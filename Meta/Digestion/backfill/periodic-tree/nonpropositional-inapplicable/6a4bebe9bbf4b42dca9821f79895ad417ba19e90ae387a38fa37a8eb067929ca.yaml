@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a4bebe9bbf4b42dca9821f79895ad417ba19e90ae387a38fa37a8eb067929ca
+  normalized_sha256: sha256:6a4bebe9bbf4b42dca9821f79895ad417ba19e90ae387a38fa37a8eb067929ca
+cas_ref: sha256:6a4bebe9bbf4b42dca9821f79895ad417ba19e90ae387a38fa37a8eb067929ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** If an odd prime r has odd valuation in F_m, then U.1 change…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 03e8c951257c9fa85f9100ef5a5e4600bba2d07d0bd28b691e2cd72bce2bc3b4
+    next_atom_id: cedabde3b427aa10346e9631a4804b389b58671b682be6e9245e86f91669d3fe

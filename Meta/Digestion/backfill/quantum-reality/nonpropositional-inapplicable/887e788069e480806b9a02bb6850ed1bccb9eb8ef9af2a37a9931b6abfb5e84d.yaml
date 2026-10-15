@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:887e788069e480806b9a02bb6850ed1bccb9eb8ef9af2a37a9931b6abfb5e84d
+  normalized_sha256: sha256:887e788069e480806b9a02bb6850ed1bccb9eb8ef9af2a37a9931b6abfb5e84d
+cas_ref: sha256:887e788069e480806b9a02bb6850ed1bccb9eb8ef9af2a37a9931b6abfb5e84d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 384 节此片段仅规定记录、选择器、仪器分支、历史追加和复合记号，没有提出概率或可达性结论。
+    previous_atom_id: 22187262bf0a02f2579057cb5d96f93a69300474677eea3d87fb643db6ff3f54
+    next_atom_id: 9f9026aa1f0a96d897ac1c792267270a786a38b40943bb1ccef16ba5c2a03e7d

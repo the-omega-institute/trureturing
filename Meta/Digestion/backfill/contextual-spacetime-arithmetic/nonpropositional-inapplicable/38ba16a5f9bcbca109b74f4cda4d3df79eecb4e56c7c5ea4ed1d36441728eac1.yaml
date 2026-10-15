@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38ba16a5f9bcbca109b74f4cda4d3df79eecb4e56c7c5ea4ed1d36441728eac1
+  normalized_sha256: sha256:38ba16a5f9bcbca109b74f4cda4d3df79eecb4e56c7c5ea4ed1d36441728eac1
+cas_ref: sha256:38ba16a5f9bcbca109b74f4cda4d3df79eecb4e56c7c5ea4ed1d36441728eac1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 68 的证明续段只论证反链输入族上的逐步仿射性，为后续碰撞见证提供构造。
+    previous_atom_id: 2a2c2fdf5e0a994eff1a97ee19241ccbbddd9ada36bf3f188ec9f6be9deb839f
+    next_atom_id: ebd3a36c303c38a6b3b7eecd3eb7c902ec73392a34e36ed16323ddc713491397

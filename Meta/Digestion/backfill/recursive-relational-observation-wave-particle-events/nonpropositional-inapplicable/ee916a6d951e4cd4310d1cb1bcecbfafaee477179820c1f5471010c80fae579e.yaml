@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee916a6d951e4cd4310d1cb1bcecbfafaee477179820c1f5471010c80fae579e
+  normalized_sha256: sha256:ee916a6d951e4cd4310d1cb1bcecbfafaee477179820c1f5471010c80fae579e
+cas_ref: sha256:ee916a6d951e4cd4310d1cb1bcecbfafaee477179820c1f5471010c80fae579e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 220.1（顺序风险上界）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: cfef8b45e2607107fa9e557f9a022a54b9308419a410afa93e7c163b29a75566
+    next_atom_id: c47f3a2907db25e28364d930b109a83a7b2e46a1e67f00fcc032ee1d688a264c

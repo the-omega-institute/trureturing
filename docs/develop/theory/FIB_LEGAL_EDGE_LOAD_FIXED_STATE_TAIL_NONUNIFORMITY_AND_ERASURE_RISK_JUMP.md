@@ -413,3 +413,767 @@ Universal per-law finiteness of $\tau_{P_\theta}(0)$ on the complete finite-hidd
 [EV]: https://arxiv.org/html/1001.3122v1
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Measurable hidden endpoints from the original biased-law half-lines
+
+**Lemma 8.1 (Original-law biased XOR hidden-endpoint recovery).** Give $A=\{a_0,a_1,b_0,b_1\}$ and $\{0,1\}$ their discrete sigma-algebras, and give $\Omega=A^{\mathbb Z}\times\{0,1\}^{\mathbb Z}$ its product sigma-algebra. Let $H_i$ and $X_i$ be its actual hidden and visible coordinate projections. Use exactly the row $\lambda_p$ and the two matrices $M_0(p),M_1(p)$ of (2.1), in their displayed state order, including every structural zero.
+
+For every real $p$ with $0<p<1$ and $p\ne1/2$, there exist total measurable maps
+
+$$
+D^-_p,D^+_p:\{0,1\}^{\mathbb N}\longrightarrow A
+$$
+
+such that the following holds for every probability measure $J$ on $\Omega$. Assume that $J$ satisfies the complete joint-cylinder law (1.3) with these coefficients: for every $\ell\in\mathbb Z$, $n\in\mathbb N_0$, hidden assignment $h:\{0,\ldots,n\}\to A$ and bit assignment $x:\{0,\ldots,n-1\}\to\{0,1\}$, the joint event specifying $H_{\ell+i}=h_i$ for $0\le i\le n$ and $X_{\ell+i}=x_i$ for $0\le i<n$ has mass given by (1.3) with $a=\ell$ and $b=\ell+n-1$. At $n=0$ this means the hidden singleton mass $\lambda_p(h_0)$, with empty product one. These nonnegative real masses are interpreted by their canonical inclusion in $[0,+\infty]$ when $J$ is extended-nonnegative-real-valued. Thus every origin, every interval length and every ordered seam is included. Then, simultaneously,
+
+$$
+J\left(\left\{\omega:
+H_0(\omega)=D^-_p\bigl((X_{-n-1}(\omega))_{n\ge0}\bigr)
+\ \text{and}\;
+H_1(\omega)=D^+_p\bigl((X_{n+1}(\omega))_{n\ge0}\bigr)
+\right\}\right)=1.
+$$
+
+The maps may depend on $p$ and are chosen before $J$. Neither joint measurability in $p$ nor a decoder independent of $p$ is asserted.
+
+Proof. First identify the actual law, rather than assume a hidden-spin representation for $J$. Proposition 2.1 constructs independent Bernoulli$(p)$ spins and an independent uniform phase, with hidden and visible coordinates (2.2). Its induced measure on $\Omega$ satisfies the required cylinders: an initial $a_s$ or $b_s$ has mass $\pi_s/2$; every active transition chooses the next spin with mass $\pi_t$ and the required XOR; every separator transition copies the spin and emits zero. Incompatible transitions have mass zero. Multiplying these factors gives (1.3) for every interval and origin, including intervals starting or ending at either phase and the hidden singleton case. This checks the joint hidden-visible law, not just its visible marginal.
+
+The complete interval cylinders determine a probability measure on $\Omega$. Indeed any cylinder restricting finitely many hidden and visible coordinates is a finite disjoint union of complete cylinders on a containing interval, with its final hidden coordinate included. Such finite-coordinate cylinders form a generating pi-system for the product sigma-algebra. Uniqueness of probability measures on that system shows that every $J$ in the statement equals the induced measure just constructed. It is therefore sufficient to construct measurable decoders under that realization and then transfer their measurable equality event by equality of the actual joint measures.
+
+Here is a total construction on binary half-lines. For a half-line $z=(z_n)_{n\ge0}$, let $\varphi(z)$ be the parity of $n+1$ at its first one; set $\varphi(z)=0$ if it has no one. This parity is the parity of the original coordinate on either side, since $-n-1$ and $n+1$ have the same parity. The first-one rule is measurable, being specified by countably many finite-coordinate events. Under the realization, Lemma 2.2 says that this rule equals the active phase on each complete half-line almost surely.
+
+Set $d=2$ if $\varphi(z)=0$ and $d=1$ if $\varphi(z)=1$, and extract $y_j=z_{d+2j-1}$ for $j\ge0$. This only selects active coordinates in the original half-line; it does not change the law or the clock. Form a candidate spin sequence by $t_0=0$ and $t_{j+1}=t_j\mathbin\oplus y_j$. Define $c_p(z)=1$ when the averages of $t_0,\ldots,t_{m-1}$ converge to $1-p$ as $m\to\infty$, and define $c_p(z)=0$ otherwise. The latter case includes convergence to $p$ and all exceptional records. Each $t_j$ is a measurable function of finitely many coordinates after the measurable phase choice; convergence to the specified real number is a countable measurable condition. Thus $c_p$ is a total measurable bit-valued map. Finally put
+
+$$
+\begin{aligned}
+D^-_p(z)&=\begin{cases}a_{c_p(z)}&\varphi(z)=0,\\b_{c_p(z)}&\varphi(z)=1,\end{cases}\\
+D^+_p(z)&=\begin{cases}b_{c_p(z)}&\varphi(z)=0,\\a_{c_p(z)}&\varphi(z)=1.\end{cases}
+\end{aligned}
+$$
+
+These maps are measurable on the entire half-line space, including records incompatible with either phase.
+
+To check the endpoint indices, if the actual phase is zero, the negative active list is $Y_{-1},Y_{-2},\ldots$ and the positive active list is $Y_1,Y_2,\ldots$. Their adjacent spins start respectively at $S_0$ and $S_1$, and the required states are $H_0=a_{S_0}$ and $H_1=b_{S_1}$. If the actual phase is one, the lists are $Y_{-1},Y_{-2},\ldots$ and $Y_0,Y_1,\ldots$; both start at $S_0$, and the required states are $H_0=b_{S_0}$ and $H_1=a_{S_0}$. For either direction the recurrence for $t$ gives the actual adjacent spin sequence when its endpoint spin is zero, and its complement when that endpoint spin is one. The strong law for each one-sided iid spin sequence gives limiting frequency $p$ for the actual sequence and $1-p$ for its complement. Because $p\ne1/2$, the rule $c_p$ selects the endpoint spin in all four cases. The finitely many phase and directional almost-sure events can be intersected, proving both state equalities simultaneously. Equality of joint laws established above transfers this single measurable event to every admissible $J$.
+
+This is the endpoint-recovery step used in Theorem 3.2: Lemma 3.1's complement-pair variance tending to zero supplies its conditional-projection formulation, while Lemma 2.2 supplies the phase. The strong-law selection is also the mechanism in [Conditional gain deficit, Proposition 4.1](FIB_LEGAL_EDGE_LOAD_CONDITIONAL_GAIN_DEFICIT_AND_UNWEIGHTED_BRIDGE_OBSTRUCTION.md) at $p=3/5$; the two distinct limiting frequencies apply on both biased parameter ranges here. The assertion is a `repo-derived` explicit original-domain measurable formulation of that recovery relation, with the classical strong law and measure-uniqueness argument retaining their usual attribution and no literature-priority claim.
+
+The hypotheses are satisfiable by Proposition 2.1. No decoder, spin-image law, independence of the observed half-lines, tail summability, finite-record sufficiency or extra positivity is assumed. The period-two law requires no mixing or aperiodicity premise. The fair parameter and endpoints are excluded. This auxiliary asserts only the displayed endpoint relation; it does not assert a law-existence theorem, posterior, moment, entropy or tail conclusion, or the other conclusions of Theorem 3.2 or the cited Proposition 4.1. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 9. Original-law paid-read lower bound for a hidden endpoint
+
+**Definition 9.1 (Admissible arbitrary-address protocol).** Fix $0<p<1$ with
+$p\ne1/2$, $j\in\{0,1\}$, and let $(\mathsf U,\mathcal U,\nu)$ be one
+arbitrary probability space independent of the complete joint law $J_p$. Fixed
+public data may be included as a constant in $\mathsf U$; any random public
+data are included in the same source-independent variable with its unchanged
+law $\nu$. A protocol is a measurable next-event rule which, given
+$u\in\mathsf U$ and each finite acquired ordered record
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))\in(\mathbb Z\times\{0,1\})^n,
+$$
+
+either chooses the next integer address $t_{n+1}$, returns a state
+$A\in\{a_0,a_1,b_0,b_1\}$, or continues internally indefinitely without any
+further read or return. Finite next events may follow internal waiting:
+their occurrence, type, address or output, and finite waiting time depend
+measurably only on the fixed public data, $u$ and $r$. All internal
+randomness is included in $u$. If an address is chosen, the only reply is
+the actual source bit $x_{n+1}=X_{t_{n+1}}$ from the same stationary source.
+Every such read is charged: repetitions, separator zeros, negative, positive,
+disconnected and arbitrarily distant addresses all count once.
+
+The return time $\tau$ and the charged read count
+$N\in\mathbb N_0\cup\{\infty\}$ are separate random variables. Set
+$\tau=\infty$ on every nonreturning path, and let $N$ count all actual reads.
+Thus $\tau=\infty$ with any finite $N$, including $N=0$, is permitted by
+indefinite internal continuation after that finite record. Infinite read
+paths are also permitted. On a return, $N$ is finite; the output and $\tau$
+depend measurably only on the fixed public data, $u$, and the acquired
+ordered address/reply record. On $\{\tau<\infty\}$, write $\mathsf R$ for that
+terminal ordered record.
+
+There is no hidden-state, half-line or tail read, source-dependent seed or
+timing, reset, law switch, moving endpoint, or erased-coordinate substitution.
+The rule may return before any read and may output a state from the wrong
+phase. Null records and versions completed by null sets are included through
+the usual measurable completion. Put
+
+$$
+\mathbb P_p=J_p\otimes\nu,
+\qquad
+E_k=\{\tau<\infty,\ N\le k\},
+\qquad
+R=\frac{\max(p,1-p)}{\min(p,1-p)}>1.
+\tag{9.1}
+$$
+
+The public and auxiliary variables are independent of the original hidden
+endpoint $H_j$ and of every $X_t$.
+
+**Theorem 9.2 (Original-clock fixed-endpoint XOR acquisition bound).** For
+every admissible protocol of Definition 9.1 and every $k\ge0$,
+
+$$
+\mathbb P_p\bigl(A\ne H_j,\ E_k\bigr)
+\ \ge\
+\frac{\mathbb P_p(E_k)}{1+R^{k+1}}.
+\tag{9.2}
+$$
+
+Consequently, if a protocol has a positive-probability finite return, then
+its error probability on finite returns is positive. More explicitly, the
+same proof gives the random-count form
+
+$$
+\mathbb P_p\bigl(A\ne H_j,\ \tau<\infty\bigr)
+\ \ge\
+\mathbb E_p\!\left[
+ \frac{\mathbf 1_{\{\tau<\infty\}}}{1+R^{N+1}}
+\right].
+\tag{9.3}
+$$
+
+No almost-sure return, deterministic bound, or finite expected value of $N$ is
+assumed. The integrand in (9.3) is defined as zero on $\{\tau=\infty\}$,
+whether $N$ is finite or infinite.
+
+**Proof.** Use the realization (2.2) supplied by Proposition 2.1 only as a
+description of the one fixed law $J_p$. Thus $\varphi$ is uniform and the
+$S_\ell$ are iid Bernoulli$(p)$. The hidden endpoint states can be written as
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+\varphi=0&a_{S_0}&b_{S_1}\\
+\varphi=1&b_{S_0}&a_{S_0}
+\end{array}
+\tag{9.4}
+$$
+
+For a fixed phase $\varphi$, the two entries obtained by replacing the
+displayed spin by its complement are the two states of that phase. We compare
+their masses while keeping $p$, the phase, the source, and the protocol fixed.
+
+Fix $u$ and a finite record $r$ of length $n$. Whether the next-event
+choices at its successive prefixes prescribe $r$ followed by a finite
+return is determined by $u$ and $r$. If not, its terminal mass is zero under
+every hidden state. If so, the source section of
+$\{\mathsf R=r,\tau<\infty\}$ is exactly the finite cylinder
+$\{X_{t_i}=x_i:1\le i\le n\}$, and $A$ and $\tau$ are fixed. In particular,
+internal waiting or its divergence imposes no additional source condition:
+the same $u$ and acquired replies give the same finite events and delays.
+This applies also to adaptive addresses. Under phase $\varphi$, a read at
+$t=2\ell+\varphi$ returns
+
+$$
+X_t=Y_\ell=S_\ell\mathbin\oplus S_{\ell+1},
+$$
+
+whereas a read at the other parity returns the separator zero. Discarding
+the latter reads from the comparison does not discard their charges. The
+active reads in $r$ therefore give a finite labelled multigraph on the spin
+indices, with an edge $\{\ell,\ell+1\}$ for each active read. Repeated reads
+give repeated edges. Inconsistent duplicate labels have zero probability
+under both endpoint states.
+
+For an arbitrary measurable seed space, the masses below are source-section
+masses at the fixed value $u$; no regular conditional probability on
+$\mathsf U$ is being assumed.
+
+Let $q=q_{j,\varphi}$ be the spin index displayed in (9.4): $q=j$ when
+$\varphi=0$ and $q=0$ when $\varphi=1$. In the graph formed by the active
+reads, the component containing $q$ has at most $n+1$ vertices. Once $S_q=s$
+is fixed, the labelled edges determine every spin in this component, if they
+are consistent. The joint mass of that component, including the Bernoulli
+factor at $q$, is a product of at most $n+1$ factors, each equal to $p$ or
+$1-p$. Replacing $s$ by $1-s$ complements all those factors. Consequently,
+for the two same-phase endpoint states $h_{\varphi,0}$ and
+$h_{\varphi,1}$, the joint masses of $r$ satisfy
+
+$$
+R^{-(n+1)}\le
+\frac{\mathbb P_p(H_j=h_{\varphi,0},\,\mathsf R=r,\,\tau<\infty\mid u)}
+     {\mathbb P_p(H_j=h_{\varphi,1},\,\mathsf R=r,\,\tau<\infty\mid u)}
+\le R^{n+1},
+\tag{9.5}
+$$
+
+whenever the denominator is nonzero. The same argument shows that the two
+masses are simultaneously zero or simultaneously positive. All components
+disjoint from the component of $q$ contribute the same factor to both masses;
+this is why disconnected and distant reads do not increase the exponent.
+The phase factor $1/2$ is also common. This is only a reindexing of a finite
+product in the original law, not a transformation of the source or a newly
+permitted read.
+
+For this fixed $u$ and $r$, write $w_h$ for the joint mass of the terminal
+record and $H_j=h$, and let $h_\ast=A(u,r)$. Let $\bar h_\ast$ be the other
+state with the same phase as $h_\ast$ and the complementary spin. By (9.5),
+
+$$
+w_{h_\ast}\le R^{n+1}w_{\bar h_\ast}.
+$$
+
+Every state in the opposite phase is an error whenever the output is
+$h_\ast$. If $O$ denotes the total mass of those two opposite-phase states,
+then, with $W=\sum_hw_h$ and $L=\sum_{h\ne h_\ast}w_h$,
+
+$$
+W=w_{h_\ast}+w_{\bar h_\ast}+O
+\le (1+R^{n+1})w_{\bar h_\ast}+O
+\le (1+R^{n+1})L.
+\tag{9.6}
+$$
+
+Thus $L\ge W/(1+R^{n+1})$. Summing (9.6) over all terminal records of
+length $n\le k$ and then integrating over $u$ gives
+
+$$
+\mathbb P_p(A\ne H_j,E_k)
+\ge \frac{\mathbb P_p(E_k)}{1+R^{k+1}},
+$$
+
+because $R>1$. The same recordwise inequality with its own $n$ sums over all
+finite terminal records and gives (9.3). If
+$\mathbb P_p(\tau<\infty)>0$, then the finite-return event is the countable
+union of the $E_k$, so some $E_k$ has positive probability and (9.2) gives a
+strictly positive error probability. Paths continuing internally forever
+after finitely many reads, and infinite-read nonreturning paths, belong to
+none of these terminal events and contribute zero to both sides of (9.3).
+Only actual reads enter the returning record length $n$. The argument uses
+finite record masses, so completion choices and null fibres do not change
+it. $\square$
+
+**Attribution 9.3 (Scope of the acquisition increment).** Proposition 2.1,
+Lemma 3.1, Theorem 4.1 and Lemma 8.1 supply the four-state law, its
+complement-pair products, fixed original clock and measurable endpoint
+description. The finite-energy/product-likelihood step in the proof is the
+elementary finite specialization of those displayed products. The filtering
+and synchronization results of [Chigansky--van Handel, Example 10][CVH],
+[Travers--Crutchfield, *Exact Synchronization*, Definitions 5--8 and
+Theorem 3](https://arxiv.org/html/1008.4182v3), and [Travers--Crutchfield,
+*Asymptotic Synchronization*, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) provide neighboring mechanisms but do
+not supply (9.2) for arbitrary integer-address adaptive paid reads. Equation
+(9.2) is the source-specific repo-derived quantitative bridge. It makes no
+sharpness or optimal-cost claim, and it does not assert physical storage,
+universal filtering, formal verification, or completion of the original
+attainment problem.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Sharp count-only endpoint error with paid phase information
+
+**Theorem 10.1 (Paid phase-cost refinement and selective sharpness).** Retain
+exactly Definition 9.1, including the fixed original $H_j$, $j\in\{0,1\}$,
+the one law $J_p$, and the arbitrary unchanged independent auxiliary law
+$\nu$. Put
+
+$$
+a=\max(p,1-p),\qquad b=\min(p,1-p),\qquad R=a/b,
+\qquad e_0=1-a/2,\qquad e_n=\frac1{1+R^n}\quad(n\ge1).
+\tag{10.1}
+$$
+
+For a fixed seed and a positive terminal cylinder of length $n$, let $W$
+be its source mass and $L$ its error mass for the protocol's chosen output.
+For every output state, whether or not it maximizes posterior probability,
+
+$$
+L\ge e_nW.
+\tag{10.2}
+$$
+
+Consequently every admissible protocol satisfies
+
+$$
+\begin{aligned}
+\mathbb P_p(A\ne H_j,\tau<\infty)&\ge\mathbb E_p[g],
+&g&=\begin{cases}e_N&\tau<\infty,\\0&\tau=\infty,\end{cases}\\
+\mathbb P_p(A\ne H_j,E_0)&\ge(1-a/2)\mathbb P_p(E_0),\\
+\mathbb P_p(A\ne H_j,E_k)&\ge\frac{\mathbb P_p(E_k)}{1+R^k}
+&& (k\ge1).
+\end{aligned}
+\tag{10.3}
+$$
+
+Each $e_n$ is the largest coefficient depending only on $p$ and $n$ that
+works in (10.2) for all such records and protocols. The coefficients in the
+two budget bounds of (10.3) are likewise best possible when selective finite
+return is permitted.
+
+Proof. Reuse Theorem 9.2's fixed-seed terminal-cylinder reduction. For each
+seed $u$ and terminal ordered record $r$, the source section is the cylinder
+$C=\{X_{t_i}=x_i:1\le i\le n\}$ if the prescribed choices and finite return
+are consistent, and is empty otherwise. The output is fixed on that
+section. Adaptive choices and internal waiting add no source constraint.
+These are section masses, with no regular conditional probability assumed
+on the auxiliary space.
+
+Write $w_h=J_p(C,H_j=h)$, $W=\sum_hw_h$, and $L=W-w_h$ when the output is
+$h$. At $n=0$, a nonempty terminal section is the whole source space.
+Proposition 2.1 gives largest state prior $a/2$, so $L\ge(1-a/2)W$.
+Now take $n\ge1$. If $w_h=0$, (10.2) is immediate. Otherwise let $\varphi$
+be the phase corresponding to $h$ at this original endpoint, and let
+$q=q_{j,\varphi}$ be its actual spin index from (9.4): $q=j$ for
+$\varphi=0$, and $q=0$ for $\varphi=1$. Let $\bar h$ be the complementary
+spin state at the same endpoint and phase.
+
+Under this phase, use the graph of distinct active edges
+$\{\ell,\ell+1\}$ read in $r$, adjoining $q$ as an isolated vertex if
+necessary. Let $V$ be the component of $q$ and $v=|V|$. It is a finite path
+or a singleton, so it has $v-1$ distinct edges and $v\le n+1$. Separator
+reads remain charged, as do repeated edges. Positive mass excludes a one
+at a separator, inconsistent repetitions and any incompatible labels.
+As in Lemma 3.1 and (9.5), the two endpoint choices determine complementary
+assignments $(s_\ell)_{\ell\in V}$ and $(1-s_\ell)_{\ell\in V}$. With
+$\pi_0=1-p$ and $\pi_1=p$, their masses have the form
+
+$$
+w_h=K\prod_{\ell\in V}\pi_{s_\ell},\qquad
+w_{\bar h}=K\prod_{\ell\in V}\pi_{1-s_\ell},\qquad K>0.
+$$
+
+The common factor includes $1/2$ for the phase and all components disjoint
+from $V$. Thus if $v\le n$,
+$w_h\le R^v w_{\bar h}\le R^nL$.
+
+It remains to consider $v=n+1$. The $n$ distinct edges in $V$ then use all
+$n$ calls: every call is a distinct active edge in this one component, with
+no repetition, separator or other component. If any reply is one, both
+spin values occur in each of the two complementary assignments. Hence
+$|\#\{\ell:s_\ell=1\}-\#\{\ell:s_\ell=0\}|\le v-2=n-1$, and the same
+products give $w_h\le R^{n-1}w_{\bar h}\le R^nL$.
+
+If instead all replies are zero, every address has parity $\varphi$.
+Under the opposite phase all these reads are separator zeros, imposing no
+spin constraint. The same seed and replies follow the same terminal rule,
+so the opposite-phase joint mass of $C$ is exactly $1/2$. All of it is
+error for output $h$, whereas $w_h\le1/2$. Thus $w_h\le L\le R^nL$
+also in this case. We have proved $W=w_h+L\le(1+R^n)L$ in every case.
+Zero-mass cylinders contribute zero. In particular the argument covers
+both endpoints and bias directions, all-zero and one-containing records,
+and repeated, disconnected, negative or arbitrarily distant reads.
+
+There are countably many finite ordered integer-address/reply records.
+Sum (10.2) over terminal records and integrate over the unchanged
+independent law $\nu$, as in Theorem 9.2. This gives the first bound in
+(10.3). On nonreturns $g=0$, including indefinite internal continuation
+after any finite $N$ and infinite-read paths. The sequence $(e_n)_{n\ge0}$
+is nonincreasing: $e_1=b<e_0$, and $R>1$. Restriction to $N\le k$ therefore
+gives both budget bounds. Measurable completion changes none of these
+integrated masses.
+
+For sharpness fix $n\ge1$ and either original endpoint $j$. Ignore the
+auxiliary variable without changing its law. Make all $n$ predetermined
+actual reads: first the $n-1$ even addresses
+$2(j+i)$, $0\le i\le n-2$, then the distant even address $2(j+n)$.
+Return only if every local reply is zero and the distant reply is one;
+on every other complete record continue internally forever with no more
+reads. Thus $N=n$ on every path. Put $\sigma=1$ for $p>1/2$ and $\sigma=0$
+for $p<1/2$, and return $a_\sigma$ when $j=0$ or $b_\sigma$ when $j=1$.
+
+The paid distant one forces phase zero. In that phase the local zero
+replies say that the $n$ spins $S_j,\ldots,S_{j+n-1}$ are all equal.
+The distant reply is $S_{j+n}\mathbin\oplus S_{j+n+1}$, whose spin set is
+disjoint from that block and whose probability of being one is $2ab$.
+The two local assignments have masses $a^n$ and $b^n$, and (9.4) identifies
+their endpoint states. Independence in the same realization (2.2) gives
+
+$$
+\begin{aligned}
+\mathbb P_p(\tau<\infty)&=ab(a^n+b^n)>0,\\
+\mathbb P_p(A\ne H_j,\tau<\infty)&=ab\,b^n,\\
+\mathbb P_p(A\ne H_j\mid\tau<\infty)&=\frac{b^n}{a^n+b^n}=e_n.
+\end{aligned}
+\tag{10.4}
+$$
+
+For $n=1$ the local read list is empty; its block is the single unobserved
+endpoint spin $S_j$, still disjoint from the distant pair. The local event
+is then unrestricted, consistently with $a+b=1$, so (10.4) holds without
+an unpaid read. For $n=0$, immediate return of any state with prior $a/2$
+has error $e_0$. These protocols attain (10.2) and the corresponding budget
+bounds, proving maximality of their count-only coefficients. $\square$
+
+The finite-product ambiguity used in the proof retains the attribution of
+Lemma 3.1 and Theorem 9.2. [Chigansky--van Handel, arXiv:0910.3603v2,
+Example 10][CVH] supplies the classical fair hidden equality/XOR ambiguity.
+[Travers--Crutchfield, arXiv:1008.4182v3, Definitions 5--8 and
+Theorem 3](https://arxiv.org/html/1008.4182v3) and
+[arXiv:1011.1581v2, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) concern current-state synchronization
+from consecutive words. They do not supply the biased original-clock
+paid-record coefficient above. The phase-cost case distinction and the
+same-law selective equality are `repo-derived`, without a literature-priority
+claim. Theorem 9.2 remains valid with its weaker exponent.
+
+Sharpness here concerns selective finite-return events. For $n\ge1$ the
+witness has positive nonreturn probability, even though $N=n$ always; it
+does not determine optimal unconditional risk for bounded almost-surely
+returning protocols, optimal expected read cost, or optima at a prescribed
+return probability. The lower bounds apply to those protocols whenever
+they satisfy Definition 9.1. Open Problem 6.4 is unchanged.
+
+## 追加锚（本行以下为增补区）
+
+## 11. All-zero paid records and a one-call guaranteed-return optimum
+
+**Theorem 11.1 (Sharp all-zero terminal-cylinder envelope).** Retain exactly
+Definition 9.1 and the coefficients $a,b,R,e_n$ of Theorem 10.1. Put
+
+$$
+c=a^2+b^2\in(0,1),\qquad
+f_n(m)=\frac{b^{m+1}+c^{n-m}}
+ {a^{m+1}+b^{m+1}+c^{n-m}},\qquad
+z_n=\min_{0\le m\le n}f_n(m)\quad(n\ge0),
+\tag{11.1}
+$$
+
+where the minimum is over integers. For each fixed seed and each positive
+all-zero finite terminal source cylinder of actual record length $n$, its
+mass $W$ and error mass $L$ satisfy $L\ge z_nW$ for every output. The empty
+record is all-zero. Each $z_n$ is the largest coefficient for this precise
+class of records, for either original endpoint, either bias direction and
+any unchanged independent auxiliary law. Moreover,
+
+$$
+z_0=e_0=1-a/2,\qquad z_n>e_n\quad(n\ge1),\qquad
+z_{n+1}<z_n\quad(n\ge0).
+\tag{11.2}
+$$
+
+No $z_n$ bound is asserted for a record containing a one.
+
+Proof. Use Proposition 2.1's realization (2.2) and Theorem 9.2's
+fixed-seed terminal-cylinder reduction. A terminal ordered record consistent
+with the rule has source section exactly its acquired-bit cylinder; adaptive
+choices and finite internal waits impose no additional source restriction.
+Thus fix an ordered list of $n$ addresses, all with reply zero. Let $n_0,n_1$
+count its actual calls at the two parities, including repetitions, so that
+$n_0+n_1=n$.
+
+For a phase $\varphi$, let $Q_\varphi$ be the probability of this cylinder
+under that phase, without its prior factor $1/2$. Distinct active queried
+edges form disjoint finite paths on the spin indices. A path of $\ell$
+edges forces its $\ell+1$ spins to be equal and contributes
+$t_{\ell+1}=a^{\ell+1}+b^{\ell+1}$. Disjoint paths use disjoint iid spins.
+The elementary convexity inequality, with weights $a,b$ summing to one,
+gives
+
+$$
+t_{\ell+1}=a\,a^\ell+b\,b^\ell
+\ge(a\,a+b\,b)^\ell=c^\ell\quad(\ell\ge1).
+$$
+
+If $d_\varphi$ is the number of distinct queried active edges in that
+phase, then $d_\varphi\le n_\varphi$ and consequently
+
+$$
+Q_\varphi=\prod_{\text{active components}}t_{\ell+1}
+\ge c^{d_\varphi}\ge c^{n_\varphi}>0.
+\tag{11.3}
+$$
+
+An empty product is one. Separator calls impose no constraint in that phase
+but remain in the actual counts; repeated edges likewise retain their
+charges. This product description allows arbitrary negative, disconnected
+and distant integer addresses.
+
+Fix the output state $h$. At the fixed original endpoint $j$, it specifies
+one phase $\varphi$ and one endpoint-spin value. That spin's index is
+$q=q_{j,\varphi}$ from (9.4). Adjoin $q$ as an isolated vertex when no
+queried active edge is incident to it. Its component has $m$ distinct
+edges and $m+1$ vertices,
+where $0\le m\le n_\varphi$. Let $D\in(0,1]$ be the product of the factors
+for all other active components in that phase. The two endpoint-state
+masses in phase $\varphi$ are
+
+$$
+\frac12a^{m+1}D,\qquad \frac12b^{m+1}D.
+$$
+
+The opposite-phase mass is $Q_{1-\varphi}/2$ and is entirely error for
+output $h$. The larger of the two displayed masses is an upper bound on
+the success mass for that output. Writing $T=Q_{1-\varphi}/D$ gives
+
+$$
+\frac LW\ge
+\frac{b^{m+1}+T}{a^{m+1}+b^{m+1}+T},\qquad
+T\ge c^{n_{1-\varphi}}\ge c^{n-m}.
+\tag{11.4}
+$$
+
+The fraction increases with $T$, so it is at least $f_n(m)\ge z_n$.
+This comparison also covers output of the less likely spin state. Both
+phases have positive mass on every finite zero cylinder; no phase has been
+read for free.
+
+At $n=0$, (11.1) gives $(b+1)/2=1-a/2$. If $n\ge1$ and $m<n$, then
+
+$$
+f_n(m)>\frac{b^{m+1}}{a^{m+1}+b^{m+1}}
+=\frac1{1+R^{m+1}}\ge e_n.
+$$
+
+If $m=n$, its numerator $b^{n+1}+1$ exceeds $a^{n+1}$, so
+$f_n(n)>1/2>e_n$. The minimum over the finite set is therefore strictly
+larger than $e_n$. For strict decrease choose a minimizer $m$ for $z_n$.
+Keeping this same $m$ in $f_{n+1}$ multiplies its positive $c^{n-m}$ term
+by $c<1$ and strictly decreases the fraction. Hence
+$z_{n+1}\le f_{n+1}(m)<f_n(m)=z_n$.
+
+For attainment, fix any $0\le m\le n$, put $d=n-m$, and choose a public
+phase label $\psi\in\{0,1\}$; this label is a choice of query pattern, not
+knowledge of the actual phase. Let $q=q_{j,\psi}$, $L_*=j+m+2$, and make
+all $n$ predetermined actual calls at
+
+$$
+2(q+i)+\psi\quad(0\le i<m),\qquad
+2(L_*+2i)+(1-\psi)\quad(0\le i<d),
+\tag{11.5}
+$$
+
+in the displayed order. Ignore the auxiliary variable without changing its
+law. Return only when all $n$ replies are zero; otherwise continue
+internally forever after the last call, without further reads. Let
+$\sigma=1$ if $p>1/2$ and $\sigma=0$ if $p<1/2$. Write
+$h_{j,\eta,s}$ for the endpoint state specified in (9.4) by phase $\eta$
+and endpoint-spin value $s$. Return $h_{j,\psi,\sigma}$.
+
+In phase $\psi$ the first list is the $m$-edge path starting at $q$ and
+the second list consists of separators. In phase $1-\psi$ the first list
+consists of separators and the second list gives $d$ disjoint active
+spin pairs, all disjoint from that phase's endpoint spin. Indeed both
+endpoint indices are at most $j\le1$, whereas these pairs start at
+$L_*\ge j+2$. Let $C$ be the all-zero cylinder of these calls. Independence
+within each phase of the one law gives the complete endpoint masses
+
+$$
+\begin{aligned}
+J_p(C,H_j=h_{j,\psi,\sigma})&=\tfrac12a^{m+1},&
+J_p(C,H_j=h_{j,\psi,1-\sigma})&=\tfrac12b^{m+1},\\
+J_p(C,H_j=h_{j,1-\psi,\sigma})&=\tfrac12a c^d,&
+J_p(C,H_j=h_{j,1-\psi,1-\sigma})&=\tfrac12b c^d.
+\end{aligned}
+\tag{11.6}
+$$
+
+These formulas include $m=0$ and $d=0$. In particular, with
+$r_{n,m}=\mathbb P_p(\tau<\infty)$,
+
+$$
+\begin{aligned}
+r_{n,m}&=\tfrac12(a^{m+1}+b^{m+1}+c^{n-m}),\\
+\mathbb P_p(A\ne H_j,\tau<\infty)
+&=\tfrac12(b^{m+1}+c^{n-m}),\\
+\mathbb P_p(A\ne H_j\mid\tau<\infty)&=f_n(m),\qquad
+N=n\ \text{on every path},\qquad \mathbb E_pN=n.
+\end{aligned}
+\tag{11.7}
+$$
+
+Choosing a minimizer attains $z_n$, proving maximality for the stated
+class. For $n=0$ this is immediate return. For $n\ge1$,
+$0<r_{n,m}<1$: if $m\ge1$, then $a^{m+1}+b^{m+1}<1$; if $m=0$, then
+$c^{n-m}<1$. All rejected paths still pay $n$ calls, contributing
+$n(1-r_{n,m})$ to the unconditional mean. The construction works with
+either $\psi$, either $j$, and either direction of bias. $\square$
+
+**Theorem 11.2 (Integrated bound separated by record type).** Under the
+same contract let $Z$ be the event of finite return with all replies zero,
+including a return with no calls. Define the random variable $G$ by cases,
+
+$$
+G=\begin{cases}
+z_N&\text{on }Z,\\
+e_N&\text{on }\{\tau<\infty\}\setminus Z,\\
+0&\text{on }\{\tau=\infty\}.
+\end{cases}
+\qquad
+\mathbb P_p(A\ne H_j,\tau<\infty)\ge\mathbb E_pG.
+\tag{11.8}
+$$
+
+The definition makes no evaluation of $z_\infty$ or $e_\infty$.
+
+Proof. For each fixed seed, sum Theorem 11.1's inequality over the all-zero
+terminal records and Theorem 10.1's inequality over the other terminal
+records. There are countably many finite ordered integer-address/reply
+records. Their terminal sections are disjoint, including the empty record,
+so integration over the arbitrary independent law $\nu$ and Tonelli's
+theorem give (11.8). All masses used before integration are source-section
+masses, with no conditioning on a singleton seed or assumed regular
+conditional law on the seed space. Finite internal waits supply no extra
+observations. Every nonreturn, whether internal divergence after finitely
+many calls or an infinite-read path, contributes zero to $G$; its actual
+reads remain part of $N$. Measurable completion changes none of these
+integrated masses. $\square$
+
+**Theorem 11.3 (Zero-record mass forced by a return budget).** For an
+integer $k\ge1$ put
+
+$$
+E_k=\{\tau<\infty,N\le k\},\qquad
+\rho_k=\mathbb P_p(E_k),\qquad Z_k=E_k\cap Z,\qquad
+\beta_k=\frac{c^{\lfloor k/2\rfloor}+c^{\lceil k/2\rceil}}2.
+\tag{11.9}
+$$
+
+For every protocol of Definition 9.1, without any restriction on reads
+outside $E_k$,
+
+$$
+\begin{aligned}
+\mathbb P_p(Z_k)&\ge(\rho_k+\beta_k-1)_+,\\
+\mathbb P_p(A\ne H_j,E_k)
+&\ge e_k\rho_k+(z_k-e_k)(\rho_k+\beta_k-1)_+,
+\end{aligned}
+\tag{11.10}
+$$
+
+where $x_+=\max(x,0)$. In particular, almost-sure finite return within $k$
+actual calls has unconditional error at least
+
+$$
+e_k+(z_k-e_k)\beta_k>e_k.
+\tag{11.11}
+$$
+
+Proof. For a fixed seed $u$, follow the next-event rules with every reply
+specified to be zero, stopping this construction at the $k$th call, a
+finite return, or indefinite internal continuation, whichever comes first.
+Let $\ell\le k$ be the number of calls collected and let $B(u)$ be the
+source cylinder requiring zero at these $\ell$ addresses. At the $k$th
+call impose no condition on subsequent actions. The construction is an
+analysis of one branch of the rule; it gives the protocol no extra source
+access. Let $n_0(u),n_1(u)$ be its actual call counts by parity, so that
+$n_0(u)+n_1(u)=\ell$. By (11.3),
+
+$$
+J_p(B(u))\ge\tfrac12(c^{n_0(u)}+c^{n_1(u)})\ge\beta_k.
+\tag{11.12}
+$$
+
+For the last inequality, adding missing units to reach total $k$ can only
+decrease the sum. At a fixed total, transferring a unit from a count at
+least two larger than the other count decreases the sum, since $0<c<1$.
+Thus the integer minimum occurs at the two balanced counts in (11.9).
+Repetitions and separator calls are included throughout this argument.
+
+The subset $B$ of the source/seed product with sections $B(u)$ is
+measurable: only finitely many next-event choices, each measurable, and
+countably many finite address lists are involved. Integrating (11.12)
+gives $\mathbb P_p(B)\ge\beta_k$. On $B$, the actual protocol follows the
+specified zero branch for all the collected calls. If $\ell<k$, that
+branch has already returned or continues internally forever; in the latter
+case it cannot lie in $E_k$. If $\ell=k$, a return with at most $k$ calls
+has no additional replies. Consequently
+
+$$
+B\cap E_k\subseteq Z_k,\qquad
+\mathbb P_p(Z_k)\ge\mathbb P_p(B)+\rho_k-1
+\ge\beta_k+\rho_k-1.
+$$
+
+Nonnegativity proves the first bound in (11.10). Restrict the recordwise
+sum in Theorem 11.2 to $E_k$. The two coefficient sequences are
+nonincreasing, including their index-zero terms, and therefore
+
+$$
+\mathbb P_p(A\ne H_j,E_k)
+\ge z_k\mathbb P_p(Z_k)+e_k\mathbb P_p(E_k\setminus Z_k)
+=e_k\rho_k+(z_k-e_k)\mathbb P_p(Z_k).
+$$
+
+Since $z_k-e_k>0$, the first bound yields the second. With $\rho_k=1$ it
+gives (11.11), whose strict inequality uses $\beta_k>0$. Paths outside
+$E_k$ can make any finite or infinite number of reads, or diverge
+internally; no bound on them entered the construction. $\square$
+
+**Theorem 11.4 (Exact guaranteed-return one-call risk).** For each original
+endpoint $j\in\{0,1\}$, among protocols of Definition 9.1 with almost-sure
+finite return and at most one actual call, the minimum unconditional state
+error is exactly
+
+$$
+b+\frac{ac}{2}=1-\frac a2-a^2b.
+\tag{11.13}
+$$
+
+Proof. The two candidates for $z_1$ have the common denominator $1+c$;
+their success numerators are respectively $a$ and $a^2$. Since $a>a^2$,
+
+$$
+z_1=\frac{b+c}{1+c},\qquad \beta_1=\frac{1+c}{2},\qquad e_1=b.
+$$
+
+Theorem 11.3, including protocols which return without a call on some
+seeds, bounds the error below by
+
+$$
+b+\left(\frac{b+c}{1+c}-b\right)\frac{1+c}{2}
+=b+\frac{ac}{2}.
+$$
+
+For equality, ignore the auxiliary variable without changing its law and
+read the actual bit at the fixed even address $t=2(j+2)$. Return
+$h_{j,0,\sigma}$ on reply one and $h_{j,1,\sigma}$ on reply zero, with
+$\sigma$ and the states as in Theorem 11.1. Equivalently the outputs are
+$a_\sigma,b_\sigma$ for replies one, zero when $j=0$, and
+$b_\sigma,a_\sigma$ for replies one, zero when $j=1$.
+
+In phase zero this bit is $S_{j+2}\mathbin\oplus S_{j+3}$, independent
+of the endpoint spin $S_j$; in phase one it is a separator zero. Thus a
+one identifies phase zero, while a zero leaves positive mass in both
+phases. The zero branch's output has joint success mass $a/2$ from phase
+one, without observing that phase. The one branch has joint success mass
+$a^2b$. More explicitly the actual joint reply and error masses are
+
+$$
+\begin{array}{c|cc}
+x&\mathbb P_p(X_t=x)&\mathbb P_p(X_t=x,A\ne H_j)\\ \hline
+0&(1+c)/2&(b+c)/2\\
+1&ab&ab^2
+\end{array}
+\tag{11.14}
+$$
+
+The rule returns after its one paid call on every path. The total error
+is $1-a/2-a^2b$, equal to $b+ac/2$ because $c=1-2ab$. It is legal for
+both original endpoints and both directions of bias under the unchanged
+stationary law and auxiliary law. $\square$
+
+For $k\ge2$, (11.10)--(11.11) are lower bounds without a general sharpness
+assertion. The exact zero-record envelope and its selective witnesses do
+not provide a protocol jointly attaining all the recordwise bounds and
+the forced zero-record mass at an arbitrary prescribed return probability.
+The full joint risk/return-probability/expected-read-cost frontier remains
+unresolved. Its total cost is the extended expectation $\mathbb E_pN$
+over returning and nonreturning paths, including all repetitions and
+separators; replacing it by a mean restricted to returns would discard
+the $n(1-r_{n,m})$ charges in (11.7). Internal nonreturn after finitely many
+reads and infinite-read nonreturn are distinct allowed cost cases.
+Open Problem 6.4's whole-domain attainment and separation question remains
+unchanged.
+
+The supplier law, complementary-spin products and terminal-cylinder
+reduction are Proposition 2.1, Lemma 3.1 and Theorems 9.2--10.1. The
+convexity and finite-product Bayesian comparisons above are elementary;
+the source-specific zero-record coefficient, its same-law equality and
+the return-budget consequences are `repo-derived`. Classical attribution
+remains [Chigansky--van Handel, arXiv:0910.3603v2, Example 10][CVH] for the
+fair equality/XOR ambiguity, and [Travers--Crutchfield,
+arXiv:1008.4182v3, Definitions 5--8 and Theorem
+3](https://arxiv.org/html/1008.4182v3) and
+[arXiv:1011.1581v2, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) for consecutive-word current-state
+synchronization. Their current-state/consecutive-observation statements
+do not supply the arbitrary-address, fixed-original-endpoint zero-record
+envelope under Definition 9.1. These attributions make no worldwide
+priority claim.
+
+## 追加锚（本行以下为增补区）

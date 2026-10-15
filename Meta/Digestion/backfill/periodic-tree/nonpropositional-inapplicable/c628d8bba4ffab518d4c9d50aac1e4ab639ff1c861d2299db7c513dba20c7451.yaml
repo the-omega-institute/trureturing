@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c628d8bba4ffab518d4c9d50aac1e4ab639ff1c861d2299db7c513dba20c7451
+  normalized_sha256: sha256:c628d8bba4ffab518d4c9d50aac1e4ab639ff1c861d2299db7c513dba20c7451
+cas_ref: sha256:c628d8bba4ffab518d4c9d50aac1e4ab639ff1c861d2299db7c513dba20c7451
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** GP33 给出出现秩与模四条件，GP31 给出不同层的互素性，故 p_j 互不相同。令 r=r_j。模 p_j 时 Q^r=…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: b2397cf25f0a376433c28c2741b9ead302ae260dcae79fc36c302242a07269dd
+    next_atom_id: f12bd3ec949ce867a186eddaf417234b35f5f9cc736789e076fb690d57e4119b

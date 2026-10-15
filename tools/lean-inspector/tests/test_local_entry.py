@@ -544,6 +544,93 @@ esac
         self.assertIn('build :report', self.calls[1])
         self.assertNotIn('complete-entry-reused', result.stdout)
 
+    def report_regeneration_fixture(self):
+        # Exercise the real entry, cleanup and publication with a small process
+        # standing in for Lake; no project or mathematical fixture compilation.
+        generated = self.root / '.lake/build/lean-inspector'
+        for name in ('modules/A.zip', 'modules/A.zip.trace', 'modules/A.zip.fib-previous',
+                     'report.zip', 'report.zip.trace'):
+            self.fixture.write(str((generated / name).relative_to(self.root)), 'retained incompatible report')
+        compiled = self.root / '.lake/build/lib/lean/D5/A.olean'
+        self.fixture.write(str(compiled.relative_to(self.root)), 'compiled Lean input')
+        self.fixture.write('.lake/packages/dependency/.lake/build/lib/Dep.olean', 'dependency input')
+        self.script('tools/scripts/worktree/lean-cache-run.sh', '''exec python3 - "$@" <<'PY'
+import subprocess, sys
+from pathlib import Path
+sys.path.insert(0, 'tools/scripts/worktree')
+from lean_cache_release import cache_guard
+with cache_guard(Path.cwd()):
+    raise SystemExit(subprocess.run(sys.argv[1:]).returncode)
+PY
+''')
+        self.script('bin/report-lake', '''exec python3 - <<'PY'
+import json, os, sys, zipfile
+from pathlib import Path
+sys.path.insert(0, 'tools/lean-inspector')
+import publication
+root = Path.cwd()
+state = root / '.lake/build/lean-inspector'
+seen = dict(files=sorted(str(p.relative_to(state)) for p in state.rglob('*') if p.is_file()),
+            artifact_cache=os.environ.get('LAKE_ARTIFACT_CACHE'),
+            restore_artifacts=os.environ.get('LAKE_RESTORE_ARTIFACTS'))
+(root / 'regeneration.json').write_text(json.dumps(seen))
+if seen['artifact_cache'] != 'false' or seen['restore_artifacts'] != 'false':
+    raise SystemExit(29)  # A retained content-store artifact would otherwise restore.
+state.mkdir(parents=True, exist_ok=True)
+(state / 'modules').mkdir()
+(state / 'modules/A.zip').write_text('fresh generic report leaf')
+with zipfile.ZipFile(state / 'report.zip', 'w') as archive:
+    for suffix in publication.SUFFIXES:
+        path = root / 'seed' / (publication.RAW + suffix)
+        archive.write(path, path.name)
+PY
+''')
+        self.environment['LAKE_BIN'] = str(self.root / 'bin/report-lake')
+        return generated, compiled
+
+    def test_explicit_report_regeneration_discards_native_leaves_and_restoration(self):
+        generated, compiled = self.report_regeneration_fixture()
+        stamp = compiled.stat().st_mtime_ns
+        result = self.run_entry('REGENERATE_REPORT_ARTIFACTS=1')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn('complete-entry-reused', result.stdout)
+        self.assertEqual(json.loads((self.root / 'regeneration.json').read_text()),
+                         dict(files=[], artifact_cache='false', restore_artifacts='false'))
+        self.assertEqual((generated / 'modules/A.zip').read_text(), 'fresh generic report leaf')
+        self.assertFalse((generated / 'modules/A.zip.fib-previous').exists())
+        self.assertEqual((compiled.read_text(), compiled.stat().st_mtime_ns), ('compiled Lean input', stamp))
+        self.assertEqual((self.root / '.lake/packages/dependency/.lake/build/lib/Dep.olean').read_text(),
+                         'dependency input')
+        publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
+        with patch.dict(os.environ, self.environment, clear=True):
+            self.api.read_receipt(self.output, self.api.capture(self.root))
+
+    def test_normal_entry_reuses_and_aggregate_rebuild_retains_native_leaves(self):
+        generated, _ = self.report_regeneration_fixture()
+        original = {p: p.read_bytes() for p in generated.rglob('*') if p.is_file()}
+        result = self.run_entry()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse((self.root / 'regeneration.json').exists())
+        self.assertEqual({p: p.read_bytes() for p in original}, original)
+        result = self.run_entry('REBUILD_REPORT_CACHE=1')
+        self.assertNotEqual(result.returncode, 0)
+        observed = json.loads((self.root / 'regeneration.json').read_text())
+        self.assertEqual(set(observed['files']), {str(p.relative_to(generated)) for p in original})
+        self.assertNotEqual(observed['artifact_cache'], 'false')
+        self.assertNotEqual(observed['restore_artifacts'], 'false')
+
+    def test_report_regeneration_respects_busy_writer_and_failed_build(self):
+        generated, _ = self.report_regeneration_fixture()
+        with self.api.publication_guard(self.root, self.output):
+            result = self.run_entry('REGENERATE_REPORT_ARTIFACTS=1')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual((generated / 'modules/A.zip').read_text(), 'retained incompatible report')
+        self.script('bin/report-lake', 'echo "explicit extraction failed" >&2\nexit 31\n')
+        result = self.run_entry('REGENERATE_REPORT_ARTIFACTS=1')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('explicit extraction failed', result.stderr)
+        self.assertFalse(publication.member(self.output, '.reuse.json').exists())
+
     def test_reuse_or_build_is_explicit_and_never_fetches(self):
         self.damage('format')
         result = self.run_entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build')
@@ -566,7 +653,8 @@ esac
         self.assert_guarded(result)
 
     def test_invalid_make_options_fail_before_fetch_or_build(self):
-        for option in ('REBUILD_REPORT_CACHE=2', 'LEAN_REPORT_CACHE_MISS_POLICY=invalid'):
+        for option in ('REBUILD_REPORT_CACHE=2', 'REGENERATE_REPORT_ARTIFACTS=2',
+                       'LEAN_REPORT_CACHE_MISS_POLICY=invalid'):
             result = self.run_entry(option)
             self.assertNotEqual(result.returncode, 0, '[FAIL] invalid_option_must_fail_fast')
             self.assertEqual(self.calls, [])

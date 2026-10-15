@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8e67eda80e8dc1b6786bfd562a92510ff8183176fa59ac78cdfb8c665ea28f3f
+  normalized_sha256: sha256:8e67eda80e8dc1b6786bfd562a92510ff8183176fa59ac78cdfb8c665ea28f3f
+cas_ref: sha256:8e67eda80e8dc1b6786bfd562a92510ff8183176fa59ac78cdfb8c665ea28f3f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只引入本节的模型数据、记号、术语或允许操作条件；这些是约定及假设，不是待证明的结论。
+    previous_atom_id: 0a0bddf4a4abd82fbb8d82676046b8d25bf23196261fb28b4c2a53e1d8a2d6df
+    next_atom_id: 0d4a19408215b6ae7b53a5bf08cc180c247ac5a10deec9c91ed2817c89b0abec

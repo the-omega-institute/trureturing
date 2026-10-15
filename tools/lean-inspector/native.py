@@ -8,6 +8,7 @@ from functools import lru_cache
 import io
 import os
 from pathlib import Path
+import shutil
 import stat
 import struct
 import subprocess
@@ -125,6 +126,23 @@ def retain_request(root, executable, arguments, utilities, origin=None):
 
 def state(root):
     return Path(root) / '.lake/build/lean-inspector'
+
+
+def regenerate(root, *command):
+    """Explicit report-only rebuild, called inside lean-cache-run's writer guard.
+
+    Compiled Lean and dependency directories are outside this generated state.
+    Removing the state also removes traces, pending/previous leaves and the
+    aggregate. Disable Lake's content-store restoration for this invocation so
+    identical input traces cannot resurrect the discarded report artifacts.
+    """
+    if not command:
+        raise ValueError('report regeneration requires a build command')
+    generated = state(root)
+    if generated.exists() or generated.is_symlink():
+        shutil.rmtree(generated)
+    subprocess.run(command, cwd=root, check=True,
+                   env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
 
 
 def write_if_changed(path, data):
@@ -618,7 +636,8 @@ def _publish(root, destination):
 
 def main():
     actions = {'prepare': prepare, 'aggregate-inputs': aggregate_inputs,
-               'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch}
+               'module': module, 'aggregate': aggregate, 'publish': publish, 'batch': batch,
+               'regenerate': regenerate}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
     actions[sys.argv[1]](*sys.argv[2:])

@@ -17,6 +17,25 @@ internal sealed class CohnUniformThreeAdicDocument : IScribeDocumentDefinition
                 + "The hypotheses range over every q>=7 with q congruent to 1 modulo 6, "
                 + "including composite q, and every integer xi divisible by 3.")),
             Describe.Lean(
+                DescribeId.Create("cohn-polynomial-identification"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Congruence/CohnUniformThreeAdic.polynomial_identification"),
+                H("The polynomial is the odd-power imaginary coordinate"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("m"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    new Formula.Subscript(F.Id("P"), Seq(D(2), F.Id("m"), Plus, D(1))),
+                    Seq(Open, new Formula.Power(F.Id("X"), D(2)), Minus, D(1), Close), Sp, Eq, Sp,
+                    Operatorname, Grp(F.Id("im")),
+                    Grp(new Formula.Power(F.Id("z"), Seq(D(2), F.Id("m"), Plus, D(1))))))),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Factorization/cohn1993squareplusthree")),
+                Blocks(Paragraph(Text(
+                    "Here X is the polynomial indeterminate and z is X+sqrt(-3) in the quadratic algebra over Z[X]; "
+                    + "P_q(X squared minus one) denotes polynomial composition. The identity holds for every natural m. "
+                    + "The existing odd binomial expansion of the imaginary coordinate identifies each term after substituting X squared minus one into P_(2m+1). "
+                    + "The evaluation hom evalQuadratic evaluates both coordinates at an integer a and commutes with powers. "
+                    + "The Eisenstein reduction consumes this identity through that hom, without a second proof of the polynomial expansion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cohn-stationary-congruence"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/Congruence/CohnUniformThreeAdic.cohn_stationary_congruence"),
@@ -66,11 +85,10 @@ internal sealed class CohnUniformThreeAdicDocument : IScribeDocumentDefinition
                     "The actual polynomial congruence is consumed here. LTE at 4, 1 and "
                     + "(q-1)/2 gives v_3(2^(q-1)-1)=nu+1, while P_q(xi)=1 would make "
                     + "the same nonzero integer divisible by 3^(nu+2). "
-                    + "In a later Eisenstein reduction, xi=a^2-1 and P_q(xi)=1 are the "
-                    + "remaining-exponent input. That reduction, the q=3 branch and the "
-                    + "arbitrary-exponent theorem are separate obligations. Neither this "
-                    + "consumer nor the congruence states a classification of x^2+3=y^e, "
-                    + "an original Fibonacci-depth gcd theorem, a Wall-Sun-Sun result, "
-                    + "or closure of the parent DCE task."))),
+                    + "EisensteinCohnReductionCore derives xi=a^2-1, divisibility of xi by three, "
+                    + "and P_q(xi)=1 from the remaining odd-prime power equation. "
+                    + "That reduction handles q=3 and even exponents directly, and combines "
+                    + "this obstruction with the prime-divisor reduction to exclude x^2+3=y^e "
+                    + "for all integers x>=2 and y and all natural e>=2."))),
                 DescribeRole.Theorem))));
 }

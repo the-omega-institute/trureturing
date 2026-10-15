@@ -63527,7 +63527,7 @@ $$
 
 与定理418.2矛盾。$\square$
 
-式（418.9）不是新增素数定理。例如可直接用 [Johnston–Yang, arXiv:2204.01980v2, Theorem 1.1](../../../Library/Weil/johnstonyang2022pnt.md) 的既有误差式，取 $U(t)=\sqrt{\log t}$ 及任意固定 $c<0.8274$ 吸收其对数幂。更近的 [Fiori–Jaskari, arXiv:2609.23222v1, Theorem 1.1 与 Table 1](../../../Library/ArithSums/nicolas2025comparison.md) 提供 $U(t)=(\log t)^{3/5}/(\log\log t)^{1/5}$ 的供应器；按上引文献注所定位原稿的陈述可取其固定正指数常数。这里约束的是同一实际包两矩证书的分辨率，所用 PNT 误差、通用矩界与求积余项均由上述既有来源承担。
+式（418.9）不是新增素数定理。例如可直接用 [Johnston–Yang, arXiv:2204.01980v2, Theorem 1.1](../../../Library/Weil/johnstonyang2022pnt.md) 的既有误差式，取 $U(t)=\sqrt{\log t}$ 及任意固定 $c<0.8274$ 吸收其对数幂。更近的 [Fiori–Jaskari, arXiv:2609.23222v2, Theorem 1.1 与 Table 1](../../../Library/ArithSums/nicolas2025comparison.md) 提供 $U(t)=(\log t)^{3/5}/(\log\log t)^{1/5}$ 的供应器；按上引文献注所定位原稿的陈述可取其固定正指数常数。这里约束的是同一实际包两矩证书的分辨率，所用 PNT 误差、通用矩界与求积余项均由上述既有来源承担。
 
 **边界 418.4（需要分辨的仍是实际有符号偏差）。** 定理418.2和418.3只给该充分证书的必要尺度；不提供有效数值截止，不证明任一低矩证书实际出现，也不支付潜在非正自匹配谷底的完整 Robin 裕度。五模式递归若用作这些包的地址，必须能保留这一增长分辨率下的同源矩与接缝信息；地址细化本身不能替代 $A(t)-t$ 的符号。更高矩或直接负载比较仍可处理被该两矩证书排除的窗口。
 

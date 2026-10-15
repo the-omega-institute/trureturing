@@ -1425,3 +1425,1439 @@ The obstruction here is actual coefficient aggregation with the entire relation 
 Finally, apply the actual herald bound (25.27) with $H=4$ and its reset (23.3). At most five monitored uses prepare $`xx^*`$ almost surely from any initial density; four further coherent uses suffice, for a total of nine. Separately counted sufficient resources are memory dimension five, four stored flags of joint dimension sixteen, a reusable two-level herald detector, a seven-state wait/capture/termination controller, a four-valued setting register, a three-level outcome pointer and a twelve-valued retained terminal record per trial or processing of those data. Retaining the auxiliary herald time adds a five-valued record. For the spectral projectors in (26.29), the already proved pointer construction (25.28) preserves every count sector. These use and dimension bounds are sufficient logical resources for the specified window measurements; they impose no uncounted end-memory readout or intermediate intervention and assert no optimized physical costs. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 27. Actual global-count renewal batches: sharp window tradeoffs and internal phase references
+
+**Definition 27.1 (Common prepared batches and identification).** Fix $H=4$ and either $K=\{1,2,3,4\}$ or $K=\{1,2,4\}$. Use Definitions 23.1, 25.1 and 26.1 with known $p_k>0$ on $K$, $\sum_{k\in K}p_k=1$, and one fixed internal phase vector $\theta\in\mathbb T^K$. Thus, on the orthonormal memory basis $e_0,\ldots,e_4$,
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\quad c_k=0\ (k\notin K),\qquad
+x=\sum_{k\in K}c_ke_{4-k},\qquad
+Se_j=e_{j+1}\ (j<4),\quad Se_4=0,\quad J=xe_4^*.
+$$
+
+An actual monitored tick has posterior $`xx^*`$. A subsequent coherent window uses the same supplied isometry $V\psi=S\psi\otimes|0\rangle+J\psi\otimes|1\rangle$, with stable branch representatives, accessible chronological flags and no inaccessible which-history record. There is no intervention during a window and no terminal memory measurement. Inner products are conjugate-linear in the first entry. For $K_0=S,K_1=J$ and $K_w=K_{w_n}\cdots K_{w_1}$, write
+
+$$
+|\Psi_n\rangle=\sum_{w\in\{0,1\}^n}K_wx\otimes|w\rangle,\qquad
+\Omega_n=\operatorname{Tr}_{\rm mem}|\Psi_n\rangle\langle\Psi_n|,\qquad
+\Omega_n[w,v]=\langle K_vx,K_wx\rangle,\qquad
+Q_n|w\rangle=|w|_1|w\rangle,\qquad
+U_n(t)=e^{itQ_n},\qquad T_n=\mathcal D_n(\Omega_n)
+$$
+
+as in (25.3), with $\Omega_0=1$. A batch is a positive-integer list $\mathbf n=(n_1,\ldots,n_r)$ of independently actually prepared windows of this same device and internal $\theta$. All its flags are stored until one terminal POVM, whose effects commute only with
+
+$$
+Q_{\rm tot}=\sum_{j=1}^r Q_{n_j},\qquad
+\rho_{\mathbf n,\theta}=\bigotimes_{j=1}^r\Omega_{n_j,\theta},\qquad
+\mathsf Q_{\mathbf n,\theta}=\mathcal D_{\rm tot}(\rho_{\mathbf n,\theta}),
+\quad \mathcal D_{\rm tot}(A)=\sum_M P_M A P_M.
+\tag{27.1}
+$$
+
+Arbitrary effects within each total-count block are supplied. Preparation records are ignored: the terminal effect is tensored with their identity. Lengths within a batch are fixed before its preparation, without adaptation to its herald records. Theorem 27.2 gives a serial realization of the required product. Equal classical laws, equal $p$, equal local $T_n$, or equal single-window marginals alone do not imply this actual product with common $\theta$.
+
+The charged batch coordinates are largest window $L=\max_jn_j$, coherent applications $C=\sum_jn_j$, number of heralds $r$, and $C$ stored two-dimensional flags of joint dimension $2^C$. Monitored applications and all other apparatus are separate resources. A window of length one has the pure flag $|0\rangle$; call windows of length at least two nontrivial. Length-zero scalar factors, if supplied, contribute no information.
+
+A batch or fixed finite terminal law identifies the family if its equality implies $\theta'-\theta\in\Gamma_K$, the affine subgroup (25.4). The target is this supplied family's averaged-channel and outcome-labeled instrument orbit, with the memory-unitary meanings of Definition 24.1. In full support its complete character coordinates are
+
+$$
+\phi_1=\theta_1-2\theta_2+\theta_3,\qquad
+\phi_2=\theta_1-\theta_2-\theta_3+\theta_4;
+\tag{27.2}
+$$
+
+in sparse support the complete primitive coordinate is $\phi=2\theta_1-3\theta_2+\theta_4$. These are the full integer-quotient coordinates of (26.18) and (25.30), not a list of separately accessible formal monomials. An affine gauge may set $\theta_1=\theta_2=0$, leaving $(\theta_3,\theta_4)=(\phi_1,\phi_1+\phi_2)$ in full support and $\theta_4=\phi$ in sparse support.
+
+**Theorem 27.2 (Actual product preparation and the full-entry bridge).** Every fixed batch in Definition 27.1 can be prepared serially with one five-dimensional source memory, at most five monitored applications per herald, and no success postselection. Averaging every waiting-time record preserves all prior retained flag marginals and prepares the next independent window. Its complete global-count datum has entries
+
+$$
+\mathsf Q_{\mathbf n}[\mathbf w,\mathbf v]
+=\mathbf1_{\sum_j|w_j|_1=\sum_j|v_j|_1}
+\prod_j\Omega_{n_j}[w_j,v_j].
+\tag{27.3}
+$$
+
+Every affine change of internal phases acts on every $\Omega_n$ by the same count rotation, so every $\mathsf Q_{\mathbf n}$ is affine invariant. The products and entries here require actual preparation, not inference of independence from marginals.
+
+Proof. Normalization gives $`S^*S=I-e_4e_4^*`$ and $`J^*J=e_4e_4^*`$ as in (23.11), so $V$ is an isometry and all the window densities have trace one. For any memory operator $M$, the first-herald subchannel after $a$ monitored zeros is, using the actual reset (23.3),
+
+$$
+\mathcal H_a(M)=JS^aM(S^*)^aJ^*
+=xx^*\langle e_{4-a},Me_{4-a}\rangle\quad(0\le a\le4),\qquad
+\sum_{a=0}^4\mathcal H_a(M)=xx^*\operatorname{Tr}M.
+\tag{27.4}
+$$
+
+Indeed $e_4^*S^a=e_{4-a}^*$; $S^5=0$ eliminates every no-herald path of length five. For a density the five mutually exclusive waiting-time probabilities sum to one. All are included, with no selection of an accepted waiting time, and every herald terminates in at most five applications almost surely, counting the tick.
+
+For retained flags $A$ possibly entangled with the memory $M$, expand $\eta_{AM}=\sum_{i,j}\eta_{ij}\otimes|e_i\rangle\langle e_j|$. The identity extension of (27.4) gives the exact replacement
+
+$$
+\left(\operatorname{id}_A\otimes\sum_a\mathcal H_a\right)(\eta_{AM})
+=\operatorname{Tr}_M\eta_{AM}\otimes xx^*.
+\tag{27.5}
+$$
+
+Applying the next $n$ coherent uses to this memory and tracing it gives $\operatorname{Tr}_M\eta_{AM}\otimes\Omega_n$. Iteration, starting with the first herald from any initial density, proves the batch product (27.1). It also applies after previous terminal measurements have changed the memory, conditional on their classical terminal transcript.
+
+If the new waiting time is retained in a classical register $D$, the actual state instead is
+
+$$
+\sum_{a=0}^4\eta_{4-a,4-a}\otimes xx^*\otimes|a\rangle\langle a|_D,
+\qquad \sum_a\eta_{4-a,4-a}=\operatorname{Tr}_M\eta_{AM}.
+\tag{27.6}
+$$
+
+These conditional old-flag operators can differ with $a$. Thus waiting-time records can correlate with old flags, even though averaging them gives (27.5). The defining terminal effects are $E_{\rm flags}\otimes I_D$ for all preparation records, with the final memory traced. Neither conditional independence from $D$ nor record-adaptive lengths follow. Keeping or disposing of those records has an apparatus cost.
+
+For the entry bridge, decompose an actual word of count $m$ as $w=0^{a_1}1\cdots0^{a_m}1\,0^t$ and let $A_k$ be the multiplicity of completed label $k$. Equations (25.13)–(25.14) give $K_wx=c^A S^t x$, where $c^A=\prod_kc_k^{A_k}$. Invalid completed labels give zero; tails beyond four give zero. For a second word $v$ of the same length, count $m'$ and tail $u$, with multiplicities $B$, retaining unequal counts in the actual memory trace gives
+
+$$
+\Omega_n[w,v]=c^A\overline{c^B}
+\sum_{\substack{k,l\in K\\k\ge t,\ l\ge u\\k-t=l-u}}c_k\overline{c_l},\qquad
+n=m+\sum_k kA_k+t=m'+\sum_k kB_k+u.
+\tag{27.7}
+$$
+
+The constraint is equality of the final memory coordinate $4-(k-t)$. Thus this extends the equal-count actual-tail formula (25.15), without an end-memory projection. Each summand has exponent $z=A+\mathbf e_k-B-\mathbf e_l$, satisfying
+
+$$
+\sum_jz_j=m-m',\qquad
+\sum_j jz_j=m'-m,
+$$
+
+because $k-l=t-u$. An affine change $\theta'_k=\theta_k+\lambda+\nu k$ therefore multiplies the entire entry by $e^{i(\lambda-\nu)(m-m')}$:
+
+$$
+\Omega_{n,\theta'}=U_n(\lambda-\nu)\Omega_{n,\theta}U_n(\lambda-\nu)^*.
+\tag{27.8}
+$$
+
+This is the same angle at every length, in agreement with the phase-dependent prepared-vector calculation (25.22). Constant changes of the branch representatives $S,J$ by $e^{i\alpha_0},e^{i\alpha_1}$ likewise give the common count angle $\alpha_1-\alpha_0$, after length-dependent scalar phases cancel. On a batch these changes are conjugations by $e^{itQ_{\rm tot}}$ and disappear under the global twirl.
+
+The entry formula (27.3) follows directly from the actual product and the diagonal total-count projectors. The marginal of $\mathsf Q_{\mathbf n}$ on window $j$ is $T_{n_j}$: in the common-angle integral the other conjugations disappear under partial trace. All permitted effects have the same expectations on $\rho$ and $\mathsf Q$, and arbitrary effects within the blocks determine every block. This is the usual $U(1)$ averaging principle of [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, equations (7)–(10), and §II.C](https://arxiv.org/html/quant-ph/0610030v3), applied to total renewal tick count. It is one common twirl of the tensor product, generally different from a tensor product of separately twirled windows.
+
+The orbit interpretation uses the existing supplied-family classification (24.7)–(24.9), as applied in Theorem 25.2 and Section 26. Here $H=4\ge2$, $S$ is one nilpotent shift block on $\mathbb C^5$, $J=xe_4^*$ has normalized rank-one range, and $c_4\ne0$. Their first four columns make the two Kraus operators independent; the pencil determinant is $u^4vc_4$, with singular lines of distinct ranks four and one. These are exactly the hypotheses of that classification, including when $c_3=0$. It identifies affine differences with averaged-channel and fixed-label instrument equivalence. No classification of arbitrary other realizations is required. The common-source limitation agrees with [Hidden Relations continuation, C-94.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md) and [Mixed State Capacity and Certification, C-98.1 and C-100.1–C-100.2](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md): their actual product-source assumptions cannot be replaced by equal marginals. Their declared two-factor bottom embedding, swaps, purities and five-mode occupation measurement have a different carrier and charge from these flags. $\square$
+
+**Theorem 27.3 (Full support: least largest window three and constrained coherent cost five).** For $K=\{1,2,3,4\}$ and every fixed known positive $p$, the least identifying largest window in Definition 27.1 is $L=3$. Within $L\le3$, the least identifying coherent cost is $C=5$, attained by $(2,3)$, and at least two nontrivial windows are necessary. Four quadrature settings, with setting retained, give a twelve-label law identifying exactly the affine, averaged-channel and labeled-instrument orbits. Without the cap $L\le3$, the least coherent cost is four, attained by a single window of length four from Theorem 26.3.
+
+Proof. Put $A=p_2\sqrt{p_1p_3}>0$ and $B=\sqrt{p_1p_2p_3p_4}>0$, the constants of (26.15). The only nonzero history vectors at lengths two and three are
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+\text{length two}&K_wx&\text{length three}&K_wx\\ \hline
+00&S^2x=c_4e_2+c_3e_3+c_2e_4&000&S^3x=c_4e_3+c_3e_4\\
+01&c_1x&001&c_2x\\
+&&010&c_1Sx
+\end{array}
+$$
+
+Also $\Omega_1=|0\rangle\langle0|$. Using (27.7), define
+
+$$
+d_1=c_4\overline c_1\overline c_2,\qquad
+d_2=d_1+c_3\overline c_1^{\,2},\qquad
+C_3=p_1p_2+A e^{i\phi_1}+B e^{i\phi_2}.
+\tag{27.9}
+$$
+
+The complete untwirled densities, in ordered supports $(00,01)$ and $(000,001,010)$, are
+
+$$
+\Omega_2=\begin{pmatrix}1-p_1&d_2\\\overline d_2&p_1\end{pmatrix},\qquad
+\Omega_3=\begin{pmatrix}
+p_3+p_4&d_1&d_2\\
+\overline d_1&p_2&\overline C_3\\
+\overline d_2&C_3&p_1
+\end{pmatrix}.
+\tag{27.10}
+$$
+
+Every omitted word row and column is zero. For example $\Omega_2[00,01]=\overline c_1\langle x,S^2x\rangle=d_2$, since $\langle x,S^2x\rangle=\overline c_2c_4+\overline c_1c_3$. Likewise $\Omega_3[000,001]=\overline c_2\langle x,S^3x\rangle=d_1$, $\Omega_3[000,010]=d_2$, and $\Omega_3[010,001]=c_1\overline c_2\langle x,Sx\rangle=C_3$. The latter contains all three terminal-tail pairs of (26.19)–(26.20); its formal characters remain aggregated in one measured coefficient.
+
+For the pair batch, the complete product Gram vectors are
+
+$$
+\begin{array}{c|c|c}
+\text{joint word}&\text{memory-history vector}&\text{total count}\\ \hline
+00|000&S^2x\otimes S^3x&0\\
+00|001&S^2x\otimes c_2x&1\\
+00|010&S^2x\otimes c_1Sx&1\\
+01|000&c_1x\otimes S^3x&1\\
+01|001&c_1x\otimes c_2x&2\\
+01|010&c_1x\otimes c_1Sx&2
+\end{array}
+\tag{27.11}
+$$
+
+They are actual history vectors for two independent five-level memories; the serial preparation (27.5) gives the same flag product. Tracing these memories and retaining only equal-total-count pairs specifies the whole $\mathsf Q_{(2,3)}$. In particular $u=00|001$ and $v=01|000$ give
+
+$$
+Z=\mathsf Q_{(2,3)}[00,001;01,000]
+=\langle c_1x\otimes S^3x,S^2x\otimes c_2x\rangle
+=d_2\overline d_1=p_1p_2p_4+p_1B e^{-i\phi_2}.
+\tag{27.12}
+$$
+
+The second-window terminal marginal supplies $C_3$. Consequently the actual inversion is
+
+$$
+\boxed{
+e^{-i\phi_2}=\frac{Z-p_1p_2p_4}{p_1B},\qquad
+e^{i\phi_1}=\frac{C_3-p_1p_2-B e^{i\phi_2}}{A}.}
+\tag{27.13}
+$$
+
+All denominators are fixed known positive numbers. No division by $d_2,Z,C_3$ or argument of a vanishing observed number occurs. This covers $C_3=0$ and $Z=0$. Since $d_1\ne0$, $Z=0$ is equivalent to $d_2=0$, which requires $p_1p_3=p_2p_4$ and $e^{i\phi_2}=-1$; (27.13) still applies. Equality of the two observations is exactly equality of the two complete source characters, and the affine converse follows from (27.8).
+
+For the largest-window lower bound, use the gauge in Definition 27.1. Then
+
+$$
+d_2=e^{i\phi_1}\sqrt{p_1}
+\left(\sqrt{p_1p_3}+\sqrt{p_2p_4}e^{i\phi_2}\right).
+\tag{27.14}
+$$
+
+At fixed $\phi_2$, replacing $\phi_1$ by $\phi_1+t$ gives $\Omega_2'=U_2(-t)\Omega_2U_2(-t)^*$; $\Omega_1$ is unchanged. Hence the entire product for every finite list with $L\le2$ changes only by a common global count rotation and has unchanged $\mathsf Q$. Taking $t\ne0$ modulo $2\pi$ gives distinct affine classes. This obstruction holds even for arbitrarily many short windows.
+
+For a common collision across all batch types with $L\le3,C\le4$, use the established pair (26.21) of Theorem 26.3. Explicitly, for any $0<h<\min(A,B)$ it supplies
+
+$$
+\alpha=\arcsin(h/A),\quad \beta=-\arcsin(h/B),\qquad
+\theta^+=(0,0,\alpha,\alpha+\beta),\quad \theta^-=-\theta^+,
+\tag{27.15}
+$$
+
+with distinct affine classes and identical full $T_3$, as proved in (26.20)–(26.22). The additional joint compatibility follows from (27.14): $d_2(\theta^-)=\overline{d_2(\theta^+)}$, so their moduli agree. If this common modulus is nonzero, choose $t$ with $e^{-it}d_2(\theta^+)=d_2(\theta^-)$. If it is zero, either angle works. Then every whole state at lengths one and two is carried from $\theta^+$ to $\theta^-$ by $U_n(t)$. Thus their globally twirled data agree for every all-short list, with one common actual phase pair, including zero-coherence cases.
+
+Every other allowed list contains one length-three window and only pure length-one companions, since $C\le4$. Its global twirl is that same $T_3$ tensored with count-zero pure flags. Therefore the single pair (27.15) defeats every permitted batch type, every permitted terminal measurement, and any pooling of these capped batches. The $(2,3)$ separator attains five. At $L\le3$ any list with at most one nontrivial window has only a single $T_n$ with $n\le3$ and pure companions, and the same collision defeats it; two nontrivial windows are necessary.
+
+For the unrestricted coherent comparison, every list of $C\le3$ is covered by this common collision. Theorem 26.3 supplies a single length-four separator using its actual $C_4=p_1p_3+B e^{i\phi_2}$ and the terminal $C_3$ marginal, with inversion (26.27). Thus the unrestricted minimum is four, with a different $L$ and one herald. This is a source result consumed for the comparison, not a new single-window theorem. Theorem 27.5 supplies the claimed finite law. The recovery of information by permitted joint charge exchanges uses the established activation principle in [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §III.C.2](https://arxiv.org/html/quant-ph/0610030v3); here the finite renewal consumer is the actual pair (27.11) and the common lower-bound compatibility just proved. $\square$
+
+**Theorem 27.4 (Sparse support: least largest window four and unrestricted coherent cost six).** For $K=\{1,2,4\}$ and every fixed known positive $p_1,p_2,p_4$, the least identifying largest window is $L=4$ and the least unrestricted coherent cost is $C=6$, attained by $(2,4)$. At $L\le4$ at least two nontrivial windows are necessary. Two quadrature settings, with setting retained, give a six-label law identifying exactly the affine, averaged-channel and labeled-instrument orbits. The single length-six separator of Theorem 25.3 has the same $C$ and one herald, with larger $L$.
+
+Proof. Here $x=c_4e_0+c_2e_2+c_1e_3$. The length-two and length-three vectors are those of Theorem 27.3 with $c_3=0$. Set $d=c_4\overline c_1\overline c_2$ and $e=c_2^2\overline c_1^{\,3}$. The complete short densities are
+
+$$
+\Omega_1=|0\rangle\langle0|,\qquad
+\Omega_2=\begin{pmatrix}1-p_1&d\\\overline d&p_1\end{pmatrix}_{00,01},\qquad
+\Omega_3=\begin{pmatrix}
+p_4&d&d\\\overline d&p_2&p_1p_2\\\overline d&p_1p_2&p_1
+\end{pmatrix}_{000,001,010}.
+\tag{27.16}
+$$
+
+The complete length-four vector list is
+
+$$
+0000:c_4e_4,\qquad0010:c_2Sx,\qquad
+0100:c_1S^2x,\qquad0101:c_1^2x.
+\tag{27.17}
+$$
+
+All other vectors vanish, including $0001$ whose coefficient is $c_3$. In this order its entire untwirled density is
+
+$$
+\Omega_4=\begin{pmatrix}
+p_4&d&d&0\\
+\overline d&p_2&p_1p_2&e\\
+\overline d&p_1p_2&p_1(1-p_1)&p_1d\\
+0&\overline e&p_1\overline d&p_1^2
+\end{pmatrix}.
+\tag{27.18}
+$$
+
+For completeness, the tail overlaps are $\langle x,Sx\rangle=\overline c_1c_2$, $\langle x,S^2x\rangle=\overline c_2c_4$, and $\langle Sx,S^2x\rangle=\overline c_1c_2$. Thus the $0010/0101$ entry is $c_2\overline c_1^{\,2}\langle x,Sx\rangle=e$, the $0100/0101$ entry is $c_1\overline c_1^{\,2}\langle x,S^2x\rangle=p_1d$, and the $0010/0100$ entry is $p_1p_2$. The $0000$ overlaps with the two count-one vectors are both $d$, and its overlap with $0101$ is zero. The four displayed diagonal weights sum to one. These calculations specify every supported entry; omitted word rows and columns are zero in (27.16)–(27.18).
+
+The pair's complete product Gram vectors are
+
+$$
+\begin{array}{c|c|c}
+\text{joint word}&\text{memory-history vector}&\text{total count}\\ \hline
+00|0000&S^2x\otimes c_4e_4&0\\
+00|0010&S^2x\otimes c_2Sx&1\\
+00|0100&S^2x\otimes c_1S^2x&1\\
+00|0101&S^2x\otimes c_1^2x&2\\
+01|0000&c_1x\otimes c_4e_4&1\\
+01|0010&c_1x\otimes c_2Sx&2\\
+01|0100&c_1x\otimes c_1S^2x&2\\
+01|0101&c_1x\otimes c_1^2x&3
+\end{array}
+\tag{27.19}
+$$
+
+As for (27.11), these realize the product in parallel and (27.5) realizes the identical flag density serially. The allowed count-two pair $u_s=00|0101$, $v_s=01|0010$ has entry
+
+$$
+\begin{aligned}
+Z_s&=\mathsf Q_{(2,4)}[00,0101;01,0010]
+=\langle c_1x\otimes c_2Sx,S^2x\otimes c_1^2x\rangle\\
+&=d\overline e=p_1c_1^2c_4\overline c_2^{\,3}
+=p_1R_6e^{i\phi},\qquad R_6=p_1p_2^{3/2}\sqrt{p_4}>0.
+\end{aligned}
+\tag{27.20}
+$$
+
+It follows that $e^{i\phi}=Z_s/(p_1R_6)$, with a known positive denominator. The complete primitive character and the source classification mapped in Theorem 27.2 give identification for all phases and all allowed probabilities. The converse is (27.8).
+
+For the largest-window obstruction, take the sparse gauge $\theta_1=\theta_2=0$, $\theta_4=\phi$. Then $d=\sqrt{p_1p_2p_4}e^{i\phi}$, and all its locations in (27.16) have row count zero and column count one. All equal-count entries there are constant. Therefore, including every zero row,
+
+$$
+\Omega_n(\phi)=U_n(-\phi)\Omega_n(0)U_n(-\phi)^*\qquad(n=1,2,3).
+\tag{27.21}
+$$
+
+The same angle acts at every short length. Hence every finite product with $L\le3$, at any coherent cost, has globally twirled density independent of $\phi$. Distinct characters are distinct affine classes, proving $L\ge4$.
+
+For the unrestricted coherent lower bound, partition every positive-integer list of $C\le5$. It is one length-five window; one length-four window with only possible length-one companions; or a list all of whose lengths are at most three. The whole-state phase blindness of $T_4,T_5$ is the established Theorem 25.3 result, and pure companions add no count exchange. Equation (27.21) handles the remaining lists. Thus every allowed batch type is phase independent; any one fixed distinct phase pair is a common collision across all these types. This proves $C\ge6$. At $L\le4$ a list with at most one nontrivial window supplies a single phase-blind $T_n$, $n\le4$, and any number of pure companions, so two nontrivial windows are necessary. Equation (27.20) attains both sharp bounds. The single-window-six comparison uses the actual coherence (25.29), not an abstract relation assumed measurable at a shorter horizon. Theorem 27.5 gives the finite pair readout. $\square$
+
+**Theorem 27.5 (Finite legal laws, positivity and sufficient logical resources).** The two separating batches admit the setting counts in Theorems 27.3–27.4, with every retained-setting label strictly positive. Actual masses, rather than normalized conditional success laws, determine these readouts. Sufficient serial logical resource bounds are as follows; the single-window rows are the source comparisons.
+
+| Family and protocol | $L$ | $C$ | Heralds | Stored flags / joint dimension | Monitored applications, at most | Total device applications, at most | Settings / retained labels |
+| --- | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| Full, $(2,3)$ | 3 | 5 | 2 | 5 / 32 | 10 | 15 | 4 / 12 |
+| Full, single four | 4 | 4 | 1 | 4 / 16 | 5 | 9 | 4 / 12 |
+| Sparse, $(2,4)$ | 4 | 6 | 2 | 6 / 64 | 10 | 16 | 2 / 6 |
+| Sparse, single six | 6 | 6 | 1 | 6 / 64 | 5 | 11 | 2 / 6 |
+
+Proof. For distinct equal-total-count words $u,v$, with entry $q=\mathsf Q[u,v]$, define the two orthonormal pairs and spectral projectors
+
+$$
+|R_\pm\rangle=(|u\rangle\pm|v\rangle)/\sqrt2,\qquad
+|I_\pm\rangle=(|u\rangle\mp i|v\rangle)/\sqrt2,\qquad
+P^B_\pm=|B_\pm\rangle\langle B_\pm|,\quad
+P^B_0=I-P^B_+-P^B_-\quad(B=R,I).
+\tag{27.22}
+$$
+
+Each three-outcome projective setting commutes with $Q_{\rm tot}$. If $D_u=\mathsf Q[u,u]$, $D_v=\mathsf Q[v,v]$ and $M=D_u+D_v$, direct expectations give, in order $(+,-,0)$,
+
+$$
+\Pr(\cdot\mid R)=(M/2+\operatorname{Re}q,M/2-\operatorname{Re}q,1-M),\qquad
+\Pr(\cdot\mid I)=(M/2+\operatorname{Im}q,M/2-\operatorname{Im}q,1-M).
+\tag{27.23}
+$$
+
+The sign of the imaginary part follows from the minus $i$ in $I_+$. Both signed differences recover twice the corresponding component of $q$. The construction is the source quadrature readout (25.24)–(25.26), applied to these actual joint pairs.
+
+For full support use the two settings for $u=00|001,v=01|000,q=Z$, and two settings for $u=010,v=001,q=C_3$ on the second window, lifted by the identity on every first-window flag. The lifted projectors remain count preserving and are measured only at the joint terminal time. Choose uniformly among the four settings, independently of the device, and retain the setting. The twelve effects are $P^s_o/4$ and sum to the identity. Their probabilities are (27.23) times $1/4$, with actual masses
+
+$$
+D_u^Z=(1-p_1)p_2,\quad D_v^Z=p_1(p_3+p_4),\quad M_Z=D_u^Z+D_v^Z,\qquad
+M_C=p_1+p_2.
+\tag{27.24}
+$$
+
+For sparse support use the two settings for $u_s,v_s$ of (27.20), uniformly and independently chosen. The six effects are $P^B_o/2$, with (27.23) times $1/2$ and
+
+$$
+D_u^s=(1-p_1)p_1^2,\qquad D_v^s=p_1p_2,\qquad M_s=D_u^s+D_v^s.
+\tag{27.25}
+$$
+
+All four diagonal masses in (27.24)–(27.25) are positive. Since $c_4\ne0$, the first nonzero coordinate of $x$ is $e_0$, whereas that of $S^2x$ is $e_2$; both are nonzero and cannot be proportional. For either product pair in (27.11) or (27.19), the first factors are these vectors times nonzero scalars. Proportional nonzero product vectors would force their first factors to be proportional, so strict Cauchy–Schwarz gives
+
+$$
+|Z|<\sqrt{D_u^ZD_v^Z}\le M_Z/2,\qquad
+|Z_s|<\sqrt{D_u^sD_v^s}\le M_s/2.
+\tag{27.26}
+$$
+
+For the lifted $C_3$ pair, $x,Sx$ are likewise nonproportional, giving $|C_3|<\sqrt{p_1p_2}\le M_C/2$. The omitted word $01|010$ has diagonal $p_1^2>0$ in the full batch, so $1-M_Z>0$; $1-M_C=p_3+p_4>0$. The omitted word $01|0101$ has diagonal $p_1^3>0$ in the sparse batch, so $1-M_s>0$. Thus every signed outcome and every zero outcome has strictly positive probability, for all phases, including cancellations in (27.13). There is no conditioning on being in the two-word span.
+
+For each setting its three projectors admit the source pointer realization (25.28), now on the entire batch:
+
+$$
+W_s=\sum_{o\in\{+,-,0\}}P^s_o\otimes R_o,\qquad
+R_o|\mathrm{ready}\rangle=|o\rangle,\qquad
+[W_s,Q_{\rm tot}\otimes I]=0.
+\tag{27.27}
+$$
+
+The $R_o$ are unitaries on a three-level pointer. Orthogonality and completeness make $W_s$ unitary. This requires no within-window operation; the complex quadrature control occurs within a total-count sector at terminal time.
+
+For the serial pairs one five-level memory, a reusable two-level herald detector, a three-level pointer, and a four-valued or two-valued setting register suffice. One explicit controller has two states $\mathrm{wait}_j$, states $\mathrm{capture}_{j,k}$ for $0\le k\le n_j$, and $\mathrm{done}$: $C+5$ states, respectively ten and eleven. The flag dimensions and use bounds follow from (27.4)–(27.5). Each retained herald time needs a five-valued classical record; two have 25 joint labels. A terminal record needs twelve or six labels per trial, or processing of the corresponding frequencies. Storage, record processing or disposal, detector/controller control, the joint measurement, and maintenance of stable phases through waiting and storage are separate resources. Ignoring a record in the effect does not eliminate its production or disposal cost.
+
+A parallel realization instead uses two five-level memories: joint Hilbert dimension 25 and sum of local level counts ten. It supplies no single ten-dimensional-memory realization. It still requires the same internal $\theta$ and phase relation, independent preparation and all flag/readout resources. These are sufficient logical realizations, without optimized hardware, elapsed time or energy costs. Neither pair route dominates its single-window comparison across all coordinates: the pairs reduce largest window, while the single windows need fewer heralds and fewer sufficient total applications; full single four also uses fewer coherent applications and flags. $\square$
+
+**Theorem 27.6 (Uniform dephasing boundary and fixed count-offset reference extensions).** Independent uniform per-window count rotations remove the activation in the two pair protocols. A single common rotation preserves their datum. In contrast, suppose the same internal $\theta$ is used, but window one and window two have arbitrary fixed unknown count offsets $\beta_1,\beta_2\in\mathbb T$, constant across repetitions. The $(2,3)$ protocol still identifies the full-support internal affine orbit using six quadrature settings and eighteen retained labels; $(2,4)$ identifies the sparse orbit using four settings and twelve labels. These claims include the full-support zero-reference case. They concern fixed count rotations, not arbitrary different internal phase vectors or general noise.
+
+Proof. If each window acquires $U_{n_j}(\beta_j)$ and its angle is independently uniform and averaged before observation, then
+
+$$
+\int\bigotimes_j U_{n_j}(\beta_j)\Omega_{n_j}U_{n_j}(\beta_j)^*
+\prod_j\frac{d\beta_j}{2\pi}
+=\bigotimes_jT_{n_j}.
+\tag{27.28}
+$$
+
+This state is already globally invariant. For full $(2,3)$ the common collision (27.15) therefore has equal whole data $T_2\otimes T_3$; for sparse $(2,4)$ the whole datum $T_2\otimes T_4$ is phase independent by Theorem 25.3. Neither specified pair then identifies. More generally independent local randomization removes every cross-window unequal-count entry, reducing any batch to its product of local data; it does not exclude longer single-window separators. One common uniform angle gives (27.1) instead and leaves (27.12), (27.20) intact. This is the established shared-reference distinction, not a new general twirl result: [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, §III.C.2 and §IV.A.4](https://arxiv.org/html/quant-ph/0610030v3).
+
+For fixed offsets put $\delta=\beta_2-\beta_1$ and define the datum precisely by
+
+$$
+\mathsf Q^\beta_{(n_1,n_2)}
+=\mathcal D_{\rm tot}\!\left(\bigotimes_{j=1}^2
+U_{n_j}(\beta_j)\Omega_{n_j,\theta}U_{n_j}(\beta_j)^*\right).
+$$
+
+Every selected joint pair whose row counts are $(0,m+1)$ and column counts $(1,m)$ gains exactly $e^{i\delta}$ by (27.3). The lifted equal-local-count observation $C_3$ is unchanged. In full support measure additionally
+
+$$
+\begin{aligned}
+Z^\beta&=\mathsf Q^\beta_{(2,3)}[00,001;01,000]
+=e^{i\delta}(p_1p_2p_4+p_1B e^{-i\phi_2}),\\
+R&=\mathsf Q^\beta_{(2,3)}[00,010;01,000]
+=e^{i\delta}d_2\overline d_2=e^{i\delta}|d_2|^2.
+\end{aligned}
+\tag{27.29}
+$$
+
+Both reference words have total count one. Their actual vectors are $S^2x\otimes c_1Sx$ and $c_1x\otimes S^3x$, present in (27.11); their inner product is $d_2\overline d_2$. Thus the reference is itself an accessible coherence, with no separately supplied phase calibration.
+
+If $R\ne0$, its exact law supplies $R/|R|=e^{i\delta}$. Put $\widehat Z=Z^\beta\overline R/|R|$ and use (27.13) with $\widehat Z$. This divides by an observed reference only after its nonvanishing is established. If $R=0$, positivity and $d_1\ne0$ imply $d_2=0$. Its two summands in (27.9) must have equal magnitudes and opposite phases, giving
+
+$$
+p_1p_3=p_2p_4,\qquad e^{i\phi_2}=-1,\qquad Z^\beta=0,\qquad
+e^{i\phi_1}=\frac{C_3-p_1p_2+B}{A}.
+\tag{27.30}
+$$
+
+Thus the internal orbit is still identified although the relative offset itself is undetermined there. The denominator is known positive, and $C_3=0$ creates no exception. There is no division by a vanishing reference or by $Z^\beta$. This zero-case diagnosis concerns exact laws; finitely many observations do not certify that a continuous probability difference is exactly zero.
+
+The two reference quadratures use (27.22) for $00|010,01|000$. Together with the four main settings, uniformly chosen and retained, they give eighteen effects $P^s_o/6$. Their reference masses are
+
+$$
+D_u^R=p_1(1-p_1),\qquad D_v^R=p_1(p_3+p_4),\qquad M_R=D_u^R+D_v^R.
+\tag{27.31}
+$$
+
+The first factors $S^2x,x$ again prove strict Cauchy–Schwarz, $|R|<\sqrt{D_u^RD_v^R}\le M_R/2$, even when $R=0$. The excluded word $01|001$ has diagonal $p_1p_2>0$, so $1-M_R>0$. Offsets only multiply entries by unit scalars, preserving every main mass and strict inequality of Theorem 27.5. Hence all eighteen labels are positive, and (27.23) with probability factor $1/6$ proves legality and recovery of the three complex observations.
+
+For sparse support the additional equal-total-count reference is always nonzero:
+
+$$
+\begin{aligned}
+Z_s^\beta&=e^{i\delta}p_1R_6e^{i\phi},\\
+R_s&=\mathsf Q^\beta_{(2,4)}[00,0010;01,0000]
+=e^{i\delta}d\overline d=e^{i\delta}p_1p_2p_4,\\
+\boxed{e^{i\phi}}&=\frac{Z_s^\beta\overline R_s}{(p_1R_6)(p_1p_2p_4)}.
+\end{aligned}
+\tag{27.32}
+$$
+
+The reference row and column both have total count one, with actual vectors $S^2x\otimes c_2Sx$ and $c_1x\otimes c_4e_4$ from (27.19). Formula (27.18) gives their inner product $d\overline d$. Only known positive constants divide the final inverse. The main two settings and the two reference quadratures, chosen uniformly, give twelve effects $P^s_o/4$. The reference masses are
+
+$$
+D_u^{R_s}=(1-p_1)p_2,\qquad D_v^{R_s}=p_1p_4,\qquad M_{R_s}=D_u^{R_s}+D_v^{R_s}.
+\tag{27.33}
+$$
+
+Their product vectors are nonproportional in the first factors, so $|R_s|<\sqrt{D_u^{R_s}D_v^{R_s}}\le M_{R_s}/2$. The omitted word $01|0101$ has mass $p_1^3>0$, proving $1-M_{R_s}>0$. The twelve labels are all strictly positive by (27.23), with factor $1/4$.
+
+All extension effects are tensored with identity on preparation records and are measured only after the windows. They use the same flag storage, herald and coherent-use counts; their setting registers and terminal records have respectively six/eighteen or four/twelve values. The pointer realization (27.27) applies unchanged. Relational phase measurements and additional reference resources are established principles, including [Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §VI.A.2](https://arxiv.org/html/quant-ph/0610030v3); here the reference cancellation is performed on the two specific non-fictitious coherences (27.29), (27.32), with its required degeneracy clause.
+
+The offset model preserves one internal device $\theta$, the product preparation, and relative count rotations constant across the measured trials. It does not include independently different internal branch-phase vectors, random resampling of the offsets, drift, correlated preparation noise or arbitrary channels on the flags. Common additional offsets remain gauge, while independent uniform resampling gives (27.28). These exact-law statements do not supply a uniform finite-sample stability bound near $R=0$ or as known positive coefficients tend to zero. For protocols required to identify every internal orbit at every fixed offset, all sharp resource lower bounds of Theorems 27.3–27.4 remain valid by restriction to zero offsets, provided the flag-only batch restrictions are retained. $\square$
+
+**Theorem 27.7 (Common adaptive obstructions and statistical applicability).** The resource obstructions above extend to separately measured batches chosen by a fixed common, parameter-independent classical policy. At each prior terminal transcript the policy may choose the next lengths, count-preserving effects and stopping decision, using independent random seeds, subject to the relevant per-batch caps. No old quantum flags are retained across batch boundaries, preparation records are not phase side information, and there is no quantum feedback, intermediate window intervention or end-memory measurement. Under these assumptions the common collision pairs have identical adaptive and stopped transcript laws. The values of $C$ describe one identifying batch, not total estimation uses or sample complexity.
+
+Proof. For full $L\le2$, fix $\phi_2$ and two distinct $\phi_1$ values as in (27.14). For full $L\le3,C\le4$, or unrestricted $C\le3$, use the one actual pair (27.15). For sparse $L\le3$, or unrestricted $C\le5$, use any one fixed pair of distinct primitive characters. The proofs above show equality of each pair's whole datum for every allowed batch list, rather than unrelated collisions for separate measurement choices. Conditional on a common finite transcript and seed, the policy chooses the same next list and effects in both devices. The actual reset (27.4) and fixed lengths give the prescribed product marginal for that next batch, even from its conditional initial memory. Its outcome kernel is identical for the two devices. Multiplying conditional kernels proves equality of the extended transcript laws by induction; averaging the independent seeds preserves it.
+
+All finite-cylinder laws of a countable classical transcript therefore agree, so the induced probability measures agree. A stopping time and its stopped output, including the possibility of never stopping, are measurable functions of that transcript and have equal laws. This argument excludes retaining flags to join a later alleged batch, or exploiting correlated preparation records: either would change the datum and the resource boundary. It does not turn the per-batch $C$ into an accuracy cost for repetitions.
+
+The laws of Theorems 27.5–27.6 have the same strictly positive finite alphabet at every parameter. Every fixed finite record from these readouts thus has positive probability at distinct orbits. Their injective exact-law maps do not give finite-record zero-error recovery of a continuous phase. Longer sampling and estimates of the probabilities require additional applications and storage, and exact-zero case distinctions such as (27.30) remain distinct from finite-data zero testing.
+
+The family preserves the classical renewal law under phase changes by Theorem 23.2. The phase-enhanced unitary-model precedent is [Liu–Elliott–Binder–Di Franco–Gu, arXiv:1810.09668v1, equation (6), Theorems 1–2 and equation (7)](https://arxiv.org/html/1810.09668v1): computational-basis output laws are unchanged while model memory measures can change. Those supplied-model results do not establish these post-herald global-count batch minima. Likewise [Renewal Phase Channel Jordan Structure and Identification, Sections 8–10](FIB_RENEWAL_PHASE_CHANNEL_JORDAN_STRUCTURE_AND_IDENTIFICATION.md) distinguishes complex-linear similarity from positivity and memory-unitary equivalence and credits the richer Source Section 24 single-window access. The present target is the existing affine orbit with the actual batch preparation and restricted global observation, rather than Jordan-data or classical-law identification.
+
+Full stationary-output identifiability uses a different datum. [Guță–Kiukas, arXiv:1402.3535v1, Definition 2, Theorem 2, equation (7) and Remark 1](https://arxiv.org/html/1402.3535v1) treats primitive finite-dimensional isometries with equality of all untwirled stationary quantum outputs, obtaining memory-unitary conjugation and one common isometry phase, and a finite full-output determination under its primitive hypotheses. [Girotti–Kiukas–Guță, arXiv:2603.20761v1, Section 3, Definition 4 and Theorem 6](https://arxiv.org/html/2603.20761v1) extends that stationary full-output equivalence to irreducible chains, including periodic cases. Their single common Kraus phase differs from independently scalar-phased labeled CP branches; their stationary initialization and full-output measurements are not the prepared flag-only data used here. Their asymptotic statistical results are not finite heralded-window or sample bounds for (27.23).
+
+[Elliott, arXiv:2610.06519v1, §III.C, Theorem 1, equations (12)–(13), and §IV.B](https://arxiv.org/html/2610.06519v1) concerns memoryful stationary full quantum space series with finite-dimensional primitive causal models, isometric memory-minimal generation and memory-basis/global-phase uniqueness. Its quantum Nemo example is a three-state renewal process of infinite classical Markov order. These are different generation objectives and observation assumptions from finite independently heralded global-count batches. General activation, common-reference averaging and relational readout are credited suppliers within the bearing renewal proofs; none substitutes for their actual-tail entries, common compatible lower bounds or charged preparation. Unknown $p$, additional preparation data, other realizations, finite-sample accuracy and general phase noise require additional hypotheses and conclusions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 28. Correlated relative noise and fixed-batch precision
+
+**Definition 28.1 (Actual noisy pair and risk).** Fix $H=4$, a known normalized probability vector positive on either $K=\{1,2,3,4\}$ or $K=\{1,2,4\}$, with the histories and total-count blocks of Definition 27.1. An actual trial prepares two windows of the same internal realization with a separately performed summed herald before each. The identity extension of the averaged replacement channel in Theorem 27.2 supplies their actual product after preparation records are ignored; individual herald records may correlate with retained flags. The two windows receive angles $(\beta _1,\beta _2)$ with law $\pi$, independently of the flags, settings, herald data and internal phases, and fresh draws are iid between trials. Put
+
+$$
+\mu=\mathbb E_\pi e^{i(\beta _2-\beta _1)},\qquad |\mu|\le1 .
+$$
+
+The exact-law comparisons allow $\mu=0$. The statistical subfamily has a known promise $0<v\le|\mu|\le1$. The angles are nuisance variables; two parameter points in a comparison may have different laws $\pi$. The terminal datum is the common total-count twirl of the actually prepared product, and the estimator sees only the retained setting and terminal outcome. Preparation and noise-controller records are averaged over: every allowed readout acts as the identity on them. They remain charged resources and provide no side information or record-adaptive preparation. For full support the loss is
+
+$$
+d_{\rm ch}((u_1,u_2),(\widehat u_1,\widehat u_2))=
+\max\{|u_1-\widehat u_1|,|u_2-\widehat u_2|\},
+$$
+
+where $u_j=e^{i\phi_j}$; for sparse support it is $|e^{i\phi}-e^{i\widehat\phi}|$. The promise $v$, iid preparation and the stated independence of $\pi$ are hypotheses of the family, not records supplied to the estimator.
+
+For a row $(w,z)$ and column $(w',z')$, write
+
+$$
+\Delta m_1=|w|_1-|w'|_1,\qquad\Delta m_2=|z|_1-|z'|_1 .
+$$
+
+The total twirl retains the entry only when $\Delta m_1+\Delta m_2=0$.
+
+More explicitly, with $n=3$ for full support and $n=4$ for sparse support,
+
+$$
+\mathsf Q_\pi=\mathcal D_{\rm total}\!\left(
+\int U_2(\beta_1)\Omega_2U_2(\beta_1)^*
+\otimes U_n(\beta_2)\Omega_nU_n(\beta_2)^*\,d\pi
+\right),\qquad U_n(\beta)|w\rangle=e^{i\beta|w|_1}|w\rangle .
+$$
+
+Here $\mathcal D_{\rm total}$ projects onto the sum-of-window-count sectors; $\rho_0=\Omega_2\otimes\Omega_n$ below.
+
+
+**Theorem 28.2 (Exact correlated-noise reduction).** For every supported row and column of the two-window product,
+
+$$
+\mathsf Q_{\pi}[(w,z),(w',z')]
+=\mathbf1_{\Delta m_1+\Delta m_2=0}
+f_\mu(\Delta m_1)
+\rho_{0}[(w,z),(w',z')],\qquad
+f_\mu(j)=
+\begin{cases}
+1,&j=0,\\
+\mu,&j=-1,\\
+\overline\mu,&j=1.
+\end{cases}
+\tag{28.1}
+$$
+
+Here $\rho_0$ is the corresponding entry before the random angles. The first length-two window supports only counts zero and one, so these are every possible retained transfer. The formula holds also at $\mu=0$. Thus the complete density depends on $\pi$ only through $\mu$ and $\overline\mu$.
+
+**Proof.** A local count rotation contributes $e^{i(\beta_1\Delta m_1+\beta_2\Delta m_2)}$. The common total-count twirl kills the entry unless $\Delta m_2=-\Delta m_1$. On a retained block the factor is $\mathbb E e^{-i(\beta_2-\beta_1)\Delta m_1}$: it is one at zero transfer, $\mu$ at transfer minus one and $\overline\mu$ at transfer plus one. Independence of the angles from the word amplitudes permits this entrywise factorization. No independence between the two angles is assumed, and no inverse of a nonunit moment is taken. $\square$
+
+**Definition 28.3 (Full and sparse coefficients).** In full support put
+
+$$
+d_1=c_4\overline c_1\,\overline c_2,\qquad
+d_2=d_1+c_3\overline c_1^{\,2},\qquad
+C_3=p_1p_2+A e^{i\phi _1}+B e^{i\phi _2},
+$$
+
+with $A=p_2\sqrt{p_1p_3}$, $B=\sqrt{p_1p_2p_3p_4}$, and
+
+$$
+\eta=\sqrt{\frac{p_1p_3}{p_2p_4}},\qquad
+\frac{d_2}{d_1}=1+\eta e^{-i\phi _2}.
+\tag{28.2}
+$$
+
+The orientation in (28.2) follows by dividing $c_3\overline c_1^{\,2}$ by $c_4\overline c_1\overline c_2$. In the balanced full case also write $D_0^{\rm f}=|d_1|^2=p_1p_2p_4$. In sparse support put
+
+$$
+d=c_4\overline c_1\,\overline c_2,\qquad
+e=c_2^2\overline c_1^{\,3},\qquad
+D_0=|d|^2=p_1p_2p_4,\qquad
+R_6=p_1p_2^{3/2}\sqrt{p_4},
+$$
+
+and $\phi=2\theta _1-3\theta _2+\theta _4$. The coefficients used below are
+
+$$
+Z=\mu d_2\overline d_1,\quad R=\mu|d_2|^2,\qquad
+Z_s=\mu d\overline e=\mu p_1R_6e^{i\phi},\quad R_s=\mu D_0.
+\tag{28.3}
+$$
+
+**Theorem 28.4 (Complete full pair density).** Label $a_0=00,a_1=01$ and $b_0=000,b_1=001,b_2=010$. Let $P=p_2+p_3+p_4$ and $Q=p_3+p_4$. In the support order
+
+$$
+a_0b_0\mid(a_0b_1,a_0b_2,a_1b_0)\mid(a_1b_1,a_1b_2),
+$$
+
+the noisy global-count density has the three blocks
+
+$$
+QP\quad\text{and}\quad
+\begin{pmatrix}
+Pp_2&P\overline C_3&\mu d_2\overline d_1\\
+PC_3&Pp_1&\mu|d_2|^2\\
+\overline\mu\,d_1\overline d_2&\overline\mu|d_2|^2&p_1Q
+\end{pmatrix}
+\quad\text{and}\quad
+p_1\begin{pmatrix}p_2&\overline C_3\\ C_3&p_1\end{pmatrix},
+\tag{28.4}
+$$
+
+with every omitted row, column and cross-block entry zero. In particular, the only nuisance-dependent entries are $Z,R$ and their conjugates.
+
+**Proof.** The nonzero local vectors are
+
+$$
+a_0=S^2x,\ a_1=c_1x,\qquad
+b_0=S^3x,\ b_1=c_2x,\ b_2=c_1Sx.
+$$
+
+The six joint vectors are
+
+$$
+\begin{array}{c|c|c}
+00|000&S^2x\otimes S^3x&0\\
+00|001&S^2x\otimes c_2x&1\\
+00|010&S^2x\otimes c_1Sx&1\\
+01|000&c_1x\otimes S^3x&1\\
+01|001&c_1x\otimes c_2x&2\\
+01|010&c_1x\otimes c_1Sx&2
+\end{array}
+$$
+
+where the last column is total tick count. Their diagonal norms are $PQ;Pp_2,Pp_1,p_1Q;p_1p_2,p_1^2$. The entry between the first two middle vectors is $P\overline C_3$, and its adjoint is $PC_3$; the last block similarly gives $p_1\overline C_3,p_1C_3$. For the middle first/third pair, the Gram product is
+
+$$
+\langle c_1x\otimes S^3x,S^2x\otimes c_2x\rangle
+=\langle c_1x,S^2x\rangle\langle S^3x,c_2x\rangle
+=d_2\overline d_1.
+$$
+
+For the middle second/third pair, the product is
+
+$$
+\langle c_1x,S^2x\rangle\langle S^3x,c_1Sx\rangle
+=d_2\overline d_2=|d_2|^2.
+$$
+
+Both pairs have $\Delta m_1=-1$, hence acquire $\mu$ by (28.1); their adjoints acquire $\overline\mu$. There are no other supported vectors or equal-total-count pairs, so (28.4) specifies the whole density. $\square$
+
+**Theorem 28.5 (Complete sparse pair density).** Here $a_0=00,a_1=01$ and $b_0=0000,b_1=0010,b_2=0100,b_3=0101$. Put $s=1-p_1=p_2+p_4$. In the support order
+
+$$
+a_0b_0\mid(a_0b_1,a_0b_2,a_1b_0)\mid(a_0b_3,a_1b_1,a_1b_2)\mid a_1b_3,
+$$
+
+the complete noisy blocks are
+
+$$
+sp_4,
+$$
+
+$$
+\begin{pmatrix}
+sp_2&sp_1p_2&\mu D_0\\
+sp_1p_2&p_1s^2&\mu D_0\\
+\overline\mu D_0&\overline\mu D_0&p_1p_4
+\end{pmatrix},
+\tag{28.5}
+$$
+
+$$
+\begin{pmatrix}
+sp_1^2&\mu d\overline e&\mu p_1D_0\\
+\overline\mu\,\overline d e&p_1p_2&p_1^2p_2\\
+\overline\mu p_1D_0&p_1^2p_2&p_1^2s
+\end{pmatrix},
+\tag{28.6}
+$$
+
+and $p_1^3$, respectively. Every unlisted entry is zero. The entry $R_s=\mu D_0$ is the $(a_0b_1,a_1b_0)$ entry of (28.5), while $Z_s=\mu d\overline e$ is the $(a_0b_3,a_1b_1)$ entry of (28.6).
+
+**Proof.** The second-window vectors are $c_4e_4,c_2Sx,c_1S^2x,c_1^2x$. Their untwirled Gram matrix is exactly
+
+$$
+\begin{pmatrix}p_4&d&d&0\\
+\overline d&p_2&p_1p_2&e\\
+\overline d&p_1p_2&p_1s&p_1d\\
+0&\overline e&p_1\overline d&p_1^2\end{pmatrix}.
+$$
+
+The eight joint vectors, with their total counts, are
+
+$$
+\begin{array}{c|c|c}
+00|0000&S^2x\otimes c_4e_4&0\\
+00|0010&S^2x\otimes c_2Sx&1\\
+00|0100&S^2x\otimes c_1S^2x&1\\
+00|0101&S^2x\otimes c_1^2x&2\\
+01|0000&c_1x\otimes c_4e_4&1\\
+01|0010&c_1x\otimes c_2Sx&2\\
+01|0100&c_1x\otimes c_1S^2x&2\\
+01|0101&c_1x\otimes c_1^2x&3.
+\end{array}
+$$
+
+The three count-one diagonals are $sp_2,p_1s^2,p_1p_4$. The first/second pair in the count-one block uses the local entry $p_1p_2$, giving $sp_1p_2$; their cross-window pairs use $d\overline d=D_0$, giving $\mu D_0$. The count-two diagonal entries are $sp_1^2,p_1p_2,p_1^2s$. Its first/second pair is $d\overline e$, its first/third pair is $d(p_1\overline d)=p_1D_0$, and its second/third pair is $p_1(p_1p_2)=p_1^2p_2$. Both the first/second and first/third pairs in this last block have $\Delta m_1=-1$, so these two cross-window entries carry $\mu$, while the second/third pair has $\Delta m_1=0$. The count-zero and count-three norms are $sp_4$ and $p_1^3$. This accounts for every supported vector and proves (28.5)–(28.6). $\square$
+
+**Theorem 28.6 (Exact inversion and all phase/noise degeneracies).** For full-support inversion, assume $\mu\ne0$. If $Z\ne0$, the full-support affine orbit is recovered from $C_3,Z,R$ by
+
+$$
+\frac RZ=\overline{\frac{d_2}{d_1}}=1+\eta e^{i\phi _2},\qquad
+e^{i\phi _2}=\frac{(R/Z)-1}{\eta},\qquad
+e^{i\phi _1}=\frac{C_3-p_1p_2-B e^{i\phi _2}}A .
+\tag{28.7}
+$$
+
+If $Z=0$ under the same nonzero-moment assumption, then $d_2=0$; this occurs exactly in the balanced case $\eta=1$ and $e^{i\phi _2}=-1$, and the second formula is replaced by that known value while the last formula remains valid. When $d_2\ne0$, $\mu=R/|d_2|^2$ is also recovered; at $d_2=0$ the orbit is identified but $\mu$ is not.
+
+In sparse support, for every $\mu\ne0$,
+
+$$
+e^{i\phi}=\frac{D_0}{p_1R_6}\frac{Z_s}{R_s},\qquad
+\mu=\frac{R_s}{D_0}.
+\tag{28.8}
+$$
+
+The nuisance value in (28.7)–(28.8) need not be the same at two compared realization points.
+
+**Proof.** Equation (28.2) gives $d_2/d_1=1+\eta e^{-i\phi _2}$, so $R/Z=\overline{d_2/d_1}$. Substitution into $C_3$ gives the first orbit coordinate. Because $d_1\ne0$ and $\mu\ne0$, the identity $Z=\mu d_2\overline{d_1}$ gives $Z=0$ exactly when $d_2=0$. This case then follows from the minimum modulus of $1+\eta e^{-i\phi _2}$. Equation (28.3) gives (28.8) because $d,e,D_0,R_6$ never vanish for positive $p$. $\square$
+
+When $\mu=0$, (28.1) kills every cross-window entry with $\Delta m_1\ne 0$. In full support the result is the product of the separately count-twirled local marginals, retaining the within-second-window coefficient $C_3$. At uniform $p_k=1/4$, the character pairs $(e^{i\phi _1},e^{i\phi _2})=(1,i)$ and $(i,1)$ have the same $C_3=(2+i)/16$ and are distinct affine orbits. Some individual full points remain separable by $C_3$, so no pointwise all-failure statement is made. In sparse support every phase-bearing entry in (28.5)–(28.6) is killed, so the whole pair is phase blind. These are fixed-batch statements and do not extend to longer windows.
+
+**Proposition 28.7 (Finite-bit equal-marginal witness).** Let $B$ be uniform on $\{0,\pi\}$. Under the common law $(\beta _1,\beta _2)=(B,B)$, $\mu=1$; under independent fair bits $\beta _1,\beta _2$, $\mu=0$. Every single-window noisy marginal is the same under these two laws: it is the parity dephasing of the corresponding local density. The joint densities differ whenever $d_2\ne0$, since the full entry $\mathsf Q[a_0b_2,a_1b_0]$ is $|d_2|^2$ in the common law and zero in the independent law. In sparse support, $d\overline e\ne0$ and the entry $\mathsf Q[a_0b_3,a_1b_1]$ gives the same distinction. Equal local marginals therefore do not imply a product joint state.
+
+**Proof.** The one-window law averages the same two parity rotations in either construction. The length-two and full length-three states have only counts zero and one. In the sparse length-four state the only possible count-zero/count-two entry is $\Omega_4[0000,0101]=0$. Therefore parity dephasing equals the local count twirl in both cases, including the marginals after the common global twirl. The relative bit is always zero in the common law and is uniform in the independent law, giving the stated $\mu$. The entries follow from (28.4) and (28.6). $\square$
+
+**Definition 28.8 (Fixed-batch measurement classes).** For the iid state $\mathsf Q_\pi(\theta)^{\otimes N}$, let $N_{\rm all}(v,\varepsilon,\delta)$ be the least pair count admitting a uniform-risk estimator with any collective POVM on the retained flags. Let $N_{\rm term}$ be the corresponding minimum when each pair is separately measured by terminal total-count-preserving effects, with settings independent of the actual device except for parameter-independent adaptation to earlier terminal transcripts. Both classes exclude all preparation/noise records, within-window interventions and end-memory readout. Thus $N_{\rm all}\le N_{\rm term}$. The following explicit finite-setting protocol upper-bounds $N_{\rm term}$; the whole-state testing lower bound applies to $N_{\rm all}$.
+
+**Theorem 28.9 (Finite legal upper laws).** For a coefficient $q=\langle u|\rho|v\rangle$, with $u,v$ in one count sector, use
+
+$$
+X=|u\rangle\langle v|+|v\rangle\langle u|,\qquad
+Y=i|u\rangle\langle v|-i|v\rangle\langle u| .
+$$
+
+Their three outcomes $+1,-1,0$ have signed means $2\operatorname{Re}q$ and $2\operatorname{Im}q$. Full support uses the two quadratures for $C_3,Z,R$, hence six retained settings and eighteen labels; sparse support uses those for $Z_s,R_s$, hence four settings and twelve labels. For $C_3$, use the corresponding second-window quadrature lifted by the identity on the first window; its mean is the actual marginal coefficient. Write $L=6$ or $4$ for the number of scalar settings. If settings are uniform and retained, bounded importance scores give, simultaneously, for the $L/2$ complex coefficients,
+
+$$
+\Pr\left[\max_\ell|\widehat q_\ell-q_\ell|>\tau\right]\le\delta,\qquad
+\tau=C_L\sqrt{\frac{\log(4L/\delta)}N},
+\tag{28.10}
+$$
+
+where $C_L$ depends only on $L$. The statistic is built from actual retained-setting masses, not conditional success probabilities.
+
+**Proof.** For a scalar setting $j$, the per-trial score is $W_j=(L/2)o\mathbf1_{\{S=j\}}$, with $o\in\{-1,0,1\}$. Directly taking $\operatorname{Tr}(\rho X)$ and $\operatorname{Tr}(\rho Y)$ gives twice the real and imaginary parts with the displayed sign. The score has the required mean and lies in $[-L/2,L/2]$. The log moment-generating function of a centered bounded variable has second derivative equal to its variance under exponential tilting, at most $L^2/4$; integrating twice gives $\log\mathbb E e^{a(W_j-\mathbb EW_j)}\le a^2L^2/8$. Chernoff optimization and a union bound with scalar tolerance $\tau/\sqrt2$ give failure at most $2L\exp(-N\tau^2/L^2)$. Thus (28.10) holds, for example with $C_L=L$. This is the bounded independent-summand method of Hoeffding, *Probability Inequalities for Sums of Bounded Random Variables*, JASA 58 (1963), 13–30, with normalization derived here. All projectors commute with total count, including the lifted marginal ones. $\square$
+
+**Theorem 28.10 (Constructive rates and safe inverses).** There are $p$-dependent constants $c_p,C_p,\varepsilon _0(p)>0$ such that, for $0<\varepsilon<\varepsilon _0(p)$, the following upper bounds hold.
+
+1. In sparse support, use $\widehat u=\operatorname{circ}((D_0/(p_1R_6))\widehat Z_s/\widehat R_s)$, where $\operatorname{circ}(z)=z/|z|$ for $z\ne0$ and $\operatorname{circ}(0)=1$. If $|\widehat R_s|<vD_0/2$, define $\widehat u=1$ without dividing. On the event (28.10), this branch is absent and $d_{\rm ch}\le\varepsilon$ whenever $\tau\le c_pv\varepsilon$. Hence
+
+$$
+N\le C_pv^{-2}\varepsilon^{-2}\log(C_p/\delta).
+\tag{28.11}
+$$
+
+2. In full unbalanced support, put $\kappa=|\sqrt{p_1p_2p_4}-p_1\sqrt{p_3}|>0$. The exact denominator obeys $|d_2|\ge\kappa$. Estimate $R/Z$, project $((\widehat R/\widehat Z)-1)/\eta$ to the circle, and set $\widehat u_1=\operatorname{circ}((\widehat C_3-p_1p_2-B\widehat u_2)/A)$. If $|\widehat Z|<v\kappa|d_1|/2$, define the projected second coordinate to be $1$ and continue with the same formula. On (28.10), this branch is absent and both chordal errors are at most $\varepsilon$ whenever $\tau\le c_pv\varepsilon$. Thus (28.11) holds for unbalanced full support.
+
+3. In full balanced support, let $d=|d_1|=\sqrt{p_1p_2p_4}$, $q_2=1+e^{i\phi _2}$, and set $a_p=1/(32(1+B/A))$ and $T=a_pvD_0^{\rm f}\varepsilon=a_pvd^2\varepsilon$. If $|\widehat Z|\le T$, set $\widehat u_2=-1$. If $|\widehat Z|>T$, use $((\widehat R/\widehat Z)-1)$ and circle projection; a zero estimated denominator is assigned to the first branch. On (28.10), the first branch implies $|u_2+1|\le O_p(\varepsilon)$, and the second implies $|\widehat u_2-u_2|\le O_p(\tau/(vd^2\varepsilon))$. The projected $C_3$ formula used in case 2 gives $\widehat u_1$. Choosing $\tau\le c_pv\varepsilon^2$ makes both errors at most $\varepsilon$, so
+
+$$
+N\le C_pv^{-2}\varepsilon^{-4}\log(C_p/\delta).
+\tag{28.12}
+$$
+
+The threshold is an approximate small-signal branch and is never an exact-zero test.
+
+**Proof.** For every unit $u$, radial projection with the stated zero convention obeys $|\operatorname{circ}(z)-u|\le2|z-u|$. If $|\zeta|<|z|$, the exact ratio estimate is
+
+$$
+\left|\frac{r+\xi}{z+\zeta}-\frac rz\right|
+\le\frac{|\xi|+|r/z||\zeta|}{|z+\zeta|}.
+$$
+
+The sparse margin is $|R_s|\ge vD_0$. The full unbalanced margin is $|Z|\ge v|d_1|\kappa$, and $|R/Z|\le1+\eta$. Choose the positive $p$-dependent score-error constant small enough that the empirical denominators exceed half these margins. The ratio estimate and projection then bound the second coordinate by a chosen small multiple of $\varepsilon$. In full support the first-coordinate error is at most $2(\tau+B|\widehat u_2-u_2|)/A$. These inequalities prove cases 1 and 2, including total estimators outside the confidence event.
+
+For the balanced case take $\varepsilon\le1$ and
+
+$$
+c_p\le\min\left\{\frac{a_pd^2}{2},\frac{a_pd^2}{48(1+B/A)},\frac A{16}\right\},
+\qquad \tau\le c_pv\varepsilon^2 .
+$$
+
+On the small branch, $|Z|\le T+\tau$ and $|Z|=|\mu|d^2|u_2+1|$, so
+
+$$
+|\widehat u_2-u_2|\le 2a_p\varepsilon.
+$$
+
+On the large branch, $|\widehat Z|>T$ and $\tau\le T/2$, so the true $Z$ is nonzero. Since $|R/Z|\le2$, the ratio estimate and projection give
+
+$$
+|\widehat u_2-u_2|
+\le\frac{6\tau}{T}
+\le\frac{\varepsilon}{8(1+B/A)}.
+$$
+
+The small-branch second-coordinate bound is even smaller. In either branch the projected first coordinate has error at most $2\tau/A+2(B/A)|\widehat u_2-u_2|\le\varepsilon$. The second-coordinate error is also at most $\varepsilon$. Substituting (28.10) proves (28.11)–(28.12); the required sample counts are sufficient integer ceilings. $\square$
+
+**Lemma 28.11 (Uniform testing bound without relative entropy).** On the finite actual word support, the local Gram vectors are linearly independent for every phase: in full support use the successive earliest coordinates of $x,Sx,S^3x$ together with the two length-two vectors; in sparse support use $x,Sx,S^2x,e_4$ together with the two length-two vectors. Consequently there is $\lambda_p>0$ such that every compared noisy pair state is at least $\lambda_p I$ on its common support. If $\rho,\sigma$ are two such states, $\Delta=\rho-\sigma$, and $N\|\Delta\|_2^2\le 2\lambda_p$, then
+
+$$
+T(\rho^{\otimes N},\sigma^{\otimes N})
+\le\frac{\sqrt N\,\|\Delta\|_2}{2\sqrt{\lambda_p}},\qquad
+T=\frac12\|\cdot\|_1 .
+\tag{28.13}
+$$
+
+Thus the equal-prior Helstrom error is at least $(1-T)/2$, uniformly over all $\delta\le\delta _0<1/4$ whenever the right side is chosen smaller than $1-2\delta_0$.
+
+**Proof.** The stated earliest nonzero coordinates give independence; compactness of the phase torus gives a positive minimum eigenvalue for each local Gram matrix. Product Gram matrices have the product lower bound on the full six- or eight-word support. Count rotations preserve that bound, and both the common twirl and the angle average are convex unitary averages, so the same bound holds for the actual noisy states on that support. The law may be any probability measure, including the atomic laws in the lower-bound construction.
+
+Let $X=\sqrt\rho-\sqrt\sigma$. The exact Sylvester identity is
+
+$$
+\sqrt\rho\,X+X\sqrt\sigma=\rho-\sigma .
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz and $\rho,\sigma\ge\lambda_pI$ give $\|X\|_2\le\|\Delta\|_2/(2\sqrt{\lambda_p})$. Since
+
+$$
+\operatorname{Tr}\sqrt\rho\sqrt\sigma=1-\frac12\|X\|_2^2,
+$$
+
+the root fidelity $F_r(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$ obeys $F_r\ge1-\|\Delta\|_2^2/(8\lambda_p)$. Root fidelity tensorizes. Bernoulli's inequality and the Fuchs–van de Graaf convention
+
+$$
+1-F_r\le T\le\sqrt{1-F_r^2}
+$$
+
+give (28.13) when the displayed smallness condition holds. Helstrom's equal-prior formula is $P_{\rm err}^{\rm opt}=(1-T)/2$. This argument uses no relative-entropy, chi-square or concentration inequality. $\square$
+
+**Theorem 28.12 (Sharp fixed-risk minimax rates).** Let $N_\star$ denote either $N_{\rm all}$ or $N_{\rm term}$ from Definition 28.8, for the uniform orbit loss in Definition 28.1. Fix any $\delta _0\in(0,1/4)$. For sufficiently small $\varepsilon>0$, uniformly for $0<\delta\le\delta _0$,
+
+$$
+N_\star\ge c_{p,\delta _0}v^{-2}\varepsilon^{-2}
+$$
+
+for sparse and unbalanced full support, while balanced full support obeys
+
+$$
+N_\star\ge c_{p,\delta _0}v^{-2}\varepsilon^{-4}.
+$$
+
+Together with (28.11)–(28.12), the upper bounds are $O_p(v^{-2}\varepsilon^{-2}\log(C_p/\delta))$ in the first two cases and $O_p(v^{-2}\varepsilon^{-4}\log(C_p/\delta))$ in the balanced case. The lower constants are uniform over all smaller $\delta$; the logarithm is retained explicitly in the constructive upper bounds. At each fixed risk $\delta\in(0,1/4)$, both measurement classes therefore have $\Theta_{p,\delta}(v^{-2}\varepsilon^{-2})$ cost in the sparse and unbalanced cases, and $\Theta_{p,\delta}(v^{-2}\varepsilon^{-4})$ worst-case cost at balance.
+
+**Proof.** Every displayed nuisance value has modulus $v$ and is realizable as the first moment of a relative-angle law on the circle (a two-point law suffices); an independent common angle can be added without changing it. For balanced full support choose, for small $t>0$,
+
+$$
+\phi _2^+=\pi+t,\quad \phi _2^-=\pi-t,\quad
+\sin\alpha(t)=\frac BA\sin t,\quad
+\phi _1^+=\alpha(t),\quad\phi _1^-=-\alpha(t).
+$$
+
+Then $C_3^+=C_3^-$. With $q_+=1-e^{-it}$, $q_-=1-e^{it}$, choose $\mu _+=v$ and $\mu _-=-ve^{-it}=v q_+/q_-$. The full blocks (28.4) agree except for $R$, and
+
+$$
+|R_+-R_-|=v|d_1|^2(2-2\cos t)|1+e^{-it}|=O_p(vt^2).
+$$
+
+The orbit separation is at least $c_pt$. Lemma 28.11 and nearest-orbit decoding therefore give $N=\Omega_{p,\delta _0}(v^{-2}t^{-4})$ . Take $t=3\varepsilon$ with a $p$-dependent cutoff ensuring the arcsine branch is defined and $2\sin t>2\varepsilon$. This proves the balanced lower bound, including $v=1$.
+
+For unbalanced full support set $\phi _2^+=t,\phi _2^-=-t$, choose $\phi _1^+=-\arcsin((B/A)\sin t)$, $\phi _1^-=+\arcsin((B/A)\sin t)$, and put
+
+$$
+q_\pm=1+\eta e^{\mp it},\qquad
+\mu _+=v,\qquad \mu _-=v q_+/q_- .
+$$
+
+The two $C_3$'s and $Z$'s agree, while $R_+-R_-=O_p(vt)$; the orbit separation is $c_pt$. Lemma 28.11 gives the stated $v^{-2}\varepsilon^{-2}$ lower bound.
+
+For sparse support use $\phi ^+=t,\phi ^-=-t$ and the same $\mu=v$. The $R_s$'s agree and $Z_s^+-Z_s^-=2ivp_1R_6\sin t$, while (28.5)–(28.6) show that all other entries are fixed or conjugate copies. Again $\|\Delta\|_2=O_p(vt)$, and the testing-to-estimation reduction gives the lower bound. Any estimator with failure at most $\delta _0$ would test two orbit points separated by more than $2\varepsilon$ with error at most $\delta _0$, contradicting Lemma 28.11 below the displayed sample orders. $\square$
+
+**Theorem 28.13 (Charged resources and measurement-domain relation).** The full $(2,3)$ batch uses two actual heralds, at most $5+5$ monitored applications, five coherent applications, five stored flags of joint dimension $2^5$, six settings, eighteen setting/outcome labels, two waiting-time records with five values each, one retained setting register and one three-outcome pointer per pair. A sufficient serial logical use count is $(5+2)+(5+3)=15$. The sparse $(2,4)$ batch has the corresponding counts $5+5$, six coherent applications, joint flag dimension $2^6$, four settings, twelve labels and sufficient use count $(5+2)+(5+4)=16$. Each window controller may use the states $\mathrm{wait},\mathrm{captured}_0,\ldots,\mathrm{captured}_n,\mathrm{done}$, so the controller resources are separate from the source memory, flags, setting registers, pointers and records. The joint noise/controller record is also separate. The serial source memory has dimension five; a parallel realization has two five-level memories of joint dimension twenty-five and sum of local level counts ten. The herald detector, controllers, storage and discard operations are additional apparatus. For $N$ trials the accounting includes $2N$ heralds, $N$ joint-noise draws, $N$ retained setting/outcome labels and at most $15N$ or $16N$ instrument uses. Herald and noise records, if retained, incur separate storage and remain inaccessible to the estimator. The visibility promise and iid preparation are model hypotheses, not a method for acquiring them. No universal hardware cost for an arbitrary supplied $\pi$ or optimal physical implementation is asserted.
+
+The lower bounds allow all collective POVMs on all retained flags and therefore dominate the legal finite-setting upper measurement class, whose effects commute with the total count and whose settings are chosen independently of the device.
+
+**Proof.** The herald bound in §25 prepares $xx^*$ from any input in at most five monitored applications. Reheralding before each window supplies the actual product; the coherent lengths and setting measurements then give the stated counts. The pointer coupling for each three-outcome spectral measurement preserves every count sector. Lemma 28.11 compares arbitrary collective measurements, so restricting the upper protocol to the displayed legal POVMs cannot weaken its validity. $\square$
+
+**Proposition 28.14 (Source conventions and boundaries).** The uniform count projection used in (28.1) is the $U(1)$ twirl $\int_0^{2\pi}d\varphi\,U(\varphi)\rho U(\varphi)^*/(2\pi)$, which projects onto equal-charge blocks as in Bartlett–Rudolph–Spekkens, quant-ph/0610030v3, §II.B, Eqs. (7)–(10). Marvian–Spekkens, arXiv:1312.0680v2, Eq. (16), gives tensor-mode convolution; Eq. (17) writes a weighted twirl $\sigma=\int d\theta\,p(\theta)U(\theta)\rho U(\theta)^\dagger$; Eq. (18) gives $\sigma^{(k)}=p_{-k}\rho^{(k)}$ with $p_k=\int d\theta\,p(\theta)e^{-ik\theta}$. The displayed entrywise integral extends its probability-density formula to arbitrary probability measures and gives the signs and conjugation in (28.1). Fuchs–van de Graaf, “Cryptographic distinguishability measures for quantum-mechanical states,” arXiv:quant-ph/9712042v2, Theorem 1, Eq. (46), is used only with root fidelity and $T=\tfrac12\|\rho-\sigma\|_1$; it supplies the displayed fidelity/trace conversion, not a chi-square, relative-entropy or concentration estimate. Its Proposition 1, Eq. (17), states the equal-prior testing formula with attribution to Helstrom, *Quantum Detection and Estimation Theory*, pp. 106–108.
+
+The fixed source §§23–27 supplies the coherent reset, actual serial product, affine character lattice, global-count blocks and quadrature pointers consumed in the proofs above. The primary weighted-twirl and reference-frame passages do not state the present two-window nuisance model or its minimax rates.
+
+The inverse at $d_2=0$ is nonregular and is handled by the balanced threshold in Theorem 28.10. The nuisance phase law may differ between compared points, and the minimax family is Cartesian in $(\theta,\pi)$. Unknown $p$, unknown $v$, noisy correlated repeats beyond the iid law, adaptive phase feedback, beta records used as side information, longer windows, intermediate interventions, memory readout and native continuous paths are outside this theorem. Mixed-state capacities and stationary continuous-path rates have different carriers, measurements and resources. No assertion here transfers their sample orders. A pointwise SLD upper bound is a different interface and is not used to infer the global nuisance rates.
+
+If the nonzero complex $\mu$ is calibrated and supplied, full support instead has the direct inverse
+
+$$
+u_2=\overline{\frac{Z/(\mu|d_1|^2)-1}{\eta}}.
+$$
+
+The finite-setting score error $O_p(v\varepsilon)$ now gives $O(\varepsilon)$ character error uniformly also at balance, followed by the same projected $C_3$ reconstruction. Thus $O_p(v^{-2}\varepsilon^{-2}\log(1/\delta))$ pairs suffice for this larger information class. Knowing only $|\mu|$, even when it equals one, does not remove the two unknown-phase nuisance branches in the balanced lower bound. This explains precisely which added calibration changes the fourth-order obstruction; it supplies no calibration procedure or cost. $\square$
+
+## 追加锚（本行以下为增补区）
+## 29. An internal noise reference restores quadratic precision with two three-step renewal windows
+
+**Definition 29.1 (Actual source, unknown relative noise and the estimation task).** Fix known numbers $p_1,p_2,p_3,p_4>0$ with sum one. On the orthonormal memory basis $e_0,\ldots,e_4$ put
+
+$$
+c_k=\sqrt{p_k}e^{i\theta_k},\qquad
+x=c_4e_0+c_3e_1+c_2e_2+c_1e_3,\qquad
+Se_j=e_{j+1}\ (j<4),\quad Se_4=0,\qquad J=xe_4^\dagger.
+\tag{29.1}
+$$
+
+The internal vector $\theta\in\mathbb T^4$, $\mathbb T=\mathbb R/(2\pi\mathbb Z)$, is fixed throughout the experiment. A window starts immediately after its own actual monitored tick. The two monitored branches are $M\mapsto SMS^\dagger$ and $M\mapsto JMJ^\dagger$. Subsequent coherent uses apply the same stable accessible isometry
+
+$$
+V\psi=S\psi\otimes|0\rangle+J\psi\otimes|1\rangle.
+$$
+
+All chronological flags are retained. No inaccessible system distinguishes the coherent histories; there is no intermediate intervention and no terminal memory observation. All preparation records are ignored by the estimator. For $w=w_1\cdots w_n$, $K_w=K_{w_n}\cdots K_{w_1}$ with $K_0=S,K_1=J$, define
+
+$$
+\Omega_n[w,z]=\langle K_zx,K_wx\rangle,\qquad
+Q_n|w\rangle=|w|_1|w\rangle,\qquad U_n(\beta)=e^{i\beta Q_n}.
+\tag{29.2}
+$$
+
+Inner products are conjugate-linear in their first argument. For an ordered pair $(a,b)$, the two separately reheralded windows receive $U_a(\beta_1)$ and $U_b(\beta_2)$. The same unknown joint probability measure $\pi$ on $\mathbb T^2$ is used in every pair class. Its draw is independent of the flags, preparations and measurement settings, and fresh draws are iid between trials. Write
+
+$$
+\mu=\int e^{i(\beta_2-\beta_1)}\,d\pi,\qquad
+\rho_{ab}(\theta,\pi)=\mathcal D_{a+b}\left(
+\int U_a(\beta_1)\Omega_aU_a(\beta_1)^\dagger
+\otimes U_b(\beta_2)\Omega_bU_b(\beta_2)^\dagger\,d\pi\right),
+\tag{29.3}
+$$
+
+where $\mathcal D_{a+b}$ projects onto equal **total** tick counts. The statistical family has a known promise $0<v\le|\mu|\le1$. Exact-law statements also allow $\mu=0$. The nuisance law may differ between parameter points, but within either point it is fixed and common to all ordered pair classes. Its realized angles and all noise records are inaccessible. No calibrated external phase, third window, longer window or feedback is supplied.
+
+The target coordinates and loss are
+
+$$
+\begin{aligned}
+\phi_1&=\theta_1-2\theta_2+\theta_3,& u_1&=e^{i\phi_1},\\
+\phi_2&=\theta_1-\theta_2-\theta_3+\theta_4,& u_2&=e^{i\phi_2},\\
+d_{\rm ch}(u,\widehat u)&=\max\{|u_1-\widehat u_1|,|u_2-\widehat u_2|\}.
+\end{aligned}
+\tag{29.4}
+$$
+
+Uniform risk means $\Pr_{\theta,\pi}[d_{\rm ch}(u,\widehat u)\le\varepsilon]\ge1-\delta$ for every allowed $(\theta,\pi)$. Let $N_{33}^{\rm all}$ be the minimum pair count for this risk when arbitrary collective POVMs on the entire actual density $\rho_{33}^{\otimes N}$ are allowed. Let $N_{33}^{\rm term}$ be the minimum for a fixed iid experiment measuring each pair by terminal effects commuting with its total count, with its independently drawn setting retained. Thus $N_{33}^{\rm all}\le N_{33}^{\rm term}$. Every outcome and setting is counted; there is no postselection or use of herald records as side information.
+
+These are the source and access assumptions of §§23–27, with the iid unknown relative-noise interface of Definition 28.1. The results below are handwritten mathematical deductions in this specified family. Their assertion is conditional on the supplied coherent access and independence assumptions, and carries no Lean or physical-realization certificate.
+
+**Theorem 29.2 (Complete three-by-three density and an actual uniform spectral gap).** Put
+
+$$
+\begin{gathered}
+h=p_3+p_4,\qquad s=1-p_1,\qquad
+A=p_2\sqrt{p_1p_3},\qquad B=\sqrt{p_1p_2p_3p_4},\\
+d_1=c_4\overline c_1\overline c_2,\qquad
+d_2=d_1+c_3\overline c_1^{\,2},\qquad D=|d_1|^2=p_1p_2p_4>0,\\
+\eta=\sqrt{\frac{p_1p_3}{p_2p_4}}>0,\qquad
+q=\frac{d_2}{d_1}=1+\eta\overline u_2,\qquad
+C=C_3=p_1p_2+A u_1+B u_2,\\
+G=\begin{pmatrix}p_2&\overline C\\C&p_1\end{pmatrix},\qquad
+K=\begin{pmatrix}|d_1|^2&d_2\overline d_1\\d_1\overline d_2&|d_2|^2\end{pmatrix}
+=D\begin{pmatrix}1&q\\\overline q&|q|^2\end{pmatrix}.
+\end{gathered}
+\tag{29.5}
+$$
+
+Let $u_0=000,u_1^{\rm w}=001,u_2^{\rm w}=010$ denote words; word superscripts distinguish them from the target characters. In the joint support order
+
+$$
+(u_0,u_0)\ \big|\
+((u_0,u_1^{\rm w}),(u_0,u_2^{\rm w}),(u_1^{\rm w},u_0),(u_2^{\rm w},u_0))
+\ \big|\
+((u_1^{\rm w},u_1^{\rm w}),(u_1^{\rm w},u_2^{\rm w}),
+ (u_2^{\rm w},u_1^{\rm w}),(u_2^{\rm w},u_2^{\rm w})),
+$$
+
+the whole density is
+
+$$
+\boxed{\rho_{33}=h^2\ \oplus\
+\begin{pmatrix}hG&\mu K\\\overline\mu K&hG\end{pmatrix}
+\ \oplus\ (G\otimes G).}
+\tag{29.6}
+$$
+
+All other rows, columns and cross-count blocks in the six-flag space of dimension $64$ are zero. In particular,
+
+$$
+\begin{aligned}
+P&=\rho_{33}[(u_0,u_1^{\rm w}),(u_1^{\rm w},u_0)]=\mu D,\\
+W&=\rho_{33}[(u_0,u_1^{\rm w}),(u_2^{\rm w},u_0)]=\mu d_2\overline d_1=\mu Dq.
+\end{aligned}
+\tag{29.7}
+$$
+
+The terminal marginal coefficient in either window is $C$. The entire state depends on $\pi$ only through $\mu$ and $\overline\mu$.
+
+On its fixed nine-word support, for every phase and every probability measure $\pi$,
+
+$$
+\rho_{33}\ge\lambda_p I_9,\qquad
+\lambda_p=(p_1p_2p_4^3)^2>0.
+\tag{29.8}
+$$
+
+The bound is independent of $v$ and remains valid at $|\mu|=1$ and $\mu=0$.
+
+**Proof.** Normalization gives $S^\dagger S+J^\dagger J=I$, and the first-tick maps from any memory operator $M$ are
+
+$$
+\mathcal H_a(M)=JS^aM(S^\dagger)^aJ^\dagger
+=xx^\dagger\langle e_{4-a},Me_{4-a}\rangle\quad(0\le a\le4),\qquad
+\sum_{a=0}^4\mathcal H_a(M)=xx^\dagger\operatorname{Tr}M.
+\tag{29.9}
+$$
+
+Because $S^5=0$, every waiting path is included and the tick occurs in at most five monitored applications. For any old retained system $F$ entangled with memory $M$,
+
+$$
+\left(\operatorname{id}_F\otimes\sum_a\mathcal H_a\right)(\zeta_{FM})
+=\operatorname{Tr}_M\zeta_{FM}\otimes xx^\dagger.
+\tag{29.10}
+$$
+
+This follows by expanding $\zeta$ in the memory matrix units: the sum keeps all diagonal units with the same reset and kills off-diagonal units. Coherent generation from the new reset therefore leaves the old flag marginal unchanged and supplies its product with $\Omega_n$. In particular, serially reheralding gives the actual product in (29.3), even when a separately retained waiting-time record correlates with old flags. The latter record must be averaged over, as the definition requires. This rederives the replacement premise of Theorem 27.2 rather than inferring a product from equal marginals.
+
+The complete nonzero local history vectors through length three are
+
+$$
+\begin{array}{c|c}
+\text{word}&K_wx\\\hline
+0&Sx\\
+00&S^2x=c_4e_2+c_3e_3+c_2e_4\\
+01&c_1x\\
+000&S^3x=c_4e_3+c_3e_4\\
+001&c_2x\\
+010&c_1Sx.
+\end{array}
+\tag{29.11}
+$$
+
+All omitted vectors vanish because $Jx=0$ and the next admissible tick must be separated by at least one zero. Taking their actual Gram entries gives
+
+$$
+\Omega_1=|0\rangle\langle0|,\qquad
+\Omega_2=\begin{pmatrix}s&d_2\\\overline d_2&p_1\end{pmatrix},\qquad
+\Omega_3=\begin{pmatrix}h&d_1&d_2\\\overline d_1&p_2&\overline C\\\overline d_2&C&p_1\end{pmatrix}.
+\tag{29.12}
+$$
+
+For example,
+
+$$
+\begin{aligned}
+\Omega_3[000,001]&=\overline c_2\langle x,S^3x\rangle=c_4\overline c_1\overline c_2,\\
+\Omega_3[000,010]&=\overline c_1\langle Sx,S^3x\rangle
+=c_4\overline c_1\overline c_2+c_3\overline c_1^{\,2},\\
+\Omega_3[010,001]&=c_1\overline c_2\langle x,Sx\rangle\
+&=p_1p_2+c_1c_3\overline c_2^{,2}+c_1c_4\overline c_2\overline c_3
+=p_1p_2+A u_1+B u_2.
+\end{aligned}
+$$
+
+Division of the second summand of $d_2$ by $d_1$ gives $\eta e^{-i\phi_2}$ with the displayed conjugation. These local entries are credited antecedents (27.9)–(27.10), explicitly recomputed here for the new consumer.
+
+For a row $(w,z)$ and column $(w',z')$, the rotations multiply the product entry by
+
+$$
+\int e^{i[\beta_1(|w|_1-|w'|_1)+\beta_2(|z|_1-|z'|_1)]}\,d\pi.
+$$
+
+The total twirl deletes the entry unless the two differences sum to zero. Every supported local count is zero or one. At zero transfer the factor is one, at first-window transfer $-1$ it is $\mu$, and at transfer $+1$ it is $\overline\mu$. This proves the arbitrary-measure version of the mode rule used in Theorem 28.2. The total-count-zero block is $h^2$. The two diagonal parts of the count-one block are $hG$. Its cross entry in row $(u_0,u_i^{\rm w})$, column $(u_j^{\rm w},u_0)$ is $\mu d_j\overline d_i$, so the cross matrix is $\mu\overline d\,d^{\mathsf T}=\mu K$, with $d=(d_1,d_2)^{\mathsf T}$. At count two, both local indices lie in $G$ and no count transfer occurs, giving $G\otimes G$. These exhaust the nine actual words. The trace is $(h+p_1+p_2)^2=1$. Partial trace over either window gives the local count twirl, so its $(010,001)$ coefficient is $C$.
+
+For an explicit spectral gap, assemble the two or three history vectors as columns of a matrix $B_n$. The matrix $\Omega_n$ is the transpose of $B_n^\dagger B_n$ and has the same eigenvalues. In $B_2$, the minor on memory rows $e_0,e_2$ has determinant $-c_1c_4^2$. In $B_3$, the minor on rows $e_0,e_1,e_3$, with column order in (29.11), has determinant $c_1c_2c_4^3$. Cauchy–Binet therefore gives
+
+$$
+\det\Omega_2\ge p_1p_4^2=:\ell_2>0,\qquad
+\det\Omega_3\ge p_1p_2p_4^3=:\ell_3>0.
+\tag{29.13}
+$$
+
+Both densities have trace one. All their eigenvalues are at most one, so each smallest eigenvalue is at least its determinant. Thus $\Omega_2\ge\ell_2I_2$ and $\Omega_3\ge\ell_3I_3$ on their actual supports. The product $\Omega_3\otimes\Omega_3$ is at least $\ell_3^2I_9$. All count rotations preserve this word support and its identity, as do the averaging and total twirl. This proves (29.8). It establishes full support and a gap from actual Gram vectors, without a Fisher-information or generic-phase argument. $\square$
+
+**Theorem 29.3 (Internal inversion, all cancellation cases and the zero-moment boundary).** If $\mu\ne0$, the complete state and the finite observations $P,W,C$ identify the two characters and the nuisance moment by
+
+$$
+\boxed{
+\mu=P/D,\qquad
+u_2=\overline{\frac{W/P-1}{\eta}},\qquad
+u_1=\frac{C-p_1p_2-Bu_2}{A}.}
+\tag{29.14}
+$$
+
+For the promised family the actual margin is $|P|\ge vD$. No lower bound on $|d_2|$, $|W|$ or $|C|$ is needed. This includes the balanced case $\eta=1$, the cancellation $d_2=W=0$, and every zero of $C$. No functional of $\pi$ beyond $\mu$ is identified.
+
+At $\mu=0$, equality of complete $(3,3)$ states is exactly equality of $C$. Their entire character fibers are determined as follows. With $z=C-p_1p_2$, for $z\ne0$ the possible $u_2$ obey
+
+$$
+|u_2|=1,\qquad
+\operatorname{Re}(\overline z u_2)=\frac{|z|^2+B^2-A^2}{2B},\qquad
+u_1=\frac{z-Bu_2}{A}.
+\tag{29.15}
+$$
+
+Such a fiber has at most two points. If $z=0$, a fiber exists exactly when $A=B$, and then it consists of all $u_1=-u_2$. For every positive $p$ some fibers contain two distinct character points. There are also identifiable points at $\mu=0$, for example $C=p_1p_2+A+B$, whose fiber is $u_1=u_2=1$. Hence zero moment is a failure of uniform identification in this fixed experiment, not failure at every point or an impossibility for other window lengths.
+
+Every complex $\mu=r e^{i\gamma}$ with $0\le r\le1$ is realized by an atomic joint-angle law. In particular, the visibility endpoint $v=1$ belongs to the model. There are finite-bit laws with identical one-window marginals but different joint states for **every** internal phase vector.
+
+**Proof.** Equations (29.7) and $D>0$ give the first two inverses, and the known coefficient $A>0$ gives the third. If $d_2=0$, then $q=0$ and $1+\eta\overline u_2=0$; since $|u_2|=1$, this forces $\eta=1,u_2=-1$. Formula (29.14) still uses the nonzero $P$ and returns this value. A vanishing $C$ is only a known value in the affine numerator of the third formula, not a denominator.
+
+Equality of the two characters is exactly equality modulo the affine subgroup $\Gamma=\{(\lambda+\nu k)_{k=1}^4\}$. Indeed, if $\Delta=\theta'-\theta$ has both characters zero, then $\Delta_3=2\Delta_2-\Delta_1$, $\Delta_4=3\Delta_2-2\Delta_1$; take $\lambda=2\Delta_1-\Delta_2$, $\nu=\Delta_2-\Delta_1$. Conversely affine differences annihilate both characters. On the actual vectors an affine difference multiplies each local density entry by a common count phase $e^{i(\lambda-\nu)(|w|_1-|z|_1)}$, which cancels in retained joint entries. Equivalently, substitution in (29.5)–(29.6) proves invariance directly. Thus the equality fibers for $\mu\ne0$ are exactly affine phase classes together with a fixed nuisance moment; laws with that same moment remain indistinguishable.
+
+For comparison with the source's channel terminology, this affine equivalence also equals memory-unitary equivalence of the outcome-labeled instrument and averaged channel in this supplied family. The elementary classification can be recovered from (29.1):
+
+$$
+\det(aS+bJ)=a^4bc_4.
+$$
+
+The two singular lines of this Kraus pencil have ranks four and one, respectively. Unitary equivalence of the averaged channel induces a unitary mixing of its two linearly independent Kraus operators. To see the latter fact directly, vectorize the two Kraus lists as full-column-rank matrices $F,H$. Equality of their Choi matrices says $FF^\dagger=HH^\dagger$; their ranges agree, so $H=FT$ for a square matrix $T$. Multiplication by a left inverse of $F$ and its adjoint gives $TT^\dagger=I$, hence $T$ is unitary. Preservation of the distinct singular-line ranks forces this mixing to preserve each line, so it preserves the labeled branches up to scalar phases. If $USU^\dagger=e^{it}S$, then $\ker S^\dagger=\mathbb Ce_0$ and $S^je_0=e_j$ imply $Ue_j=e^{i(\chi+jt)}e_j$. The corresponding rank-one reset equivalence says that $c'_k/c_k$ has an affine phase in $k$. Conversely the same diagonal unitary realizes every such affine change, with harmless Kraus scalar phases. This recovers only the supplied-family interpretation of §§24–27; it does not classify arbitrary competing sources.
+
+At $\mu=0$, (29.6) is determined by $G$ alone, and its marginal recovers $C$, proving the equality assertion. Solving $|z-Bu_2|=A$ gives (29.15). A line intersects the unit circle in at most two points when $z\ne0$; when $z=0$ the equation reduces to $A=B$. To produce a collision for every $p$, choose $0<k<\min(A,B)$ and let $\alpha=\arcsin(k/A)$, $\beta=\arcsin(k/B)$. The two points
+
+$$
+(u_1,u_2)=(e^{i\alpha},e^{-i\beta})
+\quad\text{and}\quad(e^{-i\alpha},e^{i\beta})
+$$
+
+have the same real $z=A\cos\alpha+B\cos\beta$ and distinct characters. At $z=A+B$, equality in the triangle inequality instead forces $u_1=u_2=1$.
+
+For the actual moment law, take a fair bit $B_0\in\{0,\pi\}$ and an independent angle $\Gamma$ equal to $\gamma$ with probability $(1+r)/2$ and to $\gamma+\pi$ with probability $(1-r)/2$. Set
+
+$$
+\beta_1=B_0,\qquad\beta_2=B_0+\Gamma\pmod {2\pi}.
+\tag{29.16}
+$$
+
+Its first relative moment is $r e^{i\gamma}$. Draw these variables anew at every trial, independently of all preparation and design variables. For $r=1$ the second angle has a deterministic offset from the same fair bit. For $r=0$ the two bits may be taken independent and fair. Because $\Omega_3$ supports only counts zero and one, averaging the fair bit makes each local marginal exactly its count twirl. The common-bit law $\beta_1=\beta_2=B_0$ has $\mu=1$; independent fair bits have $\mu=0$. Both give the same one-window marginals, while their joint entry $P$ is respectively $D$ and zero, uniformly in $\theta$. These laws prove moment realizability and the joint distinction without supplying a noise record to the estimator. $\square$
+
+**Theorem 29.4 (One iid six-setting experiment and a total estimator).** There are positive constants $c_p,C_p$ depending only on the fixed probabilities such that, for $0<\varepsilon\le1$, $0<v\le1$ and $0<\delta<1/4$,
+
+$$
+N_{33}^{\rm term}(v,\varepsilon,\delta)
+\le\left\lceil C_p v^{-2}\varepsilon^{-2}\log(12/\delta)\right\rceil.
+\tag{29.17}
+$$
+
+The protocol uses exactly six scalar settings, eighteen retained setting/outcome labels, all actual pairs and one fixed iid experiment. It applies uniformly at and off balance. Its same data give an estimate of the unknown complex moment; no externally supplied calibration is used.
+
+**Proof.** For a same-total-count matrix entry $z=\rho[r,t]$, use the spectral measurements of
+
+$$
+X_{r,t}=|r\rangle\langle t|+|t\rangle\langle r|,\qquad
+Y_{r,t}=i|r\rangle\langle t|-i|t\rangle\langle r|.
+\tag{29.18}
+$$
+
+Both have outcomes $o\in\{-1,0,1\}$; direct tracing gives means $2\operatorname{Re}z$ and $2\operatorname{Im}z$ with this sign for $Y$. Choose the two quadratures of $P$, those of $W$, and the quadratures of the second-window $(010,001)$ coefficient, lifted by the identity on the first window. The last two means are $2\operatorname{Re}C,2\operatorname{Im}C$. All six observables commute with total count. Choose a setting $S\in\{1,\ldots,6\}$ uniformly and independently at each trial, and retain $(S,o)$. Their eighteen masses form the iid law. By (29.8), each of their three spectral projectors has positive rank on the actual support and hence strictly positive mass. No conditioning on its count sector or on a nonzero outcome is performed.
+
+For scalar setting $j$, the all-trial score $Z_j=3o\mathbf1_{\{S=j\}}$ has the relevant scalar coefficient as mean and lies in $[-3,3]$. For a centered variable in an interval of length six, the second derivative of its log moment-generating function is its variance under exponential tilting. That variance is at most nine: centering at the midpoint bounds the second moment by nine, and subtracting the squared mean only decreases it. Integration twice gives $\log\mathbb E e^{a(Z_j-\mathbb EZ_j)}\le9a^2/2$. Independence, Markov's inequality and minimization in $a$ imply
+
+$$
+\Pr\bigl[|\overline Z_j-\mathbb EZ_j|>t\bigr]\le2e^{-Nt^2/18}.
+$$
+
+Combining the two scalar scores into each complex estimate and applying a union bound to six scalar errors at tolerance $\tau/\sqrt2$ yields
+
+$$
+\Pr\left[\max\{|widehat P-P|,|\widehat W-W|,|\widehat C-C|\}>\tau\right]
+\le12e^{-N\tau^2/36}.
+\tag{29.19}
+$$
+
+Thus take $\tau=6\sqrt{\log(12/\delta)/N}$. This is a self-contained bounded-summand concentration argument; attribution of that method to Hoeffding does not require or assert retrieval of his original article.
+
+Define $\operatorname{circ}(z)=z/|z|$ when $z\ne0$ and $\operatorname{circ}(0)=1$. Define the estimator on **every** data record by
+
+$$
+\begin{aligned}
+\widehat u_2&=
+\begin{cases}
+1,&|widehat P|<vD/2,\\
+\operatorname{circ}\!\left(\overline{(\widehat W/\widehat P-1)/\eta}\right),&|widehat P|\ge vD/2,
+\end{cases}\\
+\widehat u_1&=\operatorname{circ}\!\left((\widehat C-p_1p_2-B\widehat u_2)/A\right),\\
+\widehat\mu&=\operatorname{proj}_{\{|z|\le1\}}(\widehat P/D).
+\end{aligned}
+\tag{29.20}
+$$
+
+There is never division by zero in the second branch. Disk projection is Euclidean projection and is nonexpansive. For any unit $u$, including $z=0$,
+
+$$
+|\operatorname{circ}(z)-u|\le2|z-u|.
+\tag{29.21}
+$$
+
+For $z\ne0$ this follows from $||z|-1|\le|z-u|$ and the triangle inequality; at $z=0$ its left side is at most two.
+
+On the confidence event in (29.19), if $\tau\le vD/4$, then $|widehat P|\ge3vD/4$ and the first branch is absent. Since $|W/P|=|q|\le1+\eta$,
+
+$$
+\left|\frac{\widehat W}{\widehat P}-q\right|
+\le\frac{|widehat W-W|+|q|\,|widehat P-P|}{|widehat P|}
+\le\frac{2(2+\eta)\tau}{vD}.
+$$
+
+Consequently, with
+
+$$
+k_2=\frac{4(2+\eta)}{D\eta},\qquad
+k_1=\frac2A(1+Bk_2),\qquad
+k=\max\{1,k_1,k_2\},\qquad
+c_p=\min\{D/4,1/k\},
+\tag{29.22}
+$$
+
+the estimates obey
+
+$$
+|widehat u_2-u_2|\le k_2\tau/v,\qquad
+|widehat u_1-u_1|\le k_1\tau/v,\qquad
+|widehat\mu-\mu|\le\tau/D.
+$$
+
+Here $v\le1$ was used to absorb the direct $\widehat C$ error into $\tau/v$. Choosing $\tau\le c_pv\varepsilon$ makes both character errors at most $\varepsilon$, and also ensures the safe margin for $\varepsilon\le1$. Formula (29.17) follows with $C_p=36c_p^{-2}$. Zero numerators are covered by (29.21); no argument of a vanishing coefficient is required. The absolute moment estimate converges on the same confidence event. It estimates only the moment, not the full noise law. $\square$
+
+**Theorem 29.5 (Whole-state fixed-risk lower bound for the fixed $(3,3)$ experiment).** Fix $0<\delta_0<1/4$. For sufficiently small $\varepsilon>0$, with its cutoff depending only on $p$, uniformly for $0<v\le1$ and $0<\delta\le\delta_0$,
+
+$$
+N_{33}^{\rm all}(v,\varepsilon,\delta)
+\ge c_{p,\delta_0}v^{-2}\varepsilon^{-2}.
+\tag{29.23}
+$$
+
+Together with (29.17), at each fixed $\delta\in(0,1/4)$ both measurement classes have $\Theta_{p,\delta}(v^{-2}\varepsilon^{-2})$ pair cost. The constructive upper bound retains $\log(12/\delta)$; the claimed lower bound is fixed-risk and contains no asserted logarithmic strengthening.
+
+**Proof.** First record the classical fidelity conversion in the precise convention needed here. If two density matrices on the same finite support satisfy $\rho,\sigma\ge\lambda I$, write $\Delta=\rho-\sigma$ and $X=\sqrt\rho-\sqrt\sigma$. The Sylvester identity
+
+$$
+\sqrt\rho\,X+X\sqrt\sigma=\Delta
+$$
+
+and Hilbert–Schmidt Cauchy–Schwarz give $\|X\|_2\le\|\Delta\|_2/(2\sqrt\lambda)$: inner product with $X$ bounds the left side below by $2\sqrt\lambda\|X\|_2^2$. As $\operatorname{Tr}\sqrt\rho\sqrt\sigma=1-\|X\|_2^2/2$, the root fidelity obeys
+
+$$
+F_r(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1
+\ge1-\frac{\|\Delta\|_2^2}{8\lambda}.
+\tag{29.24}
+$$
+
+Root fidelity tensorizes. The Fuchs–van de Graaf inequality, in half-trace-norm convention, is
+
+$$
+T(\rho,\sigma):=\tfrac12\|\rho-\sigma\|_1
+\le\sqrt{1-F_r(\rho,\sigma)^2}.
+$$
+
+Using $(1-a)^N\ge1-Na$ in (29.24) yields
+
+$$
+T(\rho^{\otimes N},\sigma^{\otimes N})
+\le\frac{\sqrt N\|\Delta\|_2}{2\sqrt\lambda}
+\quad\text{if }N\|\Delta\|_2^2\le2\lambda.
+\tag{29.25}
+$$
+
+The equal-prior optimal testing error for arbitrary POVMs is $(1-T)/2$, the Helstrom formula. Thus the following bound controls the entire state before any measurement, not just its selected entries or local information matrix.
+
+For small $t>0$, set $\alpha(t)=\arcsin((B/A)\sin t)$ and choose
+
+$$
+\phi_2^+=t,\quad\phi_2^-=-t,\qquad
+\phi_1^+=-\alpha(t),\quad\phi_1^-=\alpha(t),\qquad
+\mu_+=\mu_-=v.
+\tag{29.26}
+$$
+
+These are actual internal phases, for instance via $\theta_1=\theta_2=0$, $\theta_3=\phi_1$, $\theta_4=\phi_1+\phi_2$. Both points use the **same** atomic angle law (29.16) with $r=v,\gamma=0$. Their $C$'s agree because their imaginary parts cancel and their cosine parts agree. Their $q$'s are $1+\eta e^{\mp it}$, so $|q_+|^2=|q_-|^2$. Every block of (29.6) is identical except the off-diagonal entries of the two cross matrices $\mu K$. Directly,
+
+$$
+\|\rho_{33}^+-\rho_{33}^-\|_2
+=4vD\eta|\sin t|\le4vD\eta t.
+\tag{29.27}
+$$
+
+Their character separation is at least $|e^{it}-e^{-it}|=2\sin t$. Take $t=3\varepsilon$ and restrict $\varepsilon$ so that $t\le1/2$ and $(B/A)\sin t\le1/2$. Then separation is greater than $2\varepsilon$. By (29.8), (29.25) applies with $\lambda=\lambda_p$. For a sufficiently small positive $p$-dependent constant $c$, $N\le cv^{-2}t^{-2}$ makes $T\le1/2$, hence every test has error at least $1/4>\delta_0$.
+
+An estimator with risk at most $\delta_0$ at both points would give a test of error at most $\delta_0$ by choosing the nearer character point: the two radius-$\varepsilon$ balls are disjoint. This contradiction proves (29.23). The support gap and atomic law include $v=1$, so there is no endpoint exception. $\square$
+
+**Definition 29.6 (Short-pair iid design class and its charge).** Let
+
+$$
+\mathcal I_5=\{(a,b):1\le a,b\le3,\ a+b\le5\}.
+$$
+
+A design chooses nonnegative known weights $w_{ab}$ summing to one. They may depend on $(p,v,\varepsilon,\delta)$, but not on $\theta$ or $\pi$. Each trial draws a class independently with these weights, performs that actual ordered pair with its own two heralds and the common ordered joint law $\pi$, and retains its class label. The complete one-trial density, before any terminal measurement, is the orthogonal direct sum
+
+$$
+\sigma_w(\theta,\pi)=\bigoplus_{(a,b)\in\mathcal I_5}w_{ab}\rho_{ab}(\theta,\pi).
+\tag{29.28}
+$$
+
+The lower-bound class allows arbitrary collective POVMs on $\sigma_w^{\otimes N}$, including simultaneous use of all retained labels and all actual flag sectors. The coherent charge is the maximum allowed pair sum, not its weight-averaged sum, and each realized pair is charged its actual $a+b$ applications. There is no class-dependent relabeling of the ordered noise angles. A single-window class, if also allowed, has its corresponding local count-twirled density and one charged herald.
+
+**Theorem 29.7 (A common balanced obstruction for both orientations and all short-pair mixtures).** Suppose $p_1p_3=p_2p_4$, equivalently $\eta=1$. For every design in Definition 29.6, every sufficiently small $\varepsilon>0$, $0<v\le1$ and $0<\delta\le\delta_0<1/4$, uniform risk requires
+
+$$
+N\ge c_{p,\delta_0}v^{-2}\varepsilon^{-4},
+\tag{29.29}
+$$
+
+with a constant and cutoff independent of the weights and their dependence on $(v,\varepsilon,\delta)$. This remains true if single windows of lengths at most three are included in the mixture.
+
+Consequently, at balance, maximum coherent pair sum six is the minimum permitting a uniform quadratic $\varepsilon^{-2}$ pair rate in this fixed iid, at-most-two-window, largest-window-at-most-three design class. The $(3,3)$ upper bound attains that sum. This is not a claim about minimum weight-averaged charge, unrestricted longer windows, adaptive quantum controls, or total coherent cost over all trials.
+
+**Proof.** The complete two orientations must be compared with the same ordered $\pi$, not just with the same local marginals. Let $a_0=00,a_1=01$ and use the three words of Theorem 29.2. In the order
+
+$$
+a_0u_0\mid(a_0u_1^{\rm w},a_0u_2^{\rm w},a_1u_0)
+\mid(a_1u_1^{\rm w},a_1u_2^{\rm w}),
+$$
+
+the whole $(2,3)$ state is
+
+$$
+\rho_{23}=sh\ \oplus\
+\begin{pmatrix}
+sp_2&s\overline C&Z\\sC&sp_1&R\\\overline Z&\overline R&p_1h
+\end{pmatrix}\ \oplus\ p_1G,
+\qquad Z=\mu Dq,\quad R=\mu D|q|^2.
+\tag{29.30}
+$$
+
+For $(3,2)$, use order
+
+$$
+u_0a_0\mid(u_1^{\rm w}a_0,u_2^{\rm w}a_0,u_0a_1)
+\mid(u_1^{\rm w}a_1,u_2^{\rm w}a_1).
+$$
+
+The complete state is
+
+$$
+\rho_{32}=sh\ \oplus\
+\begin{pmatrix}
+sp_2&s\overline C&\overline{\widetilde Z}\\
+sC&sp_1&\overline R\\\widetilde Z&R&p_1h
+\end{pmatrix}\ \oplus\ p_1G,
+\qquad\widetilde Z=\mu D\overline q.
+\tag{29.31}
+$$
+
+Every omitted word and cross-count entry is zero. These formulas follow from the local Gram matrices (29.12) and the transfer signs in the proof of Theorem 29.2. In particular, the bottom-row transfer of (29.31) is $-1$ in window one, giving $\mu d_1\overline d_2$, not $\overline\mu d_1\overline d_2$. Exchanging the **physical angle variables** would replace $\mu$ by $\overline\mu$. Merely choosing the ordered class $(3,2)$ does not exchange them. Equivalently, swapping tensor factors relates $\rho_{32}(\theta,\mu)$ to $\rho_{23}(\theta,\overline\mu)$, rather than to $\rho_{23}(\theta,\mu)$.
+
+For small $t>0$, let $\alpha=\arcsin((B/A)\sin t)$ and select the two points
+
+$$
+\phi_2^+=\pi+t,\quad\phi_2^-=\pi-t,\qquad
+\phi_1^+=\alpha,\quad\phi_1^-=-\alpha,\qquad
+\mu_+=v,\quad\mu_-=-ve^{-it}.
+\tag{29.32}
+$$
+
+Their $C$'s agree: the imaginary terms are $A\sin\alpha-B\sin t=0$ and its negative. Their real terms also agree. At each point use (29.16), with $(r,\gamma)=(v,0)$ and $(v,\pi-t)$ respectively, and use that point's law for **all** ordered classes. Thus the nuisance construction is simultaneous and consists of actual atomic angle laws, including $v=1$. No design-dependent noise distribution is used.
+
+Put $z_t=e^{-it}$, $q_+=1-z_t$, $q_-=1-z_t^{-1}$ and $r_t=|1-z_t|^2$. Then
+
+$$
+q_-=-q_+/z_t,\qquad
+\mu_+q_+=\mu_-q_-,\qquad
+\begin{aligned}
+R_+-R_-&=vD r_t(1+z_t),\\
+\widetilde Z_+-\widetilde Z_-&=vD(q_-+z_tq_+)=vD r_t(1+z_t).
+\end{aligned}
+\tag{29.33}
+$$
+
+The last equality is the exact Laurent-polynomial identity $q_-+z_tq_+=|1-z_t|^2(1+z_t)$ for $|z_t|=1$. Let $H_t=vD r_t(1+z_t)$. Since $r_t=4\sin^2(t/2)\le t^2$, $|H_t|\le2vDt^2$. Formula (29.30) differs only in $R$ and its adjoint; (29.31) differs only in $\widetilde Z,R$ and their adjoints. Consequently their **whole-state** differences are exactly
+
+$$
+\|\rho_{23}^+-\rho_{23}^-\|_2=\sqrt2|H_t|,\qquad
+\|\rho_{32}^+-\rho_{32}^-\|_2=2|H_t|.
+\tag{29.34}
+$$
+
+In particular, including both orientations exposes another $O_p(vt^2)$ entry, not an $O_p(vt)$ entry. This is the shared-nuisance step required for a mixture lower bound.
+
+For every shorter pair the law is an actual prefix marginal of one of these two complete states:
+
+$$
+\rho_{ab}=\operatorname{Tr}_{\rm omitted\ terminal\ flags}\rho_{23}
+\quad(a\le2,b\le3),\qquad
+\rho_{ab}=\operatorname{Tr}_{\rm omitted\ terminal\ flags}\rho_{32}
+\quad(a\le3,b\le2).
+\tag{29.35}
+$$
+
+Indeed isometric continuation followed by tracing its new flags and memory leaves the earlier flag density $\Omega_a$ or $\Omega_b$. Partial trace also intertwines each count rotation with its prefix rotation and intertwines the common-angle total twirl with the remaining total twirl. These statements hold before averaging $\pi$ and therefore preserve its ordered common law. The two ranges in (29.35) exhaust $\mathcal I_5$. This is a lawful marginal map, not a substitution of a different preparation or terminal memory readout. At most three flags are discarded. For a partial trace over a $d$-dimensional system, Hilbert–Schmidt Cauchy–Schwarz on its diagonal blocks gives $\|\operatorname{Tr}_E M\|_2\le\sqrt d\|M\|_2$. Thus (29.34) implies, simultaneously,
+
+$$
+\|\rho_{ab}^+-\rho_{ab}^-\|_2\le16Dv t^2
+\qquad((a,b)\in\mathcal I_5).
+\tag{29.36}
+$$
+
+The numerical factor is a common sufficient bound, not an optimized coefficient. One-window densities $T_1,T_2$ are phase independent and $T_3$ depends only on the common $C$, so their differences are zero.
+
+Every component has a common fixed actual support and eigenvalues at least $\lambda_p$ from (29.8). For lengths one, two and three its local bounds are $1,\ell_2,\ell_3$, and $\ell_3\le\ell_2\le1$, so every local product of at most two such windows is at least $\ell_3^2I$. Averaging and twirling preserve this inequality. Applying (29.24) to (29.36) gives
+
+$$
+F_r(\rho_{ab}^+,\rho_{ab}^-)
+\ge1-K_pv^2t^4,\qquad K_p=32D^2/\lambda_p.
+\tag{29.37}
+$$
+
+For the retained-label direct sums, square roots and trace norm are blockwise, hence exactly
+
+$$
+F_r(\sigma_w^+,\sigma_w^-)
+=\sum_{a,b}w_{ab}F_r(\rho_{ab}^+,\rho_{ab}^-)
+\ge1-K_pv^2t^4.
+\tag{29.38}
+$$
+
+This step does not assume a positive minimum weight or a weight-independent spectral gap for the whole direct sum. Zero or arbitrarily small weights cause no difficulty. Fidelity tensorization and the same Bernoulli and trace conversion give
+
+$$
+T((\sigma_w^+)^{\otimes N},(\sigma_w^-)^{\otimes N})
+\le\sqrt{2NK_p}\,v t^2
+\quad\text{when }NK_pv^2t^4\le1.
+\tag{29.39}
+$$
+
+The character separation is at least $2\sin t$. Set $t=3\varepsilon$, with the same small cutoff ensuring $\alpha$ is defined and separation exceeds $2\varepsilon$. For $N\le(8K_p)^{-1}v^{-2}t^{-4}$ the trace distance is at most $1/2$, so the Helstrom testing error is at least $1/4>\delta_0$. Nearest-character decoding contradicts the proposed uniform estimator, proving (29.29) uniformly over every design. Adding identical one-window components preserves (29.38).
+
+Finally, a per-pair coherent sum at most five under the length-three cap is exhausted by these classes, while (29.17) provides a quadratic protocol at sum six. Their distinct exponents as $\varepsilon\downarrow0$ give the asserted minimum for that cap. Largest window two cannot identify the full target at any rate in this design class: $T_1,T_2$ are fixed, and the only variable entry of $\rho_{22}$ is $\mu|d_2|^2$ and its adjoint. In the gauge $\theta_1=\theta_2=0$, $d_2=e^{i\phi_1}\sqrt{p_1}(\sqrt{p_1p_3}+\sqrt{p_2p_4}e^{i\phi_2})$, so $|d_2|^2$ is independent of $\phi_1$. Holding $\phi_2,\pi$ fixed and varying $\phi_1$ gives identical complete states in every length-at-most-two class. Thus largest window three and coherent pair sum six are separate necessary coordinates for the stated balanced quadratic task. $\square$
+
+**Theorem 29.8 (Charged logical resources and observation boundaries).** The finite-setting $(3,3)$ upper experiment with $N$ actual pairs uses $2N$ actual heralds, $N$ joint-angle draws, $6N$ coherent applications and at most $10N$ monitored herald applications. Therefore $16N$ total source applications suffice. Each pair retains six two-dimensional flags of joint dimension $64$, has largest window three and coherent pair sum six, uses a six-valued setting register and a three-outcome pointer, and produces one of eighteen retained setting/outcome labels. These coordinates are distinct from pair count, physical hardware, elapsed time, energy and any native QFT or production resource.
+
+A sufficient serial realization has one five-level source memory; a parallel realization has two five-level memories of joint dimension $25$ and sum of local level counts ten, not a single ten-dimensional source memory. Herald detection, settings, pointers, controllers, records, storage, disposal and the supplied noise source are additional apparatus. At fixed risk the statistical order for the displayed protocol is $\Theta_{p,\delta}(v^{-2}\varepsilon^{-2})$ pairs, hence the same order of its charged heralds and coherent applications. The design-class lower bound concerns the precision exponent for bounded pair types and does not optimize those other resources.
+
+**Proof.** Each averaged herald in (29.9) takes at most five applications including its tick; two heralds and two three-use coherent windows therefore give $2(5+3)=16$ applications. The coherent flags number six. A sufficient window controller has the six states $\mathrm{wait},\mathrm{captured}_0,\ldots,\mathrm{captured}_3,\mathrm{done}$ and can be reused serially with counted control of the pair and its setting. A reusable two-level detector suffices for monitored branches. If waiting times are retained, they occupy two separate five-valued registers per pair. Keeping or discarding them is an apparatus operation, and the estimator still acts as their identity. Noise records or a physical mechanism producing $\pi$ must likewise be separately accounted for. An arbitrary probability measure need not have a finite exact register representation; no such representation or universal noise-generation cost follows from a promise on $\mu$.
+
+For each setting, let $\Pi_o$ be its complete three-outcome spectral projectors and let $R_o$ be pointer unitaries satisfying $R_o|\mathrm{ready}\rangle=|o\rangle$. Then
+
+$$
+\mathcal W=\sum_{o\in\{-1,0,1\}}\Pi_o\otimes R_o
+$$
+
+is unitary and commutes with $Q_{\rm tot}\otimes I$. Reading the pointer realizes the allowed terminal POVM. For the lifted $C$ settings, $\Pi_o$ is the local spectral projector tensored with the first-window identity, and has the same commutator property. This is a logical realization under the assumed access to arbitrary total-count-commuting effects; it neither supplies controls excluded by that access model nor proves a hardware construction.
+
+The pairwise upper experiment can measure and release each six-flag register before the next pair. It may retain $N$ classical labels, or process six running sums and a counter; the latter registers require a number of bits growing with $N$ and are not absorbed into the five-level source memory. The lower bound grants the larger class storing all labeled quantum pairs until a collective POVM, whose storage is a separate resource. No finite-configuration observer theorem applies automatically to these expanding estimation records.
+
+At $\mu=0$ Theorem 29.3 gives the exact collision boundary for this fixed experiment. The length-four, single-window separator of Theorem 26.3 lies outside the present length-three cap; no longer-window impossibility is claimed. Unknown $p$ or $v$, drifting internal phases, non-iid noise, dependence of noise on histories or settings, unavailable within-sector controls, access to preparation or angle records, extra windows, intermediate interventions and terminal memory observations change the premises. The arguments prove neither their rates nor a means to supply the stable isometry or promised noise law. $\square$
+
+**Convention 29.9 (Supplier correspondence, literature scope and source-relative content).** The owning supplied source is §§23–28 of `FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_II.md` at revision `5e664b49a38f652392d3fc09a0e411e4d496a900`. The comparison snapshot is dev revision `ae0e1324bad90ef2f14a906751b011c7025e5e5b`; its owning volume contains §§23–27. The hypotheses, chronology and equality conventions used here have the following exact correspondence.
+
+| Supplier | Mathematical role and retained boundary |
+| --- | --- |
+| Definition 23.1, (23.2)–(23.4); Definitions 25.1 and 26.1 | Five-level full-support shift/reset source, actual post-tick preparation, stable accessible coherent isometry, chronological memory trace, and count-commuting terminal access. The present proof recomputes the used histories and reset maps. Stationary purity and channel-spectrum assertions of §23 are not premises of the rates. |
+| Theorem 26.3, (26.15)–(26.22) | Full integer quotient and the aggregated local $C_3$ coefficient; its collision and single-window horizon-four result are antecedents. The present target is finite-sample precision with unknown relative noise, not a new first-sensitive or noiseless horizon theorem. |
+| Theorem 27.2, (27.4)–(27.8) | Summed-herald identity extension gives the actual serial product; correlated preparation records must be ignored. The replacement is rederived in (29.9)–(29.10). |
+| Theorem 27.3, (27.9)–(27.14); Theorems 27.5–27.6 | Local $\Omega_2,\Omega_3$, $d_1,d_2,C_3$, affine equivalence, within-sector quadratures, charged logical apparatus, and the existing fixed-offset internal-reference principle. These are credited antecedents, not newly invented reference-frame methods. |
+| Definition 28.1; Theorems 28.2 and 28.4 | Unknown iid correlated relative-angle law, first-moment sign, and complete $(2,3)$ density. The proof derives the arbitrary-measure reduction and explicitly treats $(3,2)$ with the same ordered law. |
+| Theorems 28.9–28.12; Proposition 28.14 | Existing all-trial scores, safe-inverse method, whole-state fidelity/testing route, and balanced nuisance branches for a fixed $(2,3)$ batch. The construction and inequalities needed here are derived explicitly. The known-complex-moment upper comparison in 28.14 supplies no free calibration. |
+| `FIB_SPARSE_COHERENT_EXACT_FIRST_SENSITIVE_HORIZON.md`, Conventions 1.1–1.2, Corollary 7.1 and §8 at the comparison snapshot | Arbitrary-support first sensitivity is a different target. Its three-support specialization and full-support equality-fiber discussion explicitly credit §26. Neither is an unknown-noise precision or pair-design theorem. |
+| `FIB_GROWING_STATE_BUDGET_RENEWAL_TRADEOFF.md`, Definitions 2.1–2.2 and 3.1; `FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK_CONTINUATION.md`, Definitions 23.1–23.3 at the comparison snapshot | Polynomial-geometric stationary classical sources, uninterrupted consecutive-bit access, complete persistent configuration budgets and paid stopping means. Those source, access and cost contracts differ from reheralded coherent flags, iid pairs and growing retained estimation records. Their tradeoffs are not imported here. |
+
+The Fourier mode and twirl principles are literature-attested. Marvian–Spekkens, [arXiv:1312.0680v2](https://arxiv.org/abs/1312.0680v2), HTML Eqs. (16)–(18), corresponding to PDF Eqs. (2.13)–(2.15), state tensor-mode convolution, weighted twirling and $\sigma^{(k)}=p_{-k}\rho^{(k)}$ with $p_k=\int p(\theta)e^{-ik\theta}\,d\theta$. These exact passages fix the sign convention. Their density formula is extended here to arbitrary measures by the displayed entry integral, rather than by an assumed density for an atomic law. Bartlett–Rudolph–Spekkens, [quant-ph/0610030v3](https://arxiv.org/abs/quant-ph/0610030v3), §II.B, PDF Eqs. (2.7)–(2.10), give the common $U(1)$ integral and equal-total-charge block projection. These passages do not specify the present renewal source or its noise calibration cost.
+
+Fuchs–van de Graaf, [quant-ph/9712042v2](https://arxiv.org/abs/quant-ph/9712042v2), §4.3, Proposition 4, Eq. (24), uses the unsquared quantum Bhattacharyya coefficient, equal to root fidelity; Eq. (27) states tensor multiplicativity. Theorem 1, Eq. (46), supplies $1-F_r\le T\le\sqrt{1-F_r^2}$. Proposition 1, Eq. (17), supplies the equal-prior error formula, attributing it to Helstrom, *Quantum Detection and Estimation Theory*, pp. 106–108. The use here is limited to these conventions and statements; it does not certify the separately attributed Helstrom book, or import a relative-entropy, chi-square or concentration theorem. The bounded-summand inequality in (29.19) is derived in the proof and is not a claim of original Hoeffding-text retrieval.
+
+Bounded related literature includes self-referenced optical tomography and nuisance estimation: Even Tzur, [arXiv:2512.08127v1](https://arxiv.org/abs/2512.08127v1), pp. 1–3 and Eq. (8), considers two identical unknown optical fields and photon-number-resolved self-interference; Suzuki–Yang–Hayashi, [arXiv:1911.02790v3](https://arxiv.org/abs/1911.02790v3), introduction pp. 1–3, distinguishes unknown dephasing nuisance from a known-noise precision problem. Gazit–Ng–Suzuki, [arXiv:1904.11849v1](https://arxiv.org/abs/1904.11849v1), introduction and §II.A, formulate quantum design with local estimation criteria; Ghosh–Kobus–Kurdziałek–Demkowicz-Dobrzański, [arXiv:2511.07211v1](https://arxiv.org/abs/2511.07211v1), §§I–II, use correlated dephasing channels with controls and a specified Gaussian phase law. These are related mathematical settings, not suppliers of the present global uniform-risk or cap-five collective-testing conclusion. Their remaining proofs, appendices and experimental claims are not certified by this limited scope. Bounded abstract-level context also includes Soh et al., [arXiv:1503.04763v2](https://arxiv.org/abs/1503.04763v2), reference-pulse self-referenced CV-QKD, and Ishida et al., [arXiv:0807.1364v1](https://arxiv.org/abs/0807.1364v1), identification against unknown quantum reference copies; no theorem is imported from their abstracts. No global novelty conclusion follows from these limited comparisons.
+
+The source-relative additional content is the complete actual $(3,3)$ block (29.6), its nonvanishing $\mu D$ reference and explicit Gram gap, the balance-uniform total estimator and quadratic fixed-risk pair law, and the shared ordered-noise obstruction for **both** $(2,3)$ and $(3,2)$ and every retained-label short-pair mixture. The common-noise, direct-sum argument establishes the stated maximum-pair-sum minimum without replacing the nuisance by a known complex calibration. These are repository-derived deductions relative to the specified suppliers; the reused local matrices, twirl theory, quadratures, fidelity conversion and testing principle retain their existing ownership. This mathematical appendix asserts no independent full-proof review, kernel status, worldwide originality or theorem for supplying the physical noise resource.
+
+## 追加锚（本行以下为增补区）

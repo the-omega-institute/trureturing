@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd0aa7ce07feb40e86f588948a3748b92855fb1578a3d1541dc56397665c1602
+  normalized_sha256: sha256:cd0aa7ce07feb40e86f588948a3748b92855fb1578a3d1541dc56397665c1602
+cas_ref: sha256:cd0aa7ce07feb40e86f588948a3748b92855fb1578a3d1541dc56397665c1602
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该项结束同值异角色证书的字段枚举并重述定理 1.1 的非单射解释；数值不能决定角色是已覆盖主子项的说明，没有另一个待证数学目标。
+    previous_atom_id: 67df7419dd0235aeb87c63b74df3fd9959bbdaead9d402cbdab098075b106a8a
+    next_atom_id: 07d1a7f536aa56607c85047dbe66f57b398abd7792a4c9dda4effd4a058d807d
