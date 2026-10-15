@@ -79,19 +79,18 @@ private theorem boundary_log_comparison (F : ℂ → ℂ) (P : ℂ[X]) (c : ℂ)
   have hq (z : ℂ) (hz : z ∈ sphere c delta) : q z ∈ Complex.slitPlane := by
     have hFz := hFn z hz
     have he : q z - 1 = (P.eval z - F z) / F z := by dsimp [q]; field_simp
-    apply Complex.mem_slitPlane_of_norm_lt_one
-    rw [he, norm_div]
-    exact (div_lt_one (norm_pos_iff.mpr hFz)).mpr (hclose z hz)
+    have hsmall : ‖q z - 1‖ < 1 := by
+      rw [he, norm_div]
+      exact (div_lt_one (norm_pos_iff.mpr hFz)).mpr (hclose z hz)
+    simpa only [add_sub_cancel] using Complex.mem_slitPlane_of_norm_lt_one hsmall
   have hL (z : ℂ) (hz : z ∈ sphere c delta) :
       HasDerivAt L (P.derivative.eval z / P.eval z - deriv F z / F z) z := by
     have hFz := hFn z hz
     have hPz := hPn z hz
     have hFd := (hF z (sphere_subset_closedBall hz)).differentiableAt.hasDerivAt
     have hqd := (P.hasDerivAt z).div hFd hFz
-    convert hqd.clog (hq z hz) using 1
-    dsimp [q]
-    field_simp [hPz, hFz]
-    <;> ring
+    convert hqd.clog (hq z hz) using 1 <;>
+      dsimp [L, q, Pi.div_def] <;> field_simp [hPz, hFz] <;> ring
   have hPc : ContinuousOn (fun z => P.derivative.eval z / P.eval z) (sphere c delta) :=
     P.derivative.continuous.continuousOn.div P.continuous.continuousOn hPn
   have hFc : ContinuousOn (fun z => deriv F z / F z) (sphere c delta) :=
@@ -126,6 +125,8 @@ private theorem unit_log_count (F U : ℂ → ℂ) (c : ℂ) (delta : ℝ) (m : 
     have hz0 := sub_ne_zero.mpr hzc
     have hdF := (((hasDerivAt_id z).sub_const c).pow m).mul
       (hUa z (sphere_subset_closedBall hz)).differentiableAt.hasDerivAt
+    change HasDerivAt (fun w => (w - c) ^ m * U w)
+      ((m : ℂ) * (z - c) ^ (m - 1) * 1 * U z + (z - c) ^ m * deriv U z) z at hdF
     have hFe : F = fun z => (z - c) ^ m * U z := funext hf
     rw [hFe, hdF.deriv]
     by_cases hm : m = 0
@@ -141,6 +142,7 @@ private theorem unit_log_count (F U : ℂ → ℂ) (c : ℂ) (delta : ℝ) (m : 
     apply continuousOn_const.mul
     apply (continuousOn_id.sub continuousOn_const).inv₀
     intro z hz he
+    change z - c = 0 at he
     have := mem_sphere_iff_norm.mp hz
     rw [he, norm_zero] at this
     linarith
@@ -161,6 +163,7 @@ private theorem polynomial_log_count (P : ℂ[X]) (c : ℂ) (delta : ℝ)
     apply ContinuousOn.circleIntegrable hd.le
     apply (continuousOn_id.sub continuousOn_const).inv₀
     intro z hz he
+    change z - a = 0 at he
     exact hroot a ha (sub_eq_zero.mp he ▸ hz)
   have haint (a : ℂ) (ha : a ∈ P.roots) :
       (∮ z in C(c, delta), (z - a)⁻¹) =
@@ -179,31 +182,41 @@ private theorem polynomial_log_count (P : ℂ[X]) (c : ℂ) (delta : ℝ)
       exact Complex.circleIntegral_eq_zero_of_differentiable_on_off_countable hd.le
         (s := ∅) Set.countable_empty han.continuousOn
         (fun z hz => (han z (ball_subset_closedBall hz.1)).differentiableAt)
+  have hsum_integrable : ∀ s : Multiset ℂ, s ≤ P.roots →
+      CircleIntegrable (fun z => (s.map (fun a => (z - a)⁻¹)).sum) c delta := by
+    intro s
+    induction s using Multiset.induction_on with
+    | empty =>
+      intro _
+      simpa using (continuousOn_const.circleIntegrable hd.le :
+        CircleIntegrable (fun _ : ℂ => (0 : ℂ)) c delta)
+    | @cons a s ih =>
+      intro hsub
+      simpa only [Multiset.map_cons, Multiset.sum_cons, Pi.add_def] using
+        (hi a (Multiset.mem_of_le hsub (by simp))).add
+          (ih ((Multiset.le_cons_self _ _).trans hsub))
   have hs : ∀ s : Multiset ℂ, s ≤ P.roots →
       (∮ z in C(c, delta), (s.map (fun a => (z - a)⁻¹)).sum) =
         (2 * Real.pi * Complex.I) * (s.filter (fun a => ‖a - c‖ < delta)).card := by
     intro s
     induction s using Multiset.induction_on with
-    | empty => intro _; simp
+    | empty => intro _; simp [circleIntegral]
     | @cons a s ih =>
       intro hsub
       have ha : a ∈ P.roots := Multiset.mem_of_le hsub (by simp)
       have hs : s ≤ P.roots := le_trans (Multiset.le_cons_self _ _) hsub
-      have his : CircleIntegrable (fun z => (s.map (fun a => (z - a)⁻¹)).sum) c delta := by
-        induction s using Multiset.induction_on with
-        | empty => simpa using (continuousOn_const.circleIntegrable hd.le :
-            CircleIntegrable (fun _ : ℂ => (0 : ℂ)) c delta)
-        | @cons b t iht =>
-          simp only [Multiset.map_cons, Multiset.sum_cons]
-          exact (hi b (Multiset.mem_of_le hs (by simp))).add
-            (iht (le_trans (Multiset.le_cons_self _ _) hs))
+      have his := hsum_integrable s hs
       simp only [Multiset.map_cons, Multiset.sum_cons]
       rw [circleIntegral.integral_add (hi a ha) his, haint a ha, ih hs]
-      by_cases hb : ‖a - c‖ < delta <;> simp [hb, mul_add, Nat.cast_add, Nat.cast_one]
-  have he := (IsAlgClosed.splits P).eval_derivative_div_eval_of_ne_zero
-  rw [circleIntegral.integral_congr hd.le (fun z hz => by
-    simpa only [one_div] using he (hPn z hz))]
-  exact hs P.roots le_rfl
+      by_cases hb : ‖a - c‖ < delta <;>
+        simp [hb, mul_add, Nat.cast_add, Nat.cast_one, add_comm]
+  have he (z : ℂ) (hz : P.eval z ≠ 0) :=
+    (IsAlgClosed.splits P).eval_derivative_div_eval_of_ne_zero hz
+  calc
+    _ = (∮ z in C(c, delta), (P.roots.map (fun a => (z - a)⁻¹)).sum) :=
+      circleIntegral.integral_congr hd.le (fun z hz => by
+        simpa only [one_div] using he z (hPn z hz))
+    _ = _ := hs P.roots le_rfl
 
 private theorem retained_disk_count (F : ℂ → ℂ) (P : ℂ[X]) (c : ℂ)
     (delta : ℝ) (m : ℕ) (hd : 0 < delta) (hm : 1 ≤ m)
