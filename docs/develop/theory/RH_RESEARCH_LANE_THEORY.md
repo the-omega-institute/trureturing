@@ -6302,7 +6302,7 @@ PairCalibratedSecondMagnusObservability          |
 OrderedTimeSimplexSecondMagnusAverage
                         |
                         v
-FiniteFrequencyOrderedSimplexCoercivity         Open
+FiniteFrequencyOrderedSimplexCoercivity         Frozen
                         |
                         v
 HolonomyToFixedScaleWeilTransport               Open
@@ -6333,7 +6333,9 @@ RH
 
 ### P0. `FiniteFrequencyOrderedSimplexCoercivity`
 
-利用本轮闭式积分与有限最小频差，冻结统一时间窗口双边界。
+利用闭式积分与有限最小频差，冻结统一时间窗口双边界。真源为
+`D5/S3/Observer/AgencyHolonomy/FiniteFrequencyOrderedSimplexCoercivity`；该有限
+接口只对平方系数能量成立，并不提供无限频率下界或 Weil 运输。
 
 ### P1. `HolonomyToFixedScaleWeilTransport`
 
@@ -6364,10 +6366,11 @@ RH
 - 有限 Fourier 代数生成元的精确 commutator expansion；
 - pair-adapted clocks 下四倍 holonomy energy 的精确恢复；
 - ordered-time simplex scalar response 的闭式公式；
+- 有限非共振频率族在同一时间窗上的双边界与正 coercivity 常数；
 - 零频差响应为零；
 - 非负窗口上的响应非负。
 
-本轮没有证明公共固定时刻的全频率可观测性、finite-family ordered-window coercivity、time-ordered exponential、Magnus 级数收敛、holonomy-to-Weil transport、xi-ratio Pick positivity、离线零点数与负平方数的等式、Fredholm 极限、全局 Weil 正性或 RH。
+本轮没有证明公共固定时刻的全频率可观测性、time-ordered exponential、Magnus 级数收敛、holonomy-to-Weil transport、xi-ratio Pick positivity、离线零点数与负平方数的等式、Fredholm 极限、全局 Weil 正性或 RH。
 
 本轮关闭的有限链为：
 
