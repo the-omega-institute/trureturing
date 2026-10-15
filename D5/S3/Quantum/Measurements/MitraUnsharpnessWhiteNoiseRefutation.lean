@@ -161,6 +161,84 @@ private theorem xMin_eq_of_eq_diag2
     have hbu : b = u := by linarith [hsR]
     simp [a, b, hav', hbu, min_comm]
 
+private theorem diag2_posSemidef
+    (u v : ℝ) (hu : 0 ≤ u) (hv : 0 ≤ v) :
+    (diag2 u v).PosSemidef := by
+  rw [diag2, Matrix.posSemidef_diagonal_iff]
+  intro i
+  fin_cases i
+  · exact Complex.zero_le_real.mpr hu
+  · exact Complex.zero_le_real.mpr hv
+
+private theorem witness_isPOVM : IsPOVM witness := by
+  constructor
+  · intro i
+    fin_cases i <;> apply diag2_posSemidef <;> norm_num
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [witness, diag2, Fin.sum_univ_succ] <;> norm_num
+
+private theorem witness_norms :
+    (fun i : Fin 4 => opNorm (witness i)) =
+      ![(12 : ℝ) / 40, 13 / 40, 14 / 40, 37 / 40] := by
+  funext i
+  fin_cases i
+  · change opNorm (diag2 (12 / 40) (1 / 40)) = 12 / 40
+    rw [opNorm_diag2] <;> norm_num
+  · change opNorm (diag2 (13 / 40) (1 / 40)) = 13 / 40
+    rw [opNorm_diag2] <;> norm_num
+  · change opNorm (diag2 (14 / 40) (1 / 40)) = 14 / 40
+    rw [opNorm_diag2] <;> norm_num
+  · change opNorm (diag2 (1 / 40) (37 / 40)) = 37 / 40
+    rw [opNorm_diag2] <;> norm_num
+
+private theorem witness_norm_sum :
+    (∑ i : Fin 4, opNorm (witness i)) = (19 : ℝ) / 10 := by
+  rw [show (fun i : Fin 4 => opNorm (witness i)) =
+      ![(12 : ℝ) / 40, 13 / 40, 14 / 40, 37 / 40] from witness_norms]
+  norm_num [Fin.sum_univ_succ]
+
+private theorem witness_X :
+    X witness = diag2 (273 / 800) (704 / 800) := by
+  unfold X
+  have hnorm (i : Fin 4) :
+      opNorm (witness i) =
+        (![ (12 : ℝ) / 40, 13 / 40, 14 / 40, 37 / 40] : Fin 4 → ℝ) i :=
+    congrFun witness_norms i
+  simp_rw [hnorm]
+  ext i j
+  fin_cases i <;> fin_cases j
+  all_goals
+    simp [witness, diag2, Fin.sum_univ_succ]
+    <;> norm_num
+
+private theorem witness_xMin :
+    xMin (X witness) (X_isHermitian witness witness_isPOVM) =
+      (273 : ℝ) / 800 := by
+  rw [xMin_eq_of_eq_diag2 _ (X_isHermitian witness witness_isPOVM)
+    (273 / 800) (704 / 800) witness_X]
+  norm_num
+
+private theorem witness_sigmas :
+    sigma1 witness witness_isPOVM = (73 : ℝ) / 800 ∧
+    sigma2 witness witness_isPOVM = (107 : ℝ) / 800 := by
+  constructor
+  · change xMin (X witness) (X_isHermitian witness witness_isPOVM) - 1 / (4 : ℝ) = _
+    rw [witness_xMin]
+    norm_num
+  · change (∑ i : Fin 4, opNorm (witness i)) / (4 : ℝ) -
+      xMin (X witness) (X_isHermitian witness witness_isPOVM) = _
+    rw [witness_norm_sum, witness_xMin]
+    norm_num
+
+theorem result : ¬ claim := by
+  intro h
+  have hs :
+      sigma2 witness witness_isPOVM ≤ sigma1 witness witness_isPOVM :=
+    (h 4 (by norm_num) witness witness_isPOVM).1
+  rw [witness_sigmas.1, witness_sigmas.2] at hs
+  norm_num at hs
+
 end
 
 end D5.S3.Quantum.Measurements.MitraUnsharpnessWhiteNoiseRefutation
