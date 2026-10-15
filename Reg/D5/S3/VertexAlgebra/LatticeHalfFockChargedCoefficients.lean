@@ -459,6 +459,8 @@ private theorem dependence : ObservationalDependence signature actual := by
       probeLattice probeColour 0 (MvPolynomial.X (probeColour, 0))
   rw [map_zero, _root_.D5.S3.VertexAlgebra.LatticeActualAnnihilation.annihilate_X]
   norm_num [probeLattice, Algebra.smul_def]
+  change (0 : Oscillator probeLattice) ≠ 2
+  norm_num
 
 def familyRegistration : Registration arena (type_of% (@half_annihilation_creation)) where
   actual := actual
