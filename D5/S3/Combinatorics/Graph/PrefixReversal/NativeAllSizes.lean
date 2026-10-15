@@ -25,7 +25,8 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateExistence
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
-open private special_path_from_state SpecialPathFromState ordinary_from_state OrdinaryFromState from
+open NativeActualStateSuppliers
+open private special_path_from_state ordinary_from_state from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 
 private def finalPrefix (m : ℕ) : List (Fin (m + 1)) :=

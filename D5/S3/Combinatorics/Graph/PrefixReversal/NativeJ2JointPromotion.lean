@@ -156,7 +156,8 @@ private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
     dsimp only [P]
     rw [SimpleGraph.Walk.support_copy, W.childPieces j]
     simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
-      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.coeFn_mk, j, SimpleGraph.Walk.support_map,
+      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.comp_apply, RelHom.coeFn_mk, j,
+      SimpleGraph.Walk.support_map,
       List.flatMap_map, mapPiece, List.map_append, List.map_map,
       List.map_flatMap, Function.comp_def, List.flatMap_cons, List.flatMap_nil,
       List.map_cons, List.map_nil, List.append_nil]
@@ -165,7 +166,7 @@ private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
     dsimp only [P]
     rw [SimpleGraph.Walk.edges_copy, W.childPieces j]
     simpa only [parentPiece, childLift, lift, rawPParentMap, pMarkedParentLift,
-      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.coeFn_mk, j,
+      j2SpecialMap, SimpleGraph.Hom.comp, RelHom.comp_apply, RelHom.coeFn_mk, j,
       SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
       List.map_append, List.map_map, List.map_flatMap, List.map_cons, List.map_nil,
       Sym2.map_map, Sym2.map_mk, Function.comp_def, List.append_assoc,
