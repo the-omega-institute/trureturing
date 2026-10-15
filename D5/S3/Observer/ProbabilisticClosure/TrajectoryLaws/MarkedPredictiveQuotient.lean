@@ -132,7 +132,7 @@ theorem quotient_successor_mk (M : Bool → Matrix H H ℝ)
 
 open UnifilarPairSurvival
 
-private theorem word_quotient (M : Bool → Matrix H H ℝ)
+theorem word_quotient (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M)
     (n : ℕ) (i : H) (w : Fin n → Bool) (a : FutureClass M) :
     (if classOf M (endpoint (successor M) n i w) = a
@@ -162,7 +162,7 @@ theorem trajectory_first (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n �
     trajectory δ n i w 0 = i := by cases n <;> simp [trajectory]
 
 omit [Fintype H] in
-private theorem trajectory_last (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
+theorem trajectory_last (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
     trajectory δ n i w (Fin.last n) = endpoint δ n i w := by
   induction n generalizing i with
   | zero => rfl

@@ -3400,3 +3400,616 @@ relational-fiber problem follows from (PCA.67)–(PCA.81).
 [FCS]: FIB_NATIVE_FINITE_READER_CODE_SYNTHESIS.md
 
 ## 追加锚（本行以下为增补区）
+## 34. Two-sided saturation of every live cube prefix
+
+**Definition 34.1 (live histories at both execution minima).** Fix
+$n\ge5$, $3\le k\le n-2$, the supplied $A$ of Definition 23.1,
+and $r\ge0$. Throughout §§34–35, $P$ is any preparer of Convention
+23.2, correct for the original $\sigma_{A,k}$ on the whole
+$\mathcal U_*$, with
+
+$$
+q_P(u)\le n+1,\qquad \ell_P(u)\le3+W_A
+\quad(u\in\mathcal U_*).
+\tag{PCA.82}
+$$
+
+There is no restriction on its installed addresses, repeated literals,
+unused states, shared successors or union cycles. Its actual runs on
+Lemma 24.1's cube are used only as lower witnesses. In a finite
+execution history, let $S$ be the set of coordinates exposed by any
+query in $E_i$, let $h$ be their number of ones, and let
+$m=|S|-h$. An exposure includes a selected child query: all three
+addresses at either occurrence determine that same bit by (PCA.55).
+A history ending just before the next invocation is *live* if its
+cube completions have both prescribed bits, equivalently
+
+$$
+h<k,\qquad m\le n-k.
+\tag{PCA.83}
+$$
+
+Histories include all paid invocations already made, including
+cube-constant ones. Their sets and counts are proof notation, not
+accessible running coordinates. A live history cannot end at a
+latch: all its cube completions follow that history, whereas their
+two different original entries are required.
+
+**Lemma 34.2 (opposite-code comparisons on both sides).** For every
+cube vector $\theta$ of weight $k-1$, there is an actual origin
+$u^-_\theta\in\Pi_3$ of prescribed bit one such that every word
+distinguishing it from $u_\theta$ belongs to
+
+$$
+\mathcal C_c\cup\{RLR\},\qquad
+\mathcal C_c=RLL\mathcal W\ \cup\ RRL\mathcal W.
+\tag{PCA.84}
+$$
+
+For every cube vector $\eta$ of weight $k$, there is an actual
+origin $u^+_\eta\in Z_*$ of prescribed bit zero such that every
+word distinguishing it from $u_\eta$ belongs to
+$\mathcal C_3=RLR\mathcal W$. Both distinguishing sets contain
+$RLR$, and their intersection is exactly $\{RLR\}$. Every correct
+run on either of these cube vectors therefore has a distinguishing
+invocation outside $\bigcup_iE_i$, of length at least three.
+
+Proof. Keep $x_a=B_\theta$ and $x_{b_j}=D_j$ for $j=1,2,4$
+in (PCA.56), and replace $x_c$ by beta and $x_{b_3}$ by alpha,
+as in Theorem 25.2. All six values remain different. NBP Proposition
+9.3 gives a genuine finite inverse in $\Pi_3$, with its complete
+predecessor row $R_3$. Only the two $c$ cones and the $b_3$
+cone can change. In the latter cone the old beta and new alpha
+are leaves, so every nonempty suffix gives absent on both. Thus
+only its root $RLR$ can distinguish them there. The required bits
+are zero on $u_\theta$ and one on this comparison origin.
+
+For the positive side choose a branch image $D_3$ different from
+every $B_\eta$ in the finite cube and from $D_c,D_1,D_2,D_4$.
+The infinite branch-image supply of NBP Proposition 15.2 allows
+this choice. In (PCA.56), with vector $\eta$, replace only the
+beta $x_{b_3}$ by $D_3$. All six values are now distinct branch
+images. NBP Proposition 9.3 supplies an actual inverse in $Z_*$,
+whose prescribed bit is zero by (PCA.12), whereas $u_\eta$ has
+bit one. Only the $b_3$ cone changes.
+
+The every-address occurrence identity (NBP.9.7) proves these
+statements for all finite suffixes, including traversal past leaves.
+Words shorter than three remain exterior branches. The $c$ and
+$b_3$ cones are disjoint from every $E_i$ and from one another.
+At $RLR$ the respective reply pairs are beta/alpha and beta/branch,
+so that word belongs to both distinguishing sets and is their only
+common member. All repeated occurrences use the same whole value;
+all different-class disequalities and the full current row persist.
+
+Finally, if a cube run had no distinguishing invocation, the comparison
+source would follow its identical finite path to the identical literal
+entry latch. This contradicts the opposite prescribed bit and the
+injectivity of the original entry map. The required extra invocation
+is therefore on that same cube run, not on a separately maximized
+execution. $\square$
+
+**Theorem 34.3 (live-prefix saturation and the unique live profile
+literal).** Every live history of Definition 34.1 extends to each of
+two actual cube runs, one of final weight $k-1$ and one of final
+weight $k$, with the following properties.
+
+1. Every proper prefix before the last distinct selected-coordinate
+   query is live. Each completed run uses exactly $n$ selected
+   invocations, one at each coordinate, and exactly one further
+   invocation. Their total costs are exactly $n+1$ and $3+W_A$.
+2. Every invocation from a live history queries either a previously
+   unexposed coordinate $i$, at exactly $LLLw_i$ or $LRLw_i$,
+   or the literal $RLR$. There is at most one nonselected invocation
+   during the live portion. In particular a selected child, a repeated
+   bit, an unrelated constant or root word, and a second profile
+   invocation are excluded there.
+3. On the two saturated completions in part 1, the unique nonselected
+   invocation is $RLR$ and precedes the $n$th selected invocation.
+
+Proof. Start with the given live history. For a negative completion,
+answer each first exposure of a new coordinate by one until the
+total number of exposed ones is $k-1$, and then by zero.
+For a positive completion, instead answer new coordinates by zero
+until the total number of exposed zeros is $n-k$, and then by one.
+Previously exposed coordinates keep their values. Lemma 24.1 gives
+the actual reply for each such bit, including at selected children;
+every other word receives its fixed cube reply.
+
+For the negative rule every proper exposed prefix has at most $k-1$
+ones and at most $n-k$ zeros; its last fresh answer is the
+$(n-k+1)$st zero. For the positive rule the analogous last answer
+is the $k$th one. Thus both predicates remain possible until the
+$n$th distinct exposure. These rules are consistent with the
+starting history by (PCA.83). Every finite response history has
+actual cube completions.
+
+A latch before all $n$ exposures would give one entry to both
+required bits. Nor can a running state first repeat: all bit values
+used between its two visits have then been fixed, and any actual
+completion would repeat that stationary deterministic loop forever.
+The finite installed state set and sourcewise termination therefore
+force all $n$ distinct exposures. Their resulting vectors have the
+claimed weights, and their remaining paths are actual terminating
+cube runs.
+
+Lemma 34.2 supplies, on each of these very runs, one further
+distinguishing invocation outside the selected supports. The $n$
+distinct selected invocations charge at least $W_A$ letters, and
+that further invocation charges at least three. Both bounds in
+(PCA.82) are consequently equalities. There can be no repeated
+coordinate or second nonselected invocation anywhere on either
+saturated run. Every selected word must have its minimum length
+$s_i+4$, attained in $E_i$ only at its two occurrence roots;
+the unique nonselected word has length exactly three.
+
+Apply these two completions at a live history just before any
+specified next invocation. That invocation's installed word is the
+same in both completions, even if its next bit answer differs.
+If selected, it is fresh and is one of the two shortest roots.
+If nonselected, it is the sole nonselected word on both completed
+runs, and so must distinguish both respective comparisons of
+Lemma 34.2. Their intersection forces that word to be $RLR$.
+A prefix containing two nonselected invocations would itself
+occur in a saturated completion, which has only one. This proves
+parts 1 and 2 without identifying any installed states or
+declaring their union acyclic.
+
+It remains to exclude postponing the profile invocation until after
+all $n$ selected calls on a saturated run. If it were so postponed,
+the prefix through those calls would consist solely of the $n$
+shortest selected roots, with cost $n$ calls and $W_A$ letters.
+Hold their whole value $x_a=B_\theta$ fixed and choose three
+actual origins with $x_c=\beta$, the same branch values at
+$b_1,b_2$, and, respectively,
+
+$$
+(x_{b_3},x_{b_4})=(D_3,D_4),\quad
+(\alpha,D_4),\quad(D_3,\alpha).
+\tag{PCA.85}
+$$
+
+Choose the branch values to avoid $B_\theta$ and one another.
+These are actual $Z_c,\Pi_3,\Pi_4$ origins by NBP Proposition
+9.3. Their required bits are respectively $0,1,1$. They all follow
+that selected-only prefix, since both $a$ occurrences are identical.
+Each has at most one invocation and three letters left. A shorter
+word gives the common exterior branch. A length-three word at
+$a,b_1,b_2$ or either $c$ occurrence is common to all three.
+The $b_3$ root distinguishes only $\Pi_3$, and the $b_4$ root
+only $\Pi_4$. No one allowed invocation can separate $Z_c$ from
+both positive origins. Immediate latching also cannot do so.
+This contradicts whole-domain correctness and (PCA.82).
+
+Thus the sole nonselected invocation precedes the last selected
+one; its starting history is live. Part 2 identifies it as $RLR$.
+This proves part 3. The sources in (PCA.85), like those in Lemma
+34.2, are actual full-fiber comparison origins, not extra runtime
+ports or restrictions on upper inputs. $\square$
+
+## 35. A consumed saturation invariant in shared-state exclusion
+
+**Theorem 35.1 (a two-history exclusion for installed running states).**
+Let two live cube histories of the same preparer end at the same
+installed running state. Write their exposed coordinate sets as
+$S,T$ and their numbers of exposed ones as $h,g$. Set
+
+$$
+a=|S\setminus T|,\quad b=|T\setminus S|,\quad
+U=[n]\setminus(S\cup T),\quad u=|U|.
+$$
+
+Then the following integer intersection must be empty:
+
+$$
+[0,u]\ \cap\
+[k-h-b,k-h-1]\ \cap\
+[k-g-a,k-g-1]\ \cap\ \mathbb Z.
+\tag{PCA.86}
+$$
+
+Also, if $S=T$, then necessarily $h=g$. These are necessary
+conditions for sharing, not a sufficient sharing criterion or a
+converse construction.
+
+Proof. Suppose first that an integer $t$ lies in (PCA.86).
+Fix one assignment on $U$ with exactly $t$ ones. In the first
+history, after all of $U$ has these values, the unexposed part
+$T\setminus S$ still has the nonconstant residual threshold
+
+$$
+1\le k-h-t\le b.
+$$
+
+For the second history the corresponding assertion is
+$1\le k-g-t\le a$ on $S\setminus T$. Hence after any partial
+exposure of that fixed $U$ assignment both histories still have
+zero and one completions: complete the rest of $U$ as fixed and
+vary their respective remaining private sets. This argument does
+not require their old assignments on $S\cap T$ to agree.
+
+Follow the successors from the common state using that assignment
+on $U$. Every cube-constant word has the same reply in both
+histories. A selected word in $S\cup T$ would repeat a coordinate
+already exposed in at least one of the two still-live histories.
+Theorem 34.3 excludes that invocation. The same theorem excludes
+any selected child, any other nonselected word except $RLR$,
+a second $RLR$, or a repeat within $U$. Consequently the common
+continuation can use at most the $u$ fresh coordinates of $U$
+and one $RLR$. Both histories remain live throughout these
+possibilities, so a latch is impossible. After those finitely many
+possibilities are exhausted, no permitted next invocation remains.
+This contradicts correctness and sourcewise termination. This is
+the use of live-prefix saturation in the state-merger argument;
+mere equality of residual names is not a premise.
+
+Now suppose $S=T$ but, say, $h>g$. Apply Theorem 34.3 to the
+first history, taking its positive saturated completion of total
+weight $k$. Give the second history the same values on every
+coordinate outside $S$. Both actual cube sources then follow the
+same suffix from the alleged common state. Indeed, until its last
+fresh selected query the first run is live, so it queries only
+previously unread coordinates and possibly $RLR$; these replies
+agree on the two sources. On that saturated run all coordinates
+are read exactly once, and its unique $RLR$ precedes the last
+one. It therefore latches immediately after that last selected
+invocation, with no further source distinction. The second source
+reaches the same latch, but its total weight is
+$k-h+g<k$. Their required entries differ, a contradiction.
+Interchanging the histories covers $g>h$. $\square$
+
+**Corollary 35.2 (two explicit classes of forbidden live mergers).**
+Two live histories with the same exposed set and different hit
+counts cannot share a running state. Two live histories with the
+same number of exposed coordinates and the same hit count, but
+different exposed sets, cannot share a running state either.
+
+Proof. The first statement is the second part of Theorem 35.1.
+For the second put $d=|S|=|T|$ and $h=g$. Then
+$a=b>0$ and $n-d=a+u$. Liveness gives
+
+$$
+1\le k-h\le n-d=a+u.
+$$
+
+The integer interval $[k-h-a,k-h-1]$ is nonempty, its upper
+endpoint is nonnegative and its lower endpoint is at most $u$.
+It therefore intersects $[0,u]$. This makes (PCA.86) nonempty,
+contrary to Theorem 35.1. $\square$
+
+**Proposition 35.3 (the precise limitation of the exclusion).** The
+conclusions of Theorem 35.1 do not entail that an installed state
+determines an exposed set, hit count or live residual function.
+There is a whole-domain preparer at both execution minima with
+two live histories at one state for which both the exposed sets
+and hit counts differ.
+
+Proof. Proposition 36.1 below constructs such a preparer. At its
+common state take
+
+$$
+S=\{1,2,5\},\ h=0,\qquad
+T=\{1,3,4\},\ g=3,\qquad n=7,\ k=4.
+\tag{PCA.87}
+$$
+
+Here $a=b=u=2$. The two threshold intervals in (PCA.86) are
+$[2,3]$ and $[-1,0]$, so the exclusion does not apply. The
+two live residuals in (PCA.87) are the different functions proved
+in Proposition 36.1. Thus the empty-intersection case is a real
+remaining sharing class, not a license to assert a converse.
+$\square$
+
+## 36. A balanced-literal live merger on the entire original domain
+
+**Proposition 36.1 (same-state different live residuals with both
+execution maxima attained).** For the existing prescribed code
+$\sigma_{A,4}$ with $A=\{1,2,3,4,5,6,7\}$, there is a full
+Convention 23.2 preparer with
+
+$$
+H=47+r,\qquad p=8,\qquad \ell=59=3+W_A.
+\tag{PCA.88}
+$$
+
+Two live actual cube histories reach one common running state,
+with the exposed data of (PCA.87). Their respective residuals
+on unexposed coordinates are
+
+$$
+\theta_3\theta_4\theta_6\theta_7
+\quad\hbox{and}\quad
+\theta_2\vee\theta_5\vee\theta_6\vee\theta_7.
+\tag{PCA.89}
+$$
+
+Some subsequent actual executions repeat previously exposed
+selected coordinates. All literals, successors, running states
+and latches are installed and counted. The construction is
+larger than the old grid, whose count here is $20+r$.
+
+Proof. Write $a_i=LLL L^iR$ and $c_i=|a_i|=i+4$.
+For every source in $Z_{b_3}$ put
+$\theta_i=\mathbf1_{\{r_{x_a}(L^iR)=\mathsf{branch}\}}$.
+These seven bits are proof notation on an arbitrary branch image,
+not a promise that it has a comb shape. Put
+
+$$
+X=\{2,5\},\quad Y=\{3,4\},\quad R=\{6,7\},\qquad
+c_X=c_2+c_5=15=c_3+c_4=c_Y,
+\quad c_1=5,\quad c_R=21,\quad W_A=56.
+\tag{PCA.90}
+$$
+
+Use the two original-entry latches, denoted $L_0=\widehat e_0$,
+$L_1=\widehat e_1$. Every selected-query state below installs
+the word $a_i$ in its indicated coordinate $i$. Its zero
+successor is installed separately for each of alpha, beta and
+absent; its one successor is installed for branch. Thus the two
+successor columns specify all four actual native edges.
+
+Four disjoint fallback blocks use only the selected-query part
+of Theorem 26.1's threshold grid, with the following supplied
+coordinate orders and thresholds. They share only $L_0,L_1$.
+
+| Block and its start | Ordered remaining coordinates | Required remaining hits | Installed running states |
+| --- | --- | --- | --- |
+| $G_1$ | $(3,4,5,6,7)$ | $3$ | $3(5-3+1)=9$ |
+| $G_2$ | $(3,4,6,7)$ | $3$ | $3(4-3+1)=6$ |
+| $G_3$ | $(2,4,5,6,7)$ | $3$ | $3(5-3+1)=9$ |
+| $G_4$ | $(2,5,6,7)$ | $2$ | $2(4-2+1)=6$ |
+
+In each block the pair $(h,m)$ names a separately installed grid
+state, reading the $(h+m+1)$st coordinate of that displayed list.
+Its branch successor advances $h$ or latches $L_1$ at its required
+hit count; its other three successors advance $m$ or latch $L_0$
+when too few hits remain possible. These are precisely the
+successors (PCA.62), with the block's list and threshold substituted.
+No counter or computed address is installed alongside these states.
+
+Install the following thirteen further selected-query states,
+all distinct from every fallback state.
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $P_1$ | $1$ | $P_2$ | $P_3$ |
+| $P_2$ | $2$ | $P_5$ | $G_1$ |
+| $P_5$ | $5$ | $V$ | $G_2$ |
+| $P_3$ | $3$ | $G_3$ | $P_4$ |
+| $P_4$ | $4$ | $G_4$ | $V$ |
+| $V$ | $6$ | $V_0$ | $V_1$ |
+| $V_0$ | $7$ | $O_2$ | $J$ |
+| $V_1$ | $7$ | $J$ | $B_3$ |
+| $O_2$ | $2$ | $O_5$ | $L_1$ |
+| $O_5$ | $5$ | $L_0$ | $L_1$ |
+| $J$ | $1$ | $L_0$ | $L_1$ |
+| $B_3$ | $3$ | $L_0$ | $B_4$ |
+| $B_4$ | $4$ | $L_0$ | $L_1$ |
+
+The first five states form the head. The last eight form its shared
+continuation. Each table entry is a fixed state name; subscripts
+denote no auxiliary running memory.
+
+For completeness install the original two profile states, start at
+$D$, and use their unchanged four-successor table, replacing only
+the threshold-grid start by $P_1$.
+
+| State | Absolute literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D$ | $RLR$ | $L_1$ | $P_1$ | $T$ | $L_0$ |
+| $T$ | $RRR$ | $L_1$ | $L_0$ | $L_0$ | $L_0$ |
+
+Every mandated additional latch is installed, unused, and counted.
+The Boolean symbols in the proof specify successor choices; handoff
+carries the original complete entry $e_0$ or $e_1$, not a new
+one-bit encoding.
+
+We first prove correctness for every Boolean vector of selected
+replies. The four fallback entries are reached with, respectively,
+
+$$
+(\theta_1,\theta_2)=(0,1),\quad
+(\theta_1,\theta_2,\theta_5)=(0,0,1),\quad
+(\theta_1,\theta_3)=(1,0),\quad
+(\theta_1,\theta_3,\theta_4)=(1,1,0).
+$$
+
+Their already acquired hit counts are respectively $1,1,1,2$.
+The displayed fallback thresholds are therefore exactly the
+remaining requirements for four hits, and their lists contain
+every unqueried coordinate once.
+
+There are exactly two other routes to $V$:
+
+$$
+\lambda:\ \theta_1=0,\ \theta_2=\theta_5=0,
+\qquad
+\mu:\ \theta_1=1,\ \theta_3=\theta_4=1.
+\tag{PCA.91}
+$$
+
+On $\lambda$, four hits require every bit in $Y\cup R$ to be
+one. On $\mu$, the remaining task is OR on $X\cup R$.
+Both are nonconstant on their cube completions, proving liveness
+and (PCA.89). The selected query at $V$ has not yet been made.
+
+For the correctness proof only, let $t=\theta_6+\theta_7$.
+The three scan states $V,V_0,V_1$ route $t=0$ to OR on $X$,
+$t=1$ to the single query $J$ of $\theta_1$, and $t=2$ to
+AND on $Y$. This is the fixed table above, not a runtime sum.
+On $\lambda$ the first two exits return zero because
+$\theta_X=00$ and $\theta_1=0$; the last exit computes exactly
+the necessary AND on $Y$. On $\mu$ the first exit computes
+the necessary OR on $X$; the other two return one because
+$\theta_1=1$ and $\theta_Y=11$. Thus every route computes
+the original four-hit predicate.
+
+This verification holds for every possible Boolean vector, hence
+for the seven branch indicators of every finite branch image in
+$Z_{b_3}$, regardless of interior shape, depth, leaf labels or
+absent selected nodes. The occurrence identity (NBP.9.7) identifies
+each $a_i$ reply with that actual indicator. Outside $Z_{b_3}$,
+$D$ directly handles $\Pi_3$. When $b_3$ is branch the only
+code-one remaining profile is $\Pi_4$, detected at $T$ by alpha
+at $b_4$. All other profiles on that route latch zero, exactly as
+in Theorem 26.1. These are all eleven original profiles.
+The root absent edges are installed even though those roots are
+reached on this domain. Each selected alpha, beta and absent reply
+uses its own installed zero edge. No finite address is removed
+from the native permission or replaced by a computed relative one.
+
+For the execution bounds, any fallback route reads an initial
+segment of distinct coordinates and then each remaining coordinate
+at most once, so it uses at most seven selected calls and $W_A$
+letters. On a shared route the head costs three selected calls.
+The $R$ scan costs two. The final OR or AND uses at most two
+more, and $J$ uses one. There are therefore at most seven selected
+calls. A $\lambda$ head has literal charge $c_1+c_X$ and a
+$\mu$ head has $c_1+c_Y$. Their scan adds $c_R$.
+Either two-query exit adds at most $c_X=c_Y$; the single-query
+exit adds $c_1\le c_X=c_Y$. Consequently every shared route
+also has selected literal charge at most $W_A$. This is where
+the balanced absolute-literal equality in (PCA.90) is needed:
+a repeat is paid by omitting a group of equal total length,
+not by treating that repeat as free.
+
+Adding $D$ gives at most eight calls and $3+W_A=59$ letters
+on a selected path. A nonselected profile route has at most two
+calls and six letters. Every route terminates; in fact this
+constructed installed graph is acyclic. Lemma 24.1's actual
+all-zero cube origin follows
+
+$$
+D,\ P_1,\ P_2,\ P_5,\ V,\ V_0,\ O_2,\ O_5,\ L_0.
+\tag{PCA.92}
+$$
+
+It has seven selected calls, including real repeats of coordinates
+$2,5$, and selected charge
+$c_1+2c_X+c_R=56$. This one genuine source attains both
+maxima in (PCA.88).
+
+There are $5$ head states, $8$ shared-continuation states and
+$9+6+9+6=30$ fallback states, hence $43$ selected-query
+states. Adding $D,T$, the two original-entry latches and all
+$r$ mandated latches gives exactly $47+r$. No uncounted selector,
+phase state, working register or stored source has been used.
+The original reader remains its separate eight-state apparatus,
+with all five complete canonical predecessor-row outputs, two
+fresh calls at most and six fresh letters at most. All original
+holes, equalities, different-class disequalities and blocking guards
+in those outputs remain as in Convention 23.2. The table generates
+the original prescribed entry on each identical source; it does
+not select another compatible encoder.
+
+Finally, Lemma 24.1 supplies actual cube origins for every
+completion of either history (PCA.91). The common state $V$
+therefore genuinely merges two live, different residuals on the
+original domain. On $\lambda$ with $\theta_6=0$, the predicate
+is already zero, whereas on $\mu$ with that same reply it still
+depends on $X$ and $\theta_7$. Both enter the same $V_0$.
+Replacing that state globally by the former history's zero latch
+would corrupt the latter history. The repeats in (PCA.92) belong
+to a suffix that is essential on other histories. This is a
+live merger before certification, rather than insertion of a
+disposable paid tail after a common certificate. Its larger count
+does not disprove a no-larger normalization theorem or the grid
+optimum; either assertion would require its own proof. $\square$
+
+## 37. Supplier hypotheses and the remaining state comparison
+
+**Proposition 37.1 (scope of the resulting state comparison).** Under
+Definition 32.2, for $3\le k\le n-2$ every candidate table at
+both execution minima obeys Theorem 34.3 and the exclusions of
+Theorem 35.1. Nevertheless these results do not give an
+original-state quotient in which every live state has one
+threshold residual, and do not determine
+$H_{\mathrm{exec}}(A,k;r)$ or $H_{\min}(A,k;r)$.
+
+Proof. The first claim applies the preceding theorems to exactly
+the competitors of Definition 32.2. The second claim about an
+original-state quotient follows from Proposition 36.1: its same
+state $V$ has the two different nonconstant restrictions (PCA.89).
+An assignment of one residual to that original state cannot
+represent both, and first-certificate truncation at $V_0$
+conflicts on the two histories just proved. Splitting states,
+changing their query words, or replacing an entire table may
+produce another representation, but preservation of installed
+cardinality, the prescribed code and both execution caps would
+then be additional obligations.
+
+In particular no bound stronger than (PCA.81) is deduced here.
+The grid remains an upper at both execution minima. The example
+(PCA.88) has a larger installed count and supplies a structural
+counterexample, not an improved resource optimum. The unrestricted
+minimum also still allows the already supplied paid multiple-scan
+constructions of §§29–33. $\square$
+
+**Attribution 37.2 (classical hypotheses and source-specific
+deductions).** Wegener, *The Complexity of Boolean Functions*,
+Chapter 14 §4, Definition 4.1 and Theorems 4.1 and 4.3,
+[printed pp. 423–425][WBP], owns the optimal synchronous
+read-once representation of symmetric functions and its residual
+count. The proof on printed p. 424 expressly uses that every
+graph path in a BP1 is realized by an input, a property it
+does not claim for general branching programs. Bryant,
+[§2, Definition 1][BRY], requires strictly increasing argument
+indices on nonterminal edges. These are genuine additional
+hypotheses. Live-prefix freshness proved here is not a proof
+that an arbitrary installed native graph meets them; Proposition
+36.1 already obstructs the direct residual assignment, even
+with an acyclic constructed graph.
+
+Sinha, *Some Topics in Parallel Computation and Branching
+Programs*, [§2.1.3, printed p. 17][SINHA95], allows cycles
+provided no semantic path contains a cycle, and records the
+Pippenger leveling construction with $(l+1)s$ states for size
+$s$ and semantic length $l$. That construction's copies do
+not establish a cardinality-preserving comparison for the
+native installed-state question. The classical results remain
+their suppliers' results; no read-once optimality theorem is
+reproved or imported beyond its hypotheses.
+
+The native mathematical suppliers are NBP Proposition 9.3,
+(NBP.9.7), Proposition 15.2 and the unchanged reader of Theorem
+15.5; here their contracts are Definitions 1.1–2.2 and 4.1–4.2,
+Convention 23.2 and Lemma 24.1. Theorem 26.1 supplies the
+reused fallback grids and profile front. The added deductions
+are the two-sided actual comparisons and their all-prefix
+saturation, its consumption in (PCA.86), and the balanced-literal
+full-domain live merger (PCA.88). Their consumer is the
+installed-state gap of Definition 32.2 and Proposition 32.3. They are
+repository-derived ordinary-paper arguments, without a current
+kernel or worldwide-priority claim.
+
+[Bounded native preparer synthesis, Theorems 8.3 and 9.1 and
+Convention 11.3][BPS34], and [Polynomial origin certificates,
+§9, Lemma 9.1][POC34], preserve an attained joint relation
+and SAME budgets while allowing different pointwise generated
+bits on different matched actual sources. Their SOME-code
+normalization supplies no preservation of the independently
+prescribed $\sigma_{A,k}$ on the identical source.
+[Native weight optimization, §8, Open problem 8.4][NWO34],
+retains its distinct local-to-global compatibility and
+native-completion obligations. No entropy, certificate or
+finite-relaxation optimum from those contracts is substituted
+for a native shared-state exclusion here.
+
+All services and separate prices in Assumption 33.2 remain
+supplied: actual origin/version binding and update, acquisition
+and authentication, export, isolation, code-only handoff,
+faithful complete reader entry and stationary truthful service.
+Every installed running, latch and whole-output state retains
+its appropriate phase's charge; every actual invocation and
+absolute literal is paid. Table representation, literal storage,
+entry and whole-output contents, initialization, handoff,
+service storage, time and energy keep their separate prices.
+Neither the lower comparisons nor the full-domain construction
+adds an archive, source copy, address operation, decoder,
+counter or unpriced phase coordinate.
+
+[BPS34]: FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md
+[POC34]: FIB_NATIVE_POLYNOMIAL_ORIGIN_CERTIFICATES.md
+[NWO34]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,72 @@
+
+
+Positivity of every Kraus-word summand and (3.9) give, for every such word of length $k$ and every initial eigenvector,
+
+$$
+t\|\sigma^{1/2}A_w\eta_b\|^2
+\le\operatorname{Tr}[\sigma T^k(B)]\le\epsilon.
+\tag{3.12}
+$$
+
+This includes the empty word. Substitution and the vector triangle inequality give $\|\sigma^{1/2}e_j\|\le C\sqrt{\epsilon/t}$. Hence
+
+$$
+\operatorname{Tr}(\sigma P)
+=\sum_{j=1}^m\|\sigma^{1/2}e_j\|^2
+\le DC^2\frac\epsilon t.
+\tag{3.13}
+$$
+
+To control the entire leakage from this approximately invariant space, use the Kraus row $V$ in (3.5) and $\widehat P=\operatorname{diag}(P,\ldots,P)$ on $H^{\oplus M}$. Then
+
+$$
+\begin{aligned}
+\|QV\widehat P\|_\infty^2
+&\le\|QV\widehat P\|_2^2
+=\sum_{a=1}^M\sum_{j=1}^m\|QA_ae_j\|^2
+\le D^3\delta^2,\\
+\alpha&:=D^{3/2}\delta=\frac p{8n}.
+\end{aligned} \tag{3.14}
+$$
+
+For $X=PXP$, set $\widehat X=\operatorname{diag}(X,\ldots,X)$. The identity $T(X)-PT(X)P=QT(X)+PT(X)Q$ gives
+
+$$
+\begin{aligned}
+T(X)-PT(X)P
+={}&QV\widehat P\widehat X\widehat P V^\dagger\\
+&+PV\widehat P\widehat X\widehat P V^\dagger Q.
+\end{aligned} \tag{3.15}
+$$
+
+The first term includes the $Q$-$Q$ and $Q$-$P$ blocks once each, and the second the $P$-$Q$ block. The projections and $V$ are contractions; (3.14), also applied to the adjoint factor, bounds each term by $\alpha\|X\|_\infty$. Thus all leakage, including coherences, is at most $2\alpha\|X\|_\infty$.
+
+Define $T_P(X)=PT(PXP)P$. Its Kraus matrices $PA_aP$ satisfy
+
+$$
+\sum_a PA_aP A_a^\dagger P\le PT(I)P\le P\le I.
+\tag{3.16}
+$$
+
+It is subunital and contracts operator norm. Since $0\le B_+\le P$ and $T_P(P)\le P$, positivity gives $0\le T_P^j(B_+)\le P$ for all $j$. Put $Y_j=T_P^j(B_+)$. The iterate difference is
+
+$$
+T^{j+1}(B_+)-Y_{j+1}
+=T\big(T^j(B_+)-Y_j\big)+T(Y_j)-PT(Y_j)P.
+\tag{3.17}
+$$
+
+The first term has norm at most the preceding error; the second at most $2\alpha$ by (3.15), since $Y_j=PY_jP$ and $\|Y_j\|_\infty\le1$. The initial error is zero, giving $\|T^n(B_+)-T_P^n(B_+)\|_\infty\le2n\alpha=p/4$. Also $0\le T^n(B_-)\le tI$ by subunitality. Trace against $\sigma$ to get
+
+$$
+\begin{aligned}
+p&\le\operatorname{Tr}[\sigma T^n(B)]\\
+&\le\operatorname{Tr}(\sigma P)+2n\alpha+t\\
+&\le DC^2\frac\epsilon t+\frac p4+\frac p4.
+\end{aligned} \tag{3.18}
+$$
+
+Both $p,t$ are positive, so $t\le2DC^2\epsilon/p$. Using $t=ps/4$ yields $s\le8DC^2\epsilon/p^2$, which is (3.7). At $\epsilon=0$ the argument contradicts $s>0$ without dividing by $\epsilon$.
+
+For $r=D$, $B\ge\lambda_D(B)I$ and the first early inequality give $\lambda_D(B)\le\operatorname{Tr}(\sigma B)\le\epsilon$. If $n$ is an early index, the hypotheses can force $p\le\epsilon$ but the proof is unchanged. An empty Kraus family makes the positive late condition impossible for $n\ge1$; it creates no exceptional nonzero case. $\square$
+
