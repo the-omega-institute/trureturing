@@ -862,7 +862,7 @@ def evidence : Registration arena (∀ (q : ℕ) (hq : 0 < q),
   dependence := dependence
 
 def registration :
-    Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    Contract.Registration.{_,_,_,0,0,0,0,1,0,0,0,0,0}
       (_root_.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.common_residue_cardinality)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.ConceptDynamics.Coding.ResetIntegralGluing.uniformAudit.common_residue_cardinality.unit
