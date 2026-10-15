@@ -430,7 +430,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         with tempfile.TemporaryDirectory() as temporary:
             stage = pathlib.Path(temporary)
             with tarfile.open(archive) as source:
-                source.extractall(stage, filter="data")
+                source.extractall(stage)
             seal = stage / "build/stratalint/raw-lean-report.json.reuse.json"
             value = json.loads(seal.read_text())
             value["inputs"]["report_format"] = "incompatible-report-format"

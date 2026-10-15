@@ -131,16 +131,25 @@ def state(root):
 def regenerate(root, *command):
     """Explicit report-only rebuild, called inside lean-cache-run's writer guard.
 
-    Compiled Lean and dependency directories are outside this generated state.
-    Removing the state also removes traces, pending/previous leaves and the
-    aggregate. Disable Lake's content-store restoration for this invocation so
+    Remove generated report leaves, traces and the aggregate, retaining native
+    program directories and compiler input projections. Mathematical Lean and
+    dependency build directories lie outside this report state. Disable Lake's
+    content-store restoration for this invocation so
     identical input traces cannot resurrect the discarded report artifacts.
     """
     if not command:
         raise ValueError('report regeneration requires a build command')
     generated = state(root)
-    if generated.exists() or generated.is_symlink():
-        shutil.rmtree(generated)
+    if generated.is_symlink():
+        raise ValueError('report state must not be a symlink')
+    if generated.exists():
+        for path in generated.iterdir():
+            if path.name in {'producer', 'interface', 'reg', 'judge-inputs'}:
+                continue
+            if path.is_dir() and not path.is_symlink():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
     subprocess.run(command, cwd=root, check=True,
                    env=dict(os.environ, LAKE_ARTIFACT_CACHE='false', LAKE_RESTORE_ARTIFACTS='false'))
 
