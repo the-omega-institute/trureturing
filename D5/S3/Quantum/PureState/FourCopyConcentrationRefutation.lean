@@ -59,9 +59,7 @@ def claim : Prop :=
 
 /-- The product of singlets on positions `(1, 2)` and `(3, 4)`. -/
 def u (q : Q) : ℂ :=
-  if q = ((0, 1), (0, 1)) ∨ q = ((1, 0), (1, 0)) then 1 / 2
-  else if q = ((0, 1), (1, 0)) ∨ q = ((1, 0), (0, 1)) then -1 / 2
-  else 0
+  rationalSinglets ((q.1.1, q.2.1), (q.1.2, q.2.2))
 
 /-- The orthogonal second singlet-sector vector. -/
 def v (q : Q) : ℂ := (Real.sqrt 3 : ℂ)⁻¹ * (2 * rationalSinglets q - u q)
