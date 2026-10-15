@@ -15,12 +15,12 @@ $S$ by one own-coordinate reply or is constant. The residual target itself may
 also be determined on a particular subset of $S$. For a nonnegative whole-block
 weight $w$ put
 
-$$
+```math
 R_S(w)=\max_{a}
 \sum_y\max_z
 \sum_{\substack{x\in S:r_a(x)=y\\g_{q_*}(x)=z}}w(x),
 \tag{SRP.1}
-$$
+```
 
 where the constant experiment is included among the choices of $a$. The set
 obtained by choosing, for each attained reply $y$, one maximizing residual
@@ -64,10 +64,10 @@ It remains to consider a directed cycle. Write the residual equation at $i$
 as $g_{q_i}(x_i)=f_i(x_{i+1})$, with indices cyclic, where each $f_i$
 factors through one own reply. Define
 
-$$
+```math
 M_i(u,v)=\sum_{\substack{x_i:g_{q_i}(x_i)=u\\f_{i-1}(x_i)=v}}w_i(x_i),
 \qquad h_i(v)=\max_uM_i(u,v).
-$$
+```
 
 The cycle mass is
 $\sum_{z_1,\ldots,z_\ell}\prod_iM_i(z_i,z_{i-1})$. Entrywise domination by

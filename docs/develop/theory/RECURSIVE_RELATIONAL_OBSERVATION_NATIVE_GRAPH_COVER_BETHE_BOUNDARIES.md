@@ -69,10 +69,9 @@ arbitrary block weight into pairwise constructor weights.
 
 ## 2. The two-state cycle calculation
 
-For $h=1$ write $u_{ab}=\langle\operatorname{bit}(a),
-\operatorname{bit}(b)\rangle$ and let $F=(f(a,b))_{a,b\in\{0,1\}}$. Choose the
-successor pattern in which block $i$ has state $u_{b_i b_{i+1}}$ on a cycle of
-length $\ell$. Then
+For $`h=1`$ write $`u_{ab}=\langle\operatorname{bit}(a),\operatorname{bit}(b)\rangle`$
+and let $`F=(f(a,b))_{a,b\in\{0,1\}}`$. Choose the successor pattern in which
+block $`i`$ has state $`u_{b_i b_{i+1}}`$ on a cycle of length $`\ell`$. Then
 
 $$
 Z_\ell(F)=\frac{\operatorname{tr}(F^\ell)}{W^\ell}.
@@ -81,11 +80,11 @@ $$
 
 Take the positive rational matrices
 
-$$
+```math
 F_-=\begin{pmatrix}1&3\\3&1\end{pmatrix},
 \qquad
 F_+=\begin{pmatrix}3&1\\1&3\end{pmatrix},
-$$
+```
 
 and give each of the other seven states of $S_2$ weight $1/10$. In both cases
 $W=87/10$. The eigenvalues are $4,-2$ for $F_-$ and $4,2$ for $F_+$, so

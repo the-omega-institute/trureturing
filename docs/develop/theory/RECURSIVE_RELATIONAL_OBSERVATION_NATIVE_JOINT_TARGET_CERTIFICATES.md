@@ -130,9 +130,10 @@ $\pi$ of the coordinates, let $T_i(\pi)$ contain those hard targets whose
 chosen donor precedes $i$. The vector $Y_{i,T_i(\pi)}$ is a function of $X_i$
 and also a function of the preceding coordinates. Therefore
 
-$$
+```math
 I(X_i;X_{\mathrm{pre}(i)})\ge H(Y_{i,T_i(\pi)}).
-$$
+```
+
 For any subset of an ordered list, chain rule and conditioning monotonicity
 show
 
@@ -411,11 +412,11 @@ $$
 
 Every cap accepted by $V_b$ at $\mu_h$ satisfies
 
-$$
+```math
  C\ge T_{k,b}:=
  \frac{204^{k-b}\,11472^{b/2}}{429^k}>B.
 \tag{JTC.14}
-$$
+```
 
 **Proof.** A coarse target is constant above the scaffold or depends on one
 frontier module. A bundle of at most $b$ targets touches at most $b$ modules.
