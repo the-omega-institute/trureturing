@@ -118,7 +118,7 @@ $$\operatorname{D5.S3.Quantum.Analysis.KeplerCoulombSphereQESCoefficients.claim}
 
 *Commentary.*
 
-Normalize with z = Q squared divided by curvature, dividing each positive even-index coefficient by Q. An explicit polynomial solution satisfies the normalized equations by telescoping identities. The recurrence forces every solution to be proportional to this polynomial solution, and the first equation fixes the proportionality constant. The denominator and the odd-index numerator polynomials have strictly positive coefficients through their degrees. Their coefficients give b and c, and evaluation at nonnegative z makes the denominator strictly positive. Rescaling by curvature yields the two families of factorial ratios, products and polynomial brackets.
+Normalize with z = Q squared divided by curvature, dividing each positive even-index coefficient by Q. An explicit polynomial solution satisfies the normalized equations by telescoping identities. The recurrence forces every solution to be proportional to this polynomial solution, and the first equation fixes the proportionality constant. As polynomials in z, the common denominator of (4.19)-(4.24) and, for admissible k, the odd-index brackets have strictly positive coefficients through their degrees; for odd m each bracket is the normalized odd-index numerator, while for even m that numerator has zero constant term and the bracket is that numerator divided by z. Their coefficients give b and c, and evaluation at nonnegative z makes the denominator strictly positive. Rescaling by curvature yields the two families of factorial ratios, products and polynomial brackets.
 
 ## References
 
