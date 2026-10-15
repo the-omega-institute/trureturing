@@ -70,7 +70,10 @@ internal sealed class GeigerKedemSpinEntropyPhaseRefutationDocument : IScribeDoc
                             + "The Shannon terms agree for the two phases, so the entropy at "
                             + "phaseZ = Real.pi minus the entropy at phaseZ = 0 is 1/891. "
                             + "This nonzero difference contradicts the universal phase-independence assertion."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("geiger-kedem-2022-spin-one-entropy-phase-independence-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
