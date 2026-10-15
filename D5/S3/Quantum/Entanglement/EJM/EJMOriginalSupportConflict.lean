@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict
    mirror-E: none(waiver:original-support-natural-join-refutation)
-   anchors: [D5/S0/Certificates/FiniteNaturalJoin, D5/S3/Quantum/Entanglement/EJMInflationScore]
+   anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict.claim; result=D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict.result; claim=D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict.claim
    digest: No original twenty-coordinate event simultaneously occupies the full outcome orbits at singleton8 and triangles2 and3. -/
 
