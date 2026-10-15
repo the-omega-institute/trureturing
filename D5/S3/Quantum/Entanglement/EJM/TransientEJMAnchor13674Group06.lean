@@ -21,6 +21,7 @@ def table (x13 x16 x18 : Fin 4) : ℤ :=
 set_option trace.profiler true in
 private theorem sum_receipt : ∀ (x13 x16 x18 : Fin 4),
     table x13 x16 x18 = TransientEJMAnchor13674Factor25.table x13 x16 x18 := by
+  intro x13 x16 x18
   rfl
 
 def lowerAt (e : Event (Fin 20) (Fin 4)) : ℤ :=
