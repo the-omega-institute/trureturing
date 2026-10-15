@@ -3452,3 +3452,905 @@ assumption. Their existence cannot establish any of the listed physical
 or operational conclusions. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 25. Moving resolution with the original killed source
+
+**Definition 25.1 (fixed data, complete domains and the two charges).**
+Fix, before choosing a parameter neighbourhood or a time family,
+
+$$
+0<Z<1,\quad H=(1-Z)/2,\quad
+0<l<k_0<u<H,\quad \varepsilon>0,\quad \tau_{\min}>0.
+\tag{25.1}
+$$
+
+For every sufficiently small nonzero real $\kappa$ of either sign use
+exactly Definition 20.1. Thus $X=Y=H+\kappa$, the probabilities are
+
+$$
+(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+\tag{25.2}
+$$
+
+all preparation phases are arbitrary and immutable, the amplitude
+convention is negative, and the increments satisfy $h_2=0$, $h_1=h_3=v$.
+The unimodular coordinates are $\theta=h_{13}$, $D=h_0-h_{13}$ and $v$,
+each of actual period $2\pi$. The full cylinder, measure and pole are
+
+$$
+\Omega=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad I=(l,u),\quad d\mu=dk\,d\theta\,dv\,dD,
+\quad o=(k_0,0,0,0).
+\tag{25.3}
+$$
+
+Retain $P=\partial_k$ and the original $Q$ with
+$d=(1,-1,0,-1,1)$, $\mathcal I_\kappa=
+\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}$ and
+$w_s=d_s/(p_{\kappa,s}\mathcal I_\kappa)$.
+For subsequent estimates write its already supplied coefficients as
+
+$$
+\begin{aligned}
+s_\kappa&=H+\kappa,& \alpha_\kappa&=\kappa+\kappa^2/H,\\
+A_\kappa&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-\alpha_\kappa)},&
+B_\kappa&=-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},&
+b_\kappa&=\frac{s_\kappa-k}{H(k-\alpha_\kappa)},\\
+Q_\kappa&=A_\kappa\partial_\theta+B_\kappa\partial_v
+                 +\kappa b_\kappa\partial_D.
+\end{aligned}
+\tag{25.4}
+$$
+
+There is one $v$ coefficient. Let $T_\kappa$, $\mathcal F_\kappa$ and
+$L_\kappa$ be the complete free form, its horizontal closure and its
+Friedrichs operator in (20.4). The covariance is
+$\operatorname{diag}(\varepsilon^2,1)$, with diffusion covariance twice
+this matrix times $dt$. The original clock is $e^{-tL_\kappa}$.
+Both height faces are absorbing and every phase is periodic.
+Put
+
+$$
+d_I=u-l,\qquad \lambda=\frac{\varepsilon^2\pi^2}{d_I^2},\qquad
+\phi(k)=\sqrt{2/d_I}\sin\frac{\pi(k-l)}{d_I}.
+\tag{25.5}
+$$
+
+For every $\tau\ge\tau_{\min}$ define, in that clock,
+
+$$
+V_{\kappa,\tau}(y)=\int_\tau^\infty p_\kappa(t,o,y)dt,
+\qquad S(\tau)=\mathbb P_{k_0}(\zeta>\tau),
+\tag{25.6}
+$$
+
+where $\zeta$ is the first exit from $I$ of
+$K_t=k_0+\sqrt2\varepsilon B_t^1$. The source equation, both deaths
+and its charge are those of Theorem 20.2:
+
+$$
+L_\kappa V_{\kappa,\tau}=p_\kappa(\tau,o,\cdot),\qquad
+\int p_\kappa(\tau,o,y)d\mu(y)=S(\tau)\in(0,1).
+\tag{25.7}
+$$
+
+Compare exactly the two fields
+
+$$
+W_{\rm raw}=V_{\kappa,\tau},\qquad
+W_{\rm unit}=V_{\kappa,\tau}/S(\tau).
+\tag{25.8}
+$$
+
+The second has effective source $p_\kappa(\tau,o,\cdot)/S(\tau)$ of
+charge one; propagation in its inverse $L_\kappa^{-1}$ still has both
+height deaths. It is not a reset source or the Green field of a
+survival-conditioned free generator. Theorem 20.2 and Theorem 23.1,
+applied at each fixed pair $(\kappa,\tau)$, give bounded positive
+multipliers before the following attractive forms are used. They are
+closed on exactly $\mathcal F_\kappa$, have operator domain
+$D(L_\kappa)$, compact resolvent, and attained finite minima
+
+$$
+E_\sigma(\kappa,\tau;g)=
+\inf_{\substack{f\in\mathcal F_\kappa\\\|f\|_2=1}}
+\left(T_\kappa[f]-g\int W_\sigma|f|^2d\mu\right),\qquad g>0.
+\tag{25.9}
+$$
+
+Here the infimum is over the entire original domain. The unregularized
+full point-field collapse of Theorem 3.1 remains a different, reused
+statement. No attractive evolution is a premise of any estimate below.
+
+## 26. All-time native heat bounds and the actual circle gap
+
+**Theorem 26.1 (joint heat estimate and hidden-circle mixing).**
+For the fixed data (25.1), there is one $\kappa_*>0$ and constants
+$c,C>0$, independent of $\kappa,t,\tau$ and $g$, such that, for both
+signs $0<|\kappa|\le\kappa_*$ and every $t\ge\tau_{\min}$,
+
+$$
+0<p_\kappa(t,o,y)\le
+ C e^{-\lambda t}\left(1+\frac1{|\kappa|\sqrt t}\right)
+\qquad(y\in\Omega).
+\tag{26.1}
+$$
+
+In particular, throughout that same neighbourhood and for all
+$\tau\ge\tau_{\min}$,
+
+$$
+\|V_{\kappa,\tau}\|_\infty\le
+ C e^{-\lambda\tau}\left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\tag{26.2}
+$$
+
+The lowest free eigenvalue is exactly $\lambda$, with normalized
+positive eigenfunction $(2\pi)^{-3/2}\phi(k)$. If
+$\delta_\kappa$ is the gap above it, then
+
+$$
+c\kappa^2\le\delta_\kappa\le C\kappa^2.
+\tag{26.3}
+$$
+
+For $t\ge\max(\tau_{\min},|\kappa|^{-2})$ one also has, uniformly
+in every actual phase and every height,
+
+$$
+\left|e^{\lambda t}p_\kappa(t,o,y)
+ -\frac{\phi(k_0)\phi(k)}{(2\pi)^3}\right|
+ \le C e^{-c\kappa^2t}.
+\tag{26.4}
+$$
+
+Thus (26.1) includes winding and mixing at times of order
+$|\kappa|^{-2}$ and beyond. The additive constant in its factor
+$1+(|\kappa|\sqrt t)^{-1}$ is the actual-circle saturation of the
+hidden heat factor.
+
+Proof. The argument uses the actual phase Fourier series and scalar
+Dirichlet operators; it does not assume a uniform hypoelliptic heat
+constant. Choose a closed two-sided parameter interval on which all
+probabilities on a slightly larger height interval have positive
+margins. The coefficients in (25.4) and their derivatives are then
+uniformly bounded on $[l,u]$, and $0<m\le b_\kappa\le M<\infty$.
+All subsequent parameter restrictions are fixed independently of time.
+
+Write $a_\kappa(k)=(A_\kappa(k),B_\kappa(k),b_\kappa(k))$.
+For $\eta\in\mathbb R^3$ let
+
+$$
+H_{\kappa,\eta}=-\varepsilon^2\partial_k^2+
+                 |\eta\cdot a_\kappa(k)|^2
+\quad\hbox{on }H_0^1(I),\qquad
+\beta_\kappa(\eta)=\inf\sigma(H_{\kappa,\eta}).
+\tag{26.5}
+$$
+
+The phrase ``on $H_0^1$'' specifies its form domain; the operator is
+the scalar Dirichlet Friedrichs realization. We prove the uniform bound
+
+$$
+\beta_\kappa(\eta)\ge\lambda+c\Psi(|\eta|),\qquad
+\Psi(r)=\begin{cases}r^2,&0\le r\le1,\\r^{2/3},&r\ge1.\end{cases}
+\tag{26.6}
+$$
+
+The following elementary one-dimensional estimates are intermediate
+steps in this native Fourier calculation. For $|e|=1$, the numerator
+of $v_{\kappa,e}=e\cdot a_\kappa$ with denominator
+$2H(k-\alpha_\kappa)$ is the quadratic polynomial
+
+$$
+P_{\kappa,e}(k)=e_1(k-2\kappa)(s_\kappa-k)
+                 -e_2k(k-2\kappa)+2e_3(s_\kappa-k).
+\tag{26.7}
+$$
+
+At zero its coefficient vector is
+$(2He_3,He_1-2e_3,-e_1-e_2)$. The map from $e$ to these three
+coefficients is invertible. By continuity its inverse remains uniformly
+bounded after a single parameter shrink. The denominator is bounded
+above and below by positive constants. Hence, uniformly in $\kappa,e$,
+
+$$
+\|v_{\kappa,e}\|_\infty\le M_1,\qquad
+|\{k\in I:|v_{\kappa,e}(k)|\le s\}|\le C_1\sqrt s
+\quad(0<s\le1).
+\tag{26.8}
+$$
+
+For the second inequality, a measurable set of length $b>0$ contains
+three points whose successive distances are at least $b/4$, up to an
+arbitrarily small reduction. If a quadratic is bounded there by $C s$,
+its Lagrange interpolation formula bounds its coefficient norm by
+$C' s/b^2$, since $I$ is bounded. The uniform lower coefficient norm
+in (26.7) gives $b\le C''\sqrt s$. Applying this to the sublevel set
+proves (26.8), including linear and constant polynomial cases.
+
+For normalized $f\in H_0^1(I)$ put
+
+$$
+\mathcal E=\varepsilon^2\|f'\|_2^2+
+ r^2\|v_{\kappa,e}f\|_2^2,\qquad r>0.
+$$
+
+One-dimensional Sobolev and Dirichlet Poincare give
+$\|f\|_\infty^2\le2\|f'\|_2\le2\sqrt{\mathcal E}/\varepsilon$
+and $\mathcal E\ge\lambda$. Splitting its unit norm over the sublevel
+set in (26.8) and its complement yields
+
+$$
+1\le C\sqrt{s\mathcal E}+\frac{\mathcal E}{r^2s^2}.
+\tag{26.9}
+$$
+
+Choose $s=c_0/\mathcal E$, where $c_0\le\lambda$ is fixed small
+enough to make the first term at most $1/2$. It follows that
+$\mathcal E\ge c_1 r^{2/3}$, uniformly for every normalized $f$.
+This proves the needed large-frequency growth without a boundary
+subelliptic estimate.
+
+For small frequencies, compactness of the parameter interval and unit
+sphere and the polynomial independence give
+
+$$
+m_1:=\inf_{\kappa,|e|=1}\int_I
+             |v_{\kappa,e}|^2\phi^2dk>0.
+\tag{26.10}
+$$
+
+Indeed a zero integral would make the polynomial (26.7) identically
+zero. Decompose $f=z\phi+h$, $h\perp\phi$. The next scalar Dirichlet
+height eigenvalue is $4\lambda$. If
+$\mathfrak d=\mathcal E-\lambda$, then
+$\|h\|_2^2\le\mathfrak d/(3\lambda)$. When $\mathfrak d\le d_0$ for a sufficiently
+small fixed $d_0>0$, the triangle inequality, (26.8) and (26.10) give
+
+$$
+\|v_{\kappa,e}f\|_2
+ \ge |z|\sqrt{m_1}-M_1\sqrt{\mathfrak d/(3\lambda)}
+ \ge\tfrac12\sqrt{m_1}.
+$$
+
+Thus $\mathfrak d\ge m_1r^2/4$. If $\mathfrak d>d_0$ and $r\le1$, instead
+$\mathfrak d\ge d_0r^2$. This proves (26.6) for $r\le1$. For each fixed
+$\kappa,e$, the scalar variational bottom is nondecreasing in $r$.
+It therefore has a uniform positive gap above $\lambda$ for $r\ge1$.
+Combining that gap on a bounded range with
+$\beta_\kappa(re)\ge c_1r^{2/3}$ on the large range proves (26.6)
+for all $r$. This proof also applies to complex $f$, by the same norm
+inequalities.
+
+Let $K_{\kappa,\eta}(t;k,k')$ be the scalar kernel of (26.5), and
+$h_I$ the original killed height kernel. Positivity and domination give
+
+$$
+0\le K_{\kappa,\eta}(t;k,k')\le h_I(t;k,k').
+\tag{26.11}
+$$
+
+For attribution, this is the elementary bounded nonnegative-potential
+case of the Trotter product formula [T, Theorem 5.11]: alternate the
+height heat semigroup and multiplication by
+$\exp(-t|\eta\cdot a_\kappa|^2/n)$. Every product is positive and
+dominated by the height semigroup, and its strong limit has the same
+property. At each fixed $\eta$ the potential is bounded and the scalar
+operator is selfadjoint with the same Dirichlet domain, exactly the
+hypotheses of that theorem. No uniform bound on that potential is assumed.
+
+Fix $\delta=\tau_{\min}/4$. The height sine series bounds
+$\sup_kh_I(2\delta;k,k)$ by a finite constant. Splitting the scalar
+semigroup at times $\delta,t-2\delta,\delta$, and using its spectral
+norm and (26.11), gives for $t\ge\tau_{\min}$
+
+$$
+\begin{aligned}
+|K_{\kappa,\eta}(t;k,k')|
+&\le C_\delta e^{-\beta_\kappa(\eta)(t-2\delta)}\\
+&\le C e^{-\lambda t}\exp(-c t\Psi(|\eta|)).
+\end{aligned}
+\tag{26.12}
+$$
+
+Here $t-2\delta\ge t/2$; this fixed positive smoothing interval
+loses no fraction of the height death exponent $\lambda$.
+
+Use the orthonormal angular modes
+$(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$, for $(n,m,j)\in\mathbb Z^3$.
+Parseval for the raw measure gives the exact scalar potential
+$(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$.
+Consequently the completed free form is the orthogonal sum of (26.5)
+with $\eta=(n,m,\kappa j)$. More explicitly, for the orthonormal
+expansion $f=\sum f_{nmj}(k)(2\pi)^{-3/2}e^{i(n\theta+mv+jD)}$,
+
+$$
+\begin{aligned}
+\mathcal F_\kappa=\biggl\{f\in L^2(\mu):\;&
+ f_{nmj}\in H_0^1(I)\text{ for all }n,m,j,\\
+&\sum_{n,m,j}\left(\varepsilon^2\|f'_{nmj}\|_2^2+
+ \|(nA_\kappa+mB_\kappa+\kappa j b_\kappa)f_{nmj}\|_2^2\right)
+ <\infty\biggr\},
+\end{aligned}
+$$
+
+and $T_\kappa$ is precisely that sum. Phase convolution commutes with
+both fields and converges in the form norm. Finite Fourier truncation
+and scalar height approximation show conversely that every sequence in
+the displayed domain is a limit of the original core. This proves the
+decomposition for the complete domain. In particular
+
+$$
+p_\kappa(t,o,(k,\theta,v,D))=
+\frac1{(2\pi)^3}\sum_{n,m,j\in\mathbb Z}
+ e^{i(n\theta+mv+jD)}
+ K_{\kappa,(n,m,\kappa j)}(t;k_0,k).
+\tag{26.13}
+$$
+
+Absolute convergence follows from (26.12) and the summation estimate
+below. Thus this kernel identity follows from the orthogonal-sum
+semigroup first, and then holds pointwise by continuity. It is not a
+formal Fourier density at $\kappa=0$.
+
+Set $a=|\kappa|\le1$. Monotonicity of $\Psi$ gives
+
+$$
+\Psi(\sqrt{n^2+m^2+a^2j^2})
+ \ge\tfrac13\{\Psi(|n|)+\Psi(|m|)+\Psi(a|j|)\}.
+$$
+
+For $t\ge\tau_{\min}$ the first two one-dimensional sums are
+bounded independently of $t$. For the third, comparison with an
+integral gives
+
+$$
+\begin{aligned}
+\sum_{j\in\mathbb Z}e^{-c t\Psi(a|j|)}
+&\le1+\frac2a\int_0^\infty e^{-c t\Psi(r)}dr\\
+&\le C\left(1+\frac1{a\sqrt t}\right).
+\end{aligned}
+\tag{26.14}
+$$
+
+On $(0,1)$ the integral is bounded by $C t^{-1/2}$; on $(1,\infty)$
+comparison with the full $r^{2/3}$ integral gives $C t^{-3/2}$,
+which is at most a fixed multiple of $t^{-1/2}$ on this time range.
+The Fourier sum, (26.12) and (26.14) prove (26.1) on the entire original
+cylinder. Integrating it for $t\ge\tau$, and using
+$t^{-1/2}\le\tau^{-1/2}$, proves (26.2).
+
+For the gap, the zero angular mode has bottom $\lambda$ and next
+eigenvalue $4\lambda$. Every nonzero angular mode has
+$|(n,m,\kappa j)|\ge a$, so (26.6) gives a gap at least $c a^2$
+when $a\le1$. The normalized test
+$(2\pi)^{-3/2}\phi(k)e^{iD}$ is orthogonal to the ground state and has
+energy
+
+$$
+\lambda+a^2\int_I b_\kappa(k)^2\phi(k)^2dk\le\lambda+Ca^2.
+\tag{26.15}
+$$
+
+It belongs to the completed form domain by height approximation.
+The variational principle [T, Theorem 4.10] proves (26.3); the same
+Fourier decomposition proves simplicity of the ground state. This
+derives the gap rather than importing one from a different diffusion.
+
+Finally, omit the zero triple in (26.13). Each remaining frequency
+satisfies $\Psi(|\eta|)\ge a^2$. Remove half of its exponential as
+$e^{-c a^2t/2}$, and sum the other half by (26.14). For $t\ge a^{-2}$
+that sum is bounded. The zero triple is $h_I(t;k_0,k)$, whose sine
+series differs from $e^{-\lambda t}\phi(k_0)\phi(k)$ by at most
+$C e^{-4\lambda t}$ on $t\ge\tau_{\min}$. After decreasing $c$,
+these statements give (26.4). The integer lattice in (26.13) is exactly
+the actual $2\pi$ lattice; neither a changed angular Haar mass nor a
+noncompact approximation was used. $\square$
+
+## 27. Full-state witnesses at every resolution
+
+**Theorem 27.1 (joint variational lower witnesses).** After a fixed
+shrink of the same two-sided neighbourhood, there exist $c,C_0>0$ and,
+for every $0<|\kappa|\le\kappa_*$ and $\tau\ge\tau_{\min}$,
+a real normalized $f_{\kappa,\tau}\in C_c^\infty(\Omega)$ such that
+
+$$
+\begin{aligned}
+T_\kappa[f_{\kappa,\tau}]&\le C_0,\\
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+ &\ge c e^{-\lambda\tau}
+              \left(1+\frac1{|\kappa|\sqrt\tau}\right).
+\end{aligned}
+\tag{27.1}
+$$
+
+These are actual full-domain witnesses for the original point-generated
+field. They remain valid when the cutoff depends arbitrarily on the
+parameter, including in the circle-mixing range.
+
+Proof. Fix a compact interval $J\Subset I$ with nonempty interior.
+The killed height kernel satisfies
+
+$$
+h_I(t;k_0,k)\ge c_J e^{-\lambda t}
+\quad(t\ge\tau_{\min},\ k\in J).
+\tag{27.2}
+$$
+
+To verify uniformity in time, use its strictly positive continuous
+kernel on a compact time interval, and then its sine series: the leading
+term is $e^{-\lambda t}\phi(k_0)\phi(k)$, with a positive minimum on
+$J$, while the remaining terms are $O(e^{-4\lambda t})$. Thus (27.2)
+uses the same two absorbing height faces and the same clock.
+
+Integrate out both visible angles, rather than assume an independent
+hidden driver. Proposition 16.2 gives the original real hidden lift
+
+$$
+\delta_t=\sqrt2\kappa\int_0^t b_\kappa(K_s)dB_s^2.
+\tag{27.3}
+$$
+
+The same $B^2$ drives the visible angles. Conditional on the entire
+height path, which depends only on the independent $B^1$, its hidden
+variance is $2\kappa^2\mathcal A_t$, where
+
+$$
+\mathcal A_t=\int_0^t b_\kappa(K_s)^2ds,
+\qquad m^2t\le\mathcal A_t\le M^2t
+\quad\hbox{on }\{\zeta>t\}.
+\tag{27.4}
+$$
+
+These deterministic bounds hold on that very surviving path; they do
+not combine different realizations. The conditional characteristic
+function follows by the Gaussian stochastic integral with the now
+fixed integrand. On reducing $\delta_t$ modulo its actual $2\pi$
+period, its conditional density is
+
+$$
+G_{\kappa^2\mathcal A_t}(D),\qquad
+G_s(D)=\frac1{\sqrt{4\pi s}}
+ \sum_{r\in\mathbb Z}e^{-(D+2\pi r)^2/(4s)}.
+\tag{27.5}
+$$
+
+This is a conditional formula for the original law, not a new clock,
+a new source, or a new diffusion input. In particular the exact visible
+integral is
+
+$$
+\begin{aligned}
+M_\kappa(t;k,D)
+&:=\int_{\mathbb T^2}p_\kappa(t,o,(k,\theta,v,D))d\theta dv\\
+&=h_I(t;k_0,k)\,
+ \mathbb E\!\left[G_{\kappa^2\mathcal A_t}(D)
+        \mid K_t=k,\ \zeta>t\right].
+\end{aligned}
+\tag{27.6}
+$$
+
+Disintegration is with respect to the killed height endpoint measure.
+It holds almost everywhere, which suffices for all following integrals.
+It is obtained by integrating the joint transition law, not by multiplying
+independent visible and hidden densities.
+
+Put $a=|\kappa|$, $r_\tau=\min(1,a\sqrt\tau)$, and fix
+$0<\eta_0<1/4$. If $a\sqrt\tau\le1$, then for
+$t\in[\tau,\tau+1]$ the variance parameter $s$ in (27.5) lies between
+$m^2a^2\tau$ and $M^2(1+1/\tau_{\min})a^2\tau$.
+The single summand with $r=0$ proves
+$G_s(D)\ge c/(a\sqrt\tau)$ on $|D|\le\eta_0r_\tau$.
+If $a\sqrt\tau\ge1$, instead $s\ge m^2$.
+There is a common strictly positive lower bound for $G_s(D)$ for all
+$s\ge m^2$ and all $D\in\mathbb T$: on any bounded positive time
+interval use the positive periodized Gaussian, and for large $s$ use
+its Fourier series
+$(2\pi)^{-1}\sum_{j\in\mathbb Z}e^{-j^2s}e^{ijD}$,
+whose coefficients are obtained by a Gaussian integral over the
+periodized real line.
+Together these facts and (27.2) give
+
+$$
+M_\kappa(t;k,D)\ge c e^{-\lambda t}
+       \left(1+\frac1{a\sqrt\tau}\right)
+\tag{27.7}
+$$
+
+for $t\in[\tau,\tau+1]$, $k\in J$ and
+$|D|\le\eta_0r_\tau$. All constants are independent of $\kappa,\tau$.
+This lower estimate already includes every hidden winding in the
+large-time case.
+
+Choose real $\chi\in C_c^\infty(\operatorname{int}J)$ and
+$F\in C_c^\infty((-\eta_0,\eta_0))$ with
+$\int_I\chi^2dk=\int_{\mathbb R}F^2dx=1$.
+For the actual representative $D\in(-\pi,\pi)$ set
+
+$$
+f_{\kappa,\tau}(k,\theta,v,D)=
+ \frac1{2\pi}\chi(k)r_\tau^{-1/2}F(D/r_\tau).
+\tag{27.8}
+$$
+
+Extend by zero through the phase seam and periodically. Since
+$r_\tau\le1$ and $\eta_0<1/4$, this is smooth on the actual torus
+and compactly supported away from the height faces. The raw Jacobian
+is $dD=r_\tau dx$; the visible volume is $(2\pi)^2$. Therefore
+$\|f_{\kappa,\tau}\|_2=1$ exactly, and direct application of the two
+original fields gives
+
+$$
+T_\kappa[f_{\kappa,\tau}]
+ =\varepsilon^2\|\chi'\|_2^2
+  +\frac{a^2}{r_\tau^2}\|F'\|_2^2
+                    \int_I b_\kappa^2\chi^2dk\le C_0.
+\tag{27.9}
+$$
+
+Indeed $a^2/r_\tau^2$ is either $1/\tau\le1/\tau_{\min}$ or
+$a^2\le\kappa_*^2$. No isotropic derivative in $D$ was substituted
+for $Q_\kappa$.
+
+For their potential expectation, Tonelli gives the exact full-space
+identity
+
+$$
+\begin{aligned}
+\int V_{\kappa,\tau}|f_{\kappa,\tau}|^2d\mu
+=\frac1{(2\pi)^2}\int_{I\times\mathbb T}
+ \chi(k)^2r_\tau^{-1}F(D/r_\tau)^2
+ \left(\int_\tau^\infty M_\kappa(t;k,D)dt\right)dkdD.
+\end{aligned}
+\tag{27.10}
+$$
+
+Use the positive time window $[\tau,\tau+1]$ in this entire field,
+then (27.7) and the exact normalization. This proves (27.1).
+The trial amplitudes depend on $D$. Their use of a marginal in
+(27.10) computes their original full energy; it neither changes the
+point source nor identifies the full infimum with a marginal infimum.
+The upper estimate in Theorem 26.1, in contrast, holds for every full
+state. $\square$
+
+## 28. Necessary and sufficient scales for arbitrary cutoff families
+
+**Theorem 28.1 (complete-state joint stability classification).**
+For the fixed data (25.1), take one neighbourhood supplied by Theorems
+26.1 and 27.1. There are constants $0<c\le C<\infty$ and
+$C_0<\infty$, independent of both parameter signs and all
+$\tau\ge\tau_{\min}$, such that for every fixed $g>0$,
+
+$$
+\begin{aligned}
+R(a,\tau)&=e^{-\lambda\tau}
+                   \left(1+\frac1{a\sqrt\tau}\right),&
+U(a,\tau)&=1+\frac1{a\sqrt\tau},\\
+\lambda-CgR(a,\tau)&\le E_{\rm raw}(\kappa,\tau;g)
+ \le\min\{\lambda,C_0-cgR(a,\tau)\},\\
+\lambda-CgU(a,\tau)&\le E_{\rm unit}(\kappa,\tau;g)
+ \le\min\{\lambda,C_0-cgU(a,\tau)\},& a&=|\kappa|.
+\end{aligned}
+\tag{28.1}
+$$
+
+Let $\tau(\kappa)\ge\tau_{\min}$ be any deterministic family, without
+continuity, measurability or monotonicity assumptions. On this fixed
+two-sided neighbourhood the complete-state energies have a common
+finite lower bound if and only if, respectively,
+
+$$
+\begin{array}{ll}
+\mathrm{raw}:&
+\displaystyle\liminf_{\kappa\to0,\ \kappa\ne0}
+ |\kappa|\sqrt{\tau(\kappa)}\,e^{\lambda\tau(\kappa)}>0,\\[4pt]
+\mathrm{unit}:&
+\displaystyle\liminf_{\kappa\to0,\ \kappa\ne0}
+ \kappa^2\tau(\kappa)>0.
+\end{array}
+\tag{28.2}
+$$
+
+A liminf of $+\infty$ satisfies the condition. Failure of either
+condition produces a sequence $\kappa_n\to0$ and the actual normalized
+states (27.8), at $\tau=\tau(\kappa_n)$, whose corresponding energies
+tend to $-\infty$. If the condition fails on only one sign, the sequence
+may be chosen on that sign; no regularity across signs is required.
+
+Equivalently, writing $L_a=\log(1/a)$, the sharp raw lower scale is
+
+$$
+\tau(\kappa)\ge
+ \frac{L_a-\tfrac12\log L_a}{\lambda}-O(1),
+\qquad a\downarrow0,
+\tag{28.3}
+$$
+
+where $O(1)$ means one bounded constant, common to the entire two-sided
+family. The unit-charge scale is $\tau(\kappa)\ge c_*/a^2$ eventually
+for some fixed $c_*>0$. The assertion is for every fixed positive
+coupling; it uses no coupling that shrinks with the parameter.
+
+Proof. First the killed height law gives
+
+$$
+c_S e^{-\lambda t}\le S(t)\le C_S e^{-\lambda t}
+\qquad(t\ge\tau_{\min}).
+\tag{28.4}
+$$
+
+For completeness, its sine expansion has a strictly positive first
+coefficient and the higher terms decay faster; positivity and continuity
+on a remaining compact time interval complete the bounds. The exact
+expansion and charge cost are given in (29.1). This is the survival
+probability of (25.6), not an assumed unit mass.
+
+Theorem 26.1 and height Poincare prove the raw lower bound in (28.1)
+on the complete domain. Theorem 27.1 gives its upper bound with the
+same $R$. Dividing the field by (28.4) gives both unit bounds with
+$U$. This also retains the exact identity
+$E_{\rm unit}(\kappa,\tau;g)=E_{\rm raw}(\kappa,\tau;g/S(\tau))$
+at each parameter, but a fixed-coupling fixed-time conclusion alone
+would not have supplied the joint estimates.
+The test $(2\pi)^{-3/2}\phi(k)$ has free energy $\lambda$ and a
+nonnegative attractive expectation, so both energies are at most
+$\lambda$. It is admissible by height approximation, and the fields
+are bounded at each parameter. This proves all of (28.1).
+
+For an arbitrary family, the first line of (28.2) is precisely eventual
+boundedness of $e^{-\lambda\tau}/(a\sqrt\tau)$, and $e^{-\lambda\tau}$
+is already bounded. The raw lower estimate thus gives sufficiency.
+If it fails, choose a sequence along which
+$a\sqrt\tau e^{\lambda\tau}\to0$. Then $R\to\infty$ and (27.8)
+has raw energy at most $C_0-cgR\to-\infty$. This proves necessity
+by admissible states, not by the failure of a supremum estimate.
+Likewise the second line is precisely eventual boundedness of
+$1/(a\sqrt\tau)$; its failure gives $U\to\infty$ along a sequence
+and the same states give unit energy tending to $-\infty$.
+
+These eventual criteria are equivalent to boundedness on the whole
+chosen punctured neighbourhood. Indeed on every annulus
+$a\ge a_0>0$, both $R$ and $U$ are bounded solely by
+$a_0,\tau_{\min}$, even for an arbitrarily discontinuous or unbounded
+time family. Thus no further local uniformity assumption away from zero
+is missing. If a scale diverges only along a subsequence, the conclusion
+is unboundedness below along that subsequence; it need not be a limit
+of the energies along every parameter.
+
+To verify the endpoint in (28.3), the logarithm of the first product
+in (28.2) is
+
+$$
+\lambda\tau+\tfrac12\log\tau-L_a.
+\tag{28.5}
+$$
+
+The strictly increasing function $F(t)=\lambda t+\tfrac12\log t$
+has derivative at least $\lambda$. Its solution $t_a$ to $F(t_a)=L_a$
+satisfies
+
+$$
+t_a=\frac{L_a-\tfrac12\log L_a}{\lambda}+O(1).
+\tag{28.6}
+$$
+
+For example substituting the expression on the right without $O(1)$
+leaves $-\tfrac12\log\lambda+o(1)$ in $F(t)-L_a$, and the derivative
+bound controls its distance from the root. A common lower bound on
+(28.5) implies $\tau\ge t_a-C/\lambda$. Conversely a common bound
+$\tau\ge t_a-C'$ bounds (28.5) below, since $t_a\to\infty$ and
+$F'$ is bounded above on $[t_a-C',t_a]$. This proves the equivalence,
+including families with arbitrarily large times. $\square$
+
+**Proposition 28.2 (distinct stability scales and the mixing endpoint).**
+The two interaction conventions have genuinely different stability
+criteria. For $a$ sufficiently small let
+$\tau(\kappa)=L_a/\lambda$, extending it by $\tau_{\min}$ when
+needed. Then
+
+$$
+E_{\rm raw}(\kappa,\tau(\kappa);g)\longrightarrow\lambda,
+\qquad
+E_{\rm unit}(\kappa,\tau(\kappa);g)\longrightarrow-\infty.
+\tag{28.7}
+$$
+
+For any fixed $b>0$, the family $\tau=b/a^2$ instead has uniformly
+bounded unit-charge energies. For
+$\tau=(L_a-\tfrac12\log L_a)/\lambda+s$ with fixed real $s$,
+
+$$
+R(a,\tau)\longrightarrow\sqrt\lambda\,e^{-\lambda s}.
+\tag{28.8}
+$$
+
+Thus the logarithmic correction in (28.3) cannot be discarded when
+classifying arbitrary families up to bounded energy.
+
+Proof. At $\tau=L_a/\lambda$ one has $e^{-\lambda\tau}=a$,
+so $R=a+1/\sqrt\tau\to0$ while $U\to\infty$.
+Both conclusions (28.7) follow directly from (28.1), including the
+full-state lower bound for the first and normalized witnesses for the
+second. At $\tau=b/a^2$ one has $U=1+b^{-1/2}$, which gives the
+asserted uniform bound. Finally
+$e^{-\lambda\tau}=a\sqrt{L_a}e^{-\lambda s}$ and
+$\tau\sim L_a/\lambda$, proving (28.8).
+The heat factor in (26.1) is of order $1/(a\sqrt\tau)$ before
+mixing and of order one after it; the actual gap (26.3) gives the
+same transition scale. $\square$
+
+## 29. Survival cost, potential mass and the actual zero leaf
+
+**Proposition 29.1 (exact source charge and large-cutoff cost).**
+Put $\xi_0=\pi(k_0-l)/d_I$ and $C_o=4\sin\xi_0/\pi>0$.
+For the same original source and both absorbing height faces,
+
+$$
+\begin{aligned}
+S(t)&=\frac4\pi\sum_{j=0}^\infty
+ \frac{\sin((2j+1)\xi_0)}{2j+1}
+ e^{-(2j+1)^2\lambda t},\\
+\mathcal M(t):=\int_\Omega V_{\kappa,t}d\mu
+&=\frac4{\pi\lambda}\sum_{j=0}^\infty
+ \frac{\sin((2j+1)\xi_0)}{(2j+1)^3}
+ e^{-(2j+1)^2\lambda t}.
+\end{aligned}
+\tag{29.1}
+$$
+
+In particular these are independent of $\kappa$, and as $t\to\infty$,
+
+$$
+S(t)=C_oe^{-\lambda t}(1+O(e^{-8\lambda t})),\qquad
+\mathcal M(t)=\frac{C_o}{\lambda}e^{-\lambda t}
+                                  (1+O(e^{-8\lambda t})).
+\tag{29.2}
+$$
+
+The raw effective source charge is $S(t)$; the unit convention has
+source charge one and potential mass
+
+$$
+\int_\Omega W_{\rm unit}d\mu
+ =\mathcal M(t)/S(t)
+ =\mathbb E(\zeta-t\mid\zeta>t)
+ \longrightarrow1/\lambda.
+\tag{29.3}
+$$
+
+Every raw-stable family in Theorem 28.1 has $\tau\to\infty$ and
+
+$$
+S(\tau(\kappa))\le C a\sqrt{\log(1/a)}
+\quad\hbox{eventually}.
+\tag{29.4}
+$$
+
+For the raw endpoint in (28.8) the more precise cost is
+
+$$
+S(\tau)=C_o a\sqrt{L_a}e^{-\lambda s}(1+o(1)).
+\tag{29.5}
+$$
+
+Every unit-stable family has $\tau\ge b/a^2$ eventually for some
+$b>0$, hence $S(\tau)\le C e^{-\lambda b/a^2}$. At the fixed multiple
+$\tau=b/a^2$ its exact asymptotic cost is
+
+$$
+S(\tau)=C_o e^{-\lambda b/a^2}(1+o(1)).
+\tag{29.6}
+$$
+
+Proof. Integrating the full free heat law over all three actual phases
+leaves the killed height kernel, by (23.8). That scalar kernel, relative
+to $dk$, is
+
+$$
+h_I(t;k_0,k)=\frac2{d_I}\sum_{n=1}^\infty
+ \sin(n\xi_0)\sin\frac{n\pi(k-l)}{d_I}\,e^{-n^2\lambda t}.
+$$
+
+For positive time its absolutely convergent sine series can be integrated
+in height. The even terms vanish and the odd integrals give the first
+line of (29.1). Tonelli for the nonnegative heat kernel gives
+$\mathcal M(t)=\int_t^\infty S(r)dr$; integrating the absolutely
+convergent series gives its second line. The first omitted odd mode is
+$n=3$, with exponent $9\lambda$, proving (29.2). Conditional remaining
+lifetime and (25.7)--(25.8) prove (29.3). No angular averaging factor
+enters this charge calculation.
+
+Raw stability forces $\tau\to\infty$, since a bounded subsequence of
+times makes the product in (28.2) tend to zero. Its equivalent lower
+bound (28.3), together with (29.2), gives (29.4).
+Substitution gives (29.5). The unit criterion and (29.2) give (29.6)
+and its stated upper bound for arbitrary unit-stable families.
+Thus raw stabilization at logarithmic times can occur while
+$a\sqrt\tau\to0$, because the original source charge has decreased
+to the scale of that shrinking width. Division by $S$ removes that
+attenuation; bounded unit-charge fields require spreading to a hidden
+width bounded away from zero, on the original circle scale. This is a
+mathematical comparison of effective source conventions, not a supplied
+operation restoring lost particles or preparing a conditioned process.
+$\square$
+
+**Proposition 29.2 (marginal and zero-leaf boundaries at moving times).**
+The exact marginal and completed-domain identities (23.4)--(23.5)
+continue to hold at every moving cutoff. Moreover, uniformly in the
+same neighbourhood and all $\tau\ge\tau_{\min}$,
+
+$$
+\|\overline V_{\kappa,\tau}\|_\infty\le Ce^{-\lambda\tau},\qquad
+\|\overline V_{\kappa,\tau}/S(\tau)\|_\infty\le C.
+\tag{29.7}
+$$
+
+Thus the energies on the complete $D$-independent sector have a uniform
+lower bound for both conventions and every cutoff family, even when the full-state
+criterion (28.2) fails. Their effective coupling to the base field
+remains $g/(2\pi)$ under the isometry $Jh=(2\pi)^{-1/2}h$.
+The actual native zero-parameter leaf is
+$I\times\mathbb T_\theta\times\mathbb T_v$ with its own raw measure,
+unit source and coupling $g$. Its two regularized conventions have
+uniformly bounded fields for all $\tau\ge\tau_{\min}$.
+
+Proof. Integration in $D$ selects $j=0$ in (26.13). Its factor becomes
+$(2\pi)^{-2}$, and (26.12)--(26.14), now summed only over $n,m$,
+give $\overline p_\kappa(t,q_0,q)\le Ce^{-\lambda t}$.
+Time integration and (28.4) prove (29.7). The completed-domain and
+same-field energy factors are exactly (23.5), so bounded multiplication
+and height Poincare give the sector assertion.
+
+At zero the actual original law has $D=0$ throughout its lifetime,
+by (16.8). It is the three-coordinate operator of Definition 23.2;
+its Fourier modes involve only $nA_0+mB_0$. The same $j=0$ calculation
+therefore proves (29.7) on that actual leaf. It does not construct a
+four-dimensional Lebesgue heat density at zero. In particular the
+auxiliary four-coordinate operator in Definition 21.1, defined by
+resolving $x=D/\kappa$ before taking a coefficient limit, is still a
+different comparison object. The full witnesses (27.8) retain a hidden
+coordinate for every nonzero parameter and have no implication of
+an available projection, amplitude preparation, acquisition procedure,
+mean selector or empirical spatial-dimension theorem. $\square$
+
+## 30. Mathematical supplier correspondence for the joint law
+
+**Proposition 30.1 (scoped premises and the joint native conclusion).**
+The all-time estimates (26.1)--(26.4), the full-state witnesses
+(27.8)--(27.10), and the necessary and sufficient arbitrary-family
+criteria (28.2)--(28.3) have the following mathematical dependencies.
+The elementary polynomial, Fourier and variational steps in their proofs
+are supporting methods; their native joint conclusion is the additional
+content, rather than a new general heat or perturbation theorem.
+
+| Supplier | Exact mathematical scope used |
+| --- | --- |
+| [N, Definitions 2.1, 2.3, 3.1 and 8.1; Theorems 8.2 and 10.3](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md) | Original probabilities, preparations, phase convention, two controls, actual grouped leaves and finite native realization. No physical amplitude preparation follows from finite ray realization. |
+| This volume, Propositions 2.1--2.2 and Theorem 3.1 | Completed free forms, killed free heat and compactness at each nonzero parameter, and unregularized full point-field collapse. The collapse is reused, not applied to the regularized multiplier. |
+| This volume, (12.7), Proposition 16.2 and §§20--24, at [the published source through §24](https://github.com/the-omega-institute/trureturing/blob/28695dc3c5b8fc9106f1648e021792233e355c31/docs/develop/theory/FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md) | Exact coefficients, common two-driver killed law, effective source equation, original charge and mass identities, fixed-parameter minima, fixed-time inverse-gap estimates, and completed marginal factors. The constants in the fixed-time estimates do not supply the moving-cutoff criterion. |
+| [FiniteRectangleTransport](https://github.com/the-omega-institute/trureturing/blob/0bfa84f27ca531cca721a1c90d35ded2a51c0738/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean), including `polygon_admissible`, `horizontal_leg`, `vertical_leg`, `rectangle_chain`, `weight_compatible`, `finite_rectangles_realize` | Finite original probability/phase paths and compatibility. These statements contain no heat kernel, all-time circle gap or attractive-energy classification. |
+| Pinned mathlib [BrownianMotion.Basic](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/BrownianMotion/Basic.lean) and [Fourier.AddCircleMulti](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircleMulti.lean) | Generic Brownian and Fourier tools, not the native joint conclusion. The latter file uses unit-circle probability Haar measure; (26.13) instead states explicitly the raw $2\pi$ angular factors required here. No formal-library theorem is asserted to certify the ordinary proof. |
+| [Observation quotient, Theorem 3.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md); [Free diffusion quotient rigidity, §§2--3](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md) | Hidden integration, averaging, source smearing and complete free-domain pullbacks at their stated factors. They do not identify a marginal energy with the full attractive minimum. The present $q$ factor is exactly the one already verified in §23. |
+| [Continuation III, Specification 82.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md); [Continuation IV, §§100--102](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md) | Bounded truncation and the different finite occurrence-tree screening problem, respectively. Neither supplies the native killed-cylinder moving-time classification. |
+| [H] Colin de Verdiere--Hillairet--Trelat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal, nilpotentization and related results*, Ann. H. Lebesgue 4, 897--971, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem B.1, Corollary B.3 and Theorem 3.5 | Literature-attested uniform local smoothing and positive-time parameter continuity used in the published fixed-time supplier. They are not an assumed all-time estimate for the degenerating original torus. The all-time bound here follows from (26.7)--(26.14). |
+| [T] G. Teschl, *Mathematical Methods in Quantum Mechanics*, GSM 99, online version February 12, 2009, [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems 5.11, 6.24 and 4.10 | Literature-attested Trotter domination for each bounded scalar nonnegative potential, bounded form perturbation after the actual multiplier is bounded, and min-max. None supplies the native parameter/time constants without the coefficient and source calculations. |
+
+Proof. The original contract and the fixed-time source/domain results
+are the cited published premises. Formula (26.7) verifies the specific
+uniform polynomial nondegeneracy needed for (26.6), including the resolved
+coefficient at zero without introducing a zero-parameter four-dimensional
+law. The actual Fourier lattice then yields both the joint full-space
+supremum and the native circle gap, with its large-time constant mode.
+The same killed height path and the same $B^2$ in (27.3) yield the hidden
+marginal estimate, from which exactly normalized original full-domain
+states have bounded kinetic energy and the matching potential expectation.
+Their combination proves necessity as well as sufficiency in (28.2).
+The sine expansion independently fixes the charge cost and distinguishes
+it from field mass. Thus the all-time native classification is a
+repository-derived ordinary mathematical result with the stated mature
+attribution, not a literature-priority claim or a physical selection
+mechanism. $\square$
+
+## 追加锚（本行以下为增补区）
