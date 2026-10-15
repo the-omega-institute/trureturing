@@ -6,6 +6,8 @@ Gap masses identify native unary insertion minima in both ordered orientations.
 
 Words and masks use the original ordered source schedule: the first source is inserted and the second is the base. The degree is the minimum number of maximal nonempty first-source runs over all actual masks, with infinity for an invalid output. Neither source roles nor minimum semantics are exchanged when passing to the reverse-unary case.
 
+The inserted-unary gap, degree and spectrum arguments use Hughes arXiv v2, Section 11, Theorem 9: https://arxiv.org/abs/2608.27755v2. The reverse-unary and universal minimum-mask exchange statements are separate arguments.
+
 **Definition 1.1 (Occupied extra gaps).**
 
 $$\forall e \in \operatorname{List}\left(\operatorname{Nat}\left(\right)\right),\; \operatorname{occupied}\left(e\right) = \operatorname{countPositive}\left(e\right)$$
@@ -60,7 +62,7 @@ $$\forall alpha \in \operatorname{Type}\left(\right),\; \forall a \in alpha,\; \
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/HughesUnaryInsertion.inserted_gap_iff` (`✓ std3`). ∎
 
-*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v2>.
+*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
 *Commentary.*
 
@@ -84,11 +86,11 @@ $$\forall alpha \in \operatorname{Type}\left(\right),\; \forall a \in alpha,\; \
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/HughesUnaryInsertion.inserted_degree` (`✓ std3`). ∎
 
-*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v2>.
+*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
 *Commentary.*
 
-Each occupied gap needs an inserted run because non-a letters separate gaps. The grouped mask puts each gap's inserted letters together, reaches exactly that number of runs, and preserves both projections. This formalizes the occupied-gap proof of Hughes Theorem 9 for arbitrary alphabets. For positive inserted length its convention agrees with native U-run degree; when that length is zero the native count is zero.
+Each occupied gap needs an inserted run because non-a letters separate gaps. The grouped mask puts each gap's inserted letters together, reaches exactly that number of runs, and preserves both projections. This formalizes the occupied-gap proof of Hughes arXiv v2, Theorem 9, for arbitrary alphabets. For positive inserted length its convention agrees with native U-run degree; when that length is zero the native count is zero.
 
 **Theorem 1.8 (Reverse-unary internal minimum and attainment).**
 
@@ -144,7 +146,7 @@ $$\forall alpha \in \operatorname{Type}\left(\right),\; \forall a \in alpha,\; \
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/HughesUnaryInsertion.inserted_spectrum` (`✓ std3`). ∎
 
-*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v2>.
+*Citation.* Charles E. Hughes (2026). *Undecidability of Adjacent Equality for Insertion, Shuffle, and Crossover Language Operations*. URL: <https://arxiv.org/abs/2608.27755v1>.
 
 *Commentary.*
 

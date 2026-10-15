@@ -80,7 +80,7 @@ Every a gap retains its whole label list b. Its q count contributes to h, and it
 
 **Definition 1.7 (Grouped labels in each gap).**
 
-$$\forall alpha \in \operatorname{Type}\left(\right),\; \forall a \in alpha,\; \forall cs \in \operatorname{List}\left(alpha\right),\; \forall h \in \operatorname{List}\left(\operatorname{Nat}\left(\right)\right),\; \forall q \in Side,\; \forall e \in \operatorname{List}\left(\operatorname{Nat}\left(\right)\right),\; \operatorname{grouped}\left(q, cs, h, e\right) : \operatorname{List}\left(Side\right)$$
+$$\forall alpha \in \operatorname{Type}\left(\right),\; \forall q \in Side,\; \forall cs \in \operatorname{List}\left(alpha\right),\; \forall h \in \operatorname{List}\left(\operatorname{Nat}\left(\right)\right),\; \forall e \in \operatorname{List}\left(\operatorname{Nat}\left(\right)\right),\; \operatorname{grouped}\left(q, cs, h, e\right) : \operatorname{List}\left(Side\right)$$
 
 *Formalization.* `D5/S1/Words/UnaryGapWords.grouped` (`✓ std3`).
 

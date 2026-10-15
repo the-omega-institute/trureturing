@@ -63,8 +63,9 @@ internal sealed class UnaryGapWordsDocument : IScribeDocumentDefinition
                 "Every a gap retains its whole label list b. Its q count contributes to h, "
                 + "and its opposite-source count contributes to e. Every non-a occurrence "
                 + "has label q. This is an inductive decomposition of actual letters and labels.", false),
-            Node("grouped", "Grouped labels in each gap", BindBase(All("q", F.Id("Side"),
-                All("e", Masses, Seq(Call("grouped", Q, C, Hs, E), Sp, Colon, Sp, Masks)))),
+            Node("grouped", "Grouped labels in each gap", All("alpha", Type(),
+                All("q", F.Id("Side"), All("cs", Words, All("h", Masses,
+                    All("e", Masses, Seq(Call("grouped", Q, C, Hs, E), Sp, Colon, Sp, Masks)))))),
                 "With a unary inserted source, place its gap mass together after the base "
                 + "copies. With a unary base source, place base copies before the inserted "
                 + "copies in each nonterminal gap, and after them in the terminal gap.", false),

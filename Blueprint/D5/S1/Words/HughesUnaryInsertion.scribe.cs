@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words;
 internal sealed class HughesUnaryInsertionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Words/HughesUnaryInsertion.";
-    private static readonly LibraryNoteRef Hughes = LibraryNoteRef.Create("D5/L/Words/hughes2026unary");
+    private static readonly LibraryNoteRef Hughes = LibraryNoteRef.Create("D5/L/Words/hughes2026a27755");
     private static readonly Formula A = F.Id("a"), C = F.Id("cs"), Hs = F.Id("h");
     private static readonly Formula E = F.Id("e"), W = F.Id("w"), M = F.Id("M");
     private static Formula Words => Call("List", F.Id("alpha"));
@@ -38,6 +38,10 @@ internal sealed class HughesUnaryInsertionDocument : IScribeDocumentDefinition
                 + "number of maximal nonempty first-source runs over all actual masks, with "
                 + "infinity for an invalid output. Neither source roles nor minimum semantics "
                 + "are exchanged when passing to the reverse-unary case.")),
+            Paragraph(Text("The inserted-unary gap, degree and spectrum arguments use Hughes "
+                + "arXiv v2, Section 11, Theorem 9: https://arxiv.org/abs/2608.27755v2. "
+                + "The reverse-unary and universal minimum-mask exchange statements are "
+                + "separate arguments.")),
             Node("occupied", "Occupied extra gaps", Disp(All("e", Masses,
                 Equal(Call("occupied", E), Call("countPositive", E)))),
                 "Count strictly positive extra masses; a positive original gap with zero extra "
@@ -70,7 +74,7 @@ internal sealed class HughesUnaryInsertionDocument : IScribeDocumentDefinition
                 "Each occupied gap needs an inserted run because non-a letters separate gaps. "
                 + "The grouped mask puts each gap's inserted letters together, reaches exactly "
                 + "that number of runs, and preserves both projections. This formalizes the "
-                + "occupied-gap proof of Hughes Theorem 9 for arbitrary alphabets. For positive "
+                + "occupied-gap proof of Hughes arXiv v2, Theorem 9, for arbitrary alphabets. For positive "
                 + "inserted length its convention agrees with native U-run degree; when that "
                 + "length is zero the native count is zero.", true, true),
             Node("reverse_degree", "Reverse-unary internal minimum and attainment", DegreeFormula(true),
