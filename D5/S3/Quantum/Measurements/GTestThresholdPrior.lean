@@ -119,7 +119,7 @@ def P_G {n d : ℕ}
     (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ)
     (φ : Fin d → ℂ) (p : ℝ) : ℝ :=
-  p * completeness G φ + (1 - p) * soundness G w U
+  AffineMap.lineMap (soundness G w U) (completeness G φ) p
 
 def P_T (p : ℝ) : ℝ :=
   D5.S3.QuantumChannels.UnifiedPinchingFee.doorGap p
@@ -434,7 +434,10 @@ theorem result : claim := by
   refine ⟨?_, ht⟩
   unfold P_G P_T soundness
     D5.S3.QuantumChannels.UnifiedPinchingFee.doorGap
+  rw [AffineMap.lineMap_apply_module]
+  simp only [smul_eq_mul]
   rw [hs, hc, mul_one]
+  rw [add_comm ((1 - p) * (1 - (O G w : ℝ) / (M w : ℝ))) p]
   exact linear_compare (M w : ℝ) (O G w : ℝ) p
     (Nat.cast_pos.mpr (orbit_card_pos w)) (Nat.cast_nonneg _)
 
