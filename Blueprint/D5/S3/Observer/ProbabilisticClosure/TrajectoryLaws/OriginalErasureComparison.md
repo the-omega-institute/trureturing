@@ -1,0 +1,79 @@
+# Full-half-line squared erasure comparisons
+
+## Abstract
+
+Full-half-line squared erasure comparisons
+
+**Definition 1.1 (cellMass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
+
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any measurable source, class and observation maps, cellMass(mu,q,w,b,a) is mu(q=a and w=b), in ENNReal. The actual quotient/MAP bridge uses this same joint cell, including null cells.
+
+**Theorem 1.2 (current map error).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original theta and radius, an actual finite-word classifier attains classError and maximizes each class/word cellMass. OriginalUnifilarQuotient.actual_map_pairs uses both conclusions directly. The original universal theorem remains its other live consumer.
+
+**Theorem 1.3 (error mass formula).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any probability measure, measurable finite class and observation maps, and classifier m, its disagreement mass is one minus the sum over observation b of cellMass(b,m(b)). The existing mapClassifier_optimal remains its live consumer.
+
+Fix a finite hidden alphabet H with measurable singletons and an arbitrary original Presentation theta. Use exactly OriginalLawTrimming.jointLaw(theta), denoted J, and its actual visible pushforward visibleLaw(theta), denoted P. Classes are OriginalFutureScreening.originalClass(theta,t), the existing future-profile quotient after the proved law-preserving positive-support trimming, extended measurably over original null states. No unifilarity, positive original stationary masses, ergodicity, reversibility, time reversal or exact synchronization is assumed.
+
+For a visible integer path z, before(z)(n)=z(-n-1) and after(z)(n)=z(n+1), for every natural n. exterior(z) is the pair of these complete sequences, omitting precisely coordinate zero. leftWord(r,z)(i)=z(-r+i) and rightWord(r,z)(i)=z(i+1), for i in Fin r, in chronological order. leftObservation is (leftWord,after), retaining the entire future after zero; rightObservation is (before,rightWord), retaining the entire past before zero. At r=0 both finite words are empty, while these entire opposite half-lines remain. Each one-sided observation omits one adjacent coordinate. No forced-zero radius-zero defect is claimed.
+
+erasedBit(z) is the real indicator of z(0)=true. bitPredictor(mu,x,o)(e) is the real mass of true in the actual total condDistrib of x given o under mu at e. fullMean, leftMean and rightMean compose these bounded conditional-probability versions under P with exterior, leftObservation and rightObservation. leftRisk and rightRisk are their respective squared differences from fullMean, integrated under P. erasureTail(theta,R) is the ENNReal sum, over all n natural, of ofReal(leftRisk(theta,R+n)) plus ofReal(rightRisk(theta,R+n)); no finiteness premise is present.
+
+classError(theta,r) is the ENNReal infimum, over all finite-word classifiers m from (Fin r to Bool) to the trimmed future classes, of J(originalClass(theta,0) differs from m(leftWord(r))). A fixed ordering induced by Fintype.equivFin resolves MAP ties by selecting the first class maximizing the actual joint mass of class and word. Every word, including a zero-mass word, receives a class. The finite success partition proves actual MAP attainment of this infimum.
+
+**Theorem 1.4 (Universal comparisons on the selected original realization).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every such original theta and every natural r, there is a finite-word MAP classifier whose actual error at class Q0 from X[-r,-1] is classError(theta,r). The infimum error at Q(r+1) from X[1,r] equals that same classError(theta,r). Both ENNReal.ofReal(leftRisk(theta,r)) and ENNReal.ofReal(rightRisk(theta,r)) are at most classError(theta,r). The real risks are also at most the real value classError(theta,r).toReal; actual MAP attainment proves this error finite. For every natural R, erasureTail(theta,R) is at most twice the ENNReal sum of classError(theta,R+n) over natural n. The sum can be infinite.
+
+For every measurable observation o from integer visible paths to a pair of complete natural-indexed binary sequences, the P conditional bit predictor composed with o and the visible projection equals J's conditional expectation of erasedBit composed with the visible projection given o composed with that projection, J-almost everywhere. The proof also applies this pullback to each finite-word/full-half-line observation through the same general private pullback lemma. Thus the visible risks and every hidden-class predictor are evaluated on the same actual J and P.
+
+For the left comparison, screening at zero is composed with the complete visible past and with the future's tail and center bit. ScreenedBinaryPredictor gives a total measurable g(class,complete future after zero) in [0,1] whose value at the actual class is the conditional center-bit mean given class and the complete exterior. The tower property gives the full and left visible conditional means as projections of this same g. Replace the class by any classifier of the left word. The replacement is measurable in (leftWord,after); its squared error is zero on a correct class and at most one otherwise. Nested projection optimality bounds the actual left risk by the actual classifier error, then by its infimum.
+
+For the right comparison, use screening at r+1. The complete future beginning at r+1 screens the pair (complete past before zero,rightWord,center bit) given Q(r+1). Disintegration gives a total measurable g(class,(before,rightWord)) in [0,1] on every class/exterior pair. The complete exterior is reconstructed measurably from the right word and the entire future starting at r+1. The tower and squared-error argument therefore give the right risk bound. The actual joint stationarity identity translates Q0 and X[-r,-1] by r+1 to Q(r+1) and X[1,r], proving equality of error laws without reversing any path.
+
+All coordinate reconstruction arguments include Fin 0 and use the original emitted-bit clock. Null original states remain in the original path space and carry zero actual mass; predictors remain total on impossible pairs. The finite-class singleton case, reducible, periodic and nonunifilar presentations stay within the universal quantifiers. Nonnegative ENNReal summation proves the tail comparison independently of summability. Strict contraction, marked unifilar quotient dynamics and geometric summability are separate conclusions.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.cellMass`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.current_map_error`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.error_mass_formula`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalErasureComparison.full_half_line_erasure_comparison`
+- Dependency: [D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality](../../../ConceptDynamics/Prediction/ConditionalExpectationOptimality.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening](OriginalFutureScreening.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ScreenedBinaryPredictor](ScreenedBinaryPredictor.md)
