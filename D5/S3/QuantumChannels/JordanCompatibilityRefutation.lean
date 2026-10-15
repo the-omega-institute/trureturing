@@ -7,8 +7,6 @@
    digest: Compatible channels in dimension four need not be Jordan compatible. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic
 
 set_option linter.style.longLine false
 
@@ -115,8 +113,8 @@ private theorem J_measurePrepare (L : κ → Mat ι) :
       Matrix.kroneckerMap (· * ·) (L i).transpose (Matrix.single i i (1 : ℂ)) := by
   ext ⟨a, i⟩ ⟨b, j⟩
   rw [J_apply, measurePrepare_single]
-  simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single, Matrix.of_apply, Matrix.transpose_apply,
-    mul_ite, mul_one, mul_zero]
+  simp only [Matrix.sum_apply, Matrix.kroneckerMap_apply, Matrix.single, Matrix.of_apply,
+    Matrix.transpose_apply, mul_ite, mul_one, mul_zero]
   by_cases hij : i = j
   · subst j
     simp
@@ -261,14 +259,15 @@ private def jointEffects (p : Fin 4 × Fin 4) : M4 := h p.1 p.2 • E p.1
 private def Gamma : Map (Fin 4) (Fin 4 × Fin 4) := measurePrepare jointEffects
 
 private theorem h_nonneg (i j : Fin 4) : 0 ≤ h i j := by
-  unfold h
+  rw [h.eq_1]
   split_ifs <;> norm_num
 
 private theorem h_row_sum (i : Fin 4) : ∑ j : Fin 4, h i j = 1 := by
-  fin_cases i <;> norm_num [h, Fin.sum_univ_four, Fin.ext_iff]
+  simp only [h.eq_1]
+  fin_cases i <;> norm_num [Fin.sum_univ_four, Fin.ext_iff]
 
 private theorem h_mix (j : Fin 4) : ∑ i : Fin 4, h i j • E i = F j := by
-  unfold h
+  simp only [h.eq_1]
   simp only [add_smul, Finset.sum_add_distrib, ← Finset.smul_sum,
     mul_smul, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   rw [effects_sum.1]
@@ -354,8 +353,8 @@ private theorem image_blocks (A : A4) :
         (if i = k then E i d.1 c.1 else 0) * (if j = l then F j d.2 c.2 else 0) := by
     rcases c with ⟨c, c'⟩
     rcases d with ⟨d, d'⟩
-    rw [MatrixMap.kron_def]
-    simp [Phi, Psi, measurePrepare_single, Matrix.single_apply,
+    rw [Phi.eq_1, Psi.eq_1, MatrixMap.kron_def]
+    simp [measurePrepare_single, Matrix.single_apply,
       Prod.mk.injEq, ite_and, mul_ite, Finset.sum_ite_irrel]
   unfold jordanAction
   rw [MatrixMap.kron_def]
@@ -367,7 +366,7 @@ private theorem image_blocks (A : A4) :
   · subst k
     by_cases hjl : j = l
     · subst l
-      simp only [if_true, B, contract_apply, Fintype.sum_prod_type]
+      simp only [if_true, B.eq_1, contract_apply, Fintype.sum_prod_type]
       exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ =>
         Finset.sum_congr rfl fun z _ => Finset.sum_congr rfl fun w _ => by ring
     · simp [hjl]
@@ -439,14 +438,14 @@ private theorem contract_id_left (A : A4)
 private theorem B_half_row (A : A4)
     (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (i : Fin 4) :
     B A i 2 + B A i 3 = (1 / 2 : ℝ) • E i := by
-  unfold B
+  rw [B.eq_1, B.eq_1]
   rw [← contract_add_right, effect_halves.2.2.2, contract_smul_right,
     contract_id_right A h2, (effects_transpose i).1]
 
 private theorem B_half_col (A : A4)
     (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (j : Fin 4) :
     B A 0 j + B A 1 j = (1 / 2 : ℝ) • F j := by
-  unfold B
+  rw [B.eq_1, B.eq_1]
   rw [← contract_add_left, effect_halves.1, contract_smul_left,
     contract_id_left A h1, (effects_transpose j).2]
 
