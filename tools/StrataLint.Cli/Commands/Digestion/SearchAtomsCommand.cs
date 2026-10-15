@@ -40,7 +40,7 @@ internal static class SearchAtomsCommand
                 var metadata = DigestionQuerySelection.ReadSourceMetadata(repository, selected);
                 _ = DigestionQuerySelection.Merge(selectedMetadata!, metadata.Raw);
                 var eligible = metadata.Document.RequireDigestionSources()
-                    .Where(source => source.DefaultDispatch == DigestionDefaultDispatch.Eligible)
+                    .Where(source => source.DefaultDispatch is DigestionDefaultDispatch.Eligible or DigestionDefaultDispatch.Excluded)
                     .Select(source => source.SourceId).ToHashSet(StringComparer.Ordinal);
                 paths = paths.Where(path => eligible.Contains(DigestionQuerySelection.SourceId(path))).ToArray();
             }
