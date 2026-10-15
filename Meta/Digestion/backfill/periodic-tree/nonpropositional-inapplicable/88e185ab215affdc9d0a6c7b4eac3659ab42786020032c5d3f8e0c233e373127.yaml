@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:88e185ab215affdc9d0a6c7b4eac3659ab42786020032c5d3f8e0c233e373127
+  normalized_sha256: sha256:88e185ab215affdc9d0a6c7b4eac3659ab42786020032c5d3f8e0c233e373127
+cas_ref: sha256:88e185ab215affdc9d0a6c7b4eac3659ab42786020032c5d3f8e0c233e373127
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** This is the finite-set statement FSP2. A direct proof is as…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: d3cb87bac2be07c24746c250ed3bdd83bb4fd8b9b488155864167d92950efd99
+    next_atom_id: 5ecefef8bd466018503a2c543d10563582eed9e334d00ad30c1a40798054fa0d

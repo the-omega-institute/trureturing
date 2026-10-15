@@ -1,0 +1,19 @@
+**Theorem 14.4 (paid common-start full-fiber correspondence).**
+Under Assumption 14.1 and the terminal-latch convention, on every
+nonempty full actual fixed-row one-image fiber, for every vector
+$\mathbf b$ of (NBP.14.4),
+
+$$
+\mathsf{PaidNative}_*(\mathbf b)
+\quad\Longleftrightarrow\quad
+\mathsf{PaidRoot}_{*,\lambda}(\mathbf b).
+\tag{NBP.14.7}
+$$
+
+Necessity weakly decreases each of the seven upper resources.
+Sufficiency preserves the root witness's installed alphabets,
+actual code range, phase call counts and phase literal sums.
+Both directions retain one actual paid code-only handoff.
+The comparison is joint table existence, not preservation of an
+arbitrary prescribed encoder, graph or native trace.
+

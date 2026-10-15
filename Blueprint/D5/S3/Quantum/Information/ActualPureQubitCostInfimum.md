@@ -18,7 +18,19 @@ $\operatorname{BddBelow}(S)\ \Leftrightarrow\ \exists b\in\mathbb R,\forall q\in
 
 All radii in the statement are real. The right limit is through every positive real radius tending to zero, and the three eventual properties hold together on one positive interval.
 
-**Theorem 1.1 (Exact quadratic infimum coefficient).**
+**Theorem 1.1 (Energy of a Hermitian qubit operator).**
+
+$$\forall M \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; (\operatorname{Matrix}.\operatorname{IsHermitian}\left(M\right)) \Rightarrow (2 \cdot \operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(M \cdot M\right)\right) = \operatorname{Complex}.\operatorname{re}\left(\operatorname{Matrix}.\operatorname{trace}\left(M\right)\right)^{2} + \left\lVert \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{ActualPureQubitCostInfimum}.\operatorname{bloch}\left(M\right) \right\rVert^{2})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ActualPureQubitCostInfimum.matrix_energy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Hermitian complex two-by-two matrix M, twice the real trace of M squared is the squared real trace of M plus the squared Euclidean norm of its Bloch vector. Positivity and normalization are not required.
+
+**Theorem 1.2 (Exact quadratic infimum coefficient).**
 
 $$\begin{aligned}&\forall m\in\mathbb N,\ p,v:J_m\to\mathbb R,\\&(\forall j\in J_m,0<p_j)\land\sum_{j\in J_m}p_j=1\land\sum_{j\in J_m}v_j=0\land v\neq0\\&\land\ (\exists i,j,k\in J_m,\ s_i\neq s_j\land s_i\neq s_k\land s_j\neq s_k)\\&\longrightarrow\quad0<V\\&\land\ (\exists\delta>0,\forall R\in\mathbb R,\ 0<R<\delta\longrightarrow\\&\qquad\operatorname{costs}(p,v,R)\neq\emptyset\land\operatorname{BddBelow}(\operatorname{costs}(p,v,R))\land\operatorname{IsGLB}(\operatorname{costs}(p,v,R),C_2(p,v,R)))\\&\land\lim_{R\to0^+}\frac{C_2(p,v,R)-B}{R^2}=\frac V4\end{aligned}$$
 
@@ -34,6 +46,7 @@ The lower bound uses the joint limit of feasible rank-two coefficients: positivi
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitCostInfimum.matrix_energy`
 - Truth anchor: `D5/S3/Quantum/Information/ActualPureQubitCostInfimum.result`
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitFisherRank](ActualPureQubitFisherRank.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitUpperFamily](ActualPureQubitUpperFamily.md)

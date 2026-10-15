@@ -1,0 +1,65 @@
+**Proposition 6.2 (both entire-source and whole-row directions).** The entire
+fiber is
+
+$$
+D=\{U(x,y,p,q):x,y,p,q\in\mathcal T,\ \Delta(x,y)\}.
+\tag{NIS.21}
+$$
+
+Two distinct attained complete rows have exterior $C$, all eight holes reached,
+and partitions
+
+$$
+\begin{aligned}
+\pi_0&=\{\{1\},\{2\},\{3,5\},\{4,6\},\{7\},\{8\}\},\\
+\pi_1&=\{\{1\},\{2\},\{3,7\},\{4,8\},\{5\},\{6\}\}.
+\end{aligned}
+\tag{NIS.22}
+$$
+
+Their entire strata are exactly
+
+$$
+\begin{aligned}
+D_0&=\{\Theta_0(x,y)=U(x,y,A_x,A_y):\Delta(x,y)\},\\
+D_1&=\{\Theta_1(x,y)=U(x,y,B_y,B_x):\Delta(x,y)\}.
+\end{aligned}
+\tag{NIS.23}
+$$
+
+Before negatives both displayed charts have the full Cartesian domain
+$\mathcal T^2$. Other attained rows remain in (NIS.21).
+
+Proof. The seven outer branch literals force the actual comb skeleton.
+Extract its actual slots 1, 2, 3 and 4 as $x,y,p,q$.
+The helper branch literals and their right $\beta$ children, together with
+(NIS.20), force exactly $A_x,A_y,B_y,B_x$. All comb ancestors are original
+branches. Original-present transport at $q_1,q_2$ therefore gives the actual
+epoch-one/two whole subtree values $\rho x,\rho y,\rho^2x,\rho^2y$;
+no born-address transport is used. The other compared endpoints are reached
+by the displayed branch literals. The fifteen negatives are precisely
+$\Delta$. Thus extraction reconstructs that same whole original as
+(NIS.21).
+
+Conversely each such finite $U$ gives every literal and positive at its stated
+epoch. Its six base positions and the two helper children are reached; its
+$\Delta$ gives all negatives with both guards. Its old root row has exactly
+the stipulated single reached hole and class. These prove both fiber directions.
+
+The six base values are distinct. Hence $\pi_0$ forces exactly
+$p=A_x,q=A_y$, and $\pi_1$ forces exactly $p=B_y,q=B_x$.
+All other class distinctions follow from $\Delta$. Extraction and filling
+give both stratum directions, checking all 28 unordered hole-pair bits and
+the complete exterior and reached set.
+
+For attainment use $c_0=\alpha$, $c_{n+1}=\langle c_n,\alpha\rangle$.
+The owning normal-code mass gives $\gamma(c_n)=n$ for $n\ge1$.
+Set $x=c_2,y=c_5$. The six masses are
+$(2,5,2,5,6,3)$. Only $x,A_x$ and $y,A_y$ share a mass, and each of these
+pairs has clocks differing by one, since
+$\kappa(\rho t)=\kappa(t)+1$. All fifteen negatives thus hold on this one
+finite tuple. Both source maps attain their exact rows. ARH Proposition 2.1
+applies to this one fixed paid acquisition schedule and final epoch 2:
+conditional on Assumption 1.4, its successful output fiber is exactly
+(NIS.21), in both original-source directions. $\square$
+

@@ -43,6 +43,10 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
         "Block positivity bounds the Frobenius sum by the real trace and gives a separable ball about a scalar identity.",
         H("The Gurvits--Barnum separable ball"), Blocks(
             Paragraph(Text("All matrices act on the product index set Fin m times Fin n. SeparableCone consists of finite sums of Kronecker products of positive semidefinite factors. BlockPositive means that the real quadratic form is nonnegative on every product vector. The Frobenius sum below is the sum of squared entry norms, independently of any default norm on matrices. Empty index sets and a ball of radius zero are included.")),
+            Describe.Lean(DescribeId.Create("gb-psd-trace-square"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.psd_trace_sq"),
+                H("Positive semidefinite trace-square bound"), StatementSource.FromAuthor(Disp(PsdTraceSquare())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a positive semidefinite complex matrix on any finite index type, the real trace of its square is at most the square of its real trace. Its eigenvalues are nonnegative, so the sum of their squares is at most the square of their sum. The empty index type gives equality at zero."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("gb-block-positive-frobenius"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.frobSq_le_trace_sq_of_blockPositive"),
                 H("Block-positive Frobenius bound"), StatementSource.FromAuthor(Disp(Bound())),
@@ -59,6 +63,27 @@ internal sealed class GurvitsBarnumBallDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.separableCone_scaled_one_sub_two_projection"),
                 H("Projection ray"), StatementSource.FromAuthor(Disp(Projection())),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a Hermitian idempotent Q of real trace ell at least one, the matrix is PSD: it is the sum of ell minus one times the identity and twice the complement of Q. Its squared distance from ell plus one times the identity is 4 ell, which is at most the square of ell plus one. The real trace parameter includes integer ranks by coercion. This supplies the complementary high-rank rays in a spectral decomposition."))), DescribeRole.Theorem))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula QualifiedCall(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Seq(Operatorname, Grp(F.Id(owner)), Dot,
+            Operatorname, Grp(F.Id(name))), [.. arguments]);
+
+    private static Formula PsdTraceSquare()
+    {
+        var index = F.Id("I");
+        var matrix = F.Id("C");
+        var finite = Seq(OpenBracket, Call("Fintype", index), CloseBracket);
+        var square = Parenthesized(Mul(matrix, matrix));
+        var left = QualifiedCall("Complex", "re",
+            Parenthesized(QualifiedCall("Matrix", "trace", square)));
+        var right = Pow2(Parenthesized(QualifiedCall("Complex", "re",
+            Parenthesized(QualifiedCall("Matrix", "trace", matrix)))));
+        return All("I", F.Id("Type"), Seq(finite, Comma, Sp,
+            All("C", Call("Matrix", index, index, C),
+                Imp(QualifiedCall("Matrix", "PosSemidef", matrix), Le(left, right)))));
+    }
 
     private static Formula Bound()
     {

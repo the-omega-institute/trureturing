@@ -1,0 +1,70 @@
+**Theorem 6.3 (eligible comparison and complete finite realizers).** For
+$B=\{r_0,r_1\}$ of (NIS.22), the image-saturation handler applies.
+Its unique common closure point is
+
+$$
+W=C[K,K,\rho K,\rho K,\rho K,\rho K,\rho K,\rho K],
+\qquad K=\langle\rho K,\alpha\rangle.
+\tag{NIS.24}
+$$
+
+For every supplied $h$, one can produce two distinct legal finite originals
+in the entire $D_0,D_1$ sharing the one depth-$h$ prefix of $W$.
+Thus $J_B(h)$ holds for every $h$.
+
+Proof. Equality of entire completed source maps first identifies their
+two independent coordinates at slots 1 and 2 as $X,Y$. Their selector slots
+then require exactly
+
+$$
+\rho X=\langle\rho^2Y,\beta\rangle,\qquad
+\rho Y=\langle\rho^2X,\beta\rangle.
+\tag{NIS.25}
+$$
+
+Conversely these equations make all eight whole slots equal. The two
+occurrence edges have weight $1-2=-1$, so the only cycle has weight $-2$.
+The potentials $s_X=s_Y=1$ give
+
+$$
+A=\langle\rho B,\beta\rangle,\qquad
+B=\langle\rho A,\beta\rangle,\qquad A,B\in L_1.
+\tag{NIS.26}
+$$
+
+Both filters pass for every solution of these functional equations:
+$\rho B,\rho A,\beta$ all belong to $L_1$, so paired images do too.
+There are no free states and no finite parameters. This is an automatic
+passing saturation case. Exact inversion equivalently gives
+
+$$
+X=\langle\rho Y,\alpha\rangle,\qquad
+Y=\langle\rho X,\alpha\rangle.
+\tag{NIS.27}
+$$
+
+For example applying $\rho$ to the first equation of (NIS.27) gives the
+first of (NIS.25), and completed injectivity proves its converse for every
+$Y$; the second is identical with names interchanged. The two explicit
+pair guards give a unique solution. Swapping $X,Y$ preserves the system,
+so uniqueness gives $X=Y=K$, with the already owned guarded continuation
+equation in (NIS.24). Its finite prefixes are computable by guarded iteration.
+
+For any requested $h$, apply SLP Lemma 2.1 to the whole $\Delta$, the finite
+seed in Proposition 6.2, and the two infinite original-coordinate prefixes
+of $(K,K)$. It supplies one finite $(x_h,y_h)$ satisfying all fifteen
+negatives and both prescribed prefixes simultaneously. Substitute this
+same tuple into both maps of (NIS.23). Nonexpansion and native pairing make
+both sources agree through $h$ with the single $W$. Proposition 6.2 verifies
+all input predicates and both exact full rows. They are different originals:
+at selector slot 3 their values are $A_{x_h}$ and $B_{y_h}$, different by
+the same retained $\Delta$. They need not solve (NIS.25) as exact finite
+equations.
+
+Conversely any common closure point has the comb skeleton and actual slots
+1 and 2. Taking limits of each entire source map and using continuity
+gives (NIS.25), and guarded uniqueness forces (NIS.24).
+The finite construction gives reverse inclusion, so the common closure is
+exactly $\{W\}$. The closure point carries no finite negative or partition
+claim. $\square$
+

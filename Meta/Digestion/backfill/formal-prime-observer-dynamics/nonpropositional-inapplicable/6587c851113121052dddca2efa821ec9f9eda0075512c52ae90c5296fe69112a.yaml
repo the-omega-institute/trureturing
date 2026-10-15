@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6587c851113121052dddca2efa821ec9f9eda0075512c52ae90c5296fe69112a
+  normalized_sha256: sha256:6587c851113121052dddca2efa821ec9f9eda0075512c52ae90c5296fe69112a
+cas_ref: sha256:6587c851113121052dddca2efa821ec9f9eda0075512c52ae90c5296fe69112a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：71. 依赖图：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 0aea8af954ed8d772172452c168d3eb318060a03840a04a563da04b5f2a68bc0
+    next_atom_id: e0dec137afae95ee3c78077db0af21b8637996fe0500aa7b69594314fad54c24

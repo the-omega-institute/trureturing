@@ -1,0 +1,39 @@
+**Definition 2.1 (certificate data).** Combine the two parameter tuples
+and any finite auxiliary tuple into $\theta=(\mathbf n,\mathbf z)$.
+Supply a finite Boolean invariant
+$I(\theta)=C_0(\theta_0)\land C_1(\theta_1)\land\Theta(\theta)$
+in the language of Definition 1.3. Supply a simultaneous substitution
+$S$ sending each natural coordinate to $n_i+d_i$, for fixed $d_i\ge0$,
+and each tree coordinate to a mixed template in the old $\theta$.
+It sends every finite assignment to a finite assignment.
+
+Supply finitely many mixed comparison pairs $A_j(\theta),B_j(\theta)$,
+with $A_0=U_0,B_0=U_1$. For each $j$ supply a common template
+
+$$
+H_j(\theta;\mathbf w)::=E(\theta)\mid\rho^a w_k\mid
+\langle H,H\rangle,
+\tag{SPC.6}
+$$
+
+where $E$ is mixed and $a\ge0$ is fixed. Comparison holes may repeat.
+The same coefficient values $E(\theta)$ occur on both sides.
+Require the finite obligations
+
+$$
+\begin{aligned}
+&\exists\theta\ I(\theta),\qquad I(\theta)\Longrightarrow I(S\theta),\\
+&I(\theta)\Longrightarrow A_j(S\theta)=H_j(\theta;\mathbf A(\theta)),\\
+&I(\theta)\Longrightarrow B_j(S\theta)=H_j(\theta;\mathbf B(\theta)).
+\end{aligned}
+\tag{SPC.7}
+$$
+
+Each occurrence $\rho^a w_k$ in $H_j$ gives an edge $j\to k$,
+weighted by $d+\lfloor a/2\rfloor$, where $d$ is its address length
+in the displayed pairing skeleton. Count occurrences separately.
+Keep the vertices reachable from $0$, and let their number be $r\ge1$.
+Require that their zero-weight edges contain no directed cycle.
+A hole-free template has no outgoing edges. This is supplied finite
+certificate data, not an asserted finite quotient of arbitrary histories.
+

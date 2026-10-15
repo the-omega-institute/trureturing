@@ -1,0 +1,21 @@
+**References 7.1 (bounded source comparison).** The repository interfaces
+in this volume are those at source revision
+[3f27425f9ac9ce82d412b7f54b3881dc2da20ce3](https://github.com/the-omega-institute/trureturing/tree/3f27425f9ac9ce82d412b7f54b3881dc2da20ce3).
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| [ARH §§1–8][ARH] | Complete acquired-state contract; guarded whole-endpoint semantics; positive root classification; exact finite/cofinite indices with every old condition; entire-row finite-budget criterion and sufficient consumers. The classification and compiler are supply. Theorem 8.3 prevents treating an infinite orbit fiber as a finite union of exact literal-only old inputs. |
+| [ARH §§10–18 and §§19–25][ARH] | Synchronous and constructor-elimination families give their own full-row decisions and paid consumers. Their retained general joint-minimum questions are not settled here; recognition of the positive root record is essential to the present operational theorem. |
+| [JRF §§1–7][JRF] | Sourcewise versus worst-budget order, actual read/update/length accounting, shortest words, finite strategy optimization, and separate same-run weighted minimization are supplied methodology. Its literal-only admissibility and equal-row predicates are not invoked on arbitrary relation histories. |
+| [SCR §§9–10][SCR] | Sharp epoch-four general transport and its complete-row consumers apply on their stated all-tree interfaces. They do not supply the acquired-orbit entry-static, nonexpansive joint optimum proved here. |
+| [SLH §6.2 and §§59–62][SLH] | The ordered-search capacity $3\cdot2^h-2$ and its construction; complete old-row acquisition, repeats, disequalities and source-continuous handoff. These are attributed supply, not new capacity or generic minimization theorems. |
+| H. Comon et al., [*Tree Automata Techniques and Applications*, author version, §1.4, pp. 31–34](https://inria.hal.science/hal-03367725v1/document) | `literature-attested`: the ranked tree homomorphism definition makes this $\rho$ a fixed linear homomorphism; Theorems 1.4.3–1.4.4 give their stated language closures. Those closures do not provide the acquired-state, arbitrary-service or cost correspondences here. |
+
+The source-relative additions are (AOF.7), the full-fiber two-way
+operational completeness of Theorem 4.1, the exact optima obtained from
+that completeness, and their signed-guard-sensitive complete-row consumer.
+They are `repo-derived` ordinary deductions. Finite minimax recursion,
+Pareto order, atomic root classification, unification and automata
+background remain suppliers; no global novelty or priority follows from
+this bounded comparison.
+

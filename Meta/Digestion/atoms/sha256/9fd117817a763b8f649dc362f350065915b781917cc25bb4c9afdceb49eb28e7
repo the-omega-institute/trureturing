@@ -1,0 +1,74 @@
+**Theorem 8.2 (entire source reconstruction and all attained rows).**
+The entire fiber of Definition 8.1 is
+
+$$
+D^{(a)}=\{U_a(x,y):x,y\in\mathcal T\}.
+\tag{NMF.8.3}
+$$
+
+Its complete target-row image has exactly three attained labels.
+Every label has reached set $Q$ and the entire exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$.
+Their partitions and entire strata are
+
+$$
+\begin{aligned}
+r_0&:\{\{1,2\},\{3\}\},&
+D_0^{(a)}&=\{U_a(t,t):t\in\mathcal T\},\\
+r_1&:\{\{1,3\},\{2\}\},&
+D_1^{(a)}&=\{U_a(St,t):t\in\mathcal T\},\\
+r_2&:\{\{1\},\{2\},\{3\}\},&
+D_2^{(a)}&=\{U_a(x,t):x,t\in\mathcal T,\
+                         x\ne t,\ x\ne St\}.
+\end{aligned}
+\tag{NMF.8.4}
+$$
+
+Both directions recover the original source itself, including every
+literal, both endpoint guards of every sign, and the off-task negative.
+
+Proof. The epoch-zero literals force
+$u=\langle x,\langle y,z\rangle\rangle$, with $x,y,z$ nonempty.
+Existing native branch nodes survive every iterate. Thus the epoch-$a$
+root and $R$ literals hold, and the subtree at epoch-$a$ address $RL$
+is $Sy$. The first relation in (NMF.8.2) has reached endpoints and
+forces $z=Sy$.
+
+For any finite $t$, all its original branch nodes survive $S$.
+At each original alpha leaf the new root reply is beta for $a=1$
+and branch for $a\ge2$. At each original beta leaf it is branch for
+every $a\ge1$. These statements follow from the native leaf laws:
+after beta becomes a branch, subsequent updates preserve that branch.
+There is at least one original leaf, so $t\ne St$.
+Consequently the second relation is true for every $U_a(x,y)$,
+with both its original $RL,RR$ endpoints reached.
+
+For the last relation, finite leaf count gives
+
+$$
+\ell(U_a(x,y))=\ell(x)+\ell(y)+\ell(Sy)>\ell(x),
+$$
+
+so the reached original root differs from its reached left subtree.
+The old root row has one reached hole and one class for every
+nonempty source. Therefore every $U_a(x,y)$ satisfies that old row,
+all four literals, and all three guarded records. Together with
+the forced decomposition, this proves (NMF.8.3) in both directions.
+
+The target values are exactly $x,y,Sy$, and $y\ne Sy$ on the entire
+finite domain. Thus $x$ can equal the second value, the third value,
+or neither, giving exactly the partitions and conditions in
+(NMF.8.4). The first two rows are attained for every $t$ by their
+displayed sources. The third is attained with $x=S^2t$: one has
+$S^2t\ne St$ by applying the preceding leaf argument to $St$, and
+$S^2t\ne t$ by applying it to $\rho^{2a}$ on $t$.
+No exterior or row label is discarded.
+
+All relation epochs are $0$ or $a\le N$. Instantiating
+[ARH, Proposition 2.1][ARH] with these fixed public coordinates
+supplies their source-total paid acquisition correspondence,
+conditional on its complete access cut. In particular every finite
+source in (NMF.8.3) gives the same stipulated retained input.
+This uses that producer's supplied contract and imposes no additional
+cross-source equality or source-bearing field. $\square$
+

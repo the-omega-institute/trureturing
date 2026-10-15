@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fad8971da0584b451b8e27f08ab904055b9249807ea06f028d968fc5341427c4
+  normalized_sha256: sha256:fad8971da0584b451b8e27f08ab904055b9249807ea06f028d968fc5341427c4
+cas_ref: sha256:fad8971da0584b451b8e27f08ab904055b9249807ea06f028d968fc5341427c4
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.activePrimePowers_eq_empty_of_exp_lt_two
+    target_statement_id: sha256:800a9cb9cc3f95a69d6acc0110046d53a9b09c0cd72cb5867a38cdde917e6f0d
+  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.smallSupport_poincare_reduction
+    target_statement_id: sha256:2e5f1d0a6bbd674bec75b15861c86b31777468c148dd5f249c4c1d8313878302
+receipts:
+  unresolved_subitems: []

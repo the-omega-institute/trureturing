@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7306df3b2d1a92d51e6f5c1809e6dd5f8ce2c396f5460127f48af8b8f2d4b186
+  normalized_sha256: sha256:7306df3b2d1a92d51e6f5c1809e6dd5f8ce2c396f5460127f48af8b8f2d4b186
+cas_ref: sha256:7306df3b2d1a92d51e6f5c1809e6dd5f8ce2c396f5460127f48af8b8f2d4b186
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 由 $\det M\ne0$，实线性映射 $M_{\mathbb R}$ 可逆。定义  $$ b_M:\mathbb Z^2…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 339af79d035a523a940e2766446c01a400f20961f418dd14f17c1b8ac5b1be0f
+    next_atom_id: 40cd093d8444bbb5d6183e134afd87b47e7671b78f87b1b502e1262d345752dd

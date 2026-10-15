@@ -1,0 +1,64 @@
+**Theorem 2.5 (exact paths, every-path lower bound and source directions).**
+For every unequal finite native tuple, the leaves of $F(\mathbf u)$
+are in bijection with $\Delta(\mathbf u)$ by their address words.
+The path for $p$ has exactly $|p|$ direction markers. Consequently
+the corresponding path of $K(\mathbf u)$ has exactly $|p|$
+occurrences of $a$, and
+
+$$
+\min_{\pi\text{ a branch of }K(\mathbf u)}\#_a(\pi)
+=d(\mathbf u).
+\tag{NMF.5}
+$$
+
+For the entire product of Definition 1.2, every tuple is unequal and
+
+$$
+J_B(h)\quad\Longleftrightarrow\quad
+\exists\mathbf u\in\mathcal E_{I,B}\quad
+\forall\pi\text{ a branch of }K(\mathbf u)\quad
+\#_a(\pi)\ge h+1.
+\tag{NMF.6}
+$$
+
+Both directions use one simultaneously chosen tuple satisfying every
+original finite constraint. In particular (NMF.6) does not exchange
+$\exists\mathbf u$ and $\forall\pi$.
+
+Proof. Induct on the finite convolution. At a nonconstant root,
+the frontier is exactly $\{\varepsilon\}$ and $F=e$; its path has
+empty address word and zero markers. At a constant leaf the frontier
+is empty, and the subtree has flag $E$. At a common branch,
+
+$$
+\Delta=L\Delta_L\ \cup\ R\Delta_R,
+$$
+
+with empty contributions precisely from the $E$ children. Each
+retained child's path gains its actual direction letter and one
+marker. With two retained children $b$ distinguishes their paths
+but adds no marker; with one child the unary direction marker still
+remembers whether the original edge was left or right. The induction
+therefore proves the bijection, the entire original address word and
+the exact marker count. Collapsing the two marker labels changes
+neither paths nor their counts. This proves (NMF.5). Raw output edge
+length, which also counts the inserted $b$ nodes, is not the cost.
+
+If all components of a product tuple were identical, their complete
+rows under the deterministic map $R_Q$ would be identical, contrary
+to the distinct row labels. Thus (NMF.5) applies to every product
+tuple. A witness for (NMF.2), by Theorem 2.2, has $d>h$; its own
+pruning supplies the witness on the right of (NMF.6). Conversely
+a tuple on that right has $d\ge h+1$ by (NMF.5), hence all four
+replies agree through $h$ by (NMF.4). Its membership in the entire
+product already enforces all old and new exteriors, reached sets,
+partitions, signs and whole-value correlations. $\square$
+
+The minimum in (NMF.5) is the first-disagreement counterpart of
+NLC's minimum native leaf depth [NLC, Definition 1.1][NLC]. Common
+early leaves are removed here because their descendants agree as
+absent; they do not bound the first-disagreement depth. In a full
+binary pruned address trie, ordinary minimum leaf depth is exactly
+$d$. In a trie with deleted equal children, direction markers count
+its original edges even where only one child remains.
+

@@ -2962,3 +2962,132 @@ coefficientwise payment scheme, while preserving joint arithmetic
 compensation as the route required by (SV4). The full original
 signed bound and RH remain unproved; no historical originality
 or Lean certification is claimed for this application.
+
+## A moving source has a finite-horizon coefficientwise cost obstruction
+
+Keep the original conditional full-window source, all maximizing ties and
+$\Theta,\eta,d,\kappa,a$ from
+[FH1--FH4](../Estimation/trureturing2026pricegapconvexity.md#a-common-future-horizon-pays-the-complete-remote-remainder).
+Write $M_X=X^{1/2-\eta}\log X$, $L_X=t_m-t_0$,
+$\ell=(d/8)M_X\sqrt X$, $B(t)=\mathcal B_X(t)$, and use exactly
+that application's nonnegative eventual weight $\mathsf W_X$ and common
+finite horizon $\mathsf U_X$. This is an application of (SV1),
+(SV67)--(SV68) and the
+[existing reciprocal-prime Mertens estimate](../Scale/lichtman2020mertens.md),
+not a new recovery or prime-distribution theorem. It addresses one
+coefficientwise payment scheme, not the joint lower bound (FH4).
+
+### The actual terminal core supplies a legal pressure price
+
+Choose any original terminal active core $u^\star$ and put
+
+$$
+B^\star=\log u^\star,\qquad A^\star=B^\star+t_m,\qquad
+y=4A^\star,\qquad \epsilon=\frac1{A^\star\log A^\star},\qquad
+\mathsf S_X=\int_{t_0}^{t_m}\sqrt{B(t)}\log B(t)\,dt.
+$$
+
+PG1 gives $u^\star=N_{A^\star}^{\rm str}$, so $\epsilon$ is a
+pressure price of this actual integer. It need not equal the price at
+$\log u^\star=B^\star$. All-choice ordering gives $B(t)\le B^\star$;
+the original $\rho\to0$ gives $A^\star\le2B^\star$ eventually.
+Thus FH1's common ceiling satisfies $\log y\le\mathsf Y_X+\log8$,
+while $\log\mathsf U_X/\mathsf Y_X\to\infty$. In particular,
+
+$$
+\frac{\mathsf U_X}{y^6}\longrightarrow\infty.
+\tag{SV73}
+$$
+
+These statements hold uniformly over the original terminal choices,
+including $\Theta=1$. They do not select a favorable tie or window.
+
+Use the logarithmic Barban--Vehov weights above with parameter
+$A^\star$, hence $R<U_1<V=\sqrt{A^\star}$. Only their normalization,
+support and the general identity (SV1) are used. Denote their type-II
+factor by $b_\star^{\rm II}$, and form $T_\star^w,T_\star^g$ as in
+(SV67), using the actual $u^\star$ and the price $\epsilon$ above.
+The sieve weight $\lambda$ in that identity is distinct from
+$\lambda(v)=1/(v\log v)$ below. This specifies a source-based cutoff
+family; cutoffs chosen from the much larger horizon are not covered.
+
+### Two finite prime blocks already exceed the window budget
+
+Take ordinary primes
+
+$$
+y<p\le y^2,\qquad y^2<q\le y^4.
+$$
+
+They exceed $V$ and do not divide $u^\star$: indeed the first-layer
+ratio $\log(1+1/r)/\log r$ is less than $\lambda(r)$, so a prime
+$r>A^\star$ cannot occur in $N_{A^\star}^{\rm str}$.
+The rough-divisor calculation of (SV68) therefore gives
+
+$$
+T_\star^w(pq)=-W_{u^\star}(p)-W_{u^\star}(q).
+$$
+
+For either $r=p$ or $r=q$, its actual gain satisfies
+
+$$
+\epsilon^{-1}\log(1+1/r)
+\le\frac{A^\star\log A^\star}{r}
+\le\tfrac14\log A^\star\le\tfrac14\log r.
+$$
+
+Hence $[-T_\star^w(pq)]_+\ge(3/4)\log(pq)$.
+Every such $n=pq$ lies in $(y^3,y^6]$, above every $B(t)$ and,
+by (SV73), below $\mathsf U_X$ eventually. The exact FH3 weight is
+therefore
+
+$$
+\mathsf W_X(n)=\mathsf S_X
+\bigl(\lambda(n)-\lambda(\mathsf U_X)\bigr)
+\ge\frac{\mathsf S_X}{2n\log n}.
+$$
+
+The last inequality is uniform on this block by (SV73). Distinct pairs
+from the disjoint prime blocks have distinct products. Nonnegativity
+of the full FH weight and the existing Mertens estimate consequently give
+
+$$
+\begin{aligned}
+\mathcal N_X
+&:=\sum_{2\le n\le\mathsf U_X}
+ [-T_\star^w(n)]_+\mathsf W_X(n)\\
+&\ge\frac38\mathsf S_X
+ \left(\sum_{y<p\le y^2}\frac1p\right)
+ \left(\sum_{y^2<q\le y^4}\frac1q\right)
+\ge c_0\mathsf S_X,\qquad c_0=\frac{(\log2)^2}{16}>0.
+\end{aligned}
+\tag{SV74}
+$$
+
+Both prime sums equal $\log2+O(1/\log y)$. The original floor
+$t\ge\ell$ and $\rho<1$ imply $B(t)\ge\ell$ eventually, so
+
+$$
+\frac{\mathcal N_X}{M_XL_X}
+\ge c_0\frac{\sqrt\ell\log\ell}{M_X}
+\asymp_{d,\eta}X^{\eta/2}\sqrt{\log X}
+\longrightarrow\infty.
+\tag{SV75}
+$$
+
+Thus this source-based coefficientwise type-II negative-part payment
+cannot cost $O(M_XL_X)$ on the actual finite FH horizon. The estimate
+keeps the moving source and a common finite endpoint; the fixed-source
+infinite progression argument (SV69) alone does not supply it.
+No centered variant or general obstruction to adaptive bilinear methods
+is asserted.
+
+The same actual semiprimes retain the complete cancellation (SV72):
+$(h*\log)(pq)=\log(pq)$, the low recovery terms vanish, and
+$T_\star^w(pq)+T_\star^g(pq)=-\log(pq)$, leaving
+$\Lambda(pq)=0$. The cost in (SV74) is a separate negative-part cost,
+not a lower bound for the joint signed error or a Robin counterexample.
+The remaining task is joint arithmetic compensation at the original
+strict window budget. That estimate, (FH4), Robin and RH remain
+unproved; this finite-source application claims neither literature
+originality nor Lean/kernel verification.

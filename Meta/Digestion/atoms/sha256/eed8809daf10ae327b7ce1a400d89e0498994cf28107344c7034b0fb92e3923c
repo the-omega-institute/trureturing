@@ -1,0 +1,27 @@
+**Proof.** On a fixed stationary source, the reply to the one address
+of a given state is fixed. If the same running state were revisited,
+the deterministic suffix from it would repeat forever, contradicting
+termination. The root task has the same property for a fixed $\theta$.
+This argument fixes the source; it does not make all transitions from
+a running state use the same successor across different sources.
+
+For an explicit actual-fiber example, take $P=\{\varepsilon\}$ and
+its one-hole current row. There is one class $d$, its attained types
+are $\beta$ and $\mathsf{branch}$, and its whole predecessor row is
+constant by Corollary 10.10. Install running states $a,b$, both querying
+$d$, and a halt $h$ carrying that fixed row. Put
+$\operatorname{next}(a,\beta)=b$,
+$\operatorname{next}(b,\beta)=h$,
+$\operatorname{next}(b,\mathsf{branch})=a$ and
+$\operatorname{next}(a,\mathsf{branch})=h$; let the other replies go to
+$h$. Export initial state $a$ on type $\beta$ and $b$ on type
+$\mathsf{branch}$. This is an actual acquired two-value initialization.
+The paths are $a,b,h$ and $b,a,h$, respectively, and each uses two
+calls. Both types have actual finite origins, for instance current
+images $\beta=\rho\alpha$ and $E=\rho\beta$. The union contains the
+cycle $a\to b\to a$, although no fixed source follows that cycle.
+Replacing $d$ by the actual root address gives the same native example.
+The transfers use a single state-local response rule and preserve the
+corresponding source paths, so such union cycles and convergences
+cause no additional state or call cost. $\square$
+

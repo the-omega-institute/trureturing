@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8901f405a2d6ac016a13f8537db4c3b983cbc3919915838ce7245ab7d82c565b
+  normalized_sha256: sha256:8901f405a2d6ac016a13f8537db4c3b983cbc3919915838ce7245ab7d82c565b
+cas_ref: sha256:8901f405a2d6ac016a13f8537db4c3b983cbc3919915838ce7245ab7d82c565b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 33.5（相互支持不等于有限取得）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 5d6d354e63b4328bf72b9b53e6b82dcc7d21926677e8e58784504a00dd73ae32
+    next_atom_id: e6178a9d80377b24b9884d545759e4dd091c99cb18bbd00cd9b45405cd415d59

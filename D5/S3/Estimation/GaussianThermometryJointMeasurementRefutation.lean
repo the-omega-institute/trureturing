@@ -12,7 +12,8 @@ escape_witness: v2, single_mode_local_bound: Loewner monotonicity, physical-to-p
 domination and rotation-independent rational bounds at ν = 2 and ν = 5/4,
 used by the additive local supremum bound on the live path of result.
 admission_basis: open-problem-resolution (#11666; Refuted)
-Registration is paused under CLAUDE.md §3.9 (information-escape registration pause).
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16704
+proof_shape: physical_data: bind-only; consumers: single_mode_local_bound; reason: Applies matrix positivity and determinant nonnegativity, then normalizes the two-dimensional uncertainty matrix.
 Direct frozen dependencies: D5/S3/Observer/Fluctuation/ThermalCoefficientFloor.coth;
 D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef.
 -/
@@ -85,6 +86,29 @@ def claim : Prop :=
     ∀ σM : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ, IsGaussianMeasurementCov σM →
       fisherC (thermalCov ω T) (thermalCovDeriv ω T) σM ≤ localFisher ω T
 
+theorem physical_data : ∀ N : Matrix (Fin 2) (Fin 2) ℝ,
+    IsGaussianMeasurementCov (m := 1) N → N.PosSemidef ∧ 1 ≤ N.det := by
+  intro N hN
+  have hsym : N 1 0 = N 0 1 := congrArg (fun A => A 0 1) hN.1
+  have hcomplex : (!![(N 0 0 : ℂ), (N 0 1 : ℂ) + Complex.I;
+      (N 0 1 : ℂ) - Complex.I, (N 1 1 : ℂ)]).PosSemidef := by
+    convert hN.2 using 1
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.J, Matrix.fromBlocks, Matrix.submatrix, Fin.divNat,
+        Matrix.one_apply, hsym, sub_eq_add_neg]
+  have hdet : 1 ≤ N.det := by
+    have h := (RCLike.nonneg_iff.mp hcomplex.det_nonneg).1
+    norm_num [Matrix.det_fin_two] at h
+    simp only [Matrix.det_fin_two, hsym]
+    nlinarith
+  have hpsd : N.PosSemidef := by
+    apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (by simpa using hN.1)
+    intro x
+    have h := hcomplex.re_dotProduct_nonneg (fun i => (x i : ℂ))
+    simpa [dotProduct, Matrix.mulVec, Fin.sum_univ_two, hsym] using h
+  exact ⟨hpsd, hdet⟩
+
 /-- Escape witness v2: physical single-mode local bounds at the two witness values. -/
 private theorem single_mode_local_bound (ν d : ℝ)
     (hν : ν = 2 ∨ ν = 5 / 4) (M : Matrix (Fin 2) (Fin 2) ℝ)
@@ -135,28 +159,6 @@ private theorem single_mode_local_bound (ν d : ℝ)
     rw [hid] at ht
     rw [fisher_scalar, fisher_scalar]
     exact mul_le_mul_of_nonneg_left (by linarith) (by positivity)
-  have physical_data : ∀ N : Matrix (Fin 2) (Fin 2) ℝ,
-      IsGaussianMeasurementCov (m := 1) N → N.PosSemidef ∧ 1 ≤ N.det := by
-    intro N hN
-    have hsym : N 1 0 = N 0 1 := congrArg (fun A => A 0 1) hN.1
-    have hcomplex : (!![(N 0 0 : ℂ), (N 0 1 : ℂ) + Complex.I;
-        (N 0 1 : ℂ) - Complex.I, (N 1 1 : ℂ)]).PosSemidef := by
-      convert hN.2 using 1
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        norm_num [Matrix.J, Matrix.fromBlocks, Matrix.submatrix, Fin.divNat,
-          Matrix.one_apply, hsym, sub_eq_add_neg]
-    have hdet : 1 ≤ N.det := by
-      have h := (RCLike.nonneg_iff.mp hcomplex.det_nonneg).1
-      norm_num [Matrix.det_fin_two] at h
-      simp only [Matrix.det_fin_two, hsym]
-      nlinarith
-    have hpsd : N.PosSemidef := by
-      apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (by simpa using hN.1)
-      intro x
-      have h := hcomplex.re_dotProduct_nonneg (fun i => (x i : ℂ))
-      simpa [dotProduct, Matrix.mulVec, Fin.sum_univ_two, hsym] using h
-    exact ⟨hpsd, hdet⟩
   obtain ⟨hpsd, hdet⟩ := physical_data M hM
   have hdef : M.PosDef := hpsd.posDef_iff_det_ne_zero.mpr (by linarith)
   let s := Real.sqrt M.det
@@ -529,6 +531,5 @@ theorem result : ¬ claim := by
   have ha2 : 0 < a ^ 2 := sq_pos_of_pos ha
   nlinarith
 
-#print axioms result
 
 end D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation

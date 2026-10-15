@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f9586a720d269c3a659c4a213b8c72ef5f7c15c3e3a86c3e18f40ff0ad39c7a
+  normalized_sha256: sha256:6f9586a720d269c3a659c4a213b8c72ef5f7c15c3e3a86c3e18f40ff0ad39c7a
+cas_ref: sha256:6f9586a720d269c3a659c4a213b8c72ef5f7c15c3e3a86c3e18f40ff0ad39c7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 17. 预测完成、本质与记忆：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: d9b41e6659ce2a5ffb4a4ca4a60d5260d1f8985b79d088d285f64df2dbc0de06
+    next_atom_id: 75b913ae29874788100037b3ab4a36733ab5ab215d169982ab6d6b9e0cc61931

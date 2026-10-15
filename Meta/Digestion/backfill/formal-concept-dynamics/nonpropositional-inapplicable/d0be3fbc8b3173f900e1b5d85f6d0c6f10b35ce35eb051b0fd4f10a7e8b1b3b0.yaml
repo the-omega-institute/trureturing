@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0be3fbc8b3173f900e1b5d85f6d0c6f10b35ce35eb051b0fd4f10a7e8b1b3b0
+  normalized_sha256: sha256:d0be3fbc8b3173f900e1b5d85f6d0c6f10b35ce35eb051b0fd4f10a7e8b1b3b0
+cas_ref: sha256:d0be3fbc8b3173f900e1b5d85f6d0c6f10b35ce35eb051b0fd4f10a7e8b1b3b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 453.1（规范安全回答器）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: f1041112190849b7adab47e4003e3ad8134dc0522fa3a3e11669d08d9edd0bbd
+    next_atom_id: 456d06d18bd125b877a929bbeaf0bc510f945dadb415ca0cf81c789da07fa6da

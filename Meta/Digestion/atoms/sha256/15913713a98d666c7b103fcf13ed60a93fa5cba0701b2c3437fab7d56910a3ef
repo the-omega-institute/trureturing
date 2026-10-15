@@ -1,0 +1,9 @@
+**Corollary 3.6 (enumeration is not authentication).** $\mathcal H_{P,b}$
+and $\mathcal S_{P,b}$ are computably enumerable. A source/epoch tuple
+with finitely specified designated roles is also semidecidable by
+finite-witness enumeration. Alternatively simulate all finite active
+words on enumerated finite sources and check the whole boundary.
+Enumeration supplies no negative membership decision. A witness gives
+an alternative possible execution, not authentication that a handed-in
+record was acquired. Every branch uses the same public program.
+

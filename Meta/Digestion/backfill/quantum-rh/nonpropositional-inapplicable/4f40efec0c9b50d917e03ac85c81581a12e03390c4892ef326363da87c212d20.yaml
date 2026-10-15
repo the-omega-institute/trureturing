@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f40efec0c9b50d917e03ac85c81581a12e03390c4892ef326363da87c212d20
+  normalized_sha256: sha256:4f40efec0c9b50d917e03ac85c81581a12e03390c4892ef326363da87c212d20
+cas_ref: sha256:4f40efec0c9b50d917e03ac85c81581a12e03390c4892ef326363da87c212d20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proves the reverse implication of equivalence (32), excluding off-line zeros via poles of the logarithmic derivative.
+    previous_atom_id: afb0571254b3a0911a78acfb4fe74972be50ba5f23cb4c34aef16877c1250bc8
+    next_atom_id: 93a3935e3c5d0df59aa89d2c4e6dd7e57cc52e673a6a8c885b3fa0f34cf80519

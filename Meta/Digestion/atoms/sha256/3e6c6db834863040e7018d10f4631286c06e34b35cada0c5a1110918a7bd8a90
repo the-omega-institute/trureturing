@@ -1,0 +1,10 @@
+**Proposition 16.8 (a native two-slot strict saving with a long-address witness).**
+Take $D=1,H=1$, so $r=q=2$, and
+$\mathcal M=\{\{0\},\{1\}\}$. Zero-extra-read recovery needs exactly
+four retained labels, whereas current recovery needs exactly two and
+the code $e_0=a_0$ uses at most one fresh Read. For any two-label code
+with a correct current decoder, at least one fresh call is necessary in
+the worst case; the displayed first-slot protocol attains one.
+The retained fixed-width representations cost respectively two bits
+with zero fresh reads and one bit with the displayed current protocol.
+

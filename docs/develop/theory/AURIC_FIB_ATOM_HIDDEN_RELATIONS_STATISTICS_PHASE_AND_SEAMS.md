@@ -4837,3 +4837,70 @@ $$
 [^C58-matrix]: Gram 核与秩的矩阵形式对应固定 pin `db584cd6d46c92f209a44c0f1c829460d327499d` 的 Mathlib [Matrix/Rank.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Matrix/Rank.lean)，特别是 `ker_mulVecLin_transpose_mul_self`、`rank_transpose_mul_self` 与 `rank_transpose`；本节的 (C58.14) 直接给出其实数有限和证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 59. 带标号正活动环与局部四角问题
+
+**约定 C-59.1（共同来源与所用中间结果）。** 研究对象是带标号有限环上的实际联合概率律。沿用本卷 C-2.1 的五态顺序、C-3.2 的底面条件协方差、C-4.5–C-4.6 的固定均值 Fisher 计算；C-7.9 和 C-8.2 提供兼容矩阵及路径求和，C-19.3 提供共同二态指标与乘积项数的区别，C-26.11、C-26.12、C-26.22 提供同源闭路响应。以下把这些中间结果用于一个指定问题：消去窗口外部后，外部联合关系怎样进入本窗口的五个概率。这里所有下标都是环上的位置标号，三位占位依次写成左、中、右。
+
+**定义 C-59.2（正乘积活动来源）。** 固定整数 $n\ge5$，顶点集 $V=\mathbb Z/n\mathbb Z$，边为 $\{j,j+1\}$。定义
+
+$$
+\mathcal B_n=\{b\in\{0,1\}^{V}:b_jb_{j+1}=0\text{ 对所有 }j\},
+\qquad \lambda_j>0.
+$$
+
+完整来源律另行规定为
+
+$$
+\omega_\lambda(b)=\prod_{j\in V}\lambda_j^{b_j},\qquad
+\mathcal Z=\sum_{b\in\mathcal B_n}\omega_\lambda(b),\qquad
+\mathbb P_\lambda(B=b)=\frac{\omega_\lambda(b)}{\mathcal Z}.
+\tag{C59.1}
+$$
+
+在 $\mathcal B_n$ 外概率为零。空配置权一，所以 $\mathcal Z>0$；每个合法配置都有正概率。相邻排斥只规定支持，乘积权是额外的来源假设。总占位 $\sum_jB_j$ 不固定，也不作关于这个总数的条件化。所有概率均来自这一份共同律，不分别拼接不同来源的窗口。
+
+**命题 C-59.3（来源的铺砌表示及全正窗口）。** 把 $b_j=1$ 对应于覆盖标号位置 $j,j+1$ 的一块多米诺，赋权 $\lambda_j$；其余未覆盖位置各放权一的单格块。这给 $\mathcal B_n$ 与带标号环的单格块／多米诺铺砌之间保持权重的双射。对每个中心 $i$，三位 $(B_{i-1},B_i,B_{i+1})$ 的支持恰为
+
+$$
+(000,100,010,001,101),
+$$
+
+且五项概率都严格正。
+
+证明。两个起点相邻的多米诺恰好共享一个位置，故不重叠等价于相邻起点不能同时取一；未覆盖位置的单格块唯一确定。反向由铺砌的多米诺起点恢复 $b$，各活动恰计一次。铺砌保留标号，不对旋转取商。窗口两条边排除其余三位词；对列出的每个词，把窗口外全部置零便得到合法全环配置，因为 $n\ge5$ 时左右端点不相邻。正活动使该配置有正权。证毕。
+
+这个双射只是支持与权的重述，不改用固定多米诺数。统一活动的独立集权 $\lambda^{|I|}$ 是 Sinclair–Srivastava–Yin，*Spatial mixing and approximation algorithms for graphs with bounded connective constant*，v2 §1.1 的模型背景；这里的非齐次式 (C59.1) 由定义直接给定。[文献范围见 C-66.3](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md#66-来源范围与三种读数的共同边界)。
+
+**定义 C-59.4（五律、均值与条件表）。** 对中心 $i$ 按上述模式顺序记
+
+$$
+p^{(i)}=(p_0,p_1,p_2,p_3,p_{13}),\quad
+X=p_1+p_{13},\quad Y=p_3+p_{13},\quad Z=p_2,
+\quad r=1-Z,\quad\kappa=p_{13}.
+$$
+
+省略的上标始终属于同一个中心；不同窗口可有不同的 $X,Y,Z$。配分总权写作 $\mathcal Z$，中位均值写作 $Z$。置
+
+$$
+\Delta_i=p_0p_{13}-p_1p_3=r\kappa-XY,
+\qquad
+Q_i=\mathcal L(B_{i-1},B_{i+1}\mid B_i=0)
+=\frac1r\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+\tag{C59.2}
+$$
+
+行索引为左端，列索引为右端，各按 $0,1$ 排列。C-3.2 及《行列式、条件拼接与原生守卫接续》[推导 4.2–4.3](AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md#四用一个行列式读取这项对角关系) 给出
+
+$$
+\det Q_i=\operatorname{Cov}(B_{i-1},B_{i+1}\mid B_i=0)
+=\frac{\Delta_i}{r^2}.
+\tag{C59.3}
+$$
+
+参数对应是该供应的 $(p_0,p_2,p_3,p_5,p_{25})=(p_0,p_1,p_2,p_3,p_{13})$，不能把它的旧模式下标直接当成本节下标。无条件端点协方差为 $\kappa-XY=\Delta_i+Z\kappa$，一般不等于式 (C59.3)。没有平移不变、左右均值相等或均匀活动假设。
+
+**约定 C-59.5（外部消元的数学接口）。** 外部路径的未归一化四格响应、局部五律及其推导见同主题[续卷第 60–66 章](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)。续卷中的 $\lambda_i$、$\mathcal Z$、$p^{(i)}$、$\Delta_i$ 和 $Q_i$ 均为定义 C-59.2、C-59.4 的同一对象。所需接口保留外部的两个共同端点，而非两个独立边缘；它将给出中心活动的概率比、外部对数四角项及跨窗口校准残差三种不同读数。
+
+
+## 追加锚（本行以下为增补区）

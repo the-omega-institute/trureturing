@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:93efe78bb5e5f0a28fb82bb2551e4f2fd33a9052b2f1597d54d67254b493db20
+  normalized_sha256: sha256:93efe78bb5e5f0a28fb82bb2551e4f2fd33a9052b2f1597d54d67254b493db20
+cas_ref: sha256:93efe78bb5e5f0a28fb82bb2551e4f2fd33a9052b2f1597d54d67254b493db20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** FD9 与 $N_p\ge1$ 给出下界。由 $N_p\le p-1$、$Z_p\le2$，  $$ \delta(p)\l…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 11ddf43061b02031f5afd9b93d3ee354da905a71498719eef84dcfbf7c36da67
+    next_atom_id: 67bf9bf376a4177ae10c846e22381b37d1c63db97a1e254a04ee8d5d44dc732b

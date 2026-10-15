@@ -3,7 +3,7 @@ bibkey: higuchisudbery2000entangledcouples
 authors: A. Higuchi; A. Sudbery
 year: 2000
 title: "How entangled can two couples get?"
-doi: 10.1016/S0375-9601(00)00506-4
+doi: 10.1016/S0375-9601(00)00480-1
 url: https://arxiv.org/abs/quant-ph/0005013
 claim: "Four-qubit marginal entropy: the Higuchi–Sudbery candidate, its known restrictions, and the unrestricted maximum question."
 strata_touched:
@@ -14,7 +14,7 @@ triage: anchor
 
 ## Verified locator
 
-DOI: https://doi.org/10.1016/S0375-9601(00)00506-4
+DOI: https://doi.org/10.1016/S0375-9601(00)00480-1
 
 Source: https://arxiv.org/abs/quant-ph/0005013
 

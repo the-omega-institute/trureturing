@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:95ea4fdcec8d9977659ca263b8ed01eb08b4a02fd20e6aa3cded7587871432fc
+  normalized_sha256: sha256:95ea4fdcec8d9977659ca263b8ed01eb08b4a02fd20e6aa3cded7587871432fc
+cas_ref: sha256:95ea4fdcec8d9977659ca263b8ed01eb08b4a02fd20e6aa3cded7587871432fc
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/CarryRevealsLowDigits.carry_reveals_low_digits
+    target_statement_id: sha256:6d501f3897525fefa4b57810e9bfd1861c03daf88e2719bd31ece1a5aead2c9e
+receipts:
+  unresolved_subitems: []

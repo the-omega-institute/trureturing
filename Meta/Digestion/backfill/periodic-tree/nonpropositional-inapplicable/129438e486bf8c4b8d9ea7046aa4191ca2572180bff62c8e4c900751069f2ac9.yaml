@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:129438e486bf8c4b8d9ea7046aa4191ca2572180bff62c8e4c900751069f2ac9
+  normalized_sha256: sha256:129438e486bf8c4b8d9ea7046aa4191ca2572180bff62c8e4c900751069f2ac9
+cas_ref: sha256:129438e486bf8c4b8d9ea7046aa4191ca2572180bff62c8e4c900751069f2ac9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「R.6 奇素数的迹约束与判别式方向」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 3a14da6ccdb407f838a89dce50be7bba7fb965f42e3939cf425832ef1da3d5b5
+    next_atom_id: 0c31312f242953208f095d9b1d5c39d48fd9e317f98e612bc870253b88c97c97

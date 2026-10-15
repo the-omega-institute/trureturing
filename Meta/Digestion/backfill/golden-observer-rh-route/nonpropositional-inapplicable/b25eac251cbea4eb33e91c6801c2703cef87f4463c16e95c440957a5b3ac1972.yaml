@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b25eac251cbea4eb33e91c6801c2703cef87f4463c16e95c440957a5b3ac1972
+  normalized_sha256: sha256:b25eac251cbea4eb33e91c6801c2703cef87f4463c16e95c440957a5b3ac1972
+cas_ref: sha256:b25eac251cbea4eb33e91c6801c2703cef87f4463c16e95c440957a5b3ac1972
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying W-1 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: d15f852334e6418696442cdab41c43376b6a2c82f7d427979d4c175f1165a976
+    next_atom_id: 039db6029650087bff577e044e7448260d5d111a15b71a01d3a21a769f466aa2

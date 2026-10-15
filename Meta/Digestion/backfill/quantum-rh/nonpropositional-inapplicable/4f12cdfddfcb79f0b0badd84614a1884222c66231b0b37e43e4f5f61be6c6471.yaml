@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f12cdfddfcb79f0b0badd84614a1884222c66231b0b37e43e4f5f61be6c6471
+  normalized_sha256: sha256:4f12cdfddfcb79f0b0badd84614a1884222c66231b0b37e43e4f5f61be6c6471
+cas_ref: sha256:4f12cdfddfcb79f0b0badd84614a1884222c66231b0b37e43e4f5f61be6c6471
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本定义只将跨切片相关余项记为总相关与各切片相关之差；其精确积分表达在下一 atom 陈述。
+    previous_atom_id: a69740460798ed62f783754eaff6d88680ca3b8a66ccb140139e33074c740d49
+    next_atom_id: 3e593432205bd77523c1836c72e7133180f8f081aa0cc88ad8ff423735eb9688

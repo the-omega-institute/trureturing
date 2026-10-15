@@ -17,9 +17,15 @@ internal sealed class PauliThreeWeightBayesianInverseUniquenessDocument : IScrib
             Node("paulis", "The Pauli matrices", PaulisFormula(),
                 "sigma lists the identity and the Pauli matrices X, Y = i X Z and Z of pauliMatrix, indexed by Fin 4.",
                 "sigma", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("spin", "Spin observables", SpinFormula(),
+                "For every real three-vector r, spin r is the sum of the complex embeddings of its coordinates times the three Pauli matrices. The index i.succ in Fin 4 selects X, Y and Z, leaving out the identity.",
+                "spin", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("channel", "The Pauli channel", ChannelFormula(),
                 "The Pauli channel with probability vector p acts by A -> sum over mu of p_mu sigma_mu A sigma_mu, as a complex-linear map on 2 x 2 matrices.",
                 "pauliChannel", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("channel-cptp", "Complete positivity and trace preservation", ChannelCptpFormula(),
+                "Every nonnegative normalized vector of four Pauli weights gives a completely positive trace-preserving map.",
+                "channel_cptp", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("jamiolkowski", "The Jamiolkowski matrix", JamFormula(),
                 "J[N] = (id tensor N)(SWAP) with SWAP = sum over i, j of |i><j| tensor |j><i|, written with the matrix units single(i, j, 1) and the Kronecker product.",
                 "jam", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -30,7 +36,7 @@ internal sealed class PauliThreeWeightBayesianInverseUniquenessDocument : IScrib
                 "For every probability vector p with exactly three non-zero entries: the Pauli channel equals its own Hilbert-Schmidt adjoint, which justifies using it in the place of E^dagger, and for every density matrix rho (pure states included) a Bayesian inverse with respect to rho exists if and only if rho is the maximally mixed state 1/2.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Bayesian inverses of three-weight Pauli channels", Disp(F.Id("claim")),
-                "At the maximally mixed state the channel itself is a Bayesian inverse: it is completely positive with Kraus operators sqrt(p_mu) sigma_mu, trace preserving, and both sides of the Bayes rule equal J of the channel because the channel fixes 1/2. Conversely, write rho = (1 + r . sigma)/2 with sum r_i^2 <= 1 and r != 0. The exact Bayes rule becomes a Sylvester equation for the canonical output-input Choi matrix C = MatrixMap.choi_matrix F. With s_i = lambda_i r_i, V = 1 tensor (s . sigma)^T and R = {rho tensor 1, MatrixMap.choi_matrix E}, one has V^2 = |s|^2 1 and C + (VC + CV)/2 = R. Therefore D C = (1 - |s|^2/2) R - (VR + RV)/2 + VRV/2, where D = 1 - |s|^2 >= 0. If p_k is the zero weight, let a_1, a_2, a_3 be the other three weights, listed through the Pauli product table, and h_i = (1 - a_i) r_i. The vector w(j, i) = ((1 - h . sigma) sigma_k)_{j i}, indexed by output j and input i, gives w* (D C) w = -4[(1 - |h|^2) B + K A], with A = sum a_i h_i^2, B = sum a_i^2 (1 - a_i) r_i^2 and K = sum a_i^2 r_i^2. Here B > 0 and |h| < 1, so the value is negative for every nonzero r, including pure states and every missing-weight position. The owning Choi theorem MatrixMap.choi_PSD_iff_CP_map makes C positive semidefinite under complete positivity, and multiplication by D >= 0 preserves this property, giving a contradiction. No division by D is used. The strict estimate |lambda_i| < 1 available for three positive weights also gives D > 0, uniqueness of the Sylvester candidate, and the equivalent divided expression w* C w = -4[(1 - |h|^2) B + K A]/D; those strict-denominator consequences are explanatory algebra, while the Lean obstruction uses only D >= 0.",
+                "At the maximally mixed state the channel itself is a Bayesian inverse: it is completely positive with Kraus operators sqrt(p_mu) sigma_mu, trace preserving, and both sides of the Bayes rule equal J of the channel because the channel fixes 1/2. Conversely, write rho = (1 + r . sigma)/2 with sum r_i^2 <= 1 and r ≠ 0. The exact Bayes rule becomes a Sylvester equation for the canonical output-input Choi matrix C = MatrixMap.choi_matrix F. With s_i = lambda_i r_i, V = 1 tensor (s . sigma)^T and R = {rho tensor 1, MatrixMap.choi_matrix E}, one has V^2 = |s|^2 1 and C + (VC + CV)/2 = R. Therefore D C = (1 - |s|^2/2) R - (VR + RV)/2 + VRV/2, where D = 1 - |s|^2 >= 0. If p_k is the zero weight, let a_1, a_2, a_3 be the other three weights, listed through the Pauli product table, and h_i = (1 - a_i) r_i. The vector w(j, i) = ((1 - h . sigma) sigma_k)_{j i}, indexed by output j and input i, gives w* (D C) w = -4[(1 - |h|^2) B + K A], with A = sum a_i h_i^2, B = sum a_i^2 (1 - a_i) r_i^2 and K = sum a_i^2 r_i^2. Here B > 0 and |h| < 1, so the value is negative for every nonzero r, including pure states and every missing-weight position. The owning Choi theorem MatrixMap.choi_PSD_iff_CP_map makes C positive semidefinite under complete positivity, and multiplication by D >= 0 preserves this property, giving a contradiction. No division by D is used. The strict estimate |lambda_i| < 1 available for three positive weights also gives D > 0, uniqueness of the Sylvester candidate, and the equivalent divided expression w* C w = -4[(1 - |h|^2) B + K A]/D; those strict-denominator consequences are explanatory algebra, while the Lean obstruction uses only D >= 0.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("ting-fullwood-wu-2026-three-weight-bayesian-inverse"),
@@ -91,12 +97,43 @@ internal sealed class PauliThreeWeightBayesianInverseUniquenessDocument : IScrib
         return Disp(Equal(F.Id("sigma"), list));
     }
 
+    private static Formula Qualified(params string[] parts)
+    {
+        Formula result = Named(parts[0]);
+        for (var i = 1; i < parts.Length; i++)
+            result = Seq(result, Dot, Named(parts[i]));
+        return result;
+    }
+    private static Formula QCall(string owner, string name, params Formula[] arguments) =>
+        new Formula.Apply(Qualified([.. owner.Split('.'), name]), [.. arguments]);
+
+    private static Formula SpinFormula()
+    {
+        Formula r = F.Id("r"), i = F.Id("i");
+        const string owner = "D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness";
+        Formula direction = new Formula.TypeArrow(Call("Fin", F.D(3)), Reals());
+        Formula term = Scaled(QCall("Complex", "ofReal", Apply(r, i)),
+            QCall(owner, "sigma", QCall("Fin", "succ", i)));
+        Formula sum = Seq(Sum, Underscore, Grp(Seq(i, Colon, Sp, Call("Fin", F.D(3)))),
+            Sp, Parenthesized(term));
+        return Disp(All(r, direction, Equal(QCall(owner, "spin", r), sum)));
+    }
+
     private static Formula ChannelFormula()
     {
         Formula p = F.Id("p"), a = F.Id("A"), mu = Mu;
         Formula term = Scaled(Apply(p, mu), TimesOf(TimesOf(Sigma(mu), a), Sigma(mu)));
         return Disp(All(p, Weights(), All(a, Mat(),
             Equal(Apply(Call("pauliChannel", p), a), SumOver(mu, term)))));
+    }
+
+    private static Formula ChannelCptpFormula()
+    {
+        Formula p = F.Id("p"), mu = Mu;
+        Formula nonnegative = All(mu, Call("Fin", F.D(4)), Leq(F.D(0), Apply(p, mu)));
+        Formula normalized = Equal(SumOver(mu, Apply(p, mu)), F.D(1));
+        return Disp(All(p, Weights(), Implies(nonnegative, Implies(normalized,
+            Call("IsCPTP", Call("pauliChannel", p))))));
     }
 
     private static Formula JamFormula()

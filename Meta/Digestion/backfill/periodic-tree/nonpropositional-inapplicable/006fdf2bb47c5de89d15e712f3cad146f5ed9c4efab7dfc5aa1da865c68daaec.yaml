@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:006fdf2bb47c5de89d15e712f3cad146f5ed9c4efab7dfc5aa1da865c68daaec
+  normalized_sha256: sha256:006fdf2bb47c5de89d15e712f3cad146f5ed9c4efab7dfc5aa1da865c68daaec
+cas_ref: sha256:006fdf2bb47c5de89d15e712f3cad146f5ed9c4efab7dfc5aa1da865c68daaec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** For each positive $m$, write the valuation formula as  $$ v…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 91971340d20a5d01d3013edbdfd8f911a23f5317aafc1eac5a565e0e94a0189b
+    next_atom_id: 07bfc3216e7630ca3e6f0183722f7ea86fdfb049bbfa2e86a804973b44034622

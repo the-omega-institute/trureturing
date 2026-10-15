@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9cd1307380949dff0e8d83a87cc39b5753b03961fc61e43a7f5abf204eaccded
+  normalized_sha256: sha256:9cd1307380949dff0e8d83a87cc39b5753b03961fc61e43a7f5abf204eaccded
+cas_ref: sha256:9cd1307380949dff0e8d83a87cc39b5753b03961fc61e43a7f5abf204eaccded
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：254. 完美干预与截断机制：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 3f315c6d6404873d59d599904e0af6ef4391858d1421b5c5d33ff09c622f4594
+    next_atom_id: 4435fb63f19d8e1f11c02e435d224f3c91188216ec3585fd360b84c02e16d4f3

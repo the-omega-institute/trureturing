@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bfc6e1431e37f076ec6b6f418a2421b2be87788a4b68665740fe795b0e6e5f29
+  normalized_sha256: sha256:bfc6e1431e37f076ec6b6f418a2421b2be87788a4b68665740fe795b0e6e5f29
+cas_ref: sha256:bfc6e1431e37f076ec6b6f418a2421b2be87788a4b68665740fe795b0e6e5f29
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signed_incidence_is_totally_unimodular
+    target_statement_id: sha256:a99de66bb36a306f982959139b1231127ac74f194a2989f9e5d9d7cb875e5ad1
+receipts:
+  unresolved_subitems: []

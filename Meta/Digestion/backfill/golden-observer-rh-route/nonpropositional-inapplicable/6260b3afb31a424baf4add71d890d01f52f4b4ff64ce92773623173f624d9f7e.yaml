@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6260b3afb31a424baf4add71d890d01f52f4b4ff64ce92773623173f624d9f7e
+  normalized_sha256: sha256:6260b3afb31a424baf4add71d890d01f52f4b4ff64ce92773623173f624d9f7e
+cas_ref: sha256:6260b3afb31a424baf4add71d890d01f52f4b4ff64ce92773623173f624d9f7e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying G-g-3 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: 401ad7891615b7e2aca636b1b793711e7b4e113ee33b732a7a0ab66ba9de5559
+    next_atom_id: 2acf48d18cbdc6eb8ee9092e10368e146542cea26236badb5f9bad21f3d3a8c6

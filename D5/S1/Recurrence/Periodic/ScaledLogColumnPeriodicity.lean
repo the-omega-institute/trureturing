@@ -57,7 +57,7 @@ private theorem H_derivative : derivative ℚ H = 2 * H - 1 := by
     rw [show (2 : PowerSeries ℚ) = C (2 : ℚ) by exact (map_ofNat (C (R := ℚ)) 2).symm, ← map_mul]; norm_num
   linear_combination h
 
-private theorem log_derivative_mul : derivative ℚ (log ℚ) * (1 + X) = 1 := by
+theorem log_derivative_mul : derivative ℚ (log ℚ) * (1 + X) = 1 := by
   have h := congrArg (rescale (-1 : ℚ)) (mk_one_mul_one_sub_eq_one ℚ)
   have he : rescale (-1 : ℚ) (mk 1) = derivative ℚ (log ℚ) := by
     ext n

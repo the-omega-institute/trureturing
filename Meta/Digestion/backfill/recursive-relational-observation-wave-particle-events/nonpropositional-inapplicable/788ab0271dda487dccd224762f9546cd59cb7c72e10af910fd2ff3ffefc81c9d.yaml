@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:788ab0271dda487dccd224762f9546cd59cb7c72e10af910fd2ff3ffefc81c9d
+  normalized_sha256: sha256:788ab0271dda487dccd224762f9546cd59cb7c72e10af910fd2ff3ffefc81c9d
+cas_ref: sha256:788ab0271dda487dccd224762f9546cd59cb7c72e10af910fd2ff3ffefc81c9d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 181.1（固定调度的折扣响应）仅定义记号、合同字段或相应术语的判定条件，不断言条件成立或另提出性质。
+    previous_atom_id: 755dc5971c0397250cb62623950980f12ae669aa157bc348b7cc08fa54945be5
+    next_atom_id: 345206892cf51225339bc7b5811203c789f0fb81a3a7d237e53c271e873e8042

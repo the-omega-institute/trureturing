@@ -1,0 +1,44 @@
+**Definition 7.2 (mathematical dependencies and ownership).** NSF
+Theorem 4.3, Lemma 5.1 and Theorem 5.2 supply finite signed
+feasibility, guarded observation compilation and reconstruction
+of original sources. NIC Theorems 3.2–3.3 and 4.3 supply entire
+positive images, original-native signed pullbacks and exact
+complete row strata. They are not new decision or image-cover
+claims here. NLC's minimum leaf-depth statistic supplies the
+minimum-versus-maximum depth distinction used in §2 and the
+perfect-tree calculation in §4. [SPC][SPCEXT]'s entire productive family,
+its finite witnesses, closed comparison results and §§7–10
+representation and lifting boundaries retain their separate
+scope. In particular no rational-contact, closed-value or
+topological criterion replaces the finite tuples of (NMF.2).
+
+The source definitions correspond to the existing declarations
+$\mathsf{readout}$ in [ActualTreeReadoutAcquisition][READOUT],
+$\mathsf{literalRecord}$ and
+$\mathsf{canonicalRow\_record\_iff}$ in
+[ActualCutPartitionDecoder][ROWS], and the whole-row
+$\mathsf{rowFiberEquiv}$ in [NativeCutFibers][FIBERS]. The
+private reconstruction and injectivity lemmas
+$\mathsf{recover\_fill}$ and $\mathsf{fill\_injective}$ belong
+to that last supplied correspondence. The reached-prefix decomposition is
+$\mathsf{depthEquiv}$ in [NativeDepthPatterns][DEPTH], with
+its private $\mathsf{fill\_decompose}$ and
+$\mathsf{decompose\_fill}$ inverse helpers. These addresses
+identify the meanings being reused; the proofs in this volume
+are the mathematical arguments stated here.
+
+The external decision supplier is Barozzini, Clemente, Colcombet
+and Parys, *Cost Automata, Safe Schemes, and Downward Closures*,
+arXiv:2004.12187v6, also published in *Fundamenta Informaticae*,
+DOI [10.3233/FI-222145][BCCPDOI]. Its §4.2 supplies the precise
+linear FTT rule class, §4.4 the every-branch diagonal definition,
+and §5 the safe-scheme diagonal decision, WCMSO decision and
+safety-preserving transduction closure. The section titles fix
+the cited results without relying on the HTML's theorem counters.
+The Kraft inequality is the attributed intermediate in Theorem
+3.2. The finite native address pruning, its exact correspondence,
+the joint mass equivalence, the complete native counterexamples
+and their conditional consumer are deductions from the definitions
+and those suppliers. No external originality or absolute
+minimality assertion is attached to them.
+
