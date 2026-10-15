@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.AuricFib
 
-namespace LeanInformationAuditRegTests.AuricFib.CompiledFixture
+namespace LeanInformationAuditFibTests.AuricFib.CompiledFixture
 open D5.S3.Arith.FibonacciAtomic
 open ImmediateWindowStateCapacity
 open LeanInformationAudit.AuricFib.Contract
@@ -78,4 +78,4 @@ def wrongTarget : Application.{0,0,0,0,0,0} unrelated where
 def parameterized (_n : Nat) : Application.{0,0,0,0,0,0} NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native { reconstruction := .exact } bridge (.absent "parameterized contract") [] [.seam, .guard, .reply, .atom]
 
-end LeanInformationAuditRegTests.AuricFib.CompiledFixture
+end LeanInformationAuditFibTests.AuricFib.CompiledFixture
