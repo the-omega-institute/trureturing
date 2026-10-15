@@ -14,7 +14,7 @@ triage: anchor
 
 # Fibonacci cube edges and legal supports
 
-## Locator
+## Verified locator
 
 DOI: 10.1007/s10878-011-9433-z
 
