@@ -5,6 +5,7 @@ Lake builds the fixture once. Source, finite and non-finite boundaries share
 that result; ordinary native reuse tests own incremental build behavior.
 """
 import os
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -17,6 +18,7 @@ sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
 
 MODULE = 'Reg.Support.AuricFibUniversalFixture'
+PLAIN_MODULE = 'D5.S0.Diagonal.PigeonholeFiber'
 PREFIX = 'AuricFibUniversalProduction.'
 STATE = ROOT / '.lake/build/lean-inspector'
 
@@ -69,13 +71,24 @@ end AuricFibUniversalProduction
 ''')
         subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
             'tools/lean-inspector-reg', 'build', 'leanInspector/reportInspector',
-            MODULE + ':report'],
+            MODULE + ':report', PLAIN_MODULE + ':report'],
             cwd=ROOT, env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'), check=True)
         cls.report = cls.directory / 'raw-lean-report.json'
         with zipfile.ZipFile(STATE / 'modules' / (MODULE + '.zip')) as bundle:
             for suffix in ('', '.materials.zip', '.provenance.json'):
                 Path(str(cls.report) + suffix).write_bytes(bundle.read('raw-lean-report.json' + suffix))
         consumed = fib_analysis.consume(cls.report)
+        if set(consumed) != {'applications', 'authority'}:
+            raise AssertionError('FIB export must have no independent version field')
+        with zipfile.ZipFile(STATE / 'modules' / (PLAIN_MODULE + '.zip')) as bundle:
+            plain = json.loads(bundle.read('raw-lean-report.json'))
+            if 'fib_analysis' in plain['modules'][0]:
+                raise AssertionError('nonparticipants must not acquire a FIB partition')
+        raw = json.loads(cls.report.read_text())
+        if raw['schema'] != 'stratalint-raw-lean-report-v3':
+            raise AssertionError('parent report schema must remain v3')
+        if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
+            raise AssertionError('FIB partition must have no independent version field')
         cls.first = {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
                      if row['application'].startswith(PREFIX)}
 

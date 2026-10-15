@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f36bf308c335dc5ab1f31f0ff2e05d10513399e5371d457b915e2368089644ed
+  normalized_sha256: sha256:f36bf308c335dc5ab1f31f0ff2e05d10513399e5371d457b915e2368089644ed
+cas_ref: sha256:f36bf308c335dc5ab1f31f0ff2e05d10513399e5371d457b915e2368089644ed
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 49.7（有限阈值时的全部边界公式）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 74b67d5c87e9876d47811d5d0c9f686a870bd455855267b6ac8c17c2c9a6513d
+    next_atom_id: fbf1086e1d52301ebda6fe518cfe2b27d6b76e335d5313be800a4eeeac2a4be4

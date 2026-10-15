@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74f27a2ef1f62814b56ac8d707fba1374b60882757c7675ef607fe60f2bdd8c1
+  normalized_sha256: sha256:74f27a2ef1f62814b56ac8d707fba1374b60882757c7675ef607fe60f2bdd8c1
+cas_ref: sha256:74f27a2ef1f62814b56ac8d707fba1374b60882757c7675ef607fe60f2bdd8c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 独立切出的证明段：对上文已陈述结果给出推导或说明其适用边界；本 atom 不另提出定理、猜想或例子。
+    previous_atom_id: 5eb21bfed6f4f9146c06c094e2fa9bf08d4f8d277560b44786aec19ee8d1da7a
+    next_atom_id: 5bc25762b8fd384f34bb654bf4825b09ade23d4edce63b7ad8bd42be3faf1722

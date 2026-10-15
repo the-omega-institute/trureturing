@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:210e87b1d31c262f29e6f0f0c5c1fcc23c3082cfdd620b64e7ae616f157edce1
+  normalized_sha256: sha256:210e87b1d31c262f29e6f0f0c5c1fcc23c3082cfdd620b64e7ae616f157edce1
+cas_ref: sha256:210e87b1d31c262f29e6f0f0c5c1fcc23c3082cfdd620b64e7ae616f157edce1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 29 只引入属性父对选择与相应签名，不提出命题。
+    previous_atom_id: 8c155ce31e849611677cc6a44186b0a2f06e4968c5e61eeb6f69736dc1a614a0
+    next_atom_id: 00771929f1d82859a2e9c004227f3749b049e2820825b488c39b3dbaf868fbd3

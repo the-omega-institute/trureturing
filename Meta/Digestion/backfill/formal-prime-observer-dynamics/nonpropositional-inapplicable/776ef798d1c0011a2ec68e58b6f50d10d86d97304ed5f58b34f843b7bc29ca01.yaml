@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:776ef798d1c0011a2ec68e58b6f50d10d86d97304ed5f58b34f843b7bc29ca01
+  normalized_sha256: sha256:776ef798d1c0011a2ec68e58b6f50d10d86d97304ed5f58b34f843b7bc29ca01
+cas_ref: sha256:776ef798d1c0011a2ec68e58b6f50d10d86d97304ed5f58b34f843b7bc29ca01
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \sum_p\Gamma_s(A_p)：\[：本片段仅论证相邻的既有陈述，不另行提出命题。
+    previous_atom_id: 8b025857c788bda98a1a05679c4f91c0488257a2af967df221a19aa81871ee4d
+    next_atom_id: 204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375

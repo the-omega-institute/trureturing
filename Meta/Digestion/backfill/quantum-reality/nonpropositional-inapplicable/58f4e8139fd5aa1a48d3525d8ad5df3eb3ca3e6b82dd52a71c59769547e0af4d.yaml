@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58f4e8139fd5aa1a48d3525d8ad5df3eb3ca3e6b82dd52a71c59769547e0af4d
+  normalized_sha256: sha256:58f4e8139fd5aa1a48d3525d8ad5df3eb3ca3e6b82dd52a71c59769547e0af4d
+cas_ref: sha256:58f4e8139fd5aa1a48d3525d8ad5df3eb3ca3e6b82dd52a71c59769547e0af4d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 355 节开头片段只固定三态编码及混合 Hamiltonian，并说明编码标签的解释范围；未断言端口维数结论。
+    previous_atom_id: 70d11441bbcf0244827040eed3b4ac53d8b560a96e1a289fba3729e6183ac249
+    next_atom_id: 3dee4088ffcf82f995f2cb3077f9ca1df6b8e7bd85ddb7f5043bbf0d758b385e

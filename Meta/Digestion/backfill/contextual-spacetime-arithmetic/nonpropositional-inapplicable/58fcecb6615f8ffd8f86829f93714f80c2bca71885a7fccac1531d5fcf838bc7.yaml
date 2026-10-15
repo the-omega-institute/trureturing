@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:58fcecb6615f8ffd8f86829f93714f80c2bca71885a7fccac1531d5fcf838bc7
+  normalized_sha256: sha256:58fcecb6615f8ffd8f86829f93714f80c2bca71885a7fccac1531d5fcf838bc7
+cas_ref: sha256:58fcecb6615f8ffd8f86829f93714f80c2bca71885a7fccac1531d5fcf838bc7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述新增筛选与配对操作的更新规则。
+    previous_atom_id: d8035f7d00c01bb8937ed445056ea01f62fb0321f4436f017178161e00c5ecbd
+    next_atom_id: 23f7ebd32c18ad20f699cd648327b222d78864e7976e0436d00367b67767f1f2

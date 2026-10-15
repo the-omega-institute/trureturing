@@ -383,7 +383,7 @@ private theorem xor_sum (bs : List Bool) (a : Bool) :
       rcases (show (bs.map bit).sum%2=0 ∨ (bs.map bit).sum%2=1 by omega) with hm | hm
       all_goals cases a <;> cases b <;> simp [bit, Nat.add_mod, hm]
 
-private theorem parity_sum (x : Nat → Bool) (n : Nat) :
+theorem parity_sum (x : Nat → Bool) (n : Nat) :
     parity x n = decide (((List.range n).map (fun i => bit (x i))).sum%2 = 1) := by
   have fold : ∀ n, ((List.range n).map x).foldl xor false = parity x n := by
     intro n

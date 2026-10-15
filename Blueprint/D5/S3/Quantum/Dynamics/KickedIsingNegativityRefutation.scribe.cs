@@ -41,6 +41,15 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
                 "Equation (9), p. 2: I_{A:B}^(α)(t) = S_A^(α)(t) + S_B^(α)(t) − S_AB^(α)(t). Here α = 1/2, partialTraceRight retains A and partialTraceLeft retains B."),
             Node("claim", "Pathak's Conjecture 1 at half order", ClaimFormula(),
                 "Conjecture 1, p. 3, states verbatim: \"2𝓔(t) = I_{A:B}^{(α)}(t), hold for generic states at all times t.\" This is its α = 1/2 specialization, quantified over the chain length, real fields, product-state angles, contiguous tripartition and integer time. Each allowed tripartition has nonempty blocks. The specific fields are hᵢ = 1, with phases φᵢ = 0, for the counterexample."),
+            Node("trace_conjugate_right", "Partial trace under a right unitary", TraceConjugateRightFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by the identity on a and a matrix V on b with V adjoint times V equal to the identity leaves the partial trace over b unchanged.",
+                true, id: "trace-conjugate-right"),
+            Node("trace_conjugate_left", "Partial trace under left conjugation", TraceConjugateLeftFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by U on a and the identity on b conjugates its partial trace over b by U. The matrix U is arbitrary.",
+                true, id: "trace-conjugate-left"),
+            Node("trace_local_right", "Partial trace under local conjugation", TraceLocalRightFormula(),
+                "For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over b as conjugation by U whenever V adjoint times V equals the identity. The operator rho and the matrix U are arbitrary complex matrices of the displayed sizes.",
+                true, id: "trace-local-right"),
             Node("result", "Refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The initial state is |+⟩|+⟩|r⟩|r⟩, where |r⟩ = (2|0⟩+|1⟩)/√5, encoded by θ = (π/2,π/2,2 arctan(1/2),2 arctan(1/2)). It is generic. Factoring the commuting kick exponentials and the diagonal Ising exponential gives U = −W^{⊗4}G, with W a single-qubit unitary and G the periodic product of controlled-Z gates. The local unitaries preserve both measures. Before their action, the reduced density matrix has spectrum {16/25,4/25,4/25,1/25}; its partial transpose has spectrum {23/50,17/50,17/50,−7/50}, and both marginals are 1/2 times the identity. Hence 2𝓔(1) = log(1024/625) and I_{A:B}^(1/2)(1) = log(100/81). Strict injectivity of the logarithm on positive reals and the unequal rational arguments contradict the asserted equality. These finite-chain values do not settle a thermodynamic-limit identity at early times.",
                 true, new OpenProblemResolutionClaim(
@@ -49,8 +58,8 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, bool derived = false,
-        OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("pathak-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        OpenProblemResolutionClaim? resolution = null, string? id = null) =>
+        Describe.Lean(DescribeId.Create("pathak-" + (id ?? name.ToLowerInvariant())), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), derived ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
@@ -99,6 +108,43 @@ internal sealed class KickedIsingNegativityRefutationDocument : IScribeDocumentD
         OpenBracket, Call("Fintype", a), CloseBracket, Sp, OpenBracket, Call("Fintype", b), CloseBracket, Sp,
         OpenBracket, Call("DecidableEq", a), CloseBracket, Sp, OpenBracket, Call("DecidableEq", b), CloseBracket, Sp, body);
     private static Formula Smul(Formula a, Formula b) => Call("smul", a, b);
+
+    private static Formula RightMarginal(Formula matrix) => Apply(
+        Seq(F.Id("D5"), Dot, F.Id("S3"), Dot, F.Id("Quantum"), Dot, F.Id("Information"), Dot,
+            F.Id("PartialTraceMutualInformation"), Dot, F.Id("partialTraceRight")), matrix);
+    private static Formula Kron(Formula left, Formula right) => QCall("Matrix", "kronecker", left, right);
+    private static Formula Adjoint(Formula matrix) => QCall("Matrix", "conjTranspose", matrix);
+
+    private static Formula TraceConjugateRightFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), v = F.Id("V");
+        Formula local = Kron(Num(1), v);
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))), RightMarginal(rho));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(v), v), Num(1)), conclusion)))))));
+    }
+
+    private static Formula TraceConjugateLeftFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U");
+        Formula local = Kron(u, Num(1));
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(u, RightMarginal(rho)), Adjoint(u)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), conclusion))))));
+    }
+
+    private static Formula TraceLocalRightFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), rho = F.Id("rho"), u = F.Id("U"), v = F.Id("V");
+        Formula local = Kron(u, v);
+        Formula conclusion = Eqn(RightMarginal(Mul(Mul(local, rho), Adjoint(local))),
+            Mul(Mul(u, RightMarginal(rho)), Adjoint(u)));
+        return Disp(All("a", F.Id("Type"), All("b", F.Id("Type"), BiInstances(a, b,
+            All("rho", MatrixType(Cartesian(a, b)), All("U", MatrixType(a), All("V", MatrixType(b),
+                Implies(Eqn(Mul(Adjoint(v), v), Num(1)), conclusion))))))));
+    }
 
     private static Formula IsingFormula()
     {

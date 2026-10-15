@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84ca262e904e4bea13bf50f61c05cdd9c4ee4d6d7cc4e195c10c631479819468
+  normalized_sha256: sha256:84ca262e904e4bea13bf50f61c05cdd9c4ee4d6d7cc4e195c10c631479819468
+cas_ref: sha256:84ca262e904e4bea13bf50f61c05cdd9c4ee4d6d7cc4e195c10c631479819468
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 3.1（钟—系统历史表示）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: 1dc4106f91f4c303d2d1765fc56cf39b59fe2436371d88c622d300ae217401e7
+    next_atom_id: 3b41af709198a099422efd4d9cdf16a53409261f869a8c1ebc578efa9896a093

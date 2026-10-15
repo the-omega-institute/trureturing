@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:357c2656dc82ac1a0c96affea1228478b17d8a053197b1412e2c9e36bd9035d3
+  normalized_sha256: sha256:357c2656dc82ac1a0c96affea1228478b17d8a053197b1412e2c9e36bd9035d3
+cas_ref: sha256:357c2656dc82ac1a0c96affea1228478b17d8a053197b1412e2c9e36bd9035d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「PBC.5. Collective depths in a fully exceptional prime block」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 613c0ccbff52ab5ece3eaf497368604cfa140cfafd516cd68f99bc5a97b97304
+    next_atom_id: e081b826315964cc08311864eed6475dcca405bc5e5c5341fd53de05041179a9

@@ -3352,3 +3352,816 @@ mathematical arguments, with no new kernel certification or physical
 time law.
 
 ## 追加锚（本行以下为增补区）
+## 16. Exact joint acquisition from the native menu prefix geometry
+
+**Definition 16.1 (one declared joint prediction task).** Retain the
+source-blind stationary acquisition contract of Definition 13.1, replacing
+its singleton $p$ by an arbitrary public finite $P\subseteq A_D$. Thus
+$D\ge1$, every $p\in P$ is nonempty, starts with $R$ and has $|p|\le D$,
+and the unknown actual source is
+
+$$
+ t=\langle\alpha,v\rangle\in\mathcal F_D,
+ \qquad \operatorname{height}(v)\le D.
+\tag{AAR.85}
+$$
+
+The empty menu, nested targets and prefix-free targets are all allowed.
+The same deterministic program and source-blind initialization are used
+on every source. The only source operation during acquisition is an
+actual four-reply Read at any finite original-root word. There is no
+update, free navigation, subtree oracle, age oracle or source identifier.
+The source is promised stationary throughout this phase. Every submitted
+Read counts, including absent, repeated, constant and off-menu calls.
+
+The encoder terminates on every actual source and exports its complete
+accessible source dependence $E(t)$ before the authentic count $k$ is
+supplied. A passive decoder, with no new Read, must satisfy
+
+$$
+ \mathsf D(E(t),D,P,k)=
+ \bigl(\operatorname{readout}(p,\rho^k t)\bigr)_{p\in P}
+ \quad(t\in\mathcal F_D, k\ge0).
+\tag{AAR.86}
+$$
+
+The complete-state convention includes operands, buffers, control,
+selectors, histories, lengths and allocation distinctions. The target
+is exactly this vector for every supplied count, rather than full-source
+identity or later undeclared menus. Define
+
+$$
+ \mathcal C_D(P)=\min_{\mathsf A}\max_{t\in\mathcal F_D}
+       T_{\mathsf A}(t),\qquad
+ S=R^{-1}P,\qquad K=\operatorname{Pref}(S).
+\tag{AAR.87}
+$$
+
+The minimum ranges over all such native encoders and their passive
+decoders. Put $\operatorname{Pref}(\varnothing)=\varnothing$; otherwise
+include the empty suffix $\varepsilon$ and every prefix of every word
+in $S$. The root of nonempty $K$ represents the original address $R$,
+which is known present but whose constructor and label are unknown.
+Its greatest suffix depth is at most $D-1$.
+
+Write
+
+$$
+ B_K(t)=\bigl(\operatorname{readout}(Rq,t)\bigr)_{q\in K}
+       =\bigl(\operatorname{readout}(q,v)\bigr)_{q\in K}.
+\tag{AAR.88}
+$$
+
+This is a mathematical boundary table, not an initially supplied
+observation. It retains every relevant branch, labelled stopping leaf
+and absent position. Theorem 12.3 gives its factor to $\Sigma_P$, and
+Theorem 12.6 gives the existing minimum retained code $e_S(v)$ and its
+alphabet $n(S)$. Neither alphabet size nor terminal-record range is the
+Read objective (AAR.87). Local computation, transient and retained
+memory, operand lengths, installation, clearing, authentication and
+validation of the stationarity promise are separate resources.
+
+**Theorem 16.2 (the terminal evidence obligation on the bounded family).**
+For every correct encoder in Definition 16.1, its actual terminal
+address-reply transcript determines $B_K(t)$ among sources in
+$\mathcal F_D$. For each $p\in P$ it must contain the following evidence:
+
+1. If the initial path toward $p$ meets a leaf $a\preceq p$, including
+   a leaf at $p$, it contains an actual Read of $a$ with that leaf's
+   alpha or beta label.
+2. If $p$ is initially branch, it contains the branch reply at $p$ or
+   a nonabsent reply at a strict descendant of $p$.
+
+Conversely, a truthful transcript with these witnesses determines the
+whole table (AAR.88), and hence the joint prediction task. The complete
+export may subsequently forget some distinctions of this table.
+
+Proof. Reuse the evidence criterion of SLH Lemma 43.2 and its
+terminating-record consequence in SLH Theorem 43.3, with the bounded
+competitors checked as in Lemma 13.5. A blocking leaf $a$ lies in the
+$R$ cone. Flipping only its label preserves the ordered shape, its
+height and the fixed outer left alpha. Every literal reply except the
+one at $a$ stays unchanged. If $a=p$, the requested reply differs
+already at count zero. If $p=ar$ with $r\ne\varepsilon$, the first
+branch count in (AAR.57) differs by one. Thus some common supplied
+count distinguishes the two requested trajectories. Omitting $a$
+would replay the identical terminal transcript and complete export on
+this other member of $\mathcal F_D$, contradicting (AAR.86).
+
+If the branch witness is missing, replace the subtree at $p$ by alpha.
+No Read at $p$ occurred, and all queried strict descendants were absent;
+they stay absent. Queries outside its cone stay unchanged. This
+competitor lowers height and preserves the outer left alpha, so it is
+also in $\mathcal F_D$. Deterministic replay again gives the same
+termination and export, but the target replies at count zero differ.
+Neither comparison changes a source within an execution.
+
+A labelled leaf certifies all its strict ancestors as branches and all
+its strict descendants as absent. A nonabsent descendant certifies all
+its strict ancestors as branches. Applying these facts to every target
+covers every vertex of $K$, because each is on a path to a target.
+They prove the converse and the determination of (AAR.88). Its
+predictive factor then uses the existing guarded decoder (AAR.59).
+The leaf flip is indispensable even when two different boundary tables
+have equal predictive factors. $\square$
+
+**Theorem 16.3 (bounded canonical completions and every-word classification).**
+For nonempty $K$ there is a projection $\pi_K$ on initial right subtrees
+that preserves every reply on $K$. It keeps a reached leaf and its label;
+at a reached branch it keeps children whose addresses belong to $K$
+and replaces every other child subtree by alpha. In particular an
+initial branch at a terminal vertex of $K$ becomes
+$\langle\alpha,\alpha\rangle$. Put
+$\widehat t=\langle\alpha,\pi_K(v)\rangle$. Then
+
+$$
+ \operatorname{height}(\pi_K(v))\le\operatorname{height}(v),
+ \qquad
+ \operatorname{height}(\pi_K(v))\le1+\max_{q\in K}|q|\le D,
+ \qquad B_K(\widehat t)=B_K(t).
+\tag{AAR.89}
+$$
+
+Every finite original-root word has the following reply on this
+projected actual family:
+
+| Original-root word | Reply on $\widehat t$ |
+| --- | --- |
+| $\varepsilon$ | branch |
+| $L$ | alpha |
+| A strict extension of $L$ | absent |
+| $Rq$, $q\in K$ | The preserved actual reply at $Rq$ on $t$ |
+| $Rad$, where $a\in K$, $d\in\{L,R\}$ and $ad\notin K$ | alpha if $a$ is branch in $v$; absent otherwise |
+| $Rad z$ with that same first exit and $z\ne\varepsilon$ | absent |
+
+Moreover all permitted boundaries on $K$ have simultaneous native
+realizations within the height bound. More precisely, let $I\subseteq K$
+be any downward-closed set in the prefix order, and put
+
+$$
+ \partial_K I=\{x\in K\setminus I:
+                    \text{every strict ancestor of }x\text{ belongs to }I\}.
+\tag{AAR.90}
+$$
+
+Assign an independent alpha or beta label to each member of
+$\partial_K I$. There is a canonical right subtree whose replies on
+$K$ are branch on $I$, the assigned labels on $\partial_K I$, and
+absent everywhere else. Its height is at most
+$1+\max_{q\in K}|q|$, so its paired source is in $\mathcal F_D$.
+Here downward-closed does not mean principal or directed.
+
+Proof. Replacing a child subtree by alpha does not increase height.
+All kept branch vertices are in $K$; their added alpha children are
+at depth at most $\max|q|+1$. At a leaf the construction stops, so
+positions initially absent in $K$ remain absent. This proves (AAR.89).
+For a suffix outside $K$, its longest prefix in $K$ is unique. Its
+first edge leaving $K$ reaches the added alpha exactly when that
+prefix is a branch. If the prefix is a leaf or absent, this child is
+absent. Any further edge is absent in either case. These alternatives
+exhaust arbitrary depths, rather than only words below the menu bound.
+
+For the realization statement, start at the known-present root. Make
+exactly the reached vertices in $I$ branches, stop with the prescribed
+label at each reached vertex outside $I$, and fill every child leaving
+$K$ by alpha. Downward closure makes this consistent: a vertex of $I$
+cannot lie below a stopping leaf. Its relevant stopping leaves are
+exactly (AAR.90); all other nonbranch vertices of $K$ are absent. The
+same depth bound applies. In particular terminal branches are feasible
+because the allowed menus leave one additional level in $v$. No
+completion pads beyond $D$. $\square$
+
+**Theorem 16.4 (all-word reduction with its exact source correspondence).**
+The optimum (AAR.87) equals the minimum worst Read count for determining
+$B_K$ using only actual menu-prefix queries $Rq$, $q\in K$, on the same
+full family. For every all-word encoder $\mathsf A$ there is such a
+boundary-acquiring encoder $\mathsf A^\circ$ satisfying
+
+$$
+ T_{\mathsf A^\circ}(t)\le T_{\mathsf A}(\widehat t),\qquad
+ \max_{t\in\mathcal F_D}T_{\mathsf A^\circ}(t)
+       \le\max_{t\in\mathcal F_D}T_{\mathsf A}(t).
+\tag{AAR.91}
+$$
+
+This is a projected-source comparison of worst budgets, rather than
+$T_{\mathsf A^\circ}(t)\le T_{\mathsf A}(t)$ on the identical source.
+
+Proof. For empty $P$, return the empty vector with zero Reads. Otherwise
+simulate $\mathsf A$ on $\widehat t$, keeping the actual register $t$
+unchanged. A simulated query $Rq$ with $q\in K$ is supplied by the
+actual Read of $Rq$ on $t$. A first-exit query $Rad$ is supplied by
+at most one actual Read of $Ra$, mapped to alpha on branch and to
+absent on all other replies. Fixed outer replies and strict extensions
+of an exit require no source call. Replies already acquired on this
+stationary source may be reused by this new strategy. Each Read that
+is actually submitted still counts; no original repeated or absent
+call is retrospectively free.
+
+The classification in Theorem 16.3 makes the simulated transcript
+truthful on the one actual source $\widehat t\in\mathcal F_D$.
+Induction through the deterministic control therefore simulates its
+finite terminating execution, including any finite local work. At
+termination, Theorem 16.2 makes that transcript determine
+$B_K(\widehat t)$. This determination is effective: a simulated labelled
+Read at a vertex of $K$ used its actual reply; an immediate-exit alpha
+certifies its parent branch by the actual prefix reply. The fixed or
+absent cases supply no invented presence. Scan those witnesses to
+recover the boundary. Equation (AAR.89) makes it $B_K(t)$, and at
+most one actual call was used per simulated call. This proves (AAR.91).
+
+Conversely, a boundary strategy queries the identical original source,
+and its acquired table supplies (AAR.86) through Theorems 12.3 and
+12.6. The two inequalities of optimal worst counts follow. Every
+arbitrary adaptive finite-word competitor is included in the forward
+simulation; no shape promise was imposed on its actual input.
+
+The reply correspondence is concretely different from preserving the
+original transcript. With $P=\{R\}$, $D=1$ and
+$t=\langle\alpha,\langle\beta,\alpha\rangle\rangle$, Read$(RL)$ is
+beta on $t$ and alpha on $\widehat t$. Proposition 14.2 already gives
+a stronger singleton obstruction to universal identical-source
+pointwise prefix domination. The present joint theorem makes only the
+comparison (AAR.91). $\square$
+
+**Definition 16.5 (unresolved rooted obligations and terminal caps).**
+A rooted obligation tree $T$ is a finite nonempty prefix tree with at
+most two children per vertex, retaining its original addresses through
+an embedding into $K$. Its root is known present. An internal vertex
+may be a stopping alpha/beta leaf or a branch. A terminal vertex may
+be open, allowing alpha, beta or branch, or capped, allowing only
+alpha or beta if reached. A cap never asserts that its vertex is
+present: an earlier stopping leaf can make it absent. Relevant leaf
+labels not yet acquired are unrestricted. The task is to determine
+all replies on $T$.
+
+For $x\in T$, let $A_T(x)$ be the inclusive root-to-$x$ path and
+$\operatorname{Desc}_T(x)$ its inclusive descendant cone. Let
+$\mathscr F_T(x)$ be the rooted connected components of
+$T\setminus A_T(x)$. For nonroot $x$ with parent $p$, put
+
+$$
+ T_x^- = T\setminus\operatorname{Desc}_T^+(p),
+ \qquad
+ \operatorname{Desc}_T^+(p)=\operatorname{Desc}_T(p)\setminus\{p\}.
+\tag{AAR.92}
+$$
+
+This retains $p$ and deletes all its strict descendants in both child
+directions. Operationally the new terminal $p$ is capped. A forest of
+obligations consists of disjoint components attached below already
+certified branch paths, together with the fixed acquired replies
+outside them. It keeps each component's original-root embedding and
+its current terminal marks. Relabelling an embedding as a relative
+root for a numerical calculation grants no navigation operation.
+
+**Theorem 16.6 (exact closure of the native residual states).** Starting
+with $K$ whose terminals are open, every informative prefix Read leaves
+an obligation forest of Definition 16.5. If it queries $x$ in one
+component $T$, its conditional families are exactly these:
+
+| Actual reply | Unresolved obligations in that component |
+| --- | --- |
+| branch | All components $\mathscr F_T(x)$, with inherited terminal marks |
+| alpha or beta | Only components hanging off the strict ancestor path of $x$; its label is acquired and its entire cone is resolved |
+| absent, $x$ nonroot | $T_x^-$ with parent$(x)$ capped, and inherited marks outside the deleted cone |
+
+Root absence is impossible. An internal $x$ has a feasible branch
+reply. At an open terminal all three nonabsent replies are feasible;
+at a capped terminal only the two label replies are feasible. For
+every nonroot $x$, absence is feasible. Every allowed combination of
+residual component boundaries, including all unread labels and caps,
+is realizable in one original stationary source of $\mathcal F_D$.
+
+Proof. Branch at $x$ certifies the entire path $A_T(x)$ as branches.
+Every remaining component root is a child of one of those certified
+branches, so it is present. No further relation is imposed between
+its independent child cones. A leaf at $x$ instead certifies only its
+strict ancestors as branches, fixes its own actual label and makes
+all strict descendants absent. Removing its cone as well as the
+ancestor path leaves the stated side components.
+
+The full-binary source law gives, for any nonroot address in a
+known-present component,
+
+$$
+ x\text{ is absent}\quad\Longleftrightarrow\quad
+       \operatorname{parent}(x)\text{ is not a branch}.
+\tag{AAR.93}
+$$
+
+The parent may be a leaf or may itself be absent. Either alternative
+makes every strict descendant of that parent absent, including the
+sibling direction of $x$. Conversely this condition makes $x$ absent.
+If the parent is reached it must now be a leaf, which is precisely the
+cap in (AAR.92). An earlier leaf is still allowed. Deleting only $x$'s
+cone would leave a false sibling freedom; declaring its parent present
+would discard actual sources. Descendant targets are not abandoned:
+their future replies will be computed from the actual labelled blocker
+when the remaining boundary is acquired.
+
+These implications are sufficient, not only necessary. To realize an
+allowed residual boundary, fill each component by Theorem 16.3's
+canonical construction, forbidding a branch at a reached cap. Glue
+these subtrees below the fixed certified branch paths; preserve acquired
+labels and fill omitted children by alpha. After an absent reply,
+expanding the deleted cone is unnecessary: if its new cap is reached,
+put its chosen leaf label there, and otherwise its earlier leaf already
+makes that cone absent. This gives exactly the original conditional
+boundaries for every row of the table.
+
+All branch vertices used in this construction belong to the original
+$K$. Added children lie at most one level farther, so the right-subtree
+height is at most $\max\operatorname{depth}(K)+1\le D$. Combining
+components uses the maximum of their embedded depths, not a sum of
+heights. Thus all their choices coexist on one native source. Terminal
+marks persist until resolved or removed; an absent step only adds a
+terminal mark after deleting that parent's children. Hence there is no
+hidden internal cap. By induction this describes the exact family after
+any informative adaptive prefix transcript. Queries at already resolved
+vertices have known replies and can be omitted by a new strategy; their
+calls in a competing strategy remain charged. $\square$
+
+**Theorem 16.7 (component addition against arbitrary adaptive interleaving).**
+For a forest of the independently realizable components in Theorem
+16.6, its minimum worst prefix-Read count is the sum of the individual
+component minima. This holds for every deterministic strategy that
+interleaves components based on the whole acquired transcript.
+
+Proof. Sequentially solve the components to attain the sum. For the
+lower bound, a remaining query concerns at most one component; a query
+outside them has a known reply. Their compatible boundaries form a
+Cartesian product by Theorem 16.6, with already acquired labels fixed.
+For each component keep its nonempty set $Z_i$ of still compatible
+boundaries. As a proof device, let $d_i(Z_i)$ be its minimum worst
+remaining number of local vertex queries to determine that boundary.
+It is finite, since reading every vertex suffices, and is zero exactly
+when the boundary is already determined. This conditional complexity
+is used only for the adversary argument, rather than as the structural
+characterization to be computed below.
+
+At any query to component $i$, at least one nonempty truthful reply
+cell $Z_i'$ has
+
+$$
+ d_i(Z_i')\ge d_i(Z_i)-1.
+\tag{AAR.94}
+$$
+
+Otherwise this query followed by optimal local continuations would
+improve $d_i(Z_i)$. Choose such a reply and keep that cell. Other
+components' sets do not change. Thus $\sum_i d_i(Z_i)$ decreases
+by at most one per actual Read, regardless of adaptive interleaving,
+and a correct halt requires every component boundary to be determined.
+At least its initial sum of queries is necessary.
+
+Throughout this argument the product of retained completion sets is
+nonempty. If the strategy halted too early, its terminal record would
+leave an unresolved component. If it continued past the asserted
+budget, choose one surviving boundary in each component and glue them
+as in Theorem 16.6: that single initial source realizes the entire
+preceding adaptive transcript. There is no change of source during
+this execution and no combination of separately attainable marginal
+optima. Finite termination on every completion excludes an infinite
+source-consistent run. The inequality and attainment prove the claim.
+$\square$
+
+**Theorem 16.8 (the exact menu-prefix recurrence and native optimum).**
+Define $c(\varnothing)=0$, and for a nonempty rooted obligation shape
+$T$ define
+
+$$
+ \begin{aligned}
+ f_T(x)&=\sum_{U\in\mathscr F_T(x)}c(U),\\
+ a_T(x)&=\begin{cases}
+          0,&x=\operatorname{root}(T),\\
+          c(T_x^-),&x\ne\operatorname{root}(T),
+         \end{cases}\\
+ c(T)&=1+\min_{x\in T}\max\{f_T(x),a_T(x)\}.
+ \end{aligned}
+\tag{AAR.95}
+$$
+
+Every recursive tree has fewer vertices, so this is a finite recurrence
+on path deletion, parent truncation and rooted components of the public
+menu geometry. For every allowed $D,P$,
+
+$$
+ \boxed{\mathcal C_D(P)=c\bigl(\operatorname{Pref}(R^{-1}P)\bigr).}
+\tag{AAR.96}
+$$
+
+The number is unchanged by any assignment of open/capped terminal marks
+for a component of that same shape. An attaining source-blind encoder
+uses only original-root words $Rq$, $q\in K$, and may subsequently
+export the existing minimum $n(S)$-label prediction code. No enumeration
+of $\mathcal F_D$, whole decision trees or behavioral classes is part
+of (AAR.95).
+
+Proof. Induct simultaneously on the number of vertices for every
+assignment of terminal marks. A one-vertex component needs one Read:
+it is known present, but its two possible labels must be distinguished.
+An open terminal also allows branch; one Read resolves it as well.
+Thus both terminal types have the same value one.
+
+For a larger component, consider the first informative vertex query
+$x$. Its branch continuation has value $f_T(x)$ by Theorems 16.6–16.7
+and the inductive hypothesis. If $x$ is internal this reply is feasible.
+Its leaf continuations have just the strict-ancestor side components;
+the branch forest contains those components and, additionally, the
+child components of $x$. Their nonnegative costs show that a leaf
+continuation costs no more. If $x$ is terminal, there are no such child
+components, so every feasible positive reply has exactly $f_T(x)$.
+This includes a capped terminal, where branch is impossible but the
+two actual label replies give that same continuation cost.
+
+For nonroot $x$, absence is feasible, for example with a leaf at the
+component root. Its conditional task is exactly $T_x^-$ with the new
+cap. By the inductive hypothesis it has cost $a_T(x)$, independent of
+all inherited terminal marks. Root absence is impossible and contributes
+no extra alternative. Thus the true worst continuation for this first
+query is exactly $\max\{f_T(x),a_T(x)\}$, for every mark assignment.
+Every cell used for this lower bound has the bounded common-source
+realizations proved in Theorem 16.6. Any first query therefore requires
+at least the displayed leading one plus this maximum. A previously
+resolved query only spends a Read without changing the task. Taking
+the minimum over informative first queries proves the lower recurrence
+against every prefix strategy, including arbitrary interleaving later.
+It also proves that marks do not change its numerical value.
+
+To attain it, use fixed public tie-breaking to choose a minimizing
+$x$, and actually submit its embedded word $Rq$. On branch, solve
+$\mathscr F_T(x)$. On a label, save that actual label and solve only
+the side components left by its strict ancestors. On absent, retain
+the parent cap and solve $T_x^-$. Sequentially solving the resulting
+components attains their sum. Each step removes at least one unresolved
+vertex. A positive query is removed with its ancestor path; an absent
+query is removed with its parent's strict-descendant cone. Hence no
+actual query is repeated, all calls including absence are charged, and
+the procedure terminates on every original source with cost at most
+$c(K)$. Its actual witnesses reconstruct the entire boundary, including
+labels of caps that are reached and absence of caps blocked earlier.
+
+Theorem 16.4 identifies this prefix-boundary minimum with the original
+all-word prediction minimum, proving (AAR.96). Compute $\Sigma_P$
+or $e_S$ from that acquired boundary and use (AAR.59) at the authentic
+supplied $k$. For computing $e_S$, the constructor and relevant child
+codes needed by (AAR.67) are all in $K$; an empty child menu has its
+fixed zero code. The acquired table or complete finite transcript
+already suffices as an export. If only the minimum code is retained,
+use the complete handoff convention of Definition 12.1 to clear every
+other accessible source-dependent distinction. Such local encoding,
+storage and clearing add no Read, but have their separate costs.
+The code count and decoder are reused from §12, rather than obtained
+anew from this recurrence. $\square$
+
+**Theorem 16.9 (geometry, redundancy and admissible height slack).** The
+Read value in (AAR.96) depends only on the rooted prefix-tree shape,
+including unary-chain lengths. It is unchanged by exchanging left and
+right child directions, by increasing an admissible $D$, or by adding
+a target that is an ancestor of an existing target. Left/right exchanges
+and added ancestor targets can change the retained-alphabet count
+$n(S)$; increasing an admissible $D$ leaves both counts unchanged by
+Theorem 12.6. In particular,
+
+$$
+ \mathcal C_D(\varnothing)=0,\qquad
+ \mathcal C_D(\{p\})=\lceil\log_2(|p|+1)\rceil,
+ \qquad
+ 1\le c(K)\le|K|\quad(K\ne\varnothing).
+\tag{AAR.97}
+$$
+
+The singleton formula is exactly the already published Theorem 13.8,
+not an additional single-address acquisition result.
+
+Proof. The three operations in (AAR.95) use rooted adjacency and
+ancestor order, with no left/right weight or target markings. Adding
+an already included prefix changes no vertex of $K$. The canonical
+realizations fit every $D\ge\max_{p\in P}|p|$; the attaining queries
+inspect no extra height slack. This proves the invariances. The empty
+menu has constant output. For a singleton the obligation shape is a
+path with $|p|$ vertices, and equality with Definition 13.1's optimum
+allows direct reuse of Theorem 13.8. The lower positive bound follows
+from the two root-leaf sources with different requested trajectories.
+Reading all vertices of $K$ proves the upper bound.
+
+A nonabsent descendant certifies each strict ancestor branch; requesting
+such an already certified ancestor again adds no boundary information.
+After reading a labelled leaf, its strict descendants are already known
+absent and need no further initial probe. After absence at $x$, all
+strict descendants of its parent are already absent, but the actual
+blocking leaf and its label still require acquisition. These are
+conditional redundancies on an actual acquired transcript. Removing
+nonmaximal targets does not remove their addresses as potential probes:
+a blocking leaf at one of those ancestors must itself be read by
+Theorem 16.2. Nor do the worst-budget invariances deny source-specific
+usefulness of off-menu probes, as Proposition 14.2 demonstrates.
+$\square$
+
+**Theorem 16.10 (shared acquisition and equal-width/depth obstructions).**
+For every indicated admissible $D$, the following exact costs hold:
+
+| Declared menu | Minimum Reads | Minimum admissible $D$ |
+| --- | ---: | ---: |
+| $\varnothing$ | $0$ | $1$ |
+| $\{R\}$ | $1$ | $1$ |
+| $\{RL,RR\}$ | $2$ | $2$ |
+| $\{RLL\}$ or $\{R,RLL\}$ | $2$ | $3$ |
+| $\{RLL,RLR\}$ | $3$ | $3$ |
+| $\{RLL,RRR\}$ | $4$ | $3$ |
+
+Thus a joint menu can cost strictly less than the sum of its singleton
+optima. Menu size, antichain width and maximum target depth alone do
+not determine the price.
+
+Proof. The empty, root and singleton entries reuse (AAR.97); adding
+$R$ does not change the singleton's prefix tree. For $\{RL,RR\}$,
+Read $RL$. If absent, Read $R$: it is a leaf and its actual label
+resolves both trajectories. If nonabsent, $R$ is branch and Read $RR$
+resolves the other component. This uses at most two actual Reads.
+For a matching lower bound take the four simultaneous native sources
+
+$$
+ t_{x,y}=\langle\alpha,\langle x,y\rangle\rangle,
+ \qquad x,y\in\{\alpha,\beta\}.
+\tag{AAR.98}
+$$
+
+All lie in $\mathcal F_2$. Every literal is either constant or reads
+one of the two independent leaf labels. The requested count-zero
+vector determines both, so one Read cannot suffice. Each singleton
+has price two by Theorem 13.8, but the joint price is two rather than
+four. The same acquired reply may certify their common branch and
+supply one requested label; it is one event shared by the tasks.
+
+For $\{RLL,RLR\}$, first Read $RL$. Absence is resolved by one $R$
+Read, a leaf resolves both targets directly, and branch is followed
+by the two child Reads. The maximum is three. Its relative trie is
+$\{\varepsilon,L,LL,LR\}$. In (AAR.95) first querying the root has
+positive continuation two, querying $L$ has worst continuation two, and
+querying either terminal child has worst continuation two. For the
+last case the positive forest has one vertex of cost one, while its
+negative truncation is the two-vertex path of cost two. Thus the
+minimum is three, giving the matching all-word bound by (AAR.96).
+
+For $\{RLL,RRR\}$ the relative trie is
+$\{\varepsilon,L,LL,R,RR\}$. Querying its root has positive
+continuation four; querying $L$ or $R$ has positive continuation
+three and negative continuation one; querying $LL$ or $RR$ has
+positive continuation two and negative continuation three. The
+latter truncated shape is $\{\varepsilon,L,R,RR\}$. Its root
+query has continuation three; querying $L$ leaves the two-vertex
+$R$ path of cost two; querying $R$ has positive continuation two
+and negative continuation one; querying $RR$ has positive
+continuation one and negative continuation two, the latter being
+the two-child root $\{\varepsilon,L,R\}$ of cost two. Its exact
+value is therefore three. Consequently (AAR.95)
+gives four for the five-vertex trie.
+
+There is also a direct native lower correspondence for that price.
+Restrict to the 16 sources
+
+$$
+ t=\langle\alpha,\langle x,y\rangle\rangle,
+ \quad
+ \begin{aligned}
+ x&\in\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                            \langle\beta,\alpha\rangle\},\\
+ y&\in\{\alpha,\beta,\langle\alpha,\alpha\rangle,
+                            \langle\alpha,\beta\rangle\}.
+ \end{aligned}
+\tag{AAR.99}
+$$
+
+Their right-subtree height is at most two, so they lie in $\mathcal F_3$.
+In the left component the selected child is $L$: a root Read merges
+its two branch completions, a child Read merges the two root leaves,
+and every other literal is constant or supplies no finer partition.
+Its two leaf labels and selected child reply require two Reads in
+the worst case. In the right component the selected child is $R$,
+with the symmetric two-Read obstruction. Any original-root literal
+concerns at most one component, or is a fixed outer reply. Theorem
+16.7's product argument gives four against arbitrary interleaving
+on one of these actual sources, with both local hard histories
+simultaneously realizable. This is a common-source lower bound,
+not the sum of initial singleton bounds.
+
+Both three-letter menus have two incomparable targets and width two,
+but costs three and four. They therefore falsify any formula using
+only those summaries. The shared and split possibilities are realized
+by actual trees, including the independent factors in (AAR.99);
+the difference is their prefix overlap, rather than an imagined
+combination of separately optimal probes. $\square$
+
+**Theorem 16.11 (acquired boundary versus retained joint prediction).**
+For $D\ge3$ and $P=\{RLL,RLR\}$, the actual sources
+
+$$
+ t_0=\langle\alpha,\beta\rangle,
+ \qquad
+ t_1=\langle\alpha,\langle\alpha,\alpha\rangle\rangle
+\tag{AAR.100}
+$$
+
+have different menu-prefix boundaries and identical joint future
+trajectories. A correct full-family acquisition must read $R$ on
+$t_0$ and $RL$ on $t_1$, even though a minimum retained prediction
+code merges them. Adding the ancestor target $R$ to
+$P_0=\{RLL\}$ changes its minimum retained alphabet from six to
+seven without changing its two-Read acquisition price. Moreover
+$\{RLL\}$ and $\{RRR\}$ have the same acquisition shape and price,
+but retained alphabets of six and seven, respectively.
+
+Proof. The two sources in (AAR.100) have the joint statistic
+
+$$
+ \Sigma_{\{RLL,RLR\}}(t_0)
+   =\Sigma_{\{RLL,RLR\}}(t_1)=((3,0),(4,1)).
+\tag{AAR.101}
+$$
+
+This is the two-target instance of the already published collisions
+in Propositions 13.3 and 13.10, using (AAR.57). The $RLL$ trajectory
+has no alpha stage; its replies are absent, absent, beta, then branch.
+The $RLR$ trajectory is absent, absent, alpha, beta, then branch.
+The common left-ending absence guard is essential to the first equality.
+The boundaries differ at $R$ and $RL$. Flipping the beta at $R$ in
+$t_0$, or the alpha at $RL$ in $t_1$, changes a requested trajectory
+while preserving every other initial literal reply. Both flips remain
+in the same height-bounded family. Theorem 16.2 forces the stated
+actual Reads. Their shared collision is one joint boundary choice,
+rather than independent choices made per target.
+
+For $P_0$, the suffix menu is $\{LL\}$. Formula (AAR.66) gives six;
+for $\{R,RLL\}$ its suffix menu is $\{\varepsilon,LL\}$ and gives
+seven, since the selected root removes the beta/branch collision.
+The relative prefix tree is the same three-vertex path, so Theorem
+16.9 leaves its acquisition price at two. For $\{RRR\}$ the suffix
+menu $\{RR\}$ gives seven by the same existing count recurrence;
+its path shape is unchanged. These are applications of §12's retained
+code result, not new alphabet formulas.
+
+Thus, on attained data, the recoveries are
+
+$$
+ \text{actual terminal transcript}\ \longrightarrow\ B_K(t)
+ \ \longrightarrow\ \Sigma_P(t)
+ \ \longleftrightarrow\ e_S(v)
+ \ \longleftrightarrow\ \mathcal H_P(t).
+\tag{AAR.102}
+$$
+
+The reverse of the first boundary-to-statistic arrow fails in
+(AAR.100). The last two arrows are the attained-image bijections
+already proved in Theorems 12.3 and 12.6. Correct acquisition can
+therefore require a finer spatial boundary than the memory eventually
+needed to serve the exact declared menu. $\square$
+
+**Mathematical citation 16.12 (existing suppliers and their exact ports).**
+The structural addition (AAR.95)–(AAR.96) uses the following prior
+results with their source, operation and target conditions retained.
+
+| Supplier | Reused content and remaining interface |
+| --- | --- |
+| This volume, §§11–12 | Finite initial family, sufficient acquired boundary coordinates, guarded supplied-count decoder, joint spatial statistic and minimum retained alphabet. The full-source capture in Theorem 12.9 is sufficient but is not a minimum initial Read theorem. The present addition prices actual acquisition of its sufficient input. |
+| This volume, §§13–15 | Exact singleton Read price, height-safe leaf/branch evidence and projected-source normalization with its pointwise obstruction. They are direct suppliers for (AAR.97), the bounded evidence transfer and the singleton checks; their exact single-address results are not proved again. Multiple hanging components and parent caps require Theorems 16.6–16.8. |
+| [SLH §§35–43](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md#35-达到切点上的任意地址未来任务), especially Definition 40.3 and Lemma 43.2 | Future-code semantics, joint-query objective, shared boundary collisions and indispensable actual leaf evidence. Theorem 16.2 checks the latter's competitors inside $\mathcal F_D$. Theorem 43.5 minimizes terminal-record range, rather than maximum record length. No record-count argument substitutes for (AAR.96). |
+| [CNA §§14–21](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md#14-protected-entry-and-the-public-cut-geometry) | Ancestor-path coverage, successful ordered search and independently realized native completions. Its Release permits later paid full-tree acquisition and origin calibration. That continuation port differs from (AAR.86)'s passive decoder. Its deep-padding lower witnesses must not be assumed height-bounded. |
+| [LQF §§2–5](RECURSIVE_RELATIONAL_OBSERVATION_LITERAL_QUERY_FRONTIER.md#2-all-legal-words-their-reply-cells-and-their-literal-lengths) and [AOF §§8–9](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ORBIT_RESOURCE_FRONTIER.md#8-stationary-interval-reading-with-a-zero-origin) | All-word reply classification and actual response-map simulation are existing methods. Their acquired atomic-slot histories or age intervals are different source families. LQF's identical-history pointwise domination is stronger than (AAR.91) and is not transferred. Theorem 16.3 supplies the bounded arbitrary-tree classification needed here. |
+| [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean), `readout`, `flip`, `source_foundation`; [NativeDepthPatterns](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean), `original_present_transport`, `original_prefix_locality` | Native four replies, leaf relabelling and transport of originally present subtrees. The source module's `paid` counts distinct addresses for its separate task; (AAR.87) instead charges every actual call. Present-subtree transport does not transport from an absent address or supply an unacquired boundary. |
+| [NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean), `operational_replay`, `reached_prefix_replay`; [NativeIndependentExecution](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeIndependentExecution.lean), `native_history_correspondence` | Source-free control and same-source literal histories are native interfaces. The ordinary replay used here allows growing finite workspace. [ActualObserverPrefixRigidity](../../../D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverPrefixRigidity.lean), `actualPrefix_replay`, has its stated finite-carrier observer premise and is not silently enlarged to prove the new minimax theorem. |
+| [TargetFamilyMinimalQuotient](../../../D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.lean), `target_family_minimal_quotient` | General minimal sufficient target factor, already applied in Theorem 12.6. It supplies no query-partition geometry or acquisition cost. |
+
+A concrete failed transfer of CNA's cover functional is visible in
+Theorem 16.10's split trie
+$T=\{\varepsilon,L,LL,R,RR\}$. This is the internal skeleton of a
+complete cut. Its ordered cover $LL,RR$ has new-ancestor counts
+$(3,2)$, hence cover budget
+
+$$
+ \max\{1+\lceil\log_2 3\rceil,
+          2+\lceil\log_2 2\rceil\}=3.
+\tag{AAR.103}
+$$
+
+Its native joint passive-prediction acquisition needs four Reads by
+(AAR.99). Finding one authentic leaf permits CNA's later calibration,
+but does not resolve the other independent prediction component
+without further Reads. This exposes the target/continuation mismatch,
+rather than contradicting the cover theorem. The geometric joint
+recurrence and its bounded interfaces are `repo-derived` ordinary
+results; successful-search capacity, generic target factors and finite
+decision-game reasoning are reused methods.
+
+**Mathematical citation 16.13 (primary search models and failure boundaries).**
+[Cicalese, Laber and Saettler, *Decision Trees for Function Evaluation:
+Simultaneous Optimization of Worst and Expected Cost*, §1's DFEP
+model and decision-tree costs](https://arxiv.org/pdf/1309.2796v2)
+define finite objects, target classes, complete multiway tests, a prior
+and positive test costs. Here objects are actual bounded sources,
+classes are joint futures, and tests are literal four-reply words with
+unit Read costs. Words through right-subtree depth $D$ already
+separate initial sources; deeper words are constant absent. After
+projection, the prefix boundary is the finite object tested. The
+paper's class-determination model explains why output need not identify
+the source. Its approximation and distributional conclusions do not
+supply the exact native recurrence or the stronger compulsory evidence
+that distinguishes acquisition from retained classification. No prior
+or expected-cost conclusion is imposed here.
+
+[Bose, Cardinal, Iacono, Koumoutsos and Langerman, *Competitive Online
+Search Trees on Trees*, §1.1 and §1.3.2](https://arxiv.org/html/1908.00848v1)
+use a vertex query that finds one hidden vertex or identifies the
+connected component containing it. On an unresolved chain this gives
+the familiar shallower/hit/deeper geometry. In the joint task a branch
+reply instead leaves several components, all of which must be solved,
+and absence prunes at the queried vertex's parent. Their one-target
+component oracle, online rotations and pointer-move costs do not give
+(AAR.95), whose positive continuation is a sum rather than the cost
+of one chosen component. A constant-factor oracle simulation would
+also be insufficient for an exact unit-Read correspondence.
+
+[Zhu et al., *Budget Constrained Interactive Search for Multiple
+Targets*, §3.2's target independence and question definition](https://arxiv.org/html/2012.01945v3)
+provide a rooted-tree boundary-search comparison: their hidden target
+set is an antichain, and a Boolean question asks whether a supplied
+vertex reaches any target. Their budgeted objective chooses vertices
+close to those targets. Our relevant labelled leaves form an antichain,
+but a native Read distinguishes a local branch, two leaf labels and
+absence; it is not a descendant-existence oracle. Further, (AAR.86)
+requires exact predictions for every authentic count, rather than
+budgeted closeness. Those operation and objective differences prevent
+transferring its search optimizer.
+
+[Eisel, McMullen and Muth, *An efficient search strategy for hidden
+ideals in pointed partially ordered sets*, §1.1 and Definition 2.2](https://arxiv.org/pdf/2505.07604v1)
+permit membership queries with a cap on positive answers, and define
+an ideal to be empty or a principal downward set. Their directed-lower-set
+convention is different from (AAR.90)'s arbitrary downward-closed
+branch set. For the actual right subtree
+$\langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle$
+and the full relative depth-two menu, that branch set is
+$\{\varepsilon,L,R\}$, with two incomparable maximal vertices, so it
+is not principal. The source lies in $\mathcal F_3$. Their hidden-ideal
+recurrence therefore does not characterize this branching labelled
+boundary, even before comparing its binary membership test with the
+four-reply native port. No cap on positive replies is assumed here.
+
+[van der Linden, de Weerdt and Demirović, *Necessary and Sufficient
+Conditions for Optimal Decision Trees using Dynamic Programming*,
+§§4.2–4.3, Definition 4.2, Proposition 4.3 and Theorem 4.6](https://arxiv.org/pdf/2305.19706v4)
+identify sufficient current states and a principle of optimality as
+the ingredients of a dynamic-programming decomposition. Their
+feature-learning formulation presumes a chosen binarization and its
+own objectives and constraints. Here Theorem 16.6 proves the concrete
+native sufficient-state property, including absent guards, caps and
+bounded completions; Theorem 16.7 proves addition for simultaneously
+realizable components. These bridges cannot be supplied merely by
+writing a generic minimax decision-tree formula. Neither their
+scalability results nor a polynomial evaluation bound are claimed for
+(AAR.95).
+
+These primary correspondences concern class determination, ordered
+and tree search, discovering a rooted boundary, poset search and
+constrained decision trees. They establish the stated reuse and its
+limits, rather than worldwide originality or an exhaustive absence
+claim for other literature.
+
+**Theorem 16.14 (the recovery interface and its remaining resource boundary).**
+Under Definition 16.1, (AAR.95) prices acquiring the native spatial
+boundary sufficient for the fixed joint future task. After that
+acquisition the retained predictive factor and the supplied-count
+trajectory determine one another on their attained images, as in
+(AAR.102). Neither this factor nor the attained Read minimum entails
+recovery of the whole source, the full boundary representation, an
+unknown lag, hidden equality or authentic later observation receipts.
+
+Proof. The acquisition equality is Theorem 16.8, and the predictive
+bijections are the reused Theorems 12.3–12.6. The strict loss of a
+boundary distinction in (AAR.100) excludes a general inverse back to
+$B_K$. The projection also discards arbitrary off-menu subtree
+content while preserving every requested trajectory. Counterexample
+11.9 supplies the separate same-future, different-hidden-equality
+obstruction within this bounded family. Every menu
+reply is branch after the public horizon $H_P\le2D$, so the predicted
+vector cannot identify an unknown count beyond saturation. Computing
+a later reply creates no Read event on that later version; obtaining
+an authentic observation or a common-version collection has its own
+paid interface, as in Proposition 15.4. Empty $P$ has constant output
+regardless of source or count.
+
+The recurrence is finite and effective, but no polynomial optimizer,
+minimum transient workspace, address-traffic optimum, joint optimum
+over all resource coordinates or physical spacetime recovery follows
+from its Read equality. Stationarity and count authentication are
+hypotheses, not acquired certificates. The one extra available height
+level and independent leaf labels are used by the native realizations
+and evidence argument; an exact-height promise, restricted labels,
+nonstationary source, deeper menu, later unknown menu or unknown count
+requires its own acquisition analysis. All statements here are
+ordinary mathematical arguments. They carry no new kernel
+certification and do not settle the full mutual-recovery programme.
+$\square$
+
+## 追加锚（本行以下为增补区）

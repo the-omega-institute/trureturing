@@ -3,6 +3,7 @@ import D5.S3.Arith.Congruence.CohnUniformThreeAdic
 import Reg.Support.DependentFamily
 
 open D5.S3.Arith.Congruence.CohnUniformThreeAdic
+open D5.S3.Arith.Congruence.CohnUniformThreeAdic.Exported
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 noncomputable section
@@ -150,7 +151,81 @@ noncomputable def audit_obstruction :
   familyRecord := none,
   options := #[] }
 
-#print axioms congruenceRegistration
-#print axioms obstructionRegistration
 
 end Reg.D5.S3.Arith.Congruence.CohnUniformThreeAdic
+
+open Polynomial
+open scoped QuadraticAlgebra
+
+namespace Reg.D5.S3.Arith.Congruence.CohnUniformThreeAdic.Visibility
+@[reducible] def signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ[X]
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ m => (cohnPolynomial (2 * m + 1)).comp (X ^ 2 - 1))
+    (fun a => nomatch a)
+def zeroFamily : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun a => nomatch a)
+@[reducible] def arena : Arena where
+  signature := signature
+  Law R := ∀ m : ℕ, R.readout () () m =
+    ((⟨X, 1⟩ : QuadraticAlgebra ℤ[X] (-3) 0) ^ (2 * m + 1)).im
+
+theorem actual_law : arena.Law actual := polynomial_identification
+
+theorem zero_fails : ¬ arena.Law zeroFamily := by
+  intro h
+  have bad := h 0
+  change (0 : ℤ[X]) = _ at bad
+  norm_num at bad
+
+theorem actual_dependence : actual.readout () () 0 ≠ actual.readout () () 1 := by
+  intro h
+  have H := congrArg (Polynomial.eval (0 : ℤ)) h
+  norm_num [actual, realize, cohnPolynomial, Finset.sum_range_succ] at H
+
+def registration : Registration arena (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, zeroFamily, zero_fails⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨zeroFamily, ?_, rfl, zero_fails⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro i
+      exact nomatch i
+  dependence := by
+    intro i
+    cases i
+    exact ⟨(), 0, 1, actual_dependence⟩
+
+noncomputable def audit_identification :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@polynomial_identification)
+      (type_of% (realize signature (fun _ _ m => (cohnPolynomial (2 * m + 1)).comp (X ^ 2 - 1)) (fun a => nomatch a)))
+      (Type) (Unit) := {
+  unitName := `CohnPolynomialIdentificationVisibility,
+  realizationName := `Reg.D5.S3.Arith.Congruence.CohnUniformThreeAdic.Visibility.registration,
+  realizationSource := none, generated := false,
+  arena := .source ⟨arena⟩, objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous, localNames := false,
+  realization := .source arena ⟨registration⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ m => (cohnPolynomial (2 * m + 1)).comp (X ^ 2 - 1)) (fun a => nomatch a)),
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Congruence.CohnUniformThreeAdic,
+    definition := none, coordinates := #[0],
+    readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown, familyRecord := none, options := #[] }
+end Reg.D5.S3.Arith.Congruence.CohnUniformThreeAdic.Visibility
