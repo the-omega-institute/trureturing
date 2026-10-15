@@ -1,4 +1,10 @@
-/- Same-parent arbitrary-k joint-update candidate. Not kernel checked. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateJointPromotion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateJointPromotion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The new joint partition uses the actual P opening, actual Q fragments and saved parent cycle. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateQPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 

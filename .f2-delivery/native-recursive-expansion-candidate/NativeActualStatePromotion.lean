@@ -1,4 +1,10 @@
-/- General-k same-witness P promotion candidate, not kernel checked. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStatePromotion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStatePromotion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The actual P opening is recovered from the original retained P state and the same parent. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateSuppliers
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.Walks.ActualJointHalfCutInventory

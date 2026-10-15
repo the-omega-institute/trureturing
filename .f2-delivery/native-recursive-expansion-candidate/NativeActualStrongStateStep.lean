@@ -1,4 +1,10 @@
-/- Strong arbitrary-order state transition candidate. Not kernel checked. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStrongStateStep
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStrongStateStep
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The same parent joint partition earns both restored orders and all retained edge invariants. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateJointPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFullStateTransport
 

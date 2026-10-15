@@ -1,4 +1,10 @@
-/- General-k same-witness Q promotion candidate. Not kernel checked. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateQPromotion
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateQPromotion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Both new boundary cuts are sliced inside the special path already used by the parent. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStatePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBoundarySlicing
 

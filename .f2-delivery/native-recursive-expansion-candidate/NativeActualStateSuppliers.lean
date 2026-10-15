@@ -1,5 +1,10 @@
-/- Candidate for the general k step. Not yet kernel checked.
-   The state walk remains the supplier throughout each construction. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateSuppliers
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualStateSuppliers
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: The parent uses its original retained states, chosen child cycles and exact opening inventories throughout. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualInductionState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
