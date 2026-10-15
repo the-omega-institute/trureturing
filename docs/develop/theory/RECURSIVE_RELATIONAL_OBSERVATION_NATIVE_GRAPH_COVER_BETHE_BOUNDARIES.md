@@ -13,7 +13,7 @@ rule out a different sound cofinal verifier.
 $m=2^h$. For a bit string $b\in\{0,1\}^m$, let $u_b$ be the actual perfect
 height-$h$ tree whose leaves, in left-to-right order, are $\alpha$ for $0$ and
 $\beta$ for $1$. These are elements of the unchanged canonical interface
-$S_d$. Let $f:\{0,1\}^m\to\mathbb Q_{>0}$ and give every other state of
+$S_d$. Let $f:\{0,1\}^m\to\mathbb Q_{\ge0}$ and give every other state of
 $S_d$ a fixed positive rational weight $\eta$. Write
 
 $$
@@ -22,6 +22,9 @@ W=\sum_{x\in S_d}w(x),
 \qquad \mu(x)=w(x)/W.
 \tag{GCB.1}
 $$
+
+When $f$ is strictly positive, $\mu$ is strictly positive on all of $S_d$;
+the incidence identity itself also allows zeros in $f$.
 
 For every internal target $q$ with $|q|<h$, impose the constant factor
 $\Gamma_q=(0,0)$. For every terminal target $q$ of length $h$, choose the
@@ -127,13 +130,14 @@ $65/49$. Taking $r$ disjoint padded gadgets multiplies the ratio to
 $(65/49)^r$. Therefore the proposed unrestricted comparison
 
 $$
-Z(\text{connected }k\text{-cover})\le Z(\text{base})^k
+Z(\text{a }k\text{-cover})\le Z(\text{base})^k
 \tag{GCB.7}
 $$
 
 is false even for positive rational native weights, and no correction with
 logarithm $o(n)$ can repair this rule on the displayed family. The obstruction
-is scoped to the rule itself; Ruozzi's graph-cover inequality has a
+also occurs at dyadic lengths: take $r=2^j$, with base length $4r$ and
+lift length $8r$. It is scoped to the rule itself; Ruozzi's graph-cover inequality has a
 log-supermodularity hypothesis that the anti matrix does not satisfy.
 
 A consistent relabelling of the three triangle bits cannot remove the example:
@@ -186,6 +190,29 @@ permanents with a girth correction require a permanent support graph and a
 specified girth, neither of which is a native all-template hypothesis. These
 conditions explain why (GCB.7)--(GCB.9) are counterexamples to the proposed
 unrestricted substitutions only.
+
+**Proposition 4.2 (the explicit loop charge and global-cap boundary).**
+For a disjoint union of $c$ displayed cycles with $n$ blocks, the exact
+mass obeys
+
+$$
+Z=\prod_{j=1}^c\frac{4^{\ell_j}+(\pm2)^{\ell_j}}{W^{\ell_j}}
+\le2^c(4/W)^n.
+$$
+
+This is a sound upper for that cycle subfamily. The false per-template
+value $23/50$ in (GCB.9) is not a global cap shown to evade small-length
+checks: for these same weights $\beta(\mu)\ge8/W$ already at length one.
+
+**Proof.** Each eigenvalue correction has absolute value at most
+$4^{\ell_j}$, giving the displayed bound by multiplication. The four
+states $u_{00},u_{01},u_{10},u_{11}$ are locally admissible: the root is
+branch and each leaf target uses its own literal. Their raw weight is
+eight for either matrix. Thus they give the stated length-one pressure
+lower. In particular the cycle calculation refutes the two defined
+upper substitutions and their subexponential repairs; it does not show
+an invalid global cap escaping every finite test or an obstruction at
+optimizing weights. $\square$
 
 [Vontobel]: https://arxiv.org/html/1012.0065v2
 [Ruozzi]: https://arxiv.org/html/1202.6035

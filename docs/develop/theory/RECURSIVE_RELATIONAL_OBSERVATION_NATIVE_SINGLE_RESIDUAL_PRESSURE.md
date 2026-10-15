@@ -45,14 +45,20 @@ Thus for one support, $A_n(w)=R_S(w)^n$ and
 $\beta(w)=R_S(w)$ at every length. Donors may be off-target, cyclic and
 coordinate-dependent; no independent-child restriction is used.
 
-**Proof.** Keep, for each coordinate, only a witness for its residual target.
-If a residual target is constant or has an own-coordinate witness on the
-relation, its coordinate projection is locally admissible and has mass at
-most $R_{S_i}(w_i)$. Otherwise choose a non-self donor and draw an arrow from
-that coordinate to its donor. In a component with a vertex having no incoming
-arrows, condition on its donor state. The allowed residual cell is locally
-admissible, so summing that vertex contributes at most $R_{S_i}(w_i)$, uniformly
-in the conditioned value. Remove it and continue.
+**Proof.** Choose, for each coordinate, one actual witness for its residual
+target and discard the other target equations. This enlarges the relation,
+so it suffices to bound the mass of the chosen equations' full solution set
+inside $\prod_iS_i$. Draw one arrow to its donor, allowing a self-loop;
+a constant equation has no outgoing arrow. Each component is a tree ending
+at a constant terminal or a directed cycle with incoming trees.
+
+Eliminate a vertex with no incoming arrows. Conditional on its donor state,
+its residual value is fixed. That target cell is locally admissible, since
+all other targets retain their global own witnesses on $S_i$. Summing the
+vertex therefore costs at most $R_{S_i}(w_i)$ uniformly in the donor state.
+No other remaining equation depends on the eliminated state. A constant
+terminal, after its incoming trees have been eliminated, obeys the same
+bound. Continue until only directed cycles remain.
 
 It remains to consider a directed cycle. Write the residual equation at $i$
 as $g_{q_i}(x_i)=f_i(x_{i+1})$, with indices cyclic, where each $f_i$
@@ -65,18 +71,46 @@ $$
 
 The cycle mass is
 $\sum_{z_1,\ldots,z_\ell}\prod_iM_i(z_i,z_{i-1})$. Entrywise domination by
-$h_i(z_{i-1})$ bounds it by $\prod_i\sum_vh_i(v)$. Choosing, for every
-reply value $v$, a maximizing $u$ gives one own-reply decoder for the residual
+$h_i(z_{i-1})$ bounds it by $\prod_i\sum_vh_i(v)$, including the diagonal
+sum for a self-loop. Choosing, for every attained $f_{i-1}$ value $v$, a
+maximizing $u$ gives one own-reply decoder for the residual
 target, so the union of those cells is locally admissible and
 $\sum_vh_i(v)\le R_{S_i}(w_i)$. Multiplying the eliminated and cyclic bounds
 proves the upper inequality. Conversely, the product of local maximizing
 sets is jointly admissible and has exactly the product mass. $\square$
 
+**Corollary 1.3 (restricted fractional covers at every length).** Let
+$Z_S(n)$ be the fractional cover optimum of $S^n$ by all native jointly
+admissible subsets of that universe, and put $z_S=Z_S(1)$. For every
+one-residual support $S$ and every $n\ge1$,
+
+$$
+Z_S(n)=z_S^n.
+$$
+
+If $K_S(n)$ is the corresponding integral optimum, then
+
+$$
+\log_2z_S\le\frac{\log_2K_S(n)}n
+\le\log_2z_S+\frac{\log_2(1+n\ln|S|)}n.
+$$
+
+**Proof.** Products of local fractional cover members are jointly admissible
+and give the upper $z_S^n$. Let $y$ be a local optimal nonnegative LP dual,
+of total $z_S$, with every locally admissible set having $y$-mass at most
+one. Formula (SRP.1) is exactly that largest local mass, so $R_S(y)=1$.
+Theorem 1.2 makes $\prod_i y(x_i)$ a feasible joint dual of total $z_S^n$.
+This proves equality. Finite harmonic set-cover rounding, as used in
+[FMR, Lemma 4.4], gives
+$Z_S(n)\le K_S(n)\le H_{|S|^n}Z_S(n)$ and
+$H_{|S|^n}\le1+n\ln|S|$. These covers concern the restricted universe
+$S^n$. They are not upper covers of $S_d^n$ unless $S=S_d$. $\square$
+
 ## 2. A total sound verifier for this class
 
 **Definition 2.1 (single-residual verifier).** A certificate for
 $V_{\mathrm{SR}}(d,\mu,C,\pi)$ is a finite rational decomposition
-$\mu=\sum_\ell w_\ell$ together with, for each $ell$, a support
+$\mu=\sum_\ell w_\ell$ together with, for each $\ell$, a support
 $S_\ell$, residual target $q_\ell$, reply map $a_\ell$ and the maximizing cell
 values used in (SRP.1). The verifier checks the decomposition, the native reply
 and target tables, the residual condition for every other target, and the exact
@@ -136,9 +170,6 @@ locally admissible exactly when it omits at least one of
 $u_0,u_1,u_2,u_3$. Hence, for every nonnegative weight vector
 $(w_0,\ldots,w_4)$,
 
-where $A_n(w)$ denotes the maximum product weight of a jointly admissible
-subset of $P^n$,
-
 $$
 \beta_P(w)=A_n(w)^{1/n}
 =\sum_{s=0}^4w_s-\min\{w_0,w_1,w_2,w_3\}
@@ -146,12 +177,21 @@ $$
 \tag{SRP.4}
 $$
 
-The local fractional cover optimum of $P$ is $4/3$: the four supports
+Here $A_n(w)$ is the maximum product weight of a jointly admissible
+subset of $P^n$.
+
+The unrestricted joint fractional cover optimum on $P^n$ is exactly
+
+$$
+Z_P(n)=(4/3)^n\qquad(n\ge1).
+\tag{SRP.7}
+$$
+
+At length one, the four supports
 $P\setminus\{u_j\}$, $j=0,1,2,3$, with coefficient $1/3$ give the upper
 cover, and the dual weights $1/3$ on the four core states give the matching
-lower bound. This local LP value is not asserted to tensorize to the full
-joint cover problem; correlated projections can be larger than locally
-admissible supports, as the credited cyclic examples demonstrate.
+lower bound. This equality is for the motif universe $P^n$ with every
+correlated native competitor retained, and does not identify $Z_3(n)$.
 
 **Proof.** No local reply separates all four distinct $LL$ values on the
 core, so a set containing the core is not admissible. If $u_0$ or $u_1$ is
@@ -159,11 +199,58 @@ omitted, the $RL$ reply determines $LL$; if $u_2$ or $u_3$ is omitted, the
 $L$ reply does. All other targets already have their own witnesses. This
 classifies the local sets. The largest local weight therefore omits the
 least-weight core state, and Theorem 1.2 gives (SRP.4). The displayed cover
-and dual weights prove the local fractional statement. $\square$
+and dual weights prove $z_P=4/3$. More explicitly, the dual
+$y=(1/3,1/3,1/3,1/3,0)$ has $R_P(y)=1$ by (SRP.4), so Theorem 1.2
+bounds its product mass by one on every admissible subset of $P^n$.
+Its total mass is $(4/3)^n$. Products of the four displayed local cover
+members give the reverse inequality, proving (SRP.7). $\square$
 
 This result is stronger than the existence of the credited cyclic fiber: it
 holds for every weight vector and every length, while it remains confined to
 this support and does not identify the full $\sigma_3$.
+
+**Proposition 3.3 (paid realization of the restricted covers).** Place
+$n=2^H$ actual motif blocks at the public depth-$H$ frontier in the right
+subtree, with $D=H+3$. Any finite cover of $P^n$ by native admissible sets
+can be implemented on this slice by first-membership names, using
+$7n$ preparation Reads of maximum length $H+3$ and $n(7H+17)$ submitted
+letters. A request on the slice uses at most one original-root Read of
+length at most $H+3$, chosen before the authentic count.
+
+**Proof.** Acquire each block boundary through the actual words $Ra_iq$,
+$q\in W_3$, where $|a_i|=H$. The seven suffix lengths sum to ten, giving
+$7(H+1)+10=7H+17$ letters per block. Compute the joint canonical tuple
+and its first containing member, then export only that fixed-width name.
+All other acquired distinctions are isolated under the paid service in
+[JTC, §1]. Constant scaffold targets need no Read; every other target uses
+its cover member's one constituent donor at the actual literal $Ra_ja$.
+The factor decoder handles every later authentic count. Installed cover
+tables, membership work, padded control/allocation, temporary storage,
+predictor, isolation and authentication are separate resources.
+
+For a full-family construction, scan the entire $W_D$ boundary using
+$2^D-1$ Reads and $(D-1)2^D+1$ letters, use these names on the canonical
+slice and a separate name for every other canonical state. This counts
+exactly $m_*+|S_D|-5^n$ attained names, where $m_*$ is the number of
+first-membership names actually used on $P^n$, and extends by
+canonicalization to every variable shape. No unused cover member is
+counted as retained source information. It does not make the restricted cover an optimal full-family
+cover. $\square$
+
+For a general restricted-support joint block menu at $n$ public prefix-free
+actual occurrences $Ra_i$, $|a_i|\le H$, the credited [FMR, Lemma 6.2]
+scan instead has bounds
+
+$$
+n(2^d-1)\text{ Reads},\qquad Q\le H+d,\qquad
+A\le n\bigl((H+1)(2^d-1)+(d-2)2^d+2\bigr).
+$$
+
+The submitted words are exactly $Ra_iq$, $q\in W_d$; a donor uses the
+corresponding one original-root word. At $d=3$ these are the motif bounds
+$7n$ and $n(7H+17)$. Presence and the declared joint menu are the
+supplier's premises; Proposition 3.3's fixed full-depth scaffold is what
+also covers every original permitted target in its full-family extension.
 
 ## 4. A sharp depth-two noncofinality result
 
@@ -181,15 +268,20 @@ R=\max\{a+T,\ b+T,\ a+b+c_{\max}\}.
 \tag{SRP.5}
 $$
 
-**Proof.** On the two root leaves, every nonempty nonroot literal returns the
-same $\mathsf{absent}$ reply while the corresponding target factors differ.
-Thus a residual witness must use the root reply or a side reply whose child is
-fixed across all retained branch states. Fixing either child gives one row or
-one column of the ordered grid. These are the only
-possibilities in the native reply table. Omitting $A$, omitting $B$, or retaining
-one root leaf gives the first two alternatives in (SRP.5); retaining both and
-choosing one maximizing branch state gives the third. Taking the best alternative
-proves the formula. $\square$
+**Proof.** At least one side target, $L$ or $R$, is not the designated
+residual target. Its factors on $A,B$ differ, whereas every nonempty
+experiment gives absent on both leaves. Its own witness must therefore be
+the root reply. That reply merges all branch states, so the selected side's
+child must be fixed across them. This gives one row or one column, with at
+most three branches. The root target itself is always own-determined, so
+this argument also covers designation of the root as the residual target.
+
+By the credited depth-two local-set classification [NCM, (NCM.15)], a
+locally admissible subset either omits $B$, omits $A$, or retains both and
+at most one branch. Their maximum weights are the three terms in (SRP.5).
+If the designated residual is also own-determined, the whole support is
+locally admissible and the same formula gives its total weight. An empty
+branch part has $T=c_{\max}=0$. $\square$
 
 **Theorem 4.3 (the static single-residual class has a strict gap).** Every
 finite nonnegative decomposition accepted by $V_{\mathrm{SR}}$ at depth two
@@ -204,7 +296,7 @@ $$
 $$
 
 **Proof.** If a component support omits one root leaf, it is locally
-admissible and $R=W$, so $5W\ge7R$ is immediate. Otherwise at most three branch
+admissible and $R=W$, so $7R=7W\ge5W$. Otherwise at most three branch
 states lie in one row or column, hence $c_{\max}\ge T/3$. From (SRP.5),
 
 $$
@@ -225,6 +317,9 @@ and finite-superposition mechanism. It does not exclude multiple residual
 targets, projection-dependent target selection, the joint certificate of
 [JTC, §2], global recoloring, lawful finer cuts, or a different effective
 proof system. In particular it is not a universal impossibility theorem.
+Failure of the required endpoint coverage at $d=2$ also does not prove
+that this class's endpoints over increasing depths fail to approach
+$\lambda$; that is a different approximation question.
 
 ## 5. Original-task boundary
 
