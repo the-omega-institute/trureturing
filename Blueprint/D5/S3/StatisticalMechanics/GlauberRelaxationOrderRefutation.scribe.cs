@@ -80,7 +80,10 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
                         + "and the second characteristic root is 1/2 + Real.sqrt(64/545). All the energy and spectral "
                         + "hypotheses hold, while the partial swap rate m = 5/32 is strictly below the Glauber spectral "
                         + "gap and strictly above the energy relaxation rate. Thus the implication in Eq. (50) fails."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("luo-zhen-liu-ebler-dahlsten-2023-relaxation-order-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
