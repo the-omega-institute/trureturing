@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Fibers/ConfigurationReadout
    mirror-E: none(waiver:content-registration-pending)
-   anchors: [D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity]
+   anchors: []
    utility: none
    digest: Actual legal configuration edge maps admit a faithful optional completion and local diamond criterion. -/
 

@@ -14,7 +14,7 @@ internal sealed class CalibratedUnitaryGroupDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Quantum/Dynamics/CalibratedUnitaryGroup.calibrated_group"),
             H("The generator determines the exponential evolution"),
             StatementSource.FromAuthor(Presentation()),
-            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/giovannetti2015time")),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Observer/giovannetti2015time")),
             Blocks(
                 Paragraph(Text("Let H be a complete complex inner product space. Let U(t) be a continuous complex linear operator for each real t, with U(0)=I, U(s+t)=U(s)U(t), and U(t)*U(t)=I for every t. Assume the operator-valued map has real derivative G at zero in the operator norm. These assumptions include the original finite-dimensional differentiable unitary group, since finite-dimensional complex inner product spaces are complete. They do not assume a Hamiltonian or its equation of motion.")),
                 Paragraph(Text("The group law writes U(s)=U(s-t)U(t). Differentiating at s=t proves U'(t)=G U(t) for every real t. Differentiating U(t)*U(t)=I at zero gives G*+G=0. The derivative of F(t)=exp(-tG)U(t) is therefore zero, and the mean-value constancy theorem gives F(t)=F(0)=I. Multiplying by exp(tG), whose product with exp(-tG) is I by the commuting exponential identity, proves U(t)=exp(tG). These steps construct the generator relation and the exponential representation from the original assumptions.")),

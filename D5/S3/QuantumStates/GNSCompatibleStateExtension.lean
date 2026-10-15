@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/QuantumStates/GNSCompatibleStateExtension
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal]
+   anchors: [mathlib/module/Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal]
    utility: none
    digest: Compatible C-star states extend uniquely and yield normalized cyclic completed GNS expectations. -/
 

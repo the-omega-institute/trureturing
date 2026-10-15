@@ -14,7 +14,7 @@ internal sealed class CoherentFlagPortDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CoherentFlagPort.flagged_cptp_roundtrip"),
                 H("flagged cptp roundtrip"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("Every normalized rectangular finite flagged port admits canonical completely positive trace-preserving encoder and decoder maps. The encoder image is proved to have zero entries between distinct classical flag sectors for every matrix input. Their all-matrix composition is exactly the same-flag Kraus composite used by the coherent dimension lower bound."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -22,7 +22,7 @@ internal sealed class CoherentFlagPortDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CoherentFlagPort.port_component_lower_bound"),
                 H("port component lower bound"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("Any normalized finite flagged port preserving all probe probabilities on every density input has coherent dimension at least the complex dimension of each probe component span."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -30,7 +30,7 @@ internal sealed class CoherentFlagPortDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CoherentFlagPort.padded_decoder_cptp"),
                 H("padded decoder cptp"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("For a partial-isometry Gram projection and a normalized finite fixed-state factorization, the explicit decoder Kraus family is normalized and supplies a canonical completely positive trace-preserving channel. Its all-matrix action includes the fixed-state complement filler."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -38,7 +38,7 @@ internal sealed class CoherentFlagPortDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CoherentFlagPort.padded_decoder_corner"),
                 H("padded decoder corner"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("The same whole-block decoder maps every encoded component corner to P times the original matrix times P, with vanishing filler contribution."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -46,7 +46,7 @@ internal sealed class CoherentFlagPortDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CoherentFlagPort.component_pinching_port"),
                 H("component pinching port"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("A complete finite family of component projections, partial-isometry embeddings into one coherent block, and normalized fixed-state factors determines an actual finite flagged port whose composite equals the component pinching map on every matrix."))),
                 DescribeRole.Theorem))));
 }

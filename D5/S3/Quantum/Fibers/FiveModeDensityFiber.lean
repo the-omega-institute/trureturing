@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Fibers/FiveModeDensityFiber
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition]
+   anchors: []
    utility: none
    digest: Full-rank five-mode density fibres have 21 real local directions and distinguish coherence. -/
 

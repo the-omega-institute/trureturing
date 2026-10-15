@@ -23,3 +23,10 @@ to Other Models of Concurrency*，Lecture Notes in Computer Science 255，pp. 32
 固定有限或可数事件集、有限主下集及明确的相容闭包条件，并逐项证明所用的
 有向并和理想重建。静态配置域不意味着所有互斥分支可以合并，也不给量子
 概率、物理时钟单位或任意读出路径无关性。
+
+## Locator
+
+- 章节 PDF：https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf
+
+定位范围为本注所述的事件因果、有限相容性、配置域及有限配置重建的域论背景；
+不把量子概率、时钟标定或读出路径无关性归于该文献。

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Dynamics/FiniteCausalPortGraph
    mirror-E: none(waiver:content-registration-pending)
-   anchors: [D5/S3/Quantum/Foundation/FiniteKrausChannel,D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity]
+   anchors: []
    utility: none
    digest: Finite causal matrix instruments have derived disjoint-port interchange and static cut semantics. -/
 

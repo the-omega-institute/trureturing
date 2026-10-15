@@ -14,7 +14,7 @@ internal sealed class CanonicalFlagCompressionDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CanonicalFlagCompression.canonical_flag_port_factorization"),
                 H("canonical flag port factorization"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression")),
                 Blocks(Paragraph(Text("Any canonical CPTP encoder with classical flag output and canonical CPTP decoder admit a normalized finite Kraus port with identical all-matrix composite action."))),
                 DescribeRole.Theorem),
             Describe.Lean(
@@ -22,7 +22,7 @@ internal sealed class CanonicalFlagCompressionDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/CanonicalFlagCompression.canonical_flag_port_lower_bound"),
                 H("canonical flag port lower bound"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumChannels/bluhmrauberwolf2018compression"), LibraryNoteRef.Create("D5/L/QuantumChannels/mayerknill2018unitary")),
                 Blocks(Paragraph(Text("For arbitrary unit probe families and arbitrary finite classical flags, canonical CPTP encoding and decoding that preserve every probe probability for every density input have coherent block dimension at least every actual component dimension."))),
                 DescribeRole.Theorem))));
 }

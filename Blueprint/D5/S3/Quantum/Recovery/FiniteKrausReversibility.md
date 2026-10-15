@@ -4,7 +4,7 @@
 
 Scalar error products construct a normalized finite Kraus left inverse. Spectral zero weights are eliminated explicitly. The reverse implication and canonical channel interface are treated in neighboring modules.
 
-The complementary-channel formulation is the exact identity-target specialization of the recovery duality theorem of Beny and Oreshkov; see `D5/L/Quantum/beny2010approximate`.
+The complementary-channel formulation is the exact identity-target specialization of the recovery duality theorem of Beny and Oreshkov; see `D5/L/QuantumChannels/beny2010approximate`.
 
 Let an isometric encoding have logical input and a physical output split into retained and environment factors. Taking environment coordinates gives the retained-channel Kraus family. The environment output entry with indices a and b is the trace of the input multiplied by the product of the adjoint of Kraus b with Kraus a. Consequently a constant environment output on every input matrix is equivalent, by nondegeneracy of the trace pairing, to scalar error products.
 

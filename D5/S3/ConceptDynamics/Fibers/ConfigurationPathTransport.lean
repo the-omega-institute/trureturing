@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Fibers/ConfigurationPathTransport
    mirror-E: none(waiver:implementation-owner-scope)
-   anchors: [D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity]
+   anchors: []
    utility: none
    digest: Configuration ideal completion, finite-endpoint edge composition and graph transport. -/
 

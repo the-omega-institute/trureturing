@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Dynamics/FiniteCausalScheduleProtocol
    mirror-E: none(waiver:content-registration-pending)
-   anchors: [D5/S3/Quantum/Dynamics/FiniteCausalPortGraph,D5/S3/Quantum/Recovery/FiniteLocalProtocol]
+   anchors: []
    utility: none
    digest: Actual finite causal schedules compile to normalized adaptive quantum programs. -/
 

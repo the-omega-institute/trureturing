@@ -23,3 +23,11 @@ arXiv:1904.04051v2，代数态及 GNS 表示的叙述。
 [AURIC Ω 第 12 节](../../docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)
 先由共享单位的嵌套有限维子代数上的相容态构造唯一连续延拓，再应用 GNS。
 这不构造不可归一的无限等权历史向量，也不把任意一致边缘当作已存在的全局态。
+
+## Locator
+
+- DOI：https://doi.org/10.48550/arXiv.1904.04051
+- arXiv v2 记录：https://arxiv.org/abs/1904.04051v2
+
+定位范围为本注所述的单位 $C^*$ 代数态及其循环 GNS 表示背景；相容局部态
+的连续延拓及无限等权历史向量的边界仍按上文区分，不另指定文献定理编号。
