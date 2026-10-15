@@ -1,0 +1,7 @@
+**定理 134.1（本原共轭理想的完整分类）。** 有
+
+$$\boxed{\gcd(|N|,|T|)\in\{1,5\},\qquad
+(h,h^*)=\begin{cases}R,&5\nmid N,\\(\delta),&5\mid N,\end{cases}} \tag{134.1}$$
+
+其中 $\delta=2\theta-1$。后一种情形还满足 $5\nmid d$、$v_5(N)=1$。本节不使用唯一分解或主理想环结论，给出生成元的直接 Bezout 证书。
+

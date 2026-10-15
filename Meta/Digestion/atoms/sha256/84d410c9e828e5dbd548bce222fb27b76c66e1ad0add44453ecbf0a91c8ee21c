@@ -1,0 +1,10 @@
+**引理 66.1（耦合角下界）。** 设 $(R,T,T,S,T,T)$ 是真正超理想四面体，$\theta$ 是 $R$ 边角，$\beta$ 是四条 $T$ 边的共同角。若
+
+$$R\ge1+2T,\qquad 0<\theta\le\pi/5,$$
+
+则
+
+$$\boxed{0<\cos\beta<\tan\frac\theta2<\frac12,\qquad \frac\pi3<\beta<\frac\pi2.} \tag{66.1}$$
+
+这是整个显示连续参数域上的估计，不假设坐标落在旧的 $[1,2]$ 盒内。
+

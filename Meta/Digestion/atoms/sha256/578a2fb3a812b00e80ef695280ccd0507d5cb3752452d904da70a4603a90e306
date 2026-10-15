@@ -1,0 +1,14 @@
+**成熟的三读数接口。** 对 $U,V\in\mathrm{SL}_2(\mathbb C)$，写
+
+$$x=\operatorname{tr}U,\quad y=\operatorname{tr}V,\quad z=\operatorname{tr}(UV).$$
+
+在 $(U,V)\mapsto(UV,U)$ 下，经典迹坐标更新为
+
+$$\boxed{(x,y,z)\mapsto(z,x,xz-y),} \tag{138.1}$$
+
+且
+
+$$\boxed{I=x^2+y^2+z^2-xyz-2=\operatorname{tr}(UVU^{-1}V^{-1})} \tag{138.2}$$
+
+保持不变。这里用完整迹；文献中半迹归一化的系数不同。这是 Fricke 迹理论与 Fibonacci 替换迹映射的经典内容，不申报为新发现。
+

@@ -1,0 +1,6 @@
+**证明。** 置 $t=1/q_B\in(0,1]$、$v=t\sin\theta-\cos\theta$，则 $-1<v\le0$ 且 $v>-\cos\theta$。所以反余弦合法，并有 $\theta<\Phi_B(\theta)<\pi$。又 $v'=t\cos\theta+\sin\theta>0$，且
+
+$$(v')^2-(1-v^2)=t^2>0.$$
+
+因此 $\Phi_B'=1-v'/\sqrt{1-v^2}<0$。增大 $B$ 严格减小 $v$，故严格增大 $\Phi_B$。最后 $\Phi_3(\pi/4)=3\pi/4$，给出所列下界。
+

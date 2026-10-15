@@ -1,0 +1,11 @@
+**定理 133.2（精确像与有限模盲区）。** 在整数上，$C$ 单射且像指标为五，具体为
+
+$$\operatorname{im}C=\{(r,s)\in\mathbb Z^2:2r+s\equiv0\pmod5\},$$
+$$u=(2r+s)/5,\qquad v=(-r+2s)/5. \tag{133.3}$$
+
+模任意 $m\ge2$，若 $5\nmid m$，$C$ 可逆；若 $5\mid m$，令 $d=m/5$，则
+
+$$\boxed{\ker C_m=\{td(1,2):t\in\mathbb Z/5\mathbb Z\}.} \tag{133.4}$$
+
+每个非空纤维恰有五个元素，并且其输出充要相容条件仍为 $2r+s\equiv0\pmod5$。
+

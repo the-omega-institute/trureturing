@@ -1,0 +1,7 @@
+**引理 127.1（实际变分问题的对称性）。** 由
+
+$$(g\cdot\alpha)_{g\sigma,\{p_{g,\sigma}i,p_{g,\sigma}j\}}
+=\alpha_{\sigma,\{i,j\}} \tag{127.3}$$
+
+定义的作用保持 $\mathcal A$、$\overline{\mathcal A}$ 和总体积。若 $\mathcal A\ne\varnothing$，其唯一最大体积角结构 $\alpha^*$ 在此作用下不变。
+

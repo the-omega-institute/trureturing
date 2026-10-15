@@ -1,0 +1,52 @@
+# 纯系数截断单纯形的标签相容同胚
+
+## 1. 系数单元与统一参考单元
+
+**定义 1.0。** 顶点集合为 $V=\{0,1,2,3\}$，六个独立系数按 $(01,02,03,23,13,12)$ 编号。令 $U=(1,\infty)^6$。对 $x\in U$，定义对称矩阵 $X_x$：对角元为零，非对角元由对应无向边的系数给出。令
+
+$$
+\Delta=\{\lambda\in\mathbb R^V:\lambda_i\ge0,\ \sum_i\lambda_i=1\},\qquad
+c_x(i,\lambda)=\lambda_i-\sum_{j\ne i}X_x(i,j)\lambda_j,
+$$
+
+$$
+C_x=\{\lambda\in\Delta:\forall i,\ c_x(i,\lambda)\le0\},\qquad
+R_e=2.
+$$
+
+各 $C_x$ 使用欧氏空间的子空间拓扑。对顶点置换 $\sigma$，令 $(\sigma_*\lambda)_k=\lambda_{\sigma^{-1}k}$。
+
+**引理 1.1（六独立系数的统一标签相容同胚族）。** 存在一个同时为所有 $x\in U$ 选定的同胚族 $M_x:C_x\to C_R$，满足以下全部条件。对任意 $x\in U$、$\lambda\in C_x$、$f,i\in V$，
+
+$$
+(M_x\lambda)_f=0\ \Longleftrightarrow\ \lambda_f=0,\qquad
+c_R(i,M_x\lambda)=0\ \Longleftrightarrow\ c_x(i,\lambda)=0.
+$$
+
+此外，对任意 $x,y\in U$、顶点置换 $\sigma$ 和遗漏顶点标签 $f\in V$，若
+
+$$
+X_x(i,j)=X_y(\sigma i,\sigma j)
+\quad(i\ne f,\ j\ne f,\ i\ne j),
+$$
+
+则对每个满足 $\lambda_f=0$ 的 $\lambda\in C_x$，有
+
+$$
+\sigma_*\lambda\in C_y,\qquad
+(\sigma_*\lambda)_{\sigma f}=0,\qquad
+M_y(\sigma_*\lambda)=\sigma_*(M_x\lambda).
+$$
+
+证明：在中央区域 $\max_i\lambda_i\le1/2$ 取恒等映射。在唯一可能的角区域 $\lambda_i=t>1/2$，令 $\mu_i=0$、$\mu_j=\lambda_j/(1-t)$，并置
+
+$$
+s_x=\sum_jX_x(i,j)\mu_j,\qquad a_x=\frac{s_x}{1+s_x},\qquad
+\theta=\frac12+\left(t-\frac12\right)\frac{2/3-1/2}{a_x-1/2}.
+$$
+
+定义 $M_x\lambda=\theta e_i+(1-\theta)\mu$。在 $C_x$ 中有 $t<1$，所以 $\mu$ 定义良好并属于相对面单纯形。由全部非对角系数大于一及 $\sum_j\mu_j=1$，得到 $s_x>1$，故各分母为正且 $1/2<a_x<1$。第 $i$ 个截断函数为 $(1+s_x)(t-a_x)$，所以原角区域满足 $t\le a_x$，从而 $1/2\le\theta\le2/3$。此公式在 $t=1/2$ 与中央恒等映射相接。交换源、靶的角端点得到逆映射，有限闭区域上的拼接给出两个方向的连续性。角方向的正比例缩放保留全部坐标零集合，$t=a_x$ 与 $\theta=2/3$ 的等价性保留活动截断面的零集合；其余截断函数严格为负。若 $\lambda_f=0$，置换保留单纯形；除遗漏顶点外，截断函数逐项由共享系数相等而一致，遗漏顶点的截断函数则为非正加权和。因此 $\sigma_*\lambda\in C_y$。活动角标签 $i\ne f$ 且 $\mu_f=0$，所以 $s_x$ 仅使用该共同面内的系数。所给三条无向边等式使置换前后的 $s_x,a_x$ 相同；参考系数全为二，在置换下不变，因而得到自然性等式。整个构造同时定义所有 $M_x$。
+
+本引理只陈述系数单元的带标签拓扑及共同面相容性。其参数域未附加 Gram 行列式、几何长度域或外部流形前提；它不承担给定三维流形的度量实现或原始剖分标记。
+
+## 追加锚（本行以下为增补区）

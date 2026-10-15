@@ -1,0 +1,4 @@
+**原始来源。** Costantino–Frigerio–Martelli–Petronio, *Triangulations of 3-manifolds, hyperbolic relative handlebodies, and Dehn filling*, arXiv:math/0402339，Conjecture 0.8 是固定给定剖分的外部目标。原卷及本篇仅处理严格超理想、负 Euler 边界的部分，不替代原始的更广泛部分截断表述。
+
+Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365v2：Lemma 4.3 提供长度余弦；Propositions 4.4–4.5、Lemma 4.6 提供全部正长度域的真正／平坦分类；Theorem 6.3 提供体积极大角结构及共同正长度；Proposition 6.7 提供所用的局部凹性。核对了 PDF 印刷页 2、21、22 的页面图像。附近散文中的 convex 字样不被当作体积凸性输入，所用符号取 Proposition 6.7 的明确 concave 陈述及其 Schlaefli 证明。
+

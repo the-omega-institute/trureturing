@@ -1,0 +1,6 @@
+**情形 A。** 有 $b=\pi,a=c=0$。由 $\beta>0$ 得 $u=1$、$\beta=\pi/v$、$v\ge5$；$u+v$ 为偶数，所以 $v$ 为奇数。式 (72.4) 使 $pv=2q$，故 $p=2m$、$q=mv$。$p+q=m(v+2)$ 为偶数而 $v+2$ 为奇数，故 $m$ 为偶数，特别地 $p\ge4$。因此
+
+$$\theta=\frac{2\pi}{q}=\frac{4\beta}{p}\le\beta\le\pi/5.$$
+
+$C$ 在 $A$ 对平坦给出 $A\ge1+R+B>B$。对真正 $D$ 用引理 72.2 得 $0<\delta<\beta\le\pi/5$，而 $\gamma=2\pi/w\le\pi/3$。目标 $A$ 的四个邻角是 $\theta,\delta,\gamma,\delta$，所以它及其中三个邻角不超过 $\pi/5$，剩余邻角不超过 $\pi/3$。引理 71.1 强制 $A<3$，与 $A\ge1+R+B>3$ 矛盾。
+

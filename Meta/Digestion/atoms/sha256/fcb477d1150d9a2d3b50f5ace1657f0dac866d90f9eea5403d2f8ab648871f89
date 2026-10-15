@@ -1,0 +1,14 @@
+**定义 1.0。** 顶点集合为 $V=\{0,1,2,3\}$，六个独立系数按 $(01,02,03,23,13,12)$ 编号。令 $U=(1,\infty)^6$。对 $x\in U$，定义对称矩阵 $X_x$：对角元为零，非对角元由对应无向边的系数给出。令
+
+$$
+\Delta=\{\lambda\in\mathbb R^V:\lambda_i\ge0,\ \sum_i\lambda_i=1\},\qquad
+c_x(i,\lambda)=\lambda_i-\sum_{j\ne i}X_x(i,j)\lambda_j,
+$$
+
+$$
+C_x=\{\lambda\in\Delta:\forall i,\ c_x(i,\lambda)\le0\},\qquad
+R_e=2.
+$$
+
+各 $C_x$ 使用欧氏空间的子空间拓扑。对顶点置换 $\sigma$，令 $(\sigma_*\lambda)_k=\lambda_{\sigma^{-1}k}$。
+

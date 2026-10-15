@@ -1,0 +1,18 @@
+**定理 130.3（两个标量未知量的精确存在唯一性）。** 定义 $q=\cos(2\pi/15)$。对 $a,b>1$ 置
+
+$$d(a,b)=1+\frac{2b^2(1-q)}{a+q},$$
+
+$$\alpha=\arccos\frac{b\sqrt{a+1}}
+{\sqrt{(2a-1)(a-1+2b^2)}},\qquad
+\beta=\arccos\frac{a+b^2}{a-1+2b^2},$$
+
+$$\theta=\arccos\frac{2b^2-(a-1)d}{a-1+2b^2},\qquad
+\eta=\arccos\frac{b\sqrt{(a+1)(d+1)}}
+{\sqrt{(a-1+2b^2)(d-1+2b^2)}}.$$
+
+则方程组
+
+$$\boxed{2\alpha+5\theta=2\pi,\qquad \beta+10\eta=2\pi} \tag{130.3}$$
+
+在 $a,b>1$ 上恰有一解。
+

@@ -1,0 +1,24 @@
+**证明。** 记 $u=a+b,v=c+d,W=u+v,z=\cos\theta$。若 $\theta\ge\Theta_B$，则 $c_B\theta\ge\pi$ 且 $W>0$，结论立即成立。以下假设 $0<\theta<\Theta_B$，置
+
+$$A=\frac2{B-1},\quad K=1+A,\quad
+W_B(\theta)=\arccos(A-K\cos\theta).$$
+
+反余弦参数属于 $(-1,1)$，且 $A-Kz>-z$，所以 $0<W_B<\pi-\theta$。若 $W\le W_B$，则在 $[0,W]$ 上 $z+\cos t>0$ 且
+
+$$\frac{d^2}{dt^2}\log(z+\cos t)=-\frac{1+z\cos t}{(z+\cos t)^2}<0.$$
+
+对称凹函数在端点取最小值得到
+
+$$(z+\cos u)(z+\cos v)\ge(z+1)(z+\cos W)$$
+$$\ge(z+1)(z+\cos W_B)=\frac{2\sin^2\theta}{B-1}.$$
+
+(76.1) 随即给出 $x<B$，矛盾，故 $W>W_B$。
+
+另一方面，$W_B$ 连续延伸到 $W_B(0)=\pi$、$W_B(\Theta_B)=0$，且在开区间有
+
+$$W_B''(\theta)=
+-\frac{AK^2(1-\cos\theta)^2}
+{[1-(A-K\cos\theta)^2]^{3/2}}<0.$$
+
+凹性使其图像位于连接两端的线段之上，故 $W_B(\theta)\ge\pi(1-\theta/\Theta_B)$。结合 $W>W_B$ 即得 (84.1)。
+

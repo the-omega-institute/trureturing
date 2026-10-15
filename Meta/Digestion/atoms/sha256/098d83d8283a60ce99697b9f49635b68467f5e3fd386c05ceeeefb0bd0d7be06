@@ -1,0 +1,27 @@
+**定理 134.1（本原共轭理想的完整分类）。** 有
+
+$$\boxed{\gcd(|N|,|T|)\in\{1,5\},\qquad
+(h,h^*)=\begin{cases}R,&5\nmid N,\\(\delta),&5\mid N,\end{cases}} \tag{134.1}$$
+
+其中 $\delta=2\theta-1$。后一种情形还满足 $5\nmid d$、$v_5(N)=1$。本节不使用唯一分解或主理想环结论，给出生成元的直接 Bezout 证书。
+
+**证明，整数公因子。** 有 $T^2-4N=5d^2$。若素数 $p\ne2,5$ 同时整除 $T,N$，则 $p\mid d$，再由 $p\mid2c+d$ 得 $p\mid c$，与本原性矛盾。若二同时整除 $T,N$，先有 $d$ 偶，再有 $c$ 偶，同样矛盾。
+
+模五有 $4N\equiv T^2$，故 $5\mid N$ 当且仅当 $5\mid T$。这时 $c\equiv2d\pmod5$，且 $d$ 不被五整除。由于 $25\mid T^2$ 而 $5d^2$ 的五进赋值为一，等式 $4N=T^2-5d^2$ 给出 $v_5(N)=1$。公因子遂恰为一或五。$N\ne0$，因为 $R$ 嵌入 $\mathbb Q(\sqrt5)$，而本原元素非零。
+
+**证明，理想与显式系数。** 选整数 $r,s$ 满足 $rN+sT=g$，其中 $g=\gcd(|N|,|T|)$。则
+
+$$A_0=rh^*+s,\quad B_0=s,\qquad A_0h+B_0h^*=g. \tag{134.2}$$
+
+当 $g=1$，这直接证明 $(h,h^*)=R$，并给出所有模数通用的左逆。
+
+当 $g=5$，取整数 $a,b$ 满足 $ad+5b=1$。利用 $h-h^*=d\delta$ 与 (134.2)，
+
+$$\boxed{\delta=(a+b\delta A_0)h+(-a+b\delta B_0)h^*.} \tag{134.3}$$
+
+反向包含由直接除法给出：
+
+$$h=\delta\left(\frac{-c+2d}{5}+\frac{2c+d}{5}\theta\right). \tag{134.4}$$
+
+两个系数因 $c\equiv2d\pmod5$ 都为整数。共轭使 $h^*$ 也被 $\delta$ 整除，因为 $\delta^*=-\delta$。所以 $(h,h^*)\subseteq(\delta)$，(134.3) 给出逆包含。
+

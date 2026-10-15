@@ -1,0 +1,22 @@
+## 69. 文献核对、证据范围与尚未闭合的接口
+
+**原始来源。** Costantino–Frigerio–Martelli–Petronio, *Triangulations of 3-manifolds, hyperbolic relative handlebodies, and Dehn filling*, arXiv:math/0402339，Conjecture 0.8 是固定给定剖分的外部目标。原卷及本篇仅处理严格超理想、负 Euler 边界的部分，不替代原始的更广泛部分截断表述。
+
+Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365v2：Lemma 4.3 提供长度余弦；Propositions 4.4–4.5、Lemma 4.6 提供全部正长度域的真正／平坦分类；Theorem 6.3 提供体积极大角结构及共同正长度；Proposition 6.7 提供所用的局部凹性。核对了 PDF 印刷页 2、21、22 的页面图像。附近散文中的 convex 字样不被当作体积凸性输入，所用符号取 Proposition 6.7 的明确 concave 陈述及其 Schlaefli 证明。
+
+**版本更新。** 2026-09-25 核对 arXiv 记录时，Zhao 的 *Combinatorial Ricci Flows and Hyperbolic Structures on a Class of Compact 3-Manifolds with Boundary* 已有 2026-09-24 上传的 `2601.15174v3`。该版 Theorem 1.1 和 Theorem 1.5 仍以所有边度至少九为一般实现条件；Lemma 2.2 给出同一原始余弦。本篇的六度实例不能由那个最低九度假设直接得到。原卷此前对 v2 的记录是历史核对，不被静默改写。Feng–Ge–Hua, DOI 10.2140/gt.2022.26.1349，仍按既有共体积／流方法来源引用。
+
+来源链接：
+
+- https://arxiv.org/abs/math/0402339
+- https://arxiv.org/pdf/1404.5365v2
+- https://arxiv.org/abs/2601.15174
+- https://arxiv.org/html/2601.15174v3
+- https://doi.org/10.2140/gt.2022.26.1349
+
+这些核对及仓内检索并非穷尽整个文献，也不是优先权证明。本篇定位为仓内新增的综合推导及非线性排除结果，不把既有公式、凹性、角刚性或覆盖理论重新宣称为原创。
+
+**复核。** 配套脚本 `cfmp_mixed_matching_check.py` 检查完整面配对、奇偶性、边识别、有向端点首次返回、链接角扇对应、角色次数及一个精确有理角结构，并对第 65 节的根式边星作浮点交叉检查。引理 66.1 的两次导数与代入关系另经符号代数恒等式复核；正文已给出全部表达式。没有运行项目 CI、Lean 编译、Scribe 投影或 Freeze，也没有新建任何形式化认证记录。
+
+**剩余问题。** 第 65 节排除了只靠中心边自相矛盾的策略；第 66–68 节证明，一旦邻接横边共享可恢复的状态，邻边角预算能真正排除平坦性。一般 CFMP 尚缺把这个耦合机制推广到不等长、无角色平衡的邻接星的估计。不能把不同横边的角度直接设成同一个 $\beta$，也不能把三类着色默认为三种数值长度。这是本篇明确留下的全局几何义务。
+

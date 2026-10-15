@@ -1,0 +1,26 @@
+**引理 122.3（循环三角扇的径向圆盘坐标）。** 令整数 $n\ge3$，令
+
+$$
+S=\{(a,b)\in\mathbb R^2: a\ge0,\ b\ge0,\ a+b\le1\},\qquad
+X_n=\operatorname{Fin}(n)\times S.
+$$
+
+$\operatorname{Fin}(n)$ 取离散拓扑，$S$ 取平面的子空间拓扑。记 $\operatorname{next}(i)=i+1\pmod n$，仅用以下接缝生成等价关系 $R_n$：
+
+$$
+(i,t,0)\sim(\operatorname{next}(i),0,t),\qquad 0\le t\le1.
+$$
+
+令 $Q_n=X_n/R_n$，取投影 $X_n\to Q_n$ 所诱导的商拓扑；不预先假设 $Q_n$ 为 Hausdorff 空间。令 $D=\{z\in\mathbb C:\lVert z\rVert\le1\}$。存在同胚 $H_n:Q_n\to D$，在每个代表上满足
+
+$$
+H_n([i,a,b])=
+\begin{cases}
+0,&a+b=0,\\
+(a+b)\exp\!\left(\mathrm i\,\dfrac{2\pi}{n}
+\left(i+\dfrac{a}{a+b}\right)\right),&a+b>0.
+\end{cases}
+$$
+
+所有三角形的原点属于同一个等价类，此类映到 $0$；其像的逆像 $H_n^{-1}(\{z:\lVert z\rVert<1\})$ 是该类的开邻域，同胚于开单位圆盘。这里扇形的关系始终由接缝生成，不能改用径向映射的核关系作为定义。
+

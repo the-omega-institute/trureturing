@@ -1,0 +1,5 @@
+source_id = "cfmp-coefficient-labeled-profile"
+path = "docs/develop/theory/CFMP_COEFFICIENT_LABELED_PROFILE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,11 @@
+**定理 89.1（共享参数的 Jensen 障碍）。** 设 $g\ge3$ 为整数，给定 $r,h>1$ 且 $r\ge1+2h$。有 $g$ 个真正四面体，其余弦长度分别为
+
+$$(r,h,h,o_i,h,h),\qquad o_i>1,$$
+
+目标角为 $\theta_i$、四个横边共同角为 $\beta_i$，并满足 $\sum_i\theta_i=\pi$。则
+
+$$\boxed{\sum_{i=1}^g\beta_i>
+ g\arccos\left(\tan\frac\pi{2g}\right)>\frac\pi2.} \tag{89.1}$$
+
+不要求 $o_i$ 或 $\theta_i$ 相等，也不要求这些块已经完成其他边的全局拼接。
+

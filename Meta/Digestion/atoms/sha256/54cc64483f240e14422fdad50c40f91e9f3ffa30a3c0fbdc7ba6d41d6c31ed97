@@ -1,0 +1,4 @@
+**引理 72.2（不等横边的角序）。** 对真正余弦长度向量 $(R,A,B,S,A,B)$，记两组横边角为 $\beta,\delta$，则
+
+$$\operatorname{sign}(\beta-\delta)=\operatorname{sign}(A-B). \tag{72.3}$$
+

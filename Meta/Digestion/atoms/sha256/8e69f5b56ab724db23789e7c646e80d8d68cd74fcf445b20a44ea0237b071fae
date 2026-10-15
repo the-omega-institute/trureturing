@@ -1,0 +1,4 @@
+# CFMP 理论卷续篇：角关联群与观察动力学
+
+本篇继续同一个 CFMP 给定剖分实现目标，承接 [群字符与运输第 119–125 节](CFMP_GEOMETRIC_REALIZATION_GROUP_TRANSPORT.md)。原有四个卷文件及其正在并行形式化的源码不改动；本篇是顺序续篇，不是另立一个猜想。第 126–132 节此前只作为会话附件交付，现于 2026-09-29 补推到原 PR #9474。读取的 PR 基线为 `b61aaa2ffe5e1879b34a37248d7bc7a5ee8c0f59`。下述是普通书面研究证明及辅助计算，待独立审阅，没有新增 Lean、CI、Scribe、admission 或 Freeze 认证。
+

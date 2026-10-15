@@ -1,0 +1,8 @@
+**文献和仓内输入。** 经典正向及逆向角长公式见 Frigerio–Moraschini, *On volumes of truncated tetrahedra with constrained edge lengths*, arXiv:1801.05326v3，第 1.1 节公式 (1)–(5)。本轮读取了相关 PDF 解析文本；该文印刷页 6 的截图请求失败，未将其记为本轮成功图像核查。Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365v2，Theorems 1.4、6.3 和第 4 节的正长度分类，提供最大角结构及共同正广义长度。本轮成功读取了其印刷页 2、21 的截图，并核对定理原文。局部正向公式也沿用原卷第 1、65、72 节。第 95 节半差恢复已有角序；新增承重步骤是半和响应、(96.3) 的正余项、逐块需求、双边预算及实际各向异性实现。
+
+- https://arxiv.org/pdf/1801.05326v3
+- https://arxiv.org/pdf/1404.5365
+- https://arxiv.org/abs/math/0402339
+
+CFMP 的给定剖分目标继续沿用 Costantino–Frigerio–Martelli–Petronio Conjecture 0.8。两条实际公共边、局部对边结构均是附加条件，未从一般最低六度假设自动推出。仓内 PR 检索仍定位到 #9474 与 #8155。有界文献检索不构成世界范围优先权证明。
+

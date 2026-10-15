@@ -1,0 +1,6 @@
+**定理 133.1（精确交织与判别式）。** 令 $D=2M-I$，则
+
+$$\boxed{D^2=5I,\qquad C=DJ,\qquad CW=MC,\qquad\det C=5.} \tag{133.2}$$
+
+在 $R=\mathbb Z[\theta]/(\theta^2-\theta-1)$ 的系数基 $(1,\theta)$ 上，$D$ 是乘以 $\delta=2\theta-1$ 的矩阵，$\delta^2=5$。因此 CFMP 返回观察，在交换输入坐标后，正是这个范数为负五的黄金整数的乘法。
+

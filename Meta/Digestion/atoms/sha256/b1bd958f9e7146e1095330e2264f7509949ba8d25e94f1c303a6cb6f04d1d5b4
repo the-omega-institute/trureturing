@@ -1,0 +1,17 @@
+## 133. CFMP 返回观察恰是黄金判别式算子
+
+**续篇基线（2026-09-29）。** 本轮读取 PR #9474 的 `b61aaa2ffe5e1879b34a37248d7bc7a5ee8c0f59`，并结合 `dev` 的 `409ac8ac7e6ea43a5afc318381b0af261543ca73` 中 `FIBONACCI_ATOMIC_RELATION_GENERATION.md`（blob `734088bcd52f4f752593942f5ecda392bbc67ea8`）。该 Fibonacci 文件此时尚不在本 PR 分支，以下用不可变源码链接定位，不复制或改写其并行版本。第 133–139 节继续同一 CFMP 目标；全部新增内容为普通书面证明，待独立审阅，不是新增 Lean 认证。
+
+第 122 节的非交换低、高返回词是 $v^{-1}u^2$ 和 $v^2u$。先取循环群的加法参数 $z=(u,v)^{\mathsf T}$，两返回量为
+
+$$Cz=\binom{2u-v}{u+2v},\qquad
+C=\begin{pmatrix}2&-1\\1&2\end{pmatrix}. \tag{133.1}$$
+
+此处的 $u,v$ 是配面平移参数，不是余弦长度。为防止两个语义层混淆，本节只研究实际配面参数及其观察。
+
+沿用 Fibonacci 卷的
+
+$$M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+W=JMJ=\begin{pmatrix}1&1\\1&0\end{pmatrix}.$$
+

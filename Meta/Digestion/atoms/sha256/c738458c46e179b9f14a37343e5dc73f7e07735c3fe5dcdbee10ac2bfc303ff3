@@ -1,0 +1,12 @@
+**证明。** 令 $W=u+v\le\pi-2\theta$，故 $0<\theta<\pi/2$、$z=\cos\theta>0$。在 $0\le t\le W$ 上，$z+\cos t>0$，且
+
+$$\frac{d^2}{dt^2}\log(z+\cos t)
+=-\frac{1+z\cos t}{(z+\cos t)^2}<0.$$
+
+于是 $\log(z+\cos t)+\log(z+\cos(W-t))$ 是对称凹函数，其最小值位于端点。因此
+
+$$(z+\cos u)(z+\cos v)\ge(z+1)(z+\cos W)$$
+$$\ge(z+1)(z+\cos(\pi-2\theta))=(1-z^2)(2z+1).$$
+
+代入 (76.1)，得到 $\cosh\ell_{12}<1+2/(2z+1)<3$。取逆否命题给出 (77.2)。常数三的尖锐性已经由第 76 节 $m=M=\pi/2$ 的真正角族给出。
+

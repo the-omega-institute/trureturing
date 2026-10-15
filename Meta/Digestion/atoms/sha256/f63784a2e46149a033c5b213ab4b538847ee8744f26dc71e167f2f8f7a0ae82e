@@ -1,0 +1,16 @@
+**定理 135.2（实际返回词的正常闭包）。** 令
+
+$$\ell=v^{-1}u^2,\qquad h=v^2u,\qquad
+N_0=\langle\!\langle\ell,h\rangle\!\rangle_F.$$
+
+则
+
+$$\boxed{F/N_0\cong C_5,\qquad
+N_0=\ker\chi,\quad\chi(u)=1,\ \chi(v)=2\pmod5.} \tag{135.1}$$
+
+并有 $\chi\Phi=3\chi$，故 $\Phi(N_0)=N_0$。同一个正常子群也是第 122 节边界词
+
+$$s=u^{-2}v,\quad t=u^{-3}vu,\quad k=vu^3$$
+
+的正常闭包。
+

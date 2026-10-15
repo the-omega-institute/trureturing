@@ -1,0 +1,7 @@
+**定理 66.2（三种共同余弦长度的混合匹配排除）。** 将实际全局边分成不交的非空类 $\mathsf R,\mathsf T,\mathsf S$。假设所有四面体仅有下列两种类型，且两型均存在：
+
+$$C=(\mathsf R,\mathsf T,\mathsf T,\mathsf R,\mathsf T,\mathsf T),$$
+$$D=(\mathsf R,\mathsf T,\mathsf T,\mathsf S,\mathsf T,\mathsf T).$$
+
+每条全局边度至少六。如果一个共同正广义长度向量满足全部总角 $2\pi$，并且三类的余弦长度分别恒为 $R,T,S$，那么其中没有平坦四面体。本定理不要求两型在各边上的出现次数平衡。
+

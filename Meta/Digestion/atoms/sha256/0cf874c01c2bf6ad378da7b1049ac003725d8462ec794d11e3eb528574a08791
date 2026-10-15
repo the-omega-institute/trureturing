@@ -1,0 +1,11 @@
+**定理 76.2（任意不等端点帽的尖锐界）。** 若
+
+$$\theta+u\le\sigma_1<\pi,\qquad\theta+v\le\sigma_2<\pi,$$
+
+令 $m=\min(\sigma_1,\sigma_2)$、$M=\max(\sigma_1,\sigma_2)$，则
+
+$$\boxed{\cosh\ell_{12}<
+B(\sigma_1,\sigma_2):=1+\frac{2(1-\cos m)}{\cos m+\cos(M-m)}.} \tag{76.3}$$
+
+这个 $B$ 是所列两端角帽下的精确上确界。角帽可以大于 $\pi/2$，只须严格小于 $\pi$。
+

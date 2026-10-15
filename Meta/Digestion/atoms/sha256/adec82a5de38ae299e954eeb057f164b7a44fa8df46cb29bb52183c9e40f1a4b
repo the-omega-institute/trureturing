@@ -1,0 +1,4 @@
+# 三维理想剖分的几何实现：第 95–100 节
+
+本文件是同一 CFMP 理论卷的顺序续篇，承接 [混合匹配补篇第 65–94 节](CFMP_GEOMETRIC_REALIZATION_MIXED_MATCHING.md)，理论目标与总卷 [CFMP_GEOMETRIC_REALIZATION](CFMP_GEOMETRIC_REALIZATION.md) 不变。基线为 PR #9474 的 `4a8d32f23193fc8a8e6f156f82c97edf63781a58`。此前源文件与命题保持不变。
+

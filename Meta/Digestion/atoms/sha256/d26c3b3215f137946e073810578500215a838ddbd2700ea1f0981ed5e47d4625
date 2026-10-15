@@ -1,0 +1,9 @@
+**有限域的等价表示。** 将四个顶点编号为 $\mathbb F_2^2$，固定非零向量 $v$ 的两条平行边 $\{x,x+v\}$ 给出一组对边。仿射群在四点上的作用忠实，且其阶为 $4\cdot6=24$，所以
+
+$$S_4\cong\operatorname{AGL}(2,\mathbb F_2)
+=\mathbb F_2^2\rtimes\operatorname{GL}(2,\mathbb F_2),$$
+$$S_4/V_4\cong\operatorname{GL}(2,\mathbb F_2)
+=\operatorname{SL}(2,\mathbb F_2)=\operatorname{Sp}(2,\mathbb F_2)\cong S_3.$$
+
+最后两个等式来自非零行列式在 $\mathbb F_2$ 中只能为一，以及二维恒等式 $M^TJM=(\det M)J$。例如 $M=\bigl(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\bigr)$ 满足 $M^3=I$，循环交换三个非零向量。这只是同一三态作用的线性表示，不引入黄金比例或物理假设。另一个经典名称是 $W(A_3)\cong S_4$；其商 $S_3\cong W(A_2)$ 也可看作三角形的二面体群。
+

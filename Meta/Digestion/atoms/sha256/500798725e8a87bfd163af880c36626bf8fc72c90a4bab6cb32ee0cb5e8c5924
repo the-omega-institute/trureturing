@@ -1,0 +1,15 @@
+**定理 95.2（精确各向异性响应）。** 定义
+
+$$\lambda_\pm=
+\frac{\sqrt{a^2-1}\mathbin{\pm}\sqrt{b^2-1}}{a+b}
+\sqrt{\frac{r-1}{r+1}}.$$
+
+则 $0<\lambda_+<1$、$|\lambda_-|<\lambda_+$，并有
+
+$$\boxed{\frac{\beta+\delta}{2}
+=\arctan\left(\lambda_+\cot\frac\theta2\right),} \tag{95.4}$$
+$$\boxed{\frac{\beta-\delta}{2}
+=\arctan\left(\lambda_-\cot\frac\theta2\right).} \tag{95.5}$$
+
+对固定 $r,a,b$，平均横角仍是第 88 节的严格凸响应 $b_{\lambda_+}(\theta)$；该参数不随对边 $o$ 变化。
+

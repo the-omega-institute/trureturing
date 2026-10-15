@@ -1,0 +1,7 @@
+## 82. 长边在小中心角处强制一个大顶点角和
+
+对 $B\ge3$、$0<\theta\le\pi/4$，定义
+
+$$q_B=\sqrt{(B-1)/2},\qquad
+\Phi_B(\theta)=\theta+\arccos\left(\frac{\sin\theta}{q_B}-\cos\theta\right). \tag{82.1}$$
+

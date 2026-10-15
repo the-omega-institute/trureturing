@@ -1,0 +1,10 @@
+**引理 88.2（全角域严格凸性）。** 对任意固定 $0<\lambda<1$，令
+
+$$D(\theta)=\sin^2(\theta/2)+\lambda^2\cos^2(\theta/2)>0.$$
+
+则在整个 $0<\theta<\pi$ 上有
+
+$$\boxed{b_\lambda'(\theta)=-\frac{\lambda}{2D(\theta)}<0,\qquad
+b_\lambda''(\theta)=
+\frac{\lambda(1-\lambda^2)\sin\theta}{4D(\theta)^2}>0.} \tag{88.2}$$
+

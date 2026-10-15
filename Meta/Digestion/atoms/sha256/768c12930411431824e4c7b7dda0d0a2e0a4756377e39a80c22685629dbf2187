@@ -1,0 +1,7 @@
+**定理 127.2（局部像中的三循环排除平坦）。** 假设 $\mathcal A\ne\varnothing$。对 $\sigma\in T$，令
+
+$$\Gamma_\sigma=\{g:g\sigma=\sigma\},\qquad
+K_\sigma=\{p_{g,\sigma}:g\in\Gamma_\sigma\}\le S_4.$$
+
+如果 $3\mid|K_\sigma|$，则 $\alpha^*$ 在 $\sigma$ 上真正非退化。
+

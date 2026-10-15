@@ -1,0 +1,9 @@
+## 136. 循环返回数据的五进相位与边界分裂
+
+采用第 122 节的实际循环面配对：四面体编号 $\omega\in\mathbb Z/N\mathbb Z$，两类配对分别为
+
+$$f_0(\omega)\leftrightarrow f_3(\omega+u),\quad p=(3,0,1,2),$$
+$$f_1(\omega)\leftrightarrow f_2(\omega+v),\quad q=(3,2,0,1). \tag{136.1}$$
+
+这里 $N\ge2$ 且 $\gcd(N,u,v)=1$，保证对偶图连通。$f_i$ 指遗漏局部顶点 $i$ 的面，两种排列均为奇排列，反向取逆。令 $r=2u-v,s=u+2v$。
+

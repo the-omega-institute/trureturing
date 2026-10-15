@@ -1,0 +1,22 @@
+**证明。** 增加 $u,v$ 到 $\sigma_1-\theta,\sigma_2-\theta$ 会减小 (76.1) 的正分母。对固定 $0<\sigma<\pi$，函数
+
+$$f_\sigma(t)=\frac{\sin t}{\cos t+\cos(\sigma-t)},\qquad0<t<\sigma,$$
+
+满足
+
+$$f_\sigma'(t)=\frac{1+\cos\sigma}{[\cos t+\cos(\sigma-t)]^2}>0.$$
+
+因同一个 $\theta<m$，两个正函数的乘积可同时用 $t=m$ 的极限取界。这给出
+
+$$1+\frac{2\sin^2m}{(1+\cos m)(\cos m+\cos(M-m))},$$
+
+即 (76.3)。最后一个分母等于 $2\cos(M/2)\cos(m-M/2)>0$。
+
+为证尖锐性，可交换两个端点使 $\sigma_1=m$、$\sigma_2=M$。取充分小的 $\varepsilon>0$，角向量为
+
+$$(m-2\varepsilon,\varepsilon,\varepsilon,\varepsilon,\varepsilon,M-m+\varepsilon).$$
+
+两个目标端点的角和分别恰为 $m,M$；另两个角和为 $M-m+3\varepsilon$ 和 $3\varepsilon$，均小于 $\pi$。所有角严格正，故既有局部角域定理给出真正四面体。代入第 70.1 式并令 $\varepsilon\downarrow0$，得到 (76.3) 的等号极限。因此该上确界无法降低。
+
+特别地，$(\sigma_1,\sigma_2)=(\pi/3,2\pi/3)$ 给出 $\cosh\ell_{12}<2$。第 70 节的两个 $\pi/2$ 帽不覆盖此情形；这也没有把一端的 $\pi/3$ 与另一个四面体的 $2\pi/3$ 拼成一个见证。等帽时 (76.3) 化为第 70 节原常数，但其范围扩展至全部 $0<\sigma<\pi$。
+

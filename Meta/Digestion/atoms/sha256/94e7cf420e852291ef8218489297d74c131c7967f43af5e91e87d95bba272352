@@ -1,0 +1,2 @@
+**Regge 对称的范围。** Akopyan–Izmestiev, arXiv:1903.04929，Theorem 1.1 对经典四面体给出保体积变换，固定一组对边并把四个横向角 $u_i$ 变成 $s-u_i$，$s=\frac12\sum_i u_i$。Doyle–Leibon, arXiv:math/0309187 的摘要记录了装饰广义双曲四面体上的 $23040$ 阶剪拼类对称群及其中 $144$ 阶 Regge 子群。原研究只读取后者摘要，不以未读证明导入额外定理。
+

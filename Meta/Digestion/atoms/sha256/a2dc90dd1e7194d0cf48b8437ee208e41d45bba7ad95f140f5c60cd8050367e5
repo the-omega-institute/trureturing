@@ -1,0 +1,16 @@
+**证明，理想与显式系数。** 选整数 $r,s$ 满足 $rN+sT=g$，其中 $g=\gcd(|N|,|T|)$。则
+
+$$A_0=rh^*+s,\quad B_0=s,\qquad A_0h+B_0h^*=g. \tag{134.2}$$
+
+当 $g=1$，这直接证明 $(h,h^*)=R$，并给出所有模数通用的左逆。
+
+当 $g=5$，取整数 $a,b$ 满足 $ad+5b=1$。利用 $h-h^*=d\delta$ 与 (134.2)，
+
+$$\boxed{\delta=(a+b\delta A_0)h+(-a+b\delta B_0)h^*.} \tag{134.3}$$
+
+反向包含由直接除法给出：
+
+$$h=\delta\left(\frac{-c+2d}{5}+\frac{2c+d}{5}\theta\right). \tag{134.4}$$
+
+两个系数因 $c\equiv2d\pmod5$ 都为整数。共轭使 $h^*$ 也被 $\delta$ 整除，因为 $\delta^*=-\delta$。所以 $(h,h^*)\subseteq(\delta)$，(134.3) 给出逆包含。
+
