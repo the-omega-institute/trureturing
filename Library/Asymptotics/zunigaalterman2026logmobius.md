@@ -48,6 +48,37 @@ $$
 $$
 for every $k,q\ge1$ and $X>0$. This is a logarithmically smoothed sign result. The corresponding unsmoothed sum $\check m_q^{(0)}(X)=\sum_{(n,q)=1,n\le X}\mu(n)/n$ may change sign, so the theorem does not give a sign for order zero.
 
+## A uniform finite bound for the Selberg coefficients
+
+A bound valid when both $q$ and $X$ vary follows from the same source
+without taking its fixed-$q$ asymptotic. Lemma 5.1, equation (5.2), states
+
+$$
+|\check m_1^{(1)}(Y)-1|
+\le Y^{-1/2}+
+\frac{8.55\times10^{-6}\,\mathbf1_{Y\ge10^{12}}}{\log Y}.
+$$
+
+For $1\le Y<10^{12}$ this implies $|\check m_1^{(1)}(Y)|\le2$;
+for $Y\ge10^{12}$ the displayed error is less than one. For $0<Y<1$
+the defining sum is empty. Lemma 7.1 and equation (7.6) give the
+positive-coefficient convolution, and Lemma 7.2(a) evaluates its total:
+
+$$
+\check m_q^{(1)}(X)=\sum_{d\mid q^\infty}\frac1d\,
+\check m_1^{(1)}(X/d),\qquad
+\sum_{d\mid q^\infty}\frac1d=\frac q{\varphi(q)}.
+$$
+
+Consequently $|\check m_q^{(1)}(X)|\le2q/\varphi(q)$ for every
+$q\ge1,X>0$, with the same constant. The Selberg-frequency
+[application](../Weil/corvalan2023interpolation.md) uses
+$X=N/q$ and $b_{N,q}=\mu(q)\check m_q^{(1)}(N/q)/\log N$ for
+squarefree $q$. This is a uniform coefficient allowance, including
+short sums near $q=N$, not a bound for their finite-interval signed
+quadratic correlations. These are consequences of the cited paper
+inputs; no new supplier theorem or Lean verification is claimed.
+
 ## Boundary for the FIB Robin route
 
 The reciprocal-divisor weight is related to the project's arithmetic vocabulary, but the source sum is Möbius signed and truncated at $X$. The Robin quantity
