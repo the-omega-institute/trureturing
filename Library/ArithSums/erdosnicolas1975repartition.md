@@ -568,6 +568,193 @@ When the actual integer is $C$ itself, its benefit and edit resource
 vanish, so this estimate adds no loss at all. It cannot replace the
 unpaid same-source signed tail in the global CA route or prove RH.
 
+### Congruence sparsity inside the conditional near-extremal set
+
+The radius in (TC.3) also gives a discrete consequence that is useful for
+future finite checks. It is a counting statement for the original source
+window, not a replacement for the signed Robin estimate.
+
+Let $V=F_r$ and keep the same $C=C_s$, $a$, and quotient conditions
+(TC.6). If a candidate satisfies $E_a(N)\le L$, then
+
+$$
+uv\le e^L.
+$$
+
+The existing Fibonacci bounds give $(C,V)=1$. Fix a divisor $v\mid C$.
+The congruence in (TC.6) determines one residue class
+
+$$
+u\equiv C^{-1}v\pmod V.
+$$
+
+Consequently, whenever $e^L<V$, the interval
+$1\le u\le e^L/v<V$ contains at most one admissible numerator for this
+fixed denominator. Therefore
+
+$$
+\boxed{
+\#\{(u,v): uv\le e^L,\ v\mid C,\ Cu\equiv v\pmod V\}
+\le \tau(C).
+}
+\tag{TC.8}
+$$
+
+This retains the denominator divisibility and the exact unit residue; it
+does not count separately optimized numerators and denominators. Combining
+(TC.3) with $a\asymp\log V$ shows that, for every fixed $M$, its conditional
+radius
+
+$$
+L=32\sqrt a+\sqrt{48M}\,a^{3/4}
+$$
+
+satisfies $L=o(\log V)$ along the Fibonacci rank family. Hence $e^L<V$
+eventually and the number of such near-extremal pairs is at most
+$\tau(C)$. The needed size estimate is available from the existing CA
+layer threshold. Every accepted prime layer has
+
+$$
+v_p(C)\log p\le\log s+O(1),
+$$
+
+as recorded in the preceding resource comparison; primes above the first
+threshold have exponent at most one. Hence for $p>\sqrt a$,
+$v_p(C)=O(1)$, while for $p\le\sqrt a$,
+$\log(v_p(C)+1)=O(\log\log a)$. The standard prime-counting bound then
+gives
+
+$$
+\log\tau(C)
+=\sum_{p\mid C}\log(v_p(C)+1)
+=O\!\left(\frac{a}{\log a}\right).
+\tag{TC.9}
+$$
+
+Since $a=2\log V+O(1)$ for $X_-=1+V\lceil V/10\rceil$,
+
+$$
+\boxed{\tau(C)=\exp O\!\left(\frac{\log V}{\log\log V}\right)=V^{o(1)}.}
+$$
+
+Thus the subpolynomial conclusion uses an existing CA threshold and a
+standard prime-counting estimate; it does not assume an unproved bound on
+$\log C$.
+
+### A sparse-exception reduction for the signed budget
+
+The two estimates above combine into a useful quantifier split. Fix $M>0$
+and take $a$ large enough that
+$\sqrt{48M}\,a^{3/4}<6a$. Define
+
+$$
+L_M(a)=32\sqrt a+\sqrt{48M}\,a^{3/4}.
+$$
+
+For a candidate satisfying $E_a(N)>L_M(a)$, monotonicity of $H_a$ gives
+
+$$
+\frac{H_a((E_a(N)-32\sqrt a)_+)}{a\log a}
+>\frac{M}{\sqrt a\log a}.
+$$
+
+Therefore (TC.5) implies the pointwise implication
+
+$$
+\boxed{
+I_\psi(a)+D^*(a)+\frac{M}{\sqrt a\log a}>R(a,w)
+\ \Longrightarrow
+\Delta_{\log}(N)>0
+}
+\tag{TC.10}
+$$
+
+for every original-window candidate with $E_a(N)>L_M(a)$. The candidates
+where this implication does not apply satisfy $E_a(N)\le L_M(a)$ and are
+bounded in number by (TC.8)--(TC.9):
+
+$$
+\boxed{
+\#\{N\text{ in the window}:E_a(N)\le L_M(a)\}
+\le \tau(C)=F_r^{o(1)}.
+}
+\tag{TC.11}
+$$
+
+Thus a proof of the signed inequality in (TC.10), together with a direct
+certificate for the exceptional set in (TC.11), would settle the complete
+Fibonacci window at that rank. This is a genuine reduction of the joint
+quantifiers: the signed input is needed uniformly for the bulk, while the
+remaining exact arithmetic work is subpolynomial. Neither ingredient is
+currently available, and the reduction concerns this Fibonacci family only;
+it is not a reduction of all integers to the family and therefore is not by
+itself a proof of RH.
+
+The conclusion only sparsifies the candidates left by the benefit bound.
+Each surviving pair still has to satisfy the window and the complete signed
+tail in (TC.5), and (TC.8) supplies neither a positive Robin margin nor a
+uniform way to verify all the remaining pairs. It is therefore a finite
+or subpolynomial reduction of the unresolved joint problem, rather than an
+RH proof.
+
+### A same-source friable-core count
+
+The large-friable-component estimate recorded in
+[the Tenenbaum--Wang interface](../Scale/tenenbaumwang2026largefriablecomponent.md)
+can be applied to the same reduced pair, rather than to a separately
+optimized integer. Keep the original-window conditions (TC.6), put
+$g_0=\gcd(N,C)=C/v$, and choose $y$ at least as large as every prime factor
+of $C$. Since $g_0\mid N$ and $g_0$ is $y$-friable,
+
+$$
+N_y\ge g_0=\frac Cv.
+$$
+
+Therefore, for any $L\ge0$,
+
+$$
+E_a(N)=\log(uv)\le L
+\quad\Longrightarrow\quad
+v\le e^L
+\quad\Longrightarrow\quad
+N_y\ge Ce^{-L}.
+$$
+
+Let $z=Ce^{-L}$ and let $x$ satisfy $X_+\le x$ and $z\le x/2$.
+Whenever
+
+$$
+\max\{2,\log z\}\le y\le z,
+$$
+
+Tenenbaum--Wang's Theorem 1 gives the independent population bound
+
+$$
+\boxed{
+\#\{N\text{ in the original window}:E_a(N)\le L\}
+\le
+\min\{\tau(C),\Theta(x,y,z)\},
+}
+\tag{TC.12}
+$$
+
+where
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right),
+\qquad
+\nu=\frac{\log z}{\log y}.
+$$
+
+The left-hand set still carries $Cu\equiv v\pmod V$ and the original
+multiplier window; the friable estimate only supplies a second upper bound
+on its cardinality. It does not bound the complete prime-power weight of
+that same $N$, the CA defect $D^*(a)$, or the signed Robin tail. Thus
+(TC.12) is a reusable sparse-counting refinement of (TC.11), while the
+pointwise signed condition (TC.10) remains the unresolved step needed for
+an all-candidate conclusion.
+
 ## Charge the actual removals before bounding additions
 
 The classical layer identity also permits a stronger pointwise use of the

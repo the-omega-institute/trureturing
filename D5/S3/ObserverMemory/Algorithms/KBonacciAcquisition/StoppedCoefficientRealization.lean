@@ -132,11 +132,11 @@ private theorem demand_normalization {L : ℕ} {J : Type*} [Fintype J]
   exact Finset.sum_comm
 
 
-private abbrev Schedule (L : ℕ) := Unit ⊕ (Fin L ⊕ Pair L)
-private abbrev Labels (J : Type*) := J × J × J
-private def label {J : Type*} (t : Labels J) (k : Fin 3) : J :=
+abbrev Schedule (L : ℕ) := Unit ⊕ (Fin L ⊕ Pair L)
+abbrev Labels (J : Type*) := J × J × J
+def label {J : Type*} (t : Labels J) (k : Fin 3) : J :=
   if k = 0 then t.1 else if k = 1 then t.2.1 else t.2.2
-private def cell {L : ℕ} : Schedule L → (Fin L → Bool) → Fin 3
+def cell {L : ℕ} : Schedule L → (Fin L → Bool) → Fin 3
   | .inl _, _ => 0
   | .inr (.inl i), b => if b i then 1 else 0
   | .inr (.inr a), b => if b a.val.1 then (if b a.val.2 then 2 else 1) else 0
@@ -144,7 +144,7 @@ private def addresses {L : ℕ} : Schedule L → List ℕ
   | .inl _ => []
   | .inr (.inl i) => [i.val]
   | .inr (.inr a) => [a.val.1.val, a.val.2.val]
-private def table {L : ℕ} (s : Schedule L) (t : Labels (Fin (L + 1))) : Catalog true L :=
+def table {L : ℕ} (s : Schedule L) (t : Labels (Fin (L + 1))) : Catalog true L :=
   ⟨fun b => label t (cell s b), by
     refine ⟨addresses s, ?_, ?_, ?_, ?_⟩
     · cases s with

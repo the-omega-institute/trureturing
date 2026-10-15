@@ -230,3 +230,558 @@ a<0.24986404,
 $$
 
 而 Liu v2 给出约 $a<0.2499484233$，原始 $7/8$ 给出 $a<1/4$。现有示例 $a=1/10$ 离三者都很远；这项改进没有打开新的 packet 分区，只精确量化了尚未支付的参数余量。
+
+## 448. Tenenbaum--Wang 的大 friable 成分计数
+
+Gérald Tenenbaum 与 Xiangyu Wang 的 [*On integers whose friable component is large*](../../../Library/Scale/tenenbaumwang2026largefriablecomponent.md)，arXiv:2609.37507v2（2026 年 10 月 11 日），给出一个与当前稀疏候选计数相邻、但量词不同的最新输入。令 $n_y$ 为 $n$ 的最大 $y$-光滑因子，
+
+$$
+\Theta(x,y,z)=\#\{n\le x:n_y>z\},
+\qquad \nu=\frac{\log z}{\log y}.
+$$
+
+其定理 1 在
+
+$$
+\max\{2,\log z\}\le y\le z\le x/2
+$$
+
+上一致给出
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right).
+$$
+
+这条估计可以直接接到当前的同一候选。对
+
+$$
+N=uv=1+F_rg,
+\qquad v\mid C,
+\qquad Cu\equiv v\pmod {F_r},
+\qquad E=\log(uv),
+$$
+
+令 $g_0=\gcd(N,C)=C/v$。若 $C$ 的所有素因子不超过 $y$，则 $g_0$ 是 $N$ 的 $y$-光滑因子，因此
+
+$$
+N_y\ge g_0=\frac Cv,
+\qquad E\le L\Longrightarrow N_y\ge Ce^{-L}.
+$$
+
+所以在
+
+$$
+\max\{2,\log(Ce^{-L})\}\le y\le Ce^{-L}\le x/2
+$$
+
+等参数条件成立时，原始窗口内的同一候选满足
+
+$$
+\#\{N\text{ in the window}:E\le L\}
+\le
+\min\left\{\tau(C),\Theta\left(x,y,Ce^{-L}\right)\right\}.
+$$
+
+左侧仍保留移动 Fibonacci 同余；这里没有把不同候选分别优化后拼接。这是本来源对当前稀疏层的真实新增接口。
+
+它仍只控制候选数量，不估计同一 $N$ 的完整 prime-power 权重、$D^*(a)$ 或 signed Robin tail $H_a$。因此它缩小了异常集合的计数问题，但没有关闭 Robin 的联合预算，也不构成 Robin 不等式或 RH 证明。
+
+### 448.1 现有尺度下的条件性比较
+
+这条来源不能直接替换 (TC.11)。若另有一个尚未证明的同源桥同时给出
+
+$$
+\log C=a+O\!\left(\frac a{\log a}\right),
+\qquad N_y\ge C e^{-L},
+\qquad L=O(a^{3/4}),
+$$
+
+并且 $C e^{-L}\le X_+/2$，可以形式上取 $y\asymp a$、$z=C e^{-L}$。此时
+
+$$
+ \nu=\frac{\log z}{\log y}
+ =\frac{a-L+O(a/\log a)}{\log a},
+$$
+
+从而
+
+$$
+ \nu\log\!\bigl(\nu\log(3\nu)\bigr)
+ =a-L+O\!\left(\frac a{\log a}\right).
+$$
+
+在 $\log X_+=a+O(1)$ 的同一附加尺度下，Tenenbaum--Wang 的人口界至多给出
+
+$$
+\log\Theta(X_+,y,z)=O\!\left(\frac a{\log a}\right),
+$$
+
+与当前精确同余计数的
+
+$$
+\log\tau(C)=O\!\left(\frac a{\log a}\right)
+$$
+
+同阶。这里的三项附加条件尚未由 FIB/CA 接口证明；即使它们都成立，也只说明人口层没有新的渐近量级，仍未支付同一候选的 signed Robin tail。要取得实质推进，必须得到常数级改进并保留同余，或直接建立联合有符号估计。
+
+## 449. Fibonacci 尺度采样的零相位接口
+
+当前 FIB 几何真正能接到 Robin 显式公式的地方，是尺度采样，而不是把组成层的四相标签直接当成零点谱。取固定 $c>0$，使用 $F_0=0,F_1=1$ 的 Fibonacci 数列，并令
+
+$$
+x_r=cF_r.
+$$
+
+这里的 $x_r$ 是把 FIB 长度直接送入显式公式的解析采样尺度；实际候选的 Robin 时钟是 $A=\log(1+F_rg)$。当 $g$ 随窗口变化时，二者没有自动相等，必须另证 $g$ 的范围和同一来源桥。
+
+特别地，在标准同尺度窗口
+
+$$
+F_r/10\le g\le F_r/5,
+$$
+
+有
+
+$$
+\log(1+F_rg)=2r\log\varphi+O(1),
+\qquad
+\log\log(1+F_rg)=\log r+O(1).
+$$
+
+所以若显式公式的变量取实际 Robin 时钟 $x=A$，其零项在该窗口上的相位是 $\gamma\log r+O(1)$，而不是 $\gamma r\log\varphi+O(1)$。只有把 $x$ 本身选成与 $F_r$ 成比例的外部解析尺度时，下面的线性黄金相位才直接出现。这个区别是 FIB 地址到 Robin 时钟桥接中的实质义务。
+
+由
+
+$$
+F_r=\frac{\varphi^r-\psi^r}{\sqrt5},
+\qquad \psi=-\varphi^{-1},
+$$
+
+得到
+
+$$
+\log x_r=r\log\varphi+\log\frac c{\sqrt5}+O(\varphi^{-2r}).
+$$
+
+因此，对固定的非平凡零点 $\rho=\beta+i\gamma$，有
+
+$$
+x_r^{\rho-1}
+=\left(\frac c{\sqrt5}\right)^{\rho-1}
+  \varphi^{r(\rho-1)}
+  \left(1+O_\rho(\varphi^{-2r})\right).
+$$
+
+它的幅度和相位分别满足
+
+$$
+\left|x_r^{\rho-1}\right|
+\asymp_{c,\rho}x_r^{\beta-1},
+\qquad
+\arg x_r^{\rho-1}
+=\gamma r\log\varphi+O_{c,\rho}(1).
+$$
+
+Polak 的 signed-tail 分解以及 Broadbent--Fiori--Kadiri--Ng--Wilk 的显式公式都包含
+
+$$
+\frac{\log x+1}{\log^2x}
+\sum_\rho\frac{x^{\rho-1}}{\rho(\rho-1)}
+$$
+
+这一零项。故在 Fibonacci 尺度上，单个固定零的首项系数具有
+
+$$
+\text{幅度}\asymp
+\frac{x_r^{\beta-1}}{\log x_r},
+\qquad
+\text{相位步长}\approx\gamma\log\varphi.
+$$
+
+这给出一个精确的尺度比较：选定 CA 源所需的充分条件是
+
+$$
+I_\psi(A)\ge-
+\frac{D_{\rm lb}(A)}{\sqrt A\log A},
+$$
+
+而若存在 $\beta>1/2$ 的零，单个零的未抵消幅度相对于 $A^{-1/2}/\log A$ 多出因子 $A^{\beta-1/2}$。这只是显式公式中的单零尺度分析；其余零、积分项和共轭配对可能发生相消，所以它不能单独排除离线零，也不能单独证明 Robin。
+
+同样，组成层的四相操作
+
+$$
+C=MJ,
+\qquad
+C:(x_+,x_-)\longmapsto(\varphi x_-,\psi x_+)
+$$
+
+交换的是黄金双嵌入的扩张与收缩通道。它没有把实数尺度 $x_r$ 变成四个复尺度，也没有已证的映射
+
+$$
+C^k\longmapsto e^{ik\pi/2}
+$$
+
+作用于 $x^{\rho-1}$ 的零点相位。因此，四相闭包不能直接替代对
+$e^{i\gamma r\log\varphi}$ 的相位平均。
+
+要把这条接口推进成 RH 证明，至少还需一个同一实际来源上的桥接定理，满足以下之一：
+
+1. 证明 FIB/CA 选定尺度上的完整零和具有可控的正性或无抵消下界；
+2. 证明该尺度序列的相位平均保留全部零重数、积分项和 prime-power 修正，并给出 $A^{-1/2}/\log A$ 级的余项；
+3. 直接给出选定实际候选的 signed $I_\psi(A)$ 下界。
+
+当前文献和仓内接口均未提供这些条件。这个尺度采样关系因此是可复用的解析接口，不是 RH 证明或新的零点估计。
+
+## 450. 全局 PNT 误差可以支付 theta 前提，但支付不了平方根级 signed 预算
+
+上一节的缺口还可以与
+`D5.S3.Arith.Robin.ActualVonMangoldtBandCompensation` 的实际前提逐项对照。
+令
+
+$$
+L=\log A,
+\qquad
+w(L)=\frac{L^{3/5}}{(\log L)^{1/5}}.
+$$
+
+Fiori--Jaskari 的全局估计，在固定紧比例区间
+
+$$
+0.99A\le t\le1.98A
+$$
+
+上取任意略小于其指数常数的 $d>0$ 后，给出一个充分大的起点以后的一致形式
+
+$$
+|\psi(t)-t|\le C A e^{-d w(L)}.
+$$
+
+这里把比例区间的常数吸收到 $C$ 和较小的 $d$ 中；这一步只是在已有
+Fiori--Jaskari 估计上作紧比例区间的单调化，不是新的 PNT 供应。
+由于
+
+$$
+0\le\psi(t)-\vartheta(t)
+ =\sum_{k\ge2}\vartheta(t^{1/k})
+ \ll\sqrt t\log t,
+$$
+
+且 $w(L)=o(L)$，同一范围内也有
+
+$$
+|\vartheta(t)-t|\le C' A e^{-d' w(L)}
+$$
+
+对某个 $0<d'<d$ 成立。于是可取
+
+$$
+\varepsilon_A=e^{-d'w(L)/2},
+\qquad
+H_A=2C'Ae^{-d'w(L)/2}.
+$$
+
+对任意 $u<v$ 满足
+
+$$
+0.99A\le u<v\le1.98A,
+\qquad v-u\ge H_A,
+$$
+
+有
+
+$$
+\begin{aligned}
+\vartheta(v)-\vartheta(u)
+&\ge(v-u)-2C'Ae^{-d'w(L)}\\
+&\ge(1-\varepsilon_A)(v-u).
+\end{aligned}
+$$
+
+因此，Fiori--Jaskari 确实可以在未知但有限的起点以后供应
+
+$$
+\operatorname{ThetaIncrementLower}(0.99A,H_A,\varepsilon_A).
+$$
+
+这澄清了一个此前容易混淆的事实：`ThetaIncrementLower` 本身不是当前的真正障碍，
+而是可以由全局 PNT 误差支付的中间接口。
+
+若固定 $c=1+\delta$，其中 $0<\delta\le1/100$，则
+
+$$
+\operatorname{bandVolume}(A,c)\asymp\frac{\delta^2}{L},
+$$
+
+而 $H_A/(\delta A)\to0$，所以 `shortAllowance` 的实际尺度为
+
+$$
+O\left(\frac{e^{-d'w(L)}}{L}\right),
+$$
+
+并且
+
+$$
+\varepsilon_A\operatorname{bandVolume}(A,c)
+=O\left(\frac{e^{-d'w(L)/2}}{L}\right).
+$$
+
+代入已有的有限补偿定理，得到的确是“几乎全部 band volume 都由实际
+$\Lambda$ 原子支付”的渐近补偿。这一结论保留了 prime powers 和右闭端点，
+所以比只用普通素数人口计数更强；但它仍只控制该有限 centered kernel。
+
+它不能支付当前 Robin 比较所要求的平方根级 signed 余项。所需尺度为
+
+$$
+\frac1{\sqrt A\log A},
+$$
+
+而上述供应器能给出的统一误差尺度至多落在
+
+$$
+\frac{e^{-d'w(L)}}{\log A}.
+$$
+
+两者的上界比为
+
+$$
+\sqrt A\,e^{-d'w(L)}\longrightarrow\infty,
+$$
+
+因为 $w(L)=o(L)$。这是“可支付的 theta 前提”和“不可支付的 signed Robin
+预算”之间的严格尺度分界：前者已由现有文献覆盖，后者仍需要同一实际
+FIB/CA 来源上的平方根级有符号估计。
+
+所以继续改进普通 PNT 或重复建立 `ThetaIncrementLower` 不会推进 RH 主线。
+下一项真正新增的结果必须是以下之一：把该 centered kernel 证明地映射到
+原始 $I_\psi(\log N)$ 并取得平方根级下界，或者直接对同一实际候选给出
+
+$$
+I_\psi(\log N)\ge-
+\frac{D_{\rm lb}(\log N)}{\sqrt{\log N}\log\log N}.
+$$
+
+本节是接口尺度分析，不是 RH 或 Robin 的新证明。
+
+## 451. centered 补偿核是膨胀差分，不是 $I_\psi$ 本身
+
+还需要把有限补偿定理的核与 Robin 比较中使用的 signed tail 区分开。
+令
+
+$$
+E(t)=\psi(t)-t,
+\qquad
+k(t)=\frac{1+\log t}{t^2(\log t)^2},
+\qquad
+I_\psi(A)=\int_A^\infty E(t)k(t)\,dt.
+$$
+
+取 $c>1$。在没有端点跳跃的开区间上，已有定义直接给出
+
+$$
+\frac{d}{dt}\left[c^{-1}\operatorname{maxKernel}(A,t/c)\right]
+=-\frac{1+\log(t/c)}{t^2(\log(t/c))^2},
+$$
+
+以及
+
+$$
+\frac{d}{dt}\operatorname{maxKernel}(A,t)=-k(t),
+$$
+
+$$
+\frac{d}{dt}\frac1{t(\log t)^2}
+=-\frac{\log t+2}{t^2(\log t)^3}.
+$$
+
+因此，对 `finiteResponse` 作 Stieltjes 分部积分时，在把已经单独记录的
+$A$ 处跳跃、右端 $R$ 项和 `smoothBoundary` 分开以后，centered 核的未抵消
+高分支贡献恰为（这里保留 dilation 定义中的 $c^{-1}$ 归一化）
+
+$$
+\boxed{
+\frac1c\int_A^\infty E(cs)k(s)\,ds
+-I_\psi(A)
+-(c-1)J_2(A),
+}
+$$
+
+其中
+
+$$
+J_2(A)=
+\int_A^\infty E(t)\frac{\log t+2}{t^2(\log t)^3}\,dt.
+$$
+
+第一项来自 $t=cs$ 的换元：在 $t>cA$ 上，膨胀核的导数是
+
+$$
+-\frac{1+\log(t/c)}{t^2(\log(t/c))^2},
+$$
+
+而 $dt=c\,ds$ 与 dilation 前的 $c^{-1}$ 恰好留下前式中的 $1/c$。
+因此换元后被积的误差仍变成 $E(cs)$，并没有只改变积分下限。更明确地，若
+
+$$
+D_c(A):=\frac1c\int_A^\infty E(cs)k(s)\,ds-I_\psi(A),
+$$
+
+则对 $c>1$ 有保留端点的精确分解
+
+$$
+\boxed{
+D_c(A)
+=-\int_A^{cA}E(t)k(t)\,dt
++\int_{cA}^\infty E(t)
+\left[
+\frac{1+\log(t/c)}{t^2(\log(t/c))^2}
+-k(t)
+\right]dt.
+}
+$$
+
+所以一般没有
+
+$$
+\frac1c\int_A^\infty E(cs)k(s)\,ds=I_\psi(cA).
+$$
+
+这不是记号差异，而是来源不同：右边只改变积分下限，左边改变了同一实际
+误差函数的取值。有限 $R$ 时的右端项和 $A$ 处跳跃必须与
+`finite_signed_response_identity` 保留的 `smoothBoundary` 一起记账；把它们
+删掉会改变原命题。
+
+于是已有 `ThetaIncrementLower` 接口最多能控制上述膨胀差分的一个有限版本，
+而 Nicolas/Broadbent--Fiori--Kadiri--Ng--Wilk 的 signed 公式控制的是
+$I_\psi(A)$。从前者得到后者至少还需要一个同源的 dilation-correlation 估计，
+同时控制上述区间端点项、权重差、$J_2(A)$ 和全部端点项，并达到
+
+$$
+O\left(\frac1{\sqrt A\log A}\right)
+$$
+
+的尺度。普通 PNT 误差、FIB 地址重编码或单独的零点计数都不提供这条映射。
+
+因此，补偿定理目前应被定位为一个独立的 centered-kernel 结果；它不能被
+重命名为 Robin signed-tail 定理，也不能用它已经支付的 band volume 冒充
+$I_\psi(A)$ 的符号。
+
+## 452. Fibonacci--Lucas 特殊值抵消仍不提供 Robin 桥
+
+Payam Danesh 的 [*Cancellation profiles of Fibonacci-Lucas zeta sums*](../../../Library/Analytic/danesh2026fiblucaszeta.md)，
+arXiv:2609.33564v1，研究有限 Fibonacci/Lucas 加权和中的负整数 zeta
+特殊值抵消。该文给出归一化绝对项的有限指数展开、总变差极限分布，及
+Fibonacci/Lucas 情形在偶次数至少 26 时的最大项位置为 8；它还量化求和
+条件数的阶。
+
+这条结果与当前缺口的对象不同。它没有 Euler 乘积、\(\Lambda\)、\(\mu\)、
+\(\psi\) 或 \(\sigma(N)/N\)，也没有把 Fibonacci 地址映射到同一个实际
+Robin 候选。因此其有限特殊值抵消不能替代
+
+$$
+I_\psi(\log N)\quad\text{或同一候选上的有符号 Robin 余量估计}.
+$$
+
+它的直接研究价值是排除一条看似相近但对象不相容的路线：有限
+Fibonacci--Lucas zeta 和的条件数抵消，不等于普通 Möbius 的平方根抵消。
+继续重做这类特殊值展开不会缩小 FIB 到 Robin 的联合系数桥缺口。
+
+## 453. 相对误差包络下的 dilation 差额上界
+
+上一节的精确分解还可以给出一个不依赖零点展开的量级结论。令
+
+$$
+L=\log A,
+\qquad a=\log c,
+\qquad c>1,
+$$
+
+并假设在整个 $[A,\infty)$ 上有同一个相对误差包络
+
+$$
+|E(t)|\le\eta_A t.
+$$
+
+### 命题 453.1（dilation 差额的包络）
+
+若 $L>0$，则由上一节对 $D_c(A)$ 的精确分解直接得到
+
+$$
+\boxed{
+|D_c(A)|
+\le
+2\eta_A a\left(\frac1L+\frac1{L^2}\right).
+}
+\tag{453.1}
+$$
+
+**证明。** 记
+
+$$
+G(u)=\frac{1+u}{u^2},
+\qquad
+k(t)=\frac{G(\log t)}{t^2}.
+$$
+
+端点项满足
+
+$$
+\begin{aligned}
+\int_A^{cA}|E(t)|k(t)\,dt
+&\le\eta_A\int_L^{L+a}\frac{1+u}{u^2}\,du\\
+&\le\eta_Aa\left(\frac1L+\frac1{L^2}\right).
+\end{aligned}
+$$
+
+尾部权重差使用
+
+$$
+|G'(u)|=\frac{u+2}{u^3}.
+$$
+
+在 $t\ge cA$ 时令 $u=\log(t/c)\ge L$。平均值定理与
+$dt/t=du$ 给出
+
+$$
+\begin{aligned}
+&\int_{cA}^{\infty}|E(t)|
+\left|\frac{1+\log(t/c)}{t^2(\log(t/c))^2}-k(t)\right|dt\\
+&\quad\le
+\eta_Aa\int_L^\infty\frac{u+2}{u^3}\,du
+=\eta_Aa\left(\frac1L+\frac1{L^2}\right).
+\end{aligned}
+$$
+
+两项相加即得（453.1）。证毕。
+
+这个上界把“端点改变”和“尾部改变权重”分开支付。若某个全尾部 PNT
+供应器能够给出如下现有零自由区同形的包络
+
+$$
+\eta_A\le C\exp\!\left(-d\frac{L^{3/5}}{(\log L)^{1/5}}\right),
+$$
+
+其中 $C,d>0$ 与 $A$ 无关，则固定 $c>1$ 时（453.1）至多给出
+
+$$
+|D_c(A)|
+\ll_c
+\frac{\exp(-dL^{3/5}(\log L)^{-1/5})}{L}.
+$$
+
+与当前 Robin 比较所需的
+
+$$
+\frac1{\sqrt A\,L}
+$$
+
+相比，其包络比为
+
+$$
+\sqrt A\exp\!\left(-d\frac{L^{3/5}}{(\log L)^{1/5}}\right),
+$$
+
+并且趋于无穷，因为 $L^{3/5}(\log L)^{-1/5}=o(L)$。这不是“不存在更强
+估计”的证明；它证明的是：现有这类全局相对 PNT 误差，经过精确 dilation
+分解后，仍不能支付平方根级 signed Robin 预算。要继续推进，必须改善同一实际
+来源上的相关性估计，而不是再次加强相对误差包络的文字形式。

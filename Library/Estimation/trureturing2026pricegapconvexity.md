@@ -3859,7 +3859,7 @@ and the auxiliary constants below, never label- or tie-dependent.
 ### Reuse the published PNT shape and its existing inverse scale
 
 The [Nicolas supplier note](../ArithSums/nicolas2025comparison.md)
-already records Fiori--Jaskari, arXiv:2609.23222v1, Theorem 1.1 and
+already records Fiori--Jaskari, arXiv:2609.23222v2, Theorem 1.1 and
 Table 1, and its complete-integral consequence. Put
 
 $$
