@@ -8,7 +8,7 @@ internal sealed class BanachDocument : IScribeDocumentDefinition
         "Analytic trace norms and bounded trace pairings on arbitrary complete complex Hilbert spaces.",
         H("The genuine trace-class Banach space"), Blocks(Describe.Lean(
             DescribeId.Create("attributed-traceclass-banach"),
-            DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Banach.TraceClass.isTraceClass_of_tendsto_of_traceNorm_bounded"),
+            DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Banach.isTraceClass_of_tendsto_of_traceNorm_bounded"),
             H("The genuine trace-class Banach space"), StatementSource.FromAuthor(Endpoint()),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/diem2026traceclass")),
             Blocks(Paragraph(Text("The trace norm equips the trace-class submodule with a complete complex normed-space structure. The operator norm is bounded by the trace norm. Uniformly trace-norm-bounded operator-norm limits are trace class with the same bound; this supplies the completeness proof.")),

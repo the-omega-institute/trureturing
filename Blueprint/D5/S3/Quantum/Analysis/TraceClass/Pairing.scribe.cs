@@ -8,7 +8,7 @@ internal sealed class PairingDocument : IScribeDocumentDefinition
         "Analytic trace norms and bounded trace pairings on arbitrary complete complex Hilbert spaces.",
         H("The continuous observable trace pairing"), Blocks(Describe.Lean(
             DescribeId.Create("attributed-traceclass-pairing"),
-            DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Pairing.TraceClass.tracePairingContinuousLinearMap_apply"),
+            DeclarationHandle.Create("D5/S3/Quantum/Analysis/TraceClass/Pairing.tracePairingContinuousLinearMap_apply"),
             H("The continuous observable trace pairing"), StatementSource.FromAuthor(Endpoint()),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumBounds/diem2026traceclass")),
             Blocks(Paragraph(Text("The map sending a bounded A to the functional T maps to Tr(A T) is complex linear and continuous from the operator norm into the strong dual of the genuine trace-class Banach space. Its norm is bounded by one. The trace-class slot uses the trace norm.")),
