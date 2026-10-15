@@ -27,7 +27,7 @@ open Finset Function Height Real
 
 variable {K : Type*} [Field K] [NumberField K] {ι ι' : Type*} [Fintype ι] [Fintype ι']
 
-private lemma fun_smul_ne_zero
+lemma fun_smul_ne_zero
     {K ι : Type*} [Field K] {c : K} {x : ι → K}
     (hc : c ≠ 0) (hx : x ≠ 0) : c • x ≠ 0 := by
   intro h
