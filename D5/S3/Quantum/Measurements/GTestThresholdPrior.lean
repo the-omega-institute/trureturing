@@ -6,7 +6,9 @@
    utility: none
    digest: The G-test threshold prior is its orbit count divided by word count plus orbit count. -/
 
-import Mathlib.LinearAlgebra.Matrix.Permutation
+import D5.S3.Quantum.Entanglement.OccupancyWordSectors
+import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 
 /-!
 The position action uses inverse permutations. The fixed-unitary twirl has the same tested
@@ -20,48 +22,46 @@ noncomputable section
 
 open scoped BigOperators Matrix
 
+open D5.S3.Quantum.Entanglement
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (trace_rank_one)
+
 attribute [local instance] Classical.propDecidable
 
-abbrev Word (n d : ℕ) :=
-  Fin n → Fin d
-
 abbrev TensorVec (n d : ℕ) :=
-  Word n d → ℂ
+  OccupancyWordSectors.Word (Fin d) n → ℂ
 
 abbrev TensorMat (n d : ℕ) :=
-  Matrix (Word n d) (Word n d) ℂ
+  Matrix (OccupancyWordSectors.Word (Fin d) n) (OccupancyWordSectors.Word (Fin d) n) ℂ
 
 local instance wordAction (n d : ℕ) :
-    MulAction (Equiv.Perm (Fin n)) (Word n d) :=
+    MulAction (Equiv.Perm (Fin n)) (OccupancyWordSectors.Word (Fin d) n) :=
   arrowAction
 
-abbrev WordOrbit {n d : ℕ} (w : Word n d) :=
+abbrev WordOrbit {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) :=
   ↥(MulAction.orbit (Equiv.Perm (Fin n)) w)
 
-def orbitMap {n d : ℕ} (w : Word n d)
+def orbitMap {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n)
     (π : Equiv.Perm (Fin n)) : WordOrbit w :=
   ⟨π • w, MulAction.mem_orbit w π⟩
 
-def M {n d : ℕ} (w : Word n d) : ℕ :=
+def M {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) : ℕ :=
   Fintype.card (WordOrbit w)
 
 def O {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d) : ℕ :=
+    (w : OccupancyWordSectors.Word (Fin d) n) : ℕ :=
   Fintype.card
     (MulAction.orbitRel.Quotient G (WordOrbit w))
 
 def psi {n d : ℕ} :
     Equiv.Perm (Fin n) →* TensorMat n d :=
-  (Matrix.permMatrixHom (n := Word n d) (R := ℂ)).comp
+  (Matrix.permMatrixHom (n := OccupancyWordSectors.Word (Fin d) n) (R := ℂ)).comp
     (MulAction.toPermHom
-      (Equiv.Perm (Fin n)) (Word n d))
+      (Equiv.Perm (Fin n)) (OccupancyWordSectors.Word (Fin d) n))
 
-def ket {n d : ℕ} (w : Word n d) : TensorVec n d :=
+def ket {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) : TensorVec n d :=
   fun x => if x = w then 1 else 0
-
-def pure {ι : Type*} (v : ι → ℂ) : Matrix ι ι ℂ :=
-  Matrix.vecMulVec v (star v)
 
 def tensorPower (n : ℕ) {d : ℕ}
     (A : Matrix (Fin d) (Fin d) ℂ) : TensorMat n d :=
@@ -73,7 +73,7 @@ def repeatKet (n : ℕ) {d : ℕ}
 
 def equalState (n : ℕ) {d : ℕ}
     (φ : Fin d → ℂ) : TensorMat n d :=
-  pure (repeatKet n φ)
+  rankOneDensity (repeatKet n φ)
 
 def UnitVector {d : ℕ} (φ : Fin d → ℂ) : Prop :=
   (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ)
@@ -84,13 +84,13 @@ def PiG {n d : ℕ}
     ∑ g : G, psi (d := d) (g : Equiv.Perm (Fin n))
 
 def rhoTilde {n d : ℕ}
-    (w : Word n d)
+    (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : TensorMat n d :=
   let T := tensorPower n (U : Matrix (Fin d) (Fin d) ℂ)
   (n.factorial : ℂ)⁻¹ •
     ∑ π : Equiv.Perm (Fin n),
       psi (d := d) π *
-        (T * pure (ket w) * T.conjTranspose) *
+        (T * rankOneDensity (ket w) * T.conjTranspose) *
         psi (d := d) (π⁻¹)
 
 def completeness {n d : ℕ}
@@ -100,19 +100,19 @@ def completeness {n d : ℕ}
 
 def soundnessError {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d)
+    (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : ℝ :=
   (Matrix.trace (PiG G * rhoTilde w U)).re
 
 def soundness {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d)
+    (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : ℝ :=
   1 - soundnessError G w U
 
 def P_G {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d)
+    (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ)
     (φ : Fin d → ℂ) (p : ℝ) : ℝ :=
   p * completeness G φ + (1 - p) * soundness G w U
@@ -123,7 +123,7 @@ def P_T (p : ℝ) : ℝ :=
 def claim : Prop :=
   ∀ (n d : ℕ)
     (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d)
+    (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ)
     (φ : Fin d → ℂ)
     (p : ℝ),
@@ -140,13 +140,14 @@ def claim : Prop :=
 variable {n d : ℕ}
 
 private theorem word_smul_apply
-    (π : Equiv.Perm (Fin n)) (x : Word n d) (j : Fin n) :
+    (π : Equiv.Perm (Fin n)) (x : OccupancyWordSectors.Word (Fin d) n) (j : Fin n) :
     (π • x) j = x (π⁻¹ j) := rfl
 
 private theorem psi_apply
-    (π : Equiv.Perm (Fin n)) (x y : Word n d) :
+    (π : Equiv.Perm (Fin n)) (x y : OccupancyWordSectors.Word (Fin d) n) :
     psi (d := d) π x y = if x = π • y then 1 else 0 := by
-  change ((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) π)⁻¹).permMatrix ℂ x y = _
+  change ((MulAction.toPermHom (Equiv.Perm (Fin n))
+    (OccupancyWordSectors.Word (Fin d) n) π)⁻¹).permMatrix ℂ x y = _
   simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
     Option.mem_def, Option.some.injEq]
   congr 1
@@ -156,45 +157,41 @@ private theorem psi_apply
 private theorem psi_mulVec
     (π : Equiv.Perm (Fin n)) (v : TensorVec n d) :
     psi (d := d) π *ᵥ v = fun x => v (π⁻¹ • x) := by
-  change ((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) π)⁻¹).permMatrix ℂ *ᵥ v = _
+  change ((MulAction.toPermHom (Equiv.Perm (Fin n))
+    (OccupancyWordSectors.Word (Fin d) n) π)⁻¹).permMatrix ℂ *ᵥ v = _
   rw [Matrix.permMatrix_mulVec]
   rfl
 
 private theorem psi_adjoint (π : Equiv.Perm (Fin n)) :
     (psi (d := d) π).conjTranspose = psi (d := d) (π⁻¹) := by
   change (((MulAction.toPermHom (Equiv.Perm (Fin n))
-    (Word n d) π)⁻¹).permMatrix ℂ).conjTranspose = _
+    (OccupancyWordSectors.Word (Fin d) n) π)⁻¹).permMatrix ℂ).conjTranspose = _
   rw [Matrix.conjTranspose_permMatrix]
-  change _ = ((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) (π⁻¹))⁻¹).permMatrix ℂ
+  change _ = ((MulAction.toPermHom (Equiv.Perm (Fin n))
+    (OccupancyWordSectors.Word (Fin d) n) (π⁻¹))⁻¹).permMatrix ℂ
   rw [map_inv, inv_inv]
 
-private theorem psi_ket (π : Equiv.Perm (Fin n)) (w : Word n d) :
+private theorem psi_ket (π : Equiv.Perm (Fin n)) (w : OccupancyWordSectors.Word (Fin d) n) :
     psi (d := d) π *ᵥ ket w = ket (π • w) := by
   rw [psi_mulVec]
   funext x
   unfold ket
   simp only [inv_smul_eq_iff]
 
-private theorem trace_mul_pure {ι : Type*} [Fintype ι]
-    (A : Matrix ι ι ℂ) (v : ι → ℂ) :
-    Matrix.trace (A * pure v) = ∑ x : ι, star (v x) * (A *ᵥ v) x := by
-  unfold pure
-  rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec]
-  exact Finset.sum_congr rfl (fun _ _ => mul_comm _ _)
-
 private theorem pure_conjugate {ι : Type*} [Fintype ι]
     (A : Matrix ι ι ℂ) (v : ι → ℂ) :
-    A * pure v * A.conjTranspose = pure (A *ᵥ v) := by
-  unfold pure
+    A * rankOneDensity v * A.conjTranspose = rankOneDensity (A *ᵥ v) := by
+  unfold rankOneDensity
   rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.star_mulVec]
 
-private theorem trace_word (A : TensorMat n d) (x : Word n d) :
-    Matrix.trace (A * pure (ket x)) = A x x := by
-  rw [trace_mul_pure]
+private theorem trace_word (A : TensorMat n d) (x : OccupancyWordSectors.Word (Fin d) n) :
+    Matrix.trace (A * rankOneDensity (ket x)) = A x x := by
+  rw [rankOneDensity, trace_rank_one]
   simp [ket.eq_1, Matrix.mulVec, dotProduct]
 
 private theorem sum_product (f : Fin n → Fin d → ℂ) :
-    (∑ x : Word n d, ∏ j : Fin n, f j (x j)) = ∏ j : Fin n, ∑ a : Fin d, f j a := by
+    (∑ x : OccupancyWordSectors.Word (Fin d) n, ∏ j : Fin n, f j (x j)) =
+      ∏ j : Fin n, ∑ a : Fin d, f j a := by
   rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
 
 private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
@@ -228,7 +225,8 @@ private theorem psi_comm_tensor (π : Equiv.Perm (Fin n))
     psi (d := d) π * tensorPower n A = tensorPower n A * psi (d := d) π := by
   ext x y
   simp only [Matrix.mul_apply, psi_apply]
-  have hleft : (∑ z : Word n d, (if x = π • z then 1 else 0) * tensorPower n A z y) =
+  have hleft : (∑ z : OccupancyWordSectors.Word (Fin d) n,
+      (if x = π • z then 1 else 0) * tensorPower n A z y) =
       tensorPower n A (π⁻¹ • x) y := by
     simp_rw [eq_comm (a := x), smul_eq_iff_eq_inv_smul, ite_mul, one_mul, zero_mul]
     simp
@@ -252,7 +250,8 @@ private theorem trace_conjugate (P T R : TensorMat n d)
   rw [← Matrix.mul_assoc P, ← Matrix.mul_assoc P, hPT,
     Matrix.trace_mul_cycle, ← Matrix.mul_assoc T.conjTranspose T P, hT, Matrix.one_mul]
 
-private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n))) (x : Word n d) :
+private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n)))
+    (x : OccupancyWordSectors.Word (Fin d) n) :
     PiG G x x = (Fintype.card (MulAction.stabilizer G x) : ℂ) / (Fintype.card G : ℂ) := by
   unfold PiG
   simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, psi_apply]
@@ -263,7 +262,7 @@ private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n))) (x : Word n d) 
   simp only [Fintype.card_subtype, eq_comm (a := x), Finset.sum_boole]
 
 private theorem twirl_trace_average (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d) (U : Matrix.unitaryGroup (Fin d) ℂ) :
+    (w : OccupancyWordSectors.Word (Fin d) n) (U : Matrix.unitaryGroup (Fin d) ℂ) :
     Matrix.trace (PiG G * rhoTilde w U) =
       (n.factorial : ℂ)⁻¹ * ∑ π : Equiv.Perm (Fin n), PiG G (π • w) (π • w) := by
   unfold rhoTilde
@@ -277,10 +276,10 @@ private theorem twirl_trace_average (G : Subgroup (Equiv.Perm (Fin n)))
   rw [← pure_conjugate]
   rw [trace_conjugate _ _ _ (tensor_unitary U) (PiG_comm_tensor G _), trace_word]
 
-private theorem orbit_card_pos (w : Word n d) : 0 < M w := by
+private theorem orbit_card_pos (w : OccupancyWordSectors.Word (Fin d) n) : 0 < M w := by
   exact Fintype.card_pos_iff.mpr ⟨⟨w, MulAction.mem_orbit_self w⟩⟩
 
-private theorem orbitMap_fiber_card (w : Word n d) (x : WordOrbit w) :
+private theorem orbitMap_fiber_card (w : OccupancyWordSectors.Word (Fin d) n) (x : WordOrbit w) :
     Fintype.card {π : Equiv.Perm (Fin n) // orbitMap w π = x} =
       Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) := by
   obtain ⟨τ, hτ⟩ := MulAction.mem_orbit_iff.mp x.property
@@ -305,7 +304,7 @@ private theorem orbitMap_fiber_card (w : Word n d) (x : WordOrbit w) :
         exact mul_inv_cancel_left _ _
   exact (Fintype.card_congr (Equiv.ofBijective f hf)).symm
 
-private theorem orbit_average (w : Word n d) (f : WordOrbit w → ℂ) :
+private theorem orbit_average (w : OccupancyWordSectors.Word (Fin d) n) (f : WordOrbit w → ℂ) :
     (n.factorial : ℂ)⁻¹ * (∑ π : Equiv.Perm (Fin n), f (orbitMap w π)) =
       (M w : ℂ)⁻¹ * ∑ x : WordOrbit w, f x := by
   have hs := Fintype.sum_fiberwise' (orbitMap w) f
@@ -327,13 +326,14 @@ private theorem orbit_average (w : Word n d) (f : WordOrbit w → ℂ) :
     _ = _ := by rw [inv_mul_cancel₀ hh, mul_one]
 
 private theorem burnside_stabilizer_sum (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d) :
-    (∑ x : WordOrbit w, Fintype.card (MulAction.stabilizer G (x : Word n d))) =
+    (w : OccupancyWordSectors.Word (Fin d) n) :
+    (∑ x : WordOrbit w,
+      Fintype.card (MulAction.stabilizer G (x : OccupancyWordSectors.Word (Fin d) n))) =
       O G w * Fintype.card G := by
   have hstab (x : WordOrbit w) :
-      Fintype.card (MulAction.stabilizer G (x : Word n d)) =
+      Fintype.card (MulAction.stabilizer G (x : OccupancyWordSectors.Word (Fin d) n)) =
         ∑ g : G, if g • x = x then 1 else 0 := by
-    change Fintype.card {g : G // g • (x : Word n d) = x.val} = _
+    change Fintype.card {g : G // g • (x : OccupancyWordSectors.Word (Fin d) n) = x.val} = _
     simp only [Fintype.card_subtype, Finset.sum_boole]
     congr 1
     apply Finset.filter_congr
@@ -350,7 +350,7 @@ private theorem burnside_stabilizer_sum (G : Subgroup (Equiv.Perm (Fin n)))
   exact MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group G (WordOrbit w)
 
 private theorem trace_eq_orbit_ratio (G : Subgroup (Equiv.Perm (Fin n)))
-    (w : Word n d) (U : Matrix.unitaryGroup (Fin d) ℂ) :
+    (w : OccupancyWordSectors.Word (Fin d) n) (U : Matrix.unitaryGroup (Fin d) ℂ) :
     Matrix.trace (PiG G * rhoTilde w U) = (O G w : ℂ) / (M w : ℂ) := by
   rw [twirl_trace_average]
   change (n.factorial : ℂ)⁻¹ * (∑ π, (fun x : WordOrbit w => PiG G x.val x.val)
@@ -377,7 +377,7 @@ private theorem psi_repeat (π : Equiv.Perm (Fin n)) (φ : Fin d → ℂ) :
     _ = _ := Equiv.prod_comp π (fun j => φ (x j))
 
 private theorem repeat_norm (φ : Fin d → ℂ) (hφ : UnitVector φ) :
-    (∑ x : Word n d, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
+    (∑ x : OccupancyWordSectors.Word (Fin d) n, star (repeatKet n φ x) * repeatKet n φ x) = 1 := by
   simp only [repeatKet.eq_1, star_prod, ← Finset.prod_mul_distrib]
   rw [sum_product (fun _ i => star (φ i) * φ i)]
   simp only [show (∑ i : Fin d, star (φ i) * φ i) = (1 : ℂ) from hφ,
@@ -395,8 +395,8 @@ private theorem PiG_repeat (G : Subgroup (Equiv.Perm (Fin n))) (φ : Fin d → �
 private theorem completeness_trace (G : Subgroup (Equiv.Perm (Fin n)))
     (φ : Fin d → ℂ) (hφ : UnitVector φ) :
     Matrix.trace (PiG G * equalState n φ) = 1 := by
-  unfold equalState
-  rw [trace_mul_pure, PiG_repeat]
+  unfold equalState rankOneDensity
+  rw [trace_rank_one, PiG_repeat]
   exact repeat_norm φ hφ
 
 private theorem linear_compare (m o p : ℝ) (hm : 0 < m) (ho : 0 ≤ o) :
