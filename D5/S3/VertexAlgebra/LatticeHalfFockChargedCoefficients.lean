@@ -620,7 +620,6 @@ theorem half_annihilation_creation (D : LatticeData) (colour : Fin D.rank)
     rw [chain]
     split_ifs
     · rw [PowerSeries.coeff_mul_C, mul_smul_comm, mul_one]
-      rfl
     · rfl
   by_cases negative : degree < 0
   · rw [halfCreationCoeff, if_pos negative, map_zero, halfCreationCoeff,
