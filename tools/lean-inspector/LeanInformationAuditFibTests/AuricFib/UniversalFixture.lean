@@ -1,9 +1,9 @@
 import Reg.D5.S0.Diagonal.PigeonholeFiber
 import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
 import Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
-import LeanInformationAuditRegTests.AuricFib.CompiledFixture
+import LeanInformationAuditFibTests.AuricFib.CompiledFixture
 
-namespace LeanInformationAuditRegTests.AuricFib.UniversalFixture
+namespace LeanInformationAuditFibTests.AuricFib.UniversalFixture
 open LeanInformationAudit.Analysis
 open LeanInformationAudit.AuricFib.Contract
 open Reg.D5.S0.Diagonal.PigeonholeFiber
@@ -19,21 +19,21 @@ def dependentFamily := familyAnalysis.{u}
 def history :=
   Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation.analysis.{u,v}
 def native := Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.initializedWindow
-def nativeDeclared := LeanInformationAuditRegTests.AuricFib.CompiledFixture.declared
-def nativeAbsent := LeanInformationAuditRegTests.AuricFib.CompiledFixture.absent
-def nativeEmpirical := LeanInformationAuditRegTests.AuricFib.CompiledFixture.empirical
-def nativeApex := LeanInformationAuditRegTests.AuricFib.CompiledFixture.apex
-def nativeZeroCondition := LeanInformationAuditRegTests.AuricFib.CompiledFixture.zeroCondition
-def nativeUnsupported := LeanInformationAuditRegTests.AuricFib.CompiledFixture.unsupported
-def nativeRejected := LeanInformationAuditRegTests.AuricFib.CompiledFixture.rejected
-def nativeWrongTarget := LeanInformationAuditRegTests.AuricFib.CompiledFixture.wrongTarget
-def nativeParameterized := LeanInformationAuditRegTests.AuricFib.CompiledFixture.parameterized
+def nativeDeclared := LeanInformationAuditFibTests.AuricFib.CompiledFixture.declared
+def nativeAbsent := LeanInformationAuditFibTests.AuricFib.CompiledFixture.absent
+def nativeEmpirical := LeanInformationAuditFibTests.AuricFib.CompiledFixture.empirical
+def nativeApex := LeanInformationAuditFibTests.AuricFib.CompiledFixture.apex
+def nativeZeroCondition := LeanInformationAuditFibTests.AuricFib.CompiledFixture.zeroCondition
+def nativeUnsupported := LeanInformationAuditFibTests.AuricFib.CompiledFixture.unsupported
+def nativeRejected := LeanInformationAuditFibTests.AuricFib.CompiledFixture.rejected
+def nativeWrongTarget := LeanInformationAuditFibTests.AuricFib.CompiledFixture.wrongTarget
+def nativeParameterized := LeanInformationAuditFibTests.AuricFib.CompiledFixture.parameterized
 
 /-- Normalization is proved, but the numeric metadata is not literal data. -/
 def nativeUnavailableLaw : Application.{0,0,0,0,0,0}
     D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution where
   evidence := .native { reconstruction := .exact }
-    LeanInformationAuditRegTests.AuricFib.CompiledFixture.bridge
+    LeanInformationAuditFibTests.AuricFib.CompiledFixture.bridge
     (.declared "law requires computation" {
       nullMass := Nat.add 0 1, lowMass := 1, highMass := 1, endsMass := 1, middleMass := 1,
       denominator := 5, positive := by decide, normalized := by decide })
@@ -170,10 +170,10 @@ def definedSource : Source (@definedTheorem.{u}) where
   rebuild := source.{u}.rebuild
   reconstruction := .exact
   selection := { source.{u}.selection with
-    owner := `LeanInformationAuditRegTests.AuricFib.UniversalFixture
+    owner := `LeanInformationAuditFibTests.AuricFib.UniversalFixture
     definition := some {
-      owner := `LeanInformationAuditRegTests.AuricFib.UniversalFixture
-      name := `LeanInformationAuditRegTests.AuricFib.UniversalFixture.definedStatement
+      owner := `LeanInformationAuditFibTests.AuricFib.UniversalFixture
+      name := `LeanInformationAuditFibTests.AuricFib.UniversalFixture.definedStatement
       path := #[] } }
 
 def specializedDefinition : Application (@definedTheorem.{0}) where
@@ -201,7 +201,7 @@ theorem absentContract : True := trivial
 
 /-- A bare proposition has a complete source binding without data observations. -/
 def dataFreeSource := Source.unobserved absentContract
-  (owner := `LeanInformationAuditRegTests.AuricFib.UniversalFixture)
+  (owner := `LeanInformationAuditFibTests.AuricFib.UniversalFixture)
 
 def dataFreeClient : Client.{0,0,0,0,0,0,0} absentContract where
   source := dataFreeSource
@@ -237,4 +237,4 @@ def unobservedMismatch : Source absentContract where
   reconstruction := .exact
   selection := dataFreeSource.selection
 
-end LeanInformationAuditRegTests.AuricFib.UniversalFixture
+end LeanInformationAuditFibTests.AuricFib.UniversalFixture
