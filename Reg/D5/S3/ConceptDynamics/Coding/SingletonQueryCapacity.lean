@@ -1,4 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.AuricFib
 import D5.S3.ConceptDynamics.Coding.SingletonQueryCapacity
 import Reg.Support.DependentFamily
 
@@ -97,5 +98,60 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
 
 
 #print axioms registration
+
+abbrev analysisSource : Analysis.Source (@singleton_or_constant_query_capacity.{0}) where
+  signature := signature
+  actual := actual
+  rebuild := arena.{0}.Law
+  reconstruction := .exact
+  selection := {
+    owner := `D5.S3.ConceptDynamics.Coding.SingletonQueryCapacity
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+
+abbrev analysisPlan : Analysis.Plan analysisSource where
+  task := ()
+  initial := []
+  additions := [[()], []]
+
+/-- Only depths zero and one are acquired; the full source domain remains Nat. -/
+abbrev analysisDomain : Analysis.Domain analysisSource where
+  parameter := ()
+  State := Fin 2
+  readout _ d := d.val + 1
+  scope := .restriction (fun d => d < 2)
+    { toFun := fun d => ⟨d.val, d.isLt⟩
+      invFun := fun d => ⟨d.val, d.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+    (fun _ _ => rfl)
+
+abbrev analysisPresentation : Analysis.FinitePresentation analysisPlan analysisDomain where
+  stateFintype := inferInstanceAs (Fintype (Fin 2))
+  stateDecidableEq := inferInstanceAs (DecidableEq (Fin 2))
+  enumeration := { states := [0, 1], nodup := by decide, complete := by decide }
+  values _ := ![.nat 1, .nat 2]
+  decode _ := fun v => match v with | .nat n => some n | _ => none
+  values_correct := by decide
+  kernel _ := ![![true, false], ![false, true]]
+  kernel_correct := by decide
+  taskValues := ![.nat 1, .nat 2]
+  task_correct := by decide
+  layers := ![(fun _ _ => true), ![![true, false], ![false, true]],
+    ![![true, false], ![false, true]]]
+  layers_correct := by decide
+
+def finiteDepthAnalysis : AuricFib.Contract.Application
+    (@singleton_or_constant_query_capacity.{0}) where
+  evidence := .typed {
+    source := analysisSource
+    plan := analysisPlan
+    acquisition := .finite analysisDomain analysisPresentation }
 
 end Reg.D5.S3.ConceptDynamics.Coding.SingletonQueryCapacity
