@@ -64,7 +64,7 @@ private theorem witnessRho_posSemidef : witnessRho.PosSemidef := by
 private theorem witnessRho_trace : witnessRho.trace = 1 := by
   rw [witnessRho, Matrix.trace_vecMulVec]
   norm_num [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
-    witnessJointPsi, witnessZ, witnessPsi, Matrix.mulVec, Matrix.diagonal, Pi.star_def]
+    witnessJointPsi.eq_1, witnessZ.eq_1, witnessPsi.eq_1, Matrix.mulVec, Matrix.diagonal, Pi.star_def]
 
 private theorem witnessBlock_unitary (c : Fin 2 × Fin 2) :
     (witnessBlock c)ᴴ * witnessBlock c = 1 ∧
@@ -72,8 +72,9 @@ private theorem witnessBlock_unitary (c : Fin 2 × Fin 2) :
   rcases c with ⟨r, s⟩
   fin_cases r <;> fin_cases s <;> constructor <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [witnessBlock, witnessZ, witnessV, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Fin.sum_univ_two, Matrix.diagonal, Matrix.vecHead, Matrix.vecTail, map_ofNat]
+    norm_num [witnessBlock.eq_1, witnessZ.eq_1, witnessV.eq_1, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Fin.sum_univ_two, Matrix.diagonal, Matrix.vecHead,
+      Matrix.vecTail, map_ofNat]
 
 private theorem witnessU_unitary :
     witnessUᴴ * witnessU = 1 ∧ witnessU * witnessUᴴ = 1 := by
@@ -124,8 +125,8 @@ private theorem witness_eq9
   simp only [dotProduct, Fintype.sum_prod_type, blockAction, Pi.star_apply]
   norm_num [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.kronecker_apply,
     Fintype.sum_prod_type,
-    Fin.sum_univ_two, witnessT, witnessJointPsi, witnessBlock, witnessZ, witnessV,
-    witnessPsi, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
+    Fin.sum_univ_two, witnessT, witnessJointPsi.eq_1, witnessBlock.eq_1, witnessZ.eq_1, witnessV.eq_1,
+    witnessPsi.eq_1, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
     Matrix.diagonal, map_ofNat]
   ring
 
