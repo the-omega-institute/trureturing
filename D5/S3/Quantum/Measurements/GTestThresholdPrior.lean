@@ -66,7 +66,8 @@ def ket {n d : ℕ} (w : OccupancyWordSectors.Word (Fin d) n) : TensorVec n d :=
 
 def tensorPower (n : ℕ) {d : ℕ}
     (A : Matrix (Fin d) (Fin d) ℂ) : TensorMat n d :=
-  Matrix.of (fun x y => ∏ j : Fin n, A (x j) (y j))
+  D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap
+    (fun _ : Fin n => Fin d) (fun _ : Fin n => A)
 
 def repeatKet (n : ℕ) {d : ℕ}
     (φ : Fin d → ℂ) : TensorVec n d :=
@@ -197,7 +198,8 @@ private theorem sum_product (f : Fin n → Fin d → ℂ) :
 private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
     tensorPower n (A * B) = tensorPower n A * tensorPower n B := by
   ext x y
-  simp only [tensorPower.eq_1, Matrix.of_apply, Matrix.mul_apply]
+  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+    Matrix.mul_apply]
   rw [← sum_product]
   apply Finset.sum_congr rfl
   intro z _
@@ -206,7 +208,8 @@ private theorem tensor_mul (A B : Matrix (Fin d) (Fin d) ℂ) :
 private theorem tensor_one :
     tensorPower n (1 : Matrix (Fin d) (Fin d) ℂ) = 1 := by
   ext x y
-  simp only [tensorPower.eq_1, Matrix.of_apply, Matrix.one_apply,
+  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+    Matrix.one_apply,
     Fintype.prod_boole, ← funext_iff]
 
 private theorem tensor_adjoint (A : Matrix (Fin d) (Fin d) ℂ) :
@@ -232,7 +235,8 @@ private theorem psi_comm_tensor (π : Equiv.Perm (Fin n))
     simp
   rw [hleft]
   simp only [mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
-  simp only [tensorPower.eq_1, Matrix.of_apply, word_smul_apply, inv_inv]
+  simp only [tensorPower, D5.S3.Quantum.Recovery.ProductPrefixRigidity.productMap,
+    word_smul_apply, inv_inv]
   exact Fintype.prod_equiv π (fun j => A (x (π j)) (y j))
     (fun j => A (x j) (y (π⁻¹ j))) (by intro j; simp)
 
