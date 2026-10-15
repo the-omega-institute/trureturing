@@ -92,12 +92,7 @@ Every other public declaration is a definition used by a public statement. The m
 
 **Refuted by `result`:** Conjecture 1 fails for the spacetime density matrix of one qubit at two times, with two control qubits as the rest of the system, at p = 2.
 
-**Computed, not formalized** (orchestrator, 15 October 2026):
-- The irrational example of the search seat (T = diag(3, 3, 3, −1)/8, A = Q at time 0 and B = S at time t) violates (25) at p = 4 (SymPy, exact).
-- For the module's T, the gap 1 + ‖T‖_p − ‖Tr_A T‖_p − ‖Tr_B T‖_p is −0.0403 at p = 2 and negative at every tested p ≥ 1.75 (1.75, 2, 2.5, 3, 4, 6, 10, 50). It is positive at p = 1.1, 1.2, 1.3 and 1.5, and changes sign near p = 1.549 (NumPy).
-- The same three-qubit construction with real ψ and rotation V, on a 721 × 721 grid of angles, gives violations at every tested p ∈ {1.5, 2, 2.5, 3, 4, 6}; the smallest gaps are −0.0129 at p = 1.5 and −0.0441 at p = 2 (NumPy).
-- In a two-qubit system, with A = B the first qubit and the second qubit as the rest of the system, Nelder–Mead minimization of the gap over pure states and unitaries reached −0.0438 at p = 2 (SciPy, floating point; not certified exactly).
-- When A and B are the whole system (Eq. (6)), 8000 random pairs (ρ, U) in dimensions 2 and 3, with p ∈ {1.5, 2, 3, 4, 8}, gave no violation; the smallest gap was 0.0905.
+**Computed, not formalized** (orchestrator, SymPy exact arithmetic, recorded in #17385): the irrational example of the search seat (T = diag(3, 3, 3, −1)/8, A = Q at time 0 and B = S at time t) violates (25) at p = 4.
 
 **Argued, not formalized.**
 - The mechanism is negativity of the Kirkwood–Dirac quasiprobability. When the rest of the system dephases both insertions, T_AB is diagonal with entries q_ij = ψ_i V_ji (Vψ)_j, which can be negative while their marginals |ψ_i|² and |(Vψ)_j|² are probabilities.
