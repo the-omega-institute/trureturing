@@ -106,7 +106,8 @@ Pure Mathematics **21** (1992), 281–325,
 Lemma 3 on p.290 and §6 on pp.309–310, by the “Relation to existing
 work” subsection of the [pinned Liu manuscript](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/frozen-source/publication/manuscript.tex).
 This historical attribution is secondary: Yoshida's original lemma
-has not been inspected here. The
+has not been inspected here. The exact overlap of Yoshida's Lemma 3
+with G1–G5 remains unsettled. The
 [existing quantitative tail and coupling application](../Fourier/montgomery1978largesieve.md)
 also remains available. G1–G5 record the particular periodic-Gamma
 comparison below, with no priority claim over these earlier methods.
