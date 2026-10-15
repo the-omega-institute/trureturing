@@ -84,6 +84,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨hyperbolic, 0, 1, ?_⟩
   change chargeNorm hyperbolic 0 ≠ chargeNorm hyperbolic 1
   norm_num [chargeNorm, bilinear, hyperbolic, Fin.sum_univ_two]
+  change (0 : ℤ) ≠ ∑ first : Fin 2, ∑ second : Fin 2,
+    (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) first second
+  norm_num [Fin.sum_univ_two]
 
 end NormReadout
 
@@ -318,6 +321,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨hyperbolic, 0, 1, ?_⟩
   change chargeScalar hyperbolic 0 ≠ chargeScalar hyperbolic 1
   norm_num [chargeScalar, chargeNorm, bilinear, hyperbolic, Fin.sum_univ_two]
+  change (2 : ℂ) ^ (∑ first : Fin 2, ∑ second : Fin 2,
+    (!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) first second) ≠ 1
+  norm_num [Fin.sum_univ_two]
 
 def familyRegistration : Registration arena (type_of% (@charged_vacuum_coefficient)) where
   actual := actual
@@ -484,6 +490,13 @@ private theorem dependence : ObservationalDependence signature actual := by
     (bilinear hyperbolic (unitCharge hyperbolic (0 : Fin 2))
       (unitCharge hyperbolic (1 : Fin 2)) : ℂ)
   norm_num [bilinear, unitCharge, hyperbolic, Fin.sum_univ_two]
+  change (0 : ℂ) ≠ ∑ first : Fin 2, ∑ second : Fin 2,
+    if second = 1 then
+      if first = 0 then
+        ((!![0, 1; 1, 0] : Matrix (Fin 2) (Fin 2) ℤ) first second : ℂ)
+      else 0
+    else 0
+  norm_num [Fin.sum_univ_two]
 
 def familyRegistration : Registration arena (type_of% (@charged_tensor_current_ward)) where
   actual := actual
