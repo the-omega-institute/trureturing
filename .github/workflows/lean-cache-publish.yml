@@ -153,7 +153,7 @@ jobs:
       pull-requests: read
     concurrency:
       group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
-      cancel-in-progress: true
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'
       PR_SOURCE: ${{ inputs.pr_source }}
