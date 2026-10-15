@@ -256,12 +256,6 @@ private def nativeCoefficientMap (D : LatticeData) (charge : Charge D) (exponent
   Polynomial.lsum fun degree => LinearMap.mulRight (Oscillator D)
     (halfCreationCoeff D charge (exponent + chargeNorm D charge + degree))
 
-private theorem nativeCoefficientMap_monomial (D : LatticeData) (charge : Charge D)
-    (exponent : ℤ) (degree : ℕ) (coefficient : Oscillator D) :
-    nativeCoefficientMap D charge exponent (Polynomial.monomial degree coefficient) =
-      coefficient * halfCreationCoeff D charge (exponent + chargeNorm D charge + degree) := by
-  simp [nativeCoefficientMap, Polynomial.lsum_apply, LinearMap.mulRight_apply]
-
 private theorem oscillatorCoefficient_as_sum (D : LatticeData) (charge : Charge D)
     (exponent : ℤ) (polynomial : Oscillator D) :
     oscillatorCoefficient D charge exponent polynomial =
