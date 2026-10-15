@@ -5,13 +5,17 @@ year: 2026
 title: Analytic trace-class and Hilbert-Schmidt operators
 doi: null
 url: https://github.com/leanprover-community/physlib/tree/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass
-claim: Analytic basis-independent trace, Hilbert-Schmidt square sums, polar factorization, and the two-sided trace-class ideal for arbitrary complex Hilbert spaces.
+claim: Analytic basis-independent trace, Hilbert-Schmidt square sums, polar factorization, the two-sided trace-class ideal, trace-norm Banach structure, cyclicity, and continuous trace pairing for arbitrary complex Hilbert spaces.
 strata_touched:
   - D5/S3/Quantum/Analysis/TraceClass/Basic
   - D5/S3/Quantum/Analysis/TraceClass/HilbertSchmidt
   - D5/S3/Quantum/Analysis/TraceClass/Polar
   - D5/S3/Quantum/Analysis/TraceClass/GeneralIdeal
   - D5/S3/Quantum/Analysis/TraceClass/GeneralProduct
+  - D5/S3/Quantum/Analysis/TraceClass/IdealNorm
+  - D5/S3/Quantum/Analysis/TraceClass/Banach
+  - D5/S3/Quantum/Analysis/TraceClass/TraceAlgebra
+  - D5/S3/Quantum/Analysis/TraceClass/Pairing
   - D5/S3/Quantum/Analysis/TraceClass/ColumnSynthesis
   - D5/S3/Quantum/Analysis/TraceClass/Compact
 license: Apache-2.0
@@ -25,9 +29,9 @@ triage: anchor
 The immutable source directory declared above is:
 https://github.com/leanprover-community/physlib/tree/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass
 
-The preserved source archive and these declaration locations were checked on
-2026-10-14. The locators attest the supplied analytic statements, not the new
-weighted-column construction or its original-operator composition.
+The locators identify the supplied analytic statements. They do not attribute
+the weighted-column construction or the logarithmic regularization joins to the
+supplier.
 
 | Supplied module | Immutable source and declaration | Attested scope |
 | --- | --- | --- |
@@ -37,9 +41,14 @@ weighted-column construction or its original-operator composition.
 | GeneralIdeal | [GeneralIdeal.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/GeneralIdeal.lean#L98), `trace_eq_of_hilbertBasis` | The actual trace-basis identity for an arbitrary trace-class bounded operator. |
 | GeneralProduct | [GeneralProduct.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/GeneralProduct.lean#L52), `isTraceClass_mul_of_isHilbertSchmidt` | The product of two Hilbert-Schmidt bounded operators is trace class. |
 
+| IdealNorm | [IdealNorm.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/IdealNorm.lean), `traceNorm_mul_mul_le` | The two-sided trace-norm ideal estimate. |
+| Banach | [Banach.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/Banach.lean), `TraceClass.isTraceClass_of_tendsto_of_traceNorm_bounded` | The genuine trace-class Banach space. |
+| TraceAlgebra | [TraceAlgebra.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/TraceAlgebra.lean), `trace_mul_cycle` | Cyclicity with a bounded factor. |
+| Pairing | [Pairing.lean](https://github.com/leanprover-community/physlib/blob/b9043cc548ef6d63a28454cf3a57fb12a0c2e142/PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/Pairing.lean), `TraceClass.tracePairingContinuousLinearMap_apply` | The continuous observable trace pairing. |
+
 ## Adoption and consumer
 
-The five source modules are adopted from immutable Physlib revision
+The nine source modules are adopted from immutable Physlib revision
 `b9043cc548ef6d63a28454cf3a57fb12a0c2e142`, under
 `PhyslibAlpha/AlgebraicFramework/HilbertSpace/TraceClass/`. The source archive
 was checked byte-for-byte against that revision. Project import paths and the
@@ -57,6 +66,13 @@ No originality is claimed for the adopted suppliers. Replace each transplant
 with direct application when an equivalent live result exists in the
 repository's own pinned Mathlib.
 
+The logarithmic regularizations also use `IdealNorm`, `Banach`, `TraceAlgebra`
+and `Pairing`. In particular, bounded-factor cyclicity is applied to
+`sqrt A * rho`, which is genuinely trace class by the ideal property, to obtain
+positive trace pairing without a commutation hypothesis. The trace-class
+Banach carrier retains its trace norm; the continuous observable pairing uses
+the operator norm. These are standard analytic suppliers, not an originality
+claim about operator logarithms or spectral entropy.
 ## Column synthesis and compactness
 
 The repository's `TraceClass/ColumnSynthesis` constructs the continuous operator
