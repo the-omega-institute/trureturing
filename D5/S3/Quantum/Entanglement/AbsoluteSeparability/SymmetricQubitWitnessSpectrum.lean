@@ -6,7 +6,7 @@
    utility: none
    digest: Exact spectra of symmetric two-qubit entanglement witnesses. -/
 
-import Mathlib
+import Mathlib.Analysis.Matrix.Spectrum
 import D5.S3.Zeros.PochhammerDeformation.QuadraticRadii
 
 set_option linter.style.longLine false
