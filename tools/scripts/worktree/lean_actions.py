@@ -8,6 +8,7 @@ import os
 import pathlib
 import re
 import shutil
+import subprocess
 import tempfile
 import threading
 import urllib.error
@@ -123,6 +124,9 @@ def actions_keys(root: pathlib.Path) -> dict:
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
+        "producer_save_allowed": ((push_writer and os.environ.get("GITHUB_REF_PROTECTED") == "true")
+                                  or dispatch_writer or pr_producer)
+        and os.environ.get("STRATALINT_CACHE_WRITES") == "true",
         "project_save_allowed": (push_writer or dispatch_writer or pr_producer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
         and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
@@ -387,6 +391,113 @@ def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if seeded else "0"}, "GITHUB_ENV")
 
 
+def resume_marker(root):
+    return root / ".lake/build/lean-inspector/producer-resume.json"
+
+
+def resume_record(root):
+    # This invocation fact is deliberately outside every transported cache path.
+    return root / "build/lean-cache/producer-resume-restored.json"
+
+
+def read_resume_record(path):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate resume field")
+            result[key] = value
+        return result
+    if path.is_symlink():
+        raise ValueError("resume record is a symlink")
+    value = json.loads(path.read_text(), object_pairs_hook=unique)
+    if not isinstance(value, dict):
+        raise ValueError("resume record is not an object")
+    return value
+
+
+def resume_spec(root):
+    keys = actions_keys(root)
+    if not keys["producer_save_allowed"]:
+        raise ValueError("producer resume requires an authorized protected or PR producer")
+    tree = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD^{tree}"], text=True).strip()
+    if not re.fullmatch(r"[0-9a-f]{40}", tree):
+        raise ValueError("producer source tree is unavailable")
+    repository = os.environ.get("GITHUB_REPOSITORY", "")
+    if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository):
+        raise ValueError("producer repository is unavailable")
+    identity = hashlib.sha256(json.dumps({
+        "tree": tree, "repository": repository, "ref": os.environ["GITHUB_REF"],
+        "inputs": dependency_inputs(root), "mathlib": keys["mathlib_revision"],
+        "os": keys["os"], "arch": keys["arch"],
+    }, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    prefix = f"lean-producer-resume-v1-{keys['mathlib_revision']}-{keys['os']}-{keys['arch']}-{identity}-"
+    paths = native_archive_paths(root, LAYERS)
+    return {"identity": identity, "restore_prefix": prefix,
+            "key": prefix + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"],
+            "paths": sorted(set(path for group in paths.values() for path in group))}
+
+
+def resume_key_matches(spec, key):
+    return re.fullmatch(re.escape(spec["restore_prefix"]) + r"[1-9][0-9]*-[1-9][0-9]*", key) is not None
+
+
+def resume_snapshot(root, spec):
+    for layer in LAYERS:
+        target = root / (".lake/packages" if layer == "dependency" else ".lake/build")
+        if target.is_symlink() or not target.is_dir():
+            receipt("resume", "save-disabled", reason="native-material-unavailable")
+            output({"resume_ready": False})
+            return
+    write_small_record(resume_marker(root), {
+        "schema_version": 1, "identity": spec["identity"], "key": spec["key"]})
+    receipt("resume", "snapshot", key=spec["key"], complete=False)
+    output({"resume_ready": True})
+
+
+def resume_restore(root, spec, key, outcome):
+    resume_record(root).unlink(missing_ok=True)
+    if outcome in ("", "skipped") or (outcome == "success" and not key):
+        receipt("resume", "miss", reason="Actions supplied no continuation")
+        return
+    try:
+        if outcome != "success" or not resume_key_matches(spec, key):
+            raise ValueError("resume transport failed or identity is incompatible")
+        marker = read_resume_record(resume_marker(root))
+        if (set(marker) != {"schema_version", "identity", "key"}
+                or type(marker["schema_version"]) is not int or marker["schema_version"] != 1
+                or marker["identity"] != spec["identity"] or marker["key"] != key):
+            raise ValueError("resume metadata does not match the selected source")
+        for path in (root / ".lake/packages", root / ".lake/build"):
+            if path.is_symlink() or not path.is_dir():
+                raise ValueError("resume native material is unavailable")
+        stamp_restored_dependency(root, actions_keys(root))
+        write_small_record(resume_record(root), {
+            "schema_version": 1, "identity": spec["identity"],
+            "snapshot_key": spec["key"], "matched_key": key})
+        receipt("resume", "restored", key=key, complete=False)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        # Actions may already have extracted part of an incompatible archive.
+        for path in (root / ".lake/packages", root / ".lake/build"):
+            if path.is_symlink() or path.is_file():
+                path.unlink()
+            elif path.exists():
+                shutil.rmtree(path)
+        receipt("resume", "miss", reason=str(error))
+
+
+def resume_verified(root):
+    try:
+        spec = resume_spec(root)
+        value = read_resume_record(resume_record(root))
+        return (set(value) == {"schema_version", "identity", "snapshot_key", "matched_key"}
+                and type(value["schema_version"]) is int and value["schema_version"] == 1
+                and value["identity"] == spec["identity"] and value["snapshot_key"] == spec["key"]
+                and resume_key_matches(spec, value["matched_key"]))
+    except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError):
+        return False
+
+
 def project_work(root):
     path = pathlib.Path(os.environ.get("STRATALINT_LEAN_BUILD_WORK_FILE", str(root / "build/lean-cache/build-work.json")))
     def unique(pairs):
@@ -420,6 +531,8 @@ def project_publication(root):
     if work is None:
         return False, "build-work-unknown", work
     if work == 0:
+        if os.environ.get("STRATALINT_CACHE_PRODUCER_COMPLETE") == "true" and resume_verified(root):
+            return True, "validated-producer-resume", work
         return False, "no-build-work", work
     return True, "built-project-artifacts", work
 
@@ -466,10 +579,12 @@ def snapshot(root, keys, layers=LAYERS):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "restore", "snapshot"))
+    parser.add_argument("command", choices=("keys", "restore", "snapshot", "resume-keys", "resume-restore", "resume-snapshot"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
     parser.add_argument("--layers", choices=LAYERS, nargs="+")
     parser.add_argument("--project-restore-key", default="")
+    parser.add_argument("--resume-key", default="")
+    parser.add_argument("--resume-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
     for layer in LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
         parser.add_argument("--" + layer + "-outcome", default="", choices=("", "success", "failure", "cancelled", "skipped"))
@@ -478,7 +593,16 @@ def main():
     try:
         root = args.repository.resolve()
         keys = actions_keys(root)
-        if args.command == "keys":
+        if args.command.startswith("resume-"):
+            spec = resume_spec(root)
+            if args.command == "resume-keys":
+                output({"resume_key": spec["key"], "resume_restore_prefix": spec["restore_prefix"]})
+                output_archive_paths("resume", spec["paths"])
+            elif args.command == "resume-restore":
+                resume_restore(root, spec, args.resume_key, args.resume_outcome)
+            else:
+                resume_snapshot(root, spec)
+        elif args.command == "keys":
             archive_paths = native_archive_paths(root, args.layers)
             if "project" in args.layers:
                 keys["project"]["restore_key"] = project_restore_key(keys)
@@ -497,7 +621,7 @@ def main():
         else:
             snapshot(root, keys, args.layers)
         return 0
-    except (OSError, ValueError, TypeError, KeyError, CachePathRegistrationError) as error:
+    except (OSError, ValueError, TypeError, KeyError, CachePathRegistrationError, subprocess.CalledProcessError) as error:
         print("CI_INPUT_FAILED " + str(error), file=os.sys.stderr)
         return 2
 

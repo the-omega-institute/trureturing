@@ -1,8 +1,11 @@
 name: Produce the Lean Actions cache
-description: Build and publish validated project, dependency and toolchain seeds without running test suites.
+description: Resume long builds separately and publish only complete validated Lean seeds.
 runs:
   using: composite
   steps:
+    - name: Reserve time to save producer progress
+      shell: bash
+      run: echo "STRATALINT_CACHE_PRODUCER_DEADLINE_AT=$(( $(date +%s) + 18000 ))" >> "$GITHUB_ENV"
     - uses: actions/setup-dotnet@v5
       with:
         global-json-file: global.json
@@ -48,7 +51,26 @@ runs:
         PROJECT_OUTCOME: ${{ steps.project.outcome }}
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-    - name: Build the report and cacheable audit programs
+    - id: resume_keys
+      name: Select the producer continuation
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-keys --repository "$GITHUB_WORKSPACE"
+    - id: resume
+      continue-on-error: true
+      uses: actions/cache/restore@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_keys.outputs.resume_key }}
+        restore-keys: ${{ steps.resume_keys.outputs.resume_restore_prefix }}
+    - name: Validate the producer continuation
+      env:
+        RESUME_KEY: ${{ steps.resume.outputs.cache-matched-key }}
+        RESUME_OUTCOME: ${{ steps.resume.outcome }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-restore --repository "$GITHUB_WORKSPACE" --resume-key "$RESUME_KEY" --resume-outcome "$RESUME_OUTCOME"
+    - id: build
+      name: Build the report and cacheable audit programs
+      continue-on-error: true
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
@@ -65,12 +87,41 @@ runs:
           unset STRATALINT_LEAN_PRODUCER_DLL
         fi
         source tools/scripts/lib/resource-observation-lib.sh
-        resource_observe_run_periodic make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        export PREFLIGHT_DEADLINE_AT="$STRATALINT_CACHE_PRODUCER_DEADLINE_AT"
+        status=0
+        resource_observe_run_periodic bash tools/scripts/report/report-supervisor.sh --role lean-cache-slice -- \
+          env -u PREFLIGHT_DEADLINE_AT make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build || status=$?
+        echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+        exit "$status"
+    - id: resume_snapshot
+      name: Prepare interrupted producer progress
+      if: ${{ !cancelled() && steps.build.outcome == 'failure' }}
+      shell: bash
+      run: python3 tools/scripts/worktree/lean_actions.py resume-snapshot --repository "$GITHUB_WORKSPACE"
+    - name: Save interrupted producer progress
+      if: ${{ !cancelled() && steps.resume_snapshot.outputs.resume_ready == 'true' }}
+      uses: actions/cache/save@v5
+      with:
+        path: ${{ steps.resume_keys.outputs.resume_archive_path }}
+        key: ${{ steps.resume_keys.outputs.resume_key }}
+    - name: Require a complete producer report
+      if: steps.build.outcome != 'success'
+      env:
+        BUILD_EXIT: ${{ steps.build.outputs.exit_code }}
+      shell: bash
+      run: |
+        if [[ "$BUILD_EXIT" == 124 ]]; then
+          echo "CACHE_PRODUCER_INCOMPLETE build slice ended; rerun the same protected ref and source SHA to continue" >&2
+        else
+          echo "CACHE_PRODUCER_FAILED build exit=$BUILD_EXIT; saved progress does not validate the report" >&2
+        fi
+        exit 1
     - id: project_snapshot
       name: Prepare the project seed
       env:
         STRATALINT_CACHE_WRITES: 'true'
         STRATALINT_REPORT_SUCCEEDED: 'true'
+        STRATALINT_CACHE_PRODUCER_COMPLETE: 'true'
       shell: bash
       run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
     - name: Require a usable project seed

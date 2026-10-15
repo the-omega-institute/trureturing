@@ -789,6 +789,143 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertIn("leanprover/lean4:v4.31.0", result.stdout)
         self.assertEqual(b"installed toolchain", material.read_bytes())
 
+    def resume_setup(self):
+        owner = self.restore_owner()
+        self.env.update(GITHUB_REPOSITORY="owner/repo", GITHUB_REF_PROTECTED="true")
+        for args in (() if (self.root / ".git").exists() else (("init", "-q"), ("add", "."),
+                ("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "source"))):
+            subprocess.run(["git", "-C", str(self.root), *args], check=True, capture_output=True)
+        (self.root / ".lake/packages/mathlib").mkdir(parents=True)
+        (self.root / ".lake/build/lib/lean").mkdir(parents=True)
+        (self.root / ".lake/build/lib/lean/Module.olean").write_bytes(b"completed module")
+        return owner
+
+    def test_producer_resume_is_separate_and_requires_the_same_source_ref_and_inputs(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            spec = owner.resume_spec(self.root)
+            self.assertTrue(spec["restore_prefix"].startswith("lean-producer-resume-v1-"))
+            for field, value in (("GITHUB_REF", "refs/heads/integration-other"),
+                    ("GITHUB_REPOSITORY", "other/repo"), ("LEAN_OPTS", "-DmaxRecDepth=1000")):
+                with mock.patch.dict(os.environ, {field: value}):
+                    self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+            for file in ("lean-toolchain", "lake-manifest.json"):
+                path = self.root / file
+                before = path.read_bytes()
+                path.write_bytes(before + b"\n")
+                self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+                path.write_bytes(before)
+            (self.root / "source.lean").write_text("def changed := 1\n")
+            subprocess.run(["git", "-C", str(self.root), "add", "source.lean"], check=True)
+            subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c",
+                "user.email=fixture@example.invalid", "commit", "-qm", "changed"], check=True, capture_output=True)
+            self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+
+    def test_resume_paths_include_registered_dependency_and_project_material(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            paths = owner.resume_spec(self.root)["paths"]
+        self.assertIn(".lake/packages", paths)
+        self.assertIn(".lake/build/lib", paths)
+        self.assertIn(".lake/build/lean-inspector", paths)
+
+    def test_resume_writer_rejects_unprotected_pushes_and_ordinary_prs(self):
+        owner = self.resume_setup()
+        for defect in ({"GITHUB_REF_PROTECTED": "false"}, {"GITHUB_REF": "refs/heads/topic"},
+                {"STRATALINT_CACHE_WRITES": "false"},
+                {"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"},
+                {"GITHUB_EVENT_NAME": "workflow_dispatch", "STRATALINT_CACHE_SOURCE_VALIDATED": "false"}):
+            with self.subTest(defect=defect), mock.patch.dict(os.environ, dict(self.env, **defect), clear=True):
+                with self.assertRaises(ValueError): owner.resume_spec(self.root)
+        for env in (dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/1/merge",
+                        STRATALINT_CACHE_PR_PRODUCER="true"),
+                    dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch", STRATALINT_CACHE_SOURCE_VALIDATED="true",
+                        STRATALINT_CACHE_SOURCE_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_COMMIT="b" * 40,
+                        STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)):
+            with mock.patch.dict(os.environ, env, clear=True):
+                self.assertTrue(owner.resume_spec(self.root)["key"].endswith("17-2"))
+
+    def test_resume_restore_preserves_partial_native_work_without_certifying_a_report(self):
+        owner = self.resume_setup()
+        env = dict(self.env, STRATALINT_REPORT_SUCCEEDED="false")
+        with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertTrue(owner.resume_verified(self.root))
+            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+        self.assertIn("resume_ready=true", receipts.getvalue())
+        self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", receipts.getvalue())
+        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+        self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
+        self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+
+    def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):
+        for defect in ("foreign-key", "foreign-ref", "missing-marker", "transport-failed", "duplicate-marker"):
+            with self.subTest(defect=defect):
+                owner = self.resume_setup()
+                with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()):
+                    spec = owner.resume_spec(self.root)
+                    owner.resume_snapshot(self.root, spec)
+                    key, outcome = spec["key"], "success"
+                    marker = owner.resume_marker(self.root)
+                    if defect == "foreign-key": key = "lean-project-push-foreign-17-2"
+                    elif defect == "foreign-ref": os.environ["GITHUB_REF"] = "refs/heads/integration-other"
+                    elif defect == "missing-marker": marker.unlink()
+                    elif defect == "transport-failed": outcome = "failure"
+                    elif defect == "duplicate-marker": marker.write_text('{"key":"a","key":"b"}')
+                    owner.resume_restore(self.root, owner.resume_spec(self.root), key, outcome)
+                    self.assertFalse(owner.resume_verified(self.root))
+                self.assertFalse((self.root / ".lake/build").exists())
+                self.assertFalse((self.root / ".lake/packages").exists())
+
+    def test_resume_cannot_be_consumed_as_an_ordinary_project_or_dependency_seed(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()):
+            spec = owner.resume_spec(self.root)
+            for layer in ("project", "dependency"):
+                self.assertFalse(owner.restore_native(self.root, owner.actions_keys(self.root), layer, spec["key"], "success"))
+
+    def test_successful_final_slice_can_promote_verified_resume_with_zero_new_work(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+            del os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"]
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+            os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
+            self.assertEqual((True, "validated-producer-resume", 0), owner.project_publication(self.root))
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+            self.assertIn("project_ready=true", receipts.getvalue())
+            os.environ["STRATALINT_REPORT_SUCCEEDED"] = "false"
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+            self.assertTrue(receipts.getvalue().endswith("project_ready=false\n"))
+            os.environ["GITHUB_RUN_ATTEMPT"] = "3"
+            self.assertFalse(owner.resume_verified(self.root))
+
+    def test_resume_cli_selects_saves_and_restores_native_continuation(self):
+        self.resume_setup()
+        result = self.run_tool(CACHE, "resume-keys")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        values = dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
+        self.assertIn("resume_restore_prefix", values)
+        self.assertIn(".lake/packages", json.loads(values["resume_archive_path"]))
+        result = self.run_tool(CACHE, "resume-snapshot")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("resume_ready=true", result.stdout)
+        result = self.run_tool(CACHE, "resume-restore", "--resume-key", values["resume_key"],
+                               "--resume-outcome", "success")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status": "restored"', result.stdout)
+        self.assertFalse((self.root / "environment").exists())
+        result = self.run_tool(CACHE, "resume-keys", env=dict(self.env, STRATALINT_CACHE_WRITES="false"))
+        self.assertEqual(2, result.returncode)
+        self.assertIn("authorized protected or PR producer", result.stderr)
+
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
