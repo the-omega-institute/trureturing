@@ -2,18 +2,16 @@
    generality: G
    mirror-B: D5/B/S0/Certificates/FiniteNaturalJoin
    mirror-E: none(waiver:finite-relation-join)
-   anchors: [D5/S0/Certificates/FiniteSymmetryBoundReplay]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict.result; instance=D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict.result
    digest: Natural joins preserve every compatible total event, so an empty checked join refutes simultaneous support membership. -/
 
-import D5.S0.Certificates.FiniteSymmetryBoundReplay
+import Mathlib.Data.List.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S0.Certificates.FiniteNaturalJoin
-
-open D5.S0.Certificates.FiniteSymmetryBoundReplay (Event)
 
 variable {Coord Value : Type*}
 
@@ -21,11 +19,11 @@ variable {Coord Value : Type*}
 abbrev Row (Coord Value : Type*) := List (Coord × Value)
 
 /-- All entries of a row agree with the same actual total event. -/
-def RowCompatible (p : Row Coord Value) (e : Event Coord Value) : Prop :=
+def RowCompatible (p : Row Coord Value) (e : Coord → Value) : Prop :=
   ∀ cv ∈ p, e cv.1 = cv.2
 
 /-- The event has a compatible row in the relation. -/
-def Covers (rows : List (Row Coord Value)) (e : Event Coord Value) : Prop :=
+def Covers (rows : List (Row Coord Value)) (e : Coord → Value) : Prop :=
   ∃ p ∈ rows, RowCompatible p e
 
 variable [DecidableEq Coord] [DecidableEq Value]
@@ -41,7 +39,7 @@ def join (left right : List (Row Coord Value)) : List (Row Coord Value) :=
 /-- A shared total event survives the computed natural join. This theorem does
 not assume join acceptance, a global support witness, or a score margin. -/
 theorem join_covers (left right : List (Row Coord Value))
-    (e : Event Coord Value) (hl : Covers left e) (hr : Covers right e) :
+    (e : Coord → Value) (hl : Covers left e) (hr : Covers right e) :
     Covers (join left right) e := by
   rcases hl with ⟨p, hp, heP⟩
   rcases hr with ⟨q, hq, heQ⟩

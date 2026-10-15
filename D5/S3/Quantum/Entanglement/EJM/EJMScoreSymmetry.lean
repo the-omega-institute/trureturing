@@ -112,7 +112,7 @@ private theorem singleton_index_bijective (s : Fin 192) :
 
 set_option maxHeartbeats 4000000 in
 -- The kernel checks all 192 exact finite table actions; the default limit is insufficient.
-private theorem triangle_map_closure (s : Fin 192) (i : Fin 16) :
+theorem triangle_map_closure (s : Fin 192) (i : Fin 16) :
     sourceSymmetry s ∘ lhsTriangle i =
       lhsTriangle (triangleIndex s i) ∘ trianglePerm (triangleLocal s i) := by
   have h : ∀ s : Fin 192, ∀ i : Fin 16, ∀ j : Fin 10,
@@ -123,7 +123,7 @@ private theorem triangle_map_closure (s : Fin 192) (i : Fin 16) :
 
 set_option maxHeartbeats 4000000 in
 -- The kernel checks all 192 exact finite table actions; the default limit is insufficient.
-private theorem singleton_map_closure (s : Fin 192) (i : Fin 16) :
+theorem singleton_map_closure (s : Fin 192) (i : Fin 16) :
     sourceSymmetry s ∘ lhsSingleton i =
       lhsSingleton (singletonIndex s i) ∘ singletonPerm (singletonLocal s i) := by
   have h : ∀ s : Fin 192, ∀ i : Fin 16, ∀ j : Fin 9,
