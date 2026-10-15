@@ -45,8 +45,20 @@ have 2^c points in their closure to obtain disjoint added sets P1 and P2
 making the two extensions countably compact. It refers to the proof of
 Lemma 2.9 in its reference [9]; it does not prove an independent-family
 cardinal theorem on that page. This is contextual attribution, not a
-second attestation of a cardinal-supply theorem. Frolík's original
-Lemma 2.9 was not inspected, and no claim about its exact proof is made.
+second attestation of a cardinal-supply theorem. Direct primary
+attestation is recorded in
+[frolik1960countablycompact](frolik1960countablycompact.md): Lemma 2.8,
+printed pages 333–334, gives 2^c accumulation points for an infinite
+subset of beta P having no accumulation point in P, where P is separable
+metrizable. Lemma 2.9, printed page 334, constructs a countably compact
+R with P contained in R contained in beta P minus M and |R| at most c
+whenever M is contained in beta P minus P and |M| is strictly below 2^c.
+Its cardinal avoidance and omega1 closing-off are classical method
+provenance alongside the fixed-D construction above. Frolík explicitly
+invokes Pospíšil's cardinal theorem and credits Katětov for the simple
+proof of Lemma 2.8; those credits are attested by Frolík, without an
+independent reading of their originals. Neither lemma states the exact
+arbitrary T1/q-injective good-set theorem.
 
 The generic closure theorem, this classical method, and the original
 Feldman–Wilce Question 1 are separate claims. The intended application

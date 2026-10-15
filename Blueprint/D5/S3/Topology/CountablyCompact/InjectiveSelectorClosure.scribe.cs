@@ -57,7 +57,8 @@ internal sealed class InjectiveSelectorClosureDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("countably-compact-injective-extension"),
                 DeclarationHandle.Create(Owner + "exists_countablyCompact_injOn_extension"), H("Actual countably compact extension"),
                 StatementSource.FromAuthor(ClosureStatement), AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Topology/ginsburgsaks1975ultrafilters")), Blocks(
+                    LibraryNoteRef.Create("D5/L/Topology/ginsburgsaks1975ultrafilters"),
+                    LibraryNoteRef.Create("D5/L/Topology/frolik1960countablycompact")), Blocks(
                     Paragraph(Text("X is an arbitrary T1 space. Starting with any Szero contained in Good, of cardinal at most c, and on which q is injective, "
                         + "the conclusion constructs S containing Szero, contained in Good, of cardinal at most c, with q injective on S and S countably compact. "
                         + "Empty and finite seeds are included. No continuity of q, first countability, sequential compactness, CH, MA, "
@@ -73,12 +74,21 @@ internal sealed class InjectiveSelectorClosureDocument : IScribeDocumentDefiniti
                         + "The final union is small because aleph1 is at most c. For an infinite subset, select an embedding of the natural numbers into it. "
                         + "Ordinal.iSup_lt_omega_one bounds all appearance stages below omega1. The next stage supplies an ambient AccPt of the range, "
                         + "which remains an AccPt of the original larger subset. The native infinite-subset characterization proves IsCountablyCompact.")),
-                    Paragraph(Text("The acknowledged source's Theorem 2.12 and preceding construction, printed pages 407-408, provide the classical "
+                    Paragraph(Text("The fixed-D source's Theorem 2.12 and preceding construction, printed pages 407-408, provide the classical "
                         + "omega1 closing-off method. For a completely regular space X, that construction closes under the D-limits of sequences "
                         + "inside beta X for one fixed free ultrafilter D. It is method background for the independent Mathlib implementation here, "
                         + "not the exact arbitrary T1 theorem with preservation of an arbitrary q-injective good set. Both exact Lean statements remain "
                         + "repository-derived. Example 5.2, printed page 413, explicitly credits Frolik and invokes 2^c closure points and disjoint added sets; "
-                        + "it does not prove the independent-family cardinal theorem on that page. No direct reading of Frolik's original Lemma 2.9 is claimed.")),
+                        + "it does not prove the independent-family cardinal theorem on that page.")),
+                    Paragraph(Text("The acknowledged primary source's Lemma 2.8, printed pages 333-334, directly attests that for separable metrizable P, "
+                        + "every infinite M contained in beta P with no accumulation point in P has 2^c accumulation points in beta P. "
+                        + "Lemma 2.9, printed page 334, gives a countably compact R with P contained in R contained in beta P minus M and cardinal at most c "
+                        + "for M contained in beta P minus P of cardinal strictly below 2^c. Its proof selects accumulation points outside M "
+                        + "and closes off through omega1; each countably infinite subset lies in a bounded stage. Abundance, cardinal avoidance and omega1 closing-off "
+                        + "are classical methods. The primary proof invokes Pospisil's cardinal theorem and credits Katetov for the simple proof of Lemma 2.8; "
+                        + "these credits are attested by Frolik, without independent reading of their originals. The reading is of scanned pages, not extracted article text. "
+                        + "Neither lemma states the exact arbitrary T1/q-injective good-set theorem or the Feldman-Wilce graph endpoint. "
+                        + "This passage-level comparison makes no broad literature absence claim; both exact Lean statements retain repository-derived provenance.")),
                     Paragraph(Text("Feldman and Wilce, A Note on Compactness and Clique Size, arXiv:2608.13320v1, Question 1 on page 5 and the sufficient construction "
                         + "on page 10, provide the research target. The present theorem supplies the generic closure step; it does not assert that the paper "
                         + "already constructs its missing set Y. Application to that question still requires free-ultrafilter cardinal supply, "
