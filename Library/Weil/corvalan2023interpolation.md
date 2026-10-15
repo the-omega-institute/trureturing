@@ -3713,3 +3713,64 @@ the signed functional is proved,
 and no conclusion about estimates on $N$-dependent lines is asserted.
 The original same-source joint upper bound, complete signed Robin
 estimate and RH remain unresolved.
+
+
+### One same-source product remains under a fixed half-plane below 3/4
+
+Retain the original family (I59), the exact functional (I91), and all
+its integer-grid observations. Suppose, as an additional premise, that
+$1/2\le b<3/4$ and $\zeta$ has no zeros in $\Re s>b$. Fix
+$b<\beta<3/4$. The Abel argument in (I118) uses $\beta<1$ for its
+coefficient estimates; the restriction $\beta<5/8$ enters only at
+the final vanishing of (I119). Apply that same argument and the residual
+estimate after (I60), without a new Mertens or prime-error theorem:
+$$
+|B|\ll_\beta hN^\beta,\qquad
+|\delta_{N,H}|\ll_\beta h^2N^{\beta-1},\qquad
+\max_{N\le m\le2N}|LR_N(m)|\ll_\beta N^\beta.
+$$
+
+Write $S_N(m)=LR_N(m)$ and, for $N\le m<2N$, put
+$$
+u_{N,m}=\frac{m+\tfrac12-\tfrac32N}{m(m+1)},\qquad
+p_{N,m}=\frac{m+\tfrac12}{m(m+1)},\qquad
+\mathscr T_N(f)=\sum_{m=N}^{2N-1}u_{N,m}f(m).
+$$
+The identity
+$A=B/N+\delta_{N,H}$ in the original coefficients gives exactly
+$$
+\begin{aligned}
+L^2\mathscr J_N(R_N)
+={}&\frac BN\mathscr T_N(S_N)
+ +\delta_{N,H}\sum_{m=N}^{2N-1}p_{N,m}S_N(m)\\
+&+(k_{N,2N}+e_{N,H})S_N(2N).
+\end{aligned}
+\tag{I136}
+$$
+This is the full response, including its actual mean and every Fourier
+alias. The endpoint is retained in its combined original coefficient.
+Since $\sum_{m=N}^{2N-1}p_{N,m}\ll1$, and the exact coefficients of (I91) and (I75) give
+$|k_{N,2N}+e_{N,H}|\ll|\delta_{N,H}|+|B|/N^2$, the last two
+terms divided by $L^2$ have total bound
+$$
+\begin{aligned}
+\left|\mathscr J_N(R_N)-\frac B{NL^2}\mathscr T_N(S_N)\right|
+ &\ll_\beta\frac{h^2N^{2\beta-1}+hN^{2\beta-2}}{L^2}\\
+ &\ll_\beta
+ \frac{N^{2\beta-3/2}e^{2\lambda\Omega}
+       +N^{2\beta-9/4}e^{\lambda\Omega}}{L^2}=o(1).
+\end{aligned}
+\tag{I137}
+$$
+Both fixed negative powers absorb their exponential-log factors when $\beta<3/4$.
+
+Consequently, under this additional fixed-half-plane premise, the
+original all-integer target $\mathscr J_N(R_N)=o(1)$ is equivalent to
+$B\mathscr T_N(S_N)=o(NL^2)$ for those same integers and the specified
+bandwidth. The coefficients and response in this product cannot be
+chosen or optimized independently. This pays the secondary and endpoint
+contributions over a wider range than (I119), but proves no new bound for
+the remaining signed product and does not improve its $5/8$ sufficient
+threshold. It is an application of the owned analytic estimates, not a
+new cancellation theorem or a Lean-certified statement. The complete
+signed Robin estimate and RH remain unresolved.
