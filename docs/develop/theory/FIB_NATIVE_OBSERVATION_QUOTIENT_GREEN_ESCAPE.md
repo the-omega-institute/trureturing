@@ -1130,3 +1130,762 @@ or a proved retention mechanism; free Markov sufficiency alone fails by
 (6.7).
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Uniform same-point energy on the retained three-coordinate family
+
+**Definition 10.1 (fixed native family and retained contract).** Retain
+[N]'s negative amplitude convention, arbitrary fixed preparation phases,
+and two original controls. Fix $0<Z<1$, $H=(1-Z)/2$,
+$I=(l,u)\Subset(0,H)$, $k_0\in I$, and $\varepsilon>0$.
+For an immutable parameter $\kappa$ put $X=Y=H+\kappa$. In mode order
+$(0,1,2,3,13)$ the probabilities and phase weights are exactly
+
+$$
+p_\kappa=(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),\qquad
+w_s=\frac{d_s}{p_{\kappa,s}\mathcal I_\kappa},\quad
+d=(1,-1,0,-1,1),\quad
+\mathcal I_\kappa=\sum_{s\in\{0,1,3,13\}}p_{\kappa,s}^{-1}.
+\tag{10.1}
+$$
+
+Increments satisfy $h_2=0$, $h_1=h_3=v$. Use
+$\theta=[h_{13}]$, $D=[h_0-h_{13}]$, and the declared observation
+$q=(k,\theta,[v])$. All three angular periods are $2\pi$.
+This is the unimodular phase change of [G, Definition 12.1], and its
+nearby full leaf has dimension four. The preparation phases are translated,
+not equated. The original full read menu is not replaced by $q$.
+
+Write $s_\kappa=H+\kappa$, $a_\kappa=\kappa s_\kappa/H$, and
+
+$$
+\begin{aligned}
+A_\kappa&=\frac{(k-2\kappa)(s_\kappa-k)}{2H(k-a_\kappa)},&
+B_\kappa&=-\frac{k(k-2\kappa)}{2H(k-a_\kappa)},\\
+C_\kappa&=\frac{\kappa(s_\kappa-k)}{H(k-a_\kappa)},&
+b_\kappa&=A_\kappa-B_\kappa
+ =\frac{s_\kappa(k-2\kappa)}{2H(k-a_\kappa)}.
+\end{aligned}
+\tag{10.2}
+$$
+
+These are the original coefficients of [G, Calculation 12.2]. Thus
+
+$$
+P=\partial_k,\qquad
+Q_\kappa=A_\kappa\partial_\theta+B_\kappa\partial_v
+                  +C_\kappa\partial_D,\qquad
+R_\kappa=A_\kappa\partial_\theta+B_\kappa\partial_v.
+\tag{10.3}
+$$
+
+Choose one closed two-sided parameter interval $K=[-\kappa_1,\kappa_1]$
+small enough that all probabilities are positive on a common larger height
+interval $I'\Supset\overline I$, with $\overline{I'}\subset(0,H)$,
+and $s_\kappa>\sup I'$, $b_\kappa>0$ there. Such a choice follows,
+for example, by first enlarging $I$ and then decreasing
+$\min(l/4,(H-u)/2,H/4)$. All constants below are chosen on this one
+compact parameter set; $Z,I,k_0,\varepsilon$ remain fixed.
+
+For $\kappa\ne0$ the full analytic cylinder, measure and free form are
+
+$$
+\Omega=I\times\mathbb T_\theta\times\mathbb T_v\times\mathbb T_D,
+\quad d\mu=dk\,d\theta\,dv\,dD,\qquad
+T_\kappa[f]=\int_\Omega
+ (\varepsilon^2|Pf|^2+|Q_\kappa f|^2)d\mu.
+\tag{10.4}
+$$
+
+Its domain is the compact smooth height-core completion; its operator
+$L_\kappa$ is the horizontal Friedrichs form operator. The full field
+$\Gamma_{\kappa,o}$ is its killed free unit point-source Green field
+at $o=(k_0,0,0,0)$. Density one, covariance
+$\operatorname{diag}(\varepsilon^2,1)$, clock $e^{-tL_\kappa}$,
+periodic phases and Dirichlet height killing are unchanged.
+
+On $B=I\times\mathbb T^2$, with $d\nu=dk\,d\theta\,dv$, set
+
+$$
+\begin{aligned}
+\mathcal E_\kappa[z]&=\int_B
+ (\varepsilon^2|\partial_kz|^2+|R_\kappa z|^2)d\nu,\qquad
+\mathcal F_\kappa^B=
+ \overline{C_c^\infty(B)}^{(\|\cdot\|_2^2+\mathcal E_\kappa)^{1/2}},\\
+(Jz)(q,D)&=(2\pi)^{-1/2}z(q).
+\end{aligned}
+\tag{10.5}
+$$
+
+Here $J$ is the actual isometry into $L^2(\Omega,\mu)$.
+The notation $\mathcal E_\kappa$ avoids confusing a function with the
+phase coordinate $v$. At $\kappa=0$, (10.5) is defined directly on the
+native three-coordinate double-wall leaf. No four-dimensional smooth
+point-Green density at $\kappa=0$ is postulated.
+
+**Theorem 10.2 (uniform native Green control and collective compactness).**
+For the family (10.1)--(10.5), the actual restricted killed free operator is
+the form operator $\mathscr L_\kappa$ of $\mathcal E_\kappa$.
+Let $p_\kappa^B$ and
+$G_\kappa(q)=\int_0^\infty p_\kappa^B(t,q_0,q)dt$ be its heat and
+unit-source Green densities, where $q_0=(k_0,0,0)$.
+There are finite constants $A>0$, $B_0\ge0$, independent of
+$\kappa\in K$, such that
+
+$$
+\int_B G_\kappa|z|^2d\nu
+ \le A\mathcal E_\kappa[z]+B_0\|z\|_2^2
+ \qquad(z\in\mathcal F_\kappa^B).
+\tag{10.6}
+$$
+
+The union of the sets
+$\{z\in\mathcal F_\kappa^B:\|z\|_2^2+\mathcal E_\kappa[z]\le M\}$,
+$\kappa\in K$, is relatively compact in $L^2(B)$ for every finite $M$.
+As $\kappa\to0$ through either sign, the free forms Mosco-converge to
+$\mathcal E_0$, and $G_\kappa\to G_0$ locally uniformly off $q_0$
+and in $L^1(B)$. The constants are not asserted uniform as
+$\varepsilon\downarrow0$ or as the fixed height data move.
+
+Proof. Hidden $D$ translations commute with the two original fields,
+preserve measure, and preserve the compact smooth height core. Their Haar
+average $\Pi$ decreases $T_\kappa$ by Jensen's inequality and gives
+orthogonal free form components. The averaged-core and variational
+resolvent proof of Theorem 2.1 therefore applies with $D$ as the hidden
+circle. It gives exactly
+
+$$
+\begin{gathered}
+\mathcal F_\kappa^{\rm full}\cap\operatorname{Ran}J
+   =J\mathcal F_\kappa^B,\qquad T_\kappa[Jz]=\mathcal E_\kappa[z],\\
+D(L_\kappa)\cap\operatorname{Ran}J=J D(\mathscr L_\kappa),\qquad
+L_\kappa J=J\mathscr L_\kappa,\qquad
+e^{-tL_\kappa}J=J e^{-t\mathscr L_\kappa}.
+\end{gathered}
+\tag{10.7}
+$$
+
+These reused projection facts require no full attractive stability.
+They also give the $q$-only free transition laws and the same height
+survival event, by iteration against bounded base observables. Equivalently
+its killed diffusion is
+
+$$
+dK_t=\sqrt2\varepsilon\,dB_t^1,\qquad
+d\theta_t=\sqrt2A_\kappa(K_t)\,dB_t^2,\qquad
+dv_t=\sqrt2B_\kappa(K_t)\,dB_t^2,
+$$
+
+with two independent real Brownian motions, phases reduced modulo
+$2\pi$, and killing at $\inf\{t:K_t\notin I\}$.
+The coefficients have no vertical derivatives and $R_\kappa k=0$, so
+there is no Itô correction. This is the original analytic clock; these
+sample paths are not asserted to be finite-variation native commands.
+
+For a concrete completed-domain description, expand in the normalized
+angular basis $(2\pi)^{-1}e^{i(m\theta+nv)}$ and write $z_{mn}(k)$
+for its coefficients. Then
+
+$$
+\begin{aligned}
+V_{\kappa,mn}(k)&=(mA_\kappa+nB_\kappa)^2
+ =b_\kappa(k)^2\left(m-\frac{(m+n)k}{s_\kappa}\right)^2,\\
+\mathcal F_\kappa^B
+ &=\left\{z:\ z_{mn}\in H^1_0(I),\
+ \sum_{m,n}\int_I(\varepsilon^2|z_{mn}'|^2+
+                 V_{\kappa,mn}|z_{mn}|^2)dk<\infty\right\},\\
+D(\mathscr L_\kappa)
+ &=\left\{z:\ z_{mn}\in H^2(I)\cap H^1_0(I),\
+ \sum_{m,n}\|(-\varepsilon^2\partial_k^2+
+                       V_{\kappa,mn})z_{mn}\|_2^2<\infty\right\}.
+\end{aligned}
+\tag{10.8}
+$$
+
+Membership in $L^2(B)$ is implicit. Parseval, finite-mode truncation and
+one-dimensional core approximation prove these identities. On the smooth
+core the expression is
+$\mathscr L_\kappa=-\varepsilon^2\partial_k^2-R_\kappa^2$;
+(10.8), or equivalently form representation, specifies its actual domain.
+No equality of the domains for different parameters is used.
+
+Here is a uniform compactness bound. Put $M=|m|+|n|$, $N=m+n$, and
+$b_- =\inf_{K\times I'}b_\kappa>0$.
+For $|N|\ge M/4$, zero extension from $I$ and the elementary oscillator
+inequality on the real line give
+
+$$
+\int_I(\varepsilon^2|f'|^2+
+ b_-^2(m-Nk/s_\kappa)^2|f|^2)dk
+ \ge\frac{\varepsilon b_-|N|}{s_\kappa}\|f\|_2^2.
+\tag{10.9}
+$$
+
+Indeed expand the nonnegative square
+$\|\varepsilon f'+a(k-t)f\|_2^2$ with
+$a=b_-|N|/s_\kappa$, $t=ms_\kappa/N$; integration by parts gives
+(10.9), also when $t$ lies outside $I$.
+If $|N|<M/4$, then $|m|>3M/8$ and $0<k/s_\kappa<1$, so
+$|m-Nk/s_\kappa|>M/8$. Thus in both cases the fiber energy is at least
+$cM\|f\|_2^2-C\|f\|_2^2$, with common constants.
+High angular modes have a uniformly small $L^2$ tail on every bounded
+energy set. Each finite collection of modes is bounded in $H^1_0(I)$,
+which is compact in $L^2(I)$. This proves collective compactness.
+The height Poincaré bound also gives the common gap
+$\lambda_0=\varepsilon^2\pi^2/(u-l)^2$.
+
+For free Mosco lower semicontinuity, take a weakly convergent sequence of
+bounded free energy. Each finite collection of Fourier modes has weak
+$H^1_0$ compactness, its coefficients converge smoothly, and its energy is
+lower semicontinuous. Taking the supremum over finite mode sets gives
+membership in $\mathcal F_0^B$ and the full lower bound. Recovery follows
+by first approximating in the $\mathcal E_0$ norm with a fixed smooth
+finite-mode core function and then taking a diagonal sequence. This proves
+the free limit without imposing a common completed domain.
+
+It remains to establish the uniform singular estimate; compactness of the
+parameter interval alone would not give (10.6). Use the unimodular base
+angles $\alpha=\theta-v$, $\beta=\theta$. Then
+
+$$
+R_\kappa=b_\kappa(k)
+ \left(\partial_\alpha+(1-k/s_\kappa)\partial_\beta\right),\qquad
+\det\begin{pmatrix}A_\kappa&B_\kappa\\A_\kappa'&B_\kappa'\end{pmatrix}
+ =-b_\kappa^2/s_\kappa.
+\tag{10.10}
+$$
+
+The determinant is uniformly separated from zero. In a real local chart
+at $q_0$, set $b_o=b_\kappa(k_0)$, $c_o=1-k_0/s_\kappa$ and
+
+$$
+\begin{gathered}
+x=k-k_0,\quad y=\alpha,\quad
+z=-s_\kappa(\beta-c_oy),\qquad
+\xi=x/\varepsilon,\quad\eta=y/b_o,\quad\zeta=z/(\varepsilon b_o),\\
+\varepsilon P=U:=\partial_\xi,\qquad
+R_\kappa=\frac{b_\kappa(k)}{b_o}
+ V,\quad V:=\partial_\eta+\xi\partial_\zeta,\qquad
+ d\nu=m_\kappa\,d\xi\,d\eta\,d\zeta,\quad
+ m_\kappa=\frac{\varepsilon^2b_o^2}{s_\kappa}.
+\end{gathered}
+\tag{10.11}
+$$
+
+These are exact identities, not only tangent limits. On one common
+coordinate neighborhood the chart Jacobians, their inverses and all
+coefficient derivatives have uniform bounds; $m_\kappa$ and
+$b_\kappa/b_o$ have positive upper and lower bounds. The Heisenberg gauge
+
+$$
+N(\xi,\eta,\zeta)
+ =\left((\xi^2+\eta^2)^2+(2\zeta-\xi\eta)^2\right)^{1/4}
+\tag{10.12}
+$$
+
+is comparable to the horizontal distance there, with common constants.
+Write $N_\kappa(q)$ for its pullback. The same construction centered at
+any point of a compact larger cylinder gives uniform local ball volumes
+comparable to $r^4$ for sufficiently small $r$.
+
+For completeness, the precise heat estimate used to integrate the
+singularity is
+
+$$
+p_\kappa^B(t,q_0,q)
+ \le C t^{-2}\exp(-cN_\kappa(q)^2/t),\quad 0<t<t_0,
+\tag{10.13}
+$$
+
+on a smaller common source chart, together with a uniform integrable
+small-time bound away from that chart. These are the local upper Gaussian
+estimates of Jerison--Sánchez-Calle [J, Theorem 2, p.849], with the
+parameter bounds checked as follows. Extend the vertical pair
+$(A_\kappa,B_\kappa)$ from $I'$ to a common height circle, keeping its
+length positive and its argument derivative of one sign. To construct the
+extension, lift its argument on $I'$; its derivative is
+$-b_\kappa^2/(s_\kappa(A_\kappa^2+B_\kappa^2))<0$.
+Continue that derivative negatively on the complementary arc, with integral
+making one full turn, and continue the positive length smoothly. The arc
+can be chosen long enough and the construction depends smoothly on
+$\kappa$. On the compact three-torus the two fields
+$\varepsilon\partial_k$ and
+$A_\kappa\partial_\theta+B_\kappa\partial_v$ are divergence free and
+uniformly bracket-generating of step two.
+
+Apply [J]'s upper-bound proof on a finite common chart cover. On the
+native cylinder its lifting coordinates can be chosen by (10.11); on the
+complementary arc the uniformly nonzero argument derivative supplies
+smooth contact coordinates with the same bounds. Their Taylor remainders
+of weighted order zero, cutoff derivatives and inverse frame determinants
+are uniformly bounded. The homogeneous model is the same pair $U,V$.
+Consequently the convolution-parametrix bounds in [J, §4, pp.848--850]
+have common constants and a common finite iteration order. More
+explicitly, on the native charts the principal model heat-kernel error is
+$((b_\kappa/b_o)^2-1)V^2p_t^H$ times the chart density factor.
+Since $b_\kappa(k)/b_o-1=O(|\xi|)$ uniformly, the homogeneous Gaussian
+bounds for $V^2p_t^H$ give an error bounded by
+$Ct^{-5/2}e^{-cN^2/t}$, whose spatial $L^1$ norm is at most
+$Ct^{-1/2}$. Each time convolution therefore gains a factor of order
+$t^{1/2}$; the beta-integral constants in any fixed number of iterations
+are common. Cutoff errors lie off the local diagonal and have uniform
+flat small-time bounds. This verifies directly the uniform error class
+used in [J]'s finite parametrix construction. The
+uniform off-diagonal Gevrey bound in its Proposition 3 follows from the
+same integration-by-parts argument with these bounded coefficients and
+the uniform local subelliptic estimate [H, Theorem B.1]. The maximum
+principle and finite-cover step in [J, Theorem 2] therefore give common
+$C,c,t_0$. This tracks the constants in that proof, rather than taking a
+supremum of unexamined fixed-operator constants. The volume denominator
+there is comparable to $t^2$ by (10.11)--(10.12). Restriction to $B$ kills
+earlier, so domain domination transfers the bound from the compact
+extension. Short paths near $q_0$ remain in the chosen chart, giving
+(10.13); outside it the distance from $q_0$ has a uniform positive lower
+bound. This extension is used only for estimates and changes neither
+height killing nor the native operator.
+
+At time one the same extension bounds all killed heat diagonals uniformly.
+The gap $\lambda_0$ and the semigroup identity then give
+$p_\kappa^B(t,q_0,q)\le C e^{-\lambda_0(t-1)}$ for $t\ge1$,
+uniformly on $B$. Integration of (10.13), using
+$\int_0^1t^{-2}e^{-cr^2/t}dt\le C'r^{-2}$, proves
+
+$$
+G_\kappa(q)\le C N_\kappa(q)^{-2}+C'
+\tag{10.14}
+$$
+
+on the source chart and a uniform bound on its exterior, including near
+the killed height faces. The Green field is positive and finite off
+$q_0$; at $q_0$ the contact diagonal asymptotic $ct^{-2}$ from [H,
+Theorem B] makes its time integral infinite.
+
+The unweighted Heisenberg Hardy inequality [R, Corollary 3.2], with
+$p=2$, $\alpha=1$, homogeneous dimension four, gives
+$\int N^{-2}|f|^2\le C_H\int(|Uf|^2+|Vf|^2)$.
+Its required strict condition is $1<4/2$.
+Use (10.11), a fixed smooth source cutoff, and horizontal localization.
+The constant density factor $m_\kappa$ appears on both sides and cancels;
+the positive lower bound on $b_\kappa/b_o$ controls the group energy by
+$\mathcal E_\kappa$. The bounded remainder and cutoff derivatives
+contribute only $B_0\|z\|_2^2$. This proves (10.6) on the smooth core.
+Applying it to differences of core approximants proves weighted $L^2$
+convergence, identifies the same almost-everywhere function, and extends
+(10.6) to exactly $\mathcal F_\kappa^B$.
+
+Finally, free Mosco convergence gives strong free resolvent and heat
+convergence. Uniform interior hypoelliptic smoothing upgrades the kernels
+to local smooth convergence for positive times, as in [H, Theorem 3.5];
+the common semigroup bound is one, the density is fixed, the drift and
+potential are zero, and (10.10) verifies its uniform strong Hörmander
+hypothesis. The Gaussian off-diagonal and exponential large-time bounds
+justify integrating on compact sets away from $q_0$. The source-chart
+mass in $\{N_\kappa<r\}$ is at most $Cr^2$, by (10.14) and volume
+$r^4$. The charts and inverses are uniformly bounded, so the mass of a
+common Euclidean neighborhood of $q_0$ tends uniformly to zero with its
+radius. Away from it the Green fields are uniformly bounded, including
+the boundary collars. Dominated convergence proves the $L^1$ assertion.
+The corresponding height marginal, obtained by testing the free evolution
+on functions of height alone, is exactly
+
+$$
+\int_{\mathbb T^2}G_\kappa(k,\theta,v)d\theta\,dv
+ =\varepsilon^{-2}G_I(k_0,k),\qquad
+G_I(a,k)=\frac{(\min(a,k)-l)(u-\max(a,k))}{u-l}.
+\tag{10.15}
+$$
+
+It supplies the same finite total Green mass for every parameter.
+$\square$
+
+## 11. A fixed strict coupling window and the singular two-sign limit
+
+**Theorem 11.1 (closed restricted forms, attained minima and actual limit).**
+With the fixed neighborhood and constants of Theorem 10.2, put
+
+$$
+g_* =\pi/A,\qquad 0<g<g_*,\qquad
+W_\kappa=G_\kappa/(2\pi),\qquad
+\mathfrak h_{\kappa,g}[z]
+ =\mathcal E_\kappa[z]-g\int_BW_\kappa|z|^2d\nu,
+\quad D(\mathfrak h_{\kappa,g})=\mathcal F_\kappa^B.
+\tag{11.1}
+$$
+
+These are closed semibounded forms on their natural completed horizontal
+domains, with the uniform coercivity
+
+$$
+\mathfrak h_{\kappa,g}[z]
+ \ge\tfrac12\mathcal E_\kappa[z]
+             -\frac{g_*B_0}{2\pi}\|z\|_2^2.
+\tag{11.2}
+$$
+
+Their form operators have compact resolvent. Every normalized infimum
+$e_\kappa(g)=\min_{\|z\|_2=1}\mathfrak h_{\kappa,g}[z]$ is finite
+and attained. For every fixed $g$ in this one positive interval,
+
+$$
+\mathfrak h_{\kappa,g}\longrightarrow\mathfrak h_{0,g}
+ \quad\hbox{in shifted Mosco sense},\qquad
+e_\kappa(g)\longrightarrow e_0(g)
+\tag{11.3}
+$$
+
+through either sign. The limit is the native three-coordinate double-wall
+point-Green form with coupling $g/(2\pi)$ relative to its unit source.
+It is not that form with coupling $g$.
+
+There is a unique nonnegative normalized ground state $z_\kappa$;
+it is positive almost everywhere. For this choice,
+
+$$
+\begin{gathered}
+z_\kappa\to z_0\quad\hbox{strongly in }L^2(B),\\
+(\varepsilon\partial_kz_\kappa,R_\kappa z_\kappa)
+ \to(\varepsilon\partial_kz_0,R_0z_0)
+ \quad\hbox{strongly in }L^2(B)\oplus L^2(B),\\
+\int_BG_\kappa|z_\kappa|^2d\nu
+ \longrightarrow\int_BG_0|z_0|^2d\nu.
+\end{gathered}
+\tag{11.4}
+$$
+
+Arbitrary normalized complex ground states require fixing their constant
+phases, for example by making their inner product with $z_0$ positive
+real for all sufficiently small parameters. Without phase fixing the
+conclusion is convergence of the ground-state lines.
+
+Proof. Equation (10.6) gives relative form bound
+$gA/(2\pi)<1/2$. KLMN [T, Theorem 6.24] proves closedness on exactly
+$\mathcal F_\kappa^B$, norm equivalence and (11.2).
+The attractive operator is defined by the variational domain
+
+$$
+D(\mathscr H_{\kappa,g})=
+ \{z\in\mathcal F_\kappa^B:\ \exists F\in L^2(B), \mathfrak h_{\kappa,g}(z,w)=\langle F,w\rangle \text{ for all }w\in\mathcal F_\kappa^B\},
+ \qquad\mathscr H_{\kappa,g}z=F.
+$$
+
+This domain is not replaced by an intersection of a free operator domain
+and a multiplier domain. Collective compactness of the free energy balls
+then gives compactness of the shifted attractive form balls. In particular each individual form
+has compact resolvent. Alternatively, a normalized minimizing sequence
+is bounded in the free form norm, has a strongly $L^2$ convergent
+subsequence, and a weakly convergent subsequence in the closed attractive
+form norm; weak lower semicontinuity proves attainment and finiteness.
+
+We give the singular lower-limit argument explicitly. Fix $g$ and
+$\kappa_j\to0$, and suppose $u_j\rightharpoonup u$ in $L^2$ with
+bounded shifted attractive energy. By (11.2) and collective compactness,
+a subsequence converges strongly to $u$, has bounded free energy, and
+free lower semicontinuity puts $u\in\mathcal F_0^B$.
+In the source charts choose smooth real cutoffs
+$\chi_{\kappa,r}^2+\vartheta_{\kappa,r}^2=1$ with
+$\chi=1$ for $N_\kappa\le r$, $\chi=0$ for $N_\kappa\ge2r$.
+They can be obtained as cosine and sine of a fixed smooth function of
+$N_\kappa/r$ constant near both endpoints. They satisfy
+
+$$
+\varepsilon^2|\partial_k\chi_{\kappa,r}|^2+
+ |R_\kappa\chi_{\kappa,r}|^2+
+\varepsilon^2|\partial_k\vartheta_{\kappa,r}|^2+
+ |R_\kappa\vartheta_{\kappa,r}|^2
+ \le Cr^{-2}\mathbf1_{\{r<N_\kappa<2r\}}.
+\tag{11.5}
+$$
+
+For each fixed $r$ these cutoffs and their derivatives converge smoothly
+as $\kappa\to0$. Horizontal IMS is an identity for both completed forms;
+the potential term splits without a remainder. Denote its nonnegative
+kinetic error by $\mathcal R_{\kappa,r}[u]$, the integral of the left
+side of (11.5) against $|u|^2$.
+The inner form is at least $-gB_0\|\chi u_j\|_2^2/(2\pi)$ by
+(10.6). For the outer form, the Green multipliers are uniformly bounded
+and converge pointwise off the pole; strong $L^2$ convergence therefore
+makes their integrals converge. Free lower semicontinuity applies to the
+outer cutoff functions. Consequently
+
+$$
+\liminf_j\mathfrak h_{\kappa_j,g}[u_j]
+ \ge \mathfrak h_{0,g}[\vartheta_{0,r}u]
+       -\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2
+       -\mathcal R_{0,r}[u].
+\tag{11.6}
+$$
+
+The local Hardy inequality also gives
+$N_0^{-1}u\in L^2$ near the pole. Thus
+$r^{-2}\int_{r<N_0<2r}|u|^2\to0$ by absolute continuity of that
+weighted integral. Equation (11.5) implies
+$\mathcal R_{0,r}[u]\to0$, and the product rule gives
+$\chi_{0,r}u\to0$ in the free form norm. The potential follows by
+(10.6). Hence $\vartheta_{0,r}u\to u$ in the attractive form norm;
+letting $r\downarrow0$ in (11.6) proves the required lower bound.
+This is the step that retains the inverse-square singularity.
+
+Recovery follows first for a fixed compact smooth test: its free energy
+converges by smooth coefficient convergence, and its potential converges
+by $L^1$ Green convergence. Approximate a general $u\in\mathcal F_0^B$
+in its form norm by such tests and use a diagonal sequence. A fixed shift
+larger than $g_*B_0/(2\pi)$ makes all forms nonnegative, so these lower
+and recovery statements are precisely shifted Mosco convergence.
+They do not assume compactness of the critical potential multiplier.
+
+Normalized recovery gives $\limsup e_{\kappa_j}(g)\le e_0(g)$.
+For actual normalized minimizers, (11.2), a fixed finite trial bound and
+collective compactness give a strongly convergent subsequence with
+norm-one limit. The lower bound just proved gives the reverse inequality
+and identifies every such limit as a limit-form minimizer. This proves
+the minimum convergence in (11.3).
+
+The modulus contraction for the two real fields decreases kinetic energy
+and leaves the potential unchanged, so a nonnegative ground state exists.
+To check simplicity and positivity with the singular potential, truncate
+$W_\kappa$ from above. For a bounded nonnegative truncation, the
+Trotter product formula gives
+$e^{-t(\mathscr L_\kappa-g\min(W_\kappa,M))}f
+ \ge e^{-t\mathscr L_\kappa}f$ for $f\ge0$.
+The decreasing truncated forms have the same lower bound and converge
+on the natural domain to the closed form (11.1); the monotone closed-form
+convergence theorem gives strong resolvent, hence heat convergence.
+The inequality passes to the limit. The free heat kernel is strictly
+positive: (10.10) gives bracket accessibility on the connected cylinder,
+and the killed free heat positivity principle applies with the same
+height boundary. Thus the restricted attractive heat operator is
+positivity improving. The elementary positive-eigenvector argument of
+[T, Theorem 10.11] applies on this $L^2(B)$ as well: its proof uses only
+selfadjointness, reality and positivity improvement. The lowest
+eigenvalue is simple and its nonnegative eigenvector is positive almost
+everywhere. These are restricted semigroups only.
+
+We finally verify the stronger assertions in (11.4), rather than infer
+them from compactness alone. Along a convergent minimizing subsequence
+write $u_j=z_{\kappa_j}$, $u=z_0$ and
+$c_g=1-gA/(2\pi)>0$. The IMS identity and (10.6) give
+
+$$
+\begin{aligned}
+c_g\limsup_j\mathcal E_{\kappa_j}
+ [\chi_{\kappa_j,r}u_j]
+ &\le e_0(g)-\mathfrak h_{0,g}[\vartheta_{0,r}u]
+       +\mathcal R_{0,r}[u]
+       +\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2\\
+ &=\mathfrak h_{0,g}[\chi_{0,r}u]
+       +\frac{gB_0}{2\pi}\|\chi_{0,r}u\|_2^2
+ \longrightarrow0\quad(r\downarrow0).
+\end{aligned}
+\tag{11.7}
+$$
+
+The potential of these inner cutoffs tends uniformly to zero by (10.6).
+Outside them bounded multipliers and strong $L^2$ convergence give
+potential convergence. This proves the last line of (11.4).
+The energy identity then gives
+$\mathcal E_{\kappa_j}[u_j]\to\mathcal E_0[u]$.
+Distributional testing, smooth coefficient convergence and the uniform
+energy bound identify the weak limits of the two horizontal derivatives
+as $(\varepsilon\partial_ku,R_0u)$. Convergence of their combined squared
+norm makes that convergence strong. Positivity and simplicity identify
+all subsequential limits, so the whole positive family converges.
+The same argument applies after the stated constant-phase choice.
+
+At zero parameter, $b_0=1/2$ and $s_0=H$. In the actual unimodular
+angles $(\alpha,\beta)=(\theta-v,\theta)$,
+$R_0=\tfrac12\partial_\alpha+
+(\tfrac12-k/(2H))\partial_\beta$. This is exactly the native double-wall
+operator of [G, Definition 4.1], with $r=2H$, the same density and clock.
+Its unit point source is $G_0$. Equation (11.1) therefore has native
+coupling $g/(2\pi)$, as claimed. $\square$
+
+## 12. Same-source normalization, lowering and local omitted-phase leakage
+
+**Theorem 12.1 (same-source lowering and checked omitted-phase leakage).**
+For every nonzero $\kappa\in K$, the same full point-source field obeys
+
+$$
+\begin{aligned}
+\int_{\mathbb T_D}p_\kappa^\Omega(t,o,(q,D))dD
+ &=p_\kappa^B(t,q_0,q),\\
+\int_{\mathbb T_D}\Gamma_{\kappa,o}(q,D)dD&=G_\kappa(q),\\
+\frac1{2\pi}\int_{\mathbb T_D}\Gamma_{\kappa,o}(q,D)dD
+ &=W_\kappa(q),\\
+T_\kappa[Jz]-g\int_\Omega\Gamma_{\kappa,o}|Jz|^2d\mu
+ &=\mathfrak h_{\kappa,g}[z].
+\end{aligned}
+\tag{12.1}
+$$
+
+The Green identity is an extended pointwise integral, also in $L^1(B)$;
+the last identity is finite on every natural restricted form domain.
+Uniform smearing of the original pole around its hidden circle gives the
+different full-space field
+
+$$
+\frac1{2\pi}\int_{\mathbb T}
+ \Gamma_{\kappa,(q_0,s)}(q,D)ds=W_\kappa(q).
+\tag{12.2}
+$$
+
+Its source is $\delta_{q_0}\otimes dD/(2\pi)$ and has total mass one.
+Viewed as a field on $B$, $W_\kappa$ has source charge $1/(2\pi)$,
+whereas $G_\kappa$ has charge one. Theorem 11.1 concerns the original
+point field evaluated on the declared state class. It makes no
+full-space smeared-source stability assertion. In addition, the normalized
+test (12.3) strictly lowers the free minimum as in (12.4), and the original
+attractive differential expression fails to preserve the retained class
+on the checked local cores below.
+
+Proof. The marginal and smearing identities are reused intermediate
+steps in this same-source comparison. Apply the free semigroup identity
+(10.7) to bounded base tests.
+Smooth interior kernels and compactness of the hidden circle make the
+heat marginal pointwise. Tonelli gives the Green marginal and its
+$L^1$ version, using (10.15). The conditional Haar average divides that
+integral by the circle length. Since $|Jz|^2=|z|^2/(2\pi)$, Tonelli and
+(10.6) give the form identity, including finiteness and weighted
+polarization. Hidden translation symmetry of the free kernel gives
+(12.2); testing its free equation identifies the displayed smeared source.
+These are the marginal and source-smearing mechanisms of Theorem 3.1,
+now applied to the full-four/retained-three family after its actual free
+domains have been checked.
+
+For the lowering assertion put $d=u-l$ and
+
+$$
+\phi(k)=\sqrt{2/d}\sin\frac{\pi(k-l)}d,\qquad
+z_*(k,\theta,v)=\phi(k)/(2\pi),\qquad
+\mathcal V_*=
+ \frac1{(2\pi)^3\varepsilon^2}
+ \int_I G_I(k_0,k)|\phi(k)|^2dk>0.
+\tag{12.3}
+$$
+
+Then $z_*\in\mathcal F_\kappa^B$, $\|z_*\|_2=1$ and
+
+$$
+\min_{\|z\|_2=1}\mathcal E_\kappa[z]=\lambda_0,\qquad
+e_\kappa(g)\le\lambda_0-g\mathcal V_*<\lambda_0
+\quad(\kappa\in K,\ 0<g<g_*).
+\tag{12.4}
+$$
+
+The zero angular mode in (10.8) includes $\phi\in H^1_0(I)$,
+so the test is in the completed domain with kinetic value $\lambda_0$.
+The height Poincaré bound proves it is the free minimum. Equation (10.15)
+and the exact $1/(2\pi)$ in (12.1) give its attractive expectation
+$\mathcal V_*$, with all three factors of circle length retained.
+The height Green is positive in $I$, proving strict positivity and
+(12.4). This compares with the actual free minimum; it does not assert
+that the ground energy is negative relative to zero.
+
+For the local noninvariance assertion, for each $\kappa\ne0$ and $g>0$,
+the differential expression $L_\kappa-g\Gamma_{\kappa,o}$ fails to preserve the
+$D$-independent class, already on compact smooth tests supported away
+from the source height. This statement uses no semibounded full
+attractive operator or full attractive heat evolution.
+
+Define the actual hidden harmonic, with all angular measures
+unnormalized, by
+
+$$
+F_\kappa(k)=\int_{\mathbb T^3}
+ \Gamma_{\kappa,o}(k,\theta,v,D)e^{-iD}\,d\theta\,dv\,dD.
+\tag{12.5}
+$$
+
+Fourier decomposition of the free height operator, or its heat integral,
+gives
+
+$$
+F_\kappa(k)=
+ \left(-\varepsilon^2\partial_k^2+C_\kappa(k)^2\right)^{-1}_D(k_0,k)>0.
+\tag{12.6}
+$$
+
+The subscript denotes Dirichlet height endpoints. To check its charge,
+the full angular Fourier expansion has factor $(2\pi)^{-3}$; integration
+in (12.5) cancels that factor. Thus its height source is exactly
+$\delta_{k_0}$. Positivity follows from the one-dimensional positive
+Dirichlet heat kernel with bounded nonnegative potential $C_\kappa^2$.
+In particular it is positive at every $k\ne k_0$ in $I$.
+
+Choose any nonnegative nonzero $\eta\in C_c^\infty(I\setminus\{k_0\})$
+and use the $D$-independent full test
+$f=\eta(k)/(2\pi)^{3/2}$. It is in the full free operator domain by
+integration by parts against the completed form domain, with
+$L_\kappa f=-\varepsilon^2\eta''/(2\pi)^{3/2}$.
+The full Green field is smooth with bounded derivatives on this entire
+phase-torus height support, so $\Gamma_{\kappa,o}f$ is another compact
+smooth test there. Consequently $f$ lies in the domain of the symmetric
+minimal attractive differential operator on
+$C_c^\infty(\Omega\setminus\{o\})$, and every expression used here is
+an actual $L^2$ function on that checked local core.
+The angular $e^{iD}$ coefficient of its attractive image, integrated over
+the two retained circles, is
+$-g\eta(k)F_\kappa(k)/(2\pi)^{3/2}$, which is nonzero.
+A $D$-independent function would have zero such coefficient. This proves
+local leakage of the same original point multiplier.
+
+The full unrestricted point-source form is nevertheless unbounded below
+for every $g>0$, by [G, Theorem 3.1]: $X=Y$ and $X+Y\ne2H$ put each
+nonzero parameter exactly on its single-wall row. Restricting tests has
+not altered that theorem or repaired its form. In particular the stable
+restricted operators in Theorem 11.1 cannot be identified with a
+compression of a semibounded full attractive heat semigroup. The
+semiboundedness hypothesis used in §6's double-wall compressed-evolution
+argument fails for this nearby full point-source problem. $\square$
+
+## 13. Supplier correspondence and mathematical meaning of the limit
+
+**Definition 13.1 (exact reuse and the parameter-uniform increment).**
+The following supplier map fixes the mathematical scope of the appendix.
+
+| Supplier | Exact use and nontransferred condition |
+| --- | --- |
+| [N, Theorems 8.2, 8.4 and §§8.5,10.2--10.3]; [G, Definition 12.1 and Calculation 12.2] | Original probabilities, arbitrary preparation translation, negative phases, actual circle periods, full prefix rays, the declared $q,D$ change and the rational coefficients (10.2). Reachability does not prepare analytic amplitudes. The full nearby dimension is four; its retained base is three. |
+| This volume, Theorems 2.1 and 3.1; [Native free diffusion quotient rigidity](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md), Theorem 3.1 | Averaged-core form reduction, variational operator reduction, killed free observation laws, point-Green marginal and normalized source smearing. The abstract identities are reused inside (10.7) and (12.1), not counted as new quotient results. The older bottom-output base is two-dimensional and elliptic; it is not the present $B$. |
+| [G, Propositions 4.2--4.3 and Theorem 5.1] | Fixed double-wall Heisenberg normalization and strict Green stability supply the limit interpretation. They do not supply a common nearby parameter window or singular-form convergence. In (10.11), $m_0=\varepsilon^2/(4H)=\varepsilon^2/(2r)$ exactly recovers their Haar factor. |
+| [G, Theorem 3.1] | Full point-source collapse at every nonzero single-wall parameter. The point source, state class and coupling are those of (10.4); the collapse remains in force. |
+| [J] D. S. Jerison and A. Sánchez-Calle, *Estimates for the Heat Kernel for a Sum of Squares of Vector Fields*, Indiana Univ. Math. J. 35 (1986), 835--854, [primary text](https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1986/35/35043/pdf), Proposition 3 and Theorem 2, §§3--4 | The upper bound is $C\mu(B(x,\sqrt t))^{-1}e^{-cd(x,y)^2/t}$ for smooth Hörmander fields on a compact manifold. The contact extension, common charts, bounded parametrix coefficients, common subelliptic constants and volume exponent four are checked in the proof of Theorem 10.2; Dirichlet domain domination returns to the actual cylinder. No full four-coordinate uniform heat bound is imported. |
+| [H], Theorems 3.2, 3.5 and B.1 | Uniform strong Hörmander generation, smooth parameter dependence, positive smooth density and uniform semigroup bounds are required. They hold for the retained free family by (10.10), not for the degenerate four-coordinate limit. Free kernel localization and positive-time convergence do not by themselves prove convergence of the singular attractive forms. |
+| [R], Corollary 3.2 | The unweighted inequality uses $p=2$, $\alpha=1$, $Q=4$ and the Lebesgue Heisenberg fields $U,V$ with gauge (10.12). The local density factor and the varying horizontal coefficient are explicitly retained in (10.11). It is an intermediate estimate, not a replacement potential. |
+| [T], Theorem 2.13, Lemma 2.24, Theorem 6.24 and the positive-eigenvector argument of Theorem 10.11 | Closed-form representation, reduction, strict relative-form perturbation and simplicity. The perturbation bound here is $gA/(2\pi)<1/2$; compactness and the critical lower limit are proved separately. The positivity argument is on $L^2(B)$ and uses restricted heat operators only. |
+| Arendt--Dier--Ouhabaz, [arXiv:1303.1167v1](https://arxiv.org/pdf/1303.1167v1), Theorem 2.2 | Its closed-form convex-set criterion assumes projection preserves the form domain and the cross-form inequality. Free Haar averaging meets those conditions by (10.7). It supplies no invariant class for the original singular multiplier; (12.5)--(12.6) give a direct checked-core obstruction. |
+| Gouasmi--Parish--Duraisamy [M], §2.1; the present volume, §6 | Projection, initial hidden data and subsequent feedback are distinct. Formal elimination is not a semibounded full-source evolution, and the older compressed-semigroup calculation is not applied across its failed stability hypothesis. |
+| Pinned Mathlib $\mathtt{db584cd6d46c92f209a44c0f1c829460d327499d}$, `Analysis/FunctionalSpaces/SobolevInequality` and `Analysis/Distribution/Sobolev`; native `Quantum/Fibers/FiniteRectangleTransport`, including private leg and polygon proofs | The Mathlib results concern Euclidean derivative Sobolev estimates and Bessel-potential spaces, not this horizontal point-Green singular family. The native private proofs supply lawful finite legs and probability/phase compatibility, not (10.6) or (11.3). No compiled application or new Lean result is asserted. |
+
+The Gaussian, Hardy, representation and projection tools are
+`literature-attested`. The added `repo-derived` result is their native
+fixed-window combination: the exact varying contact chart and Fourier
+tightness, uniform same-point Green control, the critical cutoff
+lower-limit argument, and the resulting actual minimum and ground-state
+limit with its source factor. No general projection identity or rewritten
+fixed-wall theorem is counted as new content. This correspondence makes
+no exhaustive-search or global originality claim.
+
+**Proposition 13.2 (scope of the three-coordinate conclusion).** Within
+Definition 10.1, a stable same-field restricted energy and its two-sign
+native limit exist on the declared $D$-independent analytic state class.
+They do not imply stability of the original nearby full point-source
+model or invariance of that state class under its attractive expression.
+They imply neither physical spatial dimension three nor an operation
+that realizes the restriction.
+
+Proof. Theorem 11.1 gives the restricted statement, and Theorem 12.1
+fixes its exact same-field and unit-source meaning and proves both the
+surviving full instability and the local noninvariance.
+A $q$-only free evolution, an energy evaluated on $Jz$, the energy of a
+different smeared source, and the full original point-source energy are
+therefore distinct mathematical tasks even when some restricted numerical
+values agree. The native full coherence menu still distinguishes the
+omitted phase. No projection/reset controller, amplitude preparation,
+acquired observation, finite precision law, spatial-axis map or mean
+selection appears among the premises. None can consequently be inferred
+as a realization of these analytic conclusions. All diffusion, attraction,
+covariance, density, clock, killing and amplitude-space assumptions remain
+explicit added mathematics. The sufficient window is not sharp; critical
+coupling equality, moving-data uniformity and $\varepsilon\to0$ uniformity
+are outside the assertions. $\square$
+
+## 追加锚（本行以下为增补区）
