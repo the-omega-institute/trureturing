@@ -123,7 +123,10 @@ internal sealed class FourQubitGenuineSubspaceRefutationDocument : IScribeDocume
                             + "factor is on B₂, giving a product across {A₁,A₂,B₁} | {B₂}. "
                             + "This nonzero product vector contradicts the GES condition and refutes "
                             + "the universal conjecture."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("antipin-2021-four-qubit-genuinely-entangled-subspace-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
