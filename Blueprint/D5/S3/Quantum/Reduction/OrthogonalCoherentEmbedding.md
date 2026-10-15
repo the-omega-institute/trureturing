@@ -6,7 +6,49 @@ Orthogonal component coding with complete CPTP padding attains the exact minimum
 
 The component quotient retains the arbitrary original probe family. Its finiteness follows from orthonormal representatives in finite dimension. An orthonormal basis of each actual component supplies a coordinate frame. Zero padding embeds these coordinates into a common coherent block whose dimension is the largest component dimension. The encoder stores the component as a classical flag; the decoder applies the frame inverse on the encoded support and prepares a fixed unit probe on the unused complement. Thus the decoder is completely positive and trace preserving on the entire coherent block. The composite pinches between orthogonal components, and every original probe belongs to one component, so its probability is preserved for all density inputs. Conversely every actual encoder-decoder Kraus matrix factors through the coherent block; the scalarity theorem and normalization force one nonzero scalar on each component, yielding the matching rank bound. This is the measurement-relative compression structure described by Bluhm, Rauber, and Wolf, with the nondisturbance rigidity of Mayer and Knill.
 
-**Theorem 1.1 (probe channel block form).**
+**Theorem 1.1 (components finite).**
+
+Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_finite`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_finite` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Karl Mayer and Emanuel Knill (2018). *Quantum process fidelity bounds from sets of input states*. URL: <https://arxiv.org/html/1805.04491v1>.
+
+*Commentary.*
+
+The quotient of any family of unit probes by the nonorthogonality component relation is finite.
+
+**Theorem 1.2 (components orthogonal).**
+
+Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_orthogonal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_orthogonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Karl Mayer and Emanuel Knill (2018). *Quantum process fidelity bounds from sets of input states*. URL: <https://arxiv.org/html/1805.04491v1>.
+
+*Commentary.*
+
+The actual Hilbert spans of distinct components are orthogonal.
+
+**Theorem 1.3 (components span).**
+
+Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_span`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_span` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Karl Mayer and Emanuel Knill (2018). *Quantum process fidelity bounds from sets of input states*. URL: <https://arxiv.org/html/1805.04491v1>.
+
+*Commentary.*
+
+When the original arbitrary probe family has full complex span, the supremum of its component Hilbert subspaces is the full space.
+
+**Theorem 1.4 (probe channel block form).**
 
 Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.probe_channel_block_form`
 
@@ -22,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.probe_chann
 
 Universal probe probability preservation gives normalized environment coefficients on the proved-finite graph components. Every Kraus matrix is their scalar-weighted projection sum. The channel action on every matrix is the double component sum weighted by the overlaps of those environment vectors.
 
-**Theorem 1.2 (orthogonal decomposition port).**
+**Theorem 1.5 (orthogonal decomposition port).**
 
 Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.orthogonal_decomposition_port`
 
@@ -38,7 +80,7 @@ Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.orthogonal_
 
 Every finite orthogonal spanning decomposition with unit vectors in its components admits an actual finite flagged port at any coherent dimension bounding the component dimensions. The encoder and every decoder Kraus matrix are identified explicitly by the orthonormal frame, zero padding, and the complement-filled decoder family. The fixed unit vector lies in its component, and the fixed density is proved to satisfy P times the density times P equals that density.
 
-**Theorem 1.3 (exact component port dimension).**
+**Theorem 1.6 (exact component port dimension).**
 
 Lean statement: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.exact_component_port_dimension`
 
@@ -56,8 +98,11 @@ For any arbitrary unit probe family with full complex span in a finite Hilbert s
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_finite`
+- Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_orthogonal`
+- Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_span`
 - Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.exact_component_port_dimension`
 - Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.orthogonal_decomposition_port`
 - Truth anchor: `D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.probe_channel_block_form`
 - Dependency: [D5/S3/Quantum/Reduction/CoherentFlagPort](CoherentFlagPort.md)
-- Dependency: [D5/S3/Quantum/Reduction/ProbeGraphDecomposition](ProbeGraphDecomposition.md)
+- Dependency: [D5/S3/Quantum/Reduction/ProbeComponentRigidity](ProbeComponentRigidity.md)

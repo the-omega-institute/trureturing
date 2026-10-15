@@ -10,6 +10,30 @@ internal sealed class OrthogonalCoherentEmbeddingDocument : IScribeDocumentDefin
         Blocks(
             Paragraph(Text("The component quotient retains the arbitrary original probe family. Its finiteness follows from orthonormal representatives in finite dimension. An orthonormal basis of each actual component supplies a coordinate frame. Zero padding embeds these coordinates into a common coherent block whose dimension is the largest component dimension. The encoder stores the component as a classical flag; the decoder applies the frame inverse on the encoded support and prepares a fixed unit probe on the unused complement. Thus the decoder is completely positive and trace preserving on the entire coherent block. The composite pinches between orthogonal components, and every original probe belongs to one component, so its probability is preserved for all density inputs. Conversely every actual encoder-decoder Kraus matrix factors through the coherent block; the scalarity theorem and normalization force one nonzero scalar on each component, yielding the matching rank bound. This is the measurement-relative compression structure described by Bluhm, Rauber, and Wolf, with the nondisturbance rigidity of Mayer and Knill.")),
             Describe.Lean(
+                DescribeId.Create("components-finite"),
+                DeclarationHandle.Create("D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_finite"),
+                H("components finite"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                Blocks(Paragraph(Text("The quotient of any family of unit probes by the nonorthogonality component relation is finite."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("components-orthogonal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_orthogonal"),
+                H("components orthogonal"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                Blocks(Paragraph(Text("The actual Hilbert spans of distinct components are orthogonal."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("components-span"),
+                DeclarationHandle.Create("D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.components_span"),
+                H("components span"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Quantum/mayerknill2018unitary")),
+                Blocks(Paragraph(Text("When the original arbitrary probe family has full complex span, the supremum of its component Hilbert subspaces is the full space."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("probe-channel-block-form"),
                 DeclarationHandle.Create("D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.probe_channel_block_form"),
                 H("probe channel block form"),

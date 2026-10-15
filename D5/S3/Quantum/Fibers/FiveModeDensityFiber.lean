@@ -28,9 +28,6 @@ private def coordinate (i : Fin 5) : traceZeroHermitian 5 →ₗ[ℝ] ℝ where
   map_add' A B := by simp [add_apply, Complex.add_re]
   map_smul' r A := by simp [smul_apply, Complex.mul_re]
 
-private theorem coordinate_apply (i : Fin 5) (A : traceZeroHermitian 5) :
-    coordinate i A = (A.1.1 i i).re := rfl
-
 /-- Three means of any Hermitian matrix, ordered as X, Z, Y. -/
 def means (ρ : Matrix (Fin 5) (Fin 5) ℂ) : Fin 3 → ℝ :=
   ![(ρ 1 1).re + (ρ 4 4).re, (ρ 2 2).re, (ρ 3 3).re + (ρ 4 4).re]
@@ -85,13 +82,6 @@ private theorem five_mode_tangent_fibre_finrank :
 
 def fiveModeCenter : Matrix (Fin 5) (Fin 5) ℂ :=
   (5 : ℝ)⁻¹ • (1 : Matrix (Fin 5) (Fin 5) ℂ)
-
-private theorem fiveModeCenter_posDef : fiveModeCenter.PosDef := by
-  apply Matrix.PosDef.one.smul
-  norm_num
-
-private theorem fiveModeCenter_trace : Matrix.trace fiveModeCenter = 1 := by
-  simp [fiveModeCenter, Matrix.trace, Fin.sum_univ_succ]
 
 /-- The affine-fibre coordinates are the genuine trace-zero kernel, restricted by PSD. -/
 def fibrePoint (ρ : Matrix (Fin 5) (Fin 5) ℂ) (h : LinearMap.ker modeReadout) :=

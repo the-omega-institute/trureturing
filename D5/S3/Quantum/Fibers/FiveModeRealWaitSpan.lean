@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Fibers/FiveModeRealWaitSpan
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Fibers/FiveModeRealResponse.waits_separate_real; premises=D5/S3/Quantum/Fibers/FiveModeRealWaitSpan.symmetric_decomposition
    digest: Actual nonnegative waits of the five-mode generator span all real symmetric effects. -/
 
 import D5.S3.Quantum.Fibers.NonnegativeConjugationSpan
