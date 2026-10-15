@@ -567,7 +567,7 @@ private theorem trace_sum_value (A : A4)
     module
   calc
     _ = (Matrix.trace (∑ s : Fin 2, ∑ t : Fin 2, H s t * G A s t)).re := by
-      simp [Matrix.trace_sum]
+      simp
     _ = -(1 / 5 : ℝ) := by
       rw [hv, Matrix.trace_smul, Matrix.trace_one, Complex.smul_re]
       norm_num
