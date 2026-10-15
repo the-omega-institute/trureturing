@@ -947,7 +947,7 @@ the scanned array and all other acquired dependence through the
 declared paid service. [RRN, Theorem 7.1][RRN] preserves the exact
 optimum; it does not preserve an old preparation cost. Preserving
 exactly an arbitrary nonminimal original competitor's attained
-cardinality can instead use [RRN, Theorem 7.2][RRN]'s fuller scan:
+cardinality can instead use [RRN, Corollary 7.2][RRN]'s fuller scan:
 
 $$
 2^{D+1}-1\text{ Reads},\qquad
@@ -1373,24 +1373,18 @@ different target and source handoff. No bridge from those declarations
 to an all-length stationary-source cap is established. Reading those
 hypotheses is not compiling or formally certifying this volume.
 
-**Convention 10.4 (bounded exact checks and their ceiling).** Exact
-in-memory calculations enumerate all $121$ pairs in $S_2^2$ for
-the network in §8, obtaining four solutions and mass $5/18$.
-They check all four rational squared kernel identities, the
-owner-only product $4/9$ and the same-law self-read fiber of mass
-one. The permutation coefficients sum to one for $k=0,\ldots,7$,
-and the scan-letter identities hold at depths one through eight.
-Enumeration of all $1446$ actual trees of height at most three
-checks the seven requested factors against canonicalization and
-the $120$-name full-variable-shape construction.
+**Convention 10.4 (limits of the finite examples).** The four-solution
+network of Theorem 8.1 has mass $5/18$ and owner-only product $4/9$;
+Proposition 8.2 supplies the same-law mass-one self-read family, and
+Proposition 8.3 supplies the $120$-name full-variable-shape construction
+with its stated paid resources. These examples and their proofs do not
+determine the full local-type maximum at arbitrary depth, settle all
+instances of the saturation criterion, establish higher-depth strict
+improvement or yield convergence of native pressure.
 
-These finite checks support the displayed constructions and arithmetic.
-The arbitrary-depth and all-size claims rest on the proofs, not on
-these enumerations. No full local-type enumeration, saturation
-quantifier-elimination run, higher-depth strict improvement or
-empirical convergence is claimed. No experiment program or data,
-Lean or Blueprint source, compilation result or new judge is part
-of this theory-only deliverable.
+The arbitrary-depth and all-size assertions rest on the proofs in
+§§3–7. No optimizer-cofinality, effective length tail, empirical
+convergence or Lean certification follows from these finite examples.
 
 [AAR]: RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md
 [FMR]: RECURSIVE_RELATIONAL_OBSERVATION_LATE_TARGET_FRACTIONAL_MEMORY_RATE.md

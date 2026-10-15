@@ -176,9 +176,14 @@ Z^{\mathrm{ker},\boldsymbol\varepsilon}_{\mathcal N}
 $$
 
 This keeps exactly the old seeds, scopes, owners, and block weights.
-For positive uniform $\varepsilon$, every assignment in a nonempty
-seed-domain network has strictly positive local tables; empty-domain
-networks still have value zero.
+For $\varepsilon_i>0$, the softened local table is positive at $s$
+if and only if $\Phi_i^w(s)>0$ or $q_i(s|_{O_i})>0$. Hence full
+support of every $q_i$ and positivity of every $\varepsilon_i$ suffice
+for strictly positive local tables on the entire nonempty seed domain.
+In particular, uniform kernels and a common $\varepsilon>0$ give
+$\Phi_i^{\mathrm{ker},\varepsilon}(s)\ge\varepsilon4^{-m_d}$.
+Normalization alone does not ensure this support condition.
+Empty-domain networks still have value zero.
 
 **Definition 3.2 (unnormalized floor).** Put instead
 
@@ -199,7 +204,8 @@ soft pressures by taking the supremum of the corresponding $n$th roots
 over $\mathfrak N_{d,L}(n)$, denoted
 $\beta^{\mathrm{ker}}_{d,L,\varepsilon}(w)$ and
 $\beta^{\mathrm{fl}}_{d,L,\varepsilon}(w)$ in the homogeneous case.
-Then
+The kernels may be any normalized nonnegative kernels of Definition
+3.1, including kernels with zeros. Then
 
 $$
 \beta_{d,L}(w)\le\beta^{\mathrm{ker}}_{d,L,\varepsilon}(w)
@@ -271,6 +277,26 @@ No smaller coefficient can bound its $n$th root for all $n$. At depth
 $d=1$, the same three independent root owners show the coefficient is
 attained even for nonzero weights.
 
+**Proposition 3.5 (a normalized kernel need not fill native zeros).**
+At $d=1,n=1$, take one seed owned at the root, with full domain
+$\{\alpha,\beta,\mathsf{branch}\}$ and owner table
+$B(\alpha)=\Gamma_{\varnothing}(\alpha)$,
+$B(\beta)=\Gamma_{\varnothing}(\beta)$,
+$B(\mathsf{branch})=\Gamma_{\varnothing}(C_0)$.
+In that order let $w=(1,0,0)$, $q=(1,0,0)$ and $\varepsilon=1$.
+The softened local table is $(2,0,0)$, despite positive
+$\varepsilon$ and normalization of $q$.
+
+**Proof.** The three actual sources
+$\langle\alpha,\alpha\rangle$, $\langle\alpha,\beta\rangle$ and
+$\langle\alpha,C_0\rangle$ belong to $\mathcal F_1$ and give precisely
+these seed replies at the original-root literal $R$. Each owner-table
+entry has its declared reply and reconstructs the corresponding unique
+state of $S_1$. Formula (SCP.9) therefore gives
+$(1,0,0)+(1,0,0)=(2,0,0)$. This leaves (SCP.11)–(SCP.13) intact:
+their proof uses nonnegativity and normalization, not full support.
+$\square$
+
 ## 4. Complementary actual-tuple defect fugacity
 
 **Definition 4.1 (defect carrier).** A complete native template $\Theta$
@@ -291,6 +317,12 @@ $x$ is an analytical assignment, not a legal solution or an attained
 code fiber. This differs from (SCP.9), whose carrier is the seed space
 $\prod_cT_c$ and whose incompatible seed vectors may reconstruct no
 actual tuple.
+
+For $0<\varepsilon\le1$, the constraint factor
+$\varepsilon^{v_\Theta(x)}$ is positive on all of $S_d^n$.
+The complete weighted summand is strictly positive exactly on
+$(\operatorname{supp}\mu)^n$; positivity on the entire ambient
+actual-tuple space additionally requires full support of $\mu$.
 
 **Theorem 4.2 (all-size defect-removal inequality).** Let
 $A_{d,n}(\mu)$ be the hard maximum over complete templates on $n$
@@ -394,16 +426,22 @@ $$
 $$
 
 Thus each auxiliary infimum is unchanged when restricted to rational
-probabilities; positive rational $\varepsilon$ can be used in the
-strictly positive models. A rational cap may always be rounded upward
-after a semantic cap is established.
+probabilities. For the kernel carrier, strictly positive local tables
+are guaranteed by full-support kernels and positive rational
+$\varepsilon$; the floor needs only positive $\varepsilon$. For the
+defect carrier, positive rational $\varepsilon\le1$ gives positivity
+on the probability support as in Definition 4.1. A rational cap may
+always be rounded upward after a semantic cap is established.
 
 **Proof.** Approximate inside the finite support simplex. In the defect
 carrier, every length-$n$ product mass gains at most
 $(1+\delta)^n$. In the seed carriers, each baseline potential gains at
 most $(1+\delta)$, and
 $\Phi+\Psi\le(1+\delta)(\Phi+\Psi)$ because $\Psi$ is independent of
-$\mu$. Take $n$th roots and the all-size supremum. $\square$
+$\mu$, keeping the same kernels. The rational approximation may be
+chosen positive on every point of $\operatorname{supp}\mu$, so the
+defect carrier retains exactly that support; no original zero is filled.
+Take $n$th roots and the all-size supremum. $\square$
 
 The bounds (SCP.19) are semantic all-size statements. Finite evaluation
 at a chosen length is only a lower approximation to a soft pressure; it
@@ -418,8 +456,9 @@ $$
 V^\star(d,L,\mu,\varepsilon,C,\pi)
 $$
 
-on rational $\mu$, rational $\varepsilon>0$, positive rational $C$, and
-a finite certificate string $\pi$. Soundness requires acceptance to
+on rational $\mu$, rational $\varepsilon>0$ (also $\varepsilon\le1$ for
+$\star=\mathrm{def}$), positive rational $C$, and a finite certificate
+string $\pi$. Soundness requires acceptance to
 prove, for every $n$ and every network in the same owned-seed class,
 
 $$
@@ -428,7 +467,16 @@ Z^\star_{\mathcal N}(\mu,\ldots,\mu)\le C^n,
 $$
 
 with the selected carrier $\star\in\{\mathrm{ker},\mathrm{fl},\mathrm{def}\}$
-and its exact hypotheses. For $\star=\mathrm{ker}$ or $\mathrm{fl}$ the
+and its exact hypotheses. In the strictly positive kernel specialization
+fix the uniform owner kernels of Definition 3.1; more generally a fixed
+effective rational full-support kernel rule independent of $\mu$ may
+be specified as part of the carrier. Arbitrary
+normalized kernels remain covered by the additive bounds, but need not
+define a strictly positive model. For the defect carrier the constraint
+factors are positive; its complete weighted summands have support
+$(\operatorname{supp}\mu)^n$. A result requiring positivity on all of
+$S_d^n$ additionally requires full support of $\mu$.
+For $\star=\mathrm{ker}$ or $\mathrm{fl}$ the
 universal quantifier ranges over owned-seed networks; for
 $\star=\mathrm{def}$ it ranges over complete native templates (the RRN
 correspondence supplies the stated representation). Cofinality requires accepted endpoints whose
