@@ -1,0 +1,39 @@
+**Corollary 4.4 (Uniform ranges, exact endpoints and nonempty classes).** Fix $D\ge3$ and $0<\nu_0,p_0\le1$. The class in Definition 4.1 with $\nu\ge\nu_0$, early maximum at most $\epsilon$ and $w_{D-1}\ge p_0$ satisfies
+
+$$
+E\le\min\left\{2D,8D\sqrt{\frac{A_D(p_0)\epsilon}{\nu_0}}\right\}.
+\tag{4.26}
+$$
+
+For $D=2$, only the lower bound on $\nu$ is needed, giving $\min\{4,16\sqrt{\epsilon/\nu_0}\}$. A fixed positive lower bound on $\nu$ is sufficient but is not necessary for every convergent family: for fixed $D\ge3$ and $p_0>0$, $\epsilon/\nu\to0$ suffices even if $\nu\to0$. In dimension two the same ratio condition requires no late bound. For fixed $D\ge3$ with both rates varying, the proved sufficient condition is
+
+$$
+\frac{\epsilon}{\nu p^{2D-2}}\longrightarrow0,
+\qquad A_D(p)=C_Dp^{-(2D-2)},\qquad
+C_D=8D[8(D-1)D^{5/2}]^{2(D-2)}.
+\tag{4.27}
+$$
+
+No optimal dependence on $p$ or $D$ is asserted.
+
+Proof. The expression $A_D(p)$ decreases with $p>0$. Substituting the two lower bounds into (4.8) proves (4.26). Collecting the powers of $p$ gives (4.27), and the same estimates imply the convergence statements.
+
+The classes are nonempty for every allowed $D,\epsilon,\nu_0,p_0$. Put $n=D-1$, $P_j=|e_j\rangle\langle e_j|$, and
+
+$$
+S=\sum_{j=0}^{n-1}|e_{j+1}\rangle\langle e_j|,
+\qquad L=|e_0\rangle\langle e_n|,
+\qquad \Phi(X)=SXS^\dagger,\qquad\Psi(X)=LXL^\dagger.
+\tag{4.28}
+$$
+
+Since $S^\dagger S+L^\dagger L=(I-P_n)+P_n=I$, the instrument is complete. With $\rho_0=P_n$ its actual quantities are $\nu=1$, $\tau=P_0$ and $\Phi^k(\tau)=P_k$ for $0\le k\le n$. Thus all early weights vanish and $w_n=1$. More generally $\rho_0=vP_n+(1-v)P_0$ realizes every prescribed $0<v\le1$ as $\nu=v$, with unchanged $\tau$ and weights. Since $\Phi^{n+1}(\tau)=0$, the next gap is proper. Negative $\epsilon$, or required probability lower bounds $\nu_0>1$ or $p_0>1$, are incompatible with the respective conditions.
+
+For $D\ge3$, $\epsilon=0$ and $p>0$ give exact first-hit index $D-1$. Apply O, Theorem 13.3 with the full telescope in Section 2.2: $\tau,F$ have rank one, both reachable spaces are full, and the entire tick is an exact reset of Choi rank one. Independently, the quantitative estimate gives $E=0$, and the matrix-unit definition (3.1) makes equality of Choi matrices equality of maps. The extra exact rank and reachability claims belong to that exact supplier; small positive error does not imply them.
+
+For $D=2$, $w_0=0$ gives $\lambda_2(F)=0$ and $E=0$ with no later observation. Since $\nu>0$, $F\ne0$ has rank one. Moreover $\operatorname{Tr}(F\tau)=\|F^{1/2}\tau^{1/2}\|_2^2=0$ places $\operatorname{ran}\tau$ in the one-dimensional kernel of $F$. Thus $\tau$ is pure and the exact reset Choi rank is one. Full reachability does not follow: take $\Phi(X)=P_0XP_0$, $\Psi(X)=|e_0\rangle\langle e_1|X|e_1\rangle\langle e_0|$ and $\rho_0=P_1$. The effects are $P_0,P_1$, so the instrument is complete, $\nu=1$, $\tau=P_0$ and every zero power remains $P_0$. All $w_k$ vanish and the reachable span is only $\mathbb C e_0$.
+
+At the exact late endpoint $w_{D-1}=1$, (4.2) forces every earlier weight to be zero regardless of the declared $\epsilon$. O, Theorem 13.3 therefore applies for every actual $\nu>0$. Rate-collapse counterexamples satisfying a fixed lower bound $p_0<1$ do not extend to $p_0=1$.
+
+At $\nu=0$ the actual density $\tau$ is undefined. For $D\ge3$, $A_D(p)$ is undefined at $p=0$; that substitution cannot repair a missing late bound. Dimension two has no $p$ parameter. In the separate scalar case $D=1$, a CP tick map is multiplication by a nonnegative scalar and the sole density is $1$; a positive actual tick makes it identical to its reset map, so $E=0$. Dimension zero admits no density. $\square$
+
