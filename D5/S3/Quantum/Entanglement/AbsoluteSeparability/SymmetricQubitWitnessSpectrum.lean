@@ -77,10 +77,10 @@ private theorem coherent_iff_null (x : Fin 3 → ℂ) :
       fin_cases i
       · simpa [coherent.eq_1] using ha
       · change (Real.sqrt 2 : ℂ) * a * (x 1 / ((Real.sqrt 2 : ℂ) * a)) = x 1
-        field_simp
+        exact mul_div_cancel₀ _ (mul_ne_zero hs0 ha0)
       · change (x 1 / ((Real.sqrt 2 : ℂ) * a)) ^ 2 = x 2
-        field_simp
-        rw [hs, ha]
+        rw [div_pow, div_eq_iff (pow_ne_zero 2 (mul_ne_zero hs0 ha0)),
+          mul_pow, hs, ha]
         linear_combination hx
 
 private theorem quadratic_pair (a b d : ℂ) (ha : a ≠ 0) :
@@ -88,7 +88,7 @@ private theorem quadratic_pair (a b d : ℂ) (ha : a ≠ 0) :
       a * s ^ 2 + 2 * b * s + d = 0 ∧ a * r * s = d := by
   obtain ⟨t, ht⟩ := IsAlgClosed.exists_pow_nat_eq (b ^ 2 - a * d) (by norm_num : 0 < 2)
   refine ⟨(-b + t) / a, (-b - t) / a, ?_, ?_, ?_⟩
-  all_goals field_simp
+  all_goals field_simp (disch := exact ha)
   all_goals first | linear_combination ht | linear_combination -ht
 
 private theorem two_root_bound (a b d : ℂ) (ha : a ≠ 0) (c L : ℝ) (hc : 0 < c)
@@ -262,7 +262,9 @@ private theorem cone_model (W : Matrix (Fin 3) (Fin 3) ℂ) (hW : IsSymmetricWit
     have hexp : star ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) ⬝ᵥ
         (W *ᵥ ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z)) = star z ⬝ᵥ (D *ᵥ z) := by
       rw [hxW, star_mulVec, dotProduct_mulVec, vecMul_vecMul]
-      simp only [← star_eq_conjTranspose, Unitary.coe_star_mul_self, vecMul_one]
+      change (star z ᵥ* (star (U : Matrix (Fin 3) (Fin 3) ℂ) *
+        (U : Matrix (Fin 3) (Fin 3) ℂ))) ⬝ᵥ (D *ᵥ z) = _
+      rw [Unitary.coe_star_mul_self, vecMul_one]
     rw [hexp] at hpos
     rwa [diagonal_expectation] at hpos
 
