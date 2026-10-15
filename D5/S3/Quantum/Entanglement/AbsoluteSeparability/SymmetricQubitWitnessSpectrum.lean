@@ -145,9 +145,10 @@ private theorem det_bound (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : Aᵀ = A)
     (p q : ℝ) (h : ∀ u : Fin 2 → ℂ, ‖qform A u‖ ≤ energy p q u) :
     0 ≤ p ∧ 0 ≤ q ∧ ‖A.det‖ ≤ p * q := by
   have h10 : A 1 0 = A 0 1 := congrFun (congrFun hA 0) 1
-  have hp' := h ![1, 0]
-  have hq' := h ![0, 1]
-  simp [qform, energy, mulVec, dotProduct, Fin.sum_univ_two] at hp' hq'
+  have hp' : ‖A 0 0‖ ≤ p := by
+    simpa [qform, energy, mulVec, dotProduct, Fin.sum_univ_two] using h ![1, 0]
+  have hq' : ‖A 1 1‖ ≤ q := by
+    simpa [qform, energy, mulVec, dotProduct, Fin.sum_univ_two] using h ![0, 1]
   have hp : 0 ≤ p := le_trans (norm_nonneg _) hp'
   have hq : 0 ≤ q := le_trans (norm_nonneg _) hq'
   refine ⟨hp, hq, ?_⟩
@@ -189,5 +190,212 @@ private theorem det_bound (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : Aᵀ = A)
     dsimp [S] at h3
     nlinarith only [h2, h3]
   nlinarith [norm_nonneg A.det, mul_nonneg hp hq]
+
+private theorem diagonal_expectation {n : ℕ} (d : Fin n → ℝ) (z : Fin n → ℂ) :
+    (star z ⬝ᵥ ((Matrix.diagonal (fun i => (d i : ℂ))) *ᵥ z)).re =
+      ∑ i, d i * Complex.normSq (z i) := by
+  simp only [dotProduct, mulVec_diagonal, Complex.re_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  change (star (z i) * ((d i : ℂ) * z i)).re = _
+  rw [show star (z i) * ((d i : ℂ) * z i) =
+    (d i : ℂ) * (star (z i) * z i) by ring,
+    Complex.star_def, ← Complex.normSq_eq_conj_mul_self]
+  simp
+
+private theorem cone_model (W : Matrix (Fin 3) (Fin 3) ℂ) (hW : IsSymmetricWitness W)
+    (d : Fin 3 → ℝ)
+    (hχ : W.charpoly = ∏ i : Fin 3, (Polynomial.X - Polynomial.C (d i : ℂ))) :
+    ∃ G : Matrix (Fin 3) (Fin 3) ℂ, Gᵀ = G ∧ Gᴴ * G = 1 ∧
+      ∀ z : Fin 3 → ℂ, qform G z = 0 → 0 ≤ ∑ i : Fin 3, d i * Complex.normSq (z i) := by
+  let D := Matrix.diagonal (fun i => (d i : ℂ))
+  have hD : D.IsHermitian := by
+    apply Matrix.isHermitian_diagonal_iff.mpr
+    intro i
+    simp [IsSelfAdjoint]
+  have he := (hW.1.eigenvalues_eq_eigenvalues_iff hD).mpr
+    (hχ.trans (Matrix.charpoly_diagonal _).symm)
+  let U := hW.1.eigenvectorUnitary * star hD.eigenvectorUnitary
+  have hspec : W = (U : Matrix (Fin 3) (Fin 3) ℂ) * D * star U := by
+    have hw := hW.1.spectral_theorem
+    have hd := hD.conjStarAlgAut_star_eigenvectorUnitary
+    simp only [Unitary.conjStarAlgAut_apply] at hw hd
+    rw [he, ← hd] at hw
+    simpa only [U, Submonoid.coe_mul, Unitary.coe_star, star_mul, star_star, mul_assoc] using hw
+  have hJt : Jᵀ = J := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  have hJ : J ∈ Matrix.unitaryGroup (Fin 3) ℂ := by
+    apply Matrix.mem_unitaryGroup_iff'.mpr
+    ext i j
+    fin_cases i <;> fin_cases j <;> norm_num [J, mul_apply, Fin.sum_univ_succ]
+  let G := (U : Matrix (Fin 3) (Fin 3) ℂ)ᵀ * J * U
+  have hGU : G ∈ Matrix.unitaryGroup (Fin 3) ℂ :=
+    mul_mem (mul_mem (Matrix.transpose_mem_unitaryGroup_iff.mpr U.prop) hJ) U.prop
+  refine ⟨G, ?_, Matrix.mem_unitaryGroup_iff'.mp hGU, ?_⟩
+  · simp only [G, transpose_mul, transpose_transpose, hJt, mul_assoc]
+  · intro z hz
+    have hnull : qform J ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) = 0 := by
+      have hh : qform G z = qform J ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) := by
+        dsimp [qform, G]
+        rw [← mulVec_mulVec, ← mulVec_mulVec, dotProduct_transpose_mulVec, dotProduct_comm]
+      exact hh ▸ hz
+    obtain ⟨v, hv⟩ := (coherent_iff_null _).mpr hnull
+    have hpos := hW.2 v
+    rw [hv] at hpos
+    have hxW : W *ᵥ ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) =
+        (U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ (D *ᵥ z) := by
+      rw [hspec]
+      simp only [Unitary.coe_star, ← mulVec_mulVec]
+      rw [mulVec_mulVec z (star (U : Matrix (Fin 3) (Fin 3) ℂ)) U,
+        Unitary.coe_star_mul_self, one_mulVec]
+    have hexp : star ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) ⬝ᵥ
+        (W *ᵥ ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z)) = star z ⬝ᵥ (D *ᵥ z) := by
+      rw [hxW, star_mulVec, dotProduct_mulVec, vecMul_vecMul]
+      simp only [← star_eq_conjTranspose, Unitary.coe_star_mul_self, vecMul_one]
+    rw [hexp] at hpos
+    rwa [diagonal_expectation] at hpos
+
+private theorem unitary_corner (G : Matrix (Fin 3) (Fin 3) ℂ) (hG : Gᴴ * G = 1) :
+    ‖(corner G).det‖ = ‖G 2 2‖ ∧ ‖G 2 2‖ ≤ 1 := by
+  have hGG : G * Gᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp
+    (Matrix.mem_unitaryGroup_iff'.mpr hG)
+  have hd : ‖G.det‖ = 1 := by
+    have hh := congrArg Matrix.det hG
+    have hn := congrArg norm hh
+    simp only [Matrix.det_mul, Matrix.det_conjTranspose, norm_mul, norm_star,
+      Matrix.det_one, norm_one] at hn
+    nlinarith [norm_nonneg G.det]
+  have hadj : G.adjugate = G.det • Gᴴ := by
+    calc
+      G.adjugate = G.adjugate * (G * Gᴴ) := by rw [hGG, mul_one]
+      _ = (G.adjugate * G) * Gᴴ := (mul_assoc _ _ _).symm
+      _ = G.det • Gᴴ := by rw [Matrix.adjugate_mul, smul_mul_assoc, one_mul]
+  have he := congrFun (congrFun hadj 2) 2
+  have he' : (corner G).det = G.det * star (G 2 2) := by
+    simpa [corner, Matrix.det_fin_two, Matrix.adjugate_fin_three] using he
+  constructor
+  · rw [he', norm_mul, norm_star, hd, one_mul]
+  · have hh := congrArg Complex.re (congrFun (congrFun hG 2) 2)
+    have hn : Complex.normSq (G 0 2) + Complex.normSq (G 1 2) +
+        Complex.normSq (G 2 2) = 1 := by
+      simpa [Matrix.mul_apply, Fin.sum_univ_three, Complex.mul_re,
+        Complex.normSq_apply] using hh
+    simp only [Complex.normSq_eq_norm_sq] at hn
+    have h0 := Complex.normSq_nonneg (G 1 2)
+    have h1 := Complex.normSq_nonneg (G 0 2)
+    simp only [Complex.normSq_eq_norm_sq] at h0 h1
+    nlinarith [norm_nonneg (G 2 2)]
+
+private theorem cone_spectral_bound (G : Matrix (Fin 3) (Fin 3) ℂ)
+    (hS : Gᵀ = G) (hU : Gᴴ * G = 1) (p q c : ℝ) (hc : 0 < c)
+    (h : ∀ z : Fin 3 → ℂ, qform G z = 0 →
+      0 ≤ p * Complex.normSq (z 0) + q * Complex.normSq (z 1) - c * Complex.normSq (z 2)) :
+    0 ≤ p ∧ 0 ≤ q ∧ c ^ 2 ≤ p * q := by
+  have h20 : G 2 0 = G 0 2 := congrFun (congrFun hS 0) 2
+  have h21 : G 2 1 = G 1 2 := congrFun (congrFun hS 1) 2
+  have hg : G 2 2 ≠ 0 := by
+    intro hg
+    have hz : qform G ![0, 0, 1] = 0 := by
+      simp [qform, mulVec, dotProduct, Fin.sum_univ_three, hg]
+    have hh := h ![0, 0, 1] hz
+    simp at hh
+    linarith
+  let t := ‖G 2 2‖
+  have ht : 0 < t := norm_pos_iff.mpr hg
+  obtain ⟨hdet, ht1⟩ := unitary_corner G hU
+  have hA : (corner G)ᵀ = corner G := by
+    ext i j
+    exact congrFun (congrFun hS (Fin.castSucc i)) (Fin.castSucc j)
+  have hroot (u : Fin 2 → ℂ) : c * ‖qform (corner G) u‖ ≤ t * energy p q u := by
+    apply two_root_bound (G 2 2) (G 0 2 * u 0 + G 1 2 * u 1)
+      (qform (corner G) u) hg c (energy p q u) hc
+    intro z hz
+    have hz' : qform G ![u 0, u 1, z] = 0 := by
+      simp only [qform, corner, mulVec, dotProduct, Fin.sum_univ_two, Fin.sum_univ_three,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val,
+        submatrix_apply, Fin.castSucc_zero, Fin.castSucc_one, h20, h21] at hz ⊢
+      linear_combination hz
+    have hh := h ![u 0, u 1, z] hz'
+    change 0 ≤ p * Complex.normSq (u 0) + q * Complex.normSq (u 1) -
+      c * Complex.normSq z at hh
+    dsimp [energy]
+    linarith
+  have hscaled : ∀ u : Fin 2 → ℂ,
+      ‖qform ((c : ℂ) • corner G) u‖ ≤ energy (t*p) (t*q) u := by
+    intro u
+    have hh := hroot u
+    simp only [qform, smul_mulVec, dotProduct_smul, norm_smul, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_pos hc]
+    dsimp [qform, energy] at hh ⊢
+    nlinarith only [hh]
+  have hscaledS : ((c : ℂ) • corner G)ᵀ = (c : ℂ) • corner G := by
+    rw [transpose_smul, hA]
+  obtain ⟨hp', hq', hd⟩ := det_bound ((c : ℂ) • corner G) hscaledS (t*p) (t*q) hscaled
+  have hp : 0 ≤ p := nonneg_of_mul_nonneg_right hp' ht
+  have hq : 0 ≤ q := nonneg_of_mul_nonneg_right hq' ht
+  refine ⟨hp, hq, ?_⟩
+  have hd' : c ^ 2 * t ≤ t ^ 2 * (p * q) := by
+    simp only [Matrix.det_smul, Fintype.card_fin, norm_mul, norm_pow, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_pos hc, hdet] at hd
+    nlinarith only [hd]
+  have hd'' : c ^ 2 ≤ t * (p * q) := by
+    apply le_of_mul_le_mul_right (a := t) _ ht
+    nlinarith only [hd']
+  exact hd''.trans (by
+    simpa only [one_mul] using mul_le_mul_of_nonneg_right ht1 (mul_nonneg hp hq))
+
+private theorem diagonal_witness (p q r : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q)
+    (hr : -Real.sqrt (p * q) ≤ r) :
+    IsSymmetricWitness (Matrix.diagonal ![(p : ℂ), (r : ℂ), (q : ℂ)]) := by
+  constructor
+  · apply Matrix.isHermitian_diagonal_iff.mpr
+    intro i
+    fin_cases i <;> simp [IsSelfAdjoint]
+  · intro v
+    change 0 ≤ (star (coherent v) ⬝ᵥ
+      ((Matrix.diagonal (fun i => ((![p,r,q] : Fin 3 → ℝ) i : ℂ))) *ᵥ coherent v)).re
+    rw [diagonal_expectation]
+    simp only [Fin.sum_univ_three, coherent, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val, map_pow, Complex.normSq_mul, Complex.normSq_ofReal,
+      Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+    have hx := Complex.normSq_nonneg (v 0)
+    have hy := Complex.normSq_nonneg (v 1)
+    have hs : Real.sqrt p * Real.sqrt q = Real.sqrt (p*q) := (Real.sqrt_mul hp q).symm
+    have hi : p * Complex.normSq (v 0) ^ 2 + r * (2 * Complex.normSq (v 0) *
+        Complex.normSq (v 1)) + q * Complex.normSq (v 1) ^ 2 =
+        (Real.sqrt p * Complex.normSq (v 0) - Real.sqrt q * Complex.normSq (v 1)) ^ 2 +
+          2 * (r + Real.sqrt (p*q)) * Complex.normSq (v 0) * Complex.normSq (v 1) := by
+      rw [← hs]
+      nlinarith only [Real.sq_sqrt hp, Real.sq_sqrt hq]
+    rw [hi]
+    exact add_nonneg (sq_nonneg _) (mul_nonneg (mul_nonneg
+      (mul_nonneg (by norm_num) (by linarith)) hx) hy)
+
+theorem result : claim := by
+  intro μ₁ μ₂ μ₃ h12 h23
+  constructor
+  · rintro ⟨W, hW, hχ⟩
+    by_cases h3 : 0 ≤ μ₃
+    · exact ⟨h3.trans h23, le_trans (neg_nonpos.mpr (Real.sqrt_nonneg _)) h3⟩
+    · have hc : 0 < -μ₃ := by linarith
+      have hχ' : W.charpoly = ∏ i : Fin 3,
+          (Polynomial.X - Polynomial.C ((![μ₁, μ₂, μ₃] : Fin 3 → ℝ) i : ℂ)) := by
+        simpa [Fin.prod_univ_three, mul_assoc] using hχ
+      obtain ⟨G, hS, hU, hG⟩ := cone_model W hW ![μ₁, μ₂, μ₃] hχ'
+      have hpos : ∀ z : Fin 3 → ℂ, qform G z = 0 →
+          0 ≤ μ₁ * Complex.normSq (z 0) + μ₂ * Complex.normSq (z 1) -
+            (-μ₃) * Complex.normSq (z 2) := by
+        intro z hz
+        have hh := hG z hz
+        simpa [Fin.sum_univ_three, sub_eq_add_neg, add_assoc] using hh
+      obtain ⟨_, h2, hb⟩ := cone_spectral_bound G hS hU μ₁ μ₂ (-μ₃) hc hpos
+      exact ⟨h2, Real.neg_sqrt_le_of_sq_le (by simpa using hb)⟩
+  · rintro ⟨h2, hb⟩
+    refine ⟨Matrix.diagonal ![(μ₁ : ℂ), (μ₃ : ℂ), (μ₂ : ℂ)],
+      diagonal_witness μ₁ μ₂ μ₃ (h2.trans h12) h2 hb, ?_⟩
+    simp only [Matrix.charpoly_diagonal, Fin.prod_univ_three, Matrix.cons_val_zero,
+      Matrix.cons_val_one, Matrix.cons_val]
+    ring
 
 end D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum
