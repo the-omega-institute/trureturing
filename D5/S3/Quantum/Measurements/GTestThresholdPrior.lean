@@ -167,7 +167,8 @@ private theorem psi_mulVec
 
 private theorem psi_adjoint (π : Equiv.Perm (Fin n)) :
     (psi (d := d) π).conjTranspose = psi (d := d) (π⁻¹) := by
-  change (((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) π)⁻¹).permMatrix ℂ).conjTranspose = _
+  change (((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) π)⁻¹).permMatrix ℂ).conjTranspose =
+    _
   rw [Matrix.conjTranspose_permMatrix]
   change _ = ((MulAction.toPermHom (Equiv.Perm (Fin n)) (Word n d) (π⁻¹))⁻¹).permMatrix ℂ
   rw [map_inv, inv_inv]
@@ -256,6 +257,115 @@ private theorem trace_conjugate (P T R : TensorMat n d)
     Matrix.trace (P * (T * R * T.conjTranspose)) = Matrix.trace (P * R) := by
   rw [← Matrix.mul_assoc P, ← Matrix.mul_assoc P, hPT,
     Matrix.trace_mul_cycle, ← Matrix.mul_assoc T.conjTranspose T P, hT, Matrix.one_mul]
+
+
+private theorem PiG_diagonal (G : Subgroup (Equiv.Perm (Fin n))) (x : Word n d) :
+    PiG G x x = (Fintype.card (MulAction.stabilizer G x) : ℂ) / (Fintype.card G : ℂ) := by
+  unfold PiG
+  simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, psi_apply]
+  rw [div_eq_mul_inv, mul_comm]
+  congr 1
+  change (∑ g : G, if x = g • x then (1 : ℂ) else 0) =
+    (Fintype.card {g : G // g • x = x} : ℂ)
+  simp only [Fintype.card_subtype, eq_comm (a := x), Finset.sum_boole]
+
+private theorem twirl_trace_average (G : Subgroup (Equiv.Perm (Fin n)))
+    (w : Word n d) (U : Matrix.unitaryGroup (Fin d) ℂ) :
+    Matrix.trace (PiG G * rhoTilde w U) =
+      (n.factorial : ℂ)⁻¹ * ∑ π : Equiv.Perm (Fin n), PiG G (π • w) (π • w) := by
+  unfold rhoTilde
+  rw [Matrix.mul_smul, Finset.mul_sum, Matrix.trace_smul, Matrix.trace_sum]
+  change _ * _ = _ * _
+  congr 1
+  apply Finset.sum_congr rfl
+  intro π _
+  rw [← psi_adjoint π, pure_conjugate, pure_conjugate]
+  rw [Matrix.mulVec_mulVec, psi_comm_tensor, ← Matrix.mulVec_mulVec, psi_ket]
+  rw [← pure_conjugate]
+  rw [trace_conjugate _ _ _ (tensor_unitary U) (PiG_comm_tensor G _), trace_word]
+
+private theorem orbit_card_pos (w : Word n d) : 0 < M w := by
+  exact Fintype.card_pos_iff.mpr ⟨⟨w, MulAction.mem_orbit_self w⟩⟩
+
+private theorem orbitMap_fiber_card (w : Word n d) (x : WordOrbit w) :
+    Fintype.card {π : Equiv.Perm (Fin n) // orbitMap w π = x} =
+      Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) := by
+  obtain ⟨τ, hτ⟩ := MulAction.mem_orbit_iff.mp x.property
+  let f : MulAction.stabilizer (Equiv.Perm (Fin n)) w →
+      {π : Equiv.Perm (Fin n) // orbitMap w π = x} := fun h =>
+    ⟨τ * h.val, Subtype.ext (by
+      change (τ * h.val) • w = x.val
+      rw [mul_smul, h.property, hτ])⟩
+  have hf : Function.Bijective f := by
+    constructor
+    · intro a b h
+      apply Subtype.ext
+      exact mul_left_cancel (congrArg Subtype.val h)
+    · intro π
+      have hπ := congrArg Subtype.val π.property
+      change π.val • w = x.val at hπ
+      refine ⟨⟨τ⁻¹ * π.val, ?_⟩, ?_⟩
+      · change (τ⁻¹ * π.val) • w = w
+        rw [mul_smul, hπ, ← hτ, inv_smul_smul]
+      · apply Subtype.ext
+        change τ * (τ⁻¹ * π.val) = π.val
+        exact mul_inv_cancel_left _ _
+  exact (Fintype.card_congr (Equiv.ofBijective f hf)).symm
+
+private theorem orbit_average (w : Word n d) (f : WordOrbit w → ℂ) :
+    (n.factorial : ℂ)⁻¹ * (∑ π : Equiv.Perm (Fin n), f (orbitMap w π)) =
+      (M w : ℂ)⁻¹ * ∑ x : WordOrbit w, f x := by
+  have hs := Fintype.sum_fiberwise' (orbitMap w) f
+  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, orbitMap_fiber_card] at hs
+  have hc : M w * Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) =
+      n.factorial := by
+    simpa only [M.eq_1, Fintype.card_perm, Fintype.card_fin] using
+      MulAction.card_orbit_mul_card_stabilizer_eq_card_group (Equiv.Perm (Fin n)) w
+  have hm : (M w : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.ne_of_gt (orbit_card_pos w))
+  have hh : (Fintype.card (MulAction.stabilizer (Equiv.Perm (Fin n)) w) : ℂ) ≠ 0 :=
+    Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+  have hcast := congrArg (fun k : ℕ => (k : ℂ)) hc
+  simp only [Nat.cast_mul] at hcast
+  rw [← hs, ← hcast, ← Finset.mul_sum]
+  field_simp
+
+private theorem burnside_stabilizer_sum (G : Subgroup (Equiv.Perm (Fin n)))
+    (w : Word n d) :
+    (∑ x : WordOrbit w, Fintype.card (MulAction.stabilizer G (x : Word n d))) =
+      O G w * Fintype.card G := by
+  have hstab (x : WordOrbit w) :
+      Fintype.card (MulAction.stabilizer G (x : Word n d)) =
+        ∑ g : G, if g • x = x then 1 else 0 := by
+    change Fintype.card {g : G // g • (x : Word n d) = x.val} = _
+    simp only [Fintype.card_subtype, Finset.sum_boole]
+    congr 1
+    apply Finset.filter_congr
+    intro g _
+    exact ⟨fun h => Subtype.ext h, fun h => congrArg Subtype.val h⟩
+  simp_rw [hstab]
+  rw [Finset.sum_comm]
+  have hfix (g : G) :
+      (∑ x : WordOrbit w, if g • x = x then 1 else 0) =
+        Fintype.card (MulAction.fixedBy (WordOrbit w) g) := by
+    simp only [Finset.sum_boole]
+    exact (Fintype.card_subtype _).symm
+  simp_rw [hfix]
+  exact MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group G (WordOrbit w)
+
+private theorem trace_eq_orbit_ratio (G : Subgroup (Equiv.Perm (Fin n)))
+    (w : Word n d) (U : Matrix.unitaryGroup (Fin d) ℂ) :
+    Matrix.trace (PiG G * rhoTilde w U) = (O G w : ℂ) / (M w : ℂ) := by
+  rw [twirl_trace_average]
+  change (n.factorial : ℂ)⁻¹ * (∑ π, (fun x : WordOrbit w => PiG G x.val x.val)
+    (orbitMap w π)) = _
+  rw [orbit_average w (fun x : WordOrbit w => PiG (d := d) G x.val x.val)]
+  simp_rw [PiG_diagonal, div_eq_mul_inv]
+  rw [← Finset.sum_mul]
+  have hcast := congrArg (fun k : ℕ => (k : ℂ)) (burnside_stabilizer_sum G w)
+  simp only [Nat.cast_sum, Nat.cast_mul] at hcast
+  rw [hcast]
+  have hg : (Fintype.card G : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero
+  field_simp
 
 
 end
