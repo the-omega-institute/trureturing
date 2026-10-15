@@ -1,0 +1,38 @@
+**Corollary 9.1 (normalized mass cannot replace joint depth).**
+For the entire three-row product of Definition 8.1, and also for
+its entire $r_0,r_1$ pair product,
+
+$$
+\forall h\ J_B(h),\qquad
+\inf_{\mathbf u}W_{1/2}(\mathbf u)=\frac12.
+\tag{NMF.9.1}
+$$
+
+For every fixed $0<\theta<1$, the normalized biased infimum is
+$\min(\theta,1-\theta)>0$. For every real $q\ge1/2$,
+
+$$
+\inf_{\mathbf u}W_q(\mathbf u)\ge\frac12.
+\tag{NMF.9.2}
+$$
+
+For every rational $0<q<1/2$, the infimum remains zero.
+
+Proof. Combine Theorems 8.4–8.5 and $M_{1/2}=W_{1/2}$.
+For $q\ge1/2$, every frontier term satisfies
+$q^{|p|}\ge2^{-|p|}$, so every tuple has
+$W_q\ge W_{1/2}\ge1/2$. For $0<q<1/2$ the finite triples
+in (NMF.8.16) have masses tending to zero; their pair restrictions
+have the same frontier. This also directly instantiates the valid
+strict-discount equivalence of Theorem 3.2.
+
+The paragraph following Theorem 4.1 leaves failure of the reverse
+critical zero-infimum implication on entire signed row products
+unasserted. Equations (NMF.8.12) and (NMF.9.1) supply that
+entire-product counterexample. Theorem 4.1 itself concerns a
+different input, (NMF.13), whose entire critical infimum is zero;
+its conclusion remains as stated. A balanced subsequence alone
+could not establish (NMF.9.1). The all-tuple lower bound is what
+prevents an alternative source tuple from decreasing this
+infimum to zero. $\square$
+

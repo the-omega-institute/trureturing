@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:df7634be677ae4bda556624cb26bee2e3a4a91fd41a6c98855985149aa5e3ff3
+  normalized_sha256: sha256:df7634be677ae4bda556624cb26bee2e3a4a91fd41a6c98855985149aa5e3ff3
+cas_ref: sha256:df7634be677ae4bda556624cb26bee2e3a4a91fd41a6c98855985149aa5e3ff3
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/DeterministicCompletionMinimality.minimal_deterministic_completion
+    target_statement_id: sha256:8deb30f0613a9667a86e1252f7de4e74eafbe5d7dd9338b6bfbca1ec420551aa
+receipts:
+  unresolved_subitems: []

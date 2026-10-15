@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.LeanReportScript.Tests;
 
-public sealed class LeanReportPairScriptTests
+public sealed class LeanReportPairScriptTests(Xunit.Abstractions.ITestOutputHelper testOutput)
 {
     [Fact]
     public void CandidateInterfaceForwardsArgumentsAndProducerFailure()
@@ -18,6 +18,11 @@ public sealed class LeanReportPairScriptTests
         var result = TestProcessRunner.Run("bash", [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/lean-report-pair.sh"),
             "--producer", producer, "--lake-bin", "/usr/bin/true", "--candidate-root", temporary.Path,
             "--candidate-output", output], temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+        if (result.ExitCode != 71)
+        {
+            testOutput.WriteLine($"StandardError:\n{Encoding.UTF8.GetString(result.StandardError)}");
+            testOutput.WriteLine($"StandardOutput:\n{Encoding.UTF8.GetString(result.StandardOutput)}");
+        }
         Assert.Equal(71, result.ExitCode);
         Assert.Equal($"/usr/bin/true\n--repository\n{temporary.Path}\n--output\n{output}\n", Encoding.UTF8.GetString(result.StandardOutput));
     }

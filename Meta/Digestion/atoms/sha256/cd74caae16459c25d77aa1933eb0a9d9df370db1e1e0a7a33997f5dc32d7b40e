@@ -1,0 +1,19 @@
+**Proof.** *Reduction to a graph state.* Write $\psi=\lambda(U_1\otimes\cdots\otimes U_N)|\Gamma\rangle$ (Convention 2.3). In the form $Z_n^{(\mathtt q)}=\langle\psi^{\otimes G}|P|\psi^{\otimes G}\rangle$ of Convention 2.2, the operator $P$ permutes the copies of each qubit among themselves, so it commutes with $\big(U_1\otimes\cdots\otimes U_N\big)^{\otimes G}$, and the scalar contributes $|\lambda|^{2|G|}=1$. Hence $Z_n^{(\mathtt q)}$ is the same for $\psi$ and for $|\Gamma\rangle$, and it suffices to treat $\psi=|\Gamma\rangle$ with the given $\Gamma$.
+
+*The quadratic form.* Write $\delta_u=\delta_{\mathrm{col}(u)}$ and, for $x:G\to\{0,1\}^N$, let $x_u\in\mathbb F_2^G$ be the function $r\mapsto x_r(u)$. All amplitudes of $|\Gamma\rangle$ are real, and each of the $2|G|$ factors carries the normalisation $2^{-N/2}$, so
+
+$$
+Z_n^{(\mathtt q)}=2^{-N|G|}\sum_{x}(-1)^{\Phi(x)},\qquad \Phi(x)=\sum_{u<v}\Gamma_{uv}\sum_{r\in G}\Big(x_r(u)x_r(v)+x_{r+\delta_u}(u)\,x_{r+\delta_v}(v)\Big)\in\mathbb F_2 .
+$$
+
+For $a,b\in\mathbb F_2^G$ put $\langle a,b\rangle=\sum_ra(r)b(r)$ and $(T_sa)(r)=a(r+s)$. Re-indexing the second sum by $r\mapsto r-\delta_v$ gives $\Phi(x)=\sum_{u<v}\Gamma_{uv}\big(\langle x_u,x_v\rangle+\langle T_{\delta_u-\delta_v}x_u,x_v\rangle\big)$.
+
+*Fourier coordinates.* For $a\in\mathbb F_2^G$ and $t\in G$ let $\hat a(t)=\sum_ra(r)\zeta^{t\cdot r}\in F$. For $0\ne w\in G$ some coordinate $w_i$ is nonzero, $\zeta^{w_i}\ne1$, and $\sum_{t_i\in\mathbb Z/n}\zeta^{t_iw_i}=(\zeta^{nw_i}-1)/(\zeta^{w_i}-1)=0$; hence $\sum_{t\in G}\zeta^{t\cdot w}$ equals $|G|$ for $w=0$ and $0$ otherwise. Since $|G|=n^{\mathtt q-1}$ is odd, $|G|=1$ in $F$, and this gives the inversion formula $a(r)=\sum_t\hat a(t)\zeta^{-t\cdot r}$ and the Parseval identity $\langle a,b\rangle=\sum_{t\in G}\hat a(t)\,\hat b(-t)$. Moreover $\widehat{T_sa}(t)=\zeta^{-t\cdot s}\hat a(t)$. With $X_u(t)=\hat x_u(t)$ and $\lambda_u=\lambda_u(t)=\zeta^{t\cdot\delta_u}=\zeta^{f_t(\mathrm{col}(u))}$,
+
+$$
+\Phi(x)=\sum_{t\in G}\varphi_t,\qquad \varphi_t=\sum_{u<v}\Gamma_{uv}\,\frac{\lambda_u+\lambda_v}{\lambda_u}\,X_u(t)\,X_v(-t),
+$$
+
+using $1+\zeta^{-t\cdot(\delta_u-\delta_v)}=1+\lambda_v/\lambda_u$.
+
+*Frobenius orbits.* The group $G$ is partitioned into the orbits of $t\mapsto2t$. The orbit $O$ of $t$ has $k=|O|$ elements, $k$ being the multiplicative order of $2$ modulo the order of $t$. Since the entries of $x_u$ lie in $\mathbb F_2$, $X_u(2t)=X_u(t)^2$, so $X_u(t)^{2^k}=X_u(t)$ and $X_u(t)$ lies in the subfield $K_O\subseteq F$ with $2^k$ elements; likewise $\varphi_{2t}=\varphi_t^2$ and $\varphi_t\in K_O$, so $\sum_{s\in O}\varphi_s=\operatorname{Tr}_{K_O/\mathbb F_2}\varphi_t$. 

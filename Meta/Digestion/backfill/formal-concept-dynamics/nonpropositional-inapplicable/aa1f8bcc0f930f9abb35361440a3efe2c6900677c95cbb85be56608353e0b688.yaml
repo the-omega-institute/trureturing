@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa1f8bcc0f930f9abb35361440a3efe2c6900677c95cbb85be56608353e0b688
+  normalized_sha256: sha256:aa1f8bcc0f930f9abb35361440a3efe2c6900677c95cbb85be56608353e0b688
+cas_ref: sha256:aa1f8bcc0f930f9abb35361440a3efe2c6900677c95cbb85be56608353e0b688
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 22.3（观察极限怀疑）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 0f31f74ccd6e40d596d0f98ef0e281a64cf5fcb2186e558e3de4298ccd63a1e2
+    next_atom_id: 2bbf2df749662944dce20b67d750ae6495a732e3e98d18bddf22c087db6a5332

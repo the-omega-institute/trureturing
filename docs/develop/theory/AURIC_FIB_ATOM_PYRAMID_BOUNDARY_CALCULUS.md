@@ -2067,3 +2067,1964 @@ $\Gamma_n$、合法位置指标 $u_i$、事件概率和同源条件记录；
 [PE-G]: https://arxiv.org/abs/quant-ph/0602096v1
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 配对记忆、关联转移与局域时间的闭合条件
+
+### 16.1 五模式、配对副本与已有概率纤维
+
+**定义 16.1（有序副本及标签对应）。** 令单副本空间
+$\mathcal H=\mathbb C^5$ 的正交单位基按
+$\mathcal S=(0,1,2,3,13)$ 排列。其占位向量采用 $(x,y,z)$ 次序：
+
+$$
+v_0=(0,0,0),\quad v_1=(1,0,0),\quad v_2=(0,0,1),\quad
+v_3=(0,1,0),\quad v_{13}=(1,1,0).
+$$
+
+$|0\rangle$（亦记 $s_0$）是范数一的基向量，不是零向量。
+本卷 §4–5 的数量标签与本章位置标签的精确双射是
+
+$$
+(0,2,3,5,25)_{\rm old}\longleftrightarrow(0,1,2,3,13),
+\qquad
+(p_0,p_2,p_3,p_5,p_{25})_{\rm old}
+=(p_0,p_1,p_2,p_3,p_{13}).
+$$
+
+这是定义 15.2 的同一重标记；其张量位置次序 $(x,z,y)$
+与此处画金字塔用的 $(x,y,z)$ 仅交换后两个坐标。
+令 $E_s=|s\rangle\langle s|$，
+$N_x=E_1+E_{13},N_y=E_3+E_{13},N_z=E_2$。
+本卷 4.2、4.3、6.2 已分别供应概率逆式、行列式和整数核。
+在上述双射下直接消费为
+
+$$
+\begin{gathered}
+r=1-Z,\qquad
+p_\kappa=(r-X-Y+\kappa,X-\kappa,Z,Y-\kappa,\kappa),\\
+0\le Z\le1,\quad 0\le X,Y\le r,\quad
+\max(0,X+Y-r)\le\kappa\le\min(X,Y),\\
+d=(1,-1,0,-1,1),\qquad
+v_0+v_{13}=v_1+v_3,\qquad
+\Delta=p_0p_{13}-p_1p_3=r\kappa-XY.
+\end{gathered}
+$$
+
+因此同三均值的差为实数倍 $d$，同总数及总占位的整数计数差为整数倍 $d$。
+这里不把已有反解或核另立为新定理。
+
+有序配对空间是 $\mathcal H_A\otimes\mathcal H_B$，
+$|s,t\rangle=|s\rangle_A\otimes|t\rangle_B$，共二十五个基标签。
+这两个因子是两个完整五模式副本；它们不同于单个副本内部
+定义 15.2 的三个位置 qubit 因子，也不同于沿原生扫描相邻的两个守卫窗口。
+后者要满足本卷 7.1 的接缝条件，此处没有把二十五个有序副本标签
+宣布为全部合法的相邻原生输入。算子 $\mathsf S|s,t\rangle=|t,s\rangle$
+交换两个副本。全文密度矩阵均有限维、半正定且迹一；配对初态满足
+$\mathsf S\rho\mathsf S=\rho$，不预设乘积性。
+交换不变态可以同时含对称和反对称子空间的质量，不要求支撑包含于
+$\operatorname{Sym}^2\mathcal H$。
+
+### 16.2 固定配对的两个旋转读数
+
+**命题 16.2（总占位守恒与配对旋转）。** 在整个配对空间上定义
+
+$$
+\begin{gathered}
+A=|0,13\rangle\langle1,3|+|13,0\rangle\langle3,1|,
+\qquad K=A+A^\dagger,\qquad U(u)=e^{-iuK},\\
+P_+=AA^\dagger,\qquad P_-=A^\dagger A,\qquad P=P_++P_-,\\
+B=P_+-P_-,\qquad J=-i(A-A^\dagger),\qquad
+\rho(u)=U(u)\rho U(u)^\dagger,\\
+b=\operatorname{Tr}(\rho B),\quad j=\operatorname{Tr}(\rho J),\quad
+b(u)=\operatorname{Tr}(\rho(u)B),\quad j(u)=\operatorname{Tr}(\rho(u)J).
+\end{gathered}
+$$
+
+则 $K$ 与 $\mathsf S$ 及每个
+$N_\alpha\otimes I+I\otimes N_\alpha$ 对易，$\alpha=x,y,z$。
+对每个实数 $u$，
+
+$$
+\begin{gathered}
+[K,B]=-2iJ,\qquad [K,J]=2iB,\\
+b(u)=b\cos2u+j\sin2u,\qquad
+j(u)=j\cos2u-b\sin2u,\\
+b(u)^2+j(u)^2=b^2+j^2.
+\end{gathered}
+$$
+
+证明。两个跃迁的源、靶是四个不同正交基向量，故
+$A^2=(A^\dagger)^2=0$，$P_+P_-=0$，$K^2=P$，$KP=PK=K$。
+$\mathsf S$ 互换 $A$ 的两项，所以 $\mathsf S A\mathsf S=A$。
+每个总占位算子在各跃迁两端的特征值相等，正是
+$v_0+v_{13}=v_1+v_3$ 的三个分量；在其他基向量上 $K$ 为零。
+这证明全空间对易，也给出
+
+$$
+U(u)=I+(\cos u-1)P-i\sin u\,K.
+$$
+
+直接用 $AP_-=P_+A=A$、$AP_+=P_-A=0$ 及其伴随，得到两个交换子。
+Heisenberg 导数为
+$\frac{d}{du}(U^\dagger BU)=iU^\dagger[K,B]U=2U^\dagger JU$
+及 $\frac{d}{du}(U^\dagger JU)=-2U^\dagger BU$。
+具有初值 $(B,J)$ 的线性方程唯一解是对应的旋转公式；取迹即得读数式。
+平方和由实平面旋转保持。$b,j$ 都是二副本可观测量的期望，
+并非任意单副本边缘的函数。这里 $K$ 交换两对活动配置，
+它不等于交换整个子系统的 $\mathsf S$。证毕。
+
+### 16.3 一般相关态的完整边缘概率公式
+
+**定理 16.3（全空间边缘纤维运动）。** 令
+$\rho_A(u)=\operatorname{Tr}_B\rho(u)$，
+$p_s(u)=\operatorname{Tr}(\rho_A(u)E_s)$。
+对于定义 16.1 的任意交换不变初态，包括任意允许的相干项，
+
+$$
+\boxed{\quad
+p(u)=p(0)+\frac d4\,[b(\cos2u-1)+j\sin2u].\quad}
+$$
+
+各单副本均值 $X,Y,Z$ 分别不变，且
+
+$$
+\kappa(u)-\kappa(0)=\frac{b(u)-b}{4}.
+$$
+
+证明。$U$ 与 $\mathsf S$ 对易，所以 $\rho(u)$ 始终交换不变，
+两边完整约化矩阵相等。定义全空间上的对称局域投影平均
+
+$$
+M_s=\frac12(E_s\otimes I+I\otimes E_s).
+$$
+
+于是 $p_s(u)=\operatorname{Tr}(\rho(u)M_s)$。
+在 $P_+$ 的两个配置中，$M_0=M_{13}=1/2$、$M_1=M_3=M_2=0$；
+在 $P_-$ 的两个配置中，$M_1=M_3=1/2$、$M_0=M_{13}=M_2=0$。
+因 $M_s$ 对角，它不连接 $P$ 与 $P^\perp$。因此全空间恒等式为
+
+$$
+M_s=R_s+\frac{d_s}{4}B,\qquad
+R_s=(I-P)M_s(I-P)+\frac{\mathbf1_{\{s\ne2\}}}{4}P.
+$$
+
+$K$ 在 $P^\perp$ 为零，在 $P$ 内与标量对易，故 $[K,R_s]=0$。
+这不是仅在四个活动向量上的等式：两侧在 $P^\perp$ 同为 $M_s$，
+且所有跨块矩阵元同为零。故对任意 $\rho$，无论它在活动块之间、
+活动与非活动之间或非活动内部有何相干，均有
+
+$$
+\operatorname{Tr}(\rho(u)M_s)-\operatorname{Tr}(\rho M_s)
+=\frac{d_s}{4}[b(u)-b].
+$$
+
+代入 16.2 即覆盖五个模式。对 $s=13$ 就是 $\kappa$ 的公式。
+向量 $d$ 对 $N_x,N_y,N_z$ 的三个占位行求和都为零，所以各均值不变。
+等价地，总占位守恒且两边均值相同，每边都等于总均值的一半。
+
+交换不变性用于从 $M_s$ 回到每个单边概率，不能删除。
+例如不对称输入 $|0,13\rangle\langle0,13|$ 在 $u=\pi/2$ 变为
+$|1,3\rangle\langle1,3|$；第一副本的 $x$ 均值从零变一，
+第二副本从一变零，总量仍为一。
+一般不对称输入只由上述条件保证总量及对称边缘平均的公式。证毕。
+
+### 16.4 有限读出任务的预测闭合
+
+**命题 16.4（概率未来曲线的充分且必要数据）。** 固定 16.2 的 $K$。
+允许的未来任务为：不作中途测量、反馈、复位或其他操作，
+只在任意指定最终参数 $u$ 读取单副本的五模式概率。
+两个交换不变初态具有相同的全部此类未来曲线，当且仅当
+它们的 $(p(0),b,j)$ 相同。
+
+证明。相同三组数据代入 16.3 给相同曲线。反向，令 $u=0$ 得到 $p(0)$ 相同。
+函数是解析的，读取 $s=13$ 的曲线并取原点导数，有
+
+$$
+\kappa'(0)=j/2,\qquad \kappa''(0)=-b.
+$$
+
+故曲线相同要求 $j,b$ 分别相同；即使只允许所有 $u\ge0$，
+原点右导数也给同一结论。退化纤维、零概率和 $b=j=0$
+均由同一解析公式处理，不需极角或正支撑假设。证毕。
+
+这份任务数据不声称恢复整个 $25\times25$ 配对矩阵，
+也不声称决定全部约化矩阵的非对角元或所有干预协议。
+数据为连续实数，并未给定精度、编码、可达读口或有限位数上界。
+
+### 16.5 乘积输入与四角相位的自包含桥
+
+**命题 16.5（相同乘积态的专门化）。** 若
+$\rho=\sigma\otimes\sigma$，$\sigma$ 为任意单副本密度矩阵，
+$p_s=\langle s|\sigma|s\rangle$，则
+
+$$
+b=2(p_0p_{13}-p_1p_3)=2\Delta,\qquad
+j=4\operatorname{Im}(\sigma_{1,0}\sigma_{3,13}).
+$$
+
+特别地，对相同纯乘积输入
+$|\psi\rangle\otimes|\psi\rangle$，在所用振幅非零处写
+$\psi_s=\sqrt{p_s}e^{-i\theta_s}$，并令
+
+$$
+R=\sqrt{p_0p_1p_3p_{13}},\qquad
+\chi=\theta_0-\theta_1-\theta_3+\theta_{13}.
+$$
+
+则 $j=4R\sin\chi$，且
+
+$$
+\kappa(u)-\kappa(0)=-\Delta\sin^2u+R\sin\chi\sin2u.
+$$
+
+证明。$P_+$ 读取两个对角概率 $p_0p_{13}$，$P_-$ 读取两个 $p_1p_3$，
+故第一式对混合乘积同样成立，并不刻画纯态。
+按 $\sigma_{s,t}=\langle s|\sigma|t\rangle$，
+$\operatorname{Tr}(\rho A)=2\sigma_{1,0}\sigma_{3,13}$。
+$\operatorname{Tr}(\rho A^\dagger)$ 是它的共轭，给第二式。
+纯态时令 $\alpha=\psi_0\psi_{13}$、$\beta=\psi_1\psi_3$，则
+
+$$
+\sigma_{1,0}\sigma_{3,13}
+=\overline\alpha\beta=R e^{i\chi}.
+$$
+
+将 $b=2\Delta,j=4\operatorname{Im}(\overline\alpha\beta)$ 代入 16.3，
+再用 $\cos2u-1=-2\sin^2u$，得到所列桥。
+若有振幅为零，直接使用
+$\operatorname{Im}(\overline\alpha\beta)$，不定义该零振幅的相位。
+对角乘积态的上述非对角矩阵元为零，故 $j=0$。
+一般相关配对态既无乘积因子分解，也不能从 $p$ 确定 $b$ 或 $j$。
+例如 $p_s=1/5$ 的纯乘积族改变 $\chi$ 即改变 $j$，
+而下一命题给相同完整局域矩阵但不同 $b$ 的实例。证毕。
+
+### 16.6 同完整局域态的配对来源反例
+
+**命题 16.6（局域最大混合仍遗漏配对记忆）。** 记
+$\Pi_{s,t}=|s,t\rangle\langle s,t|$，取
+
+$$
+\begin{aligned}
+\rho_+&=\tfrac15(\Pi_{0,13}+\Pi_{13,0}+\Pi_{1,1}+\Pi_{3,3}+\Pi_{2,2}),\\
+\rho_-&=\tfrac15(\Pi_{0,0}+\Pi_{13,13}+\Pi_{1,3}+\Pi_{3,1}+\Pi_{2,2}).
+\end{aligned}
+$$
+
+两态都交换不变、对角且归一化半正定，两边完整边缘均为 $I_5/5$。
+两者共有 $X=Y=2/5,Z=\kappa=1/5,\Delta=0$，而
+$b_+=2/5,b_-=-2/5,j_+=j_-=0$。在 $u=\pi/2$，
+
+$$
+p_+=(0,2/5,1/5,2/5,0),\qquad
+p_-=(2/5,0,1/5,0,2/5).
+$$
+
+证明。每式是五个正交投影等权混合；非对角有序标签总成交换对，
+对角标签自身不动。每个副本的每个模式恰在一项出现一次，
+所以偏迹就是 $I_5/5$，并非仅对角概率相同。
+$\rho_+$ 恰有两个 $P_+$ 配置而无 $P_-$ 配置，$\rho_-$ 反之；
+两态对角使 $J$ 的期望为零。代入 16.3，
+位移分别为 $-d/5$、$d/5$，得到两组结果。
+也可由 $U(\pi/2)$ 逐对交换活动配置直接得到同样边缘。
+相同的外加局域时钟读数可以赋给这两份初态；它不改变其 $b$ 差异，
+所以完整局域密度矩阵连同这种相同钟读数仍不足以预测该任务。证毕。
+
+### 16.7 全支撑约定下的关联与局域熵收支
+
+**定义 16.7（本章统一的自然对数）。** 对概率律使用
+$H(p)=-\sum_s p_s\ln p_s$，对密度矩阵使用
+$S(\sigma)=-\operatorname{Tr}(\sigma\ln\sigma)$，均取 $0\ln0=0$。
+量子相对熵为
+$D(\sigma\Vert\tau)=\operatorname{Tr}[\sigma(\ln\sigma-\ln\tau)]$
+当 $\operatorname{supp}\sigma\subseteq\operatorname{supp}\tau$，
+否则为 $+\infty$；对数在相应正支撑上取值。
+经典 $D(p\Vert q)$ 采用同一支持约定。
+$\mathsf I(A:B)_\sigma=S(\sigma_A)+S(\sigma_B)-S(\sigma)$。
+所有当前熵量的单位为 nat；本卷 §5.1–5.2 的二底量须乘 $\ln2$：
+
+$$
+H=(\ln2)H_2,\qquad D=(\ln2)D_2,\qquad
+\mathsf I=(\ln2)\mathsf I_2.
+$$
+
+**定理 16.8（相关输入也成立的精确熵收支）。** 对 16.2 的一般交换不变态，
+
+$$
+\boxed{\quad
+2[S(\rho_A(u))-S(\rho_A(0))]
+=\mathsf I(A:B)_{\rho(u)}-\mathsf I(A:B)_\rho.\quad}
+$$
+
+这里两个互信息有限且非负，并且
+$\mathsf I(A:B)_\sigma=D(\sigma\Vert\sigma_A\otimes\sigma_B)$，
+包括奇异态。相同乘积输入给 $S(\rho_A(u))\ge S(\rho_A(0))$，
+但不推出沿 $u$ 的导数非负。
+
+证明中先完整落实所用的标准有限维熵恒等式。
+若 $Q_A$ 是 $\ker\sigma_A$ 的投影，则
+$\operatorname{Tr}[\sigma(Q_A\otimes I)]=0$。
+该数是 $\|(Q_A\otimes I)\sigma^{1/2}\|_{\rm HS}^2$，
+故 $\sigma$ 的支撑正交于 $\ker\sigma_A\otimes\mathcal H_B$。
+对 $B$ 同理，二者合起来给
+
+$$
+\operatorname{supp}\sigma\subseteq
+\operatorname{supp}\sigma_A\otimes\operatorname{supp}\sigma_B.
+$$
+
+在右侧空间上两边缘都严格正，谱分解直接给
+$\ln(\sigma_A\otimes\sigma_B)=\ln\sigma_A\otimes I+I\otimes\ln\sigma_B$。
+用偏迹定义取期望得到
+
+$$
+D(\sigma\Vert\sigma_A\otimes\sigma_B)
+=-S(\sigma)+S(\sigma_A)+S(\sigma_B).
+$$
+
+为同时说明非负性，对任意归一化 $\tau$ 及
+$\operatorname{supp}\sigma\subseteq\operatorname{supp}\tau$，
+把 $\sigma$ 的正谱写为 $\sum_i a_i|e_i\rangle\langle e_i|$，
+令 $t_i=\langle e_i|\tau|e_i\rangle>0$。
+在 $\tau$ 的正特征基内，以 $|\langle e_i|f_k\rangle|^2$ 为权用
+标量 $\ln$ 的凹性，得
+$\langle e_i|\ln\tau|e_i\rangle\le\ln t_i$。
+因此
+
+$$
+D(\sigma\Vert\tau)\ge\sum_i a_i\ln(a_i/t_i)
+\ge\sum_i(a_i-t_i)=1-\sum_i t_i\ge0.
+$$
+
+第二个不等式是 $-\ln x\ge1-x$，最后用这些 $e_i$ 只占一个子空间且
+$\operatorname{Tr}\tau=1$。不满足支撑包含时的无穷值也非负。
+这些步骤覆盖了奇异乘积边缘，不曾在零特征值上机械取对数。
+
+回到配对演化，酉共轭保持联合谱，故 $S(\rho(u))=S(\rho)$。
+交换不变性使两边缘熵相等。在互信息定义中相减，便得所列收支式。
+相同乘积输入的联合熵是两倍输入熵，故输入互信息为零；
+输出非负性给相对于初始值的不等式。
+
+在 16.6 的两种相关输入中，联合谱均为五个 $1/5$，
+初始局域熵为 $\ln5$；最终边缘概率为两个 $2/5$、一个 $1/5$，其余零。
+因这些边缘对角，
+
+$$
+S_A(\pi/2)=\ln5-\tfrac45\ln2,\qquad
+\Delta S_A=-\tfrac45\ln2,\qquad
+\Delta\mathsf I=-\tfrac85\ln2.
+$$
+
+这展示相关输入的局域熵可降低。证毕。
+
+数学引文与范围。[Groisman–Popescu–Winter][PM-GPW] 的
+*On the quantum, classical and total amount of correlations in a quantum state*，
+§II、Theorem II.3，将量子互信息识别为渐近多副本去关联所需的最小局域噪声率。
+其式 (2)–(3) 的局域随机酉和近似去关联操作不同于这里的单个联合 $U(u)$。
+本章消费互信息的标准含义及熵工具，不把该渐近操作定理当作本碰撞的成本等式。
+有相干时 $H(p)$ 只是指定模式测量的 Shannon 熵，不能替换 $S(\rho_A)$；
+例如一般纯 $\psi$ 的 $S=0$ 而 $H(p)>0$。
+
+### 16.8 固定纤维的已有最大熵补全
+
+**数学引文 16.9（闭支撑最大熵与条件信息的准确消费）。**
+按 16.1 的双射与 16.7 的换底，本卷 5.1–5.2 已给出整个闭纤维上
+唯一最大熵律。对 $r>0$，其当前写法为
+
+$$
+\kappa^\star=XY/r,\qquad
+p^\star=\left(\frac{(r-X)(r-Y)}r,
+\frac{X(r-Y)}r,Z,\frac{(r-X)Y}r,\frac{XY}r\right).
+$$
+
+令底面条件概率矩阵（行是 $x$，列是 $y$）为
+
+$$
+Q=\frac1r\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix}.
+$$
+
+它是本卷 4.3 未归一化矩阵除以 $r$。
+5.2 的条件边缘映为 $(1-X/r,X/r)$ 与 $(1-Y/r,Y/r)$；
+供应结论准确给
+
+$$
+D(p\Vert p^\star)=H(p^\star)-H(p)
+=r\,\mathsf I_Q(x:y)\ge0.
+$$
+
+这里 $\mathsf I_Q$ 是条件在 $z=0$ 后的二元互信息，
+不是把原三占位 $(x,y,z)$ 宣告为无条件独立。
+$0\le X,Y\le r$ 的退化边缘也在原供应定理内：任何 $p$ 的正底格
+对应正的行、列边缘，故该 $p^\star$ 格为正，
+即 $\operatorname{supp}p\subseteq\operatorname{supp}p^\star$。
+于是上述 $D$ 有限，并且等于零当且仅当 $p=p^\star$。
+若 $r=0$，$X=Y=\kappa=0$，唯一律为中位模式 $p_2=1$，定义 $D=0$；
+加权条件贡献为零，不在零概率事件上定义 $Q$ 或 $\mathsf I_Q$。
+
+以下涉及非退化连续纤维时主要取
+$0<Z<1,\ 0<X,Y<r$。这保证 $p^\star$ 的四个底格严格正，
+但任一实际 $p$ 仍可位于纤维端点。
+本节的闭支撑熵式及后面的离散交换式也适用于 $Z=0$ 和退化边缘；
+含四个底格对数比或 Fisher 倒数的微分式则只在底格全正处使用。
+
+### 16.9 对角同分布输入的精确关联转移
+
+**定理 16.10（内部条件信息转为副本间互信息）。** 令
+$\rho_p=\sum_s p_sE_s$，初态为独立同分布的
+$\rho_p\otimes\rho_p$。对所有实数 $u$，输出的两个边缘仍为对角态，且
+
+$$
+p(u)=p-\Delta\sin^2u\,d=(1-\lambda)p+\lambda p^\star,
+\qquad \lambda=r\sin^2u\in[0,1].
+$$
+
+当 $r=0$ 时右式按 $p=p^\star$ 解释。对 $r>0$，
+
+$$
+\boxed{\quad
+\mathsf I(A:B)_{\rho(u)}
+=2[D(p\Vert p^\star)-D(p(u)\Vert p^\star)]
+=2r[\mathsf I_Q(x:y)-\mathsf I_{Q(u)}(x:y)].\quad}
+$$
+
+顶点处三种加权信息量均为零。
+
+证明。对角输入只在两个活动二乘二块内发生变化；
+一个块内记 $e_+=|0,13\rangle,e_-=|1,3\rangle$，
+输入两质量为 $a_+=p_0p_{13},a_-=p_1p_3$。
+在次序 $(e_+,e_-)$ 下，$U$ 的矩阵为
+$\begin{pmatrix}c&-it\\-it&c\end{pmatrix}$，$c=\cos u,t=\sin u$。
+输出为
+
+$$
+\begin{pmatrix}
+c^2a_++t^2a_-&ict(a_+-a_-)\\
+-ict(a_+-a_-)&t^2a_++c^2a_-
+\end{pmatrix}.
+$$
+
+另一个块 $(|13,0\rangle,|3,1\rangle)$ 完全同形，
+非活动部分保留原对角。新非对角项的两个配置在两侧标签都不同，
+所以对任意一侧作偏迹均为零；初态没有其他跨块相干可以演化出交叉项。
+这证明完整边缘对角性，而非只计算其五个对角元。
+16.5 给 $b=2\Delta,j=0$，16.3 遂给第一种概率写法。
+对于 $r>0$，已有反解给
+$p-p^\star=(\kappa-\kappa^\star)d$ 及
+$\Delta=r(\kappa-\kappa^\star)$，于是得到凸组合。
+$r=0$ 时初态只含 $|2,2\rangle$，$K$ 在其上为零。
+
+初态为乘积，联合熵是 $2H(p)$；酉演化保持它。
+边缘对角且相等，使输出互信息为 $2[H(p(u))-H(p)]$。
+同纤维的 $p,p(u)$ 共用 16.9 的唯一 $p^\star$，
+相减其熵缺口恰得第一条转移式；再代入 $D=r\mathsf I_Q$ 得第二条。
+所有边界项均由 16.9 的支持包含和 16.8 的乘积支撑证明保证有限。
+
+一般 $ct\Delta\ne0$ 时联合矩阵具有上式的相干；
+不能把所有部分交换的输出都当作经典联合表。
+在 $u=\pi/2$，两个块的非对角元为零，质量交换，
+此时对角联合表上的作用确为配置置换。
+守恒的是联合酉熵；所列下降量属于单副本底面条件信息，
+其两倍准确进入副本间互信息，并非一般信息消失定理。证毕。
+
+### 16.10 闭合周期与另行规定的复位序列
+
+**命题 16.11（概率返回不等于闭合弛豫）。** 对任意 16.2 初态，
+$p(u+\pi)=p(u)$；但 $U(\pi)=I-2P$，不是全空间恒等算子。
+$U(2\pi)=I$。因此同一闭合配对不构成沿 $u$ 单调的普遍弛豫。
+
+证明。16.3 的两个三角函数均以 $\pi$ 为周期，直接给概率式。
+16.2 的 $U$ 表达式给后两式；活动与非活动之间的相干在 $\pi$ 时可变号。
+例如交换对称单位向量
+$e_+=(|0,13\rangle+|13,0\rangle)/\sqrt2$ 与
+$e_0=|2,2\rangle$ 的归一化叠加 $(e_++e_0)/\sqrt2$
+在 $\pi$ 后变成 $(-e_++e_0)/\sqrt2$，其密度矩阵不相同。
+故概率返回不保证整个量子态返回。
+任何连续、周期而单调的实函数都必须为常数；
+16.10 中只要 $\Delta\ne0$，$\sin^2u$ 项即给非恒定概率往返。
+例如 $(X,Y,Z,\kappa)=(2/5,2/5,1/5,3/10)$ 给
+$p=(3/10,1/10,1/5,1/10,3/10)$，
+$\kappa(\pi/2)=11/50\ne3/10$，而 $\kappa(\pi)=3/10$。
+其 $\pi/2$ 输出互信息严格正：联合谱中的质量 $1/100$ 重数四仍在，
+但输出边缘 $(11/50,9/50,10/50,9/50,11/50)$ 的乘积态
+全部特征值至少 $81/2500>1/100$，所以输出不是乘积。
+也可直接用严格熵凹性及 16.9：$\lambda=4/5\in(0,1)$、$p\ne p^\star$
+给 $H(p(\pi/2))>H(p)$。随后回到初值，局域熵不能全过程单调。
+这与每个时刻均不低于初始熵的乘积输入结论相容。证毕。
+
+**定义 16.12（重新独立配对）。** 第 $n$ 轮输入另行规定为
+$\rho_{p_n}\otimes\rho_{p_n}$，作用参数 $u_n$ 后仅保留共同对角边缘
+作为 $p_{n+1}$，下一轮再次制备两份当前边缘的独立副本。
+这丢弃上一轮的联合相关，并添加了重新配对的制备规则；
+它不是在原来那一对上继续作用 $U$，也不是由酉动力学自动产生独立性。
+
+**命题 16.13（任意有限复位日程的闭式）。** 固定各轮共有的 $X,Y,Z$。
+对 $r>0$，令 $D_n=D(p_n\Vert p^\star)$，则
+
+$$
+\begin{gathered}
+\kappa_{n+1}-\kappa^\star
+=(1-r\sin^2u_n)(\kappa_n-\kappa^\star),\\
+\kappa_N-\kappa^\star
+=(\kappa_0-\kappa^\star)\prod_{n=0}^{N-1}(1-r\sin^2u_n),\\
+D_{n+1}\le(1-r\sin^2u_n)D_n.
+\end{gathered}
+$$
+
+$r=0$ 时唯一顶点律恒定，$D_n=0$。全交换轮 $u_n=\pi/2$ 给
+$\kappa_{n+1}=Z\kappa_n+XY$。
+
+证明。16.10 每轮保持同三均值，且
+$p_{n+1}=(1-\lambda_n)p_n+\lambda_n p^\star$，
+$\lambda_n=r\sin^2u_n$，取第 $13$ 坐标再归纳便得乘积式。
+对 $p_s^\star>0$，函数 $t\mapsto t\ln(t/p_s^\star)$
+在 $t>0$ 的二阶导数为 $1/t>0$，连续延拓到 $t=0$ 后仍凸。
+$p_s^\star=0$ 的格在整条纤维上恒零，不参与。
+故对各格应用凸性并求和，得到
+$D((1-\lambda)p+\lambda p^\star\Vert p^\star)
+\le(1-\lambda)D(p\Vert p^\star)$。
+令 $\lambda=r$ 及 $1-r=Z$ 得全交换递推。
+
+对于非平衡初值，收敛到 $\kappa^\star$ 的准确日程条件是
+$\prod_{n\ge0}(1-\lambda_n)=0$。
+若某个 $\lambda_n=1$，它立即成立；否则各因子正，等价于
+$\sum_n-\ln(1-\lambda_n)=+\infty$，由有限乘积取对数后取极限得到。
+所有 $u_n=0$ 即反例，不能删去日程条件。
+当 $0<Z<1$，每轮斜率 $1-r\sin^2u_n\ge Z>0$，
+故各有限轮映射在纤维上到其像为单射，可以在像内代数反演。
+收缩不自动等于数学上的非单射；被舍弃的是所声明任务外的联合相关。
+$Z$ 仅是此全交换复位模型的保留系数，不能称为闭合配对的衰减率。证毕。
+
+### 16.11 整数网格上的两种连续极限
+
+**定理 16.14（复位边缘的尺度极限）。** 固定 $r\in[0,1]$、
+有限实数 $g$、$\nu>0$ 及 $\tau\ge0$。每个整数 $n\ge1$ 取
+$h=\tau/n$，在同一网格的 $n$ 轮使用同一碰撞参数 $u_h$。
+复位递推的乘数有
+
+$$
+\begin{array}{ll}
+u_h=gh:& (1-r\sin^2(gh))^n\longrightarrow1,\\
+u_h=\sqrt{\nu h}:&
+(1-r\sin^2\sqrt{\nu h})^n\longrightarrow e^{-\nu r\tau}.
+\end{array}
+$$
+
+第二种极限边缘保持三均值，且满足
+
+$$
+\dot\kappa=-\nu(r\kappa-XY),\qquad
+\kappa(\tau)=\kappa^\star+(\kappa(0)-\kappa^\star)e^{-\nu r\tau}
+\quad(r>0).
+$$
+
+$r=0$ 时唯一顶点律保持不变，不使用 $XY/r$。
+
+证明。$\tau=0$ 或 $r=0$ 时所有乘数直接为一。
+以下 $\tau>0$，对每个固定参数组，充分大 $n$ 时
+$x_n=r\sin^2u_h\in[0,1/2]$，所以 $1-x_n>0$ 可取实对数。
+当 $x=0$ 时 $\ln(1-x)=0$；整个区间内
+
+$$
+\ln(1-x)=-x+O(x^2),\qquad
+\sin^2 t=t^2+O(t^4)\quad(t\to0).
+$$
+
+第一条的余项也可由
+$\ln(1-x)+x=-\int_0^x t/(1-t)\,dt$
+绝对值至多 $x^2$ 得到，故没有在可能为零的有限轮因子上取对数。
+若 $u_h=gh$，则
+
+$$
+n\ln(1-x_n)=-nr g^2h^2+O(nh^4)
+=-rg^2\tau h+O(\tau h^3)\longrightarrow0.
+$$
+
+$g=0$ 时直接恒为零。若 $u_h=\sqrt{\nu h}$，则
+
+$$
+x_n=r\nu h+O(h^2),\qquad
+n\ln(1-x_n)=-r\nu\tau+O(\tau h)\longrightarrow-r\nu\tau.
+$$
+
+指数连续性及 16.13 给两种极限，再将仿射概率逆式逐坐标代入。
+对得到的极限函数求导即给 ODE，并在 $r=0$ 使用 $X=Y=0$。
+因此这是每个固定 $\tau$ 的整数网格复位边缘极限；
+没有构造或断言所有轮次的完整联合量子态有同一极限。
+
+若一轮历时 $h>0$ 且写成 Hamiltonian 强度 $g_hK$，
+则 $g_h=u_h/h$。第二种尺度要求 $g_h=\sqrt{\nu/h}$ 发散，
+第一种则保持有限 $g$，其弛豫消失。
+时间网格变细本身不选择非零弛豫率。
+[Ciccarello、Lorenzo、Giovannetti、Palma][PM-CM] 的
+*Quantum collision models: open system dynamics from repeated interactions*，
+§5.6、§5.8 区分粗粒化与发散耦合的严格连续极限；
+其一般主方程还有第一阶 Hamiltonian 等条件。
+此处极限由准确标量递推证明，未借该综述省略模型条件。证毕。
+
+### 16.12 亲和力、Fisher 曲率与可变率耗散
+
+**命题 16.15（同纤维上的耗散链）。** 在四个底格都正的部分，令
+
+$$
+a_+=p_0p_{13},\quad a_-=p_1p_3,\quad
+\mathcal A=\ln(a_+/a_-),\quad
+\mathcal I_F=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+[HiddenRelations C-4.6][PM-H] 已供应自然对数下
+$H'=-\vartheta$、$\vartheta'=\mathcal I_F$ 及 Fisher 线元；
+[Symplectic §35.7][PM-S] 采用同一负相位约定。
+精确映射为供应者的 $\vartheta\mapsto\mathcal A$、
+$\mathcal I\mapsto\mathcal I_F$、纤维变量仍为 $\kappa$。
+消费该曲率及 16.9，当前缺口有
+
+$$
+\partial_\kappa D=\mathcal A,\qquad
+\partial_\kappa^2D=\mathcal I_F.
+$$
+
+于是 16.14 的流在该域满足
+
+$$
+\frac{dD}{d\tau}
+=-\nu(a_+-a_-)\ln(a_+/a_-)\le0.
+$$
+
+更一般地，令 $\nu(\tau)\ge0$ 在时间域每个紧区间上可积，
+$\Lambda(\tau)=\int_0^\tau\nu(t)\,dt$，则 $r>0$ 时绝对连续的唯一解为
+
+$$
+\kappa(\tau)-\kappa^\star
+=(\kappa(0)-\kappa^\star)e^{-r\Lambda(\tau)}.
+$$
+
+证明。$H(p^\star)$ 在固定纤维上为常数，故已有 $H'$ 和 $H''$
+直接给 $D$ 的两个导数。新动力学链使用
+$r\kappa-XY=a_+-a_-$，将 ODE 代入
+$\frac{dD}{d\tau}=\partial_\kappa D\,\dot\kappa$。
+对正 $a_+,a_-$，$\ln$ 单调使
+$(a_+-a_-)(\ln a_+-\ln a_-)\ge0$，得到符号。
+这并不要求 $Z>0$，只要求四个实际底格为正。
+
+可变率方程写成 $y'=-r\nu y$，$y=\kappa-\kappa^\star$。
+绝对连续积分因子 $e^{r\Lambda}$ 给 $(e^{r\Lambda}y)'=0$ 几乎处处，
+所以显示的解存在且唯一；任意两解之差用同一等式即为零。
+它还给
+
+$$
+p(\tau)=e^{-r\Lambda(\tau)}p(0)
++(1-e^{-r\Lambda(\tau)})p^\star.
+$$
+
+因指数介于零、一，整个闭纤维保持可行。
+对于 $0<X,Y<r$，$p^\star$ 四底格正；
+即使初态在端点，只要 $\Lambda(\tau)>0$，就已进入正底面。
+在 $\Lambda=0$ 的初段边界律保持原样；熵缺口用有限和的连续延拓定义，
+不将 $0\cdot\ln0$ 型的速率乘积擅自算作有限导数。
+如需要起点斜率，应取实际曲线的单侧差商，允许其为无穷；
+耗散恒等式只在正底面几乎处处使用。
+任意两时刻之间的凸组合及 16.13 的凸性证明仍给闭域上 $D$ 不增。
+若 $X$ 或 $Y$ 等于零或 $r$，纤维为点，$D=0$，
+缺失底格的亲和力不定义；$r=0$ 的顶点同理。
+
+[Rao–Esposito][PM-RE] 的 *Nonequilibrium Thermodynamics of Chemical Reaction Networks:
+Wisdom from Stochastic Thermodynamics*，§III.E.2、式 (74)–(77)，
+在质量作用、闭合详细平衡网络中给自由能差与广义相对熵的 Lyapunov 关系。
+此处标量通量 $a_+-a_-$ 与对数亲和力的非负乘积使用同一熵方法，
+但概率始终归一化，证明直接如上；没有从该化学模型输入温度、热、功或物理实现。证毕。
+
+### 16.13 校准时钟、绕行记录与任务边界
+
+**命题 16.16（时间重参数与累计交换）。** 对 16.15 的解，令
+$t=h(\tau)$ 为 $C^1$ 严格递增校准，$h'(\tau)>0$、$h(0)=0$。
+在其像时间域定义 $\widetilde\kappa(t)=\kappa(h^{-1}(t))$。
+它满足相同轨道方程，但速率为
+
+$$
+\widetilde\nu(t)=\frac{\nu(h^{-1}(t))}{h'(h^{-1}(t))},\qquad
+\frac{d\widetilde\kappa}{dt}
+=-\widetilde\nu(t)(r\widetilde\kappa-XY).
+$$
+
+并有
+$\int_0^{h(\tau)}\widetilde\nu(t)\,dt=\Lambda(\tau)$。
+
+证明。每个紧区间上 $h'$ 有正下界，逆函数为 $C^1$，
+复合保持局部绝对连续。链式法则几乎处处给所示除以 $h'$ 的速率；
+变量代换 $t=h(s)$ 给积分恒等式。由 16.15 的唯一解，
+相同累计交换意味着对应时刻相同 $\kappa$，从而相同 $p$。
+这只说明此任务中有校准关系的两种参数化，不提供普遍公共时钟，
+也不推出因果传播速度或其他动力学的相同钟率。证毕。
+
+**命题 16.17（周期相位不足以记录任意绕行次数）。** 对同一闭合配对，
+令 $R_{BJ}=\sqrt{b^2+j^2}$。若 $R_{BJ}>0$，
+
+$$
+b(u)+ij(u)=(b+ij)e^{-2iu}
+$$
+
+只有模 $2\pi$ 的极角；其读数不能区分 $u$ 与 $u+\pi\ell$，
+$\ell\in\mathbb Z$。因此只读当前 $(p,b,j)$ 的任何函数都不能
+对任意多圈给出精确累计绕行数。若 $R_{BJ}=0$，根本没有极角。
+
+证明。16.2 给复数旋转式，16.3 同时给 $p$ 的 $\pi$ 周期。
+对任意正整数 $L$，$u,u+\pi,\ldots,u+L\pi$ 的当前读数完全相同，
+而累计圈数不同；读数的后处理不能给它们不同答案。
+半径零时复数恒零，$\arg0$ 不定义，不能拿任意选定角当观测。
+若任务要求区分累计圈数，需另供绕行计数、轮次记录或足以重建它们的历史；
+该附加记录不是由周期相位自带。
+
+预测闭合总要连同实际未来操作规则指定：
+16.4 的无干预概率任务用 $(p,b,j)$；16.12 的重新独立配对任务
+另给每轮制备规则和 $u_n$；16.16 的轨道重参数另给校准 $h$。
+即使保留完整局域态，16.6 仍要求必要的配对信息。
+这些都是指定观察与操作族的闭合陈述，不是关于一切物理时钟的定理，
+也不把闭合配对的 $u$ 与复位极限的 $\tau$ 认作同一过程。证毕。
+
+### 16.14 合法长路径的矩纤维与熵基准
+
+**定义 16.18（同一合法模式空间上的低阶矩）。** 对整数 $n\ge0$，
+$\Gamma_n$ 为路径 $[n]$ 的所有独立集，包含空集；
+$\Gamma_0=\{\varnothing\}$。令 $N=|\Gamma_n|$，
+$\mathcal H_n=\mathbb C^N$，基为 $|I\rangle$，$I\in\Gamma_n$。
+对合法 $T$ 定义
+
+$$
+f_T(I)=\mathbf1_{\{T\subseteq I\}},\qquad
+F_T=\sum_{I\in\Gamma_n}f_T(I)|I\rangle\langle I|,\qquad
+\mu_T(p)=\sum_I p_I f_T(I).
+$$
+
+固定整数 $q\ge1$ 以及全部非空合法 $|T|\le q$ 的矩，并固定
+$\mu_\varnothing=1$。可行纤维 $\mathcal F$ 是这些线性等式
+与概率单纯形的交，假定非空。
+[Correlation §23.2][PM-C] 已供应函数基、对偶方向与概率逆式：
+
+$$
+D_T(I)=(-1)^{|T|-|I|}\mathbf1_{\{I\subseteq T\}},\qquad
+\langle f_S,D_T\rangle=\mathbf1_{\{S=T\}},\qquad
+p_I=\sum_{T\supseteq I}(-1)^{|T|-|I|}\mu_T.
+$$
+
+参数对应是其 $m_T\mapsto f_T$，$\mathcal O_r\mapsto$
+本章质量及 $|T|\le q$ 的矩报告，阶数参数 $r\mapsto q$；
+它的有符号数组 $D_T$ 保持原义，不是相对熵 $D(\cdot\Vert\cdot)$。
+[Symplectic §35.13][PM-S] 消费同一逆式并配上相位。
+这里只使用每个合法集的包含区间是 Boolean 区间的事实；
+$n\ge2$ 时全部 $\Gamma_n$ 并不是 Boolean 格。
+
+**数学引文 16.19（有限矩最大熵工具在本纤维的完整应用）。**
+有限集合的线性矩约束最大熵与指数族对偶是既有工具，
+参见 [Wainwright–Jordan][PM-WJ]，§§3.5–3.6、Theorems 3.3–3.4。
+这里取计数基测度、状态 $I\in\Gamma_n$、充分统计量
+$(f_T)_{0<|T|\le q}$、自然对数。
+以下给出本应用的完整有限维桥，尤其保留最大点的正性条件。
+
+若 $\mathcal F$ 含有每个 $I$ 上均正的可行律，
+则存在唯一最大熵律 $p^\star$，它也处处正，而且有有限实系数
+
+$$
+\ln p_I^\star=c+\sum_{\substack{T\in\Gamma_n\\0<|T|\le q}}
+\lambda_T f_T(I).
+$$
+
+对同纤维任何律 $p$，包括含零质量的律，
+
+$$
+D(p\Vert p^\star)=H(p^\star)-H(p).
+$$
+
+应用证明。$\mathcal F$ 非空、闭且有界，有限维中为紧集。
+$-t\ln t$ 连续延拓于 $[0,1]$，故熵最大值存在。
+该标量函数在不同两点之间严格凹（内部由二阶导数 $-1/t<0$，
+涉及零的端点由 $-(at)\ln(at)>-a t\ln t$，$0<a<1,t>0$）。
+两份不同概率至少一个坐标不同，所以 $H$ 在单纯形上严格凹；
+$\mathcal F$ 凸，最大者唯一。
+
+设 $v$ 是全正可行律，若最大者 $p^\star$ 的零格集合 $Z_0$ 非空，
+考察同纤维 $p_t=(1-t)p^\star+tv$。
+在 $p_I^\star>0$ 的有限多格上，光滑性给熵变化 $O(t)$；
+在零格上，熵增量恰为
+
+$$
+-\sum_{I\in Z_0}tv_I\ln(tv_I)
+=-t\ln t\sum_{I\in Z_0}v_I-t\sum_{I\in Z_0}v_I\ln v_I.
+$$
+
+因 $\sum_{Z_0}v_I>0$，第一项压过任何 $O(t)$，
+充分小 $t>0$ 时总熵严格增加，矛盾。因此最大者全正。
+
+令矩阵 $C$ 的行是常数一和所固定的 $f_T$。
+对于每个实向量 $w\in\ker C$，全正性保证充分小正负 $t$
+都使 $p^\star+tw$ 可行；沿该方向熵导数必须为零：
+
+$$
+\sum_I(-1-\ln p_I^\star)w_I=0.
+$$
+
+有限维正交分解 $ (\ker C)^\perp=\operatorname{im}C^{\mathsf T}$
+给出所列仿射对数式，将常数及系数符号吸收进 $c,\lambda_T$。
+这一步不以“可写乘子”为理由跳过边界正性。
+既有对偶基还保证全空间所选矩行独立；
+即使换成有冗余的统计量，行空间结论也仍成立，只是系数可不唯一。
+
+由于 $C(p-p^\star)=0$，对数式给
+$\sum_I(p_I-p_I^\star)\ln p_I^\star=0$。于是
+
+$$
+\begin{aligned}
+D(p\Vert p^\star)
+&=\sum_{I:p_I>0}p_I\ln p_I-\sum_I p_I\ln p_I^\star\\
+&=-H(p)-\sum_I p_I^\star\ln p_I^\star
+=H(p^\star)-H(p).
+\end{aligned}
+$$
+
+每个 $p_I^\star>0$，因此零输入质量不会造成支撑问题，证明完整。
+
+边界纤维也有准确版本，供下一节覆盖全部输入支撑。
+令 $\mathcal J=\bigcup_{p\in\mathcal F}\operatorname{supp}p$。
+有限性保证：对每个 $I\in\mathcal J$ 选一个在该格为正的可行律，
+将这些律等权平均，就得到在整个 $\mathcal J$ 上正的可行律。
+所有可行律在其余格恒零。将上述紧性、严格凹性、小混合及行空间论证
+逐一限制到 $\mathcal J$，得到唯一最大者，且
+$p_I^\star>0$ 恰在 $\mathcal J$ 内。
+对数仿射式只需在 $I\in\mathcal J$ 成立；限制后的行可以相关，
+但同样的正交分解仍给有限系数。
+任意可行 $p$ 的支撑包含于 $\mathcal J$，所以同一熵缺口式仍有限且成立。
+这没有把有限对数参数延拓到被迫为零的格，也没有把边界纤维维数
+当成全正纤维的维数。若纤维只有一点，最大者就是该点，所有缺口为零。
+当 $n=0$ 时这正是唯一模式的平凡情形。
+
+### 16.15 多副本的相位群约束与相关预算
+
+**定理 16.20（保持低阶总矩的精确多副本预算）。**
+取 16.18 的 $n,q,\mathcal F$ 及任意 $p\in\mathcal F$，
+令 $m\ge1$ 为整数。输入为独立同分布的
+$\rho_p^{\otimes m}$，$\rho_p=\sum_I p_I|I\rangle\langle I|$。
+在完整空间 $\mathcal H_n^{\otimes m}$ 上取酉算子 $V$，假设它与
+每个副本置换 $W_\pi$ 及全部低阶总荷对易：
+
+$$
+[V,W_\pi]=0\quad(\pi\in\mathfrak S_m),\qquad
+[V,Q_T]=0,\qquad Q_T=\sum_{a=1}^m F_T^{(a)},
+\quad 0<|T|\le q.
+$$
+
+输出 $\sigma=V\rho_p^{\otimes m}V^\dagger$ 的每个边缘是同一个对角态
+$\rho_{p'}$，$p'\in\mathcal F$。以 16.19 的同纤维最大者为基准，
+
+$$
+\begin{gathered}
+\mathsf I_m(\sigma):=\sum_{a=1}^m S(\sigma_a)-S(\sigma)
+=D\left(\sigma\,\middle\Vert\,\bigotimes_{a=1}^m\sigma_a\right)\ge0,\\
+\boxed{\quad
+\mathsf I_m(\mathrm{out})=m[H(p')-H(p)]
+=m[D(p\Vert p^\star)-D(p'\Vert p^\star)].\quad}
+\end{gathered}
+$$
+
+该结论允许输入在任意可行支撑上、输出含任意满足条件的联合相干，
+不假设输出仍是乘积。
+
+证明。输入的每一因子相同，故对每个置换 $W_\pi$ 不变；
+$V$ 对易使输出同样不变。任意两位置由一个置换互换，
+所以其完整边缘矩阵相同。
+
+现在证明完整边缘对角，不能只以共同均值或活动块计算代替。
+因为 $q\ge1$，所有单点 $T=\{i\}$ 的总占位荷都在对易假设内。
+对任意 $\boldsymbol t\in\mathbb R^n$，定义单副本相位群
+
+$$
+D(\boldsymbol t)=\exp\left(i\sum_{i=1}^n t_i F_{\{i\}}\right),\qquad
+D(\boldsymbol t)^{\otimes m}
+=\exp\left(i\sum_i t_i Q_{\{i\}}\right).
+$$
+
+对角输入与这个总相位群对易，$V$ 也与之对易，所以
+$D(\boldsymbol t)^{\otimes m}\sigma D(\boldsymbol t)^{\dagger\otimes m}=\sigma$。
+对其他 $m-1$ 因子偏迹；它们上的酉共轭不改变偏迹，得到
+
+$$
+D(\boldsymbol t)\sigma_aD(\boldsymbol t)^\dagger=\sigma_a.
+$$
+
+若 $I\ne J$ 是两合法模式，其占位向量不同，选一个
+$i\in I\mathbin\triangle J$，仅令 $t_i=\pi$，其余为零。
+矩阵元 $\langle I|\sigma_a|J\rangle$ 在这个共轭下乘 $-1$，
+又必须保持不变，故等于零。此论证覆盖所有模式对与全部相干来源，
+包括非活动部分、稀疏输入及多维总荷简并空间。
+$n=0$ 时只有一个模式，不存在非对角元；$m=1$ 时同一论证仍成立。
+于是每个边缘都是共同对角概率 $p'$。
+
+总荷守恒给
+
+$$
+m\mu_T(p')=\operatorname{Tr}(\sigma Q_T)
+=\operatorname{Tr}(\rho_p^{\otimes m}Q_T)=m\mu_T(p).
+$$
+
+$m>0$，故所有固定矩相同；归一化由密度矩阵的偏迹保证，
+从而 $p'\in\mathcal F$。这也使边界情况下 $p'$ 的支撑包含于
+16.19 的同一 $\mathcal J$。
+
+互信息的支撑论证同样覆盖所有副本。对每个 $a$，
+令 $R_a$ 为 $\ker\sigma_a$ 的投影，则
+$\operatorname{Tr}(\sigma R_a^{(a)})=0$，
+$\|R_a^{(a)}\sigma^{1/2}\|_{\rm HS}=0$。
+因此 $\operatorname{supp}\sigma$ 同时位于所有
+$\operatorname{supp}\sigma_a$ 对应的子空间中，交集恰为
+$\bigotimes_a\operatorname{supp}\sigma_a$。
+在此乘积支撑上谱分解给
+
+$$
+\ln\left(\bigotimes_a\sigma_a\right)
+=\sum_a (\ln\sigma_a)^{(a)}.
+$$
+
+取 $\sigma$ 的期望及偏迹就得 $\mathsf I_m=D$；
+16.8 的一般相对熵非负证明适用于这里的有限维配对
+$(\sigma,\bigotimes_a\sigma_a)$，无须所有 $\sigma_a$ 满秩。
+酉保持联合谱，输入独立使
+$S(\sigma)=mH(p)$；相同对角边缘给
+$\sum_aS(\sigma_a)=mH(p')$。
+最后对同纤维两律应用 16.19 的缺口式，便得完整预算。
+$m=1$ 时 $\mathsf I_1=0$，预算仍为零；
+$q$ 足以固定全部合法矩时已有逆式令纤维为点，也与公式相容。证毕。
+
+上述置换与总荷条件是充分条件，不是所有可能操作的必要分类。
+总荷简并空间中的联合相干可以存在；被相位群排除的是单副本的非对角元。
+$\mathsf I_m$ 是全部副本的总相关，不等于把所有两两互信息相加。
+对于五模式取 $n=3,q=1,m=2$，
+$F_{\{1\}},F_{\{2\}},F_{\{3\}}=(N_x,N_z,N_y)$，
+$V=U(u)$；16.2 核验所需的置换和总荷对易，
+16.19 的最大者在本纤维就是 16.9 的 $p^\star$。
+因此此一般预算确实接回 16.10 的同一实际五模式转移。
+
+### 16.16 九位置的既有维数与离散延续记忆
+
+**数学引文及应用 16.21（八十九模式上的预算与五十一对边界）。**
+取 $n=9,q=2$，在 $\Gamma_9$ 上固定质量、全部单点矩和合法二点矩。
+[Correlation §23.2][PM-C] 的既有阶数计数直接给
+
+$$
+(|\Gamma_9^{(0)}|,|\Gamma_9^{(1)}|,\ldots,|\Gamma_9^{(5)}|)
+=(1,9,28,35,15,1),\qquad |\Gamma_9|=89.
+$$
+
+其双向反演及对偶核给全正可行纤维的高阶概率方向数
+$35+15+1=51$；这不是新增计数。
+[Symplectic 命题 35.13][PM-S] 的阶数参数 $r$ 在本应用为 $q=2$：
+在所有 $p_I>0$ 的射影振幅层上，先固定这些矩，再除去非空低阶矩的
+Hamilton 相位平移，得到五十一对高阶矩—共轭角。
+其原射线实维 $2(89-1)=176$，非空低阶生成元数 $9+28=37$，
+约化实维 $176-2\cdot37=102=2\cdot51$。
+这一约化要求全正部分上的自由相位作用；
+在零支撑或奇异层上不能直接沿用此维数。
+
+将此处 $\Gamma_9$、$q=2$、任意整数 $m\ge1$
+代入 16.20，若 $V$ 满足其全部假设，则得到这条纤维上的精确预算
+
+$$
+\mathsf I_m(\mathrm{out})
+=m[D(p\Vert p^\star)-D(p'\Vert p^\star)].
+$$
+
+应用依据就是 16.20 的单点相位群、各低阶总荷和置换不变性，
+与五十一这个数没有额外的动力学推断。
+五十一维概率核不保证任意方向都能由给定交换菜单实现；
+五十一对辛坐标也不证明某菜单连通、遍历、混合或收敛到最大熵。
+这些结论另需指定允许的交换和相应动力学分析。
+一百零二维是上述数学约化的实维，不是物理时空维数或仪器数。
+
+[NativeContinuation Assumption 21.1、Theorem 23.2][PM-N]
+则属于另一任务。其固定十五来源纤维与目标为
+
+$$
+C=\{(1,0),(1,1),(0,1)\}\cup\{(15,j),(j,15):0\le j\le5\},
+\qquad \ell_{a,b}=17-b.
+$$
+
+它在同一已取得入口上，要求四值原生 Read、即时零或一合法位写入、
+当前合法词承载全部可变状态，且没有另存的时钟、回复、程序计数器或历史。
+在其固定服务和不可变表格条件下，最小词宽是
+$L(0)=L(1)=\infty,L(2)=6,L(k)=5$（每个有限 $k\ge3$）。
+这里的参数映射仅是照用该来源的 $C,\ell,k,d$ 与完整状态合同；
+没有将连续配对变量 $(p,b,j)$ 映成其有限控制器。
+改变精度或读写合同就改变问题；五、六位结论不能作为本章连续状态的位数。
+同样，副本置换不变和原生接缝守卫是不同假设，互不授予访问服务。
+
+### 16.17 数学供应与适用假设
+
+**数学引文 16.22（工具、应用与边界对应）。**
+本章具体的五模式配对公式、反例、复位专门化及长路径预算桥
+是对下列已有工具与仓内坐标的应用；一般熵恒等式、指数族对偶、
+整数核、概率逆式、Fisher 曲率及已有维数各保留原归属。
+
+| 供应者及准确范围 | 当前参数对应与消费 | 使用条件 |
+| --- | --- | --- |
+| 本卷 4.2–4.3、5.1–5.2、6.2、15.2–15.3 | 旧 $(0,2,3,5,25)$ 映到 $(0,1,2,3,13)$；$r=1-Z$、$d$、$\Delta$、$p^\star$；旧 $H_2,D_2,I_2$ 乘 $\ln2$ | 最大熵是固定三均值的选择；条件底面互信息，含闭支撑与顶点 |
+| HiddenRelations C-4.6；Symplectic §35.7–35.9 | $\vartheta=\mathcal A$、$\mathcal I=\mathcal I_F$；$\psi_s=\sqrt{p_s}e^{-i\theta_s}$、$\chi=\theta_0-\theta_1-\theta_3+\theta_{13}$ | 曲率只用于正底格；本章固定二副本线性 $K$ 由 16.2–16.5 自行建立，不把单副本四次流当成相同生成元 |
+| Correlation §23.2；Symplectic §35.13 | $m_T=f_T$、阶数 $r=q$、$\mu_T$、$D_T$、$\Gamma_n$；$n=9,q=2$ 的八十九与五十一 | 有符号核不是概率本身；逆坐标需非负；辛维数限全正自由作用层 |
+| Wainwright–Jordan，*Graphical Models, Exponential Families, and Variational Inference*，§§3.5–3.6、Theorems 3.3–3.4 | 有限计数测度，状态 $I$，低阶包含指标作为统计量；16.19 完整给出正最大者、对数仿射和熵缺口桥 | 有全正可行点时用整个 $\Gamma_n$；否则只在已证明的活支撑 $\mathcal J$ 上用对数 |
+| Groisman–Popescu–Winter，quant-ph/0410091v2，§II、Theorem II.3 | 标准量子互信息与总相关含义；自然对数统一单位；16.8、16.20 展开有限维支撑和迹恒等式 | 原操作率定理为渐近多副本局域随机酉去关联，不等于本章联合碰撞或制备成本 |
+| [Şenyaşa、Kesgin、Karpat、Çakmak，*Entropy production in non-Markovian collision models: Information backflow vs system-environment correlations*][PM-SC]，2204.09522v2，§II 式 (2)–(5) | 保留或丢弃已建联合相关的操作区别，与 16.12 的明示重新配对条件对照 | 原文为 qubit 系统—环境及环境间 partial SWAP；本章 $K$ 不是子系统 SWAP，率符号不从该例直接移植 |
+| Ciccarello、Lorenzo、Giovannetti、Palma，2106.11974v2，§5.6、§5.8 | 碰撞时长与耦合强度分开；本章用 $h=\tau/n,u_h=gh$ 或 $\sqrt{\nu h}$ | 这里只证明复位边缘的网格极限；一般主方程的附加假设保持在供应者范围 |
+| Rao–Esposito，1602.07257v3，§III.E.2、式 (74)–(77) | 相对熵 Lyapunov 与通量—亲和力方法；本章为 $\Delta\ln(a_+/a_-)$ | 原文质量作用及详细平衡化学条件不能自动赋予概率模型热力学量；16.15 直接证明所需符号 |
+| NativeContinuation Assumption 21.1、Definition 21.2、Theorem 23.2 | 同十五历史、完整滞后目标、原生 Read 与完整可变词合同，$L(2)=6,L(k\ge3)=5$ | 独立的离散观察及写入任务；不识别为 $(p,b,j)$ 的连续编码 |
+
+本章的论域是所列有限维态、允许操作、概率纤维及校准映射；
+每个结论依赖其对应假设。单副本内部条件关联、副本间总相关、
+共轭角、离散延续词宽分别属于明确的对象和任务。
+这些对应不给出未知态参数的取得方式、任意交换菜单的混合性、
+时钟的普遍统一性或物理装置的实现结论。
+
+[PM-H]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[PM-S]: SYMPLECTIC_PREDICTIVE_COMPLETION.md
+[PM-C]: AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[PM-N]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY_CONTINUATION.md
+[PM-WJ]: https://people.eecs.berkeley.edu/~jordan/papers/wainwright-jordan-fnt.pdf
+[PM-GPW]: https://arxiv.org/abs/quant-ph/0410091v2
+[PM-SC]: https://arxiv.org/abs/2204.09522v2
+[PM-CM]: https://arxiv.org/abs/2106.11974v2
+[PM-RE]: https://arxiv.org/abs/1602.07257v3
+
+## 追加锚（本行以下为增补区）
+
+## 17. 从五种铺法到素数面积的精确填充
+
+### 17.1 同一五模式的条带表示
+
+**定义 17.1（条带、砖与位置标签）。** 对整数 $n\ge0$，令
+$\mathcal T_n$ 为长度 $n$、高度一的条带的完整铺法集合。
+砖 $\mathtt M$ 覆盖一个单位格，砖 $\mathtt D$ 覆盖相邻两个单位格；
+所有砖沿条带放置，内部不交并覆盖每个格。等价地，铺法是由
+$\mathtt M,\mathtt D$ 组成、总长度为 $n$ 的有限词，其中两字母的长度分别为一、二。
+$\mathcal T_0=\{\varepsilon\}$，空条带有唯一空铺法。
+本章的 $\mathcal T_n$ 不表示本卷定义 1.1 的来源树 $T_n$；
+砖 $\mathtt M$ 也不表示组成递推矩阵 $M$。
+
+记
+
+$$
+\mathcal I_k=\{I\subseteq\{1,\ldots,k\}:i\in I\Longrightarrow i+1\notin I\},
+\qquad \mathcal I_0=\{\varnothing\}.
+$$
+
+这是 [StaticSeams 定义 5.1][EF-SS] 的独立支持集 $\Sigma_k$；
+该处 $\Gamma_k$ 是以这些支持为顶点、以一位差为边的图。
+因此将 $\Gamma_k$ 用作合法位词空间时，本章精确取其顶点集
+$V(\Gamma_k)=\mathcal I_k$，不混用图与集合。
+
+**命题 17.2（五模式的完整铺法字典）。** 对每个 $n\ge1$，
+将 $I\in\mathcal I_{n-1}$ 中的 $i$ 解释为覆盖第 $i,i+1$ 格的
+$\mathtt D$ 的起点，并在其余格放 $\mathtt M$，给出双射
+
+$$
+\Theta_n:\mathcal I_{n-1}\longrightarrow\mathcal T_n.
+$$
+
+当 $n=4$，本卷定义 2.1、15.2、16.1 的五模式对应如下。
+列中的旧标签属于原来的模式命名，新的数字表示起点集合。
+
+| 旧标签 | 起点标签 | 起点集合 | 位串 $(x,z,y)$ | 完整条带铺法 | 零层原生数量 |
+| --- | --- | --- | --- | --- | ---: |
+| $0$，即 $[null]$ | $0$ | $\varnothing$ | $000$ | $\mathtt{MMMM}$ | $0$ |
+| $2$ | $1$ | $\{1\}$ | $100$ | $\mathtt{DMM}$ | $2$ |
+| $3$ | $2$ | $\{2\}$ | $010$ | $\mathtt{MDM}$ | $3$ |
+| $5$ | $3$ | $\{3\}$ | $001$ | $\mathtt{MMD}$ | $5$ |
+| $25$ | $13$ | $\{1,3\}$ | $101$ | $\mathtt{DD}$ | $7$ |
+
+这里 $[null]$ 表示没有选中的 domino 起点；它的条带仍被四个
+$\mathtt M$ 完整填满。最后一列的原生数量来自本卷定义 1.3，
+不是砖长，也不是条带面积；表中每条条带的面积都是四。
+精确重标记是
+$(0,2,3,5,25)_{\rm old}\leftrightarrow(0,1,2,3,13)$。
+
+证明。两个起点的距离为一时相应 domino 重叠，距离至少二时不重叠。
+故独立支持能按所述方法完成唯一铺法。反过来，从任何完整铺法读取
+所有 domino 的左端格号，得到无相邻元素的集合。
+剩下的格只能由 monomer 覆盖，所以两构造互逆。
+对 $n=1$，双方都只有一个元素；$n=0$ 已单独定义，毋须引入
+负长度的支持集。对 $n=4$，合法支持恰为表中五项。
+
+在此表示上，合法的一位添加 $I\mapsto I\cup\{i\}$
+等价于把第 $i,i+1$ 格的 $\mathtt{MM}$ 换成 $\mathtt D$。
+确实，添加合法意味着 $i-1,i,i+1$ 原先均不是 domino 起点，
+故这两格都是 monomer。删除起点给逆替换。
+因此这个另外规定的局部换砖关系恰对应 [StaticSeams 定义 5.1][EF-SS]
+的 Hamming 一位差关系。该图只规定组合邻接；若要把邻接解释为原生操作，
+仍须有原生菜单和守卫的合法性映射。证毕。
+
+### 17.2 中缝事件与已有概率纤维
+
+**数学引文及应用 17.3（同一律中的中缝与条件关联）。**
+在定义 17.1 的四格条带上取任意概率律
+$p=(p_0,p_1,p_2,p_3,p_{13})$，各项非负且总和一。
+由命题 17.2 运输本卷 §4–5 的同一五模式律；
+不另行抽取左右两半，也不预设等概率。
+令 $x,y,z$ 分别为起点 $1,3,2$ 的占位指标，并令
+
+$$
+X=\mathbb E_p x,\quad Y=\mathbb E_p y,\quad Z=\mathbb E_p z,
+\quad r=1-Z,\quad \kappa=\mathbb E_p(xy)=p_{13}.
+$$
+
+点态关系是 $xz=yz=0$、$xy=\mathbf1_{\{13\}}$。
+条带中央的缝位于第 $2,3$ 格之间。事件 $z=0$ 的四条铺法
+$0,1,3,13$ 分别由左右两个长度二的铺法拼接而成；
+事件 $z=1$ 只有穿缝铺法 $\mathtt{MDM}$，即模式 $2$。
+因此本卷金字塔的四个底角与顶点在这里分别读取“不穿中缝的两侧选择”
+与“中央 domino”。这是一份组合字典，不把条带变成物理三维金字塔。
+
+本卷数学引文 4.2–4.3 经上述重标记直接给
+
+$$
+\begin{aligned}
+p_0&=r-X-Y+\kappa,&p_1&=X-\kappa,\\
+p_2&=Z,&p_3&=Y-\kappa,&p_{13}&=\kappa,\\
+\max(0,X+Y-r)&\le\kappa\le\min(X,Y),&&0\le X,Y\le r.
+\end{aligned}
+$$
+
+当且仅当 $Z<1$ 时，底面条件律有定义。为避免与黄金二次型混淆，记为
+
+$$
+Q_{\rm cond}=\frac1r
+\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix},
+\qquad
+\det Q_{\rm cond}=\frac{r\kappa-XY}{r^2}.
+$$
+
+行取 $x=0,1$，列取 $y=0,1$。在此条件律中，左右两半独立的充要条件为
+
+$$
+(1-Z)\kappa=XY.
+$$
+
+证明。中央 domino 存在恰为 $z=1$。它覆盖第 $2,3$ 格，
+两端只剩 monomer，故穿缝分支唯一。不穿缝时两侧分别为
+$\mathtt{MM}$ 或 $\mathtt D$，产生表中的四角。
+同一律运输后每个模式质量保持不变，故既有逆式可逐项代入。
+条件边缘为 $X/r,Y/r$，联合占位概率为 $\kappa/r$。
+若独立，则联合概率等于两边缘之积，给出所列等式；
+反之略记 $Q=Q_{\rm cond}$，此等式给 $Q_{11}=Q_{1\bullet}Q_{\bullet1}$，
+再用各行、列和及总和一，另外三格也等于边缘的乘积。
+这个论证允许条件边缘为零或一。
+若 $Z=1$，非负性迫使 $X=Y=\kappa=0$，唯一铺法为 $\mathtt{MDM}$；
+$Q_{\rm cond}$ 未定义，$0=0$ 不能在此被读成条件独立的断言。证毕。
+
+**命题 17.4（相同中缝读数不决定两半的关系）。**
+模式 $0,13$ 各质量 $1/2$ 的律，与模式 $1,3$ 各质量 $1/2$ 的律，
+都满足 $(X,Y,Z)=(1/2,1/2,0)$，却分别有
+$\kappa=1/2$ 和 $0$，条件协方差分别为 $1/4$ 和 $-1/4$。
+四个底角各质量 $1/4$ 的第三个律具有相同三均值而条件独立。
+若五模式均匀，则 $Z=1/5$、$X=Y=2/5$、$\kappa=1/5$，
+底面条件律也独立，但无条件协方差为 $1/25$。
+
+证明。将各质量代入 17.3 的公式即可。
+均匀五模式给 $r\kappa=4/25=XY$，而无条件
+$\operatorname{Cov}(x,y)=\kappa-XY=1/25$。
+所以穿缝概率、给定不穿缝时的左右关联、无条件关联是三个不同读数。
+该例消费本卷 §4 的同均值纤维，并不把概率补全变成换砖过程。证毕。
+
+### 17.3 任意中缝的两类铺法与递归编号
+
+**数学引文及应用 17.5（五模式中缝字典的长条带延伸）。**
+对整数 $a,b\ge1$，沿长度 $a+b$ 条带的第 $a,a+1$ 格间的缝分类，得
+
+$$
+\mathcal T_{a+b}\ \simeq\
+(\mathcal T_a\times\mathcal T_b)
+\ \sqcup\ (\mathcal T_{a-1}\times\mathcal T_{b-1}).
+$$
+
+第一分支不穿缝；第二分支含唯一覆盖第 $a,a+1$ 格的 domino。
+这把 17.3 的“四角加顶点”延伸为两个不交的笛卡尔积，
+不是将全部铺法写成单个笛卡尔积。
+
+证明及经典计数的消费。若不穿缝，限制到左右区间就得到
+长度 $a,b$ 的两条完整铺法，逆为直接拼接。
+若穿缝，删除该 domino 后，左右剩余长度为 $a-1,b-1$；
+把这两条铺法与中间 domino 顺序拼回给逆映射。
+长度一端的剩余长度为零时使用 $\varepsilon$，因此 $a=1$ 或 $b=1$
+不产生例外。两分支由中央 domino 是否存在区分，互不相交且穷尽。
+
+记 $t_n=|\mathcal T_n|$。按第一块砖分类给
+$t_0=t_1=1$，且 $t_n=t_{n-1}+t_{n-2}$（$n\ge2$），
+所以在 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$ 的约定下，
+$t_n=F_{n+1}$。这是经典 monomer–domino 计数，
+见 Kahkeshani 的 [JIS Article 17.5.4 原文引言][EF-K]；
+其论文的主要对象是有色 $2\times n$ 铺法，本文只取引言中的
+$1\times n$ 计数作为供应，不将以下完整字典归于那篇论文。
+
+对等长两半取 $a=b=m\ge1$，上述实际双射给
+
+$$
+|\mathcal T_{2m}|=F_{m+1}^2+F_m^2=F_{2m+1}.
+$$
+
+算术恒等式亦由钉定版本的 [Fibonacci 供应][EF-Fib]
+`Nat.fib_two_mul_add_one` 给出；这里所需的额外数据是两分支的
+逐铺法映射及其逆，而不只是相同基数。
+
+| 条带长度 $2m$ | 不穿缝 $F_{m+1}^2$ | 穿缝 $F_m^2$ | 总铺法数 $F_{2m+1}$ |
+| --- | ---: | ---: | ---: |
+| $4$ | $4$ | $1$ | $5$ |
+| $6$ | $9$ | $4$ | $13$ |
+| $8$ | $25$ | $9$ | $34$ |
+| $10$ | $64$ | $25$ | $89$ |
+| $12$ | $169$ | $64$ | $233$ |
+
+若在 $\mathcal T_{a+b}$ 上有概率律，双射把它运输为这两个乘积集合上
+总质量仍为一的一个律。集合是乘积不意味着其中的联合律是乘积测度。
+等概率律只是一种另外选择；其分支概率才是相应计数除以 $t_{a+b}$。
+因此总数为素数并不妨碍这种按缝递归拼接。证毕。
+
+**定义 17.6（可逆的递归排名）。** 对每个 $n\ge0$，
+定义 $R_n:\mathcal T_n\to\{0,\ldots,t_n-1\}$，先排所有以
+$\mathtt M$ 开头的词，再排所有以 $\mathtt D$ 开头的词，各分支递归排序：
+
+$$
+\begin{gathered}
+R_0(\varepsilon)=0,\qquad R_1(\mathtt M)=0,\\
+R_n(\mathtt M w)=R_{n-1}(w),\qquad
+R_n(\mathtt D w)=t_{n-1}+R_{n-2}(w)\quad(n\ge2).
+\end{gathered}
+$$
+
+逆编号 $U_n$ 在 $n=0,1$ 取上述唯一词；在 $n\ge2$ 时定义
+
+$$
+U_n(k)=
+\begin{cases}
+\mathtt M U_{n-1}(k),&0\le k<t_{n-1},\\
+\mathtt D U_{n-2}(k-t_{n-1}),&t_{n-1}\le k<t_n.
+\end{cases}
+$$
+
+**命题 17.7（编号的双向恢复与按缝的分支坐标）。**
+$R_n,U_n$ 互逆。对 $m\ge1$，不穿中央缝的铺法唯一写为 $LR$，
+其中 $L,R\in\mathcal T_m$；穿缝者唯一写为 $L\mathtt D R$，
+其中 $L,R\in\mathcal T_{m-1}$。分别记录
+$(0,R_m(L),R_m(R))$ 或 $(1,R_{m-1}(L),R_{m-1}(R))$
+可完全恢复原铺法。
+
+证明。按 $n$ 归纳：两个排名区间分别有 $t_{n-1},t_{n-2}$ 项，
+不交且恰好覆盖 $\{0,\ldots,t_n-1\}$。在各分支上去掉首砖，
+用归纳假设，再添回首砖，便同时证明 $U_nR_n$ 和 $R_nU_n$ 为恒等。
+按缝分支的互逆性由 17.5 给出，恢复左右词使用对应的 $U$。
+例如 $\mathcal T_2$ 的次序是 $\mathtt{MM},\mathtt D$，
+$\mathcal T_3$ 的次序是 $\mathtt{MMM},\mathtt{MD},\mathtt{DM}$。
+排名依赖明确指定的顺序，不声称保持任一原生动作。证毕。
+
+### 17.4 给两类铺法使用的整数地址与半开基本域
+
+**定义 17.8（两方块地址域）。** 暂取互素正整数 $1\le a\le b$，令
+
+$$
+\begin{gathered}
+N=a^2+b^2\ge2,\qquad v_1=(a,b),\quad v_2=(-b,a),\qquad
+\Lambda=\mathbb Zv_1+\mathbb Zv_2,\\
+B=[0,b)\times[0,b),\quad
+S=[b,b+a)\times[b-a,b),\quad
+\mathcal D=B\sqcup S,\quad D=\mathcal D\cap\mathbb Z^2,\\
+\ell:\mathbb Z^2\longrightarrow\mathbb Z/N\mathbb Z,
+\qquad \ell(x,y)=bx-ay\pmod N.
+\end{gathered}
+$$
+
+区域 $B,S$ 的面积分别为 $b^2,a^2$，其中每个整数锚点
+$d\in D$ 对应单位格 $d+[0,1)^2$。
+后续以 $(a,b)=(F_m,F_{m+1})$ 把“不穿缝、穿缝”两类铺法
+分别放到这两个方块的格子上。
+
+**数学引文及应用 17.9（两类地址的唯一陪集代表）。**
+定义 17.8 的 $D$ 是 $\mathbb Z^2/\Lambda$ 的完整且无重复代表集，
+$\ell$ 诱导该商与 $\mathbb Z/N\mathbb Z$ 的同构。
+因此两类格子的地址足以唯一识别一个剩余类。
+此处使用经典格基本域方法作为 17.11 的中间步骤；以下保留本区域所需的
+逐点论证。二维大小方块铺平面的经典背景是 Pythagorean tiling，
+参见 Führer [2204.11529v2，Theorem 2 与 Lemma 1][EF-F]。
+其 Theorem 2 要求两边长不等 $q<p$；在本参数中为 $a<b$。
+其 Lemma 1 的代表覆盖是“up to null sets”。
+下述半开边界结论另由给出的证明承担，也包含 $a=b=1$。
+
+证明。先计算
+
+$$
+v_1\cdot v_2=0,\qquad |v_1|^2=|v_2|^2=N,
+\qquad \det(v_1,v_2)=N.
+$$
+
+由 $\gcd(a,b)=1$ 得 $\gcd(b,N)=\gcd(b,a^2)=1$，
+所以 $\ell(x,0)=bx$ 遍历全部剩余类。
+两基向量都被 $\ell$ 送到零，故 $\Lambda\subseteq\ker\ell$。
+反过来，若 $N\mid bx-ay$，则
+
+$$
+b(ax+by)\equiv a(ay)+b^2y=Ny\equiv0\pmod N.
+$$
+
+$b$ 在模 $N$ 下为单位，故 $N\mid ax+by$。
+于是
+
+$$
+u=\frac{ax+by}{N},\qquad v=\frac{-bx+ay}{N}
+$$
+
+都是整数，且 $(x,y)=uv_1+vv_2$。
+因此 $\ker\ell=\Lambda$，并有 $[\mathbb Z^2:\Lambda]=N$。
+
+现证 $\mathcal D$ 内两点若相差格向量，必相同；这个更强的论断
+同时控制随后使用的边界。设 $p,q\in\mathcal D$，
+$z=p-q=uv_1+vv_2$，$u,v\in\mathbb Z$。由区域的半开范围，
+
+$$
+|z_x|<a+b,\qquad |z_y|<b,
+\qquad N(u^2+v^2)=|z|^2<(a+b)^2+b^2<4N.
+$$
+
+最后一个严格不等式来自
+$4N-((a+b)^2+b^2)=3a^2-2ab+2b^2=(a-b)^2+2a^2+b^2>0$。
+若 $(u,v)\ne(0,0)$，整数平方和小于四只可能给
+
+$$
+z\in\{\pm v_1,\ \pm v_2,\ \pm(v_1+v_2),\ \pm(v_1-v_2)\}.
+$$
+
+$\pm v_1$ 的纵差绝对值为 $b$，$\pm(v_1+v_2)$ 的为 $a+b$，
+均与纵差严格小于 $b$ 冲突；
+$\pm(v_1-v_2)$ 的横差绝对值为 $a+b$，也被排除。
+只剩 $\pm v_2$。交换 $p,q$ 后可设 $p=q+(-b,a)$。
+$p_x\ge0$ 强迫 $q_x\ge b$，所以 $q\in S$，从而
+$q_y\ge b-a$，进而 $p_y=q_y+a\ge b$，与 $p\in\mathcal D$ 冲突。
+故 $z=0$。
+
+$D$ 含 $b^2+a^2=N$ 个锚点；刚证它们在商中两两不同，
+而商恰有 $N$ 个元素，故每类恰有一个锚点。
+于是每个 $k\in\mathbb Z^2$ 都唯一写作 $d+\lambda$，
+$d\in D,\lambda\in\Lambda$，亦记 $\mathbb Z^2=D\oplus\Lambda$。
+
+若 $a=b$，互素性强迫 $a=b=1$。上述严格边界证明照常成立；
+此时 $\mathcal D=[0,2)\times[0,1)$，
+$D=\{(0,0),(1,0)\}$，$\ell(x,y)=x-y\pmod2$。
+这也直接给出等边长端点的两个代表，并未套用要求 $q<p$ 的外部定理。证毕。
+
+**命题 17.10（地址域的逐点平面覆盖）。**
+定义 17.8 的平移族满足点态不交并
+
+$$
+\mathbb R^2=\bigsqcup_{\lambda\in\Lambda}(\mathcal D+\lambda),
+\qquad
+\sum_{\lambda\in\Lambda}\mathbf1_{\mathcal D}(x-\lambda)=1
+\quad\text{对每个 }x\in\mathbb R^2.
+$$
+
+证明。整数端点和半开约定给精确分解
+$\mathcal D=\bigsqcup_{d\in D}(d+[0,1)^2)$。
+对任意实点 $x$，逐坐标取下整，唯一得到
+$x=k+f$，$k\in\mathbb Z^2$、$f\in[0,1)^2$。
+由 17.9 唯一分解 $k=d+\lambda$，于是
+$x=(d+f)+\lambda\in\mathcal D+\lambda$。
+
+若还有 $x=(d'+f')+\lambda'$，其中 $d'\in D$、
+$f'\in[0,1)^2$、$\lambda'\in\Lambda\subseteq\mathbb Z^2$，
+唯一小数部分先给 $f=f'$，再由整数代表的唯一性给
+$d=d',\lambda=\lambda'$。证明包括整数格线、方块接口和所有顶点。
+$\mathcal D$ 有界且格离散，所以每个点的覆盖和只有有限个可能非零项。
+
+若把所有半开方块改为闭方块，平移族仍覆盖平面且内部不交，
+但共同边界可被多次计入，不能再宣称每一点覆盖数为一。
+例如 $a=b=1$ 时 $(1,0)$ 属于 $\mathcal D$，
+$(1,0)-v_1=(0,-1)$ 不属于 $\mathcal D$；
+$(0,1)-v_2=(1,0)$ 属于 $\mathcal D$，而 $(0,1)$ 本身不属于。
+这说明顶边必须交给相邻平移，而非删去或重复保留。证毕。
+
+### 17.5 从完整铺法到两方块和剩余类
+
+**定理 17.11（保持中缝事件与同一概率律的地址桥）。**
+取整数 $m\ge1$，置
+
+$$
+a=F_m,\qquad b=F_{m+1},\qquad N=a^2+b^2=F_{2m+1}.
+$$
+
+连续 Fibonacci 数互素，见 [Fibonacci 供应][EF-Fib]
+`Nat.fib_coprime_fib_succ`，故定义 17.8 的全部假设满足。
+定义映射 $\Phi_m:\mathcal T_{2m}\to D$：
+
+$$
+\begin{aligned}
+\Phi_m(LR)&=(R_m(L),R_m(R))&&\text{不穿缝},\\
+\Phi_m(L\mathtt D R)&=(b+R_{m-1}(L),b-a+R_{m-1}(R))&&\text{穿缝}.
+\end{aligned}
+$$
+
+则
+
+$$
+\mathcal T_{2m}\xrightarrow{\ \Phi_m\ }D
+\xrightarrow{\ \ell|_D\ }\mathbb Z/N\mathbb Z
+$$
+
+是两个明确可逆的双射。中央穿缝事件恰映到 $S\cap\mathbb Z^2$，
+不穿缝事件恰映到 $B\cap\mathbb Z^2$。
+对任意 $\mathcal T_{2m}$ 上的概率律 $\mu$，以
+
+$$
+\mu_D(d)=\mu(\Phi_m^{-1}(d)),\qquad
+\mu_N(c)=\mu_D((\ell|_D)^{-1}(c))
+$$
+
+运输它，所有经逆映射读取的事件与函数期望保持不变。
+特别地，$m=2$ 时 17.3 的 $Z,\kappa,X,Y$ 都保留原来的共同概率来源。
+
+证明。17.5、17.7 给出两个不交分支上的可逆编号。
+不穿缝时两个编号分别在 $0,\ldots,b-1$ 中，故遍历大方块全部锚点。
+穿缝时两个编号分别在 $0,\ldots,a-1$ 中，加上偏移 $(b,b-a)$，
+恰遍历小方块锚点。
+给定 $d=(x,y)\in D$，若 $x<b$，逆像为 $U_m(x)U_m(y)$；
+若 $x\ge b$，逆像为
+$U_{m-1}(x-b)\mathtt D U_{m-1}(y-b+a)$。
+因两方块不交，分支判定唯一。
+17.9 已证明 $\ell|_D$ 为双射。给定剩余类 $c$，
+按 $B$ 的 $b^2$ 个锚点、再按 $S$ 的 $a^2$ 个锚点依次求 $bx-ay\bmod N$，
+取唯一等于 $c$ 的一项，便是有限且全定义的逆；之后按上述 $U$ 恢复铺法。
+这也明确给出了剩余类到铺法的算法，不仅是基数相等。
+
+对任意函数 $h:\mathcal T_{2m}\to\mathbb R$，变量替换给
+
+$$
+\sum_{\tau\in\mathcal T_{2m}}\mu(\tau)h(\tau)
+=\sum_{d\in D}\mu_D(d)h(\Phi_m^{-1}(d))
+=\sum_{c\in\mathbb Z/N\mathbb Z}\mu_N(c)
+ h(\Phi_m^{-1}((\ell|_D)^{-1}(c))).
+$$
+
+取事件指标即得事件质量保持。该公式不把 $\mu_N$ 强制为均匀律，
+也不把各分支内的 $\mu$ 强制为左右独立。
+在 $m=2$，按模式 $0,1,2,3,13$ 排列的五个锚点与剩余类分别为
+
+$$
+((0,0),(1,0),(2,1),(0,1),(1,1)),\qquad (0,2,3,4,1)\pmod5.
+$$
+
+所以即使 $X,Y,Z$ 相同而 $\kappa$ 不同，17.4 的两律仍被运输为不同的
+剩余类概率律；双射不会抹去这条概率纤维。证毕。
+
+这里双射的元素是一条条完整铺法。长度 $2m$ 的每条材料条带面积是 $2m$，
+$D$ 的 $N$ 个格子则各代表一种铺法；没有把同一材料条带切成面积 $N$。
+把 $\Phi_m$ 当作原生操作的共轭还需要证明操作逐步相容，
+单凭编号和逆编号没有这种结论。
+
+**命题 17.12（六格条带的十三个完整地址）。**
+取 $m=3$，则 $(a,b,N)=(2,3,13)$，$\ell(x,y)=3x-2y\pmod{13}$。
+使用定义 17.6 的次序，全部地址如下；表中的分隔线只标左右剩余铺法，
+中间的 $\mathtt D$ 在穿缝行单独写出。
+
+| 中缝分支 | 左、右铺法及中央砖 | 完整铺法 | 锚点 $(x,y)$ | 剩余类 |
+| --- | --- | --- | --- | ---: |
+| 不穿缝 | $\mathtt{MMM}\mid\mathtt{MMM}$ | $\mathtt{MMMMMM}$ | $(0,0)$ | $0$ |
+| 不穿缝 | $\mathtt{MD}\mid\mathtt{MMM}$ | $\mathtt{MDMMM}$ | $(1,0)$ | $3$ |
+| 不穿缝 | $\mathtt{DM}\mid\mathtt{MMM}$ | $\mathtt{DMMMM}$ | $(2,0)$ | $6$ |
+| 不穿缝 | $\mathtt{MMM}\mid\mathtt{MD}$ | $\mathtt{MMMMD}$ | $(0,1)$ | $11$ |
+| 不穿缝 | $\mathtt{MD}\mid\mathtt{MD}$ | $\mathtt{MDMD}$ | $(1,1)$ | $1$ |
+| 不穿缝 | $\mathtt{DM}\mid\mathtt{MD}$ | $\mathtt{DMMD}$ | $(2,1)$ | $4$ |
+| 不穿缝 | $\mathtt{MMM}\mid\mathtt{DM}$ | $\mathtt{MMMDM}$ | $(0,2)$ | $9$ |
+| 不穿缝 | $\mathtt{MD}\mid\mathtt{DM}$ | $\mathtt{MDDM}$ | $(1,2)$ | $12$ |
+| 不穿缝 | $\mathtt{DM}\mid\mathtt{DM}$ | $\mathtt{DMDM}$ | $(2,2)$ | $2$ |
+| 穿缝 | $\mathtt{MM}\mid\mathtt D\mid\mathtt{MM}$ | $\mathtt{MMDMM}$ | $(3,1)$ | $7$ |
+| 穿缝 | $\mathtt D\mid\mathtt D\mid\mathtt{MM}$ | $\mathtt{DDMM}$ | $(4,1)$ | $10$ |
+| 穿缝 | $\mathtt{MM}\mid\mathtt D\mid\mathtt D$ | $\mathtt{MMDD}$ | $(3,2)$ | $5$ |
+| 穿缝 | $\mathtt D\mid\mathtt D\mid\mathtt D$ | $\mathtt{DDD}$ | $(4,2)$ | $8$ |
+
+证明。$R_3$ 依次给 $\mathtt{MMM},\mathtt{MD},\mathtt{DM}$ 编号 $0,1,2$，
+$R_2$ 给 $\mathtt{MM},\mathtt D$ 编号 $0,1$。
+代入 17.11 得各锚点，再代入 $3x-2y$ 得最后一列。
+最后一列恰含 $0$ 至 $12$ 各一次，且两分支分别有九项、四项。
+例如剩余类 $10$ 的唯一锚点是 $(4,1)$，
+故逆过程读取小方块编号 $(1,0)$，恢复 $\mathtt{DDMM}$。
+该例的十三是铺法总数及地址域面积，而不是六格条带材料的面积。证毕。
+
+### 17.6 两方块材料的有限平移切割
+
+**定义 17.13（同格的倾斜方块及交片）。**
+对定义 17.8 的参数，令
+
+$$
+\mathcal Q=\{s v_1+t v_2:0\le s<1, 0\le t<1\},
+\qquad
+P_\lambda=\mathcal D\cap(\mathcal Q+\lambda)
+\quad(\lambda\in\Lambda).
+$$
+
+这里 $\mathcal Q$ 是欧氏边长 $\sqrt N$、面积 $N$ 的半开方块，
+不是条件概率矩阵 $Q_{\rm cond}$，也不是黄金二次型。
+在本节中切割的材料是 $\mathcal D$；它是代表铺法的两方块区域。
+
+**定理 17.14（铺法地址域到倾斜方块的精确材料拼接）。**
+只有有限多个 $P_\lambda$ 非空，并有精确不交并
+
+$$
+\mathcal D=\bigsqcup_{\lambda\in\Lambda}P_\lambda,\qquad
+\mathcal Q=\bigsqcup_{\lambda\in\Lambda}(P_\lambda-\lambda).
+$$
+
+所以对 $\mathcal D$ 作有限切割、仅用平移，就得到 $\mathcal Q$；
+不需要旋转或缩放。若一个交片跨越 $B,S$，可按两者再拆成至多两片。
+所有交片由有限条线性不等式给出，是带有明确边界归属的多边形片，
+必要时也容许低维边界片。
+
+证明。$v_1,v_2$ 线性无关，每个实点唯一写成实坐标组合。
+将这两个实系数分别取整数部分，得
+$\mathbb R^2=\bigsqcup_{\lambda\in\Lambda}(\mathcal Q+\lambda)$，
+这里的唯一性直接来自 $[0,1)$。与 $\mathcal D$ 相交得到第一式。
+若 $P_\lambda$ 非空，则 $\lambda\in\mathcal D-\mathcal Q$；
+后者有界，而格向量 $uv_1+vv_2$ 在有界集内的整数系数 $u,v$ 有界，
+所以非空片有限，包括可能只含边界的片。
+
+给定 $q\in\mathcal Q$，由 17.10 唯一写为 $q=d+\mu$，
+其中 $d\in\mathcal D,\mu\in\Lambda$。
+取 $\lambda=-\mu$，则 $d=q+\lambda\in P_\lambda$，
+且 $q=d-\lambda$，故目标被覆盖。
+若 $p-\lambda=p'-\lambda'$，$p,p'\in\mathcal D$，
+则 $p-p'=\lambda-\lambda'\in\Lambda$。
+17.9 的点态唯一性给 $p=p'$、$\lambda=\lambda'$，故目标也无重叠。
+
+$B,S$ 各是半开方块，$\mathcal Q+\lambda$ 是半开平行四边形，
+分别相交就是上述线性不等式片。它们的平移保持面积，
+但整个证明以逐点存在唯一性为依据，并未从面积相等倒推覆盖。
+若采用闭多边形来表示材料轮廓，则内部不交、共同边界允许共享；
+要维持逐点唯一性，必须保留本定义的边界归属。证毕。
+
+**命题 17.15（面积十三的五片、坐标和边界归属）。**
+在 17.12 的 $(a,b)=(2,3)$ 情形，写
+
+$$
+A(x,y)=2x+3y,\qquad H(x,y)=-3x+2y,\qquad
+\mathcal Q=\{0\le A<13, 0\le H<13\}.
+$$
+
+令 $\lambda_{k,l}=kv_1+lv_2=(2k-3l,3k+2l)$。
+表中每片的精确定义是其来源方块与
+
+$$
+13k\le A(x,y)<13(k+1),\qquad
+13l\le H(x,y)<13(l+1)
+$$
+
+的交。来源方块仍取 $B=[0,3)^2$、$S=[3,5)\times[1,3)$。
+顶点列给闭包的依次顶点；实际包含哪些边和顶点，完全由上述不等式决定。
+
+| 片 | 来源 | $(k,l)$ | 闭包顶点 | 平移 $-\lambda_{k,l}$ | 面积 |
+| --- | --- | --- | --- | --- | ---: |
+| $P_1$ | $B$ | $(0,-1)$ | $(0,0),(3,0),(3,7/3),(2,3)$ | $(-3,2)$ | $17/3$ |
+| $P_2$ | $S$ | $(0,-1)$ | $(3,1),(5,1),(3,7/3)$ | $(-3,2)$ | $4/3$ |
+| $P_3$ | $B$ | $(0,0)$ | $(0,0),(2,3),(0,3)$ | $(0,0)$ | $3$ |
+| $P_4$ | $B$ | $(1,-1)$ | $(3,7/3),(3,3),(2,3)$ | $(-5,-1)$ | $1/3$ |
+| $P_5$ | $S$ | $(1,-1)$ | $(5,1),(5,3),(3,3),(3,7/3)$ | $(-5,-1)$ | $8/3$ |
+
+这五片的平移像精确分割 $\mathcal Q$。
+其闭包为顶点 $(0,0),(2,3),(-1,5),(-3,2)$ 的方块。
+
+证明。对 $\mathcal D$ 中的点，$0\le A<26$ 且 $-13<H<13$，
+所以只需 $k\in\{0,1\}$、$l\in\{-1,0\}$。
+在 $S$ 中，$H=-3x+2y<-9+6<0$，故没有 $l=0$ 的片。
+在 $B$ 中，若 $H\ge0$，则 $3x\le2y<6$，从而
+$A=2x+3y<4+9=13$；因此 $(k,l)=(1,0)$ 也为空。
+剩下恰为表中五个非空交片。
+
+切线 $H=0$ 为 $y=3x/2$，与大方块边界交于 $(0,0),(2,3)$；
+切线 $A=13$ 与 $x=3,y=3,y=1$ 的交点分别为
+$(3,7/3),(2,3),(5,1)$。由这些交点及来源方块的角点得到表中顶点。
+$P_3$ 是底长二、高三的三角形，面积三；
+$P_4$ 的水平边长一、竖直高 $2/3$，面积 $1/3$；
+$P_1$ 占据大方块其余部分，面积 $9-3-1/3=17/3$。
+小方块内 $P_2$ 的两直角边长为二和 $4/3$，面积 $4/3$，
+故 $P_5$ 面积为 $4-4/3=8/3$。
+
+边界归属也由同一交式给出：$H=0$ 属 $l=0$，
+$A=13$ 属 $k=1$；$x=3$ 若同时 $1\le y<3$ 则属于 $S$，
+若 $y<1$ 则不在 $\mathcal D$；$y=3$ 与 $x=5$ 均不在 $\mathcal D$。
+例如 $(0,0)$ 属 $P_3$ 而非 $P_1$，
+$(3,7/3)$ 属 $P_5$，虽是其余若干片闭包的共同顶点，
+$(2,3)$ 和 $(5,1)$ 则都只是来源闭包的点。
+因此不能把顶点表误读为五个闭集彼此点态不交。
+
+对任一实际交片中的点平移 $-\lambda_{k,l}$，有
+$A\mapsto A-13k$、$H\mapsto H-13l$，正好落入 $\mathcal Q$ 的半开范围。
+表已穷尽所有交片，故 17.14 同时给目标的无缺口与无重复。
+面积和
+$17/3+4/3+3+1/3+8/3=13$
+是与该逐点结论相符的数值结果，不代替覆盖证明。证毕。
+
+### 17.7 素数对统一平移分解的限制
+
+**数学引文及应用 17.16（剩余类地址上的乘法障碍）。**
+取 17.11 的地址群 $G=\mathbb Z/N\mathbb Z$；以下论证也适用于任意
+整数 $N\ge2$。对 $A,B\subseteq G$，用 $A\oplus B=G$ 表示
+每个 $g\in G$ 都恰有一种写法 $g=a+b$，$a\in A,b\in B$。
+这意味着同一个形状 $A$ 的平移 $A+b$（$b\in B$）精确分割 $G$。
+则 $N$ 为素数的充要条件是：每个这样的统一平移分解都满足
+$|A|=1$ 或 $|B|=1$。
+对同一 $N$ 的格 $\Lambda$，若 $N$ 为素数，也没有严格中间格
+$\Lambda\subsetneq\Lambda'\subsetneq\mathbb Z^2$。
+
+证明及本桥的应用。唯一表示给集合双射 $A\times B\to G$，
+故 $|A||B|=N$；$N$ 为素数时必有一个因子为一。
+若 $N=uv$，$u,v>1$，则
+
+$$
+A=\{0,1,\ldots,u-1\},\qquad
+B=\{0,u,2u,\ldots,(v-1)u\}
+$$
+
+给反向例证。每个 $0\le r<N$ 唯一写成 $r=i+uj$，
+$0\le i<u,0\le j<v$；所有这些整数和都在 $[0,N)$，
+所以模 $N$ 后没有新增重复。由此得到充要性。
+若存在上述严格中间格，指数乘法给
+
+$$
+N=[\mathbb Z^2:\Lambda']\,[\Lambda':\Lambda],
+$$
+
+两个指数都大于一，与素性冲突。这些是有限集合和格指数的基本事实，
+在本应用中约束的是地址群中的统一复制方式。
+
+17.12 中的 $13=9+4$ 是两个不同大小的铺法分支之和；
+17.15 的五片也形状不同。因此它们都不是被禁止的
+$|A||B|=13$、两个因子都大于一的统一平移分解。
+素数面积不禁止不同形状的切片、切割后重组、上述加法递归，
+也不宣称对任意允许砖集都有或没有铺法。证毕。
+
+**命题 17.17（较大周期中的重复与绕边）。**
+对定义 17.8 的任何参数都有
+
+$$
+Ne_1=av_1-bv_2,\qquad Ne_2=bv_1+av_2,\qquad
+N\mathbb Z^2\subseteq\Lambda,\qquad [\Lambda:N\mathbb Z^2]=N.
+$$
+
+因此在边长 $N$ 的方形环面 $\mathbb R^2/N\mathbb Z^2$ 上，
+$\mathcal D$ 的 $N$ 个平移像构成逐点不交覆盖。
+即使 $N$ 为素数，这种较大周期内的重复仍成立。
+
+证明。前两式逐坐标展开即得，包含关系随之成立。
+指数乘法及 17.9 给
+$N^2=[\mathbb Z^2:N\mathbb Z^2]
+=[\mathbb Z^2:\Lambda][\Lambda:N\mathbb Z^2]$，故后一个指数为 $N$。
+在 $\Lambda/N\mathbb Z^2$ 中选 $N$ 个代表，
+把 17.10 的平面分割按 $N\mathbb Z^2$ 投影，即得这些平移像。
+若两个像在环面交于一点，其平面代表相差一个
+$N\mathbb Z^2\subseteq\Lambda$ 向量，17.9 的唯一性迫使
+两来源点相同且两个格代表属于同一类。
+存在性同理由平面覆盖下降。
+
+环面可用半开盒 $[0,N)^2$ 表示，但一份平移像可能横跨盒的相对边，
+在盒内被切成几部分。这不是把 $N$ 份完整形状都不绕边地摆进同一盒子的断言。
+例如 $a=b=1,N=2$ 时 $\mathcal D=[0,2)\times[0,1)$，
+可取格代表 $0,(1,1)$；第二份的横区间 $[1,3)$ 在模二坐标下绕边。
+17.16 排除的是模 $N$ 地址群中的非平凡统一因子，
+此处重复则发生在面积 $N^2$ 的环面，两个对象的大小不同。证毕。
+
+### 17.8 地址面积、黄金二次型与 Cassini 余量
+
+**数学引文及应用 17.18（同一 Fibonacci 参数的两种二次读数）。**
+记参数向量 $w_m=(F_m,F_{m+1})$，$m\ge0$，区别于格基 $v_1,v_2$；
+将递推矩阵明确写作
+
+$$
+\mathbf M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad w_{m+1}=\mathbf Mw_m,
+\qquad N_m=|w_m|^2=F_m^2+F_{m+1}^2=F_{2m+1}.
+$$
+
+$\mathbf M$ 是本卷定义 1.1 的组成矩阵，区别于砖 $\mathtt M$。
+$m\ge1$ 时 $N_m$ 是 17.11 两类铺法地址域的面积；
+$m=0$ 时 $w_0=(0,1)$、$N_0=1$ 只用于以下递推初值，
+不满足定义 17.8 的正 $a$ 假设。对 $m\ge1$，
+
+$$
+N_{m+1}=3N_m-N_{m-1}.
+$$
+
+另一方面，把 [SecondOrder 定理 60.1][EF-SO] 的黄金二次型
+$Q_F$ 在本章记作 $q_F$，则
+
+$$
+\det((a,b),\mathbf M(a,b))=a^2+ab-b^2=q_F(a,b),
+\qquad q_F(\mathbf M(a,b))=-q_F(a,b).
+$$
+
+因而沿该轨道的 Cassini 余量为
+
+$$
+\det(w_m,w_{m+1})
+=F_mF_{m+2}-F_{m+1}^2=(-1)^{m+1}\quad(m\ge0).
+$$
+
+$q_F$ 是不定二次型，$N_m$ 是正定欧氏面积读数；前者并非欧氏面积函数，
+也都不是 17.3 的条件概率矩阵 $Q_{\rm cond}$。
+
+证明及供应的参数对应。$\mathbf Mw_m=w_{m+1}$ 由 Fibonacci 递推给出；
+平方和身份直接使用 17.5 中的经典供应。
+令 $a=F_m,b=F_{m+1}$，$m\ge1$ 时 $F_{m-1}=b-a$，所以
+
+$$
+\begin{aligned}
+N_{m+1}&=b^2+(a+b)^2=a^2+2ab+2b^2,\\
+N_{m-1}&=(b-a)^2+a^2=2a^2-2ab+b^2,
+\end{aligned}
+$$
+
+相减给所列二阶递推。
+$\det((a,b),(b,a+b))=a(a+b)-b^2$ 识别出既有 $Q_F$；
+60.1 供应它在同一矩阵下的反号关系。
+在 $w_0=(0,1)$ 处此值为 $-1$，所以依次为
+$-1,+1,-1,+1,\ldots$，即 $(-1)^{m+1}$。
+特别地，$m=0$ 的符号为负，$m=1$ 的为正。
+
+同一递推矩阵出现在原生组成及地址参数中，只建立了明确的代数对应。
+它不是对 $\mathcal D$ 的平面等距变换：例如 $N_1=2,N_2=5$。
+因此不能把组成更新直接解释为保面积换砖或未经声明的原生空间操作。
+Cassini 是经典恒等式，此处消费的是其作为相邻地址向量行列式的精确余量。证毕。
+
+**命题 17.19（八乘八与五乘十三的材料边界）。**
+边长八的方块面积为 $64$，边长五、十三的矩形面积为 $65$。
+对向量 $(5,8),(8,13)$，有
+
+$$
+\det((5,8),(8,13))=65-64=1,
+\qquad \frac{13}{8}-\frac85=\frac1{40}.
+$$
+
+因此两个区域不能通过有限多边形切割和刚性移动精确相互填充。
+把两条不同斜率边当作一条直线也不成立。
+
+证明。面积和斜率差分别是所示整数乘积及通分结果；
+这里是 17.18 的 $m=5$，其符号为 $+1$。
+有限个多边形切片在内部不重叠时，共同边界面积为零，故面积可加；
+每片刚性移动保持面积，故精确拼接必须保留总面积。
+若一个声称的重排确实从面积 $64$ 出发却声称覆盖面积 $65$ 的矩形，
+则至少有覆盖、无重叠、轮廓尺寸或拼接边共线性中的一项失败。
+未给出具体切片时，不能指定缺口或重叠发生在哪条边。
+
+更一般地，相邻 Fibonacci 比例的差对 $m\ge1$ 精确为
+
+$$
+\frac{F_{m+2}}{F_{m+1}}-\frac{F_{m+1}}{F_m}
+=\frac{(-1)^{m+1}}{F_mF_{m+1}}.
+$$
+
+由 $F_{m+2}=F_{m+1}+F_m\ge2F_m$（$m\ge1$），
+两个奇偶子列均趋于无穷，所以比例差随分母增长而趋零。
+面积行列式的绝对值却恒为一。
+所以比例逼近没有把这一个单位的绝对面积差消去。
+17.14 的合法材料切割使用相等的面积 $N_m$，
+不依赖把这一余量忽略。证毕。
+
+### 17.9 递归铺满与整块重复的区别
+
+**数学引文及应用 17.20（同一参数下的矩形递归及层间面积障碍）。**
+沿 17.11 的 Fibonacci 参数，可用 [SecondOrder 定理 60.2][EF-SO]
+的矩形构造：对 $m\ge1$，$F_m\times F_{m+1}$ 矩形由
+边长 $F_1,\ldots,F_m$ 的方块拼成。
+其下降递归在 $m\ge2$ 时切下边长 $F_m$ 的方块，
+余下 $F_m\times F_{m-1}$ 矩形，将余矩形转过直角后，其边长是上一层的
+$F_{m-1}\times F_m$；在 $m=1$ 停于一个单位方块。
+
+但对 $m\ge1$，17.11 的相邻两层地址域面积 $N_m,N_{m+1}$ 互素，
+且 $N_m>1$，所以 $N_{m+1}/N_m$ 不是整数。
+因此有限个完整的、全等于第 $m$ 层地址域的材料块，
+若不切割、不缩放，不能无重叠地填满第 $m+1$ 层地址域。
+该障碍也适用于面积相应的倾斜方块 $\mathcal Q$。
+
+证明及应用范围。对 $m\ge2$，半开矩形有实际坐标分割
+
+$$
+[0,F_m)\times[0,F_{m+1})
+=[0,F_m)^2\ \sqcup\
+([0,F_m)\times[F_m,F_{m+1})).
+$$
+
+第二片高度为 $F_{m+1}-F_m=F_{m-1}$，
+共享的水平切线归上片，故没有缺口或点态重复。
+旋转后的几何余矩形与上一层全等；使用半开坐标重新表示时，
+边界按同一切口规则分配。这正是 60.2 既有构造的下降形式。
+当 $m=2$，切下一单位方块，余下一单位方块；
+当 $m=1$，原区域本身就是单位方块，停止递归，
+不把 $F_0=0$ 的零宽对象作为另一块正面积材料。
+归纳也给 $\sum_{k=1}^mF_k^2=F_mF_{m+1}$。
+
+对于地址域，用 [Fibonacci 供应][EF-Fib] 的强可除性
+`Nat.fib_gcd`，即 $\gcd(F_r,F_s)=F_{\gcd(r,s)}$，得到
+
+$$
+\gcd(N_m,N_{m+1})
+=F_{\gcd(2m+1,2m+3)}=F_1=1.
+$$
+
+两个奇数指标相差二，其公因数整除二又为奇数，故最大公因数为一。
+$m\ge1$ 时 $N_m=F_{2m+1}\ge F_3=2$。
+若有整数个 $k$ 份第 $m$ 层完整材料恰铺第 $m+1$ 层，面积相加给
+$kN_m=N_{m+1}$，于是 $N_m$ 整除 $N_{m+1}$，与互素且 $N_m>1$ 冲突。
+$m=0$ 的 $N_0=1$ 不在这一不可能结论内。
+所以“各层遵循同一递归规则”和“上一层整块的统一重复”是不同性质；
+矩形递归保留不同尺度的方块，17.14 则允许切割地址域，均不违背面积障碍。证毕。
+
+### 17.10 覆盖函数与地址群上的 Fourier 条件
+
+**定义 17.21（点态覆盖和有限群的约定）。**
+区域 $\mathcal D$ 对格 $\Lambda$ 的覆盖函数为
+
+$$
+C_{\mathcal D,\Lambda}(x)
+=\sum_{\lambda\in\Lambda}\mathbf1_{\mathcal D}(x-\lambda).
+$$
+
+在定义 17.8 的有界区域上，该和逐点有限。
+值零表示该点未覆盖，大于一表示该点重复覆盖。
+在 $G=\mathbb Z/N\mathbb Z$ 上，对复值函数定义未归一化卷积和 Fourier 变换
+
+$$
+\begin{gathered}
+(f*g)(x)=\sum_{y\in G}f(y)g(x-y),\\
+\chi_k(x)=\exp(2\pi i kx/N),\qquad
+\widehat f(k)=\sum_{x\in G}f(x)\overline{\chi_k(x)},
+\quad k\in\{0,\ldots,N-1\}.
+\end{gathered}
+$$
+
+不在变换或卷积的定义中除以 $N$。
+这些是有限阿贝尔群的标准角色约定；所用反演与卷积关系参见
+Keith Conrad，[《Characters of Finite Abelian Groups》§4，式 (4.4) 与练习 10][EF-C]。
+下面把它们应用到 17.16 的地址分解，并明确给出反向所需的反演论证。
+
+**数学引文及应用 17.22（精确覆盖的全部频率判据）。**
+对 17.16 的 $A,B\subseteq G$，以下三个条件等价：
+
+$$
+\begin{aligned}
+&A\oplus B=G;\\
+&\mathbf1_A*\mathbf1_B=\mathbf1_G;\\
+&|A||B|=N\quad\text{且}\quad
+\widehat{\mathbf1_A}(k)\widehat{\mathbf1_B}(k)=0
+\quad(1\le k<N).
+\end{aligned}
+$$
+
+与此同时，17.10 的地址域满足更直接的实平面点态等式
+$C_{\mathcal D,\Lambda}\equiv1$。
+有限群公式是对规定的统一平移地址任务的判据，
+不把连续区域的任意切割等同于一个 $A\oplus B$ 分解。
+
+证明。$(\mathbf1_A*\mathbf1_B)(x)$ 恰是 $x=a+b$ 的表示数，
+所以前两个条件等价。对任意 $f,g$，换元 $z=x-y$ 给
+
+$$
+\begin{aligned}
+\widehat{f*g}(k)
+&=\sum_{y,z\in G} f(y)g(z)\overline{\chi_k(y+z)}\\
+&=\left(\sum_y f(y)\overline{\chi_k(y)}\right)
+  \left(\sum_z g(z)\overline{\chi_k(z)}\right)
+=\widehat f(k)\widehat g(k).
+\end{aligned}
+$$
+
+若 $k\ne0\pmod N$，令 $\zeta=\exp(2\pi i k/N)\ne1$，
+则 $(1-\zeta)\sum_{x=0}^{N-1}\zeta^x=1-\zeta^N=0$，
+故 $\widehat{\mathbf1_G}(k)=0$；在零频处它为 $N$。
+又 $\widehat{\mathbf1_A}(0)=|A|$、$\widehat{\mathbf1_B}(0)=|B|$，
+由此得到第二条件蕴含第三条件。
+
+为反向恢复函数，对 $x,y\in G$ 再用同一等比数列求和，得到角色正交式
+
+$$
+\sum_{k=0}^{N-1}\chi_k(x-y)
+=\begin{cases}N,&x=y,\\0,&x\ne y.\end{cases}
+$$
+
+因此逐项展开给
+
+$$
+\frac1N\sum_{k=0}^{N-1}\widehat f(k)\chi_k(x)
+=\frac1N\sum_{y\in G}f(y)\sum_{k=0}^{N-1}\chi_k(x-y)=f(x).
+$$
+
+这就是本约定的反演公式。第三条件使
+$\mathbf1_A*\mathbf1_B$ 的变换在每一频率上都等于
+$\widehat{\mathbf1_G}$，由反演便得函数相等。
+所以等价证明包括全部非零频率和反演，不只是一条必要的计数关系。
+17.10 的实平面结论则已经逐点成立，包括半开边界；
+无需用只控制积分或几乎处处关系的论证替代。证毕。
+
+**命题 17.23（总量相等仍可同时有缺口与重叠）。**
+在 $G=\mathbb Z/4\mathbb Z$ 中，取 $A=B=\{0,1\}$，则
+$|A||B|=4$，但覆盖函数按 $0,1,2,3$ 排列为 $(1,2,1,0)$，
+所以不是统一平移分解。
+在平面中，区域 $E=[0,2)\times[0,1/2)$ 面积为一，
+等于格 $\mathbb Z^2$ 的基本面积，但其格平移也不铺满平面。
+
+证明。群中四对和分别为 $0,1,1,2$，给所列覆盖数。
+在 Fourier 约定下 $\widehat{\mathbf1_A}(1)=1-i$，
+其与自身之积为 $-2i\ne0$，所以非零频率确实检出缺陷。
+平面中 $(1/2,1/4)$ 同时属于 $E$ 与 $E+(-1,0)$，
+而 $(1/2,3/4)$ 不属于任何 $E+(u,v)$，$u,v\in\mathbb Z$，
+因为其纵向小数部分为 $3/4$ 而非 $[0,1/2)$。
+因此总面积或零频总量相等不能推出逐点填充。
+17.9 的唯一陪集代表与 17.14 的唯一交片反演提供的正是这些例子缺失的约束。证毕。
+
+### 17.11 五模式应用的闭合范围
+
+**定理 17.24（同一铺法来源上的完整对应及其边界）。**
+在定义 17.1、17.6、17.8、17.13、17.21 的对象与操作下，
+对每个 $m\ge1$ 有下列相容关系：合法支持经完整铺法及按缝编号进入
+$N_m=F_{2m+1}$ 个地址；地址经唯一陪集代表进入模 $N_m$ 的剩余类；
+两方块地址域逐点铺平面并能有限平移切成面积 $N_m$ 的倾斜方块。
+$m=2$ 时，它们以 17.2 的五模式及 17.3 的中缝概率关系为起点；
+$m=3$ 时，它们具体为 17.12 的十三地址与 17.15 的五片材料拼接。
+任何给定概率律只按同一双射运输，原有中缝事件与联合占位读数保持。
+素数 $N_m$ 的统一乘法障碍与这些加法分支、不同形状的材料切片并存。
+
+证明。17.2 的支持双射及 17.5 的中缝分支给铺法的完整来源；
+17.7 给每个分支的可逆编号。
+17.11 用同一个 $m$ 把两种分支放到面积 $b^2,a^2$ 的地址方块，
+并逐事件保留共同的概率律；没有把两个分支的任意最优概率拼成一个新律。
+17.9 的互素条件、余类核及唯一代表证明使地址不丢失也不重复，
+17.10 的整数部分与小数部分唯一分解再把离散结论提升为逐点实平面覆盖。
+17.14 用同一格的两个基本域给有限平移切割，17.15 给完整有理坐标例。
+17.16 只约束 $A\oplus B$ 这种统一复制任务，17.17 则说明更大环面周期仍能重复。
+17.18–17.20 将同一参数的欧氏面积、黄金不定型、Cassini 一单位余量
+和矩形递归分别保留，17.22–17.23 则区分覆盖函数与总量。
+这些逐对象、逐映射的结论连接了所列关系。证毕。
+
+附于该定理的数学供应及消费范围如下。经典条带计数、Fibonacci 恒等式、
+格基本域方法和有限 Fourier 分析在这里承担中间工具；
+完整结论是这些工具对本卷五模式、同源概率纤维和指定地址区域的应用。
+
+| 供应 | 本章使用的对象或关系 | 保留的适用边界 |
+| --- | --- | --- |
+| 本卷定义 1.3、2.1、15.2、16.1，数学引文 4.2–4.3 | 旧标签到起点标签，$(X,Y,Z,\kappa)$，概率逆式与条件行列式；17.2–17.4、17.11 | 原生数量不作砖长；条件矩阵仅在 $Z<1$ 定义；全程同一律 |
+| [StaticSeams 定义 5.1][EF-SS] | 无相邻独立支持与 Hamming 一位差；17.2 的 $\mathtt{MM}\leftrightarrow\mathtt D$ | 组合换砖须另声明；图邻接不自动是原生许可 |
+| [Kahkeshani，引言][EF-K] | $1\times n$ monomer–domino 计数 $t_n=F_{n+1}$；17.5 | 原论文主体为有色 $2\times n$ 铺法，不供应本章全部概率与陪集桥 |
+| [Fibonacci 算术供应][EF-Fib] | 连续项互素、奇指标平方和、强可除性；17.5、17.11、17.20 | 分别以 $m,m$ 和 $(2m+1,2m+3)$ 为参数；面积不是原生读数 |
+| [Führer，Theorem 2、Lemma 1][EF-F] | 大小方块格铺法的经典背景；17.9–17.15 使用给定区域的完整证明 | Theorem 2 限 $q<p$；Lemma 1 为零测集意义；半开逐点和等边端点由本文证明 |
+| [SecondOrder 定理 60.1–60.2][EF-SO] | $Q_F\mapsto q_F$ 的反号关系与矩形方块递归；17.18、17.20 | 不定型区别于正定面积；矩形递归保留不同尺度和单位终端 |
+| [Conrad，§4 式 (4.4)、练习 10][EF-C] | 未归一化有限变换、反演、卷积；17.21–17.23 的地址覆盖 | 本章显式保留零频与全部非零频率；不外推到任意连续材料切割 |
+
+这些结论的构造假设不可删除：独立支持只保证本定义的一维铺法，
+一般局部合法系统并不因此获得全局可铺性。
+$\Phi_m$ 是完整铺法集合的双射，材料切割是另一个映射
+$\mathcal D\to\mathcal Q$，二者作用的对象不同。
+任何原生动作的可达性、概率混合过程与换砖过程的等价性，
+以及一般砖集的铺平面判定，都没有由这些映射给出。
+这些任务须各自增加允许操作及相容性证明。
+
+[EF-SS]: AURIC_FIB_ATOM_STATIC_SEAMS_TRANSITION_CIRCULATION_AND_FIBONACCI_TOGGLE_CYCLES.md
+[EF-SO]: AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md
+[EF-K]: https://cs.uwaterloo.ca/journals/JIS/VOL20/Kahkeshani/kahk3.tex
+[EF-F]: https://arxiv.org/abs/2204.11529v2
+[EF-Fib]: https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Basic.lean
+[EF-C]: https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf
+
+## 追加锚（本行以下为增补区）

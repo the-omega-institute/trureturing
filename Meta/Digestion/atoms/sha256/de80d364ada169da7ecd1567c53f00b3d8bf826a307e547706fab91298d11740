@@ -1,0 +1,19 @@
+**Definition 5.2 (recognized image-saturation class).** Apply the fixed
+SFS Definition 3.4 preliminary equivalences, including every semantic
+homogeneous and finite-description branch. At a remaining comparison list,
+try the finitely many orientations of decorated-variable endpoints as in
+Definition 3.2. One orientation must cover every remaining equation with at
+most one definition per head and no positive occurrence cycle. Use Theorem
+3.3, retaining all images; then use all saturation modes and their exact
+guards and original reconstructions. Old accepted functional branches are
+included by taking $a_i=0$. A proved clash is handled without an orientation.
+
+The input $(I,B)$ belongs to $\mathcal C_{\rm img}$ precisely when every
+original chart tuple, original scalar mode and semantic branch is a clash
+or is handled this way. An unhandled branch is OUTSIDE, even if another
+branch has a successful test. Recognition does not unfold recursive
+definitions or search supplied certificates. It is finite and input-derived:
+chart covers, scalar modes, preliminary branches and orientations are finite;
+cycle tests, potentials, root-link normalization and saturation all terminate.
+This is a recognizable subclass of the unchanged original problem.
+

@@ -1,0 +1,1 @@
+Choose a representative $t_O$ of each orbit. The $\mathbb F_2$-linear map $\mathbb F_2^G\to\prod_OK_O$, $a\mapsto(\hat a(t_O))_O$, is injective, because the representatives determine $\hat a$ on all of $G$ and the inversion formula recovers $a$; both sides have $\mathbb F_2$-dimension $\sum_O|O|=|G|$, so it is a bijection. 

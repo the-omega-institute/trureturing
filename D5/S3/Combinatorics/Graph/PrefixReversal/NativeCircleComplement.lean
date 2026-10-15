@@ -6,6 +6,7 @@
    utility: none
    digest: Complete native-circle complements supply actual a/b cut pieces. -/
 import D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 set_option autoImplicit false
 
@@ -37,7 +38,7 @@ private theorem circleCoordinate_injective {m : ℕ} (hm : 3 ≤ m)
   have hi := (coordinateEquiv hm z).injective hsub
   exact congrArg Prod.snd hi
 
-private theorem configurationCycle_rotation {m : ℕ} (z : Configuration m)
+theorem native_configurationCycle_rotation {m : ℕ} (z : Configuration m)
     (r : Fin (m + 1)) : configurationCycle (z * finCycle r) = configurationCycle z := by
   have hr : finRotate (m + 1) ^ r.val = finCycle r := by
     simpa using rotate_pow_eq_cycle (m := m) r.val
@@ -46,7 +47,7 @@ private theorem configurationCycle_rotation {m : ℕ} (z : Configuration m)
   rw [rotate_pow_list]
   exact List.IsRotated.symm ⟨r.val, rfl⟩
 
-private theorem configurationCycle_reversal {m : ℕ} (z : Configuration m) :
+theorem native_configurationCycle_reversal {m : ℕ} (z : Configuration m) :
     configurationCycle (z * a m) = (configurationCycle z).reverse := by
   change ((List.ofFn (z * a m) : List (Fin (m + 1))) : Cycle (Fin (m + 1))) = _
   rw [full_reverse_list]
@@ -58,10 +59,10 @@ private theorem circleCoordinate_mem {m : ℕ} (z : Configuration m)
   cases s
   · left
     simpa only [circleCoordinate, Bool.false_eq_true, ↓reduceIte, mul_one] using
-      configurationCycle_rotation z r
+      native_configurationCycle_rotation z r
   · right
-    simpa only [circleCoordinate, ↓reduceIte, configurationCycle_reversal,
-      configurationCycle_rotation]
+    simpa only [circleCoordinate, ↓reduceIte, native_configurationCycle_reversal,
+      native_configurationCycle_rotation]
 
 private theorem positive_coordinate {m : ℕ} (z v : Configuration m)
     (hv : configurationCycle v = configurationCycle z) :
@@ -79,7 +80,7 @@ private theorem circleCoordinate_surjective {m : ℕ} (z v : Configuration m)
   · obtain ⟨r, hr⟩ := positive_coordinate z v hv
     exact ⟨(r, false), by simpa [circleCoordinate] using hr⟩
   · have hva : configurationCycle (v * a m) = configurationCycle z := by
-      rw [configurationCycle_reversal, hv, Cycle.reverse_reverse]
+      rw [native_configurationCycle_reversal, hv, Cycle.reverse_reverse]
     obtain ⟨r, hr⟩ := positive_coordinate z (v * a m) hva
     refine ⟨(r, true), ?_⟩
     simp only [circleCoordinate, ↓reduceIte, hr, mul_assoc, a_sq, mul_one]
@@ -338,5 +339,167 @@ theorem native_a_complement {m : ℕ} (hm : 3 ≤ m) (z : Configuration m) :
 #print axioms circleEquiv
 #print axioms native_b_complement
 #print axioms native_a_complement
+
+private theorem native_a_ne_b {m : ℕ} (hm : 3 ≤ m) : a m ≠ b m := by
+  intro h
+  have he := congrArg (fun z : Configuration m => (z (Fin.last m)).val) h
+  simp only [a_apply, Fin.val_rev, Fin.val_last, b_apply,
+    Nat.sub_self, lt_self_iff_false, if_false] at he
+  omega
+
+private theorem native_b_sq (m : ℕ) : b m * b m = 1 := by
+  apply Equiv.ext
+  intro i
+  exact PrefixReversalTripleOddNonGeneration.reverseIndex_involutive
+    (L := m) (by omega) i
+
+private theorem native_adj_neighbors {m : ℕ} (x y : Configuration m)
+    (h : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Adj x y) :
+    y = x * a m ∨ y = x * b m := by
+  rw [SimpleGraph.mulCayley_adj'] at h
+  obtain ⟨_, g, hg, he⟩ := h
+  simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hg
+  rcases hg with rfl | rfl
+  · left
+    rcases he with he | he
+    · exact he.symm
+    · have hh := congrArg (· * a m) he
+      simpa only [mul_assoc, a_sq, mul_one] using hh.symm
+  · right
+    rcases he with he | he
+    · exact he.symm
+    · have hh := congrArg (· * b m) he
+      simpa only [mul_assoc, native_b_sq, mul_one] using hh.symm
+
+private theorem native_cycle_retains_edges {m : ℕ} (hm : 3 ≤ m)
+    {z : Configuration m}
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z z)
+    (hw : w.IsCycle) (x : Configuration m) (hx : x ∈ w.support) :
+    s(x, x * a m) ∈ w.edges ∧ s(x, x * b m) ∈ w.edges := by
+  have hsubset : w.toSubgraph.neighborSet x ⊆ {x * a m, x * b m} := by
+    intro y hy
+    exact (native_adj_neighbors x y hy.adj_sub).elim Or.inl Or.inr
+  have hne : x * a m ≠ x * b m := fun h => native_a_ne_b hm (mul_left_cancel h)
+  have he := Set.eq_of_subset_of_ncard_le hsubset (by
+    rw [Set.ncard_pair hne, hw.ncard_neighborSet_toSubgraph_eq_two hx])
+  constructor
+  · apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mp
+    change x * a m ∈ w.toSubgraph.neighborSet x
+    rw [he]
+    exact Or.inl rfl
+  · apply SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges.mp
+    change x * b m ∈ w.toSubgraph.neighborSet x
+    rw [he]
+    exact Or.inr rfl
+
+/-- Every genuine full native circle complement contains exactly all other
+native a/b edges. In particular, the b edge at a later insertion contact is
+retained whenever it differs from this complement's actual deleted edge. -/
+theorem native_complement_edge_inventory {m : ℕ} (hm : 3 ≤ m)
+    (z g : Configuration m) (hg : g = a m ∨ g = b m)
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z (z * g))
+    (hp : w.IsPath) (hl : w.length = 2 * (m + 1) - 1)
+    (hs : ∀ x, x ∈ w.support ↔ Circle z x)
+    (x h : Configuration m) (hx : Circle z x) (hh : h = a m ∨ h = b m) :
+    s(x, x * h) ∈ w.edges ↔ s(x, x * h) ≠ s(z, z * g) := by
+  have hg1 : g ≠ 1 := hg.elim (fun h => h ▸ a_ne_one hm)
+    (fun h => h ▸ b_ne_one hm)
+  have hadj : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Adj z (z * g) := by
+    rw [SimpleGraph.mulCayley_adj']
+    refine ⟨?_, g, by simpa using hg, Or.inl rfl⟩
+    intro he
+    exact hg1 (mul_left_cancel (by simpa only [mul_one] using he.symm))
+  have hmissing : s(z, z * g) ∉ w.edges := by
+    intro he
+    have heq := hp.length_eq_one_of_mem_edges he
+    omega
+  let q := w.reverse.cons hadj
+  have hq : q.IsCycle := by
+    apply (SimpleGraph.Walk.cons_isCycle_iff w.reverse hadj).mpr
+    refine ⟨hp.reverse, ?_⟩
+    simpa only [SimpleGraph.Walk.edges_reverse, List.mem_reverse] using hmissing
+  have hxq : x ∈ q.support := by
+    simp only [q, SimpleGraph.Walk.support_cons, SimpleGraph.Walk.support_reverse,
+      List.mem_cons, List.mem_reverse]
+    exact Or.inr ((hs x).mpr hx)
+  have hedge : s(x, x * h) ∈ q.edges := by
+    rcases hh with rfl | rfl
+    · exact (native_cycle_retains_edges hm q hq x hxq).1
+    · exact (native_cycle_retains_edges hm q hq x hxq).2
+  simp only [q, SimpleGraph.Walk.edges_cons, SimpleGraph.Walk.edges_reverse,
+    List.mem_cons, List.mem_reverse] at hedge
+  constructor
+  · intro he hsame
+    exact hmissing (hsame ▸ he)
+  · intro hne
+    exact hedge.resolve_left hne
+
+/-- Actual native a/b edges belonging to an independently specified circle. -/
+def NativeCircleEdge {m : ℕ} (z : Configuration m) (e : Sym2 (Configuration m)) : Prop :=
+  ∃ x h : Configuration m, Circle z x ∧ (h = a m ∨ h = b m) ∧ e = s(x, x * h)
+
+/-- An arbitrary undirected edge belongs to an actual complete native
+complement exactly when it is a native circle edge outside its literal cut. -/
+theorem native_complement_full_edge_inventory {m : ℕ} (hm : 3 ≤ m)
+    (z g : Configuration m) (hg : g = a m ∨ g = b m)
+    (w : (SimpleGraph.mulCayley ({a m, b m} : Set (Configuration m))).Walk z (z * g))
+    (hp : w.IsPath) (hl : w.length = 2 * (m + 1) - 1)
+    (hs : ∀ x, x ∈ w.support ↔ Circle z x) (e : Sym2 (Configuration m)) :
+    e ∈ w.edges ↔ NativeCircleEdge z e ∧ e ≠ s(z, z * g) := by
+  constructor
+  · intro he
+    obtain ⟨⟨x, y⟩, rfl⟩ := Sym2.mk_surjective e
+    have hx := (hs x).mp (w.fst_mem_support_of_mem_edges he)
+    rcases native_adj_neighbors x y (w.adj_of_mem_edges he) with hy | hy
+    · subst y
+      exact ⟨⟨x, a m, hx, Or.inl rfl, rfl⟩,
+        (native_complement_edge_inventory hm z g hg w hp hl hs x (a m) hx
+          (Or.inl rfl)).mp he⟩
+    · subst y
+      exact ⟨⟨x, b m, hx, Or.inr rfl, rfl⟩,
+        (native_complement_edge_inventory hm z g hg w hp hl hs x (b m) hx
+          (Or.inr rfl)).mp he⟩
+  · rintro ⟨⟨x, h, hx, hh, rfl⟩, hne⟩
+    exact (native_complement_edge_inventory hm z g hg w hp hl hs x h hx hh).mpr hne
+
+#print axioms native_complement_edge_inventory
+private theorem circle_b_reversal {m : ℕ} (v : Configuration m) :
+    configurationCycle (v * b m) = (configurationCycle v).reverse := by
+  have hr : configurationCycle (v * a m * (a m * b m)) =
+      configurationCycle (v * a m) := by
+    rw [ab_eq_rotate]
+    apply Cycle.coe_eq_coe.mpr
+    rw [show List.ofFn (v * a m * finRotate (m + 1)) =
+      (List.ofFn (v * a m)).rotate 1 from by
+        simpa only [pow_one] using rotate_pow_list (v * a m) 1]
+    exact List.IsRotated.symm ⟨1, rfl⟩
+  have he : v * a m * (a m * b m) = v * b m := by
+    rw [mul_assoc, ← mul_assoc (a m), a_sq, one_mul]
+  rw [he, native_configurationCycle_reversal] at hr
+  exact hr
+
+private theorem circle_native_closed {m : ℕ} (z x g : Configuration m)
+    (hx : Circle z x) (hg : g = a m ∨ g = b m) : Circle z (x * g) := by
+  have hr : configurationCycle (x * g) = (configurationCycle x).reverse := by
+    rcases hg with rfl | rfl
+    · exact native_configurationCycle_reversal x
+    · exact circle_b_reversal x
+  rcases hx with hx | hx
+  · exact Or.inr (hr.trans (congrArg Cycle.reverse hx))
+  · exact Or.inl (by rw [hr, hx, Cycle.reverse_reverse])
+
+/-- Every endpoint of an actual native circle edge lies in its independently
+specified complete rotation/reversal circle. -/
+theorem native_circle_edge_endpoint {m : ℕ} (z v : Configuration m)
+    (e : Sym2 (Configuration m)) (he : NativeCircleEdge z e) (hv : v ∈ e) :
+    Circle z v := by
+  obtain ⟨x, g, hx, hg, rfl⟩ := he
+  rcases Sym2.mem_iff.mp hv with rfl | rfl
+  · exact hx
+  · exact circle_native_closed z x g hx hg
+
+
+#print axioms native_complement_full_edge_inventory
+#print axioms native_circle_edge_endpoint
 
 end D5.S3.Combinatorics.Graph.PrefixReversal.NativeCircleComplement

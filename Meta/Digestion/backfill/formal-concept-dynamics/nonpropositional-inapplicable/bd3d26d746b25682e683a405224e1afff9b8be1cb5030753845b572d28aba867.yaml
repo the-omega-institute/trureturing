@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bd3d26d746b25682e683a405224e1afff9b8be1cb5030753845b572d28aba867
+  normalized_sha256: sha256:bd3d26d746b25682e683a405224e1afff9b8be1cb5030753845b572d28aba867
+cas_ref: sha256:bd3d26d746b25682e683a405224e1afff9b8be1cb5030753845b572d28aba867
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“不同干预”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 0385d66af5acf424ccdf1aab916c4411669a7725b31eba907bc22fc5a7ae0185
+    next_atom_id: 67e2616c39a485d956a87a84dc8d83e4b9cdef48e3d0d5f1c0098f574b4a0cd1

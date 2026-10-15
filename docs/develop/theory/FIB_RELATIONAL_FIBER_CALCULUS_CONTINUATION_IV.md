@@ -645,3 +645,706 @@ the unbounded coordinate, but it is not a witness for the finite-profile
 threshold set. If unrestricted source-total weighted optimization is desired,
 it is a separate problem requiring its own decision and attainment hypothesis;
 it is not supplied by the finite Pareto theorem.
+## 51. Redundant complete words with the original call trace
+
+**Definition 51.1 (the supplied complete finite controller).** Let $Q$ be
+all installed logical states of a controller, with $K=|Q|\ge1$. Include
+halt states, unreachable states, error states and every installed invalid-code
+completion. At $q\in Q$ there is one fixed original instruction $I(q)$:
+either a primitive with its entire literal payload, or $\mathsf{Halt}(Y_q)$
+with one fixed complete output. A nonhalt instruction has a declared finite
+typed-response set $O_q$ and a total table
+
+$$
+\delta_q:O_q\longrightarrow Q.
+\tag{FIB.51.1}
+$$
+
+Every typed response has its row, whether or not it is possible on an
+admitted source. A silent primitive uses its declared constant response, such
+as $\bot$ in Definition 46.1. A primitive that is undefined outside its
+legal domain remains undefined there; this definition supplies no observable
+failure response for a missing strict edge. Halt has no response rows.
+For notational uniformity put $O_q=\varnothing$ at a halt, with its
+unique empty successor map.
+
+The source and apparatus domains may be infinite. Their original legality,
+actual response and apparatus-successor maps are retained. The complete
+proof-side apparatus state includes any history needed by these maps, as in
+§47; it is not an additional observer input. All mutable information used
+by instruction selection is already in $q$, and its next value depends only
+on $q$ and the actual declared response. In particular, the all-action
+factorization of Definition 46.1 is a premise. A source-indexed successor
+list that fails this factorization is not an input controller.
+
+Initialization is either a common $q_0$ or a map $c(i)\in Q$ of an initial
+record $i$ that was genuinely acquired under the original contract. The
+original source, target and acquired record stay paired. Neither an arbitrary
+source label nor a retrospectively compatible history qualifies as $i$.
+The record is not available again after initialization unless already
+represented in the counted control.
+
+Use exactly the conditional whole-word instruction and immediate-response
+services of [FIB continuation II][FIB51-II], Definition 45.1. A word is the
+whole mutable observer. The static instruction service selects the original
+instruction; that primitive's transient response immediately selects hold or
+one legal bit flip and is discarded. There is no intervening instruction.
+These control services obtain no further source response and perform no
+apparatus update beyond the declared original primitive.
+Installation, acquisition, initialization, selection, literal delivery,
+primitive execution, response writing and output are supplied and charged
+separately. The premise grants these functions at the chosen finite width;
+it does not construct their physical implementation from a word count.
+
+**Theorem 51.2 (finite redundant realization of every typed row).** For
+any controller in Definition 51.1, these conditional services admit a finite
+installed set $W\subseteq L_\ell$ and a proof-side surjection
+$\pi:W\to Q$ with fixed instruction table $\widehat I$ and immediate
+response table $\widehat\delta$, satisfying
+
+$$
+\begin{aligned}
+\widehat I(w)&=I(\pi(w)),\\
+\pi(\widehat\delta(w,o))&=\delta_{\pi(w)}(o),\\
+d_H(w,\widehat\delta(w,o))
+ &=\mathbf1_{\{\delta_{\pi(w)}(o)\ne\pi(w)\}}
+ \qquad(o\in O_{\pi(w)}).
+\end{aligned}
+\tag{FIB.51.2}
+$$
+
+For $K\ge2$, put
+
+$$
+r=\lceil\log_2K\rceil,\qquad m=2^r-1,\qquad
+f=2^{m-r}.
+\tag{FIB.51.3}
+$$
+
+One realization has
+
+$$
+\ell=2m-1=2^{r+1}-3,\qquad |W|=Kf,
+\qquad |\pi^{-1}(q)|=f\quad(q\in Q).
+\tag{FIB.51.4}
+$$
+
+For $K=1$ one may take $\ell=1$, $W=\{0\}$ and $f=1$.
+These bounds depend on the installed controller, not on source cardinality,
+a maximum execution length or an acyclicity assumption.
+
+For each admitted source and its original initialization, the realization
+preserves every original primitive, entire submitted literal, actual raw
+response, apparatus successor and original target. A first Halt exists in
+one run exactly when it exists in the other; its complete output and the
+number of preceding primitives are equal.
+This includes immediate halt, every finite execution prefix and infinite
+runs. Legality, success and termination transfer wherever the original
+controller has them; they are not conclusions about an arbitrary finite
+table solely from its encoding.
+
+Proof. For $K\ge2$, label the logical states injectively by
+$a:Q\hookrightarrow\mathbb F_2^r$. Index the $m$ data coordinates in a
+fixed order by the nonzero vectors $v\in\mathbb F_2^r$. Use the classical
+Hamming check map and the zero-interleaving map
+
+$$
+\sigma(x)=\sum_{v\ne0}x_vv,\qquad
+J(x_1,\ldots,x_m)=x_1\,0\,x_2\,0\,\cdots\,0\,x_m.
+\tag{FIB.51.5}
+$$
+
+The all-distinct nonzero check vectors and the rule identifying a one-bit
+change by its check vector are the Hamming construction in *Matrix Hamming
+Codes*, §§9.1–9.3 [MIT-HAMMING]. The displayed zero-interleaving map is
+Cabello–Eppstein–Klavžar's Proposition 3.1 [FIB51-CEK]. These are
+literature-attested ingredients, not new coding or coloring results.
+Their use here does not require the old controller graph to embed in a cube.
+
+The check vectors include a basis, so $\sigma$ is onto. Fixing all $m-r$
+coordinates outside those basis positions leaves a unique choice of the
+basis coordinates for each prescribed syndrome. Each syndrome fiber
+therefore has exactly $f$ elements. Install precisely
+
+$$
+W=\{J(x):\sigma(x)\in a(Q)\},\qquad
+\pi(J(x))=a^{-1}(\sigma(x)).
+\tag{FIB.51.6}
+$$
+
+Thus each logical state has exactly $f$ installed aliases, including states
+with empty actual support. When $K<2^r$, the unused syndrome fibers are not
+installed. Neither these words nor other ambient no-$11$ words have rows.
+The map $J$ is injective, has length $2m-1$ and always gives a no-$11$ word.
+
+At $w=J(x)$ install the exact instruction $I(q)$, where $q=\pi(w)$.
+For each typed response $o$, put $q'=\delta_q(o)$ and $d=a(q)+a(q')$.
+If $d=0$, install hold. Otherwise install the flip of data coordinate $d$,
+namely physical bit $2\operatorname{index}(d)-1$. If $e_d$ is the unit
+vector in that data coordinate, then
+
+$$
+\sigma(x+e_d)=\sigma(x)+d=a(q').
+\tag{FIB.51.7}
+$$
+
+The successor is in $W$, projects to $q'$ and differs in one physical bit.
+All separator bits stay zero. Injection of $a$ gives $d=0$ exactly when
+$q=q'$, proving all three equations (FIB.51.2). This specifies every typed
+row, including error transitions and responses with empty actual support;
+none is replaced by a convenient hold unless the original successor is
+$q$ itself. Every alias of a halt state has its original fixed full output
+and no response entries.
+
+For a common initial state, choose $a(q_0)=0$ and initialize at $0^\ell$.
+More generally the explicit section
+
+$$
+s(q)=
+\begin{cases}
+J(0^m),&a(q)=0,\\
+J(e_{a(q)}),&a(q)\ne0
+\end{cases}
+\quad\text{satisfies}\quad \pi(s(q))=q.
+\tag{FIB.51.8}
+$$
+
+Initialize to $s(c(i))$ using only the genuinely acquired $i$. This is one
+separately supplied whole-word initialization; it is not a response step
+or a free acquisition of $i$. For $K=1$, the sole instruction is copied to
+word $0$, every typed successor holds, and the same claims follow directly.
+
+The quantities $a,\sigma,\pi,q,q'$ and $d$ in these formulas specify
+finite static rows. They are not runtime computations or registers. Each
+entire installed word already selects its fixed original instruction, and
+each pair of that word and a typed response already selects hold or one
+fixed bit index. The conditional service has no external decoded PC,
+syndrome, phase, response latch or retained history. If an implementation
+needs such persistent state to perform the selection, it does not satisfy
+Definition 51.1's complete-word service premise.
+
+For the execution proof, relate an old boundary $(z,s,q)$ to a new boundary
+$(z,s,w)$ by $\pi(w)=q$, retaining the same original target $z$, complete
+apparatus state $s$ and ordered primitive history. Initialization establishes
+this relation. At related nonhalt boundaries, the instructions and their
+legality domains are equal. The same primitive with the same literal acts
+on the same apparatus, giving the same actual response and successor.
+Equation (FIB.51.2) restores the relation immediately. No instruction occurs
+between this response and the next corresponding boundary. Induction proves
+equality of every finite original event prefix. If execution reaches an
+undefined action, both sides have the same undefined action; no success or
+failure sensor is manufactured there.
+
+A new boundary is a halt exactly when its projected old boundary is one,
+with exactly the same output. Hence finite first halt and zero-call first
+halt correspond in both directions. An infinite original run has arbitrarily
+long matching finite prefixes; the recursively defined new run cannot halt
+at any finite boundary and is infinite. Conversely an infinite new run
+projects to the infinite old run. A logical cycle may return to another
+alias of its starting state; future rows still obey (FIB.51.2). No unfolding
+of histories and no bound on the number of traversals was used. $\square$
+
+## 52. Full installation bills and the transfer boundary
+
+**Corollary 52.1 (aliases, payloads and one matched run).** Use Theorem
+51.2, with its $f=1$ convention when $K=1$. Let $K_H$ count old halt states
+and let $E_0=\sum_{q\text{ nonhalt}}|O_q|$. The realization has exactly
+
+| Installed item | Count |
+| --- | --- |
+| Complete words and instruction rows | $Kf$ |
+| Aliases of each individual logical state | $f$ |
+| Halt rows, including unreachable halts | $K_Hf$ |
+| Typed response entries | $E_0f$ |
+| Full word-key bits in an explicit table | $Kf\ell$ |
+| Hold/flip-index bits for the typed entries | $E_0f\lceil\log_2(\ell+1)\rceil$ |
+
+If $\mathcal R$ is the set of old literal-Read states with literal $p_q$,
+the new Read-row count is $f|\mathcal R|$. Its distinct installed literal
+union is exactly the old one. Fully inlining the literals gives exactly
+$f\sum_{q\in\mathcal R}|p_q|$ address letters, with $f$ copies of each
+old row's payload. Empty literals have zero letters but still have rows,
+length fields, delivery and execution. Each old fixed halt payload is
+likewise installed $f$ times; no two different old halt states are silently
+merged merely because their outputs coincide.
+
+For a finite terminating run with logical states $q_0,\ldots,q_n$, the
+native call count is exactly the original $n$. There are $n+1$ instruction
+selections including Halt, $n$ immediate response selections and one output.
+The response bit-change count is
+
+$$
+b=\sum_{j=0}^{n-1}\mathbf1_{\{q_{j+1}\ne q_j\}}\le n.
+\tag{FIB.52.1}
+$$
+
+The same identity holds on every finite prefix of a nonterminating run.
+Counts of each primitive, submitted literal order and address-length sums,
+actual apparatus epochs and source-state peaks are preserved on the same
+source whenever these coordinates are defined by the original events.
+Initialization writes, table-selection costs and other implementation
+services are not included in this equality of event coordinates.
+
+Proof. Each old state has $f$ aliases, and each alias copies precisely that
+state's instruction, payload and typed-response list. This gives the table
+and payload counts. Equation (FIB.51.2) gives the exact bit-change indicator;
+the execution correspondence gives the remaining same-run equalities.
+No source maximum or coordinate minimum was taken. $\square$
+
+**Definition 52.2 (an explicit finite table representation).** Suppose
+the old fixed instructions, including their response types, literal lengths
+and complete halt outputs, have supplied finite binary records. Let $b_I$
+be a common padded record width, and fix the response order for each such
+record. Put
+
+$$
+t_* =\max\bigl(\{0\}\cup\{|O_q|:q\text{ nonhalt}\}\bigr),\qquad
+\beta=\lceil\log_2(\ell+1)\rceil.
+$$
+
+One explicit rectangular representation stores, for each of the $Kf$ words,
+its full $\ell$-bit key, its $b_I$-bit instruction record and $t_*$ response
+slots of $\beta$ bits each. Zero means hold; $j\in\{1,\ldots,\ell\}$
+means flip physical bit $j$. Unused slots are fixed zero padding, not typed
+response entries. Its exact record-array length is
+
+$$
+S_{\rm rows}=Kf(\ell+b_I+t_*\beta).
+\tag{FIB.52.2}
+$$
+
+The supplied format, record interpretation and any extra framing, dictionary,
+index or selection apparatus are charged in addition when present. The
+literal and halt payloads already included in $b_I$ must not be charged
+a second time as extra row-array bits. If output objects have no supplied
+binary representation, Corollary 52.1 counts their copies but assigns no
+finite bit-length to them by fiat.
+
+A stored common initial word adds $\ell$ immutable bits. For acquired-input
+initialization, an explicit section table for (FIB.51.8) instead adds
+$K\ell$ word bits in the original fixed state order, plus its framing and
+the original realization of $c(i)$. The acquisition and selection of $i$
+and the physical initialization service retain their original permissions
+and separate prices. Existence of this finite section does not realize an
+arbitrary unsupplied map $c$ on an infinite input domain.
+
+For a matched finite run, use the cost vector
+
+$$
+\begin{aligned}
+C={}&C_{\rm acquire}+C_{\rm promise/source}
+ +C_{\rm compile/install}+C_{\rm init}(i)\\
+ &+\sum_{j=0}^{n-1}\bigl(
+ C_{\rm select}(w_j)+C_{\rm deliver}(I(q_j))
+ +C_{\rm primitive}(I(q_j),s_j)
+ +C_{\rm response}(w_j,o_j)\bigr)\\
+ &+C_{\rm select}(w_n)+C_{\rm output}(Y_{q_n}).
+\end{aligned}
+\tag{FIB.52.3}
+$$
+
+Terms charge the services actually supplied and do not assume zero tariffs.
+Compilation and installation have finite combinatorial descriptions here;
+their physical time, workspace and energy are not inferred from
+(FIB.52.2). The trace equality does not identify new selection or output
+tariffs with the old ones.
+
+**Corollary 52.3 (inherited certificates and distinct realization scopes).**
+Given the old exact reachable supports $C_q$, let $\widehat C_w$ be the
+exact support at $w$ in the matched new runs. Then
+
+$$
+\widehat C_w\subseteq C_{\pi(w)},\qquad
+\bigcup_{\pi(w)=q}\widehat C_w=C_q.
+\tag{FIB.52.4}
+$$
+
+An existing support–rank certificate from continuation II, Theorem 27.2,
+restricts to the new exact supports by
+$\widehat\rho(z,s,w)=\rho(z,s,\pi(w))$. All its legality, closure,
+descent and fixed-output conditions hold there. This is a reuse of that
+certificate theorem; support closure alone supplies no rank or termination.
+In particular, (FIB.52.4) does not assert that each alias has the whole old
+exact support. Some aliases can remain unreachable.
+
+Proof. Each actual new prefix projects to its old prefix, proving inclusion.
+Every actual old prefix has its lifted prefix, proving the union equality.
+The commuting successor equation and equal primitive supply the conditions
+of the old certificate on each restricted support; any assumed strict rank
+decrease is therefore retained. $\square$
+
+The present realization has a surjective logical correspondence with $Kf$
+installed states. It is distinct from continuation II's Theorem 45.4, which
+requires one word per old state and is subject to the fixed $K_{2,3}$
+obstruction of Proposition 46.2. It is also distinct from Corollary 47.2's
+actual-history forest, whose bounds require finite sources and a finite
+maximum actual length and which need not preserve unsupported typed rows.
+Those results remain in their original scopes. This construction neither
+reproves their graph statements nor supplies a compact optimum. When a
+budget counts every installed state, the new witness belongs at budget
+$Kf$, not $K$.
+
+The all-action and complete-history requirements of §§41, 46–47 remain
+premises. This realization does not synthesize an ExactChart, repair the
+pseudo-controller of Counterexample 41.4, authenticate a source promise or
+turn a cycling candidate cover into a successful controller. Nor does it
+supply the uniform bounds or exact acceleration required by §§47–50 for
+finite-profile decision and Pareto conclusions. An infinite-domain controller
+may terminate on each source with unbounded worst event cost, and that
+property is also preserved.
+
+The Hamming check construction and zero interleaving in Theorem 51.2 are
+literature-attested. The complete typed-table application, exact original
+execution correspondence and itemized installation bill are repo-derived
+ordinary conditional mathematics. No new Hamming code, syndrome method,
+coupon coloring, graph classification, optimal width or total physical-cost
+claim is made. These statements provide no Lean/kernel certification.
+
+[MIT-HAMMING]: https://math.mit.edu/~djk/18.310/Lecture-Notes/matrix_hamming_codes_2007.html
+[FIB51-CEK]: https://arxiv.org/pdf/0903.2507v1
+[FIB51-II]: FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md
+
+## 追加锚（本行以下为增补区）
+
+## 53. Sharp installation bounds for saturated complete-successor controllers
+
+**Definition 53.1 (the strict saturated comparison).** Fix a controller
+of Definition 51.1 with $K=|Q|\ge2$, all states nonhalting, and
+$O_q=Q$, $\delta_q(o)=o$ for every $q,o\in Q$. Each state retains its
+fixed original instruction $I(q)$ and entire literal payload. Saturation
+concerns the designated typed rows, not the actual support of their replies.
+An installation consists of a nonempty finite set
+
+$$
+W\subseteq L_\ell
+=\{w\in\{0,1\}^\ell:w_jw_{j+1}=0\ (1\le j<\ell)\},
+\qquad \pi:W\twoheadrightarrow Q,\qquad M=|W|,
+$$
+
+where $\ell\ge1$ and $\pi$ is proof-side correspondence only. Every word
+is the entire mutable observer. Its fixed instruction is $I(\pi(w))$.
+A valid fixed static response table is a function
+$R:W\times Q\to W$ satisfying, at every installed word and every typed reply,
+
+$$
+\pi(R(w,o))=o,\qquad d_H(w,R(w,o))\le1.
+\tag{FIB.53.1}
+$$
+
+Unsupported replies and unreachable installed words are included. The
+conditional services are exactly those of Definition 51.1 and continuation
+II, Definition 45.1: the original primitive's transient reply selects hold
+or one legal bit flip immediately and is discarded, without an intervening
+instruction, further source observation or extra apparatus update. No decoded
+label, PC, syndrome, latch, stage or retained record exists outside the word.
+Initialization uses either the same actual common $q_0$ or the same genuinely
+acquired record $i$ and its original $c(i)$, paired with the same source and
+target; choose a word over that state. Such whole-word initialization is a
+separately supplied service, not an acquisition of $i$ or later access to it.
+The original source legality and all-action factorization remain premises.
+Acquisition, source promises, installation, initialization, selection, literal
+delivery, primitive execution and response writing retain their separate
+charges from §§51–52. No count here supplies these services physically.
+
+Write $G_W$ for the induced Hamming-distance-one graph on $W$, and put
+$N_W[w]=\{u\in W:d_H(u,w)\le1\}$. All neighborhoods below are installed
+neighborhoods, including their centers.
+
+**Proposition 53.2 (exact static-table existence).** For fixed $W$ and
+$\pi$ in Definition 53.1, a valid response table exists if and only if
+
+$$
+\pi(N_W[w])=Q\qquad\text{for every }w\in W.
+\tag{FIB.53.2}
+$$
+
+Proof. A valid table supplies $R(w,o)\in N_W[w]\cap\pi^{-1}(o)$ for
+each $o$, proving necessity. Conversely, fix an order on the finite set
+$W$. For each pair $(w,o)$ choose the first member of this nonempty
+intersection, choosing $w$ itself when $o=\pi(w)$. These choices give one
+fixed table satisfying (FIB.53.1), with hold on the same label and one flip
+on every different label. Coverage proves existence; a preselected table
+must still satisfy (FIB.53.1) row by row. In particular, coverage alone
+does not certify an arbitrary assignment of successors. $\square$
+
+Condition (FIB.53.2) says that the label classes form a domatic partition
+of $G_W$: each is a dominating set in the closed-neighborhood sense of
+Zelinka, *Domatic numbers of cube graphs*, pp. 117–119 [FIB53-ZELINKA].
+It does not require every label in the open neighborhood; the center supplies
+its own label.
+
+**Theorem 53.3 (installation bounds and equality rigidity).** Every valid
+installation of Definition 53.1 satisfies
+
+$$
+\ell\ge2K-3,\qquad M\ge2^{K-1}.
+\tag{FIB.53.3}
+$$
+
+Put $d=K-1$. If $\ell=2d-1$, the installed set is exactly the odd-coordinate
+cube
+
+$$
+W=\{x_1\,0\,x_2\,0\,\cdots\,0\,x_d:x\in\{0,1\}^d\}.
+\tag{FIB.53.4}
+$$
+
+If $M=2^d$, then $W$ is a coordinate $d$-cube in $\{0,1\}^\ell$:
+exactly $d$ coordinates vary independently and all others are fixed padding.
+The whole face must lie in $L_\ell$. Thus its free positions are pairwise
+nonadjacent, fixed positions adjacent to them are zero, and the remaining
+fixed bits obey the no-$11$ constraint.
+
+Proof. Proposition 53.2 gives $|N_W[w]|\ge K$, hence every vertex has
+degree at least $d$. Choose an installed word of maximum Hamming weight.
+Every installed neighbor decreases its weight, so its degree is at most
+its weight, which is at most $\lceil\ell/2\rceil$ for a no-$11$ word.
+Consequently $d\le\lceil\ell/2\rceil$ and $\ell\ge2d-1$.
+
+Suppose $\ell=2d-1$. The only no-$11$ word of weight $d$ has ones in
+positions $1,3,\ldots,2d-1$: fitting $d$ ones with a gap between each pair
+uses all $2d-1$ positions. Every word with an even-position one therefore
+has weight at most $d-1$. If any such word is installed, choose one of
+maximum weight among that subset. An upward installed neighbor would still
+have its even-position one and contradict maximality in the subset.
+Its degree is therefore at most $d-1$, a contradiction. Hence $W$ lies in
+the odd-coordinate $d$-cube. Degree at least $d$ now forces all $d$ cube
+neighbors of each installed word to be installed. Nonemptiness and the
+connectivity of the cube force all its vertices, proving (FIB.53.4).
+
+For the size bound, Simon's cube lemma is supplied by Ambainis–Vihrovs,
+*Size of Sets with Small Sensitivity: a Generalization of Simon's Lemma*,
+§3, Theorem 1 and Corollary 1, pp. 4–5 [FIB53-AV]. For the actual minimum
+degree $D$ it gives $M\ge2^D$, with equality only for a coordinate
+$D$-cube. There is no irreducibility premise in this result. Here $D\ge d$,
+so $M\ge2^D\ge2^d$; equality $M=2^d$ forces $D=d$ and a coordinate
+$d$-cube, with the stated padding restrictions imposed by $W\subseteq L_\ell$.
+
+For a direct proof of this classical step, induct on ambient dimension.
+For a nonempty induced cube subgraph of minimum degree at least $t$,
+the case $t=0$ has size at least one, with equality a singleton.
+For $t\ge1$, a constant coordinate
+can be deleted and induction applied unchanged. Otherwise split a varying
+coordinate into its two nonempty slices. Each slice loses at most one
+neighbor per vertex, so has minimum degree at least $t-1$ and, by
+induction, at least $2^{t-1}$ vertices. Equality in the summed bound
+forces both slices to be coordinate $(t-1)$-faces. Their internal degrees
+are exactly $t-1$, so every vertex must have its cross-slice mate. Their
+projections coincide, and adjoining the split coordinate gives a coordinate
+$t$-face. This proves both the bound and its equality assertion. $\square$
+
+**Corollary 53.4 (perfect label classes at either equality).** If either
+$\ell=2K-3$ or $M=2^{K-1}$ holds in a valid installation, then every label
+class $C_q=\pi^{-1}(q)$ is a perfect radius-one code inside the installed
+$(K-1)$-cube, and
+
+$$
+K|C_q|=2^{K-1},\qquad K\mid2^{K-1}.
+\tag{FIB.53.5}
+$$
+
+In particular $K$ is a power of two. Equality in the width bound also
+forces equality in the size bound; equality in size permits fixed padding.
+
+Proof. Theorem 53.3 makes $W$ a $d$-cube in either case. Each closed
+neighborhood has $d+1=K$ vertices and all $K$ labels, each exactly once.
+For each fixed $q$, every vertex of this cube is therefore within distance
+one of exactly one member of $C_q$. The radius-one balls centered at
+$C_q$ partition the installed cube and each contain $K$ vertices. Counting
+gives (FIB.53.5). Every prime divisor of $K$ must divide a power of two,
+so $K=2^r$ for an integer $r\ge1$. This is the domatic fullness/divisibility
+argument used for ordinary cubes by Zelinka, p. 117 [FIB53-ZELINKA], applied
+after the installation rigidity has been established. These are balls in
+$G_W$, not balls required to partition the whole Fibonacci graph
+$\Gamma_\ell$. The argument does not classify the labellings or require
+them to be linear. $\square$
+
+**Proposition 53.5 (degree alone is insufficient).** For $K=3$, the
+zero-interleaved square $W=\{000,001,100,101\}\subseteq L_3$ has minimum
+degree $2=K-1$ but admits no three-label closed-neighborhood coverage.
+
+Proof. Each closed neighborhood has three vertices. Coverage would put
+each label there exactly once. Counting occurrences of one fixed label
+over all four closed neighborhoods gives $3|C_q|=4$, since every vertex
+belongs to three such neighborhoods. This contradicts $3\nmid4$.
+Thus the degree consequence of Proposition 53.2 cannot replace its full
+coverage condition. $\square$
+
+**Theorem 53.6 (one common least pair and its universal boundary).** Fix
+the original controller, source contract and initialization of Definition
+53.1. Order installation pairs by
+$(\ell,M)\preceq(\ell',M')$ when $\ell\le\ell'$ and $M\le M'$.
+If $K=2^r$ with $r\ge1$, the attainable pairs have the common least element
+
+$$
+(\ell_*,M_*)=(2K-3,\,2^{K-1}).
+\tag{FIB.53.6}
+$$
+
+If $K$ is not a power of two, every valid installation instead satisfies
+$\ell\ge2K-2$ and $M>2^{K-1}$. A finite attainable upper pair remains
+
+$$
+r=\lceil\log_2K\rceil,\quad m=2^r-1,\qquad
+(\ell,M)=(2m-1,\,K\,2^{m-r}).
+\tag{FIB.53.7}
+$$
+
+Proof. Reuse the single installation of Theorem 51.2 on this same original
+controller. When $K=2^r$, its state labelling exhausts all syndromes, so
+(FIB.51.6) installs the entire zero-interleaved $m$-cube, with $m=K-1$.
+Its already specified typed response table obeys (FIB.53.1), and
+$K2^{m-r}=2^m=2^{K-1}$ while $2m-1=2K-3$. This one witness attains both
+bounds of Theorem 53.3 and is below every competing pair in the product
+order. For $K=2$ it is simply $W=\{0,1\}$ at width one. Initialization is
+the section (FIB.51.8) on the same actual common state or acquired record;
+its supplied service and charges remain in force. No separate coordinate
+minimizers or different-source runs have been combined. For nonpowers,
+Corollary 53.4 excludes either equality, and integrality gives the stated
+strict bounds. Theorem 51.2 with its unused syndrome fibers omitted gives
+(FIB.53.7). These arguments leave the exact minima for nonpowers unsettled.
+$\square$
+
+The attaining witness uses the classical Hamming check construction of
+*Matrix Hamming Codes*, §§9.1–9.3 [MIT-HAMMING], and the zero interleaving
+of Cabello–Eppstein–Klavžar, Proposition 3.1, p. 5 [FIB51-CEK], through
+Theorem 51.2. Simon's size/equality result, the domatic argument and these
+upper-bound ingredients are literature-attested. The saturated controller
+application, no-$11$ width rigidity and common-pair conclusion are
+repo-derived ordinary conditional mathematics, with no global novelty claim.
+
+At powers of two this is also a sharp universal-compiler worst-case pair:
+Theorem 51.2 supplies it for every $K$-state controller under its own
+state-corresponding all-row contract, while the saturated nonhalting subclass
+forces both coordinates. It is not a pointwise lower bound for every
+$K$-state table. For example, a nonhalting table whose every reply returns
+to its current state can use $K$ distinct unit words of length $K$, one per
+state, with every response holding. For $K\ge3$ its $M=K<2^{K-1}$.
+
+The lower-bound comparison excludes halts, supported-only or reachable-only
+row obligations, sparse parity controllers such as SLHC §13, and arbitrary
+trace-only implementations without the stipulated surjection. Nonhalting
+does not prove an action legal or a run infinite: an undefined original
+primitive stays undefined. The pair counts width and installed words only;
+it asserts no optimum for latency, energy, total cost or service availability,
+no uniqueness of a labelled optimum, no classification of perfect codes in
+the whole Fibonacci graph, and no termination, finite-profile or execution
+Pareto conclusion. Those claims require their separate original premises.
+
+[FIB53-AV]: https://eccc.weizmann.ac.il/report/2014/077/revision/2/download
+[FIB53-ZELINKA]: https://dml.cz/bitstream/handle/10338.dmlcz/129735/MathSlov_32-1982-2_2.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 54. The K=3 common least pair under strict saturation
+
+**Theorem 54.1 (the saturated three-state frontier).** Keep Definition 53.1
+unchanged, including all installed words, all typed replies, unsupported rows,
+unreachable rows, the onto map, the complete original instruction and literal
+at every word, and the immediate hold-or-one-bit response rule. For $K=3$ the
+coordinatewise common least attainable pair is
+
+$$
+(\ell_*,M_*)=(4,6).
+\tag{FIB.54.1}
+$$
+
+The lower statements already proved in §§53.3--53.6 give
+$\ell\ge4$, $M\ge5$, and the attainable upper pair $(5,6)$. It remains to
+exclude $M=5$ and to exhibit one width-four table.
+
+**Five-word obstruction.** Let $G_W$ be the induced Hamming graph of a
+hypothetical valid $W$ with $|W|=5$. Proposition 53.2 is used first, not
+replaced: every closed installed neighborhood contains all three labels, so
+$|N_W[w]|\ge3$ and every vertex of $G_W$ has degree at least two. The graph is
+bipartite, since Hamming-one edges change word parity. Every component of a
+finite bipartite graph of minimum degree two contains a cycle of length at least
+four; with five vertices this forces one connected component. Neither bipartition side can have size one, because vertices on the other
+side would then have degree at most one. Its bipartition therefore has parts
+of sizes two and three. The three-vertex side contributes at least
+six incident edges, while at most $2\cdot3=6$ bipartite edges are possible.
+Thus $G_W$ would have to be $K_{2,3}$.
+
+This cannot be an induced subgraph of a Boolean cube. Two distinct cube
+vertices that have a common neighbor differ in exactly two coordinates, and
+then they have exactly two common neighbors (flip either differing coordinate).
+The two vertices in the size-two side of $K_{2,3}$ would have three common
+neighbors. Hence no valid installation has five words, and therefore
+$M\ge6$. The closed-neighborhood hypothesis is essential: degree two by
+itself does not provide the three labels, as Proposition 53.5 already shows
+for its four-word square.
+
+**Width-four witness.** Put
+
+$$
+W=\{0000,0001,0100,0101,1000,1001\}\subset L_4,
+$$
+
+and define the onto correspondence
+
+$$
+\pi(0000)=\pi(0001)=0,\qquad
+\pi(0100)=\pi(1001)=1,\qquad
+\pi(0101)=\pi(1000)=2.
+$$
+
+The following is one fixed table; the three response columns are in the order
+$o=0,1,2$.
+
+| $w$ | $\pi(w)$ | $N_W[w]$ | $R(w,0)$ | $R(w,1)$ | $R(w,2)$ |
+|---|---:|---|---|---|---|
+| $0000$ | 0 | $\{0000,0001,0100,1000\}$ | $0000$ | $0100$ | $1000$ |
+| $0001$ | 0 | $\{0000,0001,0101,1001\}$ | $0001$ | $1001$ | $0101$ |
+| $0100$ | 1 | $\{0000,0100,0101\}$ | $0000$ | $0100$ | $0101$ |
+| $0101$ | 2 | $\{0001,0100,0101\}$ | $0001$ | $0100$ | $0101$ |
+| $1000$ | 2 | $\{0000,1000,1001\}$ | $0000$ | $1001$ | $1000$ |
+| $1001$ | 1 | $\{0001,1000,1001\}$ | $0001$ | $1001$ | $1000$ |
+
+Every displayed word has no adjacent ones. Each response is the center or a
+Hamming-one neighbor, and its image under $\pi$ is exactly $o$. Each displayed
+closed neighborhood contains all of $\{0,1,2\}$, so Proposition 53.2 certifies
+all eighteen typed rows, including rows with no actual support. At each word
+install the original instruction $I(\pi(w))$ with its entire literal payload.
+For a common initial state, choose one of $0000,0100,0101$ according to its
+label; for an acquired $c(i)$ choose the corresponding listed word, using only
+the original acquisition. Thus the original
+source/target pairing, all-action factorization, undefined-action boundary,
+and same-source event-prefix correspondence from §§46 and 51 remain intact.
+No decoded label, PC, syndrome, phase, latch, controller field, or retained
+record is added outside the whole word.
+
+The lower bounds and this witness prove (FIB.54.1) in the product order. The
+classical suppliers used by the preceding bounds are Simon's cube lemma and
+gap theorem (Ambainis--Vihrovs, ECCC 2014/077 revision 2, Theorem 1,
+Corollary 1 and Theorem 3, pp. 4--5) and the closed-neighborhood/domatic
+formulation (Zelinka, *Domatic numbers of cube graphs*, pp. 117--119), as
+already cited in §§53.3--53.4. The five-word obstruction and the table above
+are the present controller application; they add no coding, graph-classification,
+or optimizer theorem. CEK Proposition 3.1 and the MIT Matrix Hamming §§9.1--9.3
+supply the existing $(5,6)$ construction in §51; they are not needed to
+justify the new width-four witness.
+
+A bounded fresh-source comparison at dev pin
+$d2488e18542d1070abf4b7173900b88ecc32112f$ covers distinct
+stationary-law, serial-paid-local, and sparse/halting contracts, with no matching
+Definition 53.1 saturated $K=3$ frontier. This is overlap evidence within the
+checked sources, not an exhaustive corpus or novelty claim. The IV file at that
+pin lacks §§51--53; this records absence at that pin and does not assert that
+unmerged IV text was deleted. Initialization, acquisition, source promises,
+installation, selection, literal delivery, primitive execution, response
+writing, and output remain separately supplied and charged. No physical-service,
+termination, latency, total-cost, or kernel-validation conclusion follows.
+
+## 55. Mathematical citation for the sparse parity example in §53
+
+**Citation convention (for §53).** The phrase “sparse parity controllers
+such as SLHC §13” in §53 designates [SLHC §14, Theorem 14.2 and
+Corollary 14.3][FIB55-SLHC]: the redundant realization of the entire
+Construction 11.5 table, with fixed halts and the original call trace.
+SLHC §13, “Bounded genuine Updates and binary-size native acquisition”,
+has a different clock-cell construction; it is not the construction
+designated by this particular citation.
+
+[FIB55-SLHC]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT_CONTINUATION.md#14-unknown-shape-parity-with-no-added-routing-calls
+
+## 追加锚（本行以下为增补区）

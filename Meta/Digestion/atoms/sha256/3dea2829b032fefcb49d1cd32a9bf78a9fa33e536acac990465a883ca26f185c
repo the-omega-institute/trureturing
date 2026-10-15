@@ -1,0 +1,24 @@
+**Definition 9.1 (reduced completed code).** Let $\widehat{\mathcal T}$ be the
+finite-prefix completion of the native finite ordered trees. Let
+$\mathscr C_{\mathbb Z}$ consist of coinductive ordered binary trees with finite
+leaves $[n]$, $n\in\mathbb Z$, and the unique leafless tree $\Omega$. The raw
+constructor is $F(U,V)$, with $F(\Omega,\Omega)=\Omega$ extensionally. Thus
+$\Omega$ is determined by all of its replies; it is not a leaf label and not an
+infinity token.
+
+For $d\in\mathbb Z$, write $\sigma^d$ for the shift of every finite label by
+$d$, fixing $\Omega$. A code is reduced when it is $\Omega$, a leaf $[n]$, or
+$F(U,V)$ with reduced children and neither
+
+$$
+(U,V)=([n+1],[n])\quad(n\in\mathbb Z),
+\qquad (U,V)=(\Omega,\Omega).
+\tag{NIS.30}
+$$
+
+The first forbidden pair is the native atomic collapse. The second is the
+local representation of the leafless completion. A constructor node with no
+finite leaf below it is therefore represented by $\Omega$ only after a value
+has been chosen, not merely because the current syntax has no displayed
+terminal.
+

@@ -1,0 +1,1 @@
+- `Blueprint/D5/S3/Fourier/FinitePoisson.md`：有限加法字符、零化子及正交关系。这里用到的是字符的类型，不把 Poisson 求和宣称为新的极值上界。

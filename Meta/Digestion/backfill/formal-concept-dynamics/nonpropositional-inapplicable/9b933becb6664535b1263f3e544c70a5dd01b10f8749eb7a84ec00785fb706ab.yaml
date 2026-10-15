@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+  normalized_sha256: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+cas_ref: sha256:9b933becb6664535b1263f3e544c70a5dd01b10f8749eb7a84ec00785fb706ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“隐私”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 405299c529b2549042f4d6a41751311262dbb112c4e022caf7066f7b31810af4
+    next_atom_id: 5684c09fadcbc32a2c378f23867cd39fc9f607be231c645b8914537a96039e87

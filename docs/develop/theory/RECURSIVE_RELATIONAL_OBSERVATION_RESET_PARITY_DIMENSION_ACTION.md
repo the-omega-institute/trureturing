@@ -671,3 +671,154 @@ Gaussian image-plus-kernel quotient or arbitrary-time classification is
 claimed.
 
 ## 追加锚（本行以下为增补区）
+
+## Theorem 17. The oriented integral ring of the native square quotient
+
+For every $q>0$, including $q=1$, write
+
+$$
+S_q=\sum_{k<q}X^k,\qquad F_q=X^{2q}-S_q^2,\qquad
+W_q=S_q-(X-1)X^q,\qquad H=X^2+1.
+$$
+
+Let $N_q$ be the original integer dimension group, $\Theta_q$ its forward
+time and $U_q$ its literal sign action. Its normalized integer chart
+$\Phi_q:\mathbb Z[X]/(F_q)\to N_q$ sends $1$ to the original stage-zero
+vector $g_q$ and intertwines multiplication by $X$ with $\Theta_q$.
+The literal sign intertwines with multiplication by $W_q$.
+Put $L_q=I+\Theta_q^2$. There is an onto integer-linear map
+$\eta_q:N_q\to A_q$ with
+
+$$
+\ker\eta_q=\operatorname{im}L_q,\qquad \eta_q(g_q)=1,
+$$
+
+where the following table fixes the ring and its orientations:
+
+| $q\bmod4$ | $A_q$ | Forward time $t_q$ | Literal sign $u_q$ |
+| --- | --- | --- | --- |
+| $0$ | $\mathbb Z/1\mathbb Z$ | $1=0$ | $1=0$ |
+| $1$ | $(\mathbb Z/2\mathbb Z)[C_2]$ | $[\tau]$ | $[\tau]$ |
+| $2$ | $\mathbb Z/5\mathbb Z$ | $3$ | $1$ |
+| $3$ | $\mathbb Z[i]$ | $i$ | $-1$ |
+
+For every $p\in\mathbb Z[X]$ and $z\in N_q$,
+
+$$
+\eta_q(p(\Theta_q)z)=p(t_q)\eta_q(z),\qquad
+\eta_q(U_qz)=u_q\eta_q(z).
+$$
+
+The canonical additive quotient $N_q/\operatorname{im}L_q$ is identified
+with $A_q$. Its ring structure is transported through this proved
+identification; no ring structure on the original $N_q$ is assumed.
+Both ring maps are inverse and preserve one, integer coefficients and
+all polynomials. Original quotient addition is preserved.
+
+Put $d_q=(1,2,4,4)_{q\bmod4}$ and let $\sigma_q$ be the actual
+forward history shift. The element $t_q$ is a unit, with inverse
+$1,[\tau],2,-i$ in residue order. Every $a\in A_q^\times$ has an
+exponent $0\le j<d_q$ such that
+
+$$
+a=t_q^j,\qquad \eta_q\bigl(\rho_q(\sigma_q^j)g_q\bigr)=a.
+$$
+
+Here the second equality uses the underlying ring value of the unit.
+
+Proof. First work in $\mathbb Z[X]/(H)$ and put $t=[X]$. Here
+$t^2=-1$, $t^4=1$, and $1+t+t^2+t^3=0$. Splitting the geometric sum
+into four-term blocks proves $[S_{q+4}]=[S_q]$. Induction therefore reduces
+$S_q$ to $S_{q\bmod4}$, while $t^q=t^{q\bmod4}$. Direct substitution gives
+
+$$
+[F_q]=(1,-2,1-2t,0),\qquad
+[W_q]=(1-t,2+t,2t,-1)
+$$
+
+in residue order. Consequently $(F_q,H)=(r_q,H)$, with $r_q$ the
+displayed literal polynomial residue. This is an integral ideal equality:
+the difference $F_q-r_q$ lies in $(H)$, which proves both inclusions.
+For residue two the further equality $(H,1-2X)=(5,X-3)$ follows in both
+directions from
+
+$$
+\begin{aligned}
+5&=4H+(2X+1)(1-2X),\\
+X-3&=-3(1-2X)-5X,\\
+1-2X&=-2(X-3)-5,\\
+H&=(X-3)(X+3)+10.
+\end{aligned}
+$$
+
+Residue zero gives the whole ideal. For residue one, reduce the integer
+coefficients modulo two and send $X$ to $[\tau]$. The reverse ring map
+sends $[\tau]$ to $[X]$ and coefficients to their constant classes.
+The relations $2=0$ and $X^2=1$ make this map well-defined. Checking both
+composites on integer coefficients and the two group elements proves
+that the maps are inverse. For residue two evaluation at three identifies
+$\mathbb Z[X]/(5,X-3)$ with $\mathbb Z/5\mathbb Z$, with the inverse given
+by constant classes. For residue three the forward map evaluates at
+$i$; the inverse sends $a+bi$ to $a+b[X]$. The relation $[X]^2=-1$
+proves multiplicativity, and checking the composites on $i$, constants
+and $X$ gives the inverse laws. These maps send the displayed residues
+of $W_q$ to exactly the sign entries in the table.
+
+The ring third-isomorphism theorem identifies
+$(\mathbb Z[X]/(F_q))/([H])$ with $\mathbb Z[X]/(F_q,H)$, retaining the
+canonical polynomial projection. The normalized native chart gives
+
+$$
+L_q\Phi_q(b)=\Phi_q([H]b).
+$$
+
+An ideal witness $[H]b=\Phi_q^{-1}(x)$ therefore supplies the actual
+native preimage $\Phi_q(b)$. Conversely $x=L_qy$ supplies the ideal
+witness $\Phi_q^{-1}(y)$. These are both kernel directions on the original
+integer group. Surjectivity follows from the polynomial quotient
+projection and $\Phi_q$. The additive first-isomorphism theorem gives
+the original image quotient, through which multiplication is transported.
+Normalization at $1$, forward time, every polynomial and the literal
+sign follows along these same maps.
+
+For an original stage-$n$ vector $v$, its chart coordinate is the cyclic
+coordinate polynomial of $T_q^{-n}v$, transported through the literal
+sign-to-integer polynomial ring equivalence. Applying the same quotient
+projection gives its arithmetic coordinate. Thus later stages retain
+inverse time; $t_q$ continues to denote forward time. No division by
+$X-1$, rational sign splitting, cardinality argument or unit-square
+quotient is used.
+
+For the unit assertion, the zero ring has a single unit. In
+$(\mathbb Z/2\mathbb Z)[C_2]$, write an element as $a+b[\tau]$.
+The augmentation homomorphism takes a unit to a unit, so $a+b=1$;
+the two binary coefficient possibilities leave exactly $1$ and
+$[\tau]$. In $\mathbb Z/5\mathbb Z$, the four nonzero elements are
+$3^0,3^1,3^2,3^3=1,3,4,2$. For a Gaussian unit $a+bi$, the norm-one
+criterion gives $a^2+b^2=1$. Thus $-1\le a,b\le1$ and the integer
+solutions give $1,i,-1,-i$. These are precisely the displayed bounded
+powers of $t_q$. Finally $\rho_q(\sigma_q)=\Theta_q$, multiplicativity,
+the polynomial action law and $\eta_q(g_q)=1$ give
+$\eta_q(\rho_q(\sigma_q^j)g_q)=t_q^j$. This realizes every arithmetic
+unit by an actual history shift at the normalized native generator.
+
+## Theorem 18. Converse realization correcting the limitation in Theorem 16
+
+For every $q>0$, an actual full numbered-history homeomorphism $h$ with
+
+$$
+\rho_q(h)=I+\Theta_q^2
+$$
+
+exists if and only if $4\mid q$. This replaces the final no-converse
+limitation in Theorem 16; its five-character assertions are unchanged.
+
+Proof. Necessity is Theorem 15, since the image of a homeomorphism under
+$\rho_q$ is an integer-linear equivalence. For sufficiency use the
+existing two-step numbered-history endpoint realization at $4\mid q$
+([D5.S3.ConceptDynamics.Coding.ResetNumberedHistories.TwoStep.rho_eq](../../../D5/S3/ConceptDynamics/Coding/ResetTwoStepArithmetic.lean#L919)).
+Its set-image action on every original beam generator is the sum of that
+generator and its two forward-time image. Those generators generate the
+original integer dimension group, giving $\rho_q(h)=I+\Theta_q^2$.
+
+## 追加锚（本行以下为增补区）

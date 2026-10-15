@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ce51728e3919a48061151cecd16bd453efc4eefa9a89d7274c7a8971431647a
+  normalized_sha256: sha256:0ce51728e3919a48061151cecd16bd453efc4eefa9a89d7274c7a8971431647a
+cas_ref: sha256:0ce51728e3919a48061151cecd16bd453efc4eefa9a89d7274c7a8971431647a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 写 $u s_\rho(n)=A+P\varphi$，其中 $P=P_u^\rho(n)$。 取内部嵌入并用 $(s_\rh…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: f4026bda49ab5e4e712c666d0c8744045c49594a9eb9a77a877cc627dfbb6570
+    next_atom_id: e04645609c57d04f7afabe932a28e2317f5c917ee4a53d2a4b52a9291d1c7d52

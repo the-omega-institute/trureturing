@@ -1,0 +1,20 @@
+**Proposition 7.2 (empty, root and noncovering cuts).** With $P=\varnothing$,
+every row is the full source tree and the birth vector is empty; existing
+full-image parsing recovers predecessors and, at known $n$, the entire
+finite past with zero birth supplement. With $P=\{\varepsilon\}$,
+every row is one hole with one class, its birth is zero, and at known
+$n$ its finite row history is the constant sequence. This root row
+does not determine the hidden source.
+
+A finite noncovering cut can have bounded birth supplementary width
+while its literal exterior grows without bound.
+
+**Proof.** The two edge cuts follow directly from Definition 1.2 and the
+supplied inverse parser. For the last assertion take $P=\{L\}$ and
+$u=\langle\alpha,\alpha\rangle$. At every epoch the row exterior is
+$\langle\square_L,T_n\rangle$. The existing recurrence
+$T_{n+2}=\langle T_{n+1},T_n\rangle$ gives unbounded tree size. Its
+only cut was present at zero, so its birth vector is the constant $(0)$.
+Finite supplementary information does not bound the retained concrete
+row. $\square$
+

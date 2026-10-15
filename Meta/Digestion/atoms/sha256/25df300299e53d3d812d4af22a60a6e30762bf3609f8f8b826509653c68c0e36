@@ -1,0 +1,56 @@
+**Proof, full-domain attainments.** By Proposition 9.3, the acquired current
+data determine the unique label $h\in\{0,1,2,3,4\}$: inspect the acquired
+right-class values for alpha, taking $h=0$ if none is alpha. This is a
+finite computation on genuinely acquired terms, not a free retained
+marker. The encoders below export only their specified block index.
+Their tables and the five complete row outputs are public finite data
+computed from $P,R_*$ using Proposition 9.3 and Theorem 2.2. Every label
+is actually attained, so each listed block is nonempty on $\mathcal U_*$.
+
+For $r=1$, export one common value. First query $LLL$, a representative
+root of class $a$. Its value is an image, so the reply is beta or branch.
+If it is beta, the actual label lies in $\{0,1,2\}$: a selected $3$ or
+$4$ would force $x_c=\beta=x_a$, contradicting the retained disequality.
+If it is branch, the actual label lies in $\{0,3,4\}$: a selected $1$
+or $2$ would force $x_a=\beta$.
+
+In the beta case, query the root at $q_1R=LLR$; an alpha reply identifies
+$h=1$ and stops. Otherwise query $q_2R=LRR$; alpha identifies $h=2$ and
+any other reply gives $h=0$. In the branch case perform the same tests
+at $q_3R=RLR$ and $q_4R=RRR$, returning $3,4$ or $0$. All these roots
+are reached. Non-alpha replies may be beta or branch; their distinction
+is not needed. Each source is classified correctly with at most three
+calls. In particular $h=0$ remains possible on both outcomes of the
+first query: an image filling with no alpha may still have $x_a=\beta$.
+The strategy does not pretend to make a target-only group test on the
+entire fiber. On $u_0$ it makes all three calls, attaining this bound.
+
+For $r=2$, export the block of the actual label in
+$\{0,1,2\}\mid\{3,4\}$. In the first block, test $b_1$ and then, if
+needed, $b_2$ at their cut roots for alpha; if neither is alpha, return
+zero. In the second block test $b_3$ for alpha; otherwise infer $4$.
+This is correct on every origin of the full fiber with at most two
+calls, and $u_0$ attains two.
+
+For $r=3$, use $\{0\}\mid\{1,2\}\mid\{3,4\}$. The singleton block
+needs no query; in either two-member block test its first right-class
+root for alpha and infer the other member on a non-alpha reply. The
+worst count is one, attained on both non-singleton blocks. For $r=4$
+one may use the four nonempty blocks
+$\{0\}\mid\{1\}\mid\{2\}\mid\{3,4\}$, again with worst count one.
+For $r\ge5$, export the actual label itself, using five values, and
+return its complete row with zero fresh invocations. This last endpoint
+is the attained predecessor/current-alpha correspondence of Theorem 3.2
+and the zero-query acquired-record recovery of Theorem 8.2.
+
+Each construction uses one common deterministic reader and actual
+pre-cut export from the supplied current data. After identifying $h$ it
+returns the entire $R_h$, including canonical restricted class names,
+all disequalities and the absent-cut guards from its concrete beta leaf.
+The reader never asks for a predecessor tree or an unknown-subtree
+comparison. Necessity rules out two calls when $r=1$, one when $r=2$,
+and zero when $r=3,4$. For $r\ge5$ zero is minimal. This proves (NBP.9.9).
+For integer $q\ge0$ these cases are exactly $r2^q\ge5$; a strategy with
+fewer than $q$ calls already satisfies the upper budget, with no extra
+calls required. Hence (NBP.9.8) follows. $\square$
+

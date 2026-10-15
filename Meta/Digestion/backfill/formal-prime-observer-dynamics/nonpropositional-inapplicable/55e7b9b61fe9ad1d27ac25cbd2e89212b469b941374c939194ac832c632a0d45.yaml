@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55e7b9b61fe9ad1d27ac25cbd2e89212b469b941374c939194ac832c632a0d45
+  normalized_sha256: sha256:55e7b9b61fe9ad1d27ac25cbd2e89212b469b941374c939194ac832c632a0d45
+cas_ref: sha256:55e7b9b61fe9ad1d27ac25cbd2e89212b469b941374c939194ac832c632a0d45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{Cyl}(J,m,w)：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 1c01bed82c69398d62fffa29542be3a9eb99d378f3c1a9e3b091a447f8cfb722
+    next_atom_id: e5ec52a700650629a45ca3d5f4753022b97640fd4d84b24e43f0a03bbbbfe919

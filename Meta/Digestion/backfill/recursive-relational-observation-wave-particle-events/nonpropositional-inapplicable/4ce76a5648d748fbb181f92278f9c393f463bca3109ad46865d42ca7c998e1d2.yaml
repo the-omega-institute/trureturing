@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4ce76a5648d748fbb181f92278f9c393f463bca3109ad46865d42ca7c998e1d2
+  normalized_sha256: sha256:4ce76a5648d748fbb181f92278f9c393f463bca3109ad46865d42ca7c998e1d2
+cas_ref: sha256:4ce76a5648d748fbb181f92278f9c393f463bca3109ad46865d42ca7c998e1d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 72.1（来源、续接与扰动的成本要求）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: eb945ee482be4b4ad17e9e5821177627812d65acba8aec63fc50747adad9f1bb
+    next_atom_id: 2734de2a7ead0f4a9a34ea1210851a065b49a6673f84c89289d99c40f8da6a5a

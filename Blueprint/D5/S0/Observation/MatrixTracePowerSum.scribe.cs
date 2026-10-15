@@ -12,7 +12,18 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Closed power traces for a two by two matrix from a supplied Vieta pair.",
         H("Power Traces from Trace and Determinant in Size Two"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("matrix-trace-pow-add-two"),
+                DeclarationHandle.Create("D5/S0/Observation/MatrixTracePowerSum.trace_pow_add_two"),
+                H("The two-step recurrence for matrix power traces"),
+                StatementSource.FromAuthor(TraceRecurrenceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Over any commutative ring, the traces of powers of a two-by-two matrix "
+                        + "satisfy a two-step recurrence whose coefficients are its trace and determinant."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("matrix-trace-power-sum"),
             DeclarationHandle.Create(Declaration),
             H("A supplied Vieta pair gives every power trace"),
@@ -42,6 +53,30 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
                         + "the closed form and removes the field hypothesis, and that file is "
                         + "neither restated nor amended."))),
             DescribeRole.Theorem))));
+
+    private static Formula TraceRecurrenceFormula()
+    {
+        Formula ring = F.Id("R");
+        Formula matrix = F.Id("M");
+        Formula exponent = F.Id("n");
+        Formula trace(Formula value) => Seq(Qualified("Matrix", "trace"), Parenthesized(value));
+        Formula determinant = Seq(Qualified("Matrix", "det"), Parenthesized(matrix));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, Parenthesized(Seq(ring, Colon, Sp, TypeUniverse())), Comma, Sp,
+                TypeClass(Call("CommRing", ring)), Comma),
+            Seq(Forall, Sp, Parenthesized(Seq(matrix, Colon, Sp, MatrixSpace(ring))), Comma),
+            Seq(Forall, Sp, Parenthesized(Seq(exponent, Colon, Sp, Naturals())), Comma),
+            Seq(trace(MatrixPower(matrix, Seq(exponent, Sp, Plus, Sp, Num(2)))), Sp, Eq, Sp,
+                trace(matrix), Sp, Cdot, Sp,
+                trace(MatrixPower(matrix, Seq(exponent, Sp, Plus, Sp, Num(1)))), Sp, Minus, Sp,
+                determinant, Sp, Cdot, Sp, trace(MatrixPower(matrix, exponent))),
+        ]));
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula Qualified(string owner, string name) =>
+        Seq(Operatorname, Grp(F.Id(owner)), Dot, Operatorname, Grp(F.Id(name)));
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 

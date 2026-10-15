@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd796b58d889d3ac8b2d9c916546355e6a0a759129249dc5b78120410894de12
+  normalized_sha256: sha256:cd796b58d889d3ac8b2d9c916546355e6a0a759129249dc5b78120410894de12
+cas_ref: sha256:cd796b58d889d3ac8b2d9c916546355e6a0a759129249dc5b78120410894de12
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第 397 节导言只说明辅助效果与标签空间的类型、用途及访问权限边界，不给出新的不等式。
+    previous_atom_id: 9f220bb1f06b6e0f96dc3a7f81eb46874dcb6138cbbb1a77fa61d0e24c2db2a8
+    next_atom_id: b4477e982bbb699b6f266f87cffd8acb55a7cf732ea322f7fb24b07c0f84b66e

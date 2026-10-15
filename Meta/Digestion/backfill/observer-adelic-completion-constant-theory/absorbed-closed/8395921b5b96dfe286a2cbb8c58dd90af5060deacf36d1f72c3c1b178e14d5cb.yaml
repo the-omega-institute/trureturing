@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8395921b5b96dfe286a2cbb8c58dd90af5060deacf36d1f72c3c1b178e14d5cb
+  normalized_sha256: sha256:8395921b5b96dfe286a2cbb8c58dd90af5060deacf36d1f72c3c1b178e14d5cb
+cas_ref: sha256:8395921b5b96dfe286a2cbb8c58dd90af5060deacf36d1f72c3c1b178e14d5cb
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaGamma/MasslessTangentConeLimit.massless_tangent_cone_limit
+    target_statement_id: sha256:8c8b5eca81abdf46550e81229d61503f1b68ff6abfa5fbf4b9b240a4f40d659d
+receipts:
+  unresolved_subitems: []

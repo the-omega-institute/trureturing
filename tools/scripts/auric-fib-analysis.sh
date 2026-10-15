@@ -12,6 +12,6 @@ export GIT_OPTIONAL_LOCKS=0
 cd "$ROOT"
 if [[ ${1-} == --test ]]; then
   lake -d tools/lean-inspector-reg env lean --run tools/lean-inspector/LeanInformationAuditRegTests/AuricFib/RateBoundary.lean
-  exec python3 -B "$ROOT/tools/lean-inspector/tests/test_auric_fib_analysis.py" "$ROOT/tools/scripts/auric-fib-analysis.sh"
+  exec python3 -B "$ROOT/tools/lean-inspector/tests/test_auric_fib_analysis.py" "$ROOT/.lake/build/lean-inspector/reg/bin/auricFibAnalysis"
 fi
 exec lake -d tools/lean-inspector-reg env lean --run tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean "$@"

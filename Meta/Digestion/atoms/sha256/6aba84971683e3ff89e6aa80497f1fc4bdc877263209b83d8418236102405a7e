@@ -1,0 +1,29 @@
+**Definition 8.1 (Positive quintic constants and two real amplitudes).** All square roots in this section are the positive real square roots. Set
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\eta=\sqrt{\frac{\phi-\sqrt{\phi^2-4/5}}2},\qquad
+\lambda=\phi^2\eta,\qquad
+\alpha=\sqrt{\frac{5\lambda}{2}}. \tag{8.1}
+$$
+
+These are positive real algebraic constants: $\phi>1$, $0<\sqrt{\phi^2-4/5}<\phi$, and consequently $\eta,\lambda,\alpha>0$. They satisfy
+
+$$
+\phi^2=\phi+1,\qquad
+\eta^4-\phi\eta^2+\frac15=0,\qquad
+\lambda^2+\eta^2=3\lambda\eta. \tag{8.2}
+$$
+
+Define the real quadratic polynomials
+
+$$
+\begin{aligned}
+s(t)&=\alpha t(t-\eta),\\
+p(t)&=\sqrt5\left(t^2+(1-\lambda)t+\frac{1+\eta^2-\lambda}{2}\right)
+       =p_0+p_1t+p_2t^2,\\
+p_0&=\frac{\sqrt5}{2}(1+\eta^2-\lambda),\qquad
+p_1=\sqrt5(1-\lambda),\qquad p_2=\sqrt5.
+\end{aligned} \tag{8.3}
+$$
+

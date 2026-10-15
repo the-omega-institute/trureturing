@@ -1,0 +1,56 @@
+**Proof, attainment.** Let $N=k+1$ and $d=\min\{r,N\}$. In the public
+canonical order of $H$, with $\bot$ placed last, partition $H$ into $d$
+nonempty blocks $G_1,\ldots,G_d$ whose sizes differ by at most one.
+Their largest size is
+
+$$
+\max_j|G_j|=\left\lceil\frac{N}{d}\right\rceil
+=\left\lceil\frac{N}{r}\right\rceil.
+\tag{NAR.9.7}
+$$
+
+The finite block table depends only on the old row and $r$. From the
+actually acquired data, Theorem 4.2 extracts the actual alpha label
+$A_P(u)$ without additional acquisition queries. Export as $\sigma(u)$
+only its block index $j$. All labels are realized on $\mathcal U_R$ by
+Theorem 5.2, so this supplement uses exactly $d\le r$ actual values.
+The block table is common; the actual block index is the entire extra
+source-dependent initial input.
+
+On receiving $j$, choose an omitted label $t_j$: choose $\bot$ if it
+belongs to $G_j$, and otherwise the least class in $G_j$. Query one old
+representative root $p_b$ for each $b\in G_j\setminus\{t_j\}$, in
+canonical order, stopping at the first beta reply. Every queried label
+is an old class, since a block containing $\bot$ omits it. The actual
+updated-root replies are exactly (NAR.7.2): beta means $A_P(u)=b$, and
+branch means $A_P(u)\ne b$. Alpha and absence do not occur at these
+persisting roots. If all tests give branch, the only remaining label
+in $G_j$ is $t_j$, which is therefore the actual label. In a singleton
+block there are no tests.
+
+This identifies the label on every source in the full fiber, not only
+on the witnesses. Using that label with $P,R$, Theorem 2.1 constructs
+the whole next exterior and complete partition. The reader therefore
+returns the entire required next row with at most
+
+$$
+|G_j|-1\le\left\lceil\frac{k+1}{r}\right\rceil-1
+\tag{NAR.9.8}
+$$
+
+fresh invocations. A source whose label is the omitted member of a
+largest block realizes all those negative tests, so this reader's
+worst-case count is exactly the right-hand side. Such a source exists
+by Theorem 5.2. For integer $q\ge0$, the inequality $r(q+1)\ge k+1$ is
+equivalent to $q\ge\lceil(k+1)/r\rceil-1$. Necessity and attainment
+give (NAR.9.4).
+
+If there is no left birth, Theorem 2.1 already computes the next row
+from $P,R$ alone; export one common supplement and make zero calls.
+If $k=0$, $H=\{\bot\}$ and the formula also gives zero for every
+$r\ge1$, even when a left birth exists. With a left birth and $r=1$,
+the formula is $k$, the endpoint of Theorem 7.2. With $q=0$ it requires
+exactly $r\ge k+1$, the endpoint of Theorem 5.2; every $r\ge k+1$
+admits singleton blocks and zero calls. These are the supplied endpoints
+and their degenerate cases, not additional endpoint discoveries. $\square$
+

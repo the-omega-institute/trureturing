@@ -1,0 +1,16 @@
+**Definition 1.4 (completion).** Let $\widehat{\mathcal T}$ contain all finite
+or infinite full ordered binary trees with $\alpha,\beta$ leaves and the same
+four replies. It is the closed valid-tree subspace of the countable product
+of four-element reply sets, hence compact. It is complete for the prefix
+metric $d(S,T)=2^{-\delta(S,T)}$, where $\delta$ is the first differing reply
+depth. A finite tree is isolated by its prefix through maximum leaf depth.
+Every valid finite prefix has a finite filling. The unique leafless tree is
+$\Omega$.
+
+Extend $\rho$ by its actual leaf replacements and pair law. Matching leaf
+roots have identical entire finite images; matching branch roots reduce a
+requested reply to children at one smaller depth. Induction on that depth
+proves prefix nonexpansion of every fixed power, including born and absent
+positions. Pairing gains one agreement depth. Finite native expressions are
+therefore continuous. Bare $\rho$ is not assumed contracting.
+

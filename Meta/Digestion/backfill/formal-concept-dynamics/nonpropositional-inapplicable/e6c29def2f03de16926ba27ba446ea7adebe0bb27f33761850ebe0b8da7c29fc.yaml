@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6c29def2f03de16926ba27ba446ea7adebe0bb27f33761850ebe0b8da7c29fc
+  normalized_sha256: sha256:e6c29def2f03de16926ba27ba446ea7adebe0bb27f33761850ebe0b8da7c29fc
+cas_ref: sha256:e6c29def2f03de16926ba27ba446ea7adebe0bb27f33761850ebe0b8da7c29fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 247.1（空承诺）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: d22048180c59638ff3933a3393b71358b17502b96013938aa3f27494e0a496c0
+    next_atom_id: cc2ad4ab6b50311c481d7d30f9e89a00167f2ee9b3af0586d3bbbef29db3d544

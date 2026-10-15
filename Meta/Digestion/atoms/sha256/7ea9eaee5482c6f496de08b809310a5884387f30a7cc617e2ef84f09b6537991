@@ -1,0 +1,15 @@
+**Theorem 7.2 (sharp first-version worst-case calls).** Under Assumption 7.1,
+the minimum deterministic worst-case fresh raw-call count is
+
+$$
+q(R)=
+\begin{cases}
+0,&L_C=\varnothing,\\
+k,&L_C\ne\varnothing.
+\end{cases}
+\tag{NAR.7.1}
+$$
+
+This includes $k=0$. A protocol attaining it also obtains sufficient
+finite data to calculate every later same-$P$ row algebraically.
+

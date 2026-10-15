@@ -1,0 +1,12 @@
+**Mathematical citation 3.4 (direction of the marker).** The
+[Native Alpha Recut Memory companion, Theorems 2.1--3.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ALPHA_RECUT_MEMORY.md)
+already classifies forward old/new collisions and the needed alpha
+marker on the **old** row: a newborn left beta can collide with an old
+alpha value after that value is updated. Theorems 2.2--3.3 here concern
+the **current** class with value alpha and reconstruct the previous row.
+The forward conditional marker can discard its alpha distinction when
+no future left birth needs it; it is not the full current label of
+Definition 3.1. The two tasks have different fibers and directions.
+Neither their identical $k+1$ upper-bound form nor a forward recurrence
+supplies the predecessor correspondence (NBP.2.4).
+

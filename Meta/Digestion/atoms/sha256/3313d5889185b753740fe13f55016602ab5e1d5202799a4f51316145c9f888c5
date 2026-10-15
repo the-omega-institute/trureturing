@@ -1,0 +1,8 @@
+# Explicit finite quotient for the Coxeter-sector (8,9) packet
+
+This note makes the finite-index step in the degree-(8,9) Coxeter-sector construction effective. It gives one explicit quotient with exactly
+
+N = 3,995,136
+
+target tetrahedra. It is an existence upper bound for this construction; it does not prove that N=24 is impossible or that the displayed quotient is minimal.
+

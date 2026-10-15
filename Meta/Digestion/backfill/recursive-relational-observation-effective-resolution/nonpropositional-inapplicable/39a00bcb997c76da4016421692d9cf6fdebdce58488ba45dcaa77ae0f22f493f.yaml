@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39a00bcb997c76da4016421692d9cf6fdebdce58488ba45dcaa77ae0f22f493f
+  normalized_sha256: sha256:39a00bcb997c76da4016421692d9cf6fdebdce58488ba45dcaa77ae0f22f493f
+cas_ref: sha256:39a00bcb997c76da4016421692d9cf6fdebdce58488ba45dcaa77ae0f22f493f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为前邻已陈述结论的证明及所用条件、精度或估计范围的解释；不提出独立的新待证陈述。
+    previous_atom_id: 53ddd863cfb4278a041396e979adcf17d2bc3c9721d4c5fdef427df1bf944c83
+    next_atom_id: 83e9cbcecfdadc43ccf6f56efaa8f72fe12b9dc27f826b79dbe544097a54821e

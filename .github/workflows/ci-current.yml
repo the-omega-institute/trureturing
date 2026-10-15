@@ -16,6 +16,7 @@ on:
 permissions:
   contents: read
   actions: read
+  pull-requests: read
 
 concurrency:
   group: ci-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
@@ -361,6 +362,8 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-cache]
+            .github/actions/lean-cache-produce/action.yml
+            .github/workflows/lean-cache-publish.yml
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/scripts/workflow/elan-cache-inventory.sh
@@ -376,6 +379,7 @@ jobs:
             tools/lean-inspector/tests/test_native_records.py
             tools/scripts/worktree/cache_material.py
             tools/scripts/worktree/lean_actions.py
+            tools/scripts/worktree/lean_pr_cache.py
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
             tools/tests/StrataLint.Cache.Tests/*
@@ -396,6 +400,7 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/pr_cache_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
             [tests-cache-native]
             Meta/FILEMAP.toml
@@ -471,12 +476,16 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/scripts/worktree/lean-cache-ensure.sh
             [tests-ci-entry]
+            tools/scripts/dotnet-test.sh
+            tools/scripts/workflow/ci_compute.py
             tools/scripts/workflow/ci-entry-test.sh
             tools/scripts/workflow/ci_detect.py
             tools/scripts/workflow/ci_required.py
             tools/scripts/workflow/test_ci_detect.py
+            tools/scripts/workflow/test_ci_compute.py
             tools/scripts/workflow/test_ci_required.py
             [tests-cli]
+            tools/scripts/workflow/ci_compute.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/cleanup_anchor_cases.py
             tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/mirror_fixture.py
@@ -713,6 +722,9 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-declared-template]
+            tools/scripts/auric-fib-analysis.sh
+            tools/lean-inspector/*.py
+            tools/lean-inspector/*.json
             # The ordinary native facets run LeanUtilityInputCommand over D5
             # and validate the complete registered module and producer scopes.
             # Include their actual readers and compiler imports in this unit.
@@ -929,6 +941,14 @@ jobs:
             tools/scripts/worktree/worktree_publication.py
             tools/scripts/worktree/worktree_preservation.py
             [tests-lean]
+            # Compiled audit execution in current consumes these runtime inputs.
+            D5/*.lean
+            Reg/*.lean
+            Trureturing.lean
+            Meta/FILEMAP.*.toml
+            tools/lean-inspector/*.lean
+            tools/scripts/compiled-judge-test.sh
+            tools/scripts/auric-fib-analysis.sh
             # NativeTestSupport stages the real compiler and package configuration;
             Makefile
             Reg/lakefile.toml
@@ -1016,6 +1036,7 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             [tests-lean-report-script]
+            tools/scripts/workflow/ci_compute.py
             tools/StrataLint.Engineering/*
             tools/StrataLint.Runtime/*
             tools/scripts/workflow/judge-lean-producer.sh
@@ -1671,7 +1692,11 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 180
+    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    timeout-minutes: 360
+    outputs:
+      lean_required: ${{ steps.report_entry.outputs.hit }}
+      project_seed_available: ${{ steps.project_published.outcome == 'success' || (steps.lean_report.outcome == 'success' && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_skip_reason == 'no-build-work' && env.STRATALINT_ACTIONS_CACHE_SEEDED == '1') }}
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
@@ -1693,6 +1718,15 @@ jobs:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - id: report_entry
+        name: Select report-dependent checks
+        env:
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_HIT_PATHS: |
+            *
+            !docs/develop/theory/*
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: delta_entry
         name: Check delta inputs
@@ -1847,7 +1881,14 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - id: prepared
+        name: Adopt a matching PR preparation for this event
+        if: steps.report_entry.outputs.hit == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py adopt --repository "$GITHUB_WORKSPACE"
       - id: keys
+        if: steps.report_entry.outputs.hit == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
@@ -1859,9 +1900,10 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - id: toolchain
+        if: steps.report_entry.outputs.hit == 'true'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -1869,7 +1911,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: steps.prepared.outputs.adopted != 'true' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -1877,6 +1919,7 @@ jobs:
           key: ${{ steps.keys.outputs.project_restore_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - id: lean_seeds
+        if: steps.report_entry.outputs.hit == 'true'
         name: Restore optional Lean build seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
@@ -1885,9 +1928,27 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Prepare judge and selected test dependencies
+        env:
+          JUDGE_HIT: ${{ steps.judge.outputs.cache-hit }}
+          DECLARED_TESTS: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template'] }}
+        run: |
+          if [[ "$JUDGE_HIT" != true ]]; then
+            dotnet restore tools/StrataLint.Cli/StrataLint.Cli.csproj --locked-mode
+          fi
+          if [[ "$DECLARED_TESTS" == true ]]; then
+            dotnet restore tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj --locked-mode
+            dotnet restore tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj --locked-mode
+          fi
+      - id: compute_budget
+        name: Initialize the shared compute allowance
+        run: |
+          budget="$RUNNER_TEMP/current-compute-seconds"
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
-        run: dotnet build $JUDGE_BUILD_ARGS
+        run: python3 tools/scripts/workflow/ci_compute.py run -- dotnet build $JUDGE_BUILD_ARGS --no-restore
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
       - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
@@ -1898,30 +1959,47 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
+      - name: Theory-only file and capacity checks
+        if: steps.report_entry.outputs.hit == 'false'
+        env:
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            base="$(git rev-parse HEAD^1)"
+          else
+            base="$CI_PUSH_BEFORE"
+          fi
+          python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-delta --protected-base "$base"
       - id: lean_report
         name: Build the Lean report
-        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.lean_seeds.outcome == 'success' && steps.compute_budget.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
+          # This supervisor also encloses preparation; compute phases share the file above.
+          STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
             export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+            echo "STRATALINT_LEAN_PRODUCER_DLL=$producer" >> "$GITHUB_ENV"
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
           rc=0
           make lean-report LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail || rc=$?
           if [[ "$rc" != 0 ]]; then
-            echo "::error title=Lean cache seed required::Lean report preparation failed. For a missing native seed, apply the lean-cache-produce label to this PR, or dispatch lean-cache-publish.yml on the protected branch and exact SHA. Wait for the producer, then retry this check."
+            echo "::error title=Lean report failed::Inspect the preceding error. For a missing or incompatible native seed, apply the lean-cache-produce label to this PR. Protected dev/integration pushes automatically run the cache producer after current finishes; a manual lean-cache-publish.yml dispatch on the protected ref and exact SHA is also available. Wait for the producer, then retry this check."
             exit "$rc"
           fi
-          make compiled-judge-test
+      - name: Run the compiled audit checks
+        if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean']
+        run: make compiled-judge-test
       - name: Verify production source binding artifacts
+        if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
         env:
+          CI_DOTNET_PREPARED: '1'
           FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
-        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
+        run: python3 tools/scripts/workflow/ci_compute.py run -- make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -1930,33 +2008,47 @@ jobs:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - name: Publish the push project seed
+      - id: project_save
+        name: Publish the push project seed
         if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
+      - id: project_published
+        name: Confirm the push seed is available to automatic production
+        if: ${{ !cancelled() && github.event_name == 'push' && steps.project_snapshot_push.outputs.project_ready == 'true' && steps.project_save.outcome == 'success' }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
+        run: |
+          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
+          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
+            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null
       - name: Prepare the Scribe scope
+        if: steps.report_entry.outputs.hit == 'true'
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
+        if: steps.report_entry.outputs.hit == 'true'
+        run: python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
       - name: Scribe content
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.report_entry.outputs.hit == 'true' }}
         env:
           SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
-        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
+        run: python3 tools/scripts/workflow/ci_compute.py run -- tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
       - name: Delta rules
-        if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
+        if: ${{ !cancelled() && steps.report_entry.outputs.hit == 'true' && steps.delta_entry.outputs.hit == 'true' }}
         run: |
           rc=0
-          dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
+          python3 tools/scripts/workflow/ci_compute.py run -- dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
       # Dependency and elan caches follow successful checks.
       - id: snapshot
-        if: ${{ success() && env.CACHE_WRITES == 'true' }}
+        if: ${{ success() && steps.report_entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' }}
         continue-on-error: true
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
@@ -1978,6 +2070,37 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+
+  # Reuse a validated seed when no build work occurred, or publish the increment.
+  # Missing usable seeds still get the long producer outside required checks.
+  cache-producer:
+    name: Produce the protected push Lean cache
+    needs: current
+    if: ${{ !cancelled() && github.event_name == 'push' && github.ref_protected && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && needs.current.outputs.lean_required == 'true' && needs.current.outputs.project_seed_available != 'true' }}
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: lean-cache-branch-${{ github.ref }}
+      cancel-in-progress: false
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the protected push and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Produce the Actions cache
+        uses: ./.github/actions/lean-cache-produce
 
   banned-api-proof:
     needs: detect
@@ -2111,7 +2234,7 @@ jobs:
     with:
       command: >-
         bash tools/scripts/workflow/ci-entry-test.sh &&
-        python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py
+        python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py tools/scripts/workflow/test_ci_compute.py
       dotnet: false
 
   tests-cli:

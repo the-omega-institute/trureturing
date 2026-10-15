@@ -1,0 +1,19 @@
+**Assumption 7.1 (terminal advancing stamp promise).** Fix an effective
+$P$ with universal finite-interference liveness on every finite source.
+For the returned states under consideration, the full $b$ contains a
+natural $K$, authentic by the producer's correctness proof, with
+$K=\ell(U_v)$ at a designated final source-observation event $v$.
+All subsequent observer computation through the separate Return is a
+source-free effective suffix: no further Read, source-dependent timing,
+allocator telemetry, ambient source query or scheduler observation can
+influence it. Compare the complete accessible boundary, including all
+permissions and metadata. Authenticity and totality are promises; the
+algorithm below does not decide whether arbitrary code satisfies them.
+CAB's last guard Read followed by its declared encoding and cleanup is
+one supplied implementation of the final-observation condition.
+
+Earlier observations, retries and captures are unrestricted. The writer
+can make arbitrarily many additional updates after $v$; the observer
+neither learns nor implicitly records them. A copied numeral without
+certification at this final observation is not this promise.
+

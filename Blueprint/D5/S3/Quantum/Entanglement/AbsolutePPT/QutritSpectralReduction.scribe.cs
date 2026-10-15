@@ -137,6 +137,29 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
         return empty ? statement : Binders(statement,("n",N),("x",Q),("v",Arrow(Fin(n),Q)));
     }
 
+    private static Formula Conditional(Formula condition, Formula yes, Formula no) =>
+        Seq(Id("if"),Sp,condition,Sp,Id("then"),Sp,yes,Sp,Id("else"),Sp,no);
+    private static Formula BellDefinition()
+    {
+        var i=Id("i"); var j=Id("j"); var k=Id("k"); var l=Id("l");
+        var ij=Parenthesized(Seq(i,Comma,j)); var kl=Parenthesized(Seq(k,Comma,l));
+        var lk=Parenthesized(Seq(l,Comma,k));
+        var c=new Formula.Power(Typed(Call("Real.sqrt",Int(2)),C),Int(-1));
+        var body=Conditional(Eq(i,j),Conditional(Eq(ij,kl),Int(1),Int(0)),
+            Conditional(Eq(ij,kl),Conditional(Lt(i,j),c,new Formula.Negate(c)),
+                Conditional(Eq(ij,lk),c,Int(0))));
+        return Binders(Eq(Call("bell",ij,kl),body),
+            ("i",Fin(Int(3))),("j",Fin(Int(3))),("k",Fin(Int(3))),("l",Fin(Int(3))));
+    }
+    private static Formula PermutationUnitaryDefinition()
+    {
+        var i=Id("I"); var e=Id("e");
+        var matrix=Matrix(i,i,C);
+        return Binders(Eq(Typed(Call("permutationU",e),matrix),Call("Equiv.permMatrix",e,C)),
+            ("I",Id("Type")),("",Call("Fintype",i)),("",Call("DecidableEq",i)),
+            ("e",Call("Equiv.Perm",i)));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal qutrit APPT states yield ordered nonnegative spectral certificate coordinates constrained by both boundary LMIs.",
         H("Qutrit spectral reduction"),Blocks(
@@ -170,6 +193,13 @@ internal sealed class QutritSpectralReductionDocument : IScribeDocumentDefinitio
                 "The second qutrit LMI interchanges boundary indices 5 and 6 relative to K1. All matrix entries are real.",provenance:AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/hildebrand2007pptspectra"))),
             Desc("QutritSpectralReduction","boundaryValues","Boundary spectral coordinates",BoundaryDefinition(),
                 "The dependent Fin constructor carries the displayed natural-number index and its bound proof. The first three coordinates are unchanged; the remaining six have index 3k+q. Here n=3+k, and the full dimension is 3(3+k)."),
+            Desc("QutritSpectralReduction","bell","Bell change of basis",BellDefinition(),
+                "Diagonal tensor coordinates are fixed. Each pair of off-diagonal tensor coordinates is changed to its symmetric and antisymmetric combinations with coefficient one over the square root of two."),
+            Desc("QutritSpectralReduction","bell_mem_unitaryGroup","The Bell basis matrix is unitary",
+                Seq(Id("bell"),InMacro,Sp,Call("unitaryGroup",Prod(Fin(Int(3)),Fin(Int(3))),C)),
+                "The Bell basis matrix is unitary. Its diagonal entries fix the diagonal basis vectors, while each off-diagonal pair is rotated by the reciprocal square root of two. Spectral reduction and the diagonalization of a pure state's partial transpose use this change of basis.",DescribeRole.Theorem),
+            Desc("QutritSpectralReduction","permutationU","Permutation unitary",PermutationUnitaryDefinition(),
+                "The unitary associated with a permutation has its permutation matrix as its underlying complex matrix. It reorders the diagonal coordinates in spectral decompositions."),
             Desc("QutritSpectralReduction","spectral_reduction","Density-to-spectral-certificate reduction",SpectralStatement(),
                 "For every k and every positive semidefinite trace-one Matrix on Fin 3 × Fin (3+k), literal APPT yields antitone nonnegative real certificate coordinates with mass one, both positive boundary matrices, and the same real trace-square. The public conclusion does not identify these coordinates with rho's eigenvalues; the proof chooses sorted eigenvalues. The proof constructs Bell and permutation unitaries, compresses their partial transposes, and sorts the eigenvalues. This is the necessary direction of Hildebrand, Corollary 4, pages 5–6, together with the standard trace identities.",DescribeRole.Theorem,AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/hildebrand2007pptspectra"))))));
 }

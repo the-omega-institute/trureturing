@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4488cca1be2b7cc3a59399d3039802871c86cd7d1640c88cbb54d5fd2b13fcf5
+  normalized_sha256: sha256:4488cca1be2b7cc3a59399d3039802871c86cd7d1640c88cbb54d5fd2b13fcf5
+cas_ref: sha256:4488cca1be2b7cc3a59399d3039802871c86cd7d1640c88cbb54d5fd2b13fcf5
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/FiniteHermitianCongruence.finite_hermitian_congruence
+    target_statement_id: sha256:4007b78cfe63f7e78994aaa2cc36aa74ae5e905062ed60ecf7fffe446f315e01
+receipts:
+  unresolved_subitems: []
