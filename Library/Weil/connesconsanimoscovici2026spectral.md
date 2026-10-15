@@ -725,6 +725,58 @@ identification, without Lean verification or a novelty claim. The
 high-floor and far-input estimates remain valid; a changed cutoff or
 stronger correlated exterior comparison has a separate proof obligation.
 
+The existing G7 bound also locates the loss. Its positive floor after
+mode1203 applies to $v+y$ for every exterior form-domain vector $y$ after
+mode1280. With $\kappa=A(2\pi\cdot1204/d)-59/10>0$, orthogonality gives
+$Q_L(v+y)\ge\kappa(6+\|y\|^2)$. Thus the actual exterior Schur quadratic
+on this particular $v$ is positive. This reuses G7 and does not determine
+the Schur sign on arbitrary retained vectors.
+
+### Reuse the inverse-residual supplier with the actual prime compression
+
+Keep the same exterior projection $Q_N$, $N=1280$. On its even range put
+
+$$
+\Gamma_N=\operatorname{diag}_{m>N} A(2\pi m/d),\qquad
+P_N=Q_NC_{\rm p}Q_N,\qquad
+B_N=\Gamma_N^{-1/2}P_N\Gamma_N^{-1/2}.
+$$
+
+These are the actual compressed prime shifts and the existing Neumann
+Gamma comparison, not a constant reference on the whole even space.
+G6--G7 give $\Gamma_N\succeq477I/80$, $\|P_N\|\le59/10$ and
+$\|B_N\|\le472/477$. Hence the bounded reference
+$T_N=I-B_N\succeq5I/477$ is positive. If $H_N$ denotes the actual
+closed exterior operator, the same even Gamma and pole comparison gives
+$H_N\succeq\Gamma_N^{1/2}T_N\Gamma_N^{1/2}$ in form sense.
+
+Reuse the [source inverse-residual identity](liu2026tailcompensation.md#a-common-256-mode-consumer)
+with reference $T_N$, trial $X=I$ and lower bound $5/477$. Its inverse
+majorant is $I+B_N+(477/5)B_N^2$. Consequently the actual coupling
+$C_N$ and its common filtered columns $Z_N=\Gamma_N^{-1/2}C_N$ satisfy
+
+$$
+C_N^*H_N^{-1}C_N
+\preceq Z_N^*Z_N+Z_N^*B_NZ_N
++\frac{477}{5}(B_NZ_N)^*(B_NZ_N).
+$$
+
+This is a parameter application of the existing residual identity. It
+retains the signed prime correlation and its squared residual on the
+same forcing columns. The original scalar-floor comparison discarded
+that information. The bounded preconditioning specifies the positive
+reference without extending the source's old support constants or
+assuming a sign for the full Weil operator.
+
+The three compressed quantities on the right have not been supplied or
+tested for the required retained sign. They require the complete actual
+coupling and exterior prime compression. Compressing $B_N$ to a finite
+subspace before forming the squared residual requires paying the
+discarded rows.
+The far-input packet alone supplies none of those full compressed
+quantities. No successful repaired certificate, new general operator
+theorem, Lean verification or cofinal positivity is asserted.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
