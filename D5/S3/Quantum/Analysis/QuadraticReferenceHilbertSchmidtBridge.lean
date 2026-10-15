@@ -35,7 +35,14 @@ def rightTrace (T B : H →L[ℂ] H) (hT : IsTraceClass T) : ℂ :=
 def invSqrt (σ : H →L[ℂ] H) : H →ₗ.[ℂ] H :=
   LinearPMap.inverse ((CFC.sqrt σ).toLinearMap.toPMap ⊤)
 
-
+private theorem exists_hilbertSchmidt_of_square_summable_columns
+    {w : Set H} (e : HilbertBasis w ℂ H) (v : w → H)
+    (hv : Summable (fun i : w => ‖v i‖ ^ 2)) :
+    ∃ A : H →L[ℂ] H,
+      (∀ i, A (e i) = v i) ∧ IsHilbertSchmidt A ∧
+      (∑' i : w, ‖A (e i)‖ ^ 2) = ∑' i : w, ‖v i‖ ^ 2 ∧
+      ‖A‖ ≤ Real.sqrt (∑' i : w, ‖v i‖ ^ 2) := by
+  exact HilbertSchmidt.exists_hilbertSchmidt_of_square_summable_columns e v hv
 
 private theorem sqrt_apply_eigenvector (σ : H →L[ℂ] H) (hσ : 0 ≤ σ)
     (x : H) (s : ℝ) (hs : 0 < s) (he : σ x = (s : ℂ) • x) :
@@ -72,6 +79,13 @@ private theorem sqrt_apply_eigenvector (σ : H →L[ℂ] H) (hσ : 0 ≤ σ)
       (neg_nonneg.mp hreal) (mul_nonneg hc.le (sq_nonneg _))
     exact sq_eq_zero_iff.mp ((mul_eq_zero.mp hm).resolve_left hc.ne')
   exact sub_eq_zero.mp (norm_eq_zero.mp hynorm)
+
+private theorem eq_of_basis_columns {w : Set H} (e : HilbertBasis w ℂ H)
+    (A B : H →L[ℂ] H) (h : ∀ i, A (e i) = B (e i)) : A = B := by
+  apply ContinuousLinearMap.ext_on
+    (Submodule.dense_iff_topologicalClosure_eq_top.mpr e.dense_span)
+  rintro _ ⟨i, rfl⟩
+  exact h i
 
 private theorem inverse_sqrt_domain_and_extension {w : Set H}
     (e : HilbertBasis w ℂ H) (σ ρ A : H →L[ℂ] H) (hσ : 0 ≤ σ)
@@ -251,9 +265,8 @@ theorem quadratic_reference_hilbertSchmidt_bridge
     simpa only [← hvnorm, ENNReal.toReal_ofReal (sq_nonneg _)] using h
   obtain ⟨A, hAe, hAhs, hAsum, _⟩ := exists_hilbertSchmidt_of_square_summable_columns e v hv
   have hprod : A * CFC.sqrt σ = ρ := by
-    apply ContinuousLinearMap.ext_on
-      (Submodule.dense_iff_topologicalClosure_eq_top.mpr e.dense_span)
-    rintro _ ⟨i, rfl⟩
+    apply eq_of_basis_columns e
+    intro i
     rw [mul_apply_eq_comp, sqrt_apply_eigenvector σ hσpos (e i) (s i) (hs i) (hσe i),
       map_smul, hAe]
     dsimp only [v]
