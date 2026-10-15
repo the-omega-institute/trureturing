@@ -7,6 +7,7 @@
    digest: The periodic same-phase SSH excess pseudo-entropy assertion has a rational counterexample. -/
 
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
+import D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding
 import D5.S3.Quantum.Information.InputInformationBalance
 
 set_option autoImplicit false
@@ -20,6 +21,7 @@ open PredictiveThermodynamic.Physical (Assignment)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
   (FullOperator fullC fullC_CAR fullC_mixed_anticomm_of_lt fermionWord prefixCount)
 open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberOperator numberOperator_eq_diagonal)
+open D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding (fullC_entries)
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (occupationCount)
 
 namespace D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
@@ -240,11 +242,6 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     intro x hx
     exact hswap3 x
   rw [hleft3]
-
-private theorem fullC_entries_local {M : ℕ} (j : Fin M) (s t : Assignment M) :
-    fullC j s t = ∏ k, fermionWord j k (s k) (t k) := by
-  simp [fullC, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp,
-    Matrix.submatrix_apply]
 
 private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s : Assignment M) :
     (fullC j *ᵥ f) s =
