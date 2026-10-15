@@ -1,0 +1,120 @@
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeJ2JointPromotion
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeJ2JointPromotion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Promote the original P and Q paths on their same actual native J2 parent. -/
+/- Candidate source, not yet kernel checked or admitted for freezing.
+   The private transport below is intended for the actual eight-piece
+   joint constructor, not as a separately delivered application. -/
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
+import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
+
+set_option autoImplicit false
+
+namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
+
+open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameTransport
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
+open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
+open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
+open D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport
+open private pChildIndex old_base_bound outer_base_bound from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
+open private j2SpecialMap from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentCycle
+open private childLift parentPiece from
+  D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
+
+private def rawPParentMap {m : ℕ} (F : SupplyFrame m 2)
+    (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length) :
+    domainGraph (FrameDomain F) →g ParentGraph F A u hbase :=
+  (pMarkedParentLift F A u hbase hA).comp
+    (j2SpecialMap F (old_base_bound F A u hbase hA))
+
+/-- The literal P opening used in W has the transported split and exact
+inventories of the original retained P seed. No new P path is selected. -/
+private theorem same_p_parent_opening {m : ℕ} (hm : 5 ≤ m)
+    (F : SupplyFrame m 2) (A : List (Fin (m + 1))) (u : Fin (m + 1))
+    (hbase : F.base = A ++ [u]) (hA : 3 ≤ A.length)
+    (W : OuterParentWitnessFor hm F A u hbase hA) :
+    let O := outerFrame F A u hbase
+    let lift := rawPParentMap F A u hbase hA
+    let d := (W.P.seed.joint 1).walk.map lift
+    let rest := [W.P.seed.joint 0, W.P.seed.joint 2, W.P.seed.joint 3,
+      W.P.seed.joint 4, W.P.seed.joint 5].map (mapPiece lift)
+    let deleted := (W.P.seed.H.toList ++ W.P.seed.K.toList).map (Sym2.map lift)
+    ∃ s t : ParentVertex F A u hbase,
+      s.val = rightPort O (m - 1) ∧ t.val = leftPort O (m - 1) ∧
+      ∃ (hₐ : (ParentGraph F A u hbase).Adj (lift (W.P.seed.joint 1).start) s)
+        (h_b : (ParentGraph F A u hbase).Adj s t)
+        (tail : (ParentGraph F A u hbase).Walk t (lift (W.P.seed.joint 1).finish)),
+        d = (tail.cons h_b).cons hₐ ∧
+        ∃ P : (ParentGraph F A u hbase).Walk s t,
+          (⟨s, t, P⟩ : Piece (ParentGraph F A u hbase)) =
+            W.pieces (pChildIndex F A u hbase) ∧
+          P.support.Perm (d.support ++ rest.flatMap fun p => p.walk.support) ∧
+          P.edges.Perm ((rest.flatMap fun p => p.walk.edges) ++
+            tail.edges ++ [s(lift (W.P.seed.joint 1).start, s)] ++ deleted) := by
+  classical
+  dsimp only
+  let O := outerFrame F A u hbase
+  let j := pChildIndex F A u hbase
+  let lift := rawPParentMap F A u hbase hA
+  obtain ⟨s₀, t₀, hs₀, ht₀, hₐ, h_b, tail, hd, _, hPs, hPe⟩ :=
+    native_j2_original_p_joint_split hm F A u hbase hA W
+  have hidx : 2 + j.val = m - 1 := by
+    have h := F.prefix_length
+    rw [hbase, List.length_append, F.selected_length,
+      List.length_append, List.length_singleton] at h
+    change 2 + A.length = m - 1
+    omega
+  have hj : 0 < j.val := by change 0 < A.length; omega
+  have hs : (W.pieces j).start = lift s₀ := by
+    apply Subtype.ext
+    rw [W.childPieces]
+    change (W.paths j).piece.start.val = s₀.val
+    rw [(W.paths j).start_eq]
+    simp only [childStartIndex, if_neg (by omega : ¬ j.val = 0), hidx, hs₀]
+  have ht : (W.pieces j).finish = lift t₀ := by
+    apply Subtype.ext
+    rw [W.childPieces]
+    change (W.paths j).piece.finish.val = t₀.val
+    rw [(W.paths j).finish_eq, hidx, ht₀]
+  let P := (W.pieces j).walk.copy hs ht
+  refine ⟨lift s₀, lift t₀, hs₀, ht₀, lift.map_adj hₐ, lift.map_adj h_b,
+    tail.map lift, ?_, P, ?_, ?_, ?_⟩
+  · simpa only [SimpleGraph.Walk.map_cons] using congrArg
+      (fun w => w.map lift) hd
+  · dsimp only [P]
+    cases W.pieces j with
+    | mk a b w =>
+      dsimp only at hs ht
+      subst a
+      subst b
+      rfl
+  · apply (List.map_perm_map_iff Subtype.val_injective).mp
+    simpa only [P, SimpleGraph.Walk.support_copy, W.childPieces,
+      parentPiece, SimpleGraph.Walk.support_map, List.flatMap_map, mapPiece,
+      List.map_append, List.map_map, List.map_flatMap, Function.comp_def]
+      using hPs
+  · apply (List.map_perm_map_iff (Sym2.map.injective Subtype.val_injective)).mp
+    simpa only [P, SimpleGraph.Walk.edges_copy, W.childPieces,
+      parentPiece, SimpleGraph.Walk.edges_map, List.flatMap_map, mapPiece,
+      List.map_append, List.map_map, List.map_flatMap, List.map_cons, List.map_nil,
+      Sym2.map_map, Sym2.map_mk, Function.comp_def]
+      using hPe
+
+end D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
