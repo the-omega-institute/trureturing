@@ -9,11 +9,14 @@
 import D5.S3.Quantum.Schatten.Holder
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
+import D5.S3.Quantum.FiniteDimensional
+import D5.S3.Quantum.PureState.PureStateHandshake
 
 set_option linter.style.longLine false
 
 open scoped BigOperators Matrix Kronecker ComplexOrder
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.Quantum.FiniteDimensional D5.S3.Quantum.PureState
 
 namespace D5.S3.Quantum.Information.SpacetimeDensitySchattenSubadditivityRefutation
 
@@ -40,18 +43,15 @@ noncomputable def witnessV : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(4 : ℂ) / 5, (3 : ℂ) / 5;
      (-3 : ℂ) / 5, (4 : ℂ) / 5]
 
-noncomputable def witnessZ : Matrix (Fin 2) (Fin 2) ℂ :=
-  Matrix.diagonal ![(1 : ℂ), -1]
-
 noncomputable def witnessJointPsi : (Fin 2 × (Fin 2 × Fin 2)) → ℂ :=
-  fun x => ((witnessZ ^ x.2.1.val) *ᵥ witnessPsi) x.1 / 2
+  fun x => ((qubitZ ^ x.2.1.val) *ᵥ witnessPsi) x.1 / 2
 
 noncomputable def witnessRho :
     Matrix (Fin 2 × (Fin 2 × Fin 2)) (Fin 2 × (Fin 2 × Fin 2)) ℂ :=
-  Matrix.vecMulVec witnessJointPsi (star witnessJointPsi)
+  PureStateHandshake.rankOneDensity witnessJointPsi
 
 noncomputable def witnessBlock : (Fin 2 × Fin 2) → Matrix (Fin 2) (Fin 2) ℂ :=
-  fun c => witnessZ ^ c.2.val * witnessV * witnessZ ^ c.1.val
+  fun c => qubitZ ^ c.2.val * witnessV * qubitZ ^ c.1.val
 
 noncomputable def witnessU :
     Matrix (Fin 2 × (Fin 2 × Fin 2)) (Fin 2 × (Fin 2 × Fin 2)) ℂ :=
@@ -65,9 +65,9 @@ private theorem witnessRho_posSemidef : witnessRho.PosSemidef := by
   exact Matrix.posSemidef_vecMulVec_self_star witnessJointPsi
 
 private theorem witnessRho_trace : witnessRho.trace = 1 := by
-  rw [witnessRho, Matrix.trace_vecMulVec]
+  rw [witnessRho, PureStateHandshake.rankOneDensity, Matrix.trace_vecMulVec]
   norm_num [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
-    witnessJointPsi.eq_1, witnessZ.eq_1, witnessPsi.eq_1, Matrix.mulVec, Matrix.diagonal, Pi.star_def]
+    witnessJointPsi.eq_1, qubitZ, witnessPsi.eq_1, Matrix.mulVec, Matrix.diagonal, Pi.star_def]
 
 private theorem witnessBlock_unitary (c : Fin 2 × Fin 2) :
     (witnessBlock c)ᴴ * witnessBlock c = 1 ∧
@@ -75,7 +75,7 @@ private theorem witnessBlock_unitary (c : Fin 2 × Fin 2) :
   rcases c with ⟨r, s⟩
   fin_cases r <;> fin_cases s <;> constructor <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [witnessBlock.eq_1, witnessZ.eq_1, witnessV.eq_1, Matrix.mul_apply,
+    norm_num [witnessBlock.eq_1, qubitZ, witnessV.eq_1, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_two, Matrix.diagonal, Matrix.vecHead,
       Matrix.vecTail, map_ofNat]
 
@@ -128,7 +128,7 @@ private theorem witness_eq9
   simp only [dotProduct, Fintype.sum_prod_type, blockAction, Pi.star_apply]
   norm_num [Matrix.trace, Matrix.diag, Matrix.mul_apply, Matrix.kronecker_apply,
     Fintype.sum_prod_type,
-    Fin.sum_univ_two, witnessT, witnessJointPsi.eq_1, witnessBlock.eq_1, witnessZ.eq_1, witnessV.eq_1,
+    Fin.sum_univ_two, witnessT, witnessJointPsi.eq_1, witnessBlock.eq_1, qubitZ, witnessV.eq_1,
     witnessPsi.eq_1, Matrix.mulVec, dotProduct, Matrix.conjTranspose_apply,
     Matrix.diagonal, map_ofNat]
   ring
