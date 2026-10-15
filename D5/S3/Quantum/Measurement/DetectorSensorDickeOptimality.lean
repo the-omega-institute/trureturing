@@ -7,9 +7,8 @@
    digest: Balanced Dicke probes optimize detector-sensor identification. -/
 /-
 proof_shape and consumer map (names in this module namespace; escape_witness: none):
-fire: bind-only; consumers=A,G_diag,G_phase,N_diag,fire_normSq,isoSuccess,isoSuccess_gram | isoSuccess: bind-only; consumers=claim,dicke_attainment,global_success_upper_bound,result | rCount: bind-only; consumers=claim,counts_partition,ratio,ratio_formula,result
+fire: bind-only; consumers=G_diag,G_phase,G_total,G_total_moment,N_diag,N_psd,average_gram_overlap,dicke_attainment,dicke_gram,dicke_gram_invariant,fire_normSq,global_success_upper_bound,isoSuccess,isoSuccess_gram,result,sum_N | isoSuccess: bind-only; consumers=claim,dicke_attainment,global_success_upper_bound,isoSuccess_gram(type),result | rCount: bind-only; consumers=claim,counts_partition,ratio,ratio_formula,result
 lCount: bind-only; consumers=claim,counts_partition,lCount_pair_independent,lCount_perm,lCount_self,lCount_sum,pair_count_product,ratio,ratio_formula,result | T: bind-only; consumers=claim,global_success_upper_bound,result,threshold_range,threshold_small_nonneg | claim: bind-only; consumers=result(type)
-A: bind-only; consumers=G,N,N_diag,N_psd,average_gram_overlap,dicke_attainment,sum_N | G: bind-only; consumers=G_diag,G_phase,G_total,G_total_moment,average_gram_overlap,dicke_attainment,dicke_gram,dicke_gram_invariant,global_success_upper_bound,result | N: bind-only; consumers=N_diag,dicke_attainment,global_success_upper_bound,isoSuccess_gram,sum_N
 N_psd: bind-only; consumers=global_success_upper_bound | sum_N: bind-only; consumers=global_success_upper_bound | N_diag: bind-only; consumers=isoSuccess_gram
 isoSuccess_gram: bind-only; consumers=dicke_attainment,global_success_upper_bound | phase_normSq: bind-only; consumers=fire_normSq | fire_normSq: bind-only; consumers=G_diag
 G_diag: bind-only; consumers=average_gram_overlap | G_phase: bind-only; consumers=G_total,dicke_gram_invariant | G_total: bind-only; consumers=G_total_moment
@@ -23,9 +22,9 @@ different_bits_row: bind-only; consumers=different_bits_total | different_bits_t
 lCount_sum: bind-only; consumers=pair_count_product | pair_count_product: bind-only; consumers=ratio_formula | psd_cauchy_schwarz: bind-only; consumers=rank_certificate
 outer_quadratic: bind-only; consumers=rank_certificate | rank_certificate: bind-only; consumers=constant_diagonal_gram_bound | gram_decomposition_to_povm: bind-only; consumers=constant_diagonal_gram_bound
 trace_rank_mul: bind-only; consumers=constant_diagonal_gram_bound | constant_diagonal_gram_bound: bind-only; consumers=constant_overlap_certificate | d: bind-only; consumers=H_diag,constant_overlap_certificate,d_antitone,d_hasDerivAt,d_nonneg,dicke_attainment,global_success_upper_bound,result
-H: bind-only; consumers=H_diag,H_mul_Hinv,H_sq,Hinv_mul_H,constant_overlap_certificate,dicke_attainment | J_psd: bind-only; consumers=P_psd | P_psd: bind-only; consumers=H_psd,Hinv_hermitian,Q_psd
+H: bind-only; consumers=H_diag,H_mul_Hinv,H_psd(type),H_sq,Hinv_mul_H,constant_overlap_certificate,dicke_attainment | J_psd: bind-only; consumers=P_psd | P_psd: bind-only; consumers=H_psd,Hinv_hermitian,Q_psd
 P_sq: bind-only; consumers=H_sq,Hinv_mul_H,PQ_zero,QP_zero,Q_psd,Q_sq | Q_psd: bind-only; consumers=H_psd,Hinv_hermitian | PQ_zero: bind-only; consumers=H_sq,Hinv_mul_H
-QP_zero: bind-only; consumers=H_sq,Hinv_mul_H | Q_sq: bind-only; consumers=H_sq,Hinv_mul_H | H_psd: bind-only; consumers=H_mul_Hinv,constant_overlap_certificate,dicke_attainment
+QP_zero: bind-only; consumers=H_sq,Hinv_mul_H | Q_sq: bind-only; consumers=H_sq,Hinv_mul_H | H_psd: bind-only; consumers=constant_overlap_certificate,dicke_attainment
 H_sq: bind-only; consumers=constant_overlap_certificate,dicke_attainment | H_diag: bind-only; consumers=constant_overlap_certificate,dicke_attainment | d_nonneg: bind-only; consumers=constant_overlap_certificate,global_success_upper_bound
 constant_overlap_certificate: bind-only; consumers=global_success_upper_bound | moment: bind-only; consumers=G_total_moment,average_gram_overlap,dicke_gram,dicke_moment,moment_bounds,overlap,overlap_bounds | overlap: bind-only; consumers=average_gram_overlap,dicke_gram,global_success_upper_bound,overlap_bounds
 cstar: bind-only; consumers=cstar_cos,cstar_lt_one,dicke_attainment,dicke_gram,global_success_upper_bound,overlap_bounds,result,threshold_range,threshold_small_nonneg | moment_bounds: bind-only; consumers=overlap_bounds | G_total_moment: bind-only; consumers=average_gram_overlap
@@ -37,7 +36,7 @@ dprime: bind-only; consumers=d_antitone,d_hasDerivAt | d_hasDerivAt: bind-only; 
 ratio: bind-only; consumers=ratio_formula,ratio_minimizer_balanced,result | ratio_formula: bind-only; consumers=ratio_minimizer_balanced | ratio_minimizer_balanced: bind-only; consumers=result
 dicke_normalized: bind-only; consumers=dicke_gram | dicke_gram_invariant: bind-only; consumers=dicke_gram | global_success_upper_bound: bind-only; consumers=result
 avgMatrix_eq_of_invariant: bind-only; consumers=dicke_gram | dicke_moment: bind-only; consumers=dicke_gram | dicke_gram: bind-only; consumers=result
-Hinv: bind-only; consumers=H_mul_Hinv,Hinv_mul_H,dicke_attainment | Hinv_hermitian: bind-only; consumers=H_mul_Hinv,dicke_attainment | Hinv_mul_H: bind-only; consumers=H_mul_Hinv,dicke_attainment
+Hinv: bind-only; consumers=H_mul_Hinv,Hinv_hermitian(type),Hinv_mul_H,dicke_attainment | Hinv_hermitian: bind-only; consumers=dicke_attainment | Hinv_mul_H: bind-only; consumers=H_mul_Hinv,dicke_attainment
 H_mul_Hinv: bind-only; consumers=dicke_attainment | E_psd: bind-only; consumers=sqrt_povm_exists | sum_E: bind-only; consumers=sqrt_povm_exists
 sqrt_povm_exists: bind-only; consumers=dicke_attainment | square_root_diag: bind-only; consumers=dicke_attainment | dicke_attainment: bind-only; consumers=result
 result: bind-only; consumers=external-settling-result
@@ -51,8 +50,12 @@ D5/S3/Quantum/Entanglement/TriangleIndependentSourceNoise; D5.S3.Quantum.Entangl
 D5/S3/Quantum/Measurement/AntidistinguishabilityGram; D5.S3.Quantum.Measurement.AntidistinguishabilityGram.hermitian_projection_complement_psd; sha256:f3cb74fbe3632aad2eae16e435345e87d531afa9b1e0e3b5fce022abec66b3ad
 D5/S3/Quantum/Measurement/AntidistinguishabilityGram; D5.S3.Quantum.Measurement.AntidistinguishabilityGram.matrix_penrose_exists; sha256:513144412204993724a7d6fa4dad279c6f19c6d6086bd62ce5fefe72d6ab8f3e
 D5/S3/Quantum/Measurement/AntidistinguishabilityGram; D5.S3.Quantum.Measurement.AntidistinguishabilityGram.psd_summand_projection; sha256:39658a336acceab2655f45c7b440ee5b1ce94d5857afe693e59a9d9b2d8d5236
+D5/S3/Quantum/Recovery/PurifiedLocalPath; D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram; sha256:0d9f33a80e1ac7a06b318c665f644b5f59c6a7e2165b62fda1db1cf395ea82e7
+D5/S3/Quantum/Reduction/IsometricCompression; D5.S3.Quantum.Reduction.IsometricCompression.compress; sha256:ece129ea3121d41eb72b96831bf50f675e9fccf3bae2b5d39dc556c28adb9beb
 D5/S3/Weil/ZetaLinear/RankTrace; RHLinalg.trace_mul_nonneg_of_posSemidef; sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
 The claim inlines the weight formula and retains its quantifiers; LocalPOVM supplies the measurement type.
+Matrix.transpose forms the fired-state matrix; ProductPrefixRigidity.gram and
+IsometricCompression.compress supply its Gram matrix and pulled-back effects.
 The Fin 2 weight owner DynamicCoolingParallelTieUniqueness and the phase owner
 DelayedRemoteControlDimensionWitness are I-level; this G-level module uses their expressions inline.
 Private helpers organize the Gram average, trace certificate and attaining measurement.
@@ -60,6 +63,8 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 -/
 import D5.S3.Quantum.Entanglement.TriangleIndependentSourceNoise
 import D5.S3.Quantum.Measurement.AntidistinguishabilityGram
+import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Reduction.IsometricCompression
 import D5.S3.Weil.ZetaLinear.RankTrace
 noncomputable section
 open Matrix
@@ -86,21 +91,15 @@ def claim : Prop := ∀ n : ℕ, ∀ hn : 3 ≤ n, ∀ θ : ℝ, ((0 < θ ∧ θ
   ∀ φ : (Fin n → Bool) → ℂ, (∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1 / (n.choose l : ℝ) else 0) →
   ∀ ψ : (Fin n → Bool) → ℂ, ∑ x, Complex.normSq (ψ x) = 1 →
   ∀ M : LocalPOVM (Fin n → Bool) (Fin n), ∃ M' : LocalPOVM (Fin n → Bool) (Fin n), isoSuccess θ ψ M ≤ isoSuccess θ φ M'
-private def A {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) :
-    Matrix (Fin n → Bool) (Fin n) ℂ := fun x i => fire θ i ψ x
-private def G {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) := (A θ ψ)ᴴ * A θ ψ
-private def N {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)
-    (M : LocalPOVM (Fin n → Bool) (Fin n)) (i : Fin n) :=
-  (A θ ψ)ᴴ * M.effect i * A θ ψ
-private theorem N_psd {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) (i : Fin n) : (N θ ψ M i).PosSemidef :=
-  (M.positive i).conjTranspose_mul_mul_same (A θ ψ)
-private theorem sum_N {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) : ∑ i, N θ ψ M i = G θ ψ := by
-  simp only [N, G, ← Matrix.sum_mul, ← Matrix.mul_sum, M.complete, Matrix.mul_one]
-private theorem N_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) (i : Fin n) :     N θ ψ M i i i = star (fire θ i ψ) ⬝ᵥ (M.effect i *ᵥ fire θ i ψ) := by
-  rw [N, Matrix.mul_assoc]
+private theorem N_psd {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) (i : Fin n) : ((D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i))).PosSemidef :=
+  (M.positive i).conjTranspose_mul_mul_same (((fun i => fire θ i ψ)ᵀ))
+private theorem sum_N {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) : ∑ i, (D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i)) = (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) := by
+  simp only [D5.S3.Quantum.Reduction.IsometricCompression.compress, D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram, ← Matrix.sum_mul, ← Matrix.mul_sum, M.complete, Matrix.mul_one]
+private theorem N_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) (i : Fin n) :     (D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i)) i i = star (fire θ i ψ) ⬝ᵥ (M.effect i *ᵥ fire θ i ψ) := by
+  rw [D5.S3.Quantum.Reduction.IsometricCompression.compress, Matrix.mul_assoc]
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply,
-    A, dotProduct, Matrix.mulVec, Pi.star_apply]
-private theorem isoSuccess_gram {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) :     isoSuccess θ ψ M = (1 / (n : ℝ)) * ∑ i, (N θ ψ M i i i).re := by
+    Matrix.transpose, Matrix.of_apply, dotProduct, Matrix.mulVec, Pi.star_apply]
+private theorem isoSuccess_gram {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) :     isoSuccess θ ψ M = (1 / (n : ℝ)) * ∑ i, ((D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i)) i i).re := by
   simp only [isoSuccess, N_diag]
 private theorem phase_normSq (θ : ℝ) (b : Bool) : Complex.normSq ((Complex.exp ((if b then 1 else -1) * (θ : ℂ) * Complex.I))) = 1 := by
   rw [Complex.normSq_eq_norm_sq]
@@ -108,15 +107,15 @@ private theorem phase_normSq (θ : ℝ) (b : Bool) : Complex.normSq ((Complex.ex
 private theorem fire_normSq {n : ℕ} (θ : ℝ) (i : Fin n) (ψ : (Fin n → Bool) → ℂ)     (x : Fin n → Bool) : Complex.normSq (fire θ i ψ x) = Complex.normSq (ψ x) := by
   change Complex.normSq ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) = _
   rw [Complex.normSq_mul, phase_normSq, one_mul]
-private theorem G_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) (i : Fin n) : G θ ψ i i = 1 := by
-  simp only [G, Matrix.mul_apply, Matrix.conjTranspose_apply, A]
+private theorem G_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) (i : Fin n) : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i i = 1 := by
+  simp only [D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose, Matrix.of_apply]
   have h : ∀ x, star (fire θ i ψ x) * fire θ i ψ x = (Complex.normSq (ψ x) : ℂ) := by
     intro x
     exact (Complex.normSq_eq_conj_mul_self (z := fire θ i ψ x)).symm.trans
       (congrArg Complex.ofReal (fire_normSq θ i ψ x))
   simp only [h, ← Complex.ofReal_sum, hψ, Complex.ofReal_one]
-private theorem G_phase {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) (i j : Fin n) :     G θ ψ i j = ∑ x, (Complex.normSq (ψ x) : ℂ) *       star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) * (Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I)) := by
-  simp only [G, Matrix.mul_apply, Matrix.conjTranspose_apply, A]
+private theorem G_phase {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) (i j : Fin n) :     (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i j = ∑ x, (Complex.normSq (ψ x) : ℂ) *       star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) * (Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I)) := by
+  simp only [D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose, Matrix.of_apply]
   apply Finset.sum_congr rfl
   intro x _
   change star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) * ((Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) = _
@@ -124,8 +123,8 @@ private theorem G_phase {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) (i 
   change (star (ψ x) * star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)))) * ((Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) =
     (star (ψ x) * ψ x) * star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) * (Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I))
   ring
-private theorem G_total {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) :     (∑ i : Fin n, ∑ j : Fin n, G θ ψ i j).re =       ∑ x, Complex.normSq (ψ x) * Complex.normSq (∑ i : Fin n, (Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) := by
-  have he : ∑ i : Fin n, ∑ j : Fin n, G θ ψ i j =
+private theorem G_total {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ) :     (∑ i : Fin n, ∑ j : Fin n, (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i j).re =       ∑ x, Complex.normSq (ψ x) * Complex.normSq (∑ i : Fin n, (Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) := by
+  have he : ∑ i : Fin n, ∑ j : Fin n, (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i j =
       ∑ x, (Complex.normSq (ψ x) : ℂ) *
         (Complex.normSq (∑ i : Fin n, (Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I))) : ℂ) := by
     calc
@@ -496,12 +495,11 @@ private theorem P_sq (n : ℕ) (hn : 0 < n) : ((n : ℝ)⁻¹ • (Matrix.of (fu
 private theorem Q_psd (n : ℕ) (hn : 0 < n) : ((1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))))).PosSemidef :=
   hermitian_projection_complement_psd (((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) (P_psd n).isHermitian (P_sq n hn)
 private theorem PQ_zero (n : ℕ) (hn : 0 < n) : ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) * (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) = 0 := by
-  rw [Matrix.mul_sub, Matrix.mul_one, P_sq n hn, sub_self]
+  exact (show IsIdempotentElem ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) from P_sq n hn).mul_one_sub_self
 private theorem QP_zero (n : ℕ) (hn : 0 < n) : (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) * ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) = 0 := by
-  rw [Matrix.sub_mul, Matrix.one_mul, P_sq n hn, sub_self]
+  exact (show IsIdempotentElem ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) from P_sq n hn).one_sub_mul_self
 private theorem Q_sq (n : ℕ) (hn : 0 < n) : (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) * (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) = (1 - ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))))) := by
-  rw [Matrix.sub_mul, Matrix.one_mul, Matrix.mul_sub, Matrix.mul_one, P_sq n hn]
-  abel
+  exact (show IsIdempotentElem ((n : ℝ)⁻¹ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) from P_sq n hn).one_sub
 private theorem H_psd (n : ℕ) (hn : 0 < n) (c : ℝ) : (H n c).PosSemidef :=
   ((P_psd n).smul (Real.sqrt_nonneg _)).add ((Q_psd n hn).smul (Real.sqrt_nonneg _))
 private theorem H_sq (n : ℕ) (hn : 1 ≤ n) (c : ℝ) (hc : c ∈ Set.Icc 0 1) :     H n c * H n c = (1-c) • (1 : Matrix (Fin n) (Fin n) ℂ) + c • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
@@ -557,7 +555,7 @@ private theorem moment_bounds {n : ℕ} (ψ : (Fin n → Bool) → ℂ)     (hψ
         apply mul_le_mul_of_nonneg_left _ (Complex.normSq_nonneg _)
         exact_mod_cast balanced_product_upper n ((Finset.univ.filter (fun j => x j = true)).card) (weight_le x)
       _ = _ := by rw [← Finset.sum_mul, hψ, one_mul]
-private theorem G_total_moment {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     (∑ i : Fin n, ∑ j : Fin n, G θ ψ i j).re =       (n : ℝ)^2 - 4 * Real.sin θ^2 * moment ψ := by
+private theorem G_total_moment {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     (∑ i : Fin n, ∑ j : Fin n, (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)) i j).re =       (n : ℝ)^2 - 4 * Real.sin θ^2 * moment ψ := by
   rw [G_total]
   simp only [phase_sum_normSq]
   have he : ∀ x : Fin n → Bool, (((Finset.univ.filter (fun j => x j = true)).card*(n-(Finset.univ.filter (fun j => x j = true)).card) : ℕ) : ℝ) =
@@ -597,14 +595,14 @@ private theorem constant_overlap_total (n : ℕ) (c : ℝ) :     (∑ i : Fin n,
     Finset.sum_add_distrib, ← Complex.ofReal_sum]
   push_cast
   ring
-private theorem average_gram_overlap {n : ℕ} (hn : 2 ≤ n) (θ : ℝ)     (ψ : (Fin n → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     avgMatrix (G θ ψ) = (1-overlap θ ψ) • (1 : Matrix (Fin n) (Fin n) ℂ) +       overlap θ ψ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
-  obtain ⟨c, hc⟩ := invariant_constant_offDiagonal hn (G θ ψ)
-    (Matrix.posSemidef_conjTranspose_mul_self (A θ ψ)).isHermitian
-  have he : avgMatrix (G θ ψ) = (1-c) • (1 : Matrix (Fin n) (Fin n) ℂ) + c • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
+private theorem average_gram_overlap {n : ℕ} (hn : 2 ≤ n) (θ : ℝ)     (ψ : (Fin n → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     avgMatrix ((D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ))) = (1-overlap θ ψ) • (1 : Matrix (Fin n) (Fin n) ℂ) +       overlap θ ψ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
+  obtain ⟨c, hc⟩ := invariant_constant_offDiagonal hn ((D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ)))
+    (Matrix.posSemidef_conjTranspose_mul_self (((fun i => fire θ i ψ)ᵀ))).isHermitian
+  have he : avgMatrix ((D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ))) = (1-c) • (1 : Matrix (Fin n) (Fin n) ℂ) + c • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
     ext i j
     by_cases hij : i = j
     · subst j
-      rw [avgMatrix_diag (G θ ψ) (G_diag θ ψ hψ)]
+      rw [avgMatrix_diag ((D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i ψ)ᵀ))) (G_diag θ ψ hψ)]
       simp [Complex.real_smul]
     · rw [hc i j hij]
       simp [Complex.real_smul, Matrix.one_apply, hij]
@@ -615,7 +613,7 @@ private theorem average_gram_overlap {n : ℕ} (hn : 2 ≤ n) (θ : ℝ)     (ψ
   have hden : (n : ℝ)*(n-1) ≠ 0 := mul_ne_zero (by linarith) (by linarith)
   have hco : c = overlap θ ψ := by
     unfold overlap
-    field_simp [show (n : ℝ) ≠ 0 by linarith, show (n : ℝ)-1 ≠ 0 by linarith]
+    field_simp [left_ne_zero_of_mul hden, right_ne_zero_of_mul hden]
     nlinarith [ht]
   rwa [hco] at he
 private theorem overlap_bounds {n : ℕ} (hn : 2 ≤ n) (θ : ℝ)     (ψ : (Fin n → Bool) → ℂ) (hψ : ∑ x, Complex.normSq (ψ x) = 1) :     cstar n θ ≤ overlap θ ψ ∧ overlap θ ψ ≤ 1 := by
@@ -821,7 +819,7 @@ private theorem dicke_normalized {n : ℕ} (l : ℕ) (hl : l ≤ n)     (φ : (F
   simp only [hφ, Finset.sum_ite, Finset.sum_const_zero, add_zero,
     Finset.sum_const, nsmul_eq_mul, weight_class_card]
   field_simp
-private theorem dicke_gram_invariant {n : ℕ} (θ : ℝ) (l : ℕ)     (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0)     (σ : Equiv.Perm (Fin n)) (i j : Fin n) :     G θ φ (σ i) (σ j) = G θ φ i j := by
+private theorem dicke_gram_invariant {n : ℕ} (θ : ℝ) (l : ℕ)     (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0)     (σ : Equiv.Perm (Fin n)) (i j : Fin n) :     (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i φ)ᵀ)) (σ i) (σ j) = (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i φ)ᵀ)) i j := by
   simp only [G_phase]
   have he := Equiv.sum_comp ((Equiv.arrowCongr σ.symm (Equiv.refl Bool))) (fun x : Fin n → Bool =>
     (Complex.normSq (φ x) : ℂ)*star ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)))*(Complex.exp ((if x j then 1 else -1) * (θ : ℂ) * Complex.I)))
@@ -835,7 +833,7 @@ private theorem global_success_upper_bound (n : ℕ) (hn : 3 ≤ n) (θ : ℝ)  
   have hc : overlap θ ψ ∈ Set.Icc 0 1 := ⟨ht.2.2.trans ho.1, ho.2⟩
   have hcstar : cstar n θ ∈ Set.Icc 0 1 := ⟨ht.2.2, (cstar_lt_one n (by omega) θ ⟨ht.1, ht.2.1⟩).le⟩
   have hb := constant_overlap_certificate n (by omega) (overlap θ ψ) hc
-    (avgN (N θ ψ M)) (avgN_psd _ (N_psd θ ψ M))
+    (avgN (fun i => D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i))) (avgN_psd _ (N_psd θ ψ M))
     (by rw [sum_avgN, sum_N, average_gram_overlap (by omega) θ ψ hψ])
   rw [avgN_objective] at hb
   have hd := d_antitone n (by omega) hcstar hc ho.1
@@ -862,7 +860,7 @@ private theorem dicke_moment {n : ℕ} (l : ℕ) (hl : l ≤ n) (φ : (Fin n →
   simp only [he, Finset.sum_ite, Finset.sum_const_zero, add_zero,
     Finset.sum_const, nsmul_eq_mul, weight_class_card]
   field_simp
-private theorem dicke_gram {n : ℕ} (hn : 3 ≤ n) (θ : ℝ) (l : ℕ) (hl : l ≤ n)     (hbalance : l*(n-l) = n^2/4) (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0) :     G θ φ = (1-cstar n θ) • (1 : Matrix (Fin n) (Fin n) ℂ) + cstar n θ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
+private theorem dicke_gram {n : ℕ} (hn : 3 ≤ n) (θ : ℝ) (l : ℕ) (hl : l ≤ n)     (hbalance : l*(n-l) = n^2/4) (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0) :     (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i φ)ᵀ)) = (1-cstar n θ) • (1 : Matrix (Fin n) (Fin n) ℂ) + cstar n θ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ))) := by
   have he := average_gram_overlap (by omega) θ φ (dicke_normalized l hl φ hφ)
   rw [avgMatrix_eq_of_invariant _ (dicke_gram_invariant θ l φ hφ)] at he
   have ho : overlap θ φ = cstar n θ := by
@@ -890,9 +888,7 @@ private theorem Hinv_mul_H (n : ℕ) (hn : 1 ≤ n) (c : ℝ) (hc : 0 ≤ c ∧ 
     mul_inv_cancel₀ (Real.sqrt_pos.mpr ha).ne', mul_inv_cancel₀ (Real.sqrt_pos.mpr hb).ne', one_smul]
   abel
 private theorem H_mul_Hinv (n : ℕ) (hn : 1 ≤ n) (c : ℝ) (hc : 0 ≤ c ∧ c < 1) :     H n c * Hinv n c = 1 := by
-  have h := congrArg Matrix.conjTranspose (Hinv_mul_H n hn c hc)
-  simpa only [Matrix.conjTranspose_mul, (H_psd n (by omega) c).isHermitian.eq,
-    (Hinv_hermitian n (by omega) c).eq, Matrix.conjTranspose_one] using h
+  exact mul_eq_one_comm.mp (Hinv_mul_H n hn c hc)
 private theorem E_psd {n : ℕ} (i : Fin n) : ((Matrix.diagonal (Pi.single i (1 : ℂ)))).PosSemidef := by
   apply Matrix.posSemidef_diagonal_iff.mpr
   intro j
@@ -951,15 +947,15 @@ private theorem sqrt_povm_exists {h : Type*} [Fintype h] [DecidableEq h]     (n 
   · simp
 private theorem square_root_diag {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) (i : Fin n) :     (H*(Matrix.diagonal (Pi.single i (1 : ℂ)))*H) i i = H i i * H i i := by
   simp [Matrix.mul_apply, Matrix.diagonal_apply, Pi.single_apply]
-private theorem dicke_attainment {n : ℕ} (hn : 3 ≤ n) (θ : ℝ)     (hc : 0 ≤ cstar n θ ∧ cstar n θ < 1) (φ : (Fin n → Bool) → ℂ)     (hG : G θ φ = (1-cstar n θ) • (1 : Matrix (Fin n) (Fin n) ℂ) + cstar n θ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) :     ∃ M : LocalPOVM (Fin n → Bool) (Fin n), isoSuccess θ φ M = d n (cstar n θ)^2 := by
-  obtain ⟨M, hM⟩ := sqrt_povm_exists n (by omega) (A θ φ) (H n (cstar n θ))
+private theorem dicke_attainment {n : ℕ} (hn : 3 ≤ n) (θ : ℝ)     (hc : 0 ≤ cstar n θ ∧ cstar n θ < 1) (φ : (Fin n → Bool) → ℂ)     (hG : (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i φ)ᵀ)) = (1-cstar n θ) • (1 : Matrix (Fin n) (Fin n) ℂ) + cstar n θ • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) :     ∃ M : LocalPOVM (Fin n → Bool) (Fin n), isoSuccess θ φ M = d n (cstar n θ)^2 := by
+  obtain ⟨M, hM⟩ := sqrt_povm_exists n (by omega) (((fun i => fire θ i φ)ᵀ)) (H n (cstar n θ))
     (Hinv n (cstar n θ)) (H_psd n (by omega) _).isHermitian
     (Hinv_hermitian n (by omega) _) (Hinv_mul_H n (by omega) _ hc)
     (H_mul_Hinv n (by omega) _ hc)
-    (by change G θ φ = _; rw [hG, H_sq n (by omega) _ ⟨hc.1, hc.2.le⟩])
+    (by change (D5.S3.Quantum.Recovery.ProductPrefixRigidity.gram ((fun i => fire θ i φ)ᵀ)) = _; rw [hG, H_sq n (by omega) _ ⟨hc.1, hc.2.le⟩])
   refine ⟨M, ?_⟩
-  have he (i : Fin n) : N θ φ M i i i = (d n (cstar n θ) : ℂ)^2 := by
-    rw [N, hM i, square_root_diag, H_diag n (by omega)]
+  have he (i : Fin n) : (D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i φ)ᵀ) (M.effect i)) i i = (d n (cstar n θ) : ℂ)^2 := by
+    rw [D5.S3.Quantum.Reduction.IsometricCompression.compress, hM i, square_root_diag, H_diag n (by omega)]
     ring
   rw [isoSuccess_gram]
   simp only [he, Complex.ofReal_re, Complex.ofReal_im, pow_two,

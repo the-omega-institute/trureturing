@@ -101,3 +101,5 @@ Averaging a feasible Gram decomposition over sensor permutations preserves its o
 - Truth anchor: `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`
 - Dependency: [D5/S3/Quantum/Entanglement/TriangleIndependentSourceNoise](../Entanglement/TriangleIndependentSourceNoise.md)
 - Dependency: [D5/S3/Quantum/Measurement/AntidistinguishabilityGram](AntidistinguishabilityGram.md)
+- Dependency: [D5/S3/Quantum/Recovery/PurifiedLocalPath](../Recovery/PurifiedLocalPath.md)
+- Dependency: [D5/S3/Quantum/Reduction/IsometricCompression](../Reduction/IsometricCompression.md)
