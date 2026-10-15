@@ -482,6 +482,314 @@ inspected Molnar v1 statement; they are
 recorded here as combined applications of existing inputs, without a
 priority or Lean-verification claim.
 
+## A joint deficit on the original integer
+
+The following application combines the same local loss with the classical
+CA supporting price. Its purpose is to control each actual integer,
+including integers whose prime support or exponents differ from a CA
+maximizer. The supporting identity is bookkeeping; the estimate below
+charges all three possible exponent choices on a prime band.
+
+For $X=\log n>2$ and $L=\log X$, put
+
+$$
+\epsilon_X=\frac{\log(1+1/X)}{\log X},\qquad
+F_{X,p}(a)=\log Z(p^a)-\epsilon_Xa\log p
+\quad(a\in\mathbb Z_{\ge0}).
+$$
+
+Let $N_X$ be the largest classical CA maximizer at this price. Define
+
+$$
+S_{X,p}(a)=\max_{j\in\mathbb Z_{\ge0}}F_{X,p}(j)-F_{X,p}(a)\ge0,
+\qquad d_\kappa(p^0)=0,
+$$
+
+$$
+J_\kappa(n)=\sum_p
+\left(S_{X,p}(v_p(n))+d_\kappa(p^{v_p(n)})\right).
+\tag{J1}
+$$
+
+The sum is finite: outside the supports of $n$ and $N_X$, both terms
+vanish. These are deficits of the original integer, not losses taken
+from a different normalized maximizer. Multiplicativity gives exactly
+
+$$
+\log\frac{Q_\kappa(n)}{B(n)}=H_X-J_\kappa(n),\qquad
+H_X=\log Z(N_X)+\epsilon_X(X-\log N_X)-\gamma-\log L.
+\tag{J2}
+$$
+
+The [CNS classical CA thresholds](../Arith/caveney2012sacaga.md),
+equations (7)--(11) and Lemma 1, give
+$\log N_X\ge\vartheta(X)$, support on primes at most $X$, and optimal
+exponent one whenever $\sqrt{2X}<p<X$. Choosing the largest maximizer
+includes the first-layer tie if $X$ itself is prime. With
+$\mathcal M(X)=\prod_{p\le X}(1-p^{-1})^{-1}$, it follows that
+
+$$
+H_X\le E(X):=
+\log\mathcal M(X)-\gamma-\log L
++\epsilon_X(X-\vartheta(X)).
+\tag{J3}
+$$
+
+For any set $I$ of primes in $(\sqrt{2X},X)$, define
+
+$$
+A_{X,p}=\log(1+1/p)-\epsilon_X\log p,\qquad
+B_{X,p}=\epsilon_X\log p+\log(1-p^{-2}).
+$$
+
+Then every original factorization satisfies
+
+$$
+J_\kappa(n)\ge
+\sum_{p\in I}\min\{A_{X,p},B_{X,p},d_\kappa(p)\}.
+\tag{J4}
+$$
+
+Indeed, if $v_p(n)=0$, its supporting deficit is $A_{X,p}$.
+If $v_p(n)=1$, that deficit vanishes but the local reciprocal loss is
+$d_\kappa(p)$. If $v_p(n)=a\ge2$, then
+
+$$
+\begin{aligned}
+S_{X,p}(a)
+&=\log Z(p)-\log Z(p^a)+\epsilon_X(a-1)\log p\\
+&\ge\log(1-p^{-2})+\epsilon_X\log p=B_{X,p},
+\end{aligned}
+$$
+
+because $Z(p^a)/Z(p)\le(1-p^{-2})^{-1}$. Adding its nonnegative
+reciprocal loss preserves the bound. Thus deleting or repeating a prime
+cannot remove its exponent-one loss without paying another deficit.
+
+Fix $0<a<b<1$. Uniformly on $aX<p<bX$,
+$A_{X,p},B_{X,p}\gg_{a,b}X^{-1}$. For example,
+$XA_{X,p}=X/p-1+o(1)$ and $XB_{X,p}=1+o(1)$ there.
+The local formula (L1) also gives
+
+$$
+d_\kappa(p)\ge
+\frac{\log(\kappa/(p+1))}{\kappa-1}.
+$$
+
+Along any prescribed schedule $\kappa=K(X)$ with $K(X)/X\to\infty$,
+the common lower bound
+$\log(\kappa/(X+1))/(\kappa-1)$ is positive and $o(X^{-1})$.
+All three entries in (J4) therefore exceed that bound eventually.
+The prime number theorem on each fixed band, followed by
+$a\downarrow0$ and $b\uparrow1$, yields
+
+$$
+J_{K(X)}(n)\ge(1-o(1))\frac X L
+\frac{\log(K(X)/(X+1))}{K(X)-1}.
+\tag{J5}
+$$
+
+The error is independent of the actual prime-exponent choices. The
+statement holds along $X=\log n\to\infty$ for all integers $n$; no CA
+assumption on $n$ has been made. After proving the sign at $K(X)$,
+Molnar's existing parameter monotonicity covers every real
+$1<\kappa\le K(X)$.
+
+## The signed prime error after the supporting-price cancellation
+
+Write $R(t)=\vartheta(t)-t$ and
+
+$$
+T(X)=\sum_{p>X}\left[-\log(1-p^{-1})-\frac1p\right]\ge0.
+$$
+
+Reuse the [prime-reciprocal partial-summation identity in the Nicolas
+application](../ArithSums/nicolas2025comparison.md), with the Mertens
+constant fixed by the existing product asymptotic. It transforms (J3) into
+
+$$
+\begin{aligned}
+E(X)={}&\left(\frac1{XL}-\epsilon_X\right)R(X)\\
+&-\int_X^\infty R(t)
+\frac{\log t+1}{t^2(\log t)^2}\,dt-T(X),
+\end{aligned}
+\tag{J6}
+$$
+
+where
+
+$$
+0<\frac1{XL}-\epsilon_X\le\frac1{2X^2L}.
+\tag{J7}
+$$
+
+The prime sum uses $p\le X$, so the complementary tail uses $p>X$,
+including at prime endpoints. The price cancels the leading endpoint
+term $R(X)/(XL)$; the remaining integral retains its sign. Neither
+(J2) nor this cancellation alone supplies positivity.
+
+### Eventual ranges from existing unconditional prime estimates
+
+Let $f(u)=u^{3/5}(\log u)^{-1/5}$. Chiara Bellotti's
+[*A new zero-density estimate for $\zeta(s)$ and the error term in the
+Prime Number Theorem*, arXiv:2508.02041v1](https://arxiv.org/pdf/2508.02041v1),
+printed pp.2--3, Theorem 1.5 and Corollary 1.6, report
+
+$$
+|R(t)|\ll t\exp(-d f(\log t)),\qquad
+d=\left(\frac{5^6 A_0^3}{2^2 3^4}\right)^{1/5},\quad
+A_0=\frac1{48.0718}.
+$$
+
+This is a preprint supplier, without an RH assumption. Its displayed
+theta statement and constants were inspected; its full analytic proof
+has not been independently verified here. It is not a reciprocal Robin
+theorem. Using that bound in (J6), and $f'(L)\sim3f(L)/(5L)$, gives
+
+$$
+E(X)\ll\int_L^\infty\frac{e^{-df(u)}}u\,du
+\ll\frac{e^{-df(L)}}{f(L)}.
+$$
+
+The endpoint in (J7) is smaller, and $-T(X)\le0$ can be discarded for
+this upper bound. Define
+
+$$
+K_{\mathrm B}(n)=
+\frac{X e^{df(L)}f(L)^2}{L\log L}.
+\tag{J8}
+$$
+
+Here $K_{\mathrm B}/X\to\infty$ and
+$\log(K_{\mathrm B}/X)=df(L)+O(\log L)$. Equation (J5) gives
+
+$$
+J_{K_{\mathrm B}(n)}(n)
+\ge(d-o(1))\frac{\log L}{f(L)}e^{-df(L)}.
+$$
+
+The extra $\log L$ pays the unspecified constant in the prime-error
+bound. Thus the paper application of this supplier is
+
+$$
+\exists n_0\ \forall n\ge n_0\ \forall\,1<\kappa\le K_{\mathrm B}(n):
+\qquad Q_\kappa(n)<B(n).
+\tag{J9}
+$$
+
+The integers $n$ are unrestricted; $\kappa$ is real. No numerical
+$n_0$ is supplied. This range is $X^{1+o(1)}$, so it includes
+$C X(\log X)^A$ eventually for every fixed $A\ge0,C>0$ but remains
+below the $X^{3/2}$ diagonal. These quantifiers do not supply a cutoff
+uniform in $A,C$.
+
+A separate, earlier supplier is
+[Johnston--Yang v2](../Weil/johnstonyang2022pnt.md), Theorem 1.4,
+equation (1.8), printed p.2:
+
+$$
+|R(t)|\le0.027t(\log t)^{1.801}e^{-0.1853 f(\log t)}
+\quad(t\ge23).
+$$
+
+The same calculation gives the explicit parameter formula
+
+$$
+K_{\mathrm{JY}}(n)=
+\frac12\frac{X e^{0.1853 f(L)}}{L^{1.601}(\log L)^{2/5}}.
+\tag{J10}
+$$
+
+For clarity about the constants, put $c=0.1853$ and
+$W(L)=L^{1.201}(\log L)^{1/5}e^{-cf(L)}$. The upper bound obtained
+from (J6) is
+$E(X)\le(0.027/((3/5)c)+o(1))W(L)$, whereas (J5) gives
+$J_{K_{\mathrm{JY}}(n)}(n)\ge(2c-o(1))W(L)$.
+Since $2c=0.3706>0.027/((3/5)c)$, the counterpart of (J9) holds
+with $K_{\mathrm{JY}}$ using this supplier alone. A specified parameter
+formula does not specify the first valid integer cutoff.
+
+### A fixed zero-free half-plane as a separate input
+
+Suppose $1/2<\beta<1$ and $\zeta(s)\ne0$ for $\Re s>\beta$.
+The integrated explicit formula supplies
+
+$$
+\int_2^t(\Psi(u)-u)\,du
+=-\sum_\rho\frac{t^{\rho+1}}{\rho(\rho+1)}+O(t).
+\tag{J11}
+$$
+
+For a primary locator, see Adrian Dudek,
+[*On the Riemann Hypothesis and the Difference Between Primes*,
+arXiv:1402.6417v2](https://arxiv.org/pdf/1402.6417v2),
+section 2.1, equations (3)--(4), printed pp.3--4. The formula follows
+by integrating (3); the zero sum is absolutely convergent, with every
+zero counted with multiplicity. Its lower-end constants and linear
+term fit in $O(t)$ without RH. The numerical $12/5$ remainder in
+Dudek's Lemma 4 uses RH and is not used here.
+
+Under the stated half-plane input the zero sum is $O_\beta(t^{\beta+1})$.
+The prime-power difference $\Psi-\vartheta$ contributes
+$O(t^{3/2}(\log t)^2)$ after integration, which is smaller because
+$\beta>1/2$. Consequently
+
+$$
+\int_2^t R(u)\,du=O_\beta(t^{\beta+1}).
+$$
+
+Integrating (J6)'s tail once more by parts gives
+$E(X)\le O_\beta(X^{\beta-1}/L)$. For its separate endpoint term,
+the unconditional $R(X)=O(X)$ together with (J7) already suffices;
+no pointwise error has been inferred from an integrated estimate.
+Taking
+
+$$
+K_\beta(n)=X^{2-\beta}\frac L{\log L}
+\tag{J12}
+$$
+
+in (J5) gives
+$J_{K_\beta(n)}(n)\ge(1-\beta-o(1))
+X^{\beta-1}(\log L)/L$. Thus, under this half-plane assumption,
+there is an $n_0(\beta)$ beyond which every integer $n$ and every real
+$1<\kappa\le K_\beta(n)$ satisfy the normalized inequality.
+
+The [Liu v2 source card](../Analytic/liu2026quasirh.md),
+Theorem 27.1, reports such a half-plane with
+$\beta_0=0.874957019420098946\ldots$. Applied as that new preprint's
+stated analytic input, (J12) has exponent
+$2-\beta_0=1.125042980579901054\ldots$. This is a conditional use of
+the reported supplier: neither its analytic dependency chain nor its
+external Lean code has been independently verified here. It still
+does not reach the $3/2$ diagonal.
+
+## The remaining signed inequality at the RH scale
+
+For $K(n)=\lceil X^{3/2}\rceil$, (J5) gives
+
+$$
+J_{K(n)}(n)\ge(1/2-o(1))X^{-1/2}.
+\tag{J13}
+$$
+
+One sufficient missing estimate is therefore a fixed $\delta>0$ with
+
+$$
+E(X)\le(1/2-\delta)X^{-1/2}\quad\text{eventually}.
+\tag{J14}
+$$
+
+Alternatively one can retain the information discarded in (J3)--(J5)
+and seek $H_X<J_{K(n)}(n)$ directly for $X=\log n$.
+Equation (J14) is a sufficient condition, not a necessary one.
+The unconditional estimates used above, and the reported
+$\beta_0$ half-plane, supply upper bounds too coarse to establish it.
+That does not assert that the actual signed error exceeds this scale.
+The joint estimates are combined paper applications of the cited
+suppliers, without an originality or Lean-verification claim; the
+diagonal sign and RH remain unresolved.
+
 ## Consequences for the FIB and same-source Robin routes
 
 The parameter $k$ in the LCM expansion counts divisor entries; the
@@ -491,6 +799,11 @@ identifying either parameter with the other or with a Fourier cutoff.
 On a FIB address, (D1) is evaluated at the actual decoded integer.
 The occupancy and seam rules alone supply neither the prime-power
 factors in (L1) nor the sign required in (D3).
+For the joint route (J1)--(J5), a FIB address must retain or recover
+the same decoded integer's actual $v_p(n)$ and $X=\log n$, including
+whether each prime in the relevant band is absent, occurs once, or is
+repeated. Address depth and interval-length conservation do not supply
+these arithmetic deficits.
 Its normalized extremizers in section 4 likewise optimize a different
 function from the classical strict CA stock. Appendix A, printed
 pp.21--22, gives an explicit obstruction to using unnormalized
