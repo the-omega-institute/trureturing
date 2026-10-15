@@ -94,4 +94,78 @@ noncomputable def every_missing_prefix_obstruction_registration : LeanInformatio
 #print axioms family
 #print axioms every_missing_prefix_obstruction_registration
 
+abbrev separatorSignature : Signature where
+  Params := Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Reply
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def separatorActual : Realization separatorSignature :=
+  realize separatorSignature (fun _ q u => readout q u) (fun e => nomatch e)
+
+def separatorBad : Realization separatorSignature :=
+  realize separatorSignature (fun _ _ _ => .alpha) (fun e => nomatch e)
+
+abbrev separatorArena : Arena where
+  signature := separatorSignature
+  Law R := ∀ r : Address,
+    R.readout () r (substitution^[NativeRankedNavigationCompiler.pathCost r+1] (.of true)) = .beta ∧
+    R.readout () r (substitution^[NativeRankedNavigationCompiler.pathCost r+1] (.of false)) = .branch
+
+private theorem separator_bad : ¬ separatorArena.Law separatorBad := by
+  intro h
+  have he := (h []).1
+  cases he
+
+def separatorFamily : Registration separatorArena (type_of% (@atomic_separator)) where
+  actual := separatorActual
+  bridge := Iff.rfl
+  variation := ⟨atomic_separator, separatorBad, separator_bad⟩
+  sensitivity := ⟨fun i => ⟨separatorBad,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, separator_bad⟩, fun i => nomatch i⟩
+  dependence := by
+    intro _
+    refine ⟨[], .of true, .of false, ?_⟩
+    change Reply.alpha ≠ .beta
+    decide
+
+noncomputable def atomic_separator_registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@atomic_separator) (Realization separatorSignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteMenuObstruction.atomic_separator.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteMenuObstruction.separatorFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨separatorArena⟩
+  objectArena := .source ⟨separatorArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source separatorArena ⟨separatorFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize separatorSignature (fun _ q u => readout q u) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteMenuObstruction
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","fn","arg","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms separatorFamily
+#print axioms atomic_separator_registration
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeFiniteMenuObstruction
