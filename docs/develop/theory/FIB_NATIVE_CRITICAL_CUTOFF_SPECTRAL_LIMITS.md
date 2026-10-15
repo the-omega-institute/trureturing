@@ -2238,3 +2238,779 @@ procedure, or many-body stability. None of those assertions is
 needed in (41.2) or (42.2).
 
 ## 追加锚（本行以下为增补区）
+
+
+## 44. The original amplitude boundary and independent coefficient data
+
+**Definition 44.1 (fixed-time response on the whole base).**
+Retain Definition 31.1, the two critical families and every original
+fixed datum, with both signs of $\kappa\to0$. Write
+$\mathscr H_B=L^2(B,d\nu_B)$ and $\mathscr H=L^2(\Omega,d\mu)$.
+The operators below are those of the entire completed forms (25.9),
+not their restrictions:
+
+$$
+\begin{aligned}
+H_{{\rm raw},\kappa}&=L_\kappa-gM_{V_{\kappa,\tau_s}},&
+H_{{\rm unit},\kappa}&=L_\kappa-gM_{W_{\rm unit}(\kappa,\tau_b)},\\
+Jh(q,D)&=(2\pi)^{-1/2}h(q),&
+J^*f(q)&=(2\pi)^{-1/2}\int_{\mathbb T}f(q,D)\,dD,\\
+C_{\sigma,\kappa}(t)&=J^*e^{-tH_{\sigma,\kappa}}J,&
+\mathcal D_{\sigma,\kappa}(t)
+ &=C_{\sigma,\kappa}(2t)-C_{\sigma,\kappa}(t)^2.
+\end{aligned}
+\tag{44.1}
+$$
+
+All fields are bounded at each parameter, and (32.9) bounds them
+uniformly along either critical family. Their selfadjoint generators
+have the original operator domains $D(L_\kappa)$ and form domains
+$\mathcal F_\kappa$, with a common finite lower bound for fixed
+data and $g$; the semigroups act on all of $\mathscr H$. Put, using exactly the
+full-base operators of Definition 36.1,
+
+$$
+S_t=e^{-t\mathcal K_0},\qquad
+T_c(t)=e^{-t\mathcal K_c},\qquad
+F(x)=e^{-x^2/(4\beta)},\qquad
+m_s=c_s\sqrt{4\pi\beta}.
+\tag{44.2}
+$$
+
+Define the following bounded operators independently of the unknown
+native response:
+
+$$
+\begin{aligned}
+A_s(t)&=\frac1{2\pi}\int_{\mathbb R}
+              [T_{gc_sF(x)}(t)-S_t]\,dx,\\
+D_s(t)&=\frac1{2\pi}\int_{\mathbb R}
+              [T_{gc_sF(x)}(t)-S_t]^2\,dx,\\
+B_b(t)&=\frac1{2\pi}\int_{\mathbb T}
+                    T_{gc_0G_{\beta b}(D)}(t)\,dD,\\
+V_b(t)&=\frac1{2\pi}\int_{\mathbb T}
+             [T_{gc_0G_{\beta b}(D)}(t)-B_b(t)]^2\,dD.
+\end{aligned}
+\tag{44.3}
+$$
+
+These are norm Bochner integrals. Indeed bounded-multiplier Duhamel
+estimates give, for $0\le c\le c_{\max}$,
+
+$$
+\|T_c(t)-S_t\|
+ \le t c\|\phi\|_\infty e^{tc_{\max}\|\phi\|_\infty}.
+\tag{44.4}
+$$
+
+Consequently the first two integrands are dominated in norm by
+constants times $F$ and $F^2$, respectively. The circle integrands
+are norm continuous. In particular $D_s(t)$ and $V_b(t)$ are positive
+operators. All modes $(n,m)$ of (36.1) remain in (44.3).
+
+**Theorem 44.2 (native fixed-time limits and the sharp raw scale).**
+For every fixed $t>0$, every fixed original $s\in\mathbb R$,
+$b>0$, $g>0$ and model datum, through both signs, the following
+limits hold strongly on the entire space $\mathscr H_B$:
+
+$$
+\begin{aligned}
+C_{{\rm raw},\kappa}(t)&\longrightarrow S_t,&
+\frac{C_{{\rm raw},\kappa}(t)-S_t}{r_s}
+ &\longrightarrow A_s(t),\\
+\frac{\mathcal D_{{\rm raw},\kappa}(t)}{r_s}
+ &\longrightarrow D_s(t),&
+C_{{\rm unit},\kappa}(t)&\longrightarrow B_b(t),\\
+\mathcal D_{{\rm unit},\kappa}(t)&\longrightarrow V_b(t).
+\end{aligned}
+\tag{44.5}
+$$
+
+Strong convergence here means convergence on each fixed base $L^2$
+input, without a visible-mode or smoothness restriction. The scaled
+raw operator families in (44.5) are uniformly bounded. On the fixed
+unit base vector
+
+$$
+h_*(k,\theta,v)=\frac{\phi(k)}{2\pi}
+\tag{44.6}
+$$
+
+which belongs to $D(\mathcal K_c)$ for every fixed $c\ge0$ by
+(36.1), one has, for every such $t$,
+
+$$
+\langle A_s(t)h_*,h_*\rangle>0,\qquad
+\langle D_s(t)h_*,h_*\rangle>0,\qquad
+\langle V_b(t)h_*,h_*\rangle>0.
+\tag{44.7}
+$$
+
+Thus $r_s=|\kappa|\sqrt{\tau_s}$ is the first nonzero raw correction
+and equal-step defect scale on this declared test. The leading raw
+family is autonomous, but its first correction contains a nonzero
+composition defect. The unit limiting family fails the equal-step
+semigroup law at every positive time. No small-coupling hypothesis
+is imposed. The proof is given in §§45--47.
+
+## 45. Native error control at the field-width scale
+
+**Lemma 45.1 (an integrated native remainder and its boundary estimate).**
+For the raw field set
+
+$$
+P_\kappa(q,D)=c_s\phi(k)F(D/r_s),
+\qquad -\pi\le D\le\pi,
+\tag{45.1}
+$$
+
+with periodic interpretation. Its values match at the seam; no
+regularity of its derivative at that seam is needed. Then
+
+$$
+\sup_{q\in B}\int_{\mathbb T}
+       |V_{\kappa,\tau_s}(q,D)-P_\kappa(q,D)|\,dD=o(r_s),
+\qquad
+\sup_q\int_{\mathbb T}V_{\kappa,\tau_s}(q,D)\,dD=O(r_s).
+\tag{45.2}
+$$
+
+If $C^P_\kappa(t)=J^*e^{-t(L_\kappa-gM_{P_\kappa})}J$, then,
+in operator norm on the whole base,
+
+$$
+\|C_{{\rm raw},\kappa}(t)-C^P_\kappa(t)\|=o(r_s).
+\tag{45.3}
+$$
+
+Proof. The exact marginal identity [G, (23.4)] sets $j=0$ in
+[G, (26.13)]. The zero visible mode is the scalar killed height
+kernel. Its sine expansion and the uniformly separated nonzero
+visible modes give, uniformly on $B$,
+
+$$
+\begin{aligned}
+\overline V_{\kappa,\tau_s}(q)
+ &=\frac{\phi(k_0)\phi(k)}{\lambda(2\pi)^2}
+       e^{-\lambda\tau_s}+o(e^{-\lambda\tau_s}),\\
+\frac1{r_s}\int_{\mathbb T}V_{\kappa,\tau_s}(q,D)\,dD
+ &\longrightarrow m_s\phi(k).
+\end{aligned}
+\tag{45.4}
+$$
+
+For the first line, (26.12) with $(n,m)\ne(0,0)$ and $j=0$
+has a summable bound $Ce^{-(\lambda+d)t}$ after decreasing a
+fixed $d>0$; the higher height modes decay at least as
+$e^{-4\lambda t}$. Time integration preserves these relative
+errors. The second line uses (32.14); its coefficient is
+$\phi(k_0)e^{-\lambda s}/((2\pi)^2\sqrt\lambda)
+ =c_s\sqrt{4\pi\beta}$.
+
+For each fixed $R$, (32.9) gives
+
+$$
+\sup_{q,\ |x|\le R}
+ |V_{\kappa,\tau_s}(q,r_sx)-c_s\phi(k)F(x)|\longrightarrow0.
+\tag{45.5}
+$$
+
+Both fields in (45.1)--(45.5) are nonnegative. Their total
+$D$ integrals divided by $r_s$ converge uniformly to the same
+$m_s\phi(k)$. Their integrals on $|D|\le Rr_s$, divided by
+$r_s$, also converge uniformly to the same
+$c_s\phi(k)\int_{-R}^R F(x)dx$. Subtracting gives
+
+$$
+\limsup_{\kappa\to0}\frac1{r_s}\sup_q
+ \int_{|D|>Rr_s}V_{\kappa,\tau_s}(q,D)\,dD
+ \le c_s\|\phi\|_\infty\int_{|x|>R}F(x)dx.
+\tag{45.6}
+$$
+
+The model has the same tail bound. On the inner interval (45.5)
+controls the absolute difference by $o(r_s)$ for fixed $R$.
+Taking the parameter limit and then $R\to\infty$ proves (45.2).
+This argument needs neither a rate in (32.9) nor an estimate
+obtained by dividing its uniform $o(1)$ by $r_s$.
+
+Here is the compression estimate used to pass from (45.2) to
+(45.3). The free semigroup $U_\kappa(t)=e^{-tL_\kappa}$ is positive,
+and exactly
+$U_\kappa(t)J=J\overline S_\kappa(t)$, where
+$\overline S_\kappa(t)=e^{-t\overline L_\kappa}$ on the complete
+base domain [G, (23.3)--(23.5)]. For bounded real fields
+$0\le W_1,W_2\le M$, Trotter's formula gives
+
+$$
+|e^{-t(L_\kappa-gM_{W_i})}Jh|
+ \le e^{gMt}J\overline S_\kappa(t)|h|.
+\tag{45.7}
+$$
+
+This is the bounded selfadjoint, semibounded case of Teschl's
+Theorem 5.11; bounded multiplication leaves the operator domain
+unchanged, so its hypotheses hold. Duhamel's formula, tested between
+$Jz$ and $Jh$, and (45.7) bound the compressed difference by
+
+$$
+\begin{aligned}
+&\left|\left\langle
+ J^*\bigl[e^{-t(L_\kappa-gM_{W_1})}
+          -e^{-t(L_\kappa-gM_{W_2})}\bigr]Jh,z
+ \right\rangle\right|\\
+&\quad\le\frac{g e^{gMt}}{2\pi}
+ \int_0^t\int_B
+   (\overline S_\kappa(u)|h|)(q)
+   (\overline S_\kappa(t-u)|z|)(q)
+   \left[\int_{\mathbb T}|W_1-W_2|(q,D)dD\right]d\nu_B\,du\\
+&\quad\le\frac{gt e^{gMt}}{2\pi}
+ \sup_q\int_{\mathbb T}|W_1-W_2|(q,D)dD\,\|h\|_2\|z\|_2.
+\end{aligned}
+\tag{45.8}
+$$
+
+The last step uses the base $L^2$ contraction and Cauchy--Schwarz.
+The common bound $M$ is supplied by (32.9). Taking the supremum
+over unit $h,z$ and using (45.2) proves (45.3). This controls the
+actual full field, including its nonzero visible frequencies, at
+the required native scale. The auxiliary field (45.1) has not
+been declared the original source. $\square$
+
+## 46. The raw response and its first returning hidden component
+
+**Theorem 46.1 (raw expansion with all native cross terms).**
+The raw assertions of (44.5)--(44.7) hold with the coefficients
+(44.3).
+
+Proof. First, the free base difference is smaller than the proposed
+scale:
+
+$$
+\|\overline S_\kappa(t)-S_t\|=O_t(a)=o(r_s).
+\tag{46.1}
+$$
+
+To see the operator-norm estimate, use the exact complete Fourier
+sum on the base. In its $(n,m)$ block the two scalar operators
+have the same domain $H^2(I)\cap H_0^1(I)$ and their bounded
+potentials differ by at most $Ca(n^2+m^2)$. The coefficient
+functions converge in supremum norm at rate $O(a)$ by (25.4).
+Both scalar bottoms are at least
+$\lambda+c\Psi(\sqrt{n^2+m^2})$ by [G, (26.6)] with $j=0$,
+including $\kappa=0$ as in §36. Scalar Duhamel estimates therefore
+give a block difference at most
+
+$$
+Ca t(n^2+m^2)e^{-t[\lambda+c\Psi(\sqrt{n^2+m^2})]}.
+\tag{46.2}
+$$
+
+Its supremum over the lattice is $O_t(a)$. The zero block agrees
+exactly. This proves (46.1) on the complete base, without promoting
+an interior form core to an operator core.
+
+For the auxiliary field (45.1) we now compute its compressed
+response. The following representation uses precisely the native
+killed law [G, (16.4), (25.4)] from a starting point $q=(k,\theta,v)$:
+
+$$
+\begin{aligned}
+K_u&=k+\sqrt2\varepsilon B_u^1,\qquad
+ \zeta=\inf\{u:K_u\notin I\},\\
+q_{\kappa,u}
+ &=\left(K_u,\theta+\sqrt2\int_0^u A_\kappa(K_w)dB_w^2,
+                    v+\sqrt2\int_0^u B_\kappa(K_w)dB_w^2\right),\\
+Y_{\kappa,u}&=\sqrt2\int_0^u b_\kappa(K_w)dB_w^2,\qquad
+D_u=D+\kappa Y_{\kappa,u}\pmod {2\pi}.
+\end{aligned}
+\tag{46.3}
+$$
+
+The phase integrals are stopped at $\zeta$ when necessary. The weights
+$R_\kappa$ and $R_0$ below are defined on $\{t<\zeta\}$ by their
+displayed formulas and set to zero on $\{\zeta\le t\}$. Both visible
+phase entries are read modulo $2\pi$. The two
+original Brownian motions are used throughout, and the same $B^2$
+drives all three angular increments. Thus (46.3) retains every
+cross term in the original square $|Q_\kappa f|^2$.
+The free-law/Friedrichs correspondence and its marginal are those
+of [G, §23]. The bounded-potential path formula used here follows
+by applying the Trotter product formula to this killed free law:
+the product weights are exponentials of time Riemann sums, which
+converge along continuous surviving paths. Their absolute values
+are bounded by $e^{gMt}$, so bounded convergence identifies the
+formula first on bounded continuous inputs and then on $L^2$.
+Only bounded continuous potentials are needed below.
+
+Let $L=2\pi/r_s$, let $F_L$ denote the periodic function equal to
+$F$ on $[-L/2,L/2]$, and put
+$\eta_\kappa=\kappa/r_s$, so $|\eta_\kappa|=\tau_s^{-1/2}\to0$.
+Integrating the initial $D$ in (44.1), then changing variables
+$D=r_sx$, gives exactly
+
+$$
+\begin{aligned}
+\frac{[C^P_\kappa(t)-\overline S_\kappa(t)]h(q)}{r_s}
+ &=\mathbb E_q\left[
+       R_\kappa h(q_{\kappa,t});\ t<\zeta\right],\\
+R_\kappa
+ &=\frac1{2\pi}\int_{-L/2}^{L/2}
+ \left\{\exp\left(gc_s\int_0^t
+       \phi(K_u)F_L(x+\eta_\kappa Y_{\kappa,u})du\right)-1\right\}dx.
+\end{aligned}
+\tag{46.4}
+$$
+
+This exact formula has already integrated the entire hidden circle;
+no spectral-index expansion or oscillator approximation is involved.
+If $M_0=gc_s\|\phi\|_\infty$, the inequality
+$e^z-1\le e^{M_0t}z$ for $0\le z\le M_0t$ and translation
+invariance on that circle give the deterministic bound
+
+$$
+0\le R_\kappa\le
+ \frac{gc_s t\|\phi\|_\infty e^{M_0t}}{2\pi}
+                     \int_{\mathbb R}F(x)dx=:K_t.
+\tag{46.5}
+$$
+
+Consequently the operators on the first line of (46.4) have norm
+at most $K_t$, since the right side is dominated by
+$K_t\overline S_\kappa(t)|h|$.
+
+Define, on the same killed height paths,
+
+$$
+R_0=\frac1{2\pi}\int_{\mathbb R}
+ \left\{\exp\left(gc_sF(x)\int_0^t\phi(K_u)du\right)-1\right\}dx.
+\tag{46.6}
+$$
+
+Then $\mathbb E_q|R_\kappa-R_0|\to0$, uniformly in the starting
+point. Here are bounds that justify both the expanding circle and
+the moving hidden phase. The total variation of $F_L$ on its
+circle is at most $\|F'\|_{L^1(\mathbb R)}$. Hence
+
+$$
+\int_{-L/2}^{L/2}|F_L(x+z)-F_L(x)|dx
+ \le |z|\|F'\|_1.
+\tag{46.7}
+$$
+
+The stopped stochastic integral in (46.3) satisfies
+$\mathbb E_q|Y_{\kappa,u}|\le C\sqrt u$, uniformly for $u\le t$,
+by its isometry and the uniform bound on $b_\kappa$. The exponential
+is Lipschitz on $[0,M_0t]$. Replacing each shifted $F_L$ in
+(46.4) by the unshifted one therefore changes $R_\kappa$ in
+expected absolute value by at most $C_t|\eta_\kappa|$.
+Extending the remaining unshifted integral from $[-L/2,L/2]$ to
+$\mathbb R$ costs at most
+$C_t\int_{|x|>L/2}F(x)dx\to0$. This proves the assertion.
+In particular these errors are errors of the already divided
+response in (46.4), rather than an unscaled error divided later.
+
+The base angular increments in $q_{\kappa,t}$ converge to those
+in $q_{0,t}$ in mean square, uniformly in the starting point,
+because $A_\kappa-A_0$ and $B_\kappa-B_0$ are $O(a)$ uniformly.
+The height path and its two-sided killing time agree exactly.
+For bounded smooth base inputs, (46.5)--(46.7) therefore show
+uniform, hence base $L^2$, convergence of (46.4) to
+
+$$
+\mathbb E_q[R_0h(q_{0,t});\ t<\zeta]
+ =\frac1{2\pi}\int_{\mathbb R}
+       [T_{gc_sF(x)}(t)-S_t]h(q)dx=A_s(t)h(q).
+\tag{46.8}
+$$
+
+The equality uses the same bounded-potential path formula on the
+actual base operator $\mathcal K_c$ of §36. Bounded smooth inputs
+with compact height support are dense in $\mathscr H_B$.
+The uniform operator bound (46.5) and boundedness of $A_s(t)$
+extend (46.8) to every fixed base $L^2$ input. Combining it with
+(45.3) and (46.1) proves the raw response expansion in (44.5),
+including its uniform scaled bound and both signs.
+
+Write $\Delta_x(t)=T_{gc_sF(x)}(t)-S_t$. Strong expansion of the
+bounded products, using the uniform scaled bound just proved, gives
+
+$$
+\begin{aligned}
+\frac{\mathcal D_{{\rm raw},\kappa}(t)}{r_s}
+ &\longrightarrow A_s(2t)-S_tA_s(t)-A_s(t)S_t\\
+ &=\frac1{2\pi}\int_{\mathbb R}\Delta_x(t)^2dx=D_s(t).
+\end{aligned}
+\tag{46.9}
+$$
+
+The second identity follows from the semigroup law of each fixed
+$T_c$ and $S$: the integrand before simplification is
+$T_c(t)^2-S_t^2-S_t(T_c(t)-S_t)-(T_c(t)-S_t)S_t
+ =(T_c(t)-S_t)^2$. No commutation of $T_c(t)$ with $S_t$
+is assumed. Their norm integrability follows from (44.4).
+
+Finally, on the angular-constant vector $h_*$, the killed height
+path formula reads
+
+$$
+T_c(t)h_*(q)=\frac1{2\pi}\mathbb E_k\left[
+ e^{c\int_0^t\phi(K_u)du}\phi(K_t);\ t<\zeta\right].
+\tag{46.10}
+$$
+
+For $c>0$ this is strictly larger than $S_th_*(q)$ at every
+interior height: survival has positive probability and $\phi$ is
+positive throughout $I$. Thus
+$\langle A_s(t)h_*,h_*\rangle>0$ and
+
+$$
+\langle D_s(t)h_*,h_*\rangle
+ =\frac1{2\pi}\int_{\mathbb R}\|\Delta_x(t)h_*\|_2^2dx>0.
+\tag{46.11}
+$$
+
+Together with (44.5), these strict inequalities prove that neither
+raw leading coefficient disappears on this fixed nonzero test.
+The field width $r_s$ differs from both the ground width
+$a\tau_s^{1/4}$ and the spacing scale $\tau_s^{-1/2}$ of §38.
+Their ratios are not used as error estimates. $\square$
+
+## 47. The complete unit boundary limit and strict finite-time variance
+
+**Theorem 47.1 (unit limit without a coupling restriction).**
+The unit assertions of (44.5)--(44.7) hold on the whole base.
+Moreover, for every fixed $t>0$,
+
+$$
+B_b(2t)-B_b(t)^2=V_b(t)\ge0,
+\qquad \langle V_b(t)h_*,h_*\rangle>0.
+\tag{47.1}
+$$
+
+Proof. By (32.9), the original unit field converges uniformly on
+the full cylinder to $c_0\phi(k)G_{\beta b}(D)$. The potentials
+are uniformly bounded; all original positive $g$ are allowed.
+Use (46.3) in the bounded-potential path formula. On each fixed
+time interval the hidden displacement $\kappa Y_{\kappa,u}$
+tends to zero in expected supremum, by the martingale maximal
+inequality and bounded $b_\kappa$. The base angular increments
+converge to those at zero as before. Uniform continuity of the
+circle heat density and uniform field convergence show, for bounded
+smooth $h$, convergence of the compressed path formula to
+
+$$
+\frac1{2\pi}\int_{\mathbb T}\mathbb E_q\left[
+ \exp\left(gc_0G_{\beta b}(D)\int_0^t\phi(K_u)du\right)
+ h(q_{0,t});\ t<\zeta\right]dD=B_b(t)h(q).
+\tag{47.2}
+$$
+
+The convergence is uniform in $q$. The uniform semigroup bound
+$e^{gMt}$ and density of those inputs extend it strongly to all
+$\mathscr H_B$. Formula (47.2) is the boundary compression of the
+direct integral of $T_{gc_0G_{\beta b}(D)}(t)$ over the unchanged
+raw hidden circle. It is not evolution in the averaged potential.
+
+Uniform boundedness permits the strong limit of the squared
+compressed operators. With $T_D=T_{gc_0G_{\beta b}(D)}(t)$,
+selfadjointness and the semigroup law in each fixed fibre give
+
+$$
+\begin{aligned}
+B_b(2t)-B_b(t)^2
+ &=\frac1{2\pi}\int_{\mathbb T}T_D^2dD-B_b(t)^2\\
+ &=\frac1{2\pi}\int_{\mathbb T}(T_D-B_b(t))^2dD.
+\end{aligned}
+\tag{47.3}
+$$
+
+Thus the defect equals $V_b(t)$. This is the native evaluation of
+the compression identity already owned by [Free quotient,
+Proposition 5.1](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md),
+not a transfer of the singular attractive hypotheses in
+[Observation quotient, §6](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md).
+Every semigroup here comes from the actual bounded critical field.
+
+For strictness, (46.10) shows that $c\mapsto T_c(t)h_*$ is strictly
+increasing pointwise on the interior for every $t>0$. The circle
+function $G_{\beta b}$ is continuous and nonconstant for every
+finite $b>0$, since its first Fourier coefficient is nonzero.
+Therefore $D\mapsto T_Dh_*$ is a continuous, nonconstant
+$\mathscr H_B$-valued function, and
+
+$$
+\langle V_b(t)h_*,h_*\rangle
+ =\frac1{2\pi}\int_{\mathbb T}
+        \|T_Dh_*-B_b(t)h_*\|_2^2dD>0.
+\tag{47.4}
+$$
+
+This proves strict failure at each fixed positive time, for every
+original $g>0$, and completes the proof of Theorem 44.2. $\square$
+
+## 48. The actual ground pole has vanishing amplitude boundary residue
+
+**Theorem 48.1 (vanishing residue for every normalized actual ground).**
+In either original critical family, through both signs and for every
+fixed original datum and $g>0$, every normalized actual full ground
+$f_{\sigma,\kappa}$ satisfies
+
+$$
+\|J^*f_{\sigma,\kappa}\|_{\mathscr H_B}^2\longrightarrow0.
+\tag{48.1}
+$$
+
+In particular the residue of the actual full ground spectral pole in
+the boundary compression vanishes. This is compatible with all the
+energies, collapsing gaps and ground probability laws of §§33,41--42.
+
+Proof. For $0<\delta<\pi$ let
+$E_\delta=\{D:\rho(D)<\delta\}$. Cauchy--Schwarz in the raw hidden
+coordinate, whose measure on this set is $2\delta$, gives
+
+$$
+\begin{aligned}
+\|J^*(1_{E_\delta}f_{\sigma,\kappa})\|_2
+ &\le\sqrt{\delta/\pi}\,\|1_{E_\delta}f_{\sigma,\kappa}\|_2,\\
+\|J^*f_{\sigma,\kappa}\|_2
+ &\le\sqrt{\delta/\pi}
+       +\|1_{E_\delta^c}f_{\sigma,\kappa}\|_2.
+\end{aligned}
+\tag{48.2}
+$$
+
+The second term tends to zero for each fixed $\delta$ by the
+actual-ground concentration of Theorem 33.2. Letting
+$\delta\downarrow0$ proves (48.1), including arbitrary ground phases.
+This uses unscaled probability concentration and the $L^2$ norm;
+it does not assume amplitude $L^1$ convergence on an expanding
+rescaled chart, and claims no sharp residue rate.
+
+For small parameters the actual ground is simple by (41.2).
+Its rank-one spectral projection compresses to
+$|J^*f_{\sigma,\kappa}\rangle\langle J^*f_{\sigma,\kappa}|$,
+whose norm is exactly (48.1). Its fixed-time contribution is that
+operator times $e^{-t\Lambda_{\sigma,1}}$. The ground energies have
+finite limits (33.1), so this contribution also tends to zero in
+norm. A normalized probability concentrated in a shrinking hidden
+set can have unit mass while its amplitude integral tends to zero;
+(48.2) proves precisely this distinction for the actual grounds.
+
+The fixed-index eigenvalue laws specify pole locations and spacings,
+whereas (48.1) specifies an overlap with the fixed boundary isometry.
+Those are different data. Equations (46.4) and (47.2) determine the
+fixed-time boundary limits without summing fixed-index eigenvalue
+asymptotics. Hence neither the raw free leading response nor the
+unit fibre average contradicts the published nonfree full spectral
+bottom or its shrinking ground law. No interchange with an
+uncontrolled spectral tail is required. $\square$
+
+## 49. Complete restriction, actual zero leaf and the composition boundary
+
+**Theorem 49.1 (same-source restrictions and distinct limiting responses).**
+Let $R_{\sigma,\kappa}(t)$ be the semigroup of the complete
+$D$-independent restriction, transported to $\mathscr H_B$ by $J$.
+Let $Z_{\sigma,\kappa}(t)$ be the attractive semigroup of the actual
+native $\kappa=0$ leaf with unit pole $q_0$, coupling $g$ and cutoff
+$\tau_s$ or $\tau_b$ indexed by the same $a$. These are different
+constructions. Their whole-base strong limits are
+
+$$
+\begin{array}{c|ccc}
+ &\text{projected full evolution}&\text{complete restriction}
+                       &\text{actual zero leaf}\\ \hline
+\mathrm{raw}&S_t&S_t&S_t\\
+\mathrm{unit}&B_b(t)&T_{gc_0/(2\pi)}(t)&T_{gc_0}(t).
+\end{array}
+\tag{49.1}
+$$
+
+For the raw family this comparison can also be made at its first
+scale. Define the fixed operator
+
+$$
+\mathcal L_t=\int_0^t S_{t-u}M_\phi S_u\,du.
+\tag{49.2}
+$$
+
+Then strongly on every fixed base input,
+
+$$
+\begin{aligned}
+R_{{\rm raw},\kappa}(t)
+ &=S_t+r_s\frac{gm_s}{2\pi}\mathcal L_t+o(r_s),\\
+Z_{{\rm raw},\kappa}(t)
+ &=S_t+r_s gm_s\mathcal L_t+o(r_s).
+\end{aligned}
+\tag{49.3}
+$$
+
+On $h_*$ the difference between the projected full raw coefficient
+$A_s(t)$ and the restricted coefficient is strictly positive in
+its pairing with $h_*$. Similarly
+
+$$
+\langle[B_b(t)-T_{gc_0/(2\pi)}(t)]h_*,h_*\rangle>0.
+\tag{49.4}
+$$
+
+Thus restriction does not recover the full projected response, even
+when their raw leading limits agree.
+
+Proof. The exact complete-domain restriction is [G, (23.5)]:
+
+$$
+\overline T_\kappa[h]
+ -\frac g{2\pi}\int_B\overline W_\kappa(q)|h(q)|^2d\nu_B,
+\qquad h\in\overline{\mathcal F}_\kappa,
+\tag{49.5}
+$$
+
+where $\overline W_\kappa=\int_{\mathbb T}W_\kappa\,dD$ is an
+integral, not an average. Its normalization remains $g/(2\pi)$.
+The actual leaf has the complete domain $\overline{\mathcal F}_0$
+and its own field $V_{0,\tau}$, divided by $S(\tau)$ for unit
+charge, with coupling $g$. Equations (34.3)--(34.5) give the
+unit multiplier limits $c_0\phi$ in both constructions; bounded
+perturbation and (46.1) prove their two unit limits in (49.1).
+The raw integrated asymptotic (45.4) is
+$\overline V_{\kappa,\tau_s}=r_s m_s\phi+o(r_s)$ uniformly.
+The same scalar sine and nonzero visible-mode argument at the
+actual leaf gives $V_{0,\tau_s}=r_s m_s\phi+o(r_s)$ uniformly.
+
+The perturbing raw multipliers in these two comparison problems
+are $O(r_s)$. Their second and higher bounded-potential Duhamel
+terms are $O(r_s^2)$. The first terms, (46.1), and the uniform
+field asymptotics therefore prove (49.3). In the first terms the
+uniformly bounded free factors converge strongly at each integration
+time, so dominated integration gives $\mathcal L_t$. The free
+zeroth term differs from $S_t$ by $O_t(a)=o(r_s)$.
+This also proves the raw comparison limits in (49.1).
+
+For strictness in the raw coefficient, insert (46.10) into (44.3).
+On surviving height paths $\int_0^t\phi(K_u)du>0$ and
+$gc_sF(x)>0$. The strict inequality $e^z-1>z$ for $z>0$
+shows that $A_s(t)h_*$ strictly exceeds its term linear in the
+potential. The latter is
+$gc_s(2\pi)^{-1}\int_{\mathbb R}F(x)dx\,\mathcal L_t h_*
+ =gm_s(2\pi)^{-1}\mathcal L_t h_*$, proving the claimed pairing.
+For the unit family, strict Jensen inequality in $D$, on the same
+surviving paths, gives
+
+$$
+\frac1{2\pi}\int_{\mathbb T}
+ e^{gc_0G_{\beta b}(D)\int_0^t\phi(K_u)du}\,dD
+ >e^{(gc_0/(2\pi))\int_0^t\phi(K_u)du},
+\tag{49.6}
+$$
+
+because $\int G_{\beta b}dD=1$ and $G_{\beta b}$ is nonconstant.
+Multiplication by the positive terminal $\phi(K_t)/(2\pi)$ and
+expectation prove (49.4).
+
+The source distinctions are exactly Theorem 34.2. At the unit cutoff
+the original full conditional source has density
+$\phi(k)G_{\beta b}(D)/(J_\phi(2\pi)^2)$ relative to $d\mu$.
+The actual leaf has raw measure $d\nu_B$ and its embedded source
+is supported on $D=0$. The hidden-Haar-smeared source associated
+with (49.5) has density
+$\phi(k)/(J_\phi(2\pi)^3)$ relative to $d\mu$.
+At every finite $b$ these differ. In the raw regime the original
+conditional source has width $r_s$ and law (32.11); its field
+mass tends to zero and its total source charge is (32.12).
+The common weak unscaled source limit does not identify its
+response coefficient with either comparison in (49.3).
+All these statements retain the original time, raw measures,
+both absorbing faces, controls, covariance and preparations.
+$\square$
+
+**Proposition 49.2 (analytic memory, supplier hypotheses and scope).**
+The defects in (44.5) decide failure of composition through the
+original analytic amplitude boundary. The strict unit limiting
+defect rules out a time-homogeneous semigroup on this boundary
+with the same responses. Concatenating the same full evolutions
+without intermediate erasure requires information distinguishing
+the hidden components lost by $J^*$.
+In the raw family the leading limit composes, while reproduction
+through its first nonzero correction has the nonzero defect
+$r_sD_s(t)+o(r_s)$ on the test (44.6). These conclusions assert
+neither a minimal finite hidden-state realization nor a physical
+projection, reset, preparation or acquisition procedure.
+
+Proof. Put $\Pi=JJ^*$. The exact bounded compression identity of
+[Free quotient, (5.3)] applies at each actual cutoff because the
+full attractive operator is selfadjoint and semibounded:
+
+$$
+\mathcal D_{\sigma,\kappa}(t)
+ =[(1-\Pi)e^{-tH_{\sigma,\kappa}}J]^*
+       [(1-\Pi)e^{-tH_{\sigma,\kappa}}J].
+\tag{49.7}
+$$
+
+Composing the projected response twice inserts $\Pi$ at the
+intermediate time, and (49.7) measures the lost returning
+component. Equations (46.9) and (47.3)--(47.4) evaluate it at the
+original fixed positive times, rather than only near $t=0$.
+They give the stated obstruction and its raw order. An extra
+intermediate projection is a mathematical operation in this test;
+no native actuator implementing it is supplied.
+
+The analytic tools used here have the following precise roles.
+Teschl's [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+Theorems 5.11 and 6.24, supplies the semibounded Trotter formula
+and closed bounded-multiplier perturbations (relative form bound
+zero). The original complete forms and common lower bounds are
+specified in Definition 44.1. Scalar common operator domains in
+(46.2) are the explicit Dirichlet domains, not an assertion about
+an interior operator core. Theorem 6.31 of that text requires
+strong resolvent convergence for its functional-calculus conclusion;
+no such conclusion is inferred merely from convergence of interior
+forms here. The direct native path estimates (46.4)--(46.8) and
+(47.2) supply the required fixed-time convergence instead.
+
+Arendt--Dier--Ouhabaz,
+[arXiv:1303.1167v1, Theorem 2.2](https://arxiv.org/pdf/1303.1167v1),
+requires projection to preserve the form domain and the stated
+cross-form inequality for invariance of a closed convex set.
+The free averaging in [G, §23] preserves the complete free form
+domain, but that fact is no invariance assertion for the attractive
+form. Its bounded hidden-dependent multiplier and the strict
+native defects above preclude transferring free invariance to the
+responses under study. The older [Observation quotient,
+Theorem 6.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+has full dimension three, base dimension two and a strict
+semiboundedness hypothesis. The nearby singular restricted result
+in its Theorem 11.1 has its own small-coupling hypothesis.
+Neither supplies the present four-coordinate full evolution or
+its critical asymptotics. The fixed-pole strict-gap comparison
+retains its separate stable singular-form contract as well.
+
+Gouasmi--Parish--Duraisamy,
+[arXiv:1611.06277v2, §2.1, (2.1)--(2.3)](https://arxiv.org/pdf/1611.06277v2),
+distinguishes an instantaneous projected term, hidden initial data
+and subsequent feedback. That finite-dimensional elimination
+example explains the interpretation of an obstruction to
+composition; it supplies no native coefficient, field error,
+semigroup domain or complexity theorem. The concrete native
+content here is (45.2)--(46.9), the all-base unit correspondence
+(47.2), the strict tests and the actual-ground residue (48.1).
+These are repository-derived applications of classical analytic
+tools, with the published spectra and ground laws reused exactly;
+no exhaustive novelty assertion is made.
+
+Finally $J^*$ takes the normalized amplitude integral in (44.1);
+it is not marginalization of $|f|^2$. The latter retains unit ground probability and has the
+shrinking laws of §42, while the former has (48.1). Neither
+operation specifies a physical interface. Three retained state
+coordinates, hidden state capacity and physical spatial axes are
+different assertions. The mathematical composition obstruction
+gives no physical spatial selection, independent driver, reset,
+finite-memory dimension, growing-time estimate, acquisition cost
+or computational speedup. The statements are for the two original
+critical families and fixed original parameters only; they include
+no further parameter uniformity, sharp residue rate or general
+norm-resolvent claim. $\square$
+
+## 追加锚（本行以下为增补区）

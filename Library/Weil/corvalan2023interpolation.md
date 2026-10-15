@@ -291,8 +291,11 @@ $$
 A proposed supply $E_N\le C(1+\log N)^A$, with one finite $A\ge0$
 and one $C$ for all sufficiently large integers $N$, already entails
 RH by the argument below. The estimate cannot be treated as an
-independently paid, weaker precursor to (I1). This is a one-way strength
-analysis: neither this estimate nor a converse from RH is supplied.
+independently paid, weaker precursor to (I1). This implication is a
+one-way strength analysis. The later classical-error application
+supplies a paper converse only for the every-epsilon subpower version
+of the first proportional block; no fixed polylogarithmic supplier is
+established.
 
 ### Passing integer cutoffs and cells without losing the actual source
 
@@ -421,7 +424,7 @@ Reuse the [existing discrete large-sieve input](../Fourier/montgomery1978largesi
 equation (1), namely Montgomery's Theorem 3, printed p.559, and the
 duality in §4, Lemma 2. The following is a paper application to the
 coefficients and residual of (I10); the classical large sieve is not
-reproved. No unconditional bound for the complete energy is asserted.
+reproved. This reduction alone supplies no bound for the complete energy.
 
 Write $e(u)=\exp(2\pi i u)$ and retain the zero-frequency coefficient
 
@@ -626,21 +629,44 @@ D_{N,\eta,j}(m)=
 B_{N,q,r}e(mr/q).
 $$
 
-Its coefficient energy is at most
-$V_{N,\eta}^{\rm away}$. Its denominators can reach $N$, so the
-large-sieve separation term is $N^2$, even when its numerical angles
-lie in a smaller set. Using the actual weight gives
+Apply the same large sieve separately on dyadic denominator shells
+$Q\le q<2Q$, $Q=2,4,\ldots$, truncated at $N$. On a shell,
+the coefficient argument above gives the uniform allowance
 
 $$
-\sum_j\|D_{N,\eta,j}\|_{I_j}^2
-\ll V_{N,\eta}^{\rm away}
-\sum_j\frac{M_j+N^2}{M_j^2}
-\ll\frac{\log(1+\eta N)}{\eta L^2}.
+V_Q^{\rm away}\ll\frac1{\eta L^2}
+\sum_{Q\le q<2Q}\frac{(q/\varphi(q))^2}{q}
+\ll\frac1{\eta L^2}.
+$$
+
+This includes $\eta Q<1$. On each actual block keep the additional
+$q>Q_j$ restriction: it only decreases that shell's coefficient
+energy. The shell's separation cost is $O(Q^2)$, not $N^2$.
+For the shell response $D_Q$ defined piecewise on these blocks,
+
+$$
+\|D_Q\|^2\ll V_Q^{\rm away}
+\sum_j\frac{M_j+Q^2}{M_j^2}
+\ll\frac1{\eta L^2}\left(\frac1N+\frac{Q^2}{N^2}\right).
+$$
+
+The full weighted norm is on $N\le m\le N^2$. Use its triangle
+inequality across denominator shells only after this estimate.
+There are $O(1+L)$ shells and $\sum_QQ\ll N$, so
+
+$$
+\left(\sum_j\|D_{N,\eta,j}\|_{I_j}^2\right)^{1/2}
+\ll\frac1{\sqrt\eta\,L}
+\left(\frac{1+L}{\sqrt N}+\frac{\sum_QQ}{N}\right)
+\ll\frac1{\sqrt\eta\,L}.
 \tag{I26}
 $$
 
-Indeed, the geometric sum is at most $2/N+4/3\le2$ for $N\ge3$.
-The last block and the endpoint $N^2$ remain included. Define the
+This uses the original large-sieve separation on every shell. It
+avoids the extra logarithm that would result from applying the full
+$N^2$ separation cost after merging all shell energies in (I25).
+No improvement of arbitrary-coefficient separation by angular width
+is assumed. The last block and endpoint $N^2$ remain included. Define the
 retained response, for $m\in I_j$, by
 
 $$
@@ -659,20 +685,22 @@ $$
 \sum_{m=N}^{N^2}\frac{|\mathcal C_{N,\eta}(m)|^2}{m(m+1)}
 \right)^{1/2}\right|
 \ll\frac{N^{-1/4}}L+
-\frac{\sqrt{\log(1+\eta N)}}{\sqrt\eta\,L}.
+\frac1{\sqrt\eta\,L}.
 \tag{I27}
 $$
 
 All constants are independent of $N,\eta$. For example,
 $\eta_N=(4\sqrt{\log N})^{-1}$ lies in $(0,1/4]$ for $N\ge3$,
-and the right side is $O((\log N)^{-1/4})$. Thus an actual shrinking
+and the right side is $O((\log N)^{-3/4})$. Thus an actual shrinking
 angular region, together with the same complete-period mean, retains
 the weighted norm up to a vanishing error. For the asymptotic choice
-$\eta_N=(\log N)^{-a}$, this allowance tends to zero when $0<a<1$;
-at $a=1$ it gives only $O(1)$. If $\eta\le1/N$, all nonzero
-frequencies are deleted and the second term in (I27) has size
-$O(\sqrt N/L)$; taking an arbitrarily narrow angular region does not
-supply a small-error reduction through (I27).
+$\eta_N=(\log N)^{-a}$ this allowance tends to zero when $0<a<2$;
+at $a=2$ it gives only $O(1)$. If $\eta\le1/N$, all nonzero
+frequencies are deleted. The displayed angular allowance is then
+at least $\sqrt N/L$; alternatively the unrestricted coefficient
+bound (I20) gives the allowance $O(\sqrt N/L)$ directly. Taking an
+arbitrarily narrow angular region therefore does not supply a
+small-error reduction through these estimates.
 
 The remaining frequencies satisfy both $q>\sqrt{M_j}$ and
 $\|r/q\|<\eta_N$. They need not be nearly constant over a block:
@@ -706,3 +734,636 @@ five-mode encoding can organize the retained indices without
 supplying their Möbius cancellation. Equations (I25)–(I27) remain
 paper applications of the cited existing inputs, without a new Lean
 declaration or an originality claim.
+
+
+## A numerator cut that follows the observation block
+
+The same supplied inputs pay a narrower restriction on the circular
+numerator $k(r,q)=\min(r,q-r)$, distinct from the angle $k(r,q)/q$.
+For every integer $K\ge1$, the sine estimate used in (I25) gives
+
+$$
+\sum_{\substack{1\le r<q\\(r,q)=1\\k(r,q)>K}}
+|B_{N,q,r}|^2\ll\frac{|b_{N,q}|^2}{K+1},\qquad
+\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1\\k(r,q)>K}}
+|B_{N,q,r}|^2\ll\frac{N}{(K+1)L^2}.
+\tag{I28}
+$$
+
+Indeed, $|1-e(-r/q)|\ge4k(r,q)/q$, and at most two numerators have
+a given positive $k$. Sum the tail of $k^{-2}$ and use the same
+uniform $b_{N,q}$ bound and finite totient moment as in (I20).
+When $K\ge q/2$ the corresponding tail is empty.
+
+Fix $0<b<2$ and use the actual blocks and denominator cutoffs of
+(I23). On block $I_j$, put
+
+$$
+K_j=\left\lceil\frac{N^2}{M_jL^b}\right\rceil.
+$$
+
+Let $G_{N,\eta,b,j}$ be the sum over the frequencies retained in
+$\mathcal C_{N,\eta}$ for which $k(r,q)>K_j$, with their original
+coefficients and phases. Its coefficient energy is bounded by (I28).
+The original $N^{-2}$ separation, the actual weight and
+$K_j+1\ge N^2/(M_jL^b)$ give
+
+$$
+\begin{aligned}
+\sum_j\|G_{N,\eta,b,j}\|_{I_j}^2
+&\ll\sum_j\frac{N(M_j+N^2)}{M_j^2(K_j+1)L^2}\\
+&\ll L^{b-2}\left(\frac{1+\lfloor\log_2N\rfloor}{N}
++\sum_j\frac{N}{M_j}\right)
+\ll L^{b-2}.
+\end{aligned}
+\tag{I29}
+$$
+
+The last geometric sum is at most two, and the other term is
+uniformly bounded for $N\ge3$. Empty frequency sets
+and the final singleton block require no exception.
+
+Define $\mathcal C^{\rm num}_{N,\eta,b}$ on $I_j$ by retaining exactly
+$q>Q_j$, $\|r/q\|<\eta$, and $k(r,q)\le K_j$, together with the
+unchanged $d_N$. The added deletion intersects the previous retained
+set, so no frequency is subtracted twice. Equations (I27)–(I29) give
+
+$$
+\left|\sqrt{E_N}-\|\mathcal C^{\rm num}_{N,\eta,b}\|\right|
+\ll\frac{N^{-1/4}}L+
+\frac1{\sqrt\eta\,L}
++L^{b/2-1}.
+\tag{I30}
+$$
+
+Here the norm is the same weighted norm on the complete interval
+$N\le m\le N^2$. The numerator deletion itself does not require an
+angular restriction: dropping that restriction from its definition
+still gives (I29), and comparison with the denominator-only retained
+response has error $O(N^{-1/4}/L+L^{b/2-1})$.
+
+For example, use $\eta=(4L^{3/2})^{-1}$ and $b=3/2$. The complete
+comparison still costs $O(L^{-1/4})$, while the remaining circular
+numerators also obey $k\le\lceil N/(2^jL^{3/2})\rceil$. For
+$q\asymp N$ this restricts the angle to
+$O(2^{-j}L^{-3/2}+N^{-1})$. This is a further paid restriction,
+including an increasingly small numerator allowance on later blocks;
+it is not a bound for the retained signed norm.
+
+The original mean cannot be removed by rebinding the response at zero.
+Although $R_N(0)=1$ and the exact full expansion can be written as
+$1+\sum B_{N,q,r}(e(mr/q)-1)$, deleting a set in that expression
+would remove $G(m)-G(0)$. Estimate (I29) controls $G(m)$ on the actual
+blocks and does not separately control the constant $G(0)$.
+Keeping the original $d_N$ preserves the paid estimate.
+
+For $q>N/2$ the actual coefficient is
+$b_{N,q}=\mu(q)\log(N/q)/L$. Even after (I30), the earliest block
+contains $m\asymp N$, $k=1$, $q\asymp N$, with reciprocal-phase
+parameter $mk\asymp N$. Results requiring a faster phase do not cover
+that endpoint. The coprimality condition, exact Fourier kernel,
+block-dependent cutoff and mean interaction all remain part of any
+supplier obligation. This is a further application of the same cited
+inputs, without a new supplier theorem, originality claim or Lean
+verification.
+
+
+## Reusing a known centered coefficient family
+
+Ehm's [Gram-matrix and centering source](ehm2024grammatrices.md),
+Section 8.2 and Proposition 8.1, already provides a correction to the
+Selberg coefficients for centering the relevant moments. Its known
+construction need not be reinvented. The linked application compares
+that modified balanced family with the actual family here: the full
+$L^2(0,1)$ norm cost is $O(1/\log N)$, and the difference of the
+square roots of the actual local energies is
+$O(\log N/\sqrt N)$, for any fixed correction constants.
+The centering property additionally requires the source's stated
+linear system. These allowances permit honest transfer of a future
+complete estimate; the source leaves its signed inversion error
+unestimated. They do not reuse the original squarefree Fourier
+support for the modified coefficients, or supply the retained joint
+bound in (I30).
+
+
+## A complete energy allowance from the existing Mertens input
+
+The [Ng source note](../Analytic/ng2004summatorymobius.md#reuse-of-the-unconditional-input)
+already records the classical unconditional Vinogradov–Korobov
+estimate for the actual $\mathcal M(x)=\sum_{n\le x}\mu(n)$.
+Reuse it without proving a new Mertens theorem. For some fixed
+$c_0>0$ and all sufficiently large $x$,
+
+$$
+|\mathcal M(x)|\ll x e^{-c_0\Xi(x)},\qquad
+\Xi(x)=\frac{(\log x)^{3/5}}{(\log\log x)^{1/5}}.
+$$
+
+The existing source note also records the Lee–Leong v5 explicit
+supplier. Only the asymptotic allowance above is used here; no
+numerical constant or starting threshold is certified in this
+application. It pays the following complete energy bound for the
+original coefficients, mean and discrete weight:
+
+$$
+E_N\ll N e^{-c\Xi(N)}
+\qquad\text{for some fixed }c>0.
+\tag{I31}
+$$
+
+Here and below $N$ is a sufficiently large integer. To check the
+actual parameters, fix $0<\kappa<c_0/8$ and put
+
+$$
+Y=N e^{-\kappa\Xi(N)},\qquad X=N e^{\kappa\Xi(N)}.
+$$
+
+Eventually $1<Y<N<X<N^2$. Uniformly for $Y\le x\le N$,
+$\Xi(x)/\Xi(N)\to1$, since $\Xi(N)=o(\log N)$. Thus the known
+Mertens input gives
+
+$$
+\sup_{Y\le x\le N}|\mathcal M(x)|
+\ll N e^{-(c_0/2)\Xi(N)}.
+$$
+
+For the actual integer samples $N\le m\le X$, split the $n$-sum in
+$R_N(m)$ at $Y$. Its part $n\le Y$ is bounded absolutely by $Y$.
+On $[Y,N]$ set
+
+$$
+g_m(x)=\frac{\log(N/x)}L\{m/x\}.
+$$
+
+Its supremum plus total variation is $O(1+m/Y)$, including all
+jumps. On smooth pieces the variation is bounded by
+$\int_Y^N[1/(Lx)+m/x^2]dx$; there are $O(1+m/Y)$ jumps of size
+at most one. Discrete Abel summation uses the actual values $g_m(n)$,
+so no continuity convention at shared integer jumps is required.
+The boundary $\mathcal M(\lfloor Y\rfloor)=\mathcal M(Y)$ is also
+covered by the displayed bound. Consequently
+
+$$
+\begin{aligned}
+|R_N(m)|
+&\ll 1+Y+N e^{-(c_0/2)\Xi(N)}(1+m/Y)\\
+&\ll N e^{-\kappa\Xi(N)}\qquad(N\le m\le X).
+\end{aligned}
+$$
+
+The last step uses $m/Y\le e^{2\kappa\Xi(N)}$ and
+$c_0/2>3\kappa$. The original telescoping weight now gives
+
+$$
+\sum_{N\le m\le X}\frac{|R_N(m)|^2}{m(m+1)}
+\ll N e^{-2\kappa\Xi(N)}.
+$$
+
+For the entire remaining range $X<m\le N^2$, use
+$|R_N(m)|\le1+N$ and
+$\sum_{m>X}1/[m(m+1)]\le1/X$. Its energy is therefore at most
+$O(N^2/X)=O(N e^{-\kappa\Xi(N)})$, proving (I31).
+This argument never separates or optimizes the actual mean and
+cross terms; it bounds the original residual itself.
+
+For every fixed $A>0$, (I31) implies $E_N\ll_A N/(\log N)^A$.
+This is a complete allowance, stronger than any one fixed
+logarithmic saving, but supplies no fixed power saving:
+$c\Xi(N)/\log N=c(\log N)^{-2/5}(\log\log N)^{-1/5}\to0$.
+It therefore supplies neither the uniform polylogarithmic energy
+needed by the earlier strength argument nor a fixed zero-free
+half-plane. The exact FIB approximation rate and the same-integer
+signed Robin estimate remain unresolved. Equation (I31) is a paper
+application of the already owned classical input, without a new
+Mertens result, originality claim or Lean certification.
+
+## Classical RH errors calibrate the first proportional block
+
+For the original coefficients and residual of (I10), distinguish the
+first proportional block from the complete window:
+
+$$
+E_N^{\rm first}:=
+\sum_{m=N}^{2N}\frac{|R_N(m)|^2}{m(m+1)}.
+\tag{I32}
+$$
+
+The classical inputs are the RH consequences
+$M(t)=\sum_{n\le t}\mu(n)\ll_\delta t^{1/2+\delta}$ for every fixed
+$\delta>0$, and $\psi(t)-t\ll\sqrt t\log^2t$, where
+$\psi(t)=\sum_{k\le t}\Lambda(k)$. Both are stated in
+[Conrey, *Riemann's Hypothesis*, Section 3, printed p.6](https://aimath.org/~kaur/publications/90.pdf),
+author draft of 28 April 2019, PDF SHA256
+`6a704095b7359d17e27bd54eae3116c2ba621d2499e0b3c61c9c3a66c30619dc`.
+They are reused, without a weak-Mertens mean-square hypothesis, zero
+simplicity or a reciprocal-$\zeta'$ moment condition. The calculation
+below is a paper application to the specified local residual, not an
+originality claim for these classical criteria or a Lean certification.
+
+A related discrete-window precedent is
+[Gallardo-Gutiérrez–Seco, arXiv:2206.02654v6, Theorem 3.1 and (15),
+printed pp.9–10](https://arxiv.org/pdf/2206.02654v6). At its parameter
+$\sigma=1/2$, (15) uses the same weight $1/[m(m+1)]$ on a moving
+window. Its residual, however, is
+$1+\sum_{k\le N}\mu(k)(\{m/k\}-N\{m/N\}/k)$, without the
+logarithmic Selberg coefficients. Its bound is used along a selected
+subsequence. Neither identical cell weights nor that subsequence
+supplies a bound for (I32).
+
+Retain $U_N$ from (I12). The classical convolution identity
+$\sum_{d\mid k}\mu(d)\log(N/d)=\Lambda(k)+L\mathbf1_{k=1}$ gives
+
+$$
+L R_N(m)=mU_N-\psi(m)+\mathcal T_N(m),\qquad
+\mathcal T_N(m)=\sum_{N<n\le m}\mu(n)\log(N/n),\quad N\le m\le2N.
+\tag{I33}
+$$
+
+Indeed, the full divisor sum over $k\le m$ is $\psi(m)+L$.
+Its omitted $n>N$ terms have $\lfloor m/n\rfloor=1$ throughout this
+block, including $m=2N$; the logarithmic weight at $n=N$ is zero.
+Substitution in the exact residual formula gives (I33).
+
+Under RH fix $0<\delta<1/2$. The Dirichlet identity for $1/\zeta$
+and its derivative at 1 give the classical normalizations
+$\sum\mu(n)/n=0$ and $\sum\mu(n)\log n/n=-1$; convergence and local
+differentiation follow from the quoted Mertens bound. Abel summation
+then gives the exact tails
+
+$$
+\begin{aligned}
+U_N-1
+&=\sum_{n>N}\frac{\mu(n)\log(n/N)}n
+=-\int_N^\infty M(t)\frac{1-\log(t/N)}{t^2}\,dt
+\ll_\delta N^{-1/2+\delta},\\
+\mathcal T_N(m)
+&=M(m)\log(N/m)+\int_N^m\frac{M(t)}t\,dt
+\ll_\delta N^{1/2+\delta}.
+\end{aligned}
+\tag{I34}
+$$
+
+The second bound is uniform on $N\le m\le2N$. Combining (I33)–(I34)
+with the quoted Chebyshev error and
+$\sum_{m=N}^{2N}1/[m(m+1)]\le1/N$ yields
+
+$$
+E_N^{\rm first}\ll_\delta
+\frac{N^{2\delta}}{L^2}+L^2.
+\tag{I35}
+$$
+
+In particular RH implies $E_N^{\rm first}\ll_\varepsilon N^\varepsilon$
+for every fixed $\varepsilon>0$. Conversely, use the existing
+(I11)–(I16) argument on $J=(5/4,7/4)$. For every fixed positive
+$\varepsilon$ its norm bound is
+$O_\varepsilon(y^{(1+\varepsilon)/2}(1+\log y)^B)$ with finite $B$.
+For each $\Re s>1/2$ choose a fixed $\varepsilon<2\Re s-1$ and apply
+(I15) on a neighborhood of $s$. Its no-common-zero argument gives RH.
+Thus the calibrated paper equivalence is
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\text{for every }\varepsilon>0,\quad
+E_N^{\rm first}\ll_\varepsilon N^\varepsilon
+\quad\text{for all sufficiently large integers }N.
+\tag{I36}
+$$
+
+Constants and the lower cutoff may depend on $\varepsilon$; neither
+$\delta$ nor $\varepsilon$ varies with $N$ in the estimates used.
+This supplies no converse for a fixed polylogarithmic allowance, no
+RH bound for the entire window $N\le m\le N^2$, and no optimal
+Nyman–Beurling approximation rate.
+
+There is a stronger known supplier with additional assumptions,
+already cited in the FIB source, Section 391.3:
+[Bettin–Conrey–Farmer, arXiv:1211.5191v1, Theorem 1, printed p.2](https://arxiv.org/pdf/1211.5191v1).
+It uses these same logarithmic coefficients. Set
+$\mathcal F_N(x)=\mathbf1_{(0,1)}(x)+\sum_{n\le N}a_{N,n}\{1/(nx)\}$
+on the half-line and $\mathcal D_N=\|\mathcal F_N\|_2^2$.
+The classical Mellin–Plancherel dictionary identifies this with that
+paper's critical-line integral. On $m\le t<m+1$, $m\ge N$, the
+exact relation is
+$\mathcal F_N(1/t)=R_N(m)+c_N(t-m)$. Thus, for
+$J_N=\int_{1/(2N+1)}^{1/N}|\mathcal F_N(x)|^2dx$,
+
+$$
+\left|\sqrt{E_N^{\rm first}}-\sqrt{J_N}\right|
+\le\frac{|c_N|}{\sqrt N},\qquad
+E_N^{\rm first}\le2\mathcal D_N+\frac{2|c_N|^2}N.
+$$
+
+The lower endpoint is $1/(2N+1)$ because the sample $m=2N$ contributes
+its whole cell. The cited theorem assumes RH and, for some
+$\delta>0$, $\sum_{|\Im\rho|\le T}|\zeta'(\rho)|^{-2}\ll T^{3/2-\delta}$;
+the latter includes zero simplicity. It supplies
+$\mathcal D_N\sim(2+\gamma-\log(4\pi))/\log N$, and hence
+$E_N^{\rm first}\ll1/\log N$ under those complete assumptions.
+This reuses the known stronger supplier with a paid cell comparison;
+it does not remove its extra hypothesis or assert a first-block
+asymptotic with the same constant.
+
+A fixed polylogarithmic first-block allowance also constrains zero
+multiplicity. If $E_N^{\rm first}\ll L^A$ with fixed $A\ge0$, the same
+cell calculation on $J$ gives
+$\|S_y(y\,\cdot)\|_{L^2(J)}\ll\sqrt y(1+\log y)^{A/2+1}$.
+For a zero $\rho$ on the critical line choose $h\in C_c^\infty(J)$
+with $H_h(\rho)\ne0$ using (I16). The Mellin integral obeys
+$F_h(\rho+u)=O_h(u^{-A/2-2})$ as $u\downarrow0$.
+The meromorphic right side of (I15) has a pole of order $m_\rho$ at
+$\rho$, so
+
+$$
+m_\rho\le\lfloor A/2+2\rfloor.
+\tag{I37}
+$$
+
+This uses meromorphic continuation near $\rho$, not holomorphy on
+the boundary. The test function may depend on $\rho$ without changing
+the exponent. The every-$\varepsilon$ condition in (I36) has no
+controlled $\varepsilon$-dependence from which to deduce (I37).
+An extra uniform multiplicity consequence does not establish that
+the fixed polylogarithmic condition is strictly stronger than RH.
+
+## Five-mode resolution as a paid cutoff sampling interface
+
+The five modes can specify a sufficiently dense set of actual cutoff
+parameters. They do not change the Möbius coefficients inside any
+cutoff. The following application reuses (I11), the canonical finite
+Zeckendorf interval bound and the legal-word count in
+[the FIB source, Sections 105–106](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+with canonical decoding owned by the
+[existing golden-window note](../Digit/mathlib2026goldenwindows.md).
+It claims neither special Fibonacci cancellation nor an original
+sampling theorem.
+
+First retain an integer $N\ge3$, allow real $y\ge N$, and put
+$\Delta=y-N$. Unlike (I11), new dictionary indices may now enter.
+For every real $t$ the exact difference is
+
+$$
+\begin{aligned}
+S_y(t)-S_N(t)
+={}&\log(y/N)\left(1+\sum_{n\le N}\mu(n)\{t/n\}\right)\\
+&+\sum_{N<n\le y}\mu(n)\log(y/n)\{t/n\}.
+\end{aligned}
+$$
+
+The first term has magnitude at most $2\Delta$. There are at most
+$\Delta$ new indices, each with logarithmic weight at most
+$\log(y/N)\le\Delta/N$. Hence
+
+$$
+|S_y(t)-S_N(t)|\le2\Delta+\frac{\Delta^2}N\le3\Delta
+\qquad(0\le\Delta\le N),
+\tag{I38}
+$$
+
+uniformly in $t$, including across fractional-part jumps.
+
+Let a fixed set $\mathcal Q\subseteq\mathbb N_{\ge3}$ have the left
+coverage property: for every sufficiently large real $y$, there is
+$N\in\mathcal Q$ with
+$0\le y-N\le C\sqrt N(\log N)^B$, for fixed $C>0$ and $B\ge0$.
+For $q\in J=(5/4,7/4)$, every cell meeting $qy$ then has its integer
+left endpoint in $[N,2N]$ once $N$ is sufficiently large. Use (I12),
+the actual weight $1/[m(m+1)]$, $y\asymp N$, and (I38), to obtain
+
+$$
+\|S_y(y\,\cdot)\|_{L^2(J)}^2
+\ll NL^2E_N^{\rm first}+(1+L)^4+\Delta^2.
+\tag{I39}
+$$
+
+Consequently the right side of (I36), restricted to all sufficiently
+large $N\in\mathcal Q$ for each fixed $\varepsilon$, still implies
+RH by the same Mellin argument. RH supplies that restricted condition
+by (I35). This transfers the required inner Mellin window, without
+claiming to reconstruct every full moving first-block energy from
+one left sample.
+
+Here is a concrete $\mathcal Q$ using exactly the five occupancy
+modes. Use $F_0=0,F_1=1$, keep the separate unit bit, and group
+$F_3,F_4,F_5=2,3,5$ and their subsequent triples into windows. For
+$L\ge1$ and each integer
+
+$$
+F_{6L+3}\le n<F_{6L+9},
+$$
+
+form $Q_L(n)$ by replacing the lowest $L$ windows by `null`, retaining
+all higher digits and the unit bit. Deletion preserves the
+nonadjacency rule and seams. The canonical finite interval bound gives
+
+$$
+0\le n-Q_L(n)<F_{3L+3}.
+$$
+
+The leading digit has index at least $6L+3$ and is not deleted;
+therefore $Q_L(n)$ stays in the same annulus. The standard Fibonacci
+square identity yields
+
+$$
+F_{3L+3}^2
+=(F_{3L+1}+F_{3L+2})^2
+\le2(F_{3L+1}^2+F_{3L+2}^2)=2F_{6L+3}
+\le2Q_L(n).
+$$
+
+Let $\mathcal Q$ be the union of these images. Every real $y\ge34$
+has $n=\lfloor y\rfloor$ in one of these annuli. With $N=Q_L(n)$,
+
+$$
+0\le y-N<1+\sqrt{2N}\le2\sqrt N.
+\tag{I40}
+$$
+
+There are $3L+6$ remaining high slots, indexed $3L+3$ through
+$6L+8$. The known nonadjacent-word count and at most two choices
+of unit bit give
+$|\mathcal Q\cap[F_{6L+3},F_{6L+9})|\le2F_{3L+8}$.
+Thus each annulus needs only $O(\sqrt{F_{6L+3}})$ distinct cutoff
+points; the constant includes its fixed scale ratio. Combining
+(I35), (I39) and (I40) gives the paper application
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\text{for every }\varepsilon>0,\quad
+E_N^{\rm first}\ll_\varepsilon N^\varepsilon
+\quad\text{for all sufficiently large }N\in\mathcal Q.
+\tag{I41}
+$$
+
+The truncation creates a different integer cutoff; (I38) pays for that
+change of source. It is not a lossless coarse observation of the same
+integer. Each $R_N$ still includes every original $n\le N$ with its
+original coefficient. A single sequence such as $F_{3L}$ has gaps of
+order $N$ and is not justified by this square-root coverage argument.
+Nor does this replace the separate $\lfloor N/d\rfloor$ schedule
+issue for Binet convolution transport in the FIB source, Section 391.
+The unresolved task is an unconditional, uniform signed energy bound
+on this fixed set; the digit-count and gap bounds do not supply it.
+No new Lean declaration or certified RH implication is asserted here.
+
+
+## Bracketing cutoffs by the published derivative-variation bound
+
+A stronger cutoff interface follows by directly applying
+[S. S. Dragomir, *Bounds for the deviation of a function from the chord
+generated by its extremities*, Bull. Austral. Math. Soc. 78 (2008),
+225–248, Theorem 5.2, (5.5), printed pp.234–235](https://doi.org/10.1017/S0004972708000671).
+For an absolutely continuous real function whose derivative has a
+bounded-variation representative, that theorem bounds the endpoint
+chord error by
+
+$$
+|f(z)-\operatorname{chord}_{a,b}f(z)|
+\le\frac{(z-a)(b-z)}{b-a}\operatorname{Var}_{[a,b]}(f')
+\le\frac{b-a}{4}\operatorname{Var}_{[a,b]}(f').
+$$
+
+The theorem includes piecewise linear functions; its sharpness example
+is an absolute-value function. The supplier is this published bound,
+not a new interpolation theorem. Its application here keeps the
+original coefficients and cutoff family.
+
+Fix integers $3\le A<B$, put $h=B-A$, and freeze the observation
+argument $t>0$. In the logarithmic cutoff coordinate $x$,
+
+$$
+f_t(x)=S_{e^x}(t)
+=x+\sum_{n\le B}\mu(n)\{t/n\}(x-\log n)_+,
+\qquad \log A\le x\le\log B.
+\tag{I42}
+$$
+
+This is absolutely continuous and piecewise linear. Its right-slope
+representative has variation at most
+$\sum_{A<n\le B}|\mu(n)|\{t/n\}\le h$; choosing this representative
+also handles the endpoint hinges. For $A\le y\le B$, define
+
+$$
+\eta=\frac{\log(y/A)}{\log(B/A)},\qquad
+P_y(t)=(1-\eta)S_A(t)+\eta S_B(t).
+$$
+
+Dragomir's theorem applies to (I42) and gives, uniformly in $t$,
+
+$$
+|S_y(t)-P_y(t)|
+\le\frac h4\log(B/A)\le\frac{h^2}{4A}.
+\tag{I43}
+$$
+
+The improvement over (I38) uses both endpoint functions. It does not
+claim that one endpoint alone has this quadratic cutoff error.
+
+Retain $J=(5/4,7/4)$. If $B/A<8/7$, then $yJ$ lies inside both
+$[A,2A]$ and $[B,2B]$. For either $K=A$ or $K=B$, (I12), the exact
+cell weights and $y\asymp K$ give
+
+$$
+\|S_K(y\,\cdot)\|_{L^2(J)}^2
+\ll K(\log K)^2E_K^{\rm first}+(1+\log K)^4.
+$$
+
+Indeed, the cell containing each $qy$ has its integer left endpoint
+in $[K,2K]$; changing from $dq$ to $dt/y$ costs $1/y$, while removing
+the energy weight costs $O(K^2)$. The within-cell slope contributes
+$O(|U_K|^2)$, bounded by the fourth logarithmic power. Convexity for
+the endpoint mixture and (I43) now yield
+
+$$
+\|S_y(y\,\cdot)\|_{L^2(J)}^2
+\ll\sum_{K\in\{A,B\}}K(\log K)^2E_K^{\rm first}
+ +(1+\log A)^4+\frac{h^4}{A^2}.
+\tag{I44}
+$$
+
+Consequently a fixed unbounded set of integer cutoffs with consecutive
+gaps $B-A\ll A^{3/4}(\log A)^C$, for a fixed $C\ge0$, is enough for
+the every-$\varepsilon$ condition: suppose that for each
+$\varepsilon>0$ there are constants $C_\varepsilon,N_\varepsilon$
+such that $E_N^{\rm first}\le C_\varepsilon N^\varepsilon$ for every
+sampled $N\ge N_\varepsilon$. Apply this at both bracketing cutoffs.
+Using a smaller fixed $\varepsilon$ to absorb logarithms, (I44) gives
+$\|S_y(y\,\cdot)\|_2^2\ll_\varepsilon y^{1+\varepsilon}$ for every
+sufficiently large real $y$. The existing (I15)–(I16) argument excludes
+zeros in $\Re s>1/2$ by choosing $\varepsilon<2\Re s-1$.
+This is another paid cutoff application of that argument, not an
+unconditional estimate for $E_N^{\rm first}$.
+
+### A coarser grid using the actual five occupancy modes
+
+The same canonical interval and legal-word bounds cited above supply
+a concrete bracketing grid. For $L\ge1$ and each integer
+
+$$
+F_{12L+3}\le n<F_{12L+15},
+$$
+
+replace the lowest $3L$ triple windows by `null`, keeping all higher
+digits and the separate unit bit. Write the output as
+$\widetilde Q_L(n)$ and the union of these images as
+$\mathcal Q_{\rm chord}$. The deleted positions are exactly
+$F_3,\ldots,F_{9L+2}$, so the canonical interval bound gives
+
+$$
+0\le n-\widetilde Q_L(n)<F_{9L+3}.
+$$
+
+The leading digit has index at least $12L+3$, survives deletion, and
+keeps the output in the original annulus. The elementary Fibonacci
+bounds $\varphi^{k-2}\le F_k\le\varphi^{k-1}$ for $k\ge2$ imply
+
+$$
+F_{9L+3}\le\varphi^{5/4}\widetilde Q_L(n)^{3/4}.
+$$
+
+These annuli cover all integers at least $F_{15}=610$. Thus every
+real $y\ge610$ has a sampled $N\le y$ with
+
+$$
+0\le y-N<(1+\varphi^{5/4})N^{3/4}.
+\tag{I45}
+$$
+
+The lower endpoint of every annulus is itself retained. For consecutive
+sampled points $A<B$, let $y\uparrow B$ through $(A,B)$. Every left
+sample supplied by (I45) is at most $A$; monotonicity of
+$x+(1+\varphi^{5/4})x^{3/4}$ gives
+$B-A\le(1+\varphi^{5/4})A^{3/4}$. In particular $B/A\to1$, as
+required for (I44); there is no cross-annulus gap exception.
+
+The remaining high slots run from $9L+3$ through $12L+14$, a total
+of $3L+12$ slots. The existing nonadjacent-word count and at most two
+unit choices give
+
+$$
+|\mathcal Q_{\rm chord}\cap[F_{12L+3},F_{12L+15})|
+\le2F_{3L+14}=O(F_{12L+3}^{1/4}).
+\tag{I46}
+$$
+
+Combining the supplied conditional converse (I35) with (I44)–(I46)
+therefore gives the paper application
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\text{for every }\varepsilon>0,\quad
+E_N^{\rm first}\ll_\varepsilon N^\varepsilon
+\quad\text{for all sufficiently large }N\in\mathcal Q_{\rm chord}.
+\tag{I47}
+$$
+
+The gain is a coarser sufficient cutoff grid: $O(N^{1/4})$ points per
+fixed-ratio annulus instead of the $O(N^{1/2})$ grid used with the
+one-sided bound. Every sampled residual still uses all original
+indices $n\le N$, with their original signed Möbius coefficients.
+No digital orthogonality or special Fibonacci cancellation is assumed.
+Both bracketing energies must be controlled uniformly; an almost-all
+cutoff estimate cannot be substituted for that condition. The known
+unconditional allowance (I31) remains insufficient, and no new
+sufficient unconditional energy estimate or RH proof is supplied.
+These are source-checked paper applications, without Lean certification.
