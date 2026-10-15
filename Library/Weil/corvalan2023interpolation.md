@@ -2696,3 +2696,89 @@ mollifier error on the active height intervals, is ruled out by the
 That lower bound neither rules out the weighted Nyman--Beurling
 norm tending to zero nor supplies a sign for the retained functional
 in (I95).
+
+## Preserve primitive-numerator cancellation at the endpoint
+
+Keep the complete coefficients and actual functional of (I91).
+For an integer $m$ and $q\ge2$, set
+$$
+\mathcal S_q(m)=\{m/q\}-\frac{q-1}{2q},\qquad
+\Pi_q(m)=-\frac1q\sum_{\substack{1\le r<q\\(r,q)=1}}
+ \frac{e(mr/q)}{1-e(-r/q)},
+$$
+and put $\mathcal S_1=\Pi_1=0$. Grouping the already owned finite sawtooth
+expansion by reduced denominator and applying classical Mobius
+inversion gives
+$$
+q\mathcal S_q(m)=\sum_{d\mid q}d\Pi_d(m),\qquad
+\Pi_q(m)=\frac1q\sum_{d\mid q}\mu(q/d)d\mathcal S_d(m),\qquad
+|\Pi_q(m)|\le\frac{\sigma(q)}{2q}.
+\tag{I96}
+$$
+Indeed $|\mathcal S_d(m)|\le(d-1)/(2d)\le1/2$ on the integer grid.
+The first equality retains every reduced denominator of the original
+$q$-periodic response; inversion is applied to this finite divisor
+identity before taking an absolute value. This reuses standard
+Fourier grouping and Mobius inversion in the current application.
+
+The [existing finite positive-moment bound](../ArithSums/weingartner2010distribution.md#finite-bridge-and-precise-application)
+gives $\sum_{q\le D}(q/\varphi(q))^2\le DW(2)$, with the fixed
+finite Euler product $W(2)$ defined there. The same source already
+supplies $\sigma(q)/q\le q/\varphi(q)$, hence
+$$
+\sum_{q\le D}\frac{\sigma(q)}{\varphi(q)}
+\le\sum_{q\le D}\left(\frac q{\varphi(q)}\right)^2
+\le DW(2).
+$$
+No additional average-order estimate is needed.
+Since $T_{N,\le D}(m)=\sum_{2\le q\le D}b_{N,q}\Pi_q(m)$ with the
+same full aliases as in (I18), its owned coefficient bound and (I96)
+now give
+$$
+\begin{aligned}
+\sup_{m\in\mathbb Z}|T_{N,\le D}(m)|
+ &\le\frac1L\sum_{q\le D}\frac{\sigma(q)}{\varphi(q)}
+ \le\frac{DW(2)}L,\\
+|\mathscr J_N(T_{N,\le D})|
+ &\ll\frac{\epsilon_N}{L^2}
+ \left(\frac{h^2D^2}{N}+h^3D\right),\qquad 2\le D\le N.
+\end{aligned}
+\tag{I97}
+$$
+For the second row, the interior sum uses the unchanged interval-sum
+and variation bounds in (I92)--(I93). Its endpoint uses the first row
+of (I97) and the actual $e_{N,H}\ll h^3\epsilon_N$ from (I75).
+Thus the endpoint's factor $\log(2D)$ in the earlier bound is removed
+by retaining cancellation between primitive numerators of each $q$.
+
+With $\kappa_\star$ from (I94), fix any $0\le\eta<1$ and set
+$$
+\widehat D_N=
+\left\lfloor\frac{\sqrt N}{h}e^{\kappa_\star\Omega}L^\eta\right\rfloor,
+\qquad T_{N,>\widehat D_N}=R_N-d_N-T_{N,\le\widehat D_N}.
+$$
+For sufficiently large $N$, $2\le\widehat D_N\le N$ and
+$\widehat D_N\asymp N^{3/4}e^{(\kappa_\star-\lambda)\Omega}L^\eta$.
+Substituting this cut in (I97) and using linearity yields
+$$
+\mathcal A_{N,H}
+=\mathscr J_N(d_N+T_{N,>\widehat D_N})
++O\left(
+ e^{-(c_\star-2\kappa_\star)\Omega}L^{2\eta-2}
+ +e^{-(\Delta_\star-\kappa_\star)\Omega}L^{\eta-2}
+\right).
+\tag{I98}
+$$
+Both exponential factors are bounded by one, and both logarithmic
+powers tend to zero for each fixed $\eta<1$. No uniform convergence
+as $\eta\uparrow1$ is asserted. At $\eta=0$ the same cut as (I95)
+has a smaller endpoint allowance; every fixed $\eta>0$ also pays a
+larger complete frequency sector.
+
+The retained aliases have $q>\widehat D_N$ and $j<N/\widehat D_N$.
+Their actual signs, coprimality, endpoint and constant channel remain
+coupled. The still required estimate is
+$\mathscr J_N(d_N+T_{N,>\widehat D_N})=o(1)$. This is a refinement
+of the project application of existing arithmetic inputs, with no
+mathematical-priority claim or Lean certification. It supplies no
+complete same-integer signed Robin bound or RH proof.
