@@ -6,7 +6,7 @@
    utility: none
    digest: Exact spectra of symmetric two-qubit entanglement witnesses. -/
 
-import Mathlib.Analysis.Matrix.Spectrum
+import D5.S3.Quantum.Divergence.CanonicalRelativeModularModel
 import D5.S3.Zeros.PochhammerDeformation.QuadraticRadii
 
 set_option linter.style.longLine false
@@ -205,18 +205,6 @@ private theorem det_bound (A : Matrix (Fin 2) (Fin 2) ℂ) (hA : Aᵀ = A)
     nlinarith only [h2, h3]
   nlinarith [norm_nonneg A.det, mul_nonneg hp hq]
 
-private theorem diagonal_expectation {n : ℕ} (d : Fin n → ℝ) (z : Fin n → ℂ) :
-    (star z ⬝ᵥ ((Matrix.diagonal (fun i => (d i : ℂ))) *ᵥ z)).re =
-      ∑ i, d i * Complex.normSq (z i) := by
-  simp only [dotProduct, mulVec_diagonal, Complex.re_sum]
-  apply Finset.sum_congr rfl
-  intro i _
-  change (star (z i) * ((d i : ℂ) * z i)).re = _
-  rw [show star (z i) * ((d i : ℂ) * z i) =
-    (d i : ℂ) * (star (z i) * z i) by ring,
-    Complex.star_def, ← Complex.normSq_eq_conj_mul_self]
-  simp
-
 private theorem cone_model (W : Matrix (Fin 3) (Fin 3) ℂ) (hW : IsSymmetricWitness W)
     (d : Fin 3 → ℝ)
     (hχ : W.charpoly = ∏ i : Fin 3, (Polynomial.X - Polynomial.C (d i : ℂ))) :
@@ -272,7 +260,8 @@ private theorem cone_model (W : Matrix (Fin 3) (Fin 3) ℂ) (hW : IsSymmetricWit
         (U : Matrix (Fin 3) (Fin 3) ℂ))) ⬝ᵥ (D *ᵥ z) = _
       rw [Unitary.coe_star_mul_self, vecMul_one]
     rw [hexp] at hpos
-    rwa [diagonal_expectation] at hpos
+    rw [D5.S3.Quantum.Divergence.CanonicalChannelDPI.diagonal_quadratic_form] at hpos
+    simpa only [Complex.normSq_eq_norm_sq] using hpos
 
 private theorem unitary_corner (G : Matrix (Fin 3) (Fin 3) ℂ) (hG : Gᴴ * G = 1) :
     ‖(corner G).det‖ = ‖G 2 2‖ ∧ ‖G 2 2‖ ≤ 1 := by
@@ -373,7 +362,8 @@ private theorem diagonal_witness (p q r : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q)
   · intro v
     change 0 ≤ (star (coherent v) ⬝ᵥ
       ((Matrix.diagonal (fun i => ((![p,r,q] : Fin 3 → ℝ) i : ℂ))) *ᵥ coherent v)).re
-    rw [diagonal_expectation]
+    rw [D5.S3.Quantum.Divergence.CanonicalChannelDPI.diagonal_quadratic_form]
+    simp only [← Complex.normSq_eq_norm_sq]
     simp only [Fin.sum_univ_three, coherent.eq_1, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.cons_val, map_pow, Complex.normSq_mul, Complex.normSq_ofReal,
       Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
