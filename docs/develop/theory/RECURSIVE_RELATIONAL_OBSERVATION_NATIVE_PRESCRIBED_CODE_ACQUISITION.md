@@ -4013,3 +4013,412 @@ counter or unpriced phase coordinate.
 [NWO34]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
 
 ## 追加锚（本行以下为增补区）
+## 38. Exact five-position third-hit installed cardinality
+
+**Scope 38.1 (the unchanged native contract).** Fix five distinct positive
+positions
+
+$$
+A = {s₁ < s₂ < s₃ < s₄ < s₅},   cᵢ = sᵢ + 4,   W_A = ∑ᵢ cᵢ,   k = 3,   r ≥ 0.
+$$
+
+A competitor is any Convention 23.2 preparer for the original prescribed
+code on the whole unbounded one-image fibre. It is a finite stationary graph
+of fixed absolute words with all four native replies installed, a common
+running start, sourcewise termination, the original complete entries and
+reader, and no restriction on order, read-once behaviour, acyclicity, source
+shape, repeated words, shared successors or unused states. Every installed
+running or latch state and every invocation is charged, including constants,
+absence, roots and repeats. Assume only the simultaneous execution caps
+
+$$
+p_P ≤ 6,   ℓ_P ≤ 3 + W_A.   (PCA.93)
+$$
+
+The reader, handoff, all complete rows, equality and disequality classes,
+strict-prefix guards, services and separately priced resources are exactly
+those of §§1–4 and 23. The finite cube below is a lower-bound family only.
+
+For a cube prefix before an effective selected invocation, let S be the set
+of selected coordinates already exposed, let h be the number of their one
+replies, and put d = |S|. Call the prefix live when both threshold values
+remain possible. For n = 5 and k = 3 this is
+
+$$
+h ≤ 2,   d − h ≤ 2.   (PCA.94)
+$$
+
+A state carrying the literal RLR can be followed on the cube through its
+constant beta edge; whenever a state is called selected below, this common
+edge has already been followed. Thus a possible profile call is still
+charged and cannot create a free state identification.
+
+**Lemma 38.2 (all-weight comparison and profile timing).** Every actual cube
+run, for every θ ∈ {0,1}⁵, has an invocation outside ⋃ᵢ Eᵢ and hence has a
+call of length at least three. Under (PCA.93), a live prefix extends to actual
+weight-two and weight-three cube runs whose selected portions contain exactly
+five distinct selected invocations and exactly one nonselected invocation,
+namely RLR, before the fifth selected invocation. In particular the first
+selected coordinate is common to all cube runs.
+
+**Proof.** Let uθ be the actual origin supplied by Lemma 24.1. If |θ| ≤ 2,
+keep xₐ = Bθ and replace x_c by beta and x_b₃ by alpha. The six class values
+remain distinct, NBP Proposition 9.3 supplies an actual Π₃ origin, and every
+selected address in every Eᵢ has the same reply as on uθ. The prescribed
+entries differ. If |θ| ≥ 3, keep all selected replies and replace the beta at
+b₃ by a fresh branch image, chosen distinct from the finitely many values in
+this comparison. NBP Proposition 9.3 supplies an actual zero-profile origin
+in Z₍*₎, again with the same selected replies and the opposite prescribed
+entry. Thus a correct path on uθ must visit a word outside all Eᵢ; the address
+classification (PCA.55) gives length at least three. This argument is for
+every cube weight, not only the two boundary weights.
+
+Starting at any live prefix, answer fresh selected coordinates by ones until
+two ones have been exposed for the negative completion, and by zeros until
+two zeros have been exposed for the positive completion; thereafter answer
+fresh coordinates with the opposite value. The two response rules are actual
+cube completions by Lemma 24.1 and preserve (PCA.94) until all five
+coordinates have been exposed. A latch before that point would give one
+entry to both required values. A first repeated running state would repeat a
+stationary deterministic loop on an actual completion, contradicting
+sourcewise termination. Hence each completion reads all five selected
+coordinates once. Theorem 34.3 excludes a second nonselected invocation on
+these live continuations. The all-weight comparison supplies one additional
+paid invocation, so the call cap forces exactly five selected invocations and
+one nonselected invocation on each saturated completion; the literal cap
+forces selected charge W_A and nonselected length three.
+
+It remains to locate that nonselected invocation. If it were postponed until
+after all five selected roots, the selected prefix would already cost five
+calls and W_A letters, leaving at most one call and three letters. Keep the
+same selected replies and choose the three actual comparison origins used in
+(PCA.85): a zero-profile origin with x_c = beta, a Π₃ origin differing at
+b₃, and a Π₄ origin differing at b₄. A word shorter than three is common to
+all three. A length-three word in the b₃ cone separates only the Π₃ origin,
+and one in the b₄ cone separates only Π₄; every other available word is
+common on this comparison. No single final invocation can therefore produce
+the three required entries. The unique nonselected invocation must precede
+the fifth selected query, and its cube reply is beta. The first selected word
+is consequently fixed after the common start, possibly after this one common
+profile call. ∎
+
+**Lemma 38.3 (nested live supports cannot merge).** Two live cube histories
+of the same preparer ending at one running state cannot have S ⊂ T.
+
+**Proof.** Write h and g for the hit counts in S and T, put b = |T ∖ S| > 0,
+and let U = [5] ∖ T. Complete the T history to weight two by assigning
+exactly 2 − g ones on U. Its saturated suffix queries only U and the already
+common profile call, and then enters the zero entry. Give the S history the
+same values on U and assign one to every coordinate in T ∖ S. It follows
+that identical suffix from the common state, because none of those private
+coordinates is queried in the suffix. Correctness of the zero entry gives
+h + b + (2 − g) < 3, hence h + b ≤ g.
+
+Conversely complete the T history to weight three by assigning 3 − g ones on
+U, and give every coordinate in T ∖ S value zero for the S source. The same
+suffix now enters the one entry. Correctness gives h + (3 − g) ≥ 3, hence
+h ≥ g. These inequalities contradict b > 0. The two completions are actual
+finite origins, and their old assignments on S ∩ T need not be compared:
+the common suffix reads only U and the profile word. ∎
+
+**Lemma 38.4 (scoped reciprocal saturated-prefix balance).** Suppose two
+incomparable live histories end at one running state, with exposed sets
+S,T satisfying S ∖ T = {a}, T ∖ S = {b}, and nonempty common unread set
+U = [5] ∖ (S ∪ T). Suppose their respective residuals and private old
+values are
+
+$$
+AND({b} ∪ U),\quad a = 0,
+\qquad OR({a} ∪ U),\quad b = 1.
+$$
+
+Then their complete actual continuations under (PCA.93) force cₐ = c_b.
+The assertion concerns only this AND/OR geometry and these private
+polarities; it makes no cost-balance claim for other mergers.
+
+**Proof.** The OR history has exactly two old ones.
+Complete all its unread coordinates {a} ∪ U by zero. This is precisely its
+negative saturated extension from Theorem 34.3: it remains live until the
+last of these coordinates, reaches total weight two, and reads every
+selected coordinate once at an occurrence root. Its only other invocation
+is RLR, before its last selected query. After that query it goes directly
+to the original zero-entry latch, since its six paid calls are exhausted.
+The selected suffix from the common state therefore queries exactly
+{a} ∪ U, in whatever order its stationary table dictates, with all replies
+beta. It never queries T again and has no post-certification query.
+
+Now complete the AND history by giving U the same zeros and giving its
+unread b either value. Lemma 24.1 realizes this as an actual origin. From
+the common state it follows exactly the OR source's suffix: its old a is
+zero, its U replies are the same, and every nonselected cube reply is
+constant. Induction through the fixed successors gives the same complete
+suffix and terminal latch. Assignments on S ∩ T need not agree because
+this suffix never queries them. On this AND source the selected prefix
+queries S once, and the replayed suffix queries {a} ∪ U once. Thus it
+makes five selected invocations, repeats a, omits b, and has selected
+literal charge W_A + cₐ − c_b. This repeat can occur after that source is
+already certified zero; it is permitted and charged, not excluded by
+live-prefix freshness. Lemma 38.2 supplies on this very source at least
+one nonselected call of length at least three. Consequently
+
+$$
+3 + W_A + cₐ − c_b ≤ ℓ_P ≤ 3 + W_A,
+\qquad cₐ ≤ c_b.
+\tag{PCA.95}
+$$
+
+For the reverse inequality the AND history has exactly two old zeros:
+its threshold residual requires every unread coordinate. Complete its
+unread {b} ∪ U by one. Theorem 34.3's positive saturated extension stays
+live until the last such coordinate, has total weight three, queries all
+five selected coordinates once at their roots, and ends directly at the
+original one-entry latch with its single paid RLR already made. Replay
+that suffix on the OR history with U all one and its unread a arbitrary.
+The old b = 1 agrees with the fresh b = 1, and the suffix reads neither
+S ∩ T nor a. The same fixed-successor induction is therefore valid.
+This OR source repeats b, omits a, makes five selected invocations and
+pays selected charge W_A + c_b − cₐ. Its own mandatory nonselected call
+adds at least three letters. The literal cap gives c_b ≤ cₐ.
+
+Both charges concern complete runs on their respective actual sources;
+no costs from different executions are added. RLR need not have occurred
+at the same prefix position in the two histories. If replay would produce
+two nonselected calls, five selected calls already make that impossible
+under p_P ≤ 6; if it would produce none, Lemma 38.2 is contradicted.
+In every permitted replay its nonselected charge is at least three.
+By Lemma 2.3 a terminating replay cannot revisit a running state, so its
+repeated coordinate is queried at a distinct installed state; both states
+and both invocations count. The two inequalities prove the claimed equality. ∎
+
+**Theorem 38.5 (nine reachable selected cells and the exact bound).** Every
+preparer in Scope 38.1 has at least nine distinct installed running states
+whose literals lie in ⋃ᵢ Eᵢ. Consequently
+
+$$
+H ≥ 13 + r.   (PCA.96)
+$$
+
+Together with Theorem 26.1, this gives
+
+$$
+H_exec(A,3;r) = 13 + r   (|A| = 5).   (PCA.97)
+$$
+
+**Proof.** By Lemma 38.2 the first selected coordinate is a fixed x. The
+following nine live cells are reachable by actual cube prefixes:
+
+$$
+\{(d,h)\}=\{(0,0),(1,0),(1,1),(2,0),(2,1),(2,2),
+             (3,1),(3,2),(4,2)\}.
+\tag{PCA.98}
+$$
+
+The displayed strings record their selected replies, not runtime registers:
+
+| d | h | one reachable reply prefix |
+|---:|:---:|:---|
+| 0 | 0 | ε |
+| 1 | 0, 1 | 0, 1 |
+| 2 | 0, 1, 2 | 00, 01, 11 |
+| 3 | 1, 2 | 001, 011 |
+| 4 | 2 | 0011 |
+
+Every prefix in the table satisfies (PCA.94), so Lemma 24.1 realizes it and
+sourcewise termination prevents an earlier latch or repeated state.
+
+Histories with the same exposed set and different hit counts cannot merge by
+Theorem 35.1; histories with the same d,h and different exposed sets cannot
+merge by Corollary 35.2. We also use the following direct budget observation.
+Once a branch has made five selected invocations, Lemma 38.2 supplies a
+mandatory nonselected invocation, so no sixth selected invocation is available
+under p_P ≤ 6. If two actual sources then have the same reply at a state but
+opposite required entries, a nonselected cube word has the same reply on both
+sources, and a sixth selected query is forbidden.
+
+First, Lemma 38.3 excludes proper containment. Since every exposed set after
+the first query contains x, this disposes of all comparisons involving the
+d = 0 or d = 1 cells. A d = 4 set either contains an earlier set, or has no
+coordinate outside its union with that earlier set; Theorem 34.3 then forbids
+a common next selected query. Thus the only possible cross-depth comparison
+left is an incomparable d = 2 set and an incomparable d = 3 set.
+
+Consider the three d = 2 histories. Let a₀ be the second coordinate after
+reply 0 at x, and a₁ the second coordinate after reply 1. Write 00, 01, 10, 11
+for the two selected replies. If a₀ = a₁, the three displayed d = 2 cells
+have the same support and their different hit counts exclude sharing by
+Theorem 35.1. Hence in the following cross-branch comparisons assume
+a₀ ≠ a₁. The pairs 00,01 and 10,11 have the same
+support and are excluded by Theorem 35.1; 01,10 have the same d,h and
+different support and are excluded by Corollary 35.2. If 00 and 10 shared a
+state, their private old values would both be zero. The only common unread
+coordinates are two coordinates z,w. After either first common query, choose
+reply one; both histories remain live, so the next effective selected query is
+the other common coordinate. With both replies one, the 00 history still
+needs its private coordinate, while the 10 history is already positive. The
+common next query must therefore be the private coordinate of the 10 history.
+Give it value zero also on the 00 completion. This is the fifth selected
+invocation on both paths; their beta replies agree and the budget observation
+forbids any later selected split, so the opposite required entries are
+impossible.
+
+If 01 and 11 shared a state, their private old values would both be one. Give
+the first common unread query, and then the second, reply zero. The 01 history
+is then forced to zero, while the 11 history must query the private coordinate
+of the 01 history. Give that fresh coordinate value one, which is also the old
+value in the 01 history. This is the fifth selected invocation on both paths;
+the common branch reply and the budget observation again contradict the
+opposite required entries.
+
+It remains to compare 00 and 11. Put a = a₀, b = a₁ and let z,w be
+the two common unread coordinates. The histories have supports {x,a} and
+{x,b}, old private values a = 0 and b = 1, and residuals
+AND({b,z,w}) and OR({a,z,w}). Lemma 38.4 applies with U = {z,w}.
+Explicitly, the 11 history completed by a = z = w = 0 has weight two
+and must read all three of those coordinates before its zero latch.
+Replaying its entire suffix on 00 repeats a and omits b, forcing
+cₐ ≤ c_b. The 00 history completed by b = z = w = 1 has weight three
+and must read all three before its one latch. Replaying on 11 repeats b
+and omits a, forcing c_b ≤ cₐ. These are both required actual executions
+of one alleged shared graph. Distinct selected positions have distinct
+costs cᵢ = sᵢ + 4, so their simultaneous inequalities are impossible.
+
+This exclusion allows post-certification discrimination. For example, if
+the common suffix first reads z = 1,w = 0, both histories have become
+constant with opposite values after four selected invocations. A fifth
+selected invocation at a distinct installed running state querying the old
+coordinate x returns beta on 00 and branch on 11 and can directly choose
+the two original latches. That state and its invocation both count.
+With an earlier RLR its call count is six. Its respective selected charges
+are W_A + c_x − c_b and W_A + c_x − cₐ, so both local paths can obey
+the literal cap, for instance when c_x is least. No common-reply argument
+excludes this repeat. Instead, the two complete saturated continuations
+above exclude the merger regardless of the choices on this mixed branch
+or any other decided branch. Repeated roots, selected children or further
+cube-constant queries on such branches remain ordinary paid operations;
+they cannot change either forced extremal charge. Thus the three displayed
+d = 2 cells require three different installed states.
+
+For d = 3, a one-hit history has an AND residual on its two unread
+coordinates and a two-hit history has an OR residual. Equal supports are
+already excluded. Since both supports contain x, different supports have
+intersection size one or two. In the size-one case each history has two
+private coordinates and there is no common unread coordinate. In Theorem
+35.1 put a = b = 2, u = 0, h = 1, g = 2. The intersection (PCA.86) is
+[0,0] ∩ [0,1] ∩ [−1,0], which contains the integer zero. That geometry
+is therefore excluded by the existing theorem.
+
+In the size-two case the private coordinates are a (exposed in the AND
+history) and b (exposed in the OR history), with one common unread
+coordinate z. At z = 0 the AND history is forced zero and the
+OR history must query a. If the old AND value of a were one, choose fresh
+a = 1 in the OR source; both replies would be branch at the fifth selected
+visit, and the budget observation forbids a later split between the opposite
+entries. Hence the old AND value is a = 0. At z = 1 the OR history is
+forced one and the AND history must query b. If the old OR value of b were
+zero, choose fresh b = 0 in the AND source; both replies would be beta at the
+fifth selected visit, and the budget observation again forbids a later split.
+Hence the old OR value is b = 1. Lemma 38.4 now applies with U = {z}:
+complete the OR source by a = z = 0 and the AND source by b = z = 1.
+Their saturated suffixes replay on the opposite histories with exactly the
+two paid repeats established in that lemma. They force cₐ = c_b, impossible.
+Therefore the two d = 3 cells are distinct.
+
+It remains to compare d = 2 and d = 3. For supports of sizes two and three,
+with one common unread coordinate, Theorem 35.1's intersection is
+
+$$
+[0,1] ∩ [1 − h, 2 − h] ∩ [2 − g, 2 − g],
+$$
+
+where h is the d = 2 hit count and g the d = 3 hit count. For h ∈ {0,1,2}
+and g ∈ {1,2} it is nonempty, and hence sharing is forbidden, except for
+(h,g) = (0,2) and (h,g) = (2,1).
+
+For (h,g) = (0,2), incomparable supports have the form S = {x,a} and
+T = {x,b,c}. The first history has x = a = 0; the second must have x = 1
+and exactly one of b,c equal to one, since equal replies at x would force the
+same second coordinate. Let z be the unique common unread coordinate. Give z
+reply one. The d = 2 history still needs both b,c, while the d = 3 history is
+already positive. If the common next query is b and its old value in the d = 3
+history is zero, give fresh b = 0 to the d = 2 source. The beta reply is
+common, the first source is forced zero and the second requires one, and the
+second source has now made five selected visits; the budget observation rules
+out any later selected split. If that old value is one, give fresh b = 1: the
+common branch reply leaves the first history live and the second history after
+five selected visits. The first requires the other private query c, which
+would be a sixth selected visit on the second source and is forbidden by its
+mandatory nonselected invocation. The same argument applies if the common
+query is c.
+
+For (h,g) = (2,1), the first history has x = a = 1; the second has x = 0
+and exactly one of b,c equal to one. Give the common unread coordinate z reply
+zero. The d = 2 history needs one of b,c, while the d = 3 history can never
+reach three if its queried private coordinate is zero and is forced zero. If
+the common query is b and its old value in the d = 3 history is zero, give
+fresh b = 0 to the d = 2 source. The common beta reply leaves the first source
+live and the second source forced zero. Any correct common continuation must
+query the first source's remaining private coordinate c, but the second source
+has already made five selected visits and has a mandatory nonselected visit,
+so this would be a forbidden sixth selected query; latching would fail the
+first source. If that old value is one, give fresh b = 1: the common branch
+reply gives the first source one while the second is forced zero, and the same
+five-visit budget rules out a later split. Querying c is symmetric. Thus no
+d = 2 state can be a d = 3 state.
+
+All nine cells in (PCA.98) therefore require distinct installed selected
+running states. Each is a state with a word in one of the disjoint supports
+Eᵢ, so there are at least nine such states. Lemma 7.1 requires, separately,
+one running state in the b₃ occurrence cone and one in the b₄ occurrence
+cone; those cones are disjoint from all Eᵢ and from one another. The two
+original complete-entry latches and the r mandated additional latches are
+also installed and counted. Hence H ≥ 9 + 2 + 2 + r = 13 + r.
+
+Theorem 26.1 with n = 5 and k = 3 supplies the full-domain grid with nine
+selected states, the two profile states, the two original latches and the r
+mandated latches, and it attains p = 6 and ℓ = 3 + W_A. Its proof covers
+every original profile, every finite address, all four replies, the complete
+reader entries and all output guards. Thus the lower and upper bounds
+coincide. No ordering, read-once or acyclicity property of an arbitrary
+competitor was used. ∎
+
+## 39. Attribution, boundary and falsifiers for the bounded result
+
+The actual-cube and occurrence facts are supplied by PCA Lemma 24.1 and NBP
+Proposition 9.3, occurrence identity (NBP.9.7) and Proposition 15.2;
+the saturation and profile-timing facts are PCA Theorem 34.3, the interval exclusion is PCA Theorem 35.1, the mandatory
+profile states are PCA Lemma 7.1, and the attaining grid is PCA Theorem 26.1.
+The new source-specific content is the nested-support exclusion, the expanded
+five-position same-depth and cross-depth case analysis, the reciprocal
+saturated-suffix charges for the stated single-private-coordinate AND/OR
+geometry, and their direct nine-state installed-state count.
+
+Wegener, *The Complexity of Boolean Functions*, Chapter 14 §1,
+Definitions 1.1–1.2, and §4, Theorems 4.1 and 4.3, gives the classical residual
+count for BP1/read-once branching programs. Bryant, *Graph-Based Algorithms
+for Boolean Function Manipulation*, §2 Definition 1, imposes strictly
+increasing variable indices. Sinha, *Some Topics in Parallel Computation and
+Branching Programs*, §2.1.3, distinguishes semantic paths from union-graph
+cycles and gives a leveling blow-up. Those suppliers do not apply their
+hypotheses to the unrestricted native competitors here. The proof of (PCA.97)
+uses no classical BP1 transfer, no fixed variable order and no acyclicity
+assumption; its count is made on the original installed states.
+
+The reciprocal balance statement is not a global cost-balance theorem. It
+retains the AND/OR residuals, the two private old polarities, the common
+unread suffix and the two execution caps. The six-position unequal-cost
+candidate and any other incomparable merger geometry are not accepted here.
+No assertion is made for n ≥ 6, for a no-larger whole-table replacement, or
+for the unrestricted H_min. Acquisition, authentication, export, isolation,
+entry, stationary service, physical memory, time and energy remain separately
+supplied and priced. The result is an ordinary-paper bounded parameter
+theorem, not a kernel, physical or whole-goal claim.
+
+A direct falsifier is a correct original-contract preparer for some five-point
+A satisfying p_P ≤ 6, ℓ_P ≤ 3 + W_A and H ≤ 12 + r. At proof level, a
+reachable shared state in any excluded cell pair, a nested-support merger
+whose two saturated completions violate one of the displayed inequalities, or
+a legal completion escaping one of the forced-polarity cases would refute the
+corresponding step. The preceding statements do not settle the unresolved
+larger-parameter or uncapped problems.
+
+## 追加锚（本行以下为增补区）

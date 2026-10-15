@@ -2206,3 +2206,1326 @@ history or age, or physical space and time.
 [NWOCOK]: https://github.com/the-omega-institute/trureturing/blob/29f45c0bee5e8d45e4993ef7824b43d2c52235eb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Native conditional sections and the exact population maximum
+
+**Convention 18.1 (two different completion questions).** Sections
+18–25 retain Definitions 1.2–1.4 in full: the ordered alpha/beta
+trees, the same stationary original source throughout paid preparation
+and the later Read, every source-independent late request, and every
+subsequently supplied authentic count. They give ordinary mathematical
+proofs, without Lean certification. Repository suppliers in these
+sections mean their committed text at
+`ce2fe4a685b5a195b8b0a380616daf0151f576cb`.
+
+The first question concerns the matching-population functional
+$\mathcal B_{\mathcal N}$ of Definition 13.3 and its difference
+$\mathcal I_{\rm cov}=\mathcal U_{\mathcal N}-\mathcal B_{\mathcal N}$
+from Definition 15.1. The second concerns the permutation-chain
+defect $\Delta(P)$ of (COK.21) for one already existing common law
+on actual solutions. A matching population is not assumed to extend
+to such a law on its original base. Even when it does, these
+functionals and losses are different. The local-to-joint defect
+$\mathcal L_\eta$ of (COK.32) remains a third quantity.
+
+All entropies, relative entropies and logarithms below have base two.
+A positive matching population means a collection supported on
+$R_i^+$ satisfying the whole-group equations (COK.61). Its entries
+may vanish at other points of $R_i^+$; it need not have full support.
+For heterogeneous weights, a group's support witness always uses
+its actual outside owner's weight support, as in Definition 2.3.
+
+**Definition 18.2 (the finite one-block mass).** For a nonzero
+nonnegative weight $w$ on the entire $S_d$, put
+
+$$
+\ell_d(w)=A_1(w)
+ =\max_{\Theta\text{ complete on one actual block}}
+       \sum_{x\in C_\Theta}w(x).
+\tag{COK.83}
+$$
+
+Here every target in $W_d$ is prescribed, constants lie in its
+attained $G_q$, and a nonconstant target uses a total decoder of
+one actual own-coordinate reply. This is the $n=1$ instance of
+(COK.10), not a new pressure definition. The finite menu attains
+the maximum; a constant singleton template shows $\ell_d(w)>0$.
+In particular
+
+$$
+0<\ell_d(w)\le\beta_d(w)\le\Omega_d(w).
+\tag{COK.84}
+$$
+
+For rational $w$, $\ell_d(w)$ is rational and exactly computable
+by finite enumeration of these complete templates and their actual
+states. No arbitrary-size cutoff for $\beta_d$ is involved.
+
+**Lemma 18.3 (guard-preserving conditional sections).** Fix any
+actual network on $n$ blocks, any nonzero nonnegative weights
+$w_i:S_d\to[0,\infty)$, and any positive matching population
+$p=(p_i)$. Use the entire owned tuple $O_i$ and incoming tuple
+$I_i=(B_{ji})_{(j,i)\in E}$ of Definition 11.2. For an attained
+incoming value $b$, define
+
+$$
+\begin{aligned}
+T_{i,b}&=\{o:(o,b)\in R_i^+\},\qquad
+z_i(b)=\sum_{o\in T_{i,b}}w_i(x_i(o,b)),\\
+g_{i,b}(o)&=\frac{w_i(x_i(o,b))}{z_i(b)}
+                  \quad(o\in T_{i,b}).
+\end{aligned}
+\tag{COK.85}
+$$
+
+Then $g_{i,b}$ is a probability and
+
+$$
+0<z_i(b)\le\ell_d(w_i).
+\tag{COK.86}
+$$
+
+Proof. Positive probability of $I_i=b$ supplies at least one
+$(o,b)\in R_i^+$, proving strict positivity. In the local analytical
+description of block $i$, replace every occurrence of an incoming
+seed by the full factor prescribed at its fixed coordinate in $b$.
+Each replacement belongs to that port's original attained range.
+Remove just these incoming seed symbols. Retain all owned seeds,
+their domains, their distinct actual owner ports, their owner tables
+and the identities $h(B_{o_c}(a))=a$. Retain every repeated owned
+occurrence as that same seed, along with every actual compatibility
+test and the one whole weight $w_i$.
+
+These are precisely lawful one-block owned-seed data in
+[RRN, Definition 5.1 and Theorem 5.2][COKRrnJoint]. Their guarded
+inverse is a complete one-block native template, including its
+off-domain owner guards. Its positive solutions are exactly
+$x_i(o,b)$ for $o\in T_{i,b}$. Indeed its local full factor vector
+is the old vector with this same $b$ substituted, in both directions.
+If $o\ne o'$, some owned reply differs; that reply is recovered at
+its retained actual owner port. Thus the reconstructed trees differ.
+The weighted solution sum is exactly $z_i(b)$, with no multiplicity,
+so (COK.83) bounds it. When $O_i$ is empty there is just one empty
+owned tuple, and the same argument gives a constant template.
+
+Fixing $b$ here is a comparison of finite mathematical sections.
+It supplies no observation, cut descriptor or source-dependent
+constant to the original reader, and asserts no operation on the
+outside stationary source. $\square$
+
+**Theorem 18.4 (exact conditional-section deficit).** Under Lemma
+18.3's hypotheses, let
+
+$$
+\operatorname{TC}_i
+ =\sum_{(j,i)\in E}H_{p_i}(B_{ji})-H_{p_i}(I_i).
+$$
+
+Then, without any incidence, width, acyclicity, product-law or
+global-extension hypothesis,
+
+$$
+\begin{aligned}
+&\sum_i\log_2\ell_d(w_i)
+       -\mathcal B_{\mathcal N}(p;\boldsymbol w)\\
+&\quad=\sum_i\left\{
+ \mathbb E_{b\sim(p_i)_{I_i}}
+ \left[\log_2\frac{\ell_d(w_i)}{z_i(b)}
+       +D_2\bigl(p_i(O_i\mid b)\Vert g_{i,b}\bigr)\right]
+       +\operatorname{TC}_i\right\}\ge0.
+\end{aligned}
+\tag{COK.87}
+$$
+
+Equality holds exactly when, for every $i$ and every
+positive-probability $b$, one has $z_i(b)=\ell_d(w_i)$ and
+$p_i(O_i\mid b)=g_{i,b}$, and the whole incoming groups under
+that same $p_i$ are mutually independent. This last condition
+does not require independence of seeds within a group.
+
+Proof. Every edge entropy in $\mathcal B_{\mathcal N}$ is the
+entropy of one entire incoming group, by (COK.61). At block $i$,
+
+$$
+H(p_i)-\sum_{(j,i)\in E}H_{p_i}(B_{ji})
+ =H_{p_i}(O_i\mid I_i)-\operatorname{TC}_i.
+\tag{COK.88}
+$$
+
+The conditional finite Gibbs identity on $T_{i,b}$ gives
+
+$$
+H_{p_i}(O_i\mid I_i)+\mathbb E_{p_i}\log_2w_i(x_i)
+ =\mathbb E_b\log_2 z_i(b)
+  -\mathbb E_bD_2\bigl(p_i(O_i\mid b)\Vert g_{i,b}\bigr).
+\tag{COK.89}
+$$
+
+Its conditional probabilities may vanish; $g_{i,b}$ is positive
+on the finite $T_{i,b}$, so each relative entropy is finite.
+Insert (COK.89) in (COK.88), then in (COK.66), and subtract from
+$\sum_i\log_2\ell_d(w_i)$. This proves the identity. The section
+bound, relative-entropy nonnegativity and entropy subadditivity
+make each displayed term nonnegative. Total correlation is the
+relative entropy of the incoming joint law to the product of its
+whole-group marginals, so it vanishes exactly at their mutual
+independence. The other equality conditions follow term by term.
+Empty incoming tuples have $\operatorname{TC}_i=0$ and one
+context, so no exceptional case is omitted. $\square$
+
+**Theorem 18.5 (sharp maximum over all matching populations).** For
+every $d,n\ge1$ and all nonzero nonnegative $w_1,\ldots,w_n$,
+
+$$
+\max_{\substack{\mathcal N\text{ actual on }n\text{ blocks}\\
+                  p\in\mathcal P^+(\mathcal N;\boldsymbol w)}}
+ \mathcal B_{\mathcal N}(p;\boldsymbol w)
+   =\sum_{i=1}^n\log_2 A_1(w_i).
+\tag{COK.90}
+$$
+
+In particular, for homogeneous $w$,
+
+$$
+\sup_{n,\mathcal N,p}\frac{\mathcal B_{\mathcal N}(p;w)}n
+       =\log_2\ell_d(w).
+\tag{COK.91}
+$$
+
+If all weights are rational, the maximum in (COK.90) is attained
+with rational matching populations. For real weights rational
+populations approach the same value on fixed positive supports.
+
+Proof. Theorem 18.4 supplies the upper bound, even without using
+matching beyond the stated population domain. For each $i$ choose
+a complete one-block template attaining $\ell_d(w_i)$. RRN's exact
+correspondence makes all of its seeds owned in that block, with
+no incoming groups and one lift per actual tree. On its positive
+solution set use the law $w_i(x)/\ell_d(w_i)$, transported by that
+bijection to its owned tuples. The Gibbs identity is
+
+$$
+H(O_i)+\mathbb E\log_2w_i(x_i)=\log_2\ell_d(w_i).
+$$
+
+Take the disjoint union of these $n$ actual templates. Matching
+has no edges to test, so these laws are a positive matching
+population attaining (COK.90). This union is a lawful competitor
+in the unrestricted class used by that maximum; it is not a
+reduction of another competitor to independent child codes.
+Rational weights give rational normalized laws. At real weights,
+approximate each finite Gibbs law by rational laws on its same
+positive solution support. Entropy and the finite energy expectation
+are continuous there; the edge-free matching constraints remain
+vacuous. This proves the last assertion and (COK.91). $\square$
+
+The maximum is for the cover-population functional. It is neither
+$\log_2\Omega_d(w)$ nor $\log_2\beta_d(w)$ in general, and it
+is not an optimization of $\Delta(P)$.
+
+## 19. The exact error floor for matching-population completion
+
+**Corollary 19.1 (the best error in Corollary 15.3).** Fix $d\ge1$
+and a nonzero nonnegative rational homogeneous $w$. For the exact
+$\mathcal U,\mathcal B,\mathcal I_{\rm cov}$ of §§13–15,
+
+$$
+\min_{\substack{n\ge1,\ \mathcal N\text{ actual}\\
+                  p\in\mathcal P^+(\mathcal N;w)\text{ rational}}}
+ \left[\log_2\Omega_d(w)
+     -\frac{\mathcal U_{\mathcal N}(p;w)}n
+     +\frac{\mathcal I_{\rm cov}(p)}n\right]
+ =\log_2\frac{\Omega_d(w)}{\ell_d(w)}.
+\tag{COK.92}
+$$
+
+Consequently the two errors $\delta,\epsilon\ge0$ in (COK.77)
+can have arbitrarily small sum, over all these networks and
+populations, if and only if $\Omega_d(w)=\ell_d(w)$. More
+precisely, their smallest possible sum is the right side of
+(COK.92), and is attained.
+
+Proof. The credited identity (COK.74) turns the expression in
+brackets into $\log_2\Omega_d(w)-\mathcal B_{\mathcal N}/n$.
+Theorem 18.5 bounds it below by the right side and attains that
+bound with an edge-free one-block maximizing Gibbs law. For that
+law $\mathcal I_{\rm cov}=0$ and
+$\mathcal U=\mathcal B=\log_2\ell_d(w)$. Thus choose
+$\delta=\log_2(\Omega_d(w)/\ell_d(w))$ and $\epsilon=0$.
+Conversely (COK.77) forces $\delta+\epsilon$ to be at least its
+bracketed expression. Nonnegativity follows from (COK.84).
+$\square$
+
+For each specified rational weight the equality in this corollary
+is decidable: $\ell_d(w)$ is an exact rational finite maximum,
+and [NWO, Theorem 6.1][COKNwoJoint] makes $\Omega_d(w)$ a
+computable algebraic number. Exact algebraic comparison tests
+their equality. This settles this fixed-law population premise;
+it does not compute $\beta_d(w)$ or decide $a_d=b_d$.
+
+As a credited tightness check, [NCE, Theorems 9.2–9.3][COKNceJoint]
+has a one-block attaining set at its positive joint law
+$\mu_{\rm j}$ and
+$\beta_3(\mu_{\rm j})=\Omega_3(\mu_{\rm j})=2499/6407$.
+Thus $\ell_3(\mu_{\rm j})$ equals that same supplied value,
+and (COK.92)'s floor is zero there. Neither that credited
+fixed-law equality nor this population consequence identifies
+an optimizer over all laws.
+
+**Proposition 19.2 (a strictly positive actual-law separation).**
+Reuse exactly the states of [NWO, Definitions 4.1 and 4.3,
+Theorems 4.2 and 4.4][COKNwoJoint]. For precision, let
+$Z=\{0,\ldots,15\}$ and, for each four-set
+$Q=\{z_0<z_1<z_2<z_3\}$, put $f_Q(z_i)=i$ and
+$f_Q(z)=0$ outside $Q$. Define $T_0=\alpha$ and
+$T_{h+1}=\langle T_h,\alpha\rangle$. In a fixed perfect
+ordered scaffold of height eleven, its $2048$ slots have public
+addresses $a$. Use $1820=\binom{16}{4}$ distinct slots $a_Q$
+for the $T_{f_Q(z)}$, four further slots for the binary digits
+of $z$, one for a fixed alpha marker, and alpha at all remaining
+slots. These are NWO's sixteen distinct states $x_z\in S_{15}$,
+of height at most fourteen. Let $\mu_0$ be uniform on them and
+zero elsewhere, and let $u$ be uniform on the entire $S_{15}$.
+Put
+
+$$
+s=|S_{15}|,\qquad
+\mu_* =\frac{63}{64}\mu_0+\frac1{64}u.
+\tag{COK.93}
+$$
+
+This is a rational probability positive at every original canonical
+state, including every variable shape. It satisfies
+
+$$
+\begin{aligned}
+\Omega_{15}(\mu_*)&\ge\frac{63}{256}+\frac1{16s}
+                                  >\frac{252}{1024},\\
+\ell_{15}(\mu_*)&\le\beta_{15}(\mu_*)\le\frac{205}{1024}.
+\end{aligned}
+\tag{COK.94}
+$$
+
+For every actual network of every size and every rational positive
+matching population at this one law,
+
+$$
+\log_2\Omega_{15}(\mu_*)-\mathcal U/n
+             +\mathcal I_{\rm cov}/n
+ >\log_2(252/205)>0.
+\tag{COK.95}
+$$
+
+Proof with the credited witness distinguished. NWO Theorem 4.2
+proves the entire finite-envelope value
+$\Omega_{15}(\mu_0)=3/16$ and gives a lawful one-block
+three-state attaining set. The sandwich (COK.84) therefore gives
+$\ell_{15}(\mu_0)=\beta_{15}(\mu_0)=3/16$.
+
+NWO's actual entering witnesses use
+
+$$
+E_0=\alpha,\quad E_1=\langle\alpha,\alpha\rangle,\quad
+E_2=\langle\beta,\alpha\rangle,\quad
+E_3=\langle\langle\alpha,\alpha\rangle,\alpha\rangle.
+$$
+
+Their actual $L$ replies are, respectively, absent, alpha, beta,
+branch. In the same scaffold, put $E_{f_Q(z)}$ in slot $a_Q$,
+alpha at the digit slots, beta at the marker and alpha elsewhere,
+obtaining the actual $u_z\in S_{15}$. One outside-owner group
+uses all the distinct ports $a_QL$ together. For each $z$ the
+single tree $u_z$ supplies its whole simultaneous group image;
+these are not independent coordinate witnesses. Both $x_z$ and
+$u_z$ have positive $\mu_*$ weight. Thus NWO Theorem 4.4 applies
+to the original complete decoration list and gives
+
+$$
+\Omega_{15}(\mu_*)\ge
+4\left(\frac{63}{64\cdot16}+\frac1{64s}\right).
+$$
+
+The external witness's weight is used for its support test, not
+inserted as a second local potential. Its local law has the
+owned digit tuple and the single incoming tuple each determining
+$z$, so its $k=1$ entropies are exactly $4$ and $0$, as in that
+supplier. This is the first inequality in (COK.94).
+
+For the other direction use homogeneity and the additive native
+pressure stability of [NPC, Theorem 6.1][COKNpcJoint]:
+
+$$
+\beta_{15}(\mu_*)
+ \le\frac{63}{64}\frac3{16}+\frac1{64}
+ =\frac{205}{1024}.
+$$
+
+No convexity of $\Omega$ is used; NWO disproves it. Corollary
+19.1 now gives (COK.95), because the strictly positive term
+$1/(16s)$ makes $\Omega_{15}(\mu_*)/\ell_{15}(\mu_*)$
+strictly greater than $252/205$. $\square$
+
+This is a consequence for the specified matching-population route
+on an existing credited actual witness, not a second hash
+construction or a new rate endpoint. Larger populations, covers
+or sheet counts cannot remove (COK.95). It does not exclude
+stability-closed or richer cap rules; the proof itself uses NPC
+stability for a bypass cap. Moreover
+$a_{15}\le\Omega_{15}(\mu_0)=3/16<\Omega_{15}(\mu_*)$,
+so this positive law is not an envelope minimizer. Pointwise
+separation does not refute optimizer-cofinality.
+
+## 20. Reciprocal units and common-law loss with one incoming owner
+
+**Definition 20.1 (existing common laws and ownership units).** Fix
+$d,n\ge1$ and an actual owned-seed network. Let $P$ be any
+probability on any nonempty retained relation of actual seed
+solutions. It may have zeros, arbitrary correlations and arbitrary
+nonnegative once-owned block weights underlying its support.
+It is not assumed to arise by extension of local laws.
+
+Assume that every block uses seeds from at most one distinct
+outside owner. When present denote that owner by $j(i)$, and
+write $B_i=\operatorname{pr}_{j(i),i}O_{j(i)}$ for its entire
+locally occurring group. Self references stay inside $O_i$.
+Use the distinct notation
+
+$$
+\iota_i=I_P(O_i;B_i),
+$$
+
+setting $\iota_i=0$ if there is no outside owner. Thus the
+ownership digraph has an edge $j(i)\to i$ and indegree at most
+one; outgoing degree and seed incidence are unrestricted.
+
+A reciprocal pair is $\{i,j\}$ with $j(i)=j$ and $j(j)=i$.
+These pairs are disjoint. Partition the owner blocks into units
+$\mathscr U$ consisting of those pairs and all remaining
+singletons. Write $O_U=(O_i)_{i\in U}$ and define, under the
+same $P$,
+
+$$
+\begin{aligned}
+T(P)&=\sum_{U\in\mathscr U}H_P(O_U)-H_P(s)
+   =D_2\!\left(P\,\middle\|\,\bigotimes_{U\in\mathscr U}P_{O_U}\right),\\
+M_{ij}&=I_P(O_i;O_j),\\
+L(P)&=\sum_{\{i,j\}\text{ reciprocal}}
+           \left[M_{ij}-\frac{\iota_i+\iota_j}{2}\right],\\
+J_{\rm out}(P)&=\sum_{i:\,j(i)\text{ exists and is not reciprocal}}
+                    \iota_i.
+\end{aligned}
+\tag{COK.96}
+$$
+
+The product in $T$ is an analytical product of unit marginals,
+not an asserted law of actual solutions. Empty owned tuples have
+one value and entropy zero. In this class the COK chain defect,
+defined for any such common law, is
+
+$$
+\Delta(P)=\sum_iH_P(O_i)-H_P(s)-\frac12\sum_i\iota_i,
+\tag{COK.97}
+$$
+
+since the two coefficients for one incoming owner are $1/2$,
+whereas a block with none contributes $H_P(O_i)$. For a Gibbs
+law on a retained relation this is exactly (COK.21), and it then
+has the weighted cap consumer (COK.22).
+
+**Lemma 20.2 (forest information inequality, including support zeros).**
+For any finite joint law on tuples $(Y_U)_{U\in\mathscr U}$ and
+any undirected forest $F$ on these units,
+
+$$
+\sum_{\{U,V\}\in F}I(Y_U;Y_V)
+ \le\sum_UH(Y_U)-H((Y_U)_U).
+\tag{COK.98}
+$$
+
+Proof. Root each forest component and order units with parents
+before children. The chain rule, followed by discarding all
+conditioning except the parent, gives
+
+$$
+H((Y_U)_U)
+ \le\sum_{U\text{ root}}H(Y_U)
+       +\sum_{U\text{ nonroot}}H(Y_U\mid Y_{\operatorname{parent}(U)}).
+$$
+
+Subtract from $\sum_UH(Y_U)$. Every nonroot term contributes
+one edge mutual information, proving (COK.98). There is no
+Markov factorization or positivity premise. $\square$
+
+**Theorem 20.3 (sharp reciprocal-unit loss bounds).** For every
+network and common law in Definition 20.1, $L(P)\ge0$ and
+
+$$
+\begin{aligned}
+\Delta(P)&=T(P)+L(P)-\tfrac12J_{\rm out}(P),\\
+\Delta(P)&\ge\tfrac14T(P)+L(P),\\
+\Delta(P)&\ge\tfrac16J_{\rm out}(P)+L(P).
+\end{aligned}
+\tag{COK.99}
+$$
+
+In particular $\Delta(P)=0$ if and only if $P$ factors across
+the reciprocal-pair/singleton units and every reciprocal pair
+satisfies
+
+$$
+I_P(O_i;B_i)=I_P(O_i;O_j)=I_P(O_j;B_j).
+\tag{COK.100}
+$$
+
+Dependence at zero chain loss can therefore remain only within
+reciprocal units, and both actual incoming projections must
+retain it. This characterizes already existing laws, including
+hard-zero supports; it is not a local-law extension theorem.
+
+Proof. On a reciprocal pair, $B_i$ is a projection of $O_j$ and
+$B_j$ a projection of $O_i$. Data processing gives
+$\iota_i,\iota_j\le M_{ij}$. Thus every summand of $L$ is
+nonnegative. Grouping the entropy sum by units gives
+
+$$
+\sum_iH(O_i)-H(s)=T(P)+\sum_{\{i,j\}\text{ reciprocal}}M_{ij}.
+$$
+
+Subtract half of the incoming mutual-information sum to obtain
+the exact identity in (COK.99).
+
+Contract each reciprocal pair in the ownership digraph and
+delete its two internal edges. No external edge enters a pair:
+each member already uses its one allowed outside owner inside
+that pair. A singleton still has indegree at most one. No
+parallel edge can remain: two edges from different members of
+a pair into one singleton would give that singleton two outside
+owners; edges into a pair are already excluded. Two opposite
+edges between singletons would instead have been contracted as
+a reciprocal pair. There are no loops. The underlying simple
+undirected graph is consequently a pseudoforest: in any connected
+component its directed indegree bound gives at most as many
+edges as vertices, hence at most one undirected cycle. Every
+cycle has length at least three.
+
+Keep every bridge, and from each cycle delete one of its edges
+uniformly. This finite auxiliary distribution is on forests;
+each edge is retained with probability at least $2/3$. For a
+nonreciprocal edge $j\to i$, data processing gives
+
+$$
+\iota_i\le I_P(O_{U(i)};O_{U(j)}).
+$$
+
+Apply Lemma 20.2 to each forest, and then average. All edge
+informations are nonnegative, so
+
+$$
+\frac23J_{\rm out}(P)\le T(P).
+\tag{COK.101}
+$$
+
+The exact identity now gives
+$\Delta-L\ge T-3T/4=T/4$ and
+$\Delta-L\ge(2/3)J_{\rm out}-J_{\rm out}/2
+=J_{\rm out}/6$, proving the two bounds.
+
+If $\Delta=0$, the first bound and nonnegativity force $T=L=0$.
+The relative entropy in (COK.96) then makes the units independent.
+Each nonreciprocal edge joins different units, so its $\iota_i$
+is zero. Vanishing of $L$ forces both nonnegative projection
+losses $M_{ij}-\iota_i$ and $M_{ij}-\iota_j$ to vanish on
+each pair, proving (COK.100). Conversely unit independence
+gives $T=J_{\rm out}=0$, and (COK.100) gives $L=0$; the exact
+identity gives $\Delta=0$. Isolated units, empty owned tuples
+and zero-probability assignments require no change to the
+argument. $\square$
+
+**Proposition 20.4 (sharpness on actual native data).** Both constants
+$1/4$ and $1/6$ in (COK.99) are attained. For any $d\ge2$, use
+three binary seeds owned at the actual $L$ ports of three blocks,
+with complete prescriptions
+
+$$
+z_{i,\varepsilon}=(0,0),\qquad
+z_{i,Lr}=\Gamma_r(s_i),\qquad
+z_{i,Rr}=\Gamma_r(s_{i-1})
+\quad(Lr,Rr\in W_d),
+\tag{COK.102}
+$$
+
+with cyclic indices. Extend excluded branch and absent owner
+replies by the alpha factor, as in §21 below. Give weight $1/2$
+to each of $\langle\alpha,\alpha\rangle$ and
+$\langle\beta,\beta\rangle$, and zero to every other state
+of $S_d$. Its positive actual Gibbs support is precisely the
+two constant-bit assignments, equiprobable. There are no
+reciprocal pairs and
+
+$$
+T=2,\qquad J_{\rm out}=3,\qquad L=0,\qquad\Delta=1/2.
+$$
+
+Proof. The guarded full factors force exactly
+$x_i=\langle s_i,s_{i-1}\rangle$, with every binary assignment
+an actual solution. Positive weight at every block requires
+neighboring bits to agree, giving just the stated two tuples,
+of equal product weight. Their three owned bits each have
+entropy one and their joint entropy is one. Every incoming bit
+equals its owned bit under this one law, so its mutual
+information is one. Substitute in (COK.96)–(COK.97).
+The binary-slot realization is the credited COK/OOA/GCB mechanism;
+the example establishes sharpness of (COK.99), without an
+unrestricted mass or rate claim. $\square$
+
+## 21. Actual reciprocal covers with full-support whole-block weights
+
+**Definition 21.1 (binary slots and a positive nonproduct law).** Fix
+$d\ge2$, let $s_d=|S_d|$ and $b=s_d+2$, and put
+
+$$
+\mu(\langle\alpha,\alpha\rangle)
+ =\mu(\langle\beta,\beta\rangle)=\frac2b,
+\qquad \mu(x)=\frac1b\quad\text{for every other }x\in S_d.
+\tag{COK.103}
+$$
+
+The total raw weight is $s_d+2$, so this is a strictly positive
+rational probability on the entire unchanged canonical alphabet.
+Its binary-pair weight minor is
+$b^{-1}\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$,
+with determinant $3/b^2>0$; it is not a product of two leaf weights.
+The binary matrix and conditional rows below are credited to
+Theorem 8.1 and [OOA, §7][COKOoaJoint]. The full-support scaling
+keeps their local calculation on the actual binary slots.
+
+Start with two reciprocal blocks, each owning one binary seed
+at its actual $L$ port. An $m$-sheet whole-group cover has two
+perfect matchings. Relabel sheets so one matching is the identity;
+write $h\in\operatorname{Sym}([m])$ for the relative matching
+on the other. Write the blocks as $A_i,B_i$, their owned seeds
+as $a_i,b_i\in\{\alpha,\beta\}$, and prescribe every target by
+
+$$
+\begin{array}{lll}
+z_{A_i,\varepsilon}=(0,0),&
+z_{A_i,Lr}=\Gamma_r(a_i),&
+z_{A_i,Rr}=\Gamma_r(b_i),\\
+z_{B_i,\varepsilon}=(0,0),&
+z_{B_i,Lr}=\Gamma_r(b_i),&
+z_{B_i,Rr}=\Gamma_r(a_{h(i)}),
+\end{array}
+\quad Lr,Rr\in W_d.
+\tag{COK.104}
+$$
+
+An occurrence of $a_i$ queries the actual $L$ port of $A_i$,
+and an occurrence of $b_i$ that of $B_i$. For each nonconstant
+table send both excluded replies branch and absent to the
+corresponding full alpha-leaf factor. At an owner port this
+factor has reply alpha, different from either excluded input.
+These are total native tables with the actual binary guards,
+not an extra domain observation. All factors are in the original
+attained ranges. In particular a suffix below a leaf still has
+its entire temporal factor prescribed.
+
+**Proposition 21.2 (exact common actual solutions).** The full
+complete-template solution set of (COK.104) is exactly
+
+$$
+x_{A_i}=\langle a_i,b_i\rangle,\qquad
+x_{B_i}=\langle b_i,a_{h(i)}\rangle
+\quad(i\in[m]),
+\tag{COK.105}
+$$
+
+for all $2^{2m}$ assignments of the same shared owner bits.
+Every tuple has exactly one seed lift, every seed has prescribed
+block incidence two, and each original block receives its one
+whole weight (COK.103). A length-$\ell$ cycle of $h$ gives a
+cycle on $2\ell$ actual owner blocks; $\ell=1$ gives a
+reciprocal pair.
+
+Proof. The root equation forces branch. The guarded actual owner
+equation forces its $L$ child to be precisely its binary seed
+leaf. Its $R$ child factor, at the other owner's actual reply,
+forces precisely the other specified leaf. These immediate factors
+already force (COK.105); every longer prescribed suffix is then
+its correct leaf factor. Conversely any binary seed assignment
+constructs (COK.105) and satisfies all those equations and guards.
+The actual $L$ replies recover all seeds, giving the inverse
+without multiplicity. Each $a_i$ occurs in $A_i$ and in the
+unique $B_{h^{-1}(i)}$; each $b_i$ occurs in $B_i$ and $A_i$.
+The alternating route through these matchings gives the stated
+cycles. Both source identity and every repeated coordinate are
+unchanged. $\square$
+
+**Proposition 21.3 (matching local optima are compatible).** At every
+copied block, in the order (own seed, incoming seed), prescribe
+the full four-point law
+
+$$
+p(\alpha,\alpha)=p(\beta,\beta)=\frac25,\qquad
+p(\alpha,\beta)=p(\beta,\alpha)=\frac1{10}.
+\tag{COK.106}
+$$
+
+Its two marginals are fair, so the whole-group matching equations
+hold for every $h$. Put
+
+$$
+I_0=1-h_2(1/5)>0,\qquad c=\frac{\sqrt{10}}b.
+\tag{COK.107}
+$$
+
+Each block has mutual information $I_0$ and its individual local
+COK minimax value is exactly $c$. Explicit normalized rows are
+
+$$
+Q_\varnothing(o)=\tfrac12,\qquad
+Q_{\{1\}}(o\mid z)=
+ \begin{cases}4/5,&o=z,\\1/5,&o\ne z.\end{cases}
+\tag{COK.108}
+$$
+
+For every $m,h$, there is a common actual law of full support on
+the solution cube with exactly these copied local laws. It need
+not be the Gibbs law of the once-owned weights.
+
+Proof. The uniform marginal and binary crossover probability
+$1/5$ give the mutual information in (COK.107). On all four
+local inputs, direct substitution gives
+
+$$
+\mu(x_i)^2=c^2Q_\varnothing(o)Q_{\{1\}}(o\mid z).
+\tag{COK.109}
+$$
+
+The marginal and conditional rows of $p$ are precisely
+(COK.108). Take logarithms and expectations in (COK.109).
+The conditional Gibbs identity gives
+$[H_p(O)+H_p(O\mid B)]/2+\mathbb E_p\log_2\mu(x_i)
+=\log_2c$. The pointwise equality gives a cap $c$, and this
+one-law objective, or the credited local minimax Theorem 4.1,
+forces every such local cap to be at least $c$. These are the
+four actual configurations of this decoration, all positive
+under (COK.103). The calculation does not optimize over the
+entire decoration list defining $\Omega_d$.
+
+For common-law existence, let $U_{2m}$ be uniform on all owner
+bit assignments and let $C_{2m}$ be uniform on the two constant
+assignments. The law
+
+$$
+P^{\rm comp}=\tfrac35 C_{2m}+\tfrac25 U_{2m}
+\tag{COK.110}
+$$
+
+is positive on the whole actual cube. Every local pair concerns
+two distinct owner bits, by Proposition 21.2. A given equal pair
+has probability $3/10+(2/5)(1/4)=2/5$, and a given unequal
+pair probability $(2/5)(1/4)=1/10$. Thus its local law is exactly
+$p$ at every block, for every $h$. This proves compatibility,
+without identifying it with a Gibbs law. $\square$
+
+## 22. Reciprocal depletion obstructs small-loss cover completion
+
+**Theorem 22.1 (loss for every compatible common law).** In the
+actual cover of §21, let $P$ be any common law with all copied
+local laws (COK.106). If $\operatorname{cyc}(h)$ counts the
+cycles of $h$, including fixed points, then
+
+$$
+\Delta(P)\ge\bigl(m-\operatorname{cyc}(h)\bigr)I_0.
+\tag{COK.111}
+$$
+
+If $f(h)$ is its number of fixed points, consequently
+
+$$
+\frac{\Delta(P)}{2m}
+ \ge\frac14\left(1-\frac{f(h)}m\right)I_0.
+\tag{COK.112}
+$$
+
+A zero-defect common completion exists exactly when $h$ is the
+identity. In particular fixed-point-free covers have loss at
+least $I_0/4$ per original block for every such completion.
+
+Proof. Every owned seed is fair and the mutual information on
+each actual incoming edge is $I_0$. In the $2\ell$-owner
+component of each permutation cycle, choose a spanning path of
+$2\ell-1$ distinct undirected edges. For $\ell=1$ this is
+the one edge of its reciprocal pair; for $\ell\ge2$ it is a
+cycle with one edge deleted. The union is a forest with
+$2m-\operatorname{cyc}(h)$ edges, and the same $P$ has mutual
+information $I_0$ on every selected edge. Lemma 20.2, applied
+here to the individual owned tuples, yields
+
+$$
+\sum_iH_P(O_i)-H_P(s)
+ \ge\bigl(2m-\operatorname{cyc}(h)\bigr)I_0.
+$$
+
+This remains true when $P$ correlates different cover components.
+Formula (COK.97) subtracts half the $2m$ directed incoming
+informations, namely $mI_0$, proving (COK.111). Each nonfixed
+cycle uses at least two sheets, so
+$\operatorname{cyc}(h)\le f(h)+(m-f(h))/2$. Substitute and
+divide by $2m$ for (COK.112).
+
+If $h$ is the identity, take the product over its $m$ reciprocal
+pairs of law $p$ on $(a_i,b_i)$. It is an actual common law
+with independent units and both incoming projections equal to
+the entire other owner's bit. Theorem 20.3 gives $\Delta=0$.
+If $h$ is not the identity, then $m-\operatorname{cyc}(h)>0$,
+and $I_0>0$ makes (COK.111) exclude zero defect. This proves
+both directions. $\square$
+
+**Theorem 22.2 (stability under approximate preservation of the full
+local laws).** Let $P$ instead have every copied four-point local
+seed law within total variation $\varepsilon\le1/2$ of $p$.
+Define
+
+$$
+v(\varepsilon)=3h_2(\varepsilon)+\varepsilon\log_2 3.
+\tag{COK.113}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\Delta(P)&\ge
+ \bigl(m-\operatorname{cyc}(h)\bigr)I_0-3m v(\varepsilon),\\
+\frac{\Delta(P)}{2m}&\ge
+ \frac14\left(1-\frac{f(h)}m\right)I_0
+                      -\frac32 v(\varepsilon).
+\end{aligned}
+\tag{COK.114}
+$$
+
+Proof. For laws on $r$ outcomes at total variation $t$, the
+finite entropy continuity bound is
+$|H(X)-H(X')|\le h_2(t)+t\log_2(r-1)$ in the ranges used
+here. One direct proof takes a maximal coupling with mismatch
+indicator of probability $t$: given the other outcome and a
+mismatch there are at most $r-1$ choices. Thus each of
+$H(X\mid X')$ and $H(X'\mid X)$ is at most the displayed
+quantity, which bounds their entropy difference. The zero-distance
+case follows by equality.
+
+Marginalization does not increase total variation. Apply this
+bound to two binary marginals and their four-outcome joint law.
+The functions $h_2(t)$ and $h_2(t)+t\log_2 3$ are increasing
+for $0\le t\le1/2$, so every actual local edge information
+satisfies
+
+$$
+|\iota_i-I_0|\le3h_2(\varepsilon)
+                         +\varepsilon\log_2 3=v(\varepsilon).
+$$
+
+Use the same $2m-\operatorname{cyc}(h)$-edge forest as in
+Theorem 22.1. Its information sum is at least that edge count
+times $I_0-v$. In (COK.97) subtract at most $m(I_0+v)$.
+This gives the stronger intermediate bound
+
+$$
+\Delta(P)\ge
+ (m-\operatorname{cyc}(h))I_0
+ -(3m-\operatorname{cyc}(h))v.
+$$
+
+Dropping its favorable $\operatorname{cyc}(h)v$ term proves
+the first line of (COK.114); the same cycle-count inequality
+proves the second. The bounds remain valid when $I_0-v<0$.
+$\square$
+
+**Corollary 22.3 (a precisely excluded completion mechanism).** Fix
+$0<\theta\le1$. There is no completion rule which, on an
+unbounded sequence of the whole-group covers (COK.104), both
+preserves their full local laws with error
+$\varepsilon_m\to0$, chooses relative matchings with
+$f(h_m)/m\le1-\theta$, and supplies common actual laws with
+$\Delta(P_m)/(2m)\to0$. Their lower limit is at least
+$\theta I_0/4>0$.
+
+Proof. Apply (COK.114) and $v(\varepsilon_m)\to0$.
+$\square$
+
+Compatibility is not the missing premise in this example:
+(COK.110) supplies compatible full-support common laws for
+every matching. The obstruction is to retaining the displayed
+local optima while depleting reciprocal actual-owner matching
+and asking for vanishing common-law chain loss. In this class
+one must retain that joint matching information or pay the
+quantified loss. It is not an obstruction to arbitrary cover
+choices, global recoloring, other native certificates, lawful
+recuts, optimization over $\mu$, or computability. The result
+does not identify the compatible law with a prescribed Gibbs
+law or determine its component normalizers.
+
+## 23. Original all-competitor consumer and paid acquired witnesses
+
+**Theorem 23.1 (conditional correction for every original code).**
+Fix $1\le d\le D$, put $n=2^{D-d}$, and let $\mu$ be any
+probability on the entire $S_d$. Restrict any jointly correct
+original preparation and reader of Definition 1.2 to the fixed
+perfect scaffold of $n$ actually present canonical blocks in the
+right subtree. Let $B_e$ be its nonempty unchanged complete-name
+fibers on this slice; they partition $S_d^n$.
+
+For each positive-mass $B_e$, choose complete native witnesses
+and the exact RRN lift of this retained relation. Let $P_e$ be
+its own Gibbs law for $\prod_i\mu(x_i)$. Suppose blockwise
+conditional caps $C_{e,i}>0$ and positive normalized kernels
+satisfy (COK.14) on relations covering that retained positive
+support. If the chosen actual witness has at most one incoming
+outside owner at every block, compute $T_e,L_e$ as in
+Definition 20.1 and put $\delta_e=T_e/4+L_e$. Otherwise put
+$\delta_e=0$. Then
+
+$$
+\mu^{\otimes n}(B_e)
+ \le\left(\prod_iC_{e,i}\right)2^{-\delta_e},
+\qquad
+1\le\sum_{e:\,\mu^n(B_e)>0}
+       \left(\prod_iC_{e,i}\right)2^{-\delta_e}.
+\tag{COK.115}
+$$
+
+There is no assumption that every original fiber has a
+one-incoming-owner witness. The correction is conditional on
+its chosen actual witness and is zero in the unrestricted
+remaining cases.
+
+Proof. The credited [NPC, Theorem 7.1][COKNpcJoint] restricts
+the original procedure without changing a name or its fiber.
+For a fixed name and public request its zero-Read choice or
+arbitrary original-root query is fixed before reply and count.
+On the actual scaffold that query is constant or enters one
+actual donor block. The credited all-word canonical simulation
+turns its suffix into a function of one actual boundary reply
+in that same donor or a constant. Correctness for every
+authentic count forces the complete target factor to be a
+function of that reply. This supplies complete witnesses for
+every target, with arbitrary off-target donors and all original
+correlations retained. It does not require independent child
+codes, nor does it move donors to the target block.
+
+RRN gives the exact one-lift actual relation of $B_e$ inside
+those witnesses. For its positive mass use its own common Gibbs
+law $P_e$. The retained-relation version of (COK.22) gives
+
+$$
+\log_2\mu^n(B_e)
+ \le\sum_i\log_2C_{e,i}-\Delta(P_e).
+$$
+
+Theorem 20.3 bounds this last loss below by $\delta_e$ in the
+stated class; otherwise its original nonnegativity suffices.
+Exponentiating proves the first assertion. Zero-mass fibers
+contribute nothing, and summing the positive masses gives one,
+proving the second. All actual shared variables, guards, support
+zeros and whole weights are those of this one common law.
+$\square$
+
+The theorem quantifies over every original competitor. It is a
+conditional mass refinement, not a uniform numerical cap: the
+Gibbs corrections and unrestricted other fibers have not been
+bounded by a finite optimizer-cofinal certificate. In particular
+the product of reciprocal-unit marginals used in $T_e$ is not
+claimed to satisfy the native support. Small $T_e/n$ controls
+normalized relative entropy only; it supplies no support-valid
+completion or size-independent total-variation estimate.
+
+**Proposition 23.2 (credited paid realization of the reciprocal-cover
+fibers).** Fix public $d\ge2,m\ge1,h$, let $N=2m$,
+$H=\lceil\log_2N\rceil$, $K=2^H$ and $D=d+H$. Put the
+$N$ actual ordered blocks (COK.105) in a public perfect
+height-$H$ scaffold in the right subtree, padding the other
+$K-N$ slots by alpha. On the entire original variable-shape
+$\mathcal F_D$ there is a correct deterministic effective
+preparation and reader with exactly
+
+$$
+|S_D|-2^{2m}+1
+\tag{COK.116}
+$$
+
+complete attained names. On every source it uses exactly
+
+$$
+2^D-1\text{ preparation Reads},\qquad
+Q_{\rm prep}=D,\qquad
+A_{\rm prep}=(D-1)2^D+1\text{ submitted letters}.
+\tag{COK.117}
+$$
+
+Every permitted late request uses zero Reads or one actual
+original-root Read of length at most $H+2\le D$, chosen
+before its reply and every authentic count. This is an explicit
+nonoptimal full-family witness using Theorem 16.1's paid scan,
+not a new scan theorem or acquisition optimum.
+
+Proof of the instantiated correspondence. The ordered scaffold
+embeds the $2^{2m}$ rows injectively in $S_D$. Merge exactly
+these states into one name and give each other canonical state
+its own name. Before any request, the source-blind preparer
+actually reads every literal $Rq$, $q\in W_D$, in a fixed
+public order on the one stationary $t=\langle\alpha,v\rangle$,
+including absent replies. The acquired array computes
+$\pi_D(v)$, and a finite installed table selects its fixed-width
+complete name. Every canonical state is an actual possible
+right subtree and is fixed by $\pi_D$, so all these names are
+attained and (COK.116) counts them exactly. Counting those scan
+words and their lengths gives (COK.117).
+
+At a singleton name the requested full factor is installed, so
+no Read is needed. At the merged name, targets strictly above
+the frontier are constant branch and padding targets have
+their fixed alpha factors for every remaining suffix. A target
+inside a true block has form $Ra_iq$, $q\in W_d$. For the
+block root use branch. For $q=Lr$ or $Rr$, (COK.104) selects
+the actual owner of the indicated leaf. Its only Read is
+
+$$
+Ra_jL,\qquad |Ra_jL|=H+2\le D.
+\tag{COK.118}
+$$
+
+From its reply and the fixed suffix $r$, the installed table
+gives $\Gamma_r$ of that leaf. Thus it gives the requested
+full factor, including factors at initially absent suffixes.
+These cases exhaust every original request, since its length
+is at most $D$.
+
+Canonicalization preserves this queried reply and the requested
+factor on the full inverse-image fiber, including all original
+variable shapes. Each queried owner occurrence is actually
+present. Homomorphic transport (COK.82), with exactly the
+presence premise of `original_present_transport`, therefore
+applies; subtree notation supplies no access port. After this
+single query, (COK.5) answers every subsequently supplied
+authentic $k\ge0$ without another Read. The query is selected
+from the complete name, $D,p$ and public tables before its
+reply and every count. The matching $h$ and scaffold are
+fixed public installation, never acquired advice. $\square$
+
+**Proposition 23.3 (a paid one-block consumer of the section maximum).**
+For any three distinct credited states $x_z$ of Proposition
+19.2, the analogous full-family construction on $\mathcal F_{15}$
+has exactly $|S_{15}|-2$ attained names, one for those three
+canonical states and one for every other canonical state. Its
+preparation uses $32767$ actual Reads, maximum address fifteen
+and $458753$ submitted letters. On the merged name every
+request needs zero Reads or one actual original-root Read of
+length at most fourteen.
+
+Proof. NWO Theorem 4.2 supplies their complete own-coordinate
+witnesses: in a chain slot with three distinct heights
+$h_1<h_2<h_3$, query $L^{h_2}$ inside that slot. Its replies
+are absent, alpha, branch, respectively. For two distinct
+heights query the smaller height, giving alpha or branch; for
+one use constants. Among heights $0,1,2,3$ the selected
+exponent is at most two. The slot prefix has length eleven,
+so the full literal with the original $R$ wrapper has length
+at most $1+11+2=14$. Varying digit slots use their actual
+root replies. Above-slot factors, fixed slots and marker
+factors are constants. Once the height or digit is identified,
+its table gives every requested full factor within that slot,
+including initially absent suffixes. These are exactly the
+credited one-block witnesses, not a new hash family.
+
+Apply Theorem 16.1's $N=1$ construction to this admissible
+three-state subset of its complete one-block solution set.
+The scan acquires all $Rq$, $q\in W_{15}$, computes the
+canonical state, and selects the merged-or-singleton name on
+every original source. The same canonical inverse-image and
+authentic-count proof as Proposition 23.2 covers all requests.
+The attained-name count is $|S_{15}|-3+1$, and
+$2^{15}-1=32767$ and $14\cdot2^{15}+1=458753$ give the
+stated preparation charges. $\square$
+
+**Convention 23.4 (complete export and separate resources).** Both
+constructions export only the counted fixed-width name. Public
+allocation, fixed scan order and a padded finite selection
+schedule accompany the declared paid handoff and access
+isolation. The scanned arrays, temporary selectors, buffers,
+lengths, allocation, preparation control, transcripts, accessible
+timing and every other acquired distinction beyond the name
+are inaccessible after handoff. If any additional distinction
+survives, it must enlarge the counted alphabet. These services
+are premises, not inferred physical erasure operations.
+
+The same credited Theorem 16.1 also pays for the one-block and
+disjoint-union witnesses used to attain Theorem 18.5. For fixed rational $w_i$,
+enumerate a maximizing one-block template for each weight and
+let $B_i$ be its nonempty positive solution set. Their
+disjoint union has the actual admissible relation
+$B=\prod_iB_i$, with no acquired code colors assumed. For
+$H=\lceil\log_2n\rceil$ and $D=d+H$, merging its scaffold
+image and naming the other canonical states separately gives
+exactly $|S_D|-\prod_i|B_i|+1$ complete attained names. The
+actual scan has precisely (COK.117)'s charges, and a late
+nonconstant equation queries its selected original owner
+literal of length at most $D$. For a fixed real weight a
+chosen attaining finite template has the same implementation;
+no effective selection from arbitrary real input weights is
+claimed. This implements the attaining population's underlying
+finite native relation, not its analytical Gibbs probabilities,
+and asserts no optimality for $M_1(D)$.
+
+Installed membership, topology, owner and factor tables are
+finite source-independent data. Their generation and size,
+preparation work/control and temporary storage, post-request
+workspace, final predictor size, address construction, authentic
+count representation, lawful entry, source continuity,
+authentication, handoff/isolation and physical time remain
+separate resources. For the factor alone the existing bound
+$\lceil\log_2(2D+1)\rceil+1$ bits suffices. The complete
+name in (COK.116) needs
+$\lceil\log_2(|S_D|-2^{2m}+1)\rceil$ fixed-width bits.
+No arbitrary competitor's acquisition cost is preserved, and
+no free total-efficiency claim is made. There is no subtree,
+equality, copying, reset, identity, age, navigation or advice port.
+The analytical weights, laws, conditional sections and unit
+product distributions are never supplied to the reader.
+
+## 24. Exact finite examples and the distinction between the losses
+
+**Proposition 24.1 (four actual blocks and two relative matchings).**
+At $d=2$, $|S_2|=11$ and $b=13$. For $m=2$, both $h$ equal
+to the identity and $h$ equal to the transposition have sixteen
+actual solutions in $S_2^4$, precisely (COK.105). Their masses
+and single-block Gibbs marginals, in the order
+$\alpha\alpha,\alpha\beta,\beta\alpha,\beta\beta$, are
+
+$$
+\begin{array}{c|c|c}
+h&Z_h&\text{local actual Gibbs probabilities}\\ \hline
+\mathrm{id}&100/28561&(2/5,1/10,1/10,2/5)\\
+(12)&82/28561&(14/41,13/82,13/82,14/41).
+\end{array}
+\tag{COK.119}
+$$
+
+Each nevertheless has the separate compatible full-support law
+(COK.110) with the prescribed marginal $p$. At $D=4$ the paid
+full-family code of Proposition 23.2 has exactly $15116$
+attained names, fifteen preparation Reads, maximum address
+four and forty-nine submitted letters.
+
+Proof. The $16$ binary assignments lift uniquely by Proposition
+21.2. The full-factor equations can also be tested directly on
+all $11^4=14641$ actual tuples: impose the branch roots and
+the four guarded left/other-owner right equations in (COK.104),
+with excluded replies sent to alpha. Their satisfying tuples
+are exactly those sixteen, for each matching. This checks
+actual native equations rather than an unconstrained graph
+surrogate.
+
+For the masses, reuse the credited matrix
+$M=\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$,
+whose eigenvalues are $3,1$. On a length-$\ell$ cycle of $h$
+the alternating actual blocks give the cyclic product of $2\ell$
+such matrices, hence the exact identity
+
+$$
+Z_h=b^{-2m}\prod_{\ell\text{ cycle length of }h}(9^\ell+1).
+\tag{COK.120}
+$$
+
+This is OOA's existing binary transfer calculation on the
+explicitly proved actual solution set, not a new matrix method.
+For the identity the two length-one cycles give $10^2/13^4$;
+for the transposition one length-two cycle gives $82/13^4$.
+On each reciprocal pair the Gibbs law is proportional to
+$M_{ab}^2$, giving the first marginal. On the four-cycle it
+is proportional to $M_{ab}(M^3)_{ba}$; the diagonal and
+off-diagonal entries of $M^3$ are $14,13$, giving the second.
+Thus compatible completion and Gibbs completion already differ
+on these four actual blocks.
+
+Finally $|S_3|=2+11^2=123$ and
+$|S_4|=2+123^2=15131$. Equation (COK.116) subtracts sixteen
+and adds one. Equation (COK.117) gives $2^4-1=15$ and
+$3\cdot2^4+1=49$. $\square$
+
+**Proposition 24.2 (cover charge is not common-law chain loss).**
+For the single reciprocal pair $m=1$ of §21, its actual Gibbs
+law is $p$ on $(a_1,b_1)$. Its common-law defect is zero, while
+the induced matching population has
+
+$$
+\mathcal I_{\rm cov}=I_0>0,\qquad
+\mathcal U=2\log_2c,\qquad
+\mathcal B=2\log_2c-I_0.
+\tag{COK.121}
+$$
+
+Proof. Its weight is proportional to $M_{ab}^2$, so the Gibbs
+law is $p$, with both incoming groups the entire other owned
+bit. Theorem 20.3 gives $\Delta=0$. At either block the
+incoming total correlation is zero because there is one group.
+In (COK.73), the empty subset contributes $I_0/2$ and the
+full subset zero. Summing the two blocks gives
+$\mathcal I_{\rm cov}=I_0$. Proposition 21.3 gives each
+local COK value $\log_2c$, and (COK.74) gives the last
+equality. Thus identifying the two losses would already
+contradict an actual reciprocal two-block example. $\square$
+
+**Convention 24.3 (finite verification limits).** The two four-block
+readings in (COK.119) have bounded exact in-memory checks on
+all $14641$ actual tuples for each matching, with exact
+rational masses and marginals. The arithmetic in (COK.94)
+uses exactly
+$(63/64)(3/16)+1/64=205/1024$,
+$4\cdot63/(64\cdot16)=252/1024$ and $252-205=47$.
+The depth-fifteen witness uses the specified $1820<2048$
+slots and the exact scan sums in Proposition 23.3. No
+enumeration of the entire $S_{15}$ or computation of its
+conditional-envelope optimization is asserted. The triangle
+in Proposition 20.4 verifies sharpness symbolically. No
+experimental program or data is retained, and none of these
+finite checks implies empirical convergence. The all-size
+claims rest on the proofs in §§18–23.
+
+For an original-source check of Proposition 23.2 at $d=2,m=1$,
+the full $\mathcal F_3$ consists of $1446$ variable-shape
+sources. Their fixed seven-Read boundary scan yields $123$
+canonical states and exactly $120$ complete names, merging
+the four right subtrees
+$\langle\langle a,b\rangle,\langle b,a\rangle\rangle$.
+On that name the three upper targets are branch constants;
+the other four targets select $RLL$ or $RRL$ according to
+(COK.104). All seven requests and authentic counts $0,\ldots,6$
+give $70854$ exact comparisons with direct substitution/readout,
+all agreeing. This checks a finite count range; correctness
+for every subsequent count uses (COK.5) and Proposition 23.2's
+proof, not extrapolation from that range. The scan has seven
+Reads, maximum address three and seventeen submitted letters.
+
+## 25. Credited mathematics and the unchanged global obligation
+
+**Convention 25.1 (primary attribution and exact transfer limits).**
+Conditional Gibbs variational identities, relative entropy,
+chain-rule conditioning, data processing, total correlation,
+finite entropy continuity and forest mutual-information
+inequalities are mature machinery. The repo-derived relations
+here are their guard-preserving native conditional-section
+application (COK.87), the sharp all-network population maximum
+(COK.90), its fixed-law completion error (COK.92), and the
+reciprocal-unit and reciprocal-depleted-cover consequences
+(COK.99), (COK.111) and (COK.114), with their original consumer.
+No worldwide-originality or independent-review claim is attached.
+
+| Primary supplier | Precise correspondence and boundary |
+| --- | --- |
+| P. O. Vontobel, *Counting in Graph Covers: A Combinatorial Characterization of the Bethe Entropy Function*, arXiv:1012.0065v2, Theorems 25, 30 and 33 [primary text][VontobelCOK] | Rational local laws are finite-cover lift-realizable; Bethe entropy and partition values describe averaged-cover exponents. The exact native whole-group and private-configuration correspondence is already Convention 17.1. It gives neither a prescribed Gibbs law on the base nor vanishing $\Delta$. The relative permutation $h$ retains actual shared-coordinate matching; it is not an independent copy of each occurrence. |
+| N. Ruozzi, *The Bethe Partition Function of Log-supermodular Graphical Models*, arXiv:1202.6035v2, Theorem 4.1 and Corollary 4.2 [primary text][COKRuozziJoint] | A binary log-supermodular factorization gives $Z(\text{cover})\le Z(\text{base})^k$ and a Bethe lower bound. Arbitrary native compatibility zeros and joint weights do not supply this hypothesis. No per-cover upper or unrestricted native cap is transferred here. |
+| A. Atserias and P. G. Kolaitis, *Consistency, Acyclicity, and Positive Semirings*, arXiv:2009.09488v1, Lemma 12 and Theorems 4–5 [primary text][COKAkJoint] | The local-to-global result assumes an acyclic/running-intersection hypergraph and matching overlap data. The forest inequality in Lemma 20.2 is proved directly for an already existing common law, without assuming native acyclicity or Markov structure. The cyclic cover family even has explicit compatible completion; its obstruction concerns loss. |
+
+The pinned COK §§12–17 own finite-cover completion, exact
+multinomial averaging, the cover-pressure direction, the
+information identity and the full-family scan. They are used
+with their stated directions and are not redelivered as new.
+RRN owns the exact two-way guarded seed language and paid
+normal form; CBN owns constructor reconstruction, repeated
+coordinate equality and once-owned weights; NPC/FMR own
+pressure, stability, all-competitor scaffold transport and
+paid canonical acquisition. NWO owns exact finite-envelope
+optimization, algebraic comparison and the actual sixteen-state
+witness in §19. OOA owns positive full-row order laws and its
+zero-affinity criterion, binary kernels and cyclic transfer
+matrix; (COK.99) instead characterizes the chain loss of
+already-existing laws with arbitrary actual support. OCC owns
+component-normalizer freedom and its conditional-ratio charge;
+none is inferred away by the existence of a common law here.
+
+SIR's effective incidence error is between semantic quantities,
+without an evaluation cutoff. OCB's owner-only and same-law
+entropy boundaries, GDB's specified raw analytic/neighborhood/
+bounded-pinning obstructions, SCP's additive pressure bounds
+and precisely failed relative gate, and the credited JTC/RCE/JPL
+grammar boundaries retain their scopes. The present results
+neither remove their support/stability rules nor assert a
+stronger impossibility for their unrestricted extensions.
+
+The exact `FiniteNaturalJoin.join_covers` premises require both
+`Covers` assertions on the same full assignment and supply no
+completion. The exact `original_present_transport` premise
+requires an actually present subtree; Propositions 23.2–23.3
+use that presence through original-root literals. The finite
+predecessor-row minimax/effective-root and finite-reader-synthesis
+sources concern other targets and acquisition/handoff contracts.
+No theorem from those contracts is transferred into an all-length
+native cap or a free preparer, and no formal compilation is
+claimed.
+
+**Open problem 25.2 (optimizer relevance and genuine global loss).**
+At general depth the missing equality remains
+
+$$
+a_d=\min_{\mu\in\Delta(S_d)}\Omega_d(\mu)
+\quad\stackrel{?}{=}\quad
+b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)=2^{-\sigma_d}.
+\tag{COK.122}
+$$
+
+NWO settles the real/rational finite-envelope approximation,
+attainment and strict rational caps at $a_d$. Theorem 18.5
+settles the entire matching-population maximum as
+$\log_2\ell_d(w)$, so the raw Corollary 15.3 route has the
+exact fixed-law floor (COK.92). In particular unbounded cover
+population search alone cannot supply a stronger lower witness
+by this functional. Equality $\Omega_d(w)=\ell_d(w)$ at one
+law gives equality with $\beta_d(w)$ there, by (COK.84), but
+does not exclude a smaller $\beta_d$ at another law. Even
+such an equality at an $\Omega$-minimizer does not prove
+(COK.122).
+
+Theorem 20.3 controls genuine common-law dependence only in
+the one-incoming-owner class. No cardinality-preserving theorem
+reduces every original competitor to this class. The next
+completion requirement must keep the actual joint owner
+matching: in §22, compatible, locally envelope-optimal laws
+cannot have small loss on reciprocal-depleted covers, even
+with full-support whole-block weights and incidence two.
+A general positive route must retain that structure or prove
+a multi-owner replacement/loss theorem, and must separately
+control the actual Gibbs and component-normalizer requirements.
+Neither requirement is supplied by local marginal matching.
+
+No total sound optimizer-cofinal verifier of NPC Definition 8.1,
+uniform effective native length-error modulus, sharp original
+$\lambda$, general exact $M_1(D)$, preparation optimum or
+full minimal-relations/internal-observer/mutual-recovery theorem
+is proved or disproved here. The full goal continues to range
+over arbitrary native sizes, guards, shared seeds, cycles,
+support zeros and complete joint weights. Numerical inequalities
+such as [NCE, Theorem 10.1][COKNceJoint]'s credited
+$\lambda\ge\log_2(6407/2499)/8$ and [D3][D3]'s
+$\lambda<3/16$ and $M_1(3)=4$ remain valid within their
+proved scopes; these sections give no new endpoint and make
+no assertion that a supplied older lower endpoint is best.
+
+Under the paid services, operational recovery remains exactly
+the requested full temporal factor from a complete acquired
+name and at most one actual same-source reply, followed by
+every authentic-count trajectory value via (COK.5). The
+trajectory conversely determines that factor by its first
+branch count and alpha-stage flag. It does not recover an
+arbitrary whole hidden source, unobserved history or age,
+physical space and time, or the access services themselves.
+
+[COKNwoJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHT_OPTIMIZATION.md
+[COKRrnJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REPRESENTATIVE_REPLY_NORMAL_FORM.md
+[COKNpcJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRODUCT_PRESSURE_COMPLETENESS.md
+[COKOoaJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_ORDER_AFFINITY.md
+[COKNceJoint]: https://github.com/the-omega-institute/trureturing/blob/ce2fe4a685b5a195b8b0a380616daf0151f576cb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CYCLIC_ENTROPY_LOWER.md
+[COKRuozziJoint]: https://arxiv.org/html/1202.6035v2
+[COKAkJoint]: https://arxiv.org/html/2009.09488v1
+
+## 追加锚（本行以下为增补区）

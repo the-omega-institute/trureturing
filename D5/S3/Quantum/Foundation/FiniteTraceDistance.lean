@@ -237,7 +237,7 @@ namespace D5.S3.Quantum.Foundation.FiniteTraceDistance
 open BigOperators Classical Matrix
 open scoped ComplexOrder MatrixOrder
 
-private def isometry {d e R : Type*} [Fintype d] [DecidableEq e]
+def isometry {d e R : Type*} [Fintype d] [DecidableEq e]
     [CommRing R] [StarRing R] (A : Matrix d e R) : Prop :=
   A.conjTranspose * A = 1
 
