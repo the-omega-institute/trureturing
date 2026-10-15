@@ -577,8 +577,8 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         + "literal-source and logarithmic-limit results within the stated source/readout model. The finite-even "
                         + "bridge supplies the lower bounds and eventual positivity used in the raw-even application below; full "
                         + "raw limits and identification with eta_b require that further limit argument. Equality of the contract "
-                        + "counts is supplied by the contract correspondence below; contract-rate and observation-image "
-                        + "identifications require their own arguments. The finite-codebook lower "
+                        + "counts is supplied by the contract correspondence below; the complete observation-count application "
+                        + "identifies the actual images by absolute history length. Contract-rate limits require their own arguments. The finite-codebook lower "
                         + "bound alone does not assert those identifications, additional bilateral-language conclusions, a physical "
                         + "realization, a resource or optimality bound, or literature novelty.")))))),
             new DocumentBlock.Section(H("Exact contract and guard correspondence"), Blocks(
@@ -667,8 +667,8 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         "This correspondence retains K ≥ 2 and both strict budget inequalities; it makes no assertion at "
                         + "their endpoints or outside that interval. It is an application of the existing slot, affine, "
                         + "guard and finite-cardinality results to the original sources. Equality of these finite counts "
-                        + "does not by itself provide a contract-rate limit, an observation-image identification or a "
-                        + "physical, resource, optimality or literature-novelty claim.")))))),
+                        + "does not by itself provide a contract-rate limit. The observation-count application below supplies the "
+                        + "actual image and absolute-length identifications. No physical, resource, optimality or literature-novelty claim follows.")))))),
             new DocumentBlock.Section(H("Operation records on the prescribed sources"), Blocks(
                 Paragraph(Text(
                     "The operation_pair_membership application has a different telescope. For every model, ownership o, "
@@ -726,8 +726,89 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         + "or the whole future color record constant. The eventual L0 statement concerns labels. "
                         + "The result holds for either side and both models, for all three contracts and the empty "
                         + "Return list, whose common stem and model anchor are still present. It supplies an operation "
-                        + "record from ActualPairSupply, without a converse characterization, observation-count or "
-                        + "offset identification, rate conclusion, physical realization, resource or novelty claim.")))))),
+                        + "record from ActualPairSupply. The observation-count application below adds the image counts and "
+                        + "absolute offset identification; no converse operation characterization, rate conclusion, physical realization, resource or novelty claim is asserted.")))))),
+            new DocumentBlock.Section(H("Complete observation-count application"), Blocks(
+                new DocumentBlock.Section(H("The observed dictionary and original hypotheses"), Blocks(
+                    Paragraph(Text("The actual_observation_count_correspondence application counts the original histories and literal sources by absolute observation length. Fix either model, "
+                        + "arbitrary ownership o : Fin 5 → Bool, real b, contract in {closed,strict,recordMargin}, and natural T and K with K ≥ 2, lam − g² chiᴷ H < b and b < lam − g² "
+                        + "chiᴷ(A/(1 − rho chiᴷ)). Keep H = hSide(high), A = aSide(high) and d = (lam − b)/g²/chiᴷ. There is no positivity or parity assumption on T and no extra margin, "
+                        + "endpoint or guard hypothesis.")),
+                    Paragraph(Text("For every Nobs : Nat, ObservedContractDictionary(model,o,b,contract,Nobs) is the subtype of all positive Return lists xs with "
+                        + "ActualPairSupply(model,o,b,contract,xs) and history(model,xs).length = Nobs. It uses the full original supply relation, including each side’s history, zero-error "
+                        + "and entire-future clauses. Write offset = observationOffset(model), equal to 26 for original and 52 for anchored, N = offset + T, and O = "
+                        + "ObservedContractDictionary(model,o,b,contract,N). The length in this definition is the actual color-history length; neither a freely chosen word length nor the "
+                        + "total finite sourcePrefix length replaces it.")))),
+                new DocumentBlock.Section(H("Absolute length and the identity on executions"), Blocks(
+                    Paragraph(Text("For every list xs, each return contributes 6m + 20r literal positions, so externalWord(j,xs).length = listWeight(xs) on either side. Reversal changes no length. "
+                        + "The common stem has 6 + 20 = 26 positions; the original anchor is empty and the anchored model adds another 26. Hence observedPrefix(j,model,xs).length = offset + "
+                        + "listWeight(xs). The corresponding color blocks have exactly these same lengths, giving history(model,xs).length = offset + listWeight(xs) as well. These "
+                        + "identities hold for every list, including the empty list, before any budget or supply assumption.")),
+                    Paragraph(Text("Thus observed_contract_equiv identifies O with ContractDictionary(model,o,b,contract,T). Its forward map keeps xs.val and its ActualPairSupply proof and cancels "
+                        + "the same natural offset from offset + listWeight(xs.val) = offset + T. Its inverse keeps the identical list and supply and rewrites weight T into the absolute "
+                        + "history length. Both inverse laws are equality of subtypes with unchanged underlying lists. This equivalence introduces no selection, replacement source or new "
+                        + "error function.")),
+                    Paragraph(Text("The contract correspondence above supplies an explicit Finite instance for ContractDictionary at this same T, using the weight-preserving Return map and "
+                        + "finite_weight_lists. Finite.of_equiv along the inverse of observed_contract_equiv therefore gives Finite O. Finiteness is established before the image "
+                        + "cardinalities are compared; a zero value of Nat.card is not used to infer finiteness or emptiness.")))),
+                new DocumentBlock.Section(H("Actual images of the same dictionary"), Blocks(
+                    Paragraph(Text("ActualHistoryImage(model,o,b,contract,N) is the range of xs ↦ history(model,xs.val) for xs : O. For a fixed side j, ActualSourceImage(j,model,o,b,contract,N) is "
+                        + "the range of xs ↦ source(j,model,xs.val) on that same O, as a set of functions Nat → Label with their complete prescribed tails. "
+                        + "ActualSourcePairImage(model,o,b,contract,N) is the range of xs ↦ (source(high,model,xs.val),source(low,model,xs.val)). Both components come from one and the same "
+                        + "xs.val; the pair image is not a Cartesian product of independently chosen side images.")),
+                    Paragraph(Text("The original historyImageCount, sourceImageCount(j,·) and sourcePairImageCount are Nat.card of these respective range subtypes. The histories are lists of Color; "
+                        + "source equality is equality of complete Label-address functions. These distinct codomains are retained. The model, ownership, b, contract and absolute N are "
+                        + "common to every range map, and the dictionary condition continues to require actual simultaneous supply of both sides even when only one side’s image is counted.")))),
+                new DocumentBlock.Section(H("Injection and the four image counts"), Blocks(
+                    Paragraph(Text("The complete_execution_word_parser gives injection of history(model,·) on the underlying Return lists, hence on O by subtype extensionality. For each side, two "
+                        + "members of O have the same weight T by observed_contract_equiv. The equal-weight actual source-address injection above then recovers equality of those very lists "
+                        + "from equality of their full source functions. Equality of two source pairs implies equality of their high components, so that same high-side injection recovers "
+                        + "the list and proves injection of the pair map. No independent marginal choices or presumed observed-prefix equality enter this argument.")),
+                    Paragraph(Text("For each of these injective maps, Equiv.ofInjective identifies O with its actual range subtype. Composing its inverse with observed_contract_equiv and applying "
+                        + "Nat.card_congr gives historyImageCount(model,o,b,contract,N) = contractCount(model,o,b,contract,T), sourceImageCount(j,model,o,b,contract,N) = "
+                        + "contractCount(model,o,b,contract,T) for every j, and sourcePairImageCount(model,o,b,contract,N) = contractCount(model,o,b,contract,T). The "
+                        + "contract_count_correspondence at exactly T,K and the two stated budgets then identifies this common count with "
+                        + "actualCount(model,K,d,contractStrict(o,contract),T). Here contractStrict(o,closed) = !o(0), while strict and recordMargin both give true. These are four image "
+                        + "counts: history, high source, low source and same-list pair.")))),
+                new DocumentBlock.Section(H("Every member carries its operation record"), Blocks(
+                    Paragraph(Text("For every xs : O, the same equivalence gives listWeight(xs.val) = T. Substitution in the absolute length identity gives observedPrefix(j,model,xs.val).length = N "
+                        + "for every side j, and xs.property already gives history(model,xs.val).length = N. Thus the count comparison and all member conclusions refer to exactly the same "
+                        + "execution, history and two literal sources.")),
+                    Paragraph(Text("Apply operation_pair_membership to xs.val and its own ActualPairSupply proof, separately for each j. This gives "
+                        + "OperationRecord(o,b,contract,source(j,model,xs.val),OperationPairedRecord(model,o,xs.val,j)) and OperationFiniteSource(source(j,model,xs.val)). OperationRecord "
+                        + "retains the full OperationOmega path, support inequalities, branch recurrence and every-time readout described above; it is not merely history membership. "
+                        + "OperationPairedRecord uses the actual history before N and observe(o,coordinate(tailPrefix(j),p − N),0) at every p ≥ N. The budget, contract and ownership are "
+                        + "unchanged.")))),
+                new DocumentBlock.Section(H("Literal tails at every position"), Blocks(
+                    Paragraph(Text("The member’s sourcePrefix is observedPrefix(j,model,xs.val) ++ tailPrefix(j). At every q : Nat, append-right indexing and the prefix length N give "
+                        + "source(j,model,xs.val)(offset + T + q) = address(tailPrefix(j),q). This is equality of the literal Label at every tail position, including q = 0, every position "
+                        + "within the finite tail, its final L0 and the infinite continuation. It is stronger than equality of readouts alone and does not rely on discarding a finite "
+                        + "initial part of the tail.")),
+                    Paragraph(Text("The finite-source conclusion has the explicit boundary M = sourcePrefix(j,model,xs.val).length: source(j,model,xs.val)(p) = L0 for all p ≥ M. N marks the start of "
+                        + "the tail, whereas M includes the finite tail itself. The original tailPrefix remains block(j) ++ repeatWord(C,3) ++ exitPrefix(j), with exitPrefix(high) = [L5,L0] "
+                        + "and exitPrefix(low) = [L0]. In particular the model’s 26/52 observation offset is not enlarged to include this tail.")))),
+                new DocumentBlock.Section(H("One supplied error and the entire future"), Blocks(
+                    Paragraph(Text("For each xs : O and side j, unpack xs.property’s ActualPairSupply at j once, obtaining one err : Nat → Real together with its bound, history observations, "
+                        + "zero-error clause and entire-future clause. Keep that very err in all of the following conclusions. Its original ErrorBound(b,contract,err) is |err(p)| ≤ b for "
+                        + "closed, |err(p)| < b for strict, or one eps > 0 with |err(p)| ≤ b − eps at every p for recordMargin. The two sides may use different errors; no common positive "
+                        + "margin across members or sides is introduced.")),
+                    Paragraph(Text("For every p and every hp : p < offset + T, observe(o,coordinate(sourcePrefix(j,model,xs.val),p),err(p)) = history(model,xs.val)[p]. This entry uses the dependent "
+                        + "index proof obtained by rewriting history(model,xs.val).length = offset + T in hp, exactly as required by the original list readout. The zero-error clause for "
+                        + "this same err is err(p) = 0 whenever offset + T ≤ p, including equality at the boundary.")),
+                    Paragraph(Text("For every q : Nat, the same err also satisfies observe(o,coordinate(sourcePrefix(j,model,xs.val),offset + T + q),err(offset + T + q)) = "
+                        + "observe(o,coordinate(tailPrefix(j),q),0). Rewrite the supplied future clause using observedPrefix.length = offset + T to obtain this equality without replacing "
+                        + "its error witness. It covers the entire infinite future on the actual source, together with the bound and every dependent history entry. Zero future error means "
+                        + "an unperturbed readout of the prescribed suffix coordinate; it does not force every tail coordinate to be zero or the whole future color record to be constant.")))),
+                new DocumentBlock.Section(H("Parameter correspondence and applicability"), Blocks(
+                    Paragraph(Text("The supplier map is exactly the one used above: high/low correspond to low = false/true, original/anchored to anchor = false/true, and Return(m,r) retains both "
+                        + "positive coordinates. Labels map as L3,L0,L5,L2,L25 to threeLabel,nullLabel,fiveLabel,twoLabel,twoFiveLabel; T2 maps to the fixed t² and lam to lambda, with "
+                        + "t,g,rho,chi,initial, source labels, suffix coordinates, history and list weight preserved. The observation dictionary equivalence adds only the absolute 26/52 "
+                        + "length identification. In particular the guard Boolean contractStrict(o,contract), the model flag and the ownership function remain distinct parameters.")),
+                    Paragraph(Text("The complete observation-count application retains both original strict budgets and K ≥ 2 for its count-to-guard conclusion and covers every natural T, including "
+                        + "T = 0, odd T and empty dictionaries. No positive count is assumed. For odd T the inherited parity argument makes the weight-T dictionary empty, and the same "
+                        + "equivalences give zero image counts; T = 0 retains the empty execution with its stem, optional anchor and prescribed tail whenever supplied. The absolute-length "
+                        + "and same-list range arguments add no observation-length logarithmic limit or little-o asymptotic conclusion. They assert no physical realization, resource or "
+                        + "optimality bound, or literature novelty.")))))),
             new DocumentBlock.Section(H("Raw even logarithmic asymptotics"), Blocks(
                 new DocumentBlock.Section(H("Original dictionaries, parameters and rate"), Blocks(
                     Paragraph(Text(
@@ -849,8 +930,8 @@ internal sealed class BilateralDocument : IScribeDocumentDefinition
                         + "their contract lower bounds retain their stated scopes. The separate contract correspondence above "
                         + "identifies the full finite dictionaries at contractStrict(o,contract), and the operation application "
                         + "places each supplied source in its prescribed operation record. The raw-even argument itself "
-                        + "adds no contract-rate limit, observation-image or offset identification. Those conclusions require "
-                        + "their own arguments. It also gives no additional bilateral-language "
+                        + "adds no contract-rate or observation-length asymptotic limit. The observation-count application "
+                        + "identifies the finite images and absolute offset separately. It also gives no additional bilateral-language "
                         + "identification, empirical or physical realization, resource or optimality bound, or literature novelty "
                         + "claim.")))))))));
 

@@ -3014,3 +3014,827 @@ no further parameter uniformity, sharp residue rate or general
 norm-resolvent claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 50. Native coupling measures and the equivalence of hidden labels
+
+**Definition 50.1 (the supplied limiting realization and its two measures).**
+Retain all fixed data of Definitions 31.1, 36.1 and 44.1. In particular,
+$s\in\mathbb R$, $b>0$ and $g>0$ are fixed, the clock is unchanged,
+and $\mathscr H_B$ includes both visible circles and both absorbing
+height faces. Write
+
+$$
+\begin{aligned}
+K&=\mathcal K_0,& M&=M_\phi,& P&=\|\phi\|_\infty,\\
+c_b(D)&=gc_0G_{\beta b}(D),& C_s&=gc_s,&
+c_s^{\rm line}(x)&=C_s e^{-x^2/(4\beta)},\\
+\alpha_b&=gc_0G_{\beta b}(\pi),&
+C_b&=gc_0G_{\beta b}(0).
+\end{aligned}
+\tag{50.1}
+$$
+
+The new symbol $C_s$ is a coupling, not the small parameter
+$a=|\kappa|$. The complete native fibre generator remains
+$\mathcal K_c=K-cM$, with operator domain $D(K)$ and form domain
+$\overline{\mathcal F}_0$. On the original raw-circle space
+$\mathscr H=L^2(\mathbb T,dD;\mathscr H_B)$ define
+
+$$
+\begin{aligned}
+H_\infty&=\int_{\mathbb T}^{\oplus}(K-c_b(D)M)\,dD,\\
+D(H_\infty)&=\left\{f:f(D)\in D(K)\text{ a.e.},\quad
+                    \int_{\mathbb T}\|Kf(D)\|^2dD<\infty\right\},\\
+(Q_tf)&=J^*e^{-tH_\infty}f
+       =\frac1{\sqrt{2\pi}}\int_{\mathbb T}
+                         T_{c_b(D)}(t)f(D)\,dD.
+\end{aligned}
+\tag{50.2}
+$$
+
+Here $J$ is exactly (44.1), and $Q_t:\mathscr H\to\mathscr H_B$.
+The bounded multiplier in (50.2) leaves the displayed completed
+operator domain unchanged; $H_\infty\ge\lambda-C_bP$. Its form
+domain is the corresponding square-integrable direct integral of
+$\overline{\mathcal F}_0$, with the free form integrable. Thus
+$e^{-tH_\infty}$ is the direct integral of the complete $T_c(t)$,
+and $Q_tJ=B_b(t)$. This is the supplied limit in (47.2).
+
+Let $\mu_b$ be the pushforward of $dD/(2\pi)$ by $c_b$, and let
+$\nu_s$ be the pushforward of $dx/(2\pi)$ by $c_s^{\rm line}$.
+The second measure is defined on $(0,C_s]$, has infinite total mass,
+and is used only with compensation or an integrable positive power
+of $c$. Define the finite measure $\eta_s$ by
+$d\eta_s(c)=c\,d\nu_s(c)$. The original responses are exactly
+
+$$
+B_b(t)=\int T_c(t)\,d\mu_b(c),\qquad
+A_s(t)=\int [T_c(t)-S_t]\,d\nu_s(c).
+\tag{50.3}
+$$
+
+**Theorem 50.2 (native label equivalence and full support).**
+For every finite $b>0$,
+$0<\alpha_b<C_b$, and $c_b$ is strictly decreasing as a function
+of $\rho(D)\in[0,\pi]$. Consequently the precise equivalence of
+the native hidden labels, in terms of their complete fibre responses,
+is
+
+$$
+\begin{aligned}
+T_{c_b(D)}(t)h=T_{c_b(E)}(t)h
+ \quad\text{for every }t\ge0,\ h\in\mathscr H_B
+\quad\Longleftrightarrow\quad
+c_b(D)=c_b(E)
+\quad\Longleftrightarrow\quad E=D\text{ or }E=-D\pmod{2\pi}.
+\end{aligned}
+\tag{50.4}
+$$
+
+The probability measure $\mu_b$ is atomless and has full support
+$[\alpha_b,C_b]$. The measures on the raw side have densities
+
+$$
+d\nu_s(c)=\frac{\sqrt\beta}{\pi c\sqrt{\log(C_s/c)}}\,dc,
+\qquad
+d\eta_s(c)=\frac{\sqrt\beta}{\pi\sqrt{\log(C_s/c)}}\,dc
+\quad(0<c<C_s).
+\tag{50.5}
+$$
+
+Both have full support up to the endpoint zero, with no atom there
+when $\eta_s$ is regarded as a measure on $[0,C_s]$. Their relevant
+moments, including the raw factors, are
+
+$$
+\begin{aligned}
+m_j^b&=\int c^j\,d\mu_b(c)
+ =\frac{(gc_0)^j}{2\pi}\int_{\mathbb T}G_{\beta b}(D)^j\,dD
+ \quad(j\ge0),& m_0^b&=1,\\
+m_j^s&=\int c^j\,d\nu_s(c)
+ =\sqrt{\frac\beta\pi}\frac{C_s^j}{\sqrt j}
+ \quad(j\ge1),&
+\int c^r\,d\eta_s(c)&=m_{r+1}^s\quad(r\ge0).
+\end{aligned}
+\tag{50.6}
+$$
+
+Proof. The heat-kernel monotonicity is classical: see
+Alonso-Orán--Chamizo--Martínez--Mas, *Pointwise monotonicity of
+heat kernels*, [arXiv:1807.11072v2, Theorem 1.1 and §2,
+pp.1,4--5](https://arxiv.org/pdf/1807.11072v2).
+The native correspondence is the unit circle with arclength
+$dD$, Laplacian $\partial_D^2$, circumference $2\pi$ and time
+$\beta b$; no rescaling of its period or density is involved.
+Here its strict form can also be checked directly. Put
+$f_N(D)=e^{N\cos D}/\int_{\mathbb T}e^{N\cos E}\,dE$.
+It is even and its derivative is negative on $(0,\pi)$.
+The derivative of $G_t*f_N$ solves the Dirichlet heat equation
+on $(0,\pi)$, with nonpositive initial data, because evenness and
+periodicity give derivative zero at both endpoints. The parabolic
+maximum principle makes this derivative nonpositive for $t>0$.
+The measures $f_NdD$ tend to the unit point mass at zero; convolution
+therefore converges with every derivative to $G_t$ for fixed $t>0$.
+It follows that $w(t,D)=\partial_DG_t(D)\le0$ on $(0,\pi)$.
+It is not identically zero at any positive time: the Fourier
+coefficient of $\sin D$ in $w$ is $-e^{-t}/\pi$.
+Applying the strict maximum principle to $w$ between times $t/2$
+and $t$ gives $w(t,D)<0$ throughout the open interval. Positivity
+of $G_t$ follows also from its positive periodized Gaussian (32.8).
+These classical heat-equation steps establish precisely the
+monotonicity needed here, including every finite $\beta b>0$.
+
+If two fibre semigroups agree on every input for all nonnegative
+times, their generators agree on $D(K)$. Their difference is
+$(c_b(E)-c_b(D))M$. Since $\phi>0$ almost everywhere on $I$,
+$M$ is injective, so the couplings agree. Conversely equal
+couplings give the same operator and domain. Strict radial
+monotonicity gives the last equivalence in (50.4). This is a
+statement about fibre operators, not the assertion that a delta
+amplitude at an individual hidden label belongs to $\mathscr H$.
+
+Each nonempty open subinterval of $[\alpha_b,C_b]$ has a hidden
+preimage of positive raw length, while a singleton has at most two
+preimages. This proves full support and absence of atoms. More
+explicitly, on the interior the density is
+$1/(\pi|c_b'(\rho(c))|)$, where $\rho(c)$ is the inverse on
+$(0,\pi)$; it is integrable at the endpoints because it is a
+pushforward of $d\rho/\pi$.
+
+On the raw line, use the two signs of
+$x=2\sqrt\beta\sqrt{\log(C_s/c)}$ and the original factor
+$1/(2\pi)$. This gives (50.5). The divergence of
+$\int d\nu_s$ is also immediate from the infinite length of
+$\mathbb R$; it is not a probability measure. Direct Gaussian
+integration gives
+$\int (C_s e^{-x^2/(4\beta)})^j dx/(2\pi)
+=C_s^j\sqrt{\beta/\pi}/\sqrt j$ for $j\ge1$.
+The circle formula is the definition of pushforward. This proves
+all moment and support assertions. $\square$
+
+## 51. All-amplitude invisibility and the minimal supplied boundary
+
+**Theorem 51.1 (the exact invisible space).**
+For arbitrary full amplitudes, define
+
+$$
+\begin{aligned}
+\mathscr N&=\bigcap_{t\ge0}\ker Q_t,\\
+\mathscr C&=\overline{\operatorname{span}}
+       \{e^{-tH_\infty}Jh:t\ge0,\ h\in\mathscr H_B\}.
+\end{aligned}
+\tag{51.1}
+$$
+
+Then, with equalities of amplitudes understood almost everywhere,
+
+$$
+\begin{aligned}
+\mathscr C&=\mathscr N^\perp
+ =\{f\in\mathscr H:f(D)=f(-D)\},\\
+\mathscr N&=\{f\in\mathscr H:f(D)=-f(-D)\}.
+\end{aligned}
+\tag{51.2}
+$$
+
+In particular, for any $f_1,f_2\in\mathscr H$,
+
+$$
+Q_tf_1=Q_tf_2\text{ for every }t\ge0
+\quad\Longleftrightarrow\quad
+f_1(D)+f_1(-D)=f_2(D)+f_2(-D)\text{ a.e.}
+\tag{51.3}
+$$
+
+Proof. Selfadjointness gives
+$\langle Q_tf,h\rangle=\langle f,e^{-tH_\infty}Jh\rangle$;
+thus $\mathscr N=\mathscr C^\perp$. Reflection in $D$ commutes
+with $H_\infty$, and $Jh$ is even, so $\mathscr C$ is contained
+in the even subspace. It remains to prove the converse; mere
+separation of the scalar labels would not suffice for arbitrary
+$\mathscr H_B$-valued amplitudes.
+
+Every bounded selfadjoint $e^{-uH_\infty}$ preserves $\mathscr C$
+by its semigroup law, and therefore also preserves
+$\mathscr C^\perp$. For $v\in\mathscr C\cap D(H_\infty)$,
+the strong generator difference quotient shows
+$H_\infty v\in\mathscr C$. In particular, for $h\in D(K)$,
+
+$$
+H_\infty Jh=JKh-c_bJMh.
+\tag{51.4}
+$$
+
+Both $Jh$ and $JKh$ are in $\mathscr C$, hence so is $c_bJMh$.
+The set $M D(K)$ is dense in $\mathscr H_B$: $D(K)$ is dense,
+$M$ is bounded, and $\overline{\operatorname{Ran}M}=\mathscr H_B$
+because $M=M^*$ and $\ker M=0$. Boundedness of $c_b$ now implies
+$c_bJh\in\mathscr C$ for every $h\in\mathscr H_B$.
+
+Inductively, suppose $c_b^rJh\in\mathscr C$ for every base $h$.
+For $h\in D(K)$ this vector belongs to the exact domain (50.2),
+and
+
+$$
+H_\infty(c_b^rJh)=c_b^rJKh-c_b^{r+1}JMh.
+\tag{51.5}
+$$
+
+The same density argument gives $c_b^{r+1}J\mathscr H_B
+\subset\mathscr C$. Thus all vector-valued coupling polynomials
+belong to $\mathscr C$. By Theorem 50.2, every measurable even
+function of $D$ is a measurable function of $c_b(D)$, up to null
+sets. Polynomials are dense in $L^2(\mu_b)$: continuous functions
+are dense for this finite compactly supported measure, and the
+Weierstrass theorem approximates continuous functions uniformly.
+Finite sums of scalar functions times base vectors are dense in
+the vector-valued $L^2$ space. Hence the coupling polynomials
+are dense in the entire even subspace. This proves (51.2), and
+applying it to $f_1-f_2$ proves (51.3).
+
+No bounded inverse of $M$ was used; $\phi$ vanishes at the height
+faces. Nor was an interior test space asserted to be an operator
+core. Equations (51.4)--(51.5) use the full operator domain.
+The spectral and reducing-subspace principles used here are the
+classical ones in Teschl's
+[author text, §3.1, (3.30)--(3.37) and Theorem 3.7,
+printed pp.93--96](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The identification of their generated subspace with the native
+even amplitudes is the additional correspondence proved above.
+$\square$
+
+**Theorem 51.2 (minimal realization and boundary-fixing uniqueness).**
+On $\widehat{\mathscr H}_b=L^2(\mu_b;\mathscr H_B)$ put
+
+$$
+\begin{aligned}
+(\widehat H_bv)(c)&=(K-cM)v(c),& (\widehat Jh)(c)&=h,\\
+D(\widehat H_b)&=\left\{v:v(c)\in D(K)\text{ a.e.},\quad
+                    \int\|Kv(c)\|^2d\mu_b(c)<\infty\right\},\\
+(Uv)(D)&=(2\pi)^{-1/2}v(c_b(D)).
+\end{aligned}
+\tag{51.6}
+$$
+
+Then $U$ is unitary from $\widehat{\mathscr H}_b$ onto
+$\mathscr C$, $U\widehat J=J$, and it intertwines the generators
+with their domains. The semibounded selfadjoint realization
+$(\widehat{\mathscr H}_b,\widehat H_b,\widehat J)$ is minimal:
+the closed span of $e^{-t\widehat H_b}\widehat J\mathscr H_B$
+is its whole Hilbert space. Its compressed response is $B_b(t)$.
+For every $v\in\widehat{\mathscr H}_b$ its actual full-input
+readout is
+
+$$
+Q_tUv=\widehat J^*e^{-t\widehat H_b}v
+     =\int T_c(t)v(c)\,d\mu_b(c).
+$$
+
+Within the category of semibounded selfadjoint generators with a
+specified isometric boundary copy of $\mathscr H_B$, any two
+minimal realizations of this same response are related by a
+unique unitary that fixes that boundary and intertwines the
+generators. Every such realization has a reducing boundary-cyclic
+part with this minimal realization; an orthogonal invisible
+summand is not determined by the compressed response.
+
+Proof. The pushforward definition proves
+$\|Uv\|_{\mathscr H}^2=\int\|v(c)\|^2d\mu_b(c)$, with precisely
+the raw factor in (51.6). Theorem 50.2 and (51.2) prove that its
+range is $\mathscr C$. The displayed domains and pointwise action
+give the intertwining, including domain equality. Minimality and
+the response formula follow from Theorem 51.1 and (50.3).
+Substitution of $Uv$ in (50.2), with both factors
+$(2\pi)^{-1/2}$, gives the stated full-input readout.
+
+For completeness, let $(\mathscr L_i,A_i,I_i)$, $i=1,2$, be two
+minimal triples in the declared category, with
+$I_i^*e^{-tA_i}I_i=B_b(t)$. On their algebraic cyclic spans send
+
+$$
+\sum_j e^{-t_jA_1}I_1h_j
+ \longmapsto\sum_j e^{-t_jA_2}I_2h_j.
+\tag{51.7}
+$$
+
+The squared norm of either side is the same sum of inner products
+with $B_b(t_j+t_k)$, since each $A_i$ is selfadjoint. Thus the map
+is well defined and isometric. Minimality makes its extension
+unitary and makes that extension unique. Increasing every $t_j$
+by $u\ge0$ shows that it intertwines the semigroups; strong
+generator difference quotients then give intertwining of the
+generators and their domains. Taking $t_j=0$ gives boundary fixing.
+For a nonminimal triple its closed cyclic span reduces the
+semigroup, as in the proof of Theorem 51.1, and the same argument
+applies there. An orthogonal reducing summand with zero boundary
+overlap makes no contribution to $B_b$.
+
+This uniqueness is a selfadjoint supplied-boundary assertion.
+It does not minimize branches over arbitrary latent generators,
+identify raw compensated $A_s$ with a normalized realization, or
+give a physical hidden-state dimension. $\square$
+
+## 52. All-order differentiation with the native noncommuting factors
+
+**Theorem 52.1 (a common domain and the exact moment criterion).**
+Let $\mathscr D$ consist of finite sums
+
+$$
+h(k,\theta,v)=\frac1{2\pi}\sum_{(n,m)\in E}
+                     h_{nm}(k)e^{i(n\theta+mv)},
+\qquad E\subset\mathbb Z^2\text{ finite},\quad
+h_{nm}\in C_c^\infty(I).
+\tag{52.1}
+$$
+
+This is dense in the whole base Hilbert space and is contained in
+$D(\mathcal K_c^r)$ for every finite $c\ge0$ and every integer
+$r\ge0$. For every such $h$, the functions $T_c(t)h$, $B_b(t)h$
+and $A_s(t)h$ have strong right derivatives of every order at
+$t=0$, as well as continuous strong derivatives on $[0,\infty)$.
+
+For a finite positive UNIT list and a finite positive RAW list write
+
+$$
+\begin{aligned}
+B^{[n]}(t)&=\sum_{i=1}^nw_iT_{c_i}(t),&
+w_i&\ge0,\quad\sum_iw_i=1,\quad c_i\ge0,\\
+A^{[n]}(t)&=\sum_{i=1}^na_i[T_{d_i}(t)-S_t],&
+a_i&\ge0,\quad d_i\ge0,
+\end{aligned}
+\tag{52.2}
+$$
+
+where every coefficient and coupling is finite. For every integer
+$q\ge0$, agreement of derivatives of orders $0,\ldots,q$ at
+zero on every input in $\mathscr D$ is equivalent respectively to
+
+$$
+\sum_iw_ic_i^j=m_j^b\quad(0\le j\le q),
+\qquad
+\sum_i a_i d_i^j=m_j^s\quad(1\le j\le q).
+\tag{52.3}
+$$
+
+The RAW condition for $q=0$ is empty. No normalization of
+$\sum_i a_i$ occurs.
+
+Proof. In each fixed angular mode the action of $K$ is exactly
+(36.1) at $c=0$, a second-order height differential expression
+with smooth polynomial potential. It maps $C_c^\infty(I)$ to
+itself. Multiplication by the smooth $\phi$ has the same property,
+without changing angular modes or enlarging the height support.
+The explicit Dirichlet operator domain in (36.1) contains these
+functions. Consequently $\mathcal K_c\mathscr D\subset\mathscr D$,
+and induction proves membership in every generator-power domain.
+Density follows from finite Fourier truncation and the density of
+$C_c^\infty(I)$ in height $L^2$. This is a dense invariant test
+domain for powers, not a claim that density makes it an operator
+core for the Dirichlet generator. In particular no all-order
+domain claim about the distinct vector $h_*$ of (44.6) is needed.
+
+Put $L=-K$. On $\mathscr D$, for $r\ge0$,
+
+$$
+(L+cM)^r h=\sum_{j=0}^r c^j W_{r,j}h,
+\qquad W_{r,0}=L^r,\quad W_{r,r}=M^r.
+\tag{52.4}
+$$
+
+Here $W_{r,j}$ is the sum of all ordered words of length $r$
+with $j$ factors $M$ and $r-j$ factors $L$, each word in its
+actual order of action. This follows by ordinary multiplication
+and induction on $r$ on the invariant domain; it is not a
+commutative binomial formula. The spectral theorem gives
+$\partial_t^rT_c(t)h=T_c(t)(L+cM)^rh$ continuously down to zero.
+For $c$ in a compact interval these derivatives are bounded
+uniformly on any fixed time interval, because (52.4) is a finite
+vector-valued polynomial and $\|T_c(t)\|\le e^{cPt}$.
+Thus differentiation under the finite measure $\mu_b$ is justified.
+
+For the infinite raw measure one needs the compensation also
+after differentiation. For fixed $r,h,T$, (52.4) shows
+$\|[(L+cM)^r-L^r]h\|\le C_{r,h}c$ for $0\le c\le C_s$.
+The exact identity
+
+$$
+\begin{aligned}
+\partial_t^r[T_c(t)-S_t]h
+ &=[T_c(t)-S_t]L^rh
+   +T_c(t)[(L+cM)^r-L^r]h
+\end{aligned}
+\tag{52.5}
+$$
+
+and (44.4) therefore bound this derivative by $C_{r,h,T}c$
+uniformly on $[0,T]$. This is integrable against $\nu_s$ by
+(50.6). Dominated strong integration, applied successively to
+these continuous derivatives (or to their integral fundamental
+theorem), proves every asserted derivative of $A_s(t)h$.
+At zero their values are consequently
+
+$$
+\begin{aligned}
+\partial_t^rB_b(0)h&=\sum_{j=0}^r m_j^bW_{r,j}h,\\
+\partial_t^rA_s(0)h&=\sum_{j=1}^r m_j^sW_{r,j}h.
+\end{aligned}
+\tag{52.6}
+$$
+
+The empty second sum is zero. Formula (52.6) for the finite
+lists holds with their finite moments, also when a coupling or
+coefficient is zero. It proves sufficiency in (52.3).
+For necessity, argue successively in $r$. Once the lower moments
+agree, the difference of the derivatives of order $r$ is exactly
+the difference of the $r$th moments times $M^rh$. For every
+$r\ge1$, $M^r$ is injective, hence is nonzero on any nonzero
+$h\in\mathscr D$. Equality for all such $h$ forces that moment
+to agree. In UNIT the zeroth moments already agree by the required
+normalization; in RAW both zeroth responses vanish. This proves
+necessity for every $q$, without a visible-mode restriction and
+without commuting any factors. $\square$
+
+## 53. Sharp native branch budgets and impossibility of exact finite lists
+
+**Theorem 53.1 (the sharp orders for every branch budget).**
+For each positive integer $n$, among all lists (52.2), the greatest
+integer $q$ for matching initial derivatives through order $q$ on
+every input in $\mathscr D$ is
+
+$$
+q_{\rm UNIT}(n)=2n-1,\qquad q_{\rm RAW}(n)=2n.
+\tag{53.1}
+$$
+
+Both are attained with $n$ strictly positive weights and $n$
+distinct couplings in the interior of their original compact
+native ranges. The same attaining lists will be used in §54.
+Neither $B_b(t)$ nor $A_s(t)$ equals a finite positive list in
+its respective class for all $t\ge0$ as operators on the entire
+$\mathscr H_B$.
+
+Proof. Apply positive Gaussian quadrature to $\mu_b$ on
+$[\alpha_b,C_b]$ and to $\eta_s$ on $[0,C_s]$.
+Its classical content is the quadrature theorem stated in
+Golub--Welsch, *Calculation of Gauss Quadrature Rules*,
+*Math. Comp.* **23** (1969), §1, pp.221--222, with the
+Jacobi-matrix correspondence in §2, (2.1)--(2.6), pp.222--223
+([primary article](https://www.ams.org/journals/mcom/1969-23-106/S0025-5718-69-99647-1/S0025-5718-69-99647-1.pdf),
+[public copy](https://web.stanford.edu/class/cme335/S0025-5718-69-99647-1.pdf)).
+The positive compact moment setting is also the one in
+Schmüdgen, *Ten Lectures on the Moment Problem*,
+[arXiv:2008.12698v1, Theorem 1.16 and the opening of Lecture 2,
+pp.16--17](https://arxiv.org/pdf/2008.12698v1).
+Neither supplier identifies our native measure or our operator
+derivatives; those are (50.5)--(50.6) and Theorem 52.1.
+
+Here is the quadrature step explicitly for these measures. For
+either finite measure $\sigma$, every nonzero polynomial has
+strictly positive squared integral, by full interval support.
+Thus its monic orthogonal polynomial $p_n$ of degree $n$ exists
+by the positive-definite polynomial Gram matrix. It has $n$
+simple roots in the interior of the interval. To verify this last
+fact, let $q$ be the product of its distinct interior roots where
+its sign changes. If there were fewer than $n$, then $\deg q<n$
+and $p_nq$ would have a constant nonzero sign except at finitely
+many points on the interval: every remaining interior root has
+even multiplicity, and exterior or nonreal factors cannot change
+the sign there. Its integral would be nonzero, contradicting
+orthogonality to $q$. There must therefore be $n$ interior
+sign-changing roots, all simple, exhausting the degree.
+
+Write the roots as $z_1,\ldots,z_n$, let $\ell_i$ be their
+degree-$(n-1)$ Lagrange polynomials, and put
+$v_i=\int\ell_i\,d\sigma$. Polynomial division by $p_n$ gives
+
+$$
+\int f\,d\sigma=\sum_{i=1}^nv_if(z_i)
+\qquad(\deg f\le2n-1).
+\tag{53.2}
+$$
+
+Indeed the quotient has degree at most $n-1$, so its product
+with $p_n$ integrates to zero, while the remainder is interpolated
+by the $\ell_i$. Applying (53.2) to $\ell_i^2$ gives
+$v_i=\int\ell_i^2d\sigma>0$, and applying it to $1$ gives the
+total mass. This proves the required existence, location,
+positivity and exactness as intermediate classical facts.
+
+For $\sigma=\mu_b$, denote the nodes and weights by
+$c_{b,i}^{(n)},w_{b,i}^{(n)}$. They are a valid UNIT list,
+including $\sum_iw_{b,i}^{(n)}=1$, and match $m_j^b$ through
+$j=2n-1$. For $\sigma=\eta_s$, denote them by
+$d_{s,i}^{(n)},v_{s,i}^{(n)}$. All these nodes are strictly
+between $0$ and $C_s$. Set
+
+$$
+a_{s,i}^{(n)}=\frac{v_{s,i}^{(n)}}{d_{s,i}^{(n)}}>0.
+\tag{53.3}
+$$
+
+These are finite for each fixed $n$, with no requirement on
+their sum. For $1\le j\le2n$,
+
+$$
+\sum_i a_{s,i}^{(n)}(d_{s,i}^{(n)})^j
+ =\sum_i v_{s,i}^{(n)}(d_{s,i}^{(n)})^{j-1}
+ =\int c^{j-1}d\eta_s(c)=m_j^s.
+\tag{53.4}
+$$
+
+Theorem 52.1 proves attainment of both orders on every input
+in the common all-power domain, not just in a scalar sector.
+Every constructed node is an actual native fibre: the UNIT node
+is $c_b(\rho_i)$ for its unique $\rho_i\in(0,\pi)$, and the RAW
+node is $c_s^{\rm line}(x_i)$ with
+$x_i=2\sqrt\beta\sqrt{\log(C_s/d_{s,i}^{(n)})}$.
+For example, at budget one the two lists are explicitly
+
+$$
+B_1(t)=T_{gc_0/(2\pi)}(t),\qquad
+A_1(t)=\sqrt{\frac{2\beta}{\pi}}
+                   [T_{C_s/\sqrt2}(t)-S_t].
+\tag{53.5}
+$$
+
+Indeed a one-node quadrature node is the first moment divided
+by the total mass of its finite measure; (50.6) gives both
+nodes and weights displayed here.
+
+For the upper bounds retain the entire declared competitor class.
+Given a UNIT list, let $z_1,\ldots,z_r$ be the distinct couplings
+with positive total weight, where $1\le r\le n$. They may lie
+anywhere in $[0,\infty)$. The polynomial
+$p(c)=\prod_{i=1}^r(c-z_i)$ satisfies
+
+$$
+\sum_i w_i p(c_i)^2=0,
+\qquad \int p(c)^2d\mu_b(c)>0.
+\tag{53.6}
+$$
+
+The second inequality follows from full interval support,
+regardless of the locations of the finitely many zeros.
+Matching through derivative $2n$ would match every moment of
+the polynomial $p^2$, whose degree is $2r\le2n$, contrary to
+(53.6).
+
+For a RAW list, discard only for this argument the terms with
+$a_i=0$ or $d_i=0$, and merge the remaining repeated positive
+couplings to $z_1,\ldots,z_r$, where $0\le r\le n$.
+This does not restrict the competitors or change their response.
+Put $p(c)=\prod_{i=1}^r(c-z_i)$, with $p=1$ when $r=0$.
+Then
+
+$$
+\sum_i a_i d_i p(d_i)^2=0,
+\qquad
+\int c p(c)^2d\nu_s(c)=\int p(c)^2d\eta_s(c)>0.
+\tag{53.7}
+$$
+
+The polynomial $cp^2$ has zero constant term and degree
+$2r+1\le2n+1$, so all its integrals are finite even though
+$\nu_s$ has infinite mass. Matching derivatives through
+$2n+1$ would contradict (53.7) by Theorem 52.1. This covers
+zero, repeated and redundant branches, including a list whose
+response is identically zero. In particular redundancy cannot
+improve the maximum in either family. It also shows that at an
+attaining order all $n$ branches must be effective and distinct.
+
+Finally equality for all times on the whole base implies equality
+of every derivative on $\mathscr D$, by Theorem 52.1. For any
+fixed finite list this contradicts (53.6) or (53.7). Thus the
+finite-list exact-realization decisions are negative for both
+original families, for every fixed original $s,b,g$.
+The obstruction concerns complete native semigroups and uses
+their noncommuting derivatives; it does not substitute scalar
+exponentials for them. $\square$
+
+## 54. The attaining lists also approximate in operator norm
+
+**Theorem 54.1 (explicit finite-horizon bounds with raw compensation).**
+Use exactly the quadrature lists of Theorem 53.1 and write
+
+$$
+\begin{aligned}
+B_n(t)&=\sum_{i=1}^nw_{b,i}^{(n)}T_{c_{b,i}^{(n)}}(t),\\
+A_n(t)&=\sum_{i=1}^na_{s,i}^{(n)}
+                           [T_{d_{s,i}^{(n)}}(t)-S_t],\\
+R_N(z)&=\sum_{j=N}^\infty\frac{z^j}{j!}\quad(z\ge0),&
+M_s&=m_1^s=C_s\sqrt{\beta/\pi}.
+\end{aligned}
+\tag{54.1}
+$$
+
+For every fixed $0\le T<\infty$ the following computable errors are
+valid in operator norm on the entire base, uniformly for
+$0\le t\le T$:
+
+$$
+\begin{aligned}
+\|B_b(t)-B_n(t)\|&\le E_{b,n}(T)
+ :=2R_{2n}(C_bPT)
+ \le2e^{C_bPT}\frac{(C_bPT)^{2n}}{(2n)!},\\
+\|A_s(t)-A_n(t)\|&\le E_{s,n}(T)
+ :=\frac{2M_s}{C_s}R_{2n+1}(C_sPT)
+ \le\frac{2M_s}{C_s}e^{C_sPT}
+                    \frac{(C_sPT)^{2n+1}}{(2n+1)!}.
+\end{aligned}
+\tag{54.2}
+$$
+
+Both tend to zero as $n\to\infty$. The coefficients and nodes
+are determined by the finite positive moment matrices (50.6)
+and the orthogonal polynomials in the proof of Theorem 53.1;
+the bounds require no estimate on their smallest node or on
+$\sum_i a_{s,i}^{(n)}$.
+
+Proof. Since $K\ge\lambda>0$, $\|S_t\|\le1$.
+Define ordered operator integrals on base inputs by
+
+$$
+U_0(t)=S_t,\qquad
+U_j(t)=\int_0^tS_{t-u}M U_{j-1}(u)\,du\quad(j\ge1).
+\tag{54.3}
+$$
+
+These are strong operator integrals and
+$\|U_j(t)\|\le (Pt)^j/j!$ by induction. Bounded-perturbation
+Duhamel expansion gives the norm-convergent series
+
+$$
+T_c(t)=\sum_{j=0}^\infty c^jU_j(t),\qquad
+T_c(t)-S_t=\sum_{j=1}^\infty c^jU_j(t).
+\tag{54.4}
+$$
+
+To justify the formula without any commutativity assumption,
+differentiate $S_{t-u}T_c(u)h$ for $h\in D(K)$.
+The common operator domain $D(K-cM)=D(K)$ gives derivative
+$cS_{t-u}MT_c(u)h$; the factors have their displayed order.
+Integration and density give the Duhamel identity on the whole
+base. Iteration gives (54.4), because its $N$th remainder is
+bounded by $e^{cPt}(cPt)^{N+1}/(N+1)!$ on bounded time and
+coupling intervals. Equivalently the absolutely norm-convergent
+series solves that Volterra equation uniquely by iteration.
+This is the classical ordered bounded-perturbation expansion.
+The selfadjoint common-domain input is Teschl's
+[Theorem 6.4, printed p.135](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf):
+the real bounded $-cM$ has relative operator bound zero.
+The native series (54.3) retains the full $K$ of (36.1).
+
+Integrating (54.4) against $\mu_b$ and subtracting the UNIT
+list cancels all terms through $j=2n-1$. Every later moment
+of either positive measure is at most $C_b^j$, since both are
+probabilities supported in $[\alpha_b,C_b]$. The norm of the
+remaining difference is at most
+$2\sum_{j\ge2n}(C_bPt)^j/j!$, proving the first bound.
+
+On the raw side compensation removes the $j=0$ term before
+integration. For $j\ge1$,
+
+$$
+m_j^s\le M_s C_s^{j-1},\qquad
+\sum_i a_{s,i}^{(n)}(d_{s,i}^{(n)})^j
+ =\sum_i v_{s,i}^{(n)}(d_{s,i}^{(n)})^{j-1}
+ \le M_s C_s^{j-1}.
+\tag{54.5}
+$$
+
+The first estimate integrates $c^{j-1}$ against the finite
+$\eta_s$; the second uses its same total mass and its same
+compact range. Thus the sum of integrated norms in (54.4),
+starting at $j=1$, is finite. This proves termwise integration
+against the original infinite $\nu_s$ and controls its entire
+tail towards $c=0$, rather than deleting a segment of the
+hidden line. The moments through $2n$ cancel by (53.4), leaving
+at most
+$2M_s C_s^{-1}\sum_{j\ge2n+1}(C_sPt)^j/j!$.
+This proves the second bound with the original raw normalization.
+
+Finally $R_N(z)\le e^z z^N/N!$, as is seen by comparing
+$(N+k)!$ with $N!k!$ in the series. For fixed $z$ this tends
+to zero, proving all convergence assertions. All bounds are
+operator bounds, so no restriction on the input or on visible
+Fourier modes is present. Strong derivatives on $\mathscr D$
+in §52 are not being replaced by operator-norm differentiability
+of the unbounded-generator semigroups at zero. $\square$
+
+**Theorem 54.2 (both composition corrections from the same lists).**
+With precisely the lists in (54.1), define
+
+$$
+\begin{aligned}
+V_n(t)&=B_n(2t)-B_n(t)^2\\
+ &=\sum_iw_{b,i}^{(n)}
+          [T_{c_{b,i}^{(n)}}(t)-B_n(t)]^2\ge0,\\
+D_n(t)&=A_n(2t)-S_tA_n(t)-A_n(t)S_t\\
+ &=\sum_i a_{s,i}^{(n)}
+          [T_{d_{s,i}^{(n)}}(t)-S_t]^2\ge0.
+\end{aligned}
+\tag{54.6}
+$$
+
+For every fixed $0\le T<\infty$, uniformly for $0\le t\le T$,
+
+$$
+\begin{aligned}
+\|V_b(t)-V_n(t)\|
+ &\le E_{b,n}(2T)+2e^{C_bPT}E_{b,n}(T),\\
+\|D_s(t)-D_n(t)\|
+ &\le E_{s,n}(2T)+2E_{s,n}(T).
+\end{aligned}
+\tag{54.7}
+$$
+
+In particular both errors tend to zero in operator norm. The
+RAW expression approximates the original first-order $D_s$
+of (46.9), not $A_s(2t)-A_s(t)^2$.
+
+Proof. Each individual $T_c(t)$ is selfadjoint and obeys its
+own semigroup law. Expanding the UNIT square sum and using
+$\sum_iw_iT_{c_i}(t)=B_n(t)$ and $\sum_iw_i=1$ gives
+$\sum_iw_iT_{c_i}(t)^2-B_n(t)^2$; no two distinct fibres have
+been commuted. This proves the first identity and positivity.
+For the second identity put $T=T_{d_i}(t)$ and $S=S_t$.
+The contribution of a single branch to its first line is
+
+$$
+(T^2-S^2)-S(T-S)-(T-S)S
+ =T^2-ST-TS+S^2=(T-S)^2.
+\tag{54.8}
+$$
+
+This uses both cross orders, and proves positivity after the
+positive weighted sum. The same calculation under the
+compensated integral is exactly (46.9).
+
+Both $B_n(t)$ and $B_b(t)$ have norm at most $e^{C_bPt}$.
+The identity $X^2-Y^2=X(X-Y)+(X-Y)Y$ therefore bounds the
+difference of their squares by
+$2e^{C_bPT}E_{b,n}(T)$, and their responses at $2t$ differ by
+at most $E_{b,n}(2T)$. This proves the first inequality in
+(54.7). Subtract the two cross expressions for $D_s$ and
+$D_n$, and use $\|S_t\|\le1$, to obtain the second.
+
+One may also see the first-order meaning directly: if a
+bookkeeping scalar $r$ is used in $S_t+rA_n(t)$, its equal-step
+composition difference is $rD_n(t)-r^2A_n(t)^2$.
+Only its coefficient of $r$ is the raw correction. The
+compensated bound
+$\|A_n(t)\|\le M_sPt\,e^{C_sPt}$ follows from (54.4)--(54.5),
+so this expansion introduces no divergent total-weight term.
+The scalar $r$ here does not assert any new finite-$\kappa$
+error estimate or replace the inherited scale $r_s$. $\square$
+
+## 55. Predictive distinctions and the scope of the branch count
+
+**Proposition 55.1 (what the native finite inquiry determines).**
+The all-time equivalence of arbitrary UNIT full amplitudes is
+(51.3); its minimal selfadjoint supplied-boundary representative
+is (51.6). Boundary-prepared responses on all base inputs have
+the finite-list obstructions, sharp derivative orders and
+attaining approximations of §§52--54. These are different input
+quantifiers. The necessary native label distinctions are coupling
+distinctions, with exactly the reflection equivalence (50.4).
+The budget $n$ counts complete $\mathscr H_B$-amplitude branches
+in (52.2), and gives neither a physical spatial dimension nor
+a memory-bit or scalar-state count.
+
+Proof. A general $f\in\mathscr H$ is read by $Q_t$ in (50.2),
+whereas a boundary-prepared input has the special form $Jh$
+and response $Q_tJh=B_b(t)h$. The former allows arbitrary even
+and odd amplitudes; the latter fixes the hidden profile before
+evolution. Theorem 51.1 determines the former equivalence and
+Theorem 51.2 removes exactly its invisible reducing summand.
+Theorem 53.1 excludes exact finite positive native lists for
+the latter response, while Theorems 54.1--54.2 approximate it
+and the original compensated raw coefficients by the same
+attaining lists. Every branch still contains all base modes,
+and its base generator has both original absorbing faces.
+In particular none of these theorems replaces a branch by a
+number, a bit, an axis, or a commuting height-only model.
+
+The raw response has no zeroth moment and no normalized hidden
+probability in (50.3); its extra matching order comes from the
+finite weighted measure $c\,d\nu_s$, not from an additional
+spatial direction. The standard spectral, moment and quadrature
+facts credited above are intermediate suppliers. The native
+content is their verified correspondence with $K-cM$, the
+actual $J^*e^{-tH_\infty}$, the two different raw measures and
+their ordered response coefficients. No worldwide novelty
+claim follows from that correspondence.
+
+All statements are pointwise in the original fixed $s\in\mathbb R$,
+$b>0$, $g>0$ and model data. The two signs of $\kappa$ retain
+their already proved limits in §§44--49; nothing here asserts
+new finite-$\kappa$ observability or norm-error transfer.
+The approximation bounds concern fixed finite horizons, not
+optimal uniform rates or growing horizons. The supplied
+analytic boundary entails no physical amplitude acquisition,
+projection actuator, reset, new driver, $SO(3)$ law, actual-ground
+residue rate, spatial selection or computational speedup.
+$\square$
+
+## 追加锚（本行以下为增补区）

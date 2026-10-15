@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Large finite nonabelian subgroups in the original Reset beam representation kernel.
+Finite alternating subgroups and their simultaneous finite-support product in the original Reset kernel.
 
 The original rho acts on DimensionGroup(resetMatrix q) by actual beam pushforward. Every full history automorphism commutes with UNIT shift; rho_unitShift identifies its native image with forward resetTheta. nativePolynomialEquiv then makes the transported image polynomial-linear on QF=Z[X]/(F q). Its value at 1 determines it as multiplication by that value, so actual image maps commute. No ring is installed on Native.
 
@@ -44,10 +44,50 @@ $$\forall q \in Nat, k \in Nat, hq \in 2 \le q, hk \in 2 \le k, hq0 \in 0 < q,\;
 
 The injectivity is inherited from the genuine original-history action, whose guarded words are realized by existing positive-word extension. hq0 can be any proof of 0<q, which follows from q>=2. For k>=2 the alternating groups are nonabelian, including A4, and their factorial orders are unbounded as k grows. No cross-k compatibility, complete kernel classification or locally finite whole-kernel conclusion is claimed.
 
+**Definition 1.4 (A countable product with finite support).**
+
+$$FiniteGapAlternating:Type$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.FiniteGapAlternating` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This is Mathlib RestrictedProduct with n-th fiber Alt(Fin(2^(n+2))), bottom subgroups, and Filter.cofinite. A tuple has finitely many nonidentity coordinates, multiplied coordinatewise in their original noncommutative groups. The coordinate n=0 is A4.
+
+**Definition 1.5 (Simultaneous action in the original kernel).**
+
+$$\forall q \in Nat, hq \in 2 \le q, hqzero \in 0 < q,\; \operatorname{gapProductKernelEmbedding}\left(q, hq, hqzero\right):\operatorname{MonoidHom}\left(FiniteGapAlternating, \operatorname{kernel}\left(\operatorname{rho}\left(q, hqzero\right)\right)\right)$$
+
+*Formalization.* `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.gapProductKernelEmbedding` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Use the actual signed edge b: (0,zeta)→(0,1), and a: (0,1)→(0,zeta). With c_h the chain 0→1 and d_h the reset from 1, U=a c_zeta d_zeta and V=c_one d_one c_zeta d_zeta are b-free loops at (0,1), of lengths 3 and 4. A bit is U^4 or V^3. Concatenating n+2 blocks and closing with a gives d(n)=12(n+2)+1 edges from target(b) to source(b). The first edges of the two blocks differ, so the codes are injective. All edges are transported through originalEdge with their actual labels, numbers and absolute signs. The chain requires q>=2.
+
+**Theorem 1.6 (Joint faithfulness on all original histories).**
+
+$$\forall q \in Nat, hq \in 2 \le q, hqzero \in 0 < q,\; \operatorname{FunctionInjective}\left(\operatorname{gapProductKernelEmbedding}\left(q, hq, hqzero\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.gapProductKernelEmbedding_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+SeparatorGapAction proves that overlapping interiors between consecutive b edges have the same endpoints. It proves exact separator preservation, both directions of eligibility invariance, and cross-length commutation on arbitrary bilateral sequences. The legal seams use the distinct source and target of b. Its finite-support homomorphism acts on ALL History(ResetGraph q), commutes with the actual unit shift and has a real continuous inverse. On a realized word b D(n,i) b, every other length fixes the central data while coordinate n outputs D(n,g(n)(i)); this determines every coordinate of the tuple. Noncoded gaps, extra q>2 edges and arbitrary exterior tails are included. The original rho has commuting images by the cyclic integer chart. Alternating factors are killed as restrictions of these new symmetric actions, using three-cycle commutators in Sym, including A4. Subgroup closure places the finite product in the SAME rho kernel. The classical marker method is discussed in Library/FiniteGroups/boylelindrudolph1988automorphism.md. There is no q=1 claim, unrestricted infinite-product continuity, publication novelty claim or classification of the whole kernel.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.FiniteGapAlternating`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.alternatingKernelEmbedding`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.alternatingKernelEmbedding_injective`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.gapProductKernelEmbedding`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.gapProductKernelEmbedding_injective`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetHistoryKernel.symmetricAction`
 - Dependency: [D5/S3/ConceptDynamics/Coding/MarkerPermutationAction](MarkerPermutationAction.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart](ResetNativeIntegerChart.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/SeparatorGapAction](SeparatorGapAction.md)
