@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Observer/Linear/PositiveWindowObservationBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Observer/Linear/HilbertMomentCoercivity, D5/S3/Observer/Linear/ExactTaylorObservationRemainder]
+   anchors: []
    utility: none
    digest: A finite uniform derivative floor gives an explicit observation-energy floor on every positive window in arbitrary Hilbert spaces. -/
 
