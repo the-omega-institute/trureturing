@@ -650,7 +650,8 @@ internal sealed partial class LeanSourceCatalog
             }
 
             var kind = tokens[kindIndex].Text;
-            var nameIndex = NextIdentifier(tokens, kindIndex + 1, end);
+            var nameIndex = kind == "instance" ? InstanceNameIndex(tokens, kindIndex, end)
+                : NextIdentifier(tokens, kindIndex + 1, end);
             if (nameIndex < 0 || IsAnonymousInstance(tokens, kindIndex, end))
             {
                 continue;
@@ -753,11 +754,12 @@ internal sealed partial class LeanSourceCatalog
             var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
             var kindIndex = FindDeclarationKind(tokens, start, end);
             if (kindIndex < 0 && tokens[start].Text is not ("@" or "example")
-                || IsAnonymousInstance(tokens, kindIndex, end))
+                || IsAnonymousInstance(tokens, kindIndex, end)
+                || IsNamedInstance(tokens, kindIndex, end))
             {
                 result.AddRange(tokens[start..end]);
             }
-            else if (tokens[start].Text is "set_option" or "include" or "omit")
+            else if (tokens[start].Text is "set_option" or "include" or "omit" or "open")
             {
                 result.AddRange(tokens[start..FindDeclarationKind(tokens, start, end)]);
             }
@@ -770,11 +772,12 @@ internal sealed partial class LeanSourceCatalog
     private static bool IsAnonymousInstance(
         ImmutableArray<LeanSourceToken> tokens, int kindIndex, int end) =>
         kindIndex >= 0 && tokens[kindIndex].Text == "instance"
-        && (kindIndex + 1 >= end || !IsIdentifier(tokens[kindIndex + 1].Text));
+        && InstanceNameIndex(tokens, kindIndex, end) < 0;
 
     private static IEnumerable<ImmutableArray<LeanSourceToken>> ImplicitInstanceCommands(
         ImmutableArray<LeanSourceToken> tokens) =>
-        AnonymousInstanceCommands(tokens).Concat(AttributedInstanceCommands(tokens));
+        AnonymousInstanceCommands(tokens).Concat(AttributedInstanceCommands(tokens))
+            .Concat(NamedInstanceCommands(tokens));
 
     private static IEnumerable<ImmutableArray<LeanSourceToken>> AttributedInstanceCommands(
         ImmutableArray<LeanSourceToken> tokens)
@@ -826,45 +829,6 @@ internal sealed partial class LeanSourceCatalog
                 token.Text is "macro" or "macro_rules" or "syntax" or "notation" or "elab" or "elab_rules"))
                 yield return command;
         }
-    }
-
-    private static int FindDeclarationKind(
-        ImmutableArray<LeanSourceToken> tokens,
-        int start,
-        int end)
-    {
-        if (DeclarationKinds.Contains(tokens[start].Text))
-        {
-            return start;
-        }
-
-        if (tokens[start].Text is not ("@" or "private" or "protected" or "noncomputable"
-            or "partial" or "unsafe" or "local" or "public" or "meta" or "set_option" or "include" or "omit"))
-        {
-            return -1;
-        }
-
-        var depth = 0;
-        var body = tokens[start].Text is not ("set_option" or "include" or "omit");
-        for (var index = start + 1;
-            index < end && tokens[index].Line == tokens[start].Line;
-            index++)
-        {
-            var text = tokens[index].Text;
-            depth += text switch
-            {
-                "(" or "[" or "{" => 1,
-                ")" or "]" or "}" => -1,
-                _ => 0,
-            };
-            if (depth == 0 && text == "in") body = true;
-            if (depth == 0 && body && DeclarationKinds.Contains(text))
-            {
-                return index;
-            }
-        }
-
-        return -1;
     }
 
     private static int NextIdentifier(

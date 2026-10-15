@@ -614,4 +614,82 @@ internal sealed partial class LeanSourceCatalog
 
     private static bool IsGeneratorClosure(LeanSourceDeclaration declaration) =>
         declaration.FullName.EndsWith("._generated_source_closure", StringComparison.Ordinal);
+
+    private static int InstanceNameIndex(ImmutableArray<LeanSourceToken> tokens, int kindIndex, int end)
+    {
+        var next = kindIndex + 1;
+        if (next + 2 < end && tokens[next].Text == "("
+            && tokens[next + 1].Text == "priority" && tokens[next + 2].Text == ":=")
+        {
+            var depth = 1;
+            next += 3;
+            while (next < end && depth > 0)
+            {
+                if (tokens[next].Text == "(") depth++;
+                else if (tokens[next].Text == ")") depth--;
+                next++;
+            }
+            if (depth != 0) return -1;
+        }
+        return next < end && IsIdentifier(tokens[next].Text) ? next : -1;
+    }
+
+    private static bool IsNamedInstance(
+        ImmutableArray<LeanSourceToken> tokens, int kindIndex, int end) =>
+        kindIndex >= 0 && tokens[kindIndex].Text == "instance"
+        && !IsAnonymousInstance(tokens, kindIndex, end);
+
+    private static IEnumerable<ImmutableArray<LeanSourceToken>> NamedInstanceCommands(
+        ImmutableArray<LeanSourceToken> tokens)
+    {
+        var starts = FindCommandStarts(tokens);
+        for (var index = 0; index < starts.Length; index++)
+        {
+            var start = starts[index];
+            var end = index + 1 < starts.Length ? starts[index + 1] : tokens.Length;
+            if (IsNamedInstance(tokens, FindDeclarationKind(tokens, start, end), end))
+                yield return tokens[start..end];
+        }
+    }
+
+    private static int FindDeclarationKind(
+        ImmutableArray<LeanSourceToken> tokens,
+        int start,
+        int end)
+    {
+        if (DeclarationKinds.Contains(tokens[start].Text))
+        {
+            return start;
+        }
+
+        if (tokens[start].Text is not ("@" or "private" or "protected" or "noncomputable"
+            or "partial" or "unsafe" or "local" or "scoped" or "public" or "meta"
+            or "set_option" or "include" or "omit" or "open"))
+        {
+            return -1;
+        }
+
+        var depth = 0;
+        var body = tokens[start].Text is not ("set_option" or "include" or "omit" or "open");
+        for (var index = start + 1;
+            index < end && tokens[index].Line == tokens[start].Line;
+            index++)
+        {
+            var text = tokens[index].Text;
+            depth += text switch
+            {
+                "(" or "[" or "{" => 1,
+                ")" or "]" or "}" => -1,
+                _ => 0,
+            };
+            if (depth == 0 && text == "in") body = true;
+            if (depth == 0 && body && DeclarationKinds.Contains(text))
+            {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
 }

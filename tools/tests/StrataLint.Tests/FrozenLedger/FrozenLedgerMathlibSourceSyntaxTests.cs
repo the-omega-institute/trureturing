@@ -511,7 +511,7 @@ public sealed partial class FrozenLedgerTests
 
     [Theory]
     [InlineData("instance : Inhabited Nat := ⟨7⟩\n", "missing")]
-    [InlineData("instance (priority := 10) named : Inhabited Nat := ⟨7⟩\n", "named")]
+    [InlineData("instance (priority := 10) named : Inhabited Nat := ⟨7⟩\n", "missing")]
     public void MathlibReanchorDoesNotUseAnonymousSourceForUnresolvedNamedDeclaration(
         string source, string name)
     {
