@@ -1227,3 +1227,613 @@ affine proof and original correspondence provide their stated
 quantifiers. No formal kernel verification is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 324. An attained unequal-tail sector
+
+**Theorem 324.1 (A conserved terminal-cell transfer).**
+Retain the original source, full Borel carrier, consumer and resource
+classes of 315.1. For every real triple satisfying
+
+$$
+0<\tau\le\frac1{24},\qquad 0\le t\le\tau,\qquad
+0\le\delta\le\min\left\{\tau-t,\frac{53t}{128}\right\},
+\tag{324.1}
+$$
+
+prescribe
+
+$$
+\begin{aligned}
+a_1=a_2&=1-11\tau,&
+(a_3,\ldots,a_7)&=(13,10,9,8,6)\tau,\\
+a_8&=5\tau+t+\delta,&a_9&=5\tau+t-\delta,&
+E&=5\tau+\frac{11t}{64}.
+\end{aligned}
+\tag{324.2}
+$$
+
+Append **any entire positive nonincreasing vanishing actual tail** with
+$a_{10}\le E$. For the separately selected marked targets
+$\lambda_x^a=(1-a_{n(x)})\delta_{\theta_0}
++a_{n(x)}\delta_{\theta_{n(x)}}$, both original hard-two minima are
+attained and equal $E$:
+
+$$
+\min_{A\in\mathcal N_2}e_a(A)
+=\min_{A\in\mathcal O_2}e_a(A)=E.
+\tag{324.3}
+$$
+
+For this fixed entire sequence, every positive **closed** cap $c$ is
+feasible in either class exactly when $c\ge E$. The constructed
+stopped rule and its own $N$ completion use the identical source and
+one source-independent seed, have identical output laws, and make at
+most two actual requests. Arbitrary original competitors retain their
+arbitrary addresses, repeated requests and full-carrier outputs.
+
+At $t>0$ the actual active length at $E$ is nine. At $t=0$ necessarily
+$\delta=0$, the active length is seven and the result is the reused
+seven-active case. The range (324.1) is sufficient; no maximality of
+the allowable transfer is asserted. The new amplitude coverage is
+only $\delta>0$; the equal-tail theorem 321.1 is reused.
+
+**Domain verification.** The head gap is $1-24\tau\ge0$, and the
+five middle amplitudes are ordered. The remaining relevant gaps are
+
+$$
+a_7-a_8=\tau-t-\delta\ge0,\qquad
+a_8-a_9=2\delta\ge0,\qquad
+a_9-E=\frac{53t}{64}-\delta\ge\frac{53t}{128}.
+\tag{324.4}
+$$
+
+Thus the sequence is positive, ordered and bounded by one, including
+all head or tail ties. Also
+$0<E\le331/1536<1$. If $t>0$, (324.4) and $a_{10}\le E$
+give exactly nine active coordinates; if $t=0$, $a_8=a_9=E$
+and $a_7=6\tau>E$. These arguments include $\tau=1/24$,
+$t=\tau$ (where $\delta=0$), the order boundary
+$\delta=\tau-t$, and exhaustion of the donor at
+$\delta=53t/128$. The algebraic zero-scale point is not an
+original positive-sequence assertion.
+
+## 325. The one whole law and its common-cell coupling
+
+**Construction 325.1 (Only one exhaustion vector changes).**
+Let $R=O(1,2;1,2,0)$ and use exactly the genuine sixteen-table
+$P^0$ in 319.1 and the complete $P^\star$ in 320.1. Start with
+
+$$
+p^B=(1-24\tau)R+24(\tau-t)P^0+24tP^\star.
+\tag{325.1}
+$$
+
+Here every row of the displayed $P^0$ table has its integer count
+multiplied by $\tau-t$. In particular its row
+$O(1,4;0,4,0)$ keeps first output zero: its class-1 correct count
+is eleven per 24, not the twelve of the other head-fill variant.
+Every deterministic row in the displayed $P^\star$ table keeps its
+schedule and all three labels, with its integer count multiplied by
+$s=t/128$. Keep the five mixed $P^\star$ rows as follows, listing
+unnormalized vectors. Different rows, including coincident schedules
+from $P^0$ or $R$, remain alternative branches.
+
+| Schedule | Mass | First vector | Middle vector | Exhaustion vector |
+| --- | --- | --- | --- | --- |
+| $(1,2)$ | $944s$ | $944s e_1$ | $944s e_2$ | $463s e_0+220s e_3+162s e_4+99s e_5$ |
+| $(2,3)$ | $391s$ | $333s e_0+58s e_2$ | $391s e_3$ | $391s e_0$ |
+| $(3,4)$ | $236s$ | $236s e_0$ | $236s e_4$ | $148s e_0+88s e_5$ |
+| $(6,7)$ | $74s$ | $74s e_0$ | $74s e_7$ | $17s e_0+(4s+\delta)e_8+(53s-\delta)e_9$ |
+| $(6,8)$ | $53s$ | $53s e_0$ | $53s e_8$ | $17s e_0+36s e_9$ |
+
+Call the resulting law $p^\delta$. Only the exhaustion vector of
+the $P^\star$ component on $(6,7)$ was changed. Its separate
+$P^0$ component on that same schedule is unchanged. In every row,
+**each** counterfactual vector has that row's mass; three such
+vectors are never added as three schedule masses. For the changed row,
+
+$$
+17s+(4s+\delta)+(53s-\delta)=74s,
+\qquad 53s-\delta\ge0.
+\tag{325.2}
+$$
+
+Every entry is nonnegative. The deterministic $P^\star$ counts sum
+to 1374 and its mixed counts to 1698, so the schedule masses of the
+entire construction sum once to
+
+$$
+(1-24\tau)+24(\tau-t)+(1374+1698)s=1.
+\tag{325.3}
+$$
+
+This is one normalized probability law before any source is inspected.
+
+For a row of positive mass $m$, partition $[0,1)$ separately in
+each of its three cells into increasing-label half-open intervals
+$I_0(u),I_{10}(v),I_{11}(z)$ of lengths equal to that cell's
+label masses divided by $m$. Give the full deterministic table
+$O(i,j;u,v,z)$ weight
+
+$$
+m\,|I_0(u)\cap I_{10}(v)\cap I_{11}(z)|.
+\tag{325.4}
+$$
+
+The intersections form a partition and reproduce all three marginals
+with total weight $m$. This supplies all counterfactual labels from
+the same local seed coordinate before replies. Zero-mass rows are
+omitted; no division or limit sampler is needed there. It is the
+coupling already used in 320.2, applied to the stated new vector.
+
+**Lemma 325.2 (Identity on the entire Boolean cube).** For every
+$w\in\{0,1\}^9$, including all multiple-zero words,
+
+$$
+p^\delta_w=p^B_w+\delta w_6w_7(e_8-e_9).
+\tag{325.5}
+$$
+
+**Proof.** The changed vector is used exactly in the exhaustion
+cell of $(6,7)$, whose indicator is $w_6w_7$. Its difference is
+$\delta(e_8-e_9)$, and every other cell and row is unchanged.
+This argument concerns the full vector, independently of which other
+bits vanish. $\square$
+
+## 326. Every word and the independent union constraint
+
+**Theorem 326.1 (All-real full-row feasibility).** The one law
+325.1 satisfies every row of 315.2 at (324.2) and cap $E$.
+Its positive-word base mass is $p^\delta_+(0)=1-E$.
+
+**Proof.** First use the unchanged endpoint proofs 319.2 and 320.2.
+They prove all three independent rows on every word for their
+respective profiles and caps, with the actual $P^0$ specified above.
+For $R$ the auxiliary profile is $(1,1,0,\ldots,0)$ and its cap
+is zero. The weights in (325.1) are nonnegative and sum to one.
+Their affine combination has amplitudes
+
+$$
+(1-11\tau,1-11\tau,13\tau,10\tau,9\tau,8\tau,6\tau,
+ 5\tau+t,5\tau+t)
+\tag{326.1}
+$$
+
+and cap
+$5(\tau-t)+24t(331/1536)=5\tau+11t/64=E$.
+Every event probability and every event demand is affine in these
+same weights. Thus every independent row holds for $p^B$ for
+every real parameter, and $p^B_+(0)=1-E$. This is a proof from
+the complete endpoint inequalities, not an inference from a parameter
+scan or a check of extreme suffixes only.
+
+At a word with first zero $n\le7$, both transferred labels lie
+outside $\{0,n\}$. Equation (325.5) leaves its base probability,
+correct probability and their union probability separately unchanged.
+The target amplitude is unchanged too. This proves all three rows
+in those classes even when $w_6w_7=1$ and several other bits vanish.
+
+It remains to check the two classes where a transferred label is
+correct. Write $c_n=p_w(n)$ and
+$d_n=1-p_w(0)-p_w(n)$ for the outside-pair probability in the
+indicated class. All earlier bits are one in classes 8 and 9, so
+$w_6w_7=1$. The following exact counts refer to this same endpoint
+law $P^\star$, not separately attainable marginals:
+
+| First zero | Correct count /3072 | Outside-pair count /3072 |
+| --- | ---: | ---: |
+| 8, either value of $w_9$ | 106 | 622 |
+| 9 | 106 | 573 |
+
+Indeed (320.5) gives $Z=728$ in the entire class 8, independent
+of $w_9$, and $Z=679$ in class 9. Subtract its correct count
+106. Alternatively the full vector at $111111110$ has counts
+
+$$
+(2393,0,0,220,162,187,0,0,4,106)/3072
+\tag{326.2}
+$$
+
+in label order $0,\ldots,9$. On both classes $P^0$ sees a
+positive seven-bit prefix, has correct mass zero and outside mass
+$5/24$; $R$ emits zero. Consequently the baseline counts are
+
+$$
+c^B_8=c^B_9=\frac{53t}{64},\qquad
+d^B_8=5\tau-\frac{18t}{128},\qquad
+d^B_9=5\tau-\frac{67t}{128}.
+\tag{326.3}
+$$
+
+For example $d^B_8=5(\tau-t)+622t/128$; the other identity
+uses 573 in place of 622. After the single transfer,
+
+$$
+\begin{aligned}
+c_8&=\frac{53t}{64}+\delta=a_8-E,&
+d_8&=5\tau-\frac{18t}{128}-\delta,\\
+c_9&=\frac{53t}{64}-\delta=a_9-E,&
+d_9&=5\tau-\frac{67t}{128}+\delta.
+\end{aligned}
+\tag{326.4}
+$$
+
+Thus the correct deficit equals $E$ in each class. Independently,
+the union deficits satisfy
+
+$$
+E-d_8=\frac{40t}{128}+\delta\ge0,\qquad
+E-d_9=\frac{89t}{128}-\delta
+ \ge\frac{36t}{128}\ge0.
+\tag{326.5}
+$$
+
+The base deficit is $c_n+d_n-a_n=d_n-E\le0$. This proves
+the base, correct and independent union rows separately. In
+particular the worsening union row in class 9 has not been inferred
+by adding singleton inequalities. Its pre-transfer slack is
+$89t/128$, whereas the **available donor mass in the changed
+cell** is only $53t/128$. The smaller latter quantity is the
+nonnegativity restriction in (324.1). These two stocks have different
+meanings and are not interchanged.
+
+At the positive word (325.5) changes only two nonzero labels, so its
+base mass remains $1-E$. Negative singleton demands remain literal
+throughout, and no zero-score event or multiple-zero word was removed.
+Nonnegativity of $d_8,d_9$ also follows from the actual normalized
+cell construction, rather than from a signed deficit calculation.
+This proves the full-row assertion, including $t=0$, zero branch
+weights, exhausted donor and every equality endpoint. $\square$
+
+## 327. Original realization, actual tails and matching lower bound
+
+**Proof of Theorem 324.1.** The original objects are explicitly those
+in 315.1: $X=\{(r,g):r\text{ prime},\ \lceil F_r/10\rceil
+\le g\le\lfloor F_r/5\rfloor\}$,
+$N=1+F_rg$, $q_i=[p_i\mid N]$ and the finite first absence
+$n(x)$. The carrier remains
+$\Theta=\bigsqcup B_j\sqcup\bigsqcup P_j$, with interval
+blocks and their full Borel sigma algebra; the actual distinct marks
+are $\theta_j=(B_1,1/(j+2))$. The same consumer returns unknown
+on $B_j$ and proposes $j$ on $P_j$. Its original nonatomic
+targets $(1-h_0)\nu_x+h_0\pi_{\Omega(x)}$, with the density and
+parameters of 315.1, remain unchanged. There is no probability law
+on the source, supplied value of $N$, source label, first absence
+or extra observation. The error in (324.3) is only against the
+separately selected marked targets (315.2).
+
+Every word used in 326 is an actual finite reply pattern. To recall
+the elementary justification in 315.3, the invertible Fibonacci
+matrix $Q$ modulo each prime $p$ has scalar $k$th power precisely
+when $p\mid F_k$. Its class in the finite projective linear group
+has an order $z(p)\ge3$, giving $p\mid F_k$ iff $z(p)\mid k$.
+For finitely specified primes of product $D$, choose a prime $r$
+larger than all these ranks with $F_r\ge10(D+2)$. No rank
+divides $r$, so $F_r$ is invertible modulo $D$. CRT prescribes
+$g=-F_r^{-1}$ at a desired one and $g=0$ at a desired zero.
+The actual integer window for $g$ has length at least $D$ and
+contains this residue. This realizes every multiple-zero word and
+positive prefix. Applying it to the first $n$ bits with only the
+last bit zero realizes each later actual first absence as well.
+Finite prime support makes first absence finite for every source;
+the finite positive word is not an infinite all-positive source.
+
+Partition one source-independent uniform $U\in[0,1)$ into the
+schedule intervals of 325, omitting zero weights. Within a mixed
+interval use its same rescaled coordinate for all the quantiles in
+(325.4). Before replies, this fixes the branch, the whole increasing
+schedule and every counterfactual terminal label. Execute only the
+selected schedule on the same actual source, stop at its first
+**queried** zero or exhaustion, and hand its indicated actual mark
+to the unchanged consumer. All interval choices are measurable;
+half-open endpoints fix a rule at every seed. Handoff is finite
+for every source and seed, zero advice is used, and there are at
+most two actual calls. The second address was fixed before replies.
+
+The $N$ completion uses this identical $U$ and source, acquires
+the whole preselected schedule and reconstructs the same stopped
+output. Its ignored second call still counts. Thus these two
+constructed rules have identical laws, without any claim of
+preserving an arbitrary initially given $N$ law. The reused normalized
+criterion 109.1 applies to the explicitly stopped law: for its
+unique expansion
+$p_w=c_0+\sum_i\ell_iw_i+\sum_{i<j}Q_{ij}w_iw_j$, it has
+
+$$
+c_0\ge H(p):=\sum_i\left(\sum_{j>i}(-Q_{ij})_+-\ell_i\right)_+
+\quad\text{coordinatewise}.
+\tag{327.1}
+$$
+
+Normalization makes the scalar schedule budget redundant as in
+108.4. Degree two alone or scalar expectation representability
+does not replace this stopped membership condition. At $t=0$ use
+the law on its seven actual active inputs; it ignores 8 and 9.
+
+For $n(x)\le9$, the full-row proof 326 gives the selected-target
+cap. For every actual $n(x)>9$, no emitted mark is $\theta_{n(x)}$
+and the low word is $1^9$. The exact full-carrier identity is
+
+$$
+\operatorname{TV}\left(\sum_{j=0}^9p^\delta_+(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+=\max\{1-p^\delta_+(0),a_n\}=\max\{E,a_n\}=E.
+\tag{327.2}
+$$
+
+It includes $a_{10}=E$, every later tie, and every permitted
+positive monotone vanishing tail; no summability is required. At
+$t=0$, the same identity beyond 7 also covers classes 8 and 9.
+Thus both constructed rules have uniform error exactly $E$.
+
+For necessity reuse the **complete-$N$** lower score 318.2–318.3:
+for every real finite profile, every ordered late embedding, and
+the same complete feasible allocation of any finite mass,
+
+$$
+2b_2+11b_{j_1}+13b_{j_2}+13b_{j_3}+12b_{j_4}
++11b_{j_5}+11b_{j_6}+11b_{j_7}\le2+128e.
+\tag{327.3}
+$$
+
+Its explicit 46 rows have
+$\beta=(0,16,88,104,104,96,88,88,88)$, $K=1024$ and
+$W=368$, with $B_N=B_O=W$. The support proof maximizes over
+all ten labels in every cell of all 36 pairs, retains the full
+catalog, coarsens empty/singleton/repeated schedules, and permutes
+cells for reversals. Outside the embedded coordinates, scored bits
+are one and outside labels earn zero, so it covers all horizons
+and ordered embeddings. For this one score $Y$ and this same
+allocation, $Yh\le YG_N\lambda\le M\Delta_N(Y)=0$; there
+is no division by $M$ or substitution of separately optimized
+margins. These are reused lower-bound results, not another family.
+
+The original necessary direction uses the exact closed-cap transport
+110.2 recalled in 315.3. Countability gives one common probability-one
+seed event of finite execution and at most two calls. Finite actual
+witnesses for low words with fixed high replies, whole-schedule address
+truncation, and finite handoff cutoffs give approximating representatives
+in the same class. Compactness of that class's finite catalog simplex
+then gives one representative at the exact closed cap. This argument
+retains arbitrary original addresses, repetitions and all Borel outputs.
+For the required prefix nine, restrict a longer representative by
+fixing higher replies to zero, projecting higher labels to zero and
+contracting constant observations; extend a shorter one by ignored
+inputs. Projection contracts every TV row, including the independent
+union row. In the extension, each added first zero has amplitude at
+most the proposed cap and exact error
+$\max\{1-p_+(0),a_n\}$ at most that cap. These are proof
+representations, not uncounted actual observations. No original
+competitor's complete law or coupling is asserted to survive.
+
+Consequently (327.3) applies to every original competitor at any
+proposed positive cap below one, including a cap smaller than $E$
+which activates more actual tail coordinates. Substitute
+$j_1,\ldots,j_7=3,\ldots,9$. Its contributions are
+
+$$
+\begin{aligned}
+2a_2-2&=-22\tau,\\
+11a_3+13a_4+13a_5+12a_6+11a_7&=552\tau,\\
+11(a_8+a_9)&=110\tau+22t.
+\end{aligned}
+\tag{327.4}
+$$
+
+The sum is $640\tau+22t=128E$. The transfer cancels because
+the last two coefficients are equal. Hence every such cap satisfies
+$128c\ge128E$. If a competitor had error less than $E$, choose
+a positive cap between its error and $E$ to contradict this bound;
+this also excludes zero error. Both explicit rules attain $E$.
+Every larger closed cap admits those same rules, including $c=1$
+and $c>1$. Every smaller positive cap is excluded, proving all
+of (324.3) and the claimed closed-cap equivalence. $\square$
+
+## 328. The exact regional all-score consumer
+
+**Proposition 328.1 (Only the scale $\tau=1/24$).**
+For $\tau=1/24$, $t>0$ and (324.1), let $b_i=a_i$ for
+$1\le i\le9$. Then $(b,E)\in H_9\cap H_N$, with the same
+mass-one stopped allocation $\lambda^O$ of 325, and for **every**
+full nonnegative score $y$,
+
+$$
+F_{Qy}(b,E)=yh(b,E)\le yG_O\lambda^O\le\Delta_O(y).
+\tag{328.1}
+$$
+
+In particular $\Delta_O(y)\le1$ implies $F_{Qy}(b,E)\le1$.
+For any such score with $\Delta_O(y)\le1$ and any complete $N$
+allocation on this same profile of mass $M\ge1$, there cannot be
+a strict inequality $F_{Qy}(b,E)>M$.
+No hull membership at other scales is asserted.
+
+**Proof.** Use the exact hull
+$H_9=\{1\ge b_1\ge\cdots\ge b_9\ge E\ge0,
+\ b_2=b_3,\ 0\le\sum_{3}^9b_i-10E\le1-b_1\}$.
+Here $b_2=b_3=13/24$; order and $b_9>E$ follow from 324.4.
+The transfer cancels in the sum, so
+
+$$
+\sum_{i=3}^9b_i-10E=\frac14+\frac{9t}{32}>0,\qquad
+b_1+\sum_{i=3}^9b_i-10E
+=\frac{19}{24}+\frac{9t}{32}\le\frac{617}{768}<1.
+\tag{328.2}
+$$
+
+Thus all hull conditions hold. The same stopped allocation satisfies
+every full row and has mass one, proving $H_N$ membership by
+completion. Nonnegative pairing with this actual stopped allocation
+gives (328.1) for every full score, not merely the lower score used
+above. With unit-$O$ excess its value is at most one and hence at
+most any such $M$. This is a regional statement at the specified
+profile, without a restriction on scores or a comparison of separately
+chosen profiles. $\square$
+
+## 329. The specified direct seven-core extraction
+
+**Proposition 329.1 (Obstruction only to the direct method of 173–174).**
+For $t>0$ in (324.1), extracting a seven-coordinate core by exactly
+the residual-extension equations of
+[173–174](KBONACCI_SELF_CALIBRATING_ACQUISITION_RESOURCES_CONTINUATION_V.md),
+with $m=7$, $L=9$, cannot produce (324.2) at cap $E$.
+This excludes that specified extraction, although the actual profile
+is feasible in both original classes by 324.1.
+
+**Proof.** Those fixed equations require
+
+$$
+g_8=a_8-E=\frac{53t}{64}+\delta,\qquad
+g_9=a_9-E=\frac{53t}{64}-\delta,\qquad g_{10}=0.
+\tag{329.1}
+$$
+
+They are ordered and nonnegative; $g_9>0$ for $t>0$.
+The two prescribed residual weights and their sums are
+
+$$
+\begin{aligned}
+w_8&=3(g_8-g_9)=6\delta,&
+w_9&=\frac{10}{3}g_9=\frac{265t}{96}-\frac{10\delta}{3},\\
+W&=w_8+w_9=\frac{9g_8+g_9}{3}
+ =\frac{265t}{96}+\frac{8\delta}{3},\\
+E_{\rm res}&=\frac{6g_8+g_9}{3}
+ =\frac{371t}{192}+\frac{5\delta}{3},&
+W-E_{\rm res}&=g_8.
+\end{aligned}
+\tag{329.2}
+$$
+
+Both weights are nonnegative. The parameter bounds give
+
+$$
+\begin{aligned}
+W&\le\frac{265t}{96}+\frac{8(\tau-t)}3
+ \le\frac{265\tau}{96}\le\frac{265}{2304}<1,\\
+E-E_{\rm res}
+ &=5\tau-\frac{169t}{96}-\frac{5\delta}{3}
+ \ge\frac{10\tau}{3}-\frac{3t}{32}
+ \ge\frac{311\tau}{96}>0.
+\end{aligned}
+\tag{329.3}
+$$
+
+Thus $r=1-W>0$ and the unique candidate core lies in the ordered
+positive domain:
+
+$$
+A_i=\frac{a_i-W}{r}\ (1\le i\le7),\qquad
+e_0=\frac{E-E_{\rm res}}r,\qquad
+1\ge A_1\ge\cdots\ge A_7\ge e_0>0.
+\tag{329.4}
+$$
+
+Indeed $A_1\le1$ follows from $a_1\le1$, order follows from
+the common positive denominator, and
+$A_7-e_0=(a_7-E-g_8)/r=(\tau-t-\delta)/r\ge0$.
+The complete inverse correspondence is
+
+$$
+a_i=rA_i+W\ (i\le7),\qquad
+E=re_0+E_{\rm res},\qquad a_8=E+g_8,\quad a_9=E+g_9.
+\tag{329.5}
+$$
+
+Reuse the complete-$N$ necessary $Y_2$ relation of 299.1 on this
+candidate core. Its reading is
+
+$$
+A_2+4A_3+5A_4+5A_5+5A_6+4A_7-1-40e_0
+=\frac{665t/96+16\delta/3}{1-W}>0.
+\tag{329.6}
+$$
+
+For direct verification, the numerator before division is
+
+$$
+[a_2+4a_3+5a_4+5a_5+5a_6+4a_7-1-40E]
+-23W+40E_{\rm res}.
+\tag{329.7}
+$$
+
+The bracket equals $-55t/8$. Substituting (329.2) gives
+$665t/96+16\delta/3$, strictly positive at $t>0$.
+Therefore this candidate core has no complete feasible $N$ allocation
+of any finite mass, and in particular no stopped core suitable for
+that direct method. At $t=0$, $\delta=0$ and this reading is zero;
+there is no exclusion on that reused branch. The argument neither
+excludes every earlier supplier nor asserts original $O$ infeasibility
+or a separator. $\square$
+
+## 330. Parameter identification and retained boundaries
+
+**Proposition 330.1 (The narrower wedge is the same family).**
+Let $0<\tau\le1/24$ and $u/2\le v\le u\le\tau$ with
+$u,v\ge0$. Put
+
+$$
+t=\frac{u+v}{2},\qquad \delta=\frac{u-v}{2};\qquad
+u=t+\delta,\quad v=t-\delta.
+\tag{330.1}
+$$
+
+Then $0\le t\le\tau$, $0\le\delta\le\tau-t$, and
+$\delta\le t/3\le53t/128$. For $t>0$ the last bound is
+strict. Thus its amplitudes $a_8=5\tau+u$, $a_9=5\tau+v$
+and cap $5\tau+11(u+v)/128$ are already within 324.1.
+Its direct-extraction formulas become exactly
+
+$$
+W=\frac{521u+9v}{192},\qquad
+E_{\rm res}=\frac{691u+51v}{384},\qquad
+Y_2\text{ numerator}=\frac{1177u+153v}{192}.
+\tag{330.2}
+$$
+
+**Proof.** The first bounds follow from $u=t+\delta\le\tau$
+and $v\le u$. The condition $v\ge u/2$ is
+$t-\delta\ge(t+\delta)/2$, or $3\delta\le t$.
+Since $1/3<53/128$, this implies (324.1), including the zero
+branch. Substitute the inverse identities into (324.2) and (329.2),
+(329.6) to obtain the displayed expressions. This is an exact
+identification of parameterized profiles, not a second attained
+family, endpoint or method obstruction. An alternative supplier
+denoted $P^\dagger$ on that wedge provides no separate coverage
+credit here and is not needed for this proof. $\square$
+
+The mathematical increment is one conserved-cell transfer, counted
+once together with its stated regional consumer and specified-method
+adjunct. The equal-tail family, $P^0$, $P^\star$, the complete-$N$
+lower score, the seven-active branch, earlier completed cones and the
+original source/seed/closed-cap transport are reused at their existing
+scopes.
+Neither the sufficient transfer range nor a bounded overlap comparison
+is a maximality or literature-priority assertion.
+
+The primary framework remains exactly 323.2. Blackwell's finite-family
+attainable loss vectors and supporting-hyperplane comparison concern
+one whole randomized procedure. Kaniewski, Lee and de Wolf's
+Definitions 6 and 8 and Theorem 9 concern nonnegative real scalar
+leaf outputs and maximum supported path cost; their coefficient
+normalization and scalar output rescaling do not supply normalized
+probability vectors, equal cell masses or an increasing stop.
+Here (325.2)–(325.4), 326 and 327 separately prove those conditions.
+
+All constructed output laws are finite atomic laws on actual marks.
+Their finite support has mass one for the output and zero for every
+unchanged original nonatomic target, hence TV one against that target.
+No accuracy against those original targets or change of consumer is
+inferred from selected marked-target accuracy.
+
+The unrestricted question 323.3 retains its full original quantifiers,
+signed residual, one unrestricted $V$ and one common $\theta$ budget,
+including nonzero zero-cost $V$ at $\theta=1$. The new law is
+feasible in both classes, and the positive reading in 329.6 excludes
+only one extracted core. Neither yields the required same-profile
+$N$-only strict separator or a certificate for every unit-$O$ input.
+There is no exact-law preservation requirement on a replacement $O$
+law, no new fixed-anchor or output-label restriction, and no claim
+about other amplitude regions, arbitrary gapped primal attainment or
+maximal unequal-tail allowance.
+
+## 追加锚（本行以下为增补区）
