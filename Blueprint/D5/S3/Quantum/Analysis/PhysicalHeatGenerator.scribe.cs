@@ -25,13 +25,13 @@ internal sealed class PhysicalHeatGeneratorDocument : IScribeDocumentDefinition
                     + "if and only if the pair consisting of f and minus v belongs to the graph of K. "
                     + "Any strongly continuous contraction semigroup with that same full generator graph equals S.")),
                 Paragraph(Text("The multiplier bound and finite Hermite approximants establish strong continuity. "
-                    + "Existing physical graph-core approximants enter the source-selected closed-generator theorem. "
+                    + "Existing physical graph-core approximants enter the source-selected closed-generator theorem imported from ContractionSemigroup. "
                     + "Conversely, continuous coordinate maps identify every coefficient of any asserted derivative. "
                     + "Physical basis equality is discharged inside the proof from the frozen orthonormality, totality and Schwartz tests.")),
                 Paragraph(Text("The source-selected general semigroup proofs are Scott Armstrong’s "
                     + "MarkovProcess revision dbade0d12c4f84179441a9df7d7147df7a8bcaa0, "
                     + "from Semigroup/Basic, StrongOperatorLimit, Generator, OrbitContinuity, GeneratorClosed and GeneratorUniqueness. "
-                    + "They retain their original proof bodies and namespace inside this receiving module, "
+                    + "They retain their original proof bodies and public namespace in the generic ContractionSemigroup module imported by this physical application, "
                     + "with no claim of mathematical originality. Both donor and receiver use Lean v4.33.0 and mathlib "
                     + "db584cd6d46c92f209a44c0f1c829460d327499d. The complete Apache 2.0 license is at "
                     + "docs/reports/heat-suppliers/markovprocess-LICENSE.txt; the immutable donor has no NOTICE file. "

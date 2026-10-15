@@ -22,7 +22,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.ad
 
 The Boolean image grammar and distinct-class leaf bounds decide precisely Admissible. The branch obligation remains in the retained native image-chart supplier.
 
-**Definition 1.2 (Finite Chart Enumeration).**
+**Theorem 1.2 (Exact Boolean Admissibility).**
+
+$$\forall C: LiteralRow, (\forall theta: (\operatorname{Classes}\left(C\right)) \to (\operatorname{Option}\left(Bool\right)), ((\operatorname{admissibleCode}\left(C, theta\right) = true) \iff (\operatorname{Admissible}\left(C, theta\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.admissibleCode_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The public equivalence connects the executable checker to the original admissibility predicate for every literal row and every class-root assignment. It is reused by the actual repeated-partner controllers.
+
+**Definition 1.3 (Finite Chart Enumeration).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.chartList`
 
@@ -34,7 +46,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.ch
 
 List.pi enumerates the three replies at every appearing class and filters by admissibleCode. Completeness includes zero classes. No actual origin, source-size bound, or native-word bound is a data argument.
 
-**Definition 1.3 (Entire Predecessor Target).**
+**Definition 1.4 (Entire Predecessor Target).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.computedTarget`
 
@@ -46,7 +58,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.co
 
 The computable mask tests each occurrence parent for the visible alpha sibling and calls NativePredecessorRowRecovery.back. Shared old and new occurrences are repaired individually, including the root and blocked cuts.
 
-**Definition 1.4 (Executable Unit-Call Value).**
+**Definition 1.5 (Executable Unit-Call Value).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.minimaxValue`
 
@@ -58,7 +70,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.mi
 
 Row-count fuel suffices: every nonempty reply fiber of a splitting coordinate is strictly smaller. A constant target costs zero. Otherwise List.argmin selects the actual class coordinate with one plus the maximum child value. Empty reply cells contribute zero.
 
-**Definition 1.5 (Particular Attaining Tree).**
+**Definition 1.6 (Particular Attaining Tree).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.minimaxTree`
 
@@ -70,7 +82,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.mi
 
 The tree follows the same argmin and three reply cells as minimaxValue. Constant tables stop at their common complete target. Empty and impossible branches stop at the supplied fallback.
 
-**Theorem 1.6 (Exact Recurrence and Finite Chart Bound).**
+**Theorem 1.7 (Exact Recurrence and Finite Chart Bound).**
 
 $$\forall C: LiteralRow, (\forall W: \operatorname{List}\left(\operatorname{TableRow}\left(C\right)\right), ((((\operatorname{constantTarget}\left(W\right) = true) \implies (\operatorname{minimaxValue}\left(C, W\right) = 0)) \land ((\operatorname{constantTarget}\left(W\right) = false) \implies (\operatorname{minimaxValue}\left(C, W\right) = \operatorname{scoreMinimum}\left(C, W, \operatorname{minimaxValue}\left(C\right)\right)))) \land (\forall fallback: LiteralRow, ((\forall a: \operatorname{TableRow}\left(C\right), ((\operatorname{member}\left(a, W\right)) \implies (\operatorname{fst}\left(\operatorname{rootRun}\left(\operatorname{rowType}\left(a\right), \operatorname{minimaxTree}\left(C, fallback, W\right)\right)\right) = \operatorname{rowTarget}\left(a\right)))) \land (\operatorname{rootDepth}\left(\operatorname{minimaxTree}\left(C, fallback, W\right)\right) = \operatorname{minimaxValue}\left(C, W\right)))) \land (\forall T: \operatorname{RootTree}\left(C, LiteralRow\right), ((\forall a: \operatorname{TableRow}\left(C\right), ((\operatorname{member}\left(a, W\right)) \implies (\operatorname{fst}\left(\operatorname{rootRun}\left(\operatorname{rowType}\left(a\right), T\right)\right) = \operatorname{rowTarget}\left(a\right)))) \implies (\operatorname{minimaxValue}\left(C, W\right) \leq \operatorname{rootDepth}\left(T\right)))) \land (\operatorname{length}\left(\operatorname{chartList}\left(C\right)\right) \leq \operatorname{pow}\left(3, \operatorname{card}\left(\operatorname{Classes}\left(C\right)\right)\right)) \land (\forall theta: \operatorname{Chart}\left(C\right), (\operatorname{member}\left(theta, \operatorname{chartList}\left(C\right)\right))) \land (\forall theta: (\operatorname{Classes}\left(C\right)) \to (\operatorname{Option}\left(Bool\right)), (\operatorname{computedTarget}\left(C, theta\right) = \operatorname{target}\left(C, theta\right)))))$$
 
@@ -85,6 +97,7 @@ The retained result combines the constant-target or splitting-menu recurrence, a
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.admissibleCode`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.admissibleCode_spec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.chartList`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.computedTarget`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeFiniteRootMinimax.finite_root_minimax`
