@@ -18,13 +18,13 @@ private def cache : Cache :=
   (List.finRange 15).foldl
     (fun cache i => step cache ⟨i.val, by have h := i.isLt; omega⟩ (prefix i))
     initial
-private def partial : Partial (Fin 20) (Fin 4) := fun g =>
+private def partialEvent : Partial (Fin 20) (Fin 4) := fun g =>
   if h : g.val < 15 then some (prefix ⟨g.val, h⟩) else none
 
 set_option trace.profiler true in
 private theorem suffix_accepted :
     check EJMOriginalGlobalDAGData.nodes step lower EJMGlobalScoreSymmetry.dominates
-      scale 6 ⟨55, by decide⟩ cache partial = true := by
+      scale 6 ⟨55, by decide⟩ cache partialEvent = true := by
   decide +kernel
 
 #print axioms suffix_accepted
