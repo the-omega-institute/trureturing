@@ -13,7 +13,7 @@ N_psd: bind-only; consumers=global_success_upper_bound | sum_N: bind-only; consu
 isoSuccess_gram: bind-only; consumers=dicke_attainment,global_success_upper_bound | phase_normSq: bind-only; consumers=fire_normSq | fire_normSq: bind-only; consumers=G_diag
 G_diag: bind-only; consumers=average_gram_overlap | G_phase: bind-only; consumers=G_total,dicke_gram_invariant | G_total: bind-only; consumers=G_total_moment
 phase_euler: bind-only; consumers=phase_sum | phase_sum: bind-only; consumers=phase_sum_normSq | phase_sum_normSq: bind-only; consumers=G_total_moment
-avgMatrix: bind-only; consumers=average_gram_overlap,avgMatrix_diag,avgMatrix_eq_of_invariant,avgMatrix_invariant,avgMatrix_total,dicke_gram,global_success_upper_bound,invariant_constant_offDiagonal,sum_avgN | avgN: bind-only; consumers=avgN_objective,avgN_psd,global_success_upper_bound,sum_avgN | avgN_psd: bind-only; consumers=global_success_upper_bound
+avgMatrix: bind-only; consumers=average_gram_overlap,avgMatrix_diag,avgMatrix_eq_of_invariant,avgMatrix_invariant,avgMatrix_total,dicke_gram,global_success_upper_bound,invariant_constant_offDiagonal,sum_avgN | avgN: bind-only; consumers=avgN_objective,avgN_psd(type),global_success_upper_bound,sum_avgN | avgN_psd: bind-only; consumers=global_success_upper_bound
 sum_avgN: bind-only; consumers=global_success_upper_bound | avgN_objective: bind-only; consumers=global_success_upper_bound | avgMatrix_invariant: bind-only; consumers=invariant_constant_offDiagonal
 perm_pair_exists: bind-only; consumers=invariant_constant_offDiagonal,lCount_pair_independent | invariant_constant_offDiagonal: bind-only; consumers=average_gram_overlap | weight_class_card: bind-only; consumers=counts_partition,dicke_moment,dicke_normalized,pair_count_product
 counts_partition: bind-only; consumers=ratio_formula | weight_le: bind-only; consumers=G_total_moment,moment_bounds | balanced_product_upper: bind-only; consumers=moment_bounds,ratio_minimizer_balanced
@@ -103,7 +103,10 @@ private theorem isoSuccess_gram {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → 
   simp only [isoSuccess, N_diag]
 private theorem phase_normSq (θ : ℝ) (b : Bool) : Complex.normSq ((Complex.exp ((if b then 1 else -1) * (θ : ℂ) * Complex.I))) = 1 := by
   rw [Complex.normSq_eq_norm_sq]
-  cases b <;> simp [Complex.norm_exp, Complex.mul_re, Complex.mul_im]
+  have h := Complex.norm_exp_ofReal_mul_I ((if b then 1 else -1) * θ)
+  push_cast at h
+  simp only [apply_ite Complex.ofReal, Complex.ofReal_one, Complex.ofReal_neg] at h
+  rw [h, one_pow]
 private theorem fire_normSq {n : ℕ} (θ : ℝ) (i : Fin n) (ψ : (Fin n → Bool) → ℂ)     (x : Fin n → Bool) : Complex.normSq (fire θ i ψ x) = Complex.normSq (ψ x) := by
   change Complex.normSq ((Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I)) * ψ x) = _
   rw [Complex.normSq_mul, phase_normSq, one_mul]
@@ -196,10 +199,9 @@ private def avgN {n : ℕ} (B : Fin n → Matrix (Fin n) (Fin n) ℂ)
     (i : Fin n) : Matrix (Fin n) (Fin n) ℂ :=
   Finset.expect Finset.univ (fun σ : Equiv.Perm (Fin n) => (B (σ i)).submatrix σ σ)
 private theorem avgN_psd {n : ℕ} (B : Fin n → Matrix (Fin n) (Fin n) ℂ)     (hB : ∀ i, (B i).PosSemidef) (i : Fin n) : (avgN B i).PosSemidef := by
-  simp only [avgN, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div]
-  apply Matrix.PosSemidef.smul
-  · exact Matrix.posSemidef_sum Finset.univ (fun σ _ => (hB (σ i)).submatrix σ)
-  · positivity
+  exact (Finset.expect_nonneg (s := Finset.univ)
+    (f := fun σ : Equiv.Perm (Fin n) => (B (σ i)).submatrix σ σ)
+    (fun σ _ => ((hB (σ i)).submatrix σ).nonneg)).posSemidef
 private theorem sum_avgN {n : ℕ} (B : Fin n → Matrix (Fin n) (Fin n) ℂ) :     ∑ i, avgN B i = avgMatrix (∑ i, B i) := by
   ext j k
   simp only [avgN, avgMatrix, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div, Matrix.sum_apply, Matrix.smul_apply,
@@ -231,8 +233,8 @@ private theorem perm_pair_exists {α : Type*} [DecidableEq α] (a b c d : α)   
   obtain ⟨σ, hσ⟩ := Equiv.Perm.exists_extending_pair
     (fun x : Bool => if x then b else a)
     (fun x : Bool => if x then d else c)
-    (by intro x y h; cases x <;> cases y <;> simp_all)
-    (by intro x y h; cases x <;> cases y <;> simp_all)
+    (Bool.injective_iff.mpr hab)
+    (Bool.injective_iff.mpr hcd)
   exact ⟨σ, hσ false, hσ true⟩
 private theorem invariant_constant_offDiagonal {n : ℕ} (hn : 2 ≤ n)     (B : Matrix (Fin n) (Fin n) ℂ) (hB : B.IsHermitian) :     ∃ c : ℝ, ∀ i j : Fin n, i ≠ j → avgMatrix B i j = (c : ℂ) := by
   let a : Fin n := ⟨0, by omega⟩
@@ -308,16 +310,13 @@ private theorem different_bits_row {n : ℕ} (x : Fin n → Bool) (i : Fin n) : 
     congr 1
     ext j
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-    cases x j <;> simp
+    exact ne_comm.trans Bool.ne_false_iff
   · simp only [if_true, Nat.cast_id]
     have h := Finset.card_filter_add_card_filter_not
       (s := (Finset.univ : Finset (Fin n))) (fun j => x j = true)
     have he : (Finset.univ.filter (fun j => true ≠ x j)).card =
         (Finset.univ.filter (fun j => ¬ x j = true)).card := by
-      congr 1
-      ext j
-      simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-      cases x j <;> simp
+      simp only [ne_comm]
     rw [he]
     simp only [Finset.card_univ, Fintype.card_fin] at h
     omega
@@ -410,7 +409,8 @@ private theorem rank_certificate {h : Type*} [Fintype h] [DecidableEq h]     (H 
   rw [Matrix.sub_mulVec, Matrix.smul_mulVec, dotProduct_sub, he]
   have hsmul : star z ⬝ᵥ ((H i i).re • (H *ᵥ z)) =
       ((H i i).re : ℂ) * (star z ⬝ᵥ (H *ᵥ z)) := by
-    simp [dotProduct, Finset.mul_sum, Complex.real_smul, mul_assoc, mul_left_comm]
+    simpa only [Complex.real_smul] using
+      dotProduct_smul (H i i).re (star z) (H *ᵥ z)
   rw [hsmul]
   apply Complex.nonneg_iff.mpr
   constructor
@@ -588,8 +588,8 @@ private theorem avgMatrix_total {n : ℕ} (B : Matrix (Fin n) (Fin n) ℂ) :    
   push_cast
   field_simp
 private theorem avgMatrix_diag {n : ℕ} (B : Matrix (Fin n) (Fin n) ℂ)     (hd : ∀ i, B i i = 1) (i : Fin n) : avgMatrix B i i = 1 := by
-  simp [avgMatrix, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div, Matrix.smul_apply, Matrix.sum_apply, Matrix.submatrix_apply, hd,
-    Complex.real_smul]
+  simpa only [avgMatrix, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div, Matrix.smul_apply, Matrix.sum_apply, Matrix.submatrix_apply, hd] using
+    (Fintype.expect_const (ι := Equiv.Perm (Fin n)) (1 : ℂ))
 private theorem constant_overlap_total (n : ℕ) (c : ℝ) :     (∑ i : Fin n, ∑ j : Fin n,       ((1-c) • (1 : Matrix (Fin n) (Fin n) ℂ) + c • (Matrix.of (fun _ _ : Fin n => (1 : ℂ)))) i j).re =       (n : ℝ) + (n : ℝ)*(n-1)*c := by
   simp [Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, Complex.real_smul,
     Finset.sum_add_distrib, ← Complex.ofReal_sum]
@@ -848,8 +848,8 @@ private theorem global_success_upper_bound (n : ℕ) (hn : 3 ≤ n) (θ : ℝ)  
     _ ≤ _ := hsq
 private theorem avgMatrix_eq_of_invariant {n : ℕ} (B : Matrix (Fin n) (Fin n) ℂ)     (hB : ∀ σ : Equiv.Perm (Fin n), ∀ i j, B (σ i) (σ j) = B i j) : avgMatrix B = B := by
   ext i j
-  simp [avgMatrix, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div, Matrix.smul_apply, Matrix.sum_apply, Matrix.submatrix_apply,
-    hB, Complex.real_smul]
+  simpa only [avgMatrix, Finset.expect, Finset.card_univ, ← NNRat.cast_smul_eq_nnqsmul ℝ, NNRat.cast_inv, NNRat.cast_natCast, one_div, Matrix.smul_apply, Matrix.sum_apply, Matrix.submatrix_apply, hB] using
+    (Fintype.expect_const (ι := Equiv.Perm (Fin n)) (B i j))
 private theorem dicke_moment {n : ℕ} (l : ℕ) (hl : l ≤ n) (φ : (Fin n → Bool) → ℂ)     (hφ : ∀ x, Complex.normSq (φ x) = if (Finset.univ.filter (fun j => x j = true)).card = l then 1/(n.choose l : ℝ) else 0) :     moment φ = ((l*(n-l) : ℕ) : ℝ) := by
   have hC : (n.choose l : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt (Nat.choose_pos hl)
   unfold moment
@@ -891,8 +891,7 @@ private theorem H_mul_Hinv (n : ℕ) (hn : 1 ≤ n) (c : ℝ) (hc : 0 ≤ c ∧ 
   exact mul_eq_one_comm.mp (Hinv_mul_H n hn c hc)
 private theorem E_psd {n : ℕ} (i : Fin n) : ((Matrix.diagonal (Pi.single i (1 : ℂ)))).PosSemidef := by
   apply Matrix.posSemidef_diagonal_iff.mpr
-  intro j
-  by_cases hj : j = i <;> simp [Pi.single_apply, hj]
+  exact Pi.single_nonneg.mpr zero_le_one
 private theorem sum_E (n : ℕ) : ∑ i : Fin n, (Matrix.diagonal (Pi.single i (1 : ℂ))) = 1 := by
   simpa only [Matrix.diagonal_single] using (Matrix.sum_single_one (m := Fin n) (α := ℂ))
 private theorem sqrt_povm_exists {h : Type*} [Fintype h] [DecidableEq h]     (n : ℕ) (hn : 0 < n) (A : Matrix h (Fin n) ℂ) (H R : Matrix (Fin n) (Fin n) ℂ)     (hH : H.IsHermitian) (hR : R.IsHermitian) (hRH : R*H=1) (hHR : H*R=1)     (hG : Aᴴ*A=H*H) :     ∃ M : LocalPOVM h (Fin n), ∀ i, Aᴴ*M.effect i*A=H*(Matrix.diagonal (Pi.single i (1 : ℂ)))*H := by
