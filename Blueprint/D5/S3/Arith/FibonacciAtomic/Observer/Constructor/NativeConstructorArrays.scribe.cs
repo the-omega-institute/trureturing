@@ -1,7 +1,7 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.Constructor;
 internal sealed class NativeConstructorArraysDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -10,7 +10,7 @@ internal sealed class NativeConstructorArraysDocument : IScribeDocumentDefinitio
             Paragraph(Text("Write alpha = Source.of true, beta = Source.of false and C0 = Source.mul alpha alpha. Canonical 0 t means t = alpha. Canonical (k+1) accepts either labelled leaf, and Canonical (k+1) (Source.mul l r) means Canonical k l and Canonical k r. Hence S d = {t : Source | Canonical d t} has S1 = {alpha,beta,C0} and S(k+1) = {alpha,beta} disjoint-union {Source.mul l r | l,r in S k} for positive k. The depth-zero auxiliary carrier fixes the two children of each cutoff branch to alpha; it is not an extra represented coordinate.")),
             Paragraph(Text("Address is a Boolean word, with false = L and true = R. W d = {w : Address | w.length < d}, including the empty root word when d is positive. For z : W d -> Reply, extend z w is z w inside this menu and absent outside it. Edges d z a means that Allowed (z (a ++ w)) (z (a ++ w ++ [b])) holds for every Boolean b and every w with w.length + 1 < d. H d = {z : W d -> Reply | extend z [] is not absent and Edges d (extend z) []}. Thus H is defined by the root condition and six local pairs, independently of any matching tree. Reply consists exactly of alpha, beta, branch and absent.")),
             Describe.Lean(DescribeId.Create("native-constructor-legal-realization"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.legal_realization"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.legal_realization"),
                 H("Literal realization of independently legal arrays"),
                 StatementSource.FromAuthor(Disp(All("d", V("Nat"), All("z", Arr(V("Address"), V("Reply")), All("a", V("Address"),
                     Imp(Call("Edges", V("d"), V("z"), V("a")),
@@ -23,7 +23,7 @@ internal sealed class NativeConstructorArraysDocument : IScribeDocumentDefinitio
                     Paragraph(Text("Reconstruction uses NativeWholeRowService.decodePattern and NativeDepthPatterns.fill with a constant alpha frontier. The proof derives absence below an early leaf directly from the six pairs and recursively realizes both subarrays below a branch. It proves the literal replies for every represented word, with no actual-matching-tree hypothesis and no realization choice.")),
                     Paragraph(Text("This result supplies the array-to-tree direction. The complete representation below consumes this independent reconstruction in both inverse laws. The six-pair induction supplies the independent native reconstruction; finite product and coordinate arithmetic reuse that correspondence."))), DescribeRole.Theorem)
             ,Describe.Lean(DescribeId.Create("native-faithful-constructor-representation"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.faithful_constructor_representation"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.faithful_constructor_representation"),
                 H("Faithful constructor representation on the whole native carrier"),
                 WholeStatement(),
                 AssessedProvenance.FromRepo(), Blocks(

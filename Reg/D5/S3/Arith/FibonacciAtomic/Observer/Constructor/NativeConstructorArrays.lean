@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.NativeConstructorArrays
+import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeConstructorArrays
 import Reg.Support.SingleDependentReadout
 
 set_option autoImplicit false
@@ -118,7 +118,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeConstructorArrays
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeConstructorArrays
     definition := none
     coordinates := #[0,2]
     readouts := #[
@@ -202,7 +202,7 @@ def wholeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeConstructorArrays
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeConstructorArrays
     definition := none
     coordinates := #[0,6]
     readouts := #[{

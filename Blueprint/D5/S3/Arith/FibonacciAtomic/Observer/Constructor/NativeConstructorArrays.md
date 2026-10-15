@@ -14,7 +14,7 @@ Address is a Boolean word, with false = L and true = R. W d = {w : Address | w.l
 
 $$\forall d: Nat, (\forall z: Address \to Reply, (\forall a: Address, ((\operatorname{Edges}\left(d, z, a\right)) \implies (((0 < d) \implies (\operatorname{z}\left(a\right) \neq absent)) \implies ((\operatorname{Canonical}\left(d, \operatorname{realize}\left(d, z, a\right)\right)) \land (\forall w: Address, ((\operatorname{length}\left(w\right) < d) \implies (\operatorname{readout}\left(w, \operatorname{realize}\left(d, z, a\right)\right) = \operatorname{z}\left(\operatorname{append}\left(a, w\right)\right)))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.legal_realization` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.legal_realization` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,7 +28,7 @@ This result supplies the array-to-tree direction. The complete representation be
 
 $$\forall d, n: Nat, (\forall hd: 0 < d, (\forall hn: 0 < n, ((\forall t: Source, ((\operatorname{Canonical}\left(1, t\right)) \iff ((t = \operatorname{of}\left(true\right)) \lor ((t = \operatorname{of}\left(false\right)) \lor (t = \operatorname{mul}\left(\operatorname{of}\left(true\right), \operatorname{of}\left(true\right)\right)))))) \land ((\forall k: Nat, (\forall l, r: Source, ((\operatorname{Canonical}\left(k + 1, \operatorname{mul}\left(l, r\right)\right)) \iff ((\operatorname{Canonical}\left(k, l\right)) \land (\operatorname{Canonical}\left(k, r\right)))))) \land ((\operatorname{Bijective}\left(\operatorname{scalarReadout}\left(d, hd\right)\right)) \land ((\operatorname{Bijective}\left(\operatorname{productEquiv}\left(d, n, hd\right)\right)) \land ((\forall x: \operatorname{Fin}\left(n\right) \to \operatorname{S}\left(d\right), (\forall i: \operatorname{Fin}\left(n\right), (\forall w: \operatorname{W}\left(d\right), (\operatorname{val}\left(\operatorname{productEquiv}\left(d, n, hd, x, i\right)\right)\left(w\right) = \operatorname{readout}\left(\operatorname{val}\left(w\right), \operatorname{val}\left(\operatorname{x}\left(i\right)\right)\right))))) \land ((\operatorname{card}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(n\right), \operatorname{W}\left(d\right)\right)\right) = n \times (2^{d} - 1)) \land (\operatorname{card}\left(Reply\right) = 4)))))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.faithful_constructor_representation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.faithful_constructor_representation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,6 +46,6 @@ This is a native representation theorem. It adds no preparation or reader port, 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.faithful_constructor_representation`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/NativeConstructorArrays.legal_realization`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan](NativeWholeRowPlan.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.faithful_constructor_representation`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.legal_realization`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan](../NativeWholeRowPlan.md)
