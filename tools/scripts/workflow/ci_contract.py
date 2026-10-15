@@ -97,19 +97,42 @@ def changed_paths(root, base, head=None):
         for _ in range(2 if status[0] in "RC" else 1):
             paths.append(fields.pop(0).decode("utf-8"))
     if head is None:
-        paths += [p.decode("utf-8") for p in git(root, "ls-files", "--others", "--exclude-standard", "-z").split(b"\0") if p]
+        # The candidate consists of cached paths (including tracked paths that
+        # are missing from the worktree) and ordinary, nonignored untracked
+        # paths.  In particular, an ignored file left on disk after a staged
+        # removal is not part of that candidate merely because it is physical.
+        candidate_list = [
+            p.decode("utf-8") for p in git(
+                root, "ls-files", "--cached", "--others", "--exclude-standard", "-z"
+            ).split(b"\0") if p
+        ]
+        candidate_paths = set(candidate_list)
+        untracked_list = [
+            p.decode("utf-8") for p in git(
+                root, "ls-files", "--others", "--exclude-standard", "-z"
+            ).split(b"\0") if p
+        ]
+        # Tracked paths are already covered by the base-to-worktree diff;
+        # inspect only ordinary untracked paths as additional candidates.
+        paths += [path for path in untracked_list if path not in paths]
         # The comparison base can contain paths absent from the real index.
         # Compare their actual entries too, without staging or writing objects.
-        wanted, baseline = set(paths), {}
+        baseline = {}
         for entry in git(root, "ls-tree", "-r", "-z", base).split(b"\0"):
             if not entry:
                 continue
             header, raw = entry.split(b"\t", 1)
             path = raw.decode("utf-8")
-            if path in wanted:
-                mode, _, identity = header.split()
-                baseline[path] = (mode, bytes.fromhex(identity.decode("ascii")))
-        paths = [path for path in paths if candidate_entry(root / path) != baseline.get(path)]
+            mode, _, identity = header.split()
+            baseline[path] = (mode, bytes.fromhex(identity.decode("ascii")))
+        # Include baseline paths missing from the candidate, such as a tracked
+        # file removed from the index while its ignored bytes remain on disk.
+        paths += [path for path in baseline if path not in candidate_paths and path not in paths]
+        paths = [
+            path for path in paths
+            if (candidate_entry(root / path) if path in candidate_paths else None)
+            != baseline.get(path)
+        ]
     return list(dict.fromkeys(paths))
 
 

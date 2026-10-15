@@ -136,6 +136,28 @@ class ContractTests(unittest.TestCase):
         plan = self.parity()
         self.assertFalse(plan["hits"]["tests-worktree-contract"])
 
+    def test_staged_removal_of_ignored_tracked_file_matches_committed_candidate(self):
+        retired = "tools/retired.py"
+        self.put(retired, b"tracked before retirement\n")
+        self.put(".gitignore", b"tools/retired.py\n")
+        self.git("add", ".gitignore")
+        self.git("add", "-f", retired)
+        self.git("commit", "-qm", "track retired file")
+        self.base = self.git("rev-parse", "HEAD").strip()
+
+        self.git("rm", "--cached", "--", retired)
+        paths = contract.changed_paths(self.root, self.base)
+        self.assertEqual(paths, [retired])
+
+        data, _ = contract.load(self.root)
+        local = contract.selection(data, paths, "pull-request")
+        self.git("commit", "-qm", "retire ignored file")
+        candidate = contract.candidate_identity(self.root)
+        self.assertEqual(self.git("rev-parse", "HEAD^{tree}").strip(), candidate)
+        hosted = contract.changed_paths(self.root, self.base, "HEAD")
+        self.assertEqual(hosted, paths)
+        self.assertEqual(contract.selection(data, hosted, "pull-request"), local)
+
     @unittest.skipUnless(hasattr(os, "symlink"), "symlinks required")
     def test_unindexed_base_files_keep_mode_and_symlink_differences(self):
         original = self.base
