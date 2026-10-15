@@ -875,7 +875,7 @@ theorem sugawaraMode_zero_single (D : LatticeData)
   rw [sugawaraMode_single_sector, he]
 
 
-theorem oscillatorEuler_monomial (D : LatticeData) (d : Index D →₀ ℕ) (c : ℂ) :
+private theorem oscillatorEuler_monomial (D : LatticeData) (d : Index D →₀ ℕ) (c : ℂ) :
     oscillatorEuler D (monomial d c) =
       ((Finsupp.weight (fun x : Index D => x.2+1) d : ℕ) : ℂ) • monomial d c := by
   classical

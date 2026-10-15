@@ -4,30 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual charged first-source-oscillator correction and descendant coefficient.
-   proof_shape: Corr_charged_first_oscillator: content
-   admission_basis: escape-witness
-   escape_witness: The literal original charged first-descendant is expanded through
-   the released Corr/Ytw constructor. Its charged correction is not a
-   consequence of the zero-charge Corr_X_zero specialization.
-   Literature status: classical twisted lattice construction; zero novelty. -/
+   digest: Original ordinary current and native half-current interfaces. -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockAllStateField
 
 set_option autoImplicit false
-set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.VertexAlgebra.LatticeHalfFockFirstDescendant
 
-open LatticeGeneratingFieldLocality
-open MvPolynomial
-open LatticeHalfFockChargedTensorCoefficients
-open LatticeHalfFockFiniteCorrection
-open LatticeHalfFockFockNormalField
-open LatticeHalfFockAllStateField
-open LatticeHalfFock
-open scoped BigOperators TensorProduct
+open LatticeGeneratingFieldLocality LatticeHalfFockChargedTensorCoefficients LatticeHalfFock
+open MvPolynomial LatticeHalfFockFiniteCorrection LatticeHalfFockFockNormalField LatticeHalfFockAllStateField
+open scoped BigOperators VertexOperator TensorProduct
 
 noncomputable section
 
@@ -126,9 +114,6 @@ theorem originalFirstDescendant_coefficient (D : LatticeData) (hu : IsUnit D.G.d
   congr 1
   ring
 
+
 end
 end D5.S3.VertexAlgebra.LatticeHalfFockFirstDescendant
-
-#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFirstDescendant.Corr_charged_first_oscillator
-#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFirstDescendant.charged_first_descendant_field
-#print axioms D5.S3.VertexAlgebra.LatticeHalfFockFirstDescendant.originalFirstDescendant_coefficient

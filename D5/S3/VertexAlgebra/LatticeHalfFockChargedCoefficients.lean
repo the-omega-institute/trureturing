@@ -56,7 +56,7 @@ private theorem series_constant (D : LatticeData) (charge : Charge D) :
     PowerSeries.constantCoeff (halfCreationSeries D charge) = 0 := by
   simp [halfCreationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
 
-private theorem exponential_derivative (D : LatticeData) (charge : Charge D) :
+theorem exponential_derivative (D : LatticeData) (charge : Charge D) :
     PowerSeries.derivative (Oscillator D) (halfCreationExponential D charge) =
       halfCreationExponential D charge *
         PowerSeries.derivative (Oscillator D) (halfCreationSeries D charge) := by
@@ -74,7 +74,7 @@ theorem exponential_constant (D : LatticeData) (charge : Charge D) :
     rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, series_constant]
     simp [hdegree]
 
-private theorem series_derivative_coeff (D : LatticeData) (charge : Charge D) (degree : ℕ) :
+theorem series_derivative_coeff (D : LatticeData) (charge : Charge D) (degree : ℕ) :
     PowerSeries.coeff degree (PowerSeries.derivative (Oscillator D)
       (halfCreationSeries D charge)) =
       if degree % 2 = 0 then
@@ -536,6 +536,114 @@ theorem half_creation_coefficient_transport (D : LatticeData) (left right : Char
         (polynomial_bound.trans_lt (lt_of_not_ge hbound))]
       have shifted_negative : degree - (translatedDegree : ℤ) < 0 := by omega
       simp [halfCreationCoeff, shifted_negative]
+
+end
+
+noncomputable section
+
+private theorem half_annihilation_logarithm (D : LatticeData) (colour : Fin D.rank)
+    (mode : ℕ) (charge : Charge D) :
+    ActualSeriesDerivation.seriesDerivation D
+        (LatticeActualAnnihilation.annihilationDerivation D colour mode)
+        (halfCreationSeries D charge) =
+      PowerSeries.C (((2 / (2 * mode + 1 : ℂ)) *
+        (bilinear D (unitCharge D colour) charge : ℂ)) • (1 : Oscillator D)) *
+          PowerSeries.X ^ (2 * mode + 1) := by
+  apply PowerSeries.ext
+  intro degree
+  rw [ActualSeriesDerivation.series_coeff]
+  simp only [halfCreationSeries, PowerSeries.coeff_mk,
+    PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow]
+  by_cases odd : degree % 2 = 1
+  · rw [if_pos odd, Derivation.map_smul,
+      LatticeActualAnnihilation.annihilation_linear_creation]
+    by_cases same : mode = degree / 2
+    · have index : degree = 2 * mode + 1 := by omega
+      subst degree
+      rw [if_pos (by omega : mode = (2 * mode + 1) / 2)]
+      simp only [if_pos rfl, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat,
+        Nat.cast_one, ite_true, smul_smul, mul_one]
+    · have index : degree ≠ 2 * mode + 1 := by omega
+      simp [same, index, Ne.symm index]
+  · have index : degree ≠ 2 * mode + 1 := by omega
+    simp [odd, index, Ne.symm index]
+
+theorem half_annihilation_creation (D : LatticeData) (colour : Fin D.rank)
+    (mode : ℕ) (charge : Charge D) (degree : ℤ) :
+    LatticeActualAnnihilation.annihilate D colour mode (halfCreationCoeff D charge degree) =
+      ((2 / (2 * mode + 1 : ℂ)) * (bilinear D (unitCharge D colour) charge : ℂ)) •
+        halfCreationCoeff D charge (degree - (2 * mode + 1 : ℕ)) := by
+  have natural_law (degree : ℕ) :
+      LatticeActualAnnihilation.annihilate D colour mode
+          (PowerSeries.coeff degree (halfCreationExponential D charge)) =
+        if 2 * mode + 1 ≤ degree then
+          ((2 / (2 * mode + 1 : ℂ)) * (bilinear D (unitCharge D colour) charge : ℂ)) •
+            PowerSeries.coeff (degree - (2 * mode + 1)) (halfCreationExponential D charge)
+        else 0 := by
+    have chain := congrArg (PowerSeries.coeff degree)
+      (ActualSeriesDerivation.actual_exponential_derivation_series D
+        (LatticeActualAnnihilation.annihilationDerivation D colour mode)
+        (halfCreationSeries D charge) (series_constant D charge))
+    change PowerSeries.coeff degree (ActualSeriesDerivation.seriesDerivation D
+      (LatticeActualAnnihilation.annihilationDerivation D colour mode)
+        (halfCreationExponential D charge)) = _ at chain
+    rw [ActualSeriesDerivation.series_coeff, LatticeActualAnnihilation.annihilation_apply,
+      half_annihilation_logarithm, ← mul_assoc, PowerSeries.coeff_mul_X_pow'] at chain
+    rw [chain]
+    split_ifs
+    · rw [PowerSeries.coeff_mul_C, mul_smul_comm, mul_one]
+      rfl
+    · rfl
+  by_cases negative : degree < 0
+  · rw [halfCreationCoeff, if_pos negative, map_zero, halfCreationCoeff,
+      if_pos (by omega), smul_zero]
+  · rw [halfCreationCoeff, if_neg negative, natural_law]
+    by_cases shifted : 2 * mode + 1 ≤ degree.toNat
+    · rw [if_pos shifted, halfCreationCoeff, if_neg (by omega),
+        show (degree - (2 * mode + 1 : ℕ)).toNat = degree.toNat - (2 * mode + 1) by omega]
+    · rw [if_neg shifted, halfCreationCoeff, if_pos (by omega), smul_zero]
+
+theorem half_translated_derivation (D : LatticeData) (colour : Fin D.rank)
+    (mode : ℕ) (charge : Charge D) (polynomial : Oscillator D) :
+    halfTranslatedPolynomial D charge
+        (LatticeActualAnnihilation.annihilate D colour mode polynomial) =
+      LatticeActualAnnihilation.polynomialDerivation D colour mode
+        (halfTranslatedPolynomial D charge polynomial) := by
+  open LatticeActualAnnihilation in
+  have variable_law (index : Index D) :
+      halfTranslatedPolynomial D charge (annihilate D colour mode (X index)) =
+        polynomialDerivation D colour mode (halfTranslatedPolynomial D charge (X index)) := by
+    rcases index with ⟨other, level⟩
+    have constant_law (scalar : ℂ) : annihilate D colour mode (scalar • (1 : Oscillator D)) = 0 := by
+      rw [← annihilation_apply, Derivation.map_smul, Derivation.map_one_eq_zero, smul_zero]
+    have translated_constant (scalar : ℂ) :
+        halfTranslatedPolynomial D charge (scalar • (1 : Oscillator D)) =
+          Polynomial.C (scalar • (1 : Oscillator D)) := by
+      simp [halfTranslatedPolynomial, Algebra.smul_def]
+    simp only [halfTranslatedPolynomial, MvPolynomial.eval₂AlgHom_X,
+      halfTranslationVariable, map_sub, Derivation.leibniz, polynomialDerivation_C,
+      constant_law, polynomialDerivation_X, Derivation.leibniz_pow, smul_zero,
+      zero_smul, add_zero, zero_add, map_zero, sub_zero]
+    change halfTranslatedPolynomial D charge (annihilate D colour mode (X (other, level))) = _
+    rw [annihilate_X]
+    by_cases same : mode = level
+    · simp only [if_pos same]
+      exact translated_constant _
+    · simp [same, halfTranslatedPolynomial]
+  induction polynomial using MvPolynomial.induction_on with
+  | C scalar =>
+    simp [halfTranslatedPolynomial, LatticeActualAnnihilation.polynomialDerivation_C,
+      LatticeActualAnnihilation.annihilate, LatticeSugawaraCurrents.weightedPartial]
+  | add left right hleft hright =>
+    simp only [map_add, halfTranslatedPolynomial, map_add] at hleft hright ⊢
+    rw [hleft, hright]
+  | mul_X polynomial index previous =>
+    rw [LatticeActualAnnihilation.annihilate_mul]
+    simp only [halfTranslatedPolynomial, map_add, map_mul] at previous variable_law ⊢
+    rw [previous, variable_law,
+      (LatticeActualAnnihilation.polynomialDerivation D colour mode).leibniz]
+    simp only [smul_eq_mul]
+    ring
 
 end
 

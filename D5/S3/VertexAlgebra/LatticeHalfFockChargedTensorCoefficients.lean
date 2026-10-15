@@ -204,7 +204,7 @@ private theorem creation_zero (D : LatticeData) (charge : Charge D) :
     rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, constant]
     simp [hdegree]
 
-private theorem charged_vacuum_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
+theorem charged_vacuum_coefficient (D : LatticeData) (hu : IsUnit D.G.det)
     (charge : Charge D) (exponent : ℤ) (vector : ActualGround D hu) :
     chargedCoefficient D hu charge exponent ((1 : Oscillator D) ⊗ₜ[ℂ] vector) =
       chargeScalar D charge • (halfCreationCoeff D charge (exponent + chargeNorm D charge) ⊗ₜ[ℂ]
@@ -249,4 +249,215 @@ theorem charged_ground_leading (D : LatticeData) (hu : IsUnit D.G.det)
   exact inverse.symm
 
 end
+noncomputable section
+
+private def nativeCoefficientMap (D : LatticeData) (charge : Charge D) (exponent : ℤ) :
+    Polynomial (Oscillator D) →ₗ[Oscillator D] Oscillator D :=
+  Polynomial.lsum fun degree => LinearMap.mulRight (Oscillator D)
+    (halfCreationCoeff D charge (exponent + chargeNorm D charge + degree))
+
+private theorem nativeCoefficientMap_monomial (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (degree : ℕ) (coefficient : Oscillator D) :
+    nativeCoefficientMap D charge exponent (Polynomial.monomial degree coefficient) =
+      coefficient * halfCreationCoeff D charge (exponent + chargeNorm D charge + degree) := by
+  simp [nativeCoefficientMap, Polynomial.lsum_apply, LinearMap.mulRight_apply]
+
+private theorem oscillatorCoefficient_as_sum (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (polynomial : Oscillator D) :
+    oscillatorCoefficient D charge exponent polynomial =
+      nativeCoefficientMap D charge exponent (halfTranslatedPolynomial D charge polynomial) := by
+  change (∑ᶠ degree : ℕ, oscillatorTerm D charge exponent polynomial degree) = _
+  rw [finsum_eq_sum_of_support_subset _ (term_support D charge exponent polynomial)]
+  rfl
+
+private theorem nativeCoefficientMap_C_mul (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (coefficient : Oscillator D) (polynomial : Polynomial (Oscillator D)) :
+    nativeCoefficientMap D charge exponent (Polynomial.C coefficient * polynomial) =
+      coefficient * nativeCoefficientMap D charge exponent polynomial := by
+  rw [← Polynomial.smul_eq_C_mul, map_smul]
+  rfl
+
+private theorem nativeCoefficientMap_on_support (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (polynomial : Polynomial (Oscillator D)) (support : Finset ℕ)
+    (contained : polynomial.support ⊆ support) :
+    nativeCoefficientMap D charge exponent polynomial =
+      ∑ degree ∈ support, polynomial.coeff degree *
+        halfCreationCoeff D charge (exponent + chargeNorm D charge + degree) := by
+  change polynomial.sum (fun degree coefficient => coefficient *
+    halfCreationCoeff D charge (exponent + chargeNorm D charge + degree)) = _
+  exact Polynomial.sum_eq_of_subset _ (by intro degree; simp) contained
+
+private theorem nativeCoefficientMap_X_pow_mul (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (weight : ℕ) (polynomial : Polynomial (Oscillator D)) :
+    nativeCoefficientMap D charge exponent (Polynomial.X ^ weight * polynomial) =
+      nativeCoefficientMap D charge (exponent + weight) polynomial := by
+  classical
+  have contained : (Polynomial.X ^ weight * polynomial).support ⊆
+      polynomial.support.image (fun degree => weight + degree) := by
+    intro degree nonzero
+    have coefficient := Polynomial.mem_support_iff.mp nonzero
+    rw [Polynomial.coeff_X_pow_mul'] at coefficient
+    split_ifs at coefficient with lower
+    · exact Finset.mem_image.mpr ⟨degree - weight,
+        Polynomial.mem_support_iff.mpr coefficient, by omega⟩
+    · exact (coefficient rfl).elim
+  rw [nativeCoefficientMap_on_support D charge exponent _ _ contained,
+    Finset.sum_image, nativeCoefficientMap_on_support D charge (exponent + weight)
+      polynomial polynomial.support (by rfl)]
+  · apply Finset.sum_congr rfl
+    intro degree hdegree
+    rw [show weight + degree = degree + weight by omega, Polynomial.coeff_X_pow_mul]
+    congr 2
+    push_cast
+    ring
+  · intro left hleft right hright same
+    change weight + left = weight + right at same
+    omega
+
+private theorem oscillatorCoefficient_X_mul (D : LatticeData) (charge : Charge D)
+    (exponent : ℤ) (index : Index D) (polynomial : Oscillator D) :
+    oscillatorCoefficient D charge exponent (MvPolynomial.X index * polynomial) =
+      MvPolynomial.X index * oscillatorCoefficient D charge exponent polynomial -
+        (bilinear D charge (unitCharge D index.1) : ℂ) •
+          oscillatorCoefficient D charge (exponent + omega D index) polynomial := by
+  have translation : halfTranslatedPolynomial D charge (MvPolynomial.X index * polynomial) =
+      Polynomial.C (MvPolynomial.X index : Oscillator D) *
+        halfTranslatedPolynomial D charge polynomial -
+      Polynomial.C ((bilinear D charge (unitCharge D index.1) : ℂ) • (1 : Oscillator D)) *
+        (Polynomial.X ^ omega D index * halfTranslatedPolynomial D charge polynomial) := by
+    simp only [halfTranslatedPolynomial, map_mul, MvPolynomial.eval₂AlgHom_X,
+      halfTranslationVariable]
+    ring
+  let left := Polynomial.C (MvPolynomial.X index : Oscillator D) *
+    halfTranslatedPolynomial D charge polynomial
+  let right := Polynomial.C ((bilinear D charge (unitCharge D index.1) : ℂ) •
+    (1 : Oscillator D)) *
+    (Polynomial.X ^ omega D index * halfTranslatedPolynomial D charge polynomial)
+  have difference : nativeCoefficientMap D charge exponent (left - right) =
+      nativeCoefficientMap D charge exponent left - nativeCoefficientMap D charge exponent right := by
+    classical
+    have contained : (left - right).support ⊆ left.support ∪ right.support := by
+      intro degree hdegree
+      by_contra outside
+      have left_zero : left.coeff degree = 0 := by
+        by_contra nonzero
+        exact outside (Finset.mem_union_left _ (Polynomial.mem_support_iff.mpr nonzero))
+      have right_zero : right.coeff degree = 0 := by
+        by_contra nonzero
+        exact outside (Finset.mem_union_right _ (Polynomial.mem_support_iff.mpr nonzero))
+      have nonzero := Polynomial.mem_support_iff.mp hdegree
+      rw [Polynomial.coeff_sub, left_zero, right_zero, sub_self] at nonzero
+      exact nonzero rfl
+    rw [nativeCoefficientMap_on_support D charge exponent (left - right)
+      (left.support ∪ right.support) contained]
+    simp only [Polynomial.coeff_sub, sub_mul, Finset.sum_sub_distrib]
+    rw [← nativeCoefficientMap_on_support D charge exponent left _ Finset.subset_union_left,
+      ← nativeCoefficientMap_on_support D charge exponent right _ Finset.subset_union_right]
+  rw [oscillatorCoefficient_as_sum, translation, difference,
+    nativeCoefficientMap_C_mul, nativeCoefficientMap_C_mul,
+    nativeCoefficientMap_X_pow_mul, ← oscillatorCoefficient_as_sum,
+    ← oscillatorCoefficient_as_sum, smul_mul_assoc, one_mul]
+
+private theorem polynomialDerivation_coeff (D : LatticeData) (colour : Fin D.rank)
+    (mode degree : ℕ) (polynomial : Polynomial (Oscillator D)) :
+    (LatticeActualAnnihilation.polynomialDerivation D colour mode polynomial).coeff degree =
+      LatticeActualAnnihilation.annihilate D colour mode (polynomial.coeff degree) := by
+  change LatticeActualAnnihilation.annihilationDerivation D colour mode
+    (polynomial.coeff degree) = _
+  rw [LatticeActualAnnihilation.annihilation_apply]
+
+private theorem nativeCoefficientMap_annihilation (D : LatticeData) (colour : Fin D.rank)
+    (mode : ℕ) (charge : Charge D) (exponent : ℤ) (polynomial : Polynomial (Oscillator D)) :
+    LatticeActualAnnihilation.annihilate D colour mode
+        (nativeCoefficientMap D charge exponent polynomial) =
+      nativeCoefficientMap D charge exponent
+          (LatticeActualAnnihilation.polynomialDerivation D colour mode polynomial) +
+        ((2 / (2 * mode + 1 : ℂ)) * (bilinear D (unitCharge D colour) charge : ℂ)) •
+          nativeCoefficientMap D charge (exponent - (2 * mode + 1 : ℕ)) polynomial := by
+  classical
+  have contained : (LatticeActualAnnihilation.polynomialDerivation D colour mode polynomial).support ⊆
+      polynomial.support := by
+    intro degree hdegree
+    apply Polynomial.mem_support_iff.mpr
+    intro zero
+    have nonzero := Polynomial.mem_support_iff.mp hdegree
+    rw [polynomialDerivation_coeff, zero, map_zero] at nonzero
+    exact nonzero rfl
+  rw [nativeCoefficientMap_on_support D charge exponent polynomial _ (by rfl), map_sum,
+    nativeCoefficientMap_on_support D charge exponent _ polynomial.support contained,
+    nativeCoefficientMap_on_support D charge (exponent - (2 * mode + 1 : ℕ)) polynomial _ (by rfl),
+    Finset.smul_sum, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro degree hdegree
+  rw [LatticeActualAnnihilation.annihilate_mul, half_annihilation_creation,
+    polynomialDerivation_coeff, mul_smul_comm]
+  rw [show exponent + chargeNorm D charge + (degree : ℤ) - (2 * mode + 1 : ℕ) =
+    (exponent - (2 * mode + 1 : ℕ)) + chargeNorm D charge + degree by omega]
+
+private theorem oscillator_annihilation (D : LatticeData) (colour : Fin D.rank)
+    (mode : ℕ) (charge : Charge D) (exponent : ℤ) (polynomial : Oscillator D) :
+    LatticeActualAnnihilation.annihilate D colour mode
+        (oscillatorCoefficient D charge exponent polynomial) =
+      oscillatorCoefficient D charge exponent
+          (LatticeActualAnnihilation.annihilate D colour mode polynomial) +
+        ((2 / (2 * mode + 1 : ℂ)) * (bilinear D (unitCharge D colour) charge : ℂ)) •
+          oscillatorCoefficient D charge (exponent - (2 * mode + 1 : ℕ)) polynomial := by
+  simp only [oscillatorCoefficient_as_sum, half_translated_derivation]
+  exact nativeCoefficientMap_annihilation D colour mode charge exponent _
+
+private theorem oscillator_current_ward (D : LatticeData) (colour : Fin D.rank)
+    (charge : Charge D) (mode exponent : ℤ) (polynomial : Oscillator D) :
+    LatticeHalfFock.current D colour mode (oscillatorCoefficient D charge exponent polynomial) -
+      oscillatorCoefficient D charge exponent (LatticeHalfFock.current D colour mode polynomial) =
+        (bilinear D (unitCharge D colour) charge : ℂ) •
+          oscillatorCoefficient D charge (exponent - (2 * mode + 1)) polynomial := by
+  by_cases negative : mode < 0
+  · simp only [LatticeHalfFock.current, if_pos negative, LinearMap.mulLeft_apply,
+      oscillatorCoefficient_X_mul, LatticeFiniteNegativeGeneration.bilinear_symmetric D charge]
+    have shifted : exponent + (omega D (colour, (-mode - 1).toNat) : ℤ) =
+        exponent - (2 * mode + 1) := by
+      simp only [omega, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat]
+      omega
+    rw [shifted]
+    abel
+  · have nonnegative : 0 ≤ mode := by omega
+    have mode_cast : (mode.toNat : ℤ) = mode := Int.toNat_of_nonneg nonnegative
+    have shifted : exponent - (2 * mode.toNat + 1 : ℕ) = exponent - (2 * mode + 1) := by
+      push_cast
+      omega
+    have scalar : LatticeHalfFock.frequency mode * (2 / (2 * mode.toNat + 1 : ℂ)) = 1 := by
+      have complex_cast : (mode.toNat : ℂ) = (mode : ℂ) := by exact_mod_cast mode_cast
+      have nonzero : (2 * mode.toNat + 1 : ℂ) ≠ 0 := by
+        exact_mod_cast (by omega : 2 * mode.toNat + 1 ≠ 0)
+      unfold LatticeHalfFock.frequency
+      rw [← complex_cast]
+      simp only [div_eq_mul_inv]
+      rw [← mul_assoc,
+        show ((mode.toNat : ℂ) + 1 * (2 : ℂ)⁻¹) * 2 = 2 * mode.toNat + 1 by ring,
+        mul_inv_cancel₀ nonzero]
+    simp only [LatticeHalfFock.current, if_neg negative, LinearMap.smul_apply,
+      oscillator_annihilation, map_smul, smul_add, smul_smul, shifted]
+    rw [← mul_assoc, scalar, one_mul]
+    abel
+
+theorem charged_tensor_current_ward (D : LatticeData) (hu : IsUnit D.G.det)
+    (colour : Fin D.rank) (charge : Charge D) (mode exponent : ℤ) :
+    LatticeHalfFock.tensorCurrent D (ActualGround D hu) colour mode *
+        chargedCoefficient D hu charge exponent -
+      chargedCoefficient D hu charge exponent *
+        LatticeHalfFock.tensorCurrent D (ActualGround D hu) colour mode =
+      (bilinear D (unitCharge D colour) charge : ℂ) •
+        chargedCoefficient D hu charge (exponent - (2 * mode + 1)) := by
+  apply TensorProduct.ext'
+  intro polynomial vector
+  simp only [LatticeHalfFock.tensorCurrent, LatticeHalfFock.tensorEnd, chargedCoefficient,
+    Module.End.mul_apply, LinearMap.sub_apply, LinearMap.smul_apply, TensorProduct.map_tmul,
+    LinearMap.id_apply, map_smul]
+  rw [← smul_sub, ← TensorProduct.sub_tmul, oscillator_current_ward,
+    TensorProduct.smul_tmul']
+  rw [smul_comm]
+  simp only [TensorProduct.smul_tmul']
+
+end
+
 end D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

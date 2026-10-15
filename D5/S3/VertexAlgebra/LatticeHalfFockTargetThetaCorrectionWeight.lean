@@ -7,7 +7,6 @@
    digest: Consumed exact original suppliers with checked private visibility bridges. -/
 
 import D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
-import D5.S3.VertexAlgebra.LatticeHalfFockVisibilitySuppliers
 import Mathlib.Tactic.Module
 
 set_option autoImplicit false
@@ -17,17 +16,20 @@ set_option maxRecDepth 4096
 namespace D5.S3.VertexAlgebra.LatticeHalfFockCorrectionGrading
 
 run_cmd
-  let supplier := `D5.S3.VertexAlgebra.LatticeHalfFockVisibilitySuppliers.labelledRemainders_size
+  let supplier := (Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection 0).append
+    `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.labelledRemainders_size
   Lean.Elab.Command.elabCommand
     (← `(noncomputable abbrev $(Lean.mkIdent `labelledRemainders_size) := @$(Lean.mkIdent supplier)))
 
 run_cmd
-  let supplier := `D5.S3.VertexAlgebra.LatticeSugawaraConformal.oscillatorEuler_monomial
+  let supplier := (Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeSugawaraConformal 0).append
+    `D5.S3.VertexAlgebra.LatticeSugawaraConformal.oscillatorEuler_monomial
   Lean.Elab.Command.elabCommand
     (← `(noncomputable abbrev $(Lean.mkIdent `oscillatorEuler_monomial) := @$(Lean.mkIdent supplier)))
 
 run_cmd
-  let supplier := `D5.S3.VertexAlgebra.LatticeHalfFockVisibilitySuppliers.wordWeight_occurrences
+  let supplier := (Lean.Name.num `_private.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection 0).append
+    `D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection.wordWeight_occurrences
   Lean.Elab.Command.elabCommand
     (← `(noncomputable abbrev $(Lean.mkIdent `wordWeight_occurrences) := @$(Lean.mkIdent supplier)))
 

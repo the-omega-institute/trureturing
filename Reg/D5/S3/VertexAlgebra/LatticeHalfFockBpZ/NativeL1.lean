@@ -34,12 +34,8 @@ instance : Fintype Role where
 
 instance : Nonempty Role := ⟨Role.original⟩
 
-structure Parameters where
-  source : Carrier data
-  weight : ℤ
-  exponent : ℤ
-  homogeneous : source ∈ _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.grade data weight
-  second : NativeTensor
+abbrev Parameters := Σ _source : Carrier data, Σ _weight : ℤ,
+  Σ _exponent : ℤ, NativeTensor
 
 abbrev signature : Signature where
   Params := Parameters
@@ -52,17 +48,18 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def originalReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
-  tensorPairing ((Ytw data determinantUnit parameter.source).coeff parameter.exponent state)
-    parameter.second
+  let ⟨source, _weight, exponent, first⟩ := parameter
+  tensorPairing ((Ytw data determinantUnit source).coeff exponent first) state
 
 def reflectedReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
-  paritySign parameter.weight * ∑ power ∈ Finset.range
-    (_root_.D5.S3.VertexAlgebra.LatticeSugawaraLocalNilpotence.oscillatorBound data parameter.source + 1),
-    ((power.factorial : ℂ)⁻¹) * tensorPairing state
+  let ⟨source, weight, exponent, first⟩ := parameter
+  paritySign weight * ∑ power ∈ Finset.range
+    (_root_.D5.S3.VertexAlgebra.LatticeSugawaraLocalNilpotence.oscillatorBound data source + 1),
+    ((power.factorial : ℂ)⁻¹) * tensorPairing first
       ((Ytw data determinantUnit
         ((_root_.D5.S3.VertexAlgebra.LatticeSugawaraCurrents.sugawaraMode data
-          explicitLeechSpectrum.inverse 1 ^ power) parameter.source)).coeff
-            (-parameter.exponent - 4 * parameter.weight + 2 * (power : ℤ)) parameter.second)
+          explicitLeechSpectrum.inverse 1 ^ power) source)).coeff
+            (-exponent - 4 * weight + 2 * (power : ℤ)) state)
 
 def actual : Realization signature :=
   realize signature (fun role parameter state => match role with
@@ -76,31 +73,32 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law observation := ∀ parameter state,
-    observation.readout Role.original parameter state =
-      observation.readout Role.reflected parameter state
+  Law observation := ∀ (source : Carrier data) (weight exponent : ℤ)
+    (_homogeneous : source ∈ _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.grade data weight)
+    (first second : NativeTensor),
+    observation.readout Role.original ⟨source, weight, exponent, first⟩ second =
+      observation.readout Role.reflected ⟨source, weight, exponent, first⟩ second
 
 theorem exact_source_bridge :
     (type_of% (@original_native_bpz_homogeneous)) ↔ arena.Law actual := by
-  constructor
-  · intro source parameter state
-    exact source parameter.source parameter.weight parameter.exponent parameter.homogeneous
-      state parameter.second
-  · intro law source weight exponent homogeneous first second
-    exact law ⟨source, weight, exponent, homogeneous, second⟩ first
+  exact Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  exact one_ne_zero (law ⟨0, 0, 0, Submodule.zero_mem _, 0⟩ 0)
+  exact one_ne_zero (law 0 0 0 (Submodule.zero_mem _) 0 0)
 
-private theorem actual_readout (role : Role) (parameter : Parameters) (state : NativeTensor) :
+private theorem actual_readout (role : Role) (parameter : Parameters) (state : NativeTensor)
+    (homogeneous : parameter.1 ∈
+      _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.grade data parameter.2.1) :
     actual.readout role parameter state = originalReadout parameter state := by
+  rcases parameter with ⟨source, weight, exponent, first⟩
   cases role
   · rfl
-  · exact (original_native_bpz_homogeneous parameter.source parameter.weight parameter.exponent
-      parameter.homogeneous state parameter.second).symm
+  · exact (original_native_bpz_homogeneous source weight exponent homogeneous first state).symm
 
-private theorem source_nonzero : ∃ parameter state, originalReadout parameter state ≠ 0 := by
+private theorem source_nonzero : ∃ parameter state,
+    parameter.1 ∈ _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.grade data parameter.2.1 ∧
+      originalReadout parameter state ≠ 0 := by
   let ground := nativeBasis
     (0 : _root_.D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.Half 12)
   let vacuum : NativeTensor := (1 : Oscillator data) ⊗ₜ[ℂ] ground
@@ -129,7 +127,7 @@ private theorem source_nonzero : ∃ parameter state, originalReadout parameter 
     · simp [_root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.energy,
         _root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.oscillatorEnergy]
     · simp [_root_.D5.S3.VertexAlgebra.LatticePositiveEnergy.carrierBasis_apply]
-  refine ⟨⟨Finsupp.single 0 1, 0, 0, homogeneous, second⟩, vacuum, ?_⟩
+  refine ⟨⟨Finsupp.single 0 1, 0, 0, vacuum⟩, second, homogeneous, ?_⟩
   change tensorPairing ((Ytw data determinantUnit (Finsupp.single 0 1)).coeff 0 vacuum)
     second ≠ 0
   rw [Ytw_vacuum]
@@ -151,9 +149,9 @@ def altered (selected : Role) : Realization signature :=
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  obtain ⟨parameter, state, nonzero⟩ := source_nonzero
+  obtain ⟨parameter, state, homogeneous, nonzero⟩ := source_nonzero
   refine ⟨parameter, state, 0, ?_⟩
-  rw [actual_readout, actual_readout]
+  rw [actual_readout role parameter state homogeneous, actual_readout role parameter 0 homogeneous]
   simpa [originalReadout] using nonzero
 
 private theorem sensitivity : Sensitivity arena actual := by
@@ -168,15 +166,15 @@ private theorem sensitivity : Sensitivity arena actual := by
         (if other = role then (1 : ℂ) else actual.readout other parameter state)
       exact (if_neg different).symm
     · intro law
-      have impossible := law ⟨0, 0, 0, Submodule.zero_mem _, 0⟩ 0
+      have impossible := law 0 0 0 (Submodule.zero_mem _) 0 0
       cases role
-      · change (1 : ℂ) = actual.readout Role.reflected ⟨0, 0, 0, Submodule.zero_mem _, 0⟩ 0
+      · change (1 : ℂ) = actual.readout Role.reflected ⟨0, 0, 0, 0⟩ 0
           at impossible
-        rw [actual_readout] at impossible
+        rw [actual_readout _ _ _ (Submodule.zero_mem _)] at impossible
         simpa [originalReadout] using impossible
-      · change actual.readout Role.original ⟨0, 0, 0, Submodule.zero_mem _, 0⟩ 0 = (1 : ℂ)
+      · change actual.readout Role.original ⟨0, 0, 0, 0⟩ 0 = (1 : ℂ)
           at impossible
-        rw [actual_readout] at impossible
+        rw [actual_readout _ _ _ (Submodule.zero_mem _)] at impossible
         simpa [originalReadout] using impossible
   · intro empty
     exact nomatch empty
@@ -214,15 +212,15 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeL1
     definition := none
-    coordinates := #[0, 1, 2, 3, 5]
+    coordinates := #[0, 1, 2, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 4
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

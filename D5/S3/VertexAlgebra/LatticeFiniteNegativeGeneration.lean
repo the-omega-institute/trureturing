@@ -256,7 +256,7 @@ private theorem neutral_negative_single (D : LatticeData) (i : Fin D.rank)
   rw [heq]
   simp [neutralMode, neutralPolynomialMode, show -(n : ℤ) - 1 < 0 by omega]
 
-theorem actual_negative_single (D : LatticeData) (β γ : Charge D)
+private theorem actual_negative_single (D : LatticeData) (β γ : Charge D)
     (_h : 0 ≤ bilinear D β γ) :
     VertexOperator.ncoeff (actualField D β) (-bilinear D β γ - 1)
       (Finsupp.single γ 1) = epsilon D β γ • Finsupp.single (β + γ) 1 := by

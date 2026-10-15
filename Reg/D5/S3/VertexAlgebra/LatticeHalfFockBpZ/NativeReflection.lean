@@ -34,12 +34,8 @@ instance : Fintype Role where
 
 instance : Nonempty Role := ⟨Role.original⟩
 
-structure Parameters where
-  charge : Charge data
-  axis : Fin data.rank
-  order : ℕ
-  exponent : ℤ
-  second : NativeTensor
+abbrev Parameters := Σ _charge : Charge data, Σ _axis : Fin data.rank,
+  Σ _order : ℕ, Σ _exponent : ℤ, NativeTensor
 
 abbrev signature : Signature where
   Params := Parameters
@@ -52,22 +48,21 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def originalReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
+  let ⟨charge, axis, order, exponent, first⟩ := parameter
   tensorPairing ((Ytw data determinantUnit
-    (Finsupp.single parameter.charge (MvPolynomial.X (parameter.axis, parameter.order)))).coeff
-      parameter.exponent state) parameter.second
+    (Finsupp.single charge (MvPolynomial.X (axis, order)))).coeff exponent first) state
 
 def reflectedReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
-  (∑ reduced ∈ Finset.range (parameter.order + 1),
-    jetReflectionScalar parameter.order reduced * tensorPairing state
+  let ⟨charge, axis, order, exponent, first⟩ := parameter
+  (∑ reduced ∈ Finset.range (order + 1),
+    jetReflectionScalar order reduced * tensorPairing first
       ((nativeOppositeYtw
-        (Finsupp.single parameter.charge (MvPolynomial.X (parameter.axis, reduced)))).coeff
-          (-2 * chargeNorm data parameter.charge - parameter.exponent -
-            2 * parameter.order - 2 * reduced - 4) parameter.second)) +
-    ((-1 : ℂ) ^ (parameter.order + 1) *
-      (bilinear data (unitCharge data parameter.axis) parameter.charge : ℂ)) *
-      tensorPairing state ((nativeOppositeYtw (Finsupp.single parameter.charge 1)).coeff
-        (-2 * chargeNorm data parameter.charge - parameter.exponent -
-          2 * parameter.order - 2) parameter.second)
+        (Finsupp.single charge (MvPolynomial.X (axis, reduced)))).coeff
+          (-2 * chargeNorm data charge - exponent - 2 * order - 2 * reduced - 4) state)) +
+    ((-1 : ℂ) ^ (order + 1) *
+      (bilinear data (unitCharge data axis) charge : ℂ)) *
+      tensorPairing first ((nativeOppositeYtw (Finsupp.single charge 1)).coeff
+        (-2 * chargeNorm data charge - exponent - 2 * order - 2) state)
 
 def actual : Realization signature :=
   realize signature (fun role parameter state => match role with
@@ -82,29 +77,25 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law observation := ∀ parameter state,
-    observation.readout Role.original parameter state =
-      observation.readout Role.reflected parameter state
+  Law observation := ∀ (charge : Charge data) (axis : Fin data.rank)
+    (order : ℕ) (exponent : ℤ) (first second : NativeTensor),
+    observation.readout Role.original ⟨charge, axis, order, exponent, first⟩ second =
+      observation.readout Role.reflected ⟨charge, axis, order, exponent, first⟩ second
 
 theorem exact_source_bridge :
     (type_of% (@original_jet_source_reflection)) ↔ arena.Law actual := by
-  constructor
-  · intro source parameter state
-    exact source parameter.charge parameter.axis parameter.order parameter.exponent
-      state parameter.second
-  · intro law charge axis order exponent first second
-    exact law ⟨charge, axis, order, exponent, second⟩ first
+  exact Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  exact one_ne_zero (law ⟨0, 0, 0, 0, 0⟩ 0)
+  exact one_ne_zero (law 0 0 0 0 0 0)
 
 private theorem actual_readout (role : Role) (parameter : Parameters) (state : NativeTensor) :
     actual.readout role parameter state = originalReadout parameter state := by
+  rcases parameter with ⟨charge, axis, order, exponent, first⟩
   cases role
   · rfl
-  · exact (original_jet_source_reflection parameter.charge parameter.axis parameter.order
-      parameter.exponent state parameter.second).symm
+  · exact (original_jet_source_reflection charge axis order exponent first state).symm
 
 private theorem source_nonzero : ∃ parameter state, originalReadout parameter state ≠ 0 := by
   let ground := nativeBasis (0 : _root_.D5.S3.VertexAlgebra.LatticeTwistedGroundRealization.Half 12)
@@ -127,7 +118,7 @@ private theorem source_nonzero : ∃ parameter state, originalReadout parameter 
     exact absent ⟨second, nonzero⟩
   obtain ⟨second, nonzero⟩ := witness
   let vacuum : NativeTensor := (1 : Oscillator data) ⊗ₜ[ℂ] ground
-  refine ⟨⟨0, 0, 0, -1, second⟩, vacuum, ?_⟩
+  refine ⟨⟨0, 0, 0, -1, vacuum⟩, second, ?_⟩
   change tensorPairing ((Ytw data determinantUnit
     (Finsupp.single 0 (MvPolynomial.X (0, 0)))).coeff (-1) vacuum) second ≠ 0
   rw [Ytw_current]
@@ -163,7 +154,7 @@ private theorem sensitivity : Sensitivity arena actual := by
         (if other = role then (1 : ℂ) else actual.readout other parameter state)
       exact (if_neg different).symm
     · intro law
-      have impossible := law ⟨0, 0, 0, 0, 0⟩ 0
+      have impossible := law 0 0 0 0 0 0
       cases role
       · change (1 : ℂ) = actual.readout Role.reflected ⟨0, 0, 0, 0, 0⟩ 0 at impossible
         rw [actual_readout] at impossible
@@ -202,19 +193,19 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   variation := .evidence ⟨familyRegistration.variation⟩ trivial
   sensitivity := .evidence ⟨familyRegistration.sensitivity⟩ trivial
   partialSensitivity := none
-  escapeFrom := some escapeFrom
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection
     definition := none
-    coordinates := #[0, 1, 2, 3, 5]
+    coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 4
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 4
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -227,13 +218,9 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
 
 namespace Word
 
-structure Parameters where
-  charge : Charge data
-  count : ℕ
-  axes : Fin count → Fin data.rank
-  orders : Fin count → ℕ
-  exponent : ℤ
-  second : NativeTensor
+abbrev Parameters := Σ _charge : Charge data, Σ count : ℕ,
+  Σ _axes : Fin count → Fin data.rank, Σ _orders : Fin count → ℕ,
+  Σ _exponent : ℤ, NativeTensor
 
 abbrev signature : Signature where
   Params := Parameters
@@ -246,20 +233,21 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def originalReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
-  tensorPairing ((Ytw data determinantUnit (Finsupp.single parameter.charge
-    (∏ j : Fin parameter.count, MvPolynomial.X (parameter.axes j, parameter.orders j)))).coeff
-      parameter.exponent state) parameter.second
+  let ⟨charge, count, axes, orders, exponent, first⟩ := parameter
+  tensorPairing ((Ytw data determinantUnit (Finsupp.single charge
+    (∏ j : Fin count, MvPolynomial.X (axes j, orders j)))).coeff exponent first) state
 
 def reflectedReadout (parameter : Parameters) (state : NativeTensor) : ℂ :=
-  let weight : ℕ := ∑ j : Fin parameter.count, (parameter.orders j + 1)
-  (-1 : ℂ) ^ weight * ∑ selection : ((j : Fin parameter.count) → Fin (parameter.orders j + 2)),
-    (∏ j : Fin parameter.count, ((parameter.orders j + 1).choose (selection j).val : ℂ)) *
-      tensorPairing state ((nativeOppositeYtw (Finsupp.single parameter.charge
-        (∏ j : Fin parameter.count, if (selection j).val = 0 then
-          MvPolynomial.C (bilinear data (unitCharge data (parameter.axes j)) parameter.charge : ℂ)
-        else MvPolynomial.X (parameter.axes j, (selection j).val - 1)))).coeff
-          (-2 * chargeNorm data parameter.charge - parameter.exponent - 2 * (weight : ℤ) -
-            2 * (∑ j : Fin parameter.count, ((selection j).val : ℤ))) parameter.second)
+  let ⟨charge, count, axes, orders, exponent, first⟩ := parameter
+  let weight : ℕ := ∑ j : Fin count, (orders j + 1)
+  (-1 : ℂ) ^ weight * ∑ selection : ((j : Fin count) → Fin (orders j + 2)),
+    (∏ j : Fin count, ((orders j + 1).choose (selection j).val : ℂ)) *
+      tensorPairing first ((nativeOppositeYtw (Finsupp.single charge
+        (∏ j : Fin count, if (selection j).val = 0 then
+          MvPolynomial.C (bilinear data (unitCharge data (axes j)) charge : ℂ)
+        else MvPolynomial.X (axes j, (selection j).val - 1)))).coeff
+          (-2 * chargeNorm data charge - exponent - 2 * (weight : ℤ) -
+            2 * (∑ j : Fin count, ((selection j).val : ℤ))) state)
 
 def actual : Realization signature :=
   realize signature (fun role parameter state => match role with
@@ -273,35 +261,32 @@ def rejected : Realization signature :=
 
 def arena : Arena where
   signature := signature
-  Law observation := ∀ parameter state,
-    observation.readout Role.original parameter state =
-      observation.readout Role.reflected parameter state
+  Law observation := ∀ (charge : Charge data) (count : ℕ)
+    (axes : Fin count → Fin data.rank) (orders : Fin count → ℕ)
+    (exponent : ℤ) (first second : NativeTensor),
+    let _weight : ℕ := ∑ j : Fin count, (orders j + 1)
+    observation.readout Role.original ⟨charge, count, axes, orders, exponent, first⟩ second =
+      observation.readout Role.reflected ⟨charge, count, axes, orders, exponent, first⟩ second
 
 theorem exact_source_bridge :
     (type_of% (@original_word_source_reflection)) ↔ arena.Law actual := by
-  constructor
-  · intro source parameter state
-    exact source parameter.charge parameter.count parameter.axes parameter.orders
-      parameter.exponent state parameter.second
-  · intro law charge count axes orders exponent first second
-    exact law ⟨charge, count, axes, orders, exponent, second⟩ first
+  exact Iff.rfl
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro law
-  exact one_ne_zero (law ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0)
+  exact one_ne_zero (law 0 0 Fin.elim0 Fin.elim0 0 0 0)
 
 private theorem actual_readout (role : Role) (parameter : Parameters) (state : NativeTensor) :
     actual.readout role parameter state = originalReadout parameter state := by
+  rcases parameter with ⟨charge, count, axes, orders, exponent, first⟩
   cases role
   · rfl
-  · exact (original_word_source_reflection parameter.charge parameter.count parameter.axes
-      parameter.orders parameter.exponent state parameter.second).symm
+  · exact (original_word_source_reflection charge count axes orders exponent first state).symm
 
 private theorem source_nonzero : ∃ parameter state, originalReadout parameter state ≠ 0 := by
-  obtain ⟨parameter, state, nonzero⟩ :=
+  obtain ⟨⟨charge, axis, order, exponent, first⟩, state, nonzero⟩ :=
     Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection.source_nonzero
-  refine ⟨⟨parameter.charge, 1, fun _ => parameter.axis, fun _ => parameter.order,
-    parameter.exponent, parameter.second⟩, state, ?_⟩
+  refine ⟨⟨charge, 1, fun _ => axis, fun _ => order, exponent, first⟩, state, ?_⟩
   simpa only [originalReadout,
     Reg.D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection.originalReadout,
     Fin.prod_univ_one] using nonzero
@@ -330,7 +315,7 @@ private theorem sensitivity : Sensitivity arena actual := by
         (if other = role then (1 : ℂ) else actual.readout other parameter state)
       exact (if_neg different).symm
     · intro law
-      have impossible := law ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0
+      have impossible := law 0 0 Fin.elim0 Fin.elim0 0 0 0
       cases role
       · change (1 : ℂ) = actual.readout Role.reflected ⟨0, 0, Fin.elim0, Fin.elim0, 0, 0⟩ 0
           at impossible
@@ -376,15 +361,15 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.LatticeHalfFockBpZ.NativeReflection
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 6]
+    coordinates := #[0, 1, 2, 3, 4, 5]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 5
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 5
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

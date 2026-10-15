@@ -102,7 +102,7 @@ private theorem weightedPartial_commute (D : LatticeData) (i j : Fin D.rank)
     Lean.Elab.Tactic.evalTactic (← `(tactic| rw [($(Lean.mkIdent supplier))]))
   exact smul_comm _ _ _
 
-private theorem weightedPartial_X_mul (D : LatticeData) (i j : Fin D.rank)
+theorem weightedPartial_X_mul (D : LatticeData) (i j : Fin D.rank)
     (a b : ℕ) (p : Oscillator D) :
     weightedPartial D i a (X (j,b) * p) =
       (if a = b then (D.G i j : ℂ) • p else 0) +
