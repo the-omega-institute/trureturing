@@ -72,7 +72,7 @@ theorem sequenceProjection_jointly_monic (A : ℕ → C) {X : C}
       intro y
       simp only [Category.assoc, p, biproduct.isoCoproduct_inv, Sigma.ι_desc]
       dsimp only [B, finiteSubcoproductsCocone_pt]
-      rw [biproduct.lift_π, Pi.lift_π, sequenceProjection_leg]
+      rw [biproduct.lift_π, Pi.lift_comp_π, sequenceProjection_leg]
       by_cases h : (⟨x, hx⟩ : s) = y
       · subst y
         simp
@@ -85,7 +85,7 @@ theorem sequenceProjection_jointly_monic (A : ℕ → C) {X : C}
   apply (cancel_mono p).1
   apply Pi.hom_ext
   intro n
-  simp only [Category.assoc, p, Pi.lift_π, zero_comp]
+  simp only [Category.assoc, p, Pi.lift_comp_π, zero_comp]
   exact hg n
 
 set_option backward.isDefEq.respectTransparency false in

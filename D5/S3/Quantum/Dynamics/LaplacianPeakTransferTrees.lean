@@ -212,8 +212,6 @@ private lemma neighbor_sum_hub {R : Type*} [AddCommMonoid R] (k l : ℕ) (i : Fi
     ext; simp
   rw [hn, Finset.sum_filter]
   simp [tree, Fintype.sum_option, Fintype.sum_prod_type]
-  rw [Finset.sum_comm]
-  simp
 private lemma neighbor_sum_leaf {R : Type*} [AddCommMonoid R] (k l : ℕ) (i : Fin k) (j : Fin l)
     (f : (Option (Fin k × Option (Fin l))) → R) :
     ∑ x ∈ (tree k l).neighborFinset (some (i, some j)), f x = f (some (i, none)) := by
@@ -321,7 +319,7 @@ private lemma w0_eigen (s : ℕ) :
     (tree (hubCount s) (leafCount s)).lapMatrix ℝ *ᵥ w0 s = (0 : ℝ) • w0 s := by
   have hc : (cell 1 1 1 : (Option (Fin (hubCount s) × Option (Fin (leafCount s)))) → ℝ) = (fun _ => 1) := by
     funext v; rcases v with (_ | ⟨i, _ | j⟩) <;> rfl
-  simpa [w0, hc] using (tree (hubCount s) (leafCount s)).lapMatrix_mulVec_const_eq_zero (R := ℝ)
+  simpa [w0, hc, Pi.one_def] using (tree (hubCount s) (leafCount s)).lapMatrix_mulVec_one_eq_zero ℝ
 private lemma wa_eigen (s : ℕ) :
     (tree (hubCount s) (leafCount s)).lapMatrix ℝ *ᵥ wa s = eigA s • wa s := by
   rw [wa, lap_cell]

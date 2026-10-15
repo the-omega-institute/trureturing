@@ -111,7 +111,7 @@ jobs:
       actions: read
     concurrency:
       group: lean-cache-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
+      cancel-in-progress: false
     env:
       STRATALINT_CACHE_WRITES: 'true'
       STRATALINT_CACHE_PR_PRODUCER: 'true'
@@ -128,6 +128,253 @@ jobs:
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Produce the Actions cache
         uses: ./.github/actions/lean-cache-produce
+      - name: Export the upgrade producer report and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-upgrade-report-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/raw-lean-report.json*
+            .lake/build/lean-inspector/inputs.json
+            .lake/build/lean-inspector/module-inputs.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 3
+      - name: Produce the frozen alignment scoped report
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          python3 - <<'PY'
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          root = Path.cwd()
+          sys.path.insert(0, str(root / 'tools/lean-inspector'))
+          import scoped
+
+          class AlignmentEntry(scoped.Entry):
+              def discover(self, roots):
+                  inputs = scoped.public.selection.Selection(self.root)
+                  inputs.validate('lean-report')
+                  if not set(roots) <= inputs.modules().keys():
+                      raise ValueError('alignment roots must be registered report modules')
+                  utility_file = self.phase('utility', [
+                      'dotnet', self.producer, 'lean-utility-input'])
+                  utility_scope_file = self.phase('utility-scope', [
+                      'dotnet', self.producer, 'lean-utility-input', '--scope'])
+                  utilities = scoped.public.read_json(utility_file.read_bytes())
+                  utility_inputs = scoped.public.read_json(utility_scope_file.read_bytes())
+                  request = self.temporary / 'scope-request.json'
+                  selected = self.temporary / 'selected-modules.json'
+                  request.write_bytes(scoped.materials.canonical_json(dict(
+                      roots=roots, modules=sorted(inputs.modules()),
+                      utilities=utilities, utility_inputs=utility_inputs)))
+                  self.phase('scope', self.guarded('script', 'run',
+                      'leanInspector/reportScope', str(request), str(selected)))
+                  scope = scoped.public.read_json(selected.read_bytes())
+                  scoped.check_scope(self.root, scope, roots)
+                  self.environment['STRATALINT_INSPECTOR_SCOPE_FILE'] = str(selected)
+                  self.environment['STRATALINT_INSPECTOR_UTILITY_INPUT'] = str(utility_file)
+                  return scope, utilities
+
+          roots = sorted({
+              path.relative_to(root / 'Golden/Frozen/state').as_posix()
+                  .removesuffix('.lean.json').replace('/', '.')
+              for path in (root / 'Golden/Frozen/state').rglob('*.lean.json')
+              if (root / path.relative_to(root / 'Golden/Frozen/state')
+                  .as_posix().removesuffix('.json')).is_file()
+          })
+          if not roots:
+              raise ValueError('frozen alignment requires nonempty retained roots')
+          output = root / '.lake/build/stratalint/frozen-alignment-report.json'
+          logs = Path(str(output) + '.logs')
+          logs.mkdir(parents=True, exist_ok=True)
+          with tempfile.TemporaryDirectory(prefix='frozen-alignment.') as temporary:
+              entry = AlignmentEntry(root, temporary, logs)
+              entry.provision()
+              scoped.produce(entry, output, roots)
+          PY
+      - name: Export the frozen alignment scoped report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-alignment-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/frozen-alignment-report.json
+            .lake/build/stratalint/frozen-alignment-report.json.sha256
+            .lake/build/stratalint/frozen-alignment-report.json.input.attestation
+            .lake/build/stratalint/frozen-alignment-report.json.provenance.json
+            .lake/build/stratalint/frozen-alignment-report.json.materials.zip
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
+
+
+  compatibility-probe:
+    name: Check the mathlib upgrade compatibility roots
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'mathlib-upgrade-probe'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      actions: read
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the pull request merge candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Build the Lean producer for the PR seed
+        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
+      - id: keys
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_restore_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional validated seeds
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Compile and inspect the compatibility roots
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          set -euo pipefail
+          unset LEAN_NUM_THREADS
+          mkdir -p build/lean-cache
+          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
+          if [[ -n "$producer" ]]; then
+            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
+          else
+            unset STRATALINT_LEAN_PRODUCER_DLL
+          fi
+          compatibility_roots=(
+            D5.S3.Weil.ZetaPntBase.AdditiveCombination
+            D5.S0.Tower.NonPisot.GapCountInstances
+            D5.S0.Computability.NatPresburgerSolver
+            D5.S1.Recurrence.LinearRows.DoubledLinearExponentDyadicSupport
+            D5.S1.Recurrence.Residue.IterateExponentialParity
+            D5.S1.Recurrence.Residue.IterateProductFourFiveEighthModEight
+            D5.S1.Recurrence.Residue.QuadraticPowerDiagonalFibbinaryParity
+            D5.S1.Words.ChauveZhangUnaryNeighborhoodRefutation
+            D5.S1.Words.Complexity.LyndonBrackets.LyndonStandardFactorization
+            D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleEvaluation
+            D5.S1.Words.Complexity.ThueMorseReducedAbelianEven
+          )
+          make lean-report-scoped \
+            LEAN_REPORT=.lake/build/stratalint/upgrade-compatibility-scoped-report.json \
+            LEAN_TARGETS="${compatibility_roots[*]}" \
+            2>&1 | tee build/lean-cache/compatibility-probe.log
+      - name: Check the additive tactic domains and equation operations
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          set -euo pipefail
+          cat > build/lean-cache/additive-compatibility.lean <<'LEAN'
+          import D5.S3.Weil.ZetaPntBase.AdditiveCombination
+          set_option autoImplicit false
+
+          example {A : Type*} [AddGroup A] (a b : A) (h : a = b) : a = b := by
+            additive_combination (norm := simp [h]) h
+
+          example {A : Type*} [AddGroup A] (a b c : A) (h : a = b) :
+              a + c = b + c := by
+            additive_combination (norm := (
+              change (a + c - (b + c)) - ((a + c) - (b + c)) = 0
+              exact sub_self _)) (h + c)
+
+          example {R : Type*} [Ring R] (a b c d : R) (h : a = b) (k : c = d) :
+              a * c = b * d := by
+            additive_combination (h * k)
+
+          example {R : Type*} [DivisionRing R] (a b c d : R) (h : a = b) (k : c = d) :
+              a / c = b / d := by
+            additive_combination (h / k)
+
+          example {R : Type*} [DivisionRing R] (a b : R) (h : a = b) :
+              a⁻¹ = b⁻¹ := by
+            additive_combination (h⁻¹)
+
+          example {R : Type*} [Ring R] [IsReduced R] (a b : R) (h : a = b) :
+              a = b := by
+            additive_combination (norm := simp [h]) (exp := 2) h
+
+          elab "additive_two_test " e:term : tactic =>
+            Mathlib.Tactic.LinearCombinationPrime.elabAdditiveCombination
+              e none none (some e) true
+
+          example {A : Type*} [AddCommGroup A] (a b : A) (h : a = b) : a = b := by
+            additive_two_test h
+
+          example {A : Type*} [AddCommGroup A] (a b c : A) (h : a = b) :
+              (a + c) - c = (b + c) - c := by
+            additive_two_test h
+          LEAN
+          bash tools/scripts/worktree/lean-cache-run.sh lake env lean \
+            build/lean-cache/additive-compatibility.lean
+      - name: Regenerate the solver Blueprint from its compiled inputs
+        env:
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: |
+          printf '%s\0' Blueprint/D5/S0/Computability/NatPresburgerSolver.scribe.cs > build/lean-cache/solver-scribe-paths
+          make emit PATHS=build/lean-cache/solver-scribe-paths
+      - name: Export the generated solver Blueprint
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-upgrade-blueprint-${{ github.run_id }}-${{ github.run_attempt }}
+          path: Blueprint/D5/S0/Computability/NatPresburgerSolver.md
+          if-no-files-found: error
+          retention-days: 3
+      - name: Export compatibility diagnostics and scoped report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathlib-upgrade-compatibility-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .lake/build/stratalint/upgrade-compatibility-scoped-report.json*
+            .lake/build/stratalint/upgrade-compatibility-scoped-report.json.logs/
+            build/lean-cache/compatibility-probe.log
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 3
 
   publish:
     name: Publish the Lean build cache

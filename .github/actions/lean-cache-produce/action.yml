@@ -52,6 +52,8 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         STRATALINT_ACCEPT_COLD_BUILD: '1'
+        STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+        LEAN_NUM_THREADS: '1'
         # Include ordinary audit programs in the same measured Lake invocation.
         STRATALINT_LEAN_BUILD_TARGETS: '["leanInspector/LeanInformationAudit","leanInspector/reportInspector","leanInspectorInterface/LeanInformationAuditInterface","reg/Reg","regInspector/LeanInformationAuditRegAnalysis.AuricFib.Main","regInspector/LeanInformationAuditRegTests","regInspector/auricFibAnalysis","regInspector/compiledJudgeTests"]'
       shell: bash
@@ -62,7 +64,8 @@ runs:
         else
           unset STRATALINT_LEAN_PRODUCER_DLL
         fi
-        make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
+        source tools/scripts/lib/resource-observation-lib.sh
+        resource_observe_run_periodic make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
     - id: project_snapshot
       name: Prepare the project seed
       env:

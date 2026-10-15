@@ -2395,7 +2395,7 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       project: tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
-      lean: toolchain
+      lean: build
       cache-dependency-path: |
         tools/tests/StrataLint.Lean.Tests/packages.lock.json
         tools/StrataLint.TestEvidence/packages.lock.json

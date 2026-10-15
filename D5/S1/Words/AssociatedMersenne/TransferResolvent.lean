@@ -68,7 +68,7 @@ local notation "Y" => (PowerSeries.C (Polynomial.X : Polynomial ℤ) : (PowerSer
 
 set_option maxHeartbeats 200000
 
-local notation "D" => PowerSeries.derivative (Polynomial ℤ)
+local notation "D" => PowerSeries.derivative (R := Polynomial ℤ)
 
 set_option maxRecDepth 2048
 

@@ -77,11 +77,9 @@ theorem one_observer_operator_nonreconstruction
       simp [observerSquare, pow_two, Module.End.mul_apply]
       module]
     convert ((hconstant.sub hlinear).sub hlinear).add hquadratic using 1
-    · ext s
-      rfl
-    · change (2 : Real) • (t • x - H x) =
-        (0 - H x - H x) + (2 * t) • x
-      module
+    change (2 : Real) • (t • x - H x) =
+      (0 - H x - H x) + (2 * t) • x
+    module
   have secondObserver : ∀ (H : Module.End Real V) (h : Real), h ≠ 0 →
       t • LinearMap.id +
           (2 * h)⁻¹ •

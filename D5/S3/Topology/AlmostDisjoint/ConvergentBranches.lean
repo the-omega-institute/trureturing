@@ -9,7 +9,7 @@
 import Mathlib.Topology.MetricSpace.HausdorffAlexandroff
 import Mathlib.Topology.Sequences
 import Mathlib.SetTheory.Cardinal.Continuum
-import Mathlib.Logic.Denumerable
+import Mathlib.Basic.Denumerable
 import Mathlib.Logic.Equiv.List
 import Mathlib.Order.Zorn
 

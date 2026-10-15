@@ -316,7 +316,7 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
   have hQcausal : ∀ n, n ≤ T → ∀ (x : Prefix Y n) (a b : ∀ t, A t),
       (∀ i, i.val < n → a i = b i) → prefixMarginal Q n x a = prefixMarginal Q n x b :=
     ((feedback_normalization_prefix_causality_sequential_kernels
-      T hT A Y Q hQ0 hQsum).out 0 2).mp hQmass
+      T hT A Y Q hQ0 hQsum).out 1 3).mp hQmass
   have herror : feedbackDistance P Q ≤ feedbackDefect P := by
     apply Finset.sup'_le
     rintro ⟨f, E⟩ hv
@@ -357,6 +357,6 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
   intro R hR0 hRsum hRcausal
   exact normalization_lower_bound P R
     (((feedback_normalization_prefix_causality_sequential_kernels
-      T hT A Y R hR0 hRsum).out 0 2).mpr hRcausal)
+      T hT A Y R hR0 hRsum).out 1 3).mpr hRcausal)
 
 end D5.S3.ObserverMemory.Prediction.CausalRepairEnvelopes

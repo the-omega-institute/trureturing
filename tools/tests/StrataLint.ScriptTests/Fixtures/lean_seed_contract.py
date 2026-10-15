@@ -7,6 +7,11 @@ import subprocess
 import datetime
 import shutil
 import unittest
+import io
+import multiprocessing
+import sys
+import time
+from concurrent.futures import ProcessPoolExecutor
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
@@ -279,5 +284,43 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
 
+def run_transport_case(method):
+    """Each case owns a private repository and process-local patches."""
+    output = io.StringIO()
+    case = TransportTests(method)
+    started = time.monotonic()
+    result = unittest.TextTestRunner(stream=output, verbosity=2).run(case)
+    record = dict(case=f"{TransportTests.__qualname__}.{method}", worker_pid=os.getpid(), tests_run=result.testsRun,
+                  failures=len(result.failures), errors=len(result.errors), skipped=len(result.skipped),
+                  expected_failures=len(result.expectedFailures), unexpected_successes=len(result.unexpectedSuccesses),
+                  successful=result.wasSuccessful() and result.testsRun == 1
+                  and not result.skipped and not result.expectedFailures,
+                  seconds=time.monotonic() - started)
+    return record, output.getvalue()
+
+
+def run_transport_suite():
+    methods = unittest.defaultTestLoader.getTestCaseNames(TransportTests)
+    records = []
+    started = time.monotonic()
+    # Global production-function patches cannot share threads. Spawned workers
+    # keep each case's private filesystem and Python state isolated.
+    with ProcessPoolExecutor(max_workers=2, mp_context=multiprocessing.get_context("spawn")) as workers:
+        for record, output in workers.map(run_transport_case, methods):
+            records.append(record)
+            print("TRANSPORT_CASE_RESULT " + json.dumps(record, sort_keys=True), file=sys.stderr, flush=True)
+            if not record["successful"]:
+                print(output, file=sys.stderr, flush=True)
+    expected = {f"{TransportTests.__qualname__}.{method}" for method in methods}
+    successful = (len(records) == len(methods) and {record["case"] for record in records} == expected
+                  and all(record["successful"] for record in records))
+    print(f"Ran {sum(record['tests_run'] for record in records)} tests in {time.monotonic() - started:.3f}s",
+          file=sys.stderr)
+    print("OK" if successful else "FAILED", file=sys.stderr)
+    return 0 if successful else 1
+
+
 if __name__ == "__main__":
+    if sys.argv[1:] == ["TransportTests"]:
+        raise SystemExit(run_transport_suite())
     unittest.main()

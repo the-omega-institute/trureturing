@@ -355,13 +355,13 @@ theorem upper_excision (F : CommonFlow)
       restrict_compProd_left _ _ _ (measurableSet_singleton b).compl, hFA]
     rfl
   have hsB : (νP ⊗ₘ F.B).snd = νB := by
-    rw [hΓB, Measure.snd, Measure.map_smul]
+    rw [hΓB, Measure.snd, Measure.map_smul _ measurable_snd.aemeasurable]
     change w⁻¹ • (F.GammaB.restrict (Prod.fst ⁻¹' {p})ᶜ).snd = _
     rw [snd_restrict_complement _ p b he.2.1, F.marginB₂]
     change _ = F.nuB[|{b}ᶜ]
     rw [ProbabilityTheory.cond, hb]
   have hsA : (νB ⊗ₘ F.A).snd = νP := by
-    rw [hΓA, Measure.snd, Measure.map_smul]
+    rw [hΓA, Measure.snd, Measure.map_smul _ measurable_snd.aemeasurable]
     change w⁻¹ • (F.GammaA.restrict (Prod.fst ⁻¹' {b})ᶜ).snd = _
     rw [snd_restrict_complement _ b p he.2.2, F.marginA₂]
     change _ = F.nuP[|{p}ᶜ]

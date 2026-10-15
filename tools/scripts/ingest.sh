@@ -7,7 +7,7 @@ PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest SOURCES | mathlib-reanchor BASE" >&2
+  echo "USAGE: ingest.sh ingest SOURCES | mathlib-reanchor BASE [ALREADY_RETIRED_UPSTREAM_PORT ...]" >&2
   exit 2
 }
 
@@ -28,11 +28,21 @@ case "$VERB" in
       "${ingest_args[@]}"
     ;;
   mathlib-reanchor)
-    [[ $# -eq 2 && -n "$2" ]] || usage
+    [[ $# -ge 2 && -n "$2" ]] || usage
     make -C "$ROOT" lean-report
     base_sha="$(git -C "$ROOT" merge-base HEAD "$2")"
+    reanchor_args=(ledger-reanchor-mathlib --base "$base_sha")
+    shift 2
+    for retired_port in "$@"; do
+      reanchor_args+=(--retired-upstream-port "$retired_port")
+    done
+    set -f
+    for retired_port in ${RETIRED_UPSTREAM_PORTS:-}; do
+      reanchor_args+=(--retired-upstream-port "$retired_port")
+    done
+    set +f
     dotnet run --project "$PROJECT" --configuration Release -- \
-      ledger-reanchor-mathlib --base "$base_sha"
+      "${reanchor_args[@]}"
     ;;
   *)
     usage

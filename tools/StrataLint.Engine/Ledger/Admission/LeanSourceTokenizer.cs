@@ -16,6 +16,7 @@ internal static class LeanSourceTokenizer
         var index = 0;
         var line = 1;
         var column = 0;
+        var leadingComment = false;
         while (index < source.Length)
         {
             if (char.IsWhiteSpace(source[index]))
@@ -37,6 +38,7 @@ internal static class LeanSourceTokenizer
 
             if (index + 1 < source.Length && source[index] == '/' && source[index + 1] == '-')
             {
+                var beginsCommand = column == 0 || leadingComment;
                 var depth = 0;
                 do
                 {
@@ -63,11 +65,14 @@ internal static class LeanSourceTokenizer
                     throw new LeanSourceExtractionException("Lean block comment is unterminated.");
                 }
 
+                leadingComment = beginsCommand;
+
                 continue;
             }
 
             var tokenLine = line;
-            var tokenColumn = column;
+            var tokenColumn = leadingComment ? 0 : column;
+            leadingComment = false;
             if (source[index] == '"')
             {
                 var start = index;
@@ -158,6 +163,7 @@ internal static class LeanSourceTokenizer
             {
                 line++;
                 column = 0;
+                leadingComment = false;
             }
             else
             {
@@ -174,7 +180,7 @@ internal static class LeanSourceTokenizer
     private static bool IsIdentifierPart(char value) =>
         IsIdentifierStart(value)
         || char.IsDigit(value)
-        || value is '\'' or '.'
+        || value is '\'' or '.' or '?' or '!'
         || char.GetUnicodeCategory(value) is
             UnicodeCategory.NonSpacingMark
             or UnicodeCategory.SpacingCombiningMark
