@@ -954,3 +954,610 @@ lower bound retains the larger almost-sure class of Definition 1.2.
 [TwoRead]: FIB_TWO_PAID_READ_ALMOST_SURE_ENDPOINT_RISK.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Installed complete memory at the inherited optimum
+
+**Definition 9.1 (The unchanged closed class and its third-budget cost).**
+Use exactly [Two Read, Definition 8.1][TwoRead], including its finite
+nonempty installed set $K$, fixed instructions
+$\operatorname{Read}(t)$ and $\operatorname{Halt}(h)$, reply-only update
+$\delta$, measurable initialization $c_{\rm init}$ on the given
+independent seed space, finite instruction durations, and no silent
+instruction. The seed is not read after initialization. Every action,
+branch, program position and output distinction usable at runtime is
+in the current element of $K$. In particular there is no additional
+reply register, clock, counter, phase, archive or output latch.
+All installed rows, including unused rows and halt rows, count in $|K|$.
+
+Keep the original $J_p$, fixed $j$, $h_\phi$, $v_\phi$, $a,b,\eta,c$,
+$\sigma$, and $q_3,L_3$ of Definitions 1.1--1.3. Define
+
+$$
+M_3(p,j,\nu)=\min\bigl\{|K|:
+q_3=1,\ L_3=1-S_3
+\text{ in that closed class}\bigr\},
+\tag{9.1}
+$$
+
+where $S_3$ is the already proved value (5.10), and the minimum of an
+empty set is $+\infty$. This is an implementation question for a
+subclass attaining the unrestricted optimum, not a new definition of
+the unrestricted protocols. Their possible internal nonreturn after
+finitely many calls remains as in Definition 1.2. The condition in
+(9.1) remains almost-sure budgeted return.
+
+**Lemma 9.2 (Positive initialization cells and actual instruction
+sections).** If a table in Definition 9.1 has $q_3=1$ and
+$L_3=1-S_3$, every initial row $r$ with
+$\omega_r:=\nu(c_{\rm init}^{-1}\{r\})>0$, used deterministically,
+has $q_3(r)=1$ and correctness $S_3$ under $J_p$.
+For such a start, a reachable positive source section after three
+reads has a halt instruction next. At an earlier section the actual
+instruction is either a read or a halt; its fixed output must maximize
+the joint state mass whenever equality in the corresponding scalar
+bound is attained.
+
+Proof. The finite partition and independence give exactly the argument
+of Two Read, Lemma 8.2, now using Theorem 7.1:
+
+$$
+\begin{aligned}
+1=q_3&=\sum_{r\in K}\omega_r q_3(r),\\
+S_3=q_3-L_3&=\sum_{r\in K}\omega_r C_3(r),
+\qquad \sum_{r\in K}\omega_r=1.
+\end{aligned}
+\tag{9.2}
+$$
+
+First $q_3(r)=1$ on every positive cell, then $C_3(r)\le S_3$ on
+those cells forces $C_3(r)=S_3$. No divisibility or atomlessness of the
+seed law is used.
+
+By Lemma 2.1 every actual prefix has its full reply-cylinder section.
+A fourth read on a positive section already excludes that whole
+section from $E_3$. Thus a read after three calls there is impossible.
+The closed instruction set then forces a halt. A nonmaximizing label
+on a positive leaf loses its strict positive difference from $m(C)$;
+all inequalities used here are upper bounds and cannot compensate
+that loss on another leaf.
+
+The scalar bounds of Sections 3--5 apply also to a subtree that stops
+early: for any contemplated extra read, the two refined sections
+partition the old section, and
+$m(C)\le m(C\cap\{X_t=0\})+m(C\cap\{X_t=1\})$.
+This observation is used only for scalar upper bounds. No hypothetical
+read, padding node, address representative or replacement state is
+included in the state argument below. $\square$
+
+For a deterministic attaining start, write $\alpha$ for the parity of
+its first address, $\beta=1-\alpha$, and $T=v_\alpha$ for the actual
+target spin index in phase $\alpha$. An edge $E=\{d,d+1\}$ in the
+following sections always denotes the actual instruction address
+$2d+\alpha$, not a freely observable spin pair. Distinct edge letters
+do not by themselves assert distinct controller states. A fresh
+extension of one of two disjoint edges means a line edge sharing one
+endpoint with that edge and having its other vertex outside both
+edges. A join of two disjoint components means one actual line edge
+with one endpoint in each component; it exists only when the geometry
+of the integer line permits it.
+
+## 10. Equality information from the component bounds
+
+**Lemma 10.1 (Exact equality after a zero edge and a one edge).**
+Suppose two vertex-disjoint phase-$\alpha$ active edges have been
+read, one with label zero and one with label one. The phase is certified.
+The inherited bound for their continuation with at most one further
+read is $a^2\eta$, including the phase prior. Its equality cases are:
+
+| Target position | Equality instructions and labels |
+| --- | --- |
+| In the zero edge | Halt with $h_\alpha(\sigma)$, or make any last actual read and halt with that same label on each positive reply section. |
+| In the one edge | Read the joining edge between the two pairs; both replies are positive and have unique maximizing target spins of opposite values. |
+| Outside both edges | Read the edge joining the target singleton to the zero pair; both replies are positive, with unique maximizing target spins $\sigma$ on zero and $1-\sigma$ on one. |
+
+In the latter two rows such a line edge must exist; otherwise equality
+is impossible. A required last read cannot be replaced by an early halt.
+Instructions after null replies are unrestricted by this statement.
+
+Proof. The two pair weights are $(a^2,b^2)$ and $(\eta,\eta)$.
+These are precisely the cases in Lemma 3.4; we inspect its equality
+comparisons rather than recompute the unrestricted optimum.
+
+If the target is in the zero pair, its best mass before another read
+is already $a^2\eta$. Its preferred spin is uniquely $\sigma$.
+A fresh extension of that pair changes its orientation odds $R^2$
+to $R^3$ or $R$, both strictly greater than one. A join to the tie
+pair preserves the preferred orientation. A repeat, separator, or
+query outside its component only repeats a constraint or partitions
+the common factors. Thus every last read retains that unique
+maximizing target spin on each positive section. This proves both
+necessity of its labels and sufficiency for every address in the
+first row.
+
+If the target is in the one pair, the no-read mass is $c\eta/2$,
+strictly below $a^2\eta$ because $c<2a^2$. A fresh extension gives
+$ac\eta<a^2\eta$, and an operation not reaching the zero pair
+cannot do better. The only remaining improving operation is its join
+to the zero pair, by the exhaustive line geometry of Lemma 3.1.
+In the heavier four-spin completion the zero pair is both $\sigma$,
+and the one pair has one spin of each value. If the joining reply is
+$z$, the endpoint of the one pair next to the zero pair is
+$\sigma\oplus z$; its other endpoint is the complement. Each heavier
+completion has weight $a^3b$, versus $ab^3$ for its complement.
+Thus the target's maximizing values are opposite for the two joining
+replies, uniquely so since $a>b$. Each best full-law mass is
+$a^3b/2=a^2\eta/2$, proving equality.
+
+For an exterior target, its singleton has odds $R$. A join to the
+tie pair, an edge to a fresh vertex, or an operation not reaching the
+target leaves best sum $ac\eta<a^2\eta$. A join between the two
+nontarget pairs also leaves the target independent and has that same
+sum. Joining the target to the zero pair is the remaining possibility.
+A zero joining reply gives the constant triple with weights $a^3,b^3$;
+a one gives weights $a^2b,ab^2$, with the target minority in the
+heavier assignment. Multiplication by the independent one-pair factor
+and the phase prior gives best masses $a^3\eta$ and $a\eta^2$.
+Their sum is $a^2\eta$, and the stated labels are unique. All required
+edges here are new active edges on a finite line forest; both replies
+therefore have positive mass. $\square$
+
+**Lemma 10.2 (Exact equality after two one edges, including ties).**
+After two vertex-disjoint phase-$\alpha$ active one edges $E,H$,
+the inherited continuation bound is $2a\eta^2$.
+If $T$ belongs to either pair, equality requires a last read that is a
+fresh extension of that pair. Both replies are positive. Their unique
+maximizing target spins are opposite: use the heavier three-spin
+completion of (3.3) on the extended pair.
+
+If $T$ is outside both pairs, an early halt attains equality exactly
+with label $h_\alpha(\sigma)$. Any last actual read can also attain
+it, with these complete maximizing-label rules on positive sections:
+
+1. If that read is active and its edge contains $T$ and one vertex
+   outside $E\cup H\cup\{T\}$, reply zero uniquely requires
+   $h_\alpha(\sigma)$; on reply one either $h_\alpha(0)$ or
+   $h_\alpha(1)$ is maximizing.
+2. Every other last read uniquely requires $h_\alpha(\sigma)$ on
+   each positive reply section.
+
+In particular neither a wrong-phase label nor a further read on a
+positive third-reply section can use the tie.
+
+Proof. Both pair components have weights $(\eta,\eta)$.
+For an internal target the best mass before a new read is $\eta^2$,
+strictly smaller than $2a\eta^2$. Joining the two tie pairs leaves
+the target tied; a disjoint query, repeat or separator also leaves it
+tied. Exactly a fresh extension of its own pair gives orientation
+weights $a^2b,ab^2$ on its three-spin component, with the other one
+pair independent. This is the equality operation in Lemma 3.5 and
+Lemma 3.1. For either last reply the heavier triple has two majority
+spins and one minority spin, so (3.3) gives unique, opposite target
+values at the two replies.
+
+For an exterior target, the current mass is already $2a\eta^2$.
+If a new edge joins the target to a tie pair, that pair contributes
+$\eta$ for either target value at either reply, and the target's
+prior $a>b$ keeps $\sigma$ uniquely preferred. If the new edge
+contains no target, it only partitions independent constraints;
+the same preference holds, including a join of the two nontarget
+pairs. Repeats and separators have the same conclusion on their
+possible replies. Finally an edge from $T$ to an entirely fresh
+vertex gives target weights $(a^2,b^2)$ on zero and $(\eta,\eta)$
+on one, times the unchanged factors from $E,H$. Its best sum leaves
+the old majority correctness unchanged, but its one reply has exactly
+the two stated tied labels. This exhausts every actual integer address
+and proves both necessity and sufficiency. $\square$
+
+**Lemma 10.3 (Equality in the final one after two zero edges).**
+Let $E,F$ be disjoint active zero edges and let $G$ be the next active
+edge. Equality in the inherited bound
+
+$$
+m(E=0,F=0,G=1)\le a^2c\eta
+\tag{10.1}
+$$
+
+holds exactly when $G$ is vertex-disjoint from both $E,F$ and
+$T\in E\cup F$. The maximizing label on this one leaf is then uniquely
+$h_\alpha(\sigma)$.
+
+Proof. Unpack Lemma 4.2. For a disjoint $G$, target in a zero pair
+gives exactly $a^2c\eta$, whereas target in $G$ gives
+$c^2\eta/2<a^2c\eta$, and exterior target gives
+$ac^2\eta<a^2c\eta$. These inequalities are strict by
+$c<2a^2$ and $c<a$.
+
+A repeated edge makes the one reply impossible. For an extension,
+the possible maxima are $ac\eta/2$ and $a^2\eta/2$; they are
+strictly smaller than the bound by $a>1/2$ and $c>1/2$.
+For a join of the two zero pairs the possible maxima are
+$\eta^2/2$ and $a\eta^2$. The latter strictly bounds the former
+and is strictly below $a^2c\eta$, since $b<c$. These are all the
+incidences. In the equality case the target pair's two orientation
+weights $a^2,b^2$ have a common positive factor from the other
+components; their strict inequality gives the unique label. $\square$
+
+## 11. The complete equality description for actual attaining starts
+
+**Proposition 11.1 (All attaining starts, with optional last reads).**
+Fix a table of Definition 9.1 and a deterministic initial row with
+$q_3=1$. It attains correctness $S_3$ if and only if its actual
+positive-section execution has the following form, with the terminal
+labels specified below. On null or inconsistent sections this
+proposition imposes no instruction or output condition.
+
+The first instruction reads an edge $E$ of parity $\alpha$.
+After first reply zero it reads an edge $F$ of that same parity;
+$E,F$ are vertex-disjoint. After replies $00$ it reads an edge $G$
+of that parity, disjoint from both $E,F$. The actual target index
+satisfies $T\in E\cup F$. Its third-reply successors on this prefix
+halt, with labels
+
+$$
+000:\ h_\beta(\sigma),\qquad
+001:\ h_\alpha(\sigma).
+\tag{11.1}
+$$
+
+After first reply one it reads an edge $H$ of parity $\alpha$,
+vertex-disjoint from $E$. Write $xy$ for the first two replies,
+including when the actual second edge is $F$ on the zero subtree
+and $H$ on the one subtree. There are exactly these cases:
+
+| Target incidence | Prefix $01$ | Prefix $10$ | Prefix $11$ |
+| --- | --- | --- | --- |
+| $T\in E$ | Optional last read or halt; always target spin $\sigma$. | Required join of $E,H$; use Lemma 10.1's one-pair target labels. | Required fresh extension of $E$ outside $E\cup H$; use Lemma 10.2's internal-target labels. |
+| $T\in F\cap H$ | Required join of $E,F$; use Lemma 10.1's one-pair target labels. | Optional last read or halt; always target spin $\sigma$. | Required fresh extension of $H$ outside $E\cup H$; use Lemma 10.2's internal-target labels. |
+| $T\in F\setminus H$ | Required join of $E,F$; use Lemma 10.1's one-pair target labels. | Required join of $T$ to the zero pair $H$; its zero/one target spins are $\sigma,1-\sigma$. | Optional last read or halt; exactly the exterior-target labels and ties of Lemma 10.2. |
+
+Every target-spin label in the table means its actual state
+$h_\alpha(s)$. Every required joining edge must exist in the original
+integer line. The optional last read can have any actual integer
+address, including the other parity or a repeat; it is still paid.
+After any last read every positive reply successor must immediately
+halt with the specified maximizing label. All mandatory prefixes and
+both replies of every mandatory third read have positive source mass.
+No early halt is allowed at the root, after the first reply, or on
+$00$; the optional cells displayed are the only possible positive
+sections of early return.
+
+Proof. An initial halt gives correctness at most $a/2<S_3$.
+For any first read both replies have positive mass, respectively
+$1-\eta$ and $\eta$. Let $D_0,D_1$ be the actual correct masses
+on these two sections. Lemma 9.2 and Lemmas 5.1--5.2 give
+
+$$
+D_0\le Z,\qquad D_1\le D,\qquad Z+D=S_3.
+\tag{11.2}
+$$
+
+Equality in the total forces equality in both bounds and in every
+intervening bound that sums to them. Halting on first zero gives at
+most $a/2<Z$; halting on first one gives at most $a\eta<D$, by
+(5.3). Thus both actual successors read.
+
+Consider their zero subtree first. The proof of Lemma 5.2 gives
+$Q<Z$ if $F$ has the other parity. For the same parity its repeated
+and adjacent cases are strictly below $Z$, by (5.6)--(5.8).
+These are bounds for at most the remaining reads, hence include
+halting at either second-reply section by Lemma 9.2. Consequently
+$F$ has the same parity and is disjoint from $E$.
+If the actual $00$ instruction halts, its mass is at most $a/2$,
+and its $01$ continuation has mass at most $a^2\eta$ by Lemma 3.4.
+Their sum falls short of $Z$ by $a^2c\eta>0$. Thus $00$ really
+reads an address $G$. If its parity is $\beta$, the bound is again
+$Q<Z$, by the corresponding case in Lemma 5.2.
+
+For parity $\alpha$, the $000$ leaf has maximum exactly $a/2$:
+it contains all of phase $\beta$, and no state has prior above
+$a/2$. The other two terms have upper bounds
+
+$$
+D_{01}\le a^2\eta,\qquad m(001)\le a^2c\eta.
+\tag{11.3}
+$$
+
+Their sum with $a/2$ is $Z$, so all three bounds must be attained.
+Lemma 10.3 forces $G$ disjoint from $E,F$ and $T\in E\cup F$.
+On $001$ its unique label is the second label in (11.1).
+On $000$ the phase-$\alpha$ largest mass is $a^2c^2/2<a/2$,
+and the phase-$\beta$ majority has mass $a/2>b/2$; hence its
+unique label is the first label in (11.1). At $01$, apply Lemma 10.1
+with $E$ the zero pair and $F$ the one pair. If $T\in E$, this
+is its optional case; otherwise $T\in F$ and its required join
+and unique, opposite labels give the last two rows of the table.
+
+For the first-one subtree, the second instruction cannot be a
+separator, a repeat, or an adjacent edge: each has bound $a\eta<D$
+in Lemma 5.1. Thus its actual edge $H$ has parity $\alpha$ and is
+disjoint from $E$. Its two continuation bounds are
+
+$$
+D_{10}\le a^2\eta,\qquad D_{11}\le2a\eta^2,
+\tag{11.4}
+$$
+
+and they sum to $D$. They too must both be equalities. Apply
+Lemma 10.1 to $E=1,H=0$, and Lemma 10.2 to $E=1,H=1$.
+Together with $T\in E\cup F$ these give exactly the three rows
+of the displayed table. In its first row the required join also forces
+$E,H$ to have precisely one intervening line edge. This restriction
+is a conclusion about actual addresses, not an address normalization.
+
+Each required prefix has distinct active edges on a finite line
+forest, with consistent prescribed labels; every corresponding spin
+assignment has positive product weight since $a,b>0$. Phase
+$\alpha$ therefore gives positive mass to all the required branches
+and to both replies of each required new edge. The all-zero section
+also has the entire positive phase-$\beta$ contribution. Lemma 9.2
+forces all their third-reply successors to halt.
+
+Conversely take an actual execution with the displayed conditions.
+On its zero subtree (11.1) attains $a/2$ and $a^2c\eta$;
+Lemma 10.1 makes the $01$ continuation attain $a^2\eta$.
+Thus it attains the inherited value $Z$ on that same source.
+On its one subtree Lemmas 10.1--10.2 attain the two values in
+(11.4), hence $D$. They are continuations of the same first read,
+so their sum is $S_3$. Optional last reads and their tied choices
+attain these same bounds by the precise label rules above.
+This proves necessity and sufficiency, including all positive early
+halts and all maximizing-label ties. $\square$
+
+## 12. Sharing obstruction, an actual complete table, and the minimum
+
+**Lemma 12.1 (Six distinct read rows and three distinct halt rows).**
+Every deterministic attaining start in Proposition 11.1 visits at least
+six distinct read states and at least three distinct halt states on
+positive source sections. This lower bound concerns states of the
+original installed table, allowing sharing at different branches and
+depths, rather than occurrences in an unrolled tree.
+
+Proof. Denote the actual root read state by $r$, and its two
+successors by $r_0,r_1$, with edge instructions $F,H$ respectively.
+Let $r_{00}$ be the required third read at edge $G$.
+These are names for reached table states, whose distinctness must be
+proved. There are two further mandatory third-read occurrences,
+selected as follows.
+
+If $T\in E$, take $r_{10}$ at the joining edge $P$ of $E,H$ and
+$r_{11}$ at the fresh extension $W$ of $E$ outside $E\cup H$.
+The edges $P,W$ are distinct: $P$ meets $H$, whereas $W$ adds a
+vertex outside $H$. Each meets $E$, whereas $G$ is disjoint from
+$E$. Thus the three mandatory third-read states
+$r_{00},r_{10},r_{11}$ are pairwise distinct by their fixed addresses.
+If $r_0=r_1$, their zero successors would coincide. Those successors
+are $r_{00}$ and $r_{10}$, whose addresses have just been shown
+different. Hence $r_0\ne r_1$, even if $F=H$ as addresses.
+
+Suppose instead $T\in F$. At $01$ there is a mandatory third read
+$r_{01}$ on the joining edge $P$ of $E,F$. This edge meets $E$.
+If $T\in H$, select the required $r_{11}$ on a fresh extension
+$W$ of $H$ outside $E\cup H$. Its two vertices are outside $E$,
+so $W\ne P$. Also $G\ne P$, since $G$ is disjoint from $E$.
+The only possible sharing among these third occurrences is therefore
+$r_{00}=r_{11}$ with the same address $G=W$.
+That sharing is impossible by their actual zero successors: both
+zero replies have positive mass; after $000$ the successor halts
+with $h_\beta(\sigma)$, whereas after $110$ it halts with a
+phase-$\alpha$ label. The phase state pairs are disjoint.
+Thus $r_{00},r_{01},r_{11}$ are three distinct states even when
+two of their addresses coincide. If $r_0=r_1$, their instructions
+force $F=H$; their one successors would then identify $r_{01}$
+with $r_{11}$, contradicting $P\ne W$. Hence again
+$r_0\ne r_1$.
+
+If $T\in F\setminus H$, select the required $r_{10}$ on the
+edge $W$ joining $T$ to the zero pair $H$. This edge is disjoint
+from $E$, because both $T$ and $H$ are outside $E$; so it differs
+from $P$, which meets $E$. It meets $F$ at $T$, so differs from
+$G$, which is disjoint from $F$. Also $G\ne P$. Thus
+$r_{00},r_{01},r_{10}$ are pairwise distinct. In this case $F,H$
+have different addresses since one contains $T$ and the other does
+not, so $r_0\ne r_1$ directly.
+
+It remains to exclude sharing across execution depths. In every case
+$E$ differs from $F,H$, since those edges are disjoint from it;
+therefore $r$ is distinct from $r_0,r_1$. Each of $r_0,r_1$
+has at least one fixed successor that is a read state: for $r_0$
+use its zero successor $r_{00}$; for $r_1$ use one of the mandatory
+third reads in the applicable case. Every mandatory third read has
+both replies positive and both fixed successors are halt states by
+Proposition 11.1. It therefore cannot be the same state as either
+$r_0$ or $r_1$: the reply whose successor is a read would instead
+have to lead to a halt. Nor can it be $r$, whose two successors
+are reads. This proves six distinct installed read rows in every case.
+Extra optional read rows, if present, cannot reduce their number.
+
+There are three distinct required halt labels. The positive $000$
+and $001$ leaves require $h_\beta(\sigma)$ and
+$h_\alpha(\sigma)$. If $T\in E$, the two leaves of the join at
+$10$ require opposite phase-$\alpha$ spins; if $T\in F$, use
+the join at $01$ instead. These labels uniquely require a halt with
+$h_\alpha(1-\sigma)$ as well. A halt state has one fixed label,
+so three halt rows are necessary and cannot be read rows.
+
+The proof used actual equal-state consequences of the fixed update
+map, including an output conflict when literal addresses alone do
+not separate rows. It placed no topological ordering on the installed
+graph. Null branches may have cycles, arbitrary further reads or
+other outputs; the contradiction always uses a positive reply section
+and its fixed successor. Likewise extra installed or uninitialized
+rows are still counted and cannot remove these required states.
+$\square$
+
+**Definition 12.2 (A complete table on the original source).**
+Choose either $\alpha\in\{0,1\}$ as public data, put
+$\beta=1-\alpha$ and $T=v_\alpha$, and use distinct states
+$R,R_0,R_1,R_{00},R_{10},R_{11},Z,P,Q$.
+Initialize constantly at $R$ on the given unchanged seed space.
+Install exactly these rows:
+
+| State | Actual instruction | Successor for reply zero | Successor for reply one |
+| --- | --- | --- | --- |
+| $R$ | $\operatorname{Read}(2T+\alpha)$ | $R_0$ | $R_1$ |
+| $R_0$ | $\operatorname{Read}(2(T+2)+\alpha)$ | $R_{00}$ | $P$ |
+| $R_1$ | $\operatorname{Read}(2(T+2)+\alpha)$ | $R_{10}$ | $R_{11}$ |
+| $R_{00}$ | $\operatorname{Read}(2(T+4)+\alpha)$ | $Z$ | $P$ |
+| $R_{10}$ | $\operatorname{Read}(2(T+1)+\alpha)$ | $Q$ | $P$ |
+| $R_{11}$ | $\operatorname{Read}(2(T-1)+\alpha)$ | $P$ | $Q$ |
+| $Z$ | $\operatorname{Halt}(h_\beta(\sigma))$ | -- | -- |
+| $P$ | $\operatorname{Halt}(h_\alpha(\sigma))$ | -- | -- |
+| $Q$ | $\operatorname{Halt}(h_\alpha(1-\sigma))$ | -- | -- |
+
+The dashes indicate that halt instructions have no update. All read
+updates, including those on source-inconsistent binary histories, are
+specified in the table. Its second rows at the same address are two
+different installed states with different updates.
+
+**Proposition 12.3 (Same-source upper realization).**
+Definition 12.2 is legal for either original endpoint, either first
+parity, both bias directions and every specified unchanged independent
+seed law. It has $q_3=1$ and correctness $S_3$.
+
+Proof. The first edge is $\{T,T+1\}$, containing the actual
+phase-$\alpha$ target. Both second edges are $\{T+2,T+3\}$;
+the zero-zero third edge is $\{T+4,T+5\}$, disjoint from both.
+The $10$ edge $\{T+1,T+2\}$ joins the first two pairs; its
+heavier completions put the target at $1-\sigma$ and $\sigma$
+on joining replies zero and one. The $11$ edge
+$\{T-1,T\}$ is a fresh extension of the target's one pair;
+its two heavier triples put the target at $\sigma,1-\sigma$.
+These are precisely the first row of Proposition 11.1 with its unique
+labels. On $01$ the rule immediately halts with the allowed majority
+label. Therefore that proposition proves correctness $S_3$.
+
+Every formal binary execution halts after two reads on $01$ and
+three on every other first-two-reply prefix. Each actual instruction
+has finite duration, so in particular $q_3=1$. No artificial read
+refund is involved: the repeat on $01$ in Definition 6.1 is simply
+not made by this table. For $\alpha=0$ all other actual calls and
+outputs are those of that existing source attainer. For $\alpha=1$
+the same displayed integer literals are active edges in phase one
+and paid separators in phase zero; the equality verification uses
+the actual $T=v_1=0$, not a transported target. The all-zero output
+uses the other phase's actual $S_{v_\beta}$ and its original majority
+mass $a/2$.
+
+Explicitly $v_0=j$, $v_1=0$ and (1.3) give the required endpoint
+state for both $j=0,1$ in both phase alternatives. The majority
+convention uses $\sigma=1$ for $p>1/2$ and $\sigma=0$ for
+$p<1/2$, with no change of source law. Negative integer literals,
+including $2(T-1)+\alpha$ when negative, are legal and charged.
+Constant initialization consumes no property of the seed law and
+leaves it unchanged. All current-stage and output distinctions are
+exactly the installed states in the table. $\square$
+
+**Theorem 12.4 (Exact all-attainers installed-state minimum).**
+For the original biased source, with $0<p<1$, $p\ne1/2$, either
+fixed original $j\in\{0,1\}$ and every given unchanged independent
+seed probability space, in exactly the closed class of Two Read,
+Definition 8.1,
+
+$$
+\boxed{M_3(p,j,\nu)=9=6+3.}
+\tag{12.1}
+$$
+
+Every attaining table has at least six installed read rows and three
+installed halt rows. Definition 12.2 attains the bound, separately for
+either chosen first parity. Thus the minimum has no further dependence
+on $p,j,\nu$ in the stated parameter range.
+
+Proof. A finite initialization partition has at least one cell of
+positive measure. Lemma 9.2 makes its deterministic start an attainer.
+Proposition 11.1 and Lemma 12.1 force six distinct read states and
+three distinct halt states in the original installed $K$.
+Thus $|K|\ge6+3=9$ for every attaining table, regardless of the
+number of positive initialization cells or unused rows. The actual
+table of Definition 12.2 has exactly those nine rows and attains
+$S_3$ by Proposition 12.3. The universal lower bound and the original
+source upper realization therefore agree. The risk value itself
+remains Theorem 7.1's unrestricted result. $\square$
+
+## 13. Source ownership, literature correspondence and exact scope
+
+**Attribution 13.1 (Reused results and the additional conclusion).**
+Sections 9--12 use the original law and paid measurable protocol of
+Original, Proposition 2.1, (2.2), Definition 9.1 and (9.4), also stated
+in Risk, Definitions 1.1--1.3. Their component products and acquired
+source-section method retain the ownership listed in Attribution 8.1.
+The scalar values $S_3,Z,D$ and all upper bounds used to identify
+equality are those of Sections 3--7 of this volume. The complete
+instruction contract, finite initialization-cell argument and the
+one/two-read complete-memory precedents are Two Read, Definition 8.1,
+Lemma 8.2 and Theorem 8.5. None of these supplied results is claimed
+as new here.
+
+The added `repo-derived` ordinary-paper result is the complete
+three-read equality description, including its exterior-target tie,
+and the instruction/successor/output sharing obstruction that applies
+to every attaining installed table, consumed in Theorem 12.4 with one
+matching actual-source table. This is source-relative additional
+coverage; no literature-wide priority claim is made.
+
+Alberto Larrauri and Roderick Bloem,
+[*Minimization and Synthesis of the Tail in Sequential Compositions of
+Mealy machines*, arXiv:2105.10292v2, Section 5, Theorem 4 and Appendix B](https://arxiv.org/html/2105.10292v2),
+give the two directions between implementations of a specified
+observation machine and closed compatible covers, with no more cover
+classes than implementation states and a realization with one state
+per class. Compatibility alone does not replace successor closure.
+The actual equality-of-successor argument in Lemma 12.1 is an
+application of that established deterministic closure principle; this
+paper supplies the original source's equality cases before doing the
+outer minimization over its optimal policies. No numerical state
+bound for this source is attributed to that general theorem.
+
+Sebastian Junges et al.,
+[*Permissive Finite-State Controllers of POMDPs using Parameter
+Synthesis*, arXiv:1710.10294v2, Definition 7](https://arxiv.org/html/1710.10294v2),
+define finite memory nodes, an observation-dependent action map, and
+an action/observation-dependent memory update, allowing randomization.
+That is finite-memory control background. It is not the closed
+fixed-instruction, reply-consumed, fixed-halt-label interface being
+minimized here; neither a free current observation nor an online
+randomizer is imported from it.
+
+[Observation Context, Definition 60.8 and Theorem 60.9](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)
+already gives closed-cover and action/label/successor partition
+characterizations for one fixed active atomic tree. Its theorem
+explicitly leaves the choice of acquisition policy outside that
+minimum. The passive-word promise-coloring theorem in
+[Promise Colorings and Total Output Automata](../../../Blueprint/D5/S0/Automata/PromiseColoringTotalization.md)
+likewise retains its own prescribed-word and output contract.
+Neither theorem alone supplies Proposition 11.1's all-optimal-policy
+quantifier or Lemma 12.1's installed-state obstruction.
+
+The [stopping-law radius result](FIB_STOPPING_LAW_RIGIDITY_AND_SHARP_LINEAR_ADDRESS_RADIUS.md)
+and the finite-address/signature results cited in Two Read concern
+law or signature preservation and integer address range. They do not
+preserve controller-state count by premise and are not used for that
+purpose. The [K-bonacci complete-controller counts](KBONACCI_COMPLETE_CONTROLLER_MEMORY.md)
+use emitted-block actions, a free INITIAL observation, different
+source and targets, and a different fee. No state count is transferred
+from that contract. The bilateral Fibonacci dictionary's execution
+parsing and reset/count applications, and the joint stopped-law or
+quantum-port problems, likewise furnish no resource premise here.
+
+**Boundary 13.2 (What the installed-state conclusion does and does not
+measure).** All necessities use actual instructions and positive finite
+source sections; none replaces $q_3=1$ by an all-input cap on the
+original competitors. Null or inconsistent reply branches and extra
+installed rows may carry cycles. The closed subclass has no silent
+instruction, whereas the unrestricted original acquisition class still
+allows internal nonreturn after finitely many reads. A total table here
+is not a compiler for that larger class.
+
+The counted resource is the entire finite controller state set with
+fixed integer literals and fixed output labels. Static address lengths,
+code length, the mechanism implementing initialization, physical bit
+storage, writes, processing time, energy and expected paid reads are
+separate resources. There is no external phase, seed reread, reply
+latch, program counter or output archive in the realizing table or in
+the lower-bound model. The theorem does not extend to $p=1/2$ or
+$p=0,1$, to $q_3<1$, to a larger read budget, or to another loss.
+It is an ordinary mathematical proof, not a Lean-kernel or independent
+review certification. It supplies this endpoint-memory increment;
+it does not settle the broader FIB research goal.
+
+## 追加锚（本行以下为增补区）
