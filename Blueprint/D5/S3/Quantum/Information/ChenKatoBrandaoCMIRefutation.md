@@ -52,7 +52,35 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{
 
 Section III.C, PDF p. 16, Conjecture III.1, verbatim: “For any channel ℰ: C → C′ with trivial correctable algebra 𝒜(ℰ) = ℂ I, there exists a constant η < 1 such that for any tripartite system ABC and any state ρ_ABC, it holds that I(A:C′|B)_ℰ(ρ) ≤ η I(A:C|B)_ρ.” The dimensions n, nPrime, dA and dB range over all natural numbers; Fin gives zero-based coordinates. The finite Kraus index type iota and family K are arbitrary. Normalization is the literal sum of K adjoint times K. DensityState is the existing carrier of positive semidefinite trace-one matrices and permits singular states. The let-bound L is I_AB kronecker K. ofKraus is the landed spelling for FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus: ofKraus(L,L,X) is literally the sum of L_i X L_i adjoint. CStarMatrix.ofMatrix.symm(val(rho)) exposes the same density matrix in Matrix coordinates. The strict upper bound eta < 1 is uniform over all ancillary dimensions and states for the fixed channel.
 
-**Theorem 1.5 (A four-dimensional channel refutes the conjecture).**
+**Theorem 1.5 (Tracing the right factor of a real diagonal matrix).**
+
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall r \in (A \times B) \to \mathbb{R},\; \operatorname{PartialTraceMutualInformation.partialTraceRight}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (x:(A \times B)) \mapsto (r\left(x\right): \mathbb{C})\right)\right) = \operatorname{Matrix.diagonal}\left(\operatorname{fun} (a:A) \mapsto ((\sum_{b:B} (r\left((a, b)\right)): \mathbb{R}): \mathbb{C})\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceRight_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Chi-Fang Chen, Kohtaro Kato and Fernando G. S. L. Brandão (2020). *Matrix Product Density Operators: when do they have a local parent Hamiltonian?*. URL: <https://arxiv.org/abs/2010.14682v3>.
+
+*Commentary.*
+
+For arbitrary finite index types A and B and any real function r on A × B, tracing out B sums the diagonal weights over B. The real weights and their real sums are embedded in ℂ. No sign or normalization condition is imposed on r.
+
+**Theorem 1.6 (Tracing the left factor of a real diagonal matrix).**
+
+$$\forall A \in \operatorname{Type},\; \forall B \in \operatorname{Type},\; [\operatorname{Fintype}\left(A\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(B\right)] \forall r \in (A \times B) \to \mathbb{R},\; \operatorname{PartialTraceMutualInformation.partialTraceLeft}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (x:(A \times B)) \mapsto (r\left(x\right): \mathbb{C})\right)\right) = \operatorname{Matrix.diagonal}\left(\operatorname{fun} (b:B) \mapsto ((\sum_{a:A} (r\left((a, b)\right)): \mathbb{R}): \mathbb{C})\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceLeft_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Chi-Fang Chen, Kohtaro Kato and Fernando G. S. L. Brandão (2020). *Matrix Product Density Operators: when do they have a local parent Hamiltonian?*. URL: <https://arxiv.org/abs/2010.14682v3>.
+
+*Commentary.*
+
+For arbitrary finite index types A and B and any real function r on A × B, tracing out A sums the diagonal weights over A. The remaining matrix is diagonal on B, with the real marginal sums embedded in ℂ. The weights may be negative.
+
+**Theorem 1.7 (A four-dimensional channel refutes the conjecture).**
 
 $$\neg claim$$
 
@@ -76,6 +104,8 @@ For 0 < p < 1, take Kraus matrices K_(j,false) = sqrt(1-p) Matrix.single(j,j,1) 
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.cmi`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.correctable`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.entropy`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceLeft_diagonal`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.partialTraceRight_diagonal`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoCMIRefutation.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
