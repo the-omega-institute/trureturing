@@ -75,7 +75,10 @@ internal sealed class FourCopyConcentrationRefutationDocument : IScribeDocumentD
                         + "For every coefficient matrix C, output K K C is (det C) squared times the Bell array D5.S3.Quantum.QubitWitnesses.bellCoefficients, "
                         + "whose entries are one on the diagonal and zero off the diagonal. The fixed local contractions therefore give a universal conclusive protocol with success probability 2|det C| to the fourth power. "
                         + "At C0 this probability is 1/8, whereas B C0 is zero, contradicting the asserted inequality."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("orthey-philip-kondra-streltsov-2026-four-copy-concentration-bound"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
