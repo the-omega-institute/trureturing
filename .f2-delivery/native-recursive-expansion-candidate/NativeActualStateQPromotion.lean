@@ -7,6 +7,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateQPromotion
 
 open D5.S3.Combinatorics.Graph.PrefixReversalZeroStarComplement
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveExpansion
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
