@@ -450,4 +450,102 @@ private theorem B_half_col (A : A4)
   rw [← contract_add_left, effect_halves.1, contract_smul_left,
     contract_id_left A h1, (effects_transpose j).2]
 
+private def sign : Fin 2 → ℝ := ![1, -1]
+private def leftIndex : Fin 2 → Fin 4 := ![0, 1]
+private def rightIndex : Fin 2 → Fin 4 := ![2, 3]
+private def G (A : A4) (s t : Fin 2) : M4 :=
+  (4 : ℝ) • B A (leftIndex s) (rightIndex t)
+
+private theorem G_possemidef (A : A4)
+    (hT : (jordanAction Phi Psi A).PosSemidef) (s t : Fin 2) :
+    (G A s t).PosSemidef :=
+  (B_possemidef A hT _ _).smul (by norm_num : (0 : ℝ) ≤ 4)
+
+private theorem G_marginals (A : A4)
+    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (∀ s : Fin 2, ∑ t : Fin 2, G A s t =
+      (1 / 2 : ℝ) • (1 + ((4 / 5 : ℝ) * sign s) • P)) ∧
+    (∀ t : Fin 2, ∑ s : Fin 2, G A s t =
+      (1 / 2 : ℝ) • (1 + ((3 / 4 : ℝ) * sign t) • Q)) := by
+  constructor
+  · intro s
+    rw [Fin.sum_univ_two]
+    change (4 : ℝ) • B A (leftIndex s) 2 + (4 : ℝ) • B A (leftIndex s) 3 = _
+    rw [← smul_add, B_half_row A h2]
+    fin_cases s <;> dsimp [E, S, leftIndex, sign] <;> module
+  · intro t
+    rw [Fin.sum_univ_two]
+    change (4 : ℝ) • B A 0 (rightIndex t) + (4 : ℝ) • B A 1 (rightIndex t) = _
+    rw [← smul_add, B_half_col A h1]
+    fin_cases t <;> dsimp [F, S, rightIndex, sign] <;> module
+
+private theorem G_moments (A : A4)
+    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4)))
+    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) :
+    (∑ s : Fin 2, ∑ t : Fin 2, G A s t) = 1 ∧
+    (∑ s : Fin 2, ∑ t : Fin 2, sign s • G A s t) = (4 / 5 : ℝ) • P ∧
+    (∑ s : Fin 2, ∑ t : Fin 2, sign t • G A s t) = (3 / 4 : ℝ) • Q := by
+  obtain ⟨hr, hc⟩ := G_marginals A h1 h2
+  have hr0 := hr 0
+  have hr1 := hr 1
+  have hc0 := hc 0
+  have hc1 := hc 1
+  simp only [Fin.sum_univ_two] at hr0 hr1 hc0 hc1 ⊢
+  dsimp [sign] at hr0 hr1 hc0 hc1 ⊢
+  constructor
+  · calc
+      _ = (G A 0 0 + G A 0 1) + (G A 1 0 + G A 1 1) := rfl
+      _ = _ := congrArg₂ (· + ·) hr0 hr1
+      _ = 1 := by module
+  constructor
+  · calc
+      _ = (G A 0 0 + G A 0 1) - (G A 1 0 + G A 1 1) := by module
+      _ = _ := congrArg₂ (· - ·) hr0 hr1
+      _ = (4 / 5 : ℝ) • P := by module
+  · calc
+      _ = (G A 0 0 + G A 1 0) - (G A 0 1 + G A 1 1) := by module
+      _ = _ := congrArg₂ (· - ·) hc0 hc1
+      _ = (3 / 4 : ℝ) • Q := by module
+
+private def K (s t : Fin 2) : M4 :=
+  (2 : ℝ) • 1 - sign s • P - sign t • Q
+private def H (s t : Fin 2) : M4 :=
+  (3 / 2 : ℝ) • 1 - sign s • P - sign t • Q
+
+private theorem H_gram (s t : Fin 2) :
+    H s t = (1 / 4 : ℝ) • ((K s t).conjTranspose * K s t) := by
+  obtain ⟨hp, hq, _, _, hpp, hqq, hpq⟩ := pauli_facts
+  unfold H K
+  simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul,
+    Matrix.conjTranspose_one, hp.eq, hq.eq, star_trivial]
+  fin_cases s <;> fin_cases t <;> dsimp [sign]
+  all_goals
+    simp only [one_smul, neg_smul, sub_neg_eq_add, sub_mul, mul_sub,
+      add_mul, mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+      Matrix.one_mul, Matrix.mul_one, hpp, hqq]
+    have hx : Q * P = -(P * Q) := by
+      exact eq_neg_of_add_eq_zero_right hpq
+    rw [hx]
+    module
+
+private theorem trace_gram_mul_re_nonneg (K G : M4) (hG : G.PosSemidef) :
+    0 ≤ (Matrix.trace ((K.conjTranspose * K) * G)).re := by
+  have h := (hG.mul_mul_conjTranspose_same K).trace_nonneg
+  have hh := (RCLike.nonneg_iff.mp h).1
+  change 0 ≤ (Matrix.trace (K * G * K.conjTranspose)).re at hh
+  simpa only [Matrix.trace_mul_cycle K G K.conjTranspose] using hh
+
+private theorem trace_sum_nonneg (A : A4)
+    (hT : (jordanAction Phi Psi A).PosSemidef) :
+    0 ≤ ∑ s : Fin 2, ∑ t : Fin 2, (Matrix.trace (H s t * G A s t)).re := by
+  apply Finset.sum_nonneg
+  intro s _
+  apply Finset.sum_nonneg
+  intro t _
+  rw [H_gram, Matrix.smul_mul, Matrix.trace_smul]
+  rw [Complex.smul_re, smul_eq_mul]
+  exact mul_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 4)
+    (trace_gram_mul_re_nonneg (K s t) _ (G_possemidef A hT s t))
+
 end D5.S3.QuantumChannels.JordanCompatibilityRefutation
