@@ -293,4 +293,95 @@ private theorem poly_log_moment (s : ℝ) (hs : |s| ≤ 1) :
     smul_eq_mul]
   ring
 
+private noncomputable def witnessAlpha : ℝ := Real.arctan (Real.sqrt 10)
+
+private noncomputable def witnessBeta : ℝ := Real.arctan (1 / 3)
+
+private theorem witnessAlpha_mem : witnessAlpha ∈ Icc 0 (Real.pi / 2) :=
+  ⟨Real.arctan_nonneg.mpr (Real.sqrt_nonneg 10), (Real.arctan_lt_pi_div_two _).le⟩
+
+private theorem witnessBeta_mem : witnessBeta ∈ Icc 0 (Real.pi / 2) :=
+  ⟨Real.arctan_nonneg.mpr (by norm_num), (Real.arctan_lt_pi_div_two _).le⟩
+
+private theorem witness_coefficients :
+    Real.sin witnessAlpha * Real.cos witnessBeta = 3 / Real.sqrt 11 ∧
+    Real.cos witnessAlpha = 1 / Real.sqrt 11 ∧
+    Real.sin witnessAlpha * Real.sin witnessBeta = 1 / Real.sqrt 11 := by
+  have h10 : Real.sqrt 10 ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
+  have h11 : Real.sqrt 11 ≠ 0 := (Real.sqrt_pos.mpr (by norm_num)).ne'
+  have ha : Real.sin witnessAlpha = Real.sqrt 10 / Real.sqrt 11 := by
+    simp only [witnessAlpha, Real.sin_arctan]
+    rw [Real.sq_sqrt (by norm_num)]
+    norm_num
+  have hac : Real.cos witnessAlpha = 1 / Real.sqrt 11 := by
+    simp only [witnessAlpha, Real.cos_arctan]
+    rw [Real.sq_sqrt (by norm_num)]
+    norm_num
+  have hbc : Real.cos witnessBeta = 3 / Real.sqrt 10 := by
+    norm_num [witnessBeta, Real.cos_arctan, Real.sqrt_div]
+  have hbs : Real.sin witnessBeta = 1 / Real.sqrt 10 := by
+    norm_num [witnessBeta, Real.sin_arctan, Real.sqrt_div]
+    field_simp
+  rw [ha, hac, hbc, hbs]
+  constructor
+  · field_simp
+  constructor
+  · rfl
+  · field_simp
+
+private noncomputable def auxiliaryDensity (s t : ℝ) : ℝ :=
+  Complex.normSq (poly s (circleMap 0 1 t)) / (22 * Real.pi)
+
+private theorem density_phase (phase s : ℝ)
+    (hphase : Complex.exp ((phase : ℂ) * Complex.I) = (s : ℂ)) (t : ℝ) :
+    density witnessAlpha witnessBeta 0 phase t = auxiliaryDensity s t := by
+  let u := circleMap 0 1 t
+  have hu_norm : ‖u‖ = 1 := by simp [u]
+  have hu : u ≠ 0 := norm_ne_zero_iff.mp (by rw [hu_norm]; norm_num)
+  have he1 : Complex.exp ((t : ℂ) * Complex.I) = u := by simp [u, circleMap]
+  have he2 : Complex.exp (((2 * t : ℝ) : ℂ) * Complex.I) = u ^ 2 := by
+    rw [← he1, ← Complex.exp_nat_mul]
+    congr 1
+    push_cast
+    ring
+  have hez : Complex.exp (((phase - 2 * t : ℝ) : ℂ) * Complex.I) = (s : ℂ) / u ^ 2 := by
+    rw [Complex.ofReal_sub, sub_mul, Complex.exp_sub, hphase, he2]
+  have hstar : star u = u⁻¹ := by
+    apply eq_inv_of_mul_eq_one_left
+    rw [Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
+      Complex.normSq_eq_norm_sq, hu_norm]
+    norm_num
+  have hroot : (Real.sqrt 11 : ℂ) ≠ 0 := by
+    exact_mod_cast (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 11)).ne'
+  have hfactor :
+      (3 / (Real.sqrt 11 : ℂ)) * u ^ 2 + (1 / (Real.sqrt 11 : ℂ)) * u +
+        (1 / (Real.sqrt 11 : ℂ)) * ((s : ℂ) / u ^ 2) =
+      (1 / (Real.sqrt 11 : ℂ)) * u ^ 2 * star (poly s u) := by
+    simp only [poly, star_add, star_mul, star_pow, star_ofNat,
+      show star (s : ℂ) = (s : ℂ) from Complex.conj_ofReal s, hstar]
+    field_simp
+  have hu_sq : Complex.normSq u = 1 := by
+    rw [Complex.normSq_eq_norm_sq, hu_norm]
+    norm_num
+  have hr : Complex.normSq (1 / (Real.sqrt 11 : ℂ)) = 1 / 11 := by
+    rw [map_div₀, map_one, Complex.normSq_ofReal, ← sq, Real.sq_sqrt (by norm_num)]
+  unfold density auxiliaryDensity
+  rw [witness_coefficients.1, witness_coefficients.2.1, witness_coefficients.2.2]
+  push_cast at he2 hez ⊢
+  rw [zero_add, he2, he1, hez, hfactor]
+  simp only [map_mul, map_pow, hr, hu_sq, one_pow, mul_one,
+    Complex.star_def, Complex.normSq_conj]
+  dsimp only [u]
+  ring
+
+private theorem density_zero_phase (t : ℝ) :
+    density witnessAlpha witnessBeta 0 0 t = auxiliaryDensity 1 t := by
+  apply density_phase
+  norm_num
+
+private theorem density_pi_phase (t : ℝ) :
+    density witnessAlpha witnessBeta 0 Real.pi t = auxiliaryDensity (-1) t := by
+  apply density_phase
+  simp [Complex.exp_pi_mul_I]
+
 end D5.S3.Entropy.GeigerKedemSpinEntropyPhaseRefutation
