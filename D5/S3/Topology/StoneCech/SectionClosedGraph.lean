@@ -1,7 +1,13 @@
-/-
-UNCOMPILED SOURCE CANDIDATE. No elaboration or kernel verification has run.
-Intended canonical path: D5/S3/Topology/StoneCech/SectionClosedGraph.lean.
-The archived SectionDenseSelector dependency is not installed at its import path.
+/- GID: D5/S3/Topology/StoneCech/SectionClosedGraph
+   generality: G
+   mirror-B: D5/B/S3/Topology/StoneCech/SectionClosedGraph
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Actual section-dense selectors carry a closed graph with finite unbounded cliques. -/
+
+/-!
+# Closed fibre graphs on actual principal extensions
 
 The vertex space is the actual principal extension of a section-good selector.
 Adjacency is principal-only, between distinct points in the same q-fibre.
