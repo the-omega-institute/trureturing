@@ -20,8 +20,6 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
                     + "A DecidableRel A supplies a decision for each adjacency statement A i j; "
                     + "the bracketed DecidableRel A is an anonymous typeclass assumption. Natural numbers in real-valued "
                     + "expressions are coerced to the reals.")),
-            Node("probability", "Probability vectors", ProbabilityFormula(),
-                "A probability vector has nonnegative entries with total mass one, as required for the states in Eq. (30)."),
             Node("regularNeighborhood", "A regular undirected neighbourhood", RegularNeighborhoodFormula(),
                 "Every state has exactly n neighbours, with n at least one. Adjacency is symmetric and irreflexive. "
                     + "Finset.univ is the finite set of all states; Finset.filter retains the states adjacent to j, "
@@ -37,7 +35,9 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
                     + "the sum of the edge weights in that column over all l, including l = j. "
                     + "For an irreflexive neighbourhood the self-edge weight is zero, so this is Eq. (31)."),
             Node("isSARun", "Annealing from an initial thermal state", SARunFormula(),
-                "Every time slice is a probability vector. The initial vector is the Gibbs distribution at beta(0), "
+                "D5.S3.TotalVariation.CycleSingleCutMinimax.Probability requires nonnegative entries with total mass one, "
+                    + "as required for the states in Eq. (30). Every time slice is a probability vector. "
+                    + "The initial vector is the Gibbs distribution at beta(0), "
                     + "and Eq. (30) updates p(t) using the transition matrix at beta(t + 1). "
                     + "Matrix.mulVec multiplies a matrix by a column vector: its i-th coordinate is the sum "
                     + "of the matrix entries in row i times the corresponding vector entries. "
@@ -93,7 +93,7 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula ProbabilityFormula() => SizeBinder(All("p", States(),
-        IffOf(LocalCall("probability", V("p")),
+        IffOf(At(Qualified("D5", "S3", "TotalVariation", "CycleSingleCutMinimax", "Probability"), V("p")),
             And(All("i", FinType(), LE(D(0), At(V("p"), V("i")))),
                 Equal(SumOver("i", At(V("p"), V("i"))), D(1))))));
 
@@ -145,10 +145,11 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
         Formula transition = LocalCall("glauber", V("n"), V("A"), V("E"), At(V("beta"), next));
         Formula recursion = All("t", Naturals(), Equal(At(V("p"), next),
             At(Qualified("Matrix", "mulVec"), transition, At(V("p"), V("t")))));
-        Formula conditions = And(All("t", Naturals(), LocalCall("probability", At(V("p"), V("t")))),
+        Formula conditions = And(All("t", Naturals(),
+            At(Qualified("D5", "S3", "TotalVariation", "CycleSingleCutMinimax", "Probability"), At(V("p"), V("t")))),
             And(Equal(At(V("p"), D(0)), LocalCall("gibbs", V("E"), At(V("beta"), D(0)))), recursion));
-        return GraphBinders(EnergyBinder(RunBinders(
-            IffOf(LocalCall("isSARun", V("n"), V("A"), V("E"), V("beta"), V("p")), conditions))));
+        return And(ProbabilityFormula(), GraphBinders(EnergyBinder(RunBinders(
+            IffOf(LocalCall("isSARun", V("n"), V("A"), V("E"), V("beta"), V("p")), conditions)))));
     }
 
     private static Formula MeanEnergyFormula() => SizeBinder(EnergyBinder(All("p", States(),

@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.claim; result=D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.result; claim=D5/S3/StatisticalMechanics/GlauberRelaxationOrderRefutation.claim
    digest: A four-state Glauber annealing run refutes relaxation-time rate order. -/
 
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.Stochastic
+import D5.S3.TotalVariation.CycleSingleCutMinimax
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -21,9 +19,6 @@ open scoped BigOperators
 The partial-swap side of (50) is eliminated using Proposition 2: its rate m has
 spectral gap m. The gap comparison avoids interpreting a zero denominator as a
 finite relaxation time. Characteristic roots retain algebraic multiplicity. -/
-
-def probability {N : ℕ} (p : Fin N → ℝ) : Prop :=
-  (∀ i, 0 ≤ p i) ∧ (∑ i, p i) = 1
 
 def regularNeighborhood {N : ℕ} (n : ℕ)
     (A : Fin N → Fin N → Prop) [DecidableRel A] : Prop :=
@@ -63,7 +58,7 @@ def isSARun {N : ℕ} (n : ℕ)
     (A : Fin N → Fin N → Prop) [DecidableRel A]
     (E : Fin N → ℝ) (β : ℕ → ℝ)
     (p : ℕ → Fin N → ℝ) : Prop :=
-  (∀ t, probability (p t)) ∧
+  (∀ t, D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (A := Fin N) (p t)) ∧
   p 0 = gibbs E (β 0) ∧
   (∀ t,
     p (t + 1) =
@@ -218,8 +213,9 @@ private theorem Pq_stochastic (q : ℝ) (hq : 0 < q) :
 
 private theorem probability_mulVec {N : ℕ} {P : Matrix (Fin N) (Fin N) ℝ}
     {p : Fin N → ℝ} (hP : ∀ i j, 0 ≤ P i j)
-    (hcol : ∀ j, (∑ i, P i j) = 1) (hp : probability p) :
-    probability (P.mulVec p) := by
+    (hcol : ∀ j, (∑ i, P i j) = 1)
+    (hp : D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (A := Fin N) p) :
+    D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (A := Fin N) (P.mulVec p) := by
   have hM : P ∈ Matrix.colStochastic ℝ (Fin N) :=
     Matrix.mem_colStochastic_iff_sum.mpr ⟨hP, hcol⟩
   exact ⟨Matrix.nonneg_mulVec_of_mem_colStochastic hM hp.1,
@@ -241,7 +237,8 @@ private theorem run_isSA : isSARun 2 adj4 E4 beta4 run := by
       fin_cases i <;> norm_num
     · norm_num [Fin.sum_univ_succ]
   | succ k ih =>
-    change probability ((glauber 2 adj4 E4 (Real.log (q4 (k + 1)))).mulVec (run k))
+    change D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (A := Fin 4)
+      ((glauber 2 adj4 E4 (Real.log (q4 (k + 1)))).mulVec (run k))
     have hq : 0 < q4 (k + 1) := lt_trans zero_lt_one (q4_spec.1 (k + 1))
     rw [glauber_log _ hq]
     exact probability_mulVec (Pq_stochastic _ hq).1 (Pq_stochastic _ hq).2 ih
