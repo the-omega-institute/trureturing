@@ -11,6 +11,7 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBaseSlicing
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
 
@@ -130,10 +131,12 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
     have hab := (Sym2.map.injective hbij.injective) (hae.trans hbe.symm)
     exact Finset.disjoint_left.mp W.Q.seed.partitions.disjoint ha (hab.symm ▸ hb)
   have hK : K.image (Sym2.map Subtype.val) = markedCuts O := by
-    simpa only [K, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap] using
+    simpa only [K, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap,
+      RelHom.coeFn_mk] using
       (same_seed_marked_cut_images hm O W.Q).1
   have hH : H.image (Sym2.map Subtype.val) = markedCuts B := by
-    simpa only [H, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap] using
+    simpa only [H, Finset.image_image, Function.comp_def, Sym2.map_map, j2SpecialMap,
+      RelHom.coeFn_mk] using
       (same_seed_marked_cut_images hm O W.Q).2
   have hKS : K = specialCuts (by omega : 3 ≤ m) O hBO := by
     dsimp only [K]
@@ -144,10 +147,10 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
   have hportL (i : Fin 3) : relabel O * port m (i, false, true) = leftPort O i.val := by
     simpa only [port, Bool.false_eq_true, ↓reduceIte] using (native_j2_frame_ports hm O i).2
   have hbarR (i : Fin 3) : relabel O * port m (i, true, false) = rightPort B i.val := by
-    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
       (native_j2_frame_barred_ports hm O i).1
   have hbarL (i : Fin 3) : relabel O * port m (i, true, true) = leftPort B i.val := by
-    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
       (native_j2_frame_barred_ports hm O i).2
   have hp₁s : p₁.start.val = leftPort O 1 :=
     ((W.Q.seed.jointPorts 5).1).trans (hportL 1)

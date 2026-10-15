@@ -82,21 +82,23 @@ private theorem same_seed_marked_cut_images {m : ℕ} (hm : 5 ≤ m)
       P.seed.H.image (Sym2.map Subtype.val) = markedCuts (reverseSelected F) := by
   classical
   constructor
-  · simp only [P.primaryCuts, raw_side_cuts hm false, Finset.image_image]
-    unfold markedCuts
-    congr 1
-    funext i
+  · rw [P.primaryCuts, raw_side_cuts hm false]
+    dsimp only [FrameDomain]
+    simp only [Finset.image_image, markedCuts]
+    apply Finset.image_congr
+    intro i _
     change s(relabel F * port m (i, false, false), relabel F * port m (i, false, true)) =
       s(rightPort F i.val, leftPort F i.val)
     simp only [port, Bool.false_eq_true, ↓reduceIte]
     rw [(native_j2_frame_ports hm F i).1, (native_j2_frame_ports hm F i).2]
-  · simp only [P.oppositeCuts, raw_side_cuts hm true, Finset.image_image]
-    unfold markedCuts
-    congr 1
-    funext i
+  · rw [P.oppositeCuts, raw_side_cuts hm true]
+    dsimp only [FrameDomain]
+    simp only [Finset.image_image, markedCuts]
+    apply Finset.image_congr
+    intro i _
     change s(relabel F * port m (i, true, false), relabel F * port m (i, true, true)) =
       s(rightPort (reverseSelected F) i.val, leftPort (reverseSelected F) i.val)
-    simp only [port, Bool.true_eq_true, ↓reduceIte]
+    simp only [port, Bool.false_eq_true, ↓reduceIte]
     rw [(native_j2_frame_barred_ports hm F i).1, (native_j2_frame_barred_ports hm F i).2]
 
 /-- The actual ordinary opening in the parent retains the original P
@@ -151,12 +153,14 @@ theorem native_j2_original_p_opening_inventory {m : ℕ} (hm : 5 ≤ m)
       W.P.seed.walk.support.map Subtype.val := by
     have h := congrArg (fun z => z.support.map Subtype.val) W.oldP.mappedWalk
     simpa only [SimpleGraph.Walk.support_copy, SimpleGraph.Walk.support_map,
-      List.map_map, Function.comp_def, pMarkedChildMap, j2SpecialMap] using h
+      List.map_map, Function.comp_def, pMarkedChildMap, j2SpecialMap,
+      RelHom.coeFn_mk] using h
   have hrawEdges : W.oldP.cycle.walk.edges.map (Sym2.map Subtype.val) =
       W.P.seed.walk.edges.map (Sym2.map Subtype.val) := by
     have h := congrArg (fun z => z.edges.map (Sym2.map Subtype.val)) W.oldP.mappedWalk
     simpa only [SimpleGraph.Walk.edges_copy, SimpleGraph.Walk.edges_map,
-      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap, j2SpecialMap] using h
+      List.map_map, Function.comp_def, Sym2.map_map, pMarkedChildMap, j2SpecialMap,
+      RelHom.coeFn_mk] using h
   have htail : W.oldP.cycle.walk.support.tail.map Subtype.val =
       W.P.seed.walk.support.tail.map Subtype.val := by
     simpa only [List.map_tail] using congrArg List.tail hrawSupport

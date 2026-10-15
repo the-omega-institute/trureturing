@@ -12,6 +12,7 @@ import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2QSourcePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
 
 namespace D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2JointPromotion
 
@@ -73,10 +74,10 @@ private theorem same_old_joint_native_ports {m : ℕ} (hm : 5 ≤ m)
     simpa only [port, Bool.false_eq_true, ↓reduceIte] using
       (native_j2_frame_ports hm F j).2
   have hBR (j : Fin 3) : relabel F * port m (j, true, false) = rightPort B j.val := by
-    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
       (native_j2_frame_barred_ports hm F j).1
   have hBL (j : Fin 3) : relabel F * port m (j, true, true) = leftPort B j.val := by
-    simpa only [port, Bool.true_eq_true, ↓reduceIte] using
+    simpa only [port, Bool.false_eq_true, ↓reduceIte] using
       (native_j2_frame_barred_ports hm F j).2
   have h := W.P.seed.jointPorts i
   fin_cases i
