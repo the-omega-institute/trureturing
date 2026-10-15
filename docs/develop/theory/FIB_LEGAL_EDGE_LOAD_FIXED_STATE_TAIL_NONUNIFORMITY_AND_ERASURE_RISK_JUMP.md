@@ -460,3 +460,207 @@ This is the endpoint-recovery step used in Theorem 3.2: Lemma 3.1's complement-p
 The hypotheses are satisfiable by Proposition 2.1. No decoder, spin-image law, independence of the observed half-lines, tail summability, finite-record sufficiency or extra positivity is assumed. The period-two law requires no mixing or aperiodicity premise. The fair parameter and endpoints are excluded. This auxiliary asserts only the displayed endpoint relation; it does not assert a law-existence theorem, posterior, moment, entropy or tail conclusion, or the other conclusions of Theorem 3.2 or the cited Proposition 4.1. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Original-law paid-read lower bound for a hidden endpoint
+
+**Definition 9.1 (Admissible arbitrary-address protocol).** Fix $0<p<1$ with
+$p\ne1/2$, $j\in\{0,1\}$, and let $(\mathsf U,\mathcal U,\nu)$ be one
+arbitrary probability space independent of the complete joint law $J_p$. Fixed
+public data may be included as a constant in $\mathsf U$; any random public
+data are included in the same source-independent variable with its unchanged
+law $\nu$. A protocol is a measurable next-event rule which, given
+$u\in\mathsf U$ and each finite acquired ordered record
+
+$$
+r=((t_1,x_1),\ldots,(t_n,x_n))\in(\mathbb Z\times\{0,1\})^n,
+$$
+
+either chooses the next integer address $t_{n+1}$, returns a state
+$A\in\{a_0,a_1,b_0,b_1\}$, or continues internally indefinitely without any
+further read or return. Finite next events may follow internal waiting:
+their occurrence, type, address or output, and finite waiting time depend
+measurably only on the fixed public data, $u$ and $r$. All internal
+randomness is included in $u$. If an address is chosen, the only reply is
+the actual source bit $x_{n+1}=X_{t_{n+1}}$ from the same stationary source.
+Every such read is charged: repetitions, separator zeros, negative, positive,
+disconnected and arbitrarily distant addresses all count once.
+
+The return time $\tau$ and the charged read count
+$N\in\mathbb N_0\cup\{\infty\}$ are separate random variables. Set
+$\tau=\infty$ on every nonreturning path, and let $N$ count all actual reads.
+Thus $\tau=\infty$ with any finite $N$, including $N=0$, is permitted by
+indefinite internal continuation after that finite record. Infinite read
+paths are also permitted. On a return, $N$ is finite; the output and $\tau$
+depend measurably only on the fixed public data, $u$, and the acquired
+ordered address/reply record. On $\{\tau<\infty\}$, write $\mathsf R$ for that
+terminal ordered record.
+
+There is no hidden-state, half-line or tail read, source-dependent seed or
+timing, reset, law switch, moving endpoint, or erased-coordinate substitution.
+The rule may return before any read and may output a state from the wrong
+phase. Null records and versions completed by null sets are included through
+the usual measurable completion. Put
+
+$$
+\mathbb P_p=J_p\otimes\nu,
+\qquad
+E_k=\{\tau<\infty,\ N\le k\},
+\qquad
+R=\frac{\max(p,1-p)}{\min(p,1-p)}>1.
+\tag{9.1}
+$$
+
+The public and auxiliary variables are independent of the original hidden
+endpoint $H_j$ and of every $X_t$.
+
+**Theorem 9.2 (Original-clock fixed-endpoint XOR acquisition bound).** For
+every admissible protocol of Definition 9.1 and every $k\ge0$,
+
+$$
+\mathbb P_p\bigl(A\ne H_j,\ E_k\bigr)
+\ \ge\
+\frac{\mathbb P_p(E_k)}{1+R^{k+1}}.
+\tag{9.2}
+$$
+
+Consequently, if a protocol has a positive-probability finite return, then
+its error probability on finite returns is positive. More explicitly, the
+same proof gives the random-count form
+
+$$
+\mathbb P_p\bigl(A\ne H_j,\ \tau<\infty\bigr)
+\ \ge\
+\mathbb E_p\!\left[
+ \frac{\mathbf 1_{\{\tau<\infty\}}}{1+R^{N+1}}
+\right].
+\tag{9.3}
+$$
+
+No almost-sure return, deterministic bound, or finite expected value of $N$ is
+assumed. The integrand in (9.3) is defined as zero on $\{\tau=\infty\}$,
+whether $N$ is finite or infinite.
+
+**Proof.** Use the realization (2.2) supplied by Proposition 2.1 only as a
+description of the one fixed law $J_p$. Thus $\varphi$ is uniform and the
+$S_\ell$ are iid Bernoulli$(p)$. The hidden endpoint states can be written as
+
+$$
+\begin{array}{c|cc}
+ &j=0&j=1\\ \hline
+\varphi=0&a_{S_0}&b_{S_1}\\
+\varphi=1&b_{S_0}&a_{S_0}
+\end{array}
+\tag{9.4}
+$$
+
+For a fixed phase $\varphi$, the two entries obtained by replacing the
+displayed spin by its complement are the two states of that phase. We compare
+their masses while keeping $p$, the phase, the source, and the protocol fixed.
+
+Fix $u$ and a finite record $r$ of length $n$. Whether the next-event
+choices at its successive prefixes prescribe $r$ followed by a finite
+return is determined by $u$ and $r$. If not, its terminal mass is zero under
+every hidden state. If so, the source section of
+$\{\mathsf R=r,\tau<\infty\}$ is exactly the finite cylinder
+$\{X_{t_i}=x_i:1\le i\le n\}$, and $A$ and $\tau$ are fixed. In particular,
+internal waiting or its divergence imposes no additional source condition:
+the same $u$ and acquired replies give the same finite events and delays.
+This applies also to adaptive addresses. Under phase $\varphi$, a read at
+$t=2\ell+\varphi$ returns
+
+$$
+X_t=Y_\ell=S_\ell\mathbin\oplus S_{\ell+1},
+$$
+
+whereas a read at the other parity returns the separator zero. Discarding
+the latter reads from the comparison does not discard their charges. The
+active reads in $r$ therefore give a finite labelled multigraph on the spin
+indices, with an edge $\{\ell,\ell+1\}$ for each active read. Repeated reads
+give repeated edges. Inconsistent duplicate labels have zero probability
+under both endpoint states.
+
+For an arbitrary measurable seed space, the masses below are source-section
+masses at the fixed value $u$; no regular conditional probability on
+$\mathsf U$ is being assumed.
+
+Let $q=q_{j,\varphi}$ be the spin index displayed in (9.4): $q=j$ when
+$\varphi=0$ and $q=0$ when $\varphi=1$. In the graph formed by the active
+reads, the component containing $q$ has at most $n+1$ vertices. Once $S_q=s$
+is fixed, the labelled edges determine every spin in this component, if they
+are consistent. The joint mass of that component, including the Bernoulli
+factor at $q$, is a product of at most $n+1$ factors, each equal to $p$ or
+$1-p$. Replacing $s$ by $1-s$ complements all those factors. Consequently,
+for the two same-phase endpoint states $h_{\varphi,0}$ and
+$h_{\varphi,1}$, the joint masses of $r$ satisfy
+
+$$
+R^{-(n+1)}\le
+\frac{\mathbb P_p(H_j=h_{\varphi,0},\,\mathsf R=r,\,\tau<\infty\mid u)}
+     {\mathbb P_p(H_j=h_{\varphi,1},\,\mathsf R=r,\,\tau<\infty\mid u)}
+\le R^{n+1},
+\tag{9.5}
+$$
+
+whenever the denominator is nonzero. The same argument shows that the two
+masses are simultaneously zero or simultaneously positive. All components
+disjoint from the component of $q$ contribute the same factor to both masses;
+this is why disconnected and distant reads do not increase the exponent.
+The phase factor $1/2$ is also common. This is only a reindexing of a finite
+product in the original law, not a transformation of the source or a newly
+permitted read.
+
+For this fixed $u$ and $r$, write $w_h$ for the joint mass of the terminal
+record and $H_j=h$, and let $h_\ast=A(u,r)$. Let $\bar h_\ast$ be the other
+state with the same phase as $h_\ast$ and the complementary spin. By (9.5),
+
+$$
+w_{h_\ast}\le R^{n+1}w_{\bar h_\ast}.
+$$
+
+Every state in the opposite phase is an error whenever the output is
+$h_\ast$. If $O$ denotes the total mass of those two opposite-phase states,
+then, with $W=\sum_hw_h$ and $L=\sum_{h\ne h_\ast}w_h$,
+
+$$
+W=w_{h_\ast}+w_{\bar h_\ast}+O
+\le (1+R^{n+1})w_{\bar h_\ast}+O
+\le (1+R^{n+1})L.
+\tag{9.6}
+$$
+
+Thus $L\ge W/(1+R^{n+1})$. Summing (9.6) over all terminal records of
+length $n\le k$ and then integrating over $u$ gives
+
+$$
+\mathbb P_p(A\ne H_j,E_k)
+\ge \frac{\mathbb P_p(E_k)}{1+R^{k+1}},
+$$
+
+because $R>1$. The same recordwise inequality with its own $n$ sums over all
+finite terminal records and gives (9.3). If
+$\mathbb P_p(\tau<\infty)>0$, then the finite-return event is the countable
+union of the $E_k$, so some $E_k$ has positive probability and (9.2) gives a
+strictly positive error probability. Paths continuing internally forever
+after finitely many reads, and infinite-read nonreturning paths, belong to
+none of these terminal events and contribute zero to both sides of (9.3).
+Only actual reads enter the returning record length $n$. The argument uses
+finite record masses, so completion choices and null fibres do not change
+it. $\square$
+
+**Attribution 9.3 (Scope of the acquisition increment).** Proposition 2.1,
+Lemma 3.1, Theorem 4.1 and Lemma 8.1 supply the four-state law, its
+complement-pair products, fixed original clock and measurable endpoint
+description. The finite-energy/product-likelihood step in the proof is the
+elementary finite specialization of those displayed products. The filtering
+and synchronization results of [Chigansky--van Handel, Example 10][CVH],
+[Travers--Crutchfield, *Exact Synchronization*, Definitions 5--8 and
+Theorem 3](https://arxiv.org/html/1008.4182v3), and [Travers--Crutchfield,
+*Asymptotic Synchronization*, §VI Theorem 1 and §VII.1 Proposition
+3](https://arxiv.org/html/1011.1581v2) provide neighboring mechanisms but do
+not supply (9.2) for arbitrary integer-address adaptive paid reads. Equation
+(9.2) is the source-specific repo-derived quantitative bridge. It makes no
+sharpness or optimal-cost claim, and it does not assert physical storage,
+universal filtering, formal verification, or completion of the original
+attainment problem.
+
+## 追加锚（本行以下为增补区）
