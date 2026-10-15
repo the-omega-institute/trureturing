@@ -893,3 +893,867 @@ No Green-tail, Coulomb, binding, empirical, resource, or formal-kernel
 certification conclusion is a consequence asserted here. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 41. All-time estimates for the native threshold kernel
+
+**Definition 41.1 (unchanged operator and three Green conventions).**
+Retain exactly §§35--40 and G Definition 25.1. Write
+$B_\kappa=-\mathscr A_\kappa$, $F_\kappa(t;k,k';r)
+=e^{\lambda t}g_\kappa^I(t;k,k';r)$, and $p=\phi(k)\phi(k')$.
+For $m\ge0$ define the nonnegative extended integral
+
+$$
+\mathcal G_{\kappa,m}(k,k';r)
+=\int_0^\infty e^{-mt}F_\kappa(t;k,k';r)\,dt.
+\tag{41.1}
+$$
+
+For $m>0$ this is the raw kernel of $(B_\kappa-\lambda+m)^{-1}$.
+The original unshifted killed Green is $\mathcal G_{\kappa,\lambda}$,
+not $\mathcal G_{\kappa,0}$. Its unit source is relative to $dk\,dq$.
+The massive Q Green relative to raw measure is
+$\phi(k')\mathcal G_{\kappa,m}/\phi(k)$; relative to
+$\phi(k')^2dk'\,dq'$ it is $\mathcal G_{\kappa,m}/p$.
+These are exact consequences of (37.2), not new conditioning operations.
+All constants below depend only on the fixed data and $\mathcal K$.
+
+**Lemma 41.2 (native global spatial bounds and integrable band error).**
+For the fixed interval $\mathcal K$ of Definition 35.1, for all its parameters,
+all $k,k'\in I$ and $r\in\mathbb R^3$, there are $c,C>0$ such that
+
+$$
+\begin{aligned}
+0\le F_\kappa(t;k,k';r)
+ &\le Cp\,t^{-6}
+       \exp[-c(|r|^2+|k-k'|^2)/t],&&0<t\le1,\\
+F_\kappa(t;k,k';r)
+ &\le Cp\,t^{-3/2}e^{-c|r|^2/t},&&t\ge1,\\
+|F_\kappa(t;k,k';r)-p\Gamma_{\kappa,t}(r)|
+ &\le Cp\,t^{-5/2}
+       e^{-c\min(|r|^2/t,|r|)},&&t\ge1.
+\end{aligned}
+\tag{41.2}
+$$
+
+The small-time power is an upper bound, not the sharp homogeneous power.
+These estimates include both height faces and every real frequency.
+
+Proof. The additional spatial estimates can be obtained directly from the
+same scalar fibres as (36.5). Here are details of the complex-frequency
+step, including the bounds needed for its integration. For real $\eta,\rho$
+the Brownian-bridge/Feynman--Kac formula for the scalar bounded potential
+$( (\eta+i\rho)\cdot c_\kappa)^2$ gives
+
+$$
+|K_{\kappa,\eta+i\rho}(t;k,k')|
+\le e^{C t|\rho|^2}K_{\kappa,\eta}(t;k,k').
+\tag{41.3}
+$$
+
+Indeed the real part of the potential is
+$(\eta\cdot c_\kappa)^2-(\rho\cdot c_\kappa)^2$, and the last square
+is bounded by $C|\rho|^2$. This formula follows also by the bounded
+multiplication Trotter products, so does not assume ellipticity in phases.
+It applies to the killed height bridge with both faces.
+
+The one-dimensional reflection formula for the Dirichlet interval kernel
+implies, for $0<t\le1$,
+
+$$
+h_I(t;k,k')\le C\phi(k)\phi(k')t^{-3/2}
+                 e^{-c|k-k'|^2/t}.
+\tag{41.4}
+$$
+
+For clarity, the usual reflection bound before this simplification is
+$Ct^{-1/2}(1\wedge d(k)/\sqrt t)(1\wedge d(k')/\sqrt t)
+ e^{-c|k-k'|^2/t}$, where $d(k)=\min(k-l,u-k)$.
+It follows by pairing each reflected Gaussian with its negative image at
+each endpoint; the mean value theorem bounds the paired differences by
+the corresponding endpoint distance divided by $\sqrt t$, with polynomial
+Gaussian derivatives absorbed by a larger Gaussian constant. The remaining
+images are a convergent Gaussian series. Since $d\asymp\phi$, it gives
+(41.4).
+
+Split the fibre semigroup at $t/4,t/2,t/4$. The endpoint norms are bounded
+by $h_I(t/2;k,k)^{1/2}\le C\phi(k)t^{-3/4}$, and (26.6) controls
+the middle norm. Consequently
+$e^{\lambda t}|K_{\kappa,\eta}(t;k,k')|
+ \le Cp t^{-3/2}e^{-ct\Psi(|\eta|)}$ for $t\le1$.
+Take the geometric mean with (41.4), using potential domination for that
+second bound. The result retains $p t^{-3/2}$ and has both the height
+Gaussian and $e^{-ct\Psi(|\eta|)}$, with smaller constants in the exponents.
+For $t\ge1$ use (36.6) instead. The frequency integrals are respectively
+bounded by $Ct^{-9/2}$ and $Ct^{-3/2}$. This explains the first power
+$t^{-6}$ in (41.2) and gives the large-time on-diagonal bound.
+
+All fibre kernels are entire in complex frequency: on every bounded
+complex set their bounded-potential expansion converges in operator norm,
+and endpoint splitting gives the same fact for kernels. Equation (41.3)
+and the preceding integrable frequency bounds permit shifting the Fourier
+contour to $\eta+i\rho$. One can first use finite rectangular contours;
+the vertical face integrals vanish along expanding rectangles because
+$e^{-ct\Psi(|\eta|)}$ dominates every polynomial, uniformly on a fixed
+imaginary strip. The factor in inversion is then
+$e^{-\rho\cdot r+C t|\rho|^2}$. Optimizing over all real $\rho$ gives
+the first two lines of (41.2), retaining the height Gaussian in the first.
+
+We give the band-error argument as well, since an on-diagonal heat limit
+alone does not control its time integral. In a fixed complex ball write
+$z=\eta+i\rho$. The bounded-potential Neumann series used in (36.7)
+is analytic there and gives a bilinearly normalized analytic eigenfunction
+$v_z$ and eigenvalue $\Lambda(z)$ satisfying
+
+$$
+\Lambda(z)=\lambda+z^{\mathsf T}M_\kappa z+O(|z|^4),\qquad
+v_z(k)/\phi(k)=1+O(|z|^2).
+\tag{41.5}
+$$
+
+The constants are uniform. Bilinear normalization means $\int_Iv_z^2=1$;
+thus the rank-one kernel is $v_z(k)v_z(k')$, without complex conjugation.
+The $H^2$ estimates and zero boundary values in (36.7) prove the displayed
+pointwise quotient estimate also for complex $z$. The complementary
+semigroup has bound $Cp e^{-(\lambda+d)t}$ for some $d>0$, $t\ge1$.
+To see the needed uniform gap without an assumption on nonnormal spectra,
+identify its spectral subspace with $\phi^\perp$ using the analytic Riesz
+projection, which is $O(|z|^2)$ from the unperturbed projection. The
+conjugated generator there is $H_I|_{\phi^\perp}$ plus a bounded
+$O(|z|^2)$ operator. The unperturbed semigroup decays at $4\lambda$;
+Duhamel's formula and Gronwall give decay at $4\lambda-C|z|^2$.
+Endpoint splitting as above supplies the factors $p$. Choose the complex
+ball small enough to leave a fixed positive $d$.
+
+In a smaller real-frequency ball, subtract the Gaussian band, use (41.5),
+and absorb the fourth-order real-frequency error into its positive
+quadratic form. On the line $z=\eta+i\rho$ the integral of the absolute
+error is at most
+
+$$
+Cp\,t^{-5/2}[1+(\sqrt t|\rho|)^4]e^{Ct|\rho|^2}
+ +Cp e^{-dt+Ct|\rho|^2},\qquad |\rho|\le\rho_0.
+\tag{41.6}
+$$
+
+Explicitly the pointwise integrand is bounded by
+$Cp(|z|^2+t|z|^4)e^{-ct|\eta|^2+Ct|\rho|^2}$; integration of its
+Gaussian moments gives (41.6). Outside that ball, (41.3), (36.6) and
+$\Psi(|\eta|)\ge c_0>0$ give the second exponentially decaying term;
+the Gaussian outside the ball has the same bound. Thus the complete
+contour integral, rather than a truncated Fourier kernel, obeys (41.6).
+Choose $\rho$ parallel to $r$ with length
+$\min(\rho_1,|r|/(C_1t))$, with $\rho_1$ fixed sufficiently small and
+$C_1$ sufficiently large. The Fourier factor absorbs the polynomial in
+(41.6) and its exponential remainder. For $|r|\le C_1\rho_1t$ it gives
+$Cp t^{-5/2}e^{-c|r|^2/t}$; on the complementary range it gives
+$Cp t^{-5/2}e^{-c|r|}$. This proves the last line of (41.2).
+No sum over height eigenfunctions or large-frequency remainder was omitted.
+$\square$
+
+## 42. The three-real-phase threshold Green law
+
+**Theorem 42.1 (native Green asymptotics including zero mass).**
+Put $d_\kappa(r)=\sqrt{r^{\mathsf T}M_\kappa^{-1}r}$. For $r\ne0$,
+
+$$
+Y_{\kappa,m}(r)=\int_0^\infty e^{-mt}\Gamma_{\kappa,t}(r)dt
+=\frac{e^{-\sqrt m\,d_\kappa(r)}}
+       {4\pi\sqrt{\det M_\kappa}\,d_\kappa(r)},\qquad m\ge0.
+\tag{42.1}
+$$
+
+The actual native Green is finite at every distinct full point, including
+$r=0$, $k\ne k'$, at $m=0$. Uniformly for every $m\ge0$, $|r|\ge1$,
+$\kappa\in\mathcal K$ and both heights in $I$,
+
+$$
+|\mathcal G_{\kappa,m}(k,k';r)-pY_{\kappa,m}(r)|
+\le Cp|r|^{-3}.
+\tag{42.2}
+$$
+
+In particular, as $R\to\infty$,
+
+$$
+R\mathcal G_{\kappa,\mu/R^2}(k,k';Rz)
+=p\frac{e^{-\sqrt\mu d_\kappa(z)}}
+ {4\pi\sqrt{\det M_\kappa}\,d_\kappa(z)}+O(pR^{-2})
+\tag{42.3}
+$$
+
+uniformly for $\mu$ in every compact subset of $[0,\infty)$ and $z$ in
+every compact subset of $\mathbb R^3\setminus\{0\}$. The normalized error
+is uniform even as either height approaches either absorbing face. No
+relation between $R$ and $\kappa$ is required. For the original real lift,
+replace the left side by
+$|\kappa|R\mathcal G^{\rm orig}_{\kappa,\mu/R^2}
+ (k,k';J_\kappa Rz)$ when $\kappa\ne0$.
+Its tensor is exactly $J_\kappa M_\kappa J_\kappa^{\mathsf T}$,
+including the signed cross terms in (39.1).
+
+Proof. The first two lines of (41.2) prove off-diagonal finiteness at both
+time endpoints. For the error on $t\ge1$, split at $t=|r|$ if $|r|\ge1$.
+The part below that time is exponentially small in $|r|$, and the rest is
+bounded by
+$Cp\int_0^\infty t^{-5/2}e^{-c|r|^2/t}dt=C'p|r|^{-3}$.
+The small-time native and Gaussian integrals are exponentially small for
+$|r|\ge1$. Multiplication by $e^{-mt}\le1$ preserves every estimate,
+including $m=0$. This proves (42.2). Formula (42.1) follows by substituting
+$u=d_\kappa(r)/(2\sqrt t)$ in its Gaussian integral (or differentiating
+that integral in $\sqrt m$ and fixing its value at zero).
+It has the displayed unit-source constant because
+$-\nabla\cdot M_\kappa\nabla+m$ becomes $-\Delta+m$ after
+$r=M_\kappa^{1/2}y$, whose volume Jacobian is $\sqrt{\det M_\kappa}$.
+The native unit-source identity is also retained at $m=0$:
+$(B_\kappa-\lambda+m)\mathcal G_{\kappa,m}=\delta$
+in distributions relative to raw measure. Integrate the heat equation
+against a compactly supported smooth test; its boundary terms are the
+unit delta at time zero and zero at infinity, the latter by (41.2).
+Scaling proves (42.3); (39.1) proves its signed pushforward.
+Thus the time-zero and time-infinity tails are controlled by native bounds,
+not by a formal Laplace transform of (36.3). $\square$
+
+**Proposition 42.2 (the projected pole is not a height-separated value).**
+For $k\ne k'$, $\mathcal G_{\kappa,m}(k,k';0)$ is finite and strictly
+positive for $m\ge0$. No finite value can be assigned to $Y_{\kappa,m}(0)$
+to extend (42.3) to those points. In particular at fixed distinct heights
+$R\mathcal G_{\kappa,\mu/R^2}(k,k';0)\to+\infty$.
+
+Proof. The first line of (41.2) retains $e^{-c|k-k'|^2/t}$ and the second
+is integrable. Positivity is inherited from the bracket-generating native
+heat kernel. Dominated convergence at $m=0$ proves the last assertion.
+The effective phase kernel has its genuine three-dimensional pole at zero.
+As $r\to0$ with these distinct heights fixed, the native kernel stays
+finite by the same local bounds, while $Y_{\kappa,m}(r)\to\infty$.
+This is an obstruction in the original height-dependent model, not in a
+replacement elliptic operator. Bounded or collapsing phase displacements
+must therefore retain the native finite part specified in §44. $\square$
+
+## 43. Two real visible phases and the actual hidden circle
+
+**Definition 43.1 (exact cylinder, Fourier convention and response).**
+For $\kappa\ne0$ set $a=|\kappa|$, $L=2\pi/a$, $w=(\theta,v)\in\mathbb R^2$
+and $x=D/\kappa\in\mathbb R/(L\mathbb Z)$.
+There is no wrapping of $\theta$ or $v$. The resolved raw measure is
+$dk\,dw\,dx$; the original raw measure is $dk\,dw\,dD=a\,dk\,dw\,dx$.
+The original positive-probability margin gives $\kappa_*<l/2<1/4$,
+so the already fixed parameter interval has $L\ge1$.
+Let $F^L_\kappa=e^{\lambda t}g^L_\kappa$. Exactly,
+
+$$
+\begin{aligned}
+g^L_\kappa(t;k,k';w,x)
+ &=\sum_{j\in\mathbb Z}g^I_\kappa(t;k,k';w,x+jL)\\
+ &=\frac1{L(2\pi)^2}\sum_{j\in\mathbb Z}\int_{\mathbb R^2}
+ e^{i\eta\cdot w+i\kappa jx}K_{\kappa,(\eta,\kappa j)}(t;k,k')d\eta,\\
+g^{D}_\kappa(t;k,k';w,D)&=a^{-1}g^L_\kappa(t;k,k';w,D/\kappa).
+\end{aligned}
+\tag{43.1}
+$$
+
+Define $\mathcal G^L_{\kappa,m}=\int_0^\infty e^{-mt}F^L_\kappa dt$.
+For $m>0$ and nonzero phase point modulo $L$, define the effective response
+
+$$
+E^L_{\kappa,m}(w,x)=\int_0^\infty e^{-mt}
+       \sum_{j\in\mathbb Z}\Gamma_{\kappa,t}(w,x+jL)dt
+ =\sum_{j\in\mathbb Z}Y_{\kappa,m}(w,x+jL).
+\tag{43.2}
+$$
+
+Both expressions are nonnegative convergent expressions on that domain.
+Their source is exactly $\delta_0(dw)\delta_0(dx)$ relative to raw
+$dw\,dx$ on $\mathbb R^2\times(\mathbb R/L\mathbb Z)$:
+$(-\nabla\cdot M_\kappa\nabla+m)E^L_{\kappa,m}=\delta_0$.
+This follows by integrating its normalized heat equation; it includes
+no angular probability-Haar factor and no height delta in the effective
+operator. The native point source and its height factors are those in
+(41.1) and (43.6).
+Write the original tensor, without dropping any cross term, as
+
+$$
+M_\kappa=\begin{pmatrix}N_\kappa&h_\kappa\\h_\kappa^{\mathsf T}&d_\kappa^*\end{pmatrix},
+\quad S_\kappa=d_\kappa^*-h_\kappa^{\mathsf T}N_\kappa^{-1}h_\kappa>0,
+\quad y=x-h_\kappa^{\mathsf T}N_\kappa^{-1}w,\quad
+b=\sqrt{w^{\mathsf T}N_\kappa^{-1}w}.
+\tag{43.3}
+$$
+
+Here $d_\kappa^*$ is a tensor entry, not the distance in (42.1).
+Uniform positivity of $M_\kappa$ bounds $N_\kappa,S_\kappa$ above and below.
+The complete effective heat kernel is
+
+$$
+\Gamma^L_{\kappa,t}(w,x)
+=\frac{e^{-b^2/(4t)}}{4\pi t\sqrt{\det N_\kappa}}\,
+ \frac1L\sum_{j\in\mathbb Z}
+ e^{-S_\kappa\kappa^2j^2t}e^{i\kappa jy}.
+\tag{43.4}
+$$
+
+For $w\ne0$ its time integral also has the absolutely convergent expression
+
+$$
+E^L_{\kappa,m}(w,x)
+=\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \sum_{j\in\mathbb Z}e^{i\kappa jy}
+ K_0\!\left(b\sqrt{m+S_\kappa\kappa^2j^2}\right),
+\quad
+K_0(z)=\frac12\int_0^\infty s^{-1}e^{-s-z^2/(4s)}ds.
+\tag{43.5}
+$$
+
+For $w=0$, $x\notin L\mathbb Z$, use (43.2), not an ordinary convergent
+sum of separately integrated modes: each integral of (43.4)'s individual
+mode then diverges at $t=0$.
+
+Proof. Projecting the native stochastic law gives the first image identity
+in (43.1); (41.2) makes its heat sum locally uniformly convergent.
+Fourier transformation in $w$ and the raw circle Fourier series give its
+second identity with exactly the displayed prefactor. The bound (36.6),
+or its small-time version proved in Lemma 41.2, is integrable in $\eta$
+and summable in $j$ at each $t>0$, so this is an identity of point kernels
+for the complete operator. The sign of $\kappa$ reverses the hidden lattice
+and is retained in $e^{ijD}$ and the cross terms. Its density factor is the
+absolute Jacobian $a^{-1}$.
+
+Tonelli gives (43.2). Completing the square in the two continuous Gaussian
+frequencies yields (43.4), including the shift $y$ and the Schur complement.
+Integrating a mode gives (43.5) by its displayed definition of $K_0$.
+For $b>0$ the inequality $s+z^2/(4s)\ge z$ and a split at $s=z/2$
+give exponential decay of $K_0(z)$ for large positive $z$, with a polynomial
+factor; thus the full sum is absolutely convergent. If $b=0$, each mode
+contains $\int_0^1dt/t=\infty$, whereas the image integral is finite at a
+nonzero hidden separation. This explicitly identifies the failed
+interchange, including visible-coincident hidden-separated points. $\square$
+
+**Theorem 43.2 (native point comparison and the full crossover).**
+Let $r_j=(w,x+jL)$ and suppose $\min_j|r_j|\ge1$. Then for every $m>0$,
+
+$$
+|\mathcal G^L_{\kappa,m}(k,k';w,x)-pE^L_{\kappa,m}(w,x)|
+\le Cp\sum_{j\in\mathbb Z}|r_j|^{-3}.
+\tag{43.6}
+$$
+
+For $m=\mu/R^2$, $w=Rz_w$, $x=Rz_x$ modulo $L$, and $\rho=L/R$,
+
+$$
+R\mathcal G^L_{\kappa,\mu/R^2}(k,k';Rz_w,Rz_x)
+=pE^\rho_{\kappa,\mu}(z_w,z_x)
+ +O\!\left(pR^{-2}\sum_{j\in\mathbb Z}|(z_w,z_x+j\rho)|^{-3}\right).
+\tag{43.7}
+$$
+
+Here $E^\rho$ is exactly (43.2) with circumference $\rho$, tensor
+$M_\kappa$ and mass $\mu$. This quantitative formula requires only the
+stated minimum separation, and allows all relative rates and both signs.
+In particular for $\mu$ in positive compact sets:
+
+- If $\rho\to\infty$ and $z$ stays in a compact subset of
+  $\mathbb R^3\setminus\{0\}$, then $E^\rho_{\kappa,\mu}(z)
+  -Y_{\kappa,\mu}(z)\to0$ uniformly.
+- If $\rho$ stays in a positive compact set, (43.7) is a uniform absolute
+  approximation on compact phase sets separated from its wrapped pole.
+  These sets may have $z_w=0$ and $z_x\notin\rho\mathbb Z$.
+- If $\rho\to0$ and $z_w$ stays in a compact set bounded away from zero,
+  uniformly in $z_x$ modulo $\rho$,
+
+$$
+L\mathcal G^L_{\kappa,\mu/R^2}(k,k';Rz_w,Rz_x)
+-p\frac{K_0(\sqrt\mu\sqrt{z_w^{\mathsf T}N_\kappa^{-1}z_w})}
+        {2\pi\sqrt{\det N_\kappa}}\longrightarrow0.
+\tag{43.8}
+$$
+
+The third statement includes fixed nonzero $\kappa$ and $R\to\infty$.
+It concerns long visible distance; it is not a native absolute
+approximation at a fixed native endpoint. Original $D$ densities acquire
+$a^{-1}$ in every statement.
+
+Proof. Integrate the positive image identity by Tonelli. Apply (42.2) to
+each image and sum its absolute error, whose $|j|^{-3}$ tail converges.
+This proves (43.6). Scaling the explicit Gaussian response proves (43.7).
+For the first endpoint, the noncentral Yukawa images are bounded by a
+geometric exponential tail, uniformly on the prescribed mass and point
+sets. In the second case the sum of inverse cubes is uniformly bounded.
+For the third case comparison with the integral in the hidden variable gives
+
+$$
+\sum_j|(z_w,z_x+j\rho)|^{-3}\le C(1+\rho^{-1})
+\tag{43.9}
+$$
+
+when $|z_w|\ge\delta>0$. After multiplying (43.7) by $\rho$, the
+error is $O(pR^{-2}(1+\rho))$. In (43.5), with period $\rho$, all
+nonzero modes decay exponentially in $|z_w|/\rho$; their complete sum
+tends to zero after multiplication by $\rho$. The zero mode is precisely
+the expression in (43.8). This proves all endpoints without deleting a
+periodic phase or replacing a joint point kernel by a marginal. $\square$
+
+**Proposition 43.3 (joint-point mixing scale).**
+The hidden heat mixing coefficient in the native small-wall, long-time
+joint-point regime is $S_\kappa$, not $d_\kappa^*=\langle b_\kappa^2\rangle$.
+The scale is $a^2t$ with exponent $S_0a^2j^2t$ in the wall limit.
+For a fixed small parameter, the bottom of hidden block $j$ is
+
+$$
+\Delta_j(\kappa)=\inf_{\eta\in\mathbb R^2}
+       [\Lambda_\kappa(\eta,\kappa j)-\lambda],\qquad
+\Delta_j(\kappa)=S_\kappa\kappa^2j^2+O((\kappa j)^4)
+\quad(|\kappa j|\to0).
+\tag{43.10}
+$$
+
+The slowest nonzero block has gap comparable to $a^2$.
+Neither equality of its exact fixed-parameter gap with $S_\kappa a^2$,
+nor equality with the fully wrapped trace coefficient of G §33, is claimed.
+
+Proof. For $\xi$ small, uniform coercivity excludes minimizers outside a
+fixed small frequency ball. In that ball (36.4) and positivity of its
+Hessian give the unique minimizing visible frequency
+$\eta=-N_\kappa^{-1}h_\kappa\xi+O(\xi^3)$ by the implicit function
+theorem. Substitution gives $S_\kappa\xi^2+O(\xi^4)$.
+Coercivity (26.6) gives $\Delta_j\ge c\Psi(a|j|)$ for all $j$;
+the trial frequency at $j=1$ gives the matching $Ca^2$ upper bound.
+Thus the gap and all other blocks are controlled, not only finitely many.
+For joint point heat kernels (43.4) displays the coefficient directly.
+The periodized last line of (41.2) has error at most
+$Cp t^{-5/2}(1+\sqrt t/L)$, uniformly in phases: to bound its image sum,
+split $|r_j|\le t$ and its complement, compare the Gaussian part with its
+one-dimensional integral, and sum the exponential tail. At
+$t=s/a^2$, $s$ in a positive compact set, this is smaller by a factor
+$O(a^2)$ than the main $t^{-1}/L$ scale. Hence (43.4) supplies the
+actual native joint-point scaling there. By contrast integration over
+visible endpoints forces $\eta=0$ before expansion and gives
+$d_\kappa^*$; fully wrapping them also removes the continuous saddle.
+Those operations do not compute this joint-point coefficient.
+Indeed $\langle A_\kappa b_\kappa\rangle>0$ by the original positive
+coefficients, so $h_\kappa\ne0$ and $S_\kappa<d_\kappa^*$ strictly.
+$\square$
+
+## 44. Native finite parts, collapsed sources and the zero-mass tail
+
+**Theorem 44.1 (an exact composite formula on the whole off-diagonal domain).**
+For every $L=2\pi/|\kappa|$, define
+
+$$
+\begin{aligned}
+H^L_{\kappa,m}(w,x)&=\int_1^\infty e^{-mt}\Gamma^L_{\kappa,t}(w,x)dt,\\
+C^L_{\kappa,m}(k,k';w,x)
+&=\int_0^1 e^{-mt}F^L_\kappa(t;k,k';w,x)dt\\
+&\quad+\int_1^\infty e^{-mt}
+  [F^L_\kappa(t;k,k';w,x)-p\Gamma^L_{\kappa,t}(w,x)]dt.
+\end{aligned}
+\tag{44.1}
+$$
+
+At every distinct full point, including $w=x=0$ with $k\ne k'$, the
+second quantity is finite for all $m\ge0$ and continuous at $m=0$.
+For $m>0$ the following is an exact equality:
+
+$$
+\mathcal G^L_{\kappa,m}=C^L_{\kappa,m}+pH^L_{\kappa,m}.
+\tag{44.2}
+$$
+
+In particular (44.2), rather than an evaluation at an effective phase pole,
+is the native formula in the height-only and source-collapse layers.
+The short-time term in $C^L$ is strictly positive; it is not discarded.
+For nonzero phase points the alternative finite correction
+$C^L_{\kappa,m}-p\int_0^1e^{-mt}\Gamma^L_{\kappa,t}dt$
+may be added to $pE^L_{\kappa,m}$.
+
+Proof. Periodize (41.2). The time-large error has absolute bound
+$Cp[t^{-5/2}+L^{-1}t^{-2}]$, integrable independently of $m\ge0$.
+The small-time native bound is a convergent sum of
+$Cp t^{-6}e^{-c(|r_j|^2+|k-k'|^2)/t}$.
+It is integrable precisely on the stated off-diagonal domain, locally
+uniformly on its compact subsets. This proves existence and continuity
+by dominated convergence. Splitting the native integral at one and adding
+and subtracting its effective large-time kernel proves (44.2).
+The cutoff at one is fixed in the original clock and defines the finite
+part's normalization; it is not a new physical resolution or clock.
+Other positive splitting times give the same equality with correspondingly
+changed summands.
+
+This correction cannot uniformly be replaced by zero at fixed native
+endpoints. Fix $k\ne k'$, $m>0$ and a nonzero small phase vector tending
+to zero. The native Green stays finite, whereas the central effective
+Yukawa image diverges. Thus their difference is nonzero and unbounded
+on this family. This proves failure of a uniform effective absolute
+approximation in the actual model, even at fixed $\kappa$.
+If heights also coalesce, the original native point singularity remains;
+(44.1) retains it rather than changing its local homogeneous dimension.
+$\square$
+
+**Theorem 44.2 (positive logarithmic infrared tail and its normalization).**
+For each fixed nonzero $\kappa$, each fixed pair of heights and phases,
+
+$$
+F^L_\kappa(t;k,k';w,x)
+=\frac{A_\kappa(k,k')}{t}+O(t^{-2}),\qquad
+A_\kappa(k,k')=\frac{p}{4\pi L\sqrt{\det N_\kappa}}>0.
+\tag{44.3}
+$$
+
+The remainder is locally uniform in points, including distinct heights
+at coincident phases; fixed-parameter constants are allowed here.
+Consequently $\mathcal G^L_{\kappa,0}=+\infty$ at every point.
+There is no finite nonnegative threshold Green on this cylinder.
+At distinct full points the precisely normalized subtraction is
+
+$$
+\begin{aligned}
+\mathcal G^L_{\kappa,m}-A_\kappa\log(1/m)&\longrightarrow
+\mathfrak F^L_\kappa,\qquad m\downarrow0,\\
+\mathfrak F^L_\kappa
+&=\int_0^1F^L_\kappa(t)dt
+ +\int_1^\infty[F^L_\kappa(t)-A_\kappa/t]dt
+ -\gamma A_\kappa,
+\end{aligned}
+\tag{44.4}
+$$
+
+where $\gamma=-\lim_{m\downarrow0}
+ [\int_1^\infty e^{-mt}dt/t+\log m]$ is Euler's constant.
+The finite part may have either sign and is not a nonnegative Green.
+For original raw $D$ measure the logarithmic coefficient is
+$p/(8\pi^2\sqrt{\det N_\kappa})$.
+
+Proof. In (43.4) the zero hidden mode is
+$(4\pi L t\sqrt{\det N_\kappa})^{-1}e^{-b^2/(4t)}$;
+all other modes have exponential suppression for fixed $L$.
+The periodized band error is $O(p[t^{-5/2}+L^{-1}t^{-2}])$.
+This proves (44.3) directly for the native kernel with no marginalization.
+Its positive leading coefficient proves divergence, independently of the
+small-time behavior. Subtract $A_\kappa/t$ only on $t\ge1$;
+the remaining integrals are absolutely convergent off the full source.
+The elementary exponential-integral identity defining $\gamma$ proves
+(44.4) by dominated convergence. Finally divide by $a$ and use $aL=2\pi$.
+The logarithm uses the fixed mass unit of (41.1); replacing that unit changes
+the finite part by the corresponding explicit multiple of $A_\kappa$.
+$\square$
+
+**Theorem 44.3 (simultaneous zero mass and hidden decompactification).**
+Let $L\to\infty$, $\kappa=\pm2\pi/L$, and $m=m(L)>0$ arbitrary.
+For full points in a fixed compact off-diagonal set and a bounded chosen
+phase representative $r=(w,x)$, uniformly in both signs,
+
+$$
+\begin{aligned}
+\mathcal G^L_{\kappa,m}(k,k';w,x)
+&=\mathcal G_{\kappa,m}(k,k';w,x)+pT_\kappa(L,m)+O(pL^{-2}),\\
+T_\kappa(L,m)
+&=-\frac1{2\pi L\sqrt{\det N_\kappa}}
+       \log\!\left(1-e^{-L\sqrt{m/S_\kappa}}\right).
+\end{aligned}
+\tag{44.5}
+$$
+
+The formula retains $r=0$, $k\ne k'$. Its error is uniform in $m>0$;
+it does not require $L\sqrt m$ bounded away from zero. When
+$L\sqrt m\to0$ its additional tail is
+
+$$
+T_\kappa(L,m)=\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \log\!\frac{\sqrt{S_\kappa}}{L\sqrt m}+o(L^{-1}).
+\tag{44.6}
+$$
+
+Thus this tail can vanish, converge to a nonzero constant, or diverge.
+For example $m=L^{-4}$ gives a vanishing tail,
+$m=L^{-2}e^{-cL}$ gives $c/(4\pi\sqrt{\det N_0})$ for $c>0$,
+and $m=L^{-2}e^{-L^2}$ gives a tail growing as
+$L/(4\pi\sqrt{\det N_0})$.
+The product $|\kappa|R$ alone does not determine a simultaneous
+zero-mass/decompactification limit when $mR^2$ may also tend to zero.
+More generally, for $|r|\le c_0L$ with one sufficiently small fixed $c_0$,
+the error in the first line of (44.5) is bounded by
+$Cp(|r|L^{-2}+L^{-3})$. Hence the same additional tail also controls
+long-distance sequences $r=Rz$, $L/R\to\infty$: after multiplication
+by $R$ their error is $O(p[(R/L)^2+R/L^3])$ for bounded $z$.
+The central native term remains exact even at phase-coincident points.
+
+Proof. Keep the central image as the exact native Green, also when its
+phase vector is zero. For every noncentral image (42.2) has summable error
+$O(pL^{-3}|j|^{-3})$. Replace those images by their Yukawa values.
+For $r=0$ their sum is exactly $T_\kappa(L,m)$, because
+$(M_\kappa^{-1})_{33}=1/S_\kappa$ and
+$\det M_\kappa=(\det N_\kappa)S_\kappa$, so the paired $j$ terms are
+
+$$
+\frac1{2\pi L\sqrt{\det N_\kappa}}
+ \sum_{j\ge1}\frac{e^{-jL\sqrt{m/S_\kappa}}}{j}.
+\tag{44.7}
+$$
+
+The series is $-\log(1-e^{-L\sqrt{m/S_\kappa}})$ for every $m>0$.
+Moving its argument by bounded $r$ changes each image by at most
+$C|r|/(jL)^2$, uniformly in $m$: differentiate
+$e^{-\sqrt m s}/s$ and use $(1+\sqrt m s)e^{-\sqrt m s}\le C$.
+Summing these errors proves (44.5). Expanding $1-e^{-b}=b(1+O(b))$
+proves (44.6) and its examples. If also $m\to0$, the central native term
+converges to its finite zero-mass value, uniformly on these compact
+sets, by (41.2). This proves the stated distinct outcomes in the original
+native cylinder, rather than merely in an effective comparison.
+For instance take the same $R=L^2$ in the last two exponential examples:
+$|\kappa|R=2\pi L$ is identical, while their additional tails differ.
+$\square$
+
+**Proposition 44.4 (hidden separation with coincident visible point).**
+Let $w=0$, $x=\alpha L$, $\alpha$ in a compact subset of $(0,1)$,
+and $b_0=L\sqrt{m/S_\kappa}>0$. Then
+
+$$
+\begin{aligned}
+E^L_{\kappa,m}(0,\alpha L)
+ &=\frac1{4\pi L\sqrt{\det N_\kappa}}
+   \sum_{j\in\mathbb Z}\frac{e^{-b_0|j+\alpha|}}{|j+\alpha|},\\
+\sum_{j\in\mathbb Z}\frac{e^{-b_0|j+\alpha|}}{|j+\alpha|}
+ &=-2\log b_0+\mathcal P(\alpha)+o(1),\qquad b_0\downarrow0,\\
+\mathcal P(\alpha)&=\frac1\alpha+
+ \sum_{j\ge1}\left(\frac1{j+\alpha}+\frac1{j-\alpha}-\frac2j\right).
+\end{aligned}
+\tag{44.8}
+$$
+
+The last series converges absolutely and uniformly on these compact sets.
+For $L\to\infty$, the actual native value is $p$ times the first line
+plus $O(pL^{-3})$, uniformly for all $m>0$. For fixed $L$, the finite
+native correction in (44.1) must instead be retained; it does not vanish
+merely because $m\downarrow0$.
+
+Proof. At $w=0$, $d_\kappa(0,x)=|x|/\sqrt{S_\kappa}$;
+(43.2) therefore gives the first line. Subtract
+$2\sum_{j\ge1}e^{-b_0j}/j=-2\log(1-e^{-b_0})$.
+The difference tends to $\mathcal P(\alpha)$: its zero-mass paired
+terms are $O(j^{-3})$, and the derivatives of the exponential terms add
+bounds $C b_0 e^{-c b_0j}/j$ and $C b_0^2e^{-c b_0j}$, whose sums tend
+to zero. This justifies the limit uniformly in $\alpha$, not a termwise
+sum of divergent integrated modes. Finally (43.6) has error
+$CpL^{-3}\sum|j+\alpha|^{-3}$. This proves the native assertion and
+explains its fixed-parameter limitation. $\square$
+
+## 45. Killing, threshold recurrence and the actual zero leaf
+
+**Theorem 45.1 (source factors, finite lifetime and different infrared laws).**
+The following statements refer to the unchanged original clock and both
+absorbing faces.
+
+1. On each cover or quotient used here, the unshifted killed Green has
+   finite off-diagonal values and total raw mass
+
+$$
+\int G^{\rm killed}(k,q;k',q')\,dk'\,dq'
+=\mathbb E_k\zeta=\frac{(k-l)(u-k)}{2\varepsilon^2}.
+\tag{45.1}
+$$
+
+   It is the unit-source inverse of the original $B_\kappa$.
+   It has no unshifted Coulomb tail: on the resolved real cover its
+   large-phase value is bounded by $Cp e^{-c|r|}$ for $|r|\ge1$.
+2. The resolved three-real-phase Q law is transient, with a finite
+   zero-mass off-diagonal Green and the rank-three anisotropic infrared
+   coefficient (42.3). The two-visible-real/hidden-periodic Q law is
+   recurrent with infinite invariant measure and has the logarithmic
+   threshold divergence (44.3)--(44.4).
+3. On the actual native zero leaf, $D$ is frozen. Its two-real-phase cover
+   has tensor $N_0$ from (39.3), not a third diffusing coordinate.
+   Its threshold and Q Greens diverge logarithmically at zero mass, with
+   raw threshold coefficient $p/(4\pi\sqrt{\det N_0})$ multiplying
+   $\log(1/m)$. For $\mu$ in positive compact sets and $z\ne0$ in
+   compact sets,
+
+$$
+\mathcal G^{\rm leaf}_{\mu/R^2}(k,k';Rz)
+\longrightarrow
+\frac{p}{2\pi\sqrt{\det N_0}}
+ K_0\!\left(\sqrt\mu\sqrt{z^{\mathsf T}N_0^{-1}z}\right).
+\tag{45.2}
+$$
+
+   There is no extra factor $R$. A finite part is normalized exactly as
+   in (44.4) with the stated leaf coefficient. The original unshifted
+   leaf Green remains finite and has (45.1), as already supplied in
+   G §§9--11. In the original four-coordinate space its law carries
+   $\delta_{D_0}(dD')$, not a four-dimensional raw density.
+
+Proof. Integration over phases in any of these stochastic laws gives
+exactly the original killed height Brownian motion. Tonelli therefore
+reduces the total Green mass to $\int_0^\infty S_k(t)dt$.
+The function on the right of (45.1) is the unique zero-boundary solution
+of $-\varepsilon^2f''=1$; the stopped Itô formula, or integration of
+the height sine kernel, identifies it with $\mathbb E_k\zeta$.
+This proves its normalization without conditioning or source renormalization.
+The first two lines of (41.2), now multiplied by $e^{-\lambda t}$,
+give finiteness and exponential large-phase decay by splitting the integral
+at a constant multiple of $|r|$, or using
+$\lambda t+c|r|^2/t\ge c'|r|$.
+The same reasoning applies after periodization and to the leaf.
+
+The Q factors are exactly those in Definition 41.1; dividing the real-cover
+heat bound by $p$ bounds its occupation of every finite-reference-measure
+set at large times by $Ct^{-3/2}$, which is integrable. Small-time occupation
+is finite off the starting point. This is transience of its irreducible
+symmetric Q process. For the cylinder and leaf, recurrence can also be
+checked independently of a point Green calculation. In Q reference measure
+take cutoff functions independent of height (and of the hidden circle),
+equal to one for visible radius at most $n$, zero beyond $n^2$, and linear
+in $\log|w|$ on the intervening annulus. Their energies are at most
+$C\int_{n<|w|<n^2}|w|^{-2}(\log n)^{-2}dw\le C/\log n$;
+the finite height mass is one, and the circle contributes its fixed length.
+These cutoffs increase to one after taking a monotone radial choice.
+The symmetric Markov form recurrence criterion identifies recurrence
+from precisely this approximation of one by bounded form-domain functions
+of vanishing energy. Its hypotheses hold here: multiplication by $\phi$
+is the unitary ground-state transform of the original closed regular form,
+compactly supported smooth height approximations to $\phi$ show that the
+displayed cutoffs are in its domain, and the native positive kernel gives
+irreducibility. Conservativity was proved in §37.
+Equivalently, a finite-energy zero potential $u$ of a nonzero nonnegative
+compactly supported test $f$ would satisfy
+$|\int f\chi_n\,d\mu^Q|^2
+ \le \mathcal E^Q(u,u)\mathcal E^Q(\chi_n,\chi_n)\to0$,
+contrary to $\int f>0$; this is the potential-theoretic content of the
+criterion for this irreducible form.
+There is no invariant probability: its two-real-phase heat bound tends
+to zero on every set of finite reference measure, by the same exhaustion
+argument as in (37.9). Thus recurrence here has infinite invariant measure.
+
+For the leaf, restrict every scalar-fibre argument of Lemma 41.2 to
+$\eta=(\eta_1,\eta_2,0)$. The native independence of its two coefficients
+and its tensor are already proved in (39.3). The identical contour proof
+now has two frequency integrals; at $t\ge1$ it gives
+$Cp t^{-1}e^{-c|w|^2/t}$ and band error
+$Cp t^{-2}e^{-c\min(|w|^2/t,|w|)}$. The small-time bound has some
+finite polynomial power and the same full off-diagonal Gaussian factors,
+by the same scalar splitting. Integrating the band error at $|w|\ge1$
+gives $Cp|w|^{-2}$, uniformly in mass. Integrating its Gaussian main term
+with $m=\mu/R^2$, $w=Rz$ gives (45.2) by the definition of $K_0$.
+At fixed $w$, the native compensated heat is
+$p/(4\pi\sqrt{\det N_0}\,t)+O(t^{-2})$; the proof of (44.4) gives
+its logarithm and finite part. This proves all the new threshold assertions
+without repeating the supplied unshifted stability/binding proofs.
+$\square$
+
+**Theorem 45.2 (fully wrapped poles and their domains).**
+At each fixed nonzero $\kappa$, on the original fully wrapped
+$I\times\mathbb T^3$ with raw measure, write $\mathcal G^{\rm wr}_{\kappa,m}$
+for its threshold resolvent. Off the full source,
+
+$$
+\mathcal G^{\rm wr}_{\kappa,m}(k,q;k',q')
+=\frac{p}{(2\pi)^3m}+\mathfrak R_\kappa(k,q;k',q')+o(1),
+\qquad m\downarrow0,
+\tag{45.3}
+$$
+
+where
+$\mathfrak R_\kappa=\int_0^\infty
+ [e^{\lambda t}p^{\rm wr}_\kappa(t)-p/(2\pi)^3]dt$.
+The fully wrapped actual zero leaf has the analogous formula with
+$(2\pi)^2$ instead of $(2\pi)^3$. Their Q laws are positive recurrent,
+with invariant probabilities $\phi(k')^2dk'\,dq'/(2\pi)^d$, $d=3,2$.
+Their Q reference Green poles are $1/((2\pi)^dm)$ and raw Q poles
+$\phi(k')^2/((2\pi)^dm)$. Zero-mass threshold and Q kernels diverge.
+These fixed-parameter finite parts are not uniform assertions across
+$\kappa=0$.
+
+Proof. The ground eigenfunction in G Theorem 26.1 is
+$(2\pi)^{-3/2}\phi$ and its remaining spectral gap is comparable to
+$a^2$; its complete Fourier estimates give exponential convergence to
+$p/(2\pi)^3$ at fixed $a>0$. Integrating the ground term gives its exact
+pole. The remainder is integrable at infinity, and is integrable at zero
+off the full source by the native local bounds and image formula.
+This proves (45.3), including the specified finite part. At zero use the
+actual leaf heat limit (39.4) and its positive gap for the nonzero visible
+lattice modes; the same proof has two angular factors. Applying (37.2)
+gives the two Q density conventions and normalized invariant measures.
+Conservativity, irreducibility and this finite invariant measure give
+positive recurrence. The gap shrinks as $a\to0$, and the actual zero law
+has a frozen-coordinate delta, so these formulas cannot be passed to zero
+as raw four-dimensional point densities. In particular this compact pole
+is not the logarithm of the two-real-phase cylinder. $\square$
+
+## 46. What the Green bridge establishes about three dimensions
+
+**Proposition 46.1 (cover-dependent infrared rank and preserved obstructions).**
+The new Green conclusion is an anisotropic rank-three threshold infrared
+law on the declared all-real winding cover, with tensor exactly (36.1).
+Its Coulomb endpoint is the zero-mass response (42.1), multiplied by the
+original height/source factors. Restoring the actual hidden circle yields
+the crossover (43.7), the joint-point coefficient $S_\kappa$, and a
+logarithmic zero-mass tail. Restoring all actual periods yields the compact
+pole (45.3). Restoring the actual zero leaf leaves only two moving phases.
+Keeping the original killing without a threshold shift instead gives a
+finite-lifetime Green with exponentially suppressed far field.
+
+None of these assertions selects a physical spatial dimension or changes
+the instantaneous rank two in (40.1). They supply no winding acquisition,
+conditioning service, physical $SO(3)$ invariance, additional control,
+new attractive interaction, or new binding/stability theorem.
+The full point-attraction collapse away from the double wall, the strict
+stable double-wall regime, the actual leaf-cover binding results and the
+heat-cutoff classification in G remain their supplied statements with their
+original domains, source conventions and hypotheses.
+
+Proof. The changes of geometry, spectral parameter and reference measure
+are explicit in (41.1), (43.1), (44.3), (45.1)--(45.3).
+Their different finite, logarithmic and pole behaviors prohibit identifying
+them as one unshifted field. The resolved tensor averages the original
+rank-one phase covariance over height histories, as proved in (40.1);
+its long-time rank does not alter the same-clock symbol. The signed
+coordinate map changes covariance by congruence and density by its absolute
+Jacobian, not by an additional actuator. The retained conclusions about
+native operations and physical interpretation are therefore exactly the
+obstructions in §40, N Theorem 10.5 and F. Attraction is absent from all
+operators in this appendix, so the cited attraction results are reused
+without a new inference about their stability. $\square$
+
+## 47. Mathematical suppliers and the scope of the bridge
+
+**Mathematical correspondence 47.1 (reuse and classical comparisons).**
+The source snapshots for the native premises are the six indicated volumes
+at commit
+[`b669ef36ee32627638ed55edc90152bf606a9df0`](https://github.com/the-omega-institute/trureturing/tree/b669ef36ee32627638ed55edc90152bf606a9df0/docs/develop/theory).
+The mathematical dependencies and limits of comparison are as follows.
+
+| Supplier | Precise role and applicability |
+| --- | --- |
+| G Definition 25.1, (26.5)--(26.12), (32.2) | Original rational coefficients, fixed interval, raw measures, both deaths, all-real-frequency coercivity and uniform bracket independence. Lemma 41.2 extends their scalar argument to a spatial estimate and an integrable band error; no elliptic heat bound is assumed for the rank-two native operator. |
+| This volume §§35--40 | The tensor, signed pushforward, point heat limit and Q/source conventions are reused. The new inference is the all-time Green comparison, its periodic crossover and its corrected finite parts, not another derivation of that tensor or heat limit. |
+| C (32.4)--(32.5) | Isolated scalar Dirichlet band perturbation is reused through the multivariate proof already in §36. Its visible-zero-block coefficient is not the joint-point Schur complement. |
+| N Theorems 10.3 and 10.5; F §§2--3 | Native controls and same-clock symbol/quotient boundaries. They do not identify a hidden integral with a full point response. |
+| S §50 | A finite-state FIB chain with a different mixed height boundary. Its quasi-stationary and Doob constructions are comparisons, not a supplier of the present two-Dirichlet-face Green. |
+| X. Geng and G. Iyer, *Long Time Asymptotics of Heat Kernels and Brownian Winding Numbers on Manifolds with Boundary*, [arXiv:1804.00368v1, Theorem 2.1, §2](https://arxiv.org/html/1804.00368v1) | Compact smooth Riemannian base, finitely generated abelian deck group and Laplace--Beltrami operator with mixed Dirichlet/Neumann conditions. The native four-dimensional symbol has rank two and is not that elliptic operator. The comparison explains the ground-band method but supplies neither Lemma 41.2 nor its time-integrated uniformity. |
+| M. Kha, *Green's function asymptotics of periodic elliptic operators on abelian coverings of compact manifolds*, [arXiv:1511.00276v3, Theorem 3.4 and Assumption A1--A4](https://arxiv.org/html/1511.00276v3) | Spectral-edge Green asymptotics for a second-order periodic selfadjoint elliptic operator, deck rank at least three, a unique nondegenerate band minimum and separation from other bands. Its effective Hessian is a useful comparison, but native ellipticity fails. Its theorem does not prove a uniform small-wall result for this hypoelliptic family or a rank-two cylinder endpoint. |
+| T. Ballu, *Asymptotics of Green functions for Markov-additive processes: an approach via dyadic splitting of integrals*, [arXiv:2407.10685v2, Theorem 1.5, Assumptions 1.2 and 1.4](https://arxiv.org/html/2407.10685v2) | Irreducible aperiodic discrete-time process on $\mathbb Z^d\times\{1,\ldots,p\}$, finite exponential moments and nonzero stationary drift. Here height is continuous and the conservative Q additive martingale is centered. Its noncentered Green theorem cannot be applied by naming this a Markov-additive process. |
+| N. Champagnat and D. Villemonais, *Exponential convergence to quasi-stationary distribution and Q-process*, [arXiv:1404.1349v2, Theorem 3.1(ii)--(iii), Assumption (A)](https://arxiv.org/html/1404.1349v2) | The transform formula has the same algebra as (37.2). Their uniform conditional minorization/mixing hypothesis is not available for phase translations on this noncompact cover; its probability-invariant conclusion is not imported. The height and fully wrapped invariant probabilities here are computed directly. |
+
+The classical reflection, bounded-potential product formula, analytic
+simple-eigenvalue perturbation, Fourier inversion, Gaussian integration
+and recurrence criterion are tools, not new general results.
+For the last criterion the precise classical statement is
+Fukushima--Oshima--Takeda, *Dirichlet Forms and Symmetric Markov Processes*,
+[second revised and extended edition (2011)](https://doi.org/10.1515/9783110218091),
+Theorem 1.6.3: recurrence is
+equivalent to a sequence $0\le u_n\le1$ in the form domain tending to one
+almost everywhere with $\mathcal E(u_n,u_n)\to0$. This is applied to the
+conservative regular symmetric Q form, not to the killed form. In particular
+the symmetric-form criterion used in Theorem 45.1 is the equivalence between
+recurrence and existence of bounded form-domain functions tending to one
+with energies tending to zero; it applies to the conservative symmetric
+regular Q form. The displayed logarithmic cutoffs check that criterion
+for the actual cylinder and leaf, including their height reference weight.
+The explicit $K_0$ integral in (43.5) fixes its normalization without
+requiring a special-function convention from a secondary source.
+
+The native assertions are repository-derived ordinary mathematical proofs.
+The comparison results above do not certify the new global estimates.
+No exhaustive literature survey or originality certification follows from
+these correspondences. The three-phase Coulomb law is conditional on the
+specified cover, threshold shift, covariance, density, clock and source;
+the physical and operation boundaries in §46 remain part of its statement.
+
+## 追加锚（本行以下为增补区）
