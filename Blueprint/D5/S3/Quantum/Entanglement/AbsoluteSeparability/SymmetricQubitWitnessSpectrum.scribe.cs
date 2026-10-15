@@ -62,11 +62,12 @@ internal sealed class SymmetricQubitWitnessSpectrumDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
-                        "The coherent vectors are exactly the null cone x^T J x = 0, "
-                            + "where J = ((0,0,-1),(0,1,0),(-1,0,0)); explicitly the "
+                        "The coherent vectors are exactly the null cone "
+                            + "x^T ((0,0,-1),(0,1,0),(-1,0,0)) x = 0; explicitly the "
                             + "equation is x1^2 - 2 x0 x2 = 0. Diagonalizing the Hermitian "
                             + "matrix by a unitary U transports this cone to the eigenbasis: "
-                            + "G = U^T J U is symmetric and unitary, and the quadratic "
+                            + "G = U^T ((0,0,-1),(0,1,0),(-1,0,0)) U is symmetric "
+                            + "and unitary, and the quadratic "
                             + "expectation is diagonal there.")),
                     Paragraph(Text(
                         "Suppose the third eigenvalue is -c with c > 0. Write A for "
@@ -81,7 +82,7 @@ internal sealed class SymmetricQubitWitnessSpectrumDocument : IScribeDocumentDef
                             + "+ q |u1|^2 for every u has p,q >= 0 and |det B| <= pq. "
                             + "Polarization bounds the bilinear form by the two "
                             + "corresponding quadratic weights. Applied to cA, this "
-                            + "bound combines with the unitary corner identity "
+                            + "bound combines with the unitary submatrix identity "
                             + "|det A| = |G22| <= 1 to give mu1,mu2 >= 0 and "
                             + "c^2 <= t mu1 mu2 <= mu1 mu2. This yields the required "
                             + "lower bound for mu3; when mu3 >= 0 both inequalities "
