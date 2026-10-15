@@ -158,6 +158,7 @@ private theorem xMin_eq_of_eq_diag2
     simp [a, b, hav', hbu, min_comm]
 
 private theorem witness_isPOVM : IsPOVM witness := by
+  rw [witness.eq_1]
   let p : Fin 4 → Fin 2 → ℝ :=
     ![![12 / 40, 1 / 40], ![13 / 40, 1 / 40],
       ![14 / 40, 1 / 40], ![1 / 40, 37 / 40]]
@@ -169,7 +170,7 @@ private theorem witness_isPOVM : IsPOVM witness := by
   convert h using 1
   funext a
   fin_cases a <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [witness, diag2, p]
+    norm_num [diag2, p]
 
 private theorem witness_norms :
     (fun i : Fin 4 => opNorm (witness i)) =
