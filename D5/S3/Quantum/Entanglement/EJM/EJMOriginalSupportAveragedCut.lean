@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMOriginalSupportAveragedCut
    mirror-E: none(waiver:original-support-orbit-cut)
-   anchors: [D5/S3/Quantum/Entanglement/EJM/EJMOriginalSupportConflict, D5/S3/Quantum/Entanglement/EJM/EJMScoreSymmetry]
+   anchors: []
    utility: none
    digest: Averaging the original three-factor conflict forces a weighted outside count across all thirty-two original factors. -/
 
