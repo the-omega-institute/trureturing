@@ -2981,3 +2981,97 @@ as do the complete same-integer signed Robin bound and RH proof.
 The [Bettin--Chandee applicability note](bettin2018trilinear.md)
 records the direct alias-split boundary and excludes the withdrawn
 stronger Kloosterman-fraction claim from the available suppliers.
+
+## A narrower numerator list for the interior linear functional
+
+The numerator cut (I28)--(I30) controls the weighted residual norm.
+Here use instead the bounded variation of the actual linear weight
+in (I91)--(I93). This is a direct application of the same geometric
+sum, sine and finite-moment inputs; it is not a new exponential-sum
+estimate. Keep $D_N^\circ,W_N^\circ,\mathcal R_N^\circ$ from
+(I99)--(I106), with every original coefficient and alias.
+
+Define the finite transform of the interior weight by
+$$
+\mathscr F_N(\theta)=\sum_{m=N}^{2N}k_{N,m}e(m\theta).
+$$
+The geometric sum and the already supplied bound on
+$\|k_N\|_\infty+\operatorname{Var}k_N$ give, by discrete Abel summation,
+$$
+|\mathscr F_N(\theta)|
+\ll\frac{h^2\epsilon_N}{N\|\theta\|},
+\qquad \theta\notin\mathbb Z.
+\tag{I107}
+$$
+This uses the actual closed integer interval and both its boundary
+values. It does not include the separate $e_{N,H}f(2N)$ term.
+
+Write $r^*=\min(r,q-r)$. For any integer $s\ge1$, consider only
+$D_N^\circ<q\le N-W_N^\circ$ and $r^*>s$. Using (I107),
+$|1-e(-r/q)|\ge4r^*/q$ and the already owned first positive moment,
+their complete contribution to the interior part of $\mathscr J_N$
+is bounded by
+$$
+\begin{aligned}
+\frac1L\sum_q\sum_{\substack{1\le r<q\\(r,q)=1\\r^*>s}}
+\left|\frac{b_{N,q}\mathscr F_N(r/q)}{q(1-e(-r/q))}\right|
+&\ll\frac{h^2\epsilon_N}{NL}
+ \sum_{q\le N}q|b_{N,q}|\sum_{r^*>s}\frac1{(r^*)^2}\\
+&\ll\frac{Nh^2\epsilon_N}{L^2s}.
+\end{aligned}
+\tag{I108}
+$$
+At most two numerators have any given $r^*$, so the inner tail is
+$O(1/s)$. The other factor follows from
+$\sum_{q\le N}q|b_{N,q}|\ll N^2/L$, exactly the finite-moment input
+of (I92). Coprimality is relaxed only in the positive allowance;
+the retained sum still has its actual coprime numerators.
+
+Choose the integer cutoff
+$$
+s_N^\circ=\left\lceil
+ \frac{Nh^2\epsilon_N\log L}{L^2}\right\rceil.
+\tag{I109}
+$$
+Its argument tends to infinity, and
+$$
+s_N^\circ\asymp
+ N^{1/2}e^{-\Delta_\star\Omega}\frac{\log L}{L^2},
+\qquad s_N^\circ=o(D_N^\circ).
+$$
+The allowance in (I108) is $O(1/\log L)$, matching the paid error
+in (I106).
+
+The remaining finite scalar is
+$$
+\begin{aligned}
+\mathcal C_N^\circ={}&d_N\mathscr F_N(0)\\
+&-\sum_{D_N^\circ<q\le N-W_N^\circ}
+ \ \sum_{\substack{1\le r<q\\(r,q)=1\\r^*\le s_N^\circ}}
+ \frac{b_{N,q}\mathscr F_N(r/q)}{q(1-e(-r/q))}\\
+&+e_{N,H}\mathcal R_N^\circ(2N),\\
+\mathcal A_{N,H}={}&\frac{\mathcal C_N^\circ}{L}
+ +O(1/\log L).
+\end{aligned}
+\tag{I110}
+$$
+The last line follows from (I106) and (I108). The interior sum has at
+most $2Ns_N^\circ$ frequency entries, of order at most
+$N^{3/2}e^{-\Delta_\star\Omega}\log L/L^2$. This is a bound on
+that list, not on the cost of computing its coefficients or on the
+complete endpoint. Conjugate pairing makes $\mathcal C_N^\circ$ real.
+
+The endpoint remains the full $e_{N,H}\mathcal R_N^\circ(2N)$,
+including its constant and every retained numerator. No high-numerator
+endpoint deletion is paid by (I107)--(I108). In particular this is a
+reduction of a linear functional, not replacement of the response by
+one frequency-truncated function at every evaluation port.
+
+The still missing estimate is $\mathcal C_N^\circ=o(L)$ for every
+sufficiently large original integer $N$ in the fixed family. The paid
+error makes this equivalent to $\mathcal A_{N,H}=o(1)$ within this
+reduction; neither estimate is established here. The comparison
+shrinks the internal list relative to (I30) at $m\asymp N$, where
+that norm cut retains numerators up to $N/L^b$, $0<b<2$. It supplies
+no new cancellation theorem, complete signed Robin bound, RH proof,
+mathematical-priority claim or Lean certification.
