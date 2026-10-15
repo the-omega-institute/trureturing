@@ -153,12 +153,12 @@ private theorem pauli_facts :
     P.IsHermitian ∧ Q.IsHermitian ∧ P.transpose = P ∧ Q.transpose = Q ∧
     P * P = 1 ∧ Q * Q = 1 ∧ P * Q + Q * P = 0 := by
   have hp : P.IsHermitian ∧ P * P = 1 := by
-    simpa only [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.XITable, P]
+    simpa only [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.XITable, P.eq_1]
       using D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs_herm_sq 4
   have hqeq : D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs 0 = Q := by
-    rw [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.ZITable]
+    rw [D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.ZITable, Q.eq_1]
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [Q, Matrix.diagonal_apply]
+    fin_cases i <;> fin_cases j <;> norm_num [Matrix.diagonal_apply]
   have hq : Q.IsHermitian ∧ Q * Q = 1 := by
     simpa only [hqeq]
       using D5.S3.QuantumContext.RankOfContextualityNonPowerTwo.Matrices.obs_herm_sq 0
