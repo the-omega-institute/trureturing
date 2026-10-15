@@ -9,7 +9,6 @@
 import D5.S3.Quantum.Schatten.Holder
 import D5.S3.Quantum.Information.ChenKatoBrandaoCMIRefutation
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
-import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.PureState.PureStateHandshake
 
 set_option linter.style.longLine false
