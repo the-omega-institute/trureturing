@@ -64,7 +64,7 @@ private theorem choi_apply (V : Matrix (Fin 3 × Fin 3) (Fin 3) ℂ)
     (p q : Fin 3 × Fin 3) :
     choi V p q = (1 / 3 : ℝ) •
       ((channelB V (Matrix.single p.1 q.1 (1 : ℂ))) p.2 q.2) := by
-  simp [choi, MatrixMap.choi_of_kraus, Matrix.sum_apply, Matrix.vecMulVec,
+  simp [choi.eq_1, MatrixMap.choi_of_kraus, Matrix.sum_apply, Matrix.vecMulVec,
     channelB, partialTraceRight, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.single, Finset.mul_sum, Complex.real_smul, ite_and, eq_comm]
 
