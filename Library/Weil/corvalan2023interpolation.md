@@ -414,3 +414,168 @@ For the actual FIB application, (I5)–(I9) still transport any error
 estimate that is genuinely supplied. They provide no value for (I10).
 This strength analysis closes neither the required uniform approximation
 nor the same-integer signed Robin margin.
+
+## A paid low-denominator part of the actual residual
+
+Reuse the [existing discrete large-sieve input](../Fourier/montgomery1978largesieve.md),
+equation (1), namely Montgomery's Theorem 3, printed p.559, and the
+duality in §4, Lemma 2. The following is a paper application to the
+coefficients and residual of (I10); the classical large sieve is not
+reproved. No unconditional bound for the complete energy is asserted.
+
+Write $e(u)=\exp(2\pi i u)$ and retain the zero-frequency coefficient
+
+$$
+d_N=1+\frac12\sum_{n\le N}a_{N,n}(1-1/n),\qquad
+T_N(m)=R_N(m)-d_N.
+\tag{I17}
+$$
+
+The finite Fourier expansion of the periodic sawtooth at integer $m$ is
+
+$$
+\{m/n\}-\frac{n-1}{2n}
+=-\frac1n\sum_{h=1}^{n-1}\frac{e(hm/n)}{1-e(-h/n)}.
+$$
+
+It follows by summing $j e(-hj/n)$ over $0\le j<n$; $n=1$ has an
+empty sum. Merge every frequency $h/n=r/q$ into its reduced fraction
+before applying a separation estimate. This gives, exactly for $m\ge N$,
+
+$$
+T_N(m)=\sum_{2\le q\le N}\ \sum_{\substack{1\le r<q\\(r,q)=1}}
+B_{N,q,r}e(mr/q),\qquad
+B_{N,q,r}=-\frac{b_{N,q}}{q(1-e(-r/q))},\qquad
+b_{N,q}=\sum_{j\le N/q}\frac{a_{N,qj}}j.
+\tag{I18}
+$$
+
+This retains all aliases of the original coefficients, rather than
+assuming that the unreduced list is separated. Non-squarefree $q$ have
+$b_{N,q}=0$. For squarefree $q$, the coefficient is the short coprime sum
+
+$$
+b_{N,q}=\frac{\mu(q)}{\log N}
+\sum_{\substack{j\le N/q\\(j,q)=1}}
+\frac{\mu(j)}j\log\frac{N}{qj}.
+\tag{I19}
+$$
+
+This is exactly the existing logarithmic coprime Möbius sum
+$\check m_q^{(1)}$ in the
+[Zuniga-Alterman source note](../Asymptotics/zunigaalterman2026logmobius.md),
+with $X=N/q$ and the prefactor $\mu(q)/\log N$. A fixed-$q$
+asymptotic alone would not suffice when $q,X$ vary together. Instead,
+reuse its uniform finite bound, obtained from Lemma 5.1, equation (5.2),
+the positive convolution (7.6) and Lemma 7.2(a):
+
+$$
+|\check m_q^{(1)}(X)|\le2q/\varphi(q)\qquad(q\ge1,\ X>0).
+$$
+
+Here $\varphi(q)$ denotes Euler's totient, distinct from the golden
+ratio used for the FIB geometry. It follows that
+$|b_{N,q}|\le2q/[\varphi(q)\log N]$ for every squarefree $q\le N$,
+including the short sums with $q$ close to $N$. Non-squarefree $q$
+still contribute zero. This uses the source's uniform convolution
+bound rather than inserting a fixed-parameter limit.
+
+For $1\le Q\le N$, the coefficient energy therefore obeys
+
+$$
+V_N(Q):=\sum_{2\le q\le Q}\ \sum_{\substack{1\le r<q\\(r,q)=1}}
+|B_{N,q,r}|^2\ll\frac{Q}{(\log N)^2}.
+\tag{I20}
+$$
+
+Indeed, the elementary sine bound gives
+$\sum_{r=1}^{q-1}|1-e(-r/q)|^{-2}\ll q^2$. Reuse the
+[existing finite positive-moment bound](../ArithSums/weingartner2010distribution.md)
+with $s=2$ and $X=Q$:
+$\sum_{q\le Q}(q/\varphi(q))^2\le QW(2)$, where the fixed Euler
+product $W(2)$ converges. Combining these two inputs proves (I20)
+with a constant independent of $N,Q$. Neither input estimates the
+signed quadratic cross terms of the residual.
+
+Let $I$ be a consecutive integer interval in
+$[M,2M)\cap[N,N^2]$, with integer $M\ge N$, and use the actual weight
+
+$$
+\|f\|_I^2=\sum_{m\in I}\frac{|f(m)|^2}{m(m+1)}.
+$$
+
+For $1\le Q\le N$, split (I18) as
+$T_N=T_{N,\le Q}+T_{N,>Q}$. Distinct reduced fractions of denominator
+at most $Q$ have circular separation at least $Q^{-2}$. In the quoted
+dual large sieve, take these frequencies, the coefficients $B_{N,q,r}$,
+and the actual interval $I$, whose length $H$ is at most $M$.
+Since $m(m+1)\ge M^2$, (I20) gives
+
+$$
+\|T_{N,\le Q}\|_I^2
+\ll\frac{Q(M+Q^2)}{M^2(\log N)^2}.
+\tag{I21}
+$$
+
+In particular, if $Q^2\le M$, the weighted triangle inequality gives
+
+$$
+\left|\|R_N\|_I-\|d_N+T_{N,>Q}\|_I\right|
+\le\|T_{N,\le Q}\|_I
+\ll\frac{\sqrt{Q/M}}{\log N}\le\frac{M^{-1/4}}{\log N}.
+\tag{I22}
+$$
+
+This is a norm error for removing a specified part, not an
+orthogonal decomposition on the short interval. Take disjoint blocks
+$I_j=[2^jN,2^{j+1}N)\cap[N,N^2]\cap\mathbb Z$ and
+$Q_j=\lfloor\sqrt{2^jN}\rfloor$, keeping the nonempty blocks
+$0\le j\le\lfloor\log_2 N\rfloor$. Define the retained residual
+$\mathcal A_N(m)=d_N+T_{N,>Q_j}(m)$ for $m\in I_j$.
+Applying (I21) on each block and summing the geometric factors $2^{-j/2}$
+gives the whole crossing-block comparison
+
+$$
+\left|\sqrt{E_N}-\left(
+\sum_{m=N}^{N^2}\frac{|\mathcal A_N(m)|^2}{m(m+1)}
+\right)^{1/2}\right|\ll\frac{N^{-1/4}}{\log N}.
+\tag{I23}
+$$
+
+Thus the discarded low-denominator part has an independently paid norm
+bound on the complete block. The retained frequencies satisfy
+$q>\sqrt M$ on the block at scale $M$; their coefficients in (I19)
+involve only $j<N/\sqrt M$. The zero-frequency term remains tied to
+the same coefficients:
+
+$$
+d_N=1+\frac12(S_N-c_N),\qquad
+S_N=\sum_{n\le N}a_{N,n}
+=\frac1{\log N}\int_1^N\frac{\mathcal M(t)}t\,dt,
+\qquad \mathcal M(t)=\sum_{n\le t}\mu(n).
+\tag{I24}
+$$
+
+At scale $M\asymp N$, applying the same large sieve to all denominators
+would give the allowance $O(N/\log^2N)$, not a polylogarithmic bound.
+Neither (I20) nor (I23) controls the retained signed cross terms or their
+interaction with $d_N$. Separate bounds for $d_N$ and each component
+are sufficient but need not be necessary, because the terms can cancel
+on these finite intervals. A uniform polylogarithmic bound for the
+retained norm squared would, by (I23) and the preceding strength
+analysis, still entail RH.
+
+Here $q$ is a reduced frequency denominator, not necessarily a prime.
+The cut $q\le Q$ is a cut by frequency order, not by numerical
+frequency magnitude or a single residue observation. Observing modulo
+$D=\operatorname{lcm}(1,\ldots,Q)$ retains all orders dividing $D$,
+including some greater than $Q$; for example $Q=3$ also retains order
+$6$. Thus the paid spectral cut cannot silently replace the earlier
+modulus-based visible/hidden cut.
+The five FIB modes can encode the indices $q,j$; their separate address
+statistics do not determine the joint condition $(q,j)=1$ or the
+short Möbius sum (I19). Squarefree composite denominators are retained.
+This application narrows the unestimated arithmetic part while
+preserving the actual source, mean and weight. It supplies neither the
+complete FIB approximation rate nor the same-integer Robin sign, and
+has not been Lean compiled or claimed as an original large-sieve result.
