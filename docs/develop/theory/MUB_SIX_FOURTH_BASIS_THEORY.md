@@ -3024,3 +3024,175 @@ K=m-Cf(m)+(I-CJ(X))(X-m)
 任何 completion 只能使用六个规范射线，故两个 completions 的射线集合相同，不能相互无偏。命题 42.1 得证。
 
 此处保留同一参数下三个实际向量的全部无偏与两两正交条件，没有以独立相位见证替换共同变量，也没有复用第 35 节已否定的全局正交到逐模正交蕴含。扩大后的每个半边长是旧值的 `256` 倍；绝对矩形仍很小，六维四 MUB 与全 strict-X 覆盖仍未解决。
+
+## 43. 互补三相位谱端点的最优线性稳定性
+
+第 41 节确定了实际互补相位行的 Fourier 能量端点。本节进一步控制接近端点时的自相关位置。所用 deltoid 参数像与判别式仍归于 Szöllősi，*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，式 (15) 与 Lemma 3.2，DOI [10.1090/S0002-9939-09-10102-8](https://doi.org/10.1090/S0002-9939-09-10102-8)。以下最优线性误差界由该域上的多项式估计推出（`repo-derived`），不把已知参数域和第 41 节的端点重新作为新结果。
+
+### 43.1 参数、结论与实际相位可达性
+
+记
+
+```math
+k=\sqrt3,\qquad M=6k-9,\qquad C=\frac{3M}{4},\qquad
+\kappa=\frac{56+24k}{11}=\frac{M-1}{C-1}.
+```
+
+对第 41 节的实际单位模互补行 `(z,w) in P_6`，令
+
+```math
+s=z_1\overline{z_0}+z_2\overline{z_1}+z_0\overline{z_2}=x+iy,
+\qquad \delta=M-x^2-y^2,\qquad g=C-x^2.
+```
+
+**命题 43.1。** 对上述每个实际互补相位对，
+
+```math
+\boxed{0\le\delta\le\kappa g,\qquad g\ge0.}
+```
+
+常数 `kappa` 不能减小。等号 `delta=kappa g` 恰在以下两种情况下成立：
+
+```math
+(x^2,y^2)=(1,0)
+\quad\text{或}\quad
+(x^2,y^2)=(C,C/3).
+```
+
+第二种是第 41 节的四个定向支撑等号点。第一种可由实际相位行
+
+```math
+z=(1,-1,1),\qquad w=(1,1,i)
+```
+
+达到：它们的自相关分别为 `-1` 和 `1`，能量谱分别为 `(1,4,4)` 和 `(5,2,2)`，逐模相加为六。这里 `g=C-1>0`，且 `delta=M-1=kappa(C-1)`，故已在实际相位可行集上证明常数最优。
+
+### 43.2 正权多项式证书与线性误差界
+
+证明。先令
+
+```math
+F(x,y)=(x^2+y^2)^2+18(x^2+y^2)-8(x^3-3xy^2)-27.
+```
+
+实际单位模行的三个循环比均为单位模，乘积为一，和为 `s`。若它们为 `U,V,W`，则 `UV+UW+VW=conj(s)`。对 `D=(U-V)(U-W)(V-W)`，有 `conj(D)=-D`，而三次多项式的判别式恒等式给出
+
+```math
+F(x,y)=-|D|^2\le0.
+```
+
+互补行的自相关为 `-s`，所以同时有 `F(-x,-y)<=0`。以下只从这两个必要不等式推导结论，不假定任意四次不等式可行点都已有相位实现。
+
+置 `u=x²,v=y²,r=u+v,p=2k+4`。两个不等式取平均给出
+
+```math
+B(r)=r^2+18r-27\le0,
+\qquad B(r)=(r-M)(r+M+18).
+```
+
+第二因子为正，故 `r<=M`、`delta>=0`。由 `k²=3` 及 `(2k-3)²>=0`，有 `k<=7/4`，所以
+
+```math
+p^2x^2\le p^2M=24k+36\le78<81.
+```
+
+因此 `9-px` 和 `9+px` 均为正。直接展开得到正权证书
+
+```math
+\frac{(9-px)F(x,y)+(9+px)F(-x,-y)}2
+=9\delta^2-8pg(3\delta+4u)\le0.
+```
+
+若 `g<0`，则 `u>C>0`，右端严格为正，矛盾。故 `g>=0`。若 `g=0`，证书立即给出 `delta=0` 及 `v=u/3`。这个代数步骤也单独给出第 41 节定向界的无微分证明。
+
+下面证明最优线性界。恒等式
+
+```math
+\kappa(C-1)=M-1,\qquad
+\kappa(14-6k)=32
+```
+
+均由 `k²=3` 得到，且 `kappa>1`。
+
+若 `u<=1`，则
+
+```math
+\kappa g-\delta
+=(\kappa-1)(1-u)+v\ge0.
+```
+
+等号当且仅当 `u=1,v=0`。
+
+若 `u>=1`，记 `a=|x|`，于是 `a>=1`、`a²=u<=C`。在两个四次约束中选取带 `+8a(u-3v)` 的一个，并代入 `r=M-delta`、`u-3v=3delta-4g`，得到
+
+```math
+P(\delta):=\delta^2+12(2a-k)\delta-32ag\le0.
+```
+
+又有精确因式分解
+
+```math
+P(\kappa g)
+=g(a-1)\bigl[24\kappa-32-\kappa^2(a+1)\bigr].
+```
+
+为确定方括号的符号，只需以下有理界：
+
+```math
+\frac53<k\le\frac74,\qquad
+\frac{96}{11}<\kappa\le\frac{98}{11},\qquad
+1\le a\le a^2\le C\le\frac98.
+```
+
+因此
+
+```math
+24\kappa-32-\kappa^2(a+1)
+\ge\frac{1952}{11}-\left(\frac{98}{11}\right)^2\frac{17}{8}
+=\frac{2127}{242}>0.
+```
+
+故 `P(kappa g)>=0`。如果 `delta>kappa g`，则
+
+```math
+P(\delta)-P(\kappa g)
+=(\delta-\kappa g)\bigl(\delta+\kappa g+12(2a-k)\bigr)>0,
+```
+
+与 `P(delta)<=0` 矛盾。所以 `delta<=kappa g`。若线性界取等号，上述分解迫使 `g=0` 或 `a=1`；前者给出 `(u,v)=(C,C/3)`，后者结合等号给出 `(u,v)=(1,0)`。反向代入可直接验证。命题得证。
+
+### 43.3 谱端点附近的显式位置控制
+
+令 `A=sqrt(C)`、`b=sqrt(C/3)`，并从四个定向等号点中选择与 `x,y` 同号的点。恒等式
+
+```math
+ y^2-C/3=g-\delta
+```
+
+及 `kappa>2` 给出
+
+```math
+\left||x|-A\right|\le\frac{g}{A},\qquad
+\left||y|-b\right|\le\frac{(\kappa-1)g}{b}.
+```
+
+因此到四个等号点的欧氏距离至多为
+
+```math
+\frac{g}{A}\sqrt{1+3(\kappa-1)^2}.
+```
+
+对于靠近下端点的模式零能量 `E0=gamma+epsilon`，若 `0<=epsilon<=2A`，则
+
+```math
+x=-A+\varepsilon/2,\qquad
+ g=A\varepsilon-\varepsilon^2/4\le A\varepsilon.
+```
+
+故到对应下端点等号点的距离至多为
+
+```math
+\varepsilon\sqrt{1+3(\kappa-1)^2}.
+```
+
+同时循环调制两行可将任意模式化为模式零；交换两行则将上端点化为另一行的下端点。因此同样适用于任一能量端点。本结论控制的是实际互补相位行的谱与自相关，不把它自动提升为共同无偏 completion 的 symmetry-affinity 下界；后者仍需保留完整共享相位和正交约束。
