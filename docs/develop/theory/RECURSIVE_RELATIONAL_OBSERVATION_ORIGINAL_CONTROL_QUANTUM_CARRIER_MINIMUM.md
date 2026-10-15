@@ -707,7 +707,7 @@ The redundant-factor state $\rho_K^{(l)}$ is independent of $s$.
 Preservation is constrained by both identity action on the $J$ factor and
 
 $$
-\operatorname{tr}_E\!left[
+\operatorname{tr}_E\!\left[
  U_{KE}^{(l)}(\rho_K^{(l)}\otimes\Sigma_E)
  U_{KE}^{(l)\dagger}\right]=\rho_K^{(l)}.
 \tag{QC.36}
