@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Measurement.ExactConditionalPreparationCost
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
-import D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection
+import D5.S3.QuantumChannels.UnifiedPinchingFee
 
 /-!
 The position action uses inverse permutations. The fixed-unitary twirl has the same tested
@@ -111,8 +111,7 @@ def soundness {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
     (w : OccupancyWordSectors.Word (Fin d) n)
     (U : Matrix.unitaryGroup (Fin d) ℂ) : ℝ :=
-  D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement
-    (soundnessError G w U)
+  D5.S3.QuantumChannels.UnifiedPinchingFee.doorGap (soundnessError G w U)
 
 def P_G {n d : ℕ}
     (G : Subgroup (Equiv.Perm (Fin n)))
@@ -122,7 +121,7 @@ def P_G {n d : ℕ}
   p * completeness G φ + (1 - p) * soundness G w U
 
 def P_T (p : ℝ) : ℝ :=
-  D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement p
+  D5.S3.QuantumChannels.UnifiedPinchingFee.doorGap p
 
 def claim : Prop :=
   ∀ (n d : ℕ)
@@ -432,7 +431,7 @@ theorem result : claim := by
     rfl
   refine ⟨?_, ht⟩
   unfold P_G P_T soundness
-    D5.S3.ConceptDynamics.PartialIdentification.ComplementSymmetryProjection.complement
+    D5.S3.QuantumChannels.UnifiedPinchingFee.doorGap
   rw [hs, hc, mul_one]
   exact linear_compare (M w : ℝ) (O G w : ℝ) p
     (Nat.cast_pos.mpr (orbit_card_pos w)) (Nat.cast_nonneg _)
