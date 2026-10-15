@@ -1683,3 +1683,119 @@ This is an application of existing short-interval estimates and the
 owned residual identity, without a new distribution theorem,
 originality claim, sufficient unconditional RH energy bound,
 same-integer signed Robin estimate or Lean certification.
+
+## Fixed-half-plane inputs sharpen the actual energy benchmark
+
+The already recorded [OpenAI source](../Analytic/openai2026quasirh.md)
+states a zero-free half-plane with boundary $7/8$. The
+[Liu v2 source](../Analytic/liu2026quasirh.md), Theorem 27.1, improves
+that boundary to $B_{\rm new}=0.874957019420098946\ldots$.
+Use these as paper-level inputs, with their strict boundary and
+principal-pole qualifications retained. Neither external Lean
+closure has been independently compiled here. The following applies
+those existing inputs to the actual family (I10); it is not a new
+zero-free-region or Mertens theorem.
+
+Here is the ordinary-integer analytic interface, including the
+parameter change needed to use a fixed boundary other than $1/2$.
+Suppose $1/2\le B<1$ and $\zeta$ has no zero in $\Re s>B$.
+The classical zero-free-half-plane/Perron argument gives, for every
+fixed $B<\beta<1$,
+
+$$
+M(x)\ll_\beta x^\beta,\qquad
+\psi(x)-x\ll_\beta x^\beta.
+\tag{I60}
+$$
+
+This is not obtained by simply renaming the RH exponent in the
+Conrey quotation. The [fixed source snapshot's
+logarithmic-control proof](https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/build/paper.tex),
+label `lem:logarithmic-control`, supplies the classical disk argument:
+Borel--Caratheodory followed by three circles uses a nonvanishing
+regularized function, polynomial strip growth, and a bounded Euler
+logarithm on a fixed disk to the right of one. Its stated functions
+are Hecke functions and regularized $\zeta_F$, not the ordinary
+integer Mertens function. To apply that argument here, use instead
+$F(s)=(s-1)\zeta(s)/(s+1)$, with its removable nonzero value at one.
+It has those same elementary growth and Euler-logarithm properties
+and is nonvanishing on $\Re s>B$.
+For any fixed $\sigma_0>B$ and $\eta>0$, the argument gives
+$1/\zeta(\sigma+it)\ll_{\sigma_0,\eta}(3+|t|)^\eta$
+on $\sigma\ge\sigma_0$; Cauchy's estimate also bounds the
+logarithmic derivative by $O_{\sigma_0}(\log(3+|t|))$ on fixed
+sub-strips away from the pole at one.
+
+For the remaining interface reuse Koukoulopoulos,
+[*The Distribution of Prime Numbers*, author's authorized preliminary
+version](https://dms.umontreal.ca/~koukoulo/documents/publications/primes.pdf),
+Theorem 7.2, printed p.71. The inspected PDF has SHA256
+`1445e107bba9c89db6529aeb4bca3ecf01170fc2854a675f5ca6f288c77ea0a8`.
+Its coefficient condition holds with $f(n)=\mu(n)$ and
+$\theta=A=0$. Choose $B<\sigma_0<\beta$, initial line
+$c=1+1/\log x$, and height $T=x^2$.
+The shifted vertical integral is $O(x^{\sigma_0}T^\eta\log T)$,
+the horizontal integrals are $O(xT^{\eta-1})$, and that theorem's
+truncation error is $O(x\log x/T+1)$.
+Take $0<\eta<(\beta-\sigma_0)/4$ to obtain the Mertens part of
+(I60), with no residue at one for $1/\zeta$.
+For the prime error directly use the same book's explicit formula,
+Theorem 5.1, printed p.57, and its zero-counting Lemma 8.2(a),
+printed p.84. With $T=x^2$ and $\Re\rho\le B$ they give
+$\psi(x)-x\ll x^B\log^2x$, retaining every multiplicity and the
+main term $x$. Absorbing the logarithm gives the second part of
+(I60). Thus neither Perron nor the prime explicit formula is
+reproved here. Only their ordinary-$\zeta$ parameter interface is
+made explicit; the source's Hecke lemma is not quoted as a theorem
+about ordinary integer Mertens sums.
+
+Apply (I60) first to the exact identity (I33). Since $\beta<1$,
+the same Abel tails and normalizations used in (I34) converge, now
+with
+$U_N-1\ll_\beta N^{\beta-1}$ and
+$\mathcal T_N(m)\ll_\beta N^\beta$ uniformly on $N\le m\le2N$.
+Thus the actual residual, including its mean and endpoint, satisfies
+$|R_N(m)|\ll_\beta N^\beta/L$ there, and
+$E_N^{\rm first}\ll_\beta N^{2\beta-1}/L^2$.
+
+For the complete window reuse the bounded-variation splitting of
+(I31), without changing any coefficient. Set $X=N^{2-\beta}$.
+At each actual sample $N\le m\le X$, use
+$Y=\sqrt{mN^\beta}$, so $1\le N^\beta\le Y\le N$.
+The lower part has absolute bound $Y$ and the upper part uses
+$\sup_{Y\le t\le N}|M(t)|\ll_\beta N^\beta$ with the already
+proved variation allowance $O(1+m/Y)$. Consequently
+
+$$
+|R_N(m)|\ll_\beta 1+Y+N^\beta(1+m/Y)
+\ll_\beta\sqrt{mN^\beta}.
+$$
+
+The original weight gives at most $O_\beta(N^\beta\log N)$ on this
+range. On the whole remaining range $X<m\le N^2$, the existing
+$|R_N(m)|\le1+N$ and telescoping weights give
+$O(N^2/X)=O(N^\beta)$. Floors and ceilings at $X,Y$ only change
+fixed constants. Choosing $\beta>B$ sufficiently close to $B$
+and absorbing the logarithm yields, for every fixed $\varepsilon>0$,
+
+$$
+E_N^{\rm first}\ll_\varepsilon N^{2B-1+\varepsilon},\qquad
+E_N\ll_\varepsilon N^{B+\varepsilon}.
+\tag{I61}
+$$
+
+For $B=7/8$ these exponents are $3/4+\varepsilon$ and
+$7/8+\varepsilon$. The stated Liu boundary gives respectively
+$0.749914038840197892\ldots+\varepsilon$ and
+$0.874957019420098946\ldots+\varepsilon$.
+These fixed power savings improve the benchmark (I31) when its
+classical VK input is supplemented by the cited fixed-half-plane
+results. They neither alter what (I31)'s own input supplies nor
+attain the every-$\varepsilon$ subpower first-block estimate (I36).
+In particular $B_{\rm new}>1/2$ leaves a positive power in the
+first-block allowance. Combining it with (I52) also fails to certify
+vanishing of the full mixed term at the bandwidth of (I59).
+The actual joint main term $\mathcal A_{N,H}$, the same-integer
+signed Robin estimate, and RH remain unresolved. This is a scoped
+application of the cited analytic inputs, without a mathematical
+priority claim or Lean certification.
