@@ -17,11 +17,12 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedFrameDomains
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedStepCoordinates
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSimultaneousBoundaryState
-open D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
-open D5.S3.Combinatorics.Graph.PrefixReversal.NativeSelectedCInvariant
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeProtectedLabels
 open D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
+open D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
+open D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
+open D5.S3.Combinatorics.Graph.PrefixReversal.InsertionLayerPartition
 open D5.S3.Combinatorics.Graph.Walks.PathRingSplicing
 open private pChildIndex outer_base_bound old_base_bound from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ParentWitnesses
