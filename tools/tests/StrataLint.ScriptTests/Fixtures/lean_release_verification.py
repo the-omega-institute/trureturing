@@ -3,6 +3,8 @@ import json
 import pathlib
 import shutil
 import subprocess
+import tarfile
+import tempfile
 
 from lean_seed_support import ROOT, digest, write
 
@@ -84,7 +86,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
                         reason = report["reason"]
                         command_tail = ([operation, "--verify", "HEAD"] if operation == "rev-parse"
                                         else [operation, "--porcelain", "--untracked-files=no"])
-                        command = repr(["git", "-C", str(self.root), *command_tail])
+                        command = repr(["git", "-C", str(self.root.resolve()), *command_tail])
                         self.assertIn("Command '" + command, reason)
                         self.assertIn(f"exit status {exit_code}", reason)
                         self.assertTrue(reason.endswith("stderr: " + expected_stderr), report)
@@ -325,3 +327,182 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertIn("lean-cache-verify-v1-", result.stdout)
+
+    def candidate_transport(self, verb, tag="", **changes):
+        return self.transport(verb, arguments=("--mode", "candidate", "--source-commit",
+            self.verification_commit, "--tag", tag, *(("--no-build",) if verb == "publish" else ())),
+            **{**self.verification_environment, "GITHUB_ACTIONS": "false", **changes})
+
+    def candidate_fixture(self):
+        self.verification_fixture()
+        self.verification_api["repos/the-omega-institute/trureturing/commits/" +
+                              self.verification_commit] = {"sha": self.verification_commit}
+        self.save_verification_api()
+
+    def candidate_tag(self):
+        published = self.candidate_transport("publish", FAKE_BUILD_EXIT="91")
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        self.assertFalse((self.root / "build-runs").exists(), "publish-only must never invoke make")
+        return json.loads(next(line.partition(" ")[2] for line in published.stdout.splitlines()
+                              if line.startswith("LEAN_CACHE_PUBLISH ")))["tag"]
+
+    def candidate_consumer(self):
+        return dict(GITHUB_ACTIONS="true", GITHUB_EVENT_NAME="workflow_dispatch",
+                    GITHUB_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_VALIDATED="true",
+                    STRATALINT_CACHE_SOURCE_REF="refs/heads/dev",
+                    STRATALINT_CACHE_SOURCE_COMMIT=self.verification_commit,
+                    STRATALINT_CACHE_CHECKED_OUT_SHA=self.verification_commit)
+
+    def test_candidate_publish_only_accepts_clean_remote_source_without_dev_ancestry(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        self.assertTrue(tag.startswith("lean-cache-verify-v1-"))
+        self.assertIn("-local-" + self.verification_commit[:12] + "-", tag)
+        manifest = json.loads((self.remote / tag / "manifest.json").read_text())
+        self.assertEqual(self.verification_commit, manifest["producer_commit_sha"])
+        self.assertNotIn("workflow_run_id", manifest)
+        calls = self.verification_calls()
+        self.assertTrue(any(call[:2] == ["api", "repos/the-omega-institute/trureturing/commits/" +
+                             self.verification_commit] for call in calls))
+        self.assertFalse(any(call[:2] in (["release", "list"], ["release", "delete"]) or
+                             (call[0] == "api" and "/branches/dev" in call[1]) for call in calls))
+
+    def test_candidate_publish_only_rejects_stale_report_without_building(self):
+        self.candidate_fixture()
+        (self.root / ".lake/build/stratalint/raw-lean-report.json.reuse.json").unlink()
+        result = self.candidate_transport("publish")
+        self.assertNotEqual(0, result.returncode)
+        self.assertFalse((self.root / "build-runs").exists())
+        self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_candidate_publication_rejects_dirty_missing_source_and_ci_callers(self):
+        self.candidate_fixture()
+        endpoint = "repos/the-omega-institute/trureturing/commits/" + self.verification_commit
+        for damage in ("dirty", "missing-source", "ci"):
+            with self.subTest(damage=damage):
+                changes = {}
+                if damage == "dirty":
+                    write(self.root / "D5/A.lean", "def a := 2\n")
+                elif damage == "missing-source":
+                    self.verification_api[endpoint] = {"sha": "f" * 40}
+                    self.save_verification_api()
+                else:
+                    changes["GITHUB_ACTIONS"] = "true"
+                result = self.candidate_transport("publish", **changes)
+                self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse((self.root / "build-runs").exists())
+                self.assertEqual([], list(self.remote.iterdir()))
+                write(self.root / "D5/A.lean", "def a := 1\n")
+                self.verification_api[endpoint] = {"sha": self.verification_commit}
+                self.save_verification_api()
+
+    def test_candidate_exact_restore_warms_validated_long_ci_without_running_build(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.candidate_transport("fetch", tag, **self.candidate_consumer())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertFalse((self.root / "build-runs").exists())
+
+    def test_candidate_restore_rejects_ordinary_ci_and_wrong_source_without_replacing_build(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        write(self.root / ".lake/build/keep.txt", "keep current material")
+        environment = self.candidate_consumer()
+        for changes in ({"GITHUB_EVENT_NAME": "pull_request"},
+                        {"STRATALINT_CACHE_SOURCE_VALIDATED": "false"},
+                        {"STRATALINT_CACHE_CHECKED_OUT_SHA": "f" * 40}):
+            result = self.candidate_transport("fetch", tag, **{**environment, **changes})
+            self.assertNotEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
+        wrong_tag = tag.replace(self.verification_commit[:12], "f" * 12)
+        result = self.candidate_transport("fetch", wrong_tag, **environment)
+        self.assertNotEqual(0, result.returncode)
+        self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
+
+    def test_candidate_restore_rejects_incompatible_sealed_report_before_replacement(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        snapshot = self.remote / tag
+        archive = snapshot / "lean-build.tgz"
+        with tempfile.TemporaryDirectory() as temporary:
+            stage = pathlib.Path(temporary)
+            with tarfile.open(archive) as source:
+                source.extractall(stage, filter="data")
+            seal = stage / "build/stratalint/raw-lean-report.json.reuse.json"
+            value = json.loads(seal.read_text())
+            value["inputs"]["report_format"] = "incompatible-report-format"
+            seal.write_text(json.dumps(value))
+            with tarfile.open(archive, "w:gz") as output:
+                output.add(stage / "build", arcname="build")
+        packed = archive.read_bytes()
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        manifest.update(archive_bytes=len(packed), archive_sha256=digest(packed),
+            parts=[{"name": archive.name, "bytes": len(packed), "sha256": digest(packed)}])
+        write(snapshot / "manifest.json", json.dumps(manifest))
+        write(self.root / ".lake/build/keep.txt", "keep current material")
+        result = self.candidate_transport("fetch", tag, **self.candidate_consumer())
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("staged report seed is incompatible", result.stdout)
+        self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
+
+    def test_candidate_notification_failure_rolls_back_installation(self):
+        self.candidate_fixture()
+        tag = self.candidate_tag()
+        directory = self.root / "notification-directory"
+        directory.mkdir()
+        for channel in ("GITHUB_ENV", "GITHUB_OUTPUT"):
+            with self.subTest(channel=channel):
+                write(self.root / ".lake/build/keep.txt", "keep current material")
+                result = self.candidate_transport("fetch", tag,
+                    **{**self.candidate_consumer(), channel: str(directory)})
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertNotIn('"status":"unpacked"', result.stdout)
+                self.assertEqual("keep current material", (self.root / ".lake/build/keep.txt").read_text())
+
+    def test_candidate_make_publish_only_and_exact_fetch_reach_transport(self):
+        self.candidate_fixture()
+        environment = self.transport_environment(**{**self.verification_environment,
+            "GITHUB_ACTIONS": "false", "FAKE_BUILD_EXIT": "91"})
+        publish = subprocess.run([shutil.which("make"), "-C", str(self.root),
+            "lean-cache-to-github-without-mathlib", "LEAN_CACHE_REPOSITORY=" + str(self.root),
+            "LEAN_CACHE_MODE=candidate", "LEAN_CACHE_SOURCE_COMMIT=" + self.verification_commit,
+            "LEAN_CACHE_PUBLISH_ONLY=1"], text=True, capture_output=True, env=environment)
+        self.assertEqual(0, publish.returncode, publish.stdout + publish.stderr)
+        self.assertFalse((self.root / "build-runs").exists())
+        tag = json.loads(next(line.partition(" ")[2] for line in publish.stdout.splitlines()
+                             if line.startswith("LEAN_CACHE_PUBLISH ")))["tag"]
+        shutil.rmtree(self.root / ".lake/build")
+        fetch = subprocess.run([shutil.which("make"), "-C", str(self.root),
+            "lean-cache-from-github-without-mathlib", "LEAN_CACHE_REPOSITORY=" + str(self.root),
+            "LEAN_CACHE_MODE=candidate", "LEAN_CACHE_SOURCE_COMMIT=" + self.verification_commit,
+            "LEAN_CACHE_TAG=" + tag], text=True, capture_output=True,
+            env={**environment, **self.candidate_consumer()})
+        self.assertEqual(0, fetch.returncode, fetch.stdout + fetch.stderr)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertFalse((self.root / "build-runs").exists())
+
+    def test_candidate_darwin_arm64_seed_restores_on_linux_arm64_only(self):
+        self.candidate_fixture()
+        # Regenerate the synthetic complete receipt under the producer platform.
+        producer = self.host_platform("Darwin", "arm64")
+        factory = subprocess.run(["python3", "-B",
+            str(ROOT / "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
+            "write-release-report", str(self.root)], text=True, capture_output=True,
+            env={**self.transport_environment(), **producer})
+        self.assertEqual(0, factory.returncode, factory.stdout + factory.stderr)
+        published = self.candidate_transport("publish", **producer)
+        self.assertEqual(0, published.returncode, published.stdout + published.stderr)
+        tag = json.loads(next(line.partition(" ")[2] for line in published.stdout.splitlines()
+                             if line.startswith("LEAN_CACHE_PUBLISH ")))["tag"]
+        shutil.rmtree(self.root / ".lake/build")
+        rejected = self.candidate_transport("fetch", tag,
+            **{**self.candidate_consumer(), **self.host_platform("Linux", "x86_64")})
+        self.assertEqual(1, rejected.returncode, rejected.stdout + rejected.stderr)
+        self.assertFalse((self.root / ".lake/build").exists())
+        restored = self.candidate_transport("fetch", tag,
+            **{**self.candidate_consumer(), **self.host_platform("Linux", "aarch64")})
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
