@@ -1599,7 +1599,7 @@ then discard the qubit. On the selected pair $G_d^\dagger G_d=I_4$.
 For a gate on the entire data/qubit register, extend it by identity on the
 other three data coordinates.
 This is the restricted controlled-imbit mechanism of
-[Wu et al., Appendix A, (22)–(23)](../../../Library/Quantum/wu2024distributedimaginarity.md),
+[Wu et al., Appendix A, (22)–(23)](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
 used here with the actual mixed state (C129.6). Directly, for
 $\omega=(I_2+zH)/2$ and every complex pair matrix,
 
@@ -2226,7 +2226,7 @@ The real-operation definitions and imaginarity framework are
 `literature-attested` in
 [Wu et al. (2021)](../../../Library/Quantum/wu2021imaginarity.md).
 The supplied-imbit real implementation is `literature-attested` in
-[Wu et al. (2024), Eq. (11) and its real-Kraus completeness argument](../../../Library/Quantum/wu2024distributedimaginarity.md),
+[Wu et al. (2024), Eq. (11) and its real-Kraus completeness argument](../../../Library/QuantumChannels/wu2024distributedimaginarity.md),
 also arXiv:2301.04782v1, Appendix A, (22)–(23). It assumes the imbit
 already supplied; it does not itself distill the unknown mixed source or
 supply native joint gates. The complete-Kraus/all-complex-algebra framework
