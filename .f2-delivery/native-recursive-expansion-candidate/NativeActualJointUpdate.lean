@@ -1,9 +1,10 @@
-/- UNCOMPILED same-cycle native actual J propagation bridge.
-   The complete closed-parent construction is mapped through the injective
-   native-domain inclusion. Its actual cut set is identified by literal
-   shifted native ports. The complete endpoint-pair update is earned from
-   the actual old joint pieces and the three actual replacement walks.
-   This is an induction-step interface, not an all-n existence theorem. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualJointUpdate
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualJointUpdate
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Update the Complete Actual Native Joint Partition. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeOuterChildAssembly
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 import D5.S3.Combinatorics.Graph.Walks.ActualClosedParentJointUpdate
@@ -243,12 +244,12 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
       (Finset.mem_filter.mp hk).2 (Finset.mem_filter.mp hh).2
   have hzero₀mem : s(ℓ₀, r₀) ∈ K := by
     apply Finset.mem_filter.mpr
-    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inl rfl, ?_⟩
+    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inl True.intro, ?_⟩
     rw [hzero₀, native_frame_marked_cuts_shift hm F₁ A u hbase₁]
     exact Finset.mem_insert_self _ _
   have hzero₁mem : s(ℓ₁, r₁) ∈ H := by
     apply Finset.mem_filter.mpr
-    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inr (Or.inl rfl), ?_⟩
+    refine ⟨by simp only [cuts, List.mem_toFinset, List.mem_cons]; exact Or.inr (Or.inl True.intro), ?_⟩
     rw [hzero₁, native_frame_marked_cuts_shift hm F₀ A u hbase₀]
     exact Finset.mem_insert_self _ _
   have hKerase : (K.erase s(ℓ₀, r₀)).image edgeVal = markedCuts F₁ := by
@@ -265,7 +266,9 @@ theorem native_actual_closed_parent_joint_update {m k : ℕ} (hm : 3 ≤ m) (hk 
     constructor
     · intro hx
       let v : ParentVertex F₀ A u hbase₀ := ⟨x, hx⟩
-      exact (List.count_map_of_injective _ Subtype.val Subtype.val_injective v).trans (hcount v)
+      have hv : (pieces.flatMap fun p => p.walk.support).count v = 1 := by
+        simpa only [List.count_eq_countP, Bool.beq_eq_decide_eq] using hcount v
+      exact (List.count_map_of_injective _ Subtype.val Subtype.val_injective v).trans hv
     · intro hx
       apply List.count_eq_zero.mpr
       intro hmapped

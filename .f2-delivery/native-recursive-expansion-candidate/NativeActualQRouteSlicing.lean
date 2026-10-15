@@ -1,8 +1,10 @@
-/- UNCOMPILED native Q consumer of the actual prior J/E/O state.
-   Both Q zero cuts are retained on the same prior cycle by its precise
-   protected-a and remaining-b invariants. Actual joint ownership and the
-   literal boundary route then force their order on the supplied Q walk.
-   No new cut-position or route-retention invariant is assumed. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualQRouteSlicing
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualQRouteSlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Slice the Same Actual Native Q Route. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualPJointPrefix
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeBoundaryRoutePositions
 import D5.S3.Combinatorics.Graph.Walks.ActualJointRouteSlicing

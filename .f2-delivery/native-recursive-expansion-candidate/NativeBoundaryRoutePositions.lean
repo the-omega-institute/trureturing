@@ -1,7 +1,10 @@
-/- UNCOMPILED native E/O route positions used by the Q ordered split.
-   The B path finishing at actual L0 is strictly later than the B path
-   starting at actual R0. These are consequences of the verified explicit
-   E/O enumerations and native port injectivity, not new state assumptions. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeBoundaryRoutePositions
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeBoundaryRoutePositions
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Locate the Actual Zero Left Port in Native Routes. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialBoundaryInstances
 
 set_option autoImplicit false
@@ -13,22 +16,35 @@ open D5.S3.Combinatorics.Graph.PrefixReversal.NativeRecursiveSupply
 open D5.S3.Combinatorics.Graph.PrefixReversal.NativeStarGrafting
 open D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open D5.S3.Combinatorics.Graph.Walks.EdgeSlicing
-open private code_injective from
+open private code_injective even_inverse_route odd_inverse_route
+  even_route_mid3_eq odd_route_mid3_eq from
   D5.S3.Combinatorics.Graph.PrefixReversal.RecursivePortBoundary
 open private frame_k_lt_m from
   D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
 
 private theorem even_left_zero_route_position (s i : ℕ) (hi : i < 2 * s + 3) :
     evenRoute s (2 * i + 1) = (0, 1) ↔ i = s + 1 := by
-  have hm := Nat.mod_lt (2 * i + 1) (by decide : 0 < 2)
-  unfold evenRoute
-  split_ifs <;> simp only [Prod.mk.injEq] <;> omega
+  constructor
+  · intro h
+    have he := congrArg (evenInverse s) h
+    rw [even_inverse_route s _ (by omega)] at he
+    simp [evenInverse] at he
+    omega
+  · intro h
+    rw [show 2 * i + 1 = 2 * s + 3 by omega]
+    exact even_route_mid3_eq s
 
 private theorem odd_left_zero_route_position (s i : ℕ) (hi : i < 2 * s + 4) :
     oddRoute s (2 * i + 1) = (0, 1) ↔ i = s + 1 := by
-  have hm := Nat.mod_lt (2 * i + 1) (by decide : 0 < 2)
-  unfold oddRoute
-  split_ifs <;> simp only [Prod.mk.injEq] <;> omega
+  constructor
+  · intro h
+    have he := congrArg (oddInverse s) h
+    rw [odd_inverse_route s _ (by omega)] at he
+    simp [oddInverse] at he
+    omega
+  · intro h
+    rw [show 2 * i + 1 = 2 * s + 3 by omega]
+    exact odd_route_mid3_eq s
 
 /-- Actual even-route pieces have precisely one path finishing at L0,
 at position s+1. Thus it is later than the first rooted B path. -/

@@ -1,8 +1,10 @@
-/- UNCOMPILED actual k2 Q-order exception.
-   The middle whole boundary path is earned as a join of three actual
-   joint pieces and two restored b seams. Its first and third joint
-   pieces contain the two Q cuts. Refining the actual full Q route then
-   earns their strict order, without importing the k>=3 cross invariant. -/
+/- GID: D5/S3/Combinatorics/Graph/Walks/ActualBaseJointRouteSlicing
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Walks/ActualBaseJointRouteSlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Slice the Exceptional Base Q Route from Actual Joint Pieces. -/
 import D5.S3.Combinatorics.Graph.Walks.ActualJointRouteSlicing
 
 set_option autoImplicit false
@@ -62,10 +64,15 @@ theorem actual_base_joint_route_three_fragments {base : V}
   have h₂₃ : G.Adj p₂.finish p₃.start :=
     w.adj_of_mem_edges (hcuts _ (Finset.mem_union.mpr (Or.inr hseam₂)))
   have hlinkTrip : Linked p₁ [p₂, p₃] := ⟨h₁₂, h₂₃, trivial⟩
-  let trip := join p₁ [p₂, p₃] hlinkTrip
+  let trip : G.Walk p₁.start p₃.finish := join p₁ [p₂, p₃] hlinkTrip
+  have htripSupport : trip.support =
+      (p₁ :: p₂ :: p₃ :: []).flatMap (fun z => z.walk.support) :=
+    join_support p₁ [p₂, p₃] hlinkTrip
+  have htripEdges : trip.edges = chainEdges p₁ [p₂, p₃] :=
+    join_edges p₁ [p₂, p₃] hlinkTrip
   have hntrip : trip.support.Nodup := by
-    rw [join_support]
-    apply (List.nodup_append'.mp (show
+    rw [htripSupport]
+    exact (List.nodup_append'.mp (show
       (((p₁ :: p₂ :: p₃ :: []).flatMap fun z => z.walk.support) ++
         rest.flatMap fun z => z.walk.support).Nodup by
       simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil,
@@ -81,7 +88,7 @@ theorem actual_base_joint_route_three_fragments {base : V}
       e ∈ (p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
         (fun z : Piece G => z.walk.edges) := by
     intro e he
-    rw [join_edges] at he
+    rw [htripEdges] at he
     simp only [chainEdges, List.mem_append, List.mem_cons, List.mem_singleton,
       List.not_mem_nil, or_false] at he
     apply (hboundaryInventory e).mpr
@@ -98,19 +105,25 @@ theorem actual_base_joint_route_three_fragments {base : V}
     (p₀ :: oldPiece :: p₄ :: []) hbn oldPiece (by simp) holdPath trip htripPath htripKeep
   have htailNil : tail = .nil := (SimpleGraph.Walk.isPath_iff_nil.mp htail).eq_nil
   have holdTrip : old = trip := by
-    simpa only [htailNil, SimpleGraph.Walk.append_nil] using hold
+    simpa only [oldPiece, htailNil, SimpleGraph.Walk.append_nil] using hold
   obtain ⟨h₀₁, h₃₄, _⟩ := hboundaryLink
   have hlinkFull : Linked p₀ [p₁, p₂, p₃, p₄] := ⟨h₀₁, h₁₂, h₂₃, h₃₄, trivial⟩
-  have hΛjoin : Λ = join p₀ [p₁, p₂, p₃, p₄] hlinkFull := by
+  let full : G.Walk p₀.start p₄.finish := join p₀ [p₁, p₂, p₃, p₄] hlinkFull
+  have hfullSupport : full.support =
+      (p₀ :: p₁ :: p₂ :: p₃ :: p₄ :: []).flatMap (fun z => z.walk.support) :=
+    join_support p₀ [p₁, p₂, p₃, p₄] hlinkFull
+  have hΛjoin : Λ = full := by
     apply SimpleGraph.Walk.ext_support
-    rw [hΛsupport, holdTrip, join_support, join_support]
+    rw [hΛsupport, holdTrip, htripSupport, hfullSupport]
     simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc]
-  have hfullPath : (join p₀ [p₁, p₂, p₃, p₄] hlinkFull).IsPath := by
-    rw [← hΛjoin]
+  have hfullPath : full.IsPath := by
     apply SimpleGraph.Walk.IsPath.mk'
-    rw [hΛsupport]
-    simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil,
-      List.append_assoc] using hbn
+    rw [hfullSupport]
+    have hbn' := hbn
+    simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil] at hbn'
+    rw [holdTrip, htripSupport] at hbn'
+    simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc]
+      using hbn'
   have hp₁ : p₁.walk.IsPath := SimpleGraph.Walk.IsPath.mk'
     ((List.nodup_flatMap.mp hjn).1 p₁ (by simp))
   have hp₃ : p₃.walk.IsPath := SimpleGraph.Walk.IsPath.mk'

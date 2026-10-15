@@ -1,8 +1,10 @@
-/- UNCOMPILED actual P prefix earned from the prior native state.
-   Literal tuples identify L0-a-s-b-t. The protected-a and remaining-b
-   invariants of the same prior cycle retain both edges. Their actual
-   terminals exclude both old marked-cut groups, so joint inventory
-   forces that literal two-edge prefix in the distinguished whole path. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualPJointPrefix
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualPJointPrefix
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Earn the Actual Native P Prefix and Retained Q Cuts. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeMarkedCutRetention
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJointMarkedCutShift
 import D5.S3.Combinatorics.Graph.Walks.ActualPiecePrefix
@@ -74,7 +76,9 @@ theorem native_actual_p_joint_prefix {m k : ℕ} (hm : 3 ≤ m)
       d.support = ℓ :: s :: tail.support ∧
       d.edges = s(ℓ, s) :: s(s, t) :: tail.edges := by
   classical
-  have huBase : u ∈ F₀.base := by rw [hbase]; simp only [List.mem_append, List.mem_singleton]; exact Or.inr rfl
+  have huBase : u ∈ F₀.base := by
+    rw [hbase]
+    exact List.mem_append.mpr (Or.inr (List.mem_singleton.mpr rfl))
   have huSelected : u ∉ F₀.selected.toFinset := by
     intro hu
     exact List.disjoint_left.mp (frame_selected_base_disjoint F₀) (List.mem_toFinset.mp hu) huBase

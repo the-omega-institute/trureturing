@@ -1,7 +1,10 @@
-/- UNCOMPILED native k2 Q exception on the same actual prior cycle.
-   The actual J2 endpoint table identifies the two restored marked seams
-   inside the middle E2 path. Same-cycle invariants earn the two new cuts;
-   literal inventory recovery earns the refinement and its cut order. -/
+/- GID: D5/S3/Combinatorics/Graph/PrefixReversal/NativeActualQBaseSlicing
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/Graph/PrefixReversal/NativeActualQBaseSlicing
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Construct the Exceptional Actual Native Q Split. -/
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQRouteSlicing
 import D5.S3.Combinatorics.Graph.Walks.ActualBaseJointRouteSlicing
 
