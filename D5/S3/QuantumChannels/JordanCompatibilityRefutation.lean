@@ -386,4 +386,68 @@ private theorem B_possemidef (A : A4)
   rw [he] at hp
   exact hp
 
+private theorem contract_id_right (A : A4)
+    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (U : M4) :
+    contract A U 1 = U.transpose := by
+  ext a b
+  have hm (r s : Fin 4) :
+      (∑ t : Fin 4, A (a, (r, t)) (b, (s, t))) =
+        if a = r ∧ b = s then 1 else 0 := by
+    have hh := congrArg (fun M => M (a, r) (b, s)) h2
+    change (∑ t : Fin 4, A (a, (r, t)) (b, (s, t))) =
+      (Matrix.single a b 1) r s at hh
+    simpa only [Matrix.single_apply] using hh
+  rw [contract_apply]
+  simp only [Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  calc
+    _ = ∑ r : Fin 4, ∑ s : Fin 4,
+        (∑ t : Fin 4, A (a, (r, t)) (b, (s, t))) * U s r := by
+      apply Finset.sum_congr rfl
+      intro r _
+      rw [Finset.sum_comm]
+      simp only [Finset.sum_mul]
+    _ = U.transpose a b := by
+      simp [hm, ite_and, ite_mul, Finset.sum_ite_irrel]
+
+private theorem contract_id_left (A : A4)
+    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (V : M4) :
+    contract A 1 V = V.transpose := by
+  ext a b
+  have hm (r s : Fin 4) :
+      (∑ t : Fin 4, A (a, (t, r)) (b, (t, s))) =
+        if a = r ∧ b = s then 1 else 0 := by
+    have hh := congrArg (fun M => M (a, r) (b, s)) h1
+    change (∑ t : Fin 4, A (a, (t, r)) (b, (t, s))) =
+      (Matrix.single a b 1) r s at hh
+    simpa only [Matrix.single_apply] using hh
+  rw [contract_apply]
+  simp only [Fintype.sum_prod_type, Matrix.one_apply, mul_ite, mul_one, mul_zero,
+    ite_mul, zero_mul, Finset.sum_ite_irrel, Finset.sum_const_zero,
+    Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  calc
+    _ = ∑ r : Fin 4, ∑ s : Fin 4,
+        (∑ t : Fin 4, A (a, (t, r)) (b, (t, s))) * V s r := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro r _
+      rw [Finset.sum_comm]
+      simp only [Finset.sum_mul]
+    _ = V.transpose a b := by
+      simp [hm, ite_and, ite_mul, Finset.sum_ite_irrel]
+
+private theorem B_half_row (A : A4)
+    (h2 : traceX2 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (i : Fin 4) :
+    B A i 2 + B A i 3 = (1 / 2 : ℝ) • E i := by
+  unfold B
+  rw [← contract_add_right, effect_halves.2.2.2, contract_smul_right,
+    contract_id_right A h2, (effects_transpose i).1]
+
+private theorem B_half_col (A : A4)
+    (h1 : traceX1 A = J (LinearMap.id : Map (Fin 4) (Fin 4))) (j : Fin 4) :
+    B A 0 j + B A 1 j = (1 / 2 : ℝ) • F j := by
+  unfold B
+  rw [← contract_add_left, effect_halves.1, contract_smul_left,
+    contract_id_left A h1, (effects_transpose j).2]
+
 end D5.S3.QuantumChannels.JordanCompatibilityRefutation
