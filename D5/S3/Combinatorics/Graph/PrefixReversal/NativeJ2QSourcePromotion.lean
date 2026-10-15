@@ -181,6 +181,8 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
       (W.special.ordered 2).walk.copy rfl (by
         simpa [evenPortRoute, evenEnumerate, evenRoute, code] using
           (W.special.orderedPorts 2).2)⟩
+  have hordered : List.ofFn W.special.ordered =
+      [W.special.ordered 0, W.special.ordered 1, W.special.ordered 2] := by rfl
   have hlink : Linked p₀ [⟨p₁.start, p₃.finish, old⟩, p₄] := by
     refine ⟨?_, ?_, trivial⟩
     · change (domainGraph (SpecialDomain O hBO)).Adj (W.special.ordered 0).finish p₁.start
@@ -193,25 +195,24 @@ theorem native_j2_same_q_three_fragments {m : ℕ} (hm : 5 ≤ m)
       norm_num [evenPortRoute, evenEnumerate, evenRoute, code, internalSeam]
   have hΛs : W.special.path.support =
       p₀.walk.support ++ old.support ++ p₄.walk.support := by
-    simp only [p₀, p₄, old, SimpleGraph.Walk.support_copy]
-    change W.special.path.support =
-      (W.special.ordered 0).walk.support ++ (W.special.ordered 1).walk.support ++
-        (W.special.ordered 2).walk.support
-    convert W.special.support using 1
+    have h := W.special.support
+    rw [hordered] at h
+    simpa only [p₀, p₄, old, SimpleGraph.Walk.support_copy,
+      List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc] using h
   have hbn : ((p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
       fun z : Piece (domainGraph (SpecialDomain O hBO)) => z.walk.support).Nodup := by
-    simp only [List.flatMap_cons, List.flatMap_nil, List.append_nil]
-    rw [← hΛs]
-    exact W.special.hamiltonian.isPath.support_nodup
+    have h := W.special.hamiltonian.isPath.support_nodup
+    rw [hΛs] at h
+    simpa only [List.flatMap_cons, List.flatMap_nil, List.append_nil,
+      List.append_assoc] using h
   have hbi (e) : e ∈ (p₀ :: ⟨p₁.start, p₃.finish, old⟩ :: p₄ :: []).flatMap
       (fun z : Piece (domainGraph (SpecialDomain O hBO)) => z.walk.edges) ↔
         e ∈ w.edges ∧ e ∉ K := by
-    simp only [p₀, p₄, old, SimpleGraph.Walk.edges_copy,
-      List.flatMap_cons, List.flatMap_nil, List.append_nil]
-    change e ∈ (W.special.ordered 0).walk.edges ++
-      (W.special.ordered 1).walk.edges ++ (W.special.ordered 2).walk.edges ↔ _
-    rw [hKS]
-    exact W.special.uncutInventory e
+    have h := W.special.uncutInventory e
+    rw [hordered] at h
+    simpa only [p₀, p₄, old, SimpleGraph.Walk.edges_copy, hKS, w,
+      List.flatMap_cons, List.flatMap_nil, List.append_nil, List.append_assoc,
+      SimpleGraph.Walk.mem_edgeSet] using h
   have hprotect := native_protected_labels O (by omega : 2 ≤ 2)
   have hAkeep (x y : {v : Configuration m // SpecialDomain O hBO v})
       (hxy : y.val = x.val * a m)
