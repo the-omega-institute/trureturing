@@ -90,7 +90,7 @@ Tier 1 conjecture of a 2019 paper, preregistered in issue #17038 before any Lean
 | result | bind-only | none: after inlining, the bridge, the spectral table, the table trade-off and the attainment are instantiations of frozen D5 and pinned Mathlib results followed by normalization | open-problem-resolution |
 | the Gram, Choi, spectral, table, entropy and attainment helpers (private) | bind-only (consumed on the proof path of `result`) | none | consumed helpers |
 
-Every other declaration is a definition used by a public statement or a compiler-generated proof on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `none`. There is no digestion atom.
+Every other public declaration is a definition used by a public statement. The module's 31 private theorems are bind-only helpers consumed on the proof path of `result`, and its 1 private definitions and its compiler-generated declarations also lie on the proof path of `result`. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The utility is `none`. There is no digestion atom.
 
 ### What the settlement shows
 
