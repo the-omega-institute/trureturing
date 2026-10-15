@@ -783,3 +783,481 @@ asserts an operational identification or a spatial-dimension selection.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 35. Every fixed full eigenvalue and the actual lowest gap
+
+**Definition 35.1 (ordered spectra of the original attractive forms).**
+Retain every datum, control, preparation, coefficient, raw measure,
+period, source, covariance, clock and boundary of Definition 31.1 and
+[G, Definition 25.1]. For nonzero $\kappa$, let
+
+$$
+\mathscr H_{\sigma,\kappa,\tau}
+ =L_\kappa-gM_{W_\sigma(\kappa,\tau)},\qquad
+Q(\mathscr H_{\sigma,\kappa,\tau})=\mathcal F_\kappa,
+\qquad D(\mathscr H_{\sigma,\kappa,\tau})=D(L_\kappa).
+\tag{35.1}
+$$
+
+Write its eigenvalues in increasing order, with multiplicity, as
+$\Lambda_{\sigma,1}(\kappa,\tau)\le
+\Lambda_{\sigma,2}(\kappa,\tau)\le\cdots$, and set
+$\Delta_\sigma(\kappa,\tau)=
+\Lambda_{\sigma,2}(\kappa,\tau)-\Lambda_{\sigma,1}(\kappa,\tau)$.
+Existence of this discrete enumeration is the compact-resolvent assertion
+of [G, (25.9)], applied separately at each parameter and cutoff.
+In particular $\Lambda_{\sigma,1}=E_\sigma$.
+
+**Theorem 35.2 (complete-domain fixed-index collapse).**
+For every fixed positive integer $N$, every fixed original $s\in\mathbb R$,
+$b>0$ and $g>0$, and through either sign of $\kappa\to0$,
+
+$$
+\begin{aligned}
+\Lambda_{{\rm raw},N}(\kappa,\tau_s)&\longrightarrow e(gc_s),\\
+\Lambda_{{\rm unit},N}(\kappa,\tau_b)&\longrightarrow
+ e\!\left(gc_0G_{\beta b}(0)\right).
+\end{aligned}
+\tag{35.2}
+$$
+
+Proof. Put $M=c_s$ or $M=c_0G_{\beta b}(0)$ as appropriate, and $c=gM$.
+Equation (32.9) gives numbers $\eta_\kappa\to0$ such that
+$W_\sigma\le M\phi+\eta_\kappa$ everywhere. The complete-domain
+inequality (33.3) therefore gives
+
+$$
+\mathfrak q_{\sigma,\kappa}[f]
+ \ge \bigl(e(c)-g\eta_\kappa\bigr)\|f\|_2^2
+ \qquad(f\in\mathcal F_\kappa).
+\tag{35.3}
+$$
+
+Its Fourier justification keeps the entire square
+$(nA_\kappa+mB_\kappa+\kappa j b_\kappa)^2$ in every summand.
+Thus this bound includes arbitrary compensating hidden frequencies
+and gives the required lower bound for every ordered eigenvalue.
+
+For the upper bound choose $N$ real normalized functions
+$F_1,\ldots,F_N\in C_c^\infty((-1,1))$ with pairwise disjoint supports.
+Use the actual $D\in(-\pi,\pi)$ chart and the same length as in (33.4):
+
+$$
+\ell_\kappa=
+\begin{cases}a\tau_s^{1/4},&\mathrm{raw},\\
+\sqrt a,&\mathrm{unit},\end{cases}
+\qquad
+f_{i,\kappa}(k,\theta,v,D)
+ =\frac{u_c(k)}{2\pi\sqrt{\ell_\kappa}}
+                  F_i(D/\ell_\kappa).
+\tag{35.4}
+$$
+
+These are orthonormal for the original raw measure: the visible volume
+is $(2\pi)^2$, the hidden Jacobian is $\ell_\kappa$, and
+$\|u_c\|_{L^2(dk)}=\|F_i\|_{L^2(dx)}=1$.
+Scalar Dirichlet approximation of $u_c$ puts every $f_{i,\kappa}$ in
+the original completed domain. Their supports avoid the circle seam.
+Both the kinetic and multiplier cross forms between distinct $i$ vanish
+by disjoint support. For each $i$ the exact kinetic energy is
+
+$$
+T_\kappa[f_{i,\kappa}]
+ =\varepsilon^2\|u_c'\|_2^2
+  +\frac{a^2}{\ell_\kappa^2}\|F_i'\|_2^2
+                 \int_I b_\kappa^2u_c^2\,dk.
+\tag{35.5}
+$$
+
+No cross term has been dropped from $Q_\kappa$: these trial functions
+are constant in both visible angles, so its action on them is exactly
+$\kappa b_\kappa\partial_D$. The lower bound (35.3), in contrast,
+has no such restriction.
+
+The second term of (35.5) tends to zero. On the union of the supports,
+$\rho(D)/r_s\le\ell_\kappa/r_s=\tau_s^{-1/4}\to0$ in the raw
+regime; in the unit regime $\rho(D)\le\ell_\kappa\to0$.
+The uniform field limits (32.9) consequently give, for all $i\le N$,
+
+$$
+\int W_\sigma|f_{i,\kappa}|^2\,d\mu
+ \longrightarrow M\int_I\phi u_c^2\,dk,
+\qquad
+\mathfrak q_{\sigma,\kappa}[f_{i,\kappa}]\longrightarrow e(c).
+\tag{35.6}
+$$
+
+Since $N$ is fixed and the cross forms vanish, the supremum of the
+Rayleigh quotient on their $N$-dimensional span tends to $e(c)$.
+The form-domain min-max principle, [Teschl, Theorem 4.10,
+printed pp.118--119](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+now gives the upper bound for the $N$th full eigenvalue. Its hypotheses
+are selfadjointness, semiboundedness and the discrete ordered spectrum,
+all supplied by (35.1); it requires neither invariant trial subspaces
+nor a common operator domain as $\kappa$ varies. Together with (35.3)
+this proves (35.2). All estimates use $a=|\kappa|$ or the uniform
+two-sided coefficient bounds. $\square$
+
+**Corollary 35.3 (fixed-parameter isolation and vanishing limiting gaps).**
+At each admissible nonzero parameter and positive cutoff the original
+attractive ground eigenvalue is simple, and $\Delta_\sigma>0$.
+Nevertheless, for both critical families,
+
+$$
+\Delta_{\rm raw}(\kappa,\tau_s)\longrightarrow0,
+\qquad
+\Delta_{\rm unit}(\kappa,\tau_b)\longrightarrow0.
+\tag{35.7}
+$$
+
+More generally the difference between the $(N+1)$st and $N$th full
+eigenvalues tends to zero for every fixed $N$. Thus no fixed finite
+initial cluster has a positive gap to its complement uniform in this
+limit.
+
+Proof. The original killed free heat kernel is strictly positive on the
+connected cylinder, as supplied by [G, Proposition 2.1 and Theorem 20.2].
+For each fixed parameter $W_\sigma$ is bounded and nonnegative.
+The bounded-potential Trotter formula [Teschl, Theorem 5.11] gives
+
+$$
+e^{-t\mathscr H_{\sigma,\kappa,\tau}}h
+ \ge e^{-tL_\kappa}h>0\quad(t>0,\quad 0\ne h\ge0).
+\tag{35.8}
+$$
+
+Indeed every multiplication factor $e^{tgW_\sigma/n}$ is at least
+one, and every free factor preserves positivity. The strong product
+limit preserves this inequality. This heat operator is real and
+selfadjoint, and its norm $e^{-t\Lambda_{\sigma,1}}$ is an eigenvalue
+by compact resolvent. The positive-eigenvector argument of [Teschl,
+Theorem 10.11, printed p.236] therefore makes it simple. That argument
+uses only the order and inner product of $L^2$, so applies here with
+the raw cylinder measure as it does on $L^2(\mathbb R^n)$.
+Discreteness then gives $\Delta_\sigma>0$. Subtract the limits in
+(35.2), first at $N=1,2$ and then at consecutive fixed indices.
+These are statements about eigenvalue differences, not an assertion
+about the spectral type of an unspecified limiting operator. $\square$
+
+## 36. The complete three-coordinate comparison spectra
+
+**Definition 36.1 (all visible modes of the actual zero leaf).**
+On exactly $L^2(B,\nu_B)$ of [G, Definition 23.2] define
+$\mathcal K_c=\overline L_0-cM_\phi$ for $c\ge0$, with form domain
+$\overline{\mathcal F}_0$ and operator domain $D(\overline L_0)$.
+For $(n,m)\in\mathbb Z^2$, let $\nu_r(n,m;c)$, $r\ge1$, be the
+increasing Dirichlet eigenvalues of
+
+$$
+\begin{aligned}
+K_{n,m}(c)
+ &=-\varepsilon^2\partial_k^2
+    +\left(\frac{nH-(n+m)k}{2H}\right)^2-c\phi(k),\\
+Q(K_{n,m}(c))&=H_0^1(I),\qquad
+D(K_{n,m}(c))=H^2(I)\cap H_0^1(I).
+\end{aligned}
+\tag{36.1}
+$$
+
+The numerator follows literally from (25.4):
+$A_0=(H-k)/(2H)$ and $B_0=-k/(2H)$.
+Let $e_r(c)=\nu_r(0,0;c)$, so $e_1(c)=e(c)$ and $e_r(0)=r^2\lambda$.
+Denote by $\zeta_N(c)$ the increasing enumeration, with multiplicity,
+of the multiset
+
+$$
+\Sigma(c)=\mathop{\bigsqcup}_{(n,m)\in\mathbb Z^2}
+                     \{\nu_r(n,m;c):r\ge1\}.
+\tag{36.2}
+$$
+
+This uses both visible circles. It is not the smaller two-coordinate
+bottom-output quotient occurring in the observation-quotient volume.
+
+**Theorem 36.2 (exact complete spectrum and complete base gap).**
+The spectrum of $\mathcal K_c$ is exactly (36.2), with multiplicities
+added whenever distinct triples $(r,n,m)$ have the same value.
+Its bottom is the simple eigenvalue $\zeta_1(c)=e(c)$ and its actual
+lowest spectral gap is
+
+$$
+\begin{aligned}
+\Gamma(c)&=\zeta_2(c)-e(c)\\
+ &=\min\left\{e_2(c)-e(c),
+       \min_{(n,m)\ne(0,0)}[\nu_1(n,m;c)-e(c)]\right\},\\
+0<\Gamma(c)&\le\min\{e_2(c)-e(c),1/4\}.
+\end{aligned}
+\tag{36.3}
+$$
+
+Proof. In the raw orthonormal expansion
+$h=(2\pi)^{-1}\sum_{n,m}h_{nm}(k)e^{i(n\theta+mv)}$, the complete
+base form domain is precisely
+
+$$
+\left\{h\in L^2(\nu_B):
+ h_{nm}\in H_0^1(I),\quad
+ \sum_{n,m}\left(\varepsilon^2\|h_{nm}'\|_2^2+
+              \|(nA_0+mB_0)h_{nm}\|_2^2\right)<\infty\right\}.
+\tag{36.4}
+$$
+
+This is the $j=0$ completed-domain argument of [G, (26.13)], now
+on the actual base at zero; finite Fourier truncation and scalar
+Dirichlet approximation give both inclusions. Bounded multiplication
+by $c\phi$ leaves it unchanged. Thus $\mathcal K_c$ is the orthogonal
+sum of exactly the scalar operators (36.1), including their complete
+domains. Their normalized eigenfunctions multiplied by
+$e^{i(n\theta+mv)}/(2\pi)$ constitute a complete orthonormal basis.
+The scalar regular separated Dirichlet problem has simple discrete
+eigenvalues by the Wronskian argument; see also [Teschl, §9.2,
+Theorems 9.6 and 9.10, printed pp.187--192]. This scalar simplicity
+does not remove coincidences between different angular modes, including
+the equal spectra at $(n,m)$ and $(-n,-m)$.
+
+The bound [G, (26.6)] at $\kappa=0$, $\eta=(n,m,0)$, implies
+
+$$
+\nu_1(n,m;c)\ge
+ \lambda+C\Psi(\sqrt{n^2+m^2})-c\|\phi\|_\infty
+ \longrightarrow+\infty\quad\text{as }|(n,m)|\to\infty.
+\tag{36.5}
+$$
+
+Here and below $C>0$ is a suitable fixed lower-bound constant and
+$\Psi$ is exactly [G, (26.6)]. Also
+$\nu_r(n,m;c)\ge r^2\lambda-c\|\phi\|_\infty$ by scalar min-max.
+Consequently only finitely many triples contribute below any fixed
+energy; the multiset enumeration is well defined and has no finite
+accumulation point.
+
+Every scalar summand is $H_c$ plus a nonnegative square. Equality of
+its bottom with $e(c)$ would force its normalized minimizer to be
+$u_c$ up to phase and $(nA_0+mB_0)u_c=0$ almost everywhere.
+The positivity of $u_c$ in $I$ would make the affine numerator in
+(36.1) identically zero, forcing $n=m=0$.
+Thus all nonzero angular bottoms are strictly larger than $e(c)$.
+Equation (36.5) makes their infimum an attained positive separation.
+The zero angular block contributes its positive scalar first gap.
+This proves the equality and positivity in (36.3). Finally the actual
+modes $(n,m)=(1,-1),(-1,1)$ have constant square $1/4$ and hence
+eigenvalues $e_r(c)+1/4$. This gives the upper bound $1/4$.
+In particular the scalar height gap alone is not the complete base
+gap. $\square$
+
+**Theorem 36.3 (actual leaf and complete restriction at the moving times).**
+Let $\Lambda^0_{\sigma,N}(\tau)$ denote the ordered eigenvalues on
+the actual native zero leaf with unit pole, raw measure and coupling $g$.
+Let $\Lambda^{\rm sec}_{\sigma,N}(\kappa,\tau)$ denote the ordered
+eigenvalues of the closed form restricted to the entire
+$D$-independent subspace. At every admissible cutoff their exact
+operator identifications on $L^2(B,\nu_B)$ are
+
+$$
+\begin{aligned}
+\mathscr H^0_{\sigma,\tau}
+ &=\overline L_0-gM_{W^0_{\sigma,\tau}},\\
+J^*\mathscr H^{\rm sec}_{\sigma,\kappa,\tau}J
+ &=\overline L_\kappa-\frac{g}{2\pi}
+                         M_{\overline W_{\sigma,\kappa,\tau}},\\
+W^0_{\rm raw,\tau}&=V_{0,\tau},\quad
+W^0_{\rm unit,\tau}=V_{0,\tau}/S(\tau),\\
+\overline W_{{\rm raw},\kappa,\tau}&=\overline V_{\kappa,\tau},\quad
+\overline W_{{\rm unit},\kappa,\tau}
+                         =\overline V_{\kappa,\tau}/S(\tau),\qquad
+Jh=(2\pi)^{-1/2}h.
+\end{aligned}
+\tag{36.6}
+$$
+
+Their form domains are respectively $\overline{\mathcal F}_0$ and
+$\overline{\mathcal F}_\kappa$ under this isometry; their operator
+domains are those of the corresponding free base operators.
+The sector operator here represents the restricted form, without an
+assertion that the full attractive operator preserves that subspace.
+For every fixed $N\ge1$, with all original parameters fixed as before,
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&\lim\Lambda_{\sigma,N}
+ &\lim\Lambda^0_{\sigma,N}&\lim\Lambda^{\rm sec}_{\sigma,N}\\ \hline
+\mathrm{raw},\ \tau_s&e(gc_s)&\zeta_N(0)&\zeta_N(0)\\
+\mathrm{unit},\ \tau_b&e(gc_0G_{\beta b}(0))
+ &\zeta_N(gc_0)&\zeta_N(gc_0/(2\pi))
+\end{array}
+\tag{36.7}
+$$
+
+All limits involving nonzero $\kappa$ hold through both signs and count
+multiplicity. In particular the actual lowest gaps have limits
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&\text{full}&\text{actual zero leaf}&\text{complete sector}\\ \hline
+\mathrm{raw},\ \tau_s&0&\Gamma(0)&\Gamma(0)\\
+\mathrm{unit},\ \tau_b&0&\Gamma(gc_0)&\Gamma(gc_0/(2\pi))
+\end{array}
+\tag{36.8}
+$$
+
+Each comparison gap displayed is strictly positive for the stated fixed
+data. The values $\zeta_N$ and $\Gamma$ are the exact complete spectral
+quantities (36.1)--(36.3), rather than scalar-height replacements.
+
+Proof. Equation (36.6) is exactly [G, (23.4)--(23.5)] and its
+surviving-charge version. Both absorbing height faces and the same
+survival function persist. The bounded fields give the stated operator
+domains. Theorem 34.1 already proves the uniform multiplier limits
+
+$$
+\begin{array}{c|cc}
+ &\mathrm{raw},\ \tau_s&\mathrm{unit},\ \tau_b\\ \hline
+W^0_{\sigma,\tau}&0&c_0\phi\\
+\overline W_{\sigma,\kappa,\tau}&0&c_0\phi.
+\end{array}
+\tag{36.9}
+$$
+
+For the actual zero leaf, bounded-multiplier min-max comparison with
+$\mathcal K_0$ or $\mathcal K_{gc_0}$ proves every fixed-index limit
+directly. To handle the changing complete sector domain, consider the
+reference base operator
+$\overline{\mathcal K}_{\kappa,c}=\overline L_\kappa-cM_\phi$.
+Its scalar blocks have potentials $(nA_\kappa+mB_\kappa)^2-c\phi$.
+For each fixed $(n,m)$ these potentials converge uniformly on $[l,u]$
+to (36.1), so every fixed scalar eigenvalue converges by min-max.
+
+There is no loss of angular modes in passing from this statement to the
+ordered complete spectrum. The uniform version of [G, (26.6)], now
+with $\eta=(n,m,0)$, bounds every block bottom from below by the right side
+of (36.5), with $C$ independent of small $\kappa$, including zero.
+Its $r$th eigenvalue is at least
+$r^2\lambda-c\|\phi\|_\infty$ as well. The first $N$ eigenfunctions
+of $H_c$ in the zero angular block provide a uniform $N$th
+eigenvalue upper bound $e_N(c)\le N^2\lambda$.
+Choose an energy strictly above this bound. Only a fixed finite set
+of angular modes and height indices can lie below it, by the two
+lower bounds. On that finite set all eigenvalues converge, and sorting
+finite multisets preserves convergence, including collisions and
+multiplicity. Hence the $N$th eigenvalue of
+$\overline{\mathcal K}_{\kappa,c}$ tends to $\zeta_N(c)$.
+
+Apply this with $c=0$ or $gc_0/(2\pi)$.
+The difference between the actual sector multiplier and its reference
+tends to zero in supremum norm by (36.9). On the same complete
+$\kappa$-domain, min-max bounds the difference of every ordered
+eigenvalue by that multiplier norm, including the factor $g/(2\pi)$.
+This proves the sector limits without identifying varying domains or
+asserting general operator convergence. The full column is Theorem 35.2.
+Subtract the first two limits and use (36.3) to obtain (36.8).
+The actual base and sector operators also have simple ground states at
+each fixed admissible cutoff: their connected base free heat kernels
+are strictly positive, and the bounded-potential argument (35.8)
+applies on $B$. Thus their first ordered differences are their actual
+lowest spectral gaps. $\square$
+
+## 37. The spectral boundary of the ground-coincidence parameter
+
+**Corollary 37.1 (ground coincidence never extends to the full low spectrum).**
+At the unique $b_*$ in (34.2), the unit critical families have equal
+limiting full and actual-zero-leaf ground energies and equal limiting
+ground probabilities after the measure embedding $D=0$. Nevertheless,
+for every fixed $N\ge2$,
+
+$$
+\begin{aligned}
+\lim_{\kappa\to0}\Lambda_{{\rm unit},N}(\kappa,\tau_{b_*})
+ &=e(gc_0),\\
+\lim_{\kappa\to0}\Lambda^0_{{\rm unit},N}(\tau_{b_*})
+ &=\zeta_N(gc_0)\ge e(gc_0)+\Gamma(gc_0)>e(gc_0).
+\end{aligned}
+\tag{37.1}
+$$
+
+The limiting full lowest gap is zero and the actual-zero-leaf lowest
+gap tends to $\Gamma(gc_0)>0$ at this same parameter. For $b\ne b_*$
+their limiting ground energies already differ. For every finite $b>0$
+and every fixed $N$, the full unit $N$th eigenvalue has a limit strictly
+below the limiting sector ground energy. In the raw family, every fixed
+full eigenvalue has a limit strictly below the limiting ground energies
+of both comparisons.
+
+Proof. At $b_*$ the full value in (36.7) is $e(gc_0)$ for every $N$,
+while the simple base ground and (36.3) give (37.1).
+The other full-versus-zero ground comparisons and ground-probability
+coincidence are exactly Theorem 34.1. For the sector comparison use
+$G_{\beta b}(0)>1/(2\pi)$ at every finite $b$ and strict decrease of
+$e$ in (34.6). In the raw family use $c_sg>0$ and
+$\zeta_1(0)=e(0)=\lambda$. These strict limiting inequalities also
+hold between the corresponding actual eigenvalues for all sufficiently
+small $|\kappa|$, separately for each fixed $N$. $\square$
+
+**Proposition 37.2 (scope of the spectral obstruction).**
+Within the original two critical families, bounded attained attractive
+ground energy and concentration of ground probabilities do not suffice
+to preserve the isolated simple low-energy spectrum of the actual native
+three-coordinate leaf. This remains true at the unit ground-coincidence
+parameter. The comparison with the complete sector is a different
+comparison, with the factor $1/(2\pi)$ and the entire spectrum (36.2).
+
+Proof. Theorems 33.1--33.2 supply bounded attained minima and the
+concentrated ground laws; (35.7) and (36.8) supply respectively the
+vanishing full gap and strictly positive comparison gaps. Equation
+(37.1) gives the obstruction even when the ground energy and probability
+match. Fixed-parameter isolation from Corollary 35.3 is consistent with
+this failure of uniform isolation. A constant fixed-index limit is not
+itself an identification of a limiting operator or its spectral type.
+The construction fixes $N$ before taking $\kappa\to0$; the derivative
+norms and supports chosen in (35.4) may depend on $N$. It supplies no
+assertion for a prescribed growing $N(\kappa)$, no spacing rate,
+transverse fluctuation profile, Weyl law or resolvent convergence.
+
+The general methods are classical variational and bounded-perturbation
+methods; the additional native conclusions are (35.2), the complete
+comparison (36.7)--(36.8), and the excited-level separation (37.1).
+The sharp heat, source, field and ground limits are reused from
+§§31--34 and [G, §§23,25--29], rather than rederived. The singular
+point-field strict-ground result in
+[Fixed-pole strict ground-energy gap, Theorem 7.2 and Boundary 8.2](FIB_NATIVE_FIXED_POLE_STRICT_GROUND_ENERGY_GAP.md)
+compares two actual minima in its strict stable regime; it is neither an
+excited spectral gap nor a critical-cutoff spectral limit. The restricted
+singular-field limit in
+[Observation quotient, Theorem 11.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+also retains its different field and small-coupling hypotheses.
+Neither replaces the completed attractive forms (35.1).
+
+For the classical semiclassical comparison, B. Simon,
+*Semiclassical Analysis of Low Lying Eigenvalues. I. Non-degenerate
+Minima: Asymptotic Expansions*, Ann. Inst. H. Poincaré A 38 (1983),
+295--308, [§1, hypotheses (A1)--(A4) and Theorem 1.1](https://www.numdam.org/item/AIHPA_1983__38_3_295_0/),
+treats $-\Delta+\Lambda^2h+\Lambda g_1$ with smooth fixed scalar
+potentials, finitely many zeros of $h$, positive definite Hessians there,
+and the stated lower and exterior bounds. Those hypotheses do not
+identify the present full form with that scalar family: here
+$\varepsilon$ stays fixed, only the hidden direction loses kinetic
+control, the raw critical field itself narrows, and the original visible
+cross terms remain. No harmonic-oscillator expansion or sharp gap rate
+is imported from that theorem. The finite-dimensional proof above
+requires only (32.9), the complete-domain lower bound and classical
+min-max, not a new general semiclassical theorem. These native deductions
+are `repo-derived`; the cited classical methods are
+`literature-attested`, without a worldwide novelty assertion.
+
+The source and domain obstructions of Theorem 34.2 persist independently
+of the spectra. The zero-leaf embedding is an embedding of measures,
+whereas $J$ is a raw-measure Hilbert-space isometry for the complete
+sector. Conditional source charge is still different from field mass;
+normalization still changes neither height death nor the original free
+clock. The free quotient criteria in
+[Free diffusion quotient rigidity, Theorem 3.1 and Definition 6.2](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md)
+do not make an attractive fixed-pole multiplier invariant or identify
+different source laws. None of these statements adds a reset, projection
+actuator, independent driver, preparation of ground amplitudes,
+acquisition procedure or mean selector. The native finite-history and
+principal-symbol boundaries in
+[Probability, phase transport and holonomy, Theorems 8.2, 10.3 and 10.5](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md)
+remain in force. State dimension is not a conclusion about physical
+spatial axes. All parameters other than $\kappa$ are fixed; no
+$\varepsilon\to0$ limit or other cutoff family is asserted. $\square$
+
+## 追加锚（本行以下为增补区）
