@@ -2,7 +2,7 @@ import Reg.D5.S0.Diagonal.PigeonholeFiber
 import D5.S3.ConceptDynamics.InformationEscapeCounting.FusedCorrectness
 import Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber
 
-namespace LeanInformationAuditRegTests.AuricFib.TypedBoundaries
+namespace LeanInformationAuditFibTests.AuricFib.TypedBoundaries
 open LeanInformationAudit.Analysis
 open LeanInformationAudit.AuricFib.Contract
 open Reg.D5.S0.Diagonal.PigeonholeFiber
@@ -127,4 +127,4 @@ example :
     Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.bridge.reply .low = none := by
   decide
 
-end LeanInformationAuditRegTests.AuricFib.TypedBoundaries
+end LeanInformationAuditFibTests.AuricFib.TypedBoundaries

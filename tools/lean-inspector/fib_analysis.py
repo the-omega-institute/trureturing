@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import time
 import zipfile
 
 HEX = re.compile(r"[0-9a-f]{64}")
@@ -179,12 +180,15 @@ def produce(row, previous_artifact, analyzer):
             leaf["reading"] = unavailable(leaf["unavailable_reason"])
         else:
             pending.append(leaf)
+    analysis_ns = 0
     if pending:
         if not analyzer:
             raise ValueError("fib.analysis_program_missing")
+        started = time.monotonic_ns()
         result = subprocess.run([str(analyzer), "--batch"],
             input=json.dumps([x["request"] for x in pending]),
             text=True, capture_output=True, check=False)
+        analysis_ns = time.monotonic_ns() - started
         if result.returncode not in (0, 2):
             raise ValueError(f"fib.analysis_failed:exit={result.returncode}:{result.stderr}")
         outputs = json.loads(result.stdout)
@@ -196,7 +200,9 @@ def produce(row, previous_artifact, analyzer):
         if (result.returncode == 2) != rejected:
             raise ValueError("fib.analysis_exit_mismatch")
     validate(partition)
-    stats = {'generated': len(pending), 'reused': reused,
+    stats = {'extracted': len(partition['applications']),
+             'analysis-invocations': int(bool(pending)), 'analysis-ns': analysis_ns,
+             'generated': len(pending), 'reused': reused,
              'unavailable': sum(x['request'] is None for x in partition['applications'])}
     print(f'LEAN_INSPECTOR_FIB module={row["module"]} generated={len(pending)} reused={reused} unavailable='
           f'{stats["unavailable"]}')

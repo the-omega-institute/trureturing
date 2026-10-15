@@ -3,7 +3,7 @@ import LeanInformationAudit.Contract.Literal
 import LeanInformationAudit.CompiledAxioms
 import LeanInformationAudit.ArtifactRegistration
 
-namespace LeanInformationAuditRegTests.AuricFib.SourceContracts
+namespace LeanInformationAuditFibTests.AuricFib.SourceContracts
 open Lean LeanInformationAudit
 
 /-- Tests call the existing reconstruction and readout correspondence checks on
@@ -76,7 +76,7 @@ private unsafe def checkNativeSource (store : RawArtifacts.Store) : IO Unit := d
     CompiledSourceScope.reconstruct info.type type.getAppArgs[0]!
     CompiledSourceScope.reconstruct info.type type.getAppArgs[1]!
     IO.println "[PASS] native reconstruction: complete original theorem before explicit specialization"
-    let fixture := `LeanInformationAuditRegTests.AuricFib.CompiledFixture
+    let fixture := `LeanInformationAuditFibTests.AuricFib.CompiledFixture
     let some unrelated := store.constants.find? (fixture ++ `unrelated)
       | throw <| IO.userError "source-contract:missing-unrelated-fixture"
     let wrongProof ← CompiledSourceScope.projectField
@@ -99,7 +99,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation,
     `Reg.D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber]
   for owner in owners do RawArtifacts.loadModule owner reader
-  RawArtifacts.loadModule `LeanInformationAuditRegTests.AuricFib.CompiledFixture reader
+  RawArtifacts.loadModule `LeanInformationAuditFibTests.AuricFib.CompiledFixture reader
   RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
   let store ← reader.get
   let closures ← IO.mkRef ({} : CompiledAxioms.AxiomClosureState)
@@ -143,4 +143,12 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     throw <| IO.userError "source-contract:ordinary-registration-correspondence"
   IO.println "[PASS] ordinary registration remains separate with its original source realization; no audit status assigned"
 
-end LeanInformationAuditRegTests.AuricFib.SourceContracts
+end LeanInformationAuditFibTests.AuricFib.SourceContracts
+
+unsafe def main : IO Unit := do
+  Lean.initSearchPath (← Lean.findSysroot)
+  let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
+  Lean.searchPathRef.modify (fixturePath :: ·)
+  let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  try LeanInformationAuditFibTests.AuricFib.SourceContracts.check reader
+  finally LeanInformationAudit.RawArtifacts.release reader

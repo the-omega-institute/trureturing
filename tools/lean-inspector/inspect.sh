@@ -64,6 +64,7 @@ finish() {
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
   if [[ "$rc" != 0 ]]; then
+    python3 -B "$SCRIPT_DIR/build_work.py" --observations "$LOG_DIR" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
     if [[ -n "$ACTIVE_PHASE" ]]; then
       printf 'LEAN_INSPECTOR_INTERRUPTED phase=%s exit=%s\n' "$ACTIVE_PHASE" "$rc" >&2 || true
       cat "$LOG_DIR/$ACTIVE_PHASE.stdout.log" "$LOG_DIR/$ACTIVE_PHASE.stderr.log" >&2 || true

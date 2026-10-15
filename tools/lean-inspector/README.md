@@ -133,13 +133,19 @@ dependency is the mathematical-dependency-free Core module. Mathematical
 contract heads use fully qualified names; the existing `RawArtifacts` reader
 loads their compiled declarations at runtime. Root `make compiled-judge-test`
 delegates to [the test entrypoint](../scripts/compiled-judge-test.sh), which uses
-`make lean` to build the test library, both audit executables and the finite
-analysis executable, then runs the native tests. CI executes this entry only
+`make lean` to build the general test library and audit executables, then runs
+the general native tests. The library excludes the FIB fixture namespace.
+CI executes this entry only
 when the existing `tests-lean` unit is selected; its source list includes runtime
-D5/Reg inputs, fixtures, compiler, scripts and consumers. FIB behavior coverage
-uses one compiled fixture through the production consumer and two finite input
-batches against the native analysis executable. It does not mutate fixtures or
-force report regeneration. Source-binding regression execution follows the
+D5/Reg inputs, fixtures, compiler, scripts and consumers. `make compiled-fib-test`
+builds the separate FIB library, source-contract executable and finite analyzer,
+then runs the production-consumer and finite-input regressions. Only the explicit
+`tests-fib` whitelist in `CI_UNITS` schedules this job; compiler import dependencies,
+fixture inputs and runtime/configuration inputs belong in that whitelist when
+introduced or changed. Lake owns execution and artifact invalidation inside the
+selected job. The production-consumer regression checks unchanged, unrelated and
+affected source builds with direct invocation-local work observations.
+Source-binding regression execution follows the
 `tests-declared-template` selection. The library's existing directory glob includes
 [Fixtures/CompiledInputs.lean](LeanInformationAuditRegTests/Fixtures/CompiledInputs.lean);
 its imports register the runtime Reg inputs. Lake builds these dependencies and
@@ -148,6 +154,25 @@ carry no copied Reg module list. The executable checks both compiled program
 import closures and enumerates contract name literals in compiled implementation
 expressions to verify each against the interface artifacts. Missing input
 artifacts, unknown names and malformed structures produce named failures.
+
+Production report output includes `LEAN_INSPECTOR_TIMING` for direct internal
+phase observations and `LEAN_INSPECTOR_FIB_WORK` for the current invocation's
+extracted applications, analyzer invocations and nanoseconds, generated readings,
+reused readings and unavailable requests. Zero means no such work was observed
+in a completed invocation; missing activity is unavailable, with null counts.
+Whole-artifact reuse executes no extraction or analysis and is not counted as
+leaf reuse. Timings sum repeated calls and can overlap between phases; they are
+not CPU attribution or predicted savings. Incomplete phase durations are null.
+Lake log replay does not supply these observations. The publication work schema,
+report identity, custody and verdicts are independent of these diagnostics.
+Analyzer implementation changes compile and run through the FIB regression unit;
+under the existing report policy they do not invalidate accepted historical
+reports. Changed detached application inputs are analyzed by the current program.
+
+The filtered declared-template CI unit requests no Lean preparation. Its external
+artifact cases retain their explicit skips. Fourier production artifact tests run
+in `current`, which retains native cache preparation. Other native cache consumers
+continue to request `build`; only those consumers attempt PR preparation adoption.
 
 Typed contract discovery inspects the five direct compiled Contract heads.
 Entries have safe, closed definition values; the decoder accepts constructor

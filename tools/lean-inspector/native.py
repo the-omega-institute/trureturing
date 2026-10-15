@@ -48,7 +48,10 @@ def module_work(operation, names):
 
 
 def produce_fib(row, output, analyzer, previous=""):
-    stats = fib_analysis.produce(row, previous or output, analyzer)
+    if row.get('fib_analysis') is None:
+        return
+    with phase('native-fib', module=row['module']):
+        stats = fib_analysis.produce(row, previous or output, analyzer)
     for kind, count in (stats or {}).items():
         activity('fib-' + kind, count)
 
@@ -350,10 +353,9 @@ def module(root, name, source, utility_path, executable, output, analyzer="", pr
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments)
-        with phase('native-fib', module=name):
-            compiled = public.read_json((directory / 'spool.json').read_bytes())
-            for row in compiled['modules']:
-                produce_fib(row, output, analyzer, previous)
+        compiled = public.read_json((directory / 'spool.json').read_bytes())
+        for row in compiled['modules']:
+            produce_fib(row, output, analyzer, previous)
         with phase('native-materials', module=name):
             (directory / 'spool.json').write_bytes(materials.canonical_json(compiled))
             materials.compact(directory / 'spool.json', spool, report)
@@ -388,15 +390,18 @@ def produce_row(row, directory, spool, root, origin, utility_path, output, templ
         source = materials.regular_spool_file(spool, decl['material_file'])
         os.replace(source, row_spool / source.name)
     spool_report = row_dir / 'spool.json'
-    spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
-    report = row_dir / public.RAW
-    materials.compact(spool_report, row_spool, report)
-    public.write_origin(report, name, origin, input_projection(root, name))
-    validate_module(report, root, name, utility_path, template_inputs=template_inputs)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    artifact = row_dir / 'module.zip'
-    public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-    os.replace(artifact, output)
+    with phase('native-materials', module=name):
+        spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
+        report = row_dir / public.RAW
+        materials.compact(spool_report, row_spool, report)
+        public.write_origin(report, name, origin, input_projection(root, name))
+    with phase('native-validation', module=name):
+        validate_module(report, root, name, utility_path, template_inputs=template_inputs)
+    with phase('native-package', module=name):
+        output.parent.mkdir(parents=True, exist_ok=True)
+        artifact = row_dir / 'module.zip'
+        public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+        os.replace(artifact, output)
 
 
 def produce_batch_chunk(requests):
@@ -640,7 +645,8 @@ def main():
                'regenerate': regenerate}
     if len(sys.argv) < 2 or sys.argv[1] not in actions:
         raise ValueError('expected prepare, module, aggregate, publish, or batch')
-    actions[sys.argv[1]](*sys.argv[2:])
+    with phase('native-' + sys.argv[1]):
+        actions[sys.argv[1]](*sys.argv[2:])
 
 
 if __name__ == '__main__':

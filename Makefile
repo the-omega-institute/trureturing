@@ -173,3 +173,7 @@ gate:
 
 compiled-judge-test:
 	@/bin/bash tools/scripts/compiled-judge-test.sh
+
+.PHONY: compiled-fib-test
+compiled-fib-test:
+	@/bin/bash tools/scripts/compiled-fib-test.sh

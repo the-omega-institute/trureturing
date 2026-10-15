@@ -180,7 +180,41 @@ class BuildWorkContracts(unittest.TestCase):
         self.assertEqual((2, 0), (value['report'], value['programs']))
         reading = next(line.removeprefix('LEAN_INSPECTOR_FIB_WORK ') for line in
                        result.stdout.splitlines() if line.startswith('LEAN_INSPECTOR_FIB_WORK '))
-        self.assertEqual(json.loads(reading), {'generated': 2, 'reused': 7, 'unavailable': 3})
+        self.assertEqual(json.loads(reading), {'scope': 'invocation-local', 'extracted': 0,
+            'generated': 2, 'reused': 7, 'unavailable': 3,
+            'analysis-invocations': 0, 'analysis-ns': 0})
+
+    def test_fib_zero_is_current_activity_not_replayed_output(self):
+        root, logs, fact = self.recorder_inputs(output=(
+            'LEAN_INSPECTOR_FIB module=Old generated=99 reused=77 unavailable=3\n'
+            'Build completed successfully (1 jobs).\n'))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_FIB_WORK ')))
+        self.assertEqual(row.pop('scope'), 'invocation-local')
+        self.assertTrue(all(value == 0 for value in row.values()), row)
+        (logs / 'native-work.jsonl').unlink()
+        result = self.run_recorder(root, logs, fact)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_FIB_WORK ')))
+        self.assertEqual(row.pop('scope'), 'unavailable')
+        self.assertTrue(all(value is None for value in row.values()), row)
+
+    def test_direct_phase_durations_include_batch_and_unknown_boundaries(self):
+        root, logs, fact = self.recorder_inputs()
+        rows = [dict(phase='native-inspect', boundary='start', monotonic_ms=100),
+                dict(phase='native-inspect', boundary='finish', monotonic_ms=140),
+                dict(phase='fib-extract', boundary='duration', elapsed_ns=23),
+                dict(phase='native-materials', boundary='start', monotonic_ms=150)]
+        (logs / 'native-phases.jsonl').write_text(''.join(json.dumps(x) + '\n' for x in rows))
+        result = self.run_recorder(root, logs, fact)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        row = json.loads(next(x.split(' ', 1)[1] for x in result.stdout.splitlines()
+                              if x.startswith('LEAN_INSPECTOR_TIMING ')))
+        self.assertEqual(row['native-inspect']['elapsed_ns'], 40_000_000)
+        self.assertEqual(row['fib-extract']['elapsed_ns'], 23)
+        self.assertIsNone(row['native-materials']['elapsed_ns'])
 
     def test_extensionless_executable_captions_resolve_project_and_package_outputs(self):
         for caption, expected in (("projectProbe", 1), ("fixture/projectProbe:exe", 1),

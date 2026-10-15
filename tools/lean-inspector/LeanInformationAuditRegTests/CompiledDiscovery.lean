@@ -1,4 +1,3 @@
-import LeanInformationAuditRegTests.AuricFib.SourceContracts
 import LeanInformationAuditRegTests.ContractRoots
 import LeanInformationAuditRegTests.ContractPaths
 import LeanInformationAuditRegTests.ContractTypeCarrier
@@ -475,7 +474,6 @@ unsafe def main : IO Unit := do
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetIndexIsolation
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
-  LeanInformationAuditRegTests.AuricFib.SourceContracts.check reader
   LeanInformationAuditRegTests.CompiledDiscovery.checkProgramBoundary reader
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures reader
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
