@@ -390,6 +390,45 @@ compression: variational restriction gives $m_L^+\le m_{L,N}^+$.
 A positivity certificate still requires the retained block and its
 complete coupling allowance.
 
+### Reuse precision-parametric arithmetic suppliers
+
+The [actual c27 arithmetic packet](https://github.com/the-omega-institute/trureturing-experiments/tree/main/docs/reports/weil-c27)
+reuses the existing pole--Gamma--prime Fourier assembly with FLINT's
+`acb.digamma` and `acb.polygamma(1)`. These existing special-function
+algorithms are called directly; no new general expansion or spectral
+criterion is introduced. The application supplies every mode from 0
+through 1280 and the coupling samples 1281, 32768 and 32769, with all
+fourteen prime powers retained.
+
+The two exponentially decaying Gamma corrections use a precision-chosen
+cutoff. With $b_j=2j+1/2$, $q=27^{-2}$ and $d=\log27$, the omitted
+contributions to the boundary symbol and complex Fourier diagonal are
+bounded respectively by
+
+$$
+\frac{27^{-b_R}}{2b_R(1-q)},\qquad
+\frac{2\,27^{-b_R}}{d b_R^2(1-q)}.
+$$
+
+These are the elementary geometric tails of the existing assembly:
+$\omega/(b^2+\omega^2)\le1/(2b)$ and
+$|(b-i\omega)^{-2}|\le1/b^2$. The implementation adds both tails to
+its directed special-function and arithmetic balls before export.
+At 768 working bits, $R=69$ supplies all 1,284 scalar pairs on a
+$2^{-640}$ grid, with observed interval width at most one grid unit.
+All output rows agree exactly with the 1024-bit execution. Eight c3
+diagonal samples and seven nonzero c3 symbol samples lie within the
+older read-only scalar routines' intervals; their sign certificate
+was not rerun. The archived packet and precise basis convention are
+specified in the linked reproduction instructions.
+
+This is a parameter application and numerical scalar input. It removes
+the old routine's fixed special-function remainder for this assembly;
+it supplies no retained-block sign or infinite coupling Gram. Matrix
+reconstruction, all middle modes, the full tail and their propagated
+errors still need certification. No c27 positivity or RH conclusion
+follows from the scalar table.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
