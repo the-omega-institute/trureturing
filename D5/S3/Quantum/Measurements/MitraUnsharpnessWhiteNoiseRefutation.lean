@@ -9,7 +9,6 @@
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Tactic
 
 set_option linter.style.longLine false
 
