@@ -124,6 +124,43 @@ private theorem opNorm_diag2
       have h := norm_le_pi_norm (![ (u : ℂ), (v : ℂ)] : Fin 2 → ℂ) (0 : Fin 2)
       simpa [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hu] using h
 
+private theorem xMin_eq_of_eq_diag2
+    (M : Matrix (Fin 2) (Fin 2) ℂ)
+    (hM : M.IsHermitian)
+    (u v : ℝ)
+    (hD : M = diag2 u v) :
+    xMin M hM = min u v := by
+  unfold xMin
+  let a : ℝ := hM.eigenvalues 0
+  let b : ℝ := hM.eigenvalues 1
+  have hsC : Matrix.trace M = ∑ i, (hM.eigenvalues i : ℂ) :=
+    hM.trace_eq_sum_eigenvalues
+  have hsR : a + b = u + v := by
+    have htr : Matrix.trace M = (u + v : ℂ) := by
+      rw [hD, diag2]
+      simp [Matrix.trace_diagonal]
+    have h := congrArg Complex.re hsC
+    rw [htr] at h
+    simpa [a, b, Fin.sum_univ_succ] using h.symm
+  have hpC : Matrix.det M = ∏ i, (hM.eigenvalues i : ℂ) :=
+    hM.det_eq_prod_eigenvalues
+  have hpR : a * b = u * v := by
+    have hdet : Matrix.det M = (u * v : ℂ) := by
+      rw [hD, diag2]
+      simp [Matrix.det_diagonal, Fin.prod_univ_succ]
+    have h := congrArg Complex.re hpC
+    rw [hdet] at h
+    simpa [a, b, Fin.prod_univ_succ] using h.symm
+  have hroot : (a - u) * (a - v) = 0 := by
+    linear_combination a * hsR - hpR
+  rcases mul_eq_zero.mp hroot with hau | hav
+  · have hau' : a = u := sub_eq_zero.mp hau
+    have hbv : b = v := by linarith [hsR]
+    simp [a, b, hau', hbv]
+  · have hav' : a = v := sub_eq_zero.mp hav
+    have hbu : b = u := by linarith [hsR]
+    simp [a, b, hav', hbu, min_comm]
+
 end
 
 end D5.S3.Quantum.Measurements.MitraUnsharpnessWhiteNoiseRefutation
