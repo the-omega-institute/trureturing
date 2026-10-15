@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:322f62b46767b1ffd4c750892fe1fe7b91f2e1d4f36d09a8e42e51f7d6f8da37
+  normalized_sha256: sha256:322f62b46767b1ffd4c750892fe1fe7b91f2e1d4f36d09a8e42e51f7d6f8da37
+cas_ref: sha256:322f62b46767b1ffd4c750892fe1fe7b91f2e1d4f36d09a8e42e51f7d6f8da37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 11.3（因子次序与归一化运输）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 61985ecade7d94490cfeba4d14bcf7db6f518bbd18236b7a12870fdfda3c4a2f
+    next_atom_id: 2f606650ece20ba8c38669530527706abd4df27da35afb765e65338fda421e92

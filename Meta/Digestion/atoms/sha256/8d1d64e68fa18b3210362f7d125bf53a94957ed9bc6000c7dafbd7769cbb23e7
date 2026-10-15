@@ -1,0 +1,10 @@
+### 10.1 The exact optimum survives a presence restriction
+
+Fix an admitted input $I=(P,R,H_0,H_{\rm rel},Q,N)$ satisfying all premises of
+Definitions 1.1--1.3, Theorem 5.4 and the paid complete-field/access-factor contract.
+Assume the authentic current epoch is $N=2k\ge2$, the attained full-row image
+$A=f(D)$ is finite and nonempty, and let $H_A$ be its existing minimizing depth and
+$M_*=m_{H_A}$. Let $M_{\rm pres}(D,Q)$ be the least additional complete-field
+alphabet among the same legal services when every post-cut current read is retained only
+through its presence bit.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52c9362bad5a829ae5f91045a48a2af812dff4a7f8441267cf8faf33bba1c122
+  normalized_sha256: sha256:52c9362bad5a829ae5f91045a48a2af812dff4a7f8441267cf8faf33bba1c122
+cas_ref: sha256:52c9362bad5a829ae5f91045a48a2af812dff4a7f8441267cf8faf33bba1c122
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 19.6（逐个固定平移不能补成全参数分别连续运算）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 875711adfb8a5c9aee841052cd558ce2cf03b9ebf4167c0c69290939ee601a3e
+    next_atom_id: c1f2538c401dfe78c6400f27a5b10bc0722e287c0c9ea07b3fa7051c0270e9a7

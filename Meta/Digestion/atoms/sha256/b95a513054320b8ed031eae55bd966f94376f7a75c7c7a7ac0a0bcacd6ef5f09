@@ -1,0 +1,67 @@
+**Definition 11.1 (stationary finite controller contract).** Use exactly
+$\mathcal U_*$, $F$, $P$, $R_*$, the six classes and the four complete
+predecessor alternatives of Definition 9.1 and Proposition 9.3, together
+with alternative zero. The suppliers are Definitions 9.1, Assumption 9.2,
+Propositions 9.3--9.4, Theorem 9.5 and Mathematical citation 9.7 at the
+immutable revision
+[a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3](https://github.com/the-omega-institute/trureturing/blob/a56175a1ce5884e0aa6f7e4ff3109dfaaecdd4a3/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_BIRTH_PROVENANCE.md#9-repeated-partners-on-a-complete-depth-three-one-image-fiber).
+In particular every finite native origin in that actual inverse fiber
+is allowed, exactly one authenticated update has occurred, and all fresh
+reads concern its stationary current tree $t=\rho u$. Acquisition, actual
+export, the complete access cut and lawful common entry are precisely
+the supplied premises of Assumption 9.2.
+
+A controller has a finite disjoint state set $\mathcal K=Q\sqcup H$,
+where $Q$ consists of running states and $H$ of halting states. Its
+source-independent tables are
+
+$$
+\begin{aligned}
+\operatorname{addr}&:Q\longrightarrow\{L,R\}^*,\\
+\operatorname{next}&:Q\times
+ \{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}
+ \longrightarrow\mathcal K,\\
+\operatorname{out}&:H\longrightarrow\mathcal R_P,\\
+\iota&:S\longrightarrow\mathcal K.
+\end{aligned}
+\tag{NBP.11.1}
+$$
+
+Here $\mathcal R_P$ denotes complete native rows at $P$. A producer
+computes a finite-valued supplement $\sigma$ from the genuinely acquired
+current data and actually exports it. The conditional realized alphabet
+is $S=\sigma[\mathcal U_*]$, with $|S|\le r$. The entry state is
+$\iota(\sigma(u))$. This state is the entire mutable accessible state;
+there is no residual payload, address register, reply register, history,
+phase, clock, archive, source-dependent table selection or external
+output decoder. At $k\in Q$ exactly one native call is made at the fixed
+address $\operatorname{addr}(k)$, and its actual four-reply result $z$
+changes the state to $\operatorname{next}(k,z)$. At $k\in H$ the controller
+stops and returns the fixed whole row $\operatorname{out}(k)$. Every call
+counts, including repeats, deep and absent queries. Every running and
+halting state, including an unused state, contributes to
+$K=|\mathcal K|$. Halting needs no further native call.
+
+The interpretation of $\iota$ must respect Assumption 9.2's recoverable
+complete entry record. In a literal realization with the original
+supplement still recoverable from the entry state, $\iota$ is injective
+on $S$. For joint encoder/controller optimization a possibly merging
+initial map is normalized before the cut: the producer instead computes
+and actually exports $\tau(u)=\iota(\sigma(u))$. This uses at most $r$
+values and the same acquired data. The declared supplement is then
+$\tau$, the initial map is its inclusion into $\mathcal K$, and the
+supplement is recoverable from that state. The public $P,R_*$ and common
+tables remain fixed. Lawful entry and the complete cut are supplied for
+this actual export. No later access to the old $\sigma$ is permitted.
+Thus merging does not silently preserve a second accessible field or
+claim a result for a fixed arbitrary encoder.
+
+Let $K_{\min}(r,q)$ be the least $K$ among these jointly chosen acquired
+encoders and controllers which return $F(u)$ for every
+$u\in\mathcal U_*$, with at most $q$ calls on each run. Set
+$K_{\min}(r,q)=+\infty$ when none exists. Throughout $r\ge1$ and $q\ge0$
+are integers and both budgets are upper bounds. The contract optimizes
+only abstract total state cardinality and raw native calls. The addresses
+and fixed tables in (NBP.11.1), their representations, acquisition,
+export, computation and physical realization have separate prices.
+

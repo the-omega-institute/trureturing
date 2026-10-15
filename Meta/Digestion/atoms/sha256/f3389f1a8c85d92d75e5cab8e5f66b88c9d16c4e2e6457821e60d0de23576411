@@ -1,0 +1,21 @@
+**Theorem 11.6 (attained retained-value price and advance knowledge).** If
+$r>0$, the least number of retained code values on
+$\mathcal F_{P,D,H}$ sufficient for the finite-family task of Definition
+11.4 is exactly
+
+$$
+(H+1)^r.
+\tag{NAR.11.12}
+$$
+
+If a sole index $i\in I$ and its future cut $Q_i$ are public before
+encoding, the corresponding least number is exactly $H+1$. The least
+fixed-width binary widths are respectively
+
+$$
+\left\lceil r\log_2(H+1)\right\rceil
+\quad\text{and}\quad
+\left\lceil\log_2(H+1)\right\rceil.
+\tag{NAR.11.13}
+$$
+

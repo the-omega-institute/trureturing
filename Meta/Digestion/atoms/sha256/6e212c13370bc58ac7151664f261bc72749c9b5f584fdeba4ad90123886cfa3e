@@ -1,0 +1,4 @@
+**Proposition 7.3 (unknown epoch and late row-only entry).** Neither
+current row plus full births nor current row alone generally restores
+a missing elapsed epoch or omitted origin provenance.
+

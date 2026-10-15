@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:50f39a605a3ddce03f95c1c7d7f97a98024c5b570ff99f976d70635386fcaf4a
+  normalized_sha256: sha256:50f39a605a3ddce03f95c1c7d7f97a98024c5b570ff99f976d70635386fcaf4a
+cas_ref: sha256:50f39a605a3ddce03f95c1c7d7f97a98024c5b570ff99f976d70635386fcaf4a
+coverage_gids:
+  - gid: D5/S3/Estimation/ExperimentCost/FiniteBranchingPathClockCriterion.finite_branching_path_clock_criterion
+    target_statement_id: sha256:c28ad7133b848a6ca44ff94a9b2a0a8f8959b58e5d69065450a358d5f3b8f5c4
+receipts:
+  unresolved_subitems: []

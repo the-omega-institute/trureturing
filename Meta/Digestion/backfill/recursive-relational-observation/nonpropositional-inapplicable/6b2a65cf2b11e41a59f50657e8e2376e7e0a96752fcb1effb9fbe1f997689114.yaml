@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b2a65cf2b11e41a59f50657e8e2376e7e0a96752fcb1effb9fbe1f997689114
+  normalized_sha256: sha256:6b2a65cf2b11e41a59f50657e8e2376e7e0a96752fcb1effb9fbe1f997689114
+cas_ref: sha256:6b2a65cf2b11e41a59f50657e8e2376e7e0a96752fcb1effb9fbe1f997689114
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义与假设107.1只固定读数假设并定义两种风险和检验错误率，不断言风险界。
+    previous_atom_id: ecfac799042e6a2b1cdeba8cc946678a6c83d6473ec918b6713bf68218c54a40
+    next_atom_id: b418caa2f17250793a3f56ec04d9d1906f04dfa2cb28c9ee561ecca3ccd51df5

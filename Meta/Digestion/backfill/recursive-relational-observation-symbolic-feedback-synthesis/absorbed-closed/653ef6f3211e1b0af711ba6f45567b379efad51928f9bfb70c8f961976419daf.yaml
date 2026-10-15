@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:653ef6f3211e1b0af711ba6f45567b379efad51928f9bfb70c8f961976419daf
+  normalized_sha256: sha256:653ef6f3211e1b0af711ba6f45567b379efad51928f9bfb70c8f961976419daf
+cas_ref: sha256:653ef6f3211e1b0af711ba6f45567b379efad51928f9bfb70c8f961976419daf
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints.completed_homogeneous_split
+    target_statement_id: sha256:ab35561b47b1e3aeccab969c3a6ab09aac4f491c935c78856d4ee59cb2a4d57e
+receipts:
+  unresolved_subitems: []

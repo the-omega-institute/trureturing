@@ -35,6 +35,19 @@ internal static class RawLeanReportArtifact
         return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials: false, scope: null);
     }
 
+    internal static LeanAxiomReport ReadFile(
+        string path,
+        RepositorySnapshot snapshot,
+        out ImmutableArray<byte> bytes,
+        bool validateMaterials = false)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        var fullPath = Path.GetFullPath(path);
+        var read = File.ReadAllBytes(fullPath);
+        bytes = ImmutableCollectionsMarshal.AsImmutableArray(read);
+        return Read(read, snapshot, MaterialsPath(fullPath), validateMaterials, scope: null);
+    }
+
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
         => Read(bytes, snapshot, materialPath: null, validateMaterials: false, scope: null);
 

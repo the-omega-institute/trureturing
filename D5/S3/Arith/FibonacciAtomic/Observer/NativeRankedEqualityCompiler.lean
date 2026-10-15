@@ -68,13 +68,13 @@ private theorem add_value {k : Nat} (n : Fin k → Nat) (q : Offset k) (a : Nat)
     offsetValue n (addOffset q a) = offsetValue n q + a := by
   simp [offsetValue, addOffset, Nat.add_assoc]
 
-private theorem atomic_injective :
+theorem atomic_injective :
     Function.Injective (fun r : Nat => substitution^[r] (.of true)) := by
   intro a b h
   have clock := congrArg kappa h
   simpa only [kappa_iterate, kappa, Nat.zero_add] using clock
 
-private theorem atomic_pair (s : Nat) :
+theorem atomic_pair (s : Nat) :
     substitution^[s+2] (.of true) =
       .mul (substitution^[s+1] (.of true)) (substitution^[s] (.of true)) := by
   rw [Function.iterate_add_apply]

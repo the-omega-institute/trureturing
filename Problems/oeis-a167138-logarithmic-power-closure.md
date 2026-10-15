@@ -26,17 +26,19 @@ analytic convergence, finite support or degree/power bound is introduced.
 
 ## Motivation
 
-The integral logarithmic-coordinate class is closed under pointwise multiplication
-and every positive pointwise power. The arbitrary-field result covers signed,
-unbounded and infinitely supported sequences through degreewise finite sums.
+The question asks whether integer ordinary coefficients in logarithmic
+coordinates survive every positive pointwise power of the EGF coefficient
+sequence. The three OEIS entries give examples of the same universal closure
+question; settling it requires the arbitrary sequence, rather than only their
+square examples or a finite coefficient window.
 
 ## Gap
 
-The full algebraic implication is kernel-checked. Independent whole-unit
-admission and complete publication are not established by this dossier.
-The original three audits and the six exposed helper audits remain unfinished
-under their exact respective issues 16520 and 16571. Two directly consumed
-finite-sum helper audits have their separate scope at issue 16582.
+The known fixed-column Hadamard EGF identity supplies products of Stirling
+columns. The whole question requires reconstruction from the original
+integrality premise, extension to arbitrary sequences by finite contributions
+at each degree, and transport back to the original characteristic-zero field.
+Integrality of L must be derived, not added as an assumption.
 
 ## Route
 
@@ -57,44 +59,77 @@ positive powers. At degree zero this retains precisely L(0)^m.
 
 ## Falsifier
 
-A refutation requires an arbitrary sequence with an entirely integral input
-transform, a positive exponent and an ordinary output coefficient outside the
-embedded integers. A finite prefix or failed method identity is insufficient.
+A counterexample to the original assertion would be a characteristic-zero
+field K, a sequence L satisfying the original integral-series premise, a
+positive exponent m and an ordinary degree r whose transformed coefficient
+lies outside the canonical integer image. Degree zero and arbitrary L(0)
+remain part of this criterion. A fixed-column identity alone, a finite
+coefficient check or a proof requiring integral L as an extra premise would
+not settle the stated question.
 
 ## Evidence
 
 Preregistration: https://github.com/the-omega-institute/trureturing/issues/16500.
 The Library note records immutable primary hashes, the bounded exact-question
 literature/ownership searches and their access gaps. The finite column supplier
-and the adapted licensed exp/log inverses are known results, with attribution
-and the complete Apache license. No proof novelty or global absence is claimed.
+is Boyadzhiev–Frontczak, Corollary 3.1, DOI 10.47443/ejm.2022.024. It and the
+adapted exp/log inverses are known results, with attribution and the complete
+Apache license retained for the inverse leaves. The exact arbitrary-field
+result and its supplier dependencies have kernel-checked statements with only
+Classical.choice, Quot.sound and propext in their accepted axiom closure.
+No proof novelty or global absence is claimed.
 
 ## Triage
 
-The whole original assertion is the only settlement target. The admission
-basis is `open-problem-resolution` for issue 16500; this is not a separate
-new-result claim for its classical suppliers. The complete arbitrary-field result is kernel-checked; this dossier does not
-establish independent whole-unit admission or completed publication. The source-owner Reg
-mirrors retain equivalence, variation, sensitivity and dependence proofs, but
-their raw source selections remain unfinished. The concrete binding and scoped
-governance consumption gaps are recorded in
-https://github.com/the-omega-institute/trureturing/issues/16520.
-This is neither completed admission nor a counted external-problem delivery.
+Theorem: the complete original assertion is proved over every
+characteristic-zero field, with arbitrary L, every positive pointwise power
+and every ordinary degree including zero. The result is canonically frozen;
+this mathematical state does not establish complete admission or delivery.
+The admission basis is `open-problem-resolution` for issue 16500. The main
+module has five authored definitions, eighteen authored bind-only theorems
+and two compiler-generated congruence declarations; its known suppliers do
+not supply a separate new-result or escape claim. A167138, A167139 and
+A167141 are one question, eligible for at most one eventual count.
 
-## ASSUMED-UNVERIFIED
-
-The mechanism identifies the integral logarithmic-coordinate series as a
-class closed under pointwise multiplication of EGF coefficient sequences,
-and therefore under every positive pointwise power. It applies to signed,
+Proved mechanism: the integral logarithmic-coordinate series form a class
+closed under pointwise multiplication of EGF coefficient sequences, and
+therefore under every positive pointwise power. The proof applies to signed,
 unbounded and infinitely supported coefficients over every characteristic-zero
 field. Every rearrangement is finite in each ordinary degree. It makes no
 analytic-convergence assertion, positive-characteristic claim, minimal-support
-claim or assertion of novelty of the supplier identities.
+claim or assertion of novelty of the supplier identities. No additional
+source-dependent consequence is claimed.
 
-Beyond the Library note's bounded literature and ownership scope, absence of a
-prior whole settlement is unverified. No global priority claim is made. The six
-exposed helper audits remain unfinished at
-https://github.com/the-omega-institute/trureturing/issues/16571; the two finite-sum
-helper audits have their separate scope at
-https://github.com/the-omega-institute/trureturing/issues/16582. Neither exception
-changes the original three-target scope at issue 16520 or supplies validation.
+Unfinished audit: all three source-owner Reg mirrors remain
+`declared_unresolved`, with null certificates and
+`IE-C050/unclassified_form/source.selection_missing`. Their equivalence,
+variation, sensitivity and dependence proofs do not supply the missing raw
+source-selection coordinates/observations, inverse packing and full
+original-statement reconstruction. The unfinished audit is disclosed at
+https://github.com/the-omega-institute/trureturing/issues/16520; that exception
+waives no other delivery duty.
+
+The six exposed helper audits remain unfinished at
+https://github.com/the-omega-institute/trureturing/issues/16571.
+The directly consumed `coeff_transform` and `T_window` helper audits have
+their separate scope at
+https://github.com/the-omega-institute/trureturing/issues/16582.
+These scopes supply no validated registration and do not change the original
+three-target scope at issue 16520.
+
+Unmet delivery duties: complete canonical local admission, the mandatory
+independent publication review triplet, exact-current-head required CI,
+MERGED status and subsequent dev verification remain necessary. The unit is
+an honest draft with no completed admission or external-problem count claimed.
+
+## ASSUMED-UNVERIFIED
+
+The bounded literature and ownership searches do not certify worldwide
+absence of a prior settlement or establish priority. SeqFan archive access
+failed, some general search services rejected or rate-limited requests, and
+the related log/integer search inspected the first fifty of fifty-three hits.
+The source attribution does not independently establish the conjecture's
+insertion date. The characteristic-zero field interpretation makes the
+source's implicit ambient field explicit; positive characteristic and
+analytic convergence are outside the result. Unfinished audit and delivery
+evidence have the limits stated in Triage.

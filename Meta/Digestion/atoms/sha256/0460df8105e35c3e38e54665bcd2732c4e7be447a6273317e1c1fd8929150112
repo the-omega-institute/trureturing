@@ -1,0 +1,31 @@
+**Theorem 5.3 (matched early leaves must be erased).** On the entire
+SPC acquired copied-source instance with
+$F(y)=\langle\alpha,\rho y\rangle$ and
+$U(x,y)=\langle x,\langle y,F(y)\rangle\rangle$, replacing
+matched terminated branches by frontier leaves gives a false
+boundedness measure on its established all-depth witness sequence.
+The pruning of Definition 2.4 avoids this error.
+
+Proof. Use the complete input and exact rows $r_0,r_1$ of
+[SPC, Definitions 3.1 and 8.1; Theorems 3.2–3.3][SPCEXT], with
+its positive epoch-one record, finite negative, whole exterior,
+reached set and full partitions. Those existing results give
+$y_n=F^n(\beta)$ and the actual original tuples
+$\mathbf w_n=(U(y_n,y_n),U(y_{n+1},y_n))$, whose minimum
+mismatch depths tend to infinity. This entire-family supplier
+and its non-rational contact are not new claims here.
+
+For every $n\ge1$, both components have reply $\alpha$ at
+original address $LL$, because the left child of each $y_n$
+is $\alpha$. This is a matched terminated branch, and every
+strict extension is absent in both components. A procedure that
+turns all matching leaves into cost endpoints therefore has an
+endpoint at depth two for every tuple of this sequence. Its
+minimum endpoint depth is at most two even though the minimum
+first-disagreement depth is unbounded. The whole right subtrees
+of the two $U$ sources also agree and create no mismatch obligation.
+In Definition 2.4 these subtrees and the common $LL$ leaf have
+flag $E$ and are deleted, while every genuine frontier address
+keeps its exact original marker count by Theorem 2.5. This is
+the consumer of the annotation's equality flags. $\square$
+

@@ -61,12 +61,7 @@ internal sealed class HannaLogarithmicAffineClosureDocument : IScribeDocumentDef
                         + "when b=0 it retains arbitrary L(0). Signed and infinitely "
                         + "supported coordinates a are included.")),
                     Paragraph(Text("The original finite-sum suppliers coeff_transform "
-                        + "and T_window are applied directly. The exact theorem audit "
-                        + "is unfinished at "
-                        + "https://github.com/the-omega-institute/trureturing/issues/16582. "
-                        + "The original three audits and six earlier helper audits retain "
-                        + "their separate scopes at issues 16520 and 16571. These audit "
-                        + "exceptions do not supply validated registration."))),
+                        + "and T_window are applied directly."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a167540-logarithmic-affine-closure"),

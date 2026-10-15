@@ -735,3 +735,580 @@ stated law and block; no uncontrolled joint limit or new coverage of all finite 
 [ME]: https://terrytao.wordpress.com/2008/01/30/254a-lecture-8-the-mean-ergodic-theorem/
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Conditional spectral interface and triplet boundary capacity
+
+The preceding sections produce finite exterior tests for a scalar square
+residual. They do not by themselves identify three spatial channels. The
+following result records exactly what would follow if a future realization
+supplies such channels with a common rotation action.
+
+**Definition 9.1 (Finite response contract).** Let
+
+$$
+\mathcal V=\mathbb R^m\otimes\mathbb R^3,
+\qquad
+\mathcal Y=\mathbb R^q,
+$$
+
+and let $\mathscr R:\mathcal V\to\mathcal Y$ be the linear map formed by a
+finite list of declared measurements. A measurement may be one of the finite
+tests from §§4–5 after a three-channel interface has been specified. Put
+
+$$
+G=\mathscr R^{\mathsf T}\mathscr R.
+$$
+
+Assume, as an additional interface hypothesis, that for every
+$Q\in SO(3)$ there is an orthogonal $W_Q$ on $\mathcal Y$ such that
+
+$$
+\mathscr R(I_m\otimes Q)=W_Q\mathscr R.
+\tag{9.1}
+$$
+
+This is an equivariance contract, not a consequence of (1.5)–(1.6),
+$\mathsf Z(P)$, or the finite-cylinder construction.
+
+**Lemma 9.2 (Equivariant Gram form).** Under (9.1), there is a positive
+semidefinite $m\times m$ matrix $A$ such that
+
+$$
+\boxed{G=A\otimes I_3.}
+\tag{9.2}
+$$
+
+**Proof.** Since $W_Q$ is orthogonal, (9.1) gives
+
+$$
+(I_m\otimes Q)^{\mathsf T}G(I_m\otimes Q)=G.
+$$
+
+Write $G$ as an $m\times m$ block matrix with $3\times3$ blocks. Every
+block commutes with every $Q\in SO(3)$. Commutation with half-turns about
+the coordinate axes first removes all off-diagonal entries. Commutation with
+a quarter-turn taking one coordinate axis to another then makes the three
+diagonal entries equal. Hence each block is a scalar multiple of $I_3$;
+symmetry and positivity give (9.2). $\square$
+
+**Theorem 9.3 (Exact spectral boundary capacity).** Let the nonzero
+eigenvalues of $A$ be
+
+$$
+\lambda_1\ge\cdots\ge\lambda_s>0.
+$$
+
+Then
+
+$$
+\boxed{\operatorname{rank}\mathscr R=3s.}
+\tag{9.3}
+$$
+
+Every exact linear boundary $S:\mathcal V\to\mathbb R^k$ for which there
+exists a linear decoder $D:\mathbb R^k\to\mathcal Y$ satisfying
+$$
+\mathscr R=DS
+$$
+for all $v$ satisfies
+
+$$
+k\ge3s.
+$$
+
+Conversely, $3s$ coordinates suffice by retaining a basis of
+$\operatorname{im}\mathscr R$. Thus each nonzero spectral mode is a complete
+three-component response; the additional capacity is a multiplicity space,
+not a fourth local spatial direction.
+
+**Proof.** The rank of $A\otimes I_3$ is $3\operatorname{rank}A$. If
+$\mathscr R=DS$ for some linear decoder $D$, then
+$\operatorname{rank}\mathscr R\le\operatorname{rank}S\le k$. Choosing a
+row-space basis of $\mathscr R$ gives a summary with $k=\operatorname{rank}
+\mathscr R$. $\square$
+
+**Theorem 9.4 (Finite-precision triplet selection).** Suppose the source
+coefficient $v$ is centered and whitened, namely
+$$
+\mathbb E[v]=0,
+\qquad
+\mathbb E[vv^{\mathsf T}]=I_{3m},
+$$
+and restrict compression to the equivariant orthogonal projections
+
+$$
+P=P_m\otimes I_3,
+\qquad
+P_m=P_m^{\mathsf T}=P_m^2,
+\qquad
+0\le r:=\operatorname{rank}P_m\le m.
+$$
+
+Write the complete spectrum of $A$ as
+$$
+\lambda_1\ge\cdots\ge\lambda_m\ge0.
+$$
+
+The minimum squared response error is
+
+$$
+\boxed{
+\min_P\mathbb E\|\mathscr R(v-Pv)\|^2
+ =3\sum_{i=r+1}^{m}\lambda_i.
+}
+\tag{9.4}
+$$
+
+The optimal $P_m$ retains eigenvectors for the $r$ largest eigenvalues.
+If $r<m$, adding the next complete three-component response lowers the error
+by $3\lambda_{r+1}$; if $r=m$, there is no next response group and the gain
+is zero.
+
+**Proof.** The error is
+
+$$
+\operatorname{tr}\bigl(G(I-P)\bigr)
+ =3\operatorname{tr}\bigl(A(I-P_m)\bigr).
+$$
+
+The spectral theorem and the finite-dimensional Ky Fan variational principle
+select the $r$ largest eigenvalues of $A$, giving (9.4). $\square$
+
+For example, if $A=\operatorname{diag}(9,4)$, the response spectrum is
+$9,9,9,4,4,4$ when the multiplicity spaces are written explicitly, and
+keeping only the first triplet leaves squared error $12$ under the stated
+identity-covariance convention. The example is a response-capacity
+calculation, not a claim about the present FIB source.
+
+**Scope 9.5 (What the triplet result does and does not establish).** If a
+future source-level bridge identifies three local FIB channels with the
+equivariant contract (9.1), Theorems 9.3–9.4 show that exact or approximate
+boundary maintenance should count complete three-component response groups.
+They do not supply that bridge, a native $SO(3)$ action, a metric, transport
+closure, a Green kernel, or a physical dimension theorem. Under the current
+DEV assumptions, the established content remains finite response
+localization and its square-residual detection; the triplet conclusion is
+conditional on the separately stated interface.
+
+## 10. Finite path-family composition and shared triplet modes
+
+Section 9 treats one finite list of measurements as one response map. A
+recursive source normally supplies several declared paths, and those paths
+can probe the same hidden mode. The correct capacity is therefore computed
+after taking their joint Gram operator, rather than by adding the ranks of the
+individual path maps.
+
+**Definition 10.1 (Finite equivariant path family).** Let $\mathcal W$ be a
+finite set of declared paths. For every $w\in\mathcal W$, let
+
+$$
+\mathscr R_w:\mathcal V\longrightarrow\mathcal Y_w,
+\qquad
+G_w=\mathscr R_w^{\mathsf T}\mathscr R_w,
+$$
+
+and suppose that each path has the same source rotation action and an
+orthogonal output action:
+
+$$
+\mathscr R_w(I_m\otimes Q)=W_{w,Q}\mathscr R_w,\qquad Q\in SO(3).
+\tag{10.1}
+$$
+
+Put
+
+$$
+\mathscr R_{\mathcal W}v=(\mathscr R_wv)_{w\in\mathcal W},\qquad
+\mathcal Y_{\mathcal W}=\bigoplus_{w\in\mathcal W}\mathcal Y_w.
+$$
+
+The direct-sum output carries the block-diagonal orthogonal action
+$W_{\mathcal W,Q}=\bigoplus_wW_{w,Q}$.
+
+**Theorem 10.2 (Joint path Gram and exact capacity).** If
+
+$$
+G_w=A_w\otimes I_3,\qquad A_w\succeq0,
+$$
+
+for every $w\in\mathcal W$, then
+
+$$
+\boxed{
+G_{\mathcal W}:=\mathscr R_{\mathcal W}^{\mathsf T}\mathscr R_{\mathcal W}
+ =A_{\mathcal W}\otimes I_3,\qquad
+A_{\mathcal W}:=\sum_{w\in\mathcal W}A_w.
+}
+\tag{10.2}
+$$
+
+Consequently, in the same linear-decoder sense as Theorem 9.3, the exact
+linear boundary capacity of the joint path family is
+
+$$
+\boxed{
+\operatorname{rank}\mathscr R_{\mathcal W}
+ =3\operatorname{rank}A_{\mathcal W}.
+}
+\tag{10.3}
+$$
+
+If one path family is enlarged from $\mathcal W$ to
+$\mathcal W\cup\{u\}$, its exact additional capacity is
+
+$$
+\boxed{
+3\bigl(\operatorname{rank}(A_{\mathcal W}+A_u)
+       -\operatorname{rank}A_{\mathcal W}\bigr),
+}
+$$
+
+which can be zero even when $\mathscr R_u$ has positive rank.
+
+**Proof.** The joint map is a direct sum, so
+
+$$
+G_{\mathcal W}=\sum_{w\in\mathcal W}G_w
+ =\left(\sum_{w\in\mathcal W}A_w\right)\otimes I_3.
+$$
+
+The rank identity for a Kronecker product gives (10.3). The last formula is
+the difference of the two joint ranks. Since the summands are positive
+semidefinite, adding a path cannot decrease the rank, but it need not add a
+new multiplicity direction. $\square$
+
+This gives a precise distinction between a new path and a new response mode.
+For example, with two multiplicity coordinates,
+
+$$
+A_1=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+A_2=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+$$
+
+each path has rank-three response, but their joint family still has capacity
+$3$. In contrast, replacing $A_2$ by
+
+$$
+\begin{pmatrix}0&0\\0&1\end{pmatrix}
+$$
+
+gives joint capacity $6$. The distinction is invisible to a count that adds
+the individual ranks.
+
+**Corollary 10.3 (Finite-precision joint selection).** Under the centered
+whitened source law and the equivariant orthogonal compression class of
+Theorem 9.4, let
+
+$$
+\lambda_1^{\mathcal W}\ge\cdots\ge\lambda_m^{\mathcal W}\ge0
+$$
+
+be the complete spectrum of $A_{\mathcal W}$. Retaining $r$ complete
+three-component multiplicity groups has minimum joint response error
+
+$$
+\boxed{
+3\sum_{i=r+1}^{m}\lambda_i^{\mathcal W},\qquad 0\le r\le m.
+}
+\tag{10.4}
+$$
+
+Thus path addition changes the finite-precision budget through the spectrum of
+the summed Gram matrix, not through a separate per-path dimension count.
+
+**Scope 10.4.** The result is finite: $\mathcal W$ is finite, all maps share
+one source and one $SO(3)$ action, and the source moments and projection class
+are those explicitly stated in Theorem 9.4. An infinite path closure requires
+its own operator convergence and summability hypotheses. The theorem still
+does not establish that the FIB source has this rotation action, that its
+paths are metric transports, or that the multiplicity rank is an ambient
+space dimension.
+
+**Scope clarification 10.5.** The finite path result uses the interface
+hypothesis (9.1), together with the centered/whitened source and
+orthogonal-projection assumptions of Theorem 9.4. These are the assumptions
+that make the joint response calculation conditional; they do not identify
+the FIB source with an $SO(3)$ representation or with a physical ambient
+space.
+
+## 10.99 追加锚（本行以下为增补区）
+
+## 11. Source-level finite-rank certificate
+
+Sections 9–10 leave the rotation interface explicit. A separate finite
+certificate can connect a predictive-dimension claim to actual FIB sources
+without asserting that the native source already carries that interface.
+
+**Definition 11.1 (Affine response minor).** Let $S$ be a source set, let
+$p_1,p_2,p_3$ be continuations that are legal for every source under
+consideration, and let $y$ be a scalar readout. For sources
+$s_0,s_1,s_2,s_3\in S$, define
+
+$$
+M_{ij}=y(T_{p_i}s_j)-y(T_{p_i}s_0),
+\qquad 1\le i,j\le3.
+\tag{11.1}
+$$
+
+An affine predictive boundary of dimension $k$ for these responses is a map
+$z:S\to\mathbb R^k$ for which, for each $i$, there are $a_i\in\mathbb R$ and
+$\ell_i\in(\mathbb R^k)^*$ satisfying
+
+$$
+y(T_{p_i}s)=a_i+\ell_i(z(s))
+\qquad\text{for every }s\in S.
+\tag{11.2}
+$$
+
+**Theorem 11.2 (Finite minor lower bound).** If an affine predictive boundary
+as in Definition 11.1 exists and
+
+$$
+\det M\ne0,
+\tag{11.3}
+$$
+
+then $k\ge3$. If a three-dimensional affine boundary exists, the minimum
+dimension for this response task is therefore exactly three.
+
+**Proof.** Let $Z$ be the $k\times3$ matrix whose $j$-th column is
+$z(s_j)-z(s_0)$, and let $L$ be the $3\times k$ matrix whose $i$-th row is
+$\ell_i$. Subtracting the $s_0$ response in (11.2) gives
+
+$$
+M=LZ.
+$$
+
+Thus $3=\operatorname{rank}M\le\operatorname{rank}Z\le k$. The last
+statement follows by comparing with the supplied three-dimensional
+realization. $\square$
+
+The minor condition is a source-and-task statement: it uses the same actual
+sources in every row and the same legal continuation family in every column.
+It cannot be replaced by three unrelated response ranks from different
+source domains.
+
+**Proposition 11.3 (A source-compatible FIB witness).** Put
+
+$$
+q(\alpha)=e_1,\qquad q(\beta)=e_2,
+$$
+
+$$
+q(\langle s,t\rangle)=q(s)\times q(t),
+\qquad q(\rho t)=Rq(t),
+$$
+
+where
+
+$$
+R=
+\begin{pmatrix}
+0&0&-1\\
+1&0&0\\
+0&-1&0
+\end{pmatrix}\in SO(3).
+$$
+
+Using the FIB recursion
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$ and the identity
+$R(u\times v)=(Ru)\times(Rv)$, these clauses are compatible. Define the
+source readout by
+
+$$
+y(s)=e_1^{\mathsf T}q(s);
+$$
+
+equivalently, the vector readout is $\widetilde y(v)=e_1^{\mathsf T}v$ and
+$y=\widetilde y\circ q$. Take sources
+
+$$
+s_0=\langle\alpha,\alpha\rangle,
+\quad s_1=\alpha,
+\quad s_2=\beta,
+\quad s_3=\langle\beta,\alpha\rangle,
+$$
+
+and continuations $p_1=\varepsilon$, $p_2=\rho$, $p_3=\rho^2$. They are
+all legal on these FIB terms. Since
+
+$$
+q(s_0)=0,
+\quad q(s_1)=e_1,
+\quad q(s_2)=e_2,
+\quad q(s_3)=-e_3,
+$$
+
+the response minor is
+
+$$
+M=
+\begin{pmatrix}
+1&0&0\\
+0&0&1\\
+0&1&0
+\end{pmatrix},
+\qquad
+\det M=-1.
+\tag{11.4}
+$$
+
+The map $q$ itself is a three-dimensional affine predictive boundary for
+this finite response family, so Theorem 11.2 makes its dimension minimal.
+
+This is a finite source-compatible continuation certificate, not a native
+closed-loop holonomy result: for example, $\rho^3\alpha\ne\alpha$ as FIB
+terms. Restricting the source set or changing the readout can change the
+minor rank. The witness therefore supplies the missing source-level
+instantiation for this task only; it does not establish a native $SO(3)$
+action, metric transport, or physical ambient dimension for FIB.
+
+## 11.99 追加锚（本行以下为增补区）
+
+## 12. The common-realization gate
+
+The joint Gram construction in Section 10 has a source-level prerequisite
+that is easy to lose under conditioning. A jointly realized path family
+consists of one source set $S$, one state map $z:S\to\mathcal V$, and one
+legal continuation/readout contract such that every path response factors
+through that same $z$. If a path uses a separately chosen state map after
+conditioning on a complement $\eta$, a joint lift to one $z$ must be supplied
+before its Gram operator can be added to the other paths.
+
+**Definition 12.1 (Joint-realization gate).** A collection of finite
+responses $\{\mathscr R_w\}_{w\in\mathcal W}$ passes the gate when there are
+a single source domain $S$, a single boundary map $z:S\to\mathcal V$, and
+linear maps $L_w$ such that
+
+$$
+\mathscr R_w=L_w\circ z
+\qquad(w\in\mathcal W),
+\tag{12.1}
+$$
+
+with all $L_w$ using the same source coordinates and the same declared
+continuation domain. The maps may have different output spaces, but their
+inputs are one common realized state.
+
+**Proposition 12.2 (Independent local fits do not pass the gate).** Local
+conditional minimizers do not by themselves establish (12.1). In particular,
+the stationary common-matrix comparison law in the latest
+[DEV global/local rank result](FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md)
+has, for every fixed block length $m$, independently minimized
+conditional defects whose total tends to zero, while every one global
+rank-two candidate for that same family obeys the following bound. For the
+same stationary law $P$ and its marginals $\mu_n=P_{[1,n]}$, with $N=2$,
+$n\ge5$, and $(n-1)\Delta\ge8$, where $v>0$ and $\Delta>0$ are the constants
+defined in Theorem 5.1 of the cited result,
+
+$$
+\mathscr R_{2,n}(\mu_n)
+\ge
+(n-4)\left[
+v-2\exp\!\left(-\frac{(n-1)\Delta^2}{64}\right)
+\right],
+\qquad v>0.
+\tag{12.2}
+$$
+
+Thus those local minimizers cannot be slices of a common global candidate in
+the same rank-two family. Consequently they cannot be used as the individual
+summands of a joint response Gram operator without an additional common lift.
+
+**Proof.** The lower bound and the vanishing fixed-block sums are the two
+conclusions of the cited comparison law. If the independently selected
+conditional minimizers had a common lift satisfying the same global rank-two
+constraint, that lift would be an admissible global candidate and would
+inherit the vanishing total discrepancy, contradicting (12.2). The failure is
+therefore a failure of joint realization, not a failure of either local
+conditional calculation. $\square$
+
+This proposition is an obstruction to an inference, not a claim that the
+comparison law itself satisfies the $SO(3)$ interface of Section 9. It says
+that even before asking for three equivariant channels, one must preserve the
+common source, continuation legality, and cross-path correlations. A
+three-component local response can remain efficient while the global boundary
+requires additional memory or multiplicity to represent the same source.
+
+## 12.99 追加锚（本行以下为增补区）
+
+## 13. Spectral decimation is not an ambient dimension
+
+The latest DEV also contains an exact Riesz/CMV decimation package. Its
+relevant facts are spectral: the moment form makes Laurent monomials with
+different residues modulo four orthogonal, the exponent map
+
+$$
+J(T^i)=T^{4i}
+\tag{13.1}
+$$
+
+is an isometry between the corresponding moment forms, and the associated
+projection norms agree across the scale-four replacement. These facts
+describe a graded spectral address, not four local spatial axes.
+
+**Definition 13.1 (Finite residue sectors).** For a finite Laurent-polynomial
+window, let
+
+$$
+\mathcal P_r
+=\operatorname{span}\{T^i:i\equiv r\pmod4\},
+\qquad r\in\{0,1,2,3\}.
+\tag{13.2}
+$$
+
+The DEV residue-orthogonality theorem says that distinct $\mathcal P_r$ are
+orthogonal for the Riesz moment form. Every finite Laurent polynomial is the
+sum of its four residue components, so this is an orthogonal sector
+decomposition of the finite spectral window. Equation (13.1) transports the
+zero-residue address under decimation; it does not identify the residue label
+with a coordinate direction.
+
+**Proposition 13.2 (Sector count and response rank are different quantities).**
+Let a finite response map respect a direct-sum decomposition
+
+$$
+\mathcal V=\bigoplus_{r=0}^{3}\mathcal V_r,
+\qquad
+\mathcal Y=\bigoplus_{r=0}^{3}\mathcal Y_r,
+\qquad
+\mathscr R_r:\mathcal V_r\to\mathcal Y_r,
+\qquad
+\mathscr R=\bigoplus_{r=0}^{3}\mathscr R_r.
+\tag{13.3}
+$$
+
+Then
+
+$$
+\boxed{
+\operatorname{rank}\mathscr R
+=\sum_{r=0}^{3}\operatorname{rank}\mathscr R_r.
+}
+\tag{13.4}
+$$
+
+The four-sector index therefore gives no value for
+$\operatorname{rank}\mathscr R$ without separate information about the four
+sector maps.
+
+**Proof.** In bases adapted to the two direct sums, $\mathscr R$ is block
+diagonal. Its image is the direct sum of the four block images inside the
+mutually disjoint summands $\mathcal Y_r$, so the dimensions add. $\square$
+
+Consequently, scale-four self-similarity can coexist with a one-component
+sector, a three-component local response, or any larger multiplicity. The
+number four records a decimation and residue structure; it does not prove
+$d=4$, $d=3$, or an $SO(3)$ action. To obtain a three-dimensional local
+claim, one still needs a source-level certificate such as Proposition 11.3
+or an independently supplied equivariant interface from Section 9.
+
+This distinction also limits how the new Riesz results can be transferred to
+FIB. The exact DEV statements establish the spectral identities for their
+declared moment forms and walks. They do not by themselves provide a FIB
+source map, a common legal continuation family, a physical metric, or a
+transport-to-space correspondence. Under the common-realization gate of
+Section 12, they can supply a graded response decomposition only after such
+a bridge is constructed.
+
+## 13.99 追加锚（本行以下为增补区）

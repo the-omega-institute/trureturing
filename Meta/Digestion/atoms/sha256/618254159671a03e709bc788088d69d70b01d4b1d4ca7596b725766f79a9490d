@@ -1,0 +1,57 @@
+**Mathematical citation 14.9 (reuse, literature and conclusion boundaries).**
+The native source and row suppliers are Definitions 1.1--1.2, with
+`literalRecord`, `canonicalRow_record_iff`, `legal_values_row` and
+`rowFiberEquiv`; the right-clock supplier is `right_clock_iterate` in
+[DelayedOriginalReadout](../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean).
+Section 11 supplies the separated-age family and acquired-row factor;
+§13.3 supplies the entire-row collision criterion and effective decoder.
+For the uniform menu of all $k$-subsets, the packing and transversal
+numbers in Theorem 14.5 are $\lfloor r/k\rfloor$ and $r-k+1$, recovering
+§13.4. Pairwise intersection is then equivalent to $2k>r$, recovering
+§13.5. Section 12 instead concerns multiple acquired chronological rows;
+its connectedness criterion is not used to infer a pre-menu code.
+The generic coloring and causal local-versus-retained distinction belong
+to [Transport--Memory Completion §§8.2 and 8.4](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#82-标签恰须切开可能混淆的前缀).
+
+The Boolean predicate used inside Theorem 14.3 is a standard proper
+simple game, in the precise terminology of Valentiner--Volić,
+[*The topology of simple games*, arXiv:2503.12578v1,
+Definitions 2.1 and 2.6](https://arxiv.org/html/2503.12578v1).
+The finite single-interval packing/piercing step inside Theorem 14.5
+is literature-attested in Gyárfás--Lehel,
+[*A Helly-type problem in trees*, printed pp. 571--573 and reference [1]
+on p. 584](https://users.renyi.hu/~gyarfas/Cikkek/02_GyarfasLehel_AHellyTypeProblemInTrees.pdf).
+Their statement credits Hajnal--Surányi's 1958 paper; no independently
+inspected theorem from that original paper or from their multi-interval
+results is required. The displayed greedy argument verifies the discrete
+public-order hypotheses here. Proper-game terminology, finite coloring
+and interval duality are reused ingredients, not new inventions.
+
+Charpenay--Le Treust--Roumy,
+[*Optimal Zero-Error Coding for Computing under Pairwise Shared Side
+Information*, arXiv:2211.03649v2, Definitions II.1 and IV.5](https://arxiv.org/html/2211.03649v2),
+uses differing function values at a common feasible side-information
+value to define the relevant conflict. Its source model is i.i.d., its
+objective is expected prefix-code length across asymptotic blocks, and
+its rate conclusions have additional support hypotheses. Those results
+do not furnish this exact adversarial single-row alphabet price. The
+finite coding bridge is already supplied by §13.3 and Transport §8.2;
+no external rate formula is transferred.
+
+The new native deductions are the arbitrary-menu overlap criterion,
+its acquired-row encoder and decoder, the exact tuple-retention price
+and its justified spatial cases, the empty-triple-intersection
+obstruction, and the Fano causal separation from whole-row ambiguity.
+They are repo-derived ordinary-theory results with stated reusable
+ingredients, without a worldwide originality or kernel-verification
+claim. General multilevel menu prices, a converse to Theorem 14.6 and
+the exact Fano ternary optimum remain undetermined here.
+
+These are finite-family retained-label and fixed-width representation
+statements. Acquired rows, truthful export/discard, actual continuity,
+stationary capture, permissions and lawful handoff remain premises.
+Recovery of an update count does not certify source identity or history,
+perform acquisition, grant native updates or price their execution.
+No all-source menu theorem, physical or total/peak memory bound,
+working-space optimum or physical-time recovery follows.
+

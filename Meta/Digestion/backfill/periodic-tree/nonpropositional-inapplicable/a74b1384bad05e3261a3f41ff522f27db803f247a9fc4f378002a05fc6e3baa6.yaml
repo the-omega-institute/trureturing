@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a74b1384bad05e3261a3f41ff522f27db803f247a9fc4f378002a05fc6e3baa6
+  normalized_sha256: sha256:a74b1384bad05e3261a3f41ff522f27db803f247a9fc4f378002a05fc6e3baa6
+cas_ref: sha256:a74b1384bad05e3261a3f41ff522f27db803f247a9fc4f378002a05fc6e3baa6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** The exponent statements follow from S8 and S9. Binary modul…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 431410b6079e84df432ba7131bb12c58af7bf607d440327ef9bdb0fcbc7e8107
+    next_atom_id: 9774ddae87b0656e7ac2fbf3514d57c5ee9a5e0b3fd27b7d409416e484818a49

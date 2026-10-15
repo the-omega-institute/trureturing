@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01c609688bb23f874489d5809fb311a1b96020a27d1a45c43701493d10e0e135
+  normalized_sha256: sha256:01c609688bb23f874489d5809fb311a1b96020a27d1a45c43701493d10e0e135
+cas_ref: sha256:01c609688bb23f874489d5809fb311a1b96020a27d1a45c43701493d10e0e135
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/CarryRevealsLowDigits.carry_reveals_low_digits
+    target_statement_id: sha256:6d501f3897525fefa4b57810e9bfd1861c03daf88e2719bd31ece1a5aead2c9e
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
+    target_statement_id: sha256:acc56dac1a926b4ff9b5ef32d7babaa2f7574b9aa0a0ce4ec577abb2d576c9f8
+receipts:
+  unresolved_subitems: []

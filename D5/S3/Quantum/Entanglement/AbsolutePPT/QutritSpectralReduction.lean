@@ -14,7 +14,9 @@ admission_basis: escape-witness
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose
   statement_id: sha256:2373e14505428583f492752adc05d104ae8b1567265ff8182e03646de824c089
-Information-escape registration is paused under CLAUDE.md section 3.9.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16011
+bell_mem_unitaryGroup; proof_shape: bind-only; escape_witness: none;
+  consumers: spectral_reduction, QutritHildebrandSufficiency.PureSpectrum.pure_pt_sorted_diagonalization
 
 castMat_mul, castMat_transpose, castMat_diagonal; proof_shape: bind-only; escape_witness: none; consumer: psd_of_rat_ldl, QutritN4PurityBound.certificate_bound, QutritN5PurityBound.certificate_bound, QutritN6PurityBound.certificate_bound, QutritN7PurityBound.certificate_bound, QutritN8PurityBound.Q_psd, QutritN9PurityBound.Q_psd, QutritN10PurityBound.Q_psd
 castIntMat_mul, castIntMat_transpose, castIntMat_diagonal; proof_shape: bind-only; escape_witness: none; consumer: psd_of_int_scaled_ldl
@@ -101,10 +103,28 @@ def K2 (l : Fin 9 → ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
 def boundaryValues (k : ℕ) (l : Fin (3*(3+k)) → ℝ) : Fin 9 → ℝ :=
   fun q => l (if h : q.val < 3 then ⟨q.val, by omega⟩ else ⟨3*k+q.val, by omega⟩)
 
-private noncomputable def bell : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := fun (i,j) (k,l) =>
+noncomputable def bell : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ := fun (i,j) (k,l) =>
   if i=j then if (i,j)=(k,l) then 1 else 0
   else if (i,j)=(k,l) then (if i<j then (Real.sqrt 2 : ℂ)⁻¹ else -(Real.sqrt 2 : ℂ)⁻¹)
   else if (i,j)=(l,k) then (Real.sqrt 2 : ℂ)⁻¹ else 0
+
+theorem bell_mem_unitaryGroup : bell ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
+  have c_square : (Real.sqrt 2 : ℂ)⁻¹*(Real.sqrt 2 : ℂ)⁻¹ = 1/2 := by
+    have h : (Real.sqrt 2 : ℂ) * (Real.sqrt 2 : ℂ)=2 := by
+      norm_cast
+      nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)]
+    rw [← mul_inv, h]
+    norm_num
+
+  have c_star : star (Real.sqrt 2 : ℂ)⁻¹=(Real.sqrt 2 : ℂ)⁻¹ := by simp
+
+  rw [mem_unitaryGroup_iff]
+  ext ⟨i,j⟩ ⟨k,l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, bell, Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_three, Fin.reduceEq, Fin.reduceFinMk, Fin.reduceLT, c_star, c_square]
+  all_goals simp only [show (starRingEnd ℂ) (Real.sqrt 2 : ℂ)⁻¹ = (Real.sqrt 2 : ℂ)⁻¹ by simp, c_square]
+  all_goals norm_num
 
 private noncomputable def extendedBell (k : ℕ) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ :=
   (fromBlocks bell 0 0 (1 : Matrix (Fin 3 × Fin k) (Fin 3 × Fin k) ℂ)).submatrix
@@ -119,17 +139,11 @@ private noncomputable def extendUnitary (k : ℕ) (V : unitaryGroup (Fin 3 × Fi
         simpa only [Matrix.star_eq_conjTranspose] using mem_unitaryGroup_iff.mp V.property
       simp [fromBlocks_conjTranspose, fromBlocks_multiply, hv, fromBlocks_one]⟩
 
-private noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
+noncomputable def permutationU {I : Type} [Fintype I] [DecidableEq I]
     (e : Equiv.Perm I) : unitaryGroup I ℂ := ⟨e.permMatrix ℂ, by
   rw [mem_unitaryGroup_iff,Matrix.star_eq_conjTranspose,Matrix.conjTranspose_permMatrix,
     ← Matrix.permMatrix_mul]
   simp⟩
-
-private noncomputable def swapU : unitaryGroup (Fin 3 × Fin 3) ℂ :=
-  ⟨(Equiv.swap ((1,1) : Fin 3 × Fin 3) ((0,2) : Fin 3 × Fin 3)).permMatrix ℂ, by
-    rw [mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_permMatrix,
-      ← Matrix.permMatrix_mul]
-    simp⟩
 
 theorem spectral_reduction (k : ℕ)
     (rho : Matrix (Fin 3 × Fin (3+k)) (Fin 3 × Fin (3+k)) ℂ)
@@ -148,14 +162,6 @@ theorem spectral_reduction (k : ℕ)
 
   have c_star : star (Real.sqrt 2 : ℂ)⁻¹=(Real.sqrt 2 : ℂ)⁻¹ := by simp
 
-  have bell_unitary : bell ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
-    rw [mem_unitaryGroup_iff]
-    ext ⟨i,j⟩ ⟨k,l⟩
-    fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, bell, Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_three, Fin.reduceEq, Fin.reduceFinMk, Fin.reduceLT, c_star, c_square]
-    all_goals simp only [show (starRingEnd ℂ) (Real.sqrt 2 : ℂ)⁻¹ = (Real.sqrt 2 : ℂ)⁻¹ by simp, c_square]
-    all_goals norm_num
 
   let pack (l : Fin 9 → ℝ) : (Fin 3 × Fin 3) → ℂ := fun (i,j) =>
     (if i=0 then (if j=0 then l 8 else if j=1 then l 7 else l 5)
@@ -192,7 +198,7 @@ theorem spectral_reduction (k : ℕ)
   let flip56 (l : Fin 9 → ℝ) : Fin 9 → ℝ := l ∘ Equiv.swap 5 6
 
   have swap_pack (l : Fin 9 → ℝ) :
-      (swapU : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)*diagonal (pack l)*(swapU : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)ᴴ =
+      ((permutationU swap56) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)*diagonal (pack l)*((permutationU swap56) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)ᴴ =
         diagonal (pack (flip56 l)) := by
     change swap56.permMatrix ℂ * diagonal (pack l) * (swap56.permMatrix ℂ)ᴴ = _
     rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
@@ -213,7 +219,7 @@ theorem spectral_reduction (k : ℕ)
     unfold extendedBell
     rw [conjTranspose_submatrix, submatrix_mul_equiv _ _ _ (((Equiv.prodSumDistrib (Fin 3) (Fin 3) (Fin k)).symm)).symm _]
     have hb : bell * bellᴴ=1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using mem_unitaryGroup_iff.mp bell_unitary
+      simpa only [Matrix.star_eq_conjTranspose] using mem_unitaryGroup_iff.mp bell_mem_unitaryGroup
     simp [fromBlocks_conjTranspose, fromBlocks_multiply, hb, fromBlocks_one]
 
   let packExtended (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ) : Fin 3 × (Fin 3 ⊕ Fin k) → ℂ :=
@@ -242,8 +248,8 @@ theorem spectral_reduction (k : ℕ)
 
 
   have extended_swap_pack (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ) :
-      (extendUnitary k swapU : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ) * diagonal (packExtended k l mid) *
-        (extendUnitary k swapU : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ)ᴴ = diagonal (packExtended k (flip56 l) mid) := by
+      (extendUnitary k (permutationU swap56) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ) * diagonal (packExtended k l mid) *
+        (extendUnitary k (permutationU swap56) : Matrix (Fin 3 × (Fin 3 ⊕ Fin k)) (Fin 3 × (Fin 3 ⊕ Fin k)) ℂ)ᴴ = diagonal (packExtended k (flip56 l) mid) := by
     ext ⟨i,j⟩ ⟨a,b⟩
     rcases j with j|j <;> rcases b with b|b
     all_goals simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, extendUnitary,
@@ -257,7 +263,7 @@ theorem spectral_reduction (k : ℕ)
 
   have necessary_K2_extended (k : ℕ) (l : Fin 9 → ℝ) (mid : Fin 3 × Fin k → ℂ)
       (h : APPT (diagonal (packExtended k l mid))) : (KC2 l).PosSemidef := by
-    have h' := appt_conjugate h (extendUnitary k swapU)
+    have h' := appt_conjugate h (extendUnitary k (permutationU swap56))
     rw [extended_swap_pack] at h'
     exact necessary_K1_extended k _ mid h'
 
@@ -518,10 +524,4 @@ theorem spectral_reduction (k : ℕ)
   dsimp only [P]
   rw [packed_purity, Complex.ofReal_re]
 
-#print axioms spectral_reduction
-#check bell
-#check extendedBell
-#check extendUnitary
-#check permutationU
-#check swapU
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction

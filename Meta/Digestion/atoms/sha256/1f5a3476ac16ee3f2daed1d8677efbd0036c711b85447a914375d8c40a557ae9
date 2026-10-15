@@ -1,0 +1,11 @@
+**Proof.** The coinductive equations in (NIS.35) define a full ordered tree;
+its subtree at address $L^jR$ is $T_{s_j}$, so distinct sequences give distinct
+finite prefixes. The equation $X=X$ imposes no further condition. The
+cardinality comparison proves the final assertion. $\square$
+
+The obstruction also applies to a free component attached to a nontrivial
+presentation. A canonical choice $\Omega$ is legitimate for a theorem about
+one selected witness, or after a separate cofinal-normalization theorem. It
+cannot be used in a completeness direction that quantifies over arbitrary
+completed values.
+

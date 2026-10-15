@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02363f7ed7c583005e464bf5e1b15371b92fa66d5ccc3dc8d0e2d3ac55d38cb2
+  normalized_sha256: sha256:02363f7ed7c583005e464bf5e1b15371b92fa66d5ccc3dc8d0e2d3ac55d38cb2
+cas_ref: sha256:02363f7ed7c583005e464bf5e1b15371b92fa66d5ccc3dc8d0e2d3ac55d38cb2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「R.1 Fibonacci 矩阵与黄金二次环」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 30dfdf1832243901287bf5fd66c221d3f05f9ae5cc3899e44ab5c31252544fa6
+    next_atom_id: 9802477d6581aa7fe5c7dbcf31bf2933f4680710eae79fba8f7d6d7a4ad20a33

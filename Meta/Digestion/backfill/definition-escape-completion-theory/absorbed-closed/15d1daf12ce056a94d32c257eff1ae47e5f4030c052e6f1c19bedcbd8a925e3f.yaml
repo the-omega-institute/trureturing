@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:15d1daf12ce056a94d32c257eff1ae47e5f4030c052e6f1c19bedcbd8a925e3f
+  normalized_sha256: sha256:15d1daf12ce056a94d32c257eff1ae47e5f4030c052e6f1c19bedcbd8a925e3f
+cas_ref: sha256:15d1daf12ce056a94d32c257eff1ae47e5f4030c052e6f1c19bedcbd8a925e3f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/FiniteParetoQuotient.finite_pareto_quotient_exact_and_complete
+    target_statement_id: sha256:b5a6abd37cc1bc87ae8d7915f06f680c85bc6a90a0f77b32ca1a96549566568a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35d30f5169f49ecdd98ba5ff028a2e682eea6318d222e3741eaa34a77d4c6891
+  normalized_sha256: sha256:35d30f5169f49ecdd98ba5ff028a2e682eea6318d222e3741eaa34a77d4c6891
+cas_ref: sha256:35d30f5169f49ecdd98ba5ff028a2e682eea6318d222e3741eaa34a77d4c6891
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义只引入该节的符号或谓词及其定义式，不追加性质、例子或推论。
+    previous_atom_id: 543a38b5f6e0b5b47069c9f1c6ed48e2fcad665a0661b86f82608c92f30e92c7
+    next_atom_id: 24605c954875eec228cd6006c734e9c06adce66c6bdbeccd60aef067fdd96ebf

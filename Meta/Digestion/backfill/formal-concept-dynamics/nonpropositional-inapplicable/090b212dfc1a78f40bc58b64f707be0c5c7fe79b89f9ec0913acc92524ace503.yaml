@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:090b212dfc1a78f40bc58b64f707be0c5c7fe79b89f9ec0913acc92524ace503
+  normalized_sha256: sha256:090b212dfc1a78f40bc58b64f707be0c5c7fe79b89f9ec0913acc92524ace503
+cas_ref: sha256:090b212dfc1a78f40bc58b64f707be0c5c7fe79b89f9ec0913acc92524ace503
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“风险厌恶”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 0c75a50af11d95f4735024cea8d67906897b2a90fe3761d970e20208b6beee44
+    next_atom_id: 0d90367caa8d2d79446508992cfc735a7da87b21939ff7d13580d694b703ed7e

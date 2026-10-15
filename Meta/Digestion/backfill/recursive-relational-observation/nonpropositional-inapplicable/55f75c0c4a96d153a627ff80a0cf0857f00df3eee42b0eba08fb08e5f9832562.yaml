@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55f75c0c4a96d153a627ff80a0cf0857f00df3eee42b0eba08fb08e5f9832562
+  normalized_sha256: sha256:55f75c0c4a96d153a627ff80a0cf0857f00df3eee42b0eba08fb08e5f9832562
+cas_ref: sha256:55f75c0c4a96d153a627ff80a0cf0857f00df3eee42b0eba08fb08e5f9832562
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 52.8 (闭关系、紧输出与集合值连续性).的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: d3e9c95ad504bc45ab7ef483a0547c927b29531f54d086dabfcb52ccadec03d0
+    next_atom_id: 945aec7db7121fbf5b9c101b60c678c1ea6d38a3b98daa8a39dd05c8cab4b2d2

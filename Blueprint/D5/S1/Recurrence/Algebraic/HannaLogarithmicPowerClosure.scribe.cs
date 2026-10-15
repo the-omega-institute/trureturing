@@ -45,13 +45,7 @@ internal sealed class HannaLogarithmicPowerClosureDocument : IScribeDocumentDefi
                 + "these same original contracts supply inverse coordinates, columns "
                 + "and field transport. HannaLogarithmicAffineClosure proves the "
                 + "distinct arithmetic-extraction implication through its finite "
-                + "affine-column polynomial and common degreewise window. The six public "
-                + "helper theorem audits are unfinished under CLAUDE 3.9, tracked at "
-                + "https://github.com/the-omega-institute/trureturing/issues/16571; "
-                + "the original three audits retain their separate issue 16520. "
-                + "The coeff_transform and T_window audits are unfinished at "
-                + "https://github.com/the-omega-institute/trureturing/issues/16582. "
-                + "Neither issue supplies validated registration or mathematical proof.")),
+                + "affine-column polynomial and common degreewise window.")),
             Node("egf", "The exponential generating series",
                 Disp(Seq(Context(), Sp, Equality(Call("egf", L()),
                     Call("mk", Lambda("n", Nat(),

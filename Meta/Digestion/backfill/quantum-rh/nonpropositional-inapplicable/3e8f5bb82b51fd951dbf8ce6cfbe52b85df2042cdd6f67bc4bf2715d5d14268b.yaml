@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3e8f5bb82b51fd951dbf8ce6cfbe52b85df2042cdd6f67bc4bf2715d5d14268b
+  normalized_sha256: sha256:3e8f5bb82b51fd951dbf8ce6cfbe52b85df2042cdd6f67bc4bf2715d5d14268b
+cas_ref: sha256:3e8f5bb82b51fd951dbf8ce6cfbe52b85df2042cdd6f67bc4bf2715d5d14268b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Final proof step of preceding independent-model theorem two using Chebyshev and Borel-Cantelli.
+    previous_atom_id: cd9888ed04db1c4cc2615a8918b8bfc932eb386fda66f4fe589e8c5b5fada780
+    next_atom_id: bee6cb99b3fcab9b4c60971411690beeda3a9aa1d8188d186bcd7910551aebd8

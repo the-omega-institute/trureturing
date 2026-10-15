@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4888d09a68c7b91a73d8587cd716f0917a3cf04191e1a339bc4de009b0bdc252
+  normalized_sha256: sha256:4888d09a68c7b91a73d8587cd716f0917a3cf04191e1a339bc4de009b0bdc252
+cas_ref: sha256:4888d09a68c7b91a73d8587cd716f0917a3cf04191e1a339bc4de009b0bdc252
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_disk_bound
+    target_statement_id: sha256:0a8956fb48ab14c06fba8940786cc1897e581c9c2b5e076a7552b8fa6c06eb5c
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.polynomial_iterated_deriv
+    target_statement_id: sha256:5a119a6780c0d178504a808795f66e425d7663060e2edb3d5a401c259edc941d
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.radius_properties
+    target_statement_id: sha256:a15551e8263241c8a6647bc480b7d92d2ae1b5fb4af5dd7966e56197e00ac9cb
+receipts:
+  unresolved_subitems: []

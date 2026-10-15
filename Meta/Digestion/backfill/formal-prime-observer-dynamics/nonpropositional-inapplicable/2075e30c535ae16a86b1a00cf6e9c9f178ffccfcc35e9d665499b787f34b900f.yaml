@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2075e30c535ae16a86b1a00cf6e9c9f178ffccfcc35e9d665499b787f34b900f
+  normalized_sha256: sha256:2075e30c535ae16a86b1a00cf6e9c9f178ffccfcc35e9d665499b787f34b900f
+cas_ref: sha256:2075e30c535ae16a86b1a00cf6e9c9f178ffccfcc35e9d665499b787f34b900f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：定义 215.1（保守可加证据）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: ba40ac56dbf680e0e553231edda9e5ea30981239723d5316fd406b29e2c60fa2
+    next_atom_id: c7616d720ae048b006d5a940a4b971cbc3c0ff40e92f9186100cd0780cd976bb

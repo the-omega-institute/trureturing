@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1381db63938e7a8fb4c1e133a7c43073a5ec5600a2a79113c3a1430665559430
+  normalized_sha256: sha256:1381db63938e7a8fb4c1e133a7c43073a5ec5600a2a79113c3a1430665559430
+cas_ref: sha256:1381db63938e7a8fb4c1e133a7c43073a5ec5600a2a79113c3a1430665559430
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「9.3 任意截面的进位与复合缺陷」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: ef9adde76545b4058361d56218337439730c2de122178047e735e163cbc372f1
+    next_atom_id: db9add9a4f7a5ea157dd7a6f5f10d3b7aa4daadbf5dc5fbfb44dd77365a07667
