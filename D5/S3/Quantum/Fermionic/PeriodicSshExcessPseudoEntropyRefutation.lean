@@ -93,7 +93,8 @@ private theorem fullC_mixed (M : ℕ) (i j : Fin M) :
            majorana j true * majorana i false) -
          Complex.I • (majorana i true * majorana j false +
            majorana j false * majorana i true)) := by
-      simp only [majorana, Bool.false_eq_true, if_false, if_true, add_mul, mul_add,
+      delta majorana
+      simp only [Bool.false_eq_true, if_false, if_true, add_mul, mul_add,
         sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul]
       match_scalars <;> norm_num [Complex.I_sq]
     _ = _ := by
