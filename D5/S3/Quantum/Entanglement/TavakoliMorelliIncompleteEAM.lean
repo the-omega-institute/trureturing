@@ -480,10 +480,9 @@ private theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
 
 theorem proj_overlap {d : ℕ} (u v : Ket (Fin d)) :
     (proj u * proj v).trace = (‖star u.vec ⬝ᵥ v.vec‖ ^ 2 : ℝ) := by
-  simpa only [D5.S3.Observer.Conditioning.recordWeight,
-    D5.S3.Quantum.FiniteDimensional.bornProbability, trace_mul_comm (proj v) (proj u)] using
-    D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
-      (fun _ : Unit => proj u) (proj v) () u.vec v.vec (proj_eq_outer u) (proj_eq_outer v)
+  rw [trace_mul_comm]
+  exact D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+    (fun _ : Unit => proj u) (proj v) () u.vec v.vec (proj_eq_outer u) (proj_eq_outer v)
 
 private theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
     (∑ a, A.effect a) = 1 := by
