@@ -247,7 +247,7 @@ private theorem mem_unitaryGroup_iff_isometry {d R : Type*} [Fintype d] [Decidab
   rw [isometry, isometry, conjTranspose_conjTranspose]
   rfl
 
-private theorem re_trace_eq_trace {n R : Type*} [Fintype n] [RCLike R]
+theorem re_trace_eq_trace {n R : Type*} [Fintype n] [RCLike R]
     {A : Matrix n n R} (hA : A.IsHermitian) : (RCLike.re A.trace : R) = A.trace := by
   rw [trace, map_sum, RCLike.ofReal_sum, IsHermitian.coe_re_diag hA]
 
