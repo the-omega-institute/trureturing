@@ -2721,6 +2721,97 @@ existing inverse, Cauchy and inertia methods, with no generic
 novelty or Lean-verification claim. Full retained and cofinal
 positivity, the original Robin tail estimate and RH remain open.
 
+### A shared-error contraction for the full rank-one sign
+
+The same OLD eighteen-coordinate core has exactly one negative
+direction. Standard bordered-matrix inertia, equivalently the
+rank-one inverse identity, reduces the coupled sign to one scalar:
+for $b=\mathcal B_V$, $s>0$ and $q=b\Sigma_*^{-1}b^*$,
+
+$$
+\Sigma_*+b^*b/s\succ0\iff s+q<0.
+$$
+
+PSD corresponds to $s+q\le0$, with one zero eigenvalue at exact
+equality. The exact updated lower-core denominator is
+$s=D_*+\Gamma$, where
+$\Gamma=\mathcal B_GP^{-1}\mathcal B_G^*\ge0$.
+An upper $\Omega\ge\Gamma$ supplies the sufficient test
+$D_*+\Omega+q<0$; failure of that test need not exclude the
+exact update. This is an application of existing block inertia
+and Woodbury algebra, not a new general theorem.
+
+Partition at the negative first pivot:
+
+$$
+\Sigma_*=\begin{pmatrix}a&r^*\\r&H\end{pmatrix},\quad
+P_+=H-rr^*/a\succ0,\quad
+T_+=\binom{-r^*/a}{I_{17}}.
+$$
+
+The accepted inertia supplies $P_+\succ0$, and
+
+$$
+q=|b_0|^2/a+(bT_+)P_+^{-1}(bT_+)^*.
+$$
+
+The scalar-defect transport gives shared information stronger
+than independent coordinate radii. For the same actual full row,
+$b=\widehat{\mathcal B}_V+f+t$ and
+
+$$
+f^*f\preceq C_f=E_e\vartheta^{-2}Z^*A_0Z,\qquad
+t^*t\preceq C_t=(1+\rho)^2E_MG_V.
+$$
+
+All-middle $A_0$, the signed far core and its entire allowance
+remain included. Under the inherited common-form/domain,
+inverse/comparison and sound-cache premises, weighted positive
+trace bounds the two transported error norms. Let
+
+$$
+n_c^2=(\widehat{\mathcal B}_VT_+)P_+^{-1}
+(\widehat{\mathcal B}_VT_+)^*,\qquad
+n_j^2=\operatorname{tr}(P_+^{-1}T_+^*C_jT_+),\quad j=f,t.
+$$
+
+Then the positive term in $q$ lies between
+$\max(0,n_c-n_f-n_t)^2$ and $(n_c+n_f+n_t)^2$.
+These are conservative simultaneous bounds; they do not assert
+joint attainment of separate error extrema.
+
+The [cached correlated-sign application](https://github.com/the-omega-institute/trureturing-experiments/tree/27a634d7fe09e9c20b28215d18e2bd6c051e71b4/docs/reports/weil-c27)
+supplies both shared Grams and uses one
+validated seventeen-dimensional FLINT solve with thirty-five
+right-hand sides. Its1024-bit consumption takes0.40 seconds.
+The resulting outer bounds are
+
+$$
+-792<q<1.043\times10^{25},\qquad
+-493<D_*+q<1.043\times10^{25}.
+$$
+
+They determine neither sign and certify no positive good-metric
+budget or exclusion of the exact lower update. Independent1536-bit
+consumption overlaps all648 Gram intervals and all four intervals
+for actual scalar quantities. Among all17 scalar exports,9 overlap
+and6 are identical; the eight disjoint exports represent different
+computed bound values. The center-energy width ratio is
+$0.999999997454$, with the same inconclusive verdict.
+
+The center-only contraction is already broad before adding the
+error radii. These data do not distinguish input uncertainty,
+conditioning, loss of joint cancellations and validated-solve
+overestimation; no condition number or spectral floor was measured.
+The missing checkpoint is a useful joint enclosure of
+$P_+x=(\widehat{\mathcal B}_VT_+)^*$ and
+$(\widehat{\mathcal B}_VT_+)x$, including its directional residual
+bound, followed by sufficiently tight error contractions. Repeating
+the same interval-box solve supplies no new source information.
+The good-block metric remains a separate obligation. Full retained
+and cofinal positivity, the Robin tail estimate and RH remain open;
+this numerical application is not Lean verification.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
