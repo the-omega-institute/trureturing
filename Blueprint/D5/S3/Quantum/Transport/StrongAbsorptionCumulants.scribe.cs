@@ -20,7 +20,9 @@ internal sealed class StrongAbsorptionCumulantsDocument : IScribeDocumentDefinit
                 DeclarationHandle.Create("D5/S3/Quantum/Transport/StrongAbsorptionCumulants.result"),
                 H("result"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Note()),
-                Blocks(Paragraph(Text("For every positive channel number and every cumulant order at least two, the normalized law has the two strong-absorption coefficients of Novaes, Eq. (58)."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("For every positive channel number and every cumulant order at least two, the normalized law has the two strong-absorption coefficients of Novaes, Eq. (58)."))), DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("novaes-2023-strong-absorption-cumulants"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula V(string name) => F.Id(name);

@@ -24,6 +24,10 @@ $$\forall M : \mathbb{N} , 1 \le M \to \forall n : \mathbb{N} , 2 \le n \to \exi
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Transport/StrongAbsorptionCumulants.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/novaes-2023-strong-absorption-cumulants` (proved) by `D5/S3/Quantum/Transport/StrongAbsorptionCumulants.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"novaes-2023-strong-absorption-cumulants","declaration_gid":"D5/S3/Quantum/Transport/StrongAbsorptionCumulants.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Novaes (2023). *Time delay statistics for chaotic cavities with absorption*. DOI: [10.1007/s10955-023-03183-7](https://doi.org/10.1007/s10955-023-03183-7). URL: <https://arxiv.org/abs/2305.18235>.
