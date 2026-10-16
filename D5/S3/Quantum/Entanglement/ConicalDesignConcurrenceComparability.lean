@@ -55,6 +55,11 @@ Utility kind is none: universal matrix identities and estimates, with no finite
 certificate, bounded enumeration, checker or numerical-reduction declaration.
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
+   D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg
+   declaration statement_id: sha256:4e1e2463b054d4f1a17a47dfa173be720d81b8370e9189ac369460319c5840c1.
+-/
+
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 
@@ -337,7 +342,7 @@ theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     (CFC.sqrt (Xᴴ * X)).trace.re
   rw [hgram, hsqrt, Matrix.trace_mul_cycle, hV, Matrix.one_mul]
 
-private theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
+theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (c : ℝ) (hc : 0 ≤ c) :
     traceNorm ((c : ℂ) • X) = c * traceNorm X := by
   have htr (U : unitaryGroup n ℂ) :

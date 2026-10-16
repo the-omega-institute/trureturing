@@ -26,6 +26,7 @@
      td_value, js_bound: bind-only; consumer=result
      result: bind-only; explicit external open-problem refutation. -/
 
+import D5.S3.Divergence.CoherenceL1RelativeEntropyBound
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
@@ -41,11 +42,8 @@ open Matrix
 open scoped ComplexOrder
 namespace D5.S3.Divergence.QuantumTriangularJensenShannonRefutation
 
-/-- A quantum state: positive semidefinite with unit trace. -/
-def IsState {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) : Prop := ρ.PosSemidef ∧ ρ.trace = 1
-/-- Base-2 von Neumann entropy `S₂(ρ) = -Tr(ρ log₂ ρ)` (with `0 log 0 = 0`). -/
-noncomputable def vonNeumann2 {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  -(Matrix.trace (cfc (fun x : ℝ => x * Real.logb 2 x) ρ)).re
+open D5.S3.Divergence.CoherenceL1RelativeEntropyBound (IsState vonNeumann2)
+
 /-- Definition 2.10 with base-2 logarithms. -/
 noncomputable def QJS2 {n : ℕ} (ρ σ : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   vonNeumann2 ((1/2 : ℂ) • (ρ + σ)) - (vonNeumann2 ρ + vonNeumann2 σ) / 2

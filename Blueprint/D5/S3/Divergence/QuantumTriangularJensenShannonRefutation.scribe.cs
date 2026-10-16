@@ -15,13 +15,6 @@ internal sealed class QuantumTriangularJensenShannonRefutationDocument : IScribe
         H("QTD squared can exceed QJS2"),
         Blocks(
             SourceQuotation(),
-            Entry("state", "IsState", "Quantum states", State(),
-                "A quantum state is a positive semidefinite complex matrix with trace one.",
-                DescribeRole.Definition, true),
-            Entry("entropy", "vonNeumann2", "Base-2 von Neumann entropy", Entropy(),
-                "The real continuous functional calculus applies x log₂ x to the Hermitian matrix. "
-                + "The negative real part of its trace is S₂, with the convention 0 log₂ 0=0.",
-                DescribeRole.Definition, true),
             Entry("jensen-shannon", "QJS2", "Quantum Jensen–Shannon divergence", JensenShannon(),
                 "Definition 2.10 with base-2 logarithms is the entropy of the average state minus the average entropy.",
                 DescribeRole.Definition, true),
@@ -34,7 +27,7 @@ internal sealed class QuantumTriangularJensenShannonRefutationDocument : IScribe
                 "For every finite dimension and every pair of quantum states, the assertion requires QTD²≤QJS₂. "
                 + "This is the lower conjunct of the proposed two-sided bound.",
                 DescribeRole.Definition, true),
-            Entry("refutation", "result", "A commuting qubit counterexample", Disp(Seq(Neg, Sp, V("claim"))),
+            Entry("refutation", "result", "A commuting qubit counterexample", Disp(Seq(Neg, Sp, Parenthesized(ClaimBody()))),
                 "Take ρ=diag(255/256,1/256) and σ=diag(1/256,255/256). Both states have strictly positive "
                 + "diagonal entries and unit trace. Their sum is the identity, so its inverse square root is the identity. "
                 + "The difference has diagonal entries 127/128 and −127/128, giving QTD=(127/128)². "
@@ -81,8 +74,6 @@ internal sealed class QuantumTriangularJensenShannonRefutationDocument : IScribe
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula And(Formula a, Formula b) =>
-        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) =>
@@ -101,12 +92,6 @@ internal sealed class QuantumTriangularJensenShannonRefutationDocument : IScribe
     private static Formula Scale(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Cdot, Sp, Parenthesized(b));
 
-    private static Formula State() => Disp(All("n", Nat, All("rho", Mat,
-        new Formula.Logic(Call("IsState", Rho), FormulaLogicOperator.Iff,
-            And(Call("PosSemidef", Rho), Eq(Call("trace", Rho), D(1)))))));
-    private static Formula Entropy() => Disp(All("n", Nat, All("rho", Mat,
-        Eq(Call("vonNeumann2", Rho), Seq(Minus, Sp, Call("re", Call("trace",
-            Call("cfc", Parenthesized(Seq(V("x"), Sp, Mapsto, Sp, Mul(V("x"), Call("logb", D(2), V("x"))))), Rho))))))));
     private static Formula JensenShannon() => Disp(Pair(Eq(Call("QJS2", Rho, Sigma),
         Sub(Call("vonNeumann2", Scale(Half(D(1)), Add(Rho, Sigma))),
             Half(Add(Call("vonNeumann2", Rho), Call("vonNeumann2", Sigma)))))));
@@ -117,7 +102,7 @@ internal sealed class QuantumTriangularJensenShannonRefutationDocument : IScribe
         return Disp(Pair(Eq(Call("QTD", Rho, Sigma), Half(Call("re", Call("trace",
             Mul(Mul(Mul(difference, inverseRoot), difference), inverseRoot)))))));
     }
-    private static Formula Claim() => Disp(new Formula.Logic(V("claim"), FormulaLogicOperator.Iff,
-        Pair(Imp(Call("IsState", Rho), Imp(Call("IsState", Sigma),
-            Le(new Formula.Power(Call("QTD", Rho, Sigma), D(2)), Call("QJS2", Rho, Sigma)))))));
+    private static Formula ClaimBody() => Pair(Imp(Call("IsState", Rho), Imp(Call("IsState", Sigma),
+        Le(new Formula.Power(Call("QTD", Rho, Sigma), D(2)), Call("QJS2", Rho, Sigma)))));
+    private static Formula Claim() => Disp(new Formula.Logic(V("claim"), FormulaLogicOperator.Iff, ClaimBody()));
 }

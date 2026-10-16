@@ -38,7 +38,7 @@ Definition 2.10 (p. 10) reads in part:
 
 QJS₂ uses the base-2 logarithm. The lower proposed inequality is false already for full-rank diagonal qubit states; the upper inequality is not addressed by this refutation.
 
-## Locator
+## Verified locator
 
 Author text: <https://arxiv.org/abs/2303.01952v5>.
 
