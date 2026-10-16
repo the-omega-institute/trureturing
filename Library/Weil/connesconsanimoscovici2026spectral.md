@@ -5156,3 +5156,145 @@ as new. All common-form/domain/inverse/legal-elimination/SAME-short,
 unitary/source/lift/comparison and sound full-far/cache premises remain
 conditions. The actual full far completion, actual retained/cofinal
 positivity, Robin tail, RH and Lean verification remain unresolved.
+
+### Retain signed source correlations in the infinite principal tail
+
+The previous fixed-charge exclusion does not cover a smaller legal,
+source-dependent fee. Estimate that fee from the SAME actual far action
+
+$$
+u_F=G_{FJ}w-G_{FE}q+H_{FE}(q-p),
+\quad E=\{1281,\ldots,2048\},\quad
+J=\{2049,\ldots,32768\}.
+$$
+
+Keep the original constant $W_F=D_{\rm far}I$ and the saved inverse
+profiles. The existing disjoint smooth kernel has principal term
+$(-1)^{m+n}/[2(m+n)]$. Write $M=32768$, $L=1281$ and combine its two
+source blocks BEFORE taking a norm:
+
+$$
+z_n=\begin{cases}-(-1)^nq_n,&n\in E,\\
+(-1)^nw_n,&n\in J.\end{cases}
+\qquad v_m=\frac{(-1)^m}{2}\sum_{n=L}^{M}\frac{z_n}{m+n}.
+$$
+
+This is a classical tail-Gram application. Partial fractions and the
+[digamma recurrence](https://dlmf.nist.gov/5.5.E2) give, for $n\ne k$,
+
+$$
+S_{nk}=\sum_{m>M}\frac1{(m+n)(m+k)}
+=\frac{H_{M+k}-H_{M+n}}{k-n}.
+$$
+
+On the diagonal the [trigamma series](https://dlmf.nist.gov/5.15.E1)
+and the integral test give $S_{nn}\le1/(M+n)$. Define
+
+$$
+h_L=0,\qquad h_{n+1}=h_n+\frac1{M+n+1},\qquad
+(Kz)_n=\sum_{k\ne n}\frac{z_k}{n-k}.
+$$
+
+Pairing the off-diagonal terms yields the directed quadratic upper
+
+$$
+Q_{\rm pad}=\sum_{n=L}^M\frac{z_n^2}{M+n}
++2\sum_{n=L}^M h_nz_n(Kz)_n
+\ \ge\ \sum_{m>M}\left(\sum_{n=L}^M\frac{z_n}{m+n}\right)^2.
+$$
+
+Only positive diagonal padding is added to the exact Gram. Thus the
+bound holds for signed real sources, with their E/J cross terms intact.
+It does not follow from an entrywise matrix upper being a Loewner upper.
+One linear Toeplitz convolution computes $Kz$ through the existing FLINT
+ball polynomial product; the kernel orientation is $1/(n-k)$.
+The saved finite $w^*Jw$ convolution is a different quadratic and is
+reused as its own result, not recomputed here.
+
+Let $R_w,R_q$ be the saved UNWEIGHTED smooth remainder norm uppers,
+already including $\gamma$, and let $H_{\rm mix}$ be the saved WEIGHTED
+bound for $H_{FE}(q-p)$. The complete actual-source estimate is
+
+$$
+N_{\rm new}=\frac{\sqrt{D_{\rm far}}}{2}
+ \sqrt{\operatorname{up}(Q_{\rm pad})}
++\sqrt{D_{\rm far}}(R_w+R_q)+H_{\rm mix},\qquad
+s=\|u_F\|_{W_F}^2\le E_{F,\rm new}:=\operatorname{up}(N_{\rm new}^2).
+$$
+
+All mixed-H and smooth remainder allowances, including the norm cross
+terms, remain paid. A negative interval lower for $Q_{\rm pad}$ causes
+no problem when its finite upper is nonnegative; a negative upper or
+nonfinite result stops the prescribed computation.
+
+Rebuild the independent charge constant with the required directions,
+
+$$
+K_{0,\rm up}=\operatorname{up}(m_J)
+-\operatorname{lo}(h)-\operatorname{lo}(E_\phi),\qquad
+D_{\rm new}=\operatorname{up}(K_{0,\rm up}+\tfrac{33}{32}E_{F,\rm new}).
+$$
+
+Then $D_{\rm new}\ge\mathcal K$ for the same actual source, and its
+strict positivity is checked before using it as a legal denominator.
+Subtracting an old far-energy UPPER from an arbitrary old charge UPPER
+would not justify this conclusion.
+
+The saved full-band Bessel projection and reflected potential remain
+unchanged. With their saved $a_1,B^2,m_{\max}$, the existing budget
+identity gives
+
+$$
+U_{F,\rm new}=E_{F,\rm new}/D_{\rm far},\quad
+p_{\rm up}=\operatorname{up}
+ (a_{1,\rm up}+2\sqrt{U_{F,\rm new}B^2_{\rm up}}
+       +m_{\max}U_{F,\rm new}),\quad
+\tau_{\rm new}=\frac{h_{\rm lower}}{h_{\rm lower}+p_{\rm up}}.
+$$
+
+This cap asserts sufficient conditional eligibility only. The prior
+full-band budget already met its conservative capacity target; no new
+determinant or capacity-sign claim is needed.
+
+The sole fixed1024-working/640-export-bit application takes0.52936
+seconds. Its directed endpoints have the following approximate values:
+
+| Quantity | Previous upper | New upper |
+|---|---:|---:|
+| Complete weighted far energy |14.1648613043077766|9.16483973939069465|
+| Positive source-valid fee |183.800677119682971|178.644404880862230|
+| Supplied sufficient parameter cap |0.0272333893565792018|0.0358711862066475850|
+
+The saved diagonal padding is approximately0.0310968581461585082,
+the signed cross contribution85.8252958041207774, and
+$Q_{\rm pad}\simeq85.8563926622669359$. The new principal weighted norm
+upper is2.54859258899100702; the retained smooth remainder contributes
+at most approximately$1.37047745623703291\cdot10^{-12}$ and the mixed-H
+norm upper remains0.478756042961116999. Their complete norm upper is
+3.02734863195349449. The rebuilt independent charge constant upper is
+169.193163899615576 and the complete reflected weighted budget upper
+is28909.5331794819506.
+
+The [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/348943da339e0eb3eaf8b6d49a67e64a24c0b439/docs/reports/weil-c27)
+pin nine accepted inputs, nine invoked source/helper files and nine
+cached producer sources. Packet SHA256 is
+`d09a5ab254d164cfd40982b31e1a155e31d6288b705d916bf248236a0d527606`.
+Only one new length31488 signed-source linear convolution and its
+quadratic reduction are performed. The original w, q and p, symbol
+remainder certificates, weighted mixed-H bound, channel subtraction,
+full-band projection and moment are reused. No old producer,
+inverse/solve, far-mode array, new potential projection, determinant,
+or parameter/source/precision scan is run.
+
+This supplies a smaller positive legal fee and a larger sufficient
+eligibility cap under the inherited actual common-form/domain,
+inverse/legal-elimination/SAME-short, unitary/source/lift/comparison
+and sound complete-far/cache premises. It does not give a negative
+FULL border margin. In particular the earlier fixed-$\overline D$
+auxiliary exclusion does not apply to this smaller fee; leaving that
+exclusion's scope is not a positivity certificate. The actual signed
+mixed far response, the relevant joint good-block inverse metric,
+actual retained/cofinal positivity, Robin tail, RH and Lean
+verification remain unresolved. The tail identity and numerical
+algorithms are classical results reused in a source-specific
+application, not new generic mathematics.
