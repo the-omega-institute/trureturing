@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6bad05ae04297902a74a67553060bed4842cca55cffffeda35015878ae60ba8c
+  normalized_sha256: sha256:6bad05ae04297902a74a67553060bed4842cca55cffffeda35015878ae60ba8c
+cas_ref: sha256:6bad05ae04297902a74a67553060bed4842cca55cffffeda35015878ae60ba8c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition of the immediately preceding Theorem 2.2, followed by a qualitative scope caveat, not an additional theorem obligation. In D5/S3/Combinatorics/Graph/LegalWords/InhomogeneousMarkovCompletion, step unfolds to the displayed transition table; the included private lemmas step_rows and step_transfer establish the stated row sums and marginal transport; chain_normalized, endpoint_canonical, completion_chain and identify_markov implement normalization, prescribed marginals, the overlapping-table quotient and uniqueness used by unique_markov_completion. The denominator sentence explains the quotient definition. The unquantified boundary caveat supplies no numerical certificate or independently posed identity and asserts no boundary extension; Interior excludes that regime. This receipt classifies proof commentary and does not assert a proved boundary theorem.
+    previous_atom_id: cfbce1b978068f50186aefe89103ba22ee78aa293215b7e387a32a0cdd604d06
+    next_atom_id: 154b6e3638e2bf1c3c57d59807c035b19bcbc6552628830d59ecf542c1b0dbc4

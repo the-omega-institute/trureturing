@@ -24,7 +24,8 @@ internal static class LeanPropositionSourceComparer
         RepositorySnapshot candidate,
         ImmutableHashSet<RepoPath> reanchoredPaths,
         FrozenStateCatalog baseState,
-        LeanAxiomReport candidateReport)
+        LeanAxiomReport candidateReport,
+        FrozenStatementWitness? oldWitness = null)
     {
         ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(candidate);
@@ -33,36 +34,44 @@ internal static class LeanPropositionSourceComparer
         ArgumentNullException.ThrowIfNull(candidateReport);
         try
         {
-            var (baseSources, candidateSources) = ParseSources(protectedBase, candidate);
-            foreach (var path in reanchoredPaths.OrderBy(
-                static path => path.Value,
-                StringComparer.Ordinal))
-            {
-                if (!baseState.Records.TryGetValue(path, out var recorded)
-                    || !candidateReport.Files.TryGetValue(path, out var current))
-                {
-                    return false;
-                }
-
-                var baseFingerprint = baseSources.ExtractPropositionSource(
-                    path,
-                    recorded.Declarations);
-                var candidateFingerprint = candidateSources.ExtractPropositionSource(
-                    path,
-                    FrozenStateRecord.Project(current));
-                if (!baseFingerprint.AsSpan().SequenceEqual(candidateFingerprint.AsSpan()))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return FindFailures(protectedBase, candidate, reanchoredPaths, baseState, candidateReport, oldWitness).IsEmpty;
         }
         catch (LeanSourceExtractionException)
         {
             return false;
         }
     }
+
+    internal static ImmutableArray<RepoPath> FindFailures(RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate, ImmutableHashSet<RepoPath> paths, FrozenStateCatalog baseState,
+        LeanAxiomReport candidateReport, FrozenStatementWitness? oldWitness = null)
+    {
+        var failures = ImmutableArray.CreateBuilder<RepoPath>();
+        var (baseSources, candidateSources) = ParseSources(protectedBase, candidate);
+        foreach (var path in paths.OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            try
+            {
+                if (!baseState.Records.TryGetValue(path, out var recorded)
+                    || !candidateReport.Files.TryGetValue(path, out var current)
+                    || !ModuleIsEquivalent(path, recorded, current, baseSources, candidateSources, oldWitness))
+                    failures.Add(path);
+            }
+            catch (LeanSourceExtractionException) { failures.Add(path); }
+        }
+        return failures.ToImmutable();
+    }
+
+    private static bool ModuleIsEquivalent(RepoPath path, FrozenStateRecord recorded, LeanFileReport current,
+        LeanSourceCatalog baseSources, LeanSourceCatalog candidateSources, FrozenStatementWitness? oldWitness)
+    {
+        if (oldWitness is not null && !recorded.Declarations.SequenceEqual(FrozenStateRecord.Project(current))
+            && LeanAuthenticatedIndexAliases.AreEquivalent(path, recorded, current, baseSources, candidateSources, oldWitness))
+            return true;
+        return baseSources.ExtractPropositionSource(path, recorded.Declarations).AsSpan()
+            .SequenceEqual(candidateSources.ExtractPropositionSource(path, FrozenStateRecord.Project(current)).AsSpan());
+    }
+
 }
 
 internal enum LeanSourceExtractionFailure { UnsupportedSyntax, IndentedDeclaration, UnresolvedPrivateOwner }
