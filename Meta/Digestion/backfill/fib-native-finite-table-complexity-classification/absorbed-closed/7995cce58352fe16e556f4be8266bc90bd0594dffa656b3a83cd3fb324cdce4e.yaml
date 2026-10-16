@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7995cce58352fe16e556f4be8266bc90bd0594dffa656b3a83cd3fb324cdce4e
+  normalized_sha256: sha256:7995cce58352fe16e556f4be8266bc90bd0594dffa656b3a83cd3fb324cdce4e
+cas_ref: sha256:7995cce58352fe16e556f4be8266bc90bd0594dffa656b3a83cd3fb324cdce4e
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.native_boolean_assignment_banks
+    target_statement_id: sha256:a3330281c84b1a26b08125c54e77a854b3aa6d4995c9560d1caacb1a4dc31a87
+receipts:
+  unresolved_subitems: []

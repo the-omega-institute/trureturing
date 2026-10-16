@@ -80,6 +80,7 @@ public sealed partial class MakeWorkflowTests
         "pr-watch",
         "gate",
         "compiled-judge-test",
+        "compiled-fib-test",
     ];
 
     private static readonly string[] ToolsTargets =
