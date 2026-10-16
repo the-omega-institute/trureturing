@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SpectralBoundaryTransfer
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SpectralBoundaryTransfer
    mirror-E: none(waiver:algebraic-spectrum-transfer)
    anchors: []
