@@ -5070,3 +5070,89 @@ All actual common-form/domain, legal elimination, SAME-short,
 unitary/source/lift, comparison and sound complete-far/cache premises
 remain conditions. No Lean result, actual retained/cofinal positivity,
 Robin-tail bound or RH conclusion is obtained.
+
+### Stop a fixed-charge old-base recipe before filling the joint metric
+
+The true old-core trial and its lower value are already cached. Apply
+the existing fixed-trial transport and bordered-inertia identities to
+that core, rather than rerunning the inconclusive transport on the
+compression UPPER $\Sigma_{\max}$. Keep the original real, unphased
+384-bit row0 source, $\rho=rV$, $\beta_J=b_JV$ and exact17-column $x$.
+The cached lower $q_{0,\mathrm{lo}}$ is a lower for this SAME trial:
+the saved positive variational lower is strictly positive, so the
+producer's `max(0,trial)` clipping was inactive.
+
+Write the TRUE old core as
+$\Sigma_0=\left(\begin{smallmatrix}a&c\\c^*&F\end{smallmatrix}\right)$,
+with $a<0$ and the saved inertia$(17+,1-)$. Choose exact rational values
+
+$$
+t_+=\frac{\tau_{\rm cap}}{h_{\rm lower}},\qquad
+\overline D=\operatorname{up}
+  (\texttt{actual.refined_common_charge_upper}).
+$$
+
+This $t_+$ is only an UPPER COMPARISON; its own eligibility is not
+asserted. Every supplied $0\le\tau\le\tau_{\rm cap}$ and actual
+$h\ge h_{\rm lower}>0$ gives $t=\tau/h\le t_+$.
+Two short contractions restore the true-core gradient and mixed scalar:
+
+$$
+g_0=\binom{(\beta_{J0}-cx)/a}{x},\quad m=\rho g_0,\quad
+\eta=1+t_+\rho_0^2/a,\quad a_+=a+t_+\rho_0^2.
+$$
+
+The fixed-trial identity on $\Sigma_0+t_+\rho^*\rho$ gives
+
+$$
+q_{\mathrm{trial},t_+}
+=q_{\mathrm{trial},0}-t_+m^2/\eta
+\ge q_{0,\mathrm{lo}}-\operatorname{up}(t_+m^2/\eta).
+$$
+
+The sole1024-working/640-export-bit application takes0.10488seconds.
+It certifies $a_+<0$ and $\eta>0$, with approximate values
+
+$$
+\begin{gathered}
+t_+\simeq2.5319197720691323970\cdot10^{-5},\qquad
+a_+\simeq-4.47097042972572520\cdot10^{-32},\qquad
+\eta\simeq0.379630426033288183,\\
+q_{0,\mathrm{lo}}\simeq-120.742434607587509,\qquad
+\operatorname{up}(t_+m^2/\eta)\simeq60.8094277285621680,\\
+q_{t_+,\mathrm{lo}}\simeq-181.551862336149677,\qquad
+\overline D\simeq183.800677119682971,\\
+\boxed{\overline D+q_{t_+,\mathrm{lo}}>2.24881478>0.}
+\end{gathered}
+$$
+
+The updated core retains17 positive directions and has a negative
+first diagonal, hence exactly one negative direction. The center
+border's first pivot is positive, and its second Schur pivot is at
+least the displayed strict margin. Thus the center border is PD.
+Adding any actual PSD $G_2$ cannot make $N_2$ indefinite. The preceding
+inertia application therefore gives one negative direction of the
+auxiliary target with ZERO projected far response, without computing
+the missing1263-good-block inverse metric. Loewner order extends this
+exclusion throughout $0\le t\le t_+$ and $D\ge\overline D$ for the
+same zero-response recipe.
+
+The [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/a6747eec1610f0d473fda635a1160ddb0d98b181/docs/reports/weil-c27)
+pin the seven cached inputs and source identities; packet SHA256 is
+`685d3535cfbc21f6ad3d03b04126d5250ff76570265fbf7f315ca741a6b45af3`.
+Only17 first-gradient and18 mixed-contraction terms are new. No
+supplier, inverse, solve, profile, old trial quadratic, Gram, source
+action, far action or parameter/precision scan is run.
+
+Consequently an explicitly enlarged energy/Gram upper-only uncertainty
+relaxation containing zero PROJECTED far response cannot certify this
+fixed-$\overline D$ recipe uniformly. That relaxed response is not an
+actual $u_F=Mw$ realization. A smaller source-dependent valid $D$, a
+signed/correlated far-charge constraint excluding this relaxed point,
+or a stronger TRUE baseline remains outside the obstruction. Merely
+tightening upper envelopes while retaining that point cannot remove it.
+The older unshifted actual-source exclusion is reused, not republished
+as new. All common-form/domain/inverse/legal-elimination/SAME-short,
+unitary/source/lift/comparison and sound full-far/cache premises remain
+conditions. The actual full far completion, actual retained/cofinal
+positivity, Robin tail, RH and Lean verification remain unresolved.
