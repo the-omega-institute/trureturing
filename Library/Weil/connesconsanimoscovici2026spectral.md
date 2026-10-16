@@ -3368,6 +3368,190 @@ new general theorem, algorithm or Lean result is supplied.
 
 
 
+### Reduce the finite source sign to one common eighteen-column inverse
+
+The same-object channel identity changes the finite source-selection
+task. This is an application of the existing finite Schur, inverse
+comparison and inertia formulas, including the classical
+[Haynsworth formula](https://doi.org/10.1016/0024-3795(68)90050-5).
+It supplies a parameter correspondence for this comparison, rather
+than a new general representer theorem or inverse algorithm.
+
+In this subsection only, let $M=M_J$, $W=W_J$,
+$U=U_{{\rm ch},J}$ and $R=R_JV$, where $V$ is the SAME exact
+eighteen-column lift. Thus $M$ is a finite30720-dimensional matrix
+and $R$ has eighteen columns. The inverse $M^{-1}$ is this finite
+matrix inverse, not the compression of an infinite inverse. Put
+$A=A_\rho$ and $\Beta=\Beta_0V$. The selected residual rows on $E$
+vanish exactly, and the cached channel projection uses the same
+middle residual. Consequently
+
+$$
+\Beta=U^*WR,\qquad
+W_c=W-WUA^{-1}U^*W,\qquad N=W_c-M^{-1}.
+$$
+
+The preceding finite block construction proves $N\succeq0$ with
+its full channel information. Indeed its block matrix
+$\mathscr T$ has Schur complement $M$ and satisfies
+
+$$
+\mathscr T\succeq T_{E\cup J}
+\succeq\operatorname{diag}(\Lambda_E,\Lambda_J)
++\binom{U_E}{U}\begin{pmatrix}U_E^*&U^*\end{pmatrix}.
+$$
+
+With $A_0=U_E^*W_EU_E+U^*WU$, inverse comparison, the $JJ$
+inverse block and the ordinary Woodbury identity give
+
+$$
+M^{-1}\preceq W-WU(I+A_0)^{-1}U^*W\preceq W_c,
+\qquad A_\rho\succeq I+A_0.
+$$
+
+The weaker statement $M\succeq W^{-1}$ alone would not justify
+subtracting the channel term. This argument retains the original
+same-channel domination; it proves semidefiniteness, without a
+strict spectral gap for $N$.
+
+For any one fixed Hermitian eighteen-dimensional coefficient
+$Q_{\rm s}$, define the finite source row map and coefficient by
+
+$$
+B=R^*(WM-I)-\Beta^*A^{-1}U^*WM=R^*NM,
+$$
+
+$$
+C=M(N+NRQ_{\rm s}R^*N)M,\qquad
+\Theta=R^*NR\succeq0.
+$$
+
+The sign and negative inertia of this entire finite source operator
+are determined by
+
+$$
+\boxed{n_-(C)=n_-(\Theta+\Theta Q_{\rm s}\Theta).}
+$$
+
+For completeness, for any source $w$ set
+$v=R^*NMw$, $a=\Theta^\dagger v$ and $e=Mw-Ra$.
+Since $\ker\Theta=\ker(N^{1/2}R)$, $v$ belongs to
+$\operatorname{ran}\Theta$ and $R^*Ne=0$. Hence
+
+$$
+w^*Cw=a^*(\Theta+\Theta Q_{\rm s}\Theta)a+e^*Ne.
+$$
+
+Conversely, taking $w=M^{-1}Ra$ realizes the first term exactly.
+The map to $a$ is injective on every negative definite source
+subspace, so this decomposition gives both inequalities for negative
+inertia. It also handles singular $N$ and $\Theta$. In particular
+$C\succeq0$ iff the small matrix is PSD, and any strict negative
+witness can be chosen in $M^{-1}\operatorname{ran}R$. This preserves
+quadratic sign and negative inertia; it neither identifies an
+Euclidean minimum eigenvector nor asserts existence of an optimizer.
+Eighteen coordinates refer to this fixed lift, not the complete
+1281-dimensional retained positivity problem.
+
+#### Keep the common far Gram before taking the inverse
+
+Let $\Sigma=\Sigma_{\max}$, $\kappa=33/32$ and let $G$ be the
+SAME signed far Gram with its complete paid allowance. For a source
+with actual finite weighted far energy, write
+
+$$
+z=W_{\rm far}^{1/2}u_{\rm far},\quad
+F_\infty=W_{\rm far}^{1/2}R_{\rm far}V,\quad
+F_\infty^*F_\infty\preceq G,
+$$
+
+$$
+k_{\rm actual}=k_J+\kappa\|z\|^2,\quad
+b_{\rm actual}=b+\kappa F_\infty^*z,\quad
+k_J=w^*MNMw,\quad b=Bw.
+$$
+
+Here $b$ and $b_{\rm actual}$ are columns. Let $a_\Sigma<0$ be
+the negative first pivot of $\Sigma$. The condition
+$a_\Sigma+\kappa G_{00}<0$ is already supplied by the accepted
+$A_{\max}=\kappa-\kappa^2G_{00}/(-a_\Sigma)>0.7772979$;
+no new scalar evaluation is needed. Thus
+$\Xi=\Sigma+\kappa G$ has seventeen positive and one negative
+eigenvalues.
+
+To retain all far covariances, augment $F_\infty$ by a factor of
+$G-F_\infty^*F_\infty$ to obtain
+$\widetilde F^*\widetilde F=G$. The negative-pivot decomposition
+of $\Sigma^{-1}$ gives
+
+$$
+I+\kappa\widetilde F\Sigma^{-1}\widetilde F^*
+\succeq\left(1-\frac{\kappa G_{00}}{-a_\Sigma}\right)I\succ0.
+$$
+
+Completing the square over the augmented far variable and using
+Woodbury therefore yields the common lower bound
+
+$$
+\boxed{
+k_{\rm actual}+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}
+\ge k_J+b^*\Xi^{-1}b.}
+$$
+
+The minimization enlarges the possible far responses. Its minimizer
+need not come from an actual source. This construction uses the
+exact inverse of $\Xi$; it is distinct from both the archived fixed
+trials and the calibrated fixed-linear trial rule.
+
+For $Q_{\rm s}=\Xi^{-1}$, set $S=N^{1/2}R$. The two Schur
+complements of
+$\left(\begin{smallmatrix}I&S\\S^*&-\Xi\end{smallmatrix}\right)$
+and the positive identity on $\ker N$ give
+
+$$
+\boxed{n_-(C_{\rm sharp})=n_+(\Xi+\Theta)-17.}
+$$
+
+Thus this lower source operator has a negative direction exactly
+when $\Xi+\Theta\succ0$. A strictly negative quadratic value for
+$\Xi+\Theta$ instead excludes negative directions of
+$C_{\rm sharp}$. Exact zero thresholds still require their own
+analysis; absence of a strict negative source is not by itself an
+exclusion of every semidefinite endpoint update.
+
+#### The missing numerical interface is a common inverse Gram
+
+The finite task is $MX=R$ and the joint eighteen-dimensional Gram
+$\Theta=R^*W_cR-R^*M^{-1}R$. For an exact rational trial matrix
+$X_0$, put $E_0=R-MX_0$ and
+$L_X=R^*X_0+X_0^*R-X_0^*MX_0$. The existing inverse-residual
+certificate gives
+
+$$
+R^*W_cR-L_X-E_0^*WE_0
+\preceq\Theta\preceq R^*W_cR-L_X.
+$$
+
+It requires the entire common residual Gram, including every cross
+term. The old two sources and the original scalar inverse optimum
+do not supply it. The saved lift/channel/far packets also do not
+archive $R^*WR$ on this lift. These interfaces remain missing;
+no block solve or numerical sign for $\Xi+\Theta$ is supplied here.
+The threshold does not require computing $\Xi^{-1}$ explicitly.
+The dependence on $\Theta$ is Loewner monotone, whereas $\Theta+\Theta Q_{\rm s}\Theta$ is generally not.
+
+Even a certified negative $C_{\rm sharp}$ would only identify a
+direction for further actual certification. A sufficient full update
+still needs an upper bound for the SAME source on
+$d+\Gamma+b_{\rm lift}^*\Sigma_L^{-1}b_{\rm lift}<0$, including
+the good-block inverse cost $\Gamma$, actual far cost and actual
+Schur complement $\Sigma_L$. The exclusion upper compression
+$\Sigma_{\max}$ cannot substitute for $\Sigma_L$ there. The
+inherited common-form/domain and inverse/comparison premises remain.
+No accepted calculation is repeated, and no actual retained/cofinal
+positivity, Robin-tail, RH, generic novelty or Lean result is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
