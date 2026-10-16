@@ -18,7 +18,19 @@ Lean statement: `D5/S3/Arith/Robin/LogLogHigherDerivative.positiveKernel`
 
 For natural m,a,b, define K(0,a,b;x)=x^(-(a+1))*(log(x))^(-(b+1)). Recursively, K(m+1,a,b;x)=(a+1)*K(m,a+1,b;x) +(b+1)*K(m,a+1,b+1;x). Every coefficient and base factor is positive on x>1. Induction also proves d K(m,a,b;x)/dx=-K(m+1,a,b;x).
 
-**Theorem 1.2 (The exact all-order sign).**
+**Theorem 1.2 (Strict positivity of the recursive kernel).**
+
+Lean statement: `D5/S3/Arith/Robin/LogLogHigherDerivative.positiveKernel_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/LogLogHigherDerivative.positiveKernel_pos` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural m,a,b and every real x>1, K(m,a,b;x)>0. The base inverse powers are positive; each recursion step is a sum of two positive multiples. At m=1 and a=b=0 the kernel equals (log(x)+1)/(x^2*log(x)^2), the activation density used by the mixed arithmetic response.
+
+**Theorem 1.3 (The exact all-order sign).**
 
 $$\forall m \in \mathbb{N}, x \in \mathbb{R},\; 1 < x \Rightarrow 0 < (-1)^{m} \cdot \operatorname{iteratedDeriv}\left(m + 1, (y \mapsto \operatorname{log}\left(\operatorname{log}\left(y\right)\right)), x\right)$$
 
@@ -35,4 +47,5 @@ To infer alternating mixed corner responses of actual integer menus, one still n
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/LogLogHigherDerivative.positiveKernel`
+- Truth anchor: `D5/S3/Arith/Robin/LogLogHigherDerivative.positiveKernel_pos`
 - Truth anchor: `D5/S3/Arith/Robin/LogLogHigherDerivative.signed_iteratedDeriv_logLog_pos`
