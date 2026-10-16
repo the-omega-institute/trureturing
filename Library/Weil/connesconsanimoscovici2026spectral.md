@@ -6720,3 +6720,187 @@ domain, source/short/lift, weight, homogeneous-cap and component
 premises remain conditions; actual-center/full-border signs,
 good-block payment, retained/cofinal positivity, Robin and RH are
 unresolved.
+
+### Couple the saved signed response through the single negative direction
+
+The independent derivative and self-term caps do not preserve all relations
+already present in the saved signed response. Reuse the classical
+negative-index-one Schur estimate on the SAME reference row instead.
+Keep the actual source, old core, lift, rows, reference inverse and signed
+response fixed. Set
+
+$$
+P=TRT^*\succeq0,\quad Q_R=P-\frac{e_0e_0^*}{\delta},\quad
+\varepsilon=\frac{\eta}{1+\eta},\quad
+Q_\varepsilon=(1-\varepsilon)P-\frac{e_0e_0^*}{\delta}
+\preceq Q_{\rm true}.
+$$
+
+Here the chosen $\eta$ is the already certified upper bound. The inverse
+comparison and common-form/domain interfaces remain hypotheses. For
+$y_0=\alpha_0\rho+\beta_J$, use the saved full intervals for
+
+$$
+q_0=\frac{\alpha_0^2}{t_{\rm old}}+D_{\rm old}+y_0Q_Ry_0^*,\quad
+r_0=y_0Py_0^*,\quad r_\rho=\rho P\rho^*,\quad
+\vartheta_0=fQ_Ry_0^*,\quad
+d_0=h_{11,\rm old}\alpha_0+h_{12,\rm old}.
+$$
+
+In particular $d_0=\alpha_0/t_{\rm old}+\rho Q_Ry_0^*$. The three
+joint quantities needed below obey
+
+$$
+\begin{aligned}
+b&=-y_0Q_\varepsilon y_0^*
+=D_{\rm old}+\alpha_0^2/t_{\rm old}-q_0+\varepsilon r_0,\\
+g&=\rho Q_\varepsilon y_0^*
+=d_0-\alpha_0/t_{\rm old}-\varepsilon\rho Py_0^*,\\
+c&=(\beta_J+f)Q_\varepsilon y_0^*
+=q_0-D_{\rm old}+\vartheta_0-\alpha_0d_0
+-\varepsilon(\beta_J+f)Py_0^*.
+\end{aligned}
+$$
+
+These identities retain the cancellations before interval enclosure. A
+lower bound on $b$ uses the upper endpoint of $q_0$; its previously
+available lower endpoint alone would not suffice. Freeze the far-row
+seminorm bound at the accepted new energy UPPER,
+
+$$
+fPf^*\le A_*,\qquad A_*=A_{\rm new,up}.
+$$
+
+With $R_*=\sqrt{r_{\rho,\rm up}r_{0,\rm up}}$, outward bounds are
+
+$$
+\begin{aligned}
+0<B&\le b,\\
+G&\ge|d_0-\alpha_0/t_{\rm old}|+\varepsilon R_*,\\
+M&\ge|q_0-D_{\rm old}+\vartheta_0-\alpha_0d_0|\\
+ &\quad+\varepsilon\left(r_{0,\rm up}+|\alpha_0|R_*
+ +\sqrt{A_*r_{0,\rm up}}\right).
+\end{aligned}
+$$
+
+$Q_\varepsilon$ has at most one negative direction. When $b>0$, its
+orthogonal complement to $y_0$ is nonnegative; completing along $y_0$
+gives $xQ_\varepsilon x^*\ge-|xQ_\varepsilon y_0^*|^2/b$. This standard
+inertia/Schur argument also allows a singular positive part $P$.
+Consequently the SAME paid comparison satisfies, for every real $\alpha$,
+
+$$
+\mathcal E_{D,k}(\alpha)
+=k\alpha^2+D+(\alpha\rho+\beta_J+f)Q_{\rm true}
+ (\alpha\rho+\beta_J+f)^*
+\ge k\alpha^2+D-\frac{(G|\alpha|+M)^2}{B}.
+$$
+
+If $L=Bk-G^2>0$, ordinary square completion gives
+
+$$
+\mathcal E_{D,k}(\alpha)\ge D-\frac{kM^2}{Bk-G^2}.
+$$
+
+A positive floor excludes a negative value of this paid comparison for
+all real steering coefficients, including any legal subset. It is not
+a lower bound for a center whose actual charge is smaller than $D$.
+A nonpositive floor or denominator supplies no sign conclusion.
+
+#### Cover the fixed source-energy-only pricing rule
+
+The saved signed Hankel cross lower can supply an actual energy lower
+without a new Hankel calculation. The exact omitted principal diagonal
+is nonnegative, and its weighted normalization is $w_F/4$. Thus
+
+$$
+E_{\rm true}=\|u_F\|_{W_F}^2\ge E_H
+=\left[\sqrt{\max\{w_F\operatorname{cross}_{\rm lo}/4,0\}}
+-\epsilon_{\rm sm,up}-H_{\rm new,up}\right]_+^2.
+$$
+
+The right side is rounded downward. Its principal, smooth and mixed terms
+must use the same source and weighted norm. $E_H$ remains a LOWER bound;
+it never replaces the fixed far-row UPPER $A_*$ in $G,M$.
+
+Fix the independent charge upper, original Bessel coefficients and $h$
+endpoints. For an energy-upper parameter $E\ge E_{\rm true}$, the pricing
+rule is
+
+$$
+D(E)=K_{\rm const,up}+\kappa E,\qquad
+k(E)=h_{\rm hi}\left(1+\frac{p_{\rm up}(E)}{h_{\rm lo}}\right),
+$$
+
+where $p_{\rm up}$ is the upward-rounded original complete budget
+$a_{1,\rm up}+2\sqrt{(E/w_F)b_{2,\rm up}}+m_{\max}E/w_F$.
+Both functions are nondecreasing. Evaluate the unrounded budget at $E_H$
+and round the resulting reciprocal coefficient DOWN to $k_{\min}$;
+then $k(E)\ge k_{\min}$. Also set
+$D_{\min}=K_{\rm const,up}+\kappa E_H$.
+
+For $Bk-G^2>0$, $k/(Bk-G^2)$ is nonincreasing in $k$. Hence
+
+$$
+Bk_{\min}-G^2>0,\qquad
+D_{\min}-\frac{k_{\min}M^2}{Bk_{\min}-G^2}>0
+$$
+
+would exclude all real-$\alpha$ comparisons obtained only by further
+improving the source-energy cap in this fixed pricing rule. This family
+keeps the actual far row and $A_*$ fixed; it does not cover better
+independent charge terms, different Bessel estimates, sources or lifts.
+The formal lower endpoint need not itself be a legal source energy cap.
+
+This is a saved-data application of classical matrix inertia, Schur
+complements, seminorm Cauchy bounds, reverse triangle inequality and
+scalar square completion. It introduces no new generic theorem,
+algorithm, literature novelty or Lean proof. The actual-center sign,
+good-block payment, full-border/cofinal positivity, Robin and RH remain
+unresolved under the inherited premises.
+
+The single fixed1024-working/640-export application uses no new matrix,
+norm, source, feature, derivative, signed-response, inverse, trace or
+tail supplier. Its64 source/input bindings agree at entry and prewrite;
+18 scalar intervals and14 exact rationals are retained. Stored assembly
+time is0.15059seconds; total time including serialization is0.18470seconds.
+
+| Bound or comparison | Directed value |
+|---|---:|
+| Timelike lower $B$ |>200.284690047319663558|
+| Pairing upper $G$ |<1139.054295521911259039|
+| Pairing upper $M$ |<161.346407789081724764|
+| Source-energy lower $E_H$ |>6.227486948459329823|
+| Fixed repriced rank denominator |>3787475.149285169293|
+| Fixed repriced all-real floor |>1.667100663167811801|
+| Energy-endpoint rank denominator |>3579664.592067604194|
+| Energy-endpoint all-real floor |>-1.473501281813134057|
+
+The current repriced fee/coefficient comparison is therefore strictly
+positive for EVERY real steering coefficient under its inherited
+interfaces. Computing a favorable derivative cannot make that specified
+paid comparison negative. This strengthens the preceding independent-cap
+test, whose negative lower floor left the same family unexcluded.
+It still supplies no lower bound for an actual smaller-fee center.
+
+The energy endpoint has a positive rank denominator, but its saved floor
+is negative. The sufficient endpoint test therefore does NOT exclude the
+whole fixed-budget energy-cap-only family. That negative lower bound is
+neither a realizable negative value nor a negative upper. The accepted
+actual energy now lies between the certified lower6.227486948459329823
+and upper6.766398882441490; a sharper SAME-source energy enclosure or a
+change to another charge/budget component can escape the scope of the
+fixed-recipe exclusion. No such escape or successful negative recipe is
+certified here. In particular independent triangle bounds do not supply
+the signed principal/mixed correlation needed to sharpen that enclosure.
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/27f0bf5ec9560f7d34aab6eabddc598644a97dd8/docs/reports/weil-c27)
+retain packet SHA256
+`a7df6338b629e9dd791ac2914c8efc7f3ef3c69c20e562da0aa18067aa40728d`
+and source SHA256
+`9c84ee8891ccc7d9af9aeaa79b162e3c0854bf714badd9366607890aa8e345c3`.
+The exact packet endpoints and rational comparisons are authoritative.
+The two scalar applications use one common realization and frozen far-row
+upper; they are not a parameter scan. The actual good-block metric,
+full-border/cofinal positivity, Robin and RH remain unresolved. No Lean
+verification or new generic theorem is claimed.
