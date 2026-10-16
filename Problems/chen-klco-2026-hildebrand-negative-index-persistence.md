@@ -102,14 +102,14 @@ Every other public declaration is a definition used by a public statement. The b
 
 **Computed, not formalized** (orchestrator, exact rational arithmetic and NumPy, recorded in #17687):
 - charpoly(M) = (t − 7)(t³ + 3t² − 117t − 103), so L has exactly two negative and two positive eigenvalues (−0.3756, −0.0271, 0.2188, 0.3090).
-- Σ± has 10 pairs at d = 4 and at least 114 at d = 5.
+- Random strictly decreasing x induce 10 distinct pairs of Σ± at d = 4 and 114 at d = 5. Product ties give further pairs (for example two more at d = 4 from x = (8, 4, 2, 1)), so these counts are lower bounds.
 - Over random ordered spectra, the largest number of negative eigenvalues found is 1 at d = 3 (in accordance with Theorem II.2), 2 at d = 4 and 3 at d = 5.
 
 **Argued, not formalized.**
 - *Every d ≥ 4.* Take x = (8, 5, 3, 1, ε₅, …, ε_d) with 1/8 > ε₅ > … > ε_d > 0. Every product with an index above 4 is below x₄² = 1, so σ₊ ranks the ten pairs of the leading 4 × 4 block first in the order above, and σ₋ ranks its six strict pairs first. With λ = (13, 13, 13, 13, 1, …, 1)/(d² + 48), the leading 4 × 4 block of L is 2M/(d² + 48). Compressing by B on the first four coordinates again gives two negative eigenvalues. So the property fails for every d ≥ 4.
-- *Mechanism.* Write L = D^{1/2}(I − C)D^{1/2} with D the diagonal of L, as in the source's Appendix A.
-  - At d = 3, C is a traceless nonnegative 3 × 3 matrix with det C ≥ 0, so at most one of its eigenvalues exceeds 1.
-  - At d = 4 the witness has D = (1/32)I and C = I − M, whose negative couplings on (1,2), (1,3), (2,3) form a triangle, with a fourth on (1,4). Its eigenvalues are 13.02, 1.87, −6 and −8.89. Two of them exceed 1, which gives the two negative eigenvalues of L.
+- *Mechanism.* When the diagonal D of L is positive (the source's "Rank 9 (Alternative)" argument in Appendix A), write L = D^{1/2}(I − C)D^{1/2}; then L and I − C have the same number of negative eigenvalues.
+  - At d = 3, C is then a traceless nonnegative 3 × 3 matrix with det C ≥ 0, so at most one of its eigenvalues exceeds 1.
+  - At d = 4 the witness has D = (1/32)I and C = I − M. The off-diagonal entries of C are 6 on (1,2), (1,3) and (2,3), which form a triangle, and on (1,4), and 0 on (2,4) and (3,4). Its eigenvalues are 13.02, 1.87, −6 and −8.89. Two of them exceed 1, which gives the two negative eigenvalues of L.
 
 **Open.**
 - The largest number of negative eigenvalues of a Hildebrand matrix as a function of d. The sampled values 1, 2, 3 for d = 3, 4, 5 are consistent with d − 2.
