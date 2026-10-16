@@ -54,7 +54,7 @@ def claim : Prop := ∀ θ : ℝ, θ ∈ Set.Icc 0 (Real.pi / 2) →
   C 0 θ + C 1 θ + C 2 θ - C 3 θ - C 4 θ - C 5 θ = X3 θ ∧
   ∑ i, C i θ = gamma • 1
 
-private theorem posSemidef_of_trace_det (u v w : ℝ)
+theorem posSemidef_of_trace_det (u v w : ℝ)
     (ht : 0 < u + w) (hd : 0 ≤ u * w - v ^ 2) :
     ((!![u, v; v, w]).map (↑) : Matrix (Fin 2) (Fin 2) ℂ).PosSemidef := by
   have hu : 0 ≤ u := by

@@ -500,7 +500,7 @@ def fullIndex : (depth : Nat) → (a : Address) → a.length = depth → Frontie
   | depth + 1, false :: rest, h => .inl (fullIndex depth rest (Nat.succ.inj h))
   | depth + 1, true :: rest, h => .inr (fullIndex depth rest (Nat.succ.inj h))
 
-private theorem full_index_address (depth : Nat) (a : Address) (h : a.length = depth) :
+theorem full_index_address (depth : Nat) (a : Address) (h : a.length = depth) :
     frontierAddress (fullPattern depth) (fullIndex depth a h) = a := by
   induction depth generalizing a with
   | zero => cases a with

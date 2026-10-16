@@ -111,7 +111,7 @@ private lemma trace_sub_mul_centered_effect (rho sigma effect : Matrix d d ℂ)
     rw [Matrix.trace_sub, htraceRho, htraceSigma, sub_self]
   simp [hzero]
 
-private lemma centered_effect_mem (effect : Matrix d d ℂ)
+lemma centered_effect_mem (effect : Matrix d d ℂ)
     (hEffect : effect.IsHermitian) :
     centeredEffect effect ∈ HermitianTraceZero (d := d) := by
   refine ⟨hEffect.sub ?_, ?_⟩

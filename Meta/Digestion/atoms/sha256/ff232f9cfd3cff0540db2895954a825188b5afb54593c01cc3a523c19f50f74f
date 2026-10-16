@@ -1,0 +1,17 @@
+**Definition 4.1 (separating chain states at depth fifteen).** Let $Z=\{0,\ldots,15\}$ and let $\mathcal J$ be its four-element subsets. For $Q=\{z_0<z_1<z_2<z_3\}$ define $f_Q(z_i)=i$ and $f_Q(z)=0$ outside $Q$. There are $\binom{16}{4}=1820$ such functions. Their joint vector separates $Z$, since a set $Q$ containing any two different indices assigns them different colors.
+
+Use a perfect ordered scaffold of height $11$ with its $2048$ length-$11$ slots. Assign distinct slots $a_Q$ to the functions, four other slots to the binary digits of $z$, and one marker slot. Other slots are alpha. Put
+
+$$
+T_0=\alpha,\qquad T_{h+1}=\langle T_h,\alpha\rangle\quad(0\le h\le2).
+$$
+
+In $x_z$ place $T_{f_Q(z)}$ at $a_Q$, alpha/beta according to the four digits at the digit slots, and alpha at the marker. Set
+
+$$
+F=\{x_z:z\in Z\},\qquad
+\mu_0(x_z)=1/16,\qquad \mu_0(x)=0\quad(x\notin F).
+$$
+
+Every tree of height at most $d-1$ belongs to $S_d$, by induction in its defining recursion. The $x_z$ have height at most $14$ and therefore belong to $S_{15}$; their digits make them distinct. Each target $q_Q=a_QLLL$ has length $14$ and lies in $W_{15}$.
+

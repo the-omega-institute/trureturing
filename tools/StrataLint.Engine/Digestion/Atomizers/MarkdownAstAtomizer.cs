@@ -11,9 +11,8 @@ internal static class MarkdownAstAtomizer
 
     /// <summary>
     /// <paramref name="parse"/> selects the block AST. It defaults to the line scanner
-    /// because the registered dialects' receipts are content-addressed over the boundaries
-    /// that scanner produces; only the default atomizer, which has no receipts to preserve,
-    /// passes a different one.
+    /// for dialect-specific source recognition. The generic path passes the AST that
+    /// retains governed structures. Historical children are owned by stored CAS plans.
     /// </summary>
     internal static AtomizedTheoryDocument Atomize(
         ReadOnlySpan<byte> bytes,
@@ -175,7 +174,7 @@ internal static class MarkdownAstAtomizer
         {
             // A scoped claim owns its internal tables and following prose. Keep those rows
             // inside its byte span rather than emitting overlapping row atoms. Outside a
-            // scoped claim, rows remain independent claims with their original boundaries.
+            // scoped claim, the selected parser determines table ownership.
             var claimSpans = candidates.Where(static candidate =>
                 candidate.IsClaim && !candidate.IsTableRow).ToArray();
             candidates.RemoveAll(candidate =>

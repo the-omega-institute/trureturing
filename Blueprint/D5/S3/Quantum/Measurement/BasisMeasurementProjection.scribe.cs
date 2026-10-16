@@ -11,6 +11,16 @@ internal sealed class BasisMeasurementProjectionDocument : IScribeDocumentDefini
         H("Basis-Measurement Projection"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("basis-measurement-equals-its-projector-coordinate-sum"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Measurement/BasisMeasurementProjection.basis_measurement_eq_projector_sum"),
+                H("Basis measurement is the sum of its trace coordinates"),
+                StatementSource.FromAuthor(ProjectorSumFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A rank-one context B consists of d Hermitian idempotents P_j with trace one, sum equal to the identity, and P_j X P_j = trace(P_j X) times P_j for every matrix X. HermitianSpace(d) is the real space of matrices equal to their conjugate transpose. The vector basisProjector(B,j) is P_j in this space, and basisMeasurement(B,A) has underlying matrix the sum of P_j A P_j. For Hermitian A each trace coordinate is real, so the compression sum is exactly the displayed real linear combination. The conclusion includes dimension zero and requires no NeZero instance."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("basis-projector-has-the-context-projector-as-its-matrix"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Measurement/BasisMeasurementProjection.basisProjector_val"),
@@ -109,6 +119,22 @@ internal sealed class BasisMeasurementProjectionDocument : IScribeDocumentDefini
                             + "preimage, ruling out the weaker conclusion of mere containment in "
                             + "the diagonal trace-zero subspace."))),
                 DescribeRole.Lemma))));
+
+    private static Formula Parenthesized(Formula value) => Seq(F.Open, value, F.Close);
+    private static Formula SumAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+
+    private static Formula ProjectorSumFormula()
+    {
+        var d = F.Id("d"); var b = F.Id("B"); var a = F.Id("A"); var j = F.Id("j");
+        var matrix = Seq(Parenthesized(a), Dot, D(1));
+        var coordinate = Call("re", Call("trace", Multiply(Call("projector", b, j), matrix)));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(j, Colon, Sp, Call("Fin", d))), Sp,
+            Call("smul", coordinate, Call("basisProjector", b, j)));
+        return Disp(SumAll("d", Seq(Mathbb, Grp(F.Id("N"))),
+            SumAll("B", Call("RankOneContext", d), SumAll("A", Call("HermitianSpace", d),
+                Equal(Call("basisMeasurement", b, a), sum)))));
+    }
 
     private static Formula BasisProjectorValueFormula()
     {

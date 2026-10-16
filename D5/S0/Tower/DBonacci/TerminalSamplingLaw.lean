@@ -382,7 +382,7 @@ theorem terminal_sampling_uniform_law (maxTrue : ℕ) :
       apply Measure.ext_of_singleton
       intro w
       rw [Measure.infinitePi_singleton_of_fintype]
-      simp [fairBit, Nat.cast_pow, ← ENNReal.inv_pow]
+      simp [fairBit, uniformPmf, Nat.cast_pow, ← ENNReal.inv_pow]
     have layerMass : (Measure.infinitePi (fun _ : Fin h => fairBit))
         {w | runAdmissible maxTrue fuel h w = true} =
           (completionCount maxTrue fuel h : ℝ≥0∞) / (2 ^ h : ℝ≥0∞) := by

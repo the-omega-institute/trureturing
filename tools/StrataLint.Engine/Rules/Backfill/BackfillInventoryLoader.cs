@@ -610,7 +610,8 @@ internal static partial class BackfillInventoryLoader
                 fields["atomizer"].Single(),
                 fields.GetValueOrDefault("acknowledged_stale", []).ToImmutableArray(),
                 metadataParse.GenreRegistryProjection,
-                entries.ToImmutable());
+                entries.ToImmutable(),
+                ParseDefaultDispatch(fields));
             sources.Add(parsedSource);
         }
 

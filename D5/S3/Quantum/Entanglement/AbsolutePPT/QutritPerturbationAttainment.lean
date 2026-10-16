@@ -14,9 +14,12 @@ admission_basis: escape-witness
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose
   statement_id: sha256:2373e14505428583f492752adc05d104ae8b1567265ff8182e03646de824c089
-Information-escape registration is paused under CLAUDE.md section 3.9.
+The newly exposed helper declarations require the current section 3.9 audit;
+unfinished registration is tracked with the quadbit-sector target in issue #17689.
 
 transpose_cp_identity; proof_shape: bind-only; escape_witness: none; consumer: projector_attainment, pure_attainment
+conjugate_outer, unitary_vector_norm, pure_outer_square; proof_shape: bind-only;
+  escape_witness: none; consumer: pure_attainment, QuadbitMaximumPurity.result
 -/
 
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
@@ -78,6 +81,24 @@ private theorem transpose_cp_identity {B : Type} [Fintype B] [DecidableEq B] (M 
   all_goals try simp_all
   all_goals ring
 
+theorem conjugate_outer {I : Type} [Fintype I] (A : Matrix I I ℂ) (v : I → ℂ) :
+    A * vecMulVec v (star v) * Aᴴ = vecMulVec (A *ᵥ v) (star (A *ᵥ v)) := by
+  rw [mul_vecMulVec, vecMulVec_mul]
+  simp [Matrix.vecMul_conjTranspose]
+
+theorem unitary_vector_norm {I : Type} [Fintype I] [DecidableEq I]
+    (U : unitaryGroup I ℂ) (v : I → ℂ) (hv : star v ⬝ᵥ v=1) :
+    star ((U : Matrix I I ℂ) *ᵥ v) ⬝ᵥ ((U : Matrix I I ℂ) *ᵥ v)=1 := by
+  have hu : (U : Matrix I I ℂ)ᴴ * (U : Matrix I I ℂ)=1 := by
+    simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self U
+  rw [Matrix.star_mulVec, dotProduct_mulVec, vecMul_vecMul, hu, vecMul_one]
+  exact hv
+
+theorem pure_outer_square {I : Type} [Fintype I] (v : I → ℂ) (hv : star v ⬝ᵥ v=1) :
+    vecMulVec v (star v) * vecMulVec v (star v)=vecMulVec v (star v) := by
+  rw [vecMulVec_mul_vecMulVec, hv]
+  simp
+
 theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
     (hv : ∑ ij, star (v ij)*v ij=1) :
     APPT (rhoPure n v) ∧ (rhoPure n v).PosSemidef ∧ (rhoPure n v).trace=1 ∧
@@ -124,11 +145,6 @@ theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
       (i : Fin 3) (j : B) :
       ((Matrix.kronecker F (1 : Matrix B B ℂ)) *ᵥ v) (i,j) = ∑ a, F i a * v (a,j) := by
     simp [Matrix.mulVec, dotProduct, Matrix.kronecker_apply, Matrix.one_apply, mul_ite, mul_one, mul_zero, Fintype.sum_prod_type, ite_mul]
-
-  have conjugate_outer {I : Type} [Fintype I] (A : Matrix I I ℂ) (v : I → ℂ) :
-      A * vecMulVec v (star v) * Aᴴ = vecMulVec (A *ᵥ v) (star (A *ᵥ v)) := by
-    rw [mul_vecMulVec, vecMulVec_mul]
-    simp [Matrix.vecMul_conjTranspose]
 
   have anti_outer_identity {B : Type} [Fintype B] [DecidableEq B] (v : Fin 3 × B → ℂ) :
       antiColumns v * (antiColumns v)ᴴ =
@@ -188,14 +204,6 @@ theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
     rw [Matrix.mul_smul, Matrix.smul_mul, pt_smul]
     exact hp
 
-  have unitary_vector_norm {I : Type} [Fintype I] [DecidableEq I]
-      (U : unitaryGroup I ℂ) (v : I → ℂ) (hv : star v ⬝ᵥ v=1) :
-      star ((U : Matrix I I ℂ) *ᵥ v) ⬝ᵥ ((U : Matrix I I ℂ) *ᵥ v)=1 := by
-    have hu : (U : Matrix I I ℂ)ᴴ * (U : Matrix I I ℂ)=1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using Unitary.coe_star_mul_self U
-    rw [Matrix.star_mulVec, dotProduct_mulVec, vecMul_vecMul, hu, vecMul_one]
-    exact hv
-
   have pure_numerator_appt {B : Type} [Fintype B] [DecidableEq B]
       (v : Fin 3 × B → ℂ) (hv : ∑ ij, star (v ij)*v ij=1) :
       APPT (1+(2 : ℂ) • vecMulVec v (star v)) := by
@@ -206,11 +214,6 @@ theorem pure_attainment (n : ℕ) (v : Fin 3 × Fin n → ℂ)
     have h := pure_lower_bound ((U : Matrix (Fin 3 × B) (Fin 3 × B) ℂ)*ᵥ v) hv'
     simpa only [mul_add, add_mul, Matrix.mul_smul, Matrix.smul_mul, mul_one, hu,
       conjugate_outer, pt_add, pt_smul, pt_one] using h
-
-  have pure_outer_square {I : Type} [Fintype I] (v : I → ℂ) (hv : star v ⬝ᵥ v=1) :
-      vecMulVec v (star v) * vecMulVec v (star v)=vecMulVec v (star v) := by
-    rw [vecMulVec_mul_vecMulVec, hv]
-    simp
 
   have hd : 0 < 3*(n : ℝ)+2 := by positivity
   have hs : 0 ≤ (1/(3*(n : ℝ)+2) : ℝ) := by positivity

@@ -57,7 +57,7 @@ proof_shape: blk: bind-only; escape_witness: none
   consumers (blk): blk_psd, blk_mul, blk_trace, blk_three, sandwich_blocks, input_entropy_eq
 proof_shape: unit_psd: bind-only; escape_witness: none
   Direct frozen dependencies (unit_psd): none
-  consumers (unit_psd): blk_psd
+  consumers (unit_psd): blk_psd, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitPreimage.pure_preimage, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitNoGo.forced_witness_output, D5.S3.QuantumChannels.ChannelTimeReversalNoGo.QubitNoGo.inverse_unitary_no_go
 proof_shape: blk_psd: bind-only; escape_witness: none
   Direct frozen dependencies (blk_psd): none
   consumers (blk_psd): input_entropy_eq
@@ -282,7 +282,7 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 private def blk (A B : Matrix n n ℂ) : Matrix (Fin 2 × n) (Fin 2 × n) ℂ :=
   single 0 0 1 ⊗ₖ A + single 1 1 1 ⊗ₖ B
 
-private lemma unit_psd (i : Fin 2) : (single i i (1 : ℂ)).PosSemidef := by
+lemma unit_psd (i : Fin 2) : (single i i (1 : ℂ)).PosSemidef := by
   have h : (diagonal (fun j : Fin 2 => if j = i then (1 : ℂ) else 0)).PosSemidef :=
     Matrix.PosSemidef.diagonal (fun j => by split <;> norm_num)
   convert h using 1
@@ -816,6 +816,4 @@ theorem result : claim := by
 end
 end
 
-#print axioms result
-#print claim
 end D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree

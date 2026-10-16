@@ -500,7 +500,7 @@ private lemma base_adj_values {i j : Fin (m + 3)} :
       simp only [sub_self, Fin.val_zero]
       omega
 
-private lemma cycle_distance (m : ℕ) :
+lemma cycle_distance (m : ℕ) :
     ∀ i j : Fin (m + 3), (cycleGraph (m + 3)).dist i j =
       WellCoveredPowerCliqueProduct.cycleMetric (m + 3) i j := by
   apply (WellCoveredPowerCliqueProduct.distance_certificate
@@ -581,11 +581,6 @@ private lemma base_diameter (m : ℕ) : (cycleGraph (m + 3)).diam = (m + 3) / 2 
 theorem diameter (M : Matchings m t) : (graph M).diam = (m + 3) / 2 + 1 := by
   rw [diameter_shift, base_diameter]
 
-#print axioms distance_bounds
-#print axioms maximal_projection
-#print axioms maximal_lift
-#print axioms spectrum_power
-#print axioms diameter
 
 end
 end MatchingCliqueCycle

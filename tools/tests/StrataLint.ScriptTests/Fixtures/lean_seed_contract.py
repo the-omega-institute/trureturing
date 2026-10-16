@@ -280,17 +280,13 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
 
+def _all_test_cases():
+    return unittest.defaultTestLoader.loadTestsFromTestCase(TransportTests)
+
+
 if __name__ == "__main__":
-    if len(sys.argv) == 3 and sys.argv[1] == "--partition":
-        partition = sys.argv[2]
-        if partition not in ("explicit", "transport"):
-            raise SystemExit("unknown Release test partition: " + partition)
-        loader = unittest.TestLoader()
-        explicit = {name for name in ReleaseVerificationCases.__dict__ if name.startswith("test_")}
-        names = [name for name in loader.getTestCaseNames(TransportTests)
-                 if (name in explicit) == (partition == "explicit")]
-        if not names:
-            raise SystemExit("empty Release test partition")
-        result = unittest.TextTestRunner().run(unittest.TestSuite(TransportTests(name) for name in names))
-        raise SystemExit(0 if result.wasSuccessful() else 1)
+    if len(sys.argv) == 2 and sys.argv[1] == "--list":
+        for case in _all_test_cases():
+            print(case.id().rsplit(".", 1)[-1])
+        raise SystemExit(0)
     unittest.main()

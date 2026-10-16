@@ -230,7 +230,7 @@ private theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) �
     Matrix.IsHermitian.eigenvectorUnitary_apply]
   ring
 
-private theorem density_eigenvalues_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)) :
+theorem density_eigenvalues_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)) :
     ∑ i, hρ.1.isHermitian.eigenvalues i = 1 := by
   have h := hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2
   simpa using congrArg Complex.re h

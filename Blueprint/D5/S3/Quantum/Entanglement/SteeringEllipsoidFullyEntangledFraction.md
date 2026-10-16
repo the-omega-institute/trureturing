@@ -337,6 +337,7 @@ For a maximally entangled e the reduced state tr_A(e e^H) is 1/2, so <e| 1 tenso
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_e3`
 - Truth anchor: `D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction.vlen_eq_norm`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../FiniteDimensional.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../Information/ActualPureQubitGeometry.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)

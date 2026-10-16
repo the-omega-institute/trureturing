@@ -89,7 +89,7 @@ theorem law_mass (M : Menu n) (P : Protocol n) (X : Matrix n n ℂ) :
     simp [branch, projector, Matrix.trace_smul, Matrix.trace_single_eq_same,
       Matrix.trace, map_sum]
 
-private theorem projector_positive (s : n) : (projector s).PosSemidef := by
+theorem projector_positive (s : n) : (projector s).PosSemidef := by
   convert Matrix.posSemidef_vecMulVec_self_star (Pi.single s (1 : ℂ)) using 1
   ext i j
   simp [projector, Matrix.vecMulVec, Matrix.single, Pi.single_apply]

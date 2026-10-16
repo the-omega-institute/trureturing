@@ -9,6 +9,16 @@ internal sealed class RankOneFeedbackProtocolDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual finite rank-one feedback, independent control, and response effects.",
         H("Rank-One Feedback and the First Read"), Blocks(
+            Describe.Lean(DescribeId.Create("rankone-projector-positive"),
+                DeclarationHandle.Create("D5/S3/Quantum/Fibers/RankOneFeedbackProtocol.projector_positive"),
+                H("Positivity of each basis projection"), StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("n"), Colon, F.Id("Type"), Comma,
+                    OpenBracket, C("Fintype", F.Id("n")), CloseBracket,
+                    OpenBracket, C("DecidableEq", F.Id("n")), CloseBracket, Comma,
+                    Forall, Sp, F.Id("s"), Colon, F.Id("n"), Comma,
+                    Seq(Operatorname, Grp(F.Id("Matrix")), Dot, C("PosSemidef", C("projector", F.Id("s"))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite index type with decidable equality and every index s, the basis projection projector s = Matrix.single s s 1 is positive semidefinite. The nonnegativity of terminal record masses follows by applying this projection to each read outcome; it also supplies positive basis inputs for the channel time-reversal contradiction."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rankone-first-read"),
                 DeclarationHandle.Create("D5/S3/Quantum/Fibers/RankOneFeedbackProtocol.actual_protocol_tv_supremum"),
                 H("The actual finite protocol supremum"), StatementSource.FromAuthor(Disp(Seq(
