@@ -3824,3 +3824,349 @@ $\kappa\to0$ is selected. The original why-three question therefore
 retains its physical realization obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. A compact microscopic source forces distant native mass
+
+**Definition 102.1 (actual critical eigenstates and their compact charge).**
+Retain all fixed data, raw measures, operators and full complex domains
+of Definitions 75.1 and 81.1. In particular $a>0$ and the admissible
+signed $\kappa\ne0$ are fixed, both height faces are Dirichlet, and
+$W_{s^2}$ uses the heat clock of $B$, independently of $a$. For $s>0$
+put
+
+$$
+\begin{aligned}
+g_s&=\chi_cs^3,& E_s&=E_{s^2}(g_s),&
+\epsilon_c(s)&=s^2E_s,\\
+m_s&=-E_s/a>0,& r_s&=-\epsilon_c(s)/s^8>0,&
+F_s&=\mathcal U_s\psi_s,
+\end{aligned}
+\tag{102.1}
+$$
+
+where $\psi_s$ is any actual normalized complex ground state of
+$aS-g_sW_{s^2}$, whose negative attainment in $D(S)$ is Proposition
+75.2. Thus $\epsilon_c(s)$ is the critical infimum denoted by
+$\epsilon_s^c$ in (91.1), and $m_s=r_ss^6/a$. The symbol $U_s$ below
+is the potential in (81.1); $\mathcal U_s$ is the unitary map there.
+For a fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of
+positive measure define
+
+$$
+\begin{aligned}
+J_K&=\int_K V(\xi)\Phi_c(\xi)d\xi,\\
+\mathfrak A_s(K)&=\int_K
+ \phi(k_0+\varepsilon s r)U_s(\xi)F_s(\xi)d\xi,
+ \qquad \xi=(r,y,z,w),\\
+\mathscr D_m&=I\times\{q\in\mathbb R^3:1\le\sqrt m\,d(q)\le2\},
+ \qquad d(q)=\sqrt{q^{\mathsf T}M^{-1}q}.
+\end{aligned}
+\tag{102.2}
+$$
+
+The overlap is used only for sufficiently small $s$ that $K\subset
+\Omega_s$. Strict positivity from Theorem 88.1 and Lemma 82.1 gives
+$0<J_K<\infty$; finiteness also follows directly from boundedness of
+$V$ and local $L^2$ integrability of $\Phi_c$.
+
+**Theorem 102.2 (finite-native mass forced by an actual eigenstate).**
+There are constants $C_0,m_0>0$, depending only on the fixed native
+data, with the following property. For each $K$ in Definition 102.1
+there is $s_K>0$ such that, for every $0<s<s_K$ for which the actual
+mass parameter satisfies $m_s\le m_0$, and for every actual normalized
+complex ground-state choice,
+
+$$
+\int_{\mathscr D_{m_s}}|\psi_s(k,q)|^2dk\,dq
+ \ \ge\ C_0\frac{s^4}{\sqrt{-\epsilon_c(s)}}
+                    |\mathfrak A_s(K)|^2.
+\tag{102.3}
+$$
+
+No hypothesis about a microscopic profile or a bound on $r_s$ is
+needed for this finite-$s$ inequality. One possible constant is
+
+$$
+C_0=\frac{\chi_c^2j_0}{a^{3/2}}b_0^2v_M,\qquad
+b_0=\frac{e^{-3}}{24\pi\sqrt{\det M}},\qquad
+v_M=\frac{28\pi}{3}\sqrt{\det M}.
+\tag{102.4}
+$$
+
+Proof. We first justify the use of a positive eigenstate without
+restricting the complex admissible domain. For each fixed positive
+$s$, $W_{s^2}$ is a bounded nonnegative real multiplier, and the
+Hamiltonian $H_s=aS-g_sW_{s^2}$ has operator domain exactly $D(S)$
+by Propositions 70.2 and 75.2.
+The native heat kernel is strictly positive almost everywhere between
+interior full points. Indeed the conditional Gaussian construction
+of G (32.7) applies also to a height bridge with different endpoints.
+The bridge stays in $I$ with positive probability. Almost surely its
+range contains an interval, and the bracket independence of G (26.7)
+prevents a nonzero linear combination of $c_\kappa$ from vanishing
+on that interval. Its phase covariance is therefore positive definite.
+The Gaussian density is positive at every phase displacement; its
+mixture with the survived height bridge gives the assertion. These
+are precisely the original rational fields and raw density, with no
+conditioning normalization in the kernel.
+
+The bounded-potential Dyson series gives a positive kernel for
+$e^{-tH_s}$, containing the strictly positive kernel of $e^{-taS}$ as its zeroth term. Its series is bounded above
+by $e^{tg_s\|W_{s^2}\|_\infty}$ times that same kernel, so it defines
+the usual integral semigroup as well as the $L^2$ operator. Since
+$H_s-E_s\ge0$, $T_t=e^{-t(H_s-E_s)}$ is an $L^2$ contraction with a
+strictly positive kernel. For any complex ground state $\psi_s$,
+
+$$
+|\psi_s|=|T_t\psi_s|\le T_t|\psi_s|,\qquad
+\|T_t|\psi_s|\|_2\le\|\psi_s\|_2.
+\tag{102.5}
+$$
+
+The pointwise inequality and equality of the norms force
+$T_t|\psi_s|=|\psi_s|$. Spectral calculus puts $|\psi_s|$ in the
+same ground eigenspace and in $D(S)$. Equality in the integral
+triangle inequality with the strictly positive kernel makes the
+phase of $\psi_s$ constant almost everywhere, and $|\psi_s|$ is
+strictly positive almost everywhere. Thus
+$\psi_s=e^{i\theta_s}u_s$ for a real $u_s>0$ with $\|u_s\|_2=1$.
+This argument uses the entire complex native domain, not an assumed
+ordinary phase gradient or a prescribed real variational class.
+
+The actual eigen-equation now gives the exact $L^2$ relation
+
+$$
+(S+m_s)u_s=\frac{g_s}{a}W_{s^2}u_s,\qquad
+u_s=\frac{g_s}{a}(S+m_s)^{-1}(W_{s^2}u_s).
+\tag{102.6}
+$$
+
+The resolvent kernel is exactly
+$\mathcal G_{\kappa,m_s}$ of L Definition 41.1, relative to raw
+$dk'\,dq'$. Phase translation invariance and the centered conditional
+Gaussian make this kernel even in the phase displacement, so either
+sign of $q-q'$ gives the same kernel. Its nonnegative integral formula
+follows from the heat integral and Tonelli. It applies even if
+$W_{s^2}u_s$ is not globally $L^1$: truncate that nonnegative $L^2$ function on increasing bounded
+sets and in value, use $L^2$ resolvent convergence, and identify the
+monotone pointwise limit along an almost everywhere convergent
+subsequence. Consequently (102.6) may be bounded below by restricting
+its source integral to $\Xi_s(K)$.
+
+Write $\ell=\sqrt{\lambda_{\min}(M)}>0$, so $|h|\ge\ell d(h)$.
+By L Theorem 42.1 there is a fixed $C_G$ such that, for all $m\ge0$,
+all heights in $I$ and $|h|\ge1$,
+
+$$
+\mathcal G_{\kappa,m}(k,k';h)
+\ge\phi(k)\phi(k')\left(
+ \frac{e^{-\sqrt m\,d(h)}}{4\pi\sqrt{\det M}\,d(h)}
+                   -C_G|h|^{-3}\right).
+\tag{102.7}
+$$
+
+This is the finite native two-endpoint resolvent bound; no inverse
+of the tangent operator is substituted for it. Set
+$y_0=e^{-3}/(12\pi\sqrt{\det M})=2b_0$ and choose $m_0>0$ with
+
+$$
+m_0\le\min(1/4,\ell^2/4),\qquad
+8C_G\ell^{-3}m_0\le y_0/2.
+\tag{102.8}
+$$
+
+Compactness of $K$ and (78.1) give, for $s\le1$,
+
+$$
+q'_s(\xi)=s c_0y+\varepsilon s^2c_1z
+                        +\varepsilon^2s^3c_2w,\qquad
+\sup_{\xi\in K}d(q'_s(\xi))\le L_Ks
+\tag{102.9}
+$$
+
+for a finite $L_K$. Choose $s_K\le1$ so that $K\subset\Omega_s$
+and $L_Ks\le1$ whenever $0<s<s_K$. If $q$ is in the phase shell
+of $\mathscr D_m$ and $0<m\le m_0$, the triangle inequality for $d$
+therefore gives, uniformly for $\xi\in K$,
+
+$$
+\tfrac12\le\sqrt m\,d(q-q'_s(\xi))\le3,\qquad
+|q-q'_s(\xi)|\ge\frac{\ell}{2\sqrt m}\ge1.
+\tag{102.10}
+$$
+
+The Yukawa term in (102.7) is at least $y_0\sqrt m$; its error
+is at most $8C_G\ell^{-3}m^{3/2}\le(y_0/2)\sqrt m$.
+Thus for all output heights $k\in I$, including arbitrarily near
+either face, and all $\xi\in K$,
+
+$$
+\mathcal G_{\kappa,m}(k,k_0+\varepsilon s r;
+                              q-q'_s(\xi))
+ \ge b_0\phi(k)\phi(k_0+\varepsilon s r)\sqrt m.
+\tag{102.11}
+$$
+
+Let $F_s^+=\mathcal U_su_s=e^{-i\theta_s}F_s$. Positivity of the
+weights and the constant phase show that
+$|\mathfrak A_s(K)|=\int_K\phi(k_0+\varepsilon s r)U_sF_s^+d\xi$.
+The exact Jacobian, potential and wavefunction factors in (78.1)
+and (81.1) give
+
+$$
+\begin{aligned}
+\int_{\Xi_s(K)}\phi(k')W_{s^2}(k',q')u_s(k',q')dk'\,dq'
+ &=j_0^{1/2}s^{-3/2}|\mathfrak A_s(K)|,\\
+u_s(k,q)&\ge\frac{\chi_c b_0\sqrt{j_0}}a
+ s^{3/2}\sqrt{m_s}\,\phi(k)|\mathfrak A_s(K)|
+ \quad\text{a.e. on }\mathscr D_{m_s}.
+\end{aligned}
+\tag{102.12}
+$$
+
+The first factor is $j_0s^7\cdot s^{-5}\cdot
+j_0^{-1/2}s^{-7/2}$, so no raw-source charge or density factor has
+been removed. The second line follows by combining (102.6),
+(102.11) and $g_s=\chi_cs^3$. Since $\int_I\phi^2dk=1$ and
+
+$$
+\left|\{q:1\le\sqrt m\,d(q)\le2\}\right|=v_Mm^{-3/2},
+\tag{102.13}
+$$
+
+squaring and integrating (102.12) gives
+$\chi_c^2b_0^2j_0v_Ma^{-2}s^3m_s^{-1/2}
+|\mathfrak A_s(K)|^2$. Finally
+$s^3m_s^{-1/2}=\sqrt a\,s^4/\sqrt{-\epsilon_c(s)}$ proves
+(102.3)--(102.4). The cutoff, both native boundary faces, every
+real phase frequency and the kinetic operator domain have all
+remained those of the actual eigen-equation. This source-specific
+connection between the compact microscopic charge and finite-native
+mass is `repo-derived`; its heat and Green inputs are exactly
+G (32.7) and L (41.1)--(42.2). The bounded-potential semigroup and
+spectral-calculus arguments are classical intermediate tools. $\square$
+
+## 103. A quantitative defect for actual profiles at bounded energy scale
+
+**Theorem 103.1 (bounded $r_s$ excludes the unit critical orbit).**
+Fix $K$ as in Definition 102.1 and set
+
+$$
+\gamma_K=C_0\phi(k_0)^2J_K^2>0.
+\tag{103.1}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ on the exact path
+$g_n=\chi_cs_n^3$, every $B\in(0,\infty)$ for which $r_{s_n}\le B$
+eventually, and every choice of actual normalized complex ground
+states, every weak global $L^2(d\xi)$ limit of $F_{s_n}$ is
+$c\Phi_c$ and satisfies
+
+$$
+|c|^2\le\frac{1}{1+\gamma_K/\sqrt B}<1,\qquad
+1-|c|^2\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.2}
+$$
+
+Every subsequence has a weakly convergent further subsequence.
+Writing $\mathcal O_c=\{e^{i\theta}\Phi_c:\theta\in\mathbb R\}$,
+the whole sequence consequently obeys
+
+$$
+\liminf_n\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)
+\ge\left(2-2(1+\gamma_K/\sqrt B)^{-1/2}\right)^{1/2}>0.
+\tag{103.3}
+$$
+
+Proof. Actual ground states have zero excess in (85.5), so Theorem
+90.1 supplies weak subsequential compactness, the limit $c\Phi_c$,
+and strong local $L^2$ convergence along every weakly convergent
+subsequence. On such a subsequence Theorem 82.3, the continuity of
+$\phi$ at $k_0$ and compactness of $K$ give
+
+$$
+\mathfrak A_{s_n}(K)\longrightarrow\phi(k_0)cJ_K.
+\tag{103.4}
+$$
+
+For detail, the multipliers
+$\phi(k_0+\varepsilon s_nr)U_{s_n}$ converge uniformly on $K$ to
+$\phi(k_0)V$, and are uniformly bounded. Their product with the
+local $L^2$ difference has integral tending to zero by
+Cauchy--Schwarz and $|K|<\infty$. Their difference paired with
+$c\Phi_c$ is controlled in the same way. No boundary regularity of
+$K$ or global $L^1$ bound on $VF_{s_n}$ is required.
+
+Here $m_{s_n}=r_{s_n}s_n^6/a\le Bs_n^6/a\to0$, so Theorem 102.2
+applies eventually. Since
+$s_n^4/\sqrt{-\epsilon_c(s_n)}=r_{s_n}^{-1/2}\ge B^{-1/2}$,
+it gives
+
+$$
+\liminf_n\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.5}
+$$
+
+These shell masses are disjoint from every fixed microscopic
+compact set for all large $n$. Indeed for a fixed compact
+$D\subset\mathbb R^4$, (78.1) gives
+$\sup_{\xi\in D}d(q'_{s_n}(\xi))=O_D(s_n)$, whereas on the
+shell $d(q)\ge m_{s_n}^{-1/2}\to\infty$. Unitarity therefore yields
+
+$$
+1\ge\int_D|F_{s_n}|^2d\xi
+       +\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\tag{103.6}
+$$
+
+for each fixed compact $D$ and all sufficiently large $n$.
+Pass to the limit using local strong convergence and (103.5),
+then exhaust $\mathbb R^4$ by compact boxes. Since $\|\Phi_c\|_2=1$,
+this gives $1\ge |c|^2+\gamma_KB^{-1/2}|c|^2$, proving (103.2).
+
+Finally, for unit vectors $F$,
+$\operatorname{dist}(F,\mathcal O_c)^2=2-2|\langle F,\Phi_c\rangle|$.
+If the limsup of the absolute overlap exceeded
+$(1+\gamma_K/\sqrt B)^{-1/2}$, weak subsequential compactness would
+give a further subsequence with limit $c\Phi_c$ violating (103.2).
+This proves (103.3) for the full sequence. $\square$
+
+**Corollary 103.2 (a necessary actual energy scale for no mass loss).**
+For any prescribed sequence $s_n\downarrow0$ and any actual normalized
+complex ground-state choices on $g_n=\chi_cs_n^3$, strong convergence
+to the critical phase orbit implies
+
+$$
+\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)\longrightarrow0
+\quad\Longrightarrow\quad
+r_{s_n}=\frac{-s_n^2E_{s_n^2}(\chi_cs_n^3)}{s_n^8}
+           \longrightarrow\infty.
+\tag{103.7}
+$$
+
+Proof. If the positive numbers $r_{s_n}$ did not tend to infinity,
+there would be a finite $B>0$ and a subsequence with $r_{s_n}\le B$.
+Theorem 103.1 would give the strictly positive lower bound (103.3)
+on that subsequence, a contradiction. This argument does not assume
+that $m_{s_n}\to0$ on the whole original sequence; that smallness
+is forced on the bounded-$r$ subsequence where it is needed.
+
+The conclusions are necessary restrictions on actual eigenstates,
+not sufficiency of $r_s\to\infty$. Proposition 100.1 supplies only
+$r_s\ge c\chi_c^2>0$ eventually; its trial upper bound on the negative
+energy is a lower bound on $r_s$, and cannot provide $r_s\le B$.
+Neither an actual bounded-$r_s$ sequence nor $r_s\to\infty$ is
+established here for the fixed original data. Thus (103.7) does not
+decide whether the actual exact-critical ground states converge to
+$\mathcal O_c$. The exact energy coefficient, a matching native
+energy-scale bound, a sufficient no-loss estimate, and the centered
+crossover remain unresolved. The finite-native resolvent used in
+(102.7) is distinct from the fixed-domain inverse in Theorem 87.2;
+no positive gap above the tangent zero mode is assumed. The
+original-coordinate change and coupling normalization remain (80.1).
+The observation and resource statements of §§92--96 supply none of
+the analytic-state preparation or physical-space correspondences
+needed to strengthen these analytic conclusions. $\square$
+
+## 追加锚（本行以下为增补区）
