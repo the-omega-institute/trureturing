@@ -3591,6 +3591,44 @@ this route still needs a sharper common inverse/residual bound or
 another sufficient ordered estimate. No actual retained/cofinal
 positivity, Robin-tail, RH or Lean result is supplied.
 
+The [two-source projection upper](https://github.com/the-omega-institute/trureturing-experiments/tree/06656aef3fb215e0331c4a9496fe669185a87043/docs/reports/weil-c27)
+uses the archived exact $Z=[w_0,w_1]$ and $M_JZ$ to supply
+
+$$
+A_Z=Z^*M_JZ,\quad B_Z=Z^*Y,\quad
+K_Z=B_Z^*A_Z^{-1}B_Z\preceq Y^*M_J^{-1}Y,
+\qquad H=\Xi+\Theta\preceq U_2=\Xi+S_J-K_Z.
+$$
+
+Only $B_Z$ and an unexported $A_Z$ diagonal are newly contracted.
+The first diagonal and both directed cross enclosures are reused.
+One existing two-column adjoint Cauchy projection uses unweighted exact
+sources, then the same implicit $V$; six raw generator-column checks
+cover both sources and modes0,39,1280. A native two-by-two solve with
+eighteen right sides forms every cross term of $K_Z$. No old source
+action, forward lift profile, finite Gram, scalar/channel supplier or
+F/D solve is regenerated.
+
+The fixed1024-bit application takes9.17 seconds and encloses
+$\det U_2\simeq-2.2564304658181403\times10^{-1361}<0$.
+The1536-bit execution takes10.55 seconds: all724 matrix-entry interval
+pairs have identical endpoints, while the two strictly negative
+determinant intervals overlap with nonidentical endpoints. The same
+algorithm is used; all40 guarded files remain unchanged.
+Under the inherited same-object channel-aware inverse comparison and
+seventeen positive directions of $\Xi$, both $U_2$ and $H$ therefore
+have seventeen positive and one negative direction. The accepted inertia
+identity gives $n_-(C_{\rm sharp})=0$ for this whole finite-$J$,
+fixed-eighteen-lift lower source comparison, including sources outside
+$\operatorname{span}Z$. Its strict-negative-source criterion is
+excluded without supplying the complete common inverse. This does not
+exclude actual sufficient updates generally or settle semidefinite
+endpoint updates. Actual common-domain/far-energy identification,
+good-block/far certification, retained/cofinal positivity, Robin tail
+and RH remain open. This is a numerical application of existing
+projection and inertia results, without generic novelty or Lean
+verification.
+
 Even a certified negative $C_{\rm sharp}$ would only identify a
 direction for further actual certification. A sufficient full update
 still needs an upper bound for the SAME source on
