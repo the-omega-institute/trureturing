@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
+import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 import D5.S3.Quantum.Analysis.TraceClass.IdealNorm
 import D5.S3.Quantum.GNSMatrix
 import D5.S3.Quantum.Matrix.CartesianVariance
@@ -21,6 +22,7 @@ open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 open Matrix
 set_option backward.isDefEq.respectTransparency false
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
+open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (entryNormSq)
 
 namespace D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 
@@ -40,9 +42,6 @@ def SchmidtNumberLE {d : ℕ} (ρ : BipartiteOp d) (r : ℕ) : Prop :=
 def correlation {d : ℕ} {κ : Type*} [Fintype κ]
     (ρ : BipartiteOp d) (A B : κ → Op d) : Matrix κ κ ℂ :=
   Matrix.of fun a b => (((ρ * Matrix.kronecker (A a) (B b)).trace).re : ℂ)
-
-private def hsSq {ι κ : Type*} [Fintype ι] [Fintype κ] (A : Matrix ι κ ℂ) : ℝ :=
-  ∑ i, ∑ j, ‖A i j‖ ^ 2
 
 def moment {d : ℕ} {κ : Type*} [Fintype κ] (A : κ → Op d) (H : Op d) : ℝ :=
   ∑ a, ((H * A a).trace.re) ^ 2
@@ -101,19 +100,19 @@ private theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq 
     trace_eq_sum_inner_hilbertBasis_of_finiteDimensional _ b, tsum_fintype]
 
 private theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
-    hsSq A = (Aᴴ * A).trace.re := by
+    entryNormSq A = (Aᴴ * A).trace.re := by
   open scoped Matrix.Norms.Frobenius in
     have htrace := congrArg Complex.re
       (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace A)
     rw [Complex.ofReal_re] at htrace
     rw [← htrace]
     change _ = ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2
-    simp only [PiLp.norm_sq_eq_of_L2, hsSq]
+    simp only [PiLp.norm_sq_eq_of_L2, entryNormSq]
 
 private theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) {s : Set (EuclideanSpace ℂ κ)}
     (b : HilbertBasis s ℂ (EuclideanSpace ℂ κ)) :
-    (∑' i : s, ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A (b i)‖ ^ 2) = hsSq A := by
+    (∑' i : s, ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A (b i)‖ ^ 2) = entryNormSq A := by
   let : Finite s := b.orthonormal.linearIndependent.finite
   let : Fintype s := Fintype.ofFinite s
   let T := Matrix.toEuclideanCLM (𝕜 := ℂ) A
@@ -136,7 +135,7 @@ private theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
 private theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
     (R S : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (R * S) ≤
-      Real.sqrt (hsSq R) * Real.sqrt (hsSq S) := by
+      Real.sqrt (entryNormSq R) * Real.sqrt (entryNormSq S) := by
   classical
   obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
   let : Finite w := b.orthonormal.linearIndependent.finite
@@ -155,7 +154,7 @@ private theorem traceNorm_gram_le {ι κ : Type*}
     [Fintype ι] [Fintype κ]
     (F G : Matrix ι κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (Fᴴ * G) ≤
-      Real.sqrt (hsSq F) * Real.sqrt (hsSq G) := by
+      Real.sqrt (entryNormSq F) * Real.sqrt (entryNormSq G) := by
   classical
   let R : Matrix (κ ⊕ ι) (κ ⊕ ι) ℂ := fromBlocks 0 Fᴴ 0 0
   let S : Matrix (κ ⊕ ι) (κ ⊕ ι) ℂ := fromBlocks 0 0 G 0
@@ -171,14 +170,14 @@ private theorem traceNorm_gram_le {ι κ : Type*}
       conjTranspose_zero, mul_fromCols, Matrix.mul_one]
     ext i j
     cases i <;> cases j <;> rfl
-  have hR : hsSq R = hsSq F := by
-    simp only [hsSq.eq_1, R, Fintype.sum_sum_type, fromBlocks_apply₁₁,
+  have hR : entryNormSq R = entryNormSq F := by
+    simp only [entryNormSq.eq_1, R, Fintype.sum_sum_type, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
       Matrix.zero_apply, norm_zero, zero_pow (by decide : 2 ≠ 0),
       Finset.sum_const_zero, add_zero, zero_add, conjTranspose_apply, norm_star]
     exact Finset.sum_comm
-  have hS : hsSq S = hsSq G := by
-    simp only [hsSq.eq_1, S, Fintype.sum_sum_type, fromBlocks_apply₁₁,
+  have hS : entryNormSq S = entryNormSq G := by
+    simp only [entryNormSq.eq_1, S, Fintype.sum_sum_type, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
       Matrix.zero_apply, norm_zero, zero_pow (by decide : 2 ≠ 0),
       Finset.sum_const_zero, add_zero, zero_add]
@@ -256,7 +255,7 @@ private theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d
 private theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
     ((coeff u)ᴴ * coeff u).trace.re = 1 := by
   rw [← hsSq_eq_trace]
-  simpa only [hsSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
+  simpa only [entryNormSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
 
 private theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
     (hr : (coeff u).rank ≤ r) :
@@ -330,7 +329,7 @@ theorem scaledPure_sandwich {d : ℕ} {A : Op d} (hA : ScaledPure A) (M : Op d) 
       ring
 
 private theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d) :
-    hsSq (K * A * Kᴴ) = (((Kᴴ * K) * A).trace.re) ^ 2 := by
+    entryNormSq (K * A * Kᴴ) = (((Kᴴ * K) * A).trace.re) ^ 2 := by
   have hX : (K * A * Kᴴ).IsHermitian :=
     Matrix.isHermitian_mul_mul_conjTranspose K (scaledPure_hermitian hA)
   have ht : (K * A * Kᴴ).trace = ((Kᴴ * K) * A).trace :=
@@ -354,10 +353,10 @@ private def schmidtSandwich {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (sva
 
 private theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
     (K : Op d) (A : κ → Op d) (hA : ∀ a, ScaledPure (A a)) :
-    hsSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
+    entryNormSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
   calc
-    hsSq (sandwichFactor K A) = ∑ a, hsSq (K * A a * Kᴴ) := by
-      simp only [hsSq.eq_1, sandwichFactor.eq_1]
+    entryNormSq (sandwichFactor K A) = ∑ a, entryNormSq (K * A a * Kᴴ) := by
+      simp only [entryNormSq.eq_1, sandwichFactor.eq_1]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro a _
@@ -601,7 +600,7 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     field_simp (disch := assumption)
     ring
   have hnonneg : 0 ≤ K Z Z := by
-    have heq : K Z Z = hsSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
+    have heq : K Z Z = entryNormSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
     rw [heq]
     exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun j _ => sq_nonneg _))
   have hcs : s ^ 2 ≤ K Z Z * (α * s) := by
@@ -663,10 +662,10 @@ private theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
     obtain ⟨ht, hq⟩ := schmidtSandwich_moments W sval hs
     rw [ht, hq, hunit, mul_one] at h
     exact h.trans (add_le_add (le_refl α) (mul_le_mul_of_nonneg_left hsum hβ))
-  have hF : hsSq (sandwichFactor KU A) ≤ α + β * (r : ℝ) := by
+  have hF : entryNormSq (sandwichFactor KU A) ≤ α + β * (r : ℝ) := by
     rw [sandwichFactor_hsSq KU A hA]
     exact hnorm U
-  have hG : hsSq (sandwichFactor KV (fun b => (B b)ᵀ)) ≤ α + β * (r : ℝ) := by
+  have hG : entryNormSq (sandwichFactor KV (fun b => (B b)ᵀ)) ≤ α + β * (r : ℝ) := by
     rw [sandwichFactor_hsSq KV _ (fun b => scaledPure_transpose (hB b)), moment_transpose]
     have h := hMB ((KVᴴ * KV)ᵀ) (isHermitian_conjTranspose_mul_self KV).transpose
     obtain ⟨ht, hq⟩ := schmidtSandwich_moments V sval hs
@@ -678,8 +677,8 @@ private theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
   rw [pure_gram_factorization u A B (fun a => scaledPure_hermitian (hA a))
     (fun b => scaledPure_hermitian (hB b)) U V sval hs hUV]
   calc
-    _ ≤ Real.sqrt (hsSq (sandwichFactor KU A)) *
-        Real.sqrt (hsSq (sandwichFactor KV (fun b => (B b)ᵀ))) := traceNorm_gram_le _ _
+    _ ≤ Real.sqrt (entryNormSq (sandwichFactor KU A)) *
+        Real.sqrt (entryNormSq (sandwichFactor KV (fun b => (B b)ᵀ))) := traceNorm_gram_le _ _
     _ ≤ Real.sqrt (α + β * r) * Real.sqrt (α + β * r) :=
       mul_le_mul (Real.sqrt_le_sqrt hF) (Real.sqrt_le_sqrt hG)
         (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
