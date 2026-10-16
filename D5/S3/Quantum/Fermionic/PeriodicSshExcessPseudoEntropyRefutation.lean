@@ -322,30 +322,11 @@ private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → 
         if s j = true ∧ t = Function.update s j false
         then (-1 : ℂ) ^ prefixCount s j else 0 := by
     rw [fullC_entry]
-    by_cases h : s j = true ∧ t = Function.update s j false
-    · have hp : prefixCount t j = prefixCount s j := by
-        rw [h.2]
-        unfold prefixCount
-        congr 1
-        ext i
-        by_cases hij : i < j
-        · have hne : i ≠ j := ne_of_lt hij
-          simp [hij, Function.update_of_ne hne]
-        · simp [hij]
-      simp [h]
-    · simp [h]
+    split_ifs <;> simp
   rw [Finset.sum_eq_single (Function.update s j false)]
   · rw [hentry]
     by_cases hs : s j = true
     · rw [if_pos hs]
-      have hp : prefixCount (Function.update s j false) j = prefixCount s j := by
-        unfold prefixCount
-        congr 1
-        ext i
-        by_cases hij : i < j
-        · have hne : i ≠ j := ne_of_lt hij
-          simp [hij, Function.update_of_ne hne]
-        · simp [hij]
       simp [hs]
     · rw [if_neg hs]
       simp [hs]
@@ -489,10 +470,7 @@ private theorem psi38_number :
     have h := psi38_three s
     change (∑ j, if s j then (1 : ℤ) else 0) * psi38Z s = 3 * psi38Z s at h
     have hocc : occupationCount s = ∑ j, if s j then 1 else 0 := by
-      unfold occupationCount
-      apply Finset.sum_congr rfl
-      intro j hj
-      cases hs : s j <;> simp
+      simp only [occupationCount, Bool.toNat, Bool.cond_eq_ite]
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi38Z s : ℂ) =
         3 * (psi38Z s : ℂ) := by exact_mod_cast h
@@ -514,10 +492,7 @@ private theorem psi58_number :
     have h := psi58_three s
     change (∑ j, if s j then (1 : ℤ) else 0) * psi58Z s = 3 * psi58Z s at h
     have hocc : occupationCount s = ∑ j, if s j then 1 else 0 := by
-      unfold occupationCount
-      apply Finset.sum_congr rfl
-      intro j hj
-      cases hs : s j <;> simp
+      simp only [occupationCount, Bool.toNat, Bool.cond_eq_ite]
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi58Z s : ℂ) =
         3 * (psi58Z s : ℂ) := by exact_mod_cast h
@@ -646,14 +621,12 @@ private theorem r22Int_eq : r22Int = !![80, 0, 0, 0; 0, 116, -84, 0; 0, -84, 116
   fin_cases i <;> fin_cases j <;> decide +kernel
 
 private theorem quadratic_nonnegC {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
-    0 ≤ star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ) := by
-  rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_conjTranspose,
-    star_star]
-  exact dotProduct_star_self_nonneg (B *ᵥ φ)
+    0 ≤ star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ) :=
+  (Matrix.posSemidef_conjTranspose_mul_self B).dotProduct_mulVec_nonneg φ
 
 private theorem quadratic_nonneg {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
     0 ≤ (star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ)).re :=
-  (Complex.nonneg_iff.mp (quadratic_nonnegC B φ)).1
+  (Matrix.posSemidef_conjTranspose_mul_self B).re_dotProduct_nonneg φ
 
 private theorem sos_lower {K M : ℕ} (E : ℝ) (α : Fin K → ℝ)
     (B : Fin K → FullOperator M) (H : FullOperator M) (φ : Assignment M → ℂ)
@@ -806,22 +779,8 @@ private theorem reduce_three_one (X : FullOperator 6) (a b : Assignment 2) :
   simp only [Fin.appendEquiv, Equiv.coe_fn_mk]
   simp_rw [Fin.append_left']
   simp only [Nat.reduceMul]
-  have hleft (x : Assignment 2) :
-      (x 0 = a 0 ∧ x 1 = a 1) ↔ x = a := by
-    constructor
-    · intro h
-      funext i
-      fin_cases i <;> simp [h]
-    · intro h
-      subst x
-      simp
   have hleftAll (x y : Assignment 2) :
-      (∀ i : Fin 2, x i = y i) ↔ x = y := by
-    constructor
-    · intro h
-      exact funext h
-    · intro h
-      exact congrFun h
+      (∀ i : Fin 2, x i = y i) ↔ x = y := funext_iff.symm
   have htail (x y : Assignment 2 × Assignment 4) :
       (∀ k : Fin 6, 2 ≤ k.val →
         Fin.append x.1 x.2 k = Fin.append y.1 y.2 k) ↔ x.2 = y.2 := by
