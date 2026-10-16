@@ -3117,14 +3117,117 @@ PSD of $L_*+\mathcal B^*\mathcal B/D$ for this fixed OLD base $L_*$
 and fixed saved dyadic dual $w$. This exclusion uses only
 nonnegativity of the good-block inverse metric.
 
-The stronger base $Q-R^*\overline W R$, other dual directions and
-other lower constructions are outside this exclusion. Actual $S_N$
+The stronger base $Q-R^*\overline W R$ is not tested by that calculation
+alone. Other dual directions and other lower constructions are outside
+this exclusion. Actual $S_N$
 can dominate this non-PSD lower bound and remain positive. The
 calculation supplies no actual $S_N$ negativity or RH counterexample.
 Actual full retained/cofinal positivity, the Robin tail and RH remain
 unresolved. These are applications of existing residual certification,
 weighted Cauchy and square completion, without generic novelty or
 Lean verification.
+
+### The paid far-enclosure gap cannot rescue the same fixed dual
+
+The [changed-compression consumer and directed packet](https://github.com/the-omega-institute/trureturing-experiments/tree/a8235067c4a19e422f1ea061876a44b53fb70835/docs/reports/weil-c27)
+test $\overline L=Q-R^*\overline W R$ with the same old nineteen
+channels, $A_\rho^{-1}$, $\rho=1/32$ and saved fixed dual. The
+baseline builders identify the discarded gain without another
+inverse or scientific supplier.
+
+Let $\widehat F$ be the signed far approximation, $F_{\rm act}$ the
+actual far residual Gram, $\epsilon_0$ the original complete padding,
+$\epsilon_1$ the later $\rho$-update padding and $\epsilon$ the exact
+rational upper already saved with the lift. The inherited two-sided
+far enclosure gives
+
+$$
+\|\widehat F-F_{\rm act}\|\le\epsilon_0\le\epsilon_1\le\epsilon.
+$$
+
+Writing $C_J=Q-R_J^*W_JR_J+\Beta^*A_\rho^{-1}\Beta$, the actual
+source-defined bases satisfy
+
+$$
+L_*=C_J-\kappa\widehat F-(\epsilon_0+\rho\epsilon_1)I,
+\qquad \overline L=C_J-\kappa F_{\rm act}.
+$$
+
+Thus $0\preceq\overline L-L_*\preceq2\kappa\epsilon I$.
+The paddings are bounded, not identified as equal. Their original
+512-bit metadata grid and transported640-bit grid remain distinct.
+This is the same $\overline W$, rather than the different ideal
+$W_{\rm G}$ majorant.
+
+Put $H_V=V^*V$, $\delta=2\kappa\epsilon$ and
+$\Sigma_{\max}=\Sigma_*+\delta H_V$. Then
+$V^*\overline LV\preceq\Sigma_{\max}$. The PSD addition preserves
+at least seventeen positive directions; a strictly negative first
+pivot leaves exactly one negative direction and no zero direction.
+Let $a_{\max}<0$, $P_{\max}\succ0$ and $T_{\max}$ denote its
+negative-pivot decomposition.
+
+Reuse the saved exact seventeen-vector $x_J$ only as a variational
+trial for this changed complement. With the same actual finite row
+$b_J$, define
+
+$$
+q_{J,\rm trial}=|b_{J,0}|^2/a_{\max}
++2\Re(b_JT_{\max}x_J)-x_J^*P_{\max}x_J,
+\qquad
+g_x=(\overline{b_{J,0}}/a_{\max})e_0+T_{\max}x_J.
+$$
+
+For $b=b_J+t$ and $q_{\max}=b\Sigma_{\max}^{-1}b^*$, the existing
+variational inverse identity gives
+
+$$
+q_{\max}\ge q_{J,\rm trial}+2\Re(tg_x)+|t_0|^2/a_{\max}.
+$$
+
+The same-source far row and energy obey the preceding weighted
+Cauchy bounds with the full $G$. Hence, for $A_{\max}>0$,
+
+$$
+\mathcal K+q_{\max}
+\ge m_J-h-E_\phi+q_{J,\rm trial}-B_{\max}^2/A_{\max},
+$$
+
+$$
+A_{\max}=\kappa-\kappa^2G_{00}/(-a_{\max}),\qquad
+B_{\max}^2=\kappa^2g_x^*Gg_x.
+$$
+
+The new1024-bit contractions take0.467 seconds. Reusing the accepted
+finite charge floor, directed endpoints give
+
+$$
+\delta<4.285\cdot10^{-135},\qquad
+q_{J,\rm trial}>-122.995465,\qquad
+B_{\max}^2/A_{\max}<10.153002,
+$$
+
+$$
+\boxed{\mathcal K+q_{\max}>36.044697.}
+$$
+
+Under the inherited actual common-form/domain, inverse/comparison,
+two-sided far-enclosure and sound-cache premises, every positive
+$D\ge\mathcal K$ therefore has $D+q_{\max}>0$. The existing
+one-negative-core criterion excludes PSD of
+$\Sigma_{\max}+b^*b/D$, which dominates the compression of
+$\overline L+\mathcal B^*\mathcal B/D$. The full specified
+stronger-base update is consequently not PSD. No good-block inverse
+metric, new inverse or solve is required.
+
+This extends the exclusion only to the same $\overline W$, saved
+fixed dual and admissible positive denominators. Other majorants,
+new or combined directions and other constructions remain outside
+its scope. Actual $S_N$ may dominate the rejected lower bound and
+be positive. The calculation gives no actual $S_N$ negativity,
+full retained/cofinal positivity, Robin-tail or RH result. It reuses
+standard variational inversion, inertia, weighted Cauchy and square
+completion, without a generic novelty or Lean claim.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
