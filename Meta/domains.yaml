@@ -206,6 +206,9 @@ domains:
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
+  Semigroups:
+    stratum: S3
+    definition: Associative nonunital multiplication, semigroup conjugacy relations, congruence quotients, and finite-semigroup structure such as idempotent powers.
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
