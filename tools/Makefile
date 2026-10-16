@@ -139,7 +139,7 @@ settle-batch: export SETTLE_BATCH_REQUESTS := $(value REQUESTS)
 unexport REQUESTS
 
 auric-fib-analysis-build:
-	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="regInspector/auricFibAnalysis LeanInformationAuditRegTests.AuricFib.RateBoundary" >&2
+	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="regInspector/auricFibAnalysis LeanInformationAuditFibTests.AuricFib.RateBoundary" >&2
 
 auric-fib-analysis: auric-fib-analysis-build
 	@/bin/bash "$(HERE)/scripts/auric-fib-analysis.sh"

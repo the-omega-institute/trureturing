@@ -1,0 +1,19 @@
+**Theorem 4.5 (polynomial exact JOINT-ATTAIN and actual-origin construction).** JOINT-ATTAIN is in deterministic polynomial time. For every positive instance of full explicit length $s$, a deterministic polynomial construction returns six class roots, the current root and an actual origin root in a finite DAG of at most $300(s+2)$ nodes and $O(s\log(s+2))$ bits.
+
+Proof. Check the exact input syntax, entries, vector lengths and reply symbols. The proposed target must equal one of the five complete objects of §2; otherwise reject. Require the constant branch replies on short words and construct the lists of Lemma 4.2.
+
+For each of the eleven profiles with the proposed entire target, take at each role the root list of its required type. Make a bipartite graph with six left vertices, one per role, and right vertices the global semantic identifiers in these lists. A role is adjacent to precisely its listed members. There are at most thirty-six right vertices and thirty-six edges. Find a matching covering the six roles, if one exists. For example repeatedly augment along an alternating path from an unmatched role to an unused value. If no such path exists, no larger matching exists: the symmetric difference with a larger matching would contain an augmenting path. At most six augmentations are required. Accept if any eligible profile has a covering matching.
+
+For soundness, the matched values satisfy every actual role constraint and are pairwise different as entire terms. Repeat the selected $a,c$ roots at their prescribed two occurrences and form $\mathscr S(x)$. The tested profile proves it is an image with the original full current row; its inverse is an actual $u\in\mathcal U_*$. Its predecessor row is the proposed whole output. Every long installed literal has its requested reply by (FTC.2), and every short literal has branch. Thus one actual source realizes both full indexed vectors and the target simultaneously, including unused records.
+
+For completeness, an actual realizing source has exactly one eligible profile. Its six distinct roots belong to the six required constrained type languages. Lemma 4.3 moves this distinct system into the retained lists, so their graph has a covering matching. The algorithm therefore accepts every attained joint element. Independent nonempty marginals would not suffice: in the all-branch-image profile, requiring right-root alpha for each of $a,c$ makes each language the singleton $\{E\}$, which cannot fill two different whole roles. Global matching rejects that collision.
+
+Finally append at most seven exterior pair nodes to the list DAG. Parse image membership bottom-up and memoize $\delta$ to obtain the source root; at most one new inverse pair node is needed per visited current node, and inverse leaves reuse the basis. The total is at most
+
+$$
+2(144V+14+7)=288V+42\le300(V+1)\le300(s+2).
+\tag{FTC.14}
+$$
+
+Backward pointers and the eight roots use $O(s\log(s+2))$ bits. Constraint processing, interning, eleven constant-size matching tests, exterior construction and memoized inversion are polynomial. The bound holds also for the empty menu. It bounds a semantic DAG certificate; its ordinary unfolding need not have polynomial size. No source-height promise or runtime DAG facility has been introduced. $\square$
+

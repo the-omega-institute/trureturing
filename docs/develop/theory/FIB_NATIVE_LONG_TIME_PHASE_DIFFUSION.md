@@ -2908,3 +2908,1793 @@ the stated native premises, not Lean-kernel certificates or empirical
 claims about a physical system.
 
 ## 追加锚（本行以下为增补区）
+
+## 55. Causal native height from a complete phase record
+
+**Definition 55.1 (source, observations and mathematical conventions).**
+Retain Definition 35.1 and G Definition 25.1, with their fixed closed
+parameter interval $\mathcal K$, original clock and coefficient functions.
+The premises in §§35–54 and G (25.1)–(25.5) are taken at
+[`11e2a65d554143d0e3f38b37f1b686453451e3c4`](https://github.com/the-omega-institute/trureturing/tree/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory).
+In this and the following sections the principal probability is
+
+$$
+\mathbf Q_\kappa=\int_I\pi(dk)\,\mathbb Q_{k,q_0}^\kappa,
+\qquad \pi(dk)=\phi(k)^2dk,
+\qquad \sigma=\sqrt2\varepsilon.
+\tag{55.1}
+$$
+
+The initial phase $q_0$ and native parameters are known, whereas $K_0$
+is the actual unobserved random variable with law $\pi$. The height
+and phase equations are exactly (37.8), with independent drivers.
+This stationary-height probability is an additional specified law;
+it is not a preparation operation supplied by the native controls.
+At nonzero $\kappa$ the original phases are
+$y=(\theta,v,D)=(\theta,v,\kappa x)$. At zero the actual source has
+$D=D_0$, and the comparison process with a moving $x$ remains separate.
+More precisely, (55.1) on the resolved space is denoted
+$\mathbf Q^{\rm res}_\kappa$ when a distinction is needed. Its
+pushforward on increments under
+$y_t=y_0+\operatorname{diag}(1,1,\kappa)(q_t-q_0)$
+is $\mathbf Q^{\rm act}_\kappa$, with the prescribed known
+initial $y_0=(\theta_0,v_0,D_0)$. At zero this map forgets the moving
+$x$ and retains the known frozen $D_0$. Both laws have exactly the same
+$(K,\theta,v)$ marginal. An observation involving comparison $x$
+at zero is taken under $\mathbf Q^{\rm res}_0$; assertions involving
+only $v$, including every risk below, hold for the actual source.
+No observation of comparison $x$ is inferred from frozen $D$.
+
+For an ideal supplied real phase projection $Y=Rq$, define
+
+$$
+\mathcal H_t^R=\sigma(Y_s:0\le s\le t)\vee\mathcal N_\kappa,
+\qquad
+\mathcal H_t^v=\sigma(e^{iv_s}:0\le s\le t)\vee\mathcal N_\kappa,
+\tag{55.2}
+$$
+
+where $\mathcal N_\kappa$ denotes the null sets in the complete
+underlying probability space. These are the completed causal
+filtrations, without adjoining observations at times greater than $t$.
+In particular we do not replace $\mathcal H_0^v$ by
+$\mathcal H_{0+}^v=\bigcap_{t>0}\mathcal H_t^v$: Theorem 55.2
+will put $K_0$ in the latter, while it is absent from the former.
+A null-set completion supplies no positive-time observations.
+For an integer matrix $N$, the lawful original torus observation is
+the vector of characters $\exp(iNy_s)$, with componentwise exponential;
+its filtration is defined in the same way. A real projection of a
+cover is asserted supplied only in the ideal real experiment.
+For a separately stipulated finite stopped record with an observed
+stop tag $T$, its data field means
+$\sigma(T,Y_{s\wedge T}:s\in\mathbb Q_+)\vee\mathcal N_\kappa$.
+This definition supplies neither a stopping operation nor a stop tag
+to any other experiment. Raw cemetery paths retain their death
+record instead of an implicitly frozen live phase.
+
+A continuous circle path with its known initial value has a unique
+continuous real lift after fixing any initial argument. Its increments
+are independent of this choice. Path lifting is Borel and causal:
+on a compact interval, subdivide until each image segment lies in a
+circle arc of length less than $\pi$ and concatenate the local arguments;
+the first successful subdivisions can be selected from a countable
+family. This construction uses only the supplied prefix. Consequently
+continuous character records give the corresponding real character
+increments, including windings, but finitely many circle values do not.
+
+All new source-specific assertions in §§55–60 are `repo-derived` in
+the ordinary proof sense. Quadratic variation, Itô's formula, Gaussian
+conditioning and the integration-by-parts information inequality used
+inside their proofs are `literature-attested` tools, with the
+correspondence specified in Definition 61.1.
+
+**Theorem 55.2 (complete wrapped $v$ history recovers height causally).**
+For every $\kappa\in\mathcal K$, including the genuine zero leaf,
+there is a causal Borel construction from the continuous wrapped $v$
+record such that, outside one null set, it recovers $K_t$ at every
+$t>0$. For every such $t$ it also recovers the complete height prefix
+$(K_s)_{0\le s\le t}$. At time zero alone the phase record carries no
+height information: the conditional law of $K_0$ is $\pi$.
+
+Put $a_\kappa(k)=2B_\kappa(k)^2$. On the entire fixed family there
+are constants $0<a_-<a_+<\infty$ and $c_a>0$ such that
+
+$$
+a_-\le a_\kappa(k)\le a_+,
+\qquad a_\kappa'(k)\ge c_a\quad(k\in\overline I).
+\tag{55.3}
+$$
+
+Writing $[v]$ for the quadratic variation of the lifted record, the
+reconstruction at a positive time is
+
+$$
+K_t=a_\kappa^{-1}\left(
+ \lim_{h\downarrow0,\ h<t}\frac{[v]_t-[v]_{t-h}}h\right).
+\tag{55.4}
+$$
+
+The inverse is on the range of $a_\kappa$; the construction can take
+an arbitrary value when its prescribed limits fail.
+
+Proof. Let $\alpha=\kappa+\kappa^2/H$. Polynomial division of G (25.4)
+gives
+
+$$
+B_\kappa(k)=-\frac1{2H}
+ \left(k+\alpha-2\kappa+
+       \frac{\alpha(\alpha-2\kappa)}{k-\alpha}\right),
+\qquad
+B_\kappa'(k)=-\frac1{2H}
+ \left(1-\frac{\alpha(\alpha-2\kappa)}{(k-\alpha)^2}\right).
+\tag{55.5}
+$$
+
+Positivity of the original probabilities gives $k>2\kappa$ when
+$\kappa>0$; the fixed small family has $|\kappa|<H$ and $k-\alpha>0$.
+Moreover
+$\alpha(\alpha-2\kappa)=\kappa^2(\kappa^2/H^2-1)\le0$.
+Thus $B_\kappa<0$ and $B_\kappa'\le-1/(2H)$.
+Compactness, strict positivity and the fixed margins in Definition
+35.1 prove (55.3), since $a_\kappa'=4B_\kappa B_\kappa'$.
+This argument does not shrink $\mathcal K$ with time or with $n$.
+
+Conditional on the height path the lifted phase is
+$\sqrt2\int_0^\cdot B_\kappa(K_s)dW_s^2$, and hence
+
+$$
+[v]_t=\int_0^t a_\kappa(K_s)ds.
+\tag{55.6}
+$$
+
+For precision about versions, take sums of squared increments along
+dyadic partitions of each bounded time interval. With bounded diffusion
+coefficient, the martingale isometry and the maximal inequality give
+an $L^2$ bound $C2^{-m}$ for the squared uniform error of the level-$m$
+variation sums. One may use the step sums at partition endpoints;
+the largest intervening increment tends to zero by continuity.
+Markov's inequality at threshold $2^{-m/8}$ and Borel–Cantelli give
+almost sure uniform convergence. The same assertion for a continuous
+semimartingale with locally bounded coefficients follows by stopping
+on compact sets; a bounded-variation part has zero quadratic variation
+and its cross sums tend to zero by Cauchy–Schwarz. These facts also
+apply to the nested variations below. A countable union over integer
+time horizons and compact stopping sets produces a single null set.
+The sums and their limits are Borel functions of the supplied prefixes.
+
+The integrand in (55.6) is continuous. Therefore its left derivatives
+exist with the asserted value simultaneously at every positive time.
+Only times at most $t$ occur in (55.4). Applying this construction at
+all positive times and taking the right limit at zero recovers the
+height prefix. The known initial phases are constant random variables,
+so $\mathcal H_0^v$ is trivial modulo null sets and leaves the
+nondegenerate law $\pi$ unchanged. Since $v$ is an original phase,
+the complete original phase record also identifies height, including
+the actual two-moving-phase zero leaf. At $\kappa=0$ the same calculation
+uses $B_0=-k/(2H)$ and requires no comparison $x$. $\square$
+
+## 56. Exhaustive real scalar path observations
+
+**Theorem 56.1 (the rational classification, including folded failures).**
+Fix a resolved real frequency $\eta=(p,q,r)$ and put
+$f(k)=\eta\cdot c_\kappa(k)$. There are unique real numbers
+$A_\eta,D_\eta,C_\eta$ such that
+
+$$
+f(k)=A_\eta(k-\alpha_\kappa)+D_\eta
+                      +\frac{C_\eta}{k-\alpha_\kappa},
+\qquad A_\eta=-\frac{p+q}{2H},
+\tag{56.1}
+$$
+
+and the residue is
+
+$$
+C_\eta=\frac{(H+\kappa)(H-\kappa)}{2H^3}
+ \bigl(2Hr-\kappa(H-\kappa)p+\kappa^2q\bigr).
+\tag{56.2}
+$$
+
+Under the actual unknown-height source (55.1), the complete real path
+of $Y=\eta\cdot q$ identifies height at every positive time, in the
+sense of Theorem 55.2, exactly in the following cases:
+
+- $C_\eta\ne0$;
+- $C_\eta=0$, $p+q\ne0$, and
+  $r_*:=\kappa+Hp/(p+q)\notin I$.
+
+The other cases have positive endpoint conditional uncertainty at
+every fixed $t>0$:
+
+$$
+\mathbf E_{\mathbf Q_\kappa}
+   \operatorname{Var}(K_t\mid\mathcal H_t^\eta)>0.
+\tag{56.3}
+$$
+
+More precisely, $C_\eta=0$, $p+q=0$ is exactly the autonomous line
+(50.1), on which the entire height and observation paths are
+independent. If $C_\eta=0$, $p+q\ne0$ and $r_*\in I$, the coefficient
+is a nonconstant multiple of $k-r_*$; it has an actual reflection
+ambiguity, even with continuous observation. The boundary cases
+$r_*=l,u$ identify height. The classification holds for both signs
+and for the resolved comparison at $\kappa=0$.
+
+Proof. Division of (50.4) gives (56.1)–(56.2). On the residue-zero
+plane it simplifies further to
+
+$$
+f(k)=\frac{p(H+\kappa)+\kappa q-(p+q)k}{2H}.
+\tag{56.4}
+$$
+
+If $p+q=0$, the residue equation forces $r=\kappa p/2$ and
+$f=p/2$. This is precisely (50.1). Otherwise (56.4) is
+$-(p+q)(k-r_*)/(2H)$. Its square is one-to-one on $I$ exactly when
+$r_*\notin I$. The left derivative of $[Y]/2$ then recovers $f(K)^2$
+and its inverse recovers height, including when the zero is an endpoint.
+
+It remains to prove identification for every nonzero residue, rather
+than assume that the first covariance is injective. Put
+$g=f^2$. The path $Y$ gives the continuous path $g(K)$ at all positive
+times by the same left derivative. Its value at zero is a limit from
+positive times on any nontrivial prefix. Itô's formula on compact
+height intervals and the constant height diffusion coefficient give
+
+$$
+[g(K)]_t=\sigma^2\int_0^t g'(K_s)^2ds.
+\tag{56.5}
+$$
+
+Thus nested variation gives the pair $(g(K_s),g'(K_s)^2)$ causally
+at every $s>0$. The height drift, although unbounded at the two
+endpoints, is bounded on every compact interval visited up to a
+finite time, so the localization used for (56.5) is legitimate.
+
+For this native rational function the pair is injective except at
+finitely many heights. Here is an explicit algebraic proof. Write
+$y=k-\alpha>0$ and $f=Ay+D+C/y$, with $C\ne0$. Exclude the finitely
+many zeros of $f$. Equality of the two pairs at $y,z$ implies
+$f(y)=\pm f(z)$ and $f'(y)=\pm f'(z)$. Equal derivatives force $y=z$,
+since $f'(y)=A-C/y^2$. Opposite derivatives give
+
+$$
+2A=C(y^{-2}+z^{-2}).
+\tag{56.6}
+$$
+
+If in addition $f(y)=f(z)$ and $y\ne z$, subtraction gives
+$A=C/(yz)$, which combined with (56.6) gives $(y-z)^2=0$,
+a contradiction. In the remaining case $f(y)=-f(z)$, put
+$U=1/y,V=1/z,S=U+V$. Equation (56.6) says
+$U^2+V^2=2A/C$. Multiplying the equation for opposite values by
+$UV$ and substituting $UV=(S^2-2A/C)/2$ gives
+
+$$
+\frac C2 S^3+D(S^2-2A/C)=0.
+\tag{56.7}
+$$
+
+This is a nonzero cubic, and each of its finitely many roots fixes
+$UV$ and hence an unordered pair $U,V$. If (56.6) has no positive
+solutions there are no such pairs. Consequently the exceptional
+heights form a finite set $E$. Outside $E$ the pair has a Borel
+inverse, obtained, for example, by selecting the unique solution
+of its rational equations on $I\setminus E$.
+
+For each positive rational $s$, stationarity gives
+$\mathbf Q_\kappa(K_s\in E)=0$. On the complement of one null set,
+all positive rational heights are therefore recovered by this inverse.
+Their limits along rationals below $t$ recover $K_t$ simultaneously
+for every $t>0$ by continuity; rational limits towards zero recover
+$K_0$ from any positive prefix. This uses no future derivative at $t$.
+It also proves why noninjectivity of the first covariance alone would
+not establish a negative case.
+
+For the negative folded case take $r=r_*\in I$ and a closed symmetric
+interval $J=[r-\delta,r+\delta]\Subset I$. Reflect a height prefix by
+$\mathcal R K_s=2r-K_s$ and replace $W^2$ by $-W^2$. Since
+$f(2r-k)=-f(k)$, this transformation leaves the entire observed
+$Y$ prefix unchanged, including its known initial value.
+
+This is an ambiguity in the actual source, not in an enlarged model.
+Indeed on paths staying in $J$ the stationary Q height law has density
+
+$$
+e^{\lambda t}\phi(K_0)\phi(K_t)
+\tag{56.8}
+$$
+
+relative to $\int_J dk\,\mathbb P_k^{\rm BM}$ restricted to those
+paths, where the Brownian variance rate is $\sigma^2$.
+Formula (56.8) is exactly $\pi(dk)$ times the Doob factor (37.2).
+The reference measure is reflection invariant. The density ratio
+of the reflected Q restriction to the original one is therefore
+
+$$
+\frac{\phi(2r-K_0)\phi(2r-K_t)}
+     {\phi(K_0)\phi(K_t)},
+\tag{56.9}
+$$
+
+which is bounded above and below by positive constants on $J$.
+The independent Brownian phase driver is invariant under sign reversal.
+Choose a terminal subinterval $J_+\Subset(r,r+\delta)$ and its
+reflection $J_-$. The event that the height stays in $J$ and ends in
+$J_+$ has positive probability, by the positive killed Brownian
+kernel inside $J$ and (56.8). Its reflected counterpart ends in
+$J_-$, has the identical observation under the transformation, and
+has an equivalent observation measure by (56.9).
+
+Disintegrating these two subprobabilities with respect to the full
+observation prefix shows that, on a set of observation values of
+positive probability, the actual posterior puts positive mass on
+both $J_+$ and $J_-$. Indeed let $\nu_\pm$ be the observation
+submeasures of the two events and let $\nu_Y$ be the full observation
+probability. Equivalence gives a positive-$\nu_Y$ set on which both
+$w_\pm=d\nu_\pm/d\nu_Y$ are positive. The actual posterior masses
+of $J_\pm$ are at least $w_\pm$. If $d>0$ is their separation,
+the posterior-independent-copy formula for variance gives
+$\operatorname{Var}(K_t\mid\mathcal H_t^\eta)\ge d^2w_+w_->0$
+on that set. Integration proves (56.3).
+If $f$ is constant, the observation is a multiple of the independent
+$W^2$ and the posterior is exactly $\pi$; this includes the
+identically zero observation. These cases exhaust (56.1). $\square$
+
+**Proposition 56.2 (known initial height and stopped prefixes).**
+If instead the initial height is a known fixed $k_0\in I$, the
+positive-time scalar classification of Theorem 56.1 is unchanged.
+In every negative case its expected conditional variance at every
+fixed $t>0$ is still positive. Knowledge of $k_0$ only makes its
+recovery at time zero trivial. For any identifying record, the same
+single pathwise reconstruction also applies at an observed finite
+stop $T>0$, on $T<\zeta$ under a killed law, and recovers $K_T$
+from that stopped prefix. No classification for a new
+height-dependent stopping rule is inferred from the deterministic-time
+negative statements.
+
+Proof. The positive proofs use the same variation identities.
+Where Theorem 56.1 used stationarity to avoid the finite set $E$
+at positive rational times, use instead the fixed-start Q height
+density $e^{\lambda s}h_I(s;k_0,k)\phi(k)/\phi(k_0)$.
+It is absolutely continuous for $s>0$, so gives zero mass to $E$.
+For an autonomous coefficient the record remains independent of
+the height path, and this strictly positive interior density has
+positive variance at every $t>0$.
+
+For a folded coefficient with center $r\in I$, let
+$\varsigma=\inf\{s\ge0:K_s=r\}$. The event
+$\varsigma<t/2$ has positive probability from every $k_0\in I$:
+a Brownian path can reach $r$ inside $I$ by that time, and its
+fixed-start Q weight on surviving paths is strictly positive.
+After $\varsigma$, restrict height to a closed symmetric
+$J\Subset I$ about $r$ and require its endpoint to belong to
+$J_+\Subset J\cap(r,u)$. This event has positive probability by
+the strong Markov property and the positive killed heat kernel in
+$J$. Reflect height only after $\varsigma$, and reverse the phase
+driver only after that time. The transformed record is exactly the
+same because $f(2r-k)=-f(k)$, and the initial height is unchanged.
+
+For killed Brownian height the transformation preserves the reference
+measure on these paired events, by the strong Markov property and
+reflection symmetry of the post-hitting increments. Conditional on
+height, reversal of the phase driver after the fixed time
+$\varsigma(K)$ preserves its independent Wiener law. The fixed-start
+Q weight is $e^{\lambda t}\phi(K_t)/\phi(k_0)$, so the ratio of
+paired Q weights is $\phi(2r-K_t)/\phi(K_t)$, bounded above and
+below on $J$. The disintegration argument of Theorem 56.1 therefore
+gives positive posterior mass on the two separated terminal intervals
+$J_+$ and its reflection. This proves positive conditional variance
+with the same known $k_0$.
+
+Finally all identifying constructions hold simultaneously at every
+positive time outside one null set. Evaluating their left limits
+and left variation derivatives at $T$ uses only the supplied stopped
+prefix, so proves the stopped assertion. At a death time, the
+predeath limit gives an absorbing face, with the cemetery meaning
+specified in Proposition 60.2. A stopping tag selected from hidden
+height can itself encode height; the negative classification above
+assumes the stated deterministic horizon and does not add such a
+tag to its observations. $\square$
+
+## 57. Matrix observations and lawful original characters
+
+**Theorem 57.1 (all real matrices).**
+For a real matrix $R$ with any finite number of rows write
+$F(k)=Rc_\kappa(k)$. Apply the residue (56.2) to each row.
+If at least one residue is nonzero, its complete path identifies height.
+If all residues vanish, write uniquely
+
+$$
+F(k)=a k+b\quad(a,b\in\mathbb R^d).
+\tag{57.1}
+$$
+
+The matrix record fails to identify height exactly when either
+$a=0$, or $a\ne0$ and $b=-r a$ for some $r\in I$.
+In every other case it identifies the complete height prefix at
+positive times. Every failure has the positive conditional variance
+(56.3), with the matrix observation filtration.
+
+Proof. A nonzero-residue row is already sufficient by Theorem 56.1.
+Otherwise the left derivative of the observed matrix quadratic
+variation is $2F(K_t)F(K_t)^{\mathsf T}$. For two vectors, equality
+of their outer products implies that they are equal or negatives,
+including the common zero case. If $a\ne0$, equality with the same
+sign implies equal heights. Opposite signs at distinct heights imply
+
+$$
+a(k+k')+2b=0.
+\tag{57.2}
+$$
+
+Thus $b=-ra$, with $k+k'=2r$. If $b$ is not a multiple of $a$, or
+if its corresponding $r$ is outside $I$, the covariance is injective
+on $I$. Its continuous inverse on compact subintervals gives causal
+recovery just as in (55.4). An endpoint $r=l,u$ does not create two
+heights in $I$. If $a=0$, the vector observation is one Brownian
+motion with a constant vector multiplier and is independent of height.
+If $b=-ra$ with $r\in I$, the reflection and driver reversal used
+in (56.8)–(56.9) preserve every component simultaneously. Their
+two separated actual posterior masses prove failure. $\square$
+
+**Theorem 57.2 (signed character classification and both zero objects).**
+For $\kappa\ne0$ an original scalar torus character
+$e^{i(n\theta+mv+jD)}$, $(n,m,j)\in\mathbb Z^3$, has resolved
+frequency $(n,m,\kappa j)$. Define
+
+$$
+E_\kappa(n,m,j)=2Hj-(H-\kappa)n+\kappa m.
+\tag{57.3}
+$$
+
+Its complete continuous record identifies height if
+$E_\kappa\ne0$. If $E_\kappa=0$ and $n+m\ne0$, it identifies
+height exactly when
+
+$$
+\kappa+\frac{Hn}{n+m}\notin I.
+\tag{57.4}
+$$
+
+The remaining $E_\kappa=0$, $n+m=0$ cases are precisely the
+independent autonomous characters (50.2). The cases failing (57.4)
+have the actual positive posterior ambiguity of Theorem 56.1.
+This includes all integer characters, primitive or not, for either
+sign of $\kappa$.
+
+For a vector of original characters, substitute each row
+$(n,m,j)\mapsto(n,m,\kappa j)$ in Theorem 57.1. This is the complete
+integer-matrix classification; individually folded characters with
+different fold centers can jointly identify height.
+
+At the resolved comparison zero, a supplied real frequency $(p,q,r)$
+has residue $r$. Frequencies with $r\ne0$ identify; those with $r=0$
+follow the affine criterion with fold center $Hp/(p+q)$ and autonomous
+line $p+q=0$. In contrast, on the actual frozen-$D$ zero leaf every
+original character has moving coefficient
+
+$$
+f_{n,m,j}(k)=\frac{Hn-(n+m)k}{2H}.
+\tag{57.5}
+$$
+
+The integer $j$ contributes only a known constant phase. Such a
+character identifies height exactly when $n+m\ne0$ and
+$Hn/(n+m)\notin I$. If $n+m=0$ it is independent of height;
+otherwise its interior fold is a positive-ambiguity case.
+The full matrix criterion on that leaf is (57.1)–(57.2) with row
+slope $-(n+m)/(2H)$ and row intercept $n/2$.
+
+Proof. Substitute the signed frequency into (56.2); its parenthesis
+is $\kappa E_\kappa$. When it vanishes, (56.4) gives the fold
+center (57.4). If $m=-n$, equation (57.3) forces $n=2j$, precisely
+(50.2). Continuous lifting of the supplied character path, as in
+Definition 55.1, gives its real increments; taking a nonprimitive
+character therefore loses no increments of that character itself.
+No division by a wrapped endpoint or an unavailable cover coordinate
+is used. The matrix claim follows componentwise from the same lifting
+and Theorem 57.1. At actual zero, insert $A_0=(H-k)/(2H)$,
+$B_0=-k/(2H)$ and $dD=0$ to obtain (57.5). At comparison zero,
+(56.2) instead gives $C_\eta=r$, because $b_0=1/k-1/H$ remains
+moving. These are different observations and different laws. $\square$
+
+**Corollary 57.3 (all real original projections, including actual zero).**
+Suppose a real linear cover record $Ry$, $y=(\theta,v,D)$, is
+supplied, with arbitrary finite real matrix $R$. For nonzero
+$\kappa$, replace each row $(p_i,q_i,r_i)$ by
+$(p_i,q_i,\kappa r_i)$ in Theorem 57.1. This classifies every
+such record for both signs. On the actual frozen-$D$ zero leaf put
+
+$$
+a_i=-\frac{p_i+q_i}{2H},\qquad b_i=\frac{p_i}{2}.
+\tag{57.6}
+$$
+
+It fails to recover height exactly when $a=0$, or $a\ne0$ and
+$b=-ra$ for one common $r\in I$; each failure has positive expected
+posterior variance at every fixed positive time under (55.1).
+In particular a real scalar row identifies exactly when
+$p+q\ne0$ and $Hp/(p+q)\notin I$. The third real coefficient
+only changes the known initial value at actual zero. A real cover
+projection descends to the original torus as a character precisely
+when all its coefficients are integers; Theorem 57.2 classifies
+these lawful observations separately.
+
+Proof. For nonzero $\kappa$, the exact signed differential map is
+$dy=\operatorname{diag}(1,1,\kappa)dq$, proving the substitution.
+At actual zero the observed increments have coefficient
+$F_i(k)=p_iA_0(k)+q_iB_0(k)=a_i k+b_i$ and no moving $D$ term.
+The affine outer-product argument and reflection proof in Theorem
+57.1 apply verbatim to these real vectors. This proves both
+sufficiency and actual-source ambiguity, rather than inferring a
+negative conclusion just from noninjectivity of a covariance.
+For a scalar row its root is $Hp/(p+q)$, including the identifying
+endpoint cases. Finally invariance under adding $2\pi$ separately
+to each original coordinate requires and suffices that every
+frequency coefficient be an integer. $\square$
+
+## 58. The finite wrapped sample experiment and an attained upper bound
+
+**Definition 58.1 (one fixed known-parameter Bayes experiment).**
+Fix $\tau>0$, $t_j=j\tau/n$ and $\Delta=\tau/n$. The data and risk are
+
+$$
+\mathcal D_n=\sigma(e^{iv_{t_j}}:0\le j\le n),\qquad
+R_{n,\kappa}=\inf_g\mathbf E_{\mathbf Q_\kappa}
+ (K_\tau-g(e^{iv_{t_0}},\ldots,e^{iv_{t_n}}))^2.
+\tag{58.1}
+$$
+
+The infimum is over Borel estimators with the common known parameters
+and initial phases. All expectations refer to the one source (55.1).
+The Bayes estimator is the conditional mean and
+$R_{n,\kappa}=\mathbf E\operatorname{Var}(K_\tau\mid\mathcal D_n)$.
+There is no supplied interpolation, height, Brownian driver, winding
+increment or additional observation between the sample times.
+
+**Theorem 58.2 (exact finite-$n$ ambiguity and full interior support).**
+For each finite $n\ge1$ and every $\kappa\in\mathcal K$ the posterior
+law of $K_\tau$ is equivalent to $\pi$, and in particular has support
+$\overline I$ and gives positive mass to every nonempty open
+subinterval of $I$. Hence $R_{n,\kappa}>0$.
+
+Proof. Given the entire height path, let
+
+$$
+V_j=\int_{t_{j-1}}^{t_j}a_\kappa(K_s)ds,
+\qquad a_-\Delta\le V_j\le a_+\Delta.
+\tag{58.2}
+$$
+
+The real increments are independent centered normals with variances
+$V_j$, by independence of $W^2$ and height. For circle increments
+$z_j\in[-\pi,\pi)$ their exact conditional density, relative to
+ordinary angular Lebesgue measure, is
+
+$$
+L_z(K)=\prod_{j=1}^n\sum_{m\in\mathbb Z}
+ \frac{\exp[-(z_j+2\pi m)^2/(2V_j)]}{\sqrt{2\pi V_j}}.
+\tag{58.3}
+$$
+
+The map from the original circle samples with fixed initial value to
+these circle increments is bijective. For fixed $n$, each factor is
+continuous and strictly positive on the compact product of its circle
+and $[a_-\Delta,a_+\Delta]$. Thus there are constants
+$0<c_n<C_n<\infty$ bounding $L_z(K)$ uniformly in $z$, height paths
+and $\kappa$. Stationarity gives $K_\tau\sim\pi$. Disintegrate the
+height path given its endpoint and apply Bayes' formula:
+
+$$
+\pi_z(dk)=\pi(dk)
+ \frac{\mathbf E[L_z(K)\mid K_\tau=k]}{\mathbf E L_z(K)}.
+\tag{58.4}
+$$
+
+Choosing the conditional height-path kernel once gives a version for
+all $z$; its density is bounded above and below by positive constants
+for $\pi$-almost every $k$. The resulting posterior is nondegenerate
+and has the asserted full support. Its variance is positive for every
+such data value, so its expected variance is positive. In fact its
+density relative to $\pi$ is at least $c_n/C_n$. For any real $b$,
+$\int(k-b)^2\pi_z(dk)\ge(c_n/C_n)\int(k-b)^2\pi(dk)$;
+minimizing over $b$ gives the uniform finite-$n$ bound
+$R_{n,\kappa}\ge(c_n/C_n)\operatorname{Var}_\pi(K)>0$.
+This bound depends on $n$ and is distinct from the sharp order
+proved in Theorem 59.1. $\square$
+
+**Theorem 58.3 (uniform wrapped-sample upper bound).**
+There are constants $C_\tau<\infty$ and $n_0$, independent of
+$\kappa\in\mathcal K$, such that
+
+$$
+R_{n,\kappa}\le C_\tau n^{-1/2}\qquad(n\ge n_0).
+\tag{58.5}
+$$
+
+Proof. Let $m=\lceil\sqrt n\rceil$, $h=m\Delta$, and use the final
+$m$ increments. For an initial bound pretend they are unwrapped and
+put $S=(m\Delta)^{-1}\sum_{j=n-m+1}^n(\Delta_jv)^2$.
+Conditional on height,
+
+$$
+\mathbf E[S\mid K]=\frac1h\int_{\tau-h}^\tau a_\kappa(K_s)ds,
+\qquad
+\operatorname{Var}(S\mid K)=\frac{2\sum V_j^2}{(m\Delta)^2}
+ \le\frac{2a_+^2}{m}.
+\tag{58.6}
+$$
+
+The actual stationary height drift is
+$\mu(k)=2\varepsilon^2\phi'(k)/\phi(k)$. Its squared stationary
+moment is finite, explicitly
+
+$$
+\mathbf E_\pi\mu(K)^2=4\varepsilon^4\int_I\phi'(k)^2dk<\infty.
+\tag{58.7}
+$$
+
+The height SDE, Cauchy–Schwarz and stationarity therefore imply, for
+$0\le u-s\le\tau$,
+
+$$
+\mathbf E|K_u-K_s|^2
+ \le2\sigma^2(u-s)+2(u-s)^2\mathbf E_\pi\mu^2
+ \le C_\tau(u-s).
+\tag{58.8}
+$$
+
+Uniform boundedness of $a_\kappa'$ and Jensen's inequality give
+
+$$
+\mathbf E\left|
+ \frac1h\int_{\tau-h}^\tau a_\kappa(K_s)ds-a_\kappa(K_\tau)
+ \right|^2\le C_\tau h.
+\tag{58.9}
+$$
+
+Clip $S$ to $[a_\kappa(l),a_\kappa(u)]$ and apply the inverse
+$a_\kappa^{-1}$. Clipping cannot increase its distance from
+$a_\kappa(K_\tau)$, and (55.3) makes this inverse uniformly Lipschitz.
+Equations (58.6)–(58.9) bound its height risk by $C_\tau(m^{-1}+h)$.
+
+For the actual estimator replace each increment by the principal
+argument of its observed circle increment, then use the same clipping
+and inverse. It agrees with the preceding estimator whenever all
+of the final $m$ real increments have absolute value less than $\pi$.
+The exact conditional normal law and (58.2) imply
+
+$$
+\mathbf Q_\kappa(\text{one of these increments wraps})
+ \le2m\exp\left(-\frac{\pi^2}{2a_+\Delta}\right).
+\tag{58.10}
+$$
+
+Both height estimates lie in $[l,u]$. The wrapped estimator's risk
+is therefore at most the unwrapped estimator's risk plus
+$2(u-l)^2m\exp[-\pi^2/(2a_+\Delta)]$. With the chosen $m$ this
+proves (58.5). No assumption about a Brownian interpolation of the
+data has entered the estimator. $\square$
+
+## 59. A lower bound inside the same stationary native source
+
+**Theorem 59.1 (sharp order of endpoint Bayes squared risk).**
+For each fixed $\tau>0$ there are constants $0<c_\tau<C_\tau<\infty$
+and $n_0$ such that, simultaneously for all $\kappa\in\mathcal K$,
+
+$$
+c_\tau n^{-1/2}\le R_{n,\kappa}\le C_\tau n^{-1/2}
+\qquad(n\ge n_0).
+\tag{59.1}
+$$
+
+In particular this holds along every sequence $\kappa(n)$ in the
+same fixed two-sided family, including sequences with actual zero
+values. The assertion is an order bound, not an exact leading
+constant or a larger-class minimax assertion.
+
+Proof. The upper bound is Theorem 58.3. We prove the lower bound by
+giving extra information about this same actual probability, retaining
+its exact weights.
+
+Choose a grid-aligned final interval of length $h=m\Delta$, where
+$m=\lceil\sqrt n\rceil$ and $s=\tau-h$. Write $x=K_s$, $z=K_\tau$,
+and express the final height segment in the coordinates
+
+$$
+K_{s+r}=x+\frac rh(z-x)+b_r,\qquad
+0\le r\le h,\qquad b_0=b_h=0.
+\tag{59.2}
+$$
+
+Enlarge the data to contain the full height and phase-driver past up
+to $s$, the bridge $b$ in (59.2), and the $m$ exact unwrapped phase
+increments on this final interval. They determine all original
+wrapped samples. Crucially, they do not contain $z$. This is a
+comparison experiment on the original probability space; no such
+additional service is asserted in (58.1).
+
+Let $\beta_h$ be the centered Brownian bridge measure with variance
+rate $\sigma^2$, and let
+$\gamma_h(w)=(2\pi\sigma^2h)^{-1/2}\exp[-w^2/(2\sigma^2h)]$.
+Given the past ending at $x$, the exact Q joint kernel of $(b,z)$ is
+
+$$
+\beta_h(db)\,\gamma_h(z-x)\,dz\,
+ e^{\lambda h}\frac{\phi(z)}{\phi(x)}
+ \mathbf1\left\{x+\frac rh(z-x)+b_r\in I\text{ for all }r\le h\right\}.
+\tag{59.3}
+$$
+
+Indeed an ordinary Brownian segment disintegrates into its endpoint
+normal density and an independent centered bridge: the covariance
+of the bridge with its endpoint is zero, so joint Gaussianity gives
+independence. Killing restricts that segment to staying in $I$, and
+the exact Doob derivative is $e^{\lambda h}\phi(z)/\phi(x)$.
+Thus (59.3) is the actual conditional Q kernel, not an approximation
+by a flat height prior. Conditional on $(x,b,z)$ the final unwrapped
+increments $y_j$ are independent $N(0,V_j(z))$, with
+
+$$
+V_j(z)=\int_{(j-1)\Delta}^{j\Delta}
+ a_\kappa\left(x+\frac rh(z-x)+b_r\right)dr,
+\quad 1\le j\le m.
+\tag{59.4}
+$$
+
+Select a closed interval $J\Subset I$ of positive length and a fixed
+$\rho>0$ such that every $x\in J$ is at distance at least $3\rho$
+from the boundary. Take a nonzero $\psi\in C_c^\infty((-1,1))$ with
+$0\le\psi\le1$. For sufficiently small $h$, form a subprobability
+$\nu_h$ by multiplying the exact joint law of the enlarged experiment
+and its target by
+
+$$
+\mathbf1_{\{x\in J\}}
+\mathbf1_{\{\sup_{r\le h}|b_r|\le\rho\}}
+\psi\left(\frac{z-x}{\sqrt h}\right)^2.
+\tag{59.5}
+$$
+
+The multiplier is at most one, so every nonnegative loss has
+$\mathbf E_{\mathbf Q_\kappa}\text{loss}\ge\int\text{loss}\,d\nu_h$.
+On this support $|z-x|\le\sqrt h\le\rho$ and the full segment
+in (59.2) stays in an interior compact set. The indicator in (59.3)
+is identically one wherever the multiplier is nonzero, with a
+positive margin from the actual absorbing faces.
+
+There are constants $c_0>0,C_0<\infty$, independent of small $h$ and
+of $\kappa$, such that
+
+$$
+\nu_h(1)\ge c_0,
+\qquad
+\int |\partial_z\log p_{\nu_h}|^2d\nu_h
+ \le C_0(h^{-1}+m).
+\tag{59.6}
+$$
+
+Here the density is with respect to the actual Q law of the past,
+$\beta_h(db)$, Lebesgue $dz$ and Lebesgue measure in the final
+unwrapped increments. Its derivative is taken at fixed past and fixed
+bridge, which are precisely the coordinates revealed to the estimator.
+
+To prove the mass bound, stationarity gives
+$\mathbf Q_\kappa(x\in J)=\pi(J)>0$. The bridge maximal second
+moment is at most $C\sigma^2h$: write it as
+$\sigma(W_r-rW_h/h)$ and apply the Brownian maximal inequality.
+Thus its displayed cutoff has probability at least $1/2$ for small
+$h$. On the remaining support $\phi(z)/\phi(x)$ is bounded above
+and below by positive constants. Substitution $z=x+\sqrt h\,u$
+in the endpoint integral gives a positive constant times
+$\int_{-1}^1\psi(u)^2\exp[-u^2/(2\sigma^2)]du$.
+Integration of the normal observation densities gives one.
+This proves $\nu_h(1)\ge c_0$.
+
+For the information bound, the part of the logarithmic derivative
+coming from the endpoint kernel and cutoff is
+
+$$
+S_0=-\frac{z-x}{\sigma^2h}+\frac{\phi'(z)}{\phi(z)}
+       +\frac{2}{\sqrt h}
+          \frac{\psi'((z-x)/\sqrt h)}{\psi((z-x)/\sqrt h)}.
+\tag{59.7}
+$$
+
+The ratio involving $\psi$ is used only where $\psi>0$. Its squared
+integral is well defined because the factor $\psi^2$ cancels the
+denominator, leaving $4\psi'^2/h$. The first term has squared
+integral at most $C/h$ by the scaled support; the second is bounded
+on the fixed interior compact set. Thus $\int S_0^2d\nu_h\le C/h$.
+There is no hidden derivative of a survival indicator on this support.
+
+From (55.3), the bounded derivative of $a_\kappa$, and (59.4),
+
+$$
+V_j\ge a_-\Delta,
+\qquad |V_j'|\le \|a_\kappa'\|_\infty\Delta,
+\qquad |V_j'/V_j|\le C.
+\tag{59.8}
+$$
+
+A centered normal observation of variance $V_j(z)$ has score
+
+$$
+S_j=\frac{V_j'}{2V_j}\left(\frac{y_j^2}{V_j}-1\right),
+\qquad
+\mathbf E[S_j\mid x,b,z]=0,
+\qquad
+\mathbf E[S_j^2\mid x,b,z]=\frac{(V_j')^2}{2V_j^2}\le C.
+\tag{59.9}
+$$
+
+The conditional scores are independent, and their cross terms with
+$S_0$ vanish as well. Summing proves the second part of (59.6),
+including the genuine Q factor $\phi(z)/\phi(x)$ in its score.
+
+For completeness, the information inequality needed here follows
+from one integration by parts. For any estimator $g$ measurable in
+the enlarged data, it is a function of the past, $b$ and the $y_j$,
+so it has no $z$ derivative in these coordinates. The cutoff makes
+the density vanish at its $z$ integration boundaries. Therefore
+
+$$
+\int(g-z)\,\partial_z\log p_{\nu_h}\,d\nu_h=\nu_h(1).
+\tag{59.10}
+$$
+
+This identity follows first for bounded $g$ by integrating
+$\partial_z((g-z)p_{\nu_h})$. For finite-risk $g$ it follows by
+truncation and Cauchy–Schwarz using (59.6); infinite-risk estimators
+already satisfy the required bound. A second Cauchy–Schwarz gives
+
+$$
+\mathbf E_{\mathbf Q_\kappa}(g-K_\tau)^2
+ \ge\int(g-z)^2d\nu_h
+ \ge\frac{\nu_h(1)^2}{\int|\partial_z\log p_{\nu_h}|^2d\nu_h}
+ \ge\frac{c}{h^{-1}+m}.
+\tag{59.11}
+$$
+
+This is the Bayesian information argument applied to a dominated
+subprobability of the same source. It does not change its drift,
+height prior, independent phase driver or target.
+
+If $R^{\rm more}_{n,\kappa}$ is the Bayes risk with the enlarged
+data, information inclusion has the direction
+
+$$
+R_{n,\kappa}\ge R^{\rm more}_{n,\kappa}
+ \ge\frac{c}{h^{-1}+m}.
+\tag{59.12}
+$$
+
+With $h=m\tau/n$ and $m=\lceil\sqrt n\rceil$, the last quantity is
+at least $c_\tau n^{-1/2}$ for large $n$. All constants used depend
+only on the fixed native data, the fixed horizon and the chosen
+interior cutoffs. The height law, $\phi$ and the bridge measure do
+not depend on $\kappa$; the observation bounds are uniform on the
+original fixed $\mathcal K$. At actual zero, $v$ and its variance
+function are exactly the same limiting native coordinates, so every
+step applies without adjoining $x$. This completes (59.1). $\square$
+
+## 60. Memory, Gaussian limits and the three actual path laws
+
+**Proposition 60.1 (what continuous recovery changes).**
+Theorem 55.2 refines, without altering, the eliminated-height memory
+and autonomous classification of §§49–54. Under (55.1), continuous
+$v$ history contains height at positive times, whereas a single
+current $v$ value and every finite sample set retain positive height
+uncertainty. The process $e^{iv_t}$ is not Markov in its completed
+natural filtration. The autonomous directions of Theorem 50.1 remain
+Brownian and independent of the entire height path. The folded
+nonautonomous directions of Theorem 56.1 are additional examples of
+continuous-path nonidentification; independence is not necessary for
+such failure.
+
+On every fixed nontrivial time interval the native continuous $v$
+path law is singular to the constant-variance Brownian law with the
+same averaged variance. More generally every nonconstant scalar
+native coefficient in Theorem 56.1 has this singularity, including
+the folded negative cases. Constant coefficients give exactly the
+Brownian exception. The full resolved native path and its rank-three
+Gaussian infrared approximation also have singular path laws; on the
+actual zero leaf the analogous comparison is between one instantaneous
+moving phase direction and the positive rank-two averaged covariance.
+These statements do not obstruct the weak long-time limits or the
+quantitative path-transport upper bounds already proved in Q.
+
+Proof. The first two assertions are Theorems 55.2 and 58.2; a single
+positive-time $v$ value is the $n=1$ experiment with that time as its
+horizon. For the Markov assertion fix $t>0$. The continuous-past
+conditional expectation of a small future circle increment satisfies
+
+$$
+\lim_{h\downarrow0}\frac1h
+ \mathbf E[2(1-\cos(v_{t+h}-v_t))\mid\mathcal H_t^v]
+ =a_\kappa(K_t)\quad\text{in }L^1.
+\tag{60.1}
+$$
+
+To see this, condition first on height: its value is
+$2(1-\exp[-\tfrac12\int_t^{t+h}a_\kappa(K_s)ds])$.
+Boundedness of $a_\kappa$, continuity and conditional contraction
+prove the limit, because $K_t$ is $\mathcal H_t^v$-measurable.
+If the circle phase were Markov, every expression on the left
+would be measurable in its current circle value. The $L^1$ limit
+would be too. Strict monotonicity of $a_\kappa$ would make $K_t$
+measurable in that single value, contradicting Theorem 58.2.
+The independence and folded statements are already proved in
+Theorems 50.1 and 56.1, respectively. In a folded nonconstant case,
+the record reveals $f(K_0)^2$ by variation and the limit towards
+zero on any positive prefix. This is a nondegenerate random variable
+under $\pi$, measurable in both height and observation histories;
+these histories therefore cannot be independent.
+
+For a scalar coefficient $f$, quadratic variation of its path is
+$2\int_0^t f(K_s)^2ds$. A nonconstant native rational $f$ has a
+nonconstant analytic square on $I$. Almost surely the height path
+on a nontrivial interval is not constant: its quadratic variation is
+$\sigma^2t>0$. The continuous image of such a height path contains
+an interval, on which an analytic nonconstant square cannot be
+constant. Consequently its phase quadratic variation is not a
+constant multiple of time. The matched Brownian law has deterministic
+linear quadratic variation. These disjoint Borel path events prove
+the scalar singularity. Circle path lifting preserves the same test.
+This uses the classical quadratic-variation distinction, not a new
+general singularity theorem.
+
+For the full resolved path the variation derivative is
+$2c_\kappa(K_s)c_\kappa(K_s)^{\mathsf T}$ of rank one, whereas the
+Gaussian in §36 has constant derivative $2M_\kappa$ of rank three.
+On the genuine zero leaf replace these by
+$2(A_0,B_0)(A_0,B_0)^{\mathsf T}$ and $2N_0$ of rank two.
+Again these are disjoint measurable path events. Weak convergence
+and convergence in a transport metric on continuous paths do not
+assert equivalence of path laws or preservation of quadratic variation;
+that functional is not continuous for the uniform topology. Thus
+there is no contradiction with §§36–40 or Q §§45–46. In particular
+Gaussian infrared rank measures temporal covariance accumulation,
+not the number of native phase drivers or physical spatial axes.
+$\square$
+
+**Proposition 60.2 (exact source weights and death boundaries).**
+Let $\rho$ be any common initial height probability on $I$, and use
+the same known initial phases for its killed and Q mixtures. Put
+$S_\rho(T)=\int_I S_k(T)\rho(dk)$. On full paths up to $T$,
+
+$$
+\frac{d\mathbb P_\rho^\kappa(\,\cdot\,,\zeta>T)}
+     {d\mathbb Q_\rho^\kappa}
+ =e^{-\lambda T}\frac{\phi(K_0)}{\phi(K_T)}.
+\tag{60.2}
+$$
+
+For the law obtained by conditioning that mixture on survival to $T$,
+its density on a prefix $\mathcal F_r$, $r\le T$, is
+
+$$
+\frac{d\mathbb P_\rho^\kappa(\,\cdot\mid\zeta>T)}
+     {d\mathbb Q_\rho^\kappa}\bigg|_{\mathcal F_r}
+ =\frac{e^{-\lambda r}\phi(K_0)S_{K_r}(T-r)}
+        {\phi(K_r)S_\rho(T)}.
+\tag{60.3}
+$$
+
+If instead each fixed-start law is first conditioned and then mixed
+with $\rho$, the denominator in (60.3) is $S_{K_0}(T)$.
+These are generally distinct initial-height laws. Formula (37.5)
+is their common fixed-start specialization.
+
+The pathwise identifying constructions above apply before death to
+the raw killed law and to a terminal-survivor law, with their own
+completed observation filtrations and exceptional null sets. Under
+an unknown initial law with positive density on the symmetric interval
+used in (56.8), the folded negative argument also persists on surviving
+compact-prefix events. The numerical risk theorem (59.1), however,
+is a theorem for $\rho=\pi$ under Q; no unchanged Bayes risk constant
+or uniform rate under a different source is asserted here.
+
+Proof. The finite-horizon Doob derivative at each fixed starting
+height is $e^{\lambda r}\phi(K_r)/\phi(K_0)$. Invert it on surviving
+paths and mix the same initial law to obtain (60.2). For a prefix
+conditioned on survival to $T$, multiply the killed prefix density
+by its actual remaining survival factor $S_{K_r}(T-r)$ and divide
+by $S_\rho(T)$. This proves (60.3). Performing conditioning before
+mixing instead divides by $S_{K_0}(T)$, as stated. All factors are
+positive at interior endpoints and are the original source factors,
+not observation-independent constants.
+
+For fixed finite $T$, these path laws are equivalent on survival;
+therefore any Q-almost-sure path identity has the asserted surviving
+version. For recovery at arbitrary times before the raw death,
+use countably many rational horizons and the same local variation
+identities. At death there is no surviving interior height: the raw
+process is at its cemetery state. If its record includes that state
+and one takes the limit of reconstructed predeath heights, this gives
+the absorbing face approached, not a continuation past death or a
+conservative raw law. The Q process itself has no finite death.
+
+On a compact symmetric interval the factors in (60.2)–(60.3) are
+bounded and positive; the reflection comparison consequently retains
+its two separated posterior possibilities for positive-density
+unknown initial laws. This is a local ambiguity assertion, not a
+transfer of the stationary endpoint risk. Globally $1/\phi(K_r)$
+is unbounded near either face. Integrability of the weights follows
+from the probability identities themselves, but uniform squared-risk
+bounds do not follow from mere absolute continuity. In (59.3) and
+(59.7) the actual Q factor and its derivative were explicitly kept;
+in (58.7)–(58.9) stationarity was explicitly used. These are the
+source-specific hypotheses that a different risk theorem would have
+to replace. No conditioning, reset, height sensor, changed clock or
+additional physical resource is provided by these measure identities.
+$\square$
+
+## 61. Mathematical suppliers and the scope of the observation theorem
+
+**Definition 61.1 (credited methods and native scope).**
+The quadratic-variation and Itô tools used inside §§55–60 are the
+classical continuous-semimartingale calculus; compare H. Föllmer,
+*Calcul d'Itô sans probabilités*, Séminaire de probabilités XV,
+[primary text](https://www.numdam.org/item/SPS_1981__15__143_0/).
+A supplied path and a refining partition with convergent squared
+increments are needed for that calculus. Here convergence and causal
+left differentiation are supplied in the proof of Theorem 55.2,
+and nested Itô variation is localized on interior compact sets.
+No arbitrary continuous record is presumed to have those properties.
+
+K. D. Elworthy, Y. Le Jan and X.-M. Li,
+*The Geometry of Filtering*,
+[arXiv:0810.2253v1](https://arxiv.org/html/0810.2253v1),
+§§2, 4–5, treats diffusion projection, filtering and non-Markovian
+observations, including the geometric role of the symbol. Its
+projectible-symbol framework is not an identification theorem for
+$f(K)^2$ with unknown stationary initial height in the present
+rational family: a folded scalar symbol here need not be a function
+of the current observed phase. The proofs above instead compute the
+native residue, its nested variation and its actual reflected source.
+F's full-class projection and reversible compression criteria remain
+separate premises and do not supply this path classification.
+
+M. E. Mancino, T. Mariotti and G. Toscano,
+*Asymptotic Normality for the Fourier spot volatility estimator in
+the presence of microstructure noise*,
+[arXiv:2209.08967v1](https://arxiv.org/html/2209.08967v1),
+§3 and its distinction from §4, places the noiseless $n^{1/4}$
+spot-volatility error scale in its classical Itô-semimartingale
+setting; the noisy scale is different. The present observations have
+no additive measurement noise. Their variance $a_\kappa(K)$ is a
+continuous Itô semimartingale after interior localization, but its
+stationary height drift has boundary singularities, and the target
+is the endpoint height on a circle-sampled known-parameter source.
+No interior-time Fourier central limit theorem, periodic extension,
+unknown-volatility minimax bound or noisy-data rate is imported as
+a proof of (59.1). The one-sided estimator and stationary moment
+bound (58.7)–(58.10) handle the endpoint and wrapping directly.
+
+M. Reiß, *Asymptotic equivalence for inference on the volatility
+from noisy observations*,
+[arXiv:1105.2128v1](https://arxiv.org/html/1105.2128v1),
+Theorem 6.2 and §8, gives Gaussian-experiment comparisons and
+nonparametric minimax conclusions for an unknown volatility function
+observed with additive Gaussian measurement error. Its equivalence
+theorem requires Hölder exponent $\alpha>(1+\sqrt5)/4$ and positive
+measurement-noise scale with its stated asymptotic relation. Here
+there is no additive measurement noise, and Itô's formula and (55.3)
+give $[a_\kappa(K)]_t=\sigma^2\int_0^t a_\kappa'(K_s)^2ds>0$.
+A Hölder path of exponent greater than $1/2$ has zero quadratic
+variation along uniform partitions, by summing its squared increment
+bound. Thus the smoothness hypothesis of that equivalence theorem
+does not hold for this native random variance. Its larger-function-class
+minimax conclusions are not a Bayes lower bound for the single native
+law (55.1); (59.3)–(59.12) supply that missing original-source argument.
+
+E. García-Portugués, M. Sørensen, K. V. Mardia and T. Hamelryck,
+*Langevin diffusions on the torus: estimation and applications*,
+[arXiv:1705.00296v1](https://arxiv.org/html/1705.00296v1),
+§2 and Proposition 1, describes wrapping densities and distinguishes
+toroidal diffusions from wrapped Euclidean processes whose projected
+histories can retain winding information. Its Proposition 1 assumes
+an ergodic Euclidean diffusion with a stationary density. The real
+$v$ lift here is not such an ergodic Euclidean source; it has a
+separate latent stationary height. That proposition is not applied
+as a native Markov or recovery theorem. Here the wrapped likelihood
+(58.3) follows directly by summing the conditional Gaussian increments,
+and (58.10) bounds its high-frequency winding error under the actual
+height mixture. Continuous path lifting and finite wrapped sampling
+therefore remain distinct observation resources.
+
+The lower-bound mechanism is the classical Bayesian information
+inequality, as in R. D. Gill and B. Y. Levit,
+*Applications of the van Trees Inequality: A Bayesian Cramér–Rao
+Bound*, Bernoulli 1 (1995),
+[DOI 10.2307/3318681](https://doi.org/10.2307/3318681).
+The relevant hypotheses are a differentiable dominated density,
+vanishing boundary terms, a target with derivative one, and finite
+integrated squared score. They are proved for the actual native
+bridge disintegration and its compact cutoff in (59.3)–(59.10), and
+the inequality itself is derived there. In particular a minimax
+bound over variable diffusion coefficients is not substituted for
+a Bayes bound under the single fixed coefficient and prior here.
+
+The native content is the exhaustive rational and lawful-character
+classification, its reflection ambiguity under the actual source,
+and the attained two-sided endpoint-height risk with the original
+wrapped data and uniform fixed-family constants. Generic variation,
+Gaussian bridge, filtering and information methods are not asserted
+as new results. These mathematical statements provide no physical
+$SO(3)$ symmetry, spatial-dimension selection, source-supplied sensor,
+finite-precision acquisition, finite CPU/bit/shot bound, minimum
+nonlinear observer dimension, new attraction or binding assertion,
+or Lean-kernel certificate. They preserve the earlier raw, Q,
+terminal-survivor, zero-leaf, memory and infrared meanings.
+
+## 追加锚（本行以下为增补区）
+
+## 62. An unknown fixed native calibration
+
+**Definition 62.1 (the experiment and its target).** Retain exactly G
+Definition 25.1, Definition 35.1 and the actual stationary-height law
+(55.1), with known $H,I=(l,u),\varepsilon$, original clock, initial
+original phases and height law. These native premises are taken at
+[`6198ac3642d19f48f815df872aef049954aca64b`](https://github.com/the-omega-institute/trureturing/tree/6198ac3642d19f48f815df872aef049954aca64b/docs/develop/theory).
+Choose once, before observing,
+
+$$
+w=u-l,\qquad
+\delta=\min\{\kappa_*/2,w/8\}>0,\qquad
+\mathcal K_{\rm cal}=[-\delta,\delta].
+\tag{62.1}
+$$
+
+Here $\kappa_*$ is the fixed admissible radius of Definition 35.1;
+in particular the margins and $|\kappa|<H$ used in (55.5) hold.
+The parameter $\kappa\in\mathcal K_{\rm cal}$ is fixed and unknown.
+For every parameter the height has the same stationary Q law,
+$K_0\sim\pi=\phi^2dk$, and satisfies (37.8). The initial height is
+unobserved. Write $\mathbf Q_\kappa$ for the actual original-coordinate
+law, including frozen $D=D_0$ at actual zero. The supplied data at $t$
+are only the ideal continuous record $(e^{iv_s})_{0\le s\le t}$.
+The target is $T_t=(\kappa,K_{[0,t]})$.
+
+A family recovery means one Borel function of that record, independent
+of the unknown parameter, correct $\mathbf Q_\kappa$-almost surely
+for every $\kappa$. Lawwise null completion is allowed, as in (55.2),
+but a different decoder selected using $\kappa$ is not family recovery.
+No right-continuization at zero is made. If a parameter prior $\nu$ is
+explicitly supplied, its experiment is
+$\mathbf P_\nu(d\kappa,d\omega)=\nu(d\kappa)\mathbf Q_\kappa(d\omega)$;
+conditional on every parameter the height law remains exactly $\pi$
+and (37.8). A completed-prior estimator has a Borel version under its
+observation law; all data fields in that experiment use its own null
+completion. The parameterwise and prior meanings are distinct.
+
+**Definition 62.2 (shifted native coordinates).** Put
+
+$$
+\begin{aligned}
+r&=|\kappa|,&\alpha_\kappa&=\kappa+\kappa^2/H,&
+U_s&=K_s-\alpha_\kappa,\\
+d_r&=2r^2/H,& b_r&=r^2(1-r^2/H^2),&
+F_r(u)&=u+d_r-b_r/u.
+\end{aligned}
+\tag{62.2}
+$$
+
+The symbol $b_r$ here is a scalar polynomial, distinct from the
+coefficient $b_\kappa(k)$ in G (25.4). All admissible shifted heights
+are positive. Polynomial division in (55.5) gives the exact identity
+
+$$
+-2HB_\kappa(K_s)=F_r(U_s)>0.
+\tag{62.3}
+$$
+
+Thus the change $(\kappa,K)\mapsto(-\kappa,K-2\kappa)$ preserves
+the entire $v$ coefficient wherever both height paths are admissible.
+This algebra alone is not an assertion about equivalence of source laws.
+The law comparison is part of Theorem 64.1 below. The source-specific
+results in §§63–67 are `repo-derived` ordinary mathematical consequences
+of these fixed premises. Their classical intermediate tools are credited
+in Definition 68.1.
+
+## 63. Calibration magnitude from nested variation
+
+**Theorem 63.1 (one causal construction for the whole fixed family).**
+There is a parameter-independent Borel causal construction from the
+wrapped $v$ history which recovers
+
+$$
+Q_t=(r,U_{[0,t]})\qquad(t>0).
+\tag{63.1}
+$$
+
+For each fixed $\kappa$ there is one $\mathbf Q_\kappa$-null set
+outside which the construction is correct simultaneously at every
+positive time. For any supplied prior there is likewise one joint
+null set. The construction identifies actual zero exactly and there
+recovers $K_{[0,t]}$. It does not require a moving comparison $x$.
+
+Proof. Use the causal circle lift and dyadic variation construction of
+Definition 55.1 and Theorem 55.2. For a continuously differentiable
+variation function write $\partial_- [X]_s$ for its left derivative
+at $s>0$. First form the continuous observable path
+
+$$
+Z_s=H\sqrt{2\partial_-[v]_s}=F_r(U_s),\qquad s>0,
+\tag{63.2}
+$$
+
+and recover its value at zero by its right limit. Since the height
+variance rate is the known $\sigma^2=2\varepsilon^2$, Itô variation
+of this recovered path gives
+
+$$
+J_s=\sqrt{\partial_-[Z]_s/\sigma^2}
+    =1+b_r/U_s^2.
+\tag{63.3}
+$$
+
+The positive square root is justified by
+$F_r'(u)=1+b_r/u^2>0$. Recover $J_0$ by continuity and repeat once:
+
+$$
+L_s=\sqrt{\partial_-[J]_s/\sigma^2}=2b_r/U_s^3.
+\tag{63.4}
+$$
+
+When $J_s=1$ we have $b_r=0$. Since $r<H$, this is precisely $r=0$;
+then $U=K=Z$. Otherwise $J_s>1,L_s>0$, and the explicit inverses are
+
+$$
+U_s=\frac{2(J_s-1)}{L_s},\qquad
+ d_r=Z_s+(J_s-2)U_s,\qquad
+ r=\sqrt{Hd_r/2}.
+\tag{63.5}
+$$
+
+Indeed (63.3) gives $b_r=(J_s-1)U_s^2$, and substitution into
+$Z_s=U_s+d_r-b_r/U_s$ proves (63.5). These formulas use no unknown
+calibration in their inputs. In particular no inversion of a supplied
+$a_\kappa$ is hidden in the construction.
+
+Here every recovered continuous path used in a subsequent variation
+is evaluated from prefixes only. On $[0,t]$ its zero value is the limit
+of its already recovered positive-time values, using times at most $t$.
+For any finite horizon the Q height stays in a compact subset of $I$.
+On such a subset the coefficients, the Q drift and all derivatives
+appearing in (63.2)–(63.4) are bounded. The localized dyadic convergence
+argument in Theorem 55.2 therefore applies successively to $v,Z,J$.
+Intersect its full-measure events for the three levels, countably many
+compact localizations and integer horizons. This gives one exceptional
+null set for each law, not a separately chosen exception at every time.
+Left differentiation then works at every positive real time, including
+the terminal time, because the variation integrands are continuous.
+Continuity supplies the whole prefix and its initial value.
+
+All sums, left derivative limits, square roots and continuous extensions
+are Borel operations on the supplied path; derivatives can be taken
+through rational positive increments tending to zero. On failure of
+limits, range tests or positivity tests assign a fixed default output.
+For a continuous prefix output, use the recovered rational-time values
+and their unique continuous extension; the requisite uniform continuity
+and range tests use only countably many rational comparisons.
+This defines the same decoder for all parameters. The success event is
+measurable jointly with the parameter, so integration of its lawwise
+null sections proves the assertion for every supplied prior. No claim
+of a uniform finite-precision bound near $r=0$ follows from the divisions
+in (63.5). $\square$
+
+## 64. The complete target quotient and its actual source laws
+
+**Theorem 64.1 (finite-prefix quotient modulo actual-law null sets).**
+Fix $t>0$. For $r\in(0,\delta]$ define
+
+$$
+\alpha_\pm=\pm r+r^2/H,\qquad
+I_\pm=I-\alpha_\pm,\qquad
+E_\pm=\{u\in C([0,t]):u_s\in I_\pm\ \hbox{for all }s\le t\}.
+\tag{64.1}
+$$
+
+The recovered $(r,u)$ has the candidate target set
+
+$$
+\mathcal C_t(r,u)
+ =\{(sr,u+\alpha_s):s\in\{+,-\},\ u\in E_s\}.
+\tag{64.2}
+$$
+
+At $r=0$ it is the singleton $(0,u)$. At $r>0$ it has one or two
+members, always including the actual target. Both sign laws give
+positive mass to $E_+\cap E_-$. Their restrictions there are equivalent,
+with the exact height-path density ratio
+
+$$
+\frac{\phi(u_0+\alpha_+)\phi(u_t+\alpha_+)}
+     {\phi(u_0+\alpha_-)\phi(u_t+\alpha_-)}.
+\tag{64.3}
+$$
+
+The equivalence includes the entire observed wrapped $v$ prefix.
+Outside this overlap the single admissible candidate is recovered.
+Consequently the family has no exact recovery of $T_t$, of its signed
+parameter, or of any one height $K_s$, $0\le s\le t$, at any fixed
+finite positive horizon. On each sign law the singleton event also
+has positive probability. Thus nonrecovery is a local overlap
+obstruction, not equivalence of the two full observation laws.
+
+More completely, let $h(\kappa,k)$ be any Borel target function on
+$\mathcal K_{\rm cal}\times C([0,t],I)$ with values in a standard Borel
+space. It has exact family recovery if and only if, for every
+$r\in(0,\delta]$,
+
+$$
+h(r,u+\alpha_+)=h(-r,u+\alpha_-)
+\quad\hbox{for }\Lambda_t\hbox{-almost every }u\in E_+\cap E_-.
+\tag{64.4}
+$$
+
+Here $\Lambda_t=\int_{\mathbb R}da\,\mathbb P_a^{\sigma\rm BM}$
+is the Brownian-height reference measure, with variance rate
+$\sigma^2$. Thus (63.1), with (64.2) understood, is a complete
+recoverable quotient relative to this target. Equality is required
+modulo the actual common-law null sets, not on every algebraically
+possible continuous path. The observation still contains ancillary
+phase randomness; no equality of its entire sigma-field with the
+quotient sigma-field is asserted.
+
+Proof. The exact stationary Q density of height relative to Brownian
+height on $[0,t]$ is the already proved (56.8). Translating height by
+$\alpha_s$ therefore gives
+
+$$
+f_s(u)=e^{\lambda t}\phi(u_0+\alpha_s)\phi(u_t+\alpha_s)
+             \mathbf1_{E_s}(u)
+\tag{64.5}
+$$
+
+relative to $\Lambda_t$. This is an identity for the actual source:
+its initial density is $\phi(k_0)^2$, its Doob factor is
+$e^{\lambda t}\phi(k_t)/\phi(k_0)$, and translation preserves Brownian
+increments and Lebesgue initial measure. In particular the two laws
+are not obtained by replacing the Q drift with a translation-invariant
+one. Their shifted drifts generally differ.
+
+Conditional on $u$, both sign laws have the identical original phase
+kernel $\Gamma_r(dv\mid u)$: its continuous real increments are
+
+$$
+v_a-v_0=-\frac1{\sqrt2H}\int_0^a F_r(u_s)\,dW_s^2,
+\qquad 0\le a\le t,
+\tag{64.6}
+$$
+
+then wrapped with the prescribed common initial phase. The driver is
+independent of height. On paths outside the two admissible domains
+extend this kernel arbitrarily; the densities (64.5) vanish there.
+The joint densities of $(u,v)$ are exactly $f_s(u)$ with respect to
+$\Lambda_t(du)\Gamma_r(dv\mid u)$. Both are strictly positive on
+the overlap. This proves (64.3), equivalence there and the absence of
+any additional sign information from the conditional phase noise.
+
+The interval $I_+\cap I_-$ has length $w-2r\ge3w/4>0$.
+Brownian height started with Lebesgue measure in a smaller interior
+interval has positive probability of remaining there for any fixed
+finite $t$. The endpoint weights in (64.5) are positive. Hence the
+common overlap has positive probability under both actual laws.
+Conversely, under the plus law $K_0\in(l,l+2r)$ has positive
+probability and implies $u_0\notin I_-$; under the minus law use
+$K_0\in(u-2r,u)$. These are positive-probability singleton events.
+Membership of $E_s$ is Borel: on a compact time interval it is exactly
+the strict lower and upper bounds on the continuous path's extrema.
+Any actual finite Q path belongs to its own $E_s$.
+
+Theorem 63.1 supplies $r,u$ from the observation. If (64.4) holds,
+select the plus candidate when admissible and otherwise the minus
+candidate, and output $h$ of that target. This is Borel, also jointly
+in $r$. For the true minus law its only possible error is the subset
+of the overlap where (64.4) fails. Equation (64.5) makes that subset
+null. The plus and zero laws are handled directly. This proves
+sufficiency with the parameterwise quantifiers in Definition 62.1.
+
+For necessity suppose a common observation decoder recovers $h$ for
+both parameters $r,-r$. Restrict their joint laws to the overlap.
+By their equivalence, both equalities for that same decoder hold
+almost everywhere under the common reference restricted there.
+Their right sides are respectively the two sides of (64.4), functions
+of $u$ alone. Integrating out the probability kernel $\Gamma_r$ forces
+(64.4) for $\Lambda_t$-almost every such $u$. Apply this argument for
+each $r$. The signed targets differ by $2r$ and their heights differ
+by the constant $2r$ at every time, proving all the stated failures.
+This argument is a witness under actual source measures, and not
+merely a collision of (62.3). $\square$
+
+**Proposition 64.2 (the exact supplied-prior posterior).** Disintegrate
+any Borel parameter prior over $r=|\kappa|$. For almost every nonzero
+$r$ under its magnitude marginal, let $p_+(r),p_-(r)$ be its
+conditional sign probabilities. After observing a positive prefix
+with recovered $(r,u)$ the posterior weights of the two targets
+in (64.2) are
+
+$$
+P_s(r,u)=
+\frac{p_s(r)\phi(u_0+\alpha_s)\phi(u_t+\alpha_s)
+                  \mathbf1_{E_s}(u)}
+ {\sum_{j\in\{+,-\}}p_j(r)\phi(u_0+\alpha_j)
+                       \phi(u_t+\alpha_j)\mathbf1_{E_j}(u)}.
+\tag{64.7}
+$$
+
+The denominator is positive almost surely. At zero the posterior
+target is $(0,u)$. In particular with positive prior weight on both
+signs at a fixed magnitude, both posterior weights are strictly
+positive throughout the overlap modulo null sets. With only one
+prior sign the parameter and heights are exactly recoverable.
+
+Proof. Conditional on $r$, multiply (64.5) by $p_s(r)$ and use the
+same phase kernel (64.6). Bayes' formula cancels this kernel and
+$e^{\lambda t}$. Since $r,u$ are themselves recovered, conditioning
+on the entire observation yields (64.7). Standard Borel
+disintegration defines $p_s$ up to the stated marginal null sets;
+no conditional probability at an unspecified zero-mass magnitude
+is required. The zero case follows from Theorem 63.1. $\square$
+
+## 65. A positive all-estimator task-risk obstruction
+
+**Theorem 65.1 (one explicit paired native experiment).** Fix any
+$r\in(0,\delta]$ and finite $t>0$. Supply exactly the prior
+$\nu_r=(\delta_r+\delta_{-r})/2$, independent of the same stationary
+Q height source, with the same original clock and initial phases.
+For every estimator $(\widehat\kappa,\widehat k)$ based on the complete
+wrapped $v$ prefix, including completed-data or independently randomized
+estimators, there is an explicit $m_{r,t}>0$ such that
+
+$$
+\begin{aligned}
+\mathbf E_{\nu_r}(\widehat\kappa-\kappa)^2&\ge r^2m_{r,t},\\
+\mathbf E_{\nu_r}(\widehat k-K_t)^2&\ge r^2m_{r,t},\\
+\mathbf E_{\nu_r}\bigl[(\widehat\kappa-\kappa)^2+
+                              (\widehat k-K_t)^2\bigr]&\ge2r^2m_{r,t}.
+\end{aligned}
+\tag{65.1}
+$$
+
+For sign classification the error probability is at least
+$m_{r,t}/2$. Each bound also lower-bounds the maximum of the two
+corresponding parameterwise risks. It does not say that every
+estimator has positive parameter risk at each individual parameter:
+a constant correct parameter estimator is the elementary exception.
+No prior is implicit in a parameterwise statement.
+
+Proof. Set $m=(l+u)/2$ and choose the closed common interval
+
+$$
+J=[m-r^2/H-w/8,\ m-r^2/H+w/8],\qquad L=|J|=w/4.
+\tag{65.2}
+$$
+
+For either sign, $J+\alpha_s$ is centered at $m+sr$ and has radius
+$w/8$; since $r\le w/8$, it lies strictly inside $I$. Put
+
+$$
+a_J=\min_{s\in\{+,-\},\ z\in J}\phi(z+\alpha_s)>0,
+\qquad
+m_{r,t}=e^{\lambda t}a_J^2\frac{8L}{\pi^2}
+                   \exp(-\varepsilon^2\pi^2t/L^2)>0.
+\tag{65.3}
+$$
+
+In fact $J+\alpha_s\subset[m-w/4,m+w/4]$, so $a_J^2\ge1/w$
+and $m_{r,t}\ge(2/\pi^2)e^{-15\lambda t}$ throughout this fixed
+nonzero family. The task-risk bound still has the factor $r^2$.
+
+Let $\Lambda_{J,t}$ be Brownian height with Lebesgue initial measure
+on the interior of $J$, restricted to paths staying in that interior
+up to $t$. Define a common submeasure of the two actual joint laws by
+
+$$
+M(du,dv)=e^{\lambda t}
+ \min_{s\in\{+,-\}}\{\phi(u_0+\alpha_s)\phi(u_t+\alpha_s)\}
+ \Lambda_{J,t}(du)\Gamma_r(dv\mid u).
+\tag{65.4}
+$$
+
+This is dominated by each sign's joint law in (64.5)–(64.6), retaining
+its actual target. Its mass is at least $m_{r,t}$: integration of the
+Dirichlet sine kernel over both endpoints of an interval of length $L$
+gives
+
+$$
+\Lambda_{J,t}(1)=\sum_{n\ge1,\ n\ {
+\rm odd}}\frac{8L}{n^2\pi^2}
+                  e^{-\varepsilon^2n^2\pi^2t/L^2},
+\tag{65.5}
+$$
+
+and its first term suffices. This is the same killed Brownian
+calculation as (37.3); it is only a reference submeasure inside the
+unchanged conservative Q experiment, not a new killed observation law.
+
+On this common submeasure put $c=u_t+r^2/H$. The two target pairs
+are $(r,c+r)$ and $(-r,c-r)$. For any real $a,b$,
+
+$$
+\frac{(a-r)^2+(a+r)^2}{2}\ge r^2,\qquad
+\frac{(b-c-r)^2+(b-c+r)^2}{2}\ge r^2.
+\tag{65.6}
+$$
+
+Integrating these inequalities against $M$ proves (65.1), because
+each source risk dominates its $M$ loss and the prior weights are
+$1/2,1/2$. A binary decision is wrong for at least one of the two
+labels at every common data value, giving $M(1)/2$. Adding the same
+independent randomization kernel preserves the argument. Completed
+estimators have Borel versions under the mixture law, whose null sets
+are null under both components. Finally an average of two risks is
+at most their maximum. The lower bound may tend to zero with $r$ or
+with increasing $t$; neither a uniform positive bound near zero nor
+an infinite-window obstruction is claimed. No Q risk is transferred
+to a survivor or raw killed source here. $\square$
+
+## 66. The least original-coordinate augmentations
+
+**Theorem 66.1 (either other original phase is sufficient and minimal).**
+Among augmentations of the stipulated $v$ record by subsets of the
+other original continuous wrapped coordinate records $\theta,D$,
+the two inclusion-minimal sufficient choices are $\{\theta\}$ and
+$\{D\}$. Each recovers the signed parameter and whole height prefix
+at every positive time by one parameter-independent causal Borel
+construction, with one lawwise null set for all positive times.
+The assertion includes actual zero with frozen $D$.
+
+Proof. Lift each supplied circle path causally using its known initial
+phase. Use polarization of the dyadic variation sums for cross
+variations. Theorem 63.1 first gives $r,U$. At a positive time put
+$c=U+r^2/H=K-\kappa$. By the original probability margins,
+
+$$
+H-c=H+\kappa-K>0,\qquad
+c^2-r^2=K(K-2\kappa)>0.
+\tag{66.1}
+$$
+
+From $v,\theta$ compute
+
+$$
+q_\theta=\frac{\partial_-[\theta,v]}{\partial_-[v]}
+        =\frac{A_\kappa(K)}{B_\kappa(K)},\qquad
+R=1-q_\theta=\frac{H+\kappa}{K}.
+\tag{66.2}
+$$
+
+Here $\partial_-[v]>0$ and $R-1=(H-c)/K>0$. Since
+$R(c+\kappa)=H+\kappa$, the signed recovery formula is
+
+$$
+\kappa=\frac{H-Rc}{R-1},\qquad K=c+\kappa.
+\tag{66.3}
+$$
+
+It works also at zero. Alternatively, from $v,D$ compute
+
+$$
+q_D=\frac{\partial_-[D,v]}{\partial_-[v]}
+   =\frac{\kappa b_\kappa(K)}{B_\kappa(K)}
+   =-\frac{2\kappa(H-c)}{c^2-r^2}.
+\tag{66.4}
+$$
+
+Both factors in (66.1) are strictly positive. Hence for $r>0$,
+$\kappa=-r\operatorname{sign}(q_D)$; for $r=0$, set $\kappa=0$.
+Then $K=U+\kappa+r^2/H$. At zero (66.4) is exactly zero because
+the actual $D$ is frozen; it is not an observation of comparison $x$.
+All cross variations and left derivatives are available from the
+supplied prefixes, and the single-null-set localization argument of
+Theorem 63.1 applies to these finitely many additional operations.
+Continuity recovers the entire prefix, including $K_0$.
+
+The empty augmentation is insufficient by Theorem 65.1 under the
+explicit paired actual-source prior. Both singleton augmentations
+are sufficient by the formulas just proved, and the pair
+$\{\theta,D\}$ contains either sufficient singleton. These exhaust
+the four stipulated subsets and prove minimality in that comparison.
+No assertion about arbitrary sensors or a minimum nonlinear observer
+state dimension is used. $\square$
+
+## 67. Finite windows, infinite histories and the time-zero boundary
+
+**Theorem 67.1 (resolution in time and the initial germ).** For the
+original $v$ experiment the following distinctions hold.
+
+For each $r>0$ and either actual sign, the candidate set (64.2)
+eventually becomes a singleton at some finite random positive horizon,
+almost surely. Nevertheless no deterministic finite horizon suffices
+almost surely for family signed-parameter recovery. On the infinite
+continuous history,
+
+$$
+\inf_{s\ge0}U_s=l-\alpha_\kappa,\qquad
+\sup_{s\ge0}U_s=u-\alpha_\kappa,\qquad
+\kappa=l-\inf_{s\ge0}U_s-r^2/H,
+\tag{67.1}
+$$
+
+almost surely; thus the full target history is recovered. At zero
+there is already positive-prefix recovery by Theorem 63.1.
+
+At time zero alone, known initial phases leave $K_0$ with law $\pi$;
+under any supplied parameter prior the posterior joint law of
+$(\kappa,K_0)$ is exactly $\nu\otimes\pi$. The positive-time germ
+$\mathcal H_{0+}^v=\bigcap_{t>0}\mathcal H_t^v$ contains $r,U_0$.
+For the paired prior $\nu_r$ its sign posterior, conditional on that
+germ, is
+
+$$
+P_s^{0+}(r,a)=
+\frac{\phi(a+\alpha_s)^2\mathbf1_{I_s}(a)}
+ {\phi(a+\alpha_+)^2\mathbf1_{I_+}(a)+
+  \phi(a+\alpha_-)^2\mathbf1_{I_-}(a)}.
+\tag{67.2}
+$$
+
+In particular the germ does not resolve the signs on the initial
+interval overlap, which has positive probability. Null completion
+alone never converts $\mathcal H_0^v$ into this germ.
+
+Proof. By (37.9), choose a fixed $T$ large enough that the Q height
+transition density relative to $\pi$ is at least $1/2$ everywhere.
+For any nonempty open $A\Subset I$, the conditional chance of
+$K_{nT}\in A$ is at least $\pi(A)/2$, uniformly in the preceding
+history. Iterating the conditional bound shows that avoiding $A$
+for $n$ such trials has probability at most
+$(1-\pi(A)/2)^n$. The same argument from every trial index proves
+visits at arbitrarily large times. Apply it to countably many
+intervals approaching each endpoint. Thus $\inf K=l,\sup K=u$
+almost surely, proving (67.1).
+
+For the plus sign, a visit to $(l,l+2r)$ excludes the minus
+candidate, since its translated candidate height is $K-2r\notin I$.
+For the minus sign a visit to $(u-2r,u)$ excludes the plus candidate.
+Such visits occur in finite time by the same argument. Candidate
+sets decrease as the horizon grows. This proves eventual resolution;
+Theorem 65.1 supplies the positive obstruction at every deterministic
+finite horizon. The bounds are consistent because their overlap
+mass need not stay bounded away from zero as $t\to\infty$.
+
+For the germ statement Theorem 63.1 gives $r,U_0$ on every positive
+prefix, using the same maps and null conventions. Under $\nu_r$,
+(64.7) is the posterior of the sign on each $\mathcal H_t^v$.
+Let $t\downarrow0$ along $1/n$. For an initial point strictly inside
+both $I_s$, continuity keeps the path inside both for all sufficiently
+small times. If it is outside one interval, that candidate is already
+excluded at zero. Initial points at the finitely many interval
+endpoints have probability zero under the continuous initial density.
+Since $U_t\to U_0$, (64.7) converges to (67.2). To justify conditioning
+on the intersection, put $p_n=\mathbf E[\mathbf1_{\{\kappa=sr\}}
+\mid\mathcal H_{1/n}^v]$. For $m>n$, nested conditional expectation
+and orthogonality give
+$\|p_n-p_m\|_2^2=\|p_n\|_2^2-\|p_m\|_2^2$.
+The decreasing bounded squared norms make $(p_n)$ Cauchy in $L^2$.
+Its limit has a version measurable in every completed
+$\mathcal H_{1/n}^v$, hence in their intersection; integrating against
+any bounded intersection-measurable function identifies it as the
+conditional expectation on that intersection. The explicit bounded
+pointwise limit (67.2) is the same $L^2$ limit. This is the classical
+reverse-martingale projection argument, applied here to the native
+posterior, and proves the claim for $\mathcal H_{0+}^v$.
+Both weights are positive on the initial overlap; the corresponding
+heights differ by $2r$. This proves the claimed initial-target
+ambiguity even for the germ. At time zero the raw observation is
+constant, and completion changes conditional laws only on null sets,
+which proves the separate $\nu\otimes\pi$ assertion. $\square$
+
+**Proposition 67.2 (sampling and calibration are separate limitations).**
+For every finite collection of deterministic phase sample times in a
+positive finite window, the original wrapped $v$ samples do not recover
+height even at a supplied known parameter. A prior giving positive
+weight to two distinct parameters prevents exact signed-parameter
+recovery from those samples. Exact magnitude recovery also fails when
+the two absolute values differ, and sign classification fails when
+the two nonzero signs differ. These facts coexist with Theorem 63.1
+and the infinite-history conclusion above.
+
+Proof. Reuse Theorem 58.2, whose strictly positive conditional wrapped
+Gaussian density argument applies also to unequal positive spacings.
+The single-time sample case is included. In the paired experiment,
+under either parameter the vector of noninitial wrapped phase samples
+has a strictly positive density with respect to the same finite
+product of circle Lebesgue measures: condition on height and use the
+positive Gaussian periodization (58.3), then integrate. Thus the two
+sample laws are equivalent, for any two distinct parameters in the
+fixed family, including a zero and a nonzero one. No exact test can
+separate either signs or distinct magnitudes from those finite samples.
+For height use the already proved known-parameter result; removing
+calibration information cannot improve an exact recovery task.
+A finite ideal continuous prefix supplies infinitely many variation
+increments, so is a different experiment. $\square$
+
+## 68. Native correspondence, credited tools and geometric scope
+
+**Definition 68.1 (suppliers and the remaining interpretation boundary).**
+The hypotheses and coefficients in §§62–67 are exactly G (25.1)–(25.5),
+L (35.1)–(35.2), (37.2), (37.8)–(37.9) and Definition 55.1.
+Theorem 55.2 is reused for causal lifting, variation versions and
+known-calibration height recovery; Theorems 56.1 and 57.1–57.3 concern
+known-parameter rational projections and characters. They do not supply
+an unknown signed calibration. Theorems 58.2–59.1 keep their
+known-parameter finite-sample meanings and their stationary Q risk.
+The new native content is (63.2)–(63.5), the translated actual-law
+quotient (64.4) and posterior (64.7), its paired-source risk (65.1),
+and the signed minimal original-coordinate recovery (66.2)–(66.4).
+These statements are `repo-derived`; no worldwide priority is asserted.
+
+The intermediate quadratic-variation and Itô operations are classical.
+H. Föllmer, *Calcul d'Itô sans probabilités*,
+[primary text, pp.143–150](https://www.numdam.org/item/SPS_1981__15__143_0/),
+defines variation along fixed refining subdivisions and proves the
+$C^2$ change-of-variable formula. Here the localized semimartingale
+convergence and common versions are supplied by Theorem 55.2; arbitrary
+continuous paths are not presumed to satisfy them. Iterating that
+calculus gives (63.3)–(63.4), while their rational inverse is native.
+The ground-state density calculation is the classical Doob transform
+already proved in Theorem 37.2. The common-submeasure testing argument
+and Bayes disintegration in §§64–65 are classical statistical tools;
+the exact common measures and targets here are (64.5) and (65.4),
+and the squared-loss bounds are derived directly in (65.6).
+The classical decreasing-field $L^2$ projection argument is supplied
+inside the proof identifying the germ conditional expectation (67.2).
+
+K. D. Elworthy, Y. Le Jan and X.-M. Li,
+*The Geometry of Filtering*,
+[arXiv:0810.2253v1](https://arxiv.org/html/0810.2253v1), §§2.4 and 5.1,
+provides the projectible-symbol and non-Markovian filtering background.
+Section 2.4 assumes a projectible constant-rank symbol; §5.1 assumes
+conservative cohesive descent with a conservative reference and a
+horizontal drift correction. The projection onto $v$ has variance
+$2B_\kappa(K)^2$ depending on the hidden height, so merely supplying
+its history does not meet that projectible-symbol hypothesis. No
+identification theorem from that framework replaces the explicit
+translated stationary density or unknown-parameter inverse here.
+The [fixed-probability relative-phase torus bijection](https://github.com/the-omega-institute/trureturing/blob/6198ac3642d19f48f815df872aef049954aca64b/D5/S3/Quantum/Fibers/ProjectiveInteriorProbabilityFiber.lean)
+concerns a different target: phases conditional on supplied basis
+probabilities. Its private reconstruction proof and public bijection do
+not supply the missing native parameter or unobserved height in this
+stochastic experiment.
+
+**Proposition 68.2 (compatibility with memory and effective phase rank).**
+The family quotient above refines the observation question without
+altering Theorems 49.1, 50.1, 54.1 or 60.1. In particular it implies
+no physical spatial dimension, physical $SO(3)$ symmetry or acquisition
+service. The instantaneous native phase rank, effective long-time
+phase rank and current-state manifold dimension remain different
+quantities.
+
+Proof. At each fixed parameter the same height source, coefficient
+functions and original clock are used. Thus the compression defect
+of F Proposition 5.1 and its native consequences (49.3), (50.1)–(50.2)
+are unchanged. Pathwise height recovery at known calibration was already
+compatible with nonzero eliminated-height memory in Proposition 60.1.
+With unknown calibration (63.1) initially leaves the two translated
+possibilities, and (64.3) explains their finite-prefix overlap without
+making $v$ autonomous. At a resolved sign, the old known-parameter
+inverse (55.4) and the new reconstruction agree on the actual height.
+At actual zero they both give $K=Z$ and frozen $D$.
+
+Theorem 40.1 still gives instantaneous phase rank one and full symbol
+rank two, whereas the temporal covariance averages have effective
+phase rank three at fixed nonzero parameter and rank two on the actual
+zero leaf. The state-manifold and current-ray counts in §§39–40 have
+their own definitions; a statistical parameter is not another moving
+spatial coordinate. N Theorem 10.5 still obstructs a smooth same-clock
+elliptic three-dimensional factor. Neither recovery of a parameter
+nor adding an observed original phase changes that symbol. Therefore
+no implication to physical three-space, a minimum nonlinear state
+count, finite bit/shot/CPU resources or an empirical realization follows.
+The native physical-observation bridge remains unspecified. The risk
+and posterior assertions here concern conservative stationary Q only;
+Proposition 60.2 retains its distinct raw and terminal-survivor weights,
+and no unchanged risk is inferred for those laws. $\square$
+
+## 追加锚（本行以下为增补区）

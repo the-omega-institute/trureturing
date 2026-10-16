@@ -1,0 +1,80 @@
+**Proposition 40.1 (temporal averaging, bounded height and observation).**
+In the original clock, the instantaneous covariance of the resolved
+four-coordinate process, under either the original killed or Q law,
+is
+
+$$
+2\begin{pmatrix}\varepsilon^2&0\\0&c_\kappa(k)c_\kappa(k)^{\mathsf T}\end{pmatrix}dt,
+\tag{40.1}
+$$
+
+of rank two. Its instantaneous phase block has rank one. The
+large-time phase tensor $2M_\kappa$ has rank three because temporal
+height occupation averages the distinct phase directions
+$c_\kappa(k)$ with the height weight $\phi^2dk$. Bounded height
+itself supplies no fourth diffusive coordinate:
+$\sup_{s\le b}|K_{Ts}-K_0|/\sqrt T\le(u-l)/\sqrt T$ under the two
+surviving conventions. On the actual zero leaf the corresponding
+large-time phase rank is two, with the same bounded-height statement.
+
+These limits do not give a smooth same-clock elliptic factor of
+dimension three, nor identify phase coordinates with physical space.
+They distinguish a full winding record from an observation of wrapped
+phases. They supply no physical rotation symmetry, spatial-selection
+principle, or observation and conditioning operation furnished by FIB.
+
+Proof. Equation (40.1) is the quadratic variation of (35.2) or
+(37.8); its height coefficient is positive and its phase vector is
+nonzero, so its rank is exactly two. Its phase rank is exactly one.
+Equations (36.1), (38.3) explain how its time average becomes positive
+on all three phase directions. This uses different height levels
+along one actual stochastic history, not three independent native
+phase actuators. The bounded-height inequality is deterministic.
+Together with Theorems 38.1 and 39.2 it gives the stated ranks after
+discarding that bounded direction.
+
+For any smooth observation $R$ into a space of dimension $d$, the
+second-order symbol pushed forward from the two original fields is
+$\varepsilon^2dR(P)dR(P)^{\mathsf T}
++dR(Q)dR(Q)^{\mathsf T}$, of rank at most two. Lower-order drifts,
+including the Q height drift, do not alter it. Thus it cannot equal
+a positive definite $d\times d$ elliptic symbol when $d\ge3$.
+This is exactly the reused same-clock obstruction in N Theorem 10.5 and F;
+the singular time-and-space limit in (36.3) or (38.1) does not
+contradict it. Likewise the local homogeneous heat dimensions seven
+on the resolved cover and four on the actual zero leaf are the
+inherited bracket-growth quantities in G §34, not these effective
+covariance ranks or physical dimensions.
+
+The resolved cover has topological dimension four and three real
+phase coordinates. The zero-leaf winding cover has topological
+dimension three and two real phase coordinates. Its height is bounded
+and its phase limit has rank two. Current-ray dimensions refer to
+the underlying native control and observation geometry of N and F;
+they are not defined by counting nonzero eigenvalues of $M_\kappa$.
+Thus none of these distinct counts is silently identified with the
+rank-three limiting phase law or a dimension of physical space.
+
+The wrapping map identifies phase representatives differing by a
+nonzero lattice vector. Thus a wrapped endpoint has many distinct
+winding lifts. A complete continuous wrapped path with a specified
+initial lift has a unique mathematical lift, whereas an endpoint
+alone does not. These are different observation conventions; the
+cover theorem does not supply a device that acquires the path. In
+particular the native wrapped nonzero phases have the long-time
+compact mixing law of G (26.4), not the real-cover density (36.3).
+Their exact Fourier series, and the leaf proof of (39.4), already
+distinguish these objects without interchanging an uncontrolled
+infinite winding sum with a limit.
+
+Finally a linear whitening by $M_\kappa^{-1/2}$ makes the limiting
+Gaussian covariance a scalar matrix in new mathematical coordinates.
+Neither the raw native coefficients nor their observation and
+operation rules are thereby proved invariant under physical $SO(3)$.
+The two different changes of probability law in §37 likewise define
+analytic laws and do not construct a preparation or survival service.
+FIB alone does not specify the imposed diffusion covariance, raw
+density, clock, winding observation, or conditioning convention.
+No Green-tail, Coulomb, binding, empirical, resource, or formal-kernel
+certification conclusion is a consequence asserted here. $\square$
+

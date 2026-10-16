@@ -26,13 +26,13 @@ open NativeSixSourceMoore (Controller Run)
 attribute [local instance] Fintype.decidableForallFintype Fintype.decidableExistsFintype
 
 private def ordinal : Fin 6 → Nat := ![0,1,3,4,5,7]
-private def coord (i : Fin 6) : Classes row := ⟨ordinal i,by fin_cases i <;> decide⟩
-private def index (d : Classes row) : Fin 6 :=
+def coord (i : Fin 6) : Classes row := ⟨ordinal i,by fin_cases i <;> decide⟩
+def index (d : Classes row) : Fin 6 :=
   if d.val = 0 then 0 else if d.val = 1 then 1 else if d.val = 3 then 2
   else if d.val = 4 then 3 else if d.val = 5 then 4 else 5
-private def inflate (θ : Fin 6 → Option Bool) (d : Classes row) : Option Bool := θ (index d)
+def inflate (θ : Fin 6 → Option Bool) (d : Classes row) : Option Bool := θ (index d)
 
-private theorem coord_index (d : Classes row) : coord (index d) = d := by
+theorem coord_index (d : Classes row) : coord (index d) = d := by
   apply Subtype.ext
   have hd := d.property
   simp only [row,labels,Finset.mem_union,Finset.mem_singleton] at hd
@@ -75,7 +75,7 @@ private theorem target_by_mask (j : Fin 5) :
   simp only [holes]
   fin_cases j <;> decide +kernel
 
-private theorem type_finite_row (θ : Fin 6 → Option Bool)
+theorem type_finite_row (θ : Fin 6 → Option Bool)
     (ad : Admissible row (inflate θ)) :
     computedTarget row (inflate θ) = predecessor (acquiredLabel θ) := by
   rw [computedTarget,mask_by_label θ ad]
