@@ -14,6 +14,7 @@ import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.QuadraticForms.GerzonEqualityParameterIdentity
 import D5.S3.Quantum.Tomography.PurityPythagorasDecomposition
+import D5.S3.Observer.BornReduction
 
 noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
@@ -479,12 +480,10 @@ private theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
 
 theorem proj_overlap {d : ℕ} (u v : Ket (Fin d)) :
     (proj u * proj v).trace = (‖star u.vec ⬝ᵥ v.vec‖ ^ 2 : ℝ) := by
-  rw [proj_eq_outer, proj_eq_outer, vecMulVec_mul_vecMulVec,
-    trace_vecMulVec, dotProduct_smul, smul_eq_mul]
-  have hz : u.vec ⬝ᵥ star v.vec = star (star u.vec ⬝ᵥ v.vec) := by
-    rw [dotProduct_comm]
-    exact star_dotProduct v.vec u.vec
-  rw [hz, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
+  simpa only [D5.S3.Observer.Conditioning.recordWeight,
+    D5.S3.Quantum.FiniteDimensional.bornProbability, trace_mul_comm (proj v) (proj u)] using
+    D5.S3.Observer.BornReduction.rank_one_pure_state_modulus_square_reduction
+      (fun _ : Unit => proj u) (proj v) () u.vec v.vec (proj_eq_outer u) (proj_eq_outer v)
 
 private theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
     (∑ a, A.effect a) = 1 := by
