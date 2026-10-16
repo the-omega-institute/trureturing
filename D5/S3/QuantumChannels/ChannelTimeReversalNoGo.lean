@@ -21,6 +21,7 @@
    proof_shape: unitaryChannel_cptp: bind-only; escape_witness: none; consumers: Part1Finite.Ti_cptp, Part1NoGo.mixed_reverse_trace, PauliChannels.D_cptp, PauliChannels.D_reversed, Qubit.Delta_cptp, Qubit.Delta_fixed, QubitNoGo.forced_witness_output, QubitNoGo.inverse_unitary_no_go, QubitUnital.spinflip_cptp, QubitWitness.conjugated_amplitude_identity, QubitWitness.conjugated_reverse, QubitWitness.unitary_delta
    proof_shape: Block.D: bind-only; escape_witness: none; consumers: Block.D_apply, Part1Finish.B_basic, Part1Finite.B_apply
    proof_shape: Block.D_apply: bind-only; escape_witness: none; consumers: Part1Finish.B_basic
+   proof_shape: Part1Finite.perm_unitary: bind-only; escape_witness: none; consumers: Part1Finite.Ti_cptp, Part1NoGo.Bi_reverse_trace
    proof_shape: Part1Finite.perm_action: bind-only; escape_witness: none; consumers: Part1Finish.R_swap, Part1Finite.B_apply, Part1NoGo.reversed_projection_trace
    proof_shape: Part1Finite.unitary_comp: bind-only; escape_witness: none; consumers: Part1Finite.B_apply, Part1NoGo.Bi_mixture, QubitWitness.conjugated_mixture
    proof_shape: Part1Finite.B: bind-only; escape_witness: none; consumers: Part1Finish.B_basic, Part1Finish.Bi_basic, Part1Finite.B_apply, Part1Finite.Bi, Part1NoGo.Bi_mixture, Part1NoGo.reversed_projection_trace
@@ -75,6 +76,7 @@ import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 import D5.S3.Quantum.QuantumChannels.TruncatedLossDephasingOptimizerRefutation
 import D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker Matrix
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
@@ -268,7 +270,7 @@ set_option maxHeartbeats 1000000
 private def perm (n : ℕ) : Fin 3 → Equiv.Perm (Fin (n+3)) :=
   ![1, Equiv.swap ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 0) ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 2) * Equiv.swap ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 0) ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 1), Equiv.swap ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 0) ((fun (n : ℕ) (r : Fin 3) => (⟨r.val, by omega⟩ : Fin (n+3))) n 2)]
 private lemma perm_unitary (n : ℕ) (p : Equiv.Perm (Fin (n+3))) : p.permMatrix ℂ ∈ Matrix.unitaryGroup (Fin (n+3)) ℂ := by
-  apply Matrix.mem_unitaryGroup_iff'.mpr; rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_permMatrix, ← Matrix.permMatrix_mul]; simp
+  exact (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary p).property
 private lemma perm_action (n : ℕ) (p : Equiv.Perm (Fin (n+3))) (X : (fun n : ℕ => Matrix (Fin (n+3)) (Fin (n+3)) ℂ) n) : unitaryChannel (p.permMatrix ℂ) X = X.submatrix p p := by
   change p.permMatrix ℂ * X * star (p.permMatrix ℂ) = _; rw [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_permMatrix]; rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]; rfl
 private lemma unitary_comp {d : ℕ} (A B : Matrix (Fin d) (Fin d) ℂ) : unitaryChannel (A * B) = unitaryChannel A ∘ₗ unitaryChannel B := by

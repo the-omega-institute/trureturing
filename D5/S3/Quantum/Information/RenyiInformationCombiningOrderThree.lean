@@ -816,6 +816,4 @@ theorem result : claim := by
 end
 end
 
-#print axioms result
-#print claim
 end D5.S3.Quantum.Information.RenyiInformationCombiningOrderThree

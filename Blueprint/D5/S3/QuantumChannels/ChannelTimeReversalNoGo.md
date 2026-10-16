@@ -69,4 +69,5 @@ For dimensions at least three, Bi_basic forces three finite-block identities; di
 - Dependency: [D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation](../Quantum/QuantumChannels/PositiveFilterTransposeRefutation.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum](../Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation](../Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.md)
+- Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../Quantum/RandomCircuits/HaarTwoCopyTwirl.md)
 - Dependency: [D5/S3/QuantumChannels/PauliThreeWeightBayesianInverseUniqueness](PauliThreeWeightBayesianInverseUniqueness.md)
