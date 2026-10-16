@@ -96,7 +96,10 @@ internal sealed class SymmetricQubitWitnessSpectrumDocument : IScribeDocumentDef
                             + "nonnegative under the two spectral inequalities. "
                             + "This is the diagonal construction underlying the "
                             + "sufficient direction of Theorem 3."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("champagne-johnston-macdonald-pipes-2022-symmetric-witness-spectrum"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula X(string name) => F.Id(name);
