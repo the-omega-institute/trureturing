@@ -235,6 +235,18 @@ internal sealed class ResetIntegralGluingDocument : IScribeDocumentDefinition
                 + "so repeated factors and even m remain in scope. No semisimple splitting, root "
                 + "normalization, nonzero-n condition, faithfulness or entropy premise is needed. "
                 + "This is a repository application of the cited existing results; no literature novelty is claimed.")),
+            Paragraph(Text("For every q>=2 let beta=dbonacciPerronRoot(q), with the literal "
+                + "f(q)=X^q-sum(i<q)X^i. Evaluation p |-> p.eval2(Int.cast,beta) factors "
+                + "through the actual Plus(q)=Int[X]/(f(q)), because f(q)(beta)=0. "
+                + "The uniform DBonacci irreducibility theorem makes "
+                + "AdjoinRoot(map(Int->Rat,f(q))) a field, so its lift to Real is injective. "
+                + "The representative map from Plus(q) into that rational quotient sends p to "
+                + "[map(p)]. Equality of two images means map(f(q)) divides map(p-s). "
+                + "Monicity makes f(q) primitive; Gauss divisibility gives f(q)|(p-s), "
+                + "hence equality already in Plus(q). The two evaluation lifts commute on "
+                + "every integer polynomial by eval2_map. Thus E:Plus(q)->+*Real is injective "
+                + "and E([p])=p(beta). This uses the existing polynomial and quotient, and "
+                + "places no ring structure on the native dimension group.")),
             Paragraph(Text("The construction is a repository derivation from standard quotient, monic division "
                 + "and pullback APIs in pinned Mathlib, together with ResetSignIntegerCyclic's literal "
                 + "geometric certificate. It supplies the integral reconstruction used by ResetIntegralUnits "
