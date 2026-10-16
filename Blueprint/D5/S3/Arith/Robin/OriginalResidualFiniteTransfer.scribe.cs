@@ -29,6 +29,11 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "function mu is Mathlib's actual Mobius function at every index, without "
                 + "a prime-only restriction or any modification at prime powers. "
                 + "M(k) is the existing full inclusive prefix sum of mu(d) for 1<=d<=k.")),
+            Paragraph(Text("The source-bound audit for log_bounds remains declared_unresolved under "
+                + "IE-C050/source.unsafe_or_external (Nat.add). The missing source-reconstruction "
+                + "binding certificate is tracked at https://github.com/the-omega-institute/trureturing/issues/17873. "
+                + "This is an unfinished audit, not a failure of the compiled inequality or evidence "
+                + "of a judge defect. The other new helper audits and full-positive transfer audit are validated.")),
             Def("mass", "Absolute block mass",
                 "For every natural N and real sequence a, A=mass(N,a)=sum(N<=m<2N,abs(a(m)))."),
             Def("variation", "Variation of the zero extension",
