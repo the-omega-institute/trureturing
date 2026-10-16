@@ -102,7 +102,19 @@ $$0 < kappa ( \delta ) \land ( J _ {0} ( D ) < B + kappa ( \delta ) \Rightarrow 
 
 Let u and v be orthogonal unit vectors, w=(u+v)/sqrt(2), zero-weight objective J0=a C(u,D)+b C(u+v,D), and B=a(lambda-lambda^2/2)+b(sqrt(2)lambda-lambda^2/2). For 0<lambda<1/sqrt(2), a,b>0 and 0<delta<norm(u-w)/2, kappa(delta)=min(a g(1,delta),b g(sqrt(2),delta)) is positive. Every ordered unit dictionary with J0<B+kappa(delta) has both atoms within delta of u and w, in one of the two orders. Repeated, antipodal and off-plane atoms are included in the domain. The baseline uses the classical proximal radial values; the explicit positive kappa and simultaneous matching strengthen the zero-weight merging characterization recorded in MAIS-A3.
 
-**Theorem 1.8 (Uniform perturbation bound).**
+**Theorem 1.8 (Bounds from nonnegative energy and the zero code).**
+
+$$\forall E : RealInnerProductSpace (  ) , \forall \lambda : Real (  ) , \forall x : E , \forall D : UnitDictionary ( E ) , 0 \le \lambda \Rightarrow ( 0 \le codeCost ( \lambda , x , D ) \land codeCost ( \lambda , x , D ) \le \frac {\Vert x \Vert ^ {2}} {2} )$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In any real inner-product space, every nonnegative penalty, signal and ordered pair of unit atoms have optimized cost between zero and half the squared signal norm. Every feasible code has nonnegative energy, and the zero code realizes the upper bound. In particular the zero signal has optimized cost zero, so its probability contributes zero to the four-point expectation.
+
+**Theorem 1.9 (Uniform perturbation bound).**
 
 $$J _ {0} ( D ) \le J _ {t} ( D ) \le J _ {0} ( D ) + \frac {t} {2}$$
 
@@ -114,7 +126,7 @@ $$J _ {0} ( D ) \le J _ {t} ( D ) \le J _ {0} ( D ) + \frac {t} {2}$$
 
 For arbitrary real weights a and b, any u, unit v, ordered unit dictionary D, lambda>=0 and t>=0, J0(D)<=Jt(D)<=J0(D)+t/2. Nonnegativity of the code energy gives the lower bound, and the zero code gives C(v,D)<=1/2.
 
-**Theorem 1.9 (The exact unperturbed minima).**
+**Theorem 1.10 (The exact unperturbed minima).**
 
 $$B \le J _ {0} ( D ) \land ( J _ {0} ( D ) = B \iff ( d _ {0} = u \land d _ {1} = w ) \lor ( d _ {0} = w \land d _ {1} = u ) )$$
 
@@ -126,7 +138,7 @@ $$B \le J _ {0} ( D ) \land ( J _ {0} ( D ) = B \iff ( d _ {0} = u \land d _ {1}
 
 For orthogonal unit u and v, 0<lambda<1/sqrt(2) and a,b>0, every ordered unit dictionary has J0 at least B. Equality holds precisely at the ordered dictionaries (u,w) and (w,u), where w=(u+v)/sqrt(2). The canonical dictionary realizes B, so these are exactly the global minimizers. This is the two-atom zero-weight merging core attested by the Positive-penalty merging proposition of MAIS-A3, a research draft, expressed here for arbitrary real inner-product spaces and the stated penalty range. Positive weights force both radial terms to attain equality; the single-direction equality criterion identifies each aligned atom, and distinctness forces different slots. The proof uses that criterion and its single-direction estimate, without invoking the simultaneous near-equality matching theorem.
 
-**Theorem 1.10 (All small positive-weight minimizers localize).**
+**Theorem 1.11 (All small positive-weight minimizers localize).**
 
 $$\forall \delta > 0 , \exists eta > 0 , \forall t , 0 < t < eta \Rightarrow argmin ( J _ {t} , D ) \Rightarrow ( dist ( d _ {0} , u ) < \delta \land dist ( d _ {1} , w ) < \delta ) \lor ( dist ( d _ {0} , w ) < \delta \land dist ( d _ {1} , u ) < \delta )$$
 
@@ -144,6 +156,7 @@ For orthogonal unit u and v, 0<lambda<1/sqrt(2), positive a,b and a+b<1, every p
 
 ## References
 
+- Truth anchor: `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_bounds`
 - Truth anchor: `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_eq_radial_iff`
 - Truth anchor: `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_radial_lower_bound`
 - Truth anchor: `D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_energy_excess_eq`
