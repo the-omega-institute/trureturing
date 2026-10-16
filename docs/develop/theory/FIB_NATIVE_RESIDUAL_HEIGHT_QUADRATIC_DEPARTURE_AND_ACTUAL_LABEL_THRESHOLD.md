@@ -2,19 +2,23 @@
 
 ## 1. The original experiment and the conditional statement
 
-This companion to [JR, §§41–57][JR] proves a global quadratic upper
-certificate, rigidity of actual low live-bearing acquisition labels,
-their sharp inequality-feasibility minimum, and strict obstructions to
-three-label height optimality. The original target remains the exact
-height-record optimum throughout $\bar s<s<s_0$, with all globally optimal
-contacts, ranks and genuine transitions. JR54 already evaluates the
-initial residual branch through its first active certificate zero and
-proves grouped uniqueness before that zero; JR55 gives endpoint laws;
-JR54 and JR56 give real-atom obstructions. Those are credited results.
-The present certificate and actual-label consequences do not complete
-the continuation beyond that certified region. All statements are
-ordinary symbolic mathematics conditional on the specified CG and JR
-premises.
+This companion to [JR, §§41–57][JR] and [RC, §§58–66][RC] proves a
+global all-four-full-PSD quadratic upper certificate and the sharp minimum
+of actual low live-bearing acquisition labels among height-optimal
+instruments throughout the original weak interval. That minimum is three
+through the contact $s_\dagger=s_0\tau_\dagger$, including the contact,
+and four for $s_\dagger<s\leq s_0$. The separately proved
+inequality-feasibility threshold is the strictly later $s_0\tau_3$.
+
+RC supplies the complete conditional residual value, the selected
+post-contact algebraic curve, the simple first $d_+$ zero, quantitative
+$C^1$ gluing, the three-to-four positive-real-atom onset, and the absence
+of later interior contact or aggregate-rank transitions. Those results
+are credited and are not left open or claimed anew. The additional
+actual-label theorem requires a common-decoder rigidity argument:
+real-atom counts alone do not count actual acquisition labels. All
+statements are ordinary symbolic mathematics conditional on the specified
+CG, JR and RC premises, including RC's interval/Bernstein comparisons.
 
 **Definition 1.1 (unchanged specimen, targets and error).** Let
 $E:\mathbb C^3\to\mathbb C^5$ be the original calibrated isometry and
@@ -38,7 +42,8 @@ coherent matrices designated by CG.111 in JR.1. They are conditional
 input data here; none of their coherent entries is replaced by a
 population or a sign average. The ideal output $\Omega_{y,e,n}$ consists
 of $EU_{e,n}B_y^{\rm id}U_{e,n}^\dagger E^\dagger$ in live and the
-five separately labelled measures
+five separately labelled measures, in original label order
+$(0,1,2,3,13)$,
 
 $$
 w_\ell f_y(t)dt\,P_f,\qquad
@@ -57,7 +62,8 @@ $$
 
 The norm includes the full coherent live block, each labelled failure
 measure, singular-time components, abort, wrong-support, zero-ideal and
-extra sectors. The isolated CG root, coefficient relations, ranks,
+extra sectors. The actual simulator density is $g_{\rm time}(t)=2/(1+t)^2$; it is
+distinct from the ideal $f_y$ above. The isolated CG root, coefficient relations, ranks,
 normalization, strict enclosures, endpoint witnesses, support and
 endpoint-saturation consequences, and the complete-output minimax value
 $E_*$ are named conditional antecedents. Their root, Jacobian and minimax
@@ -306,7 +312,7 @@ This also proves the stated high acquired effect.
 The failure plus subeffect is dominated by $M$ and hence kills
 coordinate $0$. After one global binary reversal, the exact winding
 coordinate is
-$\mathsf V(F)=\sum_j r_j(c_j)_0(c_j)_1$ on the analytic low products;
+$\mathsf V(F)=\left|\sum_j r_j(c_j)_0(c_j)_1\right|$ on the analytic low products;
 the high products have no $DT$ coordinate. Stochastic reports use their
 mean coefficients in $[-1,1]$, or may be included as actual generated
 coins. Write $c_j=Lf_j$ and group the real projectors $f_jf_j^T$ by
@@ -664,7 +670,7 @@ $$
 
 Its whole scalar-fibre decoder sends $z$ to
 $z w_\ell g(t)dt\,P_f$ separately in each original label
-$\ell=0,\ldots,4$, where $g(t)=2/(1+t)^2$.
+$\ell\in\{0,1,2,3,13\}$, where $g(t)=g_{\rm time}(t)=2/(1+t)^2$.
 Finally choose once an orthonormal basis $t_1,t_2$ of
 $\operatorname{ran}(I_5-P_V)$. For each $r=\pm1$ add one actual scalar
 complement branch with Kraus rows $\langle t_k|/\sqrt2$, $k=1,2$:
@@ -730,7 +736,7 @@ $$
  w_\ell\operatorname{tr}(EME^\dagger A)
  +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)\right]P_f,\\
 G_B&=\int_B\frac{2}{(1+t)^2}\,dt,
-\qquad B\subseteq[0,1]\text{ Borel},\quad\ell=0,\ldots,4.
+\qquad B\subseteq[0,1]\text{ Borel},\quad\ell\in\{0,1,2,3,13\}.
 \end{aligned}
 \tag{RH.36}
 $$
@@ -740,7 +746,7 @@ identities are identities of trace functionals, each multiplying its
 own labelled measure. They hold on all complex matrix units. All
 $P_V$–$(I_5-P_V)$ cross-support operators are killed, and every
 wrong-support or extra-sector output is zero. Both zero-weight original
-labels remain zero; labels $1,2,3$ remain separate. The density $g$ is
+labels $0,13$ remain zero; labels $1,2,3$ remain separate. The density $g$ is
 finite on the closed time interval, with no endpoint atom or singular
 addition. The common metadata remain in their original fixed state.
 
@@ -1064,11 +1070,11 @@ cost and affine actual TV simultaneously. Interior mixtures have at
 most twenty-three labels; zero-weight endpoint choices are removed.
 Neither RH.50 nor RH.52 is asserted globally height-optimal. $\square$
 
-## 7. The credited exact branch and its explicit curvature corollary
+## 7. The credited complete residual curve and its curvature corollaries
 
-**Proposition 7.1 (current exact interval and correspondence).** Let
+**Proposition 7.1 (credited initial branch and identified contact).** Let
 $t_\dagger$ be the least active discriminant zero of JR.142–143, and
-$\tau_\dagger=h(t_\dagger)$ in JR.141. The credited JR54 result gives
+$\tau_\dagger=h(t_\dagger)$ in JR.141. JR54 and RC63 give
 
 $$
 \bar\tau<\tau_\dagger<\tau_3,
@@ -1078,8 +1084,8 @@ $$
 \tag{RH.54}
 $$
 
-where $\phi(\tau)=F(\tau)^TGF(\tau)$ for the frame of Theorem 6.1.
-For $\bar\tau<\tau<\tau_\dagger$, its optimal grouped tuple is uniquely
+where $\phi(\tau)=F(\tau)^TGF(\tau)$ for Theorem 6.1's frame.
+Throughout this closed interval the optimal grouped tuple is uniquely
 
 $$
 X_{-,-}=FF^T,\qquad X_{+,+}=UU^T,\qquad
@@ -1087,24 +1093,42 @@ X_{-,+}=WW^T,\qquad X_{+,-}=0.
 \tag{RH.55}
 $$
 
-At the certificate endpoint at least one active slack loses rank; no
-endpoint uniqueness or genuine support transition is inferred. Definition
-5.1 gives a matching eleven-label instrument with exactly three low
-live-bearing labels throughout this closed interval.
+JR54 supplies uniqueness before the contact; RC62–63 supplies it also
+at the contact. RC's complete-source comparisons identify the first
+factor and give
+
+$$
+\begin{gathered}
+1.04175447537<t_\dagger<1.04175447539,\qquad
+.9962433511188<\tau_\dagger<.9962433511192,\\
+d_+(t_\dagger)=0,\quad d_+'(t_\dagger)<0,\quad
+ d_-(t_\dagger)>0,\quad d_N(t_\dagger)>0,\\
+.0460291518<\lambda_\dagger<.0460291520,\qquad
+.0081796784563<J(\tau_\dagger)<.0081796784566.
+\end{gathered}
+\tag{RH.54a}
+$$
+
+These are named conditional RC comparisons, not newly executed
+arithmetic. The zero is a genuine support transition, as specified in
+Proposition 7.5. Definition 5.1 gives a matching eleven-label instrument
+with exactly three actual low live-bearing labels on the whole closed
+initial branch.
 
 Proof of correspondence. JR54's positive-positive-negative vector has
 unit norm, is $Q$-null and has $01$ product $\tau/2$. Its squared
-coordinates therefore solve exactly the two linear relations and positive
-quadratic root in RH.46–48. Hence its projector is $UU^T$. The compression
-of $Q$ to $U^\perp$ is nonzero traceless, with exactly two real null
-lines. Both parameterizations continue the same initial negative line
-$v$; continuity selects $FF^T$ and the remaining line $WW^T$. The
-strictly increasing JR parameter $h(t)$ maps its certified interval to
-the one stated here. Apply JR.144–152 with these projectors, and
-Theorem 5.2 for their actual common realization. This is reuse of the
-exact branch and its grouped uniqueness, not an independent discovery
-of them. The first certificate zero does not select its first vanishing
-factor or classify later optimal supports. $\square$
+coordinates therefore solve the two linear relations and positive
+quadratic root in RH.46–48. Hence its projector is $UU^T$. The
+compression of $Q$ to $U^\perp$ is nonzero traceless, with exactly two
+real null lines. Both parameterizations continue the same initial
+negative line $v$; continuity selects $FF^T$ and the remaining line
+$WW^T$. The strictly increasing JR parameter $h(t)$ maps its certified
+interval to the stated one. JR.144–152 supplies the initial value and
+interior uniqueness. RC.37–46 identifies its endpoint and proves the
+unique aggregate there and the gluing to the next branch. Theorem 5.2
+supplies the actual common realization. None of these reused branch,
+discriminant or gluing results is a new claim of this companion.
+$\square$
 
 **Proposition 7.2 (an explicit alternative four-block certificate).** In
 the smooth interior $\bar\tau<\tau<\tau_3$ use the ordered frame
@@ -1359,7 +1383,143 @@ $(1-\tau)/(1-\vartheta)$ times the strictly positive number
 $V_0-\ell_{\rm old}(\vartheta)$. Thus the improvement is strict at every
 interior point and vanishes at the closed endpoints. The two segments
 use at most twenty-two and twenty-three actual labels. This constructive
-corollary is not a residual-curve evaluation. $\square$
+corollary is a lower bound below the complete value supplied by RC; it
+is not an additional exact branch theorem. $\square$
+
+**Proposition 7.5 (RC's complete post-contact value and contact data).**
+Use the same $Q,C,G,L$ as in RH.8. To state the supplied algebraic
+continuation without confusing its scalar coordinates with source Kraus
+matrices, for $0\leq a\leq37/125$ and $7/20\leq k\leq2/5$ put
+
+$$
+\begin{aligned}
+D_a&=\alpha(1-2a)+a^2,&U_a&=-\alpha+2a-a^2,&V_a&=\alpha-a^2,\\
+n_a&=(D_a,U_a,V_a)^T,&\sigma_a&=D_aU_a,\\
+W_a&=D_a Cn_a-2\beta akQn_a,&H_a&=-n_a^TQW_a,&R_a&=W_a^TQW_a,\\
+Z_a&=2H_aW_a+R_an_a,&
+\mathcal E_a&=2H_aW_a^TW_a+D_aR_a\sigma_a,\\
+g_a&=Z_a^TGZ_a,&
+\ell_a&=D_a^2\sigma_a Z_a^TCZ_a-\mathcal E_a^2,\\
+\mathcal P(a,k)&=a^{-1}\det[D_a^2\sigma_a CZ_a-\mathcal E_aW_a,\ QZ_a,\ GZ_a].
+\end{aligned}
+\tag{RH.67a}
+$$
+
+The divisions defining $\ell_a/a$ and $\mathcal P$ are exact polynomial
+divisions before evaluation, including at $a=0$. RC59–60 supplies a
+unique analytic selected root $k(a)\in(7/20,2/5)$ of $\mathcal P=0$.
+All subsequent expressions in this proposition use that root. Its
+full-rectangle comparisons give $D_a,H_a,R_a,\mathcal E_a>0$,
+$\sigma_a<0$, $g_a<0$, $\ell_a/a<0$. Define
+
+$$
+\begin{aligned}
+B_a&=-\frac{R_a}{2D_a\sigma_a H_a}n_an_a^T,&
+C_a&=\frac{Z_aZ_a^T}{2H_a\mathcal E_a},&A_a&=I-B_a-C_a,\\
+\omega_a&=\operatorname{tr}A_a-1,&\tau(a)&=2(A_a)_{01}.
+\end{aligned}
+\tag{RH.67b}
+$$
+
+RC60 supplies the unique simple zero $a_\dagger$ of $\omega_a$ with
+$.2951251<a_\dagger<.2951252$. RC61–63 supplies the following whole
+conditional conclusion, including original all-four-PSD necessity:
+
+$$
+\begin{gathered}
+\tau:[0,a_\dagger]\longrightarrow[\tau_\dagger,1]
+\text{ is a continuous strictly decreasing bijection},\\
+J(\tau(a))=\operatorname{tr}G-\frac{g_a}{H_a\mathcal E_a},\qquad
+\mathcal T(s_0\tau(a))=T_{\rm flat}-\frac{g_a}{2H_a\mathcal E_a},\\
+(X_{+,+},X_{+,-},X_{-,+},X_{-,-})=(A_a,0,B_a,C_a),\\
+\operatorname{rank}(A_a,B_a,C_a)=
+\begin{cases}(2,1,1),&0\leq a<a_\dagger,\\(1,1,1),&a=a_\dagger.
+\end{cases}
+\end{gathered}
+\tag{RH.67c}
+$$
+
+For $0<a\leq a_\dagger$ the aggregate tuple is unique. At $a=0$ it
+is the unique endpoint aggregate of Proposition 10.1. The two null
+lines in $W_a^\perp$ and their exact weights are
+
+$$
+\begin{aligned}
+N_{Q,a}&=\beta(W_a)_1^2+\alpha(W_a)_2^2-\alpha\beta(W_a)_0^2>0,\\
+v_\pm(a)&=\frac{-\alpha(W_a)_0(W_a)_2
+ \pm(W_a)_1\sqrt{N_{Q,a}}}
+ {\alpha(W_a)_2^2+\beta(W_a)_1^2},\\
+u_\pm(a)&=-\frac{(W_a)_0+(W_a)_2v_\pm(a)}{(W_a)_1},\qquad
+q_\pm(a)=(1,u_\pm(a),v_\pm(a))^T,\\
+w_+(a)&=\frac{(A_a)_{02}-v_-(a)(A_a)_{00}}{v_+(a)-v_-(a)},\qquad
+w_-(a)=\frac{v_+(a)(A_a)_{00}-(A_a)_{02}}{v_+(a)-v_-(a)},\\
+A_a&=w_+(a)q_+(a)q_+(a)^T+w_-(a)q_-(a)q_-(a)^T.
+\end{aligned}
+\tag{RH.67d}
+$$
+
+Every denominator displayed here is nonzero by RC60's comparisons.
+The lines $q_+,q_-,n_a,Z_a$ are distinct. Both $w_\pm$ are positive
+for $0\leq a<a_\dagger$; at contact $w_+=0<w_-$. The $A_a$ rays
+have positive $01$ product and positive height difference; $n_a$ has
+negative $01$ product and positive height difference; $Z_a$ has
+negative $01$ product and negative height difference.
+
+At $a=a_\dagger$ the surviving three weighted vectors are exactly the
+orthonormal frame in RH.55 and $Z_2/Z_1=t_\dagger$. RC63 matches both
+values and normalized multipliers there, giving $C^1$ gluing. It also
+supplies the positive linear onset
+
+$$
+\lim_{a\uparrow a_\dagger}\frac{w_+(a)}{a_\dagger-a}
+=\frac{-\omega'(a_\dagger)}{w_-(a_\dagger)K_A(a_\dagger)}>0,
+\quad K_A=\|q_+\|^2\|q_-\|^2-(q_+^Tq_-)^2>0,
+\tag{RH.67e}
+$$
+
+and $w_+(a)>9(a_\dagger-a)/1000$ on $7/25\leq a<a_\dagger$.
+There is no later interior contact or aggregate-rank transition.
+At $a=0$ the four coordinate-$0$-one rays are $(1,\pm1,\pm1)$,
+each with coefficient weight $1/4$. RC64 identifies the same inherited
+endpoint square-root constant and multiplier law of Section 10.
+
+Proof of use and actual correspondence. This proposition invokes
+RC.8–46's selected root, interval/Bernstein comparisons, matching four
+dual blocks, uniqueness, coverage and gluing as named conditional
+suppliers; it does not repeat or numerically reauthenticate them. The
+coefficient dictionary RC.2–3 is exactly RH.7–8, so its $j$ is this
+$J$, its $C_0$ is $C_a$, and its $T_{\rm flat}$ is RH.9's constant
+by RH.10. Thus its original contrast inequality, not a prescribed
+effect, is the same optimization RH.11.
+
+For the actual converse take the nonzero members of
+
+$$
+\sqrt{w_+}\,q_+,\quad\sqrt{w_-}\,q_-,\quad
+\sqrt{-R_a/(2D_a\sigma_a H_a)}\,n_a,\quad
+Z_a/\sqrt{2H_a\mathcal E_a},
+\tag{RH.67f}
+$$
+
+reporting $(+,+,-,-)$. Their real null projectors sum to $I$ by
+RH.67b,d. Their signed $01$ sum is
+$\operatorname{tr}(CA_a)-\operatorname{tr}(CB_a)-\operatorname{tr}(CC_a)
+=2(A_a)_{01}=\tau(a)$, since $\operatorname{tr}C=0$.
+Their absolute $G$ sum is
+$\operatorname{tr}G-2\operatorname{tr}(GC_a)
+=\operatorname{tr}G-g_a/(H_a\mathcal E_a)$ by the stated signs.
+Definition 5.1 therefore supplies one normalized finite instrument
+with the full complex/reference/five-labelled-Borel output RH.36–39,
+all twelve inherited errors, sharp high acquired cost and exactly the
+value RH.67c. All its decoders are TP on their entire declared fibres.
+It has four actual low live-bearing labels above contact and three
+at contact, and twelve or eleven total labels in this construction.
+The upper bound applies to every original optimizer by RC's original
+four-block certificate and Theorem 2.2. The algebraic coefficients are
+not Born probabilities or a source prior. This is a reuse of RC's
+actual realization, not a new residual-curve discovery. The universal
+actual-label lower bound is proved separately in Theorem 9.5.
+$\square$
 
 ## 8. Actual low live-bearing label rigidity and the feasibility threshold
 
@@ -1509,11 +1669,10 @@ indices remain multiplicity, as in Lemma 8.2.
 
 Every height-optimal implementation above $s_0\tau_3$ must in
 particular have at least four such labels. The construction proving
-four-label feasibility does not prove a height-optimal four-label
-attainer at an interior parameter. Section 9 proves strict actual-label
-obstructions before this cap.
-The feasibility count by itself supplies neither their location nor
-optimal-height sufficiency. $\square$
+four-label feasibility does not itself prove height-optimal attainment.
+Theorem 9.5 uses the complete RC curve and common-decoder rigidity to
+prove the different optimal-height threshold and exact counts. The
+feasibility count alone supplies neither that threshold nor that proof. $\square$
 
 ## 9. Actual-three-label height bounds and strict optimality obstructions
 
@@ -1741,7 +1900,9 @@ $\tau\in(\tau_3-\eta_3,\tau_3]$ has at least four actual low live-bearing
 labels. Three such labels do suffice for optimal height on the credited
 closed initial interval $[0,\tau_\dagger]$. Thus loss of three-label
 optimal-height sufficiency occurs strictly before its feasibility cap.
-The assertion selects no unique transition or exact four-label optimum.
+Theorem 9.5 strengthens this local consequence to the exact unique
+actual-label threshold and matching four-label height attainments, using
+RC's complete curve.
 
 Proof. The set $\mathcal F$ of orthonormal $Q$-null frames is compact.
 Its continuous functions
@@ -1806,8 +1967,174 @@ contradicts JR56.1. This reasoning is essential: atom count alone does
 not count actual labels. The supplied JR56 inequalities place
 $\bar\tau<\inf I<\sup I<\tau_3$, so the cap instrument is feasible
 on $I$ by Theorem 8.3. The four-atom witness in JR56 is a strict feasible
-lower value, not a proved optimizer; the lifting makes no four-label
-optimal-height sufficiency claim. $\square$
+lower value, not the proof of pointwise optimality. Pointwise optimal
+four-label attainment on this interval instead follows from RC via
+Theorem 9.5. $\square$
+
+**Theorem 9.5 (sharp actual-label minimum at optimal height).** Define
+$n_{\rm opt}(s)$ as the minimum number of actual low live-bearing
+acquisition labels among instruments attaining RH.6, with its original
+contrast inequality and sharp acquired cost. All original complex,
+potentially noncovariant optimizers, arbitrary inaccessible Kraus
+multiplicities and the stipulated countable/integral scope remain in
+this minimization. With $s_\dagger=s_0\tau_\dagger$,
+
+$$
+\boxed{\displaystyle
+n_{\rm opt}(s)=
+\begin{cases}
+3,&0\leq s\leq s_\dagger,\\
+4,&s_\dagger<s\leq s_0.
+\end{cases}}
+\tag{RH.89a}
+$$
+
+The contact belongs to the three-label branch, and the closed endpoint
+$s=s_0$ belongs to the four-label branch. This is an attained minimum
+of actual low live-bearing labels. It does not minimize the total
+acquisition alphabet or classify complete channels or decoders.
+
+Proof. First consider a sharp-cost original instrument with finitely
+many such labels. Lemma 8.2 gives to each label $\alpha$ a real-null
+rank-one normalized coefficient matrix
+$M_\alpha=f_\alpha f_\alpha^T\ne0$, obtained by summing all its
+encoder/live-decoder products and applying $L^{-1}$ on both sides.
+Theorem 2.2 gives
+
+$$
+\sum_\alpha M_\alpha=I,\qquad
+f_\alpha^TQf_\alpha=0.
+\tag{RH.89b}
+$$
+
+In particular at least three labels are necessary by rank, at every
+weak parameter, including $s=0$. Attached later-failure subeffects
+are PSD summands of $M$ and kill coordinate $0$, so they contribute
+no $01$ winding coordinate. Neither high branches nor failure-only
+labels contribute that coordinate. If $r_\alpha\in[-1,1]$ is the
+mean binary report of the actual acquisition label, RH.5 therefore
+implies, after a single global report reversal if needed,
+
+$$
+\tau\leq\mathsf V(F)/s_0
+=\left|\sum_\alpha r_\alpha(f_\alpha)_0(f_\alpha)_1\right|
+\leq\sum_\alpha|(f_\alpha)_0(f_\alpha)_1|.
+\tag{RH.89c}
+$$
+
+For an upper-bound construction only, assign each $M_\alpha$ to the
+slot with $r=\operatorname{sgn}((f_\alpha)_0(f_\alpha)_1)$ and
+$\epsilon=\operatorname{sgn}(f_\alpha^TGf_\alpha)$, choosing either
+sign at a zero. Their grouped tuple $X$ is feasible in RH.11 by
+RH.89b,c. It changes no competitor and grants no readable refinement.
+Splitting the actual record analytically into its supported live,
+high and failure pieces, using the triangle inequality and RH.15,
+gives the full original height bound
+
+$$
+\begin{aligned}
+T_{\rm actual}
+&\leq\frac{(1-\delta)\Delta A+L_f+
+                  \sum_\alpha|f_\alpha^TGf_\alpha|}{2}\\
+&=\frac{(1-\delta)\Delta A+L_f+
+       \sum_{r,\epsilon}\epsilon\operatorname{tr}(GX_{r,\epsilon})}{2}
+\leq\mathcal T(s_0\tau).
+\end{aligned}
+\tag{RH.89d}
+$$
+
+This includes labels which later fail and the entire actually generated
+record. No probability is divided by survival. If the original
+instrument is height-optimal, both inequalities are equalities; hence
+$X$ is an optimizer of the original four-slot problem. This equality
+step is required: a necessary real-atom reduction alone would not
+identify the actual-label optimum.
+
+For $\tau_\dagger<\tau<1$, choose the unique $0<a<a_\dagger$
+with $\tau=\tau(a)$. Proposition 7.5's credited aggregate uniqueness
+forces $X=(A_a,0,B_a,C_a)$. The rank-two $A_a$ is supported on
+$W_a^\perp$, whose real $Q$-null set consists of exactly the two
+distinct lines $q_+,q_-$. Positivity of each summand forces every
+label contributing to $A_a$ into that plane. Its two null-line masses
+are exactly $w_+,w_->0$ by RH.67d. Therefore at least one actual
+label is needed on each line. Likewise the nonzero rank-one $B_a,C_a$
+force labels on the lines $n_a,Z_a$. All four lines are distinct.
+Lemma 8.2 forbids one actual label, with its one common decoder, from
+serving two of them. Thus at least four actual low live-bearing labels
+are necessary on this whole open post-contact interval. In particular
+an inaccessible Kraus index or a split inside a grouped rank-two slot
+cannot be used to reduce this count.
+
+At $\tau=1$ the universal feasibility theorem 8.3 already excludes
+three labels since $\tau_3<1$. Alternatively RH.90 forces the four
+corner rays, and their Gram fixes a positive $1/4$ coordinate-$0$
+mass on each; Lemma 8.2 again requires four actual labels. This
+endpoint argument needs no finite optimal dual, which does not exist.
+
+It remains to exhibit matching height-optimal actual instruments.
+For $0\leq\tau\leq\bar\tau$, the plateau frame $(v,u,w)$ of
+Proposition 3.2 has exactly three low live-bearing labels and contrast
+$s_0\bar\tau\geq s_0\tau$. The requirement is an inequality, so
+attenuation or extra labels are unnecessary. For
+$\bar\tau<\tau\leq\tau_\dagger$, use Theorem 6.1's three-vector
+frame and Proposition 7.1, including the contact. For
+$\tau_\dagger<\tau\leq1$, use exactly the four nonzero vectors
+RH.67f, including their finite endpoint values. Definition 5.1 and
+RH.35–43 establish simultaneously total encoder effect $I_5$, whole-
+fibre TP decoders, all-complex/passive-reference/separate-five-label
+Borel output identities, all twelve original HALF complete-cq errors,
+sharp jointly counted acquired cost and the optimal height value.
+No channel or additional binary-effect coordinate has been imposed
+on the necessity class. These constructions prove the claimed upper
+counts and attainment at both closed boundaries.
+
+For countably many labels the same sums converge positively. Under
+the specified measurable finite-fibre, measurable-Kraus and integrable
+effect/live-Choi extension they are the corresponding integrals;
+support and equality hold almost everywhere. In particular a proposed
+counterexample with at most three actual labels has at most three
+nonzero CP-mass atoms and the finite argument applies to their CP
+maps. A positive nonatomic live-bearing component already has
+infinitely many actual labels. An unacquired integral variable is
+hidden encoder multiplicity with one common decoder and is governed
+by Lemma 8.2. No unrestricted disintegration is invoked. The finite
+constructions therefore achieve the minimum even in these larger
+comparison classes. $\square$
+
+**Corollary 9.6 (contact masses and separation of the two thresholds).**
+For a height optimizer at $\tau_\dagger<\tau<1$, its actual low-label
+coefficient mass is supported on exactly the four RC contact lines,
+possibly subdivided into further actual labels. The total normalized
+coefficient Grams on them are, respectively,
+
+$$
+w_+q_+q_+^T,\quad w_-q_-q_-^T,\quad B_a,\quad C_a.
+\tag{RH.89e}
+$$
+
+At contact there are exactly three positive ray masses, and the fourth
+exposed line has zero mass. At the endpoint there are the four corner
+masses $1/4$. These masses are coefficient moments, not acquisition
+probabilities. The two actual-label minima compare as follows:
+
+| Original required contrast | Inequality-feasible minimum | Height-optimal minimum |
+| --- | --- | --- |
+| $0\leq s\leq s_\dagger$ | $3$ | $3$ |
+| $s_\dagger<s\leq s_0\tau_3$ | $3$ | $4$ |
+| $s_0\tau_3<s\leq s_0$ | $4$ | $4$ |
+
+Proof. The equality tuple in RH.89d is unique after contact, so its
+positive summands lie in the stated supports. In the $A_a$ plane the
+two null-line projectors are independent, and RH.67d uniquely fixes
+their masses; $B_a,C_a$ are rank one. This argument also holds almost
+everywhere for the stated integral class. At contact, unique aggregate
+rank one eliminates $q_+$ completely; at the endpoint Proposition
+10.1 fixes the four corner weights. The strict ordering
+$\bar\tau<\tau_\dagger<\tau_3<1$ follows from Propositions 7.1 and
+Theorem 6.1. The table is then exactly Theorems 8.3 and 9.5.
+It does not assert common-decoder coarsening permission, native
+execution, a minimum total alphabet or uniqueness of full instruments.
+$\square$
 
 ## 10. Credited endpoint attainment, duality and asymptotic laws
 
@@ -1963,25 +2290,32 @@ Theorem 2.2 retains their full original comparison class. The matching
 lower family has twelve actual labels, all full-output identities and
 sharp cost, and is asymptotically optimal. It is not asserted pointwise
 optimal at nonzero $\varepsilon$. Exact report attenuation retains all
-old labels and may increase the alphabet to twenty-four. Neither the
-contact limit nor this family proves four-ray or four-label optimal
-sufficiency throughout any unspecified interior interval. The multiplier
+old labels and may increase the alphabet to twenty-four. The
+contact limit and this asymptotic family alone do not prove pointwise
+optimal sufficiency. RC's exact curve, Proposition 7.5 and Theorem 9.5
+supply that pointwise four-label attainment throughout the post-contact
+interval. The multiplier
 in RH.97 is the normalized contrast multiplier, distinct from
 $\lambda_{\rm sp}$ and from a physical-$s$ derivative. No narrow
 coefficient enclosure or endpoint constant is numerically reauthenticated
 here.
 
-## 11. Mathematical credit, the whole residual target and native boundaries
+## 11. Mathematical credit, conditional completion and native boundaries
 
-**Convention 11.1 (scope and source correspondence).** The substantive
+**Convention 11.1 (scope and source correspondence).** The independent
 companion content is the global all-four-full-PSD certificate RH.20–26,
 the arbitrary-multiplicity one-ray-per-actual-label proof RH.68–70,
 the actual-label feasibility minimum RH.71–72, the universal restricted
 cap value and both-orientation comparison RH.73–78, and the strict
-common-realization/compactness consequences RH.79–89. The explicit
-interval lifting combines that label lemma with the already credited
-JR56 obstruction. These are conditional repository deductions; no
-worldwide priority or literature-absence assertion is made.
+common-realization consequences RH.79–89. The sharp actual-label
+height-optimal minimum RH.89a–e combines that common-decoder bridge
+with RC's complete value/contact theorem. Its proof includes the
+necessary equality step from actual-record TV to an optimal grouped
+tuple and matching actual common attainments at every parameter.
+These are conditional repository deductions; no worldwide priority or
+literature-absence assertion is made. The inherited exact branches,
+real-atom transition, gluing and arithmetic comparisons are credited
+suppliers, not additional independent increments.
 
 CG supplies the isolated root, coefficient formulas and strict enclosures,
 exact ranks, normalization, endpoint witness data, calibration assumptions
@@ -1997,16 +2331,29 @@ no finite dual minimum.
 JR53–54 supplies the original residual sign reduction, the exact initial
 continuation through its least active certificate zero, grouped uniqueness
 before that zero, its three-real-atom cap and pre-cap nonoptimality.
-The radical frame here is a reparameterization of that frame. Proposition
-7.2 gives an alternative four-block gauge and sufficient scalar filters;
-it supplies no new branch-discovery claim. The optimized initial
-curvature RH.64–65 is an explicit corollary of JR54's already exact
-branch and constrained Hessian, so it is not left unknown. JR55 supplies
-RH.95–98, including the quantitative endpoint remainders, every-optimal-
-multiplier law and first-order contacts. JR56 supplies the exhaustive
-real-atom comparison on RH.89 and its strict witness margin. Real atoms
-and physical labels are linked here only by the proved common-decoder
-lemma and its realization argument.
+The radical frame here is a reparameterization of that frame.
+Proposition 7.2 gives an alternative four-block gauge and sufficient
+scalar filters; it supplies no new branch-discovery claim. The optimized
+initial curvature RH.64–65 is an explicit corollary of JR54's already
+exact branch and constrained Hessian. JR55 supplies RH.95–98, including
+the quantitative endpoint remainders, every-optimal-multiplier law and
+first-order contacts. JR56 supplies the exhaustive real-atom comparison
+on RH.89 and its strict witness margin.
+
+RC58–66 supplies the full selected post-contact algebraic curve, all four
+matching original dual blocks, simple first $d_+$ zero, quantitative
+$C^1$ gluing, exact positive contact weights, three-to-four real-atom
+onset and absence of later interior support/rank transitions. Its entire
+nine-coordinate source-box inclusion, independent seven-coordinate box,
+polynomial root selection and interval/Bernstein comparisons remain
+named conditional antecedents; they are not executed or reauthenticated
+here. RH.67a–f states the precise correspondence and matching actual
+construction. RC64 retains JR55's endpoint constant and all-multiplier
+law, and RC65 retains the all-complex/reference/five-Borel-output and
+sharp worst-history acquired-cost scopes. Neither a real-atom count nor
+RC's construction alphabet alone establishes a universal actual-label
+minimum. Lemma 8.2 and RH.89b–d supply the missing common-decoder and
+optimality-equality implications.
 
 CA's exposed real equality face, real-null decomposition and compatible
 finite resource constructions, and IR's rank/image compression, spectral
@@ -2016,6 +2363,16 @@ are distinct from the free other effect coordinates and all-error-optimizer
 necessity in RH.6. The exact supported rigidity and normalized SDP used
 here are reused with complete reasoning for their interface; they are
 not new full-channel uniqueness or minimax certificates.
+
+RC66 also distinguishes the selected-input all-strength acquired-mass
+law, which fixes a complete channel and complete binary effects, from
+this worst-history sharp-cost height problem over all original error
+optimizers with only a contrast inequality. Its critical-energy response
+comparison concerns a complex differential-operator domain and a
+same-realization energy coefficient. Neither acquired payload mass,
+spectral energy nor a machine-learning error is identified with another
+of these objectives. No value, exponent, capacity or control conclusion
+transfers between them without a separate proved correspondence.
 
 The underlying support, spectral, Gram, Born, trace-norm, image compression
 and Slater mechanisms are mature finite-dimensional mathematics.
@@ -2047,34 +2404,37 @@ These are conditional source references, not newly inspected or compiled
 applications. No root, Jacobian, minimax, calibration, library or
 literature assertion is reauthenticated by this volume.
 
-**Definition 11.2 (the unchanged complete mathematical goal).** Determine
-$J(\tau)$, equivalently $\mathcal T(s_0\tau)$, for every
-$\bar\tau<\tau<1$ in the original RH.6/RH.11 problem, with a universal
-upper bound matched by one actual common normalized instrument at each
-parameter. Identify all globally optimal contact rays, grouped PSD ranks
-and genuine branch/rank/label-sufficiency transitions. This is the whole
-residual value/contact/transition target; its competitor class, precision
-and resource requirements are unchanged.
+**Definition 11.2 (complete conditional value and remaining questions).**
+The original RH.6/RH.11 goal is to determine $J(\tau)$, equivalently
+$\mathcal T(s_0\tau)$, throughout $\bar\tau<\tau<1$ with
+full-class upper bounds and actual common normalized matching
+instruments, and to identify the global contacts, grouped ranks and
+genuine transitions. JR54 and RC58–66 now supply that complete
+conditional value/contact theorem: RH.54 and RH.67c cover the entire
+residual interval with no gap. The simple $d_+$ zero is the genuine
+three-to-four real-atom onset; its $C^1$ gluing and absence of later
+interior transitions are supplied results. The global quadratic bound,
+trial frames, chords and endpoint asymptotics remain useful bounds and
+corollaries; they are not substitutes for, or discoveries of, that curve.
 
-The initial interval RH.54 is already evaluated. The remaining gap is
-continuation beyond that certified region: the first vanishing active
-factor, whether its zero is a true optimal support transition, all later
-contacts and matching certificates/actual attainments over the remaining
-residual interval. The global quadratic upper family, moving trial lower
-family and retained mixtures have not been proved equal there. An endpoint
-asymptotic or a renamed finite optimization does not settle that gap.
+Theorem 9.5 resolves the additional sharp actual-low-label question
+throughout the original weak interval, including transition and endpoint.
+It uses all original error optimizers and the contrast inequality with
+other effect entries free. The earlier local obstructions do not leave
+a second unknown threshold: their exact threshold is $s_\dagger$,
+strictly before the feasibility cap $s_0\tau_3$. Grouped rank,
+projective real-null atoms, actual low live-bearing labels, hidden Kraus
+multiplicity, exact-contrast attenuation counts and total alphabets
+remain different notions even where their proved numerical minima
+coincide.
 
-A certificate zero, the actual-three-label feasibility cap and an
-optimal-height transition are different boundaries. The actual-label
-obstructions prove failure of three-label optimal sufficiency in the
-stated regions, not exactly four-label optimal sufficiency or a unique
-transition. Grouped rank, real-null atom count, actual low live-bearing
-labels, exact-contrast attenuation counts and total acquired alphabet
-remain distinct. Minimum total alphabet, whole five-mode optimizer
-uniqueness and classification of individual labelled failure-time CP
-measures also remain separate unresolved questions. Analytic refinement
-only upper-bounds an arbitrary old record; it does not expose its
-inaccessible Kraus products.
+Minimum total acquisition alphabet, whole five-mode optimizer uniqueness,
+classification of individual original labelled failure-time CP measures
+and all native enactment obligations remain separate unresolved
+questions. No analytic refinement makes an inaccessible Kraus index
+readable, and no contact decomposition grants native execution or
+permission. No statement here extends beyond the finite/countable and
+explicitly stipulated measurable finite-fibre integrable class.
 
 **Definition 11.3 (unresolved native operation and time bridge).** Native
 enactment must supply lawful acquisition on the sole unknown specimen,
@@ -2111,9 +2471,11 @@ All results are ordinary conditional supplied-operation mathematics.
 They assert no Lean/kernel/frozen evidence, numerical reauthentication,
 native feasibility, efficiency, impossibility or capacity, resource
 migration, generic neural-network or empirical ML theorem, or completion
-of the wider programme. The complete original residual goal and the
-native bridges remain active beyond the stated results.
+of the wider programme. The conditional residual value/contact and
+actual-low-label minima are given above; the native bridges and the
+wider programme remain active.
 
+[RC]: FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md
 [JR]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
 [CG]: FIB_NATIVE_COMPLETE_CONTINUATION_DISTINGUISHABILITY_GAP.md
 [CA]: FIB_NATIVE_COMPLEX_ATOMIC_CONE_AND_OPTIMAL_RESOURCE_FACES.md
