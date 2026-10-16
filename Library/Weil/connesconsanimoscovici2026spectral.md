@@ -4294,3 +4294,103 @@ by itself supply the fluctuations required in (T6). The deduction is an
 application of existing counting and oscillation theorems, with no
 originality or Lean-verification claim. It supplies no signed estimate
 for the original full Robin tail and leaves RH unproved.
+
+## A reciprocal prime-potential budget and its saved step-weight obstruction
+
+Keep the SAME actual exterior, finite $E$ block, complement $O$,
+$u=\mathcal Mw_0$ and $h=w_0^*u>0$ from the surplus-shift application.
+The [weighted Schur formula](liu2026tailcompensation.md) and the
+complete global cancellation already used there give, on the inherited
+common closed form domain,
+
+$$
+H_{\rm ext}-T\succeq\operatorname{mult}(v),\qquad
+v=59/10-r_q\ge1/632.
+$$
+
+For every admitted $f=e+y$, with $e\in E$, $y\in O$, the original
+unitary even cosine identification gives $\langle u,f\rangle=
+\langle u,y\rangle$. Weighted Cauchy yields
+
+$$
+|\langle u,y\rangle|^2\le p_v(H_{\rm ext}-T)[e+y],\qquad
+p_v=\int_I\frac{|u(x)|^2}{v(x)}\,dx.
+$$
+
+Taking the infimum over legal finite $E$ coordinates proves
+$uu^*\preceq p_v\Pi$ for the SAME closed short $\Pi$.
+Multiplication by $v$ need not preserve $E$ or $O$; the inequality
+is a form restriction. The common form/domain closure, admitted $E$
+shifts, original mass/phase and the displayed short identification
+remain conditions. This is an application of standard weighted
+Cauchy and the existing short variational definition, not a new
+general theorem. A directed $p_v\le47h$ would suffice for the fixed
+shift $t=1/48$, independently of its still separate actual positivity
+score.
+
+### Reuse the existing26cell margins without rebuilding the prime bound
+
+For a saved cell $C\subset[0,1]$, the existing rational minimum
+$\mu_C$ bounds $qv$, with $q(Ls)=1+(29/50)s^2$. Define
+
+$$
+v_C=\frac{\mu_C}{1+(29/50)(\sup C)^2},\qquad
+W(Ls)=W(-Ls)=v_C^{-1}\quad(s\in C),\qquad
+m=\max_Cv_C^{-1}.
+$$
+
+These disjoint outward cells cover the uncertain support strips too.
+Thus $W\ge1/v$ almost everywhere and $p_v\le\int W|u|^2$.
+Keep the original full source split $u=u_J+u_F$, $J=2049{:}32768$,
+and the accepted complete unweighted far cap $\|u_F\|^2\le U_F$.
+For $a_1=\int W|u_J|^2$, the weighted triangle gives
+
+$$
+\int W|u|^2\le(\sqrt{a_1}+\sqrt{mU_F})^2.
+$$
+
+The [source-specific application](https://github.com/the-omega-institute/trureturing-experiments/tree/96a31ada/docs/reports/weil-c27)
+reuses the original640-bit coefficient enclosures, cell minima and far
+cap. Only the missing finite weighted energy is computed. It retains
+both cosine sum and difference frequencies and interval errors;
+no old prime/source/action, inverse, solve, Gram matrix or far supplier
+is repeated. Approximately,
+
+$$
+\min_Cv_C=0.00174356661223,\quad
+a_1=656214.527747263,\quad mU_F=26846.3715529475,
+$$
+
+and the forward upper is $948518.835933079$, while
+$47h=50553.3119129287$. That upper does not certify the fixed shift.
+The numerical application is conditional on the same actual
+identifications and sound archives; it is not a Lean result.
+
+### The same step weight fails even with the most favorable far phase
+
+The saved cell-energy lower endpoints give $a_-\le a_1$.
+Exact rational postprocessing and integer square roots certify
+
+$$
+\sqrt{a_-}\ge810,\qquad \sqrt{mU_F}\le164.
+$$
+
+The standard reverse weighted triangle now gives for the SAME full
+source, including every far phase satisfying its complete cap,
+
+$$
+\boxed{\int_IW|u|^2\ge(810-164)^2=417316>47h.}
+$$
+
+The strict comparison uses the archived upper endpoint for $h$.
+It requires no further Fourier calculation. Therefore this exact
+saved26-cell step majorant cannot supply the proposed multiplication-
+weight budget at $1/48$; improving integration precision or the cross
+estimate with the same $W$ cannot fix it.
+
+This lower bound concerns $\int W|u|^2$, which is an upper majorant
+of $p_v$. It is not a lower bound for $p_v$ or the optimal directional
+constant relative to $\Pi$. The exact reciprocal potential, another
+majorant, additional actual nonlocal surplus and other eligible shifts
+remain unexcluded. No actual Weil negativity, retained/cofinal
+positivity, Robin tail, RH or originality claim follows.
