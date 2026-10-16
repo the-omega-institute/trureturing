@@ -463,6 +463,161 @@ theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
       trace_mul_comm _ _
     _ = _ := by simp only [L, R, mul_assoc]
 
+theorem proj_overlap {d : ℕ} (u v : Ket (Fin d)) :
+    (proj u * proj v).trace = (‖star u.vec ⬝ᵥ v.vec‖ ^ 2 : ℝ) := by
+  rw [proj_eq_outer, proj_eq_outer, vecMulVec_mul_vecMulVec,
+    trace_vecMulVec, dotProduct_smul, smul_eq_mul]
+  have hz : u.vec ⬝ᵥ star v.vec = star (star u.vec ⬝ᵥ v.vec) := by
+    rw [dotProduct_comm]
+    exact star_dotProduct v.vec u.vec
+  rw [hz, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
+
+theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
+    (∑ a, A.effect a) = 1 := by
+  have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by have := A.property.1; omega)
+  simp only [EAM.effect, ← Finset.smul_sum, A.property.2.1, smul_smul]
+  field_simp
+  simp only [one_smul]
+
+theorem eam_effect_trace {d n : ℕ} (A : EAM d n) (a : Fin n) :
+    (A.effect a).trace = (d : ℂ) / n := by
+  simp only [EAM.effect, Matrix.trace_smul, proj, MState.tr', smul_eq_mul, mul_one]
+
+theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
+    (A.effect a * A.effect b).trace.re =
+      if a = b then ((d : ℝ) / n) ^ 2
+      else (d : ℝ) * ((n : ℝ) - d) / ((n : ℝ) ^ 2 * ((n : ℝ) - 1)) := by
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hn0 : (n : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by have := A.property.1; omega)
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by
+    have : 1 < n := by have := A.property.1; omega
+    exact ne_of_gt (sub_pos.mpr (by exact_mod_cast this))
+  simp only [EAM.effect, Matrix.smul_mul, Matrix.mul_smul,
+    Matrix.trace_smul, smul_eq_mul, proj_overlap]
+  simp only [← Complex.ofReal_natCast, ← Complex.ofReal_div,
+    ← Complex.ofReal_mul, Complex.ofReal_re]
+  split_ifs with hab
+  · subst b
+    rw [ket_dot_self]
+    norm_num
+    ring
+  · rw [A.property.2.2 a b hab]
+    field_simp
+
+
+theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
+    (A : EAM d n) (H : Op d) (hH : H.IsHermitian) :
+    moment A.effect H ≤
+      ((d : ℝ) * ((d : ℝ) - 1) * (H * H).trace.re +
+        ((n : ℝ) - (d : ℝ)) * (H.trace.re) ^ 2) /
+        ((n : ℝ) * ((n : ℝ) - 1)) := by
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  have hnpos : 1 < (n : ℝ) := by
+    exact_mod_cast (show 1 < n by have := A.property.1; omega)
+  have hn0 : (n : ℝ) ≠ 0 := by linarith
+  have hn1 : (n : ℝ) - 1 ≠ 0 := by linarith
+  let K : LinearMap.BilinForm ℝ (Op d) :=
+    (LinearMap.mul ℝ (Op d)).compr₂
+      (Complex.reLm.comp (Matrix.traceLinearMap (Fin d) ℝ ℂ))
+  have hK (X Y : Op d) : K X Y = (X * Y).trace.re := rfl
+  have hcomm (X Y : Op d) : K X Y = K Y X := by
+    exact congrArg Complex.re (trace_mul_comm X Y)
+  have hI : K 1 1 = (d : ℝ) := by simp [hK]
+  have hIH : K 1 H = H.trace.re := by simp [hK]
+  have hIE (a : Fin n) : K 1 (A.effect a) = (d : ℝ) / n := by
+    rw [hK, Matrix.one_mul, eam_effect_trace]
+    simp
+  let q := H.trace.re
+  let Z := H - (q / (d : ℝ)) • (1 : Op d)
+  let t := fun a => K Z (A.effect a)
+  let T := ∑ a, t a • A.effect a
+  let s := ∑ a, t a ^ 2
+  let α := (d : ℝ) * ((d : ℝ) - 1) / ((n : ℝ) * ((n : ℝ) - 1))
+  let b := (d : ℝ) * ((n : ℝ) - d) / ((n : ℝ) ^ 2 * ((n : ℝ) - 1))
+  have hdreal : (1 : ℝ) ≤ d := by exact_mod_cast hd
+  have hα : 0 ≤ α := div_nonneg
+    (mul_nonneg (Nat.cast_nonneg _) (sub_nonneg.mpr hdreal))
+    (mul_nonneg (Nat.cast_nonneg _) (by linarith))
+  have hZ : Z.IsHermitian := hH.sub
+    (isHermitian_one.smul (by simp [isSelfAdjoint_iff]))
+  have hT : T.IsHermitian := by
+    change (∑ a, t a • A.effect a)ᴴ = ∑ a, t a • A.effect a
+    rw [conjTranspose_sum]
+    apply Finset.sum_congr rfl
+    intro a _
+    exact ((scaledPure_hermitian (eam_effect_scaledPure A a)).smul
+      (by simp [isSelfAdjoint_iff])).eq
+  have hZ1 : K Z 1 = 0 := by
+    simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
+      smul_eq_mul, hcomm H 1, hIH, hI]
+    dsimp only [q]
+    field_simp
+    ring
+  have htsum : ∑ a, t a = 0 := by
+    change ∑ a, K Z (A.effect a) = 0
+    rw [← map_sum, eam_effect_sum hd A, hZ1]
+  have hcoef : ((d : ℝ) / n) ^ 2 - b = α := by
+    dsimp only [b, α]
+    field_simp
+    ring
+  have hTP (a : Fin n) : K T (A.effect a) = α * t a := by
+    have h := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
+      K A.effect ((d : ℝ) / n) b (fun i j => eam_effect_gram hd A i j) t a
+    change K T (A.effect a) = _ at h
+    rw [htsum, mul_zero, add_zero, hcoef] at h
+    exact h
+  have hZT : K Z T = s := by
+    simp only [T, map_sum, map_smul, smul_eq_mul, t, s, pow_two]
+  have hTT : K T T = α * s := by
+    change K T (∑ a, t a • A.effect a) = α * s
+    simp only [map_sum, map_smul, smul_eq_mul, hTP, s]
+    rw [Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro a _
+    ring
+  have hZZ : K Z Z = (H * H).trace.re - q ^ 2 / (d : ℝ) := by
+    simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
+      smul_eq_mul, hcomm H 1, hIH, hI, hK H H]
+    dsimp only [q]
+    field_simp
+    ring
+  have hnonneg : 0 ≤ K Z Z := by
+    have heq : K Z Z = hsSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
+    rw [heq]
+    exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun j _ => sq_nonneg _))
+  have hcs : s ^ 2 ≤ K Z Z * (α * s) := by
+    have hc := D5.S3.Quantum.Matrix.CartesianVariance.trace_product_cauchy Z T
+    rw [D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+      Z T hZ hT, Complex.normSq_ofReal] at hc
+    simp only [RHLinalg.frobSq, RCLike.re_eq_complex_re, ← pow_two] at hc
+    change (K Z T) ^ 2 ≤ (Zᴴ * Z).trace.re * (Tᴴ * T).trace.re at hc
+    rwa [hZ.eq, hT.eq, ← hK, ← hK, hZT, hTT] at hc
+  have hs0 : 0 ≤ s := Finset.sum_nonneg (fun a _ => sq_nonneg _)
+  have hsbound : s ≤ α * K Z Z := by
+    by_cases hs : s = 0
+    · rw [hs]; exact mul_nonneg hα hnonneg
+    · have hspos : 0 < s := lt_of_le_of_ne hs0 (Ne.symm hs)
+      nlinarith
+  have hshift (a : Fin n) : K H (A.effect a) = t a + q / (n : ℝ) := by
+    dsimp only [t, Z]
+    simp only [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
+      smul_eq_mul, hIE]
+    field_simp
+    ring
+  have hmoment : moment A.effect H = s + q ^ 2 / (n : ℝ) := by
+    change (∑ a, (K H (A.effect a)) ^ 2) = _
+    simp_rw [hshift, add_sq]
+    simp only [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.sum_mul,
+      htsum, mul_zero, zero_mul, add_zero, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    dsimp only [s]
+    field_simp
+  rw [hmoment]
+  have hh := add_le_add_right hsbound (q ^ 2 / (n : ℝ))
+  rw [hZZ] at hh
+  convert hh using 1 <;> dsimp only [α, q] <;> field_simp <;> ring
+
 def claim : Prop :=
   ∀ (d n r : ℕ), 1 ≤ d → 1 ≤ r → r ≤ d →
     ∀ (A B : EAM d n) (ρ : BipartiteOp d), SchmidtNumberLE ρ r →
