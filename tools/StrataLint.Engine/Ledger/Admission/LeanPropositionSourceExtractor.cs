@@ -545,8 +545,8 @@ internal sealed partial class LeanSourceCatalog
             }
 
             var name = tokens[nameIndex].Text;
-            var fullName = name.Contains('.', StringComparison.Ordinal)
-                ? name
+            var fullName = name.StartsWith("_root_.", StringComparison.Ordinal)
+                ? name["_root_.".Length..]
                 : string.Join('.', scopeStack
                     .Select(static scope => scope.NamespaceName)
                     .Where(static namespaceName => namespaceName is not null)
@@ -800,7 +800,7 @@ internal sealed partial class LeanSourceCatalog
         value == '_' || char.IsLetter(value) || value > 127 && !char.IsWhiteSpace(value);
 
     private static bool IsIdentifierPart(char value) =>
-        IsIdentifierStart(value) || char.IsDigit(value) || value == '\'' || value == '.';
+        IsIdentifierStart(value) || char.IsDigit(value) || value is '\'' or '.' or '?' or '!';
 
     private static string NamespaceName(string fullName)
     {
