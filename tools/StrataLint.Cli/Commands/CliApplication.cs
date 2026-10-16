@@ -20,6 +20,7 @@ internal interface ICliEnvironment
     CommandResult Coverage(IReadOnlyList<string> arguments);
 
     CommandResult SearchAtoms(IReadOnlyList<string> arguments);
+    CommandResult SourceDispatch(IReadOnlyList<string> arguments);
 
     CommandResult ShowAtom(IReadOnlyList<string> arguments);
     CommandResult AtomContext(IReadOnlyList<string> arguments);
@@ -133,6 +134,8 @@ internal static class CliApplication
                 RenderExplicit(environment.DepositHeaderCheck(tail), console),
             ["lean-utility-input"] = static (environment, tail, console) =>
                 RenderExplicit(environment.LeanUtilityInput(tail), console),
+            ["source-dispatch"] = static (environment, tail, console) =>
+                RenderCommand(environment.SourceDispatch(tail), console),
             ["search-atoms"] = static (environment, tail, console) =>
                 RenderCommand(environment.SearchAtoms(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
