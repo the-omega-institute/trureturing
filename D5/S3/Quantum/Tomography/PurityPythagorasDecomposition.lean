@@ -173,51 +173,11 @@ private theorem projector_sum_norm_sq
     (hRecord : IsRecordMeasurement context.projector) (c : Fin d → ℝ) :
     ‖∑ j, (c j : ℂ) • context.projector j‖ ^ 2 = ∑ j, (c j) ^ 2 := by
   classical
-  let coefficient := fun j : Fin d => (c j : ℂ)
-  let term := fun j : Fin d => coefficient j • context.projector j
-  have hProjectorNorm (j : Fin d) : ‖context.projector j‖ = 1 := by
-    have hsq : ‖context.projector j‖ ^ 2 = 1 := by
-      rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
-        basis_projector_inner context hRecord j j]
-      simp
-    nlinarith [norm_nonneg (context.projector j)]
-  have hTermNorm (j : Fin d) :
-      ‖term j‖ ^ 2 =
-        (c j) ^ 2 := by
-    dsimp only [term, coefficient]
-    rw [norm_smul, hProjectorNorm, mul_one]
-    simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs]
-  have hTermOrtho (i j : Fin d) (hij : i ≠ j) :
-      inner ℝ (term i) (term j) = 0 := by
-    change (inner ℂ (term i) (term j)).re = 0
-    dsimp only [term]
-    rw [inner_smul_left, inner_smul_right,
-      basis_projector_inner context hRecord i j, if_neg hij]
-    simp
-  have hNormFinset : ∀ s : Finset (Fin d),
-      ‖∑ j ∈ s, term j‖ ^ 2 = ∑ j ∈ s, ‖term j‖ ^ 2 := by
-    intro s
-    induction s using Finset.induction_on with
-    | empty => simp
-    | @insert a s ha ih =>
-        have hInner : inner ℝ (term a) (∑ j ∈ s, term j) = 0 := by
-          rw [inner_sum s term (term a)]
-          apply Finset.sum_eq_zero
-          intro b hb
-          exact hTermOrtho a b (fun h => ha (h ▸ hb))
-        rw [Finset.sum_insert ha, Finset.sum_insert ha]
-        calc
-          ‖term a + ∑ j ∈ s, term j‖ ^ 2 =
-              ‖term a‖ ^ 2 + ‖∑ j ∈ s, term j‖ ^ 2 := by
-            simpa only [pow_two] using
-              norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hInner
-          _ = ‖term a‖ ^ 2 + ∑ j ∈ s, ‖term j‖ ^ 2 := by rw [ih]
-  change ‖∑ j, term j‖ ^ 2 = _
-  rw [show (∑ j, term j) = ∑ j ∈ Finset.univ, term j by simp]
-  rw [hNormFinset Finset.univ]
-  apply Finset.sum_congr rfl
-  intro j _
-  exact hTermNorm j
+  have hOrthonormal : Orthonormal ℂ context.projector :=
+    orthonormal_iff_ite.mpr (basis_projector_inner context hRecord)
+  rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ)]
+  simpa [← pow_two, ← Complex.ofReal_pow] using congrArg Complex.re
+    (hOrthonormal.inner_sum (fun j => (c j : ℂ)) (fun j => (c j : ℂ)) Finset.univ)
 
 
 /-- The energy of a trace-zero measurement is the sum of its squared trace coordinates. -/
