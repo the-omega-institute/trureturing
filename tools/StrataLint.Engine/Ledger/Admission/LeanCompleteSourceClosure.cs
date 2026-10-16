@@ -8,6 +8,7 @@ internal sealed partial class LeanSourceCatalog
 {
     private readonly ImmutableDictionary<string, CompleteSourceFile> completeSources;
     private readonly ImmutableHashSet<string> completeSourceModules;
+    private readonly ImmutableHashSet<string> unchangedSourceModules;
 
     private sealed record CompleteSourceFile(RepoPath Path, string Hash)
     {
@@ -15,15 +16,18 @@ internal sealed partial class LeanSourceCatalog
             Convert.ToHexStringLower(SHA256.HashData(file.RawBytes.AsSpan())));
     }
 
-    // An unchanged unsupported file requires every managed import, including
-    // ambient commands and proof bodies. Ordinary consumers use the same route.
+    // Complete source equality retains every managed import, ambient command
+    // and proof body, together with the complete recorded root inventory.
     private bool TryExtractCompleteSource(
         RepoPath path,
         ImmutableArray<FrozenDeclaration> recordedDeclarations,
-        out ImmutableArray<byte> result)
+        out ImmutableArray<byte> result,
+        bool includeUnchangedClosure = false,
+        bool forceComplete = false)
     {
         result = [];
-        if (completeSourceModules.IsEmpty) return false;
+        if (!forceComplete && completeSourceModules.IsEmpty
+            && (!includeUnchangedClosure || unchangedSourceModules.IsEmpty)) return false;
         var visited = new HashSet<string>(StringComparer.Ordinal);
         var queue = new Queue<string>();
         queue.Enqueue(ModuleName(path));
@@ -39,7 +43,10 @@ internal sealed partial class LeanSourceCatalog
                     queue.Enqueue(imported);
             }
         }
-        if (!visited.Overlaps(completeSourceModules)) return false;
+        if (!forceComplete && !visited.Overlaps(completeSourceModules)
+            && (!includeUnchangedClosure || !visited.All(unchangedSourceModules.Contains)
+                || !recordedDeclarations.All(declaration => PrivateModuleIsInClosure(declaration, visited))))
+            return false;
 
         var output = new StringBuilder();
         AppendField(output, "source-mode", "complete-managed-import-closure");
@@ -59,4 +66,27 @@ internal sealed partial class LeanSourceCatalog
         result = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(output.ToString()));
         return true;
     }
+    internal ImmutableArray<byte> ExtractCompletePropositionSource(RepoPath path,
+        ImmutableArray<FrozenDeclaration> declarations)
+    {
+        // Keep ordinary source, kind and private-origin validation before the full comparison.
+        _ = ExtractPropositionSource(path, declarations);
+        if (TryExtractCompleteSource(path, declarations, out var source, forceComplete: true)) return source;
+        throw new LeanSourceExtractionException("Complete Lean source closure is unavailable.");
+    }
+
+    private static bool PrivateModuleIsInClosure(FrozenDeclaration declaration, HashSet<string> modules)
+    {
+        var components = CanonicalLeanNameDecoder.ComponentsPrefix(
+            declaration.DeclarationNameKey, 0, out var consumed);
+        if (components.Length == 0 || components[0].Value != "_private") return true;
+        var index = Array.FindIndex(components, static part => part.Kind == "nn");
+        if (consumed != declaration.DeclarationNameKey.Length || index < 2
+            || index == components.Length - 1 || components[index].Value != "0"
+            || components[..index].Any(static part => part.Kind != "ns")
+            || components[(index + 1)..].Any(static part => part.Kind != "ns")) return false;
+        var owner = components[1..index].Select(static part => part.Value);
+        return modules.Any(module => owner.SequenceEqual(FullNameSegments(module)));
+    }
+
 }

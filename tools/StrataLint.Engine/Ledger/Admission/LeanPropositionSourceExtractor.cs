@@ -56,10 +56,12 @@ internal sealed partial class LeanSourceCatalog
         ImmutableDictionary<string, ImmutableArray<string>> importsByModule,
         ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule,
         ImmutableDictionary<string, CompleteSourceFile> completeSources,
-        ImmutableHashSet<string> completeSourceModules)
+        ImmutableHashSet<string> completeSourceModules,
+        ImmutableHashSet<string> unchangedSourceModules)
     {
         this.completeSources = completeSources;
         this.completeSourceModules = completeSourceModules;
+        this.unchangedSourceModules = unchangedSourceModules;
         this.declarations = declarations;
         this.importsByModule = importsByModule;
         customSyntaxCatalog = new LeanCustomSyntaxCatalog(
@@ -123,7 +125,8 @@ internal sealed partial class LeanSourceCatalog
             importsByModule.ToImmutable(),
             customSyntaxByModule.ToImmutable(),
             completeSources.ToImmutable(),
-            completeSourceModules.ToImmutable());
+            completeSourceModules.ToImmutable(),
+            (unchangedPaths ?? []).Select(ModuleName).ToImmutableHashSet(StringComparer.Ordinal));
     }
 
     internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
@@ -183,9 +186,21 @@ internal sealed partial class LeanSourceCatalog
         }
 
         var roots = ImmutableArray.CreateBuilder<(FrozenDeclaration Recorded, LeanSourceDeclaration Source)>();
+        LeanSourceExtractionException? unresolvedPrivate = null;
         foreach (var recorded in recordedDeclarations)
         {
-            roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded)));
+            try { roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded))); }
+            catch (LeanSourceExtractionException exception) when (
+                exception.Failure == LeanSourceExtractionFailure.UnresolvedPrivateOwner)
+            {
+                unresolvedPrivate ??= exception;
+            }
+        }
+        if (unresolvedPrivate is not null)
+        {
+            if (TryExtractCompleteSource(modulePath, recordedDeclarations, out completeSource,
+                includeUnchangedClosure: true)) return completeSource;
+            throw unresolvedPrivate;
         }
 
         var dependencies = new Dictionary<string, LeanSourceDeclaration>(StringComparer.Ordinal);
@@ -270,7 +285,8 @@ internal sealed partial class LeanSourceCatalog
         var exact = ResolveExactRecordedSources(moduleDeclarations[0], recordedSegments, recorded.DeclarationNameKey).ToImmutableArray();
         if (exact.IsEmpty && recordedSegments[0] == "_private")
             throw new LeanSourceExtractionException(
-                $"Lean private source owner cannot be resolved: {recorded.DeclarationNameKey}.");
+                $"Lean private source owner cannot be resolved: {recorded.DeclarationNameKey}.",
+                LeanSourceExtractionFailure.UnresolvedPrivateOwner);
         if (exact.IsEmpty && recordedSegments[^1] == "eq_def")
             throw new LeanSourceExtractionException(
                 $"Lean equation source owner cannot be resolved: {recorded.DeclarationNameKey}.");
