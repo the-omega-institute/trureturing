@@ -6,6 +6,7 @@
    digest: Assuming pairwise orthogonal contexts, purity excess splits with residual mass. -/
 
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
+import D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 
 open scoped BigOperators ComplexOrder InnerProductSpace Matrix
@@ -47,35 +48,6 @@ theorem matrix_inner_eq_trace_conjTranspose_mul
     inner ℂ A C = Matrix.trace (Aᴴ * C) := by
   change Matrix.trace (C * 1 * Aᴴ) = Matrix.trace (Aᴴ * C)
   rw [Matrix.mul_one, Matrix.trace_mul_comm]
-
-private theorem centered_density_norm_sq
-    {d : Nat} [NeZero d]
-    (rho : Matrix (Fin d) (Fin d) ℂ)
-    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1) :
-    ‖(centeredDensity rho hrho).1.1‖ ^ 2 =
-      (Matrix.trace (rho * rho)).re - (d : ℝ)⁻¹ := by
-  rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ)]
-  change
-    (inner ℂ (rho - ((d : ℂ)⁻¹) • 1)
-      (rho - ((d : ℂ)⁻¹) • 1)).re = _
-  rw [matrix_inner_eq_trace_conjTranspose_mul]
-  have hCentered :
-      (rho - ((d : ℂ)⁻¹) • 1)ᴴ = rho - ((d : ℂ)⁻¹) • 1 :=
-    (centeredDensity rho hrho).1.2
-  rw [hCentered]
-  simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul,
-    Matrix.smul_mul, Matrix.mul_one, Matrix.one_mul, Matrix.trace_sub,
-    Matrix.trace_smul, Matrix.trace_one, hrho.2, Fintype.card_fin,
-    Complex.sub_re]
-  have hdReal : (d : ℝ) ≠ 0 := by exact_mod_cast NeZero.ne d
-  have hinv : (d : ℂ)⁻¹ = (((d : ℝ)⁻¹ : ℝ) : ℂ) := by
-    exact (Complex.ofReal_inv (d : ℝ)).symm
-  rw [hinv]
-  simp only [smul_eq_mul, Complex.mul_re, Complex.sub_re,
-    Complex.ofReal_re, Complex.ofReal_im, Complex.one_re, Complex.one_im,
-    Complex.natCast_re, Complex.natCast_im, mul_zero, zero_mul, sub_zero]
-  field_simp [hdReal]
-  ring
 
 /-- Sum of the underlying matrices of all visible trace-zero measurement projections. -/
 def visibleMatrix {d : Nat} [NeZero d] {L : Type*} [Fintype L]
@@ -121,6 +93,41 @@ theorem trace_mul_real_of_hermitian
     change (starRingEnd ℂ (Matrix.trace (A * C))).im = _ at him
     rw [Complex.conj_im] at him
     simpa using (show (Matrix.trace (A * C)).im = 0 by linarith)
+
+/-- Removing the scalar trace component subtracts exactly its squared Hilbert--Schmidt mass. -/
+theorem centered_hermitian_norm_sq
+    {d : Nat} [NeZero d] (H : Matrix (Fin d) (Fin d) ℂ) (hH : H.IsHermitian) :
+    ‖H - (H.trace / (d : ℂ)) • 1‖ ^ 2 =
+      (H * H).trace.re - (H.trace.re) ^ 2 / (d : ℝ) := by
+  have hreal : H.trace = (H.trace.re : ℂ) := by
+    simpa only [Matrix.mul_one] using trace_mul_real_of_hermitian H 1 hH Matrix.isHermitian_one
+  have hCentered : (H - (H.trace / (d : ℂ)) • 1).IsHermitian := by
+    have h :=
+      (D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem H hH).1
+    change (H - (H.trace / (Fintype.card (Fin d) : ℂ)) • 1).IsHermitian at h
+    simpa only [Fintype.card_fin] using h
+  rw [InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
+    matrix_inner_eq_trace_conjTranspose_mul, hCentered.eq]
+  simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul,
+    Matrix.mul_one, Matrix.one_mul, Matrix.trace_sub, Matrix.trace_smul,
+    Matrix.trace_one, Fintype.card_fin, smul_eq_mul]
+  rw [hreal]
+  rw [show (d : ℂ) = ((d : ℝ) : ℂ) by simp]
+  simp only [RCLike.re_eq_complex_re, ← Complex.ofReal_div, ← Complex.ofReal_mul,
+    Complex.sub_re, Complex.ofReal_re]
+  field_simp [show (d : ℝ) ≠ 0 by exact_mod_cast NeZero.ne d]
+  ring_nf
+  simp
+
+private theorem centered_density_norm_sq
+    {d : Nat} [NeZero d]
+    (rho : Matrix (Fin d) (Fin d) ℂ)
+    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1) :
+    ‖(centeredDensity rho hrho).1.1‖ ^ 2 =
+      (Matrix.trace (rho * rho)).re - (d : ℝ)⁻¹ := by
+  change ‖rho - (d : ℂ)⁻¹ • 1‖ ^ 2 = _
+  have h := centered_hermitian_norm_sq rho hrho.1.isHermitian
+  simpa only [hrho.2, one_div, Complex.one_re, one_pow] using h
 
 private theorem centered_measurement_eq_probability_sum
     {d : Nat} [NeZero d]
