@@ -1,20 +1,46 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitSextitMaximumPurity
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QuadbitSextitMaximumPurity
-   mirror-E: none(waiver:exact-open-problem-sector)
+   mirror-E: none(waiver:structural-density-application)
    anchors: []
    utility: none
    digest: The maximum purity of a literal 4-by-6 APPT density matrix is 8/169. -/
 
 /-
-proof_shape: result: bind-only
-escape_witness: none. This final composition is retained as the exact external
-  open-problem sector resolution. The generic finite Bell-corner reduction
-  and the unchanged dimension-24 certificate supply the upper bound;
-  the existing low-rank separable ray supplies attainment.
-admission_basis: open-problem-resolution
-Preregistered target: https://github.com/the-omega-institute/trureturing/issues/17734
-The claim is only the m=4, n=6 sector of Conjecture 6.7 in arXiv:2608.03390v2.
+proof_shape: result, density_bound: content
+escape_witness: Unfold same-delivery helpers through density_bound and
+  FiniteBellCorner.spectral_reduction to the immutable baseline
+  8a32282e7f57c3a751640623624ee9d1ac5b3a25. The new arbitrary-local-dimension
+  product-corner construction supplies both boundary PSD constraints from
+  this actual APPT density. They are used by certificate_bound to prove the
+  universal upper bound, and hence by both the first and supremum clauses.
+  This inference is not supplied by the baseline qutrit-only reduction.
+admission_basis: escape-witness
+proof_shape: basis_dot, attaining_pos, attaining_trace, attaining_purity,
+  attaining_appt, attaining_diagonal: bind-only consumed helpers.
+  basis_dot is consumed by attaining_trace, attaining_purity, attaining_appt;
+  attaining_pos, attaining_trace, attaining_purity, attaining_appt and
+  attaining_diagonal are consumed by result. Definitions basis and
+  attainingDensity are used by these helpers; claim is the type of result.
+utility:none rationale: The content is a universal theorem for arbitrary
+  complex density matrices, obtained by the new structural Bell-corner
+  inference. No bounded enumeration, checker, numerical search, new
+  numerical premise or new finite certificate instance is introduced.
+  The rational gap certificate is reused unchanged from the baseline;
+  computing the explicit ray's trace and purity is normalization inside
+  consumed helpers, not the main new content. Finite matrix dimensions do
+  not make the continuum of densities and unitary tests a finite check.
+Literature scope: Hildebrand, quant-ph/0502170, Theorem 2, PDF page 5,
+  gives fixed-total-dimension APPT 4x6 -> 3x8. The established qutrit
+  maximum and attaining ray already imply the scalar value 8/169.
+  This is a known application and formal interface acceptance example,
+  not an independent open-problem resolution or new problem count.
+  Issue 17734 is research history, not novelty or admission authority.
+Direct baseline-frozen prerequisites: QutritN8PurityBound.certificate_bound
+  (original private declaration), QuadbitMaximumPurity.norm_of_dot_eq_one
+  and separableCone_partialTranspose_posSemidef (original private declarations),
+  and LowRankRays.separableCone_one_add_two_rankOne. FiniteBellCorner is
+  same-delivery content, not a baseline-frozen prerequisite.
 -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment

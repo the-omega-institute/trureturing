@@ -7,14 +7,47 @@
    digest: Every finite bipartite APPT density matrix with both local dimensions at least three satisfies both Bell-corner spectral LMIs. -/
 
 /-
-proof_shape: spectral_reduction: content
-escape_witness: Product compression commutes with second-factor partial
-  transpose, and an abstract finite complement extends both Bell tests to
-  arbitrary local dimensions at least three. The resulting boundary LMIs
-  are consumed by QuadbitSextitMaximumPurity.result.
+proof_shape: spectral_reduction, necessary_K1, necessary_both: content
+escape_witness: The product corner and its cardinality-based finite
+  complement construct Bell tests for arbitrary local dimensions at least
+  three. necessary_K1 derives the boundary PSD constraint from APPT of the
+  actual full packed density; necessary_both retains both tests for that
+  same density and spectrum. spectral_reduction transports these constraints
+  through sorted diagonalization while preserving every spectral coordinate.
+  The baseline qutrit theorem has one local dimension fixed at three and
+  does not provide this arbitrary-product inference by instantiation.
+  The live consumer is QuadbitSextitMaximumPurity.density_bound, used by
+  QuadbitSextitMaximumPurity.result. Planned applications are not consumers.
 admission_basis: escape-witness
-Direct frozen dependencies: QutritSpectralReduction,
-  QutritHildebrandSufficiency.OrderedDiagonalization.sorted_diagonalization.
+proof_shape: corner_injective, cornerEquiv_inl, cornerEquiv_symm_corner,
+  product_partialTranspose, corner_partialTranspose, corner_conjugate,
+  packed_swap, total_ge, packed_full: bind-only consumed helpers.
+  corner_injective constructs cornerEquiv; cornerEquiv_inl and
+  cornerEquiv_symm_corner normalize corner_conjugate; product_partialTranspose
+  feeds corner_partialTranspose, which feeds necessary_K1 together with
+  corner_conjugate. packed_swap feeds necessary_both; total_ge and
+  packed_full feed spectral_reduction. The product partial-transpose
+  identity alone is definitional, not an independent escape witness.
+  All definitions organize this live construction; none is a numerical
+  certificate, enumeration, checker or computational instance.
+utility:none rationale: An arbitrary-dimensional structural theorem over
+  all complex density matrices and all global unitaries is proved. There
+  is no bounded enumeration, checker, numerical reduction premise or newly
+  certified finite instance as the main content. The nine-coordinate index
+  checks merely normalize the packing. The consuming 4x6 application reuses
+  a pre-existing rational certificate without new coefficients or checks.
+Literature scope: The Bell-corner proof is a reusable formal construction.
+  Its 4x6 scalar application is already implied by Hildebrand Theorem 2
+  (quant-ph/0502170, PDF page 5), the qutrit maximum and known attainment.
+  Neither this construction nor that application claims mathematical priority.
+Registration: The spectral_reduction binding remains unfinished under
+  https://github.com/the-omega-institute/trureturing/issues/17689.
+Direct frozen dependency modules at immutable baseline
+  8a32282e7f57c3a751640623624ee9d1ac5b3a25:
+  QutritSpectralReduction
+    statement_id: sha256:6097ee9870c75874bc595148de745079dde46fdb08c7d3e4265b91c98b0ccde5
+  QutritHildebrandSufficiency.OrderedDiagonalization.sorted_diagonalization
+    module statement_id: sha256:3eb50049964f4c83338c72b9019a9776d036760f07a3d3a4eb823d63e2554310
 -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency

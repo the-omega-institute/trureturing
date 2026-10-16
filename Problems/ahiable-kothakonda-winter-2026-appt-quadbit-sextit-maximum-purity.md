@@ -8,114 +8,137 @@ motivation_gids:
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitSextitMaximumPurity.result
 ---
 
-# Maximum purity in the 4-by-6 absolutely PPT sector
+# Known 4-by-6 APPT maximum as a formal interface application
 
 ## Problem
 
 Ahiable, Kothakonda and Winter, arXiv:2608.03390v2, Conjecture 6.7,
-page 29, asks whether the maximum purity over the absolutely PPT set equals
-the inscribed-polytope maximum and occurs at the spectra of Eq. (44).
-The exact target is its $m=4,n=6$ sector: every positive semidefinite
-complex matrix $\rho$ on $\mathbb C^4\otimes\mathbb C^6$ with trace one and
+page 29, asks whether the maximum APPT purity equals the
+inscribed-polytope maximum and occurs at the spectra of Eq. (44).
+Its $m=4,n=6$ instance is already a consequence of existing mathematics.
+This dossier records a formal application, not an independent open-problem
+resolution or a new problem count.
+
+Every positive semidefinite complex matrix $\rho$ on
+$\mathbb C^4\otimes\mathbb C^6$ with trace one and
 $(U\rho U^\dagger)^\Gamma\succeq0$ for every global unitary $U$ satisfies
 $\operatorname{Re}\operatorname{Tr}(\rho^2)\leq8/169$.
 The real purity supremum is $8/169$, attained by the diagonal state with
 one entry $3/26$ and twenty-three entries $1/26$. Partial transpose acts
-on the second local factor.
+on the second local factor. Repeated and zero eigenvalues are included.
 
 ## Motivation
 
-Corollary 6.4 and Eq. (44) give $(24+8)/(24+2)^2=8/169$ inside the
-inscribed polytope. An attaining state gives only a lower bound. A sharp
-upper bound for the full literal APPT set requires an additional inference.
-Repeated and zero eigenvalues are included; no simple-spectrum or strict
-positivity assumption is added.
+Hildebrand, quant-ph/0502170, Theorem 2, PDF page 5, proves that at equal
+total dimension $N=n_1m_1=n_2m_2$, APPT for the factorization with
+$\min(n_1,m_1)\geq\min(n_2,m_2)$ implies APPT for the second factorization.
+Thus APPT $4\times6$ implies APPT $3\times8$. A unitary identification
+preserves positivity, trace and purity. The established qutrit
+maximum $32/26^2=8/169$ gives the upper bound, and the known APPT ray
+$(I+2|\psi\rangle\langle\psi|)/26$ attains it in $4\times6$.
+The source and scope are recorded in the existing
+[Hildebrand library note](../Library/QuantumStates/hildebrand2007pptspectra.md).
 
 ## Gap
 
-Research preregistration [#17734](https://github.com/the-omega-institute/trureturing/issues/17734)
-fixes this target. It continues the same partial conjecture as
-[#17689](https://github.com/the-omega-institute/trureturing/issues/17689),
-whose 4-by-4 sector is already delivered. It is not an independent open
-problem. The existing qutrit dimension-24 certificate controls all ordered
-spectra satisfying two boundary LMIs, but a literal 4-by-6 APPT state needs
-a product-corner reduction to those hypotheses. External novelty refresh
-is pending; no worldwide-priority conclusion is claimed.
+The formal library interface needs the rank-three necessary boundary LMIs
+for arbitrary finite products, while the baseline qutrit reduction fixes
+one local dimension at three. `FiniteBellCorner.spectral_reduction`
+supplies that structural inference directly. Its actual consumer is
+`QuadbitSextitMaximumPurity.density_bound`, used by `result`.
+Planned 4-by-5 and 4-by-7 applications are not present consumers.
+
+[#17734](https://github.com/the-omega-institute/trureturing/issues/17734)
+is research history for this application, not evidence of novelty or
+an open-problem admission authority. The existing 4-by-4 result and its
+proofs and successful Reg evidence remain associated with
+[#17689](https://github.com/the-omega-institute/trureturing/issues/17689).
 
 ## Route
 
-For all local dimensions $m,n\geq3$, embed $\mathrm{Fin}\,3$ into each
-factor and write $c(i,j)=(a(i),b(j))$. The range of $c$ and its finite
-complement partition the full product. Cardinality identifies the
-complement with $\mathrm{Fin}(mn-9)$, without a dimension-specific list.
-The essential identity is
+For all $m,n\geq3$, embed $\mathrm{Fin}\,3$ into each local factor and
+let $c(i,j)=(a(i),b(j))$. Its range and finite complement partition the
+full product. Cardinality identifies the complement with
+$\mathrm{Fin}(mn-9)$. Extend the Bell unitary and its swapped partner by
+identity on this complement. Product compression satisfies
 
 $$ (M^\Gamma)|_c=(M|_c)^\Gamma, $$
 
-since both entries at $(i,j),(k,l)$ are $M(c(i,l),c(k,j))$.
-Extending the existing Bell unitary by identity on the complement and
-compressing its partial transpose yields the first real boundary LMI;
-the existing swapped Bell test gives the second. The global packing used
-for sorted spectral diagonalization is a unitary change of eigenbasis,
-not an assumed covariance of partial transpose.
+because both entries at $(i,j),(k,l)$ equal $M(c(i,l),c(k,j))$.
+The two Bell tests therefore yield both necessary PSD matrices for the
+same actual full density and spectrum. Sorted diagonalization retains
+the largest three, smallest six and all middle coordinates, preserving
+trace and purity. An arbitrary global packing is used only as a unitary
+change of eigenbasis, never as partial-transpose covariance.
 
-The boundary selector takes the largest three and smallest six ordered
-eigenvalues and retains every middle value in the full spectrum. Trace
-and trace-square therefore remain unchanged. At $mn=24$ the selector is
-exactly `QutritSpectralReduction.boundaryValues 5`.
-The unchanged `QutritN8PurityBound.certificate_bound` gives the sharp upper
-bound, with no copied coefficient arrays or Hildebrand sufficiency premise.
-
-For a computational-basis unit vector $\psi$,
-$\rho=(I+2|\psi\rangle\langle\psi|)/26$ has trace one and purity
-$(24+8)/26^2$. After every global unitary the unscaled matrix belongs to
-the separable cone by the dimension-independent low-rank ray theorem.
-Second-factor partial transpose preserves positivity of every separable
-product term. Thus this explicit diagonal state is APPT and attains the
-upper bound, which also identifies the real supremum.
+At $mn=24$, the boundary selector is exactly
+`QutritSpectralReduction.boundaryValues 5`. The unchanged
+`QutritN8PurityBound.certificate_bound` yields the bound with no copied
+arrays or new numerical certificate. For a computational-basis unit
+vector $\psi$, the known low-rank separable ray proves the prescribed
+state APPT after every unitary; its trace and purity are $1$ and
+$(24+8)/26^2$. Bound and attainment give the real supremum.
 
 ## Falsifier
 
-A trace-one positive semidefinite 4-by-6 matrix satisfying literal APPT
-with real trace-square greater than $8/169$ refutes the target. A failure
-of the product compression, complement equivalence or full-spectrum
-trace/purity identities would invalidate the proposed reduction.
+A literal APPT density in $4\times6$ with purity greater than $8/169$
+would contradict the stated implication and qutrit bound. A failure of
+product compression, the complement equivalence or the full-spectrum
+trace/purity identities would invalidate the direct formal route.
 
 ## Evidence
 
-The canonical Lean targets are `FiniteBellCorner.spectral_reduction` and
+The retained targets are `FiniteBellCorner.spectral_reduction` and
 `QuadbitSextitMaximumPurity.result` in the owning AbsolutePPT namespace.
-The latter states the universal upper bound, real supremum and exact
-diagonal attainment together. Local compilation, scoped report, Reg
-binding and freeze evidence are reported by their canonical producers;
-o whole-repository or official-CI result follows merely from a scoped run.
+The latter includes the universal bound, real supremum and exact
+prescribed diagonal attainment. Existing accepted compilation and Reg
+data support the preceding mathematical source. Source-only prose and
+provenance revisions supply no new kernel, emitted-Scribe or official-CI
+evidence.
 
 ## Triage
 
-### What the settlement shows
+Against immutable baseline `8a32282e7f57c3a751640623624ee9d1ac5b3a25`,
+`result` has `proof_shape: content` and `admission_basis: escape-witness`.
+Unfolding `density_bound` and the same-delivery `spectral_reduction` until
+baseline-frozen prerequisites leaves the arbitrary-product Bell necessity
+inference on the live path to the upper bound and supremum. The final
+conjunction alone does not determine proof shape. The new construction
+is neither the scalar conclusion nor a restatement of it, and the
+baseline qutrit theorem cannot instantiate to a 4-by-6 product. The
+attainment helpers are bind-only with actual consumers. No open-problem
+exception is used.
 
-The reusable mechanism transfers necessary Bell-corner constraints across
-all finite local dimensions at least three. In total dimension twenty-four,
-it allows the existing sharp spectral certificate to settle a second
-local tensor-factor sector. The generic reduction is necessary only; it
-does not characterize APPT states. The 4-by-5 sector, dimension twenty-five,
-all remaining sectors and classification of all maximizers stay outside
-this result. The full source conjecture and APPT versus absolute
-separability are not settled by this sector.
+`utility: none` describes the new structural inference for arbitrary
+complex densities and all global unitaries. It introduces no bounded
+enumeration, checker, new numerical premise or newly certified finite
+instance as its main content. The pre-existing rational certificate
+retains its checker classification; normalization of the attaining ray
+is helper arithmetic. A finite matrix dimension does not turn the
+continuum of densities into a finite computation. This is a source-owner
+semantic judgment, not a new machine acceptance result.
+
+Hildebrand's implication preserves total dimension. It gives no transfer
+from dimension 20 to 18 or 21 and no dimension-28 result by the qutrit
+dimension-24 bound. The 4-by-5 and 4-by-7 sectors, all remaining sectors,
+maximizer classification, the full conjecture and APPT versus absolute
+separability remain outside this application. The generic necessary-LMI
+theorem asserts no APPT sufficiency or mathematical priority.
 
 ## ASSUMED-UNVERIFIED
 
-External novelty refresh and official required CI are pending host review.
-Same-family Codex CLI independence is disclosed; no Pro review occurred.
-Neither a model conclusion nor a source citation substitutes for the
-kernel proof or the statement-fidelity review.
+Targeted validation of the corrected source, selected Scribe emission
+and official required CI remain outstanding. This is sole-worker,
+same-family Codex CLI work, with no Pro or model-diversity review.
 
-The escape registration for the exposed normalization helper
-`QuadbitMaximumPurity.norm_of_dot_eq_one` remains unfinished: source
-coordinate extraction rejects its implicit `Fintype I` dictionary
-(`source.dictionary_or_proof_coordinate`). Its complete original
-telescope and compiled Reg proof are retained. The generic
-`FiniteBellCorner.spectral_reduction` registration also remains unfinished:
-the compiled-source dependency check rejects `Nat.pow`
-(`source.unsafe_or_external`). These audit gaps are associated with
-[#17689](https://github.com/the-omega-institute/trureturing/issues/17689).
+Two faithful Reg bindings remain `declared_unresolved` under
+[#17689](https://github.com/the-omega-institute/trureturing/issues/17689):
+`FiniteBellCorner.spectral_reduction` has IE-C050 ClosedTruthReadout,
+`reason=forbidden_dependency`, `rule=source.unsafe_or_external`,
+`site="Nat.pow; source_operand=Nat.pow"`, with the same readout;
+`QuadbitMaximumPurity.norm_of_dot_eq_one` has IE-C050 ClosedTruthReadout,
+`reason=unclassified_form`, `rule=source.dictionary_or_proof_coordinate`,
+`site=""`, `readout=""`, at its implicit `Fintype I` dictionary.
+Their original telescopes and compiled Reg proofs are retained.
+These audit gaps supply no `declared_validated` status and do not stop
+the mathematical delivery. Successful Reg evidence remains unchanged.
