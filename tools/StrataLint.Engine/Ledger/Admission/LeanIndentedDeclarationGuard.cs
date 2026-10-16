@@ -59,7 +59,8 @@ internal sealed partial class LeanSourceCatalog
                         candidate.Line == token.Line && DeclarationKinds.Contains(candidate.Text)))
             {
                 throw new LeanSourceExtractionException(
-                    $"Indented Lean declaration is unsupported in {path.Value}.");
+                    $"Indented Lean declaration is unsupported in {path.Value}.",
+                    LeanSourceExtractionFailure.IndentedDeclaration);
             }
         }
     }

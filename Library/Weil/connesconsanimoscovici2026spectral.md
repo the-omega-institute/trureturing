@@ -3591,6 +3591,44 @@ this route still needs a sharper common inverse/residual bound or
 another sufficient ordered estimate. No actual retained/cofinal
 positivity, Robin-tail, RH or Lean result is supplied.
 
+The [two-source projection upper](https://github.com/the-omega-institute/trureturing-experiments/tree/06656aef3fb215e0331c4a9496fe669185a87043/docs/reports/weil-c27)
+uses the archived exact $Z=[w_0,w_1]$ and $M_JZ$ to supply
+
+$$
+A_Z=Z^*M_JZ,\quad B_Z=Z^*Y,\quad
+K_Z=B_Z^*A_Z^{-1}B_Z\preceq Y^*M_J^{-1}Y,
+\qquad H=\Xi+\Theta\preceq U_2=\Xi+S_J-K_Z.
+$$
+
+Only $B_Z$ and an unexported $A_Z$ diagonal are newly contracted.
+The first diagonal and both directed cross enclosures are reused.
+One existing two-column adjoint Cauchy projection uses unweighted exact
+sources, then the same implicit $V$; six raw generator-column checks
+cover both sources and modes0,39,1280. A native two-by-two solve with
+eighteen right sides forms every cross term of $K_Z$. No old source
+action, forward lift profile, finite Gram, scalar/channel supplier or
+F/D solve is regenerated.
+
+The fixed1024-bit application takes9.17 seconds and encloses
+$\det U_2\simeq-2.2564304658181403\times10^{-1361}<0$.
+The1536-bit execution takes10.55 seconds: all724 matrix-entry interval
+pairs have identical endpoints, while the two strictly negative
+determinant intervals overlap with nonidentical endpoints. The same
+algorithm is used; all40 guarded files remain unchanged.
+Under the inherited same-object channel-aware inverse comparison and
+seventeen positive directions of $\Xi$, both $U_2$ and $H$ therefore
+have seventeen positive and one negative direction. The accepted inertia
+identity gives $n_-(C_{\rm sharp})=0$ for this whole finite-$J$,
+fixed-eighteen-lift lower source comparison, including sources outside
+$\operatorname{span}Z$. Its strict-negative-source criterion is
+excluded without supplying the complete common inverse. This does not
+exclude actual sufficient updates generally or settle semidefinite
+endpoint updates. Actual common-domain/far-energy identification,
+good-block/far certification, retained/cofinal positivity, Robin tail
+and RH remain open. This is a numerical application of existing
+projection and inertia results, without generic novelty or Lean
+verification.
+
 Even a certified negative $C_{\rm sharp}$ would only identify a
 direction for further actual certification. A sufficient full update
 still needs an upper bound for the SAME source on
@@ -3601,6 +3639,195 @@ $\Sigma_{\max}$ cannot substitute for $\Sigma_L$ there. The
 inherited common-form/domain and inverse/comparison premises remain.
 No accepted calculation is repeated, and no actual retained/cofinal
 positivity, Robin-tail, RH, generic novelty or Lean result is claimed.
+
+
+#### The same finite comparison also controls positive-denominator endpoints
+
+Keep the SAME finite $J$, eighteen-column lift, nineteen channels,
+$\rho=1/32$, $\overline W$, $\overline L$ and upper compression
+$\Sigma=\Sigma_{\max}$. The actual common-form/domain and inverse
+identifications, finite far energy, channel comparison and two-sided
+far enclosure remain premises. The negative projection upper supplies
+$H=\Xi+\Theta$ with inertia17 positive,1 negative,0 zero, the same as
+$\Xi$. The following is an application of the preceding block inertia
+and square completion, with no new numerical evaluation.
+
+Put $S=N^{1/2}R$ and $P_s=I+S\Xi^{-1}S^*$. The two Schur complements
+of $\left(\begin{smallmatrix}I&S\\S^*&-\Xi\end{smallmatrix}\right)$,
+using the identical nonsingular inertias of $\Xi$ and $H$, give
+$P_s\succ0$. Consequently
+
+$$
+C_{\rm sharp}=MN^{1/2}P_sN^{1/2}M\succeq0,
+\qquad \ker C_{\rm sharp}=\ker(NM).
+$$
+
+This kernel statement needs no strict spectral gap for $N$.
+For one eligible source $w$, write $b=R^*NMw$ and
+$k_J=w^*MNMw$. Use the same augmented far map
+$\widetilde F^*\widetilde F=G$ and embed its actual far response as
+$\widetilde z=(z,0)$. The accepted strict far coefficient gives
+
+$$
+P_f=I+\kappa\widetilde F\Sigma^{-1}\widetilde F^*\succeq\alpha I,
+\qquad\alpha=1-\kappa G_{00}/(-a_\Sigma)>0.
+$$
+
+The square completion is an exact identity on these common objects:
+
+$$
+\begin{aligned}
+\mathcal K+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}
+={}&w^*C_{\rm sharp}w\\
+&+\kappa\left\langle
+\widetilde z+\widetilde F\Xi^{-1}b,
+P_f(\widetilde z+\widetilde F\Xi^{-1}b)
+\right\rangle,
+\end{aligned}
+$$
+
+where $\mathcal K=k_J+\kappa\|z\|^2$ and
+$b_{\rm actual}=b+\kappa\widetilde F^*\widetilde z$.
+Both terms on the right are nonnegative. Equality forces $NMw=0$,
+then $b=k_J=0$, then $z=0$. In particular
+
+$$
+\mathcal K+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}=0
+\quad\Longrightarrow\quad
+\mathcal K=0,\ b_{\rm actual}=0.
+$$
+
+Thus for every positive $d\ge\mathcal K$, the strict inequality
+$d+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}>0$ holds. A zero
+one-negative-core threshold with positive denominator is excluded.
+
+The conclusion extends to any finite jointly eligible source block
+$W_{\rm src}$ on this same $J$, without requiring independent columns.
+Let $K_{\rm actual}$ and $B_{\rm actual}=\mathcal BV$ be its common
+charge Gram and row map. Apply the preceding scalar statement to every
+coefficient vector and its actual linear-combination source. It gives
+
+$$
+D+B_{\rm actual}\Sigma^{-1}B_{\rm actual}^*\succ0
+\qquad(D\succ0,\ D\succeq K_{\rm actual}).
+$$
+
+Bordered inertia therefore leaves exactly one negative direction in
+$\Sigma+B_{\rm actual}^*D^{-1}B_{\rm actual}$. Since
+$V^*\overline LV\preceq\Sigma$, this matrix dominates the compression
+of $\overline L+\mathcal B^*D^{-1}\mathcal B$. The specified full lower
+update is not PSD, including its positive-denominator semidefinite
+endpoint cases. The common source/action/far law is required on the
+whole source span; unrelated scalar charges cannot be substituted.
+
+Nonsingularity of $H$ is material. For the finite-matrix example
+$M=N=1$, $W_c=2$, $R=e_0^*$, $G=0$ and
+$\Sigma=\Xi=\operatorname{diag}(-1,I_{17})$, one has
+$H=\operatorname{diag}(0,I_{17})$ and $C_{\rm sharp}=0$.
+Taking $w=d=1$ and $z=0$ gives $\mathcal K=1$, $b_{\rm actual}=e_0$
+and $\Sigma+b_{\rm actual}b_{\rm actual}^*/d\succeq0$.
+Thus nonnegativity of $C_{\rm sharp}$ alone would not exclude the
+endpoint. The strict projection certificate supplies the extra
+nonsingularity for the present data.
+
+This excludes only this fixed-majorant lower-update family with
+positive-definite denominator and finite-$J$ sources. Other majorants,
+bases and source supports, actual $S_N$ positivity, retained/cofinal
+positivity, Robin tail and RH remain undecided. The argument uses the
+compression order directly; it does not replace an actual sufficient
+Schur complement by $\Sigma_{\max}$. It is a conditional application
+of existing matrix identities, without a generic novelty or
+Lean-verification claim.
+
+
+#### The projection also excludes the same complete-Gamma comparison
+
+The same two-source projection supplies a stronger conditional
+application than the fixed finite-source exclusion. Keep the actual
+exterior operator $H_{\rm ext}$, selected support $E=1281{:}2048$,
+diagonal $\Lambda$, complete comparison $T=\Lambda+B_{\rm GP}$,
+and the original retained residual map $R_{\rm res}$. The common
+form/domain, inverse and sound enclosure premises remain in force.
+Here $B_{\rm GP}$ includes the complete Gamma boundary and even pole;
+this $T$ is not the nineteen-channel surrogate used in $\overline W$.
+
+For arbitrary retained $v$, use the SAME actual selected trial
+$x_0(v)=F^{-1}B_{\rm ret}v$, and write
+
+$$
+Q(v)=v^*A_{\rm ret}v-x_0(v)^*Fx_0(v),\quad
+r(v)=R_{\rm res}v=Cv-H_{\rm ext}E x_0(v),\quad E^*r(v)=0.
+$$
+
+For every $E$-supported correction $t$, the full-comparison margin is
+
+$$
+m_T(v,t)=Q(v)+t^*Ft
+ -(r(v)-H_{\rm ext}Et)^*T^{-1}(r(v)-H_{\rm ext}Et).
+$$
+
+Apply the earlier finite inverse-variational restriction to
+$X=[E,Z]$, with the archived $Z=[w_0,w_1]$. The same block completion
+as in the scalar dual formula, with two columns instead of one, gives
+
+$$
+\sup_t m_T(v,t)\le Q(v)
+ -(Z^*r(v))^*A_Z^{-1}(Z^*r(v)),\qquad A_Z=Z^*\mathcal M Z,
+$$
+
+where $\mathcal M$ is the complete-$T$ effective action defined above.
+The archived $A_Z=Z^*M_JZ$ is exactly this finite energy, and
+$B_Z=Z^*R_{\rm res}V=Z^*R_JV$. This application uses positive
+$B_0=E^*TE$, $D_0=F-B_0$ and the common finite restriction of $T$.
+It neither assumes a full-space optimizer nor identifies $M_J^{-1}$
+with a compression of an infinite inverse. The source programs'
+complete boundary and periodic diagonal, together with their mixed
+$F^{-1}$ and $D_0^{-1}$ action terms, supply this correspondence;
+finite proposal channels do not replace $T$ in those actions.
+
+Set $Q_V=V^*QV$, $Y=R_JV$ and
+$F_V=(R_{\rm far}V)^*W_{\rm far}(R_{\rm far}V)$. The already
+identified common objects satisfy
+
+$$
+V^*\overline LV=Q_V-S_J-\kappa F_V\preceq\Sigma_{\max},
+\qquad F_V\preceq G,\qquad
+\Xi=\Sigma_{\max}+\kappa G.
+$$
+
+Consequently the SAME exact matrices obey
+
+$$
+Q_V-K_Z\preceq\Sigma_{\max}+S_J+\kappa G-K_Z=U_2.
+$$
+
+Choose $a\ne0$ with $a^*U_2a<0$ from the accepted strict projection
+certificate. The implicit lift $V$ is injective, so $v=Va\ne0$.
+Fix this $v$ once. Then
+
+$$
+\sup_t m_T(v,t)\le a^*(Q_V-K_Z)a\le a^*U_2a<0.
+$$
+
+For every admitted channel comparison $T_U=\Lambda+UU^*$ with
+$UU^*\preceq B_{\rm GP}$ and common inverse-form domains,
+$T_U\preceq T$ gives $m_{T_U}(v,t)\le m_T(v,t)$. Thus the same
+nonzero retained direction prevents whole-retained positivity
+certification by any such channel refinement, for all corrections on
+this selected $E$. Adding dual test rows, completing a dual inverse,
+or changing a numerical cutoff while representing this SAME
+$T,E,\Lambda$ cannot alter the negative exact comparison margin.
+The finite $J$ here supplies dual tests, not a truncated exterior.
+
+This is a failure of the specified inverse-residual lower comparison,
+not a negative direction of the actual Weil operator. Other selected
+supports, a changed diagonal or prime comparison, and estimates using
+actual information beyond this $T$ remain distinct routes. No new
+numerical contraction is needed. The actual form/domain and inverse
+identifications, source/lift/far correspondence and sound-cache
+premises have not been discharged by this application. Actual retained
+or cofinal positivity, Robin tail and RH remain unresolved; no new
+generic theorem, algorithm or Lean verification is claimed.
 
 
 ## A proved high-energy law and its four-component characteristic geometry
