@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
+  normalized_sha256: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
+cas_ref: sha256:b59c9340e39a14fadb17326078a5e458c3db8a788ca87f9e3c5d8e31b60ae941
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream closure, with no matching frozen project GID. The complete homomorphism-filtered carrier, arbitrary-group preservation, finite-G census with arbitrary possibly infinite codomain, both nonzero-translation branches, arbitrary/nonunit slope specialization, infinite-codomain example, and all displayed F3-squared directions, actual subgroups, paired fixed families, coset representatives and disjoint orbits are supplied by Mathlib at db584cd6d46c92f209a44c0f1c829460d327499d through instantiation, logical transport and normalization. Finset.card_vadd_finset and additive-homomorphism/cancellation identities give preservation; finite sums and local injectivity give the two necessary conditions. addOrderOf_eq_prime, nsmul_injOn_Iio_addOrderOf and IsOfFinAddOrder.mem_zmultiples_iff_mem_range_addOrderOf give the locally injective three-element cycle. AddSubgroup.zmultiples_le, Set.vadd_set_mono, AddAction.vadd_set_stabilizer_subset and Finset.eq_of_subset_of_card_le identify every fixed triple with a cycle coset. AddAction.stabilizer_coe_finset, AddAction.stabilizer_addSubgroup, finEquivZMultiples, AddAction.orbitProdStabilizerEquivAddGroup, Nat.card_congr and Nat.card_prod give the full census. Parameter substitution and finite ring/set normalization give all stated applications and pairwise disjointness via their distinct stabilizers. Exact clause-complete Lean applications use only propext, Classical.choice and Quot.sound. The existing project grid theorems require both coordinate injections and exclude H0, so their GIDs do not cover this target. No new Lean declaration, frozen theorem or coverage GID is asserted.
+    previous_atom_id: 713246155e7c8f9f79a60a0a8f9a7a97ddf4e8e59cccd5dd10910e715297736d
+    next_atom_id: 799b9bfcebe43b326c604c8eca71ea4ec08f63b66fadb43df7b69b65c4696499
+  chain_atoms:
+    - 00b991800e639d95d1325fe38cc5c43f8daafdee5fbaa9c49ca4e01e1eb4c68f
+    - 7f7538a28dd0453124d98d96c7fad0187fcbb0ccff4f45893f8111c99154079f

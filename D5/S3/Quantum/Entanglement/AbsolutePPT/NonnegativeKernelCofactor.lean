@@ -15,21 +15,30 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Data.Fintype.EquivFin
 
 /-
-SOURCE PROPOSAL ONLY: no parsing, elaboration, kernel or axiom check has been run.
-The existing CofactorKernel.kernel_cross_identity must be made public in its owner.
-Do not refer to a generated private name or duplicate its proof here.
+The classical elementary-vector argument identifies each nonnegative circuit with an
+oriented cofactor vector. Deleted-column independence selects a nonsingular row minor;
+CofactorKernel.kernel_cross_identity supplies proportionality over the selected support.
+The original circuit equations then recover every original row equation.
 
-Per-declaration consumed-content classification:
-liftCof: bind-only definition; consumed by cofactorCandidates and circuit_cofactor_complete.
-cofactorCandidates: bind-only definition; consumed by nonnegKernel_iff_mem_hull_cofactorCandidates.
-exists_row_minor_of_linearIndependent_cols: private bind-only basis/reindexing glue;
-  consumed by circuit_cofactor_complete.
-circuit_cofactor_complete: content (support-rank/minor/proportionality inference);
-  consumed by nonnegKernel_iff_mem_hull_cofactorCandidates.
-  admission_basis: escape-witness (circuit_cofactor_complete).
-nonnegKernel_iff_mem_hull_cofactorCandidates: content (actual cone characterization);
-  terminal generic consumer, not a named application-check wrapper.
-No support descent or integer cofactor algebra is reimplemented here.
+admission_basis: escape-witness
+liftCof: proof_shape: bind-only; escape_witness: none; consumers: cofactorCandidates,
+  circuit_cofactor_complete.
+cofactorCandidates: proof_shape: bind-only; escape_witness: none;
+  consumers: nonnegKernel_iff_mem_hull_cofactorCandidates.
+exists_row_minor_of_linearIndependent_cols: proof_shape: bind-only; escape_witness: none;
+  consumers: circuit_cofactor_complete.
+circuit_cofactor_complete: proof_shape: content;
+  escape_witness: support-rank/minor/proportionality inference;
+  consumers: nonnegKernel_iff_mem_hull_cofactorCandidates;
+  admission_basis: escape-witness.
+nonnegKernel_iff_mem_hull_cofactorCandidates: proof_shape: content;
+  escape_witness: exact cone characterization from circuit-to-cofactor reconstruction;
+  admission_basis: escape-witness.
+Escape audit unfinished for circuit_cofactor_complete and
+nonnegKernel_iff_mem_hull_cofactorCandidates:
+https://github.com/the-omega-institute/trureturing/issues/17856.
+The retained terminal Reg registration has unresolved source binding; neither theorem
+has a complete validated four-slot registration.
 -/
 
 set_option autoImplicit false

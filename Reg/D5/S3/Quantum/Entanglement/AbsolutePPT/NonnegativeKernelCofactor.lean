@@ -3,11 +3,15 @@ import Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/- SOURCE-ONLY REG ATTEMPT. No declared_validated or binding-evidence claim.
-This mirrors the terminal equivalence, retaining its whole original telescope.
-The other new public interfaces require the concrete bridges in audit-handoff.md.
-The sourceSelection path below is a source-derived proposal, not a checked AST pin.
-This file is intentionally separate from the mathematical integration patch.
+/- The dependent-family construction mirrors the terminal cone equivalence with its
+whole original telescope. The actual law, equivalence bridge, variation, sensitivity
+and observational dependence are Lean proof terms. The sourceSelection descriptor
+has unresolved native binding (IE-C050 ClosedTruthReadout, unclassified_form);
+this registration is not declared_validated.
+The unfinished audit for this equivalence, circuit_cofactor_complete,
+circuit_deleted_cols_linearIndependent and kernel_cross_identity is disclosed at
+https://github.com/the-omega-institute/trureturing/issues/17856.
+The other three interfaces still lack complete faithful four-slot registrations.
 -/
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCofactor

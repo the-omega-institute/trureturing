@@ -9,7 +9,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
-internal static class RawLeanReportArtifact
+internal static partial class RawLeanReportArtifact
 {
     internal const string Schema = "stratalint-raw-lean-report-v3";
     internal const string ScopedSchema = "stratalint-scoped-lean-report-v1";
@@ -101,15 +101,8 @@ internal static class RawLeanReportArtifact
         return Read(bytes, scope.SourceSnapshot, materialPath: null, validateMaterials: false, scope);
     }
 
-    private static LeanAxiomReport Read(
-        ReadOnlySpan<byte> bytes,
-        RepositorySnapshot snapshot,
-        string? materialPath,
-        bool validateMaterials,
-        LeanReportScope? scope)
+    private static JsonDocument ReadCanonicalDocument(ReadOnlySpan<byte> bytes)
     {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        Reading.Value?.Invoke();
         var text = StrictUtf8.GetString(bytes);
         ImmutableArray<byte> canonical;
         try
@@ -130,7 +123,19 @@ internal static class RawLeanReportArtifact
                 + $"actual {ByteAt(bytes, mismatch)}.");
         }
 
-        using var document = JsonDocument.Parse(text);
+        return JsonDocument.Parse(text);
+    }
+
+    private static LeanAxiomReport Read(
+        ReadOnlySpan<byte> bytes,
+        RepositorySnapshot snapshot,
+        string? materialPath,
+        bool validateMaterials,
+        LeanReportScope? scope)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        Reading.Value?.Invoke();
+        using var document = ReadCanonicalDocument(bytes);
         var root = document.RootElement;
         RequireProperties(root, ["modules", "schema"], scope is null ? "raw Lean report" : "scoped Lean report");
         var expectedSchema = scope is null ? Schema : ScopedSchema;

@@ -22,10 +22,11 @@ internal sealed partial class LeanSourceCatalog
         RepoPath path,
         ImmutableArray<FrozenDeclaration> recordedDeclarations,
         out ImmutableArray<byte> result,
-        bool includeUnchangedClosure = false)
+        bool includeUnchangedClosure = false,
+        bool forceComplete = false)
     {
         result = [];
-        if (completeSourceModules.IsEmpty
+        if (!forceComplete && completeSourceModules.IsEmpty
             && (!includeUnchangedClosure || unchangedSourceModules.IsEmpty)) return false;
         var visited = new HashSet<string>(StringComparer.Ordinal);
         var queue = new Queue<string>();
@@ -42,7 +43,7 @@ internal sealed partial class LeanSourceCatalog
                     queue.Enqueue(imported);
             }
         }
-        if (!visited.Overlaps(completeSourceModules)
+        if (!forceComplete && !visited.Overlaps(completeSourceModules)
             && (!includeUnchangedClosure || !visited.All(unchangedSourceModules.Contains)
                 || !recordedDeclarations.All(declaration => PrivateModuleIsInClosure(declaration, visited))))
             return false;
@@ -65,6 +66,15 @@ internal sealed partial class LeanSourceCatalog
         result = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(output.ToString()));
         return true;
     }
+    internal ImmutableArray<byte> ExtractCompletePropositionSource(RepoPath path,
+        ImmutableArray<FrozenDeclaration> declarations)
+    {
+        // Keep ordinary source, kind and private-origin validation before the full comparison.
+        _ = ExtractPropositionSource(path, declarations);
+        if (TryExtractCompleteSource(path, declarations, out var source, forceComplete: true)) return source;
+        throw new LeanSourceExtractionException("Complete Lean source closure is unavailable.");
+    }
+
     private static bool PrivateModuleIsInClosure(FrozenDeclaration declaration, HashSet<string> modules)
     {
         var components = CanonicalLeanNameDecoder.ComponentsPrefix(
