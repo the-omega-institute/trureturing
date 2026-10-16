@@ -99,7 +99,10 @@ internal sealed class DisorderedExclusionQuadraticResponseRefutationDocument : I
                             + "hence a remainder o(ε²). Its ε⁴ coefficient is 7872·25·1628/223175², "
                             + "which is positive, so the current is not odd. The vanishing quadratic term "
                             + "therefore does not require either rate condition and does not imply bias-reversal symmetry."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sakai-akimoto-2026-disordered-exclusion-quadratic-response"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
