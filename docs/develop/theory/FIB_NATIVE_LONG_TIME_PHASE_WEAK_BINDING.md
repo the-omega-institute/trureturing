@@ -4525,3 +4525,403 @@ underlying domains. The observation and resource results
 §§92--96 add no preparation premise to (105.1). $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 106. Weighted critical mode and a smaller admissible cutoff error
+
+**Theorem 106.1 (height moment, weighted horizontal energy and parity).**
+Retain exactly the source, clock and complex domains of §§81, 87--88.
+For the normalized positive mode $\Phi_c$ of Theorem 88.1,
+
+$$
+r\Phi_c\in\mathcal Q_E,\qquad
+\int r^2\bigl(|\Phi_c|^2+|X\Phi_c|^2+|Y\Phi_c|^2\bigr)d\xi<\infty,
+\qquad h_c[r\Phi_c]=a.
+\tag{106.1}
+$$
+
+The measure-preserving involution
+$\sigma(r,y,z,w)=(-r,y,-z,w)$ fixes $V$ and $\Phi_c$.
+For any fixed even height cutoff $\eta$ as in (98.6), put
+$\eta_R(r)=\eta(r/R)$. Then
+
+$$
+\int |\eta_R'|^2|\Phi_c|^2=o(R^{-4})\quad(R\to\infty).
+\tag{106.2}
+$$
+
+In particular $R_s=s^{-1/2}$ gives $o(s^2)$ in (106.2), and
+$\eta_{R_s}\Phi_c$ is admissible between both original faces for
+all sufficiently small original real $s>0$.
+
+Proof. Write $p_t(\xi)=p_E(t;0,\xi)$ and $f=V\Phi_c$.
+The decay (82.4), $|r|\le N$ and the volume $16R^7$ of
+$\{N\le R\}$ imply
+$V,rV\in L^2\cap L^\infty$. Consequently
+$f,rf\in L^1\cap L^2$ by Hölder and $\|\Phi_c\|_2=1$.
+The first coordinate is additive under (82.1), and its heat
+marginal is the law of $\sqrt2 B_t$. Thus
+
+$$
+\|r p_t\|_1\le\sqrt{2t},\qquad
+\|r p_t\|_2^2\le\|p_t\|_\infty\int r^2p_t\,d\xi
+ \le Ct^{-5/2},\qquad \|p_t\|_2\le Ct^{-7/4}.
+\tag{106.3}
+$$
+
+The convolution form of $P_t$ and Young's inequality, in the
+unimodular convention already checked in (87.6), now give
+
+$$
+\|rP_tf\|_2\le
+\begin{cases}
+\|rf\|_2+\sqrt{2t}\|f\|_2,&0<t\le1,\\
+Ct^{-7/4}\|rf\|_1+Ct^{-5/4}\|f\|_1,&t\ge1.
+\end{cases}
+\tag{106.4}
+$$
+
+Indeed split the output height as the input height plus their
+difference in the kernel integral; the corresponding column norms
+are exactly those in (106.3). Both lines are integrable on their
+stated intervals. Reconstruction (87.2), (88.3) says
+$\Phi_c=(\chi_c/a)\int_0^\infty P_tf\,dt$ in $L^2$.
+The same integrals converge in the norm of $L^2$ with weight
+$r^2$, by (106.4). Closedness of multiplication by $r$ proves
+$r\Phi_c\in L^2$.
+
+For bounded smooth real height multipliers $g$ with bounded derivative,
+the weak equation (88.1) gives the product identity used in (98.7),
+
+$$
+h_c[g\Phi_c]=a\int |g'|^2|\Phi_c|^2.
+\tag{106.5}
+$$
+
+The multiplier and its square preserve $\mathcal Q_E$, so the
+identity follows by the same form test, without separate phase
+regularity. Apply it to $g_R=r\eta_R$, and also to $g_R-g_T$.
+The already proved height moment implies that $g_R\Phi_c$ is
+Cauchy in $L^2$ and in $L^2(Vd\xi)$. The derivatives $g_R'$ are
+uniformly bounded and converge pointwise to one; hence
+$(g_R'-g_T')\Phi_c\to0$ in $L^2$. Equation (106.5) makes
+$g_R\Phi_c$ Cauchy in $\mathcal Q_E$ as well. Its limit is
+$r\Phi_c$, and (106.5) gives $h_c[r\Phi_c]=a$.
+The distributional product rules
+$X(r\Phi_c)=\Phi_c+rX\Phi_c$ and
+$Y(r\Phi_c)=rY\Phi_c$ prove the remaining integrability in (106.1).
+Finally
+
+$$
+\int |\eta_R'|^2|\Phi_c|^2
+ \le CR^{-4}\int_{|r|>R}r^2|\Phi_c|^2=o(R^{-4}).
+$$
+
+The admissibility argument is exactly the height-strip core
+approximation of (98.6), since $sR_s\to0$.
+The involution $\sigma$ sends $X$ to $-X$ and $Y$ to $Y$,
+preserves Lebesgue measure and fixes the source. It commutes with
+$\mathcal E$ and its heat, so fixes $V$. Simplicity and positivity
+in Theorem 88.1 then force $\Phi_c\circ\sigma=\Phi_c$.
+This proves the parity assertion and completes the proof. $\square$
+
+## 107. A second-order expansion of the complete rational native field
+
+**Definition 107.1 (same-bridge coefficient fields).** In the exact
+chart (97.1), write $\xi=(r,z)$, $z\in\mathbb R^3$,
+$u(h)=(1,h,h^2/2)$ and
+$h_t(r)=(4\pi t)^{-1/2}e^{-r^2/(4t)}$.
+Let $\mathbb E_{0,r}^t$ be expectation for the height bridge of
+$\sqrt2 B$ from zero to $r$ in time $t$. On that one bridge put
+
+$$
+S_t=\sup_{0\le v\le t}|H_v|,\qquad
+M_j=\int_0^t H_v^j u(H_v)u(H_v)^{\mathsf T}dv\quad(j=0,1,2),
+\qquad
+\gamma_M(z)=(4\pi)^{-3/2}(\det M)^{-1/2}e^{-z^{\mathsf T}M^{-1}z/4}.
+\tag{107.1}
+$$
+
+Derivatives $D\gamma_M,D^2\gamma_M$ are with respect to the
+positive definite matrix $M$, with $z$ fixed. Define
+
+$$
+\begin{aligned}
+p_0(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[\gamma_{M_0}(z)]
+              =p_E(t;0,(r,z)),\\
+p_1(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[-2D\gamma_{M_0}(z)[M_1]],\\
+p_2(t;r,z)&=h_t(r)\mathbb E_{0,r}^t[
+ 3D\gamma_{M_0}(z)[M_2]+2D^2\gamma_{M_0}(z)[M_1,M_1]],\\
+V_j(\xi)&=j_0^{-1}\int_1^\infty p_j(t;\xi)dt\quad(j=1,2),&
+V_{\rm t}(\xi)&=j_0^{-1}\int_1^\infty t p_0(t;\xi)dt.
+\end{aligned}
+\tag{107.2}
+$$
+
+These are coefficients for $\beta_s=\varepsilon s/d_0$, not for
+a changed source or a heat clock multiplied by $a$.
+
+**Theorem 107.2 (uniform complete-field remainder).** All expectations
+and integrals in (107.2) converge absolutely. There are constants
+$C,s_0>0$ depending only on the fixed original data such that
+
+$$
+\left\|\widetilde U_s-V-\beta_sV_1-\beta_s^2V_2
+                 -\lambda s^2V_{\rm t}\right\|_\infty
+ \le Cs^{5/2}\qquad(0<s<s_0).
+\tag{107.3}
+$$
+
+Here $\widetilde U_s$ has exactly the zero extension of (97.1).
+In particular (107.3) is uniform in all real phases, including the
+expanding original domain and its complement. Moreover
+
+$$
+|V_1(r,z)|\le C(1+|r|)^{-4},\qquad
+|V_2(r,z)|+V_{\rm t}(r,z)\le C(1+|r|)^{-3},\qquad V_{\rm t}>0,
+\tag{107.4}
+$$
+
+and $V_j\circ\sigma=(-1)^jV_j$, $V_{\rm t}\circ\sigma=V_{\rm t}$.
+
+Proof. We first justify the differentiated inverse moments; no
+infinite-time exchange is taken from a compact heat expansion.
+For every fixed integer $m\ge0$, every $t>0$, $r\in\mathbb R$
+and $L\ge0$,
+
+$$
+h_t(r)\mathbb E_{0,r}^t[
+ (\det M_0)^{-1/2}S_t^m\mathbf1_{\{S_t>L\}}]
+ \le C_m t^{(m-7)/2}e^{-c_m L^2/t}.
+\tag{107.5}
+$$
+
+For $m=0$ and $|r|\le L/2$, the left side is $(4\pi)^{3/2}$
+times the difference at zero phase between the full canonical
+kernel and the kernel additionally killed at $\pm L$.
+The Gaussian-mixture identification, including finiteness at zero
+phase, is the one proved in (97.6)--(97.8). The canonical part of
+(97.9), whose Markov/reflection proof works for every $t>0$,
+bounds this difference by $Ct^{-7/2}e^{-cL^2/t}$.
+For $|r|>L/2$ simply bound by the full zero-phase kernel and use
+(82.3) with $d_E(0,(r,0))\ge|r|$. This proves the $m=0$
+assertion for all endpoints. For $m>0$, layer-cake integration
+of that assertion gives
+
+$$
+L^mCt^{-7/2}e^{-cL^2/t}
+ +Cmt^{-7/2}\int_L^\infty v^{m-1}e^{-cv^2/t}dv
+ \le C_m t^{(m-7)/2}e^{-c_mL^2/t},
+$$
+
+after absorbing the polynomial factor into a weaker Gaussian.
+The case $L=0$ follows by the same integral and the full kernel
+bound. This proves (107.5), rather than assuming additional
+inverse-determinant moments. Since $S_t\ge|r|$, it also bounds
+the full moment by
+$C_m t^{(m-7)/2}e^{-c_mr^2/t}$, using $L=|r|/2$.
+
+On a path with $S_t<L$ set
+$M(\beta)=\int_0^t(1+\beta H_v)^{-2}u(H_v)u(H_v)^{\mathsf T}dv$.
+When $|\beta|L\le1/4$, $M(\beta)$ is comparable to $M_0$ in
+matrix order, and
+
+$$
+\|M_0^{-1/2}M^{(j)}(\beta)M_0^{-1/2}\|
+ \le C_j S_t^j\quad(1\le j\le3).
+\tag{107.6}
+$$
+
+These inequalities follow directly by differentiating the scalar
+factor $(1+\beta H_v)^{-2}$ under the finite path integral.
+Conjugating by $M_0^{-1/2}$ in the Gaussian, its first three
+$\beta$ derivatives are bounded, uniformly over all $z$, by
+$C_jS_t^j(\det M_0)^{-1/2}$.
+Indeed matrix differentiation produces a polynomial of bounded
+degree in $M_0^{-1/2}z$, times $e^{-c|M_0^{-1/2}z|^2}$;
+(107.6) bounds every coefficient. Taylor's theorem therefore gives
+
+$$
+\left|\gamma_{M(\beta)}-\gamma_{M_0}
+ +2\beta D\gamma_{M_0}[M_1]
+ -\beta^2\{3D\gamma_{M_0}[M_2]+2D^2\gamma_{M_0}[M_1,M_1]\}\right|
+ \le C|\beta|^3S_t^3(\det M_0)^{-1/2}.
+\tag{107.7}
+$$
+
+The derivatives at zero in this calculation use
+$M'(0)=-2M_1$, $M''(0)=6M_2$; hence their coefficients are
+exactly (107.2). By (107.5) the averaged remainder is at most
+$C|\beta|^3t^{-2}$. The same argument at zero gives
+
+$$
+|p_j(t;r,z)|\le Ct^{(j-7)/2}e^{-cr^2/t}\quad(j=0,1,2).
+\tag{107.8}
+$$
+
+This proves absolute convergence, boundedness and (107.4) by
+integration on $t\ge1$. Positivity of $V_{\rm t}$ follows from
+(82.3). Reflection of the same bridge by $H\mapsto-H$ sends
+$M_j$ to $(-1)^jJM_jJ$, where $J=\operatorname{diag}(1,-1,1)$.
+Changing $z$ to $Jz$ in (107.2) proves all the asserted parities.
+
+We now compare to the original native field, retaining its faces.
+Put $T=s^{-2}$ and $L=s^{-1/2}$. For small $s$, the extra strip
+$(-L,L)$ lies inside $I_s$, and $|\beta_s|L\le1/4$.
+Let $p_j^L$ denote (107.2)'s bridge expectations with the common
+indicator $S_t<L$. The exact native strip kernel uses $M(\beta_s)$
+on this same event, by (97.6). Thus (107.7) gives its expansion.
+For $1\le t\le T$, multiply by the actual threshold factor.
+The bounds $|e^{\lambda s^2t}-1|\le Cs^2t$ and
+$|e^{\lambda s^2t}-1-\lambda s^2t|\le Cs^4t^2$, together with
+(107.8), show that its integrated difference from
+
+$$
+p_0^L+\beta_sp_1^L+\beta_s^2p_2^L+\lambda s^2t p_0^L
+$$
+
+has supremum norm at most $Cs^3$. For clarity, the integrated
+Taylor remainder is bounded by $Cs^3\int_1^Tt^{-2}dt$;
+the exponential remainder by $Cs^4\int_1^Tt^{-3/2}dt$;
+and the cross terms by
+$Cs^3\int_1^Tt^{-2}dt+Cs^4\int_1^Tt^{-3/2}dt$.
+These bounds are uniform in the terminal point.
+
+On $|r|\le L/2$, removing the extra native strip killing costs
+at most $CL^{-5}$ after integration on $[1,T]$, by (97.9).
+For the canonical coefficients, (107.5)--(107.7) give
+
+$$
+\int_1^\infty|p_j-p_j^L|dt\le CL^{j-5}\quad(j=0,1,2),\qquad
+\int_1^\infty t|p_0-p_0^L|dt\le CL^{-3}.
+\tag{107.9}
+$$
+
+Indeed integrate $t^{(j-7)/2}e^{-cL^2/t}$ and substitute
+$t=L^2v$; the resulting integrals are finite for $j\le2$.
+Also (107.8) bounds the canonical tails past $T$ by
+$Cs^{5-j}$ and the time-weighted tail by $Cs^3$.
+The unchanged native integral past $T$ is $Cs^5$ by (82.9).
+Keeping the common factor $1/j_0$, these estimates bound the
+remainder on $|r|\le L/2$ by
+
+$$
+C\{L^{-5}+sL^{-4}+s^2L^{-3}+s^3+s^5\}\le Cs^{5/2}.
+\tag{107.10}
+$$
+
+On $|r|>L/2$, the native height tail established in the proof
+of Lemma 97.2 is $CL^{-5}+Cs^5$, also after zero extension.
+The canonical height tail in that proof bounds $V$ by $CL^{-5}$.
+Equation (107.4) bounds the other terms by
+$CsL^{-4}+Cs^2L^{-3}$. This proves (107.3) on the entire space.
+The two original faces were used in the native kernel and its
+long-time bound; the strip served only to estimate that kernel.
+
+The local higher-order supplier, Colin de Verdière--Hillairet--Trélat,
+[Theorem A, pp.902--903](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf),
+has compact positive-time and endpoint quantifiers. The smooth
+rational fields, zero drift, constant density, interior pole and
+step-three flag checked in §104 meet those local hypotheses.
+The global remainder (107.3) instead follows from the explicit
+same-bridge estimates above, not an extension of that local scope.
+Its raw density factor, signed fixed $\kappa\ne0$ and $B$ clock
+remain exactly (81.5), (97.1)--(97.3). $\square$
+
+## 108. The complete Rayleigh correction for the affine amplitude
+
+**Theorem 108.1 (admissible affine-amplitude trial asymptotic).**
+With $\eta$ as in Theorem 106.1, put
+
+$$
+\nu=\varepsilon/d_0,\quad R_s=s^{-1/2},\quad w_s(r)=1+\beta_sr,
+\quad f_s=\eta_{R_s}w_s\Phi_c,\quad
+Z_s=\mathcal T_s^{-1}f_s/\|f_s\|_2,
+\tag{108.1}
+$$
+
+and define the finite real numbers
+
+$$
+A_2=\int r^2|Y\Phi_c|^2d\xi,\quad
+J_2=\int(V_2+2rV_1)|\Phi_c|^2d\xi,\quad
+J_{\rm t}=\int V_{\rm t}|\Phi_c|^2d\xi>0.
+\tag{108.2}
+$$
+
+For every sufficiently small original real $s>0$, $Z_s$ is a
+normalized admissible real vector in the original complex form
+domain $\mathcal Q_s$, and
+
+$$
+\frac{q_s^c[Z_s]}{s^2}\longrightarrow
+\nu^2\{a(1-A_2)-\chi_cJ_2\}
+ -\lambda\{a+\chi_cJ_{\rm t}\}.
+\tag{108.3}
+$$
+
+This is the Rayleigh asymptotic of the specified trial. No sign of
+the complete coefficient or asymptotic equality for the actual
+infimum is asserted.
+The sign of (108.3) and the actual exact-critical ground-state
+profile decision remain unresolved.
+
+Proof. Theorem 106.1 makes (108.2) finite, using boundedness of
+$V_1,V_2,V_{\rm t}$ and $r\Phi_c\in L^2$.
+The cutoff approximation of (98.6), now multiplied by the smooth
+bounded-on-its-strip function $w_s$, proves admissibility.
+Both original faces lie outside its height support eventually.
+Also $\|f_s\|_2\to1$, by $r\Phi_c\in L^2$ and dominated
+convergence. Parity eliminates every integral with an odd height
+factor times a $\sigma$-even density.
+
+Use the product identity (106.5) with $g=\eta_{R_s}w_s$.
+The linear term in $\beta_s$ vanishes by parity, so
+
+$$
+h_c[f_s]=a\int|\eta_{R_s}'|^2|\Phi_c|^2
+ +a\beta_s^2\int|\eta_{R_s}+r\eta_{R_s}'|^2|\Phi_c|^2
+ =a\beta_s^2+o(s^2).
+\tag{108.4}
+$$
+
+Here (106.2) bounds the first integral; the multiplier in the
+second is uniformly bounded and tends pointwise to one.
+The exact rational cancellation in (97.2) gives
+
+$$
+a\widetilde b_s[f_s]-a b[f_s]
+ =a\int(1-w_s^2)\eta_{R_s}^2|Y\Phi_c|^2
+ =-a\beta_s^2A_2+o(s^2).
+\tag{108.5}
+$$
+
+The linear integral is zero, and (106.1) permits dominated
+convergence in the quadratic integral. No ordinary phase
+$H^1$ assumption has been made.
+
+Finally (107.3) and its parities give
+
+$$
+\int(\widetilde U_s-V)|f_s|^2
+ =\beta_s^2J_2+\lambda s^2J_{\rm t}+o(s^2).
+\tag{108.6}
+$$
+
+To check all weighted terms, the $\beta_sV_1$ term has zero
+pairing with $\eta_{R_s}^2|\Phi_c|^2$, and its next term is
+$2\beta_s^2\int rV_1\eta_{R_s}^2|\Phi_c|^2$.
+Its remaining cubic term is odd and zero. The linear cross
+terms from $V_2,V_{\rm t}$ are also odd; their terms containing
+$\beta_s^2r^2$ cost $O(s^4)$, since $r\Phi_c\in L^2$.
+Dominated convergence handles the displayed integrals, while
+(107.3)'s remainder costs $O(s^{5/2})\|f_s\|_2^2$.
+Combining (108.4)--(108.6) with the original threshold subtraction
+$-a\lambda s^2\|f_s\|_2^2$, and then normalizing, proves (108.3).
+The real vector supplies only an upper bound on the infimum over
+all complex vectors; it has not been identified with an actual
+normalized complex ground state. All three results are ordinary
+source-specific deductions using the existing variational,
+convolution, heat and parity tools, with no claim of kernel
+certification or source-independent novelty. $\square$
+
+## 追加锚（本行以下为增补区）
