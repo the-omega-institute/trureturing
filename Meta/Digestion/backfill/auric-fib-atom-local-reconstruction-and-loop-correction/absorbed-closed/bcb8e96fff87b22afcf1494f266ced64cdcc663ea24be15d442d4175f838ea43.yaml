@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:bcb8e96fff87b22afcf1494f266ced64cdcc663ea24be15d442d4175f838ea43
   normalized_sha256: sha256:bcb8e96fff87b22afcf1494f266ced64cdcc663ea24be15d442d4175f838ea43
 cas_ref: sha256:bcb8e96fff87b22afcf1494f266ced64cdcc663ea24be15d442d4175f838ea43
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/LegalWords/InhomogeneousMarkovCompletion.unique_markov_completion
+    target_statement_id: sha256:a8abf353752dcef661e993be7f53a62c2e5f7381ce2cbc74c1e33a59c7415227
 receipts:
   unresolved_subitems: []
   chain_atoms:
