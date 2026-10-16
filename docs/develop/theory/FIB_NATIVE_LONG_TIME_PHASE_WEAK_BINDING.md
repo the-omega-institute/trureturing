@@ -3340,3 +3340,487 @@ different predicates. None of the heat, form, transport or quantum
 statements above identifies the last predicate with any of the others.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 97. An exact rational comparison and its integrated source error
+
+**Definition 97.1 (comparison coordinates for the same native operator).**
+Retain all the data and full complex domains of Definitions 75.1 and
+81.1. Put $d_0=k_0-\alpha_\kappa>0$, $\beta_s=\varepsilon s/d_0$,
+and, for $z=(y,z_2,w)$, define
+
+$$
+L_s=\begin{pmatrix}1&\beta_s&0\\0&1&2\beta_s\\0&0&1\end{pmatrix},
+\quad \mathscr L_s(r,z)=(r,L_sz),\quad
+(\mathcal T_sF)(r,z)=F(\mathscr L_s(r,z)),\quad
+\widetilde U_s=U_s\circ \mathscr L_s.
+\tag{97.1}
+$$
+
+It preserves Lebesgue measure, fixes the source and both height faces,
+and is a constant linear change of the three real phase coordinates.
+Write $u(r)=(1,r,r^2/2)$ and
+$Y=u(r)\cdot\partial_z$. Then, exactly,
+
+$$
+\begin{aligned}
+v_s(r)&=(1,r,r^2/[2(1+\beta_sr)]),\\
+\widetilde b_s[f]&:=b_s[\mathcal T_s^{-1}f]
+ =\int_{\Omega_s}\left(|\partial_rf|^2+
+                   (1+\beta_sr)^{-2}|Yf|^2\right)dr\,dz.
+\end{aligned}
+\tag{97.2}
+$$
+
+These are identities of closed forms on
+$\mathcal T_s\mathcal Q_s$, not additional regularity assumptions.
+In particular no estimate of the three separate phase derivatives
+is used. To verify the identities, each component of the original
+$c_\kappa(k)$ in G (25.4) is an affine function of $k$ plus a
+constant divided by $k-\alpha_\kappa$. Consequently its exact Taylor
+identity, with $h=k-k_0$, is
+
+$$
+c_\kappa(k_0+h)=c_0+h c_1+
+                 \frac{h^2}{2(1+h/d_0)}c_2.
+\tag{97.3}
+$$
+
+Substitution in (78.1) gives the first line of (97.2), and
+$L_su(r)=(1+\beta_sr)v_s(r)$ gives its second line on the smooth
+core. Unitarity and closure give the stated full-domain identities.
+The denominator stays positive on $I_s$, since the original
+admissible interval has $k-\alpha_\kappa>0$.
+
+**Lemma 97.2 (quantitative complete-field comparison in this chart).**
+There are constants $C,c_0,s_0>0$, depending only on the fixed native
+data, such that for $0<s<s_0$, $R\ge1$ and $sR\le c_0$,
+
+$$
+\|\widetilde U_s-V\|_\infty
+ \le C(sR+R^{-5}+s^2+s^5).
+\tag{97.4}
+$$
+
+Both fields are extended by zero according to Definition 81.1 when
+appropriate. In particular, choosing $R=s^{-1/6}$ gives
+
+$$
+\|\widetilde U_s-V\|_\infty\le Cs^{5/6}.
+\tag{97.5}
+$$
+
+The heat clock and raw source factor in this estimate remain exactly
+$B$ and $j_0^{-1}$. It compares the complete infinite-time fields.
+
+Proof. We give the quantitative step for this rational family.
+Let $\widetilde P_s(t;0,(r,z))=P_s(t;0,\mathscr L_s(r,z))$.
+The unchanged Jacobian and (81.5) give
+$\widetilde U_s=j_0^{-1}\int_1^\infty
+ e^{\lambda s^2t}\widetilde P_s(t;0,\cdot)dt$.
+Choose $c_0$ small enough that $[-R,R]\subset I_s$ and
+$|\beta_s|R\le1/4$. Kill both comparison diffusions also at $r=\pm R$,
+and denote their strip kernels by $\widetilde P_s^R$ and $p_E^R$.
+This extra killing is used only to compare kernels; the field in
+(97.4) retains the original two faces.
+
+Here is the conditional Gaussian comparison, with its constants
+independent of $R,t,r,z$. The height path is $H_v=\sqrt2 B_v^1$.
+Condition on its bridge from $0$ to $r$ in time $t$ and on its staying
+in $(-R,R)$. The independent driver $B^2$ gives the phase covariances
+$2M_s$ and $2M_0$, where
+
+$$
+M_s=\int_0^t(1+\beta_sH_v)^{-2}u(H_v)u(H_v)^{\mathsf T}dv,
+\qquad M_0=\int_0^tu(H_v)u(H_v)^{\mathsf T}dv.
+\tag{97.6}
+$$
+
+The same height bridge is used in both matrices. They are positive
+definite almost surely: a nonconstant continuous bridge has an interval
+in its range, and a quadratic polynomial vanishing on that range is
+zero. On the survived event,
+$(1-C sR)M_0\le M_s\le(1+C sR)M_0$ in matrix order.
+For the Gaussian density
+$\gamma_M(z)=(4\pi)^{-3/2}(\det M)^{-1/2}
+ e^{-z^{\mathsf T}M^{-1}z/4}$ this implies
+
+$$
+|\gamma_{M_s}(z)-\gamma_{M_0}(z)|
+ \le C sR(\det M_0)^{-1/2}\qquad(z\in\mathbb R^3).
+\tag{97.7}
+$$
+
+Indeed conjugate the matrices by $M_0^{-1/2}$ and interpolate from
+$\mathrm{Id}$ to $M_0^{-1/2}M_sM_0^{-1/2}$. All eigenvalues stay in
+one fixed compact subset of $(0,\infty)$. Differentiating the determinant
+and exponential bounds the derivative by
+$C sR(\det M_0)^{-1/2}(1+|M_0^{-1/2}z|^2)
+ e^{-c|M_0^{-1/2}z|^2}$, which proves (97.7).
+Averaging over the bridge, including its unnormalized survival
+indicator and the free height density, now gives
+
+$$
+|\widetilde P_s^R(t;0,(r,z))-p_E^R(t;0,(r,z))|
+ \le C sR\,p_E(t;0,(r,0))\le C sR\,t^{-7/2}.
+\tag{97.8}
+$$
+
+The inverse-determinant expectation is finite by the canonical smooth
+kernel bound (82.3). More explicitly the Gaussian-mixture formula
+holds almost everywhere in $z$; Fatou along such points tending to zero
+bounds the zero-phase mixture by the continuous kernel's value at zero.
+This is the same justification used for the native bridge formula
+G (32.7)--(32.8), now also for bridges with different terminal heights.
+Thus (97.8) does not posit an inverse-moment estimate without evidence.
+
+For completeness, removing the extra strip killing costs, for
+$|r|\le R/2$ and $0<t\le s^{-2}$, at most
+
+$$
+C t^{-7/2}e^{-cR^2/t}
+\tag{97.9}
+$$
+
+for each kernel. To see this, split the paths exiting the strip into
+those whose first exit occurs before $t/2$ and the remainder. For the
+first set, the strong Markov property at exit leaves a kernel with time
+at least $t/2$, bounded by $Ct^{-7/2}$ by the rescaled all-height
+estimate (76.1), or by (82.3) for the canonical process. The probability
+of the height reaching $\pm R$ before $t/2$ is at most
+$Ce^{-cR^2/t}$ by the Brownian reflection bound. For the remainder,
+reverse the bridge. Symmetry of each Lebesgue kernel makes the reversed
+process the same process started at the terminal point, and its height
+starts at distance at least $R/2$ from the strip boundary. Apply the
+same first-half argument. This bounds the union and proves (97.9).
+For the native kernel the further original killing only decreases the
+exit probability; its remaining-time bound is valid because
+$s^2(t-v)\le1$. No estimate at a moving face is inferred from an
+interior expansion.
+
+Combining (97.8)--(97.9) yields, uniformly in all phases and
+$|r|\le R/2$,
+
+$$
+|\widetilde P_s(t;0,(r,z))-p_E(t;0,(r,z))|
+ \le C t^{-7/2}(sR+e^{-cR^2/t}),\qquad 0<t\le s^{-2}.
+\tag{97.10}
+$$
+
+Integrate on $1\le t\le s^{-2}$. The threshold-factor correction
+costs $Cs^2\int_1^{s^{-2}}t^{-5/2}dt\le Cs^2$, since
+$|e^{\lambda s^2t}-1|\le Cs^2t$ there. Also
+$\int_1^\infty t^{-7/2}e^{-cR^2/t}dt\le CR^{-5}$.
+The native infinite-time remainder is $Cs^5$ by (82.9), and the
+canonical remainder past $s^{-2}$ is $Cs^5$ by (82.4).
+These observations prove (97.4) on $|r|\le R/2$.
+
+On $|r|>R/2$ the height displacement alone gives
+$d(o,\Xi_s\mathscr L_s(r,z))\ge s|r|$ and
+$d_E(0,(r,z))\ge |r|$. Integrating (82.6) for original times up to
+one, and using (82.9) afterwards, bounds the native field by
+$CR^{-5}+Cs^5$. The canonical field is bounded by $CR^{-5}$ in the
+same way. Outside $I_s$ its native extension is zero and this
+canonical bound still applies. This proves (97.4) everywhere and
+(97.5) follows by substitution. The bridge, reflection, Gaussian
+matrix calculation and integration have all used one common killed
+law; no independently optimized covariance or marginal has been
+combined with it. $\square$
+
+## 98. Finite native critical errors on the whole complex domain
+
+**Theorem 98.1 (a uniform lower error and explicit critical recovery).**
+Let $q_s^c[F]=a b_s[F]-\chi_c\int U_s|F|^2
+-a\lambda s^2\|F\|_2^2$ on exactly $\mathcal Q_s$.
+There are constants $C,s_0>0$ such that, for every $0<s<s_0$ and
+every complex $F\in\mathcal Q_s$,
+
+$$
+q_s^c[F]\ge-Cs^{2/3}\|F\|_2^2.
+\tag{98.1}
+$$
+
+There are normalized $Z_s\in\mathcal Q_s$, defined for every
+sufficiently small $s$ without a diagonal parameter choice, such that
+
+$$
+|q_s^c[Z_s]|\le Cs^{2/3},\qquad
+\int U_s|Z_s|^2\longrightarrow\mu_c,\qquad
+\|Z_s-\Phi_c\|_2\longrightarrow0.
+\tag{98.2}
+$$
+
+In particular the critical infimum of (91.1) obeys
+$|\epsilon_s^c|\le Cs^{2/3}$.
+
+Proof. Work first in (97.1), writing $f=\mathcal T_sF$. Choose fixed
+smooth real functions $\eta,\zeta$ on the height line with
+$\eta^2+\zeta^2=1$, $\eta=1$ on $[-1,1]$, $\eta=0$ outside
+$[-2,2]$, and bounded derivatives. Such a smooth quadratic partition
+is obtained as $\eta=\cos\vartheta$, $\zeta=\sin\vartheta$, where
+$\vartheta$ is zero on the smaller interval and $\pi/2$ outside the
+larger interval. Put $\eta_R(r)=\eta(r/R)$ and likewise $\zeta_R$.
+Since $Y$ does not differentiate these cutoffs, the exact quadratic
+partition identity is
+
+$$
+\widetilde q_s^c[f]
+ =\widetilde q_s^c[\eta_R f]+\widetilde q_s^c[\zeta_R f]
+ -a\int(|\eta_R'|^2+|\zeta_R'|^2)|f|^2,
+\quad \widetilde q_s^c=q_s^c\circ\mathcal T_s^{-1}.
+\tag{98.3}
+$$
+
+It holds by core approximation for the entire complex closed domain.
+For $sR$ small, $\eta_R f$ belongs to $\mathcal Q_E$ after zero
+extension. On its support, (97.2) gives
+$\widetilde b_s[\eta_R f]\ge(1-C sR)b[\eta_R f]$.
+This domain assertion follows as well by cutting off native core
+approximants and using the two equivalent horizontal norms on the
+height strip; no separate phase derivative is introduced.
+Nonnegativity of $h_c$ from (84.3), boundedness of $V$, and (97.5)
+therefore give
+
+$$
+\widetilde q_s^c[\eta_R f]
+ \ge-C(sR+s^{5/6}+s^2)\|\eta_R f\|_2^2.
+\tag{98.4}
+$$
+
+Indeed subtract $(1-C sR)h_c[\eta_R f]$ and bound the remaining
+potential multipliers in supremum norm. On the support of
+$\zeta_R f$ one has $|r|\ge R$. The height-only tail proved in
+Lemma 97.2 and the nonnegative native kinetic form give
+
+$$
+\widetilde q_s^c[\zeta_R f]
+ \ge-C(R^{-5}+s^5+s^2)\|\zeta_R f\|_2^2.
+\tag{98.5}
+$$
+
+The last integral in (98.3) is at most $CR^{-2}\|f\|_2^2$.
+Set $R=R_s=s^{-1/3}$. The support $|r|\le2R_s$ lies between the
+original moving faces for all small $s$. Equations (98.3)--(98.5),
+$\|\eta_R f\|_2^2+\|\zeta_R f\|_2^2=\|f\|_2^2$ and unitarity
+prove (98.1), independently of the vector's kinetic size.
+
+For recovery use the attained positive critical mode of Theorem 88.1,
+and define
+
+$$
+f_s=\frac{\eta_{R_s}\Phi_c}{\|\eta_{R_s}\Phi_c\|_2},
+\qquad Z_s=\mathcal T_s^{-1}f_s.
+\tag{98.6}
+$$
+
+The denominator tends to one and is bounded below for all small $s$.
+The cutoff mode belongs to the native form domain: first approximate
+$\Phi_c$ in the canonical horizontal form core, multiply by the height
+cutoff, and use (97.2) on the resulting fixed height strip. This
+also proves its original Dirichlet admissibility, while allowing
+unbounded phase support in the final limit.
+Testing $H_c\Phi_c=0$ with $\eta_{R_s}^2\Phi_c$ gives the exact identity
+
+$$
+h_c[\eta_{R_s}\Phi_c]
+ =a\int |\eta_{R_s}'|^2|\Phi_c|^2\le CR_s^{-2}.
+\tag{98.7}
+$$
+
+The test belongs to $\mathcal Q_E$, and the weak eigen-equation and
+product rule justify this identity; it is not an assumed tail rate
+for $\Phi_c$. Also $b[\eta_{R_s}\Phi_c]\le C$ by the product rule.
+Thus (97.2), (97.5), (98.7) and normalization give
+$|q_s^c[Z_s]|\le C(R_s^{-2}+sR_s+s^{5/6}+s^2)
+\le Cs^{2/3}$. Boundedness of $V$ and dominated convergence give
+$v[f_s]\to v[\Phi_c]=\mu_c$; (97.5) gives the potential assertion
+in (98.2). Finally $f_s\to\Phi_c$ in $L^2$, and the unitary phase
+shears $\mathcal T_s^{-1}$ converge strongly to the identity.
+The latter follows first on compact continuous functions from
+$L_s\to\mathrm{Id}$ and then on all $L^2$ by density and unitarity.
+It proves the last assertion. Taking the infimum in (98.1) and
+testing on (98.6) proves the two-sided bound on $\epsilon_s^c$.
+$\square$
+
+## 99. An independently prescribed native critical selection window
+
+**Theorem 99.1 (energy onset and actual native phase-orbit selection).**
+For every prescribed pair of positive sequences $s_n\downarrow0$ and
+$\delta_n\downarrow0$ satisfying
+
+$$
+s_n^{2/3}=o(\delta_n),\qquad
+\tau_n=s_n^2,\qquad g_n=(\chi_c+\delta_n)s_n^3,
+\tag{99.1}
+$$
+
+one has, on the unchanged native problem,
+
+$$
+\tau_n E_{\tau_n}(g_n)=-\mu_c\delta_n+o(\delta_n).
+\tag{99.2}
+$$
+
+For every normalized complex $\psi_n\in\mathcal Q$ satisfying
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                         -E_{\tau_n}(g_n)\bigr)=o(\delta_n),
+\tag{99.3}
+$$
+
+there are constant phases $\theta_n$ such that
+
+$$
+\|\mathcal U_{s_n}\psi_n-e^{i\theta_n}\Phi_c\|_2\longrightarrow0.
+\tag{99.4}
+$$
+
+This includes every choice of actual normalized native ground states.
+There is no translation or variable phase adjustment. The explicit
+nonempty sufficient window can equivalently be written
+$\tau_n^{1/3}=o(\delta_n)$. Examples prescribed before any core
+approximation are $\delta(s)=s^p$ for every fixed $0<p<2/3$, or
+$\delta(\tau)=\tau^q$ for every fixed $0<q<1/3$, with the indicated
+$g=(\chi_c+\delta)\tau^{3/2}$.
+
+Proof. Theorem 98.1 verifies exactly (91.2) with
+$\alpha_n=Cs_n^{2/3}$ and $U_n=Z_{s_n}$:
+$\alpha_n=o(\delta_n)$, $q_n^c[U_n]=o(\delta_n)$ and
+$v_n[U_n]\to\mu_c$. The exact conjugacy (81.4) makes (99.3)
+precisely (91.3). Proposition 91.1 therefore gives (99.2) and
+(99.4) directly; its selection argument is not a new hypothesis
+here. Existence of a normalized native ground state at each pair
+is Proposition 75.2, and its excess is zero. Finally each stated
+power satisfies (99.1), and $g_n\to0$, so these are original allowed
+coupled families, with no diagonal slowing of $s_n$ or $\delta_n$.
+$\square$
+
+## 100. The macroscopic branch obstructs unrestricted uncentered onset
+
+**Proposition 100.1 (a finite bound and an allowed very-fine path).**
+There are constants $c,C,s_0>0$ such that for $0<s<s_0$ and
+$0\le\delta\le1$, with $g=(\chi_c+\delta)s^3$, the actual finite
+native infimum satisfies
+
+$$
+-C(s^{2/3}+\delta)
+ \le s^2E_{s^2}(g)
+ \le-c(\chi_c+\delta)^2s^8<0.
+\tag{100.1}
+$$
+
+Consequently, on every prescribed positive detuning path
+$\delta(s)=o(s^8)$,
+
+$$
+\frac{s^2E_{s^2}((\chi_c+\delta(s))s^3)}{\delta(s)}
+ \longrightarrow-\infty.
+\tag{100.2}
+$$
+
+In particular $\delta(s)=s^9$, $\tau=s^2$,
+$g=(\chi_c+s^9)s^3$ is an explicit original allowed path refuting
+an unrestricted assertion of (99.2) without a detuning restriction.
+This is an obstruction to that uncentered energy law, not a proof
+of failure of the critical profile on the excluded paths.
+
+Proof. The full-domain lower bound (98.1) and uniform boundedness
+of $U_s$ give the lower bound in (100.1), by subtracting
+$\delta\int U_s|F|^2$ for unit vectors. For the upper direction,
+positivity of the added short-time heat gives $W_{s^2}\ge W_1$.
+Hence the variational principle and the fixed-cutoff theorem (72.1)
+give, for all sufficiently small $g>0$,
+
+$$
+E_{s^2}(g)\le E_1(g)\le-cg^2,
+\qquad c=|e_*|/2>0.
+\tag{100.3}
+$$
+
+The smallness threshold for $g$ is uniform in $\delta\in[0,1]$
+when $s$ is small. Multiply by $s^2$ to obtain (100.1).
+This uses the macroscopic branch only as a trial upper direction;
+it does not identify it as the actual minimizing branch at these
+parameters. Finiteness and negative attainment also follow separately
+from Proposition 75.2. Since $\chi_c>0$, division by any positive
+$\delta=o(s^8)$ proves (100.2). The explicit $g(s)$ above is strictly
+increasing for $s>0$ and tends to zero, so its inverse also defines
+an allowed function $\tau(g)$ of the original formulation (75.3).
+
+More generally, if an uncentered finite-coefficient onset
+$s^2E_{s^2}(g)=-\mu_c\delta+o(\delta)$ holds on a positive path,
+(100.1) forces $\delta\ge c' s^8$ eventually for some $c'>0$.
+This necessary lower size restriction is far weaker than the proved
+sufficient window $s^{2/3}=o(\delta)$, and does not establish any
+sufficiency in the intervening range. In particular (100.3) is not
+a critical lower-error estimate, and supplies no matching coefficient
+on the finer scale $s^2g^2=\chi^2s^8$ of (91.5). $\square$
+
+## 101. Correspondence, mechanism and the remaining scales
+
+**Definition 101.1 (scope of the quantitative increment).** The new
+source-specific ingredients are the exact rational shear (97.1)--(97.3),
+the common-bridge covariance comparison and integrated estimate
+(97.4), and the native full-domain error and recovery (98.1)--(98.7).
+The selection deduction uses the existing Proposition 91.1, the
+critical mode of Theorem 88.1 and the native compactness and profile
+suppliers of §§82--90. The macroscopic obstruction reuses Theorem 72.1
+and positivity of the same original added heat; it does not repeat
+the Coulomb calculation or its generic variational theory.
+
+The conditional Gaussian representation is the one already used in
+G (32.7)--(32.8), with the very same independent height and phase
+Brownian drivers and unnormalized killed survival indicator.
+Only the exact rational identity permits the covariance matrix order
+in (97.6) on one common bridge. The strip exit estimate uses the
+standard one-dimensional reflection principle with height generator
+$\partial_r^2$, corresponding to $\sqrt2 B^1$, and the existing
+all-height bound (76.1). The canonical and native spatial Gaussian
+bounds are precisely Lemmas 82.1--82.2. Their primary supplier,
+Coulhon--Sikora, Theorem 4.1, assumes the Davies--Gaffney estimate
+and an all-time diagonal bound $Kt^{-D/2}$; here $D=7$ and those
+hypotheses are verified in the owning lemmas, with the original
+Lebesgue density and selfadjoint realizations. The theorem's polynomial
+Gaussian factor is absorbed there by decreasing the exponent.
+No additional global heat expansion is attributed to that theorem.
+
+Colin de Verdière--Hillairet--Trélat, Theorem A, gives smooth
+positive-time asymptotics on fixed compact sets; Theorem B and
+localization Theorem 3.2 supply the local convergence used in §81.
+None of them alone is being used to assert (97.4). Its uniformity in
+all real phases, growing height strip, integrated time and original
+infinite-time tail is proved above using (97.6)--(97.10) and (82.9).
+In particular the field clock is never replaced by the kinetic
+clock $aB$, its source is never divided by a surviving mass, and
+$\det L_s=1$ leaves the factor $1/j_0$ exactly unchanged.
+The original-coordinate correspondence remains (80.1), including
+its absolute $|\kappa|$ Jacobian and signed tensor entries.
+These are ordinary repository-derived deductions, with no claim
+of kernel certification or literature-wide novelty.
+
+The rank-three long-time phase tensor and weak-binding Coulomb profile
+of §§72--77 concern the three real phase directions at large scales.
+The fixed-domain Engel threshold of §§84--89 concerns the four
+coordinate, homogeneous-dimension-seven microscopic tangent operator.
+Theorem 99.1 adds an actual finite-native critical window connecting
+that fixed-domain onset to native ground states. Proposition 100.1
+shows why an unrestricted uncentered law cannot be read off from
+fixed-domain onset, even though every positive-cutoff native problem
+has a negative attained ground state. These mechanisms are compatible.
+
+The powers $2/3$ and $5/6$ above are sufficient estimates, not asserted
+optimal. Critical profile selection for detunings outside (99.1), an
+onset law centered at a finite-native critical energy, the exact branch
+crossover, and the finer rescaled $\tau g^2$ coefficient in (91.5)
+remain unresolved here. Energy-law failure in (100.2) does not resolve
+those profile questions. The observation and analytic-preparation
+boundaries of §§92--96 are unchanged: retained statistics, lawful finite
+transport, and common resource realizations do not prepare these
+analytic amplitudes or supply their physical-space interpretation.
+No physical spatial dimension, physical $SO(3)$, actual zero leaf,
+wrapped phase model, cutoff-free realization or uniformity as
+$\kappa\to0$ is selected. The original why-three question therefore
+retains its physical realization obligations.
+
+## 追加锚（本行以下为增补区）
