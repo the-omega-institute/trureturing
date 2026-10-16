@@ -37,7 +37,10 @@ internal sealed class GirardPlagneBoxLimitDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Call("claim"))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Geometry/girardplagne2026boxes")),
                 Blocks(Paragraph(Text("Fixed-support box Davenport ratios converge to the largest augmented sign determinant in every positive dimension."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("girard-plagne-2026-box-davenport-limit"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name) => Seq(Operatorname, Grp(F.Id(name)));

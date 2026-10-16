@@ -46,6 +46,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/girard-plagne-2026-box-davenport-limit` (proved) by `D5/S3/Arith/Lattices/GirardPlagneBoxLimit.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"girard-plagne-2026-box-davenport-limit","declaration_gid":"D5/S3/Arith/Lattices/GirardPlagneBoxLimit.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benjamin Girard and Alain Plagne (2026). *The Davenport constant of low-dimensional boxes*. DOI: [10.48550/arXiv.2610.16562](https://doi.org/10.48550/arXiv.2610.16562). URL: <https://arxiv.org/abs/2610.16562v1>.
