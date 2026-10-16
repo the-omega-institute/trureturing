@@ -2352,6 +2352,187 @@ It establishes neither complete retained-matrix positivity nor a
 uniform family of directions. Cofinal Weil positivity and RH remain
 unresolved, and this numerical application has no Lean verification.
 
+### A common retained-coordinate correction from the saved dual vector
+
+The preceding positive value uses one saved retained direction. To
+transport the same dual vector to all retained coefficients, reuse
+the inverse-residual square completion and the ordinary rank-one
+and Young bounds. No new general positivity theorem is needed.
+Let $R$ be the full retained-to-exterior residual map, so that
+$Rv=r(v)$ and $E^*R=0$. Keep the same finite dual $w$, exact
+implicit profiles $p,q$, comparison $T$, diagonal $W$ and
+finite-input action $M$. Write
+
+$$
+u=Mw,\qquad h=w^*M_Jw,\qquad
+\delta=u^*Wu-h,\qquad
+b=R^*(Wu-Jw).
+$$
+
+The finite floor gives $h\ge (Jw)^*\Lambda Jw$. Consequently
+
+$$
+\delta=\|u-\Lambda Jw\|_W^2
++h-(Jw)^*\Lambda Jw\ge0.
+$$
+
+For every retained $v$ and scalar $\alpha$, the same support
+correction $\alpha(q-p)$ gives
+
+$$
+m_T(\alpha(q-p);v)
+\ge v^*(Q-R^*WR)v
++2\Re(\overline\alpha\,b^*v)-\delta|\alpha|^2.
+$$
+
+Here $Q$ denotes the retained matrix of the earlier initial-trial
+quadratic. If $\delta>0$, optimizing this displayed sufficient
+expression gives the rank-one gain $bb^*/\delta$. It is not an
+identity with the optimized actual Schur matrix. If $\delta=0$,
+the nonnegative decomposition forces $b=0$, and division by
+$\delta$ is not allowed.
+
+Only a finite part of the new common column needs to be produced:
+
+$$
+b_{\rm fin}=R_J^*(W_Ju_J-w),\qquad
+b_{\rm tail}=R_{\rm far}^*W_{\rm far}u_{\rm far},\qquad
+b=b_{\rm fin}+b_{\rm tail}.
+$$
+
+The saved vector $R_Jv_0$ cannot substitute for $b_{\rm fin}$,
+which has one entry for each of the1281 retained coordinates.
+The existing two-generator residual and disjoint Cauchy product
+provide precisely this missing adjoint action, including mode0.
+
+Let $L_0$ be the archived complete lower target and retain its
+correlated far majorant
+
+$$
+F_{\rm up}=P\mathcal K P^*+\varepsilon I
+\succeq R_{\rm far}^*W_{\rm far}R_{\rm far}.
+$$
+
+The core $\mathcal K$ is signed. Its original upward operator
+allowance $\varepsilon$ remains part of $F_{\rm up}$; positivity
+is a consequence of the Gram majorization, not an assumption
+about that core or its midpoint. The allowance uses the original
+result's512-bit grid, although the target matrix uses640 bits.
+
+Reuse $E_M\ge\|u_{\rm far}\|_W^2$ by squaring upward the accepted
+effective-action tail norm. This is distinct from the much smaller
+scaled residual debit in the preceding single-direction certificate.
+For any $\rho>0$, choose common exact upper endpoints
+$\delta_{\rm up}\ge\delta$ and $E_M$, and put
+$d_\rho=\delta_{\rm up}+E_M/\rho>0$. The common trial
+$\alpha(v)=b_{\rm fin}^*v/d_\rho$ and Young's inequality give
+
+$$
+\boxed{
+L_{\rm new}=L_0-\rho F_{\rm up}
++\frac{b_{\rm fin}b_{\rm fin}^*}{d_\rho}
+\preceq S_N.
+}
+$$
+
+Every term refers to the same residual map, dual vector and
+comparison. The column is an exact implicit action enclosed by
+balls; replacing it by an uncharged midpoint outer product would
+not give this lower bound. This target need not dominate the
+earlier19-channel target, because the subtraction also changes
+coupling to the good coordinate block. Its sign must therefore
+be checked on the complete retained matrix. Positivity on the
+old18-coordinate lift or on one saved vector is insufficient.
+
+The [common-column application](https://github.com/the-omega-institute/trureturing-experiments/tree/52c36b144997ab55463ee07d67df65fcf9c1129a/docs/reports/weil-c27)
+archives the code, complete new target and its small-block sign test.
+The common-column packet encloses all1281 entries. Its1024-bit
+production took10.48 seconds; an independent1536-bit cached
+consumption gave identical column intervals, and three complete
+direct sums at modes0,39,1280 lie in those enclosures. Reusing the
+accepted unscaled tail norm gives approximately
+
+$$
+E_M=14.1648613043077766231,\qquad
+\delta_{\rm up}=298.7040165047722506653,\qquad
+d_1=312.8688778090800272884.
+$$
+
+The archived endpoints, rather than these rounded displays, specify
+the exact upward charges. With $\rho=1$, the existing structured
+test on the new complete target certifies1263 positive pivots and
+leaves the same18 coordinate modes unresolved. It took54.82 seconds.
+The existing validated dense Schur consumer then encloses that new
+18-by18 complement in99.48 seconds, without rerunning any supplier
+or original target. All18 diagonal lower endpoints are positive,
+but this does not establish positivity of their joint matrix.
+
+The full-spectrum enclosure did not isolate eigenvalues. The
+classical Sylvester test, using FLINT's existing determinant on
+the saved small enclosure, settles the sufficient target without
+another solve: its leading two-coordinate principal determinant,
+for remaining modes0 and1, satisfies
+
+$$
+\det\Sigma_{\{0,1\}}<-3.90918\times10^{-71}<0.
+$$
+
+Thus this $L_{\rm new}$ at $\rho=1$ is not positive semidefinite,
+despite its positive reduced diagonals. This is a rejection of one
+sufficient lower target, not a negative direction of the actual
+$S_N$, not an inertia count for the old target, and not a contradiction
+to the accepted positive scalar direction. No parameter scan or
+higher-precision spectral retry is used. The common column remains
+reusable for later joint constructions. All numerical implications
+retain the inherited actual domain, comparison and sound-enclosure
+premises; no Lean, full actual retained-positivity, cofinal positivity
+or RH conclusion is supplied.
+
+#### Reuse the saved good block only after a common monotone gain
+
+The existing [Woodbury interface](fukushima2011dirichlet.md#keep-the-high-constraint-and-the-exact-ground-term)
+also specifies which missing data would avoid another complete sign test.
+Write the earlier19-channel target, in its saved coordinate order, as
+
+$$
+L_* = \begin{pmatrix}P&B_g\\B_g^*&C_c\end{pmatrix},\qquad
+X_g=P^{-1}B_g,\qquad \Sigma_*=C_c-B_g^*X_g,
+$$
+
+where $P\succ0$ and the complete1263-by18 lift $X_g$ is already
+saved. Suppose a later common construction supplies the additional
+inequality
+
+$$
+S_N\succeq L_*+\mathcal B^*D_*^{-1}\mathcal B,\qquad D_*\succ0.
+$$
+
+This monotone-gain premise has not been supplied by the current
+Young target: its subtraction of $\rho F_{\rm up}$ cannot be omitted.
+For a construction satisfying that premise, put
+$\mathcal B_G=\mathcal B[I;0]$ and
+$\mathcal B_V=\mathcal B[-X_g;I]$. In the old congruence coordinates,
+the exact Schur complement of the updated positive block is
+
+$$
+\Sigma_*+\mathcal B_V^*
+\left(D_*+\mathcal B_GP^{-1}\mathcal B_G^*\right)^{-1}
+\mathcal B_V.
+$$
+
+This is the ordinary finite block inverse/Woodbury formula. In
+particular, replacing the middle Gram by an upper enclosure
+$\overline\Omega\succeq\mathcal B_GP^{-1}\mathcal B_G^*$ gives
+a sufficient18-dimensional lower test with denominator
+$D_*+\overline\Omega$. Dropping that Gram would leave the good-block
+coupling unpaid. The saved lift supplies only $P^{-1}B_g$; it is
+not an inverse action on arbitrary new right sides. The remaining
+interfaces are a common gain with its actual cross-tail control,
+$\mathcal B_V$, and this good-block inverse-metric upper enclosure.
+The new finite column is reusable input to such a construction,
+not a substitute for those missing objects. No numerical sign or
+full retained-positivity conclusion is asserted for this alternative.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici

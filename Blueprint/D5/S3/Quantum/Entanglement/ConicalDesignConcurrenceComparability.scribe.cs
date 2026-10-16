@@ -14,6 +14,9 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
         "Conical two-design concurrence bounds have a uniform ratio ordering.",
         H("Comparability of conical-design concurrence bounds"),
         Blocks(
+            Node("traceNorm_isometry", "Rectangular isometries preserve the trace norm", TraceNormIsometryFormula(),
+                "For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("swap", "The literal tensor swap", SwapFormula(),
                 "The flip F in Siudzinska's Section 2, Eq. (9), p. 2, sends the computational-basis pair (a,b) to (b,a). The identity matrix is reindexed in its columns by Prod.swap, so its (p,q) entry is 1 exactly when p=(q.2,q.1). Scalars are complex.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Siudzinska)),
@@ -77,6 +80,24 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
     private static Formula MatrixInputs(Formula body) => DesignInputs(All("rho", MatrixType(Pairs(F.Id("d"))), body));
     private static Formula SumOver(Formula i, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, type)), Sp, body);
+
+    private static Formula TraceNormIsometryFormula()
+    {
+        Formula m = F.Id("M"), n = F.Id("N"), v = F.Id("V"), x = F.Id("X");
+        Formula adjoint = Qualified("Matrix", "conjTranspose", v);
+        Formula matrix = Call("Matrix", m, n, ComplexType());
+        Formula identity = Cast(D(1), MatrixType(n));
+        Formula type = Seq(F.Id("Type"), Star);
+        Formula instances = Seq(
+            OpenBracket, Call("Fintype", m), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", m), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp);
+        return Disp(All("M", type, All("N", type, Seq(instances,
+            All("V", matrix, Imp(Eqn(Mul(adjoint, v), identity),
+                All("X", MatrixType(n), Eqn(Call("traceNorm", Mul(Mul(v, x), adjoint)),
+                    Call("traceNorm", x)))))))));
+    }
 
     private static Formula SwapFormula()
     {
