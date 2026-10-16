@@ -210,7 +210,7 @@ private theorem bank_resources {n : Nat} (b : Fin n → Bool) :
     (fun j => (small _).1) (fun j => (small _).2)
   exact ⟨bnd.1,by simpa [bank,Nat.mul_comm] using bnd.2⟩
 
-private theorem B_height (d : Nat) : height (B d) = d := by
+theorem B_height (d : Nat) : height (B d) = d := by
   simpa [B,height,GenealogicalFiberTransport.decompose,BinaryTree.height]
     using (pad_resources d (.of false)).1
 
@@ -262,7 +262,7 @@ private theorem pre_bank_resources {n : Nat} (b : Fin n → Bool) :
     (fun j => (small _).1) (fun j => (small _).2)
   exact ⟨bnd.1,by simpa [preBank,Nat.mul_comm] using bnd.2⟩
 
-private theorem pad_preimage (d : Nat) :
+theorem pad_preimage (d : Nat) :
     substitution (pad d (.of true)) = B d := by
   rw [← constant_full_fill d (.of true),full_fill_hom]
   exact constant_full_fill d (.of false)

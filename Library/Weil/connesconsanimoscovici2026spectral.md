@@ -1289,6 +1289,364 @@ square-completion methods, without a new general theorem, normalized
 eigenvalue or Lean-verification claim.
 
 
+### Retaining actual positive Gamma boundary channels in the inverse
+
+The fixed-support exclusion holds for its specified $W$. A different
+majorant can retain the positive even Gamma boundary energy already
+displayed after G6. Reuse that series, the
+[existing variational inversion and Woodbury application](fukushima2011dirichlet.md#keep-the-high-constraint-and-the-exact-ground-term),
+and the actual residual identity above. This is an application to the
+same exterior, not a new general inverse theorem.
+
+For $b_j=2j+1/2$ and exterior cosine index $n>N$, define
+
+$$
+h_{j,n}=\frac{2b_j(-1)^n}{\sqrt d\,[b_j^2+(2\pi n/d)^2]}.
+$$
+
+Integrating the existing cosh boundary response against the original
+orthonormal cosines identifies its $j$th positive term as
+$(1-e^{-b_jd})h_jh_j^*$. For a finite bin $[a,b)$ of rates, set
+
+$$
+c_a=1-e^{-b_ad},\qquad
+U_{[a,b)}=\sqrt{\frac{c_a}{b-a}}\sum_{j=a}^{b-1}h_j.
+$$
+
+Finite Cauchy--Schwarz and monotonicity of $1-e^{-b_jd}$ give
+$\sum_{j=a}^{b-1}(1-e^{-b_jd})h_jh_j^*\succeq
+U_{[a,b)}U_{[a,b)}^*$. Every column has infinite exterior support
+and belongs to $\ell^2$. Keep nineteen disjoint bins with endpoints
+$0,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181,6765$,
+and collect these columns in $U$.
+
+The archived $W$ rounds the reciprocals of the elementary logarithmic
+Gamma-minus-prime comparison upward, with a constant far weight $D$.
+Consequently $W^{-1}$ is bounded above by that diagonal lower
+comparison. The existing positive even pole term can be dropped while
+retaining these Gamma channels, giving, on the same actual form domain,
+
+$$
+H_N\succeq W^{-1}+UU^*,\qquad
+H_N^{-1}\preceq W_{\rm G}:=
+W-WU(I+U^*WU)^{-1}U^*W\preceq W.
+$$
+
+This changes the majorant that was fixed in the exclusion; no new
+finite support trial or finite solve on that excluded family is used.
+For exactly the saved direction $v$ and saved trial $y=Vx_0$, put
+$r=C_Nv-H_Ny$, $\beta=U^*Wr$ and $S=I+U^*WU$. Then
+
+$$
+Q(v-y)-\|r\|_{W_{\rm G}}^2
+=Q(v-y)-\|r\|_W^2+\beta^*S^{-1}\beta
+\le v^*S_Nv.
+$$
+
+#### A paid infinite-support directional update
+
+The [boundary-channel experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/968e46e90748065c12ee915937f4019805a5ed91/docs/reports/weil-c27)
+consumes the saved dyadic $v,x_0$, original margin, diagonal weights,
+scalar rows and far residual energy. It archives the previously unsaved
+residual action on rows1281–32768, using direct rows through4096 and
+the existing finite geometric expansion thereafter. The order128
+remainder is bounded by its absolute coefficient sum and geometric
+tail. It generates neither the old Gram nor new scalar or far moments.
+
+FLINT's existing digamma implements the finite rate sum directly:
+
+$$
+\sum_{j=a}^{b-1}\frac{b_j}{b_j^2+\omega^2}
+=\frac12\Re\left[
+\psi\left(b+\frac14+\frac{i\omega}2\right)
+-\psi\left(a+\frac14+\frac{i\omega}2\right)\right].
+$$
+
+Write $U_0,r_0,W_0$ for the complete finite middle rows and let
+$E_\infty$ be the archived upper bound for the actual far residual
+energy. If $|U_{k,m}|\le a_k/m^2$ for $m>M$, the sufficient bounds are
+
+$$
+\eta_k=\frac{Da_k^2}{3M^3},\quad
+\|U_\infty^*W_\infty U_\infty\|\le\delta:=\sum_k\eta_k,
+\quad
+|\beta_k-(U_0^*W_0r_0)_k|\le\sqrt{\eta_k E_\infty}.
+$$
+
+The Gram norm uses the trace bound for a positive matrix, not an
+entrywise outer-product comparison. For bin $k=[a,b)$ one can take
+$a_k=2\sqrt{c_a/((b-a)d)}(b-a)(a+b-1/2)(d/(2\pi))^2$.
+Put $S_0=I+U_0^*W_0U_0$ and
+$\beta_0=U_0^*W_0r_0$. A stored exact256-bit dyadic vector $z$ gives
+the directed lower gain
+
+$$
+\beta^*S^{-1}\beta\ge
+2\Re z^*\beta_0-z^*S_0z
+-2\sum_k|z_k|\sqrt{\eta_kE_\infty}-\delta\|z\|^2.
+$$
+
+The exact endpoints, using512 working bits and a256-bit output grid,
+give a gain greater than $6.60\times10^{-31}$ and the updated bound
+
+$$
+\boxed{v^*S_Nv>2.37\times10^{-31}.}
+$$
+
+This numerical implication is conditional on the stated actual
+common-form and exterior-domain identifications, the existing even
+boundary and diagonal comparisons, and sound reused enclosures.
+It repairs this unchanged complete retained direction and its unchanged
+trial. It does not certify the full retained Schur matrix or optimality
+for the updated majorant. The finite rate bins are a choice of positive
+channels, with no claim that Fibonacci endpoints are necessary or
+optimal. Full c27 positivity, cofinal positivity, Lean verification of
+this application and RH remain unresolved.
+
+### A coefficient-uniform Gamma update and its fixed-trial obstruction
+
+The preceding repair concerns its saved $v,x_0$. It does not supply a
+common trial for all retained coefficients. For that question reuse
+instead the original exact map $Y=EF^{-1}B$ from the complete structured
+target, where $E$ consists of exterior modes1281–2048. Its residual
+$R=C_N-H_NY$ vanishes on those selected rows. Keep the same $W$, nineteen
+Gamma channels, full actual exterior and original orthonormal retained
+modes0–1280. Define
+
+$$
+Q_Y=A_N-C_N^*Y-Y^*C_N+Y^*H_NY,\qquad
+T_{\rm G}=Q_Y-R^*W_{\rm G}R\preceq S_N.
+$$
+
+This uses the existing residual comparison; $T_{\rm G}$ is a sufficient
+lower target, not the actual Schur matrix. Split exterior rows at
+$M=32768$ and write
+
+$$
+A_0=U_0^*W_0U_0,\qquad \Beta_0=U_0^*W_0R_0,\qquad
+R_\infty^*W_\infty R_\infty\preceq
+G_R:=P^*KP+aI.
+$$
+
+Here $P,K,a$ are the archived112-feature signed far core and its complete
+operator allowance for this same trial. Only $G_R$ majorizes the actual
+positive Gram; neither $K$ nor $P^*KP$ is assumed positive. The existing
+Gamma trace estimate gives $U_\infty^*W_\infty U_\infty\preceq\delta I$,
+with $\delta\le0.000106746689$. All middle rows enter $A_0$;
+$\Beta_0$ needs only rows2049–32768 because of the exact selected-row
+cancellation.
+
+Let $L_{\rm old}=Q_Y-R_0^*W_0R_0-G_R$ be the archived complete lower
+target. For any common $\rho>0$, the existing variational inverse
+identity and weighted Cauchy give
+
+$$
+\boxed{
+L_\rho=L_{\rm old}+
+\Beta_0^*[I+A_0+(1+\rho^{-1})\delta I]^{-1}\Beta_0
+-\rho G_R\preceq T_{\rm G}\preceq S_N.
+}
+$$
+
+Indeed, insert the common linear channel trial
+$z=[I+A_0+(1+\rho^{-1})\delta I]^{-1}\Beta_0v$.
+The far mixed term costs $\rho\|R_\infty v\|_W^2+
+\rho^{-1}\|U_\infty z\|_W^2$, in addition to the far channel Gram
+already subtracted in the variational expression. This accounts for
+$1+\rho^{-1}$, not just $\rho^{-1}$. This is an application of those
+existing identities, not a new inverse algorithm or RH criterion.
+
+The [joint boundary experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/e3a10ac489f0a3b51817ef46ba8be56d62fc6b22/docs/reports/weil-c27)
+supplies only the previously unsaved two residual generators and
+$19\times1281$ common thin projection. It reuses the scalar rows,
+weights, full target and signed infinite moments. The finite geometric
+expansions include their absolute remainders. The derived target keeps
+the original four finite displacement generators and the signed kernel
+$\operatorname{diag}((1+\rho)K,-[I+A_0+(1+\rho^{-1})\delta I]^{-1})$;
+it does not replace the far covariance by a scalar norm.
+The inherited target matrix uses a640-bit grid, while its original
+allowance metadata uses the512-bit grid identified by the original
+pivot packet. These two scales are decoded separately.
+
+At $\rho=1/32$, the complete1281-coordinate target has1263 certified
+positive pivots; the next interval contains zero. A validated solve
+forms the remaining18-coordinate Schur block. Eigenvalue isolation
+is inconclusive, but each diagonal upper endpoint is negative. One
+negative diagonal suffices to reject $L_{1/32}$; it does not count
+negative eigenvalues or determine the sign of $S_N$.
+
+#### The failure persists in the ideal updated target for this trial
+
+To distinguish a conservative Young bound from a failure of the ideal
+$T_{\rm G}$, reuse the saved Schur inverse action at remaining mode0.
+Round the full lifted vector to exact256-bit dyadics and call it $v$;
+its squared norm is approximately2.058687316. No finite solve is
+repeated. Put $S_0=I+A_0$, $\beta_0=\Beta_0v$, and
+$E_v=v^*G_Rv$. If $\beta=U^*WRv$, weighted Cauchy gives
+
+$$
+\|\beta-\beta_0\|\le e:=\sqrt{\delta E_v},\qquad
+S_0\preceq S:=I+U^*WU\preceq S_0+\delta I.
+$$
+
+For any exact channel trial $z$, the same variational formula and
+$S_0\succeq I$ give the lower and upper gain bounds
+
+$$
+2\Re z^*\beta_0-z^*S_0z-2e\|z\|-\delta\|z\|^2
+\le\beta^*S^{-1}\beta
+\le\beta_0^*S_0^{-1}\beta_0+2e\|\beta_0\|+e^2.
+$$
+
+The old far approximation has a two-sided operator error at most $a$.
+Consequently its paid lower target differs from the ideal old target
+by between zero and $2a\|v\|^2$. Including that discrepancy, the directed
+consumer gives the following rounded values on this unnormalized $v$:
+
+| Quantity | Value or enclosing range |
+|---|---:|
+| $v^*L_{\rm old}v$ | $-3.821226857\times10^{-31}$ |
+| Upper bound $E_v$ for actual far residual energy | $2.812318944\times10^{-32}$ |
+| Gamma gain | between $2.643731998\times10^{-31}$ and $2.680490019\times10^{-31}$ |
+| $v^*L_{1/32}v$ | $-1.177716569\times10^{-31}$ |
+| Ideal $v^*T_{\rm G}v$ | strictly between $-1.18\times10^{-31}$ and $-1.14\times10^{-31}$ |
+
+The exact directed endpoints, rather than the displayed rounded
+centers, establish these signs. The1024-bit consumer uses the saved
+finite projections, far covariance and lifted action. These are
+numerical implications under the same actual form/domain and inverse
+comparison premises, without Lean verification.
+
+Thus a sharper payment for the tails or a different $\rho$ cannot
+certify this unchanged $Y,W_{\rm G}$ target: its ideal value is already
+negative in this direction. Reoptimizing the trial on $E$, adding
+Gamma channels or changing the inverse comparison are different
+questions. The next application addresses the first. The earlier saved $v,x_0$ repair remains
+valid because it uses a different trial and direction. No negative
+upper bound for the actual Schur form has been obtained. Full c27
+positivity, cofinal positivity and RH remain unresolved.
+
+### Optimizing the trial for the changed Gamma comparison
+
+Keep the same nineteen-channel $W_{\rm G}$, full retained dyadic
+direction $v$, selected768-mode isometry $E$, $F=E^*H_NE$ and
+$Z=H_NE$. Parameterize every trial on this support by
+$y=Yv+Et$, where $Y=EF^{-1}B$ is the original exact Galerkin map.
+Its ideal sufficient margin and gradient are
+
+$$
+m_{\rm G}(t)=v^*Q_Yv+t^*Ft-\|Rv-Zt\|_{W_{\rm G}}^2,
+\qquad
+g_{\rm G}(t)=Z^*W_{\rm G}Rv-K_{\rm G}t,
+\quad K_{\rm G}=Z^*W_{\rm G}Z-F.
+$$
+
+The following computation applies the existing variational inverse,
+finite displacement products and square completion. It supplies no
+new general inversion theorem. The scalar rows, finite weighted
+support Gram, original complete target, signed far moments and saved
+direction are reused.
+
+Write $D_0=U_0^*W_0Z_0$, $G_Z=Z_0^*W_0Z_0$ and
+$S_0=I+U_0^*W_0U_0$. For any selected coefficient $t$, the same
+channel variational formula gives
+
+$$
+\begin{aligned}
+t^*Z^*W_{\rm G}Zt
+&=\min_z\left\{\|Z_0t-U_0z\|_{W_0}^2
+ +\|Z_\infty t-U_\infty z\|_{W_\infty}^2+\|z\|^2\right\}\\
+&\ge t^*(G_Z-D_0^*S_0^{-1}D_0)t.
+\end{aligned}
+$$
+
+Thus the finite matrix
+$K_{{\rm G},0}=G_Z-F-D_0^*S_0^{-1}D_0$ is a lower bound for
+$K_{\rm G}$. Dropping the complete far square preserves the
+direction of this bound and its joint channel dependence.
+The existing structured interval LDL, with the rank19 correction
+and independent diagonal retained, certifies all768 positive pivots
+of $K_{{\rm G},0}-I/16$. Consequently
+
+$$
+\boxed{K_{\rm G}\succeq K_{{\rm G},0}\succeq I/16.}
+$$
+
+Only the previously unsaved $19\times768$ action $D_0$ and two
+mixed inverse generators are produced. The action includes every
+row1281–32768 and the actual selected diagonal. Direct rows end
+at4096; a384-term finite geometric expansion covers the remainder,
+with uniform ratio $2048/4097$ and its absolute remainder paid.
+
+For the mixed action $J_0=Z_0^*W_0R_0$, let $G_E,G_O$ be the
+original selected and middle generators, $G_P$ the archived
+transformed retained generator, and put
+
+$$
+V=F^{-1}G_E,\quad \widetilde G_O=G_O-Z_0V,\quad
+T_Z=Z_0^*W_0G_O,\quad T_R=R_0^*W_0\widetilde G_O,\quad
+V_A=F^{-1}(T_Z-G_ZV).
+$$
+
+The finite displacement product reconstructs the disjoint-node action as
+
+$$
+(F^{-1}J_0)_{mn}=\frac{\kappa}{m^2-n^2}
+\left[(V_A)_{m0}(G_P)_{n1}-(V_A)_{m1}(G_P)_{n0}
+ +V_{m0}(T_R)_{n1}-V_{m1}(T_R)_{n0}\right],
+$$
+
+where $\kappa=2/\pi$, $1281\le m\le2048$ and $0\le n\le1280$.
+The old $V,G_Z,T_Z,T_R,G_P$ are reused; only $V_A$ needs two
+new right sides. This identifies the required common action
+without a new middle Gram or full retained solve.
+
+The [changed-trial consumer](https://github.com/the-omega-institute/trureturing-experiments/tree/eff515f544bb5ffa572322c78889a2d528b5bcf9/docs/reports/weil-c27)
+fixes an exact384-bit dyadic correction $t_0$ proposed by the changed
+finite normal system. It encloses its full ideal margin and gradient,
+including the existing signed far error on the transformed original
+columns and the entire Gamma mixed tail. It adds back the full
+interval for the original paid allowance on its512-bit metadata grid;
+the original matrix still uses its distinct640-bit grid.
+Square completion now gives
+
+$$
+\sup_t m_{\rm G}(t)
+\le m_{\rm G}(t_0)+16\|g_{\rm G}(t_0)\|^2.
+$$
+
+On this same unnormalized $v$, the directed endpoints imply
+
+$$
+-4.102\times10^{-32}<m_{\rm G}(t_0)<-3.652\times10^{-32},
+\qquad \|g_{\rm G}(t_0)\|<1.943\times10^{-17},
+$$
+
+and the computed optimization correction is less than
+$6.041\times10^{-33}$. The combined upper endpoint gives
+
+$$
+\boxed{\sup_t m_{\rm G}(t)<-3.04\times10^{-32}.}
+$$
+
+These are conditional numerical implications under the same actual
+common-form, exterior-domain, inverse-comparison and sound enclosure
+premises. The finite normal system proposes the trial; its solution
+is not substituted for the infinite exterior inverse. All scientific
+endpoint pairs and exact trial coefficients are checked by a cached
+higher-precision consumer. No old scientific producer is rerun.
+
+Thus every trial supported on these same768 modes fails to certify
+this retained direction with this fixed nineteen-channel $W_{\rm G}$.
+This also excludes a common linear trial on this support for all
+retained coefficients. Enlarging or changing the trial support,
+adding Gamma channels and improving the inverse comparison remain
+distinct unresolved possibilities. The bound is an upper bound on
+the best sufficient target in this family, not an upper bound on the
+actual Schur form. No actual negative Weil test, full c27 positivity,
+cofinal positivity, Lean verification of this application or RH
+resolution is established.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici

@@ -471,3 +471,606 @@ resource service, or literature-wide novelty conclusion follows from
 these mathematical statements. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 75. Joint weak coupling and a shrinking positive time cutoff
+
+**Definition 75.1 (unchanged native family).** Retain all the data of
+Definition 70.1, in particular one fixed admissible signed $\kappa\ne0$,
+the original rational vector $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ of
+G (25.4), $I=(l,u)$, $k_0\in I$, $\varepsilon>0$, $a>0$, and the
+all-real cover $\mathcal C=I\times\mathbb R^3$ with raw measure
+$dY=dk\,dq$. Write $o=(k_0,0)$,
+$B=B_\kappa=-\varepsilon^2\partial_k^2-(c_\kappa\cdot\partial_q)^2$
+and $S=B-\lambda\ge0$. Both height endpoints remain Dirichlet.
+The unitary phase Fourier transform has factor $(2\pi)^{-3/2}$.
+The entire complex form domain is
+
+$$
+\mathcal Q=\left\{\psi\in L^2(dY):
+\widehat\psi(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\quad
+\int_{\mathbb R^3}\int_I
+\left(\varepsilon^2|\partial_k\widehat\psi|^2+
+ |\eta\cdot c_\kappa(k)|^2|\widehat\psi|^2\right)dk\,d\eta<\infty
+\right\}.
+\tag{75.1}
+$$
+
+Thus $D(B^{1/2})=D(S^{1/2})=\mathcal Q$, and the integral in
+(75.1) is $T[\psi]+\lambda\|\psi\|_2^2$. No phase $H^1$ condition
+is imposed on $\psi$.
+Let $p_t(Y,Z)$ denote the killed heat kernel of $B$ relative to $dZ$.
+In the notation of (70.1), $F(t;Y)=e^{\lambda t}p_t(o,Y)$.
+For $0<\tau\le1$ put
+
+$$
+D_\tau(Y)=W_\tau(Y)-W_1(Y)
+       =\int_\tau^1e^{\lambda t}p_t(o,Y)dt,\qquad
+\mathfrak e_{g,\tau}[\psi]=aT[\psi]-gV_\tau[\psi].
+\tag{75.2}
+$$
+
+A joint family consists of $g\downarrow0$ and an arbitrary declared
+function $\tau(g)>0$ with $\tau(g)\to0$. Its dimensionless comparison
+parameter and energy are
+
+$$
+\chi(g)=g\tau(g)^{-3/2},\qquad
+E_{\tau(g)}(g)=\inf_{\psi\in\mathcal Q,\ \|\psi\|_2=1}
+                  \mathfrak e_{g,\tau(g)}[\psi].
+\tag{75.3}
+$$
+
+The restriction $\tau\le1$ holds eventually in every such family;
+there is no fixed positive lower bound on its cutoff. All constants
+below may depend on the fixed native data, including $\kappa$ and
+$a$, but not on $g$, $\tau\in(0,1]$, or the tested vector.
+The heat clock remains $e^{-tB}$, without rescaling by $a$.
+
+**Proposition 75.2 (source and pointwise fixed-cutoff properties).** For
+every positive $\tau$, the source identities are still exactly
+
+$$
+SW_\tau=\rho_\tau=e^{\lambda\tau}p_\tau(o,\cdot),\qquad
+\int\rho_\tau dY=e^{\lambda\tau}\mathbb P_{k_0}(\zeta>\tau),
+\qquad \int\phi(k)\rho_\tau(k,q)dk\,dq=\phi(k_0).
+\tag{75.4}
+$$
+
+The first charge tends to one as $\tau\downarrow0$; the second is
+constant. For each fixed $g>0$ and $\tau>0$, Proposition 70.2 and
+Theorem 72.1 apply on precisely $\mathcal Q$ and $D(S)$: the energy
+is finite, negative and attained. These assertions do not assert
+uniform boundedness of $W_\tau$ as $\tau\downarrow0$.
+
+Proof. The identities are (70.4) at the specified positive time.
+Integrating $p_t(o,Y)$ over the real phases leaves the killed height
+heat kernel. Hence its raw mass is the survival probability of
+$k_0+\sqrt2\varepsilon W_t^1$ in $I$, which tends to one at time
+zero because $k_0$ is interior. Pairing instead with the eigenfunction
+$\phi$ gives the different charge in (75.4). Boundedness and spatial
+decay at each positive cutoff are the hypotheses used in Proposition
+70.2 and Theorem 72.1 and remain true separately at every pair
+$(g,\tau)$. Their existence conclusion is reused here. $\square$
+
+## 76. Uniform control of the added short-time field
+
+**Proposition 76.1 (all-height heat and killed-resolvent bounds).** There
+are constants $C,c>0$ such that for every $Y,Z\in\mathcal C$,
+
+$$
+0\le p_t(Y,Z)\le
+\begin{cases}
+Ct^{-7/2},&0<t\le1,\\
+Ce^{-\lambda t}t^{-3/2},&t\ge1.
+\end{cases}
+\tag{76.1}
+$$
+
+Consequently, for $0<\tau\le1$,
+
+$$
+\|W_\tau\|_\infty\le C\tau^{-5/2},\qquad
+\int D_\tau dY\le C,\qquad
+\|B^{-1}D_\tau\|_\infty\le C\tau^{-3/2}.
+\tag{76.2}
+$$
+
+Here the last expression denotes the nonnegative killed-resolvent
+integral. For every complex $u\in\mathcal Q$ it implies
+
+$$
+\int D_\tau|u|^2dY
+ \le C\tau^{-3/2}\bigl(T[u]+\lambda\|u\|_2^2\bigr).
+\tag{76.3}
+$$
+
+Proof. The all-height diagonal supplier is G (32.3)--(32.6) on the
+real cover. Its hypotheses use the same coefficient vector and an
+interval $J$ containing $\overline I$ with positive margins. In
+particular
+
+$$
+\det(c_\kappa,c_\kappa',c_\kappa'')(k)
+ =-\frac{H^2-\kappa^2}{2H^3(k-\alpha_\kappa)^3}\ne0
+\tag{76.4}
+$$
+
+on that larger interval. The local expansion on $J$ is uniform for
+centres $k\in[l,u]$; domination by its killed kernel bounds the kernel
+on $I$, including heights approaching either absorbing face, by
+$Ct^{-7/2}$ on the diagonal. Phase translation gives the same bound
+at every phase. Semigroup contraction extends the bound from small
+times to $0<t\le1$. Symmetry and the semigroup Cauchy--Schwarz
+inequality give
+$p_t(Y,Z)\le\sqrt{p_t(Y,Y)p_t(Z,Z)}$.
+This proves the first line of (76.1), rather than inferring an
+all-height estimate from an interior diagonal limit alone.
+The second line is the large-time bound in L Lemma 41.2, after
+removing its factor $e^{\lambda t}$ and bounding the height factors.
+The first line of that lemma, whose power is $t^{-6}$, is not used
+as a sharp short-time estimate.
+
+Integration of (76.1) against $e^{\lambda t}$ proves the first
+inequality of (76.2), since
+$\int_\tau^1t^{-7/2}dt\le C\tau^{-5/2}$ and
+$\int_1^\infty t^{-3/2}dt<\infty$.
+The exact raw mass gives
+
+$$
+\int D_\tau dY
+ =\int_\tau^1 e^{\lambda t}\mathbb P_{k_0}(\zeta>t)dt
+ \le e^\lambda.
+\tag{76.5}
+$$
+
+This uses the killed semigroup; it does not treat $F$ as a
+conservative raw-measure transition density. By Tonelli, symmetry
+and the semigroup identity, for $0<\tau<1$,
+
+$$
+\begin{aligned}
+(B^{-1}D_\tau)(Y)
+ &=\int_\tau^1e^{\lambda t}\int_0^\infty
+                p_{t+s}(o,Y)ds\,dt\\
+ &\le C\int_\tau^1(t^{-5/2}+1)dt
+ \le C\tau^{-3/2}.
+\end{aligned}
+\tag{76.6}
+$$
+
+Indeed the inner integral from $t$ to one is bounded by
+$C\int_t^1v^{-7/2}dv$, and the remaining killed large-time integral
+is uniformly finite by (76.1).
+
+For completeness, the classical weighted Schur test gives precisely
+the form consequence needed here. The symmetric positive-kernel
+operator $D_\tau^{1/2}B^{-1}D_\tau^{1/2}$ has Schur weight
+$D_\tau^{1/2}$: its weighted row integral is
+$D_\tau(Y)^{1/2}(B^{-1}D_\tau)(Y)$.
+Thus its $L^2$ norm is at most the last bound in (76.2).
+For $\tau<1$, positivity of the interior heat kernel makes the weight
+positive; at $\tau=1$ the assertion is trivial.
+Since $B\ge\lambda>0$, the squared norm of
+$D_\tau^{1/2}B^{-1/2}$ is the norm of this Schur operator.
+Applying it to $B^{1/2}u$ proves (76.3), also for complex functions.
+All operators in this calculation use $B$, whose heat is killed and
+sub-Markov, rather than assuming that the shifted heat of $S$ is
+Markovian in raw measure. $\square$
+
+**Proposition 76.2 (relative bound at the native threshold).** Uniformly
+for $0<\tau\le1$ and every complex $\psi\in\mathcal Q$,
+
+$$
+0\le V_\tau[\psi]-V_1[\psi]
+ =\int D_\tau|\psi|^2dY
+ \le C\tau^{-3/2}T[\psi].
+\tag{76.7}
+$$
+
+Proof. Fix once a small radius $\delta_0>0$ as in Proposition 71.1,
+using there only its spectral and kinetic assertions, which depend
+on $S$ and not on the cutoff. Write
+$\psi=J_{\delta_0}f+r$ with exact norm and kinetic splitting.
+There is a fixed $b_0>0$ such that
+
+$$
+T[r]\ge b_0\|r\|_2^2,\qquad
+K[f]\le CT[J_{\delta_0}f],\qquad
+\sup_{|\eta|\le\delta_0}\|v_\eta\|_{L^\infty(I)}\le C.
+\tag{76.8}
+$$
+
+The gap follows from G (26.6) on frequencies outside the ball and
+the excited height gap inside it. The eigenfunction bound follows
+from L (36.7), including its boundary quotient estimate.
+Cauchy--Schwarz in the actual three real Fourier variables gives
+
+$$
+\begin{aligned}
+\|J_{\delta_0}f\|_\infty
+ &\le C\int_{|\eta|\le\delta_0}|\widehat f(\eta)|d\eta\\
+ &\le C\left(\int_{|\eta|\le\delta_0}|\eta|^{-2}d\eta\right)^{1/2}
+          \left(\int|\eta|^2|\widehat f(\eta)|^2d\eta\right)^{1/2}
+ \le C\sqrt{T[J_{\delta_0}f]}.
+\end{aligned}
+\tag{76.9}
+$$
+
+The integral of $|\eta|^{-2}$ is finite in dimension three, and
+$M>0$ compares its last quadratic integral with $K[f]$.
+Thus (76.5) bounds the $D_\tau$ form on $J_{\delta_0}f$ by
+$CT[J_{\delta_0}f]$. On the remainder, (76.3) and its fixed gap give
+
+$$
+\int D_\tau|r|^2dY
+ \le C\tau^{-3/2}(T[r]+\lambda\|r\|_2^2)
+ \le C\tau^{-3/2}T[r].
+\tag{76.10}
+$$
+
+Finally $|J_{\delta_0}f+r|^2\le2|J_{\delta_0}f|^2+2|r|^2$,
+$\tau^{-3/2}\ge1$, and exact kinetic splitting prove (76.7).
+The low-frequency bound was applied only to the extracted band.
+The arbitrary native vector and its remainder were never assumed
+to have all phase derivatives. This removes the additive
+$\lambda\|\psi\|_2^2$ in (76.3), which by itself would be too large
+for the quadratic weak-binding limit. $\square$
+
+## 77. Persistence of the exact Coulomb energy and every profile
+
+**Theorem 77.1 (joint full-domain persistence).** Let Definition 75.1
+hold and assume $\tau(g)\to0$ and $\chi(g)\to0$. Then
+
+$$
+\frac{E_{\tau(g)}(g)}{g^2}\longrightarrow
+ e_*=-\frac{\beta^2}{4a},\qquad
+\beta=\frac{\phi(k_0)\int_I\phi^3dk}{4\pi\sqrt{\det M}}.
+\tag{77.1}
+$$
+
+For every family of normalized complex $\psi_g\in\mathcal Q$ with
+
+$$
+\mathfrak e_{g,\tau(g)}[\psi_g]-E_{\tau(g)}(g)=o(g^2),
+\tag{77.2}
+$$
+
+there are constant phases $\theta_g\in\mathbb R$ such that, with
+$\rho=\beta/(2a)$ and the same function as (72.4),
+
+$$
+\begin{aligned}
+h_*(z)&=(\det M)^{-1/4}(\rho^3/\pi)^{1/2}e^{-\rho d(z)},\\
+\left\|g^{-3/2}\psi_g(k,z/g)-e^{i\theta_g}\phi(k)h_*(z)
+                                      \right\|_{L^2(dk\,dz)}&\longrightarrow0.
+\end{aligned}
+\tag{77.3}
+$$
+
+Moreover, for the actual height projection $P=|\phi\rangle\langle\phi|$,
+
+$$
+T[\psi_g]=O(g^2),\qquad
+\|(1-P)\psi_g\|_2^2=O(g^2),\qquad
+\lim_{R\to\infty}\limsup_{g\downarrow0}
+ \int_{|gq|>R}|\psi_g(k,q)|^2dk\,dq=0.
+\tag{77.4}
+$$
+
+These conclusions include every normalized ground-state choice.
+They require no translation of the fixed source.
+
+Proof. The reference cutoff throughout this proof is exactly one.
+By (76.7), for every $\psi\in\mathcal Q$,
+
+$$
+0\le\mathfrak e_{g,1}[\psi]-\mathfrak e_{g,\tau}[\psi]
+ \le C\chi T[\psi].
+\tag{77.5}
+$$
+
+Proposition 71.1 at cutoff one and a fixed band radius gives, for
+normalized $\psi$, $V_1[\psi]\le C\sqrt{T[\psi]}+CT[\psi]$.
+Consequently every normalized native vector of nonpositive joint
+energy satisfies
+
+$$
+0\ge\mathfrak e_{g,\tau}[\psi]
+ \ge(a-C\chi-Cg)T[\psi]-Cg\sqrt{T[\psi]}.
+\tag{77.6}
+$$
+
+For $g$ and $\chi$ small enough, the coefficient of $T$ is at least
+$a/2$, proving $T[\psi]\le Cg^2$ uniformly over all such vectors.
+This estimate holds on the full complex domain (75.1).
+
+Monotonicity $W_\tau\ge W_1$ gives $E_\tau(g)\le E_1(g)$.
+Apply (77.6) to an attained joint ground state, whose existence and
+negative energy are reused from Theorem 72.1 at its positive cutoff.
+By (77.5) and the reference variational principle,
+
+$$
+E_1(g)-C\chi g^2\le E_\tau(g)\le E_1(g).
+\tag{77.7}
+$$
+
+The fixed-cutoff conclusion $E_1(g)/g^2\to e_*$ of Theorem 72.1
+therefore proves (77.1). The upper direction may also be realized
+by the same admissible reference trials
+$\phi(k)g^{3/2}h_*(gq)$: their reference energies are
+$e_*g^2+o(g^2)$ and their joint energies are no larger.
+Both the infimum comparison and the lower estimate use the whole
+$\mathcal Q$, rather than a product-state restriction.
+
+Now (77.1), (77.2) and $e_*<0$ make the joint energies of $\psi_g$
+negative eventually. Thus (77.6) gives $T[\psi_g]=O(g^2)$, and
+(77.5), (77.7) imply
+
+$$
+0\le\mathfrak e_{g,1}[\psi_g]-E_1(g)
+ \le\mathfrak e_{g,\tau(g)}[\psi_g]-E_{\tau(g)}(g)
+                      +C\chi(g)g^2=o(g^2).
+\tag{77.8}
+$$
+
+Theorem 73.1 now applies directly to this same family on its entire
+complex domain, with fixed $a$, source, tensor and reference cutoff
+one. Its conclusions are exactly (77.3)--(77.4), including the
+actual height projection, source-centred tightness and a single
+constant complex phase for each vector. In particular no compactness
+of a cutoff-dependent family of potential multipliers is being
+assumed. The uniform replacement for it is (76.7). $\square$
+
+**Proposition 77.2 (nonempty shrinking persistence families).** Every
+power family $\tau(g)=g^p$ with $0<p<2/3$ satisfies Theorem 77.1.
+More generally, $\tau(g)=g^{2/3}L(g)$ does so whenever
+$L(g)>0$, $L(g)\to\infty$ and $g^{2/3}L(g)\to0$.
+For example $L(g)=(\log(1/g))^r$ with any $r>0$ is allowed.
+
+Proof. The respective values of $\chi$ are
+$g^{1-3p/2}$ and $L(g)^{-3/2}$, which tend to zero under the
+stated hypotheses; each cutoff stays positive and tends to zero.
+$\square$
+
+## 78. Microscopic admissible competitors in the same source chart
+
+**Definition 78.1 (raw privileged scaling at the fixed pole).** Write
+$c_j=c_\kappa^{(j)}(k_0)$ for $j=0,1,2$ and
+$j_0=\varepsilon^4|\det(c_0,c_1,c_2)|>0$.
+For $s>0$ and $\xi=(r,y,z,w)\in\mathbb R^4$ define
+
+$$
+\Xi_s(\xi)=\left(k_0+\varepsilon s r,
+                 s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w\right).
+\tag{78.1}
+$$
+
+Its absolute raw Jacobian is exactly $j_0s^7$.
+Fix a nonzero $f\in C_c^\infty(\mathbb R^4\setminus\{0\})$,
+normalized by $\int|f|^2d\xi=1$, and let $K$ be its compact support.
+For all sufficiently small $s$ put
+
+$$
+\psi_s(\Xi_s(\xi))=j_0^{-1/2}s^{-7/2}f(\xi),
+\tag{78.2}
+$$
+
+with zero extension outside the image of its compact support.
+The support lies in an interior height chart for small $s$ and all
+three phase coordinates are real.
+
+**Proposition 78.2 (cutoff-matched concentration witnesses).** The
+vectors (78.2) are normalized members of $C_c^\infty(\mathcal C)$,
+hence of $\mathcal Q$. There are fixed $s_0,c_0',C_0>0$ such that
+for $0<s<s_0$,
+
+$$
+T[\psi_s]\le C_0s^{-2},\qquad
+V_{s^2}[\psi_s]\ge c_0's^{-5},\qquad
+\mathfrak e_{g,s^2}[\psi_s]
+       \le aC_0s^{-2}-c_0'gs^{-5}.
+\tag{78.3}
+$$
+
+Proof. The normalization follows from the exact Jacobian, not a
+stationary-height measure. Pulling back $s\varepsilon\partial_k$
+and $s(c_\kappa(k)\cdot\partial_q)$ under (78.1) gives
+$\partial_r$ and $v_s(r)\cdot\partial_{y,z,w}$, respectively, where
+Taylor expansion in the basis $(c_0,c_1,c_2)$ gives
+
+$$
+v_s(r)\longrightarrow(1,r,r^2/2)
+\quad\hbox{in }C^\infty\hbox{ on bounded }r\hbox{ intervals}.
+\tag{78.4}
+$$
+
+The term $r^2/2$ is due to the second derivative in (78.1), whose
+column has not been divided by two. The determinant (76.4) makes
+the change of basis invertible. It follows exactly that
+
+$$
+T[\psi_s]+\lambda
+ =s^{-2}\int\left(|\partial_rf|^2+
+                   |v_s(r)\cdot\partial_{y,z,w}f|^2\right)d\xi
+ \le C_0s^{-2}.
+\tag{78.5}
+$$
+
+The support and smooth extension assertions follow from compact
+support of $f$, the invertible linear phase map and $k_0\in I$.
+The supports avoid the pole. Thus these are native admissible
+microscopic states, rather than merely rescaled measures.
+
+Here the local heat supplier is used only on a finite positive-time
+window. Let $p_{\rm E}$ be the heat kernel relative to $d\xi$ of
+
+$$
+\partial_r^2+
+ \left(\partial_y+r\partial_z+(r^2/2)\partial_w\right)^2
+\quad\hbox{on }\mathbb R^4.
+\tag{78.6}
+$$
+
+Theorem B, (2.8), of Colin de Verdière--Hillairet--Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the
+diagonal, nilpotentization and related results*, Annales Henri
+Lebesgue 4, 897--971,
+[DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf),
+together with its localization Theorem 3.2, gives in this chart
+
+$$
+j_0s^7p_{s^2t}(o,\Xi_s(\xi))
+ \longrightarrow p_{\rm E}(t;0,\xi)
+\quad\hbox{uniformly for }(t,\xi)\in[1,2]\times K.
+\tag{78.7}
+$$
+
+These are the real-cover hypotheses already checked in G (3.2)--(3.5)
+and (32.2)--(32.5): smooth original fields on a larger height
+interval, positive smooth constant raw density, constant flag of
+weights $(1,1,2,3)$ and bounded step three, zero drift and potential
+for $B$, and selfadjoint contraction realizations. The pole is at
+positive distance from both height faces. Theorem 3.2 compares the
+identical expression and density on that interior chart and the
+actual killed realization. The actual cover is already real, so no
+periodic image sum is introduced. The rescaled density is
+$j_0d\xi$ before converting to the Lebesgue kernel in (78.7);
+this explains its factor $j_0$. Multiplication by the threshold
+factor $e^{\lambda s^2t}\to1$ is uniform on this time window.
+
+The two fields in (78.6) and their first two iterated brackets span
+at every point. Their heat kernel is smooth and strictly positive;
+this is the same tangent positivity used in G Theorem 3.1.
+Thus its minimum on $[1,2]\times K$ is positive. With $\tau=s^2$,
+positivity of the full threshold field and (78.7) give
+
+$$
+\begin{aligned}
+W_{s^2}(\Xi_s(\xi))
+ &\ge\int_{s^2}^{2s^2}e^{\lambda t}p_t(o,\Xi_s(\xi))dt\\
+ &\ge c s^{-5}\qquad(\xi\in K).
+\end{aligned}
+\tag{78.8}
+$$
+
+Normalization then gives the potential inequality in (78.3).
+This is a lower bound on the full $W_{s^2}$ from a retained window;
+no infinite-time Green limit follows from, or is required of,
+(78.7). The factor $a$ multiplies the kinetic energy only after this
+same-clock calculation. $\square$
+
+## 79. Genuine failure of the quadratic law for faster shrinking
+
+**Theorem 79.1 (microscopic energy order and divergence).** Suppose
+$g\downarrow0$, $\tau(g)\to0$ and $\chi(g)\to\infty$.
+There are constants $c,C>0$ such that eventually
+
+$$
+-Cg\tau(g)^{-5/2}\le E_{\tau(g)}(g)
+                  \le-cg\tau(g)^{-5/2}.
+\tag{79.1}
+$$
+
+In particular
+
+$$
+E_{\tau(g)}(g)\longrightarrow-\infty,\qquad
+\frac{E_{\tau(g)}(g)}{g^2}\longrightarrow-\infty.
+\tag{79.2}
+$$
+
+This contradicts the quadratic Coulomb energy law in this regime
+by actual admissible competitors, while each positive-cutoff
+problem remains separately bounded below and attained.
+
+Proof. Take $s=\sqrt{\tau(g)}$ in Proposition 78.2. Its normalized
+native vector has energy at most
+
+$$
+\tau(g)^{-1}\bigl(aC_0-c_0'\chi(g)\bigr).
+\tag{79.3}
+$$
+
+Once $\chi(g)\ge2aC_0/c_0'$, this is at most
+$-(c_0'/2)g\tau(g)^{-5/2}$, giving the upper bound in (79.1).
+The independent full-domain lower bound follows from $T\ge0$ and
+$\|W_\tau\|_\infty\le C\tau^{-5/2}$ in (76.2).
+Since $g\tau^{-5/2}=\chi/\tau\to\infty$, the first limit in
+(79.2) follows. Dividing the upper bound by $g^2$ gives
+$-c\tau^{-5/2}/g\to-\infty$, proving the second.
+Only the order in (79.1) is identified; its bounds do not identify
+an exact microscopic coefficient or a microscopic ground profile.
+The witness proves a variational upper direction, and the matching
+lower order uses the separate all-height heat estimate. Failure of
+a sufficient smallness estimate alone was not used as a
+counterexample. $\square$
+
+**Proposition 79.2 (explicit faster families and the remaining range).**
+Every family $\tau(g)=g^p$ with $p>2/3$ satisfies Theorem 79.1;
+its energy has the two-sided order $-g^{1-5p/2}$.
+The families $\tau(g)=g^{2/3}L(g)$ with $L(g)>0$ and $L(g)\to0$
+also satisfy that theorem. An example is
+$L(g)=(\log(1/g))^{-r}$ with $r>0$.
+Neither Theorem 77.1 nor Theorem 79.1 classifies families for which
+$\chi(g)$ tends to a finite strictly positive constant, or has
+neither limit zero nor limit infinity.
+
+Proof. In the power case $\chi=g^{1-3p/2}\to\infty$; in the
+second case $\chi=L^{-3/2}\to\infty$ and $\tau\to0$.
+Substitution in (79.1) gives the stated power order. The last
+assertion specifies the missing hypotheses of the two theorems;
+no critical constant or complete crossover classification is
+inferred. $\square$
+
+## 80. Native normalization and the scope of the joint conclusions
+
+**Proposition 80.1 (source, Jacobian and limiting scales).** The joint
+conclusions retain exactly the Coulomb tensor, source coefficient
+and original-coordinate transport of §§70--74. In particular, with
+$J_\kappa=\operatorname{diag}(1,1,\kappa)$ and $D=\kappa x$,
+for every positive cutoff in either regime,
+
+$$
+\psi^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1/2}\psi(k,q),\qquad
+W_\tau^{\rm orig}(k,J_\kappa q)=|\kappa|^{-1}W_\tau(k,q),
+\qquad g_{\rm orig}=|\kappa|g.
+\tag{80.1}
+$$
+
+The tensor in original coordinates is
+$J_\kappa M J_\kappa^{\mathsf T}$ with its signed cross terms.
+The conclusions concern a fixed nonzero $\kappa$, the all-real
+threshold cover and positive cutoffs. They assert neither an
+unregularized semibounded realization nor an exact microscopic
+limiting problem, and do not transfer to a wrapped threshold cover
+or the actual zero leaf. They do not select physical space or
+physical $SO(3)$.
+
+Proof. The absolute Jacobian is $|\kappa|$, so the unitary
+wavefunction factor differs from the unit raw-source kernel factor
+exactly as in Proposition 74.1. None of the cutoff estimates changes
+this Jacobian or the clock. The macroscopic coefficient remains
+$\phi(k_0)\int\phi^3/(4\pi\sqrt{\det M})$: (77.5)--(77.8)
+compare directly with the same raw point-source problem at cutoff
+one, not a stationary-height source. Formula (75.4) preserves its
+distinct raw and $\phi$-weighted charges at every time.
+
+The native joint estimates (76.7), (77.7) and (78.8)--(79.1) are
+repo-derived consequences of the specified suppliers. The sharp
+all-height short-time input is G §32, the large-time and threshold
+inputs are L Lemma 41.2 and §§42--48, and the fixed-reference
+variational and profile inputs are §§71--73. G Theorem 3.1 supplies
+the privileged concentration mechanism; (78.8) verifies that its
+time window survives the present positive cutoff. The cited
+Colin de Verdière--Hillairet--Trélat theorems supply local
+positive-time kernel convergence and localization only. The
+weighted Schur test and Cauchy--Schwarz are classical intermediate
+steps, rather than new standalone results or a global Green
+asymptotic. These correspondences make no literature-wide novelty
+assertion. The exclusions concerning large-time divergence on
+wrapped covers and the actual zero leaf are those of Proposition
+74.1 and L §§44--45. The different small-time and large-time
+scales proved here therefore preserve all those boundaries.
+$\square$
+
+## 追加锚（本行以下为增补区）

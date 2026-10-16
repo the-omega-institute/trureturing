@@ -1155,3 +1155,598 @@ external unrestricted threshold lower bound is used in (SI.34) or
 [CEMP]: https://doi.org/10.4230/LIPIcs.ICALP.2016.36
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Four-coordinate compensation, right-cut separation and inherited residual cuts
+
+**Convention 10.1 (one original table and ordinary-paper scope).**
+Throughout this section fix one complete graph of Definitions 1.2 and
+9.1, correct and terminating on every Boolean input and satisfying
+both caps $t\le n$, $J\le W$. Retain $n\ge6$,
+$K=k$, $L=n-k+1$, $3\le k\le n-2$, the distinct original costs
+$c_i=s_i+4$, and every incidence quantity of Sections 2, 5 and 9.
+In particular $\mathcal B$ uses the complete list of common-support
+cuts and the formal endpoint $n$. The results below are ordinary-paper
+deductions from the cited suppliers; no Lean verification is asserted.
+
+For a live cell $p=(h,z)$ set
+$\mathcal L(p)=\{\varepsilon:p_\varepsilon\in V\}$.
+Except at the final corner this set is nonempty. Its singleton
+possibilities are $\{1\}$ at $z=L-1$, $h<K-1$, and $\{0\}$
+at $h=K-1$, $z<L-1$. Supports, depths and the incidence diagrams
+below are mathematical indices, with no added running configuration.
+
+**Lemma 10.2 (last-layer exclusivity and universal right-cut
+separation).** Let $B=(a,b)\in\mathcal B$. Every host at depth
+$b-1$ hosts no other count cell in $V_B$. If distinct
+$p=(h,z),p'=(g,w)\in V_B$ share a host, orient them by $h<g$.
+Then
+
+$$
+g-h\ge\max(2,n-b+1),\qquad
+z-w\ge\max(2,n-b+1).
+\tag{SI.41}
+$$
+
+Put $d_*=\min(K,L)$ and $e_*=\max(K,L)$. Every interval ending
+at $b\le e_*$ has $D_B=0$, regardless of its length.
+
+Proof. At a live occurrence $(p,S,q)$ of depth $b-1$, (SI.31)
+and freshness imply
+
+$$
+S=T_b\setminus\{i(q)\}.
+\tag{SI.42}
+$$
+
+Any other live occurrence of this state inside $B$ has a support
+$S'$ contained in $T_b\setminus\{i(q)\}$. At an earlier depth
+this containment is proper, contradicting the nested-support
+exclusion of Section 2. At the same depth the supports coincide;
+a different cell has unequal hits, contradicting the equal-support
+exclusion. This proves exclusivity. It also applies when $b=n$:
+then $T_b=[n]$, with no need for a live history at depth $n$.
+
+The supplied separation (SI.7) gives $g-h,z-w\ge2$. Suppose,
+toward the stronger assertion, that
+$\min(g-h,z-w)\le n-b$. Set
+
+$$
+M=\max(h+z,g+w),\quad t=b-1-M,\quad
+A_1=K-1-g,\quad A_0=L-1-z.
+$$
+
+Here $t,A_1,A_0$ are nonnegative. Since $n=K+L-1$,
+
+$$
+\begin{aligned}
+g+z-M&=\min(g-h,z-w),\\
+A_1+A_0-t&=n-b-(g+z-M)\ge0.
+\end{aligned}
+\tag{SI.43}
+$$
+
+Choose nonnegative integers $t_1\le A_1$ and $t_0\le A_0$
+with $t_1+t_0=t$; for example take
+$t_1=\min(t,A_1)$ and $t_0=t-t_1$. Append the same reply word
+$1^{t_1}0^{t_0}$ to the two histories. All its partial count pairs
+are live for both histories, since the final counts satisfy their
+live bounds and counts only increase. This word is actual for each
+history separately. Indeed, at every step the two occurrences have
+the same installed state, its label is fresh for both by Theorem
+2.2, and either requested reply has a completion following that
+history. Their fixed successors are identical. Induction therefore
+produces two actual live extensions at the same state after every
+step. Agreement of their previously exposed assignments is unnecessary.
+
+At the end the larger depth is $b-1$. The count differences are
+unchanged and nonzero, so this gives a host at depth $b-1$ shared
+with another cell in $V_B$, contradicting exclusivity. The case
+$t=0$ is the same immediate contradiction without an extension.
+Thus both integer differences exceed $n-b$, proving (SI.41).
+This argument realizes just the constructed paired live extensions;
+it makes no assertion about arbitrary syntactic paths.
+
+If $b\le e_*$, then
+$n-b+1\ge n-e_*+1=d_*$. One of the hit and zero ranges has
+diameter $d_*-1$. The two differences in (SI.41) cannot both
+exist in those ranges. Hence no two cells in $V_B$ share a state
+and $D_B=0$. $\square$
+
+**Lemma 10.3 (all sharing pairs in a four-coordinate interval).**
+Suppose $B=(a,a+4)$, and put $d=a+1$,
+
+$$
+\begin{aligned}
+\alpha&=d-L+1,&\beta&=K-1,\\
+A&=(\alpha,L-1),&
+C&=(\alpha+1,L-2),\\
+Y&=(K-2,d-K+2),&
+Z&=(K-1,d-K+1),\\
+U&=(\alpha+1,L-1),&
+V'&=(K-1,d-K+2).
+\end{aligned}
+\tag{SI.44}
+$$
+
+The first four displayed cells have depth $d$; $U,V'$ have
+depth $d+1$. Every state shared by distinct cells of $V_B$ hosts
+exactly two cells. Its pair is one of
+
+$$
+AZ,\quad CZ,\quad AY,\quad UV',\quad AV',\quad ZU.
+\tag{SI.45}
+$$
+
+A displayed pair denotes two distinct valid cells; omit invalid cells,
+coincident endpoints and pairs failing (SI.7). A state at depth
+$d+2$ shares with no other cell of $V_B$. Moreover every $CZ$
+host has its actual zero successor at a shared $UV'$ host, and
+every $AY$ host has its actual one successor at a shared $UV'$
+host. These successor assertions do not assert injectivity.
+
+Proof. The last-depth assertion is Lemma 10.2, since $d+2=b-1$.
+If two distinct cells at depth $d+1$ share a state and have a
+common live reply, Theorem 2.2 puts their distinct child cells at
+its one fixed successor at depth $d+2$, which is forbidden.
+Their nonempty live-reply sets must therefore be opposite
+singletons. The only possible pair is $UV'$.
+
+For a state shared between depths $d$ and $d+1$, a common live
+reply would similarly share its successor between depths $d+1$
+and $d+2$, again forbidden. Thus the two live-reply sets are
+opposite singletons. The unique possibilities are $AV'$ and $ZU$.
+
+Consider two hosted cells at depth $d$. If they have no common live
+reply, the pair is $AZ$. If zero is common, their two child cells
+at depth $d+1$ must be $U,V'$ by the preceding same-depth
+classification. Subtracting the zero increment $(0,1)$ from these
+cells gives precisely $C,Z$. If one is common, subtracting $(1,0)$
+instead gives $A,Y$. This proves (SI.45), and the same actual
+fixed-successor argument proves its two successor assertions. In
+particular, a common reply cannot be treated as a new independently
+chosen child host.
+
+It remains to exclude a state with three or more hosted cells.
+Write $H=\beta-\alpha=n-1-d$, so $H\ge2$. If $H=2$, (SI.7)
+deletes every pair in (SI.45) except $AZ$: the pairs $CZ,AY,UV'$
+have hit and zero gaps only one, and the two cross-depth pairs have
+one gap only one. Thus no triple is possible, including when $C=Y$.
+If $H\ge3$, all six formal cells in (SI.44) are distinct.
+Among depth-$d$ cells the allowed pairs form the path
+$C-Z-A-Y$, which has no triple of pairwise adjacent cells.
+Deleting invalid cells or forbidden pairs cannot introduce such a
+triple. Any shared state hosts at most the two cells $U,V'$
+on depth $d+1$.
+
+A mixed triple with two cells at depth $d+1$ would contain $U,V'$.
+A depth-$d$ cell sharing with each would need a live-reply set
+disjoint from both opposite singletons, which is impossible.
+A mixed triple with two cells at depth $d$ and one at depth $d+1$
+would require both earlier cells to have the same singleton live-reply
+set opposite to the later cell's set. At a given depth there is at
+most one cell with either specified singleton live-reply set.
+The earlier cells would coincide, a contradiction. The last layer
+cannot participate in any triple by exclusivity. All possibilities
+are excluded. $\square$
+
+**Theorem 10.4 (compensation for every span-four gap).** For every
+consecutive common-support interval $B=(a,a+4)$, without any
+restriction on the other gaps,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge |V_B|.
+\tag{SI.46}
+$$
+
+Proof. Put $d=a+1$ and let
+
+$$
+e_j=\sum_{p\in V_{d+j-1}}(b_p-1)\qquad(1\le j\le3).
+$$
+
+Each of these depths is internal to a consecutive gap, so it is not
+common-support. Definition 9.1 and $b_p\ge a_p$ give $e_j\ge1$.
+In particular $E_B=e_1+e_2+e_3\ge3$.
+
+By Lemma 10.3, every multiply hosted state has exactly two cell
+incidences. Let $s$ be the number of these states, so $D_B=s$.
+Regard each as an edge between its two cells in (SI.45), retaining
+parallel edges when distinct installed states have the same pair.
+Let $v$ be the number of cells incident to these edges. Then $v\le6$,
+and at each incident cell its number of hosts is at least its degree.
+The last internal layer has none of these incident cells and has
+excess at least one. All other cells have nonnegative excess.
+Consequently
+
+$$
+E_B\ge2s-v+1\ge2s-5.
+\tag{SI.47}
+$$
+
+These inequalities include empty sharing: no assumption of positive
+degree is imposed on a cell absent from the edge relation.
+
+Suppose $E_B<s$. The bounds $E_B\ge3$ and $E_B\ge2s-5$
+force $s=4$ and $E_B=3$. Equation (SI.47) then forces $v=6$.
+Thus all six cells in (SI.44) are distinct and valid. Furthermore
+$e_1=e_2=e_3=1$. The excess at the six incident cells is at least
+$2s-v=2$, while the last layer already contributes one. Equality
+forces every incident cell to have exactly its degree many hosts,
+and every other cell on the first two layers to have exactly one
+host. This also handles every boundary deletion: if even one of the
+six formal vertices is missing or identified with another, the
+assumed strict deficit has already become impossible.
+
+Let $x,y,z_*,u_*,v_*,w_*$ be the edge multiplicities of
+$CZ,AY,UV',AZ,AV',ZU$, respectively. Since all six vertices
+are incident and $C,Y$ have only their displayed pendant edges,
+$x,y\ge1$. The successor assertion of Lemma 10.3 forces
+$z_*\ge1$. Counting degrees separately on the first two layers,
+using the just established equality between degree and host count,
+gives
+
+$$
+\begin{aligned}
+x+y+z_*+u_*+v_*+w_*&=4,\\
+2x+2y+2u_*+v_*+w_*-4&=e_1=1,\\
+2z_*+v_*+w_*-2&=e_2=1.
+\end{aligned}
+\tag{SI.48}
+$$
+
+The last equation and $z_*\ge1$ imply $z_*=1$ and
+$v_*+w_*=1$: the alternative $z_*\ge2$ is impossible, and
+$z_*=1$ fixes that sum. The middle equation now gives
+$x+y+u_*=2$, whence $x=y=1$ and $u_*=0$.
+
+If $v_*=1$, only $A$ among the depth-$d$ cells has more
+than one host. All cells from $C$ through $Z$ on that diagonal
+therefore have singleton support families. Consecutive such cells
+have equal supports: they are the two live children of a common
+parent, and Theorem 2.2 gives those children equal supports. This
+is the local diagonal argument of Theorem 4.1; no singleton
+condition on their parents is needed. The admissible hit counts
+form an integer interval, so the supports at $C$ and $Z$
+coincide. But $x=1$ gives a state shared by these unequal-hit
+cells, contradicting the equal-support exclusion.
+
+If $w_*=1$, only $Z$ has more than one host on that first
+diagonal. The same argument from $A$ through $Y$ makes their
+supports equal, contradicting the shared $AY$ state given by
+$y=1$. These are the only possibilities since $v_*+w_*=1$.
+The assumed deficit is impossible, proving $D_B\le E_B$.
+Equation (SI.33) gives the equivalent host lower bound.
+
+Every edge and successor used here is witnessed by actual live
+histories of the original graph. No certified successor is prescribed,
+and no post-certificate invocation is deleted or counted as a fresh
+allocation. $\square$
+
+**Corollary 10.5 (strict positive margin for a terminal span-four
+gap).** If $B=(n-4,n)$ is consecutive, then
+
+$$
+E_B-D_B\ge2,\qquad |Q_B|\ge |V_B|+2.
+\tag{SI.49}
+$$
+
+The only possible shared pair in this interval is
+
+$$
+(K-3,L-1),\qquad(K-1,L-3).
+\tag{SI.50}
+$$
+
+No attainment of the margin two is asserted.
+
+Proof. Here $d=n-3$ and $H=2$ in Lemma 10.3, so only its
+$AZ$ pair survives (SI.7); it is exactly (SI.50).
+These cells are valid because $K,L\ge3$. Let $s$ be their
+number of shared states, and let $e_j$ denote the three diagonal
+excesses defined in the proof of Theorem 10.4. Then $D_B=s$.
+If $s>0$, both cells have at least $s$ hosts, giving $e_1\ge2s-2$.
+For $s=0$ the same inequality is automatic. Consecutivity still
+gives $e_j\ge1$ for all three internal layers. Hence
+
+$$
+E_B-D_B\ge2+\max(1,2s-2)-s\ge2.
+\tag{SI.51}
+$$
+
+For $s=0$ the first bound is three; for $s=1$ it is two;
+for $s\ge2$ it is $s\ge2$. Equation (SI.33) completes
+the proof. $\square$
+
+**Corollary 10.6 (enlarged qualified exact whole-table minima).**
+Consider the class of complete original Boolean graphs for which
+
+$$
+B=(a,b)\in\mathcal B,\quad b>e_*
+\quad\Longrightarrow\quad b-a\le4.
+\tag{SI.52}
+$$
+
+Intervals ending at $b\le e_*$ may have arbitrary lengths.
+Every graph in this class satisfies
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,\qquad m\ge G+u.
+\tag{SI.53}
+$$
+
+The minimum Boolean running-state count in this class, at both
+uniform caps $n,W$, is exactly $G=K L$. The subclass with all
+gaps of span at most four has the same exact minimum. For complete
+original native preparers whose supplied Boolean projection in
+(SI.5) belongs to either stated class, at both native caps
+$n+1,W+3$, the exact preparation minimum is $G+4+r$.
+
+If a graph in the enlarged class actually has a consecutive terminal
+gap $(n-4,n)$, its stronger lower bound is $m\ge G+u+2$.
+The corresponding native preparation count is at least $G+6+r$.
+These stronger conditional bounds carry no attainment assertion.
+
+Proof. Every interval ending early has $D_B=0$ by Lemma 10.2.
+The other intervals have span at most four and satisfy $D_B\le E_B$
+by Theorems 9.4 and 10.4. Sum in (SI.32) to obtain (SI.53).
+If the terminal span-four gap is present, Corollary 10.5 contributes
+at least two to that sum and gives the stronger bound.
+
+The supplied grid of [PCA, Theorem 26.1][PCA] has $G$ Boolean
+running states and every depth common-support. It belongs to both
+classes and satisfies both caps on all inputs in the same graph,
+giving equality for the class minima. For a native competitor the
+projection of [WTF, Theorem 4.1][WTF] has
+$m\le H_P-4-r$ and both Boolean caps, so the respective Boolean
+lower bounds give the native lower bounds. The supplied full-fiber
+grid lift gives $G+4+r$ preparation states and both uniform native
+caps in one table, proving the exact class minima.
+
+This native upper is over every source in the unbounded original
+$\mathcal U_*$, with its original $\rho$, prescribed pointwise
+code, literal latches and complete $e_0,e_1$ entries. Its four
+successors at every installed address remain those of the supplied
+construction. The unchanged, independently priced eight-state reader
+returns the entire predecessor row, including ordered exterior,
+occurrences, equality partition, repetitions, disequalities and
+strict-prefix guards. The cube is a lower-witness projection only.
+Every installed running, output, unused and latch state retains its
+price, as does every actual constant, repeated or post-certificate
+invocation. Acquired binding, authentication, permission, same-source
+export, isolation, handoff and continuity remain the separate
+operational services of Convention 1.3. $\square$
+
+**Proposition 10.7 (a genuine span-four support gap).** If
+$\min(K,L)\ge4$, there exists a complete correct graph at both
+caps whose common-support cuts include the consecutive pair $1,5$.
+Thus allowing span four strictly enlarges the support-gap class of
+Corollary 9.5.
+
+Proof. Take a fully unfolded finite decision tree, querying coordinate
+$1$ first. In the zero child use the order $2,3,4,5$; in the one
+child use $3,4,5,2$. After those four queries, use the remaining
+coordinates in the same fixed order in both subtrees. Read all $n$
+coordinates on every path and attach the threshold output at each
+leaf. Each tree node has its fixed query and fixed successors, and
+every node is an installed counted state. There is no free branch
+selector. Every actual input pays exactly $n$ queries and $W$
+letters, including the full suffix after any earlier certificate,
+and receives the correct output.
+
+At depths $2,3,4$, the respective supports after first reply zero
+and one are
+
+$$
+\begin{array}{c|cc}
+\text{depth}&\text{first reply zero}&\text{first reply one}\\
+2&\{1,2\}&\{1,3\}\\
+3&\{1,2,3\}&\{1,3,4\}\\
+4&\{1,2,3,4\}&\{1,3,4,5\}.
+\end{array}
+\tag{SI.54}
+$$
+
+Each displayed support has an actual live history: choose the replies
+to have one one and one zero at depth two, two ones and one zero
+at depth three, and two of each at depth four, with either specified
+first reply. All proper prefixes of these live histories are live.
+The count bounds hold since $K,L\ge4$. Thus none of these three
+depths is common-support. At depth one the support is $\{1\}$,
+and at depth five every live history has support
+$\{1,2,3,4,5\}$. Such depth-five live histories exist with two
+ones and three zeros. Therefore $1,5$ are consecutive cuts.
+The supplied full-fiber lift also realizes this example with the
+unchanged native task and its original charges. $\square$
+
+**Theorem 10.8 (actual-prefix inheritance and conditional sharp
+residual-grid constraints).** Fix an actual live prefix of the
+original Boolean graph, with exposed set $S$, assignment $\eta_S$
+and $h$ ones. Put
+
+$$
+t=|S|,\qquad R=[n]\setminus S,\qquad
+N=|R|,\qquad q=k-h.
+\tag{SI.55}
+$$
+
+Use the residual graph on $R$ supplied by [CP, Theorem 5.1][CP].
+For every original common-support depth $b$ with $t<b<n$,
+the residual depth $b-t$ is common-support, with support $T_b\setminus S$.
+The formal endpoint $n$ becomes its formal endpoint $N$.
+
+Form the increasing list consisting of $t$, all original common-support
+depths strictly greater than $t$, and $n$. If all successive distances
+in this list are at most four, and $N\ge6$, $3\le q\le N-2$,
+then, on the original installed coordinate vector,
+
+$$
+m(R)\ge q(N-q+1).
+\tag{SI.56}
+$$
+
+The bound is the exact grid minimum for the qualified residual class;
+it asserts no simultaneous attainment of all prefix constraints in
+one original graph. All inequalities (SI.56) for qualifying prefixes
+hold simultaneously on that graph's single vector $(m_i)$.
+There is no restriction on gaps lying before this prefix.
+
+For one complete native preparer at both original native caps, take
+its supplied Boolean projection and an actual live cube prefix.
+Under the same inherited-cut and residual-parameter conditions,
+
+$$
+M(R)\ge q(N-q+1),
+\tag{SI.57}
+$$
+
+where $M_i$ counts all its installed selected states in the original
+classes $E_i$ of CP Definition 1.2. These inequalities likewise
+concern one installed vector $(M_i)$.
+
+Proof. CP Theorem 5.1 gives a complete correct residual threshold-$q$
+graph on $R$, with at most $m(R)$ installed states and both
+uniform caps $N,C_R$ together. It fixes the old $S$ values,
+retains realized $R$-labelled states, and suppresses fixed
+$S$-labelled chains. No state is copied.
+
+At a live residual prefix with $j$ ones and $z'$ zeros,
+the corresponding original counts are
+$(h+j,t-h+z')$. Its residual liveness inequalities give
+
+$$
+h+j\le k-1,\qquad
+t-h+z'\le t-h+N-q=n-k=L-1.
+\tag{SI.58}
+$$
+
+Thus the original prefix remains live. Original live freshness excludes
+any intervening visit to an $S$ label. Induction on the live residual
+prefix therefore identifies it with an actual original extension,
+with identical current state and the same exposed $R$ assignment.
+Conversely every live original extension of this fixed prefix appears
+in the residual graph by its subsequence construction. Impossible
+edges assigned arbitrary successors in CP's restriction cannot occur
+on these actual histories.
+
+At residual depth $b-t$, the corresponding original live extension
+has depth $b$. Its support is $T_b$ if $b$ is an original cut.
+Consequently its residual support is $T_b\setminus S$; in
+particular $S\subseteq T_b$. This proves inheritance. Residual
+depth zero is common even when $t$ was not an original cut, and
+the residual formal endpoint is $N$. The inherited cuts divide
+its depth range into intervals of length at most four under the
+stated condition. Any additional residual common-support cuts
+only subdivide those intervals. All gaps in the residual graph
+therefore have span at most four.
+
+The residual costs are the same distinct original $c_i=s_i+4$
+for $i\in R$, reindexed in their original order. Apply Corollary
+10.6 to this one complete residual graph at both $N,C_R$ caps:
+its installed count is at least $q(N-q+1)$ and at most $m(R)$.
+This proves (SI.56). Repeating this argument for different prefixes
+never changes the meaning of any $m_i$. The different proof
+restrictions are not disjoint allocated pieces of the original graph.
+
+For the native assertion, CP Corollary 5.2 and the projection in WTF
+Theorem 4.1 preserve the actual selected-state subsequence and give
+projected multiplicities $m_i\le M_i$. A live cube prefix has the
+same $S,h$ in that projection; a possible live cube-constant profile
+call changes neither. Apply (SI.56) there and sum $m_i\le M_i$
+over $R$. All calls suppressed in these mathematical restrictions
+remain paid on the original native runs. The original apparatus
+acquires no restriction, reset, residual entry or free transition.
+$\square$
+
+**Proposition 10.9 (late long-gap obstruction and the exact surviving
+global sum).** For every complete graph in Convention 10.1,
+the original comparison $m\ge G$ is equivalent to each of
+
+$$
+\begin{aligned}
+\sum_{\substack{B\in\mathcal B\\\beta_B\ge5}}(D_B-E_B)
+&\le E_{\mathrm{cut}}+u+
+ \sum_{\substack{B\in\mathcal B\\\beta_B\le4}}(E_B-D_B),\\
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+&\le E_{\mathrm{cut}}+u+
+ \sum_{B\in\mathcal A_*}(E_B-D_B),
+\end{aligned}
+\tag{SI.59}
+$$
+
+where
+
+$$
+\mathcal L_*=\{(a,b)\in\mathcal B:b-a\ge5,\ b>e_*\},
+\qquad \mathcal A_*=\mathcal B\setminus\mathcal L_*.
+$$
+
+Every summand on the right of either inequality is nonnegative.
+A correct strict-subgrid graph at both caps must therefore have a
+consecutive gap $B=(a,b)$ with
+
+$$
+b-a\ge5,\qquad b>e_*,\qquad
+D_B>E_B,\qquad |Q_B|<|V_B|.
+\tag{SI.60}
+$$
+
+Each internal depth of that gap contains a support-ambiguous cell,
+so there are at least four consecutive such depths.
+The right endpoint lies in $\{e_*+1,\ldots,n\}$, a set of
+$d_*-1$ possible depths. The same necessity applies to the supplied
+projection of every complete original native preparer with
+$H_P<G+4+r$ at both native caps.
+
+Proof. Split the exact identity (SI.32) first at span four and
+then at the partition $\mathcal L_*,\mathcal A_*$. This proves
+both equivalences (SI.59), without discarding any term. Theorems
+9.4 and 10.4 make every span-at-most-four contribution
+$E_B-D_B$ nonnegative. Any remaining interval in $\mathcal A_*$
+ends at $b\le e_*$, and Lemma 10.2 gives $D_B=0$ there.
+Thus all right-hand terms have the stated signs.
+
+If $m<G$, the second inequality is strictly reversed. Some
+$B\in\mathcal L_*$ has $D_B-E_B>0$; otherwise its left side
+would be nonpositive. Equation (SI.33) gives the host deficit.
+There are no common-support depths internal to this consecutive gap,
+and Definition 9.1 supplies an ambiguous cell on each internal
+diagonal. Its span supplies at least four of them. Finally
+$n-e_*=\min(K,L)-1=d_*-1$. For a native strict saving,
+$m\le H_P-4-r<G$ in its supplied projection, so this entire
+argument applies to that same complete projected graph. $\square$
+
+The unrestricted inequality (SI.59), in particular the late gaps of
+span at least five, remains unresolved here. No complete correct
+strict-subgrid graph is constructed. Proving $D_B\le E_B$ for
+each remaining gap would suffice but is stronger than the stated
+global sum, which permits cut excess, other interval excess and
+genuinely nonlive states to compensate a deficit. With five or more
+block coordinates there are more internal support layers; a common
+live reply can lead to another shareable internal layer. The proof
+of Lemma 10.3 therefore supplies no corresponding six-cell
+classification or compensation at those spans. The simultaneous
+CP inequalities and (SI.56) constrain one vector; subtracting lower
+bounds on overlapping coordinate sets cannot assign their differences
+as available states. The unrestricted-budget $H_{\min}$ also
+retains its separate unresolved meaning.
+
+These new deductions are repo-derived. Their mathematical suppliers
+are Theorem 2.2, the local diagonal argument in Theorem 4.1, the
+support exclusions cited in Section 2, and the exact localization
+of Theorem 9.3; the span-at-most-three theorem is reused.
+CP Theorem 5.1 supplies actual-prefix restriction, and WTF Theorem
+4.1 with PCA Theorem 26.1 supplies the original full-fiber resource
+map and grid. The fixed-representative obstructions of WTF Section
+11 do not supply a separator-capacity premise here.
+
+The literature boundaries are those of Section 8: Wegener,
+Chapter 14.4, printed pages 423–425, treats BP1 and explicitly
+uses realizability of every graph path in the normalization proof
+on page 424; Bryant, Section 2, Definition 1, requires increasing
+variable indices; CEMP, Section 2.1, assumes an acyclic graph and
+read-once consistent accepting paths. None of these extra hypotheses
+is imposed on the original paid graph by the arguments above.
+The proofs use paired actual live extensions and charged installed
+incidence, and make no worldwide priority assertion.
+
+## 追加锚（本行以下为增补区）
