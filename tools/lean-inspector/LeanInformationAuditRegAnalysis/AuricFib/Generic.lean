@@ -116,7 +116,8 @@ def analyze (request : Json) : Except String Json := do
     ("ordered_pair_denominator", Json.null), ("reason", toJson "no compiled domain evidence supplied")]
   let mut arena := emptyArena
   let mut continuation := Json.mkObj [("task", if available then toJson task else Json.null), ("outputs", Json.null),
-    ("scope", toJson "supplied task selection; actual source unverified"), ("plan", plan)]
+    ("scope", toJson "supplied task selection; actual source unverified"), ("plan", plan),
+    ("residual_sufficiency", Json.null)]
   let mut kernel := Json.mkObj [("structural", plan), ("finite_tables", Json.null)]
   let mut spectrum := Json.mkObj [("structural", plan), ("layers", Json.null),
     ("unresolved", Json.null)]
@@ -166,6 +167,26 @@ def analyze (request : Json) : Except String Json := do
         ("collapsed",
           toJson (position > 0 && layerTables[position]! == layerTables[position - 1]!))]
     let final := residual additions.size
+    let some taskIndex := (List.finRange tables.size).find? (·.val == task)
+      | throw "fib.plan_role_scope"
+    let taskSet : Finset (Fin tables.size) := {taskIndex}
+    -- Unresolved pairs at a layer that the task readout separates.
+    let conflictsAt := fun position =>
+      let withTask : Finset (Fin tables.size) := selectedAt position ∪ taskSet
+      (catalog.generatedKernel (selectedAt position)).edgeCapture (catalog.generatedKernel withTask)
+    let conflicts := conflictsAt additions.size
+    let sufficient := projectionRefinesB (catalog.generatedKernel (selectedAt additions.size))
+      (catalog.generatedKernel taskSet)
+    unless sufficient == (conflicts.card == 0) do
+      throw "internal residual sufficiency inconsistency"
+    let sufficiency := Json.mkObj [("task", toJson task), ("sufficient", toJson sufficient),
+      ("conflict_count", toJson conflicts.card), ("conflict_pairs", pairsJson conflicts),
+      ("conflict_rate", (pairRate (some n) conflicts.card).getD Json.null),
+      ("determined_at_layer", toJson ((List.range (additions.size + 1)).find? fun position =>
+        (conflictsAt position).card == 0)),
+      ("criterion", toJson "the finest listed kernel refines the task kernel; \
+        conflicts are unresolved ordered pairs whose task readouts differ"),
+      ("scope", toJson "supplied table kernels; actual readouts unverified")]
     let addresses := (pairList allPairs).map fun (a, b) => Json.mkObj [
       ("pair", toJson [a.val, b.val]),
       ("first_layer", toJson ((List.range layerTables.size).find? fun position =>
@@ -184,7 +205,8 @@ def analyze (request : Json) : Except String Json := do
         toJson "supplied table kernels and layers; actual readouts unverified")]
     continuation := Json.mkObj [("task", toJson task), ("outputs", toJson taskOutputs),
       ("scope",
-        toJson "supplied finite task outputs; decoding and source unverified"), ("plan", plan)]
+        toJson "supplied finite task outputs; decoding and source unverified"), ("plan", plan),
+      ("residual_sufficiency", sufficiency)]
     arena := Json.mkObj [("kind", toJson "supplied-finite-table"),
       ("cardinality", toJson n), ("ordered_pair_denominator", toJson (n * (n - 1))),
       ("presentation", finite),

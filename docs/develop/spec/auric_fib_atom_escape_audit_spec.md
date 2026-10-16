@@ -379,6 +379,28 @@ $$
 
 FIB 金字塔的几何层 \((X,Y,Z)\)、概率纤维层 \(\kappa/\Delta\)、原生接续层和 kernel lattice 层是不同偏序。不得把几何维数、kernel 深度和取得成本当作同一个“维度”。
 
+### 5.5 任务在残余纤维上的充分性
+
+设作者选定的任务读出为 \(t\)，其不可区分关系为 \(K_t\)。对 §5.3 的弱细化链，第 \(j\) 层的任务冲突对集合为
+
+$$
+T_j=D_{H_L}\cap(K_j\setminus K_t)\quad(0\le j\le m),
+$$
+
+即第 \(j\) 层仍不可区分、而任务读出不同的有序非对角状态对。由链的弱细化，\(T_0\supseteq T_1\supseteq\cdots\supseteq T_m\)，且 \(T_j\subseteq D_{H_L}\cap K_j\)。读出链对任务充分，当且仅当
+
+$$
+T_m=\varnothing,\qquad\text{等价地}\qquad K_m\subseteq K_t,
+$$
+
+此时任务在最终残余纤维上取常值，可由最终联合代码读出。首个决定层是满足 \(T_j=\varnothing\) 的最小 \(j\)；\(T_m\neq\varnothing\) 时不存在。有限非退化 arena 的冲突率为
+
+$$
+\operatorname{ConflictRate}=\frac{|T_m|}{N(N-1)}.
+$$
+
+\(T_m\) 的每一对都是现有读数相同而任务答案不同的一组成对实例，证明当前读出不足以决定任务；补救须加入能切开这些对的读出，对现有读数作后处理不能分开它们。\(T_m=\varnothing\) 只说明在所给 arena 与读出上任务被决定，不推出其它 arena、其它任务或未取得部分上的充分性。通用合同的有限呈现报告 \(T_m\)、充分性、冲突率与首个决定层；原生单窗应用不报告本项。
+
 ## 6. 续接任务的定量残差
 
 ### 6.1 目标响应残差
@@ -487,7 +509,7 @@ $$
 | seam_readout | 接缝、方向和原生状态读出 |
 | pyramid_coordinates | \((X,Y,Z)\) 及其定义域 |
 | association_coordinate | \(\kappa\) 或 \(\Delta\)，以及取得方式 |
-| continuation_target | 作者选定的实际任务；原生应用保留后缀、守卫、回复和拒绝 |
+| continuation_target | 作者选定的实际任务；原生应用保留后缀、守卫、回复和拒绝；通用合同的有限呈现另报任务冲突对、充分性、冲突率与首个决定层（§5.5） |
 | kernel | primitive bundle 诱导的不可区分关系 |
 | escape_pairs | 残余有序非对角状态对 |
 | escape_rate | 完整有限且 \(N>1\) 的 arena 上的精确有序 pair 率 |
