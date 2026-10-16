@@ -41,7 +41,7 @@ revision and purpose without claiming execution. Local remotes persist; hosted e
 authentication, cache transport, publication and required results remain host obligations.
 Delta exit 3 is observable protected-only early feedback on both adapters, with no
 review authorization; other failures retain their exits. Each unit/current shares one
-1800-second compute allowance across its phases, excluding preparation. The source
+7200-second compute allowance across its phases, excluding preparation. The source
 job charges judge compilation and source execution to current and exports only the
 remaining allowance through ci_compute; the continuation cannot start a fresh budget.
 Bootstrap/input failures remain distinct from completed source rejection, preserving
