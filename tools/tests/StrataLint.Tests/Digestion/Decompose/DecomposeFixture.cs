@@ -9,9 +9,9 @@ internal sealed class DecomposeFixture
 {
     internal const string Dialect = "dialect:decompose-probe";
     internal const string Bold = "**Theorem 1.1** First assertion.\n\n**Second** Second assertion.\n";
-    internal const string Eight = "**Theorem 1.1**\n\nThe obligations follow.\n\n"
-        + "- obligation one\n- obligation two\n- obligation three\n- obligation four\n"
-        + "- obligation five\n- obligation six\n- obligation seven\n- obligation eight\n\nClosing remark.\n";
+    internal static string Eight => "**Theorem 1.1** First obligation α.\n\n"
+        + string.Concat(Enumerable.Range(2, 7)
+            .Select(index => $"**Clause {index}** Independent obligation {index} α.\n\n"));
     internal static string RulesText => AtomizerRulesFixture.Minimal + "\n\n" + """
         [[dialect]]
         id = "decompose-probe"

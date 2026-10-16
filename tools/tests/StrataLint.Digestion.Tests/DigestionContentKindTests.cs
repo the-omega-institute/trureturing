@@ -25,10 +25,10 @@ public sealed class DigestionContentKindTests
     }
 
     [Fact]
-    public void GenericAtomizerDerivesStructuralRowKindFromContent()
+    public void GenericAtomizerDerivesTableSectionKindFromContent()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "| key | value |\n| --- | --- |\n| M(S) | residual escape mass |\n");
+            "## Dictionary\n\n| key | value |\n| --- | --- |\n| M(S) | residual escape mass |\n");
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
             bytes,
@@ -39,14 +39,14 @@ public sealed class DigestionContentKindTests
             bytes,
             TheoryAtomizerRules.None);
 
-        Assert.Equal("row", kinds[atom.Fingerprints.RawSha256]);
+        Assert.Equal("section", kinds[atom.Fingerprints.RawSha256]);
     }
 
     [Fact]
     public void ClauseAtomsInheritTheirParentsContentDerivedKind()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "**定理 6.62**。主张。\n\n- 第一子句。\n- 第二子句。\n");
+            "**定理 6.62**。主张。\n\n**独立补充**。第二子句。\n");
         var document = AtomizerRegistry.Atomize(
             AtomizerRegistry.PzgId,
             bytes,
