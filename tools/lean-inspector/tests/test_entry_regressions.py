@@ -17,7 +17,7 @@ import reuse
 
 class EntryRegressionTests(unittest.TestCase):
     def entry(self, *, cached=False, changed=False, selected=False, failure=0,
-              unavailable_clock=False, missing_inputs=False):
+              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False):
         fixture = test_reuse.ReuseTests()
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
@@ -56,12 +56,26 @@ class EntryRegressionTests(unittest.TestCase):
         bundle('a' * 64)
         report = fixture.report
         reuse.seal(root, report, reuse.capture(root), publication.bundle_identity(report))
+        if obsolete:
+            value = json.loads(report.read_text())
+            value['modules'][0]['fib_analysis']['schema_version'] = 1
+            report.write_bytes(materials.canonical_json(value))
+            origins = json.loads(publication.member(report, '.provenance.json').read_text())['module_origins']
+            origins['D5.A']['report_sha256'] = hashlib.sha256(materials.canonical_json(value)).hexdigest()
+            publication.write_sidecars(report, publication.coordinates(root), origins)
         before = {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES}
         if not cached:
             fixture.write('D5/A.lean', 'def a := 2\n')
             fixture.report = root / 'produced' / publication.RAW
             fixture.report.parent.mkdir()
             bundle(('b' if changed else 'a') * 64, missing_inputs)
+            if invalid_fresh:
+                value = json.loads(fixture.report.read_text())
+                value['modules'][0]['fib_analysis']['schema_version'] = 1
+                fixture.report.write_bytes(materials.canonical_json(value))
+                origins = json.loads(publication.member(fixture.report, '.provenance.json').read_text())['module_origins']
+                origins['D5.A']['report_sha256'] = hashlib.sha256(materials.canonical_json(value)).hexdigest()
+                publication.write_sidecars(fixture.report, publication.coordinates(root), origins)
             with zipfile.ZipFile(root / 'produced.zip', 'w') as archive:
                 for suffix in publication.SUFFIXES:
                     member = publication.member(fixture.report, suffix)
@@ -106,10 +120,44 @@ class EntryRegressionTests(unittest.TestCase):
             STRATALINT_FIB_REGRESSIONS_SELECTED=str(selected).lower(),
             STRATALINT_LEAN_REPORT_REUSE=str(report), BASH_ENV=str(shell_environment))
         result = subprocess.run(['bash', str(root / 'tools/lean-inspector/inspect.sh'),
-            '--repository', str(root), '--output', str(report), '--log-dir', str(logs)],
+            '--repository', str(root), '--output', str(report), '--log-dir', str(logs), '--regenerate-report-artifacts', str(int(regenerate))],
             cwd=report.parent, env=environment, capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
+
+    def test_explicit_recovery_rejects_old_comparison_and_runs_exactly_one_suite(self):
+        for failure in (0, 41):
+            with self.subTest(failure=failure):
+                result, calls, report, logs, before = self.entry(regenerate=True, obsolete=True, failure=failure)
+                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+                self.assertEqual(calls, ['ensure', 'report', 'regressions'])
+                self.assertEqual(publication.member(report, '.reuse.json').exists(), failure == 0)
+                if failure:
+                    self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
+                                              for suffix in publication.SUFFIXES})
+                    self.assertNotIn('phase=publish ', result.stderr)
+                else:
+                    self.assertIn('phase=publish status=completed', result.stderr)
+                    self.assertNotIn('schema_version', report.read_text())
+
+    def test_recovery_does_not_relax_fresh_validation_or_normal_predecessor_errors(self):
+        for regenerate, obsolete, invalid_fresh in ((False, True, False), (True, True, True)):
+            with self.subTest(regenerate=regenerate, invalid_fresh=invalid_fresh):
+                result, calls, report, logs, before = self.entry(regenerate=regenerate,
+                    obsolete=obsolete, invalid_fresh=invalid_fresh)
+                self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                self.assertIn('fib.invalid_partition', result.stderr)
+                self.assertNotIn('regressions', calls)
+                self.assertFalse(publication.member(report, '.reuse.json').exists())
+                self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
+                                          for suffix in publication.SUFFIXES})
+
+    def test_valid_recovery_predecessor_keeps_equal_input_and_selection_decisions(self):
+        for changed, selected in ((False, False), (True, False), (False, True)):
+            with self.subTest(changed=changed, selected=selected):
+                result, calls, _, _, _ = self.entry(regenerate=True, changed=changed, selected=selected)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(calls, ['ensure', 'report'] + (['regressions'] if changed or selected else []))
 
     def test_successful_fresh_decisions_run_or_skip_without_test_log_dump(self):
         for changed in (False, True):
