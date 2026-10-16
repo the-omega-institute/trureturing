@@ -3920,6 +3920,91 @@ cofinal positivity, Robin-tail or RH conclusion, generic novelty or
 Lean verification is claimed.
 
 
+#### The cached fixed trial excludes that entire sufficient shift interval
+
+The small shift is eligible but does not rescue this specified lower
+update. Reuse the stronger-base compression $\Sigma_{\max}$, its
+negative pivot $a=a_{\max}<0$, positive complement, saved exact
+seventeen-vector $x_J$ and full paid PSD far Gram $G$ from the
+far-enclosure-gap calculation. These are the SAME objects; $\Xi$ is
+not substituted for $\Sigma_{\max}$.
+
+Use $\tau$ for the shift parameter, keeping the far row distinct, and set
+
+$$
+r=w_0^*R_{\rm res}V=w_0^*R_JV,\qquad
+g_0=T_{\max}x_J+(\overline{b_{J,0}}/a)e_0,\qquad
+g_\tau=g_0+\tau(\overline{r_0}/a)e_0.
+$$
+
+For the SAME fixed trial, changing the finite row from $b_J$ to
+$b_J+\tau r$ changes its signed variational value by exactly
+
+$$
+2\tau\Re(rg_0)+\tau^2|r_0|^2/a.
+$$
+
+The full $u$ and its far action remain unscaled. Reuse verbatim the
+cached $A_{\rm low}>0$, completed-square penalty $P_0$, and lower
+$L_0>36.044697$ for $\mathcal K+q_{\max}$. Choose a directed upper
+
+$$
+P_1\ge\frac{\kappa^2|r_0/a|^2G_{00}}{A_{\rm low}}.
+$$
+
+The metric triangle inequality in the SAME PSD $G$ bounds the shifted
+far penalty by $(\sqrt{P_0}+\tau\sqrt{P_1})^2$ for $\tau\ge0$.
+Combining this with $\mathcal K_\tau=\mathcal K+\tau h$ gives
+
+$$
+\mathcal K_\tau+
+q_{\max}(\mathcal B_\tau V)
+\ge L_0+c_1\tau+c_2\tau^2,
+$$
+
+where all coefficients are rounded downward, with
+
+$$
+c_1\le h_{\rm low}+2\Re(rg_0)
+-2\sqrt{P_0P_1},\qquad
+c_2\le |r_0|^2/a-P_1.
+$$
+
+The [thin scalar consumer and exact rational packet](https://github.com/the-omega-institute/trureturing-experiments/tree/726ed4d08f4d7b37ae15079d78a0f29bf6c48f75/docs/reports/weil-c27)
+reuse the old lower, completion constants, trial and budget. Only the
+new mixed scalar and shifted penalty are evaluated; no old action,
+inverse, solve, Gram, far production or reference profile is rerun.
+The new coefficients are approximately $c_1=-1404.30017560541$ and
+$c_2=-32507.0069794674$. Exact rational minimization of the outward
+lower polynomial over $[0,t_{\rm cap}]$, without a parameter scan,
+has its minimum at $t_{\rm cap}$ and gives, under the inherited
+actual common-form/domain, inverse/comparison, far-enclosure and
+sound-cache premises,
+
+$$
+\boxed{\mathcal K_\tau+q_{\max}(\mathcal B_\tau V)
+>35.514069\quad(0\le\tau\le t_{\rm cap}).}
+$$
+
+For every eligible rational $0<\tau\le t_{\rm cap}$ and every
+positive $D\ge\mathcal K_\tau$, the existing one-negative-core
+criterion therefore excludes PSD of
+$\Sigma_{\max}+(\mathcal B_\tau V)^*(\mathcal B_\tau V)/D$.
+This matrix upper-bounds the compression of
+$\overline L+\mathcal B_\tau^*\mathcal B_\tau/D$, excluding that
+specified stronger-base lower update. No good-block inverse upper
+is needed for this exclusion. The zero endpoint is the old construction.
+
+The sole new1024-bit scalar application takes0.0113 seconds and exports
+640-bit outward enclosures and exact rational coefficients. This
+does not decide the earlier inconclusive $\ell$ packet. The interval
+endpoint is only a sufficient budget bound; larger truly eligible
+shifts, different sources, bases and majorants remain unexcluded.
+Failure of this lower update is not actual Weil negativity. Actual
+retained/cofinal positivity, Robin tail and RH remain unresolved;
+no generic novelty or Lean verification is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
