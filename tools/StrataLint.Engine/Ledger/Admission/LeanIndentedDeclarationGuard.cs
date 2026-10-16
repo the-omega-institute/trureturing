@@ -54,7 +54,7 @@ internal sealed partial class LeanSourceCatalog
                     && IsIdentifierToken(tokens[index + 1].Text)
                     && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
                         candidate.Line == token.Line && candidate.Text == ":")
-                || token.Text is "private" or "protected" or "noncomputable" or "partial" or "unsafe"
+                || token.Text is "public" or "private" or "protected" or "noncomputable" or "partial" or "nonrec" or "unsafe" or "meta" or "local" or "scoped"
                     && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
                         candidate.Line == token.Line && DeclarationKinds.Contains(candidate.Text)))
             {
