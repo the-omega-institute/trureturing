@@ -118,7 +118,10 @@ internal sealed class MarkovMpembaTripletRefutationDocument : IScribeDocumentDef
                             + "at x₁ and strictly larger at x₂. Since μ < 1/16, both coefficients are positive "
                             + "and the hotter initial state, β₁, has the smaller absolute coefficient. "
                             + "This gives a Mpemba effect although all four triplets fail (3), contradicting the conjecture."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("avitan-factor-gelbwaser-klimovsky-2026-mpemba-triplet-conjecture"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
