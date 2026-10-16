@@ -25,11 +25,11 @@ internal sealed class ArbitraryDictionaryDocument : IScribeDocumentDefinition
     private static Formula Energy(Formula signal, Formula code) => Call("E",signal,dic,code);
     private static Formula Floor() => Flow(lam,n,Minus,Frac,Grp(Sq(lam)),Grp(D(2)));
     private static Formula Mass(Formula amount) => Flow(Sum,Underscore,Grp(i),Sub(c,i),Eq,amount);
-    private static Formula Support(Formula direction) => Flow(Forall,i,Comma,Sub(c,i),Ne,D(0),
+    private static Formula Support(Formula direction) => Flow(Forall,i,Comma,Sub(c,i),Neq,D(0),
         Rightarrow,Sub(d,i),Eq,direction);
     private static Formula Contains(Formula direction) => Flow(Exists,i,Comma,Sub(d,i),Eq,direction);
     private static Formula Joint(Formula dictionary) => Call("J",dictionary);
-    private static Formula Pair(Formula a, Formula z) => Flow(Lbrack,a,Comma,z,Rbrack);
+    private static Formula Pair(Formula a, Formula z) => Flow(OpenBracket,a,Comma,z,CloseBracket);
     private static Formula Gap() => Flow(b,lam,Open,D(2),Minus,Sqrt,Grp(D(2)),Minus,
         Frac,Grp(lam),Grp(D(2)),Close);
 
@@ -53,12 +53,12 @@ internal sealed class ArbitraryDictionaryDocument : IScribeDocumentDefinition
                 DescribeId.Create("single-point-radial"),
                 DeclarationHandle.Create("D5/S3/Estimation/WhiteBoxLossFiberLaw/ArbitraryDictionary.single_point_radial"),
                 H("Radial equality and every optimal splitting"),
-                StatementSource.FromAuthor(Blocks(
-                    Disp(Flow(Floor(),Le,Cost(x),Land,Open,Cost(x),Eq,Floor(),Iff,Contains(e),Close)),
-                    Disp(Flow(Forall,c,Ge,D(0),Comma,Energy(x,c),Eq,Floor(),Iff,
-                        Open,Mass(Flow(n,Minus,lam)),Land,Support(e),Close)),
-                    Disp(Flow(Forall,i,Comma,Sub(d,i),Eq,e,Rightarrow,
-                        Open,Sub(c,i),Eq,Flow(n,Minus,lam),Comma,Forall,j,Ne,i,Comma,Sub(c,j),Eq,D(0),Close,
+                StatementSource.FromAuthor(Disp(Flow(
+                    Flow(Floor(),Le,Cost(x),Land,Open,Cost(x),Eq,Floor(),Iff,Contains(e),Close), Nl,
+                    Flow(Forall,c,Ge,D(0),Comma,Energy(x,c),Eq,Floor(),Iff,
+                        Open,Mass(Flow(n,Minus,lam)),Land,Support(e),Close), Nl,
+                    Flow(Forall,i,Comma,Sub(d,i),Eq,e,Rightarrow,
+                        Open,Sub(c,i),Eq,Flow(n,Minus,lam),Comma,Forall,j,Neq,i,Comma,Sub(c,j),Eq,D(0),Close,
                         Rightarrow,Energy(x,c),Eq,Cost(x))))),
                 AssessedProvenance.FromRepo(RadialSource),
                 Blocks(Paragraph(Text("Assume 0<lambda<norm(x), and put n=norm(x), e=x/n. " +
@@ -78,13 +78,13 @@ internal sealed class ArbitraryDictionaryDocument : IScribeDocumentDefinition
                 DescribeId.Create("whitebox-absorption"),
                 DeclarationHandle.Create("D5/S3/Estimation/WhiteBoxLossFiberLaw/ArbitraryDictionary.whitebox_absorption"),
                 H("Global absorption and the faithful dictionary gap"),
-                StatementSource.FromAuthor(Blocks(
-                    Disp(Flow(B,Le,Joint(dic),Land,Open,Joint(dic),Eq,B,Iff,
-                        Open,Contains(u),Land,Contains(w),Close,Close)),
-                    Disp(Flow(Joint(dic),Eq,B,Rightarrow,Forall,c,Ge,D(0),Comma,
+                StatementSource.FromAuthor(Disp(Flow(
+                    Flow(B,Le,Joint(dic),Land,Open,Joint(dic),Eq,B,Iff,
+                        Open,Contains(u),Land,Contains(w),Close,Close), Nl,
+                    Flow(Joint(dic),Eq,B,Rightarrow,Forall,c,Ge,D(0),Comma,
                         Energy(Flow(u,Plus,v),c),Eq,Cost(Flow(u,Plus,v)),Iff,
-                        Open,Mass(Flow(Sqrt,Grp(D(2)),Minus,lam)),Land,Support(w),Close)),
-                    Disp(Flow(Joint(Pair(u,w)),Eq,B,Comma,Joint(Pair(u,v)),Minus,B,Eq,Gap(),Gt,D(0),
+                        Open,Mass(Flow(Sqrt,Grp(D(2)),Minus,lam)),Land,Support(w),Close), Nl,
+                    Flow(Joint(Pair(u,w)),Eq,B,Comma,Joint(Pair(u,v)),Minus,B,Eq,Gap(),Gt,D(0),
                         Comma,B,Lt,Joint(Pair(u,v)))))),
                 AssessedProvenance.FromRepo(RadialSource, MergingSource),
                 Blocks(Paragraph(Text("Let u,v be orthogonal unit vectors, w=(u+v)/sqrt(2), " +

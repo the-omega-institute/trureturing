@@ -75,9 +75,10 @@ private theorem cost_attained (lam : ℝ) (x : E) (D : ι → E) (hlam : 0 < lam
       have hpen : lam * B < lam * ∑ j, d j :=
         mul_lt_mul_of_pos_left (hi.trans_le hs) hlam
       have hbase : lam * B = ‖x‖ ^ 2 / 2 := by simp only [B]; field_simp
+      have hz0 : energy lam x D c ≤ energy lam x D 0 := hmin hzero
       have hz : energy lam x D c ≤ ‖x‖ ^ 2 / 2 := by
         simpa only [energy, combination, Pi.zero_apply, zero_smul, Finset.sum_const_zero,
-          sub_zero, mul_zero, add_zero] using hmin hzero
+          sub_zero, mul_zero, add_zero] using hz0
       have hres := sq_nonneg ‖x - combination D d‖
       change ‖x - combination D c‖ ^ 2 / 2 + lam * ∑ i, c i ≤ ‖x‖ ^ 2 / 2 at hz
       change energy lam x D c ≤ energy lam x D d
@@ -372,13 +373,11 @@ theorem whitebox_absorption (lam p0 a b : ℝ) (u v : E) (D : ι → E)
       exact ⟨hru.2.1.mp (hequ h), hrw.2.1.mp (heqw h)⟩
     · rintro ⟨hi, hj⟩
       rw [hobj, hru.2.1.mpr hi, hrw.2.1.mpr hj]
-      simp only [B]
       ring
   · intro h c hc
     rw [heqw h]
     exact hrw.2.2.1 c hc
   · rw [objective, cost_zero lam (![u, w]) hlam.le, hcanonicalu, hcanonicalw]
-    simp only [B]
     ring
   · simp only [B] at hgap
     linarith
