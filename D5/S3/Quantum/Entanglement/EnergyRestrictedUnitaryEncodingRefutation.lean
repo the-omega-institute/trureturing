@@ -331,4 +331,47 @@ private theorem pure_bound {d : ℕ} [NeZero d] (E : Matrix (Fin d) (Fin d) ℂ)
     rw [← hread, ← hn00]
     exact two_level_bound N hN hNc s (v 0) hs0 (by linarith [hs2])
 
+private theorem sqrt_average {L : Type} [Fintype L] (q e : L → ℝ)
+    (hq : ∀ l, 0 ≤ q l) (ht : ∑ l, q l = 1) (he : ∀ l, 0 ≤ e l) :
+    (∑ l, q l * Real.sqrt (e l)) ≤ Real.sqrt (∑ l, q l * e l) := by
+  simpa only [smul_eq_mul] using Real.strictConcaveOn_sqrt.concaveOn.le_map_sum
+    (t := Finset.univ) (w := q) (p := e) (fun l _ => hq l) ht (fun l _ => he l)
+
+private theorem effect_bound {d : ℕ} [NeZero d]
+    (ρ : Matrix (Fin d) (Fin d) ℂ) (hρ : IsDensity ρ)
+    (E : Matrix (Fin d) (Fin d) ℂ) (hE : E.PosSemidef) (hEc : (1 - E).PosSemidef) :
+    (trace (E * ρ)).re - (E 0 0).re ≤ Real.sqrt (1 - (ρ 0 0).re) := by
+  classical
+  let t := hρ.1.isHermitian.eigenvalues
+  let v := hρ.1.isHermitian.eigenvectorBasis
+  have ht (j : Fin d) : 0 ≤ t j := hρ.1.eigenvalues_nonneg j
+  have hsum : ∑ j, t j = 1 :=
+    D5.S3.Quantum.Matrix.CartesianVariance.density_eigenvalues_sum ρ hρ
+  have hn (j : Fin d) : ‖v j‖ = 1 := v.orthonormal.1 j
+  have hdiag : (ρ 0 0).re = ∑ j, t j * Complex.normSq (v j 0) := by
+    rw [D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum ρ hρ.1.isHermitian]
+    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
+      Complex.normSq_apply, Complex.mul_re, t, v]
+  have hread : (trace (E * ρ)).re =
+      ∑ j, t j * (star (v j).ofLp ⬝ᵥ (E *ᵥ (v j).ofLp)).re := by
+    have hh := congrArg Complex.re
+      (D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral ρ E hρ.1.isHermitian)
+    rw [Matrix.trace_mul_comm] at hh
+    simpa only [Complex.re_sum, Complex.smul_re, smul_eq_mul,
+      EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin,
+      Matrix.toLin'_apply, dotProduct_comm, t, v] using hh
+  have he (j : Fin d) : 0 ≤ 1 - Complex.normSq (v j 0) := by
+    rw [← residual_norm (v j) (hn j)]
+    positivity
+  have hj := sqrt_average t (fun j => 1 - Complex.normSq (v j 0)) ht hsum he
+  have havg : (∑ j, t j * (1 - Complex.normSq (v j 0))) = 1 - (ρ 0 0).re := by
+    simp only [mul_sub, mul_one, Finset.sum_sub_distrib, hsum, hdiag]
+  calc
+    (trace (E * ρ)).re - (E 0 0).re =
+        ∑ j, t j * ((star (v j).ofLp ⬝ᵥ (E *ᵥ (v j).ofLp)).re - (E 0 0).re) := by
+      simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hsum, one_mul, hread]
+    _ ≤ ∑ j, t j * Real.sqrt (1 - Complex.normSq (v j 0)) :=
+      Finset.sum_le_sum (fun j _ => mul_le_mul_of_nonneg_left (pure_bound E hE hEc (v j) (hn j)) (ht j))
+    _ ≤ Real.sqrt (1 - (ρ 0 0).re) := by simpa only [havg] using hj
+
 end D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
