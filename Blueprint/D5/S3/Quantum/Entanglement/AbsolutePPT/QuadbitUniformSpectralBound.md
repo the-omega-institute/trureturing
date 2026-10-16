@@ -6,19 +6,7 @@ Three boundary inequalities bound the squared mass of every ordered probability 
 
 For l:Fin N to the reals, indices inside prefix and tail sums mean their natural values embedded in Fin N. Thus the three rows compare the first three entries with the last six, the first six with the last ten, and the first entry with the last three. N is arbitrary subject to N at least 67, with zero entries and repeated eigenvalues allowed.
 
-**Definition 1.1 (Three boundary rows).**
-
-$$A:Matrix\left(Fin\left(3\right), Fin\left(16\right), \mathbb{R}\right)=((-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3),(-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4),(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2))$$
-
-*Formalization.* `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.A` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A is a real 3-by-16 matrix. Its columns correspond in order to step lengths (1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N), with 6 at most j at most N-10. Equal columns in distinct slots retain their separate coordinates. The block matrix B=[A,-I3] has nineteen columns and all three rows.
-
-**Theorem 1.2 (Arbitrary-dimension squared-mass estimate).**
+**Theorem 1.1 (Arbitrary-dimension squared-mass estimate).**
 
 $$\forall (N:\mathbb{N}), (67\leq N)\Rightarrow \forall (l:Fin\left(N\right)\to \mathbb{R}), ((Antitone\left(l\right))\land (\forall (i:Fin\left(N\right)), 0\leq l\left(i\right))\land (\sum_{i:Fin\left(N\right)} l\left(i\right)=1)\land (\sum_{i:Fin\left(3\right)} l\left(i\right)\leq \sum_{i:Fin\left(6\right)} l\left(N-6+i\right))\land (\sum_{i:Fin\left(6\right)} l\left(i\right)\leq \sum_{i:Fin\left(10\right)} l\left(N-10+i\right))\land (l\left(0\right)\leq \sum_{i:Fin\left(3\right)} l\left(N-3+i\right)))\Rightarrow \sum_{i:Fin\left(N\right)} (l\left(i\right))^{2}\leq \frac{9\cdot ((N:\mathbb{N}):\mathbb{R})+16\cdot ((\left\lfloor\frac{3\cdot N+4}{8}\right\rfloor:\mathbb{N}):\mathbb{R})}{(3\cdot ((N:\mathbb{N}):\mathbb{R})+2\cdot ((\left\lfloor\frac{3\cdot N+4}{8}\right\rfloor:\mathbb{N}):\mathbb{R}))^{2}}$$
 
@@ -40,7 +28,8 @@ Dependencies are the nonnegative-kernel circuit and cofactor completeness result
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.A`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.three_row_scalar_bound`
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCofactor](NonnegativeKernelCofactor.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSpectralBound](UniformSpectralBound.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/FullRowCofactor](QuadbitUniform/FullRowCofactor.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/RaySoundness](QuadbitUniform/RaySoundness.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ScalarConeSoundness](QuadbitUniform/ScalarConeSoundness.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/SpectrumCompression](QuadbitUniform/SpectrumCompression.md)

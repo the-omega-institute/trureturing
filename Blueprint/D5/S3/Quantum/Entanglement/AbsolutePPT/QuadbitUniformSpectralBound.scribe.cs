@@ -48,20 +48,10 @@ internal sealed class QuadbitUniformSpectralBoundDocument : IScribeDocumentDefin
             Le(Sum("i",fd,Pow(Call("l",Id("i")),2)),
                 Frac(Add(Mul(Int(9),nr),Mul(Int(16),tr)),Pow(Add(Mul(Int(3),nr),Mul(Int(2),tr)),2)))))));
     }
-    private static Formula MatrixStatement()
-    {
-        int[][] rows=[[-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3],
-            [-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4],
-            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2]];
-        Formula Tuple(IEnumerable<Formula> xs) => Parenthesized(Seq(xs.SelectMany((v,i)=>i==0?new[]{v}:new[]{Comma,v}).ToArray()));
-        return Eq(Seq(Id("A"),Colon,Call("Matrix",Fin(Int(3)),Fin(Int(16)),R)),Tuple(rows.Select(row=>Tuple(row.Select(v=>Int(v))))));
-    }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Three boundary inequalities bound the squared mass of every ordered probability spectrum in every dimension at least 67.",
         H("Three-row scalar spectral bound"),Blocks(
             Paragraph(Text("For l:Fin N to the reals, indices inside prefix and tail sums mean their natural values embedded in Fin N. Thus the three rows compare the first three entries with the last six, the first six with the last ten, and the first entry with the last three. N is arbitrary subject to N at least 67, with zero entries and repeated eigenvalues allowed.")),
-            Desc("QuadbitUniformSpectralBound","A","Three boundary rows",MatrixStatement(),
-                "A is a real 3-by-16 matrix. Its columns correspond in order to step lengths (1,2,3,4,5,j,N-9,N-8,N-7,N-6,N-5,N-4,N-3,N-2,N-1,N), with 6 at most j at most N-10. Equal columns in distinct slots retain their separate coordinates. The block matrix B=[A,-I3] has nineteen columns and all three rows."),
             Desc("QuadbitUniformSpectralBound","three_row_scalar_bound","Arbitrary-dimension squared-mass estimate",Bound(),
                 "The integer t is natural-number division (3*N+4)/8, equivalently the displayed floor; its real coercion is taken only after that division. N-6, N-10 and N-3 are natural subtractions before indexing. All ratios in the bound are real divisions. The only hypotheses are the displayed ordering, nonnegativity, mass one and three boundary inequalities.",DescribeRole.Theorem),
             Paragraph(Text("The proof first reconstructs the complete spectrum from its adjacent nonnegative gaps, including the final gap to zero. The middle gap mass is compressed to one step length j. Positive middle mass uses barycentric weights; zero middle mass uses a division-free reconstruction. Closure of the Euclidean norm-to-mass cone then transfers estimates for the fixed sixteen-slot boundary cone back to every original spectrum.")),
