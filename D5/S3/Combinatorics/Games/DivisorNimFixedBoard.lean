@@ -359,7 +359,7 @@ theorem fixed_board_eventually_periodic {A : Position} (hp : Positive A) (ha : A
             have h₁ := hsignal (N + t) (by omega) j
             have h₂ := hsignal (N + t) (by omega) i
             simpa only [Nat.add_right_comm] using h₁.trans h₂.symm
-          rw [hF]
+          rw [hF, Finset.union_comm]
           congr 2
           apply Finset.image_congr
           intro d hd
@@ -368,6 +368,7 @@ theorem fixed_board_eventually_periodic {A : Position} (hp : Positive A) (ha : A
         · intro t ht
           rw [fixed_tail_recurrence hp ha
             (show 2 * A.sum < N + T * i + t by dsimp [N]; omega)]
+          rw [Finset.union_comm]
           congr 2
           apply Finset.image_congr
           intro d hd
