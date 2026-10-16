@@ -127,9 +127,11 @@ theorem asserts no APPT sufficiency or mathematical priority.
 
 ## ASSUMED-UNVERIFIED
 
-Targeted validation of the corrected source, selected Scribe emission
-and official required CI remain outstanding. This is sole-worker,
-same-family Codex CLI work, with no Pro or model-diversity review.
+The four selected D5 modules and their four Reg mirrors pass scoped
+compilation and current source-bound statement and axiom validation.
+The two corrected Scribes have canonically emitted Markdown. Independent
+host review and official required CI remain outstanding. This is
+sole-worker, same-family Codex CLI work, with no Pro or model-diversity review.
 
 Two faithful Reg bindings remain `declared_unresolved` under
 [#17689](https://github.com/the-omega-institute/trureturing/issues/17689):
