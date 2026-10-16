@@ -29,9 +29,6 @@ internal sealed class QutritWeylBlochNormSeparableBoundDocument : IScribeDocumen
                 Equal(Call("l1", Rho), Sum(I, FinThree, Sum(J, FinThree,
                     Sum(K, FinThree, Sum(L, FinThree, Norm(Call("bloch", Rho, I, J, K, L))))))))),
                 "The quantity l1 is the sum of the complex norms of all 81 Weyl--Bloch coefficients.", Prefix + "l1"),
-            Node("separable", "Finite separable mixtures", Disp(All("rho", JointMatrix,
-                Iff(Call("IsSeparable", Rho), SeparableFormula()))),
-                "A separable two-qutrit matrix is a finite convex mixture of tensor products of qutrit density matrices. IsDensity denotes D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: positive semidefinite with trace one.", Prefix + "IsSeparable"),
             Node("claim", "The sharp separable bound and an entangled violation",
                 Disp(Iff(Call("claim"), ClaimFormula())),
                 "Every separable state has l1 at most 25, a separable state attains 25, and a normalized pure two-qutrit vector produces a Weyl--Bloch one-norm strictly above 25.", Prefix + "claim"),
@@ -70,22 +67,6 @@ internal sealed class QutritWeylBlochNormSeparableBoundDocument : IScribeDocumen
         new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Imp(Formula left, Formula right) =>
         new Formula.Logic(Parenthesized(left), FormulaLogicOperator.Implies, Parenthesized(right));
-
-    private static Formula SeparableFormula()
-    {
-        var n = F.Id("n"); var t = F.Id("t"); var p = F.Id("p");
-        var sigma = F.Id("sigma"); var tau = F.Id("tau");
-        var fin = Call("Fin", n); var family = Arrow(fin, MatrixType(FinThree));
-        var pt = new Formula.Apply(p, [t]);
-        var st = new Formula.Apply(sigma, [t]); var tt = new Formula.Apply(tau, [t]);
-        return ExistsOne("n", Call("Nat"), ExistsOne("p", Arrow(fin, Call("Real")),
-            ExistsOne("sigma", family, ExistsOne("tau", family,
-                And(All("t", fin, Le(D(0), pt)),
-                    And(Equal(Sum(t, fin, pt), D(1)),
-                        And(All("t", fin, And(Call("IsDensity", st), Call("IsDensity", tt))),
-                            Equal(Rho, Sum(t, fin, Call("smul", Call("ofReal", pt),
-                                Call("kronecker", st, tt)))))))))));
-    }
 
     private static Formula ClaimFormula()
     {

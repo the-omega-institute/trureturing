@@ -12,6 +12,7 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
+Escape audit unfinished for weighted_psd: https://github.com/the-omega-institute/trureturing/issues/17573
 Escape audit unfinished for prepare_eb: https://github.com/the-omega-institute/trureturing/issues/16693
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
@@ -47,6 +48,14 @@ set_option maxRecDepth 4096
 set_option backward.isDefEq.respectTransparency false
 namespace D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 variable {𝕜 : Type} [RCLike 𝕜] {n m p r : ℕ}
+/-- Finite convex mixtures of product density matrices. -/
+def IsSeparable {X Y : Type*} [Fintype X] [Fintype Y] (ρ : Matrix (X × Y) (X × Y) ℂ) : Prop :=
+  ∃ (n : ℕ) (p : Fin n → ℝ) (σ : Fin n → Matrix X X ℂ) (τ : Fin n → Matrix Y Y ℂ),
+    (∀ t, 0 ≤ p t) ∧
+      (∑ t, p t = 1) ∧
+      (∀ t, ((σ t).PosSemidef ∧ (σ t).trace = 1) ∧ ((τ t).PosSemidef ∧ (τ t).trace = 1)) ∧
+      ρ = ∑ t, (p t : ℂ) • (σ t ⊗ₖ τ t)
+
 def SEP (𝕜 : Type) [RCLike 𝕜] (m r : ℕ) :
     Set (Matrix (Fin m × Fin r) (Fin m × Fin r) 𝕜) :=
   {X | ∃ (k : ℕ) (x : Fin k → Fin m → 𝕜) (y : Fin k → Fin r → 𝕜),
@@ -227,7 +236,7 @@ private theorem eb_post {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (
   intro r P hP
   rw [ampl_comp]
   exact sep_ampl hPhi r (hPsi r P hP)
-private def weighted (M : Matrix (Fin n) (Fin n) 𝕜)
+def weighted (M : Matrix (Fin n) (Fin n) 𝕜)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜) : Matrix (Fin r) (Fin r) 𝕜 :=
   fun u v =>
     let Q : Matrix (Fin n) (Fin n) 𝕜 := fun i j => P (i, u) (j, v)
@@ -256,7 +265,7 @@ private theorem weighted_sum {I : Type} [Fintype I]
     weighted (∑ j, M j) P = ∑ j, weighted (M j) P := by
   ext u v
   simp [weighted, Matrix.sum_mul, Matrix.trace_sum, Matrix.sum_apply]
-private theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
+theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
     (P : Matrix (Fin n × Fin r) (Fin n × Fin r) 𝕜)
     (hM : M.PosSemidef) (hP : P.PosSemidef) : (weighted M P).PosSemidef := by
   obtain ⟨x, rfl⟩ := psd_rank_sum M hM

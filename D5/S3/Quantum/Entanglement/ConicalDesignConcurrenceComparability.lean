@@ -55,6 +55,20 @@ Utility kind is none: universal matrix identities and estimates, with no finite
 certificate, bounded enumeration, checker or numerical-reduction declaration.
 -/
 
+/-
+traceNorm_isometry: proof_shape: bind-only; escape_witness: none.
+Consumers:
+  D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.bound_normal_form;
+  D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.dilation_from_completion;
+  D5.S3.QuantumChannels.SchurChannelMixedUnitaryDistance.reindex_traceNorm (private);
+  D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm.traceNorm_submatrix_equiv.
+Direct frozen dependencies:
+D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
+Escape audit unfinished:
+  https://github.com/the-omega-institute/trureturing/issues/17573
+  https://github.com/the-omega-institute/trureturing/issues/16913
+-/
+
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 
