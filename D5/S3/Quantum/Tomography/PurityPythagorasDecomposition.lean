@@ -8,23 +8,6 @@
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 
-/- Library-search audit trail (2026-08-22):
-   * `rg -n -F 'purity_pythagoras_decomposition' D5 Golden/Frozen/accepted`
-     returned no matches.
-   * Public repository hit `complementary_context_probability_pythagoras` proves the
-     one-subspace complement identity, but assumes the whole visible-coordinate sum.
-   * Public hits `trace_zero_basis_measurement_is_orthogonal_projection` and
-     `mutually_unbiased_diagonal_planes` supply each diagonal projection and the MUB
-     orthogonality characterization. The first is applied below; orthogonality is exposed
-     as the explicit `PairwiseOrthogonalMeasurements` hypothesis.
-   * Private hits in `MutuallyUnbiasedDiagonalPlanes` include coordinate inner-product and
-     dephasing expansions; contract 8 makes them unavailable to this module.
-   * Pinned Mathlib hit `norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero` supplies
-     the vector Pythagoras step after the residual is proved orthogonal to every image.
-   * Loogle-equivalent local searches for `orthogonal family norm sq sum` found no theorem
-     that already packages the accumulated projection, probability coordinates, and residual.
-   -/
-
 open scoped BigOperators ComplexOrder InnerProductSpace Matrix
 
 noncomputable section
@@ -58,7 +41,7 @@ def centeredDensity {d : Nat} [NeZero d]
     field_simp [show (d : ℂ) ≠ 0 by exact_mod_cast NeZero.ne d]
     ring
 
-private theorem matrix_inner_eq_trace_conjTranspose_mul
+theorem matrix_inner_eq_trace_conjTranspose_mul
     {d : Nat}
     (A C : Matrix (Fin d) (Fin d) ℂ) :
     inner ℂ A C = Matrix.trace (Aᴴ * C) := by
@@ -177,17 +160,13 @@ private theorem basis_projector_inner
     rw [if_pos rfl, hRecord.idempotent, (context.rankOne i).2.2.1]
   · rw [if_neg hij, hRecord.orthogonal i j hij, Matrix.trace_zero]
 
-private theorem centered_measurement_norm_sq
-    {d : Nat} [NeZero d]
-    (rho : Matrix (Fin d) (Fin d) ℂ)
-    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1)
-    (context : RankOneContext d)
-    (hRecord : IsRecordMeasurement context.projector) :
-    ‖(traceZeroBasisMeasurement context hRecord (centeredDensity rho hrho)).1.1‖ ^ 2 =
-      ∑ j, (basisProbability rho context j - (d : ℝ)⁻¹) ^ 2 := by
+/-- The squared norm of a real linear combination of the orthonormal basis projectors. -/
+theorem projector_sum_norm_sq
+    {d : Nat} [NeZero d] (context : RankOneContext d)
+    (hRecord : IsRecordMeasurement context.projector) (c : Fin d → ℝ) :
+    ‖∑ j, (c j : ℂ) • context.projector j‖ ^ 2 = ∑ j, (c j) ^ 2 := by
   classical
-  let coefficient := fun j : Fin d =>
-    ((basisProbability rho context j - (d : ℝ)⁻¹ : ℝ) : ℂ)
+  let coefficient := fun j : Fin d => (c j : ℂ)
   let term := fun j : Fin d => coefficient j • context.projector j
   have hProjectorNorm (j : Fin d) : ‖context.projector j‖ = 1 := by
     have hsq : ‖context.projector j‖ ^ 2 = 1 := by
@@ -197,7 +176,7 @@ private theorem centered_measurement_norm_sq
     nlinarith [norm_nonneg (context.projector j)]
   have hTermNorm (j : Fin d) :
       ‖term j‖ ^ 2 =
-        (basisProbability rho context j - (d : ℝ)⁻¹) ^ 2 := by
+        (c j) ^ 2 := by
     dsimp only [term, coefficient]
     rw [norm_smul, hProjectorNorm, mul_one]
     simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs]
@@ -226,13 +205,44 @@ private theorem centered_measurement_norm_sq
             simpa only [pow_two] using
               norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hInner
           _ = ‖term a‖ ^ 2 + ∑ j ∈ s, ‖term j‖ ^ 2 := by rw [ih]
-  rw [centered_measurement_eq_probability_sum rho hrho context hRecord]
   change ‖∑ j, term j‖ ^ 2 = _
   rw [show (∑ j, term j) = ∑ j ∈ Finset.univ, term j by simp]
   rw [hNormFinset Finset.univ]
   apply Finset.sum_congr rfl
   intro j _
   exact hTermNorm j
+
+
+/-- The energy of a trace-zero measurement is the sum of its squared trace coordinates. -/
+theorem traceZero_measurement_norm_sq
+    {d : Nat} [NeZero d] (context : RankOneContext d)
+    (hRecord : IsRecordMeasurement context.projector) (X : traceZeroHermitian d) :
+    ‖(traceZeroBasisMeasurement context hRecord X).1.1‖ ^ 2 =
+      ∑ j, ((X.1.1 * context.projector j).trace.re) ^ 2 := by
+  change ‖unreadState context.projector X.1.1‖ ^ 2 = _
+  have hExpansion : unreadState context.projector X.1.1 =
+      ∑ j, (((X.1.1 * context.projector j).trace.re : ℝ) : ℂ) •
+        context.projector j := by
+    rw [unreadState]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [(context.rankOne j).2.2.2, Matrix.trace_mul_comm]
+    rw [trace_mul_real_of_hermitian X.1.1 (context.projector j)
+      X.1.2 (context.rankOne j).1]
+    simp only [Complex.ofReal_re]
+  rw [hExpansion]
+  exact projector_sum_norm_sq context hRecord _
+
+private theorem centered_measurement_norm_sq
+    {d : Nat} [NeZero d]
+    (rho : Matrix (Fin d) (Fin d) ℂ)
+    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1)
+    (context : RankOneContext d)
+    (hRecord : IsRecordMeasurement context.projector) :
+    ‖(traceZeroBasisMeasurement context hRecord (centeredDensity rho hrho)).1.1‖ ^ 2 =
+      ∑ j, (basisProbability rho context j - (d : ℝ)⁻¹) ^ 2 := by
+  rw [centered_measurement_eq_probability_sum rho hrho context hRecord]
+  exact projector_sum_norm_sq context hRecord _
 
 /-- Pairwise orthogonality of the ranges of the concrete basis-measurement projections. -/
 def PairwiseOrthogonalMeasurements {d : Nat} [NeZero d]
@@ -288,20 +298,17 @@ theorem measurement_inner_residualVector
   rw [inner_sum Finset.univ component (P l x).1.1]
   rw [hSumTerms, hSelf, sub_self]
 
-/-- Pairwise orthogonal basis contexts split a normalized density matrix's purity excess into
-their centered Born-probability energies and the remaining orthogonal-complement mass. -/
-theorem purity_pythagoras_decomposition
+/-- Pairwise orthogonal measurement projections split every trace-zero Hermitian matrix. -/
+theorem traceZero_context_pythagoras
     {d : Nat} [NeZero d] {L : Type*} [Fintype L]
-    (context : L -> RankOneContext d)
+    (context : L → RankOneContext d)
     (hRecord : ∀ l, IsRecordMeasurement (context l).projector)
-    (rho : Matrix (Fin d) (Fin d) ℂ)
-    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1)
-    (hOrtho : PairwiseOrthogonalMeasurements context hRecord) :
-    (Matrix.trace (rho * rho)).re - (d : ℝ)⁻¹ =
-      (∑ l, ∑ j, (basisProbability rho (context l) j - (d : ℝ)⁻¹) ^ 2) +
-        purityResidual context hRecord (centeredDensity rho hrho) := by
+    (hOrtho : PairwiseOrthogonalMeasurements context hRecord)
+    (state : traceZeroHermitian d) :
+    ‖state.1.1‖ ^ 2 =
+      (∑ l, ‖(traceZeroBasisMeasurement (context l) (hRecord l) state).1.1‖ ^ 2) +
+        ‖residualVector context hRecord state‖ ^ 2 := by
   classical
-  let state := centeredDensity rho hrho
   let P := fun l => traceZeroBasisMeasurement (context l) (hRecord l)
   let component := fun l => (P l state).1.1
   let visible := ∑ l, component l
@@ -343,28 +350,31 @@ theorem purity_pythagoras_decomposition
     abel
   have hResidualEq : residual = residualVector context hRecord state := by
     rfl
-  have hCoordinateSum :
-      ∑ l, ‖component l‖ ^ 2 =
-        ∑ l, ∑ j,
-          (basisProbability rho (context l) j - (d : ℝ)⁻¹) ^ 2 := by
-    apply Finset.sum_congr rfl
-    intro l _
-    exact centered_measurement_norm_sq rho hrho (context l) (hRecord l)
   calc
-    (Matrix.trace (rho * rho)).re - (d : ℝ)⁻¹ = ‖state.1.1‖ ^ 2 := by
-      simpa only [state] using (centered_density_norm_sq rho hrho).symm
-    _ = ‖visible + residual‖ ^ 2 := by rw [hSplit]
+    ‖state.1.1‖ ^ 2 = ‖visible + residual‖ ^ 2 := by rw [hSplit]
     _ = ‖visible‖ ^ 2 + ‖residual‖ ^ 2 := by
       simpa only [pow_two] using
         norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hVisibleResidual
-    _ = (∑ l, ∑ j,
-          (basisProbability rho (context l) j - (d : ℝ)⁻¹) ^ 2) +
-        purityResidual context hRecord state := by
-      rw [hVisibleNorm, hCoordinateSum]
-      rw [hResidualEq]
-      change _ + purityResidual context hRecord state =
-        _ + purityResidual context hRecord (centeredDensity rho hrho)
-      rw [show state = centeredDensity rho hrho by rfl]
+    _ = _ := by rw [hVisibleNorm, hResidualEq]
+
+/-- Pairwise orthogonal basis contexts split a normalized density matrix's purity excess into
+their centered Born-probability energies and the remaining orthogonal-complement mass. -/
+theorem purity_pythagoras_decomposition
+    {d : Nat} [NeZero d] {L : Type*} [Fintype L]
+    (context : L -> RankOneContext d)
+    (hRecord : ∀ l, IsRecordMeasurement (context l).projector)
+    (rho : Matrix (Fin d) (Fin d) ℂ)
+    (hrho : rho.PosSemidef ∧ Matrix.trace rho = 1)
+    (hOrtho : PairwiseOrthogonalMeasurements context hRecord) :
+    (Matrix.trace (rho * rho)).re - (d : ℝ)⁻¹ =
+      (∑ l, ∑ j, (basisProbability rho (context l) j - (d : ℝ)⁻¹) ^ 2) +
+        purityResidual context hRecord (centeredDensity rho hrho) := by
+  rw [← centered_density_norm_sq rho hrho,
+    traceZero_context_pythagoras context hRecord hOrtho]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro l _
+  exact centered_measurement_norm_sq rho hrho (context l) (hRecord l)
 
 example :
     purityResidual (Fin.elim0 : Fin 0 -> RankOneContext 1)
