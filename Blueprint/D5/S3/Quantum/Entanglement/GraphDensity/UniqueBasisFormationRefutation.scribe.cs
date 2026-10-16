@@ -24,7 +24,10 @@ internal sealed class UniqueBasisFormationRefutationDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Set Pj=rankOneDensity(Psi j). The density (P0+P1+P2)/3 has range in spanPsi. The four ensemble vectors are (Psi 0 + sqrt(3) • Psi 1)/2, (Psi 0 - sqrt(3) • Psi 1)/2, Psi 0 and Psi 2, with weights 2/9, 2/9, 2/9 and 1/3. The first two marginals have spectrum (17,10,9)/36. Their entropy Hstar is strictly below H0=H(4/9,1/3,2/9), by 2^102 < 17^17·5^10·3^6 and the logarithm laws. The ensemble cost is (4/9)Hstar+(5/9)H0, hence strictly below H0. Every positive-weight component of an ensemble of a unit pure state is a unit phase multiple; zero-weight components vanish from the cost. Thus E_F(P0)=H0, and the finite-ensemble upper bound contradicts claim.")),
                     Paragraph(Text("This supplies a strict upper bound for the density's formation, not its exact infimum. The general positive diagonal-weight family is a neighbouring question. The numerical values H0=1.5304930568, Hstar=1.5244951608 and cost=1.5278273252 are compatible with the source's 1.52-ebit lower bound. These values are computed by the independent experiment check.py in the-omega-institute/trureturing-experiments, commit e0c03b28bb524e37942a1e8ae9687e92ffa7c0ac; they are not decimal kernel conclusions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song-chen-djokovic-2023-unique-basis-eof"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Def(string name, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Module + name),

@@ -60,6 +60,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/song-chen-djokovic-2023-unique-basis-eof` (refuted) by `D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"song-chen-djokovic-2023-unique-basis-eof","declaration_gid":"D5/S3/Quantum/Entanglement/GraphDensity/UniqueBasisFormationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhiwei Song, Lin Chen and Dragomir Z. Djokovic (2024). *The existence of distinguishable bases in three-dimensional subspaces of qutrit-qudit systems under one-way local operations and classical communication*. DOI: [10.1109/TIT.2024.3435412](https://doi.org/10.1109/TIT.2024.3435412). URL: <https://arxiv.org/abs/2307.01980v3>.
