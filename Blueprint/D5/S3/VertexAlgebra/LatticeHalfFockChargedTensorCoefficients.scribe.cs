@@ -163,12 +163,62 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                         + "ground action and the original scalar. No current commutator or charged action law is assumed. "
                         + "This current covariance is distinct from energy covariance and charged-field pair locality."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The native universal half_creation_coefficient_transport remains the exact source for the next "
+            Paragraph(Text("The corrected all-state application in "),
+                Ref("D5/S3/VertexAlgebra/LatticeHalfFockFiniteCorrection"),
+                Text(" uses this actual T_D and chargedField, with its original normalization and ground action. "
+                + "Its state-field map Ytw is injective for every D and hu:IsUnit D.G.det. "
+                + "The argument below uses the nonnegative current residue identity of the constructed fields; "
+                + "kernel stability is a consequence, not a hypothesis, and source simplicity is not assumed.")),
+            Paragraph(Text("Let K=ker(Ytw), and write J_i(n)=neutralMode D i n on the ordinary source. "
+                + "For b in K, set B=vectorFrequencyBound D b, so J_i(n)b=0 for n>B by "),
+                Ref("D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration"),
+                Text(". For every d>=0, the actual nonnegative current residue equals "
+                + "sum_{n=d}^B choose(1/2,n-d) I_(1+gamma)(Ytw(J_i(n)b))[[ell+d-n]]x. "
+                + "Its other side is the ordinary d-th product of the actual current with I_gamma(Ytw(b)), "
+                + "hence zero. Descending extraction in d removes the terms n>d; the diagonal coefficient is "
+                + "choose(1/2,0)=1. Taking ell=0 and gamma=-e-3 reads native exponent e, for every integer e. "
+                + "Thus Ytw(J_i(n)b)=0 for every n>=0, including the zero modes. The arbitrary integerization "
+                + "label here tests all native coefficients and adds no parity premise on b.")),
+            Paragraph(Text("Suppose K is nonzero and choose a nonzero b in it. The zero currents act diagonally: "
+                + "(J_i(0)b)(a)=B(e_i,a)b(a). Form the finite-dimensional invariant envelope "
+                + "V=span{[a,b(a)]:a in b.support} and T=K intersect V. The commuting zero currents restrict "
+                + "to T. The simultaneous generalized-eigenspace theorem over C gives a nonzero common "
+                + "generalized eigenvector there. On each nonzero charge coordinate its weights must equal "
+                + "B(e_i,a); scalar cancellation in the generalized-eigenvector equations proves this directly. "
+                + "Since the integral Gram matrix is invertible under hu, these weights separate charges. "
+                + "The vector is therefore [a,p] with p nonzero. Only V and T are finite-dimensional; neither "
+                + "the full carrier nor its charge sectors acquire that hypothesis.")),
+            Paragraph(Text("In this sector put L={p:[a,p] in K}. Positive source modes give "
+                + "J_i(k+1)[a,p]=(k+1)[a,sum_j G_ij partial_(j,k)p]. The scalar k+1 is nonzero over C. "
+                + "Let H be the integral inverse Gram matrix mapped into C, so H gramComplex(D)=1. "
+                + "Then partial_(j,k)p=sum_i H_ji (sum_l G_il partial_(l,k)p), which belongs to L by kernel "
+                + "stability. The source mode normalization is k+1; it is not the target half-Fock frequency. "
+                + "The existing actual current formulas in "), Ref("D5/S3/VertexAlgebra/LatticeSugawaraCurrents"),
+                Text(" supply the weighted derivatives, and the minimum-degree and zero-partial rigidity "
+                + "results of "), Ref("D5/S3/Quantum/Algebra/ConditionalPolynomialRigidity"),
+                Text(" apply to L without any finite-dimensionality assumption. A nonzero element of least "
+                + "total degree has every partial zero, hence is a nonzero constant. Rescaling shows [a,1] in K.")),
+            Paragraph(Text("Take the actual ground vector g(t)=1. It is nonzero by evaluation at t=0, "
+                + "including when D.rank=0. Since Ytw([a,1])=chargedField(a), its coefficient at "
+                + "e=-B(a,a) on 1 tensor g is exactly 2^(-B(a,a)) (1 tensor groundAction(a)g). "
+                + "charged_ground_leading makes this nonzero: the scalar is nonzero, the actual group action "
+                + "is invertible, and the tensor coordinate at the unit monomial detects the ground vector. "
+                + "This contradicts [a,1] in K, so K=0 and Ytw is injective. The argument uses no arbitrary "
+                + "Nontrivial parameter, positive rank, positive norm, positivity or unitary structure. "
+                + "Indefinite unimodular forms are included; singular Gram matrices are outside this "
+                + "faithfulness telescope, even though their finite Corr construction is defined.")),
+            Paragraph(Text("Faithfulness here means that equality of all native endomorphism coefficients "
+                + "of Ytw(u) and Ytw(w) forces u=w. It is not surjectivity onto all Laurent fields, "
+                + "simplicity of a completed VOA, positive-energy grading or a physical realization. "
+                + "This combines the classical twisted ground coefficient with current residues and ordinary "
+                + "polynomial rigidity; it makes no literature-novelty claim.")),
+            Paragraph(Text("The native universal half_creation_coefficient_transport is the exact source for "
                 + "charged coefficient products: translating C_b[n] gives kappa_g(d) C_b[n-d], "
                 + "where kappa_g is the coefficient of ((1-s)/(1+s))^g and g=B(a,b). "
                 + "Both cover branches must be retained. Their pole bounds are p=max(0,-g), q=max(0,g), "
                 + "and the physical two-step order is abs(g); positive g can have an opposite-cover pole. "
-                + "No one-sided delta identity, pair-locality or twisted Jacobi conclusion is asserted.")),
+                + "This coefficient transport statement alone supplies no one-sided delta identity, "
+                + "pair-locality or twisted Jacobi conclusion.")),
             Paragraph(Text("The precise termwise native cover-energy application remains a mathematical endpoint. "
                 + "For H satisfying BOTH H*gramComplex(D)=1 and gramComplex(D)*H=1, use the actual half-Fock L0. "
                 + "If the input polynomial is C_b[n], the degree-d summand is "
@@ -181,7 +231,8 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                 + "This termwise identity remains open pending its exact Lean application under the two stated inverse-Gram hypotheses. "
                 + "The ground shift remains D.rank/16 and physical z=t^2. Lifting the termwise identity to a complete "
                 + "charged tensor coefficient covariance is a distinct remaining endpoint.")),
-            Paragraph(Text("Energy covariance, full charged products and two-branch locality remain distinct obligations. "
+            Paragraph(Text("Energy covariance and a full conformal twisted-module structure require further identities "
+                + "beyond the local product and faithfulness application. "
                 + "The actual native spectrum keeps ground shift D.rank/16 and variable z=t^2. "
                 + "Leech realization, orbifold extension, Monster symmetry, full VOA and CFT, anomalies, fusion, "
                 + "string theory and AdS/CFT remain open. The classical construction and these native supplier applications "
