@@ -24,10 +24,11 @@ internal sealed class GlauberNeighbourhoodPassivityRefutationDocument : IScribeD
                 NeighbourhoodPassivityFormula(),
                 "For state i at step k, the Gibbs weights are evaluated at beta(k + 1), while the population "
                     + "differences use p(k). The sum runs over the states adjacent to i and is the ratio-weighted "
-                    + "passivity expression in Eq. (41). The four reused annealing definitions are displayed below.",
+                    + "passivity expression in Eq. (41). The five reused annealing definitions are displayed below.",
                 AssessedProvenance.FromRepo(Source),
                 new DocumentBlock.DisplayFormula(RegularNeighborhoodFormula()),
                 new DocumentBlock.DisplayFormula(GibbsFormula()),
+                new DocumentBlock.DisplayFormula(EdgeWeightFormula()),
                 new DocumentBlock.DisplayFormula(GlauberFormula()),
                 new DocumentBlock.DisplayFormula(SARunFormula())),
             Node("claim", "The neighbourhood-passivity expectation", ClaimFormula(),
@@ -141,6 +142,16 @@ internal sealed class GlauberNeighbourhoodPassivityRefutationDocument : IScribeD
             At(Qualified("Real", "exp"), Multiply(new Formula.Negate(V("b")), At(V("E"), V("j")))));
         return SizeBinder(EnergyBinder(All("b", Reals(), All("i", FinType(),
             Equal(OwnerCall("gibbs", V("E"), V("b"), V("i")), new Formula.Fraction(weight, normalization))))));
+    }
+
+    private static Formula EdgeWeightFormula()
+    {
+        Formula numerator = OwnerCall("gibbs", V("E"), V("b"), V("i"));
+        Formula denominator = Multiply(Typed(V("n"), Reals()),
+            Add(OwnerCall("gibbs", V("E"), V("b"), V("i")), OwnerCall("gibbs", V("E"), V("b"), V("j"))));
+        return GraphBinders(EnergyBinder(All("b", Reals(), IndexBinders(
+            Equal(OwnerCall("edgeWeight", V("n"), V("A"), V("E"), V("b"), V("i"), V("j")),
+                Conditional(At(V("A"), V("i"), V("j")), new Formula.Fraction(numerator, denominator), D(0)))))));
     }
 
     private static Formula GlauberFormula()
