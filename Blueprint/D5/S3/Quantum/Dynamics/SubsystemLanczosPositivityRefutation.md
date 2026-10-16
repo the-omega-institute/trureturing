@@ -90,6 +90,7 @@ Section 3.1, printed p. 15, conjectures: "At present, however, we are unable to 
 - Truth anchor: `D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.returnAmplitude`
 - Truth anchor: `D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.rho`
 - Truth anchor: `D5/S3/Quantum/Dynamics/SubsystemLanczosPositivityRefutation.rhoA`
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
 - Dependency: [D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow](ProjectionProbabilityFlow.md)
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
