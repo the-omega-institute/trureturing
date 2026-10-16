@@ -40,7 +40,7 @@ def correlation {d : ℕ} {κ : Type*} [Fintype κ]
     (ρ : BipartiteOp d) (A B : κ → Op d) : Matrix κ κ ℂ :=
   Matrix.of fun a b => (((ρ * Matrix.kronecker (A a) (B b)).trace).re : ℂ)
 
-def hsSq {ι κ : Type*} [Fintype ι] [Fintype κ] (A : Matrix ι κ ℂ) : ℝ :=
+private def hsSq {ι κ : Type*} [Fintype ι] [Fintype κ] (A : Matrix ι κ ℂ) : ℝ :=
   ∑ i, ∑ j, ‖A i j‖ ^ 2
 
 def moment {d : ℕ} {κ : Type*} [Fintype κ] (A : κ → Op d) (H : Op d) : ℝ :=
@@ -66,7 +66,7 @@ def EAM.effect {d n : ℕ} (A : EAM d n) (a : Fin n) : Op d :=
 def Pn {d n : ℕ} (ρ : BipartiteOp d) (A B : EAM d n) : Matrix (Fin n) (Fin n) ℂ :=
   correlation ρ A.effect B.effect
 
-theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
+private theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) :
     LinearMap.trace ℂ (EuclideanSpace ℂ κ)
       (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A).toLinearMap =
@@ -76,7 +76,7 @@ theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
 
 set_option synthInstance.maxHeartbeats 200000 in
 -- Functional calculus on endomorphisms uses both real and complex scalar towers.
-theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
+private theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm A =
       _root_.traceNorm (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A)
@@ -99,7 +99,7 @@ theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [← trace_toEuclideanCLM (CFC.sqrt (Aᴴ * A)),
     trace_eq_sum_inner_hilbertBasis_of_finiteDimensional _ b, tsum_fintype]
 
-theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
+private theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
     hsSq A = (Aᴴ * A).trace.re := by
   open scoped Matrix.Norms.Frobenius in
     have htrace := congrArg Complex.re
@@ -109,7 +109,7 @@ theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
     change _ = ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2
     simp only [PiLp.norm_sq_eq_of_L2, hsSq]
 
-theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
+private theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) {s : Set (EuclideanSpace ℂ κ)}
     (b : HilbertBasis s ℂ (EuclideanSpace ℂ κ)) :
     (∑' i : s, ‖Matrix.toEuclideanCLM (𝕜 := ℂ) A (b i)‖ ^ 2) = hsSq A := by
@@ -132,7 +132,7 @@ theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [← map_star, ← map_mul, trace_toEuclideanCLM]
   rw [Matrix.star_eq_conjTranspose, ← hsSq_eq_trace]
 
-theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
+private theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
     (R S : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (R * S) ≤
       Real.sqrt (hsSq R) * Real.sqrt (hsSq S) := by
@@ -150,7 +150,7 @@ theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
   rw [hsSq_toEuclideanCLM R b, hsSq_toEuclideanCLM S b] at h
   exact h
 
-theorem traceNorm_gram_le {ι κ : Type*}
+private theorem traceNorm_gram_le {ι κ : Type*}
     [Fintype ι] [Fintype κ]
     (F G : Matrix ι κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (Fᴴ * G) ≤
@@ -186,7 +186,7 @@ theorem traceNorm_gram_le {ι κ : Type*}
     hR, hS] at h
   exact h
 
-theorem correlation_sum_smul {d : ℕ} {κ ι : Type*} [Fintype κ] [Fintype ι]
+private theorem correlation_sum_smul {d : ℕ} {κ ι : Type*} [Fintype κ] [Fintype ι]
     (p : ι → ℝ) (ρ : ι → BipartiteOp d) (A B : κ → Op d) :
     correlation (∑ i, (p i : ℂ) • ρ i) A B =
       ∑ i, (p i : ℂ) • correlation (ρ i) A B := by
@@ -196,7 +196,7 @@ theorem correlation_sum_smul {d : ℕ} {κ ι : Type*} [Fintype κ] [Fintype ι]
     Matrix.smul_apply, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, zero_mul, sub_zero, Complex.ofReal_sum, Complex.ofReal_mul]
 
-theorem sum_sq_le_of_support_card {d r : ℕ} (sval : Fin d → ℝ)
+private theorem sum_sq_le_of_support_card {d r : ℕ} (sval : Fin d → ℝ)
     (hunit : (∑ i, sval i ^ 2) = 1)
     (hcard : Fintype.card {i : Fin d // sval i ≠ 0} ≤ r) :
     (∑ i, sval i) ^ 2 ≤ (r : ℝ) := by
@@ -217,7 +217,7 @@ theorem sum_sq_le_of_support_card {d r : ℕ} (sval : Fin d → ℝ)
     _ ≤ (s.card : ℝ) * ∑ i ∈ s, sval i ^ 2 := sq_sum_le_card_mul_sum_sq
     _ ≤ (r : ℝ) := by rw [hsumSq, mul_one]; exact_mod_cast hsize
 
-theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
+private theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
     ScaledPure (A.effect a) := by
   refine ⟨(d : ℝ) / n, A.val a, by positivity, ?_⟩
   rw [EAM.effect.eq_1, Complex.ofReal_div, Complex.ofReal_natCast,
@@ -235,7 +235,7 @@ theorem proj_eq_outer {ι : Type*} [Fintype ι] [DecidableEq ι] (u : Ket ι) :
   ext i j
   exact MState.pure_apply u
 
-theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d) :
+private theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d) :
     (proj u * Matrix.kronecker A B).trace =
       ((coeff u)ᴴ * A * coeff u * Bᵀ).trace := by
   rw [proj_eq_outer]
@@ -252,12 +252,12 @@ theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d) :
   simp only [Matrix.mul_assoc]
   rfl
 
-theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
+private theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
     ((coeff u)ᴴ * coeff u).trace.re = 1 := by
   rw [← hsSq_eq_trace]
   simpa only [hsSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
 
-theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
+private theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
     (hr : (coeff u).rank ≤ r) :
     ∃ (U V : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ),
       (∀ i, 0 ≤ sval i) ∧
@@ -328,7 +328,7 @@ theorem scaledPure_sandwich {d : ℕ} {A : Op d} (hA : ScaledPure A) (M : Op d) 
       congr 1
       ring
 
-theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d) :
+private theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d) :
     hsSq (K * A * Kᴴ) = (((Kᴴ * K) * A).trace.re) ^ 2 := by
   have hX : (K * A * Kᴴ).IsHermitian :=
     Matrix.isHermitian_mul_mul_conjTranspose K (scaledPure_hermitian hA)
@@ -345,13 +345,13 @@ theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d)
     _ _ (Matrix.isHermitian_conjTranspose_mul_self K) (scaledPure_hermitian hA)]
   norm_cast
 
-def sandwichFactor {d : ℕ} {κ : Type*} (K : Op d) (A : κ → Op d) :
+private def sandwichFactor {d : ℕ} {κ : Type*} (K : Op d) (A : κ → Op d) :
     Matrix (Fin d × Fin d) κ ℂ := fun p a => Matrix.vec (K * A a * Kᴴ) p
 
-def schmidtSandwich {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ) :
+private def schmidtSandwich {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ) :
     Op d := CFC.sqrt (diagonal (fun i => (sval i : ℂ))) * U.valᴴ
 
-theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
+private theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
     (K : Op d) (A : κ → Op d) (hA : ∀ a, ScaledPure (A a)) :
     hsSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
   calc
@@ -365,7 +365,7 @@ theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
     _ = moment A (Kᴴ * K) := by
       simp only [scaledPure_gram_norm (hA _), moment.eq_1]
 
-theorem scaledPure_transpose {d : ℕ} {A : Op d} (hA : ScaledPure A) :
+private theorem scaledPure_transpose {d : ℕ} {A : Op d} (hA : ScaledPure A) :
     ScaledPure Aᵀ := by
   obtain ⟨c, u, hc, rfl⟩ := hA
   let v : Ket (Fin d) := ⟨star u.vec, by
@@ -376,7 +376,7 @@ theorem scaledPure_transpose {d : ℕ} {A : Op d} (hA : ScaledPure A) :
     (c : ℂ) • vecMulVec (star u.vec) (star (star u.vec))
   rw [star_star]
 
-theorem schmidtSandwich_weight {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+private theorem schmidtSandwich_weight {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
     (sval : Fin d → ℝ) (hs : ∀ i, 0 ≤ sval i) :
     (schmidtSandwich U sval)ᴴ * schmidtSandwich U sval =
       U.val * diagonal (fun i => (sval i : ℂ)) * U.valᴴ := by
@@ -392,7 +392,7 @@ theorem schmidtSandwich_weight {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
     _ = U.val * (CFC.sqrt D * CFC.sqrt D) * U.valᴴ := by simp only [mul_assoc]
     _ = _ := by rw [CFC.sqrt_mul_sqrt_self D hD.nonneg]
 
-theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+private theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
     (sval : Fin d → ℝ) (hs : ∀ i, 0 ≤ sval i) :
     let H := (schmidtSandwich U sval)ᴴ * schmidtSandwich U sval
     H.trace.re = ∑ i, sval i ∧ (H * H).trace.re = ∑ i, sval i ^ 2 := by
@@ -416,7 +416,7 @@ theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
   simp only [D, trace_diagonal, diagonal_mul_diagonal, Complex.re_sum,
     Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im, mul_zero, sub_zero, pow_two, and_self]
 
-theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
+private theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
     (u : Ket (Fin d × Fin d)) (A B : κ → Op d)
     (hA : ∀ a, (A a).IsHermitian) (hB : ∀ b, (B b).IsHermitian)
     (U V : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ)
@@ -486,7 +486,7 @@ theorem proj_overlap {d : ℕ} (u v : Ket (Fin d)) :
     exact star_dotProduct v.vec u.vec
   rw [hz, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
-theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
+private theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
     (∑ a, A.effect a) = 1 := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by have := A.property.1; omega)
@@ -495,12 +495,12 @@ theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
   field_simp (disch := assumption)
   simp only [one_smul]
 
-theorem eam_effect_trace {d n : ℕ} (A : EAM d n) (a : Fin n) :
+private theorem eam_effect_trace {d n : ℕ} (A : EAM d n) (a : Fin n) :
     (A.effect a).trace = (d : ℂ) / n := by
   change (((d : ℂ) / n) • (MState.pure (A.val a)).m).trace = _
   simp only [Matrix.trace_smul, MState.tr', smul_eq_mul, mul_one]
 
-theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
+private theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
     (A.effect a * A.effect b).trace.re =
       if a = b then ((d : ℝ) / n) ^ 2
       else (d : ℝ) * ((n : ℝ) - d) / ((n : ℝ) ^ 2 * ((n : ℝ) - 1)) := by
@@ -526,7 +526,7 @@ theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
     field_simp (disch := assumption)
 
 
-theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
+private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     (A : EAM d n) (H : Op d) (hH : H.IsHermitian) :
     moment A.effect H ≤
       ((d : ℝ) * ((d : ℝ) - 1) * (H * H).trace.re +
@@ -638,7 +638,7 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
   rw [hZZ] at hh
   convert hh using 1 <;> dsimp only [α, q] <;> field_simp (disch := assumption) <;> ring
 
-theorem moment_transpose {d : ℕ} {κ : Type*} [Fintype κ]
+private theorem moment_transpose {d : ℕ} {κ : Type*} [Fintype κ]
     (A : κ → Op d) (H : Op d) :
     moment (fun a => (A a)ᵀ) H = moment A Hᵀ := by
   unfold moment
@@ -646,7 +646,7 @@ theorem moment_transpose {d : ℕ} {κ : Type*} [Fintype κ]
   intro a _
   rw [← trace_transpose_mul Hᵀ (A a), transpose_transpose]
 
-theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
+private theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
     [Fintype κ] (u : Ket (Fin d × Fin d)) (A B : κ → Op d)
     (α β : ℝ) (hA : ∀ a, ScaledPure (A a)) (hB : ∀ b, ScaledPure (B b))
     (hα : 0 ≤ α) (hβ : 0 ≤ β) (hMA : MomentBound A α β)

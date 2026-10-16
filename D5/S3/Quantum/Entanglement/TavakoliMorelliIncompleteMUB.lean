@@ -45,11 +45,11 @@ def Qm {d m : ℕ} (ρ : BipartiteOp d) (A B : MUBFamily d m) :
     Matrix (Fin m × Fin d) (Fin m × Fin d) ℂ :=
   correlation ρ A.effect B.effect
 
-theorem mub_effect_scaledPure {d m : ℕ} (A : MUBFamily d m) (p : Fin m × Fin d) :
+private theorem mub_effect_scaledPure {d m : ℕ} (A : MUBFamily d m) (p : Fin m × Fin d) :
     ScaledPure (A.effect p) :=
   ⟨1, A.ket p.1 p.2, zero_le_one, (one_smul ℂ _).symm⟩
 
-theorem mub_effect_sum {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
+private theorem mub_effect_sum {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
     ∑ a, A.effect (l, a) = 1 := by
   ext i j
   change (∑ a, proj (A.ket l a)) i j = _
@@ -57,7 +57,7 @@ theorem mub_effect_sum {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
   change ∑ a, (A.val l).val i a * star ((A.val l).val j a) = _
   exact congrArg (fun M : Op d => M i j) (Unitary.mul_star_self_of_mem (A.val l).prop)
 
-def MUBFamily.context {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
+private def MUBFamily.context {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
     RankOneContext d where
   projector a := A.effect (l, a)
   rankOne a := by
@@ -70,12 +70,12 @@ def MUBFamily.context {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
       rw [scaledPure_sandwich (mub_effect_scaledPure A (l, a)), Matrix.trace_mul_comm]
   resolvesIdentity := mub_effect_sum A l
 
-theorem mub_column_inner {d m : ℕ} (A : MUBFamily d m) (l k : Fin m) (a b : Fin d) :
+private theorem mub_column_inner {d m : ℕ} (A : MUBFamily d m) (l k : Fin m) (a b : Fin d) :
     star (A.ket l a).vec ⬝ᵥ (A.ket k b).vec =
       ((A.val l).valᴴ * (A.val k).val) a b := by
   rfl
 
-theorem mub_context_record {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
+private theorem mub_context_record {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
     IsRecordMeasurement (A.context l).projector := by
   refine ⟨?_, fun a => ((A.context l).rankOne a).2.1, ?_, (A.context l).resolvesIdentity⟩
   · intro a
@@ -88,14 +88,14 @@ theorem mub_context_record {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
         congrArg (fun M : Op d => M a b) (Unitary.star_mul_self_of_mem (A.val l).prop)
     rw [hUnitary, zero_smul, vecMulVec_zero]
 
-theorem mub_context_overlap {d m : ℕ} (A : MUBFamily d m) (l k : Fin m)
+private theorem mub_context_overlap {d m : ℕ} (A : MUBFamily d m) (l k : Fin m)
     (hlk : l ≠ k) (a b : Fin d) :
     overlap (A.context l) (A.context k) a b = (d : ℝ)⁻¹ := by
   change (proj (A.ket l a) * proj (A.ket k b)).trace.re = _
   rw [proj_overlap, Complex.ofReal_re, mub_column_inner, A.property l k hlk]
   exact one_div _
 
-theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
+private theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
     (A : MUBFamily d m) [NeZero d] :
     PairwiseOrthogonalMeasurements A.context (mub_context_record A) := by
   intro l k hlk x y
@@ -130,7 +130,7 @@ theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
     exact inner_zero_right (𝕜 := ℝ) (P l x)
 
 /-- Squared probabilities of arbitrary Hermitian inputs obey the incomplete-MUB moment bound. -/
-theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
+private theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
     (A : MUBFamily d m) (H : Op d) (hH : H.IsHermitian) :
     moment A.effect H ≤ (H * H).trace.re +
       (((m : ℝ) - 1) / (d : ℝ)) * (H.trace.re) ^ 2 := by

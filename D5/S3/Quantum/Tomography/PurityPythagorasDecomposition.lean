@@ -42,7 +42,7 @@ def centeredDensity {d : Nat} [NeZero d]
     field_simp [show (d : ℂ) ≠ 0 by exact_mod_cast NeZero.ne d]
     ring
 
-theorem matrix_inner_eq_trace_conjTranspose_mul
+private theorem matrix_inner_eq_trace_conjTranspose_mul
     {d : Nat}
     (A C : Matrix (Fin d) (Fin d) ℂ) :
     inner ℂ A C = Matrix.trace (Aᴴ * C) := by
@@ -168,7 +168,7 @@ private theorem basis_projector_inner
   · rw [if_neg hij, hRecord.orthogonal i j hij, Matrix.trace_zero]
 
 /-- The squared norm of a real linear combination of the orthonormal basis projectors. -/
-theorem projector_sum_norm_sq
+private theorem projector_sum_norm_sq
     {d : Nat} [NeZero d] (context : RankOneContext d)
     (hRecord : IsRecordMeasurement context.projector) (c : Fin d → ℝ) :
     ‖∑ j, (c j : ℂ) • context.projector j‖ ^ 2 = ∑ j, (c j) ^ 2 := by
