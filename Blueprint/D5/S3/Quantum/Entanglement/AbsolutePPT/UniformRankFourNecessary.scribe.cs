@@ -12,8 +12,18 @@ internal sealed class UniformRankFourNecessaryDocument : IScribeDocumentDefiniti
         Seq(Forall, Sp, Open, Id(s), Colon, t, Close, Comma, Sp, body);
     private static Formula Par(Formula f) => Seq(Open,f,Close);
     private static Formula And(Formula a,Formula b) => Seq(Par(a),Land,Sp,Par(b));
+    private static Formula MassDefinition(bool last)
+    {
+        Formula index = Call("val",Id("i"));
+        if (last) index = Seq(Par(Seq(Id("N"),Minus,Id("k"))),Plus,index);
+        var term = Call("ite",Seq(index,Lt,Sp,Id("N")),Call("lambda",index),Num(0));
+        var sum = Seq(new Formula.Subscript(Sum,Seq(Id("i"),Colon,Call("Fin",Id("k")))),Sp,term);
+        var body = Seq(Call(last ? "sumLast" : "sumFirst",Id("k"),Id("lambda")),F.Eq,sum);
+        return All("N",Id("Nat"),All("k",Id("Nat"),
+            All("lambda",Call("RealVector",Id("N")),body)));
+    }
     private static DocumentBlock Desc(string name,string title,Formula f,string text,DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("uniform-rank-four-"+name.Replace("_","-")),
+        Describe.Lean(DescribeId.Create("uniform-rank-four-"+name.Replace("_","-").ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/UniformRankFourNecessary."+name),
             H(title),StatementSource.FromAuthor(Disp(f)),AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))),role);
@@ -26,16 +36,16 @@ internal sealed class UniformRankFourNecessaryDocument : IScribeDocumentDefiniti
             Call("sumFirst",Num(6),Id("lambda")),Leq,Sp,Call("sumLast",Num(10),Id("lambda")));
         statement = All("lambda",Call("RealVector",total),statement);
         statement = All("e",Call("Equiv",Call("Product",Call("Fin",Id("m")),Call("Fin",Id("n"))),Call("Fin",total)),statement);
-        statement = Seq(Par(And(Seq(Num(4),Leq,Id("m")),Seq(Num(4),Leq,Id("n")))),Rightarrow,Sp,statement);
+        statement = Seq(Par(And(Seq(Num(4),Leq,Sp,Id("m")),Seq(Num(4),Leq,Sp,Id("n")))),Rightarrow,Sp,statement);
         statement = All("n",Id("Nat"),statement);
         statement = All("m",Id("Nat"),statement);
         return DocumentDefinition.Create(ScribeNode.Create(
         "A fixed rank-four product-local APPT test for arbitrary larger local dimensions.",
         H("Uniform rank-four necessity"),Blocks(
-            Desc("sumFirst","Initial spectral mass",Call("sumFirst",Id("k"),Id("lambda")),
+            Desc("sumFirst","Initial spectral mass",MassDefinition(false),
                 "For a real vector lambda indexed by Fin N, sumFirst k lambda is the sum at indices 0 through k-1. An index outside Fin N contributes zero. All uses here have k<=N.",DescribeRole.Definition),
-            Desc("sumLast","Terminal spectral mass",Call("sumLast",Id("k"),Id("lambda")),
-                "For k<=N, sumLast k lambda is the sum at indices N-k through N-1. Its guarded Fin k expression uses index N-k+i and contributes zero if that index is out of range.",DescribeRole.Definition),
+            Desc("sumLast","Terminal spectral mass",MassDefinition(true),
+                "For k<=N, sumLast k lambda is the sum at indices N-k through N-1. Its guarded Fin k expression uses index N-k+i and contributes zero if that index is out of range. The subtraction N-k is natural-number truncated subtraction.",DescribeRole.Definition),
             Desc("uniform_rank_four_necessary","Six initial entries versus ten terminal entries",
                 statement,
                 "Let m,n>=4 and let e be any explicit equivalence from Fin m times Fin n to Fin(m*n). If the complex diagonal matrix with entry lambda(e(i,j)) is absolutely PPT, then sumFirst 6 lambda <= sumLast 10 lambda. This statement does not require sorting, nonnegativity, total mass one, strict positivity or distinct entries. In particular it applies to the ordered nonnegative spectrum of an APPT density matrix. It is uniform in both local dimensions at fixed rank four; it does not assert a theorem for arbitrary rank r.",DescribeRole.Theorem),

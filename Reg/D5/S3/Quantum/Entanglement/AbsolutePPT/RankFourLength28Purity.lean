@@ -6,7 +6,7 @@ namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.RankFourLength28Purity
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.RankFourLength28Purity
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Matrix
+open LeanInformationAudit _root_.Matrix
 noncomputable section
 
 abbrev signature : Signature :=
@@ -35,10 +35,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     convert hd using 1
     ext i j
     fin_cases i <;> fin_cases j <;> norm_num [K1, boundary, l, Matrix.diagonal]
+    <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
+    <;> norm_num
   have h₂ : (K2 (boundary l)).PosSemidef := by
     convert hd using 1
     ext i j
     fin_cases i <;> fin_cases j <;> norm_num [K2, boundary, l, Matrix.diagonal]
+    <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
+    <;> norm_num
   have hb := law l (fun _ _ _ => le_rfl) (by intro i; norm_num [l])
     (by norm_num [l, Fin.sum_univ_succ]) h₁ h₂
     (by norm_num [L4, l, Fin.sum_univ_succ])
@@ -58,9 +62,9 @@ def evidence : Registration arena (type_of% (@purity_bound)) where
     arena.Law actual rejected rejected_law
   dependence := dependence
 
-/- This is an uncompiled source attempt. Its raw occurrence path and lawful
-enrolled-template binding still require the current compiler and inspector;
-issues 17689 and 17734 are the existing disclosure route. -/
+/- The scalar observation replaces the actual purity occurrence. Current
+compiler and inspector evidence determines binding status; unresolved failures
+are disclosed under issue 17734. -/
 noncomputable def registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.RankFourLength28Purity.purity_bound)
@@ -86,7 +90,7 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.RankFourLength28Purity
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
       stateBinder := 0

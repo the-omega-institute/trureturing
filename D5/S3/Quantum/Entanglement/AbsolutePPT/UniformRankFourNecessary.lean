@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformRankFourNecessary
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformRankFourNecessary
    mirror-E: none(waiver:product-local-unitary-construction)
    anchors: []
@@ -16,7 +16,7 @@ escape_witness: Six antisymmetric and ten symmetric/diagonal columns form a
 Private finite-algebra and packing helpers are consumed by this construction.
 Literature: Library/QuantumStates/hildebrand2007pptspectra.md.
 This theorem is dimension-general at fixed rank four, not generic in rank.
-Escape audit source is mirrored in Reg; compilation and binding remain open.
+The source-bound escape audit is mirrored in Reg.
 Disclosure: https://github.com/the-omega-institute/trureturing/issues/17734
 -/
 
@@ -89,9 +89,13 @@ private theorem rotation_trace (z : Fin 16 → ℝ) :
       swap).trace =
     (((∑ i : Fin 10, z ⟨6+i.val,by omega⟩) -
       (∑ i : Fin 6, z ⟨i.val,by omega⟩) : ℝ) : ℂ) := by
-  simp only [Matrix.mul_diagonal, Matrix.trace, Matrix.diag_apply,
-    Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ]
-  norm_num [pairRotation, rankIndex, swap, Matrix.conjTranspose_apply,
+  have hs (M : Matrix J J ℂ) :
+      (M * swap).trace = ∑ p : J, M p (p.2,p.1) := by
+    simp [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, swap]
+  rw [hs]
+  norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff,
+    Matrix.mul_diagonal, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_succ, pairRotation, rankIndex, swap,
     Fin.reduceEq, Fin.reduceFinMk, Fin.reduceLT, c_star, c_square]
   ring_nf
   all_goals simp [pow_two, c_square]
@@ -116,8 +120,8 @@ private theorem slot_injective {N : ℕ} (hN : 16 ≤ N) :
   intro a b hab
   apply Fin.ext
   have hv := congrArg Fin.val hab
-  dsimp [slot] at hv
-  split_ifs at hv <;> omega
+  by_cases ha : a.val < 6 <;> by_cases hb : b.val < 6 <;>
+    simp [slot, ha, hb] at hv <;> omega
 
 private def corner {m n : ℕ} (hm : 4 ≤ m) (hn : 4 ≤ n) (p : J) : Fin m × Fin n :=
   (Fin.castLE hm p.1, Fin.castLE hn p.2)
@@ -190,8 +194,9 @@ theorem uniform_rank_four_necessary {m n : ℕ} (hm : 4 ≤ m) (hn : 4 ≤ n)
       (P : Matrix _ _ ℂ)ᴴ = diagonal d := by
     change p.permMatrix ℂ * _ * (p.permMatrix ℂ)ᴴ = _
     rw [Matrix.conjTranspose_permMatrix, PEquiv.toMatrix_toPEquiv_mul,
-      PEquiv.mul_toMatrix_toPEquiv, Matrix.submatrix_diagonal_equiv]
-    rfl
+      PEquiv.mul_toMatrix_toPEquiv, Matrix.submatrix_submatrix]
+    change (diagonal (fun q => (l (e q) : ℂ))).submatrix p p = diagonal d
+    exact Matrix.submatrix_diagonal_equiv (fun q => (l (e q) : ℂ)) p
   have hdiag : APPT (diagonal d) := by
     rw [← hd]
     exact appt_conjugate happt P
@@ -223,7 +228,7 @@ theorem uniform_rank_four_necessary {m n : ℕ} (hm : 4 ≤ m) (hn : 4 ≤ n)
     rw [dif_pos (show m*n-10+i.val < m*n by omega)]
     congr 1
     apply Fin.ext
-    simp only [slot, show ¬ 6+i.val < 6 by omega, dif_neg, Fin.val_mk]
+    simp [slot, show ¬ 6+i.val < 6 by omega]
     omega
   rwa [hf,hl] at hmass
 

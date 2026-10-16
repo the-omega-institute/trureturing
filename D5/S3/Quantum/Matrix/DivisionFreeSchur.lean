@@ -13,10 +13,11 @@ escape_witness: A quadratic discriminant and a scalar square decomposition
   prove the mixed cross-matrix inequality without invertibility assumptions.
 Consumers: RankFourLength28Purity.certificate_nonnegative.
 The private Cauchy and expansion helpers are consumed proof organization.
-Escape audit evidence remains uncompiled; see issues 17689 and 17734.
+Source-bound escape audit: Reg/D5/S3/Quantum/Matrix/DivisionFreeSchur.
 -/
 
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Algebra.Order.Star.Real
 import Mathlib.Algebra.QuadraticDiscriminant
 import Mathlib.Tactic
 
@@ -70,11 +71,14 @@ private theorem compressed_quadratic (K : Matrix I I ℝ) (U : Matrix I J ℝ) (
   unfold quadratic compressed
   rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec,
     Matrix.dotProduct_transpose_mulVec]
+  exact dotProduct_comm _ _
 
 private theorem cross_dot (K : Matrix I I ℝ) (v : I → ℝ)
     (U : Matrix I J ℝ) (z : J → ℝ) :
     z ⬝ᵥ cross K v U = (U *ᵥ z) ⬝ᵥ (K *ᵥ v) := by
-  exact Matrix.dotProduct_transpose_mulVec U z (K *ᵥ v)
+  unfold cross
+  rw [Matrix.dotProduct_transpose_mulVec]
+  exact dotProduct_comm _ _
 
 private theorem quadratic_add (A B : Matrix J J ℝ) (z : J → ℝ) :
     quadratic (A+B) z = quadratic A z + quadratic B z := by
@@ -90,8 +94,8 @@ private theorem quadratic_smul (a : ℝ) (A : Matrix J J ℝ) (z : J → ℝ) :
 
 private theorem outer_quadratic (a b z : J → ℝ) :
     quadratic (vecMulVec a b) z = (z ⬝ᵥ a) * (z ⬝ᵥ b) := by
-  simp [quadratic, dotProduct, Matrix.mulVec, Matrix.vecMulVec,
-    Finset.mul_sum, Finset.sum_mul, mul_comm, mul_left_comm, mul_assoc]
+  rw [quadratic, dotProduct_mulVec, Matrix.vecMul_vecMulVec,
+    smul_dotProduct, smul_eq_mul, dotProduct_comm b z]
 
 private theorem schur_quadratic {K : Matrix I I ℝ} (hK : K.IsHermitian)
     (v : I → ℝ) (U : Matrix I J ℝ) (z : J → ℝ) :
@@ -112,7 +116,8 @@ theorem schur_posSemidef {K : Matrix I I ℝ} (hK : K.PosSemidef)
     have hb : (vecMulVec (cross K v U) (cross K v U)).IsHermitian := by
       simpa only [star_trivial] using
         (Matrix.posSemidef_vecMulVec_self_star (cross K v U)).isHermitian
-    exact (hc.smul (by simp)).sub hb
+    exact (hc.smul (show IsSelfAdjoint (quadratic K v) by
+      simp [isSelfAdjoint_iff])).sub hb
   · intro z
     change 0 ≤ quadratic (schur K v U) z
     rw [schur_quadratic hK.isHermitian]
@@ -169,7 +174,10 @@ theorem mixed_posSemidef {K₀ K₁ : Matrix I I ℝ}
       unfold mixed
       abel
     rw [he]
-    exact ((hc₁.smul (by simp)).add (hc₀.smul (by simp))).sub hb
+    exact ((hc₁.smul (show IsSelfAdjoint (quadratic K₀ v) by
+      simp [isSelfAdjoint_iff])).add
+      (hc₀.smul (show IsSelfAdjoint (quadratic K₁ v) by
+        simp [isSelfAdjoint_iff]))).sub hb
   · intro z
     change 0 ≤ quadratic (mixed K₀ K₁ v U) z
     rw [mixed_quadratic h₀.isHermitian h₁.isHermitian]

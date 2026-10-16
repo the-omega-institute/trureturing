@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity
    mirror-E: none(waiver:exact-rational-certificate)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.claim; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Data.certificate; result=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.result; claim=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.claim; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.spectrum; result=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.result; claim=D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.claim
    digest: Both rank-three pencils and the uniform rank-four inequality bound arbitrary length-28 spectral purity by one twenty-fifth. -/
 
 /-
@@ -17,8 +17,10 @@ Private helpers: certificate_identity: content; pencil_psd: bind-only,
   gap_nonnegative: bind-only, consumed by purity_bound.
 Direct reuse: QutritSpectralReduction.K1, K2, psd_of_rat_ldl;
   RHLinalg.trace_mul_nonneg_of_posSemidef.
-Escape audit evidence remains uncompiled; see issues 17689 and 17734.
+Source-bound escape audit: Reg/D5/S3/Quantum/Entanglement/AbsolutePPT/RankFourLength28Purity.
 No literal APPT-to-spectral bridge is asserted in this module.
+The utility instance is the spectrum used by result. This refutation supplies
+no admission basis for the separate positive RankFourLength28Data.certificate.
 -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.RankFourLength28Data
@@ -87,14 +89,21 @@ private noncomputable def rhs (l : Fin 28 → ℝ) : ℝ :=
 private theorem certificate_identity (l : Fin 28 → ℝ) :
     (∑ i, l i)^2 / 25 - (∑ i, (l i)^2) = rhs l := by
   classical
-  norm_num [rhs, quadratic, schur, mixed, compressed, cross, gap, transverse,
+  norm_num (config := { maxSteps := 2000000 })
+    [rhs, quadratic, schur, mixed, compressed, cross, gap, transverse,
     pencil, boundary, L4, v, U, QutritSpectralReduction.K1,
     QutritSpectralReduction.K2, RankFourLength28Data.certificate,
     RankFourLength28Data.endpoint, castMat, Matrix.map_apply, Matrix.trace,
     Matrix.diag_apply, Matrix.mul_apply, Matrix.mulVec, dotProduct,
     Matrix.vecMulVec, Matrix.transpose_apply, Matrix.smul_apply,
-    Matrix.sub_apply, Matrix.add_apply, Fin.sum_univ_succ]
-  <;> ring
+    Matrix.sub_apply, Matrix.add_apply, Matrix.of_apply, Matrix.cons_val,
+    Matrix.head_cons, Matrix.tail_cons, Matrix.vecHead, Matrix.vecTail,
+    Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two,
+    Fin.sum_univ_succ, Fin.succ, Fin.val_zero, Fin.val_succ,
+    Nat.reduceAdd, Fin.reduceFinMk]
+  <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
+  <;> norm_num
+  <;> ring!
 
 private theorem gap_nonnegative (l : Fin 28 → ℝ) (ho : Antitone l)
     (hn : ∀ i, 0 ≤ l i) (i : Fin 28) : 0 ≤ gap l i := by
@@ -115,7 +124,9 @@ private theorem certificate_nonnegative (l : Fin 28 → ℝ)
     simp only [dotProduct, Matrix.mulVec, Finset.mul_sum]
     exact Finset.sum_nonneg fun i _ => Finset.sum_nonneg fun j _ =>
       mul_nonneg (hx i) (mul_nonneg
-        (by exact_mod_cast certificate.H_nonnegative i j) (hx j))
+        (by
+          change (0 : ℝ) ≤ (certificate.H i j : ℝ)
+          exact_mod_cast certificate.H_nonnegative i j) (hx j))
   have hb : 0 ≤ ∑ s : Fin 2, ∑ i : Fin 28,
       gap l i * (castMat (certificate.B s i).rational * pencil l s).trace :=
     Finset.sum_nonneg fun s _ => Finset.sum_nonneg fun i _ =>
@@ -154,7 +165,7 @@ theorem purity_bound (l : Fin 28 → ℝ) (ho : Antitone l)
     (h4 : 0 ≤ L4 l) : ∑ i, (l i)^2 ≤ (1 : ℝ)/25 := by
   have hK (s : Fin 2) : (pencil l s).PosSemidef := by
     fin_cases s
-    · simpa only [pencil, Matrix.cons_val_zero] using h₁
+    · simpa [pencil] using h₁
     · simpa [pencil] using h₂
   have hnonneg := certificate_nonnegative l (gap_nonnegative l ho hn) hK h4
   rw [← certificate_identity, ht] at hnonneg
@@ -168,17 +179,14 @@ def claim : Prop :=
     (QutritSpectralReduction.K2 (boundary l)).PosSemidef →
     ∑ i, (l i)^2 ≤ (1 : ℝ)/25
 
-def spectrum (i : Fin 28) : ℝ := if i.val < 9 then 2/37 else 1/37
+noncomputable def spectrum (i : Fin 28) : ℝ := if i.val < 9 then 2/37 else 1/37
 
 private theorem pencil_psd :
     (castMat (!![2/37,-1/37,-1/37; -1/37,2/37,-1/37;
       -1/37,-1/37,2/37] : Matrix (Fin 3) (Fin 3) ℚ)).PosSemidef := by
   apply psd_of_rat_ldl _ !![1,0,0; -1/2,1,0; -1/2,-1,1] ![2/37,3/74,0]
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [Matrix.mul_apply, Matrix.diagonal, Fin.sum_univ_succ]
-  · intro i
-    fin_cases i <;> norm_num
+  · decide +kernel
+  · decide +kernel
 
 /-- The literal target is a negation of the literal Prop-valued claim. -/
 theorem result : ¬ claim := by
@@ -196,12 +204,22 @@ theorem result : ¬ claim := by
     convert pencil_psd using 1
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [QutritSpectralReduction.K1, boundary, spectrum, castMat]
+      norm_num [QutritSpectralReduction.K1, boundary, spectrum, castMat,
+        Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two, Fin.succ,
+        Fin.reduceFinMk]
+      <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
+      <;> norm_num
   have h₂ : (QutritSpectralReduction.K2 (boundary spectrum)).PosSemidef := by
     convert pencil_psd using 1
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [QutritSpectralReduction.K2, boundary, spectrum, castMat]
+      norm_num [QutritSpectralReduction.K2, boundary, spectrum, castMat,
+        Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
+        Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two, Fin.succ,
+        Fin.reduceFinMk]
+      <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
+      <;> norm_num
   have hp := h spectrum ho hn ht h₁ h₂
   norm_num [spectrum, Fin.sum_univ_succ] at hp
 

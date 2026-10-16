@@ -7,12 +7,12 @@ open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.UniformRankFourNecessary
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 open _root_.D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Matrix
+open LeanInformationAudit _root_.Matrix
 open scoped ComplexOrder
 noncomputable section
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (ℕ × ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature ((m : ℕ) × ℕ)
     (fun p => Fin (p.1*p.2) → ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
@@ -28,21 +28,22 @@ abbrev arena : Arena where
   Law O := ∀ {m n : ℕ}, 4 ≤ m → 4 ≤ n →
     ∀ (e : (Fin m × Fin n) ≃ Fin (m*n)) (l : Fin (m*n) → ℝ),
       APPT (diagonal (fun p => (l (e p) : ℂ))) →
-        O.readout () (m,n) l ≤ sumLast 10 l
+        O.readout () ⟨m,n⟩ l ≤ sumLast 10 l
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   let e : (Fin 4 × Fin 4) ≃ Fin 16 := Fintype.equivOfCardEq (by norm_num)
   have hz : APPT (diagonal (fun _ : Fin 4 × Fin 4 => (0 : ℂ))) := by
     intro U
-    simpa [partialTranspose] using
-      (Matrix.PosSemidef.zero : (0 : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ).PosSemidef)
+    simp only [Matrix.diagonal_zero, Matrix.mul_zero, Matrix.zero_mul]
+    exact (Matrix.PosSemidef.zero :
+      (0 : Matrix (Fin 4 × Fin 4) (Fin 4 × Fin 4) ℂ).PosSemidef)
   have bad := h (m := 4) (n := 4) (by norm_num) (by norm_num) e (fun _ => 0) hz
   norm_num [rejected, realize, sumLast] at bad
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(4,4),(fun _ => 0),(fun _ => 1),?_⟩
+  refine ⟨⟨4,4⟩,(fun _ => 0),(fun _ => 1),?_⟩
   norm_num [actual, realize, sumFirst, Fin.sum_univ_succ]
 
 def evidence : Registration arena (type_of% (@uniform_rank_four_necessary)) where
@@ -73,7 +74,7 @@ def registration :
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (@sumFirst)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.UniformRankFourNecessary
     definition := none

@@ -25,10 +25,11 @@ internal sealed class DivisionFreeSchurDocument : IScribeDocumentDefinition
             Imp(And(Call("PosSemidef",K0),Call("PosSemidef",K1)),body))) :
             All("K0",Mat("I","I"),Imp(Call("PosSemidef",K0),body));
         return All("I",Id("Type"),All("J",Id("Type"),
-            Imp(And(Call("Fintype",Id("I")),Call("Fintype",Id("J"))),body)));
+            Seq(OpenBracket,Call("Fintype",Id("I")),CloseBracket,Sp,
+                OpenBracket,Call("Fintype",Id("J")),CloseBracket,Sp,body)));
     }
     private static DocumentBlock Desc(string name,string title,bool mixed,string prose) =>
-        Describe.Lean(DescribeId.Create("division-free-"+name.Replace("_","-")),
+        Describe.Lean(DescribeId.Create("division-free-"+name.Replace("_","-").ToLowerInvariant()),
             DeclarationHandle.Create("D5/S3/Quantum/Matrix/DivisionFreeSchur."+name),H(title),
             StatementSource.FromAuthor(Disp(Statement(mixed))),AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))),DescribeRole.Theorem);

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Matrix/PartialTransposeTrace
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Matrix/PartialTransposeTrace
    mirror-E: none(waiver:finite-trace-algebra)
    anchors: []
@@ -7,13 +7,12 @@
    digest: Partial transpose is self-adjoint for finite matrix trace pairing in unequal product dimensions. -/
 
 /-
-proof_shape: partial_transpose_trace_duality: content
-admission_basis: escape-witness
-escape_witness: Reindexing the four independent product-coordinate sums proves
-  trace duality without a dimension restriction or a spectral hypothesis.
+proof_shape: partial_transpose_trace_duality: bind-only
 Consumer: UniformRankFourNecessary.core_nonnegative.
+Finite-sum reindexing and the existing outer-product trace identities organize
+the trace step of the product-local rank-four construction. This consumed
+helper supplies no standalone escape witness or first-freeze admission basis.
 The private trace-pairing identity is consumed by the vector identity.
-Escape audit source is mirrored in Reg; compilation and binding remain open.
 Disclosure: https://github.com/the-omega-institute/trureturing/issues/17734
 -/
 
