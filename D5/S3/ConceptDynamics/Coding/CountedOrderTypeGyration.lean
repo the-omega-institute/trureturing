@@ -357,23 +357,6 @@ theorem strictLeast_relabel_iff {n m d : ℕ} [NeZero d]
   intro k
   exact imp_congr_right (fun _ => wordLT_relabel_iff f g x (rotate k x))
 
-theorem primitive_relabel_iff {n m d : ℕ} [NeZero d]
-    {R R' : CountMat n m} {S S' : CountMat m n}
-    (f : EntryEmbedding R R') (g : EntryEmbedding S S') (x : Fin d → Edge (R*S)) :
-    Primitive (fun t => relabelEdge f g (x t)) ↔ Primitive x := by
-  have heq : ∀ k : Fin d,
-      rotate k (fun t => relabelEdge f g (x t)) = (fun t => relabelEdge f g (x t)) ↔
-        rotate k x = x := by
-    intro k
-    constructor
-    · intro h
-      funext t
-      exact relabelEdge_injective f g (congrFun h t)
-    · intro h
-      funext t
-      exact congrArg (relabelEdge f g) (congrFun h t)
-  simp only [Primitive, ne_eq, heq]
-
 /-- Each summand is the forward offset -k, when the source word is least and
 the k-th forward rotation of the target word is least. No orbit-count premise. -/
 def wordWeight {n m d : ℕ} [NeZero d] {A : CountMat n n} {B : CountMat m m}
