@@ -52,7 +52,6 @@ theorem observationLanguage_shift_invariant {X : Type u} {A : Type v}
   refine ⟨f x, ?_⟩
   funext n
   simp only [Function.iterate_succ_apply]
-  rfl
 
 /-- Under shadowing, the compact observation language is simultaneously a
 finite graph language, compact/closed, and shift-invariant. -/
