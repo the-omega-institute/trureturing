@@ -17,7 +17,6 @@ The diagonal reduction and normalized ray are reused from
   QuadbitQuintitMaximumPurity; the old four-by-five statement is preserved.
 utility:none rationale: This is the universal density-matrix consequence
   of the separate length-28 proof, not a new finite certificate or checker.
-The separate RankFourLength28Data admission remains unresolved.
 Literature: Library/QuantumStates/hildebrand2007pptspectra.md.
 No classification of all maximizers or assertion in other dimensions follows.
 -/
