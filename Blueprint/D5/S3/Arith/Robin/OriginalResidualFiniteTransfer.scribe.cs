@@ -77,6 +77,23 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "abs(sum(N<=m<2N,a(m)*centered(d,m)))<=d*variation(N,a). "
                 + "No moment condition is needed. The same periodic primitive and summation-by-parts "
                 + "proof supply the two-moment floor bound and the full positive mean remainder."),
+            Describe.Lean(DescribeId.Create("original-residual-centered-pair-variation-sharp-bound"),
+                DeclarationHandle.Create(Prefix + "centered_pair_variation_sharp_bound"),
+                H("Sharp centered pairing with both jumps"), StatementSource.FromAuthor(SharpBVFormula()),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every positive natural N,d and arbitrary real sequence a, let "
+                        + "S(N,d,a)=sum(N<=m<2*N,a(m)*centered(d,m)). Then abs(S)<=d*V/16, "
+                        + "where V=variation(N,a) includes both zero-extension jumps. No sign or "
+                        + "moment hypothesis is imposed, including at N=1.")),
+                    Paragraph(Text("For the original private primitive P=r*(r-d)/(2*d), r=m mod d, "
+                        + "0<=r<=d and (2*r-d)^2>=0 give -d/8<=P<=0. Hence Q=P+d/16 "
+                        + "satisfies abs(Q)<=d/16. The unchanged primitive_step supplies the wrap. "
+                        + "Q is not the zero-based prefix: Q(0)=d/16. Before taking absolute values, "
+                        + "sum(a(m+1)-a(m))=a(2*N-1)-a(N) cancels the shift exactly. "
+                        + "Both coarse and sharp bounds use one private finite by-parts assembly, "
+                        + "with boundary terms a(2*N-1)*Q(2*N)-a(N)*Q(N). "
+                        + "The new range inference is consumed by the sharper full-positive transfer. "
+                        + "This finite estimate does not settle signed infinite transport or RH."))), DescribeRole.Theorem),
             Helper("reciprocal_log_step", "Reciprocal logarithmic step",
                 "For every natural k>0, 1/(k+1)<=log(k+1)-log(k)."),
             Helper("weighted_floor_bound", "Weighted original floor count",
@@ -154,6 +171,18 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                         + "and Gram projection, analytic residue suppliers, original "
                         + "construction, infinite account, strict Robin above 5040 "
                         + "and RH remain separate obligations."))), DescribeRole.Theorem))));
+
+    private static Formula SharpBVFormula()
+    {
+        var n = F.Id("N"); var d = F.Id("d"); var a = F.Id("a");
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula reals = Seq(Mathbb, Grp(F.Id("R")));
+        return Disp(Seq(Forall, Sp, n, Comma, d, InMacro, Sp, naturals, Comma,
+            Forall, Sp, a, InMacro, Sp, new Formula.Power(reals, naturals), Comma,
+            D(0), Lt, Sp, n, Land, Sp, D(0), Lt, Sp, d, Rightarrow, Sp,
+            Lvert, Sp, Call("S", n, d, a), Rvert, Sp, Le, Sp,
+            new Formula.Fraction(d, D(1,6)), Cdot, Sp, Call("V", n, a)));
+    }
 
     private static Formula TransferFormula()
     {

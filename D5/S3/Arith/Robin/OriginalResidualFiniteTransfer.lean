@@ -182,22 +182,46 @@ private theorem pair_mass_bound {N d : ℕ} (a : ℕ → ℝ) (hd : 0 < d)
       exact (mul_le_mul_of_nonneg_left (centered_bound hd m) (abs_nonneg _)).trans_eq
         (mul_one _)
 
-theorem centered_pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
-    (hd : 0 < d) :
-    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)*variation N a := by
-  have hp (n : ℕ) : |∑ m ∈ range n, centered d m| ≤ (d : ℝ) := by
-    simpa only [zero_add, ← range_eq_Ico] using centered_prefix hd 0 n
+/-- The constant cancels in the signed telescope, before any absolute values. -/
+private theorem centered_pair_by_parts {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
+    (hd : 0 < d) (s : ℝ) :
+    (∑ m ∈ Ico N (2 * N), a m*centered d m) =
+      a (2 * N - 1)*(periodicPrimitive d (2 * N)+s)-
+        a N*(periodicPrimitive d N+s)-
+          ∑ m ∈ Ico N (2 * N - 1),
+            (a (m+1)-a m)*(periodicPrimitive d (m+1)+s) := by
+  have hp (n : ℕ) : (∑ m ∈ range n, centered d m) = periodicPrimitive d n := by
+    rw [range_eq_Ico]
+    simp_rw [← primitive_step hd]
+    rw [sum_Ico_sub _ (Nat.zero_le n)]
+    simp [periodicPrimitive]
   have he := sum_Ico_by_parts a (centered d) (by omega : N < 2 * N)
   simp only [smul_eq_mul] at he
-  rw [he]
+  simp_rw [hp] at he
+  have hcancel : (∑ m ∈ Ico N (2 * N - 1), (a (m+1)-a m)) =
+      a (2 * N - 1)-a N := sum_Ico_sub a (by omega)
+  have hs : (∑ m ∈ Ico N (2 * N - 1),
+      (a (m+1)-a m)*(periodicPrimitive d (m+1)+s)) =
+      (∑ m ∈ Ico N (2 * N - 1), (a (m+1)-a m)*periodicPrimitive d (m+1))+
+        (a (2 * N - 1)-a N)*s := by
+    simp_rw [mul_add]
+    rw [sum_add_distrib, ← sum_mul, hcancel]
+  rw [he, hs]
+  ring
+
+private theorem centered_pair_of_primitive_range {N d : ℕ} (hN : 0 < N)
+    (a : ℕ → ℝ) (hd : 0 < d) (s C : ℝ)
+    (hp : ∀ m, |periodicPrimitive d m+s| ≤ C) :
+    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ C*variation N a := by
+  rw [centered_pair_by_parts hN a hd s]
   calc
-    _ ≤ |a (2 * N - 1)*(∑ m ∈ range (2 * N), centered d m)| +
-        |a N*(∑ m ∈ range N, centered d m)| +
+    _ ≤ |a (2 * N - 1)*(periodicPrimitive d (2 * N)+s)| +
+        |a N*(periodicPrimitive d N+s)| +
         |∑ m ∈ Ico N (2 * N - 1),
-          (a (m + 1)-a m)*(∑ j ∈ range (m + 1), centered d j)| :=
+          (a (m + 1)-a m)*(periodicPrimitive d (m+1)+s)| :=
       (abs_sub _ _).trans (add_le_add (abs_sub _ _) le_rfl)
-    _ ≤ |a (2 * N - 1)| *d + |a N| *d +
-        ∑ m ∈ Ico N (2 * N - 1), |a (m + 1)-a m| *d := by
+    _ ≤ |a (2 * N - 1)| *C + |a N| *C +
+        ∑ m ∈ Ico N (2 * N - 1), |a (m + 1)-a m| *C := by
       apply add_le_add
       · apply add_le_add <;> rw [abs_mul]
         · exact mul_le_mul_of_nonneg_left (hp _) (abs_nonneg _)
@@ -206,7 +230,36 @@ theorem centered_pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
         intro m _
         rw [abs_mul]
         exact mul_le_mul_of_nonneg_left (hp _) (abs_nonneg _)
-    _ = (d : ℝ)*variation N a := by rw [← sum_mul]; unfold variation; ring
+    _ = C*variation N a := by rw [← sum_mul]; unfold variation; ring
+
+theorem centered_pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
+    (hd : 0 < d) :
+    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)*variation N a := by
+  apply centered_pair_of_primitive_range hN a hd 0 d
+  intro m
+  simpa only [add_zero] using (primitive_bound hd m).trans
+    (by have := Nat.cast_nonneg (α := ℝ) d; linarith)
+
+private theorem primitive_midpoint_bound {d : ℕ} (hd : 0 < d) (m : ℕ) :
+    |periodicPrimitive d m+(d : ℝ)/16| ≤ (d : ℝ)/16 := by
+  have hd' : (0 : ℝ) < d := by exact_mod_cast hd
+  have hr0 : (0 : ℝ) ≤ ((m % d : ℕ) : ℝ) := Nat.cast_nonneg _
+  have hr : ((m % d : ℕ) : ℝ) ≤ d := by exact_mod_cast (Nat.mod_lt m hd).le
+  have hhi : periodicPrimitive d m ≤ 0 :=
+    div_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonneg_of_nonpos hr0 (by linarith))
+      (by positivity)
+  have hlo : -(d : ℝ)/8 ≤ periodicPrimitive d m := by
+    unfold periodicPrimitive
+    apply (le_div_iff₀ (by positivity : (0 : ℝ) < 2*d)).mpr
+    nlinarith [sq_nonneg (2*((m % d : ℕ) : ℝ)-(d : ℝ))]
+  exact abs_le.mpr ⟨by linarith, by linarith⟩
+
+/-- Midpoint centering preserves the primitive step and pays both zero-extension jumps. -/
+theorem centered_pair_variation_sharp_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
+    (hd : 0 < d) :
+    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)/16*variation N a := by
+  exact centered_pair_of_primitive_range hN a hd ((d : ℝ)/16) ((d : ℝ)/16)
+    (primitive_midpoint_bound hd)
 
 private theorem pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
     (hd : 0 < d) (hz : ∑ m ∈ Ico N (2 * N), a m = 0)
