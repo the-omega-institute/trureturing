@@ -159,7 +159,7 @@ private theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
       Complex.ofReal_re]
     rfl
   have hsum (l : Fin m) : ∑ a, p l a = q := by
-    simpa only [p, q, MUBFamily.context, recordWeight,
+    simpa only [p, q, MUBFamily.context.eq_1, recordWeight,
       D5.S3.Quantum.FiniteDimensional.bornProbability, Complex.re_sum] using
       congrArg Complex.re (recordWeight_sum (mub_context_record A l) H)
   have hBasis (l : Fin m) :
