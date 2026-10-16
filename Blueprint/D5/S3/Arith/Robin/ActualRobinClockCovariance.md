@@ -12,7 +12,31 @@ Writing U(x)=W(A,x)-W(A',x), for 1<a<=A'<=A<=b and 1<=x<=y, put C=(1+1/log(a))*(
 
 The ordinary analytic calculation is the finite-band supplement in Library/Analytic/mantovanelli2026primeworkload.md at commit cd554e98a13551899994b718e7cdbd35d81624ab, specifically U-int, U-size, U-var, G-size, G-var and J. The kernel estimates proved here have no correlation-supplier premise. The supplement's further arithmetic consumers remain conditional, and no primary-source or literature-priority claim is made.
 
-**Theorem 1.1 (Actual quantitative covariance, signs and support).**
+**Theorem 1.1 (Integrability of the activation density).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualRobinClockCovariance.density_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualRobinClockCovariance.density_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real endpoints s,t with 1<s and s<=t, activationDensity is interval integrable with respect to volume from s to t. Continuity on the compact interval proves the assertion, including s=t. Translation gives integrability of u -> activationDensity(x+u) on [0,a] whenever x>1 and a>=0.
+
+**Theorem 1.2 (Integrability of both logarithmic price terms).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualRobinClockCovariance.price_terms_integrable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualRobinClockCovariance.price_terms_integrable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real endpoints a,b with 1<a and a<=b, both t -> 1/t and t -> t^(-1)/log(t) are interval integrable with respect to volume from a to b. The second integrand equals g(t). Translation therefore supplies the shifted g integrals, and singleton intervals are included.
+
+**Theorem 1.3 (Actual quantitative covariance, signs and support).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualRobinClockCovariance.actual_clock_quantitative`
 
@@ -30,8 +54,10 @@ The same actual quantitative covariance is consumed by D5/S3/Arith/Robin/ActualR
 
 The conditional Corr consumer remains unfinished. For its positive integer rough shifts, define S_R(z) as the sum of mu(w)*mu(w+z) for 1<=w<=R. The ordinary supplier is uniform for a fixed Z and every selector c(z) in [0,1], fixed before the inner Moebius sum. The required bound is abs(sum_z c(z)*S_R(z)/z) <=C22*R*B^(-1-epsilon), under the supplier's conditions, at R=L-1 and every R=r in [L,T]. This result does not certify that supplier. The exact finite Abel formula retains the negative lower anchor and the top sum of Gamma_z(T+1)*S_T(z). That top vanishes only with actual support evidence, for example b<=2*(T+1); the negative finite top in A_LT is retained in the deterministic coefficient budget. This result treats arbitrary actual clocks and does not identify them with a selected equality-inclusive CA sample.
 
-The full Robin/5040/RH goal remains active and unproved. Its complete quadratic consumer retains m*mean(R)^2, V_a with actual reserve and defect, the signed cross term 2*sum(mu(d)*beta(d)), the squarefree diagonal, d=1, all rows below L and every complementary shift. No one of these unpaid terms is removed by this covariance estimate. Faithful four-slot registration remains unfinished under the source-owner issue https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6101507121; no declared_validated state or literature priority is claimed.
+The full Robin/5040/RH goal remains active and unproved. Its complete quadratic consumer retains m*mean(R)^2, V_a with actual reserve and defect, the signed cross term 2*sum(mu(d)*beta(d)), the squarefree diagonal, d=1, all rows below L and every complementary shift. No one of these unpaid terms is removed by this covariance estimate. Four-slot registration of actual_clock_quantitative remains unfinished under the source-owner issue https://github.com/the-omega-institute/trureturing/issues/5214#issuecomment-6101507121; no declared_validated state or literature priority is claimed.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualRobinClockCovariance.actual_clock_quantitative`
+- Truth anchor: `D5/S3/Arith/Robin/ActualRobinClockCovariance.density_integrable`
+- Truth anchor: `D5/S3/Arith/Robin/ActualRobinClockCovariance.price_terms_integrable`

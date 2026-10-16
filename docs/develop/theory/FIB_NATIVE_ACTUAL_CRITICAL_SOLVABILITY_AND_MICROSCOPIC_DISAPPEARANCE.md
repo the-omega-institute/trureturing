@@ -809,3 +809,517 @@ Global weak, local strong, unit-orbit and global strong convergence are distinct
 Analytic spectral amplitudes supply no native preparation, actuation, lawful transport realization, density acquisition, resource permission or clock bridge. The spectral $E_s$ here differs from acquired mass and from ML error. These theorems imply no full-channel acquisition result, native feasibility, efficiency, capacity or impossibility claim, autonomous reduced quantum evolution, general neural-network or empirical machine-learning result, ML implementation migration, or completion of a wider programme. They are ordinary conditional symbolic mathematics, without executed mathematics, numerical validation or Lean/kernel/frozen certification.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. The mass-carrying macroscopic limit of actual weak-zero states
+
+**Definition 10.1 (fixed native Coulomb normalization).** Let L denote [Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md). Fix throughout one admitted datum of Definition 1.1 and all its supplied analytic antecedents in §§1–3. With the full original rational vector, define
+
+$$
+\begin{aligned}
+M&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}dk>0,
+&d(\mathbf z)&=\sqrt{\mathbf z^{\mathsf T}M^{-1}\mathbf z},\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi(k)^3dk}{4\pi\sqrt{\det M}}>0,
+&e_C&=-\frac{\beta_C^2}{4a},
+&\varrho&=\frac{\beta_C}{2a},\\
+h_C(\mathbf z)&=(\det M)^{-1/4}
+ \left(\frac{\varrho^3}{\pi}\right)^{1/2}e^{-\varrho d(\mathbf z)},
+&(\mathcal D_gv)(k,\mathbf z)&=g^{-3/2}v(k,\mathbf z/g).
+\end{aligned}
+\tag{10.1}
+$$
+
+Here $\mathcal D_g$ is unitary from native $L^2(dk\,dq)$ to $L^2(dk\,d\mathbf z)$. The matrix is exactly L (36.1), with all signed cross terms. The constants $\beta_C,e_C,h_C$ are respectively $\beta,e_*,h_*$ of P (71.1), (72.1) and (72.4) at the fixed cutoff one. Indeed the raw-source tail coefficient is $\phi(k_0)\phi(k)/(4\pi\sqrt{\det M})$; its expectation in the height state $\phi$ gives $\beta_C$. The unitary substitution $\mathbf z=M^{1/2}y$ gives the normalized Coulomb state in (10.1), so $\|h_C\|_2=1$. Neither the field clock nor its source is changed by the kinetic constant $a$.
+
+**Theorem 10.2 (actual weak-zero energy and full-mass profile).** For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice $\psi_{s_n}\in D(S)$, use exactly (1.7) and put $F_s=\mathcal U_s\psi_s$, zero extended to $\mathbb R^4$. If
+
+$$
+F_{s_n}\rightharpoonup0\quad\text{globally in }L^2(\mathbb R^4),
+\tag{10.2}
+$$
+
+then, along that sequence,
+
+$$
+\begin{aligned}
+\frac{E_s}{g_s^2}&\longrightarrow e_C,
+&r_s=-\frac{E_s}{s^6}&\longrightarrow-\chi_c^2e_C
+ =\frac{\chi_c^2\beta_C^2}{4a}>0,\\
+\inf_{\theta\in\mathbb R}
+\|\mathcal D_{g_s}\psi_s-e^{i\theta}\phi h_C\|_{L^2(dk\,d\mathbf z)}
+ &\longrightarrow0.
+\end{aligned}
+\tag{10.3}
+$$
+
+In particular the macroscopic limit carries the entire unit mass, with the fixed source as centre. No translating centres or subsequence-dependent Coulomb coefficients occur.
+
+Proof. Suppress the prescribed sequence index. Put
+
+$$
+\begin{aligned}
+D_{s^2}&=W_{s^2}-W_1\ge0,
+&m_s&=-E_s/a>0,
+&h_s&=s^2m_s,\\
+C_s&=s^2\mathcal U_sS\mathcal U_s^{-1},
+&Q_s(t)&=e^{-tC_s},
+&R_s(h)&=(C_s+h)^{-1},\\
+U_s^{<}&=s^5D_{s^2}\circ\Xi_s,
+&U_s^{>}&=s^5W_1\circ\Xi_s,
+&U_s&=U_s^{<}+U_s^{>}.
+\end{aligned}
+\tag{10.4}
+$$
+
+These are exactly P (75.2) and (104.1). All common-space operators mean restriction to $\Omega_s$ followed by zero extension; before extension their realization has both original Dirichlet faces. Since $W_{s^2}\ge W_1$, the common-domain variational principle and P Theorem 72.1 give $E_s\le E_1(g_s)\le-cg_s^2$ for small $s$, with fixed $c>0$. Lemma 4.2 gives $E_s\ge-C$. Consequently
+
+$$
+c_1s^8\le h_s\le C_1s^2\longrightarrow0.
+\tag{10.5}
+$$
+
+Only an upper energy comparison has been used at this point, not a matching branch assumption.
+
+The actual states have zero excess in the native condition of P Theorem 90.1. Its local compactness conclusion therefore turns (10.2) into $F_s\to0$ in $L^2(K)$ for each compact $K\subset\mathbb R^4$. The short-field convergence proved in P (104.6) is
+
+$$
+\|U_s^{<}-V\|_2\longrightarrow0,
+\qquad V\in L^2(\mathbb R^4),
+\qquad \sup_s\|U_s^{<}\|_\infty<\infty.
+\tag{10.6}
+$$
+
+It follows that
+
+$$
+\|U_s^{<}F_s\|_1\longrightarrow0.
+\tag{10.7}
+$$
+
+In detail, the contribution of $U_s^{<}-V$ is at most its $L^2$ norm, since $\|F_s\|_2=1$. On a fixed compact $K$, the contribution of $V$ is at most $\|V\|_{L^2(K)}\|F_s\|_{L^2(K)}$. Outside $K$ it is at most $\|V\mathbf1_{K^c}\|_2$. First let $s\to0$ and then exhaust by compact boxes. This uses local strong convergence and an $L^2$ multiplier tail, rather than treating weak convergence as convergence of products.
+
+We next show that the removed short-time field produces a vanishing actual resolvent vector. Retain the compact reconstruction and finite-time operator of P (104.1) and (104.9):
+
+$$
+K_{\rm rec}=\mathcal E^{-1}V,
+\qquad J_s=\int_0^{s^{-2}}Q_s(t)U_s^{<}dt,
+\qquad\|J_s-K_{\rm rec}\|_{2\to2}=d_s\longrightarrow0.
+\tag{10.8}
+$$
+
+The inverse in this formula is only the bounded compact reconstruction on these specified right sides, supplied by P Theorem 87.2; it is not an inverse on arbitrary $L^2$ inputs. Hence $\|J_sF_s\|_2\to0$ by (10.2). The early-time spectral-weight error is bounded by P (104.10):
+
+$$
+\left\|\int_0^{s^{-2}}(e^{-h_st}-1)
+ Q_s(t)U_s^{<}F_sdt\right\|_2\le Ch_s^{3/4}\longrightarrow0.
+\tag{10.9}
+$$
+
+For the remaining entire time interval use P (104.4), which gives $\|Q_s(t)\|_{1\to2}\le Cs^2t^{-3/4}$ for $t\ge s^{-2}$. Applied to this particular input, it yields
+
+$$
+\begin{aligned}
+\left\|\int_{s^{-2}}^\infty e^{-h_st}
+ Q_s(t)(U_s^{<}F_s)dt\right\|_2
+ &\le Cs^2\int_{s^{-2}}^\infty e^{-h_st}t^{-3/4}dt
+          \|U_s^{<}F_s\|_1\\
+ &\le Cs^2h_s^{-1/4}\|U_s^{<}F_s\|_1\longrightarrow0.
+\end{aligned}
+\tag{10.10}
+$$
+
+The factor $s^2h_s^{-1/4}$ is bounded by (10.5); its product tends to zero by (10.7). The heat estimate acts on complex inputs by its positive-kernel norm bound. The Laplace resolvent formula, (10.8)–(10.10), now prove
+
+$$
+\|R_s(h_s)U_s^{<}F_s\|_2\longrightarrow0.
+\tag{10.11}
+$$
+
+The time split is original field time one; the parameter $h_s=-s^2E_s/a$ comes solely from the actual eigen-equation. No clock of the field has been multiplied by $a$. In particular (10.10) controls the complete long-time contribution even when $h_s$ has order $s^8$.
+
+Define the exact auxiliary native vector
+
+$$
+v_s=\frac{g_s}{a}(S+m_s)^{-1}W_1\psi_s\in D(S).
+\tag{10.12}
+$$
+
+Here $W_1$ is bounded, $m_s>0$, and the resolvent is that of the original free operator with its complete domain. The actual equation gives the exact identities
+
+$$
+\begin{aligned}
+\psi_s-v_s&=\frac{g_s}{a}(S+m_s)^{-1}D_{s^2}\psi_s,\\
+\mathcal U_s(\psi_s-v_s)&=
+ \frac{\chi_c}{a}R_s(h_s)U_s^{<}F_s,\\
+(aS-E_s)v_s&=g_sW_1\psi_s.
+\end{aligned}
+\tag{10.13}
+$$
+
+Thus $\|\psi_s-v_s\|_2\to0$ and $\|v_s\|_2\to1$. This is an eigen-equation construction, not an arbitrary nearby vector.
+
+The needed variational precision follows from the fixed-cutoff multiplier bound P (104.12), valid on every complex native form vector:
+
+$$
+\|W_1u\|_2\le C\|S^{1/2}u\|_2\qquad(u\in\mathcal Q).
+\tag{10.14}
+$$
+
+For clarity, its consequence used here is uniform in $m>0$:
+
+$$
+\|S^{1/2}(S+m)^{-1}W_1\|_{2\to2}\le C.
+\tag{10.15}
+$$
+
+Indeed the adjoint is $W_1(S+m)^{-1}S^{1/2}$. The commuting spectral multiplier $(S+m)^{-1}S^{1/2}$ maps $L^2$ into $\mathcal Q$, so (10.14) bounds this adjoint by $C\|S(S+m)^{-1}\|\le C$. This uses spectral calculus at positive $m$, without a positive gap for $S$. From (10.12), (10.14) and (10.15), with $T[u]=\|S^{1/2}u\|_2^2$, we obtain
+
+$$
+T[v_s]\le Cg_s^2,
+\qquad\|W_1v_s\|_2\le Cg_s.
+\tag{10.16}
+$$
+
+These are bounds for the auxiliary state, not a transfer of kinetic energy from $L^2$ proximity.
+
+Let $\mathfrak e_{g,1}[u]=aT[u]-g\int W_1|u|^2$, on the original $\mathcal Q$. Pair the last equation in (10.13) with $v_s$, take real parts and subtract its fixed-cutoff potential. Exactly,
+
+$$
+\mathfrak e_{g_s,1}[v_s]
+ =E_s\|v_s\|_2^2+
+   g_s\operatorname{Re}\langle W_1v_s,\psi_s-v_s\rangle
+ =E_s\|v_s\|_2^2+o(g_s^2).
+\tag{10.17}
+$$
+
+The last bound is (10.16) times the proved $L^2$ error in (10.13). Normalize $\widehat v_s=v_s/\|v_s\|_2$, which is defined for small $s$. The exact factor $\|v_s\|_2^2$ multiplying $E_s$ in (10.17) cancels under this normalization. Therefore
+
+$$
+E_s\le E_1(g_s)\le
+ \mathfrak e_{g_s,1}[\widehat v_s]=E_s+o(g_s^2).
+\tag{10.18}
+$$
+
+The first inequality is the original variational comparison; the second tests the fixed-cutoff infimum with a normalized original-domain vector. This supplies the missing lower direction. P Theorem 72.1 gives $E_1(g_s)/g_s^2\to e_C$, hence $E_s/g_s^2\to e_C$. Since $g_s^2=\chi_c^2s^6$, the asserted $r_s$ limit follows as well.
+
+Moreover (10.18) proves the precise fixed-cutoff deficit
+
+$$
+0\le\mathfrak e_{g_s,1}[\widehat v_s]-E_1(g_s)=o(g_s^2).
+\tag{10.19}
+$$
+
+Thus P Theorem 73.1 applies to $\widehat v_s$ with fixed $\tau=1$, the same fixed original datum, and the sequence $g_s\downarrow0$. It gives phase-orbit convergence of $\mathcal D_{g_s}\widehat v_s$ to $\phi h_C$. Finally
+
+$$
+\|\widehat v_s-\psi_s\|_2
+ \le |1-\|v_s\|_2|+\|v_s-\psi_s\|_2\longrightarrow0,
+\tag{10.20}
+$$
+
+and unitarity of $\mathcal D_{g_s}$ transfers this $L^2$ conclusion to the actual states, proving (10.3). The unit norm of $\phi h_C$ gives full macroscopic mass. The sole reference near-minimizer application is (10.19), whose variational error has been derived from the actual equation. $\square$
+
+## 11. The converse microscopic implication
+
+**Theorem 11.1 (macroscopic orbit implies microscopic weak zero).** Fix the same datum and a prescribed sequence as in Theorem 10.2. If its actual normalized complex choices satisfy the macroscopic orbit convergence in (10.3), then $F_s=\mathcal U_s\psi_s\rightharpoonup0$ globally in $L^2(\mathbb R^4)$. In fact $F_s\to0$ in $L^2(K)$ for every compact $K$. Consequently, for these actual choices, microscopic weak zero and the stated unit-mass macroscopic orbit convergence are equivalent, and either implies both energy limits in (10.3).
+
+Proof. Choose phases $\theta_s$ realizing the orbit limit to an error tending to zero, and put
+
+$$
+w_s(k,q)=\phi(k)g_s^{3/2}h_C(g_sq),\qquad\|w_s\|_2=1.
+\tag{11.1}
+$$
+
+Macroscopic unitarity gives $\|\psi_s-e^{i\theta_s}w_s\|_2\to0$. Both $\phi$ and $h_C$ are bounded. At every $\xi\in\Omega_s$, the exact microscopic Jacobian gives
+
+$$
+\begin{aligned}
+|(\mathcal U_sw_s)(\xi)|
+ &=(j_0s^7)^{1/2}g_s^{3/2}
+  |\phi(k_0+\varepsilon sr)h_C(g_s\mathbf q_s(\xi))|
+ \le Cs^8,\\
+\mathbf q_s(\xi)&=s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w.
+\end{aligned}
+\tag{11.2}
+$$
+
+Here $\mathbf q_s(\xi)$ is exactly the phase component of $\Xi_s\xi$. The same bound holds for the zero extension. Therefore $\|\mathcal U_sw_s\|_{L^2(K)}\le Cs^8|K|^{1/2}\to0$ for every compact $K$. Its global norm is one, so approximation of any $L^2$ test by compactly supported tests proves global weak convergence to zero, also after the varying constant phases. Microscopic unitarity transfers the vanishing norm error from $\psi_s-e^{i\theta_s}w_s$, proving both conclusions for $F_s$. The equivalence and energy consequences now follow from Theorem 10.2. No form or operator convergence is inferred from this norm comparison. $\square$
+
+## 12. Positive response and the remaining zero-response case
+
+**Corollary 12.1 (conditional positive-response macroscopic selection).** If the fixed admitted datum satisfies $C_{\rm resp}>0$, then for every prescribed sequence $s_n\downarrow0$ and every actual normalized complex ground-state choice in $D(S)$,
+
+$$
+\begin{aligned}
+E_s&=e_Cg_s^2+o(g_s^2)
+    =\chi_c^2e_Cs^6+o(s^6),
+&\epsilon_c(s)&=\chi_c^2e_Cs^8+o(s^8),\\
+r_s&\longrightarrow\frac{\chi_c^2\beta_C^2}{4a},
+&\inf_\theta\|\mathcal D_{g_s}\psi_s-e^{i\theta}\phi h_C\|_2
+ &\longrightarrow0.
+\end{aligned}
+\tag{12.1}
+$$
+
+The same conclusions hold on any actual weak-zero subsequence at $C_{\rm resp}=0$, without asserting that all, or any, actual choices have such a subsequence.
+
+Proof. For positive response Theorem 6.1 supplies microscopic weak zero for every such actual sequence and choice. Apply Theorem 10.2. The identity $\epsilon_c(s)=s^2E_s$ gives its stated coefficient. At response zero, apply Theorem 10.2 only on the specified weak-zero subsequence. $\square$
+
+**Definition 12.2 (correspondence and unresolved alternatives).** The source-specific implication in Theorem 10.2 combines the actual weak-zero resolvent removal (10.7)–(10.13) with the derived variational error (10.17)–(10.19) to obtain the full-mass energy/profile conclusion. The full-complex fixed-cutoff multiplier, Coulomb energy and near-minimizer profile are reused from P §§71–73 and (104.12); the finite-native heat, short-field and compact reconstruction inputs are reused from P §§87 and 104. The actual bounded-energy and local compactness inputs are Lemma 4.2 and P Theorem 90.1. The positive-response disappearance input is Theorem 6.1. Spectral calculus, Hölder, compact-operator weak-to-strong continuity and the variational principle are classical intermediate tools. This source-specific composition makes no assertion of worldwide novelty. The conditional heat and localization correspondences retain precisely their supplied hypotheses in §2.2.
+
+The original full response sign and its positive or zero occurrence are not evaluated by these implications. At zero response, selection of a weak-zero subsequence, nonzero microscopic core limits, divergent or mixed scale alternatives and the complete every-choice decision remain unresolved. No statement here supplies a centered crossover, cutoff-free native realization, uniform limit in $\kappa$, physical-space identification, or analytic-state preparation from a resource, cone, observation or completely positive realization. The full original rational family, both Dirichlet faces, raw unit source, density $j_0$ and all-real complex domains are exactly those of §§1–2. Estimate (10.16) concerns the auxiliary vectors and is not asserted for the actual states; their macroscopic conclusion is an $L^2$ phase-orbit statement.
+
+## 追加锚（本行以下为增补区）
+
+## 13. A quantitative local amplitude of the actual reference state
+
+**Definition 13.1 (fixed datum, reference state and positive constant).** Fix one admitted datum of Definition 1.1 before any limit. Retain all the supplied analytic antecedents of §§1–3 and 10, including P §§70–73 and L Lemma 41.2 at this datum, with its parameter applicability conditions in L Definition 35.1. No parameter, interval, source or clock varies except the explicitly displayed $g$ or $s$. Use precisely $M,d,\beta_C,\varrho,e_C,h_C,\mathcal D_g$ of (10.1), and set
+
+$$
+\begin{aligned}
+h_0&=h_C(0)=(\det M)^{-1/4}(\varrho^3/\pi)^{1/2},
+&c_*&=\frac{e^{-4}h_0}{24\sqrt\pi}
+ =\frac{e^{-4}\varrho^{3/2}}{24\pi(\det M)^{1/4}}>0,\\
+e_1(g)&=E_1(g),
+&\mathbb B_\varrho&=\{\mathbf z:\varrho d(\mathbf z)\le1\},\\
+V_\varrho&=|\mathbb B_\varrho|
+ =\frac{4\pi}{3}\sqrt{\det M}\,\varrho^{-3},
+&\mathbb B_g&=\{q:gq\in\mathbb B_\varrho\}.
+\end{aligned}
+\tag{13.1}
+$$
+
+Positivity and finiteness follow from $M>0$, $a>0$, $\phi(k_0)>0$ and $\int_I\phi^3>0$ in (10.1). In particular this constant is specified by the original fixed data, independently of a microscopic compact set, a ground-state choice or a response sign. Let $v_g\ge0$ be any normalized actual ground state of $H_{g,1}=aS-gW_1$ in $D(S)$. Such a choice exists by P Theorem 72.1 and the positive-semigroup argument of P (102.5): that argument uses only the strictly positive native heat kernel and a bounded nonnegative multiplier, so applies at cutoff one as well. It also shows $v_g>0$ almost everywhere. The reference problem uses fixed cutoff one, not the varying cutoff $s^2$.
+
+**Theorem 13.2 (uniform reference lower amplitude).** There is $g_0>0$, depending only on the fixed datum and its antecedents, such that for every $0<g<g_0$ and every $v_g$ just specified,
+
+$$
+v_g(k,q)\ge c_*g^{3/2}\phi(k)
+\quad\text{for almost every }(k,q)\in I\times\mathbb B_g.
+\tag{13.2}
+$$
+
+The height range is the whole original interval, with both Dirichlet faces retained.
+
+Proof. Put $f_g=\mathcal D_gv_g\ge0$. Its fixed-cutoff variational deficit is exactly zero. P Theorems 72.1 and 73.1, applied with $\tau=1$ fixed, give
+
+$$
+e_1(g)/g^2\longrightarrow e_C=-a\varrho^2,
+\qquad \|f_g-\phi h_C\|_2\longrightarrow0.
+\tag{13.3}
+$$
+
+For the second assertion, apply the pointwise modulus inequality to P's phase-orbit conclusion, since $|e^{i\theta}\phi h_C|=\phi h_C$. Both conclusions are uniform over nonnegative actual reference choices: a failure of uniformity supplies $g_n\downarrow0$ and failing choices, contradicting the same sequencewise theorems. Thus, since $\phi\mathbf1_{\mathbb B_\varrho}\in L^2(dk\,d\mathbf z)$ and $\int_I\phi^2=1$,
+
+$$
+\begin{aligned}
+I_g&:=\int_{I\times\mathbb B_\varrho}\phi(k)f_g(k,\mathbf z)dk\,d\mathbf z
+ \longrightarrow\int_{\mathbb B_\varrho}h_C(\mathbf z)d\mathbf z,\\
+I_g&\ge\tfrac12 e^{-1}h_0V_\varrho
+\quad\text{for all sufficiently small }g\text{ and all these choices}.
+\end{aligned}
+\tag{13.4}
+$$
+
+Here $h_C\ge e^{-1}h_0$ on the indicated ball. This step extracts an integral on a fixed macroscopic set, without inferring point values from $L^2$ convergence.
+
+Write $\mathscr K_T(Y,Y')=e^{\lambda T}p_T^B(Y,Y')$, the raw kernel of $e^{-TS}$. L Lemma 41.2, with its complete height factors, implies for every $T\ge1$ and all interior heights and phase endpoints
+
+$$
+\left|\mathscr K_T((k,q),(k',q'))
+ -\phi(k)\phi(k')\frac{e^{-d(q'-q)^2/(4T)}}{(4\pi T)^{3/2}\sqrt{\det M}}\right|
+ \le C\phi(k)\phi(k')T^{-5/2}.
+\tag{13.5}
+$$
+
+Only the spatial exponential, which is at most one, has been discarded from that error. For $q,q'\in\mathbb B_g$, the triangle inequality for $d$ gives $d(q'-q)\le2/(\varrho g)$. Choose the native heat time and the Hamiltonian semigroup time to be
+
+$$
+T_g=(\varrho g)^{-2},\qquad t_g=T_g/a,
+\qquad \gamma_0=\frac{e^{-1}}{(4\pi)^{3/2}\sqrt{\det M}}.
+\tag{13.6}
+$$
+
+The Gaussian in (13.5) is at least $\gamma_0(\varrho g)^3$ on these endpoints. Take $g$ small enough that $T_g\ge1$ and $C/T_g\le\gamma_0/2$. Equation (13.5) then gives, uniformly over the entire height interval,
+
+$$
+\mathscr K_{T_g}((k,q),(k',q'))
+ \ge\tfrac12\gamma_0(\varrho g)^3\phi(k)\phi(k')
+\quad(q,q'\in\mathbb B_g).
+\tag{13.7}
+$$
+
+The relative height factor in the error is essential for this conclusion near either absorbing face.
+
+For completeness, the bounded nonnegative multiplier $W_1$ of P Proposition 70.2 gives the order inequality
+
+$$
+e^{-tH_{g,1}}f\ge e^{-taS}f\qquad(f\ge0,\ f\in L^2,\ t\ge0).
+\tag{13.8}
+$$
+
+Indeed its bounded-perturbation Dyson expansion has zeroth term $e^{-taS}$ and subsequent terms consisting of positive free semigroups and $gW_1$. The $n$th term has operator norm at most $(tg\|W_1\|_\infty)^n/n!$, because $S\ge0$. The series converges in operator norm at every finite $t$, and the positive cone of $L^2$ is closed. This proves (13.8) on the entire complex Hilbert space as an order assertion for nonnegative inputs. It remains valid at each finite $t=t_g$; no uniform series limit as $g\to0$ is required.
+
+The actual eigen-equation gives $v_g=e^{t_ge_1(g)}e^{-t_gH_{g,1}}v_g$. Equation (13.3) yields $t_ge_1(g)\to-1$, so $e^{t_ge_1(g)}\ge e^{-2}$ for small $g$. Positivity permits restricting the input to $I\times\mathbb B_g$. This restriction of $v_g$ is in $L^1\cap L^2$, since that set has finite measure at each $g>0$. The raw kernel integral is consequently legitimate, without assuming $v_g\in L^1$ globally. Combining (13.7)–(13.8), for almost every $(k,q)\in I\times\mathbb B_g$,
+
+$$
+\begin{aligned}
+v_g(k,q)
+&\ge e^{-2}\tfrac12\gamma_0(\varrho g)^3\phi(k)
+ \int_{I\times\mathbb B_g}\phi(k')v_g(k',q')dk'\,dq'\\
+&=e^{-2}\tfrac12\gamma_0\varrho^3g^{3/2}\phi(k)I_g\\
+&\ge\frac{e^{-3}\gamma_0\varrho^3h_0V_\varrho}{4}
+ g^{3/2}\phi(k)=c_*g^{3/2}\phi(k).
+\end{aligned}
+\tag{13.9}
+$$
+
+The equality uses exactly $\mathbf z'=gq'$ and $v_g(k',q')=g^{3/2}f_g(k',gq')$. Substitution of (13.1) and (13.6) gives $e^{-3}\gamma_0\varrho^3h_0V_\varrho/4=e^{-4}h_0/(24\sqrt\pi)$. All thresholds used above depend only on the fixed datum, and are uniform over the reference choices. The kernel of $e^{-t_gaS}$ is $\mathscr K_{a t_g}=\mathscr K_{T_g}$: this is a time chosen for a semigroup estimate, leaving the defining field clock of $W_1$ equal to $B$. $\square$
+
+**Corollary 13.3 (reference amplitude on every fixed microscopic compact set).** For every compact Lebesgue measurable $K\subset\mathbb R^4$, there is $s_K>0$ such that for $0<s<s_K$, $g_s=\chi_cs^3$, and every nonnegative normalized actual reference choice,
+
+$$
+v_{g_s}(\Xi_s\xi)\ge c_*g_s^{3/2}\phi(k_0+\varepsilon sr)
+\quad\text{for almost every }\xi\in K.
+\tag{13.10}
+$$
+
+Proof. The phase component of $\Xi_s\xi$ is exactly $\mathbf q_s(\xi)$ in (11.2). For a fixed compact $K$, its coordinates are bounded, so $\sup_Kd(\mathbf q_s(\xi))\le L_Ks$ for $0<s\le1$, with $L_K<\infty$ from the fixed jets and $M^{-1}$. Hence $\sup_K\varrho g_sd(\mathbf q_s(\xi))\le\varrho\chi_cL_Ks^4\to0$. Also $K\subset\Omega_s$ for small $s$ because $k_0$ is interior. Apply Theorem 13.2 once $g_s<g_0$ and these two inclusions hold. The nonzero Jacobian $j_0s^7$ in (2.1) preserves almost everywhere assertions under $\Xi_s$. $\square$
+
+## 14. An actual microscopic charge lowers the energy at scale $g_s^2$
+
+**Definition 14.1 (short field and positive actual charge).** For $0<s<1$, retain every actual normalized complex ground-state choice $\psi_s\in D(S)$ from (1.7), and put
+
+$$
+\begin{aligned}
+u_s&=|\psi_s|,&F_s^+&=\mathcal U_su_s=|F_s|,\\
+D_s&=W_{s^2}-W_1\ge0,&U_s^{<}&=s^5D_s\circ\Xi_s,\\
+A_s(K)&=\int_K\phi(k_0+\varepsilon sr)U_s^{<}(\xi)F_s^+(\xi)d\xi.
+\end{aligned}
+\tag{14.1}
+$$
+
+The symbol $A_s(K)$ here is a scalar charge, distinct from the Friedrichs operator $A_s$ of (2.2). Its domain is each fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of positive measure, with $s$ small enough that $K\subset\Omega_s$. P (102.5) gives $u_s>0$ almost everywhere, $u_s\in D(S)$, $\|u_s\|_2=1$, and $(aS-g_sW_{s^2})u_s=E_su_s$. Thus taking the modulus preserves an actual ground state in the original full complex problem. For each fixed $s>0$, $D_s$ is a bounded nonnegative real multiplier by P Proposition 70.2; no uniform bound for this unscaled multiplier as $s\downarrow0$ is asserted.
+
+**Theorem 14.2 (quantitative finite-native energy comparison).** With the strictly positive explicit constant $c_*$ of (13.1), for every $K$ in Definition 14.1 there is $s_K>0$ such that for every $0<s<s_K$ and every actual normalized complex ground-state choice,
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_*\sqrt{j_0\chi_c}\,A_s(K)\ge0.
+\tag{14.2}
+$$
+
+Neither a response sign nor a bound on $r_s$ is a hypothesis.
+
+Proof. Choose any nonnegative normalized actual reference ground state $v_{g_s}$. Its common operator domain with $u_s$ is exactly $D(S)$, and both potentials are bounded at this fixed $s$. Selfadjointness and the two actual eigen-equations therefore give the exact finite pairing
+
+$$
+\begin{aligned}
+O_s&:=\langle v_{g_s},u_s\rangle\in(0,1],\\
+(e_1(g_s)-E_s)O_s
+ &=g_s\int_{\mathcal C}D_s v_{g_s}u_s\,dY.
+\end{aligned}
+\tag{14.3}
+$$
+
+Strict positivity gives $O_s>0$, and Cauchy–Schwarz gives $O_s\le1$. The integral is finite by boundedness of $D_s$ and the two $L^2$ norms. This identity uses selfadjoint operator pairings, without additional phase derivatives or boundary integration. Its nonnegative right side also proves $e_1(g_s)-E_s\ge0$. Restrict it to $\Xi_s(K)$, apply (13.10), divide by $g_s^2O_s$, and use $O_s\le1$. The result is
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_*g_s^{1/2}\int_{\Xi_s(K)}\phi(k)D_su_s\,dY.
+\tag{14.4}
+$$
+
+The exact source/coordinate normalization is
+
+$$
+\begin{aligned}
+\int_{\Xi_s(K)}\phi(k)D_su_s\,dY
+ &=j_0s^7s^{-5}(j_0s^7)^{-1/2}A_s(K)
+ =\sqrt{j_0}s^{-3/2}A_s(K),\\
+g_s^{1/2}s^{-3/2}&=\sqrt{\chi_c}.
+\end{aligned}
+\tag{14.5}
+$$
+
+Substitution proves (14.2). All smallness conditions come from Corollary 13.3 and the inclusion of $K$, hence are independent of the actual ground-state choice. The signed rational fields, $j_0$, unit raw source, both height faces and the $B$ clock remain those of §§1–2. $\square$
+
+## 15. A strict core margin and the three equivalent Coulomb endpoints
+
+**Theorem 15.1 (quantitative exclusion of a core at the Coulomb endpoint).** Retain the same fixed datum. Define
+
+$$
+m_{\rm core}=\int_{\mathbb R^4}Vp\,d\xi\in(0,\infty),\qquad
+\eta_*=c_*\sqrt{j_0\chi_c}\,\phi(k_0)m_{\rm core}>0,
+\qquad r_C=-\chi_c^2e_C>0.
+\tag{15.1}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ and every actual normalized complex choice with $F_{s_n}\rightharpoonup cp$ globally in $L^2$, one has
+
+$$
+\liminf_{n\to\infty}\frac{e_1(g_{s_n})-E_{s_n}}{g_{s_n}^2}
+ \ge\eta_*|c|,
+\qquad
+\liminf_{n\to\infty}r_{s_n}
+ \ge r_C+\chi_c^2\eta_*|c|.
+\tag{15.2}
+$$
+
+In particular, if also $r_{s_n}\to R<\infty$ and $c\ne0$, then $R\ge r_C+\chi_c^2\eta_*|c|>r_C$.
+
+Proof. N Lemma 5.1 supplies exactly $0<m_{\rm core}<\infty$; its integrability follows from $V\in L^2$, $p\in L^2$ and Cauchy–Schwarz, and its strict positivity from $V,p>0$. Every other factor in $\eta_*$ is strictly positive by (1.1), (2.7) and (13.1).
+
+Actual states have zero variational excess, so the necessity and local compactness assertions of P Theorem 90.1 apply on the exact path. On the given weakly convergent subsequence they yield $F_s\to cp$ in $L^2(K)$ for each compact $K$. Consequently $F_s^+=|F_s|\to|c|p$ there. By (2.9) and boundedness of $W_1$,
+
+$$
+U_s^{<}=U_s-s^5W_1\circ\Xi_s\longrightarrow V
+\quad\text{uniformly on every fixed compact set},\qquad
+\phi(k_0+\varepsilon sr)\longrightarrow\phi(k_0)
+\quad\text{uniformly there}.
+\tag{15.3}
+$$
+
+All factors in the first product other than $F_s^+$ are locally uniformly bounded. Cauchy–Schwarz on $K$ and its finite measure therefore justify the full product limit
+
+$$
+A_s(K)\longrightarrow\phi(k_0)|c|\int_KVp\,d\xi.
+\tag{15.4}
+$$
+
+Apply (14.2) first on each fixed compact box. Only after taking its $s$-limit exhaust $\mathbb R^4$ by increasing boxes; positivity and $Vp\in L^1$ give the first inequality in (15.2). No global product convergence or uniform-in-$K$ threshold is needed. Finally the exact identity
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ =\frac{e_1(g_s)}{g_s^2}+\frac{r_s}{\chi_c^2},
+\qquad e_1(g_s)/g_s^2\longrightarrow e_C
+\tag{15.5}
+$$
+
+gives the second inequality, also if the lower limit is infinite. The statement for finite $R$ follows directly. $\square$
+
+**Theorem 15.2 (actual energy, microscopic and full-mass macroscopic equivalence).** For every prescribed sequence $s_n\downarrow0$, and for every actual normalized complex ground-state choice in the unchanged $D(S)$, the following three assertions are equivalent along that same sequence:
+
+$$
+\begin{aligned}
+&r_{s_n}\longrightarrow r_C;\\
+&F_{s_n}\rightharpoonup0\quad\text{in }L^2(\mathbb R^4);\\
+&\inf_{\theta\in\mathbb R}
+ \|\mathcal D_{g_{s_n}}\psi_{s_n}-e^{i\theta}\phi h_C\|_2
+ \longrightarrow0.
+\end{aligned}
+\tag{15.6}
+$$
+
+Whenever they hold, $F_{s_n}\to0$ in $L^2(K)$ for every compact $K$, and the energy limits in (10.3) hold. These are sequencewise equivalences, without a response-sign hypothesis or an assertion that any of the three occurs at a given response-zero datum.
+
+Proof. Suppose $r_{s_n}\to r_C$. Equations (13.3) and (15.5) make the energy defect tend to zero. Every subsequence of the unit vectors $F_{s_n}$ has a weakly convergent further subsequence; P Theorem 90.1 identifies its limit as $cp$. Theorem 15.1 forces $c=0$. Thus all weak cluster points are zero, and the full sequence converges weakly to zero: otherwise some fixed $L^2$ test has a pairing bounded away from zero on a subsequence, contradicting a further weak limit zero. This proves the new first-to-second implication using the quantitative finite-$s$ comparison. The second assertion implies the first and third by Theorem 10.2; the third implies the second by Theorem 11.1. The local conclusion is P Theorem 90.1, or Theorem 11.1 after the macroscopic implication. No form convergence is deduced from an $L^2$ norm comparison. $\square$
+
+## 16. Analytic correspondence and unresolved selection
+
+**Definition 16.1 (suppliers and scope of the quantitative comparison).** Theorems 13.2, 14.2 and 15.1 are repository-derived source-specific deductions. P Proposition 70.2 supplies positive-cutoff bounded multipliers and the common full operator domain; P Theorems 72.1 and 73.1 supply the actual fixed-cutoff energy and unit-mass macroscopic profile. L Lemma 41.2 supplies the all-height, all-real-phase, large-time native kernel error, with its original parameter conditions. P (102.5) supplies positivity and modulus preservation for actual complex ground states. P Theorem 90.1 supplies only its necessity/local-compactness part here; its construction of general near-minimizers is not used. N Lemma 5.1 supplies the finite positive canonical core charge. Theorems 10.2 and 11.1 own the other directions in (15.6). The Jacobian, field split, canonical mode and Coulomb normalization are exactly (2.1), (2.7), (10.1) and (10.4). Spectral calculus, the norm-convergent bounded-perturbation series, Cauchy–Schwarz and monotone convergence are classical intermediate tools. No literature-wide novelty or additional certification of the supplied conditional heat, localization and reconstruction antecedents is asserted.
+
+The finite estimate (14.2) makes no sign assumption and does not require bounded actual $r_s$. Its coefficient comes from the original reference ground state through a proved heat-kernel lower bound, rather than from shrinking-core values inferred from macroscopic $L^2$ convergence. Its spectral pairing is on the exact common $D(S)$, without an ordinary phase-$H^1$ restriction, an $L^2$ representative of the homogeneous response, or a positive $L^2$ gap at the canonical threshold. Neither this pairing nor (15.6) transfers actual kinetic energies from $L^2$ proximity. All signed nonzero-$\kappa$ data and jointly realized rational components remain fixed; no zero-cutoff, wrapped-phase, or uniform-in-$\kappa$ statement is made.
+
+The canonical absolute response sign and the actual occurrence of positive or zero response remain unresolved. At response zero, the existence and selection of actual endpoints are not decided: nonzero cores cannot occur at $r_C$ by (15.2), but actual selection away from $r_C$, deeper finite mixed/core branches and possible divergent behavior remain unresolved. No finer energy coefficient, centered crossover, analytic-state preparation, physical-space correspondence or physical spatial dimension follows. Resource, cone, observation and completely positive realization statements supply no additional native preparation premise here. The equivalence (15.6) and the strict charge margin are partial constraints on the original every-actual-choice selection problem, not a decision of that complete problem.
+
+## 追加锚（本行以下为增补区）
