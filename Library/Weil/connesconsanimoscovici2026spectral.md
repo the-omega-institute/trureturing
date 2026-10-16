@@ -1139,6 +1139,92 @@ normalized eigenvalues. No old scalar, moment, Gram or eigensolver
 production, new general inverse theorem or Lean verification is claimed.
 
 
+### A finite Trummer representation and a joint residual obstruction
+
+The finite displacement machinery is existing numerical linear algebra.
+Poloni, [arXiv:0903.4569v3](https://arxiv.org/pdf/0903.4569v3), p.3,
+defines the same-node, injective-node **Trummer-like** case: the generators
+determine the off-diagonal entries, while the actual diagonal must be
+supplied independently. Lemma1, p.3, gives the finite Schur generator
+update. Theorem4, p.11, gives the sum, product and inverse displacement
+rules; equation(6), p.12, updates the separately stored diagonal.
+Algorithms5–6, pp.21–22, supply the Trummer-like solve/inverse interfaces.
+The inspected PDF SHA-256 is
+`8e66a68746455a54ee68a143cd6e0843736113419a28bb7b8e37ce0612bacf8e`.
+Section7, p.17, explicitly discusses generator growth and the need for
+actual residual checks. These algorithms supply no arithmetic positivity
+theorem or universal stability guarantee. The arXiv source includes
+Matlab and Fortran implementations; no implementation is copied here.
+
+For a finite actual even compression, put $D=\operatorname{diag}(n^2)$,
+$\kappa=2/\pi$, $J_2=\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$
+and $G=(a,b)$, where
+$a_n=(-1)^nk_n$, $b_n=a_nns_n$, $k_0=1/\sqrt2$ and $k_n=1$ otherwise.
+The existing actual arithmetic entries give
+
+$$
+DQ-QD=\kappa GJ_2G^*,\qquad
+Q_{mn}=\kappa\frac{a_mb_n-b_ma_n}{m^2-n^2}\quad(m\ne n).
+$$
+
+The Gamma, prime and pole diagonal remains unchanged. No infinite
+generator identity is inferred: these generator columns need not be
+square summable.
+
+Let $V$ select exterior modes1281–2048, $F=V^*H_NV$, $B=V^*C_N$,
+$X=F^{-1}B$ and $Y=VX$. The existing exterior floor makes $F$ positive.
+Two right-hand sides $U=F^{-1}G_E$ determine the updated finite
+generators $G'_P=G_P-B^*U$ and reconstruct every column of $X$:
+
+$$
+X_{mn}=\kappa\frac{U_{m1}G'_{n2}-U_{m2}G'_{n1}}{m^2-n^2}
+\quad(m\in E,\ n\in P).
+$$
+
+The selected residual is exactly zero. For the finite remaining middle
+$O=\{2049,\ldots,32768\}$, the same finite Schur update gives
+$G'_O=G_O-Q_{OE}U$ and the actual residual $R_O=Q_{OP}-Q_{OE}X$.
+Put $T=R_O^*W_OG'_O$. The finite product rule yields
+
+$$
+D_P(R_O^*W_OR_O)-(R_O^*W_OR_O)D_P
+=\kappa\bigl(TJ_2(G'_P)^*+G'_PJ_2T^*\bigr).
+$$
+
+Thus $A_N-B^*F^{-1}B-R_O^*W_OR_O$ has displacement rank at most4,
+with its diagonal separately evaluated. This eliminates a new dense
+middle-Gram multiplication. It does not determine the sign. The far
+part retains all168 archived moments, the112-feature transform
+$P_P-P_EX$, and the complete symbol/error allowance. Its transported
+scalar charge is bounded by
+$\epsilon(1+\|X\|_F^2)$, approximately $2.07733\times10^{-135}$.
+It is not replaced by an infinite generator sum or an assumed positive
+moment midpoint.
+
+The [complete joint experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/443c0e6b5debab077cc317e35478638a3befc28c/docs/reports/weil-c27)
+constructs one explicit sufficient lower target on all1281 original
+orthonormal coordinates. Symmetric diagonal pivoting certifies1263
+positive pivots before an uncertain pivot leaves18 coordinates.
+Reconstructing the same complete target and applying the library's
+validated dense solve to that positive block gives an18-dimensional
+Schur complement. All18 diagonal upper endpoints are negative; for
+the first remaining coordinate, mode0, the diagonal is less than
+$-5.77\times10^{-31}$. One negative diagonal already rejects this
+explicit sufficient target. It does not establish18 negative
+eigenvalues, negativity of the actual $S_N$, or exclusion of every
+other trial with the same support.
+
+The two-right-hand-side trial is the exact implicit $F^{-1}B$; it is
+different from the rounded scalar trial above. The result retains all
+finite middle rows and the paid infinite far part. The existing
+inverse-residual comparison still supplies the analytic acceptance
+interface under the same common-form, domain and inverse-majorant
+premises. Full c27 Schur positivity, a successful joint lower target,
+cofinal positivity and RH remain unresolved. This is a numerical
+application of existing displacement/Schur methods, with no new general
+algorithm, priority or Lean-verification claim.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
