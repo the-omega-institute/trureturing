@@ -14,6 +14,18 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
         H("Power Traces from Trace and Determinant in Size Two"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("matrix-pow-add-two"),
+                DeclarationHandle.Create("D5/S0/Observation/MatrixTracePowerSum.pow_add_two"),
+                H("The matrix power recurrence in size two"),
+                StatementSource.FromAuthor(PowerRecurrenceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every commutative ring and every two-by-two matrix, Cayley-Hamilton "
+                    + "gives M^(n+2)=trace(M) times M^(n+1) minus det(M) times M^n. "
+                    + "This existing recurrence is used by trace_pow_add_two and by the "
+                    + "determinant-one Chebyshev transport construction in AndersonDefectFamily."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("matrix-trace-pow-add-two"),
                 DeclarationHandle.Create("D5/S0/Observation/MatrixTracePowerSum.trace_pow_add_two"),
                 H("The two-step recurrence for matrix power traces"),
@@ -70,6 +82,18 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
                 trace(matrix), Sp, Cdot, Sp,
                 trace(MatrixPower(matrix, Seq(exponent, Sp, Plus, Sp, Num(1)))), Sp, Minus, Sp,
                 determinant, Sp, Cdot, Sp, trace(MatrixPower(matrix, exponent))),
+        ]));
+    }
+
+    private static Formula PowerRecurrenceFormula()
+    {
+        Formula r=F.Id("R"), m=F.Id("M"), n=F.Id("n");
+        return Disp(new Formula.Aligned([
+            Seq(Forall,Sp,r,Colon,Sp,TypeUniverse(),Comma,Sp,TypeClass(Call("CommRing",r)),Comma),
+            Seq(Forall,Sp,m,Colon,Sp,MatrixSpace(r),Comma,Sp,n,Colon,Sp,Naturals(),Comma),
+            Seq(MatrixPower(m,Seq(n,Sp,Plus,Sp,Num(2))),Sp,Eq,Sp,
+                MatrixTrace(m),Sp,Cdot,Sp,MatrixPower(m,Seq(n,Sp,Plus,Sp,Num(1))),
+                Sp,Minus,Sp,MatrixDeterminant(m),Sp,Cdot,Sp,MatrixPower(m,n))
         ]));
     }
 

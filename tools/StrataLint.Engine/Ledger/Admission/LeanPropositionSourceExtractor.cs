@@ -12,7 +12,8 @@ internal sealed record LeanSourceDeclaration(
     ImmutableArray<LeanSourceToken> SemanticTokens,
     ImmutableArray<LeanSourceToken> AmbientTokens,
     ImmutableArray<string> Imports,
-    ImmutableHashSet<string> CustomSyntaxLiterals);
+    ImmutableHashSet<string> CustomSyntaxLiterals,
+    bool IsPrivate = false);
 
 internal sealed record LeanSourceScope(string? NamespaceName);
 
@@ -55,10 +56,12 @@ internal sealed partial class LeanSourceCatalog
         ImmutableDictionary<string, ImmutableArray<string>> importsByModule,
         ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule,
         ImmutableDictionary<string, CompleteSourceFile> completeSources,
-        ImmutableHashSet<string> completeSourceModules)
+        ImmutableHashSet<string> completeSourceModules,
+        ImmutableHashSet<string> unchangedSourceModules)
     {
         this.completeSources = completeSources;
         this.completeSourceModules = completeSourceModules;
+        this.unchangedSourceModules = unchangedSourceModules;
         this.declarations = declarations;
         this.importsByModule = importsByModule;
         customSyntaxCatalog = new LeanCustomSyntaxCatalog(
@@ -122,7 +125,8 @@ internal sealed partial class LeanSourceCatalog
             importsByModule.ToImmutable(),
             customSyntaxByModule.ToImmutable(),
             completeSources.ToImmutable(),
-            completeSourceModules.ToImmutable());
+            completeSourceModules.ToImmutable(),
+            (unchangedPaths ?? []).Select(ModuleName).ToImmutableHashSet(StringComparer.Ordinal));
     }
 
     internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
@@ -182,9 +186,21 @@ internal sealed partial class LeanSourceCatalog
         }
 
         var roots = ImmutableArray.CreateBuilder<(FrozenDeclaration Recorded, LeanSourceDeclaration Source)>();
+        LeanSourceExtractionException? unresolvedPrivate = null;
         foreach (var recorded in recordedDeclarations)
         {
-            roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded)));
+            try { roots.Add((recorded, ResolveRecordedDeclaration(moduleDeclarations, recorded))); }
+            catch (LeanSourceExtractionException exception) when (
+                exception.Failure == LeanSourceExtractionFailure.UnresolvedPrivateOwner)
+            {
+                unresolvedPrivate ??= exception;
+            }
+        }
+        if (unresolvedPrivate is not null)
+        {
+            if (TryExtractCompleteSource(modulePath, recordedDeclarations, out completeSource,
+                includeUnchangedClosure: true)) return completeSource;
+            throw unresolvedPrivate;
         }
 
         var dependencies = new Dictionary<string, LeanSourceDeclaration>(StringComparer.Ordinal);
@@ -223,6 +239,9 @@ internal sealed partial class LeanSourceCatalog
             AppendField(output, "root-key", root.Recorded.DeclarationNameKey);
             AppendField(output, "root-kind", root.Recorded.Kind);
             AppendField(output, "root-name", root.Source.FullName);
+            AppendField(output, "root-owner-path", root.Source.Path.Value);
+            if (root.Source.Path != modulePath)
+                AppendTokens(output, moduleDeclarations[0].AmbientTokens);
             AppendTokens(output, root.Source.AmbientTokens);
             AppendTokens(output, root.Source.SemanticTokens);
         }
@@ -252,7 +271,7 @@ internal sealed partial class LeanSourceCatalog
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(output.ToString()));
     }
 
-    private static LeanSourceDeclaration ResolveRecordedDeclaration(
+    private LeanSourceDeclaration ResolveRecordedDeclaration(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,
         FrozenDeclaration recorded)
     {
@@ -263,9 +282,18 @@ internal sealed partial class LeanSourceCatalog
                 $"Lean declaration name key cannot be resolved: {recorded.DeclarationNameKey}.");
         }
 
-        var matches = moduleDeclarations
-            .Where(declaration => NameKeyCanReferTo(recordedSegments, declaration.FullName))
-            .OrderByDescending(static declaration => declaration.FullName.Length)
+        var exact = ResolveExactRecordedSources(moduleDeclarations[0], recordedSegments, recorded.DeclarationNameKey).ToImmutableArray();
+        if (exact.IsEmpty && recordedSegments[0] == "_private")
+            throw new LeanSourceExtractionException(
+                $"Lean private source owner cannot be resolved: {recorded.DeclarationNameKey}.",
+                LeanSourceExtractionFailure.UnresolvedPrivateOwner);
+        if (exact.IsEmpty && recordedSegments[^1] == "eq_def")
+            throw new LeanSourceExtractionException(
+                $"Lean equation source owner cannot be resolved: {recorded.DeclarationNameKey}.");
+        var candidates = exact.IsEmpty
+            ? moduleDeclarations.Where(declaration => NameKeyCanReferTo(recordedSegments, declaration.FullName))
+            : exact;
+        var matches = candidates.OrderByDescending(static declaration => declaration.FullName.Length)
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
@@ -288,8 +316,11 @@ internal sealed partial class LeanSourceCatalog
         }
 
         var selected = best[0];
+        var sourceSegments = FullNameSegments(selected.FullName);
+        var directPrivate = recordedSegments[0] == "_private"
+            && recordedSegments[^sourceSegments.Length..].SequenceEqual(sourceSegments);
         if (!RecordedKindMatchesSource(recorded.Kind, selected.Kind)
-            && FullNameSegments(selected.FullName).Length == recordedSegments.Length)
+            && (sourceSegments.Length == recordedSegments.Length || directPrivate))
         {
             throw new LeanSourceExtractionException(
                 $"Lean declaration kind does not match source for {recorded.DeclarationNameKey}.");
@@ -298,12 +329,50 @@ internal sealed partial class LeanSourceCatalog
         return selected;
     }
 
+    private IEnumerable<LeanSourceDeclaration> ResolveExactRecordedSources(
+        LeanSourceDeclaration owner,
+        ImmutableArray<string> recordedSegments,
+        string nameKey)
+    {
+        var privateModule = ImmutableArray<string>.Empty;
+        if (recordedSegments[0] == "_private")
+        {
+            var components = CanonicalLeanNameDecoder.ComponentsPrefix(nameKey, 0, out var consumed);
+            var index = Array.FindIndex(components, static part => part.Kind == "nn");
+            if (consumed != nameKey.Length || index < 2 || components[index].Value != "0"
+                || components[..index].Any(static part => part.Kind != "ns")
+                || components[(index + 1)..].Any(static part => part.Kind != "ns"))
+                yield break;
+            privateModule = components[1..index].Select(static part => part.Value).ToImmutableArray();
+            recordedSegments = components[(index + 1)..].Select(static part => part.Value).ToImmutableArray();
+            if (recordedSegments.IsEmpty) yield break;
+        }
+
+        // A generated equation belongs to the complete named definition before eq_def.
+        // Arbitrary name-key substrings cannot establish an imported source owner.
+        var lengths = recordedSegments[^1] == "eq_def"
+            ? new[] { recordedSegments.Length, recordedSegments.Length - 1 }
+            : new[] { recordedSegments.Length };
+        foreach (var length in lengths)
+        {
+            var sourceSegments = recordedSegments[..length];
+            var fullName = string.Join('.', sourceSegments);
+            if (!byFullName.TryGetValue(fullName, out var matches)) continue;
+            foreach (var match in matches)
+                if (sourceSegments.SequenceEqual(FullNameSegments(match.FullName))
+                    && (privateModule.IsEmpty || match.IsPrivate
+                        && privateModule.SequenceEqual(FullNameSegments(ModuleName(match.Path))))
+                    && IsImported(owner, match))
+                    yield return match;
+        }
+    }
+
     private static bool RecordedKindMatchesSource(string recordedKind, string sourceKind) =>
         string.Equals(recordedKind, sourceKind, StringComparison.Ordinal)
         || sourceKind switch
         {
             "lemma" => recordedKind == "theorem",
-            "structure" => recordedKind == "inductive",
+            "structure" or "class" => recordedKind == "inductive",
             "abbrev" => recordedKind == "def",
             "instance" => recordedKind is "def" or "theorem",
             _ => false,
@@ -491,7 +560,7 @@ internal sealed partial class LeanSourceCatalog
             var end = commandIndex + 1 < commandStarts.Length
                 ? commandStarts[commandIndex + 1]
                 : tokens.Length;
-            var head = FindCommandHead(tokens, start, end);
+            var head = FindCommandHead(tokens, start, end, out _, out var privateModifier);
             if (head < 0) continue;
             var command = tokens[head].Text;
             if (command == "namespace")
@@ -571,7 +640,8 @@ internal sealed partial class LeanSourceCatalog
                 tokens[kindIndex..semanticEnd],
                 ambientTokens,
                 imports,
-                moduleCustomSyntax));
+                moduleCustomSyntax,
+                privateModifier));
         }
 
         return result.ToImmutable();
@@ -645,9 +715,17 @@ internal sealed partial class LeanSourceCatalog
         ImmutableArray<LeanSourceToken> tokens,
         int start,
         int end,
-        out bool localModifier)
+        out bool localModifier) => FindCommandHead(tokens, start, end, out localModifier, out _);
+
+    private static int FindCommandHead(
+        ImmutableArray<LeanSourceToken> tokens,
+        int start,
+        int end,
+        out bool localModifier,
+        out bool privateModifier)
     {
         localModifier = false;
+        privateModifier = false;
         var index = start;
         while (index < end)
         {
@@ -669,6 +747,7 @@ internal sealed partial class LeanSourceCatalog
                 || tokens[index].Text == "scoped" && index + 1 < end && tokens[index + 1].Text == "instance")
             {
                 localModifier |= tokens[index].Text == "local";
+                privateModifier |= tokens[index].Text == "private";
                 index++;
             }
             else

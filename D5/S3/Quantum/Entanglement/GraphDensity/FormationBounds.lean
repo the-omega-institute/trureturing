@@ -106,6 +106,7 @@ The source expression uses eigenvalues and the literal partialTraceRight.
 -/
 
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import Mathlib.Analysis.Normed.Module.Normalize
 import D5.S3.Quantum.Fibers.PhysicalFiber
 import D5.S3.Quantum.CloningMachine
@@ -856,9 +857,8 @@ private theorem marginal_branch_mixture {q k : ℕ} (part : Fin q → Fin k) (ψ
   apply Finset.sum_congr rfl
   intro j _
   rw [branch_outer part j ψ]
-  ext a a'
-  simp [partialTraceRight,D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
-    Matrix.smul_apply,Finset.mul_sum,Complex.real_smul]
+  exact
+    D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul _ _
 
 private theorem pure_measurement_entropy {q k : ℕ} (part : Fin q → Fin k) (ψ : ((Fin 2 × Fin q) → ℂ))
     (hψ : ∑ x, ‖ψ x‖^2=1) :

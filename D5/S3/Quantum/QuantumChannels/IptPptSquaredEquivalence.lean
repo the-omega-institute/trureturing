@@ -145,7 +145,7 @@ private theorem ampl_comp (Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix
     (MatrixMap.kron (Phi ∘ₗ Psi) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((MatrixMap.kron Psi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P) := by
   ext a b
   simp only [kron_id_apply, LinearMap.comp_apply]
-private theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
+theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
     (hPhi : MatrixMap.IsCompletelyPositive Phi) (hPsi : MatrixMap.IsCompletelyPositive Psi) : MatrixMap.IsCompletelyPositive (Phi ∘ₗ Psi) := by
   intro r P hP
   rw [ampl_comp]
@@ -661,7 +661,7 @@ private theorem bp_cp : MatrixMap.IsCompletelyPositive (bp n) := by unfold bp; e
 private theorem bm_cp : MatrixMap.IsCompletelyPositive (bm n) := by unfold bm; exact cp_half (conj_cp _)
 private theorem put_pp_cp : MatrixMap.IsCompletelyPositive (put n pp) := by rw [put_pp_conj]; exact cp_half (conj_cp _)
 private theorem put_pm_cp : MatrixMap.IsCompletelyPositive (put n pm) := by rw [put_pm_conj]; exact cp_half (conj_cp _)
-private theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
+theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
     MatrixMap.IsCompletelyPositive ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) := by
   intro r P hP
   have he : (MatrixMap.kron ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = ((MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) Pᵀ)ᵀ := by

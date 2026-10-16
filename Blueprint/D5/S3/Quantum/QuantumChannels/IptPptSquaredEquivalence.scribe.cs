@@ -71,6 +71,12 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             OwnerNode("prepare-eb", Prefix + "prepare_eb", "Positive measure-and-prepare maps break entanglement", PrepareBreaking(),
                 "Every positive amplified input has separable output under a map with finite positive measure-and-prepare form. Positivity of each weighted matrix follows from a rank-one decomposition of the measurement matrix and positive congruence of the input; tensor products with the positive preparations then form a finite separable sum.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("cp_comp", "Composition preserves complete positivity", CpComposition(),
+                "The composition of completely positive linear matrix maps is completely positive, over every RCLike field and all finite dimensions.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("cp_double_tau", "Double transposition preserves complete positivity", CpDoubleTranspose(),
+                "For every completely positive complex-linear matrix map, transposing its input and output gives a completely positive map. Input and output dimensions may differ.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "The three conjectures are equivalent", Disp(Equivalence()),
                 "IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by the flag lift and recovery. The source's implications PPT²(ℂ) ⇒ IPT²(ℂ) ⇒ IPT²(ℝ) retain dimension n. Entanglement breaking is characterized by a separable input-first Choi matrix, with an explicit tensor swap, and by measure-and-prepare form. Completely positive maps preserve it under pre- and post-composition. The complexification of a real entanglement-breaking map is complex entanglement breaking; in the reverse direction the IPT condition gives CSEP ∩ IPT = real SEP. These facts close both equivalences. The PPT-squared conjecture itself and the possibility of avoiding dimension doubling remain open.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -78,10 +84,22 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
                     ProblemSlugRef.Create("chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence"),
                     ResolutionKind.Proved)))));
 
+    private static Formula Cp(Formula phi) => App(Qualified("MatrixMap", "IsCompletelyPositive"), phi);
+    private static Formula RectMap(Formula scalar, string input, string output) => Seq(Mat(FinOf(V(input)), scalar), Sp,
+        new Formula.Subscript(To, Seq(V("l"), OpenBracket, scalar, CloseBracket)), Sp, Mat(FinOf(V(output)), scalar));
+    private static Formula LinearCompose(Formula a, Formula b) => Seq(Parenthesized(a), Sp, new Formula.Subscript(Circ, V("l")), Sp, Parenthesized(b));
+    private static Formula TransposeMap(string d) => App(Qualified("LinearEquiv", "toLinearMap"),
+        App(Qualified("Matrix", "transposeLinearEquiv"), FinOf(V(d)), FinOf(V(d)), C, C));
+    private static Formula CpComposition() => Disp(All("K", Named("Type"), Instance(All("n", N, All("m", N, All("p", N,
+        All("Phi", RectMap(V("K"), "m", "p"), All("Psi", RectMap(V("K"), "n", "m"),
+        Imp(Cp(V("Phi")), Imp(Cp(V("Psi")), Cp(LinearCompose(V("Phi"), V("Psi")))))))))))));
+    private static Formula CpDoubleTranspose() => Disp(All("n", N, All("m", N, All("Phi", RectMap(C, "n", "m"),
+        Imp(Cp(V("Phi")), Cp(LinearCompose(TransposeMap("m"), LinearCompose(V("Phi"), TransposeMap("n")))))))));
+
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("ipt-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("ipt-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock OwnerNode(string id, string owner, string title, Formula formula, string prose,

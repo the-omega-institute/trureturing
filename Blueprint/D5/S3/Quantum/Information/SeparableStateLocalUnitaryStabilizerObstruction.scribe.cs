@@ -15,6 +15,10 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
         "A rank-two mixture of two nonorthogonal product states remains outside the full convex stabilizer hull under every local unitary.",
         H("Separable states outside every local-unitary stabilizer frame"),
         Blocks(
+            Node("pauli_square", "Pauli matrices square to the identity", PauliSquare(),
+                "Each Pauli matrix, including the identity, has square equal to the identity.", DescribeRole.Theorem, true),
+            Node("pauli_projector_trace", "Nonidentity Pauli eigenprojectors have trace one", PauliProjectorTrace(),
+                "For a nonidentity Pauli label, either of its two spectral projectors has trace one.", DescribeRole.Theorem, true),
             Node("unitVector", "Normalized pure vectors", UnitFormula(),
                 "A pure vector has squared norm one. star is componentwise complex conjugation and dotProduct sums over the finite index type n. The Fintype argument is an instance, rather than a named mathematical variable.", DescribeRole.Definition),
             Node("IsHermitianPauli", "Signed Hermitian two-qubit Paulis", PauliFormula(),
@@ -48,6 +52,13 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                     ProblemSlugRef.Create("qian-wang-2025-separable-states-stab-local-unitaries"),
                     ResolutionKind.Proved))),
         []));
+
+    private static Formula PauliSquare() => Disp(All("p", Named("Pauli"),
+        EqTo(Mul(Call("pauliMatrix", F.Id("p")), Call("pauliMatrix", F.Id("p"))), D(1))));
+    private static Formula PauliProjectorTrace() => Disp(All("p", Named("Pauli"),
+        Logic(NeTo(F.Id("p"), Named("Pauli.I")), FormulaLogicOperator.Implies, All("ep", Named("Bool"),
+            EqTo(Call("Matrix.trace", Call("spectral", F.Id("p"),
+                Call("ite", EqTo(F.Id("ep"), Named("true")), D(1), D(0)))), D(1))))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool derived = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
