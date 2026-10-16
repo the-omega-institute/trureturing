@@ -551,7 +551,7 @@ internal sealed partial class LeanSourceCatalog
             }
 
             var text = tokens[index].Text;
-            if ((tokens[index].Column == 0 || mutualDepth > 0)
+            if ((tokens[index].CommandColumn == 0 || mutualDepth > 0)
                 && (text is "@" or "import" or "namespace" or "end" or "section" or "mutual"
                 or "macro" or "macro_rules" or "syntax" or "notation" or "local" or "scoped"
                 or "elab" or "elab_rules" or "open" or "variable" or "include" or "omit"
@@ -562,11 +562,11 @@ internal sealed partial class LeanSourceCatalog
                 result.Add(index);
             }
 
-            if (tokens[index].Column == 0 && text == "mutual")
+            if (tokens[index].CommandColumn == 0 && text == "mutual")
             {
                 mutualDepth++;
             }
-            else if (tokens[index].Column == 0 && text == "end" && mutualDepth > 0)
+            else if (tokens[index].CommandColumn == 0 && text == "end" && mutualDepth > 0)
             {
                 mutualDepth--;
             }
