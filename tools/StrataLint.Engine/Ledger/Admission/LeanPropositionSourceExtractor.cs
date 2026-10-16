@@ -303,7 +303,7 @@ internal sealed partial class LeanSourceCatalog
         || sourceKind switch
         {
             "lemma" => recordedKind == "theorem",
-            "structure" => recordedKind == "inductive",
+            "structure" or "class" => recordedKind == "inductive",
             "abbrev" => recordedKind == "def",
             "instance" => recordedKind is "def" or "theorem",
             _ => false,
