@@ -7,10 +7,10 @@
    digest: Balanced Dicke probes optimize detector-sensor identification. -/
 /-
 proof_shape and consumer map (names in this module namespace; escape_witness: none):
-fire: bind-only; consumers=G_diag,G_phase,G_total,G_total_moment,N_diag,N_psd,average_gram_overlap,dicke_attainment,dicke_gram,dicke_gram_invariant,fire_normSq,global_success_upper_bound,isoSuccess,isoSuccess_gram,result,sum_N | isoSuccess: bind-only; consumers=claim,dicke_attainment,global_success_upper_bound,isoSuccess_gram(type),result; owners=Finset.expect | rCount: bind-only; consumers=claim,counts_partition,ratio,ratio_formula,result
+fire: bind-only; consumers=G_diag,G_phase,G_total,G_total_moment,N_diag,N_psd,average_gram_overlap,dicke_attainment,dicke_gram,dicke_gram_invariant,fire_normSq,global_success_upper_bound,isoSuccess,isoSuccess_gram,result,sum_N | isoSuccess: bind-only; consumers=claim,dicke_attainment,global_success_upper_bound,isoSuccess_gram(type),result | rCount: bind-only; consumers=claim,counts_partition,ratio,ratio_formula,result
 lCount: bind-only; consumers=claim,counts_partition,lCount_pair_independent,lCount_perm,lCount_self,lCount_sum,pair_count_product,ratio,ratio_formula,result | T: bind-only; consumers=claim,global_success_upper_bound,result,threshold_range,threshold_small_nonneg | claim: bind-only; consumers=result(type); owners=Nat.lt_of_add_left_lt,Nat.zero_lt_of_lt
 N_psd: bind-only; consumers=global_success_upper_bound | sum_N: bind-only; consumers=global_success_upper_bound | N_diag: bind-only; consumers=isoSuccess_gram
-isoSuccess_gram: bind-only; consumers=dicke_attainment,global_success_upper_bound; owners=Fintype.expect_eq_sum_div_card | phase_normSq: bind-only; consumers=fire_normSq | fire_normSq: bind-only; consumers=G_diag
+isoSuccess_gram: bind-only; consumers=dicke_attainment,global_success_upper_bound | phase_normSq: bind-only; consumers=fire_normSq | fire_normSq: bind-only; consumers=G_diag
 G_diag: bind-only; consumers=average_gram_overlap | G_phase: bind-only; consumers=G_total,dicke_gram_invariant | G_total: bind-only; consumers=G_total_moment; owners=Eq.symm,Finset.sum_comm
 phase_euler: bind-only; consumers=phase_sum | phase_sum: bind-only; consumers=phase_sum_normSq | phase_sum_normSq: bind-only; consumers=G_total_moment
 avgMatrix: bind-only; consumers=average_gram_overlap,avgMatrix_diag,avgMatrix_eq_of_invariant,avgMatrix_invariant,avgMatrix_total,dicke_gram,global_success_upper_bound,invariant_constant_offDiagonal,sum_avgN | avgN: bind-only; consumers=avgN_objective,avgN_psd(type),global_success_upper_bound,sum_avgN | avgN_psd: bind-only; consumers=global_success_upper_bound
@@ -55,7 +55,7 @@ D5/S3/Quantum/Recovery/PurifiedLocalPath; D5.S3.Quantum.Recovery.ProductPrefixRi
 D5/S3/Quantum/Reduction/IsometricCompression; D5.S3.Quantum.Reduction.IsometricCompression.compress; sha256:ece129ea3121d41eb72b96831bf50f675e9fccf3bae2b5d39dc556c28adb9beb
 D5/S3/Weil/ZetaLinear/RankTrace; RHLinalg.trace_mul_nonneg_of_posSemidef; sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3
 The claim inlines the weight formula and retains its quantifiers; LocalPOVM supplies the measurement type.
-Finset.expect supplies the uniform mean in isoSuccess and the permutation averages.
+The explicit factor 1/n supplies the uniform mean in isoSuccess; Finset.expect is used for permutation averages.
 Matrix.transpose forms the fired-state matrix; ProductPrefixRigidity.gram and
 IsometricCompression.compress supply its Gram matrix and pulled-back effects.
 The Fin 2 weight owner DynamicCoolingParallelTieUniqueness and the phase owner
@@ -79,7 +79,7 @@ def fire {n : ℕ} (θ : ℝ) (i : Fin n) (ψ : (Fin n → Bool) → ℂ) :
   fun x => Complex.exp ((if x i then 1 else -1) * (θ : ℂ) * Complex.I) * ψ x
 def isoSuccess {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)
     (M : LocalPOVM (Fin n → Bool) (Fin n)) : ℝ :=
-  Finset.univ.expect (fun i => (star (fire θ i ψ) ⬝ᵥ (M.effect i *ᵥ fire θ i ψ)).re)
+  (1 / (n : ℝ)) * ∑ i, (star (fire θ i ψ) ⬝ᵥ (M.effect i *ᵥ fire θ i ψ)).re
 def rCount (n : ℕ) (i j : Fin n) (k : ℕ) :=
   (Finset.univ.filter (fun x : Fin n → Bool => (Finset.univ.filter (fun j => x j = true)).card = k ∧ x i = x j)).card
 def lCount (n : ℕ) (i j : Fin n) (k : ℕ) :=
@@ -102,9 +102,7 @@ private theorem N_diag {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.transpose, Matrix.of_apply, dotProduct, Matrix.mulVec, Pi.star_apply]
 private theorem isoSuccess_gram {n : ℕ} (θ : ℝ) (ψ : (Fin n → Bool) → ℂ)     (M : LocalPOVM (Fin n → Bool) (Fin n)) :     isoSuccess θ ψ M = (1 / (n : ℝ)) * ∑ i, ((D5.S3.Quantum.Reduction.IsometricCompression.compress ((fun i => fire θ i ψ)ᵀ) (M.effect i)) i i).re := by
-  simp only [isoSuccess, Fintype.expect_eq_sum_div_card, Fintype.card_fin,
-    N_diag, div_eq_mul_inv, one_mul]
-  exact mul_comm _ _
+  simp only [isoSuccess, N_diag, div_eq_mul_inv, one_mul]
 private theorem phase_normSq (θ : ℝ) (b : Bool) : Complex.normSq ((Complex.exp ((if b then 1 else -1) * (θ : ℂ) * Complex.I))) = 1 := by
   rw [Complex.normSq_eq_norm_sq]
   have h := Complex.norm_exp_ofReal_mul_I ((if b then 1 else -1) * θ)
@@ -448,15 +446,15 @@ private theorem gram_decomposition_to_povm {n : ℕ} (H : Matrix (Fin n) (Fin n)
         simp [K, Matrix.conjTranspose_mul, hH.eq, Matrix.mul_assoc]
       _ = N i := by rw [hP.eq]; exact hp
 private theorem trace_rank_mul {n : ℕ} (H K : Matrix (Fin n) (Fin n) ℂ)     (hH : H.IsHermitian) (i : Fin n) :     (Matrix.vecMulVec (H.col i) (star (H.col i)) * K).trace = (H * K * H) i i := by
-  rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec]
-  simp only [dotProduct, Matrix.vecMul, Matrix.mul_apply, Matrix.col_apply,
-    Pi.star_apply, Matrix.of_apply, hH.apply]
-  simp only [Finset.mul_sum, Finset.sum_mul]
-  apply Finset.sum_congr rfl
-  intro j _
-  apply Finset.sum_congr rfl
-  intro k _
-  ring
+  rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm,
+    ← Matrix.dotProduct_mulVec]
+  have hcol : star (H.col i) = H i := by
+    funext j
+    exact hH.apply i j
+  rw [hcol]
+  change _ = (H * K).row i ⬝ᵥ H.col i
+  rw [Matrix.dotProduct_mulVec]
+  rfl
 private theorem constant_diagonal_gram_bound {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ)     (hH : H.PosSemidef) (d : ℝ) (hd : 0 ≤ d) (hdiag : ∀ i, (H i i).re = d)     (N : Fin n → Matrix (Fin n) (Fin n) ℂ) (hN : ∀ i, (N i).PosSemidef)     (hs : ∑ i, N i = H * H) :     ∑ i, (N i i i).re ≤ (n : ℝ) * d^2 := by
   obtain ⟨K, hK, hR, hKN⟩ := gram_decomposition_to_povm H hH.isHermitian N hN hs
   have hi (i : Fin n) : (N i i i).re ≤ d * (H * K i).trace.re := by
