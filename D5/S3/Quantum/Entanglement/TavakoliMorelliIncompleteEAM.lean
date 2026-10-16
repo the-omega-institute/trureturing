@@ -19,7 +19,6 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 open Matrix
 set_option backward.isDefEq.respectTransparency false
-set_option synthInstance.maxHeartbeats 200000
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 namespace D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
@@ -69,11 +68,13 @@ def Pn {d n : ℕ} (ρ : BipartiteOp d) (A B : EAM d n) : Matrix (Fin n) (Fin n)
 
 theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) :
-    LinearMap.trace ℂ (EuclideanSpace ℂ κ) (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A).toLinearMap =
+    LinearMap.trace ℂ (EuclideanSpace ℂ κ)
+      (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A).toLinearMap =
       A.trace := by
   change LinearMap.trace ℂ _ (Matrix.toEuclideanLin A) = _
   rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.trace_toLin_eq]
 
+set_option synthInstance.maxHeartbeats 200000 in
 theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm A =
@@ -83,7 +84,8 @@ theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   have hsqrt : CFC.abs (Φ A) = Φ (CFC.sqrt (Aᴴ * A)) := by
     change CFC.sqrt (star (Φ A) * Φ A) = _
     apply CFC.sqrt_unique
-    · rw [← map_mul, CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg]
+    · rw [← map_mul,
+        CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg]
       simp only [← Matrix.star_eq_conjTranspose, map_mul, map_star]
     · exact map_nonneg Φ (CFC.sqrt_nonneg _)
   obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
@@ -94,6 +96,17 @@ theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [hsqrt, tsum_fintype, ← Complex.re_sum]
   rw [← trace_toEuclideanCLM (CFC.sqrt (Aᴴ * A)),
     trace_eq_sum_inner_hilbertBasis_of_finiteDimensional _ b, tsum_fintype]
+
+
+theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
+    hsSq A = (Aᴴ * A).trace.re := by
+  open scoped Matrix.Norms.Frobenius in
+    have htrace := congrArg Complex.re
+      (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace A)
+    rw [Complex.ofReal_re] at htrace
+    rw [← htrace]
+    change _ = ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2
+    simp only [PiLp.norm_sq_eq_of_L2, hsSq]
 
 
 theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
@@ -109,25 +122,21 @@ theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
       tsum_fintype, tsum_fintype, Complex.re_sum]
     apply Finset.sum_congr rfl
     intro i _
-    simpa only [ContinuousLinearMap.star_eq_adjoint, ContinuousLinearMap.mul_def, RCLike.re_eq_complex_re] using
+    simpa only [ContinuousLinearMap.star_eq_adjoint, ContinuousLinearMap.mul_def,
+      RCLike.re_eq_complex_re] using
       ContinuousLinearMap.apply_norm_sq_eq_inner_adjoint_right (𝕜 := ℂ) T (b i)
   rw [hsum]
   change (LinearMap.trace ℂ _
     (star (Matrix.toEuclideanCLM (𝕜 := ℂ) A) *
       Matrix.toEuclideanCLM (𝕜 := ℂ) A).toLinearMap).re = _
   rw [← map_star, ← map_mul, trace_toEuclideanCLM]
-  open scoped Matrix.Norms.Frobenius in
-    have htrace := congrArg Complex.re
-      (D5.S3.Quantum.GNSMatrix.frobenius_norm_sq_eq_trace A)
-    rw [Complex.ofReal_re] at htrace
-    rw [Matrix.star_eq_conjTranspose, ← htrace]
-    change ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2 = _
-    simp only [PiLp.norm_sq_eq_of_L2, hsSq]
+  rw [Matrix.star_eq_conjTranspose, ← hsSq_eq_trace]
 
-theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ] [DecidableEq κ]
+theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
     (R S : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (R * S) ≤
       Real.sqrt (hsSq R) * Real.sqrt (hsSq S) := by
+  classical
   obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
   let : Finite w := b.orthonormal.linearIndependent.finite
   let : Fintype w := Fintype.ofFinite w
@@ -141,10 +150,11 @@ theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ] [DecidableEq κ]
   simpa only [hsSq_toEuclideanCLM] using h
 
 theorem traceNorm_gram_le {ι κ : Type*}
-    [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
+    [Fintype ι] [Fintype κ]
     (F G : Matrix ι κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (Fᴴ * G) ≤
       Real.sqrt (hsSq F) * Real.sqrt (hsSq G) := by
+  classical
   let R : Matrix (κ ⊕ ι) (κ ⊕ ι) ℂ := fromBlocks 0 Fᴴ 0 0
   let S : Matrix (κ ⊕ ι) (κ ⊕ ι) ℂ := fromBlocks 0 0 G 0
   let J : Matrix (κ ⊕ ι) κ ℂ := fromRows 1 0
@@ -156,9 +166,9 @@ theorem traceNorm_gram_le {ι κ : Type*}
     simp only [R, S, J, fromBlocks_multiply, Matrix.zero_mul, Matrix.mul_zero,
       zero_add, add_zero, fromRows_mul, Matrix.one_mul,
       conjTranspose_fromRows_eq_fromCols_conjTranspose, conjTranspose_one,
-      conjTranspose_zero, mul_fromCols, Matrix.mul_one, Matrix.mul_zero,
-      ]
-    ext i j <;> cases i <;> cases j <;> rfl
+      conjTranspose_zero, mul_fromCols, Matrix.mul_one]
+    ext i j
+    cases i <;> cases j <;> rfl
   have hR : hsSq R = hsSq F := by
     simp only [hsSq, R, Fintype.sum_sum_type, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
@@ -210,6 +220,117 @@ theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
     ScaledPure (A.effect a) := by
   refine ⟨(d : ℝ) / n, A.val a, by positivity, ?_⟩
   simp only [EAM.effect, Complex.ofReal_div, Complex.ofReal_natCast]
+
+
+theorem ket_dot_self {ι : Type*} [Fintype ι] (u : Ket ι) :
+    star u.vec ⬝ᵥ u.vec = 1 := by
+  rw [dotProduct]
+  simpa only [Pi.star_apply, Complex.star_def, ← Complex.normSq_eq_conj_mul_self,
+    ← Complex.ofReal_sum, Complex.ofReal_one, Ket.apply] using
+    congrArg Complex.ofReal (Ket.normalized u)
+
+theorem proj_eq_outer {ι : Type*} [Fintype ι] [DecidableEq ι] (u : Ket ι) :
+    proj u = vecMulVec u.vec (star u.vec) := by
+  ext i j
+  exact MState.pure_apply u
+
+theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d) :
+    (proj u * Matrix.kronecker A B).trace =
+      ((coeff u)ᴴ * A * coeff u * Bᵀ).trace := by
+  rw [proj_eq_outer]
+  rw [D5.S3.Quantum.BlockNorm.EssentiallyHermitian.outer_pairing_trace
+    _ (WithLp.toLp 2 u.vec)]
+  rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toEuclideanCLM]
+  rw [dotProduct_comm]
+  change star (vec (coeff u)ᵀ) ⬝ᵥ ((Matrix.kronecker A B) *ᵥ vec (coeff u)ᵀ) = _
+  simp only [Matrix.kronecker]
+  rw [kronecker_mulVec_vec, star_vec_dotProduct_vec]
+  rw [← trace_transpose]
+  simp only [transpose_mul, transpose_transpose, conjTranspose_transpose]
+  rw [trace_mul_comm]
+  simp only [Matrix.mul_assoc]
+  rfl
+
+theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
+    ((coeff u)ᴴ * coeff u).trace.re = 1 := by
+  rw [← hsSq_eq_trace]
+  simpa only [hsSq, coeff, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
+
+theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
+    (hr : (coeff u).rank ≤ r) :
+    ∃ (U V : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ),
+      (∀ i, 0 ≤ sval i) ∧
+      coeff u = U.val * Matrix.diagonal (fun i => (sval i : ℂ)) * V.valᴴ ∧
+      (∑ i, sval i ^ 2) = 1 ∧
+      Fintype.card {i : Fin d // sval i ≠ 0} ≤ r := by
+  let hH : ((coeff u)ᴴ * coeff u).IsHermitian :=
+    Matrix.isHermitian_conjTranspose_mul_self _
+  let sval := fun i => Real.sqrt (hH.eigenvalues i)
+  let D : Op d := diagonal (fun i => (sval i : ℂ))
+  obtain ⟨U, V, hUV⟩ := exists_svd_sqrt_eigenvalues (coeff u)
+  change coeff u = U.val * diagonal (fun i => (sval i : ℂ)) * V.valᴴ at hUV
+  refine ⟨U, V, sval, fun i => Real.sqrt_nonneg _, hUV, ?_, ?_⟩
+  · have hU : U.valᴴ * U.val = 1 := Unitary.star_mul_self_of_mem U.prop
+    have hV : V.valᴴ * V.val = 1 := Unitary.star_mul_self_of_mem V.prop
+    have hsquare : ((coeff u)ᴴ * coeff u).trace =
+        (Dᴴ * D).trace := by
+      change coeff u = U.val * D * V.valᴴ at hUV
+      rw [hUV]
+      simp only [conjTranspose_mul, conjTranspose_conjTranspose]
+      calc
+        _ = (V.val * Dᴴ * (U.valᴴ * U.val) * D * V.valᴴ).trace := by
+          simp only [Matrix.mul_assoc]
+        _ = (V.val * (Dᴴ * D) * V.valᴴ).trace := by rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+        _ = _ := by rw [trace_mul_cycle, hV, Matrix.one_mul]
+    have hnorm := coeff_normalized u
+    rw [hsquare] at hnorm
+    simpa only [D, diagonal_conjTranspose, diagonal_mul_diagonal,
+      trace_diagonal, Pi.star_apply, Complex.star_def, Complex.conj_ofReal,
+      Complex.re_sum, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+      mul_zero, sub_zero, pow_two] using hnorm
+  · have hrank : (coeff u).rank =
+        Fintype.card {i : Fin d // sval i ≠ 0} := by
+      rw [hUV, rank_mul_eq_left_of_isUnit_det V.valᴴ _
+        (by rw [det_conjTranspose]; exact (Matrix.UnitaryGroup.det_isUnit V).star),
+        rank_mul_eq_right_of_isUnit_det U.val _ (Matrix.UnitaryGroup.det_isUnit U),
+        rank_diagonal]
+      exact Fintype.card_congr (Equiv.subtypeEquivRight (fun i => by simp))
+    rwa [hrank] at hr
+
+theorem scaledPure_hermitian {d : ℕ} {A : Op d} (hA : ScaledPure A) :
+    A.IsHermitian := by
+  obtain ⟨c, u, _, rfl⟩ := hA
+  exact (MState.Hermitian (MState.pure u)).smul (by simp [isSelfAdjoint_iff])
+
+theorem scaledPure_sandwich {d : ℕ} {A : Op d} (hA : ScaledPure A) (M : Op d) :
+    A * M * A = (M * A).trace • A := by
+  obtain ⟨c, u, _, rfl⟩ := hA
+
+  have h := (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake u.vec (ket_dot_self u) M).2
+  have hs : proj u * M * proj u = (M * proj u).trace • proj u := by
+    simpa only [proj_eq_outer,
+      D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity, h.2] using h.1
+  simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, hs, smul_smul,
+    smul_eq_mul]
+  congr 1
+  ring
+
+theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d) :
+    hsSq (K * A * Kᴴ) = (((Kᴴ * K) * A).trace.re) ^ 2 := by
+  have hX : (K * A * Kᴴ).IsHermitian :=
+    Matrix.isHermitian_mul_mul_conjTranspose K (scaledPure_hermitian hA)
+  have ht : (K * A * Kᴴ).trace = ((Kᴴ * K) * A).trace :=
+    Matrix.trace_mul_cycle K A Kᴴ
+  have hsquare : ((K * A * Kᴴ) * (K * A * Kᴴ)).trace =
+      (((Kᴴ * K) * A).trace) ^ 2 := by
+    have heq : (K * A * Kᴴ) * (K * A * Kᴴ) =
+        K * (A * (Kᴴ * K) * A) * Kᴴ := by simp only [Matrix.mul_assoc]
+    rw [heq, scaledPure_sandwich hA, Matrix.mul_smul, Matrix.smul_mul,
+      Matrix.trace_smul, smul_eq_mul, ht, pow_two]
+  rw [hsSq_eq_trace, hX.eq, hsquare]
+  rw [D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+    _ _ (Matrix.isHermitian_conjTranspose_mul_self K) (scaledPure_hermitian hA)]
+  norm_cast
 
 
 def claim : Prop :=
