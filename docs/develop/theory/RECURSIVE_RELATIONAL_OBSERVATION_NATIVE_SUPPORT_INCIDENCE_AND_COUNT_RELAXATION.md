@@ -774,3 +774,384 @@ theorem follows from this installed-state comparison.
 [Bryant]: https://www.cs.cmu.edu/~bryant/pubdir/ieeetc86.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Common-support cuts and compensation in short intervals
+
+**Definition 9.1 (cuts and interval incidence on one complete graph).**
+Fix one graph of Definition 1.2, with correctness, actual termination
+and both caps (SI.3). All notation and original costs remain those of
+(SI.1), (SI.4), (SI.6) and (SI.18). For $0\le d<n$, put
+$V_d=\{(h,z)\in V:h+z=d\}$. Call $d$ a common-support depth if
+every actual live history at that depth has the same support $T_d$.
+By the diagonal argument in Theorem 4.1, this is equivalent to
+$a_p=1$ for every $p\in V_d$: that argument requires no singleton
+hypothesis on other diagonals. Depth zero is common, with
+$T_0=\varnothing$.
+
+Adjoin the mathematical endpoint $n$, with $T_n=[n]$, and list all
+common-support depths together with that endpoint as
+
+$$
+0=d_0<d_1<\cdots<d_s=n.
+\tag{SI.28}
+$$
+
+Write $\mathcal C=\{d_0,\ldots,d_{s-1}\}$ and let $\mathcal B$
+be the set of open intervals $B=(d_j,d_{j+1})$. The length of
+$B=(a,b)$ means $\beta_B=b-a$, including its boundary spacing.
+There is no live cell at the formal endpoint $n$. Define
+
+$$
+\begin{aligned}
+V_B&=\{p\in V:a<h(p)+z(p)<b\},&
+Q_B&=\bigcup_{p\in V_B}F_p,\\
+E_B&=\sum_{p\in V_B}(b_p-1),&
+D_B&=\sum_{q\in Q_B}
+       \bigl(|\{p\in V_B:q\in F_p\}|-1\bigr),\\
+Q_a^{\mathrm{cut}}&=\bigcup_{p\in V_a}F_p,&
+E_a&=\sum_{p\in V_a}(b_p-1),\qquad
+E_{\mathrm{cut}}=\sum_{a\in\mathcal C}E_a.
+\end{aligned}
+\tag{SI.29}
+$$
+
+An empty interval contributes empty sets and zero sums. For the same
+installed coordinate multiplicity vector, put
+
+$$
+\begin{aligned}
+m_i&=|\{q\in Q:i(q)=i\}|,&
+m(X)&=\sum_{i\in X}m_i,\\
+X_B&=T_b\setminus T_a,&
+u_B&=|\{q\in Q\setminus Q_{\mathrm{live}}:i(q)\in X_B\}|,\\
+g_B&=|V_a|+|V_B|.&&
+\end{aligned}
+\tag{SI.30}
+$$
+
+Cuts, depths, supports and coordinate blocks are indices used to
+describe actual histories. They supply no running clock, block entry,
+reset, selector or additional state to $P$.
+
+**Lemma 9.2 (actual extension and support envelopes).** Every actual
+live history at depth $d$ extends through actual live histories to
+every specified depth $e$ with $d\le e\le n-1$. The supports at
+the depths in (SI.28) form a strictly increasing chain, with
+$|T_a|=a$. For $B=(a,b)\in\mathcal B$ and any actual live
+occurrence $(p,S,q)\in\mathcal R$ at depth $a\le d<b$,
+
+$$
+T_a\subseteq S\subsetneq T_b,\qquad
+i(q)\in T_b\setminus S\subseteq X_B.
+\tag{SI.31}
+$$
+
+At a common-support depth, different cells have disjoint host sets.
+No state hosted at that depth is live at another depth.
+
+Proof. If $h+z<n-1$ and $(h,z)\in V$, it is not the corner
+$(K-1,L-1)$. At least one of the replies zero and one therefore has
+its child count still in $V$. The next query is fresh by Theorem 2.2,
+and (SI.8) makes that child an actual live history with the installed
+successor. Iterating to the specified depth proves extension. At each
+step the chosen reply fixes an unread coordinate, so a completion of
+the resulting exposed assignment follows the entire finite prefix.
+No inconsistent syntactic path is used.
+
+Extending a history between two common depths gives containment of
+their supports; Theorem 2.2 gives their cardinalities and hence strict
+containment. The same statement at the endpoint $n$ follows from
+$T_n=[n]$. An occurrence at depth $d\ge a$ has an actual live
+ancestor at depth $a$, so its support contains $T_a$. If $b<n$,
+extend the occurrence to depth $b$. Since $d<b\le n-1$, this
+extension includes its next query and gives both $S\subsetneq T_b$
+and $i(q)\in T_b\setminus S$. If $b=n$, these assertions follow
+from $|S|<n$ and freshness. This proves (SI.31).
+
+At a common depth all supports coincide, and different cells have
+unequal hits. Their hosts are disjoint by the equal-support exclusion
+supplied in Section 2. Any live support at an earlier depth is a
+proper subset of the common support, by extension; any live support
+at a later depth properly contains it, by ancestry. The supplied
+nested-support exclusion therefore forbids the last asserted sharing.
+$\square$
+
+**Theorem 9.3 (exact localization on the original installed vector).**
+For every graph in Definition 9.1, the sets $X_B$, $B\in\mathcal B$,
+partition $[n]$, and all live sharing between different count cells is
+confined to one $V_B$. More precisely, all the pools $Q_B$ and
+$Q_a^{\mathrm{cut}}$ are pairwise disjoint, and a state in
+$Q_a^{\mathrm{cut}}$ hosts exactly one count cell. Consequently
+
+$$
+\begin{gathered}
+D=\sum_{B\in\mathcal B}D_B,\qquad
+E=E_{\mathrm{cut}}+\sum_{B\in\mathcal B}E_B,\qquad
+u=\sum_{B\in\mathcal B}u_B,\\
+m(X_B)-g_B=E_a+E_B-D_B+u_B\qquad(B=(a,b)),\\
+m-G=E_{\mathrm{cut}}+u+
+             \sum_{B\in\mathcal B}(E_B-D_B).
+\end{gathered}
+\tag{SI.32}
+$$
+
+Proof. The chain in Lemma 9.2 starts at the empty set and ends at
+$[n]$, so its successive differences $X_B$ partition $[n]$.
+Equation (SI.31) places the fixed label of every live host at depths
+$a\le d<b$ in $X_B$. Since these coordinate blocks are disjoint,
+one installed state cannot be live in two such half-open depth ranges.
+Within one range, Lemma 9.2 separates its lower cut pool from the
+interior and separates the cells of that cut. This proves every stated
+disjointness and localizes all duplicate incidences.
+
+Every live state belongs to one of these pools. In the coordinate block
+$X_B$ the installed states are precisely the disjoint union of
+$Q_a^{\mathrm{cut}}$, $Q_B$ and the states counted by $u_B$.
+The cut pool has cardinality $|V_a|+E_a$. Double-counting the
+incidences restricted to $V_B$ gives
+
+$$
+\sum_{p\in V_B}b_p=|Q_B|+D_B,\qquad
+|Q_B|=|V_B|+E_B-D_B.
+\tag{SI.33}
+$$
+
+Their sum proves the block identity in (SI.32). The half-open cell
+ranges partition $V$, so $\sum_B g_B=G$. The coordinate blocks
+partition all installed states by their fixed labels, including those
+that are never live. Thus $\sum_B m(X_B)=m$ and
+$\sum_B u_B=u$. Summation proves the remaining identities, also
+recovering (SI.19).
+
+A state live in one pool but visited after certification on another
+input stays in that one live pool. It is not included in any $u_B$.
+Actual certified traffic need not obey the live support envelope; none
+of its visits is deleted or made free by the decomposition. $\square$
+
+**Theorem 9.4 (compensation for every gap of at most three).** For
+every $B=(a,b)\in\mathcal B$ with $b-a\le3$,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge|V_B|.
+\tag{SI.34}
+$$
+
+The other intervals may have arbitrary lengths. For lengths one and
+two, $D_B=0$. For length three, every shared live host in the interval
+belongs to exactly two cells at depth $a+1$. They must be the unique
+possible pair on that diagonal consisting of a cell with $z=L-1$
+and a cell with $h=K-1$. This is a necessary classification of
+sharing, not an assertion that the pair or a sharing state exists.
+
+Proof. Length one has no internal cells. At length two put
+$X_B=\{x,y\}$. Every internal support is either
+$T_a\cup\{x\}$ or $T_a\cup\{y\}$. By (SI.31), its next
+fixed label must be the other member of $X_B$. Distinct supports
+therefore cannot share a state; equal supports at distinct cells cannot
+share by the equal-support/unequal-hit exclusion. Thus $D_B=0$.
+
+Now let $b-a=3$, so $|X_B|=3$. At the last internal depth
+$a+2$, each support consists of $T_a$ and two members of $X_B$.
+Its next fixed label is the unique omitted member. Different supports
+require different labels, while equal supports in different cells have
+unequal hits. Hence no state at that depth hosts different cells.
+
+There is also no sharing between depths $a+1$ and $a+2$.
+Their supports have the form $T_a\cup\{x\}$ and
+$T_a\cup\{y,z\}$ with $y\ne z$. If $x\in\{y,z\}$,
+they are properly nested, which excludes sharing. Otherwise their
+union is $T_b$. A shared host would have to query a label in
+$T_b$ fresh for both supports, by (SI.31), which is impossible.
+
+All duplicate incidences are therefore at depth $d=a+1$. For a
+host $q$ there, let $\mathcal H(q)\subseteq V_d$ be its set of
+hosted cells, and for each $p\in\mathcal H(q)$ let
+
+$$
+L(p)=\{\varepsilon\in\{0,1\}:p_\varepsilon\in V\}.
+$$
+
+Here $d\le n-2$, so every $L(p)$ is nonempty. If the same
+reply $\varepsilon$ belonged to $L(p)$ and $L(p')$ for distinct
+hosted cells, (SI.8) would put both distinct child cells at the one
+fixed successor $\delta(q,\varepsilon)$. Those children are at
+depth $a+2$, where such sharing has just been excluded. Thus the
+nonempty sets $L(p)$ are pairwise disjoint subsets of $\{0,1\}$.
+A shared host has exactly two cells, with opposite singleton live-reply
+sets. Since zero remains live exactly when $z<L-1$, and one remains
+live exactly when $h<K-1$, the cells must be
+
+$$
+p_-=(d-(L-1),L-1),\qquad
+p_+=(K-1,d-(K-1)).
+\tag{SI.35}
+$$
+
+If either displayed cell is outside $V_d$, sharing is impossible.
+The exclusions (SI.7) still apply whenever the pair is hosted together.
+
+Let $s_B$ be the number of shared states in this interval. Each has
+exactly two cell incidences, and all other hosts have one, so
+$D_B=s_B$. If $s_B\ge2$, both cells in (SI.35) have at least
+$s_B$ hosts. Therefore the excess on their diagonal is at least
+$2s_B-2\ge s_B$. If $s_B=1$, use that $a,b$ are consecutive
+in the complete cut list: depth $a+1$ is not common-support. By
+Definition 9.1 some cell on this diagonal has $a_p>1$, and
+Theorem 2.2 gives $b_p\ge a_p\ge2$. The excess on this diagonal
+is at least one. If $s_B=0$ there is nothing to compensate. In all
+cases,
+
+$$
+D_B=s_B\le\sum_{p\in V_{a+1}}(b_p-1)\le E_B.
+\tag{SI.36}
+$$
+
+Equation (SI.33) gives the host lower bound. The fixed-successor
+argument uses two actual live children with the same reply whenever
+both are live. It imposes no restriction on a certified child or its
+subsequent paid continuation. $\square$
+
+**Corollary 9.5 (the qualified Boolean and full-fiber native minima).**
+Within the class of Definition 1.2 graphs for which every consecutive
+common-support gap has length at most three,
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,\qquad m\ge G+u.
+\tag{SI.37}
+$$
+
+The minimum Boolean running-state count in this class, at both caps
+$n,W$, is exactly $G$. For complete original native preparers at
+both caps $n+1,W+3$ whose supplied Boolean projection in (SI.5)
+has this gap property, the minimum installed preparation count is
+exactly $G+4+r$.
+
+Proof. Sum (SI.34) over the intervals. Equation (SI.32), with
+$E_{\mathrm{cut}}\ge0$, gives $D\le E$ and $m\ge G+u$;
+subtracting $u$ gives the live-state assertion. The existing grid of
+[PCA, Theorem 26.1][PCA] has $G$ Boolean running states and a fixed
+live coordinate order. Every depth is common-support, so every gap
+has length one. It supplies equality and needs no new construction.
+
+For a native competitor with the stated projection property, the
+projection in [WTF, Theorem 4.1][WTF] is a complete correct Boolean
+graph satisfying both caps, with at most $H_P-4-r$ running states.
+Applying (SI.37) proves $H_P\ge G+4+r$. The same supplied grid
+and full-fiber lift attain this count and both native execution bounds.
+The class condition concerns that projection's actual selected-history
+supports; it is not asserted for every native competitor.
+
+The native quantifier remains over the entire original
+$\mathcal U_*$ of Definition 1.1, with all finite tree sizes,
+depths and shapes. The lower-witness cube supplies the projection;
+the reused upper is correct on the full fiber. The original pointwise
+code, literal latches and complete $e_0,e_1$ entries, all four native
+replies and all original addresses remain fixed. The unchanged reader
+returns the whole predecessor row, including its exterior, occurrences,
+equality partition, repetitions, disequalities and strict-prefix guards.
+Its eight states remain separately priced. All installed unused states
+and all actual invocations, including constants, repeats and visits
+after certification, retain their original charges. The separate
+services in Convention 1.3 remain assumptions; no acquisition or
+physical implementation follows. $\square$
+
+**Proposition 9.6 (the exact residual global obligation and a necessary
+long interval).** Partition $\mathcal B$ as
+$\mathcal B_{\le3}=\{B:\beta_B\le3\}$ and
+$\mathcal B_{\ge4}=\{B:\beta_B\ge4\}$. For this one complete
+graph, $m\ge G$ is equivalent to
+
+$$
+\sum_{B\in\mathcal B_{\ge4}}(D_B-E_B)
+\le E_{\mathrm{cut}}+u+
+       \sum_{B\in\mathcal B_{\le3}}(E_B-D_B).
+\tag{SI.38}
+$$
+
+Every correct strict-subgrid graph at both original caps therefore
+has an interval $B=(a,b)$ with
+
+$$
+b-a\ge4,\qquad D_B>E_B,\qquad |Q_B|<|V_B|.
+\tag{SI.39}
+$$
+
+Every internal depth of this interval contains a support-ambiguous
+cell. In particular there are at least three consecutive such depths.
+The same necessary condition holds for the supplied projection of
+any complete original native preparer with $H_P<G+4+r$ and
+both native caps $n+1,W+3$.
+
+Proof. Rearrange (SI.32) to obtain
+
+$$
+m-G=E_{\mathrm{cut}}+u+
+ \sum_{B\in\mathcal B_{\le3}}(E_B-D_B)
+ -\sum_{B\in\mathcal B_{\ge4}}(D_B-E_B).
+\tag{SI.40}
+$$
+
+This proves the equivalence with (SI.38). Each term on the right
+of (SI.38) is nonnegative by Theorem 9.4. If $m<G$, the inequality
+in (SI.38) is reversed strictly, so at least one long interval has
+$D_B-E_B>0$. Equation (SI.33) gives its host deficit. Consecutivity
+of the cuts means none of the internal depths is common-support;
+the equivalence in Definition 9.1 then supplies an ambiguous cell
+at each. The native projection has $m\le H_P-4-r<G$ and both
+Boolean caps by (SI.5), so the same argument applies. $\square$
+
+The remaining global obligation is (SI.38) for every original complete
+graph; it is not proved here when long intervals occur. A separate
+inequality $D_B\le E_B$ for each long interval
+would suffice, but is stronger than the required global sum: excess
+at cuts or other intervals and the genuine nonlive states can also
+compensate a local deficit. In a four-coordinate block the support
+patterns $T_a\cup\{x\}$ and $T_a\cup\{y,z\}$, with
+$x,y,z,w$ distinct, are incomparable and leave $w$ fresh for both.
+Thus the nested-support-or-full-union exclusion used for the two
+internal depths of a three-coordinate block no longer applies. These
+sets only identify the failure of that exclusion; they do not provide
+actual count-compatible histories, fixed successors or a correct table.
+Actual assignments, certified exits and both whole-run caps remain
+obligations for any proposed long-interval compensation or construction.
+
+The actual-prefix inequalities of [CP, Theorem 5.1][CP] continue to
+hold simultaneously on the same vector $(m_i)$ used in (SI.30).
+An interval here is not supplied with an independent total-threshold
+entry: different actual entry assignments and count cells may reach
+its states, and certified traffic may visit states live elsewhere.
+Neither independent residual lower bounds nor subtraction of lower
+bounds on overlapping coordinate sets establishes (SI.38). No
+cost-preserving normalization into the short-gap class is supplied.
+For $\min(k,n-k+1)\ge4$, neither the unrestricted compensation nor
+a complete correct strict-subgrid graph is established here. The
+unrestricted-budget $H_{\min}$ is a separate question.
+
+The new deductions are repo-derived ordinary mathematics: the support
+envelopes and localization concern all actual histories of one complete
+table, and Theorem 9.4 compensates every short interval without selecting
+representative histories or separator packs. Theorem 2.2, the local
+diagonal argument of Theorem 4.1, the identity of Theorem 5.2 and
+the exclusions cited in Section 2 are reused suppliers. The native
+feasibility equivalence and full-domain grid are reused without
+reproving their source or entry contracts. The fixed-representative
+obstructions of [WTF, Theorem 11.7][WTF] remain compatible with these
+incidence sums; no capacity bound for those separators is a premise.
+
+The literature comparisons retain the hypotheses stated in Section 8.
+Wegener's Chapter 14, Section 4, printed page 424 uses realizability
+of every graph path for BP1, and Bryant's Section 2, Definition 1
+requires strictly increasing variable indices. In addition,
+[Cook, Edmonds, Medabalimi and Pitassi, *Lower Bounds for
+Nondeterministic Semantic Read-Once Branching Programs*, Section
+2.1][CEMP] defines an acyclic nondeterministic graph and constrains
+every consistent accepting path to be read-once. Live freshness in
+Definition 1.2 does not impose that condition on paid post-certificate
+traffic. These are comparisons with distinct model hypotheses; no
+external unrestricted threshold lower bound is used in (SI.34) or
+(SI.38), and no worldwide priority assertion is made.
+
+[CP]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_COMMON_PREFIX_MEMORY_FRONTIER.md
+[CEMP]: https://doi.org/10.4230/LIPIcs.ICALP.2016.36
+
+## 追加锚（本行以下为增补区）
