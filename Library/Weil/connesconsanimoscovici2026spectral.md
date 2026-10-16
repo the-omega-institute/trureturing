@@ -1647,6 +1647,137 @@ actual Schur form. No actual negative Weil test, full c27 positivity,
 cofinal positivity, Lean verification of this application or RH
 resolution is established.
 
+### Keep the even pole and resolve the discarded rate contrasts
+
+The nineteen-channel exclusion concerns its specified comparison.
+Two further positive contributions can be retained using the existing
+even pole formula and finite orthogonal projection. Neither operation
+changes the actual exterior $H_N$, its original orthonormal mass,
+the selected support or the complete retained direction.
+
+For $d=\log27$, the first Gamma bin is the singleton $[0,1)$,
+with $b_0=1/2$ and $c_0=1-e^{-d/2}$. Its exterior cosine moments obey
+
+$$
+\int_I\phi_n(x)\cosh(x/2)\,dx
+=\sqrt2\sinh(d/4)h_{0,n}.
+$$
+
+On even complex tests the full pole is
+$2|\int_I f(x)\cosh(x/2)\,dx|^2$. Consequently its exterior rank-one
+matrix can be combined with the existing singleton Gamma channel:
+
+$$
+c_0+4\sinh^2(d/4)=e^{d/2}-1=e^{d/2}c_0.
+$$
+
+Thus retaining the pole requires only scaling that channel by
+$s=e^{d/4}=27^{1/4}$. Scale row and column0 of the saved finite
+channel Gram by $s$, and row0 of both $\Beta_0=U_0^*W_0R_0$ and
+$D_0=U_0^*W_0Z_0$ by $s$. The additional far trace allowance is
+$(s^2-1)\eta_0$, where
+
+$$
+\eta_0=\frac{Dc_0}{3M^3d}\left(\frac d{2\pi}\right)^4.
+$$
+
+No new finite action is needed for this pole update. The pole was
+already present in the actual form and residual; its newly retained
+role is in the lower comparison used to bound the exterior inverse.
+For non-even tests the pole pair need not be positive, so this
+construction is restricted to the existing even sector.
+
+To retain information inside each old rate bin $[a,b)$, keep its
+coefficient weight $c_a$ and split at an integer $m$.
+Put $p=m-a$, $q=b-m$ and $\ell=p+q$. Alongside the old mean keep
+the contrast
+
+$$
+V_{a,m,b}=\sqrt{c_a}\left[
+\sqrt{\frac q{p\ell}}\sum_{j=a}^{m-1}h_j
+-\sqrt{\frac p{q\ell}}\sum_{j=m}^{b-1}h_j\right].
+$$
+
+The mean and contrast have orthonormal coefficient vectors on the
+same rate family. More levels use the same $c_a$ throughout that
+original bin. Finite Bessel projection therefore gives
+
+$$
+U_{[a,b)}U_{[a,b)}^*+
+\sum_{\text{retained details}}V V^*
+\preceq c_a\sum_{j=a}^{b-1}h_jh_j^*
+\preceq\sum_{j=a}^{b-1}(1-e^{-b_jd})h_jh_j^*.
+$$
+
+This is a classical orthogonal projection application. The original
+channels are retained exactly; a contrast resolves a rate distinction
+that their means discarded. One midpoint split of every non-singleton
+original bin adds16 contrasts, for35 total channels. Fibonacci
+endpoints select these bins but are not required by the argument.
+The same actual-test comparison must still be certified after the
+additional channels; the old Hessian floor is not assumed to survive.
+
+The finite contrast actions use the existing digamma rate sums and
+finite Cauchy products. Only the new mean/detail cross block, detail
+Gram and detail projections against all retained and selected support
+columns are generated. The nineteen parent aggregates, scalar rows,
+transformed residual generator and signed far moments are reused.
+Every finite middle row1281–32768 is included. Direct support rows end
+at4096; the384-term remainder uses ratio2048/4097. The full-coefficient
+projection uses512 terms and ratio1280/2049 on rows2049–32768.
+Both absolute remainders are paid.
+
+For a detail from the displayed split, the function
+$b/(b^2+\omega^2)$ is $1/\omega^2$-Lipschitz, and the means of
+the two arithmetic progressions of rates differ by $\ell$. Hence
+
+$$
+|V_n|\le a_Vn^{-2},\qquad
+a_V=2\sqrt{c_a/d}\sqrt{pq\ell}\left(\frac d{2\pi}\right)^2,
+\qquad \eta_V=\frac{Da_V^2}{3M^3}.
+$$
+
+The enlarged positive far Gram has norm bounded by its trace, using
+the old trace allowance plus the additional $\eta_V$. This preserves
+all cross-channel terms; it is not an entrywise Loewner estimate.
+Use the assembled common $S_0,D_0,\Beta_0$ in the same finite
+shorting and gradient estimates above.
+
+For each of the following changed comparisons, all768 directed
+pivots again certify $K_{{\rm G},0}\succeq I/16$. The exact saved
+dyadic direction and support are unchanged:
+
+| Positive terms retained in the inverse comparison | Certified upper for $\sup_t m(t)$ |
+|---|---|
+| Original nineteen means and the complete even pole | $-3.0484\times10^{-32}$ |
+| Those terms and16 rate contrasts | $-2.9782\times10^{-32}$ |
+
+The inequalities are strict. For the35-channel comparison, its
+saved384-bit trial satisfies
+
+$$
+-4.047\times10^{-32}<m(t_0)<-3.5939\times10^{-32},\qquad
+\|g(t_0)\|<1.962\times10^{-17},
+$$
+
+and the optimization correction is less than $6.158\times10^{-33}$.
+The same square completion bounds every trial on these768 modes,
+including any common linear trial. These numerical implications
+retain the actual common-form/domain and sound comparison/enclosure
+premises. The [cached application](https://github.com/the-omega-institute/trureturing-experiments/tree/440b807ade6716976010adaf42c876b339ff9275/docs/reports/weil-c27)
+preserves the new actions, exact trials and directed endpoints;
+higher-precision cached consumers check them without repeating
+scientific production.
+
+Retaining these extra positive terms improves the comparison but
+still excludes certification of this direction by this specified
+family. This does not exclude arbitrary finer channels, other
+supports or the full Gamma comparison, and does not upper-bound the
+actual Schur form. A full-family saturation bound or a quantitatively
+stronger comparison is a separate missing estimate. No new general
+projection theorem, Lean result, actual c27/cofinal positivity or RH
+resolution is asserted.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
