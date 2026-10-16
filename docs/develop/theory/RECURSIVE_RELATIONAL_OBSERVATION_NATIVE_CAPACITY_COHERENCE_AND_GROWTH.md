@@ -2920,15 +2920,20 @@ It is RCA Theorem 3.3's generic selection principle with an explicitly
 instantiated mandatory CAP fiber, not a new abstract information theorem.
 $\square$
 
-**Example 13.3 (a legal five-cut instance).** After the actual acquired
-beta entrance with $H_0=h=K=1$, supply Reserve(2). Theorem 5.2 applies to
-this same finite source; no update or guard raise is necessary. Here
-$d=4$, and the five cuts have ordinals
+**Proposition 13.3 (a legal five-cut instance).** After the actual acquired
+beta entrance with $H_0=h=K=1$, supply Reserve(2). Its five Zero-test cuts
+have ordinals
 $n_0,n_0+5,n_0+10,n_0+15,n_0+20$. All preserve that old acquired material.
 Their next RD successors have pairwise different receipt lengths. A
-fixed-width binary discriminator needs at least three bits. This witness
+fixed-width binary discriminator needs at least three bits.
+
+Proof. Theorem 5.2 applies to this same finite source; no update or guard
+raise is necessary. Here $d=4$, so Theorem 13.2 gives the five cuts, their
+ordinals, unchanged old acquired material and distinct successor receipt
+lengths. Its bound gives $b_{\rm sel}\ge\lceil\log_2 5\rceil=3$. This witness
 uses legal states of one source, rather than two inconsistent packet
 interpretations or arbitrary supplied pointers.
+$\square$
 
 **Corollary 13.4 (no fixed finite supplement over all actual reserves).**
 In raw dispatcher mode, start at that acquired beta state and successively
@@ -3092,16 +3097,14 @@ reconstructed old permission bits is included in the present results.
 
 ## 15. Supplier correspondence, finite discriminators and remaining scope
 
-**Convention 15.1 (proof and deduplication status).** The application delta
+**Convention 15.1 (mathematical scope and supplier correspondence).** The CAP-specific content
 is the mandatory Reserve family with its actual ordinal, selection and
 local-cost formulas, and the literal port-33 entrance obstruction with its
 current CAP receipt consumer. The uniform physical-record construction
-and acquired-response-frontier result are explicit applications of checked
+and acquired-response-frontier result are explicit applications of
 supplier interfaces. They preserve useful source/phase/cost conditions;
 they are not new general storage, replay, kernel or factorization results.
 No claim of literature originality or physical implementation is made.
-These are ordinary mathematical proofs; no new Lean or Blueprint theorem,
-build, ingestion or machine coverage is asserted.
 
 | Supplier | Exact parameter map and remaining boundary |
 | --- | --- |
@@ -3112,7 +3115,7 @@ build, ingestion or machine coverage is asserted.
 | NCR §§5.3, 6.3, 11.3; PR57.D1 and its owning native suppliers | Existing restricted natural atlas and sufficient sequential foundations remain credited. NCR's atomic-source/fixed-controller domain is not identified with CAP's bitwise raw work and capacity maintenance. PR57 rows are counted at their declared atomicity. |
 | `NativeSerialMachine.nativeStep`, `replay_deterministic`, `operational_replay`, `reached_prefix_replay`; `NativeFullSourceProducer.native_source_producer` and its private `traverse`, `production_reads`, `stationary`; owning Scribes | These describe finite source-level control, literal source-specific replay and genuine full-source acquisition. They do not implement CAP's new cross-capacity recovery service or the port-role composition. Private proofs are credited as existing results rather than rediscovered. |
 | `NativeSerialEffective.OriginalCodeRealization`, `original_code_service_simulation`, its private evaluator/prefix/erasure lemmas; `NativeEffectiveSourceProducer` and `NativeConstructorArrays`; owning Scribes | Keep the actual genuine-code realization and original source/input, and the existing finite constructor representation. Unbounded code/state stays tape data. Source-level evaluator erasure does not erase the physical overhead or grant a new owner token. |
-| `TypedFiniteViewKernel.typed_finite_view_kernel`, `PredictiveMemoryMinimalQuotient`, `RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`; owning Scribes | Typed legality, roots/readouts, complete finite responses and realized-image kernel inclusion are existing abstract results. Their task and map parameters must be instantiated. Raw storage invertibility alone does not establish the reverse inclusion for the original terminal task or acquire an inverse. No wrapper theorem is added. |
+| `TypedFiniteViewKernel.typed_finite_view_kernel`, `PredictiveMemoryMinimalQuotient`, `RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`; owning Scribes | Typed legality, roots/readouts, complete finite responses and realized-image kernel inclusion are existing abstract results. Their task and map parameters must be instantiated. Raw storage invertibility alone does not establish the reverse inclusion for the original terminal task or acquire an inverse. |
 
 **Convention 15.2 (primary-source hypothesis map).** The following primary
 texts support only the stated correspondences. The CAP-specific proofs
@@ -3125,30 +3128,7 @@ above discharge the displayed local claims directly.
 | Lynch and Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, [author PDF](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), §3.2, Lemma 3.8 and Theorem 3.10, PDF pp. 11–12 | Related initial states and matching finite fragments are required. Here the structural foundation and each actual CAP core/receipt patch supply that comparison. Trace inclusion neither supplies a reverse natural-view kernel nor acquired backing, selection, equal prices or an infinite actual source. |
 | SSA §11 and §13.6, CSA §10, CAP §10 | Graph-local replacement, observation factorization and semantic completion retain their already stated primary-source hypotheses. No new theorem is transferred from those references here. In particular a semantic compatible limit is not an operationally supplied run. |
 
-The three directly linked PDFs were accessible and their stated passages
-were checked. Local pinned mathlib sources were unavailable because this
-workspace has no `.lake` dependency tree; its manifest names revision
-`db584cd6d46c92f209a44c0f1c829460d327499d`. No current mathlib compilation
-or exhaustive third-party search is claimed. The repository declarations
-and their owning Scribes supply the existing abstract results used here;
-no missing general lemma is proposed as a new proof target.
-
-**Observation 15.3 (bounded concrete checks).** A direct in-memory
-interpreter of Definition 3.3's five-row Zero body, not a combined CAP/RCA
-runtime, gives these finite checks:
-
-| Check and finite domain | Result and limit |
-| --- | --- |
-| $1\le K\le8$, $1\le J-K\le8$, hence $4\le d\le32$; all test cuts $0\le z\le d$ | 64 local invocations, 1,216 test cuts and 5,824 body primitives including final tests. Every cut has ordinal $5z$ relative to its entry, unchanged old payload prefix, exactly $z$ new zeros, lawful next test, distinct next receipt count, and storage increment $48z$ before that test. No full-boot, global ownership or end-to-end consumer execution is inferred. |
-| Those 64 local fibers | Each computed $\lceil\log_2(d+1)\rceil$ is sufficient for that many binary labels, and one fewer fixed-width bit is insufficient. This checks the finite counting discriminator, not acquisition or a decoder implementation. |
-| Doubling subtotals for $0\le R\le16$ | All 17 cases equal $20(2^R-1)+R$ body primitives and $4(2^R-1)$ payload cells. These omit setup/delimiters/rows as specified in Proposition 13.6. |
-| The eight PR57 symbols at the first post-L read | CAP's valid completed-descriptor first-symbol set is exactly $\{R,0\}$; RCA's literal bank sentinel F belongs to neither case. This checks the first-symbol discriminator, not a run of an impossible combined entrance. |
-
-The universal statements use the proofs, not extrapolation from these
-finite bounds. CSA's existing optional-socket and eight-track exhaustive
-checks remain credited to CSA; repeating them would not add a new result.
-
-**Conclusion 15.4 (the precise remaining construction).** The storage
+**Open problem 15.4 (the precise remaining construction).** The storage
 representation is uniform over actual finite capacity changes, and a
 reached acquired nonterminal response frontier supports mathematical
 historical reconstruction with the correct ordinals. Old acquired
