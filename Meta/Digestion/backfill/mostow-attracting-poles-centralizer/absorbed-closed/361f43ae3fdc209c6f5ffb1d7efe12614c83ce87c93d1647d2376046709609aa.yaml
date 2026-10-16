@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:361f43ae3fdc209c6f5ffb1d7efe12614c83ce87c93d1647d2376046709609aa
   normalized_sha256: sha256:361f43ae3fdc209c6f5ffb1d7efe12614c83ce87c93d1647d2376046709609aa
 cas_ref: sha256:361f43ae3fdc209c6f5ffb1d7efe12614c83ce87c93d1647d2376046709609aa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/MostowPrasadRigidity.rangeCentralizerTrivial_of_dense_attracting_poles
+    target_statement_id: sha256:15b7f95d92649cf548bedae7740529493303befe41d8d0d1e1715d4326d89e44
 receipts:
   unresolved_subitems: []
   chain_atoms:
