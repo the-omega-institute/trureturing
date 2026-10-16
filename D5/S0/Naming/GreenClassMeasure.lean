@@ -18,7 +18,10 @@ variable {O : Type*} [Fintype O] [Nonempty O] [MeasurableSpace O] [MeasurableSin
 
 /-- The per-coordinate uniform probability measure on a finite nonempty alphabet `O`. -/
 noncomputable def uniformAlphabet (O : Type*) [Fintype O] [Nonempty O] [MeasurableSpace O] :
-    Measure O := (PMF.uniformOfFintype O).toMeasure
+    Measure O := (PMF.ofFintype (fun _ : O => (Fintype.card O : ℝ≥0∞)⁻¹) (by
+      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+      exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+        (ENNReal.natCast_ne_top _))).toMeasure
 
 instance : IsProbabilityMeasure (uniformAlphabet O) :=
   PMF.toMeasure.isProbabilityMeasure _
@@ -36,7 +39,7 @@ def greenClass (S : Finset ℕ) (t : ℕ → O) : Set (ℕ → O) :=
 theorem uniformAlphabet_singleton (a : O) :
     uniformAlphabet O {a} = ((Fintype.card O : ℝ≥0∞))⁻¹ := by
   rw [uniformAlphabet, PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton a),
-    PMF.uniformOfFintype_apply]
+    PMF.ofFintype_apply]
 
 /-- **Green class positive measure (定理 4.4, clause (a)).** Under the uniform product measure on
 infinite strings over a finite nonempty alphabet `O` with `n = card O`, the green class pinning
