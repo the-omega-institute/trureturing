@@ -70,7 +70,8 @@
    assembly_from_replacement: proof_shape: bind-only; escape_witness: none; deps: F6,F7,F9,F10,F11,F12,F17,F19,F20,F21,F23,F27; consumers: result.
    referenceChannel: proof_shape: bind-only; escape_witness: none; deps: F5,F8,F12,F16,F17,F18; consumers: Theta_pointwise_contract,leftChannel.
    trace_contract_rectangular: proof_shape: content; escape_witness: trace_contract_rectangular; reason: Jordan decomposition proves trace contraction for arbitrary finite input and output types; deps: F11,F12,F15,F17,F18,F21,F22,F24,F25,F26,F28,F29,F35; consumers: Theta_pointwise_contract.
-   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F4,F24; consumers: reference_reindex_error,traceDistance_reindex.
+   reindex_traceNorm: proof_shape: bind-only; escape_witness: none; deps: F4,F24; consumers: reference_reindex_error,traceDistance_reindex,
+   D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm.traceNorm_submatrix_equiv.
    reference_reindex_error: proof_shape: bind-only; escape_witness: none; deps: F4,F7,F9,F11,F12,F24,F34; consumers: reference_error_le_diamond.
    reference_error_le_diamond: proof_shape: bind-only; escape_witness: none; deps: F1,F4,F7,F9,F11,F12,F21,F23,F24,F27,F34; consumers: Theta_pointwise_contract.
    reindexChannel: proof_shape: bind-only; escape_witness: none; deps: F16; consumers: leftChannel.
@@ -102,6 +103,7 @@
    result: proof_shape: content; escape_witness: trace_contract_rectangular; reason: rectangular contraction and disk_midpoint_phases compare the two infima; deps: F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,F13,F14,F15,F16,F17,F18,F19,F20,F21,F22,F23,F24,F25,F26,F27,F28,F29,F30,F31,F32,F33,F34,F35; consumers: settling result.
    FiniteKrausRepresentation is unfrozen; amplification uses referenceLinear and Mathlib.
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/16913
+   Escape audit unfinished for reindex_traceNorm: https://github.com/the-omega-institute/trureturing/issues/17573
    Publicized owner audit target: D5/S3/Quantum/Information/InputInformationBalance.arGrouping sha256:af64f53b6ae6b26a40dbfe8f5c7fdb38e50d44a78cf4e585a83d4f4de7d94ed1;
    its dependent equivalence-valued family registration has no compiled reconstruction,
    lawful readout, source selection, variation, sensitivity or observational-dependence evidence.
@@ -429,7 +431,7 @@ private theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq
   rw [hdiff]
   exact div_le_div_of_nonneg_right hbound (by norm_num)
 
-private theorem reindex_traceNorm {a b : Type} [Fintype a] [DecidableEq a]
+theorem reindex_traceNorm {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (e : a ≃ b) (X : Matrix a a ℂ) :
     traceNorm ((Matrix.reindexAlgEquiv ℂ ℂ e) X) = traceNorm X := by
   let V : Matrix b a ℂ := (1 : Matrix a a ℂ).submatrix e.symm (Equiv.refl a)

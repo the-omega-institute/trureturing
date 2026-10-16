@@ -30,6 +30,9 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
             Node("claim", "The equality asked after Equation (8)", ClaimFormula(),
                 "Section V, page 9, after the proof of Theorem 3: \"" + Question + "\" This proposition states the equality in the second inequality. d ranges over all natural dimensions, Phi over canonical channels on Fin d, and IsSchurChannel is the sole hypothesis. MixedUnitary represents Conv(U_d), and SchurMixedUnitary represents Λ_d. The empty dimension is included; both sets still contain the identity channel.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("reindex_traceNorm", "Trace norm is invariant under finite reindexing", ReindexTraceNormFormula(),
+                "For finite decidable index types a and b, an equivalence e preserves the trace norm under Matrix.reindexAlgEquiv. This identity also gives the submatrix form for the inverse equivalence, and it identifies ancillary coordinates in the capacity bounds.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The two diamond-distance infima are equal", Disp(Named("claim")),
                 "Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -40,7 +43,7 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("ydx-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("ydx-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -65,6 +68,21 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
     private static Formula Member(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(F.Id(name), Colon, Sp, type), Sp, body);
+
+    private static Formula ReindexTraceNormFormula()
+    {
+        Formula a = F.Id("a"), b = F.Id("b"), e = F.Id("e"), x = F.Id("X");
+        Formula matrix = Call("Matrix", a, a, Complexes());
+        Formula instances = Seq(OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", b), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", b), CloseBracket, Sp);
+        Formula equiv = Call("Equiv", a, b);
+        Formula norm(Formula value) => Call("traceNorm", value);
+        Formula indexed = App(App(Qualified("Matrix", "reindexAlgEquiv"), Complexes(), Complexes(), e), x);
+        return Disp(All("a", Named("Type"), All("b", Named("Type"), Seq(instances,
+            All("e", equiv, All("X", matrix, Equal(norm(indexed), norm(x))))))));
+    }
 
     private static Formula MixedFormula()
     {

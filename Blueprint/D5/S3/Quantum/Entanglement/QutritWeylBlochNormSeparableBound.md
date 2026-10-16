@@ -40,19 +40,7 @@ $$\forall rho \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorn
 
 The quantity l1 is the sum of the complex norms of all 81 Weyl--Bloch coefficients.
 
-**Definition 1.4 (Finite separable mixtures).**
-
-$$\forall rho \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Complex}\left(\right)\right),\; (\operatorname{IsSeparable}\left(rho\right)) \Leftrightarrow (\exists n \in \operatorname{Nat}\left(\right),\; \exists p \in \operatorname{Fin}\left(n\right) \to \operatorname{Real}\left(\right),\; \exists sigma \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \operatorname{Complex}\left(\right)\right),\; \exists tau \in \operatorname{Fin}\left(n\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \operatorname{Complex}\left(\right)\right),\; (\forall t \in \operatorname{Fin}\left(n\right),\; 0 \le p\left(t\right)) \land ((\sum_{t: \operatorname{Fin}\left(n\right)} (p\left(t\right)) = 1) \land ((\forall t \in \operatorname{Fin}\left(n\right),\; (\operatorname{IsDensity}\left(sigma\left(t\right)\right)) \land (\operatorname{IsDensity}\left(tau\left(t\right)\right))) \land (rho = \sum_{t: \operatorname{Fin}\left(n\right)} (\operatorname{smul}\left(\operatorname{ofReal}\left(p\left(t\right)\right), \operatorname{kronecker}\left(sigma\left(t\right), tau\left(t\right)\right)\right))))))$$
-
-*Formalization.* `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.IsSeparable` (`✓ std3`).
-
-*Citation.* Tobias C. Sutter, Christopher Popp and Beatrix C. Hiesmayr (2026). *Group-Theoretic Perspective on the PPT and Realignment Criteria in the Magic Simplex for Bipartite Qutrits*. DOI: [10.1103/z7jn-4try](https://doi.org/10.1103/z7jn-4try). URL: <https://arxiv.org/abs/2508.18393v2>.
-
-*Commentary.*
-
-A separable two-qutrit matrix is a finite convex mixture of tensor products of qutrit density matrices. IsDensity denotes D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound.IsDensity: positive semidefinite with trace one.
-
-**Definition 1.5 (The sharp separable bound and an entangled violation).**
+**Definition 1.4 (The sharp separable bound and an entangled violation).**
 
 $$(\operatorname{claim}\left(\right)) \Leftrightarrow ((\forall rho \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Complex}\left(\right)\right),\; (\operatorname{IsSeparable}\left(rho\right)) \Rightarrow (\operatorname{l1}\left(rho\right) \le 25)) \land ((\exists rho \in \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right), \operatorname{Complex}\left(\right)\right),\; (\operatorname{IsSeparable}\left(rho\right)) \land (\operatorname{l1}\left(rho\right) = 25)) \land (\exists psi \in \operatorname{Prod}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right)\right) \to \operatorname{Complex}\left(\right),\; (\operatorname{dotProduct}\left(\operatorname{star}\left(psi\right), psi\right) = 1) \land (25 < \operatorname{l1}\left(\operatorname{vecMulVec}\left(psi, \operatorname{star}\left(psi\right)\right)\right)))))$$
 
@@ -64,7 +52,7 @@ $$(\operatorname{claim}\left(\right)) \Leftrightarrow ((\forall rho \in \operato
 
 Every separable state has l1 at most 25, a separable state attains 25, and a normalized pure two-qutrit vector produces a Weyl--Bloch one-norm strictly above 25.
 
-**Theorem 1.6 (The sharp separable bound).**
+**Theorem 1.5 (The sharp separable bound).**
 
 $$\operatorname{claim}\left(\right)$$
 
@@ -86,11 +74,11 @@ The vector (0,1,-1)/sqrt(2) gives a qutrit density matrix with local one-norm fi
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.IsSeparable`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.W`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.bloch`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.l1`
 - Truth anchor: `D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound.result`
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](GHZMeasureBiseparableBound.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence](../QuantumChannels/IptPptSquaredEquivalence.md)
 - Dependency: [D5/S3/QuantumContext/HesseSicCertificate](../../QuantumContext/HesseSicCertificate.md)

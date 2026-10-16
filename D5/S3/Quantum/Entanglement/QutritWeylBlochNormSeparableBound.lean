@@ -6,6 +6,7 @@
    utility: none
    digest: Two-qutrit Weyl–Bloch ℓ1 norm has sharp separable bound 25. -/
 
+import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Algebra.Order.Chebyshev
@@ -39,15 +40,7 @@ def bloch
 def l1 (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : ℝ :=
   ∑ i, ∑ j, ∑ k, ∑ l, ‖bloch ρ i j k l‖
 
-def IsSeparable
-    (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : Prop :=
-  ∃ (n : ℕ) (p : Fin n → ℝ)
-    (σ : Fin n → Matrix (Fin 3) (Fin 3) ℂ)
-    (τ : Fin n → Matrix (Fin 3) (Fin 3) ℂ),
-    (∀ t, 0 ≤ p t) ∧
-      (∑ t, p t = 1) ∧
-      (∀ t, IsDensity (σ t) ∧ IsDensity (τ t)) ∧
-      ρ = ∑ t, (p t : ℂ) • (σ t ⊗ₖ τ t)
+open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 
 def claim : Prop :=
   (∀ ρ, IsSeparable ρ → l1 ρ ≤ 25) ∧
@@ -392,7 +385,7 @@ private lemma phase_norm_sq (x y : ℝ) :
   rw [hs]
   ring
 
-set_option maxHeartbeats 1113682 in
+set_option maxHeartbeats 2000000 in
 -- The 81 coefficient identities expand finite sums and complex powers.
 private lemma violation_coefficients (i j k l : Fin 3) :
     bloch violationMatrix i j k l =
@@ -452,6 +445,5 @@ private lemma nonvacuity : ∃ ψ : Fin 3 × Fin 3 → ℂ,
 
 theorem result : claim := ⟨separable_bound, sharpness, nonvacuity⟩
 
-#print axioms result
 
 end D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound

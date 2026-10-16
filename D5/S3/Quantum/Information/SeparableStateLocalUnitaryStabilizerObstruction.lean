@@ -16,8 +16,10 @@ The finite Gaussian-integer certificates are consumed bind-only normalization he
 the new mathematical conclusion excludes a continuous family of local-unitary orbits.
 Utility is none: these proof-normalization certificates supply no independent finite
 instance, checker interface, numerical approximation, or conditional numerical reduction.
-Information-escape registration is paused under CLAUDE.md section 3.9.
-Direct frozen dependencies (declaration statement_id, from baseline Freeze events):
+Escape audit unfinished for trace_projector_overlap: https://github.com/the-omega-institute/trureturing/issues/17573
+trace_projector_overlap: proof_shape: bind-only; escape_witness: none.
+Consumers: local_pauli_overlap; D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Gap.rankOne_trace_product.
+Direct frozen dependencies (declaration statement_id, from the Lean report):
 D5/S3/Quantum/Decoherence/ProjectedUnistochasticDynamics.unitaryEvolution
   sha256:e09d20adbc78becc29a640f4fb9bab3d1627ee36e10e97ed437a96cd4b7596f5
 D5/S3/Quantum/Recovery/FiniteLocalLatitudeGeometry.productVector
@@ -515,7 +517,7 @@ private theorem product_marginal (a b : (Fin 2 → ℂ)) (hb : unitVector b) : p
   rw [projector_tensor]
   change partialTraceRight (Matrix.kronecker (rankOneDensity a) (rankOneDensity b))=_
   rw [partialTraceRight_kronecker,trace_projector,hb,one_smul]
-private theorem trace_projector_overlap {n : Type*} [Fintype n] (a b : n → ℂ) : (rankOneDensity a * rankOneDensity b).trace=(Complex.normSq (star a ⬝ᵥ b) : ℂ) := by
+theorem trace_projector_overlap {n : Type*} [Fintype n] (a b : n → ℂ) : (rankOneDensity a * rankOneDensity b).trace=(Complex.normSq (star a ⬝ᵥ b) : ℂ) := by
   simp only [Matrix.trace,Matrix.diag,Matrix.mul_apply,rankOneDensity,
     Matrix.vecMulVec_apply,Pi.star_apply]
   rw [Complex.normSq_eq_conj_mul_self]
@@ -962,7 +964,5 @@ theorem result : claim := by
   refine ⟨rho (1/2) (3/5) (4/5),?_⟩
   apply family_result
   norm_num [FamilyParameters]
-#print axioms family_result
-#print axioms result
 end
 end D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
