@@ -6119,3 +6119,214 @@ algorithm, literature-novelty or Lean claim. All actual-form/domain,
 common source/short/lift, original-weight and component premises remain
 conditions. Actual-center sign, the good-block metric, full-border
 sign, retained/cofinal positivity, Robin tail and RH remain unresolved.
+
+### Recover the signed mixed correction with the saved physical Gram
+
+Keep the SAME original384-bit source, physical residual, retained lift,
+direction and original constant far weight $W_F=w_FI$. Put
+$E=\{1281,\ldots,2048\}$, $q=D^{-1}(z-b)$ and $p=F^{-1}z$,
+using the saved `D_inverse_difference` and `F_inverse_z` profiles,
+respectively. Embed $\lambda=q-p$ as $\ell$ on physical modes0 through2048,
+with zero entries outside $E$. The original full-Gamma action satisfies
+
+$$
+u_F=u^{(0)}+r_{\rm sm}+C_{\rm phys}\ell.
+$$
+
+Here $u^{(0)}$ is the already-enclosed principal proxy, and the previous
+smooth-remainder certificate supplies
+$\|r_{\rm sm}\|_{W_F}\le\epsilon_{\rm sm}$.
+For the SAME exact direction write
+$t=\mathcal D Vv_R$, $\mathcal D=\binom I{-Y}$,
+$\mathsf Bv_R=C_{\rm phys}t$ and $h=P_0t$.
+The saved full112-component vector encloses this exact $h$.
+Retain the existing upper bounds
+
+$$
+\|t\|\le\sqrt{K_{\rm phys}}L_V,\qquad
+\|\mathsf Bv_R\|_{W_F}\le N_{\rm cap},\qquad
+\|u^{(0)}\|_{W_F}\le P.
+$$
+
+The original target already saves the112-by112 kernel
+$K_0=\alpha_0w_FH_0$ and the physical operator-error certificate
+
+$$
+\|C_{\rm phys}^*W_FC_{\rm phys}-P_0^TK_0P_0\|
+\le\epsilon_{\rm far}.
+$$
+
+The kernel includes the original fixed-midpoint prefactor and masked
+moment core. No PSD assumption on $H_0$ is used. Its masking, moment,
+feature and prefactor errors are already covered by the physical
+certificate. The target's `far_matrix_error` and
+`trial_operator_norm_sq_upper` retain512-bit metadata units; the
+kernel arrays use640-bit units. The amplified complete allowance is
+not substituted for this physical error.
+
+Set
+
+$$
+a=P_0\ell,\qquad
+\nu=\kappa\langle C_{\rm phys}\ell,C_{\rm phys}t\rangle_{W_F},
+\qquad \nu_0=\kappa a^TK_0h.
+$$
+
+Then the operator-error certificate gives
+
+$$
+|\nu-\nu_0|\le
+\kappa\epsilon_{\rm far}Z_\lambda\sqrt{K_{\rm phys}}L_V,
+\qquad Z_\lambda\ge\|\lambda\|_1\ge\|\ell\|.
+$$
+
+Only the left features are new. On $E$ they are
+
+$$
+a_{A_k}=\sum_{n\in E}(-1)^n\lambda_n(n/M)^{2k},\qquad
+a_{B_k}=\sum_{n\in E}(-1)^ns_n^0\lambda_n(n/M)^{2k+1},
+$$
+
+where $s_n^0$ is the SAME exact midpoint of the saved scalar interval.
+The existing signed source-power reduction supplies both families:
+even coefficients of the source $(-1)^n\lambda_n$, and odd coefficients
+of $-(-1)^ns_n^0\lambda_n$, because its power ratio is $-n/M$.
+The original short jet and kernel are read directly. No new moments,
+physical lift, long source, proxy, inverse or far-output samples are needed.
+
+The previous primal producer also supplies a norm bound without another
+absolute source reduction. Its `actual_mixed_tail_norm_upper` encloses
+
+$$
+\frac{2\sqrt{w_F}B}{\pi\sqrt{M-2048}}\,\|\lambda\|_1,
+$$
+
+where the SAME exact symbol budget $B$ is enclosed by its saved
+`actual_symbol_budget`. If $B_{\rm lo}>0$ and $H_{\rm mix}$ is the saved
+mixed upper, define
+
+$$
+c_{\rm lo}\le\frac{2\sqrt{w_F}B_{\rm lo}}{\pi\sqrt{M-2048}},
+\qquad
+Z_\lambda=\operatorname{up}_{640}(H_{\rm mix}/c_{\rm lo}).
+$$
+
+This divides the established bound on the coefficient-times-norm by a
+positive coefficient lower bound; it does not invert an operator upper
+bound to obtain a norm estimate.
+
+For the remaining proxy-forward error, use the already established
+separate forward components directly. With $N_p=2048$, $R=56$,
+$M=32768$, $\eta=N_p/M$ and $k_p=1-N_p/(M+1)$, put
+
+$$
+r_2=\frac{4B_{\rm up}^2N_p}{\pi^2k_p^2M(4R+1)}\eta^{4R},
+\qquad
+e_P^2=e_0^2+\rho_s^2\frac{N_p\eta^2}{1-\eta^4},
+\qquad \alpha_J=\frac4{\pi^2M}.
+$$
+
+Here $e_0$ is half the width of the original saved zero-feature interval.
+All2049 physical symbol intervals have width at most one640-bit grid
+unit, so the conservative choice $\rho_s=2^{-640}$ covers their
+midpoint radii. The saved true full moment norm upper $H_*$ uses628-bit
+units and is independent of the physical support size; it is not the
+masked kernel's PSD norm. The forward component bounds imply
+
+$$
+\epsilon_b^\sharp=
+\operatorname{up}_{640}\left[
+\sqrt{w_FK_{\rm phys}}
+\left(\sqrt{r_2}+\sqrt{\alpha_JH_*}\,e_P\right)L_V\right].
+$$
+
+The squared remainder $r_2$ is below the640-bit grid. Its square root is
+taken at1024 working bits before640-bit upward rounding; its saved
+squared interval uses a separate1024-bit grid.
+
+Finally the SAME-object decomposition is
+
+$$
+\vartheta=\mu+\nu
++\kappa\langle r_{\rm sm},\mathsf Bv_R\rangle_{W_F}
++\kappa\langle u^{(0)},\mathsf Bv_R-j_h\rangle_{W_F}.
+$$
+
+Consequently the new complete transfer allowance is
+
+$$
+R_\vartheta=
+\kappa\bigl(\epsilon_{\rm sm}N_{\rm cap}+P\epsilon_b^\sharp\bigr)
++\kappa\epsilon_{\rm far}Z_\lambda\sqrt{K_{\rm phys}}L_V,
+\qquad
+\vartheta\in I_\mu+\nu_0+[-R_\vartheta,R_\vartheta].
+$$
+
+This replaces the earlier norm-only transfer allowance $E_\mu$.
+The already-saved $I_\mu$ retains its source, symbol and Abel allowances;
+they are not charged again. The unchanged pre-good-metric sufficient
+expression is $C_{\rm lin}+2\vartheta$.
+
+The sole fixed1024-working/640-export-bit application completes in
+1.30498seconds. It makes two short source-power reductions on768
+entries and one112-by112 signed cross. The original inverse profiles,
+full jet, Gram kernel, proxy interval, symbols and moment bounds are
+reused; no old scientific producer or parameter/source scan is replayed.
+The resulting directed values are:
+
+| Quantity | Approximate enclosure or upper |
+|---|---:|
+| $Z_\lambda$ |18.61447623568004556|
+| Signed kernel cross $\nu_0$ |+0.181002566603288306|
+| Sharp forward allowance $\epsilon_b^\sharp$ |5.304632297062084e−69|
+| Gram cross allowance |1.669239650964427e−66|
+| Complete transfer allowance $R_\vartheta$ |4.112478850097329e−11|
+| Actual correction $\vartheta-\mu$ |[0.18100256656216351,0.18100256664441310]|
+| Actual $\vartheta$ |[−4.331313289332710,−4.325974508801690]|
+| Frozen $C_{\rm lin}+2\vartheta$ |[16.865709521960626,16.876387083066322]|
+
+Displayed interval endpoints round outwards. The saved640-bit integer
+endpoints and exact rational allowances determine the strict tests.
+Reopening the saved proxy interval as an Arb ball introduces
+conservative radius inflation, which is also retained in these
+exports. The proxy's analytic allowance is unchanged. Its width now
+dominates the final interval width; the remaining transfer allowance
+is approximately $4.11248\cdot10^{-11}$ and is dominated by the smooth
+remainder payment.
+
+Under the inherited certificates, the actual signed correction is
+positive. It therefore does not meet the negative correction upper
+required by the unchanged sufficient test. Moreover exact saved
+endpoint arithmetic gives
+
+$$
+C_{\rm lin}+2(I_\mu+I_{\nu_0})>16.86.
+$$
+
+This holds even before adding a nonnegative transfer allowance.
+Further reduction of that allowance cannot make this fixed sufficient
+upper expression negative. This establishes a limitation of the frozen
+linear envelope, not positivity of the actual center that it bounds.
+A next sufficient estimate must recover additional signed credit or
+derive a tighter linear upper with its own justification. The
+previous value of $C_{\rm lin}$ and its certificate remain intact.
+The additional good-block metric remains a separate obligation.
+
+The packet saves the new112 left features, cross enclosure, fine
+1024-bit squared remainder and exact scalar allowances for reuse. Its
+SHA256 is
+`d527c5217314bdd5b21e0f1080ef17b1e29b880954a1bafe77a711a1102dc6bd`;
+the [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/1c83b683b465264fb2dc1e1ccdee28f56087ec4c/docs/reports/weil-c27)
+are retained in the existing experimental packet. The separate
+forward estimate uses Arb's arbitrary exponent range through the
+small squared feature terms, taking square roots before final-grid
+rounding. At physical mode0 the geometric remainder is exactly zero:
+the original coupling column and exact jet both equal
+$-\sqrt2(-1)^ms_m/(\pi m)$. Its midpoint feature error is paid by $e_0$.
+
+This is a source-specific numerical application of the existing
+physical Gram and forward component estimates. It supplies no new
+generic algorithm, literature novelty or Lean theorem. Actual-form,
+domain, common source/short/lift, original-weight and component-bound
+premises remain conditions. Actual-center and full-border signs,
+retained/cofinal positivity, Robin tail and RH remain unresolved.
