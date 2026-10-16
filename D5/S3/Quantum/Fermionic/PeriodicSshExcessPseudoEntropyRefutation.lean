@@ -18,8 +18,9 @@ open scoped BigOperators Matrix ComplexOrder Matrix.Norms.L2Operator
 open Matrix Polynomial
 open PredictiveThermodynamic.Physical (Assignment)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
-  (FullOperator fullC fullC_CAR fullC_mixed_anticomm_of_lt fermionWord prefixCount)
-open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberOperator numberOperator_eq_diagonal)
+  (FullOperator fullC prefixCount)
+open D5.S3.Quantum.Fermionic.FockMajoranaCarrier
+  (majorana majorana_clifford_and_parity numberOperator numberOperator_eq_diagonal)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression (fullC_entry)
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (occupationCount)
 
@@ -78,12 +79,29 @@ private def dGamma {M : ℕ} (h : Matrix (Fin M) (Fin M) ℝ) : FullOperator M :
 private theorem fullC_mixed (M : ℕ) (i j : Fin M) :
     fullC i * (fullC j)ᴴ + (fullC j)ᴴ * fullC i =
       if i = j then (1 : FullOperator M) else 0 := by
-  by_cases hij : i = j
-  · subst j; simp [fullC_CAR]
-  · rcases lt_or_gt_of_ne hij with h | h
-    · exact (fullC_mixed_anticomm_of_lt i j h).trans (by simp [hij])
-    · have ht := congrArg Matrix.conjTranspose (fullC_mixed_anticomm_of_lt j i h)
-      simpa [hij] using ht
+  classical
+  have hγ := (majorana_clifford_and_parity M).2.2.2.1
+  have h00 := hγ (i, false) (j, false)
+  have h01 := hγ (i, false) (j, true)
+  have h10 := hγ (i, true) (j, false)
+  have h11 := hγ (i, true) (j, true)
+  calc
+    _ = (1/4 : ℂ) •
+        ((majorana i false * majorana j false + majorana j false * majorana i false) +
+         (majorana i true * majorana j true + majorana j true * majorana i true) +
+         Complex.I • (majorana i false * majorana j true +
+           majorana j true * majorana i false) -
+         Complex.I • (majorana i true * majorana j false +
+           majorana j false * majorana i true)) := by
+      simp only [majorana, Bool.false_eq_true, if_false, if_true, add_mul, mul_add,
+        sub_mul, mul_sub, Matrix.smul_mul, Matrix.mul_smul]
+      match_scalars <;> norm_num [Complex.I_sq]
+    _ = _ := by
+      rw [h00, h11, h01, h10]
+      by_cases hij : i = j
+      · simp [hij]
+        module
+      · simp [hij]
 
 private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
     mode l * (mode l)ᴴ + (mode l)ᴴ * mode l =
@@ -343,7 +361,7 @@ private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → 
     exact False.elim (hmem (Finset.mem_univ _))
 
 private def psiCode (x : Assignment 6) : Fin 64 :=
-  finFunctionFinEquiv (fun j => if x j then (1 : Fin 2) else 0)
+  finFunctionFinEquiv (fun j => finTwoEquiv.symm (x j))
 
 private def psi38Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 20, 0, -20, 4, 0, 0, 0, 0, -20, 0, 21, -5, 0, 0, -5, 5, 0, -4, 0, 0, 0, 0, 0, 0, 4, 0, -5, 5, 0, 0, 5, -21, 0, 20, 0, 0, 0, 0, -4, 20, 0, -20, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0]
 private def psi58Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 6, 0, -6, 2, 0, 0, 0, 0, -6, 0, 7, -3, 0, 0, -3, 3, 0, -2, 0, 0, 0, 0, 0, 0, 2, 0, -3, 3, 0, 0, 3, -7, 0, 6, 0, 0, 0, 0, -2, 6, 0, -6, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
@@ -592,7 +610,7 @@ private def reduceInt (X : Assignment 6 → Assignment 6 → ℤ) :
       (Fin.append (code2.symm b) (code4.symm z))
 
 private def outerInt (f g : Assignment 6 → ℤ) : Assignment 6 → Assignment 6 → ℤ :=
-  fun x y => f x * g y
+  Matrix.vecMulVec f g
 
 private def r38Int : Matrix (Fin 4) (Fin 4) ℤ :=
   reduceInt (outerInt psi38Z psi58Z)
@@ -830,7 +848,7 @@ private theorem sum_cast_outer (f g : Assignment 6 → ℤ) (a b : Assignment 2)
       (reduceInt (outerInt f g) (code2 a) (code2 b) : ℂ) := by
   unfold reduceInt outerInt
   rw [← code4.sum_comp]
-  simp only [Equiv.symm_apply_apply, Int.cast_sum]
+  simp only [Equiv.symm_apply_apply, Int.cast_sum, Matrix.vecMulVec_apply]
 
 private theorem reduced_cast (f g : Assignment 6 → ℤ) (t : ℂ) :
     reduce (by norm_num : 2 * 1 ≤ 2 * 3)
