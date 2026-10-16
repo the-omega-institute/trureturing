@@ -87,7 +87,8 @@ theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     apply CFC.sqrt_unique
     · rw [← map_mul,
         CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg]
-      simp only [← Matrix.star_eq_conjTranspose, map_mul, map_star]
+      change Φ (star A * A) = star (Φ A) * Φ A
+      rw [map_mul, map_star]
     · exact map_nonneg Φ (CFC.sqrt_nonneg _)
   obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
   let : Finite w := b.orthonormal.linearIndependent.finite
@@ -146,7 +147,8 @@ theorem traceNorm_mul_le_hsSq {κ : Type*} [Fintype κ]
   have h := _root_.traceNorm_mul_le_of_isHilbertSchmidt hR hS
     (isTraceClass_of_finiteDimensional _) b
   rw [traceNorm_toEuclideanCLM, map_mul]
-  simpa only [hsSq_toEuclideanCLM] using h
+  rw [hsSq_toEuclideanCLM R b, hsSq_toEuclideanCLM S b] at h
+  exact h
 
 theorem traceNorm_gram_le {ι κ : Type*}
     [Fintype ι] [Fintype κ]
@@ -169,13 +171,13 @@ theorem traceNorm_gram_le {ι κ : Type*}
     ext i j
     cases i <;> cases j <;> rfl
   have hR : hsSq R = hsSq F := by
-    simp only [hsSq, R, Fintype.sum_sum_type, fromBlocks_apply₁₁,
+    simp only [hsSq.eq_1, R, Fintype.sum_sum_type, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
       Matrix.zero_apply, norm_zero, zero_pow (by decide : 2 ≠ 0),
       Finset.sum_const_zero, add_zero, zero_add, conjTranspose_apply, norm_star]
     exact Finset.sum_comm
   have hS : hsSq S = hsSq G := by
-    simp only [hsSq, S, Fintype.sum_sum_type, fromBlocks_apply₁₁,
+    simp only [hsSq.eq_1, S, Fintype.sum_sum_type, fromBlocks_apply₁₁,
       fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂,
       Matrix.zero_apply, norm_zero, zero_pow (by decide : 2 ≠ 0),
       Finset.sum_const_zero, add_zero, zero_add]
@@ -189,7 +191,7 @@ theorem correlation_sum_smul {d : ℕ} {κ ι : Type*} [Fintype κ] [Fintype ι]
     correlation (∑ i, (p i : ℂ) • ρ i) A B =
       ∑ i, (p i : ℂ) • correlation (ρ i) A B := by
   ext a b
-  simp only [correlation, Matrix.of_apply, Matrix.sum_mul, Matrix.trace_sum,
+  simp only [correlation.eq_1, Matrix.of_apply, Matrix.sum_mul, Matrix.trace_sum,
     Matrix.smul_mul, Matrix.trace_smul, Complex.re_sum, Matrix.sum_apply,
     Matrix.smul_apply, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
     Complex.ofReal_im, zero_mul, sub_zero, Complex.ofReal_sum, Complex.ofReal_mul]
@@ -218,7 +220,7 @@ theorem sum_sq_le_of_support_card {d r : ℕ} (sval : Fin d → ℝ)
 theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
     ScaledPure (A.effect a) := by
   refine ⟨(d : ℝ) / n, A.val a, by positivity, ?_⟩
-  simp only [EAM.effect, Complex.ofReal_div, Complex.ofReal_natCast]
+  simp only [EAM.effect.eq_1, Complex.ofReal_div, Complex.ofReal_natCast]
 
 theorem ket_dot_self {ι : Type*} [Fintype ι] (u : Ket ι) :
     star u.vec ⬝ᵥ u.vec = 1 := by
@@ -252,7 +254,7 @@ theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d) :
 theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
     ((coeff u)ᴴ * coeff u).trace.re = 1 := by
   rw [← hsSq_eq_trace]
-  simpa only [hsSq, coeff, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
+  simpa only [hsSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
 
 theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
     (hr : (coeff u).rank ≤ r) :
@@ -342,7 +344,7 @@ theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
     hsSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
   calc
     hsSq (sandwichFactor K A) = ∑ a, hsSq (K * A a * Kᴴ) := by
-      simp only [hsSq, sandwichFactor]
+      simp only [hsSq.eq_1, sandwichFactor]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro a _
@@ -435,12 +437,12 @@ theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
   let R := V.valᴴ * (B b)ᵀ * V.val
   have hXY : (X * Y).trace = (D * L * D * R).trace := by
     have hXeq : X = S * L * S := by
-      simp only [X, schmidtSandwich, conjTranspose_mul, conjTranspose_conjTranspose]
+      simp only [X, schmidtSandwich.eq_1, conjTranspose_mul, conjTranspose_conjTranspose]
       change S * U.valᴴ * A a * (U.val * Sᴴ) = S * L * S
       rw [hS.eq]
       simp only [L, mul_assoc]
     have hYeq : Y = S * R * S := by
-      simp only [Y, schmidtSandwich, conjTranspose_mul, conjTranspose_conjTranspose]
+      simp only [Y, schmidtSandwich.eq_1, conjTranspose_mul, conjTranspose_conjTranspose]
       change S * V.valᴴ * (B b)ᵀ * (V.val * Sᴴ) = S * R * S
       rw [hS.eq]
       simp only [R, mul_assoc]
@@ -476,13 +478,14 @@ theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
     (∑ a, A.effect a) = 1 := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by have := A.property.1; omega)
-  simp only [EAM.effect, ← Finset.smul_sum, A.property.2.1, smul_smul]
-  field_simp
+  simp only [EAM.effect.eq_1, ← Finset.smul_sum, A.property.2.1, smul_smul]
+  field_simp (disch := assumption)
   simp only [one_smul]
 
 theorem eam_effect_trace {d n : ℕ} (A : EAM d n) (a : Fin n) :
     (A.effect a).trace = (d : ℂ) / n := by
-  simp only [EAM.effect, Matrix.trace_smul, proj, MState.tr', smul_eq_mul, mul_one]
+  change (((d : ℂ) / n) • (MState.pure (A.val a)).m).trace = _
+  simp only [Matrix.trace_smul, MState.tr', smul_eq_mul, mul_one]
 
 theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
     (A.effect a * A.effect b).trace.re =
@@ -493,17 +496,19 @@ theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
   have hn1 : (n : ℝ) - 1 ≠ 0 := by
     have : 1 < n := by have := A.property.1; omega
     exact ne_of_gt (sub_pos.mpr (by exact_mod_cast this))
-  simp only [EAM.effect, Matrix.smul_mul, Matrix.mul_smul,
+  simp only [EAM.effect.eq_1, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.trace_smul, smul_eq_mul, proj_overlap]
-  simp only [← Complex.ofReal_natCast, ← Complex.ofReal_div,
-    ← Complex.ofReal_mul, Complex.ofReal_re]
+  have hc : (d : ℂ) / n = (((d : ℝ) / n : ℝ) : ℂ) := by
+    rw [Complex.ofReal_div, Complex.ofReal_natCast, Complex.ofReal_natCast]
+  rw [hc]
+  simp only [← Complex.ofReal_mul, Complex.ofReal_re]
   split_ifs with hab
   · subst b
     rw [ket_dot_self]
     norm_num
     ring
   · rw [A.property.2.2 a b hab]
-    field_simp
+    field_simp (disch := assumption)
 
 
 theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
@@ -552,14 +557,14 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
       smul_eq_mul, hcomm H 1, hIH, hI]
     dsimp only [q]
-    field_simp
+    field_simp (disch := assumption)
     ring
   have htsum : ∑ a, t a = 0 := by
     change ∑ a, K Z (A.effect a) = 0
     rw [← map_sum, eam_effect_sum hd A, hZ1]
   have hcoef : ((d : ℝ) / n) ^ 2 - b = α := by
     dsimp only [b, α]
-    field_simp
+    field_simp (disch := assumption)
     ring
   have hTP (a : Fin n) : K T (A.effect a) = α * t a := by
     have h := D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum
@@ -580,7 +585,7 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
       smul_eq_mul, hcomm H 1, hIH, hI, hK H H]
     dsimp only [q]
-    field_simp
+    field_simp (disch := assumption)
     ring
   have hnonneg : 0 ≤ K Z Z := by
     have heq : K Z Z = hsSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
@@ -603,7 +608,7 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     dsimp only [t, Z]
     simp only [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
       smul_eq_mul, hIE]
-    field_simp
+    field_simp (disch := assumption)
     ring
   have hmoment : moment A.effect H = s + q ^ 2 / (n : ℝ) := by
     change (∑ a, (K H (A.effect a)) ^ 2) = _
@@ -612,11 +617,11 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
       htsum, mul_zero, zero_mul, add_zero, Finset.sum_const,
       Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     dsimp only [s]
-    field_simp
+    field_simp (disch := assumption)
   rw [hmoment]
   have hh := add_le_add_right hsbound (q ^ 2 / (n : ℝ))
   rw [hZZ] at hh
-  convert hh using 1 <;> dsimp only [α, q] <;> field_simp <;> ring
+  convert hh using 1 <;> dsimp only [α, q] <;> field_simp (disch := assumption) <;> ring
 
 theorem moment_transpose {d : ℕ} {κ : Type*} [Fintype κ]
     (A : κ → Op d) (H : Op d) :
