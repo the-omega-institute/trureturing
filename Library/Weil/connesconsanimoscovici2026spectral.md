@@ -1289,6 +1289,120 @@ square-completion methods, without a new general theorem, normalized
 eigenvalue or Lean-verification claim.
 
 
+### Retaining actual positive Gamma boundary channels in the inverse
+
+The fixed-support exclusion holds for its specified $W$. A different
+majorant can retain the positive even Gamma boundary energy already
+displayed after G6. Reuse that series, the
+[existing variational inversion and Woodbury application](fukushima2011dirichlet.md#keep-the-high-constraint-and-the-exact-ground-term),
+and the actual residual identity above. This is an application to the
+same exterior, not a new general inverse theorem.
+
+For $b_j=2j+1/2$ and exterior cosine index $n>N$, define
+
+$$
+h_{j,n}=\frac{2b_j(-1)^n}{\sqrt d\,[b_j^2+(2\pi n/d)^2]}.
+$$
+
+Integrating the existing cosh boundary response against the original
+orthonormal cosines identifies its $j$th positive term as
+$(1-e^{-b_jd})h_jh_j^*$. For a finite bin $[a,b)$ of rates, set
+
+$$
+c_a=1-e^{-b_ad},\qquad
+U_{[a,b)}=\sqrt{\frac{c_a}{b-a}}\sum_{j=a}^{b-1}h_j.
+$$
+
+Finite Cauchy--Schwarz and monotonicity of $1-e^{-b_jd}$ give
+$\sum_{j=a}^{b-1}(1-e^{-b_jd})h_jh_j^*\succeq
+U_{[a,b)}U_{[a,b)}^*$. Every column has infinite exterior support
+and belongs to $\ell^2$. Keep nineteen disjoint bins with endpoints
+$0,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,1597,2584,4181,6765$,
+and collect these columns in $U$.
+
+The archived $W$ rounds the reciprocals of the elementary logarithmic
+Gamma-minus-prime comparison upward, with a constant far weight $D$.
+Consequently $W^{-1}$ is bounded above by that diagonal lower
+comparison. The existing positive even pole term can be dropped while
+retaining these Gamma channels, giving, on the same actual form domain,
+
+$$
+H_N\succeq W^{-1}+UU^*,\qquad
+H_N^{-1}\preceq W_{\rm G}:=
+W-WU(I+U^*WU)^{-1}U^*W\preceq W.
+$$
+
+This changes the majorant that was fixed in the exclusion; no new
+finite support trial or finite solve on that excluded family is used.
+For exactly the saved direction $v$ and saved trial $y=Vx_0$, put
+$r=C_Nv-H_Ny$, $\beta=U^*Wr$ and $S=I+U^*WU$. Then
+
+$$
+Q(v-y)-\|r\|_{W_{\rm G}}^2
+=Q(v-y)-\|r\|_W^2+\beta^*S^{-1}\beta
+\le v^*S_Nv.
+$$
+
+#### A paid infinite-support directional update
+
+The [boundary-channel experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/968e46e90748065c12ee915937f4019805a5ed91/docs/reports/weil-c27)
+consumes the saved dyadic $v,x_0$, original margin, diagonal weights,
+scalar rows and far residual energy. It archives the previously unsaved
+residual action on rows1281–32768, using direct rows through4096 and
+the existing finite geometric expansion thereafter. The order128
+remainder is bounded by its absolute coefficient sum and geometric
+tail. It generates neither the old Gram nor new scalar or far moments.
+
+FLINT's existing digamma implements the finite rate sum directly:
+
+$$
+\sum_{j=a}^{b-1}\frac{b_j}{b_j^2+\omega^2}
+=\frac12\Re\left[
+\psi\left(b+\frac14+\frac{i\omega}2\right)
+-\psi\left(a+\frac14+\frac{i\omega}2\right)\right].
+$$
+
+Write $U_0,r_0,W_0$ for the complete finite middle rows and let
+$E_\infty$ be the archived upper bound for the actual far residual
+energy. If $|U_{k,m}|\le a_k/m^2$ for $m>M$, the sufficient bounds are
+
+$$
+\eta_k=\frac{Da_k^2}{3M^3},\quad
+\|U_\infty^*W_\infty U_\infty\|\le\delta:=\sum_k\eta_k,
+\quad
+|\beta_k-(U_0^*W_0r_0)_k|\le\sqrt{\eta_k E_\infty}.
+$$
+
+The Gram norm uses the trace bound for a positive matrix, not an
+entrywise outer-product comparison. For bin $k=[a,b)$ one can take
+$a_k=2\sqrt{c_a/((b-a)d)}(b-a)(a+b-1/2)(d/(2\pi))^2$.
+Put $S_0=I+U_0^*W_0U_0$ and
+$\beta_0=U_0^*W_0r_0$. A stored exact256-bit dyadic vector $z$ gives
+the directed lower gain
+
+$$
+\beta^*S^{-1}\beta\ge
+2\Re z^*\beta_0-z^*S_0z
+-2\sum_k|z_k|\sqrt{\eta_kE_\infty}-\delta\|z\|^2.
+$$
+
+The exact endpoints, using512 working bits and a256-bit output grid,
+give a gain greater than $6.60\times10^{-31}$ and the updated bound
+
+$$
+\boxed{v^*S_Nv>2.37\times10^{-31}.}
+$$
+
+This numerical implication is conditional on the stated actual
+common-form and exterior-domain identifications, the existing even
+boundary and diagonal comparisons, and sound reused enclosures.
+It repairs this unchanged complete retained direction and its unchanged
+trial. It does not certify the full retained Schur matrix or optimality
+for the updated majorant. The finite rate bins are a choice of positive
+channels, with no claim that Fibonacci endpoints are necessary or
+optimal. Full c27 positivity, cofinal positivity, Lean verification of
+this application and RH remain unresolved.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
