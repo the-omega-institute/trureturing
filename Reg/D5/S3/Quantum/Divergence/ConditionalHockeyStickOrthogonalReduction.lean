@@ -13,13 +13,13 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.checkUnivs false
 noncomputable section
-universe u v w
+universe u_1 u_2 u_3
 
 namespace Blocks
 
 /-- Evaluate the block-diagonal construction at its source block family. -/
 abbrev signature : Signature where
-  Params := Σ ι : Type u, Σ κ : ι → Type v, ∀ i, Matrix (κ i) (κ i) ℂ
+  Params := Σ ι : Type u_1, Σ κ : ι → Type u_2, ∀ i, Matrix (κ i) (κ i) ℂ
   State p := (∀ i, Matrix (p.2.1 i) (p.2.1 i) ℂ) →
     Matrix (Sigma p.2.1) (Sigma p.2.1) ℂ
   Role := Unit
@@ -37,21 +37,21 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
-    {κ : ι → Type v} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
+  Law R := ∀ {ι : Type u_1} [Fintype ι] [DecidableEq ι]
+    {κ : ι → Type u_2} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (M : ∀ i, Matrix (κ i) (κ i) ℂ), (∀ i, (M i).PosSemidef) →
     (R.readout () ⟨ι, ⟨κ, M⟩⟩ Matrix.blockDiagonal').PosSemidef
 
-theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1,u_2}.Law rejected := by
   intro h
-  let ι := ULift.{u} Unit
-  let κ : ι → Type v := fun _ => ULift.{v} Unit
+  let ι := ULift.{u_1} Unit
+  let κ : ι → Type u_2 := fun _ => ULift.{u_2} Unit
   have hp := h (ι := ι) (κ := κ) (fun _ => 1) (fun _ => Matrix.PosSemidef.one)
   have hd := hp.diag_nonneg (i := ⟨⟨()⟩, ⟨()⟩⟩)
   norm_num [rejected, realize, Matrix.blockDiagonal'_apply_eq, Complex.le_def] at hd
 
-def source_registration : Registration arena.{u,v}
-    (type_of% @posSemidef_blockDiagonal.{u,v}) where
+def source_registration : Registration arena.{u_1,u_2}
+    (type_of% @posSemidef_blockDiagonal.{u_1,u_2}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨posSemidef_blockDiagonal, rejected, rejected_law⟩
@@ -63,7 +63,7 @@ def source_registration : Registration arena.{u,v}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Unit, ⟨fun _ => ULift.{v} Unit, fun _ => 0⟩⟩,
+    refine ⟨⟨ULift.{u_1} Unit, ⟨fun _ => ULift.{u_2} Unit, fun _ => 0⟩⟩,
       (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
     have he := congrArg (fun M => M ⟨⟨()⟩, ⟨()⟩⟩ ⟨⟨()⟩, ⟨()⟩⟩) h
@@ -72,8 +72,8 @@ def source_registration : Registration arena.{u,v}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@posSemidef_blockDiagonal.{u,v})
-      (Realization signature.{u,v}) Unit Unit := {
+      (@posSemidef_blockDiagonal.{u_1,u_2})
+      (Realization signature.{u_1,u_2}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.Blocks.unit
   realizationName :=
     .str `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.Blocks
@@ -116,7 +116,7 @@ namespace PartialTrace
 
 /-- Evaluate the source partial-trace map at its unscaled matrix. -/
 abbrev signature : Signature where
-  Params := Σ R : Type v, Σ A : Type w, Matrix (R × A) (R × A) ℂ
+  Params := Σ R : Type u_2, Σ A : Type u_3, Matrix (R × A) (R × A) ℂ
   State p := Matrix (p.1 × p.2.1) (p.1 × p.2.1) ℂ → Matrix p.1 p.1 ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -132,16 +132,16 @@ def rejected : Realization signature :=
   realize signature (fun _ p traceRight => traceRight p.2.2.transpose) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
-  signature := signature.{v,w}
-  Law r := ∀ {S : Type u} {R : Type v} {A : Type w} [DistribSMul S ℂ] [Fintype A]
+  signature := signature.{u_2,u_3}
+  Law r := ∀ {S : Type u_1} {R : Type u_2} {A : Type u_3} [DistribSMul S ℂ] [Fintype A]
     (c : S) (X : Matrix (R × A) (R × A) ℂ),
     partialTraceRight (c • X) = c • r.readout () ⟨R, ⟨A, X⟩⟩ partialTraceRight
 
-theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1,u_2,u_3}.Law rejected := by
   intro h
-  let S := ULift.{u} ℂ
-  let R := ULift.{v} Bool
-  let A := ULift.{w} Unit
+  let S := ULift.{u_1} ℂ
+  let R := ULift.{u_2} Bool
+  let A := ULift.{u_3} Unit
   let X : Matrix (R × A) (R × A) ℂ :=
     fun i j => if i.1.down = false ∧ j.1.down = true then 1 else 0
   have he := h (S := S) (R := R) (A := A) (1 : S) X
@@ -150,8 +150,8 @@ theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   have hx := congrArg (fun M : Matrix R R ℂ => M ⟨false⟩ ⟨true⟩) he
   norm_num [rejected, realize, partialTraceRight, X, Matrix.transpose] at hx
 
-def source_registration : Registration arena.{u,v,w}
-    (type_of% @partialTraceRight_smul.{u,v,w}) where
+def source_registration : Registration arena.{u_1,u_2,u_3}
+    (type_of% @partialTraceRight_smul.{u_1,u_2,u_3}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨partialTraceRight_smul, rejected, rejected_law⟩
@@ -163,7 +163,7 @@ def source_registration : Registration arena.{u,v,w}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{v} Unit, ⟨ULift.{w} Unit, 0⟩⟩,
+    refine ⟨⟨ULift.{u_2} Unit, ⟨ULift.{u_3} Unit, 0⟩⟩,
       (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
     have he := congrArg (fun M => M ⟨()⟩ ⟨()⟩) h
@@ -172,8 +172,8 @@ def source_registration : Registration arena.{u,v,w}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@partialTraceRight_smul.{u,v,w})
-      (Realization signature.{v,w}) Unit Unit := {
+      (@partialTraceRight_smul.{u_1,u_2,u_3})
+      (Realization signature.{u_2,u_3}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.PartialTrace.unit
   realizationName :=

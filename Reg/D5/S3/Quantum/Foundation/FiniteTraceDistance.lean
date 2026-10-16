@@ -13,26 +13,26 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option linter.checkUnivs false
 noncomputable section
-universe u v
+universe u_1 u_2
 
-private instance liftedRealNormedField : NormedField (ULift.{v} ℝ) :=
-  { (inferInstance : NormedCommRing (ULift.{v} ℝ)),
-    (inferInstance : Field (ULift.{v} ℝ)) with
+private instance liftedRealNormedField : NormedField (ULift.{u_2} ℝ) :=
+  { (inferInstance : NormedCommRing (ULift.{u_2} ℝ)),
+    (inferInstance : Field (ULift.{u_2} ℝ)) with
     norm_mul a b := norm_mul a.down b.down }
 
-private instance liftedRealDenselyNormedField : DenselyNormedField (ULift.{v} ℝ) where
+private instance liftedRealDenselyNormedField : DenselyNormedField (ULift.{u_2} ℝ) where
   toNormedField := liftedRealNormedField
   lt_norm_lt x y hx hxy := by
     obtain ⟨a, ha⟩ := DenselyNormedField.lt_norm_lt (α := ℝ) x y hx hxy
     exact ⟨⟨a⟩, ha⟩
 
-private instance liftedRealStarRing : StarRing (ULift.{v} ℝ) where
+private instance liftedRealStarRing : StarRing (ULift.{u_2} ℝ) where
   star := id
   star_involutive := fun _ => rfl
   star_mul := fun a b => mul_comm a b
   star_add := fun _ _ => rfl
 
-private instance liftedRealRCLike : RCLike (ULift.{v} ℝ) where
+private instance liftedRealRCLike : RCLike (ULift.{u_2} ℝ) where
   toDenselyNormedField := liftedRealDenselyNormedField
   toStarRing := liftedRealStarRing
   toNormedAlgebra := inferInstance
@@ -49,7 +49,7 @@ private instance liftedRealRCLike : RCLike (ULift.{v} ℝ) where
   mul_im_ax := by intro z w; change (0 : ℝ) = z.down * 0 + 0 * w.down; ring
   conj_re_ax := fun _ => rfl
   conj_im_ax := by intro z; change (0 : ℝ) = -0; simp
-  conj_I_ax := by change (0 : ULift.{v} ℝ) = -0; simp
+  conj_I_ax := by change (0 : ULift.{u_2} ℝ) = -0; simp
   norm_sq_eq_def_ax := by
     intro z
     change ‖z.down‖ ^ 2 = z.down * z.down + 0 * 0
@@ -65,7 +65,7 @@ private instance liftedRealRCLike : RCLike (ULift.{v} ℝ) where
 
 /-- Evaluate the source trace map at the Hermitian matrix. -/
 abbrev signature : Signature where
-  Params := Σ n : Type u, Σ R : Type v, Matrix n n R
+  Params := Σ n : Type u_1, Σ R : Type u_2, Matrix n n R
   State p := Matrix p.1 p.1 p.2.1 → p.2.1
   Role := Unit
   finiteRole := inferInstance
@@ -85,14 +85,14 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ {n : Type u} {R : Type v} [Fintype n] [RCLike R]
+  Law r := ∀ {n : Type u_1} {R : Type u_2} [Fintype n] [RCLike R]
     {A : Matrix n n R}, A.IsHermitian →
       (RCLike.re A.trace : R) = r.readout () ⟨n, ⟨R, A⟩⟩ Matrix.trace
 
-theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+theorem rejected_law : ¬ arena.{u_1,u_2}.Law rejected := by
   intro h
-  let n := ULift.{u} Bool
-  let R := ULift.{v} ℝ
+  let n := ULift.{u_1} Bool
+  let R := ULift.{u_2} ℝ
   have he := h (n := n) (R := R) (A := 1) Matrix.isHermitian_one
   have hr : rejected.readout () ⟨n, ⟨R, (1 : Matrix n n R)⟩⟩ Matrix.trace = 1 := by
     classical
@@ -106,8 +106,8 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   change (2 : ℝ) = 1 at hd
   norm_num at hd
 
-def source_registration : Registration arena.{u,v}
-    (type_of% @re_trace_eq_trace.{u,v}) where
+def source_registration : Registration arena.{u_1,u_2}
+    (type_of% @re_trace_eq_trace.{u_1,u_2}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨re_trace_eq_trace, rejected, rejected_law⟩
@@ -119,7 +119,7 @@ def source_registration : Registration arena.{u,v}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Unit, ⟨ULift.{v} Bool, fun _ _ => ⟨false⟩⟩⟩,
+    refine ⟨⟨ULift.{u_1} Unit, ⟨ULift.{u_2} Bool, fun _ _ => ⟨false⟩⟩⟩,
       (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
     intro h
     have he := congrArg ULift.down h
@@ -128,8 +128,8 @@ def source_registration : Registration arena.{u,v}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace.{u,v})
-      (Realization signature.{u,v}) Unit Unit := {
+      (@_root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace.{u_1,u_2})
+      (Realization signature.{u_1,u_2}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Foundation.FiniteTraceDistance.unit
   realizationName := `Reg.D5.S3.Quantum.Foundation.FiniteTraceDistance.source_registration
   realizationSource := none
