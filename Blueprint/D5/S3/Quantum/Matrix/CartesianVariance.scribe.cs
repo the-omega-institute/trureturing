@@ -16,6 +16,12 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
         Formula var=Sub(ReF(Trace(Mul(rho,Parenthesized(cart)))),Apply(Qualified("Complex","normSq"),Trace(Mul(rho,a))));
         Formula pq=Pure(v);
         return DocumentDefinition.Create(ScribeNode.Create("A pure vector maximizes the Cartesian matrix variance.",H("Cartesian variance"),Blocks(
+            Item("hermitian_spectral_sum", "A Hermitian matrix as a sum of spectral projections",
+                HermitianSpectralSumFormula(),
+                "A complex Hermitian matrix is the sum of the rank-one projections onto its orthonormal eigenvectors, each scaled by its real eigenvalue. WithLp.ofLp gives the coordinate vector used in each outer product."),
+            Item("hermitian_trace_spectral", "Trace pairing in an orthonormal eigenbasis",
+                HermitianTraceSpectralFormula(),
+                "Pairing a Hermitian matrix rho with any complex matrix A gives the eigenvalue-weighted sum of the quadratic forms of A on rho's orthonormal eigenvectors. No Hermitian assumption on A is required."),
             Item("psd_entry_bound", "Positive semidefinite entry bound",
                 All([B("n",F.Id("Type"))], Seq(OpenBracket,Call("Fintype",n),CloseBracket,Sp,
                     OpenBracket,Call("DecidableEq",n),CloseBracket,Sp,Comma,Sp,
@@ -55,6 +61,26 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
                 Imp(And(Eqn(Norm(v),Num(1)),All([B("rho",Mat(n))],Imp(Density(rho),LeqF(Call("variance",a,rho),Call("variance",a,pq))))),
                     All([B("B",Mat(n))],LeqF(Frob(Comm(a,b)),Mul(Mul(Num(4),Frob(b)),Call("variance",a,pq)))))),
                 "For nonzero B its two Gram matrices, normalized by twice the Frobenius square, form a density matrix. The commutator variance bound applies to this common density; B equal to zero is included."))));
+    }
+
+    private static Formula Eigenvalues(Formula h, Formula i) => Apply(
+        Seq(Qualified("Matrix", "IsHermitian"), Dot, F.Id("eigenvalues")), h, i);
+    private static Formula Eigenvector(Formula h, Formula i) => Apply(
+        Apply(Seq(Qualified("Matrix", "IsHermitian"), Dot, F.Id("eigenvectorBasis")), h), i);
+    private static Formula HermitianSpectralSumFormula()
+    {
+        Formula n = F.Id("n"), rho = F.Id("rho"), h = F.Id("hRho"), i = F.Id("i");
+        return All([B("n", N), B("rho", Mat(n)), B("hRho", Apply(Qualified("Matrix", "IsHermitian"), rho))],
+            Eqn(rho, Sum("i", Fin(n), Smul(Eigenvalues(h, i), Pure(Eigenvector(h, i))))));
+    }
+    private static Formula HermitianTraceSpectralFormula()
+    {
+        Formula n = F.Id("n"), rho = F.Id("rho"), a = F.Id("A"), h = F.Id("hRho"), i = F.Id("i");
+        Formula v = Eigenvector(h, i);
+        return All([B("n", N), B("rho", Mat(n)), B("A", Mat(n)),
+                B("hRho", Apply(Qualified("Matrix", "IsHermitian"), rho))],
+            Eqn(Trace(Mul(rho, a)), Sum("i", Fin(n), Smul(Eigenvalues(h, i),
+                Inner(v, Apply(Qualified("Matrix", "toEuclideanLin"), a, v))))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
