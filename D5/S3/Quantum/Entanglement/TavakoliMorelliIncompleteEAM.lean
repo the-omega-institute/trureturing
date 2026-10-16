@@ -618,11 +618,111 @@ theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
   rw [hZZ] at hh
   convert hh using 1 <;> dsimp only [α, q] <;> field_simp <;> ring
 
+theorem moment_transpose {d : ℕ} {κ : Type*} [Fintype κ]
+    (A : κ → Op d) (H : Op d) :
+    moment (fun a => (A a)ᵀ) H = moment A Hᵀ := by
+  unfold moment
+  apply Finset.sum_congr rfl
+  intro a _
+  rw [← trace_transpose_mul Hᵀ (A a), transpose_transpose]
+
+theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
+    [Fintype κ] (u : Ket (Fin d × Fin d)) (A B : κ → Op d)
+    (α β : ℝ) (hA : ∀ a, ScaledPure (A a)) (hB : ∀ b, ScaledPure (B b))
+    (hα : 0 ≤ α) (hβ : 0 ≤ β) (hMA : MomentBound A α β)
+    (hMB : MomentBound B α β) (hr : (coeff u).rank ≤ r) :
+    traceNorm (correlation (proj u) A B) ≤ α + β * (r : ℝ) := by
+  classical
+  obtain ⟨U, V, sval, hs, hUV, hunit, hcard⟩ := exists_normalized_svd u hr
+  let KU := schmidtSandwich U sval
+  let KV := schmidtSandwich V sval
+  have hsum := sum_sq_le_of_support_card sval hunit hcard
+  have hnorm (W : Matrix.unitaryGroup (Fin d) ℂ) :
+      moment A ((schmidtSandwich W sval)ᴴ * schmidtSandwich W sval) ≤
+        α + β * (r : ℝ) := by
+    have h := hMA ((schmidtSandwich W sval)ᴴ * schmidtSandwich W sval)
+      (isHermitian_conjTranspose_mul_self _)
+    obtain ⟨ht, hq⟩ := schmidtSandwich_moments W sval hs
+    rw [ht, hq, hunit, mul_one] at h
+    exact h.trans (add_le_add (le_refl α) (mul_le_mul_of_nonneg_left hsum hβ))
+  have hF : hsSq (sandwichFactor KU A) ≤ α + β * (r : ℝ) := by
+    rw [sandwichFactor_hsSq KU A hA]
+    exact hnorm U
+  have hG : hsSq (sandwichFactor KV (fun b => (B b)ᵀ)) ≤ α + β * (r : ℝ) := by
+    rw [sandwichFactor_hsSq KV _ (fun b => scaledPure_transpose (hB b)), moment_transpose]
+    have h := hMB ((KVᴴ * KV)ᵀ) (isHermitian_conjTranspose_mul_self KV).transpose
+    obtain ⟨ht, hq⟩ := schmidtSandwich_moments V sval hs
+    have hsq : (((KVᴴ * KV)ᵀ * (KVᴴ * KV)ᵀ)).trace.re = 1 := by
+      rw [← transpose_mul, trace_transpose]
+      exact hq.trans hunit
+    rw [hsq, trace_transpose, ht, mul_one] at h
+    exact h.trans (add_le_add (le_refl α) (mul_le_mul_of_nonneg_left hsum hβ))
+  rw [pure_gram_factorization u A B (fun a => scaledPure_hermitian (hA a))
+    (fun b => scaledPure_hermitian (hB b)) U V sval hs hUV]
+  calc
+    _ ≤ Real.sqrt (hsSq (sandwichFactor KU A)) *
+        Real.sqrt (hsSq (sandwichFactor KV (fun b => (B b)ᵀ))) := traceNorm_gram_le _ _
+    _ ≤ Real.sqrt (α + β * r) * Real.sqrt (α + β * r) :=
+      mul_le_mul (Real.sqrt_le_sqrt hF) (Real.sqrt_le_sqrt hG)
+        (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)
+    _ = _ := Real.mul_self_sqrt (by positivity)
+
+theorem schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
+    [Fintype κ] [DecidableEq κ] (ρ : BipartiteOp d) (A B : κ → Op d)
+    (α β : ℝ) (hA : ∀ a, ScaledPure (A a)) (hB : ∀ b, ScaledPure (B b))
+    (hα : 0 ≤ α) (hβ : 0 ≤ β) (hMA : MomentBound A α β)
+    (hMB : MomentBound B α β) (hρ : SchmidtNumberLE ρ r) :
+    traceNorm (correlation ρ A B) ≤ α + β * (r : ℝ) := by
+  obtain ⟨N, p, u, hp, hsum, hr, rfl⟩ := hρ
+  rw [correlation_sum_smul]
+  have htri (s : Finset (Fin N)) :
+      traceNorm (∑ k ∈ s, (p k : ℂ) • correlation (proj (u k)) A B) ≤
+        ∑ k ∈ s, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) := by
+    induction s using Finset.induction_on with
+    | empty => simp [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm]
+    | @insert k s hk ih =>
+      rw [Finset.sum_insert hk, Finset.sum_insert hk]
+      exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_add_le _ _).trans
+        (add_le_add le_rfl ih)
+  calc
+    _ ≤ ∑ k, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) := htri Finset.univ
+    _ = ∑ k, p k * traceNorm (correlation (proj (u k)) A B) := by
+      apply Finset.sum_congr rfl
+      intro k _
+      exact ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg _ _ (hp k)
+    _ ≤ ∑ k, p k * (α + β * (r : ℝ)) := by
+      exact Finset.sum_le_sum (fun k _ => mul_le_mul_of_nonneg_left
+        (pure_schmidt_traceNorm_le_of_moment (u k) A B α β hA hB hα hβ hMA hMB (hr k))
+        (hp k))
+    _ = _ := by rw [← Finset.sum_mul, hsum, one_mul]
+
 def claim : Prop :=
   ∀ (d n r : ℕ), 1 ≤ d → 1 ≤ r → r ≤ d →
     ∀ (A B : EAM d n) (ρ : BipartiteOp d), SchmidtNumberLE ρ r →
       D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm (Pn ρ A B) ≤
         ((d : ℝ) * ((d : ℝ) - 1) + (r : ℝ) * ((n : ℝ) - (d : ℝ))) /
           ((n : ℝ) * ((n : ℝ) - 1))
+
+theorem result : claim := by
+  intro d n r hd _ _ A B ρ hρ
+  let α := (d : ℝ) * ((d : ℝ) - 1) / ((n : ℝ) * ((n : ℝ) - 1))
+  let β := ((n : ℝ) - (d : ℝ)) / ((n : ℝ) * ((n : ℝ) - 1))
+  have hdreal : (1 : ℝ) ≤ d := by exact_mod_cast hd
+  have hnd : (d : ℝ) < n := by exact_mod_cast A.property.1
+  have hn1 : 0 ≤ (n : ℝ) - 1 := by linarith
+  have hden : 0 ≤ (n : ℝ) * ((n : ℝ) - 1) :=
+    mul_nonneg (Nat.cast_nonneg _) hn1
+  have hα : 0 ≤ α := div_nonneg
+    (mul_nonneg (Nat.cast_nonneg _) (sub_nonneg.mpr hdreal)) hden
+  have hβ : 0 ≤ β := div_nonneg (sub_nonneg.mpr hnd.le) hden
+  have hmoment (C : EAM d n) : MomentBound C.effect α β := by
+    intro H hH
+    have h := eam_second_moment hd C H hH
+    convert h using 1 <;> dsimp only [α, β] <;> ring
+  have h := schmidt_traceNorm_le_of_moment ρ A.effect B.effect α β
+    (eam_effect_scaledPure A) (eam_effect_scaledPure B) hα hβ
+    (hmoment A) (hmoment B) hρ
+  change traceNorm (correlation ρ A.effect B.effect) ≤ _
+  convert h using 1 <;> dsimp only [α, β] <;> ring
 
 end D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
