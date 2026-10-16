@@ -1,13 +1,13 @@
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.Constructor;
 internal sealed class CompletedNativeCanonicalCodingDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "CompletedNativeCanonicalCoding", H("Canonical coding of the native completion"), Blocks(
             Describe.Lean(DescribeId.Create("completed-native-canonical-coding"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/CompletedNativeCanonicalCoding.canonical_coding"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/Constructor/CompletedNativeCanonicalCoding.canonical_coding"),
                 H("Maximal atomic collapse and independent expansion are inverse"),
                 Statement(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The native domain is the existing unrestricted CompletionTree, with equality at every finite address, its actual substitution rho, its finite atomic iterates and its actual leafless Omega. Code is the unrestricted final coalgebra with natural-number leaves and ordered binary branches. In particular it includes nonregular infinite trees and arbitrary mixtures of finite leaves and leafless subtrees. codeOmega is the all-branch value, not a separate leaf label.")),

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/Observer/CompletedNativeCanonicalCoding
+/- GID: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/CompletedNativeCanonicalCoding
    generality: G
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)

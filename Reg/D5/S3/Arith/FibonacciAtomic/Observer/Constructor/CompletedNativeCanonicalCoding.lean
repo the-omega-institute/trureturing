@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding
+import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
@@ -10,7 +10,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeCompletionPrefixLifting
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.CompletionHomogeneousFixedPoints
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding
 noncomputable section
 
 abbrev signature : Signature where
@@ -85,8 +85,8 @@ noncomputable def registration :
     canonical_coding
     (type_of% (realize signature (fun _ _ X => collapse X) (fun e => nomatch e)))
     Unit Unit := {
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding.canonical_coding
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding.familyRegistration
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding.canonical_coding
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -102,7 +102,7 @@ noncomputable def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -119,4 +119,4 @@ noncomputable def registration :
 #print axioms registration
 
 end
-end Reg.D5.S3.Arith.FibonacciAtomic.Observer.CompletedNativeCanonicalCoding
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.CompletedNativeCanonicalCoding

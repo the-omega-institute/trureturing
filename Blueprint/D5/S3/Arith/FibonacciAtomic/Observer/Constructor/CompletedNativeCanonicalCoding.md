@@ -8,7 +8,7 @@ CompletedNativeCanonicalCoding
 
 $$(\forall X: CompletionTree, ((\operatorname{Reduced}\left(\operatorname{collapse}\left(X\right)\right)) \land (\operatorname{expansion}\left(\operatorname{collapse}\left(X\right)\right) = X))) \land (\forall C: Code, ((\operatorname{Reduced}\left(C\right)) \implies (\operatorname{collapse}\left(\operatorname{expansion}\left(C\right)\right) = C))) \land ((\operatorname{Injective}\left(collapse\right)) \land (\forall C: Code, ((\operatorname{Reduced}\left(C\right)) \implies (\exists X: CompletionTree, (\operatorname{collapse}\left(X\right) = C))))) \land (\forall k: Nat, (\forall C: Code, ((\operatorname{Reduced}\left(C\right)) \implies (\operatorname{Reduced}\left(\operatorname{shift}\left(k, C\right)\right))))) \land (\forall k: Nat, (\forall X: CompletionTree, (\operatorname{collapse}\left(\operatorname{rhoIterate}\left(k, X\right)\right) = \operatorname{shift}\left(k, \operatorname{collapse}\left(X\right)\right)))) \land (\forall C: Code, ((\operatorname{Reduced}\left(C\right)) \implies ((\operatorname{expansion}\left(C\right) = Omega) \iff (C = codeOmega)))) \land (\forall n: Nat, (\operatorname{collapse}\left(\operatorname{atomic}\left(n\right)\right) = \operatorname{primitive}\left(n\right))) \land (\forall l: CompletionTree, (\forall r: CompletionTree, ((\neg(\exists n: Nat, (\operatorname{node}\left(l, r\right) = \operatorname{atomic}\left(n\right)))) \implies (\operatorname{collapse}\left(\operatorname{node}\left(l, r\right)\right) = \operatorname{fork}\left(\operatorname{collapse}\left(l\right), \operatorname{collapse}\left(r\right)\right))))) \land (\forall l: Code, (\forall r: Code, ((\operatorname{fork}\left(l, r\right) \neq codeOmega) \implies (\neg((l = codeOmega) \land (r = codeOmega))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/CompletedNativeCanonicalCoding.canonical_coding` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/CompletedNativeCanonicalCoding.canonical_coding` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,5 +26,5 @@ The arbitrary-code atomic reflection in the proof rules out a reduced branch exp
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/CompletedNativeCanonicalCoding.canonical_coding`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints](CompletionHomogeneousFixedPoints.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/CompletedNativeCanonicalCoding.canonical_coding`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/CompletionHomogeneousFixedPoints](../CompletionHomogeneousFixedPoints.md)
