@@ -543,3 +543,179 @@ end TensorCurrentWard
 end
 
 end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+
+namespace Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
+open _root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
+open _root_.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit
+noncomputable section
+
+namespace TranslationReadout
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  (Σ lattice : LatticeData, Charge lattice)
+  (fun parameter => Oscillator parameter.1)
+  (fun parameter => Polynomial (Oscillator parameter.1))
+def actual : Realization signature := realize signature
+  (fun _ parameter polynomial => halfTranslatedPolynomial parameter.1 parameter.2 polynomial)
+  (fun empty => nomatch empty)
+def rejected : Realization signature := realize signature
+  (fun _ _ _ => 0) (fun empty => nomatch empty)
+theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨⟨hyperbolic, 0⟩, 0, 1, ?_⟩
+  simp [actual, realize, halfTranslatedPolynomial]
+end TranslationReadout
+
+namespace CreatorReadout
+abbrev signature : Signature := Reg.Support.SingleDependentReadout.signature
+  LatticeData Index Oscillator
+def actual : Realization signature := realize signature
+  (fun _ _ index => MvPolynomial.X index) (fun empty => nomatch empty)
+def rejected : Realization signature := realize signature
+  (fun _ _ index => MvPolynomial.X index + 1) (fun empty => nomatch empty)
+theorem dependence : ObservationalDependence signature actual := by
+  intro role
+  refine ⟨hyperbolic, ((0 : Fin 2), 0), ((0 : Fin 2), 1), ?_⟩
+  exact MvPolynomial.X_injective.ne (by decide)
+end CreatorReadout
+
+theorem coefficient_unit (D : LatticeData) :
+    oscillatorCoefficient D 0 0 (1 : Oscillator D) = 1 := by
+  rw [oscillatorCoefficient_as_sum]
+  have constant : halfTranslatedPolynomial D 0 (1 : Oscillator D) = Polynomial.C 1 := by
+    simp [halfTranslatedPolynomial]
+  rw [constant]
+  change Polynomial.sum (Polynomial.C (1 : Oscillator D))
+    (fun degree coefficient => coefficient *
+      halfCreationCoeff D 0 (0 + chargeNorm D 0 + degree)) = 1
+  rw [Polynomial.sum_C_index (by simp)]
+  simp [chargeNorm, bilinear, halfCreationCoeff, exponential_constant]
+
+namespace CoefficientAsSum
+abbrev signature := TranslationReadout.signature
+abbrev actual := TranslationReadout.actual
+abbrev rejected := TranslationReadout.rejected
+abbrev dependence := TranslationReadout.dependence
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (charge : Charge D) (exponent : ℤ)
+    (polynomial : Oscillator D),
+    oscillatorCoefficient D charge exponent polynomial =
+      nativeCoefficientMap D charge exponent (readout.readout () ⟨D, charge⟩ polynomial)
+theorem source_bridge : (type_of% (@oscillatorCoefficient_as_sum)) ↔ arena.Law actual := Iff.rfl
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law hyperbolic 0 0 1
+  rw [coefficient_unit] at bad
+  have impossible : (1 : Oscillator hyperbolic) = 0 := by
+    simpa [rejected, TranslationReadout.rejected, realize] using bad
+  exact one_ne_zero impossible
+
+def familyRegistration : Registration arena (type_of% (@oscillatorCoefficient_as_sum)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp oscillatorCoefficient_as_sum, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@oscillatorCoefficient_as_sum) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_as_sum "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.CoefficientAsSum.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end CoefficientAsSum
+
+namespace OscillatorCreator
+abbrev signature := CreatorReadout.signature
+abbrev actual := CreatorReadout.actual
+abbrev rejected := CreatorReadout.rejected
+abbrev dependence := CreatorReadout.dependence
+def arena : Arena where
+  signature := signature
+  Law readout := ∀ (D : LatticeData) (charge : Charge D) (exponent : ℤ)
+    (index : Index D) (polynomial : Oscillator D),
+    oscillatorCoefficient D charge exponent (MvPolynomial.X index * polynomial) =
+      readout.readout () D index * oscillatorCoefficient D charge exponent polynomial -
+        (bilinear D charge (unitCharge D index.1) : ℂ) •
+          oscillatorCoefficient D charge (exponent + omega D index) polynomial
+theorem source_bridge : (type_of% (@oscillatorCoefficient_X_mul)) ↔ arena.Law actual := Iff.rfl
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro law
+  have bad := law hyperbolic 0 0 ((0 : Fin 2), 0) 1
+  rw [oscillatorCoefficient_X_mul, coefficient_unit] at bad
+  have impossible : (0 : Oscillator hyperbolic) = 1 := by
+    simpa [rejected, CreatorReadout.rejected, realize, bilinear] using bad
+  exact zero_ne_one impossible
+
+def familyRegistration : Registration arena (type_of% (@oscillatorCoefficient_X_mul)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨source_bridge.mp oscillatorCoefficient_X_mul, rejected, rejected_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@oscillatorCoefficient_X_mul) (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
+  unitName := Lean.Name.str `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_X_mul "__information_unit"
+  realizationName := `Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients.OscillatorCreator.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[{ name := `autoImplicit, value := .bool false }]
+
+end OscillatorCreator
+
+end
+end Reg.D5.S3.VertexAlgebra.LatticeHalfFockChargedTensorCoefficients

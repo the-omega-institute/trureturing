@@ -88,6 +88,32 @@ For every D:LatticeData, hu:IsUnit(det(G(D))), i:Fin(D.rank), a:Charge(D) and m,
 
 For negative m, the native multiplication-current branch and the exact translated-variable identity give the positive odd-weight offset. For nonnegative m, the polynomial derivation commutes with translation and differentiates the actual creation coefficient; the frequency normalization cancels 2/(2m+1). The finite native coefficient map combines these two branches. Tensor-product extensionality then transports the oscillator commutator through the actual ground action and the original scalar. No current commutator or charged action law is assumed. This current covariance is distinct from energy covariance and charged-field pair locality.
 
+**Theorem 1.7 (Native polynomial coefficient functional).**
+
+$$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, p:\operatorname{Oscillator}\left(D\right), \operatorname{oscillatorCoefficient}\left(D, a, e, p\right)=\operatorname{nativeCoefficientMap}\left(D, a, e, \operatorname{Q}\left(a, p\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_as_sum` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+For every D,a,e,p, the actual oscillator coefficient is the native coefficient functional applied to Q_a(p). The functional sends the degree-d coefficient c to c C_a[e+q_a+d]. Finite translated polynomial support identifies the finsum with this polynomial-linear functional.
+
+**Theorem 1.8 (Native oscillator creator recurrence).**
+
+$$\forall D:LatticeData, a:\operatorname{Charge}\left(D\right), e:\mathbb{Z}, i:\operatorname{Index}\left(D\right), p:\operatorname{Oscillator}\left(D\right), \operatorname{oscillatorCoefficient}\left(D, a, e, \operatorname{X}\left(i\right)p\right)=\operatorname{X}\left(i\right)\operatorname{oscillatorCoefficient}\left(D, a, e, p\right)-\operatorname{B}\left(a, \operatorname{unitCharge}\left(D, \operatorname{fst}\left(i\right)\right)\right) \operatorname{oscillatorCoefficient}\left(D, a, e+\operatorname{omega}\left(D, i\right), p\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_X_mul` (`✓ std3`). ∎
+
+*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
+
+*Commentary.*
+
+The complete domain is D:LatticeData, a:Charge(D), e:Integer, i:Index(D), p:Oscillator(D). The shift is omega(D,i)=2*i.snd+1, and the pairing acts by complex scalar multiplication. Polynomial translation and its coefficient functional give this recurrence without a field commutator hypothesis.
+
+nativeCoefficientMap is the oscillator-linear polynomial coefficient functional with weight C_a[e+q_a+d]. oscillatorCoefficient_as_sum identifies the actual endomorphism with this functional applied to Q_a(p). oscillatorCoefficient_X_mul holds for every integer e and every polynomial p: A_a[e](X(i)p)=X(i)A_a[e]p-B(a,e_i)A_a[e+omega(i)]p. The full forward ordered-product identity uses these interfaces with the original odd weight; no ordinary-frequency substitution is involved.
+
 The native universal half_creation_coefficient_transport remains the exact source for the next charged coefficient products: translating C_b[n] gives kappa_g(d) C_b[n-d], where kappa_g is the coefficient of ((1-s)/(1+s))^g and g=B(a,b). Both cover branches must be retained. Their pole bounds are p=max(0,-g), q=max(0,g), and the physical two-step order is abs(g); positive g can have an opposite-cover pole. No one-sided delta identity, pair-locality or twisted Jacobi conclusion is asserted.
 
 The precise termwise native cover-energy application remains a mathematical endpoint. For H satisfying BOTH H*gramComplex(D)=1 and gramComplex(D)*H=1, use the actual half-Fock L0. If the input polynomial is C_b[n], the degree-d summand is T_d=kappa_g(d) C_b[n-d] C_a[e+q_a+d]. Universal transport gives this equality from the actual translation, not from an assumed field commutator. The native creation coefficient grading makes the two nonzero factors homogeneous of weights (n-d).toNat and (e+q_a+d).toNat. If either integer index is negative the term is zero. Otherwise their sum of weights is n+e+q_a. The exact remaining application is L0(T_d)=(D.rank/16+(n+e+q_a)/2) T_d, for all integer n and e, using the actual L_zero_monomial_coeff supplier and finite monomial decomposition. This termwise identity remains open pending its exact Lean application under the two stated inverse-Gram hypotheses. The ground shift remains D.rank/16 and physical z=t^2. Lifting the termwise identity to a complete charged tensor coefficient covariance is a distinct remaining endpoint.
@@ -101,6 +127,8 @@ Energy covariance, full charged products and two-branch locality remain distinct
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_tensor_current_ward`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_term_finite_support`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.charged_vacuum_coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_X_mul`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.oscillatorCoefficient_as_sum`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockChargedTensorCoefficients.term_support`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockChargedCoefficients](LatticeHalfFockChargedCoefficients.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockTensorFields](LatticeHalfFockTensorFields.md)
