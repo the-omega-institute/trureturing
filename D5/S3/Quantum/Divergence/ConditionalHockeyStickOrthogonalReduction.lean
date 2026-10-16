@@ -102,7 +102,7 @@ private theorem posTrace_neg_psd {n : Type*} [Fintype n] [DecidableEq n]
   have hz : (-X)⁺ = 0 :=
     (CFC.posPart_eq_zero_iff (-X)).mpr (neg_nonpos.mpr hX.nonneg)
   rw [hz]
-  simp [rt]
+  unfold rt; simp
 
 private theorem posTrace_neg_smul {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) (c : ℝ) (hc : 0 ≤ c) :
@@ -136,7 +136,7 @@ private theorem dsum_psd {n m : Type*} [Fintype n] [DecidableEq n]
     let x₂ : m → ℂ := fun i => x (Sum.inr i)
     have h1 := hX.dotProduct_mulVec_nonneg x₁
     have h2 := hY.dotProduct_mulVec_nonneg x₂
-    simpa [dsum, Matrix.mulVec, dotProduct, x₁, x₂, Fintype.sum_sum_type] using
+    unfold dsum; simpa [Matrix.mulVec, dotProduct, x₁, x₂, Fintype.sum_sum_type] using
       add_nonneg h1 h2
 
 private theorem dsum_mul {n m : Type*} [Fintype n] [DecidableEq n]
@@ -160,11 +160,11 @@ private theorem posPart_dsum {n m : Type*} [Fintype n] [DecidableEq n]
   have hpq : dsum X⁺ Y⁺ * dsum X⁻ Y⁻ = 0 := by
     rw [dsum_mul]
     rw [CFC.posPart_mul_negPart, CFC.posPart_mul_negPart]
-    simp [dsum]
+    unfold dsum; simp
   have hdecomp : dsum X Y = dsum X⁺ Y⁺ - dsum X⁻ Y⁻ := by
     rw [show dsum X⁺ Y⁺ - dsum X⁻ Y⁻ = dsum (X⁺ - X⁻) (Y⁺ - Y⁻) by
       ext i j
-      rcases i with i | i <;> rcases j with j | j <;> simp [dsum, sub_eq_add_neg]]
+      rcases i with i | i <;> rcases j with j | j <;> (unfold dsum; simp [sub_eq_add_neg])]
     rw [CFC.posPart_sub_negPart X hX, CFC.posPart_sub_negPart Y hY]
   exact (CFC.posPart_negPart_unique hdecomp hpq hP hQ).1
 
@@ -174,11 +174,13 @@ private theorem posTrace_dsum {n m : Type*} [Fintype n] [DecidableEq n]
     (hX : X.IsHermitian) (hY : Y.IsHermitian) :
     posTrace (dsum X Y) = posTrace X + posTrace Y := by
   rw [posTrace, posPart_dsum hX hY]
-  simp [posTrace, rt, dsum, Matrix.trace, Fintype.sum_sum_type]
+  unfold posTrace rt dsum; simp [Matrix.trace, Fintype.sum_sum_type]
 
-private theorem posPart_reindex {n m : Type*} [Fintype n] [DecidableEq n]
-    [Fintype m] [DecidableEq m] (e : n ≃ m) {X : Matrix n n ℂ}
+open Classical in
+private theorem posPart_reindex {n m : Type*} [Fintype n]
+    [Fintype m] (e : n ≃ m) {X : Matrix n n ℂ}
     (hX : X.IsHermitian) : (X.reindex e e)⁺ = (X⁺).reindex e e := by
+  classical
   have hP : 0 ≤ (X⁺).reindex e e :=
     ((Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg X)).submatrix e.symm).nonneg
   have hQ : 0 ≤ (X⁻).reindex e e :=
@@ -242,7 +244,7 @@ private theorem trace_flag {R A : Type*} [Fintype R] [DecidableEq R]
     (flag X Y Z).trace = X.trace + Y.trace + Z.trace := by
   unfold flag
   rw [trace_reindex]
-  simp [dsum, Matrix.trace, Fintype.sum_sum_type]
+  unfold dsum; simp [Matrix.trace, Fintype.sum_sum_type]
   ring
 
 private theorem flag_mul {R A : Type*} [Fintype R] [DecidableEq R]
@@ -276,15 +278,15 @@ private theorem flag_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
       ext i j
       rcases i with i | i
       · rcases j with j | j
-        · simp [dsum, sub_eq_add_neg]
-        · rcases j with j | j <;> simp [dsum, sub_eq_add_neg]
+        · unfold dsum; simp [sub_eq_add_neg]
+        · rcases j with j | j <;> (unfold dsum; simp [sub_eq_add_neg])
       · rcases i with i | i
         · rcases j with j | j
-          · simp [dsum, sub_eq_add_neg]
-          · rcases j with j | j <;> simp [dsum, sub_eq_add_neg]
+          · unfold dsum; simp [sub_eq_add_neg]
+          · rcases j with j | j <;> (unfold dsum; simp [sub_eq_add_neg])
         · rcases j with j | j
-          · simp [dsum, sub_eq_add_neg]
-          · rcases j with j | j <;> simp [dsum, sub_eq_add_neg]
+          · unfold dsum; simp [sub_eq_add_neg]
+          · rcases j with j | j <;> (unfold dsum; simp [sub_eq_add_neg])
     _ = _ := rfl
 
 private theorem posTrace_flag {R A : Type*} [Fintype R] [DecidableEq R]
@@ -324,7 +326,7 @@ private theorem act_zero {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B]
     (N : QuantumChannel A B) : act N (0 : Matrix A A ℂ) = 0 := by
   ext b d
-  simp [act]
+  unfold act; simp
 
 private theorem act_sub_smul {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B]
@@ -355,7 +357,7 @@ private theorem ptr_smul {R A : Type*} [Fintype R] [DecidableEq R]
     (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
     ptr (t • X) = t • ptr X := by
   ext r s
-  simp [ptr, partialTraceRight, Finset.smul_sum]
+  unfold ptr; simp [partialTraceRight, Finset.smul_sum]
 
 private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
@@ -414,7 +416,7 @@ private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
     (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
     ptr (X - t • Y) = ptr X - t • ptr Y := by
   ext i j
-  simp [ptr, partialTraceRight, Finset.sum_add_distrib, Finset.sum_neg_distrib,
+  unfold ptr; simp [partialTraceRight, Finset.sum_add_distrib, Finset.sum_neg_distrib,
     Finset.mul_sum, sub_eq_add_neg]
 
 private theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
@@ -427,7 +429,7 @@ private theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
   let Z : Matrix A A ℂ := fun a a' => X (r, a) (s, a')
   have h := N.trace_preserving (CStarMatrix.ofMatrix Z)
   change (∑ b, act N Z b b) = ∑ a, Z a a at h
-  simpa [Z, act, Matrix.trace] using h
+  exact h
 
 private theorem amp_flag {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
@@ -438,29 +440,26 @@ private theorem amp_flag {A B R : Type*} [Fintype A] [DecidableEq A]
   simp only [amp_entry]
   rcases r with r | r
   · rcases s with s | s
-    · exact (amp_entry N X r s b d).symm
+    · rfl
     · rcases s with s | s
-      · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-        try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
-      · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-        try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+      all_goals
+        change act N (0 : Matrix A A ℂ) b d = 0
+        exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
   · rcases r with r | r
     · rcases s with s | s
-      · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-        try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+      · change act N (0 : Matrix A A ℂ) b d = 0
+        exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
       · rcases s with s | s
-        · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-          try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
-        · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-          try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+        · rfl
+        · change act N (0 : Matrix A A ℂ) b d = 0
+          exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
     · rcases s with s | s
-      · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-        try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+      · change act N (0 : Matrix A A ℂ) b d = 0
+        exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
       · rcases s with s | s
-        · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-          try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
-        · simp [flag, flagEquiv, Matrix.reindex_apply, dsum, act]
-          try exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+        · change act N (0 : Matrix A A ℂ) b d = 0
+          exact congrArg (fun M : Matrix B B ℂ => M b d) (act_zero N)
+        · rfl
 
 private theorem ptr_flag {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
@@ -472,29 +471,29 @@ private theorem ptr_flag {R A : Type*} [Fintype R] [DecidableEq R]
   ext r s
   rcases r with r | r
   · rcases s with s | s
-    · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+    · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
         Matrix.trace]
     · rcases s with s | s
-      · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+      · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
           Matrix.trace]
-      · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+      · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
           Matrix.trace]
   · rcases r with r | r
     · rcases s with s | s
-      · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+      · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
           Matrix.trace]
       · rcases s with s | s
-        · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+        · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
             Matrix.trace]
-        · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+        · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
             Matrix.trace]
     · rcases s with s | s
-      · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+      · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
           Matrix.trace]
       · rcases s with s | s
-        · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+        · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
             Matrix.trace]
-        · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
+        · unfold ptr flag flagEquiv dsum; simp [Matrix.reindex_apply, partialTraceRight,
             Matrix.trace]
 
 private theorem flag_weights (p q δ : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q) (hδ : 0 < δ) :
@@ -529,7 +528,7 @@ private def pureFiller {A : Type*} [Fintype A] [DecidableEq A]
 private theorem pure_filler_state {A : Type*} [Fintype A] [DecidableEq A]
     (a₀ : A) : IsState (pureFiller a₀) := by
   refine ⟨Matrix.posSemidef_diagonal_iff.mpr (fun a => by positivity), ?_⟩
-  simp [pureFiller, Matrix.trace]
+  unfold pureFiller; simp [Matrix.trace]
 
 private theorem flag_transfer
     {A B R : Type*} [Fintype A] [DecidableEq A]
@@ -593,7 +592,7 @@ private theorem flag_transfer
       (hτ.1.smul (div_nonneg hb (le_of_lt hδ)))
   have hτrt : rt τ = 1 := by
     have ht := congrArg Complex.re hτ.2
-    simpa [rt] using ht
+    unfold rt; simpa using ht
   have hρ'trace : ρ'.trace = 1 := by
     dsimp [ρ']
     rw [trace_flag]
@@ -626,7 +625,7 @@ private theorem flag_transfer
     unfold flag
     rw [Matrix.reindex_apply]
     ext i j
-    simp [dsum]
+    unfold dsum; simp
   have hsub : ρ' - δ • σ' = flag (c • H) (a • τ) (-b • τ) := by
     dsimp [ρ', σ']
     rw [flag_sub_smul]
@@ -671,9 +670,9 @@ private theorem flag_transfer
     dsimp [H]
     exact ptr_sub_smul γ ρ σ
   have hptrρ : (ptr ρ).PosSemidef := by
-    simpa [ptr] using partialTraceRight_posSemidef hρ.1
+    unfold ptr; simpa using partialTraceRight_posSemidef hρ.1
   have hptrσ : (ptr σ).PosSemidef := by
-    simpa [ptr] using partialTraceRight_posSemidef hσ.1
+    unfold ptr; simpa using partialTraceRight_posSemidef hσ.1
   have hptrH : (ptr H).IsHermitian := by
     rw [hptrHdef]
     exact hptrρ.isHermitian.sub (hptrσ.isHermitian.smul (by
@@ -726,7 +725,7 @@ private theorem flag_transfer
       rw [hptrHdef]
       rfl
     rw [hptrE]
-    simp [rt, Matrix.trace]
+    unfold rt; simp [Matrix.trace]
   have hHB : (amp N H).IsHermitian := by
     dsimp [H]
     rw [amp_sub_smul]
@@ -749,7 +748,7 @@ private theorem flag_transfer
       exact (hτB.1.smul hb).isHermitian.neg
     rw [posTrace_flag hcHB haτB hnτB, posTrace_smul c (le_of_lt hc),
       posTrace_smul a ha, posTrace_neg_smul hτB.1 b hb, posTrace_psd hτB.1]
-    have ht : rt (act N τ) = 1 := by simp only [rt, hτB.2, Complex.one_re]
+    have ht : rt (act N τ) = 1 := by unfold rt; simp only [hτB.2, Complex.one_re]
     rw [ht]
     have hh : amp N H = amp N ρ - γ • amp N σ := amp_sub_smul N γ ρ σ
     rw [hh]
