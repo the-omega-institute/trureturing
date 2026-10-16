@@ -40,15 +40,19 @@ internal sealed class SaleemNoisyCurvatureRefutationDocument : IScribeDocumentDe
             Node("claim", "The noisy curvature conjecture", Disp(Iff(X("claim"), ClaimBody())),
                 "Section IV.B, p. 9: '" + Conjecture + "' Encoding: rhoZero is any density matrix, kappa and t are positive real numbers, and rho solves (41) with that initial state. At every g where the concurrence is twice continuously differentiable, the negative second derivative is at most the real part of Tr(rho L²), for every Hermitian SLD L. IsDensity is the reused predicate PosSemidef and trace one. Matrix indices are pairs, with the first coordinate the first qubit. The twice-continuously-differentiable condition restricts the comparison to smooth points.", true),
             Node("result", "Refutation at positive damping", Disp(new Formula.Not(Parenthesized(ClaimBody()))),
-                "Take rhoZero=diag(1,11,3,1)/16, kappa=log 2 and t=1. At g=pi/4 the evolved state is [[1,0,0,0],[0,15,8i,0],[0,−8i,15,0],[0,0,0,33]]/64. Its spin-flip spectrum is {529,49,33,33}/4096. Near that point its concurrence equals sin(2g)/4−sqrt(33)/32, hence its curvature is 1. The Hermitian matrix L=diag(0,−16/15,16/15,0) satisfies the SLD equation and gives QFI=8/15. The conjectured inequality would require 1≤8/15.", false, DescribeRole.Theorem)),
+                "Take rhoZero=diag(1,11,3,1)/16, kappa=log 2 and t=1. At g=pi/4 the evolved state is [[1,0,0,0],[0,15,8i,0],[0,−8i,15,0],[0,0,0,33]]/64. Its spin-flip spectrum is {529,49,33,33}/4096. Near that point its concurrence equals sin(2g)/4−sqrt(33)/32, hence its curvature is 1. The Hermitian matrix L=diag(0,−16/15,16/15,0) satisfies the SLD equation and gives QFI=8/15. The conjectured inequality would require 1≤8/15.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("saleem-et-al-2025-noisy-curvature-of-entanglement"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("scoe-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula X(string name) => F.Id(name);

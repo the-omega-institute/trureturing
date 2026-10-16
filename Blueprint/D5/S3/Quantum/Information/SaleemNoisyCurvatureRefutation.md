@@ -142,6 +142,10 @@ $$\neg (\forall rhoZero:\operatorname{Matrix}\left((\operatorname{Fin}\left(2\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SaleemNoisyCurvatureRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/saleem-et-al-2025-noisy-curvature-of-entanglement` (refuted) by `D5/S3/Quantum/Information/SaleemNoisyCurvatureRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"saleem-et-al-2025-noisy-curvature-of-entanglement","declaration_gid":"D5/S3/Quantum/Information/SaleemNoisyCurvatureRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zain H. Saleem; Anil Shaji; Anjala M. Babu; Da-Wei Luo; Quinn Langfitt; Ting Yu; Stephen K. Gray (2025). *Quantum Fisher Information and the Curvature of Entanglement*. DOI: [10.48550/arXiv.2504.13729](https://doi.org/10.48550/arXiv.2504.13729). URL: <https://arxiv.org/abs/2504.13729>.
