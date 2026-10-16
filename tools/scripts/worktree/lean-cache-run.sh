@@ -62,16 +62,16 @@ if [[ "$1" == --build ]]; then
     esac
   done
   if [[ $# == 0 || ${#root_targets[@]} != 0 ]]; then
-    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake build ${root_targets[@]+"${root_targets[@]}"}
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error build ${root_targets[@]+"${root_targets[@]}"}
   fi
   if [[ $# == 0 || ${#impl_targets[@]} != 0 ]]; then
-    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}
   fi
   if [[ ${#reg_targets[@]} != 0 || ( $# == 0 && -f "$ROOT/Reg/lakefile.toml" ) ]]; then
-    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/Reg" build ${reg_targets[@]+"${reg_targets[@]}"}
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error -d "$ROOT/Reg" build ${reg_targets[@]+"${reg_targets[@]}"}
   fi
   if [[ ${#downstream_targets[@]} != 0 || $# == 0 ]]; then
-    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector-reg" build ${downstream_targets[@]+"${downstream_targets[@]}"}
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake --log-level=error -d "$ROOT/tools/lean-inspector-reg" build ${downstream_targets[@]+"${downstream_targets[@]}"}
   fi
   exit 0
 fi

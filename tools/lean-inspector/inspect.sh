@@ -228,7 +228,7 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     PROGRAM_BUILD_PENDING=1
     run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
+      "$LAKE" --log-level=error "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
   exit 0
@@ -250,7 +250,7 @@ if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
   # Ensure and the existing writer guard enclose cleanup and the native build.
   REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
 fi
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" "${workspace[@]}" build :report \
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" --log-level=error "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
