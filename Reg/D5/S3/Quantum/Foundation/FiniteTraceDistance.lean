@@ -63,38 +63,38 @@ private instance liftedRealRCLike : RCLike (ULift.{v} ℝ) where
     simp
   toDecidableEq := Classical.decEq _
 
-/-- The matrix coordinate in the trace on the right side of the equality. -/
+/-- Evaluate the source trace map at the Hermitian matrix. -/
 abbrev signature : Signature where
-  Params := Σ _n : Type u, Type v
-  State p := Matrix p.1 p.1 p.2
+  Params := Σ n : Type u, Σ R : Type v, Matrix n n R
+  State p := Matrix p.1 p.1 p.2.1 → p.2.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Matrix p.1 p.1 p.2
+  Output _ p := p.2.1
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ A => A) (fun e => nomatch e)
+  realize signature (fun _ p trace => trace p.2.2) (fun e => nomatch e)
 
 /-- Repeat a single row; empty matrix domains retain their unique matrix. -/
 def rejected : Realization signature :=
   realize signature
-    (fun _ p A i j => A (Classical.choice (⟨i⟩ : Nonempty p.1)) j)
+    (fun _ p trace => trace (fun i j => p.2.2 (Classical.choice (⟨i⟩ : Nonempty p.1)) j))
     (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {n : Type u} {R : Type v} [Fintype n] [RCLike R]
     {A : Matrix n n R}, A.IsHermitian →
-      (RCLike.re A.trace : R) = (r.readout () ⟨n, R⟩ A).trace
+      (RCLike.re A.trace : R) = r.readout () ⟨n, ⟨R, A⟩⟩ Matrix.trace
 
 theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   let n := ULift.{u} Bool
   let R := ULift.{v} ℝ
   have he := h (n := n) (R := R) (A := 1) Matrix.isHermitian_one
-  have hr : (rejected.readout () ⟨n, R⟩ (1 : Matrix n n R)).trace = 1 := by
+  have hr : rejected.readout () ⟨n, ⟨R, (1 : Matrix n n R)⟩⟩ Matrix.trace = 1 := by
     classical
     have hn : Nonempty n := inferInstance
     change (∑ i, (1 : Matrix n n R) (Classical.choice hn) i) = 1
@@ -119,10 +119,10 @@ def source_registration : Registration arena.{u,v}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Unit, ULift.{v} Bool⟩,
-      (fun _ _ => ⟨false⟩), (fun _ _ => ⟨true⟩), ?_⟩
+    refine ⟨⟨ULift.{u} Unit, ⟨ULift.{v} Bool, fun _ _ => ⟨false⟩⟩⟩,
+      (fun _ => ⟨false⟩), (fun _ => ⟨true⟩), ?_⟩
     intro h
-    have he := congrArg (fun M => (M ⟨()⟩ ⟨()⟩).down) h
+    have he := congrArg ULift.down h
     change false = true at he
     cases he
 
@@ -141,7 +141,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature (fun _ p trace => trace p.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -149,12 +149,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Foundation.FiniteTraceDistance
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0, 1, 4]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "arg"]
-      stateBinder := 4
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

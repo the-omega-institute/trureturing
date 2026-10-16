@@ -17,29 +17,30 @@ universe u v w
 
 namespace Blocks
 
-/-- The block family occurring in the positive-semidefinite conclusion. -/
+/-- Evaluate the block-diagonal construction at its source block family. -/
 abbrev signature : Signature where
-  Params := Σ ι : Type u, ι → Type v
-  State p := ∀ i, Matrix (p.2 i) (p.2 i) ℂ
+  Params := Σ ι : Type u, Σ κ : ι → Type v, ∀ i, Matrix (κ i) (κ i) ℂ
+  State p := (∀ i, Matrix (p.2.1 i) (p.2.1 i) ℂ) →
+    Matrix (Sigma p.2.1) (Sigma p.2.1) ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := ∀ i, Matrix (p.2 i) (p.2 i) ℂ
+  Output _ p := Matrix (Sigma p.2.1) (Sigma p.2.1) ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ M => M) (fun e => nomatch e)
+  realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ M i => -(M i)) (fun e => nomatch e)
+  realize signature (fun _ p blockDiagonal => -(blockDiagonal p.2.2)) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι]
     {κ : ι → Type v} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (M : ∀ i, Matrix (κ i) (κ i) ℂ), (∀ i, (M i).PosSemidef) →
-    (Matrix.blockDiagonal' (R.readout () ⟨ι, κ⟩ M)).PosSemidef
+    (R.readout () ⟨ι, ⟨κ, M⟩⟩ Matrix.blockDiagonal').PosSemidef
 
 theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
@@ -62,10 +63,10 @@ def source_registration : Registration arena.{u,v}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} Unit, fun _ => ULift.{v} Unit⟩,
+    refine ⟨⟨ULift.{u} Unit, ⟨fun _ => ULift.{v} Unit, fun _ => 0⟩⟩,
       (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
-    have he := congrArg (fun M => M ⟨()⟩ ⟨()⟩ ⟨()⟩) h
+    have he := congrArg (fun M => M ⟨⟨()⟩, ⟨()⟩⟩ ⟨⟨()⟩, ⟨()⟩⟩) h
     change (0 : ℂ) = 1 at he
     exact zero_ne_one he
 
@@ -86,7 +87,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some
+    (realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -94,12 +96,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
     definition := none
-    coordinates := #[0, 3]
+    coordinates := #[0, 3, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -112,28 +114,28 @@ end Blocks
 
 namespace PartialTrace
 
-/-- The matrix operand in the partial trace on the left side. -/
+/-- Evaluate the source partial-trace map at its unscaled matrix. -/
 abbrev signature : Signature where
-  Params := Σ _R : Type v, Type w
-  State p := Matrix (p.1 × p.2) (p.1 × p.2) ℂ
+  Params := Σ R : Type v, Σ A : Type w, Matrix (R × A) (R × A) ℂ
+  State p := Matrix (p.1 × p.2.1) (p.1 × p.2.1) ℂ → Matrix p.1 p.1 ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Matrix (p.1 × p.2) (p.1 × p.2) ℂ
+  Output _ p := Matrix p.1 p.1 ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ X => X) (fun e => nomatch e)
+  realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ X => X.transpose) (fun e => nomatch e)
+  realize signature (fun _ p traceRight => traceRight p.2.2.transpose) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{v,w}
   Law r := ∀ {S : Type u} {R : Type v} {A : Type w} [DistribSMul S ℂ] [Fintype A]
     (c : S) (X : Matrix (R × A) (R × A) ℂ),
-    partialTraceRight (c • r.readout () ⟨R, A⟩ X) = c • partialTraceRight X
+    partialTraceRight (c • X) = c • r.readout () ⟨R, ⟨A, X⟩⟩ partialTraceRight
 
 theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   intro h
@@ -143,6 +145,8 @@ theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   let X : Matrix (R × A) (R × A) ℂ :=
     fun i j => if i.1.down = false ∧ j.1.down = true then 1 else 0
   have he := h (S := S) (R := R) (A := A) (1 : S) X
+  change partialTraceRight ((1 : ℂ) • X) = (1 : ℂ) • partialTraceRight X.transpose at he
+  simp only [one_smul] at he
   have hx := congrArg (fun M : Matrix R R ℂ => M ⟨false⟩ ⟨true⟩) he
   norm_num [rejected, realize, partialTraceRight, X, Matrix.transpose] at hx
 
@@ -159,9 +163,10 @@ def source_registration : Registration arena.{u,v,w}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{v} Unit, ULift.{w} Unit⟩, 0, 1, ?_⟩
+    refine ⟨⟨ULift.{v} Unit, ⟨ULift.{w} Unit, 0⟩⟩,
+      (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
-    have he := congrArg (fun M => M (⟨()⟩, ⟨()⟩) (⟨()⟩, ⟨()⟩)) h
+    have he := congrArg (fun M => M ⟨()⟩ ⟨()⟩) h
     change (0 : ℂ) = 1 at he
     exact zero_ne_one he
 
@@ -183,7 +188,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -191,12 +196,12 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
     definition := none
-    coordinates := #[1, 2]
+    coordinates := #[1, 2, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg"]
-      stateBinder := 6
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -209,30 +214,30 @@ end PartialTrace
 
 namespace RatioSets
 
-/-- Equality with a contextual comparison set is an observation of a ratio set. -/
+/-- Evaluate the channel's ratio family at gamma and the orthogonal flag. -/
 abbrev signature : Signature where
-  Params := Set ℝ
-  State _ := Set ℝ
+  Params := ℝ
+  State _ := ℝ → Bool → Set ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ _ := Set ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ S T => decide (S = T)) (fun e => nomatch e)
+  realize signature (fun _ γ ratioFamily => ratioFamily γ true) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ γ ratioFamily => (ratioFamily γ true)ᶜ) (fun e => nomatch e)
 
-/-- Both universal clauses are retained, observing the orthogonal-set equality. -/
+/-- Retain both universal clauses and observe the orthogonal ratio set. -/
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ (A B : Type) [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B),
     (∀ γ : ℝ, 1 ≤ γ →
-      r.readout () (ratios N γ false) (ratios N γ true) = true) ∧
+      ratios N γ false = r.readout () γ (ratios N)) ∧
     (∀ γ δ : ℝ, 1 ≤ γ → 1 ≤ δ → ratios N γ false = ratios N δ false)
 
 theorem rejected_law : ¬ arena.Law rejected := by
@@ -243,16 +248,17 @@ theorem rejected_law : ¬ arena.Law rejected := by
         map_cstarMatrix_nonneg' := by intro k M hM; simpa using hM }
       trace_preserving := fun _ => rfl }
   have hf := (h Unit Unit N).1 1 le_rfl
-  change false = true at hf
-  cases hf
+  change ratios N 1 false = (ratios N 1 true)ᶜ at hf
+  rw [(result Unit Unit N).1 1 le_rfl] at hf
+  have hm := Set.ext_iff.mp hf 0
+  by_cases hx : 0 ∈ ratios N 1 true
+  · exact hm.mp hx hx
+  · exact hx (hm.mpr hx)
 
 def source_registration : Registration arena claim where
   actual := actual
-  bridge := by simp only [actual, realize, claim, decide_eq_true_eq]
-  variation := ⟨by
-    intro A B _ _ _ _ N
-    exact ⟨fun γ hγ => decide_eq_true ((result A B N).1 γ hγ), (result A B N).2⟩,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨result, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -261,8 +267,8 @@ def source_registration : Registration arena claim where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨∅, ∅, Set.univ, ?_⟩
-    simp [actual, realize, Set.empty_ne_univ]
+    refine ⟨0, (fun _ _ => ∅), (fun _ _ => Set.univ), ?_⟩
+    exact Set.empty_ne_univ
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -281,7 +287,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some
+    (realize signature (fun _ γ ratioFamily => ratioFamily γ true) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -292,13 +299,14 @@ def registration :
       owner := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
       name := `D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.claim
       path := #[] }
-    coordinates := #[]
+    coordinates := #[7]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "fn", "arg", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := some #["fn", "fn"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
