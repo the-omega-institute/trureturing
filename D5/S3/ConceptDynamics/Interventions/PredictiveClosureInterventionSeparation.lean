@@ -46,12 +46,12 @@ theorem predictive_closure_not_intervention_closure :
   refine ⟨q, natural, action, ?_, ?_, ?_, ?_⟩
   · funext x
     rfl
-  · apply ((deterministic_interface_sixfold_equivalence q natural).out 1 0).mp
+  · apply ((deterministic_interface_sixfold_equivalence q natural).out 2 1).mp
     intro x y hxy
     simpa [natural] using hxy
   · intro allActionsDescend
     have congruence :=
-      ((deterministic_interface_sixfold_equivalence q (action true)).out 0 1).mp
+      ((deterministic_interface_sixfold_equivalence q (action true)).out 1 2).mp
         (allActionsDescend true)
     have broken := congruence (0 : Fin 3) (1 : Fin 3) (by decide)
     simp [q, action] at broken

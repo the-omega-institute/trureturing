@@ -122,7 +122,7 @@ private lemma cover_refinement (C : FaceChain) :
   have hc : IsChain (· ≤ ·) (C.faces : Set (Finset (Fin 4))) := by
     intro F hF G hG _
     exact C.comparable F hF G hG
-  letI := hc.linearOrder
+  letI := hc.lt_of_le.linearOrder
   let e := Fintype.orderIsoFinOfCardEq C.faces (by simp : Fintype.card C.faces = C.faces.card)
   have hn : C.faces.card - 1 + 1 = C.faces.card := by
     have := Finset.card_pos.mpr C.nonempty

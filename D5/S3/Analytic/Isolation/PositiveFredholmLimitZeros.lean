@@ -103,7 +103,7 @@ theorem positive_fredholm_limit_zeros
     have hprod (N : ℕ) :
         1 ≤ ‖∏ j, (1 + w * (eigenvalue N j : ℂ))‖ := by
       rw [norm_prod]
-      exact Finset.one_le_prod (fun j (_ : j ∈ Finset.univ) => hfactor N j)
+      exact Finset.one_le_prod₀ (fun j (_ : j ∈ Finset.univ) => hfactor N j)
     have hlim := (hpoint w).norm
     have hnorm : 1 ≤ ‖F w‖ :=
       ge_of_tendsto hlim (Eventually.of_forall fun N => hprod N)
@@ -180,7 +180,7 @@ theorem positive_fredholm_limit_zeros
           ‖∏ j, (1 + (t : ℂ) * (eigenvalue N j : ℂ))‖ := by
       have hp : 1 ≤ ∏ j, (‖1 + w * (eigenvalue N j : ℂ)‖ *
           (1 + t * eigenvalue N j)) :=
-        Finset.one_le_prod (fun j (_ : j ∈ Finset.univ) => hfactor N j)
+        Finset.one_le_prod₀ (fun j (_ : j ∈ Finset.univ) => hfactor N j)
       have htfactor (j : Fin (rank N)) :
           ‖1 + (t : ℂ) * (eigenvalue N j : ℂ)‖ = 1 + t * eigenvalue N j := by
         rw [show 1 + (t : ℂ) * (eigenvalue N j : ℂ) =

@@ -6,6 +6,7 @@
    utility: none
    digest: Fair binary window rules have defect at least one over length plus two. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 
 set_option autoImplicit false

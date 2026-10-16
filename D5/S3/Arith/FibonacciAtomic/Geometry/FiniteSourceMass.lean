@@ -10,7 +10,7 @@ import D5.S3.Arith.FibonacciAtomic.Observer.NativeRankedNavigationCompiler
 import D5.S3.Arith.FibonacciAtomic.Observer.ActualCompletionHorizon
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -23,6 +23,8 @@ open ActualTreeReadoutAcquisition (Address Reply nodes readout)
 open ActualLeafHistoryRigidity (subtree)
 open AncestorAreaInstability (T)
 open Observer.NativeRankedNavigationCompiler (pathCost pathThreshold atomic_navigation)
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
 open MeasureTheory
 open scoped BigOperators ENNReal
 
@@ -45,7 +47,7 @@ private theorem root_mem (n : ℕ) : [] ∈ vertices n := by
 instance (n : ℕ) : Nonempty (Node n) := ⟨⟨[], root_mem n⟩⟩
 
 /-- Uniform probability on all actual nodes of this source. -/
-def μ (n : ℕ) : Measure (Node n) := (PMF.uniformOfFintype (Node n)).toMeasure
+def μ (n : ℕ) : Measure (Node n) := (uniformPmf (Node n)).toMeasure
 
 instance (n : ℕ) : IsProbabilityMeasure (μ n) := by unfold μ; infer_instance
 
@@ -169,8 +171,9 @@ private theorem count_bounds (n : ℕ) :
 
 private theorem point_mass (n : ℕ) (x : Node n) :
     μ n {x} = (N n : ℝ≥0∞)⁻¹ := by
-  rw [μ, PMF.toMeasure_uniformOfFintype_apply (α := Node n) (s := {x})
-    (measurableSet_singleton x)]
+  classical
+  rw [μ, PMF.toMeasure_apply_eq_toOuterMeasure_apply _ (measurableSet_singleton x),
+    uniformPmf_toOuterMeasure_apply]
   simp [Node, N]
 
 private theorem measure_mass (n : ℕ) (p : Address) :
@@ -183,8 +186,8 @@ private theorem measure_mass (n : ℕ) (p : Address) :
     left_inv := fun _ => rfl
     right_inv := fun _ => rfl }
   have hc := Fintype.card_congr e
-  rw [μ, PMF.toMeasure_uniformOfFintype_apply (α := Node n)
-    (s := {x | p.IsPrefix x.val}) (by measurability)]
+  rw [μ, PMF.toMeasure_apply_eq_toOuterMeasure_apply _ (by measurability),
+    uniformPmf_toOuterMeasure_apply]
   simp only [Fintype.card_coe, ENNReal.toReal_div, ENNReal.toReal_natCast]
   change (Fintype.card {x : Node n // p.IsPrefix x.val} : ℝ) /
     (vertices n).card = mass n p

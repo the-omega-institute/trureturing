@@ -498,7 +498,7 @@ theorem actual_common_cubic_ramification_three_divides
         rw [Ideal.span_singleton_pow, Ideal.dvd_iff_le,
           Ideal.span_singleton_le_span_singleton]
       _ = multiplicity p (block j) := Int.natCast_multiplicity p (block j)
-      _ = (block j).factorization p := Nat.multiplicity_eq_factorization hp hB0
+      _ = (block j).factorization p := Nat.multiplicity_eq_factorization (n := block j) hp
   have hbase : v0.valuation ℚ (block j : ℚ) =
       WithZero.exp (-(block j).factorization p : ℤ) := by
     change v0.valuation ℚ (algebraMap ℤ ℚ (block j : ℤ)) = _
@@ -515,6 +515,8 @@ theorem actual_common_cubic_ramification_three_divides
       (Real.rpow_inv_natCast_pow (Nat.cast_nonneg (block j)) (by decide : (3 : ℕ) ≠ 0))
   let e := v0.asIdeal.ramificationIdx' w.asIdeal
   have hval := valuation_liesOver (K := ℚ) (L := N) v0 w (block j : ℚ)
+  rw [← Ideal.ramificationIdx'_eq_ramificationIdx v0.asIdeal w.asIdeal v0.ne_bot] at hval
+  simp only [map_natCast] at hval
   change v0.valuation ℚ (block j : ℚ) ^ e = w.valuation N (block j : N) at hval
   rw [hbase] at hval
   have hcubeval : (w.valuation N θ) ^ 3 = w.valuation N (block j : N) := by
@@ -658,7 +660,7 @@ private theorem actual_supported_different_exact_check
   rw [hecard] at hle
   have hdiv := actual_common_cubic_ramification_three_divides J j p hj hjJ hp hmod w hw
   have he : P.ramificationIdx ℤ = 3 := Nat.le_antisymm hle
-    (Nat.le_of_dvd (Ideal.ramificationIdx_pos P ℤ) hdiv)
+    (Nat.le_of_dvd (P.ramificationIdx_pos ℤ) hdiv)
   have hthree : (3 : ℤ ⧸ v0.asIdeal) ≠ 0 := by
     intro h
     have hq : Ideal.Quotient.mk v0.asIdeal (3 : ℤ) = 0 :=
@@ -852,7 +854,7 @@ theorem actual_common_cubic_absolute_different_sixth_power
         Ideal.ramificationIdx'_eq_ramificationIdx v0.asIdeal P v0.ne_bot, hv0,
         Ideal.emultiplicity_eq_emultiplicity_span, Int.natCast_emultiplicity,
         (Nat.finiteMultiplicity_iff.mpr ⟨hp.ne_one, Nat.pos_of_ne_zero ha⟩).emultiplicity_eq_multiplicity,
-        Nat.multiplicity_eq_factorization hp ha] at hmap
+        Nat.multiplicity_eq_factorization (n := a) hp] at hmap
       exact hmap
     have hDmult : emultiplicity P D = (multiplicity P D : ℕ∞) :=
       (FiniteMultiplicity.of_prime_left hPprime hDne).emultiplicity_eq_multiplicity
@@ -888,7 +890,7 @@ theorem actual_common_cubic_absolute_different_sixth_power
             Ideal.ramificationIdxIn_eq_ramificationIdx v0.asIdeal P (N ≃ₐ[ℚ] N)]
         rw [hcard] at hle
         have he : P.ramificationIdx ℤ = 3 := Nat.le_antisymm hle
-          (Nat.le_of_dvd (Ideal.ramificationIdx_pos P ℤ) hdiv)
+          (Nat.le_of_dvd (P.ramificationIdx_pos ℤ) hdiv)
         have hm : multiplicity P D = 2 := actual_supported_different_exact_check J j p
           hj hjJ hp hp3 hmod w hPover
         have hRfact : R.factorization p = 1 := Nat.factorization_eq_one_of_squarefree hRsq hp hpR

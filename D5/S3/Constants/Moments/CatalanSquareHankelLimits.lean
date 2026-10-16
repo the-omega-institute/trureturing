@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Orthogonality]
    utility: none
    digest: Both Kotesovec squared-Catalan Hankel limits equal two times log two. -/
-
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Constants.Moments.CatalanSquareHankelGrowth
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.Orthogonality
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff

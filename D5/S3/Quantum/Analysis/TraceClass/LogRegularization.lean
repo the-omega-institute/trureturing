@@ -176,8 +176,8 @@ private theorem logRegularization_eq_cfc {epsilon : ℝ} (he : 0 < epsilon)
   congr 1
   have hid : cfc (fun x : ℝ => x + epsilon) T =
       T + algebraMap ℝ (H →L[ℂ] H) epsilon := by
-    simpa only [id_eq, cfc_id ℝ T hsa] using
-      (cfc_add_const epsilon id T continuousOn_id hsa)
+    simpa only [cfc_id' ℝ T hsa] using
+      (cfc_add_const epsilon (fun x : ℝ => x) T continuousOn_id hsa)
   have hlog : ContinuousOn Real.log ((fun x : ℝ => x + epsilon) '' spectrum ℝ T) := by
     apply ContinuousOn.log continuousOn_id
     rintro y ⟨x, hx, rfl⟩

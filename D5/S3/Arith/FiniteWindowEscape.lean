@@ -7,6 +7,7 @@
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.Order.BigOperators.GroupWithZero.Finset
+import Mathlib.Algebra.Order.Ring.Nat
 import Mathlib.Data.Fintype.Pigeonhole
 import Mathlib.Data.Nat.ModEq
 import Mathlib.Data.Nat.Prime.Basic

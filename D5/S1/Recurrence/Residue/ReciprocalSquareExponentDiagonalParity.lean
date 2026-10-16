@@ -6,6 +6,7 @@
    utility: none
    digest: A binary Catalan reciprocal satisfies square-exponent diagonal equations. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.QuadraticPowerDiagonalFibbinaryParity
 
 set_option autoImplicit false
