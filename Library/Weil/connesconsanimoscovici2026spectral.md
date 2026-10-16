@@ -3535,10 +3535,42 @@ $$
 It requires the entire common residual Gram, including every cross
 term. The old two sources and the original scalar inverse optimum
 do not supply it. The saved lift/channel/far packets also do not
-archive $R^*WR$ on this lift. These interfaces remain missing;
+archive $R^*WR$ on this lift. The common inverse certificate remains missing;
 no block solve or numerical sign for $\Xi+\Theta$ is supplied here.
 The threshold does not require computing $\Xi^{-1}$ explicitly.
 The dependence on $\Theta$ is Loewner monotone, whereas $\Theta+\Theta Q_{\rm s}\Theta$ is generally not.
+
+The [finite-lift consumer and packet](https://github.com/the-omega-institute/trureturing-experiments/tree/cd81daec08450f7154e12744dc5012cf062ac69c/docs/reports/weil-c27)
+supply the first missing interface, with $Y=R_JV$:
+
+$$
+G_J=Y^*W_JY,\qquad
+S_J=G_J-\Beta_V^*A_\rho^{-1}\Beta_V=Y^*W_cY.
+$$
+
+All30720 finite rows and every cross term are retained. The existing
+certified disjoint Cauchy action uses a fixed512-term expansion with its
+absolute remainder. The original residual generators, positive weights,
+exact implicit lift, nineteen-channel map and channel inverse are reused.
+No selected inverse, old source action, scalar/channel supplier or full
+1281-dimensional target is regenerated.
+
+The1024-bit application takes88.26 seconds, with maximum exported
+$S_J$ entry width below $4.132\times10^{-178}$. An independent1536-bit
+execution of the same consumer takes132.23 seconds: all1620 pairs of
+actual matrix-entry intervals overlap, with972 endpoint-identical;
+all45 guarded files remain unchanged. The six direct generator-row
+checks pass in both executions. Width diagnostics describe the chosen
+evaluation and are not intrinsic uncertainty or condition numbers.
+
+The five archived matrices include $\Xi+S_J$, an entry enclosure of
+one exact Loewner upper matrix for $\Xi+\Theta$. Its scalar endpoints
+are not Loewner matrix endpoints, and a positive upper matrix would
+not establish positivity of the actual threshold. No threshold sign is
+tested. This supplies $S_J$, while the common $MX=R$ action and complete
+inverse-residual Gram remain missing. It is a numerical application of
+the existing Cauchy and matrix identities, without a new general theorem,
+algorithm or Lean verification.
 
 Even a certified negative $C_{\rm sharp}$ would only identify a
 direction for further actual certification. A sufficient full update
