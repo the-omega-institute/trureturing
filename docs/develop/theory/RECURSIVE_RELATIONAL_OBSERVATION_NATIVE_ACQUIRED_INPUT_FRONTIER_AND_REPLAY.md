@@ -75,8 +75,9 @@ assignments, descriptor conventions and native rule numbering. They are
 source uniform. Install a valid source $u\in\mathcal T_H$ by PR57.D5's exact
 canonical padded packet and fixed validation. There is no additional
 source-dependent installer residue. Allocation uses the deterministic Base,
-Allocate and descriptor routines; references name their actual creation
-occurrences, with no arbitrary renaming.
+Allocate and descriptor routines, or the explicit port-local construction
+of Definition 3.2; references name their actual creation occurrences, with
+no arbitrary renaming.
 
 Execute the supplied no-update producer on this source, materialize its
 lossless seed code, and complete its paid delivery to the declared controller
@@ -308,51 +309,145 @@ following five native rows are the entire loop:
 The zero/one successor test is part of the testing RD row permitted by
 PR57.D1. The final MR's control successor is the test state. There is no
 extra uncharged back-edge instruction and no bit-dependent payload branch.
-The exit reached by the final RD(0) is a different phase, before any later
-seal, descriptor construction or source work.
+The exit reached by the final RD(0) is a different phase, before the later
+payload seal, completed-frame parsing or source work.
 
-**Definition 3.2 (paid setup used for the equal-clock family).** Reserve
-three ordinary public ports for tag, length and payload. Their empty
-boundary pairs are constructed by paid boot and are untouched by the
-preceding acquisition and warm-up. The common preamble has obtained their
-Base references, the relevant token permissions, and any constant native
-descriptors; their heads are at R. All preamble occurrences have their usual
-receipts. Let $n_-$ be the actual ordinal at its end. Nothing depending on
-the varying address bits has occurred.
+**Definition 3.2 (paid setup used for the equal-clock family).** Fix the
+public controller's owner code to $U(0)$ and reserve ordinary public ports
+0, 1, 2, 3 and 4 for tag, length, payload, descriptor stream and metadata
+template, respectively. All five are initially empty, with their heads at
+R. The common paid prefix has installed their boundary pairs, the finite
+native graph below and the controller's exclusive read/write tokens. It
+has also copied the actual next source-request ordinal into otherwise
+empty public port 5 by the paid unary copy below, sealed that copy and
+executed Home; MR. Thus port 5 contains exactly $U(q)$, with its head at
+the first bit; preceding counter versions remain retained elsewhere.
+Positioning at the actual current counter version uses its real Base/Seek
+reference and is part of that prefix; once positioned, copying, sealing
+and positioning port 5 cost $5(q+1)+1+(2q+6)=7q+12$ occurrences.
+Source-request ordinals start at 0 and advance once per actual source
+call, including acquisition calls and rejects. They do not count archive
+lookup as a source call. Ports 6, 7 and 8 are the respective initially
+empty Base-counter destinations.
+Here $q$ is acquired counter data, not a meter numeral, future input or
+native instruction parameter.
 
-The setup from that cut is this fixed finite graph.
+Before appending anything to tag, length or payload, execute PR57.D2's
+Base on each empty arena into a distinct empty public counter port. Each
+Base executes Home; MR on its arena, RD(R), then EX; WR(0); MR on its
+counter: eight occurrences. Seal that counter at R by one CTL. Home; MR
+on it costs six more and puts its head on the actual $U(0)$. Thus this
+Base preamble costs exactly 45 occurrences and leaves the three arena
+heads at R and their three sealed Base heads at their first bits. Let
+$n_-$ be its actual final ordinal. All other preceding boot, acquisition,
+warm-up and request-counter work is included in that paid prefix. The
+five frame/work ports and three Base-counter ports have not been used by
+acquisition or warm-up.
 
-1. Execute one reserve-phase CTL. For each of the three tag bits execute
-   IN; EX(tag); WR(tag,input); MR(tag). Seal the tag by one CTL. Execute
-   Home(tag); MR(tag), and three unrolled RD(tag); MR(tag) pairs to recognize
-   the finite port code. For the family below this code is `010`.
+A zero-terminated unary copy uses RD and two finite successor arms: for
+1, execute EX(destination); WR(destination,read-bit); MR(destination);
+MR(source) and return to RD; for 0, execute the same four occurrences and
+continue to the next routine. It copies the terminal 0 too, so its cost is
+$5(k+1)$ on $U(k)$ and its source head ends one cell past that zero,
+at R when this is the port's sole word. A segment copy uses the same
+five-row body on each bit, with RD testing for sep instead; the final
+RD(sep) exits without copying or moving. It costs $5k+1$ on a $k$-bit
+segment. These are explicit finite expansions of AppendWord's body, with
+their terminal tests included. A literal bit or separator is appended by
+EX; WR; MR, costing three occurrences. All source ports are sealed,
+readable by this owner, and distinct from the destination. Data/test
+latches are distinct from the retained input latch.
+
+The setup from $n_-$ is the following one finite native graph.
+
+1. Execute one reserve-phase CTL, setting the input-supply purpose tag.
+   For each of the three tag bits execute IN; EX(tag); WR(tag,input);
+   MR(tag). Seal the tag by one CTL. Execute Home(tag); MR(tag), and three
+   unrolled RD(tag); MR(tag) pairs to recognize the finite port code.
+   For the family below this code is `010`.
 2. Receive $U(d)$ on the initially empty length port. For each supplied bit
    execute IN; EX(length); WR(length,input); RD(length,test); MR(length).
-   The RD branches to one of two identical MR opcodes: the 1 case returns
-   to IN, the 0 case goes to a one-CTL seal. Thus the terminating bit and its
-   exit control are paid. Run Home(length); MR(length).
-3. Execute Allocate(payload,$d$) with that actual length tape, using its
-   five-occurrence iteration and final RD(0). Append a delimiter by
-   EX(payload); WR(payload,sep); MR(payload). Execute Home(length);
-   MR(length), then Home(payload); MR(payload), and enter Definition 3.1.
+   The RD branches to two identical MR opcodes: the 1 case returns to IN,
+   the 0 case goes to a one-CTL seal. Run Home(length); MR(length).
+3. Execute one CTL entering the allocation/descriptor purpose. Construct
+   the following template on port 4, in the displayed order; each sep is
+   a real cell:
 
-No ordinal in this description is a primitive operand. Home finds the real
-left boundary; Allocate consumes the real unary length. The acquired length
-block is already its canonical wire representation. Complete payload
-descriptors, parsing, payload seal and source dispatch follow the loop and
-are charged there. Live work at a fixed port does not require an already
-published complete-block descriptor. The prior Base references bind the
-actual intervals before they are appended.
+   $$
+   \begin{aligned}
+   D_t&=U(0)U(0)U(0)U(3)\,10\,U(q),\\
+   P_l&=U(0)U(1)U(0),& S_l&=10\,U(q),\\
+   P_p&=U(0)U(2)U(0),& S_p&=11\,U(q),\\
+   W&=D_t\,\mathsf{sep}\,P_l\,\mathsf{sep}\,S_l\,
+       \mathsf{sep}\,P_p\,\mathsf{sep}\,S_p\,\mathsf{sep}.
+   \end{aligned}
+   $$
 
-For subsequent frames in nonempty arenas use the same graphs with actual
-Base/Seek positioning and complete descriptor work. Their cost is evaluated
-by the occurrence rules in Definition 3.4, rather than reusing the
-empty-port numerical formula.
+   In each of the three prefix fields, obtain the base $U(0)$ by the
+   unary copy from that arena's actual sealed Base counter. Obtain every
+   $U(q)$ by the unary copy from the actual request counter, using
+   Home; MR before its second and third copies. All remaining fields are
+   the displayed fixed literal bits, appended by their finite unrolled
+   rows. Seal W by one CTL, then Home(template); MR(template). The segment
+   lengths are $q+10,4,q+3,5,q+3$, respectively.
+4. Starting with length at its first bit and payload at R, execute the
+   following zero-reservation graph: RD(length,test); on 1 execute
+   EX(payload); WR(payload,0); MR(payload); MR(length) and return to RD;
+   on 0 exit. Append exactly one sep to payload. This graph is specified
+   directly by PR57.D1 primitives; it is not a call of PR57.D2's complete
+   Allocate service. Its zero-fill body costs $5d+1$ and its one delimiter
+   costs three more occurrences.
+5. Construct three complete descriptor records on the initially empty
+   descriptor stream. Copy segment $D_t$, append sep, and seal that record
+   by one CTL. Move the template head once to $P_l$, copy that segment,
+   and move once to $S_l$. Append a literal 1 to the descriptor stream.
+   Execute Home(length); MR(length), and copy its whole $U(d)$, terminal
+   zero included. Copy $S_l$, append sep and seal by one CTL. Move once
+   to $P_p$, copy it and move once to $S_p$. Execute Home(length);
+   MR(length), copy $U(d)$ again, then copy $S_p$, append sep and seal
+   by one CTL. A segment copy leaves the template head at that segment's
+   actual sep; exactly four template MR occurrences join the five copies.
+6. Execute Home(length); MR(length), then Home(payload); MR(payload).
+   Execute one CTL restoring the input-supply purpose and enter Definition
+   3.1's first test. No token changes owner during setup.
 
-**Theorem 3.3 (exact reader costs and cuts).** For every $d\ge0$ in Definition
-3.2, the complete setup uses exactly $16d+56$ primitives. Put
-$n_0=n_-+16d+56$, the ordinal just before the payload loop's first test.
-After $r$ complete payload iterations, $0\le r\le d$, the ordinal is
+The descriptors have PR57.D2's field order: unary owner, arena port,
+actual Base offset, length, initialization bit, mutability bit and actual
+request ordinal. They are, in full,
+
+$$
+\begin{aligned}
+D_t&=U(0)U(0)U(0)U(3)\,10\,U(q),\\
+D_l&=U(0)U(1)U(0)U(d+1)\,10\,U(q),\\
+D_p&=U(0)U(2)U(0)U(d)\,11\,U(q).
+\end{aligned}
+$$
+
+Appending 1 before the first length copy constructs $U(d+1)$ without
+arithmetic advice. The tag and length data are initialized and immutable;
+the payload's $d$ data cells are initialized to zero and remain writable.
+Its sep is outside those $d$ cells. The descriptor records are immutable,
+terminated by sep and bound to these actual construction/seal occurrences;
+they do not assert that the mutable payload is already a complete request.
+Their shared request ordinal does not alias their distinct arena ports.
+The descriptor stream and template are fixed owner-local work ports, not
+exported newly allocated data arenas. No descriptor grants another owner
+access, and the payload's eventual seal and source dispatch remain later
+service work.
+
+No ordinal is used as a primitive operand. Every variable copy scans an
+actual sealed source or actual terminating unary word. The Base offsets
+are measured before construction, and every head movement, field bit,
+terminal test, seal and accounting-tag change in this setup is displayed.
+For subsequent frames in nonempty arenas use the general supplier's real
+Base/Seek and complete Allocate/descriptor graphs, evaluated by Definition
+3.4; the following empty-port formula is not their price.
+
+**Theorem 3.3 (exact reader costs and cuts).** For every $d\ge0$ and actual
+request ordinal $q\ge0$ in Definition 3.2, the complete setup after $n_-$
+uses exactly $30d+40q+408$ primitives. Put
+$n_0=n_-+30d+40q+408$, just before the payload loop's first test. After
+$r$ complete payload iterations, $0\le r\le d$, the ordinal is
 
 $$
 n_{\mathrm{body}}(d,r)=n_0+5r.
@@ -368,34 +463,69 @@ n_{\mathrm{latch}}(d,r)=n_0+5(r-1)+2=n_0+5r-3.
 $$
 
 The complete loop, including its final zero test, uses $5d+1$ primitives.
-Hence setup plus loop costs $21d+57$ primitives, $21d+57$ ticks and
-$42d+114$ fee units after $n_-$. Its later service costs are additional.
-All these schedules are independent of the payload bit values.
+Setup plus loop therefore costs $35d+40q+409$ primitives and ticks, and
+$70d+80q+818$ fee units after $n_-$. The Base preamble adds its separately
+counted 45 primitives before $n_-$. Later payload sealing, parsing and
+source/journal/delivery service are additional. All displayed schedules
+are independent of the payload bit values.
 
-Proof. The tag's input/append part costs 12; its seal costs 1. Its head is
-then at position 4 relative to L, so Home costs 9 and MR costs 1. Three
-RD/MR pairs cost 6. Thus tag supply, seal and recognition cost 29, and
-reservation adds 1.
+Proof. Reservation plus tag supply, seal and recognition cost
+$1+12+1+9+1+6=30$: tag ends at R, position 4 relative to L. Length supply,
+seal and first positioning cost $5(d+1)+1+(2d+6)=7d+12$.
 
-The length supply is $5(d+1)$, its seal is 1, and its head is at position
-$d+2$ at R. Home/MR to its first bit costs $2d+6$. Allocate costs $5d+1$
-and leaves the length head on its terminal zero at position $d+1$. The
-payload delimiter costs 3 and leaves that head at R, position $d+2$.
-The two final Home/MR operations cost $2d+4$ and $2d+6$. Their sum is
+Template W has $3q+25$ bit cells and five sep cells. Outside its three
+Base fields and three request-ordinal fields there are 19 literal bit
+cells and five separators, costing 72 occurrences. Copying the three
+actual $U(0)$ Base fields costs 15. Copying $U(q)$ three times costs
+$15(q+1)$; the two counter Home/MR pairs cost $4q+12$. Template seal
+costs 1. Its head is then at R, position $3q+31$, so Home/MR costs
+$6q+64$. Template construction and positioning therefore cost
+$25q+179$, including all its metadata-source reads and moves. Each Base
+source ends at R; the request counter ends at R, position $q+2$.
+
+The zero-reservation body and its one sep cost $5d+4$, leaving length
+on its terminal zero, position $d+1$, and payload at R, position $d+2$.
+The five template segment copies cost $5(3q+25)+5=15q+130$; their four
+joining MR occurrences cost 4. The extra leading 1 costs 3. The two
+length-copy positionings cost $(2d+4)+(2d+6)$; the two unary copies cost
+$10(d+1)$. Three descriptor separators and seals cost 12. Thus descriptor
+construction costs $14d+15q+169$. It produces exactly the three displayed
+descriptors, containing $2d+3q+28$ bit cells and three separators. Both
+length copies end at R. The last template head is on its final sep,
+position $3q+30$, and the descriptor head is at R, position
+$2d+3q+32$.
+
+The final length and payload Home/MR pairs each cost $2d+6$. There are
+two accounting-tag CTLs. Summing these disjoint executed graphs gives
 
 $$
-1+29+5(d+1)+1+(2d+6)+(5d+1)+3+(2d+4)+(2d+6)
-=16d+56.
+30+(7d+12)+1+(25q+179)+(5d+4)
+ +(14d+15q+169)+(4d+12)+1=30d+40q+408.
 $$
 
-For $d=0$ the payload head is correctly at its delimiter and the first
-length test exits; no data cell is accessed. In general one iteration is
-exactly the five rows in Definition 3.1. Its second occurrence is IN.
-Induction on $r$ gives AIF.1 and AIF.2, with a final single RD(0) giving
-$5d+1$. A primitive has one receipt, one tick and two fee units. No control
-edge, final test, header bit, length bit or initialization iteration has
-been omitted. The varying data affect only the input latch and written
-payload cells. ∎
+Every descriptor is correctly initialized when sealed. No constructed
+interval overlaps another port; immutable source fields are only read.
+At entry to the payload loop the length and payload heads are both at
+position 1. For $d=0$ these are respectively the real terminal zero and
+the sole payload sep: the first test exits without touching the sep.
+For positive $d$, iteration $r+1$ tests length position $r+1$, consumes
+one bit, writes payload position $r+1$ and moves each head once. Induction
+gives AIF.1 and AIF.2, and after $d$ iterations both heads are on their
+respective zero/sep positions $d+1$. One final RD(0) gives $5d+1$.
+The complete setup constructs exactly $4d+6q+66$ new ordinary cells:
+three tag cells, $d+1$ length cells, $d+1$ payload cells, $3q+30$ template
+cells and $2d+3q+31$ descriptor-stream cells. Meter receipts are additional.
+Each primitive has one receipt, one tick and two fee units. ∎
+
+For the zero and small lengths, the exact setup and setup-plus-loop
+counts at the same actual ordinal parameter are:
+
+| $d$ | Setup after $n_-$ | Setup plus complete payload loop |
+| --- | --- | --- |
+| 0 | $408+40q$ | $409+40q$ |
+| 1 | $438+40q$ | $444+40q$ |
+| 2 | $468+40q$ | $479+40q$ |
+| 3 | $498+40q$ | $514+40q$ |
 
 **Definition 3.4 (whole-execution cost evaluation).** For every used native
 graph, expand sequence by joining successor edges, public tests by actual
@@ -404,9 +534,11 @@ row occurrence has cost 1; an edge which is only its successor field has
 no separate cost. A separately executed CTL has cost 1. Parameter creation
 uses the actual tape routines: Append costs 3; an actual Home at distance
 $h$ costs $2h+1$; Seek costs $2h+3a+3$ plus positioning of its real address
-string; Allocate's displayed length loop costs $5k+1$ plus its positioning
-and descriptor work. Explicit loops around a body add their own testing
-and counter movement occurrences unless already included in that body.
+string; Allocate's displayed zero-fill loop costs $5k+1$ plus its actual
+positioning, one delimiter and descriptor construction. The explicit
+port-local graph of Definition 3.2 has its own complete count. Explicit
+loops around a body add their own testing and counter movement occurrences
+unless already included in that body.
 
 The cost of a sequence is the sum of its executed graph lengths, with each
 operand head taken at its actual entry location. A public branch selects
@@ -976,8 +1108,9 @@ free freeze of a busy cut.
 **Proposition 7.1 (four prefixes with the same source and clock).** In
 Definition 5.1 take $d=3$, $r=2$ and the latch cut. The four actual prefixes
 are LL, LR, RL, RR. Their common payload-loop ordinal is $n_0+7$, and the
-complete explicit setup gives $n_0=n_-+104$. Their written/latch data and
-eventual request fields under the common L continuation are:
+complete explicit setup gives $n_0=n_-+498+40q$, where $q$ is the common
+actual request ordinal. Their written/latch data and eventual request
+fields under the common L continuation are:
 
 | Acquired prefix | Written payload prefix | Occupied input latch | Actual later submitted address | Literal reply on $t_*$ |
 | --- | --- | --- | --- | --- |
@@ -994,6 +1127,12 @@ Proof. Substitute $d=3,r=2$ into AIF.1–2 and Theorem 3.3. The first input
 letter has been written and the second is pending. AIF.9 gives the four
 distinct length-three addresses. Each descends past a leaf. The request
 rows and both task-kernel directions are those of Theorem 5.2. ∎
+
+For this seed the acquisition makes one TagRead, and the two warm-ups
+make two Rho calls. Hence Definition 3.2's source-request counter is
+actually $q=3$: the setup costs 618 primitives, $n_0=n_-+618$, and the
+four displayed latch cuts are at $n_-+625$. Setup plus the whole
+three-bit payload loop costs 634 primitives after $n_-$.
 
 **Proposition 7.2 (a partial copy instance).** For $\ell=3$, a receiver that
 has acquired the first bit L of the sealed payload has four compatible
@@ -1016,7 +1155,7 @@ time charge.
 | Source capacity and installation | The producer owns the original private $2N$ bits. Canonical source ingress, validation and all surrounding descriptors are paid. There is no second physical source used by replay. |
 | Literal instrument | TagRead uses the added same-source permission. $G(H)=(2N+3)4^N+3$ counts gate records only. At $H=2$, $N=3$ and $G(2)=579$, independent of unbounded submitted address length. Generator work, address scans, gate execution, framing and communication are separate. |
 | Acquired seed | For an $m$-leaf seed the supplied traversal makes $2m-1$ TagReads and $2(m-1)$ local markers. Its parser code has $3m-1$ payload bits. Source acquisition, serialization, ownership transfer and retained traversal work are paid separately from installation. |
-| Independent input | At the latch fiber, $r$ actual payload INs, $r-1$ WRs, $r-1$ payload moves, $r$ tests and $r-1$ length moves have executed: $5r-3$ primitives after $n_0$. The completed loop is $5d+1$; the chosen empty-port setup is $16d+56$. |
+| Independent input | At the latch fiber, $r$ actual payload INs, $r-1$ WRs, $r-1$ payload moves, $r$ tests and $r-1$ length moves have executed: $5r-3$ primitives after $n_0$. The completed loop is $5d+1$; the chosen empty-port setup is $30d+40q+408$, including its template, three descriptors and two accounting-tag changes. |
 | Frame retention | The attaining logical prefix can already reside in existing request cells plus one occupied latch. It does not inherently require a duplicate $r$-bit log. Headers, length cells, descriptors, previous frames and all unused allocated payload capacity remain physical storage. |
 | Semantic pending event | At response commitment the complete actual request and response enter $P$; row seal transfers its logical event into $A_P$. This is not a physical bulk copy. No uncommitted address prefix is made into a semantic event. |
 | Archive and publication | Actual producer rows, immutable senders, sealed mailboxes and receivers have separate tokens and origins. AIF.11 prices the chosen full copy loops; allocation, unary identities, positioning, row access and printing are additional actual graphs. |
@@ -1045,9 +1184,9 @@ all constructed cells and separately counts finite control/token/latch
 storage. The new frame and copy operations use precisely those cell and
 receipt constructors. Partitioning by actual construction therefore gives
 AIF.12 without substituting separate maxima for coexisting objects. The
-payload Allocate has constructed all $d$ cells before the varying ingress,
-and Theorem 5.2 counts distinguishable values conditional on that common
-layout. These are different quantities. ∎
+port-local zero-reservation graph has constructed all $d$ cells before
+the varying ingress, and Theorem 5.2 counts distinguishable values
+conditional on that common layout. These are different quantities. ∎
 
 ## 8. Primary literature and exact applicability
 
