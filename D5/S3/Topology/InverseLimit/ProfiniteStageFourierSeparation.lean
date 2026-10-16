@@ -1,5 +1,5 @@
 /- GID: D5/S3/Topology/InverseLimit/ProfiniteStageFourierSeparation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Topology/InverseLimit/ProfiniteStageFourierSeparation
    mirror-E: none(waiver:finite-stage-character-reflection)
    anchors: []
