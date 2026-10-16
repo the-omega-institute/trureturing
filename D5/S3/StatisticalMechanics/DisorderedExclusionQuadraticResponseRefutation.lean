@@ -11,7 +11,7 @@ import Mathlib.Data.Fintype.Powerset
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Continuity
+import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Algebra.BigOperators.Field
@@ -321,5 +321,69 @@ private theorem unique_vector (ε : ℝ) (v : Fin 6 → ℝ) (hD : D ε ≠ 0)
       ((16169*ε^4 - 144380*ε^3 + 170538*ε^2 - 262180*ε + 293869)/10) * h3 +
       (-(7839*ε^4 + 123036*ε^3 - 205274*ε^2 + 285316*ε - 282373)/10) * h4 +
       (8*(148*ε^5 + 545*ε^4 - 1544*ε^3 + 2630*ε^2 - 4412*ε + 2825)) * hn
+
+private theorem unique_law (ε : ℝ) (he : |ε| < (1 / 100 : ℝ))
+    (μ : Finset (Fin 4) → ℝ) (hμ : IsStationary 2 a a ε μ) : μ = law ε := by
+  have hvec (j : Fin 6) : F ε (fun k => μ (states k)) j = 0 := by
+    rw [balance_block ε μ hμ.1, hμ.2.2.2, sub_self, mul_zero]
+  have hnorm : (∑ j : Fin 6, μ (states j)) = 1 := by
+    have hm := sum_support μ (fun _ => 1) hμ.1
+    simp only [mul_one] at hm
+    rw [← hm]
+    exact hμ.2.2.1
+  funext s
+  by_cases hs : s.card = 2
+  · obtain ⟨j, rfl⟩ := card_two_cases s hs
+    rw [law_apply]
+    exact unique_vector ε _ (positive_polynomials ε he).1.ne' hvec hnorm j
+  · rw [hμ.1 s hs, law_support ε s hs]
+
+private theorem current_closed (ε : ℝ) (hD : D ε ≠ 0) :
+    current a a ε (law ε) = 7872 * ε * (25 + 9*ε^2 - 16*ε^4) / D ε := by
+  rw [current.eq_1, sum_law]
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, states.eq_1, B.eq_1,
+    p.eq_1, q.eq_1, a.eq_1, Matrix.cons_val, Matrix.cons_val_succ]
+  norm_num +decide
+  field_simp [hD]
+  ring
+
+private noncomputable def remainder_factor (ε : ℝ) : ℝ :=
+  -7872 * (1628*ε^3 + 28107*ε^2 - 1628*ε - 63321) / (8927 * D ε)
+
+private theorem quadratic_expansion :
+    (fun ε => current a a ε (law ε) - (7872/8927 : ℝ) * ε - 0 * ε^2)
+      =o[𝓝 0] (fun ε => ε^2) := by
+  have hg : ContinuousAt remainder_factor 0 := by
+    unfold remainder_factor
+    apply ContinuousAt.div
+    · fun_prop
+    · unfold D
+      fun_prop
+    · norm_num [D.eq_1]
+  have ho : (fun ε : ℝ => ε^3 * remainder_factor ε) =o[𝓝 0] (fun ε => ε^2) := by
+    simpa only [mul_one] using
+      (Asymptotics.isLittleO_pow_pow (𝕜 := ℝ) (by decide : 2 < 3)).mul_isBigO
+        (hg.isBigO (F := ℝ))
+  apply ho.congr' ?_ Filter.EventuallyEq.rfl
+  have hnear : ∀ᶠ ε : ℝ in 𝓝 0, |ε| < (1 / 100 : ℝ) := by
+    filter_upwards [Metric.ball_mem_nhds (0 : ℝ) (by norm_num : 0 < (1 / 100 : ℝ))]
+      with ε hε
+    simpa only [Metric.mem_ball, Real.dist_eq, sub_zero] using hε
+  filter_upwards [hnear] with ε he
+  have hD : D ε ≠ 0 := (positive_polynomials ε he).1.ne'
+  rw [current_closed ε hD, remainder_factor.eq_1]
+  field_simp [hD]
+  simp only [D.eq_1]
+  ring
+
+/-- The interacting four-site trap law has zero quadratic response without either rate symmetry. -/
+theorem result : ¬ claim := by
+  intro h
+  have hc := h 4 2 (by norm_num) (by norm_num) a a
+    (by intro i; fin_cases i <;> norm_num [a.eq_1]) rfl no_uniform no_inversion
+    (1/100) (by norm_num) law
+    (fun ε he => ⟨stationary_law ε he, fun μ hμ => unique_law ε he μ hμ⟩)
+    (7872/8927) 0 quadratic_expansion
+  exact hc rfl
 
 end D5.S3.StatisticalMechanics.DisorderedExclusionQuadraticResponseRefutation
