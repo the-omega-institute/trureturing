@@ -114,4 +114,142 @@ private theorem adaptive_value : adaptiveValue q rho effect guess = 99/100 := by
     Matrix.smul_apply, Complex.mul_re, Complex.mul_im, Matrix.cons_val_two,
     Matrix.cons_val_three, map_ofNat]
 
+private noncomputable def realMat (a b c : ℝ) : Q2 :=
+  (!![a, b; b, c]).map (↑)
+
+private def parts : Fin 8 → Finset (Fin 4) :=
+  ![{0}, {0, 1}, {0, 2}, {0, 1, 2}, {0, 3}, {0, 1, 3}, {0, 2, 3}, Finset.univ]
+
+private noncomputable def dual : Fin 8 → Fin 2 → Q2 :=
+  ![![realMat (33/100) 0 0, realMat (99/500) 0 (99/250)],
+    ![realMat (173/500) (33/500) (7/25), realMat (147/2000) (-16/125) (533/2000)],
+    ![realMat (173/500) (-33/500) (7/25), realMat (27/400) (33/250) (529/2000)],
+    ![realMat (33/100) 0 (33/100), realMat (1/200) (1/200) (1/200)],
+    ![realMat (661/2000) 0 (11/2000), realMat (99/500) 0 (99/250)],
+    ![realMat (173/500) (33/500) (7/25), realMat (33/500) (-33/250) (33/125)],
+    ![realMat (173/500) (-33/500) (7/25), realMat (33/500) (33/250) (33/125)],
+    ![realMat (33/100) 0 (33/100), 0]]
+
+private theorem real_psd (A : Q2)
+    (hr : A = realMat (A 0 0).re (A 0 1).re (A 1 1).re)
+    (hn : A = 0 ∨ (0 < (A 0 0).re + (A 1 1).re ∧
+      0 ≤ (A 0 0).re * (A 1 1).re - (A 0 1).re ^ 2)) : A.PosSemidef := by
+  rcases hn with hz | hn
+  · rw [hz]
+    exact PosSemidef.zero
+  · exact hr.symm ▸ FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det
+      _ _ _ hn.1 hn.2
+
+set_option maxHeartbeats 2000000 in
+private theorem certificate_slack (k : Fin 8) (ℓ : Fin 2) (x : Fin 4)
+    (hx : x ∈ cell (parts k) ℓ) :
+    (dual k ℓ - (q x : ℂ) • rho x).PosSemidef := by
+  fin_cases k <;> fin_cases ℓ <;> fin_cases x <;>
+    norm_num [cell, parts, Fin.ext_iff] at hx
+  all_goals apply real_psd
+  all_goals first
+    | solve
+      | ext i j
+        fin_cases i <;> fin_cases j <;>
+          norm_num [dual, realMat, q, rho, weight, ket, vecMulVec,
+            Matrix.smul_apply, Matrix.cons_val_two, Matrix.cons_val_three, map_ofNat]
+    | solve
+      | right
+        norm_num [dual, realMat, q, rho, weight, ket, vecMulVec,
+          Matrix.smul_apply, Matrix.cons_val_two, Matrix.cons_val_three, map_ofNat]
+    | left
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        norm_num [dual, realMat, q, rho, weight, ket, vecMulVec,
+          Matrix.smul_apply, Matrix.cons_val_two, Matrix.cons_val_three, map_ofNat]
+
+private theorem certificate_traces (k : Fin 8) :
+    (∀ ℓ, 0 ≤ (trace (dual k ℓ)).re) ∧
+    (trace (dual k 0)).re + (trace (dual k 1)).re ≤ 483/500 := by
+  fin_cases k <;> constructor
+  all_goals first
+    | solve
+      | intro ℓ
+        fin_cases ℓ <;> norm_num [dual, realMat, trace, Fin.sum_univ_two]
+    | norm_num [dual, realMat, trace, Fin.sum_univ_two]
+
+private theorem cell_bound {n : ℕ} (q : Fin n → ℝ) (ρ : Fin n → Q2)
+    (C : Finset (Fin n)) (M : Fin n → Q2) (Y : Q2)
+    (hp : ∀ x ∈ C, (M x).PosSemidef)
+    (hs : C.Nonempty → ∑ x ∈ C, M x = 1)
+    (hd : ∀ x ∈ C, (Y - (q x : ℂ) • ρ x).PosSemidef)
+    (ht : 0 ≤ (trace Y).re) :
+    ∑ x ∈ C, q x * (trace (ρ x * M x)).re ≤ (trace Y).re := by
+  by_cases hc : C.Nonempty
+  · have hpoint (x : Fin n) (hx : x ∈ C) :
+        q x * (trace (ρ x * M x)).re ≤ (trace (Y * M x)).re := by
+      have hpos := (Complex.nonneg_iff.mp ((hd x hx).trace_mul_nonneg (hp x hx))).1
+      simp only [sub_mul, smul_mul, trace_sub, trace_smul, Complex.sub_re,
+        smul_eq_mul, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+        zero_mul, sub_zero] at hpos
+      linarith
+    calc
+      ∑ x ∈ C, q x * (trace (ρ x * M x)).re ≤
+          ∑ x ∈ C, (trace (Y * M x)).re := Finset.sum_le_sum hpoint
+      _ = (trace Y).re := by
+        rw [← Complex.re_sum, ← trace_sum, ← Matrix.mul_sum, hs hc, mul_one]
+  · rw [Finset.not_nonempty_iff_eq_empty.mp hc]
+    simpa using ht
+
+private theorem pre_bound_parts (k : Fin 8) (M : Fin 2 → Fin 4 → Q2)
+    (hM : IsPreStrategy (parts k) M) : preValue q rho (parts k) M ≤ 483/500 := by
+  have hzero := cell_bound q rho (cell (parts k) 0) (M 0) (dual k 0)
+    (hM 0).1 (hM 0).2 (certificate_slack k 0) ((certificate_traces k).1 0)
+  have hone := cell_bound q rho (cell (parts k) 1) (M 1) (dual k 1)
+    (hM 1).1 (hM 1).2 (certificate_slack k 1) ((certificate_traces k).1 1)
+  simpa only [preValue, Fin.sum_univ_two] using
+    (add_le_add hzero hone).trans (certificate_traces k).2
+
+private theorem partitions_complete :
+    ∀ X : Finset (Fin 4), ∃ k : Fin 8, X = parts k ∨ Xᶜ = parts k := by
+  decide
+
+private theorem pre_bound (X : Finset (Fin 4)) (M : Fin 2 → Fin 4 → Q2)
+    (hM : IsPreStrategy X M) : preValue q rho X M ≤ 483/500 := by
+  obtain ⟨k, hk | hk⟩ := partitions_complete X
+  · subst X
+    exact pre_bound_parts k M hM
+  · let N : Fin 2 → Fin 4 → Q2 := ![M 1, M 0]
+    have hN : IsPreStrategy (parts k) N := by
+      intro ℓ
+      fin_cases ℓ
+      · simpa [← hk, cell, N] using hM 1
+      · simpa [← hk, cell, N] using hM 0
+    have hv : preValue q rho X M = preValue q rho (parts k) N := by
+      simp [preValue, Fin.sum_univ_two, ← hk, cell, N, add_comm]
+    rw [hv]
+    exact pre_bound_parts k N hN
+
+private theorem pre_nonempty :
+    {v | ∃ X M, IsPreStrategy X M ∧ v = preValue q rho X M}.Nonempty := by
+  let M : Fin 2 → Fin 4 → Q2 := fun _ x => if x = 0 then 1 else 0
+  refine ⟨preValue q rho Finset.univ M, Finset.univ, M, ?_, rfl⟩
+  intro ℓ
+  fin_cases ℓ
+  · constructor
+    · intro x _
+      dsimp [M]
+      split_ifs
+      · exact PosSemidef.one
+      · exact PosSemidef.zero
+    · intro _
+      norm_num [cell, M, Fin.sum_univ_succ]
+  · simp [cell]
+
+private theorem pre_upper : Ppre q rho ≤ 483/500 := by
+  apply csSup_le pre_nonempty
+  rintro v ⟨X, M, hM, rfl⟩
+  exact pre_bound X M hM
+
+theorem result : ¬ claim := by
+  intro hc
+  have h := hc 4 (by decide) q rho ensemble_valid 3 effect partition guess adaptive_valid
+  rw [adaptive_value] at h
+  linarith [pre_upper]
+
 end D5.S3.Quantum.Measurement.AdaptiveQueryQubitFourStateRefutation
