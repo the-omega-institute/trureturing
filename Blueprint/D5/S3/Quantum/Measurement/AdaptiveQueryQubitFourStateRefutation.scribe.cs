@@ -233,9 +233,11 @@ internal sealed class AdaptiveQueryQubitFourStateRefutationDocument : IScribeDoc
     private static Formula AdaptiveValueFormula()
     {
         var selected = At(N("f"), N("z"), N("ell"));
-        return EnsembleBinders(All("m", N("Nat"), All("M", Effects(), All("f", Guesses(),
-            Eq(Typed(AdaptiveCall(), N("Real")), SumOver("z", Fin(N("m")), SumOver("ell", Fin(D(2)),
-                Mul(At(N("q"), selected), RealTrace(Mul(At(N("R"), selected), At(N("M"), N("z"))))))))))));
+        var value = Eq(Typed(AdaptiveCall(), N("Real")),
+            SumOver("z", Fin(N("m")), SumOver("ell", Fin(D(2)),
+                Mul(At(N("q"), selected), RealTrace(Mul(At(N("R"), selected), At(N("M"), N("z"))))))));
+        return All("n", N("Nat"), All("m", N("Nat"), All("q", Priors(), All("R", States(),
+            All("M", Effects(), All("f", Guesses(), value))))));
     }
 
     private static Formula ClaimFormula() => IffFormula(N("claim"), All("n", N("Nat"),
