@@ -2,7 +2,7 @@
 
 The improvement obtainable from the entire class of exterior corrections to the canonical height projection has sharp power $R^{-3}$. Its uniform upper bound has an explicit constant determined by the same source and critical mode. Arbitrary sums, overlapping supports, complex coefficients and even components satisfy the bound. These are ordinary conditional mathematical results under the analytic antecedents specified below. They do not determine either absolute canonical sign or the original every-ground-state decision at response zero.
 
-Write P for [Native full-state weak binding](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md), through §108; R for [Native exact-critical energy response and scale alternatives](FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md), through §15; N for *Strict nonaffine response at the native critical scale*; A for [Actual critical solvability and conditional microscopic disappearance](FIB_NATIVE_ACTUAL_CRITICAL_SOLVABILITY_AND_MICROSCOPIC_DISAPPEARANCE.md), through §12; H for *Native critical height projection and cutoff overlap bounds*; and E for *Native entire-height response escape*. Their stated results retain their supplied conditional scopes. E already supplies strong tails, the limiting height slope, a positive residual beyond the entire height subspace and a lower witness. H already supplies the entire height projection and its decomposition. The additional content here is the upper bound uniform over the whole exterior class, its explicit source constant, and its combination with the credited lower witness to identify the sharp power.
+Write P for [Native full-state weak binding](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md), through §108; R for [Native exact-critical energy response and scale alternatives](FIB_NATIVE_EXACT_CRITICAL_ENERGY_RESPONSE_AND_SCALE_ALTERNATIVES.md), through §15; N for *Strict nonaffine response at the native critical scale*; A for [Actual critical solvability and conditional microscopic disappearance](FIB_NATIVE_ACTUAL_CRITICAL_SOLVABILITY_AND_MICROSCOPIC_DISAPPEARANCE.md), through §16; H for *Native critical height projection and cutoff overlap bounds*; and E for *Native entire-height response escape*. Their stated results retain their supplied conditional scopes. E already supplies strong tails, the limiting height slope, a positive residual beyond the entire height subspace and a lower witness. H already supplies the entire height projection and its decomposition. The additional content here is the upper bound uniform over the whole exterior class, its explicit source constant, and its combination with the credited lower witness to identify the sharp power.
 
 ## 1. The unchanged original family and its complete domains
 
@@ -772,7 +772,91 @@ $$
 
 The exact coefficient, mass-carrying macroscopic scale and normalized full-mass profile on that conditional branch are resolved credit. The same conclusions apply on any actual weak-zero subsequence at response zero, without asserting that any or every actual choice has one.
 
-Credit and proof scope. R's matching law uses its full-complex-domain lower estimate, actual negative attainment and P's actual resolvent equivalence, beyond its corrected-core trial upper construction. A's solvability uses the actual bilinear equation and compact tests fixed before homogeneous approximation. Its weak-zero transfer removes the short field in the actual resolvent and derives an $o(g_s^2)$ fixed-cutoff variational deficit before invoking P72–73. Norm proximity alone would not provide that energy precision. The converse is a microscopic/macroscopic norm comparison. None of these actual-state theorems is proved from, or strengthened by substituting an exterior homogeneous correction into, the actual eigen-equation.
+Credit and proof scope. R's matching law uses its full-complex-domain lower estimate, actual negative attainment and P's actual resolvent equivalence, beyond its corrected-core trial upper construction. A's solvability uses the actual bilinear equation and compact tests fixed before homogeneous approximation. Its weak-zero transfer removes the short field in the actual resolvent and derives an $o(g_s^2)$ fixed-cutoff variational deficit before invoking P72–73. Norm proximity alone would not provide that energy precision. The macroscopic-orbit converse is a microscopic/macroscopic norm comparison. A15.2 supplies the energy-endpoint converse through the strict core margin recorded below. None of these actual-state theorems is proved from, or strengthened by substituting an exterior homogeneous correction into, the actual eigen-equation.
+
+**Proposition 9.3 (existing quantitative core margin and three-way endpoint equivalence).** Fix one original admitted datum before any limit. In addition to the conditional antecedents already specified, retain A13.1's use of P §§70–73 and L Lemma 41.2, with the parameter applicability conditions of L Definition 35.1, where L is [Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md). All statements below retain those scopes. With exactly the Coulomb normalization (9.5), put
+
+$$
+c_{\rm ref}=\frac{e^{-4}h_C(0)}{24\sqrt\pi}
+ =\frac{e^{-4}\varrho^{3/2}}{24\pi(\det M)^{1/4}}>0,
+\qquad
+\mathbb B_g=\{q:\varrho d_M(gq)\le1\},
+\qquad e_1(g)=E_1(g).
+\tag{9.8}
+$$
+
+A13.2 supplies a datum-dependent $g_0>0$ such that every nonnegative normalized actual reference ground state $v_g\in D(S)$ of $aS-gW_1$, for every $0<g<g_0$, satisfies
+
+$$
+v_g(k,q)\ge c_{\rm ref}g^{3/2}\phi(k)
+\quad\text{for almost every }(k,q)\in I\times\mathbb B_g.
+\tag{9.9}
+$$
+
+The height range is the whole original interval. A13.3 supplies the same lower amplitude on every fixed microscopic compact set after composition with the exact $\Xi_s$. The constant $c_{\rm ref}$ is precisely A13.1's $c_*$, with no ground-state, compact-set or response-sign dependence.
+
+For any actual normalized complex ground-state choice set $F_s=\mathcal U_s\psi_s$, $u_s=|\psi_s|$, $D_s=W_{s^2}-W_1\ge0$ and $U_s^{<}=s^5D_s\circ\Xi_s$. The modulus $u_s$ is itself a normalized actual ground state in the unchanged $D(S)$. For each fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of positive measure define the scalar charge
+
+$$
+\mathfrak a_s(K)=\int_K\phi(k_0+\varepsilon sr)U_s^{<}(\xi)|F_s(\xi)|d\xi.
+\tag{9.10}
+$$
+
+This is A14.1's scalar $A_s(K)$, distinct from the Friedrichs operator of §1. For sufficiently small $s$ depending on $K$ and the fixed datum, A14.2 gives, uniformly over every actual complex ground-state choice,
+
+$$
+\frac{e_1(g_s)-E_s}{g_s^2}
+ \ge c_{\rm ref}\sqrt{j_0\chi_c}\,\mathfrak a_s(K)\ge0.
+\tag{9.11}
+$$
+
+There is no response-sign or bounded-$r_s$ hypothesis. Its exact finite-native pairing, supplied by A14.2, is
+
+$$
+O_s=\langle v_{g_s},u_s\rangle\in(0,1],\qquad
+(e_1(g_s)-E_s)O_s
+ =g_s\int_{\mathcal C}D_s v_{g_s}u_s\,dY.
+\tag{9.12}
+$$
+
+Both vectors lie in the exact common original $D(S)$; the multipliers are bounded separately at each positive $s$. This is an actual spectral comparison, with no homogeneous response vector substituted into a native domain.
+
+Define the finite positive core charge and strict margin
+
+$$
+m_{\rm core}=\int_{\mathbb R^4}Vp\,d\xi\in(0,\infty),\qquad
+\eta_*=c_{\rm ref}\sqrt{j_0\chi_c}\,\phi(k_0)m_{\rm core}>0,
+\qquad r_C=-\chi_c^2e_C>0.
+\tag{9.13}
+$$
+
+A15.1 gives, for every prescribed $s_n\downarrow0$ and every actual normalized complex choice with $F_{s_n}\rightharpoonup cp$ globally in $L^2$,
+
+$$
+\liminf_{n\to\infty}\frac{e_1(g_{s_n})-E_{s_n}}{g_{s_n}^2}
+ \ge\eta_*|c|,
+\qquad
+\liminf_{n\to\infty}r_{s_n}
+ \ge r_C+\chi_c^2\eta_*|c|.
+\tag{9.14}
+$$
+
+Thus a finite actual endpoint with nonzero microscopic weak core lies strictly above $r_C$. In particular such a core is excluded at the Coulomb endpoint. A15.2 proves that, for every prescribed sequence and every actual normalized complex choice in $D(S)$, the following three assertions are equivalent along that same sequence:
+
+$$
+\begin{aligned}
+&r_{s_n}\longrightarrow r_C;\\
+&F_{s_n}\rightharpoonup0\quad\text{globally in }L^2(\mathbb R^4);\\
+&\inf_{\theta\in\mathbb R}
+ \|\mathcal D_{g_{s_n}}\psi_{s_n}-e^{i\theta}\phi h_C\|_2
+ \longrightarrow0.
+\end{aligned}
+\tag{9.15}
+$$
+
+Whenever they hold, the energy limits (9.6) hold and $F_{s_n}\to0$ in $L^2(K)$ on every compact $K$. No response-sign hypothesis is needed for this equivalence. At response zero it asserts neither existence nor selection of any of its three equivalent endpoints.
+
+Source correspondence. These are existing conditional A13–16 results, not additional theorems derived from the exterior estimate. A13 uses the all-height relative kernel estimate of L Lemma 41.2 and the actual fixed-cutoff Coulomb energy/profile of P72–73 to obtain the reference amplitude; macroscopic $L^2$ convergence alone supplies no shrinking-core pointwise bound. A14 pairs two actual eigen-equations on the same $D(S)$ and retains the exact raw Jacobian and path factors. A15 takes compact charge limits first and then exhausts space, using N's finite positive $\int Vp$; its strict margin excludes a nonzero weak core when the energy defect vanishes. A10.2 and A11.1 supply the other endpoint implications. A16 states these scopes and the unresolved selection boundary. None assumes a positive canonical $L^2$ spectral gap, global $L^2$ membership or native realizability of the homogeneous response, or a transfer of actual kinetic energies from norm proximity. The margin constrains actual weak core mass and does not sign either canonical coefficient or bound the full $\delta_h$.
 
 ## 10. Remaining original goal, attribution and boundaries
 
@@ -789,11 +873,11 @@ $$
 
 They determine the canonical signs before comparison with $\mathscr R\overline D$. The strict residual $\delta_h>0$, the strict affine margin from N, the exact height projection from H and the exterior upper bound do not evaluate them. The ratio images and negative occurrence are already resolved. Positive and zero occurrence retain precisely their unevaluated canonical sign predicates. Arbitrary independent scalar assignments, unrelated potentials and separately optimized extrema do not respect this common realization and cannot decide it.
 
-At response zero, the general established facts remain $E_s\to0$ and $c_0\le r_s=o(s^{-6})$ for a fixed $c_0>0$. A's solvability identity is then vacuous. Selection or existence of actual weak-zero subsequences, possible nonzero microscopic core limits, bounded/divergent/mixed $r_s$ behavior and the complete every-choice decision remain unresolved. The weak-zero subsequence, if present, already has (9.6); a divergent-$r_s$ subsequence already has the microscopic unit orbit by (9.4). The exterior theorem chooses neither. A uniform centered detuning or crossover theorem remains unresolved. No positive-branch exact Coulomb coefficient or full-mass profile obligation is left open beyond its stated conditional occurrence premise.
+At response zero, the general established facts remain $E_s\to0$ and $c_0\le r_s=o(s^{-6})$ for a fixed $c_0>0$. A5.1's solvability identity is then vacuous, while A15.1–15.2 give the strict core margin (9.14) and the three-way endpoint equivalence (9.15). A nonzero microscopic weak core at the Coulomb energy endpoint is excluded. Existence or selection of that endpoint and actual weak-zero subsequences, actual endpoint selection away from $r_C$, deeper finite mixed/core branches, divergence or mixed subsequential scale behavior, and the complete every-choice decision remain unresolved. The weak-zero subsequence, if present, already has the matching energy and full-mass profile (9.6); a divergent-$r_s$ subsequence already has the microscopic unit orbit by (9.4). Neither the exterior theorem nor the credited margin selects among the remaining actual alternatives. A uniform centered detuning or crossover theorem remains unresolved. No positive-branch exact Coulomb coefficient or full-mass profile obligation is left open beyond its stated conditional occurrence premise.
 
 **Definition 10.2 (source credit and evidence).** P §§70–75 supply the native field, charges, full domains and positive-cutoff attainment; §§78 and 81 supply the chart, Jacobian and exact conjugacy. P §§82–88 supply geometry, heat, integrated tails, compactness, reconstruction and the simple mode; §§89–91 distinguish tangent onset and the weak disk from actual unit selection; §§92–96 supply observation, infinite-fibre, quantum and analytic-preparation boundaries. P §97 supplies the rational shear, §100 the one-sided macroscopic bound, §§102–105 the actual shell defect, finite-native weighted resolvent and actual equivalence, and §§106–108 the weighted mode, parity, complete common-bridge field and specified affine coefficient.
 
-R supplies coefficient multipliers, the homogeneous gap and Riesz response, recovery, the full-domain lower estimate, matching energy and conditional branches, canonical normalization, and the exact ratio/admission/negative-occurrence results. N supplies the identical-heat auxiliary fundamental solution, source reconstruction, strict nonaffinity and affine gap, including fixed complex slopes. H supplies the full height isometry, derivative-range theorem, quadrature, local representative and orthogonal decomposition, and its strict overlap/source/clock results. In particular $\mu<T<3\mu$ and $1+b[p]<\overline D<1+3b[p]$. E supplies the strong tails, slope, local derivative bridge and positive compact residual; §§3–4 and 7 above check each such ingredient used here. A supplies actual solvability and microscopic disappearance, and A10.2/A11.1/A12.1 supply weak-zero/Coulomb equivalence and the matching coefficient and full-mass positive-branch profile.
+R supplies coefficient multipliers, the homogeneous gap and Riesz response, recovery, the full-domain lower estimate, matching energy and conditional branches, canonical normalization, and the exact ratio/admission/negative-occurrence results. N supplies the identical-heat auxiliary fundamental solution, source reconstruction, strict nonaffinity and affine gap, including fixed complex slopes. H supplies the full height isometry, derivative-range theorem, quadrature, local representative and orthogonal decomposition, and its strict overlap/source/clock results. In particular $\mu<T<3\mu$ and $1+b[p]<\overline D<1+3b[p]$. E supplies the strong tails, slope, local derivative bridge and positive compact residual; §§3–4 and 7 above check each such ingredient used here. A supplies actual solvability and microscopic disappearance, and A10.2/A11.1/A12.1 supply weak-zero/Coulomb equivalence and the matching coefficient and full-mass positive-branch profile. A13.2/A13.3 supply the explicit reference lower amplitude, A14.2 the finite-native actual core-charge energy comparison, A15.1 the strict core margin, and A15.2 the same-sequence three-way Coulomb energy/weak-zero/full-mass-orbit equivalence. A16 retains the conditional analytic and unresolved selection scopes, including L Lemma 41.2's parameter conditions. These are existing actual-state credit, independent of the exterior response bound.
 
 The substantive additional deduction is the full exterior-class upper bound (6.2), with the explicit constant (5.3) obtained from the exact two-sided horizontal forcing norm. Combining it with the credited lower witness proves the sharp power. H's decomposition and E's strict escape are reused, not counted again as new results. Haar scaling, convolution, compact distributional testing, Riesz representation, density, phase integration by parts, Hardy, Cauchy–Schwarz, Hilbert-space projection and elementary ODEs are mature intermediate tools. The underlying heat, localization, hypoellipticity and convolution suppliers retain their supplied conditional scopes, as do upstream analytic and completely positive realization antecedents. No external reauthentication, numerical validation, Lean/kernel/frozen certification or worldwide novelty/absence claim is made. Author identity, publication and prior verdicts are not mathematical premises.
 
