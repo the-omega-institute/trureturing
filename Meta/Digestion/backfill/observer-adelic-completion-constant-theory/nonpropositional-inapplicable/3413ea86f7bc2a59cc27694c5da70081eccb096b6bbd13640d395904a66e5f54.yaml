@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3413ea86f7bc2a59cc27694c5da70081eccb096b6bbd13640d395904a66e5f54
+  normalized_sha256: sha256:3413ea86f7bc2a59cc27694c5da70081eccb096b6bbd13640d395904a66e5f54
+cas_ref: sha256:3413ea86f7bc2a59cc27694c5da70081eccb096b6bbd13640d395904a66e5f54
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该项是同一证书比较列表的名词续项“缺陷”，承接前后字段说明，不增加独立命题。
+    previous_atom_id: c953ec9ff3bc4a6ab64b5e19a94df79cbf0ea7c78a597e3898a74f9073daba5d
+    next_atom_id: 67df7419dd0235aeb87c63b74df3fd9959bbdaead9d402cbdab098075b106a8a

@@ -1,0 +1,27 @@
+**Proposition 8.2 (arbitrary block potentials need not factor by
+constructor).** The potential in (CBN.25) cannot in general be replaced
+by a product of unary and binary potentials on its actual constructor
+coordinates, even on a fixed actual shape.
+
+Proof. Use the eight actual $u_{a,b,c}\in S_3$ of (CBN.24). Give a tree
+weight two when $a\mathbin\oplus b\mathbin\oplus c=0$, and weight
+one otherwise. Only the three constructor coordinates $LL,LR,RL$
+vary. Any unary or binary factor on constructor coordinates therefore
+depends on at most two of these bits. Every assignment to two bits
+occurs once among the four even-parity trees and once among the four
+odd-parity trees. A unary assignment occurs twice in each; a constant
+occurs four times in each. Thus the product of any one such factor's
+values over the even-parity trees equals its product over the odd-parity
+trees. The same equality holds for any product of these factors.
+
+For the specified weight the corresponding products are $2^4=16$ and
+$1$, a contradiction. All weights are positive, so a putative
+nonnegative factorization has no zero on any argument attained by these
+eight trees; zeros elsewhere cannot avoid this contradiction. Extend
+the weight by one to all remaining canonical states. A factorization
+on $S_3$ would restrict to the excluded factorization on these eight
+trees. Thus even binary compilation of the native indicator constraints
+does not binary-factor an arbitrary original block mass. Exact weighted
+separator calculations require the ownership and scopes in Theorem 6.2.
+$\square$
+

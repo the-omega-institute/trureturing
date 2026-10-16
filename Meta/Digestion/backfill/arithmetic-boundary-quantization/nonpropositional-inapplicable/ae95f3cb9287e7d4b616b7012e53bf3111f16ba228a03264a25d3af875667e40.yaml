@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40
+  normalized_sha256: sha256:ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40
+cas_ref: sha256:ae95f3cb9287e7d4b616b7012e53bf3111f16ba228a03264a25d3af875667e40
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**25.18 证明附引（附 25.2–25.15）：经典方法归属。** 短区间定理、经典分数背包/弱对偶、对数级数及范数不等式按各自来源使用,本节组合是纸面推导,不声称文献穷尽。…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: f997dd3619c188b83af714ffd2b7d80e70039afd2d0e80180009b714318a4cee
+    next_atom_id: c0f02a1d0dc24a51fbd7ee626dd60b030f96d8bb74b96584072a7f54fc1d2a3f

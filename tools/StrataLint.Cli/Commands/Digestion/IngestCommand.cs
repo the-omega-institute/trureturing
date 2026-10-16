@@ -38,8 +38,11 @@ internal static partial class IngestCommand
                 + string.Join(", ", removed.Order(StringComparer.Ordinal)));
         }
 
-        foreach (var (sourceId, replacementSource) in replacementSources)
+        foreach (var (sourceId, proposedSource) in replacementSources)
         {
+            var replacementSource = currentSources.TryGetValue(sourceId, out var existingSource)
+                ? proposedSource with { DefaultDispatch = existingSource.DefaultDispatch }
+                : proposedSource;
             if (currentSources.TryGetValue(sourceId, out var currentSource)
                 && SourceMetadataEquals(currentSource, replacementSource))
             {
@@ -112,7 +115,8 @@ internal static partial class IngestCommand
         && current.GenreRegistryCheck.UnregisteredGenres.SequenceEqual(
             replacement.GenreRegistryCheck.UnregisteredGenres,
             StringComparer.Ordinal)
-        && current.AcknowledgedStale.SequenceEqual(replacement.AcknowledgedStale);
+        && current.AcknowledgedStale.SequenceEqual(replacement.AcknowledgedStale)
+        && current.DefaultDispatch == replacement.DefaultDispatch;
 
     // Indexes every ledger path by its source directory and atom file name, so
     // each atom's existing path is one probe instead of a scan of the snapshot.

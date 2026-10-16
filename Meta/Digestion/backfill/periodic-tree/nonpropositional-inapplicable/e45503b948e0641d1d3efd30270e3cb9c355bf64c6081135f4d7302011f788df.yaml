@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e45503b948e0641d1d3efd30270e3cb9c355bf64c6081135f4d7302011f788df
+  normalized_sha256: sha256:e45503b948e0641d1d3efd30270e3cb9c355bf64c6081135f4d7302011f788df
+cas_ref: sha256:e45503b948e0641d1d3efd30270e3cb9c355bf64c6081135f4d7302011f788df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「R.11 首次回归深度」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 21d237fbf78473f7b4a96e32aeedc374af7b36587d9c9b657ff261d01bad3c30
+    next_atom_id: 6c9cd619ab1a2f9d36d8870c2b276340ab6a8a145ffbffd77df82d4332a897a6

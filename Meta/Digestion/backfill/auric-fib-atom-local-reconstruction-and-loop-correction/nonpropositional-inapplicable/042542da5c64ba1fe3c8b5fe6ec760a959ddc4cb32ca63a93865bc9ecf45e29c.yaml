@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:042542da5c64ba1fe3c8b5fe6ec760a959ddc4cb32ca63a93865bc9ecf45e29c
+  normalized_sha256: sha256:042542da5c64ba1fe3c8b5fe6ec760a959ddc4cb32ca63a93865bc9ecf45e29c
+cas_ref: sha256:042542da5c64ba1fe3c8b5fe6ec760a959ddc4cb32ca63a93865bc9ecf45e29c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section heading only: it names Theorem 2.2 and contains no independent proposition, assumptions, formula, or conclusion. The immediately following claim atom carries the existence and uniqueness assertion.'
+    previous_atom_id: 38f3e9f4b25f6a737ece1c42292289fdb838356273c125dcdf93bd0509fa0cd6
+    next_atom_id: cfbce1b978068f50186aefe89103ba22ee78aa293215b7e387a32a0cdd604d06

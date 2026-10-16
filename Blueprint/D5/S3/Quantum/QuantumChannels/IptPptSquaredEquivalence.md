@@ -184,7 +184,31 @@ $$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \fo
 
 Every positive amplified input has separable output under a map with finite positive measure-and-prepare form. Positivity of each weighted matrix follows from a rank-one decomposition of the measurement matrix and positive congruence of the input; tensor products with the positive preparations then form a finite separable sum.
 
-**Theorem 1.16 (The three conjectures are equivalent).**
+**Theorem 1.16 (Composition preserves complete positivity).**
+
+$$\forall K \in \operatorname{Type},\; [\operatorname{RCLike}\left(K\right)] \forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall p \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(p\right), \operatorname{Fin}\left(p\right), K\right),\; \forall Psi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), K\right) \to_{l[K]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), K\right),\; (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Phi\right)) \Rightarrow ((\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Psi\right)) \Rightarrow (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left((Phi) \circ_{l} (Psi)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.cp_comp` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The composition of completely positive linear matrix maps is completely positive, over every RCLike field and all finite dimensions.
+
+**Theorem 1.17 (Double transposition preserves complete positivity).**
+
+$$\forall n \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall Phi \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right) \to_{l[\mathbb{C}]} \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{C}\right),\; (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left(Phi\right)) \Rightarrow (\operatorname{MatrixMap}.\operatorname{IsCompletelyPositive}\left((\operatorname{LinearEquiv}.\operatorname{toLinearMap}\left(\operatorname{Matrix}.\operatorname{transposeLinearEquiv}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(m\right), \mathbb{C}, \mathbb{C}\right)\right)) \circ_{l} ((Phi) \circ_{l} (\operatorname{LinearEquiv}.\operatorname{toLinearMap}\left(\operatorname{Matrix}.\operatorname{transposeLinearEquiv}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}, \mathbb{C}\right)\right)))\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.cp_double_tau` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every completely positive complex-linear matrix map, transposing its input and output gives a completely positive map. Input and output dimensions may differ.
+
+**Theorem 1.18 (The three conjectures are equivalent).**
 
 $$(PPT2C \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{C}\right))) \land (\operatorname{IPT2}\left(\mathbb{C}\right) \Leftrightarrow (\operatorname{IPT2}\left(\mathbb{R}\right)))$$
 
@@ -216,6 +240,8 @@ IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.SEP`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.choi_psd_of_cp`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.claim`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.cp_comp`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.cp_double_tau`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.prepare_eb`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.ptFirst`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence.result`

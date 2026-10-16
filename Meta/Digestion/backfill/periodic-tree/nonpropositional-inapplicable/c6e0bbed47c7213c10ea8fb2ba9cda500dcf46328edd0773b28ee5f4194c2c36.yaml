@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6e0bbed47c7213c10ea8fb2ba9cda500dcf46328edd0773b28ee5f4194c2c36
+  normalized_sha256: sha256:c6e0bbed47c7213c10ea8fb2ba9cda500dcf46328edd0773b28ee5f4194c2c36
+cas_ref: sha256:c6e0bbed47c7213c10ea8fb2ba9cda500dcf46328edd0773b28ee5f4194c2c36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「JP.5 Benfield–Lippard 猜想 6.3 的最终周期分类」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: 064868474af78322c72b70342db30badbb1f3c66fd35fd01e458c29421981ca3
+    next_atom_id: 8fd565bd5d2738ce2dfd2d0d03e288f22d3b6065c6ea155142e537936bbd53c4

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69d9f0c8040fae4fb7491fcff5200e66e979215f59fb2ecfad2561d0d792aecf
+  normalized_sha256: sha256:69d9f0c8040fae4fb7491fcff5200e66e979215f59fb2ecfad2561d0d792aecf
+cas_ref: sha256:69d9f0c8040fae4fb7491fcff5200e66e979215f59fb2ecfad2561d0d792aecf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 8.1（带记录的内部策略）仅规定模型数据、记号或术语的使用条件，不另断言所定义对象的性质。
+    previous_atom_id: 23ffd1e879780e242ca22d8fff6d4d69c073a0f9afd09ed2f59df03c4bc6990b
+    next_atom_id: 7b11eac12e9845f982955c364e8fdbea2498693525f5afb64365c8e1723ea0ed

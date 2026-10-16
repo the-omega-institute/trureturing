@@ -7,6 +7,7 @@
    digest: A finite concrete quadratic moment constructs the genuine inverse-square-root HS extension and controls the original trace. -/
 
 import D5.S3.Quantum.Analysis.TraceClass.GeneralProduct
+import D5.S3.Quantum.Analysis.TraceClass.ColumnSynthesis
 import Mathlib.LinearAlgebra.LinearPMap
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Analysis.Normed.Group.InfiniteSum
@@ -41,43 +42,7 @@ private theorem exists_hilbertSchmidt_of_square_summable_columns
       (∀ i, A (e i) = v i) ∧ IsHilbertSchmidt A ∧
       (∑' i : w, ‖A (e i)‖ ^ 2) = ∑' i : w, ‖v i‖ ^ 2 ∧
       ‖A‖ ≤ Real.sqrt (∑' i : w, ‖v i‖ ^ 2) := by
-  classical
-  have hprod (x : H) : Summable (fun i : w => ‖⟪e i, x⟫_ℂ‖ * ‖v i‖) :=
-    summable_norm_mul_of_square_sums _ _ (hasSum_norm_sq_inner_basis e x).summable hv
-      (fun _ => norm_nonneg _) (fun _ => norm_nonneg _)
-  have hsum (x : H) : Summable (fun i : w => ⟪e i, x⟫_ℂ • v i) := by
-    apply Summable.of_norm
-    simpa only [norm_smul] using hprod x
-  let L : H →ₗ[ℂ] H :=
-    { toFun := fun x => ∑' i : w, ⟪e i, x⟫_ℂ • v i
-      map_add' := by
-        intro x y
-        simp only [inner_add_right, add_smul]
-        exact (hsum x).tsum_add (hsum y)
-      map_smul' := by
-        intro c x
-        simp only [inner_smul_right, mul_smul]
-        exact (hsum x).tsum_const_smul c }
-  have hbound (x : H) : ‖L x‖ ≤ Real.sqrt (∑' i : w, ‖v i‖ ^ 2) * ‖x‖ := by
-    calc
-      ‖L x‖ ≤ ∑' i : w, ‖⟪e i, x⟫_ℂ • v i‖ := norm_tsum_le_tsum_norm (by simpa only [norm_smul] using hprod x)
-      _ = ∑' i : w, ‖⟪e i, x⟫_ℂ‖ * ‖v i‖ := by simp only [norm_smul]
-      _ ≤ Real.sqrt (∑' i : w, ‖⟪e i, x⟫_ℂ‖ ^ 2) *
-          Real.sqrt (∑' i : w, ‖v i‖ ^ 2) :=
-        tsum_mul_le_sqrt_mul_sqrt (hasSum_norm_sq_inner_basis e x).summable hv
-          (fun _ => norm_nonneg _) (fun _ => norm_nonneg _)
-      _ = Real.sqrt (∑' i : w, ‖v i‖ ^ 2) * ‖x‖ := by
-        rw [(hasSum_norm_sq_inner_basis e x).tsum_eq, Real.sqrt_sq (norm_nonneg x), mul_comm]
-  let A := L.mkContinuous (Real.sqrt (∑' i : w, ‖v i‖ ^ 2)) hbound
-  have hcol (i : w) : A (e i) = v i := by
-    change (∑' j : w, ⟪e j, e i⟫_ℂ • v j) = v i
-    simp only [orthonormal_iff_ite.mp e.orthonormal, ite_smul, one_smul, zero_smul]
-    simp
-  refine ⟨A, hcol, ⟨w, e, ?_⟩, ?_, ?_⟩
-  · simpa only [hcol] using hv
-  · simp only [hcol]
-  · exact L.mkContinuous_norm_le (Real.sqrt_nonneg _) hbound
-
+  exact HilbertSchmidt.exists_hilbertSchmidt_of_square_summable_columns e v hv
 
 private theorem sqrt_apply_eigenvector (σ : H →L[ℂ] H) (hσ : 0 ≤ σ)
     (x : H) (s : ℝ) (hs : 0 < s) (he : σ x = (s : ℂ) • x) :
@@ -117,11 +82,10 @@ private theorem sqrt_apply_eigenvector (σ : H →L[ℂ] H) (hσ : 0 ≤ σ)
 
 private theorem eq_of_basis_columns {w : Set H} (e : HilbertBasis w ℂ H)
     (A B : H →L[ℂ] H) (h : ∀ i, A (e i) = B (e i)) : A = B := by
-  ext x
-  have ha := A.hasSum (e.hasSum_repr x)
-  have hb := B.hasSum (e.hasSum_repr x)
-  simp only [map_smul, h] at ha hb
-  exact ha.unique hb
+  apply ContinuousLinearMap.ext_on
+    (Submodule.dense_iff_topologicalClosure_eq_top.mpr e.dense_span)
+  rintro _ ⟨i, rfl⟩
+  exact h i
 
 private theorem inverse_sqrt_domain_and_extension {w : Set H}
     (e : HilbertBasis w ℂ H) (σ ρ A : H →L[ℂ] H) (hσ : 0 ≤ σ)

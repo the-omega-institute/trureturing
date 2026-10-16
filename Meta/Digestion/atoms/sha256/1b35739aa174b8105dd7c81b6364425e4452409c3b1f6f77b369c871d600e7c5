@@ -1,0 +1,4 @@
+**Corollary 2.2 (strict rational fixed-weight certificates).** For rational $w\ge0$ and rational $C>\Omega_d(w)$, every nonempty type has complete strictly positive normalized rational kernels at cap $C$. Conversely kernels at cap $C>0$ imply $\Omega_d(w)\le C$.
+
+Proof. For each nonempty type choose a positive array whose pointwise maximum in (NWO.8) is strictly below $C$. Approximate its finitely many normalized rows by positive rational normalized rows. Strict positivity and all finitely many strict inequalities survive. There are finitely many types, so this supplies all arrays at the same cap. Conversely the pointwise inequalities bound every objective by $\log_2C$ using conditional cross entropy, or directly by (NWO.8). At $w=0$ the empty witness suffices. No zero weight is logged: relations are constructed from the exact support first. $\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b7629942190fb0857808484fcd6fc50ceec52b49d298d9f803bc0f241348d047
+  normalized_sha256: sha256:b7629942190fb0857808484fcd6fc50ceec52b49d298d9f803bc0f241348d047
+cas_ref: sha256:b7629942190fb0857808484fcd6fc50ceec52b49d298d9f803bc0f241348d047
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/NativeRepeatedPartnerControllers.matching_controllers
+    target_statement_id: sha256:bf06f3739d21128bacd4bc99bc685d14420d5048ea36db8a616e5a6b473b1097
+receipts:
+  unresolved_subitems: []

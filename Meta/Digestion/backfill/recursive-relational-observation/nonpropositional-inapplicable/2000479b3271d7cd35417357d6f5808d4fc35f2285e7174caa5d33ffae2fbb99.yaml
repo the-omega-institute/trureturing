@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2000479b3271d7cd35417357d6f5808d4fc35f2285e7174caa5d33ffae2fbb99
+  normalized_sha256: sha256:2000479b3271d7cd35417357d6f5808d4fc35f2285e7174caa5d33ffae2fbb99
+cas_ref: sha256:2000479b3271d7cd35417357d6f5808d4fc35f2285e7174caa5d33ffae2fbb99
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 46.0 只固定阈值周期完成、坐标及运算约定，构造性质另由后项定理承担。
+    previous_atom_id: 76458d302ce8df7e1e4c302d30221be6e0865c80b1e78dc13f70d3651f9e10d6
+    next_atom_id: 64ce0996cddfff4484e2bda988c95dde83cc3c521909e0e4307da896ad763e55

@@ -77,4 +77,5 @@ Take r=3, m=4 and s=1. The bases are I, H/√8, diag(a)H/√8 and diag(b)H/√8,
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/FourMUBBoundEntanglementRefutation.witnessGamma`
-- Dependency: [D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction](ChoiKiemKye/ConstructionReduction.md)
+- Dependency: [D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction](../Divergence/ConditionalHockeyStickOrthogonalReduction.md)
+- Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](StructuredNegativityCoincidenceRefutation.md)

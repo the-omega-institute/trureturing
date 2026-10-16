@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5caa87e2a9310b8220111e44ea4e20e99d6364955db97fb99ac44d2149a16953
+  normalized_sha256: sha256:5caa87e2a9310b8220111e44ea4e20e99d6364955db97fb99ac44d2149a16953
+cas_ref: sha256:5caa87e2a9310b8220111e44ea4e20e99d6364955db97fb99ac44d2149a16953
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只论证前述 ZFC 与遗传有限编码构造。
+    previous_atom_id: 4ad07580718b255dcd73af04f381f7598cefdb494046962a87f8bb2140e05829
+    next_atom_id: 52bb36894cb7e666288c684a74dff7746d818ec2b277ba17418b626a6e13bf78

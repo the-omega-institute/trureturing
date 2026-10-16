@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4de37855183948a9a2482d514b661d020a6046e7eaae656bb011c72c822141d3
+  normalized_sha256: sha256:4de37855183948a9a2482d514b661d020a6046e7eaae656bb011c72c822141d3
+cas_ref: sha256:4de37855183948a9a2482d514b661d020a6046e7eaae656bb011c72c822141d3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 448.1（同一未知位上的两个机制）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 8ba62bd0bb70464529b248ae6f22e219ecc395c1779714eba707ec203584f9ea
+    next_atom_id: 81c5220e3e01ad22e63bed01c0dc8ed80bc75b8f87ac4b873fd7e936dfd4078d

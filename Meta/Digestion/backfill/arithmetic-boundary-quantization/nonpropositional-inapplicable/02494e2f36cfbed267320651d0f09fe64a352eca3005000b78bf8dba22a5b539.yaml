@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02494e2f36cfbed267320651d0f09fe64a352eca3005000b78bf8dba22a5b539
+  normalized_sha256: sha256:02494e2f36cfbed267320651d0f09fe64a352eca3005000b78bf8dba22a5b539
+cas_ref: sha256:02494e2f36cfbed267320651d0f09fe64a352eca3005000b78bf8dba22a5b539
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明附引或书目定位（**数学引文。** QUANTUM-RH.md 的“5040 还给出一个直接的维数障碍”已明确四个普通指数及可逆编码语义。…）只给出所用来源、定位和证据地位，不提出独立数学陈述。
+    previous_atom_id: 299ca41f34e8cb5a792537fce385fb3cad57d04ad7d86690412934a69423b17e
+    next_atom_id: 2c82eb6f13bfdb3fafa4db7d8800e2c0fdcf0dcb583b5f1bb211778a32e9ad44
