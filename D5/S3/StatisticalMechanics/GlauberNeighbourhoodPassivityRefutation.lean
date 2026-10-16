@@ -203,9 +203,11 @@ private theorem glauber_stochastic (b : ℝ) :
   · intro i j
     rw [glauber.eq_1]
     simp (config := { congrConsts := false }) only [Matrix.of_apply]
-    split_ifs
-    · exact sub_nonneg.mpr (outflow_le b j)
-    · exact (edge_bounds b i j).1
+    by_cases h : i = j
+    · rw [if_pos h]
+      exact sub_nonneg.mpr (outflow_le b j)
+    · rw [if_neg h]
+      exact (edge_bounds b i j).1
   · intro j
     have hdiag : edgeWeight 3 adj energy b j j = 0 := by
       simp (config := { congrConsts := false }) only [edgeWeight.eq_1, Matrix.of_apply, if_neg (adj_regular.2.2.1 j)]
