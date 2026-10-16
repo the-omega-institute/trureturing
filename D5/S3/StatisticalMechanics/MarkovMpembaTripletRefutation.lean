@@ -376,7 +376,7 @@ private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
   have he (i : Fin 4) : Real.exp (-(beta x)*energy i) = x^(levels i) := by
     have ht : -(beta x)*energy i = (levels i : ℝ)*Real.log x := by
       simp only [beta.eq_1, energy.eq_1, Real.log_inv]
-      field_simp
+      field_simp (disch := positivity)
     rw [ht, Real.exp_nat_mul, Real.exp_log hx]
   simp only [gibbs.eq_1, GlauberRelaxationOrderRefutation.gibbs.eq_1,
     dotProduct, Fin.sum_univ_four]
@@ -384,7 +384,7 @@ private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
   norm_num [f.eq_1, g.eq_1, levels.eq_1, Matrix.cons_val_two, Matrix.cons_val_three]
   have hd : 1+x+x^2+x^64 ≠ 0 := ne_of_gt (by positivity)
   simp only [overlap.eq_1]
-  field_simp
+  field_simp (disch := positivity)
   ring
 
 private theorem temperature_order :
