@@ -33,6 +33,13 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                 "areaVertices(t) is the image of the same powerset under the ancestor-area vector."),
             Def("normalizedAreaFamily", "The normalized Euclidean family",
                 "The area vertices of T(n) are scaled by the reciprocal of choose(fib(n plus one),two)."),
+            Def("unitDirection", "Normalized independent directions",
+                "Each signed gap vector is divided by square root two."),
+            Def("directionSpan", "The direction space",
+                "The real span of the normalized gap vectors is the Euclidean direction space of the cube."),
+            Def("intrinsicCube", "The cube in its own direction space",
+                "This is the inverse image of the convex hull under x maps to areaVector(t) plus x, "
+                + "with x in directionSpan(t). Its volume is the canonical Euclidean volume on that subspace."),
             Describe.Lean(DescribeId.Create("native-area-cube"),
                 DeclarationHandle.Create(Prefix + "native_area_cube"), H("The native family, area formula and squared distances"),
                 StatementSource.FromAuthor(NativeFormula()), AssessedProvenance.FromRepo(),
@@ -46,7 +53,12 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                         + "An arbitrary context with equal-length fillings has the same exterior coordinate lists. "
                         + "Adding positions one at a time gives the stated sum of signed gap vectors. "
                         + "Distinct positions occupy disjoint gap pairs. Squared Euclidean distance is twice "
-                        + "the cardinality of the symmetric difference of the choices, and total area is preserved."))),
+                        + "the cardinality of the symmetric difference of the choices, and total area is preserved.")),
+                    Paragraph(Text("The convex hull is the translate of the parallelepiped of the independent "
+                        + "signed gap vectors: its coefficients range independently from zero to one. "
+                        + "After division by square root two these vectors are orthonormal. "
+                        + "Their direction span has dimension fib(n minus two), every edge has length square root two, "
+                        + "and the canonical volume in that direction space is two to the power fib(n minus two) divided by two."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("normalized-cube-diameter"),
                 DeclarationHandle.Create(Prefix + "normalized_cube_diameter"),
@@ -102,7 +114,33 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                 And(depth, And(affine, And(total, And(coordinateLength, distance))))))));
         Formula injective = Call("InjectiveOn", Call("variant", t), Call("powerset", positions));
         Formula count = EqOf(Call("card", positions), Call("fib", Seq(n, Minus, D(2))));
-        return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n), And(count, And(injective, choices)))));
+        Formula q = V("q"), offset = Call("offset", t, p), offsetQ = Call("offset", t, q);
+        Formula literal = All("p", Op("Address"), Call("Iff", Call("mem", p, positions),
+            EqOf(Call("subtree", p, t), Call("some", Op("defectB")))));
+        Formula valid = All("p", Op("Address"), Imp(Call("mem", p, positions),
+            And(Seq(offset, Lt, Seq(m, Minus, D(1))),
+                Seq(offset, Plus, D(1), Lt, Seq(m, Minus, D(1))))));
+        Formula separated = All("p", Op("Address"), Imp(Call("mem", p, positions),
+            All("q", Op("Address"), Imp(Call("mem", q, positions),
+                Imp(Seq(p, Sp, Neq, Sp, q), Seq(Par(Seq(offset, Plus, D(3), Le, offsetQ)),
+                    Sp, Lor, Sp, Par(Seq(offsetQ, Plus, D(3), Le, offset))))))));
+        Formula directions = Seq(p, Colon, positions, Sp, Mapsto, Sp,
+            Call("gapVector", m, Call("offset", t, p)));
+        Formula hull = EqOf(Call("convexHull", Seq(Mathbb, Grp(V("R"))), Call("areaVertices", t)),
+            Seq(Call("singleton", Call("areaVector", m, t)), Plus, Call("parallelepiped", directions)));
+        Formula orthonormal = Call("Orthonormal", Seq(Mathbb, Grp(V("R"))), Call("unitDirection", t));
+        Formula span = EqOf(Call("directionSpan", t),
+            Call("span", Seq(Mathbb, Grp(V("R"))), Call("range", directions)));
+        Formula dimension = EqOf(Call("finrank", Seq(Mathbb, Grp(V("R"))), Call("directionSpan", t)),
+            Call("fib", Seq(n, Minus, D(2))));
+        Formula edges = All("p", positions, EqOf(Call("norm", Call("gapVector", m, Call("offset", t, p))),
+            Call("sqrt", D(2))));
+        Formula volume = EqOf(Call("volume", Call("intrinsicCube", t)), Call("ofReal",
+            new Formula.Superscript(D(2), Frac(Call("fib", Seq(n, Minus, D(2))), D(2)))));
+        Formula geometry = And(literal, And(valid, And(separated, And(hull, And(orthonormal,
+            And(span, And(dimension, And(edges, volume))))))));
+        return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n),
+            And(count, And(injective, And(choices, geometry))))));
     }
 
     private static Formula DiameterFormula()
@@ -117,9 +155,14 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
             new Formula.Superscript(D(2), k));
         Formula endpoints = And(EqOf(Call("depth", Call("variant", Call("T", n), Emptyset)), n),
             EqOf(Call("depth", Call("variant", Call("T", n), Call("positions", Call("T", n)))), D(0)));
+        Formula scale = new Formula.Superscript(Call("choose", m, D(2)), Seq(Minus, D(1)));
+        Formula emptyVector = Seq(scale, Times, Call("areaVector", m, Call("variant", Call("T", n), Emptyset)));
+        Formula fullVector = Seq(scale, Times, Call("areaVector", m,
+            Call("variant", Call("T", n), Call("positions", Call("T", n)))));
+        Formula extremal = EqOf(Call("norm", Seq(emptyVector, Minus, fullVector)), diameter);
         Formula sequence = Seq(n, Sp, Mapsto, Sp, diameter);
         Formula decay = Seq(n, Sp, Mapsto, Sp, rate);
-        return Disp(And(All("n", Nat(), Imp(Seq(D(3), Le, n), And(exact, And(count, endpoints)))),
+        return Disp(And(All("n", Nat(), Imp(Seq(D(3), Le, n), And(exact, And(count, And(endpoints, extremal))))),
             And(Call("IsBigO", Op("atTop"), sequence, decay),
                 Call("Tendsto", sequence, Op("atTop"), Call("nhds", D(0))))));
     }

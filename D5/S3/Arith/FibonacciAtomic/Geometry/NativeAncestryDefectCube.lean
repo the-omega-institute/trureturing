@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Equal-length context substitutions preserve a common coordinate exterior while the three-leaf defect swaps its two internal areas. -/
+   digest: Native Fibonacci defects form orthogonal cubes with exact intrinsic volume. -/
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.AncestorAreaInterval
 import D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity
@@ -15,6 +15,7 @@ import Mathlib.Analysis.Normed.Module.Ball.Pointwise
 import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Data.Nat.Choose.Cast
+import Mathlib.Analysis.Convex.Combination
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -213,7 +214,8 @@ private theorem containing_defect_not_image (t : Source) (p : Address)
     | of c => simp [subtree] at hp
     | mul l r =>
       intro h
-      rcases (SourceCoordinates.IntrinsicSubstitutionCoordinates.pair_image l r).mp h with h | ⟨hl,hr⟩
+      rcases (SourceCoordinates.IntrinsicSubstitutionCoordinates.pair_image l r).mp h with
+        h | ⟨hl,hr⟩
       · obtain ⟨rfl,rfl⟩ := h
         cases b <;> cases p <;> simp [subtree, defectD] at hp
       · cases b with
@@ -226,7 +228,8 @@ private theorem variant_depth (t : Source) (A : Finset Address)
   have hat := fill_at t (fun p => decide (p ∈ A)) p (hA hp)
   have hsub : subtree p (variant t A) = some defectD := by simpa [variant, hp] using hat
   have hn := containing_defect_not_image _ _ hsub
-  have h := (SourceCoordinates.IntrinsicSubstitutionCoordinates.intrinsic_coordinates (variant t A)).1 1
+  have h := (SourceCoordinates.IntrinsicSubstitutionCoordinates.intrinsic_coordinates
+    (variant t A)).1 1
   have hz : ¬ 1 ≤ depth (variant t A) := by
     intro hh
     obtain ⟨x,hx⟩ := h.mpr hh
@@ -468,7 +471,7 @@ private theorem separated_offsets (t : Source) (p q : Address)
             simp only [offset]
             omega
 
-private theorem gap_single (m j : ℕ) (hj : j+1 < m-1) :
+private theorem gap_single (m j : ℕ) (hj : j + 1 < m - 1) :
     gapVector m j = EuclideanSpace.single ⟨j,by omega⟩ 1 -
       EuclideanSpace.single ⟨j+1,hj⟩ 1 := by
   ext i
@@ -488,8 +491,7 @@ private theorem direction_inner (t : Source) (p q : Address)
     have h₁ : offset t p ≠ offset t q := by omega
     have h₂ : offset t p ≠ offset t q+1 := by omega
     have h₃ : offset t p+1 ≠ offset t q := by omega
-    have h₄ : offset t p+1 ≠ offset t q+1 := by omega
-    simp [gapVector,h,h₁,h₂,h₃,h₄]
+    simp [gapVector,h,h₁,h₂,h₃]
 
 private theorem inner_direction_sums (t : Source) (A B : Finset Address)
     (hA : A ⊆ positions t) (hB : B ⊆ positions t) :
@@ -505,7 +507,7 @@ private theorem inner_direction_sums (t : Source) (A B : Finset Address)
         apply Finset.sum_congr rfl
         intro q hq
         exact direction_inner t p q (hA hp) (hB hq)
-      _ = _ := by simp [eq_comm]
+      _ = _ := by simp
   rw [Finset.sum_congr rfl hp, ← Finset.sum_filter]
   simp [Finset.filter_mem_eq_inter, mul_comm]
 
@@ -576,13 +578,159 @@ private theorem sourceFamily_card (t : Source) : (sourceFamily t).card = 2^(posi
   exact congrArg Subtype.val (variant_injective t
     (a₁ := ⟨A,Finset.mem_powerset.mp hA⟩) (a₂ := ⟨B,Finset.mem_powerset.mp hB⟩) h)
 
+private theorem vertices_eq (t : Source) :
+    (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) =
+      {areaVector t.length t} +
+        ∑ p ∈ positions t, ({0, gapVector t.length (offset t p)} : Set _) := by
+  classical
+  ext x
+  constructor
+  · intro hx
+    obtain ⟨A,hA,rfl⟩ := Finset.mem_image.mp hx
+    have hAp := Finset.mem_powerset.mp hA
+    apply Set.mem_add.mpr
+    refine ⟨areaVector t.length t, by simp,
+      ∑ p ∈ A, gapVector t.length (offset t p), ?_, (affine_formula t A hAp _).symm⟩
+    apply (Set.mem_finsetSum _ _ _).mpr
+    refine ⟨fun p => if p ∈ A then gapVector t.length (offset t p) else 0, ?_, ?_⟩
+    · intro p hp
+      dsimp only
+      split_ifs <;> simp
+    · rw [← Finset.sum_filter]
+      congr 1
+      ext p
+      simp only [Finset.mem_filter]
+      exact ⟨fun h => h.2, fun h => ⟨hAp h,h⟩⟩
+  · intro hx
+    obtain ⟨b,hb,y,hy,hxy⟩ := Set.mem_add.mp hx
+    obtain rfl := Set.mem_singleton_iff.mp hb
+    obtain ⟨g,hg,rfl⟩ := (Set.mem_finsetSum _ _ _).mp hy
+    let A := (positions t).filter (fun p => g p = gapVector t.length (offset t p))
+    have hA : A ⊆ positions t := Finset.filter_subset _ _
+    have he : ∑ p ∈ positions t, g p = ∑ p ∈ A, gapVector t.length (offset t p) := by
+      rw [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro p hp
+      by_cases h : g p = gapVector t.length (offset t p)
+      · simp [h]
+      · have hz : g p = 0 := by simpa only [Set.mem_insert_iff,
+          Set.mem_singleton_iff, or_false, h] using hg hp
+        simp [hz]
+    apply Finset.mem_image.mpr
+    refine ⟨A, Finset.mem_powerset.mpr hA, ?_⟩
+    rw [affine_formula t A hA _]
+    rwa [he] at hxy
+
+private theorem cube_hull (t : Source) :
+    convexHull ℝ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) =
+      {areaVector t.length t} +
+        parallelepiped (fun p : positions t => gapVector t.length (offset t p.val)) := by
+  rw [vertices_eq, convexHull_add, convexHull_singleton, parallelepiped_eq_convexHull]
+  rw [Finset.sum_coe_sort (positions t)
+    (fun p : Address => ({0, gapVector t.length (offset t p)} : Set _))]
+
+/-- The unit vectors in the independent native gap directions. -/
+def unitDirection (t : Source) (p : positions t) : EuclideanSpace ℝ (Fin (t.length-1)) :=
+  (Real.sqrt 2)⁻¹ • gapVector t.length (offset t p.val)
+
+/-- The Euclidean direction space of the native area cube. -/
+def directionSpan (t : Source) := Submodule.span ℝ (Set.range (unitDirection t))
+
+private theorem unit_orthonormal (t : Source) : Orthonormal ℝ (unitDirection t) := by
+  classical
+  rw [orthonormal_iff_ite]
+  intro p q
+  simp only [unitDirection, real_inner_smul_left, real_inner_smul_right]
+  rw [direction_inner t p.val q.val p.property q.property]
+  by_cases h : p = q
+  · subst q
+    simp only [ite_true]
+    have hsq : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+    have hp : Real.sqrt 2 ≠ 0 := by positivity
+    field_simp
+    nlinarith
+  · have hpq : p.val ≠ q.val := fun he => h (Subtype.ext he)
+    simp [h,hpq]
+
+private theorem direction_dimension (t : Source) :
+    Module.finrank ℝ (directionSpan t) = (positions t).card := by
+  unfold directionSpan
+  rw [finrank_span_eq_card (unit_orthonormal t).linearIndependent, Fintype.card_coe]
+
+private theorem direction_span_eq (t : Source) : directionSpan t =
+    Submodule.span ℝ (Set.range (fun p : positions t =>
+      gapVector t.length (offset t p.val))) := by
+  unfold directionSpan unitDirection
+  rw [Set.range_smul, Submodule.span_smul_eq_of_isUnit]
+  exact isUnit_iff_ne_zero.mpr (by positivity)
+
+/-- The convex cube translated to its own Euclidean direction space. -/
+def intrinsicCube (t : Source) : Set (directionSpan t) :=
+  {x | areaVector t.length t + (x : EuclideanSpace ℝ (Fin (t.length-1))) ∈
+    convexHull ℝ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1))))}
+
+private theorem intrinsic_volume (t : Source) :
+    MeasureTheory.volume (intrinsicCube t) =
+      ENNReal.ofReal ((Real.sqrt 2) ^ (positions t).card) := by
+  classical
+  let B : Module.Basis (positions t) ℝ (directionSpan t) :=
+    Module.Basis.span (unit_orthonormal t).linearIndependent
+  have hco (p : positions t) : (B p : EuclideanSpace ℝ (Fin (t.length-1))) =
+      unitDirection t p := Module.Basis.coe_span_apply _ p
+  have hB : Orthonormal ℝ B := by
+    rw [orthonormal_iff_ite]
+    intro p q
+    change inner ℝ (B p : EuclideanSpace ℝ (Fin (t.length-1))) (B q) = _
+    rw [hco,hco]
+    exact orthonormal_iff_ite.mp (unit_orthonormal t) p q
+  let b := B.toOrthonormalBasis hB
+  have hb (p : positions t) : (b p : EuclideanSpace ℝ (Fin (t.length-1))) =
+      unitDirection t p := by
+    have he : b p = B p := congrFun (Module.Basis.coe_toOrthonormalBasis B hB) p
+    exact (congrArg Subtype.val he).trans (hco p)
+  have hd : (fun p : positions t => gapVector t.length (offset t p.val)) =
+      fun p => Real.sqrt 2 • (b p : EuclideanSpace ℝ (Fin (t.length-1))) := by
+    funext p
+    rw [hb,unitDirection,smul_smul,mul_inv_cancel₀ (by positivity : Real.sqrt 2 ≠ 0),one_smul]
+  have him : (directionSpan t).subtype '' (Real.sqrt 2 • parallelepiped b) =
+      parallelepiped (fun p : positions t => gapVector t.length (offset t p.val)) := by
+    calc
+      _ = (Real.sqrt 2 • (directionSpan t).subtype) '' parallelepiped b := by
+        rw [← Set.image_smul, ← Set.image_comp]
+        rfl
+      _ = _ := by
+        rw [image_parallelepiped, hd]
+        rfl
+  have hset : intrinsicCube t = Real.sqrt 2 • parallelepiped b := by
+    ext x
+    simp only [intrinsicCube, Set.mem_ofPred_eq]
+    rw [cube_hull, ← him]
+    constructor
+    · intro hx
+      obtain ⟨a,ha,y,hy,he⟩ := Set.mem_add.mp hx
+      obtain rfl := Set.mem_singleton_iff.mp ha
+      obtain ⟨z,hz,hzval⟩ := hy
+      have hzx : z = x := Subtype.ext (hzval.trans (add_left_cancel he))
+      simpa only [hzx] using hz
+    · intro hx
+      exact Set.add_mem_add (Set.mem_singleton _) ⟨x,hx,rfl⟩
+  rw [hset, MeasureTheory.Measure.addHaar_smul_of_nonneg MeasureTheory.volume
+    (Real.sqrt_nonneg 2), b.volume_parallelepiped, mul_one, direction_dimension]
+
+private theorem volume_power (k : ℕ) : (Real.sqrt 2) ^ k = (2:ℝ) ^ ((k:ℝ)/2) := by
+  rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0:ℝ) ≤ 2)]
+  congr 1
+  ring
+
 private theorem diameter_exact (t : Source) :
-    Metric.diam (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) = Real.sqrt (2 * ((positions t).card : ℝ)) := by
+    Metric.diam (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) =
+      Real.sqrt (2 * ((positions t).card : ℝ)) := by
   classical
   have mem (A : Finset Address) (hA : A ⊆ positions t) :
       areaVector t.length (variant t A) ∈ areaVertices t :=
     Finset.mem_image.mpr ⟨A,Finset.mem_powerset.mpr hA,rfl⟩
-  have upper : ∀ x ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))), ∀ y ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))),
+  have upper : ∀ x ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))),
+      ∀ y ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))),
       dist x y ≤ Real.sqrt (2 * ((positions t).card : ℝ)) := by
     intro x hx y hy
     obtain ⟨A,hA,rfl⟩ := Finset.mem_image.mp hx
@@ -615,12 +763,12 @@ private theorem diameter_exact (t : Source) :
         (areaVector t.length (variant t ∅) - areaVector t.length (variant t (positions t)))]
   rwa [he] at hl
 
-/-- The actual independent family, its exact area displacement and Euclidean distances. -/
+/-- The actual independent family and its orthogonal cube with canonical intrinsic volume. -/
 theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
     (positions (T n)).card = Nat.fib (n-2) ∧
     Function.Injective
       (fun A : {A : Finset Address // A ⊆ positions (T n)} => variant (T n) A.val) ∧
-    ∀ (A : Finset Address), A ⊆ positions (T n) →
+    (∀ (A : Finset Address), A ⊆ positions (T n) →
       wd (variant (T n) A) = wd (T n) ∧
       (variant (T n) A).length = Nat.fib (n+1) ∧
       depth (variant (T n) A) = (if A = ∅ then n else 0) ∧
@@ -632,33 +780,77 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
       (coordinates (variant (T n) A)).length = Nat.fib (n+1)-1 ∧
       ∀ B ⊆ positions (T n),
         ‖areaVector (Nat.fib (n+1)) (variant (T n) A) -
-          areaVector (Nat.fib (n+1)) (variant (T n) B)‖ ^ 2 = 2 * ((A ∆ B).card : ℝ) := by
+          areaVector (Nat.fib (n+1)) (variant (T n) B)‖ ^ 2 = 2 * ((A ∆ B).card : ℝ)) ∧
+    (∀ p, p ∈ positions (T n) ↔ subtree p (T n) = some defectB) ∧
+    (∀ p ∈ positions (T n), offset (T n) p < Nat.fib (n+1)-1 ∧
+      offset (T n) p+1 < Nat.fib (n+1)-1) ∧
+    (∀ p ∈ positions (T n), ∀ q ∈ positions (T n), p ≠ q →
+      offset (T n) p+3 ≤ offset (T n) q ∨ offset (T n) q+3 ≤ offset (T n) p) ∧
+    convexHull ℝ (areaVertices (T n) : Set (EuclideanSpace ℝ (Fin ((T n).length-1)))) =
+      {areaVector (T n).length (T n)} +
+        parallelepiped (fun p : positions (T n) =>
+          gapVector (T n).length (offset (T n) p.val)) ∧
+    Orthonormal ℝ (unitDirection (T n)) ∧
+    directionSpan (T n) = Submodule.span ℝ (Set.range (fun p : positions (T n) =>
+      gapVector (T n).length (offset (T n) p.val))) ∧
+    Module.finrank ℝ (directionSpan (T n)) = Nat.fib (n-2) ∧
+    (∀ p : positions (T n), ‖gapVector (T n).length (offset (T n) p.val)‖ = Real.sqrt 2) ∧
+    MeasureTheory.volume (intrinsicCube (T n)) =
+      ENNReal.ofReal ((2:ℝ) ^ ((Nat.fib (n-2):ℝ)/2)) := by
   obtain ⟨hc,hi,hf⟩ := native_source_family n hn
   have ht := (AncestorAreaInstability.result.1 n hn).2.1
-  refine ⟨hc,hi,?_⟩
-  intro A hA
-  obtain ⟨hw,hl,hd⟩ := hf A hA
-  refine ⟨hw,hl,hd,affine_formula _ _ hA _,?_,?_,?_⟩
-  · rw [← hl]
-    exact vector_total_area _
-  · rw [coordinate_list_length, hl]
-  · intro B hB
-    rw [← ht]
-    exact squared_distance _ _ _ hA hB
+  refine ⟨hc,hi,?_,mem_positions (T n),?_,
+    (fun p hp q hq hne => separated_offsets (T n) p q hp hq hne),cube_hull (T n),
+    unit_orthonormal (T n),direction_span_eq (T n),?_,?_,?_⟩
+  · intro A hA
+    obtain ⟨hw,hl,hd⟩ := hf A hA
+    refine ⟨hw,hl,hd,affine_formula _ _ hA _,?_,?_,?_⟩
+    · rw [← hl]
+      exact vector_total_area _
+    · rw [coordinate_list_length, hl]
+    · intro B hB
+      rw [← ht]
+      exact squared_distance _ _ _ hA hB
+  · intro p hp
+    have hb := occurrence_bound (T n) p hp
+    rw [ht] at hb
+    omega
+  · rw [direction_dimension,hc]
+  · intro p
+    have he := direction_inner (T n) p.val p.val p.property p.property
+    rw [real_inner_self_eq_norm_sq, if_pos rfl] at he
+    nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), Real.sqrt_nonneg 2,
+      norm_nonneg (gapVector (T n).length (offset (T n) p.val))]
+  · rw [intrinsic_volume,volume_power,hc]
+
+private theorem endpoint_distance (t : Source) :
+    dist (areaVector t.length (variant t ∅))
+      (areaVector t.length (variant t (positions t))) =
+        Metric.diam (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) := by
+  have he := squared_distance t ∅ (positions t) (Finset.empty_subset _) (Finset.Subset.refl _)
+  rw [show (∅ : Finset Address) ∆ positions t = positions t from bot_symmDiff _] at he
+  rw [dist_eq_norm,diameter_exact]
+  nlinarith [Real.sq_sqrt (by positivity : 0 ≤ 2*((positions t).card : ℝ)),
+    Real.sqrt_nonneg (2*((positions t).card : ℝ)), norm_nonneg
+      (areaVector t.length (variant t ∅) - areaVector t.length (variant t (positions t)))]
 
 /-- The exact diameter and the number and depth endpoints of the normalized native family. -/
 private theorem normalized_family (n : ℕ) (hn : 3 ≤ n) :
     Metric.diam (normalizedAreaFamily n) =
       Real.sqrt (2 * (Nat.fib (n-2) : ℝ)) / ((Nat.fib (n+1)).choose 2 : ℝ) ∧
     (sourceFamily (T n)).card = 2 ^ Nat.fib (n-2) ∧
-    depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0 := by
+    depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0 ∧
+    ‖((Nat.fib (n+1)).choose 2 : ℝ)⁻¹ • areaVector (T n).length (variant (T n) ∅) -
+      ((Nat.fib (n+1)).choose 2 : ℝ)⁻¹ •
+        areaVector (T n).length (variant (T n) (positions (T n)))‖ =
+      Metric.diam (normalizedAreaFamily n) := by
   have hc := (native_area_cube n hn).1
   have hs := (native_source_family n hn).2.2
   have hp : (positions (T n)).Nonempty := by
     apply Finset.card_pos.mp
     rw [hc]
     exact Nat.fib_pos.mpr (by omega)
-  refine ⟨?_,?_,?_,?_⟩
+  refine ⟨?_,?_,?_,?_,?_⟩
   · rw [normalizedAreaFamily, diam_smul₀, diameter_exact, hc]
     simp only [Real.norm_eq_abs, abs_of_nonneg (by positivity :
       0 ≤ ((Nat.fib (n+1)).choose 2 : ℝ)⁻¹)]
@@ -667,6 +859,8 @@ private theorem normalized_family (n : ℕ) (hn : 3 ≤ n) :
   · simpa only [if_true] using (hs ∅ (Finset.empty_subset _)).2.2
   · simpa only [if_neg (Finset.nonempty_iff_ne_empty.mp hp)] using
       (hs (positions (T n)) (Finset.Subset.refl _)).2.2
+  · rw [← smul_sub,norm_smul, ← dist_eq_norm,endpoint_distance,
+      normalizedAreaFamily,diam_smul₀]
 
 private theorem diameter_decay (n : ℕ) (hn : 3 ≤ n) :
     Metric.diam (normalizedAreaFamily n) ≤
@@ -719,7 +913,11 @@ theorem normalized_cube_diameter :
       Metric.diam (normalizedAreaFamily n) =
         Real.sqrt (2 * (Nat.fib (n-2) : ℝ)) / ((Nat.fib (n+1)).choose 2 : ℝ) ∧
       (sourceFamily (T n)).card = 2 ^ Nat.fib (n-2) ∧
-      depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0) ∧
+      depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0 ∧
+      ‖((Nat.fib (n+1)).choose 2 : ℝ)⁻¹ • areaVector (T n).length (variant (T n) ∅) -
+        ((Nat.fib (n+1)).choose 2 : ℝ)⁻¹ •
+          areaVector (T n).length (variant (T n) (positions (T n)))‖ =
+        Metric.diam (normalizedAreaFamily n)) ∧
     Asymptotics.IsBigO Filter.atTop (fun n => Metric.diam (normalizedAreaFamily n))
       (fun n => (Nat.fib (n+1) : ℝ) ^ (-(3/2 : ℝ))) ∧
     Filter.Tendsto (fun n => Metric.diam (normalizedAreaFamily n))
