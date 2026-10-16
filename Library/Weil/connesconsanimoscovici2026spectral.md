@@ -1225,6 +1225,70 @@ application of existing displacement/Schur methods, with no new general
 algorithm, priority or Lean-verification claim.
 
 
+### The fixed768-column family fails after trial optimization
+
+The chosen-trial obstruction leaves open whether another trial on the
+same support could succeed. The [support optimization experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/a5fec125e7ecaf443205d4c72c0cbae9b270585d/docs/reports/weil-c27)
+uses the existing square-completion comparison above to settle this
+question for the same selected modes1281–2048 and archived $W$.
+
+Take the saved complete target's positive1263-coordinate principal
+block $P$ and lift remaining Schur coordinate0 by
+$(-P^{-1}be_0,e_0)$. Round to the stored exact256-bit dyadic retained
+vector $v$, keeping all1281 coordinates and its exact mass
+$\|v\|^2\simeq2.0458788430940653$. Its saved-target quadratic remains
+below $-5.77\times10^{-31}$. This is a different direction from the
+earlier128-column witness repaired by scalar enrichment.
+
+For this fixed $v$, write
+
+$$
+Z=H_NV,\quad F=V^*H_NV,\quad
+K=Z^*WZ-F,\quad t=Z^*WC_Nv-V^*C_Nv,
+$$
+
+and $m(x)=Q(v-Vx)-\|C_Nv-Zx\|_W^2$. All finite middle rows1281–32768
+enter the weighted Gram. The same finite displacement product rule,
+with actual diagonals and overlapping selected rows, certifies
+$K\succeq I/16$ by768 positive pivots of its finite lower matrix.
+The omitted actual far Gram is positive semidefinite; the signed
+moment midpoint is not assumed to be positive.
+
+The existing square-completion identity then gives
+
+$$
+\sup_xm(x)=m(x_0)+(t-Kx_0)^*K^{-1}(t-Kx_0)
+\le m(x_0)+16\|t-Kx_0\|^2.
+$$
+
+The finite solve only proposes the stored exact384-bit dyadic $x_0$.
+The full residual calculation reuses all168 moments,112 far features
+and the original extended-support operator-error upper bound. It pays
+$\varepsilon\|v-Vx_0\|^2$ for the quadratic and
+$\varepsilon\|v-Vx_0\|$ for each gradient coordinate. The finite Gram
+generators and direction-dependent actions are separately archived,
+so alternative floor and optimization consumers need no middle-row
+production.
+
+The directed result gives
+$m(x_0)\simeq-4.22459205900814696498591\times10^{-31}$ and a stored
+correction bound at most $2^{-512}$. The exact upper endpoint for
+$\sup_xm(x)$ is below $-4.22\times10^{-31}$. Therefore **every** trial
+matrix on this fixed768-column support with this same $W$ fails to
+make its inverse-residual lower target positive semidefinite.
+This excludes the ideal sufficient family, rather than only the
+earlier target with its conservative uniform far allowance.
+
+The common-form, exterior-domain and inverse-majorant premises are
+unchanged. The conclusion gives neither negative actual Weil energy
+nor exclusion of other supports or majorants. It does not undo the
+earlier positive scalar enclosure on a different direction. Full
+actual Schur positivity, cofinal positivity and RH remain open.
+This is an application of existing finite displacement and
+square-completion methods, without a new general theorem, normalized
+eigenvalue or Lean-verification claim.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
