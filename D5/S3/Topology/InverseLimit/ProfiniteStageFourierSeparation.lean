@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Topology/InverseLimit/ProfiniteStageFourierSeparation
    mirror-E: none(waiver:finite-stage-character-reflection)
    anchors: []
+   utility: none
    digest: Finite additive-character correlations separate compatible profinite residue families. -/
 
 import D5.S1.Dynamics.ProfiniteIntegers
