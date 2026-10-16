@@ -77,7 +77,7 @@ section
 open scoped BigOperators Matrix
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 /-- Entry formula for the frozen tensor-defined annihilator. -/
-theorem fullC_entries {d : ℕ} (j : Fin d) (s t : ((Fin d → Bool))) :
+private theorem fullC_entries {d : ℕ} (j : Fin d) (s t : ((Fin d → Bool))) :
     fullC j s t = ∏ k, fermionWord j k (s k) (t k) := by
   simp [fullC, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp,
     Matrix.submatrix_apply]

@@ -7,7 +7,7 @@
    digest: Periodic same-phase SSH ground states can have positive excess pseudo-entropy. -/
 
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
-import D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding
+import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,7 +20,7 @@ open PredictiveThermodynamic.Physical (Assignment)
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
   (FullOperator fullC fullC_CAR fullC_mixed_anticomm_of_lt fermionWord prefixCount)
 open D5.S3.Quantum.Fermionic.FockMajoranaCarrier (numberOperator numberOperator_eq_diagonal)
-open D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding (fullC_entries)
+open D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression (fullC_entry)
 open D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant (occupationCount)
 
 namespace D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
@@ -257,56 +257,6 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     intro x hx
     exact hswap3 x
   rw [hleft3]
-
-private theorem fullC_entry {M : ℕ} (j : Fin M) (s t : Assignment M) :
-    fullC j s t =
-      if t j = true ∧ s = Function.update t j false
-      then (-1 : ℂ) ^ prefixCount t j else 0 := by
-  classical
-  rw [fullC_entries]
-  by_cases h : t j = true ∧ s = Function.update t j false
-  · rw [if_pos h]
-    have he : (∏ i : Fin M, fermionWord j i (s i) (t i)) =
-        ∏ i : Fin M, if i < j ∧ t i = true then (-1 : ℂ) else 1 := by
-      apply Finset.prod_congr rfl
-      intro i _hi
-      rw [h.2]
-      by_cases hij : i < j
-      · have hne : i ≠ j := ne_of_lt hij
-        simp only [fermionWord, if_pos hij, Function.update_of_ne hne]
-        cases t i <;>
-          simp [hij, D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv]
-      · by_cases heq : i = j
-        · subst i
-          simp [fermionWord, Matrix.single, h.1]
-        · simp [fermionWord, hij, heq, Matrix.one_apply]
-    rw [he, ← Finset.prod_filter]
-    unfold prefixCount
-    simp [Finset.prod_const]
-  · rw [if_neg h]
-    by_cases ht : t j = true
-    · have hs : s ≠ Function.update t j false := by tauto
-      have hx : ∃ i, s i ≠ Function.update t j false i := by
-        by_contra hh
-        push Not at hh
-        exact hs (funext hh)
-      obtain ⟨i, hi⟩ := hx
-      apply Finset.prod_eq_zero (Finset.mem_univ i)
-      by_cases heq : i = j
-      · subst i
-        simp only [Function.update_self] at hi
-        have hsi : s j = true := by cases hsj : s j <;> simp_all
-        simp [fermionWord, Matrix.single, hsi]
-      · have hst : s i ≠ t i := by simpa only [Function.update_of_ne heq] using hi
-        by_cases hij : i < j
-        · simp only [fermionWord, if_pos hij]
-          cases hsi : s i <;> cases hti : t i <;>
-            try { exfalso; apply hst; simp [hsi, hti] }
-          all_goals
-            simp [D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv]
-        · simp [fermionWord, hij, heq, hst]
-    · apply Finset.prod_eq_zero (Finset.mem_univ j)
-      simp [fermionWord, Matrix.single, ht]
 
 private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s : Assignment M) :
     (fullC j *ᵥ f) s =
