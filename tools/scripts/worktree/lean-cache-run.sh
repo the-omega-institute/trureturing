@@ -55,7 +55,7 @@ if [[ "$1" == --build ]]; then
   root_targets=() impl_targets=() reg_targets=() downstream_targets=()
   for target in "$@"; do
     case "$target" in
-      LeanInformationAuditRegTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
+      LeanInformationAuditRegTests*|LeanInformationAuditFibTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
       Reg|Reg.*|Reg:*|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
       LeanInformationAudit*|+LeanInformationAudit*|leanInspector/*|leanInspectorInterface/*|@leanInspector|@leanInspector/*|@leanInspector:*|@leanInspectorInterface|@leanInspectorInterface/*|@leanInspectorInterface:*) impl_targets+=("$target") ;;
       *) root_targets+=("$target") ;;
