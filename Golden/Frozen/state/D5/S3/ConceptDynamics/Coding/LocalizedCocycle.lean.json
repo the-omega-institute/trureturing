@@ -1,1 +1,0 @@
-{"statement_id":"sha256:be725547943aff60c7ffa3e86e3b0ef8a15ffc712f4cdefc865c6c6e91101cd9","declarations":[{"declaration_name_key":"ns(ns(n0,26:SourceOnlyLocalizedCocycle),15:dyadicReduction)","kind":"theorem"},{"declaration_name_key":"ns(ns(n0,26:SourceOnlyLocalizedCocycle),23:integerValues_mod_three)","kind":"theorem"}]}

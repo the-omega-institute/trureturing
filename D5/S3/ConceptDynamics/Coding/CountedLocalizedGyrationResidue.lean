@@ -135,51 +135,6 @@ theorem canonicalLocalizedGyration_triangle
     (fun i j => le_of_lt (gyrationPositiveLift_pos e rho U i j))
     (fun i j => le_of_lt (gyrationPositiveLift_pos e rho V i j))
 
-/-- Actual nonnegative agreement over any ring equipped with the stated
-reduction. Zero entries and empty dimensions are included; this is the same
-primitive-path relativeForwardGyration, not a synthetic polynomial invariant. -/
-theorem canonicalLocalizedGyration_nonnegative
-    {n m d : ℕ} [NeZero d] (hd : 3 ∣ d)
-    {L : Type*} [CommRing L]
-    (e : ℕ) (he : padicValInt 3 (((2 * d).factorial : ℕ) : ℤ) ≤ e)
-    (rho : L →+* ZMod (3 ^ (e + 1)))
-    (R : CountMat n m) (S : CountMat m n) :
-    canonicalLocalizedGyration d e rho
-      ((R.map (Nat.castRingHom ℤ)).map (algebraMap ℤ L))
-      ((S.map (Nat.castRingHom ℤ)).map (algebraMap ℤ L)) =
-      ZMod.castHom hd (ZMod 3) (relativeForwardGyration (d := d) R S) := by
-  have h := canonicalLocalizedGyration_signed_agreement (d := d) e he rho
-    ((R.map (Nat.castRingHom ℤ)).map (algebraMap ℤ L))
-    ((S.map (Nat.castRingHom ℤ)).map (algebraMap ℤ L))
-    (R.map (Nat.castRingHom ℤ)) (S.map (Nat.castRingHom ℤ))
-    (by
-      ext i j
-      change ((R i j : ℤ) : ZMod (3 ^ (e + 1))) =
-        rho (algebraMap ℤ L (R i j : ℤ))
-      exact (map_intCast rho (R i j : ℤ)).symm)
-    (by
-      ext i j
-      change ((S i j : ℤ) : ZMod (3 ^ (e + 1))) =
-        rho (algebraMap ℤ L (S i j : ℤ))
-      exact (map_intCast rho (S i j : ℤ)).symm)
-  have hg : relativeForwardGyration (d := d) R S =
-      (orderTypeGyrationLift (d := d)
-        (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2)) : ZMod d) :=
-    relativeForwardGyration_eq_order_types
-      (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2))
-  rw [h, hg, map_intCast]
-  have he' : Sum.elim
-      (fun ij : Fin n × Fin m => (R.map (Nat.castRingHom ℤ)) ij.1 ij.2)
-      (fun ij : Fin m × Fin n => (S.map (Nat.castRingHom ℤ)) ij.1 ij.2) =
-      (fun t => ((Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2)) t : ℤ)) := by
-    funext t
-    cases t <;> rfl
-  unfold integerGyrationValue
-  rw [he']
-  apply congrArg (fun z : ℤ => (z : ZMod 3))
-  classical
-  simp only [signedGyrationLift, orderTypeGyrationLift, Ring.choose_natCast, Nat.cast_prod]
-
 /-- The dyadic reduction has its actual localization origin. -/
 def gyrationDyadicReduction (d : ℕ) :
     GyrationDyadic →+* ZMod (3 ^
