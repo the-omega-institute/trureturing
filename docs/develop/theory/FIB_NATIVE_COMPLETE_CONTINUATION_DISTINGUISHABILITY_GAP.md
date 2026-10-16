@@ -1482,3 +1482,1227 @@ or a solution of the independent fixed-Hamiltonian minimax problem.
 [ACR]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_ACQUIRED_CONTINUATION_LIMITS.md
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A fixed-filter common instrument with error below 149/1000
+
+**Definition 12.1 (fixed filter and exact-time output).** Retain the
+experiment, common-input premise and complete metric of Definitions
+2.3, 3.1, 3.2 and 4.2, including all twelve actual histories. The
+existence of a minimizing
+common channel is already supplied by Theorem 8.4, and its error is
+strictly above $L_{\rm full}$ by Theorem 9.3. The scalar-live channel
+$\Phi_0$ remains the distinct processor of Proposition 10.1. In the
+ordered basis $(+,-,2)$ of $V$, put
+
+$$
+\begin{aligned}
+K_{\mathrm{ff}}&=\operatorname{diag}\left(1,\frac1{\sqrt2},
+                                  \sqrt{\frac{21}{32}}\right),\\
+D_{\mathrm{ff}}&=I_V-K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}
+       =\operatorname{diag}\left(0,\frac12,\frac{11}{32}\right),\\
+h_{\mathrm{ff}}(t)&=\frac2{(1+t)^2},\qquad
+w=(0,\tfrac14,\tfrac12,\tfrac14,0).
+\end{aligned}
+\tag{CG.87}
+$$
+
+For every complex matrix $A\in M_3(\mathbb C)$ define one linear map
+$\Phi_{\mathrm{ff}}$ by its live block and five original-mode failure measures:
+
+$$
+\begin{aligned}
+\Phi_{\mathrm{ff},\mathrm{live}}(A)&=K_{\mathrm{ff}} A K_{\mathrm{ff}}^\dagger,\\
+\Phi_{\mathrm{ff},i}(A)(dt)&=w_i\operatorname{tr}(D_{\mathrm{ff}}A)h_{\mathrm{ff}}(t)\,dt\,P_f
+                         \qquad(0\leq i\leq4).
+\end{aligned}
+\tag{CG.88}
+$$
+
+The output time is the exact $t\in[0,1]$, equivalently $6+t$.
+Modes $1$ and $3$ remain distinct, and mode index $4$ retains its original
+name $13$. The map assigns zero measure to all additional abort,
+rejection and other zero-ideal sectors. It has no singular time part.
+These are specifications of the entire output, not postselection rules.
+All coefficients are fixed before the specimen arrives; no coefficient
+uses its unknown history or its old-cut survival mass.
+
+**Theorem 12.2 (constructive full-output upper bound).** The map
+$\Phi_{\mathrm{ff}}$ is CPTP on the whole complex matrix algebra, and for the
+unchanged minimax quantity (CG.20),
+
+$$
+\boxed{
+L_{\rm full}<E_*\leq E(\Phi_{\mathrm{ff}})
+       <\frac{104759}{704000}<\frac{149}{1000}.
+}
+\tag{CG.89}
+$$
+
+The strict lower comparison reuses Theorem 9.3 and the credited lower
+bound of Theorem 6.1; no new lower-bound proof is asserted. The upper
+bound retains the joint live quantum
+block, every original failure-mode label and the full exact-time law.
+
+Proof. First establish legality independently of performance on the
+catalogue. The density $h_{\mathrm{ff}}$ is nonnegative, bounded and measurable, and
+
+$$
+\int_0^1h_{\mathrm{ff}}(t)\,dt
+ =\left[-\frac2{1+t}\right]_0^1=1.
+\tag{CG.90}
+$$
+
+For each original label $i$, introduce Kraus densities
+
+$$
+J^{\mathrm{ff}}_{i,-}(t)=\sqrt{\frac{w_i h_{\mathrm{ff}}(t)}2}\,|f\rangle\langle-|,
+\qquad
+J^{\mathrm{ff}}_{i,2}(t)=\sqrt{\frac{11w_i h_{\mathrm{ff}}(t)}{32}}\,
+                                      |f\rangle\langle2|.
+\tag{CG.91}
+$$
+
+Their Kraus sum is precisely the density in (CG.88), for every complex
+$A$, including non-Hermitian matrices. For every ancillary dimension
+$n$ and every positive $X\in M_n\otimes M_3$, the live image is
+$(I_n\otimes K_{\mathrm{ff}})X(I_n\otimes K_{\mathrm{ff}})^\dagger\geq0$. Each failure
+density is a sum of the corresponding positive conjugations by
+$I_n\otimes J^{\mathrm{ff}}_{i,j}(t)$. Its integral over any Borel time set is
+positive. The bounded integrable densities define finite measures, so
+this proves positivity at every amplification on the full joint output
+space. Moreover,
+
+$$
+K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}+
+ \sum_{i=0}^4\int_0^1
+ \bigl(J^{\mathrm{ff}}_{i,-}(t)^\dagger J^{\mathrm{ff}}_{i,-}(t)
+       +J^{\mathrm{ff}}_{i,2}(t)^\dagger J^{\mathrm{ff}}_{i,2}(t)\bigr)\,dt
+ =K_{\mathrm{ff}}^\dagger K_{\mathrm{ff}}+D_{\mathrm{ff}}=I_V.
+\tag{CG.92}
+$$
+
+Thus the map is completely positive and trace preserving, without a
+restriction to real matrices, diagonal states or the twelve inputs.
+
+It also has an explicit extension to the entire original five-mode
+complex algebra: in the original basis $(e_0,e_1,e_2,e_3,e_4)$ take
+
+$$
+\widehat K_{\mathrm{ff}}=\operatorname{diag}
+ \left(1,\frac1{\sqrt2},\sqrt{\frac{21}{32}},
+                           \frac1{\sqrt2},1\right),\qquad
+\widehat D_{\mathrm{ff}}=\operatorname{diag}
+ \left(0,\frac12,\frac{11}{32},\frac12,0\right).
+\tag{CG.93}
+$$
+
+Use (CG.88) with these operators. Kraus densities
+$\sqrt{w_i h_{\mathrm{ff}}(t)(\widehat D_{\mathrm{ff}})_{jj}}\,|f\rangle\langle e_j|$
+prove complete positivity by the same all-amplification argument;
+$\widehat K_{\mathrm{ff}}^\dagger\widehat K_{\mathrm{ff}}+\widehat D_{\mathrm{ff}}=I_5$ proves trace
+preservation. On inputs supported in $V$ this extension agrees with
+$\Phi_{\mathrm{ff}}$ and has no live component outside $V$.
+
+Next evaluate the complete error. For $0<z<64$ and $y\in\{5,16,27\}$ write
+
+$$
+a_z^{\mathrm{ff}}=\begin{pmatrix}
+\sqrt{z/128}\\ \sqrt{(64-z)/128}\\1/\sqrt2
+\end{pmatrix},\qquad
+s_y=\frac y{y+6},\qquad
+\xi_y^{\mathrm{ff}}=\sqrt{s_y}\,a_{y+6}^{\mathrm{ff}},\qquad B_y^{\mathrm{ff}}=\xi_y^{\mathrm{ff}}(\xi_y^{\mathrm{ff}})^\dagger
+\quad(y\in\{5,16,27\}).
+\tag{CG.94}
+$$
+
+Here $a_y^{\mathrm{ff}}$ is a unit vector, and $B_y^{\mathrm{ff}}$ is the unnormalized target live
+block. For $\epsilon=e^{-i\beta}\in\{1,-1\}$ and
+$\eta=e^{-i\beta}(-1)^m$, let
+$U_{\epsilon,\eta}=\operatorname{diag}(\epsilon,\eta,1)$.
+Equation (CG.7) gives the actual input vector $U_{\epsilon,\eta}a_y^{\mathrm{ff}}$,
+and (CG.15) gives target live block
+$U_{\epsilon,\eta}B_y^{\mathrm{ff}}U_{\epsilon,\eta}^\dagger$ and failure
+densities $w_i f_y(t)P_f$, where $f_y(t)=6y/(y+6t)^2$.
+The four allowed $(\beta,m)$ give all four sign pairs. Since $K_{\mathrm{ff}}$ and
+$D_{\mathrm{ff}}$ commute with each $U_{\epsilon,\eta}$, unitary invariance of
+the live trace norm and the identical failure laws show that all four
+errors at a fixed $y$ are equal. This uses only the covariance of this
+explicit map; it imposes no restriction on other maps in (CG.20).
+
+Define its live and failure masses and its positive live overlap by
+
+$$
+\begin{aligned}
+S_y^{\mathrm{ff}}&=\|K_{\mathrm{ff}}a_y^{\mathrm{ff}}\|^2=\frac{y+148}{256},\qquad
+r_y^{\mathrm{ff}}=1-S_y^{\mathrm{ff}}=\frac{108-y}{256},\\
+C_y^{\mathrm{ff}}&=\langle K_{\mathrm{ff}}a_y^{\mathrm{ff}},\xi_y^{\mathrm{ff}}\rangle
+ =\frac y{128}+\sqrt{M_y^{\mathrm{ff}}}+\sqrt{N_y^{\mathrm{ff}}},\\
+M_y^{\mathrm{ff}}&=\frac{y(64-y)(58-y)}{32768(y+6)},\qquad
+N_y^{\mathrm{ff}}=\frac{21y}{128(y+6)}.
+\end{aligned}
+\tag{CG.95}
+$$
+
+Lemma 5.1, applied with weights $S_y^{\mathrm{ff}},s_y$, gives the full live norm
+
+$$
+L_y^{\mathrm{ff}}:=\|K_{\mathrm{ff}}a_y^{\mathrm{ff}}(a_y^{\mathrm{ff}})^\dagger K_{\mathrm{ff}}^\dagger-B_y^{\mathrm{ff}}\|_1
+       =\sqrt{(S_y^{\mathrm{ff}}+s_y)^2-4(C_y^{\mathrm{ff}})^2}.
+\tag{CG.96}
+$$
+
+In particular this norm counts all three live coherences. For the five
+separate failure sectors, positivity of $P_f$ and $\sum_i w_i=1$
+give exactly
+
+$$
+F_y^{\mathrm{ff}}:=\sum_{i=0}^4\int_0^1
+ \|w_i(r_y^{\mathrm{ff}}h_{\mathrm{ff}}(t)-f_y(t))P_f\|_1\,dt
+ =\int_0^1|r_y^{\mathrm{ff}}h_{\mathrm{ff}}(t)-f_y(t)|\,dt.
+\tag{CG.97}
+$$
+
+This is an equality of the labelled-sector norm sum. The two zero-weight
+labels and all zero-ideal extra sectors contribute zero because the map
+actually outputs zero there. There are no uncounted singular or abort
+masses. Thus the original half full cq norm, on all twelve histories, is
+
+$$
+E(\Phi_{\mathrm{ff}})=\frac12\max_{y\in\{5,16,27\}}(L_y^{\mathrm{ff}}+F_y^{\mathrm{ff}}).
+\tag{CG.98}
+$$
+
+The failure integrals admit exact analytic control over the entire time
+interval. At the two endpoint heights the density ratios satisfy
+
+$$
+\begin{aligned}
+\frac{r_5^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_5(t)}
+ &=\frac{103}{3840}\left(\frac{5+6t}{1+t}\right)^2
+ \leq\frac{12463}{15360}<1,\\
+\frac{r_{27}^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_{27}(t)}
+ &=\frac1{256}\left(\frac{27+6t}{1+t}\right)^2
+ \geq\frac{1089}{1024}>1.
+\end{aligned}
+\tag{CG.99}
+$$
+
+Indeed $(y+6t)/(1+t)$ has derivative $(6-y)/(1+t)^2$;
+the first ratio is maximized at $1$, and the second minimized there.
+Using $\int f_y=1-s_y$ consequently gives the exact values
+
+$$
+F_5^{\mathrm{ff}}=(1-s_5)-r_5^{\mathrm{ff}}=\frac{403}{2816},\qquad
+F_{27}^{\mathrm{ff}}=r_{27}^{\mathrm{ff}}-(1-s_{27})=\frac{379}{2816}.
+\tag{CG.100}
+$$
+
+For the middle height the ratio
+
+$$
+\frac{r_{16}^{\mathrm{ff}}h_{\mathrm{ff}}(t)}{f_{16}(t)}
+ =\frac{23}{3072}\left(\frac{16+6t}{1+t}\right)^2
+\tag{CG.101}
+$$
+
+is strictly decreasing from $23/12>1$ to $2783/3072<1$.
+It crosses one exactly once, at
+
+$$
+t_{\mathrm{ff}}=\frac{8\sqrt{23}-16\sqrt3}{16\sqrt3-3\sqrt{23}}
+ \in(0,1).
+\tag{CG.102}
+$$
+
+The cumulative signed difference is
+
+$$
+R_{\mathrm{ff}}(t)=\int_0^t(r_{16}^{\mathrm{ff}}h_{\mathrm{ff}}(u)-f_{16}(u))\,du
+ =\frac{t(88-27t)}{32(1+t)(8+3t)},\qquad R_{\mathrm{ff}}(1)=\frac{61}{704}.
+\tag{CG.103}
+$$
+
+Splitting the absolute-value integral at the sole crossing gives
+$F_{16}^{\mathrm{ff}}=2R_{\mathrm{ff}}(t_{\mathrm{ff}})-R_{\mathrm{ff}}(1)$. The uniform rational certificate
+
+$$
+\frac3{32}-R_{\mathrm{ff}}(t)
+ =\frac{24-55t+36t^2}{32(1+t)(8+3t)}>0
+                  \qquad(0\leq t\leq1)
+\tag{CG.104}
+$$
+
+holds because its denominator is positive and its numerator is
+$36(t-55/72)^2+431/144>0$. Hence
+
+$$
+F_{16}^{\mathrm{ff}}=2R_{\mathrm{ff}}(t_{\mathrm{ff}})-\frac{61}{704}<\frac{71}{704}.
+\tag{CG.105}
+$$
+
+Equations (CG.96), (CG.100) and (CG.105) also specify the exact error of
+this particular map: substitute $2R_{\mathrm{ff}}(t_{\mathrm{ff}})-61/704$ for $F_{16}^{\mathrm{ff}}$ in
+(CG.98). No time sampling or discretization enters the equality.
+
+It remains to certify the live bounds strictly by rational arithmetic.
+The following positive rational numbers are lower bounds for the two
+radicals in (CG.95):
+
+| $y$ | $M_y^{\mathrm{ff}}$ | $N_y^{\mathrm{ff}}$ | $\ell_y^{\mathrm{ff}}<\sqrt{M_y^{\mathrm{ff}}}$ | $n_y^{\mathrm{ff}}<\sqrt{N_y^{\mathrm{ff}}}$ |
+| --- | --- | --- | --- | --- |
+| $5$ | $15635/360448$ | $105/1408$ | $20827/100000$ | $27308/100000$ |
+| $16$ | $63/1408$ | $21/176$ | $21152/100000$ | $34542/100000$ |
+| $27$ | $10323/360448$ | $189/1408$ | $16923/100000$ | $36637/100000$ |
+
+For an explicit certificate for all six comparisons, the positive square
+remainders are
+
+| $y$ | $M_y^{\mathrm{ff}}-(\ell_y^{\mathrm{ff}})^2$ | $N_y^{\mathrm{ff}}-(n_y^{\mathrm{ff}})^2$ |
+| --- | --- | --- |
+| $5$ | $643867/3520000000000$ | $16187/13750000000$ |
+| $16$ | $49607/13750000000$ | $88149/27500000000$ |
+| $27$ | $1995867/3520000000000$ | $657541/110000000000$ |
+
+Set
+
+$$
+(c_5^{\mathrm{ff}},c_{16}^{\mathrm{ff}},c_{27}^{\mathrm{ff}})=
+ \left(\frac{5204}{10000},\frac{6819}{10000},
+                                      \frac{74653}{100000}\right),
+\qquad
+(u_5^{\mathrm{ff}},u_{16}^{\mathrm{ff}},u_{27}^{\mathrm{ff}})=
+ \left(\frac{309}{2000},\frac18,\frac{81}{500}\right).
+\tag{CG.106}
+$$
+
+Here $y/128+\ell_y^{\mathrm{ff}}+n_y^{\mathrm{ff}}-c_y^{\mathrm{ff}}$ equals, respectively,
+$1/80000$, $1/25000$ and $3/400000$. Thus $C_y^{\mathrm{ff}}>c_y^{\mathrm{ff}}>0$.
+The remaining exact positive remainders are
+
+$$
+\begin{aligned}
+(u_5^{\mathrm{ff}})^2-(S_5^{\mathrm{ff}}+s_5)^2+4(c_5^{\mathrm{ff}})^2
+ &=\frac{20019639}{3097600000000}>0,\\
+(u_{16}^{\mathrm{ff}})^2-(S_{16}^{\mathrm{ff}}+s_{16})^2+4(c_{16}^{\mathrm{ff}})^2
+ &=\frac{857889559}{193600000000}>0,\\
+(u_{27}^{\mathrm{ff}})^2-(S_{27}^{\mathrm{ff}}+s_{27})^2+4(c_{27}^{\mathrm{ff}})^2
+ &=\frac{11020208559}{77440000000000}>0.
+\end{aligned}
+\tag{CG.107}
+$$
+
+Since (CG.96) is the square root of a nonnegative norm square,
+$C_y^{\mathrm{ff}}>c_y^{\mathrm{ff}}$ and (CG.107) imply $L_y^{\mathrm{ff}}<u_y^{\mathrm{ff}}$. Combining these strict
+live bounds with (CG.100) and (CG.105), the three orbit errors are,
+respectively, strictly below
+
+$$
+\frac12\left(\frac{309}{2000}+\frac{403}{2816}\right)
+ =\frac{104759}{704000},\qquad
+\frac12\left(\frac18+\frac{71}{704}\right)
+ =\frac{159}{1408},\qquad
+\frac12\left(\frac{81}{500}+\frac{379}{2816}\right)
+ =\frac{104399}{704000}.
+\tag{CG.108}
+$$
+
+The first of these three rational bounds is the largest, and
+
+$$
+\frac{149}{1000}-\frac{104759}{704000}
+ =\frac{137}{704000}>0.
+\tag{CG.109}
+$$
+
+This proves the upper inequalities in (CG.89); $E_*\leq E(\Phi_{\mathrm{ff}})$
+is immediate from Definition 4.2. The strict lower inequality reuses
+Theorem 9.3 without altering its witness or proof.
+
+The improvement over $\Phi_0$ is strict for the achieved errors, not
+only for their displayed upper certificates. At height $y=5$, the
+live trace of $\Phi_0$ is $7/11$ and its ideal live trace is $5/11$.
+The trace norm of that Hermitian live difference is at least the absolute
+trace difference $2/11$. Its full failure norm is exactly $2/11$ by
+(CG.78). Consequently Theorem 10.2's exact achieved error obeys
+
+$$
+E(\Phi_{\mathrm{ff}})<\frac{104759}{704000}
+ <\frac2{11}\leq E(\Phi_0)=M.
+\tag{CG.110}
+$$
+
+The middle strict comparison follows from
+$2/11-104759/704000=23241/704000>0$. The scalar-live construction and
+its error formula remain valid. $\square$
+
+**Convention 12.3 (credit and the remaining observation/control bridge).**
+The fixed-filter construction and its rational certificate are credited
+supplied ordinary mathematical results; their complete proof is retained
+above. Their mathematical provenance is repo-derived, using mature
+channel and trace-norm tools; no literature priority is claimed. The
+all-amplification meaning of complete positivity and the finite-matrix
+extension framework are literature-attested in Heinosaari, Jivulescu,
+Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/abs/1205.0641v3), §2.1 and §6.1,
+[J. Math. Phys. 53, 102208](https://doi.org/10.1063/1.4755845).
+Those finite-output results do not supply this continuous-time upper
+bound; (CG.90)–(CG.92) prove legality of the actual measure-valued output
+directly. The weighted pure-block norm is reused from Lemma 5.1, and the
+original history/target laws and $L_{\rm full}$ retain their credit
+in §§1–7. Theorem 8.4 supplies existential attainment, Theorem 9.3 supplies
+the strict lower comparison, and Proposition 10.1 and Theorem 10.2 supply
+the distinct scalar-live feasible channel and its exact error. These
+are ordinary uncompiled mathematical proofs, with no Lean-verified claim.
+
+The processor receives one normalized reached-old-live-cut specimen.
+Fixed common metadata may be carried along unchanged in every sector;
+tensoring identical fixed metadata preserves the norm calculation. No
+history label, callback, helper specimen, old-cut mass as a weight, or
+free retry enters (CG.88). The emitted live block and failure records
+are the joint canonical output of the same instrument. Modes and times
+remain separate, every branch is unnormalized, and first failure is
+absorbing. Sign covariance is used only to evaluate this particular
+map's twelve errors. It neither reduces the class of all allowed maps
+to fixed filters nor asserts that every sign-covariant map is Schur.
+No physical complex-conjugation operation is used.
+
+The map is a feasible abstract common CPTP simulator in Definition 3.1's
+comparison class. Implementing it with the original calibrated control
+menu still requires an actuator/interface bridge; the source-indexed
+operators $K_x$ in (CG.14) do not provide that common implementation.
+Open problems 7.3 and 11.2 still require the exact $E_*$, an identified
+optimal common channel and a matching lower certificate over the whole
+class. Existence of some minimizing channel is already settled by
+Theorem 8.4. The fixed-filter bound sharpens the feasible side of that
+problem; it gives neither optimality of $\Phi_{\mathrm{ff}}$ nor a
+further class-wide reduction or dual certificate. It does not close the
+continuing AURIC FIB ATOM research goal.
+
+## 追加锚（本行以下为增补区）
+
+## 13. An isolated algebraic specification for the complete-output optimum
+
+**Definition 13.1 (the fixed states and algebraic variables).** Retain
+Definition 4.2 without changing its input resources, comparison class or
+output norm. Index the basis $(+,-,2)$ by $0,1,2$ only inside the matrices
+in §§13–16; these indices are not the five original failure labels.
+For $0<y<58$ put
+
+$$
+\begin{aligned}
+p_y&=\left(\frac y{128},\frac{64-y}{128},\frac12\right),\\
+d_y&=\left(\frac y{128},
+ \frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),\\
+a_y&=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,
+\qquad \xi_y=(\sqrt{d_{y0}},\sqrt{d_{y1}},\sqrt{d_{y2}})^T,\\
+\rho_y&=a_ya_y^T,\qquad B_y=\xi_y\xi_y^T.
+\end{aligned}
+\tag{CG.111}
+$$
+
+The vectors $p_y,a_y$ are also defined by the same formulas for
+$58\leq y<64$. All radicals are the positive real roots. The input is normalized,
+$\operatorname{tr}B_y=s_y=y/(y+6)$, and
+$\xi_y=\sqrt{s_y}\,a_{y+6}$. For
+$U_{e,n}=\operatorname{diag}(e,n,1)$, $e,n\in\{\pm1\}$, the actual
+inputs and live targets are $U_{e,n}\rho_yU_{e,n}^T$ and
+$U_{e,n}B_yU_{e,n}^T$. Indeed (CG.7) has
+$e=(-1)^{\beta/\pi}$ and $n=e(-1)^m$, which run through all four
+pairs. The five separate failure densities remain $w_\ell f_y(t)P_f$
+with the $w,f_y$ of (CG.50), not functions of $e,n$.
+
+Let $x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ and define
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,
+&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y&=\frac{v_yv_y^T}{v_y^Tv_y},
+&A_5&=\lambda R_5,\qquad A_{27}=(1-\lambda)R_{27},\\
+\zeta&=\left(z,\frac{59\lambda}{128},\frac\lambda2\right),
+&Z_d&=\operatorname{diag}\zeta,\\
+N&=A_5\odot\rho_5+A_{27}\odot\rho_{27},
+&S_0&=Z_d-N.
+\end{aligned}
+\tag{CG.112}
+$$
+
+Here $\odot$ is entrywise multiplication. For $i<j$ set
+
+$$
+S_{ij}=\begin{pmatrix}
+\displaystyle\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{ii}p_{yj}
+&-N_{ij}\\
+-N_{ij}&\displaystyle\zeta_i-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{yi}
+\end{pmatrix}.
+\tag{CG.113}
+$$
+
+The two distinct uses of the letter $\beta$ are separated: $\beta_1,
+\beta_2$ here are algebraic coordinates, not the original history phase
+$\beta\in\{0,\pi\}$. Define
+
+$$
+\begin{aligned}
+F(x)&=\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+       -\sum_i\zeta_i+\frac6{11}\lambda,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}),\\
+\mathcal L(x,\eta)&=F(x)+\sum_{k=0}^2\eta_k g_k(x),\\
+\Psi(x,\eta)&=(\nabla_x\mathcal L,g_0,g_1,g_2).
+\end{aligned}
+\tag{CG.114}
+$$
+
+These nine equations have real algebraic coefficients and rational
+dependence on their nine variables. Their chart denominators are
+$1+\alpha_1^2+\alpha_2^2$ and $1+\beta_1^2+\beta_2^2$, both positive.
+
+**Proposition 13.2 (root isolation and strict arithmetic margins).** Let
+$c$ have the following exact rational decimal coordinates, in order
+$(x,\eta)$, and let $C=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}]$.
+
+| Coordinate | Exact rational center |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+There is exactly one zero $u_*=(x_*,\eta_*)$ of $\Psi$ in $C$.
+The strict bounds below hold throughout $C$, before imposing $\Psi=0$:
+
+$$
+\begin{gathered}
+\frac{47}{100}<\lambda<\frac{49}{100},\qquad \eta_k>0,\\
+\zeta_0-\lambda p_{50}>\frac6{125},\qquad
+(S_0)_{00}>\frac6{125},\qquad
+\det S_0[\{0,1\}]>\frac{23}{10000},\\
+(S_{01})_{00}>\frac1{10},\qquad (S_{02})_{00}>\frac1{10},\\
+(S_{12})_{00}>\frac{69}{1000},\qquad
+\det S_{12}>\frac{11}{2000}.
+\end{gathered}
+\tag{CG.115}
+$$
+
+For any point of $C$, form the following matrices and quantities:
+
+$$
+\begin{aligned}
+H&=1000\eta_0\operatorname{adj}S_0,\qquad
+Q^{01}=\eta_1\operatorname{adj}S_{01},\qquad
+Q^{02}=\eta_2\operatorname{adj}S_{02},\qquad Q^{12}=0,\\
+r_0&=H_{00}+Q^{01}_{11}+Q^{02}_{11},\qquad
+r_1=H_{11}+Q^{01}_{00},\qquad r_2=H_{22}+Q^{02}_{00},\\
+m&=(0,1-r_1,1-r_2),\qquad q_y=p_y\cdot m,\\
+(C_y)_{ii}&=H_{ii}p_{yi}
+ +\sum_{j>i}Q^{ij}_{00}p_{yj}
+ +\sum_{j<i}Q^{ji}_{11}p_{yj},\\
+(C_y)_{ij}&=H_{ij}(\rho_y)_{ij}
+                  +Q^{ij}_{01}(\rho_y)_{ji}\quad(i<j),
+\qquad (C_y)_{ji}=(C_y)_{ij},\\
+\Delta_y&=B_y-C_y,\qquad
+\delta_y=\operatorname{tr}(R_y\Delta_y)\quad(y=5,27),\qquad
+T_{16}=\frac1{10}I_3-\Delta_{16}.
+\end{aligned}
+\tag{CG.116}
+$$
+
+The following additional inequalities hold throughout $C$:
+
+$$
+\begin{gathered}
+H_{00}>0,\qquad Q^{01}_{00}>0,\qquad Q^{02}_{00}>0,\\
+\frac{49}{100}<m_1<\frac12,\qquad
+\frac{34}{100}<m_2<\frac{35}{100},\\
+\delta_5>\frac3{1000},\qquad \delta_{27}>\frac{37}{250},\qquad
+q_5<\frac{60}{121},\quad q_{27}>\frac{36}{121},\quad q_{16}>\frac7{20},\\
+(T_{16})_{00}>\frac{97}{1000},\qquad
+\det T_{16}[\{0,1\}]>\frac{45}{10000},\qquad
+\det T_{16}>\frac{48}{10^6},\\
+0.14817810291080132013<F(x)<0.14817810291080132014,\\
+0.14817810291080132013<\delta_{27}<0.14817810291080132014.
+\end{gathered}
+\tag{CG.117}
+$$
+
+Proof. The finite arithmetic part is specified using directed dyadic
+enclosures, so the strict comparisons and the exact root have different
+roles. Put $D=2^{224}$. Represent an interval by its integer endpoints
+$[a/D,b/D]$. Embed a rational $q$ by
+$[\lfloor Dq\rfloor/D,\lceil Dq\rceil/D]$. Addition and negation
+are exact endpoint operations. For multiplication take the minimum and
+maximum of the four endpoint products, rounded down and up to multiples
+of $1/D$. For division take the four quotients, with the same directed
+rounding, only when the denominator interval excludes zero. For a
+nonnegative interval its square-root enclosure has integer endpoints
+
+$$
+\left[\left\lfloor\sqrt{aD}\right\rfloor,
+       \left\lceil\sqrt{bD}\right\rceil\right].
+\tag{CG.118}
+$$
+
+The integer endpoints in (CG.118) are again divided by $D$. Integer
+square comparison establishes their direction; no floating-point
+operation is required. Construct off-diagonal entries of $\rho_y,B_y$
+as square roots of the corresponding products of rational diagonal
+entries, and keep their diagonal entries rational.
+
+For differentiation, evaluate (CG.112)–(CG.114) in the truncated
+polynomial algebra on six formal increments, keeping degrees at most
+two. At a base point $x$, the variable $x_i$ is replaced by
+$[x_i]+X_i$. Multiply by polynomial convolution and discard degrees
+above two. For inversion, if the constant term is $a$ and the remaining
+terms are $v$, use
+
+$$
+(a+v)^{-1}=a^{-1}-a^{-2}v+a^{-3}v^2\pmod{\deg>2}.
+\tag{CG.119}
+$$
+
+The linear coefficients give first derivatives. The coefficient of
+$X_iX_j$ gives the $ij$ Hessian entry when $i\ne j$, and twice the
+coefficient of $X_i^2$ gives the diagonal entry. Evaluate sums in
+increasing index order, determinants by their first-row expansion,
+and divisions as multiplication by (CG.119). Thus, writing $\mathscr I$
+for this enclosure calculus, the full Jacobian is enclosed by
+
+$$
+D\Psi=
+\begin{pmatrix}
+F_{xx}+\sum_k\eta_k(g_k)_{xx}&
+ [\nabla g_0\ \nabla g_1\ \nabla g_2]\\
+[\nabla g_0\ \nabla g_1\ \nabla g_2]^T&0_{3\times3}
+\end{pmatrix}.
+\tag{CG.120}
+$$
+
+Let $M$ be the entrywise rational midpoint of
+$\mathscr I(D\Psi(c))$. Rational elimination gives an inverse
+$\mathcal R=M^{-1}$, with $\mathcal RM=I_9$ verified over $\mathbb Q$.
+Enclose each entry of $\mathcal R$ before interval matrix multiplication.
+The resulting arithmetic bounds are
+
+| Quantity | Strict rational upper bound |
+| --- | --- |
+| $\|\mathcal R\Psi(c)\|_\infty$ | $1/10^{28}$ |
+| $\sup_{u\in C}\|I_9-\mathcal R D\Psi(u)\|_\infty$ | $1/10^{15}$ |
+
+For the second row, take the maximum of the sums of interval absolute
+bounds along each row of $I_9-\mathcal R\mathscr I(D\Psi(C))$.
+Endpoint embedding may enlarge $C$ by less than $1/D$ per endpoint;
+this only enlarges the derivative enclosure. Applying the same endpoint
+operations directly to (CG.112), (CG.113) and (CG.116) gives every
+comparison in (CG.115) and (CG.117). The bounds for $F$ and $\delta_{27}$
+can also be enclosed more tightly as follows, with rational endpoints:
+
+$$
+\begin{aligned}
+0.14817810291080132013688243935582
+ &<F(x)<0.14817810291080132013689280825907,\\
+0.14817810291080132013685287501998
+ &<\delta_{27}<0.14817810291080132013692237259040.
+\end{aligned}
+\tag{CG.121}
+$$
+
+Only the weaker strict bounds (CG.117) are needed below. All inputs to
+these calculations are the rational center, radius, positive radicals
+and displayed expressions; no fitted residual is asserted to equal zero.
+
+For completeness, the enclosure bounds imply existence, not just a
+small numerical residual. On the exact rational closed box $C$, define
+$T(u)=u-\mathcal R\Psi(u)$. The derivative bound and the mean-value
+formula make $T$ Lipschitz with constant $k<10^{-15}$ in the maximum
+norm. For $\epsilon=10^{-24}$ and $b<10^{-28}$,
+
+$$
+\|T(u)-c\|_\infty\leq b+k\epsilon<\epsilon.
+\tag{CG.122}
+$$
+
+Thus $T$ maps $C$ strictly into itself and is a contraction. The complete
+metric space $C$ has a unique fixed point. Since $\mathcal R$ is
+invertible, its fixed points are precisely the zeros of $\Psi$.
+The derivative bound also makes $D\Psi(u_*)$ invertible. Clearing the
+positive chart denominators gives polynomial equations over the real
+algebraic numbers with a nonsingular isolated zero; the coordinates
+of that zero are algebraic. Only uniqueness in $C$ is asserted. The
+equations may have other zeros outside $C$. $\square$
+
+**Corollary 13.3 (exact ranks at the isolated point).** At $u_*$,
+
+$$
+\begin{gathered}
+S_0\succeq0,\quad\operatorname{rank}S_0=2,\qquad
+S_{01},S_{02}\succeq0,\quad
+\operatorname{rank}S_{01}=\operatorname{rank}S_{02}=1,\qquad
+S_{12}\succ0,\\
+Z_d\succeq\lambda\operatorname{diag}(p_5)\succeq0,
+\end{gathered}
+\tag{CG.123}
+$$
+
+and the $H,Q^{01},Q^{02}$ of (CG.116) are nonzero positive semidefinite
+rank-one matrices.
+
+Proof. The last three components of $\Psi=0$ give precisely
+$\det S_0=\det S_{01}=\det S_{02}=0$. The leading two-dimensional
+block of $S_0$ is positive definite by (CG.115). Its Schur complement is
+zero because its determinant is zero and that leading block is
+invertible. Thus $S_0$ is positive semidefinite of rank two.
+Each active two-dimensional block has positive first pivot and zero
+determinant, giving positive semidefiniteness and rank one by the same
+Schur-complement argument. The two strict leading minors of $S_{12}$
+give positive definiteness. This does not use the false general
+criterion that nonnegative leading minors alone imply semidefiniteness.
+The last matrix inequality follows from
+$\zeta_1=\lambda p_{51}$, $\zeta_2=\lambda p_{52}$ and the strict
+coordinate-zero slack in (CG.115). Positive multipliers and the spectral
+formula for an adjugate of a positive matrix of corank one give the
+stated ranks and positivity of $H,Q^{01},Q^{02}$. $\square$
+
+## 14. A full-class lower witness on the original output space
+
+**Theorem 14.1 (unrestricted lower certificate).** Evaluating (CG.112)
+at $u_*$, every allowed common CPTP map in (CG.20) satisfies
+
+$$
+E(\Phi)\geq F(x_*).
+\tag{CG.124}
+$$
+
+This includes complex maps with population transfer and reverse
+coherence, arbitrary countably additive time laws and all additional
+zero-ideal output sectors.
+
+Proof. Use the output-first, unnormalized Choi convention
+
+$$
+J_\Lambda=\sum_{i,j}\Lambda(|i\rangle\langle j|)
+                         \otimes|i\rangle\langle j|.
+\tag{CG.125}
+$$
+
+It is the tensor-factor swap of the input-first convention (CG.54).
+For a CP live map $\Lambda$ with input effect $G_L=\Lambda^\dagger(I_3)$,
+the correct identities are
+
+$$
+\operatorname{Tr}_{\rm out}J_\Lambda=G_L^T,\qquad
+\operatorname{tr}((A\otimes\rho^T)J_\Lambda)
+ =\operatorname{tr}(A\Lambda(\rho)),\qquad
+\operatorname{tr}((I\otimes Z)J_\Lambda)
+ =\operatorname{tr}(Z^TG_L).
+\tag{CG.126}
+$$
+
+In particular the last transpose can be suppressed for the present real
+diagonal $Z_d$, but not for an arbitrary matrix $Z$. Define
+
+$$
+W=\frac14\sum_{e,n\in\{\pm1\}}
+(U_{e,n}\otimes U_{e,n})
+(A_5\otimes\rho_5^T+A_{27}\otimes\rho_{27}^T)
+(U_{e,n}\otimes U_{e,n})^\dagger.
+\tag{CG.127}
+$$
+
+The conjugate input representation in a general Choi covariance formula
+is $\overline U$; all four present $U_{e,n}$ are real, so it equals $U$.
+In output-input order the character spaces are
+
+$$
+\begin{aligned}
+&\langle|00\rangle,|11\rangle,|22\rangle\rangle,\qquad
+\langle|01\rangle,|10\rangle\rangle,\\
+&\langle|02\rangle,|20\rangle\rangle,\qquad
+\langle|12\rangle,|21\rangle\rangle.
+\end{aligned}
+\tag{CG.128}
+$$
+
+Indeed an entry $|ai\rangle\langle bj|$ survives the group average
+exactly when the products of its two coordinate signs agree. On the
+first space $W_{ii,jj}=N_{ij}$. On the $ij$ space its diagonal entries
+are $\sum_y(A_y)_{ii}p_{yj}$ and
+$\sum_y(A_y)_{jj}p_{yi}$, and its off-diagonal entry is $N_{ij}$.
+Consequently the full nine-dimensional inequality is
+
+$$
+S:=I_3\otimes Z_d-W
+ =S_0\oplus S_{01}\oplus S_{02}\oplus S_{12}\succeq0.
+\tag{CG.129}
+$$
+
+The direct-sum equality uses the order (CG.128). In particular the
+three two-dimensional spaces have not been suppressed. A real symmetric
+positive semidefinite witness is also positive on complex vectors,
+so (CG.129) bounds an arbitrary complex Hermitian positive Choi matrix.
+
+For each of the four $y=5$ histories choose a mathematical output effect
+with live part $U_{e,n}R_5U_{e,n}^\dagger$, identity on the entire
+canonical five-label failure register at every time, and zero on other
+sectors. For the four $y=27$ histories choose live part
+$U_{e,n}R_{27}U_{e,n}^\dagger$ and zero on every nonlive sector.
+Give these effects weights $\lambda/4$ and $(1-\lambda)/4$,
+respectively. The eight weights are positive and sum to one. They are
+coefficients of a lower witness, not preparation priors or labels
+accessible to the simulator. The $y=16$ errors remain in the original
+maximum.
+
+For normalized full outputs and an effect $0\preceq M\preceq I$,
+
+$$
+\operatorname{tr}M(\Omega-\omega)
+ \leq\frac12\|\Omega-\omega\|_{1,\mathrm{cq}}.
+\tag{CG.130}
+$$
+
+To see the factor, $\operatorname{tr}(\Omega-\omega)=0$ and
+$2M-I$ is a Hermitian contraction, whose pairing is bounded by the
+trace norm. This argument also applies to measures using a common
+dominating scalar measure. Summing the eight ideal payoffs gives
+
+$$
+\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                         +\frac6{11}\lambda.
+\tag{CG.131}
+$$
+
+Now let $\Phi$ be any allowed common channel, without assuming covariance.
+Compress its live output to $V$ to obtain the CP map $\Lambda$.
+Let $G_f$ be the input effect of its entire canonical failure register,
+including any stopped quantum support and singular time measures there.
+The uncounted-by-the-test, but still present, output effect is
+
+$$
+G_o=I-G_L-G_f\succeq0.
+\tag{CG.132}
+$$
+
+It includes live mass outside $V$, abort, rejection and all remaining
+zero-ideal sectors. The eight weighted simulated live payoffs are
+$\operatorname{tr}(WJ_\Lambda)$, and the weighted failure payoff is
+$\operatorname{tr}(D_fG_f)$ for
+$D_f=\lambda\operatorname{diag}(p_5)$: averaging the four actual input
+signs gives $\operatorname{diag}(p_5)$. Equations (CG.126) and (CG.132)
+give the exact budget identity
+
+$$
+\begin{aligned}
+\operatorname{tr}Z_d-\operatorname{tr}(WJ_\Lambda)
+                    -\operatorname{tr}(D_fG_f)
+={}&\operatorname{tr}(S J_\Lambda)
+   +\operatorname{tr}((Z_d-D_f)G_f)
+   +\operatorname{tr}(Z_dG_o)\geq0.
+\end{aligned}
+\tag{CG.133}
+$$
+
+Every term on the right pairs positive semidefinite matrices. Thus the
+simulated payoff is at most $\operatorname{tr}Z_d$. Subtract this from
+(CG.131), apply (CG.130), and bound the weighted average error by the
+original maximum. This proves (CG.124).
+
+The failure effect is constant on the exact time interval. Atoms and
+singular continuous mass therefore enter $G_f$ with their entire mass.
+Wrong stopped support in that register is also included in $G_f$.
+Other wrong-support and extra mass enters $G_o$. The half full norm in
+(CG.130) continues to count it all. No output-fixing reduction, finite
+time partition, minimax interchange, strong duality theorem or channel
+covariance restriction is needed for this lower proof. $\square$
+
+## 15. The complementary common channel and exact-time equality
+
+**Theorem 15.1 (a legitimate same-point common instrument).** Evaluate
+all quantities in (CG.116) at $u_*$. Define
+
+$$
+h=\frac{He_0}{\sqrt{H_{00}}},\qquad
+b^{0j}=\frac{Q^{0j}e_0}{\sqrt{Q^{0j}_{00}}}\quad(j=1,2),\qquad
+K_0=\operatorname{diag}(h),\qquad
+K_{0j}=b^{0j}_0|0\rangle\langle j|
+                  +b^{0j}_1|j\rangle\langle0|.
+\tag{CG.134}
+$$
+
+There is one CPTP instrument on all of $M_3(\mathbb C)$ given by
+
+$$
+\begin{aligned}
+\Lambda_*(A)&=K_0AK_0^\dagger+K_{01}AK_{01}^\dagger
+                                 +K_{02}AK_{02}^\dagger,\\
+\Phi_{*,\mathrm{live}}(A)&=\Lambda_*(A),\\
+\Phi_{*,\ell}(A)(dt)&=w_\ell\operatorname{tr}(\operatorname{diag}(m)A)
+                   h_0(t)\,dt\,P_f\quad(\ell=0,1,2,3,4),\\
+h_0(t)&=\frac2{(1+t)^2}.
+\end{aligned}
+\tag{CG.135}
+$$
+
+It assigns zero mass to all additional sectors. It has a specified
+extension to the whole original five-mode complex input algebra.
+
+Proof. The pivots in (CG.117) are positive. For a positive semidefinite
+rank-one matrix $A$ with $A_{00}>0$,
+$A=(Ae_0)(Ae_0)^\dagger/A_{00}$. Corollary 13.3 therefore implies
+$H=hh^T$ and $Q^{0j}=b^{0j}(b^{0j})^T$. The live Choi matrix of
+(CG.134) is exactly
+
+$$
+J_*=H\oplus Q^{01}\oplus Q^{02}\oplus0
+\tag{CG.136}
+$$
+
+in (CG.128). In particular the live map is CP on the whole complex
+algebra. Its action for arbitrary complex $A$, without imposing
+$A_{ij}=A_{ji}$, has entries
+
+$$
+\begin{aligned}
+(\Lambda_*A)_{ii}
+ &=H_{ii}A_{ii}+\sum_{j>i}Q^{ij}_{00}A_{jj}
+                         +\sum_{j<i}Q^{ji}_{11}A_{jj},\\
+(\Lambda_*A)_{ij}
+ &=H_{ij}A_{ij}+Q^{ij}_{01}A_{ji}\quad(i<j),\\
+(\Lambda_*A)_{ji}
+ &=H_{ji}A_{ji}+Q^{ij}_{10}A_{ij}\quad(i<j).
+\end{aligned}
+\tag{CG.137}
+$$
+
+Thus $C_y$ in (CG.116) is the actual live output on $\rho_y$. The
+reverse-coherence terms are part of a Kraus map, not a physical
+transposition gate.
+
+It remains to prove trace preservation as an exact identity. At a root,
+the adjugate identity gives
+
+$$
+S_0H=S_{01}Q^{01}=S_{02}Q^{02}=0.
+\tag{CG.138}
+$$
+
+The determinant differential is
+$d\det S=\operatorname{tr}(\operatorname{adj}(S)\,dS)$. Consequently,
+when $\eta$ is held fixed at its value at the point of differentiation,
+
+$$
+d_x\mathcal L
+ =\sum_{y\in\{5,27\}}\operatorname{tr}(dA_y\,\Delta_y)
+   +\sum_i(r_i-1)d\zeta_i+\frac6{11}d\lambda.
+\tag{CG.139}
+$$
+
+To verify (CG.139) directly, use (CG.137) to expand
+
+$$
+\operatorname{tr}(S_0H)+\sum_{i<j}\operatorname{tr}(S_{ij}Q^{ij})
+ =\sum_i\zeta_i r_i
+             -\sum_{y\in\{5,27\}}\operatorname{tr}(A_y C_y).
+\tag{CG.140}
+$$
+
+This is linear in the entries of $\zeta,A_y$, holding $H,Q$ fixed.
+Its differential, combined with $dF$, proves (CG.139), including the
+factor $1000$ in $H$. In this first differential $H,Q$ are the
+adjugate coefficients at that point; differentiating them again would
+not be the determinant differential being used.
+
+The $z$ stationarity equation gives $r_0-1=0$, because only
+$\zeta_0=z$ depends on $z$ in (CG.139). The Kraus column masses are
+$\sum_aK_a^\dagger K_a=\operatorname{diag}(r_0,r_1,r_2)$ by
+(CG.134). Thus, exactly at $u_*$,
+
+$$
+\sum_{a\in\{0,01,02\}}K_a^\dagger K_a
+                      +\operatorname{diag}(m)=I_3.
+\tag{CG.141}
+$$
+
+The two strict bounds on $m$ in (CG.117) make its diagonal nonnegative.
+Each failure density in (CG.135) is CP, with Kraus densities
+$\sqrt{w_\ell m_j h_0(t)}\,|f\rangle\langle j|$ for $j=1,2$.
+Their integrals are countably additive and remain positive at every
+ancillary amplification. Since $\int_0^1h_0(t)dt=1$ by (CG.90) and
+$\sum_\ell w_\ell=1$, (CG.141) proves joint trace preservation.
+
+Let $E:\mathbb C^3\to\mathbb C^5$ have the three orthonormal columns
+in (CG.6), and put $P_V=EE^\dagger$. A concrete five-dimensional
+extension is
+
+$$
+\begin{aligned}
+\widehat\Phi_{*,\mathrm{live}}(A)
+ &=E\Lambda_*(E^\dagger AE)E^\dagger,\\
+\widehat\Phi_{*,\ell}(A)(dt)
+ &=h_0(t)\left[
+ w_\ell\operatorname{tr}(E\operatorname{diag}(m)E^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)
+ \right]dt\,P_f.
+\end{aligned}
+\tag{CG.142}
+$$
+
+Each summand is a CP compression/Kraus or trace-and-prepare map.
+Its total effect is $E I_3E^\dagger+(I_5-P_V)=I_5$ by
+(CG.141), so it is CPTP, including on non-Hermitian inputs by linearity.
+Every one of the twelve inputs lies in $V$, so the extension changes
+none of their outputs. The complementary input subspace is sent to
+original failure index $2$, not to a new history label. $\square$
+
+**Theorem 15.2 (matching error for all twelve complete outputs).** The
+single channel (CG.135) has
+
+$$
+e_5=e_{27}=F(x_*)=\delta_{27},\qquad
+e_{16}<\frac{71}{484}<\frac{37}{250}<\delta_{27},
+\tag{CG.143}
+$$
+
+where $e_y$ denotes each of its four actual-history errors at height $y$.
+In particular $E(\Phi_*)=F(x_*)$ in precisely (CG.20).
+
+Proof. First extract the exact eigenvector and equal-error identities
+from the same root; stationarity alone is not being asserted to prove
+optimality. In the two $v_5$ coordinates of (CG.139) only $A_5$ varies,
+with its nonzero scalar weight $\lambda$. Likewise the two $v_{27}$
+coordinates vary only $A_{27}$, with weight $1-\lambda>0$.
+For a real symmetric $\Delta$, $v=(a,b,\sigma)^T$, $\sigma=\pm1$,
+and $\delta=v^T\Delta v/(v^Tv)$, the chart derivatives are
+
+$$
+\frac{\partial\delta}{\partial a}
+ =\frac{2((\Delta v)_0-\delta v_0)}{v^Tv},\qquad
+\frac{\partial\delta}{\partial b}
+ =\frac{2((\Delta v)_1-\delta v_1)}{v^Tv}.
+\tag{CG.144}
+$$
+
+Here $\Delta_y$ is held fixed as the coefficient of $dA_y$ in
+(CG.139). Vanishing of these two components, and
+$v^T(\Delta v-\delta v)=0$, force the remaining component to vanish
+because $v_2=\sigma\ne0$. Hence
+
+$$
+\Delta_5v_5=\delta_5v_5,\qquad
+\Delta_{27}v_{27}=\delta_{27}v_{27}.
+\tag{CG.145}
+$$
+
+Each $B_y$ has rank one and each $C_y\succeq0$ by Theorem 15.1, so
+$\Delta_y=B_y-C_y$ has at most one positive eigenvalue: a
+two-dimensional strictly positive subspace would intersect
+$\xi_y^\perp$, where the quadratic form is nonpositive. Both endpoint
+$\delta_y$ are positive by (CG.117). Therefore
+$\operatorname{tr}(\Delta_y)_+=\delta_y$ for $y=5,27$.
+
+The $\lambda$ equation in (CG.139), with $r_0=1$ and
+$q_5=p_{51}(1-r_1)+p_{52}(1-r_2)$, gives
+
+$$
+\delta_5+\frac6{11}-q_5=\delta_{27}.
+\tag{CG.146}
+$$
+
+Complementarity (CG.138), evaluated in (CG.140), gives
+$\sum_y\operatorname{tr}(A_yC_y)=\sum_i\zeta_i r_i$.
+Substitution into the definition of $F$, using
+$\zeta_i=\lambda p_{5i}$ for $i=1,2$, yields
+
+$$
+\begin{aligned}
+F(x_*)&=\lambda\delta_5+(1-\lambda)\delta_{27}
+              +\sum_i\zeta_i(r_i-1)+\frac6{11}\lambda\\
+ &=\lambda\left(\delta_5+\frac6{11}-q_5\right)
+                         +(1-\lambda)\delta_{27}=\delta_{27}.
+\end{aligned}
+\tag{CG.147}
+$$
+
+Next compute the original half norm, including its exact-time part.
+At an unsigned input the live ideal-minus-simulated block is
+$\Delta_y$, and the five stopped differences are
+$w_\ell(f_y-q_yh_0)P_f\,dt$. Their trace sums satisfy
+
+$$
+\operatorname{tr}\Delta_y=q_y-(1-s_y),\qquad
+\int_0^1(f_y-q_yh_0)dt=1-s_y-q_y.
+\tag{CG.148}
+$$
+
+Using $\|X\|_1=2\operatorname{tr}X_+-\operatorname{tr}X$ on a
+Hermitian matrix and the corresponding signed-density identity, these
+trace terms cancel. Since $w_\ell\geq0$, $\sum w_\ell=1$, and each
+stopped state has trace one, the complete half norm is exactly
+
+$$
+e_y=\operatorname{tr}(\Delta_y)_+
+                  +\int_0^1(f_y(t)-q_yh_0(t))_+dt.
+\tag{CG.149}
+$$
+
+This equality sums the norms in the five separately named sectors;
+it does not replace their output alphabet by one pooled label. This
+channel has no mass in extra or singular sectors, so their actual
+contributions to its full norm are zero. The lower certificate allowed
+arbitrary mass there.
+
+Exact-time signs follow from the elementary rational function
+
+$$
+\frac{f_y(t)}{h_0(t)}
+ =3y\left(\frac{1+t}{y+6t}\right)^2,\qquad
+\left(\frac{f_y}{h_0}\right)'(t)
+ =\frac{6y(y-6)(1+t)}{(y+6t)^3}.
+\tag{CG.150}
+$$
+
+The denominators are positive throughout $[0,1]$. Thus
+
+$$
+\min_{[0,1]}\frac{f_5}{h_0}=\frac{60}{121},\qquad
+\max_{[0,1]}\frac{f_{27}}{h_0}=\frac{36}{121},\qquad
+\max_{[0,1]}\frac{f_{16}}{h_0}=\frac{48}{121}.
+\tag{CG.151}
+$$
+
+The strict bounds on $q_5,q_{27}$ in (CG.117) give
+$f_5-q_5h_0>0$ and $f_{27}-q_{27}h_0<0$ at every exact time.
+Consequently (CG.145)–(CG.149) give
+$e_5=\delta_5+6/11-q_5=\delta_{27}=e_{27}$.
+
+At the middle height the three positive leading minors of $T_{16}$
+in (CG.117) prove $T_{16}\succ0$. Hence every eigenvalue of
+$\Delta_{16}$ is strictly less than $1/10$. Its at-most-one-positive
+property implies $\operatorname{tr}(\Delta_{16})_+<1/10$.
+The positive part must be retained in the time estimate:
+
+$$
+\begin{aligned}
+\int_0^1(f_{16}-q_{16}h_0)_+dt
+ &=\int_0^1h_0(t)
+       \left(\frac{f_{16}(t)}{h_0(t)}-q_{16}\right)_+dt\\
+ &\leq\left(\frac{48}{121}-q_{16}\right)_+
+ \leq\frac{48}{121}-\frac7{20}.
+\end{aligned}
+\tag{CG.152}
+$$
+
+The last right-hand side is positive, and $q_{16}>7/20$.
+Together with (CG.149) this gives
+
+$$
+e_{16}<\frac1{10}+\frac{48}{121}-\frac7{20}
+ =\frac{71}{484}<\frac{37}{250}<\delta_{27}.
+\tag{CG.153}
+$$
+
+Finally $K_0$ commutes with all four $U_{e,n}$. Each of $K_{01}$ and
+$K_{02}$ transforms by a single sign character, and
+$\operatorname{diag}(m)$ is invariant. Thus (CG.135) is covariant on
+every complex input. Its four errors at each height are identical by
+unitary invariance and unchanged failure densities. This proves
+(CG.143) for all twelve actual histories, without supplying a
+history index to the map. $\square$
+
+## 16. Exact minimax value and the remaining native-control obligation
+
+**Theorem 16.1 (the original full-output minimax).** With the exact
+isolated point of Proposition 13.2 and the whole-complex common channel
+of Theorem 15.1,
+
+$$
+\boxed{
+\inf_{\Phi\ \mathrm{common\ CPTP}}
+\max_{(x,\beta,m)\in\mathcal H}
+ \frac12\|\Phi(\rho_{x,\beta,m})-\Omega_{x,\beta,m}\|_{1,\mathrm{cq}}
+ =E(\Phi_*)=F(x_*)=\delta_{27},
+\quad
+0.14817810291080132013<E_*<0.14817810291080132014.
+}
+\tag{CG.154}
+$$
+
+The symbol $x_*$ on the right is the six-coordinate algebraic variable
+of Definition 13.1; the history height $x$ on the left is still the
+original scalar $y/256$.
+
+Proof. Theorem 14.1 bounds every allowed channel below by $F(x_*)$.
+Theorem 15.2 proves the reverse inequality using one legitimate channel
+at the very same exact point. Proposition 13.2 supplies the strict
+decimal enclosure. This is a matching witness and attainer argument,
+not an inference from KKT stationarity to global optimality. $\square$
+
+**Corollary 16.2 (relation to the earlier results).** The exact-value
+and identified-simulator questions in Open problems 7.3 and 11.2 have
+the answer (CG.154) in the enlarged comparison class (CG.20). Theorem
+8.4's attainment result, Theorem 9.3's strict inequality
+$L_{\rm full}<E_*$, the scalar-live construction of §10 and the
+fixed-filter construction of §12 remain valid with their stated scope.
+No uniqueness of a minimizing channel follows.
+
+Proof. Theorems 14.1 and 15.2 directly fulfill the simultaneous
+feasibility and matching-lower requirements of Proposition 11.1.
+All quantities and classes in the earlier results are unchanged.
+Uniqueness in Proposition 13.2 concerns only a zero in a specified
+parameter box; it is not a classification of optimal channels or
+other algebraic zeros. $\square$
+
+**Convention 16.3 (mathematical attribution and control boundary).** The
+algebraic ansatz (CG.112)–(CG.116), its rational center and the
+complementary three-Kraus construction are credited supplied
+mathematics. The particular instance-specific contribution is their
+root isolation, strict inequalities, full-class witness and exact-time
+attaining-channel deduction for (CG.20). The original histories,
+calibrated target law and common-input contract retain Attribution 7.2;
+the attainment, strict lower gap and fixed-filter upper facts are
+reused from §§8–12. These are ordinary computer-assisted and analytic
+proofs; no Lean/kernel verification or worldwide priority is asserted.
+
+The finite-matrix Choi/Kraus and joint CP/TP framework is established
+in Heinosaari, Jivulescu, Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/html/1205.0641v3), §2.1 and §6.1.
+Their Theorem 5 concerns at-most-qubit pairs and is not a qutrit
+pairwise substitute for a common channel. The full diagonal-sign
+covariance form, including population transfer and transposed
+coherence terms, is established in Nechita and Park, *Random covariant
+quantum channels*, [arXiv:2403.03667v2, §5](https://arxiv.org/html/2403.03667v2),
+[DOI:10.1007/s00023-025-01558-y](https://doi.org/10.1007/s00023-025-01558-y).
+The explicit block calculation (CG.128)–(CG.129) is the required
+specialization here. Jenčová, *Comparison of quantum channels and
+statistical experiments*,
+[arXiv:1512.07016v2](https://arxiv.org/html/1512.07016v2), Theorem 4,
+uses one common channel and the $2\epsilon$ trace-norm convention.
+These finite-dimensional literature results do not by themselves
+settle exact-time outputs; (CG.130)–(CG.133) and (CG.148)–(CG.153)
+provide the needed measure-level comparison directly.
+
+The attaining instrument acts on one normalized reached-old-live-cut
+specimen. The fixed metadata can be tensored onto every output in their
+same state. No height, parity, waveform, callback, helper specimen or
+survival-mass prior is furnished to it. All live coherences and five
+original labels are retained, with index $4$ still denoting mode $13$;
+the output time is exactly $t\in[0,1]$, equivalently $6+t$.
+The instrument specifies a joint output law and has no post-failure
+operation or acceptance renormalization. Mathematical sign averaging
+and real matrices install no physical conjugation gate.
+
+Realizing this particular common CPTP instrument using only the
+original native calibrated-actuator menu remains a separate interface
+obligation. Neither the source-indexed $K_x$ of (CG.14), an ideal
+continuous phase-record law nor a linear-observation coercivity lemma
+supplies that correspondence. The result provides the exact benchmark
+for such an interface, without constructing the interface or granting
+extra observations or controls. It asserts neither finite physical
+storage of an exact time, efficient synthesis, uniqueness of the
+optimizer, an unconditional-prefix optimum nor completion of the
+continuing research programme.
+
+## 追加锚（本行以下为增补区）
