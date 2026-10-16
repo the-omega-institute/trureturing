@@ -2803,14 +2803,180 @@ The center-only contraction is already broad before adding the
 error radii. These data do not distinguish input uncertainty,
 conditioning, loss of joint cancellations and validated-solve
 overestimation; no condition number or spectral floor was measured.
-The missing checkpoint is a useful joint enclosure of
-$P_+x=(\widehat{\mathcal B}_VT_+)^*$ and
-$(\widehat{\mathcal B}_VT_+)x$, including its directional residual
-bound, followed by sufficiently tight error contractions. Repeating
-the same interval-box solve supplies no new source information.
-The good-block metric remains a separate obligation. Full retained
-and cofinal positivity, the Robin tail estimate and RH remain open;
-this numerical application is not Lean verification.
+The exact-reference certificate below supplies useful enclosures of
+this center metric and both error traces from the accepted packets.
+Their joint full-row sign and the good-block metric remain separate
+obligations. Repeating the same interval-box solve supplies no new
+source information. Full retained and cofinal positivity, the Robin
+tail estimate and RH remain open; this numerical application is not
+Lean verification.
+
+### An exact reference and directional residual certificate
+
+The [exact-reference, trace and joint signed applications](https://github.com/the-omega-institute/trureturing-experiments/tree/f5a4f57a7a549684510c928f28042d7d40e4dcfb/docs/reports/weil-c27)
+use the existing inverse-residual identity and Neumann comparison on
+the same actual $P=P_+\succ0$ and $h=\widehat{\mathcal B}_VT_+$.
+From exact rational midpoints of the mirrored core and saved finite
+centers, construct $P_0,h_0$, then the small exact FLINT inverse
+$R=P_0^{-1}$ and reference profile $x=Rh_0^*$. Exact products check
+$RP_0=I$ and $P_0x=h_0^*$. No midpoint positivity is assumed.
+
+Let $\Delta P=P-P_0$, $\delta h=h-h_0$ and
+$r=\delta h^*-\Delta Px$. With $E\ge|\Delta P|$ entrywise and
+a directed upper $\eta\ge\||R|E\|_\infty$ strictly below one,
+
+$$
+hP^{-1}h^*=h_0x+2\operatorname{Re}(\delta h\,x)
+-x^*\Delta Px+r^*P^{-1}r,
+$$
+
+$$
+0\le r^*P^{-1}r\le
+\frac{\|r\|_1\|Rr\|_\infty}{1-\eta}.
+$$
+
+The exact reference energy avoids evaluating large cancelling terms
+as independent intervals. Source uncertainty in the pivot, $T_+$,
+center and matrix remains enclosed in the signed corrections.
+Under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises, the numerical certificate gives
+
+$$
+\eta<3.976\times10^{-28},\quad
+|2\operatorname{Re}(\delta h\,x)|<4.39\times10^{-79},
+$$
+
+$$
+|x^*\Delta Px|<3.30\times10^{-28},\quad
+r^*P^{-1}r<1.309\times10^{-55}.
+$$
+
+Consequently
+
+$$
+391.85784253565945840673491942575
+<hP^{-1}h^*<
+391.85784253565945840673491942642.
+$$
+
+The1024-bit consumption takes0.104 seconds. Independent1536-bit
+consumption takes0.092 seconds; all324 exact reference fields match,
+the actual correction/energy intervals overlap, and both directed
+center widths are below $6.584\times10^{-28}$. These bounds do not
+identify the sole cause of the earlier broad interval or measure
+an actual condition number or intrinsic uncertainty floor.
+
+The same reference permits a thin error-trace contraction without
+another inverse or solve. The Hermitian path $P_0+t\Delta P$ is
+nonsingular for $0\le t\le1$ by Neumann. Actual $P\succ0$ therefore
+implies $P_0\succ0$ by constant inertia along that path. Since
+$R\Delta P$ is similar to a Hermitian matrix and has spectral
+radius at most $\eta$, standard congruence/inversion gives
+
+$$
+\frac{R}{1+\eta}\preceq P^{-1}\preceq\frac{R}{1-\eta}.
+$$
+
+For each same actual PSD $C_j^+=T_+^*C_jT_+$, $j=f,t$,
+
+$$
+\frac{\operatorname{tr}(RC_j^+)}{1+\eta}
+\le\operatorname{tr}(P^{-1}C_j^+)
+\le\frac{\operatorname{tr}(RC_j^+)}{1-\eta}.
+$$
+
+The1024-bit thin products take0.030 seconds, retaining every trace
+cross term, actual $T_+$ uncertainty and the full far allowance.
+The finite/far traces are approximately $8.869400460878844$ and
+$6.026200142006464$, with directed actual-trace interval widths
+below $8.423\times10^{-27}$ and $5.210\times10^{-27}$ respectively.
+The same triangle bounds with the certified center and full-row
+$b_0$ now give
+
+$$
+-586<q<388,\qquad -287<D_*+q<688.
+$$
+
+These marginal bounds leave the sign undecided. The triangle estimate does
+not consume every correlation between the negative coordinate and
+the positive-subspace errors already recorded in $C_f,C_t$.
+A joint signed estimate below uses these correlations to exclude
+the $D_*$-based sufficient update. A sufficiently sharper common gain
+charge and the good-block inverse metric remain missing. These are
+existing exact-rational, inverse-residual and
+Loewner methods applied to the saved common object, not new generic
+algorithms or Lean proofs. Actual full retained/cofinal positivity,
+the original Robin tail estimate and RH remain open.
+
+### A joint signed bound excludes the coarse common charge
+
+The same error Grams retain correlations between the negative
+coordinate and positive-subspace errors. Let
+$q_c=\widehat{\mathcal B}_V\Sigma_*^{-1}\widehat{\mathcal B}_V^*$
+and $g=\Sigma_*^{-1}\widehat{\mathcal B}_V^*$. The accepted reference
+profile $x$ and center residual $r_c=h^*-Px$ give
+
+$$
+g=g_x+TP^{-1}r_c,\qquad
+g_x=(\widehat{\mathcal B}_{V,0}/a)e_0+Tx.
+$$
+
+Trace domination of each actual PSD error Gram yields
+
+$$
+\|C_j^{1/2}TP^{-1}r_c\|^2\le\tau_jQ_c,\qquad
+L_j=\sqrt{(g_x^*C_jg_x)_{\rm up}}
++\sqrt{\tau_{j,\rm up}Q_{c,\rm up}},\quad j=f,t.
+$$
+
+Here $Q_c\ge r_c^*P^{-1}r_c$, and $L_j$ bounds the corresponding
+linear error. For the full row $b=\widehat{\mathcal B}_V+e$,
+$e=f+t$, quadratic expansion gives
+
+$$
+q(b)=q_c+2\operatorname{Re}(eg)+e\Sigma_*^{-1}e^*,
+$$
+
+$$
+-\frac{(\sqrt{(C_f)_{00}}+\sqrt{(C_t)_{00}})^2}{-a}
+\le e\Sigma_*^{-1}e^*
+\le(\sqrt{\tau_f}+\sqrt{\tau_t})^2.
+$$
+
+The1024-bit thin products take0.021 seconds, with no inverse or
+solve. Under the inherited actual common-form/domain,
+inverse/comparison and sound-cache premises, directed bounds give
+
+$$
+-219.39<q<-35.85,\qquad 79.76<D_*+q<263.30.
+$$
+
+Independent1536-bit consumption takes0.017 seconds; all17 scalar
+interval pairs and the final $q$ interval are endpoint-identical.
+
+Thus the particular $D_*$-based sufficient lower update is not PSD
+for any good-block metric $\Gamma\ge0$. This is an exclusion of
+that lower construction, not a negative direction for actual
+$S_N$ or an exclusion of every rank-one refinement.
+
+The negative upper for $q$ supplies the full coupled sufficient
+budget $D_\sharp+\Omega<35.85$, if positive
+$D_\sharp\ge\mathcal K$ and $\Omega\ge\Gamma$ are independently
+certified for this same common object. Neither bound is supplied.
+The available identity for $\mathcal K$ implies only
+
+$$
+\mathcal K\le D_*-F_\phi A_\rho^{-1}F_\phi^*,
+$$
+
+since $D_*$ already bounds
+$\delta+\rho\|u_{\rm far}\|_W^2$ upward. A quantitative channel-energy
+lower bound and the good-block inverse metric are the remaining
+interfaces; the ceiling cannot replace the exact charge in an
+equality. These are existing quadratic/Cauchy/trace methods applied
+to the saved common source, without generic novelty or Lean
+verification. Actual full retained/cofinal positivity, the Robin
+tail estimate and RH remain unresolved.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
