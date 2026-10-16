@@ -128,6 +128,10 @@ end AuricFibUniversalProduction
         self.assertEqual([row['count'] for row in current['delayed']['reading']['layered_spectrum']['layers']],
                          [0, 0, 4, 0])
         self.assertEqual(current['constant']['reading']['unique_capture'][0]['count'], 0)
+        for key, layer in [('finite', 0), ('constant', 0), ('delayed', 2)]:
+            sufficiency = current[key]['reading']['continuation_target']['residual_sufficiency']
+            self.assertEqual((sufficiency['sufficient'], sufficiency['conflict_count'],
+                              sufficiency['determined_at_layer']), (True, 0, layer), key)
         decoded = current['decodedNat']['reading']['continuation_target']['outputs']
         self.assertTrue(all(row['value'] == {'kind': 'text', 'value': 'seven'} for row in decoded))
         self.assertTrue(all(row['decoded']['literal'] == {'kind': 'nat', 'value': 7}
