@@ -241,8 +241,10 @@ private theorem cone_model (W : Matrix (Fin 3) (Fin 3) ℂ) (hW : IsSymmetricWit
   · intro z hz
     have hnull : qform J ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) = 0 := by
       have hh : qform G z = qform J ((U : Matrix (Fin 3) (Fin 3) ℂ) *ᵥ z) := by
-        dsimp [qform, G]
-        rw [← mulVec_mulVec, ← mulVec_mulVec, dotProduct_transpose_mulVec, dotProduct_comm]
+        simpa only [qform, G, LinearMap.BilinForm.comp_apply, Matrix.toBilin'_apply',
+          Matrix.toLin'_apply] using
+          congrArg (fun B : LinearMap.BilinForm ℂ (Fin 3 → ℂ) => B z z)
+            (Matrix.toBilin'_comp J (U : Matrix (Fin 3) (Fin 3) ℂ) U).symm
       exact hh ▸ hz
     obtain ⟨v, hv⟩ := (coherent_iff_null _).mpr hnull
     have hpos := hW.2 v
