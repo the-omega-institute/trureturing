@@ -283,7 +283,14 @@ def run_regressions(repository, previous, current, selected=False):
     same inputs without a persisted semantic test receipt.
     """
     current_inputs = application_inputs(current)
-    previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
+    try:
+        previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
+    except ValueError as error:
+        if os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1' or str(error) != 'fib.invalid_partition':
+            raise
+        # Explicit regeneration cannot use a rejected old partition as equality
+        # evidence. Require one canonical suite before publishing fresh data.
+        previous_inputs = None
     changed = current_inputs != previous_inputs
     print(f'LEAN_INSPECTOR_FIB_REGRESSIONS changed={str(changed).lower()} selected={str(selected).lower()}',
           flush=True)

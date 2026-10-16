@@ -268,7 +268,8 @@ run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 # The writer has returned. Complete regressions before replacing the published
 # report, sharing one invocation with explicit compiler/analyzer unit coverage.
-run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" \
+run_phase fib-regressions env REGENERATE_REPORT_ARTIFACTS="$REGENERATE_REPORT_ARTIFACTS" \
+  python3 -B "$SCRIPT_DIR/fib_analysis.py" \
   "$REPOSITORY/.lake/build/lean-inspector/report.zip" --regressions "$REPOSITORY" \
   --previous "$OUTPUT" --selected "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}"
 # Publication and seal share one canonical cache guard.

@@ -27,6 +27,9 @@ internal sealed class StubCliEnvironment(
     public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) =>
         checkDelta ?? throw new NotSupportedException();
 
+    public ExplicitCommandResult CheckSource(IReadOnlyList<string> arguments) =>
+        throw new NotSupportedException();
+
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
     public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
