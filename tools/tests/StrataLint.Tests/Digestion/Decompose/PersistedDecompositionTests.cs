@@ -111,7 +111,7 @@ public sealed class PersistedDecompositionTests
         var parent = Assert.Single(f.Document.RequireDigestionEntries(), entry => entry.AtomId == f.Parent.AtomId);
 
         var plan = DigestionDecomposition.Plan(parent, DecomposeFixture.Atom(text).RawBytes,
-            AtomizerRegistry.Require(atomizer).Atomize, f.Rules);
+            AtomizerRegistry.Require(atomizer).Atomize, f.Rules, f.Snapshot);
         Assert.Equal(persistedChildren.Length, plan.Children.Length);
         Assert.Equal(parent.Receipts.ChainAtoms.ToArray(),
             plan.Children.Select(child => child.Fingerprints.RawSha256[7..]).ToArray());

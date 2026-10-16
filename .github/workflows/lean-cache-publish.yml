@@ -9,7 +9,7 @@ name: Lean build cache publication
 on:
   pull_request:
     branches: [dev, 'integration-**']
-    types: [labeled]
+    types: [opened, reopened, synchronize, labeled]
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
@@ -127,7 +127,7 @@ jobs:
 
   pr-dispatch:
     name: Dispatch the PR cache build to its target
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'lean-cache-produce'
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'lean-cache-produce') && (github.event.action != 'labeled' || github.event.label.name == 'lean-cache-produce')
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 5
     permissions:

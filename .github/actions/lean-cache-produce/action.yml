@@ -1,5 +1,5 @@
 name: Produce the Lean Actions cache
-description: Resume long builds separately and publish only complete validated Lean seeds.
+description: Resume long builds separately and publish only complete validated Lean seeds, completing dependency-scoped FIB regressions required by report production.
 inputs:
   release-seed-tag:
     description: Exact local candidate Release to restore before the long build

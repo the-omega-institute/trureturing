@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply prime, tail and complement inputs at c=9. The conditional c9 retained comparison has producer and separate-session sign executions on the same hash-bound inputs. A positive constant prime reference and pointwise exterior positivity are incompatible at band256 for c>=27; the same cofinal strategy requires growing bands. Independent matrix regeneration and moment containment remain unverified; cofinal positivity remains unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply prime, tail and complement inputs at c=9. Project moment enclosures are computed by the published source-only oracle; the regenerated kernel has exactly the previous centers and sufficient target, permitting reuse of the prior positive execution. A positive constant prime reference and pointwise exterior positivity are incompatible at band256 for c>=27; the same cofinal strategy requires growing bands. Independent implementation, prime-matrix regeneration and cofinal positivity remain unverified.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -15,7 +15,7 @@ triage: anchor
 
 The primary source is the author's release [v1.0-mcom-submission](https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission), submitted to *Mathematics of Computation* on 14 September 2026. The inspected source is pinned to commit `b6cd2183c1e79c6c27a34267812a7b2d73ed1b59`: [manuscript TeX](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/frozen-source/publication/manuscript.tex) and [submitted PDF](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/manuscript.pdf). The downloaded PDF has SHA-256 `91126eee6ceb5315a4a40a4d4b2f34d058a71432ae18a8aaf47146f71abf418e`, matching the pinned README's submitted-original hash. This is an author-posted submission; journal acceptance, a DOI and external human reproduction are not asserted by the release.
 
-The theorem statements and analytic interfaces below were inspected in the pinned source. The numerical package was not executed, and the source's historical verification labels are not independent evidence supplied by this note. The complete package is the separately attached `w200-frozen-artifact.zip`, rather than GitHub's automatic source archive. The [rights statement](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/RIGHTS.md) grants no blanket open-source license; this note provides citations and mathematical applications, without copying its implementation or certificates.
+The theorem statements and analytic interfaces below were inspected in the pinned source. The author's complete numerical certificate package was not executed; its source-only moment oracle was executed separately as specified below. The source's historical verification labels are not independent evidence supplied by this note. The complete package is the separately attached `w200-frozen-artifact.zip`, rather than GitHub's automatic source archive. The [rights statement](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/RIGHTS.md) grants no blanket open-source license; this note provides citations and mathematical applications, without copying its implementation or certificates.
 
 ## Source normalization and support
 
@@ -412,7 +412,7 @@ $$
 
 The positivity of the even pole is used only in the lower complementary bound. Its upper allowance remains in the cross and norm bounds. These bounds cover the entire complement inside the even Hilbert space; they do not assert an odd-sector result or supply the finite sign in (A4).
 
-For this common embedding, (A4) can use $e=1372r+p$, $n=896r^2$ and $h=8996r^2+p$, with $n<1/2<4/5$. The source's sharper prime input $m_*=264/325$, $b_*=2011/325$ can also be used directly in its general equations (18)--(22). The actual finite $J_9,D_9$, an upper matrix bound for $G_9$, their directed source errors, and the resulting finite sign test remain unpaid. The ordinary compression $E^*M_9E$ is an upper bound for $G_9^{-1}$, so it cannot replace a lower bound for that inverse compression. The prime-coupling term $D_9$ does not vanish merely because the retained space is finite-dimensional. A positive floating compression would not discharge these obligations.
+For this common embedding, (A4) can use $e=1372r+p$, $n=896r^2$ and $h=8996r^2+p$, with $n<1/2<4/5$. The source's sharper prime input $m_*=264/325$, $b_*=2011/325$ can also be used directly in its general equations (18)--(22). For this 224-mode instance, the actual finite $J_9,D_9$, an upper matrix bound for $G_9$, their directed source errors, and the resulting finite sign test remain unpaid; the separate 256-mode instance below supplies its own finite comparison. The ordinary compression $E^*M_9E$ is an upper bound for $G_9^{-1}$, so it cannot replace a lower bound for that inverse compression. The prime-coupling term $D_9$ does not vanish merely because the retained space is finite-dimensional. A positive floating compression would not discharge these obligations.
 
 The following exact scalar replay checks the new ellipse, width and coefficient comparisons. It uses the source analytic suppliers above and does not prove those suppliers or reconstruct a numerical certificate.
 
@@ -440,13 +440,19 @@ $$
 \qquad 0\le q\le1023.
 $$
 
-Their definition contains no support half-width. The release packet `w200-pub-2026-09-14/reproduction/release-run/certificates/moments.json` has SHA-256 `f8cb5c681a22755b980d2e98d781353fe9ce058fe33eb8a7753585e2c52b2f93`, matching the pinned `frozen-manifest.json`. Its 1,024 ordered rows all have `hi-lo=3`. The checked packet-wide field `parameters.outputBits=1024` specifies the $2^{-1024}$ grid for every row; the rows have no separate `outputBits` field. Thus the packet midpoints are $\widehat\vartheta_q=(\mathrm{lo}_q+\mathrm{hi}_q)/2^{1025}$. The checked parameters also specify the common band $256$ and background $7/2$. Its metadata records the original $L=17/16$, which is absent from the moment formula and is not a width to retain in the new kernel.
+Their definition contains no support half-width. The project supplies new moment rows by directly reusing the published source-only oracle in [`01-check.py`](https://github.com/luciferyu666/certified-weil-positivity/blob/b6cd2183c1e79c6c27a34267812a7b2d73ed1b59/frozen-source/reproduction/source/01-check.py), SHA-256 `4ed7661f1f869ed6d37d7bc52f1a0889a8d305a790663dc0ae43d76f2ea0e356`. Its `complete_oracle()`, `check_rows()` and `mutation_controls()` functions use neither the author moment packet nor any retained matrix or positivity certificate. The original CLI's width metadata is absent from these functions' mathematical inputs. The oracle's digamma shifts, integrated recurrences, Binet remainder and outer normalization were checked against Appendix D.1; no new moment algorithm is claimed.
 
-The small [reviewer-materials archive](https://github.com/luciferyu666/certified-weil-positivity/releases/download/v1.0-mcom-submission/w201-reviewer-materials.zip) has SHA-256 `e5547b885d3df9113895877032ba861235adb159cd5b816c9d9f6080d22fbf41` and contains that manifest. Member size and SHA-256 were checked after selective retrieval of the moment packet; the full large archive hash was not checked. These are data-identity and format checks. The mathematical premise that every interval contains its moment, and hence $|\vartheta_q-\widehat\vartheta_q|<2^{-1023}$, is the author's Appendix D.1 claim. Its producer and oracle were not reexecuted here. The author's programs and certificate data remain ignored, read-only local input and are not redistributed in this repository. The identity checks establish neither moment containment nor a certificate result.
+The project wrapper executes the complete 6400-bit oracle and encloses each output on the $2^{-1024}$ grid by outward floor and ceiling. Both the producer and a separate native execution returned all 1,024 ordered rows, with maximum width one grid unit and all four built-in negative controls rejected. Their scientific rows agree exactly. The retained project packet has SHA-256 `fc94d792f80e832d48f167e30c2ab59f56ea1fde61ed2b50d665e2520526cb6d`, common band $256$ and background $7/2$. For midpoint $\widehat\vartheta_q=(\mathrm{lo}_q+\mathrm{hi}_q)/2^{1025}$, the wrapper's conservative width limit of two gives
+
+$$
+|\vartheta_q-\widehat\vartheta_q|\le2^{-1024}<2^{-1023}.
+$$
+
+Thus the actual new rows supply the former author-packet containment premise. This does not certify the original author packet, and repeating the author's oracle is not an independent implementation. Its complete Binet remainder is included once. The author's source remains an external, pinned input under the published reproduction authorization, without redistribution of its code or old certificate. These computations and the analytic source review are not Lean verification.
 
 ## A new-width kernel from the same scalar input
 
-Assuming the moment containment just specified, Appendix D.2, *A full-operator kernel enclosure*, applies with the actual $a=\log3$. Put $z=512a<563$ and define
+Using the computed moment enclosures just specified and the source analytic proof, Appendix D.2, *A full-operator kernel enclosure*, applies with the actual $a=\log3$. Put $z=512a<563$ and define
 
 $$
 k_{0,9}(2ay)=\sum_{q=0}^{1023}
@@ -460,7 +466,7 @@ $$
 914\frac{563^{2048}}{2048!}<2^{-758}.
 $$
 
-Indeed $(68/25)563/2048<3/4$, so the corresponding factorial estimate in Appendix D.2 applies. Consequently the full kernel and convolution operators obey the conditional bounds
+Indeed $(68/25)563/2048<3/4$, so the corresponding factorial estimate in Appendix D.2 applies. Consequently the source analytic proof and computed moment enclosures give the full-kernel and convolution-operator bounds
 
 $$
 \sup_{|x|\le2a}|k(x)-k_{0,9}(x)|<2^{-209},
@@ -485,7 +491,7 @@ $$
 \tag{A12}
 $$
 
-Thus $h_{0,9}^{(0)}=(I-B_{0,9}-\delta I)v_{0,9}$ approximates the actual filtered vector with norm error less than $2^{-768}$. Since $\|h_{0,9}\|<1/29$, its rank-one update error is at most $81(2\|h_{0,9}\|2^{-768}+2^{-1536})<2^{-765}$. Together with (A11), a matrix assembled from $K_{0,9}+81|h_{0,9}^{(0)}\rangle\langle h_{0,9}^{(0)}|$ has analytic operator error less than $2^{-206}$, before paying its own directed arithmetic and center rounding. This is conditional source-input reuse and new-width assembly, not a reproduced author certificate, a finite sign test or a kernel-verified result.
+Thus $h_{0,9}^{(0)}=(I-B_{0,9}-\delta I)v_{0,9}$ approximates the actual filtered vector with norm error less than $2^{-768}$. Since $\|h_{0,9}\|<1/29$, its rank-one update error is at most $81(2\|h_{0,9}\|2^{-768}+2^{-1536})<2^{-765}$. Together with (A11), a matrix assembled from $K_{0,9}+81|h_{0,9}^{(0)}\rangle\langle h_{0,9}^{(0)}|$ has analytic operator error less than $2^{-206}$, before paying its own directed arithmetic and center rounding. This is source-oracle reuse and new-width assembly. It does not reproduce the author's certificate or itself supply a finite sign test or a Lean-verified result.
 
 The needed scalar comparisons can be replayed without regenerating any moment:
 
@@ -503,9 +509,9 @@ assert 81 * (F(2, 29) * F(1, 2**768) + F(1, 2**1536)) < F(1, 2**765)
 print('new-width kernel and actual filtered-band allowances passed')
 ```
 
-## The remaining retained-matrix consumer at $c=9$
+## The retained-matrix criterion at $c=9$
 
-The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
+The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below state the criterion used by the 256-mode comparison below.
 
 On the actual interval $(-\log3,\log3)$, the compact self-adjoint operator $K_9$ has the source's kernel
 
@@ -523,7 +529,7 @@ Q(f)\ge2^{-49162}\|f\|^2+
 \tag{A7}
 $$
 
-The sign of the bounded term in (A7) is not established. Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits restricting **all** operators, norms and complements to the even Hilbert space for the existing even-test RH route. In that space $U_9=81|h_{0,9}\rangle\langle h_{0,9}|$; the even pole contribution is also nonnegative, but the central Gamma band remains payable. Put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
+The decomposition (A7) alone does not establish the sign of its bounded term; that requires the following retained-matrix comparison, instantiated below on the even space. Use the same actual interval, orthonormal retained embedding $E$ and projection $P=EE^*$ throughout. Reflection invariance permits restricting **all** operators, norms and complements to the even Hilbert space for the existing even-test RH route. In that space $U_9=81|h_{0,9}\rangle\langle h_{0,9}|$; the even pole contribution is also nonnegative, but the central Gamma band remains payable. Put $V_9=K_9+U_9$, $J_9=E^*V_9E$, $R_9=V_9-EJ_9E^*$ and
 
 $$
 G_9=E^*M_9^{-1}E,\qquad
@@ -540,7 +546,7 @@ G_9^{-1}+J_9\succeq
 \tag{A4}
 $$
 
-This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal even tests in this window when all objects are restricted to the even space. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, their directed source errors, the inverse-compression bound and the finite sign test remain payable. The tail input is supplied by (A5)–(A6), and the explicit even embedding has its cross and complementary-block allowances in (A8)–(A9). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal even tests in this window when all objects are restricted to the even space. This is the published block criterion. Applying it requires the actual entries of $K_9$ and the filtered-vector columns, their directed source errors, the inverse-compression bound and a finite sign test. The 256-mode instance below supplies this comparison through its source inputs and directed evidence; the 224-mode instance above remains unpaid. The tail input is supplied by (A5)–(A6), and the explicit even embedding has its cross and complementary-block allowances in (A8)–(A9). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
 
 ## A common 256-mode consumer
 
@@ -586,9 +592,13 @@ W^{-1}+J_0-\varepsilon_JI-2^{-187}I
 \tag{A13}
 $$
 
-All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note supplies its criterion and error interfaces, with no kernel theorem or originality claim.
+All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ through the computed moment enclosures and the source analytic suppliers above. Source positivity of the original window does not settle (A13). This note supplies its criterion and error interfaces, with no kernel theorem or originality claim.
 
-The [actual c9 reproduction package](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/weil-c9/README.md) publishes project-authored programs, hash-bound new-width matrix inputs and producer and separate-session conditional runs of (A13). The separate native Codex CLI session used the same program and matrix inputs, reusing the producer's environment after directly checking the pinned versions. Its full wrapper exited zero at 1536 bits; inspection of its new result confirmed all 256 serialized pivot lower endpoints strictly positive, no directed negative witness, and the exact Frobenius bound 32 by recomputing the squared norm from all 65,536 trial integers. The [compact execution record](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/weil-c9/result-summary.json) binds that fresh result by its hash. The recorded minimum pivot lower bound is not an eigenvalue bound. Moment containment remains an author premise; the retained-target source contract was reviewed separately, while independent implementation and matrix regeneration remain unverified. The package reuses the existing inputs rather than replaying the author's old certificate. This is independent execution evidence for the same conditional sufficient comparison, with no new mathematics or kernel proof; the cofinal support positivity required for RH remains unproved.
+The [actual c9 reproduction package](https://github.com/the-omega-institute/trureturing-experiments/blob/a017113d309c1ac066937cb5c450945ba31e6c5b/docs/reports/weil-c9/README.md) supplies the newly computed source moments and the kernel regenerated from them at 3072-bit directed precision. All 65,536 exact $2^{-512}$-grid $J_0$ centers, all filtered-column centers, prime centers, arithmetic and analytic allowances, canonical basis and support agree with the earlier comparison. The complete target construction also agrees: the trial proposal and rounding, $s=32$, $\mu=4/5$, $\Delta_X=1104\varepsilon_A+1280\varepsilon_B$, $\varepsilon_D$, $\varepsilon_J=2^{-205}$, identity charge $2^{-187}$ and $D$ coefficient $2^{-186}$ are unchanged. This exact identity permits reuse of the earlier positive target execution without another sign run. Reuse fixes the prior certified dyadic trial $X$; no new floating proposal or trial integers are asserted to have been computed.
+
+The original [positive execution record](https://github.com/the-omega-institute/trureturing-experiments/blob/a017113d309c1ac066937cb5c450945ba31e6c5b/docs/reports/weil-c9/result-summary.json) retains its original manifest SHA-256 `e2dd9ea5530cf353d643895676230952ce7e803aea27c161c60c534454cd1133`. Its separate native Codex CLI execution exited zero at 1536 bits, inspected all 256 serialized pivot lower endpoints as strictly positive, found no directed negative witness, and verified the exact Frobenius bound 32 from all 65,536 trial integers. The recorded minimum pivot lower bound is not an eigenvalue bound. The new [source-input verification](https://github.com/the-omega-institute/trureturing-experiments/blob/a017113d309c1ac066937cb5c450945ba31e6c5b/docs/reports/weil-c9/source-input-result.json) binds the new inputs and their exact target identity; it records no fresh sign execution and does not relabel the old run as a new-manifest execution.
+
+The separate input-verification session executed the reused source oracle and the project kernel producer and checked the exact target identity. Independent implementation and prime-matrix regeneration remain absent. The analytic transfer uses the manuscript's source suppliers; this package supplies no Lean proof, external human reproduction or cofinal support positivity. In particular this single-width even comparison does not prove RH.
 
 ```python
 from fractions import Fraction as F
@@ -760,3 +770,121 @@ Thus even a band growing polynomially in $c$ is insufficient for **these two sim
 The existing [joint pole–prime localization identity](frankliebseiringer2006hardy.md) provides another representation: it combines the continuous prime main term with the pole and Gamma terms before estimating the signed Chebyshev remainder. Its common-test remainder still lacks the required favorable bound. Alternatives to the present obstruction must supply such a joint estimate, control a signed exterior band, or justify another reference operator without a globally positive $\beta I-C_{{\rm p},c}$. None is supplied by raising $\beta$ alone, reusing the scalar moment packet at a different band, or changing the FIB coordinates. These conclusions are source applications and interface analysis, not originality claims or a proof of RH.
 
 The reusable [spectral construction](connesconsanimoscovici2026spectral.md), [ground-state theorem and negative example](connesvansuijlekom2025quadratic.md), [effective prolate concentration bounds](karnikrombergdavenport2021prolate.md), [semilocal trace remainder](connes1999trace.md), [archimedean signed Sonin comparison](connesconsani2021archimedean.md) and [semilocal dual pairing](connesconsanimoscovici2024semilocal.md) are catalogued with their source hypotheses and parameter maps. They should be reused in searching for an actual common-form estimate. Their different operator, normalization and sign contracts do not supply the retained comparison or its cofinal extension automatically.
+
+## Compact corrections cannot repair the negative prime reference
+
+For the same fixed $c>1$, put $d=\log c$ and $I=(-d/2,d/2)$.
+The obstruction above persists after every compact selfadjoint correction
+on the actual even Hilbert space. The required ingredients are classical
+[simultaneous torus recurrence](../Fourier/onishchik2020kronecker.md)
+and the weak-to-norm property of compact operators: Teschl,
+[*Mathematical Methods in Quantum Mechanics*](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+the inspected first-edition text identified in the
+[existing compactness note](lenz2010compactness.md#existing-spectral-suppliers),
+Lemma 6.8(iii), printed pp.137–138.
+
+The pinned Liu manuscript already uses weakly null modulations and
+compactness in its “Obstruction Theorem — Prime-power eight and tail
+retention,” equations (13)–(16). That theorem treats the tail-dropping
+localization $\mathcal D_\chi$ and its cutoff autocorrelation. The
+calculation below applies the same method to $M_{c,\beta}$ itself,
+with its actual even space, exact clipped overlap and threshold
+$\beta-\rho(c)$. These operators and conclusions are distinct.
+
+The classical modulation mechanism also appears in L. A. Coburn,
+R. G. Douglas, D. G. Schaeffer and I. M. Singer,
+[C*-algebras of operators on a half-space, II. Index theory](https://www.numdam.org/item/PMIHES_1971__40__69_0/),
+*Publications mathématiques de l'IHÉS* **40** (1971), 69–79,
+[DOI:10.1007/BF02684694](https://doi.org/10.1007/BF02684694),
+Lemma 3.5(i),(iii), printed p.75. The inspected
+[primary PDF](https://www.numdam.org/item/PMIHES_1971__40__69_0.pdf)
+has SHA-256 `c904b70161ea91083374bc81a8c18e7bdec8d87514535d9847cfc3f18a685d2d`.
+In the source's primed representation on $L^2(\mathbb R)$, the algebra
+generated by translations and finite-step multiplication operators has
+norm-almost-periodic conjugation by modulation. Multiplication by
+$\mathbf1_I$ belongs to that algebra and commutes with modulation;
+its corner therefore gives the actual clipped translations without
+introducing periodic boundary conditions. This is a full-space algebra
+statement; the even restriction is handled by the cosine modes below.
+The following calculation records the particular overlap and compact-repair
+consequence needed here. It reuses this classical mechanism and does
+not assert a new general spectral theorem or priority. No Lean
+verification is asserted.
+
+Use the orthonormal even modes
+
+$$
+t_k=\frac{2\pi k}{d},\qquad
+v_k(x)=\sqrt{\frac2d}\cos(t_kx),\qquad k=1,2,\ldots.
+$$
+
+For the zero-extended shift convention $(S_sf)(x)=\mathbf1_I(x+s)f(x+s)$,
+integration over $(-d/2,d/2-s)$ gives, for $0<s<d$,
+
+$$
+\langle v_k,S_sv_k\rangle
+=\left(1-\frac sd\right)\cos(t_ks)
+-\frac{\sin(t_ks)}{2\pi k}.
+\tag{A19}
+$$
+
+The negative shift gives the same real value. Only the finitely many
+prime powers $n<c$ enter $C_{{\rm p},c}$. Simultaneous recurrence supplies
+a strictly increasing sequence $k_j$ for which
+$\exp(2\pi i k_j\log n/d)\to1$ for every such $n$.
+No rational independence is required. To obtain unbounded return times,
+apply positive recurrence to $(N+1)\xi$ in the finite torus, where
+$\xi=(\log n/d\bmod1)_n$: the returned multiple $m(N+1)>N$
+lies in any prescribed neighborhood of zero. Choose shrinking
+neighborhoods and take $N$ larger than the preceding return.
+Consequently (A19) and the finite sum yield
+
+$$
+\langle v_{k_j},C_{{\rm p},c}v_{k_j}\rangle\longrightarrow\rho(c).
+$$
+
+Every orthonormal sequence is weakly null. Thus, for any compact
+selfadjoint $K$ on this even space, $\|Kv_{k_j}\|\to0$, and
+
+$$
+\boxed{\langle v_{k_j},(M_{c,\beta}+K)v_{k_j}\rangle
+\longrightarrow\beta-\rho(c).}
+\tag{A20}
+$$
+
+In particular, if $\beta<\rho(c)$, no such $K$ can make the reference
+nonnegative, regardless of its rank or norm. More generally,
+$M_{c,\beta}+K\succeq mI$ requires $\beta\ge\rho(c)+m$.
+For every fixed finite-dimensional orthogonal projection $P$,
+$\|Pv_{k_j}\|\to0$; the normalized vectors
+$(I-P)v_{k_j}/\|(I-P)v_{k_j}\|$ have the same limit in (A20), because
+$M_{c,\beta}+K$ is bounded. Thus deleting any fixed finite section also
+leaves negative reference directions when $\beta<\rho(c)$.
+This is a quadratic-form conclusion, not a claimed approximate
+eigenvector identity at the value $\beta-\rho(c)$.
+
+The already established $\rho(c)\ge\rho(27)>4$ shows that, for
+$c\ge27$ and $\beta=7/2$, the limit in (A20) is strictly less than
+$-1/2$. At any fixed finite Fourier band the central Gamma integral has
+a continuous kernel on the bounded square $\overline I^2$, hence is
+Hilbert–Schmidt; the paired pole kernel is finite rank. Their sum and
+every finite-rank retained tail update are compact. Therefore replacing
+the rest of the tail by a flat allowance $\delta I$ cannot produce a
+nonnegative bounded comparison when $\beta+\delta<\rho(c)$.
+In particular $\delta=2^{-49162}$ cannot rescue the $7/2$ reference
+at these cutoffs, even with arbitrarily large finite retained matrices.
+For this bounded comparison, a strictly negative $L^2$ quadratic also
+persists on nearby even compact smooth tests by density.
+
+The complete Weil form retains an unbounded Gamma term that this
+bounded comparison discards. The existing
+[periodic-Gamma identity and boundary bound G1–G2](connesconsanimoscovici2026spectral.md#compare-periodic-and-zero-extended-gamma-energies)
+give $Q_\Gamma(v_k)\ge A(t_k)-C_\Gamma(d)$ on their Fourier-polynomial
+form core. The pole term is nonnegative on even tests, while
+$\|C_{{\rm p},c}\|\le2\sum_{n<c}\Lambda(n)/\sqrt n$. Hence the complete
+closed-form values on these same modes tend to $+\infty$, since
+$A(t_k)\sim\log(t_k/(2\pi))$. This does not contradict (A20).
+The excluded construction is a bounded reference plus compact repairs
+and a small flat tail allowance. Retaining the growing Gamma energy
+avoids this particular obstruction; establishing the required full-form
+lower sign on cofinal supports remains unresolved.
