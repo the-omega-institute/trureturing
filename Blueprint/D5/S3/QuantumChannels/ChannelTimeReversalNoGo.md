@@ -46,6 +46,10 @@ $$\forall d \in \mathbb{N},\; (2 \le d) \Rightarrow (\forall S \in \operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chiribella-aurell-zyczkowski-2021-channel-time-reversal` (proved) by `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chiribella-aurell-zyczkowski-2021-channel-time-reversal","declaration_gid":"D5/S3/QuantumChannels/ChannelTimeReversalNoGo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Giulio Chiribella and Erik Aurell and Karol Życzkowski (2021). *Symmetries of quantum evolutions*. DOI: [10.1103/PhysRevResearch.3.033028](https://doi.org/10.1103/PhysRevResearch.3.033028). URL: <https://arxiv.org/abs/2101.04962>.
