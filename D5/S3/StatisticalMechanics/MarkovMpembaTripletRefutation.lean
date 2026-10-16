@@ -26,9 +26,6 @@ def DetailedBalance {N : ℕ} (E : Fin N → ℝ) (βb : ℝ)
     (a : Fin N → Fin N → ℝ) : Prop :=
   ∀ j k, j ≠ k → a j k = a k j * Real.exp (-(βb * (E j - E k)))
 
-noncomputable def gibbs {N : ℕ} (E : Fin N → ℝ) (β : ℝ) : Fin N → ℝ :=
-  GlauberRelaxationOrderRefutation.gibbs E β
-
 def TripletCondition {N : ℕ} (E : Fin N → ℝ) (βb : ℝ)
     (a : Fin N → Fin N → ℝ) (i j k : Fin N) : Prop :=
   let x := Real.exp (-(βb * (E j - E i)))
@@ -46,7 +43,8 @@ def IsSlowMode {N : ℕ} (M : Matrix (Fin N) (Fin N) ℝ)
 
 def MpembaEffect {N : ℕ} (E : Fin N → ℝ) (βb : ℝ) (ℓ : Fin N → ℝ) : Prop :=
   ∃ β₁ β₂ : ℝ, ((0 < β₁ ∧ β₁ < β₂ ∧ β₂ < βb) ∨ (βb < β₂ ∧ β₂ < β₁)) ∧
-    |dotProduct ℓ (gibbs E β₁)| < |dotProduct ℓ (gibbs E β₂)|
+    |dotProduct ℓ (GlauberRelaxationOrderRefutation.gibbs E β₁)| <
+      |dotProduct ℓ (GlauberRelaxationOrderRefutation.gibbs E β₂)|
 
 def claim : Prop :=
   ∀ (N : ℕ) (E : Fin N → ℝ) (βb : ℝ) (a : Fin N → Fin N → ℝ),
@@ -65,7 +63,6 @@ private noncomputable def rates (r : ℝ) : Fin 4 → Fin 4 → ℝ :=
   let C := 31/20 - 15*mean r/8
   !![0, A, B, C; A/16, 0, 1, 3/5; B/256, 1/16, 0, 1/10;
      C*r, 48*r/5, 128*r/5, 0]
-private noncomputable def M (r : ℝ) := generator (rates r)
 private def levels : Fin 4 → ℕ := ![0, 1, 2, 64]
 private noncomputable def energy : Fin 4 → ℝ := fun i => (levels i : ℝ) * Real.log 16
 private noncomputable def small : ℝ := (1/16)^64
@@ -108,10 +105,11 @@ private theorem balance_weights (r : ℝ) :
 
 set_option maxHeartbeats 1000000 in
 private theorem eigen_identities (r : ℝ) (hr : 0 < r) :
-    Matrix.vecMul (fun _ : Fin 4 => (1 : ℝ)) (M r) = 0 ∧
-    Matrix.vecMul (f r) (M r) = (-1 : ℝ) • f r ∧ Matrix.mulVec (M r) (weights r) = 0 := by
+    Matrix.vecMul (fun _ : Fin 4 => (1 : ℝ)) (generator (rates r)) = 0 ∧
+    Matrix.vecMul (f r) (generator (rates r)) = (-1 : ℝ) • f r ∧
+      Matrix.mulVec (generator (rates r)) (weights r) = 0 := by
   refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
-    simp only [M.eq_1, Matrix.vecMul, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    simp only [Matrix.vecMul, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     simp only [generator.eq_1] <;>
     norm_num [rates.eq_1, weights.eq_1, f.eq_1, g.eq_1, mean.eq_1, Fin.sum_univ_succ,
       Matrix.cons_val_two, Matrix.cons_val_three, Fin.reduceFinMk, Fin.ofNat, Fin.succ, Fin.mk.injEq] <;>
@@ -119,10 +117,10 @@ private theorem eigen_identities (r : ℝ) (hr : 0 < r) :
 
 set_option maxHeartbeats 1000000 in
 private theorem block_action (r : ℝ) (hr : 0 < r) :
-    Matrix.mulVec (M r) k1 = (block r 0 0) • k1 + (block r 1 0) • k2 ∧
-    Matrix.mulVec (M r) k2 = (block r 0 1) • k1 + (block r 1 1) • k2 := by
+    Matrix.mulVec (generator (rates r)) k1 = (block r 0 0) • k1 + (block r 1 0) • k2 ∧
+    Matrix.mulVec (generator (rates r)) k2 = (block r 0 1) • k1 + (block r 1 1) • k2 := by
   constructor <;> ext i <;> fin_cases i <;>
-    simp only [M.eq_1, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
+    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     simp only [generator.eq_1] <;>
     norm_num [rates.eq_1, k1.eq_1, k2.eq_1, mean.eq_1, block.eq_1, Fin.sum_univ_succ,
       Matrix.cons_val_two, Matrix.cons_val_three, Fin.reduceFinMk, Fin.ofNat, Fin.succ, Fin.mk.injEq] <;>
@@ -181,7 +179,8 @@ private theorem kernel_coordinates (r : ℝ) (v : Fin 4 → ℝ)
   all_goals rfl
 
 private theorem real_spectrum (r : ℝ) (hr : 0 < r) (x : ℝ) (v : Fin 4 → ℝ)
-    (hv : v ≠ 0) (he : Matrix.mulVec (M r) v = x • v) : x = 0 ∨ x ≤ -1 := by
+    (hv : v ≠ 0) (he : Matrix.mulVec (generator (rates r)) v = x • v) :
+    x = 0 ∨ x ≤ -1 := by
   by_cases hx : x = 0
   · exact Or.inl hx
   by_cases hm : x = -1
@@ -229,7 +228,7 @@ private theorem real_spectrum (r : ℝ) (hr : 0 < r) (x : ℝ) (v : Fin 4 → �
   exact Or.inr (le_trans (root_bound r x hr hq).le (by norm_num))
 
 private theorem simple_mode (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096)
-    (l : Fin 4 → ℝ) (he : Matrix.vecMul l (M r) = (-1 : ℝ) • l) :
+    (l : Fin 4 → ℝ) (he : Matrix.vecMul l (generator (rates r)) = (-1 : ℝ) • l) :
     ∃ c : ℝ, l = c • f r := by
   obtain ⟨_, hfe, hwe⟩ := eigen_identities r hr
   obtain ⟨hk1, hk2⟩ := block_action r hr
@@ -368,14 +367,14 @@ private noncomputable def overlap (x : ℝ) : ℝ :=
   (x+(2/3)*x^2+(8/15)*x^64)/(1+x+x^2+x^64)
 
 private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
-    dotProduct (f small) (gibbs energy (beta x)) = overlap x - mean small := by
+    dotProduct (f small) (GlauberRelaxationOrderRefutation.gibbs energy (beta x)) =
+      overlap x - mean small := by
   have he (i : Fin 4) : Real.exp (-(beta x)*energy i) = x^(levels i) := by
     have ht : -(beta x)*energy i = (levels i : ℝ)*Real.log x := by
       simp only [beta.eq_1, energy.eq_1, Real.log_inv]
       field_simp (disch := positivity)
     rw [ht, Real.exp_nat_mul, Real.exp_log hx]
-  simp only [gibbs.eq_1, GlauberRelaxationOrderRefutation.gibbs.eq_1,
-    dotProduct, Fin.sum_univ_four]
+  simp only [GlauberRelaxationOrderRefutation.gibbs.eq_1, dotProduct, Fin.sum_univ_four]
   rw [he 0, he 1, he 2, he 3]
   norm_num [f.eq_1, g.eq_1, levels.eq_1, Matrix.cons_val_two, Matrix.cons_val_three]
   simp only [overlap.eq_1]
