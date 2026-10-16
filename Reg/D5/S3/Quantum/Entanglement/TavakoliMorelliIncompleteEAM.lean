@@ -223,33 +223,32 @@ namespace Hermitian
 
 abbrev signature : Signature where
   Params := ℕ
-  State p := Op p
+  State _ := Star ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ d := Op d → Prop
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ A => @decide A.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e)
+  realize signature (fun _ d conjugation => @Matrix.IsHermitian ℂ (Fin d) conjugation) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {d : ℕ} {A : Op d} (_hA : ScaledPure A), R.readout () d A = true
+  Law R := ∀ {d : ℕ} {A : Op d} (_hA : ScaledPure A), R.readout () d (inferInstance : Star ℂ) A
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h scaledPure_zero
-  simp [rejected, realize] at he
+  exact h scaledPure_zero
 
 def source_registration : Registration arena (type_of% @_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.scaledPure_hermitian) where
   actual := actual
-  bridge := by simp only [actual, realize, decide_eq_true_eq]
-  variation := ⟨by simpa only [actual, realize, decide_eq_true_eq] using (@scaledPure_hermitian), rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨show arena.Law actual from (@scaledPure_hermitian), rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -258,13 +257,19 @@ def source_registration : Registration arena (type_of% @_root_.D5.S3.Quantum.Ent
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, 0, Complex.I • (1 : Op 1), ?_⟩
-    have hnot : ¬ (Complex.I • (1 : Op 1)).IsHermitian := by
+    let X : Op 1 := fun _ _ => Complex.I
+    have hnot : ¬ X.IsHermitian := by
       intro h
       have he := congrArg (fun M : Op 1 => M 0 0) h.eq
+      change star Complex.I = Complex.I at he
       have him := congrArg Complex.im he
-      norm_num [Matrix.conjTranspose] at him
-    simp [actual, realize, hnot]
+      norm_num [Complex.star_def] at him
+    have hyes : @Matrix.IsHermitian ℂ (Fin 1) ⟨id⟩ X := rfl
+    refine ⟨1, (inferInstance : Star ℂ), ⟨id⟩, ?_⟩
+    intro h
+    have he := congrFun h X
+    change X.IsHermitian = @Matrix.IsHermitian ℂ (Fin 1) ⟨id⟩ X at he
+    exact hnot (Eq.mpr he hyes)
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -280,7 +285,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ A => @decide A.IsHermitian (Classical.propDecidable _)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ d conjugation => @Matrix.IsHermitian ℂ (Fin d) conjugation) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -290,11 +295,11 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body"]
+      path := #["body", "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
