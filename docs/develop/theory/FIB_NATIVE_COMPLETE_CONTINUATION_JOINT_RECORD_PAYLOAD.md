@@ -4636,3 +4636,16 @@ not justify an exhaustive Schur assumption. The full residual curve, all contact
 native realization remain unresolved beyond these bounded results.
 
 ## 追加锚（本行以下为增补区）
+
+## 58. The joint height-record and decoder-clock continuation
+
+**Convention 58.1 (same owner and unchanged original problem).**
+The [height/clock continuation](FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD_HEIGHT_CLOCK.md),
+§§59–68, continues this volume's original joint-record/payload problem.
+It relates the actual-label height optimum to entire-fibre positive
+decoders, full-output exact-time domination and conditional finite-activity
+first-failure synthesis. It retains Definitions 34.1 and 41.1, the
+inherited CG premises, the remaining residual/contact/rank problem and
+all native acquisition and clock obligations of Definitions 40.2 and 47.2.
+
+## 追加锚（本行以下为增补区）
