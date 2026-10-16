@@ -24,9 +24,6 @@ for the constructed-tape primitive specification in its §57.
 All new statements here are repo-derived ordinary deductions. Standard
 tree inversion, deterministic native replay and allocation conservation
 are reused ingredients, without a worldwide novelty claim.
-Authorship uses formal-thinking-and-answer and theory-volume-template
-under a theory-only contract, with one Codex CLI author and repository
-context. Independent review and model diversity are not asserted.
 
 **Definition 1.2 (unchanged original instance).** Fix one actual finite
 preparation $\xi$, original source $u$, initial $H_0$, actual prior and
@@ -874,13 +871,23 @@ the production inequality.
 
 ## 8. Boundary examples and failed extensions
 
-**Example 8.1 (a partial cell is not a byte).** At $C_1(h)$ only $z.0$
+**Proposition 8.1 (a partial cell is not a byte).** At $C_1(h)$ only $z.0$
 has been created. That single child is not a complete $F_8$ cell.
 The old source head, native PC and original meter still have their
 entry values. The partial-tree decoder in §5 applies; the old
 complete-byte decoder applied directly to this new component does
 not. At $C_{24}(h)$ the new byte is complete, but Proposition 4.3
 still separates append completion from an EX successor.
+
+Proof. Definitions 3.1–3.2 give $w_1=0$ and
+$P_1=\{\varepsilon,0\}$. Thus the new cell-root occurrence at $z.0$
+is still a terminal; it has neither the complete $F_8$ scaffold nor
+its eight bit children. It cannot satisfy the complete-byte decoder's
+shape premise. The frame in Theorem 3.4 leaves the old head, PC and
+meter fixed. Theorem 5.2 decodes this actual partial tree, including
+its phase. At cut 24, Theorem 3.4 gives the complete $C_U(c_R)$
+subtree, while Proposition 4.3 identifies the remaining old-symbol,
+control and meter effects of EX. ∎
 
 **Proposition 8.2 (uninstalled target information cannot be guessed).**
 Replacing $c_R$ by an arbitrary runtime byte without supplying its
@@ -898,32 +905,76 @@ for the fixed $c_R$ avoids this missing input. A variable target
 needs actual acquired or retained operand material and its priced
 reads, not a proof-side target parameter. ∎
 
-**Example 8.3 (permission is outside a local shape).** Two otherwise
-identical local $P_j$ components can be placed in contexts with
-source writer availability respectively 1 and 0, or with different
-active PCs. Their local supports and terminal boundaries agree.
-Only the first appropriate current context enables the next birth.
-This explains the boundary parameter in Theorem 5.2 and the full
-guard recovery on $\mathcal H_C$ in Theorem 5.3; it gives no
-historical-rights restoration procedure.
+**Proposition 8.3 (permission is outside a local shape).** For
+$0\le j<24$, two identical local $P_j$ components can be placed in
+exterior contexts with source writer availability respectively 1 and
+0, or with the required active PC and a different PC. Their local
+supports and terminal boundaries agree. With the remaining guard
+premises satisfied, only the appropriate current context enables the
+next birth. Thus local shape alone does not determine permission.
 
-**Example 8.4 (meter construction is a different join).** The
+Proof. Keep the local component, its exterior attachment and its
+ownership fixed. Choose the first exterior's finite guard fields to
+satisfy Definition 4.1 and Assumption 2.5; in the second change only
+the exterior availability field to its disabling value, or the PC
+to a value failing the installed-site test. Neither change alters
+any local child path or local terminal. In the first context the
+prefix test selects $j$ and Lemma 3.3 supplies the vacant next
+destination. In the second the current guard fails, so Definition
+4.1 enables no attachment. The disabled context is not an eligible
+point of $\mathcal H_C$. This is precisely why
+Theorem 5.2 holds exterior permission fixed, whereas Theorem 5.3
+uses the specified whole observations on $\mathcal H_C$. No step
+restores a historical permission. ∎
+
+**Proposition 8.4 (meter construction is a different join).** The
 $M_J$ part of $M_C$ is unchanged because this construction modifies
 only source 16. Constructing a meter cell modifies the very chain
 from which UAS extracts the completed-row ordinal. A full-looking
 but uncommitted receipt, or only its unfinished byte, must not be
 counted as a completed original row. The source-specific pruning
-argument cannot settle the pending/completed receipt distinction.
+argument does not by itself settle the pending/completed receipt
+distinction for a meter-cell construction.
 The parent join needs actual phase material and both meter heads.
 
-**Example 8.5 (finite stock and helpers).** With $B=a=1$, a run may
-spend every birth on a distinct retained stamp and continue for
-arbitrarily many events with no additional required data. This
-does not contradict Theorem 7.3: its surplus is zero and $D$ stays
-bounded. If one adds further stamp-producing helper events to grow
-data, each helper consumes its own one-vertex production allowance
-again. A finite initial arena is already credited in $R_0$ and
-does not change the zero slope.
+Proof. Definition 2.4 changes only the pending source subtree, which
+Definition 5.1 excludes from $M_J$; hence that selected memory is
+fixed throughout this fragment. A meter-cell construction instead
+changes the retained receipt chain used to recover the old history
+in Theorem 5.3. Its proof's unchanged-$M_J$ premise therefore no
+longer holds. Moreover, Definitions 4.2 and 6.6 distinguish the
+birth or completion of a data component from an original completed
+row: the latter also requires the parent control and receipt effects
+listed in Proposition 4.3. An unfinished or merely full-looking
+receipt does not establish those effects. The parent join must
+therefore identify its pending/completed phase in actual retained
+material and preserve the distinct read and append lanes specified
+in Definition 4.1. This does not preclude a different inverse for
+a separately specified meter protocol. ∎
+
+**Proposition 8.5 (finite stock and helpers).** With $B=a=1$, the
+production and retention conditions admit event-count sequences of
+arbitrary finite length with exactly one birth per event, used as
+that event's distinct retained stamp, and no additional required
+nonreceipt data. Their surplus is zero
+and $D$ stays bounded. Further stamp-producing helper events consume
+their own one-vertex production allowances. A finite initial arena
+is already credited in $R_0$ and does not change the zero slope.
+
+Proof. Fix an initial stock of $R_0$ vertices containing the required
+nonreceipt material, of size $D_0\le R_0$. For any finite $m$, take
+$m$ distinct fresh vertices, disjoint from that stock, one per event,
+and use each as that event's retained singleton receipt. At every
+prefix $k\le m$, the production and retention counts are
+$A(k)=r(k)=k$ and $D(k)=D_0$. The receipt blocks are disjoint and
+$r(k)+D_0=k+D_0\le R_0+k$, so all these resource conditions hold,
+even with $L=0$. This supplies a witness for the counting conditions
+at every finite length; it supplies no operational controller or
+original-task realization. Each added helper with one birth and its
+own retained one-vertex stamp has increment $\beta_i-a=0$, so it
+adds no surplus in Theorem 7.3. Substituting $B=a=1$ there gives
+$D(k)\le R_0+L$ regardless of the number of helpers; enlarging the
+fixed initial arena changes only $R_0$, not that zero slope. ∎
 
 **Convention 8.6 (assignment and time boundaries).** The old five-vertex
 setter is not silently imported onto UAS's two-occurrence unary bits.
@@ -1032,18 +1083,6 @@ substitutes for the explicit proof above.
 | Leroy, [Formal verification of a realistic compiler, author manuscript](https://xavierleroy.org/publi/compcert-backend.pdf), §3.7, Definitions 10–12 | Initialized state relations, matching observable traces and final-state agreement are explicit simulation premises. A naive finite-star match can lose divergence through infinite stuttering; the stated star simulation uses a well-founded decreasing measure. Such compiler correctness does not supply our current permissions, inverse fine cuts or material/work bill. No whole-runtime simulation theorem is inferred from this isolated constructor. |
 | [Pinned mathlib StateTransition](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean), Respects, tr_reaches, tr_eval | Respects demands positive matching fragments and termination agreement on related starts. Reachability/evaluation transport assumes that relation. It does not manufacture intermediate-state inverses, vertex production, native permission or a cost theorem. |
 
-The relevant repository searches include private D5 helpers, owning
-Scribes, later FIB material and the native storage/runtime sources.
-Pinned mathlib is identified by the manifest revision above; a local
-package checkout is not assumed. The inspected ecosystem leads
-[zkinet at its fixed revision](https://github.com/Eduardogbg/zkinet/tree/14c35b124aa333a3bb37d2dfe08f24d254e0b037)
-and [soma at its fixed revision](https://github.com/SrGaabriel/soma/tree/818a00f7041023b562dbb8fc115e5716e5ce8742)
-do not provide an adopted or instantiated theorem for this interface:
-the former supplies finite node/port and interaction-rule structures;
-the latter's inspected tree has no Lean source. No ecosystem package
-is imported or claimed admitted. Bounded searches and the absence of
-an exact adopted supplier establish neither priority nor nonexistence.
-
 **Convention 10.3 (verification and attained statement).** The results
 are the explicit 25-cut literal constructor, its current-guard/frame
 and phase-sensitive actual-image inverse, same-fragment work/material
@@ -1051,8 +1090,7 @@ formulas, and the conditional retained-receipt bound with a same-source
 finite Reserve consequence. Their proofs are ordinary mathematics.
 They do not certify a Lean application, material native execution,
 installed controller, complete EX/full-row lowering or completion of
-the full original programme. No experimental program or data is part
-of this volume. All unresolved joins are the substantive obligations
-in §9, rather than effects hidden in a constructor-completion label.
+the full original programme. All unresolved joins are the substantive
+obligations in §9, rather than effects hidden in a constructor-completion label.
 
 ## 追加锚（本行以下为增补区）
