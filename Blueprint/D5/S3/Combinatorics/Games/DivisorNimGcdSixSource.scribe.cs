@@ -13,19 +13,6 @@ internal sealed class DivisorNimGcdSixSourceDocument : IScribeDocumentDefinition
         H("Actual gcd-six source reduction"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("singleton-value"),
-                DeclarationHandle.Create(Prefix + "singleton_grundy"),
-                H("The actual singleton value"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For every positive natural n, the native Grundy value of the singleton "
-                        + "multiset containing n is n. Every removal from one through n is "
-                        + "legal, and the follower values are exactly zero through n minus one. "
-                        + "The fixed-board recurrence and the general existence proof "
-                        + "both use this fact when deletion leaves no fixed heap."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-source-reduction"),
                 DeclarationHandle.Create(Prefix + "gcd_six_source_reduction"),
                 H("Move reconstruction and zero-anchor dynamics"),

@@ -343,27 +343,36 @@ theorem fixed_board_eventually_periodic {A : Position} (hp : Positive A) (ha : A
       obtain ⟨i, j, hij, heq⟩ := collision
       have propagate : ∀ t,
           fixedSequence A (N + T * j + t) = fixedSequence A (N + T * i + t) := by
-        intro t
-        induction t using Nat.strong_induction_on with
-        | h t ih =>
-          by_cases ht : t < A.gcd
-          · exact congrArg (fun v : Fin (2 * A.sum + 1) => v.val)
-              (congrFun heq ⟨t, ht⟩).symm
-          · rw [fixed_tail_recurrence hp ha (show 2 * A.sum < N + T * j + t by dsimp [N]; omega),
-              fixed_tail_recurrence hp ha (show 2 * A.sum < N + T * i + t by dsimp [N]; omega)]
-            have hF : fixedValues A (N + T * j + t) = fixedValues A (N + T * i + t) := by
-              have h₁ := hsignal (N + t) (by omega) j
-              have h₂ := hsignal (N + t) (by omega) i
-              simpa only [Nat.add_right_comm] using h₁.trans h₂.symm
-            rw [hF]
-            congr 2
-            apply Finset.image_congr
-            intro d hd
-            have hd0 := Nat.pos_of_mem_divisors hd
-            have hdD := Nat.le_of_dvd hD (Nat.mem_divisors.mp hd).1
-            have htd : d ≤ t := by omega
-            have hstep := ih (t - d) (by omega)
-            simpa only [Nat.add_sub_assoc htd] using hstep
+        apply mex_forced_block_propagation A.gcd A.gcd.divisors
+          (fun d hd => ⟨Nat.pos_of_mem_divisors hd,
+            Nat.le_of_dvd hD (Nat.mem_divisors.mp hd).1⟩)
+          (fun t => fixedSequence A (N + T * j + t))
+          (fun t => fixedSequence A (N + T * i + t))
+          (fun t => fixedValues A (N + T * i + t))
+        · intro t ht
+          exact congrArg (fun v : Fin (2 * A.sum + 1) => v.val)
+            (congrFun heq ⟨t, ht⟩).symm
+        · intro t ht
+          rw [fixed_tail_recurrence hp ha
+            (show 2 * A.sum < N + T * j + t by dsimp [N]; omega)]
+          have hF : fixedValues A (N + T * j + t) = fixedValues A (N + T * i + t) := by
+            have h₁ := hsignal (N + t) (by omega) j
+            have h₂ := hsignal (N + t) (by omega) i
+            simpa only [Nat.add_right_comm] using h₁.trans h₂.symm
+          rw [hF]
+          congr 2
+          apply Finset.image_congr
+          intro d hd
+          have hdD := Nat.le_of_dvd hD (Nat.mem_divisors.mp hd).1
+          simp only [Nat.add_sub_assoc (show d ≤ t by omega)]
+        · intro t ht
+          rw [fixed_tail_recurrence hp ha
+            (show 2 * A.sum < N + T * i + t by dsimp [N]; omega)]
+          congr 2
+          apply Finset.image_congr
+          intro d hd
+          have hdD := Nat.le_of_dvd hD (Nat.mem_divisors.mp hd).1
+          simp only [Nat.add_sub_assoc (show d ≤ t by omega)]
       refine ⟨T * (j - i), Nat.mul_pos hT (by omega), N + T * i, ?_⟩
       intro n hn
       have hstep := propagate (n - (N + T * i))

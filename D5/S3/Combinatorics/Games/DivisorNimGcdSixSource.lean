@@ -7,6 +7,7 @@
    digest: Actual gcd-six parent tails inherit the specified follower period through a uniformly stabilizing finite transformation family. -/
 
 import D5.S3.Combinatorics.Games.DivisorNimBound
+import D5.S3.Combinatorics.Games.DivisorNimPeriodPropagation
 import Mathlib.Algebra.GCDMonoid.Multiset
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Data.Fin.VecNotation
@@ -34,47 +35,6 @@ def sixTargetPeriod (H : ℕ) : ℕ := 2 * (Finset.Icc 1 H).lcm id
 /-- The zero phase records the parity of fixed heaps of dyadic depth one. -/
 noncomputable def sixZeroPhase (A : Position) : ℕ := if Even (countAt A 1) then 0 else 2
 
-theorem singleton_grundy : ∀ n, 0 < n → grundy ({n} : Position) = n := by
-  intro n
-  induction n using Nat.strong_induction_on with
-  | h n ih =>
-    intro hn
-    have hvals : (moves ({n} : Position)).image grundy = Finset.range n := by
-      ext v
-      constructor
-      · intro hv
-        rcases Finset.mem_image.mp hv with ⟨Q, hQ, rfl⟩
-        rcases moves_spec hQ with ⟨h, hh, d, hd, rfl⟩
-        have he : h = n := by simpa using hh
-        subst h
-        have herase : ({n} : Position).erase n = 0 := by simp
-        by_cases he : n - d = 0
-        · simp only [successor, he, if_true, Multiset.erase_singleton,
-            Multiset.add_zero, grundy_empty, Finset.mem_range]
-          exact hn
-        · have hs : successor ({n} : Position) n d = {n - d} := by
-            simp [successor, he]
-          rw [hs, ih (n - d) (by have := hd.1; omega) (by omega)]
-          exact Finset.mem_range.mpr (by have := hd.1; omega)
-      · intro hv
-        have hvn := Finset.mem_range.mp hv
-        have hd : legal ({n} : Position) n (n - v) := by
-          exact ⟨by omega, by omega, by simp [dividesAll]⟩
-        have hQ := successor_is_move (P := ({n} : Position)) (by simp) hd
-        refine Finset.mem_image.mpr ⟨_, hQ, ?_⟩
-        by_cases hv0 : v = 0
-        · subst v
-          simp [successor, grundy_empty]
-        · have hs : successor ({n} : Position) n (n - v) = {v} := by
-            simp [successor, Nat.sub_sub_self (by omega : v ≤ n), hv0]
-          rw [hs, ih v hvn (by omega)]
-    rw [grundy_eq, hvals]
-    apply le_antisymm
-    · by_contra h
-      have := (mex_spec (Finset.range n)).2 n (by omega)
-      simp at this
-    · by_contra h
-      exact (mex_spec (Finset.range n)).1 (Finset.mem_range.mpr (by omega))
 set_option maxHeartbeats 1500000 in
 -- Option reconstruction and state identities share the same local source proofs.
 /-- This reduction uses the native game, including singleton fixed boards and

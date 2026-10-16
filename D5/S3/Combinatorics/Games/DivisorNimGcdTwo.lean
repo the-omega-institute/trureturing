@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Games.DivisorNimGrundy
 
-open D5.S0.Certificates.Games.CrimGrundyRefutation (mex mex_spec mex_unique)
+open D5.S0.Certificates.Games.CrimGrundyRefutation (mex mex_spec)
 
 private theorem residue_of_depth {n k : ℕ} (hn : 0 < n) :
     (k ≤ valuation n ↔ 2 ^ k ∣ n) ∧
@@ -339,15 +339,31 @@ private theorem mex_zero_pair (x : ℕ) : mex {0, x} = if x = 1 then 2 else 1 :=
   classical
   by_cases hx : x = 1
   · rw [if_pos hx, hx]
-    apply mex_unique
+    apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+      (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+        ⟨(mex_spec _).1, fun m hm => by
+          by_contra hn
+          exact hm ((mex_spec _).2 m (by omega))⟩)
+    constructor
     · simp
-    · intro m hm
+    · intro m hnot
+      by_contra hle
+      apply hnot
+      have hm : m < _ := Nat.lt_of_not_ge hle
       have : m = 0 ∨ m = 1 := by omega
       rcases this with rfl | rfl <;> simp
   · rw [if_neg hx]
-    apply mex_unique
+    apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+      (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+        ⟨(mex_spec _).1, fun m hm => by
+          by_contra hn
+          exact hm ((mex_spec _).2 m (by omega))⟩)
+    constructor
     · simp [hx, Ne.symm hx]
-    · intro m hm
+    · intro m hnot
+      by_contra hle
+      apply hnot
+      have hm : m < _ := Nat.lt_of_not_ge hle
       have : m = 0 := by omega
       simp [this]
 
@@ -366,23 +382,47 @@ private theorem phase_transition (x : ℕ) (S : Finset ℕ) :
       have hb : mex ({0, 2} ∪ S) ≠ 1 := by
         intro he
         exact (mex_spec _).1 (by rw [he]; simp [h1])
-      apply mex_unique
+      apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+        (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+          ⟨(mex_spec _).1, fun m hm => by
+            by_contra hn
+            exact hm ((mex_spec _).2 m (by omega))⟩)
+      constructor
       · simp only [Finset.mem_insert, Finset.mem_singleton, not_or]
         exact ⟨by decide, by decide, Ne.symm hb⟩
-      · intro m hm
+      · intro m hnot
+        by_contra hle
+        apply hnot
+        have hm : m < _ := Nat.lt_of_not_ge hle
         have : m = 0 := by omega
         simp [this]
     · rw [if_neg h1]
       have hb : mex ({0, 2} ∪ S) = 1 := by
-        apply mex_unique
+        apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+          (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+            ⟨(mex_spec _).1, fun m hm => by
+              by_contra hn
+              exact hm ((mex_spec _).2 m (by omega))⟩)
+        constructor
         · simp [h1]
-        · intro m hm
+        · intro m hnot
+          by_contra hle
+          apply hnot
+          have hm : m < _ := Nat.lt_of_not_ge hle
           have : m = 0 := by omega
           simp [this]
       rw [hb]
-      apply mex_unique
+      apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+        (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+          ⟨(mex_spec _).1, fun m hm => by
+            by_contra hn
+            exact hm ((mex_spec _).2 m (by omega))⟩)
+      constructor
       · simp
-      · intro m hm
+      · intro m hnot
+        by_contra hle
+        apply hnot
+        have hm : m < _ := Nat.lt_of_not_ge hle
         interval_cases m <;> simp
   · simp only [if_neg hx]
     by_cases h2 : 2 ∈ S
@@ -390,21 +430,45 @@ private theorem phase_transition (x : ℕ) (S : Finset ℕ) :
       have hb : mex ({0, 1} ∪ S) ≠ 2 := by
         intro he
         exact (mex_spec _).1 (by rw [he]; simp [h2])
-      apply mex_unique
+      apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+        (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+          ⟨(mex_spec _).1, fun m hm => by
+            by_contra hn
+            exact hm ((mex_spec _).2 m (by omega))⟩)
+      constructor
       · simp only [Finset.mem_insert, Finset.mem_singleton, not_or]
         exact ⟨by decide, by decide, Ne.symm hb⟩
-      · intro m hm
+      · intro m hnot
+        by_contra hle
+        apply hnot
+        have hm : m < _ := Nat.lt_of_not_ge hle
         interval_cases m <;> simp
     · rw [if_neg h2]
       have hb : mex ({0, 1} ∪ S) = 2 := by
-        apply mex_unique
+        apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+          (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+            ⟨(mex_spec _).1, fun m hm => by
+              by_contra hn
+              exact hm ((mex_spec _).2 m (by omega))⟩)
+        constructor
         · simp [h2]
-        · intro m hm
+        · intro m hnot
+          by_contra hle
+          apply hnot
+          have hm : m < _ := Nat.lt_of_not_ge hle
           interval_cases m <;> simp
       rw [hb]
-      apply mex_unique
+      apply IsLeast.unique (s := {n : ℕ | n ∉ _})
+        (show IsLeast {n : ℕ | n ∉ _} (mex _) from
+          ⟨(mex_spec _).1, fun m hm => by
+            by_contra hn
+            exact hm ((mex_spec _).2 m (by omega))⟩)
+      constructor
       · simp
-      · intro m hm
+      · intro m hnot
+        by_contra hle
+        apply hnot
+        have hm : m < _ := Nat.lt_of_not_ge hle
         interval_cases m <;> simp
 
 /-- Every gcd-two fixed board with at least two occurrences has its actual
