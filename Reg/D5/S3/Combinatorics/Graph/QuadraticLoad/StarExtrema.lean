@@ -103,10 +103,10 @@ def starFamily : Registration starArena (type_of% @star_extrema) := by
   · intro i
     exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
 
-def lowerAudit : Contract.Registration
+def lowerAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.maximum_degree_lower_bound.{u})
     (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.lowerAudit
+  unitName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.lowerUnit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.lowerFamily
   realizationSource := none
   generated := false
@@ -127,10 +127,10 @@ def lowerAudit : Contract.Registration
   familyRecord := none
   options := #[]
 
-def starAudit : Contract.Registration
+def starAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.star_extrema)
     (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.starAudit
+  unitName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.starUnit
   realizationName := `Reg.D5.S3.Combinatorics.Graph.QuadraticLoad.StarExtrema.starFamily
   realizationSource := none
   generated := false
