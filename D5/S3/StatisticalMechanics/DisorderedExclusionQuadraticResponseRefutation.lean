@@ -7,13 +7,8 @@
    digest: Four disordered exclusion sites refute the nonzero quadratic-current conjecture. -/
 
 import Mathlib.Analysis.Asymptotics.Lemmas
-import Mathlib.Data.Fintype.Powerset
 import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
 import Mathlib.Algebra.BigOperators.Field
 
 set_option linter.style.longLine false
