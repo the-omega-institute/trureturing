@@ -6330,3 +6330,198 @@ generic algorithm, literature novelty or Lean theorem. Actual-form,
 domain, common source/short/lift, original-weight and component-bound
 premises remain conditions. Actual-center and full-border signs,
 retained/cofinal positivity, Robin tail and RH remain unresolved.
+
+
+### Test all steering coefficients before a new signed supplier
+
+Keep the SAME source, old core, lift, far row $f$, frozen positive
+fee $D_*$ and legal coefficient $t_0$. Only the real coefficient
+$\alpha$ in $y(\alpha)=\alpha\rho+\beta_J$ varies. The common source
+and its effective far action stay fixed as this row coefficient varies;
+no new dual source is selected.
+Define the fixed-fee comparison expression
+
+$$
+\mathcal E_*(\alpha)=\frac{\alpha^2}{t_0}+D_*
++(y(\alpha)+f)Q_{\rm true}(y(\alpha)+f)^*,
+\qquad
+Q_{\rm true}=TS^{-1}T^*-\frac{e_0e_0^*}{\delta}.
+$$
+
+This is a sufficient comparison family with its specified frozen fee.
+A lower bound for it is not a lower bound for an actual center using a
+smaller charge. The existing proof route needs a negative comparison;
+a positive floor would exclude this recipe for every real $\alpha$,
+without determining the sign of the actual full border. The algebraic
+family is defined for all real coefficients; this does not assert that
+every coefficient is an admissible physical test. Any legal subset
+with the same fixed data is covered by an all-real exclusion.
+
+Let $\alpha_0$ be the saved dyadic steering origin and
+$y_0=\alpha_0\rho+\beta_J$. All the following quantities already have
+saved enclosures for the SAME exact reference:
+
+$$
+\begin{aligned}
+Q_R&=TRT^*-e_0e_0^*/\delta,&
+\vartheta_0&=fQ_Ry_0^*,\\
+r_0&=y_0TRT^*y_0^*,&
+r_\rho&=\rho TRT^*\rho^*,\\
+h_{11}&=t_0^{-1}+\rho Q_R\rho^*,&
+h_{12}&=\rho Q_R\beta_J^*.
+\end{aligned}
+$$
+
+The new signed-correction packet supplies $\vartheta_0$; the finite
+steering packet supplies the remaining coefficients. Retain its
+$|f_0|\le C_-$, $\delta\ge\delta_{\rm lo}>0$, and the coherent
+packet's $fTRT^*f^*\le A$. No new direction, matrix action, norm
+reduction, source, inverse or far sample is needed.
+
+The exact curvature identity gives
+
+$$
+\frac{\rho_0^2}{\delta}=t_0^{-1}+r_\rho-h_{11}.
+$$
+
+Thus one may use upward bounds
+
+$$
+N_\rho=\operatorname{up}
+(t_0^{-1}+r_{\rho,\rm up}-h_{11,\rm lo}),
+\qquad
+F_- =\operatorname{up}(C_-^2/\delta_{\rm lo}).
+$$
+
+Cauchy on the positive reference form and the scalar negative channel
+then supply the previously unevaluated derivative's capacity:
+
+$$
+\left|fQ_R\rho^*\right|
+\le\Phi:=\operatorname{up}
+\left(\sqrt{A r_{\rho,\rm up}}+\sqrt{F_-N_\rho}\right).
+$$
+
+This is a uniform bound for one common realization. Separate maxima
+are not asserted to be jointly attainable. Put
+
+$$
+d_0=h_{11}\alpha_0+h_{12},\qquad
+B=\operatorname{up}(|d_0|_{\rm up}+\Phi).
+$$
+
+Enclose the finite reference value directly from saved scalar data:
+
+$$
+q_0=\frac{\alpha_0^2}{t_0}+D_*+r_0-\frac{(y_0)_0^2}{\delta}.
+$$
+
+In particular, a finite lower is not obtained by subtracting upper
+allowances from $C_{\rm lin}$. The old inverse comparison yields
+
+$$
+Q_{\rm true}\succeq Q_R-\epsilon_-TRT^*,
+\qquad \epsilon_- =\frac{\eta}{1+\eta}.
+$$
+
+For every real $s=\alpha-\alpha_0$, the positive-form triangle bound gives
+
+$$
+\|(y_0+s\rho+f)T\|_R^2
+\le4r_{0,\rm up}+4s^2r_{\rho,\rm up}+2A.
+$$
+
+Expanding the reference quadratic and retaining
+$fQ_Rf^*\ge-F_-$ therefore gives
+
+$$
+\mathcal E_*(\alpha_0+s)\ge K+Hs^2-2B|s|,
+$$
+
+where downward $K,H$ may be chosen as
+
+$$
+\begin{aligned}
+K&=q_{0,\rm lo}+2\vartheta_{0,\rm lo}-F_-
+-\operatorname{up}\bigl[\epsilon_-(4r_{0,\rm up}+2A)\bigr],\\
+H&=h_{11,\rm lo}
+-\operatorname{up}(4\epsilon_-r_{\rho,\rm up}).
+\end{aligned}
+$$
+
+If $H>0$, scalar square completion covers all real coefficients:
+
+$$
+\boxed{\mathcal E_*(\alpha)\ge K-\operatorname{up}(B^2/H)
+\quad\text{for every }\alpha\in\mathbb R.}
+$$
+
+The calculation tests the maximum possible gain before supplying the
+actual derivative. A nonpositive lower leaves this capacity test
+unsettled; it supplies neither a realizable favorable derivative nor
+a negative comparison. A positive lower excludes this fixed-fee and
+fixed-$t_0$ family. A smaller justified fee, another legal coefficient,
+source or comparison is a different recipe.
+
+
+The fixed1024-working/640-export-bit scalar application uses three
+accepted packets and finishes in0.61818seconds, including serialization.
+Its60 source/input byte bindings agree at entry and prewrite. There
+are no new source, matrix, norm, feature, derivative or tail calls and
+no replay of an old scientific producer. The source applies existing
+Schur comparison, Cauchy and scalar square completion; no new generic
+theorem, algorithm, literature novelty or Lean proof is claimed.
+
+| Quantity | Approximate directed value |
+|---|---:|
+| Finite reference value $q_0$ |[21.62931038112412885233753,21.62931038112412885233755]|
+| Negative-channel credit cap $F_-$ |2.327429771347697837|
+| Signed derivative capacity $\Phi$ |515.620424366832531834|
+| Comparison curvature lower $H$ |25136.371399957733363764|
+| Comparison base lower $K$ |10.639254031103735470|
+| Maximal steering gain upper |10.576881515391657423|
+| All-real comparison floor lower |0.062372515712078048|
+
+The displayed upper/lower quantities round in the indicated direction;
+the saved640-bit integer endpoints and exact rational allowances are
+authoritative. In particular, the final lower endpoint is strictly
+larger than0.062372515712078048. Hence
+
+$$
+\mathcal E_*(\alpha)>0.062372515712078048
+\quad\text{for every real }\alpha,
+$$
+
+under the inherited common-object and inverse/component certificates.
+The unchanged fee and $t_0$ comparison recipe cannot become negative
+by changing $\alpha$, even with the most favorable derivative allowed
+by these norm caps. Supplying its actual derivative is unnecessary
+for this excluded recipe. This does not exclude negativity of an
+actual center with a smaller justified fee or another comparison.
+
+At the fixed $\alpha_0$, the separate class of self-term-only
+refinements also has a positive floor. With $\vartheta_0$ and all
+other frozen terms retained, even removing the positive far-energy
+charge $A$, deleting the old nonnegative comparison allowance
+$\Delta$, and returning the entire allowed negative square gives
+
+$$
+C_{\rm lin}+2\vartheta_{0,\rm lo}-A-\Delta-F_-
+>10.639254031103735470.
+$$
+
+This diagnostic bounds refinements of that frozen upper expression;
+it is not an actual-center lower bound.
+
+The [scalar source and packet](https://github.com/the-omega-institute/trureturing-experiments/tree/673dff6646fb1f41721bb8c891e54c6fca17199f/docs/reports/weil-c27)
+retain the exact result under SHA256
+`85a52adf97e96def95aaf5abaa307338522a2bae5d7b40c96692ad0366a444fe`.
+The source SHA256 is
+`dcdb47a55003e4ca745bf33ce81133fd65577facdf6004d38308fb9f1dddc96e`.
+All inherited actual-form, domain, common-source/short/lift, weight and
+component assumptions remain. The next useful gap must change a
+justified fee, coefficient, source or comparison and retain a common
+realization; a sharper estimate inside the excluded fixed recipe
+cannot supply its missing negative comparison. The good-block metric,
+actual-center/full-border signs, retained/cofinal positivity, Robin
+tail and RH remain unresolved.
