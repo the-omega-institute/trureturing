@@ -6904,3 +6904,160 @@ The two scalar applications use one common realization and frozen far-row
 upper; they are not a parameter scan. The actual good-block metric,
 full-border/cofinal positivity, Robin and RH remain unresolved. No Lean
 verification or new generic theorem is claimed.
+
+### Retain two saved projections in the source-energy estimate
+
+The physical mixed correction and principal proxy already have signed
+projections on the SAME saved direction. Consume these projections before
+requesting another principal/mixed pairing. The estimate is the classical
+three-vector Gram inequality, as recorded in Dragomir,
+[*Improving Schwarz Inequality in Inner Product Spaces*](https://arxiv.org/abs/1709.02029v1),
+equation (1.5), applied through its Schur-complement form. It is not a new
+generic inequality or algorithm.
+
+Use the original real weighted Hilbert space with $W_F=w_FI$ and write
+
+$$
+u_F=v+r+c,\qquad c=C_{\rm phys}\ell,\qquad
+b=C_{\rm phys}t,\qquad t=\mathcal D Vv_R,\qquad h=P_0t.
+$$
+
+All of these are the SAME source, lift and direction as in the signed
+mixed-correction section. Let $\|r\|_{W_F}\le\epsilon_{\rm sm}$.
+The saved signed proxy encloses $\mu=\kappa\langle v,j_h\rangle_{W_F}$.
+The saved sharp forward and physical mixed-cross allowances give
+
+$$
+\begin{aligned}
+s:=\langle v,b\rangle_{W_F}
+&\in I_\mu/\kappa+[-R_{\rm forward}/\kappa,R_{\rm forward}/\kappa],\\
+z:=\langle c,b\rangle_{W_F}
+&\in I_{\nu_0}/\kappa+[-R_{\rm mixed}/\kappa,R_{\rm mixed}/\kappa].
+\end{aligned}
+$$
+
+Here $R_{\rm forward}=\kappa P\epsilon_b^\sharp$ and
+$R_{\rm mixed}=\kappa\epsilon_{\rm far}Z_\lambda\sqrt{K_{\rm phys}}L_V$
+are reused separately. The smooth remainder is not part of $z$.
+The proxy's already paid source, symbol and Abel allowances are retained.
+
+Only one numerical supplier is missing: the norm of this common direction.
+The existing physical certificate, $h=P_0t$ and
+$\|t\|\le\sqrt{K_{\rm phys}}L_V$ supply
+
+$$
+\|b\|_{W_F}^2
+\le h^TK_0h+\epsilon_{\rm far}K_{\rm phys}L_V^2.
+$$
+
+Evaluate one112-component feature quadratic and take the minimum of its
+outward upper and the old $N_{\rm cap}^2$. The kernel already includes the
+original far weight; neither another $w_F$ nor $\kappa$ is inserted.
+Its arrays use640-bit units, while the original physical error and
+$K_{\rm phys}$ metadata use512-bit units. No PSD property of $K_0$ is
+required. This computation preserves the shared short features instead
+of reopening the broadly enclosed eighteen-channel quadratic.
+
+Let $N^2\ge\|b\|_{W_F}^2$ denote the resulting cap. For $N>0$, the
+Schur-complement inequality is
+
+$$
+\left|\langle v,c\rangle_{W_F}-\frac{sz}{N^2}\right|
+\le
+\sqrt{\left(\|v\|_{W_F}^2-\frac{s^2}{N^2}\right)
+       \left(\|c\|_{W_F}^2-\frac{z^2}{N^2}\right)}.
+$$
+
+A norm UPPER is sufficient: increasing the bottom diagonal of the true
+three-vector Gram to $N^2$ preserves positive semidefiniteness. No norm
+lower or equality with the true norm is assumed.
+
+Use the already saved principal squared-norm lower
+$P^2_{\rm lo}=\max\{w_F\operatorname{cross}_{\rm lo}/4,0\}$ and upper
+$P^2_{\rm up}$, and the mixed-energy bounds $C^2_{\rm lo},C^2_{\rm up}$.
+The mixed lower is the saved physical quadratic lower minus its paid
+error, truncated at zero. Let $s_*,z_*$ be lower bounds on the absolute
+values of the two signed projections. Outward interval evaluation gives
+
+$$
+R=\sqrt{\left(P^2_{\rm up}-s_*^2/N^2\right)
+          \left(C^2_{\rm up}-z_*^2/N^2\right)},\qquad
+\langle v,c\rangle_{W_F}\in I_sI_z/N^2+[-R,R].
+$$
+
+Intersect this with ordinary Cauchy. Negative residual caps or
+inconsistent domains stop the application. If $N=0$, both projection
+intervals must contain zero and the application uses ordinary Cauchy
+without division. The resulting cross interval $[X_{\rm lo},X_{\rm up}]$
+gives
+
+$$
+J_{\rm lo}=\max\{0,P^2_{\rm lo}+C^2_{\rm lo}+2X_{\rm lo}\}
+\le\|v+c\|_{W_F}^2
+\le P^2_{\rm up}+C^2_{\rm up}+2X_{\rm up}=J_{\rm up}.
+$$
+
+All bounds hold uniformly for one common realization. Independent
+interval endpoints need not be jointly attainable. Apply the existing
+pricing map to the valid decomposition $(v+c)+r+0$:
+
+$$
+[\sqrt{J_{\rm lo}}-\epsilon_{\rm sm}]_+^2
+\le E_{\rm true}\le
+(\sqrt{J_{\rm up}}+\epsilon_{\rm sm})^2.
+$$
+
+Retain the stronger previous energy lower and smaller previous upper.
+The zero third component belongs to this regrouped decomposition; it
+does not assert that the original mixed vector vanishes. A single new
+upper prices both the fee and the complete original Bessel budget.
+The energy-lower endpoint uses the same regrouping and the fixed charge
+constant and $h$ endpoints. Both all-real comparison tests reuse the
+saved $B,G,M$ and their fixed far-row UPPER $A_*$; the energy lower is
+never substituted for that upper.
+
+The single fixed1024-working/640-export application retains66 runtime
+bindings, unchanged at entry and prewrite. Stored assembly time
+is0.61203seconds; time including serialization is0.72872seconds.
+Its physical quadratic is approximately11.172943110390517642,
+and the complete physical representer-energy upper is below
+15.356508960841880022. The resulting norm upper is below
+3.918738184778600392, compared with the saved broad cap near29.0983.
+
+| Quantity | Directed value |
+|---|---:|
+| Principal/mixed cross interval |[−0.113379023101042651,0.013416593112150290]|
+| Source-energy lower |>6.268984281541914933|
+| Source-energy upper |<6.524928095642312689|
+| Source-valid positive fee |<175.921995998246711018|
+| Legal coefficient |>0.000040122278284528281535|
+| Fixed repriced all-real floor |>0.296481006612169882|
+| Energy-endpoint all-real floor |>−1.220854294197841680|
+
+Displayed intervals round outwards; exact rationals and640-bit integer
+endpoints are authoritative. Both ends improve the previous source-energy
+bracket [6.227486948459329823,6.766398882441490]. The new fixed paid
+comparison remains positive for every real steering coefficient, so
+computing a favorable derivative cannot make that recipe negative.
+This supplies no lower bound for an actual center with a smaller charge.
+The energy-endpoint lower is negative and remains inconclusive for the
+whole fixed-budget energy-cap-only family. It is neither a negative
+upper nor a realizable negative comparison. The principal/mixed cross
+interval still contains positive numbers: opposite signs of the two
+saved projections alone have not certified a negative cross.
+
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/3253bccd35cab40a5ed3140a892f27e572ee7d1a/docs/reports/weil-c27)
+retain packet SHA256 `59374362635382b3b180aff21584a5a1e32d603b19ccaa5db3ea693086b5f89c` and source SHA256 `ba5ea56e4a30c3afcaf52d428bbd060f19ca18a29464f6dc15e8055837329735`.
+The fixed1024-working/640-export application makes one new physical
+direction quadratic and reuses the saved signed projections. No old
+scientific producer, signed pairing, source, feature, inverse, trace,
+moment or long-tail supplier is replayed; there is no source, parameter,
+precision or cutoff scan.
+
+This is a numerical application of existing Gram/Schur, physical-error
+and pricing certificates, with no new generic theorem, literature
+novelty or Lean proof. The actual-form/domain, common-source/short/lift,
+original-weight, component-bound and inverse-comparison premises remain.
+Actual-center/full-border signs, the good-block metric, retained/cofinal
+positivity, Robin tail and RH remain unresolved.
