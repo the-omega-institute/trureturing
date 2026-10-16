@@ -68,7 +68,10 @@ internal sealed class TavakoliMorelliIncompleteEAMDocument : IScribeDocumentDefi
                     "For a pure ket, write its coefficient matrix as U D V adjoint by the singular value decomposition, with D diagonal and nonnegative. Put S equal to the positive square root of D. The correlation table factors as F adjoint times G, whose columns are the vectorizations of S U adjoint A_a U S and S V adjoint transpose(B_b) V S. The Hilbert–Schmidt Hölder inequality bounds its trace norm by the product of the two Frobenius norms. For rank-one effects, the squared Frobenius norms are the second moments of the corresponding Hermitian weight matrices.")),
                     Paragraph(Text(
                         "The equiangular Gram matrix and Cauchy–Schwarz give, for every Hermitian H, the second-moment bound with coefficients alpha = d(d-1)/(n(n-1)) and beta = (n-d)/(n(n-1)). For each weight matrix the quadratic trace is the sum of squared Schmidt coefficients, equal to one, while the squared trace is (sum of Schmidt coefficients) squared, at most r by Cauchy–Schwarz on their at most r nonzero entries. Thus the pure-state bound is alpha plus beta r. Real linearity of the probability table, the trace-norm triangle inequality, and homogeneity for nonnegative weights extend the bound to convex mixtures. Substitution of alpha and beta yields claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-morelli-2024-conjecture-2-incomplete-eam-schmidt-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

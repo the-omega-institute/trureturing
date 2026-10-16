@@ -41,7 +41,10 @@ internal sealed class TavakoliMorelliIncompleteMUBDocument : IScribeDocumentDefi
                     "For Hermitian H, subtract its scalar trace component. Mutual unbiasedness makes the trace-zero diagonal subspaces of distinct bases orthogonal. Their measurement projections obey Pythagoras, so the sum of their squared trace coordinates is at most the squared Hilbert–Schmidt norm of the centered H. Restoring the scalar component gives the second-moment bound tr(H squared) plus (m-1)/d times (tr H) squared. Dimension one is handled directly, since the trace-zero space is zero.")),
                     Paragraph(Text(
                         "For a pure bipartite state the singular value decomposition of its coefficient matrix gives a Gram factorization of the probability table. The columns of its two factors are vectorized rank-one effects sandwiched by the square roots of the Schmidt diagonal and the local unitaries, with transposed effects on the second side. Hilbert–Schmidt Hölder bounds the trace norm by the product of their Frobenius norms. The sum of squared Schmidt coefficients equals one, and their sum squared is at most r. The common second-moment estimate therefore gives alpha plus beta r with alpha = 1 and beta = (m-1)/d. Linearity of the probability table, together with the trace-norm triangle inequality and homogeneity for nonnegative weights, extends this to every finite convex mixture of Schmidt rank at most r. This is the shared second-moment theorem applied to the MUB projectors, and its bound is exactly claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-morelli-2024-conjecture-3-incomplete-mub-schmidt-bound"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
