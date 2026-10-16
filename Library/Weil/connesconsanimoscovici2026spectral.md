@@ -6525,3 +6525,198 @@ realization; a sharper estimate inside the excluded fixed recipe
 cannot supply its missing negative comparison. The good-block metric,
 actual-center/full-border signs, retained/cofinal positivity, Robin
 tail and RH remain unresolved.
+
+
+### Reprice the same source from its saved mixed-H features
+
+The actual far source and its physical weight remain fixed. Its
+accepted decomposition is
+
+$$
+u_F=u^{(0)}+r_{\rm sm}+C_{\rm phys}\ell,\qquad
+\|u^{(0)}\|_{W_F}\le P,\quad
+\|r_{\rm sm}\|_{W_F}\le\epsilon_{\rm sm}.
+$$
+
+The existing signed-correction packet saves $a=P_0\ell$ and a
+source norm cap $Z_\lambda\ge\|\ell\|$. Its original physical target
+contains $K_0$ and
+
+$$
+\|C_{\rm phys}^*W_FC_{\rm phys}-P_0^TK_0P_0\|
+\le\epsilon_{\rm far}.
+$$
+
+Therefore a single new quadratic suffices:
+
+$$
+\|C_{\rm phys}\ell\|_{W_F}^2
+\le a^TK_0a+\epsilon_{\rm far}Z_\lambda^2.
+$$
+
+This uses the original weighted physical error in512-bit metadata
+units; the saved feature and kernel arrays use640-bit units. The
+kernel need not be PSD. No source, feature, moment, Gram or inverse
+supplier is repeated. With upward rounding define
+
+$$
+H_{\rm new}=
+\operatorname{up}\sqrt{\operatorname{up}(a^TK_0a)
++\operatorname{up}(\epsilon_{\rm far}Z_\lambda^2)},\qquad
+E_{\rm new}=\min\left\{E_{\rm old},
+\operatorname{up}\bigl((P+\epsilon_{\rm sm}+H_{\rm new})^2\bigr)\right\}.
+$$
+
+All norm cross terms remain in the square. The same actual source
+then satisfies $\|u_F\|_{W_F}^2\le E_{\rm new}$.
+
+One energy cap must enter both the fee and eligibility budget.
+Reuse the independent charge constant upper $K_{0,\rm up}$ from
+the original charge identity. Do not obtain it by subtracting a
+far-energy upper from an unrelated fee upper. With $\kappa=33/32$,
+
+$$
+D_{\rm new}=K_{0,\rm up}+\kappa E_{\rm new}>0.
+$$
+
+For the SAME reflected potential and Bessel certificate, reuse
+$a_{1,\rm up}, B_{\rm band}^2,m_{\max}$ and $W_F=w_FI$:
+
+$$
+p_{\rm new}=\operatorname{up}
+\left(a_{1,\rm up}
++2\sqrt{\frac{E_{\rm new}}{w_F}B_{\rm band}^2}
++m_{\max}\frac{E_{\rm new}}{w_F}\right),\qquad
+\tau_{\rm new}=\frac{h_{\rm lo}}{h_{\rm lo}+p_{\rm new}},\qquad
+t_{\rm new}=\frac{\tau_{\rm new}}{h_{\rm hi}}.
+$$
+
+The lower endpoint supplies the numerator in the eligibility cap;
+the upper endpoint supplies the denominator defining the legal
+coefficient. These directions are retained even if the displayed
+values of $h_{\rm lo},h_{\rm hi}$ coincide.
+
+Changing $t$ changes the reference steering curvature as well as
+the finite value. Keep the original source, rows, lift, $R,T$ and
+$Q_R$ fixed. Then
+
+$$
+h_{11,\rm new}=h_{11,\rm old}+t_{\rm new}^{-1}-t_{\rm old}^{-1},
+\qquad h_{12,\rm new}=h_{12,\rm old}.
+$$
+
+The same $y_0=\alpha_0\rho+\beta_J$, $r_0,r_\rho,\lambda_0,\delta$
+and previously supplied $\vartheta_0=fQ_Ry_0^*$ remain unchanged.
+The old all-real comparison exclusion concerns its specified old
+fee and coefficient; it is not an exclusion for this repriced family.
+
+The original positive and negative Cauchy bounds are homogeneous
+in the common source energy cap. Hence one may use
+
+$$
+A_{\rm new}=\operatorname{up}\left(A_{\rm old}
+\frac{E_{\rm new}}{E_{\rm old}}\right),\qquad
+C_{-,\rm new}=\operatorname{up}\left(C_{-,\rm old}
+\sqrt{\frac{E_{\rm new}}{E_{\rm old}}}\right).
+$$
+
+No favorable component endpoints are asserted jointly attainable.
+For the fixed saved coefficient $\alpha_0$ directly enclose
+
+$$
+q_{\rm new}=\frac{\alpha_0^2}{t_{\rm new}}+D_{\rm new}
++r_0-\frac{\lambda_0^2}{\delta},\qquad
+\Delta_{\rm new}=\operatorname{up}
+\left[\frac{\eta}{1-\eta}
+\left(\sqrt{r_{0,\rm up}}+\sqrt{A_{\rm new}}\right)^2\right].
+$$
+
+A new sufficient upper before the additional good-block metric is
+
+$$
+C_{\rm lin,new}=
+\operatorname{up}(q_{\rm new,up}+A_{\rm new}+\Delta_{\rm new}),
+\qquad C_{\rm lin,new}+2\vartheta_0.
+$$
+
+The negative far self-square has been dropped in this upper.
+The existing all-real scalar capacity formula also applies, with
+$h_{11,\rm new},t_{\rm new},D_{\rm new},A_{\rm new},C_{-,\rm new}$.
+In particular its slope uses the shifted curvature, rather than
+the old nearly stationary finite derivative.
+
+A positive sufficient upper or a nonpositive lower capacity
+does not determine an actual-center sign or furnish a favorable
+actual derivative. A negative upper would still leave the
+good-block metric and full-border/cofinal obligations to be paid.
+The fee remains an upper defining this comparison, never a lower
+bound on an actual smaller charge. This is one common-source
+energy enclosure and linked application, not a certificate for
+an independently optimized continuum of energy bounds.
+
+This is a numerical application of the existing physical Gram operator
+error, triangle inequality, source-charge identity, Bessel budget and
+Schur/Cauchy estimates. It supplies no new generic theorem, algorithm,
+literature novelty or Lean proof. All inherited actual-form/domain,
+common-source/short/lift, original weight and component premises remain.
+Actual-center/full-border signs, the good-block metric, retained/cofinal
+positivity, Robin tail and RH remain unresolved.
+
+The single fixed1024-working/640-export-bit application finishes in
+0.55967seconds including serialization. It makes one112-by112
+mixed quadratic from saved arrays. Its62 source/input bindings agree
+at entry and prewrite; no source, feature, inverse, reference, trace,
+Gram, signed-response or tail supplier is replayed.
+
+| Quantity | Previous value | Repriced value |
+|---|---:|---:|
+| Weighted mixed-H norm upper |0.478756042961117000|0.052637674256435558|
+| Weighted far-energy upper |9.164839739390695|6.766398882441490|
+| Positive source-valid fee |178.644404880862231|176.171012747133362|
+| Sufficient eligibility cap |0.035871186206647585|0.042365798558350576|
+| Legal coefficient |0.000033349857564549898|0.000039387973940699242|
+| Fixed-point sufficient expression |[16.865709521960626,16.876387083066322]|[6.738778327421815964,6.749455888527510587]|
+
+The displayed energy/norm/fee quantities round upward and legal
+caps/coefficients downward; the interval endpoints round outward.
+Saved640-bit integer endpoints and exact rational parameters are
+authoritative. The mixed Gram quadratic is approximately
+0.00277072475112661857, and the paid physical error upper is
+approximately$6.26272\cdot10^{-133}$. No extra$\kappa$ or far weight
+is inserted into that already weighted mixed norm.
+
+At the retained$\alpha_0$, the new reference finite value is
+approximately12.52275519466849333. The finite derivative is now
+approximately$-174.6152875359602151$, and the adjusted comparison
+curvature lower is approximately20539.69581714781024. These are
+changes in the legal-coefficient contribution, not a newly supplied
+far derivative. The previously near-stationary finite coefficient
+must not be treated as stationary in the new recipe.
+
+The same all-real capacity estimate now gives a lower floor near
+$-16.43212445437972714$. It therefore does not exclude the repriced
+family. This is not a favorable derivative or negative comparison
+certificate: the fixed-point sufficient upper still has positive
+upper endpoint6.749455888527510587. At this fixed coefficient, even
+the separate self-term-only refinement class has a positive floor
+above2.141787799175894749. That diagnostic concerns refinements of
+the specified frozen upper expression, not an actual-center lower.
+
+The useful new information is the tighter shared energy cap and its
+joint effect on fee and eligibility. The next signed quantity for
+steering is$fQ_R\rho^*$, with the shifted finite slope above. Before
+supplying a new long pairing, the saved full physical Gram and known
+$\vartheta_0$ can be used to assess its conditional capacity; that
+additional capacity has not been computed here. Repeating the old
+source, mixed norm or signed$\vartheta_0$ suppliers is unnecessary.
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/a24e55cb1c5686534d786330e0a8bdd7a8801975/docs/reports/weil-c27)
+retain packet SHA256
+`66360516946c571c187b5a4eb35aeed1487eef9eff28bee26d5f8fb3211f1a59`
+and source SHA256
+`92d38517ef0e724cc819ae26e934f492273d93a2a8634c89b573f98c3154b518`.
+The saved old recipe and its exclusion remain intact. All actual-form,
+domain, source/short/lift, weight, homogeneous-cap and component
+premises remain conditions; actual-center/full-border signs,
+good-block payment, retained/cofinal positivity, Robin and RH are
+unresolved.
