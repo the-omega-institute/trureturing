@@ -28,6 +28,19 @@ internal sealed class PrefixLanguageTopologyDocument : IScribeDocumentDefinition
                         + "makes openness immediate."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("prefix-cylinder-closed"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/Complexity/PrefixLanguageTopology.isClosed_prefixCylinder"),
+                H("Finite prefix cylinders are closed"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("IsClosed")), Sp,
+                    F.Id("prefixCylinder"), Sp, F.Id("S"), Sp, F.Id("n")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The complement is the union of cylinders with the same finite "
+                        + "prefix length, so it is open in the discrete product basis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("closed-prefix-reflection"),
                 DeclarationHandle.Create(
                     "D5/S1/Words/Complexity/PrefixLanguageTopology.closed_eq_iInter_prefixCylinder"),
@@ -39,6 +52,20 @@ internal sealed class PrefixLanguageTopologyDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "A point outside a closed set is excluded by one finite cylinder from the "
                         + "product basis; a point in the set supplies a witness at every level."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("closure-prefix-reflection"),
+                DeclarationHandle.Create(
+                    "D5/S1/Words/Complexity/PrefixLanguageTopology.closure_eq_iInter_prefixCylinder"),
+                H("All finite prefixes reconstruct the closure"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("closure"), Sp, F.Id("S"), Sp, Eq, Sp,
+                    F.Id("intersection"), F.Id("n"), Sp,
+                    F.Id("prefixCylinder"), Sp, F.Id("S"), Sp, F.Id("n")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Each prefix approximation is clopen, so their intersection is closed; "
+                        + "the product basis separates every point outside the closure."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("shift-prefix-transition"),
