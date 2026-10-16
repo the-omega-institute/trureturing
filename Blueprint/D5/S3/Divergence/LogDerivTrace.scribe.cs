@@ -39,8 +39,7 @@ internal sealed class LogDerivTraceDocument : IScribeDocumentDefinition
                             "(m + t I)^(-1) X (m + t I)^(-1). The notation D ln in the source " +
                             "paper denotes this integral. This formal statement does not claim " +
                             "that logDeriv is the Frechet derivative of mathlib's Matrix.log; " +
-                            "that identification remains outside the available mathlib API " +
-                            "tracked by issue #924."))),
+                            "that identification remains outside the available mathlib API."))),
                     DescribeRole.Definition),
                                 Describe.Lean(
                     DescribeId.Create("positive-definite-log-derivative-has-direction-trace"),
