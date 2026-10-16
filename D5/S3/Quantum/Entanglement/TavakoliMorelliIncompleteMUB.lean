@@ -129,7 +129,6 @@ theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
     rw [hy, map_zero]
     exact inner_zero_right _
 
-set_option maxHeartbeats 800000 in
 /-- Squared probabilities of arbitrary Hermitian inputs obey the incomplete-MUB moment bound. -/
 theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
     (A : MUBFamily d m) (H : Op d) (hH : H.IsHermitian) :
