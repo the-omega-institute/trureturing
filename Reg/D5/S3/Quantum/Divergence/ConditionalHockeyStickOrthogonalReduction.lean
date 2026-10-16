@@ -188,7 +188,8 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => Empty.elim e))
+  readout := some
+    (realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
