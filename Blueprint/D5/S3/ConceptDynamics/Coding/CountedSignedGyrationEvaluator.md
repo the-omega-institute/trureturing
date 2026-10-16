@@ -54,27 +54,18 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.sig
 
 *Commentary.*
 
-For every nonzero period d and compatible rectangular pair R:n by m, S:m by n, with R entries zero or one and S entries minus one, zero or one, supportedEvaluator equals signedGyrationLift at Sum.elim of those same matrix entries. It sums outside words a, supported middle words b and dense S rank vectors l using vectorTerm. The support module supplies the dependent-sum reindexing and rankedTerm_eq_vectorTerm supplies equality of each remaining summand. The thin integerGyrationValue_eq_supportedEvaluator helper exposes exactly the same equality through the existing integerGyrationValue definition.
+For every nonzero period d and compatible rectangular pair R:n by m, S:m by n, with R entries zero or one and S entries minus one, zero or one, supportedEvaluator equals signedGyrationLift at Sum.elim of those same matrix entries. It sums outside words a, supported middle words b and dense S rank vectors l using vectorTerm. The support module supplies the dependent-sum reindexing and rankedTerm_eq_vectorTerm supplies equality of each remaining summand. The existing integerGyrationValue definition is this signed lift, so the same equality holds directly for integerGyrationValue.
 
 The existing rationalGyrationPolynomial_eval_signed already identifies the rational polynomial evaluation with the integer signed lift after casting to the rationals. Combining that result with this equality explains the polynomial-evaluation scope without adding another named theorem. Arbitrary signed integer inputs remain valid for the original polynomial theorem; the sparse evaluator equality here has the stated binary/ternary restrictions. Dimensions may be zero, zeros may occur and matrices may be singular. No invertibility, three-divisibility of d, fixed dimension, residue table or numerical value is assumed.
 
-**Theorem 1.5 (Partition by the first outside vertex).**
+## Partition by the first outside vertex
 
-Lean statement: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.prunedEvaluator_eq_shards`
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.prunedEvaluator_eq_shards` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For d=k+1, the existing Fin.consEquiv partitions each outside word into its head i and tail of length k. Reindexing its finite sum gives prunedEvaluator(k+1,R,S) as the sum over i of prunedShard(k,R,S,i). The partition permits separate reductions at each first outside vertex. Together with supportedEvaluator_eq_pruned and integerGyrationValue_eq_supportedEvaluator, it expresses the time and I+T gyration calculations at periods three and six as finite sums of shards. This identity supplies no value for those sums.
+For d=k+1, the existing Fin.consEquiv partitions each outside word into its head i and tail of length k. Reindexing its finite sum gives prunedEvaluator(k+1,R,S) as the sum over i of prunedShard(k,R,S,i). The partition permits separate reductions at each first outside vertex. Together with supportedEvaluator_eq_pruned and the equality of integerGyrationValue with its signed lift, it expresses the time and I+T gyration calculations at periods three and six as finite sums of shards. This identity supplies no value for those sums.
 
 The relation between cyclic rotation, least representatives and signed integer weights is preserved throughout the coordinate change. The derivations use existing finite sums and ordered fibres. They do not establish the original-h theorem, literal Fix(T^6), minimum-six objective, full mod-six law or rho-image exhaustion.
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.prunedEvaluator_eq_shards`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.rankedTerm_eq_vectorTerm`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.signedGyrationLift_eq_supportedEvaluator`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedSignedGyrationEvaluator.vectorTerm_zero_of_nonminimal`
