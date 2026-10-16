@@ -886,3 +886,153 @@ All results fix the original signed nonzero $\kappa$, source, positive cutoffs, 
 Analytic amplitudes do not supply native amplitude preparation, lawful transport realization, acquisition of the relevant density, or timing and resource permissions. This differential-operator phase/spectral theorem is distinct from the selected-input acquired-mass quantity also denoted $E_s$ in other quantum volumes: a shared symbol or scale supplies no task, resource or full-channel bridge. There is no claim of native feasibility, efficiency, impossibility or capacity, autonomous reduced quantum dynamics, generic neural-network or empirical machine-learning performance, ML implementation migration, or completion of a through-2027 programme. There is no Lean/kernel/frozen certification or executed mathematical/numerical validation. The full-family sign, response-zero finer scale, and realization obligations remain at their explicit boundaries.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. Exact native ratio images and the admission neighbourhood
+
+**Proposition 14.1 (fixed interval, interior pole and signed window).**
+Write $R=\lambda/\nu^2$ and $L=u-l$. For any fixed admitted $H,I,\kappa\ne0$,
+varying only $k_0\in(l,u)$ gives exactly the open interval
+
+$$
+R=\pi^2\frac{(k_0-\alpha_\kappa)^2}{L^2},\qquad
+\mathscr R_\kappa=
+\left(\frac{\pi^2(l-\alpha_\kappa)^2}{L^2},
+      \frac{\pi^2(u-\alpha_\kappa)^2}{L^2}\right).
+\tag{14.1}
+$$
+
+More specifically fix $0<H<1/2$, $0<l<u<H$ and an explicit radius
+$0<b<\min\{l/4,(H-u)/2,H/4\}$ as in G (16.2).
+With $k_0$ varying over $I$, the respective images for $0<\kappa\le b$
+and $-b\le\kappa<0$ are exactly
+
+$$
+\mathscr R_+=\left(\frac{\pi^2(l-b-b^2/H)^2}{L^2},
+                          \frac{\pi^2u^2}{L^2}\right),\qquad
+\mathscr R_-=\left(\frac{\pi^2l^2}{L^2},
+                          \frac{\pi^2(u+b-b^2/H)^2}{L^2}\right).
+\tag{14.2}
+$$
+
+Every interior value in (14.1)–(14.2) is attained; neither endpoint is.
+With $k_0$ fixed instead, the positive and negative window images are
+
+$$
+\left[\frac{\pi^2(k_0-b-b^2/H)^2}{L^2},\frac{\pi^2k_0^2}{L^2}\right),\qquad
+\left(\frac{\pi^2k_0^2}{L^2},\frac{\pi^2(k_0+b-b^2/H)^2}{L^2}\right].
+$$
+
+The included endpoints occur only at $\kappa=b,-b$, respectively;
+the excluded endpoints require $\kappa=0$.
+This explicit window meets the larger-height-interval geometric and
+scalar-fibre requirements of L Definition 35.1, with the original rational
+coefficients. The heat, domain, mode and complete-field antecedents of
+this volume retain their supplied ordinary conditional status.
+
+Proof. The factors $\varepsilon^2$ cancel in $\lambda/\nu^2$.
+Since $l-\alpha_\kappa>0$, the map in (14.1) is strictly increasing
+and continuous in $k_0$, with precisely the displayed endpoint limits.
+On $[-b,b]$, $\alpha_\kappa'=1+2\kappa/H>0$.
+For positive $\kappa$, its range is $(0,b+b^2/H]$; for negative
+$\kappa$, it is $[-b+b^2/H,0)$. The differences $k_0-\alpha_\kappa$
+therefore have infimum and supremum $l-b-b^2/H,u$ in the first case,
+and $l,u+b-b^2/H$ in the second. None is attained because $k_0$
+is interior (and the zero parameter is excluded). Each parameter-pole
+rectangle is connected and the difference is continuous, so its image
+is an interval. These infima and suprema thus prove every intermediate
+value occurs. All differences are positive, so squaring preserves the
+intervals and their endpoint exclusions. Subtracting the same alpha
+intervals from a fixed $k_0$ proves the half-open images as well.
+
+For the analytic neighbourhood, strictness of the bound on $b$ allows
+$b'>b$ and $0<l'<l<u<u'<H$ with
+$b'<\min\{l'/4,(H-u')/2,H/4\}$. On the compact rectangle
+$[-b',b']\times[l',u']$, the original five probabilities
+$(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$ have positive margins.
+For $\kappa\ge0$, $\alpha_\kappa\le5b'/4<5l'/16$; for
+$\kappa<0$, $\alpha_\kappa<0$. Thus $k-\alpha_\kappa$ has a
+positive margin. Formula (1.3) is nonzero there since $b'<H/4$;
+compactness gives a uniform determinant lower bound and bounded
+coefficient derivatives of every fixed order.
+The numerator coefficient map $e\mapsto P_{\kappa,e}$ in G (26.7)
+is invertible throughout this rectangle: a zero polynomial would give
+$e\cdot c_\kappa=e\cdot c_\kappa'=e\cdot c_\kappa''=0$, forcing
+$e=0$. Its inverse is uniformly bounded by compactness.
+Consequently the sublevel, height Poincare and scalar semigroup proof
+of G (26.6), (26.12) applies on the whole explicit window, with constants
+depending on this fixed rectangle. The determinant and derivative bounds
+are exactly G (32.2)'s larger-cylinder hypotheses for its supplied local
+heat estimate. Restriction to $[-b,b]$ therefore supplies the neighbourhood
+required in L Definition 35.1; no unknown further parameter shrink is
+needed for these conditions. The pole may be any interior point, and
+none of these restrictions depends on a subsequent heat time.
+The inherited analytic suppliers retain their conditional status. $\square$
+
+## 15. Occurrence across distinct fixed native datasets
+
+**Proposition 15.1 (full ratio image for each sign).**
+Fix any $H\in(0,1/2)$ and any $a,\varepsilon>0$.
+Across distinct datasets obeying the explicit window of Proposition 14.1,
+for each prescribed sign of $\kappa\ne0$ the exact ratio image is $(0,\infty)$.
+Here intervals, poles and nonzero parameters may differ between datasets;
+each is fixed before its own critical limit. The endpoint zero is not
+attained and there is no finite upper endpoint.
+
+Proof. Positivity and finiteness follow from (14.1). Given any $R_*>0$,
+put $x=\sqrt{R_*}/\pi$, $t_0=\min\{x/2,1/2\}$ and
+$L=H/[2(x+1)]$. For the prescribed sign choose $\kappa=\pm\delta$
+with $\delta>0$ small, and set
+
+$$
+l=\alpha_\kappa+(x-t_0)L,\quad
+k_0=\alpha_\kappa+xL,\quad
+u=\alpha_\kappa+(x+1-t_0)L.
+\tag{15.1}
+$$
+
+At $\delta=0$ these endpoints satisfy $0<l<k_0<u<H/2$.
+By continuity, for all sufficiently small positive $\delta$ they satisfy
+$2\delta<\min\{l/4,(H-u)/2,H/4\}$. Taking the fixed radius
+$b=2\delta$ proves all original explicit admission restrictions,
+and Proposition 14.1 supplies the larger analytic neighbourhood.
+The original means are $X=Y=H+\kappa$ and $Z=1-2H$; no jet is
+chosen independently. Since $k_0-\alpha_\kappa=xL$, the ratio is
+exactly $R_*$. This proves surjectivity for each sign, including all
+intermediate values, while zero requires the impossible $d_0=0$.
+$\square$
+
+**Corollary 15.2 (nonempty actual critical-orbit regime and occurrence dictionary).**
+Retain all standing antecedents and set $Q=G_{\rm resp}/\overline D$.
+For any dataset in Propositions 14.1–15.1, $R>Q$ gives $C_{\rm resp}<0$
+and hence every actual normalized complex ground-state choice converges
+under the original $\mathcal U_s$ to $\mathcal O_c$ as $s\downarrow0$.
+For every fixed admitted nonzero signed $\kappa$ in the explicit window,
+this regime is nonempty even with $H,k_0,a,\varepsilon$ fixed: replace
+$I$ by any sufficiently narrow fixed symmetric interval about $k_0$.
+For each open image $(A,B)$ in (14.1) or (14.2), negative, positive and
+zero response occur respectively exactly when $B>Q$, $A<Q$ and
+$A<Q<B$. Across the distinct datasets of Proposition 15.1, negative
+response always occurs for each sign; positive and zero response each
+occur if and only if $G_{\rm resp}>0$.
+
+Proof. Equation (12.3) gives the exact identity
+$C_{\rm resp}=a\nu^2\overline D(Q-R)$, with positive prefactor.
+For the symmetric interval $(k_0-h,k_0+h)\subset I$, the same explicit
+radius remains admissible, while $R=\pi^2d_0^2/(4h^2)\to\infty$
+as $h\downarrow0$. Fix any sufficiently small $h>0$ with $R>Q$
+before taking $s\downarrow0$; Theorem 11.2 gives the asserted actual
+orbit convergence and $r_s\sim(-C_{\rm resp})s^{-6}$.
+The open-image assertions follow by intersection with $(Q,\infty)$,
+$(0,Q)$ and $\{Q\}$ respectively; Proposition 15.1 gives the full
+positive-axis image. For positive response the actual bounded-$r_s$
+scale and orbit defect are exactly Theorem 11.2, not an identified
+replacement profile. At zero response only (11.4) and the sequencewise
+criterion (3.9) apply; the actual $r_s$ decision remains unresolved.
+These are `repo-derived` parameter and actual-state consequences, with
+no evaluation of the canonical constants or sign for an arbitrary
+fixed datum. They assert no preparation of analytic amplitudes, positive
+$L^2$ spectral gap, $L^2$ response vector, finer coefficient, physical
+dimension or kernel verification. $\square$
+
+## 追加锚（本行以下为增补区）
