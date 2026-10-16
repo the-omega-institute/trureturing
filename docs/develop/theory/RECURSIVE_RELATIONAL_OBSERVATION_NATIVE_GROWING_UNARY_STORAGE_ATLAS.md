@@ -216,7 +216,7 @@ PC/mode/cursor, token/latch patterns, and all raw bit contents of each
 fixed finite native version store. During a bootstrap the active rows
 are its fixed NEXT/INPUT/WRITE/ADVANCE/DONE rows. A wrong supplied bit
 changes its actual raw store, not that active bootstrap. After DONE use
-ARC Definition 5.3's actual decoded row: no unique in-range well-typed
+ARC Definition 6.2's actual decoded row: no unique in-range well-typed
 row means no enabled main row. A unique row uses its actual seven native
 fields and ordered finite local effects, not the canonical $G$ row.
 
@@ -283,7 +283,7 @@ entire raw bit-pattern space, not merely its intended table, is finite.
 PC and decoded field ranges are finite. The maximum effect-list length
 and the union of its named local roles over this finite space are finite.
 If a raw store does not decode, its main row is absent exactly as specified
-in ARC Definition 5.3. If it does decode, its actual finite ordered local
+in ARC Definition 6.2. If it does decode, its actual finite ordered local
 effect is one of the enumerated cases. No estimate of three old cells is
 used: a CTL can name several current/predecessor markers on several ports.
 The finite maximum of these actual lists supplies the bound instead.
