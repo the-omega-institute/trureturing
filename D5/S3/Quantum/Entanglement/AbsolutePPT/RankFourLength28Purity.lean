@@ -433,17 +433,14 @@ private theorem certificate_nonnegative (l : Fin 28 → ℝ)
     · have hweight : (0 : ℚ) ≤ B 0 0 0 0 := by decide +kernel
       have hp := (Matrix.posSemidef_vecMulVec_self_star (![1,1,0] : Fin 3 → ℝ)).smul
         (show (0 : ℝ) ≤ (B 0 0 0 0 : ℝ) by exact_mod_cast hweight)
-      have he : castMat (B 0 0) = (B 0 0 0 0 : ℝ) •
+      have hendpoint : B 0 0 = endpoint (B 0 0 0 0) := by decide +kernel
+      have he : castMat (endpoint (B 0 0 0 0)) = (B 0 0 0 0 : ℝ) •
           vecMulVec (![1,1,0] : Fin 3 → ℝ) (star ![1,1,0]) := by
         ext j k
         fin_cases j <;> fin_cases k <;>
-          norm_num [B, endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply,
-            Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
-            Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two,
-            Fin.succ, Fin.reduceFinMk]
-        <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
-        <;> norm_num
-      rw [he]
+          norm_num [endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply]
+      change (castMat (B 0 0)).PosSemidef
+      rw [hendpoint, he]
       exact hp
     · apply psd_of_rat_ldl _ !![1, 0, 0;
             (248380/292473), 1, 0;
@@ -578,32 +575,26 @@ private theorem certificate_nonnegative (l : Fin 28 → ℝ)
     · have hweight : (0 : ℚ) ≤ B 0 27 0 0 := by decide +kernel
       have hp := (Matrix.posSemidef_vecMulVec_self_star (![1,1,0] : Fin 3 → ℝ)).smul
         (show (0 : ℝ) ≤ (B 0 27 0 0 : ℝ) by exact_mod_cast hweight)
-      have he : castMat (B 0 27) = (B 0 27 0 0 : ℝ) •
+      have hendpoint : B 0 27 = endpoint (B 0 27 0 0) := by decide +kernel
+      have he : castMat (endpoint (B 0 27 0 0)) = (B 0 27 0 0 : ℝ) •
           vecMulVec (![1,1,0] : Fin 3 → ℝ) (star ![1,1,0]) := by
         ext j k
         fin_cases j <;> fin_cases k <;>
-          norm_num [B, endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply,
-            Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
-            Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two,
-            Fin.succ, Fin.reduceFinMk]
-        <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
-        <;> norm_num
-      rw [he]
+          norm_num [endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply]
+      change (castMat (B 0 27)).PosSemidef
+      rw [hendpoint, he]
       exact hp
     · have hweight : (0 : ℚ) ≤ B 1 0 0 0 := by decide +kernel
       have hp := (Matrix.posSemidef_vecMulVec_self_star (![1,1,0] : Fin 3 → ℝ)).smul
         (show (0 : ℝ) ≤ (B 1 0 0 0 : ℝ) by exact_mod_cast hweight)
-      have he : castMat (B 1 0) = (B 1 0 0 0 : ℝ) •
+      have hendpoint : B 1 0 = endpoint (B 1 0 0 0) := by decide +kernel
+      have he : castMat (endpoint (B 1 0 0 0)) = (B 1 0 0 0 : ℝ) •
           vecMulVec (![1,1,0] : Fin 3 → ℝ) (star ![1,1,0]) := by
         ext j k
         fin_cases j <;> fin_cases k <;>
-          norm_num [B, endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply,
-            Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
-            Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two,
-            Fin.succ, Fin.reduceFinMk]
-        <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
-        <;> norm_num
-      rw [he]
+          norm_num [endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply]
+      change (castMat (B 1 0)).PosSemidef
+      rw [hendpoint, he]
       exact hp
     · apply psd_of_rat_ldl _ !![1, 0, 0;
             (271761/319757), 1, 0;
@@ -738,17 +729,14 @@ private theorem certificate_nonnegative (l : Fin 28 → ℝ)
     · have hweight : (0 : ℚ) ≤ B 1 27 0 0 := by decide +kernel
       have hp := (Matrix.posSemidef_vecMulVec_self_star (![1,1,0] : Fin 3 → ℝ)).smul
         (show (0 : ℝ) ≤ (B 1 27 0 0 : ℝ) by exact_mod_cast hweight)
-      have he : castMat (B 1 27) = (B 1 27 0 0 : ℝ) •
+      have hendpoint : B 1 27 = endpoint (B 1 27 0 0) := by decide +kernel
+      have he : castMat (endpoint (B 1 27 0 0)) = (B 1 27 0 0 : ℝ) •
           vecMulVec (![1,1,0] : Fin 3 → ℝ) (star ![1,1,0]) := by
         ext j k
         fin_cases j <;> fin_cases k <;>
-          norm_num [B, endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply,
-            Matrix.cons_val, Matrix.vecHead, Matrix.vecTail,
-            Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.cons_val_two,
-            Fin.succ, Fin.reduceFinMk]
-        <;> dsimp only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go]
-        <;> norm_num
-      rw [he]
+          norm_num [endpoint, castMat, Matrix.vecMulVec, Matrix.smul_apply]
+      change (castMat (B 1 27)).PosSemidef
+      rw [hendpoint, he]
       exact hp
   have hw : 0 ≤ L4 l * (∑ i : Fin 28, (w i : ℝ) * gap l i) :=
     mul_nonneg h4 (Finset.sum_nonneg fun i _ =>
