@@ -51,6 +51,7 @@
    Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Combinatorics.SimpleGraph.LapMatrix
@@ -357,10 +358,6 @@ private theorem rank_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) : (Matrix.block
   rw [hker,Module.finrank_pi,Fintype.card_sigma] at htot; change (Matrix.blockDiagonal' M).rank+_= _ at htot;
   have hs : ∑ i, ((M i).rank+Module.finrank ℂ (LinearMap.ker (M i).mulVecLin)) = ∑ i,Fintype.card (κ i) := by { apply Finset.sum_congr rfl; intro i hi; simpa only [Matrix.rank,Module.finrank_pi] using (M i).mulVecLin.finrank_range_add_finrank_ker };
   rw [Finset.sum_add_distrib] at hs; omega }
-private theorem psd_block (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i,(M i).PosSemidef) : (Matrix.blockDiagonal' M).PosSemidef := by {
-  have h : ∀ i,∃ B : Matrix (κ i) (κ i) ℂ, M i=star B*B := fun i => CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM i).nonneg; choose B hB using h;
-  have he : Matrix.blockDiagonal' M = (Matrix.blockDiagonal' B)ᴴ*Matrix.blockDiagonal' B := by { rw [Matrix.blockDiagonal'_conjTranspose, ← Matrix.blockDiagonal'_mul]; congr 1; funext i; exact hB i };
-  rw [he]; exact Matrix.posSemidef_conjTranspose_mul_self _ }
 end Blocks
 namespace Blocks
 variable {ι ν : Type*} [Fintype ι] [DecidableEq ι] [Fintype ν] [DecidableEq ν]
@@ -377,7 +374,7 @@ open Index
 private theorem cycle_length {n : ℕ} (hn : 3≤n) (t : Fin (2*n-3)) : 2≤(addresses n t.val).length ∧ Even (addresses n t.val).length := by { have hb := bounds hn t.isLt; rw [addresses,indices_length]; constructor; · { omega }; · { exact even_two_mul _ } }
 private theorem blockZ_zero {lo hi n : ℕ} (h : lo<hi) (a : Fin n → ℂ) : blockZ a (betaUpper hi lo) 0=1 := by { have hm : 0<(hi-lo+1)/2 := by { omega }; simp [blockZ,betaUpper,hm] }
 private theorem blockZ_unit {lo hi n : ℕ} (a : Fin n → ℂ) (ha : ∀ i, ‖a i‖=1) (j : ℕ) : ‖blockZ a (betaUpper hi lo) j‖=1 := by { have hu (k : ℕ) : ‖phaseAt a k‖=1 := by { unfold phaseAt; split_ifs <;> simp [ha] }; unfold blockZ; split_ifs; · { simp }; · { split <;> simp [norm_mul,norm_inv,hu] } }
-private theorem sign_reflect {m j : ℕ} (hj : j<m) : (-1 : ℂ)^(2*m-1-j) = -(-1 : ℂ)^j := by { have hh : 2*m-1-j+j=2*m-1 := by { omega }; have hp : (-1 : ℂ)^(2*m-1-j)*(-1 : ℂ)^j = -1 := by { rw [←pow_add,hh,Cycle.sign_last (by { omega }) (even_two_mul m)] }; linear_combination (-1 : ℂ)^j*hp - Cycle.sign_square j*(-1 : ℂ)^(2*m-1-j) }
+private theorem sign_reflect {m j : ℕ} (hj : j < m) : (-1 : ℂ)^(2*m-1-j) = -(-1 : ℂ)^j := by { have hh : 2*m-1-j+j=2*m-1 := by { omega }; have hp : (-1 : ℂ)^(2*m-1-j)*(-1 : ℂ)^j = -1 := by { rw [←pow_add,hh,Cycle.sign_last (by { omega }) (even_two_mul m)] }; linear_combination (-1 : ℂ)^j*hp - Cycle.sign_square j*(-1 : ℂ)^(2*m-1-j) }
 private theorem cycle_tensor_value {n : ℕ} (hn : 3≤n) (t : Fin (2*n-3)) (x y : Fin n → ℂ) (j : Fin (addresses n t.val).length) : tensor x y (cycleAddress n hn t j) = phaseAt x ((addresses n t.val)[j.val]).1 * phaseAt y ((addresses n t.val)[j.val]).2 := by { have hp := address_bounds hn t.isLt _ (List.getElem_mem j.isLt); dsimp [tensor,Matrix.vecMulVec,phaseAt,cycleAddress]; simp only [dif_pos (show ((addresses n t.val)[j.val]).1-1<n by { omega }), dif_pos (show ((addresses n t.val)[j.val]).2-1<n by { omega })] }
 private def cycleTerm {n : ℕ} (a x y : Fin n → ℂ) (lo hi j : ℕ) : ℂ := let p := ((indexList (betaUpper hi lo))[j]?).getD (0,0); (-1)^j * blockZ a (betaUpper hi lo) j * phaseAt x p.1 * phaseAt y p.2
 private theorem cycleTerm_upper {n lo hi j : ℕ} (a x y : Fin n → ℂ) (hj : j<(hi-lo+1)/2) : cycleTerm a x y lo hi j = (-1)^j*phaseAt x (lo+j)*phaseAt y (hi-j) := by { have hget := indices_get_upper lo hi j hj; have hlen : j<(indexList (betaUpper hi lo)).length := by { rw [indices_length]; omega }; simp only [cycleTerm,List.getElem?_eq_getElem hlen,Option.getD_some,hget]; have hu : j<(betaUpper hi lo).length := by { simpa [betaUpper] using hj }; simp [blockZ,hu] }
@@ -385,7 +382,7 @@ private theorem cycleTerm_lower {n lo hi j : ℕ} (a x y : Fin n → ℂ) (hj : 
   let m := (hi-lo+1)/2; have hge : m≤2*m-1-j := by { omega }; have hlt : 2*m-1-j<2*m := by { omega };
   have hget := indices_get_lower lo hi (2*m-1-j) hge hlt; have href : 2*m-1-(2*m-1-j)=j := by { omega }; rw [href] at hget;
   have hlen : 2*m-1-j<(indexList (betaUpper hi lo)).length := by { rw [indices_length]; exact hlt };
-  have hu : ¬2*m-1-j<(betaUpper hi lo).length := by { simpa [betaUpper] using (by { omega } : ¬2*m-1-j<m) }; dsimp only [m] at hget hlen hu;
+  have hu : ¬2*m-1-j<(betaUpper hi lo).length := by { simpa [betaUpper] using (by { omega } : ¬2*m-1-j < m) }; dsimp only [m] at hget hlen hu;
   have hidx : (indexList (betaUpper hi lo))[2*((hi-lo+1)/2)-1-j]?=some (hi-j,lo+j) := by { rw [List.getElem?_eq_getElem hlen,hget] };
   have hidx' : (indexList (betaUpper hi lo))[2*((hi-lo+1)/2)-1-j]?=some (hi-j,lo+j) := hidx; simp only [cycleTerm,hidx,Option.getD_some,blockZ,if_neg hu,hidx'];
   rw [sign_reflect hj] }
@@ -613,7 +610,7 @@ private theorem rhoGamma_psd_rank {n : ℕ} (hn : 3≤n) (a b : Fin n → ℂ) (
   have hr' : (r:ℂ)≠0 := by { exact_mod_cast ne_of_gt hr };
   have hdiag : ((r:ℂ) • (1:Matrix (Fin n) (Fin n) ℂ)).rank=n := by { rw [Matrix.rank_smul_of_mem_nonZeroDivisors _ (mem_nonZeroDivisors_of_ne_zero hr'),Matrix.rank_one,Fintype.card_fin] };
   have hp := fun t=>cycleBlock_psd_rank hn a b ha hb t; constructor;
-  · { rw [←Matrix.posSemidef_submatrix_equiv (addressEquiv n hn),rhoGamma_reindex hn]; apply Blocks.psd_block; intro t; cases t with | none => { exact Matrix.PosSemidef.one.smul (show (0:ℂ)≤(r:ℂ) by { exact_mod_cast hr.le }) } | some t => { exact (hp t).1 } };
+  · { rw [←Matrix.posSemidef_submatrix_equiv (addressEquiv n hn),rhoGamma_reindex hn]; apply D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.posSemidef_blockDiagonal'; intro t; cases t with | none => { exact Matrix.PosSemidef.one.smul (show (0:ℂ)≤(r:ℂ) by { exact_mod_cast hr.le }) } | some t => { exact (hp t).1 } };
   · {
     rw [←Matrix.rank_submatrix _ (addressEquiv n hn) (addressEquiv n hn),rhoGamma_reindex hn, Blocks.rank_block];
     have htotal : n+(∑ t : Fin (2*n-3),(addresses n t.val).length)=n*n := by { have h : (∑ t, Fintype.card (Fin (dim n t)))=n*n := by { simpa only [Fintype.card_sigma,Fintype.card_prod,Fintype.card_fin] using Fintype.card_congr (addressEquiv n hn) }; rw [Fintype.sum_option] at h; simpa only [dim,Fintype.card_fin] using h };
@@ -625,14 +622,14 @@ end Partition
 namespace Partition
 open Index
 private theorem pEntry_swapped {lo hi i j : ℕ} (hlo : lo≤ i) (hhi : j≤hi) (hij : i<j) (hs : i+j=lo+hi) (z : ℕ→ℂ) (hz : z 0=1) (hu : ∀ k, k<(hi-lo+1)/2 → z k=1) : pEntry (2*((hi-lo+1)/2)) z (2*((hi-lo+1)/2)-1-(i-lo)) (i-lo) = if i=lo ∨ j≤ i+2 then (z (2*((hi-lo+1)/2)-1-(i-lo)))⁻¹ else 0 := by {
-  let m := (hi-lo+1)/2; have hm : 0<m := by { dsimp [m]; omega }; have ht : i-lo<m := by { dsimp [m]; omega }; have hlt : i-lo<2*m-1-(i-lo) := by { omega };
+  let m := (hi-lo+1)/2; have hm : 0 < m := by { dsimp [m]; omega }; have ht : i-lo < m := by { dsimp [m]; omega }; have hlt : i-lo<2*m-1-(i-lo) := by { omega };
   have hlast : 2*m-1-(i-lo)+1=2*m ↔ i=lo := by { omega }; have hadj : 2*m-1-(i-lo)=(i-lo)+1 ↔ j≤ i+2 := by { dsimp [m] at *; omega };
   have hfirst : ¬(2*m-1-(i-lo)=0 ∧ (i-lo)+1=2*m) := by { omega }; have hlast' : ((i-lo)=0 ∧ 2*m-1-(i-lo)+1=2*m) ↔ i=lo := by { omega };
   change (if 2*m-1-(i-lo)=i-lo then (if 2*m=2 then 1 else 2) else if i-lo=2*m-1-(i-lo)+1 then z (i-lo)/z (2*m-1-(i-lo)) else if 2*m-1-(i-lo)=(i-lo)+1 then z (i-lo)/z (2*m-1-(i-lo)) else if 2*m-1-(i-lo)=0 ∧ (i-lo)+1=2*m then z (i-lo) else if i-lo=0 ∧ 2*m-1-(i-lo)+1=2*m then (z (2*m-1-(i-lo)))⁻¹ else 0)=_;
   simp only [if_neg (by { omega } : ¬2*m-1-(i-lo)=i-lo), if_neg (by { omega } : ¬i-lo=2*m-1-(i-lo)+1),hu _ ht,one_div, if_neg hfirst,hadj,hlast'];
   by_cases ha : j≤ i+2 <;> simp [ha,m] }
 private theorem blockEntry_swap {n lo hi : ℕ} (a : Fin n→ℂ) (c : ℂ) (i j : Fin n) (hlo : lo≤ i.val+1) (hhi : j.val+1≤hi) (hij : i<j) (hs : i.val+j.val+2=lo+hi) : blockEntry a (betaUpper hi lo) c (j,i) (i,j) = if i.val+1=lo ∨ j.val≤ i.val+2 then c*((phaseAt a (i.val+1))⁻¹*phaseAt a (j.val+1))⁻¹ else 0 := by {
-  let m := (hi-lo+1)/2; let k := i.val+1-lo; have ht : k<m := by { dsimp [m,k]; omega }; have hm : 0<m := by { omega }; have hl : lo≤hi := by { omega };
+  let m := (hi-lo+1)/2; let k := i.val+1-lo; have ht : k < m := by { dsimp [m,k]; omega }; have hm : 0 < m := by { omega }; have hl : lo≤hi := by { omega };
   have hupper : (i.val+1,j.val+1)=(lo+k,hi-k) := by { dsimp [k]; congr 1 <;> omega };
   have hlower : (j.val+1,i.val+1)=(hi-k,lo+k) := by { dsimp [k]; congr 1 <;> omega }; have hiu := indices_idxOf_upper hl ht;
   have hil := indices_idxOf_lower (lo:=lo) (hi:=hi) (t:=2*m-1-k) hl (by { omega }) (by { omega }); have href : 2*m-1-(2*m-1-k)=k := by { omega };
@@ -640,7 +637,7 @@ private theorem blockEntry_swap {n lo hi : ℕ} (a : Fin n→ℂ) (c : ℂ) (i j
   have hmeml : (j.val+1,i.val+1)∈indexList (betaUpper hi lo) := by { apply (indices_mem hl).mpr; dsimp; omega }; dsimp only [blockEntry];
   change (if (j.val+1,i.val+1)∈indexList (betaUpper hi lo) ∧ (i.val+1,j.val+1)∈indexList (betaUpper hi lo) then c*pEntry (indexList (betaUpper hi lo)).length (blockZ a (betaUpper hi lo)) ((indexList (betaUpper hi lo)).idxOf (j.val+1,i.val+1)) ((indexList (betaUpper hi lo)).idxOf (i.val+1,j.val+1)) else 0)=_;
   rw [if_pos ⟨hmeml,hmemu⟩,hupper,hlower,hiu,hil,indices_length]; have hz := blockZ_zero (show lo<hi by { omega }) a;
-  have hu : ∀ q, q<m → blockZ a (betaUpper hi lo) q=1 := by { intro q hq; simp [blockZ,betaUpper,show q<(hi-lo+1)/2 from hq] };
+  have hu : ∀ q, q < m → blockZ a (betaUpper hi lo) q=1 := by { intro q hq; simp [blockZ,betaUpper,show q<(hi-lo+1)/2 from hq] };
   rw [pEntry_swapped hlo hhi (by { have h : i.val<j.val := hij; omega }) (by { omega }) _ hz hu];
   have hlen : 2*m-1-k<(indexList (betaUpper hi lo)).length := by { rw [indices_length]; dsimp [m] at *; omega };
   have hget := indices_get_lower lo hi (2*m-1-k) (by { omega }) (by { omega }); rw [href] at hget;
@@ -729,14 +726,14 @@ namespace Partition
 open Index
 set_option backward.isDefEq.respectTransparency false
 private theorem indices_neighbor {lo hi u v : ℕ} (hl : lo<hi) (hu : u<(indexList (betaUpper hi lo)).length) (hv : v<(indexList (betaUpper hi lo)).length) (hn : v=u+1 ∨ u=v+1 ∨ (u=0 ∧ v+1=(indexList (betaUpper hi lo)).length) ∨ (v=0 ∧ u+1=(indexList (betaUpper hi lo)).length)) : let p := (indexList (betaUpper hi lo))[u]'hu; let q := (indexList (betaUpper hi lo))[v]'hv; p=q.swap ∨ (p.1+1=q.1 ∧ q.2+1=p.2) ∨ (q.1+1=p.1 ∧ p.2+1=q.2) := by {
-  let m := (hi-lo+1)/2; have hm : 0<m := by { dsimp [m]; omega }; have hlu : u<2*m := by { simpa only [indices_length] using hu };
-  have hlv : v<2*m := by { simpa only [indices_length] using hv }; simp only [indices_length] at hn; by_cases hum : u<m;
+  let m := (hi-lo+1)/2; have hm : 0 < m := by { dsimp [m]; omega }; have hlu : u<2*m := by { simpa only [indices_length] using hu };
+  have hlv : v<2*m := by { simpa only [indices_length] using hv }; simp only [indices_length] at hn; by_cases hum : u < m;
   · {
-    rw [indices_get_upper lo hi u hum]; by_cases hvm : v<m;
+    rw [indices_get_upper lo hi u hum]; by_cases hvm : v < m;
     · { rw [indices_get_upper lo hi v hvm]; dsimp; rcases hn with h | h | h | h <;> first | { ({ right; omega }) } | { omega } };
     · { rw [indices_get_lower lo hi v (by { omega }) (by { omega })]; dsimp; left; apply Prod.ext <;> dsimp; all_goals { rcases hn with h | h | h | h <;> simp only [indices_length] at * <;> dsimp [m] at * <;> omega } } };
   · {
-    rw [indices_get_lower lo hi u (by { omega }) (by { omega })]; by_cases hvm : v<m;
+    rw [indices_get_lower lo hi u (by { omega }) (by { omega })]; by_cases hvm : v < m;
     · { rw [indices_get_upper lo hi v hvm]; dsimp; left; apply Prod.ext <;> dsimp; all_goals { rcases hn with h | h | h | h <;> simp only [indices_length] at * <;> dsimp [m] at * <;> omega } };
     · { rw [indices_get_lower lo hi v (by { omega }) (by { omega })]; dsimp; rcases hn with h | h | h | h <;> first | { ({ right; omega }) } | { omega } } } }
 private theorem rhoGamma_support {n : ℕ} (hn : 3≤n) (a b : Fin n→ℂ) (r : ℝ) (row col : (Fin n × Fin n)) (hnz : rhoGamma a b r row col≠0) : row=col ∨ row=col.swap ∨ (row.1.val+1=col.1.val ∧ col.2.val+1=row.2.val) ∨ (col.1.val+1=row.1.val ∧ row.2.val+1=col.2.val) := by {
@@ -908,7 +905,7 @@ private theorem rho_psd_rank {n : ℕ} (hn : 3≤n) (a b : Fin n→ℂ) (r : ℝ
   letI : ∀ t:Bool,Fintype (RhoCarrier n t) := fun t=>by { cases t <;> dsimp [RhoCarrier] <;> infer_instance };
   letI : ∀ t:Bool,DecidableEq (RhoCarrier n t) := fun t=>by { cases t <;> dsimp [RhoCarrier] <;> infer_instance };
   have hp := rho_offdiag_posDef hn a b r hab hr; constructor;
-  · { rw [←Matrix.posSemidef_submatrix_equiv (rhoAddress n),rho_reindex hn a b r hab hr]; apply Blocks.psd_block; intro t; cases t; · { exact hd }; · { exact hp.posSemidef } };
+  · { rw [←Matrix.posSemidef_submatrix_equiv (rhoAddress n),rho_reindex hn a b r hab hr]; apply D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.posSemidef_blockDiagonal'; intro t; cases t; · { exact hd }; · { exact hp.posSemidef } };
   · {
     rw [←Matrix.rank_submatrix _ (rhoAddress n) (rhoAddress n),rho_reindex hn a b r hab hr, Blocks.rank_block];
     have ho : ((rho a b r).submatrix (fun p : {p : Fin n × Fin n // p.1 ≠ p.2}=>p.val) (fun p : {p : Fin n × Fin n // p.1 ≠ p.2}=>p.val)).rank= Fintype.card ({p : Fin n × Fin n // p.1 ≠ p.2}) := Matrix.rank_of_isUnit _ hp.isUnit;
