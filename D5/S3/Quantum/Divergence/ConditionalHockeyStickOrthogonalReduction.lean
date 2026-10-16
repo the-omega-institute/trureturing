@@ -77,6 +77,14 @@ private theorem rt_nonneg_psd {n : Type*} [Fintype n] [DecidableEq n]
   simp only [Complex.re_sum, Complex.ofReal_re]
   exact Finset.sum_nonneg fun i _ => hX.eigenvalues_nonneg i
 
+private theorem trace_psd {n : Type*} [Fintype n] [DecidableEq n]
+    {X : Matrix n n ℂ} (hX : X.PosSemidef) : X.trace = ((rt X : ℝ) : ℂ) := by
+  have h := hX.isHermitian.trace_eq_sum_eigenvalues
+  apply Complex.ext
+  · rfl
+  · rw [h]
+    simp [Complex.im_sum]
+
 private theorem posTrace_smul {n : Type*} [Fintype n] [DecidableEq n]
     (c : ℝ) (hc : 0 ≤ c) (X : Matrix n n ℂ) :
     posTrace (c • X) = c * posTrace X := by
@@ -95,6 +103,18 @@ private theorem posTrace_neg_psd {n : Type*} [Fintype n] [DecidableEq n]
     (CFC.posPart_eq_zero_iff (-X)).mpr (neg_nonpos.mpr hX.nonneg)
   rw [hz]
   simp [rt]
+
+private theorem posTrace_neg_smul {n : Type*} [Fintype n] [DecidableEq n]
+    {X : Matrix n n ℂ} (hX : X.PosSemidef) (c : ℝ) (hc : 0 ≤ c) :
+    posTrace (-c • X) = 0 := by
+  rw [show -c • X = -(c • X) by ext i j; simp]
+  exact posTrace_neg_psd (hX.smul hc)
+
+private theorem trace_smul_psd {n : Type*} [Fintype n] [DecidableEq n]
+    {X : Matrix n n ℂ} (hX : X.PosSemidef) (c : ℝ) :
+    (c • X).trace = ((c * rt X : ℝ) : ℂ) := by
+  rw [Matrix.trace_smul, trace_psd hX]
+  simp [Complex.ofReal_mul]
 
 private def dsum {n m : Type*} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]
@@ -305,6 +325,37 @@ private theorem act_zero {A B : Type*} [Fintype A] [DecidableEq A]
   ext b d
   simp [act]
 
+private theorem act_sub_smul {A B : Type*} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B]
+    (N : QuantumChannel A B) (t : ℝ) (X Y : Matrix A A ℂ) :
+    act N (X - t • Y) = act N X - t • act N Y := by
+  unfold act
+  have hmap : CStarMatrix.ofMatrix (X - t • Y) =
+      CStarMatrix.ofMatrix X - (t : ℂ) • CStarMatrix.ofMatrix Y := by
+    ext i j
+    simp [sub_eq_add_neg]
+  rw [hmap, map_sub, map_smul]
+  rfl
+
+private theorem act_smul {A B : Type*} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B]
+    (N : QuantumChannel A B) (t : ℝ) (X : Matrix A A ℂ) :
+    act N (t • X) = t • act N X := by
+  unfold act
+  have hmap : CStarMatrix.ofMatrix (t • X) =
+      (t : ℂ) • CStarMatrix.ofMatrix X := by
+    ext i j
+    simp
+  rw [hmap, map_smul]
+  rfl
+
+private theorem ptr_smul {R A : Type*} [Fintype R] [DecidableEq R]
+    [Fintype A] [DecidableEq A]
+    (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
+    ptr (t • X) = t • ptr X := by
+  ext r s
+  simp [ptr, partialTraceRight, Finset.smul_sum]
+
 private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ} (hX : IsState X) :
@@ -327,6 +378,24 @@ private theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
     (r s : R) (b d : B) :
     amp N X (r, b) (s, d) =
       act N (fun a a' => X (r, a) (s, a')) b d := by
+  rfl
+
+private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
+    (N : QuantumChannel A B) (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
+    amp N (t • X) = t • amp N X := by
+  ext ⟨r, b⟩ ⟨s, d⟩
+  simp only [amp_entry]
+  let Z : Matrix A A ℂ := fun a a' => X (r, a) (s, a')
+  have harg : (fun a a' => (t • X) (r, a) (s, a')) = t • Z := by
+    ext a a'
+    change (t : ℂ) * X (r, a) (s, a') =
+      (t : ℂ) * X (r, a) (s, a')
+    rfl
+  rw [harg]
+  have hact := act_smul N t Z
+  change act N (t • Z) b d = t * act N Z b d
+  rw [hact]
   rfl
 
 private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
@@ -451,6 +520,206 @@ private theorem pure_filler_state {A : Type*} [Fintype A] [DecidableEq A]
     (a₀ : A) : IsState (pureFiller a₀) := by
   refine ⟨Matrix.posSemidef_diagonal_iff.mpr (fun a => by positivity), ?_⟩
   simp [pureFiller, Matrix.trace]
+
+private theorem flag_transfer
+    {A B R : Type*} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
+    (N : QuantumChannel A B) (γ δ : ℝ) (hδ : 0 < δ)
+    (ρ σ : Matrix (R × A) (R × A) ℂ)
+    (hρ : IsState ρ) (hσ : IsState σ) :
+    ∃ c : ℝ, ∃ ρ' σ' : Matrix ((R ⊕ (Unit ⊕ Unit)) × A)
+        ((R ⊕ (Unit ⊕ Unit)) × A) ℂ,
+      0 < c ∧ IsState ρ' ∧ IsState σ' ∧ ρ' * σ' = 0 ∧
+      gap δ ρ' σ' = c * gap γ ρ σ ∧
+      gap δ (amp N ρ') (amp N σ') =
+        c * gap γ (amp N ρ) (amp N σ) := by
+  let H : Matrix (R × A) (R × A) ℂ := ρ - γ • σ
+  have hH : H.IsHermitian := by
+    dsimp [H]
+    exact hρ.1.isHermitian.sub (hσ.1.isHermitian.smul (by
+      rw [isSelfAdjoint_iff]
+      rfl))
+  let P : Matrix (R × A) (R × A) ℂ := H⁺
+  let Q : Matrix (R × A) (R × A) ℂ := H⁻
+  have hP : P.PosSemidef := by
+    dsimp [P]
+    exact Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg H)
+  have hQ : Q.PosSemidef := by
+    dsimp [Q]
+    exact Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg H)
+  have hPQ : P * Q = 0 := by
+    dsimp [P, Q]
+    exact CFC.posPart_mul_negPart H
+  have hHdecomp : H = P - Q := by
+    dsimp [P, Q]
+    exact (CFC.posPart_sub_negPart H hH).symm
+  let p : ℝ := rt P
+  let q : ℝ := rt Q
+  have hp : 0 ≤ p := by exact rt_nonneg_psd hP
+  have hq : 0 ≤ q := by exact rt_nonneg_psd hQ
+  let c : ℝ := (1 + p + q / δ)⁻¹
+  let a : ℝ := 1 - c * p
+  let b : ℝ := δ - c * q
+  have hw : 0 < c ∧ 0 ≤ a ∧ 0 ≤ b ∧ c * p + a = 1 ∧
+      (c / δ) * q + b / δ = 1 := by
+    simpa [c, a, b] using flag_weights p q δ hp hq hδ
+  rcases hw with ⟨hc, ha, hb, hca, hcb⟩
+  have hRA : Nonempty (R × A) := state_nonempty hρ
+  let a₀ : A := (Classical.choice hRA).2
+  let τ : Matrix A A ℂ := pureFiller a₀
+  have hτ : IsState τ := pure_filler_state a₀
+  let ρ' : Matrix ((R ⊕ (Unit ⊕ Unit)) × A)
+      ((R ⊕ (Unit ⊕ Unit)) × A) ℂ :=
+    flag (c • P) (a • τ) 0
+  let σ' : Matrix ((R ⊕ (Unit ⊕ Unit)) × A)
+      ((R ⊕ (Unit ⊕ Unit)) × A) ℂ :=
+    flag ((c / δ) • Q) 0 ((b / δ) • τ)
+  have hρ'psd : ρ'.PosSemidef := by
+    dsimp [ρ']
+    exact flag_psd (hP.smul (le_of_lt hc)) (hτ.1.smul ha) Matrix.PosSemidef.zero
+  have hσ'psd : σ'.PosSemidef := by
+    dsimp [σ']
+    exact flag_psd (hQ.smul (le_of_lt (div_pos hc hδ))) Matrix.PosSemidef.zero
+      (hτ.1.smul (div_nonneg hb (le_of_lt hδ)))
+  have hτrt : rt τ = 1 := by
+    have ht := congrArg Complex.re hτ.2
+    simpa [rt] using ht
+  have hρ'trace : ρ'.trace = 1 := by
+    dsimp [ρ']
+    rw [trace_flag]
+    rw [trace_smul_psd hP c, trace_smul_psd hτ.1 a, Matrix.trace_zero]
+    rw [hτrt]
+    norm_num
+    have hca' : c * rt P + a = 1 := by simpa [p] using hca
+    rw [← Complex.ofReal_mul, ← Complex.ofReal_add, hca']
+    norm_num
+  have hσ'trace : σ'.trace = 1 := by
+    dsimp [σ']
+    rw [trace_flag]
+    rw [trace_smul_psd hQ (c / δ), Matrix.trace_zero,
+      trace_smul_psd hτ.1 (b / δ)]
+    rw [hτrt]
+    norm_num
+    have hcb' : (c / δ) * rt Q + b / δ = 1 := by simpa [q] using hcb
+    rw [← Complex.ofReal_div, ← Complex.ofReal_mul, ← Complex.ofReal_div,
+      ← Complex.ofReal_add, hcb']
+    norm_num
+  have hρ' : IsState ρ' := ⟨hρ'psd, hρ'trace⟩
+  have hσ' : IsState σ' := ⟨hσ'psd, hσ'trace⟩
+  have horth : ρ' * σ' = 0 := by
+    dsimp [ρ', σ']
+    rw [flag_mul]
+    have hfirst : (c • P) * ((c / δ) • Q) = 0 := by
+      rw [Matrix.smul_mul, Matrix.mul_smul, hPQ]
+      simp
+    rw [hfirst]
+    unfold flag
+    rw [Matrix.reindex_apply]
+    ext i j
+    simp [dsum]
+  have hsub : ρ' - δ • σ' = flag (c • H) (a • τ) (-b • τ) := by
+    dsimp [ρ', σ']
+    rw [flag_sub_smul]
+    have hfirst : c • P - δ • ((c / δ) • Q) = c • H := by
+      calc
+        c • P - δ • ((c / δ) • Q) = c • (P - Q) := by
+          rw [smul_smul]
+          have h : δ * (c / δ) = c := by field_simp [ne_of_gt hδ]
+          rw [h]
+          ext i j
+          simp [sub_eq_add_neg]
+        _ = c • H := congrArg (fun X => c • X) hHdecomp.symm
+    rw [hfirst]
+    rw [show a • τ - δ • (0 : Matrix A A ℂ) = a • τ by simp]
+    rw [show 0 - δ • ((b / δ) • τ) = -b • τ by
+        rw [smul_smul]
+        have h : δ * (b / δ) = b := by field_simp [ne_of_gt hδ]
+        rw [h]
+        ext i j
+        simp]
+  have hE : E δ ρ' σ' = c * E γ ρ σ + a := by
+    rw [show E δ ρ' σ' = posTrace (flag (c • H) (a • τ) (-b • τ)) by
+      unfold E
+      rw [hsub]]
+    have hnegτ : (-b • τ).IsHermitian := by
+      rw [show -b • τ = -(b • τ) by ext i j; simp]
+      exact (hτ.1.smul hb).isHermitian.neg
+    have hcH : (c • H).IsHermitian := hH.smul (by
+      rw [isSelfAdjoint_iff]
+      rfl)
+    have haτ : (a • τ).IsHermitian := hτ.1.isHermitian.smul (by
+      rw [isSelfAdjoint_iff]
+      rfl)
+    rw [posTrace_flag hcH haτ hnegτ]
+    rw [posTrace_smul c (le_of_lt hc), posTrace_smul a ha,
+      posTrace_neg_smul hτ.1 b hb, posTrace_psd hτ.1]
+    rw [hτrt]
+    simp only [mul_one, add_zero]
+    have hHE : posTrace H = E γ ρ σ := by rfl
+    rw [hHE]
+  have hptrHdef : ptr H = ptr ρ - γ • ptr σ := by
+    dsimp [H]
+    exact ptr_sub_smul γ ρ σ
+  have hptrρ : (ptr ρ).PosSemidef := by
+    simpa [ptr] using partialTraceRight_posSemidef hρ.1
+  have hptrσ : (ptr σ).PosSemidef := by
+    simpa [ptr] using partialTraceRight_posSemidef hσ.1
+  have hptrH : (ptr H).IsHermitian := by
+    rw [hptrHdef]
+    exact hptrρ.isHermitian.sub (hptrσ.isHermitian.smul (by
+      rw [isSelfAdjoint_iff]
+      rfl))
+  have hptrsub : ptr ρ' - δ • ptr σ' =
+      dsum (c • ptr H)
+        (dsum (a • (1 : Matrix Unit Unit ℂ))
+          (-b • (1 : Matrix Unit Unit ℂ))) := by
+    calc
+      ptr ρ' - δ • ptr σ' = ptr (ρ' - δ • σ') :=
+        (ptr_sub_smul δ ρ' σ').symm
+      _ = ptr (flag (c • H) (a • τ) (-b • τ)) := by rw [hsub]
+      _ = dsum (ptr (c • H))
+          (dsum (((a • τ).trace) • (1 : Matrix Unit Unit ℂ))
+            (((-b • τ).trace) • (1 : Matrix Unit Unit ℂ))) := by
+        rw [ptr_flag]
+      _ = dsum (c • ptr H)
+          (dsum (a • (1 : Matrix Unit Unit ℂ))
+            (-b • (1 : Matrix Unit Unit ℂ))) := by
+        rw [ptr_smul]
+        rw [Matrix.trace_smul, hτ.2, Matrix.trace_smul, hτ.2]
+        simp [smul_smul]
+  have hone : (1 : Matrix Unit Unit ℂ).PosSemidef := Matrix.PosSemidef.one
+  have hEptr : E δ (ptr ρ') (ptr σ') =
+      c * E γ (ptr ρ) (ptr σ) + a := by
+    rw [show E δ (ptr ρ') (ptr σ') =
+        posTrace (ptr ρ' - δ • ptr σ') by rfl]
+    rw [hptrsub]
+    have hcptr : (c • ptr H).IsHermitian := hptrH.smul (by
+      rw [isSelfAdjoint_iff]
+      rfl)
+    have haone : (a • (1 : Matrix Unit Unit ℂ)).IsHermitian :=
+      hone.isHermitian.smul (by rw [isSelfAdjoint_iff]; rfl)
+    have hbone : (-b • (1 : Matrix Unit Unit ℂ)).IsHermitian := by
+      rw [show -b • (1 : Matrix Unit Unit ℂ) =
+          -(b • (1 : Matrix Unit Unit ℂ)) by ext i j; simp]
+      exact (hone.smul hb).isHermitian.neg
+    have hzero : (0 : Matrix Unit Unit ℂ).conjTranspose = 0 := by
+      ext i j
+      simp
+    have hinner : (dsum (a • (1 : Matrix Unit Unit ℂ))
+        (-b • (1 : Matrix Unit Unit ℂ))).IsHermitian := by
+      unfold dsum
+      exact Matrix.IsHermitian.fromBlocks haone hzero hbone
+    rw [posTrace_dsum hcptr hinner, posTrace_dsum haone hbone]
+    rw [posTrace_smul c (le_of_lt hc), posTrace_smul a ha,
+      posTrace_neg_smul hone b hb, posTrace_psd hone]
+    have hptrE : posTrace (ptr H) = E γ (ptr ρ) (ptr σ) := by
+      rw [hptrHdef]
+      rfl
+    rw [hptrE]
+    simp [rt, Matrix.trace]
+  refine ⟨c, ρ', σ', hc, hρ', hσ', horth, ?_, ?_⟩
+  · sorry
+  · sorry
 def claim : Prop :=
   ∀ (A B : Type) [Fintype A] [DecidableEq A]
       [Fintype B] [DecidableEq B] (N : QuantumChannel A B),
