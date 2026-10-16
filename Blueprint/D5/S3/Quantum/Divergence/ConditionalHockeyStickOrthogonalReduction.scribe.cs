@@ -183,7 +183,10 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                             + "gamma,delta at least one yields parameter independence. "
                             + "Thus the conditional coefficient equals its trace-distance "
                             + "value throughout this range."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hirche-george-nuradha-wilde-2026-conditional-hockey-stick-orthogonal-reduction"),
+                    ResolutionKind.Proved))
         )));
 
     private static Formula X(string name) => F.Id(name);
