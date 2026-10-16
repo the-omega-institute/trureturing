@@ -8,7 +8,6 @@
 
 import D5.S3.Weil.ZetaLinear.FullRankInertiaPullback
 import D5.S3.Analytic.ReflectedSpectrum.ConfluentNegativeJetBlock
-import Mathlib.LinearAlgebra.Matrix.Notation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
