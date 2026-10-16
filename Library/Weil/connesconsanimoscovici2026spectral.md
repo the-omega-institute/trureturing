@@ -1778,6 +1778,153 @@ stronger comparison is a separate missing estimate. No new general
 projection theorem, Lean result, actual c27/cofinal positivity or RH
 resolution is asserted.
 
+### A common finite dual bound for the complete Gamma comparison
+
+Keep the same complete retained dyadic direction $v$, the same
+$768$-mode support $E$ and the same archived diagonal
+$\Lambda=W^{-1}$. Write $B_{\rm GP}=\Gamma_{\rm b}+P_{\rm even}$ for
+the **complete** Gamma boundary and positive even pole, and set
+
+$$
+T=\Lambda+B_{\rm GP},\qquad H\succeq T>0.
+$$
+
+Here $H$ is the actual exterior operator. The common-form/domain and
+sound comparison premises above are retained. This comparison keeps
+all Gamma rates, rather than another selection of finite bins.
+For every channel matrix satisfying $UU^*\preceq B_{\rm GP}$,
+inverse monotonicity gives $m_U(t)\le m_T(t)$ for the same support
+correction $t$. Thus a strictly negative upper for
+$\sup_t m_T(t)$ would exclude every such channel refinement with
+this fixed $E,\Lambda,v$.
+
+Use actual support coordinates $x_0=F^{-1}B_{\rm ret}v$, where
+$F=E^*HE$ and $B_{\rm ret}$ is the actual retained/support coupling.
+Define
+
+$$
+Q=v^*Av-x_0^*Fx_0,\qquad Z=HE,\qquad
+r=Cv-Zx_0,\qquad E^*r=0.
+$$
+
+Then $m_T(t)=Q+t^*Ft-(r-Zt)^*T^{-1}(r-Zt)$.
+Choose one nonzero finite exact dyadic vector $w$ disjoint from $E$.
+Restrict the existing inverse variational formula to the common dual
+space $X=[E,w]$. With
+
+$$
+B_0=E^*TE,\quad b=E^*Tw,\quad \beta=w^*Tw,\quad
+a=w^*r,\quad z=w^*Z,\quad D=F-B_0,
+$$
+
+this gives, for every common $t$,
+
+$$
+m_T(t)\le\mathcal U_X(t)
+=Q+t^*Ft-
+\binom{-Ft}{a-zt}^{\!*}
+\begin{pmatrix}B_0&b\\b^*&\beta\end{pmatrix}^{-1}
+\binom{-Ft}{a-zt}.
+$$
+
+All quantities are evaluations on this same $v,w$ and actual source.
+No Fourier tail is discarded from $r$ or $T$: only the dual trial
+space is restricted, and its vectors have finite support.
+
+The earlier prime comparison supplies a strictly positive $D$ without
+a new theorem. Indeed, with $A_\Gamma$ the periodic Gamma diagonal and
+$C_{\rm p}$ the complete prime translation sum,
+
+$$
+H-T=A_\Gamma-\Lambda-C_{\rm p},\qquad
+D\succeq I/632.
+$$
+
+The slack follows from the archived G6 bound
+$q(59/10-r_q)>1/400$ and $q\le79/50$, together with
+$\Lambda\preceq A_\Gamma-(59/10)I$.
+Moreover $z^*-b=-E^*C_{\rm p}w$, since $w$ is disjoint from $E$.
+These cancellations are available for subsequent consumers.
+
+Finite block inversion and square completion now give the exact
+supremum of this **restricted upper bound**:
+
+$$
+\sup_t\mathcal U_X(t)=Q-\frac{|a|^2}{h},\qquad
+h=\beta-zF^{-1}z^*+(z-b^*)D^{-1}(z^*-b)>0.
+$$
+
+For example, eliminating $B_0$ gives
+$K=FB_0^{-1}F-F>0$ and
+$K^{-1}=D^{-1}-F^{-1}$; one scalar completion then yields the
+displayed expression. This is the same finite inversion/variational
+method already used above, not a new general Schur theorem.
+
+The complete boundary kernel also reuses existing arithmetic inputs.
+For cached actual scalars $s_n,a_n$, add back the fourteen prime-power
+sine and cosine terms to obtain
+
+$$
+s_n^{\rm GP}=s_n+\sum_{r<27}w_r\sin(\omega_n\log r),\qquad
+a_n^{\rm GP}=a_n+2\sum_{r<27}w_r(1-\log r/d)\cos(\omega_n\log r).
+$$
+
+Off-diagonal $B_{\rm GP}$ entries use the same actual divided-difference
+formula with these scalars. Its independent positive-mode diagonal is
+
+$$
+(B_{\rm GP})_{nn}
+=a_n^{\rm GP}-\frac{s_n^{\rm GP}}{\pi n}
+-\bigl(\Re\psi(1/4+i\omega_n/2)-\log\pi\bigr).
+$$
+
+The sine correction in this diagonal is essential. The equivalent
+full-rate digamma/trigamma representation follows from
+[DLMF 5.7.6](https://dlmf.nist.gov/5.7.E6) and
+[DLMF 5.15.1](https://dlmf.nist.gov/5.15.E1). No finite nineteen-channel
+trace allowance is used for the full boundary. The current-direction
+$Q$ is evaluated from the actual cached scalars and selected inverse;
+the older support cache's quadratic belongs to a different direction.
+
+For one exact $384$-bit $w$ on modes $2049$–$4096$, proposed from the
+saved thirty-five-channel inverse action, the new directed
+[finite application](https://github.com/the-omega-institute/trureturing-experiments/tree/5d7fde18a45ad653a13589cf1435ae856c3091a3/docs/reports/weil-c27)
+gives
+
+$$
+Q\simeq2.971626487064166\times10^{-30},\qquad
+\sup_t\mathcal U_X(t)\simeq6.323379216251768\times10^{-31}>0.
+$$
+
+This positive **upper bound** leaves complete-Gamma saturation
+undetermined. It is neither a positive sufficient margin nor an
+actual Schur-sign conclusion.
+
+A control locates a loss already present in this chosen dual space.
+Keep the exact same $v,w$ and archived $t_0$, but use the earlier
+thirty-five-channel/pole $T_{35}$ in the finite compression. Its
+$35$-dimensional Woodbury inverse gives
+
+$$
+\mathcal U_{X,35}(t_0)
+\simeq4.847374044137042\times10^{-31}>0,
+\qquad
+m_{35}(t_0)<-3.5939\times10^{-32}.
+$$
+
+Consequently this dual restriction loses more than
+$5.2067\times10^{-31}$ at that common trial, even for the already
+excluded comparison. In particular, its supremum cannot certify a
+negative bound for that comparison. The incomplete dual space must
+be addressed before interpreting the complete-Gamma upper as a test
+of saturation. Increasing a cutoff or adding further dual vectors
+still needs its own common-action estimate; no success is inferred.
+
+The archived program and directed endpoints retain this inconclusive
+application and the diagnostic control. They add no scalar supplier,
+old optimizer, generic inversion algorithm, Lean result, actual c27
+Schur sign, cofinal positivity or RH resolution.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
