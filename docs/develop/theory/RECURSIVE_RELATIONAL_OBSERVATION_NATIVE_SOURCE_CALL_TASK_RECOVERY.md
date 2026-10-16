@@ -1,12 +1,10 @@
 # 递归关系观察：原生源调用体的原任务恢复与切口边界
 
-> 本卷采用 `generic-v1` 的编号与追加约定。正文作为参考输入，只陈述普通数学证明及其源文前提；不承担形式化真值、执行权限或验收状态。后续增补接在文末追加锚之后，不改既有正文。
-
 ## 1. 对象、来源与结论的承担范围
 
 **约定 1.1（同一实际装置）。** 固定 ARC 的一个实际有限初始化：原始源发生 $\xi$、初始界 $H_0$、实际初始树 $u$、原始先验及客户端、所安装的 $L,G$、实际捕获和规范激活。这里及下文的 `ARC` 等简称见第 11 节。源始终是该装置的源 16，地址解释是它随实际 Reserve 扩展的同一个 $\phi_K$；语义守卫 $h$ 与已预留容量 $K$ 分开。以后供给的是任意实际供给的有限规范帧，不在初始化中放入未来容量上界、帧数、源相关建议或完成时间。关于有限前缀的结论不假设未来输入到来；关于一次返回的结论保留实际供给及每个到达的原始局部计算终止的前提。 凡复用 UAS 四视图历史核，generic 实例的原始输入完整性条件一并保留：其剩余规范原始输入固定或由实际已有输入计算；若另有外部 site 而其已消费 reservoir 不能由既有选材取得，则不在本文四核结论域。固定 entry 的定理 3.3 本身不读取未来 site。
 
-**约定 1.2（证明与作者范围）。** 本卷由一个 Codex CLI 作者撰写，采用仓内形式思考纪律及理论卷模板。已完成的多角度研究只提供可错的候选；承重依据是下列固定源文与正文证明。本文不使用另一原始行引擎草稿作为前提，不给出行引擎、Lean 证明或本机原生执行验证，也不提出全球新颖性、完整目标完成或发表批准。alpha、beta 是原始语法叶；有序配对和运行含义仍由原始规则给出。
+**约定 1.2（语法与证明范围）。** 承重依据是下列固定源文与正文证明；未提供的原始行引擎不作为前提。alpha、beta 是原始语法叶；有序配对和运行含义仍由原始规则给出。
 
 **定义 1.3（原始部分任务）。** $Q$ 恰为 AIF 定义 2.6 经 ARC 定义 11.1、UAS 定义 1.4 指定的 continuation-and-audit 任务。其原始实验包括：在原始指定 IN 处 Supply$(b)$；推进下一条原始指定且启用的非 IN 行的 Advance；原始获准的有限语义、交付与审计协议；以及只依赖已取得公开响应的有限自适应实验。一次执行的响应保留合法性、实际标签、释放的有限输出和**完整原始联合后继**。这不是全部新增端口的响应任务 $Q_G$，也不是要求输出历史。
 
@@ -174,7 +172,7 @@ parent-first、根可达和保留旧顶点是 49 支撑论证的显式前提。�
 
 **约定 9.2（终端与有界历史能力）。** CAP 第 16 节已给同输出不同历史的实际终端族；第 17 节已给最后 Ready/停止后缀界限；第 18 节已给 encompassing-image 资源界。原始空终端响应不含隐藏状态，所以本文不主张在这些终端纤维上恢复历史核。定理 4.6 允许最后**执行 halt 的响应**，但删去终端之间的比较，二者相容。有限实际增长并不产生一条无限物理运行，更不保证暂停输入或局部计算发散时的进度。
 
-**约定 9.3（候选范围逐项承担）。** 下表将提案的范围与本文确实证明的结论分开；成立的是正文条件，不是因候选来自多席便取得权威。
+**约定 9.3（候选范围逐项承担）。** 下表将提案的范围与本文确实证明的结论分开；各结论以相应正文条件为前提。
 
 | 所提范围或机制 | 保留结果与精确边界 |
 | --- | --- |
@@ -197,9 +195,9 @@ parent-first、根可达和保留旧顶点是 49 支撑论证的显式前提。�
 
 **开放问题 10.4（全程序的保留要求）。** 原目标仍是一个有限初始化的共同源装置，在真实任意有限未来增长中使独立空间/过程/边界/保留记忆在所需范围互相恢复并能合法使用，保留原始 verifier/INITIAL、全部源结果/guards/releases、所有回执与终端输出。匹配 $G_{\rm sel}$ 的历史覆盖不解决它与 UAS 四表达共用实例的问题；最后没有后续 Ready 的 suffix 也无免费历史入口。更广晚目标的 $M_1(D)$、sharp $\lambda$、全尺寸有效认证、最简性、物理符合性、最优资源和无界持续进展均未由本文证明。上述 open 不免除原目标的任何要求。
 
-## 11. 复用、成熟方法与核验界限
+## 11. 复用、成熟方法与适用界限
 
-**约定 11.1（固定仓内来源）。** 下表均取同一源快照 `db2225af354815a069ce1daa607706f3a9ded2fa`。这些是来源地址，正文编号不成为形式化工件的反向依赖。
+**约定 11.1（固定仓内来源）。** 下表均取同一源快照 `db2225af354815a069ce1daa607706f3a9ded2fa`。这些是来源地址。
 
 | 简称及来源 | 本卷使用、既有重叠及不承担部分 |
 | --- | --- |
@@ -212,20 +210,20 @@ parent-first、根可达和保留旧顶点是 49 支撑论证的显式前提。�
 | [OR](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md) 4、5.5、6.1–6.2、7.2 | before-image/权限/收据条件、stable completion、条件 fine-history、真实 INITIAL consumer 与 birth 计数；均保留尚未实例化的全行条件。 |
 | [GCA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_CUT_ACQUISITION.md) 2–6、8.3、9.4 | 已有更广历史 selector 和真实交付；精确参数/初始化见第 6 节，不重新实现，不暗移四视图核。 |
 
-**约定 11.2（已定位的 D5 与 Scribe supplier）。** 先查公有和私有声明及其 Blueprint，使用边界如下。`D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean` 的 `nativeStep`、`Replay`、`replay_deterministic`、`reached_prefix_replay`、`actual_register_execution` 给原始串行语义和回放；`NativeFullSourceProducer.lean` 的私有 `traverse`、`production_reads`、`stationary` 及公有 `native_source_producer` 给实际完整源取得，不能直接充当 CAP 的 native 权限/价格实现。`NativeSerialEffective.lean` 的 `original_code_service_simulation` 和 `terminalObservation` 使用自己的代码实现和外部 trace 终端读数，不与这里的空终端响应混同。`D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean` 与 `PredictiveMemoryMinimalQuotient.lean` 给带明确 readout/update 前提的抽象核，不能补出 concrete 输入域。
+**约定 11.2（D5 与 Scribe 引文）。** `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean` 的 `nativeStep`、`Replay`、`replay_deterministic`、`reached_prefix_replay`、`actual_register_execution` 给原始串行语义和回放；`NativeFullSourceProducer.lean` 的私有 `traverse`、`production_reads`、`stationary` 及公有 `native_source_producer` 给实际完整源取得，不能直接充当 CAP 的 native 权限/价格实现。`NativeSerialEffective.lean` 的 `original_code_service_simulation` 和 `terminalObservation` 使用自己的代码实现和外部 trace 终端读数，不与这里的空终端响应混同。`D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean` 与 `PredictiveMemoryMinimalQuotient.lean` 给带明确 readout/update 前提的抽象核，不能补出 concrete 输入域。
 
-对应 `Blueprint/D5/` 镜像的同名 `.scribe.cs` 已一并定位并阅读所用叙述。上述定理和私有助手已有自己的用途；本卷不重证、公开、包装或新增任何 Lean。所查源中没有直接提供这里的匹配 WR/跨辅助调用输入对应；这只是指定供应者的复用判断，不是全库不存在性声明。
+相关叙述见对应 `Blueprint/D5/` 镜像的同名 `.scribe.cs`。上述引用不直接提供这里的匹配 WR/跨辅助调用输入对应；这不是全库不存在性声明。
 
 **约定 11.3（外部主源与文献状态）。** 下列成熟方法只承担其明确内容；没有把一个仿真定理的名称当作本装置的权限、初始化或实验桥。
 
 | 主源 | 确切用途与文献状态 |
 | --- | --- |
-| [mathlib `StateTransition.lean`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean)，固定版本的 `Respects`、`tr_reaches₁`、`tr_reaches` | `literature-attested`：匹配关系和非空目标片段是显式前提，原始 `none` 需相应终止条件；不能把 task-undefined raw Supply 塞成 `none`。工作树的预期本地 mathlib 源路径未找到，查阅的是该确切上游文件，未作编译应用。 |
+| [mathlib `StateTransition.lean`](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean)，固定版本的 `Respects`、`tr_reaches₁`、`tr_reaches` | `literature-attested`：匹配关系和非空目标片段是显式前提，原始 `none` 需相应终止条件；不能把 task-undefined raw Supply 塞成 `none`。 |
 | [CompCert v3.16 `common/Smallstep.v`](https://raw.githubusercontent.com/AbsInt/CompCert/v3.16/common/Smallstep.v)，`fsim_properties` | `literature-attested`：初态、终态、相同 trace 的有限片段和良基 stuttering 条件；不推出含实际 meter 的完整后继相等，不授予 actor 访问。 |
 | [Lynch–Vaandrager, *Forward and Backward Simulations*, Part I](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf)，§3.2、Lemma 3.8、Theorem 3.10 | `literature-attested`：前向模拟经有限执行片段给 trace inclusion；不是四独立视图、原任务逆或当前 driver 的构造。 |
 | 本卷第 3–4、7–8 节的具体源对应及边界 | `repo-derived`：在上述源文模型中的普通推导。匹配 WR、gate 输入冗余、原始 consumer 的细 cut 计数是具体应用；不作 `suspected-novel` 或全球新颖性声明。 |
 
-**约定 11.4（核验范围与可反驳判据）。** 本卷的承重结论是普通散文证明，不是 Lean/kernel 或实际原生全图执行证书。有限读入骨架只能检验指定输入上的匹配写入规则，不能替代源服务、完整描述符、信道和实际 whole-run meter。本文不保留实验程序、样本数据或实验报告。
+**约定 11.4（适用范围与可反驳判据）。** 有限读入骨架只能检验指定输入上的匹配写入规则，不能替代源服务、完整描述符、信道和实际 whole-run meter。
 
 一个实际反证器可针对定理 3.3 寻找同固定 $e_P$、相同原始 13/latch 5/meter 而不同实际前缀的两切口；或者指出一次 IN 后、匹配 WR 前真实覆写 latch 5 的原始行。针对定理 4.6，可给出固定 Stop 路径上的额外独立 IN、原始请求来源不能区分的两个实际列表，或其 gate 超前缀在停止点前消费了错误位。针对定理 8.3，应在候选实现中标出那 48 次真实模板 birth，逐个检查取样 cut 的根可达支撑、已完成原始 receipt 数和所选原始 prefix；少一个模板 birth、一个 cut 丢失旧顶点、在 Finish 前已有额外完整原始 receipt，都会使它不满足所用前提。保持全部前提而又为这 49 个 cut 构造核相等的原始端点选择，才构成该条件结论的反证。这里不以未发现这些反证当作原生实现或全目标证书。
 
