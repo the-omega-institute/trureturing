@@ -267,12 +267,8 @@ private theorem unitary_corner (G : Matrix (Fin 3) (Fin 3) ℂ) (hG : Gᴴ * G =
     ‖(corner G).det‖ = ‖G 2 2‖ ∧ ‖G 2 2‖ ≤ 1 := by
   have hGG : G * Gᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp
     (Matrix.mem_unitaryGroup_iff'.mpr hG)
-  have hd : ‖G.det‖ = 1 := by
-    have hh := congrArg Matrix.det hG
-    have hn := congrArg norm hh
-    simp only [Matrix.det_mul, Matrix.det_conjTranspose, norm_mul, norm_star,
-      Matrix.det_one, norm_one] at hn
-    nlinarith [norm_nonneg G.det]
+  have hd : ‖G.det‖ = 1 := CStarRing.norm_of_mem_unitary
+    (Matrix.det_of_mem_unitary (Matrix.mem_unitaryGroup_iff'.mpr hG))
   have hadj : G.adjugate = G.det • Gᴴ := by
     calc
       G.adjugate = G.adjugate * (G * Gᴴ) := by rw [hGG, mul_one]
@@ -283,16 +279,7 @@ private theorem unitary_corner (G : Matrix (Fin 3) (Fin 3) ℂ) (hG : Gᴴ * G =
     simpa [corner.eq_1, Matrix.det_fin_two, Matrix.adjugate_fin_three] using he
   constructor
   · rw [he', norm_mul, norm_star, hd, one_mul]
-  · have hh := congrArg Complex.re (congrFun (congrFun hG 2) 2)
-    have hn : Complex.normSq (G 0 2) + Complex.normSq (G 1 2) +
-        Complex.normSq (G 2 2) = 1 := by
-      simpa [Matrix.mul_apply, Fin.sum_univ_three, Complex.mul_re,
-        Complex.normSq_apply] using hh
-    simp only [Complex.normSq_eq_norm_sq] at hn
-    have h0 := Complex.normSq_nonneg (G 1 2)
-    have h1 := Complex.normSq_nonneg (G 0 2)
-    simp only [Complex.normSq_eq_norm_sq] at h0 h1
-    nlinarith [norm_nonneg (G 2 2)]
+  · exact entry_norm_bound_of_unitary (Matrix.mem_unitaryGroup_iff'.mpr hG) 2 2
 
 private theorem cone_spectral_bound (G : Matrix (Fin 3) (Fin 3) ℂ)
     (hS : Gᵀ = G) (hU : Gᴴ * G = 1) (p q c : ℝ) (hc : 0 < c)
