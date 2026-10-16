@@ -15,6 +15,15 @@ internal sealed class RenyiInformationCombiningOrderThreeDocument : IScribeDocum
             + "at Renyi order three, in arbitrary finite dimensions including singular marginals.",
         H("Order-three Renyi information combining"),
         Blocks(
+            Describe.Lean(DescribeId.Create("renyi-three-basis-projector-positive"),
+                DeclarationHandle.Create(Module + "unit_psd"), H("A basis projector is positive semidefinite"),
+                StatementSource.FromAuthor(Disp(All("i", Fin(Num(2)),
+                    App(Q("Matrix", "PosSemidef"), Typed(Single(F.Id("i")), Mat(Fin(Num(2)))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For each of the two basis indices, Matrix.single i i 1 is positive semidefinite. "
+                    + "Its Kronecker products give the two positive blocks in blk_psd. "
+                    + "The channel time-reversal argument also uses the basis projector at index zero."))),
+                DescribeRole.Theorem),
             Node("conditional-entropy", "condRenyiDown", "Sandwiched conditional Renyi entropy",
                 CondFormula(),
                 "Section IV, p. 4, defines the sandwiched conditional Renyi entropy by the "

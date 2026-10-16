@@ -55,6 +55,25 @@ internal sealed class FiniteTraceDistanceDocument : IScribeDocumentDefinition
                                         QCall("Complex", "ofReal", QCall("Real", "sqrt",
                                             QCall("Matrix.IsHermitian", "eigenvalues", F.Id("hH"), F.Id("i"))))))),
                                     QCall("Matrix", "conjTranspose", Call("val", F.Id("W"))))))))))),
+                Describe.Lean(
+                    DescribeId.Create("re-trace-eq-trace"),
+                    DeclarationHandle.Create(Owner + "re_trace_eq_trace"),
+                    H("The trace of a Hermitian matrix is real"),
+                    StatementSource.FromAuthor(Disp(All(
+                        [Bound("n", F.Id("Type")), Bound("R", F.Id("Type"))], Seq(
+                            Seq(OpenBracket, Call("Fintype", n), CloseBracket),
+                            Seq(OpenBracket, Call("RCLike", r), CloseBracket),
+                            All([Bound("A", square)], Implies(QCall("Matrix", "IsHermitian", a),
+                                Eqn(Parenthesized(Seq(QCall("RCLike", "re", QCall("Matrix", "trace", a)),
+                                        Colon, r)),
+                                    QCall("Matrix", "trace", a)))))))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For every Hermitian square matrix over an RCLike scalar type, "
+                            + "coercing the real part of its trace back to that scalar "
+                            + "type gives the original trace. Only the index type is "
+                            + "assumed finite; no decidable equality is required."))),
+                    DescribeRole.Theorem),
                 Item("traceNorm", "Actual trace norm", NormForAll(Eqn(TN(a),
                     Call("re", Call("trace", Call("sqrt", Mul(Adjoint(a), a)))))), true),
                 Item("traceNorm_neg", "Negation invariance", NormForAll(Eqn(

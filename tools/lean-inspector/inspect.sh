@@ -64,6 +64,7 @@ finish() {
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
   if [[ "$rc" != 0 ]]; then
+    python3 -B "$SCRIPT_DIR/build_work.py" --observations "$LOG_DIR" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
     if [[ -n "$ACTIVE_PHASE" ]]; then
       printf 'LEAN_INSPECTOR_INTERRUPTED phase=%s exit=%s\n' "$ACTIVE_PHASE" "$rc" >&2 || true
       cat "$LOG_DIR/$ACTIVE_PHASE.stdout.log" "$LOG_DIR/$ACTIVE_PHASE.stderr.log" >&2 || true
@@ -117,6 +118,11 @@ run_phase() {
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
     cat "$LOG_DIR/$phase.stdout.log" "$LOG_DIR/$phase.stderr.log" >&2
     return "$status"
+  fi
+  if [[ "$phase" == fib-regressions ]]; then
+    # The consumer flushes its decision before tests can emit nested decisions.
+    grep -m 1 -E '^LEAN_INSPECTOR_FIB_REGRESSIONS changed=(true|false) selected=(true|false)$' \
+      "$LOG_DIR/$phase.stdout.log" >&2 || true
   fi
 }
 
@@ -228,8 +234,16 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     PROGRAM_BUILD_PENDING=1
     run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
+      "$LAKE" --log-level=error "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
+  fi
+  if [[ "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}" != false ]]; then
+    run_phase fib-regressions python3 -B "$SCRIPT_DIR/fib_analysis.py" "$OUTPUT" \
+      --regressions "$REPOSITORY" --previous "$OUTPUT" \
+      --selected "$STRATALINT_FIB_REGRESSIONS_SELECTED"
+  else
+    # Accepted identical inputs and no explicit selection need no FIB consumer.
+    printf 'LEAN_INSPECTOR_FIB_REGRESSIONS changed=false selected=false\n' >&2 || true
   fi
   exit 0
 fi
@@ -250,8 +264,14 @@ if [[ "$REGENERATE_REPORT_ARTIFACTS" == 1 ]]; then
   # Ensure and the existing writer guard enclose cleanup and the native build.
   REPORT_COMMAND=(python3 -B "$SCRIPT_DIR/native.py" regenerate "$REPOSITORY")
 fi
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" "${workspace[@]}" build :report \
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" ${REPORT_COMMAND[@]+"${REPORT_COMMAND[@]}"} "$LAKE" --log-level=error "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
+# The writer has returned. Complete regressions before replacing the published
+# report, sharing one invocation with explicit compiler/analyzer unit coverage.
+run_phase fib-regressions env REGENERATE_REPORT_ARTIFACTS="$REGENERATE_REPORT_ARTIFACTS" \
+  python3 -B "$SCRIPT_DIR/fib_analysis.py" \
+  "$REPOSITORY/.lake/build/lean-inspector/report.zip" --regressions "$REPOSITORY" \
+  --previous "$OUTPUT" --selected "${STRATALINT_FIB_REGRESSIONS_SELECTED:-false}"
 # Publication and seal share one canonical cache guard.
 run_phase publish python3 -B "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT" \
   "$LOG_DIR/entry-inputs.json"

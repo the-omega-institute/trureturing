@@ -68,7 +68,7 @@ def wordBound {O : Type} : Dialogue O → Nat
   | .read a A B C D => max a.length
       (max (max (wordBound A) (wordBound B)) (max (wordBound C) (wordBound D)))
 
-private def firstClass : (C : LiteralRow) → Address → Sum Reply (Classes C × Bool)
+def firstClass : (C : LiteralRow) → Address → Sum Reply (Classes C × Bool)
   | .of (.inl b), a => .inl (readout a (.of b))
   | .of (.inr n), a => .inr (⟨n,by simp [labels]⟩,!a.isEmpty)
   | .mul _ _, [] => .inl .branch
@@ -77,7 +77,7 @@ private def firstClass : (C : LiteralRow) → Address → Sum Reply (Classes C �
   | .mul l r, true :: a => (firstClass r a).map id
       (fun p => (⟨p.1.val,Finset.mem_union_right _ p.1.property⟩,p.2))
 
-private def classReply (below : Bool) (t : Option Bool) : Reply :=
+def classReply (below : Bool) (t : Option Bool) : Reply :=
   if below then if t = none then .branch else .absent else rootReply t
 
 private theorem query_congr (C : LiteralRow) (f g : Nat → Option Bool)
@@ -95,7 +95,7 @@ private theorem query_congr (C : LiteralRow) (f g : Nat → Option Bool)
           · exact ihl (fun n hn => same n (Finset.mem_union_left _ hn)) a
           · exact ihr (fun n hn => same n (Finset.mem_union_right _ hn)) a
 
-private theorem firstClass_reply (C : LiteralRow) (a : Address)
+theorem firstClass_reply (C : LiteralRow) (a : Address)
     (θ : Classes C → Option Bool) :
     queryReply (typeExtend C θ) a C =
       match firstClass C a with

@@ -82,7 +82,7 @@ public sealed class LeanReportProgramTargetsTests
         var lake = value.GetProperty("lake").GetString();
         var workspace = value.GetProperty("workspace").GetString();
         var calls = expectedCalls.Length == 0 ? [] : expectedCalls.Split('|')
-            .Select(call => call == "ensure" ? call : lake + " -d " + workspace + " " + call).ToArray();
+            .Select(call => call == "ensure" ? call : lake + " --log-level=error -d " + workspace + " " + call).ToArray();
         Assert.Equal(calls, value.GetProperty("calls").EnumerateArray().Select(call => call.GetString()));
         Assert.True(value.GetProperty("seed_unchanged").GetBoolean(), text);
         Assert.True(receiptExists == value.GetProperty("receipt_exists").GetBoolean(),

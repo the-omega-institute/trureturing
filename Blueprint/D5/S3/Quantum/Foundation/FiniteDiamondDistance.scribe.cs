@@ -45,6 +45,7 @@ internal sealed class FiniteDiamondDistanceDocument : IScribeDocumentDefinition
                     + "or a CStarMatrix to its ordinary matrix coordinates. block(X,i,j) is the "
                     + "input matrix with entries X((i,u),(j,w)); channelMatrixAction applies "
                     + "the channel to that matrix. entry evaluates a matrix at two coordinates.")),
+                Item("blockEquiv", "Flattening a matrix of matrix blocks", BlockEquivFormula(), true),
                 Item("referenceLinear", "Reference-amplified linear map", Types(All(
                     [Bound("X", matrix), Bound("i", r), Bound("j", r),
                         Bound("u", b), Bound("w", b)],
@@ -105,6 +106,7 @@ internal sealed class FiniteDiamondDistanceDocument : IScribeDocumentDefinition
 
     private static string Explanation(string name) => name switch
     {
+        "blockEquiv" => "The underlying algebra equivalence converts the outer CStarMatrix to a matrix, flattens its blocks with Matrix.compAlgEquiv, and converts the result back to CStarMatrix. Its star-preservation proof applies CStarMatrix.star_apply at both matrix levels. The formula quantifies that proof, whose value does not affect the equivalence.",
         "referenceLinear" => "Each reference block is transformed by the same channel linear map.",
         "referenceAction" => "This evaluates the reference-amplified linear map on a joint matrix.",
         "referenceState" => "Complete positivity preserves the joint matrix order, and trace preservation preserves the sum of the diagonal reference-block traces.",
@@ -115,6 +117,32 @@ internal sealed class FiniteDiamondDistanceDocument : IScribeDocumentDefinition
         "result" => "A spectral decomposition reduces mixed inputs to pure inputs. Factorization of the pure-state coefficient matrix compresses the reference to at most the input dimension. Reference isometries preserve the channel error, so the stabilized supremum equals the pure-state supremum at that fixed dimension.",
         _ => throw new System.ArgumentOutOfRangeException(nameof(name))
     };
+
+    private static Formula BlockEquivFormula()
+    {
+        Formula r = F.Id("r"), a = F.Id("a"), x = F.Id("X"), h = F.Id("h");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula pair = Seq(r, Sp, Times, Sp, a);
+        Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+        Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
+        Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+        Formula Method(string owner, string name, params Formula[] args) => App(Qualified(owner, name), args);
+        Formula ToAlg(Formula f) => Method("StarAlgEquiv", "toAlgEquiv", f);
+        Formula flatten = Method("AlgEquiv", "trans",
+            ToAlg(Method("StarAlgEquiv", "symm", Method("CStarMatrix", "ofMatrixStarAlgEquiv", r))),
+            Method("AlgEquiv", "trans", Method("Matrix", "compAlgEquiv", r, a, complex, complex),
+                ToAlg(Method("CStarMatrix", "ofMatrixStarAlgEquiv", pair))));
+        Formula blocks = Call("CStarMatrix", r, r, Call("CStarMatrix", a, a, complex));
+        Formula starLaw = All([Bound("X", blocks)],
+            Eqn(App(flatten, Call("star", x)), Call("star", App(flatten, x))));
+        Formula body = All([Bound("h", starLaw)],
+            Eqn(Call("blockEquiv", r, a), Method("StarAlgEquiv", "ofAlgEquiv", flatten, h)));
+        Formula instances = Seq(OpenBracket, Call("Fintype", r), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", r), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", a), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", a), CloseBracket, Comma, Sp, body);
+        return All([Bound("r", F.Id("Type")), Bound("a", F.Id("Type"))], instances);
+    }
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

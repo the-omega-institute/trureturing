@@ -1,0 +1,23 @@
+**Lemma 6.1 (Boolean assignments on all sources and actual witnesses).** A polynomial list of fixed native literals defines a consistent Boolean assignment on every actual source. Every Boolean assignment has an actual finite witness in each of $\Pi_1,\Pi_2$, with all six whole values different.
+
+Proof. Renumber each formula's distinct variable names in a fixed syntactic order as $1,\ldots,n$. For several formulas use $n\ge1$ at least their maximum variable count, renumbering each locally. Let $\ell=\lceil\log_2(\max(2,n))\rceil$ and choose the first $n$ distinct length-$\ell$ words $w_i$ in lexicographic order. For variable $i$ use the fixed literal $v_i=p_cw_i=RLLw_i$. On every actual source define
+
+$$
+b_i(u)=1\quad\Longleftrightarrow\quad r_{t_u}(v_i)=\mathsf{branch}.
+\tag{FTC.15}
+$$
+
+Alpha, beta and absent all mean zero. Stationarity makes repeated occurrences consistent. No Boolean-source promise is imposed.
+
+For any Boolean assignment $b$, take a perfect ordered skeleton of depth $\ell$. At frontier $w_i$ put $B_1$ if $b_i=1$ and beta otherwise; at unused frontier words put beta. Call the result $C_b$. Its leaves at the frontier are images and images pair to images, so $C_b$ is a branch image. Its height is at most $\ell+1$, its ordinary finite size is $O(2^\ell)=O(n+1)$, and it gives exactly the desired branch/zero replies at all $w_i$.
+
+In $\Pi_1$ choose
+
+$$
+x_a=\beta,\quad x_{b_1}=\alpha,\quad x_c=C_b,\quad
+x_{b_2}=B_{\ell+2},\quad x_{b_3}=B_{\ell+3},\quad x_{b_4}=B_{\ell+4}.
+\tag{FTC.16}
+$$
+
+For $\Pi_2$ put alpha at $b_2$ and $B_{\ell+2}$ at $b_1$, leaving the other coordinates as above. The three fresh heights exceed that of $C_b$ and are mutually different; both leaves differ from all branches. Hence all six whole values differ. Repeated partners use their single assigned value. Proposition 1.4 gives the actual finite origin $\delta(\mathscr S(x))$ and target $R_1$ or $R_2$. These witnesses realize all assignments, while the domain still includes all other legal finite origins. A fixed unconditional $Z_*$ witness is the tuple $B_1,\ldots,B_6$ in $D$ order. $\square$
+
