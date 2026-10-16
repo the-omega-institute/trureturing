@@ -8,6 +8,8 @@
 
 import D5.S3.Weil.ZetaLinear.FullRankInertiaPullback
 import D5.S3.Analytic.ReflectedSpectrum.ConfluentNegativeJetBlock
+import D5.S3.Arith.Lattices.Klartag.Walk.Increments
+import D5.S3.FiniteGroups.NikolovSegal.TypeA.RootGeometry.PartIISLnRootKernels
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,35 +19,31 @@ noncomputable section
 
 open Matrix
 open D5.S3.Analytic.ReflectedSpectrum.ConfluentNegativeJetBlock
+open D5.S3.Arith.Lattices.Klartag.Walk.Increments (UT)
+open NikolovSegal.SLnRootAction (PositiveIndex)
 open scoped BigOperators Matrix ComplexOrder
 
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.HildebrandNegativeIndexRefutation
 
 /-! ## Source carriers and orderings -/
 
-abbrev SPlus (d : ℕ) :=
-  {p : Fin d × Fin d // p.1 ≤ p.2}
-
-abbrev SMinus (d : ℕ) :=
-  {p : Fin d × Fin d // p.1 < p.2}
-
 abbrev PlusOrdering (d : ℕ) :=
-  SPlus d ≃ Fin (Fintype.card (SPlus d))
+  UT d ≃ Fin (Fintype.card (UT d))
 
 abbrev MinusOrdering (d : ℕ) :=
-  SMinus d ≃ Fin (Fintype.card (SMinus d))
+  PositiveIndex d ≃ Fin (Fintype.card (PositiveIndex d))
 
-def minusToPlus {d : ℕ} (p : SMinus d) : SPlus d :=
+def minusToPlus {d : ℕ} (p : PositiveIndex d) : UT d :=
   ⟨p.1, p.2.le⟩
 
 /-- Hildebrand compatibility; product ordering is weak. -/
 def Compatible {d : ℕ}
     (sigmaP : PlusOrdering d) (sigmaM : MinusOrdering d)
     (x : Fin d → ℝ) : Prop :=
-  (∀ p q : SPlus d,
+  (∀ p q : UT d,
     sigmaP p < sigmaP q →
       x q.1.1 * x q.1.2 ≤ x p.1.1 * x p.1.2) ∧
-  (∀ p q : SMinus d,
+  (∀ p q : PositiveIndex d,
     sigmaP (minusToPlus p) < sigmaP (minusToPlus q) →
       sigmaM p < sigmaM q)
 
@@ -61,20 +59,20 @@ def Admissible {d : ℕ}
 
 /-- Embed a plus rank into the full spectrum, then reverse it. -/
 def plusIndex {d : ℕ}
-    (r : Fin (Fintype.card (SPlus d))) : Fin (d * d) :=
+    (r : Fin (Fintype.card (UT d))) : Fin (d * d) :=
   (Fin.castLE
     (by
-      simpa only [SPlus, Fintype.card_prod, Fintype.card_fin] using
+      simpa only [UT, Fintype.card_prod, Fintype.card_fin] using
         (Fintype.card_subtype_le
           (fun p : Fin d × Fin d => p.1 ≤ p.2)))
     r).rev
 
 /-- A zero-based minus rank is already the desired spectrum index. -/
 def minusIndex {d : ℕ}
-    (r : Fin (Fintype.card (SMinus d))) : Fin (d * d) :=
+    (r : Fin (Fintype.card (PositiveIndex d))) : Fin (d * d) :=
   Fin.castLE
     (by
-      simpa only [SMinus, Fintype.card_prod, Fintype.card_fin] using
+      simpa only [PositiveIndex, Fintype.card_prod, Fintype.card_fin] using
         (Fintype.card_subtype_le
           (fun p : Fin d × Fin d => p.1 < p.2)))
     r
@@ -126,7 +124,7 @@ def claim : Prop :=
 /-! ## Explicit orderings at d = 4 -/
 
 /-- Only the upper triangle is queried by this function. -/
-private def plusRank (p : SPlus 4) : Fin 10 :=
+private def plusRank (p : UT 4) : Fin 10 :=
   (!![0, 1, 3, 6;
       0, 2, 4, 7;
       0, 0, 5, 8;
@@ -134,7 +132,7 @@ private def plusRank (p : SPlus 4) : Fin 10 :=
     Matrix (Fin 4) (Fin 4) (Fin 10)) p.1.1 p.1.2
 
 /-- Only the strict upper triangle is queried by this function. -/
-private def minusRank (p : SMinus 4) : Fin 6 :=
+private def minusRank (p : PositiveIndex 4) : Fin 6 :=
   (!![0, 0, 1, 3;
       0, 0, 2, 4;
       0, 0, 0, 5;
@@ -143,17 +141,17 @@ private def minusRank (p : SMinus 4) : Fin 6 :=
 
 private def sigmaPlus : PlusOrdering 4 :=
   Equiv.ofBijective
-    (fun p : SPlus 4 =>
+    (fun p : UT 4 =>
       Fin.cast
-        (by decide : 10 = Fintype.card (SPlus 4))
+        (by decide : 10 = Fintype.card (UT 4))
         (plusRank p))
     (by decide)
 
 private def sigmaMinus : MinusOrdering 4 :=
   Equiv.ofBijective
-    (fun p : SMinus 4 =>
+    (fun p : PositiveIndex 4 =>
       Fin.cast
-        (by decide : 6 = Fintype.card (SMinus 4))
+        (by decide : 6 = Fintype.card (PositiveIndex 4))
         (minusRank p))
     (by decide)
 
@@ -173,7 +171,7 @@ private theorem witnessAdmissible :
     exact_mod_cast hx i
   · constructor
     · have hprod :
-          ∀ p q : SPlus 4,
+          ∀ p q : UT 4,
             sigmaPlus p < sigmaPlus q →
               witnessXNat q.1.1 * witnessXNat q.1.2 ≤
                 witnessXNat p.1.1 * witnessXNat p.1.2 := by
