@@ -3641,6 +3641,105 @@ No accepted calculation is repeated, and no actual retained/cofinal
 positivity, Robin-tail, RH, generic novelty or Lean result is claimed.
 
 
+#### The same finite comparison also controls positive-denominator endpoints
+
+Keep the SAME finite $J$, eighteen-column lift, nineteen channels,
+$\rho=1/32$, $\overline W$, $\overline L$ and upper compression
+$\Sigma=\Sigma_{\max}$. The actual common-form/domain and inverse
+identifications, finite far energy, channel comparison and two-sided
+far enclosure remain premises. The negative projection upper supplies
+$H=\Xi+\Theta$ with inertia17 positive,1 negative,0 zero, the same as
+$\Xi$. The following is an application of the preceding block inertia
+and square completion, with no new numerical evaluation.
+
+Put $S=N^{1/2}R$ and $P_s=I+S\Xi^{-1}S^*$. The two Schur complements
+of $\left(\begin{smallmatrix}I&S\\S^*&-\Xi\end{smallmatrix}\right)$,
+using the identical nonsingular inertias of $\Xi$ and $H$, give
+$P_s\succ0$. Consequently
+
+$$
+C_{\rm sharp}=MN^{1/2}P_sN^{1/2}M\succeq0,
+\qquad \ker C_{\rm sharp}=\ker(NM).
+$$
+
+This kernel statement needs no strict spectral gap for $N$.
+For one eligible source $w$, write $b=R^*NMw$ and
+$k_J=w^*MNMw$. Use the same augmented far map
+$\widetilde F^*\widetilde F=G$ and embed its actual far response as
+$\widetilde z=(z,0)$. The accepted strict far coefficient gives
+
+$$
+P_f=I+\kappa\widetilde F\Sigma^{-1}\widetilde F^*\succeq\alpha I,
+\qquad\alpha=1-\kappa G_{00}/(-a_\Sigma)>0.
+$$
+
+The square completion is an exact identity on these common objects:
+
+$$
+\begin{aligned}
+\mathcal K+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}
+={}&w^*C_{\rm sharp}w\\
+&+\kappa\left\langle
+\widetilde z+\widetilde F\Xi^{-1}b,
+P_f(\widetilde z+\widetilde F\Xi^{-1}b)
+\right\rangle,
+\end{aligned}
+$$
+
+where $\mathcal K=k_J+\kappa\|z\|^2$ and
+$b_{\rm actual}=b+\kappa\widetilde F^*\widetilde z$.
+Both terms on the right are nonnegative. Equality forces $NMw=0$,
+then $b=k_J=0$, then $z=0$. In particular
+
+$$
+\mathcal K+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}=0
+\quad\Longrightarrow\quad
+\mathcal K=0,\ b_{\rm actual}=0.
+$$
+
+Thus for every positive $d\ge\mathcal K$, the strict inequality
+$d+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}>0$ holds. A zero
+one-negative-core threshold with positive denominator is excluded.
+
+The conclusion extends to any finite jointly eligible source block
+$W_{\rm src}$ on this same $J$, without requiring independent columns.
+Let $K_{\rm actual}$ and $B_{\rm actual}=\mathcal BV$ be its common
+charge Gram and row map. Apply the preceding scalar statement to every
+coefficient vector and its actual linear-combination source. It gives
+
+$$
+D+B_{\rm actual}\Sigma^{-1}B_{\rm actual}^*\succ0
+\qquad(D\succ0,\ D\succeq K_{\rm actual}).
+$$
+
+Bordered inertia therefore leaves exactly one negative direction in
+$\Sigma+B_{\rm actual}^*D^{-1}B_{\rm actual}$. Since
+$V^*\overline LV\preceq\Sigma$, this matrix dominates the compression
+of $\overline L+\mathcal B^*D^{-1}\mathcal B$. The specified full lower
+update is not PSD, including its positive-denominator semidefinite
+endpoint cases. The common source/action/far law is required on the
+whole source span; unrelated scalar charges cannot be substituted.
+
+Nonsingularity of $H$ is material. For the finite-matrix example
+$M=N=1$, $W_c=2$, $R=e_0^*$, $G=0$ and
+$\Sigma=\Xi=\operatorname{diag}(-1,I_{17})$, one has
+$H=\operatorname{diag}(0,I_{17})$ and $C_{\rm sharp}=0$.
+Taking $w=d=1$ and $z=0$ gives $\mathcal K=1$, $b_{\rm actual}=e_0$
+and $\Sigma+b_{\rm actual}b_{\rm actual}^*/d\succeq0$.
+Thus nonnegativity of $C_{\rm sharp}$ alone would not exclude the
+endpoint. The strict projection certificate supplies the extra
+nonsingularity for the present data.
+
+This excludes only this fixed-majorant lower-update family with
+positive-definite denominator and finite-$J$ sources. Other majorants,
+bases and source supports, actual $S_N$ positivity, retained/cofinal
+positivity, Robin tail and RH remain undecided. The argument uses the
+compression order directly; it does not replace an actual sufficient
+Schur complement by $\Sigma_{\max}$. It is a conditional application
+of existing matrix identities, without a generic novelty or
+Lean-verification claim.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
