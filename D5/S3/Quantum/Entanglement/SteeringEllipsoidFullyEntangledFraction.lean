@@ -68,7 +68,8 @@ Private declarations, each on the live path of result (consumer in brackets):
     [filtered_bound, operator_bound, degenerate_bound, tight_blochB]; form_one_kron
     [degenerate_bound, maxent_le]; ptL_conj, trace_conj_kron, kron_sub, form_conj_mul
     [filtered_bound]; ptL_sub [canonical_bound, degenerate_bound]; ptL_smul [canonical_bound,
-    filtered_bound, degenerate_bound]; ptR_sub, ptR_smul [canonical_bound];
+    filtered_bound, degenerate_bound]; ptR_sub [canonical_bound];
+    imported ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul [canonical_bound];
     form_conj [cs_form, psd_sub_rank_one]; form_real [psd_sub_rank_one, canonical_bound,
     degenerate_bound]; form_vecMulVec [psd_sub_rank_one]; trace_vecMulVec [canonical_bound,
     degenerate_bound]; halfPhase_mul [phase_max, tight_phase]; phase_max [fef_le, result];

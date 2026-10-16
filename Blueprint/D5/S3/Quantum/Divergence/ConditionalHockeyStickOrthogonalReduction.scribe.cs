@@ -134,7 +134,7 @@ internal sealed class ConditionalHockeyStickOrthogonalReductionDocument : IScrib
                 DeclarationHandle.Create(Prefix + "claim"),
                 H("Orthogonal reduction and independence of the parameter"),
                 StatementSource.FromAuthor(Disp(ClaimFormula())),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Section 9 asks whether the hockey-stick contraction coefficient "
                         + "can be optimized over orthogonal states, extending the "
