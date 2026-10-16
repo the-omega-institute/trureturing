@@ -82,7 +82,8 @@ private theorem trace_psd {n : Type*} [Fintype n] [DecidableEq n]
   have h := hX.isHermitian.trace_eq_sum_eigenvalues
   apply Complex.ext
   · rfl
-  · rw [h]
+  · change X.trace.im = 0
+    rw [h]
     simp [Complex.im_sum]
 
 private theorem posTrace_smul {n : Type*} [Fintype n] [DecidableEq n]
@@ -388,7 +389,7 @@ private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
     (N : QuantumChannel A B) (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
     amp N (t • X) = t • amp N X := by
   ext ⟨r, b⟩ ⟨s, d⟩
-  simp only [amp_entry]
+  rw [amp_entry]
   let Z : Matrix A A ℂ := fun a a' => X (r, a) (s, a')
   have harg : (fun a a' => (t • X) (r, a) (s, a')) = t • Z := by
     ext a a'
@@ -425,7 +426,6 @@ private theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
     ptr (amp N X) = ptr X := by
   ext r s
   change (∑ b, amp N X (r, b) (s, b)) = ∑ a, X (r, a) (s, a)
-  simp_rw [amp_entry]
   let Z : Matrix A A ℂ := fun a a' => X (r, a) (s, a')
   have h := N.trace_preserving (CStarMatrix.ofMatrix Z)
   change (∑ b, act N Z b b) = ∑ a, Z a a at h
@@ -437,7 +437,7 @@ private theorem amp_flag {A B R : Type*} [Fintype A] [DecidableEq A]
     (Y Z : Matrix A A ℂ) :
     amp N (flag X Y Z) = flag (amp N X) (act N Y) (act N Z) := by
   ext ⟨r, b⟩ ⟨s, d⟩
-  simp only [amp_entry]
+  rw [amp_entry]
   rcases r with r | r
   · rcases s with s | s
     · rfl
@@ -715,7 +715,9 @@ private theorem flag_transfer
       rw [hptrHdef]
       rfl
     rw [hptrE]
-    unfold rt; simp [Matrix.trace]
+    rw [show rt (1 : Matrix Unit Unit ℂ) = 1 by
+      unfold rt
+      simp [Matrix.trace], mul_one, add_zero]
   have hHB : (amp N H).IsHermitian := by
     unfold H
     rw [amp_sub_smul]
