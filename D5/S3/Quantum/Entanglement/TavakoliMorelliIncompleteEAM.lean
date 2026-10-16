@@ -310,12 +310,23 @@ theorem scaledPure_sandwich {d : ℕ} {A : Op d} (hA : ScaledPure A) (M : Op d) 
   have h := (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
     u.vec (ket_dot_self u) M).2
   have hs : proj u * M * proj u = (M * proj u).trace • proj u := by
-    simpa only [proj_eq_outer,
-      D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity, h.2] using h.1
-  simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.trace_smul, hs, smul_smul,
-    smul_eq_mul]
-  congr 1
-  ring
+    rw [proj_eq_outer]
+    change D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec * M *
+      D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec =
+        (M * D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec).trace •
+          D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec
+    exact h.1.trans (congrArg
+      (fun z : ℂ => z • D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u.vec) h.2)
+  calc
+    ((c : ℂ) • proj u) * M * ((c : ℂ) • proj u) =
+        (c : ℂ) • ((c : ℂ) • (proj u * M * proj u)) := by
+      rw [Matrix.smul_mul, Matrix.mul_smul, Matrix.smul_mul]
+    _ = ((c : ℂ) * (c : ℂ) * (M * proj u).trace) • proj u := by
+      rw [hs, smul_smul, smul_smul]
+    _ = (M * ((c : ℂ) • proj u)).trace • ((c : ℂ) • proj u) := by
+      rw [Matrix.mul_smul, Matrix.trace_smul, smul_smul]
+      congr 1
+      ring
 
 theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d) :
     hsSq (K * A * Kᴴ) = (((Kᴴ * K) * A).trace.re) ^ 2 := by
