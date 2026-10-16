@@ -314,7 +314,7 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
         exact hne (by
           simpa only [h.2, Function.update_idem, Function.eq_update_self_iff] using h.1)
       simp [hfalse]
-    · have hfalse : s j = true := by cases hsj : s j <;> simp_all
+    · have hfalse : s j = true := Bool.ne_false_iff.mp hs
       have hfalse' : ¬(b j = true ∧ s = Function.update b j false) := by
         intro h
         have := congrFun h.2 j
