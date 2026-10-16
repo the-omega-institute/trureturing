@@ -86,7 +86,7 @@ Every other public declaration is a definition used by a public statement. The b
 
 **Refuted by `result`:** on the Petersen graph, one Glauber step of a cooling run from a thermal state makes P_0(1) negative.
 
-**Computed, not formalized** (orchestrator, exact rationals, recorded in #17931):
+**Computed, not formalized** (orchestrator, exact rational arithmetic on the same run):
 - the minimum of P_i(0) is about 0.0298, so passivity holds at the start;
 - the other nine P_i(1) lie between 0.178 and 0.553.
 
