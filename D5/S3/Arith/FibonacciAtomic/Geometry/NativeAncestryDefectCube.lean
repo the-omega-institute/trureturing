@@ -11,7 +11,10 @@ import D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 import D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Normed.Module.Ball.Pointwise
 import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -26,7 +29,7 @@ open GenealogicalFiberTransport (substitution)
 open D5.S3.Combinatorics.Partitions.WordPartitionInverse (wd)
 open AncestorAreaInstability (T depth)
 open ActualImageAddressCertificate (replace)
-open scoped BigOperators symmDiff
+open scoped BigOperators symmDiff Pointwise
 
 noncomputable section
 open AncestorAreaInterval (coordinates offset)
@@ -554,6 +557,64 @@ private theorem vector_total_area (t : Source) :
   rw [← coordinate_list_length t]
   exact_mod_cast hs.trans (total_area t)
 
+/-- All actual sources obtained from independent subsets of the literal positions. -/
+def sourceFamily (t : Source) : Finset Source := (positions t).powerset.image (variant t)
+
+/-- The full finite set of Euclidean area vectors. -/
+def areaVertices (t : Source) : Finset (EuclideanSpace ℝ (Fin (t.length-1))) := by
+  classical
+  exact (positions t).powerset.image (fun A => areaVector t.length (variant t A))
+
+/-- The actual area family divided by the total number of leaf pairs. -/
+def normalizedAreaFamily (n : ℕ) : Set (EuclideanSpace ℝ (Fin ((T n).length-1))) :=
+  ((Nat.fib (n+1)).choose 2 : ℝ)⁻¹ • (areaVertices (T n) : Set _)
+
+private theorem sourceFamily_card (t : Source) : (sourceFamily t).card = 2^(positions t).card := by
+  unfold sourceFamily
+  rw [Finset.card_image_of_injOn, Finset.card_powerset]
+  intro A hA B hB h
+  exact congrArg Subtype.val (variant_injective t
+    (a₁ := ⟨A,Finset.mem_powerset.mp hA⟩) (a₂ := ⟨B,Finset.mem_powerset.mp hB⟩) h)
+
+private theorem diameter_exact (t : Source) :
+    Metric.diam (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) = Real.sqrt (2 * ((positions t).card : ℝ)) := by
+  classical
+  have mem (A : Finset Address) (hA : A ⊆ positions t) :
+      areaVector t.length (variant t A) ∈ areaVertices t :=
+    Finset.mem_image.mpr ⟨A,Finset.mem_powerset.mpr hA,rfl⟩
+  have upper : ∀ x ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))), ∀ y ∈ (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))),
+      dist x y ≤ Real.sqrt (2 * ((positions t).card : ℝ)) := by
+    intro x hx y hy
+    obtain ⟨A,hA,rfl⟩ := Finset.mem_image.mp hx
+    obtain ⟨B,hB,rfl⟩ := Finset.mem_image.mp hy
+    have hAp := Finset.mem_powerset.mp hA
+    have hBp := Finset.mem_powerset.mp hB
+    have hs := squared_distance t A B hAp hBp
+    have hsub : A ∆ B ⊆ positions t := by
+      intro p hp
+      rcases Finset.mem_symmDiff.mp hp with ⟨ha,_⟩ | ⟨hb,_⟩
+      · exact hAp ha
+      · exact hBp hb
+    have hc : ((A ∆ B).card : ℝ) ≤ (positions t).card :=
+      Nat.cast_le.mpr (Finset.card_le_card hsub)
+    rw [dist_eq_norm]
+    nlinarith [Real.sq_sqrt (by positivity : 0 ≤ 2 * ((positions t).card : ℝ)),
+      Real.sqrt_nonneg (2 * ((positions t).card : ℝ)), norm_nonneg
+        (areaVector t.length (variant t A) - areaVector t.length (variant t B))]
+  apply le_antisymm (Metric.diam_le_of_forall_dist_le (Real.sqrt_nonneg _) upper)
+  have hl := Metric.dist_le_diam_of_mem (areaVertices t).finite_toSet.isBounded
+    (mem ∅ (Finset.empty_subset _)) (mem (positions t) (Finset.Subset.refl _))
+  have hs := squared_distance t ∅ (positions t) (Finset.empty_subset _) (Finset.Subset.refl _)
+  rw [show (∅ : Finset Address) ∆ positions t = positions t from bot_symmDiff _] at hs
+  rw [dist_eq_norm] at hl
+  have he : ‖areaVector t.length (variant t ∅) -
+      areaVector t.length (variant t (positions t))‖ =
+      Real.sqrt (2 * ((positions t).card : ℝ)) := by
+    nlinarith [Real.sq_sqrt (by positivity : 0 ≤ 2 * ((positions t).card : ℝ)),
+      Real.sqrt_nonneg (2 * ((positions t).card : ℝ)), norm_nonneg
+        (areaVector t.length (variant t ∅) - areaVector t.length (variant t (positions t)))]
+  rwa [he] at hl
+
 /-- The actual independent family, its exact area displacement and Euclidean distances. -/
 theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
     (positions (T n)).card = Nat.fib (n-2) ∧
@@ -585,7 +646,104 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
     rw [← ht]
     exact squared_distance _ _ _ hA hB
 
+/-- The exact diameter and the number and depth endpoints of the normalized native family. -/
+private theorem normalized_family (n : ℕ) (hn : 3 ≤ n) :
+    Metric.diam (normalizedAreaFamily n) =
+      Real.sqrt (2 * (Nat.fib (n-2) : ℝ)) / ((Nat.fib (n+1)).choose 2 : ℝ) ∧
+    (sourceFamily (T n)).card = 2 ^ Nat.fib (n-2) ∧
+    depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0 := by
+  have hc := (native_area_cube n hn).1
+  have hs := (native_source_family n hn).2.2
+  have hp : (positions (T n)).Nonempty := by
+    apply Finset.card_pos.mp
+    rw [hc]
+    exact Nat.fib_pos.mpr (by omega)
+  refine ⟨?_,?_,?_,?_⟩
+  · rw [normalizedAreaFamily, diam_smul₀, diameter_exact, hc]
+    simp only [Real.norm_eq_abs, abs_of_nonneg (by positivity :
+      0 ≤ ((Nat.fib (n+1)).choose 2 : ℝ)⁻¹)]
+    ring
+  · rw [sourceFamily_card,hc]
+  · simpa only [if_true] using (hs ∅ (Finset.empty_subset _)).2.2
+  · simpa only [if_neg (Finset.nonempty_iff_ne_empty.mp hp)] using
+      (hs (positions (T n)) (Finset.Subset.refl _)).2.2
+
+private theorem diameter_decay (n : ℕ) (hn : 3 ≤ n) :
+    Metric.diam (normalizedAreaFamily n) ≤
+      (4 * Real.sqrt 2) * (Nat.fib (n+1) : ℝ) ^ (-(3/2 : ℝ)) := by
+  let m : ℝ := Nat.fib (n+1)
+  let k : ℝ := Nat.fib (n-2)
+  have hm : 2 ≤ m := by
+    have h := Nat.fib_mono (show 3 ≤ n+1 by omega)
+    change (2:ℝ) ≤ (Nat.fib (n+1) : ℝ)
+    exact_mod_cast (show 2 ≤ Nat.fib (n+1) by
+      simpa only [show Nat.fib 3 = 2 from rfl] using h)
+  have hk : k ≤ m := by
+    change (Nat.fib (n-2) : ℝ) ≤ Nat.fib (n+1)
+    exact_mod_cast Nat.fib_mono (show n-2 ≤ n+1 by omega)
+  have hmp : 0 < m := by linarith
+  have hsp : 0 < Real.sqrt m := Real.sqrt_pos.mpr hmp
+  have hc : ((Nat.fib (n+1)).choose 2 : ℝ) = m * (m-1) / 2 :=
+    Nat.cast_choose_two ℝ _
+  have hcp : 0 < ((Nat.fib (n+1)).choose 2 : ℝ) := by
+    rw [hc]
+    exact div_pos (mul_pos hmp (by linarith)) (by norm_num)
+  have hsq : m*m ≤ 4*((Nat.fib (n+1)).choose 2 : ℝ) := by rw [hc]; nlinarith
+  have hs : Real.sqrt (2*k) ≤ Real.sqrt 2 * Real.sqrt m := by
+    rw [← Real.sqrt_mul (by norm_num : (0:ℝ) ≤ 2)]
+    exact Real.sqrt_le_sqrt (by linarith)
+  have hr : m ^ (-(3/2 : ℝ)) = (m * Real.sqrt m)⁻¹ := by
+    rw [Real.rpow_neg hmp.le, show (3/2 : ℝ) = 1 + 1/2 by norm_num,
+      Real.rpow_add hmp, Real.rpow_one, ← Real.sqrt_eq_rpow]
+  rw [(normalized_family n hn).1, hr]
+  apply (div_le_iff₀ hcp).mpr
+  have hbound : Real.sqrt 2 * Real.sqrt m ≤
+      (4 * Real.sqrt 2) * (m * Real.sqrt m)⁻¹ *
+        ((Nat.fib (n+1)).choose 2 : ℝ) := by
+    have he : (Real.sqrt 2 * Real.sqrt m) * (m * Real.sqrt m) =
+        Real.sqrt 2 * (m*m) := by
+      calc
+        _ = Real.sqrt 2 * m * (Real.sqrt m ^ 2) := by ring
+        _ = _ := by rw [Real.sq_sqrt hmp.le]; ring
+    calc
+      _ ≤ (4 * Real.sqrt 2 * ((Nat.fib (n+1)).choose 2 : ℝ)) / (m * Real.sqrt m) := by
+        apply (le_div_iff₀ (mul_pos hmp hsp)).mpr
+        rw [he]
+        nlinarith [Real.sqrt_nonneg 2]
+      _ = _ := by ring
+  exact hs.trans hbound
+
+/-- Exact normalized diameter, exponential source count, depth endpoints and decay. -/
+theorem normalized_cube_diameter :
+    (∀ n : ℕ, 3 ≤ n →
+      Metric.diam (normalizedAreaFamily n) =
+        Real.sqrt (2 * (Nat.fib (n-2) : ℝ)) / ((Nat.fib (n+1)).choose 2 : ℝ) ∧
+      (sourceFamily (T n)).card = 2 ^ Nat.fib (n-2) ∧
+      depth (variant (T n) ∅) = n ∧ depth (variant (T n) (positions (T n))) = 0) ∧
+    Asymptotics.IsBigO Filter.atTop (fun n => Metric.diam (normalizedAreaFamily n))
+      (fun n => (Nat.fib (n+1) : ℝ) ^ (-(3/2 : ℝ))) ∧
+    Filter.Tendsto (fun n => Metric.diam (normalizedAreaFamily n))
+      Filter.atTop (nhds 0) := by
+  have hb : Asymptotics.IsBigO Filter.atTop (fun n => Metric.diam (normalizedAreaFamily n))
+      (fun n => (Nat.fib (n+1) : ℝ) ^ (-(3/2 : ℝ))) := by
+    apply Asymptotics.isBigO_iff.mpr
+    refine ⟨4 * Real.sqrt 2, (Filter.eventually_ge_atTop 3).mono ?_⟩
+    intro n hn
+    simpa only [Real.norm_eq_abs, abs_of_nonneg Metric.diam_nonneg,
+      abs_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)] using diameter_decay n hn
+  have hm : Filter.Tendsto (fun n : ℕ => (Nat.fib (n+1) : ℝ))
+      Filter.atTop Filter.atTop := by
+    apply Filter.tendsto_atTop_mono' Filter.atTop ?_
+      (tendsto_natCast_atTop_atTop : Filter.Tendsto
+        (fun n : ℕ => (n : ℝ)) Filter.atTop Filter.atTop)
+    filter_upwards [Filter.eventually_ge_atTop 5] with n hn
+    exact_mod_cast (Nat.le_fib_self hn).trans (Nat.fib_mono (by omega : n ≤ n+1))
+  exact ⟨normalized_family, hb, hb.trans_tendsto
+    ((tendsto_rpow_neg_atTop (by norm_num : (0:ℝ) < 3/2)).comp hm)⟩
+
 end
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube
 
 #print axioms D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube.native_area_cube
+
+#print axioms D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube.normalized_cube_diameter

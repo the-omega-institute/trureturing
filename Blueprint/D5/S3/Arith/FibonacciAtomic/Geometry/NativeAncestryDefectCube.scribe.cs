@@ -27,6 +27,12 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                 + "in Euclidean space with m minus one coordinates. Unoccupied coordinates are zero."),
             Def("gapVector", "One unit of transferred area",
                 "gapVector(m,j) is the standard unit vector at j minus the standard unit vector at j plus one."),
+            Def("sourceFamily", "The actual source family",
+                "sourceFamily(t) is the image of the full powerset of positions(t) under variant(t)."),
+            Def("areaVertices", "The complete Euclidean vertex set",
+                "areaVertices(t) is the image of the same powerset under the ancestor-area vector."),
+            Def("normalizedAreaFamily", "The normalized Euclidean family",
+                "The area vertices of T(n) are scaled by the reciprocal of choose(fib(n plus one),two)."),
             Describe.Lean(DescribeId.Create("native-area-cube"),
                 DeclarationHandle.Create(Prefix + "native_area_cube"), H("The native family, area formula and squared distances"),
                 StatementSource.FromAuthor(NativeFormula()), AssessedProvenance.FromRepo(),
@@ -41,6 +47,20 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                         + "Adding positions one at a time gives the stated sum of signed gap vectors. "
                         + "Distinct positions occupy disjoint gap pairs. Squared Euclidean distance is twice "
                         + "the cardinality of the symmetric difference of the choices, and total area is preserved."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("normalized-cube-diameter"),
+                DeclarationHandle.Create(Prefix + "normalized_cube_diameter"),
+                H("Exact normalized diameter and decay"),
+                StatementSource.FromAuthor(DiameterFormula()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The empty and full subsets attain the maximal Euclidean separation. "
+                        + "Scaling by the reciprocal total area gives the exact normalized diameter. "
+                        + "There remain two to the power fib(n minus two) distinct sources, "
+                        + "with depth n at the empty choice and zero at the full choice.")),
+                    Paragraph(Text("Writing M for fib(n plus one) and K for fib(n minus two), "
+                        + "the inequalities K at most M and choose(M,two) at least M squared divided by four "
+                        + "bound the diameter by four times square root two times M to the power minus three halves. "
+                        + "Since the Fibonacci leaf count diverges, the diameter tends to zero."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -83,5 +103,24 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
         Formula injective = Call("InjectiveOn", Call("variant", t), Call("powerset", positions));
         Formula count = EqOf(Call("card", positions), Call("fib", Seq(n, Minus, D(2))));
         return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n), And(count, And(injective, choices)))));
+    }
+
+    private static Formula DiameterFormula()
+    {
+        Formula n = V("n"), m = Call("fib", Seq(n, Plus, D(1)));
+        Formula k = Call("fib", Seq(n, Minus, D(2)));
+        Formula family = Call("normalizedAreaFamily", n);
+        Formula diameter = Call("diam", family);
+        Formula rate = new Formula.Superscript(m, Seq(Minus, Frac(D(3), D(2))));
+        Formula exact = EqOf(diameter, Frac(Call("sqrt", Seq(D(2), Times, k)), Call("choose", m, D(2))));
+        Formula count = EqOf(Call("card", Call("sourceFamily", Call("T", n))),
+            new Formula.Superscript(D(2), k));
+        Formula endpoints = And(EqOf(Call("depth", Call("variant", Call("T", n), Emptyset)), n),
+            EqOf(Call("depth", Call("variant", Call("T", n), Call("positions", Call("T", n)))), D(0)));
+        Formula sequence = Seq(n, Sp, Mapsto, Sp, diameter);
+        Formula decay = Seq(n, Sp, Mapsto, Sp, rate);
+        return Disp(And(All("n", Nat(), Imp(Seq(D(3), Le, n), And(exact, And(count, endpoints)))),
+            And(Call("IsBigO", Op("atTop"), sequence, decay),
+                Call("Tendsto", sequence, Op("atTop"), Call("nhds", D(0))))));
     }
 }
