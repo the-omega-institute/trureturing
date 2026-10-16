@@ -154,7 +154,8 @@ theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
     change ((H * A.effect (l, a)).trace - (H.trace / (d : ℂ)) *
       (proj (A.ket l a)).trace).re = _
     rw [MState.tr' (MState.pure (A.ket l a)), mul_one, hreal]
-    simp only [← Complex.ofReal_natCast, ← Complex.ofReal_div, Complex.sub_re,
+    rw [← Complex.ofReal_natCast d]
+    simp only [← Complex.ofReal_div, Complex.sub_re,
       Complex.ofReal_re]
     rfl
   have hsum (l : Fin m) : ∑ a, p l a = q := by
@@ -181,7 +182,7 @@ theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
       ‖residualVector A.context (mub_context_record A) X‖ ^ 2 at hEnergy
   simp_rw (congrConsts := false) [hBasis] at hEnergy
   rw [hNorm] at hEnergy
-  simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
+  simp (congrConsts := false) only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, nsmul_eq_mul] at hEnergy
   have hMoment : moment A.effect H = ∑ l, ∑ a, (p l a) ^ 2 := by
     rw [moment.eq_1, Fintype.sum_prod_type]
