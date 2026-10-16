@@ -38,7 +38,7 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/lean-inspector/fib_analysis.py", "import sys\nsys.exit(" + str(fib_failure) + ")\n")
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")
         script("tools/scripts/worktree/lean-cache-run.sh",
-               "#!/bin/bash\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
+               "#!/bin/bash\nprintf '%s\\n' \"$@\" > \"$LAKE_ARGUMENTS\"\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
         if interrupted:
             script("tools/scripts/worktree/lean-cache-run.sh",
                    "#!/bin/bash\n" +
@@ -71,6 +71,7 @@ class BuildWorkContracts(unittest.TestCase):
             script("tools/lean-inspector/build_work.py",
                    "import sys\nprint('LEAN_BUILD_WORK_UNKNOWN recorder unavailable', file=sys.stderr)\nsys.exit(2)\n")
         env = dict(os.environ, STRATALINT_INSPECTOR_SUPERVISED="1", LAKE_BIN=str(lake),
+                   LAKE_ARGUMENTS=str(root / "lake-arguments"),
                    STRATALINT_LEAN_PRODUCER_DLL=str(producer), GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                    STRATALINT_LEAN_BUILD_WORK_FILE=str(fact),
                    STRATALINT_FIB_REGRESSIONS_SELECTED='true' if fib_selected else 'false',
@@ -102,6 +103,16 @@ class BuildWorkContracts(unittest.TestCase):
         result = subprocess.run(entry,
                                 env=env, capture_output=True, text=True)
         return result, fact, root
+
+    def test_lake_output_filter_preserves_build_failure_and_default_failure_threshold(self):
+        for reused in (True, False):
+            for failure in (0, 23):
+                with self.subTest(reused=reused, failure=failure):
+                    result, _, root = self.invoke(reused=reused, failure=failure)
+                    self.assertEqual(failure, result.returncode, result.stderr)
+                    arguments = (root / "lake-arguments").read_text().splitlines()
+                    self.assertEqual("--log-level=error", arguments[1])
+                    self.assertFalse(any(arg.startswith("--fail-level") for arg in arguments))
 
     def test_ci_report_charges_compute_and_keeps_nested_preparation_outside(self):
         for reused in (True, False):

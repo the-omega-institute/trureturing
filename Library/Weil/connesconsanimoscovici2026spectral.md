@@ -2533,6 +2533,1076 @@ The new finite column is reusable input to such a construction,
 not a substitute for those missing objects. No numerical sign or
 full retained-positivity conclusion is asserted for this alternative.
 
+#### The saved nineteen-channel base has one negative direction
+
+The [cached lift, cross-row and inertia applications](https://github.com/the-omega-institute/trureturing-experiments/tree/906abfc541483203fde48ffb29ef4486c616e618/docs/reports/weil-c27)
+archive the following new thin data and their consumers. All large
+actions, scientific suppliers and original inverse actions are reused.
+
+The saved18-by18 complement can be classified without another
+retained solve or eigenvalue isolation. Jacobi's signature criterion
+uses the signs of its leading determinants $\Delta_k$, with
+$\Delta_0=1$: nonzero leading determinants give pivot signs
+$\operatorname{sgn}(\Delta_k/\Delta_{k-1})$.
+The cached consumer `small_schur_rank_floor.py` finds all18 determinant
+intervals strictly negative, using degree-dependent export grids
+$640k+64$. Thus its first pivot is negative and the next17 are
+positive. Under the inherited exact-complement/enclosure premises,
+this OLD nineteen-channel complement has inertia17 positive,
+1 negative,0 zero; its full target has1280 positive and1 negative
+direction after adding the1263 positive prefix.
+
+The18 small determinants took0.25 seconds and were independently
+checked against the same saved core. This is a different object
+from both the original $L_0$ complement and the failed new
+$\rho=1$ target. Negative diagonals alone had not counted its
+negative directions. A positive update of rank one is not excluded
+by this inertia: its direction, strength and coupling still matter.
+No inertia statement about actual $S_N$ follows.
+
+#### A common inverse majorant and a denominator already in the cache
+
+Keep the original comparison $T$, support $E$, residual $R$ and
+finite-input action $M$. Under the existing common form/domain
+and inverse identifications, write
+
+$$
+B_0=E^*TE,\quad F=E^*HE=B_0+D,\quad D\succ0,\qquad
+G=O^*TE,\quad H_c=O^*HE,
+$$
+
+where $O$ includes the exterior outside $E$. The effective action
+has the inherited block expression
+
+$$
+M=T_{OO}-H_cF^{-1}H_c^*
+ +(H_c-G)D^{-1}(H_c-G)^*.
+$$
+
+The ordinary weighted square completion, with
+$H_c=G+(H_c-G)$ and $F=B_0+D$, gives
+$M\succeq T_{OO}-GB_0^{-1}G^*$. Consequently
+$M^{-1}\preceq O^*T^{-1}O$. These are applications on the admitted
+forms and finite inputs; the notation does not supply missing
+domain or inverse-existence premises.
+Positivity of $H-T$ also gives
+$H_{OO}-T_{OO}\succeq(H_c-G)D^{-1}(H_c-G)^*$. The actual exterior
+Schur form after eliminating $E$ therefore dominates $M$, yielding
+$S_N\succeq Q-R^*M^{-1}R$ on these same forms.
+
+For the SAME old nineteen channels, let
+
+$$
+A_\rho=I+A_0+(1+\rho^{-1})\delta_{\rm ch}I,\qquad \rho=1/32,
+$$
+
+$$
+\overline W=
+(W_J-W_JU_JA_\rho^{-1}U_J^*W_J)
+\oplus(1+\rho)W_{\rm far}.
+$$
+
+Here $A_0$ includes all middle rows, including $E$;
+$\delta_{\rm ch}$ is the original channel-tail charge, not
+$\delta_{\rm up}$. The earlier common channel trial and Young
+bound give $\overline W\succeq O^*T^{-1}O$ and
+$Q-R^*\overline W R\succeq L_*$. With $u=Mw$, set
+
+$$
+F_\phi=u_J^*W_JU_J,\qquad
+\mathcal B=u^*\overline W R-w^*R,\qquad
+\mathcal K=u^*\overline W u-h.
+$$
+
+The same inverse-residual square completion gives
+$\mathcal K\ge0$. In particular
+
+$$
+\mathcal K=\delta+\rho\|u_{\rm far}\|_W^2
+-F_\phi A_\rho^{-1}F_\phi^*
+\le D_*:=\delta_{\rm up}+\rho E_M,
+$$
+
+where the accepted common data give $D_*<299.146668420532$.
+Choosing the common scalar trial
+$\alpha(v)=\mathcal Bv/D_*$, without division by $\mathcal K$, gives
+
+$$
+S_N\succeq Q-R^*\overline W R
++\mathcal B^*\mathcal B/D_*
+\succeq L_*+\mathcal B^*\mathcal B/D_*.
+$$
+
+This conditional application supplies the common-gain inequality;
+the actual row and the good-block inverse metric must still be
+enclosed tightly enough for its full coupled sign test. The
+denominator belongs to this full row, including its far cross;
+it cannot be paired with $b_{\rm fin}$ alone.
+
+#### The scalar defect encloses the missing common row without new channels
+
+The cached exact lift $V=[-X_g;I]$ supplies the missing thin data
+
+$$
+c=b_{\rm fin}^*V,\qquad \Beta_V=\Beta_0V,\qquad
+G_V=(P_{\rm far}^*V)^*\mathcal K_{\rm far}(P_{\rm far}^*V)
++\varepsilon V^*V.
+$$
+
+The signed112-feature core and every allowance cross term are
+retained. The exact rational $\varepsilon$ is the upper endpoint
+of the base's640-bit transported allowance, checked against the
+original512-bit metadata. The1024-bit cached products took1.44
+seconds; independent1536-bit consumption gave exactly the same3024
+matrix interval pairs. No old inverse, target, channel or moment
+producer ran.
+
+Put $Z=A_\rho^{-1}\Beta_V$ and
+$t_V=u_{\rm far}^*W_{\rm far}R_{\rm far}V$. The full row is
+$\mathcal B_V=c-F_\phi Z+(1+\rho)t_V$. The cached Gram $A_0$
+majorizes the J-only channel Gram, so weighted Cauchy pays the
+finite correction by $\sqrt{e_J(Z^*A_0Z)_{jj}}$, where
+$e_J=\|u_J\|_W^2$. The far correction costs
+$(1+\rho)\sqrt{E_M(G_V)_{jj}}$. Even these bounds exclude zero
+in every coordinate, but do not decide a matrix sign.
+
+There is stronger shared information already available. Let $v_0$
+be the accepted exact dyadic retained direction, and reuse its
+exact $\vartheta$ and certified finite residual defect
+
+$$
+e=R_Jv_0-\vartheta u_J,\qquad e^*W_Je\le E_e.
+$$
+
+The saved all-coordinate channel map then gives
+
+$$
+F_\phi=(\Beta_0v_0)^*/\vartheta-e^*W_JU_J/\vartheta.
+$$
+
+Thus the computable center and error for the FULL common row are
+
+$$
+\widehat{\mathcal B}_V=c-(\Beta_0v_0)^*Z/\vartheta,\qquad
+|(\mathcal B_V-\widehat{\mathcal B}_V)_j|
+\le\frac{\sqrt{E_e(Z^*A_0Z)_{jj}}}{|\vartheta|}
++(1+\rho)\sqrt{E_M(G_V)_{jj}}.
+$$
+
+No raw $U_J$ values need to be regenerated for this enclosure.
+Relative to the first finite Cauchy radius, the certified defect
+factor is less than $0.109095699$. The
+`full_gamma_defect_cross.py` consumer takes0.41 seconds and gives,
+in the first old-lift coordinate (mode0),
+
+$$
+5.99690490660\times10^{-15}
+< (\mathcal B_V)_0
+<9.65492947706\times10^{-15}.
+$$
+
+All18 row intervals exclude zero. Combining their magnitude lower
+bounds with the old diagonal enclosures gives
+$(\Sigma_*)_{jj}+|(\mathcal B_V)_j|^2/D_*>0$ for every $j$;
+the mode0 lower is above $2.44652\times10^{-33}$. These are
+restrictions to the OLD lift. They omit the good-block response
+and are not the updated Schur complement.
+
+For the scalar common row, a certified
+$\Omega\ge\mathcal B_GP^{-1}\mathcal B_G^*\ge0$ must still be
+paid in the denominator. A common upper $\Omega<6.21431056$
+would preserve all18 positive updated diagonal bounds just
+obtained. No such inverse-metric upper has been supplied, and
+even positive updated diagonals would leave the off-diagonal
+positivity test open. The needed data are the common row's
+correlations and a sufficient inverse-metric bound, not another
+scalar energy or channel supplier. These are applications of
+existing inverse, Cauchy and inertia methods, with no generic
+novelty or Lean-verification claim. Full retained and cofinal
+positivity, the original Robin tail estimate and RH remain open.
+
+### A shared-error contraction for the full rank-one sign
+
+The same OLD eighteen-coordinate core has exactly one negative
+direction. Standard bordered-matrix inertia, equivalently the
+rank-one inverse identity, reduces the coupled sign to one scalar:
+for $b=\mathcal B_V$, $s>0$ and $q=b\Sigma_*^{-1}b^*$,
+
+$$
+\Sigma_*+b^*b/s\succ0\iff s+q<0.
+$$
+
+PSD corresponds to $s+q\le0$, with one zero eigenvalue at exact
+equality. The exact updated lower-core denominator is
+$s=D_*+\Gamma$, where
+$\Gamma=\mathcal B_GP^{-1}\mathcal B_G^*\ge0$.
+An upper $\Omega\ge\Gamma$ supplies the sufficient test
+$D_*+\Omega+q<0$; failure of that test need not exclude the
+exact update. This is an application of existing block inertia
+and Woodbury algebra, not a new general theorem.
+
+Partition at the negative first pivot:
+
+$$
+\Sigma_*=\begin{pmatrix}a&r^*\\r&H\end{pmatrix},\quad
+P_+=H-rr^*/a\succ0,\quad
+T_+=\binom{-r^*/a}{I_{17}}.
+$$
+
+The accepted inertia supplies $P_+\succ0$, and
+
+$$
+q=|b_0|^2/a+(bT_+)P_+^{-1}(bT_+)^*.
+$$
+
+The scalar-defect transport gives shared information stronger
+than independent coordinate radii. For the same actual full row,
+$b=\widehat{\mathcal B}_V+f+t$ and
+
+$$
+f^*f\preceq C_f=E_e\vartheta^{-2}Z^*A_0Z,\qquad
+t^*t\preceq C_t=(1+\rho)^2E_MG_V.
+$$
+
+All-middle $A_0$, the signed far core and its entire allowance
+remain included. Under the inherited common-form/domain,
+inverse/comparison and sound-cache premises, weighted positive
+trace bounds the two transported error norms. Let
+
+$$
+n_c^2=(\widehat{\mathcal B}_VT_+)P_+^{-1}
+(\widehat{\mathcal B}_VT_+)^*,\qquad
+n_j^2=\operatorname{tr}(P_+^{-1}T_+^*C_jT_+),\quad j=f,t.
+$$
+
+Then the positive term in $q$ lies between
+$\max(0,n_c-n_f-n_t)^2$ and $(n_c+n_f+n_t)^2$.
+These are conservative simultaneous bounds; they do not assert
+joint attainment of separate error extrema.
+
+The [cached correlated-sign application](https://github.com/the-omega-institute/trureturing-experiments/tree/27a634d7fe09e9c20b28215d18e2bd6c051e71b4/docs/reports/weil-c27)
+supplies both shared Grams and uses one
+validated seventeen-dimensional FLINT solve with thirty-five
+right-hand sides. Its1024-bit consumption takes0.40 seconds.
+The resulting outer bounds are
+
+$$
+-792<q<1.043\times10^{25},\qquad
+-493<D_*+q<1.043\times10^{25}.
+$$
+
+They determine neither sign and certify no positive good-metric
+budget or exclusion of the exact lower update. Independent1536-bit
+consumption overlaps all648 Gram intervals and all four intervals
+for actual scalar quantities. Among all17 scalar exports,9 overlap
+and6 are identical; the eight disjoint exports represent different
+computed bound values. The center-energy width ratio is
+$0.999999997454$, with the same inconclusive verdict.
+
+The center-only contraction is already broad before adding the
+error radii. These data do not distinguish input uncertainty,
+conditioning, loss of joint cancellations and validated-solve
+overestimation; no condition number or spectral floor was measured.
+The exact-reference certificate below supplies useful enclosures of
+this center metric and both error traces from the accepted packets.
+Their joint full-row sign and the good-block metric remain separate
+obligations. Repeating the same interval-box solve supplies no new
+source information. Full retained and cofinal positivity, the Robin
+tail estimate and RH remain open; this numerical application is not
+Lean verification.
+
+### An exact reference and directional residual certificate
+
+The [exact-reference, trace and joint signed applications](https://github.com/the-omega-institute/trureturing-experiments/tree/f5a4f57a7a549684510c928f28042d7d40e4dcfb/docs/reports/weil-c27)
+use the existing inverse-residual identity and Neumann comparison on
+the same actual $P=P_+\succ0$ and $h=\widehat{\mathcal B}_VT_+$.
+From exact rational midpoints of the mirrored core and saved finite
+centers, construct $P_0,h_0$, then the small exact FLINT inverse
+$R=P_0^{-1}$ and reference profile $x=Rh_0^*$. Exact products check
+$RP_0=I$ and $P_0x=h_0^*$. No midpoint positivity is assumed.
+
+Let $\Delta P=P-P_0$, $\delta h=h-h_0$ and
+$r=\delta h^*-\Delta Px$. With $E\ge|\Delta P|$ entrywise and
+a directed upper $\eta\ge\||R|E\|_\infty$ strictly below one,
+
+$$
+hP^{-1}h^*=h_0x+2\operatorname{Re}(\delta h\,x)
+-x^*\Delta Px+r^*P^{-1}r,
+$$
+
+$$
+0\le r^*P^{-1}r\le
+\frac{\|r\|_1\|Rr\|_\infty}{1-\eta}.
+$$
+
+The exact reference energy avoids evaluating large cancelling terms
+as independent intervals. Source uncertainty in the pivot, $T_+$,
+center and matrix remains enclosed in the signed corrections.
+Under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises, the numerical certificate gives
+
+$$
+\eta<3.976\times10^{-28},\quad
+|2\operatorname{Re}(\delta h\,x)|<4.39\times10^{-79},
+$$
+
+$$
+|x^*\Delta Px|<3.30\times10^{-28},\quad
+r^*P^{-1}r<1.309\times10^{-55}.
+$$
+
+Consequently
+
+$$
+391.85784253565945840673491942575
+<hP^{-1}h^*<
+391.85784253565945840673491942642.
+$$
+
+The1024-bit consumption takes0.104 seconds. Independent1536-bit
+consumption takes0.092 seconds; all324 exact reference fields match,
+the actual correction/energy intervals overlap, and both directed
+center widths are below $6.584\times10^{-28}$. These bounds do not
+identify the sole cause of the earlier broad interval or measure
+an actual condition number or intrinsic uncertainty floor.
+
+The same reference permits a thin error-trace contraction without
+another inverse or solve. The Hermitian path $P_0+t\Delta P$ is
+nonsingular for $0\le t\le1$ by Neumann. Actual $P\succ0$ therefore
+implies $P_0\succ0$ by constant inertia along that path. Since
+$R\Delta P$ is similar to a Hermitian matrix and has spectral
+radius at most $\eta$, standard congruence/inversion gives
+
+$$
+\frac{R}{1+\eta}\preceq P^{-1}\preceq\frac{R}{1-\eta}.
+$$
+
+For each same actual PSD $C_j^+=T_+^*C_jT_+$, $j=f,t$,
+
+$$
+\frac{\operatorname{tr}(RC_j^+)}{1+\eta}
+\le\operatorname{tr}(P^{-1}C_j^+)
+\le\frac{\operatorname{tr}(RC_j^+)}{1-\eta}.
+$$
+
+The1024-bit thin products take0.030 seconds, retaining every trace
+cross term, actual $T_+$ uncertainty and the full far allowance.
+The finite/far traces are approximately $8.869400460878844$ and
+$6.026200142006464$, with directed actual-trace interval widths
+below $8.423\times10^{-27}$ and $5.210\times10^{-27}$ respectively.
+The same triangle bounds with the certified center and full-row
+$b_0$ now give
+
+$$
+-586<q<388,\qquad -287<D_*+q<688.
+$$
+
+These marginal bounds leave the sign undecided. The triangle estimate does
+not consume every correlation between the negative coordinate and
+the positive-subspace errors already recorded in $C_f,C_t$.
+A joint signed estimate below uses these correlations to exclude
+the $D_*$-based sufficient update. A sufficiently sharper common gain
+charge and the good-block inverse metric remain missing. These are
+existing exact-rational, inverse-residual and
+Loewner methods applied to the saved common object, not new generic
+algorithms or Lean proofs. Actual full retained/cofinal positivity,
+the original Robin tail estimate and RH remain open.
+
+### A joint signed bound excludes the coarse common charge
+
+The same error Grams retain correlations between the negative
+coordinate and positive-subspace errors. Let
+$q_c=\widehat{\mathcal B}_V\Sigma_*^{-1}\widehat{\mathcal B}_V^*$
+and $g=\Sigma_*^{-1}\widehat{\mathcal B}_V^*$. The accepted reference
+profile $x$ and center residual $r_c=h^*-Px$ give
+
+$$
+g=g_x+TP^{-1}r_c,\qquad
+g_x=(\widehat{\mathcal B}_{V,0}/a)e_0+Tx.
+$$
+
+Trace domination of each actual PSD error Gram yields
+
+$$
+\|C_j^{1/2}TP^{-1}r_c\|^2\le\tau_jQ_c,\qquad
+L_j=\sqrt{(g_x^*C_jg_x)_{\rm up}}
++\sqrt{\tau_{j,\rm up}Q_{c,\rm up}},\quad j=f,t.
+$$
+
+Here $Q_c\ge r_c^*P^{-1}r_c$, and $L_j$ bounds the corresponding
+linear error. For the full row $b=\widehat{\mathcal B}_V+e$,
+$e=f+t$, quadratic expansion gives
+
+$$
+q(b)=q_c+2\operatorname{Re}(eg)+e\Sigma_*^{-1}e^*,
+$$
+
+$$
+-\frac{(\sqrt{(C_f)_{00}}+\sqrt{(C_t)_{00}})^2}{-a}
+\le e\Sigma_*^{-1}e^*
+\le(\sqrt{\tau_f}+\sqrt{\tau_t})^2.
+$$
+
+The1024-bit thin products take0.021 seconds, with no inverse or
+solve. Under the inherited actual common-form/domain,
+inverse/comparison and sound-cache premises, directed bounds give
+
+$$
+-219.39<q<-35.85,\qquad 79.76<D_*+q<263.30.
+$$
+
+Independent1536-bit consumption takes0.017 seconds; all17 scalar
+interval pairs and the final $q$ interval are endpoint-identical.
+
+Thus the particular $D_*$-based sufficient lower update is not PSD
+for any good-block metric $\Gamma\ge0$. This is an exclusion of
+that lower construction, not a negative direction for actual
+$S_N$ or an exclusion of every rank-one refinement.
+
+The negative upper for $q$ supplies the full coupled sufficient
+budget $D_\sharp+\Omega<35.85$, if positive
+$D_\sharp\ge\mathcal K$ and $\Omega\ge\Gamma$ are independently
+certified for this same common object. No pair meeting this budget
+is supplied.
+The available identity for $\mathcal K$ implies only
+
+$$
+\mathcal K\le D_*-F_\phi A_\rho^{-1}F_\phi^*,
+$$
+
+since $D_*$ already bounds
+$\delta+\rho\|u_{\rm far}\|_W^2$ upward. A sufficiently strong joint
+bound for the common charge and $q$, together with the good-block
+inverse metric, remains missing; the ceiling cannot replace the exact
+charge in an equality. These are existing quadratic/Cauchy/trace methods applied
+to the saved common source, without generic novelty or Lean
+verification. Actual full retained/cofinal positivity, the Robin
+tail estimate and RH remain unresolved.
+
+### The scalar defect supplies a sharper channel charge
+
+The [experimental source and scalar packet](https://github.com/the-omega-institute/trureturing-experiments/tree/c974ba572b29b33dfc066c7d3ff37267c30c85e5/docs/reports/weil-c27)
+retain the consumer and its directed result.
+
+The same original weights, exact $v_0,\vartheta$, saved channel inverse
+and accepted scalar defect supply one additional scalar contraction.
+Write
+
+$$
+F_0=(\Beta_0v_0)^*/\vartheta,\qquad
+\eta=e^*W_JU_J/\vartheta,\qquad F_\phi=F_0-\eta,\qquad
+k=E_e/\vartheta^2.
+$$
+
+Since $U_J^*W_JU_J\preceq A_0\prec A_\rho$, the operator norm of
+$W_J^{1/2}U_JA_\rho^{-1/2}$ is at most1. Weighted Cauchy gives
+$\eta A_\rho^{-1}\eta^*\le k$, without a channel-count factor.
+For $E_0=F_0A_\rho^{-1}F_0^*$, the norm triangle inequalities yield
+
+$$
+(\max(0,\sqrt{E_0}-\sqrt{k}))^2
+\le F_\phi A_\rho^{-1}F_\phi^*
+\le(\sqrt{E_0}+\sqrt{k})^2.
+$$
+
+Under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises, the new1024-bit contraction takes0.413
+seconds including packet loading. It encloses $E_0$ near
+106.3370533152211 and $\sqrt{k}<4.023460$, giving
+
+$$
+39.545559<F_\phi A_\rho^{-1}F_\phi^*<205.505007,\qquad
+0\le\mathcal K\le D_\sharp<259.601110.
+$$
+
+Here $D_\sharp$ is the positive outward ceiling $D_*-L_F$, with
+$L_F$ the certified lower endpoint of the squared reverse-triangle
+bound. It is not an identity for $\mathcal K$. Combining this
+ceiling with the accepted $q$ upper gives a sufficient good-block
+metric budget near-223.750468, so the separate bounds provide no
+positive allowance for $\Gamma$.
+
+This inconclusive sufficient budget does not exclude a joint
+estimate of $\mathcal K+\Gamma+q$. The finite row error and the
+channel-energy term contain the same $\eta$; estimating them
+separately loses correlations. The good-block inverse metric also
+remains missing. The experimental consumer retains $F_0^*$ and
+$A_\rho^{-1}F_0^*$ for subsequent common-source contractions.
+It reuses the saved inverse and signed bound, with no new inverse,
+solve or scientific supplier. This is an application of existing
+weighted Cauchy and norm inequalities, without generic novelty or
+Lean verification. Actual full retained/cofinal positivity, the
+Robin tail estimate and RH remain unresolved.
+
+### Actual source excludes the fixed old-base rank-one lower update
+
+The [experimental consumers and directed packets](https://github.com/the-omega-institute/trureturing-experiments/tree/f9473a5b68a55eac2e3b3239939189d2fae36b24/docs/reports/weil-c27)
+separate an information obstruction from an actual-source exclusion.
+The error upper envelopes alone admit $\eta=t=0$. At that relaxed
+point, the cached finite energy gives
+$m_J-h-E_0+q_c>50.028372$, even with zero far action energy.
+Thus optimizing those unchanged envelopes cannot force a uniform
+negative upper. This relaxed point is not asserted to be realized by
+the original source.
+
+The actual nineteen-channel projection instead uses the cached
+$u_J=Mw$ and original weights to supply
+
+$$
+F_\phi=u_J^*W_JU_J,\qquad
+b_J=c-F_\phi A_\rho^{-1}\Beta_V.
+$$
+
+Only this missing functional evaluates the original channel shapes;
+the effective action, residuals, channel Gram/map and inverse actions
+are reused. The1024-bit projection takes15.924 seconds and gives
+$E_\phi=F_\phi A_\rho^{-1}F_\phi^*$ near115.345991300848898.
+All eighteen finite-row coordinates overlap the original transported
+expression $\widehat b+\eta Z$. Independent1536-bit projection
+has all79 exported intervals endpoint-identical.
+
+Let $\kappa=1+\rho=33/32$, $s=\|u_{\rm far}\|_W^2\ge0$ and
+$t=\kappa u_{\rm far}^*W_{\rm far}R_{\rm far}V$. For this SAME
+actual common source,
+
+$$
+\mathcal K=m_J-h+\kappa s-E_\phi,\qquad
+b=b_J+t,\qquad m_J=\|u_J\|_W^2.
+$$
+
+Put $q_J=b_J\Sigma_*^{-1}b_J^*$ and
+$g=\Sigma_*^{-1}b_J^*$. The full far Gram $G$, including its
+signed core and entire allowance, gives
+
+$$
+|t_0|^2\le\kappa^2sG_{00},\qquad
+|tg|^2\le\kappa^2s\,g^*Gg.
+$$
+
+Using the same one-negative decomposition of $\Sigma_*^{-1}$,
+retaining the negative far square and discarding only the
+nonnegative positive-complement square, yields
+
+$$
+\mathcal K+\Gamma+q
+\ge m_J-h-E_\phi+q_J+A s-2B\sqrt{s},
+$$
+
+$$
+A=\kappa-\kappa^2G_{00}/(-a)>0.7772979,\qquad
+B=\kappa\sqrt{g^*Gg}.
+$$
+
+The saved exact seventeen-dimensional inverse supplies a new profile
+for $b_J$, with residual-energy ceiling below $1.316\cdot10^{-55}$.
+It encloses $q_J$ in $(-120.742435,-120.742434)$. The accepted
+far trace pays the new gradient remainder, without a new inverse,
+solve or trace calculation. Writing the same saved error Gram as
+$C_t=\kappa^2E_M^0G$ and using the saved positive lower for $E_M^0$
+gives $B^2/A<10.153002$.
+
+Completing the square in $\sqrt{s}$, and using $\Gamma\ge0$, gives
+under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises
+
+$$
+m_J-h-E_\phi+q_J>48.450729,\qquad
+\boxed{\mathcal K+\Gamma+q>38.297727.}
+$$
+
+The new1024-bit joint contractions take0.108 seconds. For every
+positive $D\ge\mathcal K$, the scalar $D+\Gamma+q$ is consequently
+strictly positive. The accepted one-negative-core criterion excludes
+PSD of $L_*+\mathcal B^*\mathcal B/D$ for this fixed OLD base $L_*$
+and fixed saved dyadic dual $w$. This exclusion uses only
+nonnegativity of the good-block inverse metric.
+
+The stronger base $Q-R^*\overline W R$ is not tested by that calculation
+alone. Other dual directions and other lower constructions are outside
+this exclusion. Actual $S_N$
+can dominate this non-PSD lower bound and remain positive. The
+calculation supplies no actual $S_N$ negativity or RH counterexample.
+Actual full retained/cofinal positivity, the Robin tail and RH remain
+unresolved. These are applications of existing residual certification,
+weighted Cauchy and square completion, without generic novelty or
+Lean verification.
+
+### The paid far-enclosure gap cannot rescue the same fixed dual
+
+The [changed-compression consumer and directed packet](https://github.com/the-omega-institute/trureturing-experiments/tree/a8235067c4a19e422f1ea061876a44b53fb70835/docs/reports/weil-c27)
+test $\overline L=Q-R^*\overline W R$ with the same old nineteen
+channels, $A_\rho^{-1}$, $\rho=1/32$ and saved fixed dual. The
+baseline builders identify the discarded gain without another
+inverse or scientific supplier.
+
+Let $\widehat F$ be the signed far approximation, $F_{\rm act}$ the
+actual far residual Gram, $\epsilon_0$ the original complete padding,
+$\epsilon_1$ the later $\rho$-update padding and $\epsilon$ the exact
+rational upper already saved with the lift. The inherited two-sided
+far enclosure gives
+
+$$
+\|\widehat F-F_{\rm act}\|\le\epsilon_0\le\epsilon_1\le\epsilon.
+$$
+
+Writing $C_J=Q-R_J^*W_JR_J+\Beta^*A_\rho^{-1}\Beta$, the actual
+source-defined bases satisfy
+
+$$
+L_*=C_J-\kappa\widehat F-(\epsilon_0+\rho\epsilon_1)I,
+\qquad \overline L=C_J-\kappa F_{\rm act}.
+$$
+
+Thus $0\preceq\overline L-L_*\preceq2\kappa\epsilon I$.
+The paddings are bounded, not identified as equal. Their original
+512-bit metadata grid and transported640-bit grid remain distinct.
+This is the same $\overline W$, rather than the different ideal
+$W_{\rm G}$ majorant.
+
+Put $H_V=V^*V$, $\delta=2\kappa\epsilon$ and
+$\Sigma_{\max}=\Sigma_*+\delta H_V$. Then
+$V^*\overline LV\preceq\Sigma_{\max}$. The PSD addition preserves
+at least seventeen positive directions; a strictly negative first
+pivot leaves exactly one negative direction and no zero direction.
+Let $a_{\max}<0$, $P_{\max}\succ0$ and $T_{\max}$ denote its
+negative-pivot decomposition.
+
+Reuse the saved exact seventeen-vector $x_J$ only as a variational
+trial for this changed complement. With the same actual finite row
+$b_J$, define
+
+$$
+q_{J,\rm trial}=|b_{J,0}|^2/a_{\max}
++2\Re(b_JT_{\max}x_J)-x_J^*P_{\max}x_J,
+\qquad
+g_x=(\overline{b_{J,0}}/a_{\max})e_0+T_{\max}x_J.
+$$
+
+For $b=b_J+t$ and $q_{\max}=b\Sigma_{\max}^{-1}b^*$, the existing
+variational inverse identity gives
+
+$$
+q_{\max}\ge q_{J,\rm trial}+2\Re(tg_x)+|t_0|^2/a_{\max}.
+$$
+
+The same-source far row and energy obey the preceding weighted
+Cauchy bounds with the full $G$. Hence, for $A_{\max}>0$,
+
+$$
+\mathcal K+q_{\max}
+\ge m_J-h-E_\phi+q_{J,\rm trial}-B_{\max}^2/A_{\max},
+$$
+
+$$
+A_{\max}=\kappa-\kappa^2G_{00}/(-a_{\max}),\qquad
+B_{\max}^2=\kappa^2g_x^*Gg_x.
+$$
+
+The new1024-bit contractions take0.467 seconds. Reusing the accepted
+finite charge floor, directed endpoints give
+
+$$
+\delta<4.285\cdot10^{-135},\qquad
+q_{J,\rm trial}>-122.995465,\qquad
+B_{\max}^2/A_{\max}<10.153002,
+$$
+
+$$
+\boxed{\mathcal K+q_{\max}>36.044697.}
+$$
+
+Under the inherited actual common-form/domain, inverse/comparison,
+two-sided far-enclosure and sound-cache premises, every positive
+$D\ge\mathcal K$ therefore has $D+q_{\max}>0$. The existing
+one-negative-core criterion excludes PSD of
+$\Sigma_{\max}+b^*b/D$, which dominates the compression of
+$\overline L+\mathcal B^*\mathcal B/D$. The full specified
+stronger-base update is consequently not PSD. No good-block inverse
+metric, new inverse or solve is required.
+
+This extends the exclusion only to the same $\overline W$, saved
+fixed dual and admissible positive denominators. Other majorants,
+new or combined directions and other constructions remain outside
+its scope. Actual $S_N$ may dominate the rejected lower bound and
+be positive. The calculation gives no actual $S_N$ negativity,
+full retained/cofinal positivity, Robin-tail or RH result. It reuses
+standard variational inversion, inertia, weighted Cauchy and square
+completion, without a generic novelty or Lean claim.
+
+### A coupled two-source space is also excluded
+
+Keep the same nineteen channels, $\rho=1/32$, $\overline W$,
+stronger base $\overline L$ and upper compression $\Sigma_{\max}$.
+The common actual form/domain and inverse/comparison premises now
+apply on the entire span of two finite sources. In particular both
+effective actions have finite weighted far energy. The same two-sided
+far-error and sound-cache premises remain necessary.
+
+Retain the saved exact $w_0$ and propose $w_1$ from $W_JR_JVe_0$,
+where $e_0$ selects the negative first lift coordinate. Normalize by
+one power of two, round once to512-bit dyadics, and freeze the exact
+list. This is an arbitrary trial, not the exact residual or an
+optimizer. A nonzero exact two-coordinate minor makes the sources
+independent; both have support $J=2049{:}32768$.
+
+The new [source and action packet](https://github.com/the-omega-institute/trureturing-experiments/tree/c1a313ca2dda77ffbafe389e254396706b9c6313/docs/reports/weil-c27)
+reuse the old action and all scalar, channel, lift and far data.
+Only $w_1$ needs new actual mixed right sides, their two certified
+768-dimensional inverse actions, $u_1=Mw_1$, a1281-coordinate common
+row and a19-channel functional. The existing Cauchy projection and
+FLINT Toeplitz/Hankel adapter supply these quantities. Every old
+scientific supplier and old inverse action is reused unchanged.
+
+Write $U=[u_0,u_1]$, $W_{\rm src}=[w_0,w_1]$ and
+$\Phi=U_J^*W_JU_{{\rm ch},J}$. The new complete joint charge and row are
+
+$$
+K_J=U_J^*W_JU_J-W_{{\rm src},J}^*U_J-\Phi A_\rho^{-1}\Phi^*,
+$$
+
+$$
+B=(U_J^*W_J-W_{{\rm src},J}^*)R_JV
+-\Phi A_\rho^{-1}\Beta_V.
+$$
+
+No source cross term is dropped. With the same negative pivot $a$,
+positive complement $P$, elimination map $T$ and complete far Gram
+$G$, let $H=BT$, $B_0=Be_0$ and choose one exact17-by2 rational
+trial $X$ using the saved reference inverse. Put
+
+$$
+Q_X=B_0B_0^*/a+HX+X^*H^*-X^*PX,\qquad
+g=e_0B_0^*/a+TX,
+$$
+
+$$
+A=\kappa-\kappa^2G_{00}/(-a)>0,\qquad
+C=K_J+Q_X-\frac{\kappa^2}{A}g^*Gg.
+$$
+
+The existing variational inverse bound holds as a matrix inequality
+for this fixed $X$. For each coefficient vector $c$, its far row
+and far energy come from the same actual source $W_{\rm src}c$.
+The preceding weighted Cauchy and square completion therefore give
+the uniform bound
+
+$$
+K_{\rm actual}+B_{\rm actual}\Sigma_{\max}^{-1}B_{\rm actual}^*
+\succeq C.
+$$
+
+This pays the full far covariance without requiring a numerical far
+profile for $u_1$. It does not add separately optimized scalar gains.
+The new1024-bit application takes77.55 seconds. Its directed matrix
+enclosure certifies
+
+$$
+C_{00}>36.044697,\qquad
+C_{11}-|C_{01}|^2/C_{00}>0.0139933305,
+$$
+
+so $C\succ0$. For every positive-definite2-by2 denominator
+$D\succeq K_{\rm actual}$, ordinary bordered-block inertia leaves one
+negative direction in
+$\Sigma_{\max}+B_{\rm actual}^*D^{-1}B_{\rm actual}$.
+This matrix dominates the compression of the specified full
+$\overline L+\mathcal B^*D^{-1}\mathcal B$; that full update is
+therefore not PSD. The uniform bound also excludes every individual
+source combination from this span with its own admissible positive
+scalar denominator.
+
+This extends the numerical exclusion to this specified two-dimensional
+space, under the stated common-domain and comparison premises. It
+does not exclude other source spaces, majorants or constructions,
+and establishes no negativity of actual $S_N$. Full retained/cofinal
+positivity, Robin tail and RH remain unresolved. The general inertia,
+variational, Cauchy and convolution results are reused; the new
+contribution is actual coupled source data and their application,
+without a new general theorem, algorithm or Lean claim.
+
+
+### Calibrate the source quadratic before selecting a new direction
+
+A whole-J source proposal can use the preceding variational formula
+with a fixed linear rule $X=R_{\rm ref}T^*B^*$, where $R_{\rm ref}$ is
+the saved exact symmetric seventeen-dimensional reference. Define
+
+$$
+L=e_0e_0^*/a+TR_{\rm ref}T^*,\qquad
+Q=e_0e_0^*/a+T(2R_{\rm ref}-R_{\rm ref}PR_{\rm ref})T^*
+-\frac{\kappa^2}{A}L^*GL.
+$$
+
+Then the new linear-trial expression is $K_J+BQB^*$. It is a
+different trial rule from the preceding archived fixed rational $X$.
+The [calibration consumer](https://github.com/the-omega-institute/trureturing-experiments/tree/0310c167ce6d254c09fcf7faec5d23a2b06d15d7/docs/reports/weil-c27)
+checks the expanded/factored identity by exact rational arithmetic on
+one consistent midpoint model, before any source eigensolver is built.
+It consumes the cached two-source rows and parameters without new
+source actions, inverses, scalar/channel rows or an old production.
+
+The midpoint reference matrix has maximum entry approximately36.04.
+The preselected ordinary-double tolerance is
+$10^{-8}\max(1,\|C_{\rm ref}\|_{\max})$. Even rounding the exact $Q$
+entries before floating contraction produces a maximum absolute error
+approximately $5.1006\times10^{89}$. Factored floating evaluation,
+and floating evaluation using rounded exact reference trial entries,
+also fail this gate. No eigensolver or new source selection follows.
+These are implementation measurements in the recorded NumPy
+environment, not a condition number or a universal instability theorem.
+
+On the inherited640-bit input grid with1024 working bits, the naive
+variable-trial interval evaluation has maximum width approximately
+$1.7499\times10^{25}$; expansion through $Q$ gives
+$2.7353\times10^{79}$. Freezing the exact rational reference $X$ first
+instead gives width $1.4388\times10^{-27}$. This last computation is
+a different admissible fixed-trial rule sharing the midpoint value;
+it does not certify the variable-trial source operator. These widths
+measure the chosen evaluation, rather than intrinsic uncertainty.
+
+The failed gate rejects this specified shortcut before a new large
+source search. It neither excludes new source spaces nor guarantees
+that another source-selection method succeeds. No accepted exclusion
+is changed, and no actual Weil/cofinal positivity, Robin-tail, RH,
+new general theorem, algorithm or Lean result is supplied.
+
+
+
+### Reduce the finite source sign to one common eighteen-column inverse
+
+The same-object channel identity changes the finite source-selection
+task. This is an application of the existing finite Schur, inverse
+comparison and inertia formulas, including the classical
+[Haynsworth formula](https://doi.org/10.1016/0024-3795(68)90050-5).
+It supplies a parameter correspondence for this comparison, rather
+than a new general representer theorem or inverse algorithm.
+
+In this subsection only, let $M=M_J$, $W=W_J$,
+$U=U_{{\rm ch},J}$ and $R=R_JV$, where $V$ is the SAME exact
+eighteen-column lift. Thus $M$ is a finite30720-dimensional matrix
+and $R$ has eighteen columns. The inverse $M^{-1}$ is this finite
+matrix inverse, not the compression of an infinite inverse. Put
+$A=A_\rho$ and $\Beta=\Beta_0V$. The selected residual rows on $E$
+vanish exactly, and the cached channel projection uses the same
+middle residual. Consequently
+
+$$
+\Beta=U^*WR,\qquad
+W_c=W-WUA^{-1}U^*W,\qquad N=W_c-M^{-1}.
+$$
+
+The preceding finite block construction proves $N\succeq0$ with
+its full channel information. Indeed its block matrix
+$\mathscr T$ has Schur complement $M$ and satisfies
+
+$$
+\mathscr T\succeq T_{E\cup J}
+\succeq\operatorname{diag}(\Lambda_E,\Lambda_J)
++\binom{U_E}{U}\begin{pmatrix}U_E^*&U^*\end{pmatrix}.
+$$
+
+With $A_0=U_E^*W_EU_E+U^*WU$, inverse comparison, the $JJ$
+inverse block and the ordinary Woodbury identity give
+
+$$
+M^{-1}\preceq W-WU(I+A_0)^{-1}U^*W\preceq W_c,
+\qquad A_\rho\succeq I+A_0.
+$$
+
+The weaker statement $M\succeq W^{-1}$ alone would not justify
+subtracting the channel term. This argument retains the original
+same-channel domination; it proves semidefiniteness, without a
+strict spectral gap for $N$.
+
+For any one fixed Hermitian eighteen-dimensional coefficient
+$Q_{\rm s}$, define the finite source row map and coefficient by
+
+$$
+B=R^*(WM-I)-\Beta^*A^{-1}U^*WM=R^*NM,
+$$
+
+$$
+C=M(N+NRQ_{\rm s}R^*N)M,\qquad
+\Theta=R^*NR\succeq0.
+$$
+
+The sign and negative inertia of this entire finite source operator
+are determined by
+
+$$
+\boxed{n_-(C)=n_-(\Theta+\Theta Q_{\rm s}\Theta).}
+$$
+
+For completeness, for any source $w$ set
+$v=R^*NMw$, $a=\Theta^\dagger v$ and $e=Mw-Ra$.
+Since $\ker\Theta=\ker(N^{1/2}R)$, $v$ belongs to
+$\operatorname{ran}\Theta$ and $R^*Ne=0$. Hence
+
+$$
+w^*Cw=a^*(\Theta+\Theta Q_{\rm s}\Theta)a+e^*Ne.
+$$
+
+Conversely, taking $w=M^{-1}Ra$ realizes the first term exactly.
+The map to $a$ is injective on every negative definite source
+subspace, so this decomposition gives both inequalities for negative
+inertia. It also handles singular $N$ and $\Theta$. In particular
+$C\succeq0$ iff the small matrix is PSD, and any strict negative
+witness can be chosen in $M^{-1}\operatorname{ran}R$. This preserves
+quadratic sign and negative inertia; it neither identifies an
+Euclidean minimum eigenvector nor asserts existence of an optimizer.
+Eighteen coordinates refer to this fixed lift, not the complete
+1281-dimensional retained positivity problem.
+
+#### Keep the common far Gram before taking the inverse
+
+Let $\Sigma=\Sigma_{\max}$, $\kappa=33/32$ and let $G$ be the
+SAME signed far Gram with its complete paid allowance. For a source
+with actual finite weighted far energy, write
+
+$$
+z=W_{\rm far}^{1/2}u_{\rm far},\quad
+F_\infty=W_{\rm far}^{1/2}R_{\rm far}V,\quad
+F_\infty^*F_\infty\preceq G,
+$$
+
+$$
+k_{\rm actual}=k_J+\kappa\|z\|^2,\quad
+b_{\rm actual}=b+\kappa F_\infty^*z,\quad
+k_J=w^*MNMw,\quad b=Bw.
+$$
+
+Here $b$ and $b_{\rm actual}$ are columns. Let $a_\Sigma<0$ be
+the negative first pivot of $\Sigma$. The condition
+$a_\Sigma+\kappa G_{00}<0$ is already supplied by the accepted
+$A_{\max}=\kappa-\kappa^2G_{00}/(-a_\Sigma)>0.7772979$;
+no new scalar evaluation is needed. Thus
+$\Xi=\Sigma+\kappa G$ has seventeen positive and one negative
+eigenvalues.
+
+To retain all far covariances, augment $F_\infty$ by a factor of
+$G-F_\infty^*F_\infty$ to obtain
+$\widetilde F^*\widetilde F=G$. The negative-pivot decomposition
+of $\Sigma^{-1}$ gives
+
+$$
+I+\kappa\widetilde F\Sigma^{-1}\widetilde F^*
+\succeq\left(1-\frac{\kappa G_{00}}{-a_\Sigma}\right)I\succ0.
+$$
+
+Completing the square over the augmented far variable and using
+Woodbury therefore yields the common lower bound
+
+$$
+\boxed{
+k_{\rm actual}+b_{\rm actual}^*\Sigma^{-1}b_{\rm actual}
+\ge k_J+b^*\Xi^{-1}b.}
+$$
+
+The minimization enlarges the possible far responses. Its minimizer
+need not come from an actual source. This construction uses the
+exact inverse of $\Xi$; it is distinct from both the archived fixed
+trials and the calibrated fixed-linear trial rule.
+
+For $Q_{\rm s}=\Xi^{-1}$, set $S=N^{1/2}R$. The two Schur
+complements of
+$\left(\begin{smallmatrix}I&S\\S^*&-\Xi\end{smallmatrix}\right)$
+and the positive identity on $\ker N$ give
+
+$$
+\boxed{n_-(C_{\rm sharp})=n_+(\Xi+\Theta)-17.}
+$$
+
+Thus this lower source operator has a negative direction exactly
+when $\Xi+\Theta\succ0$. A strictly negative quadratic value for
+$\Xi+\Theta$ instead excludes negative directions of
+$C_{\rm sharp}$. Exact zero thresholds still require their own
+analysis; absence of a strict negative source is not by itself an
+exclusion of every semidefinite endpoint update.
+
+#### The missing numerical interface is a common inverse Gram
+
+The finite task is $MX=R$ and the joint eighteen-dimensional Gram
+$\Theta=R^*W_cR-R^*M^{-1}R$. For an exact rational trial matrix
+$X_0$, put $E_0=R-MX_0$ and
+$L_X=R^*X_0+X_0^*R-X_0^*MX_0$. The existing inverse-residual
+certificate gives
+
+$$
+R^*W_cR-L_X-E_0^*WE_0
+\preceq\Theta\preceq R^*W_cR-L_X.
+$$
+
+It requires the entire common residual Gram, including every cross
+term. The old two sources and the original scalar inverse optimum
+do not supply it. The saved lift/channel/far packets also do not
+archive $R^*WR$ on this lift. The common inverse certificate remains missing;
+no block solve or numerical sign for $\Xi+\Theta$ is supplied here.
+The threshold does not require computing $\Xi^{-1}$ explicitly.
+The dependence on $\Theta$ is Loewner monotone, whereas $\Theta+\Theta Q_{\rm s}\Theta$ is generally not.
+
+The [finite-lift consumer and packet](https://github.com/the-omega-institute/trureturing-experiments/tree/cd81daec08450f7154e12744dc5012cf062ac69c/docs/reports/weil-c27)
+supply the first missing interface, with $Y=R_JV$:
+
+$$
+G_J=Y^*W_JY,\qquad
+S_J=G_J-\Beta_V^*A_\rho^{-1}\Beta_V=Y^*W_cY.
+$$
+
+All30720 finite rows and every cross term are retained. The existing
+certified disjoint Cauchy action uses a fixed512-term expansion with its
+absolute remainder. The original residual generators, positive weights,
+exact implicit lift, nineteen-channel map and channel inverse are reused.
+No selected inverse, old source action, scalar/channel supplier or full
+1281-dimensional target is regenerated.
+
+The1024-bit application takes88.26 seconds, with maximum exported
+$S_J$ entry width below $4.132\times10^{-178}$. An independent1536-bit
+execution of the same consumer takes132.23 seconds: all1620 pairs of
+actual matrix-entry intervals overlap, with972 endpoint-identical;
+all45 guarded files remain unchanged. The six direct generator-row
+checks pass in both executions. Width diagnostics describe the chosen
+evaluation and are not intrinsic uncertainty or condition numbers.
+
+The five archived matrices include $\Xi+S_J$, an entry enclosure of
+one exact Loewner upper matrix for $\Xi+\Theta$. Its scalar endpoints
+are not Loewner matrix endpoints, and a positive upper matrix would
+not establish positivity of the actual threshold. No threshold sign is
+tested. This supplies $S_J$, while the common $MX=R$ action and complete
+inverse-residual Gram remain missing. It is a numerical application of
+the existing Cauchy and matrix identities, without a new general theorem,
+algorithm or Lean verification.
+
+The [cached upper selector](https://github.com/the-omega-institute/trureturing-experiments/tree/5e12e20859da48eeeb070616f1ae0b01fae4d211/docs/reports/weil-c27)
+consumes only the archived $U_{\rm th}=\Xi+S_J$. The accepted
+seventeen-positive-direction bound and $S_J\succeq0$ reduce this
+upper matrix's inertia test to its determinant sign. One1024-bit
+Arb determinant takes0.53 seconds and encloses
+$\det U_{\rm th}\simeq1.06742140729487513\times10^{-1359}>0$.
+Thus this exact upper is positive definite under the inherited premises.
+The1536-bit execution gives an overlapping positive interval with
+nonidentical endpoints; all40 guarded files remain unchanged. The
+existing degree-based export rule uses11584 absolute determinant bits
+while retaining the640-bit entry grid. No Gram, source action, inverse,
+solve or scientific supplier is replayed.
+
+This positive upper does not decide $\Xi+\Theta$ or certify a negative
+source. The inexpensive exclusion selector is therefore insufficient;
+this route still needs a sharper common inverse/residual bound or
+another sufficient ordered estimate. No actual retained/cofinal
+positivity, Robin-tail, RH or Lean result is supplied.
+
+Even a certified negative $C_{\rm sharp}$ would only identify a
+direction for further actual certification. A sufficient full update
+still needs an upper bound for the SAME source on
+$d+\Gamma+b_{\rm lift}^*\Sigma_L^{-1}b_{\rm lift}<0$, including
+the good-block inverse cost $\Gamma$, actual far cost and actual
+Schur complement $\Sigma_L$. The exclusion upper compression
+$\Sigma_{\max}$ cannot substitute for $\Sigma_L$ there. The
+inherited common-form/domain and inverse/comparison premises remain.
+No accepted calculation is repeated, and no actual retained/cofinal
+positivity, Robin-tail, RH, generic novelty or Lean result is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici

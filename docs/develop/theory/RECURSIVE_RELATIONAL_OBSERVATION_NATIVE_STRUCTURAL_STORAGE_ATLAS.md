@@ -1222,3 +1222,346 @@ rho event; an extracted tuple is not a callable handle; and mathematical
 mutual recovery does not settle these remaining objectives.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Restricted set-to-value refinement by three-slot relocations
+
+**Definition 13.1 (positioned component, operation and task).** Fix an
+already constructed bit component of Definition 4.1, its actual root $r$
+and retained occurrences $r,f,t,v_0,v_1$. Write $0=\mathsf L$ and
+$1=\mathsf R$. The actual stored relations are reciprocal child and
+$\mathsf P$ incidences. The external attachment of $r$ is fixed; the other
+four port types on these bit occurrences are empty. Throughout,
+
+$$
+f.0=v_0,\qquad f.1=v_1.
+\tag{SSA.15}
+$$
+
+At a canonical entrance of value $x$, $r.x=f$ and $r.(1-x)=t$; all
+other child slots are empty. Intermediate vertices may be unary. The
+carrier is this actual occurrence tree, with no second bit payload,
+version selector, saved byte or detached retained component.
+
+A strict relocation has an occupied source slot $p.a=v$, a distinct
+vacant destination slot $q.c$, and $q$ outside the current subtree of
+$v$. Its single atomic data effect is
+
+$$
+p.a:=\varnothing,\qquad q.c:=v,\qquad v.\mathsf P:=(q,c).
+\tag{SSA.16}
+$$
+
+These three distinct endpoint slots change coherently, without internal
+observable cuts. No control transition, operand acquisition, access-link
+retargeting, allocation or receipt is implicit. For the paths below, guards
+are established from bounded five-occurrence patterns; no unbounded
+ancestry test is supplied.
+
+Fix the supplied row-scoped authorization interface as an external
+boundary parameter. The local structural task takes a specified relocation
+command on reached roles, retains SSA.15, tests its geometric guards and
+that interface's permission, and on success has its actual complete local
+incidence successor as mathematical observation. A disabled command has no
+executing successor. Continuations are finite command sequences. This
+observation grants no client read or graph serialization.
+The assignment below is a three-command path in that relation. It is not
+an autonomous assignment controller or the original task $Q$.
+
+The root must actually be reached under the original designated field's
+write authority. Maintenance inspection stays within that row's permitted
+footprint. The target $b$ is an original rule immediate or an actual
+authorized acquired operand, available throughout the path. A latched
+operand is distinct read-only material. Merely supplying a mathematical
+parameter, private value or address does not acquire it. For a prescribed stage, a fixed finite
+private selector may inspect this component and the available operand to
+choose one relocation; supplying and retaining the stage is external to
+this data contract. It may not bundle a whole native-row patch or an
+unbounded transaction. Its apparatus, reads, positioning and persistent
+control remain explicit additional resources. A permit surviving the
+inserted phases is a premise of an application, not a protocol constructed
+by this definition.
+
+**Theorem 13.2 (uniform assignment and its scoped lower bound).** For each
+$x,b\in\{0,1\}$, under Definition 13.1 there is a path of exactly three
+nontrivial strict relocations from $g_x$ to $g_b$ on the same occurrences,
+fixing SSA.15 and every exterior incidence. Its worst-case relocation
+count is least in this fixed-occurrence relocation basis; a common length
+for all four assignments cannot be less than three.
+
+Proof. Put $a=x$, $c=1-x$. First move $f$ from $r.a$ to $t.0$.
+Then execute:
+
+$$
+\begin{array}{c|cc}
+ &\text{second relocation}&\text{third relocation}\\ \hline
+ b=x
+ &f:\ t.0\longrightarrow t.1
+ &f:\ t.1\longrightarrow r.a\\
+ b\ne x
+ &t:\ r.c\longrightarrow r.a
+ &f:\ t.0\longrightarrow r.c .
+\end{array}
+\tag{SSA.17}
+$$
+
+Initially $t$ is a terminal sibling of $f$, so $t.0$ is vacant and
+outside $f$'s subtree. After the first move the whole nonroot component
+is attached through $r.c=t$, with $t.0=f$ and $r.a$ vacant.
+If $b=x$, $t.1$ is vacant and its parent $t$ is outside $f$'s subtree.
+Moving $f$ there and then to still-vacant $r.a$ is legal and restores
+exactly the original named incidences. Thus unchanged assignments perform
+three actual relocations.
+
+If $b\ne x$, move the whole $t$ subtree into vacant $r.a$; $r$ is
+outside that subtree. This vacates $r.c$. Moving $f$ there from $t.0$
+is legal and leaves $r.a=t$, $r.c=f$, exactly $g_b$. The fork children
+and all occurrence identities are retained.
+
+Each command reattaches one subtree outside itself, preserving acyclicity,
+unique parents, root reachability and reciprocal incidence. Every exposed
+cut is therefore an actual spanning tree. No source-packet validity,
+acceptance, seal or completed-request hypothesis is used.
+
+The fixed-occurrence three-slot argument is as follows. Changing a
+vertex's parent-slot partner changes its own $\mathsf P$, its old
+parent child slot and its new parent child slot. No nonzero change of
+such reciprocal tree incidence has fewer than three changed slots.
+Exactly three forces the new child slot previously to be vacant:
+displacing another child also changes that child's $\mathsf P$.
+This is the restricted relocation fact, not a universal atomicity bound.
+
+For a changed assignment, both $f$ and $t$ change parent-slot partners.
+A relocation changes that partner only for its moved root, even when
+carrying descendants. With at most two relocations each would have to
+move once directly to its final root slot, but either first destination
+is occupied by the other. Thus a changed assignment needs at least three.
+SSA.17 attains the bound and has the same length for unchanged writes.
+An unchanged write alone admits a zero-move identity; the bound concerns
+worst-case and common length. Allocation, renaming, forest carriers and
+other primitive effects are outside this lower bound. ∎
+
+**Proposition 13.3 (actual support and terminal-boundary inverses).**
+For each component cut of Theorem 13.2 let $S_{\rm loc}$ be its actual
+root-relative child-path support, including the empty path, and
+$B_{\rm loc}$ its paths ending at vertices with neither child occupied.
+Each view separately reconstructs its current incidence with the fixed
+external root attachment as boundary parameter, and, under the same
+supplied authorization interface, determines the local structural operation
+relation of Definition 13.1. The same tree-layer
+claim holds when this component is grafted at its original socket in a
+fixed rooted ordered context.
+
+Proof. These are spatial reachability and the terminal limit of actual
+child descent. The finite-tree argument of Theorem 4.4 also applies to
+unary vertices: every position extends a terminal position. Hence
+
+$$
+S_{\rm loc}=\operatorname{Pref}(B_{\rm loc}),\qquad
+B_{\rm loc}=\operatorname{Max}_{\preceq}(S_{\rm loc}).
+\tag{SSA.18}
+$$
+
+From support, place a vertex at each path, join $w.a$ to $w$ through
+child port $a$ and the child's $\mathsf P$, and leave absent child
+extensions vacant. The empty path is $r$. In this family $f$ is the
+unique nonroot vertex with two children, whose order identifies $v_0,v_1$;
+the remaining nonroot occurrence is $t$. Thus the fixed roles are recovered.
+Arbitrary external creation names are not inferred from paths.
+
+For this decoder $D_S$, $D_S(S_{\rm loc}(C))=C$ under the fixed role
+and attachment convention, and $S_{\rm loc}(D_S(A))=A$ for every support
+$A$ in its actual image. Define $D_B=D_S\circ\operatorname{Pref}$.
+SSA.18 gives $D_B(B_{\rm loc}(C))=C$ and
+$B_{\rm loc}(D_B(F))=F$ for every actual-image frontier $F$.
+These are both inverse directions for each view separately. All incidence
+slots needed to evaluate a specified guarded command are thereby recovered;
+the external authorization interface is not recovered from these views.
+
+The actual terminal sets at the four successive cuts are:
+
+| Old and desired bit | Entrance | After first move | After second move | Exit |
+| --- | --- | --- | --- | --- |
+| $0\to0$ | $\{00,01,1\}$ | $\{100,101\}$ | $\{110,111\}$ | $\{00,01,1\}$ |
+| $0\to1$ | $\{00,01,1\}$ | $\{100,101\}$ | $\{000,001\}$ | $\{0,10,11\}$ |
+| $1\to0$ | $\{0,10,11\}$ | $\{000,001\}$ | $\{100,101\}$ | $\{00,01,1\}$ |
+| $1\to1$ | $\{0,10,11\}$ | $\{000,001\}$ | $\{010,011\}$ | $\{0,10,11\}$ |
+
+Every cut has five vertices and four tree edges, with terminal counts
+$3,2,2,3$. In a graft the root attachment, scaffold and exterior incidences
+stay fixed; all modified slots remain in the original field owner's
+region. Apply prefix reconstruction to the whole tree and restrict at the
+known socket. All exterior retained material stays present. This is a
+frame property of incidence and ownership footprint; it neither extends
+permissions nor decodes the whole runtime during a noncanonical bit phase. ∎
+
+**Proposition 13.4 (missing continuation information and local selection).**
+Component geometry alone does not determine the prescribed next command
+of an assignment invocation. Also this stencil cannot start from both
+canonical entrances with one fixed root-relative destination walk unless
+a selection or scratch convention is added.
+
+Proof. For old bit $0$, the first-move component is identical for targets
+$0$ and $1$, but their next commands move $f$ from $t.0$ to $t.1$,
+or $t$ from $r.1$ to $r.0$. Their successor frontiers are respectively
+$\{110,111\}$ and $\{000,001\}$. The target is continuation information.
+Even with target fixed to $0$, the $0\to0$ first-move component equals
+the $1\to0$ second-move component: $r.1=t$, $t.0=f$. The next commands
+move $f$ respectively to $t.1$ and to $r.0$. Thus phase omission also
+loses continuation information.
+
+The common reached positions of $g_0,g_1$ are exactly
+$\varepsilon,0,1$. Both root child slots are occupied. At either other
+common position, each child slot is occupied in one entrance and vacant
+in the other. No destination child slot reached by the same fixed walk
+is vacant in both. The bounded private selection in Definition 13.1 is
+therefore a real requirement of this stencil.
+
+These are component pairs, not equal-full-state pairs in the acquired
+original runtime, whose actual latch, controller and retained backing may
+distinguish them. They identify a required row/operand/phase binding,
+without proving that a new log is necessary, that all finite atomic
+control is forbidden, or that no full refinement exists. ∎
+
+**Definition 13.5 (local work, material and observation account).**
+Use Assumption 3.1's component prices: each relocation has one commitment,
+three endpoint assignments and zero births. A complete inspection from
+the positioned root probes both child slots at each of five vertices and
+$\mathsf P$ on each of four returns, hence $14$ probes at every phase.
+Reinspect before each relocation. The data subtotal is
+
+$$
+\begin{aligned}
+(\text{commitments},\text{probes},\text{assignments},\text{births})
+  &=(3,42,9,0),\\
+G_{\rm data}&=3(1+14+3)=54.
+\end{aligned}
+\tag{SSA.19}
+$$
+
+All five vertices and their seven-slot capacities remain retained. This
+subtotal excludes reaching the root, target reads/acquisition, material
+table installation, actual phase/latch storage and updates, continuing
+authority, receipts and all other row work. Actual entry/return walks
+add their total lengths. A root or operand held across cuts needs its
+actual access relation, not a free saved pointer. Rereading a separate
+five-vertex operand component once adds another 14 probes and its routing.
+No unbounded driver, equality service, allocator or scheduler is included.
+
+The changed SSA switch has four changed slots; one relocation has three
+and cannot perform that exchange in one occurrence. Bounded patch syntax
+can express SSA.16 on the enlarged tree carrier; the old literal compiler
+does not thereby gain an enabled relocation row. This is a restriction of the
+instantaneous data effect, paid with nine assignments and three commitments.
+It proves neither a weakening of the complete machine basis nor a
+total-cost improvement over SSA's four designated assignments.
+
+Counts are equal in all four cases, but private endpoint choices differ.
+A local count correspondence requires an explicitly declared public
+interface keeping those bounded internal choices and probes private.
+Publishing the first move's source side reveals $x$; equal counts alone
+do not prove noninterference. Three data occurrences are neither one
+original tick nor three constructed original receipts. In an unchanged
+cycle the tree returns to its entrance, so geometry alone retains no
+elapsed chronology.
+
+**Definition 13.6 (actual consumer and unproved full-row interface).**
+The exact consumer is Definition 5.1(2). Map $r,f,t,v_0,v_1$ to its
+designated field's actual template occurrences, $x$ to the current fork
+side, and $b$ to the original row's actual immediate or authorized operand.
+For AIF Definition 3.1's
+$\operatorname{WR}(\text{payload},\text{input-latch})$, the original head
+link and fixed cell-track path must reach the writable payload bit; $b$
+is the bit already consumed by its IN and still held in the distinct
+input latch. Theorem 13.2 supplies that bit's data-effect path, including
+unchanged writes. It supplies neither the preceding acquisition nor the
+row's PC transition or receipt.
+
+The same algebra is available for other symbol, latch, mark, control and
+token fields only under their actual authority/operand conditions.
+Transient mark bits need not satisfy the old canonical mark decoder,
+although the physical access link has not changed. Transient token/PC
+encodings do not define fine authorization or dispatch. No head/access or
+authority coherence follows by applying the algebra to every field.
+
+The full bridge remains unproved: initialized finite control with an
+actual row/operand/phase binding and implemented continuing maintenance
+permit; the same private preparation, installed source and acquired seed;
+pending-input preservation; progressing fragments for every original row;
+all access, owner/token, receipt and partially constructed cell/edge/
+descriptor effects; and a same-run public-observation and price account.
+It must retain rejected/aborted candidates, dead material, unsealed
+archives, both meter heads and both copy stages. Fixed-vertex relocation
+cannot create PR57.D1's receipt cells. A declared bounded constructor or
+control/receipt coeffect is legitimate possible additional atomicity, but
+is not constructed here.
+
+The target remains all $\mathcal R_H$ of Definition 1.2 for every finite
+$H\ge1$, arbitrary finite canonical frames and all lawful busy cuts.
+Noncanonical raw IN still executes and leaves that lawful task domain;
+it is not disabled. The local premises do not redefine full completion
+around this component. Source installation, actual input/acquisition,
+addressing, validation, rejects, archives and simultaneous copies remain
+payable; AIF Theorem 6.4's two-stage copy body remains $12\ell+6$ original
+primitives plus actual setup/positioning.
+
+No initialized global fine task is constructed, and neither inclusion of
+any individual global equality
+
+$$
+\ker S_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker B_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker T_{\rm fine}=\ker Q_{\rm fine},\quad
+\ker M_{\rm ret,fine}=\ker Q_{\rm fine}
+\tag{SSA.20}
+$$
+
+is proved here. Local incidence inversion does not supply an
+intersection-of-kernels substitute. Original replay or trace erasure does
+not automatically recover fine clocks and receipt histories. Installed
+table size, local work, original events/fees, fine elapsed events, output
+and peak/retained storage remain distinct coordinates. Mathematical
+recovery grants no new owner's read, named-cut acquisition or callable
+memory. Full internal-observer four-expression recovery, cross-capacity
+and named-cut integration, coherent infinite source, stationary late-target
+and sharp/effective certification retain their outstanding obligations.
+This is a reusable component, not a complete weaker basis, physical
+realization, total-cost improvement or new Lean verification.
+
+**Definition 13.7 (credited suppliers and transfer scope).** The uniform
+setter is repo-derived component mathematics. The strict relocation and
+exchange lower-bound arguments are credited prior component results;
+the equal-length unchanged-write detour supplies the set-to-value case.
+The prefix argument is the standard ingredient already used by Theorem
+4.4, applied to actual unary intermediate trees. No textual-search absence
+or encoding change establishes originality.
+
+The following committed declarations and their owning Scribes at
+Blueprint followed by the same module path with suffix .scribe.cs retain
+their own hypotheses.
+
+| Supplier | Scope and unsupported transfer |
+| --- | --- |
+| D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean: nativeStep, replay_deterministic, reached_prefix_replay, actual_register_execution; NativeFullSourceProducer.lean: native_source_producer and private traverse, production_reads, stationary | Genuine source evolution, chronological replay and no-update acquisition remain suppliers. Control/workspace is unrestricted; private subtree/location invariant parameters are not input ports. No finite local controller, authorized operand or fine receipt implementation follows. |
+| D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeConstructorArrays.lean: Allowed, Canonical, legal_realization, scalarEquiv, productEquiv and private absence/legality/uniqueness/inverse helpers | The root, cutoff and parent/child reply conditions of legal source arrays do not describe unary maintenance trees or arbitrary busy raw bytes. |
+| D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialEffective.lean: OriginalCodeRealization, original_code_service_simulation, private code-prefix/run and erasure helpers | The supplied code needs its genuine-state realization equation. Evaluator-step erasure preserves stated external observations, not fine clocks, receipts, owner access or prices. |
+| D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean: response, typed_finite_view_kernel; PredictiveMemoryMinimalQuotient.lean: predictive_memory_minimal_quotient | Labels, steps and readouts are independent task data; readout and update factorization are separate hypotheses. These theorems do not construct the missing task or the inclusions in SSA.20. |
+| Pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d: Computability/StateTransition.lean, Respects, tr_reaches, tr_eval; Data/Tree/Basic.lean, BinaryTree.numLeaves_eq_numNodes_succ | Refinement needs a related start and positive matching fragments. BinaryTree counts nil leaves, so node-plus-one is not the actual-terminal count for this unary occurrence carrier. |
+
+SSA Theorems 6.2/7.3/8.3 retain their original atomic-patch premise.
+PR57/AIF retain their input, authority, receipt, copy and all-cut contracts.
+NCR Theorems 5.3/6.3 remain restricted to the actually acquired,
+fixed-controller atomic-Native-source domain. These are suppliers within
+their proved scopes, not a finer full-runtime theorem.
+
+The following primary ingredients are literature-attested; the excluded
+operational and resource transfers remain obligations.
+
+| Primary source | Applicable ingredient and limit |
+| --- | --- |
+| Sleator and Tarjan, *A Data Structure for Dynamic Trees*, JCSS 26, 1983, §2, pp. 363–364, [primary paper](https://www.cs.cmu.edu/~sleator/papers/dynamic-trees.pdf) | Link/cut take actual vertex arguments and permit disconnected forests. Their pointer-model bounds neither implement the fixed-root reciprocal atom nor acquire its operands. |
+| Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*, JCSS 38, 1989, §§1, 2.2, [primary paper](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf) | Named access pointers, accessed-node sets, explicit initialization and version stamps are real model structures. Persistence/single-field updates supply no original owner service, reciprocal atom or same-run bill. |
+| Lynch and Vaandrager, *Forward and Backward Simulations, Part I*, Information and Computation 121, 1995, §3.2, Lemma 3.8/Theorem 3.10, [author manuscript](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf) | Related initialized starts and matching finite fragments yield trace inclusion, not inverse fine cuts, individual exact kernels or equal clocks/prices. |
+| Arrighi, Costes, Dowek and Maignan, *Space-time deterministic graph rewriting*, arXiv:2404.05838v2, local-operator/valid-sequence definitions and Remark 7, [primary text](https://arxiv.org/html/2404.05838v2) | Local replacement requires agreement on its common frontier and its own consistency/locality conditions. The neighborhood replacement is still atomic; exterior agreement is not terminal-boundary reconstruction or a serial source/owner/receipt implementation. |
+| Bennett, *Logical Reversibility of Computation*, IBM JRD 17, 1973, history/copy/reverse construction, [primary text](https://www.cs.princeton.edu/courses/archive/fall06/cos576/papers/bennett73.html) | Retained history uses actual additional tape and operations. It gives no free phase material, acquired historical service, physical reversibility or transferred total-cost bound. |
+
+## 追加锚（本行以下为增补区）
