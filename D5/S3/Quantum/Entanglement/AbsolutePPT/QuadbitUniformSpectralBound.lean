@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.three_row_scalar_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.A
    digest: Three-row scalar purity bound with the natural integer optimizer. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCofactor
@@ -314,7 +314,7 @@ open UniformSpectralBound.SharedSpectral
 noncomputable section
 
 -- These slots, including equal columns at different slots, are never quotiented.
-private def A : Matrix (Fin 3) (Fin 16) ℝ :=
+def A : Matrix (Fin 3) (Fin 16) ℝ :=
   ![![-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3],
     ![-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4],
     ![-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2]]
@@ -8093,8 +8093,7 @@ private theorem checked_tuple : ∀ (a : Fin 16) (e : Fin 4 → Fin 19),
     rw [← he]
     exact valid15 k
 
-/- Continue inside the same substantive proof. All claims here are UNCOMPILED.
- Equality align00..align15, rather than a JSON-order assumption, aligns every
+/- Equality align00..align15 aligns every
  supplied witness with the tuple on which its arithmetic proposition is checked. -/
 
 set_option maxRecDepth 8192 in
