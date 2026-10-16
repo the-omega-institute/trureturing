@@ -42,7 +42,7 @@ def centeredDensity {d : Nat} [NeZero d]
     field_simp [show (d : ℂ) ≠ 0 by exact_mod_cast NeZero.ne d]
     ring
 
-private theorem matrix_inner_eq_trace_conjTranspose_mul
+theorem matrix_inner_eq_trace_conjTranspose_mul
     {d : Nat}
     (A C : Matrix (Fin d) (Fin d) ℂ) :
     inner ℂ A C = Matrix.trace (Aᴴ * C) := by

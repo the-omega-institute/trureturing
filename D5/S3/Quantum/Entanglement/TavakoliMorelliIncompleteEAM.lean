@@ -595,11 +595,24 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     intro a _
     ring
   have hZZ : K Z Z = (H * H).trace.re - q ^ 2 / (d : ℝ) := by
-    simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
-      smul_eq_mul, hcomm H 1, hIH, hI, hK H H]
-    dsimp only [q]
-    field_simp (disch := assumption)
-    ring
+    haveI : NeZero d := ⟨by omega⟩
+    letI :=
+      D5.S3.Quantum.Measurement.BasisMeasurementProjection.matrixNormedAddCommGroup (d := d)
+    letI :=
+      D5.S3.Quantum.Measurement.BasisMeasurementProjection.matrixComplexInnerProductSpace (d := d)
+    have hreal : H.trace = (H.trace.re : ℂ) := by
+      simpa only [Matrix.mul_one] using
+        D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+          H 1 hH isHermitian_one
+    have hcenter : H - (H.trace / (d : ℂ)) • 1 = Z := by
+      rw [hreal, ← Complex.ofReal_natCast d, ← Complex.ofReal_div]
+      rfl
+    have hnorm :=
+      D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.centered_hermitian_norm_sq H hH
+    rw [hcenter, InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
+      D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.matrix_inner_eq_trace_conjTranspose_mul,
+      hZ.eq] at hnorm
+    exact hnorm
   have hnonneg : 0 ≤ K Z Z := by
     have heq : K Z Z = entryNormSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
     rw [heq]
