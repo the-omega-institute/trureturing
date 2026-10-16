@@ -7,12 +7,17 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization(
     RepositorySnapshot protectedBase, RepositorySnapshot candidate)
 {
     internal bool IsAuthorized(ImmutableHashSet<RepoPath> changedPaths, FrozenStateCatalog baseState,
-        LeanAxiomReport candidateReport) =>
-        EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+        LeanAxiomReport candidateReport)
+    {
+        var currentState = FrozenStateCatalog.Load(candidate);
+        var retained = baseState.Records.Keys.Where(currentState.Records.ContainsKey).ToImmutableHashSet();
+        return changedPaths.IsSubsetOf(retained)
+        && EffectiveLeanPins.TryRead(protectedBase, out var basePins)
         && EffectiveLeanPins.TryRead(candidate, out var candidatePins) && basePins != candidatePins
         && LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, changedPaths, baseState, candidateReport)
-        && baseState.Records.Keys.All(path => candidateReport.Files.TryGetValue(path, out var module)
+        && retained.All(path => candidateReport.Files.TryGetValue(path, out var module)
             && module.Declarations.All(static declaration => declaration.Axioms.All(LeanAxiomFacts.IsStandard)));
+    }
 }
 
 internal sealed record EffectiveLeanPins(string Toolchain, string MathlibRevision)

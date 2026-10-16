@@ -30,6 +30,8 @@ public sealed class LeanCacheRunScriptTests
         var arguments = File.ReadAllLines(calls);
         Assert.Single(arguments, value => value == "call");
         Assert.Contains(Path.Combine(LeanCacheGuard.PhysicalPath(repository), "tools/lean-inspector-reg"), arguments);
+        Assert.Contains("--log-level=error", arguments);
+        Assert.DoesNotContain(arguments, value => value.StartsWith("--fail-level", StringComparison.Ordinal));
         Assert.Contains("leanInspector/reportInspector", arguments);
         Assert.Contains("regInspector/compiledJudgeTests", arguments);
         Assert.Contains("regInspector/auricFibAnalysis", arguments);

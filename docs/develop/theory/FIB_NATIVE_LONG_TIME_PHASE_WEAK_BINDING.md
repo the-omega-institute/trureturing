@@ -3824,3 +3824,704 @@ $\kappa\to0$ is selected. The original why-three question therefore
 retains its physical realization obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 102. A compact microscopic source forces distant native mass
+
+**Definition 102.1 (actual critical eigenstates and their compact charge).**
+Retain all fixed data, raw measures, operators and full complex domains
+of Definitions 75.1 and 81.1. In particular $a>0$ and the admissible
+signed $\kappa\ne0$ are fixed, both height faces are Dirichlet, and
+$W_{s^2}$ uses the heat clock of $B$, independently of $a$. For $s>0$
+put
+
+$$
+\begin{aligned}
+g_s&=\chi_cs^3,& E_s&=E_{s^2}(g_s),&
+\epsilon_c(s)&=s^2E_s,\\
+m_s&=-E_s/a>0,& r_s&=-\epsilon_c(s)/s^8>0,&
+F_s&=\mathcal U_s\psi_s,
+\end{aligned}
+\tag{102.1}
+$$
+
+where $\psi_s$ is any actual normalized complex ground state of
+$aS-g_sW_{s^2}$, whose negative attainment in $D(S)$ is Proposition
+75.2. Thus $\epsilon_c(s)$ is the critical infimum denoted by
+$\epsilon_s^c$ in (91.1), and $m_s=r_ss^6/a$. The symbol $U_s$ below
+is the potential in (81.1); $\mathcal U_s$ is the unitary map there.
+For a fixed compact Lebesgue measurable $K\subset\mathbb R^4$ of
+positive measure define
+
+$$
+\begin{aligned}
+J_K&=\int_K V(\xi)\Phi_c(\xi)d\xi,\\
+\mathfrak A_s(K)&=\int_K
+ \phi(k_0+\varepsilon s r)U_s(\xi)F_s(\xi)d\xi,
+ \qquad \xi=(r,y,z,w),\\
+\mathscr D_m&=I\times\{q\in\mathbb R^3:1\le\sqrt m\,d(q)\le2\},
+ \qquad d(q)=\sqrt{q^{\mathsf T}M^{-1}q}.
+\end{aligned}
+\tag{102.2}
+$$
+
+The overlap is used only for sufficiently small $s$ that $K\subset
+\Omega_s$. Strict positivity from Theorem 88.1 and Lemma 82.1 gives
+$0<J_K<\infty$; finiteness also follows directly from boundedness of
+$V$ and local $L^2$ integrability of $\Phi_c$.
+
+**Theorem 102.2 (finite-native mass forced by an actual eigenstate).**
+There are constants $C_0,m_0>0$, depending only on the fixed native
+data, with the following property. For each $K$ in Definition 102.1
+there is $s_K>0$ such that, for every $0<s<s_K$ for which the actual
+mass parameter satisfies $m_s\le m_0$, and for every actual normalized
+complex ground-state choice,
+
+$$
+\int_{\mathscr D_{m_s}}|\psi_s(k,q)|^2dk\,dq
+ \ \ge\ C_0\frac{s^4}{\sqrt{-\epsilon_c(s)}}
+                    |\mathfrak A_s(K)|^2.
+\tag{102.3}
+$$
+
+No hypothesis about a microscopic profile or a bound on $r_s$ is
+needed for this finite-$s$ inequality. One possible constant is
+
+$$
+C_0=\frac{\chi_c^2j_0}{a^{3/2}}b_0^2v_M,\qquad
+b_0=\frac{e^{-3}}{24\pi\sqrt{\det M}},\qquad
+v_M=\frac{28\pi}{3}\sqrt{\det M}.
+\tag{102.4}
+$$
+
+Proof. We first justify the use of a positive eigenstate without
+restricting the complex admissible domain. For each fixed positive
+$s$, $W_{s^2}$ is a bounded nonnegative real multiplier, and the
+Hamiltonian $H_s=aS-g_sW_{s^2}$ has operator domain exactly $D(S)$
+by Propositions 70.2 and 75.2.
+The native heat kernel is strictly positive almost everywhere between
+interior full points. Indeed the conditional Gaussian construction
+of G (32.7) applies also to a height bridge with different endpoints.
+The bridge stays in $I$ with positive probability. Almost surely its
+range contains an interval, and the bracket independence of G (26.7)
+prevents a nonzero linear combination of $c_\kappa$ from vanishing
+on that interval. Its phase covariance is therefore positive definite.
+The Gaussian density is positive at every phase displacement; its
+mixture with the survived height bridge gives the assertion. These
+are precisely the original rational fields and raw density, with no
+conditioning normalization in the kernel.
+
+The bounded-potential Dyson series gives a positive kernel for
+$e^{-tH_s}$, containing the strictly positive kernel of $e^{-taS}$ as its zeroth term. Its series is bounded above
+by $e^{tg_s\|W_{s^2}\|_\infty}$ times that same kernel, so it defines
+the usual integral semigroup as well as the $L^2$ operator. Since
+$H_s-E_s\ge0$, $T_t=e^{-t(H_s-E_s)}$ is an $L^2$ contraction with a
+strictly positive kernel. For any complex ground state $\psi_s$,
+
+$$
+|\psi_s|=|T_t\psi_s|\le T_t|\psi_s|,\qquad
+\|T_t|\psi_s|\|_2\le\|\psi_s\|_2.
+\tag{102.5}
+$$
+
+The pointwise inequality and equality of the norms force
+$T_t|\psi_s|=|\psi_s|$. Spectral calculus puts $|\psi_s|$ in the
+same ground eigenspace and in $D(S)$. Equality in the integral
+triangle inequality with the strictly positive kernel makes the
+phase of $\psi_s$ constant almost everywhere, and $|\psi_s|$ is
+strictly positive almost everywhere. Thus
+$\psi_s=e^{i\theta_s}u_s$ for a real $u_s>0$ with $\|u_s\|_2=1$.
+This argument uses the entire complex native domain, not an assumed
+ordinary phase gradient or a prescribed real variational class.
+
+The actual eigen-equation now gives the exact $L^2$ relation
+
+$$
+(S+m_s)u_s=\frac{g_s}{a}W_{s^2}u_s,\qquad
+u_s=\frac{g_s}{a}(S+m_s)^{-1}(W_{s^2}u_s).
+\tag{102.6}
+$$
+
+The resolvent kernel is exactly
+$\mathcal G_{\kappa,m_s}$ of L Definition 41.1, relative to raw
+$dk'\,dq'$. Phase translation invariance and the centered conditional
+Gaussian make this kernel even in the phase displacement, so either
+sign of $q-q'$ gives the same kernel. Its nonnegative integral formula
+follows from the heat integral and Tonelli. It applies even if
+$W_{s^2}u_s$ is not globally $L^1$: truncate that nonnegative $L^2$ function on increasing bounded
+sets and in value, use $L^2$ resolvent convergence, and identify the
+monotone pointwise limit along an almost everywhere convergent
+subsequence. Consequently (102.6) may be bounded below by restricting
+its source integral to $\Xi_s(K)$.
+
+Write $\ell=\sqrt{\lambda_{\min}(M)}>0$, so $|h|\ge\ell d(h)$.
+By L Theorem 42.1 there is a fixed $C_G$ such that, for all $m\ge0$,
+all heights in $I$ and $|h|\ge1$,
+
+$$
+\mathcal G_{\kappa,m}(k,k';h)
+\ge\phi(k)\phi(k')\left(
+ \frac{e^{-\sqrt m\,d(h)}}{4\pi\sqrt{\det M}\,d(h)}
+                   -C_G|h|^{-3}\right).
+\tag{102.7}
+$$
+
+This is the finite native two-endpoint resolvent bound; no inverse
+of the tangent operator is substituted for it. Set
+$y_0=e^{-3}/(12\pi\sqrt{\det M})=2b_0$ and choose $m_0>0$ with
+
+$$
+m_0\le\min(1/4,\ell^2/4),\qquad
+8C_G\ell^{-3}m_0\le y_0/2.
+\tag{102.8}
+$$
+
+Compactness of $K$ and (78.1) give, for $s\le1$,
+
+$$
+q'_s(\xi)=s c_0y+\varepsilon s^2c_1z
+                        +\varepsilon^2s^3c_2w,\qquad
+\sup_{\xi\in K}d(q'_s(\xi))\le L_Ks
+\tag{102.9}
+$$
+
+for a finite $L_K$. Choose $s_K\le1$ so that $K\subset\Omega_s$
+and $L_Ks\le1$ whenever $0<s<s_K$. If $q$ is in the phase shell
+of $\mathscr D_m$ and $0<m\le m_0$, the triangle inequality for $d$
+therefore gives, uniformly for $\xi\in K$,
+
+$$
+\tfrac12\le\sqrt m\,d(q-q'_s(\xi))\le3,\qquad
+|q-q'_s(\xi)|\ge\frac{\ell}{2\sqrt m}\ge1.
+\tag{102.10}
+$$
+
+The Yukawa term in (102.7) is at least $y_0\sqrt m$; its error
+is at most $8C_G\ell^{-3}m^{3/2}\le(y_0/2)\sqrt m$.
+Thus for all output heights $k\in I$, including arbitrarily near
+either face, and all $\xi\in K$,
+
+$$
+\mathcal G_{\kappa,m}(k,k_0+\varepsilon s r;
+                              q-q'_s(\xi))
+ \ge b_0\phi(k)\phi(k_0+\varepsilon s r)\sqrt m.
+\tag{102.11}
+$$
+
+Let $F_s^+=\mathcal U_su_s=e^{-i\theta_s}F_s$. Positivity of the
+weights and the constant phase show that
+$|\mathfrak A_s(K)|=\int_K\phi(k_0+\varepsilon s r)U_sF_s^+d\xi$.
+The exact Jacobian, potential and wavefunction factors in (78.1)
+and (81.1) give
+
+$$
+\begin{aligned}
+\int_{\Xi_s(K)}\phi(k')W_{s^2}(k',q')u_s(k',q')dk'\,dq'
+ &=j_0^{1/2}s^{-3/2}|\mathfrak A_s(K)|,\\
+u_s(k,q)&\ge\frac{\chi_c b_0\sqrt{j_0}}a
+ s^{3/2}\sqrt{m_s}\,\phi(k)|\mathfrak A_s(K)|
+ \quad\text{a.e. on }\mathscr D_{m_s}.
+\end{aligned}
+\tag{102.12}
+$$
+
+The first factor is $j_0s^7\cdot s^{-5}\cdot
+j_0^{-1/2}s^{-7/2}$, so no raw-source charge or density factor has
+been removed. The second line follows by combining (102.6),
+(102.11) and $g_s=\chi_cs^3$. Since $\int_I\phi^2dk=1$ and
+
+$$
+\left|\{q:1\le\sqrt m\,d(q)\le2\}\right|=v_Mm^{-3/2},
+\tag{102.13}
+$$
+
+squaring and integrating (102.12) gives
+$\chi_c^2b_0^2j_0v_Ma^{-2}s^3m_s^{-1/2}
+|\mathfrak A_s(K)|^2$. Finally
+$s^3m_s^{-1/2}=\sqrt a\,s^4/\sqrt{-\epsilon_c(s)}$ proves
+(102.3)--(102.4). The cutoff, both native boundary faces, every
+real phase frequency and the kinetic operator domain have all
+remained those of the actual eigen-equation. This source-specific
+connection between the compact microscopic charge and finite-native
+mass is `repo-derived`; its heat and Green inputs are exactly
+G (32.7) and L (41.1)--(42.2). The bounded-potential semigroup and
+spectral-calculus arguments are classical intermediate tools. $\square$
+
+## 103. A quantitative defect for actual profiles at bounded energy scale
+
+**Theorem 103.1 (bounded $r_s$ excludes the unit critical orbit).**
+Fix $K$ as in Definition 102.1 and set
+
+$$
+\gamma_K=C_0\phi(k_0)^2J_K^2>0.
+\tag{103.1}
+$$
+
+For every prescribed sequence $s_n\downarrow0$ on the exact path
+$g_n=\chi_cs_n^3$, every $B\in(0,\infty)$ for which $r_{s_n}\le B$
+eventually, and every choice of actual normalized complex ground
+states, every weak global $L^2(d\xi)$ limit of $F_{s_n}$ is
+$c\Phi_c$ and satisfies
+
+$$
+|c|^2\le\frac{1}{1+\gamma_K/\sqrt B}<1,\qquad
+1-|c|^2\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.2}
+$$
+
+Every subsequence has a weakly convergent further subsequence.
+Writing $\mathcal O_c=\{e^{i\theta}\Phi_c:\theta\in\mathbb R\}$,
+the whole sequence consequently obeys
+
+$$
+\liminf_n\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)
+\ge\left(2-2(1+\gamma_K/\sqrt B)^{-1/2}\right)^{1/2}>0.
+\tag{103.3}
+$$
+
+Proof. Actual ground states have zero excess in (85.5), so Theorem
+90.1 supplies weak subsequential compactness, the limit $c\Phi_c$,
+and strong local $L^2$ convergence along every weakly convergent
+subsequence. On such a subsequence Theorem 82.3, the continuity of
+$\phi$ at $k_0$ and compactness of $K$ give
+
+$$
+\mathfrak A_{s_n}(K)\longrightarrow\phi(k_0)cJ_K.
+\tag{103.4}
+$$
+
+For detail, the multipliers
+$\phi(k_0+\varepsilon s_nr)U_{s_n}$ converge uniformly on $K$ to
+$\phi(k_0)V$, and are uniformly bounded. Their product with the
+local $L^2$ difference has integral tending to zero by
+Cauchy--Schwarz and $|K|<\infty$. Their difference paired with
+$c\Phi_c$ is controlled in the same way. No boundary regularity of
+$K$ or global $L^1$ bound on $VF_{s_n}$ is required.
+
+Here $m_{s_n}=r_{s_n}s_n^6/a\le Bs_n^6/a\to0$, so Theorem 102.2
+applies eventually. Since
+$s_n^4/\sqrt{-\epsilon_c(s_n)}=r_{s_n}^{-1/2}\ge B^{-1/2}$,
+it gives
+
+$$
+\liminf_n\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\ge\frac{\gamma_K}{\sqrt B}|c|^2.
+\tag{103.5}
+$$
+
+These shell masses are disjoint from every fixed microscopic
+compact set for all large $n$. Indeed for a fixed compact
+$D\subset\mathbb R^4$, (78.1) gives
+$\sup_{\xi\in D}d(q'_{s_n}(\xi))=O_D(s_n)$, whereas on the
+shell $d(q)\ge m_{s_n}^{-1/2}\to\infty$. Unitarity therefore yields
+
+$$
+1\ge\int_D|F_{s_n}|^2d\xi
+       +\int_{\mathscr D_{m_{s_n}}}|\psi_{s_n}|^2dk\,dq
+\tag{103.6}
+$$
+
+for each fixed compact $D$ and all sufficiently large $n$.
+Pass to the limit using local strong convergence and (103.5),
+then exhaust $\mathbb R^4$ by compact boxes. Since $\|\Phi_c\|_2=1$,
+this gives $1\ge |c|^2+\gamma_KB^{-1/2}|c|^2$, proving (103.2).
+
+Finally, for unit vectors $F$,
+$\operatorname{dist}(F,\mathcal O_c)^2=2-2|\langle F,\Phi_c\rangle|$.
+If the limsup of the absolute overlap exceeded
+$(1+\gamma_K/\sqrt B)^{-1/2}$, weak subsequential compactness would
+give a further subsequence with limit $c\Phi_c$ violating (103.2).
+This proves (103.3) for the full sequence. $\square$
+
+**Corollary 103.2 (a necessary actual energy scale for no mass loss).**
+For any prescribed sequence $s_n\downarrow0$ and any actual normalized
+complex ground-state choices on $g_n=\chi_cs_n^3$, strong convergence
+to the critical phase orbit implies
+
+$$
+\operatorname{dist}_{L^2}(F_{s_n},\mathcal O_c)\longrightarrow0
+\quad\Longrightarrow\quad
+r_{s_n}=\frac{-s_n^2E_{s_n^2}(\chi_cs_n^3)}{s_n^8}
+           \longrightarrow\infty.
+\tag{103.7}
+$$
+
+Proof. If the positive numbers $r_{s_n}$ did not tend to infinity,
+there would be a finite $B>0$ and a subsequence with $r_{s_n}\le B$.
+Theorem 103.1 would give the strictly positive lower bound (103.3)
+on that subsequence, a contradiction. This argument does not assume
+that $m_{s_n}\to0$ on the whole original sequence; that smallness
+is forced on the bounded-$r$ subsequence where it is needed.
+
+The conclusions are necessary restrictions on actual eigenstates,
+not sufficiency of $r_s\to\infty$. Proposition 100.1 supplies only
+$r_s\ge c\chi_c^2>0$ eventually; its trial upper bound on the negative
+energy is a lower bound on $r_s$, and cannot provide $r_s\le B$.
+Neither an actual bounded-$r_s$ sequence nor $r_s\to\infty$ is
+established here for the fixed original data. Thus (103.7) does not
+decide whether the actual exact-critical ground states converge to
+$\mathcal O_c$. The exact energy coefficient, a matching native
+energy-scale bound, a sufficient no-loss estimate, and the centered
+crossover remain unresolved. The finite-native resolvent used in
+(102.7) is distinct from the fixed-domain inverse in Theorem 87.2;
+no positive gap above the tangent zero mode is assumed. The
+original-coordinate change and coupling normalization remain (80.1).
+The observation and resource statements of §§92--96 supply none of
+the analytic-state preparation or physical-space correspondences
+needed to strengthen these analytic conclusions. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 104. Global reconstruction for the original finite-native resolvent
+
+**Definition 104.1 (common-space reconstruction and the native time split).**
+Retain Definitions 75.1, 81.1 and 87.1, including the fixed admissible
+signed $\kappa\ne0$, raw unit source, both height Dirichlet faces,
+all real phase frequencies and the full complex horizontal domains.
+On $L^2(\Omega_s,d\xi)$ set
+
+$$
+\begin{aligned}
+C_s&=A_s-\lambda s^2
+     =s^2\mathcal U_sS\mathcal U_s^{-1}\ge0,\\
+Q_s(t)&=e^{-tC_s},&R_s(h)&=(C_s+h)^{-1}\quad(h>0),\\
+q_s(t;\eta,\xi)&=e^{\lambda s^2t}P_s(t;\eta,\xi),\\
+U_s^{<}(\xi)&=s^5D_{s^2}(\Xi_s\xi)
+       =\frac1{j_0}\int_1^{s^{-2}}q_s(t;0,\xi)dt,\\
+U_s^{>}(\xi)&=s^5W_1(\Xi_s\xi),&U_s&=U_s^{<}+U_s^{>},\\
+K_{\rm rec}&=TM=\int_0^\infty P_tV\,dt=\mathcal E^{-1}V.
+\end{aligned}
+\tag{104.1}
+$$
+
+Here $0<s<1$, $P_t=e^{-t\mathcal E}$ and $M$ is multiplication
+by $V^{1/2}$ as in §87. An expression such as $P_tV$ means heat
+composed with multiplication. All finite-native operators in this
+section act on the common complex $L^2(\mathbb R^4,d\xi)$ by
+restriction to $\Omega_s$ followed by zero extension. Their operator
+domains before extension are $D(C_s)=D(A_s)=\mathcal U_sD(S)$.
+The last inverse in (104.1) is only the bounded reconstruction on
+the specified right sides, justified by Theorem 87.2; it does not
+assert bounded invertibility of $\mathcal E$ on all of $L^2$.
+In particular $K_{\rm rec}$ is compact and has range in
+$D(\mathcal E)$. The time split occurs at original heat time one,
+not at a clock containing the kinetic coefficient $a$.
+
+**Theorem 104.2 (global complex weighted-resolvent estimate).** There
+are $C,s_0>0$ depending only on the fixed native data, and numbers
+$d_s\ge0$ with $d_s\to0$ as $s\downarrow0$, such that, for every
+$0<s<s_0$ and every $0<h\le1$,
+
+$$
+\|R_s(h)U_s-K_{\rm rec}\|_{2\to2}
+ \le d_s+Ch^{3/4}
+       +C\left(\frac{s^8}{h}\right)^{1/4}
+       +C\left(\frac{s^8}{h}\right)^{1/2}.
+\tag{104.2}
+$$
+
+Consequently for every fixed $H>0$ there is
+$\eta_H(s)\to0$ such that for all sufficiently small $s$ and all
+$0<h\le Hs^{2/3}$ the same estimate holds with its first two
+terms replaced by $\eta_H(s)$. One may take
+$\eta_H(s)=d_s+CH^{3/4}s^{1/2}$, with the same $C$ independent
+of $H,s,h$.
+
+Proof. We first supply the two-endpoint and full-output heat
+convergence needed here. For each fixed $t>0$,
+
+$$
+q_s(t;\eta,\xi)\longrightarrow p_E(t;\eta,\xi)
+\quad\hbox{locally uniformly in }(\eta,\xi)\in\mathbb R^4\times\mathbb R^4.
+\tag{104.3}
+$$
+
+The primary supplier is exactly Colin de Verdière--Hillairet--Trélat,
+[Theorem B, (2.8), pp.915--916, and Theorem 3.2, pp.920--921](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+Their statement allows both scaled endpoints to vary on compact
+sets. In the present application the fields are the original
+$\varepsilon\partial_k,c_\kappa\cdot\partial_q$, their drift and
+potential are zero, and their smooth constant density is $dk\,dq$.
+The nonzero determinant (76.4) gives constant flag weights
+$(1,1,2,3)$ and bounded step three on an interior neighborhood of
+the fixed pole. The privileged coordinates are exactly (78.1),
+with limiting fields (81.2). The nilpotentized density in that
+chart is $j_0d\xi$, so converting the limiting kernel to unit
+Lebesgue measure gives precisely $j_0s^7p_{s^2t}=P_s$.
+Both endpoints in any fixed compact rescaled set lie in this
+interior neighborhood eventually. The localization theorem applies
+to the identical differential expression and density there and
+to its selfadjoint killed realization, whose heat is a contraction;
+it retains both original faces. Finally
+$e^{\lambda s^2t}\to1$ on compact positive-time windows. These
+checks give (104.3), without a global heat convergence premise.
+For a fixed compact set larger than the coordinate neighborhood,
+choose a fixed $R$ such that its image under $\delta_{1/R}$ lies
+in that neighborhood. The exact identities
+$q_s(t;\eta,\xi)=R^{-7}q_{Rs}(t/R^2;
+\delta_{1/R}\eta,\delta_{1/R}\xi)$ and the identical canonical
+dilation identity reduce its convergence to the checked local
+statement. Here $R$ is fixed before $s\downarrow0$.
+
+Symmetry and the semigroup identity give
+$\|q_s(t;\eta,\cdot)\|_2^2=q_s(2t;\eta,\eta)$.
+Using (76.1) in this identity proves, uniformly over all input
+heights and phases,
+
+$$
+\begin{aligned}
+\|Q_s(t)\|_{2\to2}&\le1,\\
+\|Q_s(t)\|_{1\to2}&\le
+\begin{cases}
+Ct^{-7/4},&0<t\le s^{-2},\\
+Cs^2t^{-3/4},&t\ge s^{-2}.
+\end{cases}
+\end{aligned}
+\tag{104.4}
+$$
+
+Indeed at original times $2s^2t\le1$ the diagonal is bounded
+by $Ct^{-7/2}$, with bounded threshold factor. At
+$2s^2t\ge1$ it is bounded by $Cs^4t^{-3/2}$; on the overlap
+$t\le s^{-2}$ this is at most $Ct^{-7/2}$. Integration against
+an $L^1$ input and the triangle inequality give the stated
+$1\to2$ bounds from the column norms. The first line uses
+$C_s\ge0$, not a raw-measure Markov property of the shifted heat.
+The canonical analog is $\|P_t\|_{1\to2}\le Ct^{-7/4}$ by
+(82.4) and the same column identity.
+
+For every fixed $t>0$ and $\eta$, (104.3), (104.4) and that
+identity imply the global statement
+
+$$
+q_s(t;\eta,\cdot)\longrightarrow p_E(t;\eta,\cdot)
+\quad\hbox{in }L^2(\mathbb R^4).
+\tag{104.5}
+$$
+
+To prove it, local uniform convergence and the uniform column
+$L^2$ bound give weak $L^2$ convergence, first against compactly
+supported tests and then by density. The squared column norms
+converge to $p_E(2t;\eta,\eta)$ by (104.3). This equals the
+squared norm of the limiting column. Weak convergence and norm
+convergence in the complex Hilbert space give (104.5).
+Thus no output tail is discarded in passing from local kernels
+to (104.5).
+
+The short potential satisfies
+
+$$
+\sup_{0<s<s_0}(\|U_s^{<}\|_\infty+\|U_s^{<}\|_2)<\infty,
+\qquad \|U_s^{<}-V\|_2\longrightarrow0.
+\tag{104.6}
+$$
+
+Its supremum bound follows from $0\le U_s^{<}\le U_s$ and
+Theorem 82.3. For its $L^2$ assertions use (104.1), (104.5)
+at $\eta=0$, and the column bound $Ct^{-7/4}$ for
+$1\le t\le s^{-2}$. Extend that integrand by zero for
+$t>s^{-2}$. It converges in $L^2$ at every fixed $t\ge1$
+to $p_E(t;0,\cdot)$ and is dominated in $L^2$ norm by an
+integrable function $Ct^{-7/4}$. The triangle inequality for
+the integrals and dominated convergence prove (104.6), with the
+unchanged factor $1/j_0$. Also $V\in L^2$ by (82.4), since
+the homogeneous dimension is seven and $V$ decays with power five.
+
+For each fixed $t>0$ we next have operator-norm convergence
+
+$$
+\|Q_s(t)U_s^{<}-P_tV\|_{2\to2}\longrightarrow0.
+\tag{104.7}
+$$
+
+The norm of $Q_s(t)(U_s^{<}-V)$ is bounded by
+$Ct^{-7/4}\|U_s^{<}-V\|_2$ for small $s$, by Hölder
+from $L^2$ to $L^1$ and (104.4). For the other term first
+replace $V$ by $V\mathbf1_K$ on a fixed compact box $K$.
+The squared Hilbert--Schmidt norm of
+$(Q_s(t)-P_t)V\mathbf1_K$ is
+
+$$
+\int_K |V(\eta)|^2
+ \|q_s(t;\eta,\cdot)-p_E(t;\eta,\cdot)\|_2^2d\eta
+ \longrightarrow0.
+\tag{104.8}
+$$
+
+Here (104.5) gives pointwise convergence, and (104.4) supplies
+the uniform integrable bound on $K$. The omitted multiplier
+has $L^2\to L^1$ norm at most
+$\|V\mathbf1_{K^c}\|_2$. Applying both heat $1\to2$
+bounds and then exhausting by compact boxes proves (104.7).
+This controls both input endpoints and output tails on the entire
+common space.
+
+Define the norm-convergent finite integral
+
+$$
+J_s=\int_0^{s^{-2}}Q_s(t)U_s^{<}\,dt,
+\qquad d_s=\|J_s-K_{\rm rec}\|_{2\to2}.
+\tag{104.9}
+$$
+
+The integrands, extended by zero beyond $s^{-2}$, are bounded
+in operator norm by $C$ on $(0,1)$ and by $Ct^{-7/4}$ on
+$[1,\infty)$, using (104.4)--(104.6). The canonical
+$P_tV$ has the same integrable bound. Equations (104.7) and
+dominated convergence therefore prove $d_s\to0$. This
+argument also identifies its limiting integral with $TM$ in
+(104.1). In particular the time-zero contribution is uniformly
+at most $C\delta$ on $(0,\delta)$; the convergence does not
+claim uniform local kernel convergence down to time zero.
+Norm measurability follows from positive-time norm continuity
+of the selfadjoint heat operators, after bounded multiplication.
+
+For $0<h\le1$, the same integrable bounds give
+
+$$
+\left\|\int_0^{s^{-2}}(e^{-ht}-1)Q_s(t)U_s^{<}\,dt\right\|
+ \le C\int_0^1 ht\,dt+
+       C\int_1^\infty\min(ht,1)t^{-7/4}dt
+ \le Ch^{3/4}.
+\tag{104.10}
+$$
+
+Split the last integral at $1/h$ to obtain the last inequality.
+The complete remaining native time interval is bounded by
+
+$$
+\left\|\int_{s^{-2}}^\infty e^{-ht}Q_s(t)U_s^{<}\,dt\right\|
+ \le Cs^2\int_{s^{-2}}^\infty e^{-ht}t^{-3/4}dt
+ \le C s^2h^{-1/4}.
+\tag{104.11}
+$$
+
+The last constant absorbs the finite integral
+$\int_0^\infty e^{-u}u^{-3/4}du$. Equations
+(104.9)--(104.11) control $R_s(h)U_s^{<}-K_{\rm rec}$.
+
+It remains to control the long potential $U_s^{>}$, whose
+Coulomb tail means that its multiplier function is not in $L^2$.
+The fixed-cutoff results (70.3), (71.2) and (71.4) at
+$\tau=1$, with a fixed $\delta=\delta_0$, imply
+
+$$
+\|W_1\psi\|_2\le C\|S^{1/2}\psi\|_2
+\qquad(\psi\in\mathcal Q).
+\tag{104.12}
+$$
+
+In fact the low-band piece has this bound by (71.4), while
+the remainder satisfies
+$\|W_1r\|_2\le\|W_1\|_\infty\|r\|_2
+\le C\sqrt{T[\psi]}$ by (71.2). This uses Hardy only on
+the extracted phase-$H^1$ band, and proves (104.12) for
+every complex native vector. Spectral calculus now gives, for
+every $m>0$,
+
+$$
+\|W_1(S+m)^{-1}\|_{2\to2}
+ \le C\sup_{x\ge0}\frac{\sqrt x}{x+m}
+ \le C m^{-1/2}.
+\tag{104.13}
+$$
+
+Taking adjoints gives the same bound for $(S+m)^{-1}W_1$.
+The exact unitary scaling (104.1), including restriction and
+extension, consequently gives
+
+$$
+\begin{aligned}
+\|R_s(h)U_s^{>}\|_{2\to2}
+ &=s^3\|(S+h/s^2)^{-1}W_1\|_{2\to2}\\
+ &\le Cs^4h^{-1/2}.
+\end{aligned}
+\tag{104.14}
+$$
+
+The Laplace formula for $R_s(h)$ is valid in operator norm
+after either bounded multiplier because $h>0$ and $Q_s$ is
+an $L^2$ contraction. Adding (104.9)--(104.11) and
+(104.14) proves (104.2). Substituting $h\le Hs^{2/3}$
+proves the asserted $\eta_H$. All norm estimates act on the
+full complex $L^2$ space and use the original two-face
+Friedrichs realization. No positive gap at the tangent threshold,
+ordinary isotropic phase regularity, or survival normalization
+has entered. The source-specific reconstruction estimate is
+`repo-derived`; its classical intermediate tools are spectral
+calculus, the Hilbert--Schmidt estimate, Hilbert-space weak/norm
+convergence and dominated integration, with the local primary
+heat theorem used only in the checked scope (104.3). $\square$
+
+## 105. The actual energy scale is equivalent to critical no-loss
+
+**Theorem 105.1 (sufficiency and equivalence for every actual choice).**
+For every prescribed sequence $s_n\downarrow0$ and every choice
+of actual normalized complex ground states $\psi_{s_n}$ at
+$g_n=\chi_cs_n^3$, retain exactly $F_s,\epsilon_c(s),r_s$
+of Definition 102.1. Then
+
+$$
+r_{s_n}\longrightarrow\infty
+\quad\Longleftrightarrow\quad
+\operatorname{dist}_{L^2(\mathbb R^4)}
+       (F_{s_n},\mathcal O_c)\longrightarrow0.
+\tag{105.1}
+$$
+
+Proof. Necessity is Corollary 103.2. For sufficiency the actual
+eigen-equation in $D(S)$, transported by (81.4), is exactly
+
+$$
+\begin{aligned}
+(C_s+h_s)F_s&=\frac{\chi_c}{a}U_sF_s,&
+h_s&=-\epsilon_c(s)/a=r_ss^8/a>0,\\
+F_s&=\frac{\chi_c}{a}R_s(h_s)U_sF_s.
+\end{aligned}
+\tag{105.2}
+$$
+
+Indeed the source multiplier coefficient before replacing
+$W_{s^2}$ by $s^{-5}U_s$ is $s^2g_s/a$, and
+$s^2g_ss^{-5}/a=\chi_c/a$. The energy shift is
+$s^2m_s=-s^2E_s/a=-\epsilon_c(s)/a$. Thus neither the
+kinetic coefficient nor a density factor has been absorbed
+into the heat clock. Negative attainment is Proposition 75.2,
+and bounded multiplication gives the full operator domain as
+in Definition 102.1.
+
+Theorem 98.1 supplies $0<h_s\le Hs^{2/3}$ eventually for
+a fixed $H$ depending only on the fixed data. If
+$r_{s_n}\to\infty$, Theorem 104.2 and $s_n^8/h_{s_n}=a/r_{s_n}$
+therefore give
+
+$$
+\left\|F_{s_n}-\frac{\chi_c}{a}K_{\rm rec}F_{s_n}\right\|_2
+\longrightarrow0.
+\tag{105.3}
+$$
+
+Compactness of $K_{\rm rec}$ and $\|F_{s_n}\|_2=1$ make
+this sequence precompact in the global $L^2$ norm. Any strong
+subsequential limit $F$ has norm one and satisfies
+$F=(\chi_c/a)K_{\rm rec}F$. The range assertion in
+Definition 104.1 gives $F\in D(\mathcal E)$ and
+$\mathcal EF=(\chi_c/a)VF$, so $H_cF=0$.
+By Theorem 88.1, $F=e^{i\theta}\Phi_c$. Every subsequence
+has a further subsequence of this kind; a subsequence whose
+distance to $\mathcal O_c$ stayed positive would contradict
+it. This proves sufficiency and hence (105.1) for all the
+declared complex ground-state choices.
+
+Equivalence (105.1) leaves the behavior of $r_s$ for the
+fixed original family undecided. It supplies no actual bounded-$r_s$
+sequence and no proof that $r_s\to\infty$ occurs. The exact
+energy coefficient, centered crossover, analytic-state preparation
+and physical-space interpretation remain unresolved. The
+macroscopic trial of Proposition 100.1 retains only its stated
+one-sided energy consequence. The compact inverse in (104.1)
+and the actual finite-native resolvent in (105.2) are linked by
+(104.2), while remaining different operators on different
+underlying domains. The observation and resource results
+§§92--96 add no preparation premise to (105.1). $\square$
+
+## 追加锚（本行以下为增补区）

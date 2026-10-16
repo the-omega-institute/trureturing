@@ -13,8 +13,7 @@ internal static class MathlibUpgradePropositionSourceDiagnostics
         LeanAxiomReport candidateReport)
     {
         var failures = ImmutableArray.CreateBuilder<RepoPath>();
-        var baseSources = LeanSourceCatalog.Parse(protectedBase);
-        var candidateSources = LeanSourceCatalog.Parse(candidate);
+        var (baseSources, candidateSources) = LeanPropositionSourceComparer.ParseSources(protectedBase, candidate);
         foreach (var path in reanchoredPaths.OrderBy(
             static path => path.Value,
             StringComparer.Ordinal))
@@ -23,8 +22,7 @@ internal static class MathlibUpgradePropositionSourceDiagnostics
             {
                 if (!baseState.Records.TryGetValue(path, out var recorded)
                     || !candidateReport.Files.TryGetValue(path, out var current)
-                    || !SourceBytesMatch(protectedBase, candidate, path)
-                        && !baseSources.ExtractPropositionSource(
+                    || !baseSources.ExtractPropositionSource(
                                 path,
                                 recorded.Declarations)
                             .AsSpan().SequenceEqual(candidateSources.ExtractPropositionSource(
@@ -43,11 +41,4 @@ internal static class MathlibUpgradePropositionSourceDiagnostics
         return failures.ToImmutable();
     }
 
-    private static bool SourceBytesMatch(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate,
-        RepoPath path) =>
-        protectedBase.Files.TryGetValue(path, out var baseFile)
-        && candidate.Files.TryGetValue(path, out var candidateFile)
-        && baseFile.RawBytes.AsSpan().SequenceEqual(candidateFile.RawBytes.AsSpan());
 }
