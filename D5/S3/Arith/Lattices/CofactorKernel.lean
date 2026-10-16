@@ -10,6 +10,9 @@
 admission_basis: escape-witness
 Direct frozen dependencies: none; mathematical owners are pinned Mathlib.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17570.
+Escape audit unfinished for the public kernel_cross_identity interface:
+https://github.com/the-omega-institute/trureturing/issues/17856.
+Its whole-commutative-ring-family observation and source binding remain missing.
 The box and total are literal expressions; sequence length uses Finsupp.degree in proofs.
 The public length set retains the specified sum expression.
 IsMinimalZeroSum: proof_shape: bind-only; escape_witness: none; consumers: lengths, lengths_upper_bound, primitive_cofactor_admissible, sequence_cofactor_length, lengths_nonempty, fromWeights_minimal_to_vector, lengths_finite, sequence_cofactor_multiplicities, finite_minimal_on_finset.

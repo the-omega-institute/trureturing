@@ -14,14 +14,20 @@ import Mathlib.Data.Finset.Max
 import Mathlib.Tactic.Linarith
 
 /-
-Source-preparation classification (no current compilation evidence):
-circuit_deleted_cols_linearIndependent: proof_shape: content; extracted unchanged dependence
-  contradiction from circuit_support_card_le; consumers: circuit_support_card_le,
-  NonnegativeKernelCofactor.circuit_cofactor_complete; admission_basis:
-  escape-witness (circuit_deleted_cols_linearIndependent).
-circuit_support_card_le: proof_shape: bind-only; unchanged statement; consumes deleted-column
-  independence and the finite-dimensional cardinality inequality.
-The generic decomposition and both private support-descent helpers are unchanged.
+The classical elementary-vector argument uses a signed kernel direction and
+minimum-ratio subtraction to contradict support minimality. It gives independence
+after deleting any supported column, hence the support bound by dimension.
+
+admission_basis: escape-witness
+circuit_deleted_cols_linearIndependent: proof_shape: content;
+  escape_witness: dependence-to-boundary contradiction;
+  consumers: circuit_support_card_le, NonnegativeKernelCofactor.circuit_cofactor_complete;
+  admission_basis: escape-witness.
+circuit_support_card_le: proof_shape: bind-only; escape_witness: none;
+  consumers: Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.Support.family.
+Escape audit unfinished for circuit_deleted_cols_linearIndependent:
+https://github.com/the-omega-institute/trureturing/issues/17856.
+The complete deleted-support observation and source binding remain missing.
 -/
 
 set_option autoImplicit false
