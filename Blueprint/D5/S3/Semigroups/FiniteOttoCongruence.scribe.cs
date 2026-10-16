@@ -29,10 +29,11 @@ public sealed class FiniteOttoCongruence : IScribeDocumentDefinition
         Call("QuotientCancelative", V("S")));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
-        string prose, AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        string prose, AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Owner + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite semigroups with an Otto congruence have cancellative quotients.",
@@ -75,5 +76,8 @@ public sealed class FiniteOttoCongruence : IScribeDocumentDefinition
                     + "Multiplication compatibility therefore makes the common idempotent class a two-sided identity. "
                     + "The preceding positive power supplies an inverse class, proving left cancellation. "
                     + "The relation between ab and ba, witnessed by a and b, transfers this to right cancellation.",
-                AssessedProvenance.FromRepo(Jack), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Jack), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jack-2024-finite-otto-congruence"),
+                    ResolutionKind.Proved)))));
 }

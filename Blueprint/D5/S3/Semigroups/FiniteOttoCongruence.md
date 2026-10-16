@@ -58,6 +58,10 @@ $$\forall (S: Type), [\operatorname{Semigroup}\left(S\right)] [\operatorname{Fin
 
 *Proof.* Machine-checked in Lean as `D5/S3/Semigroups/FiniteOttoCongruence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jack-2024-finite-otto-congruence` (proved) by `D5/S3/Semigroups/FiniteOttoCongruence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jack-2024-finite-otto-congruence","declaration_gid":"D5/S3/Semigroups/FiniteOttoCongruence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Trevor Jack (2026). *Answering Five Open Problems Involving Semigroup Conjugacy*. DOI: [10.1007/s00233-026-10614-w](https://doi.org/10.1007/s00233-026-10614-w). URL: <https://arxiv.org/abs/2411.16284>.
