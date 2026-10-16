@@ -4522,3 +4522,183 @@ unitary mass/phase identification, SAME closed short and sound full
 source/far archives remain conditions. The actual sufficient score and
 its good-block contribution, retained/cofinal positivity, the Robin tail
 and RH remain unresolved.
+
+### Transport the inverse majorant with the actual-surplus shift
+
+The fixed-majorant shifted row above does not exhaust the eligible
+construction. Retain the SAME positive effective action $\mathcal M$,
+full $u=\mathcal Mw_0$, $h=w_0^*u>0$, and inverse majorant
+$\overline W\succeq\mathcal M^{-1}$. The majorant is not identified
+with the exact inverse. For an admitted $0<\tau<1$, the existing
+rank-one inverse/Woodbury identity gives
+
+$$
+\mathcal M_\tau^{-1}
+=\mathcal M^{-1}-\frac{\tau}{h}w_0w_0^*,\qquad
+\overline W_\tau
+=\overline W-\frac{\tau}{h}w_0w_0^*
+\succeq\mathcal M_\tau^{-1}\succ0.
+$$
+
+This is an application on the inherited common inverse forms and
+finite-rank actions, not a claim that an arbitrary subtraction
+preserves a positive majorant. The admissibility premise remains
+$\mathcal M_\tau\preceq\mathcal A$ for the actual exterior short;
+the common domains and inverse identifications remain required.
+
+Put $w_\tau=(1-\tau)w_0$, $h_\tau=(1-\tau)h$, and
+$r=w_0^*R_{\rm res}$. Simultaneously transporting the base,
+observer and charge gives the exact cancellations
+
+$$
+u^*\overline W_\tau R_{\rm res}-w_\tau^*R_{\rm res}
+=\mathcal B,\qquad
+u^*\overline W_\tau u-h_\tau=\mathcal K,
+$$
+
+$$
+\overline L_\tau
+=Q-R_{\rm res}^*\overline W_\tau R_{\rm res}
+=\overline L+\frac{\tau}{h}r^*r.
+$$
+
+Consequently the SAME inverse-residual variational argument, for
+every fixed $D>0$ with $D\ge\mathcal K$, supplies the conditional
+lower construction
+
+$$
+S_N\succeq
+\overline L+\frac{\tau}{h}r^*r
++\frac{\mathcal B^*\mathcal B}{D}.
+$$
+
+It retains a gain discarded by the held-$\overline W$ shifted
+construction. The ordinary weighted-square identity is
+
+$$
+\frac{\tau}{h}r^*r+\frac{\mathcal B^*\mathcal B}{D}
+-\frac{(\mathcal B+\tau r)^*(\mathcal B+\tau r)}{D+\tau h}
+=\frac{\tau(h\mathcal B-Dr)^*(h\mathcal B-Dr)}
+ {Dh(D+\tau h)}\succeq0.
+$$
+
+The archived exclusions for the held-majorant family remain valid
+with their original scope. They do not exclude this larger lower
+construction, which uses actual surplus beyond the unchanged
+comparison $T$.
+
+On the accepted exact lift, its stronger-base compression is
+upper-bounded by
+
+$$
+\Sigma_\tau=\Sigma_{\max}+\frac{\tau}{h}r_V^*r_V,
+\qquad r_V=w_0^*R_{\rm res}V.
+$$
+
+The cached finite row $b_J$, actual complete far row, full paid
+Gram $G$, and charge floor remain unchanged. A compression exclusion
+must test this NEW matrix, with its actual negative first pivot and
+new positive complement; the old inverse or far-completion constant
+cannot be substituted. There is no additional $\tau h$ charge and
+no replacement of $b_J$ by $b_J+\tau r_V$ in this transported
+construction. A positive compression lower would exclude only this
+specified sufficient construction. A nonpositive lower would leave
+its sign undecided. Neither outcome alone determines the actual
+retained form, its good-block contribution, cofinal positivity,
+the Robin tail or RH. No new general theorem or Lean verification
+is asserted.
+
+### The transported projection ceiling excludes the fixed shifted comparison
+
+The archived two-source ceiling also transports, before any new
+positive-complement or good-block solve. On the SAME inherited positive
+inverse forms, finite inverse-variational restriction gives
+
+$$
+V^*(Q-R_{\rm res}^*\mathcal M^{-1}R_{\rm res})V
+\preceq Q_V-K_Z\preceq U_2.
+$$
+
+Apply the preceding rank-one inverse identity with the SAME actual
+$w_0$, full $u$, $h$ and residual map. Then
+
+$$
+\boxed{
+V^*(Q-R_{\rm res}^*\mathcal M_\tau^{-1}R_{\rm res})V
+\preceq U_{2,\tau}:=U_2+\frac{\tau}{h}r_V^*r_V.}
+$$
+
+Every admitted inverse-majorant/residual-trial lower construction
+for $\mathcal M_\tau$, including the fully transported majorant
+above, is dominated by the exact comparison on the left. A negative
+direction of $U_{2,\tau}$ therefore prevents whole-retained positivity
+certification by that fixed comparison. This upper ceiling concerns
+the full exterior comparison; its two finite sources are inverse
+trials, not a truncation of that exterior.
+
+The [source-specific cached application](https://github.com/the-omega-institute/trureturing-experiments/tree/95cba44473164287deeb484d4483f4cc4ff1b255/docs/reports/weil-c27)
+uses only the archived $U_2$,
+$r_V$, BOTH directed endpoints of the true $h$, and the accepted
+conditional $\tau=1/48$ budget. One new FLINT18 determinant gives
+
+$$
+\boxed{\det U_{2,1/48}<-4.93328\times10^{-1362}<0.}
+$$
+
+The original $U_2$ has at least seventeen positive directions, and
+the exact rank-one addition is PSD; thus this new ceiling has
+seventeen positive and one negative direction. The same nonzero
+lifted retained direction rules out positivity certification by
+any of the specified lower constructions for this $\mathcal M_{1/48}$.
+This includes both the held-majorant and fully transported families,
+for every admitted positive denominator and residual trial. It does
+not give a negative direction of the actual Weil form.
+
+The new determinant takes0.0286seconds. No source/action, energy,
+projection, inverse, solve, Gram or complete-far supplier is repeated.
+The planned seventeen-dimensional trial is unnecessary for this
+fixed comparison and is not executed. These are applications of the
+existing inverse-projection, rank-one inverse and inertia interfaces;
+no generic novelty or Lean verification is claimed.
+
+For the SAME source, an additional uniform test needs only exact
+scalar arithmetic. If $U_{\rm res}$ is the saved complete upper for
+$p_v$, then
+
+$$
+\tau_{\rm cap}=\frac{h_{\rm low}}{h_{\rm low}+U_{\rm res}}
+$$
+
+is a sufficient eligibility endpoint, because the saved complete
+resolvent upper bounds the SAME $p_v$ independently of $\tau$.
+The function $d(\tau)=\det(U_2+\tau r_V^*r_V/h)$ is affine, so
+
+$$
+d(\tau_{\rm cap})=(1-48\tau_{\rm cap})d(0)
+ +48\tau_{\rm cap}d(1/48).
+$$
+
+Here $\tau_{\rm cap}>1/48$: a directed upper uses the LOWER
+endpoint for $d(0)$, whose coefficient is negative, and the UPPER
+endpoint for $d(1/48)$. The exact rational cached application gives
+
+$$
+\tau_{\rm cap}\approx0.0215048994247574,\qquad
+\boxed{\sup_{0\le\tau\le\tau_{\rm cap}}d(\tau)
+ <-4.36494\times10^{-1362}<0.}
+$$
+
+Thus this fixed-source comparison cannot certify whole-retained
+positivity anywhere in the supplied sufficient eligibility interval.
+The scalar application takes0.0145seconds and uses no new determinant
+or matrix solve. Refining a residual trial or its numerical solver
+inside this comparison cannot overcome that upper ceiling.
+
+This interval is not the maximal actual capacity: an upper bound for
+$p_v$ cannot exclude all larger actually eligible shifts. Additional
+actual-surplus information permitting a larger shift, other positive
+update directions, or a changed comparison/support remain distinct
+routes. The actual common forms/domains, legal $E$ elimination,
+unitary/SAME-short/inverse identifications and sound common
+source/lift/full-far archives remain premises. Actual retained or
+cofinal positivity, the Robin tail and RH remain unresolved.
