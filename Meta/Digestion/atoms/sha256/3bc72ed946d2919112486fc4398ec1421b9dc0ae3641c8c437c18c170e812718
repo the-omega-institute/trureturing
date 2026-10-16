@@ -1,0 +1,38 @@
+**Accounting 6.2 (source, setup and physical services).** The complete-word
+statement has the cost decomposition of FIB §45.2. One may write its
+separate service bill as
+
+$$
+C_{\rm promise}+C_{\rm source}+C_{\rm compile}+C_{\rm tables}
++C_{\rm init}
++\sum_{d=0}^{H-1}
+\bigl(C_{\rm decode,d}+C_{\rm address,d}+C_{\rm primitive,d}
++C_{\rm write,d}\bigr)
++C_{\rm decode,H}+C_{\rm output}(x).
+\tag{SLHC.10}
+$$
+
+The entries can be resource vectors. Address charges apply to Reads;
+primitive charges include real source growth and Updates. No listed
+service is inferred free from word length, and initialization may install
+the whole common initial word under its separately supplied permission.
+Output delivers $h$ target bits; a physical serializer requiring a cursor
+or buffer must meet Definition 1.3 rather than quietly add mutable state.
+Similarly, finite table existence supplies no efficient discovery,
+synthesis, lookup or circuit implementation claim.
+
+For clarity, even the literal tree being updated can be large. The
+supplied Fibonacci recurrence gives $F_{n+1}$ leaves in $T_n$. At epoch
+$t$, the present free tree has
+
+$$
+L_x(t)=(2^m-h)F_{t+1}+\sum_{i=1}^h F_{t+x_i+1}
+\tag{SLHC.11}
+$$
+
+leaves and $2L_x(t)-1$ nodes. Each original leaf occurrence is replaced
+by its own indicated term, which proves the formula by summing leaf
+counts. This counts literal occurrences, not minimal physical storage
+under possible shared representations. Neither this count nor $H$ prices
+the implementation of a global substitution or a physical Read.
+

@@ -1,0 +1,24 @@
+**Theorem 2.1 (regularized compact minimax with full rows).** For a nonempty $R_\eta(F)$, the exact value is
+
+$$
+2^{h_\eta(w)}
+=\inf_{\substack{Q_A(o\mid b)>0\\\sum_oQ_A(o\mid b)=1}}
+\ \max_{s\in R_\eta(F)}
+\frac{w(X(s))}
+{\prod_AQ_A(O(s)\mid B_A(s))^{\gamma_k(A)}}.
+\tag{NWO.8}
+$$
+
+Every row includes the entire declared owned-tuple outcome product, for every full context in the declared $B_A$ product. Unused outcomes and contexts are retained. This is an infimum, without a strict-positive attainment assertion.
+
+Proof. Let $M=\prod_{c\in O}|T_c|$, taking $M=1$ for empty $O$. For $0<\epsilon<1$, require every row entry to be at least $\epsilon/M$. The product of these full-row domains is nonempty, compact and convex. On it and $\Delta(R_\eta(F))$, the function
+
+$$
+f(p,Q)=\mathbb E_p\log_2w(X)
+ -\sum_A\gamma_k(A)\mathbb E_p\log_2Q_A(O\mid B_A)
+$$
+
+is continuous, linear in $p$ and convex in $Q$. The compact convex minimax theorem used in [COK, Theorem 4.1][COK], credited to [Sion, Theorem 3.4][Sion], exchanges $\max_p\min_Q$ and $\min_Q\max_p$. At fixed $Q$, maximizing over $p$ gives its largest pointwise logarithmic ratio.
+
+For a fixed $p$, conditional cross entropy is at least $H_p(O\mid B_A)$ by nonnegativity of conditional relative entropy. At positive-probability contexts take the actual conditional row of $p$; at zero-probability contexts take the uniform full row. Smooth every row to $(1-\epsilon)p(\cdot\mid b)+\epsilon/M$. On observed outcomes it is at least $(1-\epsilon)p(\cdot\mid b)$, so cross entropy exceeds conditional entropy by at most $-\log_2(1-\epsilon)$. Zero-probability contexts contribute zero. As the coefficients sum to one, the restricted minimax logarithm is between $h_\eta(w)$ and $h_\eta(w)-\log_2(1-\epsilon)$. Every positive finite array belongs to some such restricted domain, and weak duality bounds its maximum below by $h_\eta(w)$. Letting $\epsilon$ decrease to zero and exponentiating proves (NWO.8). $\square$
+

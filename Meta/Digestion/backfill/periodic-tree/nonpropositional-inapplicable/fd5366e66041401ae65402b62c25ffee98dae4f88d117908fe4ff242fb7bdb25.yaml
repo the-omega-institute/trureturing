@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd5366e66041401ae65402b62c25ffee98dae4f88d117908fe4ff242fb7bdb25
+  normalized_sha256: sha256:fd5366e66041401ae65402b62c25ffee98dae4f88d117908fe4ff242fb7bdb25
+cas_ref: sha256:fd5366e66041401ae65402b62c25ffee98dae4f88d117908fe4ff242fb7bdb25
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 英文证明段（**Proof.** For $q=3$, one has $\pi(3)=8$ and $F_8=21$. Alignment makes…）仅给出前文命题的推导或证明方向，不另提出独立结论。
+    previous_atom_id: 6d766fbdb5c7782692058a49c576626e944fc521a7df77223c5fb86202c7cbf3
+    next_atom_id: null

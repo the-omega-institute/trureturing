@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:936d9688e28e95fd21b9e17ade065ae1db1cb22ff98d18e998a7aa763d60c6cb
+  normalized_sha256: sha256:936d9688e28e95fd21b9e17ade065ae1db1cb22ff98d18e998a7aa763d60c6cb
+cas_ref: sha256:936d9688e28e95fd21b9e17ade065ae1db1cb22ff98d18e998a7aa763d60c6cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 为定理 P4 的有限截断界的证明及证明解释，不另立新命题；原陈述保留自身状态。
+    previous_atom_id: 352958cfd6f933764581834a39a2547c32c91c2871dfc88c0e6d915af186b804
+    next_atom_id: 20550cedcdb7bd5abdd568efed8c14ac76497df11c1847e68afe75888e9a4c1e

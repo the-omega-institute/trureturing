@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8bd114aab86df22745c0b61d74803b265c65f819e3b530bcbcd5dfb1ae010b9b
+  normalized_sha256: sha256:8bd114aab86df22745c0b61d74803b265c65f819e3b530bcbcd5dfb1ae010b9b
+cas_ref: sha256:8bd114aab86df22745c0b61d74803b265c65f819e3b530bcbcd5dfb1ae010b9b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
+    target_statement_id: sha256:8645e015207205861a1419f9da648078569535f427c9d89a58b711c01e69f4f5
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52bfd9224513573c16d86e038ae201adcbb45c67eb7a2a38cf7be82d74dd6981
+  normalized_sha256: sha256:52bfd9224513573c16d86e038ae201adcbb45c67eb7a2a38cf7be82d74dd6981
+cas_ref: sha256:52bfd9224513573c16d86e038ae201adcbb45c67eb7a2a38cf7be82d74dd6981
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯章节标题「### 45.4 紧来源类上的任意目标距离与共同半径」，只作章节导航，无命题正文或性质断言。
+    previous_atom_id: 2c180cecc0d93a2e644b1eabc78faa5df548909c38ce0fe31f2c621adbbf0610
+    next_atom_id: 67dc541ffe362929c8aa28e97330d78c95dfca3f0629f161c4d09c2b2dcf85af

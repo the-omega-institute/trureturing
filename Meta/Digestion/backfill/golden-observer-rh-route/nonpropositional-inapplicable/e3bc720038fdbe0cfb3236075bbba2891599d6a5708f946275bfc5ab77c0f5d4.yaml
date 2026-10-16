@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3bc720038fdbe0cfb3236075bbba2891599d6a5708f946275bfc5ab77c0f5d4
+  normalized_sha256: sha256:e3bc720038fdbe0cfb3236075bbba2891599d6a5708f946275bfc5ab77c0f5d4
+cas_ref: sha256:e3bc720038fdbe0cfb3236075bbba2891599d6a5708f946275bfc5ab77c0f5d4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nonpropositional section heading identifying W-5 and its intended module; the mathematical obligation is the separate following clause. The heading supplies no additional quantified assertion.
+    previous_atom_id: 3d15352a067e96514b3c7eb2311fff327702bef555c8991f97c5988c92c9f117
+    next_atom_id: 2254fa3310ad35b8b9d12a33383a1ed3a23c55ebf9eae91503ee949c645e2481

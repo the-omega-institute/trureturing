@@ -1,0 +1,30 @@
+**Theorem 4.2 (completing predictions from the acquired exterior).** An
+actually acquired origin row $R_0$ determines the full $b_P(u)$ by finite
+computation without another source query. More generally, $(R_n,B_n^u)$
+determines every still-future entry directly from $R_n$. If $p$ is
+unreached at epoch $n$, let $f$ be its unique visible concrete blocking
+leaf, write $p=fs$ with $s\ne\varepsilon$, and set
+$\eta(\alpha)=0,\eta(\beta)=1$ and $w(s)=\#_L(s)+2\#_R(s)$. Then
+
+$$
+b_u(p)=n+2-\eta(t_n|_f)+w(s^-),
+\tag{NBP.4.3}
+$$
+
+where $s^-$ deletes the last edge. Numeric entries of $B_n^u$ are kept
+unchanged. At $n=0$, reached cuts have birth zero and this formula gives
+all remaining entries.
+
+**Proof.** The absence guard supplier of Definition 1.2 exposes $f$;
+prefix freedom prevents an opaque hole from covering its path. The first
+leaf encountered on that path is unique. Since $p$ is still absent,
+monotonicity of positions shows that it has never appeared before $n$.
+Apply the existing leaf-sector formula
+[Transport--Memory Completion, Proposition 24.1, (RA.2403)](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+to the concrete leaf of the current seed $t_n$. The number of further
+updates to its nonempty suffix $s$ is exactly
+$2-\eta(t_n|_f)+w(s^-)$. Adding the already executed $n$ proves (NBP.4.3).
+The computation reads only retained leaf labels and address letters,
+not the hidden class values. It predicts continuation; it does not
+acquire an event at the predicted time. $\square$
+

@@ -1,0 +1,25 @@
+**Proposition 12.2 (separate depth, calls, cost, and limit statements).**
+For the atomic pair in Definition 11.1, the supplier's depth statement
+is an address-depth statement ($n$), and its one-read statement is a
+call-count statement (one current read at $R^n$). The combinatorial word
+$R^n$ has address length $n$; no physical fee, transport time, source
+acquisition price, or physical-strategy optimality of that call follows
+from either fact. This leaves intact any combinatorial address/call
+minima the supplier establishes under its own contract.
+
+For fixed finite $s,t$ and rational $0<q<1/2$, (NMF.10.4) gives the
+separate scalar limit
+
+$$
+\lim_{n\to\infty}D_q(\rho^{2n}s,\rho^{2n}t)=0,
+\tag{NMF.12.1}
+$$
+
+because $0<2q<1$. This is a limit of metric values for finite trees. It
+does not assert an infinite native tree $\lim_n\rho^{2n}s$, an infinite
+physical execution, a finite or infinite call bound, convergence of row
+labels or histories, or any physical-cost theorem. At $q=1/2$ only
+(NMF.11.3) and the reused critical boundary (NMF.11.4) are available.
+
+[SLH]: RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md
+

@@ -106,7 +106,7 @@ theorem rotate_pow_list {m : ℕ} (v : Configuration m) (k : ℕ) : List.ofFn (v
 /-- The residual linear tuple at a configuration with the marked label last. -/
 def residualList {m : ℕ} (z : Configuration m) : List (Fin (m + 1)) :=
   List.ofFn (fun i : Fin m => z i.castSucc)
-private theorem residual_nodup {m : ℕ} (z : Configuration m) : (residualList z).Nodup := by
+theorem native_residual_nodup {m : ℕ} (z : Configuration m) : (residualList z).Nodup := by
   apply List.nodup_ofFn.mpr
   intro i j h
   exact (Fin.castSucc_injective m) (z.injective h)
@@ -141,14 +141,14 @@ private theorem residual_not_reverse {m : ℕ} (hm : 3 ≤ m) (z : Configuration
       (residualList z : Cycle (Fin (m + 1))).reverse := by
   intro he
   have hn : (residualList z : Cycle (Fin (m + 1))).Nodup :=
-    Cycle.nodup_coe_iff.mpr (residual_nodup z)
+    Cycle.nodup_coe_iff.mpr (native_residual_nodup z)
   have hw : DeleteWalk [] (residualList z : Cycle (Fin (m + 1)))
       (residualList z : Cycle (Fin (m + 1))).reverse := by
     rw [← he]
     exact DeleteWalk.nil _
   have hb := negative_walk_support_bound hw hn
   change (residualList z).toFinset.card ≤ 2 at hb
-  rw [List.toFinset_card_of_nodup (residual_nodup z)] at hb
+  rw [List.toFinset_card_of_nodup (native_residual_nodup z)] at hb
   simp only [residualList, List.length_ofFn] at hb
   omega
 private theorem bc_last {m : ℕ} (hm : 2 ≤ m) : (b m * c m) (Fin.last m) = Fin.last m := by
@@ -235,7 +235,7 @@ private theorem anchor_injective {m : ℕ} (hm : 2 ≤ m) (z : Configuration m) 
     have hl := congrArg List.length he
     simp [residualList] at hl
     omega
-  have hv := (residual_nodup z).rotate_congr hn k.val l.val hr
+  have hv := (native_residual_nodup z).rotate_congr hn k.val l.val hr
   simp only [residualList, List.length_ofFn, Nat.mod_eq_of_lt k.isLt,
     Nat.mod_eq_of_lt l.isLt] at hv
   exact Fin.ext hv
@@ -264,7 +264,7 @@ private theorem coordinate_injective {m : ℕ} (hm : 3 ≤ m) (z : Configuration
   have hk := anchor_injective (by omega) z (mul_right_cancel he')
   subst l
   rfl
-private theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle s = finCycle (r + s) := by
+theorem cycle_mul {m : ℕ} (r s : Fin (m + 1)) : finCycle r * finCycle s = finCycle (r + s) := by
   apply Equiv.ext
   intro i
   simp only [Equiv.Perm.mul_apply, finCycle_apply]
@@ -281,7 +281,7 @@ private theorem b_sq (m : ℕ) : b m * b m = 1 := by
   apply Equiv.ext
   intro i
   exact reverseIndex_involutive (L := m) (by omega) i
-private theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycle (-r) * a m := by
+theorem a_cycle {m : ℕ} (r : Fin (m + 1)) : a m * finCycle r = finCycle (-r) * a m := by
   apply Equiv.ext
   intro i
   simp [Equiv.Perm.mul_apply, a_apply, Fin.rev_add, sub_eq_add_neg]

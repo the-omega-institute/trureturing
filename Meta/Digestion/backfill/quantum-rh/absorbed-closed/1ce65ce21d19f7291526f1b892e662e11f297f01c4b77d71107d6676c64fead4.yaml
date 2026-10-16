@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1ce65ce21d19f7291526f1b892e662e11f297f01c4b77d71107d6676c64fead4
+  normalized_sha256: sha256:1ce65ce21d19f7291526f1b892e662e11f297f01c4b77d71107d6676c64fead4
+cas_ref: sha256:1ce65ce21d19f7291526f1b892e662e11f297f01c4b77d71107d6676c64fead4
+coverage_gids:
+  - gid: D5/S3/Analytic/Fourier/XiThetaTransform.source_theta_normalized
+    target_statement_id: sha256:09edf6c4eba965dc3d2f4ec46b9d54adee21ab99597e9de000904b38db8a9d11
+receipts:
+  unresolved_subitems: []

@@ -47,7 +47,7 @@ def claim : Prop := ∀ (p : ℕ) (hp : Fact p.Prime) (T N : ℤ),
     @H1 p hp T N k ∈ Ideal.span {((p : @R p hp T N) ^ (2 * k))} ∧
     @H2 p hp T N k ∈ Ideal.span {((p : @R p hp T N) ^ k)}
 
-private def rootToCoordinates {A : Type} [CommRing A] (T N : A) : AdjoinRoot (X ^ 2 - C T * X + C N) →ₐ[A] QuadraticAlgebra A (-N) T :=
+def rootToCoordinates {A : Type} [CommRing A] (T N : A) : AdjoinRoot (X ^ 2 - C T * X + C N) →ₐ[A] QuadraticAlgebra A (-N) T :=
   AdjoinRoot.liftAlgHom ((X ^ 2 - C T * X + C N)) (Algebra.ofId A (QuadraticAlgebra A (-N) T)) QuadraticAlgebra.omega (by
     simp [ pow_two, QuadraticAlgebra.omega_mul_omega_eq_algebraMap])
 
@@ -60,7 +60,7 @@ private def coordinatesToRoot {A : Type} [CommRing A] (T N : A) : QuadraticAlgeb
     simp only [Algebra.smul_def, mul_one, ← AdjoinRoot.algebraMap_eq, map_neg] at h ⊢
     linear_combination h⟩
 
-private def coordinateEquiv {A : Type} [CommRing A] (T N : A) : AdjoinRoot (X ^ 2 - C T * X + C N) ≃ₐ[A] QuadraticAlgebra A (-N) T :=
+def coordinateEquiv {A : Type} [CommRing A] (T N : A) : AdjoinRoot (X ^ 2 - C T * X + C N) ≃ₐ[A] QuadraticAlgebra A (-N) T :=
   AlgEquiv.ofAlgHom (rootToCoordinates T N) (coordinatesToRoot T N)
     (by apply QuadraticAlgebra.algHom_ext; simp [rootToCoordinates, coordinatesToRoot])
     (by apply AdjoinRoot.algHom_ext; simp [rootToCoordinates, coordinatesToRoot])

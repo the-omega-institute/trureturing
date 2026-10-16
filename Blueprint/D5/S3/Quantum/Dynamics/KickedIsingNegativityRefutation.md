@@ -172,7 +172,63 @@ $$claim \Leftrightarrow (\forall L \in \mathbb{N},\; \forall h \in \operatorname
 
 Conjecture 1, p. 3, states verbatim: "2𝓔(t) = I_{A:B}^{(α)}(t), hold for generic states at all times t." This is its α = 1/2 specialization, quantified over the chain length, real fields, product-state angles, contiguous tripartition and integer time. Each allowed tripartition has nonempty blocks. The specific fields are hᵢ = 1, with phases φᵢ = 0, for the counterexample.
 
-**Theorem 1.15 (Refutation).**
+**Theorem 1.15 (Partial trace under a right unitary).**
+
+$$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(V\right)) \cdot (V) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(1, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(1, V\right)\right))\right) = D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
+
+*Commentary.*
+
+For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by the identity on a and a matrix V on b with V adjoint times V equal to the identity leaves the partial trace over b unchanged.
+
+**Theorem 1.16 (Partial trace under left conjugation).**
+
+$$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(U, 1\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, 1\right)\right))\right) = ((U) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))) \cdot (Matrix.conjTranspose\left(U\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
+
+*Commentary.*
+
+For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by U on a and the identity on b conjugates its partial trace over b by U. The matrix U is arbitrary.
+
+**Theorem 1.17 (Partial trace under local conjugation).**
+
+$$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(V\right)) \cdot (V) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((U) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))) \cdot (Matrix.conjTranspose\left(U\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
+
+*Commentary.*
+
+For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over b as conjugation by U whenever V adjoint times V equals the identity. The operator rho and the matrix U are arbitrary complex matrices of the displayed sizes.
+
+**Theorem 1.18 (The left partial trace under local conjugation).**
+
+$$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(U\right)) \cdot (U) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((V) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft\left(rho\right))) \cdot (Matrix.conjTranspose\left(V\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
+
+*Commentary.*
+
+For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.
+
+**Theorem 1.19 (Refutation).**
 
 $$\neg claim$$
 
@@ -207,6 +263,10 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.reducedAB`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.renyiHalf`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_left`
+- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_right`
+- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_left`
+- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_right`
 - Dependency: [D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation](../Entanglement/FourQubitResidualSumMonotoneRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

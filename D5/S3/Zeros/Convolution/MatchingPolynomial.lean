@@ -295,11 +295,6 @@ private theorem elementaryCoeff_root (r : Fin n → ℝ) (i : ℕ) (hi : i ≤ n
     hc, Nat.sub_sub_self hi, ← mul_assoc, ← mul_pow]
   norm_num
 
-private theorem real_descFactorial (n i : ℕ) (hi : i ≤ n) :
-    (n.descFactorial i : ℝ) = (n.factorial : ℝ) / ((n - i).factorial : ℝ) := by
-  apply (eq_div_iff (by exact_mod_cast Nat.factorial_ne_zero (n - i))).mpr
-  exact_mod_cast (by simpa only [Nat.mul_comm] using Nat.factorial_mul_descFactorial hi)
-
 private theorem real_matchingSum_mul (n k : ℕ) (hk : 2 * k ≤ n) (r : Fin n → ℝ) :
     (((n - 2 * k).factorial : ℝ) * ((n - k).factorial : ℝ)) * matchingSum r k =
       ∑ i ∈ Finset.range (2 * k + 1),

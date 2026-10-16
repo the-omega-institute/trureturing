@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:68cd8ca5853086cc24ef50a4259c5e1bc7038144d0b47d4b563fdca1277d06ff
+  normalized_sha256: sha256:68cd8ca5853086cc24ef50a4259c5e1bc7038144d0b47d4b563fdca1277d06ff
+cas_ref: sha256:68cd8ca5853086cc24ef50a4259c5e1bc7038144d0b47d4b563fdca1277d06ff
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/HistoricalDepthBudgetJointExtremum.historical_depth_budget_joint_extremum
+    target_statement_id: sha256:088ea578a4fccae254c4961d2101d994038853bc0b4ad153d1556327c74d224a
+receipts:
+  unresolved_subitems: []

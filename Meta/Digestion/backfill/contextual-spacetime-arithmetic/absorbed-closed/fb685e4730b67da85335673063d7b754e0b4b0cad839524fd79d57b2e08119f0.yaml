@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0
+  normalized_sha256: sha256:fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0
+cas_ref: sha256:fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.cut_records_glue_unique
+    target_statement_id: sha256:e304ba9d779ddfe3327416b1c0bfc9614b7e42acddfd22fdb368de8a6751cf82
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.cut_scope_eq_separator
+    target_statement_id: sha256:c97a8277ae9eea8c9559136e1f5e1bed1a7cf54bf39dde017af5abe538dad718
+receipts:
+  unresolved_subitems: []

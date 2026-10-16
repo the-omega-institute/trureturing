@@ -1,0 +1,83 @@
+**Definition 10.1 (fixed complete row and full one-image domain).** Keep the
+finite ordered trees, $\rho$, literal occurrence addresses and four-reply
+native port of Definition 1.1. Fix any finite prefix-free public cut $P$
+and any complete current row $R_*=(C_*,\pi_*)$. Its reached support is
+$H\subseteq P$; its exterior includes every concrete bracket and leaf
+outside those holes, and a strict-prefix blocking leaf for every
+$p\in P\setminus H$. Let $D$ be the finite set of classes of $\pi_*$,
+$k=|D|$, and write $[p]\in D$ for the class of $p\in H$. Fix the first
+occurrence $p_d$ of each class as its representative. Empty cuts, a root
+cut, zero classes and blocked cut members are allowed.
+
+For an injective class valuation $x:D\to\mathcal T$, set
+
+$$
+\mathscr F_*(x)=C_*[(x_{[p]})_{p\in H}],\qquad
+\mathcal X_*=\{x:D\to\mathcal T:
+ (\forall d\ne e,\ x_d\ne x_e)\ \land\ \mathscr F_*(x)\in\mathcal I\},
+\quad \mathcal I=\rho[\mathcal T].
+\tag{NBP.10.1}
+$$
+
+The nonempty comparison domain and whole target are exactly
+
+$$
+\mathcal U_*=\{u\in\mathcal T:R_P(\rho u)=R_*\},\qquad F(u)=R_P(u).
+\tag{NBP.10.2}
+$$
+
+The actual legal-row fiber of Definition 1.2 and the image inverse
+$\delta$ of Transport--Memory Completion (RA.2207) give the bijection
+
+$$
+x\longmapsto u_x=\delta(\mathscr F_*(x)),\qquad
+u\longmapsto x_d=(\rho u)|_{p_d},
+\qquad \mathcal X_*\cong\mathcal U_*.
+\tag{NBP.10.3}
+$$
+
+This retains every repeated occurrence, every different-class disequality
+and every absent-cut guard. All finite origins in (NBP.10.2) remain in the
+domain; there is no bound on source size, rank or hidden history.
+
+For a finite tree $z$, write
+$\operatorname{rt}(z)\in\{\alpha,\beta,\mathsf{br}\}$ for its root
+constructor. A class-root type is a map
+$\theta:D\to\{\alpha,\beta,\mathsf{br}\}$. In the finite exterior term
+$C_*$, replace every hole occurrence by its shared class name. For a
+subterm $e$, let $\operatorname{lit}_\ell^\theta(e)$, with
+$\ell\in\{\alpha,\beta\}$, mean that $e$ is the concrete leaf $\ell$,
+or $e$ is a class name $d$ with $\theta(d)=\ell$. A pair is never a
+literal leaf. Define the finite image predicate by
+
+$$
+\begin{aligned}
+\operatorname{im}^\theta(\alpha)&=\mathsf{false},&
+\operatorname{im}^\theta(\beta)&=\mathsf{true},&
+\operatorname{im}^\theta(d)&\Longleftrightarrow\theta(d)\ne\alpha,\\
+\operatorname{im}^\theta(\langle e,f\rangle)
+&\Longleftrightarrow
+ \bigl(\operatorname{lit}_\beta^\theta(e)\land
+       \operatorname{lit}_\alpha^\theta(f)\bigr)
+ \ \lor\
+ \bigl(\operatorname{im}^\theta(e)\land
+       \operatorname{im}^\theta(f)\bigr).
+\end{aligned}
+\tag{NBP.10.4}
+$$
+
+Its disjuncts are the special block $E=\langle\beta,\alpha\rangle$
+and the general pair of image trees. Define the finite admissible chart
+
+$$
+\Theta_*=\{\theta:
+ \operatorname{im}^\theta(C_*)\ \land\
+ |\theta^{-1}(\alpha)|\le1\ \land\
+ |\theta^{-1}(\beta)|\le1\}.
+\tag{NBP.10.5}
+$$
+
+The two leaf restrictions concern distinct classes, not occurrences.
+They do not impose different values on different residual names that
+could occur in an auxiliary construction.
+

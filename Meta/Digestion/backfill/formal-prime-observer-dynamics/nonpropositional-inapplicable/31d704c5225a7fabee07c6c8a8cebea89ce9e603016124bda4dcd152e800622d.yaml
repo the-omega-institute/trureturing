@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31d704c5225a7fabee07c6c8a8cebea89ce9e603016124bda4dcd152e800622d
+  normalized_sha256: sha256:31d704c5225a7fabee07c6c8a8cebea89ce9e603016124bda4dcd152e800622d
+cas_ref: sha256:31d704c5225a7fabee07c6c8a8cebea89ce9e603016124bda4dcd152e800622d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{ConfRes}(X,Y)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 86d2b0af755237f8392fd6278b17d8902240b7f728248bd4e6e2035e4ca1a93e
+    next_atom_id: 0c82ede2eccb62c072613a687b18b6f2c39de10d19c7b469ea56088eda5dcf86

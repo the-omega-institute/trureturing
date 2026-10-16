@@ -1,33 +1,42 @@
 #!/usr/bin/env python3
-"""Real B1 clients through Lake report facets and the canonical artifact consumer.
+"""One compiled optional-analysis fixture through the production consumer.
 
-The command guard bounds infrastructure. No duration is a correctness criterion.
-Each fixture source and artifact belongs solely to this invocation.
+Lake builds the fixture once. Source, finite and non-finite boundaries share
+that result; ordinary native reuse tests own incremental build behavior.
 """
+import os
+import copy
 import hashlib
 import json
-import os
 from pathlib import Path
-import signal
-import shutil
 import subprocess
 import sys
 import tempfile
-import time
 import unittest
+from unittest.mock import patch
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / 'tools/lean-inspector'))
 import fib_analysis
+import materials
 import publication
-import native
 
 MODULE = 'Reg.Support.AuricFibUniversalFixture'
-SIBLING = 'Reg.Support.AuricFibUniversalSibling'
-DATA = 'Reg.Support.AuricFibUniversalData'
+PLAIN_MODULE = 'D5.S0.Diagonal.PigeonholeFiber'
 PREFIX = 'AuricFibUniversalProduction.'
 STATE = ROOT / '.lake/build/lean-inspector'
+
+
+def cleanup_module(module):
+    for folder in ('modules', 'inputs', 'judge-inputs'):
+        for path in (STATE / folder).glob(module + '.*'):
+            path.unlink()
+    owner, _, basename = module.rpartition('.')
+    for folder in ('lib/lean', 'ir'):
+        directory = ROOT / '.lake/build/reg' / folder / owner.replace('.', '/')
+        for path in directory.glob(basename + '.*'):
+            path.unlink()
 
 
 class UniversalProductionTests(unittest.TestCase):
@@ -35,201 +44,26 @@ class UniversalProductionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.work = tempfile.TemporaryDirectory(prefix='auric-fib-universal.')
         cls.directory = Path(cls.work.name)
-        cls.sources = [ROOT / (name.replace('.', '/') + '.lean') for name in (MODULE, SIBLING, DATA)]
-        cls.artifacts = [STATE / 'modules' / (name + '.zip') for name in (MODULE, SIBLING)]
-        owned_outputs = [Path(str(path) + suffix) for path in cls.artifacts
-                         for suffix in ('', '.pending', '.fib-previous')]
-        if any(path.exists() for path in cls.sources + owned_outputs):
+        cls.source = ROOT / (MODULE.replace('.', '/') + '.lean')
+        if cls.source.exists():
+            cls.work.cleanup()
             raise RuntimeError('universal fixture is already owned; refusing takeover')
         cls.addClassCleanup(cls.cleanup)
-        cls.environment = dict(os.environ, GIT_OPTIONAL_LOCKS='0')
-        cls.diagnostics = Path(os.environ.get('FIB_UNIVERSAL_DIAGNOSTICS', cls.directory))
-        cls.diagnostics.mkdir(parents=True, exist_ok=True)
-        cls.sequence = 0
-        cls.source = '''import LeanInformationAuditInterface.Contract.AuricFib
-namespace AuricFibUniversalData
-private def acquired : Nat := 1
-def mass : Nat := acquired
-def denominator : Nat := 5
-theorem source : type_of% D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution :=
-  D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution
-end AuricFibUniversalData
-'''
-        # Keep the dynamically compiled package within Reg's dependency boundary.
-        # Reuse the source-owned B1 clients and compile the verification data in
-        # the same fixture module, without importing a downstream test package.
-        fixture_root = ROOT / 'tools/lean-inspector/LeanInformationAuditRegTests/AuricFib'
-        native_fixture = (fixture_root / 'CompiledFixture.lean').read_text()
-        native_fixture = native_fixture.replace(
-            'LeanInformationAuditRegTests.AuricFib.CompiledFixture', 'AuricFibUniversalCompiled')
+        fixture_root = ROOT / 'tools/lean-inspector/LeanInformationAuditFibTests/AuricFib'
+        native_fixture = (fixture_root / 'CompiledFixture.lean').read_text().replace(
+            'LeanInformationAuditFibTests.AuricFib.CompiledFixture', 'AuricFibUniversalCompiled')
         generic_fixture = (fixture_root / 'UniversalFixture.lean').read_text().replace(
-            'import LeanInformationAuditRegTests.AuricFib.CompiledFixture\n', '')
+            'import LeanInformationAuditFibTests.AuricFib.CompiledFixture\n', '')
         generic_fixture = generic_fixture.replace(
-            'LeanInformationAuditRegTests.AuricFib.CompiledFixture', 'AuricFibUniversalCompiled').replace(
-            'LeanInformationAuditRegTests.AuricFib.UniversalFixture', 'AuricFibUniversalProduction')
+            'LeanInformationAuditFibTests.AuricFib.CompiledFixture', 'AuricFibUniversalCompiled').replace(
+            'LeanInformationAuditFibTests.AuricFib.UniversalFixture', 'AuricFibUniversalProduction')
         generic_fixture = generic_fixture.replace('owner := `AuricFibUniversalProduction',
                                                   'owner := `' + MODULE)
         imports = [line for text in (native_fixture, generic_fixture) for line in text.splitlines()
                    if line.startswith('import ')]
         bodies = ['\n'.join(line for line in text.splitlines() if not line.startswith('import '))
                   for text in (native_fixture, generic_fixture)]
-        cls.application = ('import ' + DATA + '\n' + '\n'.join(dict.fromkeys(imports)) + '\n'
-                           + '\n'.join(bodies)) + '''
-namespace AuricFibUniversalProduction
-open LeanInformationAudit.AuricFib.Contract
-def changedLaw : Application.{0,0,0,0,0,0} AuricFibUniversalData.source where
-  evidence := .native { reconstruction := .exact }
-    AuricFibUniversalCompiled.bridge
-    (.declared "actual private compiled dependency" {
-      nullMass := AuricFibUniversalData.mass, lowMass := 1, highMass := 1,
-      endsMass := 1, middleMass := 1, denominator := AuricFibUniversalData.denominator,
-      positive := by decide, normalized := by decide }) [] [.seam, .guard, .reply, .atom]
-end AuricFibUniversalProduction
-'''
-        cls.sources[0].write_text(cls.application)
-        cls.sources[1].write_text('import LeanInformationAuditInterface.Contract.AuricFib\n'
-            'namespace AuricFibUniversalSibling\n'
-            'def unchanged : LeanInformationAudit.AuricFib.Contract.Application.{0,0,0,0,0,0} '
-            'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution where\n'
-            '  evidence := .unsupported "no acquired contract for this adapter"\n'
-            'end AuricFibUniversalSibling\n')
-        cls.sources[2].write_text(cls.source)
-        cls.first = cls.build()
-
-    @classmethod
-    def cleanup(cls):
-        for path in cls.sources:
-            path.unlink(missing_ok=True)
-        # Only invocation-owned fixture artifacts are removed; no shared report,
-        # protected source-owned module, or other flight's artifact is touched.
-        for name in (MODULE, SIBLING, DATA):
-            for folder, suffixes in [('modules', ['.zip', '.zip.trace', '.zip.hash',
-                                                  '.zip.pending', '.zip.fib-previous']),
-                                     ('inputs', ['.json', '.json.sources.json']),
-                                     ('judge-inputs', ['.json', '.json.trace', '.json.hash'])]:
-                for suffix in suffixes:
-                    (STATE / folder / (name + suffix)).unlink(missing_ok=True)
-        cls.work.cleanup()
-
-    @classmethod
-    def command(cls, targets, *, full=False, expected=0):
-        started = time.monotonic()
-        cls.sequence += 1
-        log = cls.diagnostics / f'command-{cls.sequence}.log'
-        activity = cls.diagnostics / f'activity-{cls.sequence}.jsonl'
-        env = dict(cls.environment, STRATALINT_INSPECTOR_ACTIVITY=str(activity),
-                   STRATALINT_INSPECTOR_PROFILE='1')
-        if full:
-            env['LAKE_ARTIFACT_CACHE'] = 'false'
-        command = ['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
-                   'tools/lean-inspector-reg', 'build', *targets]
-        with (cls.diagnostics / 'commands.jsonl').open('a') as sink:
-            sink.write(json.dumps(dict(command=command, stage='started', full=full, log=str(log))) + '\n')
-        process = subprocess.Popen(command, cwd=ROOT, env=env, text=True,
-                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                   start_new_session=True)
-        try:
-            stdout, stderr = process.communicate(timeout=300)
-        except subprocess.TimeoutExpired as error:
-            # End only this invocation's process group; a timed-out compiler
-            # must not continue writing after fixture cleanup.
-            os.killpg(process.pid, signal.SIGTERM)
-            try:
-                stdout, stderr = process.communicate(timeout=10)
-            except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
-                stdout, stderr = process.communicate()
-            log.write_text(stdout + stderr)
-            with (cls.diagnostics / 'commands.jsonl').open('a') as sink:
-                sink.write(json.dumps(dict(command=command, stage='infrastructure-unresolved',
-                                           guard_seconds=300, log=str(log))) + '\n')
-            raise RuntimeError(f'INFRASTRUCTURE_UNRESOLVED: 300-second guard: {log}') from error
-        result = subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
-        log.write_text(result.stdout + result.stderr)
-        with (cls.diagnostics / 'commands.jsonl').open('a') as sink:
-            sink.write(json.dumps(dict(command=command, exit=result.returncode,
-                                       log=str(log), full=full)) + '\n')
-        if result.returncode != expected:
-            raise AssertionError(f'expected exit {expected}; actual {result.returncode}; {log}\n'
-                                 + result.stdout[-4000:] + result.stderr[-4000:])
-        cls.counts = {}
-        for line in activity.read_text().splitlines() if activity.exists() else []:
-            row = json.loads(line)
-            cls.counts[row['kind']] = cls.counts.get(row['kind'], 0) + row['count']
-        print('UNIVERSAL_ANALYSIS_WORK ' + json.dumps(dict(sequence=cls.sequence,
-            exit=result.returncode, elapsed_seconds=time.monotonic() - started,
-            full=full, actual_work=cls.counts)), flush=True)
-        return result
-
-    @classmethod
-    def build(cls, *, full=False):
-        sibling_before = ((hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
-                           cls.artifacts[1].stat().st_mtime_ns)
-                          if cls.artifacts[1].exists() else None)
-        if full:
-            previous_reports = {}
-            for artifact in cls.artifacts:
-                with zipfile.ZipFile(artifact) as bundle:
-                    previous_reports[artifact.name] = bundle.read('raw-lean-report.json')
-            # These two fixture artifacts were created by this invocation.
-            for artifact in cls.artifacts:
-                for suffix in ('', '.trace', '.hash'):
-                    Path(str(artifact) + suffix).unlink(missing_ok=True)
-        # The facets compile their source/export closures and share Lake's
-        # preparation in one invocation. Keep the existing per-command guard.
-        cls.command([name + ':report' for name in (MODULE, SIBLING)], full=full)
-        if full:
-            if cls.counts.get('extract', 0) != len(cls.artifacts) or cls.counts.get('fib-reused', 0):
-                raise AssertionError('complete report did not independently extract both fixture modules')
-            for artifact in cls.artifacts:
-                with zipfile.ZipFile(artifact) as bundle:
-                    if previous_reports[artifact.name] != bundle.read('raw-lean-report.json'):
-                        raise AssertionError('complete compiler report differs from incremental: ' + artifact.name)
-            print('UNIVERSAL_ANALYSIS_COMPLETE ' + json.dumps(dict(
-                modules=len(cls.artifacts), compiler_reports_byte_equal=True,
-                actual_work=cls.counts)), flush=True)
-        if not full and sibling_before is not None:
-            sibling_after = (hashlib.sha256(cls.artifacts[1].read_bytes()).hexdigest(),
-                             cls.artifacts[1].stat().st_mtime_ns)
-            if sibling_before != sibling_after:
-                raise AssertionError('unaffected sibling module bytes or writing time changed')
-        for name, artifact in zip((MODULE, SIBLING), cls.artifacts):
-            shutil.copyfile(artifact, cls.diagnostics / f'{cls.sequence}-{name}.zip')
-        report = cls.directory / 'raw-lean-report.json'
-        with zipfile.ZipFile(cls.artifacts[0]) as bundle:
-            for suffix in ('', '.materials.zip', '.provenance.json'):
-                Path(str(report) + suffix).write_bytes(bundle.read('raw-lean-report.json' + suffix))
-        rows = publication.validate_rows(report, Path(str(report) + '.materials.zip'))
-        cls.report = report
-        consumed = fib_analysis.consume(report)
-        (cls.diagnostics / f'consumed-{cls.sequence}.json').write_bytes(
-            publication.materials.canonical_json(consumed))
-        # Exercise the production aggregator on these real module artifacts.
-        # Its private fixture input manifest selects only this test's modules;
-        # it does not touch the repository's aggregate or full-project custody.
-        aggregate_root = cls.directory / 'aggregate-root'
-        aggregate_state = aggregate_root / '.lake/build/lean-inspector'
-        aggregate_state.mkdir(parents=True, exist_ok=True)
-        (aggregate_state / 'inputs.json').write_bytes(publication.materials.canonical_json(dict(
-            modules=[MODULE, SIBLING], coordinates=publication.coordinates(ROOT))))
-        aggregate = cls.directory / 'aggregate.zip'
-        native.aggregate(aggregate_root, aggregate, *cls.artifacts)
-        shutil.copyfile(aggregate, cls.diagnostics / f'{cls.sequence}-aggregate.zip')
-        destination = cls.directory / 'aggregate-consumer'
-        destination.mkdir(exist_ok=True)
-        combined = fib_analysis.consume(publication.unpack(aggregate, destination))
-        if len(combined['applications']) != len(consumed['applications']) + 1:
-            raise AssertionError('aggregate membership or provenance lost a compiled application')
-        if len(rows) != 1 or rows[0]['module'] != MODULE:
-            raise AssertionError('wrong canonical module artifact')
-        return {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
-                if row['application'].startswith(PREFIX)}
-
-    def test_data_free_ingress(self):
-        # Add a real author client for the existing bare proposition after the
-        # original missing-contract check. No replacement theorem is introduced.
-        before = self.build()
-        type(self).application += """
+        cls.source.write_text('\n'.join(dict.fromkeys(imports)) + '\n' + '\n'.join(bodies) + '''
 namespace AuricFibUniversalProduction
 open LeanInformationAudit.Analysis LeanInformationAudit.AuricFib.Contract
 universe u
@@ -250,89 +84,37 @@ def unobservedFamily : Application (@D5.S0.Diagonal.PigeonholeFiber.finite_readi
     plan := { task := (), initial := [], additions := [[], [()]] }
     acquisition := .unavailable "no finite presentation requested" }
 end AuricFibUniversalProduction
-"""
-        self.sources[0].write_text(self.application)
-        current = self.build()
-        for name, target, telescope, levels in (
-                ('dataFree', PREFIX + 'absentContract', 0, 0),
-                ('unobservedFamily', 'D5.S0.Diagonal.PigeonholeFiber.finite_reading_has_fiber', 4, 1)):
-            row = current[name]
-            self.assertIsNotNone(row['request'], row)
-            reading = row['reading']
-            binding = reading['source_contract']['binding']
-            self.assertEqual(binding['occurrence']['source_name'], target)
-            self.assertEqual(binding['occurrence']['original_type']['identity'], row['target_type_identity'])
-            self.assertEqual(binding['telescope_size'], telescope)
-            self.assertEqual(binding['level_count'], levels)
-            self.assertEqual(binding['coordinates'], [])
-            self.assertEqual(binding['readouts'], [])
-            self.assertIn('terminal model', binding['source_correspondence'])
-            self.assertEqual(reading['disposition']['readings']['source_contract']['kind'], 'available')
-            self.assertEqual(reading['disposition']['readings']['escape_rate']['kind'], 'unavailable')
-            self.assertIsNone(reading['escape_rate'])
-            self.assertIsNone(reading['pyramid_coordinates'])
-            self.assertLessEqual(set(binding['accepted_axioms']), {'propext', 'Classical.choice', 'Quot.sound'})
-            selected = fib_analysis.consume(self.report, [target])
-            self.assertIn(row, selected['applications'])
-        terminal = current['terminalCounts']
-        self.assertIsNotNone(terminal['request'])
-        self.assertEqual(terminal['request']['acquisition']['kind'], 'unavailable')
-        self.assertIn('fib.unobserved_source_domain_unacquired', terminal['request']['acquisition']['reason'])
-        self.assertIsNone(terminal['reading']['escape_rate'])
-        self.assertIsNone(terminal['reading']['arena']['cardinality'])
-        self.assertEqual(terminal['reading']['disposition']['readings']['source_contract']['kind'], 'available')
-        self.assertEqual(current['dataFree']['request']['plan']['additions'], [[], [0], []])
-        self.assertEqual(current['dataFree']['request']['binding']['occurrence']['original_type']['head'], 'True')
-        self.assertIsNone(current['dataFreeBad']['request'])
-        self.assertEqual(current['dataFreeBad']['unavailable_reason'], 'fib.unobserved_model_mismatch')
-        self.assertEqual(before, {k: v for k, v in current.items()
-                                if k not in {'dataFree', 'dataFreeBad', 'terminalCounts', 'unobservedFamily'}})
-        self.assertEqual(current, self.build(full=True))
-        # Replaying genuine compiler JSON through the public entry retains
-        # arithmetic but cannot retain the producer's source evidence claim.
-        replay = subprocess.run(['bash', 'tools/scripts/auric-fib-analysis.sh', '--batch'],
-            cwd=ROOT, input=json.dumps([current[k]['request'] for k in ('dataFree', 'quotient')]),
-            text=True, capture_output=True, check=False)
-        self.assertEqual(replay.returncode, 0, replay.stderr + replay.stdout)
-        for raw, key in zip(json.loads(replay.stdout), ('dataFree', 'quotient')):
-            self.assertEqual(raw['disposition']['readings']['source_contract']['kind'], 'unavailable')
-            self.assertIsNone(raw['source_contract']['binding'])
-            self.assertEqual(raw['escape_rate'], current[key]['reading']['escape_rate'])
+''')
+        subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
+            'tools/lean-inspector-reg', 'build', 'leanInspector/reportInspector',
+            MODULE + ':report', PLAIN_MODULE + ':report'],
+            cwd=ROOT, env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'), check=True)
+        cls.report = cls.directory / 'raw-lean-report.json'
+        with zipfile.ZipFile(STATE / 'modules' / (MODULE + '.zip')) as bundle:
+            for suffix in ('', '.materials.zip', '.provenance.json'):
+                Path(str(cls.report) + suffix).write_bytes(bundle.read('raw-lean-report.json' + suffix))
+        consumed = fib_analysis.consume(cls.report)
+        if set(consumed) != {'applications', 'authority'}:
+            raise AssertionError('FIB export must have no independent version field')
+        with zipfile.ZipFile(STATE / 'modules' / (PLAIN_MODULE + '.zip')) as bundle:
+            plain = json.loads(bundle.read('raw-lean-report.json'))
+            if 'fib_analysis' in plain['modules'][0]:
+                raise AssertionError('nonparticipants must not acquire a FIB partition')
+        raw = json.loads(cls.report.read_text())
+        if raw['schema'] != 'stratalint-raw-lean-report-v3':
+            raise AssertionError('parent report schema must remain v3')
+        if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
+            raise AssertionError('FIB partition must have no independent version field')
+        cls.first = {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
+                     if row['application'].startswith(PREFIX)}
 
-    def check_program_rebuilding(self, expected):
-        # This test owns its temporary edit to the production compiler it tests.
-        # Report artifacts and mathematical source are not replaced or patched.
-        program = ROOT / 'tools/lean-inspector/LeanInformationAudit/Contract/FibApplications.lean'
-        original, metadata = program.read_bytes(), program.stat()
-        valid = original + b'\nnamespace LeanInformationAudit.FibApplications\n' \
-            b'private def programBuildProbe : Nat := 1\nend LeanInformationAudit.FibApplications\n'
-        invalid = valid.replace(b'programBuildProbe : Nat := 1', b'programBuildProbe : Nat := true')
-        stamps = [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
-                  for p in self.artifacts]
-        program.write_bytes(valid)
-        try:
-            self.assertEqual(expected, self.build())
-            self.assertEqual(self.counts.get('extract', 0), 0)
-            self.assertEqual(stamps, [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
-                                     for p in self.artifacts])
-            program_log = (self.diagnostics / f'command-{self.sequence}.log').read_text()
-            self.assertIn('Built LeanInformationAudit.Contract.FibApplications', program_log)
-            program.write_bytes(invalid)
-            failed = self.command([MODULE + ':report'], expected=1)
-            self.assertIn('FibApplications.lean', failed.stdout + failed.stderr)
-            self.assertIn('error:', (failed.stdout + failed.stderr).lower())
-            self.assertEqual(stamps, [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
-                                     for p in self.artifacts])
-        finally:
-            if program.read_bytes() not in (valid, invalid):
-                raise RuntimeError('program changed outside the fixture; refusing overwrite')
-            program.write_bytes(original)
-            os.chmod(program, metadata.st_mode)
-            os.utime(program, ns=(metadata.st_atime_ns, metadata.st_mtime_ns))
-            self.command(['leanInspector/reportInspector'])
-        self.assertEqual(program.read_bytes(), original)
+    @classmethod
+    def cleanup(cls):
+        cls.source.unlink(missing_ok=True)
+        cleanup_module(MODULE)
+        cls.work.cleanup()
 
-    def test_compiled_clients_boundaries_and_incremental(self):
+    def test_compiled_clients_boundaries(self):
         current = self.first
         for key in ('finite', 'constant', 'quotient', 'restricted', 'empty', 'singleton', 'delayed', 'decodedNat'):
             self.assertIsNotNone(current[key]['request'], (key, current[key]))
@@ -400,99 +182,195 @@ end AuricFibUniversalProduction
         self.assertEqual(current['nativeUnavailableLaw']['reading']['arena']['cardinality'], 5)
         self.assertEqual(current['nativeUnavailableLaw']['reading']['disposition']['readings']['association_coordinate']['kind'],
                          'unavailable')
-        missing = fib_analysis.consume(self.report, [PREFIX + 'absentContract'])
+        missing = fib_analysis.consume(self.report, ['AuricFibUniversalCompiled.noise'])
         self.assertIn('no acquired FIB', missing['applications'][0]['reading']['disposition']['reason'])
         for row in current.values():
             self.assertFalse(row['reading']['disposition']['is_lean_proof'])
             if row['request'] is not None:
                 self.assertLessEqual(set(row['request']['binding']['accepted_axioms']),
                                      {'propext', 'Classical.choice', 'Quot.sound'})
-        snapshots = [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns) for p in self.artifacts]
-        self.assertEqual(current, self.build())
-        self.assertEqual(snapshots, [(hashlib.sha256(p.read_bytes()).hexdigest(), p.stat().st_mtime_ns)
-                                    for p in self.artifacts])
-        self.assertEqual(self.counts.get('extract', 0), 0)
-        type(self).source = self.source.replace('acquired : Nat := 1', 'acquired : Nat := 2').replace(
-            'denominator : Nat := 5', 'denominator : Nat := 6')
-        self.sources[2].write_text(self.source)
-        changed = self.build()
-        self.assertEqual(self.counts.get('fib-generated', 0), 1)
-        self.assertGreaterEqual(self.counts.get('fib-reused', 0), len(current) - 1)
-        self.assertNotEqual(current['changedLaw']['input_identity'], changed['changedLaw']['input_identity'])
-        self.assertNotEqual(current['changedLaw']['reading']['association_coordinate'],
-                            changed['changedLaw']['reading']['association_coordinate'])
-        self.assertEqual({k: v for k, v in current.items() if k != 'changedLaw'},
-                         {k: v for k, v in changed.items() if k != 'changedLaw'})
-        self.assertEqual(snapshots[1], (hashlib.sha256(self.artifacts[1].read_bytes()).hexdigest(),
-                                       self.artifacts[1].stat().st_mtime_ns))
-        self.assertEqual(changed, self.build(full=True))
-        # A source proof dependency changes the actual closure even when the
-        # target's type, numerical law and source display strings remain equal.
-        type(self).source = self.source.replace(
-            'theorem source : type_of%',
-            'private theorem sourceDependency : type_of% '
-            'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution :=\n'
-            '  D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution\n'
-            'theorem source : type_of%').replace(
-            'theorem source : type_of% '
-            'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution :=\n'
-            '  D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution\n',
-            'theorem source : type_of% '
-            'D5.S3.Arith.FibonacciAtomic.NativeContinuation.NullReplyFiber.native_execution :=\n'
-            '  sourceDependency\n')
-        self.sources[2].write_text(self.source)
-        source_changed = self.build()
-        self.assertEqual(self.counts.get('fib-generated', 0), 1)
-        self.assertNotEqual(changed['changedLaw']['input_identity'], source_changed['changedLaw']['input_identity'])
-        self.assertEqual(changed['changedLaw']['reading'], source_changed['changedLaw']['reading'])
-        self.assertEqual(source_changed, self.build(full=True))
-        # A semantically equal reader still changes its actual compiled input.
-        type(self).application = self.application.replace(
-            'fun a => rawTransition (rawMachine 0).start a',
-            'fun a => rawTransition (rawMachine 0).start (id a)')
-        self.sources[0].write_text(self.application)
-        reader_changed = self.build()
-        affected = {'nativeDeclared', 'nativeAbsent', 'nativeEmpirical', 'nativeApex',
-                    'nativeZeroCondition', 'nativeRejected', 'nativeWrongTarget',
-                    'nativeParameterized', 'nativeUnavailableLaw', 'changedLaw'}
-        self.assertEqual({key for key in source_changed
-                          if source_changed[key]['input_identity'] != reader_changed[key]['input_identity']},
-                         affected)
-        for key in source_changed:
-            self.assertEqual(source_changed[key]['reading'], reader_changed[key]['reading'])
-        self.assertEqual(reader_changed, self.build(full=True))
-        # Real membership and qualification changes; no synthetic partition.
-        type(self).application = self.application.replace('def finite := finiteAnalysis',
-            'def finite := constantAnalysis').replace('def constant := constantAnalysis\n', '')
-        type(self).application += '\nnamespace AuricFibUniversalProduction\n' \
-            'def added := Reg.D5.S0.Diagonal.PigeonholeFiber.quotientAnalysis\n' \
-            'end AuricFibUniversalProduction\n'
-        self.sources[0].write_text(self.application)
-        members = self.build()
-        self.assertEqual(self.counts.get('fib-generated', 0), 2)
-        self.assertNotIn('constant', members)
-        self.assertIn('added', members)
-        self.assertEqual(members['finite']['reading']['arena']['cardinality'], 2)
-        self.assertEqual(source_changed['history'], members['history'])
-        self.assertEqual(members, self.build(full=True))
-        type(self).application = self.application.replace('def finite := constantAnalysis\n', '') + '\nnamespace AuricFibUniversalProduction\n' \
-            'def finite := wrongOwner\nend AuricFibUniversalProduction\n'
-        self.sources[0].write_text(self.application)
-        qualified = self.build()
-        self.assertEqual(self.counts.get('fib-generated', 0), 0)
-        self.assertIsNone(qualified['finite']['request'])
-        self.assertEqual(qualified['finite']['unavailable_reason'], 'unclassified_form:source.owner')
-        self.assertEqual(members['history'], qualified['history'])
-        self.assertEqual(qualified, self.build(full=True))
-        self.check_program_rebuilding(qualified)
-        (self.diagnostics / 'verified.json').write_text(json.dumps(dict(
-            applications=len(members), finite_rate=finite['escape_rate'],
-            native_domain=native['atom_readout']['mode_order'],
-            full_incremental_equivalence=True, unchanged_module_bytes_and_mtime=True,
-            program_rebuilt_without_reading_invalidation=True, program_failure_propagated=True,
-            accepted_axioms=sorted(set().union(*(set(row['request']['binding']['accepted_axioms'])
-                for row in current.values() if row['request'] is not None))),
-            protected_scope='only invocation-owned fixture module artifacts'), indent=2) + '\n')
+
+    def test_data_free_ingress(self):
+        current = self.first
+        for name, target, telescope, levels in (
+                ('dataFree', PREFIX + 'absentContract', 0, 0),
+                ('unobservedFamily', 'D5.S0.Diagonal.PigeonholeFiber.finite_reading_has_fiber', 4, 1)):
+            row = current[name]
+            self.assertIsNotNone(row['request'], row)
+            reading = row['reading']
+            binding = reading['source_contract']['binding']
+            self.assertEqual(binding['occurrence']['source_name'], target)
+            self.assertEqual(binding['occurrence']['original_type']['identity'], row['target_type_identity'])
+            self.assertEqual(binding['telescope_size'], telescope)
+            self.assertEqual(binding['level_count'], levels)
+            self.assertEqual(binding['coordinates'], [])
+            self.assertEqual(binding['readouts'], [])
+            self.assertIn('terminal model', binding['source_correspondence'])
+            self.assertEqual(reading['disposition']['readings']['source_contract']['kind'], 'available')
+            self.assertEqual(reading['disposition']['readings']['escape_rate']['kind'], 'unavailable')
+            self.assertIsNone(reading['escape_rate'])
+            self.assertIsNone(reading['pyramid_coordinates'])
+            self.assertLessEqual(set(binding['accepted_axioms']), {'propext', 'Classical.choice', 'Quot.sound'})
+            selected = fib_analysis.consume(self.report, [target])
+            self.assertIn(row, selected['applications'])
+        terminal = current['terminalCounts']
+        self.assertIsNotNone(terminal['request'])
+        self.assertEqual(terminal['request']['acquisition']['kind'], 'unavailable')
+        self.assertIn('fib.unobserved_source_domain_unacquired', terminal['request']['acquisition']['reason'])
+        self.assertIsNone(terminal['reading']['escape_rate'])
+        self.assertIsNone(terminal['reading']['arena']['cardinality'])
+        self.assertEqual(terminal['reading']['disposition']['readings']['source_contract']['kind'], 'available')
+        self.assertEqual(current['dataFree']['request']['plan']['additions'], [[], [0], []])
+        self.assertEqual(current['dataFree']['request']['binding']['occurrence']['original_type']['head'], 'True')
+        self.assertIsNone(current['dataFreeBad']['request'])
+        self.assertEqual(current['dataFreeBad']['unavailable_reason'], 'fib.unobserved_model_mismatch')
+
+    def test_production_leaf_reuse_and_fail_closed_boundaries(self):
+        previous = STATE / 'modules' / (MODULE + '.zip')
+        row = json.loads(self.report.read_text())['modules'][0]
+        for leaf in row['fib_analysis']['applications']:
+            leaf['reading'] = None
+        reused = fib_analysis.produce(row, previous, '')
+        self.assertEqual(reused['generated'], 0)
+        self.assertEqual(reused['reused'], len(row['fib_analysis']['applications']))
+        leaf = next(x for x in row['fib_analysis']['applications'] if x['request'] is not None)
+        leaf['input_identity'] = 'f' * 64
+        with self.assertRaisesRegex(ValueError, 'fib.analysis_program_missing'):
+            fib_analysis.produce(copy.deepcopy(row), previous, '')
+        stats = fib_analysis.produce(row, previous, ROOT / 'tools/scripts/auric-fib-analysis.sh')
+        self.assertEqual(stats['generated'], 1)
+        self.assertEqual(stats['analysis-invocations'], 1)
+        self.assertGreater(stats['analysis-ns'], 0)
+        malformed = self.directory / 'uncustodied.zip'
+        with zipfile.ZipFile(malformed, 'w') as bundle:
+            bundle.writestr('raw-lean-report.json', json.dumps(dict(schema='unknown', modules=[row])))
+        with self.assertRaisesRegex(ValueError, 'fib.previous_module_binding'):
+            fib_analysis.produce(row, malformed, '')
+
+    def test_report_consumer_compares_complete_inputs_and_runs_once(self):
+        original = json.loads(self.report.read_text())['modules'][0]
+        origin = json.loads(Path(str(self.report) + '.provenance.json').read_text())
+        def save(name, row):
+            report = self.directory / (name + '.json')
+            report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row])))
+            current_origin = copy.deepcopy(origin)
+            current_origin['report_sha256'] = hashlib.sha256(report.read_bytes()).hexdigest()
+            Path(str(report) + '.provenance.json').write_text(json.dumps(current_origin))
+            return report
+        before = save('before', original)
+        same = copy.deepcopy(original)
+        same['source_sha256'] = 'f' * 64
+        same = save('same-inputs', same)
+        empty = copy.deepcopy(original)
+        empty.pop('fib_analysis')
+        empty_report = save('no-applications', empty)
+        empty_origin_path = Path(str(empty_report) + '.provenance.json')
+        empty_origin = json.loads(empty_origin_path.read_text())
+        empty_origin['input_projection']['inputs'] = [x for x in empty_origin['input_projection']['inputs']
+            if x['type'] != 'LeanInformationAudit.AuricFib.Contract.Application']
+        empty_origin_path.write_text(json.dumps(empty_origin))
+        with patch.object(fib_analysis.subprocess, 'run') as command:
+            self.assertFalse(fib_analysis.run_regressions(ROOT, before, same))
+            command.assert_not_called()
+            # First Application, all complete supported states (including
+            # unavailable inputs), removal, and explicit program coverage.
+            for previous, current, selected in ((empty_report, before, False),
+                    (before, empty_report, False), (before, same, True),
+                    (empty_report, before, True)):
+                command.reset_mock()
+                self.assertTrue(fib_analysis.run_regressions(ROOT, previous, current, selected))
+                command.assert_called_once()
+                self.assertEqual(command.call_args.args[0], ['make', '-C', str(ROOT), 'compiled-fib-test'])
+            # Every field of the complete detached input remains significant;
+            # readings themselves never select a test or invalidate a report.
+            for field, value in (('input_identity', 'a' * 64), ('unavailable_reason', 'changed boundary'),
+                                 ('target_module', 'Other.Source')):
+                changed = copy.deepcopy(original)
+                changed['fib_analysis']['applications'][0][field] = value
+                current = save('changed-' + field, changed)
+                command.reset_mock()
+                self.assertTrue(fib_analysis.run_regressions(ROOT, before, current))
+                command.assert_called_once()
+            # Failed selected work propagates and cannot replace its input data.
+            before_bytes = before.read_bytes()
+            command.side_effect = subprocess.CalledProcessError(23, 'make')
+            with self.assertRaises(subprocess.CalledProcessError) as failure:
+                fib_analysis.run_regressions(ROOT, before, same, True)
+            self.assertEqual(failure.exception.returncode, 23)
+            self.assertEqual(before.read_bytes(), before_bytes)
+        with self.assertRaisesRegex(ValueError, 'fib.missing_required_inputs'):
+            save('missing', empty)  # Its projection still declares Applications.
+            fib_analysis.application_inputs(self.directory / 'missing.json')
+        with self.assertRaises(FileNotFoundError):
+            fib_analysis.run_regressions(ROOT, before, self.directory / 'absent.json')
+
+    def test_z_native_incremental_work_uses_lake_traces(self):
+        activity = self.directory / 'incremental-work.jsonl'
+        phases = self.directory / 'incremental-phases.jsonl'
+        original = self.source.read_bytes()
+        unrelated_name = 'Reg.Support.AuricFibUnrelatedFixture'
+        unrelated = ROOT / (unrelated_name.replace('.', '/') + '.lean')
+        self.assertFalse(unrelated.exists(), 'unrelated fixture is already owned')
+        extra_targets = []
+        def build():
+            activity.write_text('')
+            phases.write_text('')
+            result = subprocess.run(['bash', 'tools/scripts/worktree/lean-cache-run.sh', 'lake', '-d',
+                'tools/lean-inspector-reg', 'build', MODULE + ':report', PLAIN_MODULE + ':report',
+                *extra_targets],
+                cwd=ROOT, env=dict(os.environ, STRATALINT_INSPECTOR_ACTIVITY=str(activity),
+                    STRATALINT_INSPECTOR_PHASES=str(phases)), capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            return [json.loads(line) for line in activity.read_text().splitlines()]
+        self.assertEqual(build(), [])
+        try:
+            unrelated.write_text('def unrelatedFibWorkProbe : Nat := 1\n')
+            extra_targets.append(unrelated_name + ':report')
+            self.assertFalse(any(x['kind'].startswith('fib-') for x in build()))
+            unrelated.write_text('def unrelatedFibWorkProbe : Nat := 2\n')
+            self.assertFalse(any(x['kind'].startswith('fib-') for x in build()))
+            # The compiler changes this module without changing any Application.
+            # Its genuine closure invalidates extraction; unchanged leaves reuse
+            # the custody-checked readings and invoke no arithmetic analyzer.
+            self.source.write_bytes(original + b'\ndef fibIncrementalNoise : Nat := 13\n')
+            changed = build()
+            self.assertEqual(sum(x['count'] for x in changed if x['kind'] == 'extract'), 1)
+            self.assertEqual(sum(x['count'] for x in changed if x['kind'] == 'fib-generated'), 0)
+            self.assertEqual(sum(x['count'] for x in changed if x['kind'] == 'fib-analysis-invocations'), 0)
+            self.assertGreater(sum(x['count'] for x in changed if x['kind'] == 'fib-reused'), 0)
+            self.assertIn('fib-extract', phases.read_text())
+            self.assertNotIn('lake-analyzer-await', phases.read_text())
+            self.assertEqual(build(), [])
+            # Keep the changed acquired law normalized and compiler-valid.
+            changed_source = original
+            for before, after in (
+                    (b'private def acquiredNullMass : Nat := 1',
+                     b'private def acquiredNullMass : Nat := 2'),
+                    (b'  denominator := 5\n', b'  denominator := 6\n')):
+                self.assertEqual(original.count(before), 1)
+                changed_source = changed_source.replace(before, after)
+            self.assertNotEqual(changed_source, original)
+            self.source.write_bytes(changed_source)
+            affected = build()
+            self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-generated'), 0)
+            self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-analysis-invocations'), 0)
+            self.assertGreater(sum(x['count'] for x in affected if x['kind'] == 'fib-reused'), 0)
+            affected_report = self.directory / 'affected-report.json'
+            with zipfile.ZipFile(STATE / 'modules' / (MODULE + '.zip')) as bundle:
+                for suffix in ('', '.materials.zip', '.provenance.json'):
+                    Path(str(affected_report) + suffix).write_bytes(
+                        bundle.read('raw-lean-report.json' + suffix))
+            declared = next(row for row in fib_analysis.consume(affected_report)['applications']
+                            if row['application'] == PREFIX + 'nativeDeclared')
+            self.assertEqual(declared['request']['law'], ['2/6'] + ['1/6'] * 4)
+            self.assertEqual(declared['reading']['source_contract']['pushforward_law'],
+                             [{'numerator': '1', 'denominator': '3'}] +
+                             [{'numerator': '1', 'denominator': '6'}] * 4)
+            self.assertEqual(build(), [])
+        finally:
+            self.source.write_bytes(original)
+            unrelated.unlink(missing_ok=True)
+            cleanup_module(unrelated_name)
 
 
 if __name__ == '__main__':

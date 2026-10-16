@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:777d5c59a07ce6e2a355a80472320605282516bd0bc7ced7d498eed91c01b6a2
+  normalized_sha256: sha256:777d5c59a07ce6e2a355a80472320605282516bd0bc7ced7d498eed91c01b6a2
+cas_ref: sha256:777d5c59a07ce6e2a355a80472320605282516bd0bc7ced7d498eed91c01b6a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是定理 E1 的正谱测度表达的证明段，只论证前文已陈述的结论，不提出独立新命题；原命题 atom 保留其自身状态。
+    previous_atom_id: b664d8929116da6563cafcdddb7f6e7dc3b66a6fe434e807422ba82db9b83ee4
+    next_atom_id: 765cda42aec1e64d1635fbfa6f8e2049ba38b5030c2d20b9ee8999f20c957f91

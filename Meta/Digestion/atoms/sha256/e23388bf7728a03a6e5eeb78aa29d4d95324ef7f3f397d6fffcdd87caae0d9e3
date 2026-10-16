@@ -1,0 +1,21 @@
+**Proposition 7.4 (hidden sources, changing cuts and raw events).** All
+same-cut row values and all cut births together need not recover the
+origin source, an arbitrary changed-cut row, or raw event history.
+
+**Proof.** At $P=\{L,R\}$ take $u=\langle\alpha,\beta\rangle$ and
+$v=\langle\beta,\alpha\rangle$. Both have births $(0,0)$ and row
+$D_{\ne}$ at every epoch: iterated injectivity preserves the inequality
+of their child values. Yet their origin raw $L$ replies are alpha and
+beta, respectively. At the changed cut $Q=\{L\}$ their origin exteriors
+$\langle\square_L,\beta\rangle$ and $\langle\square_L,\alpha\rangle$
+differ. Thus even the full same-cut past-and-future row sequence does
+not recover these targets.
+
+For event history, consider this same source contract with no extra
+update: one finite schedule reads the root once, and another reads it
+twice before handing off the same semantic row and birth data. They
+have different actual read counts and ordered event words but identical
+source versions, row values and births. The tables say when addresses
+exist, not which reads, pauses, comparisons or handoffs occurred.
+Physical elapsed time is also not an update count. $\square$
+

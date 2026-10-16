@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92131bc637aef7ebf23a6fb2a6ae4ac40c717087412655d51b0f12013f985a22
+  normalized_sha256: sha256:92131bc637aef7ebf23a6fb2a6ae4ac40c717087412655d51b0f12013f985a22
+cas_ref: sha256:92131bc637aef7ebf23a6fb2a6ae4ac40c717087412655d51b0f12013f985a22
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 173.1（自适应协议）：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: c71e92f000222276ea543fe23d46f5dd2cd16e964752e235102912e235291751
+    next_atom_id: 621c896a0c93731908566f124607821ce426207c040cf1983ce8fc6aedb5785c

@@ -12,6 +12,7 @@ result
   escape_witness: none
   admission_basis: open-problem-resolution (#15391; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/15525
+Escape audit unfinished for prepare_eb: https://github.com/the-omega-institute/trureturing/issues/16693
 Direct frozen dependencies (declaration statement_id):
 D5/S3/Quantum/Foundation/FiniteKrausChannel.MatrixMap; sha256:df01dcc9d6d91985f3214eaee7e1c5eacebab3335dff64bb7b620043c650cad7
 D5/S3/Quantum/Foundation/FiniteKrausChannel.IsCompletelyPositive; sha256:39e2682fd93035c705a08181bb7fdfb77067eba43afcc98c200c30543b913ed4
@@ -135,7 +136,7 @@ private theorem ampl_comp (Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix
     (MatrixMap.kron (Phi ∘ₗ Psi) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) ((MatrixMap.kron Psi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P) := by
   ext a b
   simp only [kron_id_apply, LinearMap.comp_apply]
-private theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
+theorem cp_comp {Phi : Matrix (Fin m) (Fin m) 𝕜 →ₗ[𝕜] Matrix (Fin p) (Fin p) 𝕜} {Psi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜}
     (hPhi : MatrixMap.IsCompletelyPositive Phi) (hPsi : MatrixMap.IsCompletelyPositive Psi) : MatrixMap.IsCompletelyPositive (Phi ∘ₗ Psi) := by
   intro r P hP
   rw [ampl_comp]
@@ -264,12 +265,12 @@ private theorem weighted_psd (M : Matrix (Fin n) (Fin n) 𝕜)
   intro j _
   rw [weighted_rank]
   exact hP.conjTranspose_mul_mul_same _
-private def HasPrepare (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) : Prop :=
+def HasPrepare (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) : Prop :=
   ∃ (k : ℕ) (M : Fin k → Matrix (Fin n) (Fin n) 𝕜)
     (N : Fin k → Matrix (Fin m) (Fin m) 𝕜),
     (∀ j, (M j).PosSemidef ∧ (N j).PosSemidef) ∧
     ∀ A, Phi A = ∑ j, Matrix.trace (M j * A) • N j
-private theorem prepare_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (hPhi : HasPrepare Phi) : IsEB Phi := by
+theorem prepare_eb (Phi : Matrix (Fin n) (Fin n) 𝕜 →ₗ[𝕜] Matrix (Fin m) (Fin m) 𝕜) (hPhi : HasPrepare Phi) : IsEB Phi := by
   obtain ⟨k, M, N, hMN, hPhi⟩ := hPhi
   intro r P hP
   have he : (MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = ∑ j, (Matrix.kroneckerMap (· * ·)) (N j) (weighted (M j) P) := by
@@ -651,7 +652,7 @@ private theorem bp_cp : MatrixMap.IsCompletelyPositive (bp n) := by unfold bp; e
 private theorem bm_cp : MatrixMap.IsCompletelyPositive (bm n) := by unfold bm; exact cp_half (conj_cp _)
 private theorem put_pp_cp : MatrixMap.IsCompletelyPositive (put n pp) := by rw [put_pp_conj]; exact cp_half (conj_cp _)
 private theorem put_pm_cp : MatrixMap.IsCompletelyPositive (put n pm) := by rw [put_pm_conj]; exact cp_half (conj_cp _)
-private theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
+theorem cp_double_tau {Phi : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix (Fin m) (Fin m) ℂ} (hPhi : MatrixMap.IsCompletelyPositive Phi) :
     MatrixMap.IsCompletelyPositive ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) := by
   intro r P hP
   have he : (MatrixMap.kron ((Matrix.transposeLinearEquiv (Fin m) (Fin m) ℂ ℂ).toLinearMap ∘ₗ Phi ∘ₗ (Matrix.transposeLinearEquiv (Fin n) (Fin n) ℂ ℂ).toLinearMap) (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) P = ((MatrixMap.kron Phi (LinearMap.id : MatrixMap (Fin r) (Fin r) _)) Pᵀ)ᵀ := by

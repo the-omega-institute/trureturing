@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be52ca437989db023208e16e6d049c023960c111f5cec996fd60c0ff50a80b84
+  normalized_sha256: sha256:be52ca437989db023208e16e6d049c023960c111f5cec996fd60c0ff50a80b84
+cas_ref: sha256:be52ca437989db023208e16e6d049c023960c111f5cec996fd60c0ff50a80b84
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述受限单射条件及指定域上的移位公式。
+    previous_atom_id: 9c66f9fe819853a2c153dbc20458cad525696005e10ff9e1b7e071898dfb4096
+    next_atom_id: 37e58983f388757a47892a0abfe1a19e9801a1530bb1f3c5902b4e2e5ee63dc8

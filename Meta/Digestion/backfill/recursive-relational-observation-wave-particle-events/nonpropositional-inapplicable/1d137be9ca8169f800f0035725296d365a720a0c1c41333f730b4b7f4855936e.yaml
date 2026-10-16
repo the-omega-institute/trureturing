@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1d137be9ca8169f800f0035725296d365a720a0c1c41333f730b4b7f4855936e
+  normalized_sha256: sha256:1d137be9ca8169f800f0035725296d365a720a0c1c41333f730b4b7f4855936e
+cas_ref: sha256:1d137be9ca8169f800f0035725296d365a720a0c1c41333f730b4b7f4855936e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 208. 矩形来源下的 Bellman 递归 是章节标题及导引，只说明本节的研究任务、来源或模型范围，不另陈述具体性质、公式或反例。
+    previous_atom_id: 6530c2ba93cf6bd4ee1ace7b69147e302490d1ab3edfa3652e6c872c57db3972
+    next_atom_id: a6ab58b61f2a73620668edfedcb1b88bc5579662066e92a20e69751809d23f8c

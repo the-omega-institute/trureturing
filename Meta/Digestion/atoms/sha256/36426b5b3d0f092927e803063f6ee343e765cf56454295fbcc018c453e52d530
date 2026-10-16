@@ -1,0 +1,15 @@
+**Lemma 2.1 (Semantic normalization, including nonreturn depths).** A lawful total-cap-$k$ rule has a measurable seed-dependent representation by finite binary read trees of height at most $k$. Read nodes carry integer addresses; leaves carry labels in $\mathcal A\cup\{\bot\}$. A leaf's depth is its exact actual paid count, including at a $\bot$ leaf. Normalization preserves $Z$ and every actual read sequence; all formal binary branches can be capped as well.
+
+Proof. Replace finite internal delays by fixed finite delays, retaining the distinction between a finite next event and indefinite internal continuation. At every formal record of length $k$, replace a request for another read by internal nonreturn without that call. Keep a return or an existing internal nonreturn there. On a path already obeying the total cap, this suppresses no actual event. A finite number of finite waits is still finite, so the return indicator, output and count are preserved; only numerical finite timing values can change. The same observation shows preservation of the actual read sequence. Inconsistent or null formal branches are now capped too.
+
+At fixed $u$, unfold the semantic next-event rule. A read has two ordered children, for replies zero and one. A return or internal nonreturn is a terminal with the corresponding label. There is no read at depth $k$, so the tree has at most $2^k-1$ read nodes when $k\ge1$, and none when $k=0$. Repeated addresses remain separate nodes and separate charges. Terminal depths are not padded.
+
+The set $\mathcal T_k$ of these trees is countable: there are finitely many shapes and terminal labellings at bounded height, with a finite tuple of integer labels for each. Give it the discrete sigma-algebra. To prove $u\mapsto T(u)$ measurable, build the finitely many possible positions successively. A preceding record $r(u)$ takes values in a countable set. If $F(u,r)$ is any measurable next-event condition, evaluation at the varying record is measurable because its event is
+
+$$
+\bigcup_r\bigl(\{u:r(u)=r\}\cap\{u:F(u,r)\}\bigr).
+\tag{2.1}
+$$
+
+Induct over the potential positions, using a dummy label where an earlier terminal removes a position. Finite events and indefinite continuation are already measurably distinguished in the contract. Completion versions can be chosen together over the countably many records; product-null changes leave the source-section identities unchanged. This proves the assertion without a regular conditional distribution on singleton seeds. It is the inherited interface of [Original, Theorems 12.2–12.3][Original], not an effective procedure for deciding divergence of arbitrary code. $\square$
+

@@ -1,0 +1,12 @@
+**Definition 5.1 (actual jointly attained family).** Put
+
+$$
+\mathcal B(P)=\{b_P(u):u\in\mathcal T\},\qquad K_P=|\mathcal B(P)|,
+\qquad P_L=\{s:Ls\in P\},\quad P_R=\{s:Rs\in P\}.
+\tag{NBP.5.1}
+$$
+
+For two suffix vectors, $a\boxtimes c$ means reattach their coordinates
+by $L,R$ to form one vector on $P$. These families concern one whole
+actual source per vector; they are not products of coordinatewise birth ranges.
+

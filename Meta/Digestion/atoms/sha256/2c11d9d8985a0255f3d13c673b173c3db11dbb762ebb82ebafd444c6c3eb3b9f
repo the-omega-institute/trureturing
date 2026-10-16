@@ -1,0 +1,27 @@
+**Proposition 10.4 (history and installation boundaries).** For odd
+$h$ and $T\ge1$ neither comparison class has a solution. For every
+fixed $h\ge1$, no one finite complete fixed-literal installation
+solves all unbounded entries, even with adaptive genuine Updates
+and counted finite internal work.
+
+Proof. The first assertion is the exact ABT Theorem 9.2 fiber
+$\{(A_S,1),(B_S,0)\}$ on any $h$-leaf shape $S$. These entries
+have the same current tree and, for odd $h$, opposite parity;
+ABT's future-experiment indistinguishability applies to all allowed
+operations and common initialization.
+
+For the second assertion put
+$\Omega=\max(\{0\}\cup\{w(p):p\text{ is an installed Read literal}\})$,
+including all routing literals. The permanent saturation supplier
+CAR Theorem 11.2 / Native Resource Frontier Theorem 2.1, used in
+§9.7, gives branch at every installed literal for every source at
+entry $t\ge\Omega+2$ and after every further Update. In terms of
+maximum ordinary length $D$, $2D+2$ is also sufficient since
+$w(p)\le2|p|$. Choose two same-shape originals differing at one
+leaf. All future raw replies, acknowledgements and internal work
+agree, whereas their target bits differ. A shared first Halt is
+wrong for one source; absence of a Halt violates termination.
+Thus the positive quantifier is $\forall T<\infty\ \exists C_{h,T}$
+in its stated regimes, not $\exists C_h\ \forall t\ge0$.
+$\square$
+

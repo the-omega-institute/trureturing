@@ -56,6 +56,18 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             Describe.Remark(DescribeId.Create("flag-lift"), H("A composition-compatible flag"), FlagConstruction(),
                 AssessedProvenance.FromLiterature(Flags), Blocks(Paragraph(Text(
                     "On the auxiliary two-dimensional factor take P+ = (1,i)(1,i)*/2 and P- = (1,-i)(1,-i)*/2. Their transpose exchanges them. Compress to these flag sectors with B+ and B-, and put E(X) = B+(X) + B-(X)^T and D(A) = A tensor P+ + A^T tensor P-. The lift D Phi E/2 has four completely positive branches for every complex PPT Phi. It is invariant under transpose on input and output, so its real restriction is IPT and complexifies back to the lift. The identity E D = 2 id makes the lift preserve composition. Completely positive insertion A tensor P+ and compression B+ recover Phi squared divided by two. This transfers entanglement breaking from the lifted square. The lift adapts the conjugate-flag construction rho tensor P+ + rho partially transposed tensor P- of Huber, Lami, Lancien and Müller-Hermes, arXiv v1, Section III.C, PDF p. 8, the second lemma labelled III.1. The map normalization, composition law and recovery are the consequences used here.")))),
+            Node("HasPrepare", "Finite positive measure-and-prepare form", PrepareFormula(),
+                "A finite family of positive measurement matrices M and positive preparation matrices N represents Phi by the sum of trace(M(j) A) times N(j), for every input matrix A. The natural number k counts all terms; n and m are arbitrary input and output dimensions over an RCLike scalar field K. Scalar multiplication is displayed by a centered dot.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            OwnerNode("prepare-eb", Prefix + "prepare_eb", "Positive measure-and-prepare maps break entanglement", PrepareBreaking(),
+                "Every positive amplified input has separable output under a map with finite positive measure-and-prepare form. Positivity of each weighted matrix follows from a rank-one decomposition of the measurement matrix and positive congruence of the input; tensor products with the positive preparations then form a finite separable sum.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("cp_comp", "Composition preserves complete positivity", CpComposition(),
+                "The composition of completely positive linear matrix maps is completely positive, over every RCLike field and all finite dimensions.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("cp_double_tau", "Double transposition preserves complete positivity", CpDoubleTranspose(),
+                "For every completely positive complex-linear matrix map, transposing its input and output gives a completely positive map. Input and output dimensions may differ.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "The three conjectures are equivalent", Disp(Equivalence()),
                 "IPT² over either field in dimension 2n implies PPT² over ℂ in dimension n by the flag lift and recovery. The source's implications PPT²(ℂ) ⇒ IPT²(ℂ) ⇒ IPT²(ℝ) retain dimension n. Entanglement breaking is characterized by a separable input-first Choi matrix, with an explicit tensor swap, and by measure-and-prepare form. Completely positive maps preserve it under pre- and post-composition. The complexification of a real entanglement-breaking map is complex entanglement breaking; in the reverse direction the IPT condition gives CSEP ∩ IPT = real SEP. These facts close both equivalences. The PPT-squared conjecture itself and the possibility of avoiding dimension doubling remain open.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -63,10 +75,22 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
                     ProblemSlugRef.Create("chiribella-davidson-paulsen-rahaman-2023-ppt-ipt-squared-equivalence"),
                     ResolutionKind.Proved)))));
 
+    private static Formula Cp(Formula phi) => App(Qualified("MatrixMap", "IsCompletelyPositive"), phi);
+    private static Formula RectMap(Formula scalar, string input, string output) => Seq(Mat(FinOf(V(input)), scalar), Sp,
+        new Formula.Subscript(To, Seq(V("l"), OpenBracket, scalar, CloseBracket)), Sp, Mat(FinOf(V(output)), scalar));
+    private static Formula LinearCompose(Formula a, Formula b) => Seq(Parenthesized(a), Sp, new Formula.Subscript(Circ, V("l")), Sp, Parenthesized(b));
+    private static Formula TransposeMap(string d) => App(Qualified("LinearEquiv", "toLinearMap"),
+        App(Qualified("Matrix", "transposeLinearEquiv"), FinOf(V(d)), FinOf(V(d)), C, C));
+    private static Formula CpComposition() => Disp(All("K", Named("Type"), Instance(All("n", N, All("m", N, All("p", N,
+        All("Phi", RectMap(V("K"), "m", "p"), All("Psi", RectMap(V("K"), "n", "m"),
+        Imp(Cp(V("Phi")), Imp(Cp(V("Psi")), Cp(LinearCompose(V("Phi"), V("Psi")))))))))))));
+    private static Formula CpDoubleTranspose() => Disp(All("n", N, All("m", N, All("Phi", RectMap(C, "n", "m"),
+        Imp(Cp(V("Phi")), Cp(LinearCompose(TransposeMap("m"), LinearCompose(V("Phi"), TransposeMap("n")))))))));
+
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("ipt-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("ipt-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock OwnerNode(string id, string owner, string title, Formula formula, string prose,
@@ -163,6 +187,24 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
         return Disp(Generic(All("Phi", MapOf(V("K")), EqTo(SourceChoi(V("Phi")), body))));
     }
 
+    private static Formula PrepareFormula()
+    {
+        Formula input = Mat(FinOf(V("n")), V("K"));
+        Formula output = Mat(FinOf(V("m")), V("K"));
+        Formula mj = App(V("M"), V("j")), nj = App(V("N"), V("j"));
+        Formula trace = App(Qualified("Matrix", "trace"), Parenthesized(Seq(mj, Sp, Star, Sp, V("A"))));
+        Formula sum = Seq(Sum, Underscore, Grp(V("j"), Colon, FinOf(V("k"))), Sp,
+            Parenthesized(Seq(trace, Sp, Cdot, Sp, nj)));
+        Formula positivity = All("j", FinOf(V("k")), And(Psd(mj), Psd(nj)));
+        Formula identity = All("A", input, EqTo(App(V("Phi"), V("A")), sum));
+        Formula body = Ex("k", N, Ex("M", new Formula.TypeArrow(FinOf(V("k")), input),
+            Ex("N", new Formula.TypeArrow(FinOf(V("k")), output), And(positivity, identity))));
+        return Disp(Generic(All("Phi", MapOf(V("K")), IffOf(Call("HasPrepare", V("Phi")), body))));
+    }
+
+    private static Formula PrepareBreaking() => Disp(Generic(All("Phi", MapOf(V("K")),
+        Imp(Call("HasPrepare", V("Phi")), Call("IsEB", V("Phi"))))));
+
     private static Formula ChoiPositive() => Disp(Generic(All("Phi", MapOf(V("K")),
         Imp(App(Qualified("MatrixMap", "IsCompletelyPositive"), V("Phi")), Psd(SourceChoi(V("Phi")))))));
 
@@ -198,8 +240,11 @@ internal sealed class IptPptSquaredEquivalenceDocument : IScribeDocumentDefiniti
             new Formula.Subscript(Gamma, Named("B")));
         Formula liftedPt = new Formula.Power(Parenthesized(V("rhotilde")),
             new Formula.Subscript(Gamma, Seq(Named("B"), Named("B"), Apos)));
-        Formula construction = Seq(Parenthesized(Call("tensor", V("rho"), V("Pplus"))),
-            Sp, Plus, Sp, Parenthesized(Call("tensor", Parenthesized(pt), V("Pminus"))));
+        Formula mul = Fun("a", C, Fun("b", C, Seq(V("a"), Sp, Star, Sp, V("b"))));
+        Formula construction = Seq(Parenthesized(App(Qualified("Matrix", "kroneckerMap"),
+                Parenthesized(mul), V("rho"), V("Pplus"))),
+            Sp, Plus, Sp, Parenthesized(App(Qualified("Matrix", "kroneckerMap"),
+                Parenthesized(mul), Parenthesized(pt), V("Pminus"))));
         Formula conclusion = Ex("rhotilde", Mat(Parenthesized(ProdOf(Parenthesized(ab), FinOf(D(2)))), C),
             And(EqTo(V("rhotilde"), Parenthesized(construction)),
                 And(Psd(V("rhotilde")), EqTo(liftedPt, V("rhotilde")))));

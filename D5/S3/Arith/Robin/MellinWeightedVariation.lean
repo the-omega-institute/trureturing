@@ -24,7 +24,7 @@ namespace D5.S3.Arith.Robin.MellinWeightedVariation
 noncomputable def weight (t : ℝ) : ℝ :=
   (Real.log t + 1) / (t ^ 2 * (Real.log t) ^ 2)
 
-private lemma weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
+lemma weight_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ weight t := by
   unfold weight
   positivity [Real.log_pos ht]
 

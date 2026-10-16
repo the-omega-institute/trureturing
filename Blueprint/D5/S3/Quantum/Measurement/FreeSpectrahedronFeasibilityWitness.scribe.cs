@@ -85,6 +85,17 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
                 "claim", AssessedProvenance.FromLiterature(Source),
                 Seq(Typed(F.Id("claim"), F.Id("Prop")), Sp, Colon, Eq, Sp, ClaimBody())),
             Describe.Lean(
+                DescribeId.Create("pos-semidef-of-trace-det"),
+                DeclarationHandle.Create(Prefix + "posSemidef_of_trace_det"),
+                H("Positive semidefiniteness from trace and determinant"),
+                StatementSource.FromAuthor(Disp(PosSemidefOfTraceDet())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A real symmetric two by two matrix whose trace is positive and determinant is "
+                        + "nonnegative becomes positive semidefinite after entrywise inclusion into the "
+                        + "complex numbers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("appendix-feasibility-result"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Feasibility throughout the closed interval"),
@@ -116,6 +127,9 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
     private static Formula Fin(byte n) => App("Fin", D(n));
     private static Formula Matrices(Formula scalars) => App("Matrix", Fin(2), Fin(2), scalars);
     private static Formula Typed(Formula value, Formula type) => Seq(Open, value, Colon, Sp, type, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Imp(Formula hypothesis, Formula conclusion) =>
+        Seq(Parenthesized(hypothesis), Sp, Rightarrow, Sp, conclusion);
     private static Formula All(Formula name, Formula type, Formula body) =>
         Seq(Forall, Sp, Open, name, Colon, Sp, type, Close, Comma, Sp, body);
     private static Formula Angle(Formula body) => All(Theta, Reals(), body);
@@ -149,6 +163,24 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
         Open, D(6), Minus, D(4), Sp, RootThree(), Close, Sp, Sine(),
         Plus, D(6), Sp, Cosine(), Minus, D(4), Sp, RootThree(), Plus, D(1, 3));
     private static Formula OffDiagonal() => Seq(D(3), Sp, Sine(), Minus, D(2), Sp, RootThree(), Plus, D(3));
+    private static Formula PosSemidefOfTraceDet()
+    {
+        var u = F.Id("u");
+        var v = F.Id("v");
+        var w = F.Id("w");
+        var trace = Seq(u, Sp, Plus, Sp, w);
+        var determinant = Seq(Seq(u, Sp, Cdot, Sp, w), Sp, Minus, Sp,
+            Seq(v, Caret, Grp(D(2))));
+        var matrix = Typed(
+            Seq(Parenthesized(Mat(u, v, v, w)), Dot, App("map", F.Id("ofReal"))),
+            Matrices(Complexes()));
+        var hypotheses = Seq(
+            Parenthesized(Seq(D(0), Sp, Lt, Sp, trace)), Sp, Land, Sp,
+            Parenthesized(Seq(D(0), Sp, Leq, Sp, determinant)));
+        var conclusion = Seq(matrix, Dot, F.Id("PosSemidef"));
+        return All(u, Reals(), All(v, Reals(), All(w, Reals(),
+            Imp(hypotheses, conclusion))));
+    }
     private static Formula ClaimBody() => Angle(Seq(
         Theta, Sp, InMacro, Sp, App("Icc", D(0), Fr(Pi, D(2))), Sp, Rightarrow, Sp,
         Open, All(F.Id("i"), Fin(6),

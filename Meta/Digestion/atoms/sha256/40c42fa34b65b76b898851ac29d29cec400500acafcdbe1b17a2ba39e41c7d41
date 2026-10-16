@@ -1,0 +1,8 @@
+**Corollary 14.3 (equality-premise substitution).** Whenever a cited signed
+consumer has an ordinary premise asserting equality of two completed outputs,
+Theorem 13.5 may replace that premise for records satisfying Definition 14.1.
+The remaining cofinality, finite freezing, joint support and whole-source
+hypotheses are unchanged. The substitution does not produce an ordinary
+finite equational derivation, a complete description language, or an
+unrestricted contact solver.
+

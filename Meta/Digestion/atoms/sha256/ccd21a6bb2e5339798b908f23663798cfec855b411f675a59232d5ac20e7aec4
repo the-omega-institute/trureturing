@@ -1,0 +1,20 @@
+**Theorem 14.3 (binary memory is exactly controlled by pairwise overlap).**
+Under Assumption 14.1 with $H=1$,
+
+$$
+N_1(\mathcal M)=2
+\quad\Longleftrightarrow\quad
+S\cap T\ne\varnothing\quad(S,T\in\mathcal M).
+\tag{NAR.14.7}
+$$
+
+If two members are disjoint, $N_1(\mathcal M)\ge4$. No binary menu in
+this contract has optimum three. In the intersecting case an effective
+one-bit encoder, factoring through (NAR.14.6), is
+
+$$
+e(a)=1\quad\Longleftrightarrow\quad
+\exists T\in\mathcal M:\ a_i=1\quad(i\in T).
+\tag{NAR.14.8}
+$$
+

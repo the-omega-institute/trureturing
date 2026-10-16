@@ -1,0 +1,57 @@
+**Theorem 12.4 (exact joint three-budget feasibility transfer).** Under
+the supplied operational premises in Definition 12.1, for every
+nonempty full actual one-image row fiber and every integer
+$r\ge1,K\ge1,q\ge0$,
+
+$$
+\mathsf{MooreInvFeas}_*(r,K,q)
+\quad\Longleftrightarrow\quad
+\mathsf{MooreRootFeas}_*(r,K,q).
+\tag{NBP.12.8}
+$$
+
+The same upper budgets charge actual exported initial distinctions,
+all installed running and halting states, and every invocation. The
+native side retains every actual finite origin and every legal finite
+native address.
+
+**Proof.** First suppose $D\ne\varnothing$. The native-to-root
+direction is Theorem 12.3. For the converse, take a root coloring and
+shared table satisfying Definition 12.2. Install the same state set,
+partition, transition table and whole halting outputs on the native
+register, replacing each coordinate $d$ by the actual native address
+$p_d$. Every $p_d$ is reached on every source of the fixed row fiber.
+For any actual valuation $x\in\mathcal X_*$ its reply is exactly
+$\theta_x(d)$; the absent transition entry is never used at these
+addresses. No bound on hidden branch depth or shape is needed.
+
+The producer inspects the roots of its actually acquired class values,
+computes $\theta_x\in\Theta_*$, and computes the finite-table value
+$c(\theta_x)$. It actually exports this initial-state code before the
+complete access cut and uses the supplied common lawful entry. Local
+inspection of acquired terms is not a fresh native call. The export
+has at most $r$ values and is recoverable from the initial state.
+Proposition 10.2 makes every type attained, so its actual code range
+is exactly $c[\Theta_*]$. Nothing else from acquisition is available
+after entry.
+
+For this arbitrary actual origin, induction on the current state makes
+the native run identical to the root run on $\theta_x$, with one native
+invocation for each root invocation and the same halting state. Thus
+the state cardinality is unchanged, the call bound is $q$, and the
+output is $G_*(\theta_x)=F(u_x)$ by Theorem 10.4. In particular it
+includes the inverse exterior, canonical restricted partition with
+all equalities and disequalities, repeated occurrences and every
+predecessor absence guard. The same installed table works for all
+actual origins; the necessity witnesses are not used for this direction.
+
+If $D=\varnothing$, Proposition 10.2 gives the singleton chart
+containing the empty type. The complete current tree is the exterior,
+and its unique actual predecessor and entire predecessor row are fixed.
+On both sides install one halting state with that row as its fixed
+output and export its one initial-state code. This uses one state, one
+actual value and zero calls, within every stated $r,K,q$. It asks no
+nonexistent coordinate and makes no dummy native invocation. Therefore
+both sides are feasible, proving (NBP.12.8) also for zero classes.
+$\square$
+

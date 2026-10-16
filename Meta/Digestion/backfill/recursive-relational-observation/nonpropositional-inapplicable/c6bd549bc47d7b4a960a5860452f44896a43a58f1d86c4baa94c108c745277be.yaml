@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c6bd549bc47d7b4a960a5860452f44896a43a58f1d86c4baa94c108c745277be
+  normalized_sha256: sha256:c6bd549bc47d7b4a960a5860452f44896a43a58f1d86c4baa94c108c745277be
+cas_ref: sha256:c6bd549bc47d7b4a960a5860452f44896a43a58f1d86c4baa94c108c745277be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 138.5（有限坐标不保证有限线性观测闭合）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 9bc3b152f944065fc3aaa7db5b184b9619f5d260ef3754506ed6d52616d157b1
+    next_atom_id: 4197824385e4b72a8d29b051b6ecbe46ad7115f7fef13dc60fb324778d65d761

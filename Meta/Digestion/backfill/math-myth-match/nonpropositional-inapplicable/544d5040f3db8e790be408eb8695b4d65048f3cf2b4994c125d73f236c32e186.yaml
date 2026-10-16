@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:544d5040f3db8e790be408eb8695b4d65048f3cf2b4994c125d73f236c32e186
+  normalized_sha256: sha256:544d5040f3db8e790be408eb8695b4d65048f3cf2b4994c125d73f236c32e186
+cas_ref: sha256:544d5040f3db8e790be408eb8695b4d65048f3cf2b4994c125d73f236c32e186
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 6.2（共同伦理不确定共同神学）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 1d36f8da584c2a95872013115a1cdc73f6b595515a4ff0dab28cf6e0c6d746bf
+    next_atom_id: 4ca6fa1fbe53441dd7bf404835eafe81adc118b2813c99d6fadca55dc1c475d8

@@ -1,0 +1,58 @@
+**Lemma 6.4 (actual finite barriers, frame admission and all-depth witnesses).**
+The coarse frame automatically has exactly one finite coordinate projection,
+$a\in\{\alpha,\beta\}$. Its other old class coordinates $x$ and $s$ have infinite
+projections. For each fixed $a=f\in\{\alpha,\beta\}$ all four full-row slices
+are infinite and have the canonical contact
+
+$$
+K_f=\langle f,\Omega\rangle.
+\tag{FFM.29}
+$$
+
+Thus this frame is admitted for the entire $A$ and for every selected
+$B\subseteq A$ with at least two rows.
+
+Proof. Let $Z_0=\alpha$ and $Z_{j+1}=\langle Z_j,Z_j\rangle$. Use the constructor
+mass $\gamma$ of [URR, Definition 2.1 and (URR.5)][URR], supplied by [ABC,
+Theorems 2.2–2.3][ABC]: it counts uncollapsed binary nodes in the normal atomic
+code. Thus $\gamma(T_n)=0$, $\gamma(\rho^a t)=\gamma(t)$, every parent has mass
+at least either child's, and a pair with a positive-mass child has mass
+$1+\gamma(s)+\gamma(t)$. The pair $\langle\alpha,\alpha\rangle$ is not the
+exceptional atomic pair, so induction yields
+
+$$
+\gamma(Z_j)=2^j-1\quad(j\ge1),\qquad\mu(Z_j)=j.
+\tag{FFM.30}
+$$
+
+In particular every $Z_j$, $j\ge1$, is non-atomic. For any requested inclusive
+$h\ge0$ set $x_h=Z_{h+1}$. With either fixed $f$, use in the four rows respectively
+
+$$
+z_h=x_h,\quad F(x_h),\quad G(x_h),\quad\rho^3x_h.
+\tag{FFM.31}
+$$
+
+All four choices are branches and hence differ from $f$. The first three give
+exactly their specified row by Lemma 6.3. The fourth has clock increment three,
+whereas $x_h,F(x_h),G(x_h)$ have increments zero, two, two; it is different from
+all of them and gives exactly $r_o$. All retained constraints follow from Lemma
+6.2, not merely from the chosen equality bit.
+
+Each $x_h$ branches through $h$. Native $\rho$ preserves every original branch,
+so its displayed iterates do too; pairing such trees retains agreement with
+$\Omega$ through $h$. The tail $s_h$ and $\langle x_h,s_h\rangle$ therefore agree
+with $\Omega$ through $h$. The finite source $U(f,x_h,z_h)$ agrees with (FFM.29)
+through $h$, including the same finite leaf at $L$ and absence below it. Its full
+finite row remains the row from (FFM.31); no row test is imposed on $K_f$.
+
+Letting $h$ grow gives distinct $x_h$ by (FFM.30). Also distinct tails follow
+from their first child $F(x_h)$ and finite injectivity of $\rho$. Thus all four
+row slices have infinitely many original sources and the two coarse coordinate
+projections $x,s$ are infinite. Both leaves $f$ are attained, and there are no
+other values of $a$ by Lemma 6.2. The computed finite projection is therefore
+exactly those two values. In the coarse old-row term
+$W(a,x,s)=\langle a,\langle x,s\rangle\rangle$, filling $x,s$ with $\Omega$
+gives $\langle f,\langle\Omega,\Omega\rangle\rangle=K_f$. These are precisely
+the canonical tests that pass, proving whole-image admission. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:010f16702a4f7ac3ff9dedee59b7eb21f0defb2687412004eb12ca10362619c3
+  normalized_sha256: sha256:010f16702a4f7ac3ff9dedee59b7eb21f0defb2687412004eb12ca10362619c3
+cas_ref: sha256:010f16702a4f7ac3ff9dedee59b7eb21f0defb2687412004eb12ca10362619c3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 278.1（真实报告）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 662dcf09b1eef2f55c47373ad70b52a8257503ab47a515c87bb1b9c3be367ad4
+    next_atom_id: b286bb7ef8f5b19dcbbacdc7de5a326238edd20d40f23aa0b8f925a4c18ece0c

@@ -5,7 +5,7 @@ year: 2001
 title: The Difference Between Consecutive Primes, II
 doi: 10.1112/plms/83.3.532
 url: https://doi.org/10.1112/plms/83.3.532
-claim: Theorem 1 supplies a prime in every sufficiently large backward interval of length x^0.525. Its forward endpoint conversion bounds repeated actual-core label weight; it does not supply asymptotic prime counts, selected-source clock control or signed zero-head cancellation.
+claim: Theorem 1 supplies prime existence in x^0.525 intervals; the unnumbered concluding proof estimate supplies a forward lower count with coefficient 9/100. These published inputs control actual-core residence and total local occupation, but do not give an asymptotic prime-count formula or signed Robin cancellation.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -86,3 +86,30 @@ not independently audited here, and its arXiv metadata supplies no
 journal reference. SM2--SM3 and SC3--SC4 continue to use the published
 BHP supplier. This records a checked recent statement, without asserting
 a current-best record or treating the newer numerical proof as verified.
+
+## The published proof's quantitative forward count
+
+The unnumbered concluding display of the same published proof, printed
+p.562 (PDF p.31), states that, for all sufficiently large real $x$,
+
+$$
+\pi(x+x^{21/40})-\pi(x)
+\ge\frac9{100}\frac{x^{21/40}}{\log x}.
+\tag{BHP-C}
+$$
+
+The rendered primary page was read for the interval direction, coefficient
+and quantifier. The display obtains $9/100$ by subtracting its four loss
+allowances from one. It is an actual lower count, rather than a mere
+existence statement or an asymptotic formula for the prime count. It
+has no separate theorem number. The original sieve proof and numerical
+integral estimates are reused, not independently re-audited or
+Lean-verified; no numerical value for the sufficient start is supplied.
+
+The [actual local-occupation application](../Estimation/trureturing2026pricegapconvexity.md#the-published-bhp-count-controls-total-local-core-occupation)
+retains BHP-C's count, converts each prime to its existing strict
+first-layer activation mass, and bounds the combined original weight
+of arbitrarily many different cores in a clock interval. The corresponding
+vanishing conclusion uses precisely the existing SC4 parameter range.
+This is a distinct application of the published estimate, not a new
+sieve theorem, prime-gap exponent or source-dependent signed estimate.

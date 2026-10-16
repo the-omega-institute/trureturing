@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:52413c961533c3339846ae7dc4eebd2e20dda203dd68a0c955defc9427b969ee
+  normalized_sha256: sha256:52413c961533c3339846ae7dc4eebd2e20dda203dd68a0c955defc9427b969ee
+cas_ref: sha256:52413c961533c3339846ae7dc4eebd2e20dda203dd68a0c955defc9427b969ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 清单片段“有限模型”仅列举主题、接口组成或考虑维度；本片段不陈述性质、存在性或推论。
+    previous_atom_id: 7b4586803f2a7fc07d9a1c898c6fcd2999f65c9d42a1540e14b7170288668da5
+    next_atom_id: e5abb429889f17950a14d1dc7438df6160ba6c3521e03235e73869dc7c8bb1c7

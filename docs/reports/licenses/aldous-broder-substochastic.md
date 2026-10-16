@@ -2,7 +2,7 @@
 
 The live source-preserving slice in `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SubstochasticEscape.lean` comes from YuZh98/aldous-broder-lean at immutable revision `bd20382923d987fc54a9773e04a4bc22b851872c`. Its source `EAB/Paper/ConfinedChain.lean` has SHA256 `d235b9788731933c6f9b315b164ed71859748ca44658eef3cf033acfefbb8fba`.
 
-The owning namespace and import list are adapted. Statement types and proof bodies are retained. The unused `rowSum_le_one` leaf, irreducible/confined-chain, Neumann-series and positive-minor results are omitted. Retire the port when this repository's pinned Mathlib contains equivalent suppliers and directly reuse those suppliers.
+The owning namespace and import list are adapted. Statement types and proof bodies are retained. The retained slice includes matrix-power decay, nonsingularity and the entrywise Neumann series. The unused `rowSum_le_one` leaf, irreducible/confined-chain and positive-minor results are omitted. Retire the port when this repository's pinned Mathlib contains equivalent suppliers and directly reuse those suppliers.
 
 The supplier pins Lean `4.30.0` and Mathlib `c5ea00351c28e24afc9f0f84379aa41082b1188f`; the target pins Lean `4.33.0` and Mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`. The retained slice is compiled against the target pins. `MatrixFoundation` contributes no declaration to the retained slice; `Mathlib.Data.Matrix.Mul`, `Mathlib.Analysis.SpecificLimits.Basic`, `Mathlib.LinearAlgebra.Matrix.ToLinearEquiv` and `Mathlib.Topology.Instances.Matrix` supply its imports.
 

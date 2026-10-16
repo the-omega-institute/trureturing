@@ -140,6 +140,38 @@ theorem IsSubstochastic.det_one_sub_ne_zero (hA : IsSubstochastic A)
     exact tendsto_const_nhds
   exact tendsto_nhds_unique hconst hlim
 
+/-- The Neumann series: the powers of `A` sum entrywise to the
+inverse of `I - A`. -/
+theorem IsSubstochastic.hasSum_pow_entry (hA : IsSubstochastic A)
+    {N : ℕ} (hN : 0 < N) {c : ℝ} (hc1 : c < 1)
+    (hc : ∀ k, rowSum A N k ≤ c) (i j : ι) :
+    HasSum (fun t => (A ^ t) i j) ((1 - A)⁻¹ i j) := by
+  have hunit : IsUnit (1 - A).det :=
+    isUnit_iff_ne_zero.mpr (hA.det_one_sub_ne_zero hN hc1 hc)
+  rw [hasSum_iff_tendsto_nat_of_nonneg (fun t => hA.pow_nonneg t i j)]
+  have hpartial : ∀ T : ℕ,
+      ∑ t ∈ Finset.range T, (A ^ t) i j =
+        (1 - A)⁻¹ i j - ∑ k, (1 - A)⁻¹ i k * (A ^ T) k j := by
+    intro T
+    have hgeom : (1 - A) * ∑ t ∈ Finset.range T, A ^ t = 1 - A ^ T :=
+      mul_neg_geom_sum A T
+    have hsolve : ∑ t ∈ Finset.range T, A ^ t =
+        (1 - A)⁻¹ * (1 - A ^ T) := by
+      rw [← hgeom, ← Matrix.mul_assoc, Matrix.nonsing_inv_mul _ hunit,
+        Matrix.one_mul]
+    have hentry := congrFun (congrFun hsolve i) j
+    rw [Matrix.sum_apply] at hentry
+    rw [hentry, Matrix.mul_sub, Matrix.mul_one, Matrix.sub_apply,
+      Matrix.mul_apply]
+  simp only [hpartial]
+  have hzero : Tendsto
+      (fun T => ∑ k, (1 - A)⁻¹ i k * (A ^ T) k j) atTop (𝓝 0) := by
+    have h := tendsto_finsetSum (Finset.univ : Finset ι)
+      (fun k _ => (hA.tendsto_pow_entry hN hc1 hc k j).const_mul
+        ((1 - A)⁻¹ i k))
+    simpa using h
+  simpa using tendsto_const_nhds.sub hzero
+
 end Substochastic
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.SubstochasticEscape

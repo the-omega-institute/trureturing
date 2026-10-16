@@ -4,6 +4,12 @@
 
 The pure Bell density has the maximally mixed one-qubit marginal.
 
+More generally, a positive joint density with a normalized pure first marginal is the tensor product of that pure density and a second density. Let P project onto the pure vector tensored with the full second interface. The marginal identity gives full trace on P. Factoring the joint density as R-adjoint times R shows that R times the complementary projection has zero squared norm, hence the joint density equals P times itself times P. Contracting with the pure vector on both sides supplies the positive trace-one second factor.
+
+Two Bell densities on overlapping pairs have the same middle-qubit marginal, one half of the identity, but admit no common three-qubit positive state. The first Bell marginal has zero diagonal entries at the unequal computational-basis addresses. Positivity makes every joint diagonal summand at either such address zero. A zero diagonal entry of a positive matrix forces its entire row and column to vanish.
+
+The off-diagonal Bell coherence required by the second pair is a sum of two joint entries. In the first entry the column has an unequal first-pair address; in the second the row has one. Both vanish, contradicting the nonzero Bell coherence. This obstruction concerns a common positive realization of both prescribed marginals; equality of their overlap does not supply such a realization.
+
 **Theorem 1.1 (The Bell pure state reduces to one half of the identity).**
 
 $$\begin{gathered}\langle\operatorname{bellVector}\mid\operatorname{bellVector}\rangle = 1 \land\\{}\operatorname{bellDensity} \geq 0 \land\\{}\operatorname{Tr}(\operatorname{bellDensity}) = 1 \land\\{}\operatorname{rank}(\operatorname{bellDensity}) = 1 \land\\{}\operatorname{bellDensity}^{2} = \operatorname{bellDensity} \land\\{}\operatorname{traceEnvironment}(\operatorname{bellDensity}) = \frac{1}{2} I \land\\{}\operatorname{traceEnvironment}(\operatorname{bellDensity})^{2} \neq \operatorname{traceEnvironment}(\operatorname{bellDensity}).\end{gathered}$$

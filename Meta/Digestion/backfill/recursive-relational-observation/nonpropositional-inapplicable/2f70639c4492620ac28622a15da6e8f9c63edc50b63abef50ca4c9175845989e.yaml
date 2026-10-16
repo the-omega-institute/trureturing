@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f70639c4492620ac28622a15da6e8f9c63edc50b63abef50ca4c9175845989e
+  normalized_sha256: sha256:2f70639c4492620ac28622a15da6e8f9c63edc50b63abef50ca4c9175845989e
+cas_ref: sha256:2f70639c4492620ac28622a15da6e8f9c63edc50b63abef50ca4c9175845989e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 142.4（指定原点重构与随机平稳扩展）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 19caaf9329d08ba38c85441565bb65eaad54131c6368f00e2105fc19e9ebc6b0
+    next_atom_id: ba5671c7b5411ccda577f649ec35c40462cd70abb81ab23381d4204e4e274f33

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d82653ad78075669a3b2cc0f9455b0afcfdebbf49c572b4fe69f89d54ac9c3c4
+  normalized_sha256: sha256:d82653ad78075669a3b2cc0f9455b0afcfdebbf49c572b4fe69f89d54ac9c3c4
+cas_ref: sha256:d82653ad78075669a3b2cc0f9455b0afcfdebbf49c572b4fe69f89d54ac9c3c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 74.1（对角不变的未点击扰动类）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: ad73968aa24728e31c4b61e2d3a23382b72a5995efa8991232ebc58a52ce7337
+    next_atom_id: ea4ef9c979e6f073c325c71e6a7d1963aa526a140abad13cc9a8ce09bc88402d

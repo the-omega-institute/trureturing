@@ -1,42 +1,65 @@
 name: Lean build cache publication
 
-# Scheduled runs keep the protected-dev Release publication contract.  Manual
-# runs are the independent Actions-cache producer: dispatch on the exact
-# protected branch ref, provide a 40-hex commit reachable from that branch, and
+# Scheduled runs keep the protected-dev Release publication contract. Manual
+# runs share the cache core with PR labels and automatic protected pushes.
+# Dispatch on the exact protected branch ref with a reachable 40-hex commit, and
 # allow up to the GitHub-hosted 360-minute job limit.  Example:
 # gh workflow run lean-cache-publish.yml --ref dev \
 #   -f source_ref=refs/heads/dev -f source_sha="$(git rev-parse dev)"
 on:
   pull_request:
     branches: [dev, 'integration-**']
-    types: [labeled]
+    types: [opened, reopened, synchronize, labeled]
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
     inputs:
       source_ref:
-        description: 'Exact protected source ref (refs/heads/dev or refs/heads/integration-...)'
+        description: 'Protected build source or PR cache target (refs/heads/dev or refs/heads/integration-...)'
         required: true
         type: string
         default: refs/heads/dev
       source_sha:
-        description: '40-hex commit reachable from source_ref; the producer checks this pin'
+        description: 'Build: reachable protected commit; PR: exact unmerged candidate M'
         required: true
+        type: string
+
+      operation:
+        description: 'Build a protected commit or pinned PR candidate'
+        type: choice
+        options: [build, pr]
+        default: build
+      release_seed_tag:
+        description: 'Optional exact local candidate Release for the long build'
+        type: string
+      release_seed_producer:
+        description: 'Immutable producer commit of release_seed_tag'
+        type: string
+      regenerate_report_artifacts:
+        description: 'Explicitly regenerate all report artifacts, retaining compiled Lean/dependencies'
+        type: boolean
+        default: false
+      pr_source:
+        description: 'PR only: immutable event PR/head/merge/base/run/attempt/target identity'
         type: string
 
 permissions: {}
 
 jobs:
-  publish:
-    name: Publish the Lean build cache
+  manual-producer:
+    name: Produce the protected branch Lean cache
     permissions:
       contents: write
       actions: write
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && github.ref == 'refs/heads/dev')
+      pull-requests: read
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'build'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: ${{ github.event_name == 'workflow_dispatch' && 360 || 120 }}
+    timeout-minutes: 360
+    concurrency:
+      group: lean-cache-branch-${{ github.ref }}
+      cancel-in-progress: false
     env:
-      STRATALINT_CACHE_WRITES: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+      STRATALINT_CACHE_WRITES: 'true'
     steps:
       - uses: actions/checkout@v5
         with:
@@ -95,14 +118,120 @@ jobs:
             export GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA"
           fi
           bash tools/scripts/workflow/ci-entry.sh
+      - name: Produce the Actions cache
+        uses: ./.github/actions/lean-cache-produce
+        with:
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+
+  pr-dispatch:
+    name: Dispatch the PR cache build to its target
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'lean-cache-produce') && (github.event.action != 'labeled' || github.event.label.name == 'lean-cache-produce')
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: write
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the PR merge candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Dispatch the single long build and report its exact run ID
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py dispatch --repository "$GITHUB_WORKSPACE"
+
+  pr-producer:
+    name: Prepare the PR Lean cache artifact
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'pr'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 360
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    concurrency:
+      group: lean-cache-pr-${{ fromJSON(inputs.pr_source).pr }}
+      cancel-in-progress: true
+    env:
+      STRATALINT_CACHE_WRITES: 'true'
+      PR_SOURCE: ${{ inputs.pr_source }}
+      SOURCE_REF: ${{ inputs.source_ref }}
+      SOURCE_SHA: ${{ inputs.source_sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the unmerged source and protected workflow runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py prepare --repository "$GITHUB_WORKSPACE"
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+        run: |
+          GITHUB_SHA="$STRATALINT_CACHE_CHECKED_OUT_SHA" bash tools/scripts/workflow/ci-entry.sh
+      - name: Build and validate the isolated preparation
+        uses: ./.github/actions/lean-cache-produce
+        with:
+          preparation-only: 'true'
+          regenerate-report-artifacts: ${{ inputs.regenerate_report_artifacts }}
+          release-seed-tag: ${{ inputs.release_seed_tag }}
+          release-seed-producer: ${{ inputs.release_seed_producer }}
+      - id: pack
+        name: Package the registered native cache paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py pack --repository "$GITHUB_WORKSPACE" --directory "$RUNNER_TEMP/pr-preparation"
+      - id: preparation
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ steps.pack.outputs.artifact_name }}
+          path: ${{ steps.pack.outputs.artifact_path }}/
+          if-no-files-found: error
+          compression-level: 0
+          overwrite: true
+      - name: Confirm the immutable preparation artifact and source identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_ID: ${{ steps.preparation.outputs.artifact-id }}
+        run: python3 tools/scripts/worktree/lean_pr_cache.py confirm --repository "$GITHUB_WORKSPACE" --artifact-id "$ARTIFACT_ID"
+
+  publish:
+    name: Publish the Lean build cache
+    if: github.event_name == 'schedule' && github.ref == 'refs/heads/dev'
+    permissions:
+      contents: write
+      actions: write
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    env:
+      STRATALINT_CACHE_WRITES: 'false'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate candidate and strip checkout remote
+        env:
+          CI_HIT_PATHS: '*'
+        run: bash tools/scripts/workflow/ci-entry.sh
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - name: Build the Lean producer for the manual seed
-        if: github.event_name == 'workflow_dispatch'
-        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
       - name: Build the scheduled Release producer
-        if: github.event_name == 'schedule'
         run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
         env:
@@ -139,209 +268,7 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build the report and run the compiled judge
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: |
-          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
-          if [[ -n "$producer" ]]; then
-            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
-          else
-            unset STRATALINT_LEAN_PRODUCER_DLL
-          fi
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
-          make compiled-judge-test
-      - id: project_snapshot
-        name: Prepare the manual project seed
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          STRATALINT_CACHE_WRITES: 'true'
-          STRATALINT_REPORT_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - name: Require a usable manual project seed
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          READY: ${{ steps.project_snapshot.outputs.project_ready }}
-          SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
-        run: |
-          if [[ "$READY" != true ]] && [[ "${STRATALINT_ACTIONS_CACHE_SEEDED:-0}" != 1 || "$SKIP_REASON" != no-build-work ]]; then
-            echo "CACHE_SEED_ERROR manual build produced no accepted project seed" >&2
-            exit 1
-          fi
-      - name: Publish the manual project seed
-        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-      - id: dependency_snapshot
-        name: Prepare the manual dependency seed
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          STRATALINT_CACHE_WRITES: 'true'
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
-      - name: Verify the manual project cache was published
-        if: github.event_name == 'workflow_dispatch' && steps.project_snapshot.outputs.project_ready == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
-        run: |
-          set -euo pipefail
-          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
-          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
-            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null || {
-              echo "CACHE_SEED_ERROR project cache was not published to the producer ref" >&2
-              exit 1
-            }
-      - name: Publish the manual dependency seed
-        if: github.event_name == 'workflow_dispatch' && steps.dependency_snapshot.outputs.dependency_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-      - name: Publish the manual toolchain seed
-        if: github.event_name == 'workflow_dispatch' && steps.elan.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
       - name: Publish the protected-dev Release snapshot
-        if: github.event_name == 'schedule'
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib
-
-  pr-producer:
-    name: Produce the pull request Lean cache
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'lean-cache-produce'
-    runs-on: ubuntu-24.04-arm
-    timeout-minutes: 360
-    permissions:
-      contents: read
-      actions: read
-    concurrency:
-      group: lean-cache-pr-${{ github.event.pull_request.number }}
-      cancel-in-progress: true
-    env:
-      STRATALINT_CACHE_WRITES: 'true'
-      STRATALINT_CACHE_PR_PRODUCER: 'true'
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.sha }}
-          fetch-depth: 2
-          persist-credentials: false
-      - name: Validate the pull request merge candidate and strip checkout remote
-        env:
-          CI_HIT_PATHS: '*'
-          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
-        run: bash tools/scripts/workflow/ci-entry.sh
-      - uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-      - name: Build the Lean producer for the PR seed
-        run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj
-      - id: keys
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
-      - id: elan
-        if: steps.keys.outputs.elan_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
-      - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
-      - id: project
-        if: steps.keys.outputs.project_key != ''
-        continue-on-error: true
-        uses: actions/cache/restore@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_restore_key }}
-          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - name: Restore optional validated seeds
-        env:
-          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
-          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
-          PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
-          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
-          PROJECT_OUTCOME: ${{ steps.project.outcome }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build the report and run the compiled judge
-        env:
-          GH_TOKEN: ${{ github.token }}
-          STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: |
-          producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
-          if [[ -n "$producer" ]]; then
-            export STRATALINT_LEAN_PRODUCER_DLL="$producer"
-          else
-            unset STRATALINT_LEAN_PRODUCER_DLL
-          fi
-          make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
-          make compiled-judge-test
-      - id: project_snapshot
-        name: Prepare the PR project seed
-        env:
-          STRATALINT_CACHE_WRITES: 'true'
-          STRATALINT_REPORT_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
-      - name: Require a usable PR project seed
-        env:
-          READY: ${{ steps.project_snapshot.outputs.project_ready }}
-          SKIP_REASON: ${{ steps.project_snapshot.outputs.project_skip_reason }}
-        run: |
-          if [[ "$READY" != true ]] && [[ "${STRATALINT_ACTIONS_CACHE_SEEDED:-0}" != 1 || "$SKIP_REASON" != no-build-work ]]; then
-            echo "CACHE_SEED_ERROR PR build produced no accepted project seed" >&2
-            exit 1
-          fi
-      - name: Publish the PR project seed
-        if: steps.project_snapshot.outputs.project_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-      - id: dependency_snapshot
-        name: Prepare the PR dependency seed
-        env:
-          STRATALINT_CACHE_WRITES: 'true'
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
-      - name: Verify the PR project cache was published
-        if: steps.project_snapshot.outputs.project_ready == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CACHE_KEY: ${{ steps.keys.outputs.project_key }}
-        run: |
-          set -euo pipefail
-          saved="$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/caches" -f key="$CACHE_KEY" -f ref="$GITHUB_REF")"
-          jq -e --arg key "$CACHE_KEY" --arg ref "$GITHUB_REF" \
-            'any(.actions_caches[]; .key == $key and .ref == $ref)' <<< "$saved" >/dev/null || {
-              echo "CACHE_SEED_ERROR project cache was not published to the producer ref" >&2
-              exit 1
-            }
-      - name: Publish the PR dependency seed
-        if: steps.dependency_snapshot.outputs.dependency_ready == 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.dependency_archive_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-      - name: Publish the PR toolchain seed
-        if: steps.elan.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v5
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
