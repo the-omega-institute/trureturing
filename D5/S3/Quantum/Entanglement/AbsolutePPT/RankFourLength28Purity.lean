@@ -186,7 +186,7 @@ theorem result : ¬ claim := by
   have ho : Antitone spectrum := by
     intro i j hij
     simp only [spectrum]
-    split_ifs <;> first | norm_num | omega
+    split_ifs <;> norm_num <;> omega
   have hn (i : Fin 28) : 0 ≤ spectrum i := by
     simp only [spectrum]
     split_ifs <;> norm_num
