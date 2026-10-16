@@ -115,7 +115,7 @@ private theorem trace_smul_psd {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) (c : ℝ) :
     (c • X).trace = ((c * rt X : ℝ) : ℂ) := by
   rw [Matrix.trace_smul, trace_psd hX]
-  simp [Complex.ofReal_mul]
+  rw [Complex.real_smul, Complex.ofReal_mul]
 
 private def dsum {n m : Type*} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]
@@ -684,8 +684,9 @@ private theorem flag_transfer
           (dsum (a • (1 : Matrix Unit Unit ℂ))
             (-b • (1 : Matrix Unit Unit ℂ))) := by
         rw [ptr_smul]
-        rw [Matrix.trace_smul, hτ.2, Matrix.trace_smul, hτ.2]
-        simp
+        rw [Matrix.trace_smul, hτ.2, Matrix.trace_smul, hτ.2,
+          Complex.real_smul, Complex.real_smul, mul_one, mul_one]
+        rfl
   have hone : (1 : Matrix Unit Unit ℂ).PosSemidef := Matrix.PosSemidef.one
   have hEptr : E δ (ptr ρ') (ptr σ') =
       c * E γ (ptr ρ) (ptr σ) + a := by
