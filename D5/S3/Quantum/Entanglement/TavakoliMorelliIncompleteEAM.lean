@@ -9,12 +9,13 @@
 import D5.S3.Quantum.Foundation.FiniteDensityPurification
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
 import D5.S3.Quantum.Analysis.TraceClass.IdealNorm
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.Vec
+import D5.S3.Quantum.GNSMatrix
 
 noncomputable section
-open scoped BigOperators ComplexOrder MatrixOrder
+open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
 open Matrix
+set_option backward.isDefEq.respectTransparency false
+set_option synthInstance.maxHeartbeats 200000
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 namespace D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
@@ -61,6 +62,33 @@ def EAM.effect {d n : ℕ} (A : EAM d n) (a : Fin n) : Op d :=
 
 def Pn {d n : ℕ} (ρ : BipartiteOp d) (A B : EAM d n) : Matrix (Fin n) (Fin n) ℂ :=
   correlation ρ A.effect B.effect
+
+theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
+    (A : Matrix κ κ ℂ) :
+    LinearMap.trace ℂ (EuclideanSpace ℂ κ) (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A).toLinearMap = A.trace := by
+  change LinearMap.trace ℂ _ (Matrix.toEuclideanLin A) = _
+  rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.trace_toLin_eq]
+
+theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
+    (A : Matrix κ κ ℂ) :
+    D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm A =
+      _root_.traceNorm (Matrix.toEuclideanCLM (𝕜 := ℂ) (n := κ) A) (isTraceClass_of_finiteDimensional _) := by
+  let Φ := Matrix.toEuclideanCLM (n := κ) (𝕜 := ℂ)
+  have hsqrt : CFC.abs (Φ A) = Φ (CFC.sqrt (Aᴴ * A)) := by
+    change CFC.sqrt (star (Φ A) * Φ A) = _
+    apply CFC.sqrt_unique
+    · rw [← map_mul, CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg]
+      simp only [← Matrix.star_eq_conjTranspose, map_mul, map_star]
+    · exact map_nonneg Φ (CFC.sqrt_nonneg _)
+  obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
+  let : Finite w := b.orthonormal.linearIndependent.finite
+  let : Fintype w := Fintype.ofFinite w
+  rw [_root_.traceNorm_eq_of_hilbertBasis _ b]
+  change (CFC.sqrt (Aᴴ * A)).trace.re = _
+  rw [hsqrt, tsum_fintype, ← Complex.re_sum]
+  rw [← trace_toEuclideanCLM (CFC.sqrt (Aᴴ * A)),
+    trace_eq_sum_inner_hilbertBasis_of_finiteDimensional _ b, tsum_fintype]
+
 
 def claim : Prop :=
   ∀ (d n r : ℕ), 1 ≤ d → 1 ≤ r → r ≤ d →
