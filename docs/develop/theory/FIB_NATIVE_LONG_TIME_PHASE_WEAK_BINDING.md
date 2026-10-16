@@ -1074,3 +1074,904 @@ scales proved here therefore preserve all those boundaries.
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 81. The exact microscopic operator and its raw source
+
+**Definition 81.1 (unitary microscopic problem).** Retain Definition
+75.1 without changing any datum. In particular $\kappa$ is one fixed
+admissible signed nonzero number, $a>0$, the heat clock is that of $B$,
+and both height faces are Dirichlet. Put $s=\sqrt\tau$ and use exactly
+$\Xi_s$, $c_j$ and $j_0$ of (78.1). Define
+
+$$
+\begin{aligned}
+I_s&=((l-k_0)/(\varepsilon s),(u-k_0)/(\varepsilon s)),&
+\Omega_s&=I_s\times\mathbb R^3,\\
+(\mathcal U_s\psi)(\xi)&=(j_0s^7)^{1/2}\psi(\Xi_s(\xi)),&
+\mathcal Q_s&=\mathcal U_s\mathcal Q,\\
+X&=\partial_r,& Y_s&=v_s(r)\cdot\partial_{y,z,w},\\
+b_s[f]&=\|Xf\|_2^2+\|Y_sf\|_2^2,& A_s&=X^*X+Y_s^*Y_s,\\
+U_s(\xi)&=s^5W_{s^2}(\Xi_s(\xi)),&
+\chi&=g s^{-3}.
+\end{aligned}
+\tag{81.1}
+$$
+
+Here $A_s$ is the Friedrichs operator with form domain $\mathcal Q_s$.
+Vectors and potentials on $\Omega_s$ are extended by zero when compared
+in $L^2(\mathbb R^4,d\xi)$ or in supremum norm. This extension does not
+replace either moving Dirichlet face by a reflecting face. The fields
+$v_s$ are the exact pulled-back fields of (78.4), not their Taylor
+polynomials. Let
+
+$$
+Y=\partial_y+r\partial_z+\tfrac12r^2\partial_w,
+\quad b[f]=\|Xf\|_2^2+\|Yf\|_2^2,
+\quad \mathcal Q_E=\overline{C_c^\infty(\mathbb R^4)}^{(\|\cdot\|_2^2+b)^{1/2}},
+\quad \mathcal E=X^*X+Y^*Y.
+\tag{81.2}
+$$
+
+This is exactly G (31.2), on unit Lebesgue measure. Write its kernel
+as $p_E(t;\eta,\xi)$, and set
+
+$$
+V(\xi)=\frac1{j_0}\int_1^\infty p_E(t;0,\xi)dt,
+\qquad h_\chi[f]=a b[f]-\chi\int V|f|^2d\xi,
+\qquad e(\chi)=\inf_{\substack{f\in\mathcal Q_E\\\|f\|_2=1}}h_\chi[f].
+\tag{81.3}
+$$
+
+The kernel uses $e^{-t\mathcal E}$, independently of $a$. In particular
+(81.3) contains neither $p_E(at;0,\xi)$ nor a unit-source potential
+with the factor $1/j_0$ removed.
+
+**Proposition 81.2 (exact conjugacy and source normalization).** The map
+$\mathcal U_s$ is unitary onto $L^2(\Omega_s,d\xi)$, and on the entire
+complex form domain, for arbitrary norms,
+
+$$
+\begin{aligned}
+b_s[\mathcal U_s\psi]&=s^2\bigl(T[\psi]+\lambda\|\psi\|_2^2\bigr),\\
+s^2\mathfrak e_{g,s^2}[\psi]
+ &=a b_s[\mathcal U_s\psi]-\chi\int U_s|\mathcal U_s\psi|^2d\xi
+                         -a\lambda s^2\|\psi\|_2^2.
+\end{aligned}
+\tag{81.4}
+$$
+
+The rescaled unit-Lebesgue heat kernel is
+
+$$
+P_s(t;\eta,\xi)=j_0s^7p_{s^2t}(\Xi_s(\eta),\Xi_s(\xi)),
+\qquad
+U_s=\frac1{j_0}\int_1^\infty e^{\lambda s^2t}P_s(t;0,\cdot)dt.
+\tag{81.5}
+$$
+
+If $\rho_{s^2}$ is the exact source in (75.4), then in distributions
+on $\Omega_s$,
+
+$$
+(A_s-\lambda s^2)U_s=s^7\rho_{s^2}(\Xi_s(\cdot)),
+\qquad
+\mathcal E V=\frac1{j_0}p_E(1;0,\cdot).
+\tag{81.6}
+$$
+
+Moreover, with zero extensions,
+
+$$
+j_0s^7\rho_{s^2}(\Xi_s(\cdot))\longrightarrow p_E(1;0,\cdot)
+\quad\hbox{in }L^1(d\xi)\hbox{ and locally uniformly}.
+\tag{81.7}
+$$
+
+Thus the limiting source in (81.6) has Lebesgue mass $1/j_0$; its
+native raw-source mass is one. These are the same normalization in
+the two different densities.
+
+Proof. The absolute Jacobian is exactly $j_0s^7$, while its
+wavefunction factor is its square root. Pulling back $s\varepsilon
+\partial_k$ and $s(c_\kappa\cdot\partial_q)$ gives $X,Y_s$.
+The smooth-core calculation (78.5) therefore proves (81.4) there;
+unitarity and form closure extend it to exactly (75.1). Both height
+traces and all real phase frequencies are retained in this closure.
+No estimate of an ordinary phase gradient is involved. Changing
+variables in the heat semigroup gives the first identity in (81.5);
+changing the integration variable in $W_{s^2}$ gives the second.
+The native source equation (75.4) then gives the first equation
+in (81.6).
+
+The local positive-time blow-up used in (78.7), with its identical
+fields, constant density, interior pole and localization away from
+both faces, applies on any compact subset of
+$(0,\infty)\times\mathbb R^4$. Its supplier is
+Colin de Verdière--Hillairet--Trélat, Theorem B (2.8), pp.915--916,
+and Theorem 3.2, pp.920--921,
+[DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+Consequently
+
+$$
+P_s(t;0,\xi)\longrightarrow p_E(t;0,\xi)
+\quad\hbox{locally uniformly for }t>0.
+\tag{81.8}
+$$
+
+The same normalization at $t=1$, multiplied by $e^{\lambda s^2}$,
+is the left side of (81.7). Its total integral is exactly
+$e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)\to1$ by (75.4).
+The canonical heat has mass one: its complete diffusion has height
+$\sqrt2 B^1$ and the other coordinates are the finite stochastic
+integrals of $1,r,r^2/2$ against $\sqrt2 B^2$ on each finite time
+interval. Local convergence, nonnegativity and convergence of total
+masses give (81.7), for example by the identity for the integral of
+the minimum of two nonnegative densities. This proves source
+convergence without renormalizing the surviving source. The second
+identity in (81.6) follows by testing the integral (81.3) and
+integrating the heat equation; its infinite-time boundary term
+vanishes by the bound established below. $\square$
+
+## 82. Uniform control of the complete integrated field
+
+**Lemma 82.1 (canonical geometry and free heat).** The multiplication
+
+$$
+(r,y,z,w)(r',y',z',w')=
+(r+r',y+y',z+z'+ry',w+w'+rz'+\tfrac12r^2y')
+\tag{82.1}
+$$
+
+makes $\mathbb R^4$ the step-three Engel group with Haar measure
+$d\xi$. Its left invariant fields $X,Y,[X,Y],[X,[X,Y]]$ have determinant
+one. The automorphic dilations and homogeneous dimension are
+
+$$
+\delta_R(r,y,z,w)=(Rr,Ry,R^2z,R^3w),\qquad Q=7.
+\tag{82.2}
+$$
+
+Let $d_E$ be its control distance for $X,Y$, with squared control
+cost $u^2+v^2$, and put
+$N(\xi)=\max(|r|,|y|,|z|^{1/2},|w|^{1/3})$. Then $d_E$ is proper,
+$d_E(0,\xi)\ge cN(\xi)$, and
+
+$$
+0<p_E(t;\eta,\xi)\le
+ C t^{-7/2}\exp[-c d_E(\eta,\xi)^2/t],\qquad t>0.
+\tag{82.3}
+$$
+
+In particular $V$ is bounded, smooth, strictly positive, and
+
+$$
+0<V(\xi)\le C(1+N(\xi))^{-5},\qquad
+\sup_\xi p_E(t;0,\xi)\le c_Et^{-7/2},\quad c_E=p_E(1;0,0).
+\tag{82.4}
+$$
+
+Proof. The semidirect action on $(y,z,w)$ in (82.1) has determinant
+one and satisfies $T_rT_{r'}=T_{r+r'}$. This verifies associativity,
+Haar measure and the displayed fields. Their two nonzero successive
+brackets are $\partial_z+r\partial_w$ and $\partial_w$.
+This also checks (82.2) and the identification with G (31.2).
+Along a control path of length $L$ from zero, successive integration
+gives $|r|,|y|\le L$, $|z|\le L^2$ and $|w|\le L^3/2$.
+Thus $N\le CL$. Finite control balls have bounded coordinates;
+unit-speed paths in such a ball have uniformly bounded velocities,
+and subsequential limits of their bounded controls and paths remain
+admissible. Closed control balls are compact. Bracket generation
+gives finite distances and the ordinary manifold topology.
+
+Left invariance and dilation covariance give
+$p_E(t;\eta,\eta)=c_Et^{-7/2}$, with the exact clock of G (31.2).
+The heat is smooth and positive by the same bracket-generating
+canonical heat supplier used in (78.7). For the off-diagonal bound
+we use Coulhon--Sikora,
+*Gaussian heat kernel upper bounds via Phragmén--Lindelöf theorem*,
+[arXiv:math/0609429](https://arxiv.org/abs/math/0609429), Theorem 4.1.
+Its hypotheses here are nonnegative selfadjoint $\mathcal E$, a
+continuous heat kernel, the preceding all-time diagonal estimate
+with $D=7$, and the Davies--Gaffney estimate in $d_E$.
+To check the last hypothesis, if $h$ is a bounded real horizontal
+Lipschitz function with $|Xh|^2+|Yh|^2\le1$, completing the square
+in the form gives
+
+$$
+\|e^{\alpha h}e^{-t\mathcal E}e^{-\alpha h}\|_{2\to2}
+ \le e^{\alpha^2t}.
+\tag{82.5}
+$$
+
+Take $h$ to be distance from one support, truncated at the distance
+between the two supports, and optimize $\alpha$ to obtain
+$e^{-d^2/(4t)}$ in the $L^2$ off-diagonal estimate. Bounded horizontal
+Lipschitz multipliers and this calculation follow by form closure
+from smooth local approximations. Theorem 4.1 gives a polynomial
+factor $(1+d^2/(4t))^{7/2}$ times the Gaussian; absorbing it into a
+Gaussian with a smaller exponent proves (82.3). No volume-doubling
+or Euclidean ellipticity premise is needed.
+
+Semigroup Cauchy--Schwarz gives the second bound in (82.4) with its
+stated diagonal constant. Integrating (82.3) over $t\ge1$ gives
+$C(1+d_E(0,\xi))^{-5}$, hence the first bound in (82.4).
+The weak heat-equation calculation of (81.6) is now justified by
+$t^{-7/2}$ at infinity. Hypoellipticity applied to that equation,
+whose right side is smooth, proves smoothness of $V$; heat positivity
+proves its strict positivity. $\square$
+
+**Lemma 82.2 (native intrinsic estimate and source-centred tails).**
+There are fixed $C,c,\delta>0$ such that the native control distance
+$d$ for $\varepsilon\partial_k,c_\kappa\cdot\partial_q$ satisfies
+
+$$
+p_t(Y,Z)\le Ct^{-7/2}\exp[-c d(Y,Z)^2/t]\quad(t>0),
+\tag{82.6}
+$$
+
+and, whenever $sR\le\delta$ and $R\ge1$,
+
+$$
+\sup_{\substack{\xi\in\Omega_s\\N(\xi)>R}}U_s(\xi)
+ \le CR^{-5}+Cs^5.
+\tag{82.7}
+$$
+
+Both constants are independent of the height of $Y,Z$, including
+heights approaching either absorbing face.
+
+Proof. The all-height diagonal estimate (76.1) gives $Ct^{-7/2}$
+for $t\le1$. Its killed large-time line also gives this power for
+$t\ge1$, because $t^2e^{-\lambda t}$ is bounded. Thus the all-time
+diagonal premise of Coulhon--Sikora Theorem 4.1 holds for $B$ on
+$(\mathcal C,d,dk\,dq)$, again with $D=7$. The operator is nonnegative
+selfadjoint with a smooth interior kernel. Complex-time kernel
+continuity, if used in that theorem, follows by factoring the
+analytic semigroup between two positive-time smoothing factors.
+The calculation (82.5) applies with the native two fields: bounded
+multiplication preserves both Dirichlet traces, and the carré du
+champ is exactly
+$\varepsilon^2|\partial_kh|^2+|c_\kappa\cdot\partial_qh|^2$.
+It proves precisely the Davies--Gaffney hypothesis in the native
+control distance. This proves (82.6). It does not assume that
+$e^{-tS}$ is sub-Markov in raw measure.
+
+Here is the geometric comparison needed for the expanding charts.
+For a native path from $o$ of length $L$ smaller than a fixed
+$\delta_1>0$, $|k-k_0|\le\varepsilon L$, so it stays in a fixed
+interior height interval. Taylor expansion in the fixed basis
+$(c_0,c_1,c_2)$ gives the three coefficient functions
+
+$$
+1+O(h^3),\qquad h+O(h^3),\qquad h^2/2+O(h^3),\quad h=k-k_0.
+\tag{82.8}
+$$
+
+Integrating them against the second control, whose absolute
+integral is at most $L$, bounds the three phase coefficients by
+$CL,C\varepsilon L^2,C\varepsilon^2L^3$, respectively.
+Together with the height bound and (78.1), this yields
+$N(\Xi_s^{-1}(Y))\le CL/s$ when $d(o,Y)<\delta_1$.
+For larger distances retain $d(o,Y)\ge\delta_1$. Consequently, after
+fixing a smaller $\delta$, points with $N(\xi)>R$ and $sR\le\delta$
+satisfy $d(o,\Xi_s\xi)/s\ge cR$.
+
+For $s^2t\le1$, (82.6) therefore bounds the integrand in (81.5)
+by $Ct^{-7/2}e^{-cR^2/t}$, including its bounded threshold factor
+$e^{\lambda s^2t}$. Its integral over $1\le t\le s^{-2}$ is at most
+$CR^{-5}$. The remaining part is
+
+$$
+s^5\int_1^\infty e^{\lambda u}p_u(o,\Xi_s\xi)du\le Cs^5
+\tag{82.9}
+$$
+
+by (76.1). This proves (82.7). Both moving faces were retained in
+the killed heat and in its all-height diagonal bound. $\square$
+
+**Theorem 82.3 (integrated convergence, including infinite time).**
+With the zero extension convention of Definition 81.1,
+
+$$
+\|U_s-V\|_{L^\infty(\mathbb R^4)}\longrightarrow0,
+\qquad \sup_{0<s\le s_0}\|U_s\|_\infty<\infty.
+\tag{82.10}
+$$
+
+More precisely, finite positive-time windows converge locally
+uniformly as in (81.8), and, for every $M\ge1$,
+
+$$
+\sup_{\xi\in\Omega_s}\frac1{j_0}
+ \int_M^\infty e^{\lambda s^2t}P_s(t;0,\xi)dt
+ \le CM^{-5/2}+Cs^5.
+\tag{82.11}
+$$
+
+The tangent integral over $[M,\infty)$ is at most $CM^{-5/2}$.
+These assertions concern the complete integrated threshold field,
+including its original infinite-time part.
+
+Proof. On $[1,M]$ use (81.8). Between rescaled times $M$ and $s^{-2}$,
+when this interval is nonempty, (76.1) gives the integrable upper
+bound $Ct^{-7/2}$, because the threshold factor is bounded there.
+For original times at least one use exactly (82.9). If $M>s^{-2}$,
+the whole remaining integral is already bounded by that expression.
+This proves (82.11); (82.4) gives the tangent assertion.
+Thus first $s\to0$ at fixed $M$, then $M\to\infty$, proves locally
+uniform convergence of the integrated potentials. It also gives
+uniform boundedness. To pass from local to global uniform
+convergence, use (82.7) and (82.4) outside the fixed compact box
+$\{N\le R\}$. For each fixed $R$ it lies in $\Omega_s$ eventually;
+then let $R\to\infty$. Points outside $\Omega_s$ have already been
+included by zero extension and the same tangent tail bound.
+This proves (82.10). The argument separates a finite-time local
+supplier from two explicit integrable time tails and a spatial
+tail; no local heat theorem is being used as an infinite Green
+interchange. $\square$
+
+
+## 83. Compactness for the entire complex horizontal domain
+
+**Lemma 83.1 (varying-domain local compactness and the lost mass).**
+Suppose $s_n\downarrow0$, $f_n\in\mathcal Q_{s_n}$, and
+
+$$
+\sup_n(\|f_n\|_2^2+b_{s_n}[f_n])<\infty.
+\tag{83.1}
+$$
+
+After a subsequence, their zero extensions converge weakly in
+$L^2(\mathbb R^4)$ and strongly in $L^2$ on every compact set to a
+vector $f\in\mathcal Q_E$. They satisfy
+
+$$
+\begin{aligned}
+\|f\|_2&\le\liminf_n\|f_n\|_2,&
+b[f]&\le\liminf_n b_{s_n}[f_n],\\
+\|U_{s_n}^{1/2}f_n-V^{1/2}f\|_2&\longrightarrow0,&
+\int U_{s_n}|f_n|^2&\longrightarrow\int V|f|^2.
+\end{aligned}
+\tag{83.2}
+$$
+
+There is no assumption of tightness in (83.1).
+
+Proof. On every fixed coordinate box, $Y_s\to Y$ in $C^\infty$
+by (78.4). The determinant of the four fields
+$X,Y_s,[X,Y_s],[X,[X,Y_s]]$ converges uniformly there to one.
+Thus these fields have one uniform strong Hörmander bound of step
+three on a slightly larger fixed box. The parameter-uniform local
+subelliptic estimate of Colin de Verdière--Hillairet--Trélat,
+Appendix B, Theorem B.1, pp.953--955, applies to $-A_s$ there: its
+coefficient derivatives are uniformly bounded, its drift and
+potential vanish, and its density is unit Lebesgue. In particular,
+for nested compact cutoffs $\eta,\eta'$ with $\eta'=1$ near
+$\operatorname{supp}\eta$, there are $\sigma>0$ and $C$ independent
+of small $s$ such that
+
+$$
+\|\eta u\|_{H^\sigma}
+ \le C\bigl(\|\eta'A_su\|_2+\|\eta'u\|_2\bigr).
+\tag{83.3}
+$$
+
+We use this operator estimate to obtain form compactness, rather
+than assuming an ordinary Sobolev norm for a form-domain vector.
+For a fixed $d>0$ set $u_{n,d}=(1+dA_{s_n})^{-1}f_n$. The spectral
+theorem and (83.1) give
+
+$$
+\|u_{n,d}\|_2\le C,\qquad
+\|A_{s_n}u_{n,d}\|_2\le C/d,\qquad
+\|f_n-u_{n,d}\|_2^2\le d\,b_{s_n}[f_n].
+\tag{83.4}
+$$
+
+The local estimate (83.3) applies to these resolvents by its closed
+distributional extension; equivalently approximate their right
+sides in $L^2$ and use (83.3). Both moving faces lie outside each
+fixed box eventually. Hence, at fixed $d$, Rellich compactness
+makes $\eta u_{n,d}$ precompact in $L^2$. Letting $d\downarrow0$
+in the last bound of (83.4) makes $\eta f_n$ precompact too.
+A compact exhaustion and the global $L^2$ bound give a subsequence
+with the asserted local strong and global weak convergence.
+
+Extend $Xf_n$ and $Y_{s_n}f_n$ by zero as $L^2$ vectors and take
+weakly convergent subsequences. Testing on fixed compact sets,
+using $Y_s\to Y$ and their zero divergences, identifies the limits
+as $Xf$ and $Yf$. Lower semicontinuity of their joint squared norm
+proves the energy inequality in (83.2).
+To check membership in the specified Friedrichs form domain, a
+vector with these two distributional derivatives in $L^2$ can be
+cut off by $\eta_R(\xi)=\eta_1(\delta_{1/R}\xi)$, where $\eta_1$
+is compactly supported and one near zero. Its two horizontal
+derivatives are bounded by $C/R$, and dominated convergence shows
+$\eta_R f\to f$ in horizontal form norm. Smooth group approximate
+identities applied to these compactly supported vectors then
+converge in the same norm, since the horizontal derivatives are
+left invariant. Thus $f\in\mathcal Q_E$, with no boundary condition
+at a fictitious finite rescaled height.
+
+Finally (82.10) gives
+$\|U_{s_n}^{1/2}-V^{1/2}\|_\infty\to0$. On a fixed compact set use
+local strong convergence; on its complement use the vanishing
+supremum of $V$ from (82.4) and the uniform $L^2$ bounds. This proves
+the last two assertions of (83.2). $\square$
+
+**Proposition 83.2 (full lower inequality and recovery).** If
+$\chi_n\to\chi>0$, $s_n\downarrow0$, $\|f_n\|_2\le C$, and the
+rescaled forms
+
+$$
+q_n[f_n]=a b_{s_n}[f_n]-\chi_n\int U_{s_n}|f_n|^2
+                         -a\lambda s_n^2\|f_n\|_2^2
+\tag{83.5}
+$$
+
+are bounded above, then (83.1) holds. Along every subsequence
+realizing a finite lower limit, a further subsequence satisfies
+
+$$
+\liminf_n q_n[f_n]\ge h_\chi[f]\ge e(\chi)\|f\|_2^2.
+\tag{83.6}
+$$
+
+For every $f\in\mathcal Q_E$ there are $f_n\in\mathcal Q_{s_n}$
+converging strongly to $f$ with
+$q_n[f_n]\to h_\chi[f]$ and $\|f_n\|_2\to\|f\|_2$.
+They may be chosen normalized when $f$ is normalized.
+
+Proof. Uniform boundedness of $U_s$, boundedness of $\chi_n$ and
+$a>0$ turn the upper energy bound into (83.1). Apply Lemma 83.1.
+Its kinetic lower bound and potential convergence give the first
+inequality in (83.6); the second is the homogeneous Rayleigh
+inequality, including $f=0$.
+
+For recovery first take $f\in C_c^\infty(\mathbb R^4)$. It belongs
+to $\mathcal Q_{s_n}$ eventually, both its height traces being zero.
+Coefficient convergence gives $b_{s_n}[f]\to b[f]$ and (82.10) gives
+the potential convergence. Now approximate an arbitrary $f$ by
+this core in the defining norm of $\mathcal Q_E$. Boundedness of
+$V$ gives convergence of its potential form. A diagonal choice of
+core approximants, each used only once its compact support lies
+between the two moving faces and its coefficient error is small,
+proves recovery. Renormalizing changes neither limit for a nonzero
+normalized target. This is an upper construction on the full native
+domain, paired with a lower estimate for every bounded-energy
+sequence on that domain. $\square$
+
+## 84. A finite positive tangent binding threshold
+
+**Theorem 84.1 (threshold, exact characterization and spectrum).**
+Define the finite positive constant and its critical coupling by
+
+$$
+C_* =\sup_{0\ne f\in\mathcal Q_E}
+        \frac{\int V|f|^2}{b[f]},\qquad
+\chi_c=\frac a{C_*}
+       =a\inf_{0\ne f\in\mathcal Q_E}\frac{b[f]}{\int V|f|^2}.
+\tag{84.1}
+$$
+
+These definitions have no zero denominators. They satisfy
+
+$$
+0<C_*\le\frac{4c_E}{15j_0},\qquad
+0<\frac{15aj_0}{4c_E}\le\chi_c<\infty.
+\tag{84.2}
+$$
+
+For every $\chi\ge0$ the operator
+$H_\chi=a\mathcal E-\chi V$ is selfadjoint on $D(\mathcal E)$,
+with closed form on precisely $\mathcal Q_E$, and
+
+$$
+\sigma_{\rm ess}(H_\chi)=[0,\infty),\qquad
+\begin{cases}
+e(\chi)=0, H_\chi\ge0,&0\le\chi\le\chi_c,\\
+e(\chi)<0,&\chi>\chi_c.
+\end{cases}
+\tag{84.3}
+$$
+
+For $0\le\chi<\chi_c$ there is no nonzero $L^2$ zero mode. For
+$\chi>\chi_c$, $e(\chi)$ is a simple isolated eigenvalue with a
+unique positive normalized eigenfunction $\Phi_\chi$. Its complex
+normalized minimizers are exactly $e^{i\theta}\Phi_\chi$ for constant
+$\theta\in\mathbb R$. All negative spectrum is discrete, with finite
+multiplicities and possible accumulation only at zero.
+
+An operator characterization of exactly the same threshold is
+obtained by putting, for $b>0$,
+
+$$
+K_b=V^{1/2}(\mathcal E+b)^{-1}V^{1/2},\qquad
+K_0=\mathop{\rm s\!\!\!-lim}_{b\downarrow0}K_b.
+\tag{84.4}
+$$
+
+The strong limit is a bounded positive operator,
+$\|K_0\|=C_*$, and $\chi_c=a/\|K_0\|$. If $\chi>\chi_c$, the
+unique positive solution $b_\chi$ of
+
+$$
+\chi\|K_{b_\chi}\|=a
+\tag{84.5}
+$$
+
+gives exactly $e(\chi)=-ab_\chi$. Compactness of $K_0$, or a
+classification of its threshold eigenvectors, is not part of
+these assertions.
+
+Proof. We first prove the finite homogeneous form bound in (84.2).
+For the nonnegative heat-resolvent integral, symmetry and the
+semigroup law, with Tonelli, give
+
+$$
+\begin{aligned}
+(\mathcal E^{-1}V)(\xi)
+ &=\frac1{j_0}\int_0^\infty\int_1^\infty
+                         p_E(t+u;0,\xi)dt\,du\\
+ &\le\frac{c_E}{j_0}\int_1^\infty\int_0^\infty(t+u)^{-7/2}du\,dt
+   =\frac{4c_E}{15j_0}=:C_0.
+\end{aligned}
+\tag{84.6}
+$$
+
+This notation defines a nonnegative pointwise integral, not a
+bounded inverse of $\mathcal E$ on $L^2$. For each $b>0$, the
+positive-kernel operator $K_b$ has Schur weight $V^{1/2}$ and
+weighted row integral
+$V(\xi)^{1/2}((\mathcal E+b)^{-1}V)(\xi)\le C_0V(\xi)^{1/2}$.
+Thus $\|K_b\|\le C_0$. The same squared-operator-norm identity used
+in (76.3) yields
+
+$$
+\int V|f|^2\le C_0\bigl(b[f]+b\|f\|_2^2\bigr).
+\tag{84.7}
+$$
+
+Let the resolvent parameter $b\downarrow0$. This proves
+$\int V|f|^2\le C_0 b[f]$ on all of $\mathcal Q_E$.
+Here the integrability of the double time integral uses $Q=7>4$;
+it does not follow merely from a positive-time heat limit.
+If $b[f]=0$, both horizontal distributional derivatives vanish;
+their brackets then show all coordinate derivatives vanish.
+An $L^2$ constant on this infinite-volume group is zero.
+Strict positivity of $V$ gives a positive potential integral for
+every nonzero $f$. A single nonzero compact core vector shows
+$C_*>0$. These facts prove (84.1)--(84.2).
+
+Boundedness of $V$ proves the stated form and operator domains.
+The fixed-field version of Lemma 83.1 proves local compactness of
+$\mathcal Q_E$ in $L^2$; with (82.4) this makes
+$V^{1/2}(\mathcal E+1)^{-1/2}$ compact.
+The free spectrum is $[0,\infty)$: dilation covariance makes its
+nonzero spectrum invariant under every positive scale, and the
+operator is nonzero and unbounded. Zero belongs by closure, or by
+normalized outward dilations, whose kinetic energy is $R^{-2}b[f]$.
+Every free spectral point is essential. Indeed translate approximate
+eigenvectors by group left translations tending sufficiently far
+to make them weakly zero; the operator commutes with these
+translations. Matrix coefficients of translations on $L^2$ vanish
+at infinity by approximation with compactly supported functions,
+so this construction satisfies Weyl's criterion. The compact form
+perturbation just proved and the resolvent identity preserve this
+essential spectrum under $-\chi V$. This is the abstract compact
+perturbation principle, applied after checking its horizontal
+hypotheses; it is not an appeal to a Euclidean Schrödinger theorem.
+
+The definition of $C_*$ gives
+
+$$
+h_\chi[f]\ge a(1-\chi/\chi_c)b[f]\quad(0\le\chi\le\chi_c).
+\tag{84.8}
+$$
+
+On the other hand normalized outward dilations of one compact
+core vector have $h_\chi\le aR^{-2}b[f]\to0$, since $V\ge0$.
+Thus the bottom is zero in this range. Strict inequality in
+$\chi<\chi_c$ and the preceding no-constant argument exclude a
+nonzero zero mode. If $\chi>\chi_c$, the supremum defining $C_*$
+provides a vector with negative Rayleigh quotient. The essential
+spectrum result makes the negative bottom an isolated eigenvalue.
+Boundedness below and compactness of the perturbation give the
+other assertions concerning the negative spectrum.
+
+For completeness, positivity and simplicity do not require taking
+a phase derivative. The convergent bounded-potential Dyson expansion
+of $e^{-tH_\chi}$ has nonnegative kernel terms and its first term is
+$p_E(at;\eta,\xi)>0$. Hence its kernel is strictly positive.
+For any bottom eigenvector $u$, the pointwise triangle inequality
+$|e^{-tH_\chi}u|\le e^{-tH_\chi}|u|$ and the spectral norm
+$\|e^{-tH_\chi}\|=e^{-te(\chi)}$ force equality in norm and then in
+the pointwise inequality. Thus $|u|$ is also a bottom eigenvector,
+and equality in the integral triangle inequality with a strictly
+positive kernel forces the phase of $u$ to be constant almost
+everywhere. Moreover $|u|$ is strictly positive. Two independent
+positive real bottom eigenvectors would have a real linear
+combination changing sign, contradicting the same argument.
+This proves the claimed uniqueness and complex phase orbit.
+
+Finally $K_b$ increases in positive-operator order as $b\downarrow0$,
+is uniformly bounded by (84.6), and therefore has the strong limit
+in (84.4). For each $b>0$ the squared-norm identity gives
+
+$$
+\|K_b\|=\sup_{0\ne f\in\mathcal Q_E}
+ \frac{\int V|f|^2}{b[f]+b\|f\|_2^2}.
+\tag{84.9}
+$$
+
+Taking the supremum over $b\downarrow0$ proves $\|K_0\|=C_*$.
+For positive $b$, form compactness makes $K_b$ compact, nonzero and
+positive. Its norm is continuous in $b$, tends to zero as
+$b\to\infty$, and is strictly decreasing: for $b_1<b_2$ test
+$K_{b_1}-K_{b_2}$ on a top eigenvector of $K_{b_2}$ and use strict
+positivity of the resolvent difference on the nonzero vector
+$V^{1/2}u$. Its limit at zero is $C_*$. These facts give the unique
+root (84.5). Form conjugation by $(\mathcal E+b)^{1/2}$ shows
+$H_\chi+ab\ge0$ exactly when $\chi\|K_b\|\le a$.
+At the root a top eigenvector $u$ of $K_b$ gives the nonzero vector
+$f=(\mathcal E+b)^{-1}V^{1/2}u\in D(\mathcal E)$ with
+$(H_\chi+ab)f=0$. Thus its energy is the bottom and equals $-ab$.
+This proves the operator characterization as well as the Rayleigh
+one. $\square$
+
+
+## 85. The exact native limit and every negative-sector profile
+
+**Theorem 85.1 (two-sided finite-positive-coupling limit).** Let
+$g_n>0$, $\tau_n>0$ tend to zero in any manner such that
+
+$$
+\chi_n=g_n\tau_n^{-3/2}\longrightarrow\chi_0\in(0,\infty).
+\tag{85.1}
+$$
+
+On exactly the native domain (75.1), with no restriction to a band,
+product vector, real vector or ordinary phase $H^1$ domain,
+
+$$
+\boxed{\displaystyle
+\lim_n\tau_n E_{\tau_n}(g_n)=e(\chi_0).}
+\tag{85.2}
+$$
+
+In fact every normalized native sequence $\psi_n\in\mathcal Q$
+satisfies
+
+$$
+\liminf_n\tau_n\mathfrak e_{g_n,\tau_n}[\psi_n]\ge e(\chi_0),
+\tag{85.3}
+$$
+
+and normalized admissible recovery sequences attain the upper
+limit $e(\chi_0)$.
+
+Proof. Put $s_n=\sqrt{\tau_n}$, $f_n=\mathcal U_{s_n}\psi_n$.
+The exact conjugacy (81.4) makes the expression in (85.3) equal to
+$q_n[f_n]$ in (83.5). If its lower limit is infinite there is
+nothing to prove. Otherwise pass to a subsequence realizing that
+lower limit. Uniform boundedness of $U_s$ bounds these forms below
+and makes their kinetic energies bounded above along this
+subsequence. Proposition 83.2 gives a further subsequence and a
+limit $f$ with
+
+$$
+\liminf_n q_n[f_n]\ge h_{\chi_0}[f]
+             \ge e(\chi_0)\|f\|_2^2\ge e(\chi_0).
+\tag{85.4}
+$$
+
+The last step uses $\|f\|_2\le1$ and $e(\chi_0)\le0$, established
+in Theorem 84.1. In particular mass outside all rescaled compact
+sets is allowed. Its absence from $f$ cannot lower (85.4): it loses
+the entire compact potential contribution and the discarded
+kinetic energy is nonnegative. No assertion of tightness entered
+the lower direction.
+
+For the upper direction choose a normalized compact core vector
+$f$ with $h_{\chi_0}[f]\le e(\chi_0)+\epsilon$. Such vectors exist
+by the defining core and boundedness of $V$. For all large $n$ its
+support lies inside both moving height faces, and
+$\mathcal U_{s_n}^{-1}f\in\mathcal Q$ is normalized. Its rescaled
+energy tends to $h_{\chi_0}[f]$ by Proposition 83.2. Let
+$\epsilon\downarrow0$, using a diagonal choice if a single recovery
+sequence is desired. Applying (85.3) to normalized infimizing
+native vectors and this upper bound proves (85.2). These two
+arguments cover every sequence (85.1), not just a power-law path.
+$\square$
+
+**Theorem 85.2 (every complex negative-sector near-minimizer).**
+Assume (85.1) and $\chi_0>\chi_c$. For every complex normalized
+sequence $\psi_n\in\mathcal Q$ satisfying precisely
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                         -E_{\tau_n}(g_n)\bigr)\longrightarrow0,
+\tag{85.5}
+$$
+
+there are constant phases $\theta_n\in\mathbb R$ such that, with
+zero extension outside $\Omega_{s_n}$,
+
+$$
+\left\|(j_0s_n^7)^{1/2}\psi_n(\Xi_{s_n}(\cdot))
+                  -e^{i\theta_n}\Phi_{\chi_0}\right\|_{L^2(d\xi)}
+ \longrightarrow0.
+\tag{85.6}
+$$
+
+Consequently the entire mass concentrates at the fixed source in
+the privileged microscopic scales:
+
+$$
+\lim_{R\to\infty}\limsup_n
+ \int_{\mathcal C\setminus\Xi_{s_n}(\{N\le R\})}
+                            |\psi_n(Y)|^2dY=0.
+\tag{85.7}
+$$
+
+The intersections with $\mathcal C$ are understood in (85.7).
+There are no translations, frequency restrictions or spatially
+varying phase adjustments in (85.6). Every choice of normalized
+native ground states is included.
+
+Proof. Theorem 85.1 and (85.5) give
+$q_n[f_n]\to e(\chi_0)<0$. The kinetic bound of Proposition 83.2
+and Lemma 83.1 apply to every subsequence. Along a further
+subsequence, (85.4) now gives the chain
+
+$$
+e(\chi_0)\ge h_{\chi_0}[f]
+       \ge e(\chi_0)\|f\|_2^2\ge e(\chi_0).
+\tag{85.8}
+$$
+
+All terms are equal. Since $e(\chi_0)<0$, equality forces
+$\|f\|_2=1$. Weak convergence of unit vectors is therefore strong
+in global $L^2$, and $f$ is a normalized minimizer of $h_{\chi_0}$.
+Theorem 84.1 makes it exactly $e^{i\theta}\Phi_{\chi_0}$.
+Thus every subsequence has a further subsequence converging to
+this one phase orbit. If its distance from the orbit did not tend
+to zero, a subsequence bounded away from it would contradict this
+conclusion. Choose the phases minimizing that distance; equivalently
+use the argument of $\langle f_n,\Phi_{\chi_0}\rangle$ with the
+appropriate inner-product convention. This proves (85.6).
+Global $L^2$ convergence to a fixed normalized profile gives (85.7).
+The source was fixed in the potential and in $\Xi_s$, so there is
+no free centre parameter. The phase-orbit result in Theorem 84.1
+was proved using positive kernels, and imposes no additional phase
+regularity on the native vectors. $\square$
+
+**Theorem 85.3 (subcritical disappearance and the critical weak limit).**
+Under (85.1), let $\psi_n$ be any normalized complex native
+sequence satisfying (85.5).
+If $0<\chi_0<\chi_c$, then, for every compact $K\subset\mathbb R^4$,
+
+$$
+\int_{\Xi_{s_n}(K)\cap\mathcal C}|\psi_n|^2dY\longrightarrow0,
+\qquad b_{s_n}[\mathcal U_{s_n}\psi_n]\longrightarrow0.
+\tag{85.9}
+$$
+
+At $\chi_0=\chi_c$, $e(\chi_c)=0$ and $H_{\chi_c}\ge0$.
+The rescaled vectors are bounded in kinetic energy and every
+subsequence has a further subsequence converging weakly globally
+and strongly locally to an $f\in\mathcal Q_E$ such that
+
+$$
+\|f\|_2\le1,\qquad
+h_{\chi_c}[f]=0,\qquad f\in\ker H_{\chi_c}.
+\tag{85.10}
+$$
+
+Along that subsequence the potential forms converge as in (83.2)
+and the kinetic energies converge to $b[f]$. In particular, if
+the tangent critical operator has no nonzero $L^2$ zero mode,
+(85.9) also holds at criticality. No existence or absence of such
+a critical zero mode, nor selection of a nonzero critical weak
+limit, is asserted here.
+
+Proof. In both cases Theorem 85.1 and (85.5) give $q_n[f_n]\to0$.
+The compactness argument again applies, and its lower inequality
+is $0\ge h_{\chi_0}[f]\ge0$. Below threshold (84.8) forces
+$b[f]=0$, whence $f=0$. Every local subsequential limit is zero;
+local compactness therefore proves the first assertion of (85.9)
+for the whole sequence. The potential convergence in (83.2) then
+makes its potential energy tend to zero. The exact identity
+(83.5) implies $b_{s_n}[f_n]\to0$, proving the second assertion.
+
+At criticality the same argument gives (85.10)'s form equality.
+For a nonnegative selfadjoint operator this equality is
+$\|H_{\chi_c}^{1/2}f\|_2^2=0$, which implies membership in its
+operator kernel. Combining $q_n[f_n]\to0$ and potential convergence
+with (83.5) gives
+$a b_{s_n}[f_n]\to\chi_c\int V|f|^2=a b[f]$.
+If that kernel is trivial all local limits are zero, and the
+preceding subcritical argument applies. Without deciding the
+kernel, (85.10) allows both a zero weak limit and lost mass; it
+does not force strong convergence or a normalized limiting profile.
+$\square$
+
+## 86. Normalization, comparison regimes and the remaining scales
+
+**Proposition 86.1 (scope of the microscopic classification).** The
+threshold $\chi_c$ is a finite strictly positive threshold for the
+limiting microscopic operator (81.3). For each actual pair
+$g,\tau>0$ the native operator still has essential spectrum
+$[0,\infty)$ and an attained negative bottom, as in Propositions
+70.2 and 75.2. In particular tangent nonnegativity below threshold
+is compatible with native binding at a smaller energy scale.
+
+For $\chi_n\to\chi_0>\chi_c$, (85.2) implies
+$E_{\tau_n}(g_n)\to-\infty$ and
+$E_{\tau_n}(g_n)/g_n^2\to-\infty$.
+For $\chi_0\le\chi_c$, it gives only
+$E_{\tau_n}(g_n)=o(\tau_n^{-1})$ at the microscopic leading order.
+This zero leading coefficient does not identify a finer Coulomb
+$g_n^2$ law or an actual native critical-profile selection.
+The exact critical tangent zero-mode taxonomy is left undecided.
+
+The raw-coordinate transport remains exactly (80.1), with its
+absolute Jacobian $|\kappa|$ and signed tensor
+$J_\kappa M J_\kappa^{\mathsf T}$. All statements fix $\kappa\ne0$
+and the real cover; none is uniform as $\kappa\to0$, a theorem on
+the actual zero leaf or a torus, a cutoff-free realization, or a
+selection of physical three-dimensional space or physical $SO(3)$.
+
+Proof. The native spectral statements are reused at each positive
+cutoff, with their exact unaltered native hypotheses. If the limit
+in (85.2) is strictly negative, division by $\tau_n\to0$ proves the
+first divergence. Since
+$\tau_ng_n^2=\chi_n^2\tau_n^4\to0$, division by $g_n^2$ proves the
+second. If the limit is zero, the displayed little-oh statement
+is precisely what division by $\tau_n$ says, and it supplies no
+coefficient on the much smaller $g_n^2$ scale. The subcritical
+local-mass conclusion is exactly at the scales of $\Xi_s$, not an
+identification of a different profile scale. At criticality the
+available weak-limit statement is precisely (85.10).
+
+The source correspondence is fixed by (81.5)--(81.7): the limiting
+unit-Lebesgue kernel has mass one, the potential has source mass
+$1/j_0$, and the unitary wavefunction uses $(j_0s^7)^{1/2}$.
+The two native source charges also remain distinct. Explicitly,
+
+$$
+\begin{aligned}
+\int_{\Omega_s}s^7\rho_{s^2}(\Xi_s\xi)d\xi
+ &=j_0^{-1}e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)\to j_0^{-1},\\
+\int_{\Omega_s}\phi(k_0+\varepsilon sr)
+                       s^7\rho_{s^2}(\Xi_s\xi)d\xi
+ &=j_0^{-1}\phi(k_0).
+\end{aligned}
+\tag{86.1}
+$$
+
+Thus no ground-height transform or surviving-charge normalization
+has been inserted. Formula (80.1) transports these same conventions
+back to the original coordinates without changing the heat clock.
+
+The other named spectral limits have different premise maps.
+[Critical cutoff, Definition 31.1](FIB_NATIVE_CRITICAL_CUTOFF_SPECTRAL_LIMITS.md)
+retains the actual circles, fixes $g$ and takes $\kappa\to0$ with
+large cutoff times. Its scalar operator and limits cannot replace
+(81.1)--(81.3), which fix $\kappa$, unwrap the phases and take
+$\tau\downarrow0$ with $g\tau^{-3/2}$ fixed.
+[Four-dimensional spectral reduction, Definition 1.5 and §3](FIB_NATIVE_FOUR_DIMENSIONAL_SPECTRAL_REDUCTION_AND_ATTAINMENT.md)
+concerns affine storage/decoder and minimax contracts; its spectral
+family is not the horizontal differential operator in (81.2).
+The heat blow-up reused here is the local result of
+Colin de Verdière--Hillairet--Trélat with the precise density and
+localization correspondence in (81.8). Coulhon--Sikora supplies
+the off-diagonal implication only after the explicit diagonal
+and Davies--Gaffney verifications in Lemmas 82.1--82.2.
+The infinite-time integration, varying-domain compactness,
+full-domain variational passage and threshold characterization
+are the deductions above from these premises. They make no
+literature-wide novelty claim. $\square$
+
+## 追加锚（本行以下为增补区）
