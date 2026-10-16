@@ -2683,3 +2683,713 @@ root/minimax premises are not reauthenticated, and no Lean/kernel,
 native-execution or programme-completion claim is made.
 
 ## 追加锚（本行以下为增补区）
+## 50. The normalized real-null problem and its global spectral certificate
+
+**Convention 50.1 (the original weak-plateau problem).** Retain the original
+full twelve-history, all-complex, common-processor problem of Definition
+41.1. The source-root, complete-channel, sharp-cost and minimax statements
+from CG §§13--17 and JR §§41--49 are conditional premises here. The
+inequality on the binary effect remains the original inequality; no other
+binary-effect coordinate, complete-channel representative, or input phase
+is fixed. In particular, the reduction below does not replace the original
+problem by CA's prescribed complete binary effect.
+
+Put
+
+$$
+L_0=\operatorname{diag}(\delta,1,1),\qquad
+L=L_0^{1/2}=\operatorname{diag}(\sqrt\delta,1,1),\qquad
+\chi=\frac{\omega}{\delta},
+$$
+
+and
+
+$$
+Q_0=\operatorname{diag}(1,-\theta,-\omega),\qquad
+Q=\operatorname{diag}(1,-(1-\chi),-\chi).
+$$
+
+Then $LQ_0L=\delta Q$ and $\operatorname{tr}Q=0$. For the four real
+PSD matrices in JR.58 write
+
+$$
+Z_{r,\epsilon}=LX_{r,\epsilon}L,\qquad
+G=LNL=
+\begin{pmatrix}g_0&x&y\\x&g_1&z\\y&z&g_2\end{pmatrix},
+$$
+
+where
+
+$$
+\begin{gathered}
+N=\begin{pmatrix}\Delta A&\xi&\eta\\\xi&\Delta B&\zeta\\\eta&\zeta&\Delta C\end{pmatrix},
+\quad(g_0,g_1,g_2,x,y,z)=(\delta\Delta A,\Delta B,\Delta C,s_0\xi,s_0\eta,\zeta),\\
+\tau=s/s_0.
+\end{gathered}
+\tag{JR.83}
+$$
+
+Thus the exact normalized primal is
+
+$$
+\begin{aligned}
+J_s=\max\quad&\sum_{r,\epsilon=\pm1}\epsilon\operatorname{tr}(GX_{r,\epsilon})\\
+\text{subject to}\quad
+&X_{r,\epsilon}\succeq0,\qquad
+\operatorname{tr}(QX_{r,\epsilon})=0,\\
+&\sum_{r,\epsilon}X_{r,\epsilon}=I,\qquad
+\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}\geq\tau.
+\end{aligned}
+\tag{JR.84}
+$$
+
+Every coordinate of the original effect not displayed in (JR.84) remains
+free. The height record is still
+
+$$
+\mathcal T(s)=\frac12\bigl[(1-\delta)\Delta A+L_f+J_s\bigr].
+\tag{JR.85}
+$$
+
+For numerical enclosures in §§50–51, use the full inherited box
+$\mathcal B_{\rm CG}=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}]$,
+where $c$ is the exact rational centre table in [CG, Proposition 13.2],
+in the order $(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z,\eta_0,\eta_1,\eta_2)$. Reconstruct the coefficients by (CG.112),
+(CG.113), (CG.116), (CG.134), then (JR.21), (JR.49) and (JR.83).
+The CG coordinate $z$ in that table is distinct from $z=G_{12}$ here.
+Every narrow directed enclosure below uses this entire box, with outward
+rational arithmetic and square-root bounds as specified in §48;
+terminating decimal endpoints are exact rationals. This only evaluates
+derived quantities on the inherited box; it does not reauthenticate
+its isolated root, exact ranks, normalization or minimax certificate.
+
+A coarse consequence of this full premise, with rational endpoints, is
+
+$$
+\begin{gathered}
+\frac{12227}{100000}<\chi<\frac{12230}{100000},\qquad
+\frac{1269}{10^6}<g_0<\frac{1270}{10^6},\qquad
+\frac{29222}{10^7}<g_1<\frac{29224}{10^7},\\
+\frac{16771}{10^7}<g_2<\frac{16773}{10^7},\qquad
+\frac{2370}{10^6}<x<\frac{2372}{10^6},\qquad
+\frac{2207}{10^6}<y<\frac{2209}{10^6},\\
+-\frac{1017}{10^7}<z<-\frac{1016}{10^7}.
+\end{gathered}
+\tag{JR.86}
+$$
+
+The coarse bounds (JR.86) support strict sign and positive-pivot
+comparisons. The narrow numerical enclosures below use $\mathcal B_{\rm CG}$,
+not (JR.86) alone.
+
+**Definition 50.2 (the real-null curve).** Set
+
+$$
+q(t)=\sqrt{1-\chi+\chi t^2},\qquad d=2-\chi,\qquad e=1+\chi,\qquad
+D_t=d+et^2,
+$$
+
+and
+
+$$
+v(t)=\frac{(q(t),-1,-t)^T}{\sqrt{D_t}}.
+\tag{JR.87}
+$$
+
+Then $\|v(t)\|=1$ and $v(t)^TQv(t)=0$. Let
+
+$$
+\begin{gathered}
+p=(1-\chi)g_0+g_1,\qquad h=\chi g_0+g_2,\\
+F_t=p+ht^2-2q(t)(x+yt)+2zt,\qquad
+\psi(t)=\frac{F_t}{D_t}.
+\end{gathered}
+\tag{JR.88}
+$$
+
+The tuple
+
+$$
+X_{-,-}=v(t)v(t)^T,\qquad X_{+,+}=I-v(t)v(t)^T,\qquad
+X_{+,-}=X_{-,+}=0
+\tag{JR.89}
+$$
+
+is feasible for (JR.84) at $s=s(t)$, with trial objective
+
+$$
+\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}=\frac{2q(t)}{D_t},\qquad
+J_{\rm trial}(t):=\operatorname{tr}G-2\psi(t)\leq J_{s(t)},\qquad
+s(t)=\frac{2s_0q(t)}{D_t}.
+\tag{JR.90}
+$$
+
+Here $J_{\rm trial}(t)$ is the linear objective of (JR.89), whereas
+$J_s$ retains its optimized meaning in (JR.84). Feasibility gives the
+displayed inequality; it does not assert equality.
+
+At $t=1$, the restriction of $G$ to $v(1)^\perp$ is represented in
+coordinates $u_0=u_1+u_2$ by
+
+$$
+\begin{pmatrix}
+g_0+g_1+2x&g_0+x+y+z\\
+g_0+x+y+z&g_0+g_2+2y
+\end{pmatrix}\succ0.
+\tag{JR.91}
+$$
+
+Evaluation on $\mathcal B_{\rm CG}$ places the determinant of (JR.91)
+in the rational interval
+
+$$
+\frac{32748113870346}{10^{18}}<\det\!\begin{pmatrix}
+ g_0+g_1+2x&g_0+x+y+z\\
+ g_0+x+y+z&g_0+g_2+2y
+\end{pmatrix}<\frac{32748113870347}{10^{18}}.
+\tag{JR.92}
+$$
+
+Consequently the former three-low-ray construction has actual value
+$T_{\rm flat}-\psi(1)$, with $\psi(1)=4\mathsf b(1)/3$. At $t=9/10$,
+exact rational radical bounds on $\mathcal B_{\rm CG}$ give
+
+$$
+3q(9/10)-D_{9/10}>
+\frac{178177939744504162}{10^{18}}>0,
+\tag{JR.93}
+$$
+
+and
+
+$$
+-\frac{97686672107194}{10^{18}}<
+3F_{9/10}-D_{9/10}F_1<-
+\frac{97686672107193}{10^{18}}.
+\tag{JR.94}
+$$
+
+Indeed, the second expression is the exact combination
+
+$$
+3F_t-D_tF_1=-(1-t^2)(dh-ep)+2x(D_t-3q(t))
+ +2y(D_t-3tq(t))+2z(3t-D_t).
+\tag{JR.95}
+$$
+
+Equations (JR.93)--(JR.95) prove $s(9/10)>2s_0/3$ and
+$\psi(9/10)<\psi(1)-10^{-5}$. Thus the original three-low point is
+strictly suboptimal at $s=2s_0/3$, while the comparison is with its
+actual TV and not with a lower bound.
+
+**Lemma 50.3 (stationary isolation).** Put $K=dh-ep$ and define
+
+$$
+\begin{aligned}
+\mathscr E(t):={q(t)D_t^2\over2}\psi'(t)
+={}&q(t)[Kt+z(d-et^2)]\\
+&+xt[2-2\chi-\chi^2+\chi et^2]\\
+&-y[(1-\chi)d+(4\chi-\chi^2-1)t^2].
+\end{aligned}
+\tag{JR.96}
+$$
+
+**Proof.** Directed rational interval evaluation of (JR.96) on the full
+box $\mathcal B_{\rm CG}$, with outward square-root bounds, gives
+
+$$
+-\frac{1100}{10^7}<\mathscr E(17/20)<-\frac{1099}{10^7},\qquad
+\frac{1857}{10^7}<\mathscr E(9/10)<\frac{1858}{10^7},
+\tag{JR.97}
+$$
+
+and, after differentiating the displayed expression and subdividing only
+by rational endpoints,
+
+$$
+\mathscr E'(t)>\frac1{200}\qquad(17/20\leq t\leq9/10).
+\tag{JR.98}
+$$
+
+Therefore there is a unique $`t_*\in(17/20,9/10)`$ with
+$`\mathscr E(t_*)=0`$. Evaluating (JR.96) on $\mathcal B_{\rm CG}$ at
+the two rational endpoints below gives respectively a strictly negative and a strictly positive value,
+yielding the isolating interval
+
+$$
+\frac{4890850417337583}{5629499534213120}<t_*<
+\frac{19563401669350333}{22517998136852480}.
+\tag{JR.99}
+$$
+
+The decimal $`t_*=0.8687895589321185\ldots`$ is only an illustration of
+this exact isolation.
+
+**Theorem 50.4 (global spectral optimum and its four slacks).** Define
+
+$$
+\mu_*=\psi(t_*),\qquad v_*=v(t_*),\qquad P_*=v_*v_*^T,
+$$
+
+and distinguish the spectral multiplier from the contrast multiplier by
+
+$$
+\lambda_{\rm sp}=\mu_*-g_0+\frac{x+yt_*}{q(t_*)},\qquad
+H_*=G+\lambda_{\rm sp}Q.
+\tag{JR.100}
+$$
+
+**Proof.** The stationarity equation is $`H_*v_*=\mu_*v_*`$. Directed bounds on the
+full box $\mathcal B_{\rm CG}$ and the bracket (JR.99) give
+
+$$
+-\frac{129}{10^5}<\mu_*<-\frac{107}{10^5},\qquad
+\frac{17}{10^4}<\lambda_{\rm sp}<\frac{22}{10^4},
+\tag{JR.101}
+$$
+
+and
+
+$$
+(H_*)_{11}>\frac9{10^4},\qquad (H_*)_{22}>\frac{14}{10^4},\qquad
+|(H_*)_{12}|<\frac{102}{10^6},\qquad
+\det(H_*[1,2])>0.
+\tag{JR.102}
+$$
+
+Thus the $1,2$ principal block is positive definite. Interlacing and
+$`H_*v_*=\mu_*v_*`$ show that $`H_*`$ has exactly one negative eigenvalue,
+namely $`\mu_*`$, and two strictly positive eigenvalues.
+
+Set
+
+$$
+Y_*=H_*-2\mu_*P_*=|H_*|.
+\tag{JR.103}
+$$
+
+The four PSD slacks of the real SDP dual are
+
+$$
+\begin{aligned}
+Y_*-G-\lambda_{\rm sp}Q&=-2\mu_*P_*\succeq0,\\
+Y_*+G+\lambda_{\rm sp}Q&=2(H_*-\mu_*P_*)\succeq0.
+\end{aligned}
+\tag{JR.104}
+$$
+
+The first line is the positive-report ($\epsilon=+1$) slack and the
+second is the negative-report ($\epsilon=-1$) slack. Explicitly, for each
+$r=\pm1$, $`S_{r,+}:=Y_*-G-\lambda_{\rm sp}Q\succeq0`$ and
+$`S_{r,-}:=Y_*+G+\lambda_{\rm sp}Q\succeq0`$. These are the four slacks of
+(JR.126) with $\lambda=0$ and $\nu_{r,\epsilon}=-\epsilon\lambda_{\rm sp}$;
+they satisfy $`S_{r,+}(I-P_*)=0`$ and $`S_{r,-}P_*=0`$.
+For any feasible tuple put $X_-:=X_{+,-}+X_{-,-}$. Then
+$0\preceq X_-\preceq I$, $\operatorname{tr}(QX_-)=0$, and
+$`\operatorname{tr}(GX_-)=\operatorname{tr}(H_*X_-)`$, because
+$\operatorname{tr}(QX_-)=0$. In an eigenbasis of $`H_*`$, the unique
+negative coordinate of $X_-$ is at most one and all positive
+coordinates contribute nonnegatively. Consequently
+
+$$
+\operatorname{tr}(GX_-)=\operatorname{tr}(H_*X_-)\geq\mu_*.
+\tag{JR.105}
+$$
+
+It follows that
+
+$$
+J_s\leq\operatorname{tr}G-2\mu_*\qquad(0\leq s\leq s_0).
+\tag{JR.106}
+$$
+
+Equality in (JR.105) holds exactly when $`X_-=P_*`$. This is the global
+upper bound, and it uses no fixed complete binary effect.
+
+**Definition 50.5 (the orthonormal null frame and exact endpoint).** Put
+
+$$
+\begin{gathered}
+a_0=1-\chi,\qquad q_*=q(t_*),\qquad B_*=a_0t_*^2+\chi,\\
+z_*={a_0q_*t_*-\sqrt{B_*-a_0\chi q_*^2}\over B_*},\qquad
+b_*=q_*-t_*z_*,\\
+u_*={ (1,b_*,z_*)^T\over\sqrt{1+b_*^2+z_*^2}},\qquad
+w_*=v_*\times u_*.
+\end{gathered}
+\tag{JR.107}
+$$
+
+**Proof.** The defining quadratic identity for $`z_*`$ gives $`u_*^TQu_*=0`$;
+orthogonality to $`v_*`$ is immediate, and hence $`w_*`$ is orthogonal to
+both and is also $Q$-null because the compression of $Q$ to
+$`v_*^\perp`$ is a nonzero traceless $2\times2$ form. Thus
+$`(v_*,u_*,w_*)`$ is an orthonormal real $Q$-null frame. Evaluation on
+$\mathcal B_{\rm CG}$ with (JR.99) gives
+
+$$
+-\frac1{10}<z_*<0,\qquad {49\over50}<b_*<{27\over25}.
+\tag{JR.108}
+$$
+
+The normalized $01$ products have signs
+
+$$
+(v_*)_0(v_*)_1<0,\qquad (u_*)_0(u_*)_1>0,\qquad
+(w_*)_0(w_*)_1<0.
+\tag{JR.109}
+$$
+
+Define
+
+$$
+\bar s=2s_0(u_*)_0(u_*)_1
+=s_0\left(|(v_*)_0(v_*)_1|+(u_*)_0(u_*)_1+|(w_*)_0(w_*)_1|\right).
+\tag{JR.110}
+$$
+
+The tuple
+
+$$
+Z_{+,+}=Lu_*u_*^TL,\quad Z_{-,+}=Lw_*w_*^TL,\quad
+Z_{-,-}=Lv_*v_*^TL,\quad Z_{+,-}=0
+\tag{JR.111}
+$$
+
+attains (JR.106), has contrast $\bar s$, and has $`X_-=P_*`$.
+Moreover,
+
+$$
+\frac{\bar s}{s_0}={2b_*\over1+b_*^2+z_*^2}
+=1-{(b_*-1)^2+z_*^2\over1+b_*^2+z_*^2}
+>1-{41\over4901}>{99\over100}.
+\tag{JR.112}
+$$
+
+Since $`t_*<1`$, $`q_*<1`$; equality in the two-coordinate
+Cauchy--Schwarz bound would require $`|(v_*)_0|=|(v_*)_1|`$, which is
+false. Hence $\bar s<s_0$. Evaluation on $\mathcal B_{\rm CG}$ with
+(JR.99) gives the illustrations
+
+$$
+0.993780002195346659<\frac{\bar s}{s_0}<0.993780002195346879,\qquad
+0.103298204128059321<T_{\rm flat}-\mu_*<0.103298204128059323.
+$$
+
+**Theorem 50.6 (optimal value and real-atom classification).** The exact
+weak-plateau value is
+
+$$
+\boxed{J_s=\operatorname{tr}G-2\mu_*,\qquad
+\mathcal T(s)=T_{\rm flat}-\mu_*,\qquad0\leq s\leq\bar s.}
+\tag{JR.113}
+$$
+
+**Proof.** In particular the equality includes $s=0$ and $s=2s_0/3$. Equality in
+(JR.105) forces the aggregate negative part to be $`P_*`$, and the aggregate
+positive part to be $`I-P_*`$. The real $Q$-null cone inside $`v_*^\perp`$
+has exactly the two lines spanned by $`u_*`$ and $`w_*`$: a two-dimensional
+totally null plane would make the nonzero traceless compression vanish.
+The rank-by-rank real null decomposition therefore classifies every
+nonzero optimal real atom, up to proportional splitting, a sign phase,
+and the report assignment, as one of $`v_*,u_*,w_*`$. The aggregate
+weights in this frame are fixed by (JR.111). This classification concerns
+the finite real SDP and its aggregate supports only; it asserts no
+uniqueness of a whole channel, a time law, a native implementation, or
+an inaccessible instrument refinement.
+
+No value above (JR.113) is possible for $s>\bar s$. Compactness of the
+feasible set and the equality classification give
+
+$$
+J_s<\operatorname{tr}G-2\mu_*,\qquad \bar s<s\leq s_0.
+\tag{JR.114}
+$$
+
+## 51. One common finite instrument and the residual interval
+
+**Definition 51.1 (the common frame instrument).** For
+$`f\in\{v_*,u_*,w_*\}`$, set $c_f=Lf$ and
+
+$$
+K_f=(c_f)_0D+(c_f)_1T+(c_f)_2S.
+\tag{JR.115}
+$$
+
+Each $K_f$ has rank two. Choose an isometry $V_f:\mathbb C^2\to\mathbb C^3$ onto its image and use encoder $V_f^\dagger K_fE^\dagger$
+with the full TP decoder
+
+$$
+A\longmapsto EV_fAV_f^\dagger E^\dagger.
+\tag{JR.116}
+$$
+
+The low reports are $`r(v_*)=-1`$, $`r(u_*)=+1`$, and $`r(w_*)=-1`$.
+The high-dimensional pair uses
+
+$$
+K_{H,\sigma}=\sqrt{(1-\delta)/2}\,D,\qquad \sigma=\pm1,
+\tag{JR.117}
+$$
+
+with the full live decoder $A\mapsto EAE^\dagger$, and both high labels
+are fair. Let $\Xi$ be the $2\times2$ failure difference matrix of
+JR.49 and choose real unit eigenvectors $f_+,f_-$. For
+$\epsilon,r=\pm1$, use the scalar row
+
+$$
+C_{\epsilon,r}={1\over\sqrt2}\langle f_\epsilon|M^{1/2}E^\dagger.
+\tag{JR.118}
+$$
+
+Its decoder sends $z$ to $z\,w_\ell g(t)dt\,P_f$ in every original
+label $\ell=0,\ldots,4$. Finally use two complement labels, with each
+complement CP map having effect $(I_5-P)/2$, scalar retained fibre,
+and decoder $z\mapsto z\,g(t)dt\,P_f$ at original label $2$ only; the
+Kraus multiplicity inside $V^\perp$ is permanently inaccessible.
+
+There are $3+2+4+2=11$ base branches. Every input, all twelve histories,
+and every passive reference use this one fixed instrument. The jointly
+counted accessible fibre includes every retained specimen, memory,
+controller, environment, or entanglement share at the cut.
+
+**Proposition 51.2 (normalization, complete channel and all labelled
+measures).**
+
+**Proof.** The frame identity gives
+
+$$
+\sum_{f\in\{v_*,u_*,w_*\}}c_fc_f^T=L_0,\qquad
+\sum_fK_f^\dagger K_f=\delta D^\dagger D+T^\dagger T+S^\dagger S.
+\tag{JR.119}
+$$
+
+Adding (JR.117) and the failure rows gives $I_3$, by the inherited
+identity $D^\dagger D+T^\dagger T+S^\dagger S+M=I_3$.
+On five modes the complement effects add $I_5-P$, so the encoder effects
+sum to $I_5$. The range isometries and the scalar decoders are TP on
+their complete declared fibres, since
+
+$$
+\int_0^1{2\over(1+t)^2}\,dt=1,\qquad
+\sum_{\ell=0}^4w_\ell=1.
+\tag{JR.120}
+$$
+
+For every $A\in M_5(\mathbb C)$, write $A_V=E^\dagger AE$. Forgetting
+all acquisition labels gives
+
+$$
+\Phi^L(A)=E\bigl(DA_VD^\dagger+TA_VT^\dagger+SA_VS^\dagger\bigr)E^\dagger,
+\tag{JR.121}
+$$
+
+and for every Borel $B\subseteq[0,1]$,
+
+$$
+\Phi^f_\ell(A)(B)=\left(\int_Bg(t)\,dt\right)
+\left[w_\ell\operatorname{tr}(EME^\dagger A)
++\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]P_f.
+\tag{JR.122}
+$$
+
+These are equalities on every complex matrix unit, hence on every complex
+input. Tensoring each encoder and decoder by a passive reference identity
+proves the same identity with the two conditional reference operators
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$ and
+$\operatorname{Tr}_5[((I_5-P)\otimes I_R)X]$. Equation (JR.122) is therefore
+valid separately for all five original labels and all Borel time sets.
+It preserves the original $`E_*`$, including every live coherence and every
+full HALF complete-cq norm term, conditional on the inherited CG
+certificate. The density $g$ is the actual common output density; it is
+not substituted for the ideal $f_y$.
+
+Only the two high labels have fibre dimension at least three, so their
+maximum twelve-history mass is $(1-\delta)A_{27}=\mathsf C(s)$ throughout
+the weak plateau. No prior, postselection, acceptance division, helper,
+copy, reset, retry, readable history or free bypass is introduced.
+
+For $0\le s\le\bar s$, the base raw report has contrast $\bar s$. An
+input-independent report kernel
+
+$$
+\Pr(F=f\mid r)={1+fr\,s/\bar s\over2},\qquad f,r=\pm1,
+\tag{JR.123}
+$$
+
+retains the original branch label and raw report and adds $F$. It gives
+$\mathsf V(F)=s$; summing over $F$ on each retained branch leaves its
+height absolute difference unchanged. Thus the exact lower-contrast
+instrument has 22 retained branches (each of the 11 base branches split
+by $F$); at $s=\bar s$ it has 11. If only the inequality
+$\mathsf V(F)\ge s$ is requested, the 11-branch raw instrument already
+suffices.
+
+**Proposition 51.3 (the residual chord and strict decrease).** Let
+$b(1)$ be the inherited endpoint residual in JR.50 and put
+
+$$
+a_s={s_0-s\over s_0-\bar s},\qquad \bar s\le s\le s_0.
+$$
+
+**Proof.** Mix the instrument of Proposition 51.2 at $\bar s$ with the inherited
+finite $s_0$ instrument, using an input-independent retained choice
+with weights $a_s$ and $1-a_s$. Both choices have the same complete
+channel and the same sharp cost. The resulting common instrument has
+
+$$
+\boxed{\mathcal T(s)\geq
+T_{\rm flat}-a_s\mu_*-(1-a_s)b(1).}
+\tag{JR.124}
+$$
+
+The inequality is a feasible retained-choice lower bound. It is not an
+evaluation of the residual optimum. Its interior branch count is 23
+(11 plus 12); the endpoint counts are 11 at $\bar s$ and 12 at $s_0$.
+
+The compact feasible sets make $J_s$ concave by retained input-independent
+choice and nonincreasing by constraint inclusion. Together with (JR.114),
+concavity forces strict decrease on $(\bar s,s_0]$: if two points in
+that interval had equal values, the slope from the preceding point
+$\bar s$, where the value is larger, would violate the monotonicity of
+secant slopes for a concave function. Hence
+
+$$
+\mathcal T(s)<T_{\rm flat}-\mu_*\quad(\bar s<s\le s_0),
+\tag{JR.125}
+$$
+
+while the exact endpoint is attained by the inherited finite instrument,
+$\mathcal T(s_0)=T_{\rm flat}-b(1)$. The residual curve, contact rays and
+branch transitions remain unevaluated.
+
+**Theorem 51.4 (the four-slack dual and the singular endpoint).** Put
+
+$$
+C={|0\rangle\langle1|+|1\rangle\langle0|\over2},\qquad \tau=s/s_0.
+$$
+
+For $s<s_0$, the normalized dual is
+
+$$
+\boxed{
+J_s=\min_{\substack{\lambda\ge0,\ Y=Y^T\\
+\nu_{r,\epsilon}\in\mathbb R}}
+\left\{\operatorname{tr}Y-\lambda\tau:
+Y-\epsilon G-\lambda rC+\nu_{r,\epsilon}Q\succeq0
+\right\}.}
+\tag{JR.126}
+$$
+
+**Proof.** Here $\lambda$ is the nonnegative contrast multiplier and is distinct
+from $\lambda_{\rm sp}$ in (JR.100). To prove finite dual attainment,
+let $X^{(1)}$ be any endpoint feasible tuple with contrast one and let
+$X^{(0)}_{r,\epsilon}=I/4$. For $0<\eta<1$,
+$X^{(\eta)}=(1-\eta)X^{(0)}+\eta X^{(1)}$ is positive definite in
+all four slots and has contrast $\eta$. Given $\tau<1$, choose
+$\eta\in(\tau,1)$. This is a genuinely strict feasible tuple for the
+primal SDP, so finite-dimensional Slater duality gives equality in
+(JR.126) and a finite dual minimizer.
+
+On $\bar s<s<s_0$, every finite optimal contrast multiplier satisfies
+$\lambda>0$. If $\lambda=0$, (JR.126) is the unconstrained spectral
+problem and its value is the plateau value in (JR.113), contradicting
+(JR.125). Complementary slackness therefore forces
+$\sum_{r,\epsilon}r(X_{r,\epsilon})_{01}=\tau$, so the original contrast
+inequality is saturated throughout the residual interval. On the constant
+interval, the certificate (JR.103)--(JR.104) is the branch
+$\lambda=0$, $`Y=Y_*`$, $\nu_{r,\epsilon}=-\epsilon\lambda_{\rm sp}$.
+
+At $s=s_0$, the endpoint primal is finitely attained, but the dual has
+an infimum and no finite minimizer. For the four endpoint null atoms
+$d_{\sigma,t}=(1,\sigma,t)^T/2$, $\sigma,t=\pm1$, complementary
+slackness for a putative finite dual minimizer first gives
+
+$$
+\begin{gathered}
+A_{+,+}=\alpha(1,-1,0)^T(1,-1,0),\qquad
+\alpha=\lambda/2,\\
+\nu_{-,+}=\nu_{+,+},\qquad
+Y_{01}=x,\quad Y_{02}=y,\quad Y_{12}=z,\\
+Y_{00}=g_0-\nu_{+,+}+\lambda/2,\\
+Y_{11}=g_1+(1-\chi)\nu_{+,+}+\lambda/2,\qquad
+Y_{22}=g_2+\chi\nu_{+,+}.
+\end{gathered}
+\tag{JR.127}
+$$
+
+The negative atom $d_{-,-}$ then requires
+$\nu_{-,-}-\nu_{+,+}=2(x+y-g_0)$. Substitution into the two remaining
+complementary diagonal equations requires both residues
+
+$$
+R_1=x-g_1-z+(1-\chi)(x+y-g_0)=0,\qquad
+R_2=y-z-g_2+\chi(x+y-g_0)=0.
+\tag{JR.128}
+$$
+
+Evaluation of (JR.128) on $\mathcal B_{\rm CG}$ gives the directed intervals
+
+$$
+\frac{2454521998719936}{10^{18}}<R_1<
+\frac{2454521998719937}{10^{18}},\qquad
+\frac{1037144557584923}{10^{18}}<R_2<
+\frac{1037144557584924}{10^{18}}.
+\tag{JR.129}
+$$
+
+Both are strictly positive, contradicting (JR.128). Thus no finite dual
+minimum exists at $s_0$. The endpoint dual infimum nevertheless equals
+$J_{s_0}$: compactness and nested feasible sets give
+$J_s\to J_{s_0}$ as $s\uparrow s_0$, while every dual feasible point
+for an interior $\tau$ remains feasible at $\tau=1$ with objective
+lowered by $\lambda(1-\tau)$. Weak duality at the endpoint sandwiches
+its dual infimum between $J_{s_0}$ and this convergent sequence. No
+multiplier-divergence rate or other endpoint asymptotic is asserted.
+
+## 52. Source conditions, literature scope and remaining boundaries
+
+**Convention 52.1 (credit and hypotheses).** CG supplies the isolated
+source root, conditional channel, normalization, sharp worst-history
+cost and original minimax certificate. JR §§41--49 supplies the original
+height-record formulation, supported equality consequences, failure
+spectral readout, labelled-time identities and the strong-regime endpoint
+instrument. CA supplies the real exposed/null-decomposition mechanism,
+rank compression and finite realization facts. IR supplies the compatible
+finite CP-map and reference/Borel-measure identities. These mechanisms are
+reused with the frame substitutions (JR.107) and (JR.115); no generic
+S-lemma, flat-roof theorem or whole-channel uniqueness claim is counted as
+new mathematics here.
+
+The equality S-lemma of Xia--Wang--Sheu supports only the relation between
+an equality quadratic constraint and a scalar PSD certificate when its
+sign-changing hypothesis holds; (JR.103)--(JR.106) provide the concrete
+certificate here. Uhlmann's common flat decomposition for affine
+functionals is an antecedent for convex decompositions, not a proof of
+this real-null height-TV optimum. Leppäjärvi--Sedlák and
+Muñoz-Moller--Leppäjärvi--Heinosaari supply finite compatibility and
+conditional-measure mechanisms within their stated hypotheses. Sekatski's
+rank/image compression is used from subsection II.1, with its stated
+finite-dimensional scope; it supplies no original state-dependent
+acquisition-cost theorem. The latest nonreal-input plateau source has a
+selected-input resource objective and a different exact-effect model; its
+values are not transferred to (JR.84)--(JR.126). Calibration XXIV's
+proper-restriction obstruction supplies no quantum CP or resource
+correspondence and is not used here.
+
+**Convention 52.2 (scope boundary).** The conditional mathematics retains
+one unknown specimen, no prior, postselection, acceptance division,
+helper, copy, reset, retry, readable history or free bypass. It counts all
+future-accessible specimen, memory, controller, environment and
+entanglement shares at one acquisition cut. The construction does not
+supply native acquisition, calibrated native D/T/S operations, coherent
+storage, an aligned-clock execution, an actual first absorbing failure
+with no later positive-carrier action, terminal live output, archives,
+controller or permission bridge. OriginalControl remains geometric rather
+than an actuator, and the noncommuting controls do not admit an exhaustive
+Schur restriction. The exact residual curve on $(\bar s,s_0)$, its contact
+transitions and the native realization therefore remain open. The statements
+above are ordinary source-conditional mathematics and do not assert
+Lean/kernel certification, native execution, or completion of the wider
+programme.
+
+## 追加锚（本行以下为增补区）
