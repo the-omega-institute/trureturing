@@ -181,7 +181,7 @@ internal static class DigestionAtomContextProjection
                         before + 1, before + 1 + after.Length,
                         source.SourceId, source.SourcePath, source.Atomizer)
                     {
-                        GoverningContext = GoverningContext(sourceBytes, atom, sourceText, blocks, scopes),
+                        GoverningContext = GoverningContext(sourceBytes, atom, sourceText, blocks, scopes).Where(static context => context.Relation == "heading").ToImmutableArray(),
                     });
                 }
                 return contexts.ToImmutable();
