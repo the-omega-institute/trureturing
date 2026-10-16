@@ -1083,6 +1083,62 @@ enriched completion, actual Schur positivity, cofinal positivity or Lean
 verification is asserted by this parameter map.
 
 
+### A residual-driven completion on the former128-column witness
+
+Keep the same full dyadic $v$ from the128-column obstruction, the same
+actual exterior $H_N$ and archived $W$. Write its former trial as
+$y_0=E_{128}x_0$ and let $V$ select exterior modes1281 through2048.
+The existing finite linear solve applied to
+
+$$
+(V^*H_NV)z=V^*(C_Nv-H_Ny_0)
+$$
+
+proposes a correction to the actual inverse equation. Round
+$y=y_0+Vz$ to768 exact96-bit dyadic coordinates. The640 coordinates
+beyond the old exterior span are nonzero. This changes the trial space;
+it is not another solve of the excluded fixed-family optimization.
+
+The [enrichment experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/9e286ae630f756dc470b23a6d2a7093465138574/docs/reports/weil-c27)
+evaluates the complete actual residual $r=C_Nv-H_Ny$ using every
+middle row1281–32768 and the same168 infinite far moments. Extending
+the112-feature columns through2048 pays a new operator allowance
+approximately $1.80743\times10^{-135}$, using the complete existing
+symbol bound. It reuses the old directed $Q(v-y_0)$ and computes only
+its exact correction
+
+$$
+Q(v-y)=Q(v-y_0)-2\operatorname{Re}\langle y-y_0,C_Nv-H_Ny_0\rangle
++\langle y-y_0,H_N(y-y_0)\rangle.
+$$
+
+The existing inverse-residual identity, under the same common-form,
+exterior-domain and inverse-comparison premises, gives
+
+$$
+Q(v-y)-\|r\|_W^2\le v^*S_Nv\le Q(v-y).
+$$
+
+| Quantity on the unchanged complete $v$ | Approximate directed value |
+|---|---:|
+| Old complete residual energy | $4.3635328423409634\times10^{-10}$ |
+| New complete residual energy | $1.0904887215065086\times10^{-10}$ |
+| New sufficient lower target | $2.8606682320961359\times10^{-10}$ |
+| New upper trial energy | $3.9511569536026445\times10^{-10}$ |
+
+The exact endpoints place the new residual energy below one quarter
+of the old value and imply
+$2.86\times10^{-10}<v^*S_Nv<3.96\times10^{-10}$ under those premises.
+The finite solve only proposes $y$; the complete residual supplies the
+infinite-exterior comparison. This certifies one scalar direction and
+does not establish full retained positivity. It changes neither earlier
+fixed-family exclusion, determines no other retained direction and
+supplies no cofinal positivity or RH proof. The original orthonormal
+mass is retained; these values are quadratics rather than asserted
+normalized eigenvalues. No old scalar, moment, Gram or eigensolver
+production, new general inverse theorem or Lean verification is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
