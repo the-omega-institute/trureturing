@@ -100,7 +100,10 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                             + "task by 1/4 + sqrt(omega) under the same averaged energy restriction. "
                             + "Since sqrt(288/625) < 17/25, every such value is less than 93/100, "
                             + "whereas 2401/2500 > 93/100. Hence claim is false."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("roch-i-carceller-tavakoli-2025-energy-restricted-unitary-encoding"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
