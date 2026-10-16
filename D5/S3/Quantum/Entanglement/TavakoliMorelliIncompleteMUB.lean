@@ -53,7 +53,7 @@ theorem mub_effect_sum {d m : ℕ} (A : MUBFamily d m) (l : Fin m) :
     ∑ a, A.effect (l, a) = 1 := by
   ext i j
   change (∑ a, proj (A.ket l a)) i j = _
-  simp only [Matrix.sum_apply, MState.pure_apply]
+  simp (congrConsts := false) only [Matrix.sum_apply, MState.pure_apply]
   change ∑ a, (A.val l).val i a * star ((A.val l).val j a) = _
   exact congrArg (fun M : Op d => M i j) (Unitary.mul_star_self_of_mem (A.val l).prop)
 
@@ -125,7 +125,7 @@ theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
       fin_cases i
       fin_cases j
       change y.1.1 0 0 = 0
-      simpa only [Matrix.trace, Matrix.diag, Fin.sum_univ_one] using htrace
+      simpa only [Matrix.trace_fin_one] using htrace
     rw [hy, map_zero]
     exact inner_zero_right _
 
@@ -164,9 +164,9 @@ theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
   have hBasis (l : Fin m) :
       ∑ a, ((X.1.1 * A.effect (l, a)).trace.re) ^ 2 =
         (∑ a, (p l a) ^ 2) - q ^ 2 / (d : ℝ) := by
-    simp_rw [hshift, show ∀ z : ℝ, (z - q / (d : ℝ)) ^ 2 =
-      z ^ 2 - (2 * (q / (d : ℝ))) * z + (q / (d : ℝ)) ^ 2 by intro z; ring]
-    simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
+    simp_rw (congrConsts := false) [hshift, sub_sq]
+    simp (congrConsts := false) only [Finset.sum_add_distrib, Finset.sum_sub_distrib,
+      ← Finset.sum_mul, ← Finset.mul_sum,
       hsum, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
     field_simp [hd0]
     ring
@@ -175,11 +175,11 @@ theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
     exact centered_hermitian_norm_sq H hH
   have hEnergy := traceZero_context_pythagoras A.context (mub_context_record A)
     (mub_measurements_orthogonal hd A) X
-  simp_rw [traceZero_measurement_norm_sq] at hEnergy
+  simp_rw (congrConsts := false) [traceZero_measurement_norm_sq] at hEnergy
   change ‖X.1.1‖ ^ 2 =
     (∑ l, ∑ a, ((X.1.1 * A.effect (l, a)).trace.re) ^ 2) +
       ‖residualVector A.context (mub_context_record A) X‖ ^ 2 at hEnergy
-  simp_rw [hBasis] at hEnergy
+  simp_rw (congrConsts := false) [hBasis] at hEnergy
   rw [hNorm] at hEnergy
   simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, nsmul_eq_mul] at hEnergy
