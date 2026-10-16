@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/campbell-2010-log-negativity-resource-independence` (refuted) by `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"campbell-2010-log-negativity-resource-independence","declaration_gid":"D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Earl T. Campbell (2010). *Optimal entangling capacity of dynamical processes*. DOI: [10.1103/PhysRevA.82.042314](https://doi.org/10.1103/PhysRevA.82.042314). URL: <https://arxiv.org/abs/1007.1445>.
