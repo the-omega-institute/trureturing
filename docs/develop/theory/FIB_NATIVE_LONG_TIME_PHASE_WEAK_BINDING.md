@@ -1975,3 +1975,602 @@ are the deductions above from these premises. They make no
 literature-wide novelty claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 87. Zero-energy inversion for the fixed microscopic source
+
+**Definition 87.1 (critical notation).** Retain all the fixed data,
+operators and full complex domains of Definition 81.1. In particular
+the heat semigroup is $P_t=e^{-t\mathcal E}$, the potential is exactly
+$V=j_0^{-1}\int_1^\infty p_E(t;0,\cdot)dt$, and $a>0$ is not inserted
+into that heat clock. Let $M$ denote multiplication by $V^{1/2}$,
+and write
+
+$$
+v[f]=\|Mf\|_2^2,\qquad
+\|f\|_{\mathcal Q_E}^2=\|f\|_2^2+b[f],\qquad
+h_c=h_{\chi_c},\qquad H_c=H_{\chi_c}.
+\tag{87.1}
+$$
+
+The constants $C_*$ and $\chi_c=a/C_*$ remain those of (84.1).
+All $L^p$ spaces in §§87--89 use unit Lebesgue Haar measure on the
+real Engel group (82.1).
+
+**Theorem 87.2 (compact zero-energy inverse and its operator domain).**
+The following integral converges in operator norm from $L^2$ to
+$L^2$:
+
+$$
+T=\int_0^\infty P_tM\,dt.
+\tag{87.2}
+$$
+
+It is compact, maps every $u\in L^2$ into $D(\mathcal E)$, and
+satisfies
+
+$$
+\mathcal E Tu=Mu,\qquad
+(\mathcal E+b)^{-1}M\longrightarrow T\quad
+\hbox{in operator norm as }b\downarrow0.
+\tag{87.3}
+$$
+
+Consequently the specific strong limit $K_0$ of (84.4) is compact
+and has the norm-convergent representation
+
+$$
+K_0=MT=\int_0^\infty MP_tM\,dt,\qquad
+\|K_b-K_0\|\longrightarrow0.
+\tag{87.4}
+$$
+
+Proof. The box $\{N\le R\}$ has volume $16R^7$ for $R>0$.
+The bound (82.4), boundedness near the origin and a dyadic annular
+sum therefore give
+
+$$
+\int V^{3/2}d\xi<\infty,\qquad
+\|V^{1/2}\|_{L^3}<\infty,\qquad
+V^{1/2}\in L^\infty,\qquad
+V^{1/2}(\xi)\longrightarrow0\quad(N(\xi)\to\infty).
+\tag{87.5}
+$$
+
+Indeed the summands at radius $2^j$ are bounded by
+$C2^{7j}2^{-15j/2}=C2^{-j/2}$. Write $m=V^{1/2}$ for the
+function defining $M$. The heat kernel has mass one and
+$\|p_E(t;0,\cdot)\|_\infty\le c_Et^{-7/2}$. Thus
+
+$$
+\|p_E(t;0,\cdot)\|_{3/2}\le c_E^{1/3}t^{-7/6},\qquad
+\|P_tMu\|_2\le c_E^{1/3}t^{-7/6}\|m\|_3\|u\|_2.
+\tag{87.6}
+$$
+
+The second inequality uses Hölder to put $mu$ in $L^{6/5}$,
+then Young convolution with exponents $6/5,3/2,2$.
+The precise general supplier is Fischer--Ruzhansky,
+*Sobolev spaces on graded groups*,
+[arXiv:1311.0192v1, §2.1, (2.2)](https://arxiv.org/html/1311.0192v1#S2.SS1).
+Its group-convolution hypothesis holds here: (82.1) is a simply
+connected graded nilpotent group, its Haar measure is the specified
+Lebesgue measure, and $P_t$ is convolution by its left invariant
+heat kernel. The group is unimodular, so either convolution
+convention gives this same norm estimate. The identity
+$5/6+2/3=1+1/2$ checks the exponents. Only Young's inequality
+is imported; no general critical-coupling or Sobolev theorem is
+being asserted as a new result.
+
+For $0<t<1$ use instead $\|P_tM\|_{2\to2}\le\|m\|_\infty$.
+These bounds prove (87.2) and the two explicit estimates
+
+$$
+\left\|\int_0^\epsilon P_tMdt\right\|\le\epsilon\|m\|_\infty,
+\qquad
+\left\|\int_R^\infty P_tMdt\right\|
+ \le6c_E^{1/3}\|m\|_3R^{-1/6}\quad(R\ge1).
+\tag{87.7}
+$$
+
+Norm measurability follows from norm continuity of $P_t$ for
+$t>0$, by the spectral theorem. For each such $t$, $P_tM$ is
+compact. To see this, replace $m$ by $m\mathbf1_{\{N\le L\}}$.
+The resulting integral operator is Hilbert--Schmidt, since
+
+$$
+\int\!\int |p_E(t;\eta,\xi)|^2
+                |m(\eta)|^2\mathbf1_{\{N(\eta)\le L\}}d\xi d\eta
+ =p_E(2t;0,0)\int_{\{N\le L\}}|m|^2d\eta<\infty.
+\tag{87.8}
+$$
+
+The omitted multiplier has operator norm at most
+$\sup_{N>L}|m|\to0$. Hence $\int_\epsilon^R P_tMdt$ is a
+norm limit of compact Riemann sums. Letting $\epsilon\downarrow0$
+and $R\to\infty$ in (87.7) proves compactness of $T$.
+
+It remains to justify an actual operator inverse on these right
+sides. For $u\in L^2$ set $z_R=\int_0^R P_tMu\,dt$.
+Spectral calculus, including the continuous value $R$ of
+$(1-e^{-R\lambda})/\lambda$ at $\lambda=0$, gives
+
+$$
+z_R\in D(\mathcal E),\qquad
+\mathcal E z_R=(1-P_R)Mu.
+\tag{87.9}
+$$
+
+There is no $L^2$ kernel of $\mathcal E$: its form would force
+$Xf=Yf=0$, their brackets force all distributional coordinate
+derivatives to vanish, and a constant is not in $L^2$ unless zero,
+as in the proof of Theorem 84.1. The spectral theorem consequently
+gives $P_RMu\to0$ in $L^2$. Since $z_R\to Tu$ in $L^2$,
+closedness of $\mathcal E$ proves (87.3)'s domain and equation.
+The resolvent integral
+$(\mathcal E+b)^{-1}M=\int_0^\infty e^{-bt}P_tMdt$
+converges to (87.2) in norm by (87.6)--(87.7) and dominated
+convergence. Multiplication by the bounded $M$ proves (87.4),
+identifying it with the strong limit already defined in (84.4).
+This proves zero-energy compactness and $L^2$ inversion directly;
+compactness of the positive-energy $K_b$ alone is not its premise.
+$\square$
+
+## 88. Attained simple critical mode on the full complex domain
+
+**Theorem 88.1 (zero-energy Birman--Schwinger equivalence and attainment).**
+The largest eigenvalue of $K_0$ is $C_*>0$ and is attained.
+There is a normalized strictly positive real vector
+$\Phi_c\in D(\mathcal E)$ with
+
+$$
+\mathcal E\Phi_c=C_*^{-1}V\Phi_c,\qquad
+H_c\Phi_c=0,\qquad
+\mu_c:=v[\Phi_c]>0,\qquad
+a b[\Phi_c]=\chi_c\mu_c.
+\tag{88.1}
+$$
+
+The following equalities and correspondence hold on the specified
+complex spaces:
+
+$$
+\begin{aligned}
+\ker H_c&=\mathbb C\Phi_c,\\
+\{f\in\mathcal Q_E:h_c[f]=0\}&=\mathbb C\Phi_c,\\
+\{f\in\mathcal Q_E:\|f\|_2=1,\ h_c[f]=e(\chi_c)\}
+ &=\{e^{i\theta}\Phi_c:\theta\in\mathbb R\},\\
+\ker(K_0-C_*I)&\underset{f\mapsto Mf}{\overset{u\mapsto C_*^{-1}Tu}
+ {\rightleftarrows}}\ker H_c.
+\end{aligned}
+\tag{88.2}
+$$
+
+The two displayed arrows are inverse linear bijections. In
+particular the extremizers of $v[f]/b[f]=C_*$, among nonzero
+$f\in\mathcal Q_E$, are exactly the nonzero multiples of $\Phi_c$.
+There is no restriction to real test vectors or to vectors with
+an ordinary phase gradient.
+
+Proof. By Theorems 84.1 and 87.2, $K_0$ is compact, selfadjoint,
+nonnegative and has norm $C_*>0$. The compact spectral theorem
+provides a top eigenvector $u\ne0$. It can be chosen nonnegative:
+the nonnegative integral kernels in (87.4) give
+$\langle |u|,K_0|u|\rangle\ge\langle u,K_0u\rangle
+=C_*\|u\|_2^2$, while the norm bound gives the reverse inequality.
+Equality in the Rayleigh bound for a nonnegative selfadjoint
+operator makes $|u|$ a top eigenvector. Moreover $Tu$ is strictly
+positive almost everywhere. For example, for nonzero $u\ge0$,
+each $P_tMu$ is strictly positive by (82.3), and its integral on
+$1\le t\le2$ is a positive lower bound for $Tu$.
+
+Put $f=C_*^{-1}Tu$. Theorem 87.2 gives $f\in D(\mathcal E)$,
+$Mf=u$, and
+
+$$
+\mathcal E f=C_*^{-1}Mu=C_*^{-1}Vf.
+\tag{88.3}
+$$
+
+In particular $f\ne0$ and $H_cf=0$. Normalize this positive
+vector to define $\Phi_c$. Bounded strict positivity of $V$
+proves $0<\mu_c<\infty$; pairing (88.3) with $f$ proves (88.1).
+
+Conversely if $f\in\ker H_c$, then
+$\mathcal E f=C_*^{-1}Vf$. Both $f$ and $C_*^{-1}TMf$
+are in $D(\mathcal E)$ and have the same image under
+$\mathcal E$, by (87.3). Its injectivity proved above implies
+$f=C_*^{-1}TMf$, hence $K_0Mf=C_*Mf$.
+The identities $MC_*^{-1}Tu=u$ on the top eigenspace and
+$C_*^{-1}TMf=f$ on the critical kernel prove the bijection.
+This also excludes a threshold Birman--Schwinger vector whose
+reconstruction would fail to be in $L^2$ or in the operator domain.
+
+Simplicity follows from the positive heat kernel argument in
+Theorem 84.1, now at the attained bottom zero. More explicitly,
+$S_t=e^{-tH_c}$ has a strictly positive kernel, since its
+bounded-potential Dyson series has nonnegative terms and contains
+$p_E(at;\eta,\xi)>0$. It is an $L^2$ contraction because
+$H_c\ge0$. If $u\in\ker H_c$, then
+$|u|=|S_tu|\le S_t|u|$ and contraction forces equality in
+$L^2$ norm, hence pointwise almost everywhere. Thus
+$S_t|u|=|u|$, and the spectral theorem puts $|u|$ in the same
+kernel. Equality in the integral triangle inequality with a
+strictly positive kernel makes the phase of a nonzero $u$
+constant almost everywhere. It also makes $|u|$ strictly positive.
+If the complex kernel had dimension at least two, subtracting
+a multiple of $\Phi_c$ would give a nonzero kernel vector
+orthogonal to $\Phi_c$. Its constant phase and strictly positive
+modulus make this impossible. The kernel is therefore exactly
+$\mathbb C\Phi_c$, and the bijection proves the same simplicity
+at the top of $K_0$.
+
+Finally the representation theorem for the nonnegative closed
+form $h_c$ gives
+$h_c[f]=\|H_c^{1/2}f\|_2^2$. Its vanishing on
+$\mathcal Q_E$ implies $f\in\ker H_c\subset D(H_c)=D(\mathcal E)$,
+by spectral calculus. Conversely a kernel vector has zero form.
+Since $e(\chi_c)=0$, these observations prove all of (88.2).
+The equality $v[f]=C_*b[f]$ is precisely $h_c[f]=0$;
+the nonzero denominators were proved in Theorem 84.1.
+$\square$
+
+## 89. Linear threshold onset and every tangent near-minimizer
+
+**Theorem 89.1 (right derivative and horizontal form convergence).**
+For the fixed source and clock of Definition 81.1,
+
+$$
+e(\chi_c+\delta)=-\mu_c\delta+o(\delta)
+\quad(\delta\downarrow0),\qquad \mu_c=\int V|\Phi_c|^2d\xi>0.
+\tag{89.1}
+$$
+
+For every sequence $\delta_n>0$ tending to zero and every complex
+$f_n\in\mathcal Q_E$ with $\|f_n\|_2=1$ and
+
+$$
+r_n:=h_{\chi_c+\delta_n}[f_n]-e(\chi_c+\delta_n)
+\ge0,\qquad r_n/\delta_n\longrightarrow0,
+\tag{89.2}
+$$
+
+there are constant phases $\theta_n\in\mathbb R$ such that
+
+$$
+\|f_n-e^{i\theta_n}\Phi_c\|_{\mathcal Q_E}\longrightarrow0.
+\tag{89.3}
+$$
+
+In particular this holds for all the normalized supercritical
+ground states of Theorem 84.1 as $\chi\downarrow\chi_c$.
+The topology in (89.3) contains the global $L^2$ norm and both
+horizontal derivative norms, with no spatially varying phase or
+centre adjustment. Also $b_{\chi_c+\delta}/\delta\to\mu_c/a$
+for the resolvent root in (84.5).
+
+Proof. Testing on $\Phi_c$ gives
+$e(\chi_c+\delta)\le-\mu_c\delta$.
+For any sequence (89.2) set $v_n=v[f_n]$. Nonnegativity of $h_c$
+and $0\le v_n\le\|V\|_\infty$ give
+
+$$
+\begin{aligned}
+0\le h_c[f_n]
+ &=e(\chi_c+\delta_n)+r_n+\delta_nv_n\\
+ &\le\delta_n(v_n-\mu_c)+r_n=O(\delta_n),\\
+v_n&\ge\mu_c-r_n/\delta_n.
+\end{aligned}
+\tag{89.4}
+$$
+
+It follows from $a b[f_n]=h_c[f_n]+\chi_cv_n$ that
+the sequence is bounded in $\mathcal Q_E$. The fixed-field
+compactness used in Lemma 83.1 gives, along every subsequence,
+a further subsequence converging weakly in $L^2$, strongly in
+local $L^2$, and weakly in its two horizontal derivatives to
+$f\in\mathcal Q_E$, with $\|f\|_2\le1$.
+For clarity, this use fixes $X,Y$ throughout: local form
+compactness follows from the fixed-field subelliptic estimate,
+and the global derivative limit and Friedrichs-domain membership
+follow from the cutoff and convolution argument in Lemma 83.1.
+Since $V$ is bounded and vanishes at infinity, local convergence
+and the uniform $L^2$ bound imply $v_n\to v[f]$.
+Lower semicontinuity and (89.4) imply $h_c[f]=0$.
+Theorem 88.1 therefore gives $f=c\Phi_c$, $|c|\le1$, while
+the last line of (89.4) gives
+
+$$
+|c|^2\mu_c=v[f]=\lim v_n\ge\mu_c.
+\tag{89.5}
+$$
+
+Thus $|c|=1$. Weak convergence of unit vectors to a unit vector
+is strong in global $L^2$. Moreover (89.4) yields
+$b[f_n]\to\chi_c\mu_c/a=b[\Phi_c]$.
+Weak convergence of the joint derivative vector
+$(Xf_n,Yf_n)$ and equality of its limiting norm yield strong
+convergence of both derivatives. Every subsequence consequently
+has a further subsequence converging in $\mathcal Q_E$ to the
+phase orbit of $\Phi_c$. Its distance from this compact orbit
+must tend to zero. Choosing a phase attaining that distance
+proves (89.3) for the whole sequence.
+
+Take now $f_n=\Phi_{\chi_c+\delta_n}$, whose existence on exactly
+this domain is Theorem 84.1. The preceding argument gives
+$v_n\to\mu_c$. On these exact minimizers,
+
+$$
+-v_n\le e(\chi_c+\delta_n)/\delta_n\le-\mu_c,
+\tag{89.6}
+$$
+
+where the lower bound is $h_c[f_n]\ge0$. Since the sequence
+$\delta_n\to0$ was arbitrary, (89.6) proves (89.1).
+The last assertion follows from $e(\chi)=-ab_\chi$ in (84.5).
+The use of the attained critical vector supplies the upper bound;
+the compact potential and the original full-domain lower bound
+prevent loss of mass in this $o(\delta)$ tangent class.
+$\square$
+
+## 90. Exactly the disk of native critical weak profiles
+
+**Theorem 90.1 (all possible profiles and attainability on every path).**
+Fix any prescribed positive parameter sequences $g_n,\tau_n\to0$
+with $\chi_n=g_n\tau_n^{-3/2}\to\chi_c$, and put
+$s_n=\sqrt{\tau_n}$. For every normalized complex native sequence
+$\psi_n\in\mathcal Q$ satisfying exactly (85.5), let
+$f_n=\mathcal U_{s_n}\psi_n$, extended by zero.
+Every subsequence has a further subsequence with a weak global
+$L^2(d\xi)$ limit, and every such limit belongs to
+
+$$
+\mathcal D_c=\{c\Phi_c:c\in\mathbb C,\ |c|\le1\}.
+\tag{90.1}
+$$
+
+Along any subsequence with $f_n\rightharpoonup c\Phi_c$, one has
+
+$$
+\begin{aligned}
+f_n&\longrightarrow c\Phi_c&&\text{in }L^2_{\rm loc},\\
+\int U_{s_n}|f_n|^2&\longrightarrow |c|^2\mu_c,&
+b_{s_n}[f_n]&\longrightarrow |c|^2b[\Phi_c],\\
+\|f_n-c\Phi_c\|_2^2&\longrightarrow1-|c|^2.
+\end{aligned}
+\tag{90.2}
+$$
+
+Conversely, for each $c\in\mathbb C$ with $|c|\le1$ and for
+each prescribed original parameter sequence just specified,
+there exists a normalized complex sequence in the original
+two-face native form domain satisfying (85.5) whose rescaled
+vectors converge weakly along the whole sequence to $c\Phi_c$.
+Thus (90.1) is both the complete possible-limit set and the
+attainable set, without choosing a subsequence of the parameters.
+In this construction, and in the necessity assertion, the heat
+clock, signed fixed nonzero $\kappa$, density $j_0^{-1}$ and
+source centre are unchanged.
+
+Proof. Theorem 85.1 gives $\tau_nE_{\tau_n}(g_n)\to0$.
+Condition (85.5) and (81.4) therefore give $q_n[f_n]\to0$,
+with $q_n$ exactly (83.5). Theorem 85.3 and Theorem 88.1 identify
+every weak limit as $c\Phi_c$, $|c|\le1$, and give the potential
+and kinetic conclusions along a convergent subsubsequence.
+Local compactness makes those conclusions valid on an entire
+weakly convergent subsequence: any failure would have a further
+subsequence, and then a compactness subsubsequence with the same
+weak limit and the asserted conclusions, a contradiction.
+The final line of (90.2) follows by expanding the squared norm,
+using $\|f_n\|_2=1$ and weak convergence. In particular global
+strong convergence to that limit holds exactly when $|c|=1$.
+
+Here is an upper construction that supplies every point of the
+disk. Choose real $u_m\in C_c^\infty(\mathbb R^4)$ with
+$\|u_m\|_2=1$ and $u_m\to\Phi_c$ in $\mathcal Q_E$.
+Such a sequence is supplied by the defining core, followed by
+normalization. Then $h_c[u_m]\to0$ and $v[u_m]\to\mu_c$.
+Choose also a fixed normalized smooth compact vector $\zeta$.
+Its normalized homogeneous dilation of radius $R$ has kinetic
+energy $R^{-2}b[\zeta]$. For each $m$ choose $R$ large enough
+to make this at most $1/m$. Translate the result in the central
+$w$ coordinate far enough to obtain a vector $z_m$ such that
+
+$$
+\|z_m\|_2=1,\qquad b[z_m]\le1/m,\qquad
+\operatorname{supp}z_m\subset\{N>m\},\qquad
+\operatorname{supp}z_m\cap\operatorname{supp}u_m=\varnothing.
+\tag{90.3}
+$$
+
+Central translation preserves Haar measure and commutes with
+$X,Y$ and every $Y_s$, because their coefficients depend only
+on $r$. Each of these supports is compact; making the translation
+larger ensures disjoint supports including their closures.
+In particular $z_m\rightharpoonup0$ in $L^2$ and
+$v[z_m]\le\sup_{N>m}V\to0$.
+
+For each fixed $m$, both vectors belong to $\mathcal Q_{s_n}$
+for all sufficiently large $n$: their compact height supports
+lie strictly between the two moving Dirichlet faces.
+The coefficient convergence in (78.4), uniform potential
+convergence (82.10), $\chi_n\to\chi_c$ and $s_n\to0$ imply
+
+$$
+q_n[u_m]\longrightarrow h_c[u_m],\qquad
+q_n[z_m]\longrightarrow h_c[z_m]
+\quad\text{at fixed }m.
+\tag{90.4}
+$$
+
+Choose increasing indices $n_m$ so that for $n\ge n_m$ both
+supports lie inside $\Omega_{s_n}$ and both errors in (90.4)
+are at most $1/m$. Let $m(n)\to\infty$ increase slowly enough
+that $n\ge n_{m(n)}$. Put $d=(1-|c|^2)^{1/2}$ and, for all
+sufficiently large $n$, set
+
+$$
+F_n=c u_{m(n)}+d z_{m(n)},\qquad
+\psi_n=\mathcal U_{s_n}^{-1}F_n.
+\tag{90.5}
+$$
+
+The finitely many unused indices may be filled with any normalized
+native core vectors. Disjoint supports make the norms and all
+the form terms add without cross terms, including the two
+horizontal derivative terms. Hence $\|F_n\|_2=1$ exactly,
+and (90.3)--(90.4) give
+
+$$
+q_n[F_n]=|c|^2q_n[u_{m(n)}]+d^2q_n[z_{m(n)}]\longrightarrow0.
+\tag{90.6}
+$$
+
+Indeed $h_c[z_m]=ab[z_m]-\chi_cv[z_m]\to0$.
+The first term in (90.5) converges strongly to $c\Phi_c$;
+the second converges weakly to zero and strongly to zero on
+every compact set. Thus the whole rescaled sequence has the
+required weak limit. Finally (81.4), (90.6) and
+$\tau_nE_{\tau_n}(g_n)\to0$ show
+
+$$
+\tau_n\bigl(\mathfrak e_{g_n,\tau_n}[\psi_n]
+                     -E_{\tau_n}(g_n)\bigr)
+ =q_n[F_n]-\tau_nE_{\tau_n}(g_n)\longrightarrow0.
+\tag{90.7}
+$$
+
+This is precisely the original near-minimizer condition, including
+when $c=0$, $|c|=1$, or the prescribed couplings approach criticality
+from different sides. It imposes no detuning rate. $\square$
+
+## 91. Quantitative detuning conditions and the smaller native scale
+
+**Proposition 91.1 (a conditional native selection criterion).**
+For prescribed $s_n\to0$ and $\delta_n\downarrow0$ put
+$\tau_n=s_n^2$, $g_n=(\chi_c+\delta_n)\tau_n^{3/2}$, and define,
+on the unchanged $\mathcal Q_{s_n}$,
+
+$$
+\begin{aligned}
+v_n[F]&=\int U_{s_n}|F|^2,\\
+q_n^c[F]&=a b_{s_n}[F]-\chi_cv_n[F]
+                           -a\lambda s_n^2\|F\|_2^2,\\
+\epsilon_n^c&=\inf_{\|F\|_2=1}q_n^c[F]
+ =\tau_nE_{\tau_n}(\chi_c\tau_n^{3/2}),\\
+\epsilon_n&=\tau_nE_{\tau_n}(g_n)
+ =\inf_{\|F\|_2=1}\{q_n^c[F]-\delta_nv_n[F]\}.
+\end{aligned}
+\tag{91.1}
+$$
+
+Suppose, in addition to the qualitative hypotheses already proved,
+that there are numbers $\alpha_n\ge0$ and normalized
+$U_n\in\mathcal Q_{s_n}$ with
+
+$$
+\epsilon_n^c\ge-\alpha_n,\qquad
+\alpha_n=o(\delta_n),\qquad
+q_n^c[U_n]=o(\delta_n),\qquad
+v_n[U_n]\longrightarrow\mu_c.
+\tag{91.2}
+$$
+
+Then $\epsilon_n=-\mu_c\delta_n+o(\delta_n)$. For every normalized
+complex native sequence whose rescaled vectors $F_n$ satisfy
+
+$$
+q_n^c[F_n]-\delta_nv_n[F_n]-\epsilon_n=o(\delta_n),
+\tag{91.3}
+$$
+
+there are constant phases with
+$\|F_n-e^{i\theta_n}\Phi_c\|_2\to0$.
+These are sufficient quantitative conditions; no assertion that
+they hold for every coupled native path is included.
+
+Proof. The trial vectors in (91.2) give
+$\epsilon_n\le-\mu_c\delta_n+o(\delta_n)$.
+The lower bound on $q_n^c$ and (91.3) then give
+
+$$
+v_n[F_n]\ge\mu_c-o(1).
+\tag{91.4}
+$$
+
+These sequences satisfy (85.5), since $o(\delta_n)=o(1)$.
+Theorem 90.1 applies. Along any weakly convergent subsubsequence,
+$v_n[F_n]\to|c|^2\mu_c$ with $|c|\le1$. Inequality (91.4)
+forces $|c|=1$, so the convergence is strong in global $L^2$.
+The usual subsequence argument gives distance to the phase orbit
+tending to zero for the whole sequence.
+For the energy conclusion one may take normalized vectors within
+$o(\delta_n)$ of each infimum in (91.1); they exist by the
+definition of the infimum. Their potential energies tend to
+$\mu_c$, and
+$\epsilon_n\ge-\alpha_n-\delta_nv_n[F_n]-o(\delta_n)$.
+Together with the trial upper bound this proves the asserted law.
+$\square$
+
+**Proposition 91.2 (scope of the critical and detuning conclusions).**
+Theorem 88.1 settles the critical tangent zero-mode question left
+open in Theorem 84.1 and Proposition 86.1. Theorem 89.1 concerns
+the tangent forms on the single fixed domain $\mathcal Q_E$.
+Theorem 90.1 classifies the native near-minimizer class (85.5),
+and does not select the limit of actual native ground states on
+an arbitrary coupled critical path. In particular that class
+contains, for each such path, sequences with every limiting
+mass $|c|^2\in[0,1]$ and every constant complex phase.
+
+The qualitative suppliers (82.10), Proposition 83.2 and (85.2)
+give no error relative to an independently prescribed
+$\delta_n\downarrow0$. To obtain selection by the criterion
+(91.2)--(91.3), the native critical lower error and a critical-mode
+recovery error must be $o(\delta_n)$, and the near-minimizer
+excess must also be $o(\delta_n)$ in rescaled energy.
+No such universal rates are concluded here. Even when those
+additional hypotheses hold, they do not supply a finer native
+Coulomb $g_n^2$ coefficient. That coefficient requires control
+at the rescaled scale
+
+$$
+\tau_ng_n^2=(\chi_c+\delta_n)^2\tau_n^4,
+\tag{91.5}
+$$
+
+and the appropriate finer asymptotics, rather than just an
+$o(1)$ or $o(\delta_n)$ error.
+
+All these results retain the real cover and the same fixed
+signed $\kappa\ne0$, both native Dirichlet faces, raw source,
+$j_0^{-1}$ density factor and heat clock. They imply no physical
+spatial-dimension or physical $SO(3)$ selection, no actual-zero-leaf
+or torus result, and no uniformity as $\kappa\to0$.
+
+Proof. The critical statements follow from (88.2), (89.2) and
+(90.5)--(90.7). In particular (90.7) only tends to zero; its
+ratio to $\delta_n$ has not been bounded. The sufficient argument
+in Proposition 91.1 uses exactly the stronger ratios in
+(91.2)--(91.3), whereas (85.2) only implies
+$\epsilon_n^c\to0$ and qualitative recovery. A quantity tending
+to zero need not be little-oh of another prescribed vanishing
+quantity. Formula (91.5) follows from the exact definition of
+$g_n$; control relative to $\delta_n$ does not in general give
+control relative to $\tau_ng_n^2$. These are distinct limits.
+The geometric and normalization restrictions are precisely those
+in Definition 81.1 and Proposition 86.1 and were used unchanged
+in (87.5)--(87.6) and (90.4)--(90.7).
+
+The mathematical suppliers for the deductions are the heat and
+source estimates of §§81--82, the full-domain compactness and
+recovery of §83, the threshold and positive-kernel arguments of
+§84, and the native weak-limit bridge of §85. Fischer--Ruzhansky
+(2.2) supplies only the explicitly matched Young convolution
+inequality in (87.6). Compact spectral theory and closed-form
+representation are used in their usual Hilbert-space senses.
+The additional deductions are the zero-energy $L^2$ inverse for
+this particular source, critical attainment and simplicity,
+the tangent onset and profile law, and the exact attainable
+native disk. These correspondences make no literature-wide
+novelty claim. $\square$
+
+## 追加锚（本行以下为增补区）
