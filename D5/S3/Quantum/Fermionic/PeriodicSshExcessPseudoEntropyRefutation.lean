@@ -311,14 +311,8 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
     by_cases hs : s j = false
     · have hfalse : ¬(b j = true ∧ s = Function.update b j false) := by
         intro h
-        apply hne
-        funext i
-        by_cases hij : i = j
-        · subst i
-          simp [h.1]
-        · have hi := congrFun h.2 i
-          simp only [Function.update_of_ne hij] at hi
-          simp [Function.update_of_ne hij, hi]
+        exact hne (by
+          simpa only [h.2, Function.update_idem, Function.eq_update_self_iff] using h.1)
       simp [hfalse]
     · have hfalse : s j = true := by cases hsj : s j <;> simp_all
       have hfalse' : ¬(b j = true ∧ s = Function.update b j false) := by
