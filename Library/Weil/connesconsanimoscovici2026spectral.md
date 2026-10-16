@@ -4702,3 +4702,124 @@ routes. The actual common forms/domains, legal $E$ elimination,
 unitary/SAME-short/inverse identifications and sound common
 source/lift/full-far archives remain premises. Actual retained or
 cofinal positivity, the Robin tail and RH remain unresolved.
+
+### Use the complete band to tighten the same-source surplus budget
+
+Keep the SAME actual common forms/domains, legal $E$ elimination,
+closed short, unitary unphased cosine identification, exact384-bit
+$w_0$, full $u=\mathcal Mw_0$, true $h$, complete far cap $U_F$ and
+reflected153-cell weight $\widetilde W\ge1/v$. The far source is
+orthogonal to EVERY cosine mode0 through $N=32768$, beyond the
+single relation $u_F\perp u_J$ used in the centered bound. This full
+band identification is a source/domain premise, not a consequence
+of the scalar cache alone.
+
+Let $P_N$ project onto those modes, and put
+
+$$
+\beta_k=\langle e_k,\widetilde W u_J\rangle,\quad
+E_N=\sum_{k=0}^N|\beta_k|^2,\quad
+b^2=\|(I-P_N)\widetilde W u_J\|^2=a_2-E_N.
+$$
+
+The ordinary Bessel/orthogonal projection and Cauchy inequalities give
+
+$$
+\boxed{p_v\le a_1+2\sqrt{U_F}\,b+mU_F.}
+$$
+
+For interval evaluation subtract a certified LOWER for $E_N$ from
+the saved UPPER for $a_2$, retain a nonnegative residual, and use
+UPPER endpoints in the final budget. The full far self-energy remains
+$mU_F$; no far mode or cross term is discarded.
+
+Only the missing multiplication projection needs production. In the
+reflected coordinate $s\in[0,1]$, write $c_l=\int_0^1\widetilde W(s)
+\cos(\pi ls)\,ds$. The same rational cell boundaries and weights give
+$c_0$ by weighted length and $c_l$, $l\ge1$, by the finite sum of
+internal jumps times $\sin(\pi lt)/(\pi l)$. For the saved positive
+input modes $J=2049{:}32768$,
+
+$$
+\beta_0=\sqrt2\sum_{n\in J}u_nc_n,\qquad
+\beta_k=\sum_{n\in J}u_n(c_{|n-k|}+c_{n+k}),\quad1\le k\le N.
+$$
+
+This is the standard Toeplitz plus Hankel multiplication formula:
+see Olver–Townsend, [arXiv:1202.1347v2](https://arxiv.org/pdf/1202.1347v2),
+§2.2, (2.7), crediting Baszenski–Tasche. The substitution
+$x=\cos(\pi s)$ gives the Chebyshev correspondence. Only the exact
+multiplication identity is used; the subsequent continuous-coefficient
+uniform approximation argument is not transferred to this step weight.
+Coefficients through $2N$ suffice EXACTLY for the requested matrix
+elements, without truncating the weight or its full squared norm.
+One symmetric Laurent polynomial convolution supplies all $\beta_k$,
+using FLINT's existing ball product rather than a new FFT implementation;
+see Johansson, [arXiv:1611.02831v1](https://arxiv.org/pdf/1611.02831v1),
+§6.1, and the [FLINT polynomial multiplication interface](https://flintlib.org/doc/arb_poly.html#c.arb_poly_mul).
+
+The [same-source experimental application](https://github.com/the-omega-institute/trureturing-experiments/tree/d5345c96/docs/reports/weil-c27)
+reuses the source/action, all153 source-cell masses, $a_1,a_2$, far
+allowance and old determinants. It supplies
+
+$$
+E_N\approx1147558.75453915,\qquad
+b^2<17004.300397,\qquad
+\boxed{p_v<38420.120.}
+$$
+
+The complete cross upper is approximately1784.31468695. The new
+budget improves the saved48941.0175473 resolvent upper, using the
+same source and weight. The sole1024-bit computation takes9.17seconds;
+all65537 weight coefficients and32769 projection coefficients are
+archived for reuse. There is no new determinant, operator-source
+action, inverse, solve, old source-cell integral or far supplier.
+
+The two saved determinant enclosures also locate the zero of the
+SAME affine ceiling $d(\tau)$, without a new matrix calculation:
+
+$$
+\tau_*\approx0.0266626470290776,\qquad
+C_*:=h\frac{1-\tau_*}{\tau_*}\approx39265.5677943.
+$$
+
+Use the LOWER endpoint of the induced $C_*$ enclosure for the strict
+budget test. The new complete upper passes it and supplies
+
+$$
+\tau_{\rm band}=\frac{h_{\rm low}}{h_{\rm low}+U_{\rm band}}
+\approx0.0272333893565792,
+\qquad
+d(\tau_{\rm band})\approx4.83012948603\times10^{-1363}>0.
+$$
+
+Thus this stronger information supplies eligible parameters beyond the
+previous negative-ceiling interval. The previous exclusion on its OLD
+supplied interval remains valid. A positive ceiling at the new endpoint
+does not prove a lower construction positive, identify maximal actual
+capacity, or settle the good-block/sufficient score. Those are separate
+remaining estimates.
+
+There is no need to expand the fixed-price640 resolvent test space.
+For any allowed test $q$, weighted Cauchy with
+$A_\lambda=\lambda-\widetilde W>0$ gives
+
+$$
+\frac{|\langle q,u_J\rangle|^2}
+ {\langle q,A_\lambda^{-1}q\rangle}
+\le\lambda a_0-a_1.
+$$
+
+Consequently every upper-bound recipe of the form
+$\lambda(a_0+U_F)-|\langle q,u_J\rangle|^2/
+\langle q,A_\lambda^{-1}q\rangle$ is at least $a_1+\lambda U_F$.
+At640 this recipe floor exceeds the required $C_*$ even if its test
+space is enlarged. This is an obstruction to that upper-bound recipe,
+not a lower bound for actual $p_v$; no further resolvent producer is run.
+
+These are applications of existing Fourier multiplication, ball
+arithmetic and projection inequalities to one common source, not new
+general theorems or Lean verification. All stated actual form/domain,
+short, unitary, full-band, source and sound complete-far/cache premises
+remain conditions. Actual retained/cofinal positivity, the Robin tail
+and RH remain unresolved.
