@@ -76,7 +76,7 @@ public sealed partial class MakeWorkflowTests
             inspector.Split('\n'),
             static line => line.StartsWith("run_phase report ", StringComparison.Ordinal));
         Assert.Equal(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" \"${{workspace[@]}}\" build :report \\",
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" ${{REPORT_COMMAND[@]+\"${{REPORT_COMMAND[@]}}\"}} \"$LAKE\" --log-level=error \"${{workspace[@]}}\" build :report \\",
             reportPhase);
 
         int EnsureDependency(string target)
