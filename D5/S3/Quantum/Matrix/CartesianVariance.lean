@@ -219,7 +219,7 @@ private theorem variance_maximizer_linear {n : ℕ} (hn : 0 < n) (A ρ : (Matrix
     linarith
   simpa only [Matrix.sub_mul,Matrix.trace_sub,Complex.sub_re,sub_nonpos] using hcoef
 
-private theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
+theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
     ρ = ∑ i, hρ.eigenvalues i • (Matrix.vecMulVec (WithLp.ofLp (hρ.eigenvectorBasis i)) (star (WithLp.ofLp (hρ.eigenvectorBasis i)))) := by
   ext j k
   conv_lhs => rw [hρ.spectral_theorem,Unitary.conjStarAlgAut_apply,Matrix.mul_apply]
@@ -235,7 +235,7 @@ theorem density_eigenvalues_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (h
   have h := hρ.1.isHermitian.trace_eq_sum_eigenvalues.symm.trans hρ.2
   simpa using congrArg Complex.re h
 
-private theorem hermitian_trace_spectral {n : ℕ} (ρ A : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
+theorem hermitian_trace_spectral {n : ℕ} (ρ A : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
     Matrix.trace (ρ*A) = ∑ i, hρ.eigenvalues i •
       inner ℂ (hρ.eigenvectorBasis i) (Matrix.toEuclideanLin A (hρ.eigenvectorBasis i)) := by
   have hcast {k : ℕ} (M : Matrix (Fin k) (Fin k) ℂ) (x : EuclideanSpace ℂ (Fin k)) :
