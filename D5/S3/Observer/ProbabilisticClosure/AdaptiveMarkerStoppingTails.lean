@@ -307,7 +307,9 @@ theorem path_support (q : unitInterval) (root : Bool) :
     rw [he] at h
     simpa [armLaw] using h
   have h0 : ∀ᵐ x ∂armLaw q root, x 0 = root := by
-    exact (ae_iff_measure_eq (by measurability)).mpr (by simpa using h0mass)
+    exact (ae_iff_measure_eq (μ := armLaw q root)
+      (by measurability : MeasurableSet {x : Path | x 0 = root}).nullMeasurableSet).mpr
+      (by simpa using h0mass)
   have hstep (i : ℕ) : ∀ᵐ x ∂armLaw q root,
       ¬(x i = true ∧ x (i + 1) = true) := by
     let κ : (n : ℕ) → Kernel (↥(Finset.Iic n) → Bool) Bool :=
@@ -617,7 +619,7 @@ theorem adaptive_marker_stopping_tails
         rw [hk, hc, ← add_mul]
         simp [← ENNReal.coe_add]
     have h := hjoint (2 * m)
-    rw [lintegral_congr hv, lintegral_piecewise hE, setLIntegral_const,
+    rw [lintegral_congr hv, lintegral_piecewise hE.nullMeasurableSet, setLIntegral_const,
       setLIntegral_const] at h
     have hreal := congrArg ENNReal.toReal h
     have hc : seedLaw.real Eᶜ = 1 - seedLaw.real E := by

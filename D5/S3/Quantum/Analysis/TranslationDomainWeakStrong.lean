@@ -62,7 +62,7 @@ theorem translation_domain_iff (f h : ℝ → ℂ) (hf : MemLp f 2 (volume : Mea
     have hbound_mem : MemLp (fun x : ℝ => C₀ * (K.indicator (fun _ : ℝ => (1 : ℝ))) x * ‖g x‖)
         1 (volume : Measure ℝ) := by
       have hi : MemLp (K.indicator (fun _ : ℝ => (1 : ℝ))) 2
-          (volume : Measure ℝ) := memLp_indicator_const 2 hKm (1 : ℝ) (Or.inr hKtop)
+          (volume : Measure ℝ) := memLp_indicator_const 2 hKm.nullMeasurableSet (1 : ℝ) (Or.inr hKtop)
       have hm : MemLp (fun x : ℝ => (K.indicator (fun _ : ℝ => (1 : ℝ))) x * ‖g x‖)
           1 (volume : Measure ℝ) := MemLp.mul hi hg.norm
       simpa [mul_assoc] using hm.const_mul C₀

@@ -210,7 +210,7 @@ theorem one_query_run (w : List Bool) :
       (preparedFormula w).2.length ≤ w.length+1 := by
     cases parsed : readWord false w with
     | none =>
-      have formulaEq : preparedFormula w = ⟨0,[[]]⟩ := by
+      have formulaEq : preparedFormula w = ⟨0,[.empty]⟩ := by
         unfold preparedFormula
         rw [parsed]
         rfl

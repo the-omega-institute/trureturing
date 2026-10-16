@@ -80,7 +80,9 @@ private def rightFn (rho : ℂ) : ℝ → ℂ :=
 
 private theorem left_memLp (rho : ℂ) (hb : 1 / 2 < rho.re) :
     MemLp (leftFn rho) 2 positiveMeasure := by
-  rw [leftFn, memLp_indicator_iff_restrict measurableSet_Ioo, positiveMeasure,
+  rw [leftFn,
+    memLp_indicator_iff_restrict (μ := positiveMeasure) measurableSet_Ioo.nullMeasurableSet,
+    positiveMeasure,
     Measure.restrict_restrict measurableSet_Ioo, inter_eq_left.mpr Ioo_subset_Ioi_self]
   have hi : IntegrableOn (fun x : ℝ => (x : ℂ) ^ (rho - 1)) (Ioo 0 1) :=
     ((intervalIntegral.intervalIntegrable_cpow' (by simp; linarith) :
@@ -101,7 +103,9 @@ private theorem left_memLp (rho : ℂ) (hb : 1 / 2 < rho.re) :
   ring
 
 private theorem right_memLp (rho : ℂ) : MemLp (rightFn rho) 2 positiveMeasure := by
-  rw [rightFn, memLp_indicator_iff_restrict measurableSet_Ioi, positiveMeasure,
+  rw [rightFn,
+    memLp_indicator_iff_restrict (μ := positiveMeasure) measurableSet_Ioi.nullMeasurableSet,
+    positiveMeasure,
     Measure.restrict_restrict measurableSet_Ioi,
     inter_eq_left.mpr (Ioi_subset_Ioi (show (0 : ℝ) ≤ 1 by norm_num))]
   have hm : Measurable (fun x : ℝ => star ((rho - 1)⁻¹) / (x : ℂ)) := by fun_prop

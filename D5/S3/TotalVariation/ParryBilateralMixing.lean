@@ -570,12 +570,18 @@ theorem bilateral_parry_mixing (k : ℕ) (hk : 2 ≤ k) :
     simpa only [measureReal_def, ENNReal.ofReal_mul ENNReal.toReal_nonneg,
       ENNReal.ofReal_toReal (measure_ne_top _ _)] using hm
   have hergodic : Ergodic T ρ := by
-    refine ⟨hT, ⟨fun A hA hinv => ?_⟩⟩
+    refine Ergodic.of_preimage_eq hT ?_
+    intro A hA hinv
     have hi : ∀ n : ℕ, T^[n] ⁻¹' A = A := by
       intro n
       induction n with
       | zero => rfl
-      | succ n ih => rw [Function.iterate_succ', Set.preimage_comp, hinv, ih]
+      | succ n ih =>
+          ext x
+          change T^[Nat.succ n] x ∈ A ↔ x ∈ A
+          rw [Function.iterate_succ_apply]
+          change T^[n] (T x) ∈ A ↔ x ∈ A
+          exact (Set.ext_iff.mp ih (T x)).trans (Set.ext_iff.mp hinv x)
     have hm := hmixρ A A hA hA
     simp only [hi, Set.inter_self] at hm
     have ha : ρ.real A = ρ.real A * ρ.real A := tendsto_nhds_unique tendsto_const_nhds hm

@@ -87,8 +87,8 @@ theorem cubic_coordinate_automorphism
     have hx : x ∈ IntermediateField.adjoin K (Set.range beta) := by
       rw [hgen]
       exact Set.mem_univ x
-    refine IntermediateField.adjoin_induction K
-      (p := fun y _ => sigma y = tau y)
+    refine IntermediateField.adjoin_induction K (s := Set.range beta)
+      (motive := fun y _ => sigma y = tau y)
       (fun y hy => ?_) (fun a => by simp)
       (fun a b _ _ ha hb => by simp [ha, hb])
       (fun a _ ha => by simp [ha])

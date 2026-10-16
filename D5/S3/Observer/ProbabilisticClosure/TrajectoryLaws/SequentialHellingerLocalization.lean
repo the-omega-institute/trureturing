@@ -158,7 +158,7 @@ theorem common_energy_localization
   have hDa K n : StronglyMeasurable[ℱ (n + 1)] (D K n) :=
     (hd n).indicator (ℱ.mono (Nat.le_succ n) _ (cut_measurable he K n))
   have hD2 K n : MemLp (D K n) 2 μ :=
-    (hd2 n).indicator (ℱ.le n _ (cut_measurable he K n))
+    (hd2 n).indicator ((ℱ.le n _ (cut_measurable he K n)).nullMeasurableSet)
   have hD0 K n : μ[D K n | ℱ n] =ᵐ[μ] 0 := by
     filter_upwards [condExp_indicator ((hd2 n).integrable (by norm_num))
       (cut_measurable he K n), hd0 n] with ω h1 h2

@@ -67,7 +67,7 @@ theorem directional_translation_domain_iff (b : E) (f h : E → ℂ) (hf : MemLp
     have hbound_mem : MemLp (fun x : E => C₀ * (K.indicator (fun _ : E => (1 : ℝ))) x * ‖g x‖)
         1 (volume : Measure E) := by
       have hi : MemLp (K.indicator (fun _ : E => (1 : ℝ))) 2
-          (volume : Measure E) := memLp_indicator_const 2 hKm (1 : ℝ) (Or.inr hKtop)
+          (volume : Measure E) := memLp_indicator_const 2 hKm.nullMeasurableSet (1 : ℝ) (Or.inr hKtop)
       have hm : MemLp (fun x : E => (K.indicator (fun _ : E => (1 : ℝ))) x * ‖g x‖)
           1 (volume : Measure E) := MemLp.mul hi hg.norm
       simpa [mul_assoc] using hm.const_mul C₀

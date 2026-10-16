@@ -636,6 +636,7 @@ theorem common_law_prefix_witness (S : Grid) (h : ratio S = ∞) :
     rw [first_zero_levels, if_neg (by omega)]
     simp
   · letI := atomic_probability t ht
+    change IsProbabilityMeasure (Measure.map (depthPath zero one) (atomicLaw t))
     exact inferInstance
   · exact (prefix_moments S zero one hne t ht).2.trans hinfinite
 
