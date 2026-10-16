@@ -1046,6 +1046,11 @@ There is no live unbounded register or return address in a latch.
    L, R, sep, F, 0 and 1 use one testing RD followed by the needed testing
    CTLs, in that displayed order. No such alternative is a free test.
 
+Home; MR in this schema reaches the first ordinary cell. A stream's
+leading F sentinel is still that cell. The full manifest-field importer
+has Definition 13.2's explicit second MR before its field loop; it does
+not identify either Home's L or that first ordinary F with a field bit.
+
 The active-bank scan need test only F: its payload alphabet is
 $\{0,1,\mathsf{sep}\}$ and a preceding F is guaranteed. In contrast,
 scratch backwards scans really do need the displayed L alternative.
@@ -1479,7 +1484,7 @@ have an explicit finite exit; they do not enter Step with forged code.
 
 | Entry | Word algorithm and complete result |
 | --- | --- |
-| Initialize | Import the actual manifest, clear the three record lists and cursors, and import the old completed frame word. Validate finite tuple syntax and native-row fields. Strip the captured field's three-bit code tag, ReadUnary its actual length and Take exactly its $\Delta(D_1)$ payload before row validation. Initialize the actual frame reader; then enter Ready. |
+| Initialize | After the native empty-bank construction, run ManifestPrefix(37) of Definition 13.2 and use its ordered field list as the actual manifest. Clear the three record lists and cursors, and import the old completed frame word from its prescribed field. Validate finite tuple syntax and native-row fields. Require tag 101 in field zero, strip those three bits, ReadUnary its actual length and Take exactly its $\Delta(D_1)$ payload; require field exhaustion before row validation. Initialize the actual frame reader; then enter Ready. |
 | Cover, tag 101 | Require empty payload. Freeze the present completed-frames word $J$; Boundary($J$) below constructs $a,b$. Append the immutable cover with its constructed creation number $c$, append cursor $a$, and Publish(CoverRef,$c,a,b$). |
 | Next, tag 110 payload $0U(c)$ | Lookup cover $c$ or Publish(NoCover). Let $k$ be its actual cursor. If $k>b$, Publish(End,$c$). Otherwise execute Issue($c,k$), then replace that cursor by consing 1 to its unary natural. No other cover's cursor changes. |
 | Select, tag 110 payload $1U(c)U(k)$ | Lookup the actual cover or Publish(NoCover). Cancel unary ones to test $a\le k\le b$. If false, Publish(CutIndexReject,$c,k$). If true, Issue($c,k$); do not change a cursor. |
@@ -1601,18 +1606,40 @@ All source, count and destination ports in these recipes are distinct.
 
 Import the resulting latest sealed binary block from 37 with the same
 RD/cons/MR/Reverse loop used on 38. Assignment helpers never touch 37.
-At initialization use a full-prefix import instead: Home(37); MR passes
-its initial F sentinel; RD then consumes each binary field through its
-following F by RD, the bit-selected cons assignment and MR, reverses that
-field, and appends it to the manifest field list. After F, MR and RD
-either start the next field or find the existing R and stop. Port 37 is
-not extended during this scan. There is no variable ordinal lookup before
-its record has been imported. The native fields have Definition 14.2's
-fixed order; lists within a field use their explicit wire grammar. The
-final saved-head-table field has its own F. Empty fields import as empty
-words; the old-frame list itself uses its explicit terminal 0. Only after
-full import may channel staging append further blocks to 37. Manifest
-lookup thereafter is in the immutable bank word, not latest-37.
+At initialization use the following full-prefix graph `ManifestPrefix(37)`
+instead. Its input is the complete sealed installation prefix, before any
+staged fields have been appended. Its first ordinary cell is the actual F
+sentinel created by $L$, distinct from every field's following F. Initialize
+the output-list register by $f:=\epsilon;\ f:=0f$, the encoded empty list.
+Then execute **Home(37); MR(37); MR(37)**. Home ends at L; the first move
+reaches the sentinel and the second reaches the first field, its delimiter
+if empty, or R if there are no fields. Neither move performs a symbol test
+or a word assignment. The sentinel is never passed to the field loop.
+
+| Native label | Actual row/word expansion and successor |
+| --- | --- |
+| BeginField | RD(37,4), testing R. On R go to Done. Otherwise execute the compiled assignment $t:=\epsilon$, then go to FieldRead. |
+| FieldRead | RD(37,4), testing F. On F go to FinishField. Otherwise execute CTL testing latch 4 for 0; on 0 go to Bit0. Otherwise execute CTL testing that same latch for 1; on 1 go to Bit1, otherwise take internal-description failure. |
+| Bit0 / Bit1 | Execute the compiled literal assignment $t:=0t$ / $t:=1t$, then one MR(37) and return to FieldRead. |
+| FinishField | Reverse($t$) into a fresh word temporary; AppendItem($f$,that word) into $f$; execute one MR(37), then go to BeginField. |
+| Done | Execute the compiled copy $\mathrm{manifest}:=f$ and continue Initialize. |
+
+The CTLs in FieldRead have no ordinary-cell effect. Their successful bit
+branch selects a literal cons before any bank helper can overwrite latch 4.
+BeginField's latch is not reused after its clearing assignment: FieldRead
+performs its own new RD. Reverse and AppendItem have Definition 12.1's
+acyclic expansions, not native string instructions. Their finite exits,
+like the bit assignments' exits, carry the resulting actual bank parity.
+The compiler uses the finite product with that parity, not a return stack.
+
+Port 37 is not extended during this scan. There is no variable ordinal
+lookup before its record has been imported. The native fields have
+Definition 14.2's fixed order; lists within a field use their explicit
+wire grammar. The final saved-head-table field has its own F. A field's
+F always emits one word, including an empty word; only R at BeginField
+ends the list. The old-frame list itself uses its explicit terminal 0.
+Only after full import may channel staging append further blocks to 37.
+Manifest lookup thereafter is in the immutable bank word, not latest-37.
 The physical descriptor words have thereby entered actual word-register
 cells, with their provenance. No word assignment assumes a mathematical
 length or reads scratch through a head that its own bank rebuild moves.
@@ -1676,6 +1703,103 @@ staging changed this scratch, so its old head or latest value is never
 reused as though still the payload counter. The six-row body alone then
 advances its endpoints and this counter. No staging operation occurs
 inside it.
+
+**Lemma 13.2a (full-prefix representation and paid entry).** Let the
+installation prefix on owned port 37, with no later staging blocks, be
+
+$$
+L\;\mathsf F\;w_0\mathsf F\;\cdots\;w_{s-1}\mathsf F\;R,
+\qquad w_i\in\{0,1\}^{*}.
+$$
+
+Each field is its actual sealed binary block, with its already constructed
+descriptor; $s$ and the lengths are mathematical parameters of this
+statement, not native loop bounds. The initial bank and owned compiler
+workspace satisfy Proposition 11.4's boundary relation, constructed by its
+native empty-bank prelude; the list and accumulator registers are distinct.
+From any actual port-37 entry head,
+ManifestPrefix terminates with manifest exactly the encoded ordered list
+$[w_0,\ldots,w_{s-1}]$ and head 37 at the existing R. It neither emits the
+initial sentinel nor removes legitimate empty fields. This includes $s=0$
+as an import relation; Initialize still requires the declared manifest
+arity and syntax. The bank, scratch, descriptor, latch, token and meter
+successors are the actual compiler/row successors, not their entry values.
+
+At BeginField after $j$ fields, the representation invariant is:
+
+1. $f$ encodes exactly $[w_0,\ldots,w_{j-1}]$; the complete active bank
+   and its descriptor satisfy Proposition 11.4.
+2. Head 37 is at the first symbol of $w_j$, at its following F when
+   $w_j=\epsilon$, or at R exactly when $j=s$. Its binary contents,
+   delimiters, seals and descriptor words/origins remain unchanged;
+   actual head marks follow the displayed moves.
+3. The actual reader has $O$'s port-37 read authority. Word helpers touch
+   only banks 32–33, scratch 34–35 and descriptors 36. They preserve head
+   37 and all saved original public heads on 0–31. They do not borrow a
+   producer token or treat a represented permission as a live one.
+
+At FieldRead within field $j$, after $q$ consumed bits, replace item 2 by
+head 37 at that field's next bit or terminal F and add
+$t=\operatorname{rev}(w_j[0:q])$, with $f$ unchanged. These assertions
+hold at the named native labels and at the corresponding completed word
+boundaries; interior helper cuts have Proposition 11.4's partial-bank
+representation rather than an assumed atomic assignment.
+
+Proof. The two moves following Home cross the existing L-to-sentinel and
+sentinel-to-first-field edges, both within the constructed interval. The
+encoded empty list gives the invariant at $j=0$, including $s=0$.
+BeginField's R branch appends no item. Otherwise clearing $t$ leaves the
+source head unchanged, and FieldRead establishes $q=0$ by its own RD.
+At a bit, the paid tests select precisely that literal bit. The compiled
+cons uses the old $t$, so the subsequent MR establishes the invariant
+with $q+1$. Its source is not an input latch left live across a helper.
+At F, Reverse yields exactly $w_j$, including $\epsilon$ when $q=0$.
+AppendItem adds precisely one framed list item, then MR establishes the
+next BeginField invariant. Consecutive Fs therefore encode distinct empty
+fields; they are not skipped as padding. Since the list/source is finite
+and unchanged, this process reaches R after exactly $s$ field completions.
+The final copy gives the stated manifest and leaves head 37 at R.
+
+The source fields' actual zero-based data offsets are
+$b_i=1+\sum_{l<i}(|w_l|+1)$: data offset zero is the initial F, not field
+zero. Base measured each $b_i$ before its construction. Import creates
+no new port-37 block and changes none of those descriptors or their
+creation ordinals. Its new bank descriptors are additional records on 36;
+they do not renumber the old records. For Definition 14.2's manifest, in
+particular, the captured field's first descriptor remains ordinal zero
+and its base remains one. Descriptor scans still change port 36's actual
+head marks; unchanged descriptor fields do not mean an unchanged complete
+descriptor tape. The original saved-head table stays a field value; it is
+not used as a free cursor placement. The actual saves/restores of
+Definition 14.2 and the
+compiler's disjoint port use preserve the original source-ready heads.
+Every import row has its receipt; every helper's complete successor is
+Proposition 11.4's. No claim restores its scratch, latch or meter history
+to the entry state. All reads have the actual port token throughout. ∎
+
+For exact local accounting let $h$ be head 37's actual entry distance
+from L, and let $z,o$ be the total numbers of zero and one bits in the
+fields. The native scan rows, excluding compiled word work, number
+
+$$
+C_{\rm scan}=2h+4+3s+3z+4o.
+$$
+
+Its opcode coordinates are
+$n_{\rm RD}=h+2+2s+z+o$, $n_{\rm ML}=h$,
+$n_{\rm MR}=2+s+z+o$, and $n_{\rm CTL}=z+2o$; the other scan coordinates
+are zero. They exclude every word helper's own RD/move/CTL/EX/WR work.
+Home contributes $2h+1$, the two entrance moves contribute two,
+BeginField contributes $s+1$ R tests, and field delimiters contribute
+$s$ reads and $s$ moves. Each zero contributes RD, one testing CTL and
+MR; each one contributes RD, two testing CTLs and MR. Add, at their
+actual intervening complete successors, the two list-initialization
+assignments, $s$ accumulator clears, $z+o$ literal cons assignments,
+$s$ Reverse and AppendItem expansions, and the final manifest-copy
+assignment. Each has Definition 11.5's complete recurrence, including
+all positioning, bank versions and descriptors. Thus the displayed scan
+subtotal is not the full import price. This is one fixed finite native
+graph, without a new primitive or a data-dependent native-state index.
 
 **Definition 13.3 (unchanged source service and normalized return).** In
 the new dispatcher, a source frame is first actually acquired by Definition
@@ -1814,7 +1938,7 @@ minting are not claimed by this one-client construction.
 
 ## 14. Paid installation without changing the old prefix
 
-**Definition 14.1 (the added activation relation).** The repair adds exactly
+**Definition 14.1 (the added activation relation).** The extension adds exactly
 an owner-authorized `Install` entrance at an original post-acquisition
 source-ready cut, and the later canonical three service tags. At every
 original busy PC Install remains disabled. Activation enters a new invocation of PR57's finite bitwise installation
@@ -1868,6 +1992,14 @@ Ready activation/handoff adapters have that same literal specification.
 This produces one finite description, independent of $u,H$, and frame
 length. $H$ is acquired manifest data. There is no Partrec-code existence
 step or unspecified evaluator in this construction.
+
+In particular $D_1$ contains ManifestPrefix's two entry moves and every
+BeginField/FieldRead test and compiled word helper in Definition 13.2.
+Its actual $\Delta(D_1)$ and $E(D_1)$ serialize that full expansion,
+including its register count, row numbering and successors. No encoding
+or bit length of a different expansion may be supplied in their place.
+The capture controller below uses only the native ingress/descriptor
+schema and has no manifest importer or dependency on $D_1$'s bit length.
 
 Use two ordinary bootstrap invocations. The first installs a fixed finite
 capture controller $L$. Its native graph is: eight authorized verifier-to-$O$
@@ -1997,6 +2129,19 @@ already local to $O$, its actual channel copies are part of installation.
 The source's no-update acquired seed is reused; no additional TagRead or
 private-latch access is introduced.
 
+Thus before full-prefix import the actual port-37 tape has precisely
+Lemma 13.2a's shape, with captured code as $w_0$ and the fixed subsequent
+fields in this order. The old-frame list is one field with an internal
+variable-length list, not a variable number of top-level fields. Its
+empty case is the word 0; any other legitimately empty top-level field
+still has its own terminating F. Neither case changes another field's
+index. The captured field is the nonempty word
+$101\,U(d_1)\,\Delta(D_1)$ of length $2d_1+4$. Its Base is one and its
+first actual descriptor has ordinal zero, as used by Definition 13.3's
+version pointer. Later fields, including the complete saved-head table,
+are finished and sealed before import. Their source-head restorations
+are paid native work; import does not stand in for those restorations.
+
 The activation record says: after old acquisition and exactly these
 $j_A$ complete original frames, take the declared Install CTL, execute
 these two bootstraps, code capture, asset-copy and initialization graphs,
@@ -2013,9 +2158,12 @@ controller before recovery runs. Step reads that owned ordinary data.
 When simulating either bootstrap it supplies the prescribed $E(L)$ bits
 or constructs $E(D_1)$ by the explicit serialization of its actual captured
 $\Delta(D_1)$ frame. Its capture-phase INs use that frame's literal bits. The bootstrap
-recipe is fixed finite code; the service description is acquired data. Initialization imports
-that finite description and actual old material, creates the initial bank and
-service archive records, installs the finite service-token state bit by
+recipe is fixed finite code; the service description is acquired data.
+Initialization first constructs the initial empty bank by Proposition
+11.4's native prelude, then runs ManifestPrefix and parses its exact fields
+by Definition 13.1. Only after that full-prefix scan may staging append
+other blocks to 37. Initialization creates the service archive records,
+installs the finite service-token state bit by
 bit, executes the receiver-port handoff to $C$, hands the service token to $C$, and executes the first installed Ready CTL.
 
 **Proposition 14.3 (installation and old-domain correspondence).** For any
@@ -2033,8 +2181,20 @@ single entry CTL, two paid finite bootstraps and intervening code capture
 have the displayed expansion.
 All source-uniform literal descriptions are finite. Their actual ingress,
 code capture, token transfers, Home/Tail, Base, length, copy, delimiter and
-seal routines terminate on finite owned material. Proposition 11.4
-handles initialization's finite word work. No producer token is handed
+seal routines terminate on finite owned material. Construct the empty bank
+by Proposition 11.4 before any import assignment. Lemma 13.2a then gives
+exactly the declared manifest, not an extra field for the sentinel.
+In particular field zero is $101\,U(d_1)\,\Delta(D_1)$: its code-kind
+check succeeds, ReadUnary returns the actual $d_1$, and Take returns the
+canonical description with empty remaining suffix. Its row validation
+therefore succeeds by canonical code supply. The old-frame field parses
+as exactly its copied list, including terminal 0 when $j_A=0$; no field
+is shifted in that case or when $j_A>0$. Original public heads have their
+saved/restored positions, the captured descriptor remains zero, and the
+reader exits at the existing port-37 R. Subsequent staging uses Tail from
+that actual head. Proposition 11.4 handles the remaining finite word work;
+the final explicit receiver/service-token handoffs and Ready CTL give the
+initialized authority and complete successor. No producer token is handed
 to the compiler. The activation marker and actual $j_A$ distinguish this
 history from another installation position. Before activation no step is
 inserted into $h$; afterwards the new code and token state are the actual
@@ -2053,12 +2213,21 @@ complete state and consumed frame-input prefix. Later reservoir bits do
 not change that result. This applies when the selected history contains
 earlier recovery computations, installation work and all paid copies.
 
-Proof. The old source prefix and activation position are fixed by the
-actual acquired manifest. Seed conversion gives the actual original
-canonical packet by the supplier's bijection. Boot descriptions and fixed
+Proof. Proposition 14.3 and Lemma 13.2a supply the actual initialized
+manifest with code in field zero and the exact old-frame and head-table
+fields. Thus the old source prefix and activation position are fixed by
+acquired fields in their declared positions. Seed conversion gives the
+actual original canonical packet by the supplier's bijection. Boot descriptions and fixed
 public inputs likewise coincide. Proposition 12.5 gives one actual row
 per simulated row, including bootstrap and all service-native rows.
 Follow the finite actual predecessor to its actual installed Ready.
+Its code and chronology include both manifest-entry MRs, every import
+test, compiled field assignment, copied descriptor and final token/Ready
+row of this same $D_1$. Step interprets those rows individually; it does
+not replace initialization by an abstract state change. In particular the
+cut on the sentinel, the cut after the second MR and cuts inside field
+or code parsing are ordinary represented native cuts with their actual
+heads, latches, partial banks, ownership and receipt successors.
 Its complete frame count and activation-completed flag satisfy Boundary's
 stopping test, and no earlier installed Ready has all those frames.
 In particular the old pre-installation Ready with $j_A$ frames does not
@@ -2076,8 +2245,9 @@ like represented original code, one row at a time. No recursive evaluation
 of a historical semantic Call occurs in this induction. ∎
 
 **Theorem 15.2 (an acquired callable package on every original lawful cut).**
-Under the bounded primitive permission of Definition 14.1 and actual
-copy authorizations of Definition 14.2, for every $h\in\mathcal R_H$,
+Under the bounded primitive permission and canonical code supply of
+Definition 14.1 and actual copy authorizations of Definition 14.2, for
+every $h\in\mathcal R_H$,
 after actual finite lawful completion and the paid installation of §14, a finite sequence of canonical Cover and
 Next frames acquires an authorized physical package for precisely $h$.
 Calling it through its actual service token returns (RCA.1), with actual
@@ -2121,9 +2291,11 @@ old target never moves under later frames. No source-only replay assertion
 or equality of original and extended clocks is used.
 
 Proof. First prove termination of complete fragments by induction on the
-number of completed frames after installation. Initialization terminates
-by Proposition 14.3. An original source frame terminates on its same finite
-canonical request by LJA's progress theorem and the explicit two-row
+number of completed frames after installation. The base is the actual
+initialized Ready of Proposition 14.3, with Lemma 13.2a's exact imported
+fields, finite entry graph and complete token/head successors. An original
+source frame terminates on its same finite canonical request by LJA's
+progress theorem and the explicit two-row
 input adapter. It uses the actual source; its new retention and return
 are finite word work. At the next service frame, all its cover backings
 and package keys refer only to earlier completed prefixes. Their actual
@@ -2165,7 +2337,9 @@ return. No auxiliary-library-only completion is asserted.
 
 Proof. Proposition 11.4 supplies its actual owned cells, finite graph,
 entry heads and complete descriptors. Proposition 12.5 supplies literal
-row simulation with actual finite representation updates. Definitions
+row simulation with actual finite representation updates. Lemma 13.2a
+and Proposition 14.3 supply the sentinel-excluding actual initialization
+entry and successful code-field parsing. Definitions
 13.1–13.4 give every handler and its ingress/output/return, and §14 gives
 paid installation and authentic code acquisition. Theorem 15.3 gives
 termination and closure on its full stated lawful domain. These discharge
@@ -2178,7 +2352,9 @@ versioned predecessor fragment. Historical token fields stay data. ∎
 $m_L=|E(L)|,m_1=|E(D_1)|$ be the actual native installation bit lengths,
 and let $d_1=|\Delta(D_1)|$ be the archival description-frame payload length.
 All include their displayed finite initial control/token data. They are computable lengths
-of the two specified expansions, not interpreter constants. Installation's
+of the two specified expansions, including ManifestPrefix's actual entry,
+tests and word helpers, not interpreter constants. Their canonical supplied
+code words and all later replay counts use this same expansion. Installation's
 vector consists of one activation CTL; the two ordinary bitwise bootstraps,
 $4(m_L+m_1)+4$ for their tested NEXT, IN, one-bit constructor-WR,
 ADVANCE and final DONE rows, with no ordinary boundary construction;
@@ -2192,6 +2368,23 @@ again. New finite control bits contribute their actual encoded bit count
 to $b_{\rm ctl}$; they are not eight-bit ordinary cells. The captured code
 frame's ingress, length and descriptor work is additional to both control
 bootstraps. Its Import runs only after $D_1$ is installed.
+
+Full manifest import is exactly Definition 13.2's ManifestPrefix, entered
+after the native empty-bank construction. Its native scan vector is
+Lemma 13.2a's, with scalar $2h+4+3s+3z+4o$ at the actual head distance
+and actual field values. Add that lemma's ordered word-instruction list
+with Definition 11.5's recurrence at every actual successor. The two
+entrance MRs each have their own receipt/tick/fee; no F is imported for
+the sentinel, and every empty field still incurs BeginField, clear,
+terminator, Reverse, AppendItem and move work. The field-zero tag/length/
+payload/exhaustion checks, row validation and old-list parsing then use
+their explicit word expansions. These are installation-purpose work,
+not free admission, a receipt-position readout or service-frame ingress.
+Its source descriptors are preserved; new bank descriptors and retained
+versions are additional storage and cost. This is a full recurrence for
+this graph, rather than a constant correction to another graph's total:
+the acquired and installed code lengths themselves are lengths of this
+expansion. Later Boundary and Prefix likewise count its actual rows.
 
 The ingress price includes its actual admission TOK, reserve CTL, Base
 and descriptor recipe. Its three
@@ -2249,8 +2442,10 @@ selector-width optimum. A target's unary word is acquired computation
 or input, never a mathematical resource allowance.
 
 Proof. Definition 11.5 reduces every compiler instruction to the displayed
-primitive graphs; §§13–14 reduce ingress, installation, source adaptation,
-outputs and return to those graphs and existing primitive supplier paths.
+primitive graphs; Lemma 13.2a includes both manifest-entry moves, all
+field/terminal tests and the exact emitted fields. §§13–14 reduce ingress,
+installation, source adaptation, outputs and return to those graphs and
+existing primitive supplier paths.
 There is no remaining instruction that reads a string, updates a map,
 allocates a block, calls a decoder or restores an entry in one step.
 Assign each primitive one entering purpose tag and retain the tag through
@@ -2281,7 +2476,11 @@ a meter receipt restores an old rather than the just-updated read head;
 a loader installs archival framing as though it were native code; a
 bootstrap enables its partial table before DONE; an unretained optional
 output choice changes the history; or a copied destination becomes
-available before its final seal. The old
+available before its final seal. Import also fails its representation if
+the initial port-37 F becomes a field, a legitimate empty field is skipped,
+the final head-table field loses its delimiter, the old-frame terminal 0
+changes another field's index, or any helper moves head 37 while it is
+the import source. The old
 falsifiers in Definition 9.1 also apply.
 
 These conditions distinguish executable realization from mathematical
@@ -2304,6 +2503,8 @@ execution of the complete compiled source/consumer graph.
 | Archival/native local codec, 0–3 rows and nine finite field patterns at each row count | All 36 framed row-list round trips recover the same seven-field row words, finite effect bits and initial-control data; their archival framing differs from the installation string. This checks the finite serialization convention, not the full expanded controller. |
 | All 63 binary control words of length 0–5 | All 1,158 post-row checks retain the old active table until DONE, preserve each actual written raw prefix and satisfy $4m+2$ for NEXT/IN/WRITE/ADVANCE/DONE. This checks the declared fresh-version boot schema, not a physical loader implementation. |
 | Channel payload lengths 0–20 and all three endpoint bases 0–2 | All 567 cases recover endpoint base and payload length from the correct staged descriptor; using staging's wire length instead is unequal in every case. Recopy after scratch reuse restores the correct counter. No ownership or complete consumer-run claim follows from this local codec check. |
+| ManifestPrefix, all 0–3-field lists over the 15 binary words of lengths 0–3, at every existing entry head | All 3,616 lists and 45,442 head cases return exactly their declared fields, preserve the source and descriptor bases, finish at R, and satisfy Lemma 13.2a's scalar and separate RD/ML/MR/CTL counts. Empty words and consecutive Fs are included. This checks native reader rows with abstract word-helper effects, not the expanded bank helpers. |
+| Manifest field/code/list wire codec, 63 binary code payloads of lengths 0–5, 31 old-frame lists of lengths 0–2 from the five fixed source tags, and eight empty/nonempty auxiliary-field masks | All 15,624 local cases preserve code field zero, its exact tag/length/payload with empty suffix, old-list order/cardinality, saved-head-table bytes and first descriptor base one. Another 126 code-frame cases, with zero or one old frame, distinguish the one-MR sentinel-reading entry from the specified two-MR entry. Arbitrary code payloads test framing, not canonical row validation or execution of $D_1$. |
 
 Proof. For the register family enumerate the seven words and finite
 assignment alternatives, perform the stated native scans/appends, and
@@ -2329,7 +2530,27 @@ NEXT/DONE; only WRITE changes the raw prefix and only DONE changes the
 active table. For channel records, cancel the first three unary fields
 of each selected staged descriptor, then decode its fourth as the payload
 length, distinct from the outer staged-frame length. These are precisely
-the stated finite predicates. ∎
+the stated finite predicates.
+
+For ManifestPrefix enumerate field tuples and actual entry heads on
+$L\mathsf Fw_0\mathsf F\cdots w_{s-1}\mathsf FR$. Execute Home and the
+two moves, then the displayed testing rows and moves; apply the explicit
+cons/reverse/list transformations as local word effects. Clobbering the
+read latch during each word helper leaves the result unchanged because
+FieldRead rereads and bit branches already selected their literal.
+Compare every result to the field tuple, its framed-list round trip and
+the opcode coordinates of Lemma 13.2a. The manifest codec family uses
+the five canonical finite source frames ReadE, Rho, empty-address TagRead,
+Left(alpha) and Right(beta), including the empty old-frame list 0. It
+varies the initialization/origin/head-table word emptiness independently.
+Frame parsing extracts exactly the supplied code word. With only one MR
+after Home the first field read is the sentinel F and emits an extra empty
+word; with two it reads the captured frame's first tag bit 1. This local
+trace applies in particular to $H=1,u=\alpha,j_A=0$, independently of
+the finite actual $\Delta(D_1)$ payload. The canonical code validator's
+success for the actual description is the ordinary argument in
+Proposition 14.3, not an output of these arbitrary-code checks. None of
+these local models executes all compiled helper, permission or seal rows. ∎
 
 **Proposition 17.3 (limits witnessed by this construction).** A fixed graph
 without the new activation permission still cannot start this installer
