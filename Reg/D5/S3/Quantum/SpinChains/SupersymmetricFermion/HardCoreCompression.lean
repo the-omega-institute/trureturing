@@ -7,7 +7,6 @@ open _root_.D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 open _root_.D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open PredictiveThermodynamic.Physical (Assignment)
-open scoped Classical
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -24,6 +23,7 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
+open Classical in
 /-- Retain every size, mode, row and column of the entry formula. -/
 abbrev arena : Arena where
   signature := signature
