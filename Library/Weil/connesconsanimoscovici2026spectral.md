@@ -4394,3 +4394,131 @@ constant relative to $\Pi$. The exact reciprocal potential, another
 majorant, additional actual nonlocal surplus and other eligible shifts
 remain unexcluded. No actual Weil negativity, retained/cofinal
 positivity, Robin tail, RH or originality claim follows.
+
+## A refined source budget from the same saved potential
+
+Keep the actual forms, source, short, normalization and full far premises
+of the preceding reciprocal-potential application. The old step-weight
+obstruction concerns its precise26-cell function. A different majorant
+can use the already accepted pointwise polynomial information within a
+cell.
+
+Let $\beta=29/50$, $q(s)=1+\beta s^2$, and let $P(s)$ be the saved
+rational quadratic lower envelope for $q(s)v(Ls)$ on the last original
+cell $[l,1]$, where $l=261826231978/274653072167$. Restore its coefficients
+from the saved logarithm intervals, square-root bounds and possible-active
+lists. Divide this cell into128 equal rational subcells, fixed before
+evaluating any new integral. On a subcell $[a,b]$, put
+
+$$
+\widetilde W|_{[a,b]}=
+\frac{1+\beta b^2}{\min_{[a,b]}P}.
+$$
+
+Keep the old weights on the other25 cells and reflect evenly to $I$.
+Exact quadratic minima give $1/v\le\widetilde W\le W$ almost everywhere.
+The outward support-switch strips remain included. Thus the old lower
+bound for $\int W|u|^2$ supplies no lower bound for the new functional.
+
+### Reuse the masses and integrate only the missing subcells
+
+The saved finite source uses $J=2049{:}32768$ and the original unphased
+cosine basis. Its physical reflected density is
+
+$$
+g(s)=2\left|\sum_{n\in J}u_n\cos(\pi ns)\right|^2,
+\qquad \int_0^1g=a_0=\|u_J\|^2.
+$$
+
+Keep the cached $a_0$, first25 cell masses and last-cell total
+$E_{\rm last}$. If $F$ is the zero-constant sine primitive of the
+nonconstant harmonics of $g$, then
+
+$$
+F(l)=a_0(1-l)-E_{\rm last},\qquad F(1)=0.
+$$
+
+The squared-harmonic intermediate was not archived, so it is restored
+once with the existing FLINT convolution/autocorrelation helper. Only
+127 missing interior primitives are evaluated; the old26 cell integrals,
+source/action, logarithm/Gamma comparison, inverse, solve, Gram and far
+suppliers are reused. Both sum and difference frequencies, all coefficient
+intervals and the accepted1024/640-bit arithmetic remain in force.
+
+For the SAME $\widetilde W$, the saved153 masses give approximately
+
+$$
+a_1=\int\widetilde W|u_J|^2=10681.5778952432,
+\qquad a_2=\int\widetilde W^2|u_J|^2=1164563.05493539,
+$$
+
+$$
+m=\|\widetilde W\|_\infty=554.477544320329,
+\qquad mU_F=25954.2272562998.
+$$
+
+Unweighted orthogonality $u_F\perp u_J$ allows the standard centered
+Cauchy bound
+
+$$
+\int\widetilde W|u|^2\le
+ a_1+2\sqrt{U_F}\sqrt{a_2-a_1^2/a_0}+mU_F.
+$$
+
+Its directed upper is $50854.0911649295$, above $47h=50553.3119129287$.
+This upper is inconclusive for the fixed shift; it does not exclude the
+new weight or actual eligibility.
+
+### Charge the full orthogonal response with one Cauchy bound
+
+Fix an auxiliary price $\lambda=640$, above the inherited uniform
+weight bound632, independently of any new resolvent-moment evaluation.
+It leaves the actual shift at $t=1/48$. Define
+
+$$
+R_\lambda=\int_I\frac{|u_J|^2}{\lambda-\widetilde W}
+ =\sum_{C}\frac{E_C}{\lambda-\widetilde W_C}.
+$$
+
+The positive bounded multiplication operator $\lambda-\widetilde W$
+and $\langle u_J,u_J+u_F\rangle=a_0$ give by weighted Cauchy
+
+$$
+a_0^2\le R_\lambda
+ \left(\lambda\|u_J+u_F\|^2-\int\widetilde W|u_J+u_F|^2\right).
+$$
+
+Consequently the SAME complete far cap supplies
+
+$$
+p_v\le\int\widetilde W|u|^2
+ \le\lambda(a_0+U_F)-\frac{a_0^2}{R_\lambda}.
+$$
+
+For directed enclosures, use
+$\lambda(a_0^{\rm up}+U_F)-(a_0^{\rm low})^2/R_\lambda^{\rm up}$.
+All terms describe one common source and weight; no separately attained
+far or cross extremum is assumed. Only one scalar sum over the already
+saved153 masses is new here.
+
+The [cached-source application](https://github.com/the-omega-institute/trureturing-experiments/tree/ffa984aef314a03470e24cfb0c32f510b0081327/docs/reports/weil-c27)
+gives $R_{640}\approx2.14857834484827$ and a directed complete upper
+$U_{\rm res}\approx48941.0175472545$. Its exact exported endpoints certify
+
+$$
+\boxed{p_v\le U_{\rm res}<47h_{\rm low}\le47h,}
+$$
+
+where $47h_{\rm low}\approx50553.3119129287$. Thus the conditional
+SAME-source directional budget is admitted at the preselected $1/48$.
+The refinement takes5.797seconds; the subsequent cached-mass scalar
+application takes0.0144seconds. No auxiliary price, shift, cell count or
+precision scan is used.
+
+These are source-specific applications of existing quadratic, finite
+Fourier and weighted-Cauchy facts, with no new generic theorem or Lean
+verification claimed. The actual common forms/domains, legal $E$ shifts,
+unitary mass/phase identification, SAME closed short and sound full
+source/far archives remain conditions. The actual sufficient score and
+its good-block contribution, retained/cofinal positivity, the Robin tail
+and RH remain unresolved.
