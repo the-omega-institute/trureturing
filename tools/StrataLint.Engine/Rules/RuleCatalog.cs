@@ -19,7 +19,7 @@ internal sealed record RuleRegistration(
     IRepositoryRule Rule,
     bool RecheckOnImplementationChange = true);
 
-public sealed class RuleCatalog
+public sealed partial class RuleCatalog
 {
     private static readonly Lazy<RuleCatalog> DefaultCatalog = new(CreateDefault);
 
