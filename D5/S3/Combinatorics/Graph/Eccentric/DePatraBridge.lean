@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/Graph/DePatraBridge
+/- GID: D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/DePatraBridge
+   mirror-B: D5/B/S3/Combinatorics/Graph/Eccentric/DePatraBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -13,7 +13,7 @@ import Mathlib.Tactic.Linarith
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.DePatraBridge
+namespace D5.S3.Combinatorics.Graph.Eccentric.DePatraBridge
 
 open SimpleGraph
 open scoped BigOperators
@@ -623,4 +623,4 @@ theorem bridge_rooted_count [Finite V] {G : SimpleGraph V} {u v : V}
 #print axioms endpoint_minima_strict
 
 end
-end D5.S3.Combinatorics.Graph.DePatraBridge
+end D5.S3.Combinatorics.Graph.Eccentric.DePatraBridge

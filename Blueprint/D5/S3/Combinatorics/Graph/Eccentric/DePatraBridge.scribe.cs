@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Eccentric;
 
 internal sealed class DePatraBridgeDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/DePatraBridge.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Connected vertex-and-edge subgraphs admit an exact decomposition at a single shared root. "

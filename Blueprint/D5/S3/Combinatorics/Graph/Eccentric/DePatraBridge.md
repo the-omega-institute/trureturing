@@ -8,9 +8,9 @@ The source question is Conjecture 2.9 of Akash De and Kamal Lochan Patra, On the
 
 **Definition 1.1 (Actual connected subgraphs).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.countContaining`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.countContaining`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/DePatraBridge.countContaining` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.countContaining` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ For a graph G and a set s of specified vertices, countContaining(G,s) is Nat.car
 
 **Definition 1.2 (Every target, including the diagonal).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricity`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricity`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricity` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricity` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ The pair count is countContaining(G,{x,y}). The eccentricity of x is the infimum
 
 **Theorem 1.3 (The singleton gives strict root bounds).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.rootMinimum_bounds`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootMinimum_bounds`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.rootMinimum_bounds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootMinimum_bounds` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ For any finite connected graph G, a root r, and an existing vertex distinct from
 
 **Theorem 1.4 (The exact deletion components).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.qualifying_components`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.qualifying_components`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.qualifying_components` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.qualifying_components` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ QualifyingBridge uses native connectivity, the native IsBridge predicate, and th
 
 **Theorem 1.5 (Contraction followed by a fresh leaf).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.bridgeShiftIso`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridgeShiftIso`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.bridgeShiftIso` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridgeShiftIso` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ For every simple graph G and distinct vertices u,v, bridgeShift(G,u,v) is isomor
 
 **Theorem 1.6 (Counts and their sum respect isomorphism).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricSum_iso`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricSum_iso`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricSum_iso` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricSum_iso` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ For arbitrary finite vertex types and a graph isomorphism e:G->H, eccentricSum(G
 
 **Theorem 1.7 (Independent edge choices on the two sides).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.rootedGluing_count`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootedGluing_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.rootedGluing_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootedGluing_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ Let S,T cover the vertex type, both contain r, and have intersection exactly {r}
 
 **Theorem 1.8 (Native bridge counting decomposition).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.bridge_rooted_count`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridge_rooted_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.bridge_rooted_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridge_rooted_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ For every QualifyingBridge G u v and every target set s, the rooted count at u i
 
 **Theorem 1.9 (Targets on one side).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.within_gluing_count`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.within_gluing_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.within_gluing_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.within_gluing_count` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -116,9 +116,9 @@ Under the same separation assumptions, let the nonempty target set s lie in S. T
 
 **Theorem 1.10 (Compare both endpoints jointly).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/DePatraBridge.endpoint_minima_strict`
+Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.endpoint_minima_strict`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/DePatraBridge.endpoint_minima_strict` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.endpoint_minima_strict` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -130,14 +130,14 @@ These results establish counting and arithmetic ingredients. They do not establi
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.bridgeShiftIso`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.bridge_rooted_count`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.countContaining`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricSum_iso`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.eccentricity`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.endpoint_minima_strict`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.qualifying_components`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.rootMinimum_bounds`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.rootedGluing_count`
-- Truth anchor: `D5/S3/Combinatorics/Graph/DePatraBridge.within_gluing_count`
-- Dependency: [D5/S3/Combinatorics/Graph/ErdosGyarfasBridgeContraction](ErdosGyarfasBridgeContraction.md)
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridgeShiftIso`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.bridge_rooted_count`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.countContaining`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricSum_iso`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.eccentricity`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.endpoint_minima_strict`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.qualifying_components`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootMinimum_bounds`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.rootedGluing_count`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.within_gluing_count`
+- Dependency: [D5/S3/Combinatorics/Graph/ErdosGyarfasBridgeContraction](../ErdosGyarfasBridgeContraction.md)
