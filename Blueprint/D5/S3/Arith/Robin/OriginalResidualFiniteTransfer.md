@@ -1,0 +1,164 @@
+# Finite Transfer of the Original Mobius Floor Residual
+
+## Abstract
+
+The unchanged finite Mobius floor response admits an explicit residual transfer with both moments, weighted floor variation and exact prefix payments.
+
+All sequences are real-valued on the natural numbers. All logarithms are natural. Fix natural N>=3 and 0<=q<=N-2, put h=q+1 and L=log N. The integer block is N<=m<2N. Empty sums are zero. The arithmetic function mu is Mathlib's actual Mobius function at every index, without a prime-only restriction or any modification at prime powers. M(k) is the existing full inclusive prefix sum of mu(d) for 1<=d<=k.
+
+**Definition 1.1 (Absolute block mass).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.mass`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.mass` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N and real sequence a, A=mass(N,a)=sum(N<=m<2N,abs(a(m))).
+
+**Definition 1.2 (Variation of the zero extension).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N and a, V=variation(N,a)=abs(a(N))+sum(N<=m<2N-1,abs(a(m+1)-a(m)))+abs(a(2N-1)). For N>=1 this is precisely the variation of a on the block extended by zero outside it. Both jumps remain.
+
+**Definition 1.3 (The actual integer floors).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.floorPair`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.floorPair` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N,d and sequence a, H(d)=floorPair(N,a,d)=sum(N<=m<2N,a(m)*floor(m/d)). The formal definition uses natural division; for d>=1 it is exactly the floor of the nonnegative real quotient.
+
+**Definition 1.4 (Logarithmic floor pairing).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logPair`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logPair` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N,d and sequence a, G(d)=logPair(N,a,d)=log(N/d)*H(d).
+
+**Definition 1.5 (The complete consecutive difference).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logDifference`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logDifference` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N,k and a, J(k)=logDifference(N,a,k)=G(k)-G(k+1).
+
+**Definition 1.6 (Denominator-weighted variation).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weightedVariation`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weightedVariation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N,h,a, W=weightedVariation(N,h,a)=sum(h<=k<N,k*abs(J(k))).
+
+**Definition 1.7 (Unchanged logarithmic Mobius coefficients).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.coefficient`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.coefficient` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N,d, alpha(d)=coefficient(N,d)=mu(d)*log(N/d)/log N. The coefficient at d=1 is retained, and the logarithmic weight at d=N is zero.
+
+**Definition 1.8 (The original affine and floor response).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.response`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.response` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N,m, response(N,m)=1+C*m-sum(1<=d<=N,alpha(d)*floor(m/d)), where C=sum(1<=d<=N,alpha(d)/d). Both the constant and the full linear coefficient are included in this definition.
+
+**Definition 1.9 (Pairing with the original response).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.residual`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.residual` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N,a, E=residual(N,a)=sum(N<=m<2N,a(m)*response(N,m)).
+
+**Definition 1.10 (High-prefix replacement with the literal constant).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.replacement`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.replacement` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N,q,a,F, Z=replacement(N,q,a,F)=-sum(q+1<=k<N,(F(k)+2)*J(k))/log N. The +2 pays a literal -2 in a supplied spectral prefix and is not absorbed into an endpoint.
+
+**Theorem 1.11 (The finite two-moment transfer).**
+
+$$\forall N,q\in \mathbb{N},\forall a,F\in \mathbb{R}^{\mathbb{N}},\forall e,c\in \mathbb{R},3\le N\land q\le N-2\land 0\le e\land 0\le c\land \sum_{m= N}^{2\cdot N-1} \operatorname{a}\left(m\right) = 0\land \sum_{m= N}^{2\cdot N-1} m\cdot \operatorname{a}\left(m\right) = 0\land (\forall k\in \mathbb{N},(q+1)\le k< N\Rightarrow \lvert \operatorname{F}\left(k\right)-\operatorname{M}\left(k\right)\rvert \le e\cdot k+c)\Rightarrow \lvert \operatorname{E}\left(N, a\right)-\operatorname{Z}\left(N, q, a, F\right)\rvert \le \frac{e+\frac{c}{(q+1)}}{\operatorname{log}\left(N\right)}\cdot N\cdot \operatorname{A}\left(N, a\right)\cdot (1+2\cdot \operatorname{log}\left(\frac{N}{(q+1)}\right)\cdot (1+\operatorname{log}\left(\frac{2\cdot N}{(q+1)}\right)))+(q+1)\cdot (\frac{3\cdot q}{2}+2)\cdot \operatorname{V}\left(N, a\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.originalResidual_finite_transfer` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let N,q be natural with N>=3 and q<=N-2. Let a,F be arbitrary real sequences, and let e,c be real with e>=0 and c>=0. Assume sum(N<=m<2N,a(m))=0 and sum(N<=m<2N,m*a(m))=0 exactly. At every integer h<=k<N assume abs(F(k)-M(k))<=e*k+c. There is no condition on F below h. Then abs(E-Z) is at most ((e+c/h)/L)*N*A*(1+2*log(N/h)*(1+log(2N/h)))+h*(3*q/2+2)*V.
+
+For d>=1 the centered sawtooth is phi(d,m)=(m mod d)/d-(d-1)/(2*d). Its periodic primitive is P(d,m)=r*(r-d)/(2*d), r=m mod d. The difference P(d,m+1)-P(d,m) equals phi(d,m), including a wrap to residue zero. Since abs(P(d,m))<=d/2, every centered prefix starting at any natural integer is bounded by d. Mathlib's finite summation by parts then gives abs(H(d))<=d*V. The same two moments give H(d)=-sum(a(m)*phi(d,m)); the pointwise sawtooth bound also gives abs(H(d))<=A.
+
+At d=1 the floor is m and the first moment cancels it. At d=N all block floors are exactly one and the zeroth moment cancels them. Thus H(1)=H(N)=G(1)=G(N)=0. Expanding the original response cancels its constant by the zeroth moment and its linear term by the first moment, giving E=-sum(mu(d)*G(d))/L. Mathlib's Finset.sum_Ioc_by_parts gives the full exact identity E=-sum(1<=k<N,M(k)*J(k))/L.
+
+Actual weighted floor drops satisfy the exact identity sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))=h*floor(m/h)+sum(h<=k<N-1,floor(m/(k+1)))-(N-1)*floor(m/N). The terminal floor is nonnegative. The inequalities floor(m/j)<=m/j and 1/(k+1)<=log(k+1)-log k telescope to an upper bound m*(1+log(N/h)), which is at most 2*N*(1+log(2*N/h)) on the original block. Expanding the product difference J(k) and using k*(log(k+1)-log k)<=1 therefore proves W<=N*A*(1+2*log(N/h)*(1+log(2*N/h))).
+
+The exact low prefix is Pq=sum(1<=k<=q,M(k)*J(k))=sum(1<=d<=q,mu(d)*G(d))-M(q)*G(h). Its bound is abs(Pq)/L<=(3/2)*q*(q+1)*V. Telescoping the entire high range gives sum(h<=k<N,J(k))=G(h), so the constant payment is exactly 2*G(h)/L and is bounded in absolute value by 2*h*V. The remaining error is sum(h<=k<N,(F(k)-M(k))*J(k))/L, bounded by ((e+c/h)/L)*W using c>=0. Their sum gives the displayed bound.
+
+The case q=0 has empty low prefix; the case q=N-2 has one high term. Zero e,c,A or V require no special division by these quantities. This theorem is finite and proves no signed spectral inequality. The actual partial-cell integral and Gram projection, analytic residue suppliers, original construction, infinite account, strict Robin above 5040 and RH remain separate obligations.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.coefficient`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.floorPair`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logDifference`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logPair`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.mass`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.originalResidual_finite_transfer`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.replacement`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.residual`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.response`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weightedVariation`
+- Dependency: [D5/S3/Arith/Robin/ActualOddMobiusFinitePairing](ActualOddMobiusFinitePairing.md)
