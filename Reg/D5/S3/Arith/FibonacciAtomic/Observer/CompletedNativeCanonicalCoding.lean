@@ -80,7 +80,8 @@ def familyRegistration : Registration arena
     exact (canonical_coding.1 (leaf true)).2.symm.trans
       ((congrArg expansion h).trans (canonical_coding.1 (leaf false)).2)
 
-noncomputable def registration : LeanInformationAudit.Contract.Registration
+noncomputable def registration :
+    LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     canonical_coding
     (type_of% (realize signature (fun _ _ X => collapse X) (fun e => nomatch e)))
     Unit Unit := {
