@@ -16,26 +16,26 @@ noncomputable section
 universe u
 
 abbrev signature : Signature where
-  Params := Type u
-  State n := Matrix n n ℂ
+  Params := Σ n : Type u, n
+  State p := Matrix p.1 p.1 ℂ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ n := n → ℝ
+  Output _ _ := ℂ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ P i => (P i i).re) (fun e => nomatch e)
+  realize signature (fun _ p P => P p.2 p.2) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ _ => 2) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ (n : Type u) [Fintype n] [DecidableEq n]
-    (P : Matrix n n ℂ) (_hp : P.PosSemidef) (_ht : P.trace = 1) (i : n),
-      (R.readout () n P) i ≤ 1
+  Law R := ∀ {n : Type u} [Fintype n] [DecidableEq n]
+    {P : Matrix n n ℂ} (_hp : P.PosSemidef) (_ht : P.trace = 1) (i : n),
+      (R.readout () ⟨n, i⟩ P).re ≤ 1
 
 theorem actualLaw : arena.{u}.Law actual := by
   intro n _ _ P hp ht i
@@ -43,28 +43,21 @@ theorem actualLaw : arena.{u}.Law actual := by
 
 theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
   intro h
-  have he := h (ULift.{u} Unit) (1 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ)
+  have he := h (n := ULift.{u} Unit) (P := 1)
     Matrix.PosSemidef.one (by simp) ⟨()⟩
   norm_num [rejected, realize] at he
 
 theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   cases i
-  refine ⟨ULift.{u} Bool, 0, 1, ?_⟩
-  intro he
-  have hc := congrArg (fun f : ULift.{u} Bool → ℝ => f ⟨false⟩) he
-  change (0 : ℝ) = 1 at hc
-  exact zero_ne_one hc
+  refine ⟨⟨ULift.{u} Unit, ⟨()⟩⟩, 0, 1, ?_⟩
+  change (0 : ℂ) ≠ 1
+  exact zero_ne_one
 
 def sourceRegistration : Registration arena.{u}
     (type_of% @_root_.D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.state_diag_le_one.{u}) where
   actual := actual
-  bridge := by
-    constructor
-    · intro h n _ _ P hp ht i
-      exact h hp ht i
-    · intro h n _ _ P hp ht i
-      exact h n P hp ht i
+  bridge := Iff.rfl
   variation := ⟨actualLaw, rejected, rejectedLaw⟩
   sensitivity := by
     constructor
@@ -91,7 +84,8 @@ noncomputable def registration :
   realization := .source arena.{u} ⟨sourceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} actual.readout actual.anchor)
+  readout := some (realize signature.{u}
+    (fun _ p P => P p.2 p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -99,12 +93,12 @@ noncomputable def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 6]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 3
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["fn", "fn"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

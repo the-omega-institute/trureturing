@@ -25,35 +25,28 @@ abbrev sumSignature : Signature where
   finiteAnchor := inferInstance
 
 def sumActual : Realization sumSignature :=
-  realize sumSignature
-    (fun _ _ M => if _ : M = 0 then 0 else
-      if h : M.IsHermitian then
-        ∑ i, h.eigenvalues i •
-          (Matrix.vecMulVec (WithLp.ofLp (h.eigenvectorBasis i))
-            (star (WithLp.ofLp (h.eigenvectorBasis i))))
-        else 0)
-    (fun e => nomatch e)
+  realize sumSignature (fun _ _ M => M) (fun e => nomatch e)
 
 def sumRejected : Realization sumSignature :=
   realize sumSignature (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev sumArena : Arena where
   signature := sumSignature
-  Law R := ∀ (n : ℕ) (M : Matrix (Fin n) (Fin n) ℂ), M.IsHermitian →
-    M = R.readout () n M
+  Law R := ∀ {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (hM : M.IsHermitian),
+    R.readout () n M = ∑ i, hM.eigenvalues i •
+      (Matrix.vecMulVec (WithLp.ofLp (hM.eigenvectorBasis i))
+        (star (WithLp.ofLp (hM.eigenvectorBasis i))))
 
 theorem sumActualLaw : sumArena.Law sumActual := by
   intro n M hM
-  by_cases hz : M = 0
-  · subst M
-    simp [sumActual, realize]
-  · simpa [sumActual, realize, hz, hM] using
-      (_root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum M hM)
+  exact _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum M hM
 
 theorem sumRejectedLaw : ¬ sumArena.Law sumRejected := by
   intro h
-  have he := h 1 (1 : Matrix (Fin 1) (Fin 1) ℂ) Matrix.isHermitian_one
-  change (1 : Matrix (Fin 1) (Fin 1) ℂ) = 0 at he
+  have he := h (1 : Matrix (Fin 1) (Fin 1) ℂ) Matrix.isHermitian_one
+  rw [← _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum
+    (1 : Matrix (Fin 1) (Fin 1) ℂ) Matrix.isHermitian_one] at he
+  change (0 : Matrix (Fin 1) (Fin 1) ℂ) = 1 at he
   have he' := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) he
   simp at he'
 
@@ -61,35 +54,12 @@ theorem sumDependence : ObservationalDependence sumSignature sumActual := by
   intro i
   cases i
   refine ⟨1, 0, 1, ?_⟩
-  intro he
-  let h1 : (1 : Matrix (Fin 1) (Fin 1) ℂ).IsHermitian := _root_.Matrix.isHermitian_one
-  have hs :=
-    (_root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum
-      (1 : Matrix (Fin 1) (Fin 1) ℂ) h1)
-  have hx : sumActual.readout () 1 (0 : Matrix (Fin 1) (Fin 1) ℂ) = 0 := by
-    simp [sumActual, realize]
-  have hy : sumActual.readout () 1 (1 : Matrix (Fin 1) (Fin 1) ℂ) = 1 := by
-    simpa [sumActual, realize, h1] using hs.symm
-  rw [hx, hy] at he
-  exact zero_ne_one he
+  exact zero_ne_one
 
 def sumSourceRegistration : Registration sumArena
     (type_of% @_root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum) where
   actual := sumActual
-  bridge := by
-    constructor
-    · intro h n M hM
-      by_cases hz : M = 0
-      · subst M
-        simp [sumActual, realize]
-      · simpa [sumActual, realize, hz, hM] using h M hM
-    · intro h n M hM
-      by_cases hz : M = 0
-      · subst M
-        simpa using
-          (_root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum
-            (0 : Matrix (Fin n) (Fin n) ℂ) hM)
-      · simpa [sumActual, realize, hz, hM] using h n M hM
+  bridge := Iff.rfl
   variation := ⟨sumActualLaw, sumRejected, sumRejectedLaw⟩
   sensitivity := by
     constructor
@@ -116,7 +86,7 @@ noncomputable def hermitianSpectralSumRegistration :
   realization := .source sumArena ⟨sumSourceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize sumSignature sumActual.readout sumActual.anchor)
+  readout := some (realize sumSignature (fun _ _ M => M) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -126,7 +96,7 @@ noncomputable def hermitianSpectralSumRegistration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "arg"]
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -155,21 +125,24 @@ def traceRejected : Realization traceSignature :=
 
 abbrev traceArena : Arena where
   signature := traceSignature
-  Law R := ∀ (n : ℕ) (ρ : Matrix (Fin n) (Fin n) ℂ)
-    (A : Matrix (Fin n) (Fin n) ℂ) (_hρ : ρ.IsHermitian),
-      Matrix.trace (ρ * A) = R.readout () ⟨n, ρ⟩ A
+  Law R := ∀ {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
+    (A : Matrix (Fin n) (Fin n) ℂ) (hρ : ρ.IsHermitian),
+      R.readout () ⟨n, ρ⟩ A = ∑ i, hρ.eigenvalues i •
+        inner ℂ (hρ.eigenvectorBasis i) (Matrix.toEuclideanLin A (hρ.eigenvectorBasis i))
 
 theorem traceActualLaw : traceArena.Law traceActual := by
-  intro n ρ A _hρ
-  rfl
+  intro n ρ A hρ
+  exact _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral ρ A hρ
 
 theorem traceRejectedLaw : ¬ traceArena.Law traceRejected := by
   intro h
-  have he := h 1 (1 : Matrix (Fin 1) (Fin 1) ℂ) (1 : Matrix (Fin 1) (Fin 1) ℂ)
+  have he := h (1 : Matrix (Fin 1) (Fin 1) ℂ) (1 : Matrix (Fin 1) (Fin 1) ℂ)
     Matrix.isHermitian_one
-  change Matrix.trace (1 * 1) = 0 at he
-  have hz : (1 : ℂ) = 0 := by simpa using he
-  exact one_ne_zero hz
+  rw [← _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral
+    (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 Matrix.isHermitian_one] at he
+  change (0 : ℂ) = Matrix.trace (1 * 1) at he
+  have hz : (0 : ℂ) = 1 := by simpa using he
+  exact zero_ne_one hz
 
 theorem traceDependence : ObservationalDependence traceSignature traceActual := by
   intro i
@@ -181,12 +154,7 @@ theorem traceDependence : ObservationalDependence traceSignature traceActual := 
 def traceSourceRegistration : Registration traceArena
     (type_of% @_root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral) where
   actual := traceActual
-  bridge := by
-    constructor
-    · intro _ n ρ A _hρ
-      rfl
-    · intro _ n ρ A hρ
-      exact _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral ρ A hρ
+  bridge := Iff.rfl
   variation := ⟨traceActualLaw, traceRejected, traceRejectedLaw⟩
   sensitivity := by
     constructor
@@ -213,7 +181,8 @@ noncomputable def hermitianTraceSpectralRegistration :
   realization := .source traceArena ⟨traceSourceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize traceSignature traceActual.readout traceActual.anchor)
+  readout := some (realize traceSignature
+    (fun _ p M => Matrix.trace (p.2 * M)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
