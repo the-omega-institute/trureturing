@@ -72,10 +72,8 @@ set_option linter.style.whitespace true
 
 private def mode {M : ℕ} (l : Fin M → ℝ) : FullOperator M :=
   ∑ j, (l j : ℂ) • fullC j
-
 private def dGamma {M : ℕ} (h : Matrix (Fin M) (Fin M) ℝ) : FullOperator M :=
   ∑ i, ∑ j, (h i j : ℂ) • ((fullC i)ᴴ * fullC j)
-
 private theorem fullC_mixed (M : ℕ) (i j : Fin M) :
     fullC i * (fullC j)ᴴ + (fullC j)ᴴ * fullC i =
       if i = j then (1 : FullOperator M) else 0 := by
@@ -103,7 +101,6 @@ private theorem fullC_mixed (M : ℕ) (i j : Fin M) :
       · simp [hij]
         module
       · simp [hij]
-
 private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
     mode l * (mode l)ᴴ + (mode l)ᴴ * mode l =
       ((∑ j, l j ^ 2 : ℝ) : ℂ) • (1 : FullOperator M) := by
@@ -148,7 +145,6 @@ private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
   apply Finset.sum_congr rfl
   intro j hj
   rw [hcar j i]
-
 private theorem dGamma_rankOne {M : ℕ} (l : Fin M → ℝ) :
     dGamma (Matrix.vecMulVec l l) = (mode l)ᴴ * mode l := by
   classical
@@ -167,21 +163,17 @@ private theorem dGamma_rankOne {M : ℕ} (l : Fin M → ℝ) :
   apply Finset.sum_congr rfl
   intro j hj
   ring
-
 private def modes38 : Fin 6 → Fin 6 → ℝ :=
   ![![-1, 1, -1, 1, -1, 1], ![-3, 7, -5, -7, 8, 0],
     ![-13, -7, 11, -7, 2, 14], ![-3, -7, -5, 7, 8, 0],
     ![13, -7, -11, -7, -2, 14], ![1, 1, 1, 1, 1, 1]]
-
 private def modes58 : Fin 6 → Fin 6 → ℝ :=
   ![![-1, 1, -1, 1, -1, 1], ![-5, 7, -3, -7, 8, 0],
     ![-11, -7, 13, -7, -2, 14], ![-5, -7, -3, 7, 8, 0],
     ![11, -7, -13, -7, 2, 14], ![1, 1, 1, 1, 1, 1]]
-
 private def eig38 : Fin 6 → ℝ := ![-11/8, -7/8, -7/8, 7/8, 7/8, 11/8]
 private def eig58 : Fin 6 → ℝ := ![-13/8, -7/8, -7/8, 7/8, 7/8, 13/8]
 private def modeNorm : Fin 6 → ℝ := ![6, 196, 588, 196, 588, 6]
-
 private theorem hopping38 :
     sshHopping 3 (3/8) =
       ∑ k, (eig38 k / modeNorm k) • Matrix.vecMulVec (modes38 k) (modes38 k) := by
@@ -189,7 +181,6 @@ private theorem hopping38 :
   fin_cases i <;> fin_cases j <;>
     norm_num [sshHopping.eq_1, eig38.eq_1, modeNorm.eq_1, modes38.eq_1, Matrix.vecMulVec,
       Matrix.sum_apply, Fin.sum_univ_succ]
-
 private theorem hopping58 :
     sshHopping 3 (5/8) =
       ∑ k, (eig58 k / modeNorm k) • Matrix.vecMulVec (modes58 k) (modes58 k) := by
@@ -197,7 +188,6 @@ private theorem hopping58 :
   fin_cases i <;> fin_cases j <;>
     norm_num [sshHopping.eq_1, eig58.eq_1, modeNorm.eq_1, modes58.eq_1, Matrix.vecMulVec,
       Matrix.sum_apply, Fin.sum_univ_succ]
-
 private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     (A : Fin K → Matrix (Fin M) (Fin M) ℝ) :
     dGamma (∑ k, t k • A k) = ∑ k, t k • dGamma (A k) := by
@@ -276,7 +266,6 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     intro x hx
     exact hswap3 x
   rw [hleft3]
-
 private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s : Assignment M) :
     (fullC j *ᵥ f) s =
       if s j = false then (-1 : ℂ) ^ prefixCount s j * f (Function.update s j true) else 0 := by
@@ -323,7 +312,6 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
       simp [hfalse']
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
-
 private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ)
     (s : Assignment M) :
     ((fullC j)ᴴ *ᵥ f) s =
@@ -354,27 +342,20 @@ private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → 
       simp [hfalse]
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
-
 private def psiCode (x : Assignment 6) : Fin 64 :=
   finFunctionFinEquiv (fun j => finTwoEquiv.symm (x j))
-
 private def psi38Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 20, 0, -20, 4, 0, 0, 0, 0, -20, 0, 21, -5, 0, 0, -5, 5, 0, -4, 0, 0, 0, 0, 0, 0, 4, 0, -5, 5, 0, 0, 5, -21, 0, 20, 0, 0, 0, 0, -4, 20, 0, -20, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0]
 private def psi58Int : Fin 64 → ℤ := ![0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 0, 6, 0, -6, 2, 0, 0, 0, 0, -6, 0, 7, -3, 0, 0, -3, 3, 0, -2, 0, 0, 0, 0, 0, 0, 2, 0, -3, 3, 0, 0, 3, -7, 0, 6, 0, 0, 0, 0, -2, 6, 0, -6, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0]
-
 private def psi38 : Assignment 6 → ℂ := fun x => (psi38Int (psiCode x) : ℂ)
 private def psi58 : Assignment 6 → ℂ := fun x => (psi58Int (psiCode x) : ℂ)
-
 private def psi38Z : Assignment 6 → ℤ := fun x => psi38Int (psiCode x)
 private def psi58Z : Assignment 6 → ℤ := fun x => psi58Int (psiCode x)
-
 private def modeInt (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ) : Assignment 6 → ℤ :=
   fun x => ∑ j, l j * (if x j = false then (-1 : ℤ) ^ prefixCount x j *
     f (Function.update x j true) else 0)
-
 private def modeCreateInt (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ) : Assignment 6 → ℤ :=
   fun x => ∑ j, l j * (if x j = true then (-1 : ℤ) ^ prefixCount x j *
     f (Function.update x j false) else 0)
-
 private def modes38Z : Fin 6 → Fin 6 → ℤ :=
   ![![-1, 1, -1, 1, -1, 1], ![-3, 7, -5, -7, 8, 0],
     ![-13, -7, 11, -7, 2, 14], ![-3, -7, -5, 7, 8, 0],
@@ -383,7 +364,6 @@ private def modes58Z : Fin 6 → Fin 6 → ℤ :=
   ![![-1, 1, -1, 1, -1, 1], ![-5, 7, -3, -7, 8, 0],
     ![-11, -7, 13, -7, -2, 14], ![-5, -7, -3, 7, 8, 0],
     ![11, -7, -13, -7, 2, 14], ![1, 1, 1, 1, 1, 1]]
-
 private theorem mode_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ)
     (s : Assignment 6) :
     (mode (fun j => (l j : ℝ)) *ᵥ (fun x => (f x : ℂ))) s =
@@ -395,7 +375,6 @@ private theorem mode_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → �
   unfold modeInt
   push_cast
   simp
-
 private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ)
     (s : Assignment 6) :
     ((mode (fun j => (l j : ℝ)))ᴴ *ᵥ (fun x => (f x : ℂ))) s =
@@ -408,7 +387,6 @@ private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 
   unfold modeCreateInt
   push_cast
   simp
-
 private theorem psi38_norm : ∑ x, psi38Z x ^ 2 = 3528 := by decide
 private theorem psi58_norm : ∑ x, psi58Z x ^ 2 = 392 := by decide
 private theorem psi38_overlap : ∑ x, psi58Z x * psi38Z x = 1152 := by decide
@@ -428,7 +406,6 @@ private theorem psi58_mode_kernel :
     (∀ k : Fin 3, modeCreateInt (modes58Z ⟨k.val, by omega⟩) psi58Z = 0) ∧
     (∀ k : Fin 3, modeInt (modes58Z ⟨k.val + 3, by omega⟩) psi58Z = 0) := by
   constructor <;> intro k <;> fin_cases k <;> decide
-
 private theorem psi38_complex_mode_kernel :
     (∀ k : Fin 3,
       (mode (fun j => (modes38Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ psi38 = 0) ∧
@@ -449,7 +426,6 @@ private theorem psi38_complex_mode_kernel :
     rw [mode_mulVec_int_cast]
     have h := congrFun (psi38_mode_kernel.2 k) s
     exact_mod_cast h
-
 private theorem psi58_complex_mode_kernel :
     (∀ k : Fin 3,
       (mode (fun j => (modes58Z ⟨k.val, by omega⟩ j : ℝ)))ᴴ *ᵥ psi58 = 0) ∧
@@ -470,7 +446,6 @@ private theorem psi58_complex_mode_kernel :
     rw [mode_mulVec_int_cast]
     have h := congrFun (psi58_mode_kernel.2 k) s
     exact_mod_cast h
-
 private theorem psi38_number :
     numberOperator 6 *ᵥ psi38 = (3 : ℂ) • psi38 := by
   rw [numberOperator_eq_diagonal]
@@ -492,7 +467,6 @@ private theorem psi38_number :
     simp [Ne.symm hne]
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
-
 private theorem psi58_number :
     numberOperator 6 *ᵥ psi58 = (3 : ℂ) • psi58 := by
   rw [numberOperator_eq_diagonal]
@@ -514,7 +488,6 @@ private theorem psi58_number :
     simp [Ne.symm hne]
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
-
 private theorem psi38_nonzero : psi38 ≠ 0 := by
   intro h
   have hz : psi38Z = 0 := by
@@ -525,7 +498,6 @@ private theorem psi38_nonzero : psi38 ≠ 0 := by
   have hn := psi38_norm
   rw [hz] at hn
   norm_num at hn
-
 private theorem psi58_nonzero : psi58 ≠ 0 := by
   intro h
   have hz : psi58Z = 0 := by
@@ -536,7 +508,6 @@ private theorem psi58_nonzero : psi58 ≠ 0 := by
   have hn := psi58_norm
   rw [hz] at hn
   norm_num at hn
-
 private theorem psi_overlap : star psi58 ⬝ᵥ psi38 = (1152 : ℂ) := by
   simp only [dotProduct, Pi.star_apply]
   have hstar (x : Assignment 6) : star (psi58 x) = (psi58Z x : ℂ) := by
@@ -546,24 +517,18 @@ private theorem psi_overlap : star psi58 ⬝ᵥ psi38 = (1152 : ℂ) := by
   simp_rw [hstar, hcast]
   have h := psi38_overlap
   exact_mod_cast h
-
 private def alpha38 : Fin 6 → ℝ := ![11/48, 1/224, 1/672, 1/224, 1/672, 11/48]
 private def alpha58 : Fin 6 → ℝ := ![13/48, 1/224, 1/672, 1/224, 1/672, 13/48]
-
 private def B38 (k : Fin 6) : FullOperator 6 :=
   if k.val < 3 then (mode (modes38 k))ᴴ else mode (modes38 k)
-
 private def B58 (k : Fin 6) : FullOperator 6 :=
   if k.val < 3 then (mode (modes58 k))ᴴ else mode (modes58 k)
-
 private theorem hamiltonian_eq_dGamma (N : ℕ) (v : ℝ) :
     hamiltonian N v = dGamma (sshHopping N v) := rfl
-
 private theorem mode_adj_mul {M : ℕ} (l : Fin M → ℝ) :
     (mode l)ᴴ * mode l = ((∑ j, l j ^ 2 : ℝ) : ℂ) • (1 : FullOperator M) -
       mode l * (mode l)ᴴ := by
   exact eq_sub_of_add_eq' (mode_car l)
-
 private theorem sos38 :
     hamiltonian 3 (3/8) = (-25/8 : ℂ) • (1 : FullOperator 6) +
       ∑ k, (alpha38 k : ℂ) • ((B38 k)ᴴ * B38 k) := by
@@ -576,7 +541,6 @@ private theorem sos38 :
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
     Matrix.vecHead, Matrix.vecTail]
   module
-
 private theorem sos58 :
     hamiltonian 3 (5/8) = (-27/8 : ℂ) • (1 : FullOperator 6) +
       ∑ k, (alpha58 k : ℂ) • ((B58 k)ᴴ * B58 k) := by
@@ -589,30 +553,23 @@ private theorem sos58 :
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
     Matrix.vecHead, Matrix.vecTail]
   module
-
 private def code2 : Assignment 2 ≃ Fin 4 :=
   (Equiv.piCongrRight (fun _ : Fin 2 => finTwoEquiv.symm)).trans
     (finFunctionFinEquiv (m := 2) (n := 2))
-
 private def code4 : Assignment 4 ≃ Fin 16 :=
   (Equiv.piCongrRight (fun _ : Fin 4 => finTwoEquiv.symm)).trans
     (finFunctionFinEquiv (m := 2) (n := 4))
-
 private def reduceInt (X : Assignment 6 → Assignment 6 → ℤ) :
     Matrix (Fin 4) (Fin 4) ℤ :=
   fun a b => ∑ z : Fin 16,
     X (Fin.append (code2.symm a) (code4.symm z))
       (Fin.append (code2.symm b) (code4.symm z))
-
 private def outerInt (f g : Assignment 6 → ℤ) : Assignment 6 → Assignment 6 → ℤ :=
   Matrix.vecMulVec f g
-
 private def r38Int : Matrix (Fin 4) (Fin 4) ℤ :=
   reduceInt (outerInt psi38Z psi58Z)
-
 private def r11Int : Matrix (Fin 4) (Fin 4) ℤ :=
   reduceInt (outerInt psi38Z psi38Z)
-
 private def r22Int : Matrix (Fin 4) (Fin 4) ℤ :=
   reduceInt (outerInt psi58Z psi58Z)
 
@@ -632,15 +589,12 @@ set_option maxRecDepth 1000000 in
 private theorem r22Int_eq : r22Int = !![80, 0, 0, 0; 0, 116, -84, 0; 0, -84, 116, 0; 0, 0, 0, 80] := by
   ext i j
   fin_cases i <;> fin_cases j <;> decide +kernel
-
 private theorem quadratic_nonnegC {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
     0 ≤ star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ) :=
   (Matrix.posSemidef_conjTranspose_mul_self B).dotProduct_mulVec_nonneg φ
-
 private theorem quadratic_nonneg {M : ℕ} (B : FullOperator M) (φ : Assignment M → ℂ) :
     0 ≤ (star φ ⬝ᵥ ((Bᴴ * B) *ᵥ φ)).re :=
   (Matrix.posSemidef_conjTranspose_mul_self B).re_dotProduct_nonneg φ
-
 private theorem sos_lower {K M : ℕ} (E : ℝ) (α : Fin K → ℝ)
     (B : Fin K → FullOperator M) (H : FullOperator M) (φ : Assignment M → ℂ)
     (hs : H = (E : ℂ) • (1 : FullOperator M) +
