@@ -6,6 +6,7 @@
    utility: none
    digest: Actual full-family differences span every rational Lyndon standard bracket. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Span.FullFamilyHomogeneity
 
 set_option autoImplicit false

@@ -6,6 +6,7 @@
    utility: none
    digest: Actual legal addresses and the complete closed endpoint graph model. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Digit.Infinite.WindowCylinderPartition
 import D5.S1.Scale.Embedding
 import D5.S0.Carrier.Units

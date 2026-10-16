@@ -65,7 +65,7 @@ theorem exists_auxiliary_deriv {A : Type*} [Fintype A] {m : ℕ} (tgt : A → Fi
     (μ.prod fun j k ↦ (ν j).choose k) ≤ 2 ^ (ν.sum fun _ k ↦ k) := by
     classical
     calc (μ.prod fun j k ↦ (ν j).choose k) ≤ ∏ j ∈ μ.support, 2 ^ ν j :=
-          Finset.prod_le_prod (fun _ _ ↦ Nat.zero_le _)
+          Finset.prod_le_prod₀ (fun _ _ ↦ Nat.zero_le _)
             (fun j _ ↦ Nat.choose_le_two_pow (ν j) (μ j))
       _ = 2 ^ ∑ j ∈ μ.support, ν j := Finset.prod_pow_eq_pow_sum _ _ _
       _ ≤ 2 ^ ∑ j ∈ μ.support ∪ ν.support, ν j :=
@@ -173,7 +173,7 @@ theorem exists_auxiliary_deriv {A : Type*} [Fintype A] {m : ℕ} (tgt : A → Fi
     refine Real.iSup_le (fun n ↦ ?_) hnn
     rw [MvPolynomial.hasseDeriv_coeff, map_mul]
     have hc : v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) ≤ 1 :=
-      IsNonarchimedean.apply_natCast_le_one hv
+      hv.apply_natCast_le_one (by simp) (map_one v)
     calc v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) * v (P.coeff (n + μ))
         ≤ 1 * v (P.coeff (n + μ)) := by gcongr
       _ = v (P.coeff (n + μ)) := one_mul _
@@ -442,7 +442,7 @@ theorem exists_auxiliary_deriv {A : Type*} [Fintype A] {m : ℕ} (tgt : A → Fi
               simp only [Function.mem_mulSupport] at hv ⊢
               exact fun h ↦ hv (by rw [h, one_pow])
           rw [finprod_pow (hSupport hx)]
-          exact finprod_le_finprod (hSupport hz) (fun v ↦ hGnn v.val)
+          exact finprod_le_finprod₀ (hSupport hz) (fun v ↦ hGnn v.val)
             hFp fun v ↦ hnon v.val v.prop
         have hXnn : (0 : ℝ) ≤ (archAbsVal.map fun v ↦ ⨆ i : (Fin (m + 1) →₀ ℕ), v (x i)).prod :=
           Multiset.prod_nonneg fun a ha ↦ by

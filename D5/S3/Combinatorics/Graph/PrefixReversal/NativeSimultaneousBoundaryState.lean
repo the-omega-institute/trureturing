@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Advance Both Actual Native Boundary Templates on One Cycle. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSimultaneousBoundaryAdvance
 

@@ -160,7 +160,7 @@ theorem bounded_strip (Φ : PowerSeries ℤ) (a b B M : ℕ) (hab : a ≤ b) (hM
       intro j hj
       calc
         d r j ≤ 2 ^ (C * (j + 1) ^ 2) := hgrowth r j hr
-        _ ≤ 2 ^ (C * (N + 1) ^ 2) := by gcongr; omega
+        _ ≤ 2 ^ (C * (N + 1) ^ 2) := by gcongr
     have hlogs : ∀ r N, 0 < r → r < L →
         2 * Nat.log2 (U r N) ≤
           Nat.log2 (U (r - 1) (N + 1)) + Nat.log2 (U (r + 1) (N + 1)) + 3 := by

@@ -375,7 +375,8 @@ private theorem ordered_residual_bounds (n K j : ℕ) (hn : 1 ≤ n) (hj : j ≤
     · simp only [elementary_zero, pow_zero, div_one]
       calc
         orderedResidual n 0 j ≤ ∏ _i ∈ Finset.range j, (1 : ℝ) :=
-          Finset.prod_le_prod (fun i hi => (hfactor i hi).1)
+          Finset.prod_le_prod₀
+            (fun i hi => (hfactor i hi).1)
             (fun i hi => (hfactor i hi).2)
         _ = 1 := by simp
   | succ K ih =>

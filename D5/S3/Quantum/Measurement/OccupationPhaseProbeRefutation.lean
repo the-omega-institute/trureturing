@@ -110,8 +110,6 @@ private theorem linear_certificate (c : Fin 5 → ℝ) :
   norm_num [energy, variance, linear, probability, partition_value, carrier_value,
     mass, activity, weight, occupation, bit, Fin.sum_univ_succ, Fin.prod_univ_succ,
     sos]
-  simp only [show (Fin.succ (2 : Fin 4) : Fin 5) = 3 from rfl,
-    show (Fin.succ (Fin.succ (2 : Fin 3)) : Fin 5) = 4 from rfl]
   ring
 
 private theorem linear_lower_bound (c : Fin 5 → ℝ) :

@@ -161,7 +161,7 @@ private theorem computedOldMask_spec (C : LiteralRow) (θ : Classes C → Option
   have hb := newbornCode_spec C θ p
   cases h : newbornCode C θ p <;> simp_all
 
-def computedTarget (C : LiteralRow) (θ : Classes C → Option Bool) : LiteralRow :=
+@[irreducible] def computedTarget (C : LiteralRow) (θ : Classes C → Option Bool) : LiteralRow :=
   (NativePredecessorRowRecovery.back C (computedOldMask C θ)).getD (.of (.inl true))
 
 private theorem computedTarget_spec (C : LiteralRow) (θ : Classes C → Option Bool) :
@@ -180,8 +180,11 @@ structure TableRow (C : LiteralRow) where
 
 def tableRows (C : LiteralRow) : List (TableRow C) :=
   (chartList C).map (fun θ =>
-    { type := θ.val, admissible := θ.property, target := computedTarget C θ.val,
-      target_eq := rfl })
+    let t := computedTarget C θ.val
+    { type := θ.val, admissible := θ.property, target := t,
+      target_eq := by
+        change t = t
+        exact rfl })
 
 def replyCell {C : LiteralRow} (W : List (TableRow C))
     (d : Classes C) (y : Option Bool) : List (TableRow C) :=

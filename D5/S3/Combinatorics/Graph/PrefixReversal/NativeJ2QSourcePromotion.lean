@@ -7,6 +7,7 @@
    digest: Split the actual Q child retained by the same native J2 parent witness. -/
 /- Candidate, not yet kernel checked. In particular, no new Q cycle or
    independently chosen special path replaces the data saved in W. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SourcePromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualQBaseSlicing
 

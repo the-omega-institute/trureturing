@@ -6,6 +6,7 @@
    utility: none
    digest: Construct one full actual state for every supplied native frame of order at least three. -/
 /- Candidate awaiting a complete kernel build of its third-order base and successor. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2ThirdOrderState
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStrongStateStep
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFramePredecessor

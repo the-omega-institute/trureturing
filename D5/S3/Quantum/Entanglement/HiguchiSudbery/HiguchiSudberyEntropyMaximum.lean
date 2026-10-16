@@ -18,6 +18,7 @@ Direct frozen dependencies of result:
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.PrimeHierarchyCertificate
 import D5.S3.Quantum.Entanglement.HiguchiSudbery.ReflectionEvaluation
 import D5.S3.Quantum.Entanglement.QuditSwappingProductBoundRefutation

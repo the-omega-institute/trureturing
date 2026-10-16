@@ -6,6 +6,7 @@
    utility: none
    digest: One chronological stopped table law synthesizes arbitrary residual amplitudes. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
 import D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.PreselectedResidualBound
 import Mathlib.Probability.Distributions.Uniform
@@ -17,7 +18,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 1200000
 noncomputable section
-open scoped BigOperators Classical
+open scoped BigOperators Classical ENNReal
 open MeasureTheory
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.OriginalScheduledWitnessTables
 open D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedCoefficientRealization
@@ -27,6 +28,21 @@ namespace D5.S3.ObserverMemory.Algorithms.KBonacciAcquisition.StoppedResidualSyn
 
 /-- Numerical addresses 0,...,m-1 followed by the base sentinel m. -/
 abbrev triples (m : ℕ) : Finset (Finset ℕ) := (Finset.range (m+1)).powersetCard 3
+
+private def uniformSubset (s : Finset (Finset ℕ)) (hs : s.Nonempty) :
+    PMF (Finset ℕ) :=
+  PMF.ofFinset (fun a => if a ∈ s then (s.card : ℝ≥0∞)⁻¹ else 0) s (by
+    have hsum : (∑ a ∈ s, if a ∈ s then (s.card : ℝ≥0∞)⁻¹ else 0) =
+        ∑ _a ∈ s, (s.card : ℝ≥0∞)⁻¹ := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      simp [ha]
+    rw [hsum, Finset.sum_const, nsmul_eq_mul]
+    have hcard : s.card ≠ 0 := Nat.ne_of_gt (Finset.card_pos.mpr hs)
+    exact ENNReal.mul_inv_cancel (by exact_mod_cast hcard)
+      (ENNReal.natCast_ne_top _)) (by
+    intro a ha
+    simp [ha])
 
 private def baseTable (L : ℕ) : Catalog true L :=
   ⟨fun _ => 0, [], by simp, by simp, by simp, by simp⟩
@@ -173,7 +189,7 @@ private theorem chronological_support {L m : ℕ} (hmL : m ≤ L) {s : Finset �
 #print axioms chronological_base
 /-- A single source-independent draw chooses an actual entire stopped table. -/
 def subsetLaw (L m : ℕ) (hmL : m ≤ L) (hm : 3 ≤ m) : PMF (Catalog true L) :=
-  (PMF.uniformOfFinset (triples m)
+  (uniformSubset (triples m)
     (Finset.powersetCard_nonempty.mpr (by simpa using (show 3 ≤ m+1 by omega)))).map
       (subsetTable L m hmL)
 
@@ -187,16 +203,16 @@ private theorem subset_mass {L m : ℕ} (hmL : m ≤ L) (hm : 3 ≤ m)
         ((triples m).card : ENNReal) := by
     rw [subsetLaw,PMF.map_comp,PMF.map_apply]
     rw [tsum_eq_sum (s := triples m) (fun s hs => by
-      simp [PMF.uniformOfFinset_apply_of_notMem _ hs])]
+      simp only [uniformSubset, PMF.ofFinset_apply, hs, if_false]
+      simp)]
     simp only [Function.comp_apply]
     calc
       _ = ∑ s ∈ triples m, if (subsetTable L m hmL s).val b = r then
           ((triples m).card : ENNReal)⁻¹ else 0 := by
         apply Finset.sum_congr rfl
         intro s hs
-        rw [PMF.uniformOfFinset_apply_of_mem _ hs]
-        simp only [eq_comm]
-        split_ifs <;> rfl
+        rw [uniformSubset, PMF.ofFinset_apply]
+        simp only [hs, if_true, eq_comm]
       _ = _ := by
         rw [← Finset.sum_filter]
         simp [div_eq_mul_inv]
