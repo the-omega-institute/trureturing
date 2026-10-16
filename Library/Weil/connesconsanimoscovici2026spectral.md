@@ -3830,6 +3830,96 @@ or cofinal positivity, Robin tail and RH remain unresolved; no new
 generic theorem, algorithm or Lean verification is claimed.
 
 
+#### A cached norm bound admits a small actual-surplus shift
+
+The unchanged complete comparison is excluded above. A distinct
+conditional construction uses the actual positive difference from it.
+Keep the SAME actual $H_{\rm ext}$, $T$, $E$, exterior complement $O$,
+effective action $\mathcal M$, residual and lift. Put
+
+$$
+D_0=E^*(H_{\rm ext}-T)E,\qquad
+C_0=O^*(H_{\rm ext}-T)E,\qquad
+\Pi=(H_{\rm ext}-T)_{OO}-C_0D_0^{-1}C_0^*.
+$$
+
+Under the inherited common form/domain and inverse identifications,
+the actual selected exterior Schur form is
+$\mathcal A=\mathcal M+\Pi$. The existing GLOBAL prime/diagonal
+slack supplies $H_{\rm ext}-T\succeq I/632$: the earlier weighted row
+has $q(59/10-r_q)>1/400$, $q\le79/50$, and
+$\Lambda\preceq A_\Gamma-(59/10)I$. This uses the complete cancellation
+$H_{\rm ext}-T=A_\Gamma-\Lambda-C_{\rm p}$ on the common form domain;
+a bound only on its selected block would not suffice.
+Minimizing that global quadratic form over the finite $E$ coordinate
+gives $\Pi\succeq I/632$ on $O$.
+
+Fix the archived exact384-bit $w_0$, with SAME full
+$u=\mathcal Mw_0$ and $h=w_0^*u>0$. The accepted common-column packet already contains an enclosure of
+$E_J$ and an upper bound for $E_F$, where
+
+$$
+E_J=\sum_{m=2049}^{32768}W_m|u_m|^2,\qquad
+E_F=D_{\rm far}\|u_{\rm far}\|_2^2.
+$$
+
+Here $W_{\rm far}=D_{\rm far}I$ is the original positive CONSTANT
+far weight. Thus this particular weighted far energy does control the
+unweighted norm. The existing pilot contains that exact constant and
+all positive middle weights; their $J$ slice starts at array index768.
+With $w_{\min,J}=\min_{m\in J}W_m$ and directed cached upper bounds,
+
+$$
+\|u\|_2^2\le U_u:=\frac{E_J^{\rm up}}{w_{\min,J}}
+ +\frac{E_F^{\rm up}}{D_{\rm far}},\qquad
+uu^*\preceq U_uI\preceq p_{\rm up}\Pi,\qquad
+p_{\rm up}=632U_u.
+$$
+
+For any directed $0<h_{\rm low}\le h$, put
+
+$$
+t_{\rm cap}=\frac{h_{\rm low}}{h_{\rm low}+p_{\rm up}}.
+$$
+
+Every fixed rational $0<t\le t_{\rm cap}<1$ satisfies
+$p_{\rm up}\le h(1-t)/t$. Consequently the existing rank-one shift
+is admissible under these premises:
+
+$$
+\mathcal M_t=\mathcal M+\frac{t}{h(1-t)}uu^*
+\preceq\mathcal A,\qquad
+\mathcal M_t((1-t)w_0)=u.
+$$
+
+The associated charge and row change by
+$\mathcal K_t=\mathcal K+th$ and
+$\mathcal B_t=\mathcal B+t\,w_0^*R_{\rm res}$.
+The full $u$, including its far action, remains unchanged.
+This construction changes the comparison using actual surplus and is
+not excluded by the preceding obstruction for unchanged $T$.
+
+The [cached scalar application](https://github.com/the-omega-institute/trureturing-experiments/tree/923ab4a9acaa9aa66d52df450a30145239b32479/docs/reports/weil-c27)
+uses only exact rational arithmetic on
+the accepted energies, positive weights and $h$ enclosure. It does not
+recompute an action, energy, inverse, source, channel or far bound.
+Its exact rational output gives, approximately,
+$U_u=4541.41733$, $p_{\rm up}=2870175.75239$ and
+$t_{\rm cap}=0.000374611014$. Under the stated premises the stored
+$t=2^{-13}=1/8192$ is an eligible interior example. This cap is a
+sufficient eligibility bound, not the largest admissible shift. The constant-weight identification and all actual
+form/domain/source correspondences remain explicit premises.
+
+This supplies no sign of the necessary quadratic
+$\ell(t)=k_J+th+(b_J+t r_V)\Xi^{-1}(b_J+t r_V)^*$.
+The earlier sole direct evaluation remains inconclusive. Actual
+success also requires a joint sufficient upper with the new good-block
+charge, the SAME actual complement and full far response. An admissible
+parameter alone does not establish that upper. No actual retained or
+cofinal positivity, Robin-tail or RH conclusion, generic novelty or
+Lean verification is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
