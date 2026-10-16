@@ -53,8 +53,12 @@ internal sealed partial class LeanSourceCatalog
     private LeanSourceCatalog(
         ImmutableArray<LeanSourceDeclaration> declarations,
         ImmutableDictionary<string, ImmutableArray<string>> importsByModule,
-        ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule)
+        ImmutableDictionary<string, ImmutableHashSet<string>> customSyntaxByModule,
+        ImmutableDictionary<string, CompleteSourceFile> completeSources,
+        ImmutableHashSet<string> completeSourceModules)
     {
+        this.completeSources = completeSources;
+        this.completeSourceModules = completeSourceModules;
         this.declarations = declarations;
         this.importsByModule = importsByModule;
         customSyntaxCatalog = new LeanCustomSyntaxCatalog(
@@ -74,8 +78,12 @@ internal sealed partial class LeanSourceCatalog
                 StringComparer.Ordinal);
     }
 
-    internal static LeanSourceCatalog Parse(RepositorySnapshot snapshot)
+    internal static LeanSourceCatalog Parse(
+        RepositorySnapshot snapshot,
+        ImmutableHashSet<RepoPath>? unchangedPaths = null)
     {
+        var completeSources = ImmutableDictionary.CreateBuilder<string, CompleteSourceFile>(StringComparer.Ordinal);
+        var completeSourceModules = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var declarations = ImmutableArray.CreateBuilder<LeanSourceDeclaration>();
         var importsByModule = ImmutableDictionary.CreateBuilder<
             string,
@@ -87,8 +95,24 @@ internal sealed partial class LeanSourceCatalog
             .Where(static file => LeanClosureValidator.IsManagedLean(file.Path.Value))
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
         {
-            declarations.AddRange(ParseFile(file, out var imports, out var customSyntax));
+            if (!file.ContentWasRead || file.RawBytes.IsDefault)
+                throw new LeanSourceExtractionException($"Lean source bytes are unavailable for {file.Path.Value}.");
             var moduleName = ModuleName(file.Path);
+            ImmutableArray<string> imports;
+            ImmutableHashSet<string> customSyntax;
+            try
+            {
+                declarations.AddRange(ParseFile(file, out imports, out customSyntax));
+            }
+            catch (LeanSourceExtractionException exception) when (
+                exception.Failure == LeanSourceExtractionFailure.IndentedDeclaration
+                && unchangedPaths?.Contains(file.Path) == true)
+            {
+                imports = ParseFileImports(file);
+                customSyntax = ImmutableHashSet<string>.Empty;
+                completeSourceModules.Add(moduleName);
+            }
+            completeSources.Add(moduleName, CompleteSourceFile.Create(file));
             importsByModule.Add(moduleName, imports);
             customSyntaxByModule.Add(moduleName, customSyntax);
         }
@@ -96,7 +120,9 @@ internal sealed partial class LeanSourceCatalog
         return new LeanSourceCatalog(
             declarations.ToImmutable(),
             importsByModule.ToImmutable(),
-            customSyntaxByModule.ToImmutable());
+            customSyntaxByModule.ToImmutable(),
+            completeSources.ToImmutable(),
+            completeSourceModules.ToImmutable());
     }
 
     internal static ImmutableArray<string> ParseFileImports(RepositoryFile file, bool includeImplicitInit = false)
@@ -141,6 +167,11 @@ internal sealed partial class LeanSourceCatalog
         RepoPath modulePath,
         ImmutableArray<FrozenDeclaration> recordedDeclarations)
     {
+        if (recordedDeclarations.IsDefaultOrEmpty)
+            throw new LeanSourceExtractionException($"Lean declaration inventory is unavailable for {modulePath.Value}.");
+        if (TryExtractCompleteSource(modulePath, recordedDeclarations, out var completeSource))
+            return completeSource;
+
         var moduleDeclarations = declarations
             .Where(declaration => declaration.Path == modulePath)
             .ToImmutableArray();
