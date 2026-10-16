@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95c4ebb8307e9a79b7d485b65d2186114eedaf8f5054d8c13e4532f42e0fb7e1
+  normalized_sha256: sha256:95c4ebb8307e9a79b7d485b65d2186114eedaf8f5054d8c13e4532f42e0fb7e1
+cas_ref: sha256:95c4ebb8307e9a79b7d485b65d2186114eedaf8f5054d8c13e4532f42e0fb7e1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段只证明前述遗漏父对修正式及全保留必要性。
+    previous_atom_id: 2f10704a1d76c0c9aa4f49b7735c6e096023e0d75629b58586e2e4bb324533cd
+    next_atom_id: 60a78f4b4b3eae05373bfeb786eef5bd2b1f4e6a1cdc79383da9491ac08d6c67

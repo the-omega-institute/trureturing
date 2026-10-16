@@ -44,11 +44,11 @@ public sealed class DigestionDecompositionPolicyTests
     }
 
     [Fact]
-    public void EnumeratedClaimsRequireDecomposition()
+    public void GovernedListDoesNotCreateIndependentClauseObligations()
     {
         var atom = Atom("**Verdict**:\n- first claim\n- second claim\n");
 
-        Assert.True(DigestionDecompositionPolicy.IsMultiClause(atom));
+        Assert.False(DigestionDecompositionPolicy.IsMultiClause(atom));
     }
 
     private static DigestionAtom Atom(string text)

@@ -1,0 +1,25 @@
+**Convention 8.3 (inherited depth-two endpoint).** [COK, §9][COK] records the credited ordinary supplier equality
+
+$$
+\Omega_2(w)=\beta_2(w)=J_2(w)
+=\max\{W-w(\alpha),W-w(\beta),w(\alpha)+w(\beta)+t\},
+$$
+
+where $W=\sum_xw(x)$ and $t$ is the maximum weight of a branch state. Its optimized endpoint $17/25$, with weights $(8,8,1,\ldots,1)/25$ on the eleven states, is inherited there from RCE/NCM/NPC. It is not a new numerical result of this volume. Exact acceptance by that older recursive-plus-range grammar does not establish positive conditional-kernel boundary acceptance.
+
+**Open problem 8.4 (joint completion and native optimizer-cofinality).** The credited native semantic identity is
+
+$$
+b_d=\min_{\mu\in\Delta(S_d)}\beta_d(\mu)=2^{-\sigma_d},
+\qquad
+\lambda=\sup_{d\ge1}2^{-d}\sigma_d.
+$$
+
+Theorem 2.3 gives $b_d\le a_d$, hence $-\log_2a_d\le\sigma_d$. Equality $a_d=b_d$ at general depth remains unproved. The exact support-preserving rational bridge closes the real/rational issue for this finite envelope; it gives no reverse native inequality.
+
+The missing relation is global compatibility of the local laws through shared actual owners, full guards, original joint weights and actual-tree zeros. A feasible local law or a closed-kernel solution need not extend to one actual network law. Even jointly realized local marginals need not have vanishing loss $\Delta(P)$ in (NWO.11); kernel relative-entropy and pointwise losses also refer to that same actual law. Any pressure equality argument must control the relevant losses on a common realization, rather than combine independently attainable marginal optima.
+
+The raw zero-free, influence, coupling and specified interpolation failures in [GDB, §§4–6][GDB] concern other mandatory premises, none used here. Its equal-neighborhood pressure separation in §8 permits a loose finite outer envelope such as $\Omega_d$ and does not refute its computability. The normalized perturbation kernels and softened seed or actual-tuple carriers in [SCP][SCP] differ from the conditional proof kernels $Q$ here. Their additive estimates do not bound support-varying $\Omega_d$; §4 therefore contradicts none of them. Strictly positive proof rows do not remove native compatibility zeros. Positivity, bounded incidence and finite enumeration supply no mixing theorem, width bound or effective native length cutoff.
+
+The all-size cofinal-verifier and effective length-tail obligations recorded in GDB/SCP remain open. No sharp native pressure or rate, general exact $M_1(D)$, efficient synthesis, implemented verifier, physical service theorem or empirical machine-learning claim is established. The credited interval $(1/8)\log_2(33/13)\le\lambda<3/16$ and $M_1(3)=4$ remain unchanged, as does the broader minimal-relations/internal-observer/mutual-recovery frontier.
+

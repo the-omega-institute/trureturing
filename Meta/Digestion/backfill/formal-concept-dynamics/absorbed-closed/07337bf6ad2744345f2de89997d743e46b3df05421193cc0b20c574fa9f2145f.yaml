@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:07337bf6ad2744345f2de89997d743e46b3df05421193cc0b20c574fa9f2145f
+  normalized_sha256: sha256:07337bf6ad2744345f2de89997d743e46b3df05421193cc0b20c574fa9f2145f
+cas_ref: sha256:07337bf6ad2744345f2de89997d743e46b3df05421193cc0b20c574fa9f2145f
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/DefectRelationMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity
+    target_statement_id: sha256:51f41e63b31fa99ec2de406408ce1154f1146b0d9f0e3e2ceb51cdd3fa100bf7
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ed1e947ab5c752fd7b7f743c2ea43b1ebe48fbb79bd8cacdf9ecc2692f59cca
+  normalized_sha256: sha256:0ed1e947ab5c752fd7b7f743c2ea43b1ebe48fbb79bd8cacdf9ecc2692f59cca
+cas_ref: sha256:0ed1e947ab5c752fd7b7f743c2ea43b1ebe48fbb79bd8cacdf9ecc2692f59cca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 31.11（整个测度的精确重建）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: f3bc280e8b108c29632375a32882216b00c4c22ee8c25e93354bb7772fe9361e
+    next_atom_id: 350f7ecaeb7c8ebcfc1aa03851bed2ad53d72a2f7465cd60b20afa7c79b42da5

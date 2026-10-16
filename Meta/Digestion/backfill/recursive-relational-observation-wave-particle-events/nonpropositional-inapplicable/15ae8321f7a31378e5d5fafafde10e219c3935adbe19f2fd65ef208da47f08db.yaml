@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15ae8321f7a31378e5d5fafafde10e219c3935adbe19f2fd65ef208da47f08db
+  normalized_sha256: sha256:15ae8321f7a31378e5d5fafafde10e219c3935adbe19f2fd65ef208da47f08db
+cas_ref: sha256:15ae8321f7a31378e5d5fafafde10e219c3935adbe19f2fd65ef208da47f08db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 169.1（续接响应映射）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: e924335d76d40205bfb0ed37d44c8d82bfd0b3d9fa85dbeaadf4daf0426f60cf
+    next_atom_id: 5127f43e411c98439551eb3e617f54e678978de597ef1f91b8d25683076c84c8

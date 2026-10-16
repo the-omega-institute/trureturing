@@ -76,6 +76,28 @@ internal sealed class QutritPerturbationAttainmentDocument : IScribeDocumentDefi
         Imp(And(Call("Matrix.IsHermitian",P),Eq(Mul(P,P),P),Eq(Call("Matrix.rank",P),n)),
             And(Call("APPT",Projector),PSInt(Projector),Eq(Trace(Projector),Int(1)),
                 Eq(Trace(Mul(Projector,Projector)),OfReal(Frac(Int(3),Mul(Int(8),CastN(n))))))))));
+    private static Formula FiniteIndex(Formula body, bool decidable = false) =>
+        All("I",Id("Type"),Seq(Bracket(Call("Fintype",Id("I"))),Sp,
+            decidable ? Seq(Bracket(Call("DecidableEq",Id("I"))),Sp,body) : body));
+    private static Formula Outer(Formula w) => Call("Matrix.vecMulVec",w,Star(w));
+    private static Formula DotNorm(Formula w) => Call("dotProduct",Star(w),w);
+    private static Formula ConjugateOuterStatement()
+    {
+        var a=Id("A");
+        var av=Call("Matrix.mulVec",a,v);
+        return FiniteIndex(All("A",Matrix(Id("I"),Id("I"),C),
+            All("v",Arrow(Id("I"),C),Eq(Mul(Mul(a,Outer(v)),Adj(a)),Outer(av)))));
+    }
+    private static Formula UnitaryNormStatement()
+    {
+        var u=Call("val",Id("U"));
+        return FiniteIndex(All("U",Call("unitaryGroup",Id("I"),C),
+            All("v",Arrow(Id("I"),C),Imp(Eq(DotNorm(v),Int(1)),
+                Eq(DotNorm(Call("Matrix.mulVec",u,v)),Int(1))))),true);
+    }
+    private static Formula OuterSquareStatement() => FiniteIndex(
+        All("v",Arrow(Id("I"),C),Imp(Eq(DotNorm(v),Int(1)),
+            Eq(Mul(Outer(v),Outer(v)),Outer(v)))));
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Explicit rank-one and projector perturbations attain the two candidate qutrit APPT purities.",
         H("Qutrit APPT attaining states"),Blocks(
@@ -86,6 +108,12 @@ internal sealed class QutritPerturbationAttainmentDocument : IScribeDocumentDefi
                 "The scalar coefficient is Complex.ofReal of a real quotient. The numeral one is the identity Matrix. The vector is indexed by Fin 3 × Fin n and star acts pointwise."),
             Desc("QutritPerturbationAttainment","rhoProjector","Projector perturbation",ProjectorDefinition(),
                 "The scalar is Complex.ofReal of the real quotient 1/(4n). This definition does not itself assume that P is an orthogonal projector."),
+            Desc("QutritPerturbationAttainment","conjugate_outer","Conjugating a rank-one outer product",ConjugateOuterStatement(),
+                "This dimension-independent identity is extracted from the original attainment proof. It identifies conjugation by an arbitrary square matrix with applying that matrix to the vector. The original qutrit attainment and the quadbit maximum proof reuse this same declaration.",DescribeRole.Theorem),
+            Desc("QutritPerturbationAttainment","unitary_vector_norm","A unitary preserves vector normalization",UnitaryNormStatement(),
+                "The complex dot product of the pointwise conjugate vector with the vector equals one. Coercion from unitaryGroup gives its matrix. This previously local helper is shared by the qutrit and quadbit attainment proofs.",DescribeRole.Theorem),
+            Desc("QutritPerturbationAttainment","pure_outer_square","A normalized outer product is idempotent",OuterSquareStatement(),
+                "A normalized complex vector determines an idempotent rank-one outer product on any finite index type. This is the original local proof exposed for reuse in the quadbit purity computation.",DescribeRole.Theorem),
             Desc("QutritPerturbationAttainment","pure_attainment","Normalized-vector attainment",PureStatement(),
                 "The normalization hypothesis is a complex equality. An explicit antisymmetric Gram complement makes the partial transpose positive under every global unitary; the normalized perturbation is positive, has trace one, and has the displayed complex trace-square.",DescribeRole.Theorem),
             Desc("QutritPerturbationAttainment","projector_attainment","Rank-n projector attainment",ProjectorStatement(),

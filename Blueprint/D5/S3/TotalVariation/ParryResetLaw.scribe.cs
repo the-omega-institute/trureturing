@@ -11,6 +11,22 @@ internal sealed class ParryResetLawDocument : IScribeDocumentDefinition
         H("The stationary signed Parry law"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("parryresetlaw-suffix-weight-succ"),
+                DeclarationHandle.Create(Prefix + "suffixWeight_succ"),
+                H("Finite suffix recurrence"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k:Nat, p:Real, j:Fin k and hj:j.val+1<k, suffixWeight k p j=p+p*suffixWeight k p (j.val+1). Splitting the finite geometric sum into its first term and tail proves the recurrence. It supports the stationary law and the right Perron weight of the original Reset beam trace."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("parryresetlaw-suffix-weight-last"),
+                DeclarationHandle.Create(Prefix + "suffixWeight_last"),
+                H("Last suffix"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every k:Nat, p:Real, j:Fin k and hj:not(j.val+1<k), suffixWeight k p j=p. The remaining finite sum has length one. This is the terminal case of the stationary and Perron recurrences."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("parryresetlaw-parry-stationary-law"),
                 DeclarationHandle.Create(Prefix + "parry_stationary_law"),
                 H("The stationary signed Parry law"),

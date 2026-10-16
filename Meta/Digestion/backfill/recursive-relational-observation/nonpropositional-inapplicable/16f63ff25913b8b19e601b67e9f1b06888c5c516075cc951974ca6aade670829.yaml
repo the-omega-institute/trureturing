@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16f63ff25913b8b19e601b67e9f1b06888c5c516075cc951974ca6aade670829
+  normalized_sha256: sha256:16f63ff25913b8b19e601b67e9f1b06888c5c516075cc951974ca6aade670829
+cas_ref: sha256:16f63ff25913b8b19e601b67e9f1b06888c5c516075cc951974ca6aade670829
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: theorem 45.3（有限核与共同细化）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 8f43c45976a9ecf12f12e3756d6e453b25f2d68f607250c84e14fb6c099a8b7b
+    next_atom_id: 30f85dc3f84b4cc314b7fd44046b62555a1dc46cc59e249cee37bf30d96a6299

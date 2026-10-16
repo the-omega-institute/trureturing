@@ -4,7 +4,67 @@
 
 A normalized quadratic output kernel has a common stopped catalog law exactly when its vector demand and common mass budget fit.
 
-**Definition 1.1 (Increasing query pairs).**
+**Definition 1.1 (Actual schedule alternatives).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Schedule`
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Schedule` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural L, Schedule L is the original sum of the empty schedule, one address in Fin L, and an increasing pair in Pair L. The actual table constructor uses these alternatives directly; no additional schedule model is introduced.
+
+**Definition 1.2 (Preselected terminal labels).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Labels`
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Labels` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every output type J, Labels J is J times J times J. The three coordinates store every terminal choice before replies; no new randomness is drawn at a visited cell.
+
+**Definition 1.3 (Stored terminal readout).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.label`
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.label` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every type J, terminal triple t in Labels J and cell k in Fin 3, label t k selects respectively the first, second or third stored output. The cell and table interfaces consume this readout.
+
+**Definition 1.4 (Chronological stopped cell).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.cell`
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.cell` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural L, schedule s in Schedule L and Boolean word b on Fin L, cell s b is zero for an empty schedule or the first queried false reply, one for singleton success or pair first success followed by second false, and two for pair success. The pair addresses are increasing, and the selected third terminal output need not be queried.
+
+**Definition 1.5 (Original entire catalog table).**
+
+Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.table`
+
+*Formalization.* `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.table` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural L, schedule s in Schedule L and terminal triple t in Labels(Fin(L+1)), table s t is the entire word-to-label function b mapped to label t (cell s b), with its original Catalog true L witness. StoppedResidualSynthesis.subsetTable and prefixTable use this constructor and its stored terminal semantics on their live derivation paths.
+
+**Definition 1.6 (Increasing query pairs).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Pair`
 
@@ -16,7 +76,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For every natural L, Pair L consists of two indices in Fin L with the first strictly smaller than the second. Index i denotes the original prime address i+1. These query indices are distinct from output labels in Fin(L+1), whose zero is the base mark.
 
-**Definition 1.2 (Output-label mass).**
+**Definition 1.7 (Output-label mass).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.mass`
 
@@ -28,7 +88,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For an arbitrary finite output type J and a real vector u on J, mass u is its sum over output labels. Signed coefficient vectors may have zero mass without being zero; the zero-mass argument used for terminal vectors requires coordinatewise nonnegativity.
 
-**Definition 1.3 (All-word quadratic expansion).**
+**Definition 1.8 (All-word quadratic expansion).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.polynomial`
 
@@ -40,7 +100,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For L, any output type J, a constant vector c, address-indexed vectors ell and increasing-pair vectors Q, polynomial at word b and label r is c(r), plus ell(i,r) for every true bit b(i), plus Q(i,j,r) for every pair of true bits. The theorem requires this expansion at every Boolean word, including every pattern with multiple zeros. Values at zero, unit and two-unit input words identify the coefficients; they do not replace the all-word expansion hypothesis.
 
-**Definition 1.4 (Outgoing negative pair demand).**
+**Definition 1.9 (Outgoing negative pair demand).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.outgoing`
 
@@ -52,7 +112,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For Q, address i and label r, outgoing Q i r is V_i(r): sum the coordinatewise negative parts of Q over increasing pairs whose first address is i. The sum runs over pairs, not labels. It is zero when there are no outgoing pairs.
 
-**Definition 1.5 (First-zero row demand).**
+**Definition 1.10 (First-zero row demand).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.rowDemand`
 
@@ -64,7 +124,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For ell and Q, rowDemand at i,r is h_i(r), the maximum of V_i(r)-ell_i(r) and zero. This demand must be accommodated by the unnormalized vector for schedules whose first query is i.
 
-**Definition 1.6 (Total vector demand).**
+**Definition 1.11 (Total vector demand).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.totalDemand`
 
@@ -76,7 +136,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For ell and Q, totalDemand at output label r is H(r), the sum of h_i(r) over addresses. Comparing H with c is coordinatewise; it does not authorize an independent probability budget for each label.
 
-**Definition 1.7 (One common scalar budget).**
+**Definition 1.12 (One common scalar budget).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.budget`
 
@@ -88,7 +148,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For L, a finite output type J, ell and Q, budget is beta: sum over addresses of the maximum of mass V_i and mass h_i. Each mass sums output labels. Under wordwise probability normalization, mass c is one and the signed masses of every ell_i and Q_ij are zero. These identities follow by evaluating the all-word expansion at zero, unit and two-unit inputs. Consequently mass h_i is at least mass V_i, each m_i equals mass h_i, and beta equals mass H. The scalar criterion beta at most one is retained exactly as in the source, although it follows from H at most c under this normalization.
 
-**Definition 1.8 (A law of entire catalog tables).**
+**Definition 1.13 (A law of entire catalog tables).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Realizes`
 
@@ -100,7 +160,7 @@ Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoef
 
 For every L and real kernel p on all Boolean words with output labels Fin(L+1), Realizes L p means that one PMF w on OriginalScheduledWitnessTables.Catalog true L has evaluated mass p(b,r) at every word and label. The same w is used for every b. Its outcomes are whole word-to-label functions represented by an empty, singleton or increasing pair schedule and a terminal table fixed before replies.
 
-**Theorem 1.9 (Original Theorem 109.1).**
+**Theorem 1.14 (Original Theorem 109.1).**
 
 Lean statement: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.stopped_coefficient_realization_iff`
 
@@ -130,13 +190,18 @@ The probability-vector allocation is distinct from scalar nonnegative query-in-e
 
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Labels`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Pair`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Realizes`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.Schedule`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.budget`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.cell`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.label`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.mass`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.outgoing`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.polynomial`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.rowDemand`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.stopped_coefficient_realization_iff`
+- Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.table`
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/StoppedCoefficientRealization.totalDemand`
 - Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalScheduledRealization](OriginalScheduledRealization.md)

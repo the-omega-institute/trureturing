@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f34faf67f87c3326bb0b03dbaeca43455ac7c668828fd85c9080d2970b508c70
+  normalized_sha256: sha256:f34faf67f87c3326bb0b03dbaeca43455ac7c668828fd85c9080d2970b508c70
+cas_ref: sha256:f34faf67f87c3326bb0b03dbaeca43455ac7c668828fd85c9080d2970b508c70
+coverage_gids:
+  - gid: D5/S3/Constants/Characterizations/ExponentialFlowUniqueness.exponential_flow_unique
+    target_statement_id: sha256:fdca27c851385c5166c2b43c862686870bc622daeb2afb7dc71b417e3da660d8
+receipts:
+  unresolved_subitems: []

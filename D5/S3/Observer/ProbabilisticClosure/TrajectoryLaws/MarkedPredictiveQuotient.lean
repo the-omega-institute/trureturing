@@ -50,7 +50,7 @@ def symbolMass (M : Bool → Matrix H H ℝ) (i : H) (x : Bool) : ℝ := ∑ j, 
 def successor (M : Bool → Matrix H H ℝ) (i : H) (x : Bool) : H :=
   if h : ∃ j, 0 < M x i j then Classical.choose h else i
 
-private theorem row_eq (M : Bool → Matrix H H ℝ)
+theorem row_eq (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M) (i j : H) (x : Bool) :
     M x i j = if j = successor M i x then symbolMass M i x else 0 := by
   by_cases h : ∃ k, 0 < M x i k
@@ -84,7 +84,7 @@ def futureSetoid (M : Bool → Matrix H H ℝ) : Setoid H :=
 abbrev FutureClass (M : Bool → Matrix H H ℝ) := Quotient (futureSetoid M)
 def classOf (M : Bool → Matrix H H ℝ) (i : H) : FutureClass M := Quotient.mk _ i
 
-private theorem future_step (M : Bool → Matrix H H ℝ)
+theorem future_step (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M)
     (i : H) (x : Bool) (n : ℕ) (w : Fin n → Bool) :
     futureMass M i (n + 1) (Fin.cons x w) =
@@ -119,11 +119,11 @@ def quotientMass (M : Bool → Matrix H H ℝ) (a : FutureClass M) (x : Bool) : 
 def quotientSuccessor (M : Bool → Matrix H H ℝ) (a : FutureClass M) (x : Bool) :
     FutureClass M := classOf M (successor M a.out x)
 
-private theorem quotient_mass_mk (M : Bool → Matrix H H ℝ) (i : H) (x : Bool) :
+theorem quotient_mass_mk (M : Bool → Matrix H H ℝ) (i : H) (x : Bool) :
     quotientMass M (classOf M i) x = symbolMass M i x :=
   same_symbol M (Quotient.exact (Quotient.out_eq (classOf M i))) x
 
-private theorem quotient_successor_mk (M : Bool → Matrix H H ℝ)
+theorem quotient_successor_mk (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M)
     (i : H) (x : Bool) (hp : symbolMass M i x ≠ 0) :
     quotientSuccessor M (classOf M i) x = classOf M (successor M i x) := by
@@ -132,7 +132,7 @@ private theorem quotient_successor_mk (M : Bool → Matrix H H ℝ)
 
 open UnifilarPairSurvival
 
-private theorem word_quotient (M : Bool → Matrix H H ℝ)
+theorem word_quotient (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M)
     (n : ℕ) (i : H) (w : Fin n → Bool) (a : FutureClass M) :
     (if classOf M (endpoint (successor M) n i w) = a
@@ -158,11 +158,11 @@ def trajectory (δ : H → Bool → H) : (n : ℕ) → H → (Fin n → Bool) �
   | n + 1, i, w => Fin.cons i (trajectory δ n (δ i (w 0)) (Fin.tail w))
 
 omit [Fintype H] in
-private theorem trajectory_first (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
+theorem trajectory_first (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
     trajectory δ n i w 0 = i := by cases n <;> simp [trajectory]
 
 omit [Fintype H] in
-private theorem trajectory_last (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
+theorem trajectory_last (δ : H → Bool → H) (n : ℕ) (i : H) (w : Fin n → Bool) :
     trajectory δ n i w (Fin.last n) = endpoint δ n i w := by
   induction n generalizing i with
   | zero => rfl
@@ -175,7 +175,7 @@ theorem path_step (M : Bool → Matrix H H ℝ) (n : ℕ)
       pathMass M n (Fin.tail h) (Fin.tail w) := by
   simp [pathMass, Fin.prod_univ_succ, Fin.tail, Fin.castSucc_succ]
 
-private theorem path_support (M : Bool → Matrix H H ℝ)
+theorem path_support (M : Bool → Matrix H H ℝ)
     (hn : ∀ x i j, 0 ≤ M x i j) (hu : RowUnifilar M)
     (n : ℕ) (i : H) (h : Fin n → H) (w : Fin n → Bool) :
     pathMass M n (Fin.cons i h) w =

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:29da481a3eb60b79407491edb813dbdea9e5f6fd7b601d108e897f82800df176
+  normalized_sha256: sha256:29da481a3eb60b79407491edb813dbdea9e5f6fd7b601d108e897f82800df176
+cas_ref: sha256:29da481a3eb60b79407491edb813dbdea9e5f6fd7b601d108e897f82800df176
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 153.1（状态值截止响应）仅引入名称、记号或相应谓词的定义条件，不断言该条件成立或另给性质命题。
+    previous_atom_id: ff3e1c9a53d34dedc09f736a735a71c3a9753e5e9c97bca4f8ba1e69d3b903ea
+    next_atom_id: 7deaf2819f6d70a32f2e00947a4bae13eea397952c930437f2df3ee03273d9eb

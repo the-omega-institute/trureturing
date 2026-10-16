@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8fa9af3208df5110520bab3ec2bac20df56f1096b1400f1175f9e8d6829a304
+  normalized_sha256: sha256:e8fa9af3208df5110520bab3ec2bac20df56f1096b1400f1175f9e8d6829a304
+cas_ref: sha256:e8fa9af3208df5110520bab3ec2bac20df56f1096b1400f1175f9e8d6829a304
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对奇素数 $p\ne5$，令），没有另行断言这些对象的性质。
+    previous_atom_id: c62f32bf85f839b79e159436e15a572aabaaa2e719af8311fe7922f20e4289ff
+    next_atom_id: c2796beaaa802b73aac5d7da4be2cb8a128265d8a2b96e2be977c048ccc6d06d

@@ -199,7 +199,7 @@ private theorem readout_walk (q : Address) (s : Option (FreeMagma Bool)) :
         | of a => rfl
         | mul l r => cases b <;> rfl
 
-private theorem readout_prim : Primrec₂ readout := by
+theorem readout_prim : Primrec₂ readout := by
   have h : Primrec (fun p : Address × FreeMagma Bool => p.1.foldl walkStep (some p.2)) :=
     Primrec.list_foldl Primrec.fst (Primrec.option_some.comp Primrec.snd)
       (walk_step_prim.comp (Primrec.fst.comp Primrec.snd) (Primrec.snd.comp Primrec.snd)).to₂
@@ -207,7 +207,7 @@ private theorem readout_prim : Primrec₂ readout := by
   exact (Primrec.option_getD.comp hm (Primrec.const Reply.absent)).of_eq
     (fun p => readout_walk p.1 (some p.2))
 
-private theorem substitution_prim : Primrec GenealogicalFiberTransport.substitution := by
+theorem substitution_prim : Primrec GenealogicalFiberTransport.substitution := by
   exact (uniform_tree_fold
     (fun _ : Unit => fun b : Bool => if b then FreeMagma.of false else .mul (.of false) (.of true))
     (fun _ : Unit => fun p : FreeMagma Bool × FreeMagma Bool => p.1.mul p.2)
