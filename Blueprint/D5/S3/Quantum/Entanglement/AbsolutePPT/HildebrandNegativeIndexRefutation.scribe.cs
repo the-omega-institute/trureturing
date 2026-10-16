@@ -115,7 +115,10 @@ internal sealed class HildebrandNegativeIndexRefutationDocument : IScribeDocumen
                             + "Its negative therefore has two strictly negative eigenvalues. "
                             + "A compression BᴴLB cannot have more negative eigenvalues than L, "
                             + "so L has at least two. This contradicts the asserted bound of one."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-klco-2026-hildebrand-negative-index-persistence"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
