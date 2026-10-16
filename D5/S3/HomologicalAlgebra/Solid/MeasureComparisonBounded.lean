@@ -33,6 +33,7 @@ realization nor the invertibility of the measure comparison is assumed.
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
+set_option synthInstance.maxHeartbeats 100000
 open CategoryTheory Limits LightProfinite OnePoint MonoidalCategory
 
 namespace LightCondensed.Solid

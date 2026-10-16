@@ -26,7 +26,7 @@ open IntProof
 
 local instance integerQuotient_proj_epi (S : LightProfinite) : Epi (P_proj ▷ freeOn S) := by
   rw [← tensorCokerIsoInt_π_inv (C := freeOn S)]
-  infer_instance
+  exact epi_comp _ _
 
 def integerMeasureQuotient : LightCondAb := cokernel boundedIntegerMeasuresInclusion
 
@@ -273,7 +273,7 @@ open IntProof
 
 local instance (S : LightProfinite) : Epi (P_proj ▷ freeOn S) := by
   rw [← tensorCokerIsoInt_π_inv (C := freeOn S)]
-  infer_instance
+  exact epi_comp _ _
 
 local instance : Epi (P ◁ integerMeasureQuotientπ) := by
   change Epi ((tensorLeft P).map (cokernel.π boundedIntegerMeasuresInclusion))
