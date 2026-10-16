@@ -8,7 +8,7 @@
 
 /- result
    proof_shape: content
-   escape_witness: none
+   escape_witness: AudenaertBinaryHolevoBound.log_hasDerivAt_affine_of_lower_bound
    admission_basis: open-problem-resolution (#16965; Proved)
    Direct frozen dependencies (declaration identities at the synchronized base):
      D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm
@@ -47,7 +47,8 @@
        statement_id: sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
    The published owner FinitePathDynamics.sum_succ_sub_castSucc is also an unfinished
-   audit target in #17312; its public declaration identity awaits the Stage B report.
+   audit target in #17312; its declaration statement_id is
+   sha256:4f021acd0150993eb37275dae31f1933287bfd4483ef95a2b47d9921dffc8a79.
    IsState and vonNeumann2 are moved unchanged from the frozen I owner
    QuantumTriangularJensenShannonRefutation; that module imports this G owner.
    The existing IsDensity predicate in TraceExpExponentialConvexityRefutation

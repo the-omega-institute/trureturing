@@ -18,6 +18,17 @@
      logarithmic directional-derivative identity was found in the pinned mathlib.
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
+   D5.S3.Divergence.LogDerivTrace.logDeriv_integrable
+   declaration statement_id: sha256:e0049d322914bed2073f93b8a16f12eb31029a0ab2fc6cb031c8d21045d1c717.
+   D5.S3.Divergence.LogDerivTrace.pairKernel_integrable
+   declaration statement_id: sha256:5400906a2d06cd169987128efc793be25dfab0eaf043664dc1d3ccdc260169ea.
+   D5.S3.Divergence.LogDerivTrace.resolvent_eq_spectral
+   declaration statement_id: sha256:32418c28ea14eea0ab3014b59c0f7eca014560cee394906ca2dc45ba82bdc469.
+   D5.S3.Divergence.LogDerivTrace.scalarKernel_integrable
+   declaration statement_id: sha256:3be81160655de3915e606533e950d885f685f9e2192f465d0732f3af7a549b8e.
+-/
+
 import Mathlib
 import Mathlib.LinearAlgebra.Matrix.Bilinear
 

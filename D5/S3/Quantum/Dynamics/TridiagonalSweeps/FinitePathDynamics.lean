@@ -25,6 +25,11 @@ Direct frozen dependencies: none (pinned Mathlib only).
 The statements hold for arbitrary finite paths; utility is none.
 -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17312.
+   D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics.sum_succ_sub_castSucc
+   declaration statement_id: sha256:4f021acd0150993eb37275dae31f1933287bfd4483ef95a2b47d9921dffc8a79.
+-/
+
 import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 import Mathlib.Analysis.Matrix.Normed
 
