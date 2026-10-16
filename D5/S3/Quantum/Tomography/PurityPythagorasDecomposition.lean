@@ -288,22 +288,15 @@ theorem traceZero_context_pythagoras
     exact measurement_inner_residualVector context hRecord hOrtho state state l
   have hNormFinset : ∀ s : Finset L,
       ‖∑ l ∈ s, component l‖ ^ 2 = ∑ l ∈ s, ‖component l‖ ^ 2 := by
+    let range := fun l => LinearMap.range (P l)
+    have hFamily : OrthogonalFamily ℝ (fun l => range l)
+        (fun l => (range l).subtypeₗᵢ) := by
+      rintro l k hlk ⟨_, x, rfl⟩ ⟨_, y, rfl⟩
+      exact hOrtho l k hlk x y
     intro s
-    induction s using Finset.induction_on with
-    | empty => simp
-    | @insert a s ha ih =>
-        have hInner : inner ℝ (component a) (∑ l ∈ s, component l) = 0 := by
-          rw [inner_sum s component (component a)]
-          apply Finset.sum_eq_zero
-          intro b hb
-          exact hOrtho a b (fun h => ha (h ▸ hb)) state state
-        rw [Finset.sum_insert ha, Finset.sum_insert ha]
-        calc
-          ‖component a + ∑ l ∈ s, component l‖ ^ 2 =
-              ‖component a‖ ^ 2 + ‖∑ l ∈ s, component l‖ ^ 2 := by
-            simpa only [pow_two] using
-              norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ hInner
-          _ = ‖component a‖ ^ 2 + ∑ l ∈ s, ‖component l‖ ^ 2 := by rw [ih]
+    simpa only [Submodule.coe_subtypeₗᵢ, Submodule.subtype_apply,
+      Submodule.coe_norm, Submodule.coe_sum] using
+      hFamily.norm_sum (fun l => ⟨P l state, ⟨state, rfl⟩⟩) s
   have hVisibleNorm :
       ‖visible‖ ^ 2 = ∑ l, ‖component l‖ ^ 2 := by
     simpa only [visible] using hNormFinset Finset.univ
