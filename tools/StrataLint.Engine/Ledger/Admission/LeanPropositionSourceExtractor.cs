@@ -223,6 +223,9 @@ internal sealed partial class LeanSourceCatalog
             AppendField(output, "root-key", root.Recorded.DeclarationNameKey);
             AppendField(output, "root-kind", root.Recorded.Kind);
             AppendField(output, "root-name", root.Source.FullName);
+            AppendField(output, "root-owner-path", root.Source.Path.Value);
+            if (root.Source.Path != modulePath)
+                AppendTokens(output, moduleDeclarations[0].AmbientTokens);
             AppendTokens(output, root.Source.AmbientTokens);
             AppendTokens(output, root.Source.SemanticTokens);
         }
@@ -252,7 +255,7 @@ internal sealed partial class LeanSourceCatalog
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(output.ToString()));
     }
 
-    private static LeanSourceDeclaration ResolveRecordedDeclaration(
+    private LeanSourceDeclaration ResolveRecordedDeclaration(
         ImmutableArray<LeanSourceDeclaration> moduleDeclarations,
         FrozenDeclaration recorded)
     {
@@ -263,9 +266,14 @@ internal sealed partial class LeanSourceCatalog
                 $"Lean declaration name key cannot be resolved: {recorded.DeclarationNameKey}.");
         }
 
-        var matches = moduleDeclarations
-            .Where(declaration => NameKeyCanReferTo(recordedSegments, declaration.FullName))
-            .OrderByDescending(static declaration => declaration.FullName.Length)
+        var exact = ResolveExactRecordedSources(moduleDeclarations[0], recordedSegments).ToImmutableArray();
+        if (exact.IsEmpty && recordedSegments[^1] == "eq_def")
+            throw new LeanSourceExtractionException(
+                $"Lean equation source owner cannot be resolved: {recorded.DeclarationNameKey}.");
+        var candidates = exact.IsEmpty
+            ? moduleDeclarations.Where(declaration => NameKeyCanReferTo(recordedSegments, declaration.FullName))
+            : exact;
+        var matches = candidates.OrderByDescending(static declaration => declaration.FullName.Length)
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
@@ -296,6 +304,27 @@ internal sealed partial class LeanSourceCatalog
         }
 
         return selected;
+    }
+
+    private IEnumerable<LeanSourceDeclaration> ResolveExactRecordedSources(
+        LeanSourceDeclaration owner,
+        ImmutableArray<string> recordedSegments)
+    {
+        // A generated equation belongs to the complete named definition before eq_def.
+        // Arbitrary name-key substrings cannot establish an imported source owner.
+        var lengths = recordedSegments[^1] == "eq_def"
+            ? new[] { recordedSegments.Length, recordedSegments.Length - 1 }
+            : new[] { recordedSegments.Length };
+        foreach (var length in lengths)
+        {
+            var sourceSegments = recordedSegments[..length];
+            var fullName = string.Join('.', sourceSegments);
+            if (!byFullName.TryGetValue(fullName, out var matches)) continue;
+            foreach (var match in matches)
+                if (sourceSegments.SequenceEqual(FullNameSegments(match.FullName))
+                    && IsImported(owner, match))
+                    yield return match;
+        }
     }
 
     private static bool RecordedKindMatchesSource(string recordedKind, string sourceKind) =>
