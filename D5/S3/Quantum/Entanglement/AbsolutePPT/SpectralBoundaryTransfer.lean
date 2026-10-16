@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-spectrum-transfer)
    anchors: []
    utility: none
-   digest: Ordered rank-three boundary spectra transfer purity bounds by actual middle insertion and deletion. -/
+   digest: Extremal observers transfer purity bounds under explicit caps. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
 import Mathlib.Algebra.BigOperators.Fin
@@ -37,113 +37,197 @@ def SpectralBound (n : ℕ) : Prop :=
 
 private def middle (n : ℕ) : Fin (n + 9) := ⟨n + 2, by omega⟩
 
-private def insertOne (n : ℕ) (l : Fin (n + 9) → ℝ) : Fin (n + 10) → ℝ :=
-  Fin.insertNth ⟨n + 2, by omega⟩ (l (middle n)) l
+/-- Actual first `p` and last `q` coordinates of a tuple of length `N`. -/
+def observerIndex (p q N : ℕ) (h : p + q ≤ N) (i : Fin (p + q)) : Fin N :=
+  if hi : i.val < p then ⟨i.val, by omega⟩
+  else ⟨N - (p + q) + i.val, by omega⟩
 
-private def deleteOne (n : ℕ) (l : Fin (n + 10) → ℝ) : Fin (n + 9) → ℝ :=
-  Fin.removeNth (middle (n + 1)) l
+def observerValues (p q N : ℕ) (h : p + q ≤ N) (l : Fin N → ℝ) :
+    Fin (p + q) → ℝ := fun i => l (observerIndex p q N h i)
 
-private theorem insertOne_order (n : ℕ) (l : Fin (n + 9) → ℝ)
-    (ho : Antitone l) : Antitone (insertOne n l) := by
-  have hmon : @Monotone (Fin (n + 10)) ℝᵒᵈ _ _
-      (Fin.insertNth (⟨n + 2, by omega⟩ : Fin (n + 10)) (l (middle n)) l) := by
-    convert (Fin.insertNth_monotone (α := ℝᵒᵈ)
-      (f := fun i => (l i : ℝᵒᵈ)) ho (⟨n + 1, by omega⟩ : Fin (n + 8))
-      (l (middle n)) (ho (by change n + 1 ≤ n + 2; omega)) le_rfl) using 1
-    congr 1
-  exact hmon
+/-- Positive division preserves the entire boundary condition in both directions. -/
+def PositiveScaleInvariant {d : ℕ} (C : (Fin d → ℝ) → Prop) : Prop :=
+  ∀ (b : Fin d → ℝ) (s : ℝ), 0 < s → (C (fun i => b i / s) ↔ C b)
 
-private theorem insertOne_nonneg (n : ℕ) (l : Fin (n + 9) → ℝ)
-    (hn : ∀ i, 0 ≤ l i) : ∀ i, 0 ≤ insertOne n l i := by
+/-- Universal purity bound on the specified actual extremal observer. -/
+def ObserverBound (p q : ℕ) (C : (Fin (p + q) → ℝ) → Prop) (N : ℕ) : Prop :=
+  ∀ (h : p + q ≤ N) (l : Fin N → ℝ), Antitone l → (∀ i, 0 ≤ l i) →
+    (∑ i, l i) = 1 → C (observerValues p q N h l) →
+      ∑ i, (l i) ^ 2 ≤ purityBound N
+
+private def cut (p q n : ℕ) : Fin (p + q + n + 1) := ⟨p + n, by omega⟩
+
+private def insertOne (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ) :
+    Fin (p + q + n + 2) → ℝ :=
+  Fin.insertNth ⟨p + n, by omega⟩ (l (cut p q n)) l
+
+private def deleteOne (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ) :
+    Fin (p + q + n) → ℝ := Fin.removeNth (cut p q n) l
+
+private theorem insertOne_order (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (ho : Antitone l) : Antitone (insertOne p q n l) := by
+  by_cases hz : p + n = 0
+  · have hi : (⟨p + n, by omega⟩ : Fin (p + q + n + 2)) = 0 := Fin.ext hz
+    have hj : cut p q n = 0 := Fin.ext hz
+    have hm : @Monotone (Fin (p + q + n + 2)) ℝᵒᵈ _ _
+        (Fin.insertNth 0 (l 0) l) :=
+      Fin.insertNth_zero_monotone (α := ℝᵒᵈ) ho (l 0) le_rfl
+    change Antitone (Fin.insertNth _ _ _)
+    rw [hi, hj]
+    exact hm
+  · have hmon : @Monotone (Fin (p + q + n + 2)) ℝᵒᵈ _ _
+        (Fin.insertNth (⟨p + n, by omega⟩ : Fin (p + q + n + 2))
+          (l (cut p q n)) l) := by
+      convert (Fin.insertNth_monotone (α := ℝᵒᵈ)
+        (f := fun i => (l i : ℝᵒᵈ)) ho
+        (⟨p + n - 1, by omega⟩ : Fin (p + q + n)) (l (cut p q n))
+        (ho (by change p + n - 1 ≤ p + n; omega))
+        (by apply le_of_eq; congr 1; apply Fin.ext; dsimp [cut]; omega)) using 1
+      congr 1
+      apply Fin.ext
+      simp
+      omega
+    exact hmon
+
+private theorem insertOne_nonneg (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (hn : ∀ i, 0 ≤ l i) : ∀ i, 0 ≤ insertOne p q n l i := by
   intro i
-  induction i using Fin.succAboveCases (⟨n + 2, by omega⟩ : Fin (n + 10))
-  · simpa [insertOne] using hn (middle n)
+  induction i using Fin.succAboveCases (⟨p + n, by omega⟩ : Fin (p + q + n + 2))
+  · simpa [insertOne] using hn (cut p q n)
   · simpa [insertOne] using hn _
 
-private theorem insertOne_middle (n : ℕ) (l : Fin (n + 9) → ℝ) :
-    insertOne n l (middle (n + 1)) = l (middle n) := by
-  have hi : middle (n + 1) =
-      (⟨n + 2, by omega⟩ : Fin (n + 10)).succAbove (middle n) := by
+private theorem insertOne_cut (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ) :
+    insertOne p q n l (cut p q (n + 1)) = l (cut p q n) := by
+  have hi : cut p q (n + 1) =
+      (⟨p + n, by omega⟩ : Fin (p + q + n + 2)).succAbove (cut p q n) := by
     apply Fin.ext
-    simp [middle, Fin.succAbove]
+    simp [cut, Fin.succAbove]
+    omega
   rw [hi]
   exact Fin.insertNth_apply_succAbove _ _ _ _
 
-private theorem insertOne_boundary (n : ℕ) (hn : 1 ≤ n)
-    (l : Fin (n + 9) → ℝ) :
-    boundaryValues (n + 1) (insertOne n l) = boundaryValues n l := by
-  funext q
-  have hi : boundaryIndex (n + 1) q =
-      (⟨n + 2, by omega⟩ : Fin (n + 10)).succAbove (boundaryIndex n q) := by
+private theorem insertOne_boundary (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ) :
+    observerValues p q (p + q + n + 2) (by omega) (insertOne p q n l) =
+      observerValues p q (p + q + n + 1) (by omega) l := by
+  funext i
+  have hi : observerIndex p q (p + q + n + 2) (by omega) i =
+      (⟨p + n, by omega⟩ : Fin (p + q + n + 2)).succAbove
+        (observerIndex p q (p + q + n + 1) (by omega) i) := by
     apply Fin.ext
-    dsimp [boundaryIndex, Fin.succAbove]
+    dsimp [observerIndex, Fin.succAbove]
     split_ifs <;> simp_all <;> omega
-  change insertOne n l (boundaryIndex (n + 1) q) = l (boundaryIndex n q)
+  change insertOne p q n l _ = l _
   rw [hi]
   exact Fin.insertNth_apply_succAbove _ _ _ _
 
-private theorem sum_insertOne (n : ℕ) (l : Fin (n + 9) → ℝ) (F : ℝ → ℝ) :
-    ∑ i, F (insertOne n l i) = F (l (middle n)) + ∑ i, F (l i) := by
-  rw [Fin.sum_univ_succAbove _ (⟨n + 2, by omega⟩ : Fin (n + 10))]
+private theorem sum_insertOne (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (F : ℝ → ℝ) :
+    ∑ i, F (insertOne p q n l i) = F (l (cut p q n)) + ∑ i, F (l i) := by
+  rw [Fin.sum_univ_succAbove _ (⟨p + n, by omega⟩ : Fin (p + q + n + 2))]
   simp [insertOne]
 
-private theorem insert_copies (a n : ℕ) (hn : 1 ≤ n)
-    (l : Fin (n + 9) → ℝ) (ho : Antitone l) (hp : ∀ i, 0 ≤ l i) :
-    ∃ v : Fin (n + 9 + a) → ℝ, Antitone v ∧ (∀ i, 0 ≤ v i) ∧
-      boundaryValues (n + a) (fun i => v (Fin.cast (by omega) i)) = boundaryValues n l ∧
-      (∑ i, v i) = (∑ i, l i) + (a : ℝ) * l (middle n) ∧
-      (∑ i, (v i) ^ 2) = (∑ i, (l i) ^ 2) + (a : ℝ) * (l (middle n)) ^ 2 := by
+private theorem insert_copies (a p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (ho : Antitone l) (hp : ∀ i, 0 ≤ l i) :
+    ∃ v : Fin (p + q + n + 1 + a) → ℝ, Antitone v ∧ (∀ i, 0 ≤ v i) ∧
+      observerValues p q (p + q + n + 1 + a) (by omega) v =
+        observerValues p q (p + q + n + 1) (by omega) l ∧
+      (∑ i, v i) = (∑ i, l i) + (a : ℝ) * l (cut p q n) ∧
+      (∑ i, (v i) ^ 2) = (∑ i, (l i) ^ 2) + (a : ℝ) * (l (cut p q n)) ^ 2 := by
   induction a generalizing n with
-  | zero =>
-      refine ⟨l, ho, hp, ?_, ?_, ?_⟩ <;> simp
+  | zero => refine ⟨l, ho, hp, ?_, ?_, ?_⟩ <;> simp
   | succ a ih =>
-      obtain ⟨v, hvo, hvp, hvb, hvs, hvq⟩ := ih (n + 1) (by omega)
-        (insertOne n l) (insertOne_order n l ho) (insertOne_nonneg n l hp)
-      have hdim : n + 1 + 9 + a = n + 9 + (a + 1) := by omega
-      let w : Fin (n + 9 + (a + 1)) → ℝ := fun i => v (Fin.cast hdim.symm i)
-      have hwF (F : ℝ → ℝ) : (∑ i, F (w i)) = ∑ i, F (v i) := by
-        exact Fin.sum_congr' (fun i => F (v i)) hdim.symm
+      obtain ⟨v, hvo, hvp, hvb, hvs, hvq⟩ := ih (n + 1)
+        (insertOne p q n l) (insertOne_order p q n l ho) (insertOne_nonneg p q n l hp)
+      have hdim : p + q + (n + 1) + 1 + a = p + q + n + 1 + (a + 1) := by omega
+      let w : Fin (p + q + n + 1 + (a + 1)) → ℝ := fun i => v (Fin.cast hdim.symm i)
+      have hwF (F : ℝ → ℝ) : (∑ i, F (w i)) = ∑ i, F (v i) :=
+        Fin.sum_congr' (fun i => F (v i)) hdim.symm
       refine ⟨w, ?_, ?_, ?_, ?_, ?_⟩
-      · intro i j hij
-        exact hvo (by exact hij)
+      · intro i j hij; exact hvo (by exact hij)
       · intro i; exact hvp _
-      · have hb := insertOne_boundary n hn l
-        funext q
-        have h := congrFun (hvb.trans hb) q
+      · have hb := insertOne_boundary p q n l
+        funext i
+        have h := congrFun (hvb.trans hb) i
         change v _ = _ at h
         change v _ = _
         convert h using 1
         congr 1
         apply Fin.ext
-        simp only [boundaryIndex, Fin.val_cast]
+        simp only [observerIndex, Fin.val_cast]
         split_ifs <;> simp_all <;> omega
       · have hw := hwF id
         simp only [id_eq] at hw
-        have hi := sum_insertOne n l id
+        have hi := sum_insertOne p q n l id
         simp only [id_eq] at hi
-        rw [hw, hvs, hi, insertOne_middle]
+        rw [hw, hvs]
+        change (∑ i : Fin (p + q + n + 2), insertOne p q n l i) +
+          (a : ℝ) * insertOne p q n l (cut p q (n + 1)) = _
+        rw [hi, insertOne_cut]
         push_cast
         ring
-      · rw [hwF (fun x => x ^ 2), hvq, sum_insertOne n l (fun x => x ^ 2), insertOne_middle]
+      · rw [hwF (fun x => x ^ 2), hvq]
+        change (∑ i : Fin (p + q + n + 2), (insertOne p q n l i) ^ 2) +
+          (a : ℝ) * (insertOne p q n l (cut p q (n + 1))) ^ 2 = _
+        rw [sum_insertOne p q n l (fun x => x ^ 2), insertOne_cut]
         push_cast
         ring
 
-private theorem deleteOne_boundary (n : ℕ) (l : Fin (n + 10) → ℝ) :
-    boundaryValues n (deleteOne n l) = boundaryValues (n + 1) l := by
-  funext q
-  change l ((middle (n + 1)).succAbove (boundaryIndex n q)) =
-    l (boundaryIndex (n + 1) q)
+private theorem deleteOne_boundary (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ) :
+    observerValues p q (p + q + n) (by omega) (deleteOne p q n l) =
+      observerValues p q (p + q + n + 1) (by omega) l := by
+  funext i
+  change l ((cut p q n).succAbove (observerIndex p q (p + q + n) (by omega) i)) = l _
   congr 1
   apply Fin.ext
-  dsimp [middle, boundaryIndex, Fin.succAbove]
+  dsimp [cut, observerIndex, Fin.succAbove]
   split_ifs <;> simp_all <;> omega
 
-private theorem sum_deleteOne (n : ℕ) (l : Fin (n + 10) → ℝ) (F : ℝ → ℝ) :
-    F (l (middle (n + 1))) + ∑ i, F (deleteOne n l i) = ∑ i, F (l i) := by
-  exact Fin.add_sum_removeNth (middle (n + 1)) (fun i => F (l i))
+private theorem sum_deleteOne (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (F : ℝ → ℝ) :
+    F (l (cut p q n)) + ∑ i, F (deleteOne p q n l i) = ∑ i, F (l i) :=
+  Fin.add_sum_removeNth (cut p q n) (fun i => F (l i))
 
-private theorem boundary_div (n : ℕ) (l : Fin (n + 9) → ℝ) (s : ℝ) :
-    boundaryValues n (fun i => l i / s) = fun q => boundaryValues n l q / s := rfl
+private theorem observer_unnormalized (p q N : ℕ)
+    (C : (Fin (p + q) → ℝ) → Prop) (hscale : PositiveScaleInvariant C)
+    (hb : ObserverBound p q C N) (h : p + q ≤ N)
+    (l : Fin N → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i)
+    (hs : 0 < ∑ i, l i) (hc : C (observerValues p q N h l)) :
+    ∑ i, (l i) ^ 2 ≤ purityBound N * (∑ i, l i) ^ 2 := by
+  let s := ∑ i, l i
+  have hs' : 0 < s := hs
+  have hp := hb h (fun i => l i / s)
+    (fun i j hij => div_le_div_of_nonneg_right (ho hij) hs'.le)
+    (fun i => div_nonneg (hn i) hs'.le)
+    (by rw [← Finset.sum_div]; exact div_self hs'.ne')
+    ((hscale (observerValues p q N h l) s hs').mpr hc)
+  simp_rw [div_pow] at hp
+  rw [← Finset.sum_div] at hp
+  exact (div_le_iff₀ (sq_pos_of_pos hs')).mp hp
+
+private theorem observer_mass_cap (p q n : ℕ) (l : Fin (p + q + n + 1) → ℝ)
+    (ho : Antitone l) (ht : ∑ i, l i = 1)
+    (hbalance : (∑ i : Fin p, l ⟨i.val, by omega⟩) ≤
+      ∑ i : Fin q, l ⟨p + n + 1 + i.val, by omega⟩) :
+    ((p + q + n + 1 : ℕ) - ((q : ℝ) - p)) * l (cut p q n) ≤ 1 := by
+  let t := l (cut p q n)
+  have htop : (p : ℝ) * t ≤ ∑ i : Fin p, l ⟨i.val, by omega⟩ := by
+    calc
+      _ = ∑ _i : Fin p, t := by simp
+      _ ≤ _ := Finset.sum_le_sum fun i _ => ho (by change i.val ≤ p + n; omega)
+  have hprefix : ((p + n + 1 : ℕ) : ℝ) * t ≤
+      ∑ i : Fin (p + n + 1), l ⟨i.val, by omega⟩ := by
+    calc
+      _ = ∑ _i : Fin (p + n + 1), t := by simp
+      _ ≤ _ := Finset.sum_le_sum fun i _ => ho (by change i.val ≤ p + n; omega)
+  have htotal : (∑ i : Fin (p + n + 1 + q), l ⟨i.val, by omega⟩) = 1 := by
+    convert ht using 1
+    exact Fin.sum_congr' l (by omega)
+  rw [Fin.sum_univ_add] at htotal
+  change (∑ i : Fin (p + n + 1), l ⟨i.val, by omega⟩) +
+    (∑ i : Fin q, l ⟨p + n + 1 + i.val, by omega⟩) = 1 at htotal
+  push_cast at hprefix ⊢
+  dsimp [t] at htop hprefix
+  linarith
 
 private theorem K1_div (b : Fin 9 → ℝ) (s : ℝ) :
     K1 (fun q => b q / s) = (1 / s) • K1 b := by
@@ -155,28 +239,10 @@ private theorem K2_div (b : Fin 9 → ℝ) (s : ℝ) :
   ext i j
   fin_cases i <;> fin_cases j <;> simp [K2, Matrix.smul_apply] <;> ring
 
-private theorem unnormalized_bound (n : ℕ) (hb : SpectralBound n)
-    (l : Fin (n + 9) → ℝ) (ho : Antitone l) (hn : ∀ i, 0 ≤ l i)
-    (hs : 0 < ∑ i, l i) (h1 : (K1 (boundaryValues n l)).PosSemidef)
-    (h2 : (K2 (boundaryValues n l)).PosSemidef) :
-    ∑ i, (l i) ^ 2 ≤ purityBound (n + 9) * (∑ i, l i) ^ 2 := by
-  let s := ∑ i, l i
-  have hs' : 0 < s := hs
-  have hp := hb (fun i => l i / s)
-    (fun i j hij => div_le_div_of_nonneg_right (ho hij) hs'.le)
-    (fun i => div_nonneg (hn i) hs'.le)
-    (by rw [← Finset.sum_div]; exact div_self hs'.ne')
-    (by rw [boundary_div, K1_div]; exact h1.smul (by positivity))
-    (by rw [boundary_div, K2_div]; exact h2.smul (by positivity))
-  simp_rw [div_pow] at hp
-  rw [← Finset.sum_div] at hp
-  exact (div_le_iff₀ (sq_pos_of_pos hs')).mp hp
-
 private theorem middle_cap (n : ℕ) (l : Fin (n + 10) → ℝ)
     (ho : Antitone l) (ht : ∑ i, l i = 1)
     (h1 : (K1 (boundaryValues (n + 1) l)).PosSemidef) :
     ((n : ℝ) + 7) * l (middle (n + 1)) ≤ 1 := by
-  let t := l (middle (n + 1))
   let B := ∑ j : Fin 6, l ⟨n + 4 + j.val, by omega⟩
   let T := l ⟨0, by omega⟩ + l ⟨1, by omega⟩ + l ⟨2, by omega⟩
   have hquad := h1.dotProduct_mulVec_nonneg (![1, 1, 1] : Fin 3 → ℝ)
@@ -185,29 +251,16 @@ private theorem middle_cap (n : ℕ) (l : Fin (n + 10) → ℝ)
     norm_num [K1, boundaryValues, boundaryIndex, dotProduct, Matrix.mulVec,
       Fin.sum_univ_succ, Nat.add_assoc] at hquad ⊢
     linarith
-  have hT : 3 * t ≤ T := by
-    have h0 := ho (show (⟨0, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
-      change 0 ≤ n + 1 + 2; omega)
-    have h1' := ho (show (⟨1, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
-      change 1 ≤ n + 1 + 2; omega)
-    have h2' := ho (show (⟨2, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
-      change 2 ≤ n + 1 + 2; omega)
-    calc
-      3 * t = t + t + t := by ring
-      _ ≤ T := add_le_add (add_le_add h0 h1') h2'
-  have hprefix : ((n + 4 : ℕ) : ℝ) * t ≤
-      ∑ j : Fin (n + 4), l ⟨j.val, by omega⟩ := by
-    calc
-      _ = ∑ _j : Fin (n + 4), t := by simp
-      _ ≤ _ := Finset.sum_le_sum fun j _ => ho (by
-        change j.val ≤ n + 1 + 2
-        omega)
-  have hsplit : (∑ j : Fin (n + 4), l ⟨j.val, by omega⟩) + B = 1 := by
-    rw [Fin.sum_univ_add (a := n + 4) (b := 6) l] at ht
-    simpa [B, Fin.castAdd, Fin.natAdd, Fin.castLE] using ht
-  push_cast at hprefix
-  dsimp [t] at hT hprefix
-  linarith
+  let w : Fin (3 + 6 + n + 1) → ℝ := fun i => l ⟨i.val, by omega⟩
+  have hwo : Antitone w := fun i j hij => ho (by exact hij)
+  have hwt : ∑ i, w i = 1 := by
+    exact (Fin.sum_congr' l (by omega)).trans ht
+  have hbal : (∑ i : Fin 3, w ⟨i.val, by omega⟩) ≤
+      ∑ i : Fin 6, w ⟨3 + n + 1 + i.val, by omega⟩ := by
+    simpa [T, B, w, Fin.sum_univ_succ, Nat.add_comm, Nat.add_left_comm,
+      Nat.add_assoc, add_assoc] using hTB
+  have hh := observer_mass_cap 3 6 n w hwo hwt hbal
+  convert hh using 1 <;> dsimp [w, cut, middle] <;> push_cast <;> try ring
 
 private def scalarF (x : ℝ) : ℝ := (x + 8) / (x + 2) ^ 2
 
@@ -282,91 +335,155 @@ private theorem deletion_scalar (N kappa t : ℝ) (hN : 10 ≤ N)
     (mul_nonneg hcoef (sub_nonneg.mpr hlarge)) (sub_nonpos.mpr htr)
   linarith
 
-/-
-proof_shape: spectral_bound_transfer: content
-escape_witness: the actual last middle coordinate controls two different
-  normalized endpoint spectra; order, extremal coordinates and both moments
-  are established above for the constructed tuples, not supplied as premises.
-admission_basis: escape-witness
+
+/- proof_shape: observer_bound_transfer: content
+   escape_witness: insert_copies constructs ordered tuples preserving the actual
+     extremal observer and both moments for arbitrary p and q; deleteOne removes
+     the original coordinate, and observer_unnormalized normalizes these same tuples.
+   admission_basis: escape-witness
+   utility: not-applicable(kind=none); structural inference, with no finite
+     certificate, enumeration, checker or numerical premise discharge.
+   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17734
 -/
-/-- For `N = n + 10`, bounds at `N - 1` and `N + a` imply the bound at `N`.
-Ties and zero coordinates are allowed. Only an actual coordinate is deleted. -/
+/-- Extremal-observer transfer with a supplied actual-coordinate cap.
+Here `N = p+q+n+1`, the actual deleted index is `N-q-1 = p+n`,
+and `kappa` is real: in mass-balance applications it is `(q:ℝ)-p`.
+The strict mass bound and the polynomial guard are both required. -/
+theorem observer_bound_transfer (p q n a : ℕ)
+    (C : (Fin (p + q) → ℝ) → Prop) (kappa : ℝ)
+    (hscale : PositiveScaleInvariant C) (ha : 1 ≤ a)
+    (hN : 10 ≤ p + q + n + 1)
+    (hC : 1 < ((p + q + n + 1 : ℕ) : ℝ) - kappa)
+    (hguard : 0 ≤ (10 - kappa) * ((p + q + n + 1 : ℕ) : ℝ) ^ 2 +
+      (6 - 15 * kappa) * ((p + q + n + 1 : ℕ) : ℝ) - 20 * kappa - 16)
+    (hcap : ∀ (l : Fin (p + q + n + 1) → ℝ), Antitone l →
+      (∀ i, 0 ≤ l i) → (∑ i, l i) = 1 →
+      C (observerValues p q (p + q + n + 1) (by omega) l) →
+      (((p + q + n + 1 : ℕ) : ℝ) - kappa) * l ⟨p + n, by omega⟩ ≤ 1)
+    (hprev : ObserverBound p q C (p + q + n))
+    (hnext : ObserverBound p q C (p + q + n + 1 + a)) :
+    ObserverBound p q C (p + q + n + 1) := by
+  intro h l ho hn ht hc
+  let N : ℝ := ((p + q + n + 1 : ℕ) : ℝ)
+  let t := l (cut p q n)
+  have ht0 : 0 ≤ t := hn _
+  have hNt : 10 ≤ N := by dsimp [N]; exact_mod_cast hN
+  have hct := hcap l ho hn ht hc
+  have hcurrent : purityBound (p + q + n + 1) = scalarF N := rfl
+  by_cases hsmall : t ≤ 1 / (N + 2)
+  · obtain ⟨v, hvo, hvn, hvb, hvs, hvq⟩ := insert_copies a p q n l ho hn
+    have hvs' : ∑ i, v i = 1 + (a : ℝ) * t := by rw [hvs, ht]
+    have hp := observer_unnormalized p q (p + q + n + 1 + a) C hscale hnext
+      (by omega) v hvo hvn (by rw [hvs']; positivity) (by rw [hvb]; exact hc)
+    rw [hvq, hvs'] at hp
+    have hs := insertion_scalar N a t hNt (by exact_mod_cast ha) ht0 hsmall
+    have hendpoint : purityBound (p + q + n + 1 + a) = scalarF (N + a) := by
+      simp only [purityBound, scalarF, N, Nat.cast_add]
+    rw [hendpoint] at hp
+    rw [hcurrent]
+    change ∑ i, (l i) ^ 2 ≤ scalarF N
+    change _ + (a : ℝ) * t ^ 2 ≤ _ at hp
+    linarith
+  · have hlarge : 1 / (N + 2) ≤ t := le_of_lt (lt_of_not_ge hsmall)
+    have ht1 : t < 1 := by
+      have hc0 : 0 < N - kappa := by dsimp [N]; linarith
+      have hle : t ≤ 1 / (N - kappa) :=
+        (le_div_iff₀ hc0).mpr (by simpa [N, t, cut, mul_comm] using hct)
+      exact lt_of_le_of_lt hle ((div_lt_one hc0).mpr hC)
+    let v := deleteOne p q n l
+    have hvb : observerValues p q (p + q + n) (by omega) v =
+        observerValues p q (p + q + n + 1) h l := deleteOne_boundary p q n l
+    have hvs : ∑ i, v i = 1 - t := by
+      have hs := sum_deleteOne p q n l id
+      simp only [id_eq] at hs
+      rw [ht] at hs
+      change t + _ = 1 at hs
+      linarith
+    have hvq : ∑ i, (v i) ^ 2 = (∑ i, (l i) ^ 2) - t ^ 2 := by
+      have hs := sum_deleteOne p q n l (fun x => x ^ 2)
+      change t ^ 2 + _ = _ at hs
+      linarith
+    have hp := observer_unnormalized p q (p + q + n) C hscale hprev (by omega) v
+      (fun i j hij => ho ((Fin.strictMono_succAbove (cut p q n)).monotone hij))
+      (fun i => hn _) (by rw [hvs]; linarith) (by rw [hvb]; exact hc)
+    rw [hvs, hvq] at hp
+    have hs := deletion_scalar N kappa t hNt (by dsimp [N]; linarith)
+      hguard hlarge (by simpa [N, t, cut] using hct)
+    have hendpoint : purityBound (p + q + n) = scalarF (N - 1) := by
+      simp only [purityBound, scalarF, N, Nat.cast_add, Nat.cast_one]
+      congr 1 <;> ring
+    rw [hendpoint] at hp
+    rw [hcurrent]
+    linarith
+
+private theorem rank_three_observer (n : ℕ) (l : Fin (n + 9) → ℝ) :
+    observerValues 3 6 (n + 9) (by omega) l = boundaryValues n l := by
+  rfl
+
+private def RankThreeBoundary (b : Fin 9 → ℝ) : Prop :=
+  (K1 b).PosSemidef ∧ (K2 b).PosSemidef
+
+private theorem rank_three_scaling : PositiveScaleInvariant RankThreeBoundary := by
+  intro b s hs
+  constructor
+  · intro hb
+    have h1 := hb.1.smul hs.le
+    have h2 := hb.2.smul hs.le
+    rw [K1_div] at h1
+    rw [K2_div] at h2
+    simpa [RankThreeBoundary, smul_smul, hs.ne'] using And.intro h1 h2
+  · intro hb
+    constructor
+    · rw [K1_div]; exact hb.1.smul (by positivity)
+    · rw [K2_div]; exact hb.2.smul (by positivity)
+
+private theorem rank_three_bound (n : ℕ) :
+    ObserverBound 3 6 RankThreeBoundary (n + 9) ↔ SpectralBound n := by
+  constructor
+  · intro hb l ho hn ht h1 h2
+    exact hb (by omega) l ho hn ht (by rw [rank_three_observer]; exact ⟨h1, h2⟩)
+  · intro hb h l ho hn ht hc
+    rw [rank_three_observer] at hc
+    exact hb l ho hn ht hc.1 hc.2
+
+/- proof_shape: spectral_bound_transfer: bind-only
+   consumers: DimensionTwentySpectralPurityBound.intermediate_nineteen,
+     DimensionTwentySpectralPurityBound.spectral_purity_bound
+   consumer direction: those declarations use spectral_bound_transfer.
+   escape_witness: none; the original complete specialization is preserved.
+-/
+/-- For `N = n + 10`, the original rank-three spectral relaxation transfers
+from `N-1` and `N+a` to `N`, including all ties and zero coordinates. -/
 theorem spectral_bound_transfer (n a : ℕ) (ha : 1 ≤ a)
     (hprev : SpectralBound n) (hnext : SpectralBound (n + 1 + a)) :
     SpectralBound (n + 1) := by
-  intro l ho hn ht h1 h2
-  let t := l (middle (n + 1))
-  have ht0 : 0 ≤ t := hn _
-  have hcap := middle_cap n l ho ht h1
-  have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg _
-  have hN : (10 : ℝ) ≤ (n : ℝ) + 10 := by linarith
-  have hcurrent : purityBound (n + 1 + 9) = scalarF ((n : ℝ) + 10) := by
-    unfold purityBound scalarF
-    push_cast
-    congr 1 <;> ring
-  change ∑ i, (l i) ^ 2 ≤ purityBound (n + 1 + 9)
-  by_cases hsmall : t ≤ 1 / ((n : ℝ) + 12)
-  · obtain ⟨v, hvo, hvn, hvb, hvs, hvq⟩ := insert_copies a (n + 1) (by omega) l ho hn
-    let w : Fin (n + 1 + a + 9) → ℝ := fun i => v (Fin.cast (by omega) i)
-    have hwF (F : ℝ → ℝ) : (∑ i, F (w i)) = ∑ i, F (v i) := by
-      exact Fin.sum_congr' (fun i => F (v i)) (by omega)
-    have hws : ∑ i, w i = 1 + (a : ℝ) * t := by
-      have hw := hwF id
-      simp only [id_eq] at hw
-      rw [hw, hvs, ht]
-    have hwq : ∑ i, (w i) ^ 2 = (∑ i, (l i) ^ 2) + (a : ℝ) * t ^ 2 := by
-      rw [hwF (fun x => x ^ 2), hvq]
-    have hwb : boundaryValues (n + 1 + a) w = boundaryValues (n + 1) l := hvb
-    have hp := unnormalized_bound (n + 1 + a) hnext w
-      (fun i j hij => hvo (by exact hij)) (fun i => hvn _)
-      (by rw [hws]; positivity) (by rw [hwb]; exact h1) (by rw [hwb]; exact h2)
-    rw [hwq, hws] at hp
-    have hs := insertion_scalar ((n : ℝ) + 10) a t hN (by exact_mod_cast ha) ht0
-      (by simpa only [add_assoc, show (10 : ℝ) + 2 = 12 by norm_num] using hsmall)
-    have hendpoint : purityBound (n + 1 + a + 9) = scalarF ((n : ℝ) + 10 + a) := by
-      unfold purityBound scalarF
-      push_cast
-      congr 1 <;> ring
-    rw [hendpoint] at hp
-    rw [hcurrent]
-    calc
-      _ ≤ scalarF ((n : ℝ) + 10 + a) * (1 + (a : ℝ) * t) ^ 2 - (a : ℝ) * t ^ 2 := by
-        linarith
-      _ ≤ _ := hs
-  · have hlarge : 1 / ((n : ℝ) + 12) ≤ t := le_of_lt (lt_of_not_ge hsmall)
-    have ht1 : t < 1 := by
-      have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg _
-      change ((n : ℝ) + 7) * t ≤ 1 at hcap
-      nlinarith [mul_nonneg hn0 ht0]
-    let v := deleteOne n l
-    have hvb : boundaryValues n v = boundaryValues (n + 1) l := deleteOne_boundary n l
-    have hvs : ∑ i, v i = 1 - t := by
-      have h := sum_deleteOne n l id
-      dsimp [id] at h
-      rw [ht] at h
-      linarith
-    have hvq : ∑ i, (v i) ^ 2 = (∑ i, (l i) ^ 2) - t ^ 2 := by
-      have h := sum_deleteOne n l (fun x => x ^ 2)
-      linarith
-    have hp := unnormalized_bound n hprev v
-      (fun i j hij => ho ((Fin.strictMono_succAbove (middle (n + 1))).monotone hij))
-      (fun i => hn _) (by rw [hvs]; linarith)
-      (by rw [hvb]; exact h1) (by rw [hvb]; exact h2)
-    rw [hvs, hvq] at hp
-    have hs := deletion_scalar ((n : ℝ) + 10) 3 t hN (by linarith)
-      (by nlinarith [sq_nonneg (n : ℝ)])
-      (by simpa only [add_assoc, show (10 : ℝ) + 2 = 12 by norm_num] using hlarge)
-      (by convert hcap using 1 <;> dsimp [t] <;> ring)
-    have hendpoint : purityBound (n + 9) = scalarF (((n : ℝ) + 10) - 1) := by
-      unfold purityBound scalarF
-      push_cast
-      congr 1 <;> ring
-    rw [hendpoint] at hp
-    rw [hcurrent]
-    calc
-      _ ≤ scalarF (((n : ℝ) + 10) - 1) * (1 - t) ^ 2 + t ^ 2 := by linarith
-      _ ≤ _ := hs
+  have hprior : ObserverBound 3 6 RankThreeBoundary (3 + 6 + n) := by
+    convert (rank_three_bound n).mpr hprev using 1 <;> omega
+  have hafter : ObserverBound 3 6 RankThreeBoundary (3 + 6 + n + 1 + a) := by
+    convert (rank_three_bound (n + 1 + a)).mpr hnext using 1 <;> omega
+  have htransfer := observer_bound_transfer 3 6 n a RankThreeBoundary 3 rank_three_scaling ha
+    (by omega) (by push_cast; linarith [Nat.cast_nonneg (α := ℝ) n]) (by push_cast; nlinarith [sq_nonneg (n : ℝ)])
+    (by
+      intro l ho hn ht hc
+      let w : Fin (n + 10) → ℝ := fun i => l ⟨i.val, by omega⟩
+      have hwo : Antitone w := fun i j hij => ho (by exact hij)
+      have hwt : ∑ i, w i = 1 := by
+        have he : ∑ i, w i = ∑ i, l i := Fin.sum_congr' l (by omega)
+        exact he.trans ht
+      have hwb : boundaryValues (n + 1) w =
+          observerValues 3 6 (3 + 6 + n + 1) (by omega) l := by
+        funext i
+        dsimp [boundaryValues, boundaryIndex, observerValues, observerIndex, w]
+        congr 1
+        apply Fin.ext
+        split_ifs <;> simp_all <;> omega
+      have hm := middle_cap n w hwo hwt (by rw [hwb]; exact hc.1)
+      convert hm using 1 <;> dsimp [w, middle] <;> push_cast <;> try ring)
+    hprior hafter
+  apply (rank_three_bound (n + 1)).mp
+  convert htransfer using 1 <;> omega
 
+#print axioms observer_bound_transfer
 #print axioms spectral_bound_transfer
 
 end
