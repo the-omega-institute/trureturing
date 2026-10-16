@@ -237,28 +237,6 @@ def periodicWordEquiv {n d : ℕ} [NeZero d] (A : CountMat n n) :
   left_inv := restrict_cyclicPath
   right_inv x := Subtype.ext (cyclicPath_restrict x.val x.property)
 
-theorem periodic_translate_residue {n d : ℕ} [NeZero d] {A : CountMat n n}
-    (x : Path A) (hx : Function.IsPeriodicPt (shift A) d x) (q : ℤ) :
-    translate (countedGraph A) q x =
-      (shift A)^[(timeIndex (d := d) q).val] x := by
-  rw [show (shift A)^[(timeIndex (d := d) q).val] x =
-      translate (countedGraph A) ((timeIndex (d := d) q).val : ℤ) x from
-    shift_iterate_translate (countedGraph A) _ x]
-  apply Subtype.ext
-  funext t
-  let p := blockAddress (Nat.pos_of_ne_zero (NeZero.ne d)) q
-  have ha := assemble_address (Nat.pos_of_ne_zero (NeZero.ne d)) q
-  have hq : q = p.1*(d : ℤ)+(timeIndex (d := d) q).val := ha.symm
-  change x.val (t+q) = x.val (t+(timeIndex (d := d) q).val)
-  calc
-    _ = x.val ((t+(timeIndex (d := d) q).val)+p.1*(d : ℤ)) := by
-      apply congrArg x.val
-      calc
-        t+q = t+(p.1*(d : ℤ)+(timeIndex (d := d) q).val) :=
-          congrArg (fun u : ℤ => t+u) hq
-        _ = _ := by ring
-    _ = _ := path_period_coordinate_int_mul x hx p.1 _
-
 /-! Lex order uses Mathlib's ordered finite Pi carrier and the original edge
 key (source,target,number). These keys are solely order embeddings. -/
 
