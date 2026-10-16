@@ -27,8 +27,8 @@ internal sealed class GreenClassMeasureDocument : IScribeDocumentDefinition
                         + "The green class G(S, t) = { x : x agrees with the target t on S } (a finite test "
                         + "suite pins the coordinates in S, the rest free) has measure exactly n^(-m): "
                         + "stringMeasure O (greenClass S t) = (card O)^(-1) ^ |S|. This is an exact equality "
-                        + "together with a strict positive lower bound (the measure is positive, the '正测'/"
-                        + "green-class positivity). The value depends only on the budget m = |S|, not on the "
+                        + "together with strict positivity of the measure (green-class positivity). "
+                        + "The value depends only on the budget m = |S|, not on the "
                         + "pinned content t — the residual uncertainty of a finite certificate is "
                         + "content-independent.")),
                     Paragraph(Text(
