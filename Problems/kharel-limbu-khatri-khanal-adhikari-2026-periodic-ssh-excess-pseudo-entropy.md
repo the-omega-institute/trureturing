@@ -44,7 +44,7 @@ Issue #17503 records the literature check before any Lean:
 
 ## Route
 
-1. **Operators.** The frozen Jordan–Wigner annihilators `fullC` and their anticommutation relations, with the frozen number operator, give the Hamiltonian H(v) = Σ h_ij c_i† c_j of Eq. (15) at w = 1.
+1. **Operators.** The frozen Jordan–Wigner annihilators `fullC` give the Hamiltonian H(v) = Σ h_ij c_i† c_j of Eq. (15) at w = 1. Their anticommutation relations follow from the Clifford relations of the frozen Majorana operators, and the frozen number operator is diagonal in the occupation basis.
 2. **Ground states.** For N = 3 and v ∈ {3/8, 5/8}, a rational orthogonal eigenbasis l_k of h(v) gives H = E_g + Σ_k α_k B_k† B_k with α_k > 0, where B_k is a(l_k)† for the negative modes and a(l_k) for the positive ones. So E_g is a lower bound for every vector. The integer vectors of the preregistration are annihilated by every B_k and have three particles. They are therefore half-filled ground states, with E_g = −25/8 and −27/8.
 3. **Reductions.** The partial trace over the last four modes of ψ₁ψ₂†, ψ₁ψ₁† and ψ₂ψ₂† is computed exactly on integer shadows of the vectors. The three reduced matrices are block diagonal: an outer pair of equal entries and an inner symmetric 2 × 2 block.
 4. **Spectra.** A rational similarity diagonalizes each block. The eigenvalues are 2/9, 2/9, 4/9, 1/9 for T_A; 104/441, 104/441, 169/441, 64/441 for ρ₁; and 10/49, 10/49, 25/49, 4/49 for ρ₂.
@@ -63,7 +63,7 @@ The module uses the source's definitions with the Jordan–Wigner order of the m
 
 The canonical source is `D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.lean` (990 lines).
 - It defines `sshHopping`, `hamiltonian`, `IsHalfFilledGroundState`, `reduce`, `matrixEntropy`, `averagedExcess` and `claim`, and proves `result : ¬ claim`.
-- It uses the frozen `JordanWigner.fullC` with `fullC_CAR`, `fullC_anticomm_of_lt` and `fullC_mixed_anticomm_of_lt`, and the frozen `FockMajoranaCarrier.numberOperator` with `numberOperator_eq_diagonal` and `majorana_clifford_and_parity`. It also uses `HardCoreCompression.fullC_entry`, the sparse entry formula of `fullC`, made public for this settlement from a local fact of that module.
+- It uses the frozen `JordanWigner.fullC` and `prefixCount`, and the frozen `FockMajoranaCarrier.numberOperator`, `numberOperator_eq_diagonal`, `majorana` and `majorana_clifford_and_parity` (the Clifford relations of the Majorana operators). It also uses `HardCoreCompression.fullC_entry`, the sparse entry formula of `fullC`, made public for this settlement from a local fact of that module.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations:
   - `result` is the designated refutation result of the `utility` header and is exempt.
