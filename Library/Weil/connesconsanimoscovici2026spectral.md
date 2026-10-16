@@ -926,11 +926,368 @@ eigenvalues about $-3.98\times10^{-6}$ and $-2.50\times10^{-11}$,
 respectively. These floating proposals do not pay scalar, far-feature
 or floating arithmetic errors and certify neither sign. In the latter
 case24 eigenvalues have computed absolute value at most $10^{-7}$.
-The outstanding task is a directed full-space consumer with the
-common-form error congruence, including these small directions.
+The directed obstructions below pay the common-form errors on complete
+retained directions and exclude these two specified sufficient families.
 The fixed-vector pilot does not prove full retained positivity, the
 original Robin tail, cofinal Weil positivity or RH. No new general
 residual theorem, originality or Lean-verification claim is made.
+
+### Directed obstructions to two fixed-column families
+
+Keep the preceding common-form, exterior-domain and inverse-comparison
+premises, $N=1280$, and the archived diagonal $W$. For $k=64$ or128,
+let $E$ select the actual exterior columns1281 through$1280+k$.
+Each fixed family can be excluded without constructing another
+full1281-square Gram or recomputing the old eigensolver proposal.
+
+Use the same $Z=H_NE$, $F=E^*H_NE$, $B=E^*C_N$ and the complete
+joint Gram $G=C_N^*WC_N$, $J=Z^*WC_N$, $L=Z^*WZ$. Put
+$K=L-F$ and $T=J-B$. The first$k$ weighted exterior rows already
+give the finite lower matrix
+
+$$
+K\succeq F^*W_kF-F\succeq40I.
+$$
+
+Omitted rows of $Z^*WZ$ are positive semidefinite; FLINT encloses
+all$k$ eigenvalues of the corresponding finite lower matrix above40.
+Each case uses its own archived full1281-coordinate dyadic direction
+$v$ and fixed$k$-coordinate dyadic trial $x$. Reuse square completion:
+
+$$
+\begin{aligned}
+m(x)&=Q(v-Ex)-\|C_Nv-Zx\|_W^2,\\
+r&=Tv-Kx=Z^*W(C_Nv-Zx)-Bv+Fx,\\
+v^*(A_N-G+T^*K^{-1}T)v
+&=m(x)+r^*K^{-1}r\le m(x)+\|r\|^2/40.
+\end{aligned}
+$$
+
+The [fixed-family experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/394343e7a959876b74a00ac520034d3d62457893/docs/reports/weil-c27)
+supplies the complete middle rows, the existing far moment core
+extended through the selected last column, and its recomputed
+quadratic and gradient operator allowances. Under the stated analytic
+premises, the directed upper bounds are:
+
+| Exterior columns $k$ | Upper bound for $m(x)+\|r\|^2/40$ | Approximate residual correction |
+|---|---:|---:|
+| 64 | $<-3.98\times10^{-6}$ | $1.67\times10^{-32}$ |
+| 128 | $<-2.49\times10^{-11}$ | $7.17\times10^{-34}$ |
+
+For every matrix trial $X$, completion of the same square gives
+$A_N-U(X)\preceq A_N-G+T^*K^{-1}T$. Thus no $X$ for this specified
+$E,W$ can make the sufficient lower target positive semidefinite.
+The trial error has already been paid; a more accurate solve or
+invertible coordinate change cannot repair either specified family.
+This does not determine the actual Schur sign or RH.
+Changing the exterior space or inverse majorant has a separate
+obligation. The calculation reuses the existing residual identity,
+source data and library algorithms, without a new general theorem,
+originality claim or Lean verification.
+
+### Reusing inverse approximation methods on the actual exterior
+
+The optimized correction above is already a block SR1/shorting update:
+
+$$
+W_E=W-(WZ-E)K^{-1}(WZ-E)^*,\qquad
+C_N^*W_EC_N=G-T^*K^{-1}T.
+$$
+
+Indeed, with $D=W-H_N^{-1}\succeq0$, one has
+$WZ-E=DZ$ and $K=Z^*DZ$. This is the existing square completion in
+inverse form. Rodomanov–Nesterov,
+[*Greedy Quasi-Newton Methods with Explicit Superlinear Convergence*](https://arxiv.org/pdf/2002.00657v3),
+equation (2.3), gives the rank-one SR1 formula; its finite-dimensional
+setting is fixed in §1.3. The block identification here uses the preceding
+algebra, rather than attributing an infinite-dimensional block theorem to
+that paper. Its relative sandwich (2.7) and Lemma 2.2 do not supply a
+uniform convergence rate here: $W$ has a strictly positive constant tail,
+whereas $H_N$ is unbounded, so $W\preceq\eta H_N^{-1}$ cannot hold for
+any finite $\eta$. Relabeling the same fixed family as SR1 does not
+escape either obstruction.
+
+Two residuals must be kept distinct. The correction
+$\|Tv-Kx\|^2/40$ measures the optimization error inside the specified
+family. The residual of the actual inverse equation is instead
+$C_Nv-H_NEx$. Adding the archived middle and far debit intervals in
+the128-column packet gives its weighted energy approximately
+$4.3635328423409634\times10^{-10}$, while the optimization correction
+is approximately $7.169494010542168\times10^{-34}$. These are evaluations
+on the same exact dyadic trial, without another solve or data generation.
+Neither quantity alone determines the actual Schur sign. The separate
+small-Rayleigh upper ceiling uses another test and supplies no lower
+margin for this direction.
+
+The following primary sources supply methods to reuse, with their
+remaining interfaces stated explicitly. Locators refer to the inspected
+arXiv versions, rather than presumed publisher numbering.
+
+| Inspected source | Reusable result | Interface still required here |
+|---|---|---|
+| Zimmerling–Druskin–Simoncini, [arXiv:2407.21505v3](https://arxiv.org/pdf/2407.21505v3), §5.1, Proposition 3 and (22), pp.12–13; Algorithms 1–2 | For finite real SPD $\mathcal A$, an orthonormal starting block and nonbreakdown, block Gauss and Gauss–Radau enclose $B^*(\mathcal A+sI)^{-1}B$ in Loewner order for $s>0$. Their difference bounds the error. | Identify full-operator moments/recurrences and pay the discarded exterior, or certify a lifted trial by its full residual. The average of the bounds is not the upper bound. |
+| Meurant–Tichý, [arXiv:2502.14979v1](https://arxiv.org/pdf/2502.14979v1), Proposition 7.1/(7.2), Theorems 7.4 and 7.6, pp.10–15 | The prescribed-node block extension and block-CG Radau error relations use a supplied $0<\mu<\lambda_{\min}(\mathcal A)$. The upper-error conclusion uses the stated full-rank and exact-termination conditions. | A Ritz value does not certify the lower endpoint. Finite-precision recurrences, rank loss and the actual infinite tail require their own enclosures. |
+| Caruso–Michelangeli, [arXiv:1908.10110v2](https://arxiv.org/pdf/1908.10110v2), Theorem 2.4, Corollary 2.5 and Remark 2.7, pp.7–8 | Unbounded nonnegative selfadjoint operators admit convergence under analytic-vector hypotheses, or the stated quasi-analytic alternatives. The minimization parameter $\xi$ must satisfy $\sigma\le\xi$ for convergence at regularity level $\sigma$. | The hypotheses have not been checked for $C_Nv$. Energy convergence does not imply residual convergence for an unbounded operator, and this theorem supplies no required finite-step numerical certificate. |
+
+For the last row, the zero-initial-guess alternative requires
+$g\in\bigcap_{n\ge0}D(H_N^n)\cap\operatorname{ran}H_N$ and
+$\sum_{n\ge1}\|H_N^ng\|^{-1/n}=\infty$.
+In that source, energy and residual levels are respectively $\sigma=1$
+and2; choosing an energy-minimizing iteration does not automatically
+give the residual-level conclusion.
+The inspected PDF SHA-256 values, in table order, are
+`fc623e1894666ec015d50d5fb16c05be1d1437d08d264edf21463dfd07f5cf00`,
+`0b6a692094a792649f6b354334f7fc5c638c61779eb7e880e4c9560812be5851`
+and `a0357d7d6b56f5e41e9ee799d076b650f40be066adc1f4f8c4cf68089e0f94a6`.
+These source readings do not constitute independent proof verification
+or a claim that no other relevant result exists.
+
+The positive shift in the first row can be parameterized without assuming
+the missing retained sign. The existing bounded majorant gives
+$H_N\succeq\eta I$ with $\eta=\|W\|^{-1}$; choose
+$0<\mu<\eta$ and formally set $\mathcal A=H_N-\mu I$, $s=\mu$.
+This specifies the source's shift, but $\mathcal A$ is still unbounded:
+running its algorithm on a finite compression alone does not bound
+the actual $H_N^{-1}$.
+
+A proposal algorithm can instead be separated from acceptance. Reuse
+the [existing inverse-residual identity](liu2026tailcompensation.md#a-common-256-mode-consumer)
+with a finite-rank trial $Y$ into $D(H_N)$ and the actual residual
+$R=C_N-H_NY$. It supplies
+
+$$
+\begin{aligned}
+U_Y&=C_N^*Y+Y^*C_N-Y^*H_NY+R^*WR,\\
+S_N-(A_N-U_Y)&=R^*(W-H_N^{-1})R\succeq0,
+\qquad S_N=A_N-C_N^*H_N^{-1}C_N.
+\end{aligned}
+$$
+
+Consequently a finite-domain approximation to an actual inverse action,
+or to the inverse action on an actual residual, can enrich the exterior
+space beyond the two excluded families. Krylov or CG is an existing
+proposal mechanism; the complete directed residual and the final signed
+lower comparison are the acceptance obligations. A small residual by
+itself is not a positive lower certificate, and one tested retained
+direction does not certify the entire retained matrix.
+
+The archived middle rows and weighted far moments can be reused only on
+their certified column range with their paid remainder amplification.
+Adding new trial columns requires their actual $H_N$ action and the
+corresponding amplification; changing $W$ requires compatible weighted
+moments or a proved comparison. The separate
+[partition-based tail floor](desogus2026threegates.md) cannot be assigned
+to a different Lanczos complement without a proved inclusion or an
+independent tail bound. No new inverse-approximation theorem, successful
+enriched completion, actual Schur positivity, cofinal positivity or Lean
+verification is asserted by this parameter map.
+
+
+### A residual-driven completion on the former128-column witness
+
+Keep the same full dyadic $v$ from the128-column obstruction, the same
+actual exterior $H_N$ and archived $W$. Write its former trial as
+$y_0=E_{128}x_0$ and let $V$ select exterior modes1281 through2048.
+The existing finite linear solve applied to
+
+$$
+(V^*H_NV)z=V^*(C_Nv-H_Ny_0)
+$$
+
+proposes a correction to the actual inverse equation. Round
+$y=y_0+Vz$ to768 exact96-bit dyadic coordinates. The640 coordinates
+beyond the old exterior span are nonzero. This changes the trial space;
+it is not another solve of the excluded fixed-family optimization.
+
+The [enrichment experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/9e286ae630f756dc470b23a6d2a7093465138574/docs/reports/weil-c27)
+evaluates the complete actual residual $r=C_Nv-H_Ny$ using every
+middle row1281–32768 and the same168 infinite far moments. Extending
+the112-feature columns through2048 pays a new operator allowance
+approximately $1.80743\times10^{-135}$, using the complete existing
+symbol bound. It reuses the old directed $Q(v-y_0)$ and computes only
+its exact correction
+
+$$
+Q(v-y)=Q(v-y_0)-2\operatorname{Re}\langle y-y_0,C_Nv-H_Ny_0\rangle
++\langle y-y_0,H_N(y-y_0)\rangle.
+$$
+
+The existing inverse-residual identity, under the same common-form,
+exterior-domain and inverse-comparison premises, gives
+
+$$
+Q(v-y)-\|r\|_W^2\le v^*S_Nv\le Q(v-y).
+$$
+
+| Quantity on the unchanged complete $v$ | Approximate directed value |
+|---|---:|
+| Old complete residual energy | $4.3635328423409634\times10^{-10}$ |
+| New complete residual energy | $1.0904887215065086\times10^{-10}$ |
+| New sufficient lower target | $2.8606682320961359\times10^{-10}$ |
+| New upper trial energy | $3.9511569536026445\times10^{-10}$ |
+
+The exact endpoints place the new residual energy below one quarter
+of the old value and imply
+$2.86\times10^{-10}<v^*S_Nv<3.96\times10^{-10}$ under those premises.
+The finite solve only proposes $y$; the complete residual supplies the
+infinite-exterior comparison. This certifies one scalar direction and
+does not establish full retained positivity. It changes neither earlier
+fixed-family exclusion, determines no other retained direction and
+supplies no cofinal positivity or RH proof. The original orthonormal
+mass is retained; these values are quadratics rather than asserted
+normalized eigenvalues. No old scalar, moment, Gram or eigensolver
+production, new general inverse theorem or Lean verification is claimed.
+
+
+### A finite Trummer representation and a joint residual obstruction
+
+The finite displacement machinery is existing numerical linear algebra.
+Poloni, [arXiv:0903.4569v3](https://arxiv.org/pdf/0903.4569v3), p.3,
+defines the same-node, injective-node **Trummer-like** case: the generators
+determine the off-diagonal entries, while the actual diagonal must be
+supplied independently. Lemma1, p.3, gives the finite Schur generator
+update. Theorem4, p.11, gives the sum, product and inverse displacement
+rules; equation(6), p.12, updates the separately stored diagonal.
+Algorithms5–6, pp.21–22, supply the Trummer-like solve/inverse interfaces.
+The inspected PDF SHA-256 is
+`8e66a68746455a54ee68a143cd6e0843736113419a28bb7b8e37ce0612bacf8e`.
+Section7, p.17, explicitly discusses generator growth and the need for
+actual residual checks. These algorithms supply no arithmetic positivity
+theorem or universal stability guarantee. The arXiv source includes
+Matlab and Fortran implementations; no implementation is copied here.
+
+For a finite actual even compression, put $D=\operatorname{diag}(n^2)$,
+$\kappa=2/\pi$, $J_2=\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$
+and $G=(a,b)$, where
+$a_n=(-1)^nk_n$, $b_n=a_nns_n$, $k_0=1/\sqrt2$ and $k_n=1$ otherwise.
+The existing actual arithmetic entries give
+
+$$
+DQ-QD=\kappa GJ_2G^*,\qquad
+Q_{mn}=\kappa\frac{a_mb_n-b_ma_n}{m^2-n^2}\quad(m\ne n).
+$$
+
+The Gamma, prime and pole diagonal remains unchanged. No infinite
+generator identity is inferred: these generator columns need not be
+square summable.
+
+Let $V$ select exterior modes1281–2048, $F=V^*H_NV$, $B=V^*C_N$,
+$X=F^{-1}B$ and $Y=VX$. The existing exterior floor makes $F$ positive.
+Two right-hand sides $U=F^{-1}G_E$ determine the updated finite
+generators $G'_P=G_P-B^*U$ and reconstruct every column of $X$:
+
+$$
+X_{mn}=\kappa\frac{U_{m1}G'_{n2}-U_{m2}G'_{n1}}{m^2-n^2}
+\quad(m\in E,\ n\in P).
+$$
+
+The selected residual is exactly zero. For the finite remaining middle
+$O=\{2049,\ldots,32768\}$, the same finite Schur update gives
+$G'_O=G_O-Q_{OE}U$ and the actual residual $R_O=Q_{OP}-Q_{OE}X$.
+Put $T=R_O^*W_OG'_O$. The finite product rule yields
+
+$$
+D_P(R_O^*W_OR_O)-(R_O^*W_OR_O)D_P
+=\kappa\bigl(TJ_2(G'_P)^*+G'_PJ_2T^*\bigr).
+$$
+
+Thus $A_N-B^*F^{-1}B-R_O^*W_OR_O$ has displacement rank at most4,
+with its diagonal separately evaluated. This eliminates a new dense
+middle-Gram multiplication. It does not determine the sign. The far
+part retains all168 archived moments, the112-feature transform
+$P_P-P_EX$, and the complete symbol/error allowance. Its transported
+scalar charge is bounded by
+$\epsilon(1+\|X\|_F^2)$, approximately $2.07733\times10^{-135}$.
+It is not replaced by an infinite generator sum or an assumed positive
+moment midpoint.
+
+The [complete joint experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/443c0e6b5debab077cc317e35478638a3befc28c/docs/reports/weil-c27)
+constructs one explicit sufficient lower target on all1281 original
+orthonormal coordinates. Symmetric diagonal pivoting certifies1263
+positive pivots before an uncertain pivot leaves18 coordinates.
+Reconstructing the same complete target and applying the library's
+validated dense solve to that positive block gives an18-dimensional
+Schur complement. All18 diagonal upper endpoints are negative; for
+the first remaining coordinate, mode0, the diagonal is less than
+$-5.77\times10^{-31}$. One negative diagonal already rejects this
+explicit sufficient target. It does not establish18 negative
+eigenvalues, negativity of the actual $S_N$, or exclusion of every
+other trial with the same support.
+
+The two-right-hand-side trial is the exact implicit $F^{-1}B$; it is
+different from the rounded scalar trial above. The result retains all
+finite middle rows and the paid infinite far part. The existing
+inverse-residual comparison still supplies the analytic acceptance
+interface under the same common-form, domain and inverse-majorant
+premises. Full c27 Schur positivity, a successful joint lower target,
+cofinal positivity and RH remain unresolved. This is a numerical
+application of existing displacement/Schur methods, with no new general
+algorithm, priority or Lean-verification claim.
+
+
+### The fixed768-column family fails after trial optimization
+
+The chosen-trial obstruction leaves open whether another trial on the
+same support could succeed. The [support optimization experiment](https://github.com/the-omega-institute/trureturing-experiments/tree/a5fec125e7ecaf443205d4c72c0cbae9b270585d/docs/reports/weil-c27)
+uses the existing square-completion comparison above to settle this
+question for the same selected modes1281–2048 and archived $W$.
+
+Take the saved complete target's positive1263-coordinate principal
+block $P$ and lift remaining Schur coordinate0 by
+$(-P^{-1}be_0,e_0)$. Round to the stored exact256-bit dyadic retained
+vector $v$, keeping all1281 coordinates and its exact mass
+$\|v\|^2\simeq2.0458788430940653$. Its saved-target quadratic remains
+below $-5.77\times10^{-31}$. This is a different direction from the
+earlier128-column witness repaired by scalar enrichment.
+
+For this fixed $v$, write
+
+$$
+Z=H_NV,\quad F=V^*H_NV,\quad
+K=Z^*WZ-F,\quad t=Z^*WC_Nv-V^*C_Nv,
+$$
+
+and $m(x)=Q(v-Vx)-\|C_Nv-Zx\|_W^2$. All finite middle rows1281–32768
+enter the weighted Gram. The same finite displacement product rule,
+with actual diagonals and overlapping selected rows, certifies
+$K\succeq I/16$ by768 positive pivots of its finite lower matrix.
+The omitted actual far Gram is positive semidefinite; the signed
+moment midpoint is not assumed to be positive.
+
+The existing square-completion identity then gives
+
+$$
+\sup_xm(x)=m(x_0)+(t-Kx_0)^*K^{-1}(t-Kx_0)
+\le m(x_0)+16\|t-Kx_0\|^2.
+$$
+
+The finite solve only proposes the stored exact384-bit dyadic $x_0$.
+The full residual calculation reuses all168 moments,112 far features
+and the original extended-support operator-error upper bound. It pays
+$\varepsilon\|v-Vx_0\|^2$ for the quadratic and
+$\varepsilon\|v-Vx_0\|$ for each gradient coordinate. The finite Gram
+generators and direction-dependent actions are separately archived,
+so alternative floor and optimization consumers need no middle-row
+production.
+
+The directed result gives
+$m(x_0)\simeq-4.22459205900814696498591\times10^{-31}$ and a stored
+correction bound at most $2^{-512}$. The exact upper endpoint for
+$\sup_xm(x)$ is below $-4.22\times10^{-31}$. Therefore **every** trial
+matrix on this fixed768-column support with this same $W$ fails to
+make its inverse-residual lower target positive semidefinite.
+This excludes the ideal sufficient family, rather than only the
+earlier target with its conservative uniform far allowance.
+
+The common-form, exterior-domain and inverse-majorant premises are
+unchanged. The conclusion gives neither negative actual Weil energy
+nor exclusion of other supports or majorants. It does not undo the
+earlier positive scalar enclosure on a different direction. Full
+actual Schur positivity, cofinal positivity and RH remain open.
+This is an application of existing finite displacement and
+square-completion methods, without a new general theorem, normalized
+eigenvalue or Lean-verification claim.
+
 
 ## A proved high-energy law and its four-component characteristic geometry
 
