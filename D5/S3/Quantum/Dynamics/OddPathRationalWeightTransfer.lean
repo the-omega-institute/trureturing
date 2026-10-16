@@ -8,22 +8,24 @@
 
 /-
 proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
-odd-path theorem of research line #14293), produced on the live path, through the private steps
-no_phase_one_transfer and no_transfer_last_first, by middle_moment_gram_det (the integer Hankel
-determinant of the middle-vertex moments is 2^j times a rational square),
+odd-path theorem of research line #14293), produced on the live path, through the private step
+no_phase_one_transfer and the reduction no_end_transfer_of_no_phase_one, by middle_moment_gram_det
+(the integer Hankel determinant of the middle-vertex moments is 2^j times a rational square),
 D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments (these moments are integers
-congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant
-odd), ending in the valuation contradiction 0 = j + 2 v_2(Q).
+congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant odd),
+ending in the valuation contradiction 0 = j + 2 v_2(Q).
 proof_shape: middle_moment_gram_det: content; escape_witness: the public conclusion itself (form
 2; the preregistered Gram determinant identity):
 det [(H ^ (a + b)) c c]_{a, b ≤ j} = 2^j * (∏_{a ≤ j} ∏_{t < a} r (m + t))^2, from the
 factorisation L * diag(1, 2, ..., 2) * L^T with L the lower triangular matrix of the entries
 (H ^ a) (m + d) c; no Mathlib or frozen declaration states it. consumer: no_phase_one_transfer.
+Public helper, stated for a path with any number of vertices:
+proof_shape: no_end_transfer_of_no_phase_one: bind-only (exists_phase and propagator_shift remove
+the transfer phase by a shift of the potentials, and the transposition symmetry of the propagator
+exchanges the two directions); consumer: result and
+D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer.result.
 Private helpers:
-proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer:
-no_transfer_last_first.
-proof_shape: no_transfer_last_first: content (escape witnesses as for result; the transfer
-phase is removed by a shift of the potentials); consumer: result.
+proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer: result.
 proof_shape: exists_odd_hankel_size: content (choice of the size by the parity of m); consumer:
 no_phase_one_transfer.
 proof_shape: det_choose_antitriangular: content (anti-triangular Hankel matrix modulo 2);
@@ -37,11 +39,11 @@ middle_moment_gram_det.
 proof_shape: det_ne_zero_of_submatrix: bind-only; consumer: det_choose_antitriangular,
 det_choose_two_pow.
 proof_shape: pathHamiltonian_shift: bind-only; consumer: propagator_shift.
-proof_shape: propagator_shift: bind-only; consumer: no_transfer_last_first.
-proof_shape: exists_phase: bind-only; consumer: no_transfer_last_first.
+proof_shape: propagator_shift: bind-only; consumer: no_end_transfer_of_no_phase_one.
+proof_shape: exists_phase: bind-only; consumer: no_end_transfer_of_no_phase_one.
 admission_basis: escape-witness (research line #14293, partial progress on the rational weights
-conjecture of arXiv:1708.03283: the conjecture is settled for every odd number of vertices; it
-remains open for every even number of vertices n >= 6).
+conjecture of arXiv:1708.03283: the conjecture is settled for every odd number of vertices; for
+the even numbers of vertices see D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer).
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -364,6 +366,32 @@ private theorem exists_phase (γ : ℂ) (hγ : Complex.normSq γ = 1) :
 
 end Shift
 
+/-- **Reduction of end-to-end transfer to phase one.** If, for every choice of real potentials,
+the propagator at time `π` of the path with weights `r` does not have the entry `1` at the last
+and first vertices, then for every choice of real potentials the path has no perfect state
+transfer at time `π` between its end vertices, in either direction. -/
+theorem no_end_transfer_of_no_phase_one {n : ℕ} (r : Fin n → ℝ)
+    (h : ∀ q : Fin (n + 1) → ℝ,
+      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 ≠ 1)
+    (q : Fin (n + 1) → ℝ) :
+    ¬ HasPST (pathHamiltonian r q) Real.pi 0 (Fin.last n) ∧
+      ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last n) 0 := by
+  have hmain : ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last n) 0 := by
+    intro hpst
+    obtain ⟨θ, hθ⟩ := exists_phase _ hpst
+    refine h (fun i => q i - θ) ?_
+    rw [propagator_shift, Matrix.smul_apply, smul_eq_mul, ← hθ, ← Complex.exp_add,
+      neg_add_cancel, Complex.exp_zero]
+  have hT : (hamiltonianPropagator (pathHamiltonian r q) (-Real.pi))ᵀ =
+      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) := by
+    rw [hamiltonianPropagator_neg, ← Matrix.exp_transpose, Matrix.transpose_smul,
+      pathHamiltonian_transpose]
+  refine ⟨fun h' => hmain ?_, hmain⟩
+  have he := congrFun (congrFun hT (Fin.last n)) 0
+  rw [transpose_apply] at he
+  unfold HasPST at h' ⊢
+  rwa [← he]
+
 /-- **Rational weights rule out perfect state transfer at time `π` on every odd path.** For every
 `m ≥ 1`, a path on `2m + 1` vertices with positive rational edge weights and arbitrary real
 potentials has no perfect state transfer between its end vertices at time `π`. -/
@@ -421,28 +449,8 @@ private theorem no_phase_one_transfer {m : ℕ} (hm : 1 ≤ m) (r : Fin (2 * m) 
   push_cast at hv
   omega
 
-/-- No perfect state transfer at time `π` from the last vertex to the first on a path with
-`2m + 1` vertices and positive rational weights. -/
-private theorem no_transfer_last_first {m : ℕ} (hm : 1 ≤ m) (r : Fin (2 * m) → ℝ)
-    (q : Fin (2 * m + 1) → ℝ) (hrat : ∀ j, ∃ x : ℚ, r j = x) (hpos : ∀ j, 0 < r j) :
-    ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last (2 * m)) 0 := by
-  intro hpst
-  obtain ⟨θ, hθ⟩ := exists_phase _ hpst
-  refine no_phase_one_transfer hm r (fun i => q i - θ) hrat hpos ?_
-  rw [propagator_shift, Matrix.smul_apply, smul_eq_mul, ← hθ, ← Complex.exp_add, neg_add_cancel,
-    Complex.exp_zero]
-
-theorem result : claim := by
-  intro m hm r q hrat hpos
-  have hmain := no_transfer_last_first hm r q hrat hpos
-  have hT : (hamiltonianPropagator (pathHamiltonian r q) (-Real.pi))ᵀ =
-      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) := by
-    rw [hamiltonianPropagator_neg, ← Matrix.exp_transpose, Matrix.transpose_smul,
-      pathHamiltonian_transpose]
-  refine ⟨fun h => hmain ?_, hmain⟩
-  have he := congrFun (congrFun hT (Fin.last (2 * m))) 0
-  rw [transpose_apply] at he
-  unfold HasPST at h ⊢
-  rwa [← he]
+theorem result : claim := fun m hm r q hrat hpos =>
+  no_end_transfer_of_no_phase_one r
+    (fun q' => no_phase_one_transfer (m := m) hm r q' hrat hpos) q
 
 end D5.S3.Quantum.Dynamics.OddPathRationalWeightTransfer

@@ -259,5 +259,56 @@ noncomputable def complete_skeleton_recovery_registration : LeanInformationAudit
   familyRecord := none
   options := #[]
 
+abbrev flipArena : Arena where
+  signature := paritySignature
+  Law R := ∀ {h : Nat} (x : Fin h → Bool) (i : Fin h),
+    parity (Function.update x i (!(x i))) ≠ R.readout () h x
+private theorem flip_bad : ¬ flipArena.Law parityBad := by
+  intro law
+  have no := @law 1 (fun _ => true) 0
+  change false ≠ false at no
+  exact no rfl
+
+def flipEvidence : Registration flipArena (type_of% (@parity_flip)) where
+  actual := parityActual
+  bridge := Iff.rfl
+  variation := ⟨@parity_flip,parityBad,flip_bad⟩
+  sensitivity := ⟨fun i => ⟨parityBad,
+    fun j h => (h (Subsingleton.elim j i)).elim,rfl,flip_bad⟩, fun e => nomatch e⟩
+  dependence := parity_dependence
+
+noncomputable def parity_flip_registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound.parity_flip) (Realization paritySignature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound.parity_flip.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound.flipEvidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨flipArena⟩
+  objectArena := .source ⟨flipArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source flipArena ⟨flipEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize paritySignature parityActual.readout parityActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body","body","body","arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.SparseLiteralParityReadLowerBound

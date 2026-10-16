@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d866dfa36aafe836037090548117e1a135c07b374b34e1a6bda5e8926c6dd1d
+  normalized_sha256: sha256:0d866dfa36aafe836037090548117e1a135c07b374b34e1a6bda5e8926c6dd1d
+cas_ref: sha256:0d866dfa36aafe836037090548117e1a135c07b374b34e1a6bda5e8926c6dd1d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of the preceding nonvanishing theorem for the first three orders; the final note explains a convergence premise used in that proof.
+    previous_atom_id: 15eb12aed71ec186edbcd3e877571bdd32780f55e1539a8ff1211975db8f51c3
+    next_atom_id: ad1250fd5db758c1658876e92791fe1a88ed4ba46a56a0c9233f3adfef117bfc

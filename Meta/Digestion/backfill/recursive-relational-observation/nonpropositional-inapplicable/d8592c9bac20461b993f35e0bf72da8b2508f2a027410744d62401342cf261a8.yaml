@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8592c9bac20461b993f35e0bf72da8b2508f2a027410744d62401342cf261a8
+  normalized_sha256: sha256:d8592c9bac20461b993f35e0bf72da8b2508f2a027410744d62401342cf261a8
+cas_ref: sha256:d8592c9bac20461b993f35e0bf72da8b2508f2a027410744d62401342cf261a8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 31.7（全部乘法观察及原测度公式）。的证明段，仅展开该陈述的推导及说明，不另提出独立命题；本收据不替代原陈述的形式化覆盖。
+    previous_atom_id: 12787ea3ae6c5e00b6e74f42816f6870e232dfd2b45a996a9cec8a9f8dc3fb94
+    next_atom_id: 5c6d1414b529843a64d10f96c5433b8a992b9b11be0828018a7723a9a5e0113b

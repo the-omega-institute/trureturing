@@ -3399,8 +3399,138 @@ DH1--DH4 are source-specific paper applications of the existing density,
 coefficient, clock, lower-sector and height suppliers. There is no new
 generic density or sampling theorem, literature-priority claim, Lean
 declaration or kernel verification. The signed common-head comparison,
-the complete original target and RH remain unproved. Outside DH1,
-including $\Theta=1$, this reduction has not been established.
+the complete original target and RH remain unproved. The Ingham extension
+below supplies another parameter range for the same reduction; neither
+density application covers $\Theta=1$.
+
+
+## The published Ingham estimate extends the same head reduction below three fifths
+
+Reuse Chourasiya--Simonič,
+[arXiv:2507.15184v2](https://arxiv.org/html/2507.15184v2), Corollary 1
+and Table 1, already used for a different coefficient in
+[the interpolation note](../Weil/corvalan2023interpolation.md#a-zero-density-contour-for-the-actual-band-coefficient).
+For every fixed $1/2<\sigma<1$, their estimate implies
+
+$$
+N(\sigma,T)\ll_\sigma T^{d_I(\sigma)}\log^3(2T),\qquad
+ d_I(\sigma)=\frac{3(1-\sigma)}{2-\sigma}<1.
+$$
+
+The source counts $\beta\ge\sigma$, $0<\gamma\le T$ with
+multiplicity and states its bound for $T\ge3\cdot10^{12}$; bounded
+lower heights are absorbed into the constant. The published estimate
+is used directly. Its exponent improves $g(\sigma)$ for
+$1/2<\sigma<7/10$ and agrees at $7/10$.
+
+Keep every original supplier, fixed $\Theta,\eta,d,a$, full window,
+maximizing tie, outgoing weight and legal height of DH3--DH4. Suppose
+that these originally supplied parameters satisfy
+
+$$
+\boxed{\frac12<\Theta\le\frac7{10},\qquad
+\Delta<\eta<
+ U(\Theta):=\frac{1-\Theta^2}{1+2\Theta-2\Theta^2}.}
+\tag{IH1}
+$$
+
+Here $\Delta=1-\Theta$, $\mu=1/2-\eta$ and
+$\sigma_{\rm safe}=1/2+\Delta\mu/\eta$ retain their meanings.
+For this range, $\Delta<U(\Theta)<1/2$, so IH1 is a nonempty
+restriction on the original parameters. It does not replace their
+supplied $\eta$. Since
+$1-d_I(\Theta)=(2\Theta-1)/(2-\Theta)>0$, its upper restriction
+is equivalent to
+
+$$
+h_I^*:=\frac{\eta-\Delta}{2\Delta[1-d_I(\Theta)]}
+<\frac{1-\eta}{2}.
+$$
+
+Fix $h_I^*<h<(1-\eta)/2$ and any fixed
+$1/2<\sigma_0<\sigma_{\rm safe}<\Theta$. For
+$\sigma\in[\sigma_0,\Theta]$, put
+
+$$
+\mathfrak p_h^I(\sigma)=
+\frac{\eta(\sigma-1/2)}\Delta+h[d_I(\sigma)-1].
+$$
+
+Unlike the convex exponent in DH2, $d_I$ is concave. Its needed
+power bound follows instead from
+
+$$
+(\mathfrak p_h^I)'(\sigma)
+=\frac\eta\Delta-\frac{3h}{(2-\sigma)^2}
+>1-\frac{150}{169}=\frac{19}{169}>0,
+$$
+
+using $\eta/\Delta>1$, $h<1/2$ and
+$(2-\sigma)^2\ge169/100$. Consequently
+
+$$
+\boxed{\varepsilon_I:=\mu-\mathfrak p_h^I(\Theta)
+=h[1-d_I(\Theta)]-\frac{\eta-\Delta}{2\Delta}>0,\qquad
+\mathfrak p_h^I(\sigma)\le\mu-\varepsilon_I.}
+\tag{IH2}
+$$
+
+Apply DH3's finite-bin argument to the same complete coefficient
+$c_{B,a}(\rho)$ with $H_X=X^h$, including $\beta=\Theta$ in the
+last bin if attained. For each fixed bin left endpoint
+$\sigma_j$, the cited density bound and the same dyadic summation give
+$\sum_{\gamma>H_X,\,\beta\ge\sigma_j}m_\rho/\gamma
+\ll H_X^{d_I(\sigma_j)-1+\epsilon}$, with a common sufficiently
+small fixed $\epsilon>0$ over the finitely many bins. Because
+$d_I(\sigma_0)<1$, this reciprocal-height sum converges. Choose the
+fixed bin width $\delta$ and $\epsilon$ so that
+$\eta\delta/\Delta+h\epsilon<\varepsilon_I/2$ and
+$d_I(\sigma_0)+\epsilon<1$. The existing coefficient bound and SC2
+then give
+
+$$
+\boxed{2\sum_{i<m}\delta_i
+\sum_{\substack{X^h<\gamma\le\tau_i\\\beta>\sigma_0}}
+m_\rho|c_{B_i,a}(\rho)|
+\ll L_XX^{\mu-\varepsilon_I/2}=o(M_XL_X).}
+\tag{IH3}
+$$
+
+As in DH3, extending each nonnegative sum above its original height
+is only an upper bound. No coefficient, subtraction, phase or mask
+is replaced. The inequality $h<(1-\eta)/2$ puts $X^h$ below every
+original legal height at one common start. SR3 pays the full sector
+$\beta\le\sigma_0$, and HC2 supplies the same complete height account.
+Thus the actual reduction DH4 also holds under IH1:
+
+$$
+\boxed{\mathcal G_X=
+2\operatorname{Re}
+\sum_{\substack{0<\gamma\le X^h\\\beta>\sigma_0}}
+m_\rho\sum_{i<m}\delta_i c_{B_i,a}(\rho)
++o(M_XL_X).}
+\tag{IH4}
+$$
+
+The error has the same uniformity over all original full windows,
+ties and legal heights. It transfers their original cofinal upper
+comparison with an arbitrarily small fixed loss of strict margin.
+
+For a conditional example outside DH1, take the original parameters
+$\Theta=11/20$, $\eta=23/50$. Then
+$\mu=1/25$, $\sigma_{\rm safe}=62/115<3/5$,
+$d_I(\Theta)=27/29$ and $h_I^*=29/180$.
+The fixed cuts $h=1/5$, $\sigma_0=53/100$ satisfy IH1--IH2 with
+$\varepsilon_I=7/2610$. This supplies no actual value of $\Theta$
+and does not authorize reselecting $\eta$.
+
+IH1--IH4 retain the growing common low head. Every fixed actual
+off-critical zero ultimately lies inside it, and its joint signed
+upper estimate is still required. The extension excludes $\Theta=1$.
+It is an application of existing density, clock, coefficient and height
+results to the original source, with no new density theorem,
+literature-priority claim, Lean declaration or kernel certification.
+The full Robin comparison and RH remain unproved.
 
 
 ## Existing bounded-variation quadrature transports every original core tie
@@ -3640,7 +3770,7 @@ inventory, Fourier decay or phase independence follows.
 
 ### The already reduced common head transports by the same account
 
-If DH1 also holds, retain its same actual growing cutoff $H_X=X^h$,
+If DH1 or IH1 holds, retain the corresponding actual growing cutoff $H_X=X^h$,
 fixed real-part cut $\sigma_0$ and exact common-head readout
 
 $$
@@ -3655,7 +3785,7 @@ $\sup_{B\in\mathscr B_X}|P_X(B)|
 \ll_a\sqrt{R_X}(1+\log^2H_X)$.
 CQ2 pays its transport by
 $O_a(\varepsilon_X^{\rm lab}R_X^{3/2}(1+\log^2H_X))=o_X(1)$.
-Reuse DH4 once and exchange only its finite common sum to obtain
+Reuse DH4 or IH4 once and exchange only its finite common sum to obtain
 
 $$
 \boxed{
@@ -3859,7 +3989,7 @@ and the auxiliary constants below, never label- or tie-dependent.
 ### Reuse the published PNT shape and its existing inverse scale
 
 The [Nicolas supplier note](../ArithSums/nicolas2025comparison.md)
-already records Fiori--Jaskari, arXiv:2609.23222v1, Theorem 1.1 and
+already records Fiori--Jaskari, arXiv:2609.23222v2, Theorem 1.1 and
 Table 1, and its complete-integral consequence. Put
 
 $$
@@ -8032,3 +8162,158 @@ signed comparison on this growing-support test, and hence the original
 strict Robin upper and RH, remain unproved. This continuation retains
 an application of existing source results, not a literature-priority
 claim or a new formalized theorem.
+
+## A remote completion cancels the actual poles at small signed cost
+
+Keep WT6--WT8's actual $F_X$, $c_X$ and $H_X=c_X-F_X$, with all
+original windows, maximizing ties, layers and common horizon. This
+application reuses the complete explicit formula and the
+[Johnston--Yang cumulative prime-power error](../Weil/johnstonyang2022pnt.md).
+The autocorrelation construction and the all-support constrained Weil
+criterion in [Connes--Consani, Appendix C, Proposition C.1](../Weil/connesconsani2021archimedean.md#vanishing-constraints-and-the-remaining-semilocal-comparison)
+are existing tools. The additional interface here is an explicit
+pole-null completion of this same test, with its support and signed
+cost paid on the original scales. No generic criterion, literature
+priority or Lean verification is asserted.
+
+### Add positive-definite mass far beyond the original support
+
+Write $A_X=\log\mathsf V_X$ for MR5's original additive support
+ceiling for $F_X$; FH1 gives $A_X=O((\log X)^4)$. To distinguish that width from
+the pole deficit, put
+
+$$
+N_X=-\mathcal P(H_X)
+=\mathsf P_X^{\rm Weil}-\mathcal P(c_X)>0.
+$$
+
+The inequality holds cofinally: WT4--WT5 give
+$\mathsf P_X^{\rm Weil}/(M_XL_X)\to\infty$, whereas WT8 gives
+$\mathcal P(c_X)=O_\tau(L_X)$ and $M_X\to\infty$.
+The support bound and WT6--WT8's $L^1$ estimate also give
+$N_X\ll_\tau L_Xe^{A_X/2}$.
+Use the same fixed nonzero even nonnegative autocorrelation $\psi$
+as WT7. For $R>A_X+2\tau+\log2$, define
+
+$$
+q_R(x)=2\psi(x)+\psi(x-R)+\psi(x+R),\qquad
+\widehat q_R(\xi)=2(1+\cos R\xi)\widehat\psi(\xi)\ge0.
+$$
+
+This is the usual autocorrelation identity applied to
+$u+u(\cdot-R)$, not a new positivity theorem.
+Evenness gives the exact moment and completion
+
+$$
+\mathcal P(q_R)=2(1+\cosh(R/2))\mathcal P(\psi),\qquad
+e_X=\varepsilon_Xq_{R_X},\qquad
+\varepsilon_X=\frac{N_X}{\mathcal P(q_{R_X})}>0,
+\qquad H_X'=H_X+e_X.
+\tag{WT11}
+$$
+
+Thus $H_X'$ remains real, even, compact smooth and positive definite.
+Since $\mathcal P(H_X')=0$ and it is even, both individual pole
+moments $G_{H_X'}(0)$ and $G_{H_X'}(1)$ vanish. Also
+$c_X'=c_X+e_X$ still satisfies $\widehat c_X'\ge|\widehat F_X|$.
+The auxiliary completion is supported in
+$[-R_X-\tau,R_X+\tau]$; the original $F_X$ and its arithmetic
+evaluations have not changed.
+
+### Retain every remote prime power in the signed account
+
+For $R>\tau+\log2$, the central bump has no prime-power term and
+the negative translated bump does not meet $\log n$ for $n\ge2$.
+Consequently the complete prime term is
+
+$$
+\Pi(q_R)=2\sum_{n\ge2}\Lambda(n)n^{-1/2}\psi(\log n-R).
+$$
+
+Set
+$\eta_\tau(R)=\sup_{|v-R|\le\tau}9.39v^{1.515}
+e^{-0.8274\sqrt v}$, with $R-\tau\ge\log2$.
+Apply the cited cumulative bound for $\Psi(t)-t$ to the compact
+weight $w_R(t)=2t^{-1/2}\psi(\log t-R)$. Its endpoint terms vanish
+and
+$w_R'(t)=2t^{-3/2}[\psi'(\log t-R)-\psi(\log t-R)/2]$.
+Stieltjes integration therefore gives
+
+$$
+\Pi(q_R)=e^{R/2}\mathcal P(\psi)
++O_\psi(e^{R/2}\eta_\tau(R)).
+$$
+
+Here the main term is exactly $\int w_R(t)dt$, using evenness of
+$\psi$. The sum includes all prime powers in the added band
+$|\log n-R|<\tau$; it is not replaced by a prime-free correction.
+The full Gamma convention in MT5 gives for the translated pair
+
+$$
+\mathcal A\bigl(\psi(\cdot-R)+\psi(\cdot+R)\bigr)
+=-2\int_0^\infty
+\frac{e^{-x/2}\psi(x-R)}{1-e^{-2x}}\,dx
+=O_\psi(e^{-R/2}).
+$$
+
+Its value at zero is zero, so it has no Gamma subtraction term.
+The central term retains its whole contribution $2\mathcal A(\psi)$,
+including the subtraction outside the support. Since
+$\mathcal P(q_R)=(2+e^{R/2}+e^{-R/2})\mathcal P(\psi)$,
+the same test's pole and prime main terms cancel. Thus
+
+$$
+|\mathscr W(q_R)|\ll_\psi1+e^{R/2}\eta_\tau(R),\qquad
+\boxed{|\mathscr W(e_X)|\ll_\psi
+N_X\bigl(e^{-R_X/2}+\eta_\tau(R_X)\bigr).}
+\tag{WT12}
+$$
+
+This pays the full signed functional, not the sum of the absolute
+pole and prime contributions. Indeed $\mathcal P(e_X)=N_X$ and
+$\Pi(e_X)=N_X+O_\psi(N_X[e^{-R_X/2}+\eta_\tau(R_X)])$ are both
+large on the original scale. No absolute complex-zero-sum estimate
+for $e_X$ is inferred.
+
+### Choose a sufficient radius and transfer the original target
+
+Take $Z_X=1+A_X+\log X$ and one fixed $K$ with
+$0.8274\sqrt K>3$. Put $R_X=KZ_X^2$. It eventually satisfies the
+separation required above, and the polynomial factor in
+$\eta_\tau(R_X)$ is absorbed by the strict exponential slack:
+
+$$
+\eta_\tau(R_X)=O_\tau(e^{-3Z_X}),\qquad
+N_X(e^{-R_X/2}+\eta_\tau(R_X))=o(L_X),\qquad
+R_X=O((\log X)^8).
+\tag{WT13}
+$$
+
+This uses the already owned square-root-logarithm PNT error; a sharper
+PNT supplier is unnecessary for this payment. For each fixed $k$,
+$\|e_X^{(k)}\|_1\le4\varepsilon_X\|\psi^{(k)}\|_1$ and
+$\varepsilon_X\ll_\psi N_Xe^{-R_X/2}$, so its small ordinary norms
+do not express the large exponentially weighted pole mass.
+Linearity and WT8 now give
+
+$$
+\mathscr W(H_X')=\mathscr W(H_X)+o(L_X),\qquad
+\mathscr W(c_X')=O_\tau(L_XY_X^2)=o(M_XL_X).
+\tag{WT14}
+$$
+
+A lower bound for $\mathscr W(H_X')$ with a fixed strict margin on
+the original $M_XL_X$ scale would therefore transfer to $H_X$ with
+the same margin and an $o(M_XL_X)$ allowance. This does not reselect
+a window, discard a tie or impose a bounded normalized clock, and it
+includes $\Theta=1$ on its original parameter range.
+
+WT10's obstruction concerns a fixed small-support replacement, so it
+does not apply to this remote completion. Conversely, the added support
+does not satisfy the fixed prime-free support contract of the
+archimedean positivity theorem. The all-support constrained criterion
+still needs its positivity estimate. The added remote prime powers
+must also be present in any semilocal comparison; no bound for their
+compressed trace, or for the enlarged completion's semilocal trace,
+is supplied by WT12. The missing same-test signed lower bound, the
+original strict Robin upper and RH remain unproved.

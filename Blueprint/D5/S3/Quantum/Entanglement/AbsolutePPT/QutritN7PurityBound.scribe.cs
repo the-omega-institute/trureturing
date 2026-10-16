@@ -8,6 +8,9 @@ internal sealed class QutritN7PurityBoundDocument : IScribeDocumentDefinition
 {
     private static Formula Int(long n) => n < 0 ? new Formula.Negate(StrataLint.Scribe.DefinitionDsl.Num(-n)) : StrataLint.Scribe.DefinitionDsl.Num(n);
     private static Formula Id(string name) => F.Id(name);
+    private static Formula R => Seq(Mathbb, Grp(Id("R")));
+    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, y);
+    private static Formula Sum(string n, Formula t, Formula f) => Seq(new Formula.Subscript(F.Sum, Seq(Id(n), Colon, t)), Parenthesized(f));
     private static Formula C => Seq(Mathbb, Grp(Id("C")));
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Qualified(string owner, string name) => Seq(Id(owner), Dot, Id(name));
@@ -32,6 +35,17 @@ internal sealed class QutritN7PurityBoundDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(prose))), role);
 
 
+    private static Formula CertificateStatement()
+    {
+        var l=Id("l");
+        var boundary=Call("QutritSpectralReduction.boundaryValues",Int(4),l);
+        var hypotheses=And(Call("Antitone",l),Le(Int(0),Call("l",Int(20))),
+            Eq(Sum("i",Fin(Int(21)),Call("l",Id("i"))),Int(1)),
+            PSInt(Call("QutritSpectralReduction.K1",boundary)),
+            PSInt(Call("QutritSpectralReduction.K2",boundary)));
+        return All("l",Arrow(Fin(Int(21)),R),Imp(hypotheses,
+            Le(Sum("i",Fin(Int(21)),Pow(Call("l",Id("i")),2)),Frac(Int(29),Pow(Int(23),2)))));
+    }
     private static Formula DensityStatement()
     {
         var rho=Id("rho");
@@ -43,6 +57,8 @@ internal sealed class QutritN7PurityBoundDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal qutrit APPT density matrices satisfy the sharp purity bound for n = 7.",
         H("Qutrit APPT purity for n = 7"),Blocks(
+            Desc("QutritN7PurityBound","certificate_bound","The reusable length-21 spectral certificate",CertificateStatement(),
+                "Every antitone real 21-coordinate vector of mass one with nonnegative last coordinate and both qutrit boundary matrices positive semidefinite has square sum at most 29/529. The rational gap certificate applies directly to spectral data. Boundary-preserving insertion and deletion use this endpoint after positive mass normalization; no literal APPT sufficiency is asserted for arbitrary boundary-feasible spectra.",DescribeRole.Theorem),
             Desc("QutritN7PurityBound","purity_bound","Sharp density-matrix purity estimate",DensityStatement(),
-                "Every positive semidefinite trace-one complex matrix on Fin 3 × Fin 7 satisfying literal APPT has the stated real trace-square bound. APPT means that the partial transpose of U rho Uᴴ is positive semidefinite for every unitary U, as defined in QutritPerturbationAttainment. The proof applies QutritSpectralReduction.spectral_reduction to obtain ordered spectral certificate coordinates with both boundary LMIs and matching purity, then consumes the private rational gap certificate. All displayed quotients are real division.",DescribeRole.Theorem))));
+                "Every positive semidefinite trace-one complex matrix on Fin 3 × Fin 7 satisfying literal APPT has the stated real trace-square bound. APPT means that the partial transpose of U rho Uᴴ is positive semidefinite for every unitary U, as defined in QutritPerturbationAttainment. The proof applies QutritSpectralReduction.spectral_reduction to obtain ordered spectral certificate coordinates with both boundary LMIs and matching purity, then consumes the reusable rational gap certificate. All displayed quotients are real division.",DescribeRole.Theorem))));
 }

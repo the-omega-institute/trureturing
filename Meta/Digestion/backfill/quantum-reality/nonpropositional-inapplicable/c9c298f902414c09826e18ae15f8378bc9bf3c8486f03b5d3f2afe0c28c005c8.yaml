@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9c298f902414c09826e18ae15f8378bc9bf3c8486f03b5d3f2afe0c28c005c8
+  normalized_sha256: sha256:c9c298f902414c09826e18ae15f8378bc9bf3c8486f03b5d3f2afe0c28c005c8
+cas_ref: sha256:c9c298f902414c09826e18ae15f8378bc9bf3c8486f03b5d3f2afe0c28c005c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 已陈述结果的证明片段：仅展开一个推导方向或计算步骤，没有另立新命题或例子。
+    previous_atom_id: cf5efb275356125aa695849dbbb696b35c4905a8afe211cfe25076034684edb8
+    next_atom_id: fe89b48f48d257bac95b262b3ca66b6aaaaf1a6d23fc32b3cbebad3622f3fbec

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee6aab5b484bb5f60dab978f6b7e585add78592dd76f4d7a716441b350501d87
+  normalized_sha256: sha256:ee6aab5b484bb5f60dab978f6b7e585add78592dd76f4d7a716441b350501d87
+cas_ref: sha256:ee6aab5b484bb5f60dab978f6b7e585add78592dd76f4d7a716441b350501d87
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 14.7（合法割上的反演与增量）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 7fb69d63b5b945288d617d12aeb3ac83536b09ce5de373567ac42ff8e630dfea
+    next_atom_id: c981d146e54ced040d0398101c9861ba9edf04b455a5dcff0223bf43fc162e19

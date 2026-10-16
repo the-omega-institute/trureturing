@@ -22,8 +22,31 @@ internal sealed class NativeActiveParityExecutionDocument : IScribeDocumentDefin
                     Paragraph(Text("The pilot alignment theorem is applied to the actual first cone of rank t plus bit(x(0)). Its existing Run retains both Updates and the paid return Read. Induction on that Run splices its terminal leaf reply into the B latch route. If J is its terminal update epoch, every original cone then has rank t plus J plus bit(x(i)), in the interval from twice K minus one through twice K plus two. The exact four-reply clock law proves that chi equals rank parity on this acquired window. Since J is even, each accepted bit is (t modulo two) XOR x(i).")),
                     Paragraph(Text("Induction over the remaining stages uses the concrete data Read and the two or three concrete latch-routing root Reads at each stage. The accumulator is the XOR of the accepted prefix. The common offset cancels for even h, and is zero when t is zero. The constructed actual Run reaches the asserted halt. Native halt uniqueness supplies the converse and the fixed endpoint, including its update epoch.")),
                     Paragraph(Text("The pilot branch hold has no promised support under the rank bound, and no off-promise termination is asserted. Chi is not a parity decoder for arbitrary saturated branches or arbitrarily deep absent addresses. This result establishes the entire expanded symbolic table's actual-source execution. Its realization as one injective immediate binary word with no adjacent ones remains a separate obligation, together with all encoding edges, width and installed-word counts for arbitrary h and the complete primitive, address and bit-change bills. No mutable-width or physical execution-service claim follows from this statement."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("cone-read"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.cone_read"),
+                H("Literal readout on an original cone"),StatementSource.FromAuthor(Disp(ConeStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any supplied Chart with h independently indexed original leaves, any label assignment, entry lag t, post-entry update epoch j, original index i and arbitrary literal suffix p, the physical readout at address(i) followed by p equals the readout of p on the atom of rank t+j+bit(x(i)). The atom on the right is the actual original cone of that source at epoch j. This identity imposes no alignment-window premise and is used for the static scan as well as the active alignment. The label convention remains atom(bit(x(i))), with alpha equal to of(true) and beta equal to of(false)."))),DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("shifted-parity"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativeActiveParityExecution.shifted_parity"),
+                H("Common Boolean offset in a finite parity"),StatementSource.FromAuthor(Disp(ShiftStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Write shift(b,x)(i)=b XOR x(i). The XOR of its first n entries is the original prefix XOR, with one additional b exactly when n is odd. Even n cancels the common offset; a false offset vanishes for every n. This identity is used after deriving the actual scheduled contributions."))),DescribeRole.Theorem))));
 
+    private static Formula ConeStatement() {
+        var h=V("h"); var C=V("C"); var x=V("x"); var t=V("t"); var j=V("j"); var i=V("i"); var p=V("p");
+        var n=Seq(t,Sp,Plus,Sp,j,Sp,Plus,Sp,Call("bit",Call("x",i)));
+        return All("h",V("Nat"),All("C",Call("Chart",h),All("x",Seq(Call("Fin",h),Sp,To,Sp,V("Bool")),
+            All("t",V("Nat"),All("j",V("Nat"),All("i",Call("Fin",h),All("p",V("Address"),
+                Eq(Call("observations",C,t,x,j,Call("append",Call("address",C,i),p)),Call("readout",p,Call("atom",n))))))))));
+    }
+    private static Formula ShiftStatement() {
+        var x=V("x"); var b=V("b"); var n=V("n");
+        return All("x",Seq(V("Nat"),Sp,To,Sp,V("Bool")),All("b",V("Bool"),All("n",V("Nat"),
+            Eq(Call("parity",Call("shift",b,x),n),Call("xor",
+                Call("and",Call("decide",Eq(Call("mod",n,D(2)),D(1))),b),Call("parity",x,n))))));
+    }
     private static Formula Statement()
     {
         var S = V("S"); var C = Call("chartOf", S); var h = Call("length", S);

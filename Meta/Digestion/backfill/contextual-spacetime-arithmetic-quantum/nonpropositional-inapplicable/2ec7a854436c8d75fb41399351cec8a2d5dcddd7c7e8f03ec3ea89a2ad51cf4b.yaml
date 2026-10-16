@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ec7a854436c8d75fb41399351cec8a2d5dcddd7c7e8f03ec3ea89a2ad51cf4b
+  normalized_sha256: sha256:2ec7a854436c8d75fb41399351cec8a2d5dcddd7c7e8f03ec3ea89a2ad51cf4b
+cas_ref: sha256:2ec7a854436c8d75fb41399351cec8a2d5dcddd7c7e8f03ec3ea89a2ad51cf4b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 236.2 的证明续段只安排半圆段的构造步骤，不提出独立命题。
+    previous_atom_id: 23e248a0ca40facf8dd8b24770f840c504d197a6a81e9aeeddd269d97dc4510e
+    next_atom_id: 7b658aedf81520b42413e0aa981ff2cc9f2de35312aa956bcb087fe4678dcab6

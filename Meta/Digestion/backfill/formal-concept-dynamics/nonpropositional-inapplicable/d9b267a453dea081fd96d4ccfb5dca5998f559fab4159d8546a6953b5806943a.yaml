@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9b267a453dea081fd96d4ccfb5dca5998f559fab4159d8546a6953b5806943a
+  normalized_sha256: sha256:d9b267a453dea081fd96d4ccfb5dca5998f559fab4159d8546a6953b5806943a
+cas_ref: sha256:d9b267a453dea081fd96d4ccfb5dca5998f559fab4159d8546a6953b5806943a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 505.2（目标答案集）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 16d1ed895aa3681f647bf7e23292ebb15d81c2e473f5d97911f0889ec9cdbba6
+    next_atom_id: 53b1509375befc2d70c66b34645473d95415ce289690bb38a11bac68604f1fe6

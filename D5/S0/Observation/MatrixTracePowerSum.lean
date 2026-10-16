@@ -80,7 +80,7 @@ private theorem sq_eq (M : Matrix (Fin 2) (Fin 2) R) :
       Matrix.det_fin_two] <;> ring
 
 /-- Shifting a power by two, in matrix form. -/
-private theorem pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
+theorem pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
     M ^ (n + 2) = Matrix.trace M • M ^ (n + 1) - Matrix.det M • M ^ n := by
   calc M ^ (n + 2) = M ^ n * M ^ 2 := by rw [← pow_add]
     _ = M ^ n * (Matrix.trace M • M - Matrix.det M • (1 : Matrix (Fin 2) (Fin 2) R)) := by
@@ -91,7 +91,7 @@ private theorem pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
         rw [← pow_succ, mul_one]
 
 /-- The same shift, read off on traces. -/
-private theorem trace_pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
+theorem trace_pow_add_two (M : Matrix (Fin 2) (Fin 2) R) (n : Nat) :
     Matrix.trace (M ^ (n + 2))
       = Matrix.trace M * Matrix.trace (M ^ (n + 1))
         - Matrix.det M * Matrix.trace (M ^ n) := by

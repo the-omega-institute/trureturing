@@ -4,7 +4,31 @@
 
 The stationary signed Parry law.
 
-**Theorem 1.1 (The stationary signed Parry law).**
+**Theorem 1.1 (Finite suffix recurrence).**
+
+Lean statement: `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_succ`
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_succ` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k:Nat, p:Real, j:Fin k and hj:j.val+1<k, suffixWeight k p j=p+p*suffixWeight k p (j.val+1). Splitting the finite geometric sum into its first term and tail proves the recurrence. It supports the stationary law and the right Perron weight of the original Reset beam trace.
+
+**Theorem 1.2 (Last suffix).**
+
+Lean statement: `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_last`
+
+*Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_last` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k:Nat, p:Real, j:Fin k and hj:not(j.val+1<k), suffixWeight k p j=p. The remaining finite sum has length one. This is the terminal case of the stationary and Perron recurrences.
+
+**Theorem 1.3 (The stationary signed Parry law).**
 
 Lean statement: `D5/S3/TotalVariation/ParryResetLaw.parry_stationary_law`
 
@@ -19,5 +43,7 @@ For every natural k >= 2, set p = parryParameter k = (dbonacciPerronRoot k)^(-1)
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParryResetLaw.parry_stationary_law`
+- Truth anchor: `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_last`
+- Truth anchor: `D5/S3/TotalVariation/ParryResetLaw.suffixWeight_succ`
 - Dependency: [D5/S0/Tower/DBonacci/PerronRoot](../../S0/Tower/DBonacci/PerronRoot.md)
 - Dependency: [D5/S3/TotalVariation/TwistedResetPaths](TwistedResetPaths.md)

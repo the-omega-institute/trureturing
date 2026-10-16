@@ -1,0 +1,14 @@
+### 2.4. Scalar perturbation and actual-history inference are different objects
+
+[O, Section 15](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md#15-polynomial-residuals-control-actual-stationary-output) fixes $m\ge2$, $n=2m+1$, a real monic degree-$m$ polynomial $P$ and a real polynomial $S$ of degree at most $m$, anchored by $S(0)=0$. Its residual and nonnegative integer weight are
+
+$$
+e=P^2+\Delta(S^2)-\Delta(t^n)/n,
+\qquad H(k)=k^n+n\sum_{t<k}e(t)
+=n\left(S(k)^2+\sum_{t<k}P(t)^2\right).
+$$
+
+For $0<q<1$, O, Theorems 15.2–15.3 supply an actual complete Newton/Gramian instrument with law $H(k)q^k/Z_H(q)$, where $Z_H(q)=\sum_{k\ge0}H(k)q^k$, and its own faithful stationary initialization, even when $e\ne0$. Under a scalar envelope $0<\ell\le H(k)/k^n\le u$ for $k\ge1$, its gap, length-biased interval and initial-wait distances from the monomial law are at most $c=(\sqrt u-\sqrt\ell)/(\sqrt u+\sqrt\ell)$, and its stationary $W$-window distance is at most $1-(1-c)^{\lceil W/2\rceil}$. The finite residual certificates and rational ninth-degree center in O, Theorems 15.4–15.5 supply instances of that envelope. This is a scalar classical output comparison between specified stationary laws. It gives no entire-tick Choi estimate and no permission to substitute a scalar TV bound for the quantity $E$ in Section 4.
+
+[O, Sections 17–19](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md#17-information-and-testing-from-one-actual-stationary-history) concern the two fixed scalar laws, with bounded positive tilt and known common $q$, observed through consecutive stationary bits. They derive relative-entropy rates, finite-record converse and attainable testing bounds, fixed-pair endpoint record orders and a rational-center observer. Their initial wait, complete-gap acquisition and unfinished terminal gap are charged; no hidden age or free probability query is available. [O, Section 20](FIB_REAL_RENEWAL_INSTRUMENTS_AND_DETECTOR_RANK.md#20-unknown-parameter-identification-by-paid-conditional-gap-pairs) instead fixes that rational center and permits independent unknown nuisance parameters under the two labels. Conditioning actually acquired gap pairs on sum four removes the nuisance; it gives uniform risk, pointwise finite mean acquisition, compact-band deadlines and a composite small-band order. These statistical results assume their specified stationary renewal laws. They supply neither a hidden-map estimate nor an additional hypothesis for Theorem 4.2. Their exact arithmetic and observer-resource conclusions are not conclusions of this companion.
+

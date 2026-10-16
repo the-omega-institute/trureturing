@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6526743c6b6a2f642009f3d71d3881dc0865af00e0c66783512afd87ee34c965
+  normalized_sha256: sha256:6526743c6b6a2f642009f3d71d3881dc0865af00e0c66783512afd87ee34c965
+cas_ref: sha256:6526743c6b6a2f642009f3d71d3881dc0865af00e0c66783512afd87ee34c965
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 40. 责任与道德运气：本项只作篇章导引，介绍主题、组织范围或固定参数，没有定理或性质断言。
+    previous_atom_id: 8588a2892a5cb4da975104b2791e601a6902d584aa4d01d9e3bad8ace33660ac
+    next_atom_id: 6b5ca2ce4c51264b4b58d11556fe9bee049239d199cf3af5087f7da59a898795

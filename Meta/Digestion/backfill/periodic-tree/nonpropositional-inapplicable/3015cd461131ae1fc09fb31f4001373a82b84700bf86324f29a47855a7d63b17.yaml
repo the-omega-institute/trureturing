@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3015cd461131ae1fc09fb31f4001373a82b84700bf86324f29a47855a7d63b17
+  normalized_sha256: sha256:3015cd461131ae1fc09fb31f4001373a82b84700bf86324f29a47855a7d63b17
+cas_ref: sha256:3015cd461131ae1fc09fb31f4001373a82b84700bf86324f29a47855a7d63b17
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** $C_j$ 不是完全平方数。唯一素因子分解中必有至少一个素数的指数为奇数。取这样的 $p_j$，由 GP33–GP34 得到…）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: df708cf9bfd418ab415abf7093088a97aa94ba26cec763d34e36720bf5ad36ee
+    next_atom_id: 2aefa058ff04e2d4100d23f6111ee53f1a46f8637daf30d62c085afd08abc2a6

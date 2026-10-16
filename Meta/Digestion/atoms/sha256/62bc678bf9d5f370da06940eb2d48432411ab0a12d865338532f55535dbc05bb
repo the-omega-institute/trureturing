@@ -1,0 +1,1 @@
+| [NativeCutFibers.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeCutFibers.lean) and [NativeDepthPatterns.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean) | `repo-derived`: class filling, distinctness, original-prefix locality and rank/depth suppliers. These source inspections are not new Lean verification of this volume. 

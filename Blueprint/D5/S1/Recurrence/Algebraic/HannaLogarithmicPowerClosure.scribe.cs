@@ -24,6 +24,28 @@ internal sealed class HannaLogarithmicPowerClosureDocument : IScribeDocumentDefi
                 + "mk, coeff, subst and factorial denote coefficient assembly, ordinary "
                 + "coefficient extraction, formal substitution and natural factorial. "
                 + "Substitution is legitimate because log(K) has constant coefficient zero.")),
+            Paragraph(Text("The reusable column definition is q(i,n)=i!S(n,i). The public "
+                + "egf_q contract identifies its rational EGF with (exp(Q)-1)^i. The "
+                + "public subst_exp_log and subst_log_exp_sub_one contracts give "
+                + "exp(log(1+X))=1+X and log(exp(X))=X as full rational formal-series "
+                + "identities. Reconstruction takes the original integral-transform "
+                + "premise over any characteristic-zero field and supplies an integer "
+                + "sequence a with L(n)=T(a,n), including n=0. The public map_transform "
+                + "contract commutes the transform with the canonical rational map, "
+                + "and transform_T identifies the rational transform of T(a) with "
+                + "the series of coefficients a. The finite coefficient formula "
+                + "coeff_transform and the exact common-window identity T_window "
+                + "also apply directly to arithmetic extraction.")),
+            Paragraph(Text("The existing proof consumes q in its column and finite-window "
+                + "identities, egf_q in egf_product_columns, subst_exp_log in "
+                + "subst_log_exp_sub_one, transform_product_columns and transform_T, "
+                + "subst_log_exp_sub_one in reconstruction, reconstruction in "
+                + "binary_closure and result, and map_transform and transform_T in "
+                + "result. For the distinct A167540 arithmetic-subsequence question, "
+                + "these same original contracts supply inverse coordinates, columns "
+                + "and field transport. HannaLogarithmicAffineClosure proves the "
+                + "distinct arithmetic-extraction implication through its finite "
+                + "affine-column polynomial and common degreewise window.")),
             Node("egf", "The exponential generating series",
                 Disp(Seq(Context(), Sp, Equality(Call("egf", L()),
                     Call("mk", Lambda("n", Nat(),
@@ -46,6 +68,39 @@ internal sealed class HannaLogarithmicPowerClosureDocument : IScribeDocumentDefi
                 "Every ordinary coefficient lies in the canonical image of the integers. "
                     + "The integer can vary with the degree; no sign or size bound is imposed.",
                 DescribeRole.Definition),
+            Node("coeff_transform", "The exact finite coefficient window",
+                Disp(Seq(Bound("L", Seq(Nat(), Sp, To, Sp, Seq(Mathbb, Grp(V("Q"))))),
+                    Sp, Bound("r", Nat()), Sp,
+                    Equality(Call("coeff", V("r"), Call("logarithmicTransform", L())),
+                        Call("sumRange", D(0), V("r"), Lambda("n", Nat(),
+                            new Formula.Binary(
+                                new Formula.Fraction(Call("L", V("n")),
+                                    Call("castNat", Seq(Mathbb, Grp(V("Q"))),
+                                        Call("factorial", V("n")))),
+                                FormulaBinaryOperator.Multiply,
+                                Call("coeff", V("r"), new Formula.Power(
+                                    Call("log", Seq(Mathbb, Grp(V("Q")))), V("n"))))))))),
+                "sumRange(0,r,f) denotes the inclusive finite sum of f(n) for 0<=n<=r. "
+                    + "The logarithm has zero constant coefficient, so its nth power "
+                    + "has no coefficient at degree r when n>r. The formula includes r=0 "
+                    + "and arbitrary rational L. It supplies the coefficient expansion "
+                    + "for both multiplication and arithmetic extraction.",
+                DescribeRole.Theorem),
+            Node("T_window", "A common finite Stirling window",
+                Disp(Seq(Bound("a", Seq(Nat(), Sp, To, Sp, Int())), Sp,
+                    Bound("n", Nat()), Sp, Bound("r", Nat()), Sp,
+                    Implication(Seq(V("n"), Sp, Le, Sp, V("r")),
+                        Equality(Call("T", V("a"), V("n")),
+                            Call("sumRange", D(0), V("r"), Lambda("i", Nat(),
+                                new Formula.Binary(Call("a", V("i")),
+                                    FormulaBinaryOperator.Multiply,
+                                    Call("q", V("i"), V("n"))))))))),
+                "The sum uses every index from zero through r. Since q(i,n)=0 for i>n, "
+                    + "the exact integer reconstruction T(a,n) can use any larger common "
+                    + "window r. No congruence or truncation error is introduced. "
+                    + "The arithmetic-extraction proof applies this with n=m*t+b "
+                    + "and r=m*d+b for each contributing t<=d.",
+                DescribeRole.Theorem),
             Node("result", "Hanna's full closure conjecture",
                 Disp(Seq(Context(), Sp, Bound("m", Nat()), Sp,
                     Implication(Call("IntegralSeries", Call("logarithmicTransform", L())),

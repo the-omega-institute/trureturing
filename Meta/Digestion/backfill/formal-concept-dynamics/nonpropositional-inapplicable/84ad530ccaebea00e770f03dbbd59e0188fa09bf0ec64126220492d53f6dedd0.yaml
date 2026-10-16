@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:84ad530ccaebea00e770f03dbbd59e0188fa09bf0ec64126220492d53f6dedd0
+  normalized_sha256: sha256:84ad530ccaebea00e770f03dbbd59e0188fa09bf0ec64126220492d53f6dedd0
+cas_ref: sha256:84ad530ccaebea00e770f03dbbd59e0188fa09bf0ec64126220492d53f6dedd0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 25.1（形式充分）：本段仅约定名称、符号及其判定条件；不主张满足条件的对象存在，也不追加性质定理。
+    previous_atom_id: 0a392f835f3ffdb773d8b876dd08b263c5cd3a943d3d7995ed950e6a01fb4761
+    next_atom_id: 833e24a00fa0da71e0a276307491c4709ee4fe54825219851392b881564f6353

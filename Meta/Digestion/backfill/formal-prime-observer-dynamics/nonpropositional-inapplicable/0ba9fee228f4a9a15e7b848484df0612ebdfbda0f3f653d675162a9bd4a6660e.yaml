@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ba9fee228f4a9a15e7b848484df0612ebdfbda0f3f653d675162a9bd4a6660e
+  normalized_sha256: sha256:0ba9fee228f4a9a15e7b848484df0612ebdfbda0f3f653d675162a9bd4a6660e
+cas_ref: sha256:0ba9fee228f4a9a15e7b848484df0612ebdfbda0f3f653d675162a9bd4a6660e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S3/PrimeForms/ThreeModFourDescent.lean`：三模四素数的下降引擎；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 0ddf5d0ac57ccfde060a131aadf6e6692ed40e2bd4cdbb53e0fd541ad95690fd
+    next_atom_id: 448ba84093b4ec65be246fdb4968de923342cee4b49c7daa5edd434f1463ab1a

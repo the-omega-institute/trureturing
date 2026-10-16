@@ -21,7 +21,7 @@ internal sealed class QuadraticReferenceHilbertSchmidtBridgeDocument : IScribeDo
                     + "required before its real value is used.")),
                 Paragraph(Text("Define the columns v_i by inverse square root of s_i times rho e_i. "
                     + "The finite moment proves their squared norms summable. For every x, synthesize "
-                    + "A x as the sum of inner(e_i,x) times v_i. Parseval and the supplied scalar "
+                    + "A x using the common ColumnSynthesis construction, the sum of inner(e_i,x) times v_i. Parseval and the supplied scalar "
                     + "square-sum product estimate prove absolute convergence of this vector series "
                     + "and the bound norm(A x) at most square root of Q times norm(x). The actual "
                     + "series is linear and continuous; orthonormality proves its columns and its "

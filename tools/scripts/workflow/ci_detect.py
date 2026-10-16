@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Decide which CI units a change hits, from the unit patterns written in the workflow.
+"""Decide which CI units a change hits from the sole unit contract.
 
-Environment: CI_UNITS holds the specification and GITHUB_OUTPUT receives
+--contract reads Meta/ci-units.json for hosted execution. The standalone pattern
+test interface accepts CI_UNITS. GITHUB_OUTPUT receives
 `hits=<JSON object>` mapping each unit, in specification order, to true or false.
 
 Specification: `[unit-id]` opens a unit section and `[*]` the shared section,
@@ -86,16 +87,35 @@ def read_changed(path):
         paths = [item.decode("utf-8") for item in data.split(b"\0")[:-1]] if data else []
     except UnicodeDecodeError as error:
         raise DetectError(f"cannot read {path}: {error}") from error
+    for item in paths:
+        if not item or item.startswith("/") or any(p in ("", ".", "..") for p in item.split("/")):
+            raise DetectError(f"invalid changed path: {item!r}")
     return paths
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--changed", type=Path, required=True)
+    parser.add_argument("--contract", action="store_true")
     args = parser.parse_args()
     try:
         spec = os.environ.get("CI_UNITS")
         output = os.environ.get("GITHUB_OUTPUT")
+        if args.contract:
+            from ci_contract import git, load, selection
+            data, revision = load(Path.cwd())
+            purpose = "pull-request" if os.environ.get("GITHUB_EVENT_NAME") == "pull_request" else "push"
+            plan = selection(data, read_changed(args.changed), purpose)
+            if not output:
+                raise DetectError("GITHUB_OUTPUT is required")
+            with open(output, "a", encoding="utf-8") as stream:
+                for key, value in plan.items():
+                    stream.write(key + "=" + json.dumps(value, separators=(",", ":")) + "\n")
+                stream.write("contract_revision=" + revision + "\n")
+            print("CI_SELECTION " + json.dumps(dict(plan, contract_revision=revision, purpose=purpose,
+                  base=os.environ.get("CI_BASE") or None,
+                  candidate=git(Path.cwd(), "rev-parse", "HEAD^{tree}").decode().strip())))
+            return 0
         if spec is None:
             raise DetectError("CI_UNITS is required")
         if not output:
@@ -119,7 +139,7 @@ def main():
         with open(output, "a", encoding="utf-8") as stream:
             stream.write("hits=" + json.dumps(hits, separators=(",", ":")) + "\n")
         return 0
-    except (DetectError, OSError) as error:
+    except (ValueError, TypeError, OSError) as error:
         print(f"CI_DETECT_ERROR {error}", file=sys.stderr)
         return 2
 

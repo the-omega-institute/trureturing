@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79d45912432dcbfe6de906123331c9f42fca88a7e3e8147f8dc782d159539d05
+  normalized_sha256: sha256:79d45912432dcbfe6de906123331c9f42fca88a7e3e8147f8dc782d159539d05
+cas_ref: sha256:79d45912432dcbfe6de906123331c9f42fca88a7e3e8147f8dc782d159539d05
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段（**证明。** 将 GC10 给出的 $\lfloor T_L(m)\alpha\rfloor$ 代入 $T_K(T_L(m))$，再使用 …）只展开前文定理或命题的论证，式子和中间推导不另提出独立陈述。
+    previous_atom_id: 4930ba2037d2ce1a69f4c9d1caf41a9af7ef09c559adaf5931fb0272d1d58576
+    next_atom_id: d7ee7bca66c4b5265d98028a4b4c4bad060c1a98e58049cb5ba60875a413f9ed

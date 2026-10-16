@@ -525,7 +525,7 @@ private theorem fair_tail (m : ℕ) (hm : 2 ≤ m) (γ : Path) (hγ : IsRootPath
         (fun _ _ => measurableSet_singleton _)
     · rw [D5.S0.Tower.DBonacci.TerminalSampling.traceCylinder, fairTape,
         Measure.infinitePi_pi _ (fun _ _ => measurableSet_singleton _)]
-      simp [fairBit]
+      simp [fairBit, D5.S0.Tower.DBonacci.TerminalSampling.uniformPmf]
   have slot_measure (d j : ℕ) (hj : j < (continuing m γ d).length) :
       MeasurableSet {tape : Tape | scan m γ tape d = Sum.inr j} ∧
       fairTape {tape : Tape | scan m γ tape d = Sum.inr j} = (2 : ℝ≥0∞)⁻¹ ^ d := by
