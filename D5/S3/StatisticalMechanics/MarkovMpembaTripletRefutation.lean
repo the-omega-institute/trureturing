@@ -378,9 +378,10 @@ private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
       simp only [beta.eq_1, energy.eq_1, Real.log_inv]
       field_simp
     rw [ht, Real.exp_nat_mul, Real.exp_log hx]
-  simp only [gibbs.eq_1, GlauberRelaxationOrderRefutation.gibbs.eq_1, he,
-    dotProduct, Fin.sum_univ_succ, f.eq_1, g.eq_1, levels.eq_1]
-  norm_num [Matrix.cons_val_two, Matrix.cons_val_three]
+  simp only [gibbs.eq_1, GlauberRelaxationOrderRefutation.gibbs.eq_1,
+    dotProduct, Fin.sum_univ_four]
+  rw [he 0, he 1, he 2, he 3]
+  norm_num [f.eq_1, g.eq_1, levels.eq_1, Matrix.cons_val_two, Matrix.cons_val_three]
   have hd : 1+x+x^2+x^64 ≠ 0 := ne_of_gt (by positivity)
   simp only [overlap.eq_1]
   field_simp
