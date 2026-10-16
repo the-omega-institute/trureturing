@@ -43,6 +43,7 @@ public sealed class HistoricalWorkContextTests
     [InlineData("\n", false)]
     [InlineData("\r\n", false)]
     [InlineData("\n", true)]
+    [InlineData("\r\n", true)]
     public void OldTableFragmentSurvivesFreshRootChangesWithDefinitionAndColumnHeader(string newline, bool repeated)
     {
         const string row = "| $F[2]$ | $1$";
