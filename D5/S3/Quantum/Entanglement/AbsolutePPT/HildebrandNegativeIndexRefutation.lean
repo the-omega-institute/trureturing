@@ -194,13 +194,13 @@ private theorem witnessSpectrum_ordered :
   refine ⟨?_, ?_, ?_⟩
   · intro i j hij
     have hij' : i.val ≤ j.val := hij
-    dsimp only [witnessSpectrum]
+    rw [witnessSpectrum.eq_1, witnessSpectrum.eq_1]
     split_ifs <;> norm_num
     omega
   · intro i
     dsimp only [witnessSpectrum]
     split_ifs <;> norm_num
-  · norm_num [witnessSpectrum, Fin.sum_univ_succ]
+  · norm_num [witnessSpectrum.eq_1, Fin.sum_univ_succ]
 
 private def witnessM : Matrix (Fin 4) (Fin 4) ℂ :=
   !![ 1, -6, -6, -6;
@@ -220,31 +220,26 @@ private def positiveBlock : Matrix (Fin 2) (Fin 2) ℂ :=
 private theorem witnessMatrix_eq :
     hildebrandMatrix 4 witnessSpectrum sigmaPlus sigmaMinus =
       (1 / 32 : ℂ) • witnessM := by
+  rw [hildebrandMatrix.eq_1, witnessM.eq_1]
   ext i j
+  simp only [Matrix.add_apply, Matrix.conjTranspose_apply]
   fin_cases i <;> fin_cases j <;>
-    norm_num [
-      hildebrandMatrix, hildebrandArray,
-      plusIndex, minusIndex,
-      sigmaPlus, sigmaMinus, plusRank, minusRank,
-      witnessSpectrum, witnessM,
-      Equiv.ofBijective, Fin.cast, Fin.castLE, Fin.rev, Fin.le_def,
-      Matrix.conjTranspose_apply, Matrix.add_apply,
-      Matrix.smul_apply, smul_eq_mul
-    ]
+    dsimp only [hildebrandArray, plusIndex, minusIndex, sigmaPlus, sigmaMinus,
+      plusRank, minusRank, witnessSpectrum, Equiv.ofBijective, Fin.cast, Fin.castLE] <;>
+    norm_num [Fin.rev, Fin.le_def, Matrix.conjTranspose_apply, Matrix.add_apply,
+      Matrix.smul_apply, smul_eq_mul]
 
 private theorem witnessBlock_eq :
     witnessBᴴ *
         hildebrandMatrix 4 witnessSpectrum sigmaPlus sigmaMinus *
         witnessB =
       -positiveBlock := by
-  rw [witnessMatrix_eq]
+  rw [witnessMatrix_eq, witnessB.eq_1, positiveBlock.eq_1]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [
-      witnessB, witnessM, positiveBlock,
-      Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Matrix.smul_apply, smul_eq_mul, Fin.sum_univ_succ, map_ofNat
-    ]
+    dsimp only [witnessM] <;>
+    norm_num [Matrix.mul_apply, Matrix.conjTranspose_apply,
+      Matrix.smul_apply, smul_eq_mul, Fin.sum_univ_succ, map_ofNat]
 
 private theorem positiveBlock_posDef :
     positiveBlock.PosDef := by
@@ -261,11 +256,9 @@ private theorem positiveBlock_posDef :
   have hDecomp : positiveBlock = D + Vᴴ * V := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [
-        positiveBlock, D, V, Matrix.diagonal,
-        Matrix.mul_apply, Matrix.conjTranspose_apply,
-        Matrix.smul_apply, smul_eq_mul, Fin.sum_univ_succ, map_ofNat
-      ]
+      dsimp only [positiveBlock, D, V] <;>
+      norm_num [Matrix.diagonal_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+        Matrix.smul_apply, smul_eq_mul, Fin.sum_univ_succ, map_ofNat]
   rw [hDecomp]
   exact hD.add_posSemidef
     (Matrix.posSemidef_conjTranspose_mul_self V)
