@@ -57,9 +57,6 @@ theorem hidden_self : hidden = hidden := rfl
             'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'],
             cwd=self.root, env=self.env, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn('raw_read_ns=', result.stdout + result.stderr)
-        self.assertNotIn(' import_ns=', result.stdout + result.stderr)
-        self.assertNotIn('LEAN_INSPECTOR_ASSESS', result.stdout + result.stderr)
         rows = self.report()[0]
         for row in rows:
             self.assertEqual(row['information_templates'],
@@ -93,7 +90,12 @@ theorem hidden_self : hidden = hidden := rfl
                 cwd=self.root, env=env, timeout=120)
             self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
             self.assertFalse((self.root / 'judge-tripwire').exists())
-            return result.stdout + result.stderr
+            diagnostics = result.stdout + result.stderr
+            if success:
+                self.assertIn('raw_read_ns=', diagnostics)
+                self.assertNotIn(' import_ns=', diagnostics)
+                self.assertNotIn('LEAN_INSPECTOR_ASSESS', diagnostics)
+            return diagnostics
 
         inspect([])
         driver = self.root / '.lake/build/lib/lean/LeanInformationAudit/TemplateEnrollment.olean'
