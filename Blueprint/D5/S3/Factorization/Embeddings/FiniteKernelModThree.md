@@ -28,7 +28,7 @@ $$\forall K \in NumberField,\; \forall U \in CommGroup,\; \forall i \in \operato
 
 *Commentary.*
 
-Here K is any number field, U any commutative group, i:U->Units(O(K)) injective, and u^3=1 implies u=1 in U. These are all the EmbeddedUnitHypotheses. DirichletUnitCompletion splits integer units into finite torsion and a free lattice. Restrict the free coordinate to its actual image L. Its kernel injects into the finite torsion group; L is a finite free integral submodule. Finite-kernel descent then bounds the dimension by the ambient Dirichlet rank. An embedding of groups alone does not imply an embedding of cube quotients: the inclusion 3Int->Int sends a nonzero cube class to zero. The kernel correction supplies cube witnesses in U itself, as used by ResetQ4UnitCubes.
+Here K is any number field, U any commutative group, i:U->Units(O(K)) injective, and u^3=1 implies u=1 in U. These are all the EmbeddedUnitHypotheses. DirichletUnitCompletion splits integer units into finite torsion and a free lattice. Restrict the free coordinate to its actual image L. Its kernel injects into the finite torsion group; L is a finite free integral submodule. Finite-kernel descent then bounds the dimension by the ambient Dirichlet rank. An embedding of groups alone does not imply an embedding of cube quotients: the inclusion 3Int->Int sends a nonzero cube class to zero. The kernel correction supplies cube witnesses in U itself. The consumed helper exists_original_cube_of_quotient_eq takes equality of two classes in ModN(Additive(U),3) and returns w in the same U with u=v*w^3. ResetQ4UnitCubes uses it for both original-order normal forms; it is quotient-kernel witness extraction, not a separate content result.
 
 ## References
 

@@ -7,6 +7,8 @@ internal sealed class ResetQ4UnitCubesDocument : IScribeDocumentDefinition
     private static Formula.BoundVariable B(string s, Formula t) => new(FormulaIdentifier.Create(s), t);
     private static Formula All(Formula f, params Formula.BoundVariable[] v) => new Formula.BindMany(FormulaQuantifier.ForAll, [..v], f);
     private static Formula Ex(Formula f, params Formula.BoundVariable[] v) => new Formula.BindMany(FormulaQuantifier.Exists, [..v], f);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Pow(string u, Formula n) => Call("pow", I(u), n);
     private static Formula Val(string i) => Call("val", I(i));
     private static Formula Units(string order) => Call("Units", Call(order, Num(4)));
@@ -50,9 +52,17 @@ internal sealed class ResetQ4UnitCubesDocument : IScribeDocumentDefinition
                 + "and spans. Quotient equality produces the cube preimage in Units(Minus(4)), "
                 + "rather than only in the surrounding number field. No fundamental-unit "
                 + "or maximal-order identification is required."),
-            Paragraph(Text("For actual component units with equal residues under rplus(4) "
-                + "and rminus(4), applying cK to both normal forms kills cubes and alpha. "
-                + "It leaves j=k in ZMod(3). This is compatible_cube_normal_forms. "
-                + "These component normal forms do not assert exhaustion of a history "
-                + "representation image or the original-h SGCC factorization.")))));
+            Entry("compatible_cube_normal_forms", "Compatible original units have the same common cube coordinate",
+                All(Imp(Equal(Call("UnitsMap", Call("rplus", Num(4)), I("u")),
+                        Call("UnitsMap", Call("rminus", Num(4)), I("w"))),
+                    Ex(And(PlusForm, And(MinusForm("w", "t"),
+                            Equal(Call("castZMod3", Val("j")), Call("castZMod3", Val("k"))))),
+                        B("i", Call("Fin", Num(3))), B("j", Call("Fin", Num(3))),
+                        B("k", Call("Fin", Num(3))), B("v", Units("Plus")), B("t", Units("Minus")))),
+                    B("u", Units("Plus")), B("w", Units("Minus"))),
+                "The hypothesis is literal equality of the residue units under rplus(4) and "
+                + "rminus(4). Applying cK to both original-order normal forms kills cubes and "
+                + "alpha, leaving j=k in ZMod(3). Both cube roots remain in their respective "
+                + "original orders. These component normal forms do not assert exhaustion of "
+                + "a history representation image or the original-h SGCC factorization."))));
 }

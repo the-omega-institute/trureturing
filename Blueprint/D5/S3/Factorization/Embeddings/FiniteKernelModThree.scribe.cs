@@ -52,5 +52,8 @@ internal sealed class FiniteKernelModThreeDocument : IScribeDocumentDefinition
                 + "then bounds the dimension by the ambient Dirichlet rank. An embedding of groups "
                 + "alone does not imply an embedding of cube quotients: the inclusion 3Int->Int "
                 + "sends a nonzero cube class to zero. The kernel correction supplies cube witnesses "
-                + "in U itself, as used by ResetQ4UnitCubes."))));
+                + "in U itself. The consumed helper exists_original_cube_of_quotient_eq takes "
+                + "equality of two classes in ModN(Additive(U),3) and returns w in the same U "
+                + "with u=v*w^3. ResetQ4UnitCubes uses it for both original-order normal forms; "
+                + "it is quotient-kernel witness extraction, not a separate content result."))));
 }

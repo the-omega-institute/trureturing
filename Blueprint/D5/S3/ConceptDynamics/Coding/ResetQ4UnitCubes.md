@@ -30,10 +30,21 @@ $$\forall u \in \operatorname{Units}\left(\operatorname{Minus}\left(4\right)\rig
 
 The same descent bounds the original minus cube quotient by one. The common finite-field character takes Bminus to one, so this class is independent and spans. Quotient equality produces the cube preimage in Units(Minus(4)), rather than only in the surrounding number field. No fundamental-unit or maximal-order identification is required.
 
-For actual component units with equal residues under rplus(4) and rminus(4), applying cK to both normal forms kills cubes and alpha. It leaves j=k in ZMod(3). This is compatible_cube_normal_forms. These component normal forms do not assert exhaustion of a history representation image or the original-h SGCC factorization.
+**Theorem 1.3 (Compatible original units have the same common cube coordinate).**
+
+$$\forall u \in \operatorname{Units}\left(\operatorname{Plus}\left(4\right)\right), w \in \operatorname{Units}\left(\operatorname{Minus}\left(4\right)\right),\; \operatorname{UnitsMap}\left(\operatorname{rplus}\left(4\right), u\right) = \operatorname{UnitsMap}\left(\operatorname{rminus}\left(4\right), w\right) \Rightarrow \left(\exists i \in \operatorname{Fin}\left(3\right), j \in \operatorname{Fin}\left(3\right), k \in \operatorname{Fin}\left(3\right), v \in \operatorname{Units}\left(\operatorname{Plus}\left(4\right)\right), t \in \operatorname{Units}\left(\operatorname{Minus}\left(4\right)\right),\; u = \operatorname{pow}\left(alpha, \operatorname{val}\left(i\right)\right) \cdot \operatorname{pow}\left(Bplus, \operatorname{val}\left(j\right)\right) \cdot \operatorname{pow}\left(v, 3\right) \land \left(w = \operatorname{pow}\left(Bminus, \operatorname{val}\left(k\right)\right) \cdot \operatorname{pow}\left(t, 3\right) \land \operatorname{castZMod3}\left(\operatorname{val}\left(j\right)\right) = \operatorname{castZMod3}\left(\operatorname{val}\left(k\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.compatible_cube_normal_forms` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The hypothesis is literal equality of the residue units under rplus(4) and rminus(4). Applying cK to both original-order normal forms kills cubes and alpha, leaving j=k in ZMod(3). Both cube roots remain in their respective original orders. These component normal forms do not assert exhaustion of a history representation image or the original-h SGCC factorization.
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.compatible_cube_normal_forms`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.minus_cube_normal_form`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes.plus_cube_normal_form`
 - Dependency: [D5/S0/Tower/DBonacci/Irreducibility](../../../S0/Tower/DBonacci/Irreducibility.md)
