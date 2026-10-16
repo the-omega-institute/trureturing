@@ -1,7 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN8PurityBound
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitSextitMaximumPurity
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
 import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN8PurityBound
@@ -25,15 +25,19 @@ abbrev arena : Arena where
       O.readout () () l ≤ (32 : ℝ)/26^2
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨rho, _hdiag, hd, ha, _hp⟩ :=
-    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitSextitMaximumPurity.result.2.2
-  obtain ⟨l, ho, hn, ht, h1, h2, _hp⟩ :=
+  let v : Fin 4 × Fin 6 → ℂ := Pi.single (0,0) 1
+  have hv : star v ⬝ᵥ v = (1 : ℂ) := by
+    classical
+    simp [v, dotProduct, Pi.single_apply]
+  obtain ⟨hd, ht, ha, _hp⟩ :=
+    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.normalized_ray v hv
+  obtain ⟨l, ho, hn, hmass, h1, h2, _hp⟩ :=
     _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner.spectral_reduction
-      (by decide : 3 ≤ 4) (by decide : 3 ≤ 6) rho hd.1 hd.2 ha
+      (by decide : 3 ≤ 4) (by decide : 3 ≤ 6) _ hd ht ha
   have hb : _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner.boundaryValues 24 (by decide) l =
       boundaryValues 5 l := rfl
   rw [hb] at h1 h2
-  have hh := h l ho (hn 23) ht h1 h2
+  have hh := h l ho (hn 23) hmass h1 h2
   change (1 : ℝ) ≤ (32 : ℝ)/26^2 at hh
   norm_num at hh
 private theorem actual_dependence : ObservationalDependence signature actual := by

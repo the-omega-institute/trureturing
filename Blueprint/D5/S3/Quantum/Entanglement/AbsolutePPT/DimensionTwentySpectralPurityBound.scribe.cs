@@ -9,18 +9,16 @@ internal sealed class DimensionTwentySpectralPurityBoundDocument : IScribeDocume
     private static Formula D(long n) => Num(n);
     private static Formula X(string n) => F.Id(n);
     private static Formula R => Seq(Mathbb, Grp(X("R")));
-    private static Formula N => Seq(Mathbb, Grp(X("N")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(X(name), [.. xs]);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
-    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Eqn(Formula x, Formula y) => Seq(x, F.Eq, y);
-    private static Formula Le(Formula x, Formula y) => Seq(x, Leq, y);
-    private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Par(q));
-    private static Formula And(params Formula[] fs) => Seq(fs.SelectMany((f,i) => i == 0 ? new[] {Par(f)} : new[] {Land, Par(f)}).ToArray());
-    private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Par(Seq(X(n), Colon, t)), Comma, Par(f));
-    private static Formula Ex(string n, Formula t, Formula f) => Seq(Exists, Par(Seq(X(n), Colon, t)), Comma, Par(f));
-    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, y);
+    private static Formula Le(Formula x, Formula y) => Seq(x, Leq, Sp,y);
+    private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Sp,Par(q));
+    private static Formula And(params Formula[] fs) => Seq(fs.SelectMany((f,i) => i == 0 ? new[] {Par(f)} : new[] {Land, Sp,Par(f)}).ToArray());
+    private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Sp,Par(Seq(X(n), Colon, t)), Comma, Par(f));
+    private static Formula Ex(string n, Formula t, Formula f) => Seq(Exists, Sp,Par(Seq(X(n), Colon, t)), Comma, Par(f));
+    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, Sp,y);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Sq(Formula x) => new Formula.Power(Par(x), D(2));
     private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
@@ -42,7 +40,7 @@ internal sealed class DimensionTwentySpectralPurityBoundDocument : IScribeDocume
     public DocumentDefinition Create()
     {
         var l=X("l"); var p=X("p"); var bound=Frac(D(7),D(121));
-        var values=Seq(OpenBrace,p,Colon,R,Mid,Ex("l",Vector(D(20)),
+        var values=Seq(OpenBrace,p,Colon,R,Mid, Sp,Ex("l",Vector(D(20)),
             And(Feasible(D(11),l),Eqn(Purity(D(20),l),p))),CloseBrace);
         return DocumentDefinition.Create(ScribeNode.Create(
             "The rank-three length-twenty spectral relaxation has greatest purity 7/121.",

@@ -13,14 +13,12 @@ internal sealed class SpectralBoundaryTransferDocument : IScribeDocumentDefiniti
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(X(name), [.. xs]);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
-    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Eqn(Formula x, Formula y) => Seq(x, F.Eq, y);
-    private static Formula Le(Formula x, Formula y) => Seq(x, Leq, y);
-    private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Par(q));
-    private static Formula And(params Formula[] fs) => Seq(fs.SelectMany((f,i) => i == 0 ? new[] {Par(f)} : new[] {Land, Par(f)}).ToArray());
-    private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Par(Seq(X(n), Colon, t)), Comma, Par(f));
-    private static Formula Ex(string n, Formula t, Formula f) => Seq(Exists, Par(Seq(X(n), Colon, t)), Comma, Par(f));
-    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, y);
+    private static Formula Le(Formula x, Formula y) => Seq(x, Leq, Sp,y);
+    private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Sp,Par(q));
+    private static Formula And(params Formula[] fs) => Seq(fs.SelectMany((f,i) => i == 0 ? new[] {Par(f)} : new[] {Land, Sp,Par(f)}).ToArray());
+    private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Sp,Par(Seq(X(n), Colon, t)), Comma, Par(f));
+    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, Sp,y);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Sq(Formula x) => new Formula.Power(Par(x), D(2));
     private static Formula Frac(Formula x, Formula y) => new Formula.Fraction(x, y);
@@ -56,7 +54,7 @@ internal sealed class SpectralBoundaryTransferDocument : IScribeDocumentDefiniti
                 All("N",N,Eqn(Call("purityBound",X("N")),Frac(Add(X("N"),D(8)),Sq(Add(X("N"),D(2)))))),
                 "Natural dimensions are cast to the reals before division. The candidate value is f(N)=(N+8)/(N+2)^2.", DescribeRole.Definition),
             Desc("SpectralBound", "A bound for the rank-three relaxation",
-                All("n",N,Seq(Call("SpectralBound",n),Iff,All("l",Vector(Add(n,D(9))),
+                All("n",N,Seq(Call("SpectralBound",n),Iff, Sp,All("l",Vector(Add(n,D(9))),
                     Imp(Feasible(n,l),Le(Purity(Add(n,D(9)),l),Call("purityBound",Add(n,D(9)))))))),
                 "SpectralBound n is the universal square-sum upper bound for all antitone nonnegative mass-one vectors of length n+9 whose two boundary pencils are positive semidefinite. This is a spectral relaxation; no sufficiency assertion for literal APPT is included.", DescribeRole.Definition),
             Desc("spectral_bound_transfer", "Transfer from two endpoint dimensions",

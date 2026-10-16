@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitSextitMaximumPurity
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
 import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner
@@ -33,7 +33,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨rho, _hdiag, hd, ha, _hp⟩ :=
-    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitSextitMaximumPurity.result.2.2
+    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.result.2.2
   obtain ⟨l, _ho, _hn, _ht, _h1, _h2, hp⟩ := h (by decide) (by decide) rho hd.1 hd.2 ha
   have hs : (0 : ℝ) ≤ ∑ i, (l i)^2 := Finset.sum_nonneg (fun _ _ => sq_nonneg _)
   change (-1 : ℝ) = ∑ i, (l i)^2 at hp

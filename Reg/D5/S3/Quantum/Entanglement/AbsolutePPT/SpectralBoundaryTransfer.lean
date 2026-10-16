@@ -41,7 +41,8 @@ private theorem endpoint18 : SpectralBound 9 := by
     funext q
     fin_cases q <;> norm_num [boundaryValues, boundaryIndex, QutritSpectralReduction.boundaryValues]
   rw [hb] at h1 h2
-  simpa [purityBound] using QutritN6PurityBound.certificate_bound l ho (hn 17) ht h1 h2
+  convert QutritN6PurityBound.certificate_bound l ho (hn 17) ht h1 h2 using 1 <;>
+    norm_num [purityBound]
 
 private theorem endpoint21 : SpectralBound 12 := by
   intro l ho hn ht h1 h2
@@ -49,7 +50,8 @@ private theorem endpoint21 : SpectralBound 12 := by
     funext q
     fin_cases q <;> norm_num [boundaryValues, boundaryIndex, QutritSpectralReduction.boundaryValues]
   rw [hb] at h1 h2
-  simpa [purityBound] using QutritN7PurityBound.certificate_bound l ho (hn 20) ht h1 h2
+  convert QutritN7PurityBound.certificate_bound l ho (hn 20) ht h1 h2 using 1 <;>
+    norm_num [purityBound]
 
 private theorem flat_psd (k : Bool) :
     ((if k then K1 else K2) (boundaryValues 10 (fun _ => (1 / 19 : ℝ)))).PosSemidef := by
@@ -69,8 +71,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, (fun _ => 0), (fun j => if j = 0 then 1 else 0), ?_⟩
-  norm_num [actual, realize, Fin.sum_univ_succ]
+  refine ⟨0, (fun _ => 0), (fun _ => 1), ?_⟩
+  change (∑ _ : Fin 10, (0 : ℝ)^2) ≠ ∑ _ : Fin 10, (1 : ℝ)^2
+  norm_num
 
 def familyRegistration : Registration arena statement where
   actual := actual
@@ -80,7 +83,7 @@ def familyRegistration : Registration arena statement where
   dependence := actual_dependence
 
 /-- The omitted source selector leaves the structural reconstruction obligation open. -/
-def registration : Contract.Registration
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.SpectralBoundaryTransfer.spectral_bound_transfer)
     (Realization signature) Type Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.SpectralBoundaryTransfer.spectral_bound_transfer.__information_unit,

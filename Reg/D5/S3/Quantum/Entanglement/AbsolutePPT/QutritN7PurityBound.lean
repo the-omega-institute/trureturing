@@ -43,12 +43,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hle := h (fun _ => (1 / 21 : ℝ)) (fun _ _ _ => le_rfl) (by norm_num)
     (by simp) (by simpa using flat_psd true) (by simpa using flat_psd false)
-  norm_num [rejected, realize] at hle
+  change (2 : ℝ) ≤ 29 / 23^2 at hle
+  norm_num at hle
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ => 0), (fun j => if j = 0 then 1 else 0), ?_⟩
-  norm_num [actual, realize, Fin.sum_univ_succ]
+  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+  change (∑ _ : Fin 21, (0 : ℝ)^2) ≠ ∑ _ : Fin 21, (1 : ℝ)^2
+  norm_num
 
 def familyRegistration : Registration arena statement where
   actual := actual
@@ -57,8 +59,8 @@ def familyRegistration : Registration arena statement where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := actual_dependence
 
-/-- The omitted source selector leaves the structural reconstruction obligation open. -/
-def registration : Contract.Registration
+/-- Source selection retains the complete spectral telescope and its square-sum observation. -/
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN7PurityBound.certificate_bound)
     (Realization signature) Type Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN7PurityBound.certificate_bound.__information_unit,
@@ -76,8 +78,14 @@ def registration : Contract.Registration
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
-  escapeFrom := some (Fin 21 → ℝ),
-  sourceSelection := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN7PurityBound,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[] }

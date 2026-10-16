@@ -50,17 +50,20 @@ private theorem rejected_bound : ¬ boundArena.Law rejected := by
   intro h
   obtain ⟨l, ho, hn, ht, h1, h2, _⟩ := sharp_spectral_purity_bound.1
   have hle := h l ho hn ht h1 h2
-  norm_num [rejected, realize] at hle
+  change (2 : ℝ) ≤ 7 / 121 at hle
+  norm_num at hle
 
 private theorem rejected_sharp : ¬ sharpArena.Law rejected := by
   intro h
   obtain ⟨l, _, _, _, _, _, heq⟩ := h.1
-  norm_num [rejected, realize] at heq
+  change (2 : ℝ) = 7 / 121 at heq
+  norm_num at heq
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ => 0), (fun j => if j = 0 then 1 else 0), ?_⟩
-  norm_num [actual, realize, Fin.sum_univ_succ]
+  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+  change (∑ _ : Fin 20, (0 : ℝ)^2) ≠ ∑ _ : Fin 20, (1 : ℝ)^2
+  norm_num
 
 def boundFamilyRegistration : Registration boundArena boundStatement where
   actual := actual
@@ -76,8 +79,8 @@ def sharpFamilyRegistration : Registration sharpArena sharpStatement where
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity sharpArena.Law actual rejected rejected_sharp
   dependence := actual_dependence
 
-/-- The omitted source selector leaves the structural reconstruction obligation open. -/
-def boundRegistration : Contract.Registration
+/-- Source selection retains the complete spectral telescope and its square-sum observation. -/
+def boundRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.spectral_purity_bound)
     (Realization signature) Type Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.spectral_purity_bound.__information_unit,
@@ -95,14 +98,20 @@ def boundRegistration : Contract.Registration
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
-  escapeFrom := some (Fin 20 → ℝ),
-  sourceSelection := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound,
+    definition := none, coordinates := #[],
+    readouts := #[{
+      path := #["body","body","body","body","body","body","fn","arg"],
+      stateBinder := 0, functionOperand := false,
+      stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[] }
 
 /-- The omitted source selector leaves the structural reconstruction obligation open. -/
-def sharpRegistration : Contract.Registration
+def sharpRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.sharp_spectral_purity_bound)
     (Realization signature) Type Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.sharp_spectral_purity_bound.__information_unit,

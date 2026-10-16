@@ -9,7 +9,7 @@ claim: "At fixed total dimension, APPT for a factorization with larger minimum l
 strata_touched:
   - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction
   - D5/S3/Quantum/Entanglement/AbsolutePPT/FiniteBellCorner
-  - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitSextitMaximumPurity
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitQuintitMaximumPurity
 license: citation-only
 triage: anchor
 ---

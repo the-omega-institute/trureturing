@@ -8,6 +8,9 @@ internal sealed class QutritN7PurityBoundDocument : IScribeDocumentDefinition
 {
     private static Formula Int(long n) => n < 0 ? new Formula.Negate(StrataLint.Scribe.DefinitionDsl.Num(-n)) : StrataLint.Scribe.DefinitionDsl.Num(n);
     private static Formula Id(string name) => F.Id(name);
+    private static Formula R => Seq(Mathbb, Grp(Id("R")));
+    private static Formula Arrow(Formula x, Formula y) => Seq(x, To, y);
+    private static Formula Sum(string n, Formula t, Formula f) => Seq(new Formula.Subscript(F.Sum, Seq(Id(n), Colon, t)), Parenthesized(f));
     private static Formula C => Seq(Mathbb, Grp(Id("C")));
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Qualified(string owner, string name) => Seq(Id(owner), Dot, Id(name));
