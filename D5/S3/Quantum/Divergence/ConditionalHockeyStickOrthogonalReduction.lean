@@ -24,9 +24,6 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
-def IsState {n : Type*} [Fintype n] [DecidableEq n]
-    (X : Matrix n n ℂ) : Prop := X.PosSemidef ∧ X.trace = 1
-
 private def rt {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) : ℝ := RHLinalg.rtrace X
 
@@ -60,13 +57,13 @@ noncomputable def ratios
       letI := fR
       letI := dR
       ∃ ρ σ : Matrix (R × A) (R × A) ℂ,
-        IsState ρ ∧ IsState σ ∧
+        ρ.PosSemidef ∧ ρ.trace = 1 ∧ σ.PosSemidef ∧ σ.trace = 1 ∧
         (orth = true → ρ * σ = 0) ∧
         0 < gap γ ρ σ ∧
         x = gap γ (amp N ρ) (amp N σ) / gap γ ρ σ}
 
 private theorem state_nonempty {n : Type*} [Fintype n] [DecidableEq n]
-    {X : Matrix n n ℂ} (hX : IsState X) : Nonempty n := by
+    {X : Matrix n n ℂ} (hX : X.PosSemidef ∧ X.trace = 1) : Nonempty n := by
   classical
   by_contra hn
   haveI : IsEmpty n := not_nonempty_iff.mp hn
@@ -298,8 +295,8 @@ private def act {A B : Type*} [Fintype A] [DecidableEq A]
 
 private theorem act_state {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B]
-    (N : QuantumChannel A B) {X : Matrix A A ℂ} (hX : IsState X) :
-    IsState (act N X) := by
+    (N : QuantumChannel A B) {X : Matrix A A ℂ} (hX : X.PosSemidef ∧ X.trace = 1) :
+    (act N X).PosSemidef ∧ (act N X).trace = 1 := by
   let rho : DensityState A := ⟨CStarMatrix.ofMatrix X,
     map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hX.1.nonneg, hX.2⟩
   exact ⟨density_posSemidef (N.mapState rho), (N.mapState rho).2.2⟩
@@ -328,8 +325,9 @@ private theorem ptr_smul {R A : Type*} [Fintype R] [DecidableEq R]
 
 private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
-    (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ} (hX : IsState X) :
-    IsState (amp N X) := by
+    (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ}
+    (hX : X.PosSemidef ∧ X.trace = 1) :
+    (amp N X).PosSemidef ∧ (amp N X).trace = 1 := by
   let rho : DensityState (R × A) := ⟨CStarMatrix.ofMatrix X,
     map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
       (Matrix.nonneg_iff_posSemidef.mpr hX.1), hX.2⟩
@@ -479,7 +477,7 @@ private def pureFiller {A : Type*} [Fintype A] [DecidableEq A]
   CStarMatrix.ofMatrix.symm (D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState a₀).1
 
 private theorem pure_filler_state {A : Type*} [Fintype A] [DecidableEq A]
-    (a₀ : A) : IsState (pureFiller a₀) := by
+    (a₀ : A) : (pureFiller a₀).PosSemidef ∧ (pureFiller a₀).trace = 1 := by
   let tau := D5.S3.Quantum.Information.OrthogonalRecordEntropy.pointerState a₀
   exact ⟨density_posSemidef tau, tau.2.2⟩
 
@@ -488,10 +486,11 @@ private theorem flag_transfer
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (γ δ : ℝ) (hδ : 0 < δ)
     (ρ σ : Matrix (R × A) (R × A) ℂ)
-    (hρ : IsState ρ) (hσ : IsState σ) :
+    (hρ : ρ.PosSemidef ∧ ρ.trace = 1) (hσ : σ.PosSemidef ∧ σ.trace = 1) :
     ∃ c : ℝ, ∃ ρ' σ' : Matrix ((R ⊕ (Unit ⊕ Unit)) × A)
         ((R ⊕ (Unit ⊕ Unit)) × A) ℂ,
-      0 < c ∧ IsState ρ' ∧ IsState σ' ∧ ρ' * σ' = 0 ∧
+      0 < c ∧ (ρ'.PosSemidef ∧ ρ'.trace = 1) ∧ (σ'.PosSemidef ∧ σ'.trace = 1) ∧
+      ρ' * σ' = 0 ∧
       gap δ ρ' σ' = c * gap γ ρ σ ∧
       gap δ (amp N ρ') (amp N σ') =
         c * gap γ (amp N ρ) (amp N σ) := by
@@ -527,7 +526,7 @@ private theorem flag_transfer
   have hRA : Nonempty (R × A) := state_nonempty hρ
   let a₀ : A := (Classical.choice hRA).2
   let τ : Matrix A A ℂ := pureFiller a₀
-  have hτ : IsState τ := pure_filler_state a₀
+  have hτ : τ.PosSemidef ∧ τ.trace = 1 := pure_filler_state a₀
   let ρ' : Matrix ((R ⊕ (Unit ⊕ Unit)) × A)
       ((R ⊕ (Unit ⊕ Unit)) × A) ℂ :=
     flag (c • P) (a • τ) 0
@@ -554,8 +553,8 @@ private theorem flag_transfer
     rw [trace_flag, trace_smul_psd hQ (c / δ), Matrix.trace_zero,
       trace_smul_psd hτ.1 (b / δ), hτrt, mul_one, add_zero, ← Complex.ofReal_add]
     exact congrArg Complex.ofReal hcb
-  have hρ' : IsState ρ' := ⟨hρ'psd, hρ'trace⟩
-  have hσ' : IsState σ' := ⟨hσ'psd, hσ'trace⟩
+  have hρ' : ρ'.PosSemidef ∧ ρ'.trace = 1 := ⟨hρ'psd, hρ'trace⟩
+  have hσ' : σ'.PosSemidef ∧ σ'.trace = 1 := ⟨hσ'psd, hσ'trace⟩
   have horth : ρ' * σ' = 0 := by
     unfold ρ' σ'
     rw [flag_mul]
@@ -656,7 +655,7 @@ private theorem flag_transfer
     rw [amp_sub_smul]
     exact (amp_state N hρ).1.isHermitian.sub
       ((amp_state N hσ).1.isHermitian.smul (IsSelfAdjoint.all _))
-  have hτB : IsState (act N τ) := act_state N hτ
+  have hτB : (act N τ).PosSemidef ∧ (act N τ).trace = 1 := act_state N hτ
   have houtsub : amp N ρ' - δ • amp N σ' =
       flag (c • amp N H) (a • act N τ) (-b • act N τ) := by
     rw [← amp_sub_smul, hsub, amp_flag, amp_smul, act_smul, act_smul]
@@ -689,19 +688,19 @@ private theorem flag_transfer
 private theorem orth_subset {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) :
     ratios N γ true ⊆ ratios N γ false := by
-  rintro x ⟨R, fR, dR, ρ, σ, hρ, hσ, _, hg, hx⟩
-  exact ⟨R, fR, dR, ρ, σ, hρ, hσ, by simp, hg, hx⟩
+  rintro x ⟨R, fR, dR, ρ, σ, hρ, hρtrace, hσ, hσtrace, _, hg, hx⟩
+  exact ⟨R, fR, dR, ρ, σ, hρ, hρtrace, hσ, hσtrace, by simp, hg, hx⟩
 
 private theorem transfer_subset {A B : Type} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] (N : QuantumChannel A B)
     (γ δ : ℝ) (hδ : 0 < δ) : ratios N γ false ⊆ ratios N δ true := by
-  rintro x ⟨R, fR, dR, ρ, σ, hρ, hσ, _, hg, hx⟩
+  rintro x ⟨R, fR, dR, ρ, σ, hρ, hρtrace, hσ, hσtrace, _, hg, hx⟩
   letI := fR
   letI := dR
   obtain ⟨c, ρ', σ', hc, hρ', hσ', ho, hi, hb⟩ :=
-    flag_transfer N γ δ hδ ρ σ hρ hσ
+    flag_transfer N γ δ hδ ρ σ ⟨hρ, hρtrace⟩ ⟨hσ, hσtrace⟩
   refine ⟨R ⊕ (Unit ⊕ Unit), inferInstance, inferInstance,
-    ρ', σ', hρ', hσ', fun _ => ho, ?_, ?_⟩
+    ρ', σ', hρ'.1, hρ'.2, hσ'.1, hσ'.2, fun _ => ho, ?_, ?_⟩
   · rw [hi]
     exact mul_pos hc hg
   · rw [hb, hi, mul_div_mul_left _ _ (ne_of_gt hc)]
