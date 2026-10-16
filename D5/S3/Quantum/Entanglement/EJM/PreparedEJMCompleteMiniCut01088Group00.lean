@@ -24,6 +24,7 @@ def table (x13 x15 x16 : Fin 4) : ℤ :=
 set_option trace.profiler true in
 theorem normalization : ∀ (x13 x15 x16 : Fin 4),
     table x13 x15 x16 = PreparedEJMCompleteMiniCut01088Factor28.table x13 x15 x16 := by
+  intro x13 x15 x16
   exact PreparedEJMCompleteMiniCut01137Group00.normalization x13 x15 x16
 
 def lowerAt (e : Assignment) : ℤ := table (e 13) (e 15) (e 16)
