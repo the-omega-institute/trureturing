@@ -822,3 +822,985 @@ unrestricted acquisition problem.
 
 ## 追加锚（本行以下为增补区）
 
+## 10. The eight-prefix problem and the base-to-eight theorem
+
+**Definition 10.1 (Domain, complete catalogs and credited premises).**
+Retain exactly the original objects of 1.1–1.4. In particular,
+
+$$
+0<\tau\le1/24,\qquad 0\le v\le u\le\tau,\qquad
+a_8=5\tau+u,\qquad a_9=5\tau+v,
+\tag{10.1}
+$$
+
+and every actual continuation satisfies
+$a_{10}\ge a_{11}\ge\cdots>0$, $a_{10}\le5\tau$, and $a_n\to0$.
+At $v=0$ the actual ninth amplitude is $5\tau>0$.
+For $C=N,O$, let $\nu_C(\tau,u)$ be the minimum of the complete
+eight-bit objective (8.1), with nine replaced by eight and labels
+$0,\ldots,8$, in that class's own normalized complete catalog.
+All three independent events and the positive row are included.
+The $N$ catalog retains four independent cell outputs, arbitrary labels,
+constants, singletons, reversals and repetitions. Constructing one
+stopped law imposes no restriction on these competitors.
+
+The construction $K$ below, its conditional union slack and its
+217 denominator are credited to the supplied complete
+whole-counterexample-proposal.json; the supplied
+whole-independent-ordinary-check.json supplies an independent ordinary
+verification. Their assertions are fallible mathematical inputs.
+The complete allocation and the proofs of the new conclusions are
+given here. The sixteen-table $P^0$, $P^\star$, their endpoint
+polynomials and full-word bounds, and the transfer $Q$ retain the
+credits of 3.1–3.4 and XVIII 319–320, 324–327.
+The full-score lower bounds, arithmetic realization and original
+closed-cap correspondence retain the credits of 1.3, 2.2 and 7.
+The supplied complete XVIII includes 324–330.
+
+**Theorem 10.2 (A common 217 upper law and its exact original error).**
+For every parameter and every entire actual continuation in (1.4),
+there is one normalized law $K$, using addresses at most eight,
+whose stopped $O$ execution and counted $N$ execution have identical
+output laws and exact original marked-target error
+
+$$
+e_a(K)=5\tau+\max\left\{\frac{22u}{217},v\right\}.
+\tag{10.2}
+$$
+
+Its complete eight-bit maximum error is exactly
+
+$$
+h=5\tau+\frac{22u}{217},
+\qquad
+\nu_N(\tau,u)\le\nu_O(\tau,u)\le h.
+\tag{10.3}
+$$
+
+For $u>0$, (10.3) is strictly below
+$T=5\tau+22u/181$. In the original family this same law is strictly
+below $T$ exactly when $v<22u/181$.
+Thus the proposed universal complementary original lower relation
+(9.2) is false: for every $0<\tau\le1/24$ and $0<u\le\tau$,
+the permitted choice $v=0$, with every allowed actual continuation,
+supplies an original counterexample in both classes.
+This statement evaluates the displayed law, not either full minimum.
+The construction and proof occupy 11–14; a rational actual witness
+is given in 15.
+
+## 11. A complete projected law and one conserved schedule budget
+
+**Definition 11.1 (The exact law $Q_8$).**
+Start with the genuine $P^\star$ of 3.2, make exactly the 53-count
+label-nine-to-eight transfer of 3.4, fix its ninth input to zero,
+and project every output label nine to zero. This defines a new
+eight-bit law $Q_8$; fixing a finite input in its definition gives
+the acquisition no observation of the actual ninth reply.
+The 26 pair tables below, and the constant-zero table of count 17,
+are its complete deterministic allocation. Each count is divided
+by 3072. The columns $f,m,z$ are the outputs on stopped cells
+$0,10,11$; its counted completion has outputs $f,f,m,z$ on
+$00,01,10,11$.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 4 | 0 | 4 | 0 | 110 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 5 | 0 | 5 | 0 | 132 |
+| 3 | 6 | 0 | 6 | 0 | 125 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 117 |
+| 4 | 6 | 0 | 6 | 0 | 110 |
+| 5 | 6 | 0 | 6 | 0 | 127 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+| 1 | 2 | 1 | 2 | 0 | 463 |
+| 1 | 2 | 1 | 2 | 3 | 220 |
+| 1 | 2 | 1 | 2 | 4 | 162 |
+| 1 | 2 | 1 | 2 | 5 | 99 |
+| 2 | 3 | 0 | 3 | 0 | 333 |
+| 2 | 3 | 2 | 3 | 0 | 58 |
+| 3 | 4 | 0 | 4 | 0 | 148 |
+| 3 | 4 | 0 | 4 | 5 | 88 |
+| 6 | 7 | 0 | 7 | 0 | 17 |
+| 6 | 7 | 0 | 7 | 8 | 57 |
+| 6 | 8 | 0 | 8 | 0 | 53 |
+
+The constant-zero table makes no requests. In the restriction of
+$P^\star$, its former $O(8,9;0,9,0)$ branch of count 17 is
+constant zero. The $(6,8)$ exhaustion vector becomes $53e_0$,
+and the $(6,7)$ exhaustion vector is $17e_0+57e_8$.
+The other mixed rows split exactly as in 3.2.
+The original deterministic and mixed schedule counts were 1374 and
+1698, with single total 3072. Restriction, label projection and
+splitting preserve that total. These are weights on complete tables;
+counterfactual cell masses are counted once per schedule.
+
+For completeness, when a schedule of mass $\mu>0$ is specified by
+three equal-mass cell vectors, partition $[0,1)$ in each cell into
+increasing-label half-open intervals $I_0(f),I_{10}(m),I_{11}(z)$,
+whose lengths are the respective entries divided by $\mu$.
+Its complete-table weight is
+
+$$
+\mu\,|I_0(f)\cap I_{10}(m)\cap I_{11}(z)|.
+\tag{11.1}
+$$
+
+The intersections partition one interval and recover all cell
+marginals with total mass $\mu$. Every mixed row used here has only
+one nonconstant cell, so the displayed splitting is also immediate.
+One local coordinate of the same seed fixes all counterfactual
+labels before any reply. Zero-mass intervals are omitted.
+
+**Definition 11.2 (The complete law $K$).**
+Let $R=O(1,2;1,2,0)$ and let $P^0$ be precisely the complete
+sixteen-table law in 3.1, including $O(1,4;0,4,0)$.
+Set
+
+$$
+s=\frac{u}{217},\qquad W=3072s,\qquad \varepsilon=36s,\qquad
+L=(1-24\tau)R+(24\tau-W)P^0+WQ_8.
+\tag{11.2}
+$$
+
+In the $P^0$ component replace mass $\varepsilon$ of
+$D_0=O(6,7;0,7,0)$ by the same mass of
+$D_8=O(6,7;0,7,8)$, keeping the whole schedule and its other
+two cell labels. The resulting law is
+
+$$
+K=L+\varepsilon(D_8-D_0).
+\tag{11.3}
+$$
+
+Equation (11.3) denotes a transfer of existing stock.
+Explicitly, each count-$k$ row of 3.1 receives mass
+$k(\tau-128s)$, each count-$k$ row of 11.1 receives mass $ks$,
+and $R$ receives $1-24\tau$. Subtract $36s$ from the indicated
+$P^0$ donor and add it to $D_8$. Coincident complete-table
+weights add. These instructions specify every final weight.
+
+**Lemma 11.3 (Nonnegative donor stock and the full-vector identity).**
+The allocation $K$ is nonnegative, normalized, and legal in both
+complete finite catalogs. For every eight-bit word,
+
+$$
+K_w-L_w=36s\,w_6w_7(e_8-e_0).
+\tag{11.4}
+$$
+
+Proof. The starting branch weights are nonnegative and sum to one:
+$1-24\tau\ge0$, $W\ge0$, and
+$24\tau-W=24(\tau-128s)>0$, since $u\le\tau$ and $128<217$.
+The donor's precise remaining $P^0$ stock is
+
+$$
+\tau-128s-36s=\tau-164s\ge\frac{53\tau}{217}>0.
+\tag{11.5}
+$$
+
+All other weights are nonnegative. After coincident rows are added,
+the total $D_0$ weight is $\tau-147s$ and the total $D_8$
+weight is $93s$; their common $(6,7)$ schedule mass is
+$\tau-54s$. The transfer preserves the total probability and every
+cell's total mass. Thus one normalized complete-table allocation
+supplies all words and events.
+
+Only the exhaustion cell of $(6,7)$ changes. Its indicator on
+every word is $w_6w_7$, independently of every other zero, and
+its vector change is $36s(e_8-e_0)$. This proves (11.4) on
+the entire cube. No address depends on a reply. The counted
+$N$ table $N(i,j;f,f,m,z)$ and the corresponding stopped
+table are both legal. $\square$
+
+## 12. The entire activation set and the positive-word allowance
+
+**Lemma 12.1 (The conditional $P^0$ union slack).**
+For every core first-zero word $n\le7$ with $w_6=w_7=1$,
+the outside-$\{0,n\}$ probability of $P^0$ is at most $4/24$.
+This includes every multiple-zero suffix where (11.4) acts.
+
+Proof. Record the precise reused full-word polynomials of XVIII
+319.2, now with $(b,c,d,z,t)=(w_3,w_4,w_5,w_6,w_7)$:
+
+$$
+\begin{aligned}
+B&=2b(1-c)+bc+(b+c)(2-d-z)+d(1-z)+z(1-t),\\
+G&=3(1-b)+(1-c).
+\end{aligned}
+\tag{12.1}
+$$
+
+Direct evaluation of the complete tables of 3.1 gives the following
+outside counts, all in units $1/24$:
+
+$$
+\begin{array}{c|l}
+n&24D_n(P^0)\\ \hline
+1&B+w_2G\\
+2&B+G\\
+3&2+2(1-c)+c(2-d-z)+d(1-z)+z(1-t)\\
+4&3+(1-d)+(1-z)+d(1-z)+z(1-t)\\
+5&3+2(1-z)+z(1-t)\\
+6&5\\
+7&5
+\end{array}
+\tag{12.2}
+$$
+
+These identities retain all suffix bits. For example, the two
+$(3,4)$ tables give $2b(1-c)+bc$, the four edges from
+$3,4$ to $5,6$ give $(b+c)(2-d-z)$, and the final edges
+give $d(1-z)+z(1-t)$. The head-to-$3,4$ contributions
+give $w_2G$ and $G$ in the first two classes.
+The correct counts are the reused
+$(11,8,8,5,4,3,1)$.
+
+The global bound five in 3.3 is visible from these identities.
+For $q=b+c$, maximizing
+$q(2-d-z)+d(1-z)+z(1-t)$ over $t$ at
+$dz=00,01,10,11$ gives $2q,q+1,q+1,1$.
+The maxima for $bc=00,01,10,11$ are $1,2,2,4$;
+adding $2b(1-c)+bc+G$ gives five in each case.
+Thus $B+G\le5$, and $B+w_2G\le5$ because $G\ge0$.
+In class three, $c=0$ gives
+$4+d(1-z)+z(1-t)\le5$, since the last two terms cannot
+both be one; $c=1$ gives $4-dz-zt\le4$.
+The next two expressions simplify to $5-dz-zt$ and
+$5-z-zt$, and the final two are constant.
+
+For the asserted stronger conditional bound set $z=t=1$.
+Now
+
+$$
+B=2b(1-c)+bc+(b+c)(1-d),\qquad G=3(1-b)+(1-c).
+\tag{12.3}
+$$
+
+For $bc=00,01,10,11$ the exact values of $B+G$ are,
+respectively,
+
+$$
+4,\qquad4-d,\qquad4-d,\qquad3-2d.
+\tag{12.4}
+$$
+
+All are at most four. This proves both first two classes, since
+$B+w_2G\le B+G$. Class three becomes
+$2+2(1-c)+c(1-d)=4-c-cd\le4$.
+Class four becomes $4-d\le4$, and class five becomes three.
+Classes six and seven cannot have $w_6=w_7=1$.
+The eighth bit is ignored by $P^0$, so every free suffix is
+included. $\square$
+
+**Lemma 12.2 (The same-law $Q_8$ core bounds and later vectors).**
+On every core first-zero fibre $n\le7$, $Q_8$ has correct
+counts
+
+$$
+(1081,1002,1002,618,490,362,106)/3072
+\tag{12.5}
+$$
+
+and outside-$\{0,n\}$ mass at most $662/3072$.
+Its later and positive vectors are exactly
+
+$$
+\begin{aligned}
+(Q_8)_8&=\frac{2344e_0+220e_3+162e_4+187e_5+159e_8}{3072},\\
+(Q_8)_+&=\frac{2446e_0+220e_3+162e_4+187e_5+57e_8}{3072}.
+\end{aligned}
+\tag{12.6}
+$$
+
+Thus its positive nonbase count is 626, leaving 36 counts below
+the core endpoint allowance 662.
+
+Proof. The reused all-word theorem XVIII 320.2 supplies (12.5)
+and the outside bound for the genuine $P^\star$. Its complete
+polynomial certificate, with $x_i=w_i$, is
+
+$$
+\begin{aligned}
+3072[1-P^\star_x(0)]
+ &=J+A x_6+B(x_7+x_8)
+       -17(x_6x_7+x_6x_8+x_7x_8+x_8x_9),\\
+A&=127-125x_3-110x_4-127x_5,\qquad
+B=17-15x_3-17x_5,\\
+J&=1139+391x_1+470x_2+523x_3+227x_4+161x_5\\
+ &\quad-463x_1x_2-391x_1x_3-110x_1x_4-27x_1x_5\\
+ &\quad-391x_2x_3-110x_2x_4-27x_2x_5
+       -148x_3x_4-132x_3x_5-117x_4x_5.
+\end{aligned}
+\tag{12.7}
+$$
+
+Each schedule contributes its nonbase first count times $(1-x_i)$,
+middle count times $x_i(1-x_j)$ and exhaustion count times $x_ix_j$.
+For fixed $x_1,\ldots,x_5$, $B\le17$ and the suffix maximum
+is $J+\max\{0,A,B\}$: take $x_9=0$; at $x_6=0$ the
+remaining maximum is $\max\{0,B,2B-17\}=\max\{0,B\}$,
+and at $x_6=1$ the remaining coefficients are nonpositive,
+giving maximum $A$.
+The credited grouped outside-count maxima, in lexicographic order
+of all free bits through five, are
+
+$$
+\begin{array}{c|l}
+n&\text{complete grouped maxima}\\ \hline
+1&185,219,302,329,583,610,662,572,655,662,662,662,662,662,631,514\\
+2&655,662,662,662,662,662,631,514\\
+3&662,642,559,532\\
+4&662,635\\
+5&649
+\end{array}
+\tag{12.8}
+$$
+
+For classes six and seven the restricted nonbase polynomials are
+$995-15(x_7+x_8)-17(x_7x_8+x_8x_9)$ and
+$760-32x_8-17x_8x_9$; subtracting their correct counts gives
+outside maxima 633 and 654. These are the supplied full-word
+endpoint bounds, with no sole-zero restriction.
+
+The 53-count transfer from nine to eight preserves every core
+$A,C,P$ event on every word. Fixing input nine to zero retains
+all eight-bit core words, and projecting label nine to zero
+preserves correct mass and can only increase base and union mass.
+This proves the claimed core bounds for the actual law $Q_8$.
+
+To derive (12.6) directly from its complete tables, the persistent
+non-tail nonbase counts are $220,162,99+88=187$.
+On first-zero eight its correct contributions are
+$15+17+17+53+57=159$; nonbase total is 728 and base is 2344.
+On the positive eight-word the four middle contributions of total
+102 disappear into base, while the $(6,7)$ exhaustion contribution
+57 remains. Thus its nonbase total is 626 and base is 2446.
+All these counts come from the same allocation. $\square$
+
+## 13. Every independent row of $K$ on every word
+
+**Theorem 13.1 (Exact complete eight-bit error).**
+At the first eight amplitudes of (1.4), the law 11.2 satisfies every
+$A,C,P$ row and the positive row at cap $h=5\tau+22s$.
+Its complete maximum error is exactly $h$.
+
+Proof. Nonnegative normalized complete-table weights were proved
+in 11.3, so all evaluated vectors are probability vectors.
+Let $c_n=K_w(n)$ and $D_n=1-K_w(0)-K_w(n)$ on a word
+with first zero $n$. By (2.2), its three independent deficits are
+$c_n+D_n-a_n$, $a_n-c_n$, and $D_n$.
+
+The transfer changes only labels zero and eight. The complete
+$P^0$ and $Q_8$ correct counts therefore give, constantly on
+each entire first-zero fibre,
+
+$$
+\begin{array}{c|l|l}
+n&c_n&a_n-c_n\\ \hline
+1&1-13\tau-327s&2\tau+327s\\
+2&1-16\tau-22s&5\tau+22s\\
+3&8\tau-22s&5\tau+22s\\
+4&5\tau-22s&5\tau+22s\\
+5&4\tau-22s&5\tau+22s\\
+6&3\tau-22s&5\tau+22s\\
+7&\tau-22s&5\tau+22s\\
+8&195s&5\tau+22s
+\end{array}
+\tag{13.1}
+$$
+
+For the first two entries the sums are
+$(1-24\tau)+11(\tau-128s)+1081s$ and
+$(1-24\tau)+8(\tau-128s)+1002s$.
+The remaining core entries follow in the same way from the printed
+correct counts. In class eight, (12.6) supplies $159s$ and
+(11.4) adds $36s$, while $u=217s$.
+All deficits in the last column are nonnegative.
+The first is at most $h$, because
+$305s\le305\tau/217<3\tau$.
+Thus every $C$ row holds, and $c_n\le a_n$ in every class.
+
+The independent $P$ rows require a separate full-word bound.
+The anchor $R$ has no outside-$\{0,n\}$ mass on any core
+word. If $n\le7$ and $w_6w_7=0$, the transfer is inactive,
+and the full-word bounds of 12.1–12.2 give
+
+$$
+D_n\le(24\tau-3072s)\frac5{24}
+          +(3072s)\frac{662}{3072}
+      =5\tau+22s=h.
+\tag{13.2}
+$$
+
+If $n\le7$ and $w_6w_7=1$, then $n\le5$ and the
+conditional $P^0$ bound is four rather than five.
+Label eight is outside $\{0,n\}$, so the transfer adds $36s$
+to this independent deficit. Consequently
+
+$$
+\begin{aligned}
+D_n&\le(24\tau-3072s)\frac4{24}
+           +(3072s)\frac{662}{3072}+36s
+       =4\tau+186s,\\
+h-D_n&\ge\tau-164s\ge53\tau/217>0.
+\end{aligned}
+\tag{13.3}
+$$
+
+This is the full activation-set check, including every multiple-zero
+suffix; it uses neither a marginal-only table nor sole-zero samples.
+
+In class eight, $R$ emits zero, $P^0$ has outside mass $5/24$,
+and $Q_8$ has outside count $728-159=569$.
+The transfer stays inside $\{0,8\}$, so
+
+$$
+D_8=(24\tau-3072s)\frac5{24}
+             +(3072s)\frac{569}{3072}
+       =5\tau-71s\le5\tau\le h.
+\tag{13.4}
+$$
+
+All $P$ rows are now proved independently.
+For each word the $A$ deficit is
+$c_n+D_n-a_n=D_n-(a_n-c_n)\le D_n\le h$,
+using the separately proved $c_n\le a_n$.
+Every $A$ row therefore holds, including negative demands.
+
+At the positive eight-word, (12.6) gives for $L$ nonbase mass
+$5(\tau-128s)+626s=5\tau-14s$.
+The transfer adds exactly $36s$, giving $h$.
+The exact positive and first-zero-eight vectors are
+
+$$
+\begin{aligned}
+K_+={}&(1-h)e_0+(2\tau-36s)e_3+(\tau+34s)e_4
+                    +(2\tau-69s)e_5+93s e_8,\\
+K_8={}&(1-5\tau-124s)e_0+(2\tau-36s)e_3+(\tau+34s)e_4
+                    +(2\tau-69s)e_5+195s e_8.
+\end{aligned}
+\tag{13.5}
+$$
+
+Hence the positive row is equality. The three class-eight deficits
+are $-93s,h,5\tau-71s$, respectively.
+Every fibre $n=2,\ldots,8$ also has correct deficit exactly $h$.
+This proves the exact full eight-bit error, as well as the upper bound.
+
+No step divides by $u$, $W$, $\varepsilon$ or a branch weight.
+At $u=0$, $K=(1-24\tau)R+24\tau P^0$ and $h=5\tau$.
+At $\tau=1/24$ the $R$ branch is absent; at $u=\tau$
+the donor bound (11.5) is still strictly positive.
+All head ties, $a_8=a_7$, and zero transfer are included.
+The algebraic $\tau=0$ point is outside the original positive domain.
+
+The balance explaining 217 is exact: the core deficit contributes
+$22s$, $Q_8$ supplies correct-eight mass $159s$, and its
+positive-word allowance supplies a further $36s$.
+The equation $u=(22+159+36)s$ balances the correct-eight
+deficit with the core cap. The donor and activation proofs make
+this balance a single feasible law; they assert no full-catalog
+optimality. $\square$
+
+## 14. Direct original execution and exact actual-source error
+
+**Theorem 14.1 (One seed, counted requests and every actual continuation).**
+The finite law $K$ has original realizations in both classes satisfying
+(10.2), with actual error attainment.
+
+Proof. Partition one source-independent uniform seed in $[0,1)$
+into half-open intervals of the complete-table weights in 11.2.
+Omit zero intervals. Equivalently use the common-cell partition
+(11.1) before splitting any row. Before replies this single seed
+fixes the whole schedule and every counterfactual label.
+
+On a selected pair $O(i,j;f,m,z)$, the stopped rule executes
+its preselected increasing schedule until the first queried zero
+or exhaustion and emits the corresponding actual mark $\theta_\ell$,
+where $\ell$ is the selected output label.
+The constant-zero branch emits $\theta_0$ with no requests.
+For clarity, an output label need not be a queried address.
+The counted $N$ realization requests both actual addresses on
+that same source and seed, even if the first reply is zero.
+It emits $f$ on $00$ or $01$, $m$ on $10$, and $z$ on
+$11$. Every acquired reply, including an ignored second reply,
+counts as an actual request. Both rules make at most two actual
+requests, have zero advice and finite measurable handoff for every
+source and seed, and use the unchanged consumer.
+They have identical laws. This is a construction of these two rules,
+without converting an arbitrary competing $N$ law to $O$.
+
+Every actual first absence $n\le8$ gives a Boolean word covered
+by Theorem 13.1; all higher replies are ignored.
+For actual $n>8$, the finite eight-prefix is positive and no
+emitted mark is $\theta_n$. Put $r=1-K_+(0)=h$.
+Splitting the signed measure into the mark zero, mark $n$, and
+the other emitted marks gives the exact full-carrier identity
+
+$$
+\operatorname{TV}\left(
+ \sum_{j=0}^8K_+(j)\delta_{\theta_j},
+ (1-a_n)\delta_{\theta_0}+a_n\delta_{\theta_n}\right)
+ =\frac{|a_n-r|+a_n+r}{2}
+ =\max\{a_n,h\}.
+\tag{14.1}
+$$
+
+Actual $a_9$ is $5\tau+v$ and all $a_n$ for $n\ge10$
+are at most $5\tau\le h$. Therefore the uniform error is at most
+$\max\{h,5\tau+v\}$ for every allowed positive, nonincreasing,
+vanishing continuation, including $a_{10}=5\tau$, all later
+ties, nonsummable tails and arbitrarily slow decay.
+
+The bound is attained on actual sources. A fixed explicit source
+with first absence two is $(r,g)=(19,419)$, verified in 15.1.
+Its correct deficit in (13.1) is $h$ for every $\tau,u$.
+If $v\le22u/217$ this already attains the claimed maximum.
+If $v>22u/217$, an actual source with first absence nine
+attains $5\tau+v$ by (14.1).
+
+Recall the credited finite-pattern argument in full to justify this
+last actuality. Modulo a prime $p$, the invertible Fibonacci matrix
+$M=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$
+has
+$M^k=\left(\begin{smallmatrix}F_{k+1}&F_k\\F_k&F_{k-1}\end{smallmatrix}\right)$
+and is scalar exactly when $p\mid F_k$.
+Its projective class has finite order $z(p)\ge3$, since
+$F_1=F_2=1$, so $p\mid F_k$ iff $z(p)\mid k$.
+For a finite set of specified primes of product $D$, choose a
+prime index $r$ larger than all these orders, with
+$F_r\ge10(D+2)$. None of these orders divides $r$, so $F_r$
+is invertible modulo $D$. Prescribe $g=-F_r^{-1}\pmod p$
+at desired ones and $g=0\pmod p$ at desired zeros.
+CRT gives a residue modulo $D$. The actual interval
+$[\lceil F_r/10\rceil,\lfloor F_r/5\rfloor]$ has length at least
+$F_r/10-2\ge D$ and contains a representative.
+Every finite word, including $1^8 0$ and every multiple-zero
+word, is actual. Each actual positive integer $N(r,g)$ has finite
+prime support, hence finite first absence.
+
+Thus (14.1) attains the larger tail value when required.
+At $v=0$ the actual ninth amplitude remains $5\tau>0$;
+every actual later first absence has error exactly $h$.
+A positive eight-prefix is a finite reply pattern, not an infinite
+all-positive source. The acquisition obtains only its selected
+schedule, without observing the full prefix or $r,g,N,n$.
+This proves the exact original error (10.2). $\square$
+
+**Corollary 14.2 (The exact refutation quantifiers).**
+For every $0<\tau\le1/24$ and $0<u\le\tau$,
+the universal original complementary plane (9.2) fails at the
+allowed member $v=0$ for every allowed actual continuation.
+For this same law and arbitrary allowed $v$, strict improvement
+over the old complementary plane holds exactly for $v<22u/181$.
+
+Proof. The exact difference at $v=0$ is
+
+$$
+\left(5\tau+\frac{22u}{181}\right)-h
+ =\frac{792u}{181\cdot217}>0.
+\tag{14.2}
+$$
+
+Moreover $181v=0<75u$, so this is a member of the strict
+complementary region. For general $v$ and $u>0$, (10.2)
+is less than $5\tau+22u/181$ iff
+$\max\{22u/217,v\}<22u/181$, which is exactly the condition
+stated. Such a $v$ automatically satisfies $181v<75u$.
+At $u=0$ necessarily $v=0$ and there is no strict improvement.
+Theorem 5.2 still evaluates its own old law correctly;
+(9.2), proposed as a full-class necessary relation, is the
+assertion refuted here. $\square$
+
+## 15. A complete rational original counterexample
+
+**Proposition 15.1 (Twenty-nine tables and an actual attainer).**
+At $\tau=u=1/24$, $v=0$, the following is the full combined
+law $K$. There are 28 pair tables and one constant-zero table;
+every count is divided by 5208.
+
+| $i$ | $j$ | $f$ | $m$ | $z$ | Count |
+| --- | --- | --- | --- | --- | ---: |
+| 1 | 2 | 1 | 2 | 0 | 819 |
+| 1 | 2 | 1 | 2 | 3 | 398 |
+| 1 | 2 | 1 | 2 | 4 | 251 |
+| 1 | 2 | 1 | 2 | 5 | 188 |
+| 1 | 3 | 1 | 3 | 0 | 267 |
+| 1 | 3 | 0 | 3 | 0 | 391 |
+| 1 | 4 | 0 | 4 | 0 | 89 |
+| 1 | 4 | 1 | 4 | 0 | 110 |
+| 1 | 5 | 1 | 5 | 0 | 27 |
+| 2 | 3 | 0 | 3 | 0 | 600 |
+| 2 | 3 | 2 | 3 | 0 | 58 |
+| 2 | 4 | 0 | 4 | 0 | 199 |
+| 2 | 5 | 0 | 5 | 0 | 27 |
+| 3 | 4 | 0 | 4 | 0 | 237 |
+| 3 | 4 | 0 | 4 | 5 | 177 |
+| 3 | 5 | 0 | 5 | 0 | 221 |
+| 3 | 6 | 0 | 6 | 0 | 214 |
+| 3 | 7 | 0 | 7 | 0 | 15 |
+| 3 | 8 | 0 | 8 | 0 | 15 |
+| 4 | 5 | 0 | 5 | 0 | 206 |
+| 4 | 6 | 0 | 6 | 0 | 199 |
+| 5 | 6 | 0 | 6 | 0 | 216 |
+| 5 | 7 | 0 | 7 | 0 | 17 |
+| 5 | 8 | 0 | 8 | 0 | 17 |
+| 6 | 7 | 0 | 7 | 0 | 70 |
+| 6 | 7 | 0 | 7 | 8 | 93 |
+| 6 | 8 | 0 | 8 | 0 | 53 |
+| 7 | 8 | 0 | 8 | 0 | 17 |
+
+The remaining table is constant zero of count 17.
+Use first eight amplitudes $(13,13,13,10,9,8,6,6)/24$ and,
+for every $n\ge9$, take
+
+$$
+a_n=\frac5{24}\,2^{-(n-9)}.
+\tag{15.1}
+$$
+
+This is an entire actual amplitude sequence in (1.4).
+The law has exact original error $369/1736$, strictly below
+the plane value $309/1448$, and the actual source $(19,419)$
+attains that error.
+
+Proof. Here $s=1/5208$, $W=128/217$, $\varepsilon=36/5208$,
+the $R$ weight is zero, and the $P^0$ weight is $89/217$.
+In denominator 5208, before transfer the counts are 89 times
+the integer list of $P^0$ plus the integer list of $Q_8$.
+Their total is $89\cdot24+3072=2136+3072=5208$.
+For example the $(1,2)$ counts are
+$4\cdot89+463=819$, $2\cdot89+220=398$,
+$89+162=251$, and $89+99=188$.
+The distinct first-label-one and first-label-zero $(1,3)$
+counts are 267 and 391. Combining other coincident rows gives
+exactly the printed table. The changed $(6,7)$ counts are
+$89+17-36=70$ and $57+36=93$.
+Its remaining $P^0$ donor stock is $89-36=53$.
+The transfer preserves the total 5208 and all counts are nonnegative.
+
+The correct counts on the entire eight first-zero fibres are
+
+$$
+(2060,1714,1714,1063,846,629,195,195)/5208.
+\tag{15.2}
+$$
+
+The exact positive and class-eight vectors are
+
+$$
+\begin{aligned}
+K_+&=(4101e_0+398e_3+251e_4+365e_5+93e_8)/5208,\\
+K_8&=(3999e_0+398e_3+251e_4+365e_5+195e_8)/5208.
+\end{aligned}
+\tag{15.3}
+$$
+
+The class-eight $A,C,P$ deficits are respectively
+$-93/5208$, $1107/5208$, and $1014/5208$.
+Theorems 13.1 and 14.1 cover every other word and every actual
+source, not only the displayed class-eight vector.
+The exact cap and comparison are
+
+$$
+h=\frac{1107}{5208}=\frac{369}{1736},\qquad
+T=\frac{927}{4344}=\frac{309}{1448},\qquad
+T-h=\frac{33}{39277}>0.
+\tag{15.4}
+$$
+
+The sequence (15.1) has $a_9=5/24$, $a_{10}=5/48$,
+strictly positive ordered tail and vanishing limit.
+It keeps the actual ninth amplitude, and the law also works for
+every other permitted $v=0$ continuation by 14.1.
+
+Finally $19$ is prime, $F_{19}=4181$, and the legal $g$ window
+is $419\le g\le836$. With $g=419$,
+
+$$
+N(19,419)=1+4181\cdot419=1751840.
+\tag{15.5}
+$$
+
+This integer is even and has digit sum 26, so it is not divisible
+by three. Its first absence is exactly two.
+At that source $a_2=13/24=2821/5208$ and the correct count
+is $1714/5208$, giving deficit $1107/5208=h$.
+The all-word and actual-tail upper proof gives TV at most $h$,
+so this source attains the exact original uniform error.
+The witness is a law on the whole original source and entire
+positive sequence. $\square$
+
+## 16. The precise reduced interval and retained original frontier
+
+**Proposition 16.1 (Reduced minima, original correspondence and the gap).**
+For both complete reduced problems,
+
+$$
+5\tau+\frac{11u}{117}
+ \le\nu_N(\tau,u)\le\nu_O(\tau,u)
+ \le5\tau+\frac{22u}{217}.
+\tag{16.1}
+$$
+
+For each class and every continuation in (1.4),
+
+$$
+\nu_C(\tau,u)\le m_C(\tau,u,v),\qquad
+\nu_C(\tau,u)=m_C(\tau,u,0).
+\tag{16.2}
+$$
+
+At $u=0$ both reduced minima and the allowed original minima
+equal $5\tau$. For $u>0$ the interval in (16.1) has positive width
+
+$$
+\frac{187u}{117\cdot217}.
+\tag{16.3}
+$$
+
+Proof. Each eight-bit catalog is finite and the full-row maximum
+is continuous on its probability simplex, so its minimum exists
+separately. The credited head-independent 43-charge inequality
+of XVII 312.2 gives $43e\ge215\tau$, hence a lower bound
+$5\tau$ in both catalogs.
+
+For the stronger lower endpoint reuse precisely the same-law bridge
+of 7.1. At any feasible eight-bit cap $e\in[0,1]$, extend the
+same complete allocation by ignoring nine and set the auxiliary
+finite amplitude $b_9=e$. If $q=p_+(0)\ge1-e$, the new
+first-zero-nine probabilities are $(q,0,q)$ and its demands
+are $(1-2e,0,1-e)$. Each holds separately, as does the
+positive row. This costs no query and requires no order condition.
+Apply the full $Y_{128}$ relation (2.4) to this one allocation
+and subtract $11b_9=11e$. Its eight-coordinate left side is
+
+$$
+2a_2+11a_3+13a_4+13a_5+12a_6+11a_7+11a_8
+ =2+585\tau+11u.
+\tag{16.4}
+$$
+
+Thus $117e\ge585\tau+11u$.
+This is the credited full-$N$ lower consequence, not a new score.
+It includes arbitrary independent $N$ outputs.
+Counted completion yields $\nu_N\le\nu_O$, and Theorem 13.1
+gives their common upper bound. Their relevant caps are below one.
+
+For (16.2), use the original compact correspondence of 8.1 in
+each class separately. Restrict any nine-bit feasible law by fixing
+input nine to zero and projecting label nine to zero, contracting
+constant observations within its schedule. Low correct events
+are unchanged, and their base and union events improve.
+The positive eight-word is the former first-zero-nine word.
+Its new base mass is the old $p(0)+p(9)\ge1-e$ by the
+independent $P_9$ row, for every actual $a_9$.
+Hence $\nu_C\le m_C$ for any allowed $v$.
+These are finite proof representations, not free observations.
+
+Conversely take an eight-bit minimizer in its own class.
+At $v=0$, every actual amplitude beyond eight is at most
+$5\tau\le\nu_C$. The common-seed execution of its complete
+tables has the original cap $\nu_C$: every low first absence
+is covered by its rows, and every later one by the exact identity
+$\max\{1-p_+(0),a_n\}\le\nu_C$.
+Thus $m_C(\tau,u,0)\le\nu_C$.
+The original necessity correspondence retains all arbitrary addresses
+and Borel outputs and preserves class feasibility, not an arbitrary
+starting law. This is the supplied R1 correspondence at its precise
+scope. It never replaces the actual $a_9$ of a specified sequence.
+
+When $u=0$, necessarily $v=0$ and (16.1)–(16.2) give the
+exact value $5\tau$. Subtracting the lower endpoint of (16.1)
+from its upper gives (16.3), positive for $u>0$.
+Neither minimax optimality of $K$ nor equality $\nu_N=\nu_O$
+for $u>0$ follows. $\square$
+
+**Corollary 16.2 (Original bounds and the unchanged attained wedge).**
+All valid lower bounds and attained results in 5–8 remain valid.
+On the whole original family,
+
+$$
+\begin{aligned}
+\max\{E_{\rm sum},L_8\}
+ &\le m_N\le m_O\\
+ &\le5\tau+
+ \min\left\{
+ \max\left\{\frac{22u}{181},\frac{11(u+v)}{128}\right\},
+ \max\left\{\frac{22u}{217},v\right\}
+ \right\}.
+\end{aligned}
+\tag{16.5}
+$$
+
+On $181v\ge75u$ the exact attained value in both classes
+is still $E_{\rm sum}$. The full-class complement remains
+unevaluated in general.
+
+Proof. Choose the better of the two complete common laws in 5.2
+and 10.2 for the fixed parameters. This selects one whole law;
+it does not combine separately optimized event margins.
+The lower bounds are (5.4) and 7.2.
+
+The old wedge's parameter condition is exactly the conserved-transfer
+parameter domain of XVIII 324–327 under
+$t=(u+v)/2$, $\delta=(u-v)/2$:
+$\delta\le53t/128$ is exactly $75u\le181v$,
+and $\delta\le\tau-t$ is $u\le\tau$.
+This domain is broader than the narrower overlapping slice
+$v\ge u/2$ identified in XVIII 330.
+The wedge law (5.2) is that same credited law, since
+$x+y=24t$ and $53x/3072=\delta$.
+At $u>0$ on the wedge, $v\ge75u/181>22u/217$,
+so $K$ has error $5\tau+v\ge E_{\rm sum}$.
+There is no conflict with the old matching lower bound or new
+optimality credit for that wedge.
+Compact original attainment in 8.1 still holds separately;
+it does not supply a value or equality in the complement.
+The full-score face question in 9.1 retains its stated unresolved
+intersection range. $\square$
+
+## 17. The surviving slack identity and exact remaining obligations
+
+**Proposition 17.1 (The R2 identity survives and its extra strengthening fails).**
+Let a complete normalized eight-bit $N$ law be feasible at
+$e=5\tau+d\in[0,1]$ for the first eight amplitudes of (1.4).
+Extend that same law by ignoring nine at auxiliary $b_9=e$
+as in 7.1. With $Y=Y_{128}$ and $\mathfrak d_r$ the demand
+of a full nine-bit row, define
+
+$$
+S=\sum_D\lambda_D(368-Yz_D)
+   +\sum_rY_r\,[p(\operatorname{event}r)-\mathfrak d_r].
+\tag{17.1}
+$$
+
+Then the supplied R2 slack identity is exactly
+
+$$
+S=8(117d-11u)\ge0.
+\tag{17.2}
+$$
+
+The additional proposed full-class strengthening $S\ge212d$
+is false for every $u>0$, as witnessed by $K$ at $e=h$.
+
+Proof. Full support gives $Yz_D\le368$ for every complete
+$N$ table. Every full row of the extended law is feasible, and
+$Y\ge0$, so each summand in (17.1) is nonnegative.
+Normalization and $p=\sum_D\lambda_Dz_D$ cancel the incidence
+terms, leaving $S=368-Y\mathfrak d$.
+The quotient (2.3)–(2.4), with $b_9=e$, gives exactly
+$S=8[117(e-5\tau)-11u]$.
+This auxiliary finite amplitude asserts nothing about the actual
+original $a_9$ and needs no order assumption.
+The identity is the credited score pairing, not a new certificate.
+
+For $K$, $d=22u/217$, and therefore
+
+$$
+S=\frac{1496u}{217},\qquad
+212d=\frac{4664u}{217},\qquad
+S-212d=-\frac{3168u}{217}<0\quad(u>0).
+\tag{17.3}
+$$
+
+The nonnegative identity remains valid.
+Its proposed strengthening would imply
+$8(117d-11u)\ge212d$, equivalently $181d\ge22u$;
+(17.3) shows why that additional full-class step cannot hold.
+For $K$ at $u=0$, one has $d=0$ and both quantities vanish. $\square$
+
+**Proposition 17.2 (The R3 restriction and R4 failed move retain their scopes).**
+The fixed-base tail-relabeling obstruction called R3 does not
+apply to $K$. The failed unaccompanied rescheduling called R4
+is not a full-class obstruction to (10.3).
+
+Proof. R3 fixes schedule masses and every originally zero- or
+core-labeled cell, redistributing only originally eight- or
+nine-labeled stock. Within that restricted family, the reused
+class-two correct mass is
+$1-16\tau-22W/3072$, and correct-eight mass is at most
+$159W/3072$. At cap $5\tau+d$ its two correct rows require
+
+$$
+22W\le3072d,\qquad 3072(u-d)\le159W,
+\tag{17.4}
+$$
+
+which imply $181d\ge22u$, also when the second demand is
+negative. This remains a restricted-family statement.
+For $u>0$, $K$ moves the positive amount $36s$ from an
+originally base-labeled $P^0$ cell to label eight and obtains
+$195s$ correct-eight mass. That operation violates R3's
+fixed-base premise. Its legality is proved by 11.3 and 12.1–13.1,
+rather than by broadening R3's scope.
+
+R4 replaces the old 17-count $O(8,9;0,9,0)$ branch by
+$O(7,8;0,8,0)$ without compensation.
+On the actual finite word $101000100$, with first zero two,
+this raises the old $Q$ outside count from 662 to 679:
+the old branch emits zero and its replacement emits eight.
+Here $w_6=0$. In $Q_8$ the old branch instead becomes
+constant zero, and the additional $(6,7)$ transfer of $K$
+is inactive. No such 17-count addition to $(7,8)$ is made.
+Thus that failed move remains excluded, while the all-word
+proof above supplies a different legal law. $\square$
+
+**Definition 17.3 (Current limits and premise boundary).**
+The established increment is the base-label-to-eight transfer,
+the full activation-set slack proof, the consumed positive-word
+allowance, the exact 217 upper law and the full original
+counterexample. The proposal supplies that construction; the
+independent ordinary check verifies it; this body supplies its
+complete ordinary derivation. The mature $P^0$, $P^\star$,
+$Q$, endpoint polynomials, full-score support, old attained
+wedge, finite-pattern arithmetic, compactness and closed-cap
+transport are reused with their stated credits.
+
+The exact full reduced minima for $u>0$, a matching new lower
+certificate, optimality of $K$, and equality or separation of
+$N$ and $O$ remain unresolved. The positive-width interval
+(16.1) is the present reduced frontier, while (16.5) and the
+old attained wedge give the stated original frontier.
+Relation (9.2) and the extra R2 strengthening are refuted;
+R2's identity, R3's restricted obstruction and R4's failed-move
+obstruction retain precisely the scopes proved above.
+
+The unrestricted simultaneous signed-budget problem of 9 and
+XVIII 323.3 still asks, for every full unit-$O$ score, for one
+unrestricted full $V\ge0$ and one common $\theta\in[0,1]$
+paying both $\Delta_N(V)+\theta\le1$ and
+$\sigma_H(Qy-QV)\le\theta$, or for the complete same-profile
+original separator. Its residual remains signed and nonzero
+zero-cost $V$ at $\theta=1$ remains allowed. The present law
+belongs to both classes and supplies neither unrestricted alternative.
+
+The mathematical statements here are repo-derived relative to the
+complete supplied DEV, owning source, proposal and check.
+Blackwell's whole attainable loss-vector framework and
+Kaniewski–Lee–de Wolf's scalar-expectation framework retain only
+the roles specified in 9 and XVIII 323.2; scalar coefficient
+normalization does not supply this law's vector or schedule budget.
+No unseen nested supplier body or unprovided external reference
+is used as additional evidence. The earlier correspondence
+theorems are reused only at the scopes expressly supplied in 1.3.
+These are ordinary mathematical proofs, without a claim of
+formal-kernel verification, worldwide priority, physical efficiency,
+general neural-network or empirical-learning consequences, or
+completion of the wider acquisition problem.
+
+All outputs are finite laws on the actual marks in $B_1$.
+Every unchanged original nonatomic target assigns their finite
+support zero mass, so their TV distance from it is one.
+The accuracy and counterexample concern the selected marked targets
+on the unchanged source, carrier, consumer and hard resource classes.
+
+## 追加锚（本行以下为增补区）
