@@ -8,7 +8,6 @@
 
 import D5.S3.StatisticalMechanics.GlauberRelaxationOrderRefutation
 import D5.S3.PrimeGaps.ShortTranslateClosure
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -122,7 +121,7 @@ private theorem gibbs_log (x : ℝ) (hx : 0 < x) :
     gibbs energy (Real.log x) =
       fun i => (1 / x ^ levels i) / ∑ j, (1 / x ^ levels j) := by
   funext i
-  simp only [gibbs.eq_1, weights_log x hx]
+  simp (config := { congrConsts := false }) only [gibbs.eq_1, weights_log x hx]
 
 private theorem gibbs_initial :
     gibbs energy (Real.log (11 / 10)) =
@@ -133,7 +132,7 @@ private theorem gibbs_initial :
         2143588810 / 15937424601, 1000000000 / 15937424601] := by
   rw [gibbs_log _ (by norm_num)]
   funext i
-  fin_cases i <;> norm_num [levels.eq_1, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num (config := { congrConsts := false }) [levels.eq_1, Fin.sum_univ_succ]
 
 private theorem gibbs_four :
     gibbs energy (Real.log 4) =
@@ -141,7 +140,7 @@ private theorem gibbs_four :
         16384 / 349525, 4 / 349525, 262144 / 349525, 65536 / 349525, 1 / 349525] := by
   rw [gibbs_log _ (by norm_num)]
   funext i
-  fin_cases i <;> norm_num [levels.eq_1, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num (config := { congrConsts := false }) [levels.eq_1, Fin.sum_univ_succ]
 
 private theorem gibbs_eight :
     gibbs energy (Real.log 8) =
@@ -150,7 +149,7 @@ private theorem gibbs_eight :
         16777216 / 153391689, 1 / 153391689] := by
   rw [gibbs_log _ (by norm_num)]
   funext i
-  fin_cases i <;> norm_num [levels.eq_1, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num (config := { congrConsts := false }) [levels.eq_1, Fin.sum_univ_succ]
 
 private theorem partition_pos (b : ℝ) :
     0 < ∑ i : Fin 10, Real.exp (-b * energy i) :=
@@ -163,14 +162,14 @@ private theorem gibbs_positive (b : ℝ) (i : Fin 10) : 0 < gibbs energy b i := 
 private theorem gibbs_probability (b : ℝ) :
     D5.S3.TotalVariation.CycleSingleCutMinimax.Probability (gibbs energy b) := by
   refine ⟨fun i => (gibbs_positive b i).le, ?_⟩
-  simp only [gibbs.eq_1]
+  simp (config := { congrConsts := false }) only [gibbs.eq_1]
   rw [← Finset.sum_div]
   exact div_self (ne_of_gt (partition_pos b))
 
 private theorem edge_bounds (b : ℝ) (i j : Fin 10) :
     0 ≤ edgeWeight 3 adj energy b i j ∧ edgeWeight 3 adj energy b i j ≤ 1 / 3 := by
   rw [edgeWeight.eq_1]
-  simp only [Matrix.of_apply]
+  simp (config := { congrConsts := false }) only [Matrix.of_apply]
   split_ifs
   · have hi := gibbs_positive b i
     have hj := gibbs_positive b j
@@ -189,7 +188,7 @@ private theorem outflow_le (b : ℝ) (j : Fin 10) :
       intro i _
       split_ifs with h
       · rfl
-      · simp only [edgeWeight.eq_1, Matrix.of_apply, if_neg h]
+      · simp (config := { congrConsts := false }) only [edgeWeight.eq_1, Matrix.of_apply, if_neg h]
     _ ≤ ∑ i ∈ Finset.univ.filter (fun i => adj i j), (1 / 3 : ℝ) :=
       Finset.sum_le_sum (fun i _ => (edge_bounds b i j).2)
     _ = 1 := by
@@ -202,13 +201,13 @@ private theorem glauber_stochastic (b : ℝ) :
   constructor
   · intro i j
     rw [glauber.eq_1]
-    simp only [Matrix.of_apply]
+    simp (config := { congrConsts := false }) only [Matrix.of_apply]
     split_ifs
     · exact sub_nonneg.mpr (outflow_le b j)
     · exact (edge_bounds b i j).1
   · intro j
     have hdiag : edgeWeight 3 adj energy b j j = 0 := by
-      simp only [edgeWeight.eq_1, Matrix.of_apply, if_neg (adj_regular.2.2.1 j)]
+      simp (config := { congrConsts := false }) only [edgeWeight.eq_1, Matrix.of_apply, if_neg (adj_regular.2.2.1 j)]
     calc
       (∑ i, glauber 3 adj energy b i j) =
           glauber 3 adj energy b j j +
@@ -217,10 +216,10 @@ private theorem glauber_stochastic (b : ℝ) :
       _ = (1 - ∑ i, edgeWeight 3 adj energy b i j) +
           ∑ i ∈ Finset.univ.erase j, edgeWeight 3 adj energy b i j := by
         congr 1
-        · simp only [glauber.eq_1, Matrix.of_apply, ite_true]
+        · simp (config := { congrConsts := false }) only [glauber.eq_1, Matrix.of_apply, ite_true]
         · apply Finset.sum_congr rfl
           intro i hi
-          simp only [glauber.eq_1, Matrix.of_apply, if_neg (Finset.ne_of_mem_erase hi)]
+          simp (config := { congrConsts := false }) only [glauber.eq_1, Matrix.of_apply, if_neg (Finset.ne_of_mem_erase hi)]
       _ = 1 := by
         rw [Finset.sum_erase (f := fun i => edgeWeight 3 adj energy b i j) _ hdiag]
         ring
@@ -247,74 +246,74 @@ private theorem run_one_formula :
     run 1 = (glauber 3 adj energy (Real.log 4)).mulVec
       (gibbs energy (Real.log (11 / 10))) := by
   change (glauber 3 adj energy (beta 1)).mulVec (gibbs energy (beta 0)) = _
-  have hb0 : beta 0 = Real.log (11 / 10) := by norm_num [beta.eq_1, q.eq_1]
-  have hb1 : beta 1 = Real.log 4 := by norm_num [beta.eq_1, q.eq_1]
+  have hb0 : beta 0 = Real.log (11 / 10) := by norm_num (config := { congrConsts := false }) [beta.eq_1, q.eq_1]
+  have hb1 : beta 1 = Real.log 4 := by norm_num (config := { congrConsts := false }) [beta.eq_1, q.eq_1]
   rw [hb0, hb1]
 
 private theorem run_one_0 : run 1 0 = oneState 0 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
 
 private theorem run_one_1 : run 1 1 = oneState 1 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
 
 private theorem run_one_2 : run 1 2 = oneState 2 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_3 : run 1 3 = oneState 3 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_4 : run 1 4 = oneState 4 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_5 : run 1 5 = oneState 5 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_6 : run 1 6 = oneState 6 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_7 : run 1 7 = oneState 7 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_8 : run 1 8 = oneState 8 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one_9 : run 1 9 = oneState 9 := by
   rw [run_one_formula, gibbs_initial]
-  norm_num (config := { decide := true }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
+  norm_num (config := { decide := true, congrConsts := false }) [Matrix.mulVec, dotProduct, glauber.eq_1, edgeWeight.eq_1, gibbs_four,
     adj.eq_1, oneState.eq_1, Matrix.cons_val, Fin.sum_univ_succ, Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
-  simp only [Matrix.cons_val]
+  simp (config := { congrConsts := false }) only [Matrix.cons_val]
   norm_num
 
 private theorem run_one : run 1 = oneState := by
@@ -334,9 +333,9 @@ private theorem run_one : run 1 = oneState := by
 private theorem passivity_value :
     neighbourhoodPassivity 3 adj energy beta run 1 0 =
       -1454086156987 / 205381037283201 := by
-  have hb2 : beta (1 + 1) = Real.log 8 := by norm_num [beta.eq_1, q.eq_1]
+  have hb2 : beta (1 + 1) = Real.log 8 := by norm_num (config := { congrConsts := false }) [beta.eq_1, q.eq_1]
   rw [neighbourhoodPassivity.eq_1, hb2, gibbs_eight, run_one]
-  norm_num (config := { decide := true }) [adj.eq_1, oneState.eq_1, Finset.sum_filter, Fin.sum_univ_succ,
+  norm_num (config := { decide := true, congrConsts := false }) [adj.eq_1, oneState.eq_1, Finset.sum_filter, Fin.sum_univ_succ,
     Fin.succ, Fin.reduceFinMk, Fin.reduceEq]
 
 theorem result : ¬ claim := by
