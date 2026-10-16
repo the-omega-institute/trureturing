@@ -55,6 +55,8 @@ The two constant-direction spines have real recurrences with coefficients $3$ an
 
 The private `quadrilateral_region` and `region_chart` identify the four half-planes with the four-vertex convex hull. The public `result` combines necessity, sufficiency and the chart correspondence.
 
+The private `scan_invariant`, `cone_scan`, `path_valid`, `sufficient`, `spine_next`, `spine_recurrence_l` and `spine_recurrence_r` are consumed bind-only helpers. After inlining, their proof paths consist of applications of the pinned list scan/fold owners and, where needed, the frozen real cubic, plus polynomial, cast and logical normalization. The content witness is `no_nonnegative_drift`, consumed through `resonant_negative` and `necessary` by `result`. Admission remains `open-problem-resolution (#17060; Proved)`.
+
 ## Falsifier
 
 A different move order, omission of the root or mandatory moves, an incorrect rational division, a strictly-positive interpretation excluding zero boundary shadows, or a claim about arbitrary independent root permutations would change the assertion. The statement echo fixes each of these choices. Failure of either implication for one natural initial triple and one actual finite path would refute the delivered assertion; `result` proves both implications for all such triples and paths.

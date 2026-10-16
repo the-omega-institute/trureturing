@@ -64,7 +64,10 @@ internal sealed class BoninShadowMarkoffPositivityDocument : IScribeDocumentDefi
                 + "makes a shadow negative by the normalized Wronskian drift estimate. The two "
                 + "inequalities cut out exactly the displayed convex hull. Integrality is "
                 + "preserved even for arbitrary integer initial shadows. The result determines "
-                + "the polygon left unspecified by the source's Theorem 1 for this rooted tree.",
+                + "the polygon left unspecified by the source's Theorem 1 for this rooted tree. "
+                + "Cone propagation, path validity, sufficiency and the spine recurrences use "
+                + "consumed bind-only helpers. The content witness is no_nonnegative_drift, "
+                + "used through resonant_negative and necessary in result.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("bonin-2024-shadow-markoff-positivity"),

@@ -94,7 +94,7 @@ $$\forall al \in \mathbb{N}, be \in \mathbb{N}, ga \in \mathbb{N},\; ((al, be, g
 
 *Commentary.*
 
-The shifted shadows 3x − σa, with σ the sum of the initial shadows, satisfy a cone invariant under both mutations. This proves positivity throughout the tree when al + be ≤ 2ga and 2al ≤ be + ga. Conversely, the two constant direction spines satisfy forced second order recurrences. A negative forcing makes a shadow negative by the normalized Wronskian drift estimate. The two inequalities cut out exactly the displayed convex hull. Integrality is preserved even for arbitrary integer initial shadows. The result determines the polygon left unspecified by the source's Theorem 1 for this rooted tree.
+The shifted shadows 3x − σa, with σ the sum of the initial shadows, satisfy a cone invariant under both mutations. This proves positivity throughout the tree when al + be ≤ 2ga and 2al ≤ be + ga. Conversely, the two constant direction spines satisfy forced second order recurrences. A negative forcing makes a shadow negative by the normalized Wronskian drift estimate. The two inequalities cut out exactly the displayed convex hull. Integrality is preserved even for arbitrary integer initial shadows. The result determines the polygon left unspecified by the source's Theorem 1 for this rooted tree. Cone propagation, path validity, sufficiency and the spine recurrences use consumed bind-only helpers. The content witness is no_nonnegative_drift, used through resonant_negative and necessary in result.
 
 ## References
 

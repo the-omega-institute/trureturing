@@ -8,13 +8,14 @@
 
 /-
 admission_basis: open-problem-resolution (#17060; Proved)
-escape_witness: none
+escape_witness: no_nonnegative_drift (via resonant_negative, necessary, result)
 Direct frozen dependency F:
   D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
   declaration statement_id:
   sha256:186570f9f6350dad09e43b147057586bf5e0ea26cd4536265608a0e0c4cbabec
 Each dependency below follows through the other declarations of this module.
-All declarations have escape_witness none; the settling theorem is result.
+The settling theorem result consumes the negative-drift content path.
+The shifted-cone and spine-recurrence helpers are consumed bind-only declarations.
 
 step_poly
   proof_shape: bind-only
@@ -49,7 +50,7 @@ scan_invariant
   consumers: cone_scan, path_valid
   Direct frozen dependencies: none
 cone_scan
-  proof_shape: content
+  proof_shape: bind-only
   consumers: sufficient
   Direct frozen dependencies: F
 root_valid
@@ -57,7 +58,7 @@ root_valid
   consumers: path_valid
   Direct frozen dependencies: none
 path_valid
-  proof_shape: content
+  proof_shape: bind-only
   consumers: sufficient, spine_next
   Direct frozen dependencies: F
 first_steps
@@ -69,7 +70,7 @@ base_cone
   consumers: sufficient
   Direct frozen dependencies: none
 sufficient
-  proof_shape: content
+  proof_shape: bind-only
   consumers: result
   Direct frozen dependencies: F
 spine_mem
@@ -77,7 +78,7 @@ spine_mem
   consumers: spine_next, necessary
   Direct frozen dependencies: none
 spine_next
-  proof_shape: content
+  proof_shape: bind-only
   consumers: spine_recurrence_l, spine_recurrence_r
   Direct frozen dependencies: F
 spine_fixed_l
@@ -89,11 +90,11 @@ spine_fixed_r
   consumers: spine_recurrence_r
   Direct frozen dependencies: none
 spine_recurrence_l
-  proof_shape: content
+  proof_shape: bind-only
   consumers: necessary
   Direct frozen dependencies: F
 spine_recurrence_r
-  proof_shape: content
+  proof_shape: bind-only
   consumers: necessary
   Direct frozen dependencies: F
 no_nonnegative_drift
