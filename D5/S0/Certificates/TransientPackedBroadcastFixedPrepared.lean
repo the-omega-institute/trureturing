@@ -127,44 +127,44 @@ theorem broadcastBlocks_bound_nat (base : Nat) (hbase : 0 < base)
 /-- Consumer API for one missing original scope axis.
 No expanded source literals or explicit chunks occur in the statement.
 The equality holds for all `index`, preserving complete-domain semantics. -/
-theorem broadcastBits_lane_nat (width prefix suffix value : Nat)
-    (hvalue : value < (2 ^ width) ^ (4 ^ prefix * 4 ^ suffix)) (index : Nat) :
+theorem broadcastBits_lane_nat (width prefixCount suffix value : Nat)
+    (hvalue : value < (2 ^ width) ^ (4 ^ prefixCount * 4 ^ suffix)) (index : Nat) :
     digit (2 ^ width) index
-        (broadcastBits (width * 4 ^ suffix) (4 ^ prefix) value) =
+        (broadcastBits (width * 4 ^ suffix) (4 ^ prefixCount) value) =
       digit (2 ^ width) (eraseDigit 4 suffix index) value := by
   have hsize : 0 < 4 ^ suffix := Nat.pow_pos (by decide)
   have hbase : 0 < (2 ^ width) ^ (4 ^ suffix) :=
     Nat.pow_pos (Nat.two_pow_pos width)
-  have hsource : value < ((2 ^ width) ^ (4 ^ suffix)) ^ (4 ^ prefix) := by
-    rw [← Nat.pow_mul, Nat.mul_comm (4 ^ suffix) (4 ^ prefix)]
+  have hsource : value < ((2 ^ width) ^ (4 ^ suffix)) ^ (4 ^ prefixCount) := by
+    rw [← Nat.pow_mul, Nat.mul_comm (4 ^ suffix) (4 ^ prefixCount)]
     exact hvalue
   rw [broadcastBits_eq, Nat.pow_mul]
-  exact broadcastBlocks_lane_nat (2 ^ width) (4 ^ suffix) (4 ^ prefix)
+  exact broadcastBlocks_lane_nat (2 ^ width) (4 ^ suffix) (4 ^ prefixCount)
     value hsize hbase hsource index
 
 /-- Consumer range API: one missing axis multiplies the lane count by four.
 This includes width zero, whose source and broadcast are both zero. -/
-theorem broadcastBits_lt_nat (width prefix suffix value : Nat)
-    (hvalue : value < (2 ^ width) ^ (4 ^ prefix * 4 ^ suffix)) :
-    broadcastBits (width * 4 ^ suffix) (4 ^ prefix) value <
-      (2 ^ width) ^ (4 ^ (prefix + suffix + 1)) := by
+theorem broadcastBits_lt_nat (width prefixCount suffix value : Nat)
+    (hvalue : value < (2 ^ width) ^ (4 ^ prefixCount * 4 ^ suffix)) :
+    broadcastBits (width * 4 ^ suffix) (4 ^ prefixCount) value <
+      (2 ^ width) ^ (4 ^ (prefixCount + suffix + 1)) := by
   have hbase : 0 < (2 ^ width) ^ (4 ^ suffix) :=
     Nat.pow_pos (Nat.two_pow_pos width)
-  have hsource : value < ((2 ^ width) ^ (4 ^ suffix)) ^ (4 ^ prefix) := by
-    rw [← Nat.pow_mul, Nat.mul_comm (4 ^ suffix) (4 ^ prefix)]
+  have hsource : value < ((2 ^ width) ^ (4 ^ suffix)) ^ (4 ^ prefixCount) := by
+    rw [← Nat.pow_mul, Nat.mul_comm (4 ^ suffix) (4 ^ prefixCount)]
     exact hvalue
-  have hexponent : (4 ^ suffix) * (4 * (4 ^ prefix)) =
-      4 ^ (prefix + suffix + 1) := by
+  have hexponent : (4 ^ suffix) * (4 * (4 ^ prefixCount)) =
+      4 ^ (prefixCount + suffix + 1) := by
     rw [Nat.pow_succ, Nat.pow_add]
     ring
-  have hboundPower : ((2 ^ width) ^ (4 ^ suffix)) ^ (4 * (4 ^ prefix)) =
-      (2 ^ width) ^ (4 ^ (prefix + suffix + 1)) := by
+  have hboundPower : ((2 ^ width) ^ (4 ^ suffix)) ^ (4 * (4 ^ prefixCount)) =
+      (2 ^ width) ^ (4 ^ (prefixCount + suffix + 1)) := by
     calc
-      _ = (2 ^ width) ^ ((4 ^ suffix) * (4 * (4 ^ prefix))) :=
-        (Nat.pow_mul (2 ^ width) (4 ^ suffix) (4 * (4 ^ prefix))).symm
+      _ = (2 ^ width) ^ ((4 ^ suffix) * (4 * (4 ^ prefixCount))) :=
+        (Nat.pow_mul (2 ^ width) (4 ^ suffix) (4 * (4 ^ prefixCount))).symm
       _ = _ := by rw [hexponent]
   have h := broadcastBlocks_bound_nat ((2 ^ width) ^ (4 ^ suffix)) hbase
-    (4 ^ prefix) value hsource
+    (4 ^ prefixCount) value hsource
   rw [hboundPower] at h
   simpa only [broadcastBits_eq, Nat.pow_mul] using h
 

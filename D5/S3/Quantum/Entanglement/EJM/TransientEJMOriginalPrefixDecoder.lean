@@ -120,10 +120,10 @@ private theorem readPrefix_sound (depth : ℕ) :
     have actualCoordinate : (coordinate depth).val = depth :=
       Nat.mod_eq_of_lt below
     cases previous : readPrefix depth p with
-    | none => simp only [readPrefix, previous] at accepted
+    | none => simp only [readPrefix, previous, reduceCtorEq] at accepted
     | some previousCode =>
       cases current : p (coordinate depth) with
-      | none => simp only [readPrefix, previous, current] at accepted
+      | none => simp only [readPrefix, previous, current, reduceCtorEq] at accepted
       | some a =>
         have codeEq : 4 * previousCode + a.val = code := by
           simpa only [readPrefix, previous, current, Option.some.injEq] using accepted
