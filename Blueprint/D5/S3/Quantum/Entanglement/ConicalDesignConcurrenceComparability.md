@@ -6,7 +6,7 @@ Conical two-design concurrence bounds have a uniform ratio ordering.
 
 **Theorem 1.1 (Rectangular isometries preserve the trace norm).**
 
-$$\forall (M : Type*), \forall (N : Type*), [\operatorname{Fintype}\left(M\right)] [\operatorname{DecidableEq}\left(M\right)] [\operatorname{Fintype}\left(N\right)] [\operatorname{DecidableEq}\left(N\right)], \forall (V : \operatorname{Matrix}\left(M, N, \mathbb{C}\right)), \forall (hV : \operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right) \cdot V = (1 : \operatorname{Matrix}\left(N, N, \mathbb{C}\right))), \forall (X : \operatorname{Matrix}\left(N, N, \mathbb{C}\right)), \operatorname{traceNorm}\left(V \cdot X \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right)\right) = \operatorname{traceNorm}\left(X\right)$$
+$$\forall (M : Type*), \forall (N : Type*), [\operatorname{Fintype}\left(M\right)] [\operatorname{DecidableEq}\left(M\right)] [\operatorname{Fintype}\left(N\right)] [\operatorname{DecidableEq}\left(N\right)], \forall (V : \operatorname{Matrix}\left(M, N, \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right) \cdot V = (1 : \operatorname{Matrix}\left(N, N, \mathbb{C}\right))) \Rightarrow \forall (X : \operatorname{Matrix}\left(N, N, \mathbb{C}\right)), \operatorname{traceNorm}\left(V \cdot X \cdot \operatorname{Matrix}.\operatorname{conjTranspose}\left(V\right)\right) = \operatorname{traceNorm}\left(X\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry` (`✓ std3`). ∎
 

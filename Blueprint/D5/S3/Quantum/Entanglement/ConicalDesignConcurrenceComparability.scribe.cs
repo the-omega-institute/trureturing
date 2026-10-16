@@ -94,7 +94,7 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             OpenBracket, Call("Fintype", n), CloseBracket, Sp,
             OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp);
         return Disp(All("M", type, All("N", type, Seq(instances,
-            All("V", matrix, All("hV", Eqn(Mul(adjoint, v), identity),
+            All("V", matrix, Imp(Eqn(Mul(adjoint, v), identity),
                 All("X", MatrixType(n), Eqn(Call("traceNorm", Mul(Mul(v, x), adjoint)),
                     Call("traceNorm", x)))))))));
     }
