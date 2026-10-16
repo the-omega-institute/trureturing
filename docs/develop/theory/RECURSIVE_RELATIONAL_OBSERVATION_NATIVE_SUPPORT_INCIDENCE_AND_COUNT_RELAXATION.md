@@ -2439,3 +2439,484 @@ inferred from these finite control counts.
 [OV]: https://arxiv.org/pdf/1812.00537v2
 
 ## 追加锚（本行以下为增补区）
+
+## 12. A proper prefix-hit cut between two block-swapped live orders
+
+**Definition 12.1 (the two-order class on actual live histories).**
+Retain Definitions 1.1–1.2 and Convention 1.3, including $n\ge6$,
+$3\le k\le n-2$, the original distinct positive integer positions
+$s_1<\cdots<s_n$, $c_i=s_i+4$, and both bounds (SI.3) on every
+input of one complete correct terminating graph. Partition $[n]$
+into fixed disjoint ordered lists
+$\mathsf I,\mathsf X,\mathsf U,\mathsf Y,\mathsf V$, where
+
+$$
+|\mathsf I|=p\ge1,\qquad
+\mathsf X=(x_1,\ldots,x_b),\quad
+\mathsf Y=(y_1,\ldots,y_b),\quad b\ge1,
+\qquad 1\le B\le p,\qquad c_{x_j}<c_{y_j}\ (1\le j\le b).
+\tag{SI.84}
+$$
+
+The lists $\mathsf U,\mathsf V$ may be empty. A list used in a set
+expression denotes its underlying set; $V$ without the sans-serif
+font continues to denote the count rectangle (SI.4). Define the two
+permutations by concatenation:
+
+$$
+\pi_0=(\mathsf I,\mathsf X,\mathsf U,\mathsf Y,\mathsf V),
+\qquad
+\pi_1=(\mathsf I,\mathsf Y,\mathsf U,\mathsf X,\mathsf V).
+\tag{SI.85}
+$$
+
+The class condition quantifies over every actual live history of the
+given installed graph. Before $\mathsf I$ has been completely read,
+its next query is the next member of $\mathsf I$. Thereafter, writing
+$h_{\mathsf I}$ for the number of its exposed ones in that block,
+its next query at depth $d$ is $\pi_0(d+1)$ if
+$h_{\mathsf I}<B$, and $\pi_1(d+1)$ if $h_{\mathsf I}\ge B$.
+Thus every live portion follows the corresponding permutation prefix.
+This is a property of actual histories, not an available operation for
+choosing an order or computing a count. No selector, counter, phase,
+archive or extra changing register is installed. After certification
+there is no order restriction: all original paid repeats, certified/live
+reuse, sharing and syntactic cycles remain permitted, subject to actual
+termination and both bounds on each complete input run.
+
+**Theorem 12.2 (one global injection of actual live hosts).** Every
+graph satisfying Definition 12.1 admits an injection
+
+$$
+\Phi:V\longrightarrow Q_{\mathrm{live}},\qquad
+\Phi(h,z)\in F_{(h,z)}.
+\tag{SI.86}
+$$
+
+Consequently, on that same installed graph,
+
+$$
+|Q_{\mathrm{live}}|\ge G=k(n-k+1),\qquad
+D\le E,\qquad m\ge G+u.
+\tag{SI.87}
+$$
+
+There is no bound on common-support gap spans or on the lengths of
+$\mathsf U,\mathsf V$. No attainment assertion for a fixed proper
+switch $B$ is part of this theorem.
+
+Proof. The live freshness and support exclusions are the supplied
+facts in Section 2: Theorem 2.2, [PE, Lemma 4.1][PE] and
+[PCA, Theorem 35.1][PCA]. We also use [PE, Theorem 3.1(2)][PE]
+with its stated $n,k$ range. Its Boolean consequence is obtained by
+lifting this entire graph through (SI.5): if lower-hit and higher-hit
+actual live histories with incomparable supports $S,T$ share a host,
+and all old bits in $T\setminus S$ on the higher-hit history are one,
+then
+
+$$
+C_{T\setminus S}\le C_{S\setminus T}.
+\tag{SI.88}
+$$
+
+The lift is correct on the full original fiber and obeys both native
+caps, so every hypothesis of that supplier applies to the two actual
+lifted cube histories. This use of the supplier adds no residual
+predicate attached to a state and no restriction on certified traffic.
+
+For a depth $d$, let $S_0(d),S_1(d)$ be the sets of the first $d$
+coordinates in (SI.85). Suppose first that these sets differ, and put
+
+$$
+P_d=S_0(d)\setminus S_1(d),\qquad
+Q_d=S_1(d)\setminus S_0(d),\qquad q_d=|P_d|=|Q_d|>0.
+\tag{SI.89}
+$$
+
+The entire $\mathsf I$ block has then been read. During the first
+swapped block, $P_d,Q_d$ are matched nonempty prefixes of
+$\mathsf X,\mathsf Y$; during $\mathsf U$ they are the full
+blocks; during the second swapped block they are matched nonempty
+suffixes. Thus (SI.84) gives
+
+$$
+C_{P_d}<C_{Q_d},\qquad q_d\le d-p.
+\tag{SI.90}
+$$
+
+A mode-zero exposed assignment on $S_0(d)$ can have any total number
+of ones in the integer interval $[0,B-1+d-p]$: its $\mathsf I$
+count ranges over $[0,B-1]$ and its other exposed bits are free.
+A mode-one assignment on $S_1(d)$ with every $Q_d$ bit one can have
+any total in $[B+q_d,d]$: its $\mathsf I$ count ranges over $[B,p]$
+and the other $d-p-q_d$ bits are free. For every live cell
+$(h,d-h)$ choose a mode-zero assignment if $h\le B+q_d-1$;
+otherwise choose a mode-one assignment with $Q_d$ all one. The first
+choice is possible by $q_d\le d-p$, and the second is possible by
+the displayed mode-one interval. These choices cover every live cell,
+including when one of the two ranges contains no live count.
+
+Each chosen assignment realizes an actual history. Its final counts
+satisfy $h<k$ and $d-h\le n-k$, so every earlier prefix of its
+chosen permutation has live counts as well. Induct from the fixed
+start on any completion of the assigned bits. Correctness forbids a
+terminal while both outputs remain possible, and Definition 12.1
+forces exactly the next permutation coordinate. Before the switch the
+order is common; after it the completed $\mathsf I$ assignment
+forces the chosen mode. Fixed successors then realize the entire
+prefix and its ending live host. No arbitrary syntactic path has been
+assumed actual. At a depth with $S_0(d)=S_1(d)$, all actual live
+histories have that common support; Theorem 2.2 supplies a history for
+every live count cell there. Select any one of its hosts.
+
+At one depth, selected histories in the same mode have equal supports
+and different hit counts, so cannot share a host. This also separates
+all selected cells at a common-support depth. At a differing-support
+depth, a selected cross-mode pair has strictly fewer hits on its
+mode-zero member, and all private $Q_d$ bits are one on its
+mode-one member. Their equal-sized distinct supports are incomparable.
+A shared host would therefore give $C_{Q_d}\le C_{P_d}$ by
+(SI.88), contradicting (SI.90). The selected hosts at each depth are
+distinct.
+
+To separate different depths, use each installed state's single fixed
+coordinate label. Every coordinate of $\mathsf I,\mathsf U,
+\mathsf V$ occupies the same unique position in both permutations,
+so such a state cannot be live at two different depths. For $x_j$,
+the only possible predecessor supports at its early and late live
+positions are respectively
+
+$$
+\mathsf I\cup\{x_1,\ldots,x_{j-1}\},\qquad
+\mathsf I\cup\mathsf Y\cup\mathsf U
+                  \cup\{x_1,\ldots,x_{j-1}\}.
+\tag{SI.91}
+$$
+
+They are properly nested, since $b\ge1$. For $y_j$ the corresponding
+supports are $\mathsf I\cup\{y_1,\ldots,y_{j-1}\}$ and
+$\mathsf I\cup\mathsf X\cup\mathsf U
+\cup\{y_1,\ldots,y_{j-1}\}$, again properly nested. PE Lemma 4.1
+excludes a common live host in each case. This derives cross-depth
+separation from actual live positions; it does not level the installed
+graph.
+
+There is now one distinct selected actual host for every
+$(h,z)\in V$, proving (SI.86). There are $G$ such cells. Since
+$|Q_{\mathrm{live}}|=G+E-D$ by Theorem 5.2, the remaining
+assertions follow. A selected state may also be visited after
+certification on another input; it is counted once. No paid
+discriminator is assigned automatically to $u$ or outside the selected
+image, and unused installed states retain their original count.
+$\square$
+
+**Corollary 12.3 (the original native lower consumer).** Let an
+original complete native preparer be correct on every
+$u\in\mathcal U_*$ at both caps $n+1,W+3$. If its particular
+Boolean projection supplied by [WTF, Theorem 4.1][WTF] satisfies
+Definition 12.1, its installed preparation count obeys
+
+$$
+H_P\ge k(n-k+1)+4+r.
+\tag{SI.92}
+$$
+
+Proof. That projection is one complete correct Boolean graph at both
+caps $n,W$, with $m\le H_P-4-r$. Apply Theorem 12.2. Membership
+is required of this projection; it is not inferred for arbitrary native
+competitors. The source, fixed pointwise code (SI.2), original latch
+output and literal complete $e_0,e_1$ entries are those of Definition
+1.1 and Convention 1.3. All finite original addresses and all four
+replies remain legal. The independent reader retains its three running
+states and five whole-row halts, hence its separately priced eight
+states and fresh bounds two queries and six letters. It returns the
+entire predecessor exterior, occurrences, canonical equality partition,
+repetitions, disequalities and strict-prefix guards. Every installed
+running, output, latch and unused state, and every actual constant,
+repeated or postcertificate invocation, retains its original charge.
+The services and resource distinctions in Convention 1.3 remain
+assumptions, not consequences of (SI.92). $\square$
+
+**Proposition 12.4 (complete feasible overload at unbounded span
+outside the prior classes).** For every integer $a\ge2$, set
+
+$$
+\begin{gathered}
+n=2a+5,\quad k=a+2,\quad s_i=i,\quad c_i=i+4,\quad t_0=1,\\
+\mathsf I=(1,6,7,\ldots,a+5),\quad
+\mathsf X=(2,3),\quad \mathsf Y=(4,5),\quad
+\mathsf U=(a+6,a+7,\ldots,2a+5),\quad
+\mathsf V=\varnothing,\quad B=1.
+\end{gathered}
+\tag{SI.93}
+$$
+
+There is a complete graph in Definition 12.1 with exactly
+
+$$
+M_a=2^n-2^{a+3}+2a+5>G=(a+2)(a+4)
+\tag{SI.94}
+$$
+
+installed running states, correct on every input with simultaneous
+maxima $n,W$. Its common-support depths are exactly
+$0,1,\ldots,a+1$, followed by the formal endpoint $n$. In the
+consecutive terminal gap $(a+1,n)$, of unbounded span $a+4\ge6$,
+an actual live state $R$ has
+
+$$
+\lambda(R)=1+\binom{a+3}{2}^{-1}>1.
+\tag{SI.95}
+$$
+
+The graph belongs neither to $\mathfrak C$ of Definition 11.6 nor
+to the enlarged terminal-exception class $\mathfrak C_5$ of
+[TS, Definition 6.3][TS]. Its full-fiber native lift has exactly
+$M_a+4+r$ preparation states and simultaneous maxima $n+1,W+3$,
+with the unchanged separately priced complete reader. This is an
+inclusion witness for Theorem 12.2, not a strict-subgrid upper.
+
+Proof, complete fixed graph. Begin with a full binary tree with a
+distinct running vertex at every depth less than $n$. Read
+$\mathsf I$ first. At each depth-$a+1$ vertex use the remaining
+order $\mathsf X,\mathsf U,\mathsf Y$ if its literal
+$\mathsf I$ assignment is all zero, and
+$\mathsf Y,\mathsf U,\mathsf X$ otherwise. These labels are fixed
+in the separate descendant vertices; no runtime mode selection is
+supplied. Each edge goes to its corresponding child, except that the
+last edge goes to the common terminal whose value is the threshold of
+that leaf's complete assignment. This defines every parent edge.
+
+Delete precisely the two disjoint full running subtrees after the
+following depth-$a+3$ prefixes, and redirect their incoming edges to
+one new state $R$:
+
+$$
+\mathcal A:\quad \mathsf I=0^{a+1},\quad \mathsf X=00,
+\qquad
+\mathcal D:\quad \mathsf I=1^{a+1},\quad \mathsf Y=00.
+\tag{SI.96}
+$$
+
+Write $\mathsf U=(u_1,\ldots,u_a)$. Install the following table,
+with all its states distinct from retained tree vertices and terminals.
+Ranges $2\le j<a$ are empty when $a=2$.
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $R$ | $u_1$ | $Z_2$ | $O_2$ |
+| $Z_j$, $2\le j<a$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_a$ | $u_a$ | $X_1$ | $J$ |
+| $O_j$, $2\le j<a$ | $u_j$ | $J$ | $O_{j+1}$ |
+| $O_a$ | $u_a$ | $J$ | $Y_1$ |
+| $X_1$ | $2$ | $X_2$ | $\mathsf1$ |
+| $X_2$ | $3$ | $\mathsf0$ | $\mathsf1$ |
+| $Y_1$ | $4$ | $J$ | $Y_2$ |
+| $Y_2$ | $5$ | $\mathsf0$ | $\mathsf1$ |
+| $J$ | $t_0=1$ | $\mathsf0$ | $\mathsf1$ |
+
+The start is the retained tree root. There is no edge to a deleted
+vertex, and these are all additional states and edges. The scan has
+$2a-1$ states: one start and two homogeneous-prefix chains. It exits
+to $J$ at the first mixture of zero and one in $\mathsf U$, to
+$X_1$ when all of $\mathsf U$ is zero, and to $Y_1$ when all of
+$\mathsf U$ is one. The five remaining rows are ordinary paid states.
+
+Proof, every-input correctness and the live-order rule. Exactly the
+two cylinders (SI.96) enter the new suffix. At $\mathcal A$ the
+residual is AND on $\mathsf U\cup\mathsf Y$, since there are no
+old ones and $a+2$ unread bits. At $\mathcal D$ it is OR on
+$\mathsf U\cup\mathsf X$, since there are $a+1=k-1$ old ones.
+The old bit $t_0$ is respectively zero and one.
+
+A mixed $\mathsf U$ certifies zero for $\mathcal A$ and one for
+$\mathcal D$; $J$ returns those values. If $\mathsf U$ is all
+zero, $X_1,X_2$ compute the remaining OR for $\mathcal D$; on
+$\mathcal A$ their old $00$ returns the already certified zero.
+If $\mathsf U$ is all one, $Y_1$ with reply one proceeds to
+$Y_2$, computing the remaining AND for $\mathcal A$. Reply zero
+at $Y_1$ goes to $J$, which returns zero on $\mathcal A$ and
+one on $\mathcal D$; the latter always has old $y_1=0$.
+These cases exhaust all assignments in both cylinders. Every other
+input follows its retained full threshold-tree path. All routes terminate.
+
+The retained tree follows (SI.85) even after certification. In the
+shared suffix, $\mathcal A$ stays live only along the all-one
+$\mathsf U$ scan and then its fresh $\mathsf Y$ queries;
+$\mathcal D$ stays live only along the all-zero scan and then its
+fresh $\mathsf X$ queries. Every old-coordinate repeat occurs on an
+already certified history. In particular $J$ is reached only after
+certification, while $X_1,X_2,Y_1$ can be certified on one origin
+and live on the other. Thus every actual live history obeys Definition
+12.1 without assigning a single residual to these shared states.
+
+Proof, both caps on every complete run. The redirected prefix uses
+$a+3$ queries, the scan at most $a$, and each exit at most two;
+the total is at most $2a+5=n$. Retained paths read each coordinate
+once, so their charge is exactly $n,W$, including postcertificate
+visits. For letters, the relevant identities are
+
+$$
+c_{t_0}=5,\qquad C_{\mathsf X}=13,\qquad C_{\mathsf Y}=17,
+\qquad c_{y_1}+c_{t_0}=8+5=13=C_{\mathsf X}.
+\tag{SI.97}
+$$
+
+On all-zero $\mathsf U$, the $\mathcal A$ run pays
+$C_{\mathsf I}+2C_{\mathsf X}+C_{\mathsf U}=W-4$;
+the $\mathcal D$ run pays at most
+$C_{\mathsf I}+C_{\mathsf Y}+C_{\mathsf U}+C_{\mathsf X}=W$.
+On all-one $\mathsf U$, $\mathcal A$ pays either $W$ through
+$Y_1,Y_2$, or $W-4$ through $Y_1,J$. The $\mathcal D$ run
+pays $C_{\mathsf I}+C_{\mathsf Y}+C_{\mathsf U}
++c_{y_1}+c_{t_0}=W$, including both repeated coordinates.
+For a mixed scan exiting at $u_j$, put
+$\mathsf U_{\le j}=\{u_1,\ldots,u_j\}$. Its complete charges are
+
+$$
+C_{\mathsf I}+C_{\mathsf X}+C_{\mathsf U_{\le j}}+c_{t_0},
+\qquad
+C_{\mathsf I}+C_{\mathsf Y}+C_{\mathsf U_{\le j}}+c_{t_0}.
+\tag{SI.98}
+$$
+
+Both are at most $W$: the first omits $\mathsf Y$, the second
+omits $\mathsf X$, and each omitted block costs more than
+$c_{t_0}$, in addition to any unread $\mathsf U$ tail. These
+are bounds on each actual input, with every repeat paid. Taking
+$\mathcal A$, $\mathsf U=1^a$, $\mathsf Y=11$ reads all $n$
+distinct coordinates and attains $n,W$ together.
+
+Proof, all installed states. The parent has $2^n-1$ running vertices.
+Each deleted subtree has $2^{a+2}-1$, since $a+2$ coordinates remain
+at its incoming edge. The replacement installs $(2a-1)+5=2a+4$
+running states. Hence its full installed running count is
+
+$$
+(2^n-1)-2(2^{a+2}-1)+(2a+4)=M_a.
+\tag{SI.99}
+$$
+
+Every retained or added state counts, whether live, certified-only or
+unused. Already the retained vertices at depths $0,\ldots,a+2$
+number $2^{a+3}-1>(a+2)(a+4)$ for $a\ge2$: this holds at
+$a=2$ and persists under doubling. Thus the graph is above-grid.
+Its Boolean total including the two shared terminals is $M_a+2$.
+
+Proof, actual overload and the consecutive late gap. Exactly the two
+prefixes (SI.96) reach $R$, both live, with counts $(0,a+3)$ and
+$(a+1,2)$. Their one and zero sets are
+
+$$
+\begin{array}{c|cc}
+& A_H&B_H\\
+\mathcal A&\varnothing&\mathsf I\cup\mathsf X\\
+\mathcal D&\mathsf I&\mathsf Y.
+\end{array}
+\tag{SI.100}
+$$
+
+Thus $A_{\mathcal A}\cap B_{\mathcal D}=\varnothing$ and
+$A_{\mathcal D}\cap B_{\mathcal A}=\mathsf I\ne\varnothing$.
+The exact all-history weights (SI.62) give (SI.95). No other live
+prefix is hidden in that mass calculation.
+
+All live histories through depth $p=a+1$ read the same prefix of
+$\mathsf I$. For every later depth through $n-1$, compare the
+actual input $\mathcal A$, $\mathsf U=1^a$, $\mathsf Y=11$
+with $\mathcal D$, $\mathsf U=0^a$, $\mathsf X=00$. Both
+remain live before their last query: their counts never exceed
+$k-1=a+1$ ones or $n-k=a+3$ zeros there. At depth $p+1$ their
+supports differ by $x_1,y_1$; at depths $p+2$ through $p+2+a$
+they contain respectively the full $\mathsf X$ and full
+$\mathsf Y$ blocks and the same $\mathsf U$ prefix; at depth
+$n-1$ they omit respectively $y_2$ and $x_2$. Every one of these
+pairs differs. Hence there is no further common-support depth.
+The terminal gap has span $n-p=a+4\ge6$ and ends at
+$n>e_*=a+4$. The overloaded $R$, at depth $a+3$, lies in its
+remaining late-long pool. It violates (SI.68). Since this gap is not
+the terminal span-five interval, its violation also lies outside the
+exception allowed in [TS, Definition 6.3][TS]. This proves exclusion
+from $\mathfrak C_5$, and hence also from its subclass
+$\mathfrak A_5$, without assuming pointwise capacity for other states.
+
+Proof, full original native lift. Use the constructive direction of
+WTF Theorem 4.1 on this entire correct table. For each retained tree
+row and each displayed coordinate-$i$ row install the original literal
+$a_i=LLL L^iR$, with four successors
+$(\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent})
+\mapsto(\delta_0,\delta_0,\delta_1,\delta_0)$, replacing terminals
+by $\widehat e_0,\widehat e_1$. Add the two original paid profile
+rows: $D_0$ queries $RLR$ with successors
+$(\widehat e_1,\text{tree root},T_0,\widehat e_0)$, and $T_0$
+queries $RRR$ with successors
+$(\widehat e_1,\widehat e_0,\widehat e_0,\widehat e_0)$, in that
+same four-reply order. Start at $D_0$ and install all $r$ further
+mandated distinct latches, even though unused.
+
+For every source of $Z_{b_3}$, an arbitrary branch image determines
+one fixed indicator vector. The all-address occurrence identity makes
+its entire selected run the Boolean run on that vector, including
+absent replies and all paid repeats. The other ten profiles are
+handled by the two original profile rows. This proves correctness on
+the entire original $\mathcal U_*$ of unbounded finite nonempty
+ordered alpha/beta trees with the homomorphic $\rho$, complete current
+row, every actual inverse source, all repeated occurrences and all
+different-class disequalities. The prescribed pointwise code and the
+literal complete entries are unchanged. The selected route adds one
+call and three letters; the other profiles use at most two calls and
+six letters. The actual cube supplier realizes the cap-attaining vector
+above, so one actual source attains $n+1,W+3$ simultaneously. The
+count is exactly $M_a+4+r$, including the two profile rows, both
+original-entry latches and every unused mandated latch. The separate
+eight-state reader and the full predecessor target remain exactly as
+in Corollary 12.3. Binding, authentication, access, same-source export,
+code-only handoff, lawful complete entry and stationary continuity
+remain the separate supplied and priced services of Convention 1.3.
+No source copy, code reread, computed address or new work register
+is obtained. $\square$
+
+Theorem 12.2 is a deduction from the credited local exclusions and
+one-sided private charge, using a choice of actual representatives
+and fixed-label cross-depth separation on one complete graph.
+Proposition 12.4 adapts the private-exchange continuation motifs of
+PE Sections 5 and 8 and PCA Section 36 solely to establish actual
+overloaded inclusion outside the earlier sufficient classes. The
+SI11 all-history capacity, [the strict short-block bounds,
+Theorems 4.1–4.2][SB], [TS, Theorem 6.4][TS] and
+[TC, Sections 1–9][TC] remain prior results. In particular the new
+injection is neither the both-conflict premise nor the sparse-run
+alternative of TC Theorem 9.1. The witness's overload does not imply
+a state saving, and the theorem does not require each late gap
+separately to compensate its deficit.
+
+The literature comparisons retain their exact hypotheses. Bryant's
+Section 2, Definition 1 and Theorem 1 [Bryant] concern graphs with
+strictly increasing indices on every nonterminal edge. Wegener's
+Chapter 14, Section 4, printed pages 423–425 [Wegener] concerns BP1;
+its normalization uses realizability of every graph path. Neither
+hypothesis follows from the live-only condition (SI.85), which allows
+paid certified repeats. Király, Nagy, Pálvölgyi and Visontai,
+*On weakly intersecting pairs of sets*, Definition 1.1 [KNPV], require
+at least one directed cross intersection for each pair, whereas SI11
+requires both. That abstract set-system condition supplies no actual
+fixed-successor realization or original-cost bridge. No external
+normalization or worldwide priority claim is used here.
+
+For $\min(k,n-k+1)\ge4$, the unrestricted collective inequality
+(SI.59), equivalently (SI.83), and the alternative of a complete correct
+strict-subgrid graph at both original caps remain unresolved. The
+unrestricted-budget $H_{\min}$ remains a separate question. No
+transformation of arbitrary competitors into Definition 12.1, no
+necessity of its cost orientation, and no attained minimum for each
+fixed proper switch has been established. No installed-state number,
+operation or acquisition permission is transferred from a quantum,
+calibration, stochastic timing, analytic or expanded-storage contract;
+no physical memory, time or realization bound follows.
+
+[TS]: FIB_NATIVE_TERMINAL_SPAN_FIVE_STRICT_COMPENSATION.md
+[SB]: FIB_NATIVE_SUPPORT_BARRIERS_AND_SHORT_BLOCK_COMPENSATION.md
+[TC]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_THRESHOLD_COST_CERTIFICATES.md
+[KNPV]: https://domotorp.web.elte.hu/cikkek/setpairs.pdf
+
+## 追加锚（本行以下为增补区）
