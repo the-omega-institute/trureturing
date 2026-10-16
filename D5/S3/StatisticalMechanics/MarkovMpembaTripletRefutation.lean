@@ -231,4 +231,189 @@ private theorem real_spectrum (r : ℝ) (hr : 0 < r) (x : ℝ) (v : Fin 4 → �
     nlinarith [hd]
   exact Or.inr (le_trans (root_bound r x hr hq).le (by norm_num))
 
+private theorem simple_mode (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096)
+    (l : Fin 4 → ℝ) (he : Matrix.vecMul l (M r) = (-1 : ℝ) • l) :
+    ∃ c : ℝ, l = c • f r := by
+  obtain ⟨_, hfe, hwe⟩ := eigen_identities r hr
+  obtain ⟨hk1, hk2⟩ := block_action r hr
+  have hw : dotProduct l (weights r) = 0 := by
+    have h := congrArg (fun v => dotProduct v (weights r)) he
+    rw [← Matrix.dotProduct_mulVec, hwe] at h
+    simp only [dotProduct_zero, smul_dotProduct, smul_eq_mul] at h
+    linarith
+  have hfw : dotProduct (f r) (weights r) = 0 := by
+    have h := congrArg (fun v => dotProduct v (weights r)) hfe
+    rw [← Matrix.dotProduct_mulVec, hwe] at h
+    simp only [dotProduct_zero, smul_dotProduct, smul_eq_mul] at h
+    linarith
+  have ha := congrArg (dotProduct l) hk1
+  have hbpair := congrArg (dotProduct l) hk2
+  rw [Matrix.dotProduct_mulVec, he, smul_dotProduct, dotProduct_add,
+    dotProduct_smul, dotProduct_smul] at ha hbpair
+  simp only [smul_eq_mul, dotProduct] at ha hbpair
+  have hz : Matrix.vecMul ![dotProduct l k1, dotProduct l k2]
+      (block r + (1 : Matrix (Fin 2) (Fin 2) ℝ)) = 0 := by
+    ext i
+    fin_cases i <;> norm_num [Matrix.vecMul, dotProduct, Fin.sum_univ_two,
+      Matrix.add_apply, Matrix.one_apply] <;> linarith
+  have hd : (block r + (1 : Matrix (Fin 2) (Fin 2) ℝ)).det ≠ 0 := by
+    have hq := (block_bounds r hr).2.2
+    have hh : (block r + (1 : Matrix (Fin 2) (Fin 2) ℝ)).det = q r (-1) := by
+      rw [Matrix.det_fin_two]
+      norm_num [Matrix.add_apply, Matrix.one_apply, q.eq_1]
+      ring
+    rw [hh]
+    exact ne_of_gt hq
+  have hpair : (![dotProduct l k1, dotProduct l k2] : Fin 2 → ℝ) = 0 := by
+    by_contra hn
+    exact hd (Matrix.exists_vecMul_eq_zero_iff.mp ⟨_, hn, hz⟩)
+  have hl1 : dotProduct l k1 = 0 := congrFun hpair 0
+  have hl2 : dotProduct l k2 = 0 := congrFun hpair 1
+  have hf1 : dotProduct (f r) k1 = 0 := by
+    norm_num [dotProduct, Fin.sum_univ_succ, f.eq_1, g.eq_1, k1.eq_1]
+    ring
+  have hf2 : dotProduct (f r) k2 = 0 := by
+    norm_num [dotProduct, Fin.sum_univ_succ, f.eq_1, g.eq_1, k2.eq_1]
+    ring
+  have hf3 : f r 3 ≠ 0 := by
+    have hmu := (mean_bounds r hr hb).2
+    change 8/15-mean r ≠ 0
+    linarith
+  let c := l 3 / f r 3
+  let u := l - c • f r
+  have hu3 : u 3 = 0 := by
+    change l 3 - (l 3 / f r 3)*f r 3 = 0
+    rw [div_mul_cancel₀ _ hf3, sub_self]
+  have huw : dotProduct u (weights r) = 0 := by
+    simp only [u, sub_dotProduct, smul_dotProduct, hw, hfw, smul_eq_mul, mul_zero, sub_self]
+  have hu1 : dotProduct u k1 = 0 := by
+    simp only [u, sub_dotProduct, smul_dotProduct, hl1, hf1, smul_eq_mul, mul_zero, sub_self]
+  have hu2 : dotProduct u k2 = 0 := by
+    simp only [u, sub_dotProduct, smul_dotProduct, hl2, hf2, smul_eq_mul, mul_zero, sub_self]
+  simp only [dotProduct, Fin.sum_univ_four, weights.eq_1, k1.eq_1, k2.eq_1] at huw hu1 hu2
+  change u 0*1+u 1*(1/16)+u 2*(1/256)+u 3*r = 0 at huw
+  change u 0*1+u 1*2+u 2*(-3)+u 3*0 = 0 at hu1
+  change u 0*7+u 1*8+u 2*0+u 3*(-15) = 0 at hu2
+  rw [hu3] at huw hu1 hu2
+  have hu0 : u 0 = 0 := by linarith
+  have huone : u 1 = 0 := by linarith
+  have hutwo : u 2 = 0 := by linarith
+  have hu : u = 0 := by
+    ext i
+    fin_cases i
+    · exact hu0
+    · exact huone
+    · exact hutwo
+    · exact hu3
+  exact ⟨c, sub_eq_zero.mp hu⟩
+
+private theorem slow_mode : IsSlowMode (generator (rates small)) (-1) (f small) := by
+  refine ⟨by norm_num, ?_, (eigen_identities small small_bounds.1).2.1, ?_, ?_⟩
+  · intro hz
+    have h0 := congrFun hz 0
+    have hm := (mean_bounds small small_bounds.1 small_bounds.2).1
+    norm_num [f.eq_1, g.eq_1] at h0
+    linarith
+  · exact real_spectrum small small_bounds.1
+  · exact simple_mode small small_bounds.1 small_bounds.2
+
+private theorem bath_weights (i : Fin 4) : Real.exp (-energy i) = weights small i := by
+  have he := LongGapsBetweenPrimes.exp_neg_nat_mul_log (x := 16) (by norm_num) (levels i)
+  have hw : weights small i = (1/16 : ℝ)^(levels i) := by
+    fin_cases i <;> norm_num only [weights.eq_1, levels.eq_1, Matrix.cons_val_zero,
+      Matrix.cons_val_one, Matrix.cons_val_succ, Matrix.cons_val_succ',
+      Matrix.cons_val_zero', small.eq_1, pow_zero, pow_one, one_div_pow]
+  rw [hw, one_div_pow]
+  convert he using 1
+  simp only [energy.eq_1, neg_mul]
+
+private theorem bath_ratio (i j : Fin 4) :
+    Real.exp (-(1*(energy i-energy j))) = weights small i / weights small j := by
+  rw [show -(1*(energy i-energy j)) = -energy i - (-energy j) by ring,
+    Real.exp_sub, bath_weights, bath_weights]
+
+private theorem reversible : DetailedBalance energy 1 (rates small) := by
+  intro i j hij
+  rw [bath_ratio, ← mul_div_assoc]
+  apply (eq_div_iff (show weights small j ≠ 0 by
+    have hr := small_bounds.1
+    fin_cases j <;> norm_num [weights.eq_1]; exact ne_of_gt hr)).2
+  exact balance_weights small i j
+
+private theorem increasing_energy : StrictMono energy := by
+  have hL : 0 < Real.log 16 := Real.log_pos (by norm_num)
+  intro i j hij
+  fin_cases i <;> fin_cases j <;> norm_num at hij <;>
+    norm_num [energy.eq_1, levels.eq_1] <;> linarith
+
+private theorem triplet_margins (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096) :
+    ∀ i j k : Fin 4, i < j → j < k →
+    rates r i k * (1 + (weights r j / weights r i)*(weights r k / weights r j)/2) -
+      rates r j k * (1 + (weights r k / weights r j)/2) ≤
+      rates r i j * (1 - weights r j / weights r i) ∧
+    rates r i k * (weights r j / weights r i) ≤ rates r j k := by
+  obtain ⟨hlo, hhi⟩ := mean_bounds r hr hb
+  intro i j k hij hjk
+  change i.val < j.val at hij
+  change j.val < k.val at hjk
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> try omega
+  all_goals constructor <;> norm_num [rates.eq_1, weights.eq_1] <;> nlinarith
+
+private theorem no_triplets :
+    ∀ i j k : Fin 4, i < j → j < k → ¬ TripletCondition energy 1 (rates small) i j k := by
+  intro i j k hij hjk
+  obtain ⟨hfirst, hsecond⟩ := triplet_margins small small_bounds.1 small_bounds.2 i j k hij hjk
+  simp only [TripletCondition.eq_1, bath_ratio]
+  rintro (⟨_, h⟩ | ⟨_, h⟩) <;> linarith
+
+private noncomputable def beta (x : ℝ) : ℝ := Real.log x⁻¹ / Real.log 16
+private noncomputable def overlap (x : ℝ) : ℝ :=
+  (x+(2/3)*x^2+(8/15)*x^64)/(1+x+x^2+x^64)
+
+private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
+    dotProduct (f small) (gibbs energy (beta x)) = overlap x - mean small := by
+  have hL : Real.log 16 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
+  have he (i : Fin 4) : Real.exp (-(beta x)*energy i) = x^(levels i) := by
+    have ht : -(beta x)*energy i = (levels i : ℝ)*Real.log x := by
+      simp only [beta.eq_1, energy.eq_1, Real.log_inv]
+      field_simp
+    rw [ht, Real.exp_nat_mul, Real.exp_log hx]
+  simp only [gibbs.eq_1, GlauberRelaxationOrderRefutation.gibbs.eq_1, he,
+    dotProduct, Fin.sum_univ_succ, f.eq_1, g.eq_1, levels.eq_1]
+  norm_num [Matrix.cons_val_two, Matrix.cons_val_three]
+  have hd : 1+x+x^2+x^64 ≠ 0 := ne_of_gt (by positivity)
+  simp only [overlap.eq_1]
+  field_simp
+  ring
+
+private theorem temperature_order :
+    0 < beta (1023/1024) ∧ beta (1023/1024) < beta (127/128) ∧ beta (127/128) < 1 := by
+  have hL : 0 < Real.log 16 := Real.log_pos (by norm_num)
+  simp only [beta.eq_1]
+  norm_num
+  refine ⟨div_pos (Real.log_pos (by norm_num)) hL, ?_, ?_⟩
+  · exact (div_lt_div_iff_of_pos_right hL).2 (Real.log_lt_log (by norm_num) (by norm_num))
+  · apply (div_lt_one hL).2
+    exact Real.log_lt_log (by norm_num) (by norm_num)
+
+private theorem overlap_comparisons :
+    1/16 < overlap (1023/1024) ∧ overlap (1023/1024) < overlap (127/128) := by
+  constructor <;> norm_num [overlap.eq_1]
+
+private theorem effect : MpembaEffect energy 1 (f small) := by
+  obtain ⟨hb1, h12, hb2⟩ := temperature_order
+  obtain ⟨hmlo, hmhi⟩ := mean_bounds small small_bounds.1 small_bounds.2
+  obtain ⟨hlo, hlt⟩ := overlap_comparisons
+  refine ⟨beta (1023/1024), beta (127/128), Or.inl ⟨hb1, h12, hb2⟩, ?_⟩
+  rw [gibbs_evaluation _ (by norm_num), gibbs_evaluation _ (by norm_num),
+    abs_of_pos (by linarith), abs_of_pos (by linarith)]
+  linarith
+
+
+theorem result : ¬ claim := by
+  intro h
+  exact (h 4 energy 1 (rates small) (by norm_num) increasing_energy (by norm_num)
+    (rates_positive small small_bounds.1 small_bounds.2) reversible no_triplets
+    (-1) (f small) slow_mode) effect
+
 end D5.S3.StatisticalMechanics.MarkovMpembaTripletRefutation
