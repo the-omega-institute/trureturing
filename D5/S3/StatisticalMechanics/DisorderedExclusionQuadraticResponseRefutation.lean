@@ -344,7 +344,7 @@ private theorem current_closed (ε : ℝ) (hD : D ε ≠ 0) :
   simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, states.eq_1, B.eq_1,
     p.eq_1, q.eq_1, a.eq_1, Matrix.cons_val, Matrix.cons_val_succ]
   norm_num +decide
-  field_simp [hD]
+  field_simp (disch := first | assumption | norm_num)
   ring
 
 private noncomputable def remainder_factor (ε : ℝ) : ℝ :=
@@ -372,7 +372,7 @@ private theorem quadratic_expansion :
   filter_upwards [hnear] with ε he
   have hD : D ε ≠ 0 := (positive_polynomials ε he).1.ne'
   rw [current_closed ε hD, remainder_factor.eq_1]
-  field_simp [hD]
+  field_simp (disch := first | assumption | norm_num)
   simp only [D.eq_1]
   ring
 
