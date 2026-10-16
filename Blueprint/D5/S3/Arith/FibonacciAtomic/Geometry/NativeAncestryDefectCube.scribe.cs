@@ -75,6 +75,10 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                         + "Since the Fibonacci leaf count diverges, the diameter tends to zero."))),
                 DescribeRole.Theorem))));
 
+    private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("native-area-" + name.ToLowerInvariant()),
+        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula V(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Op(name), [.. args]);
@@ -105,7 +109,7 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
             Call("choose", m, D(2)));
         Formula coordinateLength = EqOf(Call("length", Call("coordinates", value)), Seq(m, Minus, D(1)));
         Formula distance = All("B", Call("Finset", Op("Address")),
-            Imp(Call("Subset", b, positions), EqOf(new Formula.Superscript(
+            Imp(Call("Subset", b, positions), EqOf(new Formula.Power(
                 Call("norm", Seq(Call("areaVector", m, value), Minus,
                     Call("areaVector", m, Call("variant", t, b)))), D(2)),
                 Seq(D(2), Times, Call("card", Call("symmDiff", a, b))))));
@@ -118,12 +122,12 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
         Formula literal = All("p", Op("Address"), Call("Iff", Call("mem", p, positions),
             EqOf(Call("subtree", p, t), Call("some", Op("defectB")))));
         Formula valid = All("p", Op("Address"), Imp(Call("mem", p, positions),
-            And(Seq(offset, Lt, Seq(m, Minus, D(1))),
-                Seq(offset, Plus, D(1), Lt, Seq(m, Minus, D(1))))));
+            And(Seq(offset, Sp, Lt, Sp, Seq(m, Minus, D(1))),
+                Seq(offset, Plus, D(1), Sp, Lt, Sp, Seq(m, Minus, D(1))))));
         Formula separated = All("p", Op("Address"), Imp(Call("mem", p, positions),
             All("q", Op("Address"), Imp(Call("mem", q, positions),
-                Imp(Seq(p, Sp, Neq, Sp, q), Seq(Par(Seq(offset, Plus, D(3), Le, offsetQ)),
-                    Sp, Lor, Sp, Par(Seq(offsetQ, Plus, D(3), Le, offset))))))));
+                Imp(Seq(p, Sp, Neq, Sp, q), Seq(Par(Seq(offset, Plus, D(3), Sp, Le, Sp, offsetQ)),
+                    Sp, Lor, Sp, Par(Seq(offsetQ, Plus, D(3), Sp, Le, Sp, offset))))))));
         Formula directions = Seq(p, Colon, positions, Sp, Mapsto, Sp,
             Call("gapVector", m, Call("offset", t, p)));
         Formula hull = EqOf(Call("convexHull", Seq(Mathbb, Grp(V("R"))), Call("areaVertices", t)),
@@ -138,10 +142,10 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
         Formula edges = All("p", positions, EqOf(Call("norm", Call("gapVector", m, Call("offset", t, p))),
             Call("sqrt", D(2))));
         Formula volume = EqOf(Call("volume", Call("intrinsicCube", t)), Call("ofReal",
-            new Formula.Superscript(D(2), Frac(Call("fib", Seq(n, Minus, D(2))), D(2)))));
+            new Formula.Power(D(2), new Formula.Fraction(Call("fib", Seq(n, Minus, D(2))), D(2)))));
         Formula geometry = And(literal, And(valid, And(separated, And(hull, And(affineDirection,
             And(orthonormal, And(span, And(dimension, And(edges, volume)))))))));
-        return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n),
+        return Disp(All("n", Nat(), Imp(Seq(D(3), Sp, Le, Sp, n),
             And(count, And(injective, And(choices, geometry))))));
     }
 
@@ -151,20 +155,20 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
         Formula k = Call("fib", Seq(n, Minus, D(2)));
         Formula family = Call("normalizedAreaFamily", n);
         Formula diameter = Call("diam", family);
-        Formula rate = new Formula.Superscript(m, Seq(Minus, Frac(D(3), D(2))));
-        Formula exact = EqOf(diameter, Frac(Call("sqrt", Seq(D(2), Times, k)), Call("choose", m, D(2))));
+        Formula rate = new Formula.Power(m, Seq(Minus, new Formula.Fraction(D(3), D(2))));
+        Formula exact = EqOf(diameter, new Formula.Fraction(Call("sqrt", Seq(D(2), Times, k)), Call("choose", m, D(2))));
         Formula count = EqOf(Call("card", Call("sourceFamily", Call("T", n))),
-            new Formula.Superscript(D(2), k));
+            new Formula.Power(D(2), k));
         Formula endpoints = And(EqOf(Call("depth", Call("variant", Call("T", n), Emptyset)), n),
             EqOf(Call("depth", Call("variant", Call("T", n), Call("positions", Call("T", n)))), D(0)));
-        Formula scale = new Formula.Superscript(Call("choose", m, D(2)), Seq(Minus, D(1)));
+        Formula scale = new Formula.Power(Call("choose", m, D(2)), Seq(Minus, D(1)));
         Formula emptyVector = Seq(scale, Times, Call("areaVector", m, Call("variant", Call("T", n), Emptyset)));
         Formula fullVector = Seq(scale, Times, Call("areaVector", m,
             Call("variant", Call("T", n), Call("positions", Call("T", n)))));
         Formula extremal = EqOf(Call("norm", Seq(emptyVector, Minus, fullVector)), diameter);
         Formula sequence = Seq(n, Sp, Mapsto, Sp, diameter);
         Formula decay = Seq(n, Sp, Mapsto, Sp, rate);
-        return Disp(And(All("n", Nat(), Imp(Seq(D(3), Le, n), And(exact, And(count, And(endpoints, extremal))))),
+        return Disp(And(All("n", Nat(), Imp(Seq(D(3), Sp, Le, Sp, n), And(exact, And(count, And(endpoints, extremal))))),
             And(Call("IsBigO", Op("atTop"), sequence, decay),
                 Call("Tendsto", sequence, Op("atTop"), Call("nhds", D(0))))));
     }
