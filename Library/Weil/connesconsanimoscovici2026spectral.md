@@ -2971,10 +2971,10 @@ $$
 $$
 
 since $D_*$ already bounds
-$\delta+\rho\|u_{\rm far}\|_W^2$ upward. A quantitative channel-energy
-lower bound and the good-block inverse metric are the remaining
-interfaces; the ceiling cannot replace the exact charge in an
-equality. These are existing quadratic/Cauchy/trace methods applied
+$\delta+\rho\|u_{\rm far}\|_W^2$ upward. A sufficiently strong joint
+bound for the common charge and $q$, together with the good-block
+inverse metric, remains missing; the ceiling cannot replace the exact
+charge in an equality. These are existing quadratic/Cauchy/trace methods applied
 to the saved common source, without generic novelty or Lean
 verification. Actual full retained/cofinal positivity, the Robin
 tail estimate and RH remain unresolved.
