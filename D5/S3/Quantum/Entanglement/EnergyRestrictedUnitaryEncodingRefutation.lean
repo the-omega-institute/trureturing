@@ -181,27 +181,30 @@ private theorem protocol_encoded (x : Fin 2 × Fin 2) :
       (![![(16 / 25 : ℂ), -9 / 25 * (-1) ^ x.2.val],
         ![12 / 25 * (-1) ^ x.1.val, 12 / 25 * (-1) ^ (x.1.val + x.2.val)]] :
           Fin 2 → Fin 2 → ℂ) p.1 p.2 := by
+  rw [encoded.eq_1, protocolU.eq_1, phase.eq_1, rotation.eq_1]
   ext p
   rcases x with ⟨u, v⟩
   rcases p with ⟨i, j⟩
   fin_cases u <;> fin_cases v <;> fin_cases i <;> fin_cases j <;>
-    norm_num [encoded, protocolU, phase, rotation, shared,
+    norm_num [shared.eq_1,
       D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mulVec, dotProduct,
       Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.kroneckerMap_apply,
       Matrix.mul_apply]
 
 private theorem protocol_valid : UnitaryStrategy shared protocolU protocolM := by
   constructor
-  · norm_num [shared, Fintype.sum_prod_type, Fin.sum_univ_two, Complex.normSq_apply]
+  · simp_rw [shared.eq_1]
+    norm_num [Fintype.sum_prod_type, Fin.sum_univ_two, Complex.normSq_apply]
   · intro y
     constructor
     · intro b
       exact posSemidef_vecMulVec_self_star (measurementVector b)
-    · ext p q
+    · simp_rw [protocolM.eq_1]
+      ext p q
       rcases p with ⟨i, j⟩
       rcases q with ⟨k, l⟩
       fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-        norm_num [protocolM, measurementVector, Matrix.sum_apply, Fintype.sum_prod_type,
+        norm_num [measurementVector.eq_1, Matrix.sum_apply, Fintype.sum_prod_type,
           Fin.sum_univ_two, Matrix.vecMulVec_apply, Matrix.one_apply, Prod.mk.injEq]
 
 private theorem protocol_vacuum (x : Fin 2 × Fin 2) :
@@ -215,13 +218,15 @@ private theorem protocol_vacuum (x : Fin 2 × Fin 2) :
 private theorem protocol_value :
     taskValue coefficients (unitaryProb shared protocolU protocolM) = 2401 / 2500 := by
   have hp (x : Fin 2 × Fin 2) : unitaryProb shared protocolU protocolM x x () = 2401 / 2500 := by
-    rw [unitaryProb, protocol_encoded]
+    rw [unitaryProb, protocol_encoded, protocolM.eq_1]
     rcases x with ⟨u, v⟩
     fin_cases u <;> fin_cases v <;>
-      norm_num [protocolM, measurementVector, Matrix.mulVec, dotProduct,
+      norm_num [measurementVector.eq_1, Matrix.mulVec, dotProduct,
         Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.vecMulVec_apply,
         map_ofNat]
-  simp [taskValue, coefficients, hp]
+  rw [taskValue.eq_1]
+  simp_rw [coefficients.eq_1]
+  simp [hp]
 
 private theorem residual_norm {d : ℕ} [NeZero d]
     (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
@@ -376,7 +381,9 @@ private theorem effect_bound {d : ℕ} [NeZero d]
 
 private theorem diagonal_task (p : (Fin 2 × Fin 2) → (Fin 2 × Fin 2) → Unit → ℝ) :
     taskValue coefficients p = (1 / 4) * ∑ x, p x x () := by
-  simp [taskValue, coefficients, ite_mul, Finset.mul_sum]
+  rw [taskValue.eq_1]
+  simp_rw [coefficients.eq_1]
+  simp [ite_mul, Finset.mul_sum]
 
 private theorem qc_bound {L : Type} [Fintype L] {d : ℕ} [NeZero d]
     (q : L → ℝ) (ρ : L → (Fin 2 × Fin 2) → Matrix (Fin d) (Fin d) ℂ)
