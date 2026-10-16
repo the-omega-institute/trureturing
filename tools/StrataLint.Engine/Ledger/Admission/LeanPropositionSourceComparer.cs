@@ -65,7 +65,7 @@ internal static class LeanPropositionSourceComparer
     }
 }
 
-internal enum LeanSourceExtractionFailure { UnsupportedSyntax, IndentedDeclaration }
+internal enum LeanSourceExtractionFailure { UnsupportedSyntax, IndentedDeclaration, UnresolvedPrivateOwner }
 
 internal sealed class LeanSourceExtractionException(
     string message,
