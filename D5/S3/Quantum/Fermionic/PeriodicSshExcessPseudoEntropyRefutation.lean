@@ -27,6 +27,8 @@ namespace D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
 
 noncomputable section
 
+set_option linter.style.whitespace false
+
 def sshHopping (N : ℕ) (v : ℝ) : Matrix (Fin (2*N)) (Fin (2*N)) ℝ :=
   fun i j =>
     (if i.val / 2 = j.val / 2 ∧ i ≠ j then v else 0) +
@@ -65,6 +67,8 @@ def claim : Prop :=
       IsHalfFilledGroundState N v₁ ψ₁ → IsHalfFilledGroundState N v₂ ψ₂ → star ψ₂ ⬝ᵥ ψ₁ ≠ 0 →
       averagedExcess h ψ₁ ψ₂ ≤ 0
 
+set_option linter.style.whitespace true
+
 private def mode {M : ℕ} (l : Fin M → ℝ) : FullOperator M :=
   ∑ j, (l j : ℂ) • fullC j
 
@@ -94,7 +98,11 @@ private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
         ∑ i, ∑ j, (l i : ℂ) • (l j : ℂ) • (fullC i * (fullC j)ᴴ) := by
     rw [Finset.sum_comm]
     simp_rw [smul_smul]
-    simp [mul_comm]
+    apply Finset.sum_congr rfl
+    intro i hi
+    apply Finset.sum_congr rfl
+    intro j hj
+    rw [mul_comm (l j : ℂ) (l i : ℂ)]
   rw [hswap]
   rw [← Finset.sum_add_distrib]
   simp_rw [← Finset.sum_add_distrib]
@@ -116,7 +124,7 @@ private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
   have hrhs_i : ((l i : ℂ) ^ 2) • (1 : FullOperator M) =
       ∑ j, ((l j : ℂ) * (l i : ℂ)) •
         (if j = i then (1 : FullOperator M) else 0) := by
-    simp [Finset.sum_ite_eq', Finset.mem_univ, mul_comm, pow_two]
+    simp only [smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, pow_two]
   rw [hrhs_i]
   apply Finset.sum_congr rfl
   intro j hj
@@ -131,9 +139,15 @@ private theorem dGamma_rankOne {M : ℕ} (l : Fin M → ℝ) :
     Matrix.mul_smul]
   simp_rw [Finset.smul_sum]
   rw [Finset.sum_comm]
-  simp [Matrix.of_apply, Algebra.smul_def,
-    Complex.ofReal_mul, mul_comm]
-  simp_rw [← mul_assoc]
+  simp only [Matrix.of_apply, Complex.ofReal_mul, Complex.coe_smul]
+  ext s t
+  simp only [Matrix.sum_apply, Matrix.smul_apply, smul_smul, smul_eq_mul,
+    Complex.real_smul, Complex.ofReal_mul, mul_assoc]
+  apply Finset.sum_congr rfl
+  intro i hi
+  apply Finset.sum_congr rfl
+  intro j hj
+  ring
 
 private def modes38 : Fin 6 → Fin 6 → ℝ :=
   ![![-1, 1, -1, 1, -1, 1], ![-3, 7, -5, -7, 8, 0],
@@ -154,7 +168,7 @@ private theorem hopping38 :
       ∑ k, (eig38 k / modeNorm k) • Matrix.vecMulVec (modes38 k) (modes38 k) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [sshHopping, eig38, modeNorm, modes38, Matrix.vecMulVec,
+    norm_num [sshHopping.eq_1, eig38.eq_1, modeNorm.eq_1, modes38.eq_1, Matrix.vecMulVec,
       Matrix.sum_apply, Fin.sum_univ_succ]
 
 private theorem hopping58 :
@@ -162,7 +176,7 @@ private theorem hopping58 :
       ∑ k, (eig58 k / modeNorm k) • Matrix.vecMulVec (modes58 k) (modes58 k) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [sshHopping, eig58, modeNorm, modes58, Matrix.vecMulVec,
+    norm_num [sshHopping.eq_1, eig58.eq_1, modeNorm.eq_1, modes58.eq_1, Matrix.vecMulVec,
       Matrix.sum_apply, Fin.sum_univ_succ]
 
 private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
@@ -170,7 +184,7 @@ private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     dGamma (∑ k, t k • A k) = ∑ k, t k • dGamma (A k) := by
   classical
   ext s u
-  simp only [dGamma, Matrix.sum_apply, Matrix.smul_apply]
+  simp only [dGamma.eq_1, Matrix.sum_apply, Matrix.smul_apply]
   rw [Finset.sum_comm]
   simp_rw [smul_eq_mul]
   push_cast
@@ -267,7 +281,8 @@ private theorem fullC_entry {M : ℕ} (j : Fin M) (s t : Assignment M) :
           simp [fermionWord, Matrix.single, h.1]
         · simp [fermionWord, hij, heq, Matrix.one_apply]
     rw [he, ← Finset.prod_filter]
-    simp [prefixCount, Finset.prod_const]
+    unfold prefixCount
+    simp [Finset.prod_const]
   · rw [if_neg h]
     by_cases ht : t j = true
     · have hs : s ≠ Function.update t j false := by tauto
@@ -430,8 +445,9 @@ private theorem mode_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → �
     (mode (fun j => (l j : ℝ)) *ᵥ (fun x => (f x : ℂ))) s =
       (modeInt l f s : ℂ) := by
   classical
-  simp only [mode, Matrix.sum_mulVec, Matrix.smul_mulVec]
-  simp [fullC_sparse]
+  simp only [mode.eq_1, Matrix.sum_mulVec, Matrix.smul_mulVec]
+  simp only [Complex.ofReal_intCast, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    fullC_sparse]
   unfold modeInt
   push_cast
   simp
@@ -441,9 +457,10 @@ private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 
     ((mode (fun j => (l j : ℝ)))ᴴ *ᵥ (fun x => (f x : ℂ))) s =
       (modeCreateInt l f s : ℂ) := by
   classical
-  simp only [mode, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
+  simp only [mode.eq_1, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
     Complex.star_def, Complex.conj_ofReal, Matrix.sum_mulVec, Matrix.smul_mulVec]
-  simp [fullC_create_sparse]
+  simp only [Complex.ofReal_intCast, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
+    fullC_create_sparse]
   unfold modeCreateInt
   push_cast
   simp
@@ -529,7 +546,7 @@ private theorem psi38_number :
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi38Z s : ℂ) =
         3 * (psi38Z s : ℂ) := by exact_mod_cast h
-    simpa [psi38, psi38Z] using hc
+    simpa [psi38.eq_1, psi38Z.eq_1] using hc
   · intro b hb hne
     simp [Ne.symm hne]
   · intro hmem
@@ -554,7 +571,7 @@ private theorem psi58_number :
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi58Z s : ℂ) =
         3 * (psi58Z s : ℂ) := by exact_mod_cast h
-    simpa [psi58, psi58Z] using hc
+    simpa [psi58.eq_1, psi58Z.eq_1] using hc
   · intro b hb hne
     simp [Ne.symm hne]
   · intro hmem
@@ -585,7 +602,7 @@ private theorem psi58_nonzero : psi58 ≠ 0 := by
 private theorem psi_overlap : star psi58 ⬝ᵥ psi38 = (1152 : ℂ) := by
   simp only [dotProduct, Pi.star_apply]
   have hstar (x : Assignment 6) : star (psi58 x) = (psi58Z x : ℂ) := by
-    simp [psi58, psi58Z]
+    simp [psi58.eq_1, psi58Z.eq_1]
   have hcast (x : Assignment 6) : psi38 x = (psi38Z x : ℂ) := by
     rfl
   simp_rw [hstar, hcast]
@@ -617,7 +634,7 @@ private theorem sos38 :
   unfold B38 alpha38 eig38
   simp only [Fin.sum_univ_succ, Fin.isValue]
   rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
-  norm_num [modes38, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
+  norm_num [modes38.eq_1, modeNorm.eq_1, Fin.sum_univ_succ, Matrix.cons_val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
     Matrix.vecHead, Matrix.vecTail]
   module
@@ -630,7 +647,7 @@ private theorem sos58 :
   unfold B58 alpha58 eig58
   simp only [Fin.sum_univ_succ, Fin.isValue]
   rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
-  norm_num [modes58, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
+  norm_num [modes58.eq_1, modeNorm.eq_1, Fin.sum_univ_succ, Matrix.cons_val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
     Matrix.vecHead, Matrix.vecTail]
   module
@@ -722,7 +739,7 @@ private theorem sos_lower {K M : ℕ} (E : ℝ) (α : Fin K → ℝ)
 private theorem B38_kernel : ∀ k : Fin 6, B38 k *ᵥ psi38 = 0 := by
   have he (k : Fin 6) : modes38 k = fun j => (modes38Z k j : ℝ) := by
     funext j
-    fin_cases k <;> fin_cases j <;> norm_num [modes38, modes38Z]
+    fin_cases k <;> fin_cases j <;> norm_num [modes38.eq_1, modes38Z.eq_1]
   intro k
   fin_cases k
   · change (mode (modes38 0))ᴴ *ᵥ psi38 = 0
@@ -747,7 +764,7 @@ private theorem B38_kernel : ∀ k : Fin 6, B38 k *ᵥ psi38 = 0 := by
 private theorem B58_kernel : ∀ k : Fin 6, B58 k *ᵥ psi58 = 0 := by
   have he (k : Fin 6) : modes58 k = fun j => (modes58Z k j : ℝ) := by
     funext j
-    fin_cases k <;> fin_cases j <;> norm_num [modes58, modes58Z]
+    fin_cases k <;> fin_cases j <;> norm_num [modes58.eq_1, modes58Z.eq_1]
   intro k
   fin_cases k
   · change (mode (modes58 0))ᴴ *ᵥ psi58 = 0
@@ -793,11 +810,11 @@ private theorem psi58_energy :
 
 private theorem alpha38_nonneg : ∀ k : Fin 6, 0 ≤ alpha38 k := by
   intro k
-  fin_cases k <;> norm_num [alpha38]
+  fin_cases k <;> norm_num [alpha38.eq_1]
 
 private theorem alpha58_nonneg : ∀ k : Fin 6, 0 ≤ alpha58 k := by
   intro k
-  fin_cases k <;> norm_num [alpha58]
+  fin_cases k <;> norm_num [alpha58.eq_1]
 
 private theorem ground_from_sos (v E : ℝ) (α : Fin 6 → ℝ)
     (B : Fin 6 → FullOperator 6) (H : FullOperator 6) (ψ : Assignment 6 → ℂ)
@@ -942,7 +959,7 @@ private theorem reduced38 :
   ext a b
   generalize code2 a = i
   generalize code2 b = j
-  fin_cases i <;> fin_cases j <;> norm_num [block]
+  fin_cases i <;> fin_cases j <;> norm_num [block.eq_1]
 
 private theorem reduced11 :
     reduce (by norm_num : 2 * 1 ≤ 2 * 3)
@@ -958,7 +975,7 @@ private theorem reduced11 :
   ext a b
   generalize code2 a = i
   generalize code2 b = j
-  fin_cases i <;> fin_cases j <;> norm_num [block]
+  fin_cases i <;> fin_cases j <;> norm_num [block.eq_1]
 
 private theorem reduced22 :
     reduce (by norm_num : 2 * 1 ≤ 2 * 3)
@@ -974,7 +991,7 @@ private theorem reduced22 :
   ext a b
   generalize code2 a = i
   generalize code2 b = j
-  fin_cases i <;> fin_cases j <;> norm_num [block]
+  fin_cases i <;> fin_cases j <;> norm_num [block.eq_1]
 
 private theorem block_entropy (a p q : ℝ) (ha : 0 < a)
     (hp : 0 < p + q) (hq : 0 < p - q) :
@@ -992,7 +1009,7 @@ private theorem block_entropy (a p q : ℝ) (ha : 0 < a)
   have hs : P * Matrix.diagonal d * Q = block a p q := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [P, Q, d, block, Matrix.mul_apply, Matrix.vecMul, dotProduct,
+      simp [P, Q, d, block.eq_1, Matrix.mul_apply, Matrix.vecMul, dotProduct,
         Matrix.diagonal_apply, Fin.sum_univ_succ] <;> ring
   have hc : (show FullOperator 2 from
       fun x y => block (a : ℂ) p q (code2 x) (code2 y)).charpoly =
