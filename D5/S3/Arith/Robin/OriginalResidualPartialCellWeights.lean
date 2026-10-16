@@ -204,10 +204,6 @@ private lemma omega_endpoint {a b : ℝ} (ha : 1 < a) (m : ℕ) :
     · rw [Icc_eq_empty_of_lt (lt_of_le_of_ne (le_of_not_gt h) (Ne.symm he))]
       simp
 
-private lemma density_nonneg {t : ℝ} (ht : 1 < t) : 0 ≤ activationDensity t := by
-  unfold activationDensity
-  positivity [Real.log_pos ht]
-
 private def cap (a b t : ℝ) : ℝ :=
   if t ≤ b then activationDensity (max a t) else 0
 
@@ -228,11 +224,12 @@ private lemma cap_antitone {a b : ℝ} (ha : 1 < a) : Antitone (cap a b) := by
     change max a t * activationDensity (max a t) ≤
       max a s * activationDensity (max a s) at hh
     have hn := mul_le_mul_of_nonneg_right hmax
-      (density_nonneg (ha.trans_le (le_max_left a t)))
+      (show 0 ≤ activationDensity (max a t) from
+        MellinWeightedVariation.weight_nonneg (ha.trans_le (le_max_left a t)))
     exact (mul_le_mul_iff_right₀ hp).mp (hn.trans hh)
   · simp only [cap, if_neg htb]
     split_ifs
-    · exact density_nonneg (ha.trans_le (le_max_left _ _))
+    · exact MellinWeightedVariation.weight_nonneg (ha.trans_le (le_max_left _ _))
     · exact le_rfl
 
 private lemma step_antitone {a : ℝ} (ha : 1 < a) : Antitone (step a) := by
@@ -240,7 +237,7 @@ private lemma step_antitone {a : ℝ} (ha : 1 < a) : Antitone (step a) := by
   unfold step
   split_ifs <;> try exact le_rfl
   · exact False.elim (by linarith)
-  · exact density_nonneg ha
+  · exact MellinWeightedVariation.weight_nonneg ha
 
 private lemma cap_sub_step {a b : ℝ} (hab : a ≤ b) (t : ℝ) :
     cap a b t - step a t = (Icc a b).indicator activationDensity t := by
@@ -292,7 +289,7 @@ private lemma omega_split {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) (m : ℕ) :
 private lemma omega_nonneg {a b : ℝ} (ha : 1 < a) (m : ℕ) : 0 ≤ omega a b m := by
   apply setIntegral_nonneg (measurableSet_Icc.inter measurableSet_Icc)
   intro t ht
-  exact density_nonneg (ha.trans_le ht.1.1)
+  exact MellinWeightedVariation.weight_nonneg (ha.trans_le ht.1.1)
 
 private lemma omega_sum {N : ℕ} {a b : ℝ} (hNa : (N : ℝ) ≤ a) (hab : a ≤ b)
     (hbN : b ≤ 2 * N) (ha : 1 < a) :
@@ -349,7 +346,7 @@ private lemma omega_variation {N : ℕ} (hN : 3 ≤ N) {a b : ℝ}
     intro t
     dsimp [step]
     split_ifs
-    · exact density_nonneg ha
+    · exact MellinWeightedVariation.weight_nonneg ha
     · exact le_rfl
   have hf : F N ≤ activationDensity a := by
     have hc : ∀ t, cap a b t ≤ activationDensity a := by
