@@ -13,6 +13,10 @@ internal sealed class CoherentCopyCorrelationTaxDocument : IScribeDocumentDefini
             + "mutual information into diagonal entropy and relative entropy of coherence.",
         H("Coherent Premeasurement and Correlation Tax"),
         Blocks(
+            IsoDefinition("copyIsometry", "The basis-copying isometry", IsoIsometryFormula(),
+                "The rectangular matrix sends basis vector i to the product basis vector (i,i).", DescribeRole.Definition),
+            IsoDefinition("copyIsometry_star_mul", "Basis copying is an isometry", IsoIsometryLaw(),
+                "The adjoint of the copying matrix followed by the copying matrix is the identity on the input space.", DescribeRole.Theorem),
             Paragraph(Text(
                 "The copying isometry sends basis vector i to the joint basis vector (i,i). "
                     + "The joint state is V rho V*, including the input's off-diagonal entries. "
@@ -145,4 +149,48 @@ internal sealed class CoherentCopyCorrelationTaxDocument : IScribeDocumentDefini
         return new Formula.Apply(Seq(Operatorname, Grp(Seq([.. parts]))), [.. args]);
     }
     private static Formula Parenthesized(Formula value) => Seq(Left, Open, value, Right, Close);
+
+    private static DocumentBlock IsoDefinition(string name, string title, Formula formula,
+        string prose, DescribeRole role) => Describe.Lean(
+            DescribeId.Create("copying-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Module + name), H(title),
+            StatementSource.FromAuthor(formula), AssessedProvenance.FromLiterature(
+                LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
+            Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula IsoNamed(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula IsoApp(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    private static Formula IsoCall(string name, params Formula[] args) => IsoApp(IsoNamed(name), args);
+    private static Formula IsoQualified(string owner, string name) => Seq(IsoNamed(owner), Dot, IsoNamed(name));
+    private static Formula IsoParenthesized(Formula f) => Seq(Open, f, Close);
+    private static Formula IsoAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, IsoParenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+    private static Formula IsoEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula IsoComplex() => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula IsoPair() => Seq(F.Id("n"), Sp, Times, Sp, F.Id("n"));
+    private static Formula IsoMatrixType() => IsoCall("Matrix", F.Id("n"), F.Id("n"), IsoComplex());
+    private static Formula IsoProjection(Formula p, byte i) => Seq(p, Dot, D(i));
+    private static Formula IsoInstances(Formula body) => Seq(
+        OpenBracket, IsoCall("Fintype", F.Id("n")), CloseBracket, Sp,
+        OpenBracket, IsoCall("DecidableEq", F.Id("n")), CloseBracket, Comma, Sp, body);
+
+    private static Formula IsoIsometryFormula()
+    {
+        Formula p = F.Id("p"), i = F.Id("i");
+        Formula identity = IsoApp(IsoParenthesized(Seq(D(1), Colon, Sp, IsoMatrixType())), IsoProjection(p, 1), i);
+        Formula rhs = IsoCall("ite", IsoEqual(IsoProjection(p, 1), IsoProjection(p, 2)), identity, D(0));
+        return Disp(IsoAll("n", IsoNamed("Type"), Seq(
+            OpenBracket, IsoCall("DecidableEq", F.Id("n")), CloseBracket, Comma, Sp,
+            IsoAll("p", IsoPair(), IsoAll("i", F.Id("n"),
+                IsoEqual(IsoCall("copyIsometry", p, i), rhs))))));
+    }
+
+    private static Formula IsoIsometryLaw()
+    {
+        Formula v = IsoParenthesized(Seq(IsoNamed("copyIsometry"), Colon, Sp,
+            IsoCall("Matrix", IsoPair(), F.Id("n"), IsoComplex())));
+        return Disp(IsoAll("n", IsoNamed("Type"), IsoInstances(IsoEqual(
+            new Formula.Binary(IsoApp(IsoQualified("Matrix", "conjTranspose"), v), FormulaBinaryOperator.Multiply, v), D(1)))));
+    }
+
 }

@@ -2533,6 +2533,194 @@ The new finite column is reusable input to such a construction,
 not a substitute for those missing objects. No numerical sign or
 full retained-positivity conclusion is asserted for this alternative.
 
+#### The saved nineteen-channel base has one negative direction
+
+The [cached lift, cross-row and inertia applications](https://github.com/the-omega-institute/trureturing-experiments/tree/906abfc541483203fde48ffb29ef4486c616e618/docs/reports/weil-c27)
+archive the following new thin data and their consumers. All large
+actions, scientific suppliers and original inverse actions are reused.
+
+The saved18-by18 complement can be classified without another
+retained solve or eigenvalue isolation. Jacobi's signature criterion
+uses the signs of its leading determinants $\Delta_k$, with
+$\Delta_0=1$: nonzero leading determinants give pivot signs
+$\operatorname{sgn}(\Delta_k/\Delta_{k-1})$.
+The cached consumer `small_schur_rank_floor.py` finds all18 determinant
+intervals strictly negative, using degree-dependent export grids
+$640k+64$. Thus its first pivot is negative and the next17 are
+positive. Under the inherited exact-complement/enclosure premises,
+this OLD nineteen-channel complement has inertia17 positive,
+1 negative,0 zero; its full target has1280 positive and1 negative
+direction after adding the1263 positive prefix.
+
+The18 small determinants took0.25 seconds and were independently
+checked against the same saved core. This is a different object
+from both the original $L_0$ complement and the failed new
+$\rho=1$ target. Negative diagonals alone had not counted its
+negative directions. A positive update of rank one is not excluded
+by this inertia: its direction, strength and coupling still matter.
+No inertia statement about actual $S_N$ follows.
+
+#### A common inverse majorant and a denominator already in the cache
+
+Keep the original comparison $T$, support $E$, residual $R$ and
+finite-input action $M$. Under the existing common form/domain
+and inverse identifications, write
+
+$$
+B_0=E^*TE,\quad F=E^*HE=B_0+D,\quad D\succ0,\qquad
+G=O^*TE,\quad H_c=O^*HE,
+$$
+
+where $O$ includes the exterior outside $E$. The effective action
+has the inherited block expression
+
+$$
+M=T_{OO}-H_cF^{-1}H_c^*
+ +(H_c-G)D^{-1}(H_c-G)^*.
+$$
+
+The ordinary weighted square completion, with
+$H_c=G+(H_c-G)$ and $F=B_0+D$, gives
+$M\succeq T_{OO}-GB_0^{-1}G^*$. Consequently
+$M^{-1}\preceq O^*T^{-1}O$. These are applications on the admitted
+forms and finite inputs; the notation does not supply missing
+domain or inverse-existence premises.
+Positivity of $H-T$ also gives
+$H_{OO}-T_{OO}\succeq(H_c-G)D^{-1}(H_c-G)^*$. The actual exterior
+Schur form after eliminating $E$ therefore dominates $M$, yielding
+$S_N\succeq Q-R^*M^{-1}R$ on these same forms.
+
+For the SAME old nineteen channels, let
+
+$$
+A_\rho=I+A_0+(1+\rho^{-1})\delta_{\rm ch}I,\qquad \rho=1/32,
+$$
+
+$$
+\overline W=
+(W_J-W_JU_JA_\rho^{-1}U_J^*W_J)
+\oplus(1+\rho)W_{\rm far}.
+$$
+
+Here $A_0$ includes all middle rows, including $E$;
+$\delta_{\rm ch}$ is the original channel-tail charge, not
+$\delta_{\rm up}$. The earlier common channel trial and Young
+bound give $\overline W\succeq O^*T^{-1}O$ and
+$Q-R^*\overline W R\succeq L_*$. With $u=Mw$, set
+
+$$
+F_\phi=u_J^*W_JU_J,\qquad
+\mathcal B=u^*\overline W R-w^*R,\qquad
+\mathcal K=u^*\overline W u-h.
+$$
+
+The same inverse-residual square completion gives
+$\mathcal K\ge0$. In particular
+
+$$
+\mathcal K=\delta+\rho\|u_{\rm far}\|_W^2
+-F_\phi A_\rho^{-1}F_\phi^*
+\le D_*:=\delta_{\rm up}+\rho E_M,
+$$
+
+where the accepted common data give $D_*<299.146668420532$.
+Choosing the common scalar trial
+$\alpha(v)=\mathcal Bv/D_*$, without division by $\mathcal K$, gives
+
+$$
+S_N\succeq Q-R^*\overline W R
++\mathcal B^*\mathcal B/D_*
+\succeq L_*+\mathcal B^*\mathcal B/D_*.
+$$
+
+This conditional application supplies the common-gain inequality;
+the actual row and the good-block inverse metric must still be
+enclosed tightly enough for its full coupled sign test. The
+denominator belongs to this full row, including its far cross;
+it cannot be paired with $b_{\rm fin}$ alone.
+
+#### The scalar defect encloses the missing common row without new channels
+
+The cached exact lift $V=[-X_g;I]$ supplies the missing thin data
+
+$$
+c=b_{\rm fin}^*V,\qquad \Beta_V=\Beta_0V,\qquad
+G_V=(P_{\rm far}^*V)^*\mathcal K_{\rm far}(P_{\rm far}^*V)
++\varepsilon V^*V.
+$$
+
+The signed112-feature core and every allowance cross term are
+retained. The exact rational $\varepsilon$ is the upper endpoint
+of the base's640-bit transported allowance, checked against the
+original512-bit metadata. The1024-bit cached products took1.44
+seconds; independent1536-bit consumption gave exactly the same3024
+matrix interval pairs. No old inverse, target, channel or moment
+producer ran.
+
+Put $Z=A_\rho^{-1}\Beta_V$ and
+$t_V=u_{\rm far}^*W_{\rm far}R_{\rm far}V$. The full row is
+$\mathcal B_V=c-F_\phi Z+(1+\rho)t_V$. The cached Gram $A_0$
+majorizes the J-only channel Gram, so weighted Cauchy pays the
+finite correction by $\sqrt{e_J(Z^*A_0Z)_{jj}}$, where
+$e_J=\|u_J\|_W^2$. The far correction costs
+$(1+\rho)\sqrt{E_M(G_V)_{jj}}$. Even these bounds exclude zero
+in every coordinate, but do not decide a matrix sign.
+
+There is stronger shared information already available. Let $v_0$
+be the accepted exact dyadic retained direction, and reuse its
+exact $\vartheta$ and certified finite residual defect
+
+$$
+e=R_Jv_0-\vartheta u_J,\qquad e^*W_Je\le E_e.
+$$
+
+The saved all-coordinate channel map then gives
+
+$$
+F_\phi=(\Beta_0v_0)^*/\vartheta-e^*W_JU_J/\vartheta.
+$$
+
+Thus the computable center and error for the FULL common row are
+
+$$
+\widehat{\mathcal B}_V=c-(\Beta_0v_0)^*Z/\vartheta,\qquad
+|(\mathcal B_V-\widehat{\mathcal B}_V)_j|
+\le\frac{\sqrt{E_e(Z^*A_0Z)_{jj}}}{|\vartheta|}
++(1+\rho)\sqrt{E_M(G_V)_{jj}}.
+$$
+
+No raw $U_J$ values need to be regenerated for this enclosure.
+Relative to the first finite Cauchy radius, the certified defect
+factor is less than $0.109095699$. The
+`full_gamma_defect_cross.py` consumer takes0.41 seconds and gives,
+in the first old-lift coordinate (mode0),
+
+$$
+5.99690490660\times10^{-15}
+< (\mathcal B_V)_0
+<9.65492947706\times10^{-15}.
+$$
+
+All18 row intervals exclude zero. Combining their magnitude lower
+bounds with the old diagonal enclosures gives
+$(\Sigma_*)_{jj}+|(\mathcal B_V)_j|^2/D_*>0$ for every $j$;
+the mode0 lower is above $2.44652\times10^{-33}$. These are
+restrictions to the OLD lift. They omit the good-block response
+and are not the updated Schur complement.
+
+For the scalar common row, a certified
+$\Omega\ge\mathcal B_GP^{-1}\mathcal B_G^*\ge0$ must still be
+paid in the denominator. A common upper $\Omega<6.21431056$
+would preserve all18 positive updated diagonal bounds just
+obtained. No such inverse-metric upper has been supplied, and
+even positive updated diagonals would leave the off-diagonal
+positivity test open. The needed data are the common row's
+correlations and a sufficient inverse-metric bound, not another
+scalar energy or channel supplier. These are applications of
+existing inverse, Cauchy and inertia methods, with no generic
+novelty or Lean-verification claim. Full retained and cofinal
+positivity, the original Robin tail estimate and RH remain open.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
