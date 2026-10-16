@@ -116,4 +116,19 @@ private theorem involution_bound (A N : Matrix (Fin 2) (Fin 2) ℂ) (hA : A.IsHe
   simp only [Complex.sub_re, Complex.one_re] at hnp
   linarith
 
+private theorem two_level_involution (s : ℝ) (c : ℂ) (hs : s ^ 2 + Complex.normSq c = 1) :
+    let A : Matrix (Fin 2) (Fin 2) ℂ := !![-(s : ℂ), c; star c, s]
+    A.IsHermitian ∧ A * A = 1 ∧ trace A = 0 := by
+  dsimp
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;> simp [Matrix.conjTranspose_apply]
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_two]
+    all_goals apply Complex.ext <;>
+      simp [Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at hs ⊢ <;> nlinarith [hs]
+  · simp [Matrix.trace, Fin.sum_univ_two]
+
 end D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
