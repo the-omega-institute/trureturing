@@ -1437,6 +1437,13 @@ Theorems 74.2–74.3. These are suppliers, not additional new results below.
 RC supplies the complete static residual/contact curve; RH supplies its
 static actual-label minima. All uses retain their exact hypotheses.
 
+The published [WE, §§1–6][WE906] uses these same conditional source
+operators and exactly Definition 67.2's original comparison class. Its
+endpoint constant and universal critical full-record law are reused
+below. Its scalar reduction is for feasibility only: generating balanced
+sign labels preserves the scalar moments, but need not preserve the TV
+of an existing actual record. No TV-preserving symmetrization is assumed.
+
 Write $a,b,c,d$ for the amplitudes called $a_K,b_K,c_K,d_K$ in RH,
 and $a_{\rm src},b_{\rm src},c_{\rm src},d_{\rm src}$ in RC. Put
 
@@ -1487,6 +1494,24 @@ by multiplying an eigenprojector by $M_2^{1/2}$ on both sides. In
 particular the compatible physical direction is $M_2^{1/2}e_\epsilon$,
 not $e_\epsilon$ alone. For example the readout coordinates are
 $q_\epsilon(\mathbf c)=|e_\epsilon^TM_2^{-1/2}n(\mathbf c)|^2$.
+
+The complete correspondence with WE.6–.8 and WE.44 is:
+
+| WE symbol | Symbol and meaning here |
+| --- | --- |
+| $D,T,S,M,\theta,\omega,\delta,s_0,\alpha,\beta$ | The identical source operators and coefficients; $\kappa=h_0a+h_1b$ is the same report normalization. |
+| $U,V,W,\mu,r,k$ | $u_m,V_f,W_f,\mu_f,u_f,\sqrt{u_f}$ of FA.38; WE's $W$ is a scalar failure moment, not the complementary isometry. |
+| Radial $x$, $w_2(x)$ | $u=z^2$, $(1-\alpha u)/\beta=w^2$; neither is an original height or an elapsed time. |
+| $D_c(x),N_c(x),c_*(x)$ | $C_c+D_cu,A_c+B_cu,c_*(u)$ of FA.38. |
+| $B_*,C_{\rm end}$ | $\nu=\mu_f/c_f$, $\kappa_0=\nu(1-\sqrt{u_f})^2/2$. |
+| $q=1-s/s_0$ | $q_{\rm end}=1-\tau$ in comparisons with WE; FA.43's local $q=\nu/t$ is instead a live coefficient mass. |
+| $N,L,G,f(z,w),h(z,w),H(x)$ | $N,L,G,\ell(\mathbf c),f(\mathbf c),d(\mathbf c)$, respectively, with $\mathbf c=(s_0,z,w)$. |
+| $d_f,z_f,L_f,\gamma_f,H_\Delta,T_0$ | The identical FA.36 spectral data, $(L_f-d_f)/2,H_0,\mathcal T(s_0)$. |
+
+Thus the physical failure whitening, the full generated-record law and
+the capacity domain coincide. WE's prescribed recovery uses FA70/75's
+same free coherent completion and FIRST clock; neither its feasibility
+reduction nor this dictionary identifies arbitrary full-$M_5$ completions.
 
 **Definition 77.2 (actual labels and moment coordinates).** Let
 $n_{\rm feas}(s,A)$ be the minimum number of actual low live-bearing
@@ -1654,6 +1679,24 @@ $(u,v)=(u^\dagger,v^\dagger)$. The strong $s^\dagger$ is distinct
 from the static weak contact $s_\dagger=s_0\tau_\dagger$.
 In particular $A=0$, $s=s_0$ and $s=1$ are infeasible at finite
 budget; $s=0$ has the positive attained threshold $\log(1+t_0)$.
+
+For comparison with WE Theorem 4.1, on the rising branch write
+$q_{\rm end}=1-\tau$. The same exact threshold becomes
+
+$$
+t_{\min}(s)=\frac{\kappa_0}{q_{\rm end}}
+ +\frac{\nu(1+\sqrt{u_f})^2}{2(2-q_{\rm end})},
+\qquad 0<q_{\rm end}\le1-\tau_*.
+$$
+
+WE.29 has $p_{\rm cap}=q_m/2$ and
+$q_0=1-p_{\rm cap}\sqrt{u_f}
+-\sqrt{(1-p_{\rm cap})(1-p_{\rm cap}u_f)}<1-\tau_*$.
+Its exact recovery expression WE.30 is therefore this threshold on
+$0<q_{\rm end}\le q_0$. WE supplies that restricted recovery and its
+endpoint constant, rather than the entire threshold claim. FA.41 also
+covers the rest of the rising branch and the attained floor, using the
+global convexity of Lemma 78.2.
 
 **Proof.** Use FA.37. Let $p$ be its coefficient probability measure,
 $u=z^2$, and let $d\lambda=b_jdp/\mu_f$ be the failure-weighted
@@ -1997,7 +2040,8 @@ $$
 \tag{FA.54}
 $$
 
-Then
+Here $\kappa_0=C_{\rm end}$ is the evaluated endpoint constant
+of WE.28, reused with the dictionary of Convention 77.1. Then
 
 $$
 1-\tau_{\max}(t)=\kappa_0/t+\kappa_1/t^2+O(t^{-3}).
@@ -2019,6 +2063,14 @@ $$
 \qquad F_{\rm lim}(\kappa_0)=d_f.
 \tag{FA.56}
 $$
+
+At $\zeta=\kappa_0$, [WE, Theorem 6.2][WE906] gives the same
+$\mathcal T(s_0)-\gamma_f$ limit for **every** sequence of admitted
+actual instruments in these classes retaining its full generated
+acquisition labels, including nonoptimizers. A coarsened record has
+only the corresponding upper limit bound. This universal critical law
+is a supplied result; FA.56's general $\zeta>\kappa_0$ assertion is
+about the optimal value and the recovery below.
 
 **Proof.** Expanding FA.44 at $q=\nu/t=0$ gives FA.55 and the
 strict-side feasibility assertions. Its positive second coefficient
@@ -2042,7 +2094,8 @@ $\int|f+t^{-1}\ell/\mathfrak c|d\sigma-
 the upper limit in FA.56.
 
 For minimum limiting cost, use $d\lambda=d\sigma/\mu_f$ and
-$\int z^2d\lambda=u_f$. Jensen for $h_1$ of Lemma 78.2 gives
+$\int z^2d\lambda=u_f$. The strict supporting tangent WE.17–.18,
+with $\mathcal F=d/\mathfrak c$, gives
 
 $$
 \int d/\mathfrak c\,d\sigma
@@ -2085,14 +2138,12 @@ $\zeta>\kappa_0$, mix its finite moment representation with the
 minimum-cost measure and let the mixing weight decrease to zero.
 The objective tends to $F_{\rm lim}(\zeta)$ while the cost is strictly
 smaller. This proves the matching lower limit. At $\zeta=\kappa_0$,
-compactness and strict equality in FA.58 force every limiting failure
-measure to the edge class just described. Conversely, for every feasible
-finite index choose an actual maximizer from Theorem 72.1. Its failure
-absolute sum is at least
-$|\int f\,d\sigma|=d_f$, and its mixing error is $O(t^{-1})$.
-Its live measure tends to the same corner masses. This proves the lower
-limit also for every feasible sequence with vanishing edge slack, rather
-than only for a selected recovery path. $\square$
+the universal law WE Theorem 6.2 applies directly, since its product
+is $t_n(1-\tau_n)\to C_{\rm end}$. Applying it to the attained
+maximizers of Theorem 72.1 proves FA.56 there for every eventually
+feasible sequence, including vanishing edge slack. Its stronger
+nonoptimizer quantifier is retained as stated, without a second proof.
+$\square$
 
 **Theorem 81.3 (exact spectral budget threshold).** With the compatible
 $\mathbf c_\epsilon,b_\epsilon$ of Proposition 80.2 put
@@ -2645,10 +2696,27 @@ effects alone does not supply it.
 
 For supported-nonzero low labels, different real-null rays cannot be
 aggregated into a single two-dimensional label in this way. On the same
-ray, preservation of each fine branch requires equality of its entire
-normalized failure CP measures, divided by its live coefficient weight,
-not merely equality of their integrated failure/live ratio. In compatible
-unitary fibre coordinates, equal complete decoders are sufficient.
+ray write the supported live composites as $p_i\operatorname{Ad}_K$,
+$p_i>0$, and define the supported failure composites
+
+$$
+\widehat\Phi^f_{i,\ell}(\mathcal B)
+ =\mathcal R_i^f{}_{\ell}(\mathcal B)\mathcal E_i
+       \operatorname{Ad}_E:M_3\longrightarrow\text{failure output}.
+$$
+
+Up to unitary identifications of the qubit fibres, preserving every fine
+composite **on the supported algebra** is equivalent to equality of
+$\widehat\Phi^f_{i,\ell}(\mathcal B)/p_i$ for all $i,\ell,\mathcal B$.
+This retains the entire time CP measures, not just their integrated
+failure/live ratios. In the resulting unitary coordinates the complete
+decoders agree on their entire qubit fibres, and therefore satisfy FA.77
+even for arbitrary full-$M_5$ encoders. With preassigned fibre coordinates,
+the common decoder must instead agree with each given decoder there.
+Neither statement identifies the full encoders divided by $p_i$ or
+requires equality of their normalized full-$M_5$ failure composites.
+FA.77 remains the full-domain criterion, with no restriction on the
+encoders' action on $V^\perp$ or cross-support operators.
 
 **Proof.** A common decoder preserving the fine composites necessarily
 satisfies FA.77; conversely the equality and an admissible common decoder
@@ -2657,21 +2725,60 @@ full-instrument postprocessing interface, as in Leppäjärvi–Sedlák,
 arXiv:2010.15816v1, §IV Definition 4, Eq.1. Here it is imposed
 componentwise also on Borel outputs, not inferred from POVM equality.
 
-For low labels $\mathcal E_i=\operatorname{Ad}_{C_i}$ on the supported
-qutrit and $C_i$ is onto, so this linear map has image all $M_2$.
+For low labels the restriction
+$\widehat{\mathcal E}_i:=\mathcal E_i\operatorname{Ad}_E
+=\operatorname{Ad}_{C_i}$ has onto $C_i:\mathbb C^3\to\mathbb C^2$.
+This restricted linear map has image all $M_2$.
 Thus FA.77 determines the common decoder on its entire fibre, rather
 than only on selected input states. A common injective live decoder
 forces all products onto one coefficient ray by FA.5. For that ray
 write its live composite as $p_i\operatorname{Ad}_K$. Injectivity
 then gives $C_i/\sqrt{p_i}$ independent of $i$ in common live-decoder
-coordinates. Every failure composite divided by $p_i$ must consequently
-coincide. Conversely when such complete normalized composites coincide,
-their encoder effects divided by $p_i$ coincide, since the decoder is
-TP. Surjective square-root factorizations of this common effect differ
-only by fibre unitaries, and in those coordinates their full decoders
-coincide. The original admissible path of any one of them supplies a
-common decoder with the same required budget. This proves the stated
-same-ray criterion with the coordinate qualification.
+coordinates, after removing irrelevant Kraus phases. Hence precisely
+the supported failure composites $\widehat\Phi^f_{i,\ell}/p_i$
+coincide. Conversely, if those maps coincide, the supported total
+encoder effects $C_i^\dagger C_i/p_i$ coincide, by TP and the common
+normalized live composite. Onto factorizations of this rank-two effect
+differ only by fibre unitaries. In those coordinates the supported
+encoders divided by $p_i$ are the same surjective CP map, so equality
+of all its normalized output composites makes the complete decoders
+equal on $M_2$. The admissible chronological path of one supplies a
+common decoder with the required activity; constant unitary coordinate
+changes preserve the norm integral. This proves exactly the supported
+normalized equivalence. The equality just established is equality of
+decoders on $M_2$, since the restricted encoder is surjective. Composing
+those equal decoders with each original full encoder proves FA.77 on
+all of $M_5$. It does not extend the identity
+$\widehat{\mathcal E}_i/p_i=\widehat{\mathcal E}_j/p_j$ to full
+encoders; no such extension is used.
+
+The distinction is necessary within the original comparison class.
+Take a nonzero-failure low branch of the floor constructor, with
+supported encoder $C$, live coefficient $p$, and decoder $\mathcal R$
+whose total failure effect is $F\ne0$. Split it into two equal
+supported branches, using that same decoder on both, and on $M_5$ set
+
+$$
+\mathcal E_1=\tfrac12\operatorname{Ad}_{CE^\dagger}
+                 +\varepsilon\operatorname{Ad}_{W^\dagger},\qquad
+\mathcal E_2=\tfrac12\operatorname{Ad}_{CE^\dagger},
+\qquad 0<\varepsilon<1.
+$$
+
+Reduce the separate complement encoder from
+$\operatorname{Ad}_{W^\dagger}$ to
+$(1-\varepsilon)\operatorname{Ad}_{W^\dagger}$. Total encoder effect
+remains $I_5$. Every fibre is unchanged, and the added Kraus environment
+is discarded. The original twelve supported histories, individual
+errors, contrast, sharp joint cost, record TV, activity and FIRST clock
+are unchanged. FA.77 holds on all $M_5$ with
+$\mathcal R_1=\mathcal R_2=\mathcal R$. Yet for
+$X=W|v\rangle\langle v|W^\dagger$ with $\langle v|F|v\rangle>0$,
+branch 1 has nonzero failure output on some original label and Borel
+set, while branch 2 has none. Dividing by the equal supported live
+weights $p/2$ cannot make those full-domain maps equal. Their supported
+normalized maps do coincide. This is an allowed multi-Kraus free
+completion, with no additional specimen or readable Kraus control.
 
 This statement preserves full output instruments, not a particular
 unobserved Hamiltonian description. If an internal prescribed path is
@@ -2735,8 +2842,9 @@ Necessity follows because the injective $B$ fixes the encoder from the
 live map. Sufficiency follows by the displayed factorization and
 $\operatorname{Ad}_B\mathcal E=\Phi^L$. The TP decoder makes
 $\mathcal E^\dagger(I)$ exactly the target branch's total effect,
-so it is TNI when that branch is. Any other supported factorization is
-unitarily equivalent by Proposition 85.1, giving the same criterion.
+so it is TNI when that branch is. Any other factorization of the same
+supported complete composites is unitarily equivalent by Proposition
+85.1's supported equivalence, giving the same full-component criterion.
 Its admitted rank-one time law has the activity just computed. Thus no
 extra full-$M_5$ equality follows from mere proportionality of supported
 effects; the five Borel components must all pass this criterion.
@@ -2933,10 +3041,13 @@ cross-label maximum or selected-input average. This verifies the common
 correspondence for every stated attainer and every finite recovery
 family. $\square$
 
-**Convention 86.2 (credited tools and distinct conclusions).** The new
-scalar, boundary, coefficient-existence, joint-layer and finite-activity
-label deductions are `repo-derived` ordinary conditional mathematics.
-No worldwide novelty claim is made. Their exact supplier interfaces are:
+**Convention 86.2 (credited tools and distinct conclusions).** The entire
+scalar threshold, minimum-budget boundary height, coefficient existence,
+general joint-layer and finite-activity label deductions are
+`repo-derived` ordinary conditional mathematics. WE's evaluated endpoint
+constant and universal critical full-record law are reused, not counted
+as new results. No worldwide novelty claim is made. The exact supplier
+interfaces are:
 
 | Supplier | Use and boundary |
 | --- | --- |
@@ -2945,6 +3056,7 @@ No worldwide novelty claim is made. Their exact supplier interfaces are:
 | [RC, §§58–66][RC42] and [RH, §§8–10][RH42] | Full static residual/contact curve, finite static dual at its valid scope, and distinct static feasible/height-optimal low-label counts; no finite-budget support sufficiency. |
 | [IR, Lemma 10.1][IR42] | Zero-Rayleigh finite null decomposition, including singular/rank-zero remainders; a normalized instrument still needs its total effect bound and completion. |
 | FA68–70, FA72, FA74–75 | Prescribed-law minimum with terminal effect identity, double rigidity/capacity, full-fibre construction, exact finite moments, strict two-sided deficit bounds and complete output correspondence. These intermediates are reused. |
+| [WE, Theorems 2.2, 3.2, 4.1 and 6.2][WE906] | The same original class and feasibility-only scalar reduction; strict tangent WE.17–.18; $C_{\rm end}=\kappa_0$ and $B_*=\nu$, the restricted exact recovery expression, and the critical full-record limit for every admitted actual instrument sequence. The entire threshold FA.41, boundary height FA.46 and general joint problem FA.53–.59 require their stated additional arguments; WE's scalar sign construction gives no TV-preserving symmetrization. |
 | [Yang–Xie, arXiv:1605.02431v2, §II Theorem 1][YX] | Hermitian PSD $N\times N$ Toeplitz gives rank-many positive circle atoms; uniqueness only at rank deficiency. Applied with $N=5$ in FA72, not a scalar frontier or minimum-label theorem. |
 | [Leppäjärvi–Sedlák, arXiv:2010.15816v1, §IV Definition 4, Eq.1 and Proposition 6][POST] | Full quantum-instrument postprocessing; the proposition's detailed-instrument recovery assumes orthogonal Kraus ranges. It grants no discarded-index access or arbitrary continuous disintegration. |
 | Real quantifier elimination and one-dimensional semialgebraic finiteness | Applied in Theorem 80.1 to the explicitly polynomial attained-value graph with fixed real parameters; only limit existence follows. No inaccessible supplementary text is a premise. |
@@ -3005,5 +3117,6 @@ requirements, is neither completed nor narrowed by these finite results.
 [TA42]: https://github.com/the-omega-institute/trureturing/blob/42c0c311f19d89110016c3b54a29b43ce69d5b6d/docs/develop/theory/FIB_NATIVE_TOTAL_ACTUAL_ACQUISITION_ALPHABET.md
 [HP42]: https://github.com/the-omega-institute/trureturing/blob/42c0c311f19d89110016c3b54a29b43ce69d5b6d/docs/develop/theory/FIB_NATIVE_CRITICAL_HEIGHT_PROJECTION_AND_CUTOFF_OVERLAP_BOUNDS.md
 [POST]: https://arxiv.org/html/2010.15816v1
+[WE906]: https://github.com/the-omega-institute/trureturing/blob/90649c566145c094ba1acc79b747e82064214fbf/docs/develop/theory/FIB_NATIVE_WEAK_FINITE_ACTIVITY_ENDPOINT_CONSTANT.md
 
 ## 追加锚（本行以下为增补区）
