@@ -4,6 +4,21 @@ namespace StrataLint.Engine;
 
 internal static class LeanPropositionSourceComparer
 {
+    internal static (LeanSourceCatalog Base, LeanSourceCatalog Candidate) ParseSources(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate)
+    {
+        var unchanged = protectedBase.Files
+            .Where(pair => LeanClosureValidator.IsManagedLean(pair.Key.Value)
+                && pair.Value.ContentWasRead && !pair.Value.RawBytes.IsDefault
+                && candidate.Files.TryGetValue(pair.Key, out var current)
+                && current.ContentWasRead && !current.RawBytes.IsDefault
+                && pair.Value.RawBytes.AsSpan().SequenceEqual(current.RawBytes.AsSpan()))
+            .Select(static pair => pair.Key).ToImmutableHashSet();
+        return (LeanSourceCatalog.Parse(protectedBase, unchanged),
+            LeanSourceCatalog.Parse(candidate, unchanged));
+    }
+
     internal static bool AreEquivalent(
         RepositorySnapshot protectedBase,
         RepositorySnapshot candidate,
@@ -18,8 +33,7 @@ internal static class LeanPropositionSourceComparer
         ArgumentNullException.ThrowIfNull(candidateReport);
         try
         {
-            var baseSources = LeanSourceCatalog.Parse(protectedBase);
-            var candidateSources = LeanSourceCatalog.Parse(candidate);
+            var (baseSources, candidateSources) = ParseSources(protectedBase, candidate);
             foreach (var path in reanchoredPaths.OrderBy(
                 static path => path.Value,
                 StringComparer.Ordinal))
@@ -51,4 +65,11 @@ internal static class LeanPropositionSourceComparer
     }
 }
 
-internal sealed class LeanSourceExtractionException(string message) : FormatException(message);
+internal enum LeanSourceExtractionFailure { UnsupportedSyntax, IndentedDeclaration }
+
+internal sealed class LeanSourceExtractionException(
+    string message,
+    LeanSourceExtractionFailure failure = LeanSourceExtractionFailure.UnsupportedSyntax) : FormatException(message)
+{
+    internal LeanSourceExtractionFailure Failure { get; } = failure;
+}

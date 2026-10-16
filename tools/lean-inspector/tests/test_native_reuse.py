@@ -259,10 +259,10 @@ class NativeReportConsumerTests:
         (self.root / 'entry-tools/lake').chmod(0o755)
         (self.root / 'entry-tools/lean').symlink_to(Path(self.lake).with_name('lean'))
         self.env['LAKE_BIN'] = str(self.root / 'entry-tools/lake')
-        workspace = ['-d', str((self.root / 'tools/lean-inspector-reg').resolve())]
+        workspace = ['--log-level=error', '-d', str((self.root / 'tools/lean-inspector-reg').resolve())]
         def builds():
             return [args for line in calls.read_text().splitlines()
-                    if (args := json.loads(line))[:3] == [*workspace, 'build']]
+                    if (args := json.loads(line))[:len(workspace) + 1] == [*workspace, 'build']]
         def clear_calls():
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
