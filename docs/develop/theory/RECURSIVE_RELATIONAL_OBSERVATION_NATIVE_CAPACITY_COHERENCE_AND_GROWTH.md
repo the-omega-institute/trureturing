@@ -64,6 +64,10 @@ guard to $J$ without changing $t$ or backing cells. Raise($h$) returns
 paid operations, not source rejects. They preserve the source-call count $q$,
 accepted-modification count $g$ and accepted-rho epoch $e$. A distinct all-event
 count $m$ includes maintenance, source events and exposed local/stop markers.
+The inherited semantic-event count $j$ includes every source event,
+NativeLocal and Halt, including executed rejects, and excludes maintenance.
+Thus $q\le j\le m$; none of these is the primitive clock. Journal access,
+copying, fences and other service microsteps increment neither $j$ nor $m$.
 Successful reservations and strict raises have separate layout and policy
 ordinals $r,p$. Every accessible ordinal is a constructed unary word.
 
@@ -73,6 +77,10 @@ source-write, pending-row and partial-copy cuts remain runtime states. The
 restriction on maintenance admission removes no original busy cut or original
 continuation. No arbitrary-busy-cut migration, concurrency, crash recovery or
 interrupt service is included.
+
+The inherited callable journal service is an auxiliary paid memory routine,
+with the explicit resident entry and versioned index contracts of §6. It
+does not add a semantic source/maintenance event or an external source tag.
 
 ## 2. Primitive carrier, material and installation authority
 
@@ -109,7 +117,7 @@ and 27 its waiting command/return packet. Maintenance protects these four
 ports. Ports 28–31 are actor archive, archive descriptors, checking work and
 terminal/output work respectively. Delivery can append to or scan those
 four ports while preserving all old payloads and handle meanings. Producer
-17 holds block descriptions, 18 the old source-row stream, 19 unified-row
+17 holds block descriptions, 18 the semantic-journal index, 19 unified-row
 indices, 20 responses, 21 frozen-prefix work, 22 inherited public-expression
 frames, and 23 the counter bank of Definition 6.1. These are boot assignments,
 not a later movement of already acquired data.
@@ -230,7 +238,8 @@ symbols, finite role permutations and truth tables are expanded literally.
 Loops over variable data have actual tape heads and terminal tests. Static
 routine calls form the order: primitive word routines, arithmetic, native field/descriptor and bit-frame
 codecs, closed readout/staging, directory state/resolution and manifest
-serialization, source generation, dispatch and rows.
+serialization, source generation, dispatch, semantic/unified rows and their
+finite index/lookup/snapshot readers.
 Their call graph has finite depth; inherited public-expression traversal uses
 PR57's constructed frame stack. No routine generates its own evaluator.
 
@@ -602,14 +611,14 @@ At idle it acquires and seals one
 canonical complete frame on port 13, parses it, retains its return kind and
 command, and takes the source-availability token into the selected service.
 It executes ReadState before generation or maintenance. Old source tags go
-to Definition 4.4, then the inherited response/counter/source-row routines.
+to Definition 4.4, then the response/counter/semantic-row routines below.
 Maintenance tags go to Definition 5.1. Local controller and terminal markers
 go to their inherited actually executed code/complete-output routines.
 Every route then goes to the unified row/delivery routine of §6, its actual
 acknowledgement, TOK returning the source-service token to the dispatcher,
 one CTL restoring the idle phase, and the same controller's
 saved return edge. A raw external-frame mode instead returns to its next
-frame IN. A terminal route finishes its row/delivery and actual ACK, and the
+frame IN. A global-terminal route finishes its row/delivery and actual ACK, and the
 requested stop-snapshot/verification/consumer work of §6, before its halt
 CTL. A verifier refusal completes that route with no task output. Source calls use CloseFence(`source-start`) before generation and
 CloseFence(`response-commit`) after release; NativeLocal and Halt use the
@@ -617,10 +626,28 @@ same start/commit pair around their complete marker/output commitment.
 These replace, rather than duplicate, any inherited designated fence sites.
 They have no directory publication and use `no-publication` in the row.
 The complete old/new $q,g,e,j,m$ words are staged before their roles are
-reused. An original source call advances $q$, an accepted modification $g$,
-and an accepted Rho $e$; the old source-row seal advances $j$. Local/terminal
-markers and maintenance preserve $q,g,e,j$. Each completed unified event
-advances $m$ once. Fence-count $f$ is separate from every one of these.
+reused. At commitment an original source call advances $q$, an accepted
+modification $g$, and an accepted Rho $e$. Every source call, NativeLocal and
+Halt advances $j$ once, exactly as in LJA4.2–4.3. Local/terminal markers
+preserve $q,g,e$; maintenance preserves $q,g,e,j$. Each of these completed
+events advances $m$ once. Prepare the required incremented unary versions
+before commitment; the committed response and actual phase select them by
+paid copying/AppendCounter afterward. A row seal materializes an already
+committed event and does not increment it again. Every nonmaintenance route
+writes its semantic row and index before its unified row and index, as in
+Definition 6.2a. Fence-count $f$ is separate from all these counts.
+
+The same boot installs the auxiliary `journal` call-kind. A source-free
+caller reaches that fixed entry through its actually installed public code
+with the retained query of Definition 6.2a; it is not an additional raw-frame
+tag or a scheduler choice. At acknowledged idle the producer's entry CTL
+reserves admission and its TOK holds the source-service token busy before
+the actor workspace loan and query channel. The query parser, row/prefix
+service, reply checks and final ACK return this call-kind's saved continuation
+through source-token TOK and idle CTL. It takes no event-row join. The
+producer's local frozen-prefix entry uses its already held phase/token and
+returns to that frozen continuation. Neither entry grants any legacy graph
+new control or permission, and neither is enabled at an arbitrary busy cut.
 
 The three-bit original frame tags remain ReadE `000`, Rho `001`, TagRead
 `010`, Left `011`, Right `100`. Reserve is `101` and Raise is `110`.
@@ -710,7 +737,7 @@ allocating a data word does not add a new control successor. $\square$
 
 **Definition 5.1 (complete maintenance graphs).** At entry the command $U(J)$
 is retained, the source token is held busy, ReadState has materialized
-$h,K,r,p,v$, and inherited $q,g,e,m$ are accessible through their complete
+$h,K,r,p,v$, and $q,g,e,j,m$ are accessible through their complete
 counter descriptors. Counter lookup is an origin/ordinal scan of their
 immutable versions followed by the supplied complete unary copy; it never
 treats an ordinal as a primitive address. The suspended actor continuation
@@ -905,6 +932,7 @@ no operation uses an ordinal as a head position.
 
 For staging across a call, use fixed finite block types `old-h`, `old-K`,
 `old-r`, `old-p`, `old-v`, `old-q`, `old-g`, `old-e`, `old-j`, `old-m`,
+`old-semantic-last`, `old-unified-last`, `current-semantic-row`,
 and the finite start/publication/response/boot fence kinds. They are complete
 ordinary blocks on 21 described on 17. LatestType(type) is Home; MR on the
 complete descriptor stream, with an actual zero ordinal: for each record
@@ -915,7 +943,9 @@ At terminal RD(R) return the last match or typed `no-block`. Reload a staged
 word by that selected ordinal, the individual descriptor field scans, At
 and the complete length-bounded copy to a word role. These are paid scans,
 not a named-register or pointer lookup instruction. Before each operation,
-load/stage every required before-field in this fixed order. If ReadState
+load/stage every required counter/directory before-field in this fixed order.
+Last-reference and current-row types are constructed at their index/row
+steps in Definition 6.2a. If ReadState
 produces five words, retain only the field being staged and release the
 other four; an additional origin ReadState obtains the next one. After
 staging, reload only the words currently needed by the arithmetic/record
@@ -1119,7 +1149,8 @@ proves finite expansion and the producer/reader correspondence, not an
 assumed certificate for an otherwise missing service. $\square$
 
 **Definition 6.2 (row language and producer writer).** Every completed event
-has one unified producer row, with the following finite ordered fields:
+has one unified producer row of version `SEG-U1`, with eighteen Frame fields
+in the following order:
 model/version; source occurrence $\xi$; initial $H_0$/prior reference; old
 all-event ordinal $m$; predecessor unified-row reference; event kind;
 complete retained request reference; complete response; before/after $h,K$;
@@ -1127,30 +1158,35 @@ before/after layout and policy ordinals; before/after $q,g,e,j$;
 before/after committed-directory counts; complete after-directory manifest;
 start and response-commit fence references;
 post-directory-publication fence reference or the finite tag `no-publication`; original
-source-row reference or `no-source-row`; template/controller identity.
+semantic-row reference or `no-semantic-row`; template/controller identity.
 Tuple arities and kind tags are fixed finite values; all fields use Frame.
 An optional reference field is the one-bit 0 for its none tag, or 1 followed
 by its complete encoded reference. This fixes `no-publication`,
-`no-source-row` and `no-predecessor` without treating an empty field as none.
+`no-semantic-row` and `no-predecessor` without treating an empty field as none.
 Fence-reference payloads are the six-field tuples of Definition 6.1a;
 compound before/after fields use nested Frames at their stated fixed arity.
+In particular the $h,K$ field has four components (before $h,K$, after
+$h,K$), the layout/policy field has four, the $q,g,e,j$ field has eight,
+and the directory-count field has two. The semantic $q,g,e$ field below
+has six, obtained by omitting $j$ from those same before/after groups.
 Context/name/address material and every request frame are copied or referred
 to by their complete actually retained descriptors. A reject row has reject
 and no rejected candidate payload. A maintenance refusal has its own kind.
 NativeLocal and Halt retain their inherited executed-instruction/output types.
 
-The old producer source-row stream continues to receive each original source
-event with its original $q,g,e,j$ meanings and original occurrence field.
-Its physical source descriptor at that event means its actual interval then;
-the new row supplies the complete active public manifest payload defined
-below and the historical guard. No manifest field contains private source
-bits or changes an old interval into a frozen snapshot.
-No old row is edited or retyped. Unified maintenance rows have
-`no-source-row`, preserve $q,g,e,j$, and advance only $m$. Original calls advance their actual applicable $q,g,e,j$ indices and $m$;
-local/terminal markers preserve $q,g,e,j$ and advance $m$ only. A source response enters
-the pending-event component at its release, and row seal later transfers it
-to the sealed archive component. An activated directory entry before response
-release is actual maintenance work, not a fabricated old source event.
+There is a semantic row for every original source call, NativeLocal and
+Halt, with the inherited event count $j$; Definition 6.2a specifies its
+versioned physical representation and its relation to LJA's row language.
+Unified maintenance rows have `no-semantic-row`, preserve $q,g,e,j$, and
+advance only $m$. A local/terminal marker advances $j,m$ and preserves
+$q,g,e$. Every source call advances $q,j,m$, with $g,e$ determined by its
+original accept/reject case. Neither copying nor either row seal counts as
+another event. No previously sealed row is edited or retyped.
+A source response enters the pending-event component at its release, and
+unified row seal later transfers it to the sealed unified archive component.
+An activated directory entry before response release is actual maintenance
+work, not a fabricated old source event. A manifest contains no private
+source bits and does not turn a mutable interval into a frozen snapshot.
 
 The manifest is one finite bit word
 
@@ -1216,10 +1252,11 @@ or enumerate the full frozen prefix. For the first row the predecessor is
 the literal `no-predecessor`. No predecessor is inferred from a raw offset.
 The $m$ counter version is already prepared; before completion its meaning
 and this unfinished index remain determined by phase. Delivery starts only
-after the new row index is complete. The old source-row reference is the
-inherited sealed journal ordinal/owner/type, constructed by its supplied
-journal writer; it is an audit reference, not a transferred private read
-permission or a replacement for the new row's actual copied fields.
+after the new row index is complete. A present semantic-row reference is
+the actual block reference constructed by Definition 6.2a and indexed on
+18. Its semantic ordinal, descriptor ordinal and unified ordinal are
+distinct fields. Its payload is copied to a receiver before that receiver
+uses it; its printed producer base confers no private read permission.
 
 The response token and row seal are distinct. Between them the producer has
 one completed pending event and an unsealed row. At every cut the extended
@@ -1227,6 +1264,255 @@ event word satisfies $E^+=A^+\mathbin{+\!+}P^+$, where $A^+$ is the sealed
 row word and $P^+$ is empty or that one committed pending event. Earlier
 request-ingress and pre-response source work are unfinished work, not $P^+$.
 All bytes, heads, partial descriptors and latches also remain actual state.
+
+**Definition 6.2a (semantic journal, ordinal relation and paid access).**
+Write the completed dispatcher-event word as $x_0\cdots x_{n-1}$, including
+the acquisition entrance when it precedes the observed suffix. Put
+
+$$
+\epsilon(x)=\begin{cases}
+0,&x\text{ is Reserve or Raise, with any of its three outcomes},\\
+1,&x\text{ is ReadE, TagRead, Rho, Left, Right, NativeLocal or Halt},
+\end{cases}
+\qquad c_a=\sum_{b<a}\epsilon(x_b).
+$$
+
+Executed source rejects and absent literal replies have $\epsilon=1$.
+Invalid preparations, unfinished or malformed ingress, unexecuted illegal
+calls, archive `no-row`, copying and primitive controller work without a
+completed marker add no $x_b$. At acknowledged boundaries $m=n,j=c_n$.
+Let $U_a$ be the unified row with old ordinal $a$; let $J_k$, $1\le k\le c_n$,
+be the semantic row for the unique event at
+
+$$
+\sigma(k)=\min\{a<n:\epsilon(x_a)=1,\ c_{a+1}=k\},\qquad
+\epsilon(x_{\sigma(k)})=1.
+$$
+
+Thus $\sigma(k)$ is the position of the $k$th semantic event. A nonmaintenance
+$U_a$ has before/after $j=(c_a,c_a+1)$ and references $J_{c_a+1}$; a maintenance
+row has $(c_a,c_a)$ and `no-semantic-row`. The predecessor of $J_k$ is
+$J_{k-1}$, or none for $k=1$. It is not the preceding unified row, which
+can be maintenance. The predecessor of $U_a$ is $U_{a-1}$, or none for $a=0$.
+In particular $j=m-\#\{b<m:\epsilon(x_b)=0\}$, without identifying any
+event count with a descriptor ordinal or a primitive receipt ordinal.
+
+The semantic payload has version `SEG-J1` and fifteen Frame fields, in
+this order: version; $\xi$; `INITIAL-SOURCE` occurrence binding; initial
+$H_0$/prior binding; **postcommit** ordinal $U(k)$; optional semantic
+predecessor reference; one of the seven original event kinds; complete
+request/material-reference tuple; exact response/local marker/terminal
+output; before/after $q,g,e$ tuple; historical $U(h)$; typed source-layout
+tuple; actual template/controller identity; start fence; response-commit
+fence. The occurrence binding is the `INITIAL-SOURCE` tag and the boot
+tuple $\xi,H_0,16,b_0,L_0,0$, constructed from the retained initial directory
+fields. The source-layout tuple is the `SEG-SOURCE` tag and
+$\xi,h,K,v,M_v$. It describes the first $L(h)$ logical bits under $\phi_K$;
+it does not assert that disjoint segments are one physical interval.
+All tuple components use the existing Frame/option codecs. Row creation
+and final seal belong to the actual external descriptor/availability chain,
+as in LJA5.1; no field predicts that row's future seal or total cost.
+
+For source calls the request tuple retains the actual header/length/payload
+and complete context/name/code material already prescribed. A local marker
+instead retains its acquired controller-instruction packet; Halt retains
+its acquired terminal packet and complete sealed output block. These are
+their own typed tuples, not fabricated source-frame inputs. Required
+control/output blocks absent at the producer or receiver are actually
+copied through Definition 6.3 before use. The local/terminal packet also
+retains its installed return kind and complete saved continuation material;
+these are acquired fields, not a new evaluator argument. An acquisition producer's internal
+Stop has this same Halt journal meaning, while its saved return kind
+continues the surrounding dispatcher. A global stop takes the terminal
+route only after recording and delivery. This preserves both return paths.
+
+For every nonmaintenance event, after commitment and complete counter
+selection, scan the complete index on 18 for its last reference and stage
+it as `old-semantic-last`; the empty case constructs the none tag. Reload
+the staged before-fields and complete request/response/fences, BuildManifest,
+and Frame the fifteen fields, one at a time, into a fresh block on 21.
+Use exactly Definition 6.2's Base/payload/sep/zero-status/length/Add/
+WriteDescriptor/At; WR(1); CTL graph, with type `SEG-J1` on 17. Construct
+its actual reference from that descriptor and stage it as
+`current-semantic-row`. Append a native `00` record on 18 with two fields
+$U(k)$ and that reference, using Tail, tag/sep Appends, two WriteFields,
+EX; WR(seal); MR. Then construct $U_a$ and its index on 19. On maintenance
+execute no semantic-row or index append and construct the none tag instead.
+Before either writer, obtain `old-unified-last` by the same complete-index
+scan on 19. These writer-side last-reference scans start at L and run to
+the existing R, incrementing a real count after each verified seal and
+retaining the last complete reference. Before $J_k$ they compare index 18's
+count with the staged **old** $j=k-1$; before $U_a$ they compare index 19's
+count with staged old $m=a$. The already committed event counts can be one
+ahead of those indices. They are not passed as if an unfinished current
+row already existed. At idle/frozen completed ends the corresponding counts
+again agree. No scan of an unfinished index is invoked. The semantic and
+unified copies of $M_v$ are both actually constructed and charged.
+Staging/reload uses the fixed types in Definition 6.1; only the current
+field, output, length/budget and bounded arithmetic roles remain live.
+Other fields are loaded by a fresh origin scan, so the twelve-role bound
+and the protected actor ports are unchanged.
+
+Both indices have the native two-field reader already specified for 19.
+The semantic reader additionally checks successive labels $1,\ldots,j_*$;
+the unified reader checks $0,\ldots,m_*-1$. At idle, or in an owner-held
+frozen-prefix service, load/construct the complete end count and last
+reference before reading. Home; MR enters the index; each tag test,
+ReadField/SkipField pair and seal RD; MR consumes one actual complete
+record. Increment/Compare on unary words implements its position, label,
+requested-ordinal and end tests. Select a reference only after its seal;
+continue through the declared closed end to check its count/last reference.
+Retain a selected reference on one word role until the closed end; then
+release the scan's temporary counters before any ten-field descriptor
+staging. The query/end words already have retained blocks and can be
+reloaded by fresh scans. At that closed end, zero/out-of-range semantic queries and
+out-of-range unified queries return typed `no-row`. A found reference is
+resolved by producer ReadDescriptor, not by treating $k$ or $a$ as an address.
+For an actor caller copy its whole block and missing dependencies on route
+48 through the positioned channel. The caller resolves the equal origin in its own local
+descriptor stream before reading. This is GetSemantic($k$) or GetUnified($a$),
+respectively; no printed producer base becomes a receiver address.
+
+A source-call ordinal is $q$, not $j$. A source-only query scans the same
+semantic prefix, bounded-parses each row, counts just the five source kinds,
+and selects its postcall $q$; locals and Halt are skipped without changing
+that count; zero or a source ordinal beyond that prefix's $q$ returns
+`no-row`. Call this one-based interface GetSourcePost($i$). The original
+AIF request ordinal is zero-based: it is $q_{\rm before}=i-1$ for this
+event, while $q_{\rm after}=i$. Those retained request fields are unchanged.
+A caller of GetSourceRequest($a$) first executes unary Increment on its
+actual $U(a)$, then invokes GetSourcePost($a+1$). That translation and
+copy are charged; semantic $j$ and unified $m$ are not source-request
+ordinals. A semantic-prefix query through $k$ scans unified indices and
+their complete acquired rows, increments a separate rank word only at the
+seven semantic kinds, and selects the closed end $\sigma(k)+1$; $k=0$
+selects the empty prefix. It then uses the full snapshot/dependency routine
+of Definition 6.3 for that end. A current whole-prefix query uses $m_*$
+and includes any trailing maintenance. Prefix indices zero through their
+respective closed counts are legal; a larger prefix index returns `no-row`
+after the bounded scan. Hence the shortest prefix through
+$J_k$ and the current prefix with the same $j$ are distinct queries.
+These finite scans realize rank/select rather than acquiring it for free.
+Requests are complete retained public query words on the installed caller's
+own tapes: Frame(kind), Frame($U(i)$), Frame(closed-end binding), with five
+fixed kinds for the two row queries, source-only and the two prefix queries.
+Its fixed code constructs these fields by literal Appends and copies from
+acquired data. An actor borrows the pool from the producer, constructs/stages
+the packet in its archive/checking work and sends it on route 49. After
+that channel has returned the pool to its actor sender, the actor executes
+the twelve TOKs and CTL returning it to the producer before producer parsing.
+The producer parses the packet's three bounded fields by ReadFrame;
+a producer-local call uses its own retained packet and already owned
+payload. Verifier/consumer lookups scan their already acquired snapshots
+locally; they acquire no new producer-private read or reverse mailbox route.
+There is no new raw source-frame tag, free scheduling
+choice or unretained external query argument. This is an internal callable
+archive routine, also used by the existing snapshot/stop paths. It holds
+admission busy and changes only its actual work/copy/meter state. An
+idle archive-client call returns its payload or `no-row`, complete ACK,
+source-token and idle edges. A producer-local frozen-prefix call instead
+returns to its retained frozen/stop continuation, without an idle/admission
+edge or a new actor packet/channel. This finite return kind is retained
+before the call and selects the installed fixed return edge. It creates no source call, NativeLocal, Halt
+or maintenance event and changes neither $q,g,e,j,m$. GetSemantic is the
+versioned realization of LJA5.4's callable journal access, not a private
+source read or an arbitrary-busy-cut service.
+
+**Lemma 6.2b (all-finite journal and consumer correspondence).** For every
+finite lawful execution and every inserted finite maintenance word, the
+preceding ordinal relation, both predecessor chains, index lookups and
+complete acquired row payloads agree. Filtering unified events by
+$\epsilon=1$ gives exactly LJA's semantic-event order, including locals,
+rejects and Halt. Its fixed-$H$ operation contract is retained where the
+historical guard is $H$; changes of guard use the explicitly annotated
+extended contract, never a silent fixed-$H$ identification.
+
+The precise field correspondence with LJA5.1 is:
+
+| LJA field or consumer | Relation in this resident instrument |
+| --- | --- |
+| Semantic count/event ordinal | Same semantic count $j$; row $k$ uses the postcommit ordinal $k$, while its unified mate has old ordinal $\sigma(k)$ and before/after $j=(k-1,k)$ |
+| Sealed predecessor and journal lookup | The $k-1$ semantic predecessor maps to the actual reference of $J_{k-1}$; GetSemantic uses index 18. Unified predecessors and index 19 use their own ordinals. Descriptor ordinal $c$ is obtained separately by ReadDescriptor |
+| Original model and $H$ | `SEG-J1` is an explicit new record version; $H$ becomes the row's historical $h$, with $H_0$/prior retained independently. A whole fixed-$H_0$ LJA replay is claimed only when every semantic guard is $H_0$ |
+| Preparation and `INITIAL-SOURCE` | The same actual $\xi$ and original ingress tuple, copied from boot; no second preparation, new source value or readable payload is supplied by its name |
+| Port, request, complete material, response, before/after $q,g,e$ | Equal original data for all seven kinds, including executed rejects and complete local/output material; source-call-only indices are obtained by the separate kind filter |
+| Actual source-block descriptor | The typed layout tuple replaces the contiguous descriptor. Its interpretation is $i\mapsto\phi_K(i)$ for $i<L(h)$, with the actual manifest; old interval handles keep their original meanings |
+| Template, start/response fences, row creation | The actual installed compiled template and new paid cut/descriptor references. Corresponding cut kinds and relative order are retained; numerical addresses, fence ordinals, ticks, fees and creation occurrences are not identified with a hypothetical contiguous execution |
+| Row copy and received reference | Equality of the whole payload and original reference; receiver allocation/owner/base/status are its own. Only its acquired local descriptor permits reading |
+| LJA replay/receipt consumer | The version-aware decoder and joined verifier of Definition 6.5, with the same initial $q_{H_0}$ target, then its actual acquired-binding consumer. An unmodified LJA or PR57 byte parser is not claimed to accept these new versions |
+
+Proof. Induct on completed dispatcher events, simultaneously retaining
+the actual before/after source, counter words, sealed indices and returned
+owner/continuation boundary. At zero both indices are empty and all five
+event counters are zero; boot binding gives the actual initial occurrence.
+At a maintenance event $\epsilon=0$, the completed $m$ advances once,
+$j,q,g,e$ do not advance, index 18 and every $J_k$ remain untouched, and
+one $U_a$ with the prior unified predecessor and none semantic reference
+is sealed/indexed. This includes strict, unchanged and refusal outcomes.
+Its directory/guard effect is precisely Definition 5.1, not an original
+source event. At a source event $\epsilon=1$, Theorem 4.5 supplies its exact
+response and successor; the five original source kinds have precisely
+LJA4.3's $q,g,e$ cases. At NativeLocal or Halt its actually completed
+instruction or complete sealed output commits that marker, preserving
+$q,g,e$ and the source. Each of these seven cases advances $j,m$ once.
+The last complete semantic index therefore names $J_{c_a}$, and the new
+semantic row/index is exactly $J_{c_a+1}$. The last complete unified index
+names $U_{a-1}$, and its new row is exactly $U_a$ with that semantic link.
+Frame inversion and native seal-gated selection, proved in Lemma 6.1b,
+give all payload, counter, predecessor and reference equalities in the
+table. The end count is $c_{a+1}$, proving rank/select and $m-j$ by induction.
+
+For intermediate cuts let $E_s$ be the nonmaintenance filter of committed
+$E^+$, $A_s$ the sealed semantic-row word and $P_s$ its committed unsealed
+suffix. Commitment adds exactly the same one semantic event to $E_s,P_s$
+when $\epsilon=1$, and none on maintenance. Semantic row seal transfers
+that event from $P_s$ to $A_s$; its following index append and unified row
+seal add no event. Thus $E_s=A_s\mathbin{+\!+}P_s$, $|P_s|\le1$, alongside
+the existing $E^+=A^+\mathbin{+\!+}P^+$; the two pending fields need not
+empty at the same cut. Partial index/status/copy words remain unavailable
+and the phase retains the committed/prepared counts. Busy admission prevents
+a second event before both rows, indices, dependencies and final ACK.
+This covers all primitive cuts without asserting equality of in-flight
+archive lengths or incrementing a counter at a later seal.
+
+Index induction visits a fixed finite complete prefix and selects exactly
+its requested label after the seal; payload field induction gives the
+seven-kind and source-only filters. A successful local-origin lookup reads
+the equal acquired payload; absent/unfinished copies fail availability.
+The rank scan is over those same complete rows, so the selected prefix
+includes all preceding maintenance and omits no historical guard. Every
+word, selection, dependency, returned token and head is furnished by the
+listed finite graphs; bounded scans, not an oracle, implement the table.
+At constant historical guard $H_0$ the original row replay therefore has
+the same requests, replies, source successors and initial-target fiber.
+After Raise only the guard-annotated replay has that assertion; the old
+fixed-$H_0$ claim is not made. Changed physical descriptors, schedules and
+references are related by the displayed maps, not by fictitious byte
+equality with an unexecuted legacy run. Definitions 6.3 and 6.5 below
+copy and check these joins before any continuation or target output.
+$\square$
+
+**Example 6.2c (local, terminal and maintenance ordinals).** Relative to
+zero starting event counts, NativeLocal; TagRead(root); Halt on alpha at
+$h=K=1$ has semantic successors $j=1,2,3$ and source-call successors
+$q=0,1,1$. Its semantic rows are $J_1,J_2,J_3$, including the local and
+terminal payloads. Insert Reserve(2) before the local, Reserve(2) between
+the local and read, and Raise(1) between the read and Halt. These are,
+respectively, strict reservation, unchanged reservation and unchanged raise;
+the source and guard stay alpha and 1. The six unified rows have after-$j$
+values $0,1,1,2,2,3$ and after-$m$ values $1,2,3,4,5,6$. Thus
+$\sigma(1)=1,\sigma(2)=3,\sigma(3)=5$, and $J_2$'s predecessor is $J_1$,
+not the intervening maintenance row $U_2$. A semantic-prefix query through
+2 selects four unified rows; a current query after the fifth row selects
+five, despite both having $j=2$. At a common nonzero entrance the actual
+stored counts and predecessor references are added/carried through, not
+reset. The beta/rejected-Rho/Reserve/Raise/accepted-Rho example in Theorem
+5.3 additionally shows why the guard history cannot be removed by this
+ordinal relation.
+For the supplied stationary full-source producer on $\ell$ leaves, LJA7.3's
+$2\ell-1$ reads, $2(\ell-1)$ locals and one Halt therefore contribute exactly
+$4\ell-2$ to $j$. This uses the supplied traversal, including its two local
+actions per branch, rather than counting only its source rows.
 
 **Definition 6.3 (fully positioned two-stage channel).** A sender block is
 sealed, immutable and readable by its actual owner. Its length $\ell$ and
@@ -1268,49 +1554,75 @@ There is no assertion that $12\ell+6$, or $8\ell+4$, is the complete bill.
 Each such Prelude, At, Frame, Last, Base and Zero has its expansion here or
 in the exact supplier; the channel has no unnamed setup service.
 
-The mandatory row route copies the complete unified row and any request/context
-material absent at the actor through a fresh mailbox into that actor's
-append-only archive. Only after all referenced request/context blocks absent locally have
-arrived, and the receiver parses the whole row's framing, model/type, source
-identity, predecessor, manifest and final status/seal, does its final TOK
+The mandatory row route copies the complete unified row, its semantic row
+when present, and any request/context/control/output material absent at the
+actor through fresh mailboxes into that actor's append-only archive.
+Only after all these blocks have arrived and the receiver checks both whole
+row payloads and their local availability does its final TOK
 acknowledge the row. A channel stage's receiver-seal TOK is an internal
 copy completion; the row caller does not treat it as this final row ACK.
 Required ancillary blocks are sent in fixed order: boot binding/initialization/prior if
-absent, request header/length/payload, then named context blocks in request
-order. Absence is tested by the local origin scan, not an external assertion.
+absent, the complete typed request's enumerated blocks in order (source
+header/length/payload then contexts, or local/terminal packet and its
+control/output dependencies), then the semantic row if present, then the
+unified row. Absence is tested by the local origin scan, not an external assertion.
 The receiver uses its origin-to-local descriptor records for every referenced
-payload check. Failed structural checking takes the paid refusal edge with
+payload check. Its bounded decoder checks `SEG-U1`, identity, all before/after
+fields, full manifest, final status and predecessor against the previous
+acquired unified row, or boot at zero. It computes $\epsilon$ from the actual
+kind, checks $j'=j+\epsilon$ and the applicable $q,g,e$ cases. On maintenance
+it requires `no-semantic-row` and retains its previous semantic end. Otherwise
+it loads the present `SEG-J1` through its acquired local origin, checks all
+fifteen fields against this unified event, checks ordinal $j+1$, and compares
+its predecessor to the previous acquired semantic end. Its occurrence,
+historical guard/layout manifest, template, request/response and two fences
+must all agree. The first semantic predecessor is none even after leading
+maintenance; it never uses the preceding unified reference as that predecessor.
+Any local expected count/end word is staged in that owner's archive/checking
+work using its own descriptors while the pool is lent to it. A new joined
+end is installed by full word copies only after both checks succeed.
+Failed structural checking takes the paid refusal edge with
 no new service-admission token; authentic rows follow the success edge. The row-copy caller resumes Definition 4.6 at that actual
 acknowledgement. At stop freeze that already complete index-19 prefix:
 scan its records once, constructing its unary count, and retain its last
-row reference and event count. No later source event is admitted during
-this stop route. Construct a snapshot-index bit word with the actual count,
+row reference and event count $m_*$. Its bounded row scans count semantic
+events, construct $U(j_*)$ and retain the last semantic reference; compare
+them with the complete index-18 prefix and its closed end. The frozen prefix
+binding is $(m_*,j_*,\mathrm{last}\ U,\mathrm{last}\ J)$, with explicit none
+tags for empty ends. No later event is admitted during this stop route.
+Construct a snapshot-index bit word with Frame(`SEG-P1`), $U(m_*)$, $U(j_*)$,
+Frame(optional last unified reference), Frame(optional last semantic reference),
 Frame(boot-binding reference), Frame(prior reference), then, in index order,
-Frame(row reference), Frame(complete request-reference tuple). Iterate the
+Frame(unified row reference), Frame(complete request-reference tuple),
+Frame(optional semantic-row reference). Iterate the
 frozen indices by the preceding native reader; each row's bounded ReadFrame
 scan obtains its retained request-reference tuple. New/UnaryBody/Frame/Finish
 and the ordinary staging bit-block graph construct/seal this finite index
 on 21; its bound is obtained by the same length scan, not a live meter end.
-Each request tuple explicitly enumerates its header/length/payload and any
-context references with its constructed finite count. Its bit parser is
+Each typed request tuple explicitly enumerates all its source or local/terminal
+material references with its constructed finite count. Its bit parser is
 ReadUnary followed by that count's ReadFrames and a remaining-budget check.
 
 Through the same full channel first copy the boot binding/prior and every
-row/request/context block in this frozen finite list to the verifier, testing
+semantic/unified row and request/context/control/output block in this frozen
+finite list to the verifier, in the same dependency order and testing
 its local origins to avoid a missing dependency; then copy the sealed
 snapshot index. Its reference fields keep their producer origin meanings;
 the verifier reads payloads through its acquired local descriptors. The
 snapshot consists of these actual blocks and that completed index, and
 its release CTL follows the complete index seal and dependency checks.
 There is no atomic multi-tape freeze/copy or uncharged import. An empty
-frozen list still constructs its zero count, boot/prior fields and status.
+frozen list still constructs both zero counts, both none ends, version,
+boot/prior fields and status.
 Earlier snapshots and archives are retained; no arbitrary external
 transcript-import port is added.
 
 **Theorem 6.4 (authentic rows, old handles and complete maintenance delivery).**
 Every available receiver row equals its designated sealed sender payload,
 including every manifest, maintenance/guard/binding and acquired fence field, and every verifier snapshot
-equals the producer's frozen actual prefix. Every previous archive handle
+equals the producer's frozen actual prefix with its two journal ends.
+Semantic ordinals and predecessors are those of Lemma 6.2b, with an actual
+copied semantic row for every source/local/Halt event. Every previous archive handle
 retains its payload, prefix, owner, seal and type. A source-occurrence handle
 continues to call the current source through ReadState and Resolve. An old
 physical interval handle continues to name precisely its old interval; it
@@ -1342,6 +1654,11 @@ induction gives predecessor continuity and exact archive prefixes. The frozen
 bound excludes later append and the readout's own receipts, so snapshot
 equality follows by the same bit induction. All the new row fields have been
 constructed by Definition 6.1 and their complete sender seal precedes copying.
+Lemma 6.2b identifies exactly which semantic row belongs to each unified
+event; the receiver's joined check uses the two different predecessor
+chains. Index labels are copied data, and each received block has its own
+local descriptor. Their relation supplies neither a cross-owner token nor
+an equation between descriptor ordinals and event ordinals.
 This proves the full maintenance return route as well as its copy invariant.
 
 Source addresses retain Lemma 4.3's stable images. The logical source service
@@ -1364,12 +1681,34 @@ and target proposal. Enumerate initial candidates exactly as PR57.D8, over
 all $4^{2H_0-1}$ initial packets, validate each and apply the actual prior
 $D\subseteq\mathcal T_{H_0}$. For each retained candidate $s$, keep its initial
 target $q_{H_0}(s)$ distinct from its replay-current syntax and counters.
-Initialize replay $h=K=H_0,r=p=0$. Scan *every* unified row and complete
-associated request material in order, using the preceding explicit framing,
+Initialize replay $h=K=H_0$ and $r=p=q=g=e=j=m=0$; both expected predecessor
+references start as none. Replay counts are constructed local verifier
+words, never private bank-23 reads. Scan *every* unified row, its semantic
+mate when present, and complete associated request/control/output material
+in order, using the preceding explicit framing,
 ordinal, field and block-access scans. Malformed identity, predecessor,
 length, seal, manifest, directory-count, fence binding or counter relationships
 set a public failure
 bit; no shortened scan substitutes for the full frozen prefix.
+
+First bounded-parse the `SEG-P1` snapshot index and its two counts/two ends.
+For each position $a$, require `SEG-U1`, old $m=a$, prior after-fields equal
+to current before-fields and the exact previous unified reference. Compute
+$\epsilon$ from the kind, construct $j+\epsilon$ and compare both $j$ fields.
+On maintenance require the none semantic tag. Otherwise resolve its copied
+`SEG-J1` and compare all fifteen fields, including postcommit ordinal $j+1$,
+the previous semantic reference and the same boot/prior, historical guard,
+source layout/manifest, request/response, template and two fence tuples.
+Use the same joined-row checker as the actor, on verifier-owned acquired
+origins. In particular a private audit handle without its local payload
+does not pass. Compare the snapshot's optional semantic reference for this
+position to that actual unified field as well. Retain these proposed
+after-versions for the event's replay update below; select each counter
+once, not once in this check and again in source replay. Its local semantic
+end changes only on a semantic event, and its unified end changes on every
+event. At the frozen end require both constructed counts and both last
+references to equal the snapshot header. Leading, intervening and trailing
+maintenance therefore have their distinct complete-prefix meanings.
 
 Read the boot-binding manifest first. Parse each later manifest by
 ReadUnary for $v$ under its actual bit budget, then a $v$-bounded record
@@ -1394,10 +1733,12 @@ comes from the writer/channel, not from arithmetic on these labels.
 
 For a reservation row, recompute the public comparison and $d=4(J-K)$;
 check its exact ok/unchanged/refusal case and directory successor/count;
-on ok set only replay $K,r$ to the declared successors. For a raise row,
+on ok change only replay $K,r$ among source/layout/guard fields, preserving
+$q,g,e,j$ and advancing $m$. For a raise row,
 check $h<J\le K$, equality and refusal cases; on ok set only replay $h,p$.
+It likewise preserves $q,g,e,j$ and advances $m$ on every outcome.
 Construct replay counter versions by the same unary graphs. For an original
-source row, run the supplied whole candidate/read algorithm on the replay
+source event and its semantic row, run the supplied whole candidate/read algorithm on the replay
 syntax with *that row's replay $h$*, compare the complete response, and
 install its candidate only on the recorded true guard. Replay guards and
 all metadata must agree with the row's before/after fields. The replica
@@ -1411,6 +1752,14 @@ and terminal blocks are checked with their installed actual source-free
 controller table and complete acquired requests/responses, by PR57.D5's
 row-by-row table interpreter; nonterminating local work has no completed
 marker to verify. All declared finite prior computations must terminate.
+The acquired terminal packet's return kind is checked against the installed
+code: an acquisition-internal Halt returns its complete output to its saved
+surrounding continuation; a global Halt finishes terminal services and
+admits no later event. Replay does not stop at an internal producer return
+or silently replace it by an unrecorded local microstep.
+Every source event advances replay $q,j,m$, with its exact accepted $g,e$
+case; each completed NativeLocal/Halt advances only $j,m$. Row construction,
+copying, lookups and seals advance none of these replay event counts.
 Layout bases and creation/fence references are checked as authentic provenance
 fields of the copied actual trace, not inferred from a candidate's tree value.
 There is no pretend test that a numerical name independently authenticates an
@@ -1420,8 +1769,8 @@ and these allowed copies.
 The stop proposal is an actual retained output/input block, not a mathematical
 parameter converted to bytes for free. Copy it with the initialization and
 frozen-prefix binding from the producer to verifier archive 32 on route 50.
-After the snapshot index is sealed, its actual constructed reference supplies
-that binding. Construct a typed expected-task binding block from these
+After the snapshot index is sealed, its actual constructed reference and
+$(m_*,j_*,\mathrm{last}\ U,\mathrm{last}\ J)$ supply that binding. Construct a typed expected-task binding block from these
 complete words by Frame and the ordinary staging graph. Before consuming a
 receipt, copy this block on route 51 to consumer archive 40 as well, with
 its actual local descriptor on 41. The consumer loads its expected
@@ -1442,8 +1791,9 @@ selected finite operation graph; conjoin comparison bits; continue through
 the last row and last initial candidate. All constituent scans, arithmetic,
 gates, replicas, field writes and copies have the specified expansions.
 
-An accepted receipt has type `INITIAL-q_H0`, the complete $\xi,H_0,D$,
-literal proposal, frozen prefix end and snapshot reference, verifier
+An accepted receipt has model version `SEG-R1`, type `INITIAL-q_H0`, the complete $\xi,H_0,D$,
+literal proposal, both frozen journal counts and both optional last references,
+and snapshot reference, verifier
 creation/seal references in its completed delivery descriptor. These are the
 actual descriptor ordinal and constructed status-cell reference, with the
 sender's seal CTL in its authentic provenance; any numeric fence for that
@@ -1451,7 +1801,7 @@ seal is obtained only by a later CloseFence and belongs to that delivery
 descriptor. The receipt payload does not predict its own seal-fence numeral.
 Copy it completely through Definition 6.3 to the
 consumer. The consumer first parses every field and checks model/type,
-$\xi,H_0,D$, prefix/snapshot binding, proposed target and actual accepted
+$\xi,H_0,D$, both journal counts/ends and snapshot binding, proposed target and actual accepted
 receipt seal by finite scans and word comparison, before selecting its
 public success edge. Then Zero-allocate its task-output block and copy every
 target bit by the same bounded body; seal it and perform any required OUT
@@ -1467,13 +1817,19 @@ original $q_{H_0}$ on the nonempty compatible initial-source fiber of the
 extended event word. Every actual consumer output equals $q_{H_0}(u)$.
 
 Proof. The initial enumeration is complete and duplicate-free by PR57.T1/D8.
-Theorem 6.4 authenticates every copied row and request. Induct over those rows
+Theorem 6.4 authenticates every copied row and request, and Lemma 6.2b
+supplies their exact semantic/unified counter and predecessor correspondence.
+Induct over those rows
 with the actual initial candidate $u$. Reserve and Raise have the precise
 public cases of Definition 5.1 and preserve its replay-current tree;
 their metadata updates match ReadState's actual directory. Theorem 4.5 then
 gives the same next genuine source response and successor under the recorded
 historical guard. The same source-free controller and acquired responses
 give the same local/stop markers. Hence every comparison for $u$ succeeds.
+The joined decoder's local $j$ counts these markers as well as source calls;
+its $m$ also counts maintenance. Thus both prefix ends and every semantic
+payload check succeed for the actual source, including terminal recording
+before global halt and the acquisition producer's internal return.
 
 Conversely, for each surviving $s$ the same induction says exactly that this
 initial source under those retained commands, policies and historical guards
@@ -1516,13 +1872,14 @@ The complete producer/consumer map is:
 | Native directory/counter append | Complete-record scan; the matching and skipping branches both reach the following seal, and only a seal permits selection |
 | Producer native block descriptors on 17; local copy descriptors on 29 and verifier/consumer work | Origin/ordinal native scan, full field equality, actual local availability/At reads; remote references use acquired origin matches |
 | Source S/W fields and generated code | Resolve for every S operand **and destination**; Copy/Add for W; unchanged raw-unary interpreter after complete code construction |
-| Original source response and old source row | Historical $h$ guard, inherited $q,g,e,j$ rules; complete response commitment and genuine accepted/rejected successor |
+| Every source response, NativeLocal and Halt commitment | Inherited $q,g,e,j$ cases, complete `SEG-J1` row/index and its unified mate; Lemma 6.2b's two predecessor chains |
+| Semantic/unified indices and GetSemantic/GetUnified/source-only/prefix scans | Paid ordinal/rank/select scan, descriptor/origin resolution, actual acquired payload or typed `no-row`; no new semantic event |
 | Start, successful publication and response CloseFence | Already constructed typed closed reference blocks, reloaded through their native descriptors into the row fields; no publication call on no-change branches |
 | Retained ingress/header/length/payload/context blocks | Complete parser and row request references; missing actor copies arrive through the positioned channel before final row ACK |
-| BuildManifest and complete unified bit-row writer | Bounded ReadFrame/manifest decoder at actor and verifier; the row channel copies the full $M_v$ payload, not a directory count alone |
+| BuildManifest and complete semantic/unified bit-row writers | Bounded joined-row/manifest decoder at actor and verifier; full $M_v$, $j$ transitions and both predecessors checked before final ACK |
 | Sender/mailbox/receiver and local origin descriptors | Both length-bounded copy stages, actual status WR/CTL/TOK; only complete receiver material can be parsed |
-| Frozen rows/requests/prior/boot binding | Verifier's acquired snapshot, full historical-guard and manifest checks, finite initial-candidate enumeration |
-| Accepted INITIAL-q_H0 receipt and completed delivery descriptor | Consumer checks all fields and seals using its local acquired descriptors before writing/sealing/OUT of the target; refusal has no task output |
+| Frozen semantic/unified rows, all dependencies and two journal ends | `SEG-P1` verifier snapshot, full ordinal/guard/manifest checks and finite initial-candidate enumeration |
+| Accepted SEG-R1 INITIAL-q_H0 receipt and completed delivery descriptor | Consumer compares both journal counts/ends and all other acquired expected binding fields before writing/sealing/OUT of the target; refusal has no task output |
 | Final row parser | Final row ACK TOK, source-service-token TOK, idle CTL, fixed retained caller return edge; a terminal route instead completes its requested snapshot/verification/consumer work before halt CTL |
 
 Proof. Lemma 6.1b is a structural proof for arbitrary finite valid words and
@@ -1534,10 +1891,12 @@ and builds the manifest only after the selected directory is complete.
 No publication field has an unbound value or a future completion reference.
 On no-change/refusal branches no directory is appended, and BuildManifest
 therefore reads the identical finite record sequence. Source accepts and
-rejects both pass through their completed old source row, preserve its true
+rejects both pass through their completed semantic row, preserve its true
 historical guard, and use the unchanged manifest. NativeLocal/Halt commit
-only their own executed marker/output. Each branch writes exactly one new
-unified event and has the same finite delivery join.
+their own executed marker/output and also write their semantic row, advancing
+$j$ once. Maintenance writes no semantic row. Lemma 6.2b proves these cases
+and both indices uniformly. Each branch writes exactly one new unified row
+for its one committed event and has the same finite delivery join.
 
 For a channel, induction on $0\le i\le\ell$ gives equality of sender/mailbox
 and then mailbox/receiver prefixes and heads at their next relative index.
@@ -1548,7 +1907,8 @@ bases/status addresses came from actual Base/length/Add words and actual
 native descriptors, even on nonempty ports. Local origin records preserve
 which sealed copy each owner may read. All required referenced payloads are
 finite and the ordered missing-copy scan terminates. The complete receiver
-row parser consumes all its bounded fields, manifest and seals, then emits
+row parser consumes all its bounded fields, semantic mate, manifest and seals,
+checks both predecessor/count relationships, then emits
 the final row ACK. For these authentic outputs the checks succeed. At that
 edge the service still has its busy source token; the subsequent explicit
 TOK and idle CTL restore admission and the saved return edge, without changing
@@ -1705,8 +2065,63 @@ same three fence calls, with no arena Zero. All equal/refusal cases have
 entry/start, their actual comparisons/response construction, response
 seal/release, response CloseFence, $m+1$ and the same row return sequence;
 they have no directory write, new source allocation or publication fence.
-Source accepts/rejects both include their actual generator/gates/old row
-work and the two source-start/response fence calls before the same return.
+Source accepts/rejects both include their actual generator/gates, original
+response and applicable $q,g,e$ selection, and the two source-start/response
+fence calls, followed by the semantic/unified return route below.
+Before commitment, entry counter work prepares $m+1$ and, for each
+nonmaintenance event, $j+1$, by their actual Increment/copy/staging graphs.
+Source $q,g,e$ versions retain LJA4.2's preparation of both applicable
+accept/reject successors without a private branch. This preparation is
+counted at its actual precommit position. For a nonmaintenance event the
+common postcommit route evaluates selection/AppendCounter of the already
+prepared $j+1,m+1$ versions, the complete old semantic/unified-end
+scans and staging, the fifteen semantic-field constructions/Frames,
+BuildManifest for its layout tuple, semantic bit-block seal/descriptor/
+reference construction on 21/17, and the two-field index append on 18.
+The unified row then constructs its own full manifest and present semantic
+reference. A local or Halt has this same route and its actual packet/output
+dependency channels; it is not charged as only a unified marker. Maintenance
+has no semantic writer/index/channel, keeps $j$ and its semantic end, and
+constructs the literal none tag. Every before-field reload, including $j$
+and both predecessor references, is a displayed native descriptor/origin scan.
+
+More explicitly, let $w_1,\ldots,w_{15}$ be the actual semantic field words
+at their successive writer entries. Its payload length is
+$\ell_J=\sum_{i=1}^{15}(2|w_i|+1)$. Its writer evaluates Base(21), each
+field's construction/reload and Frame, sep/status construction, the actual
+payload-length scan, Add(status), WriteDescriptor, At(status); WR(1); CTL,
+followed by actual reference construction/staging and
+NativeWrite(`00`;$U(k)$,reference) on 18. These are the same explicitly
+expanded bit-block and native-write graphs above, not service constants.
+Add the actual full channel for $\ell_J$ unless that immutable origin is
+already acquired, and the joined decoder's fifteen bounded ReadFrames,
+all nested tuple checks, unary comparisons and full field equalities.
+The actor and verifier each evaluate that checker at their own actual
+entry heads; the corresponding workspace transfers and staged local end
+words are included. Snapshot construction and dependency delivery include
+both counts/ends, every present semantic row and every control/output block.
+Receipt and expected-binding construction/copy/checking include those same
+two counts/ends. No row reference is charged as though it supplied its payload.
+
+Journal access evaluates its retained query-packet construction and, for an
+actor client, the entry admission CTL/busy TOK, actual loan to the actor,
+route-49 channel and twelve-token
+return to the producer before parsing. A producer-local frozen-prefix helper
+uses its owned packet without that channel/loan. Both evaluate the
+closed-end scan, every native two-field read, label Increment/Compare,
+selected-reference staging, descriptor/status/origin scan, requested row
+and missing dependency channels when the caller is the actor, complete
+receiver checks and its ACK/source-token/idle return. A producer-local
+frozen call returns to its retained frozen continuation without restoring
+admission. Source-only and semantic-prefix access additionally sum the bounded
+row decodes and kind-filter/rank increments; the selected prefix uses the
+same full snapshot route. A zero-based source-request query additionally
+evaluates its caller's unary Increment/copy before the source-only packet.
+A `no-row` branch evaluates its closed scan, response construction/channel
+and return, but creates no journal
+event. These extra routines and finite tags are installed and paid in the
+same original boot, using only the existing owner partitions and token pool.
+
 These sequences, with $V$ applied left to right to their changing states,
 are exact executable recurrences for this graph. They do not predict the
 end ordinal from a precomputed favorable fixture.
@@ -1865,7 +2280,16 @@ Local/stop packets likewise carry their complete executed successor/output
 marker material. Continuation codes remain actual words in 27, never a
 source-owner oracle or an unstored return register.
 
-After all required maintenance and the genuine source row return, lend the
+Local/terminal packets enumerate the complete executed instruction/output
+material they reference. The terminal output is first actually sealed on
+31; its complete payload and origin are copied to producer 21 by the same
+actor send phase, with its actual workspace loan/return, on route 49 if not
+already acquired there, before Halt commits and its semantic
+row uses that material. This additional copy preserves 24–27 and is included
+in the terminal recurrence. Local packet dependencies use the same rule;
+no instruction/output reference substitutes for acquired data.
+
+After all required maintenance and the genuine semantic/unified row return, lend the
 pool to the actor for its return handler. It locates the acquired row through
 29's local origins, bounded-parses its complete response, scans the retained
 packet on 27 for the corresponding fixed successor or four-way literal
@@ -1929,11 +2353,17 @@ For a literal read, Theorem 4.5 gives precisely the original four-way reply
 at the actually submitted finite address, and the given code installs that
 reply's continuation. For a local instruction, the given terminating table
 execution supplies its exact encoded successor and the inherited local
-marker, without touching the source. For stop, complete output sealing and
+marker, without touching the source. By Lemma 6.2b its $j$ increment and
+semantic row are the inherited local event, not a source call or a
+maintenance row. For stop, complete output sealing and
 delivery precede the global terminal state. The controller equation and
 existing Native trace induction thus give $t=\rho^e u$ and the stated
 chronology. The lift's Native suffix starts after the fixed acquired-seed
 entrance; that entrance's own old rows remain in the actual archive.
+Its local/terminal rows also participate in the absolute semantic ordinal
+and predecessor chain; a suffix projection does not reset their stored
+counts. All semantic/unified joins and acquired lookups are those of
+Lemma 6.2b and the version-aware actual consumers of §6.
 
 Lemma 6.7 supplies the exact common returned boundary, including all
 ancillary delivery, final ACK, source-token return and idle CTL; a directory
@@ -1980,6 +2410,11 @@ projection retains genuine ReadE/TagRead/modification calls and their original
 responses, including every reject, and separately records the intervening
 guard sequence. The pure-Native projection in Theorem 8.3 retains Native
 local/read/update events and terminal output. These are different projections.
+The semantic-journal projection retains all seven LJA kinds, including Halt,
+and omits maintenance; its length is $j$. The source-call projection omits
+local/Halt as well and has length $q$. The unified event length is $m$.
+Lemma 6.2b relates their ordinals; no projection changes an old record's
+actual ordinal, reference or seal meaning.
 Source occurrence, tree value, allocation interval, layout ordinal, policy
 ordinal, accepted generation, rho epoch, frozen archive prefix and receipt
 creation are distinct identity types.
@@ -1999,7 +2434,9 @@ Proof. The original entrance and installed authority are Definitions 2.3–2.4
 and 4.6. Theorem 5.2 gives the actual reached reservation on that source;
 Lemmas 4.3 and Theorem 4.5 give the physical source operands and destinations,
 including raw update cuts. Theorem 6.4 supplies old-handle meanings, complete
-delivery and owner correspondence; Theorem 6.6 supplies the actual
+delivery and owner correspondence; Lemma 6.2b supplies the full semantic/
+unified record, index, predecessor and acquired-lookup relation, including
+NativeLocal/Halt and every maintenance outcome. Theorem 6.6 supplies the actual
 historical-guard consumer and unchanged initial-target type. Theorem 7.2
 accounts for all occurrences on that run and Theorem 7.4 retains every busy
 state and acquired input distinction. Theorem 8.3 composes these actual
