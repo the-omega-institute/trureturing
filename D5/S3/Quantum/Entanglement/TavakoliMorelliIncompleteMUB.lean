@@ -114,7 +114,7 @@ theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
       exact (hZero Y).1
     rw [(trace_zero_basis_measurement_is_orthogonal_projection
       (A.context l) (mub_context_record A l)).1.isSymmetric x (P k y), hComposition]
-    exact inner_zero_right _
+    exact inner_zero_right (𝕜 := ℝ) x
   · have hd1 : d = 1 := by omega
     subst d
     have hy : y = 0 := by
@@ -127,7 +127,7 @@ theorem mub_measurements_orthogonal {d m : ℕ} (hd : 1 ≤ d)
       change y.1.1 0 0 = 0
       simpa only [Matrix.trace_fin_one] using htrace
     rw [hy, map_zero]
-    exact inner_zero_right _
+    exact inner_zero_right (𝕜 := ℝ) (P l x)
 
 /-- Squared probabilities of arbitrary Hermitian inputs obey the incomplete-MUB moment bound. -/
 theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
@@ -191,7 +191,14 @@ theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
   have hCoeff : (((m : ℝ) - 1) / (d : ℝ)) * H.trace.re ^ 2 =
       (m : ℝ) * (H.trace.re ^ 2 / (d : ℝ)) - H.trace.re ^ 2 / (d : ℝ) := by ring
   rw [hCoeff]
-  linarith only [hEnergy, sq_nonneg ‖residualVector A.context (mub_context_record A) X‖]
+  calc
+    (∑ l, ∑ a, (p l a) ^ 2) ≤
+        ((H * H).trace.re - H.trace.re ^ 2 / (d : ℝ)) +
+          (m : ℝ) * (H.trace.re ^ 2 / (d : ℝ)) := by
+      apply sub_le_iff_le_add.mp
+      exact (le_add_of_nonneg_right
+        (sq_nonneg ‖residualVector A.context (mub_context_record A) X‖)).trans hEnergy.symm.le
+    _ = _ := by ring
 
 def claim : Prop :=
   ∀ (d m r : ℕ), 1 ≤ d → 1 ≤ m → m ≤ d → 1 ≤ r → r ≤ d →
