@@ -8,7 +8,7 @@
 
 import Mathlib.Analysis.Asymptotics.Lemmas
 import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Fin.VecNotation
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Continuity
@@ -104,5 +104,79 @@ private theorem no_inversion : ¬ InversionCorrespondence a a := by
     intro i
     exact (hk i).imp (fun h => by simpa using h 0) (fun h => by simpa using h 0)
   fin_cases k <;> norm_num [p.eq_1, q.eq_1, a.eq_1, Fin.forall_fin_succ, Fin.add_def, Fin.sub_def, Fin.neg_def] at hh
+
+private theorem sum_support (μ f : Finset (Fin 4) → ℝ)
+    (h : ∀ s, s.card ≠ 2 → μ s = 0) :
+    (∑ s, μ s * f s) = ∑ j : Fin 6, μ (states j) * f (states j) := by
+  rw [sum_configs]
+  simp only [h {} (by decide), h {0} (by decide), h {1} (by decide),
+    h {2} (by decide), h {3} (by decide), h {0,1,2} (by decide),
+    h {0,1,3} (by decide), h {0,2,3} (by decide), h {1,2,3} (by decide),
+    h {0,1,2,3} (by decide), zero_mul, zero_add, add_zero]
+  norm_num [Fin.sum_univ_succ, states.eq_1]
+  ring
+
+private theorem sum_law (ε : ℝ) (f : Finset (Fin 4) → ℝ) :
+    (∑ s, law ε s * f s) = ∑ j : Fin 6, B ε j / (5 * D ε) * f (states j) := by
+  simp only [law.eq_1, Finset.sum_mul, ite_mul, zero_mul]
+  rw [Finset.sum_comm]
+  simp
+
+private theorem law_apply (ε : ℝ) (j : Fin 6) :
+    law ε (states j) = B ε j / (5 * D ε) := by
+  fin_cases j <;> simp only [law.eq_1, states.eq_1, Fin.sum_univ_succ] <;>
+    dsimp! only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go, Fin.ofNat] <;> norm_num +decide
+
+private theorem law_support (ε : ℝ) (s : Finset (Fin 4)) (hs : s.card ≠ 2) :
+    law ε s = 0 := by
+  rw [law.eq_1]
+  apply Finset.sum_eq_zero
+  intro j hj
+  apply if_neg
+  intro he
+  subst s
+  fin_cases j <;> exact hs (by decide)
+
+private theorem rate_card {L : ℕ} [NeZero L] (wp wm : Fin L → ℝ) (ε : ℝ)
+    (s t : Finset (Fin L)) (h : s.card ≠ t.card) : rate wp wm ε s t = 0 := by
+  rw [rate.eq_1]
+  apply Finset.sum_eq_zero
+  intro i hi
+  have hz (j : Fin L) : ¬ (j ∉ s ∧ t = insert j (s.erase i)) := by
+    rintro ⟨hj, rfl⟩
+    apply h
+    rw [Finset.card_insert_of_notMem (by simp [hj])]
+    exact (Finset.card_erase_add_one hi).symm
+  simp only [if_neg (hz _), add_zero]
+
+private noncomputable def F (ε : ℝ) (v : Fin 6 → ℝ) : Fin 6 → ℝ :=
+  ![(-2*ε-6)*v 0 + (3-3*ε)*v 1 + (41*ε+41)*v 4,
+    (4*ε+4)*v 0 - 10*v 1 + (41-41*ε)*v 2 + (4-4*ε)*v 3 + (41*ε+41)*v 5,
+    (3*ε+3)*v 1 + (39*ε-43)*v 2 + (4-4*ε)*v 4,
+    (2*ε+2)*v 1 + (ε-7)*v 3 + (41-41*ε)*v 4,
+    (2-2*ε)*v 0 + (2*ε+2)*v 2 + (3*ε+3)*v 3 - 90*v 4 + (3-3*ε)*v 5,
+    (2-2*ε)*v 1 + (4*ε+4)*v 4 + (-38*ε-44)*v 5]
+
+-- Expanding six balance equations over the explicit finite configuration sums needs this budget.
+set_option maxHeartbeats 1200000 in
+private theorem balance_block (ε : ℝ) (μ : Finset (Fin 4) → ℝ)
+    (h : ∀ s, s.card ≠ 2 → μ s = 0) (j : Fin 6) :
+    F ε (fun k => μ (states k)) j =
+      2 * ((∑ s, μ s * rate a a ε s (states j)) -
+        μ (states j) * ∑ s, rate a a ε (states j) s) := by
+  rw [sum_support μ _ h, sum_configs]
+  fin_cases j <;> simp only [F.eq_1, states.eq_1, Fin.sum_univ_succ] <;>
+    dsimp! only [Matrix.vecCons, Fin.cons, Fin.cases, Fin.induction, Fin.induction.go, Fin.ofNat] <;>
+    norm_num +decide [Matrix.cons_val, rate.eq_1, p.eq_1, q.eq_1, a.eq_1,
+      Fin.add_def, Fin.sub_def, Fin.neg_def] <;> simp only [Matrix.cons_val] <;> ring
+
+private theorem polynomial_balance (ε : ℝ) (j : Fin 6) : F ε (B ε) j = 0 := by
+  fin_cases j <;>
+    simp only [F.eq_1, B.eq_1, Matrix.cons_val, Matrix.cons_val_zero',
+      Matrix.cons_val_succ'] <;> ring
+
+private theorem sum_B (ε : ℝ) : (∑ j : Fin 6, B ε j) = 5 * D ε := by
+  norm_num [B.eq_1, D.eq_1, Fin.sum_univ_succ]
+  ring
 
 end D5.S3.StatisticalMechanics.DisorderedExclusionQuadraticResponseRefutation
