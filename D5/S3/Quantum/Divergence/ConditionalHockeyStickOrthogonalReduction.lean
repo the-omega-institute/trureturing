@@ -24,6 +24,30 @@ open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteDiamondDistance
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
+set_option linter.unusedDecidableInType false in
+set_option linter.unusedFintypeInType false in
+theorem posSemidef_blockDiagonal' {ι : Type*} [Fintype ι] [DecidableEq ι]
+    {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
+    (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i, (M i).PosSemidef) :
+    (Matrix.blockDiagonal' M).PosSemidef := by
+  have h : ∀ i, ∃ B : Matrix (κ i) (κ i) ℂ, M i = star B * B :=
+    fun i => CStarAlgebra.nonneg_iff_eq_star_mul_self.mp (hM i).nonneg
+  choose B hB using h
+  have he : Matrix.blockDiagonal' M =
+      (Matrix.blockDiagonal' B).conjTranspose * Matrix.blockDiagonal' B := by
+    rw [Matrix.blockDiagonal'_conjTranspose, ← Matrix.blockDiagonal'_mul]
+    congr 1
+    funext i
+    exact hB i
+  rw [he]
+  exact Matrix.posSemidef_conjTranspose_mul_self _
+
+theorem partialTraceRight_smul {S R A : Type*} [DistribSMul S ℂ] [Fintype A]
+    (c : S) (X : Matrix (R × A) (R × A) ℂ) :
+    partialTraceRight (c • X) = c • partialTraceRight X := by
+  ext i j
+  simp [partialTraceRight, Finset.smul_sum]
+
 private def rt {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) : ℝ := RHLinalg.rtrace X
 
@@ -114,23 +138,35 @@ private def dsum {n m : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (Y : Matrix m m ℂ) : Matrix (n ⊕ m) (n ⊕ m) ℂ :=
   Matrix.fromBlocks X 0 0 Y
 
-private theorem dsum_psd {n m : Type*} [Fintype n] [DecidableEq n]
+universe u v
+
+private theorem dsum_psd {n : Type u} {m : Type v} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]
     {X : Matrix n n ℂ} {Y : Matrix m m ℂ}
     (hX : X.PosSemidef) (hY : Y.PosSemidef) : (dsum X Y).PosSemidef := by
-  rw [Matrix.posSemidef_iff_dotProduct_mulVec]
-  refine ⟨?_, ?_⟩
-  · apply Matrix.IsHermitian.fromBlocks hX.isHermitian
-    · ext; simp
-    · exact hY.isHermitian
-  · intro x
-    classical
-    let x₁ : n → ℂ := fun i => x (Sum.inl i)
-    let x₂ : m → ℂ := fun i => x (Sum.inr i)
-    have h1 := hX.dotProduct_mulVec_nonneg x₁
-    have h2 := hY.dotProduct_mulVec_nonneg x₂
-    unfold dsum; simpa [Matrix.mulVec, dotProduct, x₁, x₂, Fintype.sum_sum_type] using
-      add_nonneg h1 h2
+  let M : (b : Bool) →
+      Matrix (bif b then ULift.{u} m else ULift.{v} n)
+        (bif b then ULift.{u} m else ULift.{v} n) ℂ :=
+    fun b => Bool.casesOn b (X.submatrix ULift.down ULift.down)
+      (Y.submatrix ULift.down ULift.down)
+  have hM : ∀ b, (M b).PosSemidef := by
+    intro b
+    cases b
+    · exact hX.submatrix ULift.down
+    · exact hY.submatrix ULift.down
+  let f : n ⊕ m → Σ b, bif b then ULift.{u} m else ULift.{v} n :=
+    Sum.elim (fun i => ⟨false, ULift.up i⟩) (fun j => ⟨true, ULift.up j⟩)
+  have heq : dsum X Y = (Matrix.blockDiagonal' M).submatrix f f := by
+    unfold dsum
+    ext i j
+    cases i <;> cases j <;>
+      simp [M, f, Matrix.submatrix_apply, Matrix.blockDiagonal'_apply']
+  letI : ∀ b : Bool, Fintype (bif b then ULift.{u} m else ULift.{v} n) :=
+    fun b => by cases b <;> dsimp <;> infer_instance
+  letI : ∀ b : Bool, DecidableEq (bif b then ULift.{u} m else ULift.{v} n) :=
+    fun b => by cases b <;> dsimp <;> infer_instance
+  rw [heq]
+  exact (posSemidef_blockDiagonal' M hM).submatrix _
 
 private theorem dsum_mul {n m : Type*} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]
@@ -316,13 +352,6 @@ private theorem act_smul {A B : Type*} [Fintype A] [DecidableEq A]
       (N.toCompletelyPositiveMap.toLinearMap.comp CStarMatrix.ofMatrixₗ.toLinearMap)
   exact (T.restrictScalars ℝ).map_smul t X
 
-private theorem ptr_smul {R A : Type*} [Fintype R] [DecidableEq R]
-    [Fintype A] [DecidableEq A]
-    (t : ℝ) (X : Matrix (R × A) (R × A) ℂ) :
-    ptr (t • X) = t • ptr X := by
-  ext r s
-  unfold ptr; simp [partialTraceRight, Finset.smul_sum]
-
 private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) {X : Matrix (R × A) (R × A) ℂ}
@@ -367,7 +396,7 @@ private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
   let T : Matrix (R × A) (R × A) ℂ →ₗ[ℝ] Matrix R R ℂ :=
     { toFun := ptr
       map_add' := partialTraceRight_add
-      map_smul' := ptr_smul }
+      map_smul' := partialTraceRight_smul }
   change T (X - t • Y) = T X - t • T Y
   rw [map_sub, map_smul]
 
@@ -619,7 +648,7 @@ private theorem flag_transfer
       _ = dsum (c • ptr H)
           (dsum (a • (1 : Matrix Unit Unit ℂ))
             (-b • (1 : Matrix Unit Unit ℂ))) := by
-        rw [ptr_smul]
+        rw [show ptr (c • H) = c • ptr H from partialTraceRight_smul c H]
         rw [Matrix.trace_smul, hτ.2, Matrix.trace_smul, hτ.2,
           Complex.real_smul, Complex.real_smul, mul_one, mul_one]
         rfl
