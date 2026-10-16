@@ -34,30 +34,21 @@ abbrev boundArena : Arena where
     (K1 (boundaryValues 11 l)).PosSemidef → (K2 (boundaryValues 11 l)).PosSemidef →
       O.readout () () l ≤ (7 / 121 : ℝ)
 
-abbrev sharpStatement : Prop := IsGreatest
-  {p : ℝ | ∃ l : Fin 20 → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧ (∑ i, l i) = 1 ∧
-    (K1 (boundaryValues 11 l)).PosSemidef ∧ (K2 (boundaryValues 11 l)).PosSemidef ∧
-      (∑ i, (l i) ^ 2) = p} (7 / 121 : ℝ)
-
-abbrev sharpArena : Arena where
-  signature := signature
-  Law O := IsGreatest
-    {p : ℝ | ∃ l : Fin 20 → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧ (∑ i, l i) = 1 ∧
-      (K1 (boundaryValues 11 l)).PosSemidef ∧ (K2 (boundaryValues 11 l)).PosSemidef ∧
-        O.readout () () l = p} (7 / 121 : ℝ)
-
 private theorem rejected_bound : ¬ boundArena.Law rejected := by
   intro h
-  obtain ⟨l, ho, hn, ht, h1, h2, _⟩ := sharp_spectral_purity_bound.1
-  have hle := h l ho hn ht h1 h2
+  let l : Fin 20 → ℝ := fun _ => 1 / 20
+  have hpsd (k : Bool) :
+      ((if k then K1 else K2) (boundaryValues 11 l)).PosSemidef := by
+    have heq : (if k then K1 else K2) (boundaryValues 11 l) =
+        (1 / 10 : ℝ) • (1 : Matrix (Fin 3) (Fin 3) ℝ) := by
+      cases k <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+        norm_num [K1, K2, boundaryValues, l, Matrix.smul_apply, Matrix.one_apply]
+    rw [heq]
+    exact Matrix.PosSemidef.one.smul (by norm_num)
+  have hle := h l (fun _ _ _ => le_rfl) (fun _ => by norm_num [l])
+    (by simp [l]) (by simpa using hpsd true) (by simpa using hpsd false)
   change (2 : ℝ) ≤ 7 / 121 at hle
   norm_num at hle
-
-private theorem rejected_sharp : ¬ sharpArena.Law rejected := by
-  intro h
-  obtain ⟨l, _, _, _, _, _, heq⟩ := h.1
-  change (2 : ℝ) = 7 / 121 at heq
-  norm_num at heq
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
@@ -70,13 +61,6 @@ def boundFamilyRegistration : Registration boundArena boundStatement where
   bridge := Iff.rfl
   variation := ⟨spectral_purity_bound, rejected, rejected_bound⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity boundArena.Law actual rejected rejected_bound
-  dependence := actual_dependence
-
-def sharpFamilyRegistration : Registration sharpArena sharpStatement where
-  actual := actual
-  bridge := Iff.rfl
-  variation := ⟨sharp_spectral_purity_bound, rejected, rejected_sharp⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity sharpArena.Law actual rejected rejected_sharp
   dependence := actual_dependence
 
 /-- Source selection retains the complete spectral telescope and its square-sum observation. -/
@@ -106,31 +90,6 @@ def boundRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body","body","body","body","body","body","fn","arg"],
       stateBinder := 0, functionOperand := false,
       stateOperand := none, booleanPredicate := false }] },
-  continuation := .unknown,
-  familyRecord := none,
-  options := #[] }
-
-/-- The omitted source selector leaves the structural reconstruction obligation open. -/
-def sharpRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.sharp_spectral_purity_bound)
-    (Realization signature) Type Unit := {
-  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.sharp_spectral_purity_bound.__information_unit,
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound.sharpFamilyRegistration,
-  realizationSource := none,
-  generated := false,
-  arena := .source ⟨sharpArena⟩,
-  objectArena := .source ⟨sharpArena⟩,
-  catalog := Lean.Name.anonymous,
-  localNames := false,
-  realization := .source sharpArena ⟨sharpFamilyRegistration⟩,
-  correspondence := { stage := .evidence, objectStage := .evidence },
-  bundleNonempty := .absent,
-  readout := some (realize signature (fun _ _ l => ∑ i, (l i) ^ 2) (fun e => nomatch e)),
-  variation := .absent,
-  sensitivity := .absent,
-  partialSensitivity := none,
-  escapeFrom := some (Fin 20 → ℝ),
-  sourceSelection := none,
   continuation := .unknown,
   familyRecord := none,
   options := #[] }

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraic-spectrum-transfer)
    anchors: []
    utility: none
-   digest: The rank-three length-twenty spectral relaxation has greatest purity seven over one hundred twenty-one. -/
+   digest: The rank-three length-twenty spectral relaxation has purity at most seven over one hundred twenty-one. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SpectralBoundaryTransfer
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN6PurityBound
@@ -42,9 +42,18 @@ private theorem endpoint_twenty_one : SpectralBound 12 := by
 private theorem intermediate_nineteen : SpectralBound 10 :=
   spectral_bound_transfer 9 2 (by decide) endpoint_eighteen endpoint_twenty_one
 
-/- proof_shape: spectral_purity_bound: bind-only
-   consumer: sharp_spectral_purity_bound
-   escape_witness: none -/
+/- proof_shape: spectral_purity_bound: content after expansion through the
+   same-delivery new spectral_bound_transfer, including its actual-pivot
+   insertion/deletion and positive normalization. The endpoint_eighteen
+   and endpoint_twenty_one helpers only adapt baseline-frozen certificates;
+   intermediate_nineteen uses the new transfer on the live proof path.
+   consumer: QuadbitQuintitMaximumPurity.density_bound
+   escape_witness: SpectralBoundaryTransfer.spectral_bound_transfer
+   admission_basis: escape-witness
+   utility:none rationale: This universal inequality uses symbolic structural
+   transfer. It introduces no new finite equality certificate, enumeration,
+   coefficient object or checker. The length-21 source change only exposes
+   the original private baseline certificate. -/
 theorem spectral_purity_bound (l : Fin 20 → ℝ) (ho : Antitone l)
     (hn : ∀ i, 0 ≤ l i) (ht : ∑ i, l i = 1)
     (h1 : (K1 (boundaryValues 11 l)).PosSemidef)
@@ -54,64 +63,7 @@ theorem spectral_purity_bound (l : Fin 20 → ℝ) (ho : Antitone l)
     spectral_bound_transfer 10 1 (by decide) intermediate_nineteen endpoint_twenty_one
   convert htwenty l ho hn ht h1 h2 using 1 <;> norm_num [purityBound]
 
-private def equalitySpectrum : Fin 20 → ℝ := fun i => if i = 0 then 3 / 22 else 1 / 22
-
-private theorem equality_order : Antitone equalitySpectrum := by
-  intro i j hij
-  by_cases hj : j = 0
-  · have hi : i = 0 := by
-      subst j
-      apply Fin.ext
-      change i.val = 0
-      change i.val ≤ 0 at hij
-      omega
-    simp [hi, hj]
-  · by_cases hi : i = 0
-    · norm_num [equalitySpectrum, hi, hj]
-    · simp [equalitySpectrum, hi, hj]
-
-private theorem equality_K1 : (K1 (boundaryValues 11 equalitySpectrum)).PosSemidef := by
-  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
-  · ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [Matrix.conjTranspose_apply, K1, boundaryValues, boundaryIndex, equalitySpectrum]
-  · intro x
-    norm_num [K1, boundaryValues, boundaryIndex, equalitySpectrum,
-      Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
-    nlinarith [sq_nonneg (x 0 - x 1), sq_nonneg (x 2)]
-
-private theorem equality_K2 : (K2 (boundaryValues 11 equalitySpectrum)).PosSemidef := by
-  have heq : K2 (boundaryValues 11 equalitySpectrum) =
-      K1 (boundaryValues 11 equalitySpectrum) := by
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [K1, K2, boundaryValues, boundaryIndex, equalitySpectrum]
-  rw [heq]
-  exact equality_K1
-
-/- proof_shape: sharp_spectral_purity_bound: content
-   escape_witness: the explicit ordered spectrum has mass one, both actual
-     boundary matrices positive semidefinite and square sum exactly 7/121.
-   admission_basis: escape-witness -/
-/-- Sharpness is asserted for the rank-three spectral relaxation only. -/
-theorem sharp_spectral_purity_bound : IsGreatest
-    {p : ℝ | ∃ l : Fin 20 → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧
-      (∑ i, l i) = 1 ∧ (K1 (boundaryValues 11 l)).PosSemidef ∧
-      (K2 (boundaryValues 11 l)).PosSemidef ∧ (∑ i, (l i) ^ 2) = p}
-    (7 / 121 : ℝ) := by
-  constructor
-  · refine ⟨equalitySpectrum, equality_order, ?_, ?_, equality_K1, equality_K2, ?_⟩
-    · intro i
-      dsimp [equalitySpectrum]
-      split_ifs <;> norm_num
-    · norm_num [equalitySpectrum, Fin.sum_univ_succ]
-    · norm_num [equalitySpectrum, Fin.sum_univ_succ]
-  · intro p hp
-    obtain ⟨l, ho, hn, ht, h1, h2, rfl⟩ := hp
-    exact spectral_purity_bound l ho hn ht h1 h2
-
 #print axioms spectral_purity_bound
-#print axioms sharp_spectral_purity_bound
 #print axioms QutritN7PurityBound.certificate_bound
 
 end

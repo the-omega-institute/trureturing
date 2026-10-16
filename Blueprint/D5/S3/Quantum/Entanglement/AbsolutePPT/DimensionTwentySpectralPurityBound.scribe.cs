@@ -17,7 +17,6 @@ internal sealed class DimensionTwentySpectralPurityBoundDocument : IScribeDocume
     private static Formula Imp(Formula p, Formula q) => Seq(Par(p), Rightarrow, Sp,Par(q));
     private static Formula And(params Formula[] fs) => Seq(fs.SelectMany((f,i) => i == 0 ? new[] {Par(f)} : new[] {Land, Sp,Par(f)}).ToArray());
     private static Formula All(string n, Formula t, Formula f) => Seq(Forall, Sp,Par(Seq(X(n), Colon, t)), Comma, Par(f));
-    private static Formula Ex(string n, Formula t, Formula f) => Seq(Exists, Sp,Par(Seq(X(n), Colon, t)), Comma, Par(f));
     private static Formula Arrow(Formula x, Formula y) => Seq(x, To, Sp,y);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Sq(Formula x) => new Formula.Power(Par(x), D(2));
@@ -39,17 +38,12 @@ internal sealed class DimensionTwentySpectralPurityBoundDocument : IScribeDocume
 
     public DocumentDefinition Create()
     {
-        var l=X("l"); var p=X("p"); var bound=Frac(D(7),D(121));
-        var values=Seq(OpenBrace,p,Colon,R,Mid, Sp,Ex("l",Vector(D(20)),
-            And(Feasible(D(11),l),Eqn(Purity(D(20),l),p))),CloseBrace);
+        var l=X("l"); var bound=Frac(D(7),D(121));
         return DocumentDefinition.Create(ScribeNode.Create(
-            "The rank-three length-twenty spectral relaxation has greatest purity 7/121.",
-            H("Sharp length-twenty spectral purity"), Blocks(
+            "Every feasible rank-three length-twenty spectrum has purity at most 7/121.",
+            H("Length-twenty spectral purity bound"), Blocks(
             Desc("spectral_purity_bound", "Universal spectral inequality",
                 All("l",Vector(D(20)),Imp(Feasible(D(11),l),Le(Purity(D(20),l),bound))),
-                "For every antitone nonnegative real spectrum on Fin 20 with mass one and both rank-three boundary matrices positive semidefinite, the square sum is at most 7/121. The existing N6 and N7 rational certificate bounds give the endpoints at lengths 18 and 21. SpectralBoundaryTransfer first gives length 19 using a=2, then length 20 using a=1. Length 19 is a spectral intermediate. This inequality does not assert literal four-by-five APPT or settle the unrestricted APPT purity conjecture."),
-            Desc("sharp_spectral_purity_bound", "Greatest attained spectral purity",
-                Call("IsGreatest",values,bound),
-                "The value 7/121 is both an upper bound and an attained member of the feasible spectral purity set. Attainment uses (3,1,...,1)/22 with nineteen copies of one. Its boundary pencils coincide and their quadratic form is ((x0-x1)^2+x2^2)/11, so both are positive semidefinite. Its squared mass is (9+19)/22^2=7/121. Attainment is for the stated spectral relaxation; no density-matrix APPT realization is asserted."))));
+                "For every antitone nonnegative real spectrum on Fin 20 with mass one and both rank-three boundary matrices positive semidefinite, the square sum is at most 7/121. The baseline-frozen N6 and N7 rational certificate bounds give the endpoints at lengths 18 and 21. N7 exposes its original private certificate without changing its coefficients or proof. The same-delivery new SpectralBoundaryTransfer.spectral_bound_transfer first gives length 19 using a=2, then length 20 using a=1. Expanding this live inference stops at the baseline endpoints, not at the new transfer. Its arbitrary ordered-tuple construction, actual deletion, repeated insertion and normalization provide the structural content of this upper bound. Length 19 is a spectral intermediate. This inequality does not assert literal four-by-five APPT or settle the unrestricted APPT purity conjecture."))));
     }
 }

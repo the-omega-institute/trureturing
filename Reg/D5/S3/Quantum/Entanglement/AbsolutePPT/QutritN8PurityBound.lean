@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritN8PurityBound
-import D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
 import Reg.Support.SingleDependentReadout
 
@@ -32,9 +31,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨hd, ht, ha, _hp⟩ :=
     _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.normalized_ray v hv
   obtain ⟨l, ho, hn, hmass, h1, h2, _hp⟩ :=
-    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner.spectral_reduction
+    _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.spectral_reduction
       (by decide : 3 ≤ 4) (by decide : 3 ≤ 6) _ hd ht ha
-  have hb : _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.FiniteBellCorner.boundaryValues 24 (by decide) l =
+  have hb : _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.cornerBoundaryValues 24 (by decide) l =
       boundaryValues 5 l := rfl
   rw [hb] at h1 h2
   have hh := h l ho (hn 23) hmass h1 h2
