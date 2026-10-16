@@ -7250,3 +7250,132 @@ common-source/short/lift, original-weight, component and
 inverse-comparison premises remain. Actual-center/full-border signs,
 good-block payment, retained/cofinal positivity, Robin tail and RH
 remain unresolved.
+
+### Test an equality row inside the signed-response and energy relaxation
+
+A negative lower bound does not establish that its relaxation permits a
+negative value. Test one explicitly constructed row before replacing the
+accepted timelike estimate by a larger constrained optimization. This is
+an application of classical timelike Schur equality on the SAME finite
+reference form, with no new generic inequality or optimality claim.
+
+Retain $P=TRT^*\succeq0$, $Q_R=P-e_0e_0^*/\delta$, and
+$y_0=\alpha_0\rho+\beta_J$. The existing scalar packet already encloses
+
+$$
+r_0=y_0Py_0^*,\quad r_\rho=\rho P\rho^*,\quad
+r_{\rho\beta}=\rho P\beta_J^*,\quad
+\lambda=y_0[0],\quad g=\rho Q_Ry_0^*.
+$$
+
+Use the saved finite cross, rather than supplying another Gram:
+
+$$
+p=\alpha_0r_\rho+r_{\rho\beta}=\rho Py_0^*,\qquad
+b=\lambda^2/\delta-r_0=-y_0Q_Ry_0^*>0.
+$$
+
+Both the coefficient $\lambda$ and the finite parameters retain their
+interval uncertainty. No rounded center is declared the true form.
+Choose the one rational steering value $\alpha_*=101/2000$, and an
+exact interior value $\theta_*$ of the saved signed-response interval.
+The chosen value is not asserted to equal the actual signed response.
+Define, for the true common finite parameters,
+
+$$
+s=\alpha_*-\alpha_0,\qquad
+\tau=-\frac{\theta_*+sg}{b},\qquad
+f_{\rm rel}=\tau y_0-s\rho.
+$$
+
+Then, exactly,
+
+$$
+f_{\rm rel}Q_Ry_0^*=\theta_*,\qquad
+\alpha_*\rho+\beta_J+f_{\rm rel}=(1+\tau)y_0.
+$$
+
+This is a row in a selected scalar relaxation. Its generation by the
+original physical source/coupling, and membership of $\alpha_*$ in a
+physical legal subset, are not supplied. The construction defines a row
+for each actual finite reference form covered by the common intervals.
+
+Its two norm/cap checks use
+
+$$
+f_{\rm rel}Pf_{\rm rel}^*=
+\tau^2r_0-2\tau sp+s^2r_\rho,\qquad
+f_{\rm rel}[0]=\tau\lambda-s\delta\frac{p-g}{\lambda}.
+$$
+
+The second identity uses $\lambda\ne0$ and
+$\rho[0]=\delta(p-g)/\lambda$. The original far-row positive-energy
+and negative-coordinate bounds are homogeneous in the source-energy
+UPPER. From the saved mixed-norm recipe's $E_0,A_0,C_0$ and the latest
+source-energy upper $E$, the accepted interface gives outward caps
+
+$$
+A=A_0E/E_0,\qquad C=C_0\sqrt{E/E_0}.
+$$
+
+These are bounds in different units: $E$ is source energy, $A$ bounds
+$fPf^*$, and $C$ bounds $|f[0]|$. No source-energy lower is substituted
+for a far-row upper. Check the constructed row against BOTH caps.
+
+The already certified upper inverse comparison gives
+$Q_{\rm true}\preceq Q_R+\eta(1-\eta)^{-1}P$. Thus this constructed
+row's paid comparison has the sufficient UPPER
+
+$$
+\mathcal E_{D,k}^{\rm rel}(\alpha_*)
+\le k\alpha_*^2+D
++(1+\tau)^2\left(-b+\frac{\eta}{1-\eta}r_0\right).
+$$
+
+It is an upper on this particular constructed row, rather than the
+previous all-real lower bound. All scalar intervals propagate, and no
+matrix, inverse, physical far row or actual derivative is regenerated.
+
+The single application satisfies both caps and has a strictly negative
+UPPER for this constructed row:
+
+| Quantity | Directed value |
+|---|---:|
+| Constructed positive-energy upper |<0.583108075508182745|
+| Allowed positive-energy cap |>2.712924125459587053|
+| Constructed absolute first-coordinate upper |<2.228217728848581443e-16|
+| Allowed absolute first-coordinate cap |>4.367163575891468984e-16|
+| Constructed paid-comparison upper |<−0.567072019035610609|
+
+All three checks, and their conjunction, pass. Consequently these
+selected scalar constraints do permit a negative paid comparison under
+the retained finite-form and inverse-comparison premises. No uniform
+nonnegative bound follows from this relaxation alone. This is a
+feasible row in the relaxation, not just a negative lower bound and not
+an attained value of the original physical source. The chosen response
+lies inside the measured interval but is not identified with its true
+value. Displayed values round outwards; exact rational caps and640-bit
+interval endpoints are authoritative.
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/06d399b169a01deeeef13c2480ec60acde04eaca/docs/reports/weil-c27)
+retain packet SHA256 `1879f4b0653e762ca0d7bb1e1933a59afc79fb10851d155f1c16c87055872992` and source SHA256 `218946086714e3408a4837a98e211622a10e7361eb0789427b1d3c9f24245340`.
+The single fixed1024-working/640-export application uses one literal
+$\alpha_*$ and one interior target, with no parameter/source/precision/
+cutoff scan or retry. Earlier producers and passed fixtures are reused.
+
+The constructed row lies in the span of $\rho,y_0$, so a new payment
+confined to the perpendicular residual would vanish on this row.
+
+The selected relaxation keeps the finite form, inverse comparison,
+signed-response interval and two homogeneous far-row caps. It omits the
+full original source-to-row image constraint and other physical
+observations. A row admitted by this relaxation is not automatically
+admitted by the original source model. Determining the actual-source
+sign requires its response or an additional relation that distinguishes
+it from the constructed row; this test does not establish which single
+additional scalar would suffice.
+
+This is a numerical application of existing equality and inverse
+comparison identities, with no new generic theorem, novelty or Lean
+proof. Actual-center/full-border signs, good-block payment,
+retained/cofinal positivity, Robin tail and RH remain unresolved.
