@@ -73,18 +73,11 @@ private theorem state_nonempty {n : Type*} [Fintype n] [DecidableEq n]
 
 private theorem rt_nonneg_psd {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) : 0 ≤ rt X := by
-  rw [rt, hX.isHermitian.trace_eq_sum_eigenvalues]
-  simp only [Complex.re_sum]
-  exact Finset.sum_nonneg fun i _ => hX.eigenvalues_nonneg i
+  exact (RCLike.nonneg_iff.mp hX.trace_nonneg).1
 
 private theorem trace_psd {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) : X.trace = ((rt X : ℝ) : ℂ) := by
-  have h := hX.isHermitian.trace_eq_sum_eigenvalues
-  apply Complex.ext
-  · rfl
-  · change X.trace.im = 0
-    rw [h]
-    simp [Complex.im_sum]
+  exact (RCLike.re_eq_ofReal_of_isSelfAdjoint hX.trace_nonneg.isSelfAdjoint).mp rfl
 
 private theorem posTrace_smul {n : Type*} [Fintype n] [DecidableEq n]
     (c : ℝ) (hc : 0 ≤ c) (X : Matrix n n ℂ) :
