@@ -114,7 +114,10 @@ internal sealed class AdaptiveQueryQubitFourStateRefutationDocument : IScribeDoc
                             + "Each pair of traces has sum at most 483/500. The attainable pre-measurement "
                             + "value set is nonempty, so its supremum is at most 483/500. "
                             + "Since 99/100 exceeds 483/500 by 3/125, the four-state ensemble contradicts claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-heinosaari-2026-adaptive-query-four-qubit-states"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
