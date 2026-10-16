@@ -54,13 +54,17 @@ internal sealed class CylinderSevenTenDocument : IScribeDocumentDefinition
                 "Section 3, PDF page 15, after Proposition 3.7: “Hence, the only unknown values are Mobgp(C₇ □ Pₛ) and Mobgp(C₁₀ □ Pₛ) for s ≥ 5. We conjecture that the answer is four in these cases.” The parameter s counts the vertices of the path. Both asserted values are four for every natural s at least five."),
             Node("result", "Both values are four", "result", DescribeRole.Theorem,
                 ClaimBody(), AssessedProvenance.FromRepo(Source),
-                "Five robots in general position have distinct path coordinates. In row order their cycle coordinates form an arithmetic progression with step ±2 on the seven-cycle or ±3 on the ten-cycle. A legal move of five robots cannot change a cycle coordinate, so an unoccupied column remains unvisited. No six vertices are in general position. Four robots traverse two consecutive rows by four horizontal moves and their rotations; four vertical moves shift this traversal to the next row pair. The upper bound holds at every height, and the four-robot construction works at every height at least two.")),
+                "Five robots in general position have distinct path coordinates. In row order their cycle coordinates form an arithmetic progression with step ±2 on the seven-cycle or ±3 on the ten-cycle. A legal move of five robots cannot change a cycle coordinate, so an unoccupied column remains unvisited. No six vertices are in general position. Four robots traverse two consecutive rows by four horizontal moves and their rotations; four vertical moves shift this traversal to the next row pair. The upper bound holds at every height, and the four-robot construction works at every height at least two.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("klavzar-et-al-2025-mobile-general-position-cylinders"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose) =>
+        DescribeRole role, Formula formula, AssessedProvenance provenance, string prose,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));

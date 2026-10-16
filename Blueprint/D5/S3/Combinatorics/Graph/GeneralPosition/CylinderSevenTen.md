@@ -96,6 +96,10 @@ $$\forall (s : \mathrm{Nat}), 5 \le s \Rightarrow \left(\operatorname{mobGP}\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/GeneralPosition/CylinderSevenTen.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/klavzar-et-al-2025-mobile-general-position-cylinders` (proved) by `D5/S3/Combinatorics/Graph/GeneralPosition/CylinderSevenTen.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"klavzar-et-al-2025-mobile-general-position-cylinders","declaration_gid":"D5/S3/Combinatorics/Graph/GeneralPosition/CylinderSevenTen.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sandi Klavžar; Aditi Krishnakumar; Dorota Kuziak; Ethan Shallcross; James Tuite; Ismael G. Yero (2026). *Moving through Cartesian products, coronas and joins in general position*. DOI: [10.1016/j.dam.2025.10.041](https://doi.org/10.1016/j.dam.2025.10.041). URL: <https://arxiv.org/abs/2505.00535>.
