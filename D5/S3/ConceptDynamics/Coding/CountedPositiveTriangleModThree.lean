@@ -107,15 +107,12 @@ private def PathCoding.bases {n m d : ℕ} [NeZero d]
     PathBasis A d ≃ PathBasis B d :=
   (orbitBasisEquiv A).symm.trans (f.orbits.trans (orbitBasisEquiv B))
 
-private theorem PathCoding.bases_apply {n m d : ℕ} [NeZero d]
-    {A : CountMat n n} {B : CountMat m m} (f : PathCoding A B) (b : PathBasis A d) :
-    f.bases b = canonicalPath (f.primitive b.val) := rfl
-
 private theorem PathCoding.bases_then {n m p d : ℕ} [NeZero d]
     {A : CountMat n n} {B : CountMat m m} {C : CountMat p p}
     (f : PathCoding A B) (g : PathCoding B C) (b : PathBasis A d) :
     (f.trans g).bases b = g.bases (f.bases b) := by
-  simp only [PathCoding.bases_apply]
+  change canonicalPath ((f.trans g).primitive b.val) =
+    canonicalPath (g.primitive (canonicalPath (f.primitive b.val)).val)
   apply canonicalPath_eq_of_sameOrbit
   exact (g.orbit_iff _ _).mpr (canonicalPath_sameOrbit (f.primitive b.val))
 
@@ -273,10 +270,6 @@ private theorem pathGyration_identity {n d : ℕ} [NeZero d] (A : CountMat n n) 
 
 private def elementaryCoding {n m : ℕ} (R : CountMat n m) (S : CountMat m n) :
     PathCoding (R*S) (S*R) := ⟨(elementaryHomeomorph R S).toEquiv, elementary_shift R S⟩
-
-private theorem pathGyration_elementary {n m d : ℕ} [NeZero d]
-    (R : CountMat n m) (S : CountMat m n) :
-    pathGyration (d := d) (elementaryCoding R S) = relativeForwardGyration R S := rfl
 
 private def pathGyrationThree {n m d : ℕ} [NeZero d] (hd : 3 ∣ d)
     {A : CountMat n n} {B : CountMat m m} (f : PathCoding A B) : ZMod 3 :=
@@ -606,7 +599,8 @@ theorem relativeForwardGyration_positive_triangle_mod_three
   have ht := congrArg (fun f => pathGyrationThree (d := d) hd f)
     (recoding_triangle_diagram R₁ R₂ S₃)
   simp only [pathGyrationThree_then,associator_three_zero,zero_add,add_zero] at ht
-  simpa only [pathGyrationThree,pathGyration_elementary] using ht
+  unfold pathGyrationThree at ht
+  convert ht using 1 <;> rfl
 
 
 end D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration
