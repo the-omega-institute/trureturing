@@ -174,6 +174,18 @@ internal sealed class ResetNativeUnitNormalFormDocument : IScribeDocumentDefinit
                 + "derived at ResetIntegralGluing's application location. These are exact reuse "
                 + "derivations on the original groups, with no assumed conjugacy, semisimplicity, "
                 + "squarefreeness, surrogate histories or surrogate actions.")),
+            Paragraph(Text("Put R=rhoBar(unitShift(ResetGraph q)). rho_unitShift and native_gluing "
+                + "give R([v])=[resetTheta(q)(v)] and E(R(z))=[X]*E(z), with the literal positive "
+                + "forward [X] of Common(q). Induction gives E(R^[n](z))=[X]^n*E(z) for every "
+                + "natural n. Restrict E to the two fixed subtypes; its inverse restricts because "
+                + "E is injective and the iterate equation is proved. Both restricted inverse identities "
+                + "are the inverse identities of E; no fixedness or count is assumed. Applying Nat.card_congr and "
+                + "the companion/coset/parity derivation at ResetIntegralGluing gives |{z in Q : R^[n](z)=z}| = "
+                + "2^(gcd(q+1,n)-1 + (if Even((q+1)/gcd(q+1,n)) then 1 else 0)). "
+                + "At q=1 this is 2 for every n, and at n=0 it is 2^q. All q>0 and all n "
+                + "are retained. Arbitrary full rho values retain their proved scalar descent, "
+                + "but are not substituted for R in this periodic formula. There is no assumed "
+                + "conjugacy, inertness, positivity, field property or entropy premise.")),
             Entry("native_normal_forms", "Every native centralizer and every original rho value",
                 And(All(Imp(Call("commutesWithForwardTime", Num(2), I("A")),
                     Unique("p", Parameters, Law(I("A"), I("p")), Law(I("A"), I("r")))),
