@@ -59,14 +59,14 @@ internal static class CanonicalStatementWriter
 
     private static ImmutableArray<byte> WriteDeclaration(RepoPath path, LeanDeclaration declaration)
     {
-        var material = JsonSerializer.SerializeToElement(new
+        var material = new Dictionary<string, string?>
         {
-            declaration_name_key = declaration.NameKey,
-            kind = declaration.Kind,
-            module_path = path.Value,
-            schema = "declaration-statement-v1",
-            statement_material = declaration.LoadTypeRepresentation(),
-        });
+            ["declaration_name_key"] = declaration.NameKey,
+            ["kind"] = declaration.Kind,
+            ["module_path"] = path.Value,
+            ["schema"] = "declaration-statement-v1",
+            ["statement_material"] = declaration.LoadTypeRepresentation(),
+        };
         return StructuredCanonicalWriter.WriteJson(material);
     }
 }

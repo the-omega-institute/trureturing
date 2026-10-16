@@ -976,3 +976,562 @@ Lean certification, or completion of the continuing programme in these
 ordinary results.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. An additional producer phase port and its original-source response
+
+Sections 13–17 give a conditional acquisition interface for a binary current
+height. The extra input is a producer-bound coherent port, not a recorded
+height label. One actual probe read then selects a lawful original request
+or its unexecuted rejection, while calibration leaves the old specimen and
+all its joint records unchanged. Constructing and certifying this port from
+the original producer remains unresolved. The existing original menu alone
+is not asserted to provide this acquisition.
+
+**Definition 13.1 (source and public binary promise).** Retain Definition
+1.1's positive source, common preparation, real lifts and both original
+regularity alternatives. Restrict to its calibrated double wall
+$0<Z<1$, $r=1-Z$, $c=r/2$ and $0<k<c$. Fix public exact numbers
+$0<x<y<c$. At an actual live cut of one unknown original past the current
+height $K$ belongs to $\{x,y\}$. Its real phase, signed winding, waveform
+and retained correlations are not observer inputs. The public catalogue
+and calibrated preparation reference are extra supplied information.
+
+Use the orthonormal preparation directions
+
+$$
+U_+=(e^{-i\theta_0}e_0+e^{-i\theta_4}e_4)/\sqrt2,\qquad
+U_-=(e^{-i\theta_1}e_1+e^{-i\theta_3}e_3)/\sqrt2,\qquad
+V=\operatorname{span}\{U_+,U_-,e_2\}.
+\tag{RA.13}
+$$
+
+Here index $4$ denotes original mode $13$, and $\theta_2=0$.
+The actual family used for the lower bound is
+
+$$
+\psi_{k,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \bigl(\sqrt{2k}U_++(-1)^m\sqrt{2(c-k)}U_-\bigr),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{RA.14}
+$$
+
+Its real residual is $(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$.
+Quantum Carrier Minimum Proposition 7.2 supplies these endpoints from one
+common positive preparation: fix $a_0,q\in(0,c)$, $q\ne a_0$; use a
+unit phase leg $2\pi m$ at $a_0$, a four-unit rectangle at $q$ of height
+
+$$
+B_{\beta,m}=\frac{r(\pi m-\beta)-2\pi m a_0}{q-a_0},
+\tag{RA.15}
+$$
+
+then a unit zero-phase arrival at $k$. Indeed
+$w(q)-w(a_0)=-(q-a_0)(1,1,0,1,1)/r$, so the two phase contributions
+give exactly the displayed residual. The rectangle's real phase increment
+is zero and the arrival transports no phase. All six legs are continuous
+affine original controls in both regularity classes. For the two endpoint
+heights their probability margin is at least
+$\min\{a_0,q,x,c-a_0,c-q,c-y,Z\}>0$.
+Their phase variation $2\pi|m|+2|B_{\beta,m}|$ is finite separately for
+each history, with no common bound over all signed $m$ or real $\beta$.
+Canonical survival is positive because the compact height bands make the
+finite horizontal charges finite. These are actual live-branch witnesses;
+no unsuccessful preparation is retried or erased.
+
+**Definition 13.2 (additional joint port service).** The producer retains
+its actual classical setting $K$ throughout a declared finite calibration
+interval. The native branch makes a constant-height, zero-relative-phase
+hold. A separate two-level probe $Q$ has a calibrated basis $|0\rangle,
+|1\rangle$ and, for permitted real phase action $a$, receives
+
+$$
+R_k(a)=|0\rangle\langle0|+e^{ika/r}|1\rangle\langle1|.
+\tag{RA.16}
+$$
+
+The port is bound to this same producer, source and epoch. It reads neither
+an unrelated setting nor an estimated setting. Conditional on every actual
+classical history $h$ with current height $k$, its full operation is
+$\operatorname{id}_{SAR}\otimes\operatorname{Ad}_{R_k(a)}$ on the old
+specimen $S$, archive $A$, quantum reference $R$ and the probe. All old
+classical boundary fields are also retained. In particular, the coupling
+does not change $k$, the old real phase lift, source identity, permissions
+or controller inputs. Clock advancement and the appended calibration event
+are explicit updates; old clock/archive entries are not overwritten.
+The same statement holds for every conditional joint density $\rho^h_{SAR}$,
+including entanglement, and every actual mixture of these histories.
+The producer setting is classical here; no promise is made for a coherent
+superposition of different settings.
+
+This is a joint channel premise, stronger than a probe marginal or a claimed
+nondisturbance of separate old marginals. Stable setting, source/epoch
+authentication, coupling gain $1/r$, blank probe, coherent preparation,
+phase reference, action calibration, clock, readout and permissions are all
+additional services/resources. Port permission and hold permission must
+actually be present. Calibration by this ideal service has no inconclusive
+or executed-failure branch on its promised domain. A known missing
+permission or known interface mismatch returns an unexecuted rejection
+with its actual reason and no height certificate. Unflagged violation of
+the service premise is outside the theorem; this definition supplies no
+universal detector for such violations. An already stopped specimen keeps
+its old first failure and absorbing successor, without a live calibration
+attempt.
+
+**Proposition 13.3 (functional correspondence, without a free route).**
+The phase response (RA.16) is the restriction of the original constant-height
+phase-leg unitary to $\operatorname{span}\{e_2,U_-\}$. Specifically, an
+original phase increment $a$ at fixed height $k$ has $k'=0$, so its
+canonical survival charge and all failure densities vanish. Its live map is
+
+$$
+U_k(a)=\operatorname{diag}_{(U_+,U_-,e_2)}
+ \bigl(e^{-ia/2+ika/r},e^{ika/r},1\bigr).
+\tag{RA.17}
+$$
+
+For the fixed isometry $J|0\rangle=e_2$, $J|1\rangle=U_-$ one has
+$U_k(a)J=JR_k(a)$.
+
+Proof. Insert the signed weights (1.2) into the actual negative state-phase
+convention. At fixed height their integrals are $a w_i(k)$; the canonical
+no-failure attenuation is one. Equal paired weights preserve $U_+,U_-$,
+giving (RA.17) and the isometry identity. $\square$
+
+This identity verifies the response function only. Executing the original
+phase leg on the specimen would change its phase. Definition 13.2 instead
+asks for a separate blank-probe route while the native phase is held fixed.
+That route, its actual source binding and its identity action on the old
+joint state are extra premises. Probe action $a$ is not an unrecorded
+increment of the original relation phase $\chi$.
+
+## 14. Sharp paid action with the full unknown original orbit present
+
+**Definition 14.1 (the lower-bound access and cost contract).** During
+calibration the only additional dependence on the unknown height is the
+port of Definition 13.2. The input old specimen may be any member of
+(RA.14). All other accessible assistance is one common state independent
+of $k,\beta,m$, jointly, not merely in its separate marginals. Thus a
+source-sensitive installed programme, readable archive, clock side channel,
+receiver share, setting label or extra coupling is not an uncounted input.
+Actual history-correlated spectator archives may remain untouched but
+cannot be read by this lower-bound protocol. The upper protocol below
+preserves arbitrary such correlations and does not require their
+independence.
+
+Allow finite-dimensional ancillas, arbitrary common known controls,
+measurements, retained records and finite adaptive feedback. All outcomes
+are kept. As in FIB Atom Whitebox SIC Time Acquisition §2.4, dilate
+instruments with their outcome registers and environments and extend common
+isometries to common unitaries with extra blanks. The access contract
+requires that the outcome-retaining implementation have, between finitely
+many common instantaneous operations, the Hamiltonian
+
+$$
+H_k(t)=H_0(t)-\frac{k}{r}G(t),\qquad
+\mathcal A=\int_0^{T_c}\operatorname{diam}(\operatorname{spec}G(t))\,dt.
+\tag{RA.18}
+$$
+
+Here $\hbar=1$, $T_c<\infty$ is a common terminal time, and $H_0,G$
+are known common bounded self-adjoint operators, measurable in operator
+norm with integrable norms on each piece. The common Hilbert space may
+include enlarged outcome/environment registers; finite-dimensional
+implementations are included. Spectral diameter means supremum minus
+infimum of the bounded spectrum. The operators include routing and
+coherently retained feedback registers. The paid action is the displayed
+spectral diameter on this full coherent implementation. For one scalar drive
+$G(t)=u(t)|1\rangle\langle1|$ it is $\int|u(t)|\,dt$ and
+$a=\int u(t)\,dt$. Extra parallel couplings or coherent choices of forward
+and inverse coupling must pay their full spectral width; they are not
+unit-price extensions of a scalar call. The inaccessible producer label is
+not included as an already distinguishable input in this discriminator.
+
+Early decisions can be latched and padded to $T_c$ with the port off on
+those branches. The action bound applies to the whole padded coherent
+implementation, not its expected cost or a chosen successful branch.
+The protocol must terminate with the correct label $x$ or $y$ with
+probability one for every $\beta,m$ at each candidate height. A discarded,
+inconclusive or failed branch does not meet this task. The lower bound even
+allows disturbance of the old specimen by the common controls. Unknown
+height-dependent native processors are not additional available queries
+during this calibration; supplying them changes the access contract.
+
+**Theorem 14.2 (binary producer-port acquisition frontier).** For every
+$0<Z<1$ and public $0<x<y<c$, under Definitions 13.2 and 14.1 the minimum
+paid action for exact total binary calibration on the whole original
+family (RA.14) is
+
+$$
+\mathcal A_{\min}=\frac{\pi r}{y-x}.
+\tag{RA.19}
+$$
+
+One independent probe attains it, leaves the old specimen and all supplied
+joint archives/reference unchanged, and appends one actually acquired
+classical height bit. The attaining preservation statement holds for every
+conditional joint input $\rho^h_{SAR}$ of Definition 13.2. The minimum
+claim uses the lower-bound assistance restriction; arbitrary readable
+height-bearing archives are not subject to that lower bound.
+
+Proof. First remove a possible shortcut through the old specimen using
+actual source states. For each fixed $k$, the four states with
+$\beta\in\{0,\pi\}$ and $m\in\{0,1\}$ span $V$: their sums give
+$2\sqrt Z e_2$, and their differences give the two vectors
+$2(\sqrt{2k}U_+\pm\sqrt{2(c-k)}U_-)$. All three coefficients are
+nonzero by strict positivity. Section 13's common-preparation construction
+realizes every one of these witnesses.
+
+Fix the proposed protocol and a candidate $k$. With its common ancillary
+input absorbed, let $E^{(k)}_{\rm bad}\geq0$ be the induced effect on the
+old specimen for an incorrect or inconclusive output. Correctness says
+$\langle\psi,E^{(k)}_{\rm bad}\psi\rangle=0$ on the four actual
+witnesses. Since this equals $\|\sqrt{E^{(k)}_{\rm bad}}\psi\|^2$,
+the positive effect annihilates their entire span. Completeness therefore
+forces output $k$ with probability one for every unit vector of $V$.
+This is a consequence of one fixed protocol's correctness, not permission
+to prepare further original specimens. In particular the same protocol
+must distinguish the two ports starting from a single identical unit vector
+$v\in V$ and the same source-independent ancillary state.
+
+Purify that common ancillary state. Let $W_x(t),W_y(t)$ be the dilated
+unitaries, including every outcome and known feedback operation. Write
+$V_{\rm rel}(t)=W_x(t)^\dagger W_y(t)$. Between the common operations,
+
+$$
+i\dot V_{\rm rel}(t)=L(t)V_{\rm rel}(t),\qquad
+L(t)=-\frac{y-x}{r}\,W_x(t)^\dagger G(t)W_x(t).
+\tag{RA.20}
+$$
+
+Common instantaneous unitaries cancel in $V_{\rm rel}$. Its generator
+therefore has diameter $(y-x)\operatorname{diam}(\operatorname{spec}G)/r$.
+Apply the projective-angle accumulation argument of the cited FIB §2.4
+to the ray $V_{\rm rel}(t)|v,\mathrm{anc}\rangle$. Its continuous
+version has speed $\sqrt{\langle L^2\rangle-\langle L\rangle^2}$:
+subtract the component of $-iLz$ parallel to a unit vector $z$ and take
+its norm. If the spectrum lies in $[a,b]$, positivity of
+$(L-aI)(bI-L)$ gives variance at most
+$(b-\langle L\rangle)(\langle L\rangle-a)\leq(b-a)^2/4$.
+The projective angle obeys the triangle inequality used in FIB §2.4.
+For completeness its path-length bound also follows without a smoothness
+assumption on the controls: multiply the absolutely continuous vector
+path by the phase $\exp(i\int\langle L\rangle)$, giving a unit path
+$w$ with $w'=-i(L-\langle L\rangle)w$ and speed equal to that variance
+square root. Regard it as a path on the real Hilbert unit sphere. If
+$b(t)=\operatorname{Re}\langle w(0),w(t)\rangle$, tangency and
+Cauchy–Schwarz give $|b'|\leq\sqrt{1-b^2}\,\|w'\|$.
+Integrating the derivative of $\arccos b$, with limiting truncations at
+$b=\pm1$, bounds spherical endpoint distance by $\int\|w'\|$.
+Projective endpoint angle is no larger, since the absolute inner product
+is at least its real part. Consequently
+
+$$
+\arccos\left|\langle v,\mathrm{anc}|
+ W_x(T_c)^\dagger W_y(T_c)|v,\mathrm{anc}\rangle\right|
+ \leq\frac{(y-x)\mathcal A}{2r}.
+\tag{RA.21}
+$$
+
+The final records have different deterministic labels, hence the two
+purifications lie in orthogonal output sectors. The left side is $\pi/2$,
+proving the lower bound. Dilation retained all outcomes, so feedback and
+postselection have not supplied a free exception. Source-independent
+randomized choices also obey it: each of the finitely many spanning
+witnesses is correct almost surely, giving one common conull set of seeds
+on which this same argument applies under the common action bound.
+
+For attainment prepare $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ once
+and drive the port with positive action $a_*:=\pi r/(y-x)$. Its two possible
+states are
+
+$$
+q_k=\frac{|0\rangle+e^{ika_*/r}|1\rangle}{\sqrt2},\qquad
+\langle q_x,q_y\rangle
+ =\frac{1+e^{i(y-x)a_*/r}}2=0.
+\tag{RA.22}
+$$
+
+One calibrated measurement in this known orthonormal basis returns $Y=k$
+with certainty. The scalar drive has action $a_*$. Most importantly, the
+joint port premise gives, conditional on each actual history $h$,
+
+$$
+\rho^h_{SAR}\longmapsto
+ \rho^h_{SAR}\otimes|k(h)\rangle\langle k(h)|_Y.
+\tag{RA.23}
+$$
+
+The measured probe may also be retained in its known state $q_{k(h)}$;
+discarding that probe does not change (RA.23). Integrating this equation
+against the actual history distribution preserves its old quantum and
+classical correlations, and appends the correct correlated bit. This
+joint identity follows from the supplied coupling, not from equal sensor
+marginals. The native hold has zero survival charge and phase increment.
+There is one probe preparation, no specimen copy, reset or retry. $\square$
+
+**Corollary 14.3 (rate and continuum boundaries).** If the full spectral
+width in (RA.18) is at most $v>0$ almost everywhere, every such protocol has
+$T_c\geq\pi r/(v(y-x))$. A constant scalar drive $u=v$ attains this
+interrogation duration with the attaining protocol's endpoint preparation
+and measurement treated as instantaneous ideal operations. Nonzero
+preparation/readout overhead is an additional duration, not included in
+that equality. Under this same assistance/access contract no common finite
+action budget calibrates every height in a nonempty open interval exactly;
+nor does a common finite horizon do so at bounded spectral rate.
+
+Proof. Integrating the width bound gives $\mathcal A\leq vT_c$; use
+(RA.19). The constant drive gives equality. For an open interval and any
+finite budget, choose two distinct heights in it with gap less than
+$\pi r$ divided by that budget; the binary lower bound contradicts that
+budget. A zero budget is already excluded by any distinct pair. This
+does not rule on approximate estimation or pointwise unbounded stopping.
+$\square$
+
+## 15. An acquired legal-versus-illegal guard on the same live branch
+
+**Example 15.1 (actual preparations and calibration).** Fix
+
+$$
+Z=r=1/2,\quad c=1/4,\quad a_0=1/8,\quad q=x=1/16,\quad y=3/16.
+\tag{RA.24}
+$$
+
+For every real $\beta$ and signed integer $m$, use (RA.15) with
+$B=8\beta-4\pi m$ and arrive at either $x$ or $y$. The six-unit
+preparations share a strict probability margin $1/16$. Their common
+first five legs survive with probability
+$(2/3)(1/2)=1/3$: the down-leg factor is
+$(c-a_0)/(c-q)=2/3$, the up-leg factor is $q/a_0=1/2$, and the phase
+legs have factor one. The final arrival has factor $2/3$ in either case,
+namely $(c-a_0)/(c-x)$ or $a_0/y$. Both actual live probabilities are
+therefore $2/9$. All prior failures keep their actual first time/mode and
+absorbing $f$; these are not repeat-until-success preparations.
+
+The port cost is $a_*=4\pi$. The two output probes are
+$(|0\rangle+i|1\rangle)/\sqrt2$ and
+$(|0\rangle-i|1\rangle)/\sqrt2$. At spectral rate $v$, the ideal
+interrogation lasts $4\pi/v$. During it the native source holds its actual
+height and real phase. The old source prefix remains literally unchanged;
+the clock advances and records this hold, action and observed bit.
+
+**Proposition 15.2 (total handler and its complete quantum output).**
+Assume this port, its calibration and the following original canonical
+processor are supplied and permitted. After acquiring $Y$, consider the
+public unit relative request
+
+$$
+\Delta k(t)=t/8,\qquad \Delta\chi(t)=0,\qquad 0\leq t\leq1.
+\tag{RA.25}
+$$
+
+Its actual domain is $(0,c-1/8)=(0,1/8)$. The handler uses only the
+actually acquired $Y$ and retained permission fields. At $Y=x$ it
+reports executed and applies the matching canonical processor. At $Y=y$
+it reports unexecuted domain rejection, keeps the specimen and old joint
+state unchanged, and records no fictitious execution time or failure.
+Known permission denials likewise return unexecuted rejection.
+
+For the legal branch, let $\rho_{VR}$ denote the actual joint input,
+including quantum archives in $R$, and let
+$\rho^R_{aa}=\langle a|\rho_{VR}|a\rangle$ for
+$a\in\{+,-,2\}$ in (RA.13). Its success operator at time $t$ is
+
+$$
+K_t=\operatorname{diag}_{(+,-,2)}
+ \left(1,\sqrt{\frac{3-2t}{3(1+2t)}},\frac1{\sqrt{1+2t}}\right).
+\tag{RA.26}
+$$
+
+The terminal output consists of success with
+$(K_1\otimes I_R)\rho_{VR}(K_1^\dagger\otimes I_R)$, or the following
+exact first-failure CP densities, each with absorbing specimen $f$:
+
+$$
+\begin{aligned}
+\omega_2(t)&=\frac{2}{(1+2t)^2}|f\rangle\langle f|\otimes\rho^R_{22},\\
+\omega_1(t)&=\omega_3(t)
+ =\frac{4}{3(1+2t)^2}|f\rangle\langle f|\otimes\rho^R_{--},\\
+\omega_0(t)&=\omega_{13}(t)=0,\qquad 0<t\leq1.
+\end{aligned}
+\tag{RA.27}
+$$
+
+The labels $1$ and $3$ remain distinct actual outcomes despite equal
+densities. Exact event times are translated to the actual clock after
+calibration. On every source-family input at $x$, the complete outcome
+masses are success $1/3$, mode $2$ failure $1/3$, mode $1$ failure $1/6$,
+mode $3$ failure $1/6$, and zero in the other two modes. Failure is absorbing,
+with no original retry. With request permission present, each live branch
+has working height $y$: by execution on legal survival, and by identity on
+domain rejection at $y$. A permission denial instead retains its actual
+current height.
+The old calibration bit remains an archived event, not an overwritten
+working-height register.
+
+Proof. The partial-action domain follows by requiring
+$0<k+t/8<c$ for every $t$. Thus $x$ is legal and $y$ is illegal
+(its proposed endpoint would be $5/16>c$). The acquired bit is exactly
+the actual $K$, so the handler implements this total distinction without
+guessing a guard from a law. On the legal path
+$k(t)=(1+2t)/16$ the canonical law gives
+$\lambda=k'/k$ and $S(t)=x/k(t)=1/(1+2t)$.
+Insert this into (OC.19), or the credited horizontal maps (OC.57), to
+obtain (RA.26). The middle attenuation squared has negative derivative
+$2/(1+2t)^2$, while the minus attenuation squared has negative derivative
+$8/(3(1+2t)^2)$. The two original minus-mode jumps each have half that
+strength. This proves the full-reference CP densities (RA.27), rather
+than inferring them from a specimen marginal or an unrelated waveform.
+
+For completeness, $K_1=\operatorname{diag}(1,1/3,1/\sqrt3)$, the
+integrated middle failure effect is $2/3$, and the two integrated minus
+effects are $4/9$ each. Their sum with $K_1^\dagger K_1$ is $I_V$.
+For an actual source input the diagonal in this basis is
+$(1/8,3/8,1/2)$; substituting it gives the stated outcome masses and,
+more fully, failure densities $1/(1+2t)^2$ in mode $2$ and
+$1/(2(1+2t)^2)$ in each of modes $1,3$. No phase or signed winding has
+been supplied to the handler. Applying $K_1$ to (RA.14) gives
+$\sqrt{1/3}\,\psi_{y,\beta,m}$, with the old real lift preserved.
+
+Equation (RA.23) followed by these branch CP maps, tensored with identity
+on all old registers, proves the asserted joint implementation. The
+relative phase joins to the old actual lift through
+`concatenate_original`; zero-relative-phase requests do not require its
+numerical value. Old executed failures are never passed to a live
+processor. On a new failure the complete old archive, acquired bit,
+request, exact time/mode and stopped status remain. On rejection execution
+does not occur and its current time is retained. The two live branches can
+therefore have different current clocks; any later selector uses their
+actual clocks, permissions and records. $\square$
+
+After legal survival or domain rejection at $y$, every separately supplied
+and permitted original tail based at $y$ can be joined with its actual
+relative real phase. This includes
+either original regularity alternative, arbitrary finite durations including
+the zero-duration identity, and all signed sectors allowed by that tail's
+explicit promises. For finite feedback, choose only from actual retained
+records and the declared controller/external inputs and retain each full
+update. The credited joint-continuation theorem of Instrument Boundaries
+§14 then applies branchwise. This is not an assertion that missing future
+processors, source-sensitive permissions or controller inputs have been
+acquired. Calibration preserves the old specimen; the subsequent legal
+original operation has its genuine nonzero failure probability.
+
+## 16. Ownership of the port, information and resources
+
+**Resource statement 16.1 (separate upper and lower accounts).** The
+attaining calibration uses one live active qutrit and one independent probe
+qubit, active tensor dimension six before readout, excluding all old
+archives and references. Keeping the full five-mode realization instead
+uses a ten-dimensional live specimen/probe tensor product. Readout appends
+one classical bit; it can consume the probe, or the known conditional probe
+state can also be retained and counted. The post-read active live component
+with just that bit is $M_3\oplus M_3$, not a dimension-three complete
+observer. Stopped status, the request/status fields and every old or newly
+appended event are additional retained resources.
+
+The producer-side carrier retains a two-valued classical setting, coupled
+through the extra port. It is a source-bearing resource even though it is
+not directly delivered as an accessible label. If a larger physical or
+mathematical carrier implements it, its size is not bounded by this
+two-valued description. Port ownership and access permission belong to the
+producer/service contract. The observer owns the prepared probe and its
+actual acquired bit; neither owns an extra original specimen.
+
+The public catalogue, $Z$, preparation basis, coupling scale, known probe
+amplitudes, orthogonal readout basis, action programme, calibration and
+authentication, clock/reference stability, controller, request description,
+permissions and all selection/update inputs require their actual supplied
+representations. General exact real parameters need not have finite
+effective descriptions. In Example 15.1 the catalogue is rational, the
+basis read is the algebraic $\pm i$ basis, and $4\pi$ has a finite
+symbolic description; exact execution still consumes ideal action and
+timing/reference calibration, not a finite-noise guarantee.
+
+Paid port action is $4\pi$ in that example, with interrogation time
+$4\pi/v$ at the stated rate and any additional control/readout overhead
+charged separately. The six-unit witness preparation, its $2/9$ live
+probability, old waveform/lift information retained elsewhere, original
+hold and tail permissions, and supplied canonical processor are separate
+resources. Neither action nor live dimension prices their construction or
+certification. Exact canonical failure time is an ideal continuous record;
+no finite-bit archive bound is claimed. All source-bearing assistance must
+be counted jointly when accessible, including a returned environment,
+receiver share, source-sensitive clock or installed programme.
+
+The sharp lower bound denies such extra readable assistance; it permits
+the actual height-dependent old specimen and arbitrary common controls on
+it. The upper joint identity permits arbitrary old correlations and simply
+does not read them. A pre-existing readable height bit can reduce the
+required port action to zero, so those two assistance contracts cannot be
+conflated. No minimum physical hardware, classical archive size or total
+observer resource follows from (RA.19).
+
+## 17. Suppliers, mature attribution and remaining acquisition obligations
+
+All repository suppliers for §§13–17 are inspected at the immutable public
+snapshot `1f58736f50945c7cfeca93ce160eb9b46a3a7e7e`. The claims here have
+ordinary proofs and no new Lean/kernel certification.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean` and its owning Scribe, `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize` | Strict positive original source and actual rectangle paths. The all-signed-sector Scribe application supplies the winding leg and its real lift; the rectangle declaration alone is not credited with that entire application. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean` and its owning Scribe, `OriginalControl`, `FiniteC1Control`, `concatenate_original` | Both regularities, finite and zero durations, unchanged original prefix, matching height, translated real phase and additive transport. No port, actuator or old lift read is inferred. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5, 14, 17, 21–23; [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), §§1, 3, 6–10 | Actual full original orbit, complete stopped CP instrument, horizontal density formulas, common-preparation multi-height witnesses, matched joint continuation, known-anchor generated labels and received-command capacity remain credited. The exact total guard is an added consumer specification; a partial-action domain alone is not a height detector. |
+| [FIB Atom Whitebox SIC Time Acquisition](FIB_ATOM_WHITEBOX_SIC_TIME_ACQUISITION.md), §2.4 and Citation 3.1 | Mature adaptive query-angle accumulation, outcome-retaining dilation and common-isometry invariance are reused in (RA.20)–(RA.21). Its tensor-sign device, archived scores, query count and legal-word service do not supply an original producer port or its price. |
+| This volume §§1–12; [Instrument Stability](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md); [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md), §§2–3, 7–8 | Existing point-query obstructions, area/winding certificates, complete-instrument error data and the extra joint sampler kernel keep their own promises. A height bit acquires none of their unknown waveform samples, derivative/loss densities or full marked laws. |
+| [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§2, 4–6; [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), §§3, 9, 12–16; [Reanchoring Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_REANCHORING_BOUNDARIES.md), §§2, 7–8 | Same-event memory, supplied-helper and live/failure-calibration results, and uncertain-height reanchoring remain distinct contracts. The present port is extra height-dependent access, not an acquired parity helper, unchanged return on failure, marginal event resampling or an unaugmented reanchoring construction. |
+| [Probability/Phase Transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §9.1; [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18 | Actual relative-command domains are used for (RA.25). Same-source coherent common-port interference, aligned acquired readings and known nonzero amplitudes/record overlap remain unsupplied. The additional phase query has a different interface from those intensity readings. |
+| [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Actual joint source/epoch image, complete rejections/failures, archives, references, permissions and selection/update routes must coexist. A binary calibrated guard does not establish individual sufficiency of the four views. |
+
+**Literature statement 17.1 (mature mechanism and precise transfer).**
+Positivity of effects, actual-source spanning, unitary discrimination,
+Stinespring dilation and projective-angle geometry are mature mathematics.
+The source-specific synthesis here is `repo-derived`: the response
+correspondence (RA.17), original-orbit reduction despite the old
+height-dependent specimen, explicitly paid extra-port interface, joint
+preservation (RA.23) and complete legal-versus-illegal original consumer.
+The query-angle principle is reused, not presented as a new general
+discrimination theorem. No worldwide priority claim is made.
+
+| Primary text | Verified scope and use |
+| --- | --- |
+| A. Acín, [*Statistical distinguishability between unitary operations*, quant-ph/0102064v1](https://arxiv.org/html/quant-ph/0102064v1), Eqs. (18)–(21) | The relative-spectrum convex-hull criterion and multiple-use orthogonalization concern supplied unitary calls and prepared probes. This is mature discrimination context, not construction of our source-bound port. |
+| R. Duan, Y. Feng and M. Ying, [*Entanglement Is Not Necessary for Perfect Discrimination between Unitary Operations*, quant-ph/0601150v2](https://arxiv.org/html/quant-ph/0601150v2), Theorem 1 and the numerical-range criterion preceding it | Known candidate unitaries, actual uses and common known intervening controls permit exact discrimination at the shortest-arc threshold. The continuous spectral-action specialization is justified in (RA.20)–(RA.22); neither a source setting nor a query route is obtained from that theorem. |
+| S. Manna, S. Suresh, A. Das Bhowmik and D. Saha, [*Global vs. Local Discrimination of Locally Implementable Multipartite Unitaries*, 2509.10430v1](https://arxiv.org/html/2509.10430v1), probing protocols and Theorem 1 | Its local/global and adaptive/restricted comparisons presuppose supplied candidate operations, chosen probes and allowed measurements. Its bipartite-qubit equality of adaptive/restricted local discrimination supplies no producer coupling, acquisition law or resource transfer for this original source. |
+
+These bounded primary comparisons supply method attribution and check the
+access premises; none of the inspected texts constructs the missing joint
+original-source port. This is not an exhaustive literature search, an
+impossibility statement or evidence of worldwide originality.
+
+**Open boundary 17.2 (the unconstructed source-to-port bridge).** The
+original transport path and calibrated canonical Kraus formula do not
+provide an executable route that couples a blank probe to the producer's
+unknown actual current setting while preserving the old specimen,
+reference and records jointly. A construction must establish the retained
+producer carrier, stable setting, actual source/epoch authentication,
+permissions, nondisturbing coupling, gain/reference/timing calibration,
+probe preparation/readout, complete service failure behavior and their
+costs. Invoking (RA.16) without that contract would install the missing
+access by fiat. Existence and physical realization of this additional
+service remain unresolved.
+
+Unknown continuous catalogues, changing height during interrogation,
+uncalibrated gain or phase reference, general phase/history-dependent
+assistance, approximate/noisy acquisition and unbounded future accuracy
+are not settled by the binary exact theorem. The current bit recovers
+neither old winding nor waveform, unrecorded preparation data, unknown
+record overlap or a whole probability law. The full original class retains
+its other bases, arbitrary finite durations, both regularities and signed
+sectors; the double-wall binary promise does not replace that class.
+
+The complete common-port/overlap interface, actual compatible full observer
+archive and closed selection/update acquisition, individual four-view
+recovery, native stationary $\alpha/\beta$ memory-rate/cofinality and the
+independent fixed-Hamiltonian quantum minimax keep their original unresolved
+obligations. No source/action/observation/resource bridge from the static
+arithmetic, preparer/reader, C114 mixed-state, twisted-ground or two-clock
+span models is claimed. This conditional acquisition result does not close
+the original unaugmented menu or the continuing programme.
+
+## 追加锚（本行以下为增补区）

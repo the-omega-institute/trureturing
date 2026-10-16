@@ -6,7 +6,8 @@ detection job `detect` and every unit job; HITS is the detection output
 `hits`, a JSON object mapping each unit to whether the change hit it.
 
 Green when detection succeeded, the units in HITS are exactly the other jobs
-in NEEDS, every hit unit succeeded and every missed unit was skipped. Any
+in NEEDS, every hit unit succeeded with its corresponding execution identity,
+and every missed unit was skipped. Any
 other combination is red (exit 1); malformed input exits 2.
 """
 import json
@@ -61,6 +62,26 @@ def main():
         return 2
 
     problems = []
+    prerequisite = results.pop("source", None)
+    if "current" in hits:
+        if prerequisite is None:
+            problems.append("current source prerequisite is missing from needs")
+        elif hits["current"]:
+            outputs = needs["source"].get("outputs", {})
+            status = outputs.get("source_status") if isinstance(outputs, dict) else None
+            continuation = outputs.get("continuation") if isinstance(outputs, dict) else None
+            if prerequisite != "success" or status != "accepted" or continuation != "true":
+                problems.append(f"prerequisite source result={prerequisite} status={status!r} continuation={continuation!r}")
+            else:
+                print("CI_REQUIRED prerequisite=source result=success status=accepted")
+        elif prerequisite != "skipped":
+            problems.append(f"unhit current source prerequisite result={prerequisite}")
+        else:
+            print("CI_REQUIRED prerequisite=source status=not-applicable")
+    elif prerequisite is not None:
+        problems.append("source prerequisite has no current unit in HITS")
+    if hits.get("tests-fib") and not hits.get("current"):
+        problems.append("selected tests-fib requires selected current")
     for name in sorted(set(results) - set(hits)):
         problems.append(f"job {name} has no unit section in the detection specification")
     for name in sorted(set(hits) - set(results)):
@@ -68,10 +89,14 @@ def main():
     for name in sorted(set(hits) & set(results)):
         hit, result = hits[name], results[name]
         line = f"unit={name} hit={str(hit).lower()} result={result}"
-        if result == ("success" if hit else "skipped"):
+        outputs = needs[name].get("outputs")
+        executed = outputs.get("unit") if isinstance(outputs, dict) else None
+        if hit and result == "success" and executed != name:
+            problems.append(f"unit={name} execution identity={executed!r}")
+        elif result == ("success" if hit else "skipped"):
             print(f"CI_REQUIRED {line}")
         else:
-            problems.append(line)
+            problems.append(line + (" status=blocked" if hit and result == "skipped" else ""))
     for problem in problems:
         print(f"CI_REQUIRED_RED {problem}")
     return 1 if problems else 0

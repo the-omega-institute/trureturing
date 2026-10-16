@@ -27,7 +27,7 @@ def response (r Z k alpha beta : ℝ) : Response :=
 private def middleAxis : Response := ![0, 0, 1, 0]
 
 private theorem response_antipodes (r Z k alpha : ℝ) :
-    response r Z k alpha 0 - response r Z k alpha Real.pi = 
+    response r Z k alpha 0 - response r Z k alpha Real.pi =
       (4 * Real.sqrt (k * Z)) • middleAxis := by
   ext i
   fin_cases i <;> simp [response, middleAxis] <;> ring
@@ -43,7 +43,7 @@ private theorem nonaffine_response
   have gain (k : ℝ) (hk : k ∈ Ioo a b) :
       Real.sqrt ((k + s) * Z) = Real.sqrt (k * Z) * (D middleAxis 2) := by
     have he := congrArg (fun v : Response => v 2)
-      (show response r Z (k + s) 0 0 - response r Z (k + s) 0 Real.pi = 
+      (show response r Z (k + s) 0 0 - response r Z (k + s) 0 Real.pi =
         D (response r Z k 0 0 - response r Z k 0 Real.pi) by
           rw [hD k hk 0 0, hD k hk 0 Real.pi, map_sub]; abel)
     rw [response_antipodes, response_antipodes, map_smul] at he
@@ -120,7 +120,7 @@ theorem lawful_probability_continuation_not_affine
         HasDerivAt (fun _ : ℝ => chi0) 0 t)) ∧
     ¬ (∃ (D : Response →ₗ[ℝ] Response) (c : Response),
       ∀ k ∈ Ioo a b, ∀ alpha beta : ℝ,
-        response (1 - Z) Z (k + s) alpha beta = 
+        response (1 - Z) Z (k + s) alpha beta =
           c + D (response (1 - Z) Z k alpha beta)) := by
   have hbase : ValidBase ((1 - Z) / 2, (1 - Z) / 2, Z) := by
     dsimp [ValidBase]

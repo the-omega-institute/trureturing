@@ -237,7 +237,7 @@ namespace D5.S3.Quantum.Foundation.FiniteTraceDistance
 open BigOperators Classical Matrix
 open scoped ComplexOrder MatrixOrder
 
-private def isometry {d e R : Type*} [Fintype d] [DecidableEq e]
+def isometry {d e R : Type*} [Fintype d] [DecidableEq e]
     [CommRing R] [StarRing R] (A : Matrix d e R) : Prop :=
   A.conjTranspose * A = 1
 
@@ -247,7 +247,7 @@ private theorem mem_unitaryGroup_iff_isometry {d R : Type*} [Fintype d] [Decidab
   rw [isometry, isometry, conjTranspose_conjTranspose]
   rfl
 
-private theorem re_trace_eq_trace {n R : Type*} [Fintype n] [RCLike R]
+theorem re_trace_eq_trace {n R : Type*} [Fintype n] [RCLike R]
     {A : Matrix n n R} (hA : A.IsHermitian) : (RCLike.re A.trace : R) = A.trace := by
   rw [trace, map_sum, RCLike.ofReal_sum, IsHermitian.coe_re_diag hA]
 

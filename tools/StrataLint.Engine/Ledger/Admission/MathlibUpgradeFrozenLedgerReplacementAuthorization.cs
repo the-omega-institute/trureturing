@@ -4,15 +4,20 @@ using System.Text.Json;
 namespace StrataLint.Engine;
 
 internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization(
-    RepositorySnapshot protectedBase, RepositorySnapshot candidate)
+    RepositorySnapshot protectedBase, RepositorySnapshot candidate, FrozenStatementWitness? oldWitness = null)
 {
     internal bool IsAuthorized(ImmutableHashSet<RepoPath> changedPaths, FrozenStateCatalog baseState,
-        LeanAxiomReport candidateReport) =>
-        EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+        LeanAxiomReport candidateReport)
+    {
+        var currentState = FrozenStateCatalog.Load(candidate);
+        var retained = baseState.Records.Keys.Where(currentState.Records.ContainsKey).ToImmutableHashSet();
+        return changedPaths.IsSubsetOf(retained)
+        && EffectiveLeanPins.TryRead(protectedBase, out var basePins)
         && EffectiveLeanPins.TryRead(candidate, out var candidatePins) && basePins != candidatePins
-        && LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, changedPaths, baseState, candidateReport)
-        && baseState.Records.Keys.All(path => candidateReport.Files.TryGetValue(path, out var module)
+        && LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, changedPaths, baseState, candidateReport, oldWitness)
+        && retained.All(path => candidateReport.Files.TryGetValue(path, out var module)
             && module.Declarations.All(static declaration => declaration.Axioms.All(LeanAxiomFacts.IsStandard)));
+    }
 }
 
 internal sealed record EffectiveLeanPins(string Toolchain, string MathlibRevision)

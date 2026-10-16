@@ -279,7 +279,7 @@ private theorem joint_idempotent (P Q : (Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2
   simp only [smul_mul_smul, smul_smul, Matrix.add_mul, Matrix.mul_add,
     Matrix.one_mul, Matrix.mul_one, hP,hQ,← hc,hPPP,hPQQ,hQPQ,hPPQ,hPQPQ]
   module
-private theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
+theorem pauli_square (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := by
   cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;>
     simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two]
 private theorem pauli_hermitian (p : Pauli) : (pauliMatrix p)ᴴ=pauliMatrix p := by
@@ -502,7 +502,7 @@ private theorem unit_projector_ray {n : Type*} [Fintype n] {ψ χ : n → ℂ} (
     rw [hz,unitVector,unitVector_smul,hχ,mul_one] at hψ
     exact hψ
   rw [hz,projector_smul,hn,one_smul]
-private theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
+theorem pauli_projector_trace (p : Pauli) (hp : p ≠ .I) (ep : Bool) : (spectral p (if ep then 1 else 0)).trace=1 := by
   cases p <;> cases ep <;>
     norm_num [spectral,pauliMatrix,qubitX,qubitZ,Matrix.trace,Matrix.diag,
       Matrix.mul_apply,Fin.sum_univ_two] at *
@@ -962,7 +962,5 @@ theorem result : claim := by
   refine ⟨rho (1/2) (3/5) (4/5),?_⟩
   apply family_result
   norm_num [FamilyParameters]
-#print axioms family_result
-#print axioms result
 end
 end D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction

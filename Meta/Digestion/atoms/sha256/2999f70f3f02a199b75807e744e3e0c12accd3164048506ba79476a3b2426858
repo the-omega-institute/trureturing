@@ -1,0 +1,23 @@
+**Proposition 2.4 (exact missing common-law losses).** For the same positive-mass Gibbs law and pointwise inequalities, put
+
+$$
+\begin{aligned}
+\Delta(P)&=\mathbb E_\pi\sum_i I_P(O_i;O_{<i,\pi}\mid B_{i,A_i(\pi)}),\\
+\mathcal D_{i,A}&=D_2\bigl(P(O_i\mid B_{i,A})\Vert Q_{i,A}(\cdot\mid B_{i,A})\mid P(B_{i,A})\bigr),\\
+\ell_i(s)&=\log_2\frac{C_i\prod_AQ_{i,A}(O_i\mid B_{i,A})^{\gamma_{k_i}(A)}}{\Phi_i(s)}.
+\end{aligned}
+$$
+
+Then all losses are nonnegative and
+
+$$
+\log_2Z=\sum_i\log_2C_i-\Delta(P)
+ -\sum_{i,A}\gamma_{k_i}(A)\mathcal D_{i,A}
+ -\sum_i\mathbb E_P\ell_i.
+\tag{NWO.11}
+$$
+
+Proof. Because $B_{i,A_i(\pi)}$ is a function of preceding owners, the difference of the two conditional entropies in the preceding proof is the displayed conditional mutual information. Conditional cross entropy is conditional entropy plus $\mathcal D_{i,A}$. The definition of $\ell_i$ is the exact pointwise logarithmic slack. Substitute these three identities in the Gibbs identity. Strictly positive kernels make all terms finite; zero-probability contexts have zero contribution. This is [COK, Theorem 3.2][COK] with the same actual law. $\square$
+
+Unrelated local maximizers need not be marginals of such a law. Even joint realizability does not force $\Delta(P)=0$. These are distinct obligations from the finite optimization below.
+
