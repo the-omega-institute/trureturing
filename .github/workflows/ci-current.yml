@@ -400,6 +400,7 @@ jobs:
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/cache_publication_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/pr_cache_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
             [tests-cache-native]
@@ -450,6 +451,7 @@ jobs:
             tools/scripts/worktree/lean-cache-publish.sh
             tools/scripts/worktree/lean_cache.py
             tools/scripts/worktree/lean_cache_release.py
+            tools/scripts/worktree/lean_actions.py
             tools/tests/StrataLint.Cache.Release.Tests/*
             .editorconfig
             .globalconfig
@@ -940,6 +942,168 @@ jobs:
             tools/scripts/worktree/worktree_protocol.py
             tools/scripts/worktree/worktree_publication.py
             tools/scripts/worktree/worktree_preservation.py
+            [tests-fib]
+            # Program, fixture and configuration dependencies require explicit coverage.
+            # Reg owner data changes are handled by compiled inputs inside current.
+            .editorconfig
+            .globalconfig
+            D5/S0/Automata/DFAOStateLowerBound.lean
+            D5/S0/Diagonal/PigeonholeFiber.lean
+            D5/S0/Rewriting/Quotients/AnswerabilityCriterion.lean
+            D5/S1/Words/AdmissibleWords/AdmissibleCount.lean
+            D5/S3/Arith/Congruence/PrimePowerAffineBehavior.lean
+            D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.lean
+            D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity.lean
+            D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean
+            D5/S3/Arith/FibonacciAtomic/NativeContinuation/NullReplyFiber.lean
+            D5/S3/Arith/ZeckendorfFutureKernel.lean
+            D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.lean
+            D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel.lean
+            D5/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm.lean
+            D5/S3/ConceptDynamics/CIRPT/RoleSignature.lean
+            D5/S3/ConceptDynamics/CIRPT/UnifiedResidual.lean
+            D5/S3/ConceptDynamics/ConceptFiberDecomposition.lean
+            D5/S3/ConceptDynamics/ConceptJoinUniversal.lean
+            D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelObstruction.lean
+            D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.lean
+            D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.lean
+            D5/S3/ConceptDynamics/DefinitionEscapeLaws/SemanticClosureZeroGainCriterion.lean
+            D5/S3/ConceptDynamics/DefinitionEscapeLaws/StrictKernelNoveltyCriterion.lean
+            D5/S3/ConceptDynamics/Faithfulness/JointFaithfulnessLeibnizCriterion.lean
+            D5/S3/ConceptDynamics/InformationEscape/Arena.lean
+            D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.lean
+            D5/S3/ConceptDynamics/InformationEscape/DependentFamily.lean
+            D5/S3/ConceptDynamics/InformationEscape/EscapePairs.lean
+            D5/S3/ConceptDynamics/InformationEscape/EscapeRecord.lean
+            D5/S3/ConceptDynamics/InformationEscape/ExactRate.lean
+            D5/S3/ConceptDynamics/InformationEscape/FiniteHistoryFamily.lean
+            D5/S3/ConceptDynamics/InformationEscape/Laws.lean
+            D5/S3/ConceptDynamics/InformationEscape/ObjectDomainArena.lean
+            D5/S3/ConceptDynamics/InformationEscape/RoleHistogram.lean
+            D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty.lean
+            D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean
+            D5/S3/ConceptDynamics/InformationEscapeCounting/Fused.lean
+            D5/S3/ConceptDynamics/InformationEscapeCounting/FusedCorrectness.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/AnalysisLaws.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/LayeredCapture.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralArena.lean
+            D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.lean
+            D5/S3/ConceptDynamics/Postprocessing/PostprocessingKernelMonotonicity.lean
+            D5/S3/ConceptDynamics/RegistrationWitnesses.lean
+            D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean
+            D5/S3/ConceptDynamics/TargetRisk/RefinementRiskCostTradeoff.lean
+            D5/S3/Estimation/DataProcessing/FiniteHistoryConditionalExpectation.lean
+            Directory.Build.*
+            Directory.Packages.props
+            Makefile
+            Meta/Digestion/atomizers.toml
+            Meta/FILEMAP.toml
+            Meta/ReportProducers/*
+            Meta/ci-cache-paths.json
+            NuGet.Config
+            NuGet.config
+            Reg/lake-manifest.json
+            Reg/lakefile.toml
+            global.json
+            lake-manifest.json
+            lakefile.toml
+            lean-report-inputs.json
+            lean-toolchain
+            nuget.config
+            tools/Architecture/BannedSymbols*.txt
+            tools/Makefile
+            tools/StrataLint.Engine/*
+            tools/StrataLint.Engineering/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Runtime/*
+            tools/Trureturing.Truth/*
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Analysis/Finite.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Analysis/Source.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/AuricFib.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Implementation.lean
+            tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Registration.lean
+            tools/lean-inspector-interface/lake-manifest.json
+            tools/lean-inspector-interface/lakefile.toml
+            tools/lean-inspector-reg/*
+            tools/lean-inspector/*.json
+            tools/lean-inspector/*.py
+            tools/lean-inspector/Inspector.lean
+            tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean
+            tools/lean-inspector/LeanInformationAudit/ArtifactRegistration.lean
+            tools/lean-inspector/LeanInformationAudit/BindingRecords.lean
+            tools/lean-inspector/LeanInformationAudit/BindingWire.lean
+            tools/lean-inspector/LeanInformationAudit/CatalogData.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledAssessment.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledAxioms.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledEvidence.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledMetadata.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledRegistration.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledSnapshots.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledSourceContract.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledSourceOperands.lean
+            tools/lean-inspector/LeanInformationAudit/CompiledSourceScope.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/CompiledExpressions.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/Decoder.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/Discovery.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/FibApplications.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/FibFinite.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/FibSource.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/Literal.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/RootStructure.lean
+            tools/lean-inspector/LeanInformationAudit/Contract/SourceAudit.lean
+            tools/lean-inspector/LeanInformationAudit/EscapeEvidence.lean
+            tools/lean-inspector/LeanInformationAudit/InputTypes.lean
+            tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Carriers.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Family.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/State.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Types.lean
+            tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/View.lean
+            tools/lean-inspector/LeanInformationAudit/RegistrationData.lean
+            tools/lean-inspector/LeanInformationAudit/RegistrationRelations.lean
+            tools/lean-inspector/LeanInformationAudit/Registry/ArenaProvenance.lean
+            tools/lean-inspector/LeanInformationAudit/Registry/Repository.lean
+            tools/lean-inspector/LeanInformationAudit/Registry/SourceBinder.lean
+            tools/lean-inspector/LeanInformationAudit/Sha256.lean
+            tools/lean-inspector/LeanInformationAudit/SnapshotTypes.lean
+            tools/lean-inspector/LeanInformationAudit/SourceSelection.lean
+            tools/lean-inspector/LeanInformationAudit/TemplateData.lean
+            tools/lean-inspector/LeanInformationAudit/TemplateEnrollment.lean
+            tools/lean-inspector/LeanInformationAudit/TemplateWire.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/*
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Census.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Generic.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Macro.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Main.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Native.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Report.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/AuricFib/Source.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/Projection/ProjectionRefinement.lean
+            tools/lean-inspector/LeanInformationAuditRegAnalysis/Projection/ProjectionSchema.lean
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/*
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/CompiledFixture.lean
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/RateBoundary.lean
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/SourceContracts.lean
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/TypedBoundaries.lean
+            tools/lean-inspector/LeanInformationAuditFibTests/AuricFib/UniversalFixture.lean
+            tools/lean-inspector/inspect.sh
+            tools/lean-inspector/lake-manifest.json
+            tools/lean-inspector/lakefile.lean
+            tools/lean-inspector/native_image.c
+            tools/lean-inspector/tests/test_auric_fib*.py
+            tools/scripts/auric-fib-analysis.sh
+            tools/scripts/compiled-fib-test.sh
+            tools/scripts/lib/resource-observation-lib.sh
+            tools/scripts/report/*
+            tools/scripts/workflow/install-lean-toolchain.sh
+            tools/scripts/worktree/*
             [tests-lean]
             # Compiled audit execution in current consumes these runtime inputs.
             D5/*.lean
@@ -1692,7 +1856,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    # Platform wall-clock cap, separate from the shared 30-minute compute allowance.
+    # Platform wall-clock cap, separate from the shared 120-minute compute allowance.
     timeout-minutes: 360
     outputs:
       lean_required: ${{ steps.report_entry.outputs.hit }}
@@ -1944,7 +2108,7 @@ jobs:
         name: Initialize the shared compute allowance
         run: |
           budget="$RUNNER_TEMP/current-compute-seconds"
-          python3 tools/scripts/workflow/ci_compute.py init "$budget" 30
+          python3 tools/scripts/workflow/ci_compute.py init "$budget" 120
           echo "STRATALINT_CI_COMPUTE_BUDGET=$budget" >> "$GITHUB_ENV"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
@@ -1977,6 +2141,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           # This supervisor also encloses preparation; compute phases share the file above.
           STRATALINT_BUILD_TIMEOUT_SECONDS: '21600'
+          STRATALINT_FIB_REGRESSIONS_SELECTED: ${{ fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
@@ -2346,7 +2511,7 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName!~FourierBridgeSourceEvidenceTests"
-      lean: build
+      lean: none
       cache-dependency-path: |
         tools/tests/StrataLint.DeclaredTemplate.Tests/packages.lock.json
         tools/StrataLint.TestEvidence/packages.lock.json
@@ -2454,6 +2619,16 @@ jobs:
     with:
       command: bash tools/scripts/agent/integration-mirror-test.sh
       dotnet: false
+
+  tests-fib:
+    needs: [detect, current]
+    if: ${{ !cancelled() && fromJSON(needs.detect.outputs.hits || '{}')['tests-fib'] }}
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Require the selected report consumer's FIB regressions
+        env:
+          CURRENT_RESULT: ${{ needs.current.result }}
+        run: test "$CURRENT_RESULT" = success
 
   tests-lean:
     needs: detect
@@ -2853,7 +3028,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-fib, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-script, tests-source-atomizer, tests-engineering, tests-runtime, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

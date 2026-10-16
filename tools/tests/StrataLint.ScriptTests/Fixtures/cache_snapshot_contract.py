@@ -19,22 +19,21 @@ import urllib.parse
 import urllib.request
 
 from cache_fixture import CACHE, REV, CacheFixture
+from cache_publication_contract import PublicationCases
 
 
-class SnapshotContracts(CacheFixture, unittest.TestCase):
+class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
     def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
         result, errors = streams or (io.StringIO(), io.StringIO())
-        wait_guard = (contextlib.nullcontext() if real_wait else
-            mock.patch.object(owner, "wait_for_seed_lookup", create=True,
+        wait_guard = (contextlib.nullcontext() if real_wait else mock.patch.object(owner, "wait_for_seed_lookup", create=True,
                 side_effect=wait or (lambda completed, seconds: completed.wait())))
         env = dict(self.env, GH_TOKEN="synthetic-token", GITHUB_REPOSITORY="owner/repository",
                    GITHUB_API_URL="https://cache.example.test/api/v3")
         env.update(environment)
         with mock.patch.dict(os.environ, env, clear=True):
             publication = owner.actions_keys(self.root)["project"]
-            with mock.patch.object(urllib.request, "urlopen", side_effect=responses) as opened, \
-                    wait_guard, \
+            with mock.patch.object(urllib.request, "urlopen", side_effect=responses) as opened, wait_guard, \
                     mock.patch.object(sys, "argv", [str(CACHE), "keys", "--repository", str(self.root)]), \
                     contextlib.redirect_stdout(result), contextlib.redirect_stderr(errors):
                 code = owner.main()
@@ -64,8 +63,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         response.status = status
         response.headers = {} if link is None else {"Link": link}
         response.read.return_value = (body if body is not None else
-            json.dumps(dict(total_count=len(rows) if total is None else total,
-                            actions_caches=list(rows))).encode())
+            json.dumps(dict(total_count=len(rows) if total is None else total, actions_caches=list(rows))).encode())
         return response
 
     def next_page(self, number, ref="refs/heads/dev"):
@@ -83,8 +81,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def test_project_lookup_is_optional_without_credentials_repository_or_reader_ref(self):
         for missing in (dict(GH_TOKEN=""), dict(GITHUB_REPOSITORY=""), dict(GITHUB_REF=""),
-                dict(GITHUB_EVENT_NAME="pull_request", GITHUB_BASE_REF=""),
-                dict(GITHUB_EVENT_NAME="workflow_dispatch")):
+                dict(GITHUB_EVENT_NAME="pull_request", GITHUB_BASE_REF=""), dict(GITHUB_EVENT_NAME="workflow_dispatch")):
             with self.subTest(missing=missing):
                 opened = self.assert_lookup_fallback([], "lookup-not-configured", **missing)
                 opened.assert_not_called()
@@ -94,8 +91,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 (TimeoutError("transport guard"), "lookup-request-failed"),
                 (RuntimeError("unexpected HTTP-layer failure"), "lookup-request-failed"),
                 (urllib.error.HTTPError("https://cache.example.test", 403, "rate limit", {}, None), "lookup-http-error"),
-                (self.cache_page(status=429), "lookup-http-error"),
-                (self.cache_page(status=500), "lookup-http-error")):
+                (self.cache_page(status=429), "lookup-http-error"), (self.cache_page(status=500), "lookup-http-error")):
             with self.subTest(reason=reason, failure=type(failure).__name__):
                 opened = self.assert_lookup_fallback([failure], reason)
                 self.assertEqual(1, opened.call_count)
@@ -144,15 +140,13 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertNotEqual(row["key"], values["project_restore_key"])
             opened.assert_not_called()
             completed.set.assert_not_called()
-            before = (streams[0].getvalue(), streams[1].getvalue(),
-                      (self.root / "outputs").read_bytes())
+            before = (streams[0].getvalue(), streams[1].getvalue(), (self.root / "outputs").read_bytes())
             self.assertEqual("", before[1])
             worker.call_args.kwargs["target"]()
             completed.set.assert_called_once_with()
             late_transport.assert_called_once()
             response.read.assert_called_once_with()
-            self.assertEqual(before, (streams[0].getvalue(), streams[1].getvalue(),
-                (self.root / "outputs").read_bytes()))
+            self.assertEqual(before, (streams[0].getvalue(), streams[1].getvalue(), (self.root / "outputs").read_bytes()))
             selected = dict(line.split("=", 1) for line in streams[0].getvalue().splitlines() if "=" in line)
             self.assertEqual(values["project_key"], selected["project_restore_key"])
 
@@ -189,10 +183,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     response.read.side_effect = blocked
                     transport = [response]
                 else:
-                    response = self.cache_page([self.cache_row("999-1")], total=2,
-                        link='<' + self.next_page(2) + '>; rel="next"')
-                    transport = lambda *args, **kwargs: (
-                        blocked() if "page=2" in args[0].full_url else response)
+                    response = self.cache_page([self.cache_row("999-1")], total=2, link='<' + self.next_page(2) + '>; rel="next"')
+                    transport = lambda *args, **kwargs: (blocked() if "page=2" in args[0].full_url else response)
                 opened = self.assert_lookup_fallback(transport, "lookup-transport-hang-guard", wait=expired)
                 self.assertEqual(2 if stage == "second-page" else 1, opened.call_count)
                 self.assertFalse(never.is_set())
@@ -221,12 +213,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual(1, opened.call_count)
 
     def test_project_lookup_invalid_json_and_malformed_listings_are_optional(self):
-        for body in (b"{", b"\xff", b"[]", b"{}",
-                b'{"total_count":true,"actions_caches":[]}',
-                b'{"total_count":-1,"actions_caches":[]}',
-                b'{"total_count":0,"actions_caches":null}',
-                b'{"total_count":1,"actions_caches":[null]}',
-                b'{"total_count":1,"actions_caches":[{"key":"key"}]}',
+        for body in (b"{", b"\xff", b"[]", b"{}", b'{"total_count":true,"actions_caches":[]}',
+                b'{"total_count":-1,"actions_caches":[]}', b'{"total_count":0,"actions_caches":null}',
+                b'{"total_count":1,"actions_caches":[null]}', b'{"total_count":1,"actions_caches":[{"key":"key"}]}',
                 b'{"total_count":1,"actions_caches":[{"key":1,"ref":"ref"}]}',
                 b'{"total_count":0,"total_count":1,"actions_caches":[]}'):
             with self.subTest(body=body):
@@ -253,8 +242,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
     def test_project_lookup_rejects_missing_invalid_or_repeated_cache_ids(self):
         for invalid in (None, True, False, 0, -1, "274839201", 1.5, [], {}):
             with self.subTest(id=invalid):
-                self.assert_lookup_fallback([self.cache_page([self.cache_row("100-1", id=invalid)])],
-                    "lookup-incomplete-listing")
+                self.assert_lookup_fallback([self.cache_page([self.cache_row("100-1", id=invalid)])], "lookup-incomplete-listing")
         missing = self.cache_row("100-1")
         del missing["id"]
         self.assert_lookup_fallback([self.cache_page([missing])], "lookup-incomplete-listing")
@@ -276,21 +264,18 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertEqual(["desc"], query.get("direction"))
 
     def test_project_lookup_rejects_broken_or_cyclic_pagination_without_following_it(self):
-        for link in ("broken", '<' + self.next_page(1) + '>; rel="next"',
-                '<' + self.next_page(3) + '>; rel="next"',
+        for link in ("broken", '<' + self.next_page(1) + '>; rel="next"', '<' + self.next_page(3) + '>; rel="next"',
                 '<' + self.next_page(2).replace("cache.example.test", "other.example.test") + '>; rel="next"',
                 '<' + self.next_page(2).replace("refs%2Fheads%2Fdev", "refs%2Fheads%2Fother") + '>; rel="next"',
                 '<' + self.next_page(2) + '>; rel="next", <' + self.next_page(2) + '>; rel="next"'):
             with self.subTest(link=link):
                 opened = self.assert_lookup_fallback(
-                    [self.cache_page([self.cache_row("999-1")], total=2, link=link)],
-                    "lookup-incomplete-listing")
+                    [self.cache_page([self.cache_row("999-1")], total=2, link=link)], "lookup-incomplete-listing")
                 self.assertEqual(1, opened.call_count)
 
     def test_project_lookup_empty_or_ineligible_listing_uses_the_existing_key(self):
         self.assert_lookup_fallback([self.cache_page()], "lookup-no-eligible-seed")
-        rows = [self.cache_row(suffix) for suffix in ("0-1", "1-0", "01-1", "1-01",
-                "-1-1", "1-1-tail", "1-1\n", "1", "1-a")]
+        rows = [self.cache_row(suffix) for suffix in ("0-1", "1-0", "01-1", "1-01", "-1-1", "1-1-tail", "1-1\n", "1", "1-a")]
         prefix = self.cache_row("")["key"]
         rows += [self.cache_row("999-1", ref="refs/heads/other"),
                  self.cache_row("999-1", prefix=prefix.replace("lean-project-push-", "lean-project-v4-")),
@@ -299,8 +284,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assert_lookup_fallback([self.cache_page(rows)], "lookup-no-eligible-seed")
 
     def test_project_lookup_uses_numeric_run_and_attempt_order_not_creation_order(self):
-        rows = [self.cache_row("100-2", created_at="oldest"),
-                self.cache_row("99-9", created_at="newest"),
+        rows = [self.cache_row("100-2", created_at="oldest"), self.cache_row("99-9", created_at="newest"),
                 self.cache_row("100-10", created_at="middle"), self.cache_row("100-9"),
                 self.cache_row("10000-1", ref="refs/heads/other")]
         values, receipt, opened = self.lookup_keys([self.cache_page(rows)])
@@ -343,8 +327,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 url = urllib.parse.urlsplit(request.full_url)
                 self.assertEqual("/api/v3/repos/owner/repository/actions/caches", url.path)
                 self.assertEqual(dict(key=[values["project_restore_prefix"]], ref=[expected], per_page=["100"],
-                    sort=["created_at"], direction=["desc"]),
-                                 urllib.parse.parse_qs(url.query))
+                    sort=["created_at"], direction=["desc"]), urllib.parse.parse_qs(url.query))
                 self.assertEqual("GET", request.get_method())
                 self.assertEqual("Bearer synthetic-token", request.get_header("Authorization"))
                 self.assertGreater(opened.call_args.kwargs["timeout"], 0)
@@ -363,8 +346,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def test_pr_lookup_failure_does_not_mistake_an_unreadable_scope_for_an_empty_scope(self):
         opened = self.assert_lookup_fallback([OSError("unavailable PR listing")],
-            "lookup-request-failed", GITHUB_EVENT_NAME="pull_request",
-            GITHUB_REF="refs/pull/42/merge", GITHUB_BASE_REF="dev")
+            "lookup-request-failed", GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/42/merge", GITHUB_BASE_REF="dev")
         opened.assert_called_once()
 
     def test_project_lookup_supplies_github_json_accept_header(self):
@@ -432,8 +414,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 owner, keys, _ = self.native_seed("dependency")
                 key = keys["dependency"]["key"]
                 with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as result:
-                    owner.restore(self.root, keys, {"dependency": key}, ["dependency"],
-                                  outcomes={"dependency": outcome})
+                    owner.restore(self.root, keys, {"dependency": key}, ["dependency"], outcomes={"dependency": outcome})
                 entries = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
                            for line in result.getvalue().splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
                 self.assertEqual(1, len(entries), result.getvalue())
@@ -471,8 +452,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertIn('"reason": "lookup-not-configured"', result.stdout)
             flat = dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
             self.assertEqual(flat["project_key"], flat["project_restore_key"])
-            self.assertIn("project_restore_key=" + flat["project_key"],
-                          (directory / "output with spaces").read_text())
+            self.assertIn("project_restore_key=" + flat["project_key"], (directory / "output with spaces").read_text())
 
     def work(self, report=1, programs=0, **changes):
         path = self.root / "build/lean-cache/build-work.json"
@@ -541,16 +521,14 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         owner = self.restore_owner()
         with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as result:
             keys = owner.actions_keys(self.root)
-            owner.restore(self.root, keys, {"project": keys["project"]["key"]}, ["project"],
-                          outcomes={"project": "success"})
+            owner.restore(self.root, keys, {"project": keys["project"]["key"]}, ["project"], outcomes={"project": "success"})
         self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", result.getvalue())
 
     def test_dependency_retention_uses_only_registered_small_inputs_after_successful_restore(self):
         owner, keys, target = self.native_seed("dependency")
         original_key = keys["dependency"]["key"]
         with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()):
-            owner.restore(self.root, keys, {"dependency": original_key}, ["dependency"],
-                          outcomes={"dependency": "success"})
+            owner.restore(self.root, keys, {"dependency": original_key}, ["dependency"], outcomes={"dependency": "success"})
         (self.root / "unrelated.lean").write_text("theorem changed := True.intro\n")
         with mock.patch.dict(os.environ, self.env), \
                 mock.patch.object(pathlib.Path, "rglob", side_effect=AssertionError("native directory scan")), \
@@ -597,8 +575,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
     def test_project_updates_after_each_successful_production_even_with_an_unchanged_report(self):
         owner, keys, target = self.native_seed("project")
         with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()):
-            owner.restore(self.root, keys, {"project": keys["project"]["key"]}, ["project"],
-                          outcomes={"project": "success"})
+            owner.restore(self.root, keys, {"project": keys["project"]["key"]}, ["project"], outcomes={"project": "success"})
         (target / "new.olean").write_bytes(b"newly compiled module")
         with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as saved:
             owner.snapshot(self.root, keys, ["project"])
@@ -640,141 +617,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual(b"new successful build", source.read_bytes())
         self.assertFalse((self.root / "build/lean-cache/project/data").exists())
 
-    def test_project_zero_report_and_program_work_skips_upload(self):
-        self.native_seed("project")
-        self.work(0, 0)
-        ready, receipts = self.snapshot_result()
-        self.assertEqual("false", ready["project_ready"])
-        self.assertEqual("no-build-work", ready["project_skip_reason"])
-        self.assertEqual("no-build-work", receipts["project"]["reason"])
-
-    def test_project_report_and_program_only_work_are_publishable_on_push(self):
-        self.native_seed("project")
-        for report, programs in ((2, 0), (0, 3)):
-            with self.subTest(report=report, programs=programs):
-                self.work(report, programs)
-                ready, receipts = self.snapshot_result()
-                self.assertEqual("true", ready["project_ready"])
-                self.assertEqual(report + programs, receipts["project"]["build_work"])
-
-    def test_project_unknown_work_never_claims_zero_or_uploads(self):
-        self.native_seed("project")
-        for defect in ("missing", "malformed", "stale", "negative", "bool", "unknown", "foreign-root", "duplicate-field", "archived-path", "symlink"):
-            with self.subTest(defect=defect):
-                path = self.work()
-                if defect == "missing": path.unlink()
-                elif defect == "malformed": path.write_text("[]")
-                elif defect == "stale": self.work(run_attempt="1")
-                elif defect == "negative": self.work(-1)
-                elif defect == "bool": self.work(True)
-                elif defect == "unknown": self.work(None)
-                elif defect == "foreign-root": self.work(repository="/other")
-                elif defect == "duplicate-field": path.write_text(path.read_text().rstrip()[:-1] + ', "report": 0}')
-                elif defect == "archived-path":
-                    archived = self.root / ".lake/build/work.json"
-                    archived.write_bytes(path.read_bytes())
-                    self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(archived)
-                elif defect == "symlink":
-                    link = path.with_suffix(".link")
-                    link.symlink_to(path)
-                    self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(link)
-                ready, receipts = self.snapshot_result()
-                self.assertEqual("false", ready["project_ready"])
-                self.assertEqual("build-work-unknown", ready["project_skip_reason"])
-                self.assertEqual("build-work-unknown", receipts["project"]["reason"])
-
-    def test_project_work_from_another_run_cannot_publish(self):
-        self.native_seed("project")
-        self.work(run_id="16")
-        ready, receipts = self.snapshot_result()
-        self.assertEqual("false", ready["project_ready"])
-        self.assertEqual("build-work-unknown", receipts["project"]["reason"])
-
-    def test_ordinary_pull_requests_never_publish_project_seeds_even_with_build_work(self):
-        self.native_seed("project")
-        self.native_seed("dependency")
-        self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge")
-        for report, programs in ((2, 0), (0, 3), (0, 0), (None, None)):
-            with self.subTest(report=report, programs=programs):
-                self.work(report, programs)
-                ready, receipts = self.snapshot_result()
-                self.assertEqual("false", ready["project_ready"])
-                self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
-                self.assertEqual("true", ready["dependency_ready"])
-
-    def test_pr_dispatch_never_publishes_candidate_to_ordinary_native_prefix(self):
-        _, _, target = self.native_seed("project")
-        self.env.update(GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF="refs/heads/dev",
-                        STRATALINT_CACHE_PR_SOURCE_VALIDATED="true",
-                        STRATALINT_CACHE_SOURCE_REF="refs/pull/12/merge",
-                        STRATALINT_CACHE_TARGET_REF="refs/heads/dev",
-                        STRATALINT_CACHE_SOURCE_COMMIT="a" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA="a" * 40)
-        for report, programs, expected in ((2, 0, "false"), (0, 3, "false"),
-                                           (0, 0, "false"), (None, None, "false")):
-            with self.subTest(report=report, programs=programs):
-                self.work(report, programs)
-                ready, receipts = self.snapshot_result()
-                self.assertEqual(expected, ready["project_ready"])
-                if expected == "true":
-                    self.assertEqual(report + programs, receipts["project"]["build_work"])
-                self.assertEqual(b"native build material", (target / "module.olean").read_bytes())
-
-    def test_pr_dispatch_publication_rejects_missing_authorization_or_wrong_source_scope(self):
-        self.native_seed("project")
-        self.work(2, 0)
-        valid = dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch", GITHUB_REF="refs/heads/dev",
-                     STRATALINT_CACHE_PR_SOURCE_VALIDATED="true", STRATALINT_CACHE_SOURCE_REF="refs/pull/12/merge",
-                     STRATALINT_CACHE_TARGET_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_COMMIT="a" * 40,
-                     STRATALINT_CACHE_CHECKED_OUT_SHA="a" * 40)
-        for defect in ({"STRATALINT_CACHE_PR_SOURCE_VALIDATED": "false"},
-                       {"STRATALINT_CACHE_WRITES": "false"},
-                       {"STRATALINT_REPORT_SUCCEEDED": "false"},
-                       {"GITHUB_REF": "refs/heads/integration-another"},
-                       {"STRATALINT_CACHE_SOURCE_REF": "refs/pull/12/head"},
-                       {"STRATALINT_CACHE_SOURCE_REF": "refs/pull/0/merge"},
-                       {"STRATALINT_CACHE_CHECKED_OUT_SHA": "b" * 40},
-                       {"STRATALINT_CACHE_SOURCE_COMMIT": "0" * 40},
-                       {"GITHUB_EVENT_NAME": "pull_request"}):
-            with self.subTest(defect=defect):
-                self.env = dict(valid, **defect)
-                ready, _ = self.snapshot_result()
-                self.assertEqual("false", ready["project_ready"])
-
-    def test_only_dev_and_integration_pushes_publish_project_seeds(self):
-        self.native_seed("project")
-        for ref, expected in (("refs/heads/dev", "true"),
-                ("refs/heads/integration-ci-perf-tests", "true"), ("refs/heads/topic", "false")):
-            with self.subTest(ref=ref):
-                self.env["GITHUB_REF"] = ref
-                ready, _ = self.snapshot_result()
-                self.assertEqual(expected, ready["project_ready"])
-
-    def test_project_save_authorization_and_dependency_policy_remain_independent(self):
-        self.native_seed("project")
-        self.native_seed("dependency")
-        self.work(0, 0)
-        ready, receipts = self.snapshot_result()
-        self.assertEqual("true", ready["dependency_ready"])
-        self.env["STRATALINT_CACHE_WRITES"] = "false"
-        ready, receipts = self.snapshot_result()
-        self.assertEqual("false", ready["project_ready"])
-        self.assertEqual("false", ready["dependency_ready"])
-        self.assertEqual("save-disabled", receipts["project"]["status"])
-
-    def test_project_guard_requires_report_success_and_dependency_requires_check_success(self):
-        self.native_seed("project")
-        self.native_seed("dependency")
-        for report, checked, project, dependency in (("true", "false", "true", "false"),
-                ("false", "true", "false", "true"), (None, "true", "false", "true"),
-                ("true", "true", "true", "true")):
-            with self.subTest(report=report, checked=checked):
-                self.env["STRATALINT_CHECK_SUCCEEDED"] = checked
-                self.env.pop("STRATALINT_REPORT_SUCCEEDED", None)
-                if report is not None: self.env["STRATALINT_REPORT_SUCCEEDED"] = report
-                ready, _ = self.snapshot_result()
-                self.assertEqual(project, ready["project_ready"])
-                self.assertEqual(dependency, ready["dependency_ready"])
-
     def test_elan_inventory_lists_installed_toolchains_without_modifying_them(self):
         home = self.root / "elan cache with spaces"
         binary = home / "bin/elan"
@@ -796,14 +638,234 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertIn("leanprover/lean4:v4.31.0", result.stdout)
         self.assertEqual(b"installed toolchain", material.read_bytes())
 
+    def resume_setup(self):
+        owner = self.restore_owner()
+        self.env.update(GITHUB_REPOSITORY="owner/repo", GITHUB_REF_PROTECTED="true")
+        for args in (() if (self.root / ".git").exists() else (("init", "-q"), ("add", "."),
+                ("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "source"))):
+            subprocess.run(["git", "-C", str(self.root), *args], check=True, capture_output=True)
+        (self.root / ".lake/packages/mathlib").mkdir(parents=True)
+        (self.root / ".lake/build/lib/lean").mkdir(parents=True)
+        (self.root / ".lake/build/lib/lean/Module.olean").write_bytes(b"completed module")
+        return owner
+
+    def test_producer_resume_is_separate_and_requires_the_same_ref_and_inputs(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            spec = owner.resume_spec(self.root)
+            self.assertTrue(spec["restore_prefix"].startswith("lean-producer-resume-v1-"))
+            for field, value in (("GITHUB_REF", "refs/heads/integration-other"),
+                    ("GITHUB_REPOSITORY", "other/repo"), ("LEAN_OPTS", "-DmaxRecDepth=1000")):
+                with mock.patch.dict(os.environ, {field: value}):
+                    self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+            for file in ("lean-toolchain", "lake-manifest.json"):
+                path = self.root / file
+                before = path.read_bytes()
+                path.write_bytes(before + b"\n")
+                self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+                path.write_bytes(before)
+            for relative, text in (("source.lean", "def changed := 1\n"),
+                    ("tools/producer.py", "raise SystemExit(1)\n"), ("README.md", "documentation\n")):
+                path = self.root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text)
+                subprocess.run(["git", "-C", str(self.root), "add", relative], check=True)
+                subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c",
+                    "user.email=fixture@example.invalid", "commit", "-qm", "changed"], check=True, capture_output=True)
+                self.assertEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+
+    def test_resume_paths_include_registered_dependency_and_project_material(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True):
+            paths = owner.resume_spec(self.root)["paths"]
+        self.assertIn(".lake/packages", paths)
+        self.assertIn(".lake/build/lib", paths)
+        self.assertIn(".lake/build/lean-inspector", paths)
+
+    def test_resume_writer_rejects_unprotected_pushes_and_ordinary_prs(self):
+        owner = self.resume_setup()
+        for defect in ({"GITHUB_REF_PROTECTED": "false"}, {"GITHUB_REF": "refs/heads/topic"},
+                {"STRATALINT_CACHE_WRITES": "false"}, {"GITHUB_EVENT_NAME": "pull_request", "GITHUB_REF": "refs/pull/1/merge"},
+                {"GITHUB_EVENT_NAME": "workflow_dispatch", "STRATALINT_CACHE_SOURCE_VALIDATED": "false"}):
+            with self.subTest(defect=defect), mock.patch.dict(os.environ, dict(self.env, **defect), clear=True):
+                with self.assertRaises(ValueError): owner.resume_spec(self.root)
+        env = dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch", STRATALINT_CACHE_SOURCE_VALIDATED="true",
+                   STRATALINT_CACHE_SOURCE_REF="refs/heads/dev", STRATALINT_CACHE_SOURCE_COMMIT="b" * 40,
+                   STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)
+        with mock.patch.dict(os.environ, env, clear=True):
+            self.assertTrue(owner.resume_spec(self.root)["key"].endswith("17-2"))
+
+    def test_resume_restore_preserves_partial_native_work_without_certifying_a_report(self):
+        owner = self.resume_setup()
+        env = dict(self.env, STRATALINT_REPORT_SUCCEEDED="false")
+        with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertTrue(owner.resume_verified(self.root))
+            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+        self.assertIn("resume_ready=true", receipts.getvalue())
+        self.assertNotIn("STRATALINT_ACTIONS_CACHE_SEEDED=1", receipts.getvalue())
+        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+        self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
+        self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+
+    def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):
+        for defect in ("foreign-key", "foreign-ref", "missing-marker", "transport-failed", "duplicate-marker"):
+            with self.subTest(defect=defect):
+                owner = self.resume_setup()
+                with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()):
+                    spec = owner.resume_spec(self.root)
+                    owner.resume_snapshot(self.root, spec)
+                    key, outcome = spec["key"], "success"
+                    marker = owner.resume_marker(self.root)
+                    if defect == "foreign-key": key = "lean-project-push-foreign-17-2"
+                    elif defect == "foreign-ref": os.environ["GITHUB_REF"] = "refs/heads/integration-other"
+                    elif defect == "missing-marker": marker.unlink()
+                    elif defect == "transport-failed": outcome = "failure"
+                    elif defect == "duplicate-marker": marker.write_text('{"key":"a","key":"b"}')
+                    owner.resume_restore(self.root, owner.resume_spec(self.root), key, outcome)
+                    self.assertFalse(owner.resume_verified(self.root))
+                self.assertFalse((self.root / ".lake/build").exists())
+                self.assertFalse((self.root / ".lake/packages").exists())
+
+    def test_empty_matched_key_after_resume_attempt_discards_extracted_material(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        env = dict(self.env, STRATALINT_CACHE_PRODUCER_COMPLETE="true")
+        with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertTrue(owner.resume_verified(self.root))
+            (self.root / ".lake/packages/mathlib/partial").write_bytes(b"incomplete extraction")
+            (self.root / ".lake/build/lib/lean/Module.olean").write_bytes(b"truncated")
+            owner.resume_restore(self.root, spec, "", "success")
+            self.assertFalse(owner.resume_verified(self.root))
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+        self.assertFalse((self.root / ".lake/packages").exists())
+        self.assertFalse((self.root / ".lake/build").exists())
+        self.assertIn("resume transport failed or identity is incompatible", receipts.getvalue())
+
+    def test_no_resume_extraction_preserves_valid_dependency_seed_without_promoting(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        dependency = self.root / ".lake/packages/mathlib/keep"
+        dependency.write_bytes(b"valid dependency seed")
+        env = dict(self.env, STRATALINT_CACHE_PRODUCER_COMPLETE="true")
+        with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            keys = owner.actions_keys(self.root)
+            self.assertTrue(owner.restore_native(self.root, keys, "dependency", keys["dependency"]["key"], "success"))
+            stamp = self.root / ".lake/.stratalint-lean-cache-stamp.json"
+            stamp_bytes = stamp.read_bytes()
+            spec = owner.resume_spec(self.root)
+            for outcome in ("", "skipped"):
+                with self.subTest(outcome=outcome):
+                    owner.resume_snapshot(self.root, spec)
+                    owner.resume_restore(self.root, spec, spec["key"], "success")
+                    self.assertTrue(owner.resume_verified(self.root))
+                    owner.resume_restore(self.root, spec, "", outcome)
+                    self.assertFalse(owner.resume_verified(self.root))
+                    self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+                    self.assertEqual(b"valid dependency seed", dependency.read_bytes())
+                    self.assertEqual(stamp_bytes, stamp.read_bytes())
+                    self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+        self.assertEqual(2, receipts.getvalue().count('"reason": "Actions supplied no continuation"'))
+
+    def test_resume_cannot_be_consumed_as_an_ordinary_project_or_dependency_seed(self):
+        owner = self.resume_setup()
+        with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()):
+            spec = owner.resume_spec(self.root)
+            for layer in ("project", "dependency"):
+                self.assertFalse(owner.restore_native(self.root, owner.actions_keys(self.root), layer, spec["key"], "success"))
+
+    def test_successful_final_slice_can_promote_verified_resume_with_zero_new_work(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        with mock.patch.dict(os.environ, self.env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+            del os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"]
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+            os.environ["STRATALINT_CACHE_PRODUCER_COMPLETE"] = "true"
+            self.assertEqual((True, "validated-producer-resume", 0), owner.project_publication(self.root))
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+            self.assertIn("project_ready=true", receipts.getvalue())
+            os.environ["STRATALINT_REPORT_SUCCEEDED"] = "false"
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+            self.assertTrue(receipts.getvalue().endswith("project_ready=false\n"))
+            os.environ["GITHUB_RUN_ATTEMPT"] = "3"
+            self.assertFalse(owner.resume_verified(self.root))
+
+    def test_resume_cli_selects_saves_and_restores_native_continuation(self):
+        self.resume_setup()
+        result = self.run_tool(CACHE, "resume-keys")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        values = dict(line.split("=", 1) for line in result.stdout.splitlines() if "=" in line)
+        self.assertIn("resume_restore_prefix", values)
+        self.assertIn(".lake/packages", json.loads(values["resume_archive_path"]))
+        result = self.run_tool(CACHE, "resume-snapshot")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("resume_ready=true", result.stdout)
+        result = self.run_tool(CACHE, "resume-restore", "--resume-key", values["resume_key"], "--resume-outcome", "success")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status": "restored"', result.stdout)
+        self.assertFalse((self.root / "environment").exists())
+        result = self.run_tool(CACHE, "resume-keys", env=dict(self.env, STRATALINT_CACHE_WRITES="false"))
+        self.assertEqual(2, result.returncode)
+        self.assertIn("authorized protected branch or isolated preparation", result.stderr)
+
+    def preparation_resume_environment(self):
+        return dict(self.env, GITHUB_EVENT_NAME="workflow_dispatch",
+            GITHUB_REF="refs/heads/integration-upgrade", GITHUB_REF_PROTECTED="true",
+            STRATALINT_CACHE_PR_SOURCE_VALIDATED="true", STRATALINT_CACHE_SOURCE_REF="refs/pull/21/merge",
+            STRATALINT_CACHE_TARGET_REF="refs/heads/integration-upgrade",
+            STRATALINT_CACHE_SOURCE_COMMIT="b" * 40, STRATALINT_CACHE_CHECKED_OUT_SHA="b" * 40)
+
+    def test_preparation_resume_is_isolated_from_target_branch_and_other_prs(self):
+        owner = self.resume_setup()
+        env = self.preparation_resume_environment()
+        with mock.patch.dict(os.environ, env, clear=True):
+            spec = owner.resume_spec(self.root)
+            keys = owner.actions_keys(self.root)
+            self.assertFalse(keys["project_save_allowed"])
+            for changes in ({"STRATALINT_CACHE_SOURCE_REF": "refs/pull/22/merge"},
+                    {"GITHUB_REF": "refs/heads/integration-other", "STRATALINT_CACHE_TARGET_REF": "refs/heads/integration-other"}):
+                with mock.patch.dict(os.environ, changes):
+                    self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+            with mock.patch.dict(os.environ, {"STRATALINT_CACHE_SOURCE_COMMIT": "c" * 40,
+                    "STRATALINT_CACHE_CHECKED_OUT_SHA": "c" * 40}):
+                self.assertEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+        with mock.patch.dict(os.environ, dict(self.env, GITHUB_REF=env["GITHUB_REF"]), clear=True):
+            self.assertNotEqual(spec["restore_prefix"], owner.resume_spec(self.root)["restore_prefix"])
+
+    def test_preparation_resume_refuses_invalid_source_target_and_writer_bindings(self):
+        owner = self.resume_setup()
+        env = self.preparation_resume_environment()
+        for changes in ({"STRATALINT_CACHE_PR_SOURCE_VALIDATED": "false"}, {"STRATALINT_CACHE_SOURCE_REF": "refs/heads/dev"},
+                {"STRATALINT_CACHE_TARGET_REF": "refs/heads/integration-other"}, {"STRATALINT_CACHE_CHECKED_OUT_SHA": "c" * 40},
+                {"GITHUB_REF_PROTECTED": "false"}, {"STRATALINT_CACHE_WRITES": "false"}):
+            with self.subTest(changes=changes), mock.patch.dict(os.environ, dict(env, **changes), clear=True):
+                with self.assertRaises(ValueError):
+                    owner.resume_spec(self.root)
+
+    def test_ordinary_pr_cannot_become_a_producer_by_setting_the_legacy_marker(self):
+        owner = self.resume_setup()
+        env = dict(self.env, GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/21/merge",
+            STRATALINT_CACHE_PR_PRODUCER="true", STRATALINT_CACHE_PRODUCER_COMPLETE="true")
+        self.work(1, 1)
+        with mock.patch.dict(os.environ, env, clear=True):
+            with self.assertRaises(ValueError):
+                owner.resume_spec(self.root)
+            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+            self.assertEqual((False, "pull-requests-do-not-publish-project-seeds", None), owner.project_publication(self.root))
+
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
-
-
-
-
-
 
 
 if __name__ == "__main__":

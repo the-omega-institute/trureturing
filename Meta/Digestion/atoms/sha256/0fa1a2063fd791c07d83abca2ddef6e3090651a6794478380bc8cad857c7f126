@@ -1,0 +1,9 @@
+**Corollary 6.1 (Universal linear lower bound).** For every $k\ge1$,
+
+$$
+\rho_{\mathrm{law}}(k;p,j,\nu)\ge2k+1.
+\tag{6.1}
+$$
+
+Proof. $W_{k,j}$ belongs to the full input class on every given seed space. Theorem 5.1 excludes every smaller radius for this one input even against the full representative class. A radius representing every input must therefore be at least $2k+1$. $\square$
+
