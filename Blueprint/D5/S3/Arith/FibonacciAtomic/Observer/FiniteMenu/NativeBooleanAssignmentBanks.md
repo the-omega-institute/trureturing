@@ -92,7 +92,31 @@ $$(CoordinateSpec) \Leftrightarrow ((\operatorname{LeftInverse}\left(dToNative, 
 
 nativeClassNames abbreviates the function i ↦ value(coord(i)), represented by its six entries. The two explicit permutations preserve the source/native coordinate correspondence and the six original canonical class names.
 
-**Theorem 1.7 (Full FTC Lemma 6.1).**
+**Theorem 1.7 (Exact Basis Heights).**
+
+$$\forall d: Nat, (\operatorname{height}\left(\operatorname{B}\left(d\right)\right) = d)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.B_height` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every original B(d) has height d, including B(0)=beta. Thus B(1) through B(6) are distinct actual branch values.
+
+**Theorem 1.8 (Actual Basis Preimages).**
+
+$$\forall d: Nat, (\operatorname{rho}\left(\operatorname{pad}\left(d, alpha\right)\right) = \operatorname{B}\left(d\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.pad_preimage` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Padding alpha to depth d gives an actual predecessor of the original B(d). Every prescribed basis image is therefore in the original substitution image, with no replacement image predicate.
+
+**Theorem 1.9 (Full FTC Lemma 6.1).**
 
 $$(\forall n: Nat, ((\operatorname{LiteralSpec}\left(n\right)) \land (\operatorname{AllSources}\left(n\right)) \land (\forall b: (\operatorname{Fin}\left(n\right)) \to (Bool), ((\operatorname{BankSpec}\left(n, b, \operatorname{bank}\left(b\right)\right)) \land (\forall second: Bool, (\exists u: Fiber, (\operatorname{WitnessSpec}\left(n, b, \operatorname{bank}\left(b\right), second, u\right)))))))) \land ((\operatorname{ell}\left(0\right) = 1) \land (\operatorname{selected}\left(0\right) = []) \land (\forall b: (\operatorname{Fin}\left(0\right)) \to (Bool), (\operatorname{bank}\left(b\right) = \operatorname{B}\left(1\right)))) \land (\exists u: Fiber, ((\operatorname{rho}\left(\operatorname{value}\left(u\right)\right) = \operatorname{filling}\left(zeroTuple\right)) \land (\operatorname{Injective}\left(zeroTuple\right)) \land (\operatorname{canonicalRow}\left(P, \operatorname{value}\left(u\right)\right) = \operatorname{predecessor}\left(0\right)))) \land (LocalRenumbering) \land (CoordinateSpec)$$
 
@@ -109,12 +133,14 @@ The statement combines existing actual geometry and whole-row supply with the qu
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.AllSources`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.B_height`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.BankSpec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.CoordinateSpec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.LiteralSpec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.LocalRenumbering`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.WitnessSpec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.native_boolean_assignment_banks`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeBooleanAssignmentBanks.pad_preimage`
 - Dependency: [D5/S0/Computability/PreorderTreeEvaluation](../../../../../S0/Computability/PreorderTreeEvaluation.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate](../../ActualImageAddressCertificate.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeRepeatedPartnerControllers](../NativeRepeatedPartnerControllers.md)
