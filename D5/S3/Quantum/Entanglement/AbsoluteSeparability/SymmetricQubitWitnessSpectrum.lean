@@ -298,9 +298,7 @@ private theorem cone_spectral_bound (G : Matrix (Fin 3) (Fin 3) ℂ)
   let t := ‖G 2 2‖
   have ht : 0 < t := norm_pos_iff.mpr hg
   obtain ⟨hdet, ht1⟩ := unitary_corner G hU
-  have hA : (corner G)ᵀ = corner G := by
-    ext i j
-    exact congrFun (congrFun hS (Fin.castSucc i)) (Fin.castSucc j)
+  have hA : (corner G)ᵀ = corner G := Matrix.IsSymm.submatrix hS Fin.castSucc
   have hroot (u : Fin 2 → ℂ) : c * ‖qform (corner G) u‖ ≤ t * energy p q u := by
     apply two_root_bound (G 2 2) (G 0 2 * u 0 + G 1 2 * u 1)
       (qform (corner G) u) hg c (energy p q u) hc
@@ -323,8 +321,8 @@ private theorem cone_spectral_bound (G : Matrix (Fin 3) (Fin 3) ℂ)
       Real.norm_eq_abs, abs_of_pos hc]
     dsimp [qform, energy] at hh ⊢
     nlinarith only [hh]
-  have hscaledS : ((c : ℂ) • corner G)ᵀ = (c : ℂ) • corner G := by
-    rw [transpose_smul, hA]
+  have hscaledS : ((c : ℂ) • corner G)ᵀ = (c : ℂ) • corner G :=
+    Matrix.IsSymm.smul hA (c : ℂ)
   obtain ⟨hp', hq', hd⟩ := det_bound ((c : ℂ) • corner G) hscaledS (t*p) (t*q) hscaled
   have hp : 0 ≤ p := nonneg_of_mul_nonneg_right hp' ht
   have hq : 0 ≤ q := nonneg_of_mul_nonneg_right hq' ht
