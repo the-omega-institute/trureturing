@@ -93,7 +93,10 @@ internal sealed class PeriodicSshExcessPseudoEntropyRefutationDocument : IScribe
                         "Consequently ∆S = (1/21) log(2²·3²¹·5¹⁵·13¹³/7⁴²) > 0. "
                             + "The sign follows from the integer inequality 7⁴² < 2²·3²¹·5¹⁵·13¹³. "
                             + "Thus non-positivity fails for a one-cell subsystem even when both periodic-chain ground states are in the same phase."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kharel-limbu-khatri-khanal-adhikari-2026-periodic-ssh-excess-pseudo-entropy"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
