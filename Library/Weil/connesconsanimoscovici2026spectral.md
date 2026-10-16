@@ -2962,7 +2962,8 @@ $S_N$ or an exclusion of every rank-one refinement.
 The negative upper for $q$ supplies the full coupled sufficient
 budget $D_\sharp+\Omega<35.85$, if positive
 $D_\sharp\ge\mathcal K$ and $\Omega\ge\Gamma$ are independently
-certified for this same common object. Neither bound is supplied.
+certified for this same common object. No pair meeting this budget
+is supplied.
 The available identity for $\mathcal K$ implies only
 
 $$
@@ -2977,6 +2978,61 @@ equality. These are existing quadratic/Cauchy/trace methods applied
 to the saved common source, without generic novelty or Lean
 verification. Actual full retained/cofinal positivity, the Robin
 tail estimate and RH remain unresolved.
+
+### The scalar defect supplies a sharper channel charge
+
+The [experimental source and scalar packet](https://github.com/the-omega-institute/trureturing-experiments/tree/c974ba572b29b33dfc066c7d3ff37267c30c85e5/docs/reports/weil-c27)
+retain the consumer and its directed result.
+
+The same original weights, exact $v_0,\vartheta$, saved channel inverse
+and accepted scalar defect supply one additional scalar contraction.
+Write
+
+$$
+F_0=(\Beta_0v_0)^*/\vartheta,\qquad
+\eta=e^*W_JU_J/\vartheta,\qquad F_\phi=F_0-\eta,\qquad
+k=E_e/\vartheta^2.
+$$
+
+Since $U_J^*W_JU_J\preceq A_0\prec A_\rho$, the operator norm of
+$W_J^{1/2}U_JA_\rho^{-1/2}$ is at most1. Weighted Cauchy gives
+$\eta A_\rho^{-1}\eta^*\le k$, without a channel-count factor.
+For $E_0=F_0A_\rho^{-1}F_0^*$, the norm triangle inequalities yield
+
+$$
+(\max(0,\sqrt{E_0}-\sqrt{k}))^2
+\le F_\phi A_\rho^{-1}F_\phi^*
+\le(\sqrt{E_0}+\sqrt{k})^2.
+$$
+
+Under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises, the new1024-bit contraction takes0.413
+seconds including packet loading. It encloses $E_0$ near
+106.3370533152211 and $\sqrt{k}<4.023460$, giving
+
+$$
+39.545559<F_\phi A_\rho^{-1}F_\phi^*<205.505007,\qquad
+0\le\mathcal K\le D_\sharp<259.601110.
+$$
+
+Here $D_\sharp$ is the positive outward ceiling $D_*-L_F$, with
+$L_F$ the certified lower endpoint of the squared reverse-triangle
+bound. It is not an identity for $\mathcal K$. Combining this
+ceiling with the accepted $q$ upper gives a sufficient good-block
+metric budget near-223.750468, so the separate bounds provide no
+positive allowance for $\Gamma$.
+
+This inconclusive sufficient budget does not exclude a joint
+estimate of $\mathcal K+\Gamma+q$. The finite row error and the
+channel-energy term contain the same $\eta$; estimating them
+separately loses correlations. The good-block inverse metric also
+remains missing. The experimental consumer retains $F_0^*$ and
+$A_\rho^{-1}F_0^*$ for subsequent common-source contractions.
+It reuses the saved inverse and signed bound, with no new inverse,
+solve or scientific supplier. This is an application of existing
+weighted Cauchy and norm inequalities, without generic novelty or
+Lean verification. Actual full retained/cofinal positivity, the
+Robin tail estimate and RH remain unresolved.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
