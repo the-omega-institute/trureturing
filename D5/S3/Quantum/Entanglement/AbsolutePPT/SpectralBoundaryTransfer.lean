@@ -45,14 +45,18 @@ private def deleteOne (n : ℕ) (l : Fin (n + 10) → ℝ) : Fin (n + 9) → ℝ
 
 private theorem insertOne_order (n : ℕ) (l : Fin (n + 9) → ℝ)
     (ho : Antitone l) : Antitone (insertOne n l) := by
-  simpa [insertOne, middle] using
-    (Fin.insertNth_monotone (α := ℝᵒᵈ) ho (⟨n + 1, by omega⟩ : Fin (n + 8))
-      (l (middle n)) (ho (by change n + 1 ≤ n + 2; omega)) le_rfl)
+  have hmon : @Monotone (Fin (n + 10)) ℝᵒᵈ _ _
+      (Fin.insertNth (⟨n + 2, by omega⟩ : Fin (n + 10)) (l (middle n)) l) := by
+    convert (Fin.insertNth_monotone (α := ℝᵒᵈ)
+      (f := fun i => (l i : ℝᵒᵈ)) ho (⟨n + 1, by omega⟩ : Fin (n + 8))
+      (l (middle n)) (ho (by change n + 1 ≤ n + 2; omega)) le_rfl) using 1
+    congr 1
+  exact hmon
 
 private theorem insertOne_nonneg (n : ℕ) (l : Fin (n + 9) → ℝ)
     (hn : ∀ i, 0 ≤ l i) : ∀ i, 0 ≤ insertOne n l i := by
   intro i
-  induction i using Fin.succAboveCases ⟨n + 2, by omega⟩
+  induction i using Fin.succAboveCases (⟨n + 2, by omega⟩ : Fin (n + 10))
   · simpa [insertOne] using hn (middle n)
   · simpa [insertOne] using hn _
 
@@ -104,12 +108,23 @@ private theorem insert_copies (a n : ℕ) (hn : 1 ≤ n)
         exact hvo (by exact hij)
       · intro i; exact hvp _
       · have hb := insertOne_boundary n hn l
-        simpa [w, boundaryValues, boundaryIndex, Nat.add_assoc,
-          Nat.add_left_comm, Nat.add_comm] using hvb.trans hb
-      · rw [hwF, hvs, sum_insertOne, insertOne_middle]
+        funext q
+        have h := congrFun (hvb.trans hb) q
+        change v _ = _ at h
+        change v _ = _
+        convert h using 1
+        congr 1
+        apply Fin.ext
+        simp only [boundaryIndex, Fin.val_cast]
+        split_ifs <;> simp_all <;> omega
+      · have hw := hwF id
+        simp only [id_eq] at hw
+        have hi := sum_insertOne n l id
+        simp only [id_eq] at hi
+        rw [hw, hvs, hi, insertOne_middle]
         push_cast
         ring
-      · rw [hwF, hvq, sum_insertOne, insertOne_middle]
+      · rw [hwF (fun x => x ^ 2), hvq, sum_insertOne n l (fun x => x ^ 2), insertOne_middle]
         push_cast
         ring
 
@@ -163,22 +178,23 @@ private theorem middle_cap (n : ℕ) (l : Fin (n + 10) → ℝ)
     ((n : ℝ) + 7) * l (middle (n + 1)) ≤ 1 := by
   let t := l (middle (n + 1))
   let B := ∑ j : Fin 6, l ⟨n + 4 + j.val, by omega⟩
-  let T := l 0 + l 1 + l 2
+  let T := l ⟨0, by omega⟩ + l ⟨1, by omega⟩ + l ⟨2, by omega⟩
   have hquad := h1.dotProduct_mulVec_nonneg (![1, 1, 1] : Fin 3 → ℝ)
   have hTB : T ≤ B := by
     dsimp [T, B]
     norm_num [K1, boundaryValues, boundaryIndex, dotProduct, Matrix.mulVec,
-      Fin.sum_univ_succ] at hquad ⊢
+      Fin.sum_univ_succ, Nat.add_assoc] at hquad ⊢
     linarith
   have hT : 3 * t ≤ T := by
-    have h0 := ho (show (0 : Fin (n + 10)) ≤ middle (n + 1) by
+    have h0 := ho (show (⟨0, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
       change 0 ≤ n + 1 + 2; omega)
-    have h1' := ho (show (1 : Fin (n + 10)) ≤ middle (n + 1) by
+    have h1' := ho (show (⟨1, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
       change 1 ≤ n + 1 + 2; omega)
-    have h2' := ho (show (2 : Fin (n + 10)) ≤ middle (n + 1) by
+    have h2' := ho (show (⟨2, by omega⟩ : Fin (n + 10)) ≤ middle (n + 1) by
       change 2 ≤ n + 1 + 2; omega)
-    dsimp [T, t]
-    linarith
+    calc
+      3 * t = t + t + t := by ring
+      _ ≤ T := add_le_add (add_le_add h0 h1') h2'
   have hprefix : ((n + 4 : ℕ) : ℝ) * t ≤
       ∑ j : Fin (n + 4), l ⟨j.val, by omega⟩ := by
     calc
@@ -188,7 +204,7 @@ private theorem middle_cap (n : ℕ) (l : Fin (n + 10) → ℝ)
         omega)
   have hsplit : (∑ j : Fin (n + 4), l ⟨j.val, by omega⟩) + B = 1 := by
     rw [Fin.sum_univ_add (a := n + 4) (b := 6) l] at ht
-    simpa [B, Fin.castAdd, Fin.natAdd] using ht
+    simpa [B, Fin.castAdd, Fin.natAdd, Fin.castLE] using ht
   push_cast at hprefix
   dsimp [t] at hT hprefix
   linarith
@@ -221,7 +237,11 @@ private theorem insertion_scalar (N a t : ℝ) (hN : 10 ≤ N) (ha : 1 ≤ a)
   have hfactor : 0 ≤ 2 * scalarF (N + a) +
       (a * scalarF (N + a) - 1) * (1 / (N + 2) + t) := by
     have hprod := mul_le_mul_of_nonpos_left
-      (show 1 / (N + 2) + t ≤ 2 / (N + 2) by linarith) hcoef.le
+      (show 1 / (N + 2) + t ≤ 2 / (N + 2) by
+        calc
+          1 / (N + 2) + t ≤ 1 / (N + 2) + 1 / (N + 2) :=
+            add_le_add (le_rfl : 1 / (N + 2) ≤ 1 / (N + 2)) hsmall
+          _ = 2 / (N + 2) := by ring) hcoef.le
     have hpos : 0 < 12 / ((N + a + 2) * (N + 2)) := by positivity
     linarith
   have hid : scalarF N - (scalarF (N + a) * (1 + a * t) ^ 2 - a * t ^ 2) =
@@ -234,18 +254,17 @@ private theorem insertion_scalar (N a t : ℝ) (hN : 10 ≤ N) (ha : 1 ≤ a)
     (sub_nonneg.mpr hsmall)) hfactor
   linarith
 
-private theorem deletion_scalar (N t : ℝ) (hN : 10 ≤ N)
-    (hlarge : 1 / (N + 2) ≤ t) (hcap : (N - 3) * t ≤ 1) :
+private theorem deletion_scalar (N kappa t : ℝ) (hN : 10 ≤ N)
+    (hC : 0 < N - kappa)
+    (hguard : 0 ≤ (10 - kappa) * N ^ 2 + (6 - 15 * kappa) * N - 20 * kappa - 16)
+    (hlarge : 1 / (N + 2) ≤ t) (hcap : (N - kappa) * t ≤ 1) :
     scalarF (N - 1) * (1 - t) ^ 2 + t ^ 2 ≤ scalarF N := by
   let r := (N ^ 2 + 15 * N + 20) / ((N ^ 2 + 3 * N + 8) * (N + 2))
   have hN0 : 0 ≤ N := by linarith
   have hD : 0 < N + 2 := by linarith
   have hE : 0 < N + 1 := by linarith
-  have hC : 0 < N - 3 := by linarith
   have hQ : 0 < N ^ 2 + 3 * N + 8 := by positivity
-  have hpoly : 0 ≤ 7 * N ^ 2 - 39 * N - 76 := by
-    nlinarith [sq_nonneg (N - 10)]
-  have hroot : 1 / (N - 3) ≤ r := by
+  have hroot : 1 / (N - kappa) ≤ r := by
     dsimp [r]
     apply (div_le_div_iff₀ hC (mul_pos hQ hD)).mpr
     nlinarith
@@ -279,7 +298,8 @@ theorem spectral_bound_transfer (n a : ℕ) (ha : 1 ≤ a)
   let t := l (middle (n + 1))
   have ht0 : 0 ≤ t := hn _
   have hcap := middle_cap n l ho ht h1
-  have hN : (10 : ℝ) ≤ (n : ℝ) + 10 := by nlinarith [Nat.cast_nonneg n]
+  have hn0 : (0 : ℝ) ≤ n := Nat.cast_nonneg _
+  have hN : (10 : ℝ) ≤ (n : ℝ) + 10 := by linarith
   have hcurrent : purityBound (n + 1 + 9) = scalarF ((n : ℝ) + 10) := by
     unfold purityBound scalarF
     push_cast
@@ -290,16 +310,19 @@ theorem spectral_bound_transfer (n a : ℕ) (ha : 1 ≤ a)
     let w : Fin (n + 1 + a + 9) → ℝ := fun i => v (Fin.cast (by omega) i)
     have hwF (F : ℝ → ℝ) : (∑ i, F (w i)) = ∑ i, F (v i) := by
       exact Fin.sum_congr' (fun i => F (v i)) (by omega)
-    have hws : ∑ i, w i = 1 + (a : ℝ) * t := by rw [hwF, hvs, ht]
+    have hws : ∑ i, w i = 1 + (a : ℝ) * t := by
+      have hw := hwF id
+      simp only [id_eq] at hw
+      rw [hw, hvs, ht]
     have hwq : ∑ i, (w i) ^ 2 = (∑ i, (l i) ^ 2) + (a : ℝ) * t ^ 2 := by
-      rw [hwF, hvq]
+      rw [hwF (fun x => x ^ 2), hvq]
     have hwb : boundaryValues (n + 1 + a) w = boundaryValues (n + 1) l := hvb
     have hp := unnormalized_bound (n + 1 + a) hnext w
       (fun i j hij => hvo (by exact hij)) (fun i => hvn _)
       (by rw [hws]; positivity) (by rw [hwb]; exact h1) (by rw [hwb]; exact h2)
     rw [hwq, hws] at hp
     have hs := insertion_scalar ((n : ℝ) + 10) a t hN (by exact_mod_cast ha) ht0
-      (by simpa only [add_assoc] using hsmall)
+      (by simpa only [add_assoc, show (10 : ℝ) + 2 = 12 by norm_num] using hsmall)
     have hendpoint : purityBound (n + 1 + a + 9) = scalarF ((n : ℝ) + 10 + a) := by
       unfold purityBound scalarF
       push_cast
@@ -326,12 +349,14 @@ theorem spectral_bound_transfer (n a : ℕ) (ha : 1 ≤ a)
       have h := sum_deleteOne n l (fun x => x ^ 2)
       linarith
     have hp := unnormalized_bound n hprev v
-      (ho.comp (Fin.strictMono_succAbove (middle (n + 1))).monotone)
+      (fun i j hij => ho ((Fin.strictMono_succAbove (middle (n + 1))).monotone hij))
       (fun i => hn _) (by rw [hvs]; linarith)
       (by rw [hvb]; exact h1) (by rw [hvb]; exact h2)
     rw [hvs, hvq] at hp
-    have hs := deletion_scalar ((n : ℝ) + 10) t hN
-      (by simpa only [add_assoc] using hlarge) (by convert hcap using 1 <;> dsimp [t] <;> ring)
+    have hs := deletion_scalar ((n : ℝ) + 10) 3 t hN (by linarith)
+      (by nlinarith [sq_nonneg (n : ℝ)])
+      (by simpa only [add_assoc, show (10 : ℝ) + 2 = 12 by norm_num] using hlarge)
+      (by convert hcap using 1 <;> dsimp [t] <;> ring)
     have hendpoint : purityBound (n + 9) = scalarF (((n : ℝ) + 10) - 1) := by
       unfold purityBound scalarF
       push_cast
@@ -341,6 +366,8 @@ theorem spectral_bound_transfer (n a : ℕ) (ha : 1 ≤ a)
     calc
       _ ≤ scalarF (((n : ℝ) + 10) - 1) * (1 - t) ^ 2 + t ^ 2 := by linarith
       _ ≤ _ := hs
+
+#print axioms spectral_bound_transfer
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.SpectralBoundaryTransfer

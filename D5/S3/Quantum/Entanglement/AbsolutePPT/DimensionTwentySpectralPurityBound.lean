@@ -26,7 +26,8 @@ private theorem endpoint_eighteen : SpectralBound 9 := by
     fin_cases q <;> norm_num [boundaryValues, boundaryIndex,
       QutritSpectralReduction.boundaryValues]
   rw [hb] at h1 h2
-  simpa [purityBound] using QutritN6PurityBound.certificate_bound l ho (hn 17) ht h1 h2
+  convert QutritN6PurityBound.certificate_bound l ho (hn 17) ht h1 h2 using 1 <;>
+    norm_num [purityBound]
 
 private theorem endpoint_twenty_one : SpectralBound 12 := by
   intro l ho hn ht h1 h2
@@ -35,7 +36,8 @@ private theorem endpoint_twenty_one : SpectralBound 12 := by
     fin_cases q <;> norm_num [boundaryValues, boundaryIndex,
       QutritSpectralReduction.boundaryValues]
   rw [hb] at h1 h2
-  simpa [purityBound] using QutritN7PurityBound.certificate_bound l ho (hn 20) ht h1 h2
+  convert QutritN7PurityBound.certificate_bound l ho (hn 20) ht h1 h2 using 1 <;>
+    norm_num [purityBound]
 
 private theorem intermediate_nineteen : SpectralBound 10 :=
   spectral_bound_transfer 9 2 (by decide) endpoint_eighteen endpoint_twenty_one
@@ -50,7 +52,7 @@ theorem spectral_purity_bound (l : Fin 20 → ℝ) (ho : Antitone l)
     ∑ i, (l i) ^ 2 ≤ (7 : ℝ) / 121 := by
   have htwenty : SpectralBound 11 :=
     spectral_bound_transfer 10 1 (by decide) intermediate_nineteen endpoint_twenty_one
-  simpa [purityBound] using htwenty l ho hn ht h1 h2
+  convert htwenty l ho hn ht h1 h2 using 1 <;> norm_num [purityBound]
 
 private def equalitySpectrum : Fin 20 → ℝ := fun i => if i = 0 then 3 / 22 else 1 / 22
 
@@ -107,6 +109,10 @@ theorem sharp_spectral_purity_bound : IsGreatest
   · intro p hp
     obtain ⟨l, ho, hn, ht, h1, h2, rfl⟩ := hp
     exact spectral_purity_bound l ho hn ht h1 h2
+
+#print axioms spectral_purity_bound
+#print axioms sharp_spectral_purity_bound
+#print axioms QutritN7PurityBound.certificate_bound
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.DimensionTwentySpectralPurityBound
