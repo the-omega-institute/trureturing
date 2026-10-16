@@ -6,6 +6,15 @@
    utility: none
    digest: A genuine local qutrit corner extracts both spectral LMIs from a 4 by 4 APPT state. -/
 
+/-
+proof_shape: spectral_reduction: content
+escape_witness: an explicit tensor-product corner, with a seven-dimensional
+  complement, derives both boundary LMIs from literal four-by-four APPT.
+admission_basis: content
+Direct frozen dependencies: QutritSpectralReduction,
+  QutritHildebrandSufficiency.OrderedDiagonalization.sorted_diagonalization.
+-/
+
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritHildebrandSufficiency
 
 set_option autoImplicit false

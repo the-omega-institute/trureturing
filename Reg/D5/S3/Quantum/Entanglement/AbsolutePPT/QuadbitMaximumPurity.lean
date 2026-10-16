@@ -8,6 +8,7 @@ open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Matrix
+open scoped ComplexOrder
 
 noncomputable section
 

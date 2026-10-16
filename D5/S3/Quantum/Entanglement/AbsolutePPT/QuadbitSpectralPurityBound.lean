@@ -4,8 +4,14 @@
    mirror-E: none(waiver:kernel-checked-spectral-construction)
    anchors: []
    utility: none
-   digest: Inserting or deleting a middle spectral value yields the sharp dimension-sixteen bound.
+   digest: Inserting or deleting a middle spectral value yields the sharp dimension-sixteen bound. -/
 
+/-
+proof_shape: spectral_purity_bound: content
+escape_witness: the dimension-sixteen inequality is obtained by a new ordered
+  insertion/deletion argument preserving both extremal-coordinate LMIs.
+admission_basis: content
+Direct frozen dependencies: QutritN5PurityBound, QutritN6PurityBound.
    A four-by-four spectral bridge.  The argument only uses the two necessary
    qutrit Bell-compression LMIs on the six smallest and three largest
    coordinates, together with the already checked qutrit certificates at

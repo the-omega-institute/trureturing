@@ -86,21 +86,31 @@ simple spectrum nor strict positivity is a hypothesis.
 
 ## Evidence
 
-The complete upper-bound source is under implementation. No complete current
-kernel or official required-CI result is claimed in this checkpoint.
-The intended settling declaration is `QuadbitMaximumPurity.result : claim`,
-including the bound, real supremum and explicit diagonal attainment.
+`QuadbitMaximumPurity.result : claim` has passed the canonical scoped Lean
+build together with `QuadbitSpectralPurityBound.spectral_purity_bound`. The
+claim includes the universal bound, real supremum and explicit diagonal
+attainment. Both printed axiom closures contain only `propext`,
+`Classical.choice` and `Quot.sound`; the proof introduces no additional axiom.
+The current machine-readable report and official required CI are checked at
+delivery. A mathematical and statement-fidelity review by another agent of
+the same model family found no gap; an earlier Oracle authentication failure
+yielded no Pro review.
+
+The source-owner escape registrations for newly exposed supporting theorems
+remain unfinished and are disclosed in [#17689](https://github.com/the-omega-institute/trureturing/issues/17689).
+That audit issue does not supply any mathematical premise or establish a
+registration verdict.
 
 ## Triage
 
-**Open checkpoint.** The mathematical interpolation and Bell-corner route
-are fixed; full Lean and official CI verification remain required.
+**Proved in Lean for the stated sector.** Official required CI remains part
+of delivery verification; its outcome is not inferred from the local build.
 
 **Mechanism.** Both necessary boundary LMIs observe only nine extremal
 coordinates. Inserting or deleting an interior coordinate preserves that
 observation, allowing certificates at adjacent total dimensions to control
-a new tensor-factor sector. The proposed spectral estimate therefore has
-weaker hypotheses than literal APPT, while the final theorem must discharge
+a new tensor-factor sector. The proved spectral estimate therefore has
+weaker hypotheses than literal APPT, and the final theorem discharges
 those hypotheses from literal APPT.
 
 **Outside scope.** The other $m=4$ sectors, all $m\geq5$, a classification
@@ -113,5 +123,5 @@ claimed as formalized.
 Worldwide novelty and absence of an independent post-source settlement are
 not kernel facts. The earlier Oracle request failed authentication and gave
 no Pro result. Source provenance is recorded in the existing library notes;
-the mathematical theorem must use the literal density and APPT predicates,
-not source prose or assumed four-dimensional Hildebrand sufficiency.
+the mathematical theorem uses the literal density and APPT predicates and
+does not assume a sufficient four-dimensional Hildebrand characterization.
