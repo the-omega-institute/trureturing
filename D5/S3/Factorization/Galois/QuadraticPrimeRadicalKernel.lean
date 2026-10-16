@@ -13,8 +13,8 @@
    and the original GPC5 application. -/
 
 import D5.S3.Factorization.Galois.QuadraticCompositeRank
-import D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
 import Mathlib.Algebra.BigOperators.Associated
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Data.Complex.Basic
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
