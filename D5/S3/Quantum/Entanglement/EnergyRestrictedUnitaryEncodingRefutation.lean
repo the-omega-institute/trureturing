@@ -7,7 +7,7 @@
    digest: Four unitary encodings beat every unassisted strategy below half-unit energy. -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import D5.S3.Quantum.Reduction.IsometricCompression
+import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -16,8 +16,8 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
 
-open Matrix
-open scoped BigOperators ComplexOrder MatrixOrder Kronecker
+open _root_.Matrix
+open scoped BigOperators ComplexOrder MatrixOrder Kronecker InnerProductSpace
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 open D5.S3.Quantum.Reduction.IsometricCompression (compress)
 
@@ -125,10 +125,9 @@ private theorem two_level_involution (s : ℝ) (c : ℂ) (hs : s ^ 2 + Complex.n
     fin_cases i <;> fin_cases j <;> simp [Matrix.conjTranspose_apply]
   constructor
   · ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_two]
-    all_goals apply Complex.ext <;>
-      simp [Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at hs ⊢ <;> nlinarith [hs]
+    fin_cases i <;> fin_cases j <;> apply Complex.ext <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_two, Complex.mul_re, Complex.mul_im,
+        Complex.normSq_apply] at hs ⊢ <;> nlinarith [hs]
   · simp [Matrix.trace, Fin.sum_univ_two]
 
 private theorem two_level_bound (N : Matrix (Fin 2) (Fin 2) ℂ)
@@ -145,5 +144,191 @@ private theorem two_level_bound (N : Matrix (Fin 2) (Fin 2) ℂ)
     linear_combination hs * (N 0 0).re
   rw [heq]
   nlinarith
+
+private def rotation : unitaryGroup (Fin 2) ℂ :=
+  ⟨!![(4 / 5 : ℂ), -3 / 5; 3 / 5, 4 / 5], by
+    rw [mem_unitaryGroup_iff]
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [Matrix.mul_apply, Fin.sum_univ_two, Matrix.star_eq_conjTranspose,
+        Matrix.conjTranspose_apply, map_ofNat]⟩
+
+private def phase : unitaryGroup (Fin 2) ℂ :=
+  ⟨D5.S3.Quantum.FiniteDimensional.qubitZ, by
+    rw [mem_unitaryGroup_iff, D5.S3.Quantum.FiniteDimensional.qubit_weyl_star.2.2.1,
+      ← pow_two]
+    exact D5.S3.Quantum.FiniteDimensional.qubit_weyl_star.2.2.2.2⟩
+
+private def protocolU (x : Fin 2 × Fin 2) : unitaryGroup (Fin 2) ℂ :=
+  phase ^ x.1.val * rotation * phase ^ x.2.val
+
+private def shared (p : Fin 2 × Fin 2) : ℂ :=
+  (![![(4 / 5 : ℂ), 0], ![0, 3 / 5]] : Fin 2 → Fin 2 → ℂ) p.1 p.2
+
+private def measurementVector (x p : Fin 2 × Fin 2) : ℂ :=
+  (![![(1 / 2 : ℂ), -(-1) ^ x.2.val / 2],
+    ![(-1) ^ x.1.val / 2, (-1) ^ (x.1.val + x.2.val) / 2]] : Fin 2 → Fin 2 → ℂ) p.1 p.2
+
+private def protocolM (_y : Unit) (b : Fin 2 × Fin 2) :
+    Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+  vecMulVec (measurementVector b) (star (measurementVector b))
+
+private def coefficients (b x : Fin 2 × Fin 2) (_y : Unit) : ℝ :=
+  if b = x then 1 / 4 else 0
+
+private theorem protocol_encoded (x : Fin 2 × Fin 2) :
+    encoded shared protocolU x = fun p : Fin 2 × Fin 2 =>
+      (![![(16 / 25 : ℂ), -9 / 25 * (-1) ^ x.2.val],
+        ![12 / 25 * (-1) ^ x.1.val, 12 / 25 * (-1) ^ (x.1.val + x.2.val)]] :
+          Fin 2 → Fin 2 → ℂ) p.1 p.2 := by
+  ext p
+  rcases x with ⟨u, v⟩
+  rcases p with ⟨i, j⟩
+  fin_cases u <;> fin_cases v <;> fin_cases i <;> fin_cases j <;>
+    norm_num [encoded, protocolU, phase, rotation, shared,
+      D5.S3.Quantum.FiniteDimensional.qubitZ, Matrix.mulVec, dotProduct,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.kroneckerMap_apply,
+      Matrix.mul_apply]
+
+private theorem protocol_valid : UnitaryStrategy shared protocolU protocolM := by
+  constructor
+  · norm_num [shared, Fintype.sum_prod_type, Fin.sum_univ_two, Complex.normSq_apply]
+  · intro y
+    constructor
+    · intro b
+      exact posSemidef_vecMulVec_self_star (measurementVector b)
+    · ext p q
+      rcases p with ⟨i, j⟩
+      rcases q with ⟨k, l⟩
+      fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+        norm_num [protocolM, measurementVector, Matrix.sum_apply, Fintype.sum_prod_type,
+          Fin.sum_univ_two, Matrix.vecMulVec_apply, Matrix.one_apply, Prod.mk.injEq]
+
+private theorem protocol_vacuum (x : Fin 2 × Fin 2) :
+    unitaryVacuum shared protocolU x = 337 / 625 := by
+  rw [unitaryVacuum]
+  simp only [protocol_encoded]
+  rcases x with ⟨u, v⟩
+  fin_cases u <;> fin_cases v <;>
+    norm_num [Fin.sum_univ_two, Complex.sq_norm, Complex.normSq_apply]
+
+private theorem protocol_value :
+    taskValue coefficients (unitaryProb shared protocolU protocolM) = 2401 / 2500 := by
+  have hp (x : Fin 2 × Fin 2) : unitaryProb shared protocolU protocolM x x () = 2401 / 2500 := by
+    rw [unitaryProb, protocol_encoded]
+    rcases x with ⟨u, v⟩
+    fin_cases u <;> fin_cases v <;>
+      norm_num [protocolM, measurementVector, Matrix.mulVec, dotProduct,
+        Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.vecMulVec_apply,
+        map_ofNat]
+  simp [taskValue, coefficients, hp]
+
+private theorem residual_norm {d : ℕ} [NeZero d]
+    (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
+    ‖v - v 0 • (PiLp.single 2 0 1 : EuclideanSpace ℂ (Fin d))‖ ^ 2 =
+      1 - Complex.normSq (v 0) := by
+  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
+  have hg : ‖g‖ = 1 := by simp [g]
+  have hgv : ⟪g, v⟫_ℂ = v 0 := by
+    simpa [g] using EuclideanSpace.inner_single_left 0 (1 : ℂ) v
+  have hvg : ⟪v, g⟫_ℂ = star (v 0) := by rw [← inner_conj_symm, hgv]; rfl
+  change ‖v - v 0 • g‖ ^ 2 = _
+  rw [norm_sub_sq (𝕜 := ℂ), hv, norm_smul, hg, inner_smul_right, hvg]
+  change 1 ^ 2 - 2 * (v 0 * star (v 0)).re + (‖v 0‖ * 1) ^ 2 = 1 - Complex.normSq (v 0)
+  rw [Complex.star_def, Complex.mul_conj, Complex.ofReal_re, one_pow, mul_one,
+    ← Complex.normSq_eq_norm_sq]
+  ring
+
+private theorem vacuum_frame {d : ℕ} [NeZero d] (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1)
+    (s : ℝ) (hs : 0 < s) (he : s ^ 2 = 1 - Complex.normSq (v 0)) :
+    ∃ D : Matrix (Fin d) (Fin 2) ℂ, Dᴴ * D = 1 ∧
+      D *ᵥ ![v 0, (s : ℂ)] = v ∧ D *ᵥ ![1, 0] = Pi.single 0 1 := by
+  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
+  let w : EuclideanSpace ℂ (Fin d) := (s : ℂ)⁻¹ • (v - v 0 • g)
+  have hg : ‖g‖ = 1 := by simp [g]
+  have hgv : ⟪g, v⟫_ℂ = v 0 := by simpa [g] using EuclideanSpace.inner_single_left 0 (1 : ℂ) v
+  have hr := residual_norm v hv
+  change ‖v - v 0 • g‖ ^ 2 = 1 - Complex.normSq (v 0) at hr
+  rw [← he] at hr
+  have hw : ‖w‖ = 1 := by
+    have hrn : ‖v - v 0 • g‖ = s := by nlinarith [norm_nonneg (v - v 0 • g)]
+    simp [w, norm_smul, hrn, abs_of_pos hs, ne_of_gt hs]
+  have hgw : ⟪g, w⟫_ℂ = 0 := by
+    simp [w, hgv, inner_self_eq_norm_sq_to_K, hg]
+  have hwg : ⟪w, g⟫_ℂ = 0 := by rw [← inner_conj_symm, hgw]; simp
+  let D : Matrix (Fin d) (Fin 2) ℂ := fun i j => (![g i, w i] : Fin 2 → ℂ) j
+  refine ⟨D, ?_, ?_, ?_⟩
+  · have hi (a b : EuclideanSpace ℂ (Fin d)) :
+        star a.ofLp ⬝ᵥ b.ofLp = ⟪a, b⟫_ℂ := by
+      rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm]
+    ext i j
+    fin_cases i <;> fin_cases j
+    · change star g.ofLp ⬝ᵥ g.ofLp = 1
+      rw [hi]; simp [inner_self_eq_norm_sq_to_K, hg]
+    · change star g.ofLp ⬝ᵥ w.ofLp = 0
+      rw [hi, hgw]
+    · change star w.ofLp ⬝ᵥ g.ofLp = 0
+      rw [hi, hwg]
+    · change star w.ofLp ⬝ᵥ w.ofLp = 1
+      rw [hi]; simp [inner_self_eq_norm_sq_to_K, hw]
+  · ext i
+    simp [D, Matrix.mulVec, dotProduct, Fin.sum_univ_two, w, PiLp.smul_apply]
+    field_simp
+    ring
+  · ext i
+    simp [D, Matrix.mulVec, dotProduct, Fin.sum_univ_two, g, Pi.single_apply]
+
+private theorem pure_bound {d : ℕ} [NeZero d] (E : Matrix (Fin d) (Fin d) ℂ)
+    (hE : E.PosSemidef) (hEc : (1 - E).PosSemidef)
+    (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
+    (star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp)).re - (E 0 0).re ≤
+      Real.sqrt (1 - Complex.normSq (v 0)) := by
+  let s := Real.sqrt (1 - Complex.normSq (v 0))
+  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
+  have he0 : 0 ≤ 1 - Complex.normSq (v 0) := by
+    rw [← residual_norm v hv]
+    positivity
+  have hs0 : 0 ≤ s := Real.sqrt_nonneg _
+  have hs2 : s ^ 2 = 1 - Complex.normSq (v 0) := Real.sq_sqrt he0
+  change (star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp)).re - (E 0 0).re ≤ s
+  by_cases hs : s = 0
+  · have hr0 : v - v 0 • g = 0 := by
+      apply norm_eq_zero.mp
+      have hr := residual_norm v hv
+      change ‖v - v 0 • g‖ ^ 2 = 1 - Complex.normSq (v 0) at hr
+      nlinarith [norm_nonneg (v - v 0 • g)]
+    have hcn : Complex.normSq (v 0) = 1 := by nlinarith [hs2]
+    have hvec : v.ofLp = v 0 • Pi.single 0 1 := by
+      have hf := congrArg WithLp.ofLp (sub_eq_zero.mp hr0)
+      simpa [g] using hf
+    have hcalc : star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp) = E 0 0 := by
+      rw [hvec]
+      simp only [star_smul, Matrix.mulVec_smul, smul_dotProduct, dotProduct_smul]
+      simp only [Pi.star_single, star_one, Matrix.mulVec_single_one,
+        single_dotProduct, one_mul, smul_eq_mul]
+      change v 0 * (star (v 0) * E 0 0) = E 0 0
+      rw [← mul_assoc, mul_comm (v 0), Complex.star_def,
+        ← Complex.normSq_eq_conj_mul_self, hcn, Complex.ofReal_one, one_mul]
+    rw [hcalc, sub_self, hs]
+  · obtain ⟨D, hD, hvD, hgD⟩ := vacuum_frame v hv s (lt_of_le_of_ne hs0 (Ne.symm hs)) hs2
+    let N := compress D E
+    have hN : N.PosSemidef := hE.conjTranspose_mul_mul_same D
+    have hNc : (1 - N).PosSemidef := by
+      have hp := hEc.conjTranspose_mul_mul_same D
+      simpa only [Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_one, hD, N, compress] using hp
+    have pairing (z : Fin 2 → ℂ) :
+        star z ⬝ᵥ (N *ᵥ z) = star (D *ᵥ z) ⬝ᵥ (E *ᵥ (D *ᵥ z)) := by
+      dsimp [N, compress]
+      rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, dotProduct_mulVec,
+        vecMul_conjTranspose, star_star]
+    have hn00 : N 0 0 = E 0 0 := by
+      have hp := pairing ![1, 0]
+      rw [hgD] at hp
+      simpa [dotProduct, Fin.sum_univ_two, Matrix.mulVec_single_one,
+        Matrix.mulVec, Pi.single_apply] using hp
+    have hread := pairing ![v 0, (s : ℂ)]
+    rw [hvD] at hread
+    rw [← hread, ← hn00]
+    exact two_level_bound N hN hNc s (v 0) hs0 (by linarith [hs2])
 
 end D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
