@@ -192,8 +192,12 @@ private theorem variant_injective (t : Source) :
     change subtree p (variant t A.val) = _ at ha
     change subtree p (variant t B.val) = _ at hb
     rw [h, hb] at ha
-    by_cases hA : p ∈ A.val <;> by_cases hB : p ∈ B.val <;>
-      simp [hA, hB, defectB, defectD] at ha ⊢ <;> cases ha
+    have hne : defectB ≠ defectD := by decide
+    by_cases hA : p ∈ A.val <;> by_cases hB : p ∈ B.val
+    · exact iff_of_true hA hB
+    · exact False.elim (hne (by simpa [hA,hB] using Option.some.inj ha))
+    · exact False.elim (hne (by simpa [hA,hB] using (Option.some.inj ha).symm))
+    · exact iff_of_false hA hB
   · exact iff_of_false (fun h => hp (A.property h)) (fun h => hp (B.property h))
 
 private theorem defect_not_image : ¬ ∃ x : Source, substitution x = defectD := by
@@ -664,6 +668,32 @@ private theorem direction_span_eq (t : Source) : directionSpan t =
   rw [Set.range_smul, Submodule.span_smul_eq_of_isUnit]
   exact isUnit_iff_ne_zero.mpr (by positivity)
 
+private theorem affine_direction (t : Source) :
+    (affineSpan ℝ (convexHull ℝ (areaVertices t :
+      Set (EuclideanSpace ℝ (Fin (t.length-1)))))).direction = directionSpan t := by
+  classical
+  have h0 : areaVector t.length t ∈ areaVertices t := Finset.mem_image.mpr
+    ⟨∅, by simp, by simpa only [Finset.sum_empty,add_zero] using
+      affine_formula t ∅ (Finset.empty_subset _) t.length⟩
+  rw [affineSpan_convexHull,direction_affineSpan,
+    vectorSpan_eq_span_vsub_set_right ℝ h0,direction_span_eq]
+  apply le_antisymm
+  · apply Submodule.span_le.mpr
+    rintro x ⟨y,hy,rfl⟩
+    obtain ⟨A,hA,rfl⟩ := Finset.mem_image.mp hy
+    rw [affine_formula t A (Finset.mem_powerset.mp hA) _]
+    simp only [vsub_eq_sub,add_sub_cancel_left]
+    apply Submodule.sum_mem
+    intro p hp
+    exact Submodule.subset_span ⟨⟨p,Finset.mem_powerset.mp hA hp⟩,rfl⟩
+  · apply Submodule.span_le.mpr
+    rintro x ⟨p,rfl⟩
+    apply Submodule.subset_span
+    refine ⟨areaVector t.length (variant t {p.val}), Finset.mem_image.mpr
+      ⟨{p.val}, Finset.mem_powerset.mpr (by simp),rfl⟩, ?_⟩
+    rw [affine_formula t {p.val} (by simp) _]
+    simp
+
 /-- The convex cube translated to its own Euclidean direction space. -/
 def intrinsicCube (t : Source) : Set (directionSpan t) :=
   {x | areaVector t.length t + (x : EuclideanSpace ℝ (Fin (t.length-1))) ∈
@@ -790,6 +820,8 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
       {areaVector (T n).length (T n)} +
         parallelepiped (fun p : positions (T n) =>
           gapVector (T n).length (offset (T n) p.val)) ∧
+    (affineSpan ℝ (convexHull ℝ (areaVertices (T n) :
+      Set (EuclideanSpace ℝ (Fin ((T n).length-1)))))).direction = directionSpan (T n) ∧
     Orthonormal ℝ (unitDirection (T n)) ∧
     directionSpan (T n) = Submodule.span ℝ (Set.range (fun p : positions (T n) =>
       gapVector (T n).length (offset (T n) p.val))) ∧
@@ -801,6 +833,7 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
   have ht := (AncestorAreaInstability.result.1 n hn).2.1
   refine ⟨hc,hi,?_,mem_positions (T n),?_,
     (fun p hp q hq hne => separated_offsets (T n) p q hp hq hne),cube_hull (T n),
+    affine_direction (T n),
     unit_orthonormal (T n),direction_span_eq (T n),?_,?_,?_⟩
   · intro A hA
     obtain ⟨hw,hl,hd⟩ := hf A hA

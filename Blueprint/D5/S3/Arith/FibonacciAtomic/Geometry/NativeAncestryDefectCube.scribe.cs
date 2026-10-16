@@ -129,6 +129,8 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
         Formula hull = EqOf(Call("convexHull", Seq(Mathbb, Grp(V("R"))), Call("areaVertices", t)),
             Seq(Call("singleton", Call("areaVector", m, t)), Plus, Call("parallelepiped", directions)));
         Formula orthonormal = Call("Orthonormal", Seq(Mathbb, Grp(V("R"))), Call("unitDirection", t));
+        Formula affineDirection = EqOf(Call("direction", Call("affineSpan", Seq(Mathbb, Grp(V("R"))),
+            Call("convexHull", Seq(Mathbb, Grp(V("R"))), Call("areaVertices", t)))), Call("directionSpan", t));
         Formula span = EqOf(Call("directionSpan", t),
             Call("span", Seq(Mathbb, Grp(V("R"))), Call("range", directions)));
         Formula dimension = EqOf(Call("finrank", Seq(Mathbb, Grp(V("R"))), Call("directionSpan", t)),
@@ -137,8 +139,8 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
             Call("sqrt", D(2))));
         Formula volume = EqOf(Call("volume", Call("intrinsicCube", t)), Call("ofReal",
             new Formula.Superscript(D(2), Frac(Call("fib", Seq(n, Minus, D(2))), D(2)))));
-        Formula geometry = And(literal, And(valid, And(separated, And(hull, And(orthonormal,
-            And(span, And(dimension, And(edges, volume))))))));
+        Formula geometry = And(literal, And(valid, And(separated, And(hull, And(affineDirection,
+            And(orthonormal, And(span, And(dimension, And(edges, volume)))))))));
         return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n),
             And(count, And(injective, And(choices, geometry))))));
     }
