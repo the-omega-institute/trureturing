@@ -104,6 +104,7 @@ private theorem balance_weights (r : ℝ) :
   fin_cases i <;> fin_cases j <;> norm_num [rates.eq_1, weights.eq_1] <;> ring
 
 set_option maxHeartbeats 1000000 in
+-- The four-state eigenvector identities expand and normalize rational matrix entries.
 private theorem eigen_identities (r : ℝ) (hr : 0 < r) :
     Matrix.vecMul (fun _ : Fin 4 => (1 : ℝ)) (generator (rates r)) = 0 ∧
     Matrix.vecMul (f r) (generator (rates r)) = (-1 : ℝ) • f r ∧
@@ -116,6 +117,7 @@ private theorem eigen_identities (r : ℝ) (hr : 0 < r) :
     field_simp <;> ring
 
 set_option maxHeartbeats 1000000 in
+-- Both basis-vector actions require rational normalization after clearing denominators.
 private theorem block_action (r : ℝ) (hr : 0 < r) :
     Matrix.mulVec (generator (rates r)) k1 = (block r 0 0) • k1 + (block r 1 0) • k2 ∧
     Matrix.mulVec (generator (rates r)) k2 = (block r 0 1) • k1 + (block r 1 1) • k2 := by
