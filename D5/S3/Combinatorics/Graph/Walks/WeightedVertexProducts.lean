@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/Walks/WeightedVertexProducts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Acyclic]
    utility: none
    digest: On connected graphs over commutative groups with surjective squaring, vertex products are solvable exactly when every even closed walk balances. -/
 
