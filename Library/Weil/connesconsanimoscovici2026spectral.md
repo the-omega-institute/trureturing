@@ -5469,3 +5469,392 @@ SAME-short, unitary/source/lift/comparison and sound complete-far/cache
 premises remain conditions. The actual signed far functional, full-border
 sign, joint good-block metric, retained/cofinal positivity, Robin tail,
 RH and Lean verification remain unresolved.
+
+### Price a coherent full-inverse tail direction
+
+The isolated negative-channel envelope is excluded only with its
+fixed triangle pricing of the positive channel. Keep the SAME legal
+coefficient, fee, source-energy cap and exact dyadic direction from
+that packet. Let $\mathcal H_{\rm ctr}(e)$ denote the center scalar
+before the additional PSD good-block metric. All rows retain the
+original real, unphased convention. Write $y=\alpha\rho+\beta_J$ and
+$f=\kappa u_F^*W_FR_FV$, without changing the original source row
+$\rho$. With the same true old-core decomposition, define
+
+$$
+Q_R=TRT^*-\frac{e_0e_0^*}{\delta},\qquad
+v_R=Q_Ry^*,\qquad \vartheta=fv_R.
+$$
+
+This direction is determined by finite data before evaluating the
+actual signed far response. $Q_R$ is a reference, not the true inverse.
+The one signed functional $\vartheta$ combines the positive and negative
+cross terms before taking absolute values. It differs from the
+previous isolated response $\xi=f_0$.
+
+Reuse the saved finite reference energy $r=(yT)R(yT)^*$, the
+relative comparison $R/(1+\eta)\preceq S^{-1}\preceq R/(1-\eta)$
+and the complete-far trace bound $fQ_+f^*\le c_+^2$. Set
+
+$$
+A=\operatorname{up}((1+\eta)c_+^2),\quad
+\epsilon_R=\frac{\eta}{1-\eta},\quad
+\Delta=\operatorname{up}\left[
+\epsilon_R(\sqrt{r_{\rm up}}+\sqrt A)^2\right].
+$$
+
+The lower comparison gives $R\preceq(1+\eta)S^{-1}$, so
+$fTRT^*f^*\le A$. The upper comparison gives
+$S^{-1}-R\preceq\epsilon_R R$. Consequently the reference error
+on the SAME combined row $y+f$ is at most $\Delta$.
+
+Expanding through $Q_R$ and discarding only the nonpositive tail
+self-term $-f_0^2/\delta$ yields
+
+$$
+\mathcal H_{\rm ctr}(e)
+\le\frac{\alpha^2}{t_0}+D+r+A+\Delta
+-\frac{\lambda^2}{\delta}+2\vartheta,
+\qquad \lambda=y_0.
+$$
+
+Freeze the exact outward exported upper
+
+$$
+C_{\rm lin}=\operatorname{up}_{640}\left[
+\frac{\alpha^2}{t_0}+D+r_{\rm up}+A+\Delta
+-\frac{\lvert\lambda\rvert_{\rm lo}^2}{\delta_{\rm up}}
+\right].
+$$
+
+Then $\mathcal H_{\rm ctr}(e)\le C_{\rm lin}+2\vartheta$.
+Using an upper magnitude for the subtracted finite response, or a
+lower denominator, would not justify this upper bound.
+
+Before supplying an actual signed tail interval, the SAME full paid
+far Gram $G$ gives
+
+$$
+\lvert\vartheta\rvert\le C_\vartheta:=\operatorname{up}
+\left[\kappa\sqrt{\overline E\,
+\operatorname{up}(v_R^*Gv_R)}\right].
+$$
+
+Only one new reference matrix-vector action and one full far-Gram
+quadratic are needed; the inverse, trace, finite reference energy and
+norm cap are reused. Enclosing the one exact $v_R$ by interval
+coefficients preserves this capacity statement when the complete
+quadratic interval is propagated. Selecting an unrelated center would
+instead require paying a separate direction-error term.
+
+A nonnegative directed floor
+
+$$
+\operatorname{down}(C_{\rm lin}-2C_\vartheta)\ge0
+$$
+
+excludes only this frozen linear upper-envelope recipe. A negative
+floor means only that the recipe is not excluded. Its supplier would
+have to enclose the actual SAME-source $\vartheta$ in an interval
+$I_\vartheta$ with
+
+$$
+\operatorname{up}(C_{\rm lin}+2I_\vartheta)<0.
+$$
+
+Separate favorable endpoints need not be jointly attained. The
+discarded negative self-square can also make the linear recipe fail
+when a more precise nonlinear estimate could pass. Even a negative
+actual center certificate still needs the additional PSD good-block
+metric payment before the sufficient retained criterion applies.
+
+The sole fixed1024-working/640-export-bit application freezes
+$C_{\rm lin}\simeq25.528336100647874028$ and the exact sufficient
+threshold $-C_{\rm lin}/2\simeq-12.764168050323937014$. The reference
+tail-energy upper is $A\simeq3.899025719523745176$ and the combined
+reference-error payment is $\Delta\simeq2.741896657461350714\cdot10^{-25}$.
+The direct interval for the full Gram quadratic is approximately
+$[-4.498124461691914\cdot10^{24},4.498124461691913\cdot10^{24}]$.
+Its positive endpoint gives only
+$C_\vartheta\simeq6.621282736104631330\cdot10^{12}$; the resulting
+negative package floor supplies no actual sign or favorable realization.
+It does not establish a large actual norm. The retained coefficient
+intervals enclose the one analytic direction; their endpoints must not
+be selected independently to define another source.
+
+### Bound the same direction using the cached positive trace
+
+The existing complete-far PSD trace certificate gives a second
+bound without another vector, Gram or trace contraction. Let
+$\mathsf B=R_FV$ and keep the SAME paid PSD majorant
+$\mathsf B^*W_F\mathsf B\preceq G$, including all allowance. Put
+
+$$
+g=yT,\quad H=T^*GT,\quad
+M_R=R^{1/2}HR^{1/2}\succeq0,\quad x=R^{1/2}g^*.
+$$
+
+The classical PSD operator/trace inequality, trace cyclicity and
+$R\preceq(1+\eta)S^{-1}$ give
+
+$$
+\begin{aligned}
+\|G^{1/2}TRg^*\|^2
+&=x^*M_Rx\le\|x\|^2\operatorname{tr}M_R\\
+&=r\operatorname{tr}(TRT^*G)\\
+&\le r(1+\eta)\operatorname{tr}(Q_+G)
+\le r(1+\eta)\mathcal T.
+\end{aligned}
+$$
+
+No commutation of the PSD factors is assumed. Since
+$v_R=TRg^*-(\lambda/\delta)e_0$, the SAME majorant seminorm obeys
+
+$$
+\boxed{
+\|\mathsf Bv_R\|_{W_F}\le\sqrt{v_R^*Gv_R}
+\le N_{\rm split}:=\operatorname{up}\left[
+\sqrt{r_{\rm up}(1+\eta_{\rm up})\mathcal T_{\rm up}}
++\frac{|\lambda|_{\rm up}}{\delta_{\rm lo}}
+ \sqrt{G_{00,\rm up}}\right].}
+$$
+
+Here $\mathcal T$ is the already-normalized positive-channel trace
+bound from the fixed negative-channel packet. Dividing it by another
+energy or cap factor would not preserve the certificate. For this norm
+upper, the response magnitude uses its UPPER endpoint and the positive
+pivot magnitude uses its LOWER endpoint, opposite to the subtracted
+finite credit in $C_{\rm lin}$.
+
+The direct quadratic upper supplies
+$N_{\rm direct}=\operatorname{up}\sqrt{(v_R^*Gv_R)_{\rm up}}$.
+Freeze the minimum of these two exact outward bounds on the SAME
+seminorm and its resulting radius:
+
+$$
+N_{\rm cap}=\min(N_{\rm split},N_{\rm direct}),\qquad
+C_{\vartheta,\rm new}
+=\operatorname{up}_{640}(\kappa\sqrt{\overline E}N_{\rm cap}).
+$$
+
+This is a uniform operator-norm derivation. Dividing a bound on a
+particular source's $|\vartheta|$ by its source-energy cap would not
+prove a direction-norm bound. Taking the minimum does not assert
+that separate extremizers are jointly attained. $N_{\rm cap}$ controls
+the one analytic direction, not all vectors in its coefficient box.
+Any future source-specific functional must preserve that relation
+through its factored or short-lift interface and pay coefficient and
+remainder errors; replacing the direction by a free midpoint is invalid.
+
+One scalar-only1024-working/640-export-bit consumption of the saved
+packets takes0.01185seconds and gives:
+
+| Quantity | Approximate directed value |
+|---|---:|
+| Positive-direction norm upper |15.361788283107843110|
+| Negative-direction norm upper |13.736525306317097479|
+| Selected norm upper $N_{\rm cap}$ |29.098313589424940590|
+| Response radius $C_{\vartheta,\rm new}$ |90.843575457008727073|
+| Unchanged $C_{\rm lin}$ |25.528336100647874028|
+| Package floor lower |−156.158814813369580117|
+| Uniform center upper |207.215487014665328174|
+| Unchanged strict signed threshold |−12.764168050323937014|
+
+The new radius is smaller than the direct entrywise interval bound.
+The negative package floor still supplies no actual signed functional,
+favorable realization, negative center or full-border sign. Even an
+actual response below the frozen threshold would only open the
+additional PSD good-block metric test. In particular zero remains
+allowed by this radius alone. No expensive tail supplier is run on
+capacity nonexclusion alone; a complete source-specific factored or
+short-lift evaluation and its error contract remain missing.
+
+The coherent packet SHA256 is
+`b082eaad102c5f7ca38d1c49c19970952288ce630198a4ea76b48b96d8d23b65`;
+the scalar-only packet SHA256 is
+`6e4232d6079a4279511a67c13c6501d51a3b4fdaf410ccfee957adce29e1d7bc`.
+Both sources and directed data are retained in the
+[experiment package](https://github.com/the-omega-institute/trureturing-experiments/tree/053d16a54d6eb05c634867b271922e7d994ca9d5/docs/reports/weil-c27).
+The scalar adapter parses only the two accepted packets' scalars and
+metadata and guards inherited data/producer/helper bytes at entry and
+exit. It does not extract matrices or vectors, repeat a scientific
+contraction or replay an old producer or passed suite. There is no
+inverse/solve, source/far supplier, determinant or parameter/source/
+precision scan. The fixed direction, fee, legal coefficient, source
+energy cap, exact center envelope and signed threshold are unchanged.
+
+This is a source-specific application of the existing block inverse,
+relative Loewner, PSD operator/trace and Cauchy inequalities, not new
+generic mathematics. All inherited actual-form/domain, inverse/legal
+elimination/SAME-short, source/unitary/lift/comparison and complete
+paid-far/cache premises remain conditions. Actual signed tail response,
+full-border sign, good-block metric, retained/cofinal positivity,
+Robin tail, RH and Lean verification remain unresolved.
+
+### Use the full short residual jet for one signed functional
+
+The forward geometric-jet bounds in the existing infinite-coupling
+section also supply a function-error interface for the SAME coherent
+direction. A Gram-error estimate alone would not supply one: replacing
+an operator by its negative preserves its Gram and changes its action.
+Here the original construction separately bounds the forward geometric
+error and the error in the exact midpoint features.
+
+Let $C_{\rm phys}$ be the original coupling from modes0 through2048 to
+$m>32768$, and let $\mathcal D=\binom I{-Y}$ be the SAME exact physical
+residual map, with $Y=F_E^{-1}B_E$ on $E=\{1281,\ldots,2048\}$.
+Keep the exact implicit retained lift $V$ and direction $v_R$. Thus
+$\mathsf B=R_FV=C_{\rm phys}\mathcal D V$. The complete56-term jet is
+$\mathcal L P$, with exact synthesis prefactor $2/\pi$, actual far
+symbol $s_m$ and the original unphased parity factors. $P_0$ is the
+original fixed midpoint feature matrix, including its midpoint for
+$1/\sqrt2$. The cached lift features enclose $P_0\mathcal D V$.
+
+Write $w_F>0$ for the original constant far weight and
+$\alpha_J=4/(\pi^2M)$. Here $r_2$ is the original unweighted squared Frobenius bound;
+$w_Fr_2$ bounds its weighted square. The previously established
+component bounds give
+
+$$
+\|C_{\rm phys}-\mathcal LP\|_{W_F}^2\le w_Fr_2,
+\qquad
+\|\mathcal L(P-P_0)\|_{W_F}^2
+\le w_F\alpha_J H_*e_P^2.
+$$
+
+The existing allowance construction has nonnegative components with
+$\eta_{\rm geom}\ge r_2$ and
+$\eta_{\rm round}\ge\alpha_JH_*e_P^2$. It retains the physical
+residual amplification $K_{\rm phys}\ge\|\mathcal D\|^2$, so the
+saved exact complete allowance satisfies
+
+$$
+\epsilon_{\rm complete}\ge
+w_F(\eta_{\rm geom}+\eta_{\rm core}+\eta_{\rm round})K_{\rm phys}.
+$$
+
+The triangle inequality and $(a+b)^2\le2(a^2+b^2)$ therefore imply
+
+$$
+\boxed{
+\|\mathsf Bv_R-j_h\|_{W_F}
+\le\sqrt{2\epsilon_{\rm complete}}\,\|Vv_R\|,
+\qquad h=P_0\mathcal D Vv_R.}
+$$
+
+This uses the forward component bounds, not Gram closeness alone.
+The genuine full moment Gram controls $\|\mathcal L\|$; the sparse
+masked core is not assumed PSD. No higher moment production or use
+of that sparse core as a whole-jet norm is needed.
+
+The exact midpoint feature order is $A_0,\ldots,A_{55},B_0,\ldots,B_{55}$,
+and its actual synthesis is
+
+$$
+j_h(m)=\frac{2(-1)^m}{\pi m}
+\sum_{k=0}^{55}(M/m)^{2k}
+\bigl[(M/m)h_{B_k}-s_mh_{A_k}\bigr],\qquad M=32768.
+$$
+
+One new cached112-by18 feature action encloses $h$. The existing
+lift Gram supplies a cheap diagonal-only norm bound
+
+$$
+L_V=\operatorname{up}\sum_{j=1}^{18}
+|(v_R)_j|_{\rm up}\sqrt{(V^*V)_{jj,\rm up}},\qquad
+\epsilon_b=\operatorname{up}_{640}
+ \bigl(\sqrt{2\epsilon_{\rm complete}}L_V\bigr).
+$$
+
+No physical-vector reconstruction or new Gram contraction is required.
+The target's matrix entries use640-bit units, while its original
+allowance metadata retains512-bit units; the already-checked lift
+metadata records that distinction. The source coefficient intervals
+are propagated through the new feature action. A separately selected
+midpoint is not identified with the exact common direction.
+
+For the original principal proxy from the signed Hankel-tail estimate,
+retain
+
+$$
+u_m^{(0)}=\frac{(-1)^m}{2}
+\left[-\sum_{n\in E}\frac{(-1)^nq_n}{m+n}
++\sum_{n\in J}\frac{(-1)^nw_n}{m+n}\right],
+\quad J=\{2049,\ldots,32768\}.
+$$
+
+Its independently bounded norm is $\|u^{(0)}\|_{W_F}\le P_{\rm up}$.
+The SAME smooth and mixed-$H$ residual bounds give
+$\|u_F-u^{(0)}\|_{W_F}\le\epsilon_u$. The original $q$ remainder
+is retained; it is not relabeled as a remainder for $p$.
+For $\mu=\kappa\langle u^{(0)},j_h\rangle_{W_F}$, telescope as
+
+$$
+\vartheta-\mu=\kappa\left[
+\langle u_F-u^{(0)},\mathsf Bv_R\rangle_{W_F}
++\langle u^{(0)},\mathsf Bv_R-j_h\rangle_{W_F}\right].
+$$
+
+The existing direction norm cap consequently gives the scalar payment
+
+$$
+\boxed{
+|\vartheta-\mu|\le E_\mu:=\operatorname{up}_{640}
+\bigl[\kappa(\epsilon_uN_{\rm cap}+P_{\rm up}\epsilon_b)\bigr].}
+$$
+
+This uses the independent principal-proxy norm cap for the same fixed
+source. A future SAME-source interval $I_\mu$ would have to satisfy the
+sufficient directed test
+
+$$
+\operatorname{up}\bigl(C_{\rm lin}+2(I_\mu+E_\mu)\bigr)<0.
+$$
+
+The corresponding exact arithmetic threshold is
+$\sup I_\mu<-C_{\rm lin}/2-E_\mu$. Supplying a priced threshold alone supplies
+no actual signed moment or center sign. The additional PSD good-block
+metric remains a separate obligation even after that condition holds.
+
+The sole fixed1024-working/640-export-bit application takes0.28065seconds.
+It reads the saved112-by18 features once and consumes18 diagonal
+lift-norm entries. Its directed scalar results are:
+
+| Quantity | Approximate directed value |
+|---|---:|
+| Diagonal triangle bound $L_V$ |$4.487671887147054866\cdot10^{67}$|
+| Inherited complete allowance |$2.077324851584678042\cdot10^{-135}$|
+| Jet forward error $\epsilon_b$ |2.892599471220086626|
+| Same-source proxy error $\epsilon_u$ |0.478756042962487477|
+| Signed-functional error $E_\mu$ |21.968771391420024702|
+| Unchanged exact direction norm upper |29.098313589424940590|
+| Unchanged $C_{\rm lin}$ |25.528336100647874028|
+| Sufficient proxy threshold $-C_{\rm lin}/2-E_\mu$ |−34.732939441743961716|
+
+All thresholds use the saved exact rationals; the displayed decimals
+are approximate. The112 exported coefficient intervals have maximum
+absolute endpoint approximately1038.04984493700085 and maximum absolute
+width approximately$5.11418\cdot10^{-25}$. These are enclosures of the
+ONE shared direction, not independently selectable coefficients.
+
+The small original operator allowance does not itself establish a small
+vector error: it must be multiplied by the direction's lift-norm bound.
+The resulting error payment is finite, and the missing signed supplier
+now has an explicit numerical obligation. No value or sign of $\mu$ or
+$\vartheta$ is supplied. In particular this threshold does not establish
+a negative center or justify an expensive supplier on nonexclusion alone.
+
+The packet SHA256 is
+`154949d8ab3e1f2875de531aa63a9c5a3c3d7d133640a5ce8b1d23c98d67565a`.
+The [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/d649640d58161392ae8382a4e64662b9165ec944/docs/reports/weil-c27)
+are a source-specific application of the existing geometric-jet,
+triangle and Cauchy bounds. All earlier producers, passed suites,
+reference/Gram/trace/inverse/solve and source/far suppliers are reused.
+The adapter guards its current source and inherited inputs, helpers and
+producers at entry and exit, and writes one exclusive fresh archive.
+There is no source, parameter or precision scan, new generic algorithm
+or Lean theorem. Actual-form/domain, full physical support, common
+source/short/lift, original weight, genuine symbol and component-bound
+conditions remain inherited. Actual signed response, good-block metric,
+full-border sign, retained/cofinal positivity, Robin tail and RH remain
+unresolved.
