@@ -964,9 +964,7 @@ the missing cases. ∎
 
 The outstanding task is an executable, initialized realization of
 this interface, including its own matching, phase writes, authorized
-before-image acquisition and consumer return. The factored-bank and
-control-tether variants do not supply accepted native implementations
-of it. Even an eventual all-row construction leaves separate the
+before-image acquisition and consumer return. Even an eventual all-row construction leaves separate the
 current-owner fine-cut acquisition/codec and the two implications
 between each independently defined natural view and unchanged original
 $Q$, on its actual raw, acquired and terminal domains. The original
