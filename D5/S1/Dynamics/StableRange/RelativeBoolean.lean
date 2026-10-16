@@ -70,7 +70,7 @@ theorem stable_range_lift_eq_preimage
     calc
       (stableLift f hf)^[n] u =
           point (StableRange.core f) (projection (StableRange.core f) ((stableLift f hf)^[n] u)) :=
-        eq_point_of_projection_mem _ (by simpa only [hp] using hy)
+        eq_point_of_projection_mem _ (hp.symm ▸ hy)
       _ = point (StableRange.core f) (projection (StableRange.core f) y) := congrArg _ hp
       _ = y := (eq_point_of_projection_mem y hy).symm
 
