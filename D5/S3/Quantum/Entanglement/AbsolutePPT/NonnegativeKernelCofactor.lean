@@ -26,6 +26,7 @@ exists_row_minor_of_linearIndependent_cols: private bind-only basis/reindexing g
   consumed by circuit_cofactor_complete.
 circuit_cofactor_complete: content (support-rank/minor/proportionality inference);
   consumed by nonnegKernel_iff_mem_hull_cofactorCandidates.
+  admission_basis: escape-witness (circuit_cofactor_complete).
 nonnegKernel_iff_mem_hull_cofactorCandidates: content (actual cone characterization);
   terminal generic consumer, not a named application-check wrapper.
 No support descent or integer cofactor algebra is reimplemented here.
@@ -120,13 +121,14 @@ theorem circuit_cofactor_complete {B : Matrix (Fin m) J ℝ} {v : J → ℝ}
       (∑ j, B r (σ j) * x j) = ∑ j : S, B r j * v j := by
         change (∑ j, B r (e j).val * v (e j).val) = _
         exact e.sum_comp (fun j : S => B r j * v j)
-      _ = ∑ j ∈ S, B r j * v j := Finset.sum_coe_sort S _
+      _ = ∑ j ∈ S, B r j * v j :=
+        Finset.sum_coe_sort S (fun j : J => B r j * v j)
       _ = ∑ j, B r j * v j := by
         apply Finset.sum_subset (Finset.subset_univ S)
         intro j _ hj
         have hz : v j = 0 := by simpa [S, nzSupport] using hj
         rw [hz, mul_zero]
-  have hx : T *ᵥ x = 0 := by
+  have hx : Matrix.mulVec T x = 0 := by
     ext r
     change (∑ j, B r (σ j) * x j) = 0
     exact (hsum r).trans (hv.1.2 r)
@@ -136,15 +138,18 @@ theorem circuit_cofactor_complete {B : Matrix (Fin m) J ℝ} {v : J → ℝ}
       ⟨fun h => Fin.succ_ne_zero j (σ.injective h), hσ j.succ⟩⟩
   have hτ : Function.Injective τ := by
     intro a b h
-    exact Fin.succ_injective k (σ.injective (congrArg Subtype.val h))
+    exact Fin.succ_injective k (σ.injective (by
+      simpa [τ] using congrArg Subtype.val h))
   have hD : LinearIndependent ℝ D.col := by
     exact (circuit_deleted_cols_linearIndependent hv (hσ 0)).comp τ hτ
   have hDrank : D.rank = k := by
     have hDt : LinearIndependent ℝ D.transpose.row := hD
     simpa only [Matrix.rank_transpose, Fintype.card_fin] using hDt.rank_matrix
   have hlo : k ≤ T.rank := by
-    rw [← hDrank]
-    exact Matrix.rank_submatrix_le T id Fin.succ
+    calc
+      k = D.rank := hDrank.symm
+      _ ≤ T.rank := by
+        simpa [D] using (Matrix.rank_submatrix_le T id Fin.succ)
   have hker : LinearMap.ker T.mulVecLin ≠ ⊥ := by
     intro hz
     have hxmem : x ∈ LinearMap.ker T.mulVecLin := hx
@@ -170,7 +175,7 @@ theorem circuit_cofactor_complete {B : Matrix (Fin m) J ℝ} {v : J → ℝ}
     change (-1 : ℝ) ^ (0 : Fin (k + 1)).val *
       (A.submatrix id (0 : Fin (k + 1)).succAbove).det ≠ 0
     simpa only [Fin.val_zero, pow_zero, one_mul, hminor] using hρ
-  have hAx : A *ᵥ x = 0 := by
+  have hAx : Matrix.mulVec A x = 0 := by
     ext r
     change (∑ j, B (ρ r) (σ j) * x j) = 0
     exact (hsum (ρ r)).trans (hv.1.2 (ρ r))
@@ -186,7 +191,10 @@ theorem circuit_cofactor_complete {B : Matrix (Fin m) J ℝ} {v : J → ℝ}
     exact (mul_ne_zero hH.ne' hc0) he.symm
   have hratio (j : Fin (k + 1)) : x j = H / δ * c j := by
     rw [div_mul_eq_mul_div]
-    exact (eq_div_iff hδ).mpr (by simpa only [mul_comm] using hcross j)
+    apply (eq_div_iff hδ).mpr
+    calc
+      x j * δ = δ * x j := mul_comm _ _
+      _ = H * c j := hcross j
   obtain ⟨ε, a, hε, ha, hpro⟩ :
       ∃ ε a : ℝ, (ε = 1 ∨ ε = -1) ∧ 0 < a ∧
         ∀ j, x j = a * (ε * c j) := by

@@ -17,7 +17,8 @@ import Mathlib.Tactic.Linarith
 Source-preparation classification (no current compilation evidence):
 circuit_deleted_cols_linearIndependent: proof_shape: content; extracted unchanged dependence
   contradiction from circuit_support_card_le; consumers: circuit_support_card_le,
-  NonnegativeKernelCofactor.circuit_cofactor_complete.
+  NonnegativeKernelCofactor.circuit_cofactor_complete; admission_basis:
+  escape-witness (circuit_deleted_cols_linearIndependent).
 circuit_support_card_le: proof_shape: bind-only; unchanged statement; consumes deleted-column
   independence and the finite-dimensional cardinality inequality.
 The generic decomposition and both private support-descent helpers are unchanged.

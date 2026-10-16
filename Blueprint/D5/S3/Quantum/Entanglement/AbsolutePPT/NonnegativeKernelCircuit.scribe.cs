@@ -81,8 +81,11 @@ internal sealed class NonnegativeKernelCircuitDocument : IScribeDocumentDefiniti
             Describe.Lean(DescribeId.Create("nonnegative-kernel-deleted-columns"),
                 DeclarationHandle.Create(Root + "circuit_deleted_cols_linearIndependent"),
                 H("Independent columns after deleting a supported coordinate"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For any supported coordinate of a circuit, the other supported columns are linearly independent. A dependence among them gives a signed kernel direction vanishing at the deleted coordinate. Orient it to have a positive entry and use the existing minimum-ratio subtraction. The deleted coordinate stays positive while another supported coordinate vanishes, contradicting support minimality. This argument does not assume a cardinality bound. The support bound now follows by the dimension inequality, and the cofactor completeness theorem uses the same independence result to select a nonzero minor."))),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Circuit(V), Sp, Rightarrow, Sp,
+                    Call("LinearIndependent", Call("supportedColumnsAfterDeleting", B, F.Id("i")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The compiled declaration retains arbitrary finite J with its Fintype instance, arbitrary m, the full matrix B and vector v, the Circuit witness, the supported deleted coordinate i and its support proof. For any supported coordinate of a circuit, the other supported columns are linearly independent. A dependence among them gives a signed kernel direction vanishing at the deleted coordinate. Orient it to have a positive entry and use the existing minimum-ratio subtraction. The deleted coordinate stays positive while another supported coordinate vanishes, contradicting support minimality. This is the classical finite-dimensional elementary-vector argument; it does not assume a cardinality bound. The support bound now follows by the dimension inequality, and the cofactor completeness theorem uses the same independence result to select a nonzero minor."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("nonnegative-kernel-circuit-cardinality"),
                 DeclarationHandle.Create(Root + "circuit_support_card_le"), H("Support bound"),
