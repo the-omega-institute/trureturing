@@ -2179,6 +2179,179 @@ inverse-defect estimates. They supply no new general theorem or
 algorithm, Lean verification, actual c27 Schur sign, cofinal
 positivity or RH resolution.
 
+### Pay the infinite defect and recover one positive primal direction
+
+The preceding finite lower is also useful for a positive primal
+certificate once the missing infinite residual is paid. This is an
+application of the same inverse-residual square completion, not a
+new positivity criterion. All actual common-form/domain and sound
+$H\succeq T=\Lambda+G>0$ premises remain in force; $G$ includes the
+complete Gamma boundary and the even pole.
+
+Let $O$ embed all exterior coordinates outside $E$. For a finite
+$y$ in those coordinates, write $Z_O=O^*HE$, $K=Z_O^*-E^*TO$ and
+
+$$
+p_y=F^{-1}Z_O^*y,\qquad q_y=D^{-1}Ky,\qquad
+t_y=q_y-p_y,\qquad g=-Eq_y+Oy.
+$$
+
+Define $My=T_Oy-Z_Op_y+K^*q_y$ on this finite input and put
+$e=O(r_O-My)$. No boundedness assertion for $M$ on arbitrary
+infinite inputs is required. Finite support, the square-summable
+columns of $HE$ and bounded $T$ make these actions well defined.
+The support equations give
+
+$$
+Ft_y+Z^*g=0,\qquad r-Zt_y=Tg+e,\qquad E^*e=0,
+$$
+
+$$
+g^*Tg-t_y^*Ft_y=y^*My,\qquad g^*e=y^*O^*e.
+$$
+
+Consequently, for $L(y)=2\Re(y^*r_O)-y^*My$,
+
+$$
+\begin{aligned}
+m_T(t_y)
+&=Q+t_y^*Ft_y-(r-Zt_y)^*T^{-1}(r-Zt_y)\\
+&=Q-L(y)-e^*T^{-1}e\\
+&\ge Q-L(y)-e^*We.
+\end{aligned}
+$$
+
+Here $T^{-1}\preceq W$ uses the original archived diagonal.
+Bounded/coercive $T$ and the inherited actual domain suffice; no
+exchange of infinite extrema is used. The actual inverse-residual
+identity further gives
+
+$$
+v^*S_Nv-m_T(t_y)
+=(r-Zt_y)^*(T^{-1}-H^{-1})(r-Zt_y)\ge0.
+$$
+
+Thus a positive global paid lower establishes a sufficient comparison
+and actual Schur positivity in this single direction. A positive
+finite restricted upper alone had supplied neither conclusion.
+
+Take precisely the archived $y=\vartheta w$ supported on
+$J=2049{:}32768$. If $p=F^{-1}z$ and $q=D^{-1}(z-b)$ are the exact
+inverse vectors enclosed by the saved profiles, then
+$t_y=\vartheta(q-p)$. This is an exact implicit finite correction;
+it does not round the profiles to independent dyadic midpoints.
+On $J$, the residual is the already saved $r_J-\vartheta M_Jw$.
+The accepted finite lower therefore already pays that part of
+$e^*We$. Only $m>M_0=32768$ remains.
+
+The archived symbol polynomial supplies that disjoint tail without
+another scalar or moment computation. Put $A_0=M_0+1$, $d=\log27$,
+$k=2\pi/d$, $\gamma_0=d/\pi^2$ and
+
+$$
+c_0=\frac14-\frac{27^{-1/2}}{1-27^{-2}}
++2(\cosh(d/2)-1),\qquad
+\rho_n=-kns_n^{\rm GP}-\frac{\pi kn}4-c_0.
+$$
+
+The saved smooth polynomial has coefficients $C_0,\ldots,C_{63}$
+in $M_0/m$, with exact analytic $C_0=-\pi/4$. Its existing
+pointwise remainder satisfies
+$\epsilon(m)=a(M_0/m)^{64}+b(M_0/m)^{65}$, $a,b\ge0$.
+It follows that $m\epsilon(m)\le A_0\epsilon(A_0)$. In particular,
+the saved uniform symbol error at $A_0$ can be used as
+
+$$
+R_\infty=
+|-kM_0C_1-c_0|
++kA_0\left(\sum_{j=2}^{63}|C_j|(M_0/A_0)^j
++\epsilon(A_0)\right),\qquad
+|\rho_m|\le R_\infty\quad(m>M_0).
+$$
+
+The constant coefficient is used analytically, rather than multiplying
+its exported interval width by unbounded $m$. Coefficients use the
+saved $640$-bit grid; the remainder uses its distinct $832$-bit grid.
+The smooth symbol already includes the pole, while prime sine terms
+are separate. No pole or prime contribution is charged twice.
+
+For positive $n\le M_0<m$, the exact off-diagonal kernel is
+
+$$
+G_{mn}=(-1)^{m+n}\left[
+\frac1{2(m+n)}+
+\gamma_0\frac{\rho_m-\rho_n}{m^2-n^2}\right].
+$$
+
+With $a_n=A_0-n\ge1$, the elementary integral bound gives
+
+$$
+\sum_{m>M_0}\frac1{(m^2-n^2)^2}
+\le\frac{a_n^{-2}+a_n^{-1}}{(A_0+n)^2}=:s_n^2.
+$$
+
+Weighted Minkowski therefore supplies, for every finite $x$ on these
+nodes and the original constant far weight $D_{\rm far}$,
+
+$$
+\|G_{\rm far}x\|_W\le\sqrt{D_{\rm far}}
+\left[\frac{\|x\|_1}{2\sqrt{M_0}}
++\gamma_0\sum_n|x_n|(R_\infty+|\rho_n|)s_n\right]
+=:\mathcal B_G(x).
+$$
+
+This includes the adjacent node $n=M_0$, without a separated-ratio
+assumption. All finite $\rho_n$ come from the existing full-rate
+scalar array. There is no diagonal in this disjoint action.
+
+For $x$ on $E$, the existing actual-symbol budget
+$B_*=2\cosh(d/2)+\sum_{r<27}\Lambda(r)/\sqrt r$ gives
+$|H_{mn}|\le2B_*/[\pi(m-n)]$ and hence
+
+$$
+\|H_{{\rm far},E}x\|_W
+\le\sqrt{D_{\rm far}}\frac{2B_*}{\pi}
+\frac{\|x\|_1}{\sqrt{M_0-2048}}
+=:\mathcal B_H(x).
+$$
+
+The effective action and its residual obey
+
+$$
+(Mw)_{\rm far}=G_{{\rm far},J}w
++H_{{\rm far},E}(q-p)-G_{{\rm far},E}q,
+$$
+
+$$
+\|e_{\rm far}\|_W\le\sqrt{E_r}
++|\vartheta|\bigl(\mathcal B_G(w)
++\mathcal B_H(q-p)+\mathcal B_G(q)\bigr).
+$$
+
+Here $E_r$ is the upper energy allowance from the matching saved
+current-direction file, not the older support-direction residual.
+All three actions refer to the same exact $w,p,q$ and original mass.
+
+The [cache-only application](https://github.com/the-omega-institute/trureturing-experiments/tree/349b56740f5c3355783529672b9049fff5aa1e69/docs/reports/weil-c27)
+gives
+
+$$
+E_{\rm far}<1.264968\times10^{-31},\qquad
+m_T(t_y)>1.2194448\times10^{-31}>0,
+$$
+
+under the inherited premises. Consequently this saved original
+direction also has $v^*S_Nv>1.2194448\times10^{-31}$ under those
+premises. The consumer took $0.36$ seconds at $1024$ working bits;
+it reads accepted data and evaluates scalar norm bounds only.
+No scalar supplier, moment producer, finite action, inverse solve,
+optimizer, floor computation or increased cutoff is used.
+
+This is an application of existing variational and tail estimates.
+It establishes neither complete retained-matrix positivity nor a
+uniform family of directions. Cofinal Weil positivity and RH remain
+unresolved, and this numerical application has no Lean verification.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
