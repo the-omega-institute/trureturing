@@ -240,7 +240,7 @@ private theorem phase_next (q : Cursor) (b : Bool) :
     phase (next q b) = nextPhase (phase q) b := by
   cases q <;> cases b <;> rfl
 
-private theorem phase_scan (q : Cursor) (w : List Bool) :
+theorem phase_scan (q : Cursor) (w : List Bool) :
     phase (scan q w) = scanPhase (phase q) w := by
   induction w generalizing q with
   | nil => rfl
