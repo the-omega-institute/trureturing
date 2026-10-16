@@ -2508,3 +2508,665 @@ specified in terms of the declared primitive model; none of these literature
 names is used as a missing implementation step.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Uniform structural storage for the capacity instrument
+
+**Convention 11.1 (source, task and credited interfaces).** Write CAP for
+this volume, SSA for *Native structural storage, support, and the
+terminal-boundary atlas*, AIF for *Native acquired-input frontier and exact
+replay*, RCA for *Native retrospective cut acquisition*, and CSA for
+*Native callable storage atlas*. The following application uses CAP
+Definitions 2.2–2.4, 3.3, 5.1, 6.1–6.5 and Theorems 5.2, 7.2, 7.4;
+SSA Definitions 3.1–6.1 and Theorems 4.4, 6.2; and CSA Definitions
+3.1–4.1 and 8.2, Lemma 3.4 and Proposition 8.1. It does not identify the
+operational domains of those volumes. In particular CSA's installed RCA
+service has a fixed source-capacity parameter; its four-kernel and Call
+theorems are not cross-capacity theorems about CAP.
+
+Fix one actual finite CAP native graph, resident boot, raw or effective
+mode, controller realization where used, allocator convention and supplied
+initial data. Keep its original $H_0$, preparation occurrence $\xi$ and
+actually acquired seed syntax of $u$. At later cuts write $t$ for the
+current source. Reserve changes its backing; genuine Rho or grafting can
+change $t$; Raise changes a later admission guard. None changes the
+meaning of the initial target $q_{H_0}(u)$ or an earlier row's guard. All
+statements below concern this one initialized instrument. Variable
+integers, programs, controller states and saved returns remain its actual
+tape words, rather than values stored in an unbounded finite controller.
+
+The original continuation task is AIF Definition 2.6's partial
+finite-experiment response task instantiated with CAP's installed rows and
+seven-tag canonical source/maintenance language. It retains legal domains,
+labels and complete original successors; hidden successor coordinates are
+mathematical observations, not actor read permissions. Its actual domain
+includes busy parsing, address resolution, source overwrites, maintenance,
+rows, copied descriptors, checks and returns, rather than just idle
+endpoints. At a physically enabled IN both raw bits still execute. A bit
+leaving the canonical-prefix domain has its real latch/control/receipt
+successor and exits that domain. Boot/preparation/acquisition have their
+original entrance restrictions. A global Halt retains its original
+terminal meaning. Call this task $Q_{\rm CAP}$. No assertion below replaces
+it by an everywhere-continuing diagnostic task.
+
+**Definition 11.2 (the sole physical-record representation).** Let $b\ge1$
+be a finite number of potential native finite-bit locations, enumerated
+from the fixed graph and its boot constructors. This bounds the native
+primitive PC, latches, ownership/control flags and finite row-selection
+material, not the sizes of code or counter words on tapes. Let $z_i$ be
+$\bot$, 0 or 1 according as location $i$ is not yet constructed or holds
+that bit. Use CSA's actual optional socket, not an initially present zero:
+
+$$
+a(\bot)=\bullet,\qquad
+a(0)=((\bullet,\bullet),\bullet),\qquad
+a(1)=(\bullet,(\bullet,\bullet)),\qquad
+R(z)=F_b[a(z_1),\ldots,a(z_b)].
+$$
+
+Use SSA's eight-track cell switch, right-spine tape encoding and outer
+$F_{65}$ with the 64 actual tapes and $R(z)$. Include the actual tape
+boundary symbols, head marks and maintained origin/head links. A head link
+is absent before its original constructor; the meter has two distinct
+head links. No descriptor-to-payload access edge is added. Denote the
+resulting tree and linked carrier by $U(W)$ and $\Gamma(W)$, where $W$ is
+the comparison raw record of actual finite bits and tape tracks. On the
+structural realization the incidences are the storage: a second copy of
+$W$, a replay archive or a shadow source is not maintained beside them.
+The fixed empty socket scaffold and finite rule description are priced
+apparatus. Unbounded future reserve values are not apparatus parameters.
+
+**Proposition 11.3 (uniform raw-storage application).** On the stronger
+priced atomic patch basis of SSA Assumption 3.1, the one fixed CAP graph
+has a finite structural row realization independent of a future maximum
+reserve. It represents its original boot and all actual subsequent native
+rows, with the same inputs, core/receipt effects, owner guards and return
+edges. At its native-row boundaries define independently
+
+$$
+S_{\rm raw}(W)=\operatorname{Pos}(U(W)),\qquad
+B_{\rm raw}(W)=\operatorname{Leaves}(U(W)).
+$$
+
+Then each of these two observations, separately, has equality kernel
+exactly raw-record equality:
+
+$$
+\begin{aligned}
+S_{\rm raw}(W)=S_{\rm raw}(W')&\ \Longleftrightarrow\ W=W',\\
+B_{\rm raw}(W)=B_{\rm raw}(W')&\ \Longleftrightarrow\ W=W'.
+\end{aligned}
+$$
+
+Here positions and leaves are actual ordered spatial paths, and equality
+of raw records includes the construction domain. The statement is not an
+assertion that raw-record equality equals $Q_{\rm CAP}$-equivalence.
+
+Proof. Instantiate SSA Definition 5.2's finite pattern enumeration with
+the fixed CAP rows. Each row uses fixed finitely many tape/head roles,
+finite latch/control tests and at most its core cell constructor plus its
+receipt constructor. All unbounded iteration in Resolve, Zero, field
+scans, gate interpretation, journals and verification is iteration of
+these rows. It does not require a new pattern for a larger unary numeral.
+Combine actual core/receipt aliases before assigning a target, exactly as
+in SSA. A newly constructed finite bit uses CSA Definition 3.3: retain its
+socket root, create the four prescribed vertices and initialize their
+28 slots and the root's two child slots. The choice of bit is its actual
+native constructor value. Its absence is never treated as zero.
+Existing-bit writes, cell appends and head moves use the supplier's
+bounded stencils. The finite pattern table keeps each original guard,
+including ownership and source availability. Internal trusted probes
+supply no actor with an all-owner read operation.
+
+Start with the actual native foundation, its two meter boundary cells and
+actually endowed finite bits. Represent subsequent boot constructors as
+their own rows. Induction on the actual next row proves the commuting
+core-and-receipt square and keeps the actual head/link relation. The IN
+case includes either raw bit even when it leaves the task domain. Source
+bit overwrites are represented as raw bytes without asserting a valid tree
+midway. The same induction covers copied-but-unavailable blocks, directory
+publication before response commitment, either journal's partial seals,
+old and new guard/counter versions, lookup, verifier work and Halt. A
+structural patch is one declared atomic commitment per native row; no
+claim is made about a finer cut inside its slot assignments. The induction
+can be extended at every actual Reserve/Raise on the same initialized
+execution, without reinstallation or an upper bound on later $K$.
+
+For the inverse, decode each fixed finite socket as absent/zero/one; its
+three shapes differ. Decode each eight-track cell and the end of each
+right spine by SSA Theorem 4.4. This recovers every raw track, finite flag
+and head mark; the marks determine the access links. Conversely the raw
+record constructs exactly that support. Independently, a finite full
+ordered tree satisfies
+
+$$
+\operatorname{Pos}(U)=\{p:p\text{ is a prefix of a terminal path of }U\}.
+$$
+
+Thus the actual terminal antichain reconstructs the whole support and the
+same component inverse. Each equality has both inclusions. Actual native
+creation identities remain those of the commuting execution; structural
+auxiliary identities use its occurrence and fixed constructor role. This
+is the SSA/CSA storage construction instantiated at CAP, not another
+generic compiler or a new kernel theorem. $\square$
+
+**Proposition 11.4 (one-run structural accounting).** In this application
+let $C_{\rm cell}$ count all constructed native tape cells, including
+boundary cells and the meter, let $c$ count actually constructed finite
+bits among the $b$ sockets, and let $\ell_{\rm head}$ be the actual number
+of constructed head links. The carrier counts are
+
+$$
+\begin{aligned}
+V&=127+2b+4c+48C_{\rm cell},&
+L&=64+b+2c+24C_{\rm cell},\\
+E_{\rm tree}&=V-1,&E_{\rm access}&=\ell_{\rm head}\le65.
+\end{aligned}
+$$
+
+Occupied endpoint slots number $2(V-1+\ell_{\rm head})$ and slot capacity
+is $7V$. After boot/acquisition $\ell_{\rm head}=65$. There is no subtraction
+for dead words, overwritten data, inactive control versions or copied
+outputs. $K$ remains designated source reserve, not $C_{\rm cell}$ or $V$.
+
+For the same actual row $i$ let $e_i$ count core-plus-receipt cell appends,
+$s_i$ fresh finite bits, $t_i$ designated existing-bit targets after alias
+combination, $r_i$ retargeted head links, and $a_i$ first head activations.
+An unchanged-value designated write is counted. A bit in $s_i$ is excluded
+from $t_i$. Use the ordered probes $p_i$ of CSA Definition 8.2, with its
+finite-slot parameter $q=b$ and its actual pre-row $c$. Explicitly, with
+that definition's cell-role, append-site, old-head-walk and fresh-slot-root
+lists $\mathcal C_i,\mathcal A_i,\mathcal J_{i,\rm old},\mathcal Z_i$,
+
+$$
+\begin{aligned}
+p_i={}&d_r+6b+12c_{i-1}-4
+ +\sum_{x\in\mathcal C_i}(|\pi_x|+140)
+ +\sum_{z\in\mathcal A_i}(|\pi_z|+2)\\
+ &+\sum_{w\in\mathcal J_{i,\rm old}}|w|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2),\\
+v_i={}&48e_i+4s_i,\\
+w_i={}&4t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\\
+g_i={}&1+p_i+w_i+v_i.
+\end{aligned}
+$$
+
+Here $d_r$ is the fixed root-to-register route. Repeated probes and routes
+are charged again; access is by maintained links, not a numeric Seek.
+With $C_{{\rm cell},0}=2$ and actually endowed $c_0$, the foundation has
+$V_0=223+2b+4c_0$ and replacement price $g_0=1+8V_0$. At a finite native
+prefix of length $n$ use $G=g_0+\sum_{i=1}^n g_i$, and also charge the
+finite apparatus description and mechanism. $G$ is the structural
+replacement tariff; if both native and structural tariffs are levied,
+the declared combined fee is $2n+G$.
+
+Proof. The fixed socket component has $2b-1+4c$ vertices and $b+2c$
+terminals. Each tape with $k$ cells contributes $48k+1$ vertices and
+$24k+1$ terminals. Adding the outer 64 internal vertices gives the two
+formulas, including the two-cell foundation. The per-row expressions are
+CSA.11–CSA.13 with these actual lists: seven initialized slots for every
+new vertex, two root slots per append or fresh bit, four assignments per
+existing bit, and three/two per moved/new head link. In particular a fresh
+finite bit has $4$ vertices and $28+2=30$ assignments before its native
+control/receipt effects. Summation is on this same CAP execution. In its
+original tariff Theorem 7.2 still gives $T=n$, $F=2n$ and
+$S=S_0+b_{\rm ctl}+8A+8n$, where $A$ excludes the meter and uses that
+theorem's ordinary-cell convention. It is not the total-cell convention
+$C_{\rm cell}$ above. All installation, acquisition, directory resolution,
+source writes, both journal writers/readers, copies, checks, output and
+retired material are included whenever they occur in that prefix. No
+physical latency, energy bound or total-resource improvement follows.
+$\square$
+
+**Remark 11.5 (the terminal-task obligation).** Spatial support, physical
+terminal antichain and literal retained history can distinguish two raw
+records even when a chosen future task cannot. A storage terminal is a
+leaf of $U$; a global Halt is an operational terminal. They are different
+notions. SSA's and CSA's task-rigidity proofs use a lawful continuing
+successor at every cut. CAP also admits an absorbing global terminal,
+where that argument is unavailable. On an absorbing subdomain where every
+nonempty experiment is rejected or undefined in the same way, future
+equivalence is just equality of its allowed terminal readout (and type).
+Lossless historical views have the same kernel there only if that readout
+separates the histories they separate. This is an exact missing condition, not evidence of an actual
+terminal collision or proof of terminal injectivity. No such pair or
+separation proof is supplied here. Proposition 11.3 therefore asserts raw
+physical exactness only; it does not change $Q_{\rm CAP}$ to force a
+four-view theorem.
+
+## 12. Acquired response frontiers and historical cuts
+
+**Definition 12.1 (an actually acquired frontier).** Work after the genuine
+seed acquisition in the same initialized execution. Choose a reached
+nonterminal acknowledged return $d_i$ of the ordinary seven-tag dispatcher
+or of its fixed installed automatic/effective controller. For this
+statement no independently selected optional archive/service command is
+inserted between those requests. Such a command would require its own
+retained/acquired input and stopping rule. Let $D_i$ consist of what the
+actor actually possesses there: its acquired seed and original fixed
+boot/mode/controller data; all delivered unified rows through that
+return, their semantic mates when present, both predecessor chains; the
+complete copied request, control, return and output dependencies; and their
+sealed local origin descriptors and current read rights. These are the
+mandatory acquisitions of Definition 6.3, not proposed rows or a producer
+pointer. In particular all external canonical request bits through this
+return are present in their actual event order. Generated automatic
+commands and computed source replies are not additional external INs.
+
+Let $\nu_i$ be the primitive ordinal of this last event's response-commit
+fence. Its row includes the complete acquired fence word
+
+$$
+\operatorname{Frame}(\mathrm{kind})\,
+\operatorname{Frame}(U(f))\,
+\operatorname{Frame}(U(\nu_i))\,
+\operatorname{Frame}(U(2\nu_i))\,
+\operatorname{Frame}(\xi)\,
+\operatorname{Frame}(\mathrm{event/directory\ binding}).
+$$
+
+Definition 6.1a's paid scans constructed these numeral payloads before
+row delivery. $f$ is the fence ordinal, $\nu_i$ the absolute primitive
+ordinal, the unified row has its own event ordinal, and its local copy has
+its own descriptor ordinal. None substitutes for another. Source-only and
+semantic counts do not include maintenance in the way the unified count
+does; Definition 6.2a's $\epsilon$ and $\sigma$ remain the actual join.
+
+**Proposition 12.2 (response-frontier application of acquired replay).**
+From $D_i$ there is a finite mathematical procedure that reconstructs the
+same actual primitive history through $\nu_i$, and, for every selected
+ordinal $k\le\nu_i$ after acquisition, its literal prefix and complete
+endpoint. It can also compute the ordinal $N_i=|d_i|$ of this nonterminal
+acknowledged return and extend the reconstruction through $N_i$. At any
+later such actually acquired frontier, reconstruction restricts to the
+identical earlier prefix, including its old guards, layout, rights and
+preparation occurrence.
+
+Proof. Apply the actual local descriptor/origin resolution of Definition
+6.1 to the acquired material, not to a remote owner's private address.
+The bit decoders of Lemma 6.1b give the original request headers, lengths
+and payloads, in unified-row order. In raw mode concatenate their actual
+wire bits, excluding physical separators, status cells and computed
+responses. In the fixed automatic/effective mode, Definitions 4.6 and
+8.1–8.2 instead generate those command blocks by Append/copy from already
+acquired data, so their bits are not put in the external-input reservoir.
+The fixed boot mode and deterministic control distinguish these cases;
+no classification is guessed from equal command bytes. Acquired initial
+input and any actual externally supplied command bits are retained in
+their prescribed input-site order. For local/controller markers use the
+acquired instruction/return dependencies and the fixed installed graph;
+do not fabricate external input frames. Thus the resulting finite
+reservoir contains exactly the actual external input consumed through
+$d_i$. In particular it is a superprefix of the input consumed at
+$\nu_i$ and at every earlier selected $k$.
+
+The response fence's $U(\nu_i)$ is actually present. Run Theorem 7.4 with
+the acquired original seed and this reservoir, stopping after $\nu_i$
+original primitives, or after $k$ of them. Its induction requests a bit
+only at the actual next IN before that stop, so it consumes exactly the
+corresponding input prefix; an unused reservoir suffix has no effect.
+This is RCA Lemma 4.5's superprefix argument applied to CAP's specified
+graph, not a new replay theorem. Its state includes an IN-before-WR latch,
+a partial invalid source packet, staged counters, pending semantic or
+maintenance event, either journal writer and an unavailable copy whenever
+that is the actual phase. Old permission bits are reconstructed as data;
+they are not activated in the present machine.
+
+For the last nonterminal row, response commitment is followed by the
+specified fence readout, manifest and row construction, dependency copies,
+actor checks, final row ACK, source-token return, idle CTL and saved
+return edge. The installed graph and complete acquired dependencies fix
+this tail; it admits no additional independent external IN before that
+return. Simulate it until that particular row's acknowledged saved return,
+counting every original primitive. Lemmas 6.1b and 6.7 give termination.
+This computes $N_i$ rather than assuming the response fence is already the
+row seal, ACK or return. It is the closed-boundary stopping method of RCA
+Theorem 4.4 on this restricted CAP return, with the response ordinal
+already acquired. For any $k\le N_i$ stop this same reconstruction at $k$.
+
+Later delivered rows append without altering the acquired immutable
+prefix. Determinism and the same boot, allocator and input choices make
+later reconstruction agree at each earlier primitive. Reserve's stable
+address extension and Raise's historical-guard checks are retained as
+executed work, not replaced by the latest reserve or guard. $\square$
+
+**Corollary 12.3 (conditional retrospective coverage).** If one actual
+continuing execution has cofinal such acquired acknowledged returns, then
+every finite cut after acquisition lies in one of their reconstructible
+intervals. For a finite flight the corresponding assertion holds only
+through its reached final frontier. A selected older busy cut need not
+have been callable at that older time.
+
+Proof. Cofinality gives a reached $d_i$ with $k\le N_i$ for the actual
+finite ordinal $k$. Proposition 12.2 gives that prefix. It supplies no
+frontier when input is withheld or local work does not terminate. Its
+hypothesis is an actual continuing execution, not compatible descriptions
+from which an infinite input, source or run can be inferred. $\square$
+
+**Remark 12.4 (acquisition and payment still required).** The computation
+above reuses the CAP/AIF/RCA mathematical reconstruction interfaces. It
+does not add a callable decoder to CAP. $D_i$ gives neither an actor
+token for the producer meter nor permission to invoke RCA on CAP's
+occupied verifier lanes. Even if a future paid decoder enumerates every
+eligible older ordinal, the intended one must be lawfully bound or
+acquired; a later archive cannot supply an uncommunicated intention.
+Section 13 gives a concrete growing selection requirement. A terminal
+verification/proposal route is not the nonterminal tail used above: any
+independent terminal proposal or prior input must also be acquired, and
+the terminal stopping/callability conditions proved for that route. Those
+obligations are left open. Existing terminal consumer work is preserved.
+
+## 13. Mandatory Reserve cuts distinguish unchanged acquired memory
+
+**Definition 13.1 (the actual zero-fill cut family).** Fix a reached idle
+valid state with current source $t$, guard $h$ and reserve $K$, and an
+actual canonical strict Reserve($J$), $J>K$. The source, preparation
+$\xi$, original $H_0$ and acquired $u$ are the ones of that execution.
+Put $d=4(J-K)$. In Definition 3.3's Zero(16;$d$), after Last(bound) and
+Tail(16), let $c_z$, $0\le z\le d$, be the cut immediately before its
+bound-test RD after $z$ successful iterations. In particular $c_d$
+precedes the terminal-zero test, not the appended delimiter. Write
+$n_0=n(c_0)$ for its actual absolute primitive ordinal.
+
+Define $C_{\rm old}$ at these cuts to retain only the already acquired
+preinterval material: the actual protected controller table, persistent
+state, seed and saved return on 24–27 with their heads and rights; the
+previously acquired immutable archives, dependencies, sealed descriptors
+and handle meanings; and the common busy/Zero-test phase. It contains no
+producer work head, bound-cursor position, new arena cell, live meter,
+pulse counter or copy of the primitive ordinal. Previously acquired
+source-layout descriptors keep their original typed meanings; they grant
+no private-source read. This is a specified observation of old acquired
+material, not a claim that every conceivable retained-memory view omits
+a frontier.
+
+**Theorem 13.2 (a concrete growing discrimination requirement).** For all
+$0\le z\le d$ the $c_z$ are lawful cuts of this same invocation, with
+
+$$
+n(c_z)=n_0+5z,\qquad C_{\rm old}(c_z)=C_{\rm old}(c_0).
+$$
+
+They are pairwise inequivalent for $Q_{\rm CAP}$. Consequently any
+supplement $E$ for which $(C_{\rm old},E)$ determines either the selected
+complete cut or its full $Q_{\rm CAP}$ response profile must take at least
+$d+1$ distinct values on this family. A fixed-width $b_{\rm sel}$-bit
+supplement must satisfy
+
+$$
+2^{b_{\rm sel}}\ge d+1,\qquad
+b_{\rm sel}\ge\lceil\log_2(d+1)\rceil.
+$$
+
+Proof. The bound is a sealed $U(d)$ on another port. One successful
+iteration executes exactly RD(bound), EX(16), WR(16,0), MR(16),
+MR(bound). It consumes its next leading 1 and constructs one fresh zero
+payload cell. Before publication none of those rows changes the old source
+payload, active reserve, current guard, completed directory or committed
+semantic/unified event counts. They leave 24–27 and the old acquired
+archives/rights untouched. The bound cursor, producer heads/latches,
+new arena and meter do change, and were explicitly excluded from
+$C_{\rm old}$. Induction on $z$ proves its constancy and the exact ordinal.
+At $z=d$ the cursor has reached the sealed zero; this is still a lawful
+pending RD. All these cuts have the same prescribed Advance for that RD.
+
+Its complete successor has $n_0+5z+1$ receipts. Different $z$ therefore
+give different complete successors on this same legal one-primitive
+experiment, whether the RD reads 1 or the final 0. The original
+complete-successor task distinguishes them without a private read by the
+actor. If two of their $E$ values were equal, a decoder of their equal
+$(C_{\rm old},E)$ would have to give two different cuts or response
+profiles. This is impossible. Counting the values proves the inequality.
+It is RCA Theorem 3.3's generic selection principle with an explicitly
+instantiated mandatory CAP fiber, not a new abstract information theorem.
+$\square$
+
+**Example 13.3 (a legal five-cut instance).** After the actual acquired
+beta entrance with $H_0=h=K=1$, supply Reserve(2). Theorem 5.2 applies to
+this same finite source; no update or guard raise is necessary. Here
+$d=4$, and the five cuts have ordinals
+$n_0,n_0+5,n_0+10,n_0+15,n_0+20$. All preserve that old acquired material.
+Their next RD successors have pairwise different receipt lengths. A
+fixed-width binary discriminator needs at least three bits. This witness
+uses legal states of one source, rather than two inconsistent packet
+interpretations or arbitrary supplied pointers.
+
+**Corollary 13.4 (no fixed finite supplement over all actual reserves).**
+In raw dispatcher mode, start at that acquired beta state and successively
+supply Reserve($2K$), retaining $h=1$ and the current $t=\mathrm{beta}$.
+Under the actual input and local-progress premises, these completed
+invocations concatenate on the same source. The invocation indexed by
+$r\ge0$ enters with $K=2^r$ and has $4\cdot2^r+1$ pairwise distinguished
+Zero-test cuts with the same $C_{\rm old}$ within that invocation. No
+supplement with one fixed finite alphabet distinguishes all these fibers.
+
+Proof. Each strict Reserve preserves $t,h,\xi,u$ and returns with reserve
+$2K$ by Theorem 5.2. Induction gives the stated entrance. Theorem 13.2
+applies to each actual finite fragment. An alphabet of size $M$ fails as
+soon as $4\cdot2^r+1>M$. This is one recursively supplied sequence of
+commands and compatible reached entrances, not a separate realization for
+each cutoff. Without its supplied commands and progress, only the finite
+concatenations are asserted; compatible storage descriptions alone do not
+supply an omega-run. The example also does not require changing the fixed
+effective growth policy of §8 into this raw-mode sequence. $\square$
+
+**Proposition 13.5 (a later common archive does not select an intention).**
+Fix one of these invocations and a later reached acquired frontier covering
+all its $c_z$. Consider the $d+1$ possible recovery requests whose intended
+targets are those cuts, with the actual execution and later acquired data
+held fixed. Any successful target-selection interface must distinguish
+these intentions by an actually bound/acquired relation with at least
+$d+1$ values. Supplying more identical copies of that common later history
+does not remove this requirement.
+
+Proof. The later acquired object is identical for all these requests;
+only their intended target varies. The requested outputs are pairwise
+distinct by Theorem 13.2. A deterministic selector with identical acquired
+arguments returns the same output, so it cannot satisfy two distinct
+intentions without an additional distinguishing argument or previously
+bound selector state. The same counting argument gives the bound. An
+already acquired authentically indexed frontier can provide such a
+relation; it is not ruled out. This proposition requires no Freeze at the
+older busy cut and proves no impossibility for a later authorized paid
+recovery. It identifies information that a recovery interface must really
+receive. $\square$
+
+**Proposition 13.6 (local costs on that invocation).** Measured on its one
+actual native run, from $c_0$ to $c_z$,
+
+$$
+\Delta T=5z,\qquad \Delta F=10z,\qquad
+\Delta A=z,\qquad \Delta n=5z,\qquad \Delta S=48z.
+$$
+
+Here $A$ and $n$ use Theorem 7.2's nonmeter ordinary-cell and primitive
+receipt conventions. No finite-bit location is constructed in this loop;
+finite control values can change. From $c_0$ through the final bound test,
+the loop uses $5d+1$ primitives and $d$ new source payload cells. Its
+following delimiter costs three more primitives and one more ordinary
+cell; setup, publication, fences, journals, copies and ACK are additional.
+For the first $R$ completed doubling invocations of Corollary 13.4 the
+Zero bodies alone, including each final test, contribute exactly
+
+$$
+\sum_{r=0}^{R-1}(5(4\cdot2^r)+1)=20(2^R-1)+R
+$$
+
+primitives and $4(2^R-1)$ source payload cells. These are lower bounds on
+whole-prefix time and total construction, not a complete-operation saving.
+
+Proof. Count the displayed five rows per successful iteration. Only EX
+constructs a nonmeter cell; each of the five rows constructs its one
+receipt. Theorem 7.2 gives $8z+8(5z)=48z$ additional modeled storage.
+The terminal RD adds a receipt but no payload. Append(sep) is EX; WR; MR
+and is outside the displayed sum. The geometric sum gives the last two
+expressions. Entire-run resource accounting still uses §7 or Proposition
+11.4 on that very execution, including all input acquisition, allocation,
+directory/source addressing, row writers/readers, local copies, checking,
+return and retained dead material. The selector bit count is not a
+pointer-length bound, an executable decoder price, physical memory bound
+or proof of total-resource optimality. $\square$
+
+## 14. The literal CAP-verifier and RCA-bank common-entry obstruction
+
+**Definition 14.1 (unchanged-entry comparison).** Compare CAP Definition
+2.2 and RCA Definitions 11.1–11.4 at their actual initialized service
+entrances. The literal-identification hypothesis would use the same
+physical port 33, same L origin, same original readers and writers, and
+no added translation or prefixed-sentinel exception. It would retain CAP's
+verifier and consumer rather than substituting RCA's service for them.
+RCA assigns its eight word-compiler lanes 32–39 to its owner; bank B is
+33. Both banks receive an initial literal F sentinel before any version.
+CAP assigns 33 to the verifier's native bit-block descriptor stream. These
+are actual uses, not names for two freely supplied disjoint ports.
+
+**Theorem 14.2 (no literal common initialized descriptor/bank entry).**
+Under this unchanged-entry hypothesis no physical state satisfies both
+original ready-stream invariants. If the separate owner tokens are kept,
+CAP has no right to read the RCA-owned lane. Identifying those tokens does
+not repair the stream grammar.
+
+Proof. CAP Definition 6.1's ReadDescriptor begins Home; MR. Its first RD
+recognizes terminal R or the first tag bit. Every nonempty valid descriptor
+stream starts with the literal tag `00` followed by sep, ten bit-word
+fields each followed by sep, then seal. Hence at this origin the first
+symbol after L is R for an empty stream or 0 for a nonempty one. There is
+no leading-F branch. RCA initializes bank B by appending F; later bank
+versions are appended and no old sentinel is overwritten. Its first
+ordinary symbol at that same origin is therefore F, including when B has
+no completed version yet. The supplier alphabet has distinct symbols
+F, R and 0. The two ready invariants are disjoint.
+
+Ownership gives an additional interface distinction: RCA's installation
+transfers the lane token to its compiler owner. With that token retained,
+a CAP verifier read is unexecuted for lack of permission. If a proposed
+literal identification instead makes the token available, the original
+CAP tag reader encounters F, which is neither terminal R nor the first
+bit of `00`; its specified wrong-kind test takes metadata-fault. This is
+a conditional prediction from the impossible common-entry hypothesis,
+not a report that any combined runtime has been installed or executed.
+A different paid placement, origin or translation may avoid the conflict;
+none is supplied by calling the two tapes the same port. $\square$
+
+**Proposition 14.3 (the existing consumer makes the distinction material).**
+CAP's existing receipt/output pipeline uses the disputed descriptor
+interface. Removing that interface would remove an original consumer of
+the growing-source instrument.
+
+Proof. Definition 6.3's route 50 copies the frozen producer snapshot,
+boot/prior/proposal and complete referenced dependencies to verifier
+archive 32, with local descriptors on 33. Definition 6.1 resolves each
+acquired origin by that owner's complete native descriptor scan and local
+availability tests. Definition 6.5's verifier then checks every unified
+row, its semantic mate and predecessor where present, the complete source
+manifest and historical guard. Its initial candidate and target remain
+$D\subseteq\mathcal T_{H_0}$ and $q_{H_0}$, even after Reserve/Raise.
+An accepted result is the `SEG-R1`/`INITIAL-q_H0` receipt. Route 51 copies
+it to consumer archive 40 with descriptors on 41; its binding checks
+precede task-output construction, seal and OUT. Thus stream 33 belongs to
+a current paid verification/acquisition path with an original output,
+not an unused scratch convention. Both archives, both descriptor formats,
+all checks and both mailbox routes must survive any composition.
+$\square$
+
+**Remark 14.4 (what the obstruction leaves to construct).** The
+SSA/CSA cell encoder stores F and 0 differently and retains token bits;
+it does not allocate a new role namespace or merge stream grammars. CSA
+realizes RCA's fixed-domain installation on lanes lent to RCA; it does not
+prove CAP's verifier lanes available at a common growing-domain entrance.
+A future construction must give an actual finite installed role map,
+stream origins and live lease/return graph. If it reuses a lane, it must
+supply an explicitly paid parser/translation or a proved nonoverlapping
+lifetime with actual retention and copying. It must retain every CAP
+source, controller, semantic/unified journal, snapshot, verifier, receipt
+consumer and return path, and retain the complete external-input language
+and the original source/owner/guard provenance. Merely asserting these
+conditions as a hypothetical interface is not an implementation theorem.
+
+The same construction must also carry authentic backing/frontier rights,
+a lawfully bound target selector as in §13, acquisition of any additional
+control or terminal proposal, and a paid installed decoder with output,
+ACK and return. Its added rows have new actual ordinals and receipts;
+old original receipts/guards are not retroactively changed. No all-owner
+scanner, arbitrary-busy snapshot, infinite initial source or activation of
+reconstructed old permission bits is included in the present results.
+
+## 15. Supplier correspondence, finite discriminators and remaining scope
+
+**Convention 15.1 (proof and deduplication status).** The application delta
+is the mandatory Reserve family with its actual ordinal, selection and
+local-cost formulas, and the literal port-33 entrance obstruction with its
+current CAP receipt consumer. The uniform physical-record construction
+and acquired-response-frontier result are explicit applications of checked
+supplier interfaces. They preserve useful source/phase/cost conditions;
+they are not new general storage, replay, kernel or factorization results.
+No claim of literature originality or physical implementation is made.
+These are ordinary mathematical proofs; no new Lean or Blueprint theorem,
+build, ingestion or machine coverage is asserted.
+
+| Supplier | Exact parameter map and remaining boundary |
+| --- | --- |
+| CAP §§2–8 and 9.2–9.3 | Fixed actual boot/mode/graph, original $H_0,\xi,u$, current $t,h,K$, real strict Reserve and Raise, stable $\phi_K$, semantic versus unified ordinals, actual fences, joined verifier and unchanged `INITIAL-q_H0`. These supply the actual cut family and consumer. Joint replay does not give four individual paid inverses. |
+| SSA §§3–6, 8, 12.1; CSA §§3–4 and 8 | Instantiate their literal switch/cell/tape storage and priced finite row enumeration with CAP's finite interpreter rows; use CSA's optional native-bit sockets during boot. Source reserve $K$ maps to designated CAP payload; CSA's total tape-cell count maps instead to $C_{\rm cell}$. Neither the generic encoding nor CSA's fixed-source RCA Call supplies a CAP common service entrance. |
+| AIF §§2, 4.4–4.5; RCA §§3.3, 4.3–4.5, 11.1–11.4 and 15.1 | Complete successors and raw-IN domain are kept. Acquired seed/input plus an actual bound give literal replay; superprefix stopping and closed-return tally are reused in §12. Generic target-selection counting is reused in §13. RCA's actual banks/leases, not an abstract word register, yield §14. |
+| LJA §§5.1–5.3; CAP §§6.1–6.7 | Actual sender/mailbox/receiver status, descriptors, local origin, ACK and row dependencies are the acquisition relation for $D_i$. A copied producer reference grants no private token. Frozen lookup retains its existing target/fence scope. |
+| NCR §§5.3, 6.3, 11.3; PR57.D1 and its owning native suppliers | Existing restricted natural atlas and sufficient sequential foundations remain credited. NCR's atomic-source/fixed-controller domain is not identified with CAP's bitwise raw work and capacity maintenance. PR57 rows are counted at their declared atomicity. |
+| `NativeSerialMachine.nativeStep`, `replay_deterministic`, `operational_replay`, `reached_prefix_replay`; `NativeFullSourceProducer.native_source_producer` and its private `traverse`, `production_reads`, `stationary`; owning Scribes | These describe finite source-level control, literal source-specific replay and genuine full-source acquisition. They do not implement CAP's new cross-capacity recovery service or the port-role composition. Private proofs are credited as existing results rather than rediscovered. |
+| `NativeSerialEffective.OriginalCodeRealization`, `original_code_service_simulation`, its private evaluator/prefix/erasure lemmas; `NativeEffectiveSourceProducer` and `NativeConstructorArrays`; owning Scribes | Keep the actual genuine-code realization and original source/input, and the existing finite constructor representation. Unbounded code/state stays tape data. Source-level evaluator erasure does not erase the physical overhead or grant a new owner token. |
+| `TypedFiniteViewKernel.typed_finite_view_kernel`, `PredictiveMemoryMinimalQuotient`, `RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`; owning Scribes | Typed legality, roots/readouts, complete finite responses and realized-image kernel inclusion are existing abstract results. Their task and map parameters must be instantiated. Raw storage invertibility alone does not establish the reverse inclusion for the original terminal task or acquire an inverse. No wrapper theorem is added. |
+
+**Convention 15.2 (primary-source hypothesis map).** The following primary
+texts support only the stated correspondences. The CAP-specific proofs
+above discharge the displayed local claims directly.
+
+| Primary text | Applicable structure, parameter correspondence and unproved transfer |
+| --- | --- |
+| Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*, [author PDF](https://www.cs.cmu.edu/~sleator/papers/making-data-structures-persistent.pdf), introduction/model and §2.3, PDF pp. 2–5, 8–9 | Their named entry pointers and accessed-node restriction correspond to actual accessible origins/head links, not arbitrary references. Node-copying amortized bounds require constant bounded indegree and their update model. A persistent version is not an acquired CAP cut intention or owner lease; their bounds are not substituted for CAP's retained receipts, paid scans or total storage. |
+| Leroy and Blazy, *Formal Verification of a C-like Memory Model and Its Uses for Verifying Program Transformations*, [author PDF](https://xavierleroy.org/publi/memory-model-journal.pdf), Lemma 38 and Lemmas 65–69, PDF pp. 13, 22–23 | Mapped accesses use block-plus-offset embeddings; injection extension keeps every old mapped block at the same target. Map the old CAP segment images to the fixed part of $\phi_K$ and the new disjoint segment to its extension. Alignment, mapped-access and disjoint-allocation conditions are substantive. These lemmas supply neither CAP's actual unary resolution price nor source authority, history selection or stream composition. |
+| Lynch and Vaandrager, *Forward and Backward Simulations, Part I: Untimed Systems*, [author PDF](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), §3.2, Lemma 3.8 and Theorem 3.10, PDF pp. 11–12 | Related initial states and matching finite fragments are required. Here the structural foundation and each actual CAP core/receipt patch supply that comparison. Trace inclusion neither supplies a reverse natural-view kernel nor acquired backing, selection, equal prices or an infinite actual source. |
+| SSA §11 and §13.6, CSA §10, CAP §10 | Graph-local replacement, observation factorization and semantic completion retain their already stated primary-source hypotheses. No new theorem is transferred from those references here. In particular a semantic compatible limit is not an operationally supplied run. |
+
+The three directly linked PDFs were accessible and their stated passages
+were checked. Local pinned mathlib sources were unavailable because this
+workspace has no `.lake` dependency tree; its manifest names revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`. No current mathlib compilation
+or exhaustive third-party search is claimed. The repository declarations
+and their owning Scribes supply the existing abstract results used here;
+no missing general lemma is proposed as a new proof target.
+
+**Observation 15.3 (bounded concrete checks).** A direct in-memory
+interpreter of Definition 3.3's five-row Zero body, not a combined CAP/RCA
+runtime, gives these finite checks:
+
+| Check and finite domain | Result and limit |
+| --- | --- |
+| $1\le K\le8$, $1\le J-K\le8$, hence $4\le d\le32$; all test cuts $0\le z\le d$ | 64 local invocations, 1,216 test cuts and 5,824 body primitives including final tests. Every cut has ordinal $5z$ relative to its entry, unchanged old payload prefix, exactly $z$ new zeros, lawful next test, distinct next receipt count, and storage increment $48z$ before that test. No full-boot, global ownership or end-to-end consumer execution is inferred. |
+| Those 64 local fibers | Each computed $\lceil\log_2(d+1)\rceil$ is sufficient for that many binary labels, and one fewer fixed-width bit is insufficient. This checks the finite counting discriminator, not acquisition or a decoder implementation. |
+| Doubling subtotals for $0\le R\le16$ | All 17 cases equal $20(2^R-1)+R$ body primitives and $4(2^R-1)$ payload cells. These omit setup/delimiters/rows as specified in Proposition 13.6. |
+| The eight PR57 symbols at the first post-L read | CAP's valid completed-descriptor first-symbol set is exactly $\{R,0\}$; RCA's literal bank sentinel F belongs to neither case. This checks the first-symbol discriminator, not a run of an impossible combined entrance. |
+
+The universal statements use the proofs, not extrapolation from these
+finite bounds. CSA's existing optional-socket and eight-track exhaustive
+checks remain credited to CSA; repeating them would not add a new result.
+
+**Conclusion 15.4 (the precise remaining construction).** The storage
+representation is uniform over actual finite capacity changes, and a
+reached acquired nonterminal response frontier supports mathematical
+historical reconstruction with the correct ordinals. Old acquired
+material alone fails at a mandatory Reserve family of unbounded size;
+a later common archive still requires a lawfully distinguished target.
+Literal identification with RCA also fails the existing verifier stream
+entrance. These results retain the actual initial target, source,
+preparation, historical guards, old bytes, ownership and original
+consumers.
+
+The remaining constructive problem is a single finite common-role and
+paid recovery realization for this growing CAP runtime, including the
+acquired selector/frontier, retained backing and present rights, all
+added control/input and output/ACK/return costs, and both kernel inclusions
+for each proposed natural expression on the original task. Boot and
+pre-acquisition interpretations and global terminal-task separation must
+be justified on their actual domains. No such common service or complete
+four-expression instance has been constructed here. The original
+CAP9.3(3) programme remains unproved.
+
+## 追加锚（本行以下为增补区）
