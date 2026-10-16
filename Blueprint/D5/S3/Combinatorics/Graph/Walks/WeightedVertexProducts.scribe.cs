@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 internal sealed class WeightedVertexProductsDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Symmetric group-valued edge weights factor into vertex products precisely when even closed walks balance; bipartite graphs admit simple-cycle and arbitrary spanning-tree tests.",
+        "On a connected graph over a commutative group with surjective squaring, symmetric edge weights factor into vertex products exactly when every even closed walk balances. For a bipartite graph over any commutative group, every specified spanning tree gives equivalent simple-cycle and fundamental-cycle tests.",
         H("Weighted Vertex Products and Closed Walks"), Blocks(
             Paragraph(Text("Let V be an arbitrary vertex type, A a commutative group, G a simple graph, and w:Sym2(V)->A symmetric edge weights. For a walk p, alpha(w,p) is List.alternatingProd of its edge-weight list. Every occurrence is retained, including repeated edges and immediate backtracks. The empty walk has value one. Sol(w,G) means that there is b:V->A with b(u)b(v)=w({u,v}) on every edge.")),
             Describe.Lean(DescribeId.Create("even-closed-walks"),

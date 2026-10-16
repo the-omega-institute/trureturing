@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected]
    utility: none
-   digest: Vertex products are solvable exactly when every even closed walk balances. -/
+   digest: On connected graphs over commutative groups with surjective squaring, vertex products are solvable exactly when every even closed walk balances. -/
 
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
