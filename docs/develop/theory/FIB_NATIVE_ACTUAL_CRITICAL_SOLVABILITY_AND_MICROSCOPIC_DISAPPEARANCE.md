@@ -1323,3 +1323,444 @@ The finite estimate (14.2) makes no sign assumption and does not require bounded
 The canonical absolute response sign and the actual occurrence of positive or zero response remain unresolved. At response zero, the existence and selection of actual endpoints are not decided: nonzero cores cannot occur at $r_C$ by (15.2), but actual selection away from $r_C$, deeper finite mixed/core branches and possible divergent behavior remain unresolved. No finer energy coefficient, centered crossover, analytic-state preparation, physical-space correspondence or physical spatial dimension follows. Resource, cone, observation and completely positive realization statements supply no additional native preparation premise here. The equivalence (15.6) and the strict charge margin are partial constraints on the original every-actual-choice selection problem, not a decision of that complete problem.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 17. The original Coulomb column and the two comparison maps
+
+**Definition 17.1 (fixed datum, separated spectral parameter and comparison spaces).** Retain Definitions 1.1–3.2, 10.1 and 13.1, including all their analytic antecedents and the parameter applicability conditions of L Definition 35.1, the original signed nonzero $\kappa$, jointly realized rational vector, both height faces, every real phase and the full complex domains (1.5). Fix this one datum before taking any limit. In §§17–19 prescribe any sequence $s_n\downarrow0$ and any actual normalized complex ground-state choices $\psi_s\in D(S)$ on $g_s=\chi_cs^3$, and assume along this sequence that
+
+$$
+r_s\longrightarrow R<\infty,\qquad F_s=\mathcal U_s\psi_s\rightharpoonup cp,
+\qquad c\ne0.
+\tag{17.1}
+$$
+
+Write $\chi=\chi_c$. Theorem 15.1 gives $R>r_C=-\chi^2e_C$. Thus
+
+$$
+t_s=-E_s/g_s^2=r_s/\chi^2\longrightarrow t=R/\chi^2>-e_C>0,
+\qquad m_s=g_s^2t_s/a,\qquad h_s=s^2m_s.
+\tag{17.2}
+$$
+
+On complex $L^2(\mathbb R^3,d\mathbf z)$ put
+
+$$
+H_0=-a\nabla\cdot M\nabla,\qquad U_C(\mathbf z)=\beta_C/d(\mathbf z),
+\qquad H_C=H_0-U_C,
+\tag{17.3}
+$$
+
+where $H_C$ is the original Friedrichs form operator on $H^1$, with $M,d,\beta_C,e_C$ exactly as in (10.1). Let $\iota h(k,\mathbf z)=\phi(k)h(\mathbf z)$, let $\Pi_s$ be restriction to $\Omega_s$ followed by zero extension, and define
+
+$$
+\begin{aligned}
+\mathcal M_sh&=\mathcal U_s\mathcal D_{g_s}^{-1}\iota h,
+&\mathcal N_sf&=\mathcal D_{g_s}\mathcal U_s^{-1}\Pi_sf,\\
+\phi_s(\xi)&=\mathbf1_{\Omega_s}(\xi)\phi(k_0+\varepsilon sr),
+&\mathbf q_s(\xi)&=s c_0y+\varepsilon s^2c_1z+\varepsilon^2s^3c_2w.
+\end{aligned}
+\tag{17.4}
+$$
+
+In (17.4), extend $\phi$ by zero outside $I$ when evaluating $\phi_s$. The output of $\mathcal M_s$ is zero extended. The maps $\iota$ and $\mathcal M_s$ are isometries; $\|\mathcal N_sf\|_2=\|\Pi_sf\|_2\le\|f\|_2$. These facts follow from $\|\phi\|_2=1$ and the two exact unitaries (2.1), (10.1). In particular,
+
+$$
+(\mathcal M_sh)(\xi)=\sqrt{j_0}s^{7/2}g_s^{3/2}
+ \phi_s(\xi)h(g_s\mathbf q_s(\xi)).
+\tag{17.5}
+$$
+
+These are comparison maps in $L^2$ only. No native form membership or kinetic-energy correspondence for their inputs or outputs is part of this definition.
+
+For $b>0$, $\eta\ge0$, and the original Gaussian $\Gamma_{M,u}$ of L (36.2), set
+
+$$
+\begin{aligned}
+Y_b^{[\eta]}(\mathbf z)&=\frac1a\int_\eta^\infty
+ e^{-bu/a}\Gamma_{M,u}(\mathbf z)du,&Y_b&=Y_b^{[0]},\\
+Y_b(\mathbf z)&=\frac{e^{-\sqrt{b/a}\,d(\mathbf z)}}
+ {4\pi a\sqrt{\det M}\,d(\mathbf z)},&
+Q&=\sqrt{j_0\chi}\,\phi(k_0)m_{\rm core}>0.
+\end{aligned}
+\tag{17.6}
+$$
+
+Here $m_{\rm core}=\int Vp$ is the finite positive charge of (15.1), and $Q$ denotes a scalar source charge in §§17–20. The factor $1/a$ is inside $Y_b$, not inside the native field clock. The singular source $\delta_0$ used below is a distribution on the macroscopic phase space, never an $L^2$ vector or an additional native interaction.
+
+**Proposition 17.2 (the uniquely fixed $L^2$ Coulomb column).** Let $t=R/\chi^2$ as above. The operator $(H_0+t)^{-1}U_C$, initially on smooth functions supported away from zero, has a bounded extension $T_t$ to all complex $L^2$. The operator $I-T_t$ has a bounded inverse there. The real function
+
+$$
+\zeta_R=Q(I-T_t)^{-1}Y_t\in L^2(\mathbb R^3)
+\tag{17.7}
+$$
+
+is strictly positive almost everywhere and is the unique $L^2$ distributional solution, on all of $\mathbb R^3$, of
+
+$$
+(H_C+R/\chi^2)\zeta_R=Q\delta_0.
+\tag{17.8}
+$$
+
+It is the column determined by the original Friedrichs operator; there is no boundary parameter at the origin.
+
+Proof. The linear change $\mathbf z=M^{1/2}y$ reduces the needed Hardy bound to the classical three-dimensional inequality. It gives
+
+$$
+\|U_Cv\|_2\le C\|H_0^{1/2}v\|_2\qquad(v\in H^1).
+\tag{17.9}
+$$
+
+Consequently $U_C(H_0+t)^{-1}$ is bounded; define $T_t$ as its adjoint. This agrees with the stated initial product. Fourier interpolation in (17.9) gives, for every $\epsilon>0$, $\|U_Cv\|_2\le\epsilon\|H_0v\|_2+C_\epsilon\|v\|_2$ on $H^2$. Thus the form realization $H_C$ has operator domain $H^2$. One direct justification is to choose $L$ so large that $\|U_C(H_0+L)^{-1}\|<1$, by (17.9) and spectral calculus. The factorization of $H_0-U_C+L$ then gives its inverse into $H^2$; symmetry and the same factorization at nonreal parameters give the selfadjoint operator on $H^2$, whose form is the Friedrichs form (17.3).
+
+P (72.3) gives $\inf\sigma(H_C)=e_C$, so $H_C+t\ge(t+e_C)I>0$. For $v=(H_C+t)^{-1}f$, put $x=\|H_0^{1/2}v\|_2$ and $y=\|v\|_2$. The spectral bound gives $y\le(t+e_C)^{-1}\|f\|_2$, while its real energy identity and (17.9) give
+
+$$
+x^2\le y\|f\|_2+Cxy.
+\tag{17.10}
+$$
+
+Young's inequality therefore bounds $x$, and hence $\|U_Cv\|_2$, by a fixed multiple of $\|f\|_2$. Write $A=U_C(H_0+t)^{-1}$ and $B=U_C(H_C+t)^{-1}$. Both are bounded. The two resolvent identities, with the products justified by the common $H^2$ domain and the preceding bounds, give $B=A+AB=A+BA$. Hence $(I-A)^{-1}=I+B$. Taking adjoints proves bounded invertibility of $I-T_t$, with
+
+$$
+(I-T_t)^{-1}=I+B^*,\qquad
+B^*=[(H_C+t)^{-1}U_C]_{\rm ext}.
+\tag{17.11}
+$$
+
+For a smooth compact test $v$, integration of $-\partial_u(e^{-tu/a}\Gamma_{M,u})$ from zero to infinity gives $v(0)$ after pairing with $v$. This follows from the Gaussian approximate identity at zero and exponential decay at infinity, and proves the distributional identity below. Evaluating the Gaussian integral radially after $\mathbf z=M^{1/2}y$ gives the formula in (17.6); integrating its square with radial measure $4\pi\sqrt{\det M}r^2dr$ gives
+
+$$
+(H_0+t)Y_t=\delta_0\quad\text{in distributions},\qquad
+\|Y_t\|_2^2=\frac1{8\pi a^2\sqrt{\det M}\sqrt{t/a}}<\infty.
+\tag{17.12}
+$$
+
+For any $f\in L^2$ and any smooth compact test $v$, $U_Cv\in L^2$. The adjoint definition therefore gives $(H_0+t)T_tf=U_Cf$ distributionally. Here $U_Cf$ is locally integrable by Cauchy–Schwarz. Applying this to (17.7) proves (17.8). Conversely an $L^2$ homogeneous solution $u$ satisfies $(H_0+t)(u-T_tu)=0$ distributionally. Fourier transformation and $a\eta^{\mathsf T}M\eta+t>0$ force $u=T_tu$, and invertibility forces $u=0$. This proves uniqueness without imposing a punctured-space boundary condition.
+
+Finally $(H_C+t)^{-1}$ preserves nonnegativity. Indeed conjugation first makes its solution real for real input; testing its form equation against the negative part gives $-\mathfrak h_t[v_-]=\langle v_-,f\rangle\ge0$ for $f\ge0$, whereas $\mathfrak h_t[v_-]\ge(t+e_C)\|v_-\|_2^2$. Thus $v_-=0$. Positive annular approximations extend this order property to the bounded $B^*$ in (17.11). It follows that $\zeta_R=Q(Y_t+B^*Y_t)\ge QY_t>0$ almost everywhere. All inverses here belong to the auxiliary original Coulomb operator on the entire phase space. No $H^1$ property of $\zeta_R$, and no native-domain assertion for it, has been used. $\square$
+
+## 18. Complete output of the actual short-field source
+
+**Theorem 18.1 (core and free-column reconstruction before the long field).** Under (17.1), put $D_s=W_{s^2}-W_1$ and
+
+$$
+w_s=\frac{g_s}{a}(S+m_s)^{-1}D_s\psi_s.
+\tag{18.1}
+$$
+
+Then, in the complete zero-extended $L^2(\mathbb R^4)$ norm,
+
+$$
+\|\mathcal U_sw_s-cp-c\mathcal M_s(QY_t)\|_2\longrightarrow0.
+\tag{18.2}
+$$
+
+Proof. Use $V_s=U_s^{<}=s^5D_s\circ\Xi_s$, zero extended. P (104.6) gives $V_s\to V$ in $L^2$ and a uniform supremum bound. P Theorem 90.1, only in its necessity and local-compactness directions for actual states of zero excess, gives $F_s\to cp$ in $L^2(K)$ on every fixed compact $K$. Consequently
+
+$$
+V_sF_s\longrightarrow cVp\text{ in }L^1,\qquad
+\mu_s:=\phi_sV_sF_s\longrightarrow c\phi(k_0)Vp\text{ in }L^1.
+\tag{18.3}
+$$
+
+For the first claim, bound $(V_s-V)F_s$ by $\|V_s-V\|_2$, use local strong convergence for $V(F_s-cp)$ on a compact box, and bound its complement by $(1+|c|)\|V\mathbf1_{K^c}\|_2$. For the second, $\phi_s$ is uniformly bounded, converges pointwise to $\phi(k_0)$, and $Vp\in L^1$. Dominated convergence completes the argument. These are convergences of complex products, without taking moduli of the actual states. The exact Jacobian also gives
+
+$$
+\|D_s\psi_s\|_1=\sqrt{j_0}s^{-3/2}\|V_sF_s\|_1\le Cs^{-3/2}.
+\tag{18.4}
+$$
+
+At each fixed $s$, the source is also in $L^2$, since $D_s$ is a bounded multiplier. The resolvent integral in (18.1) is thus legitimate on the whole complex native Hilbert space.
+
+Split its native free heat time $T$ at $T=1$. For $0<T<1$ set $T=s^2u$ and retain $Q_s(u)=e^{-uC_s}$ of (10.4). Exact conjugacy gives the early output
+
+$$
+\mathcal U_sw_s^{\rm early}
+ =\frac\chi a\int_0^{s^{-2}}e^{-h_su}Q_s(u)V_sF_sdu.
+\tag{18.5}
+$$
+
+P (104.9)–(104.10) bound its difference from $(\chi/a)K_{\rm rec}F_s$ by $C(d_s+h_s^{3/4})\to0$. The compact operator $K_{\rm rec}$ sends $F_s\rightharpoonup cp$ to strong convergence, and $(\chi/a)K_{\rm rec}p=p$ by (2.7) and the supplied reconstruction. Therefore (18.5) converges strongly to $cp$ in the full output norm.
+
+For the remaining native time define $G_T$ by its kernel
+
+$$
+G_T((k,q),(k',q'))=\phi(k)\phi(k')\Gamma_{M,T}(q-q'),
+\qquad \mathscr E_T=e^{-TS}-G_T.
+\tag{18.6}
+$$
+
+The spatial factor of L (41.2), with both height factors intact, yields
+
+$$
+\|\mathscr E_T(\cdot,(k',q'))\|_2\le C\phi(k')T^{-7/4},
+\qquad \|\mathscr E_T\|_{1\to2}\le CT^{-7/4}\quad(T\ge1).
+\tag{18.7}
+$$
+
+In detail, the squared kernel bound is $C\phi(k)^2\phi(k')^2T^{-5}$ times $\exp[-2c\min(|q-q'|^2/T,|q-q'|)]$. Its phase integral is at most $CT^{3/2}$: on $|q-q'|\le T$ use the Gaussian integral, and on the complement use the exponential in $|q-q'|$. Integrate $\phi(k)^2$ to one, take the square root and then apply Minkowski to get (18.7). Thus (18.4) gives
+
+$$
+\left\|\frac{g_s}{a}\int_1^\infty
+ e^{-m_sT}\mathscr E_TD_s\psi_s\,dT\right\|_2
+ \le Cg_ss^{-3/2}\int_1^\infty T^{-7/4}dT=O(s^{3/2})\longrightarrow0.
+\tag{18.8}
+$$
+
+This bound is over all output heights and all phase points; no output compact restriction precedes it.
+
+The Gaussian part can be evaluated exactly. Substitute $\mathbf z=g_sq$, $u=g_s^2T$, and then $Y'=\Xi_s\xi$ in its input integral. Since $\Gamma_{M,T}(\mathbf z/g_s-q')=g_s^3\Gamma_{M,u}(\mathbf z-g_sq')$, (18.4)'s Jacobian calculation gives
+
+$$
+\mathcal D_{g_s}w_s^{\rm late,G}(k,\mathbf z)
+ =\phi(k)\sqrt{j_0\chi}
+ \int_{\mathbb R^4}\mu_s(\xi)
+ Y_{t_s}^{[g_s^2]}(\mathbf z-g_s\mathbf q_s(\xi))d\xi.
+\tag{18.9}
+$$
+
+In particular the prefactor before the $u$ integral is $g_s^{1/2}\sqrt{j_0}s^{-3/2}/a=\sqrt{j_0\chi}/a$; the $1/a$ is exactly the one in (17.6). This keeps the raw source density and field clock unchanged.
+
+The Gaussian $L^2$ norm is $\|\Gamma_{M,u}\|_2=C_Mu^{-3/4}$. It follows that $\|Y_b-Y_b^{[g_s^2]}\|_2\le Cg_s^{1/2}$ for $b>0$. Also $Y_{t_s}\to Y_t$ in $L^2$ by dominated Bochner integration, since $t_s\to t>0$, using $u^{-3/4}$ near zero and exponential decay at infinity. These columns have uniformly bounded $L^2$ norms for small $s$. For every fixed $\xi$, $g_s\mathbf q_s(\xi)\to0$, so translation continuity in $L^2$ gives
+
+$$
+Y_{t_s}^{[g_s^2]}(\cdot-g_s\mathbf q_s(\xi))\longrightarrow Y_t
+\quad\text{in }L^2(\mathbb R^3).
+\tag{18.10}
+$$
+
+Replace $\mu_s$ in (18.9) by $c\phi(k_0)Vp$ using (18.3) and the uniform column norm. For this fixed integrable density, (18.10) and dominated integration give convergence in full $L^2(dk\,d\mathbf z)$ to $c\iota(QY_t)$. The two changes of coordinates are isometries, so (18.8), (18.5) and this last convergence prove (18.2). In particular neither local kernel convergence alone nor weak convergence of the sources has been substituted for a complete-output estimate. $\square$
+
+## 19. Bounded native inversion and the complete two-scale norm
+
+**Theorem 19.1 (actual finite-$R$ reconstruction and exact mass law).** For every fixed datum, prescribed sequence and actual complex choices in (17.1), with the unique column (17.7),
+
+$$
+\|F_s-cp-c\mathcal M_s\zeta_R\|_2\longrightarrow0,
+\qquad 1=|c|^2(1+\|\zeta_R\|_2^2).
+\tag{19.1}
+$$
+
+The convergence in the first assertion is in the complete $L^2(\mathbb R^4)$ norm. The microscopic and macroscopic components share exactly the same complex factor $c$.
+
+Proof. Put
+
+$$
+\mathsf T_s=g_s(aS+g_s^2t_s)^{-1}W_1,
+\qquad \widetilde{\mathsf T}_s=\mathcal U_s\mathsf T_s\mathcal U_s^{-1}
+\quad\text{on }L^2(\Omega_s).
+\tag{19.2}
+$$
+
+At each fixed $s$, all multipliers in the actual equation are bounded and its domain is exactly $D(S)$. It gives the exact identity
+
+$$
+(I-\mathsf T_s)\psi_s=w_s.
+\tag{19.3}
+$$
+
+We first prove a bounded inverse uniformly for this fixed separated parameter. P Theorem 72.1 at cutoff one gives $e_1(g_s)/g_s^2\to e_C$. By (17.2), there is $d>0$ such that
+
+$$
+H_{g_s,1}+g_s^2t_s=aS-g_sW_1+g_s^2t_s\ge dg_s^2I
+\tag{19.4}
+$$
+
+for all sufficiently small $s$. For $u=(H_{g_s,1}+g_s^2t_s)^{-1}f$, set $x=\|S^{1/2}u\|_2$ and $y=\|u\|_2$. Then $y\le d^{-1}g_s^{-2}\|f\|_2$. P (104.12) and the real part of the actual operator pairing give
+
+$$
+a x^2\le y\|f\|_2+Cg_sxy,
+\qquad x\le Cg_s^{-1}\|f\|_2,
+\qquad \|W_1u\|_2\le Cg_s^{-1}\|f\|_2.
+\tag{19.5}
+$$
+
+The second inequality follows from the first by Young's inequality and the bound for $y$. The adjoint product has the same bound. Bounded-perturbation resolvent identities now give, on the entire native complex $L^2$ space,
+
+$$
+(I-\mathsf T_s)^{-1}
+ =I+g_s(H_{g_s,1}+g_s^2t_s)^{-1}W_1,
+\qquad \sup_{s\text{ small}}\|(I-\mathsf T_s)^{-1}\|<\infty.
+\tag{19.6}
+$$
+
+In addition P (104.13) gives $\|\mathsf T_s\|\le Cg_sm_s^{-1/2}\le C$. Thus both the inverse bound and all approximation arguments below apply to arbitrary $L^2$ comparison vectors. The gap (19.4) is for the actual fixed-cutoff native Hamiltonian at a parameter below its bottom, not a positive $L^2$ gap for the canonical critical operator.
+
+Next we determine its action on every fixed macroscopic input. Set
+
+$$
+\mathsf A_g=g^{-2}\mathcal D_gaS\mathcal D_g^{-1}.
+\tag{19.7}
+$$
+
+At phase Fourier frequency $\eta$, its fibre is $ag^{-2}(B_{g\eta}-\lambda)$. L (36.4), (36.7) give convergence of the first eigenvalue to $a\eta^{\mathsf T}M\eta$ and of its height projection to $|\phi\rangle\langle\phi|$ for each fixed $\eta$. The complementary eigenvalues are at least $3a\lambda/g^2$, by min-max for the nonnegative scalar phase potential. Consequently the fibres of $(\mathsf A_{g_s}+t_s)^{-1}$ converge in operator norm to $|\phi\rangle\langle\phi|/(a\eta^{\mathsf T}M\eta+t)$. They are bounded by $1/\inf_s t_s$ for small $s$. Plancherel and dominated convergence prove on the full macroscopic complex space
+
+$$
+(\mathsf A_{g_s}+t_s)^{-1}\longrightarrow
+ \iota(H_0+t)^{-1}\iota^*\quad\text{strongly}.
+\tag{19.8}
+$$
+
+For $h\in C_c^\infty(\mathbb R^3\setminus\{0\})$, P (70.3), with its uniform height error, gives
+
+$$
+g_s^{-1}W_1(k,\mathbf z/g_s)\phi(k)h(\mathbf z)
+ \longrightarrow\frac{\phi(k_0)\phi(k)^2}{4\pi\sqrt{\det M}}
+ \frac{h(\mathbf z)}{d(\mathbf z)}
+ \quad\text{in }L^2(dk\,d\mathbf z).
+\tag{19.9}
+$$
+
+Apply (19.8) to this convergent input. Its height projection integrates $\phi^3$ and gives precisely $U_Ch$. Hence
+
+$$
+\mathcal D_{g_s}\mathsf T_s\mathcal D_{g_s}^{-1}\iota h
+ \longrightarrow\iota T_th.
+\tag{19.10}
+$$
+
+The uniform bound on $\mathsf T_s$, boundedness of $T_t$, and density of these annular tests extend (19.10) to every fixed $h\in L^2$, including the singular column $\zeta_R$. Equivalently,
+
+$$
+\|\widetilde{\mathsf T}_s\mathcal M_sh-\mathcal M_sT_th\|_2\longrightarrow0
+\qquad(h\in L^2\text{ fixed}).
+\tag{19.11}
+$$
+
+We also need the action on the fixed microscopic core. For a compactly supported $f\in L^2(\mathbb R^4)$ put $f_s=\mathcal U_s^{-1}\Pi_sf$. Boundedness of $W_1$ and the exact support volume give
+
+$$
+\|W_1f_s\|_2\le C\|f\|_2,
+\qquad \|W_1f_s\|_1\le C_f s^{7/2}\|f\|_2.
+\tag{19.12}
+$$
+
+In the Laplace integral for $\mathsf T_sf_s=(g_s/a)\int_0^\infty e^{-m_sT}e^{-TS}W_1f_s\,dT$, the interval $(0,1)$ contributes at most $Cg_s\|f\|_2$ by contraction. L (41.2) gives $\|e^{-TS}\|_{1\to2}\le CT^{-3/4}$ for $T\ge1$, since its squared Gaussian column has integral $O(T^{3/2})$. Thus the remaining interval contributes at most
+
+$$
+C_fg_ss^{7/2}m_s^{-1/4}\|f\|_2
+ \le C_fg_s^{1/2}s^{7/2}\|f\|_2\longrightarrow0.
+\tag{19.13}
+$$
+
+The uniform $L^2$ bound on $\mathsf T_s$ and compact-support approximation extend this conclusion to every fixed $f\in L^2$, in particular
+
+$$
+\|\widetilde{\mathsf T}_s\Pi_sp\|_2\longrightarrow0.
+\tag{19.14}
+$$
+
+This argument requires no ordinary phase derivatives of $p$ or of the comparison approximants.
+
+Take the $L^2(\Omega_s)$ comparison vector $A_s=c(\Pi_sp+\mathcal M_s\zeta_R)$; this symbol is unrelated to the Friedrichs operator in (2.2). By (19.11), (19.14) and $(I-T_t)\zeta_R=QY_t$,
+
+$$
+(I-\widetilde{\mathsf T}_s)A_s
+ =c\Pi_sp+c\mathcal M_s(QY_t)+o_{L^2}(1)
+ =\mathcal U_sw_s+o_{L^2}(1),
+\tag{19.15}
+$$
+
+where the last equality uses Theorem 18.1 and $\|\Pi_sp-p\|_2\to0$. Subtract (19.3), apply the uniformly bounded inverse (19.6), and then replace $\Pi_sp$ by $p$ in full $L^2$. This proves the first assertion in (19.1). The argument acts entirely on $L^2$ and has not placed $A_s$ in a native form or operator domain.
+
+For a bounded $h\in L^2(\mathbb R^3)$, (17.5) gives $|\mathcal M_sh|\le C_hs^8$ on every fixed microscopic compact set. Approximation by bounded $L^2$ functions and the isometry extend local strong convergence to zero to every $h\in L^2$. Their bounded global norms then give
+
+$$
+\mathcal M_sh\rightharpoonup0\quad\text{in }L^2(\mathbb R^4)
+\qquad(h\in L^2\text{ fixed}).
+\tag{19.16}
+$$
+
+In particular $\langle p,\mathcal M_s\zeta_R\rangle\to0$. Squaring the already proved complete-norm reconstruction, using $\|F_s\|_2=\|p\|_2=1$ and $\|\mathcal M_s\zeta_R\|_2=\|\zeta_R\|_2$, proves the exact second assertion in (19.1). Both components inherit the same complex factor from the linear actual equation and its source limit (18.3). $\square$
+
+## 20. Every actual finite-$R$ choice, the two masses and absence of a third mass scale
+
+**Theorem 20.1 (conditional phase-orbit rigidity for every actual choice).** Fix one original datum and all the preceding analytic antecedents. For any prescribed sequence $s_n\downarrow0$ and any actual normalized complex ground-state choices in the unchanged $D(S)$, assume only
+
+$$
+r_{s_n}\longrightarrow R\in(r_C,\infty).
+\tag{20.1}
+$$
+
+With the unique column (17.7) and $\alpha_R=(1+\|\zeta_R\|_2^2)^{-1/2}$, one has
+
+$$
+\inf_{\theta\in\mathbb R}
+ \|F_{s_n}-e^{i\theta}\alpha_R(p+\mathcal M_{s_n}\zeta_R)\|_2
+ \longrightarrow0.
+\tag{20.2}
+$$
+
+In particular any microscopic weak cluster is $cp$ with $|c|=\alpha_R\in(0,1)$, and the datum necessarily has $C_{\rm resp}=0$.
+
+Proof. Every subsequence of the unit vectors $F_s$ has a weakly convergent further subsequence. P Theorem 90.1 identifies its limit as $cp$, and its local compactness gives local strong convergence. If $c=0$, Theorem 10.2 would force $r_s\to r_C$ on that further subsequence, contradicting (20.1). Therefore $c\ne0$. Theorem 19.1 applies and fixes $|c|=\alpha_R$. It also gives convergence to the moving vector in (20.2) with the constant phase $c/|c|$ on this further subsequence. A failure of (20.2) supplies a subsequence with distance bounded below, contradicting that conclusion on a further subsequence. Strict positivity and nonzero norm of $\zeta_R$ give $0<\alpha_R<1$. Finally $E_s=-r_ss^6\to0$, and Theorem 5.1 on any of the nonzero-core subsequences gives $c(0-C_{\rm resp})=0$. This proves the claimed response restriction without asserting that such a datum or $R$ occurs. $\square$
+
+**Corollary 20.2 (exact two masses, common phase and complete accounting).** Under (17.1), the core-subtracted macroscopic state satisfies
+
+$$
+\|\mathcal D_{g_s}\psi_s-c\mathcal N_sp-c\iota\zeta_R\|_2\longrightarrow0.
+\tag{20.3}
+$$
+
+For $K_A=\{\xi:N(\xi)\le A\}$ and every fixed $A,\delta>0$,
+
+$$
+\begin{aligned}
+\int_{K_A}|F_s|^2d\xi&\longrightarrow |c|^2\int_{K_A}p^2d\xi,\\
+\int_{d(\mathbf z)>\delta}|\mathcal D_{g_s}\psi_s(k,\mathbf z)|^2dk\,d\mathbf z
+ &\longrightarrow |c|^2\int_{d(\mathbf z)>\delta}|\zeta_R(\mathbf z)|^2d\mathbf z.
+\end{aligned}
+\tag{20.4}
+$$
+
+Consequently the two actual mass fractions are
+
+$$
+\mathfrak m_{\rm micro}=|c|^2=\frac1{1+\|\zeta_R\|_2^2},
+\qquad
+\mathfrak m_{\rm macro}=|c|^2\|\zeta_R\|_2^2
+ =\frac{\|\zeta_R\|_2^2}{1+\|\zeta_R\|_2^2},
+\qquad \mathfrak m_{\rm micro}+\mathfrak m_{\rm macro}=1.
+\tag{20.5}
+$$
+
+The first mass is obtained by $s\to0$ followed by $A\to\infty$; the second by $s\to0$ followed by $\delta\downarrow0$. There is no remaining $L^2$ mass at an intermediate or third scale. More explicitly,
+
+$$
+\lim_{A\to\infty}\lim_{\delta\downarrow0}\limsup_{n\to\infty}
+ \int_{\substack{\xi\in\Omega_{s_n}\setminus K_A\\
+ d(g_{s_n}\mathbf q_{s_n}(\xi))\le\delta}}
+ |F_{s_n}(\xi)|^2d\xi=0.
+\tag{20.6}
+$$
+
+The same mass statements hold for the whole sequence in Theorem 20.1, with $|c|^2=\alpha_R^2$, without prescribing a weak limit or a limiting phase. Its two comparison components have a common phase as in (20.2).
+
+Proof. Apply $\mathcal D_{g_s}\mathcal U_s^{-1}$ to the restriction of (19.1) to $\Omega_s$, using the exact maps (17.4), to get (20.3). Formula (19.16)'s local strong conclusion and (19.1) give the first limit in (20.4). For the second, observe that for every fixed compactly supported $f\in L^2(\mathbb R^4)$ the support of $\mathcal N_sf$ has $\mathbf z=g_s\mathbf q_s(\xi)$ with $\xi$ in that fixed compact. This phase support lies in $d(\mathbf z)<\delta$ for small $s$, since $\sup_{\operatorname{supp}f}d(g_s\mathbf q_s)=O(s^4)$. Compact-support approximation and $\|\mathcal N_s\|\le1$ therefore give
+
+$$
+\|\mathbf1_{\{d(\mathbf z)>\delta\}}\mathcal N_sp\|_2\longrightarrow0
+\qquad(\delta>0\text{ fixed}).
+\tag{20.7}
+$$
+
+Combining (20.3) with (20.7) proves the second limit. Monotone convergence, $\|p\|_2=1$, $\zeta_R\in L^2$ and the exact law (19.1) give (20.5). Moreover (20.3) and the same compact-support argument show that the limsup mass outside $d(\mathbf z)\le L$ is $|c|^2\int_{d>L}|\zeta_R|^2$, tending to zero as $L\to\infty$; there is no additional mass beyond the macroscopic scale.
+
+For fixed $A,\delta$, $K_A\subset\Omega_s$ and $d(g_s\mathbf q_s)<\delta$ on $K_A$ for all sufficiently small $s$. The two regions in (20.4) are then disjoint under the exact coordinate dictionary, and their complement is exactly the integration region in (20.6). Its limiting mass is
+
+$$
+1-|c|^2\int_{K_A}p^2
+  -|c|^2\int_{d(\mathbf z)>\delta}|\zeta_R|^2.
+\tag{20.8}
+$$
+
+First let $\delta\downarrow0$ and then $A\to\infty$. Equation (19.1) makes the result zero, proving (20.6). This is full-mass accounting for the actual states, not merely for the comparison vectors. Under (20.1), the phase-orbit conclusion (20.2) gives (20.3) with varying unit phases and the same modulus $\alpha_R$; every norm and mass argument above is phase invariant, so all the asserted whole-sequence limits follow. $\square$
+
+**Definition 20.3 (correspondence and unresolved selection).** Theorems 18.1 and 19.1 and their consequences are repository-derived deductions from the source-specific actual equation. P (104.6), (104.9)–(104.10) supply the compact early reconstruction and its global operator-norm convergence; P (104.12)–(104.13) supply the multiplier bounds on the full complex native domain; P (70.3), Theorem 72.1 and L (36.4), (36.7), (41.2) supply the fixed-cutoff tail, genuine reference spectral bottom, scalar-fibre limit and full-output spatial error. Proposition 17.2 uses only the original Coulomb Friedrichs operator and P (72.3); Hardy, Fourier transformation, spectral calculus, resolvent identities, positivity, density and dominated integration are classical intermediate tools. Theorems 5.1, 10.2 and 15.1 retain the response-solvability, weak-zero endpoint and strict nonzero-core margin credit. Neither the conditional heat antecedents nor an external threshold theorem is newly authenticated by these deductions.
+
+All limits fix the original datum, $R>r_C$ and the prescribed sequence as specified. Constants may depend on that datum and the fixed gap $R-r_C$; no uniformity through $R=r_C$, in varying data or as $\kappa\to0$ is asserted. The source coefficient in (17.6) uses the raw $j_0s^7$ Jacobian, the unchanged unit source and the height weight $\phi(k_0)$, without survival normalization. Both original Dirichlet faces and the full rational third component remain in every native heat and spectral comparison. The field heat clock remains $B$, independently of the kinetic $a$.
+
+The comparison formulas determine shapes and all $L^2$ mass only. They imply no native form-domain membership, kinetic-energy transfer, native point interaction, cutoff-free realization, analytic-state preparation or physical-space/dimension correspondence. Absolute response sign, positive/zero occurrence, occurrence of a finite mixed branch, actual selection of $R$ or of divergent $r_s$, finer signed energy coefficients and centered crossover remain unresolved. Thus conditional rigidity at an actually occurring finite $R>r_C$ leaves the original every-ground-state decision and the full target of Definition 9.1 unresolved. Entire-height response residuals and resource, cone, observation or completely positive realizations supply no additional native analytic preparation premise.
+
+## 追加锚（本行以下为增补区）

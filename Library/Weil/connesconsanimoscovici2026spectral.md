@@ -5690,3 +5690,432 @@ elimination/SAME-short, source/unitary/lift/comparison and complete
 paid-far/cache premises remain conditions. Actual signed tail response,
 full-border sign, good-block metric, retained/cofinal positivity,
 Robin tail, RH and Lean verification remain unresolved.
+
+### Use the full short residual jet for one signed functional
+
+The forward geometric-jet bounds in the existing infinite-coupling
+section also supply a function-error interface for the SAME coherent
+direction. A Gram-error estimate alone would not supply one: replacing
+an operator by its negative preserves its Gram and changes its action.
+Here the original construction separately bounds the forward geometric
+error and the error in the exact midpoint features.
+
+Let $C_{\rm phys}$ be the original coupling from modes0 through2048 to
+$m>32768$, and let $\mathcal D=\binom I{-Y}$ be the SAME exact physical
+residual map, with $Y=F_E^{-1}B_E$ on $E=\{1281,\ldots,2048\}$.
+Keep the exact implicit retained lift $V$ and direction $v_R$. Thus
+$\mathsf B=R_FV=C_{\rm phys}\mathcal D V$. The complete56-term jet is
+$\mathcal L P$, with exact synthesis prefactor $2/\pi$, actual far
+symbol $s_m$ and the original unphased parity factors. $P_0$ is the
+original fixed midpoint feature matrix, including its midpoint for
+$1/\sqrt2$. The cached lift features enclose $P_0\mathcal D V$.
+
+Write $w_F>0$ for the original constant far weight and
+$\alpha_J=4/(\pi^2M)$. Here $r_2$ is the original unweighted squared Frobenius bound;
+$w_Fr_2$ bounds its weighted square. The previously established
+component bounds give
+
+$$
+\|C_{\rm phys}-\mathcal LP\|_{W_F}^2\le w_Fr_2,
+\qquad
+\|\mathcal L(P-P_0)\|_{W_F}^2
+\le w_F\alpha_J H_*e_P^2.
+$$
+
+The existing allowance construction has nonnegative components with
+$\eta_{\rm geom}\ge r_2$ and
+$\eta_{\rm round}\ge\alpha_JH_*e_P^2$. It retains the physical
+residual amplification $K_{\rm phys}\ge\|\mathcal D\|^2$, so the
+saved exact complete allowance satisfies
+
+$$
+\epsilon_{\rm complete}\ge
+w_F(\eta_{\rm geom}+\eta_{\rm core}+\eta_{\rm round})K_{\rm phys}.
+$$
+
+The triangle inequality and $(a+b)^2\le2(a^2+b^2)$ therefore imply
+
+$$
+\boxed{
+\|\mathsf Bv_R-j_h\|_{W_F}
+\le\sqrt{2\epsilon_{\rm complete}}\,\|Vv_R\|,
+\qquad h=P_0\mathcal D Vv_R.}
+$$
+
+This uses the forward component bounds, not Gram closeness alone.
+The genuine full moment Gram controls $\|\mathcal L\|$; the sparse
+masked core is not assumed PSD. No higher moment production or use
+of that sparse core as a whole-jet norm is needed.
+
+The exact midpoint feature order is $A_0,\ldots,A_{55},B_0,\ldots,B_{55}$,
+and its actual synthesis is
+
+$$
+j_h(m)=\frac{2(-1)^m}{\pi m}
+\sum_{k=0}^{55}(M/m)^{2k}
+\bigl[(M/m)h_{B_k}-s_mh_{A_k}\bigr],\qquad M=32768.
+$$
+
+One new cached112-by18 feature action encloses $h$. The existing
+lift Gram supplies a cheap diagonal-only norm bound
+
+$$
+L_V=\operatorname{up}\sum_{j=1}^{18}
+|(v_R)_j|_{\rm up}\sqrt{(V^*V)_{jj,\rm up}},\qquad
+\epsilon_b=\operatorname{up}_{640}
+ \bigl(\sqrt{2\epsilon_{\rm complete}}L_V\bigr).
+$$
+
+No physical-vector reconstruction or new Gram contraction is required.
+The target's matrix entries use640-bit units, while its original
+allowance metadata retains512-bit units; the already-checked lift
+metadata records that distinction. The source coefficient intervals
+are propagated through the new feature action. A separately selected
+midpoint is not identified with the exact common direction.
+
+For the original principal proxy from the signed Hankel-tail estimate,
+retain
+
+$$
+u_m^{(0)}=\frac{(-1)^m}{2}
+\left[-\sum_{n\in E}\frac{(-1)^nq_n}{m+n}
++\sum_{n\in J}\frac{(-1)^nw_n}{m+n}\right],
+\quad J=\{2049,\ldots,32768\}.
+$$
+
+Its independently bounded norm is $\|u^{(0)}\|_{W_F}\le P_{\rm up}$.
+The SAME smooth and mixed-$H$ residual bounds give
+$\|u_F-u^{(0)}\|_{W_F}\le\epsilon_u$. The original $q$ remainder
+is retained; it is not relabeled as a remainder for $p$.
+For $\mu=\kappa\langle u^{(0)},j_h\rangle_{W_F}$, telescope as
+
+$$
+\vartheta-\mu=\kappa\left[
+\langle u_F-u^{(0)},\mathsf Bv_R\rangle_{W_F}
++\langle u^{(0)},\mathsf Bv_R-j_h\rangle_{W_F}\right].
+$$
+
+The existing direction norm cap consequently gives the scalar payment
+
+$$
+\boxed{
+|\vartheta-\mu|\le E_\mu:=\operatorname{up}_{640}
+\bigl[\kappa(\epsilon_uN_{\rm cap}+P_{\rm up}\epsilon_b)\bigr].}
+$$
+
+This uses the independent principal-proxy norm cap for the same fixed
+source. A future SAME-source interval $I_\mu$ would have to satisfy the
+sufficient directed test
+
+$$
+\operatorname{up}\bigl(C_{\rm lin}+2(I_\mu+E_\mu)\bigr)<0.
+$$
+
+The corresponding exact arithmetic threshold is
+$\sup I_\mu<-C_{\rm lin}/2-E_\mu$. Supplying a priced threshold alone supplies
+no actual signed moment or center sign. The additional PSD good-block
+metric remains a separate obligation even after that condition holds.
+
+The sole fixed1024-working/640-export-bit application takes0.28065seconds.
+It reads the saved112-by18 features once and consumes18 diagonal
+lift-norm entries. Its directed scalar results are:
+
+| Quantity | Approximate directed value |
+|---|---:|
+| Diagonal triangle bound $L_V$ |$4.487671887147054866\cdot10^{67}$|
+| Inherited complete allowance |$2.077324851584678042\cdot10^{-135}$|
+| Jet forward error $\epsilon_b$ |2.892599471220086626|
+| Same-source proxy error $\epsilon_u$ |0.478756042962487477|
+| Signed-functional error $E_\mu$ |21.968771391420024702|
+| Unchanged exact direction norm upper |29.098313589424940590|
+| Unchanged $C_{\rm lin}$ |25.528336100647874028|
+| Sufficient proxy threshold $-C_{\rm lin}/2-E_\mu$ |−34.732939441743961716|
+
+All thresholds use the saved exact rationals; the displayed decimals
+are approximate. The112 exported coefficient intervals have maximum
+absolute endpoint approximately1038.04984493700085 and maximum absolute
+width approximately$5.11418\cdot10^{-25}$. These are enclosures of the
+ONE shared direction, not independently selectable coefficients.
+
+The small original operator allowance does not itself establish a small
+vector error: it must be multiplied by the direction's lift-norm bound.
+The resulting error payment is finite, and the missing signed supplier
+now has an explicit numerical obligation. No value or sign of $\mu$ or
+$\vartheta$ is supplied. In particular this threshold does not establish
+a negative center or justify an expensive supplier on nonexclusion alone.
+
+The packet SHA256 is
+`154949d8ab3e1f2875de531aa63a9c5a3c3d7d133640a5ce8b1d23c98d67565a`.
+The [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/d649640d58161392ae8382a4e64662b9165ec944/docs/reports/weil-c27)
+are a source-specific application of the existing geometric-jet,
+triangle and Cauchy bounds. All earlier producers, passed suites,
+reference/Gram/trace/inverse/solve and source/far suppliers are reused.
+The adapter guards its current source and inherited inputs, helpers and
+producers at entry and exit, and writes one exclusive fresh archive.
+There is no source, parameter or precision scan, new generic algorithm
+or Lean theorem. Actual-form/domain, full physical support, common
+source/short/lift, original weight, genuine symbol and component-bound
+conditions remain inherited. Actual signed response, good-block metric,
+full-border sign, retained/cofinal positivity, Robin tail and RH remain
+unresolved.
+
+### Enclose the same-source signed proxy with an Abel tail allowance
+
+The saved forward interface reduces the missing signed response to
+$\mu=\kappa\langle u^{(0)},j_h\rangle_{W_F}$. Keep all112 coefficient
+intervals for the SAME full56 jet, the original384-bit source and the
+original constant far weight $D_F$. Write $n_0=1281$, $M=32768$ and
+
+$$
+z_n=\begin{cases}
+-(-1)^nq_n,&1281\le n\le2048,\\
+(-1)^nw_n,&2049\le n\le M,
+\end{cases}
+\qquad
+S_m=\sum_{n=n_0}^{M}\frac{z_n}{m+n}.
+$$
+
+Here $q$ is the saved `D_inverse_difference`, not the other inverse
+profile $p$. Put
+$A(t)=\sum_{k<56}h_{A_k}t^k$ and
+$B(t)=\sum_{k<56}h_{B_k}t^k$. The principal factor $1/2$ and jet
+factor $2/\pi$ combine, and their two parity factors cancel:
+
+$$
+\boxed{
+\mu=\frac{\kappa D_F}{\pi}\sum_{m>M}\frac{S_m}{m}
+\left[\frac M m B((M/m)^2)-s_mA((M/m)^2)\right].}
+$$
+
+The adjacent finite block $M+1\le m\le2M$ is evaluated with one
+existing FLINT polynomial product. With $s=M-n_0+1$, set
+
+$$
+Z_{\rm rev}(t)=\sum_{n=n_0}^{M}z_nt^{M-n},\qquad
+K(t)=\sum_{a=0}^{M+s-2}\frac{t^a}{M+1+n_0+a}.
+$$
+
+Then
+$[t^{s-1+i}]Z_{\rm rev}K=S_{M+1+i}$ for $0\le i<M$.
+This is a reciprocal-sum kernel, distinct from the already-consumed
+signed energy convolution's difference kernel. Its32768 new outputs are saved in an exclusive Cauchy checkpoint
+before finite-symbol evaluation. The finite approximate jet outputs
+are saved in a second checkpoint before infinite-tail work. The final
+interval packet references the two checkpoints by SHA256; it does not
+duplicate either array. Existing
+FLINT vector polynomial evaluation in its iterative Horner mode
+evaluates both full jet polynomials and the saved smooth symbol.
+No multiplication or multipoint algorithm is reimplemented.
+
+The original symbol certificate gives
+
+$$
+\widehat s_m=C(M/m)-\sum_u a_u\operatorname{Im}(\xi_u^m),
+\qquad |s_m-\widehat s_m|\le\sigma.
+$$
+
+Reuse all64 coefficients of $C$ and the832-grid uniform error; its
+polynomial entries use640-grid units. The seed records exact prime
+powers and the number of folded phases, not their coefficient values.
+Only the14 elementary prime-power weights and13 folded phases are
+initialized, using the existing exact phase-alias function. The
+original polynomial producer is not invoked. For each folded rational
+phase, use $\tau_u=2\log u/\log27$ and evaluate
+$\operatorname{Im}\xi_u^m=\sin(\pi m\tau_u)$ directly with
+FLINT real `sin_pi`, retaining its full angle/weight uncertainty.
+This avoids rectangular-interval wrapping across a long rotation
+recurrence; the exact signed Fourier samples are unchanged.
+
+Only the separated tail $m\ge T:=2M+1$ uses the source expansion
+
+$$
+a_r(x)=\sum_{\ell<r}d_\ell x^\ell,
+\qquad d_\ell=\sum_nz_n(-n/M)^\ell,
+\qquad S_m\simeq m^{-1}a_r(M/m).
+$$
+
+The cached unweighted principal terms from the original primal
+estimate equal $\|w\|_1/(2\sqrt M)$ and
+$\|q\|_1/(2\sqrt M)$. Their upward sum, multiplied by $2\sqrt M$,
+therefore supplies $Z\ge\sum_n|z_n|$ without another source norm scan.
+The exact reciprocal remainder and an integral from $T-1=2M$ give
+
+$$
+\left|\frac1{m+n}-\frac1m\sum_{\ell<r}(-n/m)^\ell\right|
+=\frac{(n/m)^r}{m(1+n/m)},
+\qquad
+\delta_r:=\operatorname{up}_{640}
+\frac{\sqrt{D_F}Z\,2^{-r}}{2\sqrt{(2r+1)2M}}.
+$$
+
+Thus $\|u^{(0)}-\widetilde u^{(0)}\|_{W_F}\le\delta_r$ when
+$\widetilde u^{(0)}$ agrees with the true principal source on the
+finite block and uses this approximation only on the tail. The
+factor $1/2$ is already included in $\delta_r$. The order is chosen
+once by an exact bit-length upper bound, with the prescribed scalar
+geometric budget $\eta=1/64$, to ensure
+$\kappa J_{\rm cap}\delta_r\le\eta$;
+$J_{\rm cap}=N_{\rm cap}+\epsilon_b$ bounds the actual full jet.
+There is no order, cutoff, source or precision scan.
+
+Contract the short polynomials before evaluating any infinite kernels:
+
+$$
+F_0(x)=a_r(x)\left[xB(x^2)-C(x)A(x^2)\right],
+\qquad F_1(x)=a_r(x)A(x^2).
+$$
+
+For the smooth contribution, reuse FLINT's real Hurwitz implementation:
+
+$$
+K_q(T,1)=M^{q-1}\zeta(q,T),\qquad q\ge2,
+\qquad
+\widehat\mu_{\rm smooth}=\frac{\kappa D_F}{\pi M}
+\sum_p(F_0)_pK_{p+2}(T,1).
+$$
+
+The normalization remains $M=32768$, with endpoint $T=65537$.
+Every order is at least2. The existing sparse moments at endpoint
+$M+1$ are not a complete dense bank at $T$; this application records
+its new real kernel intervals for reuse.
+
+No complex infinite phase kernel is needed. For an exact unit phase
+$\xi\ne1$, the geometric partial sums have modulus at most
+$2/|1-\xi|$. Abel summation with decreasing positive $m^{-q}$ gives
+
+$$
+\left|\sum_{m\ge T}\frac{\xi^m}{m^q}\right|
+\le\frac{2}{|1-\xi|T^q},\qquad
+|K_q(T,\xi)|\le\frac{2M^{q-1}}{|1-\xi|T^q}.
+$$
+
+For each exact folded phase, the interval computation certifies a
+strictly positive lower bound for $|1-\xi_u|$. Omitting the
+oscillatory part of the SAME approximate-source tail costs at most
+
+$$
+\boxed{
+R_{\rm osc}=\operatorname{up}_{640}\left[
+\frac{2\kappa D_F}{\pi T^2}
+\left(\sum_p |(F_1)_p|_{\rm up}(M/T)^p\right)
+\left(\sum_u\frac{|a_u|_{\rm up}}{|1-\xi_u|_{\rm lo}}\right)
+\right].}
+$$
+
+This applies to $F_1=a_rA(x^2)$, not to a separately optimized source.
+The source and symbol telescope below therefore retains its original
+terms. Coefficient intervals crossing zero are retained throughout;
+only a provably exact zero may be discarded. These are standard
+geometric-sum and Abel estimates, not a new tail algorithm or theorem.
+
+With $\rho_0=M/(M+1)$, the global symbol payment is
+
+$$
+\beta_s=\operatorname{up}_{640}
+\frac{2\sqrt{D_F}\sigma}{\pi\sqrt M}
+\sum_{k<56}|h_{A_k}|_{\rm up}\rho_0^{2k},
+\qquad \|j_h-\widehat j_h\|_{W_F}\le\beta_s.
+$$
+
+The SAME independent principal cap gives
+$\|\widetilde u^{(0)}\|_{W_F}\le P_{\rm up}+\delta_r$.
+Pair the source error with the actual jet and the symbol error with
+the approximate source. This gives the complete analytic allowance
+
+$$
+\boxed{
+R_\mu=\operatorname{up}_{640}\left[
+\kappa\left(J_{\rm cap}\delta_r+(P_{\rm up}+\delta_r)\beta_s\right)
+\right].}
+$$
+
+If $I_{\rm alg}$ encloses the finite block plus smooth tail with
+all input intervals and arithmetic rounding, then
+$\mu\in I_{\rm alg}+[-(R_\mu+R_{\rm osc}),R_\mu+R_{\rm osc}]$ and
+$\vartheta\in I_{\rm alg}+[-(R_\mu+R_{\rm osc}+E_\mu),R_\mu+R_{\rm osc}+E_\mu]$.
+The existing sufficient test before the additional PSD good-block
+metric is
+
+$$
+\operatorname{up}\left(C_{\rm lin}
++2(I_{\rm alg}+R_\mu+R_{\rm osc}+E_\mu)\right)<0.
+$$
+
+A negative upper only opens that remaining metric test. A positive
+value of this sufficient upper expression does not establish a
+positive actual center. All actual-form/domain, same source/short/lift,
+genuine symbol, original weight and previous component conditions
+remain inherited; this application supplies no generic algorithm or
+Lean result and no full-border, cofinal, Robin or RH conclusion.
+
+The saved direct-real-sine/Abel application uses1024 working bits and
+640-bit exports and takes6.96478seconds. The fixed order is$r=13$;
+there is one new reciprocal-sum convolution,186 real Hurwitz kernels,
+13 certified positive phase gaps and425984 direct real sine samples.
+The final packet saves both checkpoint references and the new real
+kernel intervals. No source/lift, inverse/solve, reference, Gram or
+trace producer is regenerated.
+
+| Quantity | Approximate directed result |
+|---|---:|
+| Finite approximate functional |−2.266706962449528562|
+| Smooth tail center |−2.242939503220959819|
+| Algorithmic center |−4.509646465670488381|
+| Source/symbol allowance $R_\mu$ |0.001800203553588446|
+| Omitted oscillatory allowance $R_{\rm osc}$ |0.000869186655284127|
+| Complete analytic allowance |0.002669390208872574|
+| Exported proxy interval $I_\mu$ |[−4.512315855885066397,−4.506977075455910365]|
+| Exported $\vartheta$ interval |[−26.48108725775422862,17.46179432641325185]|
+| Exported $C_{\rm lin}+2\vartheta$ interval |[−27.43383853406987275,60.45192487268366729]|
+
+All decimals are approximate. The saved exact640-bit grid intervals
+and exact rational allowances supply the tests; Arb radius conversion
+adds conservative inflation to the exported intervals. The proxy
+interval does not satisfy the unchanged sufficient threshold
+$-C_{\rm lin}/2-E_\mu\simeq-34.732939441743961716$.
+
+A stronger boundary for this particular estimate follows without
+another source calculation. Exact endpoint arithmetic gives
+
+$$
+C_{\rm lin}+2I_\mu>\frac{33}{2}.
+$$
+
+The approximate endpoints are16.50370438887774123 and
+16.51438194973605330. Therefore
+reducing the nonnegative norm-only transfer allowance$E_\mu$, even to
+zero, cannot make this principal-proxy sufficient upper test negative.
+This is a limitation of that sufficient estimate; it establishes
+neither a positive actual center nor a negative Weil test.
+
+Keep the actual signed correction
+$\Delta_\vartheta=\vartheta-\mu$ instead. The pre-good-metric test would
+follow from a new SAME-source upper bound satisfying
+
+$$
+\sup\Delta_\vartheta<
+-\frac{C_{\rm lin}}2-\sup I_\mu
+\simeq-8.25719097486802665.
+$$
+
+The inherited absolute estimate
+$|\Delta_\vartheta|\le E_\mu\simeq21.96877$ does not supply this negative
+upper. The numerical target is for the full signed correction, not a
+separately selectable source or coefficient. The additional PSD
+good-block metric remains separate even if that new signed condition
+is met. Neither smaller oscillatory-tail payment alone nor a sharper
+nonnegative transfer allowance alone closes this proxy's deficit.
+
+The final interval packet SHA256 is
+`6475e5f63dba423b2f1ee7e488581f15ef8d53de83a22ea064ac2e393b124d55`.
+The Cauchy checkpoint SHA256 is
+`dbfedf8f55f74b4fa1659ff02e57559fea52e3250379c8f99ed1807ee91245f9`,
+and the finite-jet checkpoint SHA256 is
+`43a29c6710cae4b4b7ad2fce9433ebba4ca0bdec9dfea968d668b13d3a469bc8`.
+The [source and directed data](https://github.com/the-omega-institute/trureturing-experiments/tree/905f8cf4c9705e32075280ae4c5741f1199a873d/docs/reports/weil-c27)
+are retained in the existing experimental packet. This application reuses standard FLINT suppliers, Abel
+summation and the prior error contracts; it introduces no generic
+algorithm, literature-novelty or Lean claim. All actual-form/domain,
+common source/short/lift, original-weight and component premises remain
+conditions. Actual-center sign, the good-block metric, full-border
+sign, retained/cofinal positivity, Robin tail and RH remain unresolved.
