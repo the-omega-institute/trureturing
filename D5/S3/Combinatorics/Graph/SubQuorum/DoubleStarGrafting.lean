@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Basic]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.Finset]
    utility: none
    digest: Double-star grafting with actual induced sets and partial colorings. -/
 
