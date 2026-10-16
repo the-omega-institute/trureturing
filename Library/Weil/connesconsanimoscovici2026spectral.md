@@ -3572,6 +3572,25 @@ inverse-residual Gram remain missing. It is a numerical application of
 the existing Cauchy and matrix identities, without a new general theorem,
 algorithm or Lean verification.
 
+The [cached upper selector](https://github.com/the-omega-institute/trureturing-experiments/tree/5e12e20859da48eeeb070616f1ae0b01fae4d211/docs/reports/weil-c27)
+consumes only the archived $U_{\rm th}=\Xi+S_J$. The accepted
+seventeen-positive-direction bound and $S_J\succeq0$ reduce this
+upper matrix's inertia test to its determinant sign. One1024-bit
+Arb determinant takes0.53 seconds and encloses
+$\det U_{\rm th}\simeq1.06742140729487513\times10^{-1359}>0$.
+Thus this exact upper is positive definite under the inherited premises.
+The1536-bit execution gives an overlapping positive interval with
+nonidentical endpoints; all40 guarded files remain unchanged. The
+existing degree-based export rule uses11584 absolute determinant bits
+while retaining the640-bit entry grid. No Gram, source action, inverse,
+solve or scientific supplier is replayed.
+
+This positive upper does not decide $\Xi+\Theta$ or certify a negative
+source. The inexpensive exclusion selector is therefore insufficient;
+this route still needs a sharper common inverse/residual bound or
+another sufficient ordered estimate. No actual retained/cofinal
+positivity, Robin-tail, RH or Lean result is supplied.
+
 Even a certified negative $C_{\rm sharp}$ would only identify a
 direction for further actual certification. A sufficient full update
 still needs an upper bound for the SAME source on
