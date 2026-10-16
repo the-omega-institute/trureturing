@@ -8,8 +8,8 @@ set_option relaxedAutoImplicit false
 namespace Reg.D5.S3.Combinatorics.Graph.LegalWords.ActivityInnovations
 
 open scoped BigOperators
+open _root_.D5.S1.Words.AdmissibleWords.AdmissibleCount
 open _root_.D5.S3.Combinatorics.Graph.LegalWords.InhomogeneousMarkovCompletion
-open _root_.D5.S3.Combinatorics.Graph.LegalWords.ActivityMeanCorrespondence
 open _root_.D5.S3.Combinatorics.Graph.LegalWords.ActivityInnovations
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -46,13 +46,17 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬arena.Law rejected := by
   intro h
   have hh := (h 0 (fun _ => 1) (fun _ => zero_lt_one)).2.1
-  have hi := (positive_activity_means 0 (fun _ => 1) (fun _ => zero_lt_one)).1.1 0
-    (by omega)
-  have hp : 0 < meansOf (fun _ : Fin 2 => (1 : ℝ)) 0 *
-      (1 - meansOf (fun _ : Fin 2 => (1 : ℝ)) 0) :=
-    mul_pos hi.1 (sub_pos.mpr hi.2)
+  have hmean : meansOf (fun _ : Fin 2 => (1 : ℝ)) 0 = 1 / 3 := by
+    have sum_two (F : (Fin 2 → Bool) → ℝ) :
+        (∑ b, F b) = ∑ a : Bool, ∑ b : Bool, F ![a, b] := by
+      rw [← (piFinTwoEquiv fun _ : Fin 2 => Bool).symm.sum_comp,
+        Fintype.sum_prod_type]
+      rfl
+    norm_num [meansOf, law, partition, sum_two, weight, monomial,
+      Fintype.sum_bool, Adm, Finset.filter_insert, Finset.filter_singleton]
+  rw [hmean] at hh
   simp only [rejected, realize, pow_two, mul_zero, Finset.sum_const_zero] at hh
-  linarith
+  norm_num at hh
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _

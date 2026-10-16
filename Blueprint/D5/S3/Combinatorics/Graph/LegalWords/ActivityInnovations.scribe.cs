@@ -39,7 +39,13 @@ internal sealed class ActivityInnovationsDocument : IScribeDocumentDefinition
                         + "the squared norm at i+1 is u(i+1)r(i)/(1-u(i)), for every edge. "
                         + "The indexing includes the two-site path when n=0.")),
                     Paragraph(Text(
-                        "The activity law is the first-order completion of its means. "
+                        "Positive site activities give a normalized law supported exactly "
+                        + "on legal words. The empty word and each singleton show that its "
+                        + "means lie strictly inside the exclusion constraints. Factoring "
+                        + "the local completion tables gives another product law with the "
+                        + "same means. Their logarithms are affine in the site bits, so the "
+                        + "two relative entropies sum to zero. Gibbs nonnegativity and its "
+                        + "equality case identify the laws; the completion is Markov. "
                         + "Group a finite expectation by its exact initial histories. The "
                         + "Markov cylinder recursion expresses one further bit using a "
                         + "two-state transition row. Exclusion and the positive occupied "
@@ -80,7 +86,7 @@ internal sealed class ActivityInnovationsDocument : IScribeDocumentDefinition
         Formula count = Add(n, D(2)), u = Call("meansOf", w);
         Formula Mean(Formula k) => new Formula.Apply(u, [k]);
         Formula E(Formula k) => Call("innovation", u, b, k);
-        Formula Norm(Formula k) => Sum(count, Mul(Call("law", w, b), new Formula.Superscript(E(k), D(2))));
+        Formula Norm(Formula k) => Sum(count, Mul(Call("law", w, b), new Formula.Power(E(k), D(2))));
         Formula orth = All("i", Call("Fin", count), All("j", Call("Fin", count),
             Imp(new Formula.Relation(i, FormulaRelationOperator.NotEqual, j),
                 Eq(Sum(count, Mul(Mul(Call("law", w, b), E(i)), E(j))), D(0)))));
