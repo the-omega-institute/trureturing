@@ -57,14 +57,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ _ v => star v) (fun e => nomatch e)
+def actual : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ v => star v) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def rejected : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u_1}
   Law R := ∀ {ι : Type u_1} [Fintype ι] (u : Ket ι),
     R.readout () ι u.vec ⬝ᵥ u.vec = 1
 
@@ -96,7 +96,7 @@ def source_registration : Registration arena.{u_1} (type_of% @_root_.D5.S3.Quant
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ket_dot_self.{u_1}) (Realization signature) Unit Unit := {
+      (@_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ket_dot_self.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.KetDot.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.KetDot.source_registration
   realizationSource := none
@@ -108,7 +108,7 @@ def registration :
   realization := .source arena.{u_1} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ v => star v) (fun e => nomatch e))
+  readout := some (realize signature.{u_1} (fun _ _ v => star v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -144,14 +144,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ _ v => star v) (fun e => nomatch e)
+def actual : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ v => star v) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+def rejected : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u_1}
   Law R := ∀ {ι : Type u_1} [Fintype ι] [DecidableEq ι] (u : Ket ι),
     proj u = vecMulVec u.vec (R.readout () ι u.vec)
 
@@ -183,7 +183,7 @@ def source_registration : Registration arena.{u_1} (type_of% @_root_.D5.S3.Quant
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_eq_outer.{u_1}) (Realization signature) Unit Unit := {
+      (@_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_eq_outer.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.Outer.unit
   realizationName := `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.Outer.source_registration
   realizationSource := none
@@ -195,7 +195,7 @@ def registration :
   realization := .source arena.{u_1} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ v => star v) (fun e => nomatch e))
+  readout := some (realize signature.{u_1} (fun _ _ v => star v) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

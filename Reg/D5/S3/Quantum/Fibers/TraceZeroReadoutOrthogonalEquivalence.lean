@@ -28,14 +28,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ p center => center p.2) (fun e => nomatch e)
+def actual : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ p center => center p.2) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ _ => fun _ _ => 1) (fun e => nomatch e)
+def rejected : Realization signature.{u_1} :=
+  realize signature.{u_1} (fun _ _ _ => fun _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u_1}
   Law R := ∀ {d : Type u_1} [Fintype d] [Nonempty d] [DecidableEq d]
     (effect : Matrix d d ℂ) (_hEffect : effect.IsHermitian),
     R.readout () ⟨d, effect⟩ centeredEffect ∈ HermitianTraceZero (d := d)
@@ -65,7 +65,7 @@ def source_registration : Registration arena.{u_1} (type_of% @_root_.D5.S3.Quant
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem.{u_1}) (Realization signature) Unit Unit := {
+      (@_root_.D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.Centering.unit
   realizationName := `Reg.D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.Centering.source_registration
   realizationSource := none
@@ -77,7 +77,7 @@ def registration :
   realization := .source arena.{u_1} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p center => center p.2) (fun e => nomatch e))
+  readout := some (realize signature.{u_1} (fun _ p center => center p.2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

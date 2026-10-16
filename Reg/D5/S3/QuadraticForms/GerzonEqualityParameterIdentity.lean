@@ -27,14 +27,14 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ p power => power p.2 2) (fun e => nomatch e)
+def actual : Realization signature.{u_2} :=
+  realize signature.{u_2} (fun _ p power => power p.2 2) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ p power => power p.2 0) (fun e => nomatch e)
+def rejected : Realization signature.{u_2} :=
+  realize signature.{u_2} (fun _ p power => power p.2 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
-  signature := signature
+  signature := signature.{u_2}
   Law R := ∀ {F : Type u_2} {S : Type u_3} [Field F] [AddCommGroup S] [Module F S]
     {n : ℕ} (K : LinearMap.BilinForm F S) (P : Fin n → S) (a b : F)
     (_hgram : ∀ i j, K (P i) (P j) = if i = j then a ^ 2 else b)
@@ -71,7 +71,7 @@ def source_registration : Registration arena.{u_2,u_3} (type_of% @_root_.D5.S3.Q
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum.{u_2,u_3}) (Realization signature) Unit Unit := {
+      (@_root_.D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.gram_pair_sum.{u_2,u_3}) (Realization signature.{u_2}) Unit Unit := {
   unitName := `Reg.D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.Gram.unit
   realizationName := `Reg.D5.S3.QuadraticForms.GerzonEqualityParameterIdentity.Gram.source_registration
   realizationSource := none
@@ -83,7 +83,7 @@ def registration :
   realization := .source arena.{u_2,u_3} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p power => power p.2 2) (fun e => nomatch e))
+  readout := some (realize signature.{u_2} (fun _ p power => power p.2 2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
