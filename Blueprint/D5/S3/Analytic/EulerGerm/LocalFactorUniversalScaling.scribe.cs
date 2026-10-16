@@ -70,38 +70,6 @@ internal sealed class LocalFactorUniversalScalingDocument
                         "This gives a sharper sufficient bound, improving one over phi to "
                             + "the fourth to one over twice phi cubed. It asserts no zero "
                             + "of any local factor."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("gc-orbit-two-prime-straddle"),
-                DeclarationHandle.Create(Module + "gc_orbit_two_prime_straddle"),
-                H("The prime-three scaled candidate stays in the golden window"),
-                StatementSource.FromAuthor(OrbitStraddleFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "The certified prime-two candidate is transported by the universal "
-                            + "logarithmic scaling. The p = 3 orbit remains strictly between "
-                            + "the lower and upper golden-window boundaries, while p = 5 is "
-                            + "already below the lower boundary.")),
-                    Paragraph(Text(
-                        "This is an arithmetic location result for the scaled candidate; it "
-                            + "does not assert a new local-factor zero or prove RH."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("scaled-gc-orbit-window-iff"),
-                DeclarationHandle.Create(Module + "scaled_gc_orbit_window_iff"),
-                H("Only primes two and three remain in the scaled golden window"),
-                StatementSource.FromAuthor(ScaledOrbitWindowFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "For every prime channel, the real part of the logarithmically scaled "
-                            + "prime-two candidate lies in the open golden window exactly when "
-                            + "the channel is p = 2 or p = 3.")),
-                    Paragraph(Text(
-                        "The exclusion of p at least 5 uses monotonicity of the real logarithm "
-                            + "and the integer inequality 2^9 < 5^4. This classifies the orbit "
-                            + "window and supplies no RH conclusion by itself."))),
                 DescribeRole.Theorem)),
         []));
 
@@ -187,45 +155,6 @@ internal sealed class LocalFactorUniversalScalingDocument
             FormulaQuantifier.ForAll,
             [Bound("s", ComplexNumbers())],
             Implies(hypothesis, summable)));
-    }
-
-    private static Formula OrbitStraddleFormula()
-    {
-        Formula lower = Fraction(
-            F.D(1),
-            F.Seq(F.D(2), F.Sp, F.Times, F.Sp, Power(F.Varphi, F.D(3))));
-        Formula upper = Fraction(F.D(1), Power(F.Varphi, F.D(2)));
-        Formula p3 = Call("goldenCandidateOrbit", F.D(3));
-        Formula p5 = Call("goldenCandidateOrbit", F.D(5));
-        return F.Disp(new Formula.Logic(
-            LessThan(lower, p3),
-            FormulaLogicOperator.And,
-            new Formula.Logic(
-                LessThan(p3, upper),
-                FormulaLogicOperator.And,
-                LessThan(p5, lower))));
-    }
-
-    private static Formula ScaledOrbitWindowFormula()
-    {
-        Formula p = F.Id("p");
-        Formula lower = Fraction(
-            F.D(1),
-            F.Seq(F.D(2), F.Sp, F.Times, F.Sp, Power(F.Varphi, F.D(3))));
-        Formula upper = Fraction(F.D(1), Power(F.Varphi, F.D(2)));
-        Formula orbit = Call("goldenCandidateOrbit", p);
-        Formula inside = new Formula.Logic(
-            LessThan(lower, orbit),
-            FormulaLogicOperator.And,
-            LessThan(orbit, upper));
-        Formula channels = new Formula.Logic(
-            Equal(p, F.D(2)),
-            FormulaLogicOperator.Or,
-            Equal(p, F.D(3)));
-        return F.Disp(new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("p", Primes())],
-            new Formula.Logic(inside, FormulaLogicOperator.Iff, channels)));
     }
 
     private static Formula FourthTail(Formula s, Formula p)

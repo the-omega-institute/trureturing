@@ -46,39 +46,8 @@ The leading deviation is the square of the phi-cubed mode. Its prime sum is summ
 
 This gives a sharper sufficient bound, improving one over phi to the fourth to one over twice phi cubed. It asserts no zero of any local factor.
 
-**Theorem 1.4 (The prime-three scaled candidate stays in the golden window).**
-
-$$\frac{1}{2 \times \varphi^{3}} < \operatorname{goldenCandidateOrbit}\left(3\right) \land \left(\operatorname{goldenCandidateOrbit}\left(3\right) < \frac{1}{\varphi^{2}} \land \operatorname{goldenCandidateOrbit}\left(5\right) < \frac{1}{2 \times \varphi^{3}}\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.gc_orbit_two_prime_straddle` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certified prime-two candidate is transported by the universal logarithmic scaling. The p = 3 orbit remains strictly between the lower and upper golden-window boundaries, while p = 5 is already below the lower boundary.
-
-This is an arithmetic location result for the scaled candidate; it does not assert a new local-factor zero or prove RH.
-
-**Theorem 1.5 (Only primes two and three remain in the scaled golden window).**
-
-$$\forall p \in \operatorname{Primes}\left(\mathbb{N}\right),\; \left(\frac{1}{2 \times \varphi^{3}} < \operatorname{goldenCandidateOrbit}\left(p\right) \land \operatorname{goldenCandidateOrbit}\left(p\right) < \frac{1}{\varphi^{2}}\right) \Leftrightarrow \left(p = 2 \lor p = 3\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.scaled_gc_orbit_window_iff` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every prime channel, the real part of the logarithmically scaled prime-two candidate lies in the open golden window exactly when the channel is p = 2 or p = 3.
-
-The exclusion of p at least 5 uses monotonicity of the real logarithm and the integer inequality 2^9 < 5^4. This classifies the orbit window and supplies no RH conclusion by itself.
-
 ## References
 
-- Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.gc_orbit_two_prime_straddle`
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.germLocalFactor_next_mode_expansion`
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.germLocalFactor_prime_scaling`
-- Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.scaled_gc_orbit_window_iff`
 - Truth anchor: `D5/S3/Analytic/EulerGerm/LocalFactorUniversalScaling.second_normalized_factor_deviation_norm_summable_sharp`
-- Dependency: [D5/S3/Analytic/GermWindow/GermZeroCertificateReduction](../GermWindow/GermZeroCertificateReduction.md)
