@@ -6,7 +6,6 @@
    digest: Mutually unbiased contexts are exactly orthogonal traceless diagonal planes. -/
 
 import D5.S3.Observer.Conditioning
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Tomography.OneStepProbabilityInnovation
 
 /- Library-search audit trail (2026-08-23):
@@ -53,7 +52,14 @@ local instance hermitianTraceZeroTopologicalSpace :
 private theorem trace_hermitian_real
     (X : Matrix (Fin d) (Fin d) ℂ) (hX : X.IsHermitian) :
     Matrix.trace X = (Matrix.trace X).re := by
-  exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hX).symm
+  apply Complex.ext
+  · simp
+  · have hstar : star (Matrix.trace X) = Matrix.trace X := by
+      rw [← Matrix.trace_conjTranspose, hX.eq]
+    have him := congrArg Complex.im hstar
+    change (starRingEnd ℂ (Matrix.trace X)).im = _ at him
+    rw [Complex.conj_im] at him
+    simpa using (show (Matrix.trace X).im = 0 by linarith)
 
 private theorem trace_overlap_real
     (B C : RankOneContext d) (j k : Fin d) :

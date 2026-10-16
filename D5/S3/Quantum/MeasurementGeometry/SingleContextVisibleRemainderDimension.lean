@@ -6,7 +6,6 @@
    digest: One rank-one context exposes one diagonal slice and leaves its orthogonal remainder. -/
 
 import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Tomography.OneStepProbabilityInnovation
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 
@@ -67,9 +66,16 @@ noncomputable def probabilityVectorExposedRatio {d : Nat} (B : RankOneContext d)
 
 private theorem hermitian_trace_eq_real {d : Nat} (A : HermitianSpace d) :
     Matrix.trace A.1 = ((Matrix.trace A.1).re : ℂ) := by
-  exact
-    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace
-      (show A.1.IsHermitian from A.2)).symm
+  have hAstar := A.2
+  change star A.1 = A.1 at hAstar
+  have hA : A.1ᴴ = A.1 := by
+    simpa only [Matrix.star_eq_conjTranspose] using hAstar
+  have hstar : star (Matrix.trace A.1) = Matrix.trace A.1 := by
+    calc
+      star (Matrix.trace A.1) = Matrix.trace A.1ᴴ :=
+        (Matrix.trace_conjTranspose A.1).symm
+      _ = Matrix.trace A.1 := by rw [hA]
+  exact (Complex.conj_eq_iff_re.mp hstar).symm
 
 private theorem projector_trace_mul_real {d : Nat} (B : RankOneContext d)
     (A : HermitianSpace d) (j : Fin d) :

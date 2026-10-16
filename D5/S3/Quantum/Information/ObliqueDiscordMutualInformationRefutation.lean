@@ -26,7 +26,6 @@ Direct frozen dependencies:
 -/
 
 import D5.S3.Quantum.Information.InputInformationBalance
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -124,7 +123,8 @@ noncomputable def phi {nA nB : ℕ} (b : ObliqueBasis nA)
     rw [hnormal] at ht
     rw [hnormal]
     have hre : Matrix.trace T = ((Matrix.trace T).re : ℂ) := by
-      exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hp.isHermitian).symm
+      rw [hp.isHermitian.trace_eq_sum_eigenvalues]
+      simp
     rw [Matrix.trace_smul, hre, Complex.ofReal_re, Complex.real_smul, ← Complex.ofReal_mul]
     rw [inv_mul_cancel₀ ht.ne', Complex.ofReal_one]
 
