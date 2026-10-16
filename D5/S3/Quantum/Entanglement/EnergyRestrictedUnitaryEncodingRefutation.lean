@@ -374,4 +374,89 @@ private theorem effect_bound {d : ℕ} [NeZero d]
       Finset.sum_le_sum (fun j _ => mul_le_mul_of_nonneg_left (pure_bound E hE hEc (v j) (hn j)) (ht j))
     _ ≤ Real.sqrt (1 - (ρ 0 0).re) := by simpa only [havg] using hj
 
+private theorem diagonal_task (p : (Fin 2 × Fin 2) → (Fin 2 × Fin 2) → Unit → ℝ) :
+    taskValue coefficients p = (1 / 4) * ∑ x, p x x () := by
+  simp [taskValue, coefficients, ite_mul, Finset.mul_sum]
+
+private theorem qc_bound {L : Type} [Fintype L] {d : ℕ} [NeZero d]
+    (q : L → ℝ) (ρ : L → (Fin 2 × Fin 2) → Matrix (Fin d) (Fin d) ℂ)
+    (M : L → Unit → (Fin 2 × Fin 2) → Matrix (Fin d) (Fin d) ℂ)
+    (h : QCStrategy q ρ M) (ω : ℝ) (henergy : ∀ x, 1 - ω ≤ qcVacuum q ρ x) :
+    taskValue coefficients (qcProb q ρ M) ≤ 1 / 4 + Real.sqrt ω := by
+  classical
+  let e (x : Fin 2 × Fin 2) := ∑ l, q l * (1 - (ρ l x 0 0).re)
+  have he0 (l : L) (x : Fin 2 × Fin 2) : 0 ≤ 1 - (ρ l x 0 0).re :=
+    sub_nonneg.mpr (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.state_diag_le_one
+      (h.2.2.1 l x).1 (h.2.2.1 l x).2 0)
+  have he (x : Fin 2 × Fin 2) : 0 ≤ e x :=
+    Finset.sum_nonneg (fun l _ => mul_nonneg (h.1 l) (he0 l x))
+  have heω (x : Fin 2 × Fin 2) : e x ≤ ω := by
+    have hx := henergy x
+    dsimp [e]
+    simp only [mul_sub, mul_one, Finset.sum_sub_distrib, h.2.1]
+    change 1 - qcVacuum q ρ x ≤ ω
+    linarith
+  have hpoint (x : Fin 2 × Fin 2) :
+      qcProb q ρ M x x () ≤ (∑ l, q l * (M l () x 0 0).re) + Real.sqrt (e x) := by
+    have hj := sqrt_average q (fun l => 1 - (ρ l x 0 0).re) h.1 h.2.1 (fun l => he0 l x)
+    calc
+      qcProb q ρ M x x () ≤
+          ∑ l, q l * ((M l () x 0 0).re + Real.sqrt (1 - (ρ l x 0 0).re)) := by
+        apply Finset.sum_le_sum
+        intro l _
+        apply mul_le_mul_of_nonneg_left _ (h.1 l)
+        have hm := h.2.2.2 l ()
+        have hc : (1 - M l () x).PosSemidef := by
+          change M l () x ≤ 1
+          rw [← hm.2]
+          exact Finset.single_le_sum (fun b _ => (hm.1 b).nonneg) (Finset.mem_univ x)
+        have hb := effect_bound (ρ l x) (h.2.2.1 l x) (M l () x) (hm.1 x) hc
+        rw [Matrix.trace_mul_comm] at hb
+        linarith
+      _ = (∑ l, q l * (M l () x 0 0).re) +
+          ∑ l, q l * Real.sqrt (1 - (ρ l x 0 0).re) := by
+        simp only [mul_add, Finset.sum_add_distrib]
+      _ ≤ _ := add_le_add (le_refl _) hj
+  have htotal : (∑ x, ∑ l, q l * (M l () x 0 0).re) = 1 := by
+    rw [Finset.sum_comm]
+    calc
+      (∑ l, ∑ x, q l * (M l () x 0 0).re) = ∑ l, q l * 1 := by
+        apply Finset.sum_congr rfl
+        intro l _
+        rw [← Finset.mul_sum]
+        congr 1
+        have hm := congrArg (fun A : Matrix (Fin d) (Fin d) ℂ => (A 0 0).re) (h.2.2.2 l ()).2
+        simpa [Matrix.sum_apply] using hm
+      _ = 1 := by simpa only [mul_one] using h.2.1
+  have hjx := sqrt_average (fun _ : Fin 2 × Fin 2 => (1 / 4 : ℝ)) e
+    (by intro x; norm_num) (by norm_num [Fintype.sum_prod_type, Fin.sum_univ_two]) he
+  have havg : (∑ x : Fin 2 × Fin 2, (1 / 4 : ℝ) * e x) ≤ ω := by
+    calc
+      _ ≤ ∑ _x : Fin 2 × Fin 2, (1 / 4 : ℝ) * ω :=
+        Finset.sum_le_sum (fun x _ => mul_le_mul_of_nonneg_left (heω x) (by norm_num))
+      _ = ω := by norm_num [Fintype.sum_prod_type, Fin.sum_univ_two]; ring
+  calc
+    taskValue coefficients (qcProb q ρ M) = (1 / 4) * ∑ x, qcProb q ρ M x x () := diagonal_task _
+    _ ≤ (1 / 4) * ∑ x, ((∑ l, q l * (M l () x 0 0).re) + Real.sqrt (e x)) :=
+      mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun x _ => hpoint x)) (by norm_num)
+    _ = 1 / 4 + ∑ x, (1 / 4 : ℝ) * Real.sqrt (e x) := by
+      rw [Finset.sum_add_distrib, htotal, mul_add, mul_one, Finset.mul_sum]
+    _ ≤ 1 / 4 + Real.sqrt (∑ x, (1 / 4 : ℝ) * e x) := add_le_add (le_refl _) hjx
+    _ ≤ 1 / 4 + Real.sqrt ω := add_le_add (le_refl _) (Real.sqrt_le_sqrt havg)
+
+theorem result : ¬ claim := by
+  intro hc
+  obtain ⟨d, hd, L, hL, q, ρ, M, hvalid, henergy, hvalue⟩ :=
+    hc (Fin 2 × Fin 2) Unit (Fin 2 × Fin 2) coefficients (288 / 625)
+      (by norm_num) (by norm_num) 2 2 shared protocolU protocolM protocol_valid
+      (by intro x; rw [protocol_vacuum]; norm_num)
+  let _ : NeZero d := hd
+  let _ : Fintype L := hL
+  have hb := qc_bound q ρ M hvalid (288 / 625) henergy
+  have hs : Real.sqrt (288 / 625 : ℝ) < 17 / 25 := by
+    apply (Real.sqrt_lt (by norm_num) (by norm_num)).2
+    norm_num
+  rw [protocol_value] at hvalue
+  linarith
+
 end D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
