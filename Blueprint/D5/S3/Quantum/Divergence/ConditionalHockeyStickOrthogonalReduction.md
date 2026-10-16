@@ -106,7 +106,9 @@ $$(\operatorname{D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduct
 
 *Formalization.* `D5/S3/Quantum/Divergence/ConditionalHockeyStickOrthogonalReduction.claim` (`✓ std3`).
 
-*Citation.* Christoph Hirche; Ian George; Theshani Nuradha; Mark M. Wilde (2026). *Conditional contraction coefficients and their applications to quantum networks*. URL: <https://arxiv.org/abs/2608.27171v1>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Christoph Hirche; Ian George; Theshani Nuradha; Mark M. Wilde (2026). *Conditional contraction coefficients and their applications to quantum networks*. URL: <https://arxiv.org/abs/2608.27171v1>.
 
 *Commentary.*
 
