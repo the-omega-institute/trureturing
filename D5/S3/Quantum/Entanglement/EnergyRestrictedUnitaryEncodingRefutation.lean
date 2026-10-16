@@ -131,4 +131,19 @@ private theorem two_level_involution (s : ℝ) (c : ℂ) (hs : s ^ 2 + Complex.n
       simp [Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at hs ⊢ <;> nlinarith [hs]
   · simp [Matrix.trace, Fin.sum_univ_two]
 
+private theorem two_level_bound (N : Matrix (Fin 2) (Fin 2) ℂ)
+    (hN : N.PosSemidef) (hNc : (1 - N).PosSemidef)
+    (s : ℝ) (c : ℂ) (hs0 : 0 ≤ s) (hs : s ^ 2 + Complex.normSq c = 1) :
+    (star (![c, (s : ℂ)] : Fin 2 → ℂ) ⬝ᵥ (N *ᵥ ![c, (s : ℂ)])).re - (N 0 0).re ≤ s := by
+  let A : Matrix (Fin 2) (Fin 2) ℂ := !![-(s : ℂ), c; star c, s]
+  obtain ⟨hA, hAA, ht⟩ := two_level_involution s c hs
+  have hb := involution_bound A N hA hAA ht hN hNc
+  have heq : (star (![c, (s : ℂ)] : Fin 2 → ℂ) ⬝ᵥ (N *ᵥ ![c, (s : ℂ)])).re - (N 0 0).re =
+      s * (trace (N * A)).re := by
+    simp [A, dotProduct, Matrix.mulVec, Matrix.mul_apply, Matrix.trace, Fin.sum_univ_two,
+      Complex.mul_re, Complex.mul_im, Complex.normSq_apply] at hs ⊢
+    linear_combination hs * (N 0 0).re
+  rw [heq]
+  nlinarith
+
 end D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
