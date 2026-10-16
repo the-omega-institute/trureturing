@@ -7,7 +7,6 @@
 
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
 import D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence
-import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 
 open scoped BigOperators ComplexOrder InnerProductSpace Matrix
 
