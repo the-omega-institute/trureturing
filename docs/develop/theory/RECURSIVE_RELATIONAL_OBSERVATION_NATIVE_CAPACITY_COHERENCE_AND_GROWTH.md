@@ -3179,19 +3179,129 @@ itself specify a terminal readout.
 $u=\alpha$, $\xi$ and prior $D=\mathcal T_1=\{\alpha,\beta\}$, and perform
 the original private packet, validation, directory/counter/fence preparation,
 stationary acquisition and seed delivery once. Keep CAP ports $0$–$63$ and
-all old owner partitions unchanged. At the first acknowledged producer-idle
-boundary, boot-installed finite code appends one activation bit to a fresh
-block on the retained ingress role 13, writes its measured base, separator,
-status and native descriptor on role 17, seals the block, rereads the bit into a
-finite latch and restores the arena tail. A fixed control branch sends bit $0$
-through the unchanged complete CAP frame parser and its row/dependency,
-acknowledgement, source-token, idle and saved-return path. Bit $1$ enters a
-fixed source-blind client which performs `Local`, `TagRead(root)` with all
-continuations equal, and `Stop(\tau)$, where $\tau=q_1(\alpha)$ is the original
-initial-target output. The new block type and branch are declared in the boot
-code; no old seven-tag frame is reinterpreted. The actor roles 24–27, verifier
-roles 32–39 and consumer roles 40–47 retain their old owners, descriptors and
-permission checks.
+all old owner partitions unchanged. The supplied actor table on 24 is the
+fixed source-blind client $C$ which performs `Local`, `TagRead(root)` with all
+four continuations equal, and `Stop(\tau)`, where $\tau=q_1(\alpha)$ is the
+original initial-target output. Boot actually writes this finite table,
+its supplied initial configuration and literal finite output material,
+by §§2.4 and 8.1. The original acquisition delivers the actual seed to 26
+before $C$ starts. Its fixed handoff continuation lends the twelve word
+ports to the actor with twelve TOKs and its CTL, writes the literal supplied
+initial-configuration word into a fresh current state on 25 by the installed
+finite Append code, and completes the initially empty waiting word on 27
+using the original block/status/local-descriptor routines. These are actual
+finite word writes; the empty word is inert until the client produces a
+command. The actor returns the twelve tokens and CTL to the producer before
+normalization. Thus 25 encodes the initial `Local` entry and 27 has no
+pending command. This initializes the client once and does not reinstall
+its table or repeat source acquisition.
+During the activation/frame loop, 24–27 remain parked at this client entry;
+ordinary row acquisition may append to 28–31 with its original permissions.
+
+The additional producer call site is fixed by native inlining, not by a
+saved-return register. Let $F^W$ be a separately numbered inlining of the
+complete seven-tag external-frame graph of §4.6 and its §6 services. It has
+the same header/length/payload ingress, parser, fault branches, admission,
+source/maintenance branches, rows, dependency copies and final row ACK.
+Its only changed successor is that of its final producer-idle CTL:
+
+$$
+\operatorname{rowACK};\operatorname{TOK}_{\rm source\to dispatcher};
+\operatorname{CTL}_{\rm idle}[W_{\rm return}].
+$$
+
+Here $[W_{\rm return}]$ is the literal successor row number in the installed
+CTL encoding of §2.3. At $W_{\rm return}$ a producer CTL selects the wrapper
+phase and the identity permutation of its twelve word roles, Tail(13) and
+Tail(17) restore their R heads, and one CTL enters $W_{\rm entry}$. The first
+acknowledged idle return after seed delivery takes this same normalization
+path. These are finite native rows and actually executed Tail loops.
+The original raw graph still has its original next-frame IN successor;
+the automatic graph retains its original saved-caller successor, including
+the Reserve/Raise/Rho policy of §8.2. Their installed entries and domains
+are unchanged; their boot branches keep their original supplied-controller
+initialization. The client initialization and joins above belong only to
+the additional $W$ boot branch, whose entry is $W_{\rm entry}$;
+there is no runtime switch from an unfinished old call into this loop.
+
+At $W_{\rm entry}$ the following entry relation holds. The producer holds
+all twelve word-port tokens, its original tokens for 0 and 13–23, and
+the dispatcher holds the available source-service token. Every prior row,
+dependency, channel check and ACK is complete. Port 13 is at its actual R;
+17 is a complete native descriptor stream at R. Directory, counter and
+journal streams have their original completed-boundary invariants, with
+$1\le H_0\le h\le K$ and the actual source represented by $\phi_K$.
+No wrapper work word or latch carries a live return value. The parked
+24–27 bytes, heads and owners are unchanged. Other heads/latches are their
+actual retained values; each helper positions its own inputs before reading.
+Only the fixed wrapper successor is enabled during activation preparation,
+not a second source or actor call. The activation graph is the following.
+
+1. Base(13;$a$) constructs the actual $U(a)$ and leaves 13 at R. Execute
+   IN(5); EX(13); WR(13,latch5); MR(13), then Append(13,sep) and
+   Append(13,0). Thus the payload bit is at $a$, sep at $a+1$ and its
+   initialized unavailable status at $a+2$. Input latch 5 is not touched
+   between IN and WR. The unconsumed-input and acquired-but-unwritten cuts
+   are distinct ordinary states.
+2. Using §§3.1–3.3 and 6.1, construct all ten source field words and run
+   WriteDescriptor on 17. Its unchanged tag is `00`, followed in order by
+   $U(\mathrm{producer}),U(13),U(a),U(1),U(c)$, the fixed `activation`
+   type, initialized flag 1, post-seal mutable flag 0, $U(a+2)$, and the
+   empty original-origin word. Every field has its physical sep, including
+   the empty origin, and the record has its final seal. The one-based $c$
+   is obtained by the paid complete-stream count, not supplied as an
+   address. This is exactly the ten-field native grammar of §6.1.
+3. Retain only the complete base/status words after that writer; its other
+   field roles are dead. At(13,status); WR(13,1); CTL seals the bit block.
+   At(13,base); RD(13,6) acquires the now-sealed bit into branch latch 6.
+   Tail(13), using test latch 4, restores R without overwriting latch 6;
+   17 is already at R. One CTL branches on latch 6. No value in latch 4
+   is retained across a positioning call. At this branch no wrapper word
+   must survive either callee.
+4. For bit 0 the CTL enters $F^W$ at its original header Base/setup
+   prelude, before the first header IN. All its entry tokens are those
+   just listed; it acquires its own complete frame and takes the source
+   token only at the original admission point. For any
+   completed canonical frame, the final ACK, source TOK and idle CTL
+   reach $W_{\rm return}$, hence $W_{\rm entry}$, before any next IN.
+   No frame header bit is consumed as an activation or conversely. A
+   malformed frame takes the original retained `frame-fault` branch;
+   an unfinished length/payload stays in its original ingress phase.
+5. For bit 1 the CTL enters the producer-to-actor loan prelude. Execute
+   the twelve TOKs of §2.2, then its CTL entering $C$'s already initialized
+   `Local` state on 25. The source-service token remains at the dispatcher
+   during this actor-local phase. No actor helper starts during the
+   partial loan. The actor has its own 24–31 and the twelve public word
+   ports, its acquired seed on 26 and no private source/producer-descriptor
+   read right. This is precisely the actual table entry of §8.1.
+
+The client uses §8.1's complete persistent-state/packet writer on 25/27.
+While the pool is at the actor, it sends each actual packet and its
+dependencies on route 49 to producer 21; nested channel loans return it
+to the actor as sender. It then returns all twelve workspace tokens and
+CTL to the producer before dispatch.
+Its `Local` marker completes its semantic/unified row and final ACK before
+the fixed producer successor lends the pool for the actor return handler.
+That handler reads its acquired row through local descriptors on 29, installs
+the root-read successor in 25 from its retained packet, returns the pool,
+then takes the next fixed table-entry loan. The root TagRead constructs its
+ordinary canonical frame from the acquired operation packet, calls the
+original source service, and follows the same ACK/loan/return-handler path.
+The acquired literal reply selects one of the four equal retained Stop
+continuations. Each actor resumption therefore starts with the actual
+completed state/packet and full workspace loan, rather than a live latch
+left over from the activation reader. These are the fixed §8.1 call sites,
+not returns into $W_{\rm entry}$.
+
+For Stop the actor actually seals its output on 31 and copies its complete
+payload and origin on route 49 into producer 21 before Halt commits. Its
+packet declares global Halt, not acquisition-internal return. The old §6
+terminal row/dependency delivery, frozen snapshot/proposal binding, route
+50 to verifier 32 with descriptors on 33, verifier receipt, route 51,
+consumer checks, task-output on 43, OUT and final ACK/return all precede
+the global halt CTL. Each nested channel returns the word pool to its
+actual sender as in §2.2. This terminal successor is not the activation
+return. No added terminal audit or reassigned verifier/consumer role occurs.
 
 Let $U(n)=1^n0$, $R_2=101\,U(3)\,U(2)$ and
 $A_2=110\,U(3)\,U(2)$. A member of $W_r$, for $r\ge1$, supplies the finite
@@ -3204,42 +3314,97 @@ $$
 \operatorname{client},
 $$
 
-where each $F_i$ is either $R_2$ or $A_2$. Every activation, frame, parser
-branch, copy, seal, return and client input is an acquired finite word on the
-same run. The installed graph has no $r$-dependent quota or future-capacity
-constant.
+where each $F_i$ is either $R_2$ or $A_2$. Activations and external frame
+bits are actually acquired by their distinct IN sites. Client packets are
+actually constructed from its installed table/state and acquired material;
+computed bits are copied/Appended, not fictitious external inputs.
+All these blocks, branches, copies, partial seals and returns belong to
+the same run. The installed graph has no $r$-dependent quota or
+future-capacity constant.
 
 **Proposition 16.3 (finite installation and original-consumer correspondence
 for $W_r$).** The extension in Definition 16.2 is a finite installed
 wrapper/control/storage extension, and each $W_r$ member reaches the original
 CAP verifier and consumer with the original target and source conditions.
 
-**Proof.** The wrapper has finitely many control states: idle, block-base
-measurement, bit latch, block append, descriptor construction, seal, restore,
-branch, and the two saved returns. Its descriptor has the fixed finite fields
-owner, role, base, length, type and status. It uses only the already declared
-finite latches and the measured roles 13 and 17; the protected actor,
-verifier and consumer partitions are never lent to the wrapper. Thus the code,
-block schema and initialization are finite and independent of $r$, while the
-sequence of actual input blocks may be any finite length.
+**Proof.** The code consists of one copy of each fixed helper at each static
+call site, the finite client table, one $F^W$ inlining and the displayed
+control joins. Its only cycle between complete frame calls is
+$W_{\rm entry}\to F^W\to W_{\rm return}\to W_{\rm entry}$.
+This is an ordinary finite graph cycle under §2.3, not recursive native
+calls or an unbounded return stack. All successor numbers, branch states,
+port/latch choices and the new finite block type are literally boot
+installed. No runtime return-kind word is needed for this fixed call site.
+The original frame command and the actor's genuine §8.1 packets and saved
+continuations still occupy their actual retained storage.
 
-The bit-zero branch executes one complete old frame service. CAP's row and
-dependency deliveries, local descriptor checks, source-token return,
-acknowledgement and idle continuation therefore have exactly their existing
-meaning. The bit-one branch saves the same finite continuation and invokes the
-fixed client. In either branch all raw ingress, partial writes and invalid
-canonical packets remain ordinary reached phases; none is suppressed by the
-wrapper. The initial acquired source is still the original $\alpha$ and its
-truthful root leaves the initial-source fibre of the verifier equal to
-$\{\alpha\}$. The client proposal is consequently the existing
-`INITIAL-q_H0` proposal $\tau$. The verifier still checks the complete source
-manifest, snapshot, predecessor and historical guard before it emits its
-receipt; the consumer still copies the checked target to its task-output block,
-performs its own binding checks and emits `OUT`, `ACK` and the final return.
-Those facts are the CAP §§6.1–6.7 correspondence, not a new terminal reader.
-Every listed wrapper edge is a paid primitive and every saved continuation is
-stored before the branch. This proves the finite installation and the
-original-consumer correspondence. $\square$
+The original paid preparation and acquired-seed return establish the stated
+completed-boundary invariants, and the first normalization establishes the
+heads and word-role permutation of $W_{\rm entry}$. From that relation,
+Base and Append give the displayed three initialized cells on 13. The
+descriptor writer has ten complete field words, including base and status;
+its other two roles suffice for its count as in §6.1. Thus it needs no
+thirteenth simultaneous word. Seal then licenses the producer's RD of its
+own bit; this is not a descriptor-derived cross-owner read. The RD into 6
+and Tail using 4 prove the branch latch invariant. Its base/status roles
+are dead at the branch, so the frame or actor may reuse the pool.
+
+For bit 0, §4.7 and Lemma 6.7 apply to $F^W$ with their original guards,
+owners, actual retained inputs and complete row/channel return. Renumbering
+its nodes changes no primitive before the final idle successor. At that
+successor every workspace token is back at the producer, the source token
+is back at the dispatcher and every mandatory ACK is complete. The return
+normalization therefore reestablishes exactly $W_{\rm entry}$, including
+the parked 24–27 state and a longer complete stream on 13/17. Induction
+gives this entry relation after any finite number of canonical frames,
+not only after the first one. Partial and fault branches keep their
+original successors and do not receive a spurious completed return.
+
+For bit 1, the actual twelve TOKs and CTL establish the §8.1 actor entry
+relation. Its Local and literal-read returns have complete retained packets,
+acquired row responses and the declared fixed handler successors. Their
+loans/returns preserve producer admission and install the next actual state
+on 25. The terminal packet/output copies supply the old global-Halt entry;
+the complete §6.5 consumer, rather than the wrapper, selects and outputs
+the checked target. The acquired initial root still identifies $\alpha$ in
+$D$, so the compatible initial-source fibre is $\{\alpha\}$. Consequently
+the authentic snapshot and historical guards pass with the proposal
+$\tau=q_1(\alpha)$ and the unchanged `INITIAL-q_H0` target. No later guard
+changes the saved initial target. Finite completion uses actually supplied
+finite input and termination of reached local/prior computations.
+The same finite $F^W$ code handles arbitrary finite request words and
+capacities on the original admission domain; none is stored as a future
+maximum. Finite initial source does not bound these retained runtime tapes.
+Infinite continuation would additionally require continuing actual input
+supply and completion of every reached local computation.
+
+For completeness, expand these additional rows by the same recurrence
+$V$ of §7.1 in the actual state left by each preceding fragment. Let
+$B$ be this run's complete boot/acquisition/client-initialization/first
+normalization cost, $A_i$ its $i$th activation block/read/branch cost,
+$P_i$ its $i$th complete $F^W$ cost through idle CTL,
+$D_i$ its return-normalization cost, and $L_C$
+its final workspace loan and complete client/terminal cost. For $r+2$
+frames the absolute length is
+
+$$
+n=B+\sum_{i=1}^{r+2}(A_i+P_i+D_i)+A_{r+3}+L_C.
+$$
+
+These are consecutive fragments of one execution, not separately optimized
+runs; their actual supplied bits and reached heads fix every summand.
+In particular $A_i$ includes IN, base/address/ordinal construction, all
+ten descriptor fields, status/seal, reread, Tail and branch; $D_i$
+includes its two CTLs and both Tail loops. $L_C$ includes all pool TOKs,
+state installation, packet construction, both channel stages, every row,
+snapshot, receipt, consumer output, ACK and halt. The boot code of $F^W$
+and every literal successor/control bit is in $B$ and $b_{\rm ctl}$.
+Each executed occurrence contributes one tick, two fee units and one
+receipt, and every constructed activation, word, descriptor and retired
+cell stays counted in $A$ of §7.2. Thus the same run satisfies
+$T=n$, $F=2n$, $S=S_0+b_{\rm ctl}+8A+8n$; there is no free return
+storage or uncharged controller. This proves the finite installation and
+original-consumer correspondence uniformly in $r$. $\square$
 
 **Theorem 16.4 (the $2^r$ terminal family).** For every $r\ge1$, $W_r$
 contains $2^r$ complete runs with pairwise different retained full histories
@@ -3427,7 +3592,8 @@ ordinal $k$, let $C(k)$ count every constructed port cell in the represented
 endpoint, including the two meter foundation cells, retired/dead material,
 all descriptors and the image's own receiver/output cells. A raw cell record
 has eight literal bits. The declared codec uses
-$\operatorname{Frame}(w)=1^{|w|}0w$ and the nested port-list codec of SSA §12;
+$\operatorname{Frame}(w)=1^{|w|}0w$ and the nested port-list codec of
+RCA Definitions 12.1–12.2;
 compressed keys, program descriptions and proper task projections are outside
 this definition. Every primitive appends one receipt cell, so
 $C(k)\ge k+2$.
@@ -3445,7 +3611,10 @@ $C(k)\ge m$, which contradicts $m\ge8C(k)$ for $C(k)>0$. If it has all been
 printed by cut $k$, one output event is required per wire bit, so $k\ge m$;
 then $m\ge8C(k)\ge8(k+2)>k$, again a contradiction. The nested 64-port
 list gives the stronger source codec subtotal $m\ge257+36C(k)$ when that
-list is included, but the eight-bit inequality already proves the exclusion.
+list is included: an eight-bit cell list on port $i$ has length $18c_i+1$,
+and the outer list has length
+$1+\sum_{i=0}^{63}(2(18c_i+1)+2)=257+36C(k)$.
+The eight-bit inequality already proves the exclusion.
 A later sender/archive/mailbox/receiver delivery escapes the self-containment
 premise because those cells lie outside the represented older endpoint.
 $\square$
@@ -3474,17 +3643,19 @@ completion records, authority checks, ACK and return are additional
 nonnegative rows, not silently absorbed into these subtotals. $\square$
 
 **Corollary 18.4 (ordinal lower bounds for a literal completed call).** Let a
-call start at ordinal $s$ and return Ready at $t$. Under the conventions of
+historical call target the absolute cut $0\le k\le s$ on the same run,
+start at ordinal $s$ and return Ready at $t$. Under the conventions of
 Proposition 18.3,
 
 $$
  t-s=17L+7+R,\qquad R\ge0.
 $$
 
-If the published word contains $U(k)$, then $L\ge k+1$ and
-$t\ge18k+24$. If it is a literal encompassing image, then
+If the published word contains the historical target word $U(k)$, then
+$L\ge k+1$ and
+$t\ge18k+24$. If it is a literal encompassing image of that target cut, then
 $L\ge8(k+2)$ and
-$t\ge137k+279$. If the exact 64-port nested list is included, the supplied
+$t\ge137k+279$. If that target's exact 64-port nested list is included, the supplied
 subword bound $L\ge257+36C(k)\ge36k+329$ gives the conservative
 $t\ge613k+5600$.
 
@@ -3496,8 +3667,8 @@ $t\ge k+17(36k+329)+7=613k+5600$. These are necessary bounds on one actual
 run, not sufficient schedules and not physical time or energy laws. $\square$
 
 **Corollary 18.5 (combined horizon bound).** In the Ready-only stopping class,
-a literal encompassing-image call targeting cut $k$ can complete before the
-final halt only if
+a historical literal encompassing-image call satisfying Corollary 18.4 and
+targeting cut $k$ can complete before the final halt only if
 
 $$
  k\le b^*\qquad\text{and}\qquad
@@ -3518,8 +3689,9 @@ these results must be one fixed finite boot installation, uniform in future
 $h$ and $K$, with an explicit owner/origin map for every added role and every
 old CAP role. It must acquire the activation and target-selection words, keep
 all old raw and partial phases, preserve the original verifier/consumer and
-`INITIAL-q_H0` target, and return through actual ACK and saved-continuation
-edges. For an earlier cut it must additionally provide an acquired immutable
+`INITIAL-q_H0` target, and return through actual ACK and installed fixed or
+saved-continuation edges. For an earlier cut it must additionally provide
+an acquired immutable
 covering prefix, an owner-authorized `Next` or `Select` binding, a live token,
 complete package serialization, both initialized copies, mandatory print,
 ACK and Ready return. No free activation, arbitrary-busy scanner, terminal
@@ -3527,7 +3699,7 @@ history reader or retroactive permission is admissible.
 
 **Proposition 19.2 (what the new bounds change).** The admissible construction
 class is restricted in three concrete ways. First, a terminal collision repair
-must install its finite activation/saved-return control at boot and prove its
+must install its finite activation and return control at boot and prove its
 original verifier/consumer correspondence; an unchanged automatic CAP graph
 cannot inherit the $W_r$ or $C_{4,M}$ branches. Second, a recovery construction
 must target the actual covered preterminal domain of Theorem 17.3 or the
@@ -3542,9 +3714,10 @@ endpoint inequality and the strict-past admission inequality. The third is
 Proposition 18.2 together with the corrected copy/handoff accounting of
 Propositions 18.3–18.4. These are restrictions on the next construction
 interface, not a proof that no task-relative four-view construction exists.
-The remaining work is to supply the displayed finite role/ownership graph,
-selector and two individual kernel/transport proofs on its actual domain; no
-such common installation is asserted here. $\square$
+The remaining work is to supply the common finite role/ownership graph,
+selector, both kernel inclusions for each natural view and lawful transition
+transport on its actual domain; no such common installation is asserted
+here. $\square$
 
 The external structural analogies retain their limited hypotheses: compatible
 memory-extension maps preserve old blocks only under disjoint allocation and
