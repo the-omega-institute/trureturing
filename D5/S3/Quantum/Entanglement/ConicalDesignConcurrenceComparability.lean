@@ -55,6 +55,14 @@ Utility kind is none: universal matrix identities and estimates, with no finite
 certificate, bounded enumeration, checker or numerical-reduction declaration.
 -/
 
+/-
+traceNorm_isometry: proof_shape: bind-only; escape_witness: none.
+Consumer: D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Norm.traceNorm_submatrix_equiv.
+Direct frozen dependencies (declaration statement_id at the base):
+D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm; sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/17573
+-/
+
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 
@@ -311,7 +319,7 @@ def claim : Prop := ∀ d : ℕ, 2 ≤ d → ∀ m n : ℕ,
     (∀ rho : DensityState (Fin d × Fin d),
       B_E G (CStarMatrix.ofMatrix.symm rho.1) ≥ B_E E (CStarMatrix.ofMatrix.symm rho.1))
 
-private theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
+theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     [Fintype N] [DecidableEq N]
     (V : Matrix M N ℂ) (hV : Vᴴ * V = 1) (X : Matrix N N ℂ) :
     traceNorm (V * X * Vᴴ) = traceNorm X := by

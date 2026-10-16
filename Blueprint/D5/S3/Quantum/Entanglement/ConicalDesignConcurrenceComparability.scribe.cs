@@ -32,6 +32,9 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("claim", "The Wang–Zhou–Chen–Fei conjecture", ClaimFormula(),
                 "Section IV, p. 8, after Theorem 2, verbatim: \"The lower bounds of concurrence induced by arbitrary two distinct conical 2-designs are comparable.\" For each d at least 2 and each pair of finite designs, one ordering holds for every bipartite state. DensityState is the canonical positive semidefinite trace-one CStarMatrix; CStarMatrix.ofMatrix.symm takes its underlying Matrix. Equal designs are also included. The state quantifier lies inside each branch, so the choice of ordering is independent of the state.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Wzcf)),
+            Node("traceNorm_isometry", "Isometric trace-norm invariance", IsometryFormula(),
+                "For a rectangular complex isometry V, the trace norm of V X V.conjTranspose equals that of X. Both finite index types are arbitrary, including the empty case.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "Uniform comparison by the ratio alpha over beta", Disp(F.Id("claim")),
                 "Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjTranspose times A=beta I+alpha vv.conjTranspose, where v=Matrix.vec I. With Q=vv.conjTranspose/d and t=sqrt(1+d alpha/beta), a rectangular isometry factors A as sqrt(beta) U (I+(t-1)Q). The trace norm is unchanged by that isometry, so the bound depends only on t. For s at most t, the projection dilation gives a trace-norm gain of at least (t squared minus s squared)/d, cancelling the change of the offset. Consequently alpha_E/beta_E at least alpha_G/beta_G gives B_E at least B_G for every state. Equal ratios give equal bounds. The total order on real ratios proves claim.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf),
@@ -134,4 +137,17 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             All("E", Call("Design", d, F.Id("m")), All("G", Call("Design", d, F.Id("n")), order))))));
         return Disp(new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, Parenthesized(body)));
     }
+    private static Formula IsometryFormula()
+    {
+        Formula m = F.Id("M"), n = F.Id("N"), v = F.Id("V"), x = F.Id("X");
+        Formula Finite(string name, Formula t, Formula body) => All(name, F.Id("Type"),
+            Seq(OpenBracket, Call("Fintype", t), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", t), CloseBracket, Sp, body));
+        Formula matrix = Call("Matrix", m, n, ComplexType());
+        Formula adj = Call("conjTranspose", v);
+        Formula conclusion = Eqn(Call("traceNorm", Mul(Mul(v, x), adj)), Call("traceNorm", x));
+        return Disp(Finite("M", m, Finite("N", n, All("V", matrix,
+            Imp(Eqn(Mul(adj, v), Cast(D(1), MatrixType(n))), All("X", MatrixType(n), conclusion))))));
+    }
+
 }

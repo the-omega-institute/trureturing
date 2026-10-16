@@ -76,7 +76,19 @@ $$claim \Leftrightarrow (\forall (d : \mathbb{N}), (2 \le d) \Rightarrow \forall
 
 Section IV, p. 8, after Theorem 2, verbatim: "The lower bounds of concurrence induced by arbitrary two distinct conical 2-designs are comparable." For each d at least 2 and each pair of finite designs, one ordering holds for every bipartite state. DensityState is the canonical positive semidefinite trace-one CStarMatrix; CStarMatrix.ofMatrix.symm takes its underlying Matrix. Equal designs are also included. The state quantifier lies inside each branch, so the choice of ordering is independent of the state.
 
-**Theorem 1.7 (Uniform comparison by the ratio alpha over beta).**
+**Theorem 1.7 (Isometric trace-norm invariance).**
+
+$$\forall (M : Type), [\operatorname{Fintype}\left(M\right)] [\operatorname{DecidableEq}\left(M\right)] \forall (N : Type), [\operatorname{Fintype}\left(N\right)] [\operatorname{DecidableEq}\left(N\right)] \forall (V : \operatorname{Matrix}\left(M, N, \mathbb{C}\right)), (\operatorname{conjTranspose}\left(V\right) \cdot V = (1 : \operatorname{Matrix}\left(N, N, \mathbb{C}\right))) \Rightarrow \forall (X : \operatorname{Matrix}\left(N, N, \mathbb{C}\right)), \operatorname{traceNorm}\left(V \cdot X \cdot \operatorname{conjTranspose}\left(V\right)\right) = \operatorname{traceNorm}\left(X\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a rectangular complex isometry V, the trace norm of V X V.conjTranspose equals that of X. Both finite index types are arbitrary, including the empty case.
+
+**Theorem 1.8 (Uniform comparison by the ratio alpha over beta).**
 
 $$claim$$
 
@@ -103,4 +115,5 @@ Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjT
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.swap`
+- Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
