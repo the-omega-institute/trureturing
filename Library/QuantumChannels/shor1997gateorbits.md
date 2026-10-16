@@ -6,6 +6,7 @@ title: "Polynomial-Time Algorithms for Prime Factorization and Discrete Logarith
 doi: 10.1137/S0097539795293172
 url: https://arxiv.org/abs/quant-ph/9508027
 claim: "Established reversible arithmetic and Fourier order finding, applied with explicit phase, work-register and power-access contracts."
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
@@ -27,3 +28,8 @@ Tang and Wright, *Are controlled unitaries helpful?*, [arXiv:2508.00055v2](https
 The continuation derives the monomial phase accumulated by the actual no11 full-flip pulses, its effect on cycle eigenphases, the concrete three-word return-sign example, tensor-conjugate cancellation on the diagonal code, the exact reduced-clock dependence on residual work, and the faithful companion-matrix probe over composite moduli. Generic monomial/Fourier algebra and reversible computation retain their established ownership. No exhaustive priority search or novel-algorithm claim is asserted.
 
 The existing LucasCompanion Lean file supplies algebraic definitions and period identities only. It has not been recompiled in this delivery, and the new quantum integration is ordinary written mathematics. The Fibonacci occupancy space, a Fibonacci fusion-chain algebra and the modular Fibonacci recurrence are distinct objects; no gate compilation between them follows from their names. The new line has no dependency on the HS4 or many-body PR.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1137/S0097539795293172
+- URL: https://arxiv.org/abs/quant-ph/9508027

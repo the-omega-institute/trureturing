@@ -2,16 +2,16 @@
 
 ## 1. Independent scope and existing owners
 
-This is an independent algorithmic continuation of the existing gate and observation theories. It does not depend on the HS4 maximum, singlet cells, spatial interpretation or many-body Hamiltonians. It distinguishes an ordinary mathematical construction, a compiled reversible circuit, a hardware experiment and a complexity advantage. Only the first, with supporting finite checks, is supplied here. No new Lean theorem or historical-priority claim is made.
+This is an independent algorithmic continuation of the existing gate and observation theories. It does not depend on the HS4 maximum, singlet cells, spatial interpretation or many-body Hamiltonians. It distinguishes an ordinary mathematical construction, a compiled reversible circuit, a hardware experiment and a complexity advantage. The mathematical constructions below use explicit ideal control and observation hypotheses.
 
-The base read for this continuation is dev `5d0de9dcddea52e5f7b5329c25f960dc098fd5c9`. The following actual sources supply different interfaces:
+The following sources supply distinct mathematical interfaces:
 
 | Existing owner | Object consumed here | Retained boundary |
 | --- | --- | --- |
 | [Legal interference](FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md), Chapter 8, especially Definitions 8.3 and 8.16 | The no11 Hilbert space, explicit conditional pulses, ordered gate words and full output records | A legal pulse and its phase are supplied controls; the occupancy grammar alone supplies neither |
 | [Output-resolved instrument closure](AURIC_FIB_ATOM_OUTPUT_RESOLVED_INSTRUMENT_CLOSURE.md), Section 15 with its editorial conditions | Actual branch maps and dependence of future observations on retained records | Classical recorded histories and unmeasured coherent work registers are different carriers |
 | [Fusion-chain QCA](FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md), Sections 1.1-1.3 and 8.1-8.2 | Actual window algebras, their embeddings and the restricted finite-depth gate menu | A finite register permutation is not automatically a local implementation on an infinite fusion chain |
-| `D5/S1/Recurrence/LucasCompanion.lean` | `matrixPeriod`, `companion_zpow_eq_one_iff`, `matrixPeriod_pos`, `companion_power_shape` | These are algebraic period declarations; this continuation does not recompile them or claim they contain a quantum circuit |
+| `D5/S1/Recurrence/LucasCompanion.lean` | `matrixPeriod`, `companion_zpow_eq_one_iff`, `matrixPeriod_pos`, `companion_power_shape` | These are algebraic period declarations; these algebraic declarations do not themselves specify a quantum circuit |
 
 Shor [S97] and Kitaev [K95] supply the established order-finding and eigenphase-estimation framework. The integration below specifies the phase information, reversible work space and power-access hypotheses needed to apply that framework to these project objects. It does not claim a new factoring algorithm or a solution of arbitrary state-machine prediction.
 
@@ -64,7 +64,7 @@ Proof. Substitute (2.2), shift the index and use r theta_j=Phi_C modulo 2pi for 
 
 These cycle phases belong to gate amplitudes, not to the pure-state edge-phase gradients of the supplier's Proposition 8.9. The latter telescope around their graph cycle. A gate cycle can have a nontrivial return phase even though its classical permutation returns.
 
-### Example 2.3. The actual three-position gate word
+### Proposition 2.3. The actual three-position gate word
 
 Take U=R_3(0,pi/2) R_2(0,pi/2) R_1(0,pi/2), with the rightmost factor first. Its permutation cycles are
 
@@ -187,7 +187,7 @@ Let n=ceil(log_2 N). Encode each residue in n bits and extend a matrix permutati
 
 The clean in-place construction uses a blank second pair of residue registers: compute f_j(x) into it, swap the two pair registers, and XOR the reversible computation of f_j^{-1} into the old-input register to return that register to zero. Arithmetic scratch must be uncomputed in both computations. This realizes |x>|0> -> |f_j(x)>|0>, not an oracle leaving hidden x-dependent work. A control is added to the specified reversible elementary circuit. The padding rule is preserved on the full bit-string domain.
 
-For r<=N^2-1, a binary clock with Q>=2(N^2-1)^2 uses O(log N) clock bits. Repeated squaring and classical modular arithmetic have polynomial bit complexity; standard reversible compilation gives a polynomial-size circuit family for this arithmetic target, followed by the established phase-estimation and classical postprocessing framework [S97,K95,IBM]. This is an architectural application of known algorithms. No primitive gate list, gate count, error-corrected realization or comparative speedup has been compiled in this delivery. By contrast, no such fast-power construction is supplied here for an arbitrary no11 sweep or fusion-chain QCA.
+For r<=N^2-1, a binary clock with Q>=2(N^2-1)^2 uses O(log N) clock bits. Repeated squaring and classical modular arithmetic have polynomial bit complexity; standard reversible compilation gives a polynomial-size circuit family for this arithmetic target, followed by the established phase-estimation and classical postprocessing framework [S97,K95,IBM]. This is an architectural application of known algorithms. A primitive gate list, gate count and physical error correction are additional implementation requirements. By contrast, no such fast-power construction is supplied here for an arbitrary no11 sweep or fusion-chain QCA.
 
 The Fibonacci matrix also satisfies q(A(x,y))=-q(x,y) for q=x^2-xy-y^2, so its square preserves a hyperbolic quadratic form over the reals. This real-coordinate identity and the finite permutation unitary concern different representations. Neither determines the other carrier's Hilbert norm, physical dimension or quantum speed advantage.
 
@@ -199,11 +199,9 @@ The QCA volume distinguishes an abstract compatible automorphism from a finite-d
 
 The common interface now has precise content: state encoding; allowed gate and work-register specification; monomial phase or general unitary spectrum; power implementation; clock effects; classical validation; and resource/error accounting. Every claimed transfer must supply those maps. This lets gate/state-machine research develop independently of any HS4 or many-body interpretation.
 
-## 9. Supporting checks and remaining obligations
+## 9. Remaining mathematical interfaces
 
-The independent checker `docs/reports/gate-shor-integration/verify_gate_shor.py` in the experiments repository checks legal sweeps for n=1,...,8, cycle return phases and paired cancellation, the actual five-word sign-offset example, clock probabilities, which-path erasure of interference, and Fibonacci return/power identities for moduli 2,...,128. It also checks the ideal two-sample denominator formula for r=1,...,40. These are bounded exact and floating checks; the all-input and all-length claims rest on the proofs above. No quantum processor or Lean compilation is involved.
-
-The remaining implementation obligations are a primitive reversible arithmetic circuit with cleaned scratch and explicit costs; controlled-pulse or decontrolled-task compilation in the declared hardware model; finite-clock extraction with a complete validation policy; and corresponding admissible Lean/Scribe formalization. No arbitrary-QCA fast-forwarding, optimal resource theorem, new factoring speedup, WSS exclusion, original HS4 proof or universal state tomography is claimed.
+The remaining implementation obligations are a primitive reversible arithmetic circuit with cleaned scratch and explicit costs; controlled-pulse or decontrolled-task compilation in the declared hardware model; finite-clock extraction with a complete validation policy. No arbitrary-QCA fast-forwarding, optimal resource theorem, new factoring speedup, WSS exclusion, original HS4 proof or universal state tomography is claimed.
 
 ### Primary references and ownership
 
@@ -211,13 +209,13 @@ The remaining implementation obligations are a primitive reversible arithmetic c
 - [K95] A. Yu. Kitaev, *Quantum measurements and the Abelian Stabilizer Problem*, [arXiv:quant-ph/9511026](https://arxiv.org/abs/quant-ph/9511026). Established eigenvalue measurement and Abelian-action formulation.
 - [AFCB14] M. Araujo, A. Feix, F. Costa and C. Brukner, *Quantum circuits cannot control unknown operations*, New Journal of Physics 16 (2014), 093026. [arXiv:1309.7976](https://arxiv.org/abs/1309.7976), DOI 10.1088/1367-2630/16/9/093026. The oracle-model distinction between an unknown channel and phase-referenced coherent control.
 - [TW26] E. Tang and J. Wright, *Are controlled unitaries helpful?*, [arXiv:2508.00055v2](https://arxiv.org/abs/2508.00055v2), revised 23 April 2026. Phase-averaged decontrolling for the paper's access/task model. Cited to delimit the no-go inference, not as an implementation performed here.
-- [IBM] IBM Quantum Learning, *Phase-estimation and factoring*, especially *Shor's algorithm*, [course](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/phase-estimation-and-factoring/shor-algorithm) and [implementation tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/shors-algorithm), consulted 14 October 2026. Explicit power-access, clock-precision and classical-reconstruction explanation. No tutorial hardware result or library-version claim is transferred to these checks.
+- [IBM] IBM Quantum Learning, *Phase-estimation and factoring*, especially *Shor's algorithm*, [course](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/phase-estimation-and-factoring/shor-algorithm) and [implementation tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/shors-algorithm). Explicit power-access, clock-precision and classical-reconstruction explanation.
 
 Monomial spectral decomposition, tensor-conjugate cancellation, finite Fourier orthogonality and reversible computation are established mathematical tools. The work here supplies their concrete gate-word correspondence, phase-offset counterexample, clean-work criterion and modular companion interface. Their historical novelty has not been established.
 
 ## 10. Continuation: controllable states, observable states and circuit costs
 
-This continuation reads the native pulse supplier at dev `b7d3aa4ba9bcfd787a543660cd1ea382d6a79bae`. Its Definition 8.3 still specifies independently addressed single-position pulses with arbitrary phase and angle. Sections 10-15 use exactly those ideal projected generators, with no finite-blockade approximation, uncontrolled drift, noise or hardware accessibility claim. Earlier implementation limits in Sections 1-9 describe the first delivery. Section 13 now supplies a native-pulse compiler for known ordinary-qubit circuits and Section 14 exercises a complete small period-readout circuit. A scalable modular-arithmetic compiler and hardware realization remain separate obligations.
+The native pulse supplier’s Definition 8.3 specifies independently addressed single-position pulses with arbitrary phase and angle. Sections 10–15 use those ideal projected generators. A scalable modular-arithmetic compiler and physical error model are separate hypotheses.
 
 Let d=|B_n|=F_{n+2} for n>=1, X_i=H_i(0), Y_i=H_i(pi/2), and P_s=|s><s| on K_n. Both X_i and Y_i are traceless Hermitian matrices. The site-i edges form a matching; on each oriented edge their matrices are the usual Pauli X and Y, and on blocked words they vanish. Pulse angles are real and inverses are available. Negative angles can also be replaced modulo 2pi for these generators. The following controllability assertions do not bound duration, pulse count or precision.
 
@@ -330,35 +328,25 @@ Proof. The elementary identities return the separators to zero, so they compose 
 
 This compilation translates a known circuit including its controlled operations. It does not attach a new control to an unknown compiled black box, so the phase-reference issue in Section 5 is retained. It also does not itself produce cheap large powers for a generic state machine. Section 7's modular-arithmetic structure still supplies that separate ingredient. The blocker-controlled phase mechanism has established neutral-atom gate precedent [J00]; the present theorem is a precise ideal-model encoding and pulse-count construction, without a novelty or experimental-fidelity claim.
 
-## 14. A complete small clock circuit actually compiled and checked
+## 14. The five-qubit modulus-two clock circuit
 
-The companion `verify_control_compiler.py` implements the compiler at the level of the native pulses (site, phase, angle), using only the two phases 0 and pi/2. It expands ordinary H, phase, CNOT, controlled-phase, SWAP and Toffoli constructions with a tracked global phase. Routing is explicit and not optimized.
-
-The test circuit has three binary clock qubits and two target qubits. Its target permutation is the actual modulus-two Fibonacci map
+The circuit has three binary clock qubits and two target qubits. Its target permutation is the actual modulus-two Fibonacci map
 
 $$(x,y)\longmapsto(x+y,x)\pmod2,$$
 
-implemented by CNOT_{2->1} followed by CNOT_{1->2}. Clock-controlled powers 1,2,4 are expanded into Toffoli circuits, then an inverse eight-point Fourier transform is applied to the clock. This small test intentionally uses repeated powers and proves no fast-forwarding result. All five qubits are encoded on nine native sites, whose complete legal Hilbert space has dimension 89.
-
-The generated example has 234 source H/phase/CNOT gates after the first decomposition, 771 routed adjacent CNOTs, and 7,328 native pulses. The checker compares the full 89-by-32 encoded action with an independently formed controlled-permutation/Fourier matrix, retaining all input columns rather than checking one selected state. The observed operator-norm residual is about 2.10e-14; final separator leakage norm is about 1.37e-14. These are floating residuals in the ideal model, not interval bounds or hardware errors.
+implemented by CNOT_{2->1} followed by CNOT_{1->2}. Clock-controlled powers 1,2,4 are expanded into Toffoli circuits, then an inverse eight-point Fourier transform is applied to the clock. This finite circuit uses repeated powers and proves no fast-forwarding result. All five qubits are encoded on nine native sites, whose complete legal Hilbert space has dimension 89.
 
 For initial clock 000 and target 10, the ideal clock law is obtained directly from
 
 $$p(y)=\frac1{64}\sum_{r=0}^{2}\left|\sum_{0\le a<8,\ a\equiv r\ (3)}e^{-2\pi iay/8}\right|^2. \tag{14.1}$$
 
-The native simulation gives the same distribution within its declared tolerance. An eight-point clock has finite precision; a single outcome does not certify the integer period. This is a compiled, simulated small order-probe, not a quantum processor experiment or a large-integer factoring benchmark. Its deliberately conservative 7,328-pulse implementation is not a claimed optimal realization.
+The eight-point clock has finite precision; a single outcome does not certify the integer period. Equation (14.1) is an ideal probability law.
 
-## 15. Verification, source ownership and current meaning for state machines
+## 15. Consequences for state machines
 
 The all-n Lie-algebra argument uses the published open-path toggle-group theorem [NY22], followed by the explicit diagonal-orbit and matching-edge commutators of Theorem 11.2. It does not infer Lie rank from a few tested values. The native compiler and its register-cleaning claims use the exact gate identities of Section 13. The general control/observability and universal-gate principles remain attributed to their existing sources.
 
-The companion checker has three distinct evidence classes. Exact symbolic identities verify single-qubit, separator, CZ and both CNOT orientations for two and three encoded data qubits, and the gauged-real/antiunitary identities for legal lengths 1-5. Exact finite-field rank calculations at prime 1009 retain actual nested-commutator ancestry, giving full complexified rank d^2-1 for n=1,...,5 with a phase reference at site one, and for all three reference locations at n=3. A full rank minor modulo a prime gives an exact characteristic-zero lower bound for those integer Lie words; trace zero supplies the matching upper bound. This is a finite algebraic certificate, not a Lean proof. Floating calculations check the complete small compiler and its output law with tolerance 2e-10. The separate reproduction note distinguishes structural integer assertions from symbolic matrix equalities and records the actual counts and source hash.
-
-The all-phase-zero finite ranks observed for n=1,...,5 are 1,3,10,28,78, while the added-quadrature ranks are 3,8,24,63,168. The phase-zero containment in a conjugate orthogonal algebra is proved for every n; a general equality theorem for that smaller algebra is not required here. Three concrete negative controls check the blind orthogonal hypotheses, leakage from replacing the complete separator pulse by a half pulse, and non-identification of a state from one fixed spectrum's weights. Their finite tests do not replace the universal proofs.
-
 The state-machine consequence is precise: gates act on amplitudes and coherences, and their composition changes which effects can be measured. In the native ideal model, a single extra local phase quadrature removes an exact symmetry obstruction, while a clean separator encoding compiles known quantum circuits with explicit overhead. Computational advantage still requires an efficient task-specific circuit, meaningful output statistics, state preparation and error control. Full controllability, state identifiability and computational speed are separate properties.
-
-No new Lean compilation, Scribe emission, inherited HS4 replay, canonical admission, independent mathematical review, hardware realization, optimized large-N arithmetic implementation or historical-first claim is made. This continuation remains on the independent gate/state-machine PR; it adds no dependency on HS4, spacetime or the many-body chapter.
 
 ### Additional primary sources
 

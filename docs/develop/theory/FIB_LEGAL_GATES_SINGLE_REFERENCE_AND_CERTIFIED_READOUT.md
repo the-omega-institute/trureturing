@@ -2,11 +2,11 @@
 
 ## 1. Scope and source interfaces
 
-This is a result-specific continuation of [FIB legal gates and Shor readout](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md), Sections 11-15. It keeps that source unchanged and remains independent of HS4 and its many-body model. The new results are ordinary written proofs, not Lean-verified declarations or claims of historical priority.
+This is a result-specific continuation of [FIB legal gates and Shor readout](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md), Sections 11-15. It keeps that source unchanged and remains independent of HS4 and its many-body model.
 
-The inspected dev snapshot is `2c22f027c10d658fbf32942a70f717537c61b2d0`. Its newly merged [four-corner coherence and single-copy certification volume](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md), C-117 and C-121, supplies the precise witness and conditional source assumptions consumed below. C-121.1 explicitly assumes an actual three-outcome PVM. Section 4 supplies its effects from the native gates; it does not change the original conditional separability or setting-independence assumptions.
+The [four-corner coherence and single-copy certification volume](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md), C-117 and C-121, supplies the precise witness and conditional source assumptions consumed below. C-121.1 explicitly assumes an actual three-outcome PVM. Section 4 supplies its effects from the native gates; it does not change the original conditional separability or setting-independence assumptions.
 
-The native generator is the existing ideal open-path operator H_i(beta)=P_(i-1)(cos(beta) X_i+sin(beta) Y_i)P_(i+1), with missing endpoint projectors equal to I, and R_i(beta,t)=exp(-it H_i(beta)). Let J_m embed m ordinary qubits into 2m-1 sites by inserting a zero between consecutive data bits. Site numbers are one-based in the formulas; the checker uses zero-based indices internally.
+The native generator is the existing ideal open-path operator H_i(beta)=P_(i-1)(cos(beta) X_i+sin(beta) Y_i)P_(i+1), with missing endpoint projectors equal to I, and R_i(beta,t)=exp(-it H_i(beta)). Let J_m embed m ordinary qubits into 2m-1 sites by inserting a zero between consecutive data bits. Site numbers are one-based in the formulas.
 
 The retained control contract is independently addressed phase-zero pulses at every site, real pulse angles, and a second quadrature at exactly one chosen data site 2q_*-1. Other data and separator sites have no second quadrature. Pulse angles, ordering, computational-word initialization, and final complete-word measurement are supplied. This is not global-only control, a finite-blockade approximation, or a noise-calibration claim.
 
@@ -65,15 +65,13 @@ Proof. The parent Proposition 11.1 gives the antiunitary A=Z_par K commuting wit
 
 The minimality is only for this fixed complex encoding, initialization and all-input action task. It is not a statement that real-amplitude computing lacks quantum computational power. Real-amplitude simulations with altered encodings are established [RG02]; extra coherent reference states or a different encoding change the resource contract. No minimal-pulse, optimal-time or all-hardware actuator theorem is claimed.
 
-### 3.3. Actual small order-probe compilation
+### 3.3. Finite order-probe application
 
-The checker implements this weaker-menu compiler and recompiles the same five-qubit modulus-two Fibonacci order probe used in the parent Section 14. The source has three clock bits, two target bits, repeated controlled powers 1,2,4 and inverse eight-point Fourier readout. There are 234 decomposed source H/phase/CNOT gates. The native implementation has nine sites, 26,174 pulses and 327 second-quadrature pulses, all at site five. All 32 input columns are compared on the full 89-dimensional legal space with an independently constructed controlled-permutation/Fourier operator.
+The three-clock-bit, two-target-bit modulus-two companion circuit in the parent Section 14 is a known five-qubit circuit. Theorem 3.1 therefore gives an exact native implementation on nine sites with a single chosen second-quadrature data address. Its all-input intertwiner retains the complete clock distribution (14.1); this finite-clock law alone does not certify an integer period.
 
-The observed operator residual is approximately 5.97e-14 and the final separator leakage norm is approximately 2.26e-14. These are floating ideal-model checks, not interval or hardware error bounds. The earlier richer-menu count was 7,328 pulses. Reducing the number of phase-capable addresses therefore increases this unoptimized routing cost; no gate-count improvement or factoring speedup is asserted. The new program emits its complete pulse list when run.
+## 4. Native implementation of the four-corner measurement effects
 
-## 4. Supplying the new dev entanglement witness's actual measurement
-
-Use the five legal three-site states. The encoded bottom space is the image of J_2; let P_b=J_2J_2^dagger and let a=|010> be the apex. The current dev C-117/C-121 operators are exactly
+Use the five legal three-site states. The encoded bottom space is the image of J_2; let P_b=J_2J_2^dagger and let a=|010> be the apex. The C-117/C-121 operators are exactly
 
 $$K_1=J_2(X\otimes Z)J_2^\dagger,\qquad K_2=J_2(Z\otimes X)J_2^\dagger,$$
 $$E_{j,\pm}=(P_b\pm K_j)/2,\qquad E_{j,0}=I_5-P_b. \tag{4.1}$$
@@ -94,11 +92,11 @@ Proof. On the bottom, the diagonal output observable is Z tensor I. Pulling it b
 
 Only the effects and their outcome probabilities have been equated. The implemented complete-word measurement refines the degenerate +/- eigenspaces. Its postmeasurement channel is not asserted to equal a minimally disturbing Lueder instrument for the coarse PVM. For sequential sources, the conditional-null assumptions must refer to the history actually retained by the experiment, including any retained refined outcomes. No future source independence is inferred from these effect identities.
 
-This closes the ideal native-realization premise singled out in dev C-121.1. Trusted apparatus calibration, source assumptions, sample complexity and physical leakage are separate. The witness remains incomplete: failure to violate its separable bound does not prove that the state is separable.
+This closes the ideal native-realization premise singled out in C-121.1. Trusted apparatus calibration, source assumptions, sample complexity and physical leakage are separate. The witness remains incomplete: failure to violate its separable bound does not prove that the state is separable.
 
 ## 5. From gate error to a time-uniform false-positive bound
 
-For round n, condition on the full retained past F_(n-1). The current state is selected before the independent uniform setting J_n in {1,2}. Under the null, its conditional bottom state is separable whenever its bottom probability is nonzero, exactly as in dev C-121.1. Let the actual three-outcome distribution at setting j differ from the ideal one in total variation by at most epsilon_(n,j), uniformly over the current state. The two error bounds are known from the past or a prespecified calibration contract. Put bar epsilon_n=(epsilon_(n,1)+epsilon_(n,2))/2.
+For round n, condition on the full retained past F_(n-1). The current state is selected before the independent uniform setting J_n in {1,2}. Under the null, its conditional bottom state is separable whenever its bottom probability is nonzero, exactly as in C-121.1. Let the actual three-outcome distribution at setting j differ from the ideal one in total variation by at most epsilon_(n,j), uniformly over the current state. The two error bounds are known from the past or a prespecified calibration contract. Put bar epsilon_n=(epsilon_(n,1)+epsilon_(n,2))/2.
 
 Use the inherited score V_n=1,-3,0 on +,-,0. No failed or outside-bottom round is discarded. For leakage outside the ideal carrier, an implementation may use a flagged zero-score outcome, but its probability must be included in the stated total-variation comparison.
 
@@ -123,7 +121,7 @@ The factor four is sharp given only the three-outcome total-variation contract: 
 
 If every actual pulse differs in operator norm by at most delta from its ideal unitary on a common full physical carrier, telescoping and measurement contraction give epsilon_1<=min(1,7delta) and epsilon_2<=min(1,28delta). Any preparation or detector error must be included separately. Consequently bar epsilon<=min(1,35delta/2).
 
-For dev's fixed calibrated family C-120.1 with bottom weight r and real coherence gamma, the ideal score mean is r gamma. Its corrected mean is at least
+For the fixed calibrated family C-120.1 with bottom weight r and real coherence gamma, the ideal score mean is r gamma. Its corrected mean is at least
 
 $$\mu=r\gamma-4\bar\epsilon.$$
 
@@ -135,15 +133,13 @@ $$\boxed{\mathbb E\tau\le\frac{4B^2}{\mu^2}\,[\log(1/\alpha)+\log(1+\lambda)].} 
 
 Indeed |lambda Z_n|<=1/2 and log(1+x)>=x-x^2 on that interval, so the conditional log-growth is at least mu^2/(4B^2). The stopped log process is pathwise at most log(1/alpha)+log(1+lambda). Summing conditional drifts up to tau wedge N bounds E[tau wedge N]; monotone convergence proves (5.2) and finite stopping. Because each fresh setting is uniform given the past, Tonelli and conditioning give expected total native pulse count (35/2)E tau. This cost bound concerns the stated positive-drift alternative and excludes preparation/readout overhead.
 
-The sequential witness tests conditional separability of the supplied source, not an arbitrary fixed initial marginal of a correlated stream. Dev C-116's common-label example retains its full force. The new native implementation and calibration correction do not certify source independence.
+The sequential witness tests conditional separability of the supplied source, not an arbitrary fixed initial marginal of a correlated stream. C-116's common-label example retains its full force. The new native implementation and calibration correction do not certify source independence.
 
-## 6. Research targets and attribution boundary
+## 6. Remaining bounds and source attribution
 
-The chapter settles a precisely specified efficient one-phase-address compilation task and supplies a native realization of the latest dev measurement effects, with a conditional calibrated error guarantee. These are model-specific quantum control and certification results. No named universal quantum-information conjecture is declared solved. The established ingredients remain standard circuit algebra, routing, antiunitary invariance, trace-distance contraction and nonnegative-supermartingale theory.
+The chapter settles a precisely specified efficient one-phase-address compilation task and supplies a native realization of the specified four-corner measurement effects, with a conditional calibrated error guarantee. These are model-specific quantum control and certification results. No named universal quantum-information conjecture is declared solved. The established ingredients remain standard circuit algebra, routing, antiunitary invariance, trace-distance contraction and nonnegative-supermartingale theory.
 
-The next genuinely unfinished targets are tighter or optimal native routing costs, a primitive large-modulus arithmetic compiler with resource counts, finite-blockade and drift-derived calibration bounds, and independently checked/Lean-formalized versions of the new statements. Efficient generic state tomography, arbitrary-state-machine fast forwarding and quantum fault tolerance are not obtained from this construction.
-
-The standalone checker in experiments PR #12 is `docs/reports/gate-shor-integration/verify_single_reference.py`. Its actual output distinguishes 23 symbolic equalities, 48 structural assertions, 55 floating comparisons and three concrete negative controls. It checks full native CY/SWAP actions on two and three encoded qubits, symbolic remote rotations, all six complete five-mode PVM effects, and the full five-qubit order-probe. Numerical validation covers every reference/target pair for one through four data qubits and additional perturbed measurement comparisons. Universal statements rely on the proofs above. No QPU, Lean compilation, canonical admission, independent mathematical review or historical-first claim is supplied.
+The next genuinely unfinished targets are tighter or optimal native routing costs, a primitive large-modulus arithmetic compiler with resource counts, finite-blockade and drift-derived calibration bounds, and explicit implementation-error models. Efficient generic state tomography, arbitrary-state-machine fast forwarding and quantum fault tolerance are not obtained from this construction.
 
 ### Primary references and exact roles
 

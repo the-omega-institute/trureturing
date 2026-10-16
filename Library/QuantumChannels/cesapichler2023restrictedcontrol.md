@@ -6,6 +6,7 @@ title: "Universal Quantum Computation in Globally Driven Rydberg Atom Arrays"
 doi: 10.1103/PhysRevLett.131.170601
 url: https://arxiv.org/abs/2305.19220
 claim: "Established universal computation with global species-selective drives, used to delimit native single-phase-address claims."
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
@@ -30,4 +31,13 @@ G. Warttmann, F. Meinert, H. P. Buechler and S. Weber, *Suppressing crosstalk fo
 
 S. R. Howard, A. Ramdas, J. McAuliffe and J. Sekhon, *Time-uniform Chernoff bounds via nonnegative supermartingales*, arXiv:1808.03204, supplies established sequential-test methodology already used by dev C-121. The new score correction uses the elementary range-four total-variation expectation bound, with the native measurement effects, actual settings, conditional source hypothesis and all rounds retained.
 
-All primary-source checks in this note were performed on 16 October 2026. No exhaustive novelty audit, QPU implementation or Lean compilation is claimed.
+No exhaustive novelty audit, QPU implementation or Lean compilation is claimed.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1103/PhysRevLett.131.170601
+- URL: https://arxiv.org/abs/2305.19220
+
+## Remaining formalization scope
+
+The full all-length native-control theorem, monomial and clean-work interfaces, routing bounds, complete five-state effects and conditional calibrated sequential test remain written mathematical results. Admissible Lean/Scribe formalization must preserve their complete telescopes and original control, encoding, history and calibration hypotheses. The finite compiler programs and their results remain in the [experiments source](https://github.com/the-omega-institute/trureturing-experiments/tree/a6a32d7ee751b959b70c9b74fe73a994dad59946/docs/reports/gate-shor-integration); finite residuals do not certify the universal statements.
