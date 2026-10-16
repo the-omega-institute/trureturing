@@ -36,6 +36,9 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "of a judge defect. The other new helper audits and full-positive transfer audit are validated.")),
             Def("mass", "Absolute block mass",
                 "For every natural N and real sequence a, A=mass(N,a)=sum(N<=m<2N,abs(a(m)))."),
+            Def("firstAbsoluteMoment", "First absolute moment on the original block",
+                "For every natural N and real sequence a, B=firstAbsoluteMoment(N,a)="
+                + "sum(N<=m<2N,m*abs(a(m))). The actual integer index remains inside the sum."),
             Def("variation", "Variation of the zero extension",
                 "For every N and a, V=variation(N,a)=abs(a(N))+sum(N<=m<2N-1,"
                 + "abs(a(m+1)-a(m)))+abs(a(2N-1)). For N>=1 this is precisely the "
@@ -79,6 +82,11 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "proof supply the two-moment floor bound and the full positive mean remainder."),
             Helper("reciprocal_log_step", "Reciprocal logarithmic step",
                 "For every natural k>0, 1/(k+1)<=log(k+1)-log(k)."),
+            Helper("weighted_floor_prefix_bound", "Partial floor count with its negative endpoint",
+                "For natural h,j,m with 0<h<=j<m, "
+                + "sum(h<=k<=j,k*(floor(m/k)-floor(m/(k+1))))"
+                + "<=m*(1+log(j/h))-j. The terminal floor(m/(j+1)) is at least one. "
+                + "Its negative contribution -j is retained for the later joint cancellation."),
             Helper("weighted_floor_bound", "Weighted original floor count",
                 "For natural N,h,m with 0<h<N and m<2*N, "
                 + "sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))<=2*N*(1+log(2*N/h)). "
@@ -87,6 +95,18 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 "For natural N,d with 0<d<=N, 0<=log(N/d)<=log(N)."),
             Helper("weighted_log_step", "Weighted logarithmic step",
                 "For every natural k>0, k*(log(k+1)-log(k))<=1."),
+            Helper("weightedVariation_firstMoment_bound", "Joint first-moment high variation",
+                "For natural N,h with 0<h<=N and arbitrary real a on the original block, "
+                + "assume only sum(N<=m<2N,m*a(m))=0. No zeroth moment is required. "
+                + "Put u=log(N/h) and B=firstAbsoluteMoment(N,a). Then the unchanged "
+                + "weightedVariation(N,h,a)<=B*(u+u*u/2). At h=N both sides vanish. "
+                + "The first moment rewrites the floor pair as a negative remainder pair. "
+                + "For delta(k)=log(k+1)-log(k), triangular finite summation keeps the "
+                + "negative endpoint -j*mass(N,a) until it cancels the entire "
+                + "mass(N,a)*sum(k*delta(k)) payment in the product difference. "
+                + "Finally sum(delta(k)*log(k/h))<=u*u/2 follows by telescoping squares. "
+                + "The existing finite transfer consumes this bound and recovers its old "
+                + "public allowance from B<=2*N*mass(N,a); no residual sign follows."),
             Helper("prefix_bound", "Absolute actual Mobius prefix",
                 "For every natural q, abs(M(q))<=q, with every original Mobius index retained."),
             Helper("sum_indices", "Exact finite integer sum",

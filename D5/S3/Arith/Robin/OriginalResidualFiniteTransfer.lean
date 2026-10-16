@@ -26,6 +26,10 @@ open D5.S3.Arith.Robin.ActualOddMobiusFinitePairing (mobiusPrefix)
 /-- Absolute mass on the complete original integer block. -/
 def mass (N : ℕ) (a : ℕ → ℝ) : ℝ := ∑ m ∈ Ico N (2 * N), |a m|
 
+/-- The actual first absolute moment, before replacing indices by a block ceiling. -/
+def firstAbsoluteMoment (N : ℕ) (a : ℕ → ℝ) : ℝ :=
+  ∑ m ∈ Ico N (2 * N), (m : ℝ) * |a m|
+
 /-- Variation of the block extended by zero, including both endpoint jumps. -/
 def variation (N : ℕ) (a : ℕ → ℝ) : ℝ :=
   |a N| + (∑ m ∈ Ico N (2 * N - 1), |a (m + 1)-a m|) + |a (2 * N - 1)|
@@ -246,6 +250,50 @@ private theorem weighted_floor_identity (m : ℕ) {h N : ℕ} (hh : 0 < h)
   dsimp [f]
   ring
 
+/-- On each partial prefix the terminal floor pays the entire negative endpoint term. -/
+theorem weighted_floor_prefix_bound {h j m : ℕ} (hh : 0 < h) (hj : h ≤ j)
+    (hm : j < m) :
+    (∑ k ∈ Ico h (j + 1), (k : ℝ) *
+      (((m / k : ℕ) : ℝ) - ((m / (k + 1) : ℕ) : ℝ))) ≤
+        (m : ℝ) * (1 + Real.log ((j : ℝ) / h)) - j := by
+  have hh' : (0 : ℝ) < h := by exact_mod_cast hh
+  have hj' : (0 : ℝ) < j := by exact_mod_cast (lt_of_lt_of_le hh hj)
+  have hs : (∑ k ∈ Ico h j, (1 : ℝ) / (k + 1 : ℕ)) ≤
+      Real.log ((j : ℝ) / h) := by
+    calc
+      _ ≤ ∑ k ∈ Ico h j, (Real.log (k + 1 : ℕ) - Real.log (k : ℝ)) := by
+        apply sum_le_sum
+        intro k hk
+        exact reciprocal_log_step (by have := mem_Ico.mp hk; omega)
+      _ = _ := by
+        rw [sum_Ico_sub (fun k : ℕ => Real.log (k : ℝ)) hj,
+          Real.log_div hj'.ne' hh'.ne']
+  have hsum : (∑ k ∈ Ico h j, ((m / (k + 1) : ℕ) : ℝ)) ≤
+      (m : ℝ) * Real.log ((j : ℝ) / h) := by
+    calc
+      _ ≤ ∑ k ∈ Ico h j, (m : ℝ) * ((1 : ℝ) / (k + 1 : ℕ)) := by
+        apply sum_le_sum
+        intro k _
+        simpa only [mul_one_div] using (Nat.cast_div_le (m := m) (n := k + 1) :
+          ((m / (k + 1) : ℕ) : ℝ) ≤ (m : ℝ) / (k + 1 : ℕ))
+      _ ≤ _ := by
+        rw [← mul_sum]
+        exact mul_le_mul_of_nonneg_left hs (Nat.cast_nonneg _)
+  have hfirst : (h : ℝ) * (m / h : ℕ) ≤ m := by
+    calc
+      _ ≤ (h : ℝ) * ((m : ℝ) / h) :=
+        mul_le_mul_of_nonneg_left (Nat.cast_div_le (m := m) (n := h)) hh'.le
+      _ = _ := by field_simp
+  have hterminal : (1 : ℕ) ≤ m / (j + 1) := by
+    exact (Nat.le_div_iff_mul_le (by omega)).mpr (by omega)
+  have hterminal' : (j : ℝ) ≤ (j : ℝ) * (m / (j + 1) : ℕ) := by
+    have ht : (1 : ℝ) ≤ (m / (j + 1) : ℕ) := by exact_mod_cast hterminal
+    nlinarith [Nat.cast_nonneg j]
+  have hid := weighted_floor_identity m hh (show h < j + 1 by omega)
+  simp only [Nat.add_sub_cancel] at hid
+  rw [hid]
+  linarith
+
 theorem weighted_floor_bound {N h m : ℕ} (hh : 0 < h) (hN : h < N)
     (hm : m < 2 * N) :
     (∑ k ∈ Ico h N, (k : ℝ)*((m / k : ℕ)-(m / (k + 1) : ℕ) : ℝ)) ≤
@@ -331,91 +379,199 @@ theorem weighted_log_step {k : ℕ} (hk : 0 < k) :
     _ ≤ (k : ℝ)*((k + 1 : ℕ)/(k : ℝ)-1) := mul_le_mul_of_nonneg_left he hk'.le
     _ = 1 := by push_cast; field_simp; ring
 
+private theorem pair_firstMoment_bound {N d : ℕ} (a : ℕ → ℝ) (hd : 0 < d)
+    (hm : ∑ m ∈ Ico N (2 * N), (m : ℝ) * a m = 0) :
+    |floorPair N a d| ≤ mass N a := by
+  have hd' : (0 : ℝ) < d := by exact_mod_cast hd
+  have hquot (m : ℕ) : ((m / d : ℕ) : ℝ) =
+      (m : ℝ) / d - (m % d : ℕ) / (d : ℝ) := by
+    rw [centered_floor hd]
+    unfold centered
+    ring
+  have hlinear : (∑ m ∈ Ico N (2 * N), a m * ((m : ℝ) / d)) = 0 := by
+    calc
+      _ = (∑ m ∈ Ico N (2 * N), (m : ℝ) * a m) / d := by
+        rw [sum_div]
+        apply sum_congr rfl
+        intro m _
+        ring
+      _ = 0 := by rw [hm, zero_div]
+  have hid : floorPair N a d =
+      -(∑ m ∈ Ico N (2 * N), a m * ((m % d : ℕ) / (d : ℝ))) := by
+    unfold floorPair
+    simp_rw [hquot, mul_sub]
+    rw [sum_sub_distrib, hlinear, zero_sub]
+  rw [hid, abs_neg]
+  calc
+    _ ≤ ∑ m ∈ Ico N (2 * N), |a m * ((m % d : ℕ) / (d : ℝ))| :=
+      abs_sum_le_sum_abs _ _
+    _ ≤ mass N a := by
+      apply sum_le_sum
+      intro m _
+      have hnonneg : 0 ≤ (m % d : ℕ) / (d : ℝ) := by positivity
+      have hone : (m % d : ℕ) / (d : ℝ) ≤ 1 :=
+        (div_le_one hd').mpr (by exact_mod_cast (Nat.mod_lt m hd).le)
+      rw [abs_mul, abs_of_nonneg hnonneg]
+      exact (mul_le_mul_of_nonneg_left hone (abs_nonneg _)).trans_eq (mul_one _)
+
+/-- Joint floor-prefix cancellation, using the first moment alone. -/
+theorem weightedVariation_firstMoment_bound {N h : ℕ} (hh : 0 < h) (hN : h ≤ N)
+    (a : ℕ → ℝ) (hm : ∑ m ∈ Ico N (2 * N), (m : ℝ) * a m = 0) :
+    weightedVariation N h a ≤ firstAbsoluteMoment N a *
+      (Real.log ((N : ℝ) / h) + Real.log ((N : ℝ) / h) ^ 2 / 2) := by
+  rcases lt_or_eq_of_le hN with hlt | rfl
+  swap
+  · simp [weightedVariation, div_self (show (N : ℝ) ≠ 0 by positivity)]
+  have hh' : (0 : ℝ) < h := by exact_mod_cast hh
+  have hNp : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le hh hN)
+  let A := mass N a
+  let B := firstAbsoluteMoment N a
+  let u := Real.log ((N : ℝ) / h)
+  let x (k : ℕ) := Real.log ((N : ℝ) / k)
+  let s (k : ℕ) := Real.log ((k : ℝ) / h)
+  let δ (k : ℕ) := Real.log (k + 1 : ℕ) - Real.log (k : ℝ)
+  let E (k : ℕ) := ∑ m ∈ Ico N (2 * N), |a m| *
+    (((m / k : ℕ) : ℝ) - ((m / (k + 1) : ℕ) : ℝ))
+  have hB : 0 ≤ B := sum_nonneg fun m _ => mul_nonneg (Nat.cast_nonneg m) (abs_nonneg _)
+  have hδ (k : ℕ) (hk : h ≤ k) : 0 ≤ δ k := by
+    have hkp : (0 : ℝ) < k := by exact_mod_cast (lt_of_lt_of_le hh hk)
+    exact sub_nonneg.mpr (Real.log_le_log hkp (by push_cast; linarith))
+  have htail (k : ℕ) (hk : h ≤ k) (hkN : k ≤ N) :
+      x k = ∑ j ∈ Ico k N, δ j := by
+    have hkp : (0 : ℝ) < k := by exact_mod_cast (lt_of_lt_of_le hh hk)
+    dsimp [x, δ]
+    rw [sum_Ico_sub (fun j : ℕ => Real.log (j : ℝ)) hkN,
+      Real.log_div hNp.ne' hkp.ne']
+  have hprefix (j : ℕ) (hj : j ∈ Ico h N) :
+      (∑ k ∈ Ico h (j + 1), (k : ℝ) * E k) ≤ B * (1 + s j) - j * A := by
+    have hji := mem_Ico.mp hj
+    calc
+      _ = ∑ m ∈ Ico N (2 * N), |a m| *
+          (∑ k ∈ Ico h (j + 1), (k : ℝ) *
+            (((m / k : ℕ) : ℝ) - ((m / (k + 1) : ℕ) : ℝ))) := by
+        dsimp [E]
+        simp_rw [mul_sum]
+        rw [sum_comm]
+        apply sum_congr rfl
+        intro m _
+        apply sum_congr rfl
+        intro k _
+        ring
+      _ ≤ ∑ m ∈ Ico N (2 * N), |a m| *
+          ((m : ℝ) * (1 + s j) - j) := by
+        apply sum_le_sum
+        intro m hm'
+        exact mul_le_mul_of_nonneg_left
+          (weighted_floor_prefix_bound hh hji.1 (by have := mem_Ico.mp hm'; omega))
+          (abs_nonneg _)
+      _ = (∑ m ∈ Ico N (2 * N), (m : ℝ) * |a m| * (1 + s j)) -
+          (∑ m ∈ Ico N (2 * N), (j : ℝ) * |a m|) := by
+        rw [← sum_sub_distrib]
+        apply sum_congr rfl
+        intro m _
+        ring
+      _ = _ := by
+        rw [← sum_mul, ← mul_sum]
+        rfl
+  have hcount : (∑ k ∈ Ico h N, (k : ℝ) * x k * E k) ≤
+      B * (∑ j ∈ Ico h N, δ j * (1 + s j)) - A * (∑ j ∈ Ico h N, (j : ℝ) * δ j) := by
+    calc
+      _ = ∑ k ∈ Ico h N, ∑ j ∈ Ico k N, δ j * ((k : ℝ) * E k) := by
+        apply sum_congr rfl
+        intro k hk
+        rw [htail k (mem_Ico.mp hk).1 (mem_Ico.mp hk).2.le]
+        simp_rw [mul_sum, sum_mul]
+        apply sum_congr rfl
+        intro j _
+        ring
+      _ = ∑ j ∈ Ico h N, δ j * (∑ k ∈ Ico h (j + 1), (k : ℝ) * E k) := by
+        rw [sum_Ico_Ico_comm]
+        simp_rw [← mul_sum]
+      _ ≤ ∑ j ∈ Ico h N, δ j * (B * (1 + s j) - j * A) := by
+        apply sum_le_sum
+        intro j hj
+        exact mul_le_mul_of_nonneg_left (hprefix j hj) (hδ j (mem_Ico.mp hj).1)
+      _ = ∑ j ∈ Ico h N, (B * (δ j * (1 + s j)) - A * ((j : ℝ) * δ j)) := by
+        apply sum_congr rfl
+        intro j _
+        ring
+      _ = _ := by rw [sum_sub_distrib, ← mul_sum, ← mul_sum]
+  have hpoint (k : ℕ) (hk : k ∈ Ico h N) :
+      (k : ℝ) * |logDifference N a k| ≤ (k : ℝ) * x k * E k + A * ((k : ℝ) * δ k) := by
+    have hki := mem_Ico.mp hk
+    have hkp : 0 < k := lt_of_lt_of_le hh hki.1
+    have hkp' : (0 : ℝ) < k := by exact_mod_cast hkp
+    have hx : 0 ≤ x k := (log_bounds hkp hki.2.le).1
+    have hid : logDifference N a k =
+        x k * (floorPair N a k - floorPair N a (k + 1)) + δ k * floorPair N a (k + 1) := by
+      dsimp [logDifference, logPair, x, δ]
+      rw [Real.log_div hNp.ne' hkp'.ne', Real.log_div hNp.ne' (by positivity)]
+      ring
+    have hraw : |logDifference N a k| ≤ x k * E k + δ k * A := by
+      rw [hid]
+      refine (abs_add_le _ _).trans (add_le_add ?_ ?_)
+      · rw [abs_mul, abs_of_nonneg hx]
+        exact mul_le_mul_of_nonneg_left (pair_difference_bound a hkp) hx
+      · rw [abs_mul, abs_of_nonneg (hδ k hki.1)]
+        exact mul_le_mul_of_nonneg_left (pair_firstMoment_bound a (by omega) hm) (hδ k hki.1)
+    exact (mul_le_mul_of_nonneg_left hraw hkp'.le).trans_eq (by ring)
+  have hcancel : weightedVariation N h a ≤ B * (∑ j ∈ Ico h N, δ j * (1 + s j)) := by
+    have hp := sum_le_sum hpoint
+    simp only [sum_add_distrib, ← mul_sum] at hp
+    change weightedVariation N h a ≤ _ at hp
+    linarith
+  have hsδ (k : ℕ) (hk : k ∈ Ico h N) : s (k + 1) = s k + δ k := by
+    have hkp : (0 : ℝ) < k := by exact_mod_cast (lt_of_lt_of_le hh (mem_Ico.mp hk).1)
+    dsimp [s, δ]
+    rw [Real.log_div (by positivity) hh'.ne', Real.log_div hkp.ne' hh'.ne']
+    ring
+  have hsquare : (∑ k ∈ Ico h N, δ k * s k) ≤ u ^ 2 / 2 := by
+    calc
+      _ ≤ ∑ k ∈ Ico h N, (s (k + 1) ^ 2 - s k ^ 2) / 2 := by
+        apply sum_le_sum
+        intro k hk
+        rw [hsδ k hk]
+        nlinarith [sq_nonneg (δ k)]
+      _ = u ^ 2 / 2 := by
+        rw [← sum_div, sum_Ico_sub (fun k => s k ^ 2) hN]
+        simp [s, u, div_self hh'.ne']
+  have hsum : (∑ j ∈ Ico h N, δ j * (1 + s j)) ≤ u + u ^ 2 / 2 := by
+    have hsumδ : (∑ j ∈ Ico h N, δ j) = u := (htail h le_rfl hN).symm
+    simp_rw [mul_add, mul_one]
+    rw [sum_add_distrib, hsumδ]
+    linarith
+  exact hcancel.trans (mul_le_mul_of_nonneg_left hsum hB)
+
 private theorem weighted_variation_bound {N h : ℕ} (hh : 0 < h) (hN : h < N)
     (a : ℕ → ℝ) (hz : ∑ m ∈ Ico N (2 * N), a m = 0)
     (hm : ∑ m ∈ Ico N (2 * N), (m : ℝ)*a m = 0) :
     weightedVariation N h a ≤ (N : ℝ)*mass N a *
       (1+2*Real.log ((N : ℝ)/h)*(1+Real.log (2*(N : ℝ)/h))) := by
-  let u := Real.log ((N : ℝ)/h)
-  let v := Real.log (2*(N : ℝ)/h)
+  let u := Real.log ((N : ℝ) / h)
+  let v := Real.log (2 * (N : ℝ) / h)
   have hu : 0 ≤ u := (log_bounds hh hN.le).1
   have hA := mass_nonneg N a
-  have hpoint (k : ℕ) (hk : k ∈ Ico h N) :
-      (k : ℝ)*|logDifference N a k| ≤
-        u*(∑ m ∈ Ico N (2 * N), |a m| *((k : ℝ)*
-          (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)))) + mass N a := by
-    obtain ⟨hkh, hkN⟩ := mem_Ico.mp hk
-    have hk0 : 0 < k := lt_of_lt_of_le hh hkh
-    have hk' : (0 : ℝ) < k := by exact_mod_cast hk0
-    have hlog := (log_bounds hk0 hkN.le).1
-    have hstep : 0 ≤ Real.log (k + 1 : ℕ)-Real.log (k : ℝ) := by
-      exact sub_nonneg.mpr (Real.log_le_log hk' (by push_cast; linarith))
-    have hlogu : Real.log ((N : ℝ)/k) ≤ u := by
-      apply Real.log_le_log (div_pos (by exact_mod_cast (by omega : 0 < N)) hk')
-      exact div_le_div_of_nonneg_left (Nat.cast_nonneg _) (by exact_mod_cast hh)
-        (by exact_mod_cast hkh)
-    have hid : logDifference N a k =
-        Real.log ((N : ℝ)/k)*(floorPair N a k-floorPair N a (k + 1)) +
-          (Real.log (k + 1 : ℕ)-Real.log (k : ℝ))*floorPair N a (k + 1) := by
-      unfold logDifference logPair
-      have hN0 : (N : ℝ) ≠ 0 := by exact_mod_cast (by omega : N ≠ 0)
-      rw [Real.log_div hN0 hk'.ne', Real.log_div hN0 (by positivity)]
-      ring
-    have hraw : |logDifference N a k| ≤
-        Real.log ((N : ℝ)/k)*(∑ m ∈ Ico N (2 * N), |a m| *
-          (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ))) +
-            (Real.log (k + 1 : ℕ)-Real.log (k : ℝ))*mass N a := by
-      rw [hid]
-      refine (abs_add_le _ _).trans (add_le_add ?_ ?_)
-      · rw [abs_mul, abs_of_nonneg hlog]
-        exact mul_le_mul_of_nonneg_left (pair_difference_bound a hk0) hlog
-      · rw [abs_mul, abs_of_nonneg hstep]
-        exact mul_le_mul_of_nonneg_left (pair_mass_bound a (by omega) hz hm) hstep
-    have hsum0 : 0 ≤ ∑ m ∈ Ico N (2 * N), |a m| *
-        (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)) := by
-      exact (abs_nonneg _).trans (pair_difference_bound a hk0)
-    calc
-      _ ≤ (k : ℝ)*(Real.log ((N : ℝ)/k)*
-          (∑ m ∈ Ico N (2 * N), |a m| *
-            (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ))) +
-              (Real.log (k + 1 : ℕ)-Real.log (k : ℝ))*mass N a) :=
-        mul_le_mul_of_nonneg_left hraw hk'.le
-      _ ≤ (k : ℝ)*(u*(∑ m ∈ Ico N (2 * N), |a m| *
-          (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)))) + mass N a := by
-        rw [mul_add]
-        apply add_le_add
-        · exact mul_le_mul_of_nonneg_left
-            (mul_le_mul_of_nonneg_right hlogu hsum0) hk'.le
-        · nlinarith [mul_le_mul_of_nonneg_right (weighted_log_step hk0) hA]
-      _ = _ := by
-        simp_rw [mul_sum]
-        congr 1
-        apply sum_congr rfl
-        intro m _
-        ring
-  have hcount : (∑ k ∈ Ico h N, ∑ m ∈ Ico N (2 * N), |a m| *((k : ℝ)*
-      (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)))) ≤
-        mass N a * (2*N*(1+v)) := by
-    rw [sum_comm, mass, sum_mul]
+  have hB : firstAbsoluteMoment N a ≤ 2 * (N : ℝ) * mass N a := by
+    unfold firstAbsoluteMoment mass
+    rw [mul_sum]
     apply sum_le_sum
     intro m hm'
-    rw [← mul_sum]
-    exact mul_le_mul_of_nonneg_left
-      (weighted_floor_bound hh hN (mem_Ico.mp hm').2) (abs_nonneg _)
-  unfold weightedVariation
+    exact mul_le_mul_of_nonneg_right
+      (show (m : ℝ) ≤ 2 * N by exact_mod_cast (mem_Ico.mp hm').2.le) (abs_nonneg _)
+  have huv : u ≤ v := by
+    apply Real.log_le_log (div_pos (by exact_mod_cast (by omega : 0 < N))
+      (by exact_mod_cast hh))
+    exact div_le_div_of_nonneg_right (by nlinarith [Nat.cast_nonneg N]) (by positivity)
+  have hshape : 0 ≤ u + u ^ 2 / 2 := by positivity
+  have hbudget : 2 * (u + u ^ 2 / 2) ≤ 1 + 2 * u * (1 + v) := by
+    nlinarith [mul_nonneg hu (sub_nonneg.mpr huv)]
   calc
-    _ ≤ ∑ k ∈ Ico h N,
-        (u*(∑ m ∈ Ico N (2 * N), |a m| *((k : ℝ)*
-          (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)))) + mass N a) :=
-      sum_le_sum hpoint
-    _ = u*(∑ k ∈ Ico h N, ∑ m ∈ Ico N (2 * N), |a m| *((k : ℝ)*
-        (((m / k : ℕ) : ℝ)-((m / (k + 1) : ℕ) : ℝ)))) + (N-h : ℕ)*mass N a := by
-      rw [sum_add_distrib, ← mul_sum]
-      simp
-    _ ≤ u*(mass N a*(2*N*(1+v))) + (N : ℝ)*mass N a := by
-      apply add_le_add (mul_le_mul_of_nonneg_left hcount hu)
-      exact mul_le_mul_of_nonneg_right (by exact_mod_cast Nat.sub_le N h) hA
-    _ = _ := by dsimp [u, v]; ring
+    _ ≤ firstAbsoluteMoment N a * (u + u ^ 2 / 2) :=
+      weightedVariation_firstMoment_bound hh hN.le a hm
+    _ ≤ (2 * (N : ℝ) * mass N a) * (u + u ^ 2 / 2) :=
+      mul_le_mul_of_nonneg_right hB hshape
+    _ = ((N : ℝ) * mass N a) * (2 * (u + u ^ 2 / 2)) := by ring
+    _ ≤ _ := mul_le_mul_of_nonneg_left hbudget (mul_nonneg (Nat.cast_nonneg _) hA)
 
 theorem prefix_bound (q : ℕ) : |mobiusPrefix q| ≤ (q : ℝ) := by
   unfold mobiusPrefix
