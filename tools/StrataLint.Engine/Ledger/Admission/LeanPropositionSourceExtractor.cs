@@ -302,6 +302,7 @@ internal sealed partial class LeanSourceCatalog
         string.Equals(recordedKind, sourceKind, StringComparison.Ordinal)
         || sourceKind switch
         {
+            "lemma" => recordedKind == "theorem",
             "structure" => recordedKind == "inductive",
             "abbrev" => recordedKind == "def",
             "instance" => recordedKind is "def" or "theorem",
