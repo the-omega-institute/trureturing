@@ -3321,6 +3321,53 @@ contribution is actual coupled source data and their application,
 without a new general theorem, algorithm or Lean claim.
 
 
+### Calibrate the source quadratic before selecting a new direction
+
+A whole-J source proposal can use the preceding variational formula
+with a fixed linear rule $X=R_{\rm ref}T^*B^*$, where $R_{\rm ref}$ is
+the saved exact symmetric seventeen-dimensional reference. Define
+
+$$
+L=e_0e_0^*/a+TR_{\rm ref}T^*,\qquad
+Q=e_0e_0^*/a+T(2R_{\rm ref}-R_{\rm ref}PR_{\rm ref})T^*
+-\frac{\kappa^2}{A}L^*GL.
+$$
+
+Then the new linear-trial expression is $K_J+BQB^*$. It is a
+different trial rule from the preceding archived fixed rational $X$.
+The [calibration consumer](https://github.com/the-omega-institute/trureturing-experiments/tree/0310c167ce6d254c09fcf7faec5d23a2b06d15d7/docs/reports/weil-c27)
+checks the expanded/factored identity by exact rational arithmetic on
+one consistent midpoint model, before any source eigensolver is built.
+It consumes the cached two-source rows and parameters without new
+source actions, inverses, scalar/channel rows or an old production.
+
+The midpoint reference matrix has maximum entry approximately36.04.
+The preselected ordinary-double tolerance is
+$10^{-8}\max(1,\|C_{\rm ref}\|_{\max})$. Even rounding the exact $Q$
+entries before floating contraction produces a maximum absolute error
+approximately $5.1006\times10^{89}$. Factored floating evaluation,
+and floating evaluation using rounded exact reference trial entries,
+also fail this gate. No eigensolver or new source selection follows.
+These are implementation measurements in the recorded NumPy
+environment, not a condition number or a universal instability theorem.
+
+On the inherited640-bit input grid with1024 working bits, the naive
+variable-trial interval evaluation has maximum width approximately
+$1.7499\times10^{25}$; expansion through $Q$ gives
+$2.7353\times10^{79}$. Freezing the exact rational reference $X$ first
+instead gives width $1.4388\times10^{-27}$. This last computation is
+a different admissible fixed-trial rule sharing the midpoint value;
+it does not certify the variable-trial source operator. These widths
+measure the chosen evaluation, rather than intrinsic uncertainty.
+
+The failed gate rejects this specified shortcut before a new large
+source search. It neither excludes new source spaces nor guarantees
+that another source-selection method succeeds. No accepted exclusion
+is changed, and no actual Weil/cofinal positivity, Robin-tail, RH,
+new general theorem, algorithm or Lean result is supplied.
+
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
