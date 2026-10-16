@@ -141,8 +141,7 @@ theorem traceRejectedLaw : ¬ traceArena.Law traceRejected := by
   rw [← _root_.D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral
     (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 Matrix.isHermitian_one] at he
   change (0 : ℂ) = Matrix.trace (1 * 1) at he
-  have hz : (0 : ℂ) = 1 := by simpa using he
-  exact zero_ne_one hz
+  norm_num [Matrix.trace] at he
 
 theorem traceDependence : ObservationalDependence traceSignature traceActual := by
   intro i

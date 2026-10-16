@@ -55,7 +55,7 @@ theorem dependence : ObservationalDependence signature.{u} actual := by
   exact zero_ne_one
 
 def sourceRegistration : Registration arena.{u}
-    (type_of% @_root_.D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.state_diag_le_one.{u}) where
+    (type_of% @state_diag_le_one.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨actualLaw, rejected, rejectedLaw⟩
