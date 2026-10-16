@@ -252,7 +252,7 @@ private theorem positiveBlock_posDef :
     dsimp only [D]
     apply Matrix.PosDef.diagonal
     intro i
-    fin_cases i <;> norm_num [Complex.lt_def]
+    fin_cases i <;> apply Complex.zero_lt_real.mpr <;> norm_num
   have hDecomp : positiveBlock = D + Vᴴ * V := by
     ext i j
     fin_cases i <;> fin_cases j <;>
