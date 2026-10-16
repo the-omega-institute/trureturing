@@ -14,6 +14,10 @@ triage: anchor
 
 # Finite binary machine supply
 
+## Verified locator
+
+<https://github.com/RBarish-UTokyo/NPCompleteness-Lean4/tree/3e603e795b44fedcf7d6dd65b7d1e30547ead925>
+
 The immutable source is revision `3e603e795b44fedcf7d6dd65b7d1e30547ead925`
 of RBarish-UTokyo/NPCompleteness-Lean4. The retained module correspondence,
 original source hashes, adaptations, full license, NOTICE status and finite
