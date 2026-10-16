@@ -68,7 +68,19 @@ $$\forall V \in \mathrm{Type},\; [\operatorname{Fintype}\left(V\right)], [\opera
 
 The spectrum records cardinalities of actual finite independent vertex sets that dominate every omitted vertex. It uses the existing maximal-independent-set predicate.
 
-**Theorem 1.6 (Projection and matching lifts bound distances).**
+**Lemma 1.6 (Distance in the base cycle).**
+
+$$\forall (m : \mathrm{Nat}), \forall (i : \operatorname{Fin}\left(m + 3\right)), \forall (j : \operatorname{Fin}\left(m + 3\right)), \operatorname{dist}\left(\operatorname{cycleGraph}\left(m + 3\right), i, j\right) = \operatorname{WellCoveredPowerCliqueProduct.cycleMetric}\left(m + 3, i, j\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.cycle_distance` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The distance between two cycle vertices is the smaller of their two circular separations.
+
+**Theorem 1.7 (Projection and matching lifts bound distances).**
 
 $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \operatorname{Matchings}\left(m, t\right),\; \forall x \in \operatorname{Vertex}\left(m, t\right),\; \forall y \in \operatorname{Vertex}\left(m, t\right),\; \operatorname{dist}\left(\operatorname{cycleGraph}\left(m + 3\right), \operatorname{fst}\left(x\right), \operatorname{fst}\left(y\right)\right) \le \operatorname{dist}\left(\operatorname{graph}\left(M\right), x, y\right) \land \operatorname{dist}\left(\operatorname{graph}\left(M\right), x, y\right) \le \operatorname{dist}\left(\operatorname{cycleGraph}\left(m + 3\right), \operatorname{fst}\left(x\right), \operatorname{fst}\left(y\right)\right) + 1$$
 
@@ -80,7 +92,7 @@ $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \ope
 
 Projecting a walk discards internal fiber steps. Conversely, a shortest cycle walk transports a vertex along its matchings; at most one final step inside the destination clique reaches the desired endpoint.
 
-**Theorem 1.7 (Maximal independent sets project).**
+**Theorem 1.8 (Maximal independent sets project).**
 
 $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \operatorname{Matchings}\left(m, t\right),\; \forall d \in \mathrm{Nat},\; \forall I \in \operatorname{Finset}\left(\operatorname{Vertex}\left(m, t\right)\right),\; \left(1 \le d \land \operatorname{IsMaximalIndep}\left(\operatorname{power}\left(\operatorname{graph}\left(M\right), d\right), I\right)\right) \Rightarrow \left(\operatorname{IsMaximalIndep}\left(\operatorname{power}\left(\operatorname{cycleGraph}\left(m + 3\right), d - 1\right), \operatorname{imageFst}\left(I\right)\right) \land \operatorname{card}\left(\operatorname{imageFst}\left(I\right)\right) = \operatorname{card}\left(I\right)\right)$$
 
@@ -92,7 +104,7 @@ $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \ope
 
 An independent set in a positive graph power contains at most one point per fiber. If an omitted base fiber could extend the projected set, shortest matching paths in the two cyclic directions would forbid at most two labels there. The fiber has at least three labels, so the original set could be extended.
 
-**Theorem 1.8 (Lawful maximal lifts exist).**
+**Theorem 1.9 (Lawful maximal lifts exist).**
 
 $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \operatorname{Matchings}\left(m, t\right),\; \forall d \in \mathrm{Nat},\; \forall S \in \operatorname{Finset}\left(\operatorname{Fin}\left(m + 3\right)\right),\; \left(1 \le d \land \operatorname{IsMaximalIndep}\left(\operatorname{power}\left(\operatorname{cycleGraph}\left(m + 3\right), d - 1\right), S\right)\right) \Rightarrow \left(\exists I \in \operatorname{Finset}\left(\operatorname{Vertex}\left(m, t\right)\right),\; \operatorname{IsMaximalIndep}\left(\operatorname{power}\left(\operatorname{graph}\left(M\right), d\right), I\right) \land \left(\operatorname{imageFst}\left(I\right) = S \land \operatorname{card}\left(I\right) = \operatorname{card}\left(S\right)\right)\right)$$
 
@@ -104,7 +116,7 @@ $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \ope
 
 Among independent vertex sets supported over a given base independent set, choose one of maximal cardinality. The same two-label bound forces a representative in every specified fiber. Base maximality and the distance bound then dominate every omitted vertex. The projection is injective and preserves cardinality.
 
-**Theorem 1.9 (All positive powers have the shifted spectrum).**
+**Theorem 1.10 (All positive powers have the shifted spectrum).**
 
 $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \operatorname{Matchings}\left(m, t\right),\; \forall d \in \mathrm{Nat},\; 1 \le d \Rightarrow \operatorname{spectrum}\left(\operatorname{power}\left(\operatorname{graph}\left(M\right), d\right)\right) = \operatorname{spectrum}\left(\operatorname{power}\left(\operatorname{cycleGraph}\left(m + 3\right), d - 1\right)\right)$$
 
@@ -116,7 +128,7 @@ $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \ope
 
 Projection and lawful lift give both inclusions of the spectrum equality. At power one the base exponent is zero: the connected cycle has an edgeless zero-th power. The argument also applies when either power has become complete.
 
-**Theorem 1.10 (The diameter is sharp).**
+**Theorem 1.11 (The diameter is sharp).**
 
 $$\forall m \in \mathrm{Nat},\; \forall t \in \mathrm{Nat},\; \forall M \in \operatorname{Matchings}\left(m, t\right),\; \operatorname{diam}\left(\operatorname{graph}\left(M\right)\right) = \operatorname{NatDiv}\left(m + 3, 2\right) + 1$$
 
@@ -132,6 +144,7 @@ Let D be the cycle diameter, half its length rounded down. Choose base vertices 
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.Matchings`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.Vertex`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.cycle_distance`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.diameter`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.distance_bounds`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Walks/MatchingCliqueCycle.forward`
