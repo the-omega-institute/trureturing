@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:eafb2f4810d22b1485bffbd94133a7a73e31280f13e8c6f63a326d505bd1344c
   normalized_sha256: sha256:eafb2f4810d22b1485bffbd94133a7a73e31280f13e8c6f63a326d505bd1344c
 cas_ref: sha256:eafb2f4810d22b1485bffbd94133a7a73e31280f13e8c6f63a326d505bd1344c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/SourceCoordinates/IntrinsicSubstitutionCoordinates.all_source_coordinate_law
+    target_statement_id: sha256:05e98f8f3d0d271ebc55958b4aa3677d2045d6b1a42ba652a7a3581019e26e55
 receipts:
   unresolved_subitems: []
   chain_atoms:
