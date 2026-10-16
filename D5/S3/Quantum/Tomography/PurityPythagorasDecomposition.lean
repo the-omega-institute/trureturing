@@ -121,7 +121,7 @@ def basisProbability {d : Nat} [NeZero d]
     (j : Fin d) : ℝ :=
   (Matrix.trace (rho * context.projector j)).re
 
-private theorem trace_mul_real_of_hermitian
+theorem trace_mul_real_of_hermitian
     {d : Nat} (A C : Matrix (Fin d) (Fin d) ℂ)
     (hA : A.IsHermitian) (hC : C.IsHermitian) :
     Matrix.trace (A * C) = ((Matrix.trace (A * C)).re : ℂ) := by
