@@ -4919,3 +4919,154 @@ SAME-short, unitary/source/lift and sound complete-far/cache conditions
 remain premises. This is a numerical application of established
 rank-one and square-completion identities, without a generic novelty,
 Lean, actual retained/cofinal positivity, Robin-tail or RH claim.
+
+
+### Reuse complete cached finite coordinates before a good-block metric
+
+The common-column, finite-channel and actual-channel packets already
+supply all inputs for a finite row on the complete retained space.
+Keep the original real, unphased384-bit row0 source, residual map,
+weights and mode order. With retained modes $0,\ldots,1280$, write
+
+$$
+c\in\mathbb R^{1281\times1},\quad
+\Beta\in\mathbb R^{19\times1281},\quad
+\chi=A_\rho^{-1}F_\phi^*\in\mathbb R^{19\times1}.
+$$
+
+Here $c$ is `common.column`, $\Beta$ is `boundary.finite_beta`, and
+$\chi$ is `actual.channel_inverse_actual_column`. These are the saved
+complete arrays; no new source or channel action is needed. Their
+same-source finite common row is
+
+$$
+\boxed{b_J=c^*-\chi^*\Beta.}
+$$
+
+The new consumer assembles its1281 coefficients with one thin channel
+product. Its consistency check uses the SAME implicit exact lift
+$V=[-X;I]$, $X=P^{-1}C$, with the archived positive/remaining coordinate
+order. Thus
+
+$$
+b_JV=(b_J)_\ell-(b_J)_gX
+=c^*V-\chi^*\Beta V.
+$$
+
+Source identity, normalization and distributivity identify this with
+`actual.actual_finite_row_on_lift`; interval overlap checks the numerical
+implementation, rather than proving equality from overlap. The saved
+1263-by18 inverse action is used only for this lift, never as an inverse
+on an arbitrary new good-block row.
+
+The sole fixed1024-working/640-export-bit application takes0.22688seconds, exports all1281 finite ordered coefficient intervals,
+and overlaps the archived lift row in all18 check coordinates. The
+[saved source and data](https://github.com/the-omega-institute/trureturing-experiments/tree/85ba706c298d2f13651941d06c3b5c8a8cd652c9/docs/reports/weil-c27) preserve
+the six input pins, twelve invoked source/helper hashes, original
+source identity, retained partition and inherited conditions. The packet
+SHA256 is
+`479b8da2bb1d490d0f4adf285a67797d733ec05d4dab33d88b6175946a89f28a`.
+No old supplier, source/adjoint/channel projection, inverse, solve,
+Gram, far or Fourier production runs; no scan or precision retry follows.
+
+The export contains every retained coordinate of the FINITE source
+contribution. The actual complete row $b=\mathcal B$ still includes the
+SAME-source far mixed row. The unweighted full $r=w^*R$ and a usable
+1263-dimensional inverse-metric bound are also not supplied by this
+assembly. Completeness in retained coordinates does not remove the
+finite-source cutoff.
+
+### A sufficient joint border on the same old core
+
+Apply the existing Schur and Haynsworth inertia formulas to a weaker
+SAME-object retained lower form $L_*\preceq\overline L$. This is an
+application interface, with its missing inputs stated explicitly, not
+a new general theorem or a computed positivity certificate. In the
+archived coordinate order let
+
+$$
+L_*=\begin{pmatrix}P&C\\C^*&A_0\end{pmatrix},\quad
+P\succ0,\quad X=P^{-1}C,\quad
+\Sigma_0=A_0-C^*X,
+$$
+
+where $P$ has dimension1263 and the nondegenerate18-dimensional
+$\Sigma_0$ has inertia$(17+,1-)$. For the original COMPLETE source
+rows $r,b$, choose an admitted $0<t\le\tau/h$ and $D>0,D\ge\mathcal K$.
+The lower target is
+
+$$
+T=L_*+t r^*r+b^*b/D.
+$$
+
+Define
+
+$$
+\rho=r_\ell-r_gX,\quad \beta_0=b_\ell-b_gX,\quad
+U=\begin{pmatrix}\rho\\\beta_0\end{pmatrix},\qquad
+G_2=\begin{pmatrix}r_g\\b_g\end{pmatrix}
+P^{-1}\begin{pmatrix}r_g^*&b_g^*\end{pmatrix}.
+$$
+
+Eliminating the good block and then the rank-two border gives
+
+$$
+J=\operatorname{diag}(t^{-1},D),\qquad
+N_2=J+G_2+U\Sigma_0^{-1}U^*,\qquad
+T\succ0\ \Longleftrightarrow\ \det N_2<0.
+$$
+
+Indeed the good-block Schur complement is
+$\Sigma_0+U^*(J+G_2)^{-1}U$. Its border with lower block
+$-(J+G_2)$ has two congruent block eliminations. Since $J+G_2\succ0$
+and $\Sigma_0$ has exactly one negative direction, $N_2$ has at least
+one positive direction; strict positivity of the updated core is
+therefore equivalent to one negative direction of $N_2$. A strictly
+negative quadratic value $e^*N_2e$ for one fixed exact nonzero $e$
+already suffices. This sufficient border uses the actual old core and
+complete same-source rows; it is distinct from the archived two-source
+UPPER ceiling.
+
+The joint metric is essential. For the algebraic example
+$P=1,C=0,\Sigma_0=-1$, $r=(1,1)$, $b=(\pm1,1)$ and $t=D=1$,
+the reduced rows and both marginal inverse energies are equal in the
+two cases. The cross energy changes sign, giving border Schur scores
+$1$ and$-3$. Consequently those marginal and reduced data alone do
+not determine even the sufficient score's sign. This is an interface
+counterexample, not a sign calculation for the retained source.
+
+If no applicable old factorization is available, the standard scalar
+Schur test offers an alternative for one COMPLETE fixed combination row
+$s=\overline e_1r+\overline e_2b$ and a proposed $\Omega>0$:
+
+$$
+P-s_g^*s_g/\Omega\succ0
+\quad\Longleftrightarrow\quad s_gP^{-1}s_g^*<\Omega.
+$$
+
+A new structured positivity test of this changed target could certify
+that metric bound using the existing displacement elimination; no
+inverse need be formed. With full-row uncertainty $s=s_J+f$ and a sound
+joint bound $f^*f\preceq C_{\rm far}$, Young's inequality gives, for
+$\eta>0$,
+
+$$
+s^*s\preceq(1+\eta)s_J^*s_J+(1+\eta^{-1})C_{\rm far}.
+$$
+
+The same full uncertainty must also control the reduced-core term.
+No combination, metric bound, far majorant, numerical parameter scan
+or new structured positivity run is supplied here. The choice
+$e=(0,1)$, and at $t=\tau/h$ the choice $e=(\tau,1)$, return
+previously studied recipes and do not create new targets by renaming
+them. Pivot lists and saved actions
+against18 particular right sides do not constitute general1263-block
+factors; the cached17-dimensional inverse acts only inside the18-core.
+
+This leaves a precise next input: the complete rows and their joint
+good-block inverse metric, or a sound bound for one fixed combination.
+The finite1281-row assembly supplies one missing finite component only.
+All actual common-form/domain, legal elimination, SAME-short,
+unitary/source/lift, comparison and sound complete-far/cache premises
+remain conditions. No Lean result, actual retained/cofinal positivity,
+Robin-tail bound or RH conclusion is obtained.
