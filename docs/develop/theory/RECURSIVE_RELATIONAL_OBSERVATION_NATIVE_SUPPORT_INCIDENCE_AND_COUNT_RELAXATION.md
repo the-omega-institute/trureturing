@@ -1750,3 +1750,692 @@ The proofs use paired actual live extensions and charged installed
 incidence, and make no worldwide priority assertion.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. All-history set-pairs capacity and an unbounded qualified gap class
+
+**Convention 11.1 (the same complete paid graph).** Retain every
+source, entry, cost, correctness and simultaneous-cap hypothesis of
+Convention 10.1. In particular the graph is correct on every Boolean
+input, at both $n,W$ caps, and its native consumer has the original
+full-fiber meaning of (SI.5). Common-support cuts, pools and the
+partition $\mathcal L_*,\mathcal A_*$ are exactly those of (SI.59).
+The unrestricted inequality there remains the main unresolved target.
+The condition below is imposed only on the actual live states of
+remaining late-long pools. No order, read-once condition after a
+certificate, or acyclicity of the syntactic union graph is imposed
+on a competitor.
+
+### 11.1 Actual prefixes, their multiplicity and normalized cell mass
+
+**Definition 11.2 (all-history indices and both directed conflicts).**
+Let $\mathscr H_p$ be the set of distinct actual live run prefixes
+of count cell $p=(h,z)$, ending immediately before a query, and let
+$\mathscr H(q)$ consist of all such prefixes ending at the installed
+state $q$. A prefix records its finite sequence of states, queried
+coordinates and replies, including its ending state. All completing
+inputs that follow that identical prefix define one member, counted
+once. Prefixes with the same ending state are not thereby identified.
+For $H$ put
+
+$$
+A_H=\{i:\text{the exposed value at }i\text{ is }1\},\qquad
+B_H=\{i:\text{the exposed value at }i\text{ is }0\}.
+\tag{SI.61}
+$$
+
+Thus $A_H\cap B_H=\varnothing$, $S_H=A_H\cup B_H$, and
+$|A_H|=h$, $|B_H|=z$. Assign the proof weight
+
+$$
+\omega(H)=\binom{h+z}{h}^{-1},\qquad
+\lambda_p(q)=\sum_{H\in\mathscr H_p\cap\mathscr H(q)}\omega(H),
+\qquad \lambda(q)=\sum_{H\in\mathscr H(q)}\omega(H).
+\tag{SI.62}
+$$
+
+Call $q$ a both-conflict state when for every two distinct members
+$H,H'\in\mathscr H(q)$,
+
+$$
+A_H\cap B_{H'}\ne\varnothing
+\quad\hbox{and}\quad
+A_{H'}\cap B_H\ne\varnothing.
+\tag{SI.63}
+$$
+
+This is a condition on all its actual live prefixes, including different
+prefixes in the same count cell. These weights are neither source
+probabilities nor a distribution on actual inputs. The prefix sets,
+assignments and sums are mathematical indices; no archive, accessible
+history, randomization, counter or extra control is installed.
+
+**Lemma 11.3 (exact all-history counting and faithful set-pair indices).**
+For every $p=(h,z)\in V$, reply words with $h$ ones and $z$ zeros
+are in bijection with $\mathscr H_p$. Consequently
+
+$$
+|\mathscr H_p|=\binom{h+z}{h},\qquad
+\sum_{H\in\mathscr H_p}\omega(H)=1,
+\qquad \sum_{q\in F_p}\lambda_p(q)=1.
+\tag{SI.64}
+$$
+
+At a fixed installed state, different actual live prefixes give different
+ordered pairs $(A_H,B_H)$. Any two such prefixes have incompatible
+exposed assignments: at least one of their two directed intersections
+in (SI.63) is nonempty. At a fixed cell and state, two distinct prefixes
+have both directed intersections nonempty.
+
+Proof. Theorem 2.2 makes each query in a live prefix fresh and its
+query depth exactly $h+z$. Starting from the fixed start, a reply word
+therefore determines at most one prefix, including its fixed states and
+coordinate choices. Conversely every initial subword of a word with
+these counts has counts bounded by $(h,z)$ and is live. Inductively
+the current state cannot be terminal, its query is fresh, and either
+requested value has an actual completion following the preceding
+prefix. The fixed successor supplies the next live state. After the
+whole word, any completion of its distinct-coordinate assignment is
+one actual input realizing this entire prefix. This proves the
+bijection and (SI.64), including the empty word and both axes. It
+counts words, not choices of completions and not distinct endpoints.
+In particular the total number of live prefixes is finite even if the
+syntactic union graph contains cycles.
+
+More generally every completion of an exposed assignment follows its
+prefix, by deterministic induction. If two distinct prefixes ending
+at $q$ had compatible assignments, choose one input completing both.
+They would be prefixes of its same actual run. Equal lengths would
+make them identical. Unequal lengths would visit $q$ twice on that
+run. From the first repeated state, the stationary fixed-input
+successors repeat forever, contradicting actual termination. Thus
+compatibility is impossible. Since compatibility means that both
+cross intersections are empty, at least one is nonempty. Equal set
+pairs in particular would be compatible and are excluded. This also
+shows that a purported duplicate index cannot be retained merely
+because a different completing input was used.
+
+Finally fix $p,q$. Theorem 2.2 gives one support $S$ for all these
+prefixes. Their one sets are distinct subsets of $S$ of the same
+cardinality $h$: equal one sets would give equal set pairs. Neither
+one set can contain the other, so each has an element outside the
+other. As their zero sets are their complements in $S$, this is exactly
+both directed intersections. No uniqueness of history at $p,q$ is
+asserted. $\square$
+
+**Theorem 11.4 (classical capacity for all actual live histories).**
+If $q\in Q_{\mathrm{live}}$ satisfies (SI.63), then
+
+$$
+\lambda(q)\le1.
+\tag{SI.65}
+$$
+
+Proof. Use the classical nonuniform Bollobás set-pairs inequality in
+[O'Neill and Verstraëte, Theorem 1, page 1][OV]: for a finite indexed
+family of finite set pairs with disjoint diagonals and
+$A_i\cap B_j\ne\varnothing$ whenever $i\ne j$,
+
+$$
+\sum_i\binom{|A_i|+|B_i|}{|A_i|}^{-1}\le1.
+$$
+
+Index the pairs by the actual members of $\mathscr H(q)$, rather
+than by inputs, endpoints, or a representative chosen at each cell.
+Lemma 11.3 gives a finite family and removes duplicate set pairs.
+Equation (SI.61) gives every disjoint diagonal. Condition (SI.63)
+gives every ordered off-diagonal intersection: the two directions
+are both required, even when the two sizes or the two depths differ.
+The denominator is exactly that in (SI.62), by live freshness.
+Every hypothesis of the cited inequality is therefore matched.
+
+A singleton family has weight at most one directly. This includes an
+empty history, where $\binom00=1$, and an axis history, where the
+weight is also one. If a pair in a both-conflict family has an empty
+one set or empty zero set, it cannot have a second member, since one
+required cross intersection would be empty. Thus these cases require
+no implicit nonempty-set assumption on the classical supplier. The
+empty live family, when considered, has mass zero. The proof uses no
+probability law on the source and realizes no additional graph path.
+$\square$
+
+**Corollary 11.5 (arbitrary-span pool compensation).** For any
+consecutive common-support gap $B=(a,b)$, the exact mass identities are
+
+$$
+\sum_{q\in Q_B}\lambda(q)=|V_B|,\qquad
+\sum_{q\in Q_B}(1-\lambda(q))=E_B-D_B.
+\tag{SI.66}
+$$
+
+If every $q\in Q_B$ is a both-conflict state, then, regardless of
+the span and of every other gap,
+
+$$
+D_B\le E_B,\qquad |Q_B|\ge|V_B|.
+\tag{SI.67}
+$$
+
+Proof. Theorem 9.3 says that all live occurrences of each $q\in Q_B$
+belong to $V_B$, and that every history in a cell of $V_B$ ends in
+$Q_B$. Sum the cell mass one in (SI.64), using these actual indices,
+to obtain the first identity. Equation (SI.33) then gives the second.
+Under the stated condition every term $1-\lambda(q)$ is nonnegative
+by Theorem 11.4, proving (SI.67). Empty interiors give zero on both
+sides. No independently acquired block entry, restriction operation,
+or allocation of a paid separator is used. $\square$
+
+### 11.2 Exact whole-table and original native consumers
+
+**Definition 11.6 (the qualified class).** Let $\mathfrak C$ consist
+of the complete graphs of Convention 11.1 for which
+
+$$
+B\in\mathcal L_*,\quad q\in Q_B
+\quad\Longrightarrow\quad q\text{ satisfies (SI.63)}.
+\tag{SI.68}
+$$
+
+There is no both-conflict requirement on cut states or on pools in
+$\mathcal A_*$. In particular the entire class of Corollary 10.6,
+whose late gaps have span at most four, is contained in $\mathfrak C$.
+
+**Theorem 11.7 (qualified exact minima at both original caps).**
+Every graph in $\mathfrak C$ satisfies
+
+$$
+D\le E,\qquad |Q_{\mathrm{live}}|\ge G,
+\qquad m\ge G+u.
+\tag{SI.69}
+$$
+
+For every original $n,k,A$ in Convention 11.1, the minimum Boolean
+running-state count within $\mathfrak C$, at both caps $n,W$ on
+one graph, is exactly $G=k(n-k+1)$. For complete original native
+preparers whose supplied Boolean projection belongs to $\mathfrak C$,
+the exact preparation minimum at both native caps $n+1,W+3$ is
+$G+4+r$.
+
+Proof. For $B\in\mathcal L_*$ apply Corollary 11.5. For every
+other pool reuse the existing suppliers: Theorems 9.4 and 10.4
+compensate spans at most four; Lemma 10.2 gives $D_B=0$ when
+$b\le e_*$. These cover exactly $\mathcal A_*$, with no condition
+on its state-history families. Summing on the same installed graph
+in (SI.32), and retaining $E_{\mathrm{cut}}\ge0$, proves (SI.69).
+No graph is changed between different pool arguments.
+
+The supplied grid of PCA Theorem 26.1 has $G$ running states,
+satisfies both caps and has every depth common-support. Thus
+$\mathcal L_*$ is empty and it belongs to $\mathfrak C$, proving
+equality. Its states generally have many actual live prefixes. More
+explicitly, at its state of cell $(h,z)$ every prefix has the same
+fixed support consisting of the first $h+z$ coordinates in its order.
+Distinct histories give distinct $h$-element one sets in that support,
+so Lemma 11.3 gives both conflicts and (SI.64) gives total mass one
+at that state. This is the fixed-cell, fixed-support argument; the
+grid's membership does not depend on a false unique-history premise.
+
+For a native competitor, WTF Theorem 4.1 gives a complete correct
+projection with both Boolean caps and $m\le H_P-4-r$. Its class
+membership is an explicit hypothesis, so (SI.69) gives
+$H_P\ge G+4+r$. Conversely the same supplied grid has the original
+full-fiber lift with exactly $G+4+r$ preparation states and both
+native caps. Its projection is the grid just discussed. Hence the
+native projection-class minimum is attained as claimed.
+
+The native quantifier remains over all finite nonempty ordered trees
+in $\mathcal U_*$, of unbounded size, depth and shape, with the
+original homomorphic $\rho$, complete current row and fixed pointwise
+code (SI.2). The original repeated occurrences and different-class
+disequalities are retained. The upper is the supplied full-fiber
+upper, rather than a cube-only upper; the cube is a lower-witness
+projection. Every finite original address and its alpha, beta, branch
+and absent replies retain their original permission and meaning.
+The original latches hand off literally to the complete $e_0,e_1$.
+The independent original eight-state reader, with its three running
+states and five whole-row halts, returns the ordered predecessor
+exterior, all reached occurrences, its canonical equality partition,
+repetitions, disequalities and strict-prefix guards. Its at most two
+fresh queries and six letters remain separate charges.
+
+All installed running, output, unused and latch states count; the
+Boolean terminals are replaced by native latches, not charged twice.
+Every actual constant, repeated or post-certificate invocation is
+paid. Binding, authentication, acquired same-version data, native
+access, export, isolation, code-only handoff, lawful complete entry
+and stationary continuity remain the separate supplied services of
+Convention 1.3. No free source copy, archive re-read, selector,
+acquisition, record register, clock or address calculation follows.
+This is an exact qualified installed-control theorem, not unrestricted
+grid optimality or a physical realization theorem. $\square$
+
+### 11.3 A complete interacting family with unbounded late gaps
+
+**Proposition 11.8 (strict enlargement with actual live sharing and
+paid post-certificate repeats).** For every integer $v\ge3$, set
+
+$$
+n=2v+4,\qquad k=v+2,\qquad s_i=i,\quad c_i=i+4,
+\qquad a=v+2.
+\tag{SI.70}
+$$
+
+There is a complete correct Boolean graph in $\mathfrak C$ whose
+common-support depths are exactly $0,1,\ldots,a$, with formal
+endpoint $n$. It has a consecutive late gap $(a,n)$ of span $v+2$,
+genuine sharing by different live count cells, and actual paid repeated
+queries after certification. Its exact installed running count and
+attained simultaneous maxima are
+
+$$
+M_v=2^{2v+4}-2^{v+2}+2v+3,\qquad
+\max t=n,\qquad \max J=W.
+\tag{SI.71}
+$$
+
+Its full-fiber native lift has exactly $M_v+4+r$ preparation states,
+attains both maxima $n+1,W+3$ on one actual source, and retains the
+original separate eight-state reader. The family is above-grid and
+lies outside the class of Corollary 10.6. It proves a strict infinite
+enlargement of that class, with no strict-subgrid upper assertion.
+Only the legitimate original cost family in (SI.70) is claimed here.
+
+Proof, complete fixed table. Use the coordinate partition
+
+$$
+C=\{1,2,\ldots,v+2\},\quad I=\{3,\ldots,v+2\},\quad
+x=v+3,\quad y=v+4,\quad
+u_j=v+4+j\ (1\le j\le v),\quad U=\{u_1,\ldots,u_v\},
+\tag{SI.72}
+$$
+
+so $C,\{x\},\{y\},U$ partition $[n]$ and $|C|=a$.
+First define a full binary decision
+tree with a distinct running state at every vertex of depth less
+than $n$. It queries $1,2,\ldots,v+2$ in that order. At a depth-$a$
+vertex use the remaining order $(y,x,u_1,\ldots,u_v)$ precisely
+when its old assignment is $(\theta_1,\theta_2)=10$, $I=1^v$;
+at every other depth-$a$ vertex use $(x,y,u_1,\ldots,u_v)$.
+Each of these orders is fixed in the literals of its separate subtree.
+Every zero or one edge goes to its corresponding child; a depth-$n$
+edge goes to the common terminal $\mathsf0$ or $\mathsf1$ according
+to the threshold of that leaf's complete assignment. This specifies
+every state, query and successor of the full tree. No order is selected
+or evaluated by an auxiliary runtime operation.
+
+Delete exactly the two entire subtrees whose incoming histories are
+
+$$
+\begin{aligned}
+\mathcal A:&\quad (\theta_1,\theta_2)=01,\quad I=0^v,\quad x=0,\\
+\mathcal B:&\quad (\theta_1,\theta_2)=10,\quad I=1^v,\quad y=0.
+\end{aligned}
+\tag{SI.73}
+$$
+
+Each incoming history has depth $v+3$ and $v+1$ unread
+coordinates. Redirect its incoming edge to the same new state $V$.
+Install only the following additional running states, all distinct
+from retained tree vertices and from the two terminals:
+
+| State | Queried coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $V$ | $u_1$ | $Z_2$ | $B_Y$ |
+| $Z_j$, $2\le j<v$ | $u_j$ | $Z_{j+1}$ | $J$ |
+| $Z_v$ | $u_v$ | $B_X$ | $J$ |
+| $B_X$ | $x$ | $\mathsf0$ | $\mathsf1$ |
+| $B_Y$ | $y$ | $J$ | $A_2$ |
+| $A_j$, $2\le j<v$ | $u_j$ | $\mathsf0$ | $A_{j+1}$ |
+| $A_v$ | $u_v$ | $\mathsf0$ | $\mathsf1$ |
+| $J$ | $1$ | $\mathsf0$ | $\mathsf1$ |
+
+The start is the retained tree root. All edges are now specified;
+there is no transition to a deleted vertex. In particular $J$ is a
+new ordinary query state at old coordinate $1$, not an uncharged
+context selector. State names carry no accessible indices beyond the
+counted current state. The $A_j$ rows form a distinct installed AND
+chain; they are not an implicit call to a free residual solver.
+
+Proof, correctness on every input. An input avoiding (SI.73) follows
+a retained full-scan tree path and receives its exact threshold. The
+only inputs entering $V$ are precisely those two contexts. Context
+$\mathcal A$ has one old one and therefore needs all $v+1$ unread
+bits in $\{y\}\cup U$; context $\mathcal B$ has $v+1$ old ones
+and needs at least one unread bit in $\{x\}\cup U$. Their residuals
+are AND and OR, respectively. Their old coordinate $1$ is respectively
+zero and one, and their old private values are $x=0$ and $y=0$.
+
+If $u_1=0$, the $Z$ chain reads until the first later one or until
+all $U$ bits have been read. A later one makes the AND context
+negative and the OR context positive; $J$ rereads coordinate $1$
+and returns these respective values. If all $U$ bits are zero,
+$B_X$ returns the correct zero from old $x=0$ on $\mathcal A$,
+and computes the only remaining OR variable $x$ on $\mathcal B$.
+If $u_1=1$, $B_Y$ reads $y$. When it is zero, $J$ returns the
+negative AND answer and positive OR answer. When it is one, only
+$\mathcal A$ is possible, since $\mathcal B$ has old $y=0$.
+The remaining $A$ chain computes exactly the conjunction of
+$u_2,\ldots,u_v$. These cases exhaust every completion of each
+context and hence every Boolean input. Every tree path and every
+suffix chain is finite, so all actual inputs terminate. Acyclicity
+of this constructed example is not a restriction on competitors.
+
+Proof, both caps with repeats charged. Write $C_X=\sum_{i\in X}c_i$
+for subsets here, and $U_{\le j}=\{u_1,\ldots,u_j\}$. The two
+prefixes pay respectively $C_C+c_x$ and $C_C+c_y$, with $v+3$
+queries. The suffix has at most $v+1$ queries: an all-zero $U$
+route uses $v$ scan states and $B_X$; a first later one at $u_j$
+uses $j$ scan states and $J$; a $u_1=1,y=0$ route uses
+$V,B_Y,J$, with $3\le v+1$; the remaining route uses $V,B_Y$
+and at most $v-1$ AND states. Thus every such input has at most
+$2v+4=n$ queries on this same table.
+
+For all-zero $U$, the complete selected letter charges are
+
+$$
+\begin{aligned}
+\mathcal A:&\ C_C+2c_x+C_U=W+c_x-c_y<W,\\
+\mathcal B:&\ C_C+c_y+C_U+c_x=W.
+\end{aligned}
+\tag{SI.74}
+$$
+
+The first line includes the genuine repeated $x$. For the first
+later one at $u_j$, $2\le j\le v$, the respective charges are
+$C_C+c_x+C_{U_{\le j}}+c_1$ and
+$C_C+c_y+C_{U_{\le j}}+c_1$, both at most $W$, because
+$c_1<c_y$ and $c_1<c_x$, respectively. For $u_1=1,y=0$ they are
+
+$$
+C_C+c_x+c_{u_1}+c_y+c_1\le W,\qquad
+C_C+2c_y+c_{u_1}+c_1\le W.
+\tag{SI.75}
+$$
+
+The first uses $c_1<c_{u_2}\le C_{U\setminus\{u_1\}}$.
+The second uses
+$c_y+c_1<c_x+c_{u_2}\le c_x+C_{U\setminus\{u_1\}}$;
+indeed $c_1<c_x$ and $c_y<c_{u_2}$ for the costs in (SI.70).
+This pays for both the old $y$ and old coordinate $1$ on
+$\mathcal B$. If $u_1=y=1$, only $\mathcal A$ occurs, and
+all its queried coordinates are distinct, so it pays at most $W$.
+Every retained ordinary tree route queries all $n$ coordinates once,
+with charge $W$, including all visits after an early certificate.
+Both caps have now been proved on every input, without deleting a
+repeat or substituting a different table for a cost objective.
+
+For simultaneous equality take a retained path with
+$(\theta_1,\theta_2)=00$, $I=1^v$, $x=1$, $y=0$, and $U=0^v$.
+It avoids both redirected prefixes, reads all coordinates and pays
+$n,W$. For actual interaction, take $\mathcal A$ with $U=0^v$:
+the AND is already negative after $u_1$, but $B_X$ still rereads $x$.
+The same $B_X$ is live on $\mathcal B$ with $U=0^v$, where it
+must decide the unread $x$. Likewise $\mathcal A$ and
+$\mathcal B$ with $u_1=0,u_2=1$ both reach the paid $J$, after
+opposite certificates, and require opposite outputs. These are real
+old-coordinate visits in a shared continuation, not a common
+certificate permitting that continuation to be erased globally.
+
+Proof, exact installed count. The full tree has $2^n-1$ running
+vertices. Each of the two deleted, disjoint subtrees has
+$2^{v+1}-1$ running vertices. The replacement has one $V$,
+$v-1$ states $Z_j$, two states $B_X,B_Y$, $v-1$ states $A_j$
+and one $J$, totaling $2v+2$. Thus
+
+$$
+(2^n-1)-2(2^{v+1}-1)+(2v+2)=M_v.
+\tag{SI.76}
+$$
+
+The Boolean total including its two distinct terminals is $M_v+2$.
+All retained tree states after certification are still installed and
+counted. Every retained running vertex is reachable by a completion
+of its tree prefix, and every new suffix state has a realizing input;
+no unused running states are added. This does not exclude genuinely
+nonlive states: for example $J$ is reached only after certification.
+The retained core alone contains $2^{v+2}-1>(v+2)(v+3)=G$
+running states for $v\ge3$. The inequality holds at $v=3$ and
+persists by doubling the exponential term. Hence $M_v>G$.
+
+Proof, all-history class membership. A retained tree vertex has a
+unique incoming prefix. Every actual live prefix of $Z_j$ or $B_X$
+is in context $\mathcal B$ with all previously read $U$ bits zero;
+context $\mathcal A$ was already certified by $u_1=0$. Every
+actual live prefix of $B_Y$ or $A_j$ is in context $\mathcal A$
+with all previously read residual bits one; context $\mathcal B$
+was certified by $u_1=1$, and cannot enter $A_2$ because its old
+$y$ is zero. These statements specify one live prefix per such state.
+The incoming contexts of $J$ have both been certified, so it has no
+live prefix. Only $V$ has two distinct live prefixes. Their one and
+zero sets are
+
+$$
+\begin{array}{c|cc}
+& A_H&B_H\\
+\mathcal A&\{2\}&\{1\}\cup I\cup\{x\}\\
+\mathcal B&\{1\}\cup I&\{2,y\}.
+\end{array}
+\tag{SI.77}
+$$
+
+Both are live: their count pairs are $(1,v+2)$ and $(v+1,2)$,
+within $0\le h\le v+1$, $0\le z\le v+2$. Every completion is
+an actual Boolean input. The two directed intersections are
+$\{2\}$ and $\{1\}\cup I$, both nonempty. Thus every live
+state of this example satisfies (SI.63), in particular every state
+of its remaining late-long pool. At $V$ its exact mass is
+
+$$
+\lambda(V)=\binom{v+3}{1}^{-1}
+             +\binom{v+3}{v+1}^{-1}
+           =\frac{v+4}{(v+3)(v+2)}<1.
+\tag{SI.78}
+$$
+
+This verifies genuine cross-count live sharing while retaining the
+full family of histories rather than discarding either context.
+
+Proof, consecutive late gap. All live histories through depth $a$
+have support equal to the corresponding prefix of $C$, so every depth
+$0,\ldots,a$ is common-support. At each depth $a+j$,
+$1\le j\le v+1$, context $\mathcal B$ with its first $j-1$
+$U$ bits zero is still live and has support
+
+$$
+S_j^{\mathcal B}=C\cup\{y\}\cup U_{\le j-1}.
+\tag{SI.79}
+$$
+
+At $j=v+1$ this is its live prefix at $B_X$, before reading $x$.
+For comparison the retained input used for cap equality has live
+prefixes all the way to depth $n-1$: after $x=1$ its hit count is
+$v+1$, and its zeros never exceed $v+2$. Their supports are
+
+$$
+S_1^{\mathrm{tree}}=C\cup\{x\},\qquad
+S_j^{\mathrm{tree}}=C\cup\{x,y\}\cup U_{\le j-2}
+\quad(2\le j\le v+1).
+\tag{SI.80}
+$$
+
+Use $U_{\le0}=\varnothing$. At $j=1$ the two supports differ
+by $x,y$; thereafter they differ by $x,u_{j-1}$. Thus no depth
+strictly between $a$ and $n$ is common-support. The pair $(a,n)$
+is consecutive, with span $v+2\ge5$ and right endpoint
+$n>e_*=v+3$. Its span is unbounded over this infinite family.
+Equations (SI.77) and the preceding singleton analysis prove membership
+in $\mathfrak C$, whereas this very gap excludes the family from
+Corollary 10.6. Together with that corollary's class inclusion, this
+proves strict enlargement, not just a different numerical instance.
+
+Proof, complete native realization of this table. Apply the existing
+full-fiber lift of WTF Theorem 4.1 to exactly this Boolean graph.
+Every coordinate-$i$ row above and every retained tree row queries
+the fixed original literal $a_i=LLL L^iR$. Its four successors are
+installed as $(\mathsf{alpha},\mathsf{beta},\mathsf{branch},
+\mathsf{absent})\mapsto(\delta_0,\delta_0,\delta_1,\delta_0)$,
+with the two terminals replaced by the original latches. Add the
+original profile rows $D,T$ from that theorem: $D$ queries $RLR$
+with successors $(\widehat e_1,\text{tree root},T,\widehat e_0)$,
+and $T$ queries $RRR$ with successors
+$(\widehat e_1,\widehat e_0,\widehat e_0,\widehat e_0)$ in the
+same four-reply order. Start at $D$ and install all $r$ further
+mandated distinct latches even though unused. This specifies all
+native edges; no auxiliary phase state, reset or service is added.
+
+On any source in $Z_{b_3}$, including arbitrary noncomb branch
+images and absent selected nodes, the original all-address occurrence
+identity gives one fixed Boolean indicator vector. The every-input
+proof above therefore gives its exact prescribed latch. The other
+ten profiles are handled by the unchanged profile front. This is a
+full-$\mathcal U_*$ upper on the identical original code, not an
+upper restricted to the cube. All selected runs pay their original
+literal charges, including the actual repeats; $D$ adds one call and
+three letters. Other profiles use at most two calls and six letters.
+The actual cube supplier realizes the cap-attaining vector above by
+a finite original source with every original disequality, so one
+source attains $n+1,W+3$ together. There are exactly $M_v$ selected
+running states, two profile states, two original-entry latches and
+$r$ additional latches, totaling $M_v+4+r$. The separate reader
+and every complete whole-row output are unchanged as in Theorem
+11.7. $\square$
+
+### 11.4 Necessary overload and the collective problem that remains
+
+**Theorem 11.9 (overloaded-state and one-way cross-count obstruction).**
+Any complete correct strict-subgrid graph at both original caps must
+have a gap $B\in\mathcal L_*$ with $D_B>E_B$, a state $q\in Q_B$
+with $\lambda(q)>1$, and two distinct actual live prefixes at that
+same $q$, in different count cells, for which exactly one of
+
+$$
+A_H\cap B_{H'},\qquad A_{H'}\cap B_H
+\tag{SI.81}
+$$
+
+is empty. Their distinct supports are incomparable; their count cells
+obey (SI.7) and the stronger right-cut separation (SI.41). The gap
+has span at least five, ends after $e_*$ and contains at least four
+consecutive noncommon-support depths. The same necessity holds for
+the supplied projection of an original native preparer with
+$H_P<G+4+r$ at both native caps.
+
+Proof. Proposition 10.9 gives the positive-deficit late gap and all
+its stated span and cut properties. Equation (SI.66) then gives
+$\sum_{q\in Q_B}\lambda(q)=|V_B|>|Q_B|$, forcing a mass
+strictly larger than one at some installed state. By Theorem 11.4,
+that state's all-history family fails (SI.63). For a witnessing pair,
+Lemma 11.3 excludes compatible assignments, so the other directed
+intersection is nonempty. The same lemma proves both intersections
+nonempty for distinct histories at fixed $p,q$, so this pair must
+come from different cells. Section 2's supplied exclusions forbid
+nested supports and equal supports with unequal hits; they also give
+(SI.7). Lemma 10.2 supplies (SI.41) within this same pool. The native
+projection has $m\le H_P-4-r<G$, and the whole argument applies
+to it without changing its installed vector. $\square$
+
+**Proposition 11.10 (exact collective capacity balance).** Without
+any both-conflict hypothesis, put
+
+$$
+\begin{aligned}
+O_*&=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}
+                         (\lambda(q)-1)_+,\\
+S_*&=\sum_{B\in\mathcal L_*}\sum_{q\in Q_B}
+                         (1-\lambda(q))_+,
+\qquad x_+=\max(x,0).
+\end{aligned}
+\tag{SI.82}
+$$
+
+For this one complete graph the unrestricted comparison $m\ge G$
+is equivalent to
+
+$$
+O_*\le S_*+E_{\mathrm{cut}}+u+
+                  \sum_{B\in\mathcal A_*}(E_B-D_B).
+\tag{SI.83}
+$$
+
+Proof. Equation (SI.66) gives
+$D_B-E_B=\sum_{q\in Q_B}(\lambda(q)-1)$ for each remaining
+pool. Split positive and negative parts and substitute in the second
+inequality of (SI.59). The pools are disjoint by Theorem 9.3, so no
+state or surplus is counted twice. All the other terms on the right
+are the nonnegative supplied terms of SI9–SI10. $\square$
+
+Equation (SI.83), equivalently the original unrestricted (SI.59), is
+not proved for arbitrary competitors here. The class theorem forces
+$O_*=0$ by an explicit sufficient condition; arbitrary graphs can
+have overload. Neither a one-way pair nor an overloaded state by
+itself suffices for a strict saving. Its positive mass can be paid by
+underloaded states in the same or other remaining pools, by cut or
+other-pool excess, or by genuinely nonlive installed states. Requiring
+separate compensation in every long gap would be stronger than this
+collective target. No normalization of an arbitrary competitor into
+$\mathfrak C$ is supplied. The original general unrestricted-budget
+$H_{\min}$ retains its separate unresolved meaning.
+
+There are already complete above-grid overload suppliers. In PE
+Theorem 8.1 the shared state $V$ has actual histories (PE.35) of
+counts $(0,m+1)$ and $(m,1)$, giving
+$\lambda(V)\ge1+1/(m+1)>1$. In PCA Proposition 36.1 its state
+$V$ has histories (PCA.91) of counts $(0,3)$ and $(3,0)$, each of
+weight one, hence $\lambda(V)\ge2$. Their full tables satisfy both
+original caps and exceed the grid. These suppliers refute universal
+pointwise capacity. They do not refute (SI.59) or its equivalent
+(SI.83); a failure of the both-conflict sufficient condition is not
+a failure of collective compensation.
+
+### 11.5 Reuse, source fidelity and bounded attribution
+
+The classical supplier in Theorem 11.4 is the nonuniform inequality,
+not a new set-pairs theorem. Its precise accessible source is Jason
+O'Neill and Jacques Verstraëte, *A generalization of the Bollobás set
+pairs inequality*, arXiv:1812.00537v2, Theorem 1 on page 1 [OV].
+That statement requires every ordered off-diagonal intersection and
+disjoint diagonals. The original Bollobás text is not claimed as
+independently obtained. An unordered incompatibility condition would
+supply only at least one direction and would not justify the cited
+inequality; the deterministic exclusion of Lemma 11.3 is deliberately
+kept separate from the additional condition (SI.63).
+
+The repository suppliers are Theorem 2.2 for live freshness and
+fixed-cell support, Theorem 9.3 for all-actual localization, SI9–SI10
+for all other pools, CP's actual-prefix restrictions on one installed
+vector, WTF Theorem 4.1 for the original full-fiber native map, PCA
+Theorem 26.1 for the attaining grid, and NBP Propositions 9.3, 15.2
+and Theorem 15.5 for the actual fiber, exhaustive profiles and original
+complete reader. These are reused with their stated source and
+permission contracts. The all-history mass bridge, its qualified
+consumer and its application to the unbounded-gap family are
+repo-derived ordinary-paper deductions, with no local kernel
+verification or independent whole-paper acceptance asserted.
+
+Proposition 11.8 uses the existing PE Sections 5 and 8 and PCA
+Section 36 private-prefix/shared-continuation motifs: an AND/OR pair,
+paid old-coordinate discrimination, and repeated queries supported
+by omitted costs. Its two opposing marker assignments are what
+make both directed intersections hold. The complete construction,
+all-history membership and consecutive unbounded late-gap proof
+supply the strict class separation needed by Theorem 11.7. The
+example's state count is above-grid; the example alone is not the
+capacity theorem or an optimum improvement. WTF Section 11's
+fixed-representative separator counterexamples are also retained as
+suppliers and are not repackaged as this bridge.
+
+The overlap comparison is bounded to the complete SI and CP volumes
+and the cited WTF, PE, PCA and NBP passages, together with the stated
+primary set-pairs source. It makes no worldwide novelty or exhaustive
+private-library claim. The ordered hypothesis in Bryant Section 2,
+Definition 1, and the acyclic semantic read-once hypotheses in CEMP
+Section 2.1 remain distinct from the current paid graph. They are not
+imported as lower-bound premises. The separately contracted quantum
+acquisition, endpoint-timing and other formal suppliers provide no
+numerical native installed-state transfer here. No unrelated axis,
+arrival or private-discrepancy conditional class is needed for
+(SI.68)–(SI.83), and no acquisition, physical-time or memory law is
+inferred from these finite control counts.
+
+[OV]: https://arxiv.org/pdf/1812.00537v2
+
+## 追加锚（本行以下为增补区）
