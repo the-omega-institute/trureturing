@@ -83,10 +83,6 @@ instance space_compact (C : Set X) [CompactSpace X] : CompactSpace (Space C) :=
 instance space_hausdorff (C : Set X) [T2Space X] : T2Space (Space C) :=
   inferInstanceAs (T2Space ↥(closure (range (graph C))))
 
-/-- Empty sources yield empty graph resolutions, without choosing a point. -/
-instance space_isEmpty (C : Set X) [IsEmpty X] : IsEmpty (Space C) :=
-  ⟨fun y => isEmptyElim y.val.1⟩
-
 /-- Each binary coordinate constrains the first coordinate to the closure of
 the corresponding actual evaluation fiber. -/
 private theorem forced_coordinate (C : Set X) (y : Space C)
