@@ -161,7 +161,7 @@ theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   have he := congrArg (fun M => M ⟨()⟩ ⟨()⟩) (h u)
   simp only [rejected, realize, proj_eq_outer, Matrix.vecMulVec, u] at he
   have he' : (1 : ℂ) * star (1 : ℂ) = 1 * 0 := he
-  simpa only [star_one, mul_one, mul_zero, one_ne_zero] using he'
+  simp only [star_one, mul_one, mul_zero, one_ne_zero] at he'
 
 def source_registration : Registration arena.{u_1} (type_of% @_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.proj_eq_outer.{u_1}) where
   actual := actual
