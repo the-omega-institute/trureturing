@@ -163,6 +163,46 @@ internal sealed class LatticeHalfFockChargedTensorCoefficientsDocument : IScribe
                         + "ground action and the original scalar. No current commutator or charged action law is assumed. "
                         + "This current covariance is distinct from energy covariance and charged-field pair locality."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("oscillator-coefficient-as-sum"),
+                DeclarationHandle.Create(Prefix + "oscillatorCoefficient_as_sum"),
+                H("Native polynomial coefficient functional"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, LatticeParameter, Comma, Sp,
+                    ChargeParameter, Comma, Sp, IntegerParameter("e"), Comma, Sp, PolynomialParameter,
+                    Comma, Sp, Call("oscillatorCoefficient", F.Id("D"), F.Id("a"), F.Id("e"), F.Id("p")),
+                    Eq, Call("nativeCoefficientMap", F.Id("D"), F.Id("a"), F.Id("e"),
+                        Call("Q", F.Id("a"), F.Id("p")))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every D,a,e,p, the actual oscillator coefficient is the "
+                    + "native coefficient functional applied to Q_a(p). The functional sends the degree-d "
+                    + "coefficient c to c C_a[e+q_a+d]. Finite translated polynomial support identifies "
+                    + "the finsum with this polynomial-linear functional."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("oscillator-coefficient-creator"),
+                DeclarationHandle.Create(Prefix + "oscillatorCoefficient_X_mul"),
+                H("Native oscillator creator recurrence"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, LatticeParameter, Comma, Sp,
+                    ChargeParameter, Comma, Sp, IntegerParameter("e"), Comma, Sp,
+                    F.Id("i"), Colon, Call("Index", F.Id("D")), Comma, Sp, PolynomialParameter, Comma, Sp,
+                    Call("oscillatorCoefficient", F.Id("D"), F.Id("a"), F.Id("e"),
+                        Seq(Call("X", F.Id("i")), F.Id("p"))), Eq,
+                    Call("X", F.Id("i")), Call("oscillatorCoefficient", F.Id("D"), F.Id("a"), F.Id("e"), F.Id("p")),
+                    Minus, Call("B", F.Id("a"), Call("unitCharge", F.Id("D"), Call("fst", F.Id("i")))), Sp,
+                    Call("oscillatorCoefficient", F.Id("D"), F.Id("a"),
+                        Seq(F.Id("e"), Plus, Call("omega", F.Id("D"), F.Id("i"))), F.Id("p"))))),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("The complete domain is D:LatticeData, a:Charge(D), e:Integer, "
+                    + "i:Index(D), p:Oscillator(D). The shift is omega(D,i)=2*i.snd+1, and the pairing "
+                    + "acts by complex scalar multiplication. Polynomial translation and its coefficient "
+                    + "functional give this recurrence without a field commutator hypothesis."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("nativeCoefficientMap is the oscillator-linear polynomial coefficient functional with "
+                + "weight C_a[e+q_a+d]. oscillatorCoefficient_as_sum identifies the actual endomorphism with this "
+                + "functional applied to Q_a(p). oscillatorCoefficient_X_mul holds for every integer e and every "
+                + "polynomial p: A_a[e](X(i)p)=X(i)A_a[e]p-B(a,e_i)A_a[e+omega(i)]p. "
+                + "The full forward ordered-product identity uses these interfaces with the original odd weight; "
+                + "no ordinary-frequency substitution is involved.")),
             Paragraph(Text("The native universal half_creation_coefficient_transport remains the exact source for the next "
                 + "charged coefficient products: translating C_b[n] gives kappa_g(d) C_b[n-d], "
                 + "where kappa_g is the coefficient of ((1-s)/(1+s))^g and g=B(a,b). "

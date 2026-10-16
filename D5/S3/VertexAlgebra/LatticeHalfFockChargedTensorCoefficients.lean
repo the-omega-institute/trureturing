@@ -251,12 +251,12 @@ theorem charged_ground_leading (D : LatticeData) (hu : IsUnit D.G.det)
 end
 noncomputable section
 
-private def nativeCoefficientMap (D : LatticeData) (charge : Charge D) (exponent : ℤ) :
+def nativeCoefficientMap (D : LatticeData) (charge : Charge D) (exponent : ℤ) :
     Polynomial (Oscillator D) →ₗ[Oscillator D] Oscillator D :=
   Polynomial.lsum fun degree => LinearMap.mulRight (Oscillator D)
     (halfCreationCoeff D charge (exponent + chargeNorm D charge + degree))
 
-private theorem oscillatorCoefficient_as_sum (D : LatticeData) (charge : Charge D)
+theorem oscillatorCoefficient_as_sum (D : LatticeData) (charge : Charge D)
     (exponent : ℤ) (polynomial : Oscillator D) :
     oscillatorCoefficient D charge exponent polynomial =
       nativeCoefficientMap D charge exponent (halfTranslatedPolynomial D charge polynomial) := by
@@ -308,7 +308,7 @@ private theorem nativeCoefficientMap_X_pow_mul (D : LatticeData) (charge : Charg
     change weight + left = weight + right at same
     omega
 
-private theorem oscillatorCoefficient_X_mul (D : LatticeData) (charge : Charge D)
+theorem oscillatorCoefficient_X_mul (D : LatticeData) (charge : Charge D)
     (exponent : ℤ) (index : Index D) (polynomial : Oscillator D) :
     oscillatorCoefficient D charge exponent (MvPolynomial.X index * polynomial) =
       MvPolynomial.X index * oscillatorCoefficient D charge exponent polynomial -
