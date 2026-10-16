@@ -186,9 +186,10 @@ private theorem outflow_le (b : ℝ) (j : Fin 10) :
       rw [Finset.sum_filter]
       apply Finset.sum_congr rfl
       intro i _
-      split_ifs with h
-      · rfl
-      · simp (config := { congrConsts := false }) only [edgeWeight.eq_1, Matrix.of_apply, if_neg h]
+      by_cases h : adj i j
+      · rw [if_pos h]
+      · rw [if_neg h]
+        simp (config := { congrConsts := false }) only [edgeWeight.eq_1, Matrix.of_apply, if_neg h]
     _ ≤ ∑ i ∈ Finset.univ.filter (fun i => adj i j), (1 / 3 : ℝ) :=
       Finset.sum_le_sum (fun i _ => (edge_bounds b i j).2)
     _ = 1 := by
