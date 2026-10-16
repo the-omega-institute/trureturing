@@ -54,7 +54,7 @@ def MomentBound {d : ℕ} {κ : Type*} [Fintype κ]
   ∀ H : Op d, H.IsHermitian →
     moment A H ≤ α * (H * H).trace.re + β * (H.trace.re) ^ 2
 
-def EAM (d n : ℕ) :=
+abbrev EAM (d n : ℕ) :=
   {ket : Fin n → Ket (Fin d) // d < n ∧
     (∑ a, proj (ket a)) = ((n : ℂ) / (d : ℂ)) • (1 : Op d) ∧
     ∀ a b, a ≠ b → ‖dotProduct (star (ket a).vec) (ket b).vec‖ ^ 2 =
@@ -75,6 +75,7 @@ theorem trace_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [Matrix.toEuclideanLin_eq_toLin_orthonormal, Matrix.trace_toLin_eq]
 
 set_option synthInstance.maxHeartbeats 200000 in
+-- Functional calculus on endomorphisms uses both real and complex scalar towers.
 theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) :
     D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm A =
@@ -97,7 +98,6 @@ theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
   rw [← trace_toEuclideanCLM (CFC.sqrt (Aᴴ * A)),
     trace_eq_sum_inner_hilbertBasis_of_finiteDimensional _ b, tsum_fintype]
 
-
 theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
     hsSq A = (Aᴴ * A).trace.re := by
   open scoped Matrix.Norms.Frobenius in
@@ -107,7 +107,6 @@ theorem hsSq_eq_trace {κ : Type*} [Fintype κ] (A : Matrix κ κ ℂ) :
     rw [← htrace]
     change _ = ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (A i))‖ ^ 2
     simp only [PiLp.norm_sq_eq_of_L2, hsSq]
-
 
 theorem hsSq_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq κ]
     (A : Matrix κ κ ℂ) {s : Set (EuclideanSpace ℂ κ)}
@@ -221,7 +220,6 @@ theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
   refine ⟨(d : ℝ) / n, A.val a, by positivity, ?_⟩
   simp only [EAM.effect, Complex.ofReal_div, Complex.ofReal_natCast]
 
-
 theorem ket_dot_self {ι : Type*} [Fintype ι] (u : Ket ι) :
     star u.vec ⬝ᵥ u.vec = 1 := by
   rw [dotProduct]
@@ -280,7 +278,8 @@ theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
       calc
         _ = (V.val * Dᴴ * (U.valᴴ * U.val) * D * V.valᴴ).trace := by
           simp only [Matrix.mul_assoc]
-        _ = (V.val * (Dᴴ * D) * V.valᴴ).trace := by rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
+        _ = (V.val * (Dᴴ * D) * V.valᴴ).trace := by
+          rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
         _ = _ := by rw [trace_mul_cycle, hV, Matrix.one_mul]
     have hnorm := coeff_normalized u
     rw [hsquare] at hnorm
@@ -305,8 +304,8 @@ theorem scaledPure_hermitian {d : ℕ} {A : Op d} (hA : ScaledPure A) :
 theorem scaledPure_sandwich {d : ℕ} {A : Op d} (hA : ScaledPure A) (M : Op d) :
     A * M * A = (M * A).trace • A := by
   obtain ⟨c, u, _, rfl⟩ := hA
-
-  have h := (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake u.vec (ket_dot_self u) M).2
+  have h := (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake
+    u.vec (ket_dot_self u) M).2
   have hs : proj u * M * proj u = (M * proj u).trace • proj u := by
     simpa only [proj_eq_outer,
       D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity, h.2] using h.1
@@ -332,6 +331,137 @@ theorem scaledPure_gram_norm {d : ℕ} {A : Op d} (hA : ScaledPure A) (K : Op d)
     _ _ (Matrix.isHermitian_conjTranspose_mul_self K) (scaledPure_hermitian hA)]
   norm_cast
 
+def sandwichFactor {d : ℕ} {κ : Type*} (K : Op d) (A : κ → Op d) :
+    Matrix (Fin d × Fin d) κ ℂ := fun p a => Matrix.vec (K * A a * Kᴴ) p
+
+def schmidtSandwich {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ) :
+    Op d := CFC.sqrt (diagonal (fun i => (sval i : ℂ))) * U.valᴴ
+
+theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
+    (K : Op d) (A : κ → Op d) (hA : ∀ a, ScaledPure (A a)) :
+    hsSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
+  calc
+    hsSq (sandwichFactor K A) = ∑ a, hsSq (K * A a * Kᴴ) := by
+      simp only [hsSq, sandwichFactor]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro a _
+      simp only [Fintype.sum_prod_type, Matrix.vec]
+      exact Finset.sum_comm
+    _ = moment A (Kᴴ * K) := by
+      simp only [scaledPure_gram_norm (hA _), moment]
+
+theorem scaledPure_transpose {d : ℕ} {A : Op d} (hA : ScaledPure A) :
+    ScaledPure Aᵀ := by
+  obtain ⟨c, u, hc, rfl⟩ := hA
+  let v : Ket (Fin d) := ⟨star u.vec, by
+    simpa only [Pi.star_apply, norm_star] using u.normalized'⟩
+  refine ⟨c, v, hc, ?_⟩
+  rw [transpose_smul, proj_eq_outer, proj_eq_outer, transpose_vecMulVec]
+  change (c : ℂ) • vecMulVec (star u.vec) u.vec =
+    (c : ℂ) • vecMulVec (star u.vec) (star (star u.vec))
+  rw [star_star]
+
+theorem schmidtSandwich_weight {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+    (sval : Fin d → ℝ) (hs : ∀ i, 0 ≤ sval i) :
+    (schmidtSandwich U sval)ᴴ * schmidtSandwich U sval =
+      U.val * diagonal (fun i => (sval i : ℂ)) * U.valᴴ := by
+  let D : Op d := diagonal (fun i => (sval i : ℂ))
+  have hD : D.PosSemidef := PosSemidef.diagonal (fun i => by
+    change (0 : ℂ) ≤ (sval i : ℂ)
+    exact_mod_cast hs i)
+  have hS : (CFC.sqrt D).IsHermitian :=
+    (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg D)).1
+  change (CFC.sqrt D * U.valᴴ)ᴴ * (CFC.sqrt D * U.valᴴ) = U.val * D * U.valᴴ
+  rw [conjTranspose_mul, conjTranspose_conjTranspose, hS.eq]
+  calc
+    _ = U.val * (CFC.sqrt D * CFC.sqrt D) * U.valᴴ := by simp only [mul_assoc]
+    _ = _ := by rw [CFC.sqrt_mul_sqrt_self D hD.nonneg]
+
+theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ)
+    (sval : Fin d → ℝ) (hs : ∀ i, 0 ≤ sval i) :
+    let H := (schmidtSandwich U sval)ᴴ * schmidtSandwich U sval
+    H.trace.re = ∑ i, sval i ∧ (H * H).trace.re = ∑ i, sval i ^ 2 := by
+  dsimp only
+  rw [schmidtSandwich_weight U sval hs]
+  let D : Op d := diagonal (fun i => (sval i : ℂ))
+  have hU : U.valᴴ * U.val = 1 := Unitary.star_mul_self_of_mem U.prop
+  have htrace : (U.val * D * U.valᴴ).trace = D.trace := by
+    rw [trace_mul_cycle, hU, Matrix.one_mul]
+  have hsquare : ((U.val * D * U.valᴴ) * (U.val * D * U.valᴴ)).trace =
+      (D * D).trace := by
+    calc
+      _ = (U.val * D * (U.valᴴ * U.val) * D * U.valᴴ).trace := by
+        simp only [mul_assoc]
+      _ = (U.val * (D * D) * U.valᴴ).trace := by
+        rw [hU]; simp only [Matrix.mul_one, mul_assoc]
+      _ = _ := by rw [trace_mul_cycle, hU, Matrix.one_mul]
+  change (U.val * D * U.valᴴ).trace.re = _ ∧
+    ((U.val * D * U.valᴴ) * (U.val * D * U.valᴴ)).trace.re = _
+  rw [htrace, hsquare]
+  simp only [D, trace_diagonal, diagonal_mul_diagonal, Complex.re_sum,
+    Complex.ofReal_re, Complex.mul_re, Complex.ofReal_im, mul_zero, sub_zero, pow_two, and_self]
+
+theorem pure_gram_factorization {d : ℕ} {κ : Type*} [Fintype κ]
+    (u : Ket (Fin d × Fin d)) (A B : κ → Op d)
+    (hA : ∀ a, (A a).IsHermitian) (hB : ∀ b, (B b).IsHermitian)
+    (U V : Matrix.unitaryGroup (Fin d) ℂ) (sval : Fin d → ℝ)
+    (hs : ∀ i, 0 ≤ sval i)
+    (hUV : coeff u = U.val * diagonal (fun i => (sval i : ℂ)) * V.valᴴ) :
+    correlation (proj u) A B =
+      (sandwichFactor (schmidtSandwich U sval) A)ᴴ *
+        sandwichFactor (schmidtSandwich V sval) (fun b => (B b)ᵀ) := by
+  let D : Op d := diagonal (fun i => (sval i : ℂ))
+  let S := CFC.sqrt D
+  have hD : D.PosSemidef := PosSemidef.diagonal (fun i => by
+    change (0 : ℂ) ≤ (sval i : ℂ)
+    exact_mod_cast hs i)
+  have hS : S.IsHermitian := (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg D)).1
+  have hSS : S * S = D := CFC.sqrt_mul_sqrt_self D hD.nonneg
+  ext a b
+  let X := schmidtSandwich U sval * A a * (schmidtSandwich U sval)ᴴ
+  let Y := schmidtSandwich V sval * (B b)ᵀ * (schmidtSandwich V sval)ᴴ
+  have hX : X.IsHermitian := Matrix.isHermitian_mul_mul_conjTranspose _ (hA a)
+  have hY : Y.IsHermitian :=
+    Matrix.isHermitian_mul_mul_conjTranspose _ (hB b).transpose
+  change ((((proj u * Matrix.kronecker (A a) (B b)).trace).re : ℂ)) =
+    star (Matrix.vec X) ⬝ᵥ Matrix.vec Y
+  rw [star_vec_dotProduct_vec, hX.eq]
+  rw [D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+    X Y hX hY]
+  congr 1
+  rw [pure_born_coeff]
+  let L := U.valᴴ * A a * U.val
+  let R := V.valᴴ * (B b)ᵀ * V.val
+  have hXY : (X * Y).trace = (D * L * D * R).trace := by
+    have hXeq : X = S * L * S := by
+      simp only [X, schmidtSandwich, conjTranspose_mul, conjTranspose_conjTranspose]
+      change S * U.valᴴ * A a * (U.val * Sᴴ) = S * L * S
+      rw [hS.eq]
+      simp only [L, mul_assoc]
+    have hYeq : Y = S * R * S := by
+      simp only [Y, schmidtSandwich, conjTranspose_mul, conjTranspose_conjTranspose]
+      change S * V.valᴴ * (B b)ᵀ * (V.val * Sᴴ) = S * R * S
+      rw [hS.eq]
+      simp only [R, mul_assoc]
+    rw [hXeq, hYeq]
+    calc
+      _ = (S * (L * (S * S) * R) * S).trace := by simp only [mul_assoc]
+      _ = (S * (L * D * R) * S).trace := by rw [hSS]
+      _ = ((S * S) * (L * D * R)).trace := by
+        rw [trace_mul_cycle]
+      _ = _ := by rw [hSS]; simp only [mul_assoc]
+  rw [hXY]
+  apply congrArg Complex.re
+  change coeff u = U.val * D * V.valᴴ at hUV
+  rw [hUV]
+  rw [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, hD.1.eq]
+  calc
+    _ = (V.val * (D * U.valᴴ * A a * U.val * D * V.valᴴ * (B b)ᵀ)).trace := by
+      simp only [mul_assoc]
+    _ = ((D * U.valᴴ * A a * U.val * D * V.valᴴ * (B b)ᵀ) * V.val).trace :=
+      trace_mul_comm _ _
+    _ = _ := by simp only [L, R, mul_assoc]
 
 def claim : Prop :=
   ∀ (d n r : ℕ), 1 ≤ d → 1 ≤ r → r ≤ d →
