@@ -69,7 +69,10 @@ internal sealed class GlauberNeighbourhoodPassivityRefutationDocument : IScribeD
                             + "−7/9. Substitution of the exact first population gives "
                             + "P_0(1) = −1454086156987/205381037283201, which is negative. "
                             + "Thus the universal nonnegativity assertion fails."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("luo-zhen-liu-ebler-dahlsten-2023-neighbourhood-passivity-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
