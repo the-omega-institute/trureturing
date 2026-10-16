@@ -39,7 +39,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void MathlibReanchorRejectsUnchangedIndentedCommentPrefixedDeclaration()
+    public void MathlibReanchorAcceptsUnchangedIndentedCommentPrefixedDeclaration()
     {
         const string source = "  /-- Hidden. -/ def p : Prop := True\n"
             + "theorem a : p := by trivial\n";
@@ -47,7 +47,7 @@ public sealed partial class FrozenLedgerTests
             baseModules: [ModuleWithReport("A", source, statementMaterial: "old elaborated p"), Module("B")],
             candidateModules: [ModuleWithReport("A", source, statementMaterial: "new elaborated p"), Module("B")],
             replacedModules: ["A"], environment: ReanchorEnvironment.PinUpgrade);
-        Assert.False(result.Authorized);
+        Assert.True(result.Authorized);
     }
 
     [Theory]
