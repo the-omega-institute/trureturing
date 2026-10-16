@@ -6,7 +6,7 @@
    utility: none
    digest: Actual finite kernel towers, original-length termination, cochain strips and stored endpoint coordinates. -/
 
-import D5.S3.ConceptDynamics.Coding.FiniteWordLag
+import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 import D5.S3.ConceptDynamics.Coding.UnitWordGyration
 import Mathlib.LinearAlgebra.Quotient.Basic
 import Mathlib.LinearAlgebra.Isomorphisms
@@ -1064,14 +1064,14 @@ theorem exchangeChain (w : Path X Y n) :
       rw [hsr] at hc
       exact hc
 
-/-- FiniteWordLag.chain_lag gives actual maps in COLUMN coordinates after
+/-- RectangularNilpotenceBarrier.exchange_chain_lag gives actual maps in COLUMN coordinates after
 transposing back. All three consumed lag equations are proved here. -/
 theorem lag (w : Path X Y n) :
     ∃ f : X.V →ₗ[D] Y.V, ∃ g : Y.V →ₗ[D] X.V,
       g.comp f = X.time^n ∧ f.comp g = Y.time^n ∧
       g.comp Y.time = X.time.comp g := by
   obtain ⟨F, G, _hAF, hBG, hFG, hGF⟩ :=
-    SourceOnly.FiniteWordLag.chain_lag w.exchangeChain
+    D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.exchange_chain_lag w.exchangeChain
   let f := Matrix.toLin X.basis Y.basis F.transpose
   let g := Matrix.toLin Y.basis X.basis G.transpose
   have hf : rows X.basis Y.basis f = F := by

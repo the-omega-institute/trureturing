@@ -88,7 +88,7 @@ Lean statement: `D5/S3/ConceptDynamics/Coding/FiniteKernelLadder.final_all_isUni
 
 *Commentary.*
 
-For any Path w from X to Y of original length n and IsUnit X.time, every vertex time of w.stage n is a unit. Each original vertex has an actual prefix of length k at most n. FiniteWordLag.chain_lag supplies coupled witnesses for that prefix; faithful row coordinates produce the actual COLUMN lag maps. lag_kernel_after and ker(q^j)=ker(T^j) then make the stage-n vertex injective.
+For any Path w from X to Y of original length n and IsUnit X.time, every vertex time of w.stage n is a unit. Each original vertex has an actual prefix of length k at most n. RectangularNilpotenceBarrier.exchange_chain_lag supplies the existing coupled witnesses for that prefix; faithful row coordinates produce the actual COLUMN lag maps. lag_kernel_after and ker(q^j)=ker(T^j) then make the stage-n vertex injective.
 
 The stage-n path still has its actual prefixes from its unit start. Those lag maps and unitFromLag construct the final units from the injective times. There is no guessed rank drop, bound by dimension, field-of-fractions shortcut or inference from injectivity over a PID to surjectivity. Original singular and zero-dimensional intermediates, and n=0, remain included.
 
@@ -126,7 +126,7 @@ For every natural d with NeZero d and three dividing d, the full boundary equati
 
 For an actual endomorphism unit a and endomorphism T with Commute a T, Mathlib Commute.units_inv_left gives T*a inverse=a inverse*T. Both unit inverse identities and that commutation equation justify the order change. This equation is applied locally when converting the two-factor transport between COLUMN and ROW conventions.
 
-The substantive constructions are the coupled all-word lag, unit-word cochain fold, repeated-quotient/original-power invariant, complete finite strip and stored endpoint Sigma identity. Quotient, coordinate, PID and exact-application support receives no separate escape or owner credit. The quotient and coordinate applications are used inside the complete finite construction.
+The five substantive content anchors are UnitWordGyration.Word.collapse_weight, Based.q_zero_iff, Path.strip, arbitrary_loop_one_edge and Based.endpoint_basis_transport. The coupled all-word lag is shared reuse of the cumulative proof from FixedPositivePartitionSseDistance.theorem32_2 through RectangularNilpotenceBarrier.exchange_chain_lag and receives no new-content or separate owner credit. Quotient, coordinate, PID and exact-application support receives no separate escape or owner credit. The quotient and coordinate applications are used inside the complete finite construction.
 
 No strongest original-h statement, its h/Word/U/j/window k/s/Q parameters, either actual factor, p2/p7 and joint mod-three corrections, FixT6 or minimum6 premise is changed by this finite algebraic construction. No bounded calibration wrapper is supplied. Classical quotient, finite PID and RS-triangle methods are reused; no literature novelty is asserted.
 
@@ -143,5 +143,5 @@ The strongest original-h root, its finite calibrations, literal FixT6 and minimu
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteKernelLadder.strip`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FiniteKernelLadder.unitFromLag`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedLocalizedGyrationResidue](CountedLocalizedGyrationResidue.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FiniteWordLag](FiniteWordLag.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier](RectangularNilpotenceBarrier.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/UnitWordGyration](UnitWordGyration.md)
