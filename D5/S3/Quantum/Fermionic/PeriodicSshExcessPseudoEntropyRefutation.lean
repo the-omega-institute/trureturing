@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.claim; result=D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.result; claim=D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.claim
-   digest: The periodic same-phase SSH excess pseudo-entropy assertion has a rational counterexample. -/
+   digest: Periodic same-phase SSH ground states can have positive excess pseudo-entropy. -/
 
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
 import D5.S3.Quantum.FermionicCorrelationalBound.CanonicalRdmAndPadding
@@ -47,6 +47,9 @@ def reduce {N L : ℕ} (h : 2*L ≤ 2*N) (X : FullOperator (2*N)) : FullOperator
     if (∀ i : Fin (2*L), x (Fin.castLE h i) = a i) ∧ (∀ i : Fin (2*L), y (Fin.castLE h i) = b i) ∧
        (∀ k : Fin (2*N), 2*L ≤ k.val → x k = y k) then X x y else 0
 
+/-- Spectral entropy, summed over the characteristic roots with algebraic multiplicity, with the
+principal scalar logarithm and 0 log 0 = 0; it agrees with −Tr(X log X) wherever that matrix
+function is defined. -/
 def matrixEntropy {n : Type*} [Fintype n] [DecidableEq n] (X : Matrix n n ℂ) : ℂ :=
   (X.charpoly.roots.map (fun z => -(z * Complex.log z))).sum
 
@@ -85,7 +88,7 @@ private theorem mode_car {M : ℕ} (l : Fin M → ℝ) :
   unfold mode
   simp only [Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, Complex.star_def,
     Complex.conj_ofReal, Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul,
-    Matrix.mul_smul, smul_add, add_smul, Finset.smul_sum]
+    Matrix.mul_smul, Finset.smul_sum]
   have hswap :
       (∑ i, ∑ j, (l i : ℂ) • (l j : ℂ) • (fullC j * (fullC i)ᴴ)) =
         ∑ i, ∑ j, (l i : ℂ) • (l j : ℂ) • (fullC i * (fullC j)ᴴ) := by
@@ -128,7 +131,7 @@ private theorem dGamma_rankOne {M : ℕ} (l : Fin M → ℝ) :
     Matrix.mul_smul]
   simp_rw [Finset.smul_sum]
   rw [Finset.sum_comm]
-  simp [Matrix.vecMulVec, Matrix.of_apply, smul_smul, Algebra.smul_def,
+  simp [Matrix.of_apply, Algebra.smul_def,
     Complex.ofReal_mul, mul_comm]
   simp_rw [← mul_assoc]
 
@@ -152,7 +155,7 @@ private theorem hopping38 :
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [sshHopping, eig38, modeNorm, modes38, Matrix.vecMulVec,
-      Matrix.sum_apply, Fin.sum_univ_succ] <;> ring
+      Matrix.sum_apply, Fin.sum_univ_succ]
 
 private theorem hopping58 :
     sshHopping 3 (5/8) =
@@ -160,15 +163,14 @@ private theorem hopping58 :
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [sshHopping, eig58, modeNorm, modes58, Matrix.vecMulVec,
-      Matrix.sum_apply, Fin.sum_univ_succ] <;> ring
+      Matrix.sum_apply, Fin.sum_univ_succ]
 
 private theorem dGamma_sum_smul {K M : ℕ} (t : Fin K → ℝ)
     (A : Fin K → Matrix (Fin M) (Fin M) ℝ) :
     dGamma (∑ k, t k • A k) = ∑ k, t k • dGamma (A k) := by
   classical
   ext s u
-  simp only [dGamma, Matrix.sum_apply, Matrix.smul_apply, Complex.ofReal_mul,
-    Finset.sum_mul, Finset.mul_sum]
+  simp only [dGamma, Matrix.sum_apply, Matrix.smul_apply]
   rw [Finset.sum_comm]
   simp_rw [smul_eq_mul]
   push_cast
@@ -259,12 +261,11 @@ private theorem fullC_entry {M : ℕ} (j : Fin M) (s t : Assignment M) :
       · have hne : i ≠ j := ne_of_lt hij
         simp only [fermionWord, if_pos hij, Function.update_of_ne hne]
         cases t i <;>
-          simp [hij, D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv,
-            Matrix.diagonal_apply]
+          simp [hij, D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv]
       · by_cases heq : i = j
         · subst i
           simp [fermionWord, Matrix.single, h.1]
-        · simp [fermionWord, hij, heq, Matrix.one_apply, Function.update_of_ne heq]
+        · simp [fermionWord, hij, heq, Matrix.one_apply]
     rw [he, ← Finset.prod_filter]
     simp [prefixCount, Finset.prod_const]
   · rw [if_neg h]
@@ -287,9 +288,8 @@ private theorem fullC_entry {M : ℕ} (j : Fin M) (s t : Assignment M) :
           cases hsi : s i <;> cases hti : t i <;>
             try { exfalso; apply hst; simp [hsi, hti] }
           all_goals
-            simp [D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv,
-              Matrix.diagonal_apply, hsi, hti]
-        · simp [fermionWord, hij, heq, hst, Matrix.one_apply]
+            simp [D5.S3.Quantum.FiniteDimensional.qubitZ, finTwoEquiv]
+        · simp [fermionWord, hij, heq, hst]
     · apply Finset.prod_eq_zero (Finset.mem_univ j)
       simp [fermionWord, Matrix.single, ht]
 
@@ -320,7 +320,7 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
           s = Function.update (Function.update s j true) j false) := by
         intro h
         have := congrFun h.2 j
-        simp [h.1, hs] at this
+        simp [hs] at this
       rw [if_neg hcond]
       simp
   · intro b hb hne
@@ -341,7 +341,7 @@ private theorem fullC_sparse {M : ℕ} (j : Fin M) (f : Assignment M → ℂ) (s
       have hfalse' : ¬(b j = true ∧ s = Function.update b j false) := by
         intro h
         have := congrFun h.2 j
-        simp [h.1, hfalse] at this
+        simp [hfalse] at this
       simp [hfalse']
   · intro hmem
     exact False.elim (hmem (Finset.mem_univ _))
@@ -367,7 +367,7 @@ private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → 
         · have hne : i ≠ j := ne_of_lt hij
           simp [hij, Function.update_of_ne hne]
         · simp [hij]
-      simp [h, hp]
+      simp [h]
     · simp [h]
   rw [Finset.sum_eq_single (Function.update s j false)]
   · rw [hentry]
@@ -381,7 +381,7 @@ private theorem fullC_create_sparse {M : ℕ} (j : Fin M) (f : Assignment M → 
         · have hne : i ≠ j := ne_of_lt hij
           simp [hij, Function.update_of_ne hne]
         · simp [hij]
-      simp [hs, hp]
+      simp [hs]
     · rw [if_neg hs]
       simp [hs]
   · intro b hb hne
@@ -434,7 +434,7 @@ private theorem mode_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → �
   simp [fullC_sparse]
   unfold modeInt
   push_cast
-  simp [Complex.ofReal_mul]
+  simp
 
 private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 6 → ℤ)
     (s : Assignment 6) :
@@ -442,12 +442,11 @@ private theorem mode_create_mulVec_int_cast (l : Fin 6 → ℤ) (f : Assignment 
       (modeCreateInt l f s : ℂ) := by
   classical
   simp only [mode, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
-    Complex.star_def, Complex.conj_ofReal, Matrix.sum_mulVec, Matrix.smul_mulVec,
-    Matrix.conjTranspose_apply]
+    Complex.star_def, Complex.conj_ofReal, Matrix.sum_mulVec, Matrix.smul_mulVec]
   simp [fullC_create_sparse]
   unfold modeCreateInt
   push_cast
-  simp [Complex.ofReal_mul]
+  simp
 
 private theorem psi38_norm : ∑ x, psi38Z x ^ 2 = 3528 := by decide
 private theorem psi58_norm : ∑ x, psi58Z x ^ 2 = 392 := by decide
@@ -515,10 +514,10 @@ private theorem psi38_number :
     numberOperator 6 *ᵥ psi38 = (3 : ℂ) • psi38 := by
   rw [numberOperator_eq_diagonal]
   funext s
-  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply, if_pos rfl,
-    one_mul, Pi.smul_apply]
+  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply,
+    Pi.smul_apply]
   rw [Finset.sum_eq_single s]
-  · simp only [if_pos rfl, one_mul, Pi.smul_apply]
+  · simp only []
     change (occupationCount s : ℂ) * psi38 s = (3 : ℂ) * psi38 s
     have h := psi38_three s
     change (∑ j, if s j then (1 : ℤ) else 0) * psi38Z s = 3 * psi38Z s at h
@@ -526,7 +525,7 @@ private theorem psi38_number :
       unfold occupationCount
       apply Finset.sum_congr rfl
       intro j hj
-      cases hs : s j <;> simp [hs]
+      cases hs : s j <;> simp
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi38Z s : ℂ) =
         3 * (psi38Z s : ℂ) := by exact_mod_cast h
@@ -540,10 +539,10 @@ private theorem psi58_number :
     numberOperator 6 *ᵥ psi58 = (3 : ℂ) • psi58 := by
   rw [numberOperator_eq_diagonal]
   funext s
-  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply, if_pos rfl,
-    one_mul, Pi.smul_apply]
+  simp only [Matrix.mulVec, dotProduct, Matrix.diagonal_apply,
+    Pi.smul_apply]
   rw [Finset.sum_eq_single s]
-  · simp only [if_pos rfl, one_mul, Pi.smul_apply]
+  · simp only []
     change (occupationCount s : ℂ) * psi58 s = (3 : ℂ) * psi58 s
     have h := psi58_three s
     change (∑ j, if s j then (1 : ℤ) else 0) * psi58Z s = 3 * psi58Z s at h
@@ -551,7 +550,7 @@ private theorem psi58_number :
       unfold occupationCount
       apply Finset.sum_congr rfl
       intro j hj
-      cases hs : s j <;> simp [hs]
+      cases hs : s j <;> simp
     rw [hocc]
     have hc : ((∑ j, if s j then (1 : ℤ) else 0) : ℂ) * (psi58Z s : ℂ) =
         3 * (psi58Z s : ℂ) := by exact_mod_cast h
@@ -602,14 +601,6 @@ private def B38 (k : Fin 6) : FullOperator 6 :=
 private def B58 (k : Fin 6) : FullOperator 6 :=
   if k.val < 3 then (mode (modes58 k))ᴴ else mode (modes58 k)
 
-private theorem modes38_norm : ∀ k : Fin 6, ∑ x, modes38 k x ^ 2 = modeNorm k := by
-  intro k
-  fin_cases k <;> norm_num [modes38, modeNorm, Fin.sum_univ_succ]
-
-private theorem modes58_norm : ∀ k : Fin 6, ∑ x, modes58 k x ^ 2 = modeNorm k := by
-  intro k
-  fin_cases k <;> norm_num [modes58, modeNorm, Fin.sum_univ_succ]
-
 private theorem hamiltonian_eq_dGamma (N : ℕ) (v : ℝ) :
     hamiltonian N v = dGamma (sshHopping N v) := rfl
 
@@ -624,8 +615,7 @@ private theorem sos38 :
   rw [hamiltonian_eq_dGamma, hopping38, dGamma_sum_smul]
   simp_rw [dGamma_rankOne]
   unfold B38 alpha38 eig38
-  simp only [Fin.sum_univ_succ, Fin.isValue, Fin.mk.injEq, Nat.reduceAdd, Nat.reduceLT,
-    ↓reduceIte]
+  simp only [Fin.sum_univ_succ, Fin.isValue]
   rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
   norm_num [modes38, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
@@ -638,8 +628,7 @@ private theorem sos58 :
   rw [hamiltonian_eq_dGamma, hopping58, dGamma_sum_smul]
   simp_rw [dGamma_rankOne]
   unfold B58 alpha58 eig58
-  simp only [Fin.sum_univ_succ, Fin.isValue, Fin.mk.injEq, Nat.reduceAdd, Nat.reduceLT,
-    ↓reduceIte]
+  simp only [Fin.sum_univ_succ, Fin.isValue]
   rw [mode_adj_mul, mode_adj_mul, mode_adj_mul]
   norm_num [modes58, modeNorm, Fin.sum_univ_succ, Matrix.cons_val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_fin_one, Matrix.cons_val_two,
@@ -707,7 +696,7 @@ private theorem sos_lower {K M : ℕ} (E : ℝ) (α : Fin K → ℝ)
     E * (star φ ⬝ᵥ φ).re ≤ (star φ ⬝ᵥ (H *ᵥ φ)).re := by
   rw [hs]
   simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.sum_mulVec,
-    Matrix.one_mulVec, Pi.smul_apply, dotProduct_add, dotProduct_smul]
+    Matrix.one_mulVec, dotProduct_add, dotProduct_smul]
   rw [dotProduct_sum]
   simp_rw [dotProduct_smul]
   have hq (k : Fin K) :
@@ -828,19 +817,19 @@ private theorem ground_from_sos (v E : ℝ) (α : Fin 6 → ℝ)
   have he : (star ψ ⬝ᵥ (H *ᵥ ψ)).re = E * (star ψ ⬝ᵥ ψ).re := by
     rw [henergy]
     rw [dotProduct_smul]
-    simp [Algebra.smul_def, Complex.mul_re]
+    simp [Complex.mul_re]
   rw [← hH, he]
   nlinarith
 
 private theorem ground38 : IsHalfFilledGroundState 3 (3/8) psi38 :=
   ground_from_sos (3/8) (-25/8) alpha38 B38 (hamiltonian 3 (3/8)) psi38
-    rfl (by convert sos38 using 1 <;> norm_num) alpha38_nonneg psi38_nonzero
-    psi38_number (by convert psi38_energy using 1 <;> norm_num)
+    rfl (by convert sos38 using 1; norm_num) alpha38_nonneg psi38_nonzero
+    psi38_number (by convert psi38_energy using 1; norm_num)
 
 private theorem ground58 : IsHalfFilledGroundState 3 (5/8) psi58 :=
   ground_from_sos (5/8) (-27/8) alpha58 B58 (hamiltonian 3 (5/8)) psi58
-    rfl (by convert sos58 using 1 <;> norm_num) alpha58_nonneg psi58_nonzero
-    psi58_number (by convert psi58_energy using 1 <;> norm_num)
+    rfl (by convert sos58 using 1; norm_num) alpha58_nonneg psi58_nonzero
+    psi58_number (by convert psi58_energy using 1; norm_num)
 
 private theorem reduce_three_one (X : FullOperator 6) (a b : Assignment 2) :
     reduce (by norm_num : 2 * 1 ≤ 2 * 3) X a b =
@@ -1028,8 +1017,81 @@ private theorem block_entropy (a p q : ℝ) (ha : 0 < a)
     mul_zero, sub_zero]
   ring
 
+private theorem entropy38 :
+    (matrixEntropy (fun a b => block (2/9) (5/18) (-1/6) (code2 a) (code2 b))).re =
+      2 * Real.log 3 - (4/3) * Real.log 2 := by
+  have h := block_entropy (2/9) (5/18) (-1/6) (by norm_num) (by norm_num) (by norm_num)
+  norm_num at h ⊢
+  rw [h]
+  simp (disch := norm_num) only [Real.log_div, Real.log_one]
+  have h4 : Real.log (4 : ℝ) = 2 * Real.log 2 := by
+    convert Real.log_pow (2 : ℝ) 2 using 1 <;> norm_num
+  have h9 : Real.log (9 : ℝ) = 2 * Real.log 3 := by
+    convert Real.log_pow (3 : ℝ) 2 using 1 <;> norm_num
+  rw [h4, h9]
+  ring
+
+private theorem entropy11 :
+    (matrixEntropy (fun a b => block (104/441) (233/882) (-5/42)
+      (code2 a) (code2 b))).re =
+      2 * Real.log 3 + 2 * Real.log 7 - (16/7) * Real.log 2 - (26/21) * Real.log 13 := by
+  have h := block_entropy (104/441) (233/882) (-5/42)
+    (by norm_num) (by norm_num) (by norm_num)
+  norm_num at h ⊢
+  rw [h]
+  simp (disch := norm_num) only [Real.log_div]
+  have h104 : Real.log (104 : ℝ) = 3 * Real.log 2 + Real.log 13 := by
+    calc
+      Real.log (104 : ℝ) = Real.log ((2 : ℝ)^3 * 13) := by norm_num
+      _ = _ := by rw [Real.log_mul (by norm_num) (by norm_num), Real.log_pow]; norm_num
+  have h441 : Real.log (441 : ℝ) = 2 * Real.log 3 + 2 * Real.log 7 := by
+    calc
+      Real.log (441 : ℝ) = Real.log ((3 : ℝ)^2 * 7^2) := by norm_num
+      _ = _ := by rw [Real.log_mul (by norm_num) (by norm_num), Real.log_pow, Real.log_pow]
+                  norm_num
+  have h64 : Real.log (64 : ℝ) = 6 * Real.log 2 := by
+    convert Real.log_pow (2 : ℝ) 6 using 1 <;> norm_num
+  have h169 : Real.log (169 : ℝ) = 2 * Real.log 13 := by
+    convert Real.log_pow (13 : ℝ) 2 using 1 <;> norm_num
+  rw [h104, h441, h64, h169]
+  ring
+
+private theorem entropy22 :
+    (matrixEntropy (fun a b => block (10/49) (29/98) (-3/14) (code2 a) (code2 b))).re =
+      2 * Real.log 7 - (4/7) * Real.log 2 - (10/7) * Real.log 5 := by
+  have h := block_entropy (10/49) (29/98) (-3/14) (by norm_num) (by norm_num) (by norm_num)
+  norm_num at h ⊢
+  rw [h]
+  simp (disch := norm_num) only [Real.log_div]
+  have h10 : Real.log (10 : ℝ) = Real.log 2 + Real.log 5 := by
+    convert Real.log_mul (by norm_num : (2 : ℝ) ≠ 0)
+      (by norm_num : (5 : ℝ) ≠ 0) using 1; norm_num
+  have h49 : Real.log (49 : ℝ) = 2 * Real.log 7 := by
+    convert Real.log_pow (7 : ℝ) 2 using 1 <;> norm_num
+  have h4 : Real.log (4 : ℝ) = 2 * Real.log 2 := by
+    convert Real.log_pow (2 : ℝ) 2 using 1 <;> norm_num
+  have h25 : Real.log (25 : ℝ) = 2 * Real.log 5 := by
+    convert Real.log_pow (5 : ℝ) 2 using 1 <;> norm_num
+  rw [h10, h49, h4, h25]
+  ring
+
+private theorem excess_positive :
+    0 < averagedExcess (by norm_num : 2 * 1 ≤ 2 * 3) psi38 psi58 := by
+  unfold averagedExcess
+  rw [reduced38, reduced11, reduced22, entropy38, entropy11, entropy22]
+  have hn : (7 : ℕ)^42 < 2^2 * 3^21 * 5^15 * 13^13 := by norm_num
+  have hr : (7 : ℝ)^42 < 2^2 * 3^21 * 5^15 * 13^13 := by exact_mod_cast hn
+  have hl := Real.log_lt_log (by positivity : (0 : ℝ) < 7^42) hr
+  simp (disch := positivity) only [Real.log_mul, Real.log_pow] at hl
+  norm_num at hl
+  linarith
+
 theorem result : ¬ claim := by
-  sorry
+  intro hc
+  have h := hc 3 1 (by norm_num) (by norm_num) (by norm_num)
+    (3/8) (5/8) (Or.inl (by norm_num)) psi38 psi58 ground38 ground58
+    (by rw [psi_overlap]; norm_num)
+  exact (not_le_of_gt excess_positive) h
 
 end
 end D5.S3.Quantum.Fermionic.PeriodicSshExcessPseudoEntropyRefutation
