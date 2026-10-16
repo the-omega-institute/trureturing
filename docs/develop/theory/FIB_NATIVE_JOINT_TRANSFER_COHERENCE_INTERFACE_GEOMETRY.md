@@ -1293,3 +1293,698 @@ remain active; this finite joint application is a bounded contribution.
 [ZG]: FIB_NATIVE_EXPLICIT_ZERO_TRANSFER_LOSS_GAP.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Actual coherent bypass and a universal Schur-replacement obstruction
+
+**Definition 9.1 (single-slot model and comparison).** In §§9–13, let
+$d\geq2$, $M_d=M_d(\mathbb C)$, $P_i=|i\rangle\langle i|$ and
+$E_{ij}=|i\rangle\langle j|$, with indices $1,\ldots,d$. These local
+indices do not rename the qutrit or five stopped modes of §1. A Schur
+channel is $\Lambda_C(X)=C\odot X$, where $C\succeq0$ and $C_{ii}=1$.
+Write $\mathsf{Sch}_d$ for this whole class of complex CPTP channels.
+In particular, both $\operatorname{id}$ and the dephasing channel
+$\Delta(X)=\sum_iX_{ii}P_i$ belong to it, and every member fixes every
+$P_i$.
+
+A supplied deterministic single-slot supermap has a finite or countable
+ACTUAL classical branch set $A$, finite positive integer dimensions
+$m_c$, common CP encoders $\mathcal E_c:M_d\to M_d\otimes M_{m_c}$,
+and common decoders $\mathcal D_c:M_d\otimes M_{m_c}\to M_d$ such that
+
+$$
+\mathcal S(\Phi)=\sum_{c\in A}\mathcal D_c
+       (\Phi\otimes\operatorname{id}_{m_c})\mathcal E_c,
+\qquad \sum_c\mathcal E_c^*(I_{dm_c})=I_d.
+\tag{JG.51}
+$$
+
+Every conditional decoder is TP on its ENTIRE input algebra, including
+off-code inputs. The encoder sum is TP; an individual encoder need
+not be TP. In the countable case the positive effect sums converge to
+$I_d$, and the CP channel sums have their corresponding norm limits.
+There is one use of the slot $\Phi$. All maps and flags are fixed
+independently of its input, and the identity of an unknown slot channel
+is not a classical input to the decoder.
+
+The bypass $M_{m_c}$ counts JOINTLY every input-dependent quantum
+system that can be accessed after the slot: stored specimen parts,
+controller or environment parts, returned systems, and later-accessible
+entanglement shares. A receiver's retained entanglement share belongs
+to this joint count. Independent blank ancillas supplied later are
+different. A discarded dilation system must remain inaccessible.
+The label $c$ is classical only if it is actually generated and retained
+as such; a coherent label is part of the quantum bypass. An abstract
+Kraus or Choi decomposition alone supplies no actual flag or permission
+to decode it. A passive inaccessible reference is allowed, with the
+identity acting on it throughout. All equations are complex-linear
+identities and retain every such amplification.
+
+Let $\mathfrak C_r$, $1\leq r\leq d$, denote the supermaps with a
+realization (JG.51), all nonzero branches satisfying $m_c\leq r$, and
+the exact fixing property
+
+$$
+\mathcal S(\Lambda)=\Lambda\quad(\Lambda\in\mathsf{Sch}_d).
+\tag{JG.52}
+$$
+
+Fixing Schur channels does not require that every output already be
+Schur. For a channel $T$, define its distance to the WHOLE Schur class by
+
+$$
+\delta(T)=\inf_{\Lambda\in\mathsf{Sch}_d}\|T-\Lambda\|_\diamond,
+\qquad
+\|L\|_\diamond=\sup_{k\geq1}\sup_{X\ne0}
+       \frac{\|(L\otimes\operatorname{id}_k)(X)\|_1}{\|X\|_1}.
+\tag{JG.53}
+$$
+
+Here $X$ ranges over all complex operators, not just states or Hermitian
+operators. This diamond norm is UNHALVED. It is an auxiliary channel
+comparison, distinct from (JG.7).
+
+**Theorem 9.2 (erasure, exact obstruction and fixed adverse slot).**
+Suppose (JG.51) fixes the identity channel. Then there are numbers
+$p_c\geq0$, $\sum_cp_c=1$, with
+
+$$
+\mathcal D_c\mathcal E_c=p_c\operatorname{id},\qquad
+\mathcal E_c^*(I)=p_cI.
+\tag{JG.54}
+$$
+
+These are actual input-independent branch probabilities. If $p_c=0$
+then $\mathcal E_c=0$; if $p_c>0$ then $\mathcal E_c/p_c$ is CPTP.
+For $\operatorname{Dep}_d(X)=\operatorname{tr}(X)I_d/d$ and
+$F(T)=d^{-1}\sum_i\operatorname{tr}(P_iT(P_i))$,
+
+$$
+F(\mathcal S(\operatorname{Dep}_d))
+       \leq\sum_cp_c\min(1,m_c/d).
+\tag{JG.55}
+$$
+
+If $\mathcal S(\operatorname{Dep}_d)$ is Schur, every positive branch
+has $m_c\geq d$. Thus an exact universal Schur-valued replacement that
+fixes $\operatorname{id}$ requires bypass dimension at least $d$ on
+EVERY positive branch, not merely on one branch or on average.
+
+If additionally $\mathcal S(\Delta)=\Delta$ and $m_c\leq r$ on every
+positive branch, the single CPTP slot
+
+$$
+K(X)=\frac{\operatorname{tr}(X)I_d-\Delta(X)}{d-1}
+\tag{JG.56}
+$$
+
+satisfies $\delta(\mathcal S(K))\geq2(d-r)/(d-1)$.
+
+Proof. Use the unnormalized Choi convention
+$J(\operatorname{id})=|\Omega\rangle\langle\Omega|$,
+$|\Omega\rangle=\sum_i|i,i\rangle$. The positive Choi matrices
+$J(\mathcal D_c\mathcal E_c)$ sum to this rank-one matrix.
+Testing any vector perpendicular to $\Omega$ forces every nonnegative
+summand to vanish there, so each summand is
+$p_c|\Omega\rangle\langle\Omega|$. This proves the first identity in
+(JG.54). TP of the FULL decoder gives its second identity by adjoints.
+The total effect gives $\sum_cp_c=1$. A CP map with zero effect is zero;
+division by a positive $p_c$ gives the claimed CPTP encoder. The same
+effect identity gives branch probability $p_c$ on every normalized
+input, also when entangled with a passive reference.
+
+For each positive branch define memory states, a full CPTP map and a
+POVM on $M_{m_c}$ by
+
+$$
+\tau_{ci}=\frac{\operatorname{tr}_{\rm slot}\mathcal E_c(P_i)}{p_c},
+\quad B_c(Y)=\mathcal D_c(I_d/d\otimes Y),
+\quad G_{ci}=B_c^*(P_i).
+\tag{JG.57}
+$$
+
+Each $\tau_{ci}$ is positive with trace one, and
+$\sum_iG_{ci}=I_{m_c}$. Since $\tau_{ci}\leq I_{m_c}$,
+$\sum_i\operatorname{tr}(G_{ci}\tau_{ci})\leq\sum_i\operatorname{tr}G_{ci}
+=m_c$. The same sum is at most $d$, since each term is a probability.
+The erased slot leaves exactly $I_d/d\otimes p_c\tau_{ci}$ before the
+decoder. Averaging proves (JG.55).
+
+If the erased-slot output is Schur, then
+$\sum_cp_cB_c(\tau_{ci})=P_i$. Positivity and purity force
+$B_c(\tau_{ci})=P_i$ on each positive branch. Consequently
+$\operatorname{tr}(G_{cj}\tau_{ci})=\mathbf1_{i=j}$: one POVM perfectly
+distinguishes $d$ memory states. The existing
+`finite_memory_history_capacity` theorem in
+[Finite Memory History Capacity][FMHC] applies with its number of states
+$N=d$ and its memory dimension equal to $m_c$, giving $d\leq m_c$.
+Its support argument is the same one needed here: the support of
+$\tau_{ci}$ lies in the $1$-eigenspace of $G_{ci}$ and in the kernels
+of $G_{cj}$ for $j\ne i$. These nonzero supports are pairwise orthogonal.
+This is a reuse of perfect-discrimination capacity, not a new capacity
+formula.
+
+For countably many branches, all preceding support tests are sums of
+nonnegative scalars with finite total. Once (JG.54) is known, the
+normalized branch maps are channels, so their contributions have norm
+bounded by their summable masses $p_c$. This also justifies the channel
+and amplified limits. Zero branches contribute nothing to any bound.
+
+The Kraus operators $|a\rangle\langle i|/\sqrt{d-1}$, $a\ne i$, prove
+that $K$ is CPTP on the full complex algebra. Moreover
+
+$$
+\operatorname{Dep}_d=\frac1d\Delta+\frac{d-1}{d}K,
+\qquad
+F(\mathcal S(K))=
+ \frac{dF(\mathcal S(\operatorname{Dep}_d))-1}{d-1}
+ \leq\frac{r-1}{d-1}.
+\tag{JG.58}
+$$
+
+For every Schur comparator $\Lambda$, input $P_i$ followed by the
+binary measurement $\{P_i,I-P_i\}$ gives
+
+$$
+\|\mathcal S(K)-\Lambda\|_\diamond
+ \geq\max_i2\bigl[1-\operatorname{tr}(P_i\mathcal S(K)(P_i))\bigr]
+ \geq2\bigl[1-F(\mathcal S(K))\bigr]
+ \geq\frac{2(d-r)}{d-1}.
+\tag{JG.59}
+$$
+
+This holds for every comparator, hence also for their infimum.
+$\square$
+
+## 10. One finite attainer for the full uniform and pointwise frontiers
+
+**Theorem 10.1 (sharp uniform memory frontier).** For every $d\geq2$
+and $1\leq r\leq d$, there is one finite-flag $\mathcal S_r\in
+\mathfrak C_r$ such that, for EVERY complex CPTP slot $\Phi$,
+
+$$
+\begin{aligned}
+\delta(\mathcal S_r(\Phi))
+ &=\|\mathcal S_r(\Phi)-\Theta(\Phi)\|_\diamond\\
+ &=\frac{2(d-r)}{d-1}\max_i
+       \bigl[1-\langle i|\Phi(P_i)|i\rangle\bigr],\\
+\inf_{\mathcal S\in\mathfrak C_r}\sup_{\Phi\ {\rm CPTP}}
+       \delta(\mathcal S(\Phi))
+ &=\inf_{\mathcal S\in\mathfrak C_r}\delta(\mathcal S(K))
+ =\epsilon_r:=\frac{2(d-r)}{d-1}.
+\end{aligned}
+\tag{JG.60}
+$$
+
+The infimum over the whole Schur class is attained by the existing
+comparator $\Theta(\Phi)$; the same $\mathcal S_r$ works for every
+$\Phi$, and the same $K$ is a worst case for every memory cap. No
+slot-dependent choice of realization or partition is required.
+
+Proof. Choose any surjection $f:\{1,\ldots,d\}\to\{1,\ldots,r\}$,
+and set $G_m=f^{-1}(m)$, $n_m=|G_m|>0$. On slot times bypass define
+
+$$
+V_f|i\rangle=|i,f(i)\rangle,\qquad
+R_0=V_f^*,\qquad
+R_{a,m,i}=\frac{|i\rangle\langle a,m|}{\sqrt{n_m}}
+ \quad(f(a)\ne m,\ i\in G_m).
+\tag{JG.61}
+$$
+
+Let $D_f(Y)=R_0YR_0^*+\sum_{a,m,i}R_{a,m,i}YR_{a,m,i}^*$.
+The first Kraus adjoint product is the code projection $V_fV_f^*$.
+For each wrong-code basis vector $|a,m\rangle$, the $n_m$ remaining
+adjoint products sum to its projection. Therefore
+
+$$
+R_0^*R_0+\sum_{a,m,i}R_{a,m,i}^*R_{a,m,i}=I_{dr},
+\qquad D_f(V_fXV_f^*)=X.
+\tag{JG.62}
+$$
+
+Thus $D_f$ is TP on all of $M_{dr}$, not just on the code. This reuses
+the full-TP recovery principle of §4 and of the existing private
+`recoveryKraus`/`recovery_complete` construction in
+[Schur Channel Mixed-Unitary Distance][SCMD]. At $r=d$, singleton
+groups give precisely that recovery, after relabelling memory indices.
+
+To specify ACTUAL finite flags, let $\omega=\exp(2\pi i/3)$,
+$z\in\{0,1,2\}^d$, $U_z=\operatorname{diag}(\omega^{z_i})$, and let
+$\pi$ range over all $d!$ permutations. Put $f_\pi(i)=f(\pi(i))$.
+Generate the classical flag $c=(\pi,z)$ uniformly, with
+$p_c=(d!3^d)^{-1}$, and supply
+
+$$
+\begin{aligned}
+\mathcal E_c(X)&=p_c(U_z\otimes I_r)V_{f_\pi}X
+                    V_{f_\pi}^*(U_z^*\otimes I_r),\\
+\mathcal D_c(Y)&=D_{f_\pi}\bigl((U_z^*\otimes I_r)Y
+                                      (U_z\otimes I_r)\bigr).
+\end{aligned}
+\tag{JG.63}
+$$
+
+These are common CP encoders with effect $p_cI_d$, and full CPTP
+conditional decoders. The bypass is $r$-dimensional on every branch;
+the uniformly generated flag is classical, not an uncounted coherent
+register. Equations (JG.51) and (JG.54) hold. A Schur slot multiplies
+each encoded $|i,f_\pi(i)\rangle\langle j,f_\pi(j)|$ by $C_{ij}$,
+and diagonal phases cancel. Recovery returns $C_{ij}E_{ij}$. Hence
+EVERY normalized branch, and their average $\mathcal S_r$, fixes every
+Schur channel.
+
+Here is the action on all complex matrix units. Define
+
+$$
+t_{ai}=\langle a|\Phi(P_i)|a\rangle,\qquad
+a_{ij}=\langle i|\Phi(E_{ij})|j\rangle\quad(i\ne j),\qquad
+\alpha=\frac{r-1}{d-1}.
+\tag{JG.64}
+$$
+
+For a coefficient $\langle a|\Phi(E_{ij})|b\rangle$, averaging the
+phases in (JG.63) multiplies it by the mean of
+$\omega^{z_i-z_j-z_a+z_b}$. This mean is nonzero exactly when
+$\mathbf e_i-\mathbf e_j-\mathbf e_a+\mathbf e_b=0$: each coordinate
+is between $-2$ and $2$, so divisibility by $3$ implies zero. For
+$i=j$ this requires $a=b$; for $i\ne j$ it requires $a=i,b=j$.
+Consequently the effective twirled slot has exactly the actions
+
+$$
+P_i\longmapsto\sum_at_{ai}P_a,\qquad
+E_{ij}\longmapsto a_{ij}E_{ij}\quad(i\ne j).
+\tag{JG.65}
+$$
+
+This is a complex-linear identity; in particular reverse coherences
+$E_{ij}\mapsto E_{ji}$ are removed. Third roots, rather than just real
+signs, are needed for this conclusion.
+
+For input $P_i$, a population arriving at $a$ is decoded to $P_a$ if
+$f_\pi(a)=f_\pi(i)$, and otherwise to
+$n_{f_\pi(i)}^{-1}\sum_{k\in G_{f_\pi(i)}}P_k$, with groups understood
+for $f_\pi$. For any fixed $a\ne i$, uniform permutation averaging gives
+the probability of correcting that population to $i$ as
+
+$$
+\sum_{m=1}^r\frac{n_m}{d}\frac{d-n_m}{d-1}\frac1{n_m}
+ =\frac{r-1}{d-1}=\alpha.
+\tag{JG.66}
+$$
+
+Thus $\mathcal S_r(\Phi)(P_i)$ is diagonal, has trace one, and its
+$i$-th entry is $t_{ii}+\alpha(1-t_{ii})$. Every off-diagonal $E_{ij}$
+is sent to $a_{ij}E_{ij}$, since its surviving encoded output is on
+the code. Unequal group sizes cause no loss in (JG.66).
+
+Identify the Schur comparator by
+
+$$
+\Theta(\Phi)(P_i)=P_i,\qquad
+\Theta(\Phi)(E_{ij})=a_{ij}E_{ij}\quad(i\ne j).
+\tag{JG.67}
+$$
+
+This is the existing private `Theta`/`Theta_entry` comparator in
+[SCMD], not a newly postulated Schur map. Its positivity is also visible
+directly: $A_{ij}=\langle i|\Phi(E_{ij})|j\rangle$, including
+$A_{ii}=t_{ii}$, is a principal compression of $J(\Phi)\succeq0$.
+Then $C=A+\operatorname{diag}(1-t_{ii})\succeq0$ has unit diagonal,
+since $0\leq t_{ii}\leq1$. Schur multiplication by $C$ is CPTP and
+equals (JG.67).
+
+Put $L=\mathcal S_r(\Phi)-\Theta(\Phi)$ and $D_i=L(P_i)$. This map
+kills all off-diagonal matrix units. Each $D_i$ is diagonal with
+nonnegative entries except possibly its $i$-th entry, and
+
+$$
+\|D_i\|_1=2(1-\alpha)(1-t_{ii}).
+\tag{JG.68}
+$$
+
+For any reference dimension and any complex operator $X$, write
+$X_{ii}=(\langle i|\otimes I)X(|i\rangle\otimes I)$. Diagonal pinching
+is an average of unitary conjugations, so its trace-norm contraction
+gives $\sum_i\|X_{ii}\|_1\leq\|X\|_1$. Consequently
+
+$$
+\begin{aligned}
+\|(L\otimes\operatorname{id})(X)\|_1
+ &=\left\|\sum_iD_i\otimes X_{ii}\right\|_1\\
+ &\leq\max_i\|D_i\|_1\sum_i\|X_{ii}\|_1
+ \leq\max_i\|D_i\|_1\|X\|_1.
+\end{aligned}
+\tag{JG.69}
+$$
+
+The input $P_i$ attaining the maximum saturates this bound. Against
+ANY Schur comparator, the same input and binary output measurement
+give the lower bound $2(1-\alpha)(1-t_{ii})$, since that comparator
+fixes $P_i$. This proves the pointwise infimum and its attainment in
+(JG.60), for arbitrary passive references and non-Hermitian operators.
+For an infinite passive reference, the same pinching inequality holds
+on trace-class operators, or follows by finite-rank approximation.
+
+Since $t_{ii}=0$ for $K$, it attains the pointwise worst value
+$\epsilon_r$. Theorem 9.2 supplies the matching lower bound for every
+$\mathcal S\in\mathfrak C_r$. This proves both minimax equalities.
+$\square$
+
+**Corollary 10.2 (erased-slot attainment and endpoints).** The same
+finite realization satisfies
+
+$$
+\delta(\mathcal S_r(\operatorname{Dep}_d))=2(1-r/d).
+\tag{JG.70}
+$$
+
+This is the minimum erased-slot distance for identity-fixing realizations
+with bypass cap $r$. At $r=1$, $\mathcal S_1$ is the finite diagonal-phase
+twirl of the slot, and $\epsilon_1=2$. At $r=d$, $\mathcal S_d=\Theta$
+and $\epsilon_d=0$. In particular $d=2$ gives uniform values $2,0$
+and erased-slot values $1,0$; $d=3$ gives uniform values $2,1,0$ and
+erased-slot values $4/3,2/3,0$.
+
+Proof. For $\operatorname{Dep}_d$, all $t_{ii}=1/d$, so (JG.60) gives
+(JG.70). Conversely (JG.55) and the measurement argument of (JG.59),
+now directly at the erased slot, give at least $2(1-r/d)$ even without
+fixing $\Delta$. At $r=1$ the sole group contains all indices, $V_f$
+simply appends a fixed scalar memory and the decoder is the inverse
+on the entire slot space. Thus the only surviving average is the
+finite phase twirl. At $r=d$ every group is a singleton, all wrong
+populations are corrected, and (JG.67) gives $\Theta$.
+The old unaveraged $r=1$ code construction would instead leave every
+slot unchanged. The phase-averaged $\mathcal S_1$ is not that identity
+supermap: for example, it removes a swap slot's reverse coherence.
+$\square$
+
+## 11. The actual high-memory probability frontier
+
+**Corollary 11.1 (sharp actual branch-mass tradeoff).** Fix
+$1\leq r<d$ and $0\leq q\leq1$. Consider all-Schur-fixing supermaps
+with a supplied finite or countable realization (JG.51) whose actual
+high-memory mass is
+
+$$
+h_r=\sum_{c:m_c>r}p_c\leq q.
+\tag{JG.71}
+$$
+
+There is no upper cap on these high dimensions other than their stated
+finite values. The uniform minimax distance for this class, and its
+minimax distance at the fixed slot $K$, both equal
+
+$$
+\epsilon_{r,q}=\frac{2(d-r)}{d-1}(1-q).
+\tag{JG.72}
+$$
+
+One common finite attainer is
+$\mathcal S_{r,q}=(1-q)\mathcal S_r+q\Theta$, with an ACTUAL independent
+classical flag selecting the two circuits. It also satisfies, for every
+$\Phi$,
+
+$$
+\delta(\mathcal S_{r,q}(\Phi))
+ =\|\mathcal S_{r,q}(\Phi)-\Theta(\Phi)\|_\diamond
+ =\epsilon_{r,q}\max_i(1-t_{ii}).
+\tag{JG.73}
+$$
+
+Proof. Theorem 9.2 gives the actual probabilities, not a freely selected
+ensemble of the output Choi matrix. Its dimension bound implies
+
+$$
+F(\mathcal S(\operatorname{Dep}_d))
+ \leq\frac rd(1-h_r)+h_r.
+\tag{JG.74}
+$$
+
+Use $\mathcal S(\Delta)=\Delta$ and (JG.58)–(JG.59) to obtain
+$\delta(\mathcal S(K))\geq\epsilon_r(1-h_r)
+\geq\epsilon_r(1-q)$. This applies to the actual finite or countable
+branch set, including high branches larger than $d$.
+
+For attainment use (JG.63) with memory $r$ on the low flag, and its
+$d$-dimensional $\Theta$ endpoint on the high flag. The resulting
+high-memory probability is exactly $q$ on every input, also with
+references. Both circuits have the same off-diagonal coefficients;
+their difference from $\Theta$ is $(1-q)L$. Equations (JG.68)–(JG.69)
+and the same basis measurement prove (JG.73), and $K$ attains (JG.72).
+At $q=0$ or $q=1$ omit the zero-probability circuit. The lower bound
+at $K$ also shows that this same supermap cannot have another allowed
+realization with high-memory mass smaller than $q$. At $q=1$, the
+exact obstruction forces every positive branch of $\Theta$ to have
+dimension at least $d$. These dimensions and probabilities are
+therefore not justified merely by padding a Kraus representation.
+$\square$
+
+## 12. The four original states as a conditional repair calibration
+
+**Proposition 12.1 (source-preserving repair on the embedded qutrit).**
+Fix ANY ONE $y\in\{5,16,27\}$, and retain the four original states
+$U\rho_yU^*$ of (JG.5), $U=\operatorname{diag}(e,n,1)$.
+If a proposed CPTP repair $T:M_3\to M_3$ fixes these four densities
+exactly, then $T=\operatorname{id}_{M_3}$. More generally, if a full
+five-mode CPTP repair $\widehat T$ fixes their embedded densities, then
+
+$$
+\widehat T(\iota X\iota^*)=\iota X\iota^*
+                  \quad\hbox{for every }X\in M_3.
+\tag{JG.75}
+$$
+
+This conclusion concerns only the embedded qutrit support $V$, not
+identity on the other two modes or on their cross-support coherences.
+It also holds after passive reference amplification.
+
+Consequently, suppose a proposed single-slot universal repair on that
+support has $T=\mathcal S(\operatorname{id})$ and is source-preserving
+in this exact sense. If it takes EVERY CPTP slot to a Schur channel,
+then every positive actual bypass branch has $m_c\geq3$. If the proposed
+repair instead satisfies the all-Schur-fixing hypothesis, a cap
+$r=1,2,3$ has sharp auxiliary uniform distances $2,1,0$, respectively.
+The latter quantitative lower bound uses the ADDITIONAL premise
+$\mathcal S(\Delta)=\Delta$; source calibration alone does not imply it.
+
+Proof. In the ordered basis $(+,-,2)$ put
+$a=\sqrt{y/128}$, $b=\sqrt{(64-y)/128}$, $c=1/\sqrt2$ and
+$\psi_{e,n}=(ea,nb,c)$. These are normalized and all $a,b,c$ are
+positive. The signed sums are
+
+$$
+\sum_{e,n}\psi_{e,n}=4c|2\rangle,\qquad
+\sum_{e,n}e\psi_{e,n}=4a|+\rangle,\qquad
+\sum_{e,n}n\psi_{e,n}=4b|-\rangle.
+\tag{JG.76}
+$$
+
+They therefore span $\mathbb C^3$. Flipping only $e$, only $n$, or
+both signs gives the respective inner products
+
+$$
+1-y/64,\qquad y/64,\qquad0.
+\tag{JG.77}
+$$
+
+The two single-flip overlaps are strictly positive at every supplied
+height, and the nonorthogonality graph is the connected four-cycle.
+Mayer–Knill, *Quantum process fidelity bounds from sets of input states*,
+[arXiv:1805.04491v1][MK], §V, Theorem 1, is the exact
+`literature-attested` rigidity used here: spanning and connectivity
+make the identity the unique CPTP map fixing those pure densities.
+No extra tomographically complete preparations are assumed.
+
+For the support assertion, the same theorem's Stinespring argument
+applies to an isometry $W$ with input $\mathbb C^3$ and output the
+five-mode space times its environment. Purity of each fixed output gives
+$W\psi_s=\iota\psi_s\otimes\eta_s$. Inner-product preservation on
+each nonorthogonality edge forces $\langle\eta_s,\eta_t\rangle=1$,
+so all environment vectors are the same. Equation (JG.76) then gives
+$Wx=\iota x\otimes\eta$ on all $\mathbb C^3$, proving (JG.75) on every
+complex matrix and every reference extension. This proof also covers
+an output algebra with additional sectors: those sectors have zero
+mass on the fixed pure outputs.
+
+Apply Theorem 9.2 to $T=\mathcal S(\operatorname{id})$ for the exact
+universal Schur-valued repair. For the stronger uniform bound use
+Theorem 10.1 under (JG.52). The existing
+`connected_probability_preserving_identity` in
+[Probe Component Rigidity][PCR] has the DIFFERENT hypothesis of
+preserving probe probabilities for all density inputs. That hypothesis
+is not substituted for the four source-state fixing conditions here.
+$\square$
+
+## 13. Mixed-unitary and literature limitations of the attainer
+
+**Proposition 13.1 (an intermediate attainer need not preserve mixed
+unitarity).** For $d=3,r=2$, take partition sizes $2,1$ in (JG.61), and
+let the slot be $\operatorname{Ad}_U$, where $U$ swaps basis vectors
+$1,2$ and fixes $3$. Then both the permutation-averaged code circuit
+without phase averaging and $\mathcal S_2$ have population columns
+
+$$
+\begin{pmatrix}1/2\\1/3\\1/6\end{pmatrix},\qquad
+\begin{pmatrix}1/3\\1/2\\1/6\end{pmatrix},\qquad
+\begin{pmatrix}0\\0\\1\end{pmatrix}.
+\tag{JG.78}
+$$
+
+Their outputs on $I_3$ are $\operatorname{diag}(5/6,5/6,4/3)$, so the
+output channels are nonunital and cannot be mixed unitary, although
+the input slot is unitary. Phase averaging preserves this population
+counterexample, but changes the full output channel.
+
+Proof. There are three equally likely choices of singleton. For input
+$P_1$, if the singleton is $3$, the erroneous population at $2$ remains
+at $2$; if it is $1$, recovery returns it to $1$; if it is $2$, recovery
+distributes it equally over $1,3$. This gives the first column in
+(JG.78). Interchanging $1,2$ gives the second. The fixed input $P_3$
+is always recovered as $P_3$. Diagonal phases cannot change these
+population columns. Their sum gives the stated nonunitality, whereas
+any convex mixture of unitary conjugations preserves $I_3$.
+
+For the unaveraged circuit, $E_{12}$ becomes $E_{21}$ precisely when
+$1,2$ are in the same group, which occurs with probability $1/3$;
+otherwise the code and complement Kraus terms kill it. Thus that
+output is $E_{21}/3$. For the phase-averaged circuit it is zero by
+(JG.65). The population defect survives, not equality of the whole
+two channels. A future application requiring mixed-unitary preservation
+needs a further construction and proof; it is not a hypothesis or
+conclusion of Theorem 10.1. $\square$
+
+The construction and sharp constants in §§9–11 are `repo-derived`
+applications of the actual slot factorization, perfect-discrimination
+capacity and the existing $\Theta$ recovery. Finite Kraus circuits,
+rank-one Choi support, phase twirling, Schur positivity and trace-norm
+pinching are mature ingredients, not new generic mechanisms. The
+calibration in Proposition 12.1 is an application of Mayer–Knill's
+known theorem, with the supplied source vectors and support mapping.
+
+The relevant comparison with Puchała, Korzekwa, Salazar, Horodecki and
+Życzkowski, *Dephasing superchannels*, [arXiv:2107.06585v2][DS], is
+bounded to Definition 3 / (24), Proposition 1 / (26), and Proposition 2 /
+(40)–(51). Their defining condition preserves EVERY basis transition
+probability of EVERY slot channel:
+
+$$
+\langle a|\Xi(\Phi)(P_i)|a\rangle
+       =\langle a|\Phi(P_i)|a\rangle\quad(\Phi,a,i).
+\tag{JG.79}
+$$
+
+Proposition 1 identifies that class with Choi Schur multiplication by
+a positive unit-diagonal correlation matrix with identical diagonal
+$d\times d$ blocks. Proposition 2 supplies controlled unitary
+pre/postprocessing with a $d^2$-dimensional ancillary system. That
+realization is an upper bound for their class, not an exact memory
+frontier for (JG.52).
+
+Indeed, for $r>1$, $K$ has zero correct population, while
+$\mathcal S_r(K)$ has correct population $(r-1)/(d-1)>0$ by (JG.66).
+Hence this attainer does not satisfy (JG.79). Conversely,
+$\Phi\mapsto\Delta\Phi\Delta$ satisfies (JG.79) but sends
+$\operatorname{id}$ to $\Delta$, so it does not satisfy (JG.52).
+The two hypothesis classes can intersect: $\mathcal S_1$ preserves
+all transitions by (JG.65) and fixes every Schur channel. Thus different
+hypotheses do not imply disjoint classes. The cited propositions are
+not an exact hit for (JG.60); this comparison asserts neither exhaustive
+non-overlap with that paper nor worldwide priority.
+
+For $r=1$, the actual CP pre-instrument and conditional full CPTP
+postprocessing in (JG.51) have the mature classically correlated
+supermap form in Rosset–Buscemi–Liang, *A resource theory of quantum
+memories and their faithful verification with minimal assumptions*,
+[arXiv:1710.04710v2][RBL], §II, (2). Their free classical records and
+randomness are consistent with the actual finite flags here, and do
+not grant free quantum bypass. That source is not cited as proving the
+capped-memory constants (JG.60) or (JG.72). None of these ordinary
+applications constitutes a new Lean declaration or kernel result.
+
+## 14. Correspondence to the unchanged original complete instrument
+
+**Definition 14.1 (application and resource correspondence).** The
+application is an obstruction to a SPECIFIED universal source-preserving
+Schur-replacement route. Its original input support is the calibrated
+$V=\iota\mathbb C^3$ of (JG.4); its four calibration states at one
+height are exactly the four phase/parity choices in (JG.5), with
+$x=y/256$, $e=(-1)^{\beta/\pi}$, $n=e(-1)^m$ and $en=(-1)^m$.
+Proposition 12.1 supplies identity on that support only if the proposed
+repair actually fixes those densities. The original simulator in (JG.7)
+must instead produce different live successors $UB_yU^*$ and full
+failure laws. Source fixing is therefore an EXTRA condition on a repair,
+not a consequence of being an admissible simulator.
+
+The correspondences and their limits are as follows.
+
+| Quantity or premise | Exact role and retained boundary |
+| --- | --- |
+| $\operatorname{Dep}_d$, $K$, $\Delta$ | Auxiliary CPTP slot channels for the erasure and uniform tests; none replaces the twelve original source histories or their target instrument. |
+| $m_c$, $r$ | Joint coherent dimension of the systems bypassing the slot. The slot itself still carries a $d$-dimensional system. Even at $r=1$, $V_f$ retains a $d$-dimensional code in slot times bypass; this is not a dimension-one acquisition of the original specimen. |
+| $p_c$, $h_r$, $q$ | Actual input-independent probabilities forced by identity fixing in (JG.54). They are not source priors, reach probabilities, success-conditioned masses, or the original history-dependent acquisition costs. |
+| (JG.23) and the joint-record frontier | The original actual acquisition retains its ENTIRE joint payload in each fibre. The sharp designated binary-record/acquisition results in [Joint Record Payload][JRP], §§29–40, and the earlier bounds in CG21–28 remain credited results; (JG.72) is a different slot-resource frontier. |
+| $\delta$ and $\epsilon_r$ | Unhalved diamond distances to the whole TP Schur class, valid on the full complex algebra with passive references. They are not numerical lower bounds on (JG.7) and do not determine its optimum or optimal resource cost. |
+| $\mathcal S(\operatorname{id})$ calibration | Exact four-density fixing forces identity only on the embedded qutrit. The sharp $K$ bound also needs $\mathcal S(\Delta)=\Delta$, supplied here by fixing ALL Schur channels. |
+| $\Theta$, full TP recovery and capacity | Existing ingredients reused with the displayed parameter substitutions. A private source declaration is evidence of the existing mathematical construction, not a newly compiled cross-module application. |
+
+The original objective stays the maximum over all twelve histories of
+HALF the FULL cq trace norm (JG.7): coherent live output, all five
+separate ideal label laws $w_\ell f_y(t)dt$ at exact elapsed time
+$t\in[0,1]$, and every singular, abort, rejection, wrong-support and
+zero-ideal sector. There is no survival division, acceptance
+normalization, time binning, marginal substitution or conversion of an
+unhalved auxiliary norm to that error. The original processor remains
+one history-independent CPTP map on all complex inputs with the common
+calibrated five-mode extension and metadata of Definition 1.4. No
+readable history, source or reach prior, helper, copy, retry, callback,
+reset, hidden environment/control input or permitted quantum bypass is
+inferred from this auxiliary construction. The inherited $E_\star$,
+optimizer conclusions and original resource frontiers are not improved
+by (JG.60) or (JG.72).
+
+**Open problem 14.2 (a faithful reduction and actual operation bridge).**
+To use a Schur replacement as a reduction of (JG.7), one must supply
+a transformation of the FULL original instrument that preserves all
+twelve target comparisons, contracts the original full-cq errors, and
+does not increase jointly counted ACTUAL acquisition cost. No such
+transformation follows from (JG.51)–(JG.79). Theorems 9.2 and 10.1
+instead exclude or quantify the specified universal replacement under
+their explicit identity, dephasing and memory hypotheses. A specialized
+non-source-preserving route is not excluded by the four-state argument.
+
+Any physical use of (JG.63) must additionally supply its acquisition,
+actual classical flags, calibrated coherent retention and controlled
+full TP decoding under the original permissions. In
+`OriginalControlComposition.OriginalControl`, nonnegative finite
+duration, continuity, strict domain, bounded phase variation and the
+absolute-continuity or finite-piecewise-$C^1$ alternative are geometric
+path conditions. They construct no actuator for these maps.
+[Probability/Phase Transport][PPT], Definition 10.1, has the actual
+fields $P=\partial_\kappa$ and
+$Q=\sum_aw_a(\kappa)\partial_{h_a}$; on the double wall its Theorem 8.7
+gives $[P,Q]=-(\partial_u+\partial_v)/r_b\ne0$, where $r_b=1-Z$.
+Probability-changing, noncommuting controls prevent treating the
+conditional diagonal/Schur closure as an exhaustive original menu.
+These path facts alone supply neither the proposed bypass nor a global
+native impossibility theorem.
+
+The same aligned original clock must accommodate acquisition and
+decoding with no added execution time, no later positive-carrier action
+after the first absorbing failure, and terminal live output at time $1$.
+Old stopped archives, source/preparation/epoch identity, permissions and
+controller updates remain part of the complete branches. A sampled
+timestamp or internal failure-destined flag is not a physical first
+absorbing event. The mathematical slot frontier supplies no native
+realization, original optimizer/resource improvement, or completion of
+the continuing original programme.
+
+[FMHC]: ../../../D5/S3/Quantum/Measurements/FiniteMemoryHistoryCapacity.lean
+[SCMD]: ../../../D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.lean
+[PCR]: ../../../D5/S3/Quantum/Reduction/ProbeComponentRigidity.lean
+[MK]: https://arxiv.org/pdf/1805.04491v1
+[DS]: https://arxiv.org/pdf/2107.06585v2
+[RBL]: https://arxiv.org/pdf/1710.04710v2
+[JRP]: FIB_NATIVE_COMPLETE_CONTINUATION_JOINT_RECORD_PAYLOAD.md
+[PPT]: AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
+
+## 追加锚（本行以下为增补区）

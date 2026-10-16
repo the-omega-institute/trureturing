@@ -169,7 +169,7 @@ public sealed class GenericAtomizerTests
     /// claim of its own. The header row names columns, not propositions, and is not one.
     /// </summary>
     [Fact]
-    public void EachDataRowOfATableIsItsOwnClaimAndTheHeaderRowIsNot()
+    public void TableRowsRemainWithTheirSectionAndColumnLegend()
     {
         var document = Atomize(
             "## §3 词典\n\n| 条目 | 内容 | 分型 |\n|---|---|---|\n"
@@ -177,10 +177,10 @@ public sealed class GenericAtomizerTests
             + "| 极点 = 相变 | Hagedorn 于 β=1 | 定理级 |\n"
             + "| Sarnak 熵分界 | μ ⟂ 零拓扑熵系统 | open |\n");
 
-        // The section keeps an atom of its own because its body is not empty: it holds the
-        // title and the column legend, which is what the section itself says. What it no
-        // longer holds is the eleven propositions that used to be folded into it.
-        Assert.Equal(4, document.Claims.Length);
+        var atom = Assert.Single(document.Claims);
+        var text = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
+        Assert.Contains("| 条目 | 内容 | 分型 |", text, StringComparison.Ordinal);
+        Assert.Contains("| Sarnak 熵分界 | μ ⟂ 零拓扑熵系统 | open |", text, StringComparison.Ordinal);
     }
 
     /// <summary>

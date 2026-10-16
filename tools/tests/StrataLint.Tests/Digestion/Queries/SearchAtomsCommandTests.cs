@@ -129,8 +129,7 @@ public sealed class SearchAtomsCommandTests
     public void TextSearchUsesOnlyTheSelectedTheoryAndReturnsMatchingAtoms()
     {
         var fixture = Create();
-        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
-            fixture.Atomized.Claims.Select(atom => new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)))), null);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), fixture.RawSnapshot(), null);
         var console = new BufferedConsole();
 
         var exit = CliApplication.Run(["search-atoms", "--source", "docs/source.md", "--text", "Middle"],
