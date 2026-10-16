@@ -28,18 +28,18 @@ def U (w : Word) : Prop := W w ∧ ¬ S w
 def Q (w : Word) : Prop := ∃ u v, w = pairWords u v ∧ U u ∧ S v
 
 def trueWord : Word := formulaWord []
-def falseWord : Word := formulaWord [[]]
+def falseWord : Word := formulaWord [.empty]
 
 def repair (fallback w : Word) : Word := if (Unrestricted.readWord w).isSome then w else fallback
 
 private theorem read_true : Unrestricted.readWord trueWord = some [] :=
   (Unrestricted.word_codec trueWord []).mpr ⟨by simp [Unrestricted.Canonical], rfl⟩
-private theorem read_false : Unrestricted.readWord falseWord = some [[]] :=
-  (Unrestricted.word_codec falseWord [[]]).mpr ⟨by simp [Unrestricted.Canonical], rfl⟩
+private theorem read_false : Unrestricted.readWord falseWord = some [.empty] :=
+  (Unrestricted.word_codec falseWord [.empty]).mpr ⟨by simp [Unrestricted.Canonical], rfl⟩
 private theorem sat_true : S trueWord := ⟨[], read_true, (fun _ => false), rfl⟩
 private theorem not_sat_false : ¬ S falseWord := by
   rintro ⟨F, hF, a, ha⟩
-  have h : F = [[]] := Option.some.inj (hF.symm.trans read_false)
+  have h : F = [.empty] := Option.some.inj (hF.symm.trans read_false)
   subst F
   simp [evaluate, Std.Sat.CNF.Clause.eval] at ha
 
@@ -55,7 +55,7 @@ theorem repair_laws (w : Word) :
     have hnW : ¬ W w := by rintro ⟨F,hF⟩; simp [hr] at hF
     have hnS : ¬ S w := by rintro ⟨F,hF,_⟩; simp [hr] at hF
     simp [repair, hr, U, hnW, hnS, not_sat_false, sat_true]
-    exact ⟨[[]], read_false⟩
+    exact ⟨[.empty], read_false⟩
   | some F =>
     have hw : W w := ⟨F, hr⟩
     simp [repair, hr, U, hw]
