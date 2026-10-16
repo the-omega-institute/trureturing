@@ -6,7 +6,7 @@ Actual supported modular coordinates are shared by the original DPI and fixed Pe
 
 **Theorem 1.1 (The real quadratic form of a real diagonal matrix).**
 
-$$\forall n \in \mathit{Type} u,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall d \in n \to \mathbb{R},\; \forall y \in n \to \mathbb{C},\; (\operatorname{dotProduct}\left(\operatorname{star}\left(y\right), \mathit{Matrix}.\mathit{mulVec}\left(\mathit{Matrix}.\mathit{diagonal}\left(\mathit{fun} i \mapsto (\operatorname{d}\left(i\right):\mathbb{C})\right), y\right)\right)).\mathit{re} = \sum_{i} \operatorname{d}\left(i\right) \cdot \left\lVert \operatorname{y}\left(i\right) \right\rVert^{2}$$
+$$\forall n \in \mathit{Type} u,\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall d \in n \to \mathbb{R},\; \forall y \in n \to \mathbb{C},\; (\operatorname{dotProduct}\left(\operatorname{star}\left(y\right), \mathit{Matrix}.\mathit{mulVec}\left(\mathit{Matrix}.\mathit{diagonal}\left(\mathit{fun} i \mapsto (d\left(i\right):\mathbb{C})\right), y\right)\right)).\mathit{re} = \sum_{i} d\left(i\right) \cdot \left\lVert y\left(i\right) \right\rVert^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Divergence/CanonicalRelativeModularModel.diagonal_quadratic_form` (`✓ std3`). ∎
 
