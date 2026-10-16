@@ -542,8 +542,8 @@ private theorem flag_transfer
     exact flag_psd (hQ.smul (le_of_lt (div_pos hc hδ))) Matrix.PosSemidef.zero
       (hτ.1.smul (div_nonneg hb (le_of_lt hδ)))
   have hτrt : rt τ = 1 := by
-    have ht := congrArg Complex.re hτ.2
-    unfold rt RHLinalg.rtrace; simpa using ht
+    unfold rt RHLinalg.rtrace
+    rw [hτ.2, RCLike.one_re]
   have hρ'trace : ρ'.trace = 1 := by
     unfold ρ'
     rw [trace_flag, trace_smul_psd hP c, trace_smul_psd hτ.1 a,
@@ -576,8 +576,7 @@ private theorem flag_transfer
           rw [smul_smul]
           have h : δ * (c / δ) = c := mul_div_cancel₀ _ (ne_of_gt hδ)
           rw [h]
-          ext i j
-          simp [sub_eq_add_neg]
+          exact (smul_sub c P Q).symm
         _ = c • H := congrArg (fun X => c • X) hHdecomp.symm
     rw [hfirst]
     rw [show a • τ - δ • (0 : Matrix A A ℂ) = a • τ by simp]
@@ -585,8 +584,7 @@ private theorem flag_transfer
         rw [smul_smul]
         have h : δ * (b / δ) = b := mul_div_cancel₀ _ (ne_of_gt hδ)
         rw [h]
-        ext i j
-        simp]
+        rw [zero_sub, neg_smul]]
   have hE : E δ ρ' σ' = c * E γ ρ σ + a := by
     rw [show E δ ρ' σ' = posTrace (flag (c • H) (a • τ) (-b • τ)) by
       unfold E
