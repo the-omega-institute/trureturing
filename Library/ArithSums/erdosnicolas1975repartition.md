@@ -697,6 +697,64 @@ uniform way to verify all the remaining pairs. It is therefore a finite
 or subpolynomial reduction of the unresolved joint problem, rather than an
 RH proof.
 
+### A same-source friable-core count
+
+The large-friable-component estimate recorded in
+[the Tenenbaum--Wang interface](../Scale/tenenbaumwang2026largefriablecomponent.md)
+can be applied to the same reduced pair, rather than to a separately
+optimized integer. Keep the original-window conditions (TC.6), put
+$g_0=\gcd(N,C)=C/v$, and choose $y$ at least as large as every prime factor
+of $C$. Since $g_0\mid N$ and $g_0$ is $y$-friable,
+
+$$
+N_y\ge g_0=\frac Cv.
+$$
+
+Therefore, for any $L\ge0$,
+
+$$
+E_a(N)=\log(uv)\le L
+\quad\Longrightarrow\quad
+v\le e^L
+\quad\Longrightarrow\quad
+N_y\ge Ce^{-L}.
+$$
+
+Let $z=Ce^{-L}$ and let $x$ satisfy $X_+\le x$ and $z\le x/2$.
+Whenever
+
+$$
+\max\{2,\log z\}\le y\le z,
+$$
+
+Tenenbaum--Wang's Theorem 1 gives the independent population bound
+
+$$
+\boxed{
+\#\{N\text{ in the original window}:E_a(N)\le L\}
+\le
+\min\{\tau(C),\Theta(x,y,z)\},
+}
+\tag{TC.12}
+$$
+
+where
+
+$$
+\Theta(x,y,z)
+=x\exp\!\left(-\nu\log\!\bigl(\nu\log(3\nu)\bigr)+O(\nu)\right),
+\qquad
+\nu=\frac{\log z}{\log y}.
+$$
+
+The left-hand set still carries $Cu\equiv v\pmod V$ and the original
+multiplier window; the friable estimate only supplies a second upper bound
+on its cardinality. It does not bound the complete prime-power weight of
+that same $N$, the CA defect $D^*(a)$, or the signed Robin tail. Thus
+(TC.12) is a reusable sparse-counting refinement of (TC.11), while the
+pointwise signed condition (TC.10) remains the unresolved step needed for
+an all-candidate conclusion.
+
 ## Charge the actual removals before bounding additions
 
 The classical layer identity also permits a stronger pointwise use of the

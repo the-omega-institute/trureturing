@@ -8,6 +8,8 @@ url: https://github.com/HEPLean/PhysLean/blob/b9043cc548ef6d63a28454cf3a57fb12a0
 claim: A real Hilbert eigenbasis gives a closable finite-span operator with self-adjoint closure.
 strata_touched:
   - D5/S3/Quantum/Analysis/EigenbasisClosure
+  - D5/S3/Quantum/Analysis/DiagonalHeat
+  - D5/S3/Quantum/Analysis/DiagonalEnergy
 license: Apache-2.0
 triage: anchor
 ---
@@ -35,3 +37,10 @@ coordinates. It allows zero and repeated real eigenvalues and an arbitrary
 basis index type. The supporting arguments are local in one theorem.
 The original copyright and grant headers are retained verbatim.
 No originality is claimed for this construction.
+
+The diagonal Hamiltonian consumer constructs the algebraic finite-span map
+using the genuine linearly independent representation, then takes this actual
+closure. Its full graph supplies the domain used by the strong heat generator
+and both resolvent inverse identities. The bounded resolvent energy caps belong
+to that same closure; no common-reference or original state-family conclusion
+is included.

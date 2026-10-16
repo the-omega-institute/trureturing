@@ -311,7 +311,7 @@ def claim : Prop := ∀ d : ℕ, 2 ≤ d → ∀ m n : ℕ,
     (∀ rho : DensityState (Fin d × Fin d),
       B_E G (CStarMatrix.ofMatrix.symm rho.1) ≥ B_E E (CStarMatrix.ofMatrix.symm rho.1))
 
-private theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
+theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     [Fintype N] [DecidableEq N]
     (V : Matrix M N ℂ) (hV : Vᴴ * V = 1) (X : Matrix N N ℂ) :
     traceNorm (V * X * Vᴴ) = traceNorm X := by
@@ -337,7 +337,7 @@ private theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     (CFC.sqrt (Xᴴ * X)).trace.re
   rw [hgram, hsqrt, Matrix.trace_mul_cycle, hV, Matrix.one_mul]
 
-private theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
+theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (c : ℝ) (hc : 0 ≤ c) :
     traceNorm ((c : ℂ) • X) = c * traceNorm X := by
   have htr (U : unitaryGroup n ℂ) :

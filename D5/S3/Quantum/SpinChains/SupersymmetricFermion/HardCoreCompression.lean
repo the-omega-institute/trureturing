@@ -116,6 +116,62 @@ theorem fullD_hardCore_iff {N : ℕ} (i : Fin N) (s t : Assignment N)
     rw [hst]
     exact erase_is_hard_core ⟨t,ht⟩ i
 
+theorem fullC_entry {N : ℕ} (j : Fin N) (s t : Assignment N) :
+    fullC j s t =
+      if t j = true ∧ s = Function.update t j false
+      then (-1 : ℂ) ^ prefixCount t j else 0 := by
+  let tensorProduct {N : ℕ} (w : Fin N → Local) : FullOperator N := tensorOp w
+  have tensorOp_entries {N : ℕ} (w : Fin N → Local) :
+      tensorProduct w = (fun s t => ∏ i : Fin N, w i (s i) (t i)) := by
+    ext s t
+    simp [tensorProduct, D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.tensorOp,
+      Matrix.submatrix_apply]
+  have spinZ_def : spinZ = Matrix.diagonal (fun b => if b then (-1 : ℂ) else 1) := by
+    ext s t
+    cases s <;> cases t <;> rfl
+  classical
+  change tensorProduct (fermionWord j) s t = _
+  rw [tensorOp_entries]
+  change (∏ i : Fin N, fermionWord j i (s i) (t i)) = _
+  by_cases h : t j = true ∧ s = Function.update t j false
+  · rw [if_pos h]
+    have he : (∏ i : Fin N, fermionWord j i (s i) (t i)) =
+        ∏ i : Fin N, if i < j ∧ t i = true then (-1 : ℂ) else 1 := by
+      apply Finset.prod_congr rfl
+      intro i _hi
+      rw [h.2]
+      by_cases hij : i < j
+      · have hne : i ≠ j := ne_of_lt hij
+        simp only [fermionWord, if_pos hij, Function.update_of_ne hne,
+          spinZ_def, qubitZ, finTwoEquiv, Matrix.diagonal_apply_eq]
+        cases t i <;> simp [hij]
+      · by_cases heq : i = j
+        · subst i
+          simp [fermionWord, Matrix.single, h.1]
+        · simp [fermionWord, hij, heq, Matrix.one_apply, Function.update_of_ne heq]
+    rw [he, ← Finset.prod_filter]
+    simp [prefixCount, Finset.prod_const]
+  · rw [if_neg h]
+    by_cases ht : t j = true
+    · have hs : s ≠ Function.update t j false := by tauto
+      have hx : ∃ i, s i ≠ Function.update t j false i := by
+        by_contra hh
+        push Not at hh
+        exact hs (funext hh)
+      obtain ⟨i,hi⟩ := hx
+      apply Finset.prod_eq_zero (Finset.mem_univ i)
+      by_cases heq : i = j
+      · subst i
+        simp only [Function.update_self] at hi
+        have hsi : s j = true := by cases hsj : s j <;> simp_all
+        simp [fermionWord, Matrix.single, hsi]
+      · have hst : s i ≠ t i := by simpa only [Function.update_of_ne heq] using hi
+        by_cases hij : i < j
+        · simp only [fermionWord,if_pos hij,spinZ_def,Matrix.diagonal_apply,hst,if_false]
+        · simp [fermionWord, hij, heq, hst, Matrix.one_apply]
+    · apply Finset.prod_eq_zero (Finset.mem_univ j)
+      simp [fermionWord, Matrix.single, ht]
+
 theorem restrictOp_fullD {N : ℕ} (i : Fin N) :
     (Matrix.submatrix (D5.S3.Quantum.SpinChains.SupersymmetricFermion.DressedOperators.fullD i) (Subtype.val : HardCore N → Assignment N) (Subtype.val : HardCore N → Assignment N)) = annihilationAt i := by
   have adjacent_iff {M : ℕ} (s : Assignment M) :
@@ -133,52 +189,6 @@ theorem restrictOp_fullD {N : ℕ} (i : Fin N) :
   have spinP_def : spinP = Matrix.diagonal (fun b => if b then (0 : ℂ) else 1) := by
     ext s t
     cases s <;> cases t <;> norm_num [visibleProjector, Matrix.diagonal, Matrix.sub_apply]
-  have fullC_entry {N : ℕ} (j : Fin N) (s t : Assignment N) :
-      fullC j s t =
-        if t j = true ∧ s = Function.update t j false
-        then (-1 : ℂ) ^ prefixCount t j else 0 := by
-    classical
-    change tensorProduct (fermionWord j) s t = _
-    rw [tensorOp_entries]
-    change (∏ i : Fin N, fermionWord j i (s i) (t i)) = _
-    by_cases h : t j = true ∧ s = Function.update t j false
-    · rw [if_pos h]
-      have he : (∏ i : Fin N, fermionWord j i (s i) (t i)) =
-          ∏ i : Fin N, if i < j ∧ t i = true then (-1 : ℂ) else 1 := by
-        apply Finset.prod_congr rfl
-        intro i _hi
-        rw [h.2]
-        by_cases hij : i < j
-        · have hne : i ≠ j := ne_of_lt hij
-          simp only [fermionWord, if_pos hij, Function.update_of_ne hne,
-            spinZ_def, qubitZ, finTwoEquiv, Matrix.diagonal_apply_eq]
-          cases t i <;> simp [hij]
-        · by_cases heq : i = j
-          · subst i
-            simp [fermionWord, Matrix.single, h.1]
-          · simp [fermionWord, hij, heq, Matrix.one_apply, Function.update_of_ne heq]
-      rw [he, ← Finset.prod_filter]
-      simp [prefixCount, Finset.prod_const]
-    · rw [if_neg h]
-      by_cases ht : t j = true
-      · have hs : s ≠ Function.update t j false := by tauto
-        have hx : ∃ i, s i ≠ Function.update t j false i := by
-          by_contra hh
-          push Not at hh
-          exact hs (funext hh)
-        obtain ⟨i,hi⟩ := hx
-        apply Finset.prod_eq_zero (Finset.mem_univ i)
-        by_cases heq : i = j
-        · subst i
-          simp only [Function.update_self] at hi
-          have hsi : s j = true := by cases hsj : s j <;> simp_all
-          simp [fermionWord, Matrix.single, hsi]
-        · have hst : s i ≠ t i := by simpa only [Function.update_of_ne heq] using hi
-          by_cases hij : i < j
-          · simp only [fermionWord,if_pos hij,spinZ_def,Matrix.diagonal_apply,hst,if_false]
-          · simp [fermionWord, hij, heq, hst, Matrix.one_apply]
-      · apply Finset.prod_eq_zero (Finset.mem_univ j)
-        simp [fermionWord, Matrix.single, ht]
   have annihilationAt_eq_fullC {N : ℕ} (i : Fin N) :
       annihilationAt i = (fun s t : HardCore N => fullC i s.val t.val) := by
     ext s t

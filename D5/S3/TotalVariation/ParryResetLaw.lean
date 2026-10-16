@@ -31,6 +31,21 @@ noncomputable def parryLaw (k : ℕ) (s : State k) : ℝ :=
   parryParameter k ^ s.2.val * suffixWeight k (parryParameter k) s.2 / (2 * normalizer k)
 
 
+/-- The finite geometric suffix recurrence, before stochastic normalization. -/
+theorem suffixWeight_succ (k : ℕ) (p : ℝ) (j : Fin k) (hj : j.val + 1 < k) :
+    suffixWeight k p j = p + p * suffixWeight k p ⟨j.val+1,hj⟩ := by
+  unfold suffixWeight
+  rw [show k-j.val = (k-(j.val+1))+1 by omega, Finset.sum_range_succ']
+  simp only [pow_one]
+  simp_rw [pow_succ, ← Finset.sum_mul]
+  ring
+
+/-- At the last suffix only the reset term remains. -/
+theorem suffixWeight_last (k : ℕ) (p : ℝ) (j : Fin k) (hj : ¬j.val+1<k) :
+    suffixWeight k p j = p := by
+  have hjk : k-j.val = 1 := by have := j.isLt; omega
+  simp [suffixWeight, hjk]
+
 /-- The selected source parameter makes the actual reset kernel stochastic and the
 explicit eigenvector-product law stationary. All suffix weights have uniform bounds. -/
 theorem parry_stationary_law (k : ℕ) (hk : 2 ≤ k) :
@@ -75,16 +90,8 @@ theorem parry_stationary_law (k : ℕ) (hk : 2 ≤ k) :
       exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono (Nat.sub_le _ _))
         (fun a _ _ => pow_nonneg hp.le _)
   have hh (j : Fin k) : 0 < suffixWeight k p j := lt_of_lt_of_le hp (hb j).1
-  have hrec (j : Fin k) (hj : j.val + 1 < k) :
-      suffixWeight k p j = p + p * suffixWeight k p ⟨j.val+1,hj⟩ := by
-    unfold suffixWeight
-    rw [show k-j.val = (k-(j.val+1))+1 by omega, Finset.sum_range_succ']
-    simp only [pow_one]
-    simp_rw [pow_succ, ← Finset.sum_mul]
-    ring
-  have hlast (j : Fin k) (hj : ¬j.val+1<k) : suffixWeight k p j = p := by
-    have hjk : k-j.val = 1 := by have := j.isLt; omega
-    simp [suffixWeight, hjk]
+  have hrec := suffixWeight_succ k p
+  have hlast := suffixWeight_last k p
   have hrow (s : State k) : ∑ t, kernel k p s t = 1 := by
     have hreset : (!s.1) ≠ s.1 := by cases s.1 <;> decide
     by_cases hs : s.2.val + 1 < k

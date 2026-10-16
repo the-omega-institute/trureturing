@@ -68,6 +68,12 @@ instance haar_probability : IsProbabilityMeasure
 end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+def permutationUnitary {n : Type*} [Fintype n] [DecidableEq n]
+    (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
+  ⟨e.permMatrix ℂ, by
+    rw [Matrix.mem_unitaryGroup_iff]
+    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
+
 def literalMoment {I : Type*} (U : Matrix I I ℂ) :
     Matrix (((I × I) × (I × I))) (((I × I) × (I × I))) ℂ :=
   Matrix.kronecker (Matrix.kronecker (U.map star) (U.map star))
@@ -194,11 +200,6 @@ private theorem entry_support (X : Matrix ((n × n)) ((n × n)) ℂ)
     · simp [phaseCount,hca,hda] at ha
       omega
 
-private def permutationUnitary (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
-  ⟨e.permMatrix ℂ, by
-    rw [Matrix.mem_unitaryGroup_iff]
-    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
-
 omit [Fintype n] in
 private theorem tensor_permutation (e : Equiv.Perm n) :
     e.permMatrix ℂ ⊗ₖ e.permMatrix ℂ = Equiv.Perm.permMatrix ℂ (e.prodCongr e) := by
@@ -210,8 +211,8 @@ private theorem tensor_permutation (e : Equiv.Perm n) :
 private theorem entry_permutation (X : Matrix ((n × n)) ((n × n)) ℂ)
     (hX : tensorCommutes X) (e : Equiv.Perm n) (r c : (n × n)) :
     X ((e.prodCongr e) r) ((e.prodCongr e) c) = X r c := by
-  have h := hX (permutationUnitary e)
-  simp only [permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
+  have h := hX (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary e)
+  simp only [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
     PEquiv.mul_toMatrix_toPEquiv,PEquiv.toMatrix_toPEquiv_mul] at h
   have hc := congrFun (congrFun h r) ((e.prodCongr e) c)
   rcases r with ⟨r1,r2⟩

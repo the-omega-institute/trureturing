@@ -6,7 +6,19 @@ One original law through trimming and endpoint classification
 
 Fix an arbitrary original Presentation theta. retainedLaw theta selects the stationary original integer-time law constructed by OriginalMarkedLaw.original_law for trim theta. jointLaw theta is its actual measurable inclusion pushforward, and visibleLaw theta is the actual Prod.snd pushforward of jointLaw. These definitions fix one common realization for all the conclusions. They do not choose separate output laws or assume defining cylinders.
 
-**Theorem 1.1 (Actual original and retained laws with trimmed endpoint masses).**
+**Theorem 1.1 (Measurable original inclusion).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.inclusion_measurable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.inclusion_measurable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original finite Presentation theta with measurable hidden singletons, includePath(theta) is measurable from retained hidden/output paths to original hidden/output paths. It applies subtype inclusion at every integer hidden coordinate and preserves every output coordinate. Actual complete future conditional measures and full-half-line screening use this same inclusion.
+
+**Theorem 1.2 (Actual original and retained laws with trimmed endpoint masses).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.same_law_trimming`
 
@@ -26,6 +38,7 @@ The original law has no all-row unifilarity assumption. The optional endpoint co
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.inclusion_measurable`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalLawTrimming.same_law_trimming`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalMarkedLaw](OriginalMarkedLaw.md)
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation](PositiveSupportPresentation.md)

@@ -56,9 +56,9 @@ private theorem cohn_polynomial_eval_power (q : ℕ) (a : ℤ) (hodd : Odd q) :
       simpa only [eval_comp, eval_sub, eval_pow, eval_X, eval_one, sinePart, z] using H
     _ = _ := H'
 
-private abbrev E₂ := QuadraticAlgebra (ZMod 2) (-1) (-1)
+abbrev E₂ := QuadraticAlgebra (ZMod 2) (-1) (-1)
 
-private def modTwo : EisensteinOrder →+* E₂ where
+def modTwo : EisensteinOrder →+* E₂ where
   toFun z := ⟨(z.re : ZMod 2), (z.im : ZMod 2)⟩
   map_zero' := by ext <;> simp
   map_one' := by ext <;> simp
@@ -180,7 +180,7 @@ private theorem modTwo_cube_of_pow (z : E₂) (n : ℕ) (hn : 0 < n)
   rw [modTwo_cube, hnorm]
   rfl
 
-private theorem norm_unit_one (u : EisensteinOrderˣ) :
+theorem norm_unit_one (u : EisensteinOrderˣ) :
     QuadraticAlgebra.norm (u : EisensteinOrder) = 1 := by
   have hu : IsUnit (QuadraticAlgebra.norm (u : EisensteinOrder)) :=
     QuadraticAlgebra.isUnit_iff_norm_isUnit.mp u.isUnit
@@ -245,7 +245,7 @@ private theorem unit_six (u : EisensteinOrderˣ) : u ^ 6 = 1 := by
 
 /-- A unit in the kernel of reduction modulo two is ±1. This is the
 specific coordinate restriction needed at q=3, not a second unit classification. -/
-private theorem unit_modTwo (u : EisensteinOrderˣ) (hu : modTwo u = 1) :
+theorem unit_modTwo (u : EisensteinOrderˣ) (hu : modTwo u = 1) :
     (u : EisensteinOrder).im = 0 := by
   have hn := norm_unit_one u
   have hi : ((u : EisensteinOrder).im : ZMod 2) = 0 := by

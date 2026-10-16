@@ -22,6 +22,7 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
         "The normalized two-copy Haar average is Hermitian and idempotent. Its action on two-site identity/swap vectors has coefficient q/(q squared + 1).",
         H("The two-copy Haar moment and its local rule"),
         Blocks(
+            Node("permutation-unitary","A permutation as a unitary matrix",PermutationUnitary(),"For a finite type with decidable equality, permutationUnitary sends a permutation e to the unitary matrix whose underlying matrix is e.permMatrix over the complex numbers. The commutant argument uses these matrices to transport entries along permutations.","permutationUnitary",DescribeRole.Definition,AssessedProvenance.FromRepo()),
             Describe.Lean(DescribeId.Create("haar-hadamard"),DeclarationHandle.Create(Prefix+"hadamard"),H("A two-coordinate Hadamard matrix"),
                 StatementSource.FromAuthor(Disp(HadamardDefinition())),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(DefinitionDsl.Text("The matrix equals the identity off the selected coordinates and has entries t, t, t, and minus t on their two-by-two block when the coordinates are distinct."))),DescribeRole.Definition),
@@ -50,6 +51,14 @@ internal sealed class HaarTwoCopyTwirlDocument : IScribeDocumentDefinition
             Node("swap","The swap vector is fixed",Fixed(D(1)),"The replica swap commutes with the two-copy unitary action, so the Haar expectation fixes it.","local_swap_fixed",DescribeRole.Theorem),
             Node("mixed","The exact mixed local rule",Mixed(),"Quarter phases force the two-copy commutant to have only identity and swap support. Permutations make its coefficients uniform; a two-coordinate Hadamard forces the remaining diagonal coefficient to be their sum. Haar invariance puts the image in this span. Hermitian pairing with the two fixed vectors then yields q/(q squared + 1) for each mixed input.","gate_mixed_rule",DescribeRole.Theorem)
         ),[]));
+    private static Formula PermutationUnitary()
+    {
+        Formula n=F.Id("n"),e=F.Id("e");
+        Formula matrix=At(Seq(Operatorname,Grp(F.Id("Equiv"),Dot,F.Id("Perm"),Dot,F.Id("permMatrix"))),Complex(),e);
+        return Generic(All("e",QCall("Equiv","Perm",n),
+            And(Seq(Call("permutationUnitary",e),Colon,Sp,Unit(n)),
+                Eqn(Call("val",Call("permutationUnitary",e)),matrix))));
+    }
     private static Formula HadamardDefinition()
     {
         Formula n=F.Id("n"),a=F.Id("a"),b=F.Id("b"),t=F.Id("t");

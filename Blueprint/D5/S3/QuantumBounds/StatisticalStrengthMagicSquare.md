@@ -304,7 +304,21 @@ $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)
 
 Conjecture 5, Section VI.D, p. 11: “There is an experiment on pairs of Bell singlets, of the 2×4×4 type, more than twice as strong as CHSH, and involving joint measurements on the pairs.” The encoding is: there exists e : Experiment with Valid e and JointMeasurement e, and S_uni (quantum e) > 2 * S_cor chsh. Since the uniform strength is no larger than the product-setting strength, which is no larger than the correlated-setting strength, this inequality implies the required comparison in each of the source's three senses.
 
-**Theorem 1.26 (The two-singlet experiment proves the conjecture).**
+**Definition 1.26 (Rational amplitudes of two singlets).**
+
+$$\forall z \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \times (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)),\; \operatorname{rationalSinglets}\left(z\right) = \operatorname{ite}\left((z.1.1 \ne z.2.1) \land (z.1.2 \ne z.2.2), \operatorname{ite}\left(z.1.1 = z.1.2, (\frac{1}{2}:\mathbb{C}), -\frac{1}{2}\right), 0\right)$$
+
+*Formalization.* `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.rationalSinglets` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* W. van Dam; R. D. Gill; P. D. Grünwald (2005). *The Statistical Strength of Nonlocality Proofs*. DOI: [10.1109/TIT.2005.851738](https://doi.org/10.1109/TIT.2005.851738). URL: <https://arxiv.org/abs/quant-ph/0307125v2>.
+
+*Commentary.*
+
+For each party-grouped basis index z, the amplitude is zero unless both corresponding bit pairs differ. When both differ, equal bits on Alice's side give one half and unequal bits give minus one half. These are the rational amplitudes of the product of two singlets.
+
+**Theorem 1.27 (The two-singlet experiment proves the conjecture).**
 
 $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)) \land ((\operatorname{JointMeasurement}\left(e\right)) \land (\operatorname{S}_{uni}\left(\operatorname{quantum}\left(e\right)\right) > 2 \cdot \operatorname{S}_{cor}\left(\operatorname{chsh}\right)))$$
 
@@ -343,6 +357,7 @@ The commuting magic-square rows and columns give four nonzero-outcome PVMs on ea
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.localBehavior`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.productLaw`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.quantum`
+- Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.rationalSinglets`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.result`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.singletCoefficient`
 - Truth anchor: `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.square`

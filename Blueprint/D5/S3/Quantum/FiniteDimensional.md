@@ -4,6 +4,14 @@
 
 Finite-dimensional Pauli, no-character, and trace-probability skeletons.
 
+`D5/L/Quantum/busch2003effectprobabilities`
+
+For the effect form of the finite-dimensional representation theorem, assume a single probability function on every positive contraction, normalized at the identity and additive whenever the sum is again a positive contraction. A single function on effects expresses the required independence from measurement context. These are additional probability assumptions; neither a fixed event structure nor a positive history length supplies them.
+
+Binary additivity first gives the zero value at zero and monotonicity. Dividing an effect into finitely many equal summands gives rational homogeneity. Squeezing a real scalar between rational scalars then gives real homogeneity on the unit interval. For a positive matrix, divide by a positive scalar larger than its norm, evaluate the resulting effect, and multiply by the scalar. Homogeneity proves independence of the chosen scale; a common scale proves additivity on the positive cone.
+
+A Hermitian matrix is a difference of positive matrices. Equality of two such differences gives equality of the cross sums, so the positive-cone functional extends unambiguously to a real-linear functional on Hermitian matrices and then to a complex-linear functional on all matrices. Finite-dimensional trace duality gives a unique representing matrix. Testing positive rank-one matrices proves that this matrix is positive, and evaluation at the identity proves trace one. This argument uses only finite additivity and includes dimension two. Busch gives the effect-measure argument; countable additivity is needed for normality in his infinite-dimensional formulation. The rank-one trace pairing specializes to the squared modulus of the inner product of unit vectors.
+
 **Theorem 1.1 (The standard qubit Weyl pair has the Pauli star skeleton).**
 
 $ZX=-(XZ) \land X^{*}=X \land Z^{*}=Z \land X^{2}=I \land Z^{2}=I$

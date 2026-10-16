@@ -76,7 +76,7 @@ private def stateY (a : SpinVector 2) : ℝ := ‖a 1‖^2
 private def stateW (a : SpinVector 2) : ℂ := star (a 0) * a 1 + star (a 1) * a 2
 private def stateZ (a : SpinVector 2) : ℂ := star (a 0) * a 2
 private def compressionM (K : ℕ) (a : SpinVector 2) : Matrix (Fin 3) (Fin 3) ℂ := !![(1-(K:ℝ)*stateY a : ℝ), (Real.sqrt (2*K:ℝ):ℂ)*stateW a, (Real.sqrt ((K:ℝ)*(K-1:ℝ)/2):ℂ)*stateZ a; (Real.sqrt (2*K:ℝ):ℂ)*stateW a, -stateZ a, 0; (Real.sqrt ((K:ℝ)*(K-1:ℝ)/2):ℂ)*stateZ a, 0, 0]
-private def entryNormSq {ι κ : Type*} [Fintype ι] [Fintype κ] (M : Matrix ι κ ℂ) : ℝ := ∑ i, ∑ j, ‖M i j‖^2
+def entryNormSq {ι κ : Type*} [Fintype ι] [Fintype κ] (M : Matrix ι κ ℂ) : ℝ := ∑ i, ∑ j, ‖M i j‖^2
 private def spinV (n : ℕ) : SpinMatrix n := ((2 : ℂ)^n)⁻¹ • coeffMatrix n * spinD n
 private def spinWeight (n : ℕ) (t : SpinIndex n) : ℂ := ((2 : ℂ)^n)⁻¹ * (Nat.choose n t.val : ℂ)
 private def edgeTop (K : ℕ) (hK : 2 ≤ K) (r : Fin 3) : SpinIndex K := ⟨r.val, by have := r.isLt ; omega⟩
