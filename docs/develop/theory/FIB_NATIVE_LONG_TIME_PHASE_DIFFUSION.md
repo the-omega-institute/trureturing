@@ -4698,3 +4698,10 @@ Proposition 60.2 retains its distinct raw and terminal-survivor weights,
 and no unchanged risk is inferred for those laws. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 69. The full-state attractive threshold problem
+
+**Definition 69.1 (weak-binding continuation).** On the fixed nonzero signed-$\kappa$ cover of Definition 35.1, let $S=B_\kappa-\lambda$ and fix $a,\tau>0$.
+The cutoff field $W_\tau=\int_\tau^\infty e^{\lambda t}g_\kappa^I(t;k_0,k;q)dt$ and the full-domain form $a\|S^{1/2}\psi\|_2^2-g\int W_\tau|\psi|^2$ are treated in [Native full-state weak binding](FIB_NATIVE_LONG_TIME_PHASE_WEAK_BINDING.md), §§70–74.
+
+## 追加锚（本行以下为增补区）
