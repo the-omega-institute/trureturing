@@ -3996,3 +3996,570 @@ restricted error gap, sharp branch-mass bound or native realization
 is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 26. Quantitative stability of the original sign-averaged live map
+
+**Convention 26.1 (source and evidence scope).** Retain the entire
+experiment of Definition 3.1, (CG.20) and Convention 21.1. In particular,
+the inputs are the twelve actual normalized reached-cut specimens
+$U_{e,n}\rho_yU_{e,n}^\dagger$, with $y=5,16,27$ and all four
+$U_{e,n}=\operatorname{diag}(e,n,1)$. There is one history-independent
+common channel, with the original five-mode completion and fixed common
+metadata, acting on the entire complex algebra. The ideal failure output
+is still the five separate measures $w_\ell f_y(t)dt\,P_f$ with
+$w=(0,1/4,1/2,1/4,0)$, $f_y(t)=6y/(y+6t)^2$ and exact $t\in[0,1]$.
+The error $E$ is HALF the full cq trace norm, maximized over the twelve
+histories, including singular measures, wrong support, aborts and every
+additional zero-ideal sector. It is not acceptance-normalized.
+
+The starred data, $E_*$ and $J_*$ are precisely the credited ordinary
+computer-assisted data of §§13–17, and $W_3,\delta_*$ are (CG.184).
+The results below are ordinary mathematical deductions from those data.
+They neither replace their certificate nor claim a new Lean verification.
+The finite test (CG.155) and sign average are analytic lower-test devices;
+neither is a supplied native operation or a preparation prior.
+
+**Definition 26.2 (finite positive source constants).** Let $S(x)$ be the
+full nine-dimensional slack (CG.129), formed from (CG.112)–(CG.113) in
+a neighbourhood of $x_*$. Use the coordinate order
+$x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ of Definition 13.1.
+All unmarked data in the following definitions are evaluated at $x_*$.
+Let $P$ be the orthogonal projection onto $\ker S_*$, and put
+
+$$
+\begin{aligned}
+s&=\min\{\nu:\nu\text{ is a positive eigenvalue of }S_*\},\\
+c_f&=\zeta_{0,*}-\lambda_*p_{50},
+&z_{\min}&=\min_i\zeta_{i,*},\\
+\mathcal B_0&=(1000\operatorname{adj}S_{0,*})\oplus0\oplus0\oplus0,\\
+\mathcal B_1&=0\oplus\operatorname{adj}S_{01,*}\oplus0\oplus0,\\
+\mathcal B_2&=0\oplus0\oplus\operatorname{adj}S_{02,*}\oplus0,\\
+M_j&=\left.\frac{\partial S(x)}{\partial x_j}\right|_{x_*}
+\quad(1\leq j\leq6),
+&L&=\left(\sum_{j=1}^6\|M_j\|_{\rm op}^2\right)^{1/2},\\
+b&=\left(\sum_{k=0}^2\|\mathcal B_k\|_1^2\right)^{1/2},
+&G&=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_*},\\
+\sigma&=\min_{\|u\|_2=1}\|Gu\|_2,
+&a&=2\sqrt{3/s},\\
+r_\lambda&=\lambda_*^{-1}+(1-\lambda_*)^{-1}
+                        +p_{50}/c_f+z_{\min}^{-1},
+&r_z&=c_f^{-1}+z_{\min}^{-1},\\
+A&=\left(r_\lambda^2+r_z^2
+       +\frac{16\lambda_*}{\|v_{5,*}\|_2^2}
+       +\frac{16(1-\lambda_*)}{\|v_{27,*}\|_2^2}\right)^{1/2},\\
+C&=a+\frac b\sigma(A+La).
+\end{aligned}
+\tag{CG.204}
+$$
+
+The direct sums use exactly (CG.128). Matrix trace norm is denoted by
+$\|\cdot\|_1$, operator norm by $\|\cdot\|_{\rm op}$, and vector
+Euclidean norm by $\|\cdot\|_2$. Thus $\sigma$ uses real vectors in
+$\mathbb R^3$ and the Euclidean norm in $\mathbb R^6$. The constant
+$C$ is distinct from the root-isolation box called $C$ in §13.
+The positive certificate slack $c_f$ has no identification with a signed
+weak-binding parameter or with an occupancy.
+
+Here every denominator is positive and every constant is finite, with
+$s,c_f,z_{\min},b,\sigma,a,A,C>0$ and $L\geq0$. Indeed Corollary 13.3
+gives the ranks $2,1,1,2$ of the four slack blocks. Thus $S_*$ has rank
+six, its kernel has dimension three, and its six positive eigenvalues
+have a finite positive minimum. Equation (CG.115) gives $c_f>0$;
+$\zeta_{1,*}=\lambda_*p_{51}>0$ and
+$\zeta_{2,*}=\lambda_*p_{52}>0$, while
+$\zeta_{0,*}>\lambda_*p_{50}>0$. The three $\mathcal B_k$ are
+nonzero positive rank-one matrices, so their trace norms are their
+positive finite traces. The chart denominators
+$1+\alpha_1^2+\alpha_2^2$ and $1+\beta_1^2+\beta_2^2$ are positive;
+hence all six Hermitian derivatives $M_j$ exist and have finite norms.
+
+For injectivity, use precisely the credited block Jacobian (CG.164).
+If $Gu=0$, then $D\Psi(u_*)(0,u)^T=0$, so $u=0$ by its credited
+invertibility. The continuous function $u\mapsto\|Gu\|_2$ attains
+its minimum on the compact unit sphere in $\mathbb R^3$. A zero minimum
+would give a unit vector in the kernel. Therefore $\sigma>0$ and
+$\|Gu\|_2\geq\sigma\|u\|_2$ for every $u$, including $u=0$.
+This is the finite-dimensional injective-map norm principle represented
+by pinned mathlib's `LinearMap.exists_antilipschitzWith`; the displayed
+minimum fixes the particular modulus used here. The fixed coordinates
+of $v_5,v_{27}$ are $-1,1$, respectively, so their norms are nonzero.
+Finally $0<\lambda_*<1$ by (CG.115). These facts justify every operation
+in (CG.204), without estimating a new numerical certificate.
+
+**Theorem 26.3 (source-specific square-root stability).** For every
+original common full-output processor $\Phi$ and every $0\leq\epsilon\leq1$,
+let $J$ be the unnormalized output-input Choi matrix of its compressed
+live map and let
+
+$$
+\overline J=\frac14\sum_{e,n}
+(U_{e,n}\otimes U_{e,n})J(U_{e,n}\otimes U_{e,n})^\dagger.
+\tag{CG.205}
+$$
+
+With the single constant $C$ of (CG.204),
+
+$$
+E(\Phi)\leq E_*+\epsilon
+\quad\Longrightarrow\quad
+\|\overline J-J_*\|_1\leq C\sqrt\epsilon.
+\tag{CG.206}
+$$
+
+The same implication holds for every finite-test channel (CG.155),
+with $E_c$ in the premise. No equality of the unaveraged live matrices
+or of the complete failure laws is asserted.
+
+Proof. Reduce a full-output candidate by $\mathcal C$ of Convention
+17.1, and then mathematically average the finite channel over the four
+actual signs, keeping both scalar flags fixed. Both operations contract
+the maximum error, because the signs permute the original four histories
+at each height. Write this averaged candidate as
+$(\overline\Lambda,\overline G_f,\overline G_o)$. Its live Choi matrix
+is (CG.205), its two effects are diagonal, and its errors at a fixed
+height are independent of the sign. Let $e_y$ be those finite errors,
+put $w_5=\lambda_*$, $w_{27}=1-\lambda_*$, and define
+
+$$
+\begin{aligned}
+\Delta_y&=B_y-\overline\Lambda(\rho_y),
+&\ell_y&=\operatorname{tr}(R_{y,*}\Delta_y)\quad(y=5,27),\\
+q_5&=\operatorname{tr}(\overline G_f\rho_5),
+&P_5&=\ell_5+6/11-q_5,
+&P_{27}&=\ell_{27},\\
+D&=\operatorname{tr}(S_*\overline J)
+  +c_f(\overline G_f)_{00}
+  +\operatorname{tr}(Z_{d,*}\overline G_o).
+\end{aligned}
+\tag{CG.207}
+$$
+
+The full certificate identity (CG.133) and its endpoint effects give
+
+$$
+w_5P_5+w_{27}P_{27}=E_*+D,\qquad
+P_y\leq e_y\leq E_*+\epsilon,\qquad D\geq0.
+\tag{CG.208}
+$$
+
+Consequently $D\leq\epsilon$ and
+$\sum_{y=5,27}w_y(e_y-P_y)\leq\epsilon$. Solving (CG.208) for
+each payoff using the upper bound on the other one yields
+
+$$
+0\leq e_y-P_y\leq\epsilon/w_y,
+\qquad |P_y-E_*|\leq\epsilon/w_y.
+\tag{CG.209}
+$$
+
+All quantities in $D$ are nonnegative. In particular, since
+$Z_{d,*}\succeq z_{\min}I$,
+
+$$
+\operatorname{tr}(S_*\overline J)\leq\epsilon,\qquad
+(\overline G_f)_{00}\leq\epsilon/c_f,\qquad
+\operatorname{tr}\overline G_o\leq\epsilon/z_{\min}.
+\tag{CG.210}
+$$
+
+First control the distance to the complementary face. Put
+$\widehat J=P\overline JP$. Positivity and the TNI live budget give
+$t:=\operatorname{tr}\overline J\leq3$. Spectral decomposition of
+$S_*$ gives $S_*\succeq s(I-P)$, hence
+$\operatorname{tr}((I-P)\overline J)\leq\epsilon/s$.
+Apply the existing positive compression inequality
+`TraceClassCompression.norm_sub_compress_le` in
+`D5/S3/Quantum/Analysis/TraceClass/FiniteCompression.lean` to
+$\overline J/t$ on $\mathbb C^9$, using an orthonormal basis adapted
+to $\operatorname{range}P$. Its tail mass is
+$\operatorname{tr}((I-P)\overline J)/t$. Rescaling gives
+
+$$
+\|\overline J-\widehat J\|_1
+\leq2\sqrt{t\operatorname{tr}((I-P)\overline J)}
+\leq a\sqrt\epsilon.
+\tag{CG.211}
+$$
+
+If $t=0$, positivity gives $\overline J=\widehat J=0$, and the
+inequality holds directly without division. Thus this use does not
+assume a normalized live map. The compression is an analytic matrix;
+it is not asserted to be a feasible TNI processor or a physical cut.
+
+The sign characters commute with $S_*$ and $P$. Accordingly
+$\widehat J$ is block diagonal in (CG.128), and in each of the first
+three blocks it is supported on the respective one-dimensional real
+kernel. The fourth block is zero. A Hermitian positive operator on
+one complex line is a nonnegative real multiple of its rank-one
+projection, even when the original operator is complex. Therefore
+
+$$
+\widehat J=\sum_{k=0}^2\widehat\eta_k\mathcal B_k,
+\qquad \widehat\eta_k\geq0,
+\qquad J_*=\sum_{k=0}^2\eta_{k,*}\mathcal B_k.
+\tag{CG.212}
+$$
+
+It remains to control these coefficients quantitatively. Define the
+real linear map on Hermitian matrices
+$\mathscr L(X)=(\operatorname{tr}(M_jX))_{j=1}^6$.
+The trace-pairing bound gives
+
+$$
+\|\mathscr L(X)\|_2\leq L\|X\|_1.
+\tag{CG.213}
+$$
+
+This is the direct finite-dimensional instance of
+`TraceClass.norm_tracePairingLinearMap_apply_le` in
+`D5/S3/Quantum/Analysis/TraceClass/Pairing.lean`, followed by Euclidean
+Cauchy–Schwarz. The determinant differential, including the factor
+$1000$ in $g_0$, gives
+$\mathscr L(\mathcal B_k)=\nabla g_k(x_*)$. Thus (CG.212) implies
+$\mathscr L(\widehat J)=G\widehat\eta$.
+
+For the uncompressed averaged candidate, the exact first-differential
+identity is
+
+$$
+\begin{aligned}
+\mathscr R&:=\nabla F(x_*)+\mathscr L(\overline J),\\
+\mathscr R\cdot dx
+ &=\sum_{y=5,27}\operatorname{tr}(dA_y\,\Delta_y)
+   +\sum_i(r_i-1)d\zeta_i+\frac6{11}d\lambda,\\
+r_i&=(\operatorname{Tr}_{\rm out}\overline J)_{ii}
+     =1-(\overline G_f)_{ii}-(\overline G_o)_{ii}.
+\end{aligned}
+\tag{CG.214}
+$$
+
+Indeed differentiate $F$ and $S=I\otimes Z_d-W$ while holding
+$\overline J$ fixed. In the $dW$ pairing, invariance of
+$\overline J$ removes the sign average, and (CG.126) gives
+$\operatorname{tr}(dA_y\overline\Lambda(\rho_y))$. This proves
+(CG.214) for arbitrary complex block matrices, without assuming
+stationarity or differentiating their coefficients.
+
+The $z$ coordinate of (CG.214) is $r_0-1$, of absolute value at most
+$r_z\epsilon$ by (CG.210). Its $\lambda$ coordinate is exactly
+
+$$
+\mathscr R_\lambda=P_5-P_{27}
+ +p_{50}(\overline G_f)_{00}
+ -p_{51}(\overline G_o)_{11}-p_{52}(\overline G_o)_{22}.
+\tag{CG.215}
+$$
+
+Use (CG.209), (CG.210), and $0\leq p_{51},p_{52}\leq1$ to bound
+its absolute value by $r_\lambda\epsilon$.
+
+For the four projector coordinates, a small effect deficit controls
+the off-eigenvector part. Here is the needed algebra, including
+degenerate spectra. For either endpoint put
+$u=v_{y,*}/\|v_{y,*}\|_2$, $R=uu^\dagger$, and
+$\mu=u^\dagger\Delta_yu$. Positivity and trace at most one of
+$B_y$ and $\overline\Lambda(\rho_y)$ imply
+$-I\preceq\Delta_y\preceq I$. Let $m,M$ be its extreme eigenvalues.
+Since $(MI-\Delta_y)(\Delta_y-mI)\succeq0$, its expectation gives
+
+$$
+\|(I-R)\Delta_yu\|_2^2
+ =u^\dagger\Delta_y^2u-\mu^2
+ \leq(M-\mu)(\mu-m)
+ \leq2(M-\mu).
+\tag{CG.216}
+$$
+
+Write $\Delta_+$ for the positive part. One always has
+$M\leq\operatorname{tr}\Delta_+$, including when $M\leq0$.
+The finite half norm is the total positive mass of the ideal-minus-
+simulated direct-sum difference. For the height-$5$ effect its scalar
+failure contribution is the entire signed failure difference, and for
+height $27$ it is zero. In both cases the unused scalar contribution
+to that positive mass is nonnegative. Therefore
+
+$$
+\operatorname{tr}(\Delta_y)_+-\mu\leq e_y-P_y
+\leq\epsilon/w_y,
+\qquad
+\|(I-R)\Delta_yu\|_2\leq\sqrt{2\epsilon/w_y}.
+\tag{CG.217}
+$$
+
+For a real chart coordinate $v_i$, $i=0,1$, the normalized vector has
+derivative $(I-R)e_i/\|v\|_2$. Thus, holding $\Delta_y$ fixed,
+
+$$
+\left|\frac{\partial}{\partial v_i}
+       \operatorname{tr}(R\Delta_y)\right|
+\leq\frac{2}{\|v\|_2}\sqrt{2\epsilon/w_y}.
+\tag{CG.218}
+$$
+
+The two coordinates at each endpoint in (CG.214) carry the factor
+$w_y$, so each is bounded by
+$2\sqrt{2w_y\epsilon}/\|v_{y,*}\|_2$.
+Combining the six coordinate bounds and using $\epsilon^2\leq\epsilon$
+on $[0,1]$ yields
+
+$$
+\|\mathscr R\|_2\leq A\sqrt\epsilon.
+\tag{CG.219}
+$$
+
+Finally the credited stationarity is
+$\nabla F(x_*)+G\eta_*=0$. Subtract it from
+$\nabla F(x_*)+\mathscr L(\widehat J)$ and use (CG.211),
+(CG.213), and (CG.219):
+
+$$
+\begin{aligned}
+\sigma\|\widehat\eta-\eta_*\|_2
+ &\leq\|G(\widehat\eta-\eta_*)\|_2
+ \leq(A+La)\sqrt\epsilon,\\
+\|\widehat J-J_*\|_1
+ &\leq\sum_k|\widehat\eta_k-\eta_{k,*}|\|\mathcal B_k\|_1
+ \leq\frac b\sigma(A+La)\sqrt\epsilon.
+\end{aligned}
+\tag{CG.220}
+$$
+
+The triangle inequality with (CG.211) proves (CG.206).
+The proof uses only the finite test's necessary error bound and the
+unchanged full-output lower certificate; it imposes no restriction on
+the original simulated exact-time laws. At $\epsilon=0$ all estimates
+are valid and recover the credited averaged rigidity. $\square$
+
+## 27. Quantitative population and every-input quantum-resource consequences
+
+**Corollary 27.1 (actual transfers and the homogeneous witness).** Under
+the hypothesis of Theorem 26.3, define actual live transfers
+$T_{ij}=\langle i|\Lambda(|j\rangle\langle j|)|i\rangle$ and their
+credited values $\tau_{ij}=\langle ij|J_*|ij\rangle$ for all
+$i,j\in\{0,1,2\}$. In particular, put
+
+$$
+\begin{aligned}
+\tau_{01}&=(Q_*^{01})_{00},&\tau_{10}&=(Q_*^{01})_{11},\\
+\tau_{02}&=(Q_*^{02})_{00},&\tau_{20}&=(Q_*^{02})_{11},\\
+d(\epsilon)&=\max\{\delta_*-2C\sqrt\epsilon,0\}.
+\end{aligned}
+\tag{CG.221}
+$$
+
+All four $\tau_{ij}$ are finite and positive by (CG.165)–(CG.166), and
+
+$$
+\begin{aligned}
+|T_{ij}-\tau_{ij}|&\leq C\sqrt\epsilon
+ &&(i,j\in\{0,1,2\}),\\
+\operatorname{tr}(W_3J)&\geq\delta_*-2C\sqrt\epsilon.
+\end{aligned}
+\tag{CG.222}
+$$
+
+Proof. Every sign conjugation fixes every Choi diagonal entry, so
+$T_{ij}=\langle ij|\overline J|ij\rangle$. Pair the difference in
+(CG.206) with the rank-one projector $|ij\rangle\langle ij|$ of
+operator norm one. This bounds each actual transfer, without identifying
+the unaveraged live map. Also $W_3$ is sign invariant, so its pairing
+with $J$ equals its pairing with $\overline J$. Its eigenvalue on
+$|\Omega\rangle/\sqrt3$ is $1$, and its other eight eigenvalues are
+$-2$; thus $\|W_3\|_{\rm op}=2$. Apply the trace-pairing bound and
+$\operatorname{tr}(W_3J_*)=\delta_*$. $\square$
+
+**Theorem 27.2 (retained coherent mass for every complex input).** Suppose
+the same near-optimal processor has an ACTUAL fully counted factorization
+of Definition 21.2, or a countable or explicitly supplied integral
+factorization with precisely Convention 21.3's hypotheses. Let
+$p_H^{\rm acq},p_H^L$ be (CG.193), with high meaning
+$d_\alpha\geq3$ for the JOINT future-accessible quantum payload. Then
+for EVERY normalized complex qutrit density matrix $\rho$,
+
+$$
+p_H^{\rm acq}(\rho)\geq p_H^L(\rho)
+\geq\frac{d(\epsilon)^2}{24}
+=\frac{[\max\{\delta_*-2C\sqrt\epsilon,0\}]^2}{24}.
+\tag{CG.223}
+$$
+
+In particular this holds for every original specimen separately. It is
+strictly positive whenever $\epsilon<\delta_*^2/(4C^2)$.
+The bound counts all retained entanglement shares and all other quantum
+systems available to execution, as required by Definition 21.2.
+
+Proof. Use the actual split $\Lambda=\Lambda_L+\Lambda_H$ of
+Theorem 24.1. The supplied factorization makes $J_L\in\mathfrak S_2$
+by (CG.191), including the specified countable and integral models.
+Hence (CG.186) and (CG.222) imply
+
+$$
+\delta_*-2C\sqrt\epsilon\leq\operatorname{tr}(W_3J_H).
+\tag{CG.224}
+$$
+
+The every-input homogeneous estimate already proved in
+(CG.196)–(CG.199) applies to this same aggregate CP/TNI high submap:
+for every unit complex vector $\psi$,
+$\operatorname{tr}(W_3J_H)\leq2\sqrt{6p_H^L(|\psi\rangle\langle\psi|)}$.
+It does not require the full channel to be exactly optimal. When
+$d(\epsilon)>0$, combine with (CG.224) and square nonnegative
+quantities; when $d(\epsilon)=0$, positivity of the branch probability
+gives the claimed zero lower bound directly. Spectral decomposition and
+linearity give the same bound for every mixed $\rho$. Finally each live
+decoder is TNI, so its trace is at most its encoder trace; summation or
+integration gives $p_H^L\leq p_H^{\rm acq}$.
+
+The aggregate high map has a finite Kraus representation because its
+input and compressed live output are both $M_3$, regardless of its
+actual classical alphabet. This representation is used only in the
+already established homogeneous estimate. It does not replace the
+actual acquisition record by a Choi decomposition. If the high set has
+zero measure, its aggregate map is zero; then (CG.224) forbids positive
+$d(\epsilon)$, consistently with (CG.223). A finite-test closure limit
+without an actual factorization has no branch-probability interpretation.
+$\square$
+
+**Corollary 27.3 (explicit positive error penalties).** Put
+$\eta=E(\Phi)-E_*$. For an original common processor one has
+$0\leq\eta\leq1$, since both outputs in the original metric are
+normalized, so Theorem 26.3 applies with $\epsilon=\eta$. Then
+
+$$
+\begin{aligned}
+J\in\mathfrak S_2
+&\quad\Longrightarrow\quad
+E(\Phi)\geq E_*+\frac{\delta_*^2}{4C^2},\\
+T_{ij}=0
+&\quad\Longrightarrow\quad
+E(\Phi)\geq E_*+\frac{\tau_{ij}^2}{C^2}
+\quad(ij\in\{01,10,02,20\}),\\
+E(\Phi)-E_*
+&\geq\frac{[\max\{\delta_*-\sqrt{24p_H^L(\rho)},0\}]^2}{4C^2}
+\quad\text{for each normalized }\rho
+\text{ in an actual factorization}.
+\end{aligned}
+\tag{CG.225}
+$$
+
+The last line remains valid with $p_H^{\rm acq}(\rho)$ in place of
+$p_H^L(\rho)$. These are positive symbolic source-dependent penalties,
+not numerical evaluations or sharp gaps. In particular the first line
+quantifies the earlier existential qubit-acquisition separation, and
+the second constrains each of the four individual transfers.
+
+Proof. For $J\in\mathfrak S_2$ the witness pairing is nonpositive;
+combine with (CG.222). For a vanishing transfer use its first bound in
+(CG.222). For the last line combine (CG.224) at $\epsilon=\eta$ with
+the homogeneous bound used in Theorem 27.2, and rearrange before
+squaring. Replacing the live probability by its larger acquisition
+probability can only decrease the right side. All four transfer
+penalties and the first witness penalty are finite and strictly positive
+by Definition 26.2 and the credited margins. The same first-line
+obstruction holds for closure of the finite-test low-dimensional class:
+$\mathfrak S_2$ is closed and the witness pairing is continuous.
+It supplies no actual flags to a limit. $\square$
+
+## 28. Source correspondence, literature and remaining native supply
+
+**Convention 28.1 (reused content and the new relation).** The quantitative
+link (CG.206), the resource bound (CG.223) and penalties (CG.225) are
+`repo-derived` ordinary results. They reuse the exact point, ranks,
+strict margins and nonsingular Jacobian of §§13–16, the equality
+identification in §17, and the homogeneous witness and every-input
+estimate in §§22–24. Those results are not reclassified as new content.
+The added step is a controlled distance from near-optimal original
+performance to the complementary live face and then to its unique
+credited coefficients. No unchanged minimax solve, root isolation or
+certificate recertification enters this deduction.
+
+The existing `TraceClassCompression.norm_sub_compress_le` supplies (CG.211)
+after trace rescaling and an adapted finite Hilbert basis. Its actual
+private helpers `compress_norm_le`, `sqrt_column` and
+`finiteSpan_projection_basis` address positive compression and its basis
+calculation; they are not assumed absent because of visibility.
+`TraceClass.norm_tracePairingLinearMap_apply_le` supplies the
+operator/trace-norm pairing. `FiniteKrausRepresentation` supplies the
+general finite Choi/Kraus mechanism, while `CoherentFlagPort` and its
+private normalization and scalar-component helpers concern actual
+flagged ports with exact probe-preservation hypotheses. Those latter
+hypotheses do not assert the near-optimal objective here. The pinned
+mathlib finite-dimensional injective-map norm principle is sufficient
+for the positive modulus in Definition 26.2; it does not assert
+source-specific error stability. No new generic interface or duplicate
+Lean declaration is needed for these ordinary applications.
+
+**Convention 28.2 (primary literature and applicable scope).**
+Ding–Udell, [*A Strict Complementarity Approach to Error Bound and
+Sensitivity of Solution of Conic Programs*, arXiv:2012.00183v2](https://arxiv.org/pdf/2012.00183v2),
+Theorem 1, Corollary 1 and §3.3, give complementary-face error bounds.
+Their hypotheses include their strong-duality and dual-strict-
+complementarity conditions; their SDP projection estimates concern
+finite real symmetric matrices with the indicated norm conventions.
+These are mature antecedents of the projection-plus-face strategy.
+Their conic error bound is not invoked as a theorem about the present
+full cq objective. In particular, the single fixed lower payoff does
+not itself isolate $J_*$ on its entire complementary face: the
+quantitative endpoint effect deficits and injective matrix $G$ are
+needed in (CG.214)–(CG.220).
+
+Nishijima–Li–Lourenço, [*Radial-type error bounds for semidefinite
+feasibility problems without strict feasibility: qualitative estimates
+and asymptotic tightness*, arXiv:2608.09013v2](https://arxiv.org/pdf/2608.09013v2),
+Theorems 3.17 and 3.19, provide explicit moduli involving facial-reduction
+data and potentially exponents $1/2^j$. Their Theorem 5.2 provides
+linear-plus-square-root optimality-system bounds under Assumption 5.1's
+strict-complementarity premises. None automatically proves a
+square-root modulus for an unencoded complete-output benchmark.
+Definition 26.2 instead fixes all constants directly from the credited
+source, and (CG.208)–(CG.220) justify the required exponent without
+assuming a new SDP representation, Slater point or exact-time feasible
+law. The full complex matrix scope follows from the Hermitian
+compression, trace pairing and spectral argument used here.
+
+The Schmidt-number and Choi/Kraus literature cited in Theorem 22.1
+continues to supply exactly its homogeneous overlap and factorization
+facts. The compatible-ecosystem search includes physlib's trace norm
+and trace distance, QICLean's trace pairing, positive compression and
+semidefinite duality, and lean-quantum's trace inequalities. Their
+examined upstream toolchain/mathlib pairs differ from this repository's
+pin; no new dependency or transplant is used. No source-specific
+near-optimal theorem was identified in those examined sources. This
+search scope does not establish literature absence or worldwide novelty.
+
+**Convention 28.3 (native bridge and quantitative boundary).** The
+constants and inequalities constrain the actual common processor and,
+when supplied, its actual joint acquisition/execution factorization.
+They grant no acquisition channel, coherent memory, classical flag,
+controlled decoder, actuator or first-failure clock. The remaining
+native bridge must supply lawful access to the sole unknown specimen,
+the fully counted retained quantum payload and any actually acquired
+record, and controlled execution with the original permissions and
+clock. It must reproduce the full five-label elapsed-time law with
+failure absorbing at that event time, no later positive-carrier action
+after failure, terminal live output at time one, and the matching old
+archives, aligned clocks and controller updates. A sampled timestamp,
+effect equality or abstract Stinespring realization does not supply
+those operations or that first-failure event.
+
+`OriginalControlComposition.OriginalControl` specifies a geometric path
+predicate. The probability-changing and noncommuting fields
+$P=\partial_\kappa$ and
+$Q=\sum_a w_a(\kappa)\partial_{h_a}$ of Probability/Phase Transport,
+Definition 10.1, do not justify replacing the native menu by the
+conditional Schur closure of Definition 18.2. The classical structural
+storage atlas and the known-parameter endpoint timing model supply no
+unknown quantum specimen acquisition. No signed weak-binding parameter
+is substituted for a nonnegative retained probability here.
+
+The mathematical average and complementary-face compression are not
+implementations, and (CG.206) asserts neither whole-channel uniqueness
+nor stability of each failure-time law. It gives no physical native
+realization, quantum capacity formula or sharp resource threshold.
+When $d(\epsilon)=0$, (CG.223) asserts only nonnegativity; for smaller
+error it gives a uniform positive resource requirement on every complex
+input in every actual fully counted factorization. The finite result
+advances the continuing quantum programme without completing its
+native acquisition and control objectives.
+
+## 追加锚（本行以下为增补区）
