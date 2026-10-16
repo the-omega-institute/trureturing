@@ -316,9 +316,9 @@ At each pop, perform the following fixed case, using copied finite cursors:
 `Outer` expands $F_{75}$ with the actual ordered tape/finite components.
 Before emitting a vertex normalize aliases: Outer to its scaffold, Finite
 to its scaffold, Cell to its F8 scaffold, and F1 to its supplied socket
-component. No alias emits a second vertex. A normalized Fm with m greater
-than one, nonempty Tape, Track or Terminal then emits exactly once and
-pushes its actual children. Thus a cell root is the F8 root itself, and
+component. No alias emits a second vertex. Every normalized component,
+including Empty Tape and absent finite sockets, then emits exactly once
+and pushes its actual children. Thus a cell root is the F8 root itself, and
 an outer socket is its component root, without an extra wrapper vertex.
 At a visited vertex emit its path and child-mask as required; push right
 then left to visit left first. Paths are Cat with literal 0/1. Frame sizes,
@@ -1468,16 +1468,7 @@ is `repo-derived`. Encoding inverses, tree contours, simulation, record/
 replay and capabilities are mature subjects. No external theorem substitutes
 for a native guard, price, ownership, program or entry relation above.
 
-The repository search first asked for a direct initialized paid growing
-unary converter/current receiver. The inspected ARC/UAS/PVC bodies delimit
-that missing join. A targeted D5/Blueprint/Library/Problems/Evidence/
-Meta-Digestion search for HistoricalImage, PackageRef, ClientImage and
-ClientView had no text hit; a broader serializer/transducer/roundtrip/
-replay/capability/persistence/reversibility search found 1,073 files, not
-1,073 sufficient programs. No claim of exhaustive examination follows.
-The nonexistent Chronicle surface supplies no search evidence.
-
-Relevant inspected public/private native statements include
+Relevant public/private native statements include
 [NativeSerialMachine](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean)
 and its
 [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs),
@@ -1491,29 +1482,26 @@ at their stated abstract-control level. Unbounded control and proof-side
 subtrees are not this native bank compiler's free inputs. NativeSerialEffective's
 terminalObservation contains a trace; it is not the original terminal Q.
 
-The local mathlib checkout is absent. The pinned revision
-`db584cd6d46c92f209a44c0f1c829460d327499d` primary sources
+At pinned mathlib revision
+`db584cd6d46c92f209a44c0f1c829460d327499d`, the primary sources
 [Encoding](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/Encoding.lean)
 and
 [StateTransition](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Computability/StateTransition.lean)
-were inspected for `decode_encode`/`encode_injective` and
-`Respects`/`tr_reaches`: the former has an explicit decoder law, the latter
+provide `decode_encode`/`encode_injective` and `Respects`/`tr_reaches`,
+respectively: the former has an explicit decoder law, the latter
 an initial relation and matched progress/termination premises. Neither
 installs this program. No upstream dependency, library execution or
 compiled exact application is asserted.
 
-| Primary source inspected | Exact reference role and limit |
+| Primary source | Exact reference role and limit |
 | --- | --- |
 | [Wadler, Deforestation, author abstract](https://homepages.inf.ed.ac.uk/wadler/topics/deforestation.html) | `literature-attested`: elimination of intermediate trees under stated syntactic conditions. It motivates the smaller canonical native-row checker; no theorem for this compiler is imported. |
-| [CompCert Smallstep development](https://compcert.org/doc/html/compcert.common.Smallstep.html) | Primary simulation interface lead. This volume supplies its own initial/step/final correspondence; no CompCert-to-native adapter or theorem application is claimed. |
+| [CompCert Smallstep development](https://compcert.org/doc/html/compcert.common.Smallstep.html) | Simulation interfaces. This volume supplies its own initial/step/final correspondence; no CompCert-to-native adapter or theorem application is claimed. |
 | [RFC 8949 §4.2.1](https://www.rfc-editor.org/rfc/rfc8949.html#section-4.2.1) | `literature-attested`: deterministic format restrictions/order are explicit. The actual unbounded unary/list codecs here are not CBOR. |
 | [Capsicum primary project](https://www.cl.cam.ac.uk/research/security/capsicum/) | `literature-attested`: rights-bearing descriptors and denial of ambient namespaces. It is a capability precedent, not an implementation of native TOK. |
 
-The completed source conclusions also identify compiler/interpreter,
-graph/tree transducer, persistent-version, checkpoint/replay and reversible
-simulation literature leads. Uninspected full papers are not proof
-premises. No worldwide search-completeness or novelty conclusion follows
-from any miss. All load-bearing equalities here are either explicitly
+No worldwide search-completeness or novelty conclusion is asserted.
+All load-bearing equalities here are either explicitly
 scoped supplier reuse or the ordinary proofs in this volume.
 
 **Definition 12.2 (completed and still pending).** The conditional
