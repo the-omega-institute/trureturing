@@ -1444,6 +1444,20 @@ below. Its scalar reduction is for feasibility only: generating balanced
 sign labels preserves the scalar moments, but need not preserve the TV
 of an existing actual record. No TV-preserving symmetrization is assumed.
 
+The published [JS, §§1–9][JSce3], *Joint endpoint records: the evaluated
+finite-activity saturation boundary*, supplies the full prescribed
+finite-product joint limit, exact finite moment repair and whole-fibre
+recovery, explicit spectral saturation boundary with its equality cases,
+and continuous strictly increasing middle transition. Its critical
+every-instrument law credits WE. These are used as published suppliers,
+with the same conditional CG antecedents, all-complex/multi-Kraus
+competitors, original contrast inequality, sharp acquired joint cost,
+whole-fibre activity and full-record objective. Their finite-product
+scope does not include an infinite-product theorem or evaluate the
+strict-interior scalar crossover. The correspondences below retain the
+additional entire-threshold, boundary-height, coefficient and label
+questions of this volume.
+
 Write $a,b,c,d$ for the amplitudes called $a_K,b_K,c_K,d_K$ in RH,
 and $a_{\rm src},b_{\rm src},c_{\rm src},d_{\rm src}$ in RC. Put
 
@@ -1512,6 +1526,34 @@ Thus the physical failure whitening, the full generated-record law and
 the capacity domain coincide. WE's prescribed recovery uses FA70/75's
 same free coherent completion and FIRST clock; neither its feasibility
 reduction nor this dictionary identifies arbitrary full-$M_5$ completions.
+
+The complete JS correspondence used in §81 is:
+
+| JS symbol or object | Symbol and meaning here |
+| --- | --- |
+| $D,T,S,M,E,\rho_{y,e,n},\Delta,\kappa$, JS.1–.6 | The identical source, twelve specimens, HALF stopped-cq error and report normalization of §§67,77; JS Definition 1.2 is exactly Definition 67.2, including its stipulated extensions. |
+| $U,V,W,\mu,r$, JS.6 | $u_m,V_f,W_f,\mu_f,u_f$ of FA.38; JS's radial mean $r=V/\mu$ is **not** its spectral scalar named $u_f$ in JS.38. |
+| $x,Y(x),H(x),c_*(x),F_c(x)$, JS.7 | $u=z^2,w^2=(1-\alpha u)/\beta,d(\mathbf c),c_*(u),d(\mathbf c)/\mathfrak c(\mathbf c)$; JS's elapsed $u$ instead means the time variable of FA.13. |
+| $N,L,G,h,K(z,w),n(z,w)$, JS.8 | FA.35's $N,L,G,h,K(\mathbf c),n(\mathbf c)$ with $\mathbf c=Lh=(s_0,z,w)$; $L$ is coefficient normalization, not $L_{\rm dec}$. |
+| $f(z,w),k(z,w)$, JS.8 | $\ell(\mathbf c),f(\mathbf c)$, respectively: live height and failure height must not be interchanged. |
+| $\pi_j,v_j,P,\nu$, JS.9–.12 | $p_j,b_j,p,\sigma$ with $d\sigma=b_jdp$; $\nu$ in FA.38 is instead the scalar $\mu_f/c_f$. Each existing label retains its own $b_j$ in the actual absolute-value objective. |
+| $q,t,\lambda$, JS.11,.20,.35 | $q_{\rm end}=1-\tau,t=e^A-1,\zeta=\lim t q_{\rm end}$; JS's $q$ is not FA.43's coefficient mass $q=\nu/t$. |
+| $H_{\rm live},S_{\rm corner},T_0,B_0$ | $H_0,j(1)=\tfrac14\sum_{\sigma,\upsilon}|\ell(s_0,\sigma,\upsilon)|,\mathcal T(s_0),\mathcal T(s_0)-\gamma_f$. |
+| $C_{\rm end},\Phi(\lambda)$, JS.20 | $\kappa_0,(F_{\rm lim}(\zeta)-d_f)/2$, on the identical covariance and cost domain, including both axes. |
+| Spectral $u_f,e_\pm$, JS.38,.41 | $t_f=-2z_f/(d_f+L_f)$ and FA.36's $e_\pm$; this $t_f$ differs from the radial $u_f=V_f/\mu_f$. |
+| $a_e,(z_e,w_e)$, JS.42 | $b_\epsilon=a_e$ and $\mathbf c_\epsilon=(s_0,z_e,w_e)$ of FA.59, so $B_\epsilon^{\rm sp}=a_e n(\mathbf c_\epsilon)n(\mathbf c_\epsilon)^T$. |
+| $C_{\rm sat}$, JS.38–.43 | $\zeta_{\rm sp}$ of FA.59, including equality at the threshold and the unique total cost of every spectral-optimal failure measure. |
+| Rare atom $a_i$, JS.23–.27 | Failure mass $a_i$ at $\mathbf c_i$; actual live weight $p_i=a_i/[t\mathfrak c(\mathbf c_i)]$ and effect $N_i=a_i n_i n_i^T$. The repair matrix is $\mathsf U=\int hh^T/\mathfrak c\,d\sigma$, not the scalar endpoint $u_m$. |
+| Four pure repair labels, JS.24–.27 | Exact residual live Gram $I-\mathsf U/t$ in $h$ coordinates, positive weights and squared coordinates for all large $t$, with normalized contrast deficit $e_t=C_\sigma/t+O(t^{-2})$, $C_\sigma=\int d/\mathfrak c\,d\sigma$. |
+| JS.30–.34 and Theorem 6.1 | FA.11–.13,.34 and §86: identical whole-qubit factorization, five separate Borel maps, conditional passive-reference trace, free coherent counted complement and FIRST clock. |
+
+In particular $\int f(\mathbf c)d\sigma=\operatorname{tr}(M\Delta)
+=-d_f$, so $\int|f|d\sigma=d_f+2\int f_+d\sigma$ on this
+whole feasible set. This establishes the objective correspondence, not
+just a match of threshold numbers. JS.36–.37 supplies finite strict
+contrast margins along every prescribed finite product sequence, even
+when the limiting cost is saturated; its construction counts are upper
+counts, not the minimum LOW-live-bearing counts of §§82–84.
 
 **Definition 77.2 (actual labels and moment coordinates).** Let
 $n_{\rm feas}(s,A)$ be the minimum number of actual low live-bearing
@@ -2009,10 +2051,10 @@ and Lemma 78.2 gives $.99448<\tau_*<.99499$. Thus the new
 feasibility turn is neither static transition. No static contact-support
 sufficiency for a finite-budget optimum follows. $\square$
 
-## 81. Joint weak-endpoint layer and its exact thresholds
+## 81. Joint weak-endpoint layer: supplied finite limits and additional scope
 
-**Definition 81.1 (limiting failure problem).** On the normalized ellipse
-put $d(\mathbf c)=(|z|-1)^2/2$ and define
+**Definition 81.1 (the supplied limiting failure problem in these coordinates).**
+On the normalized ellipse put $d(\mathbf c)=(|z|-1)^2/2$ and write
 
 $$
 F_{\rm lim}(\zeta)=\max\left\{
@@ -2023,16 +2065,15 @@ F_{\rm lim}(\zeta)=\max\left\{
 \tag{FA.53}
 $$
 
-The measure is on the same compact circle as FA.19. Its mass is bounded
-by $\operatorname{tr}M/\min\|n\|^2$, so every nonempty feasible set
-is compact and the maximum is attained. Finite positive measures suffice:
-apply finite-dimensional positive moment compression to the three failure
-entries, cost and objective together. Its elementary justification is to
-write their normalized integral vector in the convex hull of the compact
-range and eliminate linearly dependent positive weights. This also
-covers zero weights and redundant atoms.
+This is exactly JS Definition 4.1 under Convention 77.1:
+$F_{\rm lim}(\zeta)=d_f+2\Phi(\zeta)$, with the same covariance,
+cost and entire compact ellipse. JS Lemma 4.2 supplies compact
+attainment and at-most-five-atom representations preserving covariance,
+cost and objective, including axes and zero weights. Its feasibility
+domain is exactly $\zeta\ge\kappa_0$. These are reused results,
+not an additional limiting optimization or a scalar evaluation.
 
-**Theorem 81.2 (feasibility expansion and conditional height limit).** Set
+**Theorem 81.2 (finite feasibility expansion and supplied height limit).** Set
 
 $$
 \kappa_0=\frac{\nu(1-\sqrt{u_f})^2}{2}>0,\qquad
@@ -2040,22 +2081,24 @@ $$
 \tag{FA.54}
 $$
 
-Here $\kappa_0=C_{\rm end}$ is the evaluated endpoint constant
-of WE.28, reused with the dictionary of Convention 77.1. Then
+Here $\kappa_0=C_{\rm end}$ is WE.28's credited endpoint constant.
+The entire threshold FA.41–.44 gives the more precise expansion
 
 $$
 1-\tau_{\max}(t)=\kappa_0/t+\kappa_1/t^2+O(t^{-3}).
 \tag{FA.55}
 $$
 
-For $t_n\to\infty$, $\tau_n\uparrow1$ and
-$t_n(1-\tau_n)\to\zeta<\infty$, $\zeta<\kappa_0$ is eventually
-infeasible and $\zeta>\kappa_0$ eventually feasible. At equality the
-exact condition $\tau_n\le\tau_{\max}(t_n)$ is still required;
-in particular $1-\tau_n=\kappa_0/t_n$ is eventually infeasible.
-The limiting problem is feasible exactly when $\zeta\ge\kappa_0$.
-Along every such sequence which is feasible at each sufficiently large
-index, with $s_n=s_0\tau_n$ and $A_n=\log(1+t_n)$,
+For $t_n\to\infty$, $q_n=1-\tau_n>0$, $q_n\to0$ and
+$t_nq_n\to\zeta<\infty$, $\zeta<\kappa_0$ is eventually
+infeasible and $\zeta>\kappa_0$ eventually feasible. At equality
+the exact condition $\tau_n\le\tau_{\max}(t_n)$ is still required;
+in particular $q_n=\kappa_0/t_n$ is eventually infeasible. No
+monotonicity of the prescribed sequence is required.
+
+Along every such eventually feasible sequence, with
+$s_n=s_0\tau_n$ and $A_n=\log(1+t_n)$, the published finite-product
+limit JS Theorem 7.1 and credited critical law give
 
 $$
 \mathcal T_{A_n}(s_n)\longrightarrow
@@ -2064,89 +2107,71 @@ $$
 \tag{FA.56}
 $$
 
-At $\zeta=\kappa_0$, [WE, Theorem 6.2][WE906] gives the same
-$\mathcal T(s_0)-\gamma_f$ limit for **every** sequence of admitted
-actual instruments in these classes retaining its full generated
+At $\zeta=\kappa_0$, WE Theorem 6.2, also credited in JS Theorem
+9.1, gives this $\mathcal T(s_0)-\gamma_f$ limit for **every**
+sequence of admitted actual instruments retaining its full generated
 acquisition labels, including nonoptimizers. A coarsened record has
-only the corresponding upper limit bound. This universal critical law
-is a supplied result; FA.56's general $\zeta>\kappa_0$ assertion is
-about the optimal value and the recovery below.
+only the upper-limit bound. For $\zeta>\kappa_0$, FA.56 is an
+optimal-value statement with a recovering common-instrument sequence;
+it is not a universal equality for arbitrary competitors.
 
-**Proof.** Expanding FA.44 at $q=\nu/t=0$ gives FA.55 and the
-strict-side feasibility assertions. Its positive second coefficient
-proves the stated equality-path exclusion.
-For any probability measure $p$ with $\int z^2dp=1$,
+**Proof of the additional threshold assertion and application of suppliers.**
+Expanding the explicit FA.44 at $q=\nu/t=0$ gives FA.55, with a
+bounded third-order remainder. FA.41 then proves the strict-side
+feasibility assertions. Positivity of $\kappa_1$ proves the
+claimed equality-path exclusion; retaining only the leading product
+would not decide this finite feasibility question.
+
+For the supplied limit, the exact normalization identity is
 
 $$
-1-\int|z|dp=\int\frac{(|z|-1)^2}{2}dp.
+1-\int|z|dp=\int\frac{(|z|-1)^2}{2}dp
+\quad\text{when }\int dp=\int z^2dp=1.
 \tag{FA.57}
 $$
 
-For an endpoint-refined maximizing instrument, the saturated contribution
-to this identity is $t^{-1}\int d/\mathfrak c\,d\sigma$.
-Thus every limiting $\sigma$ is feasible in FA.53. Vanishing total
-deficit in FA.57 forces all positive limiting live mass to
-$(s_0,\pm1,\pm1)$. The three zero cross moments force mass $1/4$
-on each corner. The total live absolute sum therefore converges to
-$j(1)$. In FA.51,
-$\int|f+t^{-1}\ell/\mathfrak c|d\sigma-
-\int|f|d\sigma=O(t^{-1})$ uniformly by the mass bound. This proves
-the upper limit in FA.56.
-
-For minimum limiting cost, use $d\lambda=d\sigma/\mu_f$ and
-$\int z^2d\lambda=u_f$. The strict supporting tangent WE.17–.18,
-with $\mathcal F=d/\mathfrak c$, gives
+It is JS.11's deficit. Its failure-weighted cost has the supplied
+strict lower bound and equality structure of WE.17–.18 / JS.15:
 
 $$
 \int d/\mathfrak c\,d\sigma
- =\frac{\mu_f}{2}\int h_1(u)d\lambda\ge\kappa_0.
+ =\frac{\mu_f}{2}\int h_1(u)d\lambda\ge\kappa_0,
+\quad d\lambda=d\sigma/\mu_f,\quad\int u\,d\lambda=u_f.
 \tag{FA.58}
 $$
 
-Equality forces $z^2=u_f$, $w^2=v_f$. Zero failure cross moment
-fixes the two physical lines with opposite $zw$ signs, each with
-coefficient mass $\mu_f/2$. Equivalently their effects are
-$W_+/2,W_-/2$ from Theorem 71.1, since their diagonals are
-$m_1/2,m_2/2$ and off-diagonals are
-$\pm\sqrt{m_1m_2}/2$. Both height differences are negative because
-$g_\pm>0$. Their absolute sum is $d_f$. This constructs the
-minimum-cost measure and proves the edge value in FA.56.
+Here $h_1$ is FA.39 with its parameter set to one. Equality forces
+$z^2=u_f,w^2=v_f$; the two opposite $zw$ failure lines have
+coefficient mass $\mu_f/2$ each, physical effects $W_+/2,W_-/2$
+of Theorem 71.1, and both height differences negative. Thus their
+absolute failure height is $d_f$, as in JS.18–.19. This identifies
+the critical objective and all cost parameters of the supplied law.
 
-It remains to recover the full original class for $\zeta>\kappa_0$.
-Take a finite feasible $\sigma$ whose cost is strictly less than
-$\zeta$. Supply its failure by saturated actual labels of live Gram
-$t^{-1}\int\mathbf c\mathbf c^T/\mathfrak c\,d\sigma$.
-The remaining Gram is $L_0-O(t^{-1})$ in the five-dimensional
-hyperplane $\operatorname{tr}(Q_0X)=0$. It has a positive decomposition
-near the four corner atoms. Here is the needed local justification.
-Vary four positive weights near $1/4$ and four ellipse angles at the
-four distinct corners. Their Gram map has derivative onto that
-hyperplane. Indeed a symmetric quadratic annihilating every weight and
-angle derivative restricts to a degree-two trigonometric polynomial
-with four distinct double zeros. It must vanish identically, hence its
-matrix is proportional to $Q_0$, the sole annihilator of the hyperplane.
-The implicit-function theorem now supplies weight/angle corrections
-$O(t^{-1})$, with all weights positive and exact residual moments.
-Their contribution to FA.57 is $O(t^{-2})$ since $|z|-1=0$ at each
-corner. The strict cost slack therefore makes the contrast feasible for
-all large $n$. All labels, including the small saturated ones, are
-actually generated by §86. Their height tends to the value from this
-$\sigma$.
+For every finite $\zeta>\kappa_0$, apply JS Theorem 7.1 with
+$\lambda=\zeta$ and its prescribed $q_n,t_n$. JS Theorems 4.3,
+5.1 and 6.1 already provide the whole-class upper bound and exact
+finite recovery. In particular JS.23–.27 supplies the four positive
+pure-live repair labels for the residual Gram $I-\mathsf U/t$,
+with deficit $C_\sigma/t+O(t^{-2})$; JS.36–.37 supplies the
+vanishing strict-cost perturbation when the limiting optimizer has
+no cost slack. Its failure covariance is exact at every finite index.
+The rare atoms have live weights $a_i/[t\mathfrak c(\mathbf c_i)]$
+and failure effects $a_i n_i n_i^T$, including their nonvanishing
+acquired failure mass. They are actual generated labels, realized
+by §86 with the same full-complex, passive-reference, five-Borel,
+whole-fibre and FIRST-clock identities. No TV-preserving balancing
+or readable discarded Kraus index is used.
 
-For an optimum exactly on the cost constraint at any
-$\zeta>\kappa_0$, mix its finite moment representation with the
-minimum-cost measure and let the mixing weight decrease to zero.
-The objective tends to $F_{\rm lim}(\zeta)$ while the cost is strictly
-smaller. This proves the matching lower limit. At $\zeta=\kappa_0$,
-the universal law WE Theorem 6.2 applies directly, since its product
-is $t_n(1-\tau_n)\to C_{\rm end}$. Applying it to the attained
-maximizers of Theorem 72.1 proves FA.56 there for every eventually
-feasible sequence, including vanishing edge slack. Its stronger
-nonoptimizer quantifier is retained as stated, without a second proof.
-$\square$
+The objective map $B_0+\Phi(\zeta)=\mathcal T(s_0)-
+[L_f-F_{\rm lim}(\zeta)]/2$ now gives FA.56 directly, including
+threshold saturation recovery. At $\zeta=\kappa_0$ apply the
+credited every-instrument critical law to the attained maximizers
+of Theorem 72.1. This also covers arbitrarily small feasible edge
+slack; no new critical-limit proof is needed. $\square$
 
-**Theorem 81.3 (exact spectral budget threshold).** With the compatible
-$\mathbf c_\epsilon,b_\epsilon$ of Proposition 80.2 put
+**Theorem 81.3 (supplied spectral boundary and unbounded-product extension).**
+With the compatible $\mathbf c_\epsilon,b_\epsilon$ of Proposition
+80.2 put
 
 $$
 \zeta_{\rm sp}=\sum_{\epsilon=\pm}
@@ -2155,33 +2180,85 @@ $$
 \tag{FA.59}
 $$
 
-Then $\kappa_0<\zeta_{\rm sp}<\infty$ and
-$F_{\rm lim}(\zeta)=L_f$ if and only if
-$\zeta\ge\zeta_{\rm sp}$. The joint gap in FA.56 is $\gamma_f$
-at the feasibility edge, strictly positive for
-$\kappa_0\le\zeta<\zeta_{\rm sp}$ and zero at and above the
-spectral threshold. It also tends to zero when
-$t(1-\tau)\to\infty$, $\tau\uparrow1$.
+This is the evaluated $C_{\rm sat}$ of JS.38. To give its explicit
+radical correspondence without conflating radial and spectral scalars,
+put $\upsilon_{\rm sp}=t_f=-2z_f/(d_f+L_f)$ and
 
-**Proof.** Whitening $\int nn^Td\sigma=M$ makes its failure effects a
-POVM on $\mathbb C^2$. The trace-norm equality
-$\int|f|d\sigma=L_f$ requires every nonzero effect to lie on one
-of the two eigenlines of $\Xi$, because both eigenvalues are nonzero
-and of opposite sign. Their total physical effects are uniquely
-$B_\pm^{\rm sp}$. Normalizing $x=s_0$ fixes each compatible ellipse
-line up to simultaneous reversal of $z,w$, which changes neither
-capacity nor $d$. Hence FA.59 is the necessary and attained cost of
-spectral equality, not a lower estimate for it. Strict inequality below
-that cost follows from compact attainment. It exceeds $\kappa_0$:
-equality in FA.58 forces both diagonal failure directions to have
-$z^2=u_f$, while the spectral pair is different. More explicitly the
-edge pair both have strictly negative trace against $\Delta$, whereas
-the positive spectral effect has trace $\lambda_+>0$. Thus that
-pair cannot be spectral and strict Jensen excludes equality of costs.
-The fixed finite spectral measure and the same corner correction prove
-the final assertion when the available $t(1-\tau)$ diverges.
-No scalar interpolation of FA.53 between its two thresholds, uniform
-convergence rate or other contact-layer limit is evaluated here. $\square$
+$$
+\begin{gathered}
+a_+=\frac{\alpha V_f+\beta W_f\upsilon_{\rm sp}^2}
+              {1+\upsilon_{\rm sp}^2},\qquad
+a_-=\frac{\alpha V_f\upsilon_{\rm sp}^2+\beta W_f}
+              {1+\upsilon_{\rm sp}^2},\\
+x_+=\frac{V_f}{\alpha V_f+\beta W_f\upsilon_{\rm sp}^2},\qquad
+x_-=\frac{V_f\upsilon_{\rm sp}^2}
+              {\alpha V_f\upsilon_{\rm sp}^2+\beta W_f},\\
+\zeta_{\rm sp}=a_+\frac{(\sqrt{x_+}-1)^2}{2c_*(x_+)}
+             +a_-\frac{(\sqrt{x_-}-1)^2}{2c_*(x_-)}.
+\end{gathered}
+$$
+
+JS Theorem 8.2 supplies $\kappa_0<\zeta_{\rm sp}<\infty$ and
+$F_{\rm lim}(\zeta)=L_f$ if and only if
+$\zeta\ge\zeta_{\rm sp}$. Every failure measure attaining $L_f$
+has exactly cost $\zeta_{\rm sp}$; its total physical effects are
+$B_\pm^{\rm sp}$, up to proportional splitting and simultaneous
+reversal of $z,w$. JS Corollary 8.3 includes genuine common finite
+recovery along every prescribed sequence with limiting product
+$\zeta=\zeta_{\rm sp}$, not just products strictly above it.
+
+JS Theorem 9.2 also supplies continuity, concavity and strict increase
+of $F_{\rm lim}$ on $[\kappa_0,\zeta_{\rm sp}]$, with endpoint
+values $d_f,L_f$ and the attained limiting chord bound
+
+$$
+F_{\rm lim}(\zeta)\ge d_f+(L_f-d_f)
+ \frac{\zeta-\kappa_0}{\zeta_{\rm sp}-\kappa_0}.
+$$
+
+Consequently the limiting height is strictly between
+$\mathcal T(s_0)-\gamma_f$ and $\mathcal T(s_0)$ in the strict
+middle interval, and equals the latter at and above the spectral
+threshold. Qualitative strict transition and this lower chord do not
+evaluate the middle scalar interpolation, contacts or rates.
+
+There is in addition the following unbounded-product conclusion:
+for $q_n\to0$ through positive values and $t_nq_n\to\infty$,
+the original classes are eventually feasible and
+$\mathcal T_{\log(1+t_n)}(s_0(1-q_n))\to\mathcal T(s_0)$.
+This is an optimal-value assertion and is not asserted by JS's
+finite-$\lambda$ theorem.
+
+**Correspondence and proof of the additional scope.** For a spectral
+unit vector $e=(e_1,e_2)$ set
+$a_e=\alpha V_fe_2^2+\beta W_fe_1^2$ and use JS.42's
+$z_e=-\sqrt{V_f}e_2/\sqrt{a_e}$,
+$w_e=\sqrt{W_f}e_1/\sqrt{a_e}$. Then
+$n(\mathbf c_e)=M_2^{1/2}e/\sqrt{a_e}$, so
+$b_\epsilon=a_e$, $z_e^2=x_\epsilon$ and
+$\mathfrak c(\mathbf c_e)=c_*(x_\epsilon)$.
+This proves that FA.59 is precisely JS.38 on the same physical
+whitening and full covariance domain. Applying JS.39–.45 with
+$F_{\rm lim}=d_f+2\Phi$ supplies the stated spectral equality
+cases, saturation recovery and qualitative transition; those proofs
+are reused, not repeated here.
+
+For the unbounded-product extension, fix this two-atom spectral
+failure measure. Apply JS.23–.27's exact finite repair for all
+sufficiently large $t_n$. Its finite cost is the fixed
+$\zeta_{\rm sp}$ and its contrast deficit obeys
+$t_ne_{t_n}=\zeta_{\rm sp}+O(t_n^{-1})$.
+Since $t_nq_n\to\infty$, eventually $e_{t_n}\le q_n$.
+The same finite whole-fibre family is therefore admissible and its
+height tends to $\mathcal T(s_0)$ by JS.28 / §86. For the reverse
+bound, FA.57 forces every competing coefficient law toward the four
+corners; the zero cross moments fix their masses to $1/4$.
+The live absolute sum tends to $j(1)$, and the whitened spectral
+bound gives failure absolute sum at most $L_f$ for every competitor.
+The triangle bound on the actual label sum in FA.37 therefore gives
+upper limit at most $(H_0+j(1)+L_f)/2=\mathcal T(s_0)$.
+This uses no uniform fixed-strength transfer, evaluates no rate and
+asserts no universal equality for nonoptimal instruments. $\square$
 
 ## 82. Exact low-label regions and the weak endpoint obstruction
 
@@ -2888,9 +2965,9 @@ $\square$
 
 ## 86. Simultaneous original-class witnesses, suppliers and remaining boundaries
 
-**Proposition 86.1 (one common instrument for every new attainer).**
+**Proposition 86.1 (one common instrument for every stated attainer).**
 Every finite family in Theorems 78.3, 79.1, 82.1, 82.3, 83.1 and
-84.1, Proposition 82.5, and the recovery construction of Theorem 81.2
+84.1, Proposition 82.5, and the recovery families of Theorems 81.2–81.3
 is realized as follows. For each nonzero low live product $K$ and its
 attached effect $N$, choose
 $J:\mathbb C^2\to\operatorname{ran}K^\dagger$ isometric and use
@@ -2926,7 +3003,7 @@ instrument, all original individual errors, contrast inequality, sharp
 joint cost and the actual FIRST clock, rather than separate optima for
 these requirements.
 
-**Proof.** The new weak families were shown to have total low live
+**Proof.** The weak families were shown to have total low live
 Gram $L_0$ and total failure effect $M$. The strong family uses
 $\operatorname{diag}(u^\dagger,v^\dagger,1)$ and the same $M$;
 FA.79 supplies exactly its complementary high Gram. Hence the total
@@ -3041,13 +3118,22 @@ cross-label maximum or selected-input average. This verifies the common
 correspondence for every stated attainer and every finite recovery
 family. $\square$
 
-**Convention 86.2 (credited tools and distinct conclusions).** The entire
-scalar threshold, minimum-budget boundary height, coefficient existence,
-general joint-layer and finite-activity label deductions are
-`repo-derived` ordinary conditional mathematics. WE's evaluated endpoint
-constant and universal critical full-record law are reused, not counted
-as new results. No worldwide novelty claim is made. The exact supplier
-interfaces are:
+**Convention 86.2 (credited tools and distinct conclusions).** The
+additional ordinary conditional `repo-derived` results beyond the
+published suppliers are the attained entire scalar threshold FA.41–.44,
+entire weak minimum-budget-boundary height FA.45–.47, fixed-strength
+positive finite coefficient existence and static-dual lower bound
+FA.48–.50, and the finite-activity actual-label and full-component
+aggregation/refinement results of §§82–85. WE supplies the endpoint
+constant and universal critical law. JS supplies the full finite-product
+joint limiting problem and limit, exact finite moment repair and common
+whole-fibre recovery, evaluated spectral saturation boundary and equality
+cases, and qualitative strict middle transition. These overlapping
+conclusions and proofs are reused, not counted as new joint results.
+The additional joint scope retained here is the positive second term
+FA.55 with the exact finite equality-path feasibility exclusion, and the
+optimal-value limit for unbounded product in Theorem 81.3. No worldwide
+novelty claim is made. The exact supplier interfaces are:
 
 | Supplier | Use and boundary |
 | --- | --- |
@@ -3056,7 +3142,8 @@ interfaces are:
 | [RC, §§58–66][RC42] and [RH, §§8–10][RH42] | Full static residual/contact curve, finite static dual at its valid scope, and distinct static feasible/height-optimal low-label counts; no finite-budget support sufficiency. |
 | [IR, Lemma 10.1][IR42] | Zero-Rayleigh finite null decomposition, including singular/rank-zero remainders; a normalized instrument still needs its total effect bound and completion. |
 | FA68–70, FA72, FA74–75 | Prescribed-law minimum with terminal effect identity, double rigidity/capacity, full-fibre construction, exact finite moments, strict two-sided deficit bounds and complete output correspondence. These intermediates are reused. |
-| [WE, Theorems 2.2, 3.2, 4.1 and 6.2][WE906] | The same original class and feasibility-only scalar reduction; strict tangent WE.17–.18; $C_{\rm end}=\kappa_0$ and $B_*=\nu$, the restricted exact recovery expression, and the critical full-record limit for every admitted actual instrument sequence. The entire threshold FA.41, boundary height FA.46 and general joint problem FA.53–.59 require their stated additional arguments; WE's scalar sign construction gives no TV-preserving symmetrization. |
+| [WE, Theorems 2.2, 3.2, 4.1 and 6.2][WE906] | The same original class and feasibility-only scalar reduction; strict tangent WE.17–.18; $C_{\rm end}=\kappa_0$ and $B_*=\nu$, the restricted exact recovery expression, and the critical full-record limit for every admitted actual instrument sequence. The entire threshold FA.41 and boundary height FA.46 require their stated additional arguments; WE's scalar sign construction gives no TV-preserving symmetrization. |
+| [JS, Lemma 4.2, Theorems 4.3, 5.1, 6.1, 7.1, 8.2, 9.1–9.2 and Corollary 8.3][JSce3] | Identical full original class and conditional sources, with the complete parameter/objective/recovery map in Convention 77.1: $F_{\rm lim}=d_f+2\Phi$, $\zeta=\lambda$, $\zeta_{\rm sp}=C_{\rm sat}$ and radial $u_f=r$ distinct from spectral $t_f=u_f^{\rm JS}$. Supplies all prescribed finite-product limits, exact finite moment repair and full-output recovery, spectral cost uniqueness/equality and qualitative strict crossover, crediting WE at criticality. Neither a complete strict-interior scalar interpolation nor an infinite-product theorem is asserted there; JS's construction counts do not replace §§82–84's actual LOW-label minima. |
 | [Yang–Xie, arXiv:1605.02431v2, §II Theorem 1][YX] | Hermitian PSD $N\times N$ Toeplitz gives rank-many positive circle atoms; uniqueness only at rank deficiency. Applied with $N=5$ in FA72, not a scalar frontier or minimum-label theorem. |
 | [Leppäjärvi–Sedlák, arXiv:2010.15816v1, §IV Definition 4, Eq.1 and Proposition 6][POST] | Full quantum-instrument postprocessing; the proposition's detailed-instrument recovery assumes orthogonal Kraus ranges. It grants no discarded-index access or arbitrary continuous disintegration. |
 | Real quantifier elimination and one-dimensional semialgebraic finiteness | Applied in Theorem 80.1 to the explicitly polynomial attained-value graph with fixed real parameters; only limit existence follows. No inaccessible supplementary text is a premise. |
@@ -3089,7 +3176,13 @@ plateau/contact transitions; the scalar interpolation of FA.53 between
 $\kappa_0$ and $\zeta_{\rm sp}$, uniform/joint rates and next terms,
 and further joint layers near the static transitions. Existence of
 $K(s)$ and an attained limiting moment problem do not evaluate these
-values. The sharp four-label contrast ceiling and the remaining weak
+values. JS's evaluated saturation boundary, equality cases and strict
+continuous middle transition retain their supplied status, and its
+common recovery includes equality at saturation. The unbounded-product
+optimal-value limit above also remains valid. Neither result supplies
+the unevaluated middle values, rates, finite-budget interior frontier
+or coefficient/contact evaluation. The sharp four-label contrast ceiling
+and the remaining weak
 finite-budget feasible/height-optimal count partitions are also
 unevaluated; the five-label feasibility family and eventual lower bounds
 are not global optimal-count sufficiency.
@@ -3118,5 +3211,6 @@ requirements, is neither completed nor narrowed by these finite results.
 [HP42]: https://github.com/the-omega-institute/trureturing/blob/42c0c311f19d89110016c3b54a29b43ce69d5b6d/docs/develop/theory/FIB_NATIVE_CRITICAL_HEIGHT_PROJECTION_AND_CUTOFF_OVERLAP_BOUNDS.md
 [POST]: https://arxiv.org/html/2010.15816v1
 [WE906]: https://github.com/the-omega-institute/trureturing/blob/90649c566145c094ba1acc79b747e82064214fbf/docs/develop/theory/FIB_NATIVE_WEAK_FINITE_ACTIVITY_ENDPOINT_CONSTANT.md
+[JSce3]: https://github.com/the-omega-institute/trureturing/blob/ce3eb5de2f708f7b584dd86df8868682fc0fdbe6/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
 
 ## 追加锚（本行以下为增补区）
