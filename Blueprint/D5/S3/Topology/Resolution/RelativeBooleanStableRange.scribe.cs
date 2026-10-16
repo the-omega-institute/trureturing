@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.StableRange;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Topology.Resolution;
 
 internal sealed class RelativeBooleanStableRangeDocument : IScribeDocumentDefinition
 {
-    private const string Owner = "D5/S1/Dynamics/StableRange/RelativeBoolean.";
+    private const string Owner = "D5/S3/Topology/Resolution/RelativeBooleanStableRange.";
     private static Formula V(string n) => F.Id(n);
     private static Formula K => Call("core", V("f"));
     private static Formula G => Call("stableLift", V("f"), V("hf"));

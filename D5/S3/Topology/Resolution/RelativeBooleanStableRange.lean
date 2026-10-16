@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/StableRange/RelativeBoolean
+/- GID: D5/S3/Topology/Resolution/RelativeBooleanStableRange
    generality: G
-   mirror-B: D5/B/S1/Dynamics/StableRange/RelativeBoolean
+   mirror-B: D5/B/S3/Topology/Resolution/RelativeBooleanStableRange
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

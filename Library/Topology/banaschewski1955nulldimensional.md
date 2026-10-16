@@ -15,6 +15,14 @@ triage: anchor
 
 # Classical attribution and exact formalized scope
 
+## Verified locator
+
+DOI: 10.1002/mana.19550130302. Canonical URL:
+https://doi.org/10.1002/mana.19550130302. Crossref verifies the bibliographic
+metadata only; the original article has not been inspected.
+
+## Construction and scope
+
 Banaschewski's article appears in Mathematische Nachrichten 13, 129–140.
 The title, author, bibliographic coordinates and DOI are verified against
 Crossref. The original article has not been inspected, so no theorem number

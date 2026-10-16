@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S1.Dynamics.StableRange.RelativeBoolean
+import D5.S3.Topology.Resolution.RelativeBooleanStableRange
 
 /-!
 # Stable-image membership as a source-bound family
@@ -12,7 +12,7 @@ reconstructed by extensionality, without a supplied equality hypothesis.
 Raw source selection and the escape-origin binding remain unresolved.
 -/
 
-namespace Reg.D5.S1.Dynamics.StableRange.RelativeBoolean
+namespace Reg.D5.S3.Topology.Resolution.RelativeBooleanStableRange
 
 open Set Function
 open _root_.D5.S1.Dynamics
@@ -135,7 +135,7 @@ noncomputable def registration :
       (DependentFamily.Realization signature.{u}) Unit Unit where
   unitName :=
     `D5.S3.Topology.Resolution.RelativeBoolean.stable_range_lift_eq_preimage.__information_unit
-  realizationName := `Reg.D5.S1.Dynamics.StableRange.RelativeBoolean.familyRegistration
+  realizationName := `Reg.D5.S3.Topology.Resolution.RelativeBooleanStableRange.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -156,4 +156,4 @@ noncomputable def registration :
   familyRecord := none
   options := #[]
 
-end Reg.D5.S1.Dynamics.StableRange.RelativeBoolean
+end Reg.D5.S3.Topology.Resolution.RelativeBooleanStableRange

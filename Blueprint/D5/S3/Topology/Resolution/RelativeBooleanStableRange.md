@@ -8,7 +8,7 @@ The actual relative Boolean lift has exactly the inverse-image stable range and 
 
 $$\begin{aligned}\forall X: \operatorname{Type}\left(u\right), [\operatorname{TopologicalSpace}\left(X\right)]\\\forall f: X \to X, \forall hf: \operatorname{Continuous}\left(f\right),\\\operatorname{Continuous}\left(\operatorname{stableLift}\left(f, hf\right)\right) \land \operatorname{core}\left(\operatorname{stableLift}\left(f, hf\right)\right) = \operatorname{preimage}\left(\operatorname{projection}\left(\operatorname{core}\left(f\right)\right), \operatorname{core}\left(f\right)\right) \land\\\operatorname{Semiconj}\left(\operatorname{sectionC}\left(\operatorname{core}\left(f\right)\right), \operatorname{restriction}\left(f\right), \operatorname{stableLift}\left(f, hf\right)\right)\end{aligned}$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/StableRange/RelativeBoolean.stable_lift_dynamics` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/Resolution/RelativeBooleanStableRange.stable_lift_dynamics` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -28,6 +28,6 @@ This exact construction is a supplier for later period and finite-observation ar
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/StableRange/RelativeBoolean.stable_lift_dynamics`
-- Dependency: [D5/S1/Dynamics/StableRange](../StableRange.md)
-- Dependency: [D5/S3/Topology/Resolution/RelativeBoolean](../../../S3/Topology/Resolution/RelativeBoolean.md)
+- Truth anchor: `D5/S3/Topology/Resolution/RelativeBooleanStableRange.stable_lift_dynamics`
+- Dependency: [D5/S1/Dynamics/StableRange](../../../S1/Dynamics/StableRange.md)
+- Dependency: [D5/S3/Topology/Resolution/RelativeBoolean](RelativeBoolean.md)
