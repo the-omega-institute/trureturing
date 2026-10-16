@@ -6,10 +6,34 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Factorization.QuadraticIdeals;
 
 internal sealed class EisensteinCohnReductionCoreDocument : IScribeDocumentDefinition
 {
+    private static Formula I(string s) => F.Id(s);
+    private static Formula.BoundVariable B(string s, Formula t) => new(FormulaIdentifier.Create(s), t);
+    private static Formula All(Formula f, params Formula.BoundVariable[] v) =>
+        new Formula.BindMany(FormulaQuantifier.ForAll, [.. v], f);
+    private static DocumentBlock Helper(string n, Formula f, string p) => Describe.Lean(
+        DescribeId.Create(n.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(
+            "D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore." + n), H(n),
+        StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(p))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The square-plus-three equation has no integer solution with x at least two and exponent at least two.",
         H("The Eisenstein Reduction for All Integer Powers"),
         Blocks(
+            Helper("norm_unit_one",
+                All(Equal(Call("norm", Call("unitValue", I("u"))), Num(1)),
+                    B("u", Call("Units", I("EisensteinOrder")))),
+                "Every integral Eisenstein unit has norm one. This existing owner proof is reused "
+                + "unchanged and is also consumed by ResetIntegralUnits after the imaginary "
+                + "coefficient vanishes, forcing the real coefficient to be plus or minus one."),
+            Helper("unit_modTwo",
+                All(new Formula.Logic(Equal(Call("modTwo", Call("unitValue", I("u"))), Num(1)),
+                    FormulaLogicOperator.Implies, Equal(Call("im", Call("unitValue", I("u"))), Num(0))),
+                    B("u", Call("Units", I("EisensteinOrder")))),
+                "EisensteinOrder is QuadraticAlgebra Int (-1) (-1); the public ETwo abbreviation "
+                + "is the same algebra over ZMod 2. modTwo literally reduces both coefficients. "
+                + "The existing unit_modTwo gives imaginary coefficient zero for a unit reducing "
+                + "to one. It does not alone conclude plus or minus one. ResetIntegralUnits "
+                + "consumes it together with norm_unit_one at this owner."),
             Describe.Lean(
                 DescribeId.Create("int-sq-add-three-not-pow"),
                 DeclarationHandle.Create("D5/S3/Factorization/QuadraticIdeals/EisensteinCohnReductionCore.int_sq_add_three_not_pow"),

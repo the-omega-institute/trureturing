@@ -6,6 +6,7 @@ import platform
 import subprocess
 import datetime
 import shutil
+import sys
 import unittest
 
 from lean_seed_support import INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
@@ -279,5 +280,13 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
 
+def _all_test_cases():
+    return unittest.defaultTestLoader.loadTestsFromTestCase(TransportTests)
+
+
 if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "--list":
+        for case in _all_test_cases():
+            print(case.id().rsplit(".", 1)[-1])
+        raise SystemExit(0)
     unittest.main()

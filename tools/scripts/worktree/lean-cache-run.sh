@@ -55,7 +55,7 @@ if [[ "$1" == --build ]]; then
   root_targets=() impl_targets=() reg_targets=() downstream_targets=()
   for target in "$@"; do
     case "$target" in
-      LeanInformationAuditRegTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
+      LeanInformationAuditRegTests*|LeanInformationAuditFibTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*|regInspector/*|@regInspector|@regInspector/*|@regInspector:*) downstream_targets+=("$target") ;;
       Reg|Reg.*|Reg:*|+Reg.*|reg/*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
       LeanInformationAudit*|+LeanInformationAudit*|leanInspector/*|leanInspectorInterface/*|@leanInspector|@leanInspector/*|@leanInspector:*|@leanInspectorInterface|@leanInspectorInterface/*|@leanInspectorInterface:*) impl_targets+=("$target") ;;
       *) root_targets+=("$target") ;;
@@ -63,6 +63,12 @@ if [[ "$1" == --build ]]; then
   done
   if [[ $# == 0 || ${#root_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake build ${root_targets[@]+"${root_targets[@]}"}
+  fi
+  # The downstream workspace already includes the Inspector package. Build
+  # shared program targets in one native graph when both layers are selected.
+  if [[ ${#downstream_targets[@]} != 0 && ${#impl_targets[@]} != 0 ]]; then
+    downstream_targets+=("${impl_targets[@]}")
+    impl_targets=()
   fi
   if [[ $# == 0 || ${#impl_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}

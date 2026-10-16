@@ -1,0 +1,26 @@
+**Lemma 9.2 (finite exactly attained partition, FCS reuse).** There is a finite exact partition of $\mathcal U_*$ on which both good sets and the full target are constant. Closed cells are singleton actual points; live cells are countably infinite.
+
+Proof. Let
+
+$$
+b=\max\bigl(\{0\}\cup\{|a_T(q)|-3:q\in Q_T,\ |a_T(q)|\ge3\}\bigr),
+\tag{FTC.21}
+$$
+
+using all installed words. Expose each of the six class terms through inclusive relative depth $b$, retaining literal early alpha/beta leaves and their absent cones. At a frontier branch place a live name that can only be filled by a finite branch image. Different frontier names are independent; a repeated partner repeats its whole pattern with the same names. There are finitely many such patterns. For their free terms $A_d$, retain all whole negatives $A_d\ne A_e$, $d\ne e$.
+
+Define an image predicate on free syntax by $J(\alpha)=\mathsf{false}$, $J(\beta)=J(z)=\mathsf{true}$ for live names, and
+
+$$
+J([A,B])\iff
+(A\text{ is literally }\beta\text{ and }B\text{ is literally }\alpha)
+\ \lor\ (J(A)\land J(B)).
+\tag{FTC.22}
+$$
+
+This is exact under every branch-image filling. In fact a name is always a branch and cannot create a new leaf needed by the literal-$E$ alternative; the other image alternative is exactly two images. Retain precisely tuples with $J(\mathscr S(A))$ true and unequal free syntax for every different pair of class terms.
+
+Every actual source exposes one such retained tuple: branch subtrees of images are images, the image test is exact, and identical free class syntax would violate its whole-value disequality. Conversely a retained tuple has a simultaneous ground filling satisfying all negatives. Let $h\ge1$ bound all free-subterm heights with names treated as leaves. List live names $z_i$ and assign $z_i=B_{N_i}$ with $N_i>h$ and successive gaps greater than $h$. For unequal free terms descend to a first syntactic mismatch. Different concrete constructors remain different. Distinct names have different heights. A name against a ground term has greater height. Against a nonvariable term containing names, let $N_j$ be the largest assigned height occurring there. If $N_j<N_i$, its height is at most $\max(h,N_j+h)<N_i$. If $N_j>N_i$, it is greater than $N_i$. If $N_j=N_i$, that name occurs at positive depth and again gives height greater than $N_i$. Hence one assignment makes every nontrivial whole negative true at once. The exact image predicate gives an actual inverse with exactly the exposed profile. With no live names the already unequal ground tuple has its unique inverse. This proves exact coverage, not merely feasibility of selected samples.
+
+A closed tuple determines one actual origin. In a live tuple replace all $N_i$ by $N_i+k$, $k\ge0$. Gaps persist, a selected live occurrence has strictly increasing height, and the tuples and inverse origins are all distinct. Finite terms are countable, proving countable infinity. Every installed literal reply is fixed by the inclusive prefix, and the root types fix the whole target. Lemma 3.4 therefore makes both good sets constant on the cell. This is the FCS finite-profile and multiplicity argument with its required filling details. No efficiency for constructing the full partition is asserted. $\square$
+

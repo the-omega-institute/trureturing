@@ -25,6 +25,12 @@ srcDir = "../lean-inspector"
 roots = ["LeanInformationAuditRegTests"]
 globs = ["LeanInformationAuditRegTests.+"]
 
+[[lean_lib]]
+name = "LeanInformationAuditFibTests"
+srcDir = "../lean-inspector"
+roots = ["LeanInformationAuditFibTests"]
+globs = ["LeanInformationAuditFibTests.+"]
+
 # Full production analysis is explicit and never belongs to the default test glob.
 [[lean_lib]]
 name = "LeanInformationAuditRegAnalysis"
@@ -36,6 +42,11 @@ globs = ["LeanInformationAuditRegAnalysis.+"]
 name = "compiledJudgeTests"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegTests.CompiledDiscovery"
+
+[[lean_exe]]
+name = "compiledFibTests"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditFibTests.AuricFib.SourceContracts"
 
 [[lean_exe]]
 name = "auricFibAnalysis"

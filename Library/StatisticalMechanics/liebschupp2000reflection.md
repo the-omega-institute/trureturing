@@ -6,6 +6,7 @@ title: "Singlets and reflection symmetric spin systems"
 doi: 10.1016/S0378-4371(99)00521-X
 url: https://arxiv.org/abs/math-ph/9910037v1
 claim: "Positive-semidefinite ground coefficient matrices and singlet-ground-state existence for reflection-symmetric spin systems with antiferromagnetic crossing bonds."
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

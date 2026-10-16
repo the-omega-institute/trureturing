@@ -14,6 +14,9 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
         "For every n >= 3, the Bernards--Gühne Bell functional has exact quantum maximum sqrt(2) n 2^(n-2), over all finite local dimensions, binary observables and density matrices.",
         H("The exact quantum bound for nonlocality depth"),
         Blocks(
+            Node("tensor_star", "Adjoints commute with the tensor product", TensorStarFormula(),
+                "The tensor product of the adjoints of a finite family of complex matrices equals the adjoint of their tensor product. The local matrix carriers may be arbitrary types.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo()),
             Node("IsBinaryObservable", "Binary observables", BinaryObservableFormula(),
                 "A binary observable is Hermitian and both its shifts 1 - M and 1 + M are positive semidefinite. The Bell maximum ranges over two such observables at each party.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
@@ -84,6 +87,21 @@ internal sealed class NonlocalityDepthQuantumBoundDocument : IScribeDocumentDefi
     private static Formula Hermitian(Formula value) => At(Q("Matrix", "IsHermitian"), value);
     private static Formula Trace(Formula value) => At(Q("Matrix", "trace"), value);
     private static Formula Smul(Formula a, Formula b) => At(Q("SMul", "smul"), a, b);
+
+    private static Formula TensorStarFormula()
+    {
+        Formula n = X("n"), sigma = X("sigma"), matrices = X("M"), j = X("j");
+        Formula local = Matrix(At(sigma, j));
+        Formula family = Family("j", Fin(n), local);
+        Formula adjoints = Parenthesized(Seq(LambdaLower, Sp,
+            Parenthesized(Seq(j, Sp, Colon, Sp, Fin(n))), Sp, Mapsto, Sp,
+            At(Q("Matrix", "conjTranspose"), At(matrices, j))));
+        Formula left = At(Q("ProductPrefixRigidity", "productMap"), sigma, adjoints);
+        Formula right = At(Q("Matrix", "conjTranspose"), At(Q("ProductPrefixRigidity", "productMap"), sigma, matrices));
+        return Disp(All("n", Numbers("N"), All("sigma", Arrow(Fin(n), X("Type")),
+            Seq(Instances(n, "Fintype"), Instances(n, "DecidableEq"),
+                All("M", family, Equal(left, right))))));
+    }
 
     private static Formula BinaryObservableFormula()
     {
