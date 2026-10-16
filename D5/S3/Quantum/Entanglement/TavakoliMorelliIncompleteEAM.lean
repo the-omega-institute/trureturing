@@ -84,12 +84,11 @@ private theorem traceNorm_toEuclideanCLM {κ : Type*} [Fintype κ] [DecidableEq 
   let Φ := Matrix.toEuclideanCLM (n := κ) (𝕜 := ℂ)
   have hsqrt : CFC.abs (Φ A) = Φ (CFC.sqrt (Aᴴ * A)) := by
     change CFC.sqrt (star (Φ A) * Φ A) = _
-    apply CFC.sqrt_unique
-    · rw [← map_mul,
-        CFC.sqrt_mul_sqrt_self _ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg]
-      change Φ (star A * A) = star (Φ A) * Φ A
-      rw [map_mul, map_star]
-    · exact map_nonneg Φ (CFC.sqrt_nonneg _)
+    rw [← map_star, ← map_mul]
+    exact (NonUnitalStarAlgHomClass.map_cfcₙ (S := ℂ) Φ NNReal.sqrt (Aᴴ * A)
+      (by fun_prop) (by simp) Φ.toAlgEquiv.toLinearEquiv.toLinearMap.continuous_of_finiteDimensional
+      (Matrix.posSemidef_conjTranspose_mul_self A).nonneg
+      (map_nonneg Φ (Matrix.posSemidef_conjTranspose_mul_self A).nonneg)).symm
   obtain ⟨w, b, _⟩ := exists_hilbertBasis ℂ (EuclideanSpace ℂ κ)
   let : Finite w := b.orthonormal.linearIndependent.finite
   let : Fintype w := Fintype.ofFinite w
@@ -284,7 +283,7 @@ private theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
           simp only [Matrix.mul_assoc]
         _ = (V.val * (Dᴴ * D) * V.valᴴ).trace := by
           rw [hU]; simp only [Matrix.mul_one, Matrix.mul_assoc]
-        _ = _ := by rw [trace_mul_cycle, hV, Matrix.one_mul]
+        _ = _ := Matrix.trace_units_conj (Unitary.toUnits V) _
     have hnorm := coeff_normalized u
     rw [hsquare] at hnorm
     simpa only [D, diagonal_conjTranspose, diagonal_mul_diagonal,
@@ -401,8 +400,8 @@ private theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin 
   rw [schmidtSandwich_weight U sval hs]
   let D : Op d := diagonal (fun i => (sval i : ℂ))
   have hU : U.valᴴ * U.val = 1 := Unitary.star_mul_self_of_mem U.prop
-  have htrace : (U.val * D * U.valᴴ).trace = D.trace := by
-    rw [trace_mul_cycle, hU, Matrix.one_mul]
+  have htrace : (U.val * D * U.valᴴ).trace = D.trace :=
+    Matrix.trace_units_conj (Unitary.toUnits U) D
   have hsquare : ((U.val * D * U.valᴴ) * (U.val * D * U.valᴴ)).trace =
       (D * D).trace := by
     calc
@@ -410,7 +409,7 @@ private theorem schmidtSandwich_moments {d : ℕ} (U : Matrix.unitaryGroup (Fin 
         simp only [mul_assoc]
       _ = (U.val * (D * D) * U.valᴴ).trace := by
         rw [hU]; simp only [Matrix.mul_one, mul_assoc]
-      _ = _ := by rw [trace_mul_cycle, hU, Matrix.one_mul]
+      _ = _ := Matrix.trace_units_conj (Unitary.toUnits U) _
   change (U.val * D * U.valᴴ).trace.re = _ ∧
     ((U.val * D * U.valᴴ) * (U.val * D * U.valᴴ)).trace.re = _
   rw [htrace, hsquare]
@@ -539,10 +538,6 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     (LinearMap.mul ℝ (Op d)).compr₂
       (Complex.reLm.comp (Matrix.traceLinearMap (Fin d) ℝ ℂ))
   have hK (X Y : Op d) : K X Y = (X * Y).trace.re := rfl
-  have hcomm (X Y : Op d) : K X Y = K Y X := by
-    exact congrArg Complex.re (trace_mul_comm X Y)
-  have hI : K 1 1 = (d : ℝ) := by simp [hK]
-  have hIH : K 1 H = H.trace.re := by simp [hK]
   have hIE (a : Fin n) : K 1 (A.effect a) = (d : ℝ) / n := by
     rw [hK, Matrix.one_mul, eam_effect_trace]
     simp
@@ -557,21 +552,27 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
   have hα : 0 ≤ α := div_nonneg
     (mul_nonneg (Nat.cast_nonneg _) (sub_nonneg.mpr hdreal))
     (mul_nonneg (Nat.cast_nonneg _) (by linarith))
-  have hZ : Z.IsHermitian := hH.sub
-    (isHermitian_one.smul (by simp [isSelfAdjoint_iff]))
-  have hT : T.IsHermitian := by
-    change (∑ a, t a • A.effect a)ᴴ = ∑ a, t a • A.effect a
-    rw [conjTranspose_sum]
-    apply Finset.sum_congr rfl
-    intro a _
-    exact ((scaledPure_hermitian (eam_effect_scaledPure A a)).smul
-      (by simp [isSelfAdjoint_iff])).eq
+  have : NeZero d := ⟨by omega⟩
+  have hreal : H.trace = (H.trace.re : ℂ) := by
+    simpa only [Matrix.mul_one] using
+      D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
+        H 1 hH isHermitian_one
+  have hcenter : H - (H.trace / (d : ℂ)) • 1 = Z := by
+    rw [hreal, ← Complex.ofReal_natCast d, ← Complex.ofReal_div]
+    rfl
+  have hCentered : Z.IsHermitian ∧ Z.trace = 0 := by
+    have h :=
+      D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem H hH
+    change (H - (H.trace / (Fintype.card (Fin d) : ℂ)) • 1).IsHermitian ∧
+      (H - (H.trace / (Fintype.card (Fin d) : ℂ)) • 1).trace = 0 at h
+    simpa only [Fintype.card_fin, hcenter] using h
+  have hZ : Z.IsHermitian := hCentered.1
+  have hT : T.IsHermitian :=
+    isSelfAdjoint_sum Finset.univ (fun a _ =>
+      (scaledPure_hermitian (eam_effect_scaledPure A a)).smul
+        (by simp [isSelfAdjoint_iff]))
   have hZ1 : K Z 1 = 0 := by
-    simp only [Z, map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
-      smul_eq_mul, hcomm H 1, hIH, hI]
-    dsimp only [q]
-    field_simp (disch := assumption)
-    ring
+    simpa only [hK, Matrix.mul_one, Complex.zero_re] using congrArg Complex.re hCentered.2
   have htsum : ∑ a, t a = 0 := by
     change ∑ a, K Z (A.effect a) = 0
     rw [← map_sum, eam_effect_sum hd A, hZ1]
@@ -595,28 +596,19 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     intro a _
     ring
   have hZZ : K Z Z = (H * H).trace.re - q ^ 2 / (d : ℝ) := by
-    haveI : NeZero d := ⟨by omega⟩
-    letI :=
+    let :=
       D5.S3.Quantum.Measurement.BasisMeasurementProjection.matrixNormedAddCommGroup (d := d)
-    letI :=
+    let :=
       D5.S3.Quantum.Measurement.BasisMeasurementProjection.matrixComplexInnerProductSpace (d := d)
-    have hreal : H.trace = (H.trace.re : ℂ) := by
-      simpa only [Matrix.mul_one] using
-        D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
-          H 1 hH isHermitian_one
-    have hcenter : H - (H.trace / (d : ℂ)) • 1 = Z := by
-      rw [hreal, ← Complex.ofReal_natCast d, ← Complex.ofReal_div]
-      rfl
     have hnorm :=
       D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.centered_hermitian_norm_sq H hH
-    rw [hcenter, InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
-      D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.matrix_inner_eq_trace_conjTranspose_mul,
-      hZ.eq] at hnorm
+    open D5.S3.Quantum.Tomography.PurityPythagorasDecomposition in
+      rw [hcenter, InnerProductSpace.norm_sq_eq_re_inner (𝕜 := ℂ),
+        matrix_inner_eq_trace_conjTranspose_mul, hZ.eq] at hnorm
     exact hnorm
   have hnonneg : 0 ≤ K Z Z := by
-    have heq : K Z Z = entryNormSq Z := by rw [hsSq_eq_trace, hZ.eq]; rfl
-    rw [heq]
-    exact Finset.sum_nonneg (fun i _ => Finset.sum_nonneg (fun j _ => sq_nonneg _))
+    simpa only [hK, hZ.eq] using
+      (Complex.nonneg_iff.mp (posSemidef_conjTranspose_mul_self Z).trace_nonneg).1
   have hcs : s ^ 2 ≤ K Z Z * (α * s) := by
     have hc := D5.S3.Quantum.Matrix.CartesianVariance.trace_product_cauchy Z T
     rw [D5.S3.Quantum.Tomography.PurityPythagorasDecomposition.trace_mul_real_of_hermitian
@@ -629,7 +621,8 @@ private theorem eam_second_moment {d n : ℕ} (hd : 1 ≤ d)
     by_cases hs : s = 0
     · rw [hs]; exact mul_nonneg hα hnonneg
     · have hspos : 0 < s := lt_of_le_of_ne hs0 (Ne.symm hs)
-      nlinarith
+      apply (mul_le_mul_iff_left₀ hspos).mp
+      simpa only [pow_two, mul_assoc, mul_comm, mul_left_comm] using hcs
   have hshift (a : Fin n) : K H (A.effect a) = t a + q / (n : ℝ) := by
     dsimp only [t, Z]
     simp only [map_sub, map_smul, LinearMap.sub_apply, LinearMap.smul_apply,
@@ -709,17 +702,10 @@ theorem schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
   rw [correlation_sum_smul]
   have htri (s : Finset (Fin N)) :
       traceNorm (∑ k ∈ s, (p k : ℂ) • correlation (proj (u k)) A B) ≤
-        ∑ k ∈ s, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) := by
-    induction s using Finset.induction_on with
-    | empty =>
-      rw [Finset.sum_empty, Finset.sum_empty]
-      change (CFC.sqrt ((0 : Matrix κ κ ℂ)ᴴ * 0)).trace.re ≤ 0
-      rw [Matrix.conjTranspose_zero, Matrix.zero_mul, CFC.sqrt_zero, Matrix.trace_zero,
-        Complex.zero_re]
-    | @insert k s hk ih =>
-      rw [Finset.sum_insert hk, Finset.sum_insert hk]
-      exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_add_le _ _).trans
-        (add_le_add le_rfl ih)
+        ∑ k ∈ s, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) :=
+    Finset.le_sum_of_subadditive (fun M : Matrix κ κ ℂ => traceNorm M)
+      (by simp [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm])
+      D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_add_le s _
   calc
     _ ≤ ∑ k, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) := htri Finset.univ
     _ = ∑ k, p k * traceNorm (correlation (proj (u k)) A B) := by

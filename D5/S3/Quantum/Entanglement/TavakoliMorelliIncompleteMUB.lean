@@ -159,9 +159,9 @@ private theorem mub_second_moment {d m : ℕ} (hd : 1 ≤ d)
       Complex.ofReal_re]
     rfl
   have hsum (l : Fin m) : ∑ a, p l a = q := by
-    change ∑ a, (H * A.effect (l, a)).trace.re = _
-    rw [← Complex.re_sum, ← Matrix.trace_sum, ← Matrix.mul_sum, mub_effect_sum,
-      Matrix.mul_one]
+    simpa only [p, q, MUBFamily.context, recordWeight,
+      D5.S3.Quantum.FiniteDimensional.bornProbability, Complex.re_sum] using
+      congrArg Complex.re (recordWeight_sum (mub_context_record A l) H)
   have hBasis (l : Fin m) :
       ∑ a, ((X.1.1 * A.effect (l, a)).trace.re) ^ 2 =
         (∑ a, (p l a) ^ 2) - q ^ 2 / (d : ℝ) := by
