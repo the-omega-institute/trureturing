@@ -159,6 +159,22 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MathlibReanchorPreservesAdjacentScopeCommands(bool changeDomain)
+    {
+        var baseline = "section\ndef carrier : Type := Nat\n"
+            + "theorem a : ∀ x : carrier, x = x := by intro x; rfl\nend section\n";
+        var candidate = baseline.Replace("intro x; rfl", "intro x; exact rfl", StringComparison.Ordinal);
+        if (changeDomain) candidate = candidate.Replace("Type := Nat", "Type := Unit", StringComparison.Ordinal);
+        var result = ValidateMathlibReanchor(
+            baseModules: [ModuleWithReport("A", baseline, "old elaborated domain"), Module("B")],
+            candidateModules: [ModuleWithReport("A", candidate, "new elaborated domain"), Module("B")],
+            replacedModules: ["A"], environment: ReanchorEnvironment.PinUpgrade);
+        Assert.Equal(!changeDomain, result.Authorized);
+    }
+
+    [Theory]
     [InlineData("nonrec ")]
     [InlineData("@[reducible] nonrec ")]
     [InlineData("private nonrec ")]
