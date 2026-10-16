@@ -230,13 +230,15 @@ theorem traceZero_measurement_norm_sq
   have hExpansion : unreadState context.projector X.1.1 =
       ∑ j, (((X.1.1 * context.projector j).trace.re : ℝ) : ℂ) •
         context.projector j := by
-    rw [unreadState]
+    have h := congrArg (fun A : HermitianSpace d => A.1)
+      (basis_measurement_eq_projector_sum context X.1)
+    simp only [basisMeasurement_val, Submodule.coe_sum, Submodule.coe_smul,
+      basisProjector_val] at h
+    refine h.trans ?_
     apply Finset.sum_congr rfl
     intro j _
-    rw [(context.rankOne j).2.2.2, Matrix.trace_mul_comm]
-    rw [trace_mul_real_of_hermitian X.1.1 (context.projector j)
-      X.1.2 (context.rankOne j).1]
-    simp only [Complex.ofReal_re]
+    rw [Matrix.trace_mul_comm]
+    exact algebra_compatible_smul ℂ _ _
   rw [hExpansion]
   exact projector_sum_norm_sq context hRecord _
 
