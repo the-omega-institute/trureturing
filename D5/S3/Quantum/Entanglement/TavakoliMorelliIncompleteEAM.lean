@@ -668,11 +668,12 @@ theorem pure_schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
     _ = _ := Real.mul_self_sqrt (by positivity)
 
 theorem schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
-    [Fintype κ] [DecidableEq κ] (ρ : BipartiteOp d) (A B : κ → Op d)
+    [Fintype κ] (ρ : BipartiteOp d) (A B : κ → Op d)
     (α β : ℝ) (hA : ∀ a, ScaledPure (A a)) (hB : ∀ b, ScaledPure (B b))
     (hα : 0 ≤ α) (hβ : 0 ≤ β) (hMA : MomentBound A α β)
     (hMB : MomentBound B α β) (hρ : SchmidtNumberLE ρ r) :
     traceNorm (correlation ρ A B) ≤ α + β * (r : ℝ) := by
+  classical
   obtain ⟨N, p, u, hp, hsum, hr, rfl⟩ := hρ
   rw [correlation_sum_smul]
   have htri (s : Finset (Fin N)) :
@@ -718,11 +719,15 @@ theorem result : claim := by
   have hmoment (C : EAM d n) : MomentBound C.effect α β := by
     intro H hH
     have h := eam_second_moment hd C H hH
-    convert h using 1 <;> dsimp only [α, β] <;> ring
+    convert h using 1
+    dsimp only [α, β]
+    ring
   have h := schmidt_traceNorm_le_of_moment ρ A.effect B.effect α β
     (eam_effect_scaledPure A) (eam_effect_scaledPure B) hα hβ
     (hmoment A) (hmoment B) hρ
   change traceNorm (correlation ρ A.effect B.effect) ≤ _
-  convert h using 1 <;> dsimp only [α, β] <;> ring
+  convert h using 1
+  dsimp only [α, β]
+  ring
 
 end D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
