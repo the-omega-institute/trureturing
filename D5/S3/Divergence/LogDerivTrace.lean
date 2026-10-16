@@ -30,7 +30,7 @@ open scoped Matrix.Norms.L2Operator
 
 namespace D5.S3.Divergence.LogDerivTrace
 
-private lemma scalarKernel_integrable (lambda : ℝ) (hlambda : 0 < lambda) :
+lemma scalarKernel_integrable (lambda : ℝ) (hlambda : 0 < lambda) :
     IntegrableOn (fun t : ℝ => lambda / (lambda + t) ^ 2) (Set.Ioi 0) := by
   let F : ℝ → ℝ := fun t => -lambda / (lambda + t)
   have hderiv : ∀ t ∈ Set.Ici (0 : ℝ),
@@ -67,7 +67,7 @@ private lemma integral_scalarKernel (lambda : ℝ) (hlambda : 0 < lambda) :
   simpa [F, hlambda.ne'] using
     integral_Ioi_of_hasDerivAt_of_nonneg' hderiv hnonneg htendsto
 
-private lemma resolvent_eq_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma resolvent_eq_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
     (m : Matrix ι ι ℂ) (hm : m.PosDef) (t : ℝ) (ht : 0 ≤ t) :
     (m + t • 1)⁻¹ =
       hm.isHermitian.eigenvectorUnitary *
@@ -124,7 +124,7 @@ private lemma resolvent_eq_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
       rw [Matrix.mul_one]
       exact Unitary.coe_mul_star_self _
 
-private lemma pairKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
+lemma pairKernel_integrable (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     IntegrableOn (fun t : ℝ => 1 / ((a + t) * (b + t))) (Set.Ioi 0) := by
   let c := min a b
   have hc : 0 < c := lt_min ha hb
@@ -213,7 +213,7 @@ private lemma integrand_eq_spectral {ι : Type*} [Fintype ι] [DecidableEq ι]
   noncomm_ring
 
 attribute [-instance] instTopologicalSpaceMatrix Matrix.instUniformSpace in
-private lemma logDeriv_integrable {ι : Type*} [Fintype ι] [DecidableEq ι]
+lemma logDeriv_integrable {ι : Type*} [Fintype ι] [DecidableEq ι]
     (m X : Matrix ι ι ℂ) (hm : m.PosDef) :
     IntegrableOn (fun t : ℝ => (m + t • 1)⁻¹ * X * (m + t • 1)⁻¹) (Set.Ioi 0) := by
   let U := hm.isHermitian.eigenvectorUnitary

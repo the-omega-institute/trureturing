@@ -337,7 +337,7 @@ theorem traceNorm_isometry {M N : Type*} [Fintype M] [DecidableEq M]
     (CFC.sqrt (Xᴴ * X)).trace.re
   rw [hgram, hsqrt, Matrix.trace_mul_cycle, hV, Matrix.one_mul]
 
-private theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
+theorem traceNorm_smul_nonneg {n : Type*} [Fintype n] [DecidableEq n]
     (X : Matrix n n ℂ) (c : ℝ) (hc : 0 ≤ c) :
     traceNorm ((c : ℂ) • X) = c * traceNorm X := by
   have htr (U : unitaryGroup n ℂ) :

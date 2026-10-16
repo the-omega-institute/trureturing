@@ -17,6 +17,9 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("traceNorm_isometry", "Rectangular isometries preserve the trace norm", TraceNormIsometryFormula(),
                 "For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("traceNorm_smul_nonneg", "Nonnegative trace-norm homogeneity", ScalingFormula(),
+                "Multiplication by a nonnegative real scalar scales the trace norm by that scalar.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("swap", "The literal tensor swap", SwapFormula(),
                 "The flip F in Siudzinska's Section 2, Eq. (9), p. 2, sends the computational-basis pair (a,b) to (b,a). The identity matrix is reindexed in its columns by Prod.swap, so its (p,q) entry is 1 exactly when p=(q.2,q.1). Scalars are complex.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Siudzinska)),
@@ -35,7 +38,7 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Node("claim", "The Wang–Zhou–Chen–Fei conjecture", ClaimFormula(),
                 "Section IV, p. 8, after Theorem 2, verbatim: \"The lower bounds of concurrence induced by arbitrary two distinct conical 2-designs are comparable.\" For each d at least 2 and each pair of finite designs, one ordering holds for every bipartite state. DensityState is the canonical positive semidefinite trace-one CStarMatrix; CStarMatrix.ofMatrix.symm takes its underlying Matrix. Equal designs are also included. The state quantifier lies inside each branch, so the choice of ordering is independent of the state.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Wzcf)),
-            Node("result", "Uniform comparison by the ratio alpha over beta", Disp(F.Id("claim")),
+            Node("result", "Uniform comparison by the ratio alpha over beta", Disp(ClaimBody()),
                 "Vectorize each effect as A_ip=(E_i)_(p.2,p.1). The tensor identity gives A.conjTranspose times A=beta I+alpha vv.conjTranspose, where v=Matrix.vec I. With Q=vv.conjTranspose/d and t=sqrt(1+d alpha/beta), a rectangular isometry factors A as sqrt(beta) U (I+(t-1)Q). The trace norm is unchanged by that isometry, so the bound depends only on t. For s at most t, the projection dilation gives a trace-norm gain of at least (t squared minus s squared)/d, cancelling the change of the offset. Consequently alpha_E/beta_E at least alpha_G/beta_G gives B_E at least B_G for every state. Equal ratios give equal bounds. The total order on real ratios proves claim.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Wzcf),
                 new OpenProblemResolutionClaim(
@@ -144,7 +147,7 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             Mul(Call("c", F.Id("d")), Parenthesized(excess)), Field(e, "beta")))));
     }
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimBody()
     {
         Formula d = F.Id("d"), e = F.Id("E"), g = F.Id("G"), rho = F.Id("rho");
         Formula matrix = Apply(Seq(Qualified("CStarMatrix", "ofMatrix"), Dot, F.Id("symm")), Field(rho, "1"));
@@ -153,6 +156,19 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
             FormulaLogicOperator.Or, Parenthesized(All("rho", states, Le(Call("B_E", e, matrix), Call("B_E", g, matrix)))));
         Formula body = Dim(Imp(Le(D(2), d), All("m", NatType(), All("n", NatType(),
             All("E", Call("Design", d, F.Id("m")), All("G", Call("Design", d, F.Id("n")), order))))));
-        return Disp(new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, Parenthesized(body)));
+        return body;
+    }
+
+    private static Formula ClaimFormula() => Disp(new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, Parenthesized(ClaimBody())));
+
+    private static Formula TypeInputs(string name, Formula body) => All(name, F.Id("Type"), Seq(
+        OpenBracket, Call("Fintype", F.Id(name)), CloseBracket, Sp,
+        OpenBracket, Call("DecidableEq", F.Id(name)), CloseBracket, Comma, Sp, body));
+    private static Formula ScalingFormula()
+    {
+        var x = F.Id("X"); var c = F.Id("c");
+        return Disp(TypeInputs("n", All("X", MatrixType(F.Id("n")), All("c", RealType(),
+            Imp(Le(D(0), c), Eqn(Call("traceNorm", Seq(Cast(c, ComplexType()), Sp, Cdot, Sp, x)),
+                Mul(c, Call("traceNorm", x))))))));
     }
 }
