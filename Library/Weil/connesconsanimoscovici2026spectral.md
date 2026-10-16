@@ -5298,3 +5298,174 @@ actual retained/cofinal positivity, Robin tail, RH and Lean
 verification remain unresolved. The tail identity and numerical
 algorithms are classical results reused in a source-specific
 application, not new generic mathematics.
+
+### A fixed negative-channel envelope before a signed far functional
+
+Keep the SAME true old18-core and write
+
+$$
+\Sigma_0=\begin{pmatrix}a&c\\c^*&F\end{pmatrix},\quad a<0,
+\quad S=F-c^*c/a\succ0,\quad
+T=\binom{-c/a}{I},\quad \delta=-a.
+$$
+
+The existing block inverse identity gives
+
+$$
+Q=\Sigma_0^{-1}=Q_+-\frac{e_0e_0^*}{\delta},\qquad
+Q_+=TS^{-1}T^*\succeq0.
+$$
+
+The negative channel is thus the first coordinate; no new eigenvector
+or inverse is required. The saved exact17-reference $R$ and certified
+$0\le\eta<1$ already give $S^{-1}\preceq R/(1-\eta)$ for this SAME
+positive complement. The reference is not identified with the actual
+inverse.
+
+Use the signed-tail packet's energy cap $\overline E$, positive fee
+$D$ and supplied cap $\tau_{\rm cap}$, all frozen at their outward
+exported endpoints. Freeze the legal coefficient
+
+$$
+t_0=\tau_{\rm cap}/h_{\rm upper}>0.
+$$
+
+Since actual $h\le h_{\rm upper}$, this satisfies
+$t_0\le\tau_{\rm cap}/h$. The comparison coefficient formed with
+$h_{\rm lower}$ does not supply this legality statement.
+The cached rows remain $\rho=rV$ and $\beta_J=b_JV$, with actual
+$\beta=\beta_J+f$ and $f=\kappa u_F^*W_FR_FV$, $\kappa=33/32$.
+For a fixed real $e=(\alpha,1)$ set
+
+$$
+y=\alpha\rho+\beta_J,\qquad \lambda=y_0,\qquad \xi=f_0.
+$$
+
+Select $\alpha$ once from the finite reference steering entries
+
+$$
+H_{11}^{\rm ref}=t_0^{-1}+\rho_0^2/a+(\rho T)R(\rho T)^*,\qquad
+H_{12}^{\rm ref}=\rho_0\beta_{J0}/a+(\rho T)R(\beta_JT)^*.
+$$
+
+Require a positive steering denominator. Take the exact midpoints of
+their outward640-grid exports, form their negative ratio, and floor it
+to a64-bit dyadic. This fixes a direction independently of the actual
+signed tail. It asserts neither actual-center equality nor optimality.
+
+Let $G$ be the original full paid far Gram on the SAME lift, including
+all allowance. The existing reference-trace bound $\tau_F$ applies to
+$C_t=\kappa^2E_0G$, where $E_0$ is the OLD chosen energy-cap constant.
+With its positive cached lower endpoint $E_{0,\rm lo}$,
+
+$$
+\operatorname{tr}(Q_+G)\le
+\mathcal T:=\frac{\tau_{F,\rm up}}{\kappa^2E_{0,\rm lo}}.
+$$
+
+This denominator is a lower for a cap constant, not a lower for actual
+$\|u_F\|_W^2$. No new trace or Gram contraction is needed. Put
+
+$$
+p_\alpha=\operatorname{up}
+ \frac{(yT)R(yT)^*}{1-\eta},\quad
+c_+=\operatorname{up}(\kappa\sqrt{\overline E\mathcal T}),\quad
+C_-=\operatorname{up}(\kappa\sqrt{\overline E G_{00,\rm up}}).
+$$
+
+PSD trace and the seminorm triangle inequality give
+$|\xi|\le C_-$ and an exact frozen exported upper
+
+$$
+\overline T=\operatorname{up}
+ \left(\alpha^2/t_0+D+(\sqrt{p_\alpha}+c_+)^2\right).
+$$
+
+For the full center border, before its additional good-block metric,
+
+$$
+\boxed{e^*H_{\rm full}e
+\le \overline T-\frac{(\lambda+\xi)^2}{\delta}.}
+$$
+
+Let $L_\lambda$ be a directed upper for $|\lambda|$. A cheap capacity
+floor for this fixed UPPER-envelope package is
+
+$$
+F_{\rm pkg}=\operatorname{down}
+ \left(\overline T-\frac{(L_\lambda+C_-)^2}{\delta_{\rm lower}}\right).
+$$
+
+If $F_{\rm pkg}\ge0$, no allowed $\xi$ makes this package strictly
+negative. This excludes only the fixed $\alpha$ and positive-channel
+pricing envelope. Separate favorable endpoints are not asserted to
+have a common realization. If $F_{\rm pkg}<0$, the package is merely
+not excluded; a negative lower proves no actual sign.
+
+For a subsequent SAME-source interval $I_\xi$, the sufficient center
+test would instead use the opposite denominator endpoint:
+
+$$
+U_{\rm ctr}=\operatorname{up}
+ \left(\overline T-
+ \frac{\operatorname{dist}(0,I_\lambda+I_\xi)^2}
+      {\delta_{\rm upper}}\right)<0.
+$$
+
+A zero-crossing response interval earns no negative-channel credit.
+Even a negative center bound still needs
+$e^*G_2e<-U_{\rm ctr}$ for the additional PSD good-block metric before
+the sufficient retained positivity criterion applies.
+
+The sole fixed1024-working/640-export-bit application takes0.04108
+seconds and gives the following approximate directed values:
+
+| Quantity | Directed value |
+|---|---:|
+| Fixed dyadic $\alpha$ |0.0379872985139444681|
+| Legal $t_0$ |0.0000333498575645498988|
+| Positive-channel finite energy upper $p_\alpha$ |589.902516599596736|
+| Positive far-channel norm upper $c_+$ |1.97459507735731611|
+| Frozen $\overline T$ |911.633113280467383|
+| Finite response $\lambda$ |$9.64684697797322708\cdot10^{-15}$|
+| Far-response radius $C_-$ |$5.23550628472335536\cdot10^{-16}$|
+| Sufficient response magnitude upper |$1.03616862656981840\cdot10^{-14}$|
+| Package floor lower $F_{\rm pkg}$ |33.3488964810889399|
+
+Even the most favorable allowed magnitude of the negative-channel
+response is at most approximately$1.01703976064455626\cdot10^{-14}$.
+Its largest permitted negative credit is approximately878.284216799378443,
+below the frozen positive envelope. The strict positive floor excludes
+this fixed package for every allowed signed far response. Computing
+its actual $\xi$ alone cannot make this envelope certify a negative
+center, so this package's prospective signed-tail supplier is not run.
+
+At the same direction, fee, legal coefficient and response radius, any
+replacement positive-channel envelope would have to remove at least
+a gap greater than33.3488 before strict negativity could
+become possible. This is a necessary package-capacity requirement only;
+separate favorable endpoints need not be attained together, and passing
+it would supply neither an actual negative center nor the additional
+good-block metric. Tighter coherent positive-channel pricing or another
+legal direction/recipe is not excluded. The actual FULL border can
+have a sign that this conservative envelope does not certify.
+
+The [source and directed packet](https://github.com/the-omega-institute/trureturing-experiments/tree/a98a4b1e8a85b4830d6aebe526cda7ba4566ddf6/docs/reports/weil-c27)
+pin ten accepted inputs and ten cached producer sources, with invoked
+local helper and input bytes guarded at entry and exit. Packet SHA256
+is `1487736c15e524c3b86859c3e427c85ccf3512659990597bb8199e882688b21e`.
+Only three new17-dimensional reference quadratic/bilinear forms are
+evaluated. The exact reference identities, Neumann/inertia tests, old
+trace and Gram, original source/finite action and signed-tail energy
+result are reused. No old producer or passed suite, new inverse/solve,
+trace/Gram/source/far supplier, determinant or parameter/source/precision
+scan is executed.
+
+This is a source-specific cached-data application of the established
+block inverse decomposition, certified Loewner comparison, PSD trace
+and norm triangle/Cauchy bounds; no new generic theorem or algorithm is
+claimed. All inherited actual-form/domain, inverse/legal-elimination/
+SAME-short, unitary/source/lift/comparison and sound complete-far/cache
+premises remain conditions. The actual signed far functional, full-border
+sign, joint good-block metric, retained/cofinal positivity, Robin tail,
+RH and Lean verification remain unresolved.
