@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/NormCompression/ThreePointPositivityGate
+   generality: G
+   mirror-B: none(waiver:finite-gate-only)
+   mirror-E: none(waiver:finite-gate-only)
+   anchors: []
+   utility: none
+   digest: Abstract Fin 3 sign-pattern gate for three-point positivity. -/
+
 /-
   A finite-dimensional proof gate extracted from the three-point trace
   positivity argument of arXiv:2610.11021.
