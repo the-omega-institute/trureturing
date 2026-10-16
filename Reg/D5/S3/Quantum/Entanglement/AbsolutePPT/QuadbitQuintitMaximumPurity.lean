@@ -277,3 +277,179 @@ def registration_1 :
 
 end
 end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.FiniteCorner
+
+namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalReduction
+open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
+open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit Matrix
+open scoped ComplexOrder
+noncomputable section
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _m : ℕ, ℕ)
+    (fun p => Matrix (Fin p.1 × Fin p.2) (Fin p.1 × Fin p.2) ℂ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ rho => (rho * rho).trace.re) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ {m n : ℕ} (e : (Fin m × Fin n) ≃ Fin (m*n))
+    (rho : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ),
+    rho.PosSemidef → rho.trace = 1 → APPT rho →
+      ∃ l : Fin (m*n) → ℝ, Antitone l ∧ (∀ i, 0 ≤ l i) ∧ (∑ i, l i = 1) ∧
+        APPT (diagonal (fun p => (l (e p) : ℂ))) ∧
+        O.readout () ⟨m,n⟩ rho = ∑ i, (l i)^2
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨rho, _, hd, ha, _⟩ := result.2.2
+  let e : (Fin 4 × Fin 5) ≃ Fin 20 := Fintype.equivOfCardEq (by norm_num)
+  obtain ⟨l, _, _, _, _, hp⟩ := h e rho hd.1 hd.2 ha
+  have hs : (0 : ℝ) ≤ ∑ i, (l i)^2 := Finset.sum_nonneg (fun _ _ => sq_nonneg _)
+  change (-1 : ℝ) = ∑ i, (l i)^2 at hp
+  linarith
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨1,1⟩, 0, 1, ?_⟩
+  norm_num [actual, realize, Matrix.trace_one, Fintype.card_prod]
+def evidence : Registration arena (type_of% @diagonal_spectral_reduction) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@diagonal_spectral_reduction, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.diagonal_spectral_reduction)
+    (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.diagonal_spectral_reduction.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalReduction.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ rho => (rho * rho).trace.re) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","arg","body","arg","arg","arg","arg","fn","arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end
+end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalReduction
+
+namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalPencils
+open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
+open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction
+open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open LeanInformationAudit Matrix
+open scoped ComplexOrder
+noncomputable section
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _m : ℕ, ℕ)
+    (fun p => Fin (p.1*p.2) → ℝ) (fun _ => Matrix (Fin 3) (Fin 3) ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ p l => if h : 9 ≤ p.1*p.2 then
+    K1 (cornerBoundaryValues (p.1*p.2) h l) else 0) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (-1 : Matrix (Fin 3) (Fin 3) ℝ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ {m n : ℕ} (hm : 3 ≤ m) (hn : 3 ≤ n)
+    (e : (Fin m × Fin n) ≃ Fin (m*n)) (l : Fin (m*n) → ℝ),
+    APPT (diagonal (fun p => (l (e p) : ℂ))) →
+      (O.readout () ⟨m,n⟩ l).PosSemidef ∧
+      (K2 (cornerBoundaryValues (m*n)
+        (le_trans (by decide : 9 ≤ 3*3) (Nat.mul_le_mul hm hn)) l)).PosSemidef
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let e : (Fin 3 × Fin 3) ≃ Fin 9 := Fintype.equivOfCardEq (by norm_num)
+  have hz : APPT (diagonal (fun _ : Fin 3 × Fin 3 => (0 : ℂ))) := by
+    intro U
+    simp only [Matrix.diagonal_zero, Matrix.mul_zero, Matrix.zero_mul]
+    exact (Matrix.PosSemidef.zero :
+      (0 : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ).PosSemidef)
+  have hp := (h (by decide) (by decide) e (fun _ => 0) hz).1.diag_nonneg (i := 0)
+  norm_num [rejected, realize] at hp
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨3,3⟩, (fun _ => 0), (fun _ => 1), ?_⟩
+  intro h
+  have hh := congrFun (congrFun h 0) 0
+  norm_num [actual, realize, K1, cornerBoundaryValues] at hh
+private theorem actual_law : arena.Law actual := by
+  intro m n hm hn e l ha
+  simpa only [actual, realize,
+    dif_pos (le_trans (by decide : 9 ≤ 3*3) (Nat.mul_le_mul hm hn))] using
+    diagonal_necessary_both hm hn e l ha
+
+def evidence : Registration arena (type_of% @diagonal_necessary_both) where
+  actual := actual
+  bridge := by
+    constructor <;> intro h m n hm hn e l ha
+    · simpa only [actual, realize,
+        dif_pos (le_trans (by decide : 9 ≤ 3*3) (Nat.mul_le_mul hm hn))] using
+        h hm hn e l ha
+    · simpa only [actual, realize,
+        dif_pos (le_trans (by decide : 9 ≤ 3*3) (Nat.mul_le_mul hm hn))] using
+        h hm hn e l ha
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.diagonal_necessary_both)
+    (Realization signature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.diagonal_necessary_both.__information_unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalPencils.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p l => if h : 9 ≤ p.1*p.2 then
+    K1 (cornerBoundaryValues (p.1*p.2) h l) else 0) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","fn","arg","arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end
+end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitQuintitMaximumPurity.DiagonalPencils

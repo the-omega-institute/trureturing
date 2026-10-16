@@ -100,6 +100,29 @@ internal sealed class QuadbitQuintitMaximumPurityDocument : IScribeDocumentDefin
                 Eq(Call("cornerBoundaryValues",total,l,q),
                     Call("l",Parenthesized(Seq(index,Colon,Fin(total)))))))));
     }
+    private static Formula LabelledDiagonal() => Call("diagonal",
+        Parenthesized(Seq(Id("fun"),Parenthesized(Seq(Id("p"),Colon,J)),Mapsto,Sp,
+            Parenthesized(Seq(Call("l",Call("e",Id("p"))),Colon,C)))));
+    private static Formula Packing => Call("Equiv",J,Fin(N));
+    public static Formula DiagonalNecessaryStatement()
+    {
+        var boundary=Call("cornerBoundaryValues",N,l);
+        return All("m",Id("Nat"),All("n",Id("Nat"),
+            Imp(And(Le(Int(3),Id("m")),Le(Int(3),Id("n"))),
+                All("e",Packing,All("l",Arrow(Fin(N),R),
+                    Imp(Call("APPT",LabelledDiagonal()),
+                        And(PSInt(Call("K1",boundary)),PSInt(Call("K2",boundary)))))))));
+    }
+    public static Formula DiagonalSpectralStatement()
+    {
+        var purity=Eq(Call("Complex.re",Trace(Mul(rho,rho))),
+            Sum("i",Fin(N),Pow(Call("l",Id("i")),2)));
+        var conclusion=And(Call("Antitone",l),All("i",Fin(N),Le(Int(0),Call("l",Id("i")))),
+            Eq(Sum("i",Fin(N),Call("l",Id("i"))),Int(1)),Call("APPT",LabelledDiagonal()),purity);
+        var exists=Seq(Exists,Sp,Parenthesized(Seq(l,Colon,Arrow(Fin(N),R))),Comma,Sp,conclusion);
+        return All("m",Id("Nat"),All("n",Id("Nat"),All("e",Packing,
+            All("rho",Matrix(J,J,C),Imp(And(PSInt(rho),Eq(Trace(rho),Int(1)),Call("APPT",rho)),exists)))));
+    }
     public static Formula SpectralStatement()
     {
         var boundary=Call("cornerBoundaryValues",N,l);
@@ -124,6 +147,10 @@ internal sealed class QuadbitQuintitMaximumPurityDocument : IScribeDocumentDefin
             H("Four-by-five APPT maximum purity"),Blocks(
             Desc("cornerBoundaryValues","Nine extremal spectral coordinates",CornerFormula.BoundaryStatement(),
                 "For every total dimension N at least nine, the selector observes the top three and bottom six ordered coordinates. Its proof argument 9<=N is omitted from this display. At N=20 it is the same observation as SpectralBoundaryTransfer.boundaryValues 11.",DescribeRole.Definition),
+            Desc("diagonal_necessary_both","Both pencils from one labelled APPT diagonal",CornerFormula.DiagonalNecessaryStatement(),
+                "For arbitrary m,n>=3, any equivalence e from Fin m times Fin n to Fin(mn), and any real vector l, APPT of the diagonal with entries l(e(p)) forces both K1 and K2 on cornerBoundaryValues(mn,l) to be positive semidefinite. The proof argument 9<=mn is suppressed in the selector. No sorting, nonnegativity, trace or mass condition is assumed. Relabel the actual diagonal by the composite of the existing full packing and e inverse, then use the same finite-complement Bell construction. This is a global unitary relabelling before APPT is applied; no arbitrary packing is commuted through partial transpose.",DescribeRole.Theorem),
+            Desc("diagonal_spectral_reduction","A sorted spectrum retaining its actual APPT diagonal",CornerFormula.DiagonalSpectralStatement(),
+                "For all natural m,n, every supplied equivalence e, and every complex positive semidefinite trace-one APPT matrix rho on the product, there exists one antitone nonnegative real vector l of length mn with total mass one. Its actual diagonal with entries l(e(p)) is APPT, and Re trace(rho*rho) is the sum of the squares of l. There is no local-dimension lower bound; in zero total dimension the trace-one premise is impossible. Sorted Hermitian diagonalization is performed once, and unitary invariance gives the APPT diagonal, trace and trace-square. This retained diagonal allows both Bell-pencil necessity and the uniform rank-four mass test to use the same spectrum. The original spectral_reduction follows by applying diagonal_necessary_both to this diagonal. At local dimensions four and seven the two tests jointly supply the three hypotheses of the length-28 purity estimate.",DescribeRole.Theorem),
             Desc("spectral_reduction","Necessary spectral matrices in arbitrary finite local dimensions",CornerFormula.SpectralStatement(),
                 "For all natural m,n at least three, every positive semidefinite trace-one complex matrix on Fin m × Fin n satisfying literal APPT has an antitone nonnegative spectrum l of length mn and mass one. The proof argument 9≤mn is suppressed in the displayed cornerBoundaryValues selector. Both existing real matrices K1 and K2 evaluated on the nine extremal spectral coordinates are positive semidefinite, and Re trace(rho*rho) equals the sum of all mn spectral squares. Repeated and zero eigenvalues are included. Embed Fin 3 into each local factor. Their product c has a finite complement, identified with Fin(mn−9) by cardinality. Extend the Bell unitary and its swapped partner by identity on this complement. Partial transpose commutes with compression along this product: both entries at (i,j),(k,l) equal rho(c(i,l),c(k,j)). The existing Bell principal identity then gives the two necessary matrices. Ordered spectral diagonalization uses an arbitrary global packing only as a unitary conjugation; it assumes no partial-transpose covariance of that packing. These conditions are necessary and do not assert APPT sufficiency. At mn=24 the boundary equals QutritSpectralReduction.boundaryValues 5 and permits direct use of the existing dimension-24 sharp certificate. Hildebrand Theorem 2, PDF page 5 of quant-ph/0502170, already gives APPT 4×6→3×8 at fixed total dimension 24, so the qutrit maximum and established attaining ray imply the 4×6 scalar value. At total dimension twenty, the selector is SpectralBoundaryTransfer.boundaryValues 11. The length-twenty bound follows by the full rank-three insertion/deletion theorem from endpoint lengths eighteen and twenty-one, first reaching nineteen and then twenty. For the four-by-five product, the normalized coordinate ray (I+2|00><00|)/22 is exactly diagonal (3,1^19)/22. Its trace is one and its trace-square is (20+8)/22^2=7/121. For any global unitary U, the unit vector U|00> yields a separable numerator by LowRankRays.separableCone_one_add_two_rankOne; positive normalization and separableCone_partialTranspose_posSemidef imply APPT. At total dimension twenty-four, the same argument combined directly with QutritN8PurityBound.certificate_bound gives Re trace(rho^2)<=8/169 for every literal four-by-six APPT density. The coordinate ray (I+2|00><00|)/26 has diagonal (3,1^23)/26, is positive semidefinite with trace one, remains PPT after every global unitary, and has purity (24+8)/26^2=8/169. Thus the four-by-six real purity supremum is attained at 8/169. This known application uses the baseline-frozen qutrit bound at fixed total dimension and requires no extra spectral certificate. It is an application exposition, not an independently new four-by-six result. The varying-total-dimension inference for length twenty is the separate insertion/deletion argument. Neither application describes all maximizers or establishes an unrestricted APPT theorem. The four-by-five upper bound applies spectral_reduction to the density matrix and then applies the length-twenty insertion/deletion bound to that same ordered spectrum.",DescribeRole.Theorem),
             Desc("normalizedRay","Normalized rank-one ray",
