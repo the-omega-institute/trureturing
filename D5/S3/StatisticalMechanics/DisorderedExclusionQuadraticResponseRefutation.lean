@@ -12,6 +12,9 @@ import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Continuity
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Algebra.BigOperators.Field
 
 set_option linter.style.longLine false
 
@@ -157,8 +160,8 @@ private noncomputable def F (ε : ℝ) (v : Fin 6 → ℝ) : Fin 6 → ℝ :=
     (2-2*ε)*v 0 + (2*ε+2)*v 2 + (3*ε+3)*v 3 - 90*v 4 + (3-3*ε)*v 5,
     (2-2*ε)*v 1 + (4*ε+4)*v 4 + (-38*ε-44)*v 5]
 
--- Expanding six balance equations over the explicit finite configuration sums needs this budget.
 set_option maxHeartbeats 1200000 in
+-- Expanding six balance equations over the explicit finite configuration sums needs this budget.
 private theorem balance_block (ε : ℝ) (μ : Finset (Fin 4) → ℝ)
     (h : ∀ s, s.card ≠ 2 → μ s = 0) (j : Fin 6) :
     F ε (fun k => μ (states k)) j =
@@ -178,5 +181,145 @@ private theorem polynomial_balance (ε : ℝ) (j : Fin 6) : F ε (B ε) j = 0 :=
 private theorem sum_B (ε : ℝ) : (∑ j : Fin 6, B ε j) = 5 * D ε := by
   norm_num [B.eq_1, D.eq_1, Fin.sum_univ_succ]
   ring
+
+private theorem positive_polynomials (ε : ℝ) (he : |ε| < (1 / 100 : ℝ)) :
+    0 < D ε ∧ ∀ j, 0 < B ε j := by
+  have hp (n : ℕ) (hn : n ≠ 0) : -(1 / 100 : ℝ) < ε^n ∧ ε^n < (1 / 100 : ℝ) := by
+    apply abs_lt.mp
+    rw [abs_pow]
+    exact lt_of_le_of_lt
+      (pow_le_of_le_one (abs_nonneg ε) (by linarith) hn) he
+  have h1 := abs_lt.mp he
+  have h2 := hp 2 (by decide)
+  have h3 := hp 3 (by decide)
+  have h4 := hp 4 (by decide)
+  have h5 := hp 5 (by decide)
+  constructor
+  · rw [D.eq_1]
+    linarith
+  · intro j
+    fin_cases j <;> norm_num [B.eq_1, Matrix.cons_val] <;> linarith
+
+private theorem card_two_cases (s : Finset (Fin 4)) (hs : s.card = 2) :
+    ∃ j : Fin 6, s = states j := by
+  have hm : s ∈ ({ {0,1}, {0,2}, {0,3}, {1,2}, {1,3}, {2,3} } :
+      Finset (Finset (Fin 4))) := by
+    have hu : (Finset.univ.filter (fun t : Finset (Fin 4) => t.card = 2)) =
+        {{0,1}, {0,2}, {0,3}, {1,2}, {1,3}, {2,3}} := by decide
+    rw [← hu]
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ s, hs⟩
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hm
+  rcases hm with h | h | h | h | h | h
+  · exact ⟨0, h⟩
+  · exact ⟨1, h⟩
+  · exact ⟨2, h⟩
+  · exact ⟨3, h⟩
+  · exact ⟨4, h⟩
+  · exact ⟨5, h⟩
+
+private theorem stationary_law (ε : ℝ) (he : |ε| < (1 / 100 : ℝ)) :
+    IsStationary 2 a a ε (law ε) := by
+  obtain ⟨hD, hB⟩ := positive_polynomials ε he
+  refine ⟨law_support ε, ?_, ?_, ?_⟩
+  · intro s
+    rw [law.eq_1]
+    apply Finset.sum_nonneg
+    intro j hj
+    split_ifs
+    · exact div_nonneg (hB j).le (mul_pos (by norm_num) hD).le
+    · exact le_rfl
+  · have hh := sum_law ε (fun _ => 1)
+    simp only [mul_one] at hh
+    rw [hh, ← Finset.sum_div, sum_B]
+    exact div_self (mul_ne_zero (by norm_num) hD.ne')
+  · intro t
+    by_cases ht : t.card = 2
+    · obtain ⟨j, rfl⟩ := card_two_cases t ht
+      have hb := balance_block ε (law ε) (law_support ε) j
+      simp only [law_apply] at hb
+      have hz : F ε (fun k => B ε k / (5 * D ε)) j = 0 := by
+        have hf : F ε (fun k => B ε k / (5 * D ε)) j = F ε (B ε) j / (5 * D ε) := by
+          fin_cases j <;>
+            simp only [F.eq_1, Matrix.cons_val_zero', Matrix.cons_val_succ'] <;> ring
+        rw [hf, polynomial_balance, zero_div]
+      rw [hz] at hb
+      rw [law_apply]
+      linarith
+    · rw [law_support ε t ht, zero_mul]
+      apply Finset.sum_eq_zero
+      intro s hs
+      by_cases hc : s.card = 2
+      · rw [rate_card a a ε s t (by omega), mul_zero]
+      · rw [law_support ε s hc, zero_mul]
+
+set_option maxHeartbeats 1200000 in
+-- Six adjugate certificates normalize polynomials in the bias and six masses.
+private theorem unique_vector (ε : ℝ) (v : Fin 6 → ℝ) (hD : D ε ≠ 0)
+    (h : ∀ j, F ε v j = 0) (hn : (∑ j, v j) = 1) (j : Fin 6) :
+    v j = B ε j / (5 * D ε) := by
+  apply (eq_div_iff (mul_ne_zero (by norm_num) hD)).mpr
+  have h0 := h 0
+  have h1 := h 1
+  have h2 := h 2
+  have h3 := h 3
+  have h4 := h 4
+  simp only [F.eq_1, Matrix.cons_val] at h0 h1 h2 h3 h4
+  simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero] at hn
+  change v 0 + (v 1 + (v 2 + (v 3 + (v 4 + v 5)))) = 1 at hn
+  fin_cases j
+  · change v 0 * (5 * D ε) = B ε 0
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      ((31031*ε^4 + 78236*ε^3 + 67058*ε^2 + 676*ε - 297433)/2) * h0 +
+      (-3*(4729*ε^4 - 52272*ε^3 + 86862*ε^2 - 48152*ε + 15393)/10) * h1 +
+      (-41*(311*ε^4 - 4110*ε^3 + 8812*ε^2 - 1610*ε - 299)/10) * h2 +
+      (3*(53613*ε^4 + 310350*ε^3 - 238024*ε^2 - 294550*ε + 81363)/10) * h3 +
+      (-41*(3249*ε^4 - 27344*ε^3 - 5314*ε^2 + 29496*ε + 12857)/10) * h4 +
+      (123*(148*ε^5 - 1695*ε^4 + 1256*ε^3 + 390*ε^2 - 1612*ε + 2825)) * hn
+  · change v 1 * (5 * D ε) = B ε 1
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      (-(57233*ε^4 - 76334*ε^3 + 106816*ε^2 + 72158*ε - 191841)/2) * h0 +
+      ((21061*ε^4 - 4392*ε^3 - 56642*ε^2 + 203160*ε - 180467)/10) * h1 +
+      (41*(433*ε^4 + 788*ε^3 + 1530*ε^2 + 10348*ε - 523)/10) * h2 +
+      (-(293817*ε^4 + 695282*ε^3 + 580160*ε^2 - 1012898*ε - 953897)/10) * h3 +
+      (41*(5047*ε^4 - 3170*ε^3 - 28448*ε^2 + 8018*ε + 22489)/10) * h4 +
+      (-164*(148*ε^5 + 1033*ε^4 + 370*ε^3 + 928*ε^2 - 518*ε - 2825)) * hn
+  · change v 2 * (5 * D ε) = B ε 2
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      ((4169*ε^4 + 2584*ε^3 + 6842*ε^2 + 21264*ε + 13093)/2) * h0 +
+      (-3*(511*ε^4 + 922*ε^3 - 572*ε^2 + 3782*ε + 3997)/10) * h1 +
+      ((791*ε^4 - 149440*ε^3 - 174598*ε^2 - 211040*ε - 260689)/10) * h2 +
+      (3*(7067*ε^4 + 35440*ε^3 + 71894*ε^2 + 63240*ε + 21127)/10) * h3 +
+      (-(15031*ε^4 + 23184*ε^3 - 83906*ε^2 - 145496*ε - 50877)/10) * h4 +
+      (12*(148*ε^5 + 1265*ε^4 + 3036*ε^3 + 4830*ε^2 + 5608*ε + 2825)) * hn
+  · change v 3 * (5 * D ε) = B ε 3
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      ((21109*ε^4 - 107616*ε^3 - 33478*ε^2 + 104824*ε + 36473)/2) * h0 +
+      (-(7313*ε^4 + 1996*ε^3 - 136386*ε^2 + 124796*ε + 13801)/10) * h1 +
+      (-41*(189*ε^4 - 2300*ε^3 - 7242*ε^2 + 1300*ε - 331)/10) * h2 +
+      ((109261*ε^4 - 250940*ε^3 + 851402*ε^2 + 30860*ε - 1521159)/10) * h3 +
+      (-41*(1451*ε^4 + 20654*ε^3 - 13716*ε^2 - 25246*ε + 14233)/10) * h4 +
+      (82*(148*ε^5 - 2415*ε^4 - 1564*ε^3 + 1150*ε^2 + 1008*ε + 2825)) * hn
+  · change v 4 * (5 * D ε) = B ε 4
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      (-(2277*ε^4 + 7574*ε^3 - 8496*ε^2 - 8038*ε + 3131)/2) * h0 +
+      (3*(283*ε^4 + 954*ε^3 + 1184*ε^2 - 5210*ε + 2149)/10) * h1 +
+      ((677*ε^4 + 6742*ε^3 + 2520*ε^2 - 25718*ε + 3363)/10) * h2 +
+      (-3*(4551*ε^4 - 17744*ε^3 - 18870*ε^2 + 29216*ε + 11359)/10) * h3 +
+      ((8643*ε^4 + 1900*ε^3 + 96958*ε^2 - 14668*ε - 144609)/10) * h4 +
+      (-6*(148*ε^5 + 2873*ε^4 - 370*ε^3 - 2672*ε^2 + 222*ε - 2825)) * hn
+  · change v 5 * (5 * D ε) = B ε 5
+    simp only [B.eq_1, D.eq_1, Matrix.cons_val]
+    linear_combination
+      ((3201*ε^4 - 41964*ε^3 + 57898*ε^2 - 62644*ε + 59157)/2) * h0 +
+      ((1123*ε^4 - 150524*ε^3 + 175574*ε^2 - 195844*ε + 245991)/10) * h1 +
+      ((1279*ε^4 - 152420*ε^3 + 173718*ε^2 - 200220*ε + 252939)/10) * h2 +
+      ((16169*ε^4 - 144380*ε^3 + 170538*ε^2 - 262180*ε + 293869)/10) * h3 +
+      (-(7839*ε^4 + 123036*ε^3 - 205274*ε^2 + 285316*ε - 282373)/10) * h4 +
+      (8*(148*ε^5 + 545*ε^4 - 1544*ε^3 + 2630*ε^2 - 4412*ε + 2825)) * hn
 
 end D5.S3.StatisticalMechanics.DisorderedExclusionQuadraticResponseRefutation
