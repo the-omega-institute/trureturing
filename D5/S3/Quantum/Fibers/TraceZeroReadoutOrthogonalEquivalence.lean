@@ -6,6 +6,7 @@
    digest: Real trace-zero Hermitian readout fibers equal residual and projection fibers. -/
 
 import D5.S3.Quantum.Fibers.ReadoutOrthogonalEquivalence
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Analysis.InnerProductSpace.StandardSubspace
 
 /- Library-search audit trail (2026-08-21):
@@ -53,12 +54,8 @@ def HermitianTraceZero : Submodule ℝ (Matrix d d ℂ) where
 
 private lemma trace_is_real (A : Matrix d d ℂ) (hA : A.IsHermitian) :
     (Matrix.trace A).im = 0 := by
-  have hstar : star (Matrix.trace A) = Matrix.trace A := by
-    rw [← Matrix.trace_conjTranspose, hA.eq]
-  have him := congrArg Complex.im hstar
-  change ((starRingEnd ℂ) (Matrix.trace A)).im = _ at him
-  rw [Complex.conj_im] at him
-  linarith
+  simpa using (congrArg Complex.im
+    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hA)).symm
 
 private lemma trace_mul_im_zero (A B : Matrix d d ℂ)
     (hA : A.IsHermitian) (hB : B.IsHermitian) :

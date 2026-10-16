@@ -6,6 +6,7 @@
    digest: The weighted prime-time Gramian quadratic form equals trace-readout energy. -/
 
 import D5.S3.Analytic.ZetaEntropyPlane.PrimeEvidenceSharpThreshold
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.Fibers.TraceZeroReadoutOrthogonalEquivalence
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
 import Mathlib.Analysis.InnerProductSpace.LinearMap
@@ -55,12 +56,8 @@ local instance hermitianTraceZeroTopologicalSpace :
 omit [NeZero d] in
 private theorem trace_is_real (A : Matrix (Fin d) (Fin d) ℂ)
     (hA : A.IsHermitian) : (Matrix.trace A).im = 0 := by
-  have hstar : star (Matrix.trace A) = Matrix.trace A := by
-    rw [← Matrix.trace_conjTranspose, hA.eq]
-  have him := congrArg Complex.im hstar
-  change ((starRingEnd ℂ) (Matrix.trace A)).im = _ at him
-  rw [Complex.conj_im] at him
-  linarith
+  simpa using (congrArg Complex.im
+    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hA)).symm
 
 private theorem centered_effect_mem_trace_zero (effect : HermitianSpace d) :
     centeredEffect effect.1 ∈ HermitianTraceZero (d := Fin d) := by

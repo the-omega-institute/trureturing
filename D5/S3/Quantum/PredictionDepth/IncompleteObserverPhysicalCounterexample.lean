@@ -6,6 +6,7 @@
    digest: An incomplete finite observer has distinct symmetric states with equal readouts. -/
 
 import D5.S3.Quantum.Tomography.InformationalCompletenessEquivalence
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 /- Library-search audit trail (2026-08-27):
    * Exact family hits `HermitianSpace`, `traceZeroHermitian`,
@@ -93,16 +94,9 @@ theorem incomplete_observer_physical_counterexample
   have hDIdentity : inner ℝ D (identityHermitian d) = 0 :=
     Submodule.inner_left_of_mem_orthogonal hIdentityVisible hDResidual
   have hDTraceReal : Matrix.trace D.1 = ((Matrix.trace D.1).re : ℂ) := by
-    have hDstar := D.2
-    change star D.1 = D.1 at hDstar
-    have hDHermitian : D.1ᴴ = D.1 := by
-      simpa only [Matrix.star_eq_conjTranspose] using hDstar
-    have hTraceStar : star (Matrix.trace D.1) = Matrix.trace D.1 := by
-      calc
-        star (Matrix.trace D.1) = Matrix.trace D.1ᴴ :=
-          (Matrix.trace_conjTranspose D.1).symm
-        _ = Matrix.trace D.1 := by rw [hDHermitian]
-    exact (Complex.conj_eq_iff_re.mp hTraceStar).symm
+    exact
+      (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace
+        (show D.1.IsHermitian from D.2)).symm
   have hDInnerIdentity :
       inner ℝ D (identityHermitian d) = (Matrix.trace D.1).re := by
     have hDstar := D.2

@@ -6,6 +6,7 @@
    digest: Traceless bipartite Hermitian tensors split into three orthogonal sectors. -/
 
 import D5.S3.Quantum.Measurement.BasisMeasurementProjection
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Analysis.InnerProductSpace.TensorProduct
 import Mathlib.LinearAlgebra.TensorProduct.Map
@@ -152,16 +153,9 @@ theorem identityHermitian_ne_zero (d : Nat) [NeZero d] :
 
 private theorem hermitian_trace_eq_re {d : Nat} (A : HermitianSpace d) :
     Matrix.trace A.1 = ((Matrix.trace A.1).re : ℂ) := by
-  have hAstar := A.2
-  change star A.1 = A.1 at hAstar
-  have hA : A.1ᴴ = A.1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using hAstar
-  have hstar : star (Matrix.trace A.1) = Matrix.trace A.1 := by
-    calc
-      star (Matrix.trace A.1) = Matrix.trace A.1ᴴ :=
-        (Matrix.trace_conjTranspose A.1).symm
-      _ = Matrix.trace A.1 := by rw [hA]
-  exact (Complex.conj_eq_iff_re.mp hstar).symm
+  exact
+    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace
+      (show A.1.IsHermitian from A.2)).symm
 
 private theorem hermitian_inner_identity {d : Nat} (A : HermitianSpace d) :
     inner ℝ A (identityHermitian d) = (Matrix.trace A.1).re := by

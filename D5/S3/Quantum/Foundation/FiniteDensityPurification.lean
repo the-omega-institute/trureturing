@@ -228,6 +228,7 @@ Retire when equivalent statements exist in this repository pinned Mathlib,
 currently db584cd6d46c92f209a44c0f1c829460d327499d. No upstream NOTICE was present
 in the retained exact archive. -/
 import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Tactic
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
@@ -359,9 +360,8 @@ theorem trace_eq_re_trace (A : HermitianMat n 𝕜) : A.trace = RCLike.re A.mat.
 
 @[simp]
 theorem trace_eq_trace_rc (A : HermitianMat n 𝕜) : A.trace = A.mat.trace := by
-  rw [trace, Matrix.trace, map_sum, RCLike.ofReal_sum]
-  congr 1
-  exact Matrix.IsHermitian.coe_re_diag A.H
+  change (RCLike.re A.mat.trace : 𝕜) = A.mat.trace
+  exact D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace A.H
 
 end HermitianMat
 namespace Matrix

@@ -16,6 +16,7 @@
      `Finset.prod_one_add`. These are used directly below. -/
 
 import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
@@ -51,16 +52,9 @@ private def hermitianRealTrace (d : Nat) : HermitianSpace d →ₗ[ℝ] ℝ wher
 
 private theorem hermitian_trace_eq_re {d : Nat} (A : HermitianSpace d) :
     Matrix.trace A.1 = ((Matrix.trace A.1).re : ℂ) := by
-  have hAstar := A.2
-  change star A.1 = A.1 at hAstar
-  have hA : Matrix.conjTranspose A.1 = A.1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using hAstar
-  have hstar : star (Matrix.trace A.1) = Matrix.trace A.1 := by
-    calc
-      star (Matrix.trace A.1) = Matrix.trace (Matrix.conjTranspose A.1) :=
-        (Matrix.trace_conjTranspose A.1).symm
-      _ = Matrix.trace A.1 := by rw [hA]
-  exact (Complex.conj_eq_iff_re.mp hstar).symm
+  exact
+    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace
+      (show A.1.IsHermitian from A.2)).symm
 
 private theorem trace_zero_eq_ker (d : Nat) :
     traceZeroHermitian d = LinearMap.ker (hermitianRealTrace d) := by

@@ -6,6 +6,7 @@
    digest: Finite sequential word spans reach full Hermitian visibility. -/
 
 import D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 
 /- Library-search audit trail (2026-08-27):
    * Exact family hits `sequentialWordEffect`, `centeredHermitianMap`, and
@@ -35,16 +36,9 @@ open D5.S3.Quantum.PredictionDepth.FiniteSequentialWordCertificate
 
 private theorem hermitian_trace_eq_re {d : Nat} (effect : HermitianSpace d) :
     Matrix.trace effect.1 = ((Matrix.trace effect.1).re : ℂ) := by
-  have heffectStar := effect.2
-  change star effect.1 = effect.1 at heffectStar
-  have heffect : effect.1ᴴ = effect.1 := by
-    simpa only [Matrix.star_eq_conjTranspose] using heffectStar
-  have htraceStar : star (Matrix.trace effect.1) = Matrix.trace effect.1 := by
-    calc
-      star (Matrix.trace effect.1) = Matrix.trace effect.1ᴴ :=
-        (Matrix.trace_conjTranspose effect.1).symm
-      _ = Matrix.trace effect.1 := by rw [heffect]
-  exact (Complex.conj_eq_iff_re.mp htraceStar).symm
+  exact
+    (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace
+      (show effect.1.IsHermitian from effect.2)).symm
 
 private theorem centered_hermitian_map_coe (d : Nat) [NeZero d]
     (effect : HermitianSpace d) :
