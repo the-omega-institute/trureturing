@@ -410,44 +410,6 @@ private theorem weighted_variation_bound {N h : ℕ} (hh : 0 < h) (hN : h < N)
       exact mul_le_mul_of_nonneg_right (by exact_mod_cast Nat.sub_le N h) hA
     _ = _ := by dsimp [u, v]; ring
 
-private theorem prefix_range (n : ℕ) :
-    (∑ k ∈ range (n + 1), (ArithmeticFunction.moebius k : ℝ)) = mobiusPrefix n := by
-  have he : range (n + 1) = insert 0 (Ioc 0 n) := by
-    ext k
-    simp only [mem_range, mem_insert, mem_Ioc]
-    omega
-  rw [he, sum_insert (by simp)]
-  simp [mobiusPrefix]
-
-private theorem abel_identity (G : ℕ → ℝ) (q : ℕ) :
-    (∑ k ∈ Ioc 0 q, mobiusPrefix k*(G k-G (k + 1))) =
-      (∑ d ∈ Ioc 0 q, (ArithmeticFunction.moebius d : ℝ)*G d) -
-        mobiusPrefix q*G (q + 1) := by
-  have he := sum_Ioc_by_parts G (fun k => (ArithmeticFunction.moebius k : ℝ))
-    (Nat.succ_pos q)
-  simp only [smul_eq_mul, prefix_range, Nat.succ_sub_one, Nat.succ_eq_add_one] at he
-  have hp : mobiusPrefix (q + 1) = mobiusPrefix q +
-      (ArithmeticFunction.moebius (q + 1) : ℝ) := by
-    unfold mobiusPrefix
-    rw [sum_Ioc_succ_top (Nat.zero_le q)]
-  rw [sum_Ioc_succ_top (Nat.zero_le q), hp] at he
-  have hzero : mobiusPrefix 0 = 0 := by simp [mobiusPrefix]
-  rw [hzero, mul_zero, sub_zero] at he
-  have hs : (∑ k ∈ Ioc 0 q, (G (k + 1)-G k)*mobiusPrefix k) =
-      -(∑ k ∈ Ioc 0 q, mobiusPrefix k*(G k-G (k + 1))) := by
-    rw [← sum_neg_distrib]
-    apply sum_congr rfl
-    intro k _
-    ring
-  rw [hs] at he
-  have he' : (∑ d ∈ Ioc 0 q, G d*(ArithmeticFunction.moebius d : ℝ)) =
-      ∑ d ∈ Ioc 0 q, (ArithmeticFunction.moebius d : ℝ)*G d := by
-    apply sum_congr rfl
-    intro d _
-    ring
-  rw [he'] at he
-  linarith
-
 private theorem prefix_bound (q : ℕ) : |mobiusPrefix q| ≤ (q : ℝ) := by
   unfold mobiusPrefix
   calc
@@ -561,7 +523,7 @@ private theorem small_prefix_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
     rw [abs_mul]
     exact mul_le_mul (prefix_bound q) (log_pair_variation hN a (by omega) hq hz hm)
       (abs_nonneg _) hq'
-  have he := abel_identity (logPair N a) q
+  have he := D5.S3.Arith.Robin.ActualOddMobiusFinitePairing.prefix_abel (logPair N a) q
   change (∑ k ∈ Ioc 0 q, mobiusPrefix k*logDifference N a k) = _ at he
   rw [he]
   apply (div_le_iff₀ hL).mpr
@@ -631,7 +593,7 @@ theorem originalResidual_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ 
   have hE : residual N a =
       -(P + ∑ k ∈ Ico (q + 1) N, mobiusPrefix k*logDifference N a k)/Real.log N := by
     rw [residual_identity a hz hm]
-    have he := abel_identity (logPair N a) (N-1)
+    have he := D5.S3.Arith.Robin.ActualOddMobiusFinitePairing.prefix_abel (logPair N a) (N-1)
     rw [show N-1+1 = N by omega, hGN, mul_zero, sub_zero] at he
     have hs : (∑ d ∈ Ioc 0 N, (ArithmeticFunction.moebius d : ℝ)*logPair N a d) =
         ∑ d ∈ Ioc 0 (N-1), (ArithmeticFunction.moebius d : ℝ)*logPair N a d := by

@@ -81,7 +81,7 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                         + "them. Thus H(1)=H(N)=G(1)=G(N)=0. Expanding the original "
                         + "response cancels its constant by the zeroth moment and its "
                         + "linear term by the first moment, giving E=-sum(mu(d)*G(d))/L. "
-                        + "Mathlib's Finset.sum_Ioc_by_parts gives the full exact identity "
+                        + "ActualOddMobiusFinitePairing.prefix_abel supplies the full exact identity "
                         + "E=-sum(1<=k<N,M(k)*J(k))/L.")),
                     Paragraph(Text(
                         "Actual weighted floor drops satisfy the exact identity "
