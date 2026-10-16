@@ -3,7 +3,7 @@ slug: kharel-limbu-khatri-khanal-adhikari-2026-periodic-ssh-excess-pseudo-entrop
 bibkey: khareletal2026pseudoentropy
 doi: null
 url: https://arxiv.org/abs/2606.29311v1
-triage: counterexample
+triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Fermionic/PeriodicSshExcessPseudoEntropyRefutation.result
 ---
@@ -78,7 +78,7 @@ Declaration statements:
 ## Triage
 
 Tier 1 assertion of a 2026 paper, preregistered in issue #17503 before any Lean.
-`counterexample`; resolution `refuted`.
+`theorem`; resolution `refuted`.
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
