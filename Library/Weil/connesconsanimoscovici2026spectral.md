@@ -1925,6 +1925,433 @@ application and the diagnostic control. They add no scalar supplier,
 old optimizer, generic inversion algorithm, Lean result, actual c27
 Schur sign, cofinal positivity or RH resolution.
 
+### Extend the common dual action with a finite Hankel enclosure
+
+The complete-rate finite quadratic need not be assembled as a large
+square matrix. Reuse the preceding full-rate scalar array and define
+$k=2\pi/d$, $\omega_n=kn$, $\Phi_n=-\omega_ns_n^{\rm GP}$.
+For any common real centering constant $c$, put
+
+$$
+e_n=\Phi_n-\frac\pi4\omega_n-c,\qquad
+J_{mn}=\frac{(-1)^{m+n}}{2(m+n)}.
+$$
+
+The linear term contributes exactly $J_{mn}$ to the boundary
+kernel off the diagonal. On a finite set of distinct positive
+integer nodes $n\ge L$, let
+
+$$
+e_* =\max_n|e_n|,\quad
+\delta_* =\max_n|(B_{\rm GP})_{nn}-1/(4n)|,\quad
+\eta=\frac{8e_*}{dk^2(2L+1)}.
+$$
+
+Since $|m^2-n^2|\ge2L+1$ for distinct nodes, the finite triangle
+inequality gives
+
+$$
+|w^*(B_{\rm GP}-J)w|
+\le\eta\bigl(\|w\|_1^2-\|w\|_2^2\bigr)
++\delta_*\|w\|_2^2.
+$$
+
+Both maxima are evaluated on the actual supplied finite scalar
+array, with the independent actual diagonal. The choice of $c$
+affects sharpness only. This application needs no special-function
+asymptotic remainder, infinite-node regularity or full trace bound.
+
+For the current real coefficients, the existing FLINT polynomial
+product evaluates the Hankel part: if
+$p(x)=\sum_n(-1)^nw_nx^n$, then
+
+$$
+w^*Jw=\sum_{j\ge2L}\frac{[x^j]p(x)^2}{2j}.
+$$
+
+The sum is finite. This is polynomial convolution and the same
+finite triangle method, rather than a new matrix algorithm.
+
+Keep the preceding exact dyadic prefix $w_P$ on modes $2049$–$4096$
+and append $w_T$ on every remaining archived middle mode through
+$32768$. Reuse the complete current-direction $Q$, all prefix
+scalar components and the old $a,z,b,\beta$ actions. Only the new
+tail is rounded, at the same $384$-bit scale and power-of-two
+normalization. New residual/support actions use the existing finite
+geometric Cauchy products; their direct endpoint checks and absolute
+remainders are retained. The prime cancellation
+$z^*-b=-E^*C_{\rm p}w$ supplies the new mixed difference.
+
+The new quadratic reuses the actual prefix value through
+
+$$
+\beta=\beta_P+
+ w_T^*\Lambda w_T+
+ \bigl(w^*Jw-w_P^*Jw_P\bigr)+\varepsilon_J.
+$$
+
+The parent prefix is exactly the same vector. The displayed
+Hankel difference includes both prefix/tail cross terms. Charge
+only the new pairs in the triangle bound:
+
+$$
+|\varepsilon_J|\le
+\eta\left[
+(\|w\|_1^2-\|w\|_2^2)
+-(\|w_P\|_1^2-\|w_P\|_2^2)\right]
++\delta_{*,T}\|w_T\|_2^2.
+$$
+
+Here $e_*$ covers all finite nodes and $\delta_{*,T}$ only new tail
+diagonals. The new common action has $30720$ exact dual coordinates
+and $31488$ complete boundary-scalar rows. Its paid quadratic
+allowance is below $2.272\times10^{-5}$; this is an outward interval
+allowance, not a claim of a narrow $640$-bit quadratic enclosure.
+The [archived application](https://github.com/the-omega-institute/trureturing-experiments/tree/0dcb5d65cb62704e1cbe81846f76cbbf84e9d41e/docs/reports/weil-c27)
+uses the preceding unchanged bound and diagnostic consumers.
+
+The resulting complete-Gamma restricted upper lies between
+$2.88818\times10^{-31}$ and $2.88820\times10^{-31}$, so it remains
+inconclusive. At the same archived fixed $t_0$, the thirty-five-channel
+control now gives
+
+$$
+\mathcal U_{X,35}(t_0)
+\simeq-1.012916950382631\times10^{-32}<0.
+$$
+
+Thus this changed finite dual vector recovers a negative upper at
+that fixed comparison/trial. This does not establish negativity of
+$\sup_t\mathcal U_{X,35}(t)$, the complete-Gamma optimum or actual
+Schur energy. The contrast with the earlier positive fixed-trial
+control locates improvement in the common dual action, without
+assigning a sign to the still unresolved comparison.
+
+Existing scalar tables, inverses, residual generators, finite Cauchy
+products and polynomial multiplication are reused. The new production
+took $50.78$ seconds at $1024$ working bits; this is an application
+measurement. The inherited actual form/domain and sound-comparison
+premises remain. No new general theorem, Lean verification, actual
+c27/cofinal positivity or RH resolution is supplied.
+
+### Certify the optimization defect in the complete finite dual space
+
+A positive upper from one dual vector does not decide whether the
+entire available finite dual space is insufficient. The existing
+inverse variational and weighted residual estimates give a two-sided
+diagnostic without changing the original mass or comparison.
+
+Let $J$ denote the coordinate embedding for modes $2049$–$32768$,
+$G=B_{\rm GP}$ and $T=\Lambda+G$. With the same $E,F,D,r,Q$ as above,
+write
+
+$$
+T_J=J^*TJ,\quad Z_J=J^*HE,\quad B_J=E^*TJ,\quad
+K_J=Z_J^*-B_J=-E^*C_{\rm p}J,
+$$
+
+$$
+M_J=T_J-Z_JF^{-1}Z_J^*+K_J^*D^{-1}K_J.
+$$
+
+The same finite dual upper for $w\in J$ is
+$Q-|w^*r_J|^2/(w^*M_Jw)$, where $r_J=J^*r$.
+The inherited $T\succeq\Lambda$ and $D>0$ give
+$M_J\succeq\Lambda_J$. Indeed,
+
+$$
+\begin{pmatrix}F&Z_J^*\\Z_J&T_J+K_J^*D^{-1}K_J\end{pmatrix}
+=
+\begin{pmatrix}E^*TE&B_J\\B_J^*&T_J\end{pmatrix}
++
+\begin{pmatrix}I\\K_J^*D^{-1}\end{pmatrix}
+D
+\begin{pmatrix}I&D^{-1}K_J\end{pmatrix}.
+$$
+
+The second summand is positive semidefinite. Minimize the quadratic
+form in its $E$ coordinate; the diagonal lower bound still leaves
+$\Lambda_J$ on the $J$ coordinate. This is finite block elimination,
+not a new Gamma floor or a weighted infinite-trace estimate.
+
+Consequently the best upper obtainable from this complete finite
+space is
+
+$$
+\mathcal U_J=Q-r_J^*M_J^{-1}r_J.
+$$
+
+For an arbitrary exact finite dyadic $y$, set
+
+$$
+L(y)=2\Re(y^*r_J)-y^*M_Jy,\qquad e=r_J-M_Jy.
+$$
+
+Completing the square and using the original $W_J=\Lambda_J^{-1}$
+give
+
+$$
+0\le r_J^*M_J^{-1}r_J-L(y)
+=e^*M_J^{-1}e\le e^*W_Je,
+$$
+
+$$
+Q-L(y)-e^*W_Je\le\mathcal U_J\le Q-L(y).
+$$
+
+A negative right endpoint excludes the specified complete-Gamma
+comparison on the same $v,E,\Lambda$. A positive left endpoint
+instead excludes success of this finite dual restriction, without
+deciding larger finite spaces or the infinite comparison. If the
+interval crosses zero, neither conclusion follows. A large residual
+upper bound alone is not a lower bound on the true optimization loss.
+
+Only the missing $r_J$ and $M_Jw$ profiles are needed for the first
+application: choose $y=\vartheta w$ with an exact dyadic $\vartheta$
+and reuse the accepted $Q,a,z,b$ and the full-rate scalar array.
+The saved scalar bound did not retain these profiles or its two
+inverse vectors. Its existing finite solver supplies
+$p=F^{-1}z$ and $q=D^{-1}(z-b)$; then
+
+$$
+M_Jw=\Lambda_Jw+J^*G(Jw-Eq)+J^*HE(q-p).
+$$
+
+This includes both mixed terms on the same actual object.
+The saved residual generators supply the missing $r_J$ by the same
+finite geometric Cauchy expansion and its absolute remainder.
+
+For these squared integer nodes, apply the classical
+[Toeplitz/Hankel convolution](https://www.netlib.org/utk/people/JackDongarra/etemplates/node384.html)
+through existing [FLINT ball polynomial multiplication](https://flintlib.org/doc/arb_poly.html).
+For positive distinct $m,n$,
+
+$$
+\frac1{m^2-n^2}=\frac1{2m}
+\left(\frac1{m-n}+\frac1{m+n}\right).
+$$
+
+The Toeplitz kernel has zero diagonal; subtract the Hankel self
+term $u_m/(2m)$ before dividing the sum by $2m$. If
+$\Phi_n=-\omega_ns_n$ and $K_{mn}=1/(m^2-n^2)$ off the diagonal,
+the unphased operator is
+
+$$
+\operatorname{diag}(g)+\frac d{\pi^2}
+\bigl(\operatorname{diag}(\Phi)K-K\operatorname{diag}(\Phi)\bigr).
+$$
+
+Transport the parity factors $(-1)^n$ on input and output.
+The independent actual diagonal $g$ is retained. The GP symbol
+already contains the pole. This exact finite action needs no
+special-function asymptotic, new scalar table or new convolution
+algorithm. The adapter consumes Python-FLINT's existing `arb_poly`
+multiplication; all directed input balls are inherited without a
+binary64 conversion.
+
+The [archived application](https://github.com/the-omega-institute/trureturing-experiments/tree/9c03df10d88643ac843cf7c2c8a5cb4f7fbff5a6/docs/reports/weil-c27)
+contains all $30720$ residual and effective-action coordinates and the
+two $768$-coordinate inverse actions. With the same accepted exact
+$w$, an exact $512$-bit dyadic $\vartheta$ and original weights, the
+complete finite optimum satisfies
+
+$$
+2.48441\times10^{-31}
+<\mathcal U_J
+<2.88819\times10^{-31}.
+$$
+
+The weighted residual allowance is below $4.03773\times10^{-32}$.
+Thus even the best dual direction in this entire finite $J$ cannot
+make this restricted comparison upper negative. Further direction
+optimization inside the same $J$ cannot cross zero; the actual
+comparison supremum may still have either sign. Larger dual spaces
+and the actual Schur sign are not decided.
+
+The missing-profile production took $54.63$ seconds at $1024$ working
+bits, including direct actual-row checks at $2049,4096,32768$.
+This is an application timing, not an asymptotic performance claim.
+The old scalar suppliers, complete retained quadratic, channel
+optimizers and floor computation were not rerun.
+
+These are applications of existing finite variational, block and
+inverse-defect estimates. They supply no new general theorem or
+algorithm, Lean verification, actual c27 Schur sign, cofinal
+positivity or RH resolution.
+
+### Pay the infinite defect and recover one positive primal direction
+
+The preceding finite lower is also useful for a positive primal
+certificate once the missing infinite residual is paid. This is an
+application of the same inverse-residual square completion, not a
+new positivity criterion. All actual common-form/domain and sound
+$H\succeq T=\Lambda+G>0$ premises remain in force; $G$ includes the
+complete Gamma boundary and the even pole.
+
+Let $O$ embed all exterior coordinates outside $E$. For a finite
+$y$ in those coordinates, write $Z_O=O^*HE$, $K=Z_O^*-E^*TO$ and
+
+$$
+p_y=F^{-1}Z_O^*y,\qquad q_y=D^{-1}Ky,\qquad
+t_y=q_y-p_y,\qquad g=-Eq_y+Oy.
+$$
+
+Define $My=T_Oy-Z_Op_y+K^*q_y$ on this finite input and put
+$e=O(r_O-My)$. No boundedness assertion for $M$ on arbitrary
+infinite inputs is required. Finite support, the square-summable
+columns of $HE$ and bounded $T$ make these actions well defined.
+The support equations give
+
+$$
+Ft_y+Z^*g=0,\qquad r-Zt_y=Tg+e,\qquad E^*e=0,
+$$
+
+$$
+g^*Tg-t_y^*Ft_y=y^*My,\qquad g^*e=y^*O^*e.
+$$
+
+Consequently, for $L(y)=2\Re(y^*r_O)-y^*My$,
+
+$$
+\begin{aligned}
+m_T(t_y)
+&=Q+t_y^*Ft_y-(r-Zt_y)^*T^{-1}(r-Zt_y)\\
+&=Q-L(y)-e^*T^{-1}e\\
+&\ge Q-L(y)-e^*We.
+\end{aligned}
+$$
+
+Here $T^{-1}\preceq W$ uses the original archived diagonal.
+Bounded/coercive $T$ and the inherited actual domain suffice; no
+exchange of infinite extrema is used. The actual inverse-residual
+identity further gives
+
+$$
+v^*S_Nv-m_T(t_y)
+=(r-Zt_y)^*(T^{-1}-H^{-1})(r-Zt_y)\ge0.
+$$
+
+Thus a positive global paid lower establishes a sufficient comparison
+and actual Schur positivity in this single direction. A positive
+finite restricted upper alone had supplied neither conclusion.
+
+Take precisely the archived $y=\vartheta w$ supported on
+$J=2049{:}32768$. If $p=F^{-1}z$ and $q=D^{-1}(z-b)$ are the exact
+inverse vectors enclosed by the saved profiles, then
+$t_y=\vartheta(q-p)$. This is an exact implicit finite correction;
+it does not round the profiles to independent dyadic midpoints.
+On $J$, the residual is the already saved $r_J-\vartheta M_Jw$.
+The accepted finite lower therefore already pays that part of
+$e^*We$. Only $m>M_0=32768$ remains.
+
+The archived symbol polynomial supplies that disjoint tail without
+another scalar or moment computation. Put $A_0=M_0+1$, $d=\log27$,
+$k=2\pi/d$, $\gamma_0=d/\pi^2$ and
+
+$$
+c_0=\frac14-\frac{27^{-1/2}}{1-27^{-2}}
++2(\cosh(d/2)-1),\qquad
+\rho_n=-kns_n^{\rm GP}-\frac{\pi kn}4-c_0.
+$$
+
+The saved smooth polynomial has coefficients $C_0,\ldots,C_{63}$
+in $M_0/m$, with exact analytic $C_0=-\pi/4$. Its existing
+pointwise remainder satisfies
+$\epsilon(m)=a(M_0/m)^{64}+b(M_0/m)^{65}$, $a,b\ge0$.
+It follows that $m\epsilon(m)\le A_0\epsilon(A_0)$. In particular,
+the saved uniform symbol error at $A_0$ can be used as
+
+$$
+R_\infty=
+|-kM_0C_1-c_0|
++kA_0\left(\sum_{j=2}^{63}|C_j|(M_0/A_0)^j
++\epsilon(A_0)\right),\qquad
+|\rho_m|\le R_\infty\quad(m>M_0).
+$$
+
+The constant coefficient is used analytically, rather than multiplying
+its exported interval width by unbounded $m$. Coefficients use the
+saved $640$-bit grid; the remainder uses its distinct $832$-bit grid.
+The smooth symbol already includes the pole, while prime sine terms
+are separate. No pole or prime contribution is charged twice.
+
+For positive $n\le M_0<m$, the exact off-diagonal kernel is
+
+$$
+G_{mn}=(-1)^{m+n}\left[
+\frac1{2(m+n)}+
+\gamma_0\frac{\rho_m-\rho_n}{m^2-n^2}\right].
+$$
+
+With $a_n=A_0-n\ge1$, the elementary integral bound gives
+
+$$
+\sum_{m>M_0}\frac1{(m^2-n^2)^2}
+\le\frac{a_n^{-2}+a_n^{-1}}{(A_0+n)^2}=:s_n^2.
+$$
+
+Weighted Minkowski therefore supplies, for every finite $x$ on these
+nodes and the original constant far weight $D_{\rm far}$,
+
+$$
+\|G_{\rm far}x\|_W\le\sqrt{D_{\rm far}}
+\left[\frac{\|x\|_1}{2\sqrt{M_0}}
++\gamma_0\sum_n|x_n|(R_\infty+|\rho_n|)s_n\right]
+=:\mathcal B_G(x).
+$$
+
+This includes the adjacent node $n=M_0$, without a separated-ratio
+assumption. All finite $\rho_n$ come from the existing full-rate
+scalar array. There is no diagonal in this disjoint action.
+
+For $x$ on $E$, the existing actual-symbol budget
+$B_*=2\cosh(d/2)+\sum_{r<27}\Lambda(r)/\sqrt r$ gives
+$|H_{mn}|\le2B_*/[\pi(m-n)]$ and hence
+
+$$
+\|H_{{\rm far},E}x\|_W
+\le\sqrt{D_{\rm far}}\frac{2B_*}{\pi}
+\frac{\|x\|_1}{\sqrt{M_0-2048}}
+=:\mathcal B_H(x).
+$$
+
+The effective action and its residual obey
+
+$$
+(Mw)_{\rm far}=G_{{\rm far},J}w
++H_{{\rm far},E}(q-p)-G_{{\rm far},E}q,
+$$
+
+$$
+\|e_{\rm far}\|_W\le\sqrt{E_r}
++|\vartheta|\bigl(\mathcal B_G(w)
++\mathcal B_H(q-p)+\mathcal B_G(q)\bigr).
+$$
+
+Here $E_r$ is the upper energy allowance from the matching saved
+current-direction file, not the older support-direction residual.
+All three actions refer to the same exact $w,p,q$ and original mass.
+
+The [cache-only application](https://github.com/the-omega-institute/trureturing-experiments/tree/349b56740f5c3355783529672b9049fff5aa1e69/docs/reports/weil-c27)
+gives
+
+$$
+E_{\rm far}<1.264968\times10^{-31},\qquad
+m_T(t_y)>1.2194448\times10^{-31}>0,
+$$
+
+under the inherited premises. Consequently this saved original
+direction also has $v^*S_Nv>1.2194448\times10^{-31}$ under those
+premises. The consumer took $0.36$ seconds at $1024$ working bits;
+it reads accepted data and evaluates scalar norm bounds only.
+No scalar supplier, moment producer, finite action, inverse solve,
+optimizer, floor computation or increased cutoff is used.
+
+This is an application of existing variational and tail estimates.
+It establishes neither complete retained-matrix positivity nor a
+uniform family of directions. Cofinal Weil positivity and RH remain
+unresolved, and this numerical application has no Lean verification.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici

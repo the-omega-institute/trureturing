@@ -39,6 +39,29 @@ theorem isOpen_prefixCylinder [TopologicalSpace A] [DiscreteTopology A]
   exact isOpen_iUnion fun y =>
     PiNat.isOpen_cylinder (E := fun _ : ℕ => A) (y : ℕ → A) n
 
+theorem isClosed_prefixCylinder [TopologicalSpace A] [DiscreteTopology A]
+    {S : Set (ℕ → A)} (n : ℕ) :
+    IsClosed (prefixCylinder S n) := by
+  rw [← isOpen_compl_iff]
+  have hcomp : (prefixCylinder S n)ᶜ =
+      ⋃ x : {x : ℕ → A // x ∈ (prefixCylinder S n)ᶜ},
+        PiNat.cylinder (x : ℕ → A) n := by
+    ext z
+    constructor
+    · intro hz
+      exact Set.mem_iUnion.mpr ⟨⟨z, hz⟩, PiNat.self_mem_cylinder z n⟩
+    · rintro hz
+      obtain ⟨x, hx⟩ := Set.mem_iUnion.mp hz
+      intro hzS
+      obtain ⟨y, hyS, hzy⟩ := mem_prefixCylinder_iff.mp hzS
+      apply x.property
+      exact mem_prefixCylinder_iff.mpr ⟨y, hyS, fun i hi =>
+        (PiNat.mem_cylinder_iff.mp hx i hi).symm.trans
+          (PiNat.mem_cylinder_iff.mp hzy i hi)⟩
+  rw [hcomp]
+  exact isOpen_iUnion fun x =>
+    PiNat.isOpen_cylinder (E := fun _ : ℕ => A) (x : ℕ → A) n
+
 theorem prefixCylinder_succ_subset {S : Set (ℕ → A)} (n : ℕ) :
     prefixCylinder S (n + 1) ⊆ prefixCylinder S n := by
   intro x hx
@@ -73,6 +96,30 @@ theorem closed_eq_iInter_prefixCylinder [TopologicalSpace A] [DiscreteTopology A
       exact (PiNat.mem_cylinder_iff.mp hzx i hi).symm.trans
         (PiNat.mem_cylinder_iff.mp hxy i hi)
     exact (hycompl hzy) hzS
+
+theorem closure_eq_iInter_prefixCylinder [TopologicalSpace A] [DiscreteTopology A]
+    {S : Set (ℕ → A)} :
+    closure S = ⋂ n : ℕ, prefixCylinder S n := by
+  apply Subset.antisymm
+  · refine closure_minimal ?_ (isClosed_iInter fun n => isClosed_prefixCylinder n)
+    intro x hx
+    simp only [mem_iInter]
+    intro n
+    exact mem_prefixCylinder_iff.mpr ⟨x, hx, PiNat.self_mem_cylinder x n⟩
+  · intro x hx
+    by_contra hxc
+    have hopen : IsOpen (closure S)ᶜ := isClosed_closure.isOpen_compl
+    have hb := PiNat.isTopologicalBasis_cylinders (fun _ : ℕ => A)
+    obtain ⟨v, ⟨y, n, hv⟩, hxy, hycompl⟩ :=
+      hb.exists_subset_of_mem_open hxc hopen
+    rw [hv] at hxy hycompl
+    have hxn : x ∈ prefixCylinder S n := (mem_iInter.mp hx) n
+    obtain ⟨z, hzS, hzx⟩ := mem_prefixCylinder_iff.mp hxn
+    have hzy : z ∈ PiNat.cylinder y n := by
+      intro i hi
+      exact (PiNat.mem_cylinder_iff.mp hzx i hi).symm.trans
+        (PiNat.mem_cylinder_iff.mp hxy i hi)
+    exact (hycompl hzy) (subset_closure hzS)
 
 /-- One shift step lowers the required prefix length by one.  This is the
 finite-stage transition used when the closed set is shift invariant. -/
