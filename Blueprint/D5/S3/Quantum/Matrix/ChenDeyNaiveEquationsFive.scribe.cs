@@ -43,7 +43,10 @@ internal sealed class ChenDeyNaiveEquationsFiveDocument : IScribeDocumentDefinit
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("chen-dey-2020-orthostochastic-naive-equations-five"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula OrthostochasticFormula()
     {

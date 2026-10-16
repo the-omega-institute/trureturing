@@ -86,6 +86,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ChenDeyNaiveEquationsFive.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chen-dey-2020-orthostochastic-naive-equations-five` (refuted) by `D5/S3/Quantum/Matrix/ChenDeyNaiveEquationsFive.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chen-dey-2020-orthostochastic-naive-equations-five","declaration_gid":"D5/S3/Quantum/Matrix/ChenDeyNaiveEquationsFive.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Justin Chen; Papri Dey (2023). *The 4 × 4 orthostochastic variety*. DOI: [10.1080/10586458.2021.1982427](https://doi.org/10.1080/10586458.2021.1982427). URL: <https://arxiv.org/abs/2001.10691>.
