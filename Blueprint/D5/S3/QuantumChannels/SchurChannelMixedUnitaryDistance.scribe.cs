@@ -32,7 +32,10 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The two diamond-distance infima are equal", Disp(Named("claim")),
                 "Copy a basis vector i to (i,i), apply the channel on the first factor while retaining the second, and recover coherently from the correlated subspace. On its complement, recovery maps (k,i) to i. These Kraus operators sum to a trace-preserving channel. The resulting superchannel fixes every Schur channel and contracts diamond distance. Each diagonal entry of a unitary is the midpoint of two unit complex phases; independent choices of those phases give a uniform family of 2^d diagonal unitaries. Thus every unitary mixture has a Schur unitary mixture at no greater distance from Phi. Set inclusion gives the opposite inequality. This proves equality of infima without requiring an attained minimum. Pointwise recovery errors need only satisfy the contraction inequality. The argument gives no closed form for the common distance. Relating positive distance to nonmembership requires compactness or closedness beyond the present theorem.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yu-duan-xu-2017-schur-channel-diamond-equality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

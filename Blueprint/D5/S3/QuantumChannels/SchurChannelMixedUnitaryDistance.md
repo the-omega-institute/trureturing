@@ -70,6 +70,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/yu-duan-xu-2017-schur-channel-diamond-equality` (proved) by `D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"yu-duan-xu-2017-schur-channel-diamond-equality","declaration_gid":"D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nengkun Yu, Runyao Duan and Quanhua Xu (2017). *Bounds on the distance between a unital quantum channel and the convex hull of unitary channels*. DOI: [10.1109/TIT.2016.2641447](https://doi.org/10.1109/TIT.2016.2641447). URL: <https://arxiv.org/abs/1201.1172>.
