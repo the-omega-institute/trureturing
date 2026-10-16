@@ -490,7 +490,8 @@ theorem eam_effect_sum {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) :
     (∑ a, A.effect a) = 1 := by
   have hd0 : (d : ℂ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by have := A.property.1; omega)
-  simp only [EAM.effect.eq_1, ← Finset.smul_sum, A.property.2.1, smul_smul]
+  change (∑ a, ((d : ℂ) / (n : ℂ)) • proj (A.val a)) = 1
+  rw [← Finset.smul_sum, A.property.2.1, smul_smul]
   field_simp (disch := assumption)
   simp only [one_smul]
 
