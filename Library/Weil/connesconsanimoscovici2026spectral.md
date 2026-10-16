@@ -7061,3 +7061,192 @@ novelty or Lean proof. The actual-form/domain, common-source/short/lift,
 original-weight, component-bound and inverse-comparison premises remain.
 Actual-center/full-border signs, the good-block metric, retained/cofinal
 positivity, Robin tail and RH remain unresolved.
+
+### Pay omitted jet moments on the saved feature direction
+
+The complete physical operator-error payment in the preceding estimate
+contributes about4.18357 to the representer squared-norm cap. The existing
+exact full-jet Gram supplies another route on the SAME saved feature
+direction, without repeating its quadratic. Retain
+$h=(A_0,\ldots,A_{55},B_0,\ldots,B_{55})$, physical representer $b$,
+midpoint-feature jet $j_h$, original weight $w_F$, and the certificates
+
+$$
+\|j_h\|_{W_F}^2=\alpha w_Fh^THh,\qquad
+K_0=\alpha_0w_FH_0,\qquad
+\alpha=\frac4{\pi^2M},\qquad
+\|b-j_h\|_{W_F}\le\epsilon_b^\sharp.
+$$
+
+Here $M=32768$, $R=d=56$. The full moment matrix $H$ is independent
+of the physical low-support size: the saved far packet's support1280
+and the current representer's support2048 use the same $H$.
+$H^{(d)}$ keeps $k+l<d$ in each block, and $H_0$ is its one exact
+midpoint approximation. The saved $Q_{\rm up}$ encloses the SAME
+$h^TK_0h$, including its exported-array uncertainty; it is reused.
+
+Group signed feature products before bounding omitted moments. For
+$d\le n\le2R-2$, form the complete ordered sums
+
+$$
+a_n=\sum_{k+l=n}A_kA_l,\qquad
+g_n=\sum_{k+l=n}A_kB_l,\qquad
+b_n=\sum_{k+l=n}B_kB_l.
+$$
+
+Then the omitted quadratic is exactly
+
+$$
+h^T(H-H^{(d)})h
+=\sum_{n=d}^{2R-2}
+(a_nU_{2n+2}-2g_nT_{2n+3}+b_nV_{2n+4}).
+$$
+
+Ordered sums count the AA and BB off-diagonal terms, and the single
+factor2 counts AB and BA. The existing actual-symbol budget $B_*$ and
+moment integral bounds give the one-sided upper
+
+$$
+e_{{\rm box},n}=
+\frac{B_*^2(a_n)_+}{2n+1}
++\frac{2B_*|g_n|}{2n+2}
++\frac{(b_n)_+}{2n+3}.
+$$
+
+True $U,V$ are nonnegative. Thus a negative AA or BB coefficient need
+not be charged as its absolute value. Interval evaluation preserves
+uncertainty in the saved features and any resulting cancellation.
+
+Three already retained moments supply another bound. Put
+
+$$
+S_*=
+\begin{pmatrix}U_{112}&T_{113}\\T_{113}&V_{114}\end{pmatrix},
+\qquad q=\frac{M}{M+1}.
+$$
+
+For the true moments, with $x_m=M/m$ and $m>M$,
+
+$$
+S_n=\frac1M\sum_{m>M}x_m^{2n+2}
+\binom{s_m}{x_m}(s_m,x_m),\qquad
+0\preceq S_n\preceq q^{2(n-55)}S_*.
+$$
+
+This follows termwise from $0<x_m\le q$. It is a relation between
+true Gram matrices; their rounded centers need not be PSD. For
+$G_n=\left(\begin{smallmatrix}a_n&-g_n\\-g_n&b_n\end{smallmatrix}\right)$,
+the support function of $0\preceq X\preceq cS_*$ is
+$c\operatorname{Tr}[(S_*^{1/2}G_nS_*^{1/2})_+]$, including singular
+$S_*$. In dimension2, define
+
+$$
+\tau_n=a_nU_{112}-2g_nT_{113}+b_nV_{114},\qquad
+\delta_n=(a_nb_n-g_n^2)(U_{112}V_{114}-T_{113}^2).
+$$
+
+The positive-part trace equals
+
+$$
+\Phi_n=\frac{\tau_n+\sqrt{\tau_n^2+4\max\{-\delta_n,0\}}}{2}.
+$$
+
+This expression is monotone in $\tau_n$ and $\max\{-\delta_n,0\}$.
+Outward upper/lower bounds for $\tau_n,\delta_n$ therefore yield
+$\Phi_n^{\rm up}$ without a matrix square root. Select the smaller of
+the two uniform bounds for each SAME antidiagonal:
+
+$$
+E_h=\sum_{n=56}^{110}
+\min\{e_{{\rm box},n}^{\rm up},q^{2(n-55)}\Phi_n^{\rm up}\},
+\qquad h^T(H-H^{(d)})h\le E_h.
+$$
+
+No high moment or signed-moment supplier is evaluated. The three anchor
+intervals are the original640-grid enclosures, not new estimates.
+Neither the retained mask nor the omitted block is assumed PSD.
+
+Retained moment widths are at most two640-grid units, giving
+$\|H^{(d)}-H_0\|\le e_H=112\,2^{-640}$.
+The saved `moment_gram_norm` field is the original explicit TRACE upper
+$H_*$. Since true $H\succeq0$ and masking decreases Frobenius norm,
+
+$$
+\|H_0\|\le\|H^{(d)}\|_F+e_H
+\le\operatorname{Tr}H+e_H\le H_*+e_H.
+$$
+
+An arbitrary operator-norm cap alone would not justify this masked
+bound. Let $A_h$ be the sum of squared upward absolute feature caps.
+Reuse the original prefactor interval to obtain $\alpha_{\rm up}$ and
+$|\alpha-\alpha_0|\le e_\alpha$. The accepted outer certificate gives
+
+$$
+\|j_h\|_{W_F}^2\le J_h:=Q_{\rm up}
++w_F\left[\alpha_{\rm up}E_h
++A_h\left(\alpha_{\rm up}e_H+e_\alpha(H_*+e_H)\right)\right],
+\qquad
+\|b\|_{W_F}^2\le(\sqrt{J_h}+\epsilon_b^\sharp)^2.
+$$
+
+This pays omission, moment midpoint error and prefactor error. The
+original512-grid physical allowance is not reinterpreted as a640-grid
+moment error. The sharp weighted forward allowance already pays the
+actual representer to this SAME full jet; no duplicate physical-source
+payment, extra $w_F$ or $\kappa$ is inserted. A negative final $J_h$
+is inconsistent and stops the application.
+
+Only a strictly smaller representer cap enters the existing projection
+and pricing maps. The valid regrouping remains $(v+c)+r+0$; stronger
+old source-energy endpoints are retained, and unchanged comparison
+parameters reuse their saved rank outputs. The SAME $B,G,M$ and frozen
+far-row energy UPPER remain throughout.
+
+The single fixed1024-working/640-export application retains68 runtime
+bindings, unchanged at entry and prewrite. The saved quadratic is reused.
+The omitted-block payment is below$1.43015\cdot10^{-130}$ and the
+separate rounding payment below$1.25068\cdot10^{-185}$. Adding the
+original sharp forward allowance gives the following outward bounds.
+
+| Quantity | Directed value |
+|---|---:|
+| Representer squared-norm upper |<11.172943110390517643|
+| Representer norm upper |<3.342595265716523695|
+| Principal/mixed cross interval |[−0.076771255960990555,−0.060620829249211873]|
+| Source-energy lower |>6.342199815821979165|
+| Source-energy upper |<6.376853250919508462|
+| Source-valid positive fee |<175.769293814626319160|
+| Legal coefficient |>0.000040586603433261736126|
+| Fixed repriced all-real floor |>−0.572919445838071768|
+| Energy-endpoint all-real floor |>−0.779703303246544574|
+
+The norm cap improves from3.918738184778600392, and both ends of the
+preceding energy bracket [6.268984281541914933,6.524928095642312689]
+tighten. The principal/mixed cross is now strictly negative under the
+retained common-source premises. This follows from the sharper common
+direction norm, with no new signed pairing supplier.
+
+The preceding paid-recipe exclusion applies to its original fee and
+coefficient. The newly repriced pair has a negative all-real LOWER,
+so that lower-bound test leaves the new recipe unexcluded. Its negative
+lower neither realizes a negative comparison nor supplies a negative
+upper. The energy-endpoint test also remains inconclusive for the whole
+fixed-budget energy-cap-only family. Actual smaller-fee center sign is
+not determined. Displayed endpoints round outwards; exact rationals
+and640-bit packet endpoints are authoritative.
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/a89093fb3d7165a48c71f57374f218fa5c757f88/docs/reports/weil-c27)
+retain packet SHA256 `9ccd6494c0520f9f53efe0b44bcae879566157c7e7ffb698165f9d02c258fd41` and source SHA256 `d9cbc7f94640ec60a885dfce018fc626726fe77caaaa87aef63c912c0f70abcd`.
+There is one new grouped omitted-block contraction, three signed feature
+antidiagonal families, three retained anchor reads and one feature
+absolute norm. The saved masked quadratic, moment suppliers, signed
+projections, physical source, lift, inverse, trace and long-tail
+suppliers are reused, with no source/parameter/precision/cutoff scan.
+
+This is a numerical application of existing moment, semidefinite
+support-function, midpoint and jet certificates. It claims no new
+generic theorem, literature novelty or Lean proof. The actual-form/domain,
+common-source/short/lift, original-weight, component and
+inverse-comparison premises remain. Actual-center/full-border signs,
+good-block payment, retained/cofinal positivity, Robin tail and RH
+remain unresolved.
