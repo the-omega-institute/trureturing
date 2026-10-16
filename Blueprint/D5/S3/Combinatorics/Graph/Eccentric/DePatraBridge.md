@@ -126,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/DePatraBridge.endpoint_mini
 
 For natural numbers a,b,p,q with a,b at least 2, 0<p<a, and 0<q<b, min((b+1)p,aq)+min(bp,(a+1)q) is strictly smaller than min(2bp,2aq,ab)+min(bp,aq). Splitting into bp<=aq and aq<=bp gives a common summand. In the first case the remaining old minimum is less than both 2bp and ab; in the second it is less than both 2aq and ab. This compares the endpoint pair as a whole and permits the fresh leaf's individual contribution to decrease.
 
-These results establish counting and arithmetic ingredients. They do not establish the entire conjecture. The bridge-specific counting specializations, the eccentricity comparison for all other vertices and every target including the fresh leaf, and the final strict sum inequality remain unproved here. No source lemma or counting identity is assumed.
+These foundational counting and arithmetic results are consumed by DePatraCounting and DePatraConjecture. The latter proves the entire source conjecture for every qualifying bridge, including the comparison against every target and transport to contraction followed by a fresh leaf. No source lemma or counting identity is assumed.
 
 ## References
 

@@ -90,11 +90,11 @@ internal sealed class DePatraBridgeDocument : IScribeDocumentDefinition
                 + "than both 2bp and ab; in the second it is less than both 2aq and ab. "
                 + "This compares the endpoint pair as a whole and permits the fresh leaf's "
                 + "individual contribution to decrease.", DescribeRole.Theorem),
-            Paragraph(Text("These results establish counting and arithmetic ingredients. They "
-                + "do not establish the entire conjecture. The bridge-specific counting "
-                + "specializations, the eccentricity comparison for all other vertices and "
-                + "every target including the fresh leaf, and the final strict sum inequality "
-                + "remain unproved here. No source lemma or counting identity is assumed."))), []));
+            Paragraph(Text("These foundational counting and arithmetic results are consumed "
+                + "by DePatraCounting and DePatraConjecture. The latter proves the entire "
+                + "source conjecture for every qualifying bridge, including the comparison "
+                + "against every target and transport to contraction followed by a fresh leaf. "
+                + "No source lemma or counting identity is assumed."))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
         DescribeRole role) => Describe.Lean(DescribeId.Create(id),
