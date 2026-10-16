@@ -6,6 +6,8 @@ The unchanged finite Mobius floor response admits an explicit residual transfer 
 
 All sequences are real-valued on the natural numbers. All logarithms are natural. Fix natural N>=3 and 0<=q<=N-2, put h=q+1 and L=log N. The integer block is N<=m<2N. Empty sums are zero. The arithmetic function mu is Mathlib's actual Mobius function at every index, without a prime-only restriction or any modification at prime powers. M(k) is the existing full inclusive prefix sum of mu(d) for 1<=d<=k.
 
+The source-bound audit for log_bounds remains declared_unresolved under IE-C050/source.unsafe_or_external (Nat.add). The missing source-reconstruction binding certificate is tracked at https://github.com/the-omega-institute/trureturing/issues/17873. This is an unfinished audit, not a failure of the compiled inequality or evidence of a judge defect. The other new helper audits and full-positive transfer audit are validated.
+
 **Definition 1.1 (Absolute block mass).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.mass`
