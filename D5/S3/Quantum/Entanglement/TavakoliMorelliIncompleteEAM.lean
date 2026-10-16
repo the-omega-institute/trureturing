@@ -255,7 +255,8 @@ private theorem pure_born_coeff {d : ℕ} (u : Ket (Fin d × Fin d)) (A B : Op d
 private theorem coeff_normalized {d : ℕ} (u : Ket (Fin d × Fin d)) :
     ((coeff u)ᴴ * coeff u).trace.re = 1 := by
   rw [← hsSq_eq_trace]
-  simpa only [entryNormSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using u.normalized'
+  simpa only [entryNormSq.eq_1, coeff.eq_1, Matrix.of_apply, Fintype.sum_prod_type] using
+    u.normalized'
 
 private theorem exists_normalized_svd {d r : ℕ} (u : Ket (Fin d × Fin d))
     (hr : (coeff u).rank ≤ r) :
