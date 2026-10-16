@@ -28,7 +28,7 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
             Def("gapVector", "One unit of transferred area",
                 "gapVector(m,j) is the standard unit vector at j minus the standard unit vector at j plus one."),
             Describe.Lean(DescribeId.Create("native-area-cube"),
-                DeclarationHandle.Create(Prefix + "native_area_cube"), H("The native family and its affine area formula"),
+                DeclarationHandle.Create(Prefix + "native_area_cube"), H("The native family, area formula and squared distances"),
                 StatementSource.FromAuthor(NativeFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For n at least three, all B positions are counted by fib(n minus two). "
@@ -38,7 +38,9 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
                     Paragraph(Text("Coordinates record the product of the two child leaf counts at each internal gap. "
                         + "Replacing B changes its two internal coordinates from [1,2] to [2,1]. "
                         + "An arbitrary context with equal-length fillings has the same exterior coordinate lists. "
-                        + "Adding positions one at a time gives the stated sum of signed gap vectors."))),
+                        + "Adding positions one at a time gives the stated sum of signed gap vectors. "
+                        + "Distinct positions occupy disjoint gap pairs. Squared Euclidean distance is twice "
+                        + "the cardinality of the symmetric difference of the choices, and total area is preserved."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
@@ -54,7 +56,7 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
 
     private static Formula NativeFormula()
     {
-        Formula n = V("n"), a = V("A"), p = V("p");
+        Formula n = V("n"), a = V("A"), p = V("p"), b = V("B"), i = V("i");
         Formula t = Call("T", n), positions = Call("positions", t);
         Formula m = Call("fib", Seq(n, Plus, D(1)));
         Formula value = Call("variant", t, a);
@@ -66,8 +68,18 @@ internal sealed class NativeAncestryDefectCubeDocument : IScribeDocumentDefiniti
             Call("gapVector", m, Call("offset", t, p)));
         Formula affine = EqOf(Call("areaVector", m, value),
             Seq(Call("areaVector", m, t), Plus, transfer));
+        Formula total = EqOf(Seq(new Formula.Subscript(Sum,
+            Seq(i, Colon, Call("Fin", Seq(m, Minus, D(1))))), Sp, Call("areaVector", m, value, i)),
+            Call("choose", m, D(2)));
+        Formula coordinateLength = EqOf(Call("length", Call("coordinates", value)), Seq(m, Minus, D(1)));
+        Formula distance = All("B", Call("Finset", Op("Address")),
+            Imp(Call("Subset", b, positions), EqOf(new Formula.Superscript(
+                Call("norm", Seq(Call("areaVector", m, value), Minus,
+                    Call("areaVector", m, Call("variant", t, b)))), D(2)),
+                Seq(D(2), Times, Call("card", Call("symmDiff", a, b))))));
         Formula choices = All("A", Call("Finset", Op("Address")),
-            Imp(Call("Subset", a, positions), And(word, And(length, And(depth, affine)))));
+            Imp(Call("Subset", a, positions), And(word, And(length,
+                And(depth, And(affine, And(total, And(coordinateLength, distance))))))));
         Formula injective = Call("InjectiveOn", Call("variant", t), Call("powerset", positions));
         Formula count = EqOf(Call("card", positions), Call("fib", Seq(n, Minus, D(2))));
         return Disp(All("n", Nat(), Imp(Seq(D(3), Le, n), And(count, And(injective, choices)))));

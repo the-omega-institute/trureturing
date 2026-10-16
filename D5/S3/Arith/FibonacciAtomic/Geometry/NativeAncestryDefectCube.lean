@@ -26,7 +26,7 @@ open GenealogicalFiberTransport (substitution)
 open D5.S3.Combinatorics.Partitions.WordPartitionInverse (wd)
 open AncestorAreaInstability (T depth)
 open ActualImageAddressCertificate (replace)
-open scoped BigOperators
+open scoped BigOperators symmDiff
 
 noncomputable section
 open AncestorAreaInterval (coordinates offset)
@@ -410,7 +410,151 @@ private theorem affine_formula (t : Source) (A : Finset Address)
       ih (fun q hq => hA (Finset.mem_insert_of_mem hq)), Finset.sum_insert hp]
     abel
 
-/-- The actual independent source family and its affine ancestor-area formula. -/
+private theorem occurrence_bound (t : Source) (p : Address) (hp : p ∈ positions t) :
+    offset t p + 3 ≤ t.length := by
+  induction p generalizing t with
+  | nil =>
+    have ht : t = defectB := Option.some.inj ((mem_positions t []).mp hp)
+    simp [ht, offset, defectB, FreeMagma.length]
+  | cons b p ih =>
+    cases t with
+    | of c => simp [positions] at hp
+    | mul l r =>
+      cases b with
+      | false =>
+        have hx := ih l ((mem_positions l p).mpr
+          ((mem_positions (.mul l r) (false :: p)).mp hp))
+        simpa only [offset, FreeMagma.length] using hx.trans (Nat.le_add_right _ _)
+      | true =>
+        have hx := ih r ((mem_positions r p).mpr
+          ((mem_positions (.mul l r) (true :: p)).mp hp))
+        simp only [offset, FreeMagma.length]
+        omega
+
+private theorem separated_offsets (t : Source) (p q : Address)
+    (hp : p ∈ positions t) (hq : q ∈ positions t) (hne : p ≠ q) :
+    offset t p + 3 ≤ offset t q ∨ offset t q + 3 ≤ offset t p := by
+  induction t generalizing p q with
+  | of b => simp [positions] at hp
+  | mul l r hl hr =>
+    by_cases h : .mul l r = defectB
+    · rw [h,positions_B] at hp hq
+      exact False.elim (hne ((Finset.mem_singleton.mp hp).trans
+        (Finset.mem_singleton.mp hq).symm))
+    · cases p with
+      | nil => exact False.elim (h (Option.some.inj ((mem_positions _ []).mp hp)))
+      | cons b p =>
+        cases q with
+        | nil => exact False.elim (h (Option.some.inj ((mem_positions _ []).mp hq)))
+        | cons c q =>
+          have hp' := (mem_positions (.mul l r) (b :: p)).mp hp
+          have hq' := (mem_positions (.mul l r) (c :: q)).mp hq
+          cases b <;> cases c
+          · exact hl p q ((mem_positions l p).mpr hp') ((mem_positions l q).mpr hq')
+              (fun he => hne (congrArg (false :: ·) he))
+          · have hx := occurrence_bound l p ((mem_positions l p).mpr hp')
+            left
+            simp only [offset]
+            omega
+          · have hx := occurrence_bound l q ((mem_positions l q).mpr hq')
+            right
+            simp only [offset]
+            omega
+          · have hx := hr p q ((mem_positions r p).mpr hp') ((mem_positions r q).mpr hq')
+              (fun he => hne (congrArg (true :: ·) he))
+            simp only [offset]
+            omega
+
+private theorem gap_single (m j : ℕ) (hj : j+1 < m-1) :
+    gapVector m j = EuclideanSpace.single ⟨j,by omega⟩ 1 -
+      EuclideanSpace.single ⟨j+1,hj⟩ 1 := by
+  ext i
+  simp [gapVector, PiLp.single_apply, Fin.ext_iff]
+
+private theorem direction_inner (t : Source) (p q : Address)
+    (hp : p ∈ positions t) (hq : q ∈ positions t) :
+    inner ℝ (gapVector t.length (offset t p)) (gapVector t.length (offset t q)) =
+      if p = q then 2 else 0 := by
+  have hb := occurrence_bound t p hp
+  rw [gap_single t.length (offset t p) (by omega), inner_sub_left,
+    EuclideanSpace.inner_single_left, EuclideanSpace.inner_single_left]
+  by_cases h : p = q
+  · subst q
+    norm_num [gapVector]
+  · have hs := separated_offsets t p q hp hq h
+    have h₁ : offset t p ≠ offset t q := by omega
+    have h₂ : offset t p ≠ offset t q+1 := by omega
+    have h₃ : offset t p+1 ≠ offset t q := by omega
+    have h₄ : offset t p+1 ≠ offset t q+1 := by omega
+    simp [gapVector,h,h₁,h₂,h₃,h₄]
+
+private theorem inner_direction_sums (t : Source) (A B : Finset Address)
+    (hA : A ⊆ positions t) (hB : B ⊆ positions t) :
+    inner ℝ (∑ p ∈ A, gapVector t.length (offset t p))
+      (∑ p ∈ B, gapVector t.length (offset t p)) = 2 * ((A ∩ B).card : ℝ) := by
+  rw [sum_inner]
+  have hp (p : Address) (hp : p ∈ A) :
+      inner ℝ (gapVector t.length (offset t p))
+        (∑ q ∈ B, gapVector t.length (offset t q)) = if p ∈ B then 2 else 0 := by
+    rw [inner_sum]
+    calc
+      _ = ∑ q ∈ B, if p = q then (2 : ℝ) else 0 := by
+        apply Finset.sum_congr rfl
+        intro q hq
+        exact direction_inner t p q (hA hp) (hB hq)
+      _ = _ := by simp [eq_comm]
+  rw [Finset.sum_congr rfl hp, ← Finset.sum_filter]
+  simp [Finset.filter_mem_eq_inter, mul_comm]
+
+private theorem squared_distance (t : Source) (A B : Finset Address)
+    (hA : A ⊆ positions t) (hB : B ⊆ positions t) :
+    ‖areaVector t.length (variant t A) - areaVector t.length (variant t B)‖ ^ 2 =
+      2 * ((A ∆ B).card : ℝ) := by
+  rw [affine_formula t A hA, affine_formula t B hB,
+    add_sub_add_left_eq_sub, norm_sub_sq_real,
+    ← real_inner_self_eq_norm_sq, ← real_inner_self_eq_norm_sq,
+    inner_direction_sums t A A hA hA, inner_direction_sums t B B hB hB,
+    inner_direction_sums t A B hA hB]
+  simp only [Finset.inter_self]
+  have h₁ := Finset.card_sdiff_add_card_inter A B
+  have h₂ := Finset.card_sdiff_add_card_inter B A
+  have hc : (A ∆ B).card = (A \ B).card + (B \ A).card :=
+    Finset.card_union_of_disjoint disjoint_sdiff_sdiff
+  rw [hc]
+  have he₁ : ((A \ B).card : ℝ) + ((A ∩ B).card : ℝ) = A.card := by exact_mod_cast h₁
+  have he₂ : ((B \ A).card : ℝ) + ((A ∩ B).card : ℝ) = B.card := by
+    rw [Finset.inter_comm] at h₂
+    exact_mod_cast h₂
+  push_cast
+  nlinarith
+
+private theorem total_area (t : Source) : (coordinates t).sum = t.length.choose 2 := by
+  have hleaf : (ActualTreeReadoutAcquisition.leaves t).length = t.length := by
+    rw [← List.toFinset_card_of_nodup (ActualJointResponseCostCore.cost_foundation.1 t).1]
+    exact (ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).1
+  have hp := t.length_pos
+  have hc : AncestorAreaInterval.CompleteSubtree t 1 t.length :=
+    ⟨[],t,rfl,by simp [offset],by simp [offset],by
+      simp [hleaf, show t.length-1+1 = t.length by omega]⟩
+  have h := (AncestorAreaInterval.ancestor_area_interval t 1 t.length
+    (by omega) t.length_pos (by omega)).2.mpr hc
+  have harea : AncestorAreaInterval.area t 1 t.length = (coordinates t).sum := by
+    simp only [AncestorAreaInterval.area, Nat.sub_self, List.drop_zero,
+      ← coordinate_list_length t, List.take_length]
+  rw [harea, show t.length-1+1 = t.length by omega] at h
+  exact h
+
+private theorem vector_total_area (t : Source) :
+    ∑ i, areaVector t.length t i = (t.length.choose 2 : ℝ) := by
+  have hs : (∑ i : Fin (coordinates t).length, (coordinates t).getD i.val 0) =
+      (coordinates t).sum := by
+    simpa only [List.getD_eq_getElem _ _ (Fin.isLt _)] using
+      Fin.sum_univ_getElem (coordinates t)
+  change (∑ i : Fin (t.length-1), ((coordinates t).getD i.val 0 : ℝ)) = _
+  rw [← coordinate_list_length t]
+  exact_mod_cast hs.trans (total_area t)
+
+/-- The actual independent family, its exact area displacement and Euclidean distances. -/
 theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
     (positions (T n)).card = Nat.fib (n-2) ∧
     Function.Injective
@@ -421,12 +565,25 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
       depth (variant (T n) A) = (if A = ∅ then n else 0) ∧
       areaVector (Nat.fib (n+1)) (variant (T n) A) =
         areaVector (Nat.fib (n+1)) (T n) +
-          ∑ p ∈ A, gapVector (Nat.fib (n+1)) (offset (T n) p) := by
+          ∑ p ∈ A, gapVector (Nat.fib (n+1)) (offset (T n) p) ∧
+      (∑ i, areaVector (Nat.fib (n+1)) (variant (T n) A) i) =
+        ((Nat.fib (n+1)).choose 2 : ℝ) ∧
+      (coordinates (variant (T n) A)).length = Nat.fib (n+1)-1 ∧
+      ∀ B ⊆ positions (T n),
+        ‖areaVector (Nat.fib (n+1)) (variant (T n) A) -
+          areaVector (Nat.fib (n+1)) (variant (T n) B)‖ ^ 2 = 2 * ((A ∆ B).card : ℝ) := by
   obtain ⟨hc,hi,hf⟩ := native_source_family n hn
+  have ht := (AncestorAreaInstability.result.1 n hn).2.1
   refine ⟨hc,hi,?_⟩
   intro A hA
   obtain ⟨hw,hl,hd⟩ := hf A hA
-  exact ⟨hw,hl,hd,affine_formula _ _ hA _⟩
+  refine ⟨hw,hl,hd,affine_formula _ _ hA _,?_,?_,?_⟩
+  · rw [← hl]
+    exact vector_total_area _
+  · rw [coordinate_list_length, hl]
+  · intro B hB
+    rw [← ht]
+    exact squared_distance _ _ _ hA hB
 
 end
 end D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube
