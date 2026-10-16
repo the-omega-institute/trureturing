@@ -176,7 +176,21 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_
 
 For natural N,d with N>0 and d>0 and every real sequence a, abs(sum(N<=m<2N,a(m)*centered(d,m)))<=d*variation(N,a). No moment condition is needed. The same periodic primitive and summation-by-parts proof supply the two-moment floor bound and the full positive mean remainder.
 
-**Theorem 1.15 (Reciprocal logarithmic step).**
+**Theorem 1.15 (Sharp centered pairing with both jumps).**
+
+$$\forall N,d\in \mathbb{N},\forall a\in \mathbb{R}^{\mathbb{N}},0< N\land 0< d\Rightarrow \lvert \operatorname{S}\left(N, d, a\right)\rvert \le \frac{d}{16}\cdot \operatorname{V}\left(N, a\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_sharp_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive natural N,d and arbitrary real sequence a, let S(N,d,a)=sum(N<=m<2*N,a(m)*centered(d,m)). Then abs(S)<=d*V/16, where V=variation(N,a) includes both zero-extension jumps. No sign or moment hypothesis is imposed, including at N=1.
+
+For the original private primitive P=r*(r-d)/(2*d), r=m mod d, 0<=r<=d and (2*r-d)^2>=0 give -d/8<=P<=0. Hence Q=P+d/16 satisfies abs(Q)<=d/16. The unchanged primitive_step supplies the wrap. Q is not the zero-based prefix: Q(0)=d/16. Before taking absolute values, sum(a(m+1)-a(m))=a(2*N-1)-a(N) cancels the shift exactly. Both coarse and sharp bounds use one private finite by-parts assembly, with boundary terms a(2*N-1)*Q(2*N)-a(N)*Q(N). The new range inference is consumed by the sharper full-positive transfer. This finite estimate does not settle signed infinite transport or RH.
+
+**Theorem 1.16 (Reciprocal logarithmic step).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.reciprocal_log_step`
 
@@ -188,7 +202,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.reciprocal_log
 
 For every natural k>0, 1/(k+1)<=log(k+1)-log(k).
 
-**Theorem 1.16 (Weighted original floor count).**
+**Theorem 1.17 (Weighted original floor count).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_floor_bound`
 
@@ -200,7 +214,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_floor
 
 For natural N,h,m with 0<h<N and m<2*N, sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))<=2*N*(1+log(2*N/h)). The proof keeps the exact terminal floor before taking its upper bound.
 
-**Theorem 1.17 (Logarithms on the finite divisor range).**
+**Theorem 1.18 (Logarithms on the finite divisor range).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.log_bounds`
 
@@ -212,7 +226,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.log_bounds`
 
 For natural N,d with 0<d<=N, 0<=log(N/d)<=log(N).
 
-**Theorem 1.18 (Weighted logarithmic step).**
+**Theorem 1.19 (Weighted logarithmic step).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_log_step`
 
@@ -224,7 +238,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_log_s
 
 For every natural k>0, k*(log(k+1)-log(k))<=1.
 
-**Theorem 1.19 (Absolute actual Mobius prefix).**
+**Theorem 1.20 (Absolute actual Mobius prefix).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_bound`
 
@@ -236,7 +250,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_bound`
 
 For every natural q, abs(M(q))<=q, with every original Mobius index retained.
 
-**Theorem 1.20 (Exact finite integer sum).**
+**Theorem 1.21 (Exact finite integer sum).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.sum_indices`
 
@@ -248,7 +262,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.sum_indices`
 
 For every natural q, sum(1<=d<=q,d)=q*(q+1)/2 as a real identity.
 
-**Theorem 1.21 (Shared error for an arbitrary finite difference).**
+**Theorem 1.22 (Shared error for an arbitrary finite difference).**
 
 Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_error_bound`
 
@@ -260,7 +274,7 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_error_b
 
 For natural N,h with h>0, arbitrary real arrays D,F and real e,c with c>=0, if abs(F(k)-M(k))<=e*k+c for h<=k<N, then abs(sum(h<=k<N,(F(k)-M(k))*D(k)))<=(e+c/h)*sum(h<=k<N,k*abs(D(k))). The statement needs no sign condition on D or vanishing moments.
 
-**Theorem 1.22 (The finite two-moment transfer).**
+**Theorem 1.23 (The finite two-moment transfer).**
 
 $$\forall N,q\in \mathbb{N},\forall a,F\in \mathbb{R}^{\mathbb{N}},\forall e,c\in \mathbb{R},3\le N\land q\le N-2\land 0\le e\land 0\le c\land \sum_{m= N}^{2\cdot N-1} \operatorname{a}\left(m\right) = 0\land \sum_{m= N}^{2\cdot N-1} m\cdot \operatorname{a}\left(m\right) = 0\land (\forall k\in \mathbb{N},(q+1)\le k< N\Rightarrow \lvert \operatorname{F}\left(k\right)-\operatorname{M}\left(k\right)\rvert \le e\cdot k+c)\Rightarrow \lvert \operatorname{E}\left(N, a\right)-\operatorname{Z}\left(N, q, a, F\right)\rvert \le \frac{e+\frac{c}{(q+1)}}{\operatorname{log}\left(N\right)}\cdot N\cdot \operatorname{A}\left(N, a\right)\cdot (1+2\cdot \operatorname{log}\left(\frac{N}{(q+1)}\right)\cdot (1+\operatorname{log}\left(\frac{2\cdot N}{(q+1)}\right)))+(q+1)\cdot (\frac{3\cdot q}{2}+2)\cdot \operatorname{V}\left(N, a\right)$$
 
@@ -287,6 +301,7 @@ The case q=0 has empty low prefix; the case q=N-2 has one high term. Zero e,c,A 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_floor`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_sharp_bound`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.coefficient`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.floorPair`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logDifference`
