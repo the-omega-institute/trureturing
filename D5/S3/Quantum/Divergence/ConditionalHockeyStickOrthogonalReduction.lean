@@ -31,7 +31,7 @@ private def rt {n : Type*} [Fintype n] [DecidableEq n]
     (X : Mat n) : ℝ := X.trace.re
 
 private def posTrace {n : Type*} [Fintype n] [DecidableEq n]
-    (X : Mat n) : ℝ := (Matrix.trace (X⁺)).re
+    (X : Mat n) : ℝ := rt (X⁺)
 
 private def E {n : Type*} [Fintype n] [DecidableEq n]
     (γ : ℝ) (ρ σ : Mat n) : ℝ := posTrace (ρ - γ • σ)
@@ -49,7 +49,8 @@ private noncomputable def amp {A B R : Type*}
 
 private def gap {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
-    (_γ : ℝ) (_ρ _σ : Mat (R × A)) : ℝ := 0
+    (γ : ℝ) (ρ σ : Mat (R × A)) : ℝ :=
+  (E γ ρ σ - E γ (ptr ρ) (ptr σ)) * 0
 
 private noncomputable def ratios
     {A B : Type} [Fintype A] [DecidableEq A]
