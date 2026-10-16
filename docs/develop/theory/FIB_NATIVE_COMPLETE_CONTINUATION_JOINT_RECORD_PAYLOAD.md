@@ -549,3 +549,805 @@ acquisition/control programme therefore remains open.
 [PPT]: AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Original contrast and the joint acquisition cost
+
+**Definition 34.1 (joint optimization at the credited error).** Retain
+the sole normalized reached-cut experiment (JR.1), all four real signs
+at each of the three heights, and the full complex common-processor
+contract of [CG, Definitions 3.1 and 21.2]. The calibrated five-mode
+input, fixed common metadata, ideal coherent live block, five ORIGINAL
+exact-time failure measures, and HALF full cq norm are unchanged.
+The isolated point, coefficient enclosures and optimum $E_*$ of
+[CG, §§13–17] are ordinary source-conditional premises throughout.
+
+Allow any optimal common full-output processor $\Phi$, not just
+$\widehat\Phi_*$. Its acquisition is an ACTUAL factorization
+$\Phi=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha$ with CP encoders,
+$\sum_\alpha\mathcal E_\alpha^\dagger(I)=I$, full-output TP decoders,
+and jointly counted future-accessible quantum fibres of dimension
+$d_\alpha$. Countable and explicitly supplied integral factorizations
+have exactly [CG, Convention 21.3]'s measurability and integrability
+hypotheses. A binary record $r\in\{+1,-1\}$ is classical processing
+of the acquired label, with independent coins absorbed into that label.
+It is acquired before execution; it is not a measurement retrospectively
+chosen on a discarded environment. Write $F$ for its plus effect on
+the supported qutrit. Define
+
+$$
+\begin{aligned}
+\mathsf V(F)&=\frac{|\Gamma_y(F)|}{\kappa q_y}
+             =\frac{2|\operatorname{Re}F_{01}|}{\kappa},\\
+Q_H&=\sum_{\alpha:d_\alpha\geq3}
+                     \mathcal E_\alpha^\dagger(I),
+&p_H(\rho)&=\operatorname{tr}(Q_H\rho),\\
+\overline p_{H,y}&=\frac14\sum_{e,n}p_H(\rho_{y,e,n}),
+&\mathsf W&=\max_{y,e,n}p_H(\rho_{y,e,n}),\\
+\mathsf C(s)&=\inf\{\mathsf W:E(\Phi)=E_*,\ \mathsf V(F)\geq s,
+                  \text{with such an actual factorization and record}\}.
+\end{aligned}
+\tag{JR.20}
+$$
+
+Here $\Gamma_y$ is the ORIGINAL winding Fourier coefficient (JR.14),
+and (JR.19) proves that its normalized value is independent of $y$.
+The denominator is positive. The four-term sums are mathematical tests
+of four conditional laws, with no source prior. Every quantum system
+available to execution is included in $d_\alpha$, including retained
+specimen, controller, environment and entanglement shares. There is no
+helper, readable history, callback, retry, bypass or normalization.
+The cost concerns acquisition, including branches later destined for
+failure; it is not conditioned on live output. Extra acquired classical
+labels are allowed and are not presumed to be unknown source labels.
+
+**Proposition 34.2 (the source-specific determinant parameters).** In
+addition to the signs already established in Proposition 29.2, $d>0$.
+Set
+
+$$
+\theta=\frac{ab}{h_0h_1},\qquad
+\omega=\frac{cd}{h_0h_2},\qquad
+\delta=\theta+\omega,\qquad k=1-\theta-\omega,\qquad
+v_0=\frac{\omega}{1-\theta},\qquad s_0=\sqrt\delta.
+\tag{JR.21}
+$$
+
+Then $\theta,\omega>0$, $\delta<18/695<1$, and $0<v_0<1$.
+For arbitrary COMPLEX coefficients $x,z,w$,
+
+$$
+\det(xD+zT+wS)
+ =h_0h_1h_2\,x\bigl(x^2-\theta z^2-\omega w^2\bigr).
+\tag{JR.22}
+$$
+
+For each original height write
+
+$$
+\begin{aligned}
+A_y&=\sum_i h_i^2p_{yi},\\
+B_y&=b^2p_{y0}+a^2p_{y1},\\
+C_y&=d^2p_{y0}+c^2p_{y2}.
+\end{aligned}
+\tag{JR.23}
+$$
+
+All three are positive and strictly increase as $y$ runs from $5$
+through $16$ to $27$.
+
+Proof. Only the sign of $d$ requires information beyond Proposition
+29.2. In the exact root box of [CG, Proposition 13.2], the coordinates
+of (CG.112) obey
+$\lambda<1/2$, $7/5<\alpha_1<3/2$, $\alpha_2>11/10$,
+$2/5<\beta_1<1/2$, and $0<\beta_2<5/6$.
+Consequently $\|v_5\|^2>4$ and $\|v_{27}\|^2<2$.
+The two contributions to $N_{02}$ in (CG.112) have opposite signs,
+and $\sqrt{p_{50}p_{52}}=\sqrt5/16$,
+$\sqrt{p_{27,0}p_{27,2}}=\sqrt{27}/16$. Using
+$\sqrt5<9/4$ and $\sqrt{27}>5$ gives
+
+$$
+N_{02}=-\frac{\lambda\alpha_1\sqrt5}{16\|v_5\|^2}
+       +\frac{(1-\lambda)\beta_1\sqrt{27}}{16\|v_{27}\|^2}
+ >-\frac{27}{1024}+\frac1{32}>0.
+$$
+
+Since $Q^{02}_{01}=\eta_2N_{02}=cd$, with $\eta_2,c>0$, this proves
+$d>0$. These rational comparisons use the credited box and do not
+recertify its root. By rank one and [CG, Theorem 22.1],
+$h_0h_1>695/1000$, $h_0h_2>796/1000$, and
+$\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}<36/1000$.
+The inequalities $2ab\leq a^2+b^2$ and $2cd\leq c^2+d^2$
+therefore give $\delta<18/695$. Expansion of the displayed three by
+three matrix proves (JR.22), without taking complex moduli or replacing
+squares by absolute squares.
+
+Finally, $A_y$ has slope $(H_{00}-H_{11})/128>0$ by the credited
+enclosures. The box has $\eta_1>19/100$, and (CG.115) has
+$(S_{01})_{00}>1/10$, so $b^2=(Q^{01})_{11}>19/1000$.
+The trace bound gives $a^2<17/1000$, hence $B_y$ has positive
+slope $(b^2-a^2)/128$. The slope of $C_y$ is $d^2/128>0$.
+Positivity of their coefficients proves their positivity. $\square$
+
+## 35. Averaging an actual record together with its acquisition cost
+
+**Theorem 35.1 (record-preserving reduction for EVERY optimizer).**
+Given any implementation in Definition 34.1, there is a mathematical
+sign-averaged implementation with the SAME normalized winding contrast,
+the SAME four-sign averaged acquisition cost at each height, and live
+Choi matrix $J_*$ of (JR.16). Its entire full channel need not be
+$\widehat\Phi_*$. Its total canonical-failure effect on the qutrit
+is $M$, with no other output mass on that input space. This reduction
+does not assert that its sign operations are natively supplied.
+
+Proof. Put $g=(e,n)$, $U_g=\operatorname{diag}(e,n,1)$ and
+$\chi(g)=en$. On the whole five-mode live output use the fixed unitary
+$\widetilde U_g=EU_gE^\dagger+(I_5-P)$; on all failure and extra
+sectors use identity. Denote that output action by $\mathcal U_g$.
+Append an independent uniform classical coin $g$ to the acquired label
+and use encoder $\mathcal E_\alpha\circ\operatorname{Ad}_{U_g}/4$
+on the supported qutrit, decoder
+$\mathcal U_g^\dagger\circ\mathcal R_\alpha$, and report
+
+$$
+\widetilde\Phi=\frac14\sum_g
+ \mathcal U_g^\dagger\circ\Phi\circ\operatorname{Ad}_{U_g},
+\qquad \widetilde r=\chi(g)r,\qquad d_{g,\alpha}=d_\alpha.
+\tag{JR.24}
+$$
+
+The encoders have total effect $I$ and all decoders remain full TP.
+The five-mode input version uses $\widetilde U_g$ as well. This is
+one common instrument with a generated independent coin, not a random
+choice of the unknown history. The signs permute the original four
+input/target pairs at each height, including their unchanged full
+failure measures. Convexity and unitary invariance of the complete
+norm give $E(\widetilde\Phi)\leq E_*$. The credited full-class lower
+bound gives equality. Applying the finite contraction of [CG,
+Convention 17.1] and then its Theorem 17.2 fixes precisely the averaged
+live Choi $J_*$. That theorem also gives $G_o=0$ and $G_f|0\rangle=0$
+before averaging. After averaging the live effect is
+$D^\dagger D+T^\dagger T+S^\dagger S=I-M$, so the total failure
+effect is $M$. No individual failure measure or unaveraged full channel
+has been identified by this argument.
+
+The binary relabelling is essential. Its plus effect and its high-fibre
+effect are
+
+$$
+\begin{aligned}
+\widetilde F
+ &=\frac12 I+\frac14\sum_g\chi(g)U_g^\dagger F U_g
+  =\frac12I+F_{01}|0\rangle\langle1|
+                   +F_{10}|1\rangle\langle0|,\\
+\widetilde Q_H&=\frac14\sum_gU_g^\dagger Q_HU_g
+                  =\operatorname{diag}((Q_H)_{00},(Q_H)_{11},(Q_H)_{22}),\\
+\widetilde p_H(\rho_{y,e,n})&=\overline p_{H,y}
+                                      \leq\mathsf W.
+\end{aligned}
+\tag{JR.25}
+$$
+
+For the first identity, the plus effect conditional on $g$ is
+$U_g^\dagger[I/2+\chi(g)(F-I/2)]U_g$.
+Character orthogonality retains exactly the $01,10$ entries in its
+signed average. This preserves the ACTUAL record's Fourier coordinate;
+averaging while discarding or keeping its old sign unchanged would not.
+The second identity follows because the same coin neither changes
+dimension nor deletes any branch. Summing the four actual input
+probabilities gives the last identity, without a source prior.
+
+In particular an individual coherent-input cost was not diagonalized
+inside the original implementation. For its original Hermitian $Q_H$,
+the exact cost is
+
+$$
+\begin{aligned}
+p_H(\rho_{y,e,n})={}&\sum_i p_{yi}(Q_H)_{ii}
+ +2enq_y\operatorname{Re}(Q_H)_{01}\\
+ &+2e\sqrt{p_{y0}p_{y2}}\operatorname{Re}(Q_H)_{02}
+ +2n\sqrt{p_{y1}p_{y2}}\operatorname{Re}(Q_H)_{12}.
+\end{aligned}
+\tag{JR.26}
+$$
+
+Those off-diagonal terms vanish in the FOUR-SIGN average, not in an
+individual history. The argument preserves low/high fibre membership
+throughout; it replaces neither the actual cut by a virtual Choi
+ensemble nor worst-history cost by an average-case objective.
+The finite coin also preserves the hypotheses for countable and
+specified integral factorizations. $\square$
+
+## 36. The simultaneous rank and record constraint on the live face
+
+**Theorem 36.1 (one joint coefficient constraint).** For the averaged
+implementation of Theorem 35.1 there are numbers $u,v,w\in[0,1]$
+such that
+
+$$
+\begin{aligned}
+u&\leq\theta v+\omega w,\\
+\mathsf V(F)&\leq\sqrt{uv}+\sqrt{(1-u)(1-v)}\leq1,\\
+\overline p_{H,y}&\geq
+ A_y(1-u)+B_y(1-v)+C_y(1-w)
+                       \quad(y=5,16,27).
+\end{aligned}
+\tag{JR.27}
+$$
+
+The SAME $u,v,w$ occur in all three inequalities and at all heights.
+The cost inequality uses the original implementation's averaged
+ACQUISITION probability, including any high fibre that later fails.
+
+Proof. Refine the actual label by its binary coin, so $r$ is determined
+by it. Choose encoder Kraus matrices $C_{\alpha j}$ and compressed
+live-decoder Kraus matrices $R_{\alpha i}^L$. Their products
+$L_{\alpha ij}=R_{\alpha i}^LC_{\alpha j}$ give the live Choi matrix.
+Their rank is at most $d_\alpha$, and the live decoder is TNI.
+These are analytic Kraus refinements of the same branches, not newly
+observable records. In the integral case use its stipulated measurable
+Kraus fields. Integrable positive Choi matrices make the following
+finite-dimensional moments well defined.
+
+Every such Kraus vector lies in the span of $|D\rangle\!\rangle$,
+$|T\rangle\!\rangle$, $|S\rangle\!\rangle$: a vector orthogonal to
+this support has zero quadratic form against their total $J_*$,
+so positivity kills each summand, or almost every integrand. This is
+the positive-summand support mechanism already used in (JR.17).
+Write each product uniquely as $L_j=x_jD+z_jT+w_jS$.
+The three Kraus vectors are linearly independent with disjoint matrix
+supports. Applying their Gram left inverse to the Choi equality gives
+
+$$
+\sum_j
+ \begin{pmatrix}x_j\\z_j\\w_j\end{pmatrix}
+ \begin{pmatrix}\overline x_j&\overline z_j&\overline w_j\end{pmatrix}
+ =I_3.
+\tag{JR.28}
+$$
+
+In particular each total squared coefficient mass is $1$, and the total
+$D,T$ cross moment is zero. Partition these SAME products by their
+actual fibre dimension. Let $u,v,w$ be the low-fibre sums of
+$|x_j|^2,|z_j|^2,|w_j|^2$, respectively; high means $d_\alpha\geq3$.
+Each low product has rank at most two. By (JR.22), either $x_j=0$
+or $x_j^2=\theta z_j^2+\omega w_j^2$. The complex triangle inequality
+therefore gives $|x_j|^2\leq\theta|z_j|^2+\omega|w_j|^2$ in both
+cases. Sum to get the first line of (JR.27).
+
+The plus branch's failure effect is dominated by $M$. Positivity and
+$M|0\rangle=0$ imply that its $01$ entry is zero, even when the
+full failure measures differ from those of $\widehat\Phi_*$.
+There is no other mass on the qutrit input space. Computing the live
+effect as in (JR.18), and using (JR.28), consequently gives the exact
+signed-record identity
+
+$$
+\frac{2\operatorname{Re}\widetilde F_{01}}\kappa
+ =\sum_j r_j\operatorname{Re}(\overline x_jz_j).
+\tag{JR.29}
+$$
+
+Taking an absolute value and applying Cauchy–Schwarz separately on
+the low and high sets bounds this by
+$\sqrt{uv}+\sqrt{(1-u)(1-v)}$. Cauchy–Schwarz on the two real unit
+vectors $(\sqrt u,\sqrt{1-u})$, $(\sqrt v,\sqrt{1-v})$ gives the
+ceiling $1$. This proof retains arbitrary complex phases and the
+actual acquired binary record.
+
+For the cost, the aggregate low and high live maps separately commute
+with the sign action, because membership in those sets was preserved
+in (JR.24). Their coefficient Gram matrices are therefore diagonal:
+$D,T,S$ have the distinct characters $1,en,e$.
+Equivalently, average their effects over those same signs before
+testing $\rho_y$. The high live-output probability is exactly
+$A_y(1-u)+B_y(1-v)+C_y(1-w)$. Full TP of each decoder makes its
+supported live trace at most its encoder trace. Summing over the same
+high branches gives the last line of (JR.27). Countable sums and the
+specified integrals obey the same support, triangle and Cauchy–Schwarz
+arguments. No decoder has been treated as TP on just its live part.
+$\square$
+
+## 37. The sharp cost function for every required contrast
+
+**Definition 37.1 (explicit frontier parameter).** On $[v_0,1]$ put
+
+$$
+\mathfrak f(v)=\sqrt{v(\theta v+\omega)}
+              +\sqrt{(1-v)(1-\theta v-\omega)}.
+\tag{JR.30}
+$$
+
+For $0\leq s\leq s_0$ set $v_s=1$. For $s_0<s\leq1$ let $v_s$
+be the unique point in $[v_0,1)$ with $\mathfrak f(v_s)=s$.
+An expression requiring no optimization or implicit root choice is
+
+$$
+v_s=
+\frac{(1+\theta)(1-s^2-\omega)+2\omega s^2
+ +2s\sqrt{1-s^2}\sqrt{\theta(1-s^2)+\omega k}}
+ {(1+\theta)^2-4\theta s^2}
+ \qquad(s_0\leq s\leq1).
+\tag{JR.31}
+$$
+
+The formula agrees with the first case at $s=s_0$.
+
+**Theorem 37.2 (complete sharp original record/resource frontier).**
+For EVERY optimal original common processor and compatible actual
+factorization and binary record, $0\leq\mathsf V(F)\leq1$.
+Every value in this interval is feasible. For a required $s\in[0,1]$,
+every such implementation with $\mathsf V(F)\geq s$ satisfies
+
+$$
+\begin{aligned}
+\overline p_{H,y}&\geq P_y(s)
+ :=A_y(1-\omega-\theta v_s)+B_y(1-v_s),\\
+\mathsf W&\geq\mathsf C(s)=P_{27}(s).
+\end{aligned}
+\tag{JR.32}
+$$
+
+A single common finite factorization for each prescribed $s$, supplied
+in §38, attains the three averaged bounds and the worst-history bound
+SIMULTANEOUSLY, has contrast exactly $s$, and forgets to the PARTICULAR
+complete channel $\widehat\Phi_*$. Thus the infimum in (JR.20) is a
+minimum, also when the comparison permits the countable and specified
+integral factorizations. Requirements $s>1$ are infeasible.
+
+All endpoints and the constant-cost interval are
+
+$$
+\begin{aligned}
+P_y(s)&=(1-\delta)A_y &&(0\leq s\leq s_0),\\
+P_y(1)&=\frac{k}{1-\theta}(A_y+B_y),
+&v_1&=v_0.
+\end{aligned}
+\tag{JR.33}
+$$
+
+The functions $P_y$ are continuous, constant precisely on $[0,s_0]$,
+and strictly increasing on $[s_0,1]$. In particular zero required
+contrast does not permit zero dimension-three mass. These per-height
+necessary bounds are FOUR-SIGN averages. They are not individual-input
+Loewner inequalities for an unaveraged implementation.
+
+Proof. For well-definedness, set $u(v)=\theta v+\omega$.
+On $[v_0,1]$, $0<u(v)\leq v$, with equality only at $v_0$.
+Write
+$\mathfrak f(v)=\cos(\arcsin\sqrt v-\arcsin\sqrt{u(v)})$.
+The angle difference is zero at $v_0$ and increases strictly to
+$\arccos\sqrt\delta$ at $1$. Indeed its derivative in the interior
+is positive because
+$u(v)>\theta v$ and $1-u(v)>\theta(1-v)$ imply
+$\sqrt{u(v)(1-u(v))}>\theta\sqrt{v(1-v)}$.
+Thus $\mathfrak f$ decreases continuously and strictly from $1$ to
+$s_0$. This proves existence, uniqueness and the stated inverse
+continuity and monotonicity. To verify (JR.31), the equality
+$\mathfrak f(v)=s$ with $u\leq v$ gives
+
+$$
+\sqrt u=s\sqrt v-\sqrt{1-s^2}\sqrt{1-v},\qquad
+(2s^2-1-\theta)v+1-s^2-\omega
+ =2s\sqrt{1-s^2}\sqrt{v(1-v)}.
+$$
+
+Squaring the second equality gives a quadratic with positive leading
+coefficient $(1+\theta)^2-4\theta s^2\geq(1-\theta)^2$.
+The larger root is (JR.31); its inner discriminant simplifies to
+$\theta(1-s^2)+\omega k$. It is the desired root: at $s_0$ it
+is $1$, it continues without a double root for $s_0<s<1$, and
+the unique solution just proved in $[v_0,1]$ cannot switch roots
+there. At $s=1$ both roots equal $v_0$. This also verifies both
+endpoint substitutions without an extraneous squared-equation branch.
+
+Now take $u,v,w$ from Theorem 36.1. They satisfy
+$u\leq\theta v+\omega w\leq\theta v+\omega$.
+For $s\leq s_0$, the bounds $u\leq\delta$, $v,w\leq1$ immediately
+give $\overline p_{H,y}\geq(1-\delta)A_y$.
+For $s>s_0$, necessarily $v\leq v_s$. Otherwise
+$v>v_s\geq v_0$, so $u\leq\theta v+\omega<v$. For fixed $v$,
+$\sqrt{uv}+\sqrt{(1-u)(1-v)}$ increases on $0\leq u\leq v$.
+Consequently (JR.27) would imply
+
+$$
+s\leq\mathsf V(F)\leq\sqrt{uv}+\sqrt{(1-u)(1-v)}
+ \leq\mathfrak f(v)<\mathfrak f(v_s)=s,
+$$
+
+a contradiction. Hence $u\leq\theta v_s+\omega$, $v\leq v_s$,
+$w\leq1$. Substitution in (JR.27), whose weights are positive, proves
+the first line of (JR.32). It uses one joint constraint on cost and
+record, not independently optimized endpoints.
+
+The original maximum is at least each four-sign average. In the
+displayed bound, $1-\omega-\theta v_s\geq k>0$ and $1-v_s\geq0$.
+Since $A_y,B_y$ strictly increase, $P_5(s)<P_{16}(s)<P_{27}(s)$.
+Thus $\mathsf W\geq P_{27}(s)$; no averaging over heights is used.
+The construction in Theorem 38.2 supplies the reverse inequality with
+one channel and record, proving the equality defining $\mathsf C$.
+The contrast ceiling is already (JR.27); that same construction gives
+every value. Finally $P_y$ is affine decreasing in $v_s$ with strictly
+positive coefficient $\theta A_y+B_y$. This proves the remaining
+monotonicity and endpoint claims. $\square$
+
+## 38. One finite joint attainer with the full original complete output
+
+**Definition 38.1 (supplied encoder and full TP decoders).** Fix
+$s\in[0,1]$, $v=v_s$ and $u=\theta v+\omega$ before the specimen
+arrives. For $\sigma,\tau\in\{+1,-1\}$ define qutrit live matrices
+
+$$
+H_\sigma=\frac{\sqrt{1-u}D+\sigma\sqrt{1-v}T}{\sqrt2},\qquad
+L_{\sigma,\tau}=\frac{\sqrt uD+\sigma\sqrt vT+\tau S}{2}.
+\tag{JR.34}
+$$
+
+For each $L_{\sigma,\tau}$ choose once a fixed isometry
+$V_{\sigma,\tau}:\mathbb C^2\to\mathbb C^3$ onto its image.
+Its columns can be fixed by Gram–Schmidt on the first two independent
+columns in their lexicographic order. This rule uses known matrices,
+not the received state. The acquisition has the following branches:
+
+| Acquired branch | Encoder Kraus matrix | Joint fibre | Full-output decoder |
+| --- | --- | --- | --- |
+| $(H,\sigma)$ | $H_\sigma$ | $3$ | $X\mapsto EXE^\dagger$ in live |
+| $(L,\sigma,\tau)$ | $V_{\sigma,\tau}^\dagger L_{\sigma,\tau}$ | $2$ | $X\mapsto EV_{\sigma,\tau}XV_{\sigma,\tau}^\dagger E^\dagger$ in live |
+| $(f,j,\sigma)$, $j=1,2$ | $\sqrt{m_j/2}\langle j|$ | $1$ | $z\mapsto z w_\ell g(t)dt\,P_f$ in EACH original label $\ell$ |
+
+For five-mode inputs multiply each encoder matrix on the right by
+$E^\dagger$. Add branches $(\perp,\sigma)$ with scalar encoder
+$A\mapsto\operatorname{tr}((I_5-P)A)/2$, decoded to
+$z g(t)dt\,P_f$ only at original label $2$. Their two orthogonal
+complementary Kraus rows are a discarded multiplicity, not extra
+accessible quantum systems. The live and scalar decoders have no
+other output sectors. Every displayed decoder is TP on its WHOLE fibre.
+
+On a live branch retain $\sigma$ as a generated classical label, and
+on failure branches $\sigma$ is the fair coin already in their rows.
+For the designated binary record, use the fixed classical kernel
+
+$$
+\Pr(r\mid\sigma)=\frac{1+r\sigma\eta_s}{2},\qquad
+\eta_s=\begin{cases}s/s_0,&0\leq s\leq s_0,\\1,&s_0<s\leq1.
+\end{cases}
+\tag{JR.35}
+$$
+
+Absorb its coin into the actual acquisition label. All labels needed
+for decoding are retained classically, including $\sigma,\tau$ when
+present. Only the declared fibre is quantum. These are additional
+actually supplied operations, rather than permission inferred from
+a change of channel representation.
+
+**Theorem 38.2 (simultaneous rank, law, reference and cost equality).**
+The acquisition of Definition 38.1 has exactly the stated fully counted
+fibre dimensions, a finite label alphabet, full TP decoders and total
+encoder effect $I_5$. Forgetting its acquired labels gives exactly
+$\widehat\Phi_*$ on EVERY complex five-mode matrix and after tensoring
+identity on every passive reference. This includes each of the five
+original exact-time failure CP measures on every Borel set, all
+cross-support entries and all zero additional sectors. Its original
+complete-output error is the credited $E_*$. Its contrast is exactly
+$s$ and its high-fibre probability on every normalized supported
+complex input is
+
+$$
+p_H^{[s]}(\rho)=(1-u)\sum_i h_i^2\rho_{ii}
+                      +(1-v)(b^2\rho_{00}+a^2\rho_{11}).
+\tag{JR.36}
+$$
+
+Thus on EACH original sign history it equals $P_y(s)$ and its worst
+history cost is $P_{27}(s)$. Both the full-class necessary curve and
+all three per-height averages are attained by this ONE factorization.
+
+Proof. From (JR.22) and $u=\theta v+\omega>0$,
+$\det L_{\sigma,\tau}=0$. Its rows and columns indexed by $1,2$
+have diagonal minor $u h_1h_2/4>0$, so its rank is exactly two.
+Also
+
+$$
+\det H_\sigma
+ =\frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u}
+       [(1-u)-\theta(1-v)]
+ =\frac{h_0h_1h_2}{2\sqrt2}\sqrt{1-u}\,k>0.
+\tag{JR.37}
+$$
+
+Thus every $H$ branch has rank three, including $v=1$ and $s=1$.
+There is no rank convention jump at either endpoint. The image
+isometries exist for the rank-two branches and satisfy
+$V_{\sigma,\tau}V_{\sigma,\tau}^\dagger L_{\sigma,\tau}
+=L_{\sigma,\tau}$. Compression and its isometric TP decoder therefore
+have product exactly $L_{\sigma,\tau}$ on all complex matrix units.
+
+The coefficient columns in (JR.34) are orthonormal when summed over
+the two $H$ rows and four $L$ rows: their squared masses are
+$(1-u)+u=1$, $(1-v)+v=1$, $0+1=1$, and every cross moment is zero.
+The existing Kraus-mixing identity used in (JR.6) therefore gives,
+for every complex $A$,
+
+$$
+\begin{aligned}
+\sum_\sigma H_\sigma A H_\sigma^\dagger
+ +\sum_{\sigma,\tau}L_{\sigma,\tau}A L_{\sigma,\tau}^\dagger
+ &=DAD^\dagger+TAT^\dagger+SAS^\dagger,\\
+\sum_\sigma H_\sigma^\dagger H_\sigma
+ +\sum_{\sigma,\tau}L_{\sigma,\tau}^\dagger L_{\sigma,\tau}+M
+ &=I_3.
+\end{aligned}
+\tag{JR.38}
+$$
+
+The last identity is exactly the credited (CG.141). The compressed
+encoders have the same effects as the uncompressed $L$ matrices.
+Every scalar failure decoder is TP because $\sum_\ell w_\ell=1$
+and $\int_0^1g(t)dt=1$. Summing their encoder-decoder products yields
+$w_\ell g(t)dt\,\operatorname{tr}(MA)P_f$ separately for each original
+$\ell$, with both zero-weight labels retained. For five modes the
+complementary encoder effect is $I_5-P$; hence the total encoder
+effect is $P+(I_5-P)=I_5$. The forgotten maps are exactly
+
+$$
+\begin{aligned}
+\Phi_{\mathrm{live}}(A)&=
+ E[D(E^\dagger AE)D^\dagger+T(E^\dagger AE)T^\dagger
+                                  +S(E^\dagger AE)S^\dagger]E^\dagger,\\
+\Phi_\ell(A)(dt)&=g(t)\left[
+ w_\ell\operatorname{tr}(EME^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P)A)\right]dt\,P_f.
+\end{aligned}
+\tag{JR.39}
+$$
+
+These are equalities of maps and measures, not only their values on
+twelve densities. In particular cross operators between $P$ and
+$I_5-P$ have zero image, and every extra output sector is zero.
+Every identity holds on matrix units and thus after arbitrary passive
+reference amplification. More explicitly, the failure reference
+factor on a joint operator $X$ is
+$\operatorname{Tr}_5[(EME^\dagger\otimes I)X]$ in the first term,
+and $\operatorname{Tr}_5[((I_5-P)\otimes I)X]$ in the second.
+Multiplying these by the stated density and $P_f$ proves equality
+on every Borel time set, including the absence of singular mass.
+The maps leave common metadata in the same fixed state. Performance
+therefore reuses the original full-output theorem, with no new
+acceptance event or changed metric.
+
+Only the $H$ branches have dimension at least three. Their effects sum
+to $(1-u)D^\dagger D+(1-v)T^\dagger T$, proving (JR.36) even on
+complex inputs. At the original inputs this is $P_y(s)$, independent
+of both signs. The binary law is computed in §39; it gives contrast
+$s$. This finishes the simultaneous attainment claimed in Theorem
+37.2.
+
+For completeness, a dilation of this specified acquisition can use
+$|\alpha\rangle_C\otimes C_{\alpha j}|\psi\rangle$
+with an orthogonal environment copy $|\alpha,j\rangle_Z$ for every
+Kraus row. Their sum is an isometry by the encoder-effect identity.
+Trace out $Z$ to produce the actual classical label $\alpha$ and
+its declared fibre. The complementary-support multiplicity and all
+coin/dilation systems other than the retained classical label are in
+$Z$ and are permanently inaccessible BEFORE the cut. No retained
+specimen, quantum controller, environment or entanglement share is
+available outside the fibre. Later independent blank ancillas can be
+used by the TP decoders; later accessible correlated shares cannot.
+If an implementation retains $Z$, it is a different acquisition cost
+and is not the attaining implementation specified here. $\square$
+
+## 39. Actual laws, plateau cases and the inverse budget curve
+
+**Proposition 39.1 (height and sign correspondence in the attainer).**
+Put $q_{02,y}=\sqrt{p_{y0}p_{y2}}$, $q_{12,y}=\sqrt{p_{y1}p_{y2}}$
+and $\kappa_{02}=h_0c+h_2d>0$. Before the optional binary coin,
+the entire finite acquisition law on the original specimen is
+
+$$
+\begin{aligned}
+\Pr(H,\sigma\mid y,e,n)
+ &=\frac{P_y(s)}2
+    +\sigma\sqrt{(1-u)(1-v)}\,\kappa enq_y,\\
+\Pr(L,\sigma,\tau\mid y,e,n)
+ &=\frac14\bigl[uA_y+vB_y+C_y
+     +2\sigma\sqrt{uv}\,\kappa enq_y\\
+ &\hspace{22mm}+2\tau\sqrt u\,\kappa_{02}e q_{02,y}
+     +2\sigma\tau\sqrt v\,acn q_{12,y}\bigr],\\
+\Pr(f,j,\sigma\mid y,e,n)&=m_jp_{yj}/2,\qquad
+\Pr(\perp,\sigma\mid y,e,n)=0.
+\end{aligned}
+\tag{JR.40}
+$$
+
+After (JR.35), the designated binary law and effect are
+
+$$
+\Pr(r\mid y,e,n)=\frac12+r\kappa s\,enq_y,
+\qquad F=\frac12I+\frac{\kappa s}{2}
+                (|0\rangle\langle1|+|1\rangle\langle0|).
+\tag{JR.41}
+$$
+
+Thus $en=(-1)^m$ is the original winding parity and $x=y/256$ is
+the original height. The binary correct-parity probability is
+$1/2+\kappa s q_y$ at every sign; its worst original height is $5$.
+The high-fibre cost is largest at height $27$. Height $16$ remains
+one of the required complete-output constraints and has its own
+attained intermediate resource bound. No one of these heights is a
+probabilistic source weight.
+
+Proof. The cross effects are
+$D^\dagger T+T^\dagger D=\kappa X_{01}$,
+$D^\dagger S+S^\dagger D=\kappa_{02}X_{02}$, and
+$T^\dagger S+S^\dagger T=acX_{12}$, where
+$X_{ij}=|i\rangle\langle j|+|j\rangle\langle i|$.
+Expanding (JR.34)'s effects and applying the Born trace identity gives
+(JR.40). Sum over $\tau$ and the branch types. The unsigned masses
+sum to $1/2$ for each $\sigma$, while its signed term is
+$\sigma\kappa enq_y\mathfrak f(v)$. The independent record coin
+multiplies that term by $\eta_s$, with
+$\eta_s\mathfrak f(v)=s$ in both parameter regimes. This proves
+(JR.41) and the effect identity on the whole complex algebra.
+
+At $s=0$ the designated binary record is a fair coin and the cost is
+$(1-\delta)A_y$. Up to $s=s_0$ the SAME quantum instrument attains
+the constant minimum; only its fixed classical record kernel changes.
+At $s=s_0$ it can report $\sigma$ directly. For $s_0<s<1$ both high
+Kraus coefficients in (JR.34) are nonzero. At $s=1$, $u=v=v_0$,
+the low matrices are
+$(\sqrt{v_0}D+\sigma\sqrt{v_0}T+\tau S)/2$, and the high matrices
+are $\sqrt{1-v_0}(D+\sigma T)/\sqrt2$.
+The rank arguments in (JR.37) still apply. Binary relabelling supplies
+either sign of the contrast, so the signed normalized Fourier
+coordinate has precisely the feasible range $[-1,1]$.
+
+The extra labels in (JR.40) can depend separately on $e,n$ through the
+two other coherences; the binary marginal in (JR.41) depends only on
+$(y,m)$. No claim that the entire acquired law has only six classes
+is made for this different instrument. Since every $H_+$ is invertible,
+all twelve histories assign positive probability to that same branch;
+the full classical law does not identify the unknown history with
+certainty from one specimen. All these are unconditional laws at the
+already normalized old cut. $\square$
+
+**Corollary 39.2 (complete inverse resource budget).** Let
+$c_0=(1-\delta)A_{27}$ and
+$c_1=k(A_{27}+B_{27})/(1-\theta)$. Among original optimal processors
+with an actual factorization and worst-history cost at most $c$, none
+exists if $c<c_0$. For $c_0\leq c\leq c_1$ the largest feasible
+normalized binary contrast is
+
+$$
+\mathsf V_{\max}(c)=\mathfrak f\!\left(
+ \frac{A_{27}(1-\omega)+B_{27}-c}{\theta A_{27}+B_{27}}
+                         \right).
+\tag{JR.42}
+$$
+
+For $c\geq c_1$ it is $1$. In particular at the minimum resource
+budget $c_0$ the entire interval $[0,s_0]$ is attainable.
+
+Proof. Theorem 37.2 gives the constant minimum and strict increase
+thereafter, as well as the maximal contrast $1$. On its increasing
+part its cost is affine in $v_s$ with slope
+$-(\theta A_{27}+B_{27})<0$; solving that affine equation gives
+(JR.42). The finite instruments in §38 attain each case, including
+both budget endpoints. $\square$
+
+## 40. Mathematical reuse and the residual native obligation
+
+**Convention 40.1 (covered mathematics and the uncovered relation).**
+The exact original benchmark, isolated root, coefficient bounds and
+particular complete channel are credited to [CG, §§13–16]. Its
+Theorem 17.2 fixes only the sign-averaged live Choi of every optimizer;
+its entire full channel and individual failure-time laws are not unique
+by that theorem. The Schmidt-three and every-input nonsharp lower
+bounds in [CG, §§22–24], near-optimal results in §§26–28, and the
+attained family and particular-channel ceiling in §§29–33 above remain
+credited results. They are not the sharp optimization in (JR.20).
+
+The additional `repo-derived` relation is the joint actual-record/cost
+reduction (JR.24)–(JR.29), the determinant allocation and complete
+frontier (JR.30)–(JR.33), and its single finite complete-channel
+attainer with laws (JR.34)–(JR.42). In particular the constant-cost
+interval uses singular mixtures of $D,T,S$, instead of simply
+interpolating the previously attained $D+sT$ family. These results
+are ordinary conditional proofs, without fresh Lean/kernel evidence
+or a new certificate for $E_*$. The per-height necessity is explicitly
+an average; (JR.26)'s coherent-input terms remain in the actual cost.
+
+The mature mechanisms are `literature-attested`. Sekatski,
+[*The bottleneck dimension of quantum operations*,
+arXiv:2608.25010v1](https://arxiv.org/html/2608.25010v1), §II.A,
+equation (2) and Definition 1, gives the classical-assisted
+encoder/TP-decoder compression and its Kraus-rank/Schmidt-number
+correspondence. Its singular-value factorization explains the
+rank-two image compression used here; it does not supply a cost for
+this original twelve-history task or an actually acquired record.
+Leppäjärvi–Sedlák, [*Incompatibility of quantum instruments*,
+arXiv:2212.11225v2](https://arxiv.org/html/2212.11225v2), Definition 8,
+Remark 3 and Proposition 7, gives finite-dimensional instrument
+dilation and complementary-instrument postprocessing compatibility.
+Its joint-instrument requirement is retained here, but no accessible
+native environment or continuous-outcome theorem is inferred from it.
+Our failure-measure equalities instead follow directly from (JR.39).
+Complex triangle inequalities, Cauchy–Schwarz, character averaging and
+finite positive-support arguments are standard tools inside the proofs.
+
+The exact generic Kraus-mixing and branch-effect identities are reused
+from `UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance` and
+`FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal`.
+`FiniteKrausRepresentation`, including `choi_of_kraus`,
+`choi_PSD_iff_CP_map` and its Kraus representation, supplies the finite
+CP machinery, selected from Physlib at
+`6a09b2d1761a0d4430083045a247eb121d8da260`.
+`AntidistinguishabilityGram.psd_summand_projection` and its private
+`psd_summand_kills_kernel` express the support argument; their specific
+antidistinguishability conclusions are not premises of this frontier.
+Pinned mathlib `db584cd6d46c92f209a44c0f1c829460d327499d` supplies the
+matrix positivity, Gram and trace framework. These are source reuse,
+not newly compiled applications or additional Lean declarations.
+
+The source snapshot
+`648765d8c61a33ec941bbfc16416ca49c4c8c36c` also contains
+[Joint Transfer–Coherence Interface Geometry](https://github.com/the-omega-institute/trureturing/blob/648765d8c61a33ec941bbfc16416ca49c4c8c36c/docs/develop/theory/FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md),
+whose Theorem 2.2 characterizes a simultaneous ZERO-TRANSFER and
+Schmidt-two live restriction by a comparison matrix. The present live
+face has the nonzero transfers of $T,S$; that Schur-supported criterion
+is not a replacement for (JR.22) or an exhaustive native class.
+`SchurChannelMixedUnitaryDistance` concerns diamond distance of TP
+Schur channels to mixed-unitary sets. `ThreePointPositivityGate`
+concerns an entrywise nonnegative real three-point matrix under its
+one-versus-many hypothesis. `ChenDeyNaiveEquationsFive` refutes a
+five-dimensional orthostochastic lifting criterion. Their conclusions
+do not optimize this acquisition cost. The pure-state entropy identity
+in `InputInformationBalance.input_information_balance` and the
+specific coherent-copy identity in
+`CoherentCopyCorrelationTax.coherent_copy_correlation_tax` concern
+their own joint states and entropy functionals. No conversion from
+those entropies, the designated-subspace EOF refutation, or the
+classical $137/512$ allocation score to (JR.20) is established or used.
+The later weak-binding extension and structural atlas are not premises.
+These bounded source and primary-literature comparisons assert no
+worldwide priority or literature-absence result.
+
+**Definition 40.2 (remaining actual acquisition and time bridge).**
+The supplied-operation class in §38 must actually enact its common
+encoder, classical flags, calibrated support decomposition, rank-two
+image encodings, coherent retention and controlled TP decoders under
+the ORIGINAL permissions. The maps, the parameter $s$, the isometries
+and all classical kernels are fixed before receiving the sample.
+Native access to an unknown specimen, controlled decoding and permanent
+inaccessibility of the discarded dilation systems remain obligations.
+A mathematical change of candidate channel or instrument grants no
+actuator, rotation, swap, measurement or new permission.
+
+`OriginalControlComposition.OriginalControl` requires nonnegative finite
+duration, continuity, strict height domain, bounded phase variation,
+and its absolute-continuity or finite-piecewise-$C^1$ alternative.
+Its concatenation and private analytic helpers are statements about
+those paths, not constructors of the operations in §38.
+[Probability/Phase Transport][PPT], Definition 10.1, has the actual
+fields $P=\partial_\kappa$ and
+$Q=\sum_a w_a(\kappa)\partial_{h_a}$. On the double wall their
+commutator is $-(\partial_u+\partial_v)/r\ne0$ as in its Theorem
+8.7. Probability-changing noncommuting controls prevent identifying
+all original native operations with a diagonal/Schur menu. These
+geometric facts alone provide neither the acquisition map nor a
+global native impossibility theorem.
+
+The acquisition duration and placement must fit the SAME aligned
+original clock with no extra time. The five original label measures
+in (JR.39) are mathematical output measures; a physical realization
+must make the FIRST absorbing failure occur at that elapsed time,
+perform no later positive-carrier operation on a failed branch, and
+produce live output at time $1$. It must preserve the old stopped
+archives, source/epoch identity, permissions and controller updates.
+An internal failure-destined label or a timestamp sampled using
+$t=z/(2-z)$ for an independent uniform $z\in[0,1]$ does not provide
+that physical event, finite exact-time storage or extra execution
+time. These obligations remain unresolved. The sharp joint frontier
+settles the stated finite mathematical optimization; it neither
+realizes it natively nor completes the through-2027 programme.
+
+## 追加锚（本行以下为增补区）
