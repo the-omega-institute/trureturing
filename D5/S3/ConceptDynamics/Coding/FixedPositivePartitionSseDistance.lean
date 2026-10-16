@@ -714,28 +714,6 @@ theorem theorem32_2 (H : Type u) [Group H] [Fintype H] [Nontrivial H]
         exact ExchangeChain.cons U V ht
     obtain ⟨γ, hγ⟩ := (partition_lInf_geodesic p r).1
     simpa only [hγ.1, hγ.2.1] using fold (dInf p r) γ hγ.2.2.1
-  have cumulative {R : Type u} [Semiring R] {n m L : ℕ}
-      {A : Mat R n n} {B : Mat R m m} (c : ExchangeChain R A B L) :
-      ∃ (X : Mat R n m) (Y : Mat R m n),
-        A * X = X * B ∧ B * Y = Y * A ∧ X * Y = A ^ L ∧ Y * X = B ^ L := by
-    induction c with
-    | nil A => exact ⟨1, 1, by simp, by simp, by simp, by simp⟩
-    | @cons n k m L U V B tail ih =>
-      obtain ⟨X, Y, hX, hY, hXY, hYX⟩ := ih
-      refine ⟨U * X, Y * V, ?_, ?_, ?_, ?_⟩
-      · calc
-          (U * V) * (U * X) = U * ((V * U) * X) := by simp only [Matrix.mul_assoc]
-          _ = (U * X) * B := by rw [hX]; simp only [Matrix.mul_assoc]
-      · calc
-          B * (Y * V) = (B * Y) * V := by simp only [Matrix.mul_assoc]
-          _ = (Y * V) * (U * V) := by rw [hY]; simp only [Matrix.mul_assoc]
-      · calc
-          (U * X) * (Y * V) = U * (X * Y) * V := by simp only [Matrix.mul_assoc]
-          _ = (U * V) ^ (L + 1) := by rw [hXY, rectangular_exchange_power]
-      · calc
-          (Y * V) * (U * X) = Y * ((V * U) * X) := by simp only [Matrix.mul_assoc]
-          _ = (Y * X) * B := by rw [hX]; simp only [Matrix.mul_assoc]
-          _ = B ^ (L + 1) := by rw [hYX, pow_succ]
   have coordinate_bound {n : ℕ} (p r : Partition n) (L q : ℕ) (hq : 0 < q)
       (hpr : ∀ j,
         q * (∑ i, (coord p i - (j + L))) - q * (∑ i, (coord p i - (j + L + 1))) ≤
@@ -802,7 +780,7 @@ theorem theorem32_2 (H : Type u) [Group H] [Fintype H] [Nontrivial H]
       | zero => simpa only [pow_zero] using hone a
       | succ k ih => rw [pow_succ, hmul, ih, pow_succ, Module.End.mul_eq_comp]
     have cq := map_exchange_chain naturalToRational.toNonUnitalRingHom c
-    obtain ⟨X, Y, hX, hY, hXY, hYX⟩ := cumulative cq
+    obtain ⟨X, Y, hX, hY, hXY, hYX⟩ := exchange_chain_lag cq
     let A := (partitionMatrix H p).map naturalToRational
     let B := (partitionMatrix H r).map naturalToRational
     have hTR : (act A).comp (act X) = (act X).comp (act B) := by

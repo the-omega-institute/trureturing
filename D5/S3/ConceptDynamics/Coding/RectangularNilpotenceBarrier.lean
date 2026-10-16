@@ -44,6 +44,30 @@ inductive ExchangeChain (R : Type u) [Semiring R] :
       (tail : ExchangeChain R (V * U) B L) :
       ExchangeChain R (U * V) B (L + 1)
 
+/-- Coupled lag witnesses for every length and rectangular intermediate size. -/
+theorem exchange_chain_lag {L : ℕ}
+    {A : Mat R n n} {B : Mat R m m} (c : ExchangeChain R A B L) :
+    ∃ (X : Mat R n m) (Y : Mat R m n),
+      A * X = X * B ∧ B * Y = Y * A ∧ X * Y = A ^ L ∧ Y * X = B ^ L := by
+  induction c with
+  | nil A => exact ⟨1, 1, by simp, by simp, by simp, by simp⟩
+  | @cons n k m L U V B tail ih =>
+    obtain ⟨X, Y, hX, hY, hXY, hYX⟩ := ih
+    refine ⟨U * X, Y * V, ?_, ?_, ?_, ?_⟩
+    · calc
+        (U * V) * (U * X) = U * ((V * U) * X) := by simp only [Matrix.mul_assoc]
+        _ = (U * X) * B := by rw [hX]; simp only [Matrix.mul_assoc]
+    · calc
+        B * (Y * V) = (B * Y) * V := by simp only [Matrix.mul_assoc]
+        _ = (Y * V) * (U * V) := by rw [hY]; simp only [Matrix.mul_assoc]
+    · calc
+        (U * X) * (Y * V) = U * (X * Y) * V := by simp only [Matrix.mul_assoc]
+        _ = (U * V) ^ (L + 1) := by rw [hXY, rectangular_exchange_power]
+    · calc
+        (Y * V) * (U * X) = Y * ((V * U) * X) := by simp only [Matrix.mul_assoc]
+        _ = (Y * X) * B := by rw [hX]; simp only [Matrix.mul_assoc]
+        _ = B ^ (L + 1) := by rw [hYX, pow_succ]
+
 /-- A zero power at the terminal node propagates backwards along the entire chain. -/
 theorem chain_zero_power {A : Mat R n n} {B : Mat R m m} {L : ℕ}
     (c : ExchangeChain R A B L) :
