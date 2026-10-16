@@ -91,8 +91,11 @@ build together with `QuadbitSpectralPurityBound.spectral_purity_bound`. The
 claim includes the universal bound, real supremum and explicit diagonal
 attainment. Both printed axiom closures contain only `propext`,
 `Classical.choice` and `Quot.sound`; the proof introduces no additional axiom.
-The current machine-readable report and official required CI are checked at
-delivery. A mathematical and statement-fidelity review by another agent of
+The current scoped report covers both the mathematical root and its Reg
+mirror, with 91 project modules, and checks every extracted axiom closure.
+It reports the complete result registration as `declared_validated` with
+`source-equivalence`, no diagnostic, and an unknown continuation. Official
+required CI is checked at delivery. A mathematical and statement-fidelity review by another agent of
 the same model family found no gap; an earlier Oracle authentication failure
 yielded no Pro review.
 
