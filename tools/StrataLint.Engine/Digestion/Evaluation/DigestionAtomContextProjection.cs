@@ -312,13 +312,29 @@ internal static class DigestionAtomContextProjection
     {
         var ids = fresh.Select(static atom => atom.Fingerprints.RawSha256[7..]).ToHashSet(StringComparer.Ordinal);
         var leaves = MarkdigBlockAst.Parse(text);
+        // Convert each required boundary once. Counting each prefix separately
+        // repeats the source scan for every physical block and table row.
+        var offsets = leaves.SelectMany(leaf => leaf is MarkdownTableRow
+                ? new[] { leaf.Start, leaf.End, MarkdigBlockAst.LineEnd(text, leaf.End) }
+                : new[] { leaf.Start, leaf.End })
+            .Distinct().Order().ToArray();
+        var byteOffsets = new Dictionary<int, int>();
+        var utf8 = new UTF8Encoding(false, true);
+        var characterCursor = 0;
+        var byteCursor = 0;
+        foreach (var offset in offsets)
+        {
+            byteCursor += utf8.GetByteCount(text.AsSpan(characterCursor, offset - characterCursor));
+            byteOffsets.Add(offset, byteCursor);
+            characterCursor = offset;
+        }
         for (var index = 0; index < leaves.Length; index++)
         {
             var leaf = leaves[index];
-            var start = MarkdownAstAtomizer.ByteOffset(text, leaf.Start);
-            Add(start, MarkdownAstAtomizer.ByteOffset(text, leaf.End));
+            var start = byteOffsets[leaf.Start];
+            Add(start, byteOffsets[leaf.End]);
             if (leaf is not MarkdownTableRow row) continue;
-            Add(start, MarkdownAstAtomizer.ByteOffset(text, MarkdigBlockAst.LineEnd(text, leaf.End)));
+            Add(start, byteOffsets[MarkdigBlockAst.LineEnd(text, leaf.End)]);
             if (row.IsHeader || index > 0 && leaves[index - 1] is MarkdownTableRow { IsHeader: false }) continue;
             var owner = fresh.FirstOrDefault(atom => atom.StartByte < start && atom.EndByte > start);
             if (owner is not null) Add(owner.StartByte, start);
