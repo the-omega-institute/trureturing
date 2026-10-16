@@ -1925,6 +1925,115 @@ application and the diagnostic control. They add no scalar supplier,
 old optimizer, generic inversion algorithm, Lean result, actual c27
 Schur sign, cofinal positivity or RH resolution.
 
+### Extend the common dual action with a finite Hankel enclosure
+
+The complete-rate finite quadratic need not be assembled as a large
+square matrix. Reuse the preceding full-rate scalar array and define
+$k=2\pi/d$, $\omega_n=kn$, $\Phi_n=-\omega_ns_n^{\rm GP}$.
+For any common real centering constant $c$, put
+
+$$
+e_n=\Phi_n-\frac\pi4\omega_n-c,\qquad
+J_{mn}=\frac{(-1)^{m+n}}{2(m+n)}.
+$$
+
+The linear term contributes exactly $J_{mn}$ to the boundary
+kernel off the diagonal. On a finite set of distinct positive
+integer nodes $n\ge L$, let
+
+$$
+e_* =\max_n|e_n|,\quad
+\delta_* =\max_n|(B_{\rm GP})_{nn}-1/(4n)|,\quad
+\eta=\frac{8e_*}{dk^2(2L+1)}.
+$$
+
+Since $|m^2-n^2|\ge2L+1$ for distinct nodes, the finite triangle
+inequality gives
+
+$$
+|w^*(B_{\rm GP}-J)w|
+\le\eta\bigl(\|w\|_1^2-\|w\|_2^2\bigr)
++\delta_*\|w\|_2^2.
+$$
+
+Both maxima are evaluated on the actual supplied finite scalar
+array, with the independent actual diagonal. The choice of $c$
+affects sharpness only. This application needs no special-function
+asymptotic remainder, infinite-node regularity or full trace bound.
+
+For the current real coefficients, the existing FLINT polynomial
+product evaluates the Hankel part: if
+$p(x)=\sum_n(-1)^nw_nx^n$, then
+
+$$
+w^*Jw=\sum_{j\ge2L}\frac{[x^j]p(x)^2}{2j}.
+$$
+
+The sum is finite. This is polynomial convolution and the same
+finite triangle method, rather than a new matrix algorithm.
+
+Keep the preceding exact dyadic prefix $w_P$ on modes $2049$–$4096$
+and append $w_T$ on every remaining archived middle mode through
+$32768$. Reuse the complete current-direction $Q$, all prefix
+scalar components and the old $a,z,b,\beta$ actions. Only the new
+tail is rounded, at the same $384$-bit scale and power-of-two
+normalization. New residual/support actions use the existing finite
+geometric Cauchy products; their direct endpoint checks and absolute
+remainders are retained. The prime cancellation
+$z^*-b=-E^*C_{\rm p}w$ supplies the new mixed difference.
+
+The new quadratic reuses the actual prefix value through
+
+$$
+\beta=\beta_P+
+ w_T^*\Lambda w_T+
+ \bigl(w^*Jw-w_P^*Jw_P\bigr)+\varepsilon_J.
+$$
+
+The parent prefix is exactly the same vector. The displayed
+Hankel difference includes both prefix/tail cross terms. Charge
+only the new pairs in the triangle bound:
+
+$$
+|\varepsilon_J|\le
+\eta\left[
+(\|w\|_1^2-\|w\|_2^2)
+-(\|w_P\|_1^2-\|w_P\|_2^2)\right]
++\delta_{*,T}\|w_T\|_2^2.
+$$
+
+Here $e_*$ covers all finite nodes and $\delta_{*,T}$ only new tail
+diagonals. The new common action has $30720$ exact dual coordinates
+and $31488$ complete boundary-scalar rows. Its paid quadratic
+allowance is below $2.272\times10^{-5}$; this is an outward interval
+allowance, not a claim of a narrow $640$-bit quadratic enclosure.
+The [archived application](https://github.com/the-omega-institute/trureturing-experiments/tree/0dcb5d65cb62704e1cbe81846f76cbbf84e9d41e/docs/reports/weil-c27)
+uses the preceding unchanged bound and diagnostic consumers.
+
+The resulting complete-Gamma restricted upper lies between
+$2.88818\times10^{-31}$ and $2.88820\times10^{-31}$, so it remains
+inconclusive. At the same archived fixed $t_0$, the thirty-five-channel
+control now gives
+
+$$
+\mathcal U_{X,35}(t_0)
+\simeq-1.012916950382631\times10^{-32}<0.
+$$
+
+Thus this changed finite dual vector recovers a negative upper at
+that fixed comparison/trial. This does not establish negativity of
+$\sup_t\mathcal U_{X,35}(t)$, the complete-Gamma optimum or actual
+Schur energy. The contrast with the earlier positive fixed-trial
+control locates improvement in the common dual action, without
+assigning a sign to the still unresolved comparison.
+
+Existing scalar tables, inverses, residual generators, finite Cauchy
+products and polynomial multiplication are reused. The new production
+took $50.78$ seconds at $1024$ working bits; this is an application
+measurement. The inherited actual form/domain and sound-comparison
+premises remain. No new general theorem, Lean verification, actual
+c27/cofinal positivity or RH resolution is supplied.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
