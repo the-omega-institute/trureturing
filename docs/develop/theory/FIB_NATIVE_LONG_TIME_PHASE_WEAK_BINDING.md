@@ -2574,3 +2574,769 @@ native disk. These correspondences make no literature-wide
 novelty claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 92. The fixed original observation on its infinite real fibre
+
+**Definition 92.1 (retained carrier and closed domains).** Retain exactly
+Definitions 75.1 and 81.1. In particular the signed nonzero $\kappa$,
+source $o$, rational fields, raw measure and two height deaths are fixed.
+Write $u=(\theta,v)$, $d(k)=(A_\kappa(k),B_\kappa(k))$, and
+
+$$
+\pi(k,u,x)=(k,u),\qquad \mathcal B=I\times\mathbb R^2,
+\qquad d\bar Y=dk\,du,\qquad R=d(k)\cdot\partial_u.
+\tag{92.1}
+$$
+
+The retained free form and its operator are
+
+$$
+\bar b[h]=\int_{\mathcal B}
+ (\varepsilon^2|\partial_kh|^2+|Rh|^2)d\bar Y,
+\quad \bar{\mathcal Q}
+ =\overline{C_c^\infty(\mathcal B;\mathbb C)}^{(\|\cdot\|_2^2+\bar b)^{1/2}},
+\quad \bar B=-(\varepsilon^2\partial_k^2+R^2)_F.
+\tag{92.2}
+$$
+
+Equivalently, with the unitary Fourier transform in $u$ and
+$T_\eta=-\varepsilon^2\partial_k^2+(\eta\cdot d(k))^2$,
+
+$$
+\begin{aligned}
+\bar{\mathcal Q}
+ &=\left\{h:\widehat h(\cdot,\eta)\in H_0^1(I)\text{ a.e.},\
+ \int_{\mathbb R^2}\!\int_I
+ (\varepsilon^2|\partial_k\widehat h|^2+
+ |\eta\cdot d(k)|^2|\widehat h|^2)dk\,d\eta<\infty\right\},\\
+D(\bar B)
+ &=\left\{h:\widehat h(\cdot,\eta)\in H^2(I)\cap H_0^1(I)
+ \text{ a.e.},\quad \int_{\mathbb R^2}
+ \|T_\eta\widehat h(\cdot,\eta)\|_2^2d\eta<\infty\right\}.
+\end{aligned}
+\tag{92.3}
+$$
+
+Here and below a displayed domain includes membership of its underlying
+$L^2$ space. Both height traces are Dirichlet, all real frequencies are
+allowed, and the spaces are complex. The equivalence follows by
+Plancherel and closure of the smooth core: truncate the frequency
+variable, approximate in height by its Dirichlet core and then use
+smooth spatial cutoffs. On bounded frequency sets the potential is
+bounded uniformly on $I$, so this approximation is in form norm.
+The associated direct integral has the displayed operator domain,
+since each bounded-potential interval operator has domain
+$H^2\cap H_0^1$. Thus no isotropic phase $H^1$ hypothesis has been added.
+The same height Poincare inequality gives $\bar B\ge\lambda$.
+
+For a finite measure $\mu$ on $\mathcal C$ write $\pi_\#\mu$ for its
+pushforward. For an integrable density write
+$\mathsf M f(k,u)=\int_{\mathbb R}f(k,u,x)dx$.
+Pullback of bounded Borel functions is denoted $\pi^*h=h\circ\pi$;
+it is not an embedding of the retained $L^2$ space into the native one.
+
+**Theorem 92.2 (all-start killed transport and the correct Green marginal).**
+Let $\bar p_t$ be the killed heat kernel of $\bar B$ in raw measure.
+For every $t\ge0$, every bounded Borel $h$ and every original start $Y$,
+
+$$
+(e^{-tB}\pi^*h)(Y)=(e^{-t\bar B}h)(\pi Y).
+\tag{92.4}
+$$
+
+Both semigroups in this equation have their killed Markov extensions.
+For every finite signed or complex measure $\mu$,
+
+$$
+\pi_\#(\mu e^{-tB})=(\pi_\#\mu)e^{-t\bar B}.
+\tag{92.5}
+$$
+
+In particular, for every start $Y$ and $t>0$,
+
+$$
+\int_{\mathbb R}p_t(Y;(k,u,x))dx
+       =\bar p_t(\pi Y;(k,u))
+\tag{92.6}
+$$
+
+as densities. For every $\tau\ge0$ the unshifted killed fields satisfy
+
+$$
+G_\tau(Y)=\int_\tau^\infty p_t(o,Y)dt,\qquad
+\mathsf M G_\tau=\bar G_\tau
+ :=\int_\tau^\infty\bar p_t(\pi o,\cdot)dt,
+\qquad \bar B\bar G_\tau=\bar p_\tau(\pi o,\cdot).
+\tag{92.7}
+$$
+
+At $\tau=0$ the last right side is the raw unit point source
+$\delta_{\pi o}$; the field identities are nonnegative extended-integral
+identities and the source equation is distributional. At $\tau>0$ the
+source has charge $\mathbb P_{k_0}(\zeta>\tau)$, without division by that
+charge. The total mass of either field in (92.7) is
+$\int_\tau^\infty\mathbb P_{k_0}(\zeta>t)dt<\infty$.
+
+Proof. Project the actual SDE (35.2) of L, obtaining
+
+$$
+dK_t=\sqrt2\varepsilon dW_t^1,\qquad
+ du_t=\sqrt2d(K_t)dW_t^2,\qquad t<\zeta.
+\tag{92.8}
+$$
+
+Its coefficients are smooth and bounded on a larger height interval.
+Pathwise uniqueness until height exit holds, and the exit time is exactly
+the original one, independently of $x$. The projected solution from $Y$
+is therefore the solution from $\pi Y$ driven by the same two Brownian
+motions. Taking killed expectations proves (92.4) for every bounded
+Borel test, including $t=0$. Its symmetric core generator and form are
+(92.2), so this is the specified Friedrichs realization, rather than
+another boundary extension. Integrating the all-start equality proves
+(92.5), first for positive and then for signed and complex measures.
+Taking $\mu=\delta_Y$ gives (92.6). These arguments give equality of
+transition measures at every start, not only a stationary starting law.
+
+The retained system has a smooth heat density: putting
+$s_\kappa=H+\kappa$ and $\alpha_\kappa=\kappa+\kappa^2/H$, direct
+calculation from G (25.4) gives
+
+$$
+\det(d(k),d'(k))
+ =-s_\kappa\left(\frac{k-2\kappa}
+                         {2H(k-\alpha_\kappa)}\right)^2\ne0.
+\tag{92.9}
+$$
+
+Indeed $d=f(k)(s_\kappa-k,-k)$ and the determinant is $-s_\kappa f^2$.
+The allowed fixed parameter interval has $s_\kappa>0$, positive
+probabilities and no denominator zero. Thus $\partial_k,R,[\partial_k,R]$
+span the retained tangent space. This verifies the local smoothing
+hypothesis for this quotient. Density equality (92.6) is sufficient
+almost everywhere in the target; all-start factorization itself is the
+stronger measure statement (92.4).
+
+Tonelli now proves (92.7)'s field equality. Testing the retained heat
+equation against $\varphi\in C_c^\infty(\mathcal B)$ and integrating in
+time gives its source equation. The term at infinity vanishes: the
+absolute expectation of a bounded test is at most its supremum times
+the killed height survival probability, which decays exponentially by
+the interval Dirichlet expansion. That expansion also proves the finite
+mass assertion and the stated source charge. The limit at time zero is
+the point evaluation at $\pi o$. There is no threshold factor in (92.7).
+$\square$
+
+**Proposition 92.3 (the infinite-fibre qualification).** On the real cover,
+a measurable function constant on almost every entire $x$ fibre is in
+$L^2(dY)$ only if it vanishes. The map $\mathsf M$ is a contraction
+$L^1(dY)\to L^1(d\bar Y)$, but is unbounded as a proposed map
+$L^2(dY)\to L^2(d\bar Y)$, even on compact smooth vectors.
+Consequently (92.4)--(92.7) do not assert a nonzero fibre-constant
+reducing Hilbert subspace or an autonomous quantum subsystem.
+
+Proof. Fubini gives an infinite fibre norm for any nonzero constant.
+The $L^1$ statement is the integral triangle inequality. For normalized
+$h\in C_c^\infty(\mathbb R)$ with $\int h\ne0$, put
+$h_R(x)=R^{-1/2}h(x/R)$ and take a fixed nonzero compact smooth retained
+factor $u$. The norm of $u h_R$ is constant, whereas
+$\mathsf M(u h_R)=R^{1/2}(\int h)u$. This proves unboundedness. A
+normalized uniform measure on the hidden real line does not exist.
+The circle isometries in Q §§2--3 and §§10--12, where Q denotes
+[Native observation quotient and Green escape](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md),
+therefore cannot be transferred to (92.1). $\square$
+
+## 93. Exact finite-scale fibres of the original observation
+
+**Definition 93.1 (retained chart, shear and density).** Let
+$d_j=(A_\kappa^{(j)}(k_0),B_\kappa^{(j)}(k_0))$, $j=0,1,2$.
+By (92.9) there are unique real numbers $\beta,\gamma$ such that
+$d_2=\beta d_0+\gamma d_1$. Put
+
+$$
+D_0=|\det(d_0,d_1)|,\qquad
+h_*=b_\kappa''(k_0)-\beta b_\kappa(k_0)-\gamma b_\kappa'(k_0),
+\qquad \ell_s=\varepsilon^2s^3h_*.
+\tag{93.1}
+$$
+
+The determinant (76.4) gives $h_*\ne0$ and
+$j_0=\varepsilon^4D_0|h_*|$. For $b=(r,Y,Z)\in I_s\times\mathbb R^2$
+define the invertible retained chart and the actual retained map by
+
+$$
+\begin{aligned}
+\Lambda_s(b)&=(k_0+\varepsilon sr,\ s d_0Y+\varepsilon s^2d_1Z),\\
+F_s(r,y,z,w)&=(r,\ y+\varepsilon^2s^2\beta w,
+                         \ z+\varepsilon s\gamma w),\\
+i_s(b,w)&=(r,Y-\varepsilon^2s^2\beta w,Z-\varepsilon s\gamma w,w),\\
+n_s&=(0,-\varepsilon^2s^2\beta,-\varepsilon s\gamma,1),
+\qquad J_s=\varepsilon^2D_0s^4.
+\end{aligned}
+\tag{93.2}
+$$
+
+Here $n_s$ includes the zero height component. The limiting map is
+$F_0(r,y,z,w)=(r,y,z)$, with $i_0(b,w)=(r,Y,Z,w)$.
+The labels $Y,Z$ inside $b$ are scalar chart coordinates, distinct from
+native points and from the fixed probability parameter $Z$ in G.
+
+**Theorem 93.2 (exact original-observation correspondence).** For every
+$s>0$ and every $\xi\in\Omega_s$,
+
+$$
+\pi\Xi_s(\xi)=\Lambda_sF_s(\xi),\qquad
+F_s^{-1}(b)=\{i_s(b,w):w\in\mathbb R\},\qquad
+\Xi_s(\xi+t n_s)=\Xi_s(\xi)+(0,0,0,t\ell_s).
+\tag{93.3}
+$$
+
+The last equation is in original coordinates $(k,\theta,v,x)$.
+The absolute retained Jacobian is $J_s$, and
+$J_s|\ell_s|=j_0s^7$. In coordinates $(b,w)$ the full rescaled density is
+exactly $db\,dw$. Thus for every integrable $f$ on $\Omega_s$,
+
+$$
+\mathsf M_s f(b)=\int_{\mathbb R}f(i_s(b,w))dw
+\tag{93.4}
+$$
+
+is its pushforward density under the original observation in this chart.
+For every native amplitude $\psi\in L^2(dY)$, with $f=\mathcal U_s\psi$,
+
+$$
+J_s\int_{\mathbb R}|\psi(\Lambda_s b,x)|^2dx
+                 =\mathsf M_s(|f|^2)(b).
+\tag{93.5}
+$$
+
+The exact projected scaled fields are $\partial_r$ and
+
+$$
+\bar Y_s=
+ (v_{s,1}+\varepsilon^2s^2\beta v_{s,3})\partial_Y
+ +(v_{s,2}+\varepsilon s\gamma v_{s,3})\partial_Z.
+\tag{93.6}
+$$
+
+They converge in $C^\infty$ on bounded height intervals to
+$\partial_r$ and $\partial_Y+r\partial_Z$. Their tangent quotient is
+therefore the three-coordinate Heisenberg heat operator
+
+$$
+\bar{\mathcal E}
+ =-\partial_r^2-(\partial_Y+r\partial_Z)^2
+\tag{93.7}
+$$
+
+with its complex Friedrichs horizontal form closure on
+$L^2(\mathbb R^3,db)$. Its weights are $(1,1,2)$ and homogeneous
+dimension four, while the full Engel weights remain $(1,1,2,3)$
+and homogeneous dimension seven.
+
+Proof. Project (78.1) onto its first two phase components and substitute
+$d_2=\beta d_0+\gamma d_1$. Factoring $s d_0$ and
+$\varepsilon s^2d_1$ gives (93.3)'s first identity. Solving its two
+linear equations gives precisely $i_s$. In the full phase space,
+$c_2-\beta c_0-\gamma c_1=(0,0,h_*)$; the invertible determinant in
+(76.4) proves it is nonzero. This proves the translation identity,
+including the sign of $\ell_s$. Taking determinants gives $J_s$ and
+$J_s|\ell_s|=j_0s^7$. The shear $(b,w)\mapsto i_s(b,w)$ has determinant
+one. Changing variables first along the hidden line and then on the
+base proves (93.4)--(93.5), using the exact unitary factor in (81.1).
+Applying $\partial_r,Y_s$ to the three components of $F_s$ gives
+(93.6); (78.4) gives its stated limit. The two limiting fields and
+their bracket $\partial_Z$ span three dimensions, and dilation
+$(r,Y,Z)\mapsto(Rr,RY,R^2Z)$ gives the stated weights. This is the
+projection of the Engel fields in (81.2), not a redefinition of the
+original observation as $F_0$ at positive $s$. $\square$
+
+**Theorem 93.3 (positive-time heat and source correspondence).** Write
+$\bar p_H$ for the heat kernel of (93.7) relative to $db$, and set
+
+$$
+\bar P_s(t;0,b)=J_s\bar p_{s^2t}(\pi o,\Lambda_s b).
+\tag{93.8}
+$$
+
+Extend densities by zero outside their moving height intervals.
+For every fixed $t>0$,
+
+$$
+\bar P_s(t;0,\cdot)=\mathsf M_s P_s(t;0,\cdot)
+ \longrightarrow\bar p_H(t;0,\cdot)\quad\hbox{in }L^1(db),
+\tag{93.9}
+$$
+
+as $s\downarrow0$. The same convergence holds in
+$L^1([\delta,T]\times\mathbb R^3)$ for every $0<\delta<T<\infty$,
+and after inserting the factor $e^{\lambda s^2t}$.
+In particular the pushed rescaled source
+$j_0^{-1}e^{\lambda s^2}\bar P_s(1;0,b)$ tends in $L^1$ to
+$j_0^{-1}\bar p_H(1;0,b)$. Its total mass tends to $1/j_0$.
+The original source before this change of density has charge tending
+to one, exactly as in (81.7).
+
+Proof. Formula (92.6), $dx=|\ell_s|dw$ along each fibre, and
+$J_s|\ell_s|=j_0s^7$ prove the equality in (93.9). By (81.8),
+$P_s(t;0,\xi)\to p_E(t;0,\xi)$ locally uniformly at each $t>0$.
+Its total mass is $\mathbb P_{k_0}(\zeta>s^2t)\to1$, while the complete
+Engel diffusion has mass one. Nonnegativity and convergence of total
+masses therefore upgrade this local convergence to global $L^1$,
+by the minimum-of-densities argument used in (81.7).
+
+The shear $i_s$ tends to the identity and preserves four-dimensional
+Lebesgue measure. Its pullback converges strongly to the identity on
+$L^1$: prove this first for a continuous compactly supported function,
+whose sheared supports lie in one compact set, and then use density
+and its norm-one action. Consequently
+
+$$
+\|\mathsf M_sP_s(t)-\mathsf M_0p_E(t)\|_1
+ \le\|P_s(t)-p_E(t)\|_1
+       +\|p_E(t)\circ i_s-p_E(t)\|_1\longrightarrow0.
+\tag{93.10}
+$$
+
+Projecting the complete Engel SDE drops its last stochastic integral
+and gives $dr=\sqrt2dW^1$, $dY=\sqrt2dW^2$,
+$dZ=\sqrt2r\,dW^2$. Uniqueness and the symmetric core identify its
+kernel with $\bar p_H$, proving $\mathsf M_0p_E=\bar p_H$.
+The $L^1$ differences above are bounded by two; integration over
+$[\delta,T]$ and dominated convergence prove the spacetime assertion.
+The threshold factors tend uniformly to one on that interval. At
+time one their total mass is
+$j_0^{-1}e^{\lambda s^2}\mathbb P_{k_0}(\zeta>s^2)$, which proves
+the source statements. This argument controls the entire hidden
+fibre for positive finite times through total mass; it does not
+integrate a local limit over an uncontrolled fibre. $\square$
+
+## 94. Native divergence and a finite tangent threshold marginal
+
+**Theorem 94.1 (the original threshold marginal is infinite).** Fix any
+$\tau>0$, $k\in I$ and $u\in\mathbb R^2$. Let $N$ be the upper
+$2\times2$ principal block of the positive tensor $M=M_\kappa$ in L §36.
+Then
+
+$$
+\int_{-R}^R W_\tau(k,u,x)dx
+ =\frac{\phi(k_0)\phi(k)}{2\pi\sqrt{\det N}}\log R+O(1)
+ \quad(R\to\infty).
+\tag{94.1}
+$$
+
+The remainder may depend on the fixed $\tau,k,u$.
+In particular $\mathsf M W_\tau(k,u)=+\infty$ at every retained point.
+This holds for every fixed positive cutoff, however small, with the
+original source and without a surviving-charge renormalization.
+
+Proof. The fixed-cutoff tail (70.3) gives, as $|x|\to\infty$ at fixed $u$,
+
+$$
+W_\tau(k,u,x)
+ =\frac{\phi(k_0)\phi(k)}
+ {4\pi\sqrt{\det M}\sqrt{(M^{-1})_{33}}}\frac1{|x|}
+       +O(|x|^{-2}).
+\tag{94.2}
+$$
+
+Indeed the square of its anisotropic distance is
+$(M^{-1})_{33}x^2+O(|x|)+O(1)$, and the error already in (70.3) is
+$O(|x|^{-3})$. The field is bounded on the remaining finite interval
+because $\tau>0$. Integrate (94.2) on both half-lines. The cofactor
+identity $\det M\,(M^{-1})_{33}=\det N$ proves (94.1). Its coefficient
+is strictly positive at every interior height. The argument uses the
+actual full-field tail, not just a covariance match of projected heat.
+$\square$
+
+**Theorem 94.2 (finite tangent marginal and noncommuting limits).** Put
+
+$$
+\bar V(b)=\int_{\mathbb R}V(i_0(b,w))dw.
+\tag{94.3}
+$$
+
+It is finite and positive at every $b\in\mathbb R^3$, and
+
+$$
+\bar V(b)=\frac1{j_0}\int_1^\infty\bar p_H(t;0,b)dt,
+\qquad \bar{\mathcal E}\bar V=\frac1{j_0}\bar p_H(1;0,\cdot)
+\tag{94.4}
+$$
+
+in distributions. The right side has Lebesgue mass $1/j_0$.
+For every fixed $b$ and every sufficiently small $s>0$,
+
+$$
+\int_{\mathbb R}U_s(i_s(b,w))dw
+  =\frac{J_s}{j_0s^2}\int_{\mathbb R}
+                  W_{s^2}(\Lambda_s b,x)dx=+\infty.
+\tag{94.5}
+$$
+
+Nevertheless, for every $L<\infty$,
+
+$$
+\lim_{s\downarrow0}\int_{-L}^L U_s(i_s(b,w))dw
+       =\int_{-L}^L V(i_0(b,w))dw.
+\tag{94.6}
+$$
+
+Convergence is uniform for $b$ in any fixed compact set. Hence the
+iterated limit with $s\downarrow0$ first and then $L\to\infty$ is
+$\bar V(b)<\infty$, whereas the opposite order is $+\infty$.
+There is no integrable majorant along these full finite-scale fibres
+uniformly for small $s$. For each fixed $1<T<\infty$, however, the
+fibre marginal of the field restricted to rescaled times $[1,T]$
+converges in $L^1(db)$ to
+$j_0^{-1}\int_1^T\bar p_H(t;0,b)dt$.
+
+Proof. From (82.4),
+$V(r,Y,Z,w)\le C(1+|w|^{1/3})^{-5}$, an integrable function of $w$.
+This proves finiteness in (94.3), uniformly in $b$; positivity is strict.
+Tonelli and the complete Engel projection in Theorem 93.3 give the
+first identity in (94.4). One can check its time tail directly: integrate
+(82.3), using $d_E\ge cN$, to obtain
+
+$$
+\sup_b\bar p_H(t;0,b)
+ \le Ct^{-7/2}\int_{\mathbb R}
+          e^{-c|w|^{2/3}/t}dw\le Ct^{-2}.
+\tag{94.7}
+$$
+
+This is integrable on $[1,\infty)$. Integrating the retained heat
+equation against a compact smooth test therefore proves the source
+equation in (94.4), with no term at infinity. Its charge uses the
+conservative projected heat, already established by its complete SDE.
+
+Change variables along the exact fibre in (93.3). Since
+$s^5/|\ell_s|=J_s/(j_0s^2)$, this proves (94.5), whose divergence is
+Theorem 94.1 at the actual finite cutoff $s^2$. On a bounded $w$ interval
+and a compact set of $b$, the points $i_s(b,w)$ stay in one compact set,
+inside both moving faces eventually. Uniform convergence (82.10) and
+continuity of $V$ then prove (94.6). Monotone convergence in $L$ gives
+the two different iterated limits. An integrable uniform majorant would
+make (94.5) finite and is therefore impossible. Finally (81.5), Tonelli
+and (93.9) on $[1,T]$ prove the asserted finite-time $L^1$ convergence.
+No exchange of infinite time and infinite fibre has entered that claim.
+$\square$
+
+**Proposition 94.3 (separate Green conventions).** The finite native
+marginal in (92.7) and the infinite marginal in (94.1) concern different
+fields of the same free operator. Specifically $BG_\tau=p_\tau(o,\cdot)$,
+whereas $(B-\lambda)W_\tau=e^{\lambda\tau}p_\tau(o,\cdot)$.
+The finite tangent field in (94.4) is the cutoff field of the complete
+Heisenberg quotient, not the fibre integral of any fixed $U_s$.
+The finite-time heat convergence in Theorem 93.3 and the full-potential
+uniform convergence in (82.10) do not imply the contrary assertion.
+
+Proof. The two source equations are (92.7) and (75.4). Killing makes
+$\int_\tau^\infty\mathbb P(\zeta>t)dt$ finite, while the threshold
+shift cancels that height gap and (94.1) proves divergence on a single
+hidden line. The incompatibility with exchanging the fibre integral
+and microscopic limit is the explicit pair of iterated limits in
+Theorem 94.2. Thus it persists despite uniform convergence of the
+unintegrated fields. $\square$
+
+## 95. No integral transport slice and a scaled interaction escape
+
+**Theorem 95.1 (original transport has no invariant three-dimensional slice).**
+There is no nonempty $C^2$ immersed three-dimensional submanifold of
+$\mathcal C$ everywhere invariant under both original local transport
+flows $P=\partial_k$ and $Q=c_\kappa(k)\cdot\partial_q$.
+In particular no section of the fixed observation (92.1) is such a slice.
+The original transport does project to $\partial_k,R$ with its original
+height legality constraints; a projected transport family is not an
+integral slice of the full one.
+
+Proof. A submanifold invariant under the local flows is tangent to
+$P,Q$ and to their successive Lie brackets. Locally this follows by
+pulling a defining function back to a submanifold chart: its derivatives
+along tangent fields vanish, so their commutator is tangent. Alternatively
+the four-flow commutator curve has leading displacement equal to the
+bracket and stays in the invariant submanifold. Repeating with $P$
+gives tangency to
+
+$$
+P,\quad Q,\quad [P,Q]=c_\kappa'(k)\cdot\partial_q,
+\quad [P,[P,Q]]=c_\kappa''(k)\cdot\partial_q.
+\tag{95.1}
+$$
+
+Their determinant is the nonzero expression (76.4); their span has
+dimension four everywhere. This contradicts a three-dimensional tangent
+space. For the bracket iteration on a $C^2$ invariant manifold, one can
+also use invariance under the smooth ambient flows directly: conjugating
+$Q$ by arbitrary sufficiently small $P$ flows keeps a tangent vector,
+and its first and second differences converge to $c'$ and $c''$ in the
+closed tangent space at the point. This avoids requiring a third
+submanifold derivative. Projection of the original vector fields is
+immediate from their coefficients' independence of $x$. A common control
+has the same height path for all starts in a fibre, so every intermediate
+height refusal is retained. No independent hidden actuator is inferred.
+$\square$
+
+**Theorem 95.2 (same original observation and a nonzero scaled energy gap).**
+There exist a normalized real $f\in C_c^\infty(\mathbb R^4)$ and one
+finite $L>0$ with the following properties. For every sufficiently small
+$s>0$ put
+
+$$
+f_s^0=f,\qquad f_s^L(\xi)=f(\xi-Ln_s),\qquad
+\psi_s^j=\mathcal U_s^{-1}f_s^j\quad(j=0,L).
+\tag{95.2}
+$$
+
+Both vectors are normalized members of the original smooth compact core,
+hence of the entire native form and operator domains. They have exactly
+the same original retained probability marginal, the same partial trace
+over $L^2(dx)$, the same integrable amplitude marginal and the same
+kinetic energy $T$. Their projected free killed probability observations
+agree at every subsequent time and for every bounded Borel retained test.
+For the unchanged fixed-source potential, there is a number $\Delta>0$
+such that
+
+$$
+s^5\bigl(V_{s^2}[\psi_s^0]-V_{s^2}[\psi_s^L]\bigr)\longrightarrow\Delta.
+\tag{95.3}
+$$
+
+In particular, for every prescribed positive coupling family with
+$\chi_s=g_s s^{-3}\to\chi_0\in(0,\infty)$,
+
+$$
+s^2\bigl(\mathfrak e_{g_s,s^2}[\psi_s^L]
+              -\mathfrak e_{g_s,s^2}[\psi_s^0]\bigr)
+                      \longrightarrow\chi_0\Delta>0.
+\tag{95.4}
+$$
+
+This is W's prescribed microscopic energy scale and original
+observation, including at $\chi_0=\chi_c$; these vectors are not asserted
+to be ground states or near-minimizers.
+
+Proof. Choose any nonzero real compact smooth normalized $f$, with support
+away from the origin if desired. Strict positivity of $V$ gives
+$v[f]>0$. Its decay in (82.4) and dominated convergence imply
+
+$$
+v[f(\cdot-Le_w)]\longrightarrow0\quad(L\to\infty),
+\qquad e_w=(0,0,0,1).
+\tag{95.5}
+$$
+
+Choose a finite positive $L$ for which that value is smaller than
+$v[f]/2$, and set $\Delta=v[f]-v[f(\cdot-Le_w)]>0$.
+Since $n_s\to e_w$, the vectors in (95.2) have supports in one compact
+set for small $s$, strictly between the two moving height faces. They
+are smooth, compact and normalized. In original coordinates the exact
+relation (93.3) is
+
+$$
+\psi_s^L(k,u,x)=\psi_s^0(k,u,x-L\ell_s).
+\tag{95.6}
+$$
+
+An $x$ translation preserves the raw norm and every horizontal derivative,
+so it preserves $T$ on its full closed domain. It leaves both the
+probability integral $\int|\psi|^2dx$ and the amplitude integral
+$\int\psi dx$ unchanged for this integrable pair. It is a unitary acting
+only on the hidden factor in
+$L^2(\mathcal B)\otimes L^2(\mathbb R,dx)$, so it also leaves the partial
+trace unchanged. The projected probability-future assertion follows
+from (92.5), applied to their equal pushed initial probability measures.
+It refers to diffusion of those measures, not to squaring a propagated
+amplitude. The full free operator commutes with this translation as well.
+
+The exact normalization gives
+$s^5V_{s^2}[\psi_s^j]=\int U_s|f_s^j|^2$.
+Uniform convergence (82.10), convergence of the compact translations in
+$L^2$, and boundedness of $V$ prove (95.3). Equal kinetic energies make
+the difference of full energies exactly the attractive difference times
+$g_s$ with the sign displayed in (95.4). Multiplying by $s^2$ and using
+$g_ss^{-3}\to\chi_0$ proves that formula. Neither the source nor its
+centre has been translated; only the trial vector has. $\square$
+
+**Proposition 95.3 (conditional interaction and exact classical descent).**
+For a normalized complex $\psi\in\mathcal Q$ and fixed $\tau>0$, set
+$m(k,u)=\int|\psi(k,u,x)|^2dx$. On fibres with $m>0$ put
+$\nu_{k,u}(dx)=|\psi(k,u,x)|^2dx/m(k,u)$. Then exactly
+
+$$
+V_\tau[\psi]=\int_{\mathcal B}m(k,u)
+          \left(\int W_\tau(k,u,x)\nu_{k,u}(dx)\right)d\bar Y.
+\tag{95.7}
+$$
+
+Fibres with $m=0$ contribute zero. Thus a finite conditional field
+expectation, rather than the infinite Haar marginal (94.1), supplies
+the potential statistic. For any bounded smooth real multiplier $U$
+on the original carrier, the killed Feynman--Kac family of
+$a(B-\lambda)-gU$, $g>0$, factors through $\pi$ on all bounded Borel tests
+and every start if and only if $U$ is constant on every $x$ fibre.
+The original $U=W_\tau$ fails this criterion for every $\tau>0$.
+
+Proof. Equation (95.7) is Fubini; boundedness of $W_\tau$ makes it finite
+on the entire form domain, without an extra derivative requirement.
+If $U=\bar U\circ\pi$, the Feynman--Kac expression is
+
+$$
+e^{a\lambda t}\mathbb E_Y
+ \left[\exp\left(g\int_0^tU(Y_{av})dv\right)
+                      h(\pi Y_{at});\ at<\zeta\right].
+\tag{95.8}
+$$
+
+The projected path in (92.8) makes it depend only on $\pi Y$.
+Conversely take $h=1$. At every interior start its derivative at zero
+is $a\lambda+gU(Y)$. To justify it, stop first in a small interior
+height interval. The probability of exiting that interval by time $at$
+is $o(t)$ by the Brownian reflection bound. Continuity and boundedness
+of $U$ then give the derivative by dominated convergence. Thus all-start
+factorization forces equal $U$ at all points of each fibre. The original
+$W_\tau$ is smooth, bounded and positive by the positive-time heat
+regularization; at fixed $k,u$ it tends to zero as $|x|\to\infty$ by
+(70.3). It is therefore not fibre constant. This proves a scalar
+interacting diffusion-response obstruction for the original field.
+The kinetic factor $a$ changes the propagation clock in (95.8), while
+the field itself still uses the independent $B$ clock. $\square$
+
+## 96. Quantum futures, suppliers and the remaining realization conditions
+
+**Theorem 96.1 (a separate original-domain quantum obstruction).** Fix any
+$g,\tau>0$ and the original selfadjoint
+$H=a(B-\lambda)-gW_\tau$ on $D(B)$. There are normalized smooth compact
+vectors with the same partial trace over the hidden real line whose
+retained quantum position expectations under $e^{-itH}$ differ at
+arbitrarily small positive times. This already holds for $g=0$.
+It is distinct from classical probability-heat factorization (92.5).
+
+Proof. Choose normalized real
+$u\in C_c^\infty(I\times\mathbb R^2)$ and
+$h\in C_c^\infty(\mathbb R)$, and put
+
+$$
+\Psi_\nu(k,\theta,v,x)=u(k,\theta,v)h(x)e^{i\nu x},
+\qquad \nu\in\mathbb R.
+\tag{96.1}
+$$
+
+All these vectors are in $D(B)=D(H)$, with both height traces zero;
+their partial traces are the same rank-one retained state
+$|u\rangle\langle u|$. Let $M_\varphi$ multiply by the bounded real
+function $\varphi(\theta)=\arctan\theta$. It maps these core vectors
+to the core. Use inner products conjugate linear in the first slot.
+For a vector in $D(H)$ the derivative of its bounded-observable
+expectation is $i\langle\Psi,[H,M_\varphi]\Psi\rangle$, interpreted
+as the difference of its two well-defined domain pairings.
+Here the potential and the threshold constant commute with
+$M_\varphi$. If $Q=A_\kappa\partial_\theta+B_\kappa\partial_v
++b_\kappa\partial_x$, the remaining commutator on the core is
+
+$$
+[B,M_\varphi]=-M_{Q^2\varphi}-2M_{Q\varphi}Q,
+\qquad Q\varphi=\frac{A_\kappa(k)}{1+\theta^2}.
+\tag{96.2}
+$$
+
+The height commutator vanishes since $\varphi$ is independent of height.
+Integration over $x$ eliminates the real term $\int hh'=0$.
+All terms independent of $\nu$ cancel on subtracting the $\nu=0$
+expectation. The result is exactly
+
+$$
+\left.\frac d{dt}\right|_{t=0}
+ \left(\langle e^{-itH}\Psi_\nu,M_\varphi e^{-itH}\Psi_\nu\rangle
+      -\langle e^{-itH}\Psi_0,M_\varphi e^{-itH}\Psi_0\rangle\right)
+ =2a\nu\int_{\mathcal B}
+      \frac{b_\kappa(k)A_\kappa(k)}{1+\theta^2}|u|^2d\bar Y.
+\tag{96.3}
+$$
+
+On the fixed admissible interval both $b_\kappa$ and $A_\kappa$ in
+G (25.4) are strictly positive. The integral is therefore positive.
+For any $\nu\ne0$ the derivative is nonzero, while the difference at
+time zero is zero, proving separation for all sufficiently small
+positive times. This proves failure of a universal autonomous reduced
+quantum evolution for this partial trace directly, without inferring it
+from an energy difference. It does not claim that the particular
+translation pair (95.2) has different reduced quantum futures.
+$\square$
+
+**Proposition 96.2 (scalar spectral information for the scaled pair).**
+At every sufficiently small fixed $s$, and every $g_s>0$, the two vectors
+in (95.2) have different spectral probability measures for the actual
+operator $H_s=a(B-\lambda)-g_sW_{s^2}$. Their scalar heat
+self-correlations $\langle\psi_s^j,e^{-tH_s}\psi_s^j\rangle$ differ
+for all sufficiently small positive $t$ (the time interval may depend
+on $s,g_s$). This assertion supplies scalar full-operator future
+information, not a reduced-state future claim for that pair.
+
+Proof. Formula (95.3) is positive for all sufficiently small $s$.
+The vectors are in $D(H_s)$ and their energy expectations differ by
+$g_s(V_{s^2}[\psi_s^0]-V_{s^2}[\psi_s^L])>0$. The first moments of
+their spectral measures therefore differ. Since $H_s$ is bounded
+below, spectral calculus differentiates each scalar heat correlation
+at zero from the right, giving derivative
+$-\langle\psi_s^j,H_s\psi_s^j\rangle$.
+For example, after shifting $H_s$ to be nonnegative, the difference
+quotients are bounded in absolute value by the first spectral moment;
+that moment is finite for a vector in $D(H_s)$. The derivative of the
+difference is nonzero, proving the assertion. No uniform quantum-time
+limit or reduced-density conclusion is used. $\square$
+
+**Definition 96.3 (supplier correspondence and unresolved stronger claims).**
+The general mechanisms of quotient heat, hidden interaction and
+compressed response belong to Q §§2--8, while Q §§10--13 concern the
+four-full/three-retained torus family. The all-start generator criterion
+belongs also to [Free diffusion quotient rigidity](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md)
+§§3--5. The infinite-Haar-fibre and conditional-energy distinctions in
+[Recursive holographic boundary geometry III](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md)
+§§81--85 use their different carriers and are not native realization
+suppliers for this real-cover family. The full-domain native spectral
+statements, Engel integrated-field convergence, critical mode and profile
+classification remain precisely §§70--91; none is reproved or strengthened
+by taking a retained marginal.
+
+The added source-specific correspondence is (93.1)--(93.6), the positive
+finite-time pushforward (93.9), the original logarithmic divergence
+versus finite tangent marginal (94.1)--(94.6), and the exact-fibre scaled
+escape (95.2)--(95.4). The slice and quantum obstructions use the
+unchanged rational native fields, not a generic replacement model.
+These are repository-derived deductions. Plancherel, direct integrals,
+form representation, Fubini, spectral calculus and stochastic uniqueness
+are mature intermediate tools. The primary small-time supplier is exactly
+Colin de Verdiere--Hillairet--Trelat, Theorem B and localization
+Theorem 3.2, with the field, density, clock and interior-source
+hypotheses checked in (78.7) and (81.8). It supplies local positive-time
+heat convergence only. The global upgrade in (93.9) additionally uses
+convergence of total killed masses; the integrated-field supplier
+(82.10) additionally uses its explicit time and spatial tails.
+No Folland attribution, general Green-limit transfer, literature-wide
+absence, originality or kernel-certification claim is imposed here.
+
+For a native operational application, lawful ray and prefix reachability
+from G and its original transport sources remains distinct from preparing
+an analytic $L^2$ amplitude or acquiring its conditional density. The
+private polygon and rectangle lemmas consumed by
+`FiniteRectangleTransport.finite_rectangles_realize` concern individual
+finite-dimensional phase/probability transport; they do not prepare
+(95.2) or (96.1). The quantum payload fibres and acquisition/absorbing-clock
+conditions in [Joint transfer and coherence interface geometry](FIB_NATIVE_JOINT_TRANSFER_COHERENCE_INTERFACE_GEOMETRY.md)
+retain their own source contracts and supply no spatial or amplitude
+realization for the present differential operator.
+
+The source-to-amplitude preparation/acquisition map, any physical-space
+interpretation, uniformity as $\kappa\to0$, the actual zero leaf, a torus
+replacement, cutoff removal, a global unshifted-Green microscopic
+pushforward limit, and uniform quantum-time or reduced spectral limits
+are separate unresolved obligations here. The infinite threshold-fibre
+exchange is specifically refuted by Theorem 94.2. The critical detuning
+rates and finer native energy obligations remain exactly (91.2)--(91.5).
+A retained coordinate count of three, Heisenberg homogeneous dimension
+four, Engel homogeneous dimension seven, the rank-three long-time phase
+tensor and a three-dimensional isotropic Euclidean physical space are
+different predicates. None of the heat, form, transport or quantum
+statements above identifies the last predicate with any of the others.
+
+## 追加锚（本行以下为增补区）
