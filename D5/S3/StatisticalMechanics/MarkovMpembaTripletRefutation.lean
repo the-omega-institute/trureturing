@@ -110,7 +110,6 @@ set_option maxHeartbeats 1000000 in
 private theorem eigen_identities (r : ℝ) (hr : 0 < r) :
     Matrix.vecMul (fun _ : Fin 4 => (1 : ℝ)) (M r) = 0 ∧
     Matrix.vecMul (f r) (M r) = (-1 : ℝ) • f r ∧ Matrix.mulVec (M r) (weights r) = 0 := by
-  have hd : 273 + 256*r ≠ 0 := ne_of_gt (by positivity)
   refine ⟨?_, ?_, ?_⟩ <;> ext i <;> fin_cases i <;>
     simp only [M.eq_1, Matrix.vecMul, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     simp only [generator.eq_1] <;>
@@ -122,7 +121,6 @@ set_option maxHeartbeats 1000000 in
 private theorem block_action (r : ℝ) (hr : 0 < r) :
     Matrix.mulVec (M r) k1 = (block r 0 0) • k1 + (block r 1 0) • k2 ∧
     Matrix.mulVec (M r) k2 = (block r 0 1) • k1 + (block r 1 1) • k2 := by
-  have hd : 273 + 256*r ≠ 0 := ne_of_gt (by positivity)
   constructor <;> ext i <;> fin_cases i <;>
     simp only [M.eq_1, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] <;>
     simp only [generator.eq_1] <;>
@@ -136,7 +134,6 @@ private noncomputable def q (r x : ℝ) : ℝ :=
 
 private theorem block_bounds (r : ℝ) (hr : 0 < r) :
     block r 0 0 + block r 1 1 < -4 ∧ 0 < q r (-2) ∧ 0 < q r (-1) := by
-  have hd : 256*r+273 ≠ 0 := ne_of_gt (by positivity)
   have ht : block r 0 0 + block r 1 1 =
       (-50823168*r^2-60948224*r-9618245)/(7680*(256*r+273)) := by
     simp only [block.eq_1]
@@ -372,7 +369,6 @@ private noncomputable def overlap (x : ℝ) : ℝ :=
 
 private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
     dotProduct (f small) (gibbs energy (beta x)) = overlap x - mean small := by
-  have hL : Real.log 16 ≠ 0 := ne_of_gt (Real.log_pos (by norm_num))
   have he (i : Fin 4) : Real.exp (-(beta x)*energy i) = x^(levels i) := by
     have ht : -(beta x)*energy i = (levels i : ℝ)*Real.log x := by
       simp only [beta.eq_1, energy.eq_1, Real.log_inv]
@@ -382,7 +378,6 @@ private theorem gibbs_evaluation (x : ℝ) (hx : 0 < x) :
     dotProduct, Fin.sum_univ_four]
   rw [he 0, he 1, he 2, he 3]
   norm_num [f.eq_1, g.eq_1, levels.eq_1, Matrix.cons_val_two, Matrix.cons_val_three]
-  have hd : 1+x+x^2+x^64 ≠ 0 := ne_of_gt (by positivity)
   simp only [overlap.eq_1]
   field_simp (disch := positivity)
   ring
