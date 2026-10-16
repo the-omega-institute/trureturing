@@ -225,6 +225,24 @@ theorem trace_local_right {a b : Type} [Fintype a] [Fintype b]
           (U ⊗ₖ (1 : Matrix b b ℂ))ᴴ := by simp only [Matrix.mul_assoc]
   rw [he,trace_conjugate_left,trace_conjugate_right ρ V hV]
 
+-- The decidable instances are part of this interface.
+set_option linter.unusedDecidableInType false in
+theorem trace_local_left {a b : Type} [Fintype a] [Fintype b]
+    [DecidableEq a] [DecidableEq b]
+    (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
+    (hU : Uᴴ * U = 1) :
+    partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
+      V * partialTraceLeft ρ * Vᴴ := by
+  let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
+  have hp (M : Matrix (a × b) (a × b) ℂ) :
+      partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
+  have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
+    ext ⟨i,j⟩ ⟨k,l⟩
+    change U j l * V i k = V i k * U j l
+    ring
+  have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
+  rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
+
 set_option maxHeartbeats 4000000 in
 -- The four-site spectral certificates expand finite matrix products and exponentials.
 /-- The four-site generic product state violates Conjecture 1 at α = 1/2. -/
@@ -716,21 +734,6 @@ theorem result : ¬ claim := by
       (U ⊗ₖ V)ᴴ * (U ⊗ₖ V) = 1 := by
     rw [Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, hU, hV,
       Matrix.one_kronecker_one]
-  have trace_local_left {a b : Type} [Fintype a] [Fintype b]
-      [DecidableEq a] [DecidableEq b]
-      (ρ : Matrix (a × b) (a × b) ℂ) (U : Matrix a a ℂ) (V : Matrix b b ℂ)
-      (hU : Uᴴ * U = 1) :
-      partialTraceLeft ((U ⊗ₖ V) * ρ * (U ⊗ₖ V)ᴴ) =
-        V * partialTraceLeft ρ * Vᴴ := by
-    let F := Matrix.reindexAlgEquiv ℂ ℂ (Equiv.prodComm a b)
-    have hp (M : Matrix (a × b) (a × b) ℂ) :
-        partialTraceLeft M = partialTraceRight (F M) := by ext i j; rfl
-    have hv : F (U ⊗ₖ V) = V ⊗ₖ U := by
-      ext ⟨i,j⟩ ⟨k,l⟩
-      change U j l * V i k = V i k * U j l
-      ring
-    have hs (M : Matrix (a × b) (a × b) ℂ) : F Mᴴ = (F M)ᴴ := rfl
-    rw [hp,map_mul,map_mul,hs,hv,trace_local_right _ V U hU,← hp]
   have local_invariance (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
       (U V : Matrix (Fin 2) (Fin 2) ℂ) (hρ : ρ.IsHermitian)
       (hU : Uᴴ * U = 1) (hV : Vᴴ * V = 1) :

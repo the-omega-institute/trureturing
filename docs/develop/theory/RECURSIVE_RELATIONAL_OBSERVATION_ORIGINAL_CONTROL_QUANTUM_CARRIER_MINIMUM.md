@@ -841,3 +841,701 @@ and complete space/time/boundary/memory mutual recovery retain their
 unresolved source and operation bridges.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Exact current-height domain selection with all assistance counted
+
+**Convention 7.1 (two different joint retention tasks).** Sections 7–8
+concern exact current-height domain selection together with live-state
+recovery. Section 9 concerns retention of a received command until a later
+wait/execute choice. Their assistance and guard hypotheses differ. Neither
+task is the acquisition of an arbitrary original past or retention of its
+whole event archive. All conclusions are ordinary mathematical deductions;
+the source, canonical instrument and the rigidity calculation in §4 remain
+credited inputs. Repository suppliers for §§7–10 are selected at
+`773d4d43b91abd515be1059283d79dd6572fc174`.
+
+Use the double-wall source (QC.1)–(QC.4), one fixed positive preparation,
+the negative state-phase convention, and the actual family
+
+$$
+\psi_{k,\beta,m}=\sqrt Z e_2+e^{-i\beta}
+ \left(\sqrt{2k}U_++(-1)^m\sqrt{2(c-k)}U_-\right),
+\qquad 0<k<c,\quad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{QC.37}
+$$
+
+The entire signed integer is retained in the real source lift, although
+this specimen ray depends only on its parity. The original class still has
+arbitrary finite durations, including zero, strict positive support and
+both regularity alternatives of Definition 1.2. The finite controls below
+select members of that class, without imposing a common resource bound on
+all original histories.
+
+**Proposition 7.2 (one preparation for different current heights).** Fix
+$a_0,q\in(0,c)$ with $q\ne a_0$, before selecting $k,\beta,m$.
+Start at $a_0$ with the same calibrated preparation. Use a unit fixed-height
+phase leg of increment $2\pi m$, the four unit rectangle legs
+$a_0\to q\to a_0$ with phase height
+
+$$
+B_{\beta,m}=
+ \frac{r(\pi m-\beta)-2\pi m a_0}{q-a_0},
+\tag{QC.38}
+$$
+
+and a final unit horizontal leg $a_0\to k$ of zero relative phase.
+The duration is six. The actual endpoint is (QC.37), its real residual is
+$(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$, and its real relation
+increment is $2\pi m$. Both original regularity alternatives hold. For
+each finite height catalogue the paths have a common positive support
+margin. Their phase variation is $2\pi|m|+2|B_{\beta,m}|$, finite for
+each history, without a uniform bound over all $\beta,m$.
+
+Proof. The first five legs are precisely the signed construction
+(QC.24)–(QC.25) at $a_0$ with auxiliary $q$. The last leg has
+$\chi'=0$, hence zero transported phase increment. Its heights stay in
+the convex interval between $a_0$ and $k$, and all legs are continuous
+affine pieces. Their compact positive height bands verify the source and
+regularity conditions directly. Literal chronological composition preserves
+the prefix and translates the unknown old lift; it does not reveal it to
+the controller. The canonical charge (QC.7) is finite, so the live event
+has strictly positive probability. Statements about this endpoint are
+conditioned only on that actual live event; every earlier failure retains
+its first time, mode and absorbing successor and is never retried.
+$\square$
+
+**Definition 7.3 (the additional total domain guard).** Fix $M\geq2$,
+$h=c/(M+1)$ and $k_j=jh$, $1\leq j\leq M$. A public catalogue request
+has an integer $s\in\{-(M-1),\ldots,M-1\}$ and the unit relative
+control
+
+$$
+a_s(t)=sht,\qquad b_s(t)=0,\qquad 0\leq t\leq1.
+\tag{QC.39}
+$$
+
+The actual height is $k_j+a_s(t)$ and the actual phase is the old lift
+plus $b_s(t)$. The relative-command domain in the probability-phase source,
+§9.1, is $(-\min a_s,c-\max a_s)$. Thus the request is legal at
+$k_j$ exactly when $1\leq j+s\leq M$.
+
+The proposed consumer additionally requires one common total request
+handler to report **executed** on every legal catalogue input and
+**unexecuted rejection** on every illegal one. Executed includes canonical
+survival and canonical failure. Rejection leaves the specimen unexecuted.
+This exact total classification is an additional target specification. The
+existing partial-action identity supplies its domain, not a physical guard
+or a detector for an unknown height. A promised-legal service or a controller
+permitted to decline every uncertain request has a different contract.
+Fix permissions to allow every domain-legal member of this finite menu;
+other known permission denials remain distinct unexecuted rejections.
+
+**Definition 7.4 (all accessible retained information).** At the live cut,
+every history-bearing system available to recovery or a request handler
+factors jointly through a finite algebra
+
+$$
+\mathcal B=\bigoplus_{\alpha=1}^n M_{d_\alpha},\qquad
+\mathcal H_B=\bigoplus_\alpha\mathbb C^{d_\alpha},\qquad
+D=\sum_\alpha d_\alpha<\infty.
+\tag{QC.40}
+$$
+
+This includes the specimen, accessible archives, controller, source/epoch
+and programme fields, calibration, clock latches, source-sensitive timing,
+returned environments, receiver entanglement shares and every other
+accessible assistance or bypass. A common deterministic CPTP decoder
+$\mathcal R:\mathcal B\to M_3$ must recover the exact identity-cut
+specimen for all $j,\beta,m$. For a full joint implementation it must also
+preserve its actual reference and archive correlations. Each request handler
+uses only $\mathcal B$ and the same public request. No coding abort,
+postselection or source-dependent installed decoder configuration is allowed.
+An inaccessible reference may remain untouched and cannot assist a handler.
+
+For the lower bound allow arbitrary normalized code states
+$\sigma_{j,\beta,m}$ on $\mathcal B$ obeying
+
+$$
+\mathcal R(\sigma_{j,\beta,m})
+ =|\psi_{k_j,\beta,m}\rangle\langle\psi_{k_j,\beta,m}|.
+\tag{QC.41}
+$$
+
+There is no assumption that these states were acquired by a specimen-only
+channel, or that the supplied assistance is phase independent. This grants
+more inputs than an acquisition protocol and makes the lower bound apply
+also to arbitrary assistance when all of it is included in (QC.40).
+
+**Theorem 7.5 (sharp total dimension for the guarded live component).**
+Under Definitions 7.3–7.4,
+
+$$
+D\geq3M.
+\tag{QC.42}
+$$
+
+If there are at most $2^b$ classical blocks and $d_\alpha\leq d$, then
+$b+\log_2d\geq\log_2(3M)$. The total-dimension bound is attained
+for the restricted live component in §8 by $M$ qutrit blocks. This is not
+a complete classical/quantum Pareto frontier; it gives no universal
+$d\geq3$ under arbitrary supplied assistance.
+
+Proof. For each $1\leq i<M$, request $s=M-i$. Its executed event
+induces an effect $0\leq E_i\leq I$ on $\mathcal H_B$. The guard
+specification gives
+
+$$
+\operatorname{tr}(E_i\sigma_{j,\beta,m})=
+ \begin{cases}1,&j\leq i,\\0,&j>i.\end{cases}
+\tag{QC.43}
+$$
+
+If a positive state has expectation zero on a positive effect, its support
+lies in the effect's kernel: diagonalize the state and use nonnegativity
+on every positive-weight eigenvector. Expectation one gives the same
+conclusion for $I-E_i$. Let $P_j$ be the span of the supports of all code
+states with height $k_j$. For $j<l$, take $i=j$ in (QC.43); then
+$P_j\subseteq\ker(I-E_j)$ and $P_l\subseteq\ker E_j$.
+Consequently the $P_j$ are pairwise orthogonal. These are alternative
+one-request tests. The proof performs no repeated trials or incompatible
+simultaneous observations on one specimen.
+
+At each fixed $k_j$, use the first three vectors of (QC.23):
+$\phi_1=p+v_+$, $\phi_2=p-v_+$ and $\phi_3=p-i v_-$.
+They have $(\beta,m)=(0,0),(\pi,0),(\pi/2,1)$ and are actual
+endpoints by Proposition 7.2. Their Gram determinant is
+
+$$
+\det\operatorname{Gram}(\phi_1,\phi_2,\phi_3)
+ =64Zk_j(c-k_j)>0.
+\tag{QC.44}
+$$
+
+Indeed the sum and difference of the first two recover $p$ and $v_+$;
+the third then recovers $v_-$. In the basis $(U_+,U_-,e_2)$ the
+absolute determinant of their column matrix is
+$4\sqrt{2k_j}\sqrt{2(c-k_j)}\sqrt Z$, proving (QC.44).
+
+For completeness, a CPTP map taking states supported in a subspace $P$
+to three independent pure output vectors needs $\dim P\geq3$, even
+if the input states were supplied with arbitrary assistance. Extend
+$\mathcal R$ from the direct-sum algebra to $M_D$ by first dephasing
+between its blocks. For each of the three input states choose a
+positive-weight eigenvector $x_l$. Purity and positivity force the
+decoder of $|x_l\rangle\langle x_l|$ to be the corresponding pure
+output. In a Stinespring isometry,
+$Vx_l=\phi_l\otimes\eta_l$ with $\|\eta_l\|=1$.
+Apply a linear functional dual to each independent $\phi_l$ to a
+putative linear relation among these products. Its coefficient must vanish
+because $\eta_l\ne0$. Hence the three $x_l$ are independent in $P$.
+Apply this argument in each $P_j$ using (QC.41). Orthogonality now gives
+$D\geq\sum_j\dim P_j\geq3M$. Finally
+$D\leq n d\leq2^bd$ gives the bit inequality. $\square$
+
+**Corollary 7.6 (arbitrary finite catalogues and the continuum guard).**
+The lower bound $D\geq3M$ also holds for any ordered distinct interior
+heights $k_1<\cdots<k_M$, if the exact total guard includes separating
+positive ramps. In particular no fixed finite algebra (QC.40) can supply
+exact identity-cut recovery and this total original-domain classification
+over the whole continuum $0<k<c$.
+
+Proof. For each adjacent pair use the unit ramp of displacement
+$u_i=c-(k_i+k_{i+1})/2>0$. Its legal domain is
+$(0,(k_i+k_{i+1})/2)$, so its executed event gives exactly (QC.43).
+Proposition 7.2 and the pure-output argument remain valid. Arbitrarily
+large finite subsets contradict a fixed finite $D$. This argument uses
+the full domain-sensitive target; a common promised support interval and
+a smaller promised-legal menu need not include these tests. $\square$
+
+The separating requests in this corollary are illegal at some candidate
+heights. They test a different consumer from the credited containment
+obstructions using a continuation legal at every compared input; neither
+kind of witness substitutes for the other.
+
+**Proposition 7.7 (the restricted acquisition check).** A deterministic
+encoder acting on one unknown original specimen and input-independent
+ancillas cannot construct the guard of Definition 7.3, even for two
+distinct heights, without additional source-bound input.
+
+Proof. At $\beta=m=0$, two actual inputs at $k_j\ne k_l$ have overlap
+
+$$
+Z+2\sqrt{k_jk_l}+2\sqrt{(c-k_j)(c-k_l)}>0.
+\tag{QC.45}
+$$
+
+Their trace distance is strictly less than one. The separating guard
+would make their encoded supports orthogonal by (QC.43), giving distance
+one, contrary to CPTP contraction. This is the mature impossibility of
+perfectly discriminating nonorthogonal states applied to these source
+inputs. It excludes only the stated specimen-only acquisition route;
+it does not exclude a paid same-source sensor or the generator in §8.
+$\square$
+
+## 8. A known-anchor generator and finite lawful lattice updates
+
+**Definition 8.1 (restricted actual generation of the label).** Promise
+that the source is live at height $a_0$ at a public cut. The first five
+legs of Proposition 7.2 supply such a source class: their common known
+height waveform returns to $a_0$ for every unknown $\beta,m$. Their
+phase histories remain unknown to the controller. No claim is made that
+this anchor can be recognized in an arbitrary unknown past.
+
+At that cut the controller chooses $j\in\{1,\ldots,M\}$ using only
+its actual available inputs and latches the actual choice. Apply the
+supplied calibrated canonical horizontal instrument from $a_0$ to $k_j$.
+On its actual live output the new height is $k_j$ and its latched label
+is correct by the generator's operation, rather than by measurement of an
+unknown specimen or inversion of a whole law. On failure retain $j$, the
+actual time/mode and $f$, and stop.
+
+This is a restriction to a known source anchor and controller-generated
+heights. Calibrated operations, coherent coding, blank ancillas, exact
+clocks and recording are still the conditional services in Definition 1.3.
+The restriction adds no waveform sensor, overlap oracle or parity helper.
+
+**Proposition 8.2 (attainment and the actual joint label).** With fixed
+remaining metadata and no extra independently variable accessible payload,
+the exact live state-and-domain component generated in Definition 8.1 has
+algebra
+
+$$
+\mathcal B_{\rm live}=\bigoplus_{j=1}^M M_3,
+\qquad D_{\rm live}=3M.
+\tag{QC.46}
+$$
+
+The fixed calibrated isometry from §2 encodes the specimen in its
+$j$-block. The total guard compares $j+s$ with $1,M$. An illegal request
+is rejected without execution. On a legal request the handler applies the
+complete canonical instrument along $k(t)=(j+st)h$ and zero relative
+phase. On survival it updates the working label to $j+s$. Thus (QC.42)
+is attained for this live component.
+
+Proof. Retaining the chosen classical label and the active qutrit gives
+(QC.46), exact identity-cut recovery, and the integer legality test.
+For the source-family inputs, integration of (QC.7) gives the legal ramp's
+survival probability
+
+$$
+p_{j,s}=\begin{cases}
+k_j/k_{j+s},&s>0,\\
+1,&s=0,\\
+(c-k_j)/(c-k_{j+s}),&s<0.
+\end{cases}
+\tag{QC.47}
+$$
+
+Its actual surviving state is $\psi_{k_{j+s},\beta,m}$. Every failure
+operation is separately the time/mode CP measure (QC.10)–(QC.11), with
+absorbing $f$. The working-height label is meaningful only on a live
+branch; a failed branch retains its old request context and stopped status.
+
+To verify the joint generation claim, write the actually chosen classical
+label and all actual quantum inputs as a positive state-valued family
+$\rho_j^{LR}$, including its true correlations with a reference or archive.
+The generating instrument has unnormalized branch output
+
+$$
+|j\rangle\langle j|\otimes
+ (\mathcal I_{a_0\to k_j}(do)\otimes\operatorname{id}_R)
+ (\rho_j^{LR}).
+\tag{QC.48}
+$$
+
+No distribution of $j$ or conditional reference state is replaced.
+The label is latched before execution, so conditioning on actual survival
+retains its correctly biased joint distribution. Equations (QC.13) and
+(QC.17) intertwine each of these CP branches with the reduced carrier.
+They also intertwine every legal ramp after the exact integer guard.
+This proves joint correspondence, not merely matching label and specimen
+marginals. $\square$
+
+**Proposition 8.3 (continued use with the actual archive retained).**
+For every finite feedback policy using the lattice requests, actual
+records and matched external inputs, this implementation preserves the
+complete joint input/record/successor law. It retains all five failure
+names, the exact first failure time, all old events, source/epoch,
+reference, calibration, permissions, clock, controller and every selection
+and update input. Rejection remains unexecuted and failure remains absorbing.
+
+Proof. On each live block the integer guard has the same domain as the
+actual relative ramp. Theorem 3.1 gives equality of every success and
+failure CP operation on that block, tensor identity on the actual joint
+registers. Append the actual request, its outcome and controller update
+to the archive; do not overwrite old events when changing the working
+label. On an executed failure there is only the stopped continuation.
+Condition on the actually retained classical records, apply the same
+next selector and its full update kernel, and integrate. Induction proves
+the claim for any finite number of requests, exactly as in Instrument
+Boundaries Theorem 14.1. Matching chronological heights and the translated
+real phase tail follow from `concatenate_original`. $\square$
+
+The number $3M$ in (QC.46) counts only the live state-and-domain component
+at a cut with fixed remaining payload. It is not a $3M$ implementation
+of Proposition 8.3's growing full archive. Any accessible archive or
+assistance preserved by tensor identity is included in the total count
+of Definition 7.4; an extra variable payload increases that count. Even
+without an event payload, adding a stopped status sector changes the
+live-only algebra. Exact nonatomic event records fall outside a fixed
+finite algebra, as Event Memory and Coarse Aliasing Theorem 4.3 and
+Corollary 4.4 already establish. Failed branches cannot calibrate a second
+live specimen, since no such specimen or retry is supplied.
+
+**Example 8.4 (a nine-dimensional live component).** Take
+$c=1/4$, $Z=r=1/2$, $a_0=1/8$, $q=1/16$ and $M=3$. The heights
+are $(1/16,1/8,3/16)$. For the three phase witnesses of Theorem 7.5,
+the rectangle heights $B/\pi$ are $(0,8,0)$, their signed windings are
+$(0,0,1)$, and their Gram determinants at the three current heights are
+$(3/8,1/2,3/8)$. Their respective canonical preparation live
+probabilities are $(2/9,1/3,2/9)$, independent of the witness selected
+at a fixed height. The six-unit source paths have probability support at
+least $1/16$, height speed at most $1/16$ and witness phase variation
+at most $16\pi$.
+
+The positive requests of displacements $1/8$ and $1/16$ have executed
+masks $(1,0,0)$ and $(1,1,0)$. The full five-request menu has legal
+successors precisely $j+s\in\{1,2,3\}$, and all legal ramps retain
+support at least $1/16$. These values follow by substitution in
+(QC.38), (QC.44), the two monotone survival factors and the integer guard.
+They give $D_{\rm live}=9$. Universal claims use the proofs above;
+this finite instance has no separate acquisition or hardware claim.
+
+## 9. Delayed wait/execute capacity for arbitrary joint encoders
+
+**Definition 9.1 (received original phase commands).** Fix the same
+actual source as in Proposition 4.3:
+$Z=r=1/2$, $c=1/4$, current height $k=1/8$, calibrated phases
+$\theta_i=0$. Its unknown live family is all of (QC.37) at this height.
+For $N\geq1$ define $C_j=j/(N+1)$, $1\leq j\leq N$.
+A finite command $j$ is actually received before retention. Every command
+may accompany every unknown $\beta,m$; it is not a label inferred from
+the unknown past. After retention a bit $b\in\{0,1\}$ is supplied,
+requesting the one-unit original tail
+
+$$
+k(t)=1/8,\qquad \chi(t)=\chi_{\rm old}+bC_jt,
+\qquad
+U_j=\operatorname{diag}(e^{-iC_j/4},e^{iC_j/4},1)
+\quad\text{on }(U_+,U_-,e_2).
+\tag{QC.49}
+$$
+
+All requests in this task are domain-legal and permitted. The wait tail
+has $b=0$ and the execute tail $b=1$. Their height margin is $1/8$,
+height speed zero, phase speed and variation at most one, and both
+original regularities hold. Since $k'=0$, all canonical failure densities
+vanish on these tails; their complete live operation is respectively
+identity or $\operatorname{Ad}_{U_j}$. They are open relative phase
+controls and need not be integer loops. No value of $\chi_{\rm old}$
+is supplied to the controller.
+
+**Definition 9.2 (unassisted endpoint factorization).** Fix a finite
+algebra $\mathcal B=\bigoplus_\alpha M_{d_\alpha}$. A common joint
+CPTP encoder receives the classical command and the specimen. Equivalently
+it has CPTP restrictions
+$\mathcal E_j:M_3\to\mathcal B$, without a product data/program
+output requirement. All information usable after retention factors through
+$\mathcal B$. No pre-supplied history-correlated helper or accessible
+archive is an extra input to $\mathcal E_j$; no surviving command dial,
+specimen bypass, source-dependent timing, returned environment or receiver
+entanglement share escapes the count. Input-independent ancillas are
+absorbed into the maps. An inaccessible reference may remain untouched.
+
+Two fixed CPTP decoders $\mathcal D_0,\mathcal D_1:\mathcal B\to M_3$,
+independent of $j,\beta,m$, must satisfy
+
+$$
+\begin{aligned}
+\mathcal D_0\mathcal E_j(\rho_{\beta,m})&=\rho_{\beta,m},\\
+\mathcal D_1\mathcal E_j(\rho_{\beta,m})&=U_j\rho_{\beta,m}U_j^\dagger,
+\qquad
+\rho_{\beta,m}=|\psi_{1/8,\beta,m}\rangle
+                    \langle\psi_{1/8,\beta,m}|.
+\end{aligned}
+\tag{QC.50}
+$$
+
+There is no postselection, abort or permitted failure on these legal
+deterministic tails. The task does not require reporting $j$.
+This factorization is a different hypothesis from Definition 7.4, which
+permits arbitrary already supplied history assistance and counts it jointly.
+An assisted input lacking the form $\mathcal E_j(\rho_{\beta,m})$
+does not satisfy Definition 9.2.
+
+**Theorem 9.3 (sharp joint programming capacity).** Encoders and decoders
+as in Definition 9.2 exist if and only if
+
+$$
+N\leq\sum_\alpha\left\lfloor\frac{d_\alpha}{3}\right\rfloor.
+\tag{QC.51}
+$$
+
+In every feasible code, the occupied ranges for distinct commands are
+orthogonal inside each block. A fixed projective read on the retained
+code can therefore recover $j$ perfectly while leaving every valid
+encoded specimen/reference state unchanged.
+
+Proof: actual-source bridge. Use the four reachable endpoints (QC.23)
+at the parameters of Proposition 4.3. Their $(\beta,m)$ values are
+$(0,0),(\pi,0),(\pi/2,1),(3\pi/2,1)$. They come from the same
+positive preparation by the five-unit controls already supplied in §4,
+with common height waveform, support margin $1/16$, rectangle heights
+$0,8\pi,0,8\pi$, and common canonical live probability $1/3$.
+Their nonzero-overlap graph is connected and they span the active qutrit
+by (QC.27)–(QC.28); their Gram matrix is (QC.34). Earlier failed
+histories remain stopped. The generator record is not an encoder input.
+The source allows every signed sector; four of its actual histories
+suffice as the lower certificate.
+
+The credited implication (QC.29)–(QC.31) says that any channel fixing
+these four pure densities is the identity on all $M_3$. Apply it to
+$\mathcal D_0\mathcal E_j$ and to
+$\operatorname{Ad}_{U_j^\dagger}\mathcal D_1\mathcal E_j$.
+The actual-source requirements (QC.50) force the complete channel identities
+
+$$
+\mathcal D_0\mathcal E_j=\operatorname{id}_{M_3},\qquad
+\mathcal D_1\mathcal E_j=\operatorname{Ad}_{U_j}.
+\tag{QC.52}
+$$
+
+This uses one linear channel on four actual inputs; it assumes neither
+free preparation of arbitrary qutrits nor extra copies or tomography.
+
+Proof: orthogonal occupied ranges. Write encoder branch Kraus operators
+$E_{j,\alpha,a}:\mathbb C^3\to\mathbb C^{d_\alpha}$.
+Each branch is CP, generally not TP. The restriction of each decoder to
+a single input block is TP. Let its Kraus operators be $A_{\alpha,s}$
+for $\mathcal D_0$ and $B_{\alpha,t}$ for $\mathcal D_1$.
+The Choi matrices of identity and a unitary channel have rank one.
+The positive-summand argument in (QC.33) therefore gives, for all indices,
+
+$$
+A_{\alpha,s}E_{j,\alpha,a}=a_{j,\alpha,a,s}I_3,
+\qquad
+B_{\alpha,t}E_{j,\alpha,a}=b_{j,\alpha,a,t}U_j.
+\tag{QC.53}
+$$
+
+Choose encoder Kraus operators $E=E_{j,\alpha,a}$ and
+$F=E_{l,\alpha,a'}$ in the same block. Decoder trace preservation gives
+two expressions for the same operator:
+
+$$
+\begin{aligned}
+E^\dagger F
+ &=\sum_s(A_{\alpha,s}E)^\dagger(A_{\alpha,s}F)=\lambda I_3,\\
+E^\dagger F
+ &=\sum_t(B_{\alpha,t}E)^\dagger(B_{\alpha,t}F)
+   =\nu U_j^\dagger U_l.
+\end{aligned}
+\tag{QC.54}
+$$
+
+For $j\ne l$, $U_j^\dagger U_l$ is not scalar: its middle-reference
+entry is one, while $0<|C_j-C_l|<1$ excludes unity of both other
+characters. Hence $\lambda=\nu=0$, and $E^\dagger F=0$.
+All occupied ranges of different commands in this block are orthogonal.
+For a nonzero $E$, the first line with $F=E$ gives
+$E^\dagger E=qI_3$ with $q>0$, so $\operatorname{rank}E=3$.
+Every command active in block $\alpha$ therefore occupies at least three
+dimensions, disjoint from every other command active there. At most
+$\lfloor d_\alpha/3\rfloor$ commands are active in that block.
+Every command is active in at least one block since its encoder is TP.
+Summing these incidences proves necessity of (QC.51).
+
+Let $S_{j,\alpha}$ be the span of all command-$j$ Kraus ranges in block
+$\alpha$. Their mutually orthogonal projectors, and the unused
+complement, define a fixed projective read. Every valid command-$j$
+encoded state is supported on $\bigoplus_\alpha S_{j,\alpha}$.
+The same support statement holds with an untouched reference, by applying
+the encoder Kraus operators tensored with identity. The read returns $j$
+with probability one and leaves that entire joint state unchanged.
+
+Proof: sufficiency. Under (QC.51), assign each command an orthogonal
+three-dimensional slot in one block. Let $V_j$ be its isometric embedding
+and encode $\rho$ as $V_j\rho V_j^\dagger$ in that block.
+Let $P_\perp$ be the unused-slot complement in $\mathcal H_B$ and
+fix any normalized qutrit density $\tau$. On a block-diagonal input $X$,
+use the two whole-domain maps
+
+$$
+\mathcal D_b(X)=\sum_{j=1}^N U_j^bV_j^\dagger X V_j(U_j^b)^\dagger
+             +\operatorname{tr}(P_\perp X)\tau,
+\qquad b=0,1.
+\tag{QC.55}
+$$
+
+Each summand is CP, and the slot projectors plus $P_\perp$ sum to
+identity, proving TP. These maps satisfy (QC.52), also tensor identity
+on every reference. This proves sufficiency and the theorem. $\square$
+
+**Corollary 9.4 (resource consequences and continuum scope).** Under the
+unassisted endpoint factorization,
+
+$$
+D=\sum_\alpha d_\alpha\geq3N,
+\qquad
+N\leq2^{b_c}\lfloor d/3\rfloor
+\quad\text{if }n\leq2^{b_c},\ d_\alpha\leq d.
+\tag{QC.56}
+$$
+
+With qutrit blocks at least $N$ blocks are needed; with a single quantum
+block its dimension must be at least $3N$. Total dimension alone is not
+sufficient for a prescribed block profile. No fixed finite algebra solves
+the exact continuum command task $C\in(0,1)$ with a later wait/execute
+choice, even though all these tails have the same height margin, duration
+and bounded phase speed/variation.
+
+Proof. Apply (QC.51), bound each floor by $d_\alpha/3$ for the first
+inequality and by $\lfloor d/3\rfloor$ for the second. Every finite
+catalogue lies in the same bounded tail class, so unbounded $N$ excludes
+a fixed finite algebra. $\square$
+
+**Example 9.5 (later choice changes the task).** For $N=2$, the commands
+are $C_1=1/3$ and $C_2=2/3$. One qutrit cannot implement both later
+choices. A single six-dimensional block or two qutrit blocks can; the
+profile $(4,2)$ has total dimension six but capacity only one by (QC.51).
+If execute had already been irrevocably chosen before encoding, a single
+qutrit could instead store $U_j\rho U_j^\dagger$ and discard the
+command. It would not solve the later-wait alternative. Thus the $N$
+factor prices a pending lawful choice, rather than a static endpoint
+representation.
+
+**Proposition 9.6 (the attaining code has the original continuation).**
+Under the conditional calibrated coding and canonical-actuation services,
+the slot construction implements the actual tails (QC.49), with their
+correct common one-unit clock and no new failure. It can retain the
+recovered $j$, received $b$ and every actual matched archive/reference
+field for subsequent finite lawful use. Those retained output records
+carry their additional memory cost.
+
+An additional history-correlated archive is preserved here by identity as
+a spectator, without assisting this code. If it is accessible across the
+retention cut, it enlarges the retained boundary and Definition 9.2's
+factorization must be checked again before applying the lower bound.
+
+Proof. Read the slot nondisturbingly, decode its qutrit, and drive the
+prescribed relative phase tail using the actually recovered command and
+the later bit. The weight (QC.2) at $k=1/8$ is
+$(1/4,-1/4,0)$ in the active basis; integration gives exactly (QC.49).
+The canonical hazard is zero, so this entire tail has no executed-failure
+branch. Its input was the live branch of the actual source certificate;
+earlier failures are retained with $f$ and are never restarted.
+The source composition theorem preserves the actual prefix, matches
+height and adds the translated relative tail without reading the old lift.
+Equation (QC.52) gives complete quantum equality on the decoded joint
+input. Keep the actual command, bit and updates; Theorem 3.1 and
+Instrument Boundaries Theorem 14.1 then give every separately permitted
+finite canonical continuation on these matched joint inputs. Known
+permission denial or a request outside this declared menu is an
+unexecuted rejection, not a fabricated tail failure. A subsequent legal
+canonical failure has its original exact first time/mode and absorbing
+successor. This constructs no hidden-height or hidden-past guard.
+$\square$
+
+## 10. Source correspondence, precision, literature and unresolved bridges
+
+**Resource statement 10.1 (what is and is not minimized).** Theorem 7.5
+minimizes total retained Hilbert dimension for a live state-and-total-guard
+component, allowing arbitrary counted assistance. Theorem 9.3 gives the
+exact block profile capacity of an unassisted endpoint-factorized delayed
+command task. Their superficially similar factors of three have different
+premises; they cannot be multiplied or combined without a new common-task
+proof. Neither is the complete observer minimum of Definition 1.3.
+
+For the lattice, rational $c$ gives a finite description of $h$ and all
+integer request arithmetic. The working label uses
+$\lceil\log_2M\rceil$ bits in a binary implementation; (QC.42)'s
+bit inequality is attained by qutrit blocks when $M$ is a power of two.
+Request indices, counters, policy state, clocks and all variable archives
+are separately included when retained. For each finite delayed catalogue,
+$C_j=j/(N+1)$ has a finite rational description; its source-dependent
+command setting must cross retention through $\mathcal B$. It cannot
+survive for free as an installed phase dial or a timing channel.
+
+The rational examples have finite algebraic descriptions of the support
+basis and compression isometries, and finite symbolic descriptions of
+their phase gates. Exact real calibration, exact clocks, exact gate
+implementation and the canonical exact-time recorder remain declared
+ideal services. An arbitrary real calibration parameter or waveform need
+not have a finite effective description. Programme length, arithmetic
+precision, sensing, preparation, acquisition, waveform generation, gate
+synthesis and physical hardware are distinct resources; none is priced by
+$D$ or the capacity formula. The four-state delayed-source witness has
+duration five, height speed at most $1/16$, phase speed at most $8\pi$,
+phase variation at most $18\pi$ and preparation live probability $1/3$.
+This probability is not a repeat-until-success resource.
+
+All new bounds are exact. No approximate guard, finite-noise programming
+rate, finite effective implementation of an arbitrary real waveform or
+unbounded-horizon error guarantee is derived from exact orthogonality.
+Every finite execution keeps its actual growing archive. A finite live
+component does not imply a forever finite-state predictor.
+
+**Source statement 10.2 (precise suppliers and consumers).** The following
+references specify the source/action/record/continuation correspondence at
+the immutable revision named in Convention 7.1.
+
+| Supplier | Used content and boundary |
+| --- | --- |
+| [FiniteRectangleTransport Lean](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean) and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/FiniteRectangleTransport.scribe.cs) | `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible` and actual rectangle realization supply the positive original source. The Scribe's all-signed-sector application supplies the real lifts used in Propositions 7.2 and 4.3. A geometric path is not a physical sensor or actuator. |
+| [OriginalControlComposition Lean](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/D5/S3/Quantum/Fibers/OriginalControlComposition.lean) and its [Scribe](https://github.com/the-omega-institute/trureturing/blob/773d4d43b91abd515be1059283d79dd6572fc174/Blueprint/D5/S3/Quantum/Fibers/OriginalControlComposition.scribe.cs) | Both original regularity alternatives, finite and zero durations, unchanged prefixes, matching heights, translated real tails and additive integrals. No unknown absolute past lift is supplied to a controller. |
+| [Probability-phase transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §§9.1–9.2 | Actual common relative-command domains and chronological action. Definition 7.3 explicitly adds a total domain classifier; that service does not follow from the partial operation. The requests in §9 are legal at the common known height. |
+| This volume §§2–4; [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§5.2, 9–15 | Exact five-labelled qutrit CP correspondence, the four-state reachable rigidity certificate, canonical survival/absorption and matched joint finite continuation are credited. Theorem 7.5 instead counts simultaneous height separation and output span; Theorem 9.3 prices a received pending command with arbitrary joint encoders. |
+| [Record Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md), §§2–9, 11; [Sampled Instrument Certificates](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_SAMPLED_INSTRUMENT_CERTIFICATES.md), §§3, 7–8 | Existing finite-query limits and conditional finite-precision certificates. SCI Proposition 8.4 consumes an actually delivered certificate and an exact matching height, with the full joint boundary retained. The present known-anchor generator supplies its own restricted exact height label; it neither constructs SCI's sampler nor proves its extra joint kernel (SC.23). |
+| [Event Memory and Coarse Aliasing](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md), §§3–6 | Actual same-event retention and finite-bin/exact-time distinctions. Their full-archive obstruction remains; a live dimension of $3M$ or a pending-command capacity is not an exact timestamp capacity. |
+| [Parity Record Transport](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_PARITY_RECORD_TRANSPORT.md), §§3–9 | Its calibrated history-correlated helper is an additional endpoint/checkpoint service. Theorem 7.5 counts all such accessible assistance if present; Theorem 9.3 does not admit that assisted input unless its endpoint factorization is separately established. Return on success gives no unchanged helper on failure. |
+| [Transport–Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §§2.9–2.12, 2.18; [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §34; [Atlas Stable Core Holonomy](RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md), Theorem 6.3 | Same coherent source/common port, aligned acquired records, known nonzero amplitudes and record overlap, actual joint source/epoch image, executable domains/routes, full rejections/failures and compatible updates. Propositions 8.3 and 9.6 preserve supplied joint fields in their restricted tasks. They do not construct the common acquisition image or the individual four-view maps required by these consumers. |
+
+**Literature statement 10.3 (mature ingredients and limits of transfer).**
+
+| Primary source and version | Checked statement and actual use |
+| --- | --- |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | Distinct deterministic exact unitary programmes on arbitrary data require orthogonal programme vectors. Its input is product data/program. That premise alone does not cover Definition 9.2's arbitrary joint encoder; (QC.52)–(QC.54) prove the needed conclusion directly. No programme or data acquisition service is imported. |
+| E. Knill and R. Laflamme, [*A Theory of Quantum Error-Correcting Codes*, quant-ph/9604034v1](https://arxiv.org/html/quant-ph/9604034v1), Theorems 3.1–3.2, Eqs. (19)–(20) | Exact recovery has scalar composite Kraus operators and scalar error products on the code. This is the mature reversibility mechanism in (QC.53)–(QC.54). Here the scalar identities are derived from the rank-one Choi matrices with all encoder branches included; an individual branch is not incorrectly assumed TP. |
+| M. Sedlák et al., [*Storage and retrieval of two unknown unitary channels*, 2410.23376v2](https://arxiv.org/html/2410.23376v2), §II and Proposition 1 | The storage phase has $n$ uses of an unknown unitary from two alternatives; retrieval receives its stored state and fresh data as a tensor product. These are different source/access premises from one retained original specimen and a received classical command. No discrimination, success or acquisition cost from that task is transferred. |
+
+Effect-support separation, Stinespring dilation, pure-output span arguments,
+rank-one Choi positivity, nonorthogonal-state discrimination and controlled
+CP operations are `literature-attested` mature mathematics. The additional
+source-specific content is the joint $3M$ total-guard bound with its actual
+multi-height witness and known-anchor realization, and the sharp
+sum-of-floors capacity with forced nondisturbing command read for arbitrary
+joint encoders on the actual four-state source. These are `repo-derived`
+ordinary deductions, not new kernel certificates or worldwide priority
+claims. The inspected primary sources and committed suppliers do not supply
+the missing joint acquired observer; this bounded comparison proves neither
+its impossibility nor an exhaustive absence in the literature.
+
+**Boundary statement 10.4 (the remaining same-source relation).** An
+arbitrary unknown original past still requires an actually obtained and
+certified joint record of whatever domain, calibration, clock/reference,
+source/epoch, archive and controller information its selector reads.
+Every legal selected operation and recorded update must have its complete
+success/failure successor in the same actual running image. A whole-law
+inverse, equal separate marginals, a supplied helper or an abstract causal
+network representation does not construct that acquisition.
+
+Theorem 7.5 obstructs a proposed finite exact total-domain guard, with its
+extra guard premise explicit. It leaves promised-legal restricted menus
+open. Theorem 9.3 prices retention after actual command reception under
+its unassisted factorization. It leaves history-assisted inputs outside that
+factorization open. The restricted positive constructions use known source
+anchors or already received commands and calibrated ideal gates. They do
+not acquire unknown past height, phase lift, waveform, helper overlap or
+whole probability law. The full canonical event archive is separately
+retained and counted; a terminal pure-family task is not substituted for
+the exact-time/five-mode task.
+
+Full space/time/boundary/memory recovery, native stationary
+$\alpha/\beta$ memory-rate/cofinality and the independent fixed-Hamiltonian
+quantum minimax retain their original source and operation obligations.
+No cross-model sensor or resource map from the mixed-state, lattice,
+TwoClock, preparer/reader or static arithmetic models is established here.
+Physical realization, calibration acquisition, approximate delayed
+programming and a fully acquired closed observer remain unresolved.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,14 @@
+**Proposition 6.3 (credited source hardness premise and paired source).** Use the mature premise that well-formed Boolean CNF satisfiability is NP-complete. The language
+
+$$
+Q=\{(\phi,\psi):\phi,\psi\text{ are well-formed CNFs},\
+\phi\text{ is unsatisfiable and }\psi\text{ is satisfiable}\}
+\tag{FTC.17}
+$$
+
+is DP-complete; the well-formed UNSAT language is coNP-complete.
+
+Proof. SAT membership has a Boolean assignment certificate. For any NP language its SAT reduction may have well-formed outputs: replace a malformed output by a fixed contradictory CNF. This preserves SAT membership. If $Y\in\mathrm{coNP}$, reduce its NP complement to SAT by such a map $g$. Then $x\in Y$ exactly when $g(x)$ is a well-formed unsatisfiable CNF, proving well-formed UNSAT hardness. Its complement consists of malformed strings or satisfiable CNFs and is NP, so UNSAT is coNP-complete.
+
+The displayed $Q$ is an NP/coNP conjunction with polynomial syntax checks. For any $X\in\mathrm{NP}$ and $Y\in\mathrm{coNP}$ choose well-formed-output reductions $f$ from $X$ to SAT and $g$ from the complement of $Y$ to SAT. Then $x\in X\cap Y$ exactly when $(g(x),f(x))\in Q$. This proves DP-hardness from the stated SAT premise. Empty conjunctions represent true; a CNF with an empty clause represents false. All source languages here reject malformed encodings. The SAT premise and these classical reduction methods are credited, without external research or primary validation. $\square$
+
