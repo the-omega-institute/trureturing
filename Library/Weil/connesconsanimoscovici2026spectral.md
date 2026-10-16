@@ -1521,10 +1521,131 @@ Thus a sharper payment for the tails or a different $\rho$ cannot
 certify this unchanged $Y,W_{\rm G}$ target: its ideal value is already
 negative in this direction. Reoptimizing the trial on $E$, adding
 Gamma channels or changing the inverse comparison are different
-questions and remain open. The earlier saved $v,x_0$ repair remains
+questions. The next application addresses the first. The earlier saved $v,x_0$ repair remains
 valid because it uses a different trial and direction. No negative
 upper bound for the actual Schur form has been obtained. Full c27
 positivity, cofinal positivity and RH remain unresolved.
+
+### Optimizing the trial for the changed Gamma comparison
+
+Keep the same nineteen-channel $W_{\rm G}$, full retained dyadic
+direction $v$, selected768-mode isometry $E$, $F=E^*H_NE$ and
+$Z=H_NE$. Parameterize every trial on this support by
+$y=Yv+Et$, where $Y=EF^{-1}B$ is the original exact Galerkin map.
+Its ideal sufficient margin and gradient are
+
+$$
+m_{\rm G}(t)=v^*Q_Yv+t^*Ft-\|Rv-Zt\|_{W_{\rm G}}^2,
+\qquad
+g_{\rm G}(t)=Z^*W_{\rm G}Rv-K_{\rm G}t,
+\quad K_{\rm G}=Z^*W_{\rm G}Z-F.
+$$
+
+The following computation applies the existing variational inverse,
+finite displacement products and square completion. It supplies no
+new general inversion theorem. The scalar rows, finite weighted
+support Gram, original complete target, signed far moments and saved
+direction are reused.
+
+Write $D_0=U_0^*W_0Z_0$, $G_Z=Z_0^*W_0Z_0$ and
+$S_0=I+U_0^*W_0U_0$. For any selected coefficient $t$, the same
+channel variational formula gives
+
+$$
+\begin{aligned}
+t^*Z^*W_{\rm G}Zt
+&=\min_z\left\{\|Z_0t-U_0z\|_{W_0}^2
+ +\|Z_\infty t-U_\infty z\|_{W_\infty}^2+\|z\|^2\right\}\\
+&\ge t^*(G_Z-D_0^*S_0^{-1}D_0)t.
+\end{aligned}
+$$
+
+Thus the finite matrix
+$K_{{\rm G},0}=G_Z-F-D_0^*S_0^{-1}D_0$ is a lower bound for
+$K_{\rm G}$. Dropping the complete far square preserves the
+direction of this bound and its joint channel dependence.
+The existing structured interval LDL, with the rank19 correction
+and independent diagonal retained, certifies all768 positive pivots
+of $K_{{\rm G},0}-I/16$. Consequently
+
+$$
+\boxed{K_{\rm G}\succeq K_{{\rm G},0}\succeq I/16.}
+$$
+
+Only the previously unsaved $19\times768$ action $D_0$ and two
+mixed inverse generators are produced. The action includes every
+row1281–32768 and the actual selected diagonal. Direct rows end
+at4096; a384-term finite geometric expansion covers the remainder,
+with uniform ratio $2048/4097$ and its absolute remainder paid.
+
+For the mixed action $J_0=Z_0^*W_0R_0$, let $G_E,G_O$ be the
+original selected and middle generators, $G_P$ the archived
+transformed retained generator, and put
+
+$$
+V=F^{-1}G_E,\quad \widetilde G_O=G_O-Z_0V,\quad
+T_Z=Z_0^*W_0G_O,\quad T_R=R_0^*W_0\widetilde G_O,\quad
+V_A=F^{-1}(T_Z-G_ZV).
+$$
+
+The finite displacement product reconstructs the disjoint-node action as
+
+$$
+(F^{-1}J_0)_{mn}=\frac{\kappa}{m^2-n^2}
+\left[(V_A)_{m0}(G_P)_{n1}-(V_A)_{m1}(G_P)_{n0}
+ +V_{m0}(T_R)_{n1}-V_{m1}(T_R)_{n0}\right],
+$$
+
+where $\kappa=2/\pi$, $1281\le m\le2048$ and $0\le n\le1280$.
+The old $V,G_Z,T_Z,T_R,G_P$ are reused; only $V_A$ needs two
+new right sides. This identifies the required common action
+without a new middle Gram or full retained solve.
+
+The [changed-trial consumer](https://github.com/the-omega-institute/trureturing-experiments/tree/eff515f544bb5ffa572322c78889a2d528b5bcf9/docs/reports/weil-c27)
+fixes an exact384-bit dyadic correction $t_0$ proposed by the changed
+finite normal system. It encloses its full ideal margin and gradient,
+including the existing signed far error on the transformed original
+columns and the entire Gamma mixed tail. It adds back the full
+interval for the original paid allowance on its512-bit metadata grid;
+the original matrix still uses its distinct640-bit grid.
+Square completion now gives
+
+$$
+\sup_t m_{\rm G}(t)
+\le m_{\rm G}(t_0)+16\|g_{\rm G}(t_0)\|^2.
+$$
+
+On this same unnormalized $v$, the directed endpoints imply
+
+$$
+-4.102\times10^{-32}<m_{\rm G}(t_0)<-3.652\times10^{-32},
+\qquad \|g_{\rm G}(t_0)\|<1.943\times10^{-17},
+$$
+
+and the computed optimization correction is less than
+$6.041\times10^{-33}$. The combined upper endpoint gives
+
+$$
+\boxed{\sup_t m_{\rm G}(t)<-3.04\times10^{-32}.}
+$$
+
+These are conditional numerical implications under the same actual
+common-form, exterior-domain, inverse-comparison and sound enclosure
+premises. The finite normal system proposes the trial; its solution
+is not substituted for the infinite exterior inverse. All scientific
+endpoint pairs and exact trial coefficients are checked by a cached
+higher-precision consumer. No old scientific producer is rerun.
+
+Thus every trial supported on these same768 modes fails to certify
+this retained direction with this fixed nineteen-channel $W_{\rm G}$.
+This also excludes a common linear trial on this support for all
+retained coefficients. Enlarging or changing the trial support,
+adding Gamma channels and improving the inverse comparison remain
+distinct unresolved possibilities. The bound is an upper bound on
+the best sufficient target in this family, not an upper bound on the
+actual Schur form. No actual negative Weil test, full c27 positivity,
+cofinal positivity, Lean verification of this application or RH
+resolution is established.
 
 ## A proved high-energy law and its four-component characteristic geometry
 
