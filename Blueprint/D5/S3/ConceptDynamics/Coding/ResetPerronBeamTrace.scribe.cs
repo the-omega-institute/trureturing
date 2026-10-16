@@ -95,5 +95,17 @@ internal sealed class ResetPerronBeamTraceDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every q:Nat, hq:2<=q, h:ResetFullAut q, a b:Fin 2 and n:Int, suppose (rho q (0<q) h).toLinearMap=(-1:Int)^a.val smul ((groupAction(resetMatrix q)(Multiplicative.ofAdd true)^b.val) * (rho q (0<q)(unitShift (ResetGraph q))^n).toLinearMap). Then a=0. Evaluate at Phi(1), use tau_sign and tau_time_zpow and beta^n>0, and compare with original_action_positive. This consumes a supplied expression and does not prove that every action admits such an expression."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The inverse-time beam construction and ordered dimension representation are classical: Boyle, Lind and Rudolph, The automorphism group of a shift of finite type, Transactions of the AMS 306 (1988), 71-114, section 6, printed pages 85-87, DOI 10.1090/S0002-9947-1988-0927684-2. The concrete coupling to the original numbered Reset graph and native presentation is derived here from the geometric suppliers. No publication novelty is claimed.")),
+            Paragraph(Text("For every q>=2 and hp:0<q, put Phi=nativeIntEquiv(q,hp), "
+                + "beta=dbonacciPerronRoot(q), and let tau be the normalized beam trace. "
+                + "For every p:Int[X] and every b:QF(q), "
+                + "tau(Phi(fp(q,p)*b))=p.eval2(Int.cast,beta)*tau(Phi(b)). "
+                + "Polynomial induction proves the identity: constants use the integer "
+                + "module law, sums use additivity, and multiplication by forward X uses "
+                + "native_presentation and tau_theta. In particular the operation occurs in "
+                + "the integer polynomial chart; Native remains an integer module. "
+                + "Taking b=1 and the literal tau_one=1, quotient representatives give "
+                + "tau(Phi(z))=E(plus(q,z)) for every z:QF(q), for the same injective Plus "
+                + "evaluation E. Both identities quantify over arbitrary vectors and "
+                + "polynomials, with no degree bound or change of trace normalization.")),
             Paragraph(Text("The Perron assertion is restricted to q>=2, with no positive-entropy claim at q=1. It neither exhausts the q=2 rho image nor classifies the kernel or splits the full history group. Integral gluing, unit, lattice, conductor and residue questions remain separate.")))));
 }

@@ -26,23 +26,23 @@ open NativeSixSourceMoore (Controller Run)
 attribute [local instance] Fintype.decidableForallFintype Fintype.decidableExistsFintype
 
 private def ordinal : Fin 6 → Nat := ![0,1,3,4,5,7]
-private def coord (i : Fin 6) : Classes row := ⟨ordinal i,by fin_cases i <;> decide⟩
-private def index (d : Classes row) : Fin 6 :=
+def coord (i : Fin 6) : Classes row := ⟨ordinal i,by fin_cases i <;> decide⟩
+def index (d : Classes row) : Fin 6 :=
   if d.val = 0 then 0 else if d.val = 1 then 1 else if d.val = 3 then 2
   else if d.val = 4 then 3 else if d.val = 5 then 4 else 5
-private def inflate (θ : Fin 6 → Option Bool) (d : Classes row) : Option Bool := θ (index d)
+def inflate (θ : Fin 6 → Option Bool) (d : Classes row) : Option Bool := θ (index d)
 
-private theorem coord_index (d : Classes row) : coord (index d) = d := by
+theorem coord_index (d : Classes row) : coord (index d) = d := by
   apply Subtype.ext
   have hd := d.property
   simp only [row,labels,Finset.mem_union,Finset.mem_singleton] at hd
   rcases hd with ((h | h) | (h | h)) | ((h | h) | (h | h)) <;>
     simp_all [coord,index,ordinal]
 
-private def queryAddress : Fin 5 → Address :=
+def queryAddress : Fin 5 → Address :=
   ![position 0,position 1,position 3,position 5,position 7]
-private def queryCoord : Fin 5 → Fin 6 := ![0,1,2,4,5]
-private def replies (θ : Fin 6 → Option Bool) (j : Fin 5) : Reply :=
+def queryCoord : Fin 5 → Fin 6 := ![0,1,2,4,5]
+def replies (θ : Fin 6 → Option Bool) (j : Fin 5) : Reply :=
   NativeClassRootPadding.rootReply (θ (queryCoord j))
 def acquiredLabel (θ : Fin 6 → Option Bool) : Fin 5 :=
   if θ 1 = some true then 1 else if θ 2 = some true then 2
@@ -75,7 +75,7 @@ private theorem target_by_mask (j : Fin 5) :
   simp only [holes]
   fin_cases j <;> decide +kernel
 
-private theorem type_finite_row (θ : Fin 6 → Option Bool)
+theorem type_finite_row (θ : Fin 6 → Option Bool)
     (ad : Admissible row (inflate θ)) :
     computedTarget row (inflate θ) = predecessor (acquiredLabel θ) := by
   rw [computedTarget,mask_by_label θ ad]
@@ -91,7 +91,7 @@ def installed {n : Nat} (T : Table n) : Controller (Fin n) (Fin 5) where
   next := T.next
   out := predecessor
 
-private def evaluate {n : Nat} (T : Table n) (θ : Fin 6 → Option Bool) :
+def evaluate {n : Nat} (T : Table n) (θ : Fin 6 → Option Bool) :
     Nat → Fin n ⊕ Fin 5 → Option (Fin 5 × List (Fin n))
   | 0, .inl _ => none
   | 0, .inr h => some (h,[])
@@ -142,7 +142,7 @@ def entrySeven (h : Fin 5) : Fin 2 ⊕ Fin 5 :=
 def entrySix (h : Fin 5) : Fin 1 ⊕ Fin 5 :=
   if h.val ≤ 2 then .inr h else .inl 0
 
-private def FiniteCorrect {n : Nat} (T : Table n) (entry : Fin 5 → Fin n ⊕ Fin 5)
+def FiniteCorrect {n : Nat} (T : Table n) (entry : Fin 5 → Fin n ⊕ Fin 5)
     (q : Nat) (θ : Fin 6 → Option Bool) : Prop :=
   (match evaluate T θ q (entry (acquiredLabel θ)) with
   | none => false
@@ -243,7 +243,7 @@ def Succeeds {n : Nat} (T : Table n) (entry : Fin 5 → Fin n ⊕ Fin 5)
     Run (installed T) (substitution x.val) (entry (acquiredLabel (profile x))) tr h ∧
     predecessor h = canonicalRow P x.val ∧ tr.length ≤ q
 
-private theorem install_correct {n : Nat} (T : Table n)
+theorem install_correct {n : Nat} (T : Table n)
     (entry : Fin 5 → Fin n ⊕ Fin 5) (q : Nat)
     (finite : ∀ θ, Admissible row (inflate θ) → FiniteCorrect T entry q θ) :
     Succeeds T entry q := by

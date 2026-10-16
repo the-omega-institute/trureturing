@@ -230,6 +230,62 @@ There is also a pointwise homeomorphism h_j:F_j->R_j with e_j(h_j(v))=f(v) for e
 
 Apply the frontier equation to the preceding cycles T and H. For each displayed closed coefficient edge A of F_j, its H2 edge is h_j(A)={z in R_j:e_j(z) in f(A)}. The entire boundary of each native cap region R_j is the union of h_j(A) over its three displayed closed edges; the entire boundary of each native side region R_j is the union of h_j(A) over its six displayed closed edges, retaining the displayed cyclic labels. The pointwise identity e_j(h_j(v))=f(v) gives e_j(h_j(A))=f(A). The same_body_metric_segments supplier identifies this H3 image f(A) with the full ambient H3 metric-between set of its two native endpoints and supplies its isometric arclength parametrization. The pointwise homeomorphism and original injectivity preserve the distinct cycle vertices, each adjacent-edge singleton intersection and every nonadjacent-edge disjointness statement. These conclusions concern the eight named original cap and side regions and their displayed cycles.
 
+Application: recovering the actual length Gram from native supports and corners. Here the starting data are a given set P in the original native H3, four cap normals cap_i and four side normals side_i in Real4, and native points p_ij=corner(i,j) for all twelve ordered pairs i!=j in {0,1,2,3}. This is a conditional inverse direction to the preceding construction from input lengths and a chosen M,f. No frame, known cap Gram, or identification of P with that constructed image is assumed. Use the same Lorentz form B(u,v)=u0*v0+u1*v1+u2*v2-u3*v3, its matrix J=diag(1,1,1,-1), and the original native metric and lift of `D5/S3/Geometry/Hyperideal/LengthGramMetricSegments`. Its lift_unit and lift_cosh identities give B(lift(p),lift(p))=-1 and B(lift(p),lift(q))=-cosh(dist(p,q)). These are the classical Lorentz metric identities; the argument below applies them with finite-dimensional linear algebra.
+
+Assume B(cap_r,cap_r)=B(side_r,side_r)=1 for every r in {0,1,2,3}, and the exact eight-halfspace equality P={p in H3: for every r, B(cap_r,lift(p))<=0 and B(side_r,lift(p))<=0}. Define the named support traces Fcap_r={p in P:B(cap_r,lift(p))=0} and Fside_r={p in P:B(side_r,lift(p))=0}. For every ordered i!=j assume p_ij in P, p_ij in Fcap_r iff r=i, and p_ij in Fside_r iff r!=i and r!=j, for every r. Finally assume B(cap_r,side_t)=0 whenever r!=t. These are all the support and corner premises used here; in particular the two families need not already be declared independent. The twelve points are p_01,p_02,p_03,p_10,p_12,p_13,p_20,p_21,p_23,p_30,p_31,p_32. Values corner(i,i), if supplied, are unused.
+
+Membership in P makes every support evaluation at p_ij nonpositive. Exact incidence then makes B(cap_r,lift(p_ij)) strictly negative for r!=i, and B(side_r,lift(p_ij)) strictly negative for r=i or r=j. Fix i!=j and put X=lift(p_ij), Y=lift(p_ji). The cap-i evaluation is zero at X and strictly negative at Y, so p_ij!=p_ji. Consequently d_ij=dist(p_ij,p_ji)>0 in the original native metric. This derives positivity for each paired distance from incidence, before any Gram entries are recovered.
+
+Let k,h be the two distinct complementary labels. Evaluate a relation alpha*side_k+beta*side_h=0 at lift(p_ih). The side-k evaluation is zero and the side-h evaluation is strictly negative, forcing beta=0. Since side_k has Lorentz square one, it is nonzero, and alpha=0. Thus side_k,side_h span a two-dimensional subspace. Define R={v in Real4:B(side_k,v)=B(side_h,v)=0}, the B-orthogonal complement of span(side_k,side_h). The form B is nondegenerate because det(J)=-1, so the orthogonal-complement dimension formula gives dim(R)=4-2=2.
+
+Both X and Y belong to R by their two complementary side incidences. They are independent: evaluating a relation alpha*X+beta*Y=0 against cap_i first forces beta=0, and X has Lorentz square -1, so alpha=0. Both cap_i and cap_j also belong to R by the offdiagonal cap-side orthogonality. Evaluating a relation between these caps at X forces the coefficient of cap_j to vanish; cap_i has square one, so the other coefficient vanishes. Each pair therefore spans a two-dimensional subspace of the two-plane R. Inclusion and equality of dimensions give both span equalities below.
+
+$$
+span\left(X, Y\right) = R = span\left(cap\left(i\right), cap\left(j\right)\right)
+$$
+
+The diagonal cap-side evaluations are now forced to be nonzero. For any i choose j!=i and write delta_i=B(cap_i,side_i). If delta_i were zero, side_i would annihilate both cap_i and cap_j, the latter by the assumed offdiagonal orthogonality. The span equality would make B(side_i,Y)=0, contradicting its strictly negative value at p_ji. Hence delta_i!=0 for every i. The normalized linear functionals phi_i(v)=B(side_i,v)/delta_i and psi_i(v)=B(cap_i,v)/delta_i satisfy phi_i(cap_j)=psi_i(side_j)=1 if i=j and 0 otherwise. Applying phi_i or psi_i to a linear relation isolates its i-th coefficient. Thus all four caps are independent and all four sides are independent. If C is the four-by-four matrix with row i equal to cap_i, the row-independence criterion gives det(C)!=0 and C invertible. No sign of det(C) is required.
+
+For the same arbitrary ordered i!=j set c=cosh(dist(p_ij,p_ji)) and s=sqrt(c^2-1). The positive native distance gives c>1 and s>0. The original lift identities give B(X,X)=B(Y,Y)=-1 and B(X,Y)=-c.
+
+$$
+c = cosh\left(dist\left(corner\left(i, j\right), corner\left(j, i\right)\right)\right) \land \left(s = sqrt\left(c^{2} - 1\right) \land \left(1 < c \land 0 < s\right)\right)
+$$
+
+The span equality writes cap_i=a*X+b*Y. Orthogonality at its own corner gives -a-b*c=0, so a=-b*c. Its unit square then gives b^2*(c^2-1)=1. At the reversed corner its evaluation is B(cap_i,Y)=b*(c^2-1)<0. Since c^2-1=s^2>0, this forces b=-1/s and a=c/s. Interchanging i and j gives the reversed formula with the same c and s, by symmetry of the native distance. Thus the nonpositive support orientation selects the actual caps, including their signs.
+
+$$
+cap\left(i\right) = \frac{c}{s} \cdot X - \frac{1}{s} \cdot Y
+$$
+
+$$
+cap\left(j\right) = \frac{c}{s} \cdot Y - \frac{1}{s} \cdot X
+$$
+
+Bilinearity now gives B(cap_i,cap_j)=(-c^3+c)/s^2=-c, using s^2=c^2-1. This recovers the offdiagonal cap Gram entry from the actual native distance. The diagonal entries are one by the unit-cap premise.
+
+$$
+B\left(cap\left(i\right), cap\left(j\right)\right) = -c = -cosh\left(dist\left(corner\left(i, j\right), corner\left(j, i\right)\right)\right)
+$$
+
+Form the actual length vector L in the original six-slot order 01,02,03,23,13,12, with d_ij=dist(corner(i,j),corner(j,i)). All six entries are strictly positive by the paired-corner argument. The use of d_23 in slot 3, d_13 in slot 4 and d_12 in slot 5 keeps the original lengthGram convention.
+
+$$
+L = tuple\left(d\left(0, 1\right), d\left(0, 2\right), d\left(0, 3\right), d\left(2, 3\right), d\left(1, 3\right), d\left(1, 2\right)\right)
+$$
+
+$$
+\forall q \in Fin\left(6\right),\; 0 < L\left(q\right)
+$$
+
+Let G=lengthGram(L). Its diagonal entries agree with the cap squares, and the recovered offdiagonal entries agree with its six negative hyperbolic cosines; reversing an ordered pair uses dist(p_ij,p_ji)=dist(p_ji,p_ij). Since the caps are the rows of C, the (i,j)-entry of C*J*transpose(C) is B(cap_i,cap_j). Entrywise equality gives the row congruence below, with the invertibility of C already derived from the corner evaluations.
+
+$$
+C \cdot J \cdot transpose\left(C\right) = G = lengthGram\left(L\right)
+$$
+
+This application recovers the actual metric Gram for given native P, supports and ordered corners satisfying the stated hypotheses. Existence of such data from six prescribed lengths, inverse identification of P with a source cut-body realization, all-face recognition and rigidity remain unresolved. It asserts no global length-domain, topology, volume, Schlaefli variation or gluing conclusion.
+
 Classification of every arbitrary face of the body, flat-boundary limits, Schlaefli variation, co-volume, gluing and full CFMP completion remain separate obligations. The existing native mass and twelve right-angle truncation applications are retained. The construction reuses the existing geometry and makes no novelty claim for the classical Lorentz formulas.
 
 ## References

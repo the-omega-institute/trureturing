@@ -2730,3 +2730,528 @@ representation is asserted. These partial programming and realized-source
 obstructions complete none of those tasks.
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Mixed height records under actual original-orbit testing
+
+**Definition 24.1 (one common horizontal request).** Fix the double-wall
+source of §4, one positive preparation and its common calibrated directions
+where supplied. Write $V=\operatorname{span}\{|+\rangle,|-\rangle,|2\rangle\}$,
+$0<Z<1$ and $c=(1-Z)/2$. The tested specimen vectors are precisely
+
+$$
+\psi_{x,\beta,m}=\sqrt Z|2\rangle+e^{-i\beta}
+ \left(\sqrt{2x}|+\rangle+(-1)^m\sqrt{2(c-x)}|-\rangle\right),
+\qquad \beta\in\mathbb R,\quad m\in\mathbb Z.
+\tag{OC.72}
+$$
+
+Choose $M\geq1$, distinct $x_1,\ldots,x_M$, and common parameters
+$d,L$ such that $d>0$, $0<L<\infty$ and $0<x_j<c-d$ for every $j$.
+The sole requested continuation is the relative control $(dt/L,0)$ on
+$[0,L]$. Its domain is $(0,c-d)$; at height $x_j$ its actual coordinate
+is $k_j(t)=x_j+dt/L$, and its old real phase lift is unchanged. Put
+
+$$
+\begin{aligned}
+s_j&=\frac{x_j}{x_j+d},& a_j&=\sqrt{s_j},\\
+b_j&=\sqrt{\frac{x_j(c-x_j-d)}{(x_j+d)(c-x_j)}},&
+D_j&=\operatorname{diag}_{(+,-,2)}
+ \left(\frac1{a_j},\sqrt{\frac{c-x_j-d}{c-x_j}},1\right),\\
+K_j&=a_jD_j=\operatorname{diag}_{(+,-,2)}(1,b_j,a_j).
+\end{aligned}
+\tag{OC.73}
+$$
+
+Thus $D_j\psi_{x_j,\beta,m}=\psi_{x_j+d,\beta,m}$, both vectors
+are normalized, and $\|D_j\|^2=1/s_j$. Proposition 17.2 supplies the
+complete canonical instrument for this request. In particular its success
+probability on every vector (OC.72) at height $x_j$ is $s_j$.
+The lower bounds below test only this actual orbit, rather than requiring
+arbitrary $M_3$ test preparations, recovery of the input, or a total
+legality guard.
+
+**Definition 24.2 (the entire incoming joint assistance).** At the live
+handoff the source-bearing assistance accessible to the processor is a
+density operator $\tau_j$ on one finite-dimensional Hilbert space $H$.
+For every actual history at height $x_j$ its marginal is this same $\tau_j$,
+independent of $\beta$ and of the whole signed integer $m$. Set
+$S_j=\operatorname{supp}\tau_j$ and $D=\dim H$; $\tau_j$ is strictly
+positive on $S_j$. A finite classical–quantum register is represented on
+$H=\bigoplus_y H_y$, with block-diagonal states and counted dimension
+$D=\sum_y\dim H_y$, including its classical alternatives.
+
+This is a joint premise. $H$ includes every accessible source-sensitive
+archive, programme description, controller and selector/update input,
+clock latch, calibration token, permission field, receiver share and
+environmental port that can supply history information during this
+operation. Equal or independent separate marginals do not imply the
+premise. Any additional source-bearing input changes it. A fixed
+index-independent blank and fixed common apparatus may instead be
+absorbed into the common operation. Public parameters and its common
+calibrated description do not reveal the actual $j$.
+
+An unread reference/archive $R$ can have an arbitrary actual joint
+extension $\omega_{j,\beta,m}^{HR}$ of $\tau_j$, and is acted on by
+identity throughout. It cannot select the operation or later act as a free
+programming port. Conditional on a fixed actual history the specimen is
+pure, so its joint state is
+$|\psi_{x_j,\beta,m}\rangle\langle\psi_{x_j,\beta,m}|
+\otimes\omega_{j,\beta,m}^{HR}$. No factorization between $H$ and
+$R$, and no accessible purification of $\tau_j$, is assumed.
+
+One common trace-nonincreasing CP success operation acts on the accessible
+specimen and $H$. All retained success flags, quantum records and discarded
+environments are included in a single successful dilation contraction
+$W:V\otimes H\longrightarrow\mathcal L\otimes E$, where
+$\mathcal L$ contains the output specimen. A fixed mixed blank can be
+purified in defining this proof dilation. No access to $E$ is thereby
+supplied. Require only that its unnormalized specimen output be
+
+$$
+p_j(\beta,m)|\psi_{x_j+d,\beta,m}\rangle
+                 \langle\psi_{x_j+d,\beta,m}|,
+\qquad p_j(\beta,m)\geq0,
+\tag{OC.74}
+$$
+
+for every $j,\beta,m$. Zero success is allowed; programme return and
+phase-independent success probabilities are not premises. Any implementation
+of the complete canonical instrument must satisfy (OC.74), with its
+prescribed probabilities $s_j$.
+
+**Theorem 24.3 (shared success dilation and support-mass inequality).**
+Under Definitions 24.1–24.2 there are linear maps $A_j:S_j\to E$ such that
+
+$$
+W(q\otimes u)=D_jq\otimes A_ju
+\quad(q\in V,\ u\in S_j),\qquad
+A_j^\dagger A_j\leq s_jI_{S_j}.
+\tag{OC.75}
+$$
+
+The probabilities in (OC.74) are consequently constants
+$p_j=\operatorname{tr}(\tau_jA_j^\dagger A_j)$, independent of
+$\beta,m$. For $j\ne k$ let $P_{jk}$ be the orthogonal projection
+onto $S_j\cap S_k$, regarded as a subspace of $H$. Then
+
+$$
+\begin{aligned}
+W\bigl(V\otimes(S_j\cap S_k)\bigr)&=0,\\
+p_j&\leq s_j\bigl(1-\operatorname{tr}(P_{jk}\tau_j)\bigr).
+\end{aligned}
+\tag{OC.76}
+$$
+
+In particular, identical supports at two distinct heights force zero exact
+success at both, even when their density operators differ. No commutativity,
+classical decoder or unambiguous measurement of the programmes is assumed.
+
+Proof. Fix $j,\beta,m$. Spectrally decompose $\tau_j$ on $S_j$.
+Project each corresponding successful dilation vector onto the specimen
+space perpendicular to $\psi_{x_j+d,\beta,m}$. By (OC.74), the sum
+of its squared projected norms, weighted by the strictly positive
+eigenvalues, is zero. Every projected vector is therefore zero. By
+linearity this holds for every $u\in S_j$, including when the success
+probability is zero. Hence
+
+$$
+W(\psi_{x_j,\beta,m}\otimes u)
+ =\psi_{x_j+d,\beta,m}\otimes r_\epsilon(z,u),
+\quad z=e^{-i\beta},\quad\epsilon=(-1)^m.
+\tag{OC.77}
+$$
+
+Here $r_\epsilon$ is uniquely determined by the $|2\rangle$ component,
+since $Z>0$. The left side is affine in $z$, so this component makes
+$r_\epsilon(z,u)=r_0(u)+z r_{1,\epsilon}(u)$ on the unit circle.
+The constant $r_0(u)$ comes from the same input
+$\sqrt Z|2\rangle\otimes u$ for both signs. The $|+\rangle$
+component of the right side is
+$z\sqrt{2(x_j+d)}(r_0(u)+zr_{1,\epsilon}(u))$.
+The left side has degree at most one. Comparing polynomial coefficients
+on the whole unit circle gives $r_{1,\epsilon}(u)=0$.
+Vector-valued coefficient comparison is justified by applying arbitrary
+continuous linear functionals; a scalar polynomial with infinitely many
+zeros is zero.
+
+Comparing the remaining constant and linear coefficients in (OC.77)
+now gives
+$W(|2\rangle\otimes u)=|2\rangle\otimes r_0(u)$ and
+
+$$
+W\left((\sqrt{2x_j}|+\rangle+
+ \epsilon\sqrt{2(c-x_j)}|-\rangle)\otimes u\right)
+=\left(\sqrt{2(x_j+d)}|+\rangle+
+ \epsilon\sqrt{2(c-x_j-d)}|-\rangle\right)\otimes r_0(u).
+$$
+
+The two signs both occur among actual signed histories. Adding and
+subtracting their identities gives (OC.75), with $A_ju=r_0(u)$.
+This depends linearly on $u$, as is also immediate from the $|2\rangle$
+component of $W$. These basis-vector evaluations are algebraic consequences
+for the same linear map, not additional preparations or observation access.
+Evaluation of contractivity on
+$|+\rangle\otimes u$ yields
+$\|A_ju\|^2/s_j\leq\|u\|^2$. Since $D_j$ sends each normalized
+input to its normalized target, taking the actual $\tau_j$ trace gives
+the probability formula and its independence.
+
+For $u\in S_j\cap S_k$, the common $|2\rangle$ image gives
+$A_ju=A_ku$. The common $|+\rangle$ image gives
+$A_ju/a_j=A_ku/a_k$. The numbers $a_j,a_k$ differ: if $x<y$ then
+
+$$
+\frac{y}{y+d}-\frac{x}{x+d}
+ =\frac{d(y-x)}{(x+d)(y+d)}>0.
+$$
+
+Thus $A_ju=A_ku=0$, proving the first part of (OC.76).
+On $S_j$, $A_j=A_j(I-P_{jk})$, so (OC.75) implies
+$A_j^\dagger A_j\leq s_j(I_{S_j}-P_{jk}|_{S_j})$.
+Tracing against $\tau_j$ proves the second part. This trace step uses
+positivity and does not require $P_{jk}$ to commute with $\tau_j$.
+$\square$
+
+## 25. Saturated rank-sum capacity and the conditional sector upper
+
+**Theorem 25.1 (algebraically independent mixed supports).** Under the
+same hypotheses, suppose $p_j=s_j$ for every $j$, as required by the
+canonical complete law. Then the sum of the support spaces is algebraically
+direct:
+
+$$
+\sum_{j=1}^M u_j=0,\quad u_j\in S_j
+ \quad\Longrightarrow\quad u_1=\cdots=u_M=0.
+\qquad
+D\geq\sum_{j=1}^M\operatorname{rank}\tau_j\geq M.
+\tag{OC.78}
+$$
+
+More precisely, on $H_0=\operatorname{span}_jS_j$ there is one common
+isometry $B:H_0\to E$, independent of $j$, such that
+
+$$
+A_j=a_jB|_{S_j},\qquad
+W(q\otimes u)=K_jq\otimes Bu
+\quad(q\in V,\ u\in S_j).
+\tag{OC.79}
+$$
+
+This is a statement about the total successful residue. It imposes no
+orthogonality requirement on the incoming $S_j$ and supplies no accessible
+inverse or physically returned programme.
+
+Proof. By (OC.75), $Q_j=s_jI_{S_j}-A_j^\dagger A_j$ is positive.
+Its expectation in the faithful state $\tau_j$ is $s_j-p_j=0$.
+In a positive-eigenvalue eigenbasis of $\tau_j$, this is a positive
+weighted sum of nonnegative diagonal entries of $Q_j$. Each is zero;
+equivalently $Q_j^{1/2}$ annihilates the whole basis. Thus
+$A_j^\dagger A_j=s_jI_{S_j}$.
+
+Define $B$ on $H_0$ by the $|+\rangle$ component of the one map $W$.
+For $u\in S_j$, (OC.75) says
+
+$$
+W(|+\rangle\otimes u)=|+\rangle\otimes Bu,
+\qquad Bu=A_ju/a_j.
+$$
+
+These identities extend to the span and make $B$ a contraction.
+The equality just proved makes it an isometry on each $S_j$.
+The positive operator $I_{H_0}-B^\dagger B$ has zero quadratic form
+on each such subspace. Its square root therefore annihilates each $S_j$,
+hence their span. Consequently $B^\dagger B=I_{H_0}$: the same $B$
+is an isometry globally, not only separately on the supports.
+This proves (OC.79).
+
+Let $C:H_0\to E$ be the $|2\rangle$ component of
+$W(|2\rangle\otimes\,\cdot\,)$. On $S_j$ it equals $A_j=a_jB$.
+Thus the single linear operator $T=B^\dagger C$ on $H_0$ satisfies
+$Tu=a_ju$ for every $u\in S_j$. All $a_j$ are distinct by the strict
+monotonicity in the proof of Theorem 24.3. If $\sum_j u_j=0$, apply
+$\prod_{k\ne j}(T-a_kI)$ to obtain
+
+$$
+\left(\prod_{k\ne j}(a_j-a_k)\right)u_j=0.
+$$
+
+The scalar is nonzero, so every $u_j=0$. The empty product for $M=1$
+is the identity. Taking dimensions proves (OC.78). No self-adjointness
+of $T$ was used; distinct eigenspaces are algebraically independent even
+when they are not orthogonal.
+
+Pairwise intersections alone would not justify (OC.78). The rays spanned
+by $(1,0)$, $(0,1)$ and $(1,1)$ in $\mathbb C^2$ have pairwise zero
+intersection, while $(1,0)+(0,1)-(1,1)=0$ is a nontrivial relation
+among them. Thus their sum is not direct. Theorem 25.1 excludes three
+such programmes for three distinct heights at their canonical success
+weights. The common contraction and its saturated plus direction are
+essential to the stronger conclusion. $\square$
+
+For an actual extension $\omega_{j,\beta,m}^{HR}$ of $\tau_j$,
+(OC.79) gives the unnormalized successful output in the dilation as
+
+$$
+s_j|\psi_{x_j+d,\beta,m}\rangle
+       \langle\psi_{x_j+d,\beta,m}|
+\otimes(B\otimes I_R)\omega_{j,\beta,m}^{HR}
+                         (B^\dagger\otimes I_R).
+\tag{OC.80}
+$$
+
+The extension is supported on $S_j\otimes R$: positivity and its
+vanishing marginal weight outside $S_j$ imply this. Thus every incoming
+assistance/reference correlation is preserved isometrically in the total
+residue on success. Tracing out an inaccessible part of $E$ need not
+preserve recoverability for an observer. Formula (OC.80) cannot be used
+as an accessible return or calibration service. It places no return
+condition on failure.
+
+**Proposition 25.2 (sharpness with supplied orthogonal sectors).** For
+every choice of positive integers $r_1,\ldots,r_M$, the incoming dimension
+bound $D\geq\sum_jr_j$ is attained conditionally by height records of
+ranks $r_j$ and a common ideal processor implementing the entire canonical
+time/five-mode instrument. This is the orthogonal controlled-instrument
+construction already available in §§17–20 and Quantum Carrier Minimum §8,
+with mixed states inside each sector. It assumes supplied source-bound
+sectors and calibrated operations; it does not acquire either.
+
+Proof. Take $H=\bigoplus_j\mathbb C^{r_j}$ with orthogonal projections
+$P_j$, and any state $\tau_j$ faithful on the $j$th sector. Put $v=d/L$
+and, as in (OC.57),
+
+$$
+f_j(t)=\frac{v x_j}{(x_j+vt)^2},\qquad
+g_j(t)=\frac{c}{c-x_j}f_j(t),\qquad 0<t\leq L.
+\tag{OC.81}
+$$
+
+Use success operator $\sum_j K_j\otimes P_j$. For failure mode $2$
+use the Kraus fields
+$\sqrt{f_j(t)}|f\rangle\langle2|\otimes P_j$;
+for each of modes $1,3$ use
+$\sqrt{g_j(t)/2}|f\rangle\langle-|\otimes P_j$.
+Modes $0,4$ have zero fields. The index $j$ in these fields can be
+discarded; the observed marks remain exactly the original mode and time.
+The identities (OC.58), sector by sector, make the total effects sum to
+$I_{V\otimes H}$. Integrating the fields over Borel time events gives
+the required countably additive CP measures.
+
+On an actual state supported in the $j$th sector these operations equal
+the prescribed specimen instrument tensor identity on that sector and on
+every unchanged reference. They therefore preserve the actual programme
+and its joint reference correlations, on success and on each failure
+branch of this particular construction. Failure has absorbing specimen
+$f$ and retains its first exact time/mode and old archive. Already stopped
+inputs use the declared stopped identity. The incoming dimension is
+$\sum_jr_j$, as claimed. This sufficient construction supplies no
+necessity of orthogonal sectors; Theorem 18.1 already permits nonorthogonal
+pure programmes for suitable two-height requests. $\square$
+
+## 26. One preparation, an interval of actual heights and a single tail
+
+**Proposition 26.1 (aligned original histories for the capacity consumer).**
+Take the same source and preparation as Proposition 21.1:
+$Z=1/2$, $c=1/4$, preparation height $a=1/8$, auxiliary rectangle height
+$u=1/16$, and common calibrated preparation phases where supplied.
+For every
+
+$$
+x\in[1/8,3/16],\qquad \beta\in\mathbb R,\qquad m\in\mathbb Z,
+$$
+
+there is an actual six-unit original history from that preparation whose
+conditional live specimen is $\psi_{x,\beta,m}$, whose residual real
+lift is $(\beta,\beta-\pi m,0,\beta-\pi m,\beta)$, and whose
+canonical live probability is
+
+$$
+\frac13\frac{a}{x}>0.
+\tag{OC.82}
+$$
+
+All these histories admit the same zero-relative-phase request of
+displacement $d=1/32$ over any common $L>0$. Its mathematical domain
+is $(0,7/32)$ and its tail probabilities have common lower bound $1/32$.
+The lower bounds of §§24–25 consequently apply to any actually delivered
+joint assistance satisfying Definition 24.2 at this live cut.
+
+Proof. Use a unit fixed-height phase leg of increment $2\pi m$, followed
+by the four unit-leg rectangle $a\to u\to a$ of phase height
+$B_{\beta,m}=8\beta-4\pi m$, then a unit zero-phase horizontal leg
+$a\to x$. These are exactly the signed source construction of
+Proposition 21.1, allowing the final horizontal endpoint to range over
+the displayed interval. For a direct residual check,
+
+$$
+\begin{aligned}
+w(a)&=(1/4,-1/4,0,-1/4,1/4),\\
+w(u)-w(a)&=(1/8,1/8,0,1/8,1/8),\\
+2\pi m w(a)+B_{\beta,m}(w(u)-w(a))
+ &=(\beta,\beta-\pi m,0,\beta-\pi m,\beta).
+\end{aligned}
+\tag{OC.83}
+$$
+
+The final horizontal leg adds no phase. The down/up rectangle has
+canonical survival
+$((c-a)/(c-u))(u/a)=(2/3)(1/2)=1/3$; its phase legs have survival one.
+The final increasing leg contributes $a/x$, including the waiting case
+$x=a$. This proves (OC.82). All prefix probabilities are at least
+$1/16$. Every control is continuous with finitely many affine pieces,
+hence satisfies both original regularity alternatives. Its phase variation
+is $2\pi|m|+2|8\beta-4\pi m|$, finite for each history. No common
+phase-variation budget contains this full signed family.
+
+The tail lies between $x$ and $x+1/32\leq7/32<c$; all five
+probabilities are at least $1/32$. It is lawful in both regularity
+alternatives and has finite speed $d/L$. Literal chronological
+concatenation preserves the old six-unit prefix, translates the relative
+phase by its actual old lift, and adds the transported integrals. It does
+not give $x,\beta,m$, the rectangle generator or its description to the
+processor. This proves the asserted actual-source and common-tail
+correspondence. $\square$
+
+**Corollary 26.2 (finite and interval capacity obstruction).** Suppose an
+actual acquisition at this live cut leaves the specimen in (OC.72) and
+delivers the complete joint handoff of Definition 24.2. Exact canonical
+continuation for $M$ distinct displayed heights requires
+$D\geq\sum_j\operatorname{rank}\tau_j\geq M$. No fixed finite $D$
+can support this exact continuation at every height of $[1/8,3/16]$ under
+that independence premise. For the three heights
+
+$$
+(x_1,x_2,x_3)=(1/8,5/32,3/16),\qquad
+(s_1,s_2,s_3)=(4/5,5/6,6/7),\qquad
+(b_1^2,b_2^2,b_3^2)=(3/5,5/9,3/7),
+\tag{OC.84}
+$$
+
+even three distinct pure programme rays in dimension two are insufficient.
+
+Proof. Proposition 26.1 supplies every tested phase and signed winding
+at each height with positive live probability and the same legal request.
+Apply Theorem 25.1. For an interval implementation apply it to a subset
+of $D+1$ distinct heights. The rational values in (OC.84) follow by
+substitution in (OC.73); in each case $s_j<1$ and $s_j>0$.
+$\square$
+
+The complete failure law is not replaced by (OC.84). Applying the credited
+CP densities (OC.57) to the actual orbit gives
+
+$$
+\begin{aligned}
+S_j(t)&=\frac{x_j}{x_j+vt},\qquad -S_j'(t)=f_j(t),\\
+\bigl(\Pr_j(\mathrm{fail},i,dt)\bigr)_{i=0}^4
+ &=(0,c,Z,c,0)f_j(t)\,dt.
+\end{aligned}
+\tag{OC.85}
+$$
+
+Indeed the middle input population is $Z$, while the minus population
+is $2(c-x_j)$, giving $Zf_j$ and
+$2(c-x_j)g_j/2=cf_j$ for each of modes $1,3$. Their sum is
+$(Z+2c)f_j=f_j$, so the total failure mass is $1-s_j$ and its
+integrated mode masses are $(0,c,Z,c,0)(1-s_j)$. This derives the
+ramp law from its CP maps, without extending the particular waveform
+example in Event Memory and Coarse Aliasing §3 by analogy.
+
+Every earlier failure retains its actual first time/mode, archive and
+absorbing $f$. Theorems 24.3–26.2 condition only on the positive-probability
+already-live cut. A later implementation cannot pay the loss in (OC.76)
+by silently adding failures: doing so changes the prescribed success mass
+and hence the complete joint instrument. These inequalities do not
+authorize an extra failure operation, reset, retry, reversal, extra copy,
+tomography or an accessible hidden Kraus index.
+
+## 27. Counted resources, attribution and the remaining acquisition boundary
+
+**Convention 27.1 (operation and resource scope).** The consumer in
+§§24–26 is one permitted common relative horizontal request on the same
+still-live specimen. All tested histories are from one actual preparation,
+base, source/epoch and aligned clock. The prescribed waveform generator,
+calibrated Kraus operations, blank resources and exact time/mode recorder
+are the additional ideal operation services of §§5.2 and 17; their
+mathematical specification supplies neither hardware nor a waveform sensor.
+Selection uses only actual retained inputs in $H$ and public common
+inputs. Any internal measurement or feedback is included in the single
+common CP operation with all its retained outputs.
+
+The request is partial: outside $(0,c-d)$ it has no executed original
+successor. No unknown-height rejection detector or total guard is added.
+A separately known permission or source mismatch has only its declared
+unexecuted rejection and controller update. Original failure has its
+executed time/mode and absorbing successor instead. No positive original
+control is executed from $f$. For $d=0$, a matching finite wait, including
+the zero-duration identity, imposes no height-capacity bound: all $a_j=1$
+and the distinct-eigenvalue argument does not apply. A positive $d$ with
+$L=0$ is not this continuous lawful request.
+
+| Resource | Exact allocation and boundary |
+| --- | --- |
+| Live specimen | The credited three-dimensional span $V$, with its original five-mode labels and stopped completion. It is an input separate from the programme dimension $D$; no new specimen compression minimum is asserted. |
+| Incoming accessible assistance | The whole $H$, of dimension $D=\sum_y\dim H_y$ in the finite classical–quantum case. All accessible history-bearing archives, source-bound programmes, clocks, calibration, controller/permission data, receiver shares and selection/update ports belong jointly here. A variable source-dependent installed programme is not common apparatus. |
+| Unread joint reference $R$ | Retained by identity and possibly correlated with $H$ and the history. Its exclusion from accessible assistance is an access premise, not a claim that it is absent or uncorrelated. Making it accessible changes the handoff and its counted resource. |
+| Successful residue $E$ | Includes every retained success output and the mathematical discarded environment. The isometry $B$ is global on this residue; it need not have a readable output or accessible inverse. Output residue dimension is not substituted for the incoming capacity bound. |
+| Public description and ideal services | The common candidate catalogue, $c,d,L$, basis, source convention, waveform generation, exact gates and recorder are fixed and conditional. The rational height example has a finite symbolic description; exact gates, real clocks, reference stability, parameter precision and exact time records have separate implementation and storage costs. |
+| Acquisition and complete archive | No procedure or finite cost for preparing, acquiring, source-binding or certifying $\tau_j$ is supplied. Exact nonatomic failure-time storage, the growing full archive, arithmetic, calibration work and physical hardware are not bounded by $\sum_j\operatorname{rank}\tau_j$. |
+
+These are exact finite-horizon assertions, with total witness duration
+$6+L$. The common positive margin is a property of the witness subclass,
+not a replacement for the full original `ValidBase` class, arbitrary
+finite durations, either original regularity alternative or all real lifts
+and signed windings. There is no noisy-programme bound, TV approximation,
+finite-shot law acquisition or unbounded-future error guarantee here.
+
+**Attribution 27.2 (source-specific deduction and mature ingredients).**
+The support-mass inequality, saturated rank-sum implication under actual
+orbit testing and interval application are `repo-derived` ordinary
+deductions. Their source and interfaces are the following public suppliers,
+read at `1f58736f50945c7cfeca93ce160eb9b46a3a7e7e`.
+
+| Supplier | Mathematical use and retained distinction |
+| --- | --- |
+| `FiniteRectangleTransport.lean`, `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`, and its owning Blueprint Scribe | Strict positive five-mode source and rectangle; the Scribe's all-sector application supplies the fixed-height signed leg. Formula (OC.83) instantiates these at one preparation, rather than crediting the rectangle declaration alone with all-sector synthesis. |
+| `OriginalControlComposition.lean`, `OriginalControl`, `FiniteC1Control`, `concatenate_original`, and its owning Blueprint Scribe | Both original regularities, finite and zero durations, literal prefix, matching height, translated real tail and additive integrals. No old lift or actuation permission is inferred. |
+| This volume §§4–5.2, 9–15, 17–22 | Actual orbit, known-height rigidity, full canonical success/failure instrument, classification and joint finite continuation are credited. Theorem 21.2 is the common-assistance special case. Theorem 18.1 supplies feasible nonorthogonal two-height programmes under its stronger full-$M_3$ testing contract; it does not acquire them. |
+| Parity Record Transport §§12–15; Reanchoring Boundaries §§2–7 | Equal-support parity helpers at a known height, actual live calibration records, and uncertain-height reanchoring have their stated distinct contracts. The new height-dependent mixed records are independent of phase and whole signed winding, and their target is a common relative horizontal canonical tail. No existing helper optimum or reanchoring obstruction is redelivered. |
+| Quantum Carrier Minimum §§1, 7–9 | Exact live carrier, known-anchor generated labels and already received command capacity remain distinct resource tasks. Their total-guard or common-recovery lower hypotheses are not assumed for Theorem 25.1. The controlled-sector upper remains conditional. |
+| Instrument Stability; Record Acquisition; Sampled Instrument Certificates; Event Memory and Coarse Aliasing | Existing stability, query bounds, finite-table certificates, actual-event memory and coarse-aliasing conclusions keep their own observation, regularity and sensor premises. No sample rate, sensor law, no-imprinting result or finite-timestamp theorem is asserted anew. |
+| Transport–Memory Completion §§2.9–2.12, 2.18 | Recovery still needs an actual common coherent port, aligned acquired readings, known nonzero amplitudes and known nonzero record overlap. Neither a height programme nor an isometry in a proof dilation supplies these inputs or divides out unknown overlap. |
+| Process Geometry §34; Atlas Stable Core Holonomy Theorem 6.3 | One actual joint source/epoch image, archives, references, permissions, domains/routes and full success/failure selector/update closure are required. Joint assistance marginals in Definition 24.2 do not establish their acquisition or the individually sufficient four recovery views. |
+
+Stinespring dilation, positivity of a pure marginal, contraction saturation
+and independence of distinct eigenspaces are mature mathematics used
+inside the proofs. The following primary references locate the transformation
+and support tools without transferring unavailable observation services.
+
+| Primary source | Applicable result and limit |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3 | `literature-attested`: deterministic pure-family transformations factor Gram matrices through positive environment Gram matrices; complete multi-probabilistic transformations sum positive outcome contributions. Source-dependent discarded environments are allowed. The continuous-orbit coefficient argument and mixed-height capacity are proved here; the paper supplies no source-bound acquired programme. |
+| T. Rudolph, R. W. Spekkens and P. S. Turner, [*Unambiguous discrimination of mixed states*, quant-ph/0303071v2](https://arxiv.org/html/quant-ph/0303071v2), §II, Eq. (1) and its kernel condition | `literature-attested`: an error-free conclusive POVM effect is supported in the competing state's kernel. Theorem 24.3 uses positivity and support geometry but does not assume that its processor discriminates the programmes. It therefore imports no unambiguous-discrimination optimum. |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | `literature-attested`: distinct exact deterministic unitaries on arbitrary data require orthogonal programmes. Those hypotheses differ from this dissipative original-orbit task. Algebraic directness in (OC.78) is not programme orthogonality. |
+| L. Leppäjärvi and M. Sedlák, [*Incompatibility of quantum instruments*, 2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | For its finite-dimensional, finite-outcome instruments, compatibility is characterized through postprocessing a complementary instrument. Such complementary access is a separate joint-operation premise. No complementary port, continuous-monitor construction or acquisition map is transferred here. |
+
+**Open boundary 27.3 (the original acquired observer).** Actual acquisition
+and certification of sufficient source-bound assistance from an arbitrary
+unknown original past on the same still-live branch remain unresolved.
+The hypothesis that the entire accessible $\tau_j$ is independent of
+$\beta,m$ is substantive. A genuinely phase- or winding-dependent joint
+archive, changing record-selected menus, an extra sensing service, a
+generator invariant or a different lawful mechanism requires its own
+source/action/successor proof; it cannot be omitted to apply this theorem.
+Theorem 24.3 also permits lower-success endpoint tasks when its bound is
+positive, but these do not thereby reproduce the prescribed full failure law.
+
+The rank-sum bound obstructs a finite independent handoff claiming this
+particular exact canonical continuation beyond its capacity. It neither
+rules out every nontrivial live action nor constructs an acquired observer.
+Full space/time/boundary/memory mutual recovery, the native stationary
+$\alpha/\beta$ memory-rate/effective-certification problem and the separate
+fixed-Hamiltonian quantum minimax retain their original unresolved bridges.
+No source/action/resource correspondence to C114, PCA, KBONACCI, twisted-ground
+or other different sources follows from dimensions or terminology. These
+ordinary results assert no worldwide originality, physical realization,
+new Lean certification or completion of that programme.
+
+## 追加锚（本行以下为增补区）
