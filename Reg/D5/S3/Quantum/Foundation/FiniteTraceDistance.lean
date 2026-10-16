@@ -129,7 +129,7 @@ def source_registration : Registration arena.{u,v}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace.{u,v})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{u,v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Foundation.FiniteTraceDistance.unit
   realizationName := `Reg.D5.S3.Quantum.Foundation.FiniteTraceDistance.source_registration
   realizationSource := none

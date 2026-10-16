@@ -72,7 +72,7 @@ def source_registration : Registration arena.{u,v}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@posSemidef_blockDiagonal.{u,v})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{u,v}) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.Blocks.unit
   realizationName :=
     .str `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.Blocks
@@ -168,7 +168,7 @@ def source_registration : Registration arena.{u,v,w}
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@partialTraceRight_smul.{u,v,w})
-      (Realization signature) Unit Unit := {
+      (Realization signature.{v,w}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.PartialTrace.unit
   realizationName :=
