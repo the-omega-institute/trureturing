@@ -11,6 +11,16 @@ internal sealed class TraceZeroReadoutOrthogonalEquivalenceDocument : IScribeDoc
         H("Trace-Zero Hermitian Readout Fibers"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("centered-hermitian-effect-has-zero-trace"),
+                DeclarationHandle.Create(
+                    "D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence.centered_effect_mem"),
+                H("Removing the scalar trace component gives a trace-zero Hermitian matrix"),
+                StatementSource.FromAuthor(CenteredEffectFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a Hermitian matrix on a nonempty finite index type, subtracting its trace divided by the dimension times the identity preserves Hermiticity and makes the trace zero. These two conditions are precisely membership in the real trace-zero Hermitian subspace. The formula expands both that membership and the centered matrix."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("trace-zero-hermitian-readout-residual-projection-equivalence"),
                 DeclarationHandle.Create(
                     "D5/S3/Quantum/Fibers/TraceZeroReadoutOrthogonalEquivalence."
@@ -36,6 +46,28 @@ internal sealed class TraceZeroReadoutOrthogonalEquivalenceDocument : IScribeDoc
                             + "real subtype. Matrix trace and complex-inner-product identities "
                             + "bridge its real pairing to the source's complex trace equation."))),
                 DescribeRole.Theorem))));
+
+    private static Formula Parenthesized(Formula value) => Seq(F.Open, value, F.Close);
+    private static Formula CenteredAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+
+    private static Formula CenteredEffectFormula()
+    {
+        var d = F.Id("d"); var e = F.Id("E");
+        var complex = Seq(Mathbb, Grp(F.Id("C")));
+        var matrix = Call("Matrix", d, d, complex);
+        var dimension = Parenthesized(Seq(Call("card", d), Colon, Sp, complex));
+        var identity = Parenthesized(Seq(D(1), Colon, Sp, matrix));
+        var centered = Subtract(e, Call("smul", new Formula.Fraction(Call("trace", e), dimension), identity));
+        var conclusion = new Formula.Logic(Call("IsHermitian", Parenthesized(centered)), FormulaLogicOperator.And,
+            Equal(Call("trace", Parenthesized(centered)), D(0)));
+        var implication = new Formula.Logic(Call("IsHermitian", e), FormulaLogicOperator.Implies, Parenthesized(conclusion));
+        return Disp(CenteredAll("d", Seq(F.Id("Type"), Star), Seq(
+            OpenBracket, Call("Fintype", d), CloseBracket, Sp,
+            OpenBracket, Call("Nonempty", d), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", d), CloseBracket, Sp,
+            CenteredAll("E", matrix, implication))));
+    }
 
     private static Formula Call(string name, params Formula[] arguments)
     {
