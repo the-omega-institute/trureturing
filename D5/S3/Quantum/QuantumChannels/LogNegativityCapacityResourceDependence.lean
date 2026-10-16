@@ -33,6 +33,7 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
+import D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.QuantumChannels.SchurChannelMixedUnitaryDistance
 open Matrix
@@ -181,9 +182,9 @@ private theorem conditionalNatural_positive (M : Matrix H H ℂ)
       ∑ a, ∑ b, M (e a) (e b) * σ (e b, f u) (e a, f v) := rfl
   have ht (i j : R) : partialTraceLeft ((M ⊗ₖ (1 : Matrix R R ℂ)) * σ) i j =
       ∑ a, ∑ b, M a b * σ (b, i) (a, j) := by
-    simp only [partialTraceLeft, Matrix.mul_apply, Fintype.sum_prod_type,
-      Matrix.kronecker_apply, Matrix.one_apply, mul_ite, mul_one, mul_zero,
-      ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    calc
+      _ = ∑ a, ∑ b, M b a * σ (a, i) (b, j) := conditionalNatural_apply M σ i j
+      _ = _ := Finset.sum_comm
   have he : partialTraceLeft ((M ⊗ₖ (1 : Matrix R R ℂ)) * σ) =
       (weighted (M.submatrix e e)
         (σ.submatrix (Equiv.prodCongr e f) (Equiv.prodCongr e f))).submatrix f.symm f.symm := by
@@ -843,8 +844,11 @@ section
 open Matrix D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Gap
 private theorem pure_trace_mass {I : Type*} [Fintype I] (v : I → ℂ) :
     (vecMulVec v (star v)).trace.re=(∑ i, ‖v i‖ ^ 2) := by
-  simp [Matrix.trace_vecMulVec,dotProduct,Complex.re_sum,Complex.star_def,
-    Complex.mul_conj,Complex.normSq_eq_norm_sq,← Complex.ofReal_pow]
+  have h := congrArg Complex.re
+    (D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.pure_trace
+      (WithLp.toLp 2 v : EuclideanSpace ℂ I))
+  simpa only [← Complex.ofReal_pow, Complex.ofReal_re,
+    EuclideanSpace.norm_sq_eq] using h
 private theorem product_mixed_gap (S T : Matrix (Fin 3) (Fin 3) ℂ)
     (hS : S.PosSemidef) (hT : T.PosSemidef) :
     S.trace.re*T.trace.re/6561 ≤ (P*(S⊗ₖT)).trace.re := by

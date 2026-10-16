@@ -14,7 +14,7 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
         H("Log-negativity capacity depends on the input resource"),
         Blocks(
             Node("extend", "Free local ancillary systems", ExtendFormula(),
-                "Section I, p. 2, verbatim: “Throughout, we assume that local ancilla (typically labelled as Hilbert space Ha′ ⊗ Hb′ ), local unitaries and classical communication are freely available as is appropriate in many communication and distributed computation scenarios.” The finite Kraus action of the extended channel uses identity Kraus factors on the ancillary pair, with Matrix.reindex ordering the cut as AA' versus BB'.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
+                "Section I, p. 2, verbatim: “Throughout, we assume that local ancilla (typically labelled as Hilbert space Ha′ ⊗ Hb′ ), local unitaries and classical communication are freely available as is appropriate in many communication and distributed computation scenarios.” The finite Kraus action is D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap.of_kraus applied to the two displayed families and rho. It uses identity Kraus factors on the ancillary pair, with Matrix.reindex ordering the cut as AA' versus BB'.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
             Node("capSep", "Separable-input entangling capacity", CapacityFormula(false),
                 "Section I, Eq. (1), p. 2, verbatim: “The maximum achievable entanglement for a dynamical map, Λ, when the initial state is separable, is given by:” The formula is E(Λ) = sup{E(Λ(σ))|σ ∈ S}. Eqs. (4)–(5) and the logarithmic rescaling use Real.logb 2 of the partial-transpose trace norm. The supremum in EReal includes every finite local ancilla dimension. IsDensity is positive semidefinite with trace one, and IsSeparable is a finite convex mixture of products of such matrices.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Campbell)),
             Node("capAssisted", "Assisted entangling capacity", CapacityFormula(true),
@@ -73,8 +73,11 @@ internal sealed class LogNegativityCapacityResourceDependenceDocument : IScribeD
         Formula e = Call("prodProdProdComm", Fin(V("dA")), Fin(V("dB")), Fin(V("a")), Fin(V("b")));
         Formula family = Lam("k", Fin(V("r")), Call("reindex", e, e,
             Kron(At(k, i), Cast(D(1), Sq(ProdType(Fin(V("a")), Fin(V("b"))))))));
+        Formula owner = Seq(Operatorname, Grp(V("D5"), Dot, V("S3"), Dot, V("Quantum"), Dot,
+            V("Foundation"), Dot, V("FiniteKrausChannel"), Dot, V("PhyslibLeaf"), Dot,
+            V("MatrixMap"), Dot, V("of")), Underscore, Grp(V("kraus")));
         return ChannelInputs(All("a", N, All("b", N, All("rho", Sq(InputType),
-            Eq(Call("extend", k, rho), At(Call("ofKraus", family, family), rho))))));
+            Eq(Call("extend", k, rho), At(At(owner, family, family), rho))))));
     }
     private static Formula ClaimFormula()
     {
