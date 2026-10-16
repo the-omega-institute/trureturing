@@ -29,7 +29,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open Matrix Module
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Kronecker
 
-private def blockEquiv (r a : Type*) [Fintype r] [DecidableEq r]
+def blockEquiv (r a : Type*) [Fintype r] [DecidableEq r]
     [Fintype a] [DecidableEq a] :
     CStarMatrix r r (CStarMatrix a a ℂ) ≃⋆ₐ[ℂ]
       CStarMatrix (r × a) (r × a) ℂ :=

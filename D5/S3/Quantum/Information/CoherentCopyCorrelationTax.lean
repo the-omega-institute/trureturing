@@ -23,10 +23,10 @@ open D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 namespace D5.S3.Quantum.Information.CoherentCopyCorrelationTax
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def copyIsometry : Matrix (n × n) n ℂ :=
+def copyIsometry : Matrix (n × n) n ℂ :=
   fun a i => if a.1 = a.2 then (1 : Matrix n n ℂ) a.1 i else 0
 
-private theorem copyIsometry_star_mul :
+theorem copyIsometry_star_mul :
     (copyIsometry (n := n))ᴴ * (copyIsometry (n := n)) = 1 := by
   ext i j
   simp [Matrix.mul_apply, copyIsometry, Fintype.sum_prod_type,
@@ -195,6 +195,5 @@ theorem coherent_copy_correlation_tax (rho : DensityState n) :
   have h := pinching_entropy_identity rho
   linarith
 
-#print axioms coherent_copy_correlation_tax
 
 end D5.S3.Quantum.Information.CoherentCopyCorrelationTax
