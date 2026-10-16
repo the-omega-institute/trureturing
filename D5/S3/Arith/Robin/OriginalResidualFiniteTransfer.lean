@@ -288,7 +288,7 @@ theorem weighted_floor_prefix_bound {h j m : ℕ} (hh : 0 < h) (hj : h ≤ j)
     exact (Nat.le_div_iff_mul_le (by omega)).mpr (by omega)
   have hterminal' : (j : ℝ) ≤ (j : ℝ) * (m / (j + 1) : ℕ) := by
     have ht : (1 : ℝ) ≤ (m / (j + 1) : ℕ) := by exact_mod_cast hterminal
-    nlinarith [Nat.cast_nonneg j]
+    nlinarith [show (0 : ℝ) ≤ (j : ℝ) from Nat.cast_nonneg j]
   have hid := weighted_floor_identity m hh (show h < j + 1 by omega)
   simp only [Nat.add_sub_cancel] at hid
   rw [hid]
@@ -421,7 +421,7 @@ theorem weightedVariation_firstMoment_bound {N h : ℕ} (hh : 0 < h) (hN : h ≤
       (Real.log ((N : ℝ) / h) + Real.log ((N : ℝ) / h) ^ 2 / 2) := by
   rcases lt_or_eq_of_le hN with hlt | rfl
   swap
-  · simp [weightedVariation, div_self (show (N : ℝ) ≠ 0 by positivity)]
+  · simp [weightedVariation, div_self (show (h : ℝ) ≠ 0 by positivity)]
   have hh' : (0 : ℝ) < h := by exact_mod_cast hh
   have hNp : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le hh hN)
   let A := mass N a
@@ -561,7 +561,8 @@ private theorem weighted_variation_bound {N h : ℕ} (hh : 0 < h) (hN : h < N)
   have huv : u ≤ v := by
     apply Real.log_le_log (div_pos (by exact_mod_cast (by omega : 0 < N))
       (by exact_mod_cast hh))
-    exact div_le_div_of_nonneg_right (by nlinarith [Nat.cast_nonneg N]) (by positivity)
+    exact div_le_div_of_nonneg_right
+      (by nlinarith [show (0 : ℝ) ≤ (N : ℝ) from Nat.cast_nonneg N]) (by positivity)
   have hshape : 0 ≤ u + u ^ 2 / 2 := by positivity
   have hbudget : 2 * (u + u ^ 2 / 2) ≤ 1 + 2 * u * (1 + v) := by
     nlinarith [mul_nonneg hu (sub_nonneg.mpr huv)]
