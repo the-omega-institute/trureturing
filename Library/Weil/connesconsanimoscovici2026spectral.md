@@ -3034,6 +3034,98 @@ weighted Cauchy and norm inequalities, without generic novelty or
 Lean verification. Actual full retained/cofinal positivity, the
 Robin tail estimate and RH remain unresolved.
 
+### Actual source excludes the fixed old-base rank-one lower update
+
+The [experimental consumers and directed packets](https://github.com/the-omega-institute/trureturing-experiments/tree/f9473a5b68a55eac2e3b3239939189d2fae36b24/docs/reports/weil-c27)
+separate an information obstruction from an actual-source exclusion.
+The error upper envelopes alone admit $\eta=t=0$. At that relaxed
+point, the cached finite energy gives
+$m_J-h-E_0+q_c>50.028372$, even with zero far action energy.
+Thus optimizing those unchanged envelopes cannot force a uniform
+negative upper. This relaxed point is not asserted to be realized by
+the original source.
+
+The actual nineteen-channel projection instead uses the cached
+$u_J=Mw$ and original weights to supply
+
+$$
+F_\phi=u_J^*W_JU_J,\qquad
+b_J=c-F_\phi A_\rho^{-1}\Beta_V.
+$$
+
+Only this missing functional evaluates the original channel shapes;
+the effective action, residuals, channel Gram/map and inverse actions
+are reused. The1024-bit projection takes15.924 seconds and gives
+$E_\phi=F_\phi A_\rho^{-1}F_\phi^*$ near115.345991300848898.
+All eighteen finite-row coordinates overlap the original transported
+expression $\widehat b+\eta Z$. Independent1536-bit projection
+has all79 exported intervals endpoint-identical.
+
+Let $\kappa=1+\rho=33/32$, $s=\|u_{\rm far}\|_W^2\ge0$ and
+$t=\kappa u_{\rm far}^*W_{\rm far}R_{\rm far}V$. For this SAME
+actual common source,
+
+$$
+\mathcal K=m_J-h+\kappa s-E_\phi,\qquad
+b=b_J+t,\qquad m_J=\|u_J\|_W^2.
+$$
+
+Put $q_J=b_J\Sigma_*^{-1}b_J^*$ and
+$g=\Sigma_*^{-1}b_J^*$. The full far Gram $G$, including its
+signed core and entire allowance, gives
+
+$$
+|t_0|^2\le\kappa^2sG_{00},\qquad
+|tg|^2\le\kappa^2s\,g^*Gg.
+$$
+
+Using the same one-negative decomposition of $\Sigma_*^{-1}$,
+retaining the negative far square and discarding only the
+nonnegative positive-complement square, yields
+
+$$
+\mathcal K+\Gamma+q
+\ge m_J-h-E_\phi+q_J+A s-2B\sqrt{s},
+$$
+
+$$
+A=\kappa-\kappa^2G_{00}/(-a)>0.7772979,\qquad
+B=\kappa\sqrt{g^*Gg}.
+$$
+
+The saved exact seventeen-dimensional inverse supplies a new profile
+for $b_J$, with residual-energy ceiling below $1.316\cdot10^{-55}$.
+It encloses $q_J$ in $(-120.742435,-120.742434)$. The accepted
+far trace pays the new gradient remainder, without a new inverse,
+solve or trace calculation. Writing the same saved error Gram as
+$C_t=\kappa^2E_M^0G$ and using the saved positive lower for $E_M^0$
+gives $B^2/A<10.153002$.
+
+Completing the square in $\sqrt{s}$, and using $\Gamma\ge0$, gives
+under the inherited actual common-form/domain, inverse/comparison
+and sound-cache premises
+
+$$
+m_J-h-E_\phi+q_J>48.450729,\qquad
+\boxed{\mathcal K+\Gamma+q>38.297727.}
+$$
+
+The new1024-bit joint contractions take0.108 seconds. For every
+positive $D\ge\mathcal K$, the scalar $D+\Gamma+q$ is consequently
+strictly positive. The accepted one-negative-core criterion excludes
+PSD of $L_*+\mathcal B^*\mathcal B/D$ for this fixed OLD base $L_*$
+and fixed saved dyadic dual $w$. This exclusion uses only
+nonnegativity of the good-block inverse metric.
+
+The stronger base $Q-R^*\overline W R$, other dual directions and
+other lower constructions are outside this exclusion. Actual $S_N$
+can dominate this non-PSD lower bound and remain positive. The
+calculation supplies no actual $S_N$ negativity or RH counterexample.
+Actual full retained/cofinal positivity, the Robin tail and RH remain
+unresolved. These are applications of existing residual certification,
+weighted Cauchy and square completion, without generic novelty or
+Lean verification.
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
