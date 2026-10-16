@@ -172,8 +172,8 @@ def analyze (request : Json) : Except String Json := do
     let taskSet : Finset (Fin tables.size) := {taskIndex}
     -- Unresolved pairs at a layer that the task readout separates.
     let conflictsAt := fun position =>
-      (catalog.generatedKernel (selectedAt position)).edgeCapture
-        (catalog.generatedKernel (selectedAt position ∪ taskSet))
+      let withTask : Finset (Fin tables.size) := selectedAt position ∪ taskSet
+      (catalog.generatedKernel (selectedAt position)).edgeCapture (catalog.generatedKernel withTask)
     let conflicts := conflictsAt additions.size
     let sufficient := projectionRefinesB (catalog.generatedKernel (selectedAt additions.size))
       (catalog.generatedKernel taskSet)
