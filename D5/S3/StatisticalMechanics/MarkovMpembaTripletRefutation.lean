@@ -130,4 +130,105 @@ private theorem block_action (r : ℝ) (hr : 0 < r) :
       Matrix.cons_val_two, Matrix.cons_val_three, Fin.reduceFinMk, Fin.ofNat, Fin.succ, Fin.mk.injEq] <;>
     field_simp <;> ring
 
+private noncomputable def q (r x : ℝ) : ℝ :=
+  x^2 - (block r 0 0 + block r 1 1)*x +
+    block r 0 0 * block r 1 1 - block r 0 1 * block r 1 0
+
+private theorem block_bounds (r : ℝ) (hr : 0 < r) :
+    block r 0 0 + block r 1 1 < -4 ∧ 0 < q r (-2) ∧ 0 < q r (-1) := by
+  have hd : 256*r+273 ≠ 0 := ne_of_gt (by positivity)
+  have ht : block r 0 0 + block r 1 1 =
+      (-50823168*r^2-60948224*r-9618245)/(7680*(256*r+273)) := by
+    simp only [block.eq_1]
+    norm_num
+    field_simp
+    ring
+  have hq2 : q r (-2) =
+      (6914360475648*r^4+14183493009408*r^3+7535913889792*r^2+
+        274800737600*r+4382303125)/(960000*(256*r+273)^2) := by
+    simp only [q.eq_1, block.eq_1]
+    norm_num
+    field_simp
+    ring
+  have hq1 : q r (-1) =
+      (274752*r+59225)*(12582912*r^3+26058752*r^2+14458848*r+995875)/
+        (480000*(256*r+273)^2) := by
+    simp only [q.eq_1, block.eq_1]
+    norm_num
+    field_simp
+    ring
+  rw [ht, hq2, hq1]
+  refine ⟨?_, by positivity, by positivity⟩
+  apply (div_lt_iff₀ (by positivity)).2
+  nlinarith [sq_nonneg r]
+
+private theorem root_bound (r x : ℝ) (hr : 0 < r) (hx : q r x = 0) : x < -2 := by
+  obtain ⟨ht, hq2, _⟩ := block_bounds r hr
+  by_contra hn
+  have hp : 0 ≤ (x+2)*(x-2-(block r 0 0+block r 1 1)) :=
+    mul_nonneg (by linarith) (by linarith)
+  simp only [q.eq_1] at hx hq2
+  nlinarith
+
+private theorem kernel_coordinates (r : ℝ) (v : Fin 4 → ℝ)
+    (hs : dotProduct (fun _ : Fin 4 => (1 : ℝ)) v = 0)
+    (hf : dotProduct (f r) v = 0) :
+    v = (-v 2/3) • k1 + (-v 3/15) • k2 := by
+  simp only [dotProduct, Fin.sum_univ_four, one_mul] at hs
+  norm_num [dotProduct, Fin.sum_univ_four, f.eq_1, g.eq_1,
+    Matrix.cons_val_two, Matrix.cons_val_three] at hf
+  ext i
+  fin_cases i <;> norm_num [k1.eq_1, k2.eq_1, Matrix.cons_val_two, Matrix.cons_val_three]
+  · linear_combination hs - hf - mean r*hs
+  · linear_combination hf + mean r*hs
+  all_goals rfl
+
+private theorem real_spectrum (r : ℝ) (hr : 0 < r) (x : ℝ) (v : Fin 4 → ℝ)
+    (hv : v ≠ 0) (he : Matrix.mulVec (M r) v = x • v) : x = 0 ∨ x ≤ -1 := by
+  by_cases hx : x = 0
+  · exact Or.inl hx
+  by_cases hm : x = -1
+  · exact Or.inr hm.le
+  obtain ⟨h1, hf, _⟩ := eigen_identities r hr
+  have hs : dotProduct (fun _ : Fin 4 => (1 : ℝ)) v = 0 := by
+    have h := congrArg (dotProduct (fun _ : Fin 4 => (1 : ℝ))) he
+    rw [Matrix.dotProduct_mulVec, h1, dotProduct_smul] at h
+    simp only [zero_dotProduct, smul_eq_mul] at h
+    exact (mul_eq_zero.mp h.symm).resolve_left hx
+  have hfv : dotProduct (f r) v = 0 := by
+    have h := congrArg (dotProduct (f r)) he
+    rw [Matrix.dotProduct_mulVec, hf, smul_dotProduct, dotProduct_smul] at h
+    simp only [smul_eq_mul] at h
+    have hn : x+1 ≠ 0 := by intro hh; apply hm; linarith
+    apply (mul_eq_zero.mp (show (x+1)*dotProduct (f r) v = 0 by linarith)).resolve_left hn
+  have hc := kernel_coordinates r v hs hfv
+  have hn : (![(-v 2/3), (-v 3/15)] : Fin 2 → ℝ) ≠ 0 := by
+    intro hh
+    have h2 := congrFun hh 0
+    have h3 := congrFun hh 1
+    norm_num at h2 h3
+    apply hv
+    rw [hc]
+    have hv2 : v 2 = 0 := by linarith
+    have hv3 : v 3 = 0 := by linarith
+    simp only [hv2, hv3, neg_zero, zero_div, zero_smul, add_zero]
+  obtain ⟨hk1, hk2⟩ := block_action r hr
+  rw [hc, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, hk1, hk2] at he
+  have he2 := congrFun he 2
+  have he3 := congrFun he 3
+  norm_num [k1.eq_1, k2.eq_1, Matrix.cons_val_two, Matrix.cons_val_three] at he2 he3
+  have hz : Matrix.mulVec (block r - x • (1 : Matrix (Fin 2) (Fin 2) ℝ))
+      ![-v 2/3, -v 3/15] = 0 := by
+    ext i
+    fin_cases i <;>
+      norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.sub_apply,
+        Matrix.smul_apply, Matrix.one_apply] <;> linarith
+  have hd := Matrix.exists_mulVec_eq_zero_iff.mp ⟨_, hn, hz⟩
+  have hq : q r x = 0 := by
+    rw [Matrix.det_fin_two] at hd
+    norm_num [Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply] at hd
+    simp only [q.eq_1]
+    nlinarith [hd]
+  exact Or.inr (le_trans (root_bound r x hr hq).le (by norm_num))
+
 end D5.S3.StatisticalMechanics.MarkovMpembaTripletRefutation
