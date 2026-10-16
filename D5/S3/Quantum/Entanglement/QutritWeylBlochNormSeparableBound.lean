@@ -385,7 +385,7 @@ private lemma phase_norm_sq (x y : ℝ) :
   rw [hs]
   ring
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 1113682 in
 -- The 81 coefficient identities expand finite sums and complex powers.
 private lemma violation_coefficients (i j k l : Fin 3) :
     bloch violationMatrix i j k l =

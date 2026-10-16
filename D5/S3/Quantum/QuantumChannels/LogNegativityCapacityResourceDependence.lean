@@ -31,7 +31,7 @@ Escape audit unfinished for the supporting owner theorems: https://github.com/th
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 -/
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
-import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity
 import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 import D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
@@ -51,17 +51,18 @@ set_option maxHeartbeats 4000000
 section
 namespace D5.S3.Quantum.QuantumChannels.LogNegativityCapacityResourceDependence.Gap
 variable {I J : Type*} [Fintype I] [Fintype J]
-private theorem row_cauchy (u v : I → ℂ) :
-    ‖∑ i, u i * v i‖ ^ 2 ≤ (∑ i, ‖u i‖ ^ 2) * (∑ i, ‖v i‖ ^ 2) := by
-  have h := norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 (star u) : EuclideanSpace ℂ I)
-    (WithLp.toLp 2 v : EuclideanSpace ℂ I)
-  have hs := pow_le_pow_left₀ (norm_nonneg _) h 2
-  simpa [EuclideanSpace.norm_sq_eq, mul_pow, PiLp.inner_apply,
-    RCLike.inner_apply, Pi.star_apply, dotProduct, mul_comm] using hs
+open scoped Matrix.Norms.Frobenius in
 private theorem frobenius_mulVec (D : Matrix I J ℂ) (x : J → ℂ) :
     (∑ i, ‖(D *ᵥ x) i‖ ^ 2) ≤ (∑ i, ∑ j, ‖D i j‖ ^ 2) * (∑ i, ‖x i‖ ^ 2) := by
-  rw [Finset.sum_mul]
-  exact Finset.sum_le_sum fun i _ => row_cauchy (D i) x
+  have h := Matrix.frobenius_norm_mul D (Matrix.replicateCol Unit x)
+  have he : D * Matrix.replicateCol Unit x = Matrix.replicateCol Unit (D *ᵥ x) := rfl
+  rw [he, Matrix.frobenius_norm_replicateCol, Matrix.frobenius_norm_replicateCol] at h
+  have hs := pow_le_pow_left₀ (norm_nonneg _) h 2
+  rw [mul_pow, EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq] at hs
+  convert hs using 1
+  congr 1
+  simp only [Matrix.frobenius_norm_def, Real.rpow_two, ← Real.sqrt_eq_rpow]
+  rw [Real.sq_sqrt (Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _)]
 variable [DecidableEq I]
 private theorem inverse_frame_bound (C D : Matrix I I ℂ) (hDC : D*C=1)
     (hD : (∑ i, ∑ j, ‖D i j‖ ^ 2) ≤ 9) (x : I → ℂ) :
@@ -224,17 +225,23 @@ private theorem conditional_positive (M : Matrix (A × B) (A × B) ℂ)
   exact conditionalNatural_positive M _ hM (hσ.submatrix _)
 private theorem separable_ppt (σ : Matrix (A×B) (A×B) ℂ) (hσ : IsSeparable σ) :
     Matrix.PosSemidef (fun i j : A × B => σ (i.1,j.2) (j.1,i.2)) := by
-  obtain ⟨n,p,S,T,hp,_,hST,hσ⟩ := hσ
-  rw [hσ]
-  have he : (fun i j : A × B => (∑t,(p t : ℂ) • (S t ⊗ₖ T t)) (i.1,j.2) (j.1,i.2))=
-      ∑t,(p t : ℂ) • (S t ⊗ₖ (T t).transpose) := by
-    ext i j
-    simp [Matrix.sum_apply,Matrix.smul_apply,Matrix.kronecker_apply]
-  rw [he]
-  apply Matrix.posSemidef_sum
-  intro t _
-  exact ((hST t).1.1.kronecker (hST t).2.1.transpose).smul
-    (by simpa [Complex.nonneg_iff] using hp t)
+  let a := (Fintype.equivFin A).symm
+  let b := (Fintype.equivFin B).symm
+  let e := Equiv.prodCongr a b
+  have hc : D5.S3.Resource.CompositeCones.separableCone (σ.submatrix e e) := by
+    obtain ⟨n,p,S,T,hp,_,hST,rfl⟩ := hσ
+    refine ⟨n, (fun t => (p t : ℂ) • (S t).submatrix a a),
+      (fun t => (T t).submatrix b b), ?_, ?_⟩
+    · intro t
+      exact ⟨((hST t).1.1.submatrix _).smul (by simpa [Complex.nonneg_iff] using hp t),
+        (hST t).2.1.submatrix _⟩
+    · ext i j
+      simp [Matrix.submatrix_apply, Matrix.sum_apply, Matrix.smul_apply,
+        Matrix.kronecker_apply, e, Equiv.prodCongr_apply, mul_assoc]
+  have ht := D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitMaximumPurity.separableCone_partialTranspose_posSemidef hc
+  have hh := ht.submatrix e.symm
+  convert hh using 1 <;> ext i j <;>
+    simp [partialTranspose, Matrix.submatrix_apply, e, Equiv.prodCongr_apply, mul_assoc]
 private theorem conditional_ppt (M : Matrix (A×B) (A×B) ℂ)
     (σ : Matrix ((A×X)×(B×Y)) ((A×X)×(B×Y)) ℂ)
     (hM : Matrix.PosSemidef (fun i j : A × B => M (i.1,j.2) (j.1,i.2))) (hσ : IsSeparable σ) :

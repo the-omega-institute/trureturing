@@ -75,7 +75,7 @@ The Tiles complementary projector Q is positive under partial transpose. The inp
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.extend`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/LogNegativityCapacityResourceDependence.result`
-- Dependency: [D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation](../Dynamics/KickedIsingNegativityRefutation.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitMaximumPurity](../Entanglement/AbsolutePPT/QuadbitMaximumPurity.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GHZMeasureBiseparableBound](../Entanglement/GHZMeasureBiseparableBound.md)
 - Dependency: [D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth](../Entanglement/UniversalReplacementCapacityGrowth.md)
 - Dependency: [D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction](../Information/SeparableStateLocalUnitaryStabilizerObstruction.md)
