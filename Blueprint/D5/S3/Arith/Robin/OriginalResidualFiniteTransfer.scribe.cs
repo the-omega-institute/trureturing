@@ -13,6 +13,11 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
+    private static DocumentBlock Helper(string name, string title, string text) =>
+        Describe.Lean(DescribeId.Create("original-residual-" + name.Replace("_", "-")),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The unchanged finite Mobius floor response admits an explicit residual transfer with both moments, weighted floor variation and exact prefix payments.",
         H("Finite Transfer of the Original Mobius Floor Residual"),
@@ -53,6 +58,39 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 "For every N,q,a,F, Z=replacement(N,q,a,F)="
                 + "-sum(q+1<=k<N,(F(k)+2)*J(k))/log N. The +2 pays a literal -2 "
                 + "in a supplied spectral prefix and is not absorbed into an endpoint."),
+            Def("centered", "The nonzero integer mean",
+                "For all natural d,m, centered(d,m)=(m mod d)/d-(d-1)/(2*d). For d>=1 "
+                + "the subtracted mean is the exact average on integer residues, including residue zero."),
+            Helper("centered_floor", "The original quotient decomposition",
+                "For every natural d>0 and m, floor(m/d)=m/d-centered(d,m)-(d-1)/(2*d), "
+                + "where the quotient on the left is natural division and the other quotient is real."),
+            Helper("variation_nonneg", "Nonnegative complete variation",
+                "For every natural N and arbitrary real sequence a, variation(N,a)>=0, "
+                + "including both endpoint absolute values and the entire interior difference sum."),
+            Helper("centered_pair_variation_bound", "Centered pairing with both jumps",
+                "For natural N,d with N>0 and d>0 and every real sequence a, "
+                + "abs(sum(N<=m<2N,a(m)*centered(d,m)))<=d*variation(N,a). "
+                + "No moment condition is needed. The same periodic primitive and summation-by-parts "
+                + "proof supply the two-moment floor bound and the full positive mean remainder."),
+            Helper("reciprocal_log_step", "Reciprocal logarithmic step",
+                "For every natural k>0, 1/(k+1)<=log(k+1)-log(k)."),
+            Helper("weighted_floor_bound", "Weighted original floor count",
+                "For natural N,h,m with 0<h<N and m<2*N, "
+                + "sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))<=2*N*(1+log(2*N/h)). "
+                + "The proof keeps the exact terminal floor before taking its upper bound."),
+            Helper("log_bounds", "Logarithms on the finite divisor range",
+                "For natural N,d with 0<d<=N, 0<=log(N/d)<=log(N)."),
+            Helper("weighted_log_step", "Weighted logarithmic step",
+                "For every natural k>0, k*(log(k+1)-log(k))<=1."),
+            Helper("prefix_bound", "Absolute actual Mobius prefix",
+                "For every natural q, abs(M(q))<=q, with every original Mobius index retained."),
+            Helper("sum_indices", "Exact finite integer sum",
+                "For every natural q, sum(1<=d<=q,d)=q*(q+1)/2 as a real identity."),
+            Helper("prefix_error_bound", "Shared error for an arbitrary finite difference",
+                "For natural N,h with h>0, arbitrary real arrays D,F and real e,c with c>=0, "
+                + "if abs(F(k)-M(k))<=e*k+c for h<=k<N, then "
+                + "abs(sum(h<=k<N,(F(k)-M(k))*D(k)))<=(e+c/h)*sum(h<=k<N,k*abs(D(k))). "
+                + "The statement needs no sign condition on D or vanishing moments."),
             Describe.Lean(DescribeId.Create("original-residual-finite-transfer"),
                 DeclarationHandle.Create(Prefix + "originalResidual_finite_transfer"),
                 H("The finite two-moment transfer"), StatementSource.FromAuthor(TransferFormula()),

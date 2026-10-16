@@ -126,7 +126,139 @@ Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.replacement`
 
 For every N,q,a,F, Z=replacement(N,q,a,F)=-sum(q+1<=k<N,(F(k)+2)*J(k))/log N. The +2 pays a literal -2 in a supplied spectral prefix and is not absorbed into an endpoint.
 
-**Theorem 1.11 (The finite two-moment transfer).**
+**Definition 1.11 (The nonzero integer mean).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered`
+
+*Formalization.* `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural d,m, centered(d,m)=(m mod d)/d-(d-1)/(2*d). For d>=1 the subtracted mean is the exact average on integer residues, including residue zero.
+
+**Theorem 1.12 (The original quotient decomposition).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_floor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_floor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d>0 and m, floor(m/d)=m/d-centered(d,m)-(d-1)/(2*d), where the quotient on the left is natural division and the other quotient is real.
+
+**Theorem 1.13 (Nonnegative complete variation).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N and arbitrary real sequence a, variation(N,a)>=0, including both endpoint absolute values and the entire interior difference sum.
+
+**Theorem 1.14 (Centered pairing with both jumps).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural N,d with N>0 and d>0 and every real sequence a, abs(sum(N<=m<2N,a(m)*centered(d,m)))<=d*variation(N,a). No moment condition is needed. The same periodic primitive and summation-by-parts proof supply the two-moment floor bound and the full positive mean remainder.
+
+**Theorem 1.15 (Reciprocal logarithmic step).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.reciprocal_log_step`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.reciprocal_log_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural k>0, 1/(k+1)<=log(k+1)-log(k).
+
+**Theorem 1.16 (Weighted original floor count).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_floor_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_floor_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural N,h,m with 0<h<N and m<2*N, sum(h<=k<N,k*(floor(m/k)-floor(m/(k+1))))<=2*N*(1+log(2*N/h)). The proof keeps the exact terminal floor before taking its upper bound.
+
+**Theorem 1.17 (Logarithms on the finite divisor range).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.log_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.log_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural N,d with 0<d<=N, 0<=log(N/d)<=log(N).
+
+**Theorem 1.18 (Weighted logarithmic step).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_log_step`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_log_step` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural k>0, k*(log(k+1)-log(k))<=1.
+
+**Theorem 1.19 (Absolute actual Mobius prefix).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural q, abs(M(q))<=q, with every original Mobius index retained.
+
+**Theorem 1.20 (Exact finite integer sum).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.sum_indices`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.sum_indices` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural q, sum(1<=d<=q,d)=q*(q+1)/2 as a real identity.
+
+**Theorem 1.21 (Shared error for an arbitrary finite difference).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_error_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_error_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural N,h with h>0, arbitrary real arrays D,F and real e,c with c>=0, if abs(F(k)-M(k))<=e*k+c for h<=k<N, then abs(sum(h<=k<N,(F(k)-M(k))*D(k)))<=(e+c/h)*sum(h<=k<N,k*abs(D(k))). The statement needs no sign condition on D or vanishing moments.
+
+**Theorem 1.22 (The finite two-moment transfer).**
 
 $$\forall N,q\in \mathbb{N},\forall a,F\in \mathbb{R}^{\mathbb{N}},\forall e,c\in \mathbb{R},3\le N\land q\le N-2\land 0\le e\land 0\le c\land \sum_{m= N}^{2\cdot N-1} \operatorname{a}\left(m\right) = 0\land \sum_{m= N}^{2\cdot N-1} m\cdot \operatorname{a}\left(m\right) = 0\land (\forall k\in \mathbb{N},(q+1)\le k< N\Rightarrow \lvert \operatorname{F}\left(k\right)-\operatorname{M}\left(k\right)\rvert \le e\cdot k+c)\Rightarrow \lvert \operatorname{E}\left(N, a\right)-\operatorname{Z}\left(N, q, a, F\right)\rvert \le \frac{e+\frac{c}{(q+1)}}{\operatorname{log}\left(N\right)}\cdot N\cdot \operatorname{A}\left(N, a\right)\cdot (1+2\cdot \operatorname{log}\left(\frac{N}{(q+1)}\right)\cdot (1+\operatorname{log}\left(\frac{2\cdot N}{(q+1)}\right)))+(q+1)\cdot (\frac{3\cdot q}{2}+2)\cdot \operatorname{V}\left(N, a\right)$$
 
@@ -150,15 +282,26 @@ The case q=0 has empty low prefix; the case q=N-2 has one high term. Zero e,c,A 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_floor`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.centered_pair_variation_bound`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.coefficient`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.floorPair`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logDifference`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.logPair`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.log_bounds`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.mass`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.originalResidual_finite_transfer`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.prefix_error_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.reciprocal_log_step`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.replacement`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.residual`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.response`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.sum_indices`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.variation_nonneg`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weightedVariation`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_floor_bound`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualFiniteTransfer.weighted_log_step`
 - Dependency: [D5/S3/Arith/Robin/ActualOddMobiusFinitePairing](ActualOddMobiusFinitePairing.md)
