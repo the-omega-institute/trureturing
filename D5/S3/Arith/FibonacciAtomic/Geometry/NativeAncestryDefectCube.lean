@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.AncestorAreaInterval
 import D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity
+import D5.S3.Arith.FibonacciAtomic.ActualHistorySingleHoleRecovery
 import D5.S3.Arith.FibonacciAtomic.SourceCoordinates.NativeRotationDepthGap
 import D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -49,17 +50,6 @@ private theorem coordinate_list_length (t : Source) : (coordinates t).length = t
         FreeMagma.length]
       omega
 
-private theorem plug_length (C : OutputContext) (x : Source) :
-    (C.plug x).length = C.outsideLeaves + x.length := by
-  induction C with
-  | hole => simp [OutputContext.plug, OutputContext.outsideLeaves]
-  | left C r ih =>
-      simp only [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length]
-      omega
-  | right l C ih =>
-      simp only [OutputContext.plug, OutputContext.outsideLeaves, FreeMagma.length]
-      omega
-
 private theorem equal_length_coordinate_splice
     (C : OutputContext) (x y : Source) (hxy : x.length = y.length) :
     ∃ L R : List ℕ,
@@ -73,7 +63,8 @@ private theorem equal_length_coordinate_splice
   | left C r ih =>
       obtain ⟨L, R, hx, hy, hL⟩ := ih x y hxy
       have hlen : (C.plug x).length = (C.plug y).length := by
-        rw [plug_length, plug_length, hxy]
+        rw [ActualHistorySingleHoleRecovery.context_length,
+          ActualHistorySingleHoleRecovery.context_length, hxy]
       let Q : List ℕ := R ++ [(C.plug x).length * r.length] ++ coordinates r
       refine ⟨L, Q, ?_, ?_, ?_⟩
       · simp only [OutputContext.plug, coordinates, Q, hx, List.append_assoc]
@@ -82,7 +73,8 @@ private theorem equal_length_coordinate_splice
   | right l C ih =>
       obtain ⟨L, R, hx, hy, hL⟩ := ih x y hxy
       have hlen : (C.plug x).length = (C.plug y).length := by
-        rw [plug_length, plug_length, hxy]
+        rw [ActualHistorySingleHoleRecovery.context_length,
+          ActualHistorySingleHoleRecovery.context_length, hxy]
       let P : List ℕ := coordinates l ++ [l.length * (C.plug x).length] ++ L
       refine ⟨P, R, ?_, ?_, ?_⟩
       · simp only [OutputContext.plug, coordinates, P, hx, List.append_assoc]
@@ -747,11 +739,6 @@ private theorem intrinsic_volume (t : Source) :
   rw [hset, MeasureTheory.Measure.addHaar_smul_of_nonneg MeasureTheory.volume
     (Real.sqrt_nonneg 2), b.volume_parallelepiped, mul_one, direction_dimension]
 
-private theorem volume_power (k : ℕ) : (Real.sqrt 2) ^ k = (2:ℝ) ^ ((k:ℝ)/2) := by
-  rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0:ℝ) ≤ 2)]
-  congr 1
-  ring
-
 private theorem diameter_exact (t : Source) :
     Metric.diam (areaVertices t : Set (EuclideanSpace ℝ (Fin (t.length-1)))) =
       Real.sqrt (2 * ((positions t).card : ℝ)) := by
@@ -854,7 +841,8 @@ theorem native_area_cube (n : ℕ) (hn : 3 ≤ n) :
     rw [real_inner_self_eq_norm_sq, if_pos rfl] at he
     nlinarith [Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2), Real.sqrt_nonneg 2,
       norm_nonneg (gapVector (T n).length (offset (T n) p.val))]
-  · rw [intrinsic_volume,volume_power,hc]
+  · rw [intrinsic_volume, ← Real.rpow_natCast,
+      ← Real.rpow_div_two_eq_sqrt _ (by norm_num : (0:ℝ) ≤ 2), hc]
 
 private theorem endpoint_distance (t : Source) :
     dist (areaVector t.length (variant t ∅))
