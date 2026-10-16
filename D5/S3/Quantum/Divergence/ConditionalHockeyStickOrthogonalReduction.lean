@@ -26,7 +26,7 @@ open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 set_option linter.unusedDecidableInType false in
 set_option linter.unusedFintypeInType false in
-theorem posSemidef_blockDiagonal' {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem posSemidef_blockDiagonal {ι : Type*} [Fintype ι] [DecidableEq ι]
     {κ : ι → Type*} [∀ i, Fintype (κ i)] [∀ i, DecidableEq (κ i)]
     (M : ∀ i, Matrix (κ i) (κ i) ℂ) (hM : ∀ i, (M i).PosSemidef) :
     (Matrix.blockDiagonal' M).PosSemidef := by
@@ -166,7 +166,7 @@ private theorem dsum_psd {n : Type u} {m : Type v} [Fintype n] [DecidableEq n]
   letI : ∀ b : Bool, DecidableEq (bif b then ULift.{u} m else ULift.{v} n) :=
     fun b => by cases b <;> dsimp <;> infer_instance
   rw [heq]
-  exact (posSemidef_blockDiagonal' M hM).submatrix _
+  exact (posSemidef_blockDiagonal M hM).submatrix _
 
 private theorem dsum_mul {n m : Type*} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]

@@ -14,7 +14,7 @@ Direct frozen dependencies:
     statement_id: sha256:0386217fa1109c4358c01b5fe2db195888fa2f776c05e63cec2e880416d1c8ff
   StructuredNegativityCoincidenceRefutation.partialTransposeB
     statement_id: sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393
-  ConditionalHockeyStickOrthogonalReduction.posSemidef_blockDiagonal' (public owner)
+  ConditionalHockeyStickOrthogonalReduction.posSemidef_blockDiagonal (public owner)
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
 The projector expression is inlined using Matrix.vecMulVec and star; no duplicate projector is declared.
 Each private theorem has proof_shape: bind-only and escape_witness: none.
@@ -32,7 +32,7 @@ namespace D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
 open Matrix
 open scoped ComplexOrder
 open D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (posSemidef_blockDiagonal')
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction (posSemidef_blockDiagonal)
 noncomputable section
 /-- Columns are basis vectors; basis zero is computational whenever present. -/
 def IsMUBFamily {d m : ℕ} (U : Fin m → Matrix (Fin d) (Fin d) ℂ) : Prop :=
@@ -571,7 +571,7 @@ private theorem sector_psd (p : Fin 2) (h : Fin 8) : (sector p h).PosSemidef := 
   exact ((blockC_psd p h 0).mul_mul_conjTranspose_same _).add
     ((blockC_psd p h 1).mul_mul_conjTranspose_same _)
 private theorem rawState_psd (p : Fin 2) : (rawState p).PosSemidef := by
-  exact (posSemidef_blockDiagonal' (sector p) (sector_psd p)).submatrix _
+  exact (posSemidef_blockDiagonal (sector p) (sector_psd p)).submatrix _
 private theorem rho_psd : rho.PosSemidef :=
   (rawState_psd 0).smul (by norm_num [Complex.le_def])
 private theorem rho_ppt : (partialTransposeB rho).PosSemidef := by
