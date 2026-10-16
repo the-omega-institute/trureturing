@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd1f38d76d0c556bdf2bb3a002fdec09f9693d1ccdd3a8891b181b506d353c5a
+  normalized_sha256: sha256:cd1f38d76d0c556bdf2bb3a002fdec09f9693d1ccdd3a8891b181b506d353c5a
+cas_ref: sha256:cd1f38d76d0c556bdf2bb3a002fdec09f9693d1ccdd3a8891b181b506d353c5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义261.2　编码奇偶只规定模型对象、符号、协议或适用条件；附文限定这些定义的含义，没有另立性质断言。
+    previous_atom_id: 5bff074dd3b4bdaa31f008953c87f63b0e046447d62f5e5b476966ceb854bf61
+    next_atom_id: b3b075efbddcd8cbace6d16b4ad7cce7bbdfb0056a13892775055d6e210fca4d

@@ -28,7 +28,7 @@ private theorem hermitian_trace_sq {ι : Type*} [Fintype ι]
   change ‖WithLp.toLp 2 (fun i => WithLp.toLp 2 (C i))‖ ^ 2 = _
   simp [PiLp.norm_sq_eq_of_L2]
 
-private theorem psd_trace_sq {ι : Type*} [Fintype ι]
+theorem psd_trace_sq {ι : Type*} [Fintype ι]
     (C : Matrix ι ι ℂ) (hC : C.PosSemidef) :
     (trace (C * C)).re ≤ ((trace C).re) ^ 2 := by
   classical

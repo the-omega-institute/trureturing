@@ -108,7 +108,7 @@ private theorem descendants_absent (n : ℕ) (p : Address)
   obtain ⟨V, hV⟩ := (node_iff _ _).mp (List.mem_toFinset.mp hx)
   simp [append_subtree, hp] at hV
 
-private theorem cost_length (p : Address) : p.length ≤ pathCost p := by
+theorem cost_length (p : Address) : p.length ≤ pathCost p := by
   induction p with
   | nil => rfl
   | cons b p ih => cases b <;> simp [pathCost, List.length_cons] at * <;> omega

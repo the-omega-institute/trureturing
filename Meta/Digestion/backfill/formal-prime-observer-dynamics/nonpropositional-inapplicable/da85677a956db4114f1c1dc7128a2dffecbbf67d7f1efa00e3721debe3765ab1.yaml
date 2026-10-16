@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da85677a956db4114f1c1dc7128a2dffecbbf67d7f1efa00e3721debe3765ab1
+  normalized_sha256: sha256:da85677a956db4114f1c1dc7128a2dffecbbf67d7f1efa00e3721debe3765ab1
+cas_ref: sha256:da85677a956db4114f1c1dc7128a2dffecbbf67d7f1efa00e3721debe3765ab1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：公式片段 \operatorname{CF}_{\mathcal Q}(M)：\[：只引入对象、参数、术语或记号；不附加存在性、唯一性或其他性质断言。
+    previous_atom_id: 30b49eec4c535edbd4e6e5fc5eab6907ca76b049bbcffc624badba74f5edba42
+    next_atom_id: 2c950ee852daf8fda916118eb5887d8833472504be06bdead5117cfb9fa46bc9

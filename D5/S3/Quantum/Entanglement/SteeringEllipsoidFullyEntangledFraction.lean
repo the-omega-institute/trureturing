@@ -68,7 +68,8 @@ Private declarations, each on the live path of result (consumer in brackets):
     [filtered_bound, operator_bound, degenerate_bound, tight_blochB]; form_one_kron
     [degenerate_bound, maxent_le]; ptL_conj, trace_conj_kron, kron_sub, form_conj_mul
     [filtered_bound]; ptL_sub [canonical_bound, degenerate_bound]; ptL_smul [canonical_bound,
-    filtered_bound, degenerate_bound]; ptR_sub, ptR_smul [canonical_bound];
+    filtered_bound, degenerate_bound]; ptR_sub [canonical_bound];
+    imported ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul [canonical_bound];
     form_conj [cs_form, psd_sub_rank_one]; form_real [psd_sub_rank_one, canonical_bound,
     degenerate_bound]; form_vecMulVec [psd_sub_rank_one]; trace_vecMulVec [canonical_bound,
     degenerate_bound]; halfPhase_mul [phase_max, tight_phase]; phase_max [fef_le, result];
@@ -80,11 +81,15 @@ clause for every parameter, not a finite certificate, enumeration, checker or nu
 reduction.
 -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.QuantumBounds.CHSHWitness
+
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+  (partialTraceRight_smul)
 
 set_option autoImplicit false
 noncomputable section
@@ -264,7 +269,7 @@ private lemma ptL_conj (K : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     Matrix.conjTranspose_apply, Matrix.one_apply]
   ring
 
-private lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
+lemma trace_conj_kron (K A : Matrix (Fin 2) (Fin 2) ℂ) (ρ : TwoQubit) :
     trace (((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K) * ρ * ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ *
       (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ))) = trace (ρ * (A ⊗ₖ (Kᴴ * K))) := by
   have h : ((1 : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ K)ᴴ * (A ⊗ₖ (1 : Matrix (Fin 2) (Fin 2) ℂ)) *
@@ -288,10 +293,6 @@ private lemma ptR_sub (x y : TwoQubit) :
 private lemma ptL_smul (c : ℂ) (x : TwoQubit) :
     partialTraceLeft (c • x) = c • partialTraceLeft x := by
   ext b d; simp [partialTraceLeft]; ring
-
-private lemma ptR_smul (c : ℂ) (x : TwoQubit) :
-    partialTraceRight (c • x) = c • partialTraceRight x := by
-  ext b d; simp [partialTraceRight]; ring
 
 private lemma form_conj {M : TwoQubit} (hM : M.IsHermitian) (x y : Fin 2 × Fin 2 → ℂ) :
     star (star x ⬝ᵥ (M *ᵥ y)) = star y ⬝ᵥ (M *ᵥ x) := by
@@ -376,7 +377,7 @@ theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
     rw [hDdef, ptL_sub, ptL_smul, hB]
   have eA : partialTraceRight σ =
       ((t⁻¹ : ℝ) : ℂ) • partialTraceRight (vecMulVec w (star w)) + partialTraceRight D := by
-    rw [hDdef, ptR_sub, ptR_smul]; abel
+    rw [hDdef, ptR_sub, partialTraceRight_smul]; abel
   have radB : vlen (blochVec (partialTraceLeft D)) =
       t⁻¹ * vlen (blochVec (partialTraceLeft (vecMulVec w (star w)))) := by
     rw [eB, blochVec_sub, blochVec_scalar, blochVec_smul, zero_sub, ← neg_smul, vlen_smul, abs_neg,

@@ -40,6 +40,7 @@ CPU_SLAB_BOXES ?= 64
 CPU_SLAB_DEADLINE ?=
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
 SELECTED_TEST_PROJECT = $(if $(filter tools/%,$(TEST_PROJECT)),$(abspath $(HERE)/../$(TEST_PROJECT)),$(TEST_PROJECT))
+CI_NO_RESTORE = $(if $(filter 1,$(CI_DOTNET_PREPARED)),--no-restore,)
 TEST_FILTER ?=
 FILEMAP_SCOPE ?=
 FILEMAP_PRODUCER ?=
@@ -57,7 +58,7 @@ dotnet:
 dotnet: export DOTNET_PROJECT := $(value DOTNET_PROJECT)
 
 filemap-conform:
-	@set -e; cd "$(REPOSITORY)"; dotnet build "$(HERE)/StrataLint.FileMap/StrataLint.FileMap.csproj" --configuration Release -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet; args=(); if test -n "$$FILEMAP_SCOPE"; then args+=(--scope "$$FILEMAP_SCOPE"); fi; if test -n "$$FILEMAP_PRODUCER"; then args+=(--producer-write-set "$$FILEMAP_PRODUCER"); fi; dotnet "$(HERE)/StrataLint.FileMap/bin/Release/net10.0/StrataLint.FileMap.dll" "$${args[@]}"
+	@set -e; cd "$(REPOSITORY)"; dotnet build "$(HERE)/StrataLint.FileMap/StrataLint.FileMap.csproj" $(CI_NO_RESTORE) --configuration Release -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet; args=(); if test -n "$$FILEMAP_SCOPE"; then args+=(--scope "$$FILEMAP_SCOPE"); fi; if test -n "$$FILEMAP_PRODUCER"; then args+=(--producer-write-set "$$FILEMAP_PRODUCER"); fi; dotnet "$(HERE)/StrataLint.FileMap/bin/Release/net10.0/StrataLint.FileMap.dll" "$${args[@]}"
 filemap-conform: export FILEMAP_SCOPE := $(value FILEMAP_SCOPE)
 filemap-conform: export FILEMAP_PRODUCER := $(value FILEMAP_PRODUCER)
 
@@ -105,7 +106,7 @@ test:
 test: export DOTNET_ROOT := $(RESOLVED_DOTNET_ROOT)
 
 compile-proof:
-	@test "$(PROOF)" = capability-proof -o "$(PROOF)" = banned-api-proof || { echo "PROOF must be capability-proof or banned-api-proof" >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet build "$(HERE)/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" --configuration Release -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet && dotnet "$(HERE)/StrataLint.TestEvidence/bin/Release/net10.0/StrataLint.TestEvidence.dll" compile-proof "$(PROOF)"
+	@test "$(PROOF)" = capability-proof -o "$(PROOF)" = banned-api-proof || { echo "PROOF must be capability-proof or banned-api-proof" >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet build "$(HERE)/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" $(CI_NO_RESTORE) --configuration Release -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet && dotnet "$(HERE)/StrataLint.TestEvidence/bin/Release/net10.0/StrataLint.TestEvidence.dll" compile-proof "$(PROOF)"
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
@@ -138,7 +139,7 @@ settle-batch: export SETTLE_BATCH_REQUESTS := $(value REQUESTS)
 unexport REQUESTS
 
 auric-fib-analysis-build:
-	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="regInspector/auricFibAnalysis LeanInformationAuditRegTests.AuricFib.RateBoundary" >&2
+	@$(MAKE) --no-print-directory -C "$(REPOSITORY)" lean LEAN_TARGETS="regInspector/auricFibAnalysis LeanInformationAuditFibTests.AuricFib.RateBoundary" >&2
 
 auric-fib-analysis: auric-fib-analysis-build
 	@/bin/bash "$(HERE)/scripts/auric-fib-analysis.sh"

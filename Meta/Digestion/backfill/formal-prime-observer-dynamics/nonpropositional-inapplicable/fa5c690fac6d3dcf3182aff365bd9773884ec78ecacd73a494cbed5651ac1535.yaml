@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa5c690fac6d3dcf3182aff365bd9773884ec78ecacd73a494cbed5651ac1535
+  normalized_sha256: sha256:fa5c690fac6d3dcf3182aff365bd9773884ec78ecacd73a494cbed5651ac1535
+cas_ref: sha256:fa5c690fac6d3dcf3182aff365bd9773884ec78ecacd73a494cbed5651ac1535
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：214. Chernoff 精确误差指数：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: 56cfe84bcd7f2934a025298630b950c4aba343e485a05ccae8f8fd83f33f0b4d
+    next_atom_id: b5832098121a1d9fa8036749956741e4ca48d765a3ce67649c9d5d124251bcf9

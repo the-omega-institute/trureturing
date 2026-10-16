@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4d0fd8ff621b847863087549a59add7e1b35820c9cb235443c033d99f1582b3
+  normalized_sha256: sha256:c4d0fd8ff621b847863087549a59add7e1b35820c9cb235443c033d99f1582b3
+cas_ref: sha256:c4d0fd8ff621b847863087549a59add7e1b35820c9cb235443c033d99f1582b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明。：该段仅论证前文命题 13.3（当前标记与历史记录在结构上可分离）。，不另立新的命题陈述；前文命题本身仍保留。
+    previous_atom_id: 4f292fc4b906e1dc0d81b7afe7016baaa6652e3d031cae2d37750caa15333882
+    next_atom_id: 5a42b718de9a75ee6cf46d6af64f565429689b6c2ecccb6ac936271d56082b33

@@ -1,0 +1,47 @@
+## 1. Standalone memory, instrument and probability conventions
+
+Fix a finite complex Hilbert space $H=\mathbb C^D$ with a fixed orthonormal basis. All persistent quantum or classical registers, retained Kraus records and controllers that influence future steps belong to this memory. The matrices are fixed in time. There is no uncounted correlated input or time-dependent external controller. Summed Kraus labels within a visible branch do not persist. Real examples below remain maps on the full complex matrix algebra, including nonreal coherences.
+
+An operator $X\ge0$ is positive semidefinite; a density is a positive operator with $\operatorname{Tr}X=1$, and an effect satisfies $0\le X\le I$. A density is faithful if it is positive definite and pure if it has rank one. The adjoint of a matrix is $A^\dagger$. A linear map is completely positive (CP) if all its tensor ampliations by identity maps preserve positivity. In finite dimension it has a finite Kraus representation, proved in Lemma 3.2. A complete binary instrument consists of CP maps
+
+$$
+\Phi(X)=\sum_a K_aXK_a^\dagger,
+\qquad \Psi(X)=\sum_b L_bXL_b^\dagger,
+\qquad \sum_aK_a^\dagger K_a+\sum_bL_b^\dagger L_b=I.
+$$
+
+The symbols zero and one denote, respectively, the no-tick branch $\Phi$ and tick branch $\Psi$. Completeness means that $\Phi+\Psi$ is trace preserving; each branch is trace nonincreasing on positive inputs. The trace dual is characterized by $\operatorname{Tr}[Y\Lambda(X)]=\operatorname{Tr}[\Lambda^*(Y)X]$, so $\Phi^*(Y)=\sum_aK_a^\dagger YK_a$. The Choi rank is the minimum Kraus count, equivalently the rank of the Choi matrix defined in Section 3. It is distinct from the rank of a Kraus matrix and from the rank of a branch effect.
+
+For a specified initializer $\rho_0$, a positive-probability initial tick defines
+
+$$
+\nu=\operatorname{Tr}\Psi(\rho_0)>0,
+\qquad \tau=\Psi(\rho_0)/\nu,
+\qquad F=\Psi^*(I),
+\qquad w_k=\operatorname{Tr}[F\Phi^k(\tau)].
+$$
+
+These are actual instrument quantities. The density $\tau$ is not a freely selected seed, and $\rho_0$ need not be invariant. The index $k\ge0$ counts zeros before the next tick; the interevent duration is $k+1$. Thus $w_0$ is an immediate consecutive tick. A first-hit index $h$ means $w_0=\cdots=w_{h-1}=0$ and $w_h>0$, with no assertion about later indices. Writing $s_k=\operatorname{Tr}\Phi^k(\tau)$ gives $s_0=1$, $s_k-s_{k+1}=w_k$ and $\sum_{k=0}^Nw_k=1-s_{N+1}\le1$. The next-gap distribution is proper exactly when $s_k\to0$. None of properness, renewal independence, purity or a common reset is a default hypothesis.
+
+For any density $\rho$ and binary word, the actual probability is
+
+$$
+\mathbb P_\rho(x_1\cdots x_N)
+=\operatorname{Tr}[\mathcal E_{x_N}\cdots\mathcal E_{x_1}(\rho)],
+\qquad \mathcal E_0=\Phi,\quad\mathcal E_1=\Psi.
+$$
+
+The empty word has probability one. An invariant density satisfies $(\Phi+\Psi)(\rho)=\rho$ and produces stationary cylinders. A global reset to a density $\tau$ means $\Psi(X)=\tau\operatorname{Tr}(FX)$ for every complex matrix $X$. It fixes the normalized output of every positive-probability tick. If the next gap is proper, repeated ticks then yield independent gaps with the same law; an arbitrary instrument's one-gap marginal alone does not prove that independence.
+
+For orientation, a proper gap law $\gamma_k$ of finite interval mean $\mu=\sum_{k\ge0}(k+1)\gamma_k$ has tails $S_a=\sum_{k\ge a}\gamma_k$. Its equilibrium renewal cylinders are
+
+$$
+\begin{aligned}
+\mathbb P(0^a1\,0^{g_1}1\cdots0^{g_{r-1}}1\,0^b)
+&=\frac{S_aS_b}{\mu}\prod_{j=1}^{r-1}\gamma_{g_j}\quad(r\ge1),\\
+\mathbb P(0^N)&=\frac1\mu\sum_{k\ge N}(k-N+1)\gamma_k.
+\end{aligned}
+$$
+
+All run lengths are nonnegative integers, and the product is empty when there is only one tick. These formulas include boundary tails and stationary length bias. They are not imposed on the arbitrary instruments in Section 4. The notation $d_{\rm TV}$ below means half the $\ell^1$ distance between classical probability distributions. It is not the Choi trace norm.
+

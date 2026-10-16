@@ -10,13 +10,13 @@ internal static partial class RepositoryRules
         path.StartsWith("Library/", StringComparison.Ordinal)
         && path.EndsWith(".md", StringComparison.OrdinalIgnoreCase);
 
-    private static ImmutableArray<RuleFinding> LibraryCapacity(DeltaRuleContext context)
+    private static ImmutableArray<RuleFinding> LibraryCapacity(RepositorySnapshot current, RawChangeSet changes)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var change in context.Changes.Entries.Where(static change =>
+        foreach (var change in changes.Entries.Where(static change =>
             change.Kind is RawChangeKind.Added && IsLibraryDocument(change.Path.Value)))
         {
-            if (!context.Current.Files.TryGetValue(change.Path, out var file))
+            if (!current.Files.TryGetValue(change.Path, out var file))
                 continue;
 
             var lines = CountArtifactLines(file.Text);

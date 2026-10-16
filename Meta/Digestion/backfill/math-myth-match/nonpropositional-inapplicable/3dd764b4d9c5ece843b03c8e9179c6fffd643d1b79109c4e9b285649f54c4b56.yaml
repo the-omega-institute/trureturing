@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3dd764b4d9c5ece843b03c8e9179c6fffd643d1b79109c4e9b285649f54c4b56
+  normalized_sha256: sha256:3dd764b4d9c5ece843b03c8e9179c6fffd643d1b79109c4e9b285649f54c4b56
+cas_ref: sha256:3dd764b4d9c5ece843b03c8e9179c6fffd643d1b79109c4e9b285649f54c4b56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 51.1（从确定操作到多种后续可能）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: c593fa935d0481e2eed82232d883f44ab9cb4b2c2ac9df89730ad54f21cced39
+    next_atom_id: 5b0a16e37f3bc10f9702ca4a2a0e67949e5141200371dfee04f8cb648acc6061

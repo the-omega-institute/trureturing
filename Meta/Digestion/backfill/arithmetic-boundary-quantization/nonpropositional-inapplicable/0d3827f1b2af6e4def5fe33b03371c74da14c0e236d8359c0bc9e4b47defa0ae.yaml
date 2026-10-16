@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d3827f1b2af6e4def5fe33b03371c74da14c0e236d8359c0bc9e4b47defa0ae
+  normalized_sha256: sha256:0d3827f1b2af6e4def5fe33b03371c74da14c0e236d8359c0bc9e4b47defa0ae
+cas_ref: sha256:0d3827f1b2af6e4def5fe33b03371c74da14c0e236d8359c0bc9e4b47defa0ae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明段或其连续推导片段（**证明。** 全部 \(y_p>0\)。逐行凹性、第 15 节及其方差单调性给出…）只论证所在节前文的结论，不另列新的独立命题。
+    previous_atom_id: 4510d61bdf0e17e95a49d3a408e17b2de29bc68d17169ea4aced4869622eb395
+    next_atom_id: 48beafc28415ed4be14f3db3919aefa41563a9c5ff9a38181f53788aa193a350

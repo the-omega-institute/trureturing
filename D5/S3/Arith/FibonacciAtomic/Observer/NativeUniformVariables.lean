@@ -30,7 +30,7 @@ abbrev VariableKey := Nat × Address
 def variableKey {C : LiteralRow} {d : Nat} {η : Patterns C d}
     (x : Variables η) : VariableKey := (x.1.val,frontierAddress (η x.1) x.2)
 
-private theorem frontier_injective {d : Nat} (p : Pattern d) :
+theorem frontier_injective {d : Nat} (p : Pattern d) :
     Function.Injective (frontierAddress p) := by
   intro x y h
   by_contra ne

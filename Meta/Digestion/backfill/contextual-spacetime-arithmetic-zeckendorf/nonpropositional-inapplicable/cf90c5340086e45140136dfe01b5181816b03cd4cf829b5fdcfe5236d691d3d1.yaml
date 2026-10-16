@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf90c5340086e45140136dfe01b5181816b03cd4cf829b5fdcfe5236d691d3d1
+  normalized_sha256: sha256:cf90c5340086e45140136dfe01b5181816b03cd4cf829b5fdcfe5236d691d3d1
+cas_ref: sha256:cf90c5340086e45140136dfe01b5181816b03cd4cf829b5fdcfe5236d691d3d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Explanatory proof of Proposition 361.1. PrimeReciprocalCharacter.result supplies prime cancellation, the zero fibre and the strict topology inclusion. The injective one-row initial map into a metrizable product gives metrizability. The coordinatewise sum of two distinct units is still a binary capacity state; its half-row finite sum is 1 and hence zero in AddCircle. The individual half-row values and exclusion from the radius-1/4 ball retain the stated scope.
+    previous_atom_id: c615909a8fe69754290b754a8f9524a296aa6fdcd5de750a234ca56eda5a8cf7
+    next_atom_id: 6ef4bd8f864c2bade10ae9a104497652713e7f023ad3e098041204c9c5dd48b0

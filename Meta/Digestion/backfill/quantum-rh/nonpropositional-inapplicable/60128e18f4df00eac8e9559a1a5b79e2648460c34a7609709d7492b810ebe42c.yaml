@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60128e18f4df00eac8e9559a1a5b79e2648460c34a7609709d7492b810ebe42c
+  normalized_sha256: sha256:60128e18f4df00eac8e9559a1a5b79e2648460c34a7609709d7492b810ebe42c
+cas_ref: sha256:60128e18f4df00eac8e9559a1a5b79e2648460c34a7609709d7492b810ebe42c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof of preceding maximum-entropy formulas (13)-(14); final sentence only interprets the chosen representative.
+    previous_atom_id: adf8a83429a25264b0f7e38ad6da21cd6a80b9eb8ffab85c3b13318f32e5bc1a
+    next_atom_id: 7cac6c5a9e970df23b3ecff63ba3bbc51b6a57b39a6fcb4aabc74d97eef556ba

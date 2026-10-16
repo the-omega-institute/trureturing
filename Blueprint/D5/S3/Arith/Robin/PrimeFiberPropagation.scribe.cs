@@ -18,6 +18,17 @@ internal sealed class PrimeFiberPropagationDocument : IScribeDocumentDefinition
                 + "increase of Z, weighted by log(log(n)), is paid by the increase of the double logarithm. "
                 + "It discards the existing Robin slack at n, so it is sufficient for propagation and not necessary.")),
             Describe.Lean(
+                DescribeId.Create("divisor-ratio-positive"),
+                DeclarationHandle.Create(Prefix + "divisorRatio_pos"),
+                H("Positivity of the normalized divisor sum"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural n with n!=0, divisorRatio(n)>0. "
+                    + "The numerator sigma(1,n) and the denominator n are both positive. "
+                    + "This permits logarithmic product identities at arbitrary positive "
+                    + "arithmetic corners; no coprimality condition is needed for positivity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("edge-propagation"),
                 DeclarationHandle.Create(Prefix + "robinAt_mul_of_edgeTest"),
                 H("A passing edge carries Robin's inequality"),

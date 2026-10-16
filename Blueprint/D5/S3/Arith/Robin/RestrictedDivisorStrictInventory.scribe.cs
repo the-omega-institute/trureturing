@@ -97,6 +97,76 @@ internal sealed class RestrictedDivisorStrictInventoryDocument : IScribeDocument
                         + "terminal reserve, the complete signed prime budget, "
                         + "Robin's inequality or the Riemann hypothesis."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-full-domain-forced-prime-inventory"),
+                DeclarationHandle.Create(Prefix + "original_maximum_strict_inventory"),
+                H("Every original maximizing tie has the residual strict inventory"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let p be prime and let N satisfy the literal "
+                        + "OriginalFirstClockTransport.originalMaximizes(p,N): "
+                        + "N is positive, 5040*p divides N, and N maximizes "
+                        + "originalObjective over every positive multiple of "
+                        + "5040*p. Assume exactly 243<=log(N)<p. Then "
+                        + "N.factorization(p)=1, and there is a positive natural "
+                        + "integer U with N=p*U, 5040 dividing U, p not dividing "
+                        + "U, and U.factorization(q)=optimalLayerCount("
+                        + "ActualRobinClockCovariance.g(log(N)),q) for every "
+                        + "natural q. The clock remains log(N), rather than "
+                        + "log(U). The result applies to every maximizing tie; "
+                        + "no least-source choice or attainment supplier is assumed.")),
+                    Paragraph(Text(
+                        "For every prime q, N*q is again a positive multiple "
+                        + "of 5040*p. Its exact prime_delta and the existing "
+                        + "strict loglog_tangent inequality force the next "
+                        + "N layer strictly below the price at log(N). To "
+                        + "delete a top q layer, its exponent must exceed "
+                        + "the factorization of the entire mandatory floor "
+                        + "5040*p. Factorization subtraction then proves "
+                        + "5040*p divides N/q, so this is an actual legal "
+                        + "competitor. Its floor also keeps log(N/q)>1. The "
+                        + "same strict tangent, taken at log(N), forces the "
+                        + "removed layer strictly above that same price. "
+                        + "Weak maximality is sufficient for both strict "
+                        + "comparisons, including objective ties.")),
+                    Paragraph(Text(
+                        "Since p>log(N)>=243, the prime p is not a divisor "
+                        + "of 5040, and its mandatory floor exponent is one. "
+                        + "The existing reciprocal-power marginal bound and "
+                        + "strict price decrease put even its first layer "
+                        + "below the own-clock price. Strict marginal decrease "
+                        + "therefore makes every higher p layer inactive. "
+                        + "A p exponent at least two would permit deleting "
+                        + "its top layer and contradict the strict deletion "
+                        + "comparison. Hence precisely one p is removed "
+                        + "to construct U, preserving every mandatory 5040 layer.")),
+                    Paragraph(Text(
+                        "For q different from p, N and U have identical "
+                        + "q exponents. Their next residual layer is strictly "
+                        + "inactive by legal insertion into N. An occupied "
+                        + "residual top layer above the 5040 floor is strictly "
+                        + "active by legal deletion from N. At the floor it "
+                        + "is active by the existing forced_5040_active "
+                        + "argument at log(N)>=243. For q=p the residual "
+                        + "stack is empty and its first layer is inactive. "
+                        + "The strict active-layer interval identifies each "
+                        + "count, including absent prime stacks. Nonprime "
+                        + "directions have zero factorization and zero "
+                        + "optimalLayerCount by their definitions; no "
+                        + "prime-power stack or equality endpoint is omitted.")),
+                    Paragraph(Text(
+                        "This bridge derives the inventory from original "
+                        + "nonlinear maximality. It assumes no inventory law, "
+                        + "forced exponent-one premise, fixed-price optimality, "
+                        + "analytic supplier or MAIN upper bound. Existence "
+                        + "of such an original maximizer and the displayed "
+                        + "clock window remain separate obligations. The "
+                        + "bridge alone supplies neither the JC18 initial "
+                        + "arithmetic-height payment nor the complete signed "
+                        + "prime budget, strict Robin inequality or RH."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "Repository derivation reuses the original integer objective, "
                 + "the single-prime objective delta, the strict active-layer "

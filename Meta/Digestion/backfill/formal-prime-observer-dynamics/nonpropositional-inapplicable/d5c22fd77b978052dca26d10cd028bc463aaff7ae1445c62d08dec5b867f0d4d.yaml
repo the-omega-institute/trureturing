@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5c22fd77b978052dca26d10cd028bc463aaff7ae1445c62d08dec5b867f0d4d
+  normalized_sha256: sha256:d5c22fd77b978052dca26d10cd028bc463aaff7ae1445c62d08dec5b867f0d4d
+cas_ref: sha256:d5c22fd77b978052dca26d10cd028bc463aaff7ae1445c62d08dec5b867f0d4d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- `D5/S1/Solenoid/StreamlineDecomposition.lean` 与相关路径分解文件：可见实流与固定隐藏余量的路径结构。：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 306f201156b700bce290bd5439304ba0343b3b54b7905ac2f8ca0cfc5242671a
+    next_atom_id: 2fe6dfb4e99e26c9baa1db9ac97b3b6e92345eab49c92b436849e84e7417f91b

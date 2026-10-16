@@ -1,0 +1,22 @@
+**Theorem 4.2 (the entire boundary maximum is exactly three sixteenths).** For the original complete decoration list,
+
+$$
+\Omega_{15}(\mu_0)=3/16.
+\tag{NWO.16}
+$$
+
+Proof of the upper bound. Every literal, including words beyond these trees, has at most three actual replies on all of $F$. Above the slots it sees fixed branch. In a chain slot it sees only alpha, branch or absent. At a digit root it sees alpha/beta and at proper descendants it sees absent. Marker and unused slots are fixed. However (NWO.1) gives at $q_Q$, for heights $h=0,1,2,3$, respectively,
+
+$$
+\Gamma_{LLL}(T_h)=(5,0),(4,0),(3,0),(2,1).
+\tag{NWO.17}
+$$
+
+For any decoration whatsoever and any law $p$ on $R_\eta(F)$, put $P=\operatorname{supp}p_X$. Every value of an owned seed under $p$ is an actual reply in $F$ at its owner. Every incoming seed value is likewise an actual reply at its recorded outside owner port in the simultaneous witness required by (NWO.5). At each such fixed port $F$ has at most three replies. Thus every seed takes at most three values under $p$, regardless of a larger declared domain. A target is constant or a table of one seed, so $|g_q(P)|\le3$ for every $q$.
+
+If $P$ contained four distinct states, their indices would give a $Q$ with four distinct factors at $q_Q$, by (NWO.17), a contradiction. Hence $|P|\le3$. Since $O$ is a function of $X$, every conditional entropy is at most $H(X)\le\log_2 3$, while the log weight is always $-4$. Every type's value is at most $3/16$. This bounds the full maximum, not a chosen subfamily.
+
+Proof of attainment. Choose any three distinct indices. In each chain slot let $H$ be its set of heights on those states. If $H=\{h_1<h_2<h_3\}$, the literal $L^{h_2}$ within the slot returns absent, alpha, branch respectively and identifies the height. If $H=\{h_1<h_2\}$, the literal $L^{h_1}$ returns alpha and branch and identifies the height. For singleton $H$ use constants. In every nonconstant slot create one locally owned seed at this selected actual port, with domain exactly these attained replies. Its tables prescribe all full factors at all targets within that slot. The selected exponent is at most two, so each owner port has length at most $13$ and is in $W_{15}$. The owner table is the actual factor at that port and obeys (NWO.3); owners in different slots are distinct.
+
+Give each varying digit its own alpha/beta owner at the digit root, and use it for every target in that slot, including proper-descendant temporal factors. Above-slot factors, fixed slots and marker factors are constants. This specifies every port, including initially absent suffixes. There are at most $1824<m_{15}$ seeds and no external groups, so this is a legal $k=0$ decoration. The varying digit replies distinguish the selected three states. Their actual seed assignments are in $R_\eta(F)$, and their uniform law has $H(O)=\log_2 3$ and expected log weight $-4$. It attains $3/16$, proving (NWO.16). $\square$
+

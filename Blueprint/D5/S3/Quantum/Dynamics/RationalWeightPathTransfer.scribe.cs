@@ -9,6 +9,8 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
     private const string Prefix = "D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/GraphInvariants/kirkland2019rationalweightspst");
+    private static readonly LibraryNoteRef Kay =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/kay2010perfectstatetransferreview");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Kirkland, McLaren, Pereira, Plosker and Zhang (arXiv:1708.03283) conjecture that a weighted path on at least four vertices, with or without potentials, whose edge weights are all rational has no perfect state transfer between its end vertices at readout time pi, and prove it for n = 4 and for n congruent to 3 or 5 modulo 8. For every k >= 1 the statement holds for the paths on n = 2^k + 1 vertices, with arbitrary real potentials and in both directions; for k >= 3 these sizes are congruent to 1 modulo 8.",
@@ -26,6 +28,9 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
             Node("mirror", "Transfer from the first vertex forces mirror-symmetric weights", MirrorFormula(),
                 "This is the second conclusion of the reversal form of a unitary sending the first vertex to the last: if U is unitary, commutes with the path Hamiltonian and sends the first basis vector to gamma times the last one, with |gamma| = 1, then r t = r (m - 1 - t) for every edge t. Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.",
                 "persymmetric_weights", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("weights", "Spectral weights under perfect state transfer", WeightsFormula(),
+                "Let W be the unitary matrix of orthonormal eigenvectors of the Hermitian matrix H, eigenvectorUnitary(H), with the eigenvalues lambda_k = eigenvalues(H, k), and put gamma = exp(i t H)(a, b). In the formula I is the imaginary unit, conj is complex conjugation, (v : C) is the complex number equal to the real number v, normSq is the squared modulus, card(V) is the number of sites, univ is the set of all indices and erase(univ, k) the set of the indices different from k. Write c_k = W(a, k) conj(W(b, k)) and rho_k = P / prod_{l != k} (lambda_k - lambda_l). The hypotheses on the powers of H give sum_k c_k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c_k f(lambda_k) on the monic polynomial f = prod_{l != k} (X - lambda_l), of degree m, gives c_k prod_{l != k} (lambda_k - lambda_l) = P. Since P is not zero, the eigenvalues are distinct and c_k = rho_k, a nonzero real number. The spectral theorem gives gamma = sum_k W(a, k) exp(i t lambda_k) conj(W(b, k)), the pairing of the two unit vectors x_k = conj(W(a, k)) and y_k = exp(i t lambda_k) conj(W(b, k)). Perfect state transfer says |gamma| = 1, so sum_k |y_k - gamma x_k|^2 = 1 + |gamma|^2 - 2 Re(conj(gamma) gamma) = 0 and exp(i t lambda_k) conj(W(b, k)) = gamma conj(W(a, k)) for every k; this is the equality case of the Cauchy-Schwarz inequality. Multiplying by W(a, k) gives exp(i t lambda_k) rho_k = gamma |W(a, k)|^2, and taking moduli gives |rho_k| = |W(a, k)|^2. Dividing by the nonzero real number rho_k gives exp(i t lambda_k) = gamma where rho_k > 0 and exp(i t lambda_k) = -gamma where rho_k < 0; as rho_k is never zero, the second case is the one in which rho_k > 0 fails, which is how the last conjunct is written. For the Hamiltonian of a path on the vertices 0, ..., m the hypotheses on the powers hold between the two end vertices with P the product of the m edge weights; this is the statement pathHamiltonian_pow_apply_ends of the same module, an instance of the column formula for the powers together with the symmetry of the Hamiltonian. The weight formula |W(a, k)|^2 = |P| / |prod_{l != k} (lambda_k - lambda_l)| is the classical Hochstadt formula for the weights of the eigenvectors of a symmetric tridiagonal matrix on its first site, which Kay's review recalls in its subsection on inverse eigenvalue problems: with B'(lambda_n) = prod_{m != n} (lambda_n - lambda_m), the weight |alpha_n|^2 is the reciprocal of (-1)^n B'(lambda_n), normalised so that the weights sum to one. For a mirror-symmetric chain and its two end sites the phase is gamma on the symmetric and -gamma on the antisymmetric eigenvectors, and these alternate in increasing order of the eigenvalues, so the last conjunct is the perfect state transfer condition of Kay's review, lambda_n - lambda_{n-1} = (2 m_n + 1) pi / t_0 for the ordered eigenvalues of a symmetric chain, with t_0 the transfer time and m_n an integer. Derived here is the form of these facts for an arbitrary Hermitian matrix with the stated moments between two sites a and b and perfect state transfer between them at a real time t, with no symmetry assumption: the constant of proportionality is the moment P, the cross weights W(a, k) conj(W(b, k)) are the signed numbers rho_k, and the phases exp(i t lambda_k) are gamma times the sign of rho_k.",
+                "pst_spectral_weights", DescribeRole.Theorem, AssessedProvenance.FromRepo(Kay)),
             Node("classes", "Spectral parity classes of a transfer at time pi", ClassesFormula(),
                 "Let c k = W a k conj(W b k) for the orthonormal eigenvectors W of H with eigenvalues lambda k. The hypotheses on the powers of H give sum_k c k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c k f(lambda k) on the monic polynomial f = prod_{l != k} (X - lambda l) gives c k prod_{l != k} (lambda k - lambda l) = P, so the eigenvalues are distinct and every c k is a nonzero real number. Transfer at time pi forces exp(i pi lambda_k) conj(W b k) = gamma conj(W a k) with gamma = exp(i pi H)(a, b), since the sum of the squared moduli of their differences vanishes. Hence |c k| = |W a k|^2, whose sum is 1, while sum_k c k = 0. The class A of indices with c k > 0 has sum_{k in A} c k = 1/2, and exp(i pi lambda_k) equals gamma on A and -gamma off A. Shifting the eigenvalues by an eigenvalue of the class A gives integers z, even on A and odd off A, with lambda k - lambda l = z k - z l. The source records as known that, after a common shift, the eigenvalues of a path with perfect state transfer at time pi between its end vertices are integers that alternate between even and odd. The identity P sum_{i in A} 1 / prod_{j != i} (z i - z j) = 1/2, stated for a general Hermitian matrix with the given moment data, is derived here.",
                 "pst_parity_classes", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
@@ -156,6 +161,51 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
             Sp, Cast(Cast(Sub(App(z, i), App(z, j)), Integers()), Reals()));
         return Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, a)), Sp,
             new Formula.Power(Parenthesized(nodal), Neg(D(1))));
+    }
+
+    private static Formula Hermitian(Formula body)
+    {
+        Formula v = F.Id("V"), h = F.Id("H");
+        return Disp(All("V", F.Id("Type"), Inst(Call("Fintype", v), Inst(Call("DecidableEq", v),
+            All("H", Call("Matrix", v, v, Complexes()), Implies(Call("IsHermitian", h), body))))));
+    }
+
+    private static Formula Eigenvalue(Formula k) => Call("eigenvalues", F.Id("H"), k);
+    private static Formula Eigenvector(Formula x, Formula k) =>
+        Entry(Call("eigenvectorUnitary", F.Id("H")), x, k);
+    private static Formula SpectralPhase(Formula t, Formula k) =>
+        Call("exp", Mul(Mul(Cast(t, Complexes()), F.Id("I")), Cast(Eigenvalue(k), Complexes())));
+    private static Formula TransferEntry(Formula t, Formula a, Formula b) =>
+        Entry(Call("exp", Smul(Parenthesized(Mul(Cast(t, Complexes()), F.Id("I"))), F.Id("H"))), a, b);
+
+    private static Formula WeightsFormula()
+    {
+        Formula v = F.Id("V"), h = F.Id("H"), t = F.Id("t"), a = F.Id("a"), b = F.Id("b"),
+            m = F.Id("m"), weight = F.Id("P"), p = F.Id("p"), k = F.Id("k"), l = F.Id("l");
+        Formula moments = All("p", Naturals(), Implies(LessEq(p, m),
+            Equal(Entry(new Formula.Power(h, p), a, b), IfThenElse(Equal(p, m), weight, D(0)))));
+        Formula nodal = Seq(
+            new Formula.Subscript(Prod, Seq(l, Sp, InMacro, Sp, Call("erase", Named("univ"), k))), Sp,
+            Parenthesized(Sub(Eigenvalue(k), Eigenvalue(l))));
+        Formula rho = new Formula.Fraction(weight, nodal);
+        Formula simple = Call("Injective", Call("eigenvalues", h));
+        Formula cross = All("k", v, Equal(
+            Mul(Eigenvector(a, k), Call("conj", Eigenvector(b, k))), Cast(rho, Complexes())));
+        Formula phase = All("k", v, Equal(
+            Mul(SpectralPhase(t, k), Cast(rho, Complexes())),
+            Mul(TransferEntry(t, a, b), Cast(Call("normSq", Eigenvector(a, k)), Complexes()))));
+        Formula modulus = All("k", v,
+            Equal(new Formula.Absolute(rho), Call("normSq", Eigenvector(a, k))));
+        Formula entry = TransferEntry(t, a, b);
+        Formula sign = All("k", v, Equal(SpectralPhase(t, k),
+            Parenthesized(IfThenElse(Less(D(0), rho), entry, Neg(entry)))));
+        Formula conclusion = And(simple, And(Parenthesized(cross),
+            And(Parenthesized(phase), And(Parenthesized(modulus), Parenthesized(sign)))));
+        Formula body = All("t", Reals(), All("a", v, All("b", v, All("m", Naturals(),
+            Implies(Equal(Call("card", v), Add(m, D(1))), All("P", Reals(),
+                Implies(NotEqual(weight, D(0)), Implies(Parenthesized(moments),
+                    Implies(Call("HasPST", h, t, a, b), conclusion)))))))));
+        return Hermitian(body);
     }
 
     private static Formula ClassesFormula()

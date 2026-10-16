@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:087c714399df958e1eec7009c1fb2e5f132d8f47ae44c53f0440f2b9acbf76fc
+  normalized_sha256: sha256:087c714399df958e1eec7009c1fb2e5f132d8f47ae44c53f0440f2b9acbf76fc
+cas_ref: sha256:087c714399df958e1eec7009c1fb2e5f132d8f47ae44c53f0440f2b9acbf76fc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Research-direction recommendation to study cross terms and gluing residuals; no new claimed theorem.
+    previous_atom_id: 6c39b7dc013700c16d1330c54a55ad17df611a5335875c1aa7694aa19ff04453
+    next_atom_id: 653ddbc413f6e99a12b261629e954f093078bd36df67ba60954e26e3afe9cfa7

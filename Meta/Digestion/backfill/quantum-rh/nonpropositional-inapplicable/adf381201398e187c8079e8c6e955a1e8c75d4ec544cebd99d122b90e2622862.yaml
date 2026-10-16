@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:adf381201398e187c8079e8c6e955a1e8c75d4ec544cebd99d122b90e2622862
+  normalized_sha256: sha256:adf381201398e187c8079e8c6e955a1e8c75d4ec544cebd99d122b90e2622862
+cas_ref: sha256:adf381201398e187c8079e8c6e955a1e8c75d4ec544cebd99d122b90e2622862
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是定理 I2 的有限观察空间边界恒等式的证明段，只论证前文已陈述的结论，不提出独立新命题；原命题 atom 保留其自身状态。
+    previous_atom_id: ee425ea06616fd0f316f4ec675f08c194f1a322c66490006b88f876689118d41
+    next_atom_id: d7173563776ab16626dd7928844b21b8891cf51589bafb808b5e645740086436
