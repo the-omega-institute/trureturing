@@ -114,6 +114,26 @@ indices, 20 responses, 21 frozen-prefix work, 22 inherited public-expression
 frames, and 23 the counter bank of Definition 6.1. These are boot assignments,
 not a later movement of already acquired data.
 
+Port 21 also holds staged public blocks and frozen-prefix work; BuildManifest
+constructs its word on one of 1–12 before copying it into a block/row.
+These contain public directory material, never source payload.
+Verifier 32 is its acquired snapshot/block archive, 33 its native descriptor
+stream, 34 its candidate/replica arena, 35 its public prior/program work,
+36 receipt construction, 37 target work, 38 enumeration/frame work and 39
+checking work. Consumer 40 is its acquired receipt/binding archive, 41 its
+native descriptors, 42 initialization/proposal work, 43 task-output blocks,
+44 checks, 45 retained binding work, 46 serial output and 47 scratch.
+The fixed mailbox routes are producer-to-actor 48, actor-to-producer 49,
+producer-to-verifier 50 and verifier-to-consumer 51; 52–55 are unused here.
+A mailbox's native descriptor is on its sender's descriptor stream (17, 29
+or 33); the receiver's final archive descriptor is on 29, 17, 33 or 41 as
+appropriate. All these assignments are part of the paid resident boot.
+Descriptor streams on 17,
+29 and the corresponding verifier/consumer work ports use the same native
+record format of Definition 6.1. The readout service has the supplier's
+public meter read head; its arithmetic uses producer public word roles.
+No actor or consumer receives a private arena token from a descriptor.
+
 The new word routines use latch 4 for public tests/data and finite control for
 one additional read bit or comparison result. Private gate operands/results
 use latches 0–3. The input latch is 5 and is untouched until its corresponding
@@ -127,13 +147,46 @@ not move the protected controller heads or change their bits or owner.
 Archive and checking heads can move in the prescribed delivery. Finite runtime
 latches and phase do change and remain part of the actual history.
 
+The twelve public word ports are one serial arithmetic workspace, initially
+owned by the producer. The installed joint control may lend them to the
+actor, verifier or consumer, using **twelve actual TOK occurrences**, one
+per port, then one CTL entering that owner's service phase. Return executes
+the twelve reverse TOKs and one CTL. These are the existing port tokens,
+not a new permission primitive or a free ability to read another owner's
+archive. A helper never runs while only part of this finite token transfer
+is complete. Those transfer cuts are actual busy states with a unique next
+TOK; they are not callable services. Existing word bytes/heads transfer as
+constructed public material. All caller words needed afterward are either
+among these transferred complete words or staged in their original owned
+blocks before reuse. Ports 0 and 13–27 do not join this lending pool.
+In particular no private source, producer descriptor bank or protected
+actor table/state/seed/command token is lent. A nonproducer owner accesses
+only its local descriptor/archive ports and these lent public word roles;
+it cannot call producer directory/counter lookup as a local private read.
+
+For a channel the pool starts at the sender. Before receiver allocation,
+lend it to that receiver for its own Base/Zero/status/descriptor preparation,
+then return it to the sender for stage one. After mailbox seal/read-token
+handoff, lend it to the receiver for stage two and receiver checks. Counter,
+base and status words survive these transfers at their actual ports. Return
+the pool to the sender after copy/check completion, before resuming a sender
+routine. A mandatory row parser can run in this receiver phase before the
+return; its final row ACK follows that return. At stop lend the pool to the
+verifier for its whole replay/receipt construction and to the consumer for
+its checks/output; nested channels follow the same rule with their actual
+sender as the pool-return owner. No two owners run these routines together.
+Thus the eight private ports of a verifier/consumer need hold its archive,
+descriptor stream, program/candidate blocks and snapshots, while the twelve
+actual lent word ports supply the stated arithmetic/field roles. Every
+lending and return is charged and installed at original boot.
+
 A native call is inlined with its fixed return edge, as in PR57.D1. There is no
 unbounded native call stack. Twelve word-role names can be permuted among the
 twelve work ports by a finite-control CTL; this is a permutation of twelve
 fixed ports, not a variable-address pointer. Arithmetic outputs always use a
 port distinct from their inputs. A needed repeated operand is copied to a
 spare port first. After the result is complete, one such CTL exchanges its role
-with the old destination role. Every routine below uses at most six operand,
+with the old destination role. Ordinary word/arithmetic routines use at most six operand,
 output and temporary word roles at once; directory iteration adds four field
 roles and two retained-state roles. More explicitly, ReadState retains five
 state words and one current field, with at most two arithmetic temporaries;
@@ -145,7 +198,17 @@ temporaries; a channel retains its three bases, length, two status addresses
 and counter plus at most three construction temporaries. Variable generator
 frames and verifier candidates are constructed blocks on their designated
 work tapes, loaded a field at a time, not further simultaneously live word
-roles. Thus the twelve ports suffice. Old words
+roles. CloseFence's scans/tuple construction use target/count/bound/tick/fee/ref-output
+roles and at most four temporary/field roles, at most ten in all; subsequent
+staging/descriptor construction releases these roles as in Definition 6.1. Before such a call, reusable
+row/state material is staged as complete blocks on 21 with actual native
+descriptors on 17, and is reloaded one field at a time. BuildManifest uses
+output/expected-count/visited-count/tag/current-field/length and at most two
+arithmetic temporaries, at most eight; earlier row fields have already been
+written or staged. Reference tuples and compound response/counter fields
+are built one component at a time, with those same bounded scans. Staging is
+the explicit bit-block graph of Definition 6.2, not an unbounded native
+stack or simultaneous collection of word roles. Thus the twelve ports suffice. Old words
 on a reused port remain constructed; appending the next word never overwrites
 them. Gate execution and directory generation use these work ports in separate
 phases, and do not share live word operands across that boundary.
@@ -165,8 +228,9 @@ last successor to its test row; it adds no invisible back-edge occurrence.
 Fixed subroutines are inlined. The finite alternatives over ports, latches,
 symbols, finite role permutations and truth tables are expanded literally.
 Loops over variable data have actual tape heads and terminal tests. Static
-routine calls form the order: primitive word routines, arithmetic, field
-iteration, directory state/resolution, source generation, dispatch and rows.
+routine calls form the order: primitive word routines, arithmetic, native field/descriptor and bit-frame
+codecs, closed readout/staging, directory state/resolution and manifest
+serialization, source generation, dispatch and rows.
 Their call graph has finite depth; inherited public-expression traversal uses
 PR57's constructed frame stack. No routine generates its own evaluator.
 
@@ -200,6 +264,16 @@ paid prefix is included. No source identity or handle alone gives the actor
 that seed payload. Original guarded clients need not acquire the seed merely
 to use Reserve or Raise.
 
+Before that directory seal, boot constructs all six zero counter records of
+Definition 6.1, including the inherited fence counter. Immediately after its
+seal WR and following MR, boot runs CloseFence(`initial-publication`). It
+serializes the initial manifest and that returned fence reference in a sealed
+public boot-binding block on 21, with its description on 17. This block,
+initialization and prior are copied to the actor before its first use and to
+the verifier with its snapshot. This is finite paid boot work. The directory
+does not contain its own future publication fence. The initial source and
+its original ingress interval remain exactly those above.
+
 ## 3. Explicit word, position and field routines
 
 **Definition 3.1 (work-word representation and elementary graphs).** A work
@@ -226,25 +300,42 @@ On a $k$-bit word its copy loop has exactly $5k+1$ occurrences, before Finish.
 The terminal test is present even for the empty word. The return has the
 source head on sep and destination head at the new word's first bit.
 
-For a directory/frame field whose head already points to its first bit,
+For a native metadata field whose head already points to its first bit,
 CopyField uses the identical loop without Last($s$). It stops at that field's
 actual sep. SkipField repeatedly RD; on sep MR and return; otherwise MR and
 repeat. On $k$ bits it costs $2k+2$. All source heads and destination tails
 in these calls are those actual marked cells. No mathematical offset is used
 as an unexecuted stopping test.
 
+WriteField($s,d$) is Last($s$), FieldBody($s,d$), Append($d$,sep),
+with destination already at R. It writes precisely $w\mathsf{sep}$ for
+the complete source word $w$ and returns source on its own sep, destination
+at R. ReadField($s,d$) is CopyField($s,d$) followed by **MR($s$)**.
+It enters at the first field bit, including at sep for an empty field, and
+returns source immediately *after* that sep, destination at its newest
+word's first bit. SkipField has this same source exit. These are the shared
+metadata writer/reader contracts; CopyField alone deliberately keeps its
+on-sep exit. A framed bit payload is decoded by Definition 6.1, never by
+applying a sep scanner to its concatenated frames.
+
 Equivalently, FieldBody is just that sep-terminated $5k+1$ loop, entered
 with source at its first bit and destination at R, returning with source at
 sep and destination at R. CopyField is New(destination), FieldBody, Finish;
-Copy additionally positions the source with Last. A caller writing a
-directory or framed row invokes FieldBody and its displayed Append(sep),
-rather than CopyField's work-word Finish. UnaryBody copies a complete
+Copy additionally positions the source with Last. A native field writer uses WriteField. A bit-row writer uses Frame,
+whose payload part calls FieldBody without a separator; it appends its
+one physical sep/status only after all frames. Neither is CopyField's
+work-word Finish on a mixed stream. UnaryBody copies a complete
 $U(a)$ using RD(source); EX(destination); WR(destination,read-bit);
 MR(destination); MR(source) for every bit, including its terminal 0. The
 RD successor repeats on 1 and returns after those same four remaining
 occurrences on 0. Its cost is $5(a+1)$; source returns one cell past the 0
 and destination at R. The raw zero-copy calls below mean this graph, with
 their explicitly stated source positioning and destination already at R.
+All word/field routines may overwrite latch 4; they preserve input latch 5
+and private operand/result latches 0–3. Their callers retain no return data
+in latch 4 across a positioning call. Each payload RD's bit survives through
+its immediately following Append/WR; Finish's later tests may overwrite it.
+The channel uses a distinct data latch, as specified in Definition 6.3.
 
 **Definition 3.2 (unary arithmetic graphs).** The following act on actual
 newest unary words, with distinct input/output ports. Begin by Last on each
@@ -290,7 +381,7 @@ $[b,b+k)$ are the interval and $b+k$ is its following constructed delimiter.
 The interval descriptor consists of actual unary owner, port, base, length,
 initialization/mutability bits and construction ordinal copied into the
 record that owns it. It is not an atomic allocation result. Standalone
-descriptor copies use Definition 3.1 and the framing in Definition 6.1.
+descriptor copies use Definition 3.1 and the native fields/wire-reference distinction in Definition 6.1.
 
 At($a;d$), for actual unary address $U(v)$, executes Last($d$); Home($a$);
 MR($a$), then RD($d$); on 1 MR($a$); MR($d$) and repeat; on 0 return at the
@@ -320,8 +411,7 @@ native writer alone can append here.
 
 IterateDirectory executes Home(0); MR(0). At each record it reads the two tag
 bits with RD; MR per bit, checks its sep with RD; MR, and selects one of the
-three finite field counts. Each field is either CopyField into a work role
-followed by MR(0), or SkipField. It checks the seal by RD; MR, then repeats;
+three finite field counts. Each field is either ReadField into a work role, or SkipField. It checks the seal by RD; MR, then repeats;
 at R the testing RD returns. A seal cell is never copied as field data. A
 record's tag, field cursor and finite number of remaining fields are finite
 control. Record ordinals, if needed, are unary work words incremented by
@@ -331,14 +421,16 @@ the executable iterator is called only with a complete idle directory or a
 previously frozen complete copy. It is never run concurrently with its writer.
 
 WriteRecord executes Tail(0), appends the two literal tag bits and sep, then
-for each listed field executes Last on that field's work port and the
-CopyField loop to directory 0, followed by Append(0,sep). Its source word
+for each listed field executes WriteField to directory 0. Its source word
 heads end at sep and destination remains at R. Finally EX(0) constructs the
 prospective seal cell, WR(0,seal) publishes it, and MR(0) returns to R.
 Publication is precisely that one WR, after every field has been written.
 The preceding EX, WR and following MR are three distinct runtime cuts. A
 partial record grants no source authority. No operation atomically installs
 its variable-length fields or writes an unbounded current pointer.
+WriteRecord returns at R immediately after MR. A subsequent CloseFence is a
+separate CTL-fence/readout graph; neither the seal WR nor this MR is a meter
+fence.
 
 **Lemma 3.5 (word/field expansion and termination).** Every lawful invocation
 of Definitions 3.1–3.4 has a finite deterministic primitive expansion, including
@@ -390,7 +482,7 @@ reservation it copies $J$ into the current $K$ role and its stored $r+1$ into
 the layout role. On a raise it copies $J$ into $h$ and its stored $p+1$ into
 the policy role. At every later seal it increments $v$ by the actual unary
 graph. All other fields are skipped with SkipField. The field copies are
-CopyField into a distinct work port, then a finite role permutation; fields
+ReadField into a distinct work port, then a finite role permutation; fields
 not needed after a check release their temporary roles. Copies of $H_0$ and
 initial identity needed for a row are obtained by another origin scan, never
 by a hidden register. The iterator's R exit is this routine's return edge.
@@ -502,7 +594,11 @@ histories retain their actual differing bit values.
 $\square$
 
 **Definition 4.6 (resident admission and return).** The native graph installed
-at boot has the following dispatch cycle. At idle it acquires and seals one
+at boot has the following dispatch cycle. At its nonterminal idle boundary
+all twelve workspace tokens have returned to the producer and the source
+service token has returned to the dispatcher. An actor-local computation
+or partial token transfer is its own actual phase, not this idle boundary.
+At idle it acquires and seals one
 canonical complete frame on port 13, parses it, retains its return kind and
 command, and takes the source-availability token into the selected service.
 It executes ReadState before generation or maintenance. Old source tags go
@@ -510,9 +606,21 @@ to Definition 4.4, then the inherited response/counter/source-row routines.
 Maintenance tags go to Definition 5.1. Local controller and terminal markers
 go to their inherited actually executed code/complete-output routines.
 Every route then goes to the unified row/delivery routine of §6, its actual
-acknowledgement, one CTL restoring the idle phase, and the same controller's
+acknowledgement, TOK returning the source-service token to the dispatcher,
+one CTL restoring the idle phase, and the same controller's
 saved return edge. A raw external-frame mode instead returns to its next
-frame IN. A terminal route finishes its row/delivery before global halt.
+frame IN. A terminal route finishes its row/delivery and actual ACK, and the
+requested stop-snapshot/verification/consumer work of §6, before its halt
+CTL. A verifier refusal completes that route with no task output. Source calls use CloseFence(`source-start`) before generation and
+CloseFence(`response-commit`) after release; NativeLocal and Halt use the
+same start/commit pair around their complete marker/output commitment.
+These replace, rather than duplicate, any inherited designated fence sites.
+They have no directory publication and use `no-publication` in the row.
+The complete old/new $q,g,e,j,m$ words are staged before their roles are
+reused. An original source call advances $q$, an accepted modification $g$,
+and an accepted Rho $e$; the old source-row seal advances $j$. Local/terminal
+markers and maintenance preserve $q,g,e,j$. Each completed unified event
+advances $m$ once. Fence-count $f$ is separate from every one of these.
 
 The three-bit original frame tags remain ReadE `000`, Rho `001`, TagRead
 `010`, Left `011`, Right `100`. Reserve is `101` and Raise is `110`.
@@ -548,14 +656,25 @@ Base before Zero on 13 supplies the payload's real base. Zero constructs
 its $d$ bits and sep; Append(0) constructs its status. Before the first
 payload test execute At(13,payload-base) and Last(counter). After the
 terminal test execute At(13,status); WR(1); CTL seal. Every status address
-is the constructed base+length+1. Their descriptors are framed actual
-words in producer block descriptions on 17. Their separate physical
+is the constructed base+length+1. Their descriptors are the sep-delimited native records of Definition 6.1
+on producer block descriptions 17; encoded references in a wire field use
+that definition's separate bit-tuple codec. Their separate physical
 separators/status bits are not wire-input bits: the chronological wire
 frame is exactly the header bits, length bits and payload bits referred to
 by those three descriptors. Automatic commands construct the same three
 blocks by Append/copy instead of IN, including the same actual status and
 descriptor work. This fixes setup and entry positions even on nonempty
 port 13 and leaves every acquired-but-unwritten input cut distinct.
+Construct the complete request-reference word as $U(k)$ followed by Frame of
+each complete block reference: header, length, payload, then any additional
+canonical context blocks in order. Its actual count is three plus that
+explicit finite list's count, constructed by unary increment during the
+retained-list scan. New, UnaryBody, Frame per reference and Finish build
+this word; stage it as a complete public block if later work needs its role.
+In the original canonical context language the context is already in the
+payload, so there are no additional context blocks. The request tuple
+therefore neither supplies a larger snapshot nor substitutes a name for
+an unacquired payload.
 
 At every physically prescribed IN both supplied bits execute IN and its
 receipt/control successor. Canonical-prefix admissibility is only the task
@@ -577,8 +696,9 @@ loop and its setup; the finite parser determines the selected complete
 command. Each branch is an actual inlined graph with the single stated row
 and acknowledgement join. Lemma 3.5 terminates the new setup and directory
 calls; the reused generator, source and old row services terminate on finite
-data by PR57.L1–L4. The complete row and channel expansions in §6 terminate
-and have that join as their fixed exit. The final CTL returns to the retained
+data by PR57.L1–L4. The field/descriptor and actual fence graphs of Lemma 6.1b and the
+complete row/channel/ACK composition of Lemma 6.7 terminate and have that
+join as their fixed exit, on every selected branch. The final source-token TOK and idle CTL return to the retained
 caller kind; maintenance has not changed the actor's stored continuation or
 table. At an unfinished input bit the IN/WR distinction and its successors
 are exactly the displayed graph. There is consequently a real route into,
@@ -594,19 +714,22 @@ $h,K,r,p,v$, and inherited $q,g,e,m$ are accessible through their complete
 counter descriptors. Counter lookup is an origin/ordinal scan of their
 immutable versions followed by the supplied complete unary copy; it never
 treats an ordinal as a primitive address. The suspended actor continuation
-and old archive permissions are untouched.
+and old archive permissions are untouched. Run CloseFence(`maintenance-start`)
+once here, before the branch tests. Retain its complete staged reference and
+its constructed fence-count component $U(f_s)$ for either maintenance kind.
 
 For Reserve, Compare($J,K$) selects greater/equal/less. In the greater branch:
 Sub and two doublings construct $d=4(J-K)$; increment $r$ and $v$ into prepared
-new words; obtain an already closed start fence $f_s$ by PR57.D3's fence and
-full finite readout; Base(16) constructs $b$; Zero(16;$d$) creates the interval
+new words; reload the already acquired $U(f_s)$; Base(16) constructs $b$; Zero(16;$d$) creates the interval
 and its delimiter. Copy all seven reservation fields into work words, one at
 a time as needed; construct the response fields `reserve-ok`, old $K$, $J$,
 and new layout ordinal. The fields containing $m$ refer to the completed
 pre-operation all-event count. WriteRecord(`01`) appends the complete entry
-and publishes it at its seal WR. Its source-service token remains busy.
+and publishes it at its seal WR. After its final MR execute
+CloseFence(`post-directory-publication`) bound to the new count $v+1$ and
+retain its complete reference $f_d$. Its source-service token remains busy.
 Construct/seal the finite response block, release its response token by CTL,
-and take the already closed response-commit fence. The prepared $m+1$ version
+and run CloseFence(`response-commit`), retaining its complete reference. The prepared $m+1$ version
 is now selected by paid copying/descriptor work. Go to the §6 maintenance
 row routine. In the equal and less branches allocate no source segment and
 append no directory record: prepare the typed `unchanged` or
@@ -614,13 +737,16 @@ append no directory record: prepare the typed `unchanged` or
 only $m$, and use the identical row/delivery/return route.
 
 For Raise, Compare($J,h$), then Compare($J,K$), selects exactly $h<J\le K$.
-In that branch increment $p,v$, take the closed start fence, construct the
+In that branch increment $p,v$, reload the acquired $U(f_s)$, construct the
 five raise fields and response `raise-ok`, old $h$, $J$, new policy ordinal,
-then WriteRecord(`10`). No source cell is a WR destination. Commit response,
-take its fence, select $m+1$, and go to the same row route. Equality with $h$
+then WriteRecord(`10`), its final MR and
+CloseFence(`post-directory-publication`) with the new count. No source cell
+is a WR destination. Commit response, run CloseFence(`response-commit`), select $m+1$, and go to the same row route. Equality with $h$
 returns `unchanged`; $J<h$ or $J>K$ returns `maintenance-refusal`, with no
-directory record. Failure/equality branches also take their own start and
-response fences. Every invocation prepares both old and required incremented
+directory record. Failure/equality branches use that same entry start reference and run
+CloseFence after their own response release, retaining both actual references;
+they write
+`no-publication` and never borrow either reference as a publication fence. Every invocation prepares both old and required incremented
 counter versions before selecting them, as in LJA4.2. Directory count and
 $r,p$ at an activated but not-yet-row-sealed cut are determined by the actual
 directory prefix and phase; their later wire copies are not atomic counters.
@@ -631,8 +757,12 @@ call is still unavailable. The following MR, response sealing/release, closed
 fence scans, row writing, channel phases and acknowledgement are all real
 states. Before publication, staged allocation/metadata has no current-source
 authority. Only after acknowledgement does the dispatcher restore source
-admission. A row's directory reference and publication fence are serialized
-after they exist; no field predicts its own future completion ordinal.
+admission. A row's manifest payload and complete publication-fence reference are
+serialized only after their construction. The latter names its actual
+post-publication CTL-fence, not the directory seal WR. All three closed
+fence readouts and their staging/descriptor work precede row serialization.
+The no-change/refusal branches retain their unchanged complete manifest.
+No field predicts its own future completion ordinal.
 
 **Theorem 5.2 (paid source-specific reserve).** From every reached idle valid
 state and every actual finite $J>K$, the installed Reserve($J$) has a unique
@@ -668,7 +798,10 @@ outside the newly allocated interval and directory append. Their old payload
 bits, owners and seals are untouched. Protected controller heads are unchanged;
 archive/checking heads move only by their actual declared service work.
 The new response and row/copy work terminate
-by §6 and restore the prescribed idle return. They add genuine receipts and
+by Lemmas 6.1b and 6.7, including construction/readout of the new
+post-publication CTL-fence, complete manifest transport, final row ACK,
+source-token TOK and idle CTL. They restore the prescribed saved return edge.
+They add genuine receipts and
 history; they do not establish equality of complete pre/post states. This
 joint invariant proves a continuing operation on the installed original
 source, not a fresh per-capacity installation. $\square$
@@ -701,62 +834,289 @@ total restriction back to that old source domain. $\square$
 
 ## 6. Complete counters, rows, channels and consumers
 
-**Definition 6.1 (counter and field access without free references).** For a
-fully specified counter-bank convention, reserve producer port 23 for public
-counter versions. Its record is a three-bit name, sep, $U(n)$, sep, seal;
-names 000,001,010,011,100 denote $q,g,e,j,m$. Boot appends a zero record for
-each. LoadCounter(name) executes Home; MR and a record scan: read three bits
-with RD; MR, check sep with RD; MR, CopyField the value when the finite name
-matches and otherwise SkipField, check seal with RD; MR, then repeat until
-the terminal RD(R). Each matching copy replaces that role by a finite port
-permutation; the last matching sealed version is returned. AppendCounter
-executes Tail, literal name/sep Appends, the raw copy loop on the selected
-complete $U(n)$ through its terminal zero, Append(sep), EX; WR(seal); MR.
-This is the explicit origin/version access used by Definition 5.1. It does
-not require a recursively positioned descriptor. Bank bits are public
-metadata under producer ownership, not secret source operands. All counter
-updates occur on these actual records. After commitment and before record
-completion their effective semantic values are determined by phase and the
-already prepared old/new words, as in LJA4.2; no partial unary word is current.
+**Definition 6.1 (one metadata codec and its bit transport).** Native
+metadata fields are arbitrary finite bit words, including the empty word.
+Their physical encoding is $D(w)=w\mathsf{sep}$. A native record is a fixed
+finite kind tag encoded as one such field, its kind's fixed number of $D$
+fields, then one seal symbol. There is no separator between the last field's
+sep and that seal. A directory tag selects its arity in Definition 3.4;
+a counter name selects its one value field. Every new bit-block descriptor has the same
+fixed tag `00` and ten fields, in this order:
 
-Each new row field is a finite bit string. Frame($w$) writes $U(|w|)$ followed
-by exactly those bits. To construct its length, position a complete work word
-with Last, start an output work word with New, then repeatedly RD(input); on
-sep terminate with Append(0), Finish, otherwise Append(1); MR(input) and
-repeat. This length scan has $5|w|+1$ occurrences before the final 0/Finish.
-Reset the source with Last, append the complete unary length by its raw
-zero-copy loop to the row tail, then copy its bits by the sep-terminated raw
-copy loop. Output row position remains at R throughout those bodies; those
-raw loops omit New/Finish on their destination. Field-source positioning and
-the terminal tests remain present. A field already in a sealed block is
-loaded by At on its descriptor's constructed base and the actual length
-counter; RD; Append; MR(source); MR(length), with its initial/final length
-tests, produces the corresponding complete work word before Frame.
+$$
+U(\mathrm{owner}),U(\mathrm{port}),U(b),U(\ell),U(c),
+\mathrm{type},\mathrm{initialized},\mathrm{mutable},U(a_{\rm status}),
+\mathrm{origin}.
+$$
 
-A block reference is a framed tuple of unary owner, port, actual Base offset,
-length and creation ordinal, together with its type and seal-cell reference.
-Every reference field is produced by these same routines. Origin access to
-a block-description stream counts its actual seals with the unary increment
-and Compare graphs until the requested ordinal; each preceding field uses
-SkipField. The requested complete record's fields are copied with CopyField.
-At its terminal R the scan returns typed `no-block`. There is no descriptor
-lookup primitive. Existing immutable block descriptors and archive lookups
-retain the supplier's owner/seal checks and actual paid scans.
+Here owner means the stable descriptor/allocation steward. For an immutable
+archive it is its payload owner; for a mailbox the current read-token holder
+can change by the explicit TOK while the creation steward/reference stays
+fixed. No such handoff grants access to the steward's private descriptor
+stream: the channel already carries the actual base/length/status words.
+Initialization records actual written cells; mutable is the post-seal
+mutability flag. Construction writes while a payload is unavailable remain
+permitted; mutable=0 forbids later writes after its complete seal.
+Here $c$ is the one-based ordinal of this descriptor in its owner's
+append-only descriptor stream, $b,\ell$ are actual payload base/length,
+and $a_{\rm status}=b+\ell+1$ for a bit block with following sep/status.
+The origin field is empty for an original block and is the complete encoded
+sender reference for a received copy. Empty origin is data, not a missing
+field. Types and flags have fixed finite encodings. Source intervals have
+the separate mutable-interval type and their directory seal reference;
+they do not acquire a bit-block status cell or become immutable archives.
+Descriptor streams themselves are accessed from L and do not need a
+descriptor of their own.
 
-For clarity, the arbitrary-word equality used in the new parsers and consumers
-has its own finite graph. Execute Last on two distinct complete word ports;
-set a finite control flag to true. Repeatedly RD(first), save its symbol in
-finite control, RD(second). Unequal symbols clear the flag. If both symbols
-are sep, return the flag. Otherwise MR on each head whose symbol is not sep
-and repeat. A head already on sep stays there. Thus both words are completely
-scanned even after a mismatch, including different lengths. Parsing Frame
-first copies its unary length by the zero-terminated raw copy; position its
-completed counter with Last, then repeat RD(counter); on 1 RD(payload);
-Append(output,bit); MR(payload); MR(counter), on 0 Finish(output) and return.
-The caller consumes exactly its fixed field arity and checks the block's
-actual remaining length. These graphs supply the new framing/equality checks
-in Definitions 6.2–6.5; the original tree/normal-form parsers retain their
-exact supplier graphs.
+WriteDescriptor counts the complete existing stream's seals by paid unary
+increment, prepares $c=1+\text{count}$, executes Tail, literal tag/sep Appends,
+ten WriteFields, then EX; WR(seal); MR. Before Tail starts, all ten source
+field words are complete on ten distinct roles. Their creation/count scan
+uses the other two roles; count-only scanning skips fields and needs only
+its count, increment temporary and literal-one roles, one of which is the
+creation field itself. No field is fetched through the descriptor stream
+while its new record is unfinished. Fixed flags/owner/port/type words are
+literally constructed before this append. After the payload copy, a staged
+bit block's original source word can be released; its actual base/length
+words and constructed zero status remain. The descriptor preparation then
+reuses the remaining roles. On return, no more than the caller's needed
+base/length/status/origin words remain live; other fields may be reloaded.
+For channels, retain mailbox base/status while preparing the receiver's ten
+fields, at most twelve roles; reload the sender base from its now-complete
+descriptor afterward. Thus no thirteen-word simultaneous state or scan of
+a growing descriptor tail is implicit. ReadDescriptor takes a complete
+requested ordinal and one fixed field-number (or the finite `count-only`
+kind). It starts Home; MR with constructed ordinal zero. Read/check the
+next tag (its first RD also detects terminal R). For each actual record
+Increment prepares the next ordinal and Compare determines whether this is
+the requested record. Use ReadField only for the one
+requested field of that record and SkipField for every other field, then
+check seal by RD; MR. Only that verified seal permits its copied field's
+selection/return. Other fields of the same descriptor are obtained by
+repeating this origin scan, never by retaining ten simultaneous word roles.
+The count-only kind skips all fields and returns its actual final count.
+At terminal RD(R) a field request returns
+`no-block` if no such ordinal existed. Wrong kinds and missing seals have distinct metadata-fault edges at the
+corresponding tag/seal RD; no incomplete record becomes selected. FieldBody
+and SkipField have the stated valid-bit-field precondition. All active
+metadata writers preserve it; no arbitrary-symbol metadata import is added. To count for append, use this
+same scan with all fields skipped. These scans include all earlier complete records;
+no operation uses an ordinal as a head position.
+
+For staging across a call, use fixed finite block types `old-h`, `old-K`,
+`old-r`, `old-p`, `old-v`, `old-q`, `old-g`, `old-e`, `old-j`, `old-m`,
+and the finite start/publication/response/boot fence kinds. They are complete
+ordinary blocks on 21 described on 17. LatestType(type) is Home; MR on the
+complete descriptor stream, with an actual zero ordinal: for each record
+check tag, increment ordinal, ReadField only its type, SkipField its other
+nine fields, check seal by RD; MR; compare that complete type word and on
+match Copy the actual ordinal into a selected role plus its CTL exchange.
+At terminal RD(R) return the last match or typed `no-block`. Reload a staged
+word by that selected ordinal, the individual descriptor field scans, At
+and the complete length-bounded copy to a word role. These are paid scans,
+not a named-register or pointer lookup instruction. Before each operation,
+load/stage every required before-field in this fixed order. If ReadState
+produces five words, retain only the field being staged and release the
+other four; an additional origin ReadState obtains the next one. After
+staging, reload only the words currently needed by the arithmetic/record
+writer. No old field is inferred from the new guard or reserve.
+
+Serial admission ensures that until this row is complete no later operation
+can replace these latest old-field types. CloseFence staging uses its own
+distinct types and therefore preserves them. A new operation may append its
+own versions only after the preceding ACK/return. Old payloads and their
+ordinary references remain immutable. The staging writer reads/copies its
+input word and constructs its payload/length first; that word and unrelated
+caller roles can then be released before its ten descriptor fields are
+prepared. This fixes caller live roles and persistence without scanning
+an unfinished descriptor or requiring an unbounded native call stack.
+
+A wire block reference is the fixed-arity bit tuple of owner, descriptor
+stream port, $c$, payload port, $b,\ell$, type and status-cell address. Each
+component is encoded by Frame below. Its bytes are constructed from the
+actual descriptor fields. Resolving it first loads that owner's complete
+descriptor by origin/ordinal scan and compares every component, type and
+availability, one descriptor component per origin scan. The owner's
+payload can then be read by At and its complete
+length. A reference to another owner is resolved at a receiver only by
+scanning the receiver's own descriptor stream for its equal origin field;
+the selected *local* descriptor supplies the local port/base/length.
+There is no cross-owner pointer dereference. More than one acquired copy
+may exist; this scan selects the first sealed matching copy, whose immutable
+payload is equal. To find it, construct ordinal 1 and request that ordinal's
+origin field, compare it, then load/check its local type/port/status fields
+one at a time. A failed match/availability test increments that ordinal and
+restarts the scan; `no-block` terminates the search. Every bound is the fixed
+complete local descriptor prefix, not a live destination under construction. A search with no matching acquired copy returns `not-acquired`.
+Before copying, the installed receiver-side allocation graph writes its own
+receiver descriptor, copying the complete sender reference as origin; its native record seal does not make the still
+zero-status receiver payload available. The final payload CTL/TOK does. A mailbox descriptor likewise retains the
+original sender reference, rather than replacing it by a different payload
+identity; the mailbox-to-receiver copy preserves that original origin key.
+All comparisons are complete word comparisons and all local status reads
+are actual At; RD occurrences. Existing token ownership supplies the
+permission test; knowing the encoded reference supplies no token.
+
+For counters reserve producer port 23. Names `000,001,010,011,100,101`
+denote $q,g,e,j,m,f$, where $f$ is PR57.D3's paid fence count. Boot writes
+one $U(0)$ record for each. Their native format is name, sep, $U(n)$, sep,
+seal. LoadCounter starts Home; MR. At each record it reads three name bits
+with RD; MR per bit and checks sep with RD; MR. A matching value uses
+ReadField into a fresh work role; a nonmatch uses SkipField. **Both
+enter the following RD at the seal**, then MR crosses it. Only after this
+seal check does a matching branch execute its CTL role exchange. Continue
+to terminal RD(R), returning the last sealed match, or typed `no-counter`.
+Thus first, latest and repeated versions have one contract. AppendCounter
+uses Tail, literal name/sep Appends, WriteField of the actual unary value,
+then EX; WR(seal); MR. During a counter append the effective value is the
+prepared old/new word selected by the actual service phase, as in LJA4.2;
+a partial append is not an idle bank. The six fixed names are always present
+on a valid boot. Every inherited $q,g,e,j$ access/update and every new
+$m,f$ access/update uses these LoadCounter/AppendCounter graphs, preserving
+the inherited old/new phase rule. There is no independently updated shadow
+bank. Counter values are complete unary words; arbitrary empty
+fields remain legal in the other metadata schemas.
+
+The bit transport encoding of a field is $B(w)=U(|w|)w$, called Frame($w$).
+It has $2|w|+1$ bits and contains **no** sep. Frame enters with its destination
+at R. Last(input), New(length), then RD(input); on a bit Append(length,1);
+MR(input) and repeat; on sep Append(length,0); Finish(length). Last(input)
+repositions the payload. Last(length), UnaryBody(length,destination) copies
+the complete length including its zero. FieldBody(input,destination) copies
+the payload, leaving input on sep and destination at R. No New or Finish is
+performed on the destination inside Frame. A tuple of frames becomes one
+work word only when its caller executes its final Finish; a bit-block writer
+instead appends its own sep/status. A native descriptor writer always uses
+WriteField, never adjacent Frames. A reference *inside* one native field
+is a bit tuple and is decoded as such after ReadField has acquired it.
+
+For complete finite bit-block parsing, position its payload with At and
+Last on an actual $U(B)$ budget, one 1 for each payload bit. BudgetBit is
+RD(budget); on 0 return `short-block`; otherwise RD(source,4) on the typed bit payload,
+MR(source); MR(budget). It costs four occurrences per consumed bit, returns
+that bit in latch 4, and never touches the physical sep/status. The testing
+latch is distinct from 4. ReadUnary copies successive BudgetBits with Append
+to a fresh word through and including the first 0, then Finish. Its finite
+branch on each copied bit is retained in control across Append.
+
+ReadFrame first ReadUnary's its length into a temporary word. It then New's
+an output, Last's that length and repeats RD(length); on 1 BudgetBit;
+Append(output,bit); MR(length), on 0 Finish(output) and return. The source
+is now immediately after exactly this field's payload and the budget head
+has advanced by $2|w|+1$ positions. The output is the exact field $w$, even
+when empty. Tuple parsing invokes this graph at the fixed arity; the final
+RD(budget) must be 0 and RD(source) must be sep. A manifest has the explicit
+finite record count below instead of a fixed outer arity. Missing terminators,
+length overruns and extra payload set structural failure on the detecting
+paid test. The owner retains/scans the remaining bounded payload on a failure
+edge before refusing; it never reads beyond its constructed status boundary.
+These bounds also apply to nested reference and receipt tuples.
+
+Word equality executes Last on two distinct word ports. Repeatedly RD(first),
+save its symbol in finite control, RD(second); unequal symbols clear a finite
+flag. If both are sep, return the flag. Otherwise MR on each non-sep head
+and repeat; a sep head stays there. Hence mismatches, unequal lengths and
+empty words all receive a complete finite scan. A field in an immutable block
+is acquired by its checked descriptor, At, the length/budget-driven RD;
+Append; MR bodies, then Finish, before further Frame/ReadField use. No bit
+framing is silently converted into native delimiters.
+
+**Definition 6.1a (actual closed fences).** All meter-fence sites in this
+installed graph, including inherited source start/response sites, use the
+following CloseFence graph. All other CTLs, including record and payload
+seals, append ordinary receipts unless this graph explicitly says fence.
+LoadCounter($f$), Increment into a distinct complete word, then execute one
+**CTL-fence**. Its receipt is the next actual $\mathsf F$. AppendCounter
+selects that prepared fence-count version before readout. Between that CTL
+and the completed version the prepared word and phase retain the count;
+no other fence site or source request is callable. Readout itself creates
+only ordinary receipts. This is the supplier's fence counter made explicit,
+not an extra primitive or a free counter update.
+
+Execute Home(meter read head); MR. Construct a fresh bound word and a
+separate $U(0)$ visited-fence word. For every receipt RD(meter); append one
+1 to the bound. On an F, Increment the visited-fence word and Compare it
+with the constructed target $U(f)$; on equality terminate at that receipt,
+otherwise MR(meter) and repeat. On an ordinary receipt MR and repeat.
+The finite F/equality branch is retained across its Append operations.
+Append 0 and Finish(bound). The target fence already existed before this
+scan; no readout goes to the live meter R. The bound is exactly $U(n_f)$,
+where $n_f$ counts all receipts through that actual CTL-fence, inclusively.
+The target $U(f)$ and the event ordinal $U(n_f)$ have different meanings.
+
+Now run PR57.D3's second scan at Home(meter); MR, Last(bound), with fresh
+tick and fee destinations at R. Its displayed $13n_f+7$ body constructs
+$U(n_f),U(2n_f)$, including terminal zeros; Finish their work words. Construct
+the bit tuple Frame(kind), Frame($U(f)$), Frame($U(n_f)$), Frame($U(2n_f)$),
+Frame(source occurrence), Frame(event/directory binding), with actual word
+copies. The last binding is exactly $B(U(m))B(U(v))$, built by two Frames
+and Finish from the old event ordinal and the declared cut's directory count.
+Start uses the before count; publication and response use the after count;
+boot uses event ordinal zero and initial count one. All these are actual
+prepared words or complete-record loads. The complete fence-reference word includes all these constructed numerals.
+Copy it to one ordinary immutable public block on 21, with its native
+descriptor on 17, before another caller reuses the word roles. After its
+payload/length copy the temporary tick/fee/tuple word roles can be released;
+the descriptor's ten-field preparation is the preceding bounded convention.
+The returned handle reloads that complete tuple, including both numeral
+payloads; no additional separate numeral-block handles are promised. Staging uses Base,
+FieldBody, sep/status construction, status Add/At; WR(1); CTL and
+WriteDescriptor, exactly as the row bit-block graph below. These staging
+seals are ordinary CTLs. The producer owns the blocks and can reload them
+by ReadDescriptor and bounded copy. Delivery of their reference bits inside
+a row acquires those bits for the receiver; it grants no meter/private read.
+No OUT is required for these internal references.
+
+For a directory operation enter CloseFence(`post-directory-publication`)
+immediately after WriteRecord's final MR; its paid counter preparation
+precedes its actual CTL-fence, while source service is still busy.
+Its binding contains $\xi,m$ and the new complete directory count. It certifies
+that closed post-publication cut, **not** the earlier seal WR receipt.
+The start fence precedes branch-specific allocation/publication; the response fence follows the
+actual response-release CTL. Their kind tags and bindings distinguish them.
+For refusal/unchanged or a source/local event there is no new directory
+publication: the row writes the literal `no-publication` and performs no
+publication-fence call. The boot publication uses its own initial kind.
+
+**Lemma 6.1b (field, counter, reference and fence composition).** For all
+finite valid field words and finite complete records, the preceding writers
+and readers are inverse on their payloads and have the stated head/latch
+exits. Every current caller obtains its fields and fence words by finite
+actual occurrences. This includes empty fields, first/latest/multiple records,
+all maintenance branches, row transport, verification and receipt consumption.
+
+Proof. Induct on a word's bit length. At zero FieldBody's terminal RD sees
+sep; WriteField adds exactly that one destination sep. CopyField's Finish
+moves only its distinct destination, and ReadField's final MR crosses the
+source sep. At a successor, RD reads exactly the next bit, its three Append
+occurrences write that bit, and the source MR reduces the remaining length.
+SkipField crosses the same final sep. Thus record induction reaches each
+next field and finally the seal, including adjacent empty fields. The seal
+RD precedes every selected-record role exchange. Induction over complete
+records therefore proves last-sealed counter selection and ordinal descriptor
+selection without shifting the seal test or scanning a bit tuple as a field.
+
+For Frame, the first scan constructs exactly one length 1 per source bit;
+UnaryBody writes its terminating 0 too. BudgetBit advances one input and
+one bound position. Induction on the decoded length gives exact ReadFrame
+payload and budget consumption; the zero case consumes the length 0 and
+no payload. Induction on tuple arity, then on manifest record count, proves
+complete decoding and detection of under/over-lengths. Fixed port cases,
+finite kind arities and the explicit bit tests are native finite control.
+A copied reference is compared with a complete local descriptor/origin;
+At then receives its actual local base, never the remote printed base.
+
+Finally, induct on completed CloseFence calls: there are exactly $f$ F
+receipts and the selected/prepared counter is $U(f)$. Its next CTL creates
+exactly the next F. The read head reaches that pre-existing finite marker
+in finitely many visits; new ordinary receipts are after it. The bound and
+second scan count exactly its $n_f,2n_f$. Serialization/staging copies these
+actual words, not an ordinal inferred from a future WR. Their typed bindings
+have already been written when used by the row writer. Each listed caller
+uses precisely these exits or the separately stated raw unary/gate-code
+contract. All loops have fixed finite existing source/budget bounds. This
+proves finite expansion and the producer/reader correspondence, not an
+assumed certificate for an otherwise missing service. $\square$
 
 **Definition 6.2 (row language and producer writer).** Every completed event
 has one unified producer row, with the following finite ordered fields:
@@ -764,10 +1124,16 @@ model/version; source occurrence $\xi$; initial $H_0$/prior reference; old
 all-event ordinal $m$; predecessor unified-row reference; event kind;
 complete retained request reference; complete response; before/after $h,K$;
 before/after layout and policy ordinals; before/after $q,g,e,j$;
-before/after committed-directory counts; start and response-commit fences;
-directory-publication fence or the finite tag `no-publication`; original
+before/after committed-directory counts; complete after-directory manifest;
+start and response-commit fence references;
+post-directory-publication fence reference or the finite tag `no-publication`; original
 source-row reference or `no-source-row`; template/controller identity.
 Tuple arities and kind tags are fixed finite values; all fields use Frame.
+An optional reference field is the one-bit 0 for its none tag, or 1 followed
+by its complete encoded reference. This fixes `no-publication`,
+`no-source-row` and `no-predecessor` without treating an empty field as none.
+Fence-reference payloads are the six-field tuples of Definition 6.1a;
+compound before/after fields use nested Frames at their stated fixed arity.
 Context/name/address material and every request frame are copied or referred
 to by their complete actually retained descriptors. A reject row has reject
 and no rejected candidate payload. A maintenance refusal has its own kind.
@@ -776,13 +1142,49 @@ NativeLocal and Halt retain their inherited executed-instruction/output types.
 The old producer source-row stream continues to receive each original source
 event with its original $q,g,e,j$ meanings and original occurrence field.
 Its physical source descriptor at that event means its actual interval then;
-the new row separately supplies the full active manifest prefix and guard.
+the new row supplies the complete active public manifest payload defined
+below and the historical guard. No manifest field contains private source
+bits or changes an old interval into a frozen snapshot.
 No old row is edited or retyped. Unified maintenance rows have
-`no-source-row`, preserve $q,g,e,j$, and advance only $m$. Original calls and
-markers advance their inherited indices and $m$. A source response enters
+`no-source-row`, preserve $q,g,e,j$, and advance only $m$. Original calls advance their actual applicable $q,g,e,j$ indices and $m$;
+local/terminal markers preserve $q,g,e,j$ and advance $m$ only. A source response enters
 the pending-event component at its release, and row seal later transfers it
 to the sealed archive component. An activated directory entry before response
 release is actual maintenance work, not a fabricated old source event.
+
+The manifest is one finite bit word
+
+$$
+M_v=U(v)\;\prod_{a=1}^{v}
+ \bigl(B(\mathrm{tag}_a)B(w_{a,1})\cdots B(w_{a,k(\mathrm{tag}_a)})\bigr),
+\qquad k(00)=6,\ k(01)=7,\ k(10)=5.
+$$
+
+BuildManifest($v$) uses a free work-word destination and New, then Last and
+UnaryBody to copy the actual $U(v)$ prefix. Execute Home(0); MR. For each
+record ReadField copies its tag into another work word; its finite two-bit
+test (RD; MR; RD; MR; RD(sep))
+selects the arity. Frame that tag to the manifest destination. For each
+remaining field ReadField into a temporary word, then Frame it to the same
+manifest destination at R. Check seal with RD; MR and increment a separate
+actual record-count word. At terminal RD(R), Compare that count with $v$,
+then Finish the manifest work word. The directory head is never moved by
+Frame's word/length scans, whose ports are distinct. There is no copy of
+seal symbols into a bit field. This works from the initial record onward,
+with arbitrary finite identity fields and all repeated maintenance records.
+The completed word is Frame-copied into the row's manifest field and its
+work role can then be released. Boot uses the same graph for $M_1$.
+
+The row transports this payload, not just $U(v)$ or a producer-only handle.
+Its before manifest is the previously acquired row's after manifest, or the
+acquired boot binding for the first row. A refusal, unchanged request,
+source call or local/terminal marker supplies the identical $M_v$; a strict
+Reserve or Raise supplies $M_{v+1}$. The complete producer row channel thus
+also copies every active base/length and directory start-fence field.
+Snapshots need no extra private directory port: their rows contain these
+payloads. The producer constructs each manifest on this same run and pays
+for every scan, field copy, length construction and Frame. No delivery cost
+is assigned merely to its count.
 
 To write a row, first Base(14) records its real beginning. Its fields are
 constructed and appended by Definition 6.1 in the displayed order. Append
@@ -790,13 +1192,34 @@ sep, then append one zero bit as its seal-status cell; measure the completed
 payload length by a scan from the saved base up to its first sep, constructing
 a unary length word exactly as above. Construct the complete block descriptor,
 including the actual address base+length+1 of that status cell, by Add and
-Frame. Seek that cell with At and WR(1); one CTL seals the completed row and
+WriteDescriptor. The descriptor is a native record, not a concatenation of
+wire Frames. Its ordinal is acquired by the explicit descriptor-prefix scan. Seek that cell with At and WR(1); one CTL seals the completed row and
 records its immutable availability. The sep/status cell is not a payload bit.
-The row's length, descriptor, previous-row link and earlier fences are all
-actual material. Its seal occurrence is part of the provenance relation;
+The row's length, descriptor, previous-row link, manifest and earlier
+fence references are all actual material. The same Base/length/sep/status/
+WriteDescriptor/At; WR(1); CTL graph stages finite public words on 20 or 21
+and constructs responses, initialization blocks and verifier receipts.
+It reads an already completed source word; its length scan and FieldBody
+use distinct work ports, so later stages cannot extend their scan bound. Its seal occurrence is part of the provenance relation;
 any serialized fence naming that occurrence is acquired by a later closed
 readout and stored in the later delivery descriptor, not inside a row before
 its own creation. No self-referential current cost field is required.
+
+After row seal, construct its complete wire reference from that actual
+descriptor. Append on index stream 19 a native `00` record with two fields:
+$U(m)$ and that reference, then EX; WR(seal); MR. The index writer is Tail,
+literal tag/sep Appends, two WriteFields and those three final occurrences.
+Its reader is Home; MR, fixed tag RD/MRs, ReadField/SkipField for both fields,
+RD(seal); MR, with actual unary ordinal/count comparisons; the first tag RD
+also tests R. It can return the last sealed row reference for a predecessor,
+or enumerate the full frozen prefix. For the first row the predecessor is
+the literal `no-predecessor`. No predecessor is inferred from a raw offset.
+The $m$ counter version is already prepared; before completion its meaning
+and this unfinished index remain determined by phase. Delivery starts only
+after the new row index is complete. The old source-row reference is the
+inherited sealed journal ordinal/owner/type, constructed by its supplied
+journal writer; it is an audit reference, not a transferred private read
+permission or a replacement for the new row's actual copied fields.
 
 The response token and row seal are distinct. Between them the producer has
 one completed pending event and an unsealed row. At every cut the extended
@@ -814,7 +1237,9 @@ and initializes its $\ell$ payload cells and following sep. Append one
 zero seal-status cell immediately after that sep, by the three-primitive
 Append; construct the mailbox descriptor with status address
 base+$\ell+1$. Do the identical Base/Zero/status/descriptor construction at
-the receiver's archive port. These ports can be nonempty: both bases are
+the receiver's archive port. The receiver constructs its own block and local descriptor during the
+explicit workspace loan of Definition 2.2, then returns the pool for stage
+one. These ports can be nonempty: both bases are
 measured at their actual current R. Their distinct intervals, tokens and
 status cells exist before copying. Sender, mailbox and receiver coexist.
 
@@ -823,9 +1248,11 @@ The six-row loop is RD(counter,test); on 0 go to sealing, on 1 RD(sender,data);
 WR(mailbox,data); MR(sender); MR(mailbox); MR(counter) and back to the test.
 The private/data latch and public counter-test latch are distinct. At exit,
 At(mailbox,status); WR(1) is the seal-status prelude; CTL seals the whole
-mailbox; TOK hands off its read token. For the second stage reposition
+mailbox; TOK hands off its read token. Lend the word pool to the receiver
+by Definition 2.2. For the second stage reposition
 Last(counter), At(mailbox,base), At(receiver,base), run the identical six-row
-loop, At(receiver,status); WR(1); CTL seal; TOK acknowledgement. These
+loop, At(receiver,status); WR(1); CTL seal; TOK copy completion. Complete its requested receiver checks
+and return the word pool before the sender continuation/row ACK. These
 At invocations include Last on their actual address words. Every computed
 status address and its duplicate needed for later positioning is copied
 before the corresponding body. The destination's following sep permits its
@@ -835,7 +1262,7 @@ does not stand for an unconstructed seal table.
 
 Consequently the two payload loops, terminal tests, CTL seals and TOKs have
 exactly $12\ell+6$ occurrences, as in AIF6.4. The two real status-positioning
-and WR preludes, all Base/Zero/status/descriptor construction, first positioning
+and WR preludes, all Base/Zero/status/descriptor construction, actual workspace loans/returns, first positioning
 and between-stage repositioning are additional displayed graph evaluations.
 There is no assertion that $12\ell+6$, or $8\ell+4$, is the complete bill.
 Each such Prelude, At, Frame, Last, Base and Zero has its expansion here or
@@ -843,18 +1270,46 @@ in the exact supplier; the channel has no unnamed setup service.
 
 The mandatory row route copies the complete unified row and any request/context
 material absent at the actor through a fresh mailbox into that actor's
-append-only archive. Only after the receiver parses the whole row's framing,
-model/type, source identity, predecessor reference and final status/seal does
-its TOK acknowledge. The row-copy caller resumes Definition 4.6 at that actual
-acknowledgement. At stop, freeze the actual complete unified row/request/prior
-prefix; obtain its finite bound by scanning that already closed prefix;
-copy it through the same full channel to a fresh verifier snapshot. A snapshot
-is readable only after its complete receiver seal. Earlier snapshots and
-archives are retained; no arbitrary external transcript-import port is added.
+append-only archive. Only after all referenced request/context blocks absent locally have
+arrived, and the receiver parses the whole row's framing, model/type, source
+identity, predecessor, manifest and final status/seal, does its final TOK
+acknowledge the row. A channel stage's receiver-seal TOK is an internal
+copy completion; the row caller does not treat it as this final row ACK.
+Required ancillary blocks are sent in fixed order: boot binding/initialization/prior if
+absent, request header/length/payload, then named context blocks in request
+order. Absence is tested by the local origin scan, not an external assertion.
+The receiver uses its origin-to-local descriptor records for every referenced
+payload check. Failed structural checking takes the paid refusal edge with
+no new service-admission token; authentic rows follow the success edge. The row-copy caller resumes Definition 4.6 at that actual
+acknowledgement. At stop freeze that already complete index-19 prefix:
+scan its records once, constructing its unary count, and retain its last
+row reference and event count. No later source event is admitted during
+this stop route. Construct a snapshot-index bit word with the actual count,
+Frame(boot-binding reference), Frame(prior reference), then, in index order,
+Frame(row reference), Frame(complete request-reference tuple). Iterate the
+frozen indices by the preceding native reader; each row's bounded ReadFrame
+scan obtains its retained request-reference tuple. New/UnaryBody/Frame/Finish
+and the ordinary staging bit-block graph construct/seal this finite index
+on 21; its bound is obtained by the same length scan, not a live meter end.
+Each request tuple explicitly enumerates its header/length/payload and any
+context references with its constructed finite count. Its bit parser is
+ReadUnary followed by that count's ReadFrames and a remaining-budget check.
+
+Through the same full channel first copy the boot binding/prior and every
+row/request/context block in this frozen finite list to the verifier, testing
+its local origins to avoid a missing dependency; then copy the sealed
+snapshot index. Its reference fields keep their producer origin meanings;
+the verifier reads payloads through its acquired local descriptors. The
+snapshot consists of these actual blocks and that completed index, and
+its release CTL follows the complete index seal and dependency checks.
+There is no atomic multi-tape freeze/copy or uncharged import. An empty
+frozen list still constructs its zero count, boot/prior fields and status.
+Earlier snapshots and archives are retained; no arbitrary external
+transcript-import port is added.
 
 **Theorem 6.4 (authentic rows, old handles and complete maintenance delivery).**
 Every available receiver row equals its designated sealed sender payload,
-including the maintenance/guard/binding fields, and every verifier snapshot
+including every manifest, maintenance/guard/binding and acquired fence field, and every verifier snapshot
 equals the producer's frozen actual prefix. Every previous archive handle
 retains its payload, prefix, owner, seal and type. A source-occurrence handle
 continues to call the current source through ReadState and Resolve. An old
@@ -868,10 +1323,20 @@ No other writer can mutate the immutable sender or the sealed mailbox in
 their respective phases. The receiver's status starts at constructed zero,
 is changed only after all $\ell$ bits have been written, and its availability
 is released only by the following CTL/TOK. Thus a readable receiver has the
-whole equal payload, not merely its copied prefix. Descriptor and origin
-fields are among those copied bits; they are not newly chosen by a receiver.
+whole equal payload, not merely its copied prefix. Origin references in the row are copied bits. The receiver's local
+descriptor fields are constructed at its actual Base before copying and
+retain that exact origin. Equality of the two payloads does not identify
+their distinct owner, port, base or seal cells. Subsequent lookup uses the
+local descriptor, not the origin's private physical address.
 
-The producer writer appends without modifying any prior row or its descriptor.
+BuildManifest's record induction copies exactly each tag and all of its
+finite fields after consuming their true native separators. Its completed
+count is the actual directory length. Thus a delivered row contains the
+whole active manifest and each acquired fence tuple, not merely references
+to inaccessible directory or meter payload. The receiver's bounded decoder
+recovers those same words by Lemma 6.1b, including empty identity/origin
+fields and every old segment. The producer writer appends without modifying
+any prior row or its descriptor.
 The mandatory route completes the same check on each successive row, so
 induction gives predecessor continuity and exact archive prefixes. The frozen
 bound excludes later append and the readout's own receipts, so snapshot
@@ -902,8 +1367,30 @@ target $q_{H_0}(s)$ distinct from its replay-current syntax and counters.
 Initialize replay $h=K=H_0,r=p=0$. Scan *every* unified row and complete
 associated request material in order, using the preceding explicit framing,
 ordinal, field and block-access scans. Malformed identity, predecessor,
-length, seal, directory-count or counter relationships set a public failure
+length, seal, manifest, directory-count, fence binding or counter relationships
+set a public failure
 bit; no shortened scan substitutes for the full frozen prefix.
+
+Read the boot-binding manifest first. Parse each later manifest by
+ReadUnary for $v$ under its actual bit budget, then a $v$-bounded record
+loop. ReadFrame acquires the tag; its finite check supplies the arity; the
+inner fixed-arity ReadFrames acquire every field. Check its remaining budget
+and complete shape, not just its count. The first record must agree with
+the copied $\xi,H_0,b_0,L_0,16,0$ boot binding. Maintain the preceding complete
+manifest as an immutable local block. Compare all previous records/fields
+in full, using the same scans and word equality. For an ok reservation the
+new final record must be exactly tag `01` with $J,b,4(J-K),r+1,m,v,f_s$;
+for an ok raise exactly tag `10` with $J,p+1,m,v,f_s$. Check their resulting
+count, $h,K,r,p$, and that the declared new interval is positive and beyond
+every prior source interval. The intervening scratch gap is permitted;
+authentic provenance supplies its actual Base, not a candidate-tree guess.
+Every other event must have a byte-equal manifest and unchanged directory
+count. Thus unequal $h,K$, multiple records and no-change histories all
+retain their true meanings. Fence-reference tuples must have their expected
+kind, $\xi,m$ and before/after directory-count binding, and $2n$ fee relation; a successful publication has
+its distinct acquired post-publication fence between the start and response
+fences. A no-publication branch must have that literal tag. Their authenticity
+comes from the writer/channel, not from arithmetic on these labels.
 
 For a reservation row, recompute the public comparison and $d=4(J-K)$;
 check its exact ok/unchanged/refusal case and directory successor/count;
@@ -930,6 +1417,20 @@ There is no pretend test that a numerical name independently authenticates an
 external transcript. Provenance here comes from the exclusive owned writer
 and these allowed copies.
 
+The stop proposal is an actual retained output/input block, not a mathematical
+parameter converted to bytes for free. Copy it with the initialization and
+frozen-prefix binding from the producer to verifier archive 32 on route 50.
+After the snapshot index is sealed, its actual constructed reference supplies
+that binding. Construct a typed expected-task binding block from these
+complete words by Frame and the ordinary staging graph. Before consuming a
+receipt, copy this block on route 51 to consumer archive 40 as well, with
+its actual local descriptor on 41. The consumer loads its expected
+$\xi,H_0,D$, proposal, prefix and snapshot values from this acquired block;
+its requested target type is the fixed `INITIAL-q_H0` program tag. It does
+not compare a receipt against unacquired free parameters. These additional
+mandatory binding/proposal copies and construction are included in the
+same stop recurrence and use no source read.
+
 For each surviving initial candidate compare the proposal with the saved
 $q_{H_0}(s)$, using PR57.D8's literal tag/tuple encoding and complete
 normal-coordinate adapter if needed. The decision is nonempty compatible
@@ -943,7 +1444,12 @@ gates, replicas, field writes and copies have the specified expansions.
 
 An accepted receipt has type `INITIAL-q_H0`, the complete $\xi,H_0,D$,
 literal proposal, frozen prefix end and snapshot reference, verifier
-creation/seal references. Copy it completely through Definition 6.3 to the
+creation/seal references in its completed delivery descriptor. These are the
+actual descriptor ordinal and constructed status-cell reference, with the
+sender's seal CTL in its authentic provenance; any numeric fence for that
+seal is obtained only by a later CloseFence and belongs to that delivery
+descriptor. The receipt payload does not predict its own seal-fence numeral.
+Copy it completely through Definition 6.3 to the
 consumer. The consumer first parses every field and checks model/type,
 $\xi,H_0,D$, prefix/snapshot binding, proposed target and actual accepted
 receipt seal by finite scans and word comparison, before selecting its
@@ -974,7 +1480,16 @@ initial source under those retained commands, policies and historical guards
 produces the recorded source responses and event meanings. Reserve supplies
 no source-dependent payload to distinguish further candidates. Authentic
 physical-layout fields constrain the actual instrument/provenance, not a
-fictitious guessed source value. Thus the survivor set is precisely that
+fictitious guessed source value. More explicitly, induct simultaneously on
+equal acquired public command/response prefixes. Theorem 4.5's generator,
+source-address and private-gate schedules have identical public event words
+until each release; equal released responses then determine identical
+post-release work. All directory, counter, descriptor, manifest and fence
+routines depend only on these public words and the deterministic allocator.
+Thus they construct identical public payloads, cut ordinals and fees for
+any candidate in this fiber. They cannot silently delete a candidate that
+has all the same original responses. This applies to rejected and unchanged
+branches as well as accepted/strict-publication branches. Thus the survivor set is precisely that
 compatible initial-source fiber, with the stated structural checks. The
 complete enumeration's nonempty/constant decision is the asserted condition.
 The preserved initial-target computation is the existing exact $q_{H_0}$
@@ -983,10 +1498,87 @@ value. Whole receipt copying and the consumer's type/binding checks preserve
 that value before actual task-output writes. No target is re-evaluated under
 the newest guard merely because its archive is now read later. $\square$
 
+**Lemma 6.7 (complete caller and returned-boundary composition).** Every
+valid finite complete canonical request at a reached acknowledged idle state
+has the selected finite paid continuation through its complete row ACK to
+its saved return edge, or through its terminal ACK and requested stop work to halt. This includes
+source acceptance/rejection, Reserve greater/equal/less and all Raise
+comparison branches, every finite valid context and finite literal address.
+Reached local/controller computations and required external supplies must
+terminate. During this continuation the actual finite partial phases are
+not callable extra services and are not projected out of the actual state.
+
+The complete producer/consumer map is:
+
+| Material and writer | Actual reader and endpoint |
+| --- | --- |
+| Boot source ingress/validation, initial native directory and six counters | ReadState/Resolve and LoadCounter by ReadField/SkipField; boot CloseFence and boot-binding copy finish before acquired-controller use |
+| Native directory/counter append | Complete-record scan; the matching and skipping branches both reach the following seal, and only a seal permits selection |
+| Producer native block descriptors on 17; local copy descriptors on 29 and verifier/consumer work | Origin/ordinal native scan, full field equality, actual local availability/At reads; remote references use acquired origin matches |
+| Source S/W fields and generated code | Resolve for every S operand **and destination**; Copy/Add for W; unchanged raw-unary interpreter after complete code construction |
+| Original source response and old source row | Historical $h$ guard, inherited $q,g,e,j$ rules; complete response commitment and genuine accepted/rejected successor |
+| Start, successful publication and response CloseFence | Already constructed typed closed reference blocks, reloaded through their native descriptors into the row fields; no publication call on no-change branches |
+| Retained ingress/header/length/payload/context blocks | Complete parser and row request references; missing actor copies arrive through the positioned channel before final row ACK |
+| BuildManifest and complete unified bit-row writer | Bounded ReadFrame/manifest decoder at actor and verifier; the row channel copies the full $M_v$ payload, not a directory count alone |
+| Sender/mailbox/receiver and local origin descriptors | Both length-bounded copy stages, actual status WR/CTL/TOK; only complete receiver material can be parsed |
+| Frozen rows/requests/prior/boot binding | Verifier's acquired snapshot, full historical-guard and manifest checks, finite initial-candidate enumeration |
+| Accepted INITIAL-q_H0 receipt and completed delivery descriptor | Consumer checks all fields and seals using its local acquired descriptors before writing/sealing/OUT of the target; refusal has no task output |
+| Final row parser | Final row ACK TOK, source-service-token TOK, idle CTL, fixed retained caller return edge; a terminal route instead completes its requested snapshot/verification/consumer work before halt CTL |
+
+Proof. Lemma 6.1b is a structural proof for arbitrary finite valid words and
+records, not a length bound on this table. At every listed join it supplies
+the next reader's actual entry head and complete material. In particular
+WriteRecord ends at R; its next CloseFence creates its own F and materializes
+its own count/closed ordinal. The row writer reloads these completed words
+and builds the manifest only after the selected directory is complete.
+No publication field has an unbound value or a future completion reference.
+On no-change/refusal branches no directory is appended, and BuildManifest
+therefore reads the identical finite record sequence. Source accepts and
+rejects both pass through their completed old source row, preserve its true
+historical guard, and use the unchanged manifest. NativeLocal/Halt commit
+only their own executed marker/output. Each branch writes exactly one new
+unified event and has the same finite delivery join.
+
+For a channel, induction on $0\le i\le\ell$ gives equality of sender/mailbox
+and then mailbox/receiver prefixes and heads at their next relative index.
+At $\ell=0$ the terminal test still runs and the distinct zero-status cell
+is sought, written and sealed. At $i<\ell$ the data latch is written before
+any next public counter test; public and data latches are distinct. All
+bases/status addresses came from actual Base/length/Add words and actual
+native descriptors, even on nonempty ports. Local origin records preserve
+which sealed copy each owner may read. All required referenced payloads are
+finite and the ordered missing-copy scan terminates. The complete receiver
+row parser consumes all its bounded fields, manifest and seals, then emits
+the final row ACK. For these authentic outputs the checks succeed. At that
+edge the service still has its busy source token; the subsequent explicit
+TOK and idle CTL restore admission and the saved return edge, without changing
+the stored controller/table/seed or waiting Native command. A paid structural
+refusal on malformed acquired material grants no success/output token.
+
+Verification has a fixed finite initial-packet enumeration and finite row
+bounds; each declared prior/reached local computation terminates by premise.
+The workspace handover is a fixed twelve-port induction: after its $i$th
+TOK exactly ports 1 through $i$ have the new owner, the rest retain the old
+owner, and every word/head is unchanged by these TOKs. Its final CTL enables
+the new owner's helper. Reverse induction gives all twelve back before
+sender/dispatcher return. No mixed-transfer cut enables a helper or another
+source request. This proves the local permission/continuation joins, not
+just equality of two copied payloads. Their arithmetic/field calls run only after the twelve actual workspace
+TOKs have reached that owner, and return those tokens before a different
+owner resumes. The same field induction covers its manifest/reference/receipt readers and
+the consumer's success and refusal cases. Thus the table contains actual
+finite compositions at every caller, not required future implementations.
+Every prefix within a loop, staging block, readout, seal/status transition,
+copy, parser or token return has the next installed primitive and retains
+its own heads, latches, tokens, partially constructed words and meter.
+Only required but withheld input or divergent reached local computation can
+prevent the stated progress conclusion. $\square$
+
 ## 7. Exact cost recurrence and all actual cuts
 
 **Definition 7.1 (evaluable primitive recurrence).** Expand the finite graphs
-in Definitions 2.3–6.5 and the cited exact supplier graphs. For a graph entry
+in Definitions 2.2–6.7, the actual controller graph of Definition 8.1, and the
+cited exact supplier graphs. For a graph entry
 $G$, actual joint configuration $z$ and actual supplied input word $I$, define
 its evaluation recursively. At its stated return/halt edge set $V(G,z,I)=0$.
 At a non-IN primitive with enabled successor $z'$ set
@@ -998,16 +1590,126 @@ contribute 1. Unsupported/disabled calls have no executed edge. Withheld IN
 or divergent local work has no finite return value. On every lawful finite
 completed operation here the recurrence terminates by the preceding proofs.
 
-This is a primitive evaluation, not a schematic sum of services of unknown
-cost. For example WriteRecord with field lengths $k_1,\ldots,k_f$ evaluates
-to its actual Tail cost, 12 tag/seal occurrences, and, for each field,
-its actual Last cost plus $5k_a+4$. Zero has its actual Last/Tail calls,
-$5d+1$ body and 3 delimiter occurrences. Resolve's value is obtained by
-following its actual tag/field scan, Compare/Sub calls and the one successful
-Add, with every input Last and field delimiter. Reserve's value follows
-Definition 5.1's actual selected graph through row acknowledgement and its
-final idle CTL. No symbol such as an unspecified setup, migration or
-publication charge occurs in this recurrence.
+The following equations expose the helper and complete-service bills.
+Every cost is evaluated in the actual configuration reached by the preceding
+summand; repeated Last/Tail calls are not coalesced. Write $L_s$ for that
+call's Last cost, $N_d$ for its New/Tail cost, and $F_d=3+L_d$ for Finish
+at its actual entry. A role exchange contributes its separate CTL.
+
+$$
+\begin{aligned}
+V(\mathrm{WriteField}(w))&=L_s+5k+4,\\
+V(\mathrm{ReadField}(w))&=N_d+5k+2+F_d,\\
+V(\mathrm{SkipField}(w))&=2k+2,\\
+V(\mathrm{NativeWrite}(t;w_1,\ldots,w_a))
+ &=\mathrm{Tail}+3(|t|+1)+\sum_i(L_i+5k_i+4)+3,\\
+V(\mathrm{Frame}(w))&=L_s+N_c+(5k+1)+3+F_c
+                       +L_s+L_c+5(k+1)+(5k+1),\\
+V(\mathrm{ReadFrame}(w))&=N_c+7(k+1)+F_c+N_d+L_c+(9k+1)+F_d,
+\qquad k=|w|.
+\end{aligned}
+$$
+
+The $+2$ in ReadField is its terminal field RD and final source MR; its
+Finish is separate. ReadFrame includes all BudgetBit tests and source/budget
+moves: seven occurrences per unary length bit, nine per payload bit, one
+terminal length RD. Its tuple-end budget/status tests are additional.
+NativeWrite gives directory overhead 12, counter overhead 15 and descriptor
+overhead 12 before the displayed field terms. WriteDescriptor additionally
+pays its complete count-only origin scan, ordinal increment and all ten
+field preparations *before* NativeWrite; any caller staging/reload is counted
+at its actual graph occurrence. In a complete counter lookup,
+Home; MR and terminal RD cost Home$+2$; each record contributes 10 for
+name/sep and seal RD/MRs, its selected ReadField or SkipField cost, and one
+CTL only if a verified matching value replaces its role. Descriptor lookup
+uses the analogous tag/ten-field/seal recurrence plus every unary ordinal
+increment/Compare. Zero retains Last/Tail, $5d+1$ and its delimiter cost 3.
+All equality/failed-test/remaining-block scans follow their displayed actual
+branches. A malformed partial graph is billed by its executed prefix,
+not by substituting the successful formula.
+
+For a complete directory with fields $w_{a,i}$,
+
+$$
+P_v=|M_v|=v+1+\sum_{a=1}^{v}
+ \left(5+\sum_{i=1}^{k(\mathrm{tag}_a)}(2|w_{a,i}|+1)\right).
+$$
+
+BuildManifest evaluates New(destination), Last($v$), UnaryBody($v$),
+Home(directory); MR, construction of its zero count; for each record
+ReadField(tag), its two-bit kind check (RD; MR; RD; MR; RD(sep), cost 5),
+Frame(tag), each ReadField/Frame pair, RD(seal); MR and the paid count
+Increment; then RD(R), Compare(count,$v$), Finish(destination).
+These terms determine its exact cost on any finite directory. The manifest
+row field alone writes $2P_v+1$ bits; a row with field lengths $k_i$ has
+$\ell=\sum_i(2k_i+1)$ payload bits. All those field lengths, including $P_v$,
+are actually constructed by the length scans. Row construction additionally
+evaluates Base, the final sep/status Appends, length scan, status Add,
+WriteDescriptor, At(status); WR(1); CTL. There is no manifest-copy cost hidden
+behind a prefix count.
+
+CloseFence evaluates LoadCounter($f$), Increment, its one CTL-fence,
+AppendCounter, and the two explicit closed scans and staging. More precisely,
+its first scan's receipt bodies cost
+
+$$
+5n_f-1+\sum_{a=1}^{f}
+  \bigl(V(\mathrm{Increment}(\mathrm{visited}))+
+        V(\mathrm{Compare}(\mathrm{visited},f))\bigr).
+$$
+
+Each nonterminal receipt has RD, Append(1), MR, costing 5; the selected F has
+no final MR, giving the minus one. Add Home; MR, New(bound), literal visited
+zero construction, Append(0), Finish(bound), every selected-role CTL, and the
+second scan's actual positioning/New calls, $13n_f+7$ body and two Finishes.
+Add every Frame, closed-block Base/copy/sep/status/descriptor/At/WR/CTL
+staging occurrence, LatestType scan and later reload. The $n_f$ here describes the selected
+existing finite prefix; its *executable* bound is the actual stored scan
+result, never a free instruction argument. This is a nonrecursive meter
+readout despite the ordinary receipts created by both scans.
+
+For one channel of $\ell$ bits, evaluate sender descriptor lookup/status
+checks and length copy, both Base/Zero/sep/status/Add/WriteDescriptor
+constructions, first and between-stage Last/At positionings, and both
+At(status); WR(1) preludes. Add $12\ell+6$ for the two payload loops and
+their CTL/TOK pairs. Add any caller's complete parsing/local origin scans
+and **final row ACK** separately. Each workspace loan or return contributes
+exactly 13 occurrences (twelve TOKs and its phase CTL). A channel with receiver
+setup and return as above has four such handovers, 52 occurrences, in addition
+to its setup, positioning, status preludes and $12\ell+6$ copy core. In particular that ACK is not the
+intermediate copy-completion TOK. The complete row return sequence is row
+construction, missing-block tests and their ordered channels, row channel,
+complete receiver checks, final ACK TOK, source-token TOK, idle CTL, fixed
+return edge. At stop it instead takes its actual terminal edge after ACK and the
+requested finite stop work described next.
+Each of these summands is an above finite graph evaluation, not an unknown
+setup service. Row-index append is NativeWrite with tag length 2 and two
+fields. Stop evaluates the frozen index scan/count, each bounded row/request
+scan, construction of the snapshot-index word (UnaryBody and the displayed
+Frames), its staging block, the finite ordered dependency channels, snapshot
+index channel and release/dependency checks. Verification then sums the
+complete initial-packet enumeration, declared finite prior computations and
+all historical row/manifest replays and the actual owner-workspace loans;
+expected-task binding/proposal construction/channels, receipt construction/channel, consumer
+full checks and its selected output/refusal branch follow before halt.
+All replica allocation, local descriptor scans and target-bit OUTs stay in
+these same primitive recurrences.
+
+For strict Reserve the service order is entry counter/state loads,
+before-field staging/reload, CloseFence(start), public comparison/arithmetic/version preparation,
+Base/Zero, actual field/response construction, WriteRecord,
+CloseFence(publication), response seal/release, CloseFence(response),
+AppendCounter($m+1$) and the complete row return sequence. Strict Raise has
+its two comparisons and metadata/version preparation, WriteRecord and the
+same three fence calls, with no arena Zero. All equal/refusal cases have
+entry/start, their actual comparisons/response construction, response
+seal/release, response CloseFence, $m+1$ and the same row return sequence;
+they have no directory write, new source allocation or publication fence.
+Source accepts/rejects both include their actual generator/gates/old row
+work and the two source-start/response fence calls before the same return.
+These sequences, with $V$ applied left to right to their changing states,
+are exact executable recurrences for this graph. They do not predict the
+end ordinal from a precomputed favorable fixture.
 
 Gate generation includes every source-field Resolve, real absolute-address
 arithmetic and all emitted bits. A gate record has length
@@ -1016,7 +1718,9 @@ with its actual head distances, four full address-field copies and their
 real descriptor/positioning expansions. The caller supplies the actual
 constructed addresses, not a free address map. ReadE, modifications and
 literal minterms use the same templates and public loop bounds as their
-suppliers. Installation evaluates the actual finite native-description
+suppliers. Controller work additionally evaluates its packet channel/canonical frame
+construction, actual table/local segments, workspace handovers and complete
+returned-state installation from Definition 8.1. Installation evaluates the actual finite native-description
 encoding and every boot bit; it is not excluded as a constant migration
 premise. The AIF empty-port setup formula is not reused for later nonempty
 ports; their Base/Zero/At graphs are evaluated instead.
@@ -1049,8 +1753,8 @@ in $b_{\rm ctl}$. Label each primitive by its actual opcode and current
 finite owner-purpose phase; summing those disjoint counts recovers $n$,
 without counting a helper both as setup and as its caller. Definition 7.1
 adds exactly one for that same primitive, so it computes the same totals.
-Every Reserve performs positive zero-fill, directory and row work; every
-Raise performs positive metadata/row work. A projection omitting their labels
+Every strict Reserve performs positive zero-fill, directory and row work;
+all other Reserve/Raise branches still perform positive response/row work. A projection omitting their labels
 therefore cannot have the same primitive length. $\square$
 
 **Proposition 7.3 (storage-layout costs are different coordinates).** In a
@@ -1102,7 +1806,13 @@ latch/receipt successor. Induct up to the absolute ordinal, retaining all
 intermediate primitive states rather than just decoded trees. Resolve and
 directory publication have no nondeterministic allocator or hidden pointer;
 the new exact graphs thus meet the replay supplier's missing-specification
-premise. Canonical-prefix input is exactly the same admissibility restriction
+premise. In particular the copied-but-not-yet-selected counter word, on-sep
+versus after-sep field positions, partial Frame lengths and budgets, staged
+fence numerals, readout head before its selected F, manifest construction,
+local origin descriptors, receiver statuses all partial workspace-token transfers, and the final row/source-token/idle
+edges are retained as actual states. The induction uses their installed
+next occurrence, not an abstract invariant standing in for that occurrence.
+Canonical-prefix input is exactly the same admissibility restriction
 for the extended seven-tag language. Both raw bits remain physically enabled
 at IN; choosing an inadmissible bit executes it and exits the theorem's
 canonical-prefix domain. There is no illegal-none rewrite. The ordinal is a
@@ -1138,6 +1848,35 @@ Upon service return, the corresponding successor or acquired-reply branch
 is installed by full word copies into controller-owned state, with its
 actual table/word positioning. No new controller table is installed after
 boot and no command is selected using a free hidden tree size.
+
+The table/local phase borrows the twelve public word ports by the actual
+TOK/CTL sequence of Definition 2.2. It completes its persistent state and
+waiting packet on 25/27 before returning that pool. At an external Native
+instruction it seals the complete operation packet on 27 and sends it by
+Definition 6.3 to a producer-owned retained block on 21. This copy occurs
+before maintenance; the head/bytes/continuation of 27 at that completed
+handoff are then protected throughout the ensuing maintenance. Parse that
+acquired packet by its fixed opcode and bounded Frame fields. For a literal
+read, copy its entire address into the canonical TagRead payload; for Rho
+construct the literal three-bit Rho header and empty payload. The common
+header/length/payload construction of Definition 4.6 writes these complete
+retained blocks, using copies/Appends instead of IN for computed bits.
+Local/stop packets likewise carry their complete executed successor/output
+marker material. Continuation codes remain actual words in 27, never a
+source-owner oracle or an unstored return register.
+
+After all required maintenance and the genuine source row return, lend the
+pool to the actor for its return handler. It locates the acquired row through
+29's local origins, bounded-parses its complete response, scans the retained
+packet on 27 for the corresponding fixed successor or four-way literal
+continuation, and copies that complete code/state into 25 with the supplied
+stack/table word routines. Rho's waiting packet is used only after the genuine
+Rho; each intervening Reserve/Raise returns to the producer's suspended
+public growth-policy edge. Then return the workspace pool before the next
+producer dispatch. Every packet copy, canonical transduction, table segment,
+loan/return and state installation is an actual finite graph included in
+Definition 7.1; an uncompleted local segment retains its actual unfinished
+history rather than supplying a boundary action.
 
 **Definition 8.2 (source-blind safe growth policy).** In the automatic Native
 mode, just before an unconditional Native rho instruction, load actual $h,K$
@@ -1196,6 +1935,11 @@ existing Native trace induction thus give $t=\rho^e u$ and the stated
 chronology. The lift's Native suffix starts after the fixed acquired-seed
 entrance; that entrance's own old rows remain in the actual archive.
 
+Lemma 6.7 supplies the exact common returned boundary, including all
+ancillary delivery, final ACK, source-token return and idle CTL; a directory
+seal alone is not that boundary. Lemma 6.1b supplies complete fields and actual
+fence numerals on the successful and no-change/refusal paths. Each readout
+stops at a pre-existing marker despite its own additional receipts.
 Each new stage is a finite graph with finite constructed bounds; the reached
 table/supply premises make the inherited stages finite too. Inductively
 concatenate their actual shared endpoints. The native graph, source, state,
