@@ -1251,8 +1251,11 @@ $$
 This uses the actual orthogonal projection and does not replace it by
 the oblique transport or by the commutator majorant.
 
-For the full-support choice $S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$,
-the owned prime-count estimate gives $C_{S_X}\ll\sqrt{\mathsf V_X}$.
+For the original test's support scale $\mathsf V_X$, keep the explicit
+family $S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$. This family
+need not contain every prime through the remote completion's enlarged
+support. The owned prime-count estimate gives
+$C_{S_X}\ll\sqrt{\mathsf V_X}$.
 WT13 gives
 
 $$
@@ -1288,11 +1291,23 @@ $$
 $$
 
 Together with WT12 and WT14, equation (37) shows that the remote
-completion changes the full signed arithmetic--semilocal-trace
-residual by $o(L_X)$ on the same all-primes-through-support family.
-It therefore supplies the missing remote-trace payment needed to
-transfer any future joint lower bound from the pole-null test back to
-$H_X$. It does not provide that joint lower bound: the residual for
-$H_X$ still contains the complete prime-power term and the growing
-metric correction $\Delta_{S_X}(h_{H_X})$, and Robin's inequality and
+completion changes the signed arithmetic--semilocal-trace residual
+with this prescribed $S_X$ by $o(L_X)$. A future joint lower bound
+formed with that same family therefore transfers from the pole-null
+test back to $H_X$.
+
+The stronger comparison using every prime through the completed
+test's support remains unfinished. That support reaches
+$R_X+\tau$ in logarithmic coordinates, so the prime-count estimate
+for the enlarged family only gives $C_S\ll_\psi e^{R_X/2}$.
+Combined with (35), the resulting upper bound in (34), divided by
+$L_X$, is $O_\psi(e^{A_X/2})$; it does not establish an $o(1)$
+payment. Completing this stronger comparison requires a sharper
+trace estimate or a joint signed bound that retains the growing
+correction on the same enlarged place set. Neither (37) nor this
+insufficient upper estimate refutes such a comparison.
+
+The joint lower bound itself also remains unfinished: the residual
+for $H_X$ contains the complete prime-power term and the growing
+metric correction $\Delta_{S_X}(h_{H_X})$. Robin's inequality and
 RH remain unproved.
