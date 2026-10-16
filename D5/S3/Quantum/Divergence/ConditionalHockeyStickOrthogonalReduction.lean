@@ -100,7 +100,7 @@ private theorem rt_nonneg_psd {n : Type*} [Fintype n] [DecidableEq n]
 
 private theorem trace_psd {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) : X.trace = ((rt X : ℝ) : ℂ) := by
-  exact (RCLike.re_eq_ofReal_of_isSelfAdjoint hX.trace_nonneg.isSelfAdjoint).mp rfl
+  exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hX.isHermitian).symm
 
 private theorem posTrace_smul {n : Type*} [Fintype n] [DecidableEq n]
     (c : ℝ) (hc : 0 ≤ c) (X : Matrix n n ℂ) :

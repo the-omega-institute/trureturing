@@ -77,6 +77,7 @@ import Mathlib.Analysis.Normed.Field.Approximation
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
 import D5.S3.Weil.ZetaLinear.RankTrace
 set_option backward.isDefEq.respectTransparency false
@@ -278,10 +279,8 @@ lemma regularization_strictly_improving {d : ℕ} (T : (Matrix (Fin d) (Fin d) �
     (hT : (KPositive 2 _ T)) (ε : ℝ) (hε : 0 < ε)
     (X : (Matrix (Fin d) (Fin d) ℂ)) (hX : X.PosSemidef) (hne : X ≠ 0) :
     (((T + (ε : ℂ) • ((Matrix.traceLinearMap (Fin d) ℂ ℂ).smulRight (1 : Matrix (Fin d) (Fin d) ℂ))) : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) X).PosDef := by
-  have htrreal : ((Matrix.trace X).re : ℂ) = Matrix.trace X := by
-    apply Complex.ext
-    · rfl
-    · simpa using hX.trace_nonneg.2
+  have htrreal : ((Matrix.trace X).re : ℂ) = Matrix.trace X :=
+    D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hX.isHermitian
   have htrne : (Matrix.trace X).re ≠ 0 := by
     intro hz
     have hz' : Matrix.trace X = 0 := by rw [← htrreal, hz]; simp

@@ -9,6 +9,7 @@
 /- dual_kraus: proof_shape: bind-only; escape_witness: none;
    consumers: result, D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation.result. -/
 
+import D5.S3.Quantum.Foundation.FiniteTraceDistance
 import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
 import D5.S3.QuantumChannels.CumulantRenyiDataProcessingRefutation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
@@ -227,9 +228,8 @@ private theorem scalar_output_conceals {din dout : ℕ} {Ω Λ : Type}
     rw [hc]
     simp only [Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul, smul_eq_mul]
     congr 1
-    have hr : ((trace A).re : ℂ) = trace A := by
-      simp only [Matrix.trace, Complex.re_sum, Complex.ofReal_sum, Matrix.diag_apply]
-      exact Finset.sum_congr rfl (fun i _ => hA.coe_re_apply_self i)
+    have hr : ((trace A).re : ℂ) = trace A :=
+      D5.S3.Quantum.Foundation.FiniteTraceDistance.re_trace_eq_trace hA
     simp only [Matrix.trace_diagonal, Finset.sum_const, Finset.card_univ,
       Fintype.card_fin, nsmul_eq_mul, Complex.ofReal_div, Complex.ofReal_natCast, hr]
     field_simp

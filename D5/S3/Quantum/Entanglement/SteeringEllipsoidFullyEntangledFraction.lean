@@ -80,11 +80,15 @@ clause for every parameter, not a finite certificate, enumeration, checker or nu
 reduction.
 -/
 
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 import D5.S3.Quantum.FiniteDimensional
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence
 import D5.S3.QuantumBounds.CHSHWitness
+
+open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
+  (partialTraceRight_smul)
 
 set_option autoImplicit false
 noncomputable section
@@ -289,10 +293,6 @@ private lemma ptL_smul (c : ℂ) (x : TwoQubit) :
     partialTraceLeft (c • x) = c • partialTraceLeft x := by
   ext b d; simp [partialTraceLeft]; ring
 
-private lemma ptR_smul (c : ℂ) (x : TwoQubit) :
-    partialTraceRight (c • x) = c • partialTraceRight x := by
-  ext b d; simp [partialTraceRight]; ring
-
 private lemma form_conj {M : TwoQubit} (hM : M.IsHermitian) (x y : Fin 2 × Fin 2 → ℂ) :
     star (star x ⬝ᵥ (M *ᵥ y)) = star y ⬝ᵥ (M *ᵥ x) := by
   rw [← star_dotProduct_star, star_star, star_mulVec, ← dotProduct_mulVec, hM.eq]
@@ -376,7 +376,7 @@ theorem canonical_bound (σ : TwoQubit) (hσ : σ.PosSemidef)
     rw [hDdef, ptL_sub, ptL_smul, hB]
   have eA : partialTraceRight σ =
       ((t⁻¹ : ℝ) : ℂ) • partialTraceRight (vecMulVec w (star w)) + partialTraceRight D := by
-    rw [hDdef, ptR_sub, ptR_smul]; abel
+    rw [hDdef, ptR_sub, partialTraceRight_smul]; abel
   have radB : vlen (blochVec (partialTraceLeft D)) =
       t⁻¹ * vlen (blochVec (partialTraceLeft (vecMulVec w (star w)))) := by
     rw [eB, blochVec_sub, blochVec_scalar, blochVec_smul, zero_sub, ← neg_smul, vlen_smul, abs_neg,
