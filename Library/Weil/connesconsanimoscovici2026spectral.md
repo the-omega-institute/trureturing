@@ -3740,6 +3740,96 @@ of existing matrix identities, without a generic novelty or
 Lean-verification claim.
 
 
+#### The projection also excludes the same complete-Gamma comparison
+
+The same two-source projection supplies a stronger conditional
+application than the fixed finite-source exclusion. Keep the actual
+exterior operator $H_{\rm ext}$, selected support $E=1281{:}2048$,
+diagonal $\Lambda$, complete comparison $T=\Lambda+B_{\rm GP}$,
+and the original retained residual map $R_{\rm res}$. The common
+form/domain, inverse and sound enclosure premises remain in force.
+Here $B_{\rm GP}$ includes the complete Gamma boundary and even pole;
+this $T$ is not the nineteen-channel surrogate used in $\overline W$.
+
+For arbitrary retained $v$, use the SAME actual selected trial
+$x_0(v)=F^{-1}B_{\rm ret}v$, and write
+
+$$
+Q(v)=v^*A_{\rm ret}v-x_0(v)^*Fx_0(v),\quad
+r(v)=R_{\rm res}v=Cv-H_{\rm ext}E x_0(v),\quad E^*r(v)=0.
+$$
+
+For every $E$-supported correction $t$, the full-comparison margin is
+
+$$
+m_T(v,t)=Q(v)+t^*Ft
+ -(r(v)-H_{\rm ext}Et)^*T^{-1}(r(v)-H_{\rm ext}Et).
+$$
+
+Apply the earlier finite inverse-variational restriction to
+$X=[E,Z]$, with the archived $Z=[w_0,w_1]$. The same block completion
+as in the scalar dual formula, with two columns instead of one, gives
+
+$$
+\sup_t m_T(v,t)\le Q(v)
+ -(Z^*r(v))^*A_Z^{-1}(Z^*r(v)),\qquad A_Z=Z^*\mathcal M Z,
+$$
+
+where $\mathcal M$ is the complete-$T$ effective action defined above.
+The archived $A_Z=Z^*M_JZ$ is exactly this finite energy, and
+$B_Z=Z^*R_{\rm res}V=Z^*R_JV$. This application uses positive
+$B_0=E^*TE$, $D_0=F-B_0$ and the common finite restriction of $T$.
+It neither assumes a full-space optimizer nor identifies $M_J^{-1}$
+with a compression of an infinite inverse. The source programs'
+complete boundary and periodic diagonal, together with their mixed
+$F^{-1}$ and $D_0^{-1}$ action terms, supply this correspondence;
+finite proposal channels do not replace $T$ in those actions.
+
+Set $Q_V=V^*QV$, $Y=R_JV$ and
+$F_V=(R_{\rm far}V)^*W_{\rm far}(R_{\rm far}V)$. The already
+identified common objects satisfy
+
+$$
+V^*\overline LV=Q_V-S_J-\kappa F_V\preceq\Sigma_{\max},
+\qquad F_V\preceq G,\qquad
+\Xi=\Sigma_{\max}+\kappa G.
+$$
+
+Consequently the SAME exact matrices obey
+
+$$
+Q_V-K_Z\preceq\Sigma_{\max}+S_J+\kappa G-K_Z=U_2.
+$$
+
+Choose $a\ne0$ with $a^*U_2a<0$ from the accepted strict projection
+certificate. The implicit lift $V$ is injective, so $v=Va\ne0$.
+Fix this $v$ once. Then
+
+$$
+\sup_t m_T(v,t)\le a^*(Q_V-K_Z)a\le a^*U_2a<0.
+$$
+
+For every admitted channel comparison $T_U=\Lambda+UU^*$ with
+$UU^*\preceq B_{\rm GP}$ and common inverse-form domains,
+$T_U\preceq T$ gives $m_{T_U}(v,t)\le m_T(v,t)$. Thus the same
+nonzero retained direction prevents whole-retained positivity
+certification by any such channel refinement, for all corrections on
+this selected $E$. Adding dual test rows, completing a dual inverse,
+or changing a numerical cutoff while representing this SAME
+$T,E,\Lambda$ cannot alter the negative exact comparison margin.
+The finite $J$ here supplies dual tests, not a truncated exterior.
+
+This is a failure of the specified inverse-residual lower comparison,
+not a negative direction of the actual Weil operator. Other selected
+supports, a changed diagonal or prime comparison, and estimates using
+actual information beyond this $T$ remain distinct routes. No new
+numerical contraction is needed. The actual form/domain and inverse
+identifications, source/lift/far correspondence and sound-cache
+premises have not been discharged by this application. Actual retained
+or cofinal positivity, Robin tail and RH remain unresolved; no new
+generic theorem, algorithm or Lean verification is claimed.
+
+
 ## A proved high-energy law and its four-component characteristic geometry
 
 Taira–Willems–Wrochna, *Large eigenvalues of the Connes–Moscovici
