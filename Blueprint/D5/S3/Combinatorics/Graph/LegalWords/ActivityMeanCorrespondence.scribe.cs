@@ -31,10 +31,10 @@ internal sealed class ActivityMeanCorrespondenceDocument : IScribeDocumentDefini
                 + "legal words and is zero elsewhere. The partition function sums weight "
                 + "over all Boolean words, and law divides each weight by that sum. "
                 + "Thus the normalization is defined by the actual configuration sum.")),
-            Describe.Lean(DescribeId.Create("reconstructed-activity-law"),
-                DeclarationHandle.Create(Prefix + "reconstructed_activity_law"),
-                H("Reconstructing the product law and its normalization"),
-                StatementSource.FromAuthor(Reconstruction()),
+            Describe.Lean(DescribeId.Create("activity-mean-correspondence"),
+                DeclarationHandle.Create(Prefix + "activity_mean_correspondence"),
+                H("The product law, partition function, and unique inverse"),
+                StatementSource.FromAuthor(Correspondence()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -51,14 +51,7 @@ internal sealed class ActivityMeanCorrespondenceDocument : IScribeDocumentDefini
                         + "constant is emptyMass, the completion probability of the empty "
                         + "word. The normalized completion sums to one, hence emptyMass times "
                         + "the actual partition sum equals one. This determines the displayed "
-                        + "normalization and identifies the whole product law."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("activity-mean-correspondence"),
-                DeclarationHandle.Create(Prefix + "activity_mean_correspondence"),
-                H("Uniqueness of the activities from their means"),
-                StatementSource.FromAuthor(Correspondence()),
-                AssessedProvenance.FromRepo(),
-                Blocks(
+                        + "normalization and identifies the whole product law.")),
                     Paragraph(Text(
                         "For any positive vector w, its product law has the prescribed interior "
                         + "means if and only if w is the explicitly reconstructed vector. "
@@ -105,30 +98,22 @@ internal sealed class ActivityMeanCorrespondenceDocument : IScribeDocumentDefini
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
 
-    private static Formula Reconstruction()
+    private static Formula Correspondence()
     {
-        Formula u = F.Id("u"), n = F.Id("n"), a = Call("activity", u, n);
-        Formula law = Call("law", a), count = Add(n, D(1));
-        Formula i = F.Id("i");
+        Formula u = F.Id("u"), n = F.Id("n"), w = F.Id("w"), a = Call("activity", u, n);
+        Formula law = Call("law", a), count = Add(n, D(1)), i = F.Id("i");
         Formula numerator = Seq(new Formula.Subscript(Prod, Seq(i, Colon, Sp, Call("Fin", n))), Sp,
             Grp(new Formula.Binary(D(1), FormulaBinaryOperator.Subtract, Call("u", Add(Call("val", i), D(1))))));
         Formula denominator = Seq(new Formula.Subscript(Prod, Seq(i, Colon, Sp, Call("Fin", count))), Sp,
             Call("seam", u, Call("val", i)));
+        Formula uniqueness = All("w", new Formula.TypeArrow(Call("Fin", Add(n, D(2))), Real()),
+            Imp(Positive(w, n), new Formula.Logic(Call("Means", u, count, Call("law", w)),
+                FormulaLogicOperator.Iff, Eq(w, a))));
+        Formula conclusion = And(Positive(a, n), And(Eq(law, Call("completion", u, n)),
+            And(Eq(Call("partition", a), new Formula.Fraction(numerator, denominator)),
+                And(Call("Means", u, count, law), uniqueness))));
         return Disp(All("u", new Formula.TypeArrow(Nat(), Real()), All("n", Nat(),
-            Imp(Call("Interior", u, Add(n, D(2))),
-                And(Positive(a, n), And(Eq(law, Call("completion", u, n)),
-                    And(Eq(Call("partition", a), new Formula.Fraction(numerator, denominator)),
-                        Call("Means", u, count, law))))))));
-    }
-
-    private static Formula Correspondence()
-    {
-        Formula u = F.Id("u"), n = F.Id("n"), w = F.Id("w");
-        return Disp(All("u", new Formula.TypeArrow(Nat(), Real()), All("n", Nat(),
-            Imp(Call("Interior", u, Add(n, D(2))),
-                All("w", new Formula.TypeArrow(Call("Fin", Add(n, D(2))), Real()),
-                    Imp(Positive(w, n), new Formula.Logic(Call("Means", u, Add(n, D(1)), Call("law", w)),
-                        FormulaLogicOperator.Iff, Eq(w, Call("activity", u, n)))))))));
+            Imp(Call("Interior", u, Add(n, D(2))), conclusion))));
     }
 
     private static Formula InteriorMeans()

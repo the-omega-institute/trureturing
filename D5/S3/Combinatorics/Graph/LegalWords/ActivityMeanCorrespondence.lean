@@ -136,7 +136,7 @@ private theorem activity_pos (u : ℕ → ℝ) (n : ℕ) (hu : Interior u (n + 2
           (hu.2 (k.val + 1) (by have := k.isLt; omega)))
 
 /-- The completion is precisely the product law, and its normalization is explicit. -/
-theorem reconstructed_activity_law (u : ℕ → ℝ) (n : ℕ) (hu : Interior u (n + 2)) :
+private theorem reconstructed_law (u : ℕ → ℝ) (n : ℕ) (hu : Interior u (n + 2)) :
     (∀ i, 0 < activity u n i) ∧
     law (activity u n) = completion u n ∧
     partition (activity u n) =
@@ -295,11 +295,18 @@ private theorem weights_equal_of_laws {N : ℕ} (v w : Fin N → ℝ)
   simp only [law, weight_singleton, hp] at hi
   exact (div_left_inj' (partition_pos w hw).ne').mp hi
 
-/-- Among positive activities, the prescribed interior means determine exactly one vector. -/
-theorem activity_mean_correspondence (u : ℕ → ℝ) (n : ℕ)
-    (hu : Interior u (n + 2)) (w : Fin (n + 2) → ℝ) (hw : ∀ i, 0 < w i) :
-    Means u (n + 1) (law w) ↔ w = activity u n := by
-  have h := reconstructed_activity_law u n hu
+/-- Interior means determine the positive activities, the product law, and its normalization. -/
+theorem activity_mean_correspondence (u : ℕ → ℝ) (n : ℕ) (hu : Interior u (n + 2)) :
+    (∀ i, 0 < activity u n i) ∧
+    law (activity u n) = completion u n ∧
+    partition (activity u n) =
+      (∏ i : Fin n, (1 - u (i.val + 1))) / ∏ i : Fin (n + 1), seam u i.val ∧
+    Means u (n + 1) (law (activity u n)) ∧
+    ∀ (w : Fin (n + 2) → ℝ), (∀ i, 0 < w i) →
+      (Means u (n + 1) (law w) ↔ w = activity u n) := by
+  have h := reconstructed_law u n hu
+  refine ⟨h.1, h.2.1, h.2.2.1, h.2.2.2, ?_⟩
+  intro w hw
   constructor
   · intro hm
     exact weights_equal_of_laws w (activity u n) h.1
@@ -376,7 +383,6 @@ theorem positive_activity_means (n : ℕ) (w : Fin (n + 2) → ℝ)
   · intro i
     exact (hm i).symm
 
-#print axioms reconstructed_activity_law
 #print axioms activity_mean_correspondence
 #print axioms positive_activity_means
 
