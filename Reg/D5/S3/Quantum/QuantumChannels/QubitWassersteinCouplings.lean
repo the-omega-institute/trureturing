@@ -84,8 +84,7 @@ noncomputable def registration :
   realization := .source arena.{u} ⟨sourceRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u}
-    (fun _ p P => P p.2 p.2) (fun e => Empty.elim e))
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
