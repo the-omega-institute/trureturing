@@ -74,13 +74,14 @@ private noncomputable def rho (x : Fin 4) : Q2 :=
 private theorem ensemble_valid : IsEnsemble q rho := by
   refine ⟨?_, ?_, ?_⟩
   · intro x
+    rw [q.eq_1]
     fin_cases x <;> norm_num [q.eq_1]
   · norm_num [q.eq_1, Fin.sum_univ_succ]
   · intro x
     constructor
     · exact (posSemidef_vecMulVec_self_star (ket x)).smul
-        (by fin_cases x <;> norm_num [weight.eq_1])
-    · rw [rho, trace_smul, trace_vecMulVec]
+        (by rw [weight.eq_1]; fin_cases x <;> norm_num)
+    · rw [rho, trace_smul, trace_vecMulVec, ket.eq_1]
       fin_cases x <;>
         norm_num [weight.eq_1, ket.eq_1, dotProduct, Fin.sum_univ_two, map_ofNat]
 
@@ -100,15 +101,17 @@ private theorem adaptive_valid : IsAdaptiveStrategy effect partition guess := by
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · intro z
     exact (posSemidef_vecMulVec_self_star (effectKet z)).smul
-      (by fin_cases z <;> norm_num [effectWeight.eq_1])
-  · ext i j
+      (by rw [effectWeight.eq_1]; fin_cases z <;> norm_num)
+  · rw [Fin.sum_univ_three, effect.eq_1, effectKet.eq_1]
+    ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [effect.eq_1, effectWeight.eq_1, effectKet.eq_1, vecMulVec, Fin.sum_univ_succ,
-        Matrix.sum_apply, Matrix.smul_apply, map_ofNat]
+        Matrix.sum_apply, Matrix.smul_apply, Matrix.cons_val_two, map_ofNat]
   · intro z ℓ
     fin_cases z <;> fin_cases ℓ <;> decide
 
 private theorem adaptive_value : adaptiveValue q rho effect guess = 99/100 := by
+  rw [adaptiveValue.eq_1, guess.eq_1]
   norm_num [adaptiveValue.eq_1, q.eq_1, rho, weight.eq_1, ket.eq_1, effect.eq_1, effectWeight.eq_1, effectKet.eq_1,
     guess.eq_1, trace, Matrix.mul_apply, vecMulVec, Fin.sum_univ_three, Fin.sum_univ_two,
     Matrix.smul_apply, Complex.mul_re, Complex.mul_im, Matrix.cons_val_two,
@@ -137,13 +140,17 @@ private theorem real_psd (A : Q2)
   rcases hn with hz | hn
   · rw [hz]
     exact PosSemidef.zero
-  · exact hr.symm ▸ FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det
+  · rw [hr, realMat.eq_1]
+    exact FreeSpectrahedronFeasibilityWitness.posSemidef_of_trace_det
       _ _ _ hn.1 hn.2
 
 set_option maxHeartbeats 2000000 in
+-- The finite case proof checks all 32 rational slack matrices.
 private theorem certificate_slack (k : Fin 8) (ℓ : Fin 2) (x : Fin 4)
     (hx : x ∈ cell (parts k) ℓ) :
     (dual k ℓ - (q x : ℂ) • rho x).PosSemidef := by
+  rw [cell.eq_1, parts.eq_1] at hx
+  rw [dual.eq_1]
   fin_cases k <;> fin_cases ℓ <;> fin_cases x <;>
     norm_num [cell.eq_1, parts.eq_1, Fin.ext_iff] at hx
   all_goals apply real_psd
@@ -198,12 +205,12 @@ private theorem cell_bound {n : ℕ} (q : Fin n → ℝ) (ρ : Fin n → Q2)
 
 private theorem pre_bound_parts (k : Fin 8) (M : Fin 2 → Fin 4 → Q2)
     (hM : IsPreStrategy (parts k) M) : preValue q rho (parts k) M ≤ 483/500 := by
+  rw [preValue.eq_1, Fin.sum_univ_two]
   have hzero := cell_bound q rho (cell (parts k) 0) (M 0) (dual k 0)
     (hM 0).1 (hM 0).2 (certificate_slack k 0) ((certificate_traces k).1 0)
   have hone := cell_bound q rho (cell (parts k) 1) (M 1) (dual k 1)
     (hM 1).1 (hM 1).2 (certificate_slack k 1) ((certificate_traces k).1 1)
-  simpa only [preValue.eq_1, Fin.sum_univ_two] using
-    (add_le_add hzero hone).trans (certificate_traces k).2
+  exact (add_le_add hzero hone).trans (certificate_traces k).2
 
 private theorem partitions_complete :
     ∀ X : Finset (Fin 4), ∃ k : Fin 8, X = parts k ∨ Xᶜ = parts k := by
