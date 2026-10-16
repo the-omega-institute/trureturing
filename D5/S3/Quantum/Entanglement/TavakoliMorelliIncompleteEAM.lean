@@ -220,7 +220,8 @@ theorem sum_sq_le_of_support_card {d r : ℕ} (sval : Fin d → ℝ)
 theorem eam_effect_scaledPure {d n : ℕ} (A : EAM d n) (a : Fin n) :
     ScaledPure (A.effect a) := by
   refine ⟨(d : ℝ) / n, A.val a, by positivity, ?_⟩
-  simp only [EAM.effect.eq_1, Complex.ofReal_div, Complex.ofReal_natCast]
+  rw [EAM.effect.eq_1, Complex.ofReal_div, Complex.ofReal_natCast,
+    Complex.ofReal_natCast]
 
 theorem ket_dot_self {ι : Type*} [Fintype ι] (u : Ket ι) :
     star u.vec ⬝ᵥ u.vec = 1 := by
@@ -344,14 +345,14 @@ theorem sandwichFactor_hsSq {d : ℕ} {κ : Type*} [Fintype κ]
     hsSq (sandwichFactor K A) = moment A (Kᴴ * K) := by
   calc
     hsSq (sandwichFactor K A) = ∑ a, hsSq (K * A a * Kᴴ) := by
-      simp only [hsSq.eq_1, sandwichFactor]
+      simp only [hsSq.eq_1, sandwichFactor.eq_1]
       rw [Finset.sum_comm]
       apply Finset.sum_congr rfl
       intro a _
       simp only [Fintype.sum_prod_type, Matrix.vec]
       exact Finset.sum_comm
     _ = moment A (Kᴴ * K) := by
-      simp only [scaledPure_gram_norm (hA _), moment]
+      simp only [scaledPure_gram_norm (hA _), moment.eq_1]
 
 theorem scaledPure_transpose {d : ℕ} {A : Op d} (hA : ScaledPure A) :
     ScaledPure Aᵀ := by
