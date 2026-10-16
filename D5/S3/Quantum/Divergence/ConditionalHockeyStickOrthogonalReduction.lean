@@ -544,23 +544,23 @@ private theorem flag_transfer
         c * gap γ (amp N ρ) (amp N σ) := by
   let H : Matrix (R × A) (R × A) ℂ := ρ - γ • σ
   have hH : H.IsHermitian := by
-    dsimp [H]
+    unfold H
     exact hρ.1.isHermitian.sub (hσ.1.isHermitian.smul (by
       rw [isSelfAdjoint_iff]
       rfl))
   let P : Matrix (R × A) (R × A) ℂ := H⁺
   let Q : Matrix (R × A) (R × A) ℂ := H⁻
   have hP : P.PosSemidef := by
-    dsimp [P]
+    unfold P
     exact Matrix.nonneg_iff_posSemidef.mp (CFC.posPart_nonneg H)
   have hQ : Q.PosSemidef := by
-    dsimp [Q]
+    unfold Q
     exact Matrix.nonneg_iff_posSemidef.mp (CFC.negPart_nonneg H)
   have hPQ : P * Q = 0 := by
-    dsimp [P, Q]
+    unfold P Q
     exact CFC.posPart_mul_negPart H
   have hHdecomp : H = P - Q := by
-    dsimp [P, Q]
+    unfold P Q
     exact (CFC.posPart_sub_negPart H hH).symm
   let p : ℝ := rt P
   let q : ℝ := rt Q
@@ -584,39 +584,29 @@ private theorem flag_transfer
       ((R ⊕ (Unit ⊕ Unit)) × A) ℂ :=
     flag ((c / δ) • Q) 0 ((b / δ) • τ)
   have hρ'psd : ρ'.PosSemidef := by
-    dsimp [ρ']
+    unfold ρ'
     exact flag_psd (hP.smul (le_of_lt hc)) (hτ.1.smul ha) Matrix.PosSemidef.zero
   have hσ'psd : σ'.PosSemidef := by
-    dsimp [σ']
+    unfold σ'
     exact flag_psd (hQ.smul (le_of_lt (div_pos hc hδ))) Matrix.PosSemidef.zero
       (hτ.1.smul (div_nonneg hb (le_of_lt hδ)))
   have hτrt : rt τ = 1 := by
     have ht := congrArg Complex.re hτ.2
     unfold rt; simpa using ht
   have hρ'trace : ρ'.trace = 1 := by
-    dsimp [ρ']
-    rw [trace_flag]
-    rw [trace_smul_psd hP c, trace_smul_psd hτ.1 a, Matrix.trace_zero]
-    rw [hτrt]
-    norm_num
-    have hca' : c * rt P + a = 1 := by simpa [p] using hca
-    rw [← Complex.ofReal_mul, ← Complex.ofReal_add, hca']
-    norm_num
+    unfold ρ'
+    rw [trace_flag, trace_smul_psd hP c, trace_smul_psd hτ.1 a,
+      Matrix.trace_zero, hτrt, mul_one, add_zero, ← Complex.ofReal_add]
+    exact congrArg Complex.ofReal hca
   have hσ'trace : σ'.trace = 1 := by
-    dsimp [σ']
-    rw [trace_flag]
-    rw [trace_smul_psd hQ (c / δ), Matrix.trace_zero,
-      trace_smul_psd hτ.1 (b / δ)]
-    rw [hτrt]
-    norm_num
-    have hcb' : (c / δ) * rt Q + b / δ = 1 := by simpa [q] using hcb
-    rw [← Complex.ofReal_div, ← Complex.ofReal_mul, ← Complex.ofReal_div,
-      ← Complex.ofReal_add, hcb']
-    norm_num
+    unfold σ'
+    rw [trace_flag, trace_smul_psd hQ (c / δ), Matrix.trace_zero,
+      trace_smul_psd hτ.1 (b / δ), hτrt, mul_one, add_zero, ← Complex.ofReal_add]
+    exact congrArg Complex.ofReal hcb
   have hρ' : IsState ρ' := ⟨hρ'psd, hρ'trace⟩
   have hσ' : IsState σ' := ⟨hσ'psd, hσ'trace⟩
   have horth : ρ' * σ' = 0 := by
-    dsimp [ρ', σ']
+    unfold ρ' σ'
     rw [flag_mul]
     have hfirst : (c • P) * ((c / δ) • Q) = 0 := by
       rw [Matrix.smul_mul, Matrix.mul_smul, hPQ]
@@ -627,13 +617,13 @@ private theorem flag_transfer
     ext i j
     unfold dsum; simp
   have hsub : ρ' - δ • σ' = flag (c • H) (a • τ) (-b • τ) := by
-    dsimp [ρ', σ']
+    unfold ρ' σ'
     rw [flag_sub_smul]
     have hfirst : c • P - δ • ((c / δ) • Q) = c • H := by
       calc
         c • P - δ • ((c / δ) • Q) = c • (P - Q) := by
           rw [smul_smul]
-          have h : δ * (c / δ) = c := by field_simp [ne_of_gt hδ]
+          have h : δ * (c / δ) = c := mul_div_cancel₀ _ (ne_of_gt hδ)
           rw [h]
           ext i j
           simp [sub_eq_add_neg]
@@ -642,7 +632,7 @@ private theorem flag_transfer
     rw [show a • τ - δ • (0 : Matrix A A ℂ) = a • τ by simp]
     rw [show 0 - δ • ((b / δ) • τ) = -b • τ by
         rw [smul_smul]
-        have h : δ * (b / δ) = b := by field_simp [ne_of_gt hδ]
+        have h : δ * (b / δ) = b := mul_div_cancel₀ _ (ne_of_gt hδ)
         rw [h]
         ext i j
         simp]
@@ -663,16 +653,16 @@ private theorem flag_transfer
     rw [posTrace_smul c (le_of_lt hc), posTrace_smul a ha,
       posTrace_neg_smul hτ.1 b hb, posTrace_psd hτ.1]
     rw [hτrt]
-    simp only [mul_one, add_zero]
+    rw [mul_one, add_zero]
     have hHE : posTrace H = E γ ρ σ := by rfl
     rw [hHE]
   have hptrHdef : ptr H = ptr ρ - γ • ptr σ := by
-    dsimp [H]
+    unfold H
     exact ptr_sub_smul γ ρ σ
   have hptrρ : (ptr ρ).PosSemidef := by
-    unfold ptr; simpa using partialTraceRight_posSemidef hρ.1
+    exact partialTraceRight_posSemidef hρ.1
   have hptrσ : (ptr σ).PosSemidef := by
-    unfold ptr; simpa using partialTraceRight_posSemidef hσ.1
+    exact partialTraceRight_posSemidef hσ.1
   have hptrH : (ptr H).IsHermitian := by
     rw [hptrHdef]
     exact hptrρ.isHermitian.sub (hptrσ.isHermitian.smul (by
@@ -727,7 +717,7 @@ private theorem flag_transfer
     rw [hptrE]
     unfold rt; simp [Matrix.trace]
   have hHB : (amp N H).IsHermitian := by
-    dsimp [H]
+    unfold H
     rw [amp_sub_smul]
     exact (amp_state N hρ).1.isHermitian.sub
       ((amp_state N hσ).1.isHermitian.smul (by rw [isSelfAdjoint_iff]; rfl))
@@ -748,7 +738,7 @@ private theorem flag_transfer
       exact (hτB.1.smul hb).isHermitian.neg
     rw [posTrace_flag hcHB haτB hnτB, posTrace_smul c (le_of_lt hc),
       posTrace_smul a ha, posTrace_neg_smul hτB.1 b hb, posTrace_psd hτB.1]
-    have ht : rt (act N τ) = 1 := by unfold rt; simp only [hτB.2, Complex.one_re]
+    have ht : rt (act N τ) = 1 := by unfold rt; rw [hτB.2, Complex.one_re]
     rw [ht]
     have hh : amp N H = amp N ρ - γ • amp N σ := amp_sub_smul N γ ρ σ
     rw [hh]
