@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/UnaryWords
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Licensed unary-prefix and finite paired-word decoding supply. -/
 
 module

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/StackControl
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Counted decision continuations and framed word movement. -/
 
 import D5.S0.Computability.BinaryMachine.StackWords

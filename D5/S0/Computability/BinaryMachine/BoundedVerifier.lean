@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/BoundedVerifier
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Tactic.FinCases]
-   utility: kind=none
+   utility: none
    digest: A concrete polynomial verifier rejects malformed pairs and oversized original target witnesses. -/
 
 import Mathlib.Tactic.FinCases

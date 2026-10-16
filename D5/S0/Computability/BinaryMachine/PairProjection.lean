@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/PairProjection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Total polynomial projections use exact unary-prefix pairs and fixed malformed fallbacks. -/
 
 import D5.S0.Computability.BinaryMachine.PairPreimage

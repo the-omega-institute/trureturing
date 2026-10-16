@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/OriginalPairLanguages
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Exact all-word guarded projections characterize the ordered original UNSAT-SAT language. -/
 
 import D5.S0.Computability.OriginalClauseLanguages

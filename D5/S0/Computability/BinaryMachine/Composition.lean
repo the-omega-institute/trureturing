@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/Composition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Licensed finite binary machine Composition supply. -/
 
 module

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/OriginalClauseClassification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Original guarded UNSAT and ordered UNSAT-SAT are conditionally complete in one concrete binary model. -/
 
 import D5.S0.Computability.OriginalClauseGuard

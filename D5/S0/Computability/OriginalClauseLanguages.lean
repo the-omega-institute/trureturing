@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/OriginalClauseLanguages
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Exact original guarded SAT, guarded UNSAT and their ordered binary pair language. -/
 
 import D5.S0.Computability.UnrestrictedClauseWords

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/PairPreimage
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Polynomial paired preprocessing preserves the witness and rejects malformed outer words. -/
 
 import D5.S0.Computability.BinaryMachine.TransducerPair

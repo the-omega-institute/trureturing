@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/NPPreimage
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: NP is closed under executed polynomial preimages with the original target witness bound. -/
 
 import D5.S0.Computability.BinaryMachine.PairPreimage

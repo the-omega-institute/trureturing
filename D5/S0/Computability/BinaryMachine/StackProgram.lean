@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/StackProgram
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Licensed finite binary machine StackProgram supply. -/
 
 module

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/StackPower
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Finite stack multiplication produces exact polynomial unary witness budgets. -/
 
 import Mathlib.Tactic.Ring

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/StackCompare
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Counted all-word comparison of certificate and unary-budget lengths. -/
 
 import D5.S0.Computability.BinaryMachine.StackControl

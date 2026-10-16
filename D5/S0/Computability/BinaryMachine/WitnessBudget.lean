@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/WitnessBudget
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Original target certificate bounds are enforced by a total finite stack computation. -/
 
 import D5.S0.Computability.BinaryMachine.StackPower

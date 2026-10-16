@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/PairConstructor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Exact outer pair words are constructed by counted finite stack instructions. -/
 
 import D5.S0.Computability.BinaryMachine.StackPair

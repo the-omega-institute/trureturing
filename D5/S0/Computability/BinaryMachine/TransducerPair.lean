@@ -3,7 +3,7 @@
    mirror-B: D5/B/S0/Computability/BinaryMachine/TransducerPair
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: Common-input polynomial transducers execute both maps and construct their ordered pair. -/
 
 import D5.S0.Computability.BinaryMachine.PairConstructor
