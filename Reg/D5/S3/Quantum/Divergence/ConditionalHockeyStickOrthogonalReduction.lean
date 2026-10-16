@@ -30,10 +30,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => nomatch e)
+  realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => Empty.elim e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ p blockDiagonal => -(blockDiagonal p.2.2)) (fun e => nomatch e)
+  realize signature (fun _ p blockDiagonal => -(blockDiagonal p.2.2)) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature
@@ -88,7 +88,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => nomatch e))
+    (realize signature (fun _ p blockDiagonal => blockDiagonal p.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -126,10 +126,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => nomatch e)
+  realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => Empty.elim e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ p traceRight => traceRight p.2.2.transpose) (fun e => nomatch e)
+  realize signature (fun _ p traceRight => traceRight p.2.2.transpose) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature.{v,w}
@@ -188,7 +188,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p traceRight => traceRight p.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

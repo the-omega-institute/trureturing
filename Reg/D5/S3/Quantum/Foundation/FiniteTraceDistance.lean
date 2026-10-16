@@ -75,13 +75,13 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p trace => trace p.2.2) (fun e => nomatch e)
+  realize signature (fun _ p trace => trace p.2.2) (fun e => Empty.elim e)
 
 /-- Repeat a single row; empty matrix domains retain their unique matrix. -/
 def rejected : Realization signature :=
   realize signature
     (fun _ p trace => trace (fun i j => p.2.2 (Classical.choice (⟨i⟩ : Nonempty p.1)) j))
-    (fun e => nomatch e)
+    (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature
@@ -141,7 +141,7 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p trace => trace p.2.2) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p trace => trace p.2.2) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
