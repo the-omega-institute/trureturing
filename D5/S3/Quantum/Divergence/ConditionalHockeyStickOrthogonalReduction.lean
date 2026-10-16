@@ -62,7 +62,7 @@ noncomputable def ratios
         0 < gap γ ρ σ ∧
         x = gap γ (amp N ρ) (amp N σ) / gap γ ρ σ}
 
-private theorem state_nonempty {n : Type*} [Fintype n] [DecidableEq n]
+private theorem state_nonempty {n : Type*} [Fintype n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef ∧ X.trace = 1) : Nonempty n := by
   classical
   by_contra hn
