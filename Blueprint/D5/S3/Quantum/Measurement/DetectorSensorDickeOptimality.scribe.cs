@@ -63,7 +63,10 @@ internal sealed class DetectorSensorDickeOptimalityDocument : IScribeDocumentDef
 
     private static DocumentBlock Node(string name, Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Owner + "." + name), H(name),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("zhan-gupta-hillery-2024-detector-sensor-dicke-optimality"),
+                ResolutionKind.Proved) : null);
 
     private static Formula FireFormula() => All("n", Nat, All("theta", Real, All("i", FinN, All("psi", State,
         Eqn(Call("fire", V("theta"), V("i"), V("psi")), LambdaOf("x", Word,

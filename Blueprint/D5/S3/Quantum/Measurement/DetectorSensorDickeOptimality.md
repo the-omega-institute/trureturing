@@ -82,6 +82,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/zhan-gupta-hillery-2024-detector-sensor-dicke-optimality` (proved) by `D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"zhan-gupta-hillery-2024-detector-sensor-dicke-optimality","declaration_gid":"D5/S3/Quantum/Measurement/DetectorSensorDickeOptimality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* C. Zhan, H. Gupta, M. Hillery (2024). *Optimizing Initial State of Detector Sensors in Quantum Sensor Networks*. DOI: [10.1145/3655028](https://doi.org/10.1145/3655028). URL: <https://arxiv.org/abs/2306.17401v6>.
