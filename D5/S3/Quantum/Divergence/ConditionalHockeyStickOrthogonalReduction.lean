@@ -74,7 +74,7 @@ private theorem state_nonempty {n : Type*} [Fintype n] [DecidableEq n]
 private theorem rt_nonneg_psd {n : Type*} [Fintype n] [DecidableEq n]
     {X : Matrix n n ℂ} (hX : X.PosSemidef) : 0 ≤ rt X := by
   rw [rt, hX.isHermitian.trace_eq_sum_eigenvalues]
-  simp only [Complex.re_sum, Complex.ofReal_re]
+  simp only [Complex.re_sum]
   exact Finset.sum_nonneg fun i _ => hX.eigenvalues_nonneg i
 
 private theorem trace_psd {n : Type*} [Fintype n] [DecidableEq n]
@@ -128,7 +128,7 @@ private theorem dsum_psd {n m : Type*} [Fintype n] [DecidableEq n]
   rw [Matrix.posSemidef_iff_dotProduct_mulVec]
   refine ⟨?_, ?_⟩
   · apply Matrix.IsHermitian.fromBlocks hX.isHermitian
-    · ext <;> simp
+    · ext; simp
     · exact hY.isHermitian
   · intro x
     classical
@@ -144,7 +144,7 @@ private theorem dsum_mul {n m : Type*} [Fintype n] [DecidableEq n]
     (X X' : Matrix n n ℂ) (Y Y' : Matrix m m ℂ) :
     dsum X Y * dsum X' Y' = dsum (X * X') (Y * Y') := by
   rw [dsum, dsum, dsum, Matrix.fromBlocks_multiply]
-  simp [dsum]
+  simp
 
 private theorem posPart_dsum {n m : Type*} [Fintype n] [DecidableEq n]
     [Fintype m] [DecidableEq m]
@@ -220,9 +220,10 @@ private def flag {R A : Type*} [Fintype R] [DecidableEq R]
     Matrix ((R ⊕ (Unit ⊕ Unit)) × A) ((R ⊕ (Unit ⊕ Unit)) × A) ℂ :=
   Matrix.reindex (flagEquiv R A).symm (flagEquiv R A).symm (dsum X (dsum Y Z))
 
-private theorem trace_reindex {n m : Type*} [Fintype n] [DecidableEq n]
-    [Fintype m] [DecidableEq m] (e : n ≃ m) (X : Matrix n n ℂ) :
+private theorem trace_reindex {n m : Type*} [Fintype n]
+    [Fintype m] (e : n ≃ m) (X : Matrix n n ℂ) :
     (X.reindex e e).trace = X.trace := by
+  classical
   simp only [Matrix.trace, Matrix.reindex_apply, Matrix.diag, Matrix.submatrix_apply]
   rw [Equiv.sum_comp e.symm (fun i : n => X i i)]
 
@@ -472,30 +473,29 @@ private theorem ptr_flag {R A : Type*} [Fintype R] [DecidableEq R]
   rcases r with r | r
   · rcases s with s | s
     · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-        Matrix.trace, Fintype.sum_sum_type]
+        Matrix.trace]
     · rcases s with s | s
       · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-          Matrix.trace, Fintype.sum_sum_type]
+          Matrix.trace]
       · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-          Matrix.trace, Fintype.sum_sum_type]
+          Matrix.trace]
   · rcases r with r | r
     · rcases s with s | s
       · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-          Matrix.trace, Fintype.sum_sum_type]
+          Matrix.trace]
       · rcases s with s | s
         · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-            Matrix.trace, Fintype.sum_sum_type]
-
+            Matrix.trace]
         · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-            Matrix.trace, Fintype.sum_sum_type]
+            Matrix.trace]
     · rcases s with s | s
       · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-          Matrix.trace, Fintype.sum_sum_type]
+          Matrix.trace]
       · rcases s with s | s
         · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-            Matrix.trace, Fintype.sum_sum_type]
+            Matrix.trace]
         · simp [ptr, flag, flagEquiv, Matrix.reindex_apply, dsum, partialTraceRight,
-            Matrix.trace, Fintype.sum_sum_type]
+            Matrix.trace]
 
 private theorem flag_weights (p q δ : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q) (hδ : 0 < δ) :
     let c := (1 + p + q / δ)⁻¹
@@ -572,7 +572,7 @@ private theorem flag_transfer
   let b : ℝ := δ - c * q
   have hw : 0 < c ∧ 0 ≤ a ∧ 0 ≤ b ∧ c * p + a = 1 ∧
       (c / δ) * q + b / δ = 1 := by
-    simpa [c, a, b] using flag_weights p q δ hp hq hδ
+    exact flag_weights p q δ hp hq hδ
   rcases hw with ⟨hc, ha, hb, hca, hcb⟩
   have hRA : Nonempty (R × A) := state_nonempty hρ
   let a₀ : A := (Classical.choice hRA).2
@@ -696,7 +696,7 @@ private theorem flag_transfer
             (-b • (1 : Matrix Unit Unit ℂ))) := by
         rw [ptr_smul]
         rw [Matrix.trace_smul, hτ.2, Matrix.trace_smul, hτ.2]
-        simp [smul_smul]
+        simp
   have hone : (1 : Matrix Unit Unit ℂ).PosSemidef := Matrix.PosSemidef.one
   have hEptr : E δ (ptr ρ') (ptr σ') =
       c * E γ (ptr ρ) (ptr σ) + a := by
