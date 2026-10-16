@@ -509,7 +509,9 @@ theorem eam_effect_gram {d n : ℕ} (hd : 1 ≤ d) (A : EAM d n) (a b : Fin n) :
   have hn1 : (n : ℝ) - 1 ≠ 0 := by
     have : 1 < n := by have := A.property.1; omega
     exact ne_of_gt (sub_pos.mpr (by exact_mod_cast this))
-  simp only [EAM.effect.eq_1, Matrix.smul_mul, Matrix.mul_smul,
+  change ((((d : ℂ) / n) • proj (A.val a)) *
+    (((d : ℂ) / n) • proj (A.val b))).trace.re = _
+  rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     Matrix.trace_smul, smul_eq_mul, proj_overlap]
   have hc : (d : ℂ) / n = (((d : ℝ) / n : ℝ) : ℂ) := by
     rw [Complex.ofReal_div, Complex.ofReal_natCast, Complex.ofReal_natCast]
@@ -698,7 +700,11 @@ theorem schmidt_traceNorm_le_of_moment {d r : ℕ} {κ : Type*}
       traceNorm (∑ k ∈ s, (p k : ℂ) • correlation (proj (u k)) A B) ≤
         ∑ k ∈ s, traceNorm ((p k : ℂ) • correlation (proj (u k)) A B) := by
     induction s using Finset.induction_on with
-    | empty => simp [D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm]
+    | empty =>
+      rw [Finset.sum_empty, Finset.sum_empty]
+      change (CFC.sqrt ((0 : Matrix κ κ ℂ)ᴴ * 0)).trace.re ≤ 0
+      rw [Matrix.conjTranspose_zero, Matrix.zero_mul, CFC.sqrt_zero, Matrix.trace_zero,
+        Complex.zero_re]
     | @insert k s hk ih =>
       rw [Finset.sum_insert hk, Finset.sum_insert hk]
       exact (D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm_add_le _ _).trans
