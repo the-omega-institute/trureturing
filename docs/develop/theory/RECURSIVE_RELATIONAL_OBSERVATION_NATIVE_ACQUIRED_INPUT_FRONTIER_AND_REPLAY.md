@@ -12,9 +12,10 @@ part of a machine's acquired information when its input operation executes.
 That occurrence can precede its tape write, a complete request, a source
 response, a producer row seal, and acquisition by a different owner. The
 results below concern those distinct cuts of one actual source execution.
-They give a sufficient reconstruction code through every primitive cut of a
-specified serial runtime, and a sharp conditional information requirement on
-actual equal-clock unfinished-request families. They do not give four global
+They give a sufficient reconstruction code through every primitive cut of the
+lawful canonical-frame histories of a specified serial runtime, and a sharp
+conditional information requirement on actual equal-clock unfinished-request
+families. They do not give four global
 exact kernels for spatial support, time, continuation boundary, and callable
 memory.
 
@@ -88,17 +89,24 @@ have a source-independent ordinal. The source at this fence is still $u$.
 
 Let $\mathcal R_H$ consist of every subsequent primitive prefix of every
 finite legal sequence of the source requests in Definition 2.4 under the
-serial dispatcher below. It includes incomplete input, generation, private
-gates and source writes, counter preparation, pending events, row prefixes,
+serial dispatcher below, with their canonical frames from Definition 2.2.
+This is the full lawful canonical-frame domain, not the set of all raw-input
+runs. It includes incomplete input, generation, private gates and source
+writes, counter preparation, pending events, row prefixes,
 both communication stages and acknowledgement. The absolute ordinal $n(h)$
 counts all actual primitives from the original irreducible meter entrance,
 including preparation and acquisition. No pre-acquisition inverse theorem is
 claimed.
 
 **Definition 2.2 (external actor and canonical request frames).** At a
-prescribed public IN, an external actor in a common ready state has two
-supply edges, 0 and 1, returning to that ready state. It has no private-source
-argument or private read port. Its choices may be independent, or functions
+physically enabled prescribed public IN, an external actor in a common ready
+state has two raw supply edges, 0 and 1, returning to that ready state.
+Either bit is consumed into the input latch, takes the installed control
+successor and appends its receipt, even if the consumed word is no longer
+extendible to a canonical frame. IN does not validate that word, write a
+tape or move a head. Such an occurrence is executed; it is not `none`.
+The actor has no private-source argument or private read port. Its choices
+may be independent, or functions
 of already acquired public data. Future choices are not part of the adapter
 state and are not included in its reconstruction task.
 
@@ -113,9 +121,27 @@ names are generated canonically from their actual creation references. An
 independently chosen name, program or schedule is additional input if an
 interface admits it.
 
-Only prefixes extendible to a canonical well-typed frame are needed in
-$\mathcal R_H$. Every finite address and every finite context tree is
-included, even when its whole source modification will reject. Canonical
+Let $\mathsf C$ be exactly this set of complete well-typed source frames,
+and let $\mathsf P=\{p:\exists w\in\mathsf C,\ p\preceq w\}$, where
+$\preceq$ is the word-prefix relation, including equality. At a prescribed
+source-frame IN, let $p(h)$ be the already consumed prefix of
+the current ingress frame, empty at its first IN. The admissible task-input
+bits are exactly
+
+$$
+\operatorname{Adm}(h)=\{b\in\{0,1\}:p(h)b\in\mathsf P\}.
+$$
+
+This restricts the continuation task, not the physical raw supply edges.
+It depends on the declared frame syntax and already acquired input, not
+on the private source, its future reply or future input. No input filter or
+new checking primitive is installed. Any implemented syntax check uses
+and pays for public parsing work. Behavior after a consumed noncanonical
+prefix is not specified here beyond the actual IN successor just described.
+
+All actual ingress prefixes extendible to canonical well-typed frames are
+retained in $\mathcal R_H$. Every finite address and every finite context
+tree is included, even when its whole source modification will reject. Canonical
 framing removes encoding choices, not command choices. Repeated equal
 commands remain different occurrences in their actual order.
 
@@ -161,6 +187,7 @@ The operative distinctions are as follows.
 | Situation | Result and successor convention |
 | --- | --- |
 | Legal admitted source service, including rejection | `some(label, complete original successor)`; rejection changes work, receipts and records even when it preserves the tree |
+| Physically enabled raw IN whose bit leaves $\mathsf P$ | Executed latch/control/receipt successor; outside $\mathcal R_H$ and the task-input domain, not `none`; later malformed-frame behavior is unspecified |
 | Literal descent beyond a leaf | An executed TagRead with response `absent` |
 | Busy second semantic call, missing permission, or read of an unavailable destination | Illegal and unexecuted `none`; no new event or row |
 | Paid row lookup at a sealed owned prefix, index outside that prefix | Executed typed `no-row`, with the actual scan/work/meter successor |
@@ -191,23 +218,76 @@ fictional current decoded tree. The full-state carrier does not require a
 tree at that cut.
 
 **Definition 2.6 (continuation-and-audit task, before the views).** A primitive
-experiment can Supply($b$) when the next instruction is IN, or Advance the
-prescribed next non-IN primitive. A semantic experiment can run the finite
+task experiment can Supply($b$) at the next prescribed IN exactly when
+$b\in\operatorname{Adm}(h)$, or Advance the prescribed next enabled non-IN
+primitive. A physically enabled Supply outside this set is outside the
+task-transport domain; the task does not invoke it or assign it an
+illegal-unexecuted response. The physical actor can still execute it as
+in Definition 2.2. A semantic experiment can run the finite
 lawful protocols of Definition 2.4 at their admission points. It may finish
 an already admitted request, wait by actual prescribed work for delivery,
-and fetch a complete actual row. A finite adaptive experiment uses only
+and fetch a complete actual row. Source-frame inputs in these protocols
+obey the same admissibility rule. A finite adaptive experiment uses only
 acquired public phase, availability and responses to choose its branches.
 It has a finite decision tree, not a private-state test.
 
 Responses retain legality, actual labels and released finite outputs, and
 the complete original joint successor after every executed action. The
 empty response retains running/terminal type and any terminal output.
-All failure types in Definition 2.4 remain distinct. Write $h\sim_Q k$ if
-every such finite experiment has equal responses at the two endpoints.
+All specified failure types in Definition 2.4 remain distinct. Trials of
+physically disabled or unauthorized operations retain their `none` response;
+they do not execute a primitive. A physically enabled noncanonical Supply
+instead leaves the experiment undefined on this lawful task domain. More
+precisely, each endpoint gives a partial response map on finite experiment
+trees, defined exactly when no executed branch attempts such a Supply.
+Write $h\sim_Q k$ if these maps have the same domain and equal responses
+there. Undefinedness is a mathematical domain distinction, not an output,
+receipt, rejection or physical prevention of raw IN.
 This task concerns actual continuation and authentic row audit, not a
 request to output one of the views defined later. In particular, its public
 row experiment below suffices for the lower bound even if the private
 successor coordinates are omitted from the observable output.
+
+**Lemma 2.7 (closure on the full lawful prefix class).** For every
+$H\ge1$, every valid installed source and every $h\in\mathcal R_H$, each
+physically enabled prescribed non-IN successor is in $\mathcal R_H$.
+At a prescribed IN, the physical successor $h\cdot\mathrm{IN}(b)$ is in
+$\mathcal R_H$ if and only if $b\in\operatorname{Adm}(h)$. This includes
+all incomplete canonical tags, unary lengths and tree or address payloads,
+all intervening work and all source accepts and rejects.
+
+Proof. The complete-frame language $\mathsf C$ is prefix-free: the three-bit
+tag and terminating unary length fix the payload length, so a strict extension cannot be another
+complete frame. Thus the serial protocol identifies the current frame
+prefix without choosing a future completion. Every proper prefix in
+$\mathsf P$ has a next bit still in $\mathsf P$, by taking the next bit
+of any witnessing complete frame. Every complete frame denotes one of the
+finite requests in Definition 2.4. Its service and delivery terminate,
+including when the whole modification rejects; syntax imposes no capacity
+restriction on supplied context trees.
+
+For a non-IN successor, keep a canonical completing request sequence that
+witnesses $h\in\mathcal R_H$. The prescribed internal step is the same
+next step of that run. If $h$ is at the final idle boundary of its witness,
+append, for example, the canonical ReadE frame `0000`; its reservation work
+supplies the extension. At IN, if $p(h)b\in\mathsf P$, choose any complete
+frame extending it. Keep the already completed frames, supply that
+completion and finish its prescribed finite service. No future bit affects
+the earlier deterministic steps, so this is a lawful completed run with
+the given physical successor as a prefix. Conversely, membership of that
+successor in $\mathcal R_H$ would supply a canonical current-frame
+completion extending $p(h)b$, proving $p(h)b\in\mathsf P$. This proves
+necessity and sufficiency on the entire class, not a selected subfamily.
+
+For concrete raw edges, tag prefixes `1` and `10` both extend the Right
+frame `10011011`, whose payload is the code `11` of $\alpha$. After the
+prescribed intervening work, supplying 1 yields `11` and `101`, respectively.
+Neither extends any tag in `000,001,010,011,100`. In Definition 3.2 these
+INs occur at $n_-+6$ and $n_-+10$. Each consumes the bit into its latch,
+advances control and adds a receipt while leaving the tag tape and its head
+unchanged at that occurrence. Both successors are physically executed and
+outside $\mathcal R_H$. No later malformed-frame service is needed for
+these counterexamples to closure under all raw edges. ∎
 
 ## 3. A fully counted finite input reader
 
@@ -357,9 +437,10 @@ source-service cost is replaced by a count of input triples or Boolean gates.
 ## 4. Two residuals and a source-bound decoder
 
 **Definition 4.1 (consumed input and its storage frontier).** For an actual
-prefix $h$ after $a(u)$, let $I(h)$ be precisely the word of bits consumed
-by public IN after that fence, in actual order. Fixed deterministic work
-does not add to it. Let $L(h)$ be the chronological word of those bits whose
+prefix $h\in\mathcal R_H$ after $a(u)$, let $I(h)$ be precisely the word of
+bits consumed by public IN after that fence, in actual order. Fixed
+deterministic work does not add to it. Let $L(h)$ be the chronological word
+of those bits whose
 corresponding input WR has executed into retained frame material. Let
 $Q(h)$ be the singleton current input bit exactly in the phase between its
 IN and that WR, and empty otherwise. A stale value left physically in the
@@ -506,23 +587,30 @@ before the claimed position. No total authentic-history recognition is
 inferred from success on the actual image; the theorem requires actual
 entrance and acquisition provenance. ∎
 
-**Corollary 4.5 (joint successor transport with input labels).** On the
-actual key image, an enabled internal primitive transports
+**Corollary 4.5 (joint successor transport on the lawful task domain).** On
+the actual key image of $\mathcal R_H$, a physically enabled prescribed
+non-IN primitive transports
 $K=(\operatorname{code}(u),I,n)$ to
-$(\operatorname{code}(u),I,n+1)$. An enabled IN with actual chosen bit $b$
-transports it to $(\operatorname{code}(u),Ib,n+1)$. Decoding the transported
-key gives the complete original successor and an actual extended prefix
-in the same joint image. An illegal action has no such extension.
+$(\operatorname{code}(u),I,n+1)$. At a prescribed IN, every
+$b\in\operatorname{Adm}(h)$ transports it to
+$(\operatorname{code}(u),Ib,n+1)$. Each transported key is in that same
+actual image, and its decoder gives the complete original joint successor
+and extended primitive prefix. These are all the raw IN successors that
+remain in this image. A physically enabled bit outside
+$\operatorname{Adm}(h)$ still executes its raw IN but has no such
+same-image extension. A physically disabled action executes no primitive.
 
-Proof. Decode the actual state by Theorem 4.4. An internal row has a unique
-next rewrite. At IN the actual interface has the two declared supply
-edges, and transport carries the same $b$ on both sides. Append that very
-primitive occurrence to the original prefix. It obeys the installed rule,
-has the indicated acquired word and count, and is an actual member of the
-same history image. The induction of Theorem 4.4 applied to the extension
-gives its whole successor. No independently chosen next input is predicted
-from $u$ or $n$. If the primitive is disabled there is no original admitted
-occurrence to append. ∎
+Proof. Decode the actual prefix and state by Theorem 4.4. Lemma 2.7 proves
+that appending each stated non-IN occurrence or admissible IN occurrence
+remains in $\mathcal R_H$, for every prefix in that full class. A non-IN
+adds no acquired bit; an IN appends exactly the same supplied $b$; either
+adds one to the actual count. The extended prefix therefore has exactly
+the displayed key. Theorem 4.4 applied to it gives its whole successor,
+including latches, work, permissions and receipts. Lemma 2.7 also proves
+that no other raw IN successor belongs to the class. In particular its
+`11` and `101` edges are executed exits from the lawful domain, not disabled
+actions. No future bit is predicted from $u$ or $n$, and no physical raw
+edge is removed by this transport statement. ∎
 
 **Proposition 4.6 (semantic projection and its limits).** Projection of
 actual completed source events retains their actual typed responses. On
@@ -596,7 +684,9 @@ Proof. The two warm-ups in AIF.7 are actual accepted modifications, and the
 producer acquisition leaves the source unchanged. Setup depends on the
 common tag and $d$ only. Definition 3.1 has a bit-independent five-row
 control graph. By induction, every choice word $x$ is supplied by the
-same accessible actor at those actual IN ports. Equal $d,r$ give the same
+same accessible actor at those actual IN ports. The fixed TagRead header
+admits all $d$-bit address words, so both bits are in the task-input domain
+at every payload IN in these families. Equal $d,r$ give the same
 native states, head locations, allocated intervals, test values and receipt
 pattern. Only the consumed payload values differ. Theorem 3.3 gives the
 same full ordinal $n_0+5r$ or $n_0+5r-3$, respectively.
@@ -612,8 +702,10 @@ fiber and all the claimed equalities.
 For separation, use one common continuation: supply L at every remaining
 address position, finish the prescribed routine through its actual row
 seal and delivery acknowledgement, and fetch the row of this request
-from its authentic complete prefix. At a latch cut this first executes
-the prescribed WR; it does not resupply the bit already acquired. The
+from its authentic complete prefix. Every such completion is a canonical
+TagRead frame, so this experiment is in the task domain at every member
+of the fiber. At a latch cut this first executes the prescribed WR; it
+does not resupply the bit already acquired. The
 submitted address is
 
 $$
@@ -647,9 +739,10 @@ those earlier differences are suppressed.
 Conversely, if $x=y$, the scaffold and every consumed input bit agree.
 Induction through the explicit setup and loop gives the same full actual
 prefix and endpoint, including old cells, latches and receipts. Every
-common future experiment then has the same legality, labels, outputs and
-whole successors by deterministic evaluation with its same future supplied
-bits. This proves the other direction of AIF.8.
+future experiment tree therefore has the same domain membership at these
+identical endpoints. On that domain it has the same legality, labels,
+outputs and whole successors by deterministic evaluation with its same
+future supplied bits. This proves the other direction of AIF.8.
 
 If a sufficient supplement merged two different prefixes, the equal common
 side data and that supplement would have to determine the same response
@@ -710,8 +803,9 @@ separating experiment in Theorem 5.2 proves that its kernel strictly
 contains the task kernel when $r>0$.
 
 For $(S_0,x)$, equal values force equal $x$, whence identical actual cuts
-and all task responses. Task equivalence forces equal $x$ by the fetched
-request fields, and its common $S_0$ is already equal. These are both
+and equal experiment domains and all task responses. Task equivalence
+forces equal $x$ by the fetched request fields, and its common $S_0$ is
+already equal. These are both
 kernel inclusions for this view. The same two arguments apply independently
 to $(B_0,x)$ with its common frontier and to $(M_0,x)$ with its common seed
 and position. None uses an intersection of the views' kernels.
@@ -979,9 +1073,10 @@ variable is not cited as a physical acquisition mechanism.
 The relevant primary passages support the distinctions just stated. No
 general completeness theorem for refinement or prophecy is used to assert
 that a missing input has already been acquired. No probabilistic assumption
-is needed for the counting bounds: the full finite fibers are realized by
-the two accessible supply edges. Search scope and these citations do not
-establish absence of stronger results elsewhere.
+is needed for the counting bounds: the full finite address fibers are
+realized by the two accessible supply edges, both admissible at each of
+their payload INs. Search scope and these citations do not establish absence
+of stronger results elsewhere.
 
 ## 9. Unresolved mathematical and operational boundaries
 
@@ -995,8 +1090,10 @@ separately, and its memory interpretation must name actual ownership and
 paid access at a named cut.
 
 Theorems 4.4–4.5 give a joint reconstruction and successor witness from
-acquired input under canonical deterministic dispatch. They do not define
-the missing natural support/frontier relations. The last committed tree
+acquired input on the full lawful canonical-frame history domain under
+deterministic dispatch. Successor transport covers every enabled prescribed
+non-IN edge and exactly the admissible input edges of Definition 2.2. They
+do not define the missing natural support/frontier relations. The last committed tree
 replayed from $E$ is an abstract semantic state during a source overwrite;
 calling it the current physical tree does not solve Definition 9.1.
 Proposition 5.5 proves exact kernels only on its explicitly fixed input
@@ -1020,6 +1117,13 @@ its determinism premise. Future values of the external actor are never
 replay inputs. Arbitrary-entry authentication, fabricated transcript
 recognition, crash recovery, hostile writers and physical noise remain
 outside this ideal exclusive-owner domain.
+
+Physically enabled raw bits that destroy canonical extendibility leave
+the lawful history and task-transport domains. Their actual IN successors
+are retained as executed occurrences in the physical semantics, but no
+malformed-frame continuation, response service or replay-image closure for
+those runs is established. Studying such a domain requires specifying that
+behavior; restricting task experiments does not physically prevent the input.
 
 **Definition 9.4 (unchanged wider objectives).** Finite $H$ is an explicit
 capacity parameter, not one coherent infinite physical source. Pointwise
