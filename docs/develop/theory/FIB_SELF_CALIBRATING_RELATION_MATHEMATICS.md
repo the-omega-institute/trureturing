@@ -3323,3 +3323,184 @@ $$
 对于未声明次数上界的函数，只需在任意 $L$ 个已读序号上给漂移增加非零倍数的 $\prod_{i=0}^{L-1}(t-i)$，就保留全部有限读数而改变未来。因此有限恢复不认证其前提在更大函数族中的有效性。时间平移边界直接沿用命题 37.4。模变换群识别的一般概念可参见 Li–Lee–Bresler, “A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models”, Definition 2.7, [arXiv:1501.06120](https://arxiv.org/abs/1501.06120)；本推论的具体正尺度群及其完备性由上述共同来源恢复给出。∎
 
 ## 追加锚（本行以下为增补区）
+## 40. 固定路径的不可避免读取量与已知左因子接口
+
+### 定义 40.1（固定路径读取数）
+
+固定 $k,d\ge0$。一条每步必读的预定路径是
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1}\quad(1\le i<N),\qquad E_i\in\{M,J\},
+$$
+
+并在每个 $A_i$ 读取一次。定义 $n_{\rm fix}(k,d)$ 为使某条这样的路径对定义 39.1 的全部
+$(R_0,H,D)$ 唯一确定目标的最小统一读取数；若无此路径则置为 $\infty$。路径在任何读数前固定，且不重置关系、增益、漂移或读数时钟。
+
+### 引理 40.2（两来源多项式碰撞）
+
+对任意固定合法路径和 $N\le 2k+d+2$，存在两个不同的严格正秩一规范关系
+$R_0^{(1)},R_0^{(2)}$，两个非零 $H_1,H_2\in\Pi_k$，以及
+$D_1,D_2\in\Pi_d$，使
+
+$$
+H_1(i)\operatorname{tr}(A_iR_0^{(1)})+D_1(i)
+ =H_2(i)\operatorname{tr}(A_iR_0^{(2)})+D_2(i)\quad(0\le i<N).
+$$
+
+这两个世界的全部操作和读数序号相同，但规范关系不同。
+
+**证明。** 取两个待定的正秩一规范矩阵 $B,C$，写
+$a_i=\operatorname{tr}(A_iB)$、$b_i=\operatorname{tr}(A_iC)$。在未知系数
+
+$$
+(P,Q,E)\in\Pi_k\times\Pi_k\times\Pi_d
+$$
+
+上考虑齐次评价方程
+
+$$
+P(i)a_i+Q(i)b_i+E(i)=0\qquad(0\le i<N).                    \tag{40.1}
+$$
+
+其未知数为 $2k+d+3$，所以在所给的 $N$ 范围有非零核。为确保两份增益块都
+非零，先取 $C=B$，并把 $B$ 取在有限个非零子式的补集，使由 $a_i$ 与漂移列
+组成的评价矩阵达到最大列秩。此时 $(P,-P,0)$（$P
+e0$）给出混合核向量；若
+$C$ 沿正秩一锥作足够小而非零的变分，投影核的紧致性说明其极限不能落入 $P=0$
+或 $Q=0$ 的单侧核（单侧核会违反上述最大列秩）。因此变分后仍可取 $P,Q$ 均
+非零。若 $N\le k+d+1$，先在一个单侧核中取向量，再与 $(P,-P,0)$ 相加，得到
+同样的混合向量。评价矩阵的最大子式只排除一个真代数子集，而正秩一锥是开集，
+故可以同时避开 $B=C$；重复累计矩阵只降低方程秩，不改变这个选择。
+
+令
+
+$$
+R_0^{(1)}=B,\quad R_0^{(2)}=C,\quad H_1=P,\quad H_2=-Q,\quad
+D_1=0,\quad D_2=-E.
+$$
+
+式 (40.1) 就是所需的整段记录相等式。这个论证是评价矩阵的秩—核和两份
+参数化像的 secant 维数论证；这里使用的只是标准线性代数，双线性可识别性的
+一般术语见 Li--Lee--Bresler, Definition 2.7、Theorem 2.8，以及
+Kech--Krahmer, Definitions III.1--III.2。它没有把这些文献的复数或泛型结论
+当作本合同的实正性证明。
+
+证明从未除以 $H_i(j)$ 或假定其取正值。因此 $H_i$ 可以有实际次数低于 $k$，
+首项为零，在初始位置有根，在采样位置取零或负值，并可有重根；$D_i$ 同样可
+有实际次数低于 $d$。当 $k\ge3$ 时，例如 $G(t)=-(t)^2(t-2)$ 有初始二重根、另一个采样根和
+负采样值；$G(t)=1$ 是任意较大上界下的低实际次数实例。它们都直接落在同一
+齐次方程中。特别地，$k=d=0$ 时 (40.1) 仍给出常非零增益和常漂移的碰撞（而
+更强的四读数下界见定理 40.6）。∎
+
+### 定理 40.3（固定路径的通用下界）
+
+在定义 39.1 的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(k,d)\ge \max\{2k+d+3,\ k+d+4,\ 5\}.        \tag{40.2}
+$$
+
+其中第一项对每条 $N\le2k+d+2$ 的固定路径都由引理 40.2 给出；第二项是参数
+维数下界；第三项由定理 40.6 给出。
+
+**证明。** 引理 40.2 直接说明第一项以内不能唯一恢复。对第二项，取规范关系
+的正秩一开坐标 $(x,y)$，再取 $k+1$ 个增益系数和 $d+1$ 个漂移系数，得到
+维数 $k+d+4$ 的非空开集。任意固定路径的读数映射在该开集上连续；由欧氏维数
+不降性（等价地，对开集使用 invariance of domain）不能把它嵌入 $\mathbb R^N$ 且
+$N<k+d+4$。这只用于固定路径，不涉及自适应协议。第三项的精确证明在下述定理。∎
+
+### 定义 40.4（已知左因子的可行提升）
+
+固定严格正列 $u$，令 $R=u v^{\mathsf T}$，其中 $v=(v_1,v_2)^{\mathsf T}>0$，且
+$A_i u=(r_i,s_i)^{\mathsf T}$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间，并定义
+
+$$
+C_u(p,q,E)_i=r_i p(i)+s_iq(i)+E(i).
+$$
+
+对物理目标，$p=Gv_1$、$q=Gv_2$，其中 $G\in\Pi_k\setminus\{0\}$；因此可行
+提升域为
+
+$$
+\mathcal V_u=\{(p,q,E):p\ne0,\ q=\rho p\text{ for some }\rho>0,\ E\in\Pi_d\}.
+$$
+
+从 $(p,q,E)$ 恢复规范目标时，$\rho=v_2/v_1$ 给出
+$R_0=uv^{\mathsf T}/(v^{\mathsf T}u)$，而 $p,q$ 给出规范增益
+$H=(v^{\mathsf T}u)G$；原始分解的全部剩余尺度恰为
+
+$$
+ v\longmapsto\lambda v,\qquad G\longmapsto G/\lambda,\qquad \lambda>0. \tag{40.3}
+$$
+
+### 命题 40.5（已知左因子的精确判据）
+
+在固定 $u$ 的子族中，完整目标（规范关系、非零增益和漂移）被一条固定路径
+统一确定，当且仅当 $C_u$ 在 $\mathcal V_u$ 上是单射。若采用线性提升合同，把
+$(p,q,E)$ 本身作为完整目标，则这句话等价于整个
+$\Pi_k\times\Pi_k\times\Pi_d$ 上的 $C_u$ 单射。
+
+**证明。** 记录向量正是 $C_u(p,q,E)$。单射立即给出 $p,q,E$，从而按定义 40.4
+恢复规范关系、规范增益和漂移；(40.3) 说明没有遗漏的正尺度自由度。反之，
+若 $C_u$ 在 $\mathcal V_u$ 上有两个不同前像，则它们给出相同全部记录而目标不同。
+特别地，任何漂移纯核元 $(0,0,E)\ne0$ 都已经造成两个不同漂移的碰撞，即使关系和
+增益相同；不能因增益在某些采样点为零而删除该核元。线性提升合同中任意非零核元
+都改变完整提升目标，故得到全空间单射的等价表述。物理子族只应使用
+$\mathcal V_u$ 上的单射；把环境外的非比例 $(p,q)$ 核元误称为物理碰撞会错误加强
+必要性。
+
+该判据只固定 $u$。它不能推出未知左因子的充分性：定理 11.1 的 $R_1,R_2,R_3$
+在前三次合法读数上给出相同历史，且其左因子不同；命题 38.4 又给出同一路径上
+零增益采样点的共同来源碰撞。故 $C_u$ 的单射性不得晋升为未知关系的结论。∎
+
+### 定理 40.6（常增益常漂移的尖锐五读数基例）
+
+在未知非零常增益和未知常漂移的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(0,0)=5.                                                    \tag{40.4}
+$$
+
+五读数路径取 $I,M,JM,MJM,M^2JM$。令 $S=H R_0$；定理 9.1 的五个整数线性组合
+先唯一恢复 $(S,D)$，再由 $H=\operatorname{tr}S\ne0$、$R_0=S/H$ 恢复规范目标。
+这里没有假定 $H=1$，也允许 $H<0$。
+
+少于五次的下界对八条三动作历史逐一成立。表中 $S_1,S_2$ 均为严格正秩一矩阵，
+令世界 $j$ 的增益为 $\operatorname{tr}S_j$、规范关系为
+$R_0^{(j)}=S_j/\operatorname{tr}S_j$；世界 1 的漂移为 $0$，世界 2 的漂移为表中
+$c$。四个读数向量（含初始 $I$）分别相同：
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{动作}&S_1&S_2&c& (z_0,z_1,z_2,z_3)\\ \hline
+MMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&0&(3,5,8,13)\\
+MMJ&\left(\begin{smallmatrix}3&4\\3&4\end{smallmatrix}\right)&\left(\begin{smallmatrix}4&6\\2&3\end{smallmatrix}\right)&0&(7,11,18,17)\\
+MJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,4)\\
+MJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,3)\\
+JMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&0&(3,3,5,8)\\
+JMJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&-1&(2,2,3,3)\\
+JJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)&-1&(2,2,2,3)\\
+JJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&-1&(2,2,2,2)
+\end{array}
+$$
+
+直接相乘可见每行满足
+$\operatorname{tr}(A_iS_1)=\operatorname{tr}(A_iS_2)+c$；每对规范关系不同，
+故四读数不能统一恢复。表中八行穷尽三步 $M/J$ 历史，证明五读数下界。由于常非零
+增益和常漂移是任意 $k,d$ 合同的合法低阶实例，(40.4) 也给出所有 $k,d$ 的普适
+五读数下界。∎
+
+### 推论 40.7（当前合同的组合界与贡献范围）
+
+结合定理 39.2 的固定路径充分性，
+
+$$
+\boxed{\max\{2k+d+3,\ k+d+4,\ 5\}\le n_{\rm fix}(k,d)\le3k+d+5.} \tag{40.5}
+$$
+
+上界复用 §39 的合流评价、漂移分离和四迹逆；下界的新合同内容是引理 40.2 的
+同一正来源、同一增益、同一漂移碰撞及定理 40.6 的逐历史五读数表。行列式、核、
+secant 和变换群只是已知支撑工具；本推论不声称高次数最优性，也不声称任何自适应
+不可能性或未知左因子充分条件。∎
+
+## 追加锚（本行以下为增补区）
