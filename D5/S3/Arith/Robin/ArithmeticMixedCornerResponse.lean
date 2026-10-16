@@ -7,6 +7,7 @@
    digest: Actual coprime corners have a positive integral and quantitative area bounds. -/
 
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.LogLogHigherDerivative
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import D5.S3.Arith.Robin.PrimeFiberPropagation
 
@@ -28,7 +29,7 @@ open Set MeasureTheory
 namespace D5.S3.Arith.Robin.ArithmeticMixedCornerResponse
 
 open D5.S3.Arith.Robin.ActualRobinClockCovariance
-open D5.S3.Arith.Robin.PrimeFiberPropagation (divisorRatio)
+open D5.S3.Arith.Robin.PrimeFiberPropagation (divisorRatio divisorRatio_pos)
 
 /-- The absolute logarithmic Robin margin, including Euler's constant. -/
 def G (n : ℕ) : ℝ :=
@@ -36,8 +37,14 @@ def G (n : ℕ) : ℝ :=
     Real.log (Real.log (Real.log (n : ℝ)))
 
 private theorem density_pos {t : ℝ} (ht : 1 < t) : 0 < activationDensity t := by
-  unfold activationDensity
-  positivity [Real.log_pos ht]
+  have h := D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel_pos 1 0 0 ht
+  have ht0 : t ≠ 0 := ne_of_gt (by linarith)
+  have hl0 : Real.log t ≠ 0 := (Real.log_pos ht).ne'
+  have he : activationDensity t =
+      D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel 1 0 0 t := by
+    norm_num [activationDensity, D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel]
+    field_simp [ht0, hl0]
+  exact he.symm ▸ h
 
 private theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
     activationDensity t ≤ activationDensity s := by
@@ -52,24 +59,14 @@ private theorem density_antitone {s t : ℝ} (hs : 1 < s) (hst : s ≤ t) :
 
 private theorem shifted_g_integrable {x a : ℝ} (hx : 1 < x) (ha : 0 ≤ a) :
     IntervalIntegrable (fun u => g (x + u)) volume 0 a := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le ha]
-  intro u hu
-  exact ((g_has_deriv_at (by linarith [hu.1] : 1 < x + u)).continuousAt.comp
-    (continuousAt_const.add continuousAt_id)).continuousWithinAt
+  have h := (price_terms_integrable hx (by linarith : x ≤ x + a)).2.comp_add_left x
+  simpa only [sub_self, add_sub_cancel_left, g, one_div, mul_inv_rev,
+    div_eq_mul_inv, mul_comm, one_mul] using h
 
 private theorem shifted_density_integrable {x a : ℝ} (hx : 1 < x) (ha : 0 ≤ a) :
     IntervalIntegrable (fun u => activationDensity (x + u)) volume 0 a := by
-  apply ContinuousOn.intervalIntegrable
-  rw [uIcc_of_le ha]
-  intro u hu
-  have hp : 1 < x + u := by linarith [hu.1]
-  have hz : x + u ≠ 0 := ne_of_gt (by linarith)
-  have hl : Real.log (x + u) ≠ 0 := (Real.log_pos hp).ne'
-  have hc : ContinuousAt (fun v : ℝ => x + v) u := continuousAt_const.add continuousAt_id
-  exact (((Real.continuousAt_log hz).comp hc).add continuousAt_const |>.div
-    ((hc.pow 2).mul (((Real.continuousAt_log hz).comp hc).pow 2))
-    (mul_ne_zero (pow_ne_zero 2 hz) (pow_ne_zero 2 hl))).continuousWithinAt
+  simpa only [sub_self, add_sub_cancel_left] using
+    (density_integrable hx (by linarith : x ≤ x + a)).comp_add_left x
 
 private theorem shifted_g_integral {x a : ℝ} (hx : 1 < x) (ha : 0 ≤ a) :
     (∫ u in 0..a, g (x + u)) =
@@ -173,10 +170,8 @@ private theorem log_ratio_cancellation {n r s : ℕ} (hn : 0 < n)
       (ArithmeticFunction.sigma 1 n : ℝ) =
       (ArithmeticFunction.sigma 1 (n * r) : ℝ) *
         (ArithmeticFunction.sigma 1 (n * s) : ℝ) := by exact_mod_cast hσ
-  have hpos : ∀ m : ℕ, 0 < m → 0 < divisorRatio m := by
-    intro m hm
-    exact div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 m hm.ne')
-      (by exact_mod_cast hm)
+  have hpos : ∀ m : ℕ, 0 < m → 0 < divisorRatio m :=
+    fun _ hm => divisorRatio_pos hm.ne'
   rw [← Real.log_mul (hpos _ (by positivity)).ne' (hpos _ hn).ne',
     ← Real.log_mul (hpos _ (by positivity)).ne' (hpos _ (by positivity)).ne']
   apply congrArg Real.log

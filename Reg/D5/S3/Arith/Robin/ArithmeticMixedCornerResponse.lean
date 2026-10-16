@@ -56,8 +56,15 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   refine ⟨(), 2, 3, ?_⟩
   change activationDensity 2 ≠ activationDensity 3
   have hp : 0 < activationDensity 3 := by
-    unfold activationDensity
-    positivity [Real.log_pos (by norm_num : (1 : ℝ) < 3)]
+    have h := _root_.D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel_pos
+      1 0 0 (by norm_num : (1 : ℝ) < 3)
+    have hl0 : Real.log 3 ≠ 0 := (Real.log_pos (by norm_num : (1 : ℝ) < 3)).ne'
+    have he : activationDensity 3 =
+        _root_.D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel 1 0 0 3 := by
+      norm_num [activationDensity,
+        _root_.D5.S3.Arith.Robin.LogLogHigherDerivative.positiveKernel]
+      field_simp [hl0]
+    exact he.symm ▸ h
   have h := _root_.D5.S3.Arith.Robin.MellinWeightedVariation.scaleWeight_antitone
     (x := 2) (y := 1) (a := 2) (b := 3) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num) (by norm_num)

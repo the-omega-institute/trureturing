@@ -41,5 +41,6 @@ Keep the absolute log partition A0=log(sum_s exp(beta*d_s)). For normalized weig
 - Truth anchor: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.G`
 - Truth anchor: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.arithmetic_mixed_response`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](ActualRobinClockCovariance.md)
+- Dependency: [D5/S3/Arith/Robin/LogLogHigherDerivative](LogLogHigherDerivative.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)
 - Dependency: [D5/S3/Arith/Robin/PrimeFiberPropagation](PrimeFiberPropagation.md)
