@@ -3304,7 +3304,7 @@ N_j=p_jb_jn_{h_j}n_{h_j}^T,
 $$
 
 $$
-\sum_jp_jh_jh_j^T=I_3,qquad
+\sum_jp_jh_jh_j^T=I_3,\qquad
 \sum_jp_jb_jn_{h_j}n_{h_j}^T=M.
 \tag{FA.92}
 $$
@@ -3460,7 +3460,7 @@ $b_F=\mu_f/q$; their total failure covariance is $M$.
 The remaining Gram is
 
 $$
-B_q=\operatorname{diag}(m,d_1,d_2),qquad
+B_q=\operatorname{diag}(m,d_1,d_2),\qquad
 m=1-q,\quad d_1=1-q\nu_f,\quad d_2=1-q\upsilon_f,
 \quad m=\alpha d_1+\beta d_2.
 \tag{FA.105}
@@ -3469,7 +3469,7 @@ It is positive definite. The unique maximum-contrast completion is the four
 corner measure
 
 $$
-h^4_{\sigma\upsilon}=(1,\sigma\sqrt{d_1/m},\upsilon\sqrt{d_2/m}),qquad
+h^4_{\sigma\upsilon}=(1,\sigma\sqrt{d_1/m},\upsilon\sqrt{d_2/m}),\qquad
 p^4_{\sigma\upsilon}=m/4,
 \tag{FA.106}
 $$
@@ -3605,7 +3605,7 @@ Write its unique null representation as $B=\sum_{h\in R}r_hhh^T$ and set
 $C_h=t\mathfrak c(h)$. The fixed-allocation feasible contrast condition is
 
 $$
-\tau\le\sum_{h\in F}\frac{a_h}{C_h}|z_h|+sum_{h\in R}r_h|z_h|.
+\tau\le\sum_{h\in F}\frac{a_h}{C_h}|z_h|+\sum_{h\in R}r_h|z_h|.
 \tag{FA.115}
 $$
 For every such request the fixed-allocation maximum height is
