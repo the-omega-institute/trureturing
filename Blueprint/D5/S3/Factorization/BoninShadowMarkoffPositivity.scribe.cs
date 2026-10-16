@@ -65,13 +65,17 @@ internal sealed class BoninShadowMarkoffPositivityDocument : IScribeDocumentDefi
                 + "inequalities cut out exactly the displayed convex hull. Integrality is "
                 + "preserved even for arbitrary integer initial shadows. The result determines "
                 + "the polygon left unspecified by the source's Theorem 1 for this rooted tree.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bonin-2024-shadow-markoff-positivity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("bonin-shadow-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula MoveFormula() => Disp(new Formula.Aligned([
         Seq(Operatorname, Grp(F.Id("inductive")), Sp, F.Id("Move"), Colon, Sp, F.Id("Type")),

@@ -84,6 +84,10 @@ $$\forall al \in \mathbb{N}, be \in \mathbb{N}, ga \in \mathbb{N},\; ((al, be, g
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/BoninShadowMarkoffPositivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bonin-2024-shadow-markoff-positivity` (proved) by `D5/S3/Factorization/BoninShadowMarkoffPositivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bonin-2024-shadow-markoff-positivity","declaration_gid":"D5/S3/Factorization/BoninShadowMarkoffPositivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nathan Bonin (2024). *Conditions of positivity on a shadow Markoff tree*. DOI: [10.48550/arXiv.2403.07668](https://doi.org/10.48550/arXiv.2403.07668). URL: <https://arxiv.org/abs/2403.07668>.
