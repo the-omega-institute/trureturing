@@ -398,6 +398,16 @@ private theorem amp_smul {A B R : Type*} [Fintype A] [DecidableEq A]
   rw [hact]
   rfl
 
+private theorem amp_sub_smul {A B R : Type*} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
+    (N : QuantumChannel A B) (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
+    amp N (X - t • Y) = amp N X - t • amp N Y := by
+  ext ⟨r, b⟩ ⟨s, d⟩
+  let Z : Matrix A A ℂ := fun a a' => X (r, a) (s, a')
+  let W : Matrix A A ℂ := fun a a' => Y (r, a) (s, a')
+  change act N (Z - t • W) b d = (act N Z - t • act N W) b d
+  exact congrArg (fun M : Matrix B B ℂ => M b d) (act_sub_smul N t Z W)
+
 private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
     [Fintype A] [DecidableEq A]
     (t : ℝ) (X Y : Matrix (R × A) (R × A) ℂ) :
@@ -717,9 +727,61 @@ private theorem flag_transfer
       rfl
     rw [hptrE]
     simp [rt, Matrix.trace]
+  have hHB : (amp N H).IsHermitian := by
+    dsimp [H]
+    rw [amp_sub_smul]
+    exact (amp_state N hρ).1.isHermitian.sub
+      ((amp_state N hσ).1.isHermitian.smul (by rw [isSelfAdjoint_iff]; rfl))
+  have hτB : IsState (act N τ) := act_state N hτ
+  have houtsub : amp N ρ' - δ • amp N σ' =
+      flag (c • amp N H) (a • act N τ) (-b • act N τ) := by
+    rw [← amp_sub_smul, hsub, amp_flag, amp_smul, act_smul, act_smul]
+  have hEB : E δ (amp N ρ') (amp N σ') =
+      c * E γ (amp N ρ) (amp N σ) + a := by
+    unfold E
+    rw [houtsub]
+    have hcHB : (c • amp N H).IsHermitian :=
+      hHB.smul (by rw [isSelfAdjoint_iff]; rfl)
+    have haτB : (a • act N τ).IsHermitian :=
+      (hτB.1.smul ha).isHermitian
+    have hnτB : (-b • act N τ).IsHermitian := by
+      rw [neg_smul]
+      exact (hτB.1.smul hb).isHermitian.neg
+    rw [posTrace_flag hcHB haτB hnτB, posTrace_smul c (le_of_lt hc),
+      posTrace_smul a ha, posTrace_neg_smul hτB.1 b hb, posTrace_psd hτB.1]
+    have ht : rt (act N τ) = 1 := by simp only [rt, hτB.2, Complex.one_re]
+    rw [ht]
+    have hh : amp N H = amp N ρ - γ • amp N σ := amp_sub_smul N γ ρ σ
+    rw [hh]
+    ring
   refine ⟨c, ρ', σ', hc, hρ', hσ', horth, ?_, ?_⟩
-  · sorry
-  · sorry
+  · unfold gap
+    rw [hE, hEptr]
+    ring
+  · unfold gap
+    rw [hEB, ptr_amp, ptr_amp, hEptr, ptr_amp, ptr_amp]
+    ring
+
+private theorem orth_subset {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B) (γ : ℝ) :
+    ratios N γ true ⊆ ratios N γ false := by
+  rintro x ⟨R, fR, dR, ρ, σ, hρ, hσ, _, hg, hx⟩
+  exact ⟨R, fR, dR, ρ, σ, hρ, hσ, by simp, hg, hx⟩
+
+private theorem transfer_subset {A B : Type} [Fintype A] [DecidableEq A]
+    [Fintype B] [DecidableEq B] (N : QuantumChannel A B)
+    (γ δ : ℝ) (hδ : 0 < δ) : ratios N γ false ⊆ ratios N δ true := by
+  rintro x ⟨R, fR, dR, ρ, σ, hρ, hσ, _, hg, hx⟩
+  letI := fR
+  letI := dR
+  obtain ⟨c, ρ', σ', hc, hρ', hσ', ho, hi, hb⟩ :=
+    flag_transfer N γ δ hδ ρ σ hρ hσ
+  refine ⟨R ⊕ (Unit ⊕ Unit), inferInstance, inferInstance,
+    ρ', σ', hρ', hσ', fun _ => ho, ?_, ?_⟩
+  · rw [hi]
+    exact mul_pos hc hg
+  · rw [hb, hi, mul_div_mul_left _ _ (ne_of_gt hc)]
+    exact hx
 def claim : Prop :=
   ∀ (A B : Type) [Fintype A] [DecidableEq A]
       [Fintype B] [DecidableEq B] (N : QuantumChannel A B),
@@ -727,6 +789,15 @@ def claim : Prop :=
     (∀ γ δ : ℝ, 1 ≤ γ → 1 ≤ δ → ratios N γ false = ratios N δ false)
 
 theorem result : claim := by
-  sorry
+  intro A B _ _ _ _ N
+  constructor
+  · intro γ hγ
+    exact Set.Subset.antisymm
+      (transfer_subset N γ γ (lt_of_lt_of_le zero_lt_one hγ))
+      (orth_subset N γ)
+  · intro γ δ hγ hδ
+    exact Set.Subset.antisymm
+      ((transfer_subset N γ δ (lt_of_lt_of_le zero_lt_one hδ)).trans (orth_subset N δ))
+      ((transfer_subset N δ γ (lt_of_lt_of_le zero_lt_one hγ)).trans (orth_subset N γ))
 
 end D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
