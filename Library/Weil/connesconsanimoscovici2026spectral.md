@@ -4823,3 +4823,99 @@ general theorems or Lean verification. All stated actual form/domain,
 short, unitary, full-band, source and sound complete-far/cache premises
 remain conditions. Actual retained/cofinal positivity, the Robin tail
 and RH remain unresolved.
+
+### Transport the archived trial before another matrix solve
+
+Use the supplied $\tau_{\rm band}$ above and BOTH true-$h$ endpoints.
+The archived exact17trial $x$ and scalar enclosures already describe
+the SAME $\Sigma_0=\Sigma_*+\delta H_{\rm lift}$, unchanged finite row
+$b_J$, source row $r=r_V$ and complete paid PSD far Gram $G$.
+Write $\Sigma_0=\left(\begin{smallmatrix}a_0&c\\c^*&F_0\end{smallmatrix}\right)$,
+$a_0<0$, and
+
+$$
+g_0=\bigl((b_0-cx)/a_0,x\bigr),\quad m_0=rg_0,\quad
+z_0=g_0^*Gg_0,\quad \mu=\tau/h,\quad
+\eta=1+\mu r_0^2/a_0.
+$$
+
+For this real fixed trial, the standard rank-one update gives
+
+$$
+a_\tau=a_0+\mu r_0^2=a_0\eta,\quad
+\theta=\frac{\mu r_0m_0}{a_\tau},\quad
+g_\tau=g_0-\theta e_0,
+$$
+
+$$
+q_\tau(x)=q_0(x)-\frac{\mu m_0^2}{\eta},\qquad
+z_\tau=z_0-2\theta(e_0^*Gg_0)+\theta^2G_{00}.
+$$
+
+Indeed, the first gradient coordinate is
+$(b_0-cx-\mu r_0r_+x)/(a_0+\mu r_0^2)$; subtracting its old
+value gives $-\theta$. Expanding
+$q_0(x)=(b_0-cx)^2/a_0+2b_+x-x^*F_0x$ under the SAME rank-one
+update gives the displayed decrement. The Gram identity then follows
+by expanding $g_\tau^*Gg_\tau$.
+
+The cached $q_0$ is only a LOWER and is used in that direction.
+Only the missing18term mixed scalar $e_0^*Gg_0$ needs a new contraction.
+Recompute, rather than transfer the old far coefficient,
+
+$$
+A_\tau=\kappa-\frac{\kappa^2G_{00}}{-a_\tau}>0,
+\qquad \kappa=33/32.
+$$
+
+The same-source far square completion supplies the directed lower
+
+$$
+\mathcal K+q_\tau(\mathcal BV)
+\ge\ell_\tau:=(\mathrm{charge})_{\rm lo}+q_{0,\rm lo}
+ -\left(\frac{\mu m_0^2}{\eta}\right)_{\rm up}
+ -\left(\frac{\kappa^2z_\tau}{A_\tau}\right)_{\rm up}.
+$$
+
+The [saved scalar application](https://github.com/the-omega-institute/trureturing-experiments/tree/a2283cc01569193283e2a0ee12139cc66909e35b/docs/reports/weil-c27)
+reuses all old trial, source, energy and Gram calculations. Its sole
+fixed1024/640-bit run takes0.09882seconds and encloses
+
+$$
+\eta\simeq0.379630426033288183,\quad
+a_\tau\simeq-4.47097042972572520\times10^{-32},\quad
+A_\tau\simeq0.362304559585549403,
+$$
+
+$$
+z_\tau\simeq55.6410065569858228,\qquad
+(\kappa^2z_\tau/A_\tau)_{\rm up}\simeq163.323659119699822,
+\qquad \boxed{\ell_\tau\simeq-177.935387035771641.}
+$$
+
+The strict pivot and coefficient guards pass, but this negative LOWER
+is inconclusive about the exact score and about positivity. A positive
+$\ell_\tau$ would exclude every $D>0,D\ge\mathcal K$ at the endpoint;
+the fixed-$D$ order
+
+$$
+\overline L_{\tau_2}+\mathcal B^*\mathcal B/D
+ -\overline L_{\tau_1}-\mathcal B^*\mathcal B/D
+=\frac{\tau_2-\tau_1}{h}r^*r\succeq0
+$$
+
+would then extend that exclusion down the supplied interval. Its
+antecedent is not established here. The old smaller-interval ceiling
+exclusion and the enlarged conditional eligibility budget keep their
+stated scopes.
+
+No new inverse, solve, trial, matrix/determinant, source/action,
+Fourier/potential or old energy/far supplier is run, and this fixed
+recipe stops without scanning. A sufficient positivity certificate
+still needs the SAME actual Schur complement and good-block inverse
+cost; the projected18row and exclusion upper $\Sigma_{\max}$ cannot
+replace them. All inherited actual inverse-form/domain, legal $E$,
+SAME-short, unitary/source/lift and sound complete-far/cache conditions
+remain premises. This is a numerical application of established
+rank-one and square-completion identities, without a generic novelty,
+Lean, actual retained/cofinal positivity, Robin-tail or RH claim.
