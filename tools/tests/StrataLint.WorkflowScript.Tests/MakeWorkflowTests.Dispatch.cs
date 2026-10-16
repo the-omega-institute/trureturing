@@ -118,7 +118,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
+            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\" \"$$REANCHOR_OLD_REPORT\"",
             Recipe(makefile, "mathlib-reanchor"));
         // The four targets that reach the command line keep the verb in the Makefile and stay one
         // recipe line: the dispatch table above allows at most one line per target, and

@@ -10,8 +10,11 @@ internal static class DagLedgerMathlibReanchorWriter
     {
         try
         {
-            if (arguments.Count != 2 || arguments[0] != "--base" || string.IsNullOrWhiteSpace(arguments[1]))
-                throw new InvalidOperationException("USAGE: StrataLint ledger-reanchor-mathlib --base REV");
+            if (arguments.Count is not (2 or 4) || arguments[0] != "--base" || string.IsNullOrWhiteSpace(arguments[1])
+                || arguments.Count == 4 && (arguments[2] != "--old-report" || string.IsNullOrWhiteSpace(arguments[3])))
+                throw new InvalidOperationException("USAGE: StrataLint ledger-reanchor-mathlib --base REV [--old-report PATH]");
+            var oldWitness = arguments.Count == 4
+                ? RawLeanReportArtifact.ReadFrozenWitnessFile(Path.GetFullPath(arguments[3], root)) : null;
             var protectedBase = Decode(DagLedgerCommandPreparation.Ask(() =>
                 repository.ReadRevisionProjection(arguments[1], TruthExportCommand.IsTruthInput)));
             var state = FrozenStateCatalog.Load(protectedBase);
@@ -30,8 +33,8 @@ internal static class DagLedgerMathlibReanchorWriter
             var drift = retained.Where(path => state.Records[path].StatementId != planned[path].StatementId
                 || !state.Records[path].Declarations.SequenceEqual(planned[path].Declarations)).ToImmutableHashSet();
             if (drift.IsEmpty) return new(true, "MATHLIB_REANCHOR replacement_modules=0 drift_seed_modules=0 recognition=not-required\n", string.Empty);
-            var failures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(protectedBase, truth.Snapshot, drift, state, truth.Report);
-            var authorized = new MathlibUpgradeFrozenLedgerReplacementAuthorization(protectedBase, truth.Snapshot)
+            var failures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(protectedBase, truth.Snapshot, drift, state, truth.Report, oldWitness);
+            var authorized = new MathlibUpgradeFrozenLedgerReplacementAuthorization(protectedBase, truth.Snapshot, oldWitness)
                 .IsAuthorized(drift, state, truth.Report);
             var output = $"MATHLIB_REANCHOR replacement_modules={drift.Count}\nMATHLIB_REANCHOR drift_seed_modules={drift.Count}\n"
                 + $"AUTHORIZATION proposition_source_equivalent={(failures.IsEmpty ? "pass" : "fail")} failed_modules={failures.Length}\n"
