@@ -32,7 +32,7 @@ noncomputable def uniformPmf (α : Type*) [Fintype α] [Nonempty α] : PMF α :=
     exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
       (ENNReal.natCast_ne_top _))
 
-theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
+private theorem uniformPmf_toOuterMeasure_apply (α : Type*) [Fintype α] [Nonempty α]
     (s : Set α) [Fintype s] :
     (uniformPmf α).toOuterMeasure s = Fintype.card s / Fintype.card α := by
   classical
@@ -268,7 +268,7 @@ theorem terminal_sampling_execution_cylinders
     have region_measurable : ∀ j, MeasurableSet (regions j) :=
       fun _ => (Set.toFinite _).measurableSet
     have family_measurable : Measurable (fun tape j => readBlock width (cursor + j * width) tape) := by
-      apply Measurable.of_eval
+      apply measurable_pi_iff.mpr
       intro j
       exact (measurable_of_finite (blockEquiv width)).comp
         (by fun_prop)
@@ -294,7 +294,8 @@ theorem terminal_sampling_execution_cylinders
         simp only [Set.mem_ofPred_eq, Set.mem_compl_iff, acceptSet]
         omega
       calc
-        _ = Fintype.card (↥(acceptSetᶜ)) := Fintype.card_congr (Set.equivOfEq he)
+        _ = Fintype.card (↥(acceptSetᶜ)) :=
+          Fintype.card_congr (Equiv.subtypeEquivRight (Set.ext_iff.mp he))
         _ = _ := by rw [Fintype.card_compl_set, Fintype.card_fin, cardAccept]
     have rejection_mass : ν {y | bound ≤ y.val} = ((Q - bound : ℕ) : ℝ≥0∞) / Q := by
       unfold ν
