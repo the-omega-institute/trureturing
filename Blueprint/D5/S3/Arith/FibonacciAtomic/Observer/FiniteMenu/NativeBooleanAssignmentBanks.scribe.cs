@@ -28,6 +28,14 @@ internal sealed class NativeBooleanAssignmentBanksDocument : IScribeDocumentDefi
                 "Name is List Bool, a finite syntactic spelling. Each formula is represented by its ordered name-occurrence list. localCount(names)=length(dedup(names)); localIndex uses the index in that fixed syntactic deduplication order. commonCount(formulas)=max(1,foldr(max,0,map(localCount,formulas))). commonIndex embeds localIndex into Fin(commonCount). Each formula independently extends every assignment on its appearing names. Different formulas need not agree on equal spellings; the common universe uses the maximum local count, not a union count."),
             Definition("CoordinateSpec", "Exact Coordinate Interface", CoordinateStatement(),
                 "nativeClassNames abbreviates the function i ↦ value(coord(i)), represented by its six entries. The two explicit permutations preserve the source/native coordinate correspondence and the six original canonical class names."),
+            Describe.Lean(DescribeId.Create("native-boolean-b-height"),
+                DeclarationHandle.Create(Prefix+"B_height"), H("Exact Basis Heights"),
+                StatementSource.FromAuthor(Disp(All("d",V("Nat"),EqOf(Call("height",Call("B",V("d"))),V("d"))))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Every original B(d) has height d, including B(0)=beta. Thus B(1) through B(6) are distinct actual branch values."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-boolean-pad-preimage"),
+                DeclarationHandle.Create(Prefix+"pad_preimage"), H("Actual Basis Preimages"),
+                StatementSource.FromAuthor(Disp(All("d",V("Nat"),EqOf(Call("rho",Call("pad",V("d"),V("alpha"))),Call("B",V("d")))))), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Padding alpha to depth d gives an actual predecessor of the original B(d). Every prescribed basis image is therefore in the original substitution image, with no replacement image predicate."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("native-boolean-assignment-banks"), DeclarationHandle.Create(Prefix+"native_boolean_assignment_banks"),
                 H("Full FTC Lemma 6.1"), StatementSource.FromAuthor(Disp(MainStatement())), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The first clause holds for every natural n and every Boolean assignment, and supplies both second=false and second=true actual witnesses. At n=0, ell=1, selected is empty and the bank is B(1), while both witness families remain available. Independently of every assignment, zeroTuple=[B(1),B(3),B(4),B(2),B(5),B(6)] in native order is B(1) through B(6) in D order. Its explicit origin is filling of the corresponding pad(j,alpha) values. The six values are distinct branch images and its full predecessor is Rzero=predecessor(0)=row. This is the unconditional Zstar witness.")),

@@ -13,6 +13,8 @@ internal interface ICliEnvironment
 
     ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments);
 
+    ExplicitCommandResult CheckSource(IReadOnlyList<string> arguments);
+
     AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments);
 
     CommandResult Coverage(IReadOnlyList<string> arguments);
@@ -107,6 +109,8 @@ internal static class CliApplication
                 RenderExplicit(environment.CheckCurrent(tail), console),
             ["check-delta"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
+            ["check-source"] = static (environment, tail, console) =>
+                RenderExplicit(environment.CheckSource(tail), console),
             ["compile-proof"] = static (_, tail, console) =>
                 RenderTestEvidence("compile-proof", tail, console),
             ["clean-lanes"] = static (environment, tail, console) =>

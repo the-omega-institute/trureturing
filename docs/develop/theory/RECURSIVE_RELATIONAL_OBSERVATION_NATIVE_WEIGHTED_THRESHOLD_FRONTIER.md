@@ -1035,3 +1035,532 @@ goal.
 [SINHA]: https://dada.cs.washington.edu/research/tr/1995/08/UW-CSE-95-08-02.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Fixed-history separator capacity and representative choices
+
+**Definition 11.1 (parameters, cells and certificate packs).** Fix an
+integer $M\ge2$ and put
+
+$$
+n=3M+5,\qquad k=M+4,\qquad
+[n]=\{t\}\sqcup X\sqcup Y\sqcup R\sqcup
+       \{u_1,\ldots,u_M,v_1,\ldots,v_M\},
+\tag{WTF.36}
+$$
+
+where $X=\{x,x'\}$, $Y=\{y,y'\}$ and
+$R=\{r_1,\ldots,r_M\}$. Set
+$U_j=\{u_{M-j+1},\ldots,u_M\}$ and
+$I_j=[n]\setminus(X\cup Y\cup U_j)$, for $1\le j\le M$.
+Use original costs $c_i=s_i+4$ with distinct positive integer positions
+$s_i$, and assume the four inequalities of PE (PE.16):
+
+$$
+c_t\le c_{x'},\qquad c_t\le c_{y'},\qquad
+c_x+c_t\le C_Y,\qquad c_y+c_t\le C_X.
+\tag{WTF.37}
+$$
+
+One permitted input is $c_i=5\,3^{i-1}$, $s_i=c_i-4$, with
+$t,x,y,x',y'$ at indices $1,2,3,4,5$, and the other coordinates
+assigned the remaining indices in the displayed order. Its five costs
+are $5,15,45,135,405$, so (WTF.37) holds. The positions are strictly
+increasing and positive. Its subset sums are distinct: the greatest
+term at which two subsets differ exceeds the sum of all earlier terms.
+This is the permitted input choice of PE Proposition 5.2 extended to
+$n$ coordinates; after fixing it the pointwise code of Definition 1.2
+is held fixed.
+
+For a table of Definition 3.1 at caps $(n,W)$, write
+
+$$
+\mathcal D_{n,k}=\{(h,z):0\le h\le k-1,\ 0\le z\le n-k\}.
+$$
+
+A live-cell representative system chooses, for each cell in
+$\mathcal D_{n,k}$, an actual live history with those exposed one and
+zero counts, ending before a running invocation. Its state map is
+$f:\mathcal D_{n,k}\to Q_B$, where $Q_B$ is the installed running
+set. The chosen histories are part of the system. A collision is a
+pair of distinct cells with the same representative state; a collection
+of collisions is cell-disjoint when no cell belongs to two pairs.
+This uses the representative notion in PE Theorem 4.2, without
+requiring $f$ to be injective or a state to determine a residual.
+
+For fixed colliding histories satisfying Theorem 7.1, an allowed
+completion means its exact cross-fill: retain each history's own $I$
+values, use the old $S$ values on $X$ and old $T$ values on $Y$ on
+both inputs, and choose any $\omega$ in its conflict band on $U$.
+Its first separator is the first common-suffix state with different
+replies. Its certificate pack consists of that state and the first
+new zero and one exposures completing the two certificates in
+(WTF.23). In the collisions below $\lambda=v=1$, so this is an
+unambiguous three-state pack. Here $v$ denotes the residual count of
+Notation 6.2, not a coordinate $v_i$.
+
+**Definition 11.2 (one complete table with a retained separator).**
+Start with a complete binary query tree of depth $n$, with different
+running vertices at all internal positions, and terminal $0$ or $1$
+at depth $n$ according to the full threshold. Every path queries every
+coordinate exactly once, including after a certificate. First query
+$r_1,\ldots,r_M$ in that order. The notation $e_j$ in a routing vector
+means the $j$th unit vector, distinct from the reader entries $e_0,e_1$.
+
+In the cylinder $R=e_j$, query $t$ next, then all of
+$I_j\setminus(R\cup\{t\})$ in increasing coordinate-index order.
+If $t=0$, query $x,x'$ next; if $t=1$, query $y,y'$ next.
+Finish by increasing index among the remaining coordinates.
+In $R=0^M$, use increasing index among the remaining coordinates
+except that $t$ is last. In every other routing cylinder use increasing
+index among all remaining coordinates. These rules assign a fixed
+coordinate to each distinct tree vertex.
+
+Select the following two prefixes in $R=e_j$. On the low prefix put
+$t=0$, all old $u_i$ equal to zero, $v_1,\ldots,v_{M-j}$ equal to
+one and the remaining $v_i$ equal to zero, then $(x,x')=(1,0)$.
+On the high prefix put $t=1$, all old $u_i$ equal to zero, all
+$v_i$ equal to one, then $(y,y')=(0,1)$. Empty displayed lists impose
+no conditions. Their supports are respectively $I_j\cup X$ and
+$I_j\cup Y$, and both have length $n-j-2$.
+
+In the untouched cylinder $R=0^M$, retain the final $t$-vertex after
+all $v_i$ and $x,x',y$ have answered one, and all $u_i$ and $y'$
+have answered zero. Call this existing vertex $J$. Its prefix has
+$M+3=k-1$ ones, so its zero and one successors are $0,1$.
+
+Delete the complete remaining subtree at each of the selected low and
+high prefixes, including its root. Each has $j+2$ query levels.
+Redirect both incoming edges at scale $j$ to a new vertex $V_j$.
+Install the following distinct new scan states; the state $J$ in their
+successors is the existing vertex just retained.
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $V_1$ | $u_M$ | $B_X$ | $B_Y$ |
+| $V_j$, $2\le j\le M$ | $u_{M-j+1}$ | $Z_{M-j+2}$ | $O_{M-j+2}$ |
+| $Z_i$, $2\le i<M$ | $u_i$ | $Z_{i+1}$ | $J$ |
+| $O_i$, $2\le i<M$ | $u_i$ | $J$ | $O_{i+1}$ |
+| $Z_M$ | $u_M$ | $B_X$ | $J$ |
+| $O_M$ | $u_M$ | $J$ | $B_Y$ |
+
+Install four further distinct private states, disjoint from the tree
+and all scan states:
+
+| State | Coordinate | Zero successor | One successor |
+| --- | --- | --- | --- |
+| $B_X$ | $x$ | $B_{x'}$ | $J$ |
+| $B_{x'}$ | $x'$ | $0$ | $1$ |
+| $B_Y$ | $y$ | $J$ | $B_{y'}$ |
+| $B_{y'}$ | $y'$ | $0$ | $1$ |
+
+All other retained tree transitions remain unchanged. The two original
+Boolean terminals are the only terminals. Denote this installed table
+by $B_M$. The shared scan and private transitions reuse the motif of
+PE Theorem 5.1, but all scales here share their scan tails and the
+single retained $J$.
+
+**Theorem 11.3 (whole-table feasibility, exact count and native lift).**
+The table $B_M$ is total, terminates correctly on every Boolean input,
+and has exact installed running count
+
+$$
+m_B=2^{3M+5}-16(2^M-1)+5M+1>G=k(n-k+1).
+\tag{WTF.38}
+$$
+
+Every input uses at most $n$ queries and weighted charge at most $W$;
+one untouched input attains both bounds. The full-fiber lift of
+Theorem 4.1 therefore has exact installed preparation count and
+simultaneously attained uniform maxima
+
+$$
+H=m_B+4+r,\qquad p=n+1,\qquad \ell=3+W.
+\tag{WTF.39}
+$$
+
+It preserves the entire original domain, code, literal complete reader
+entries and separate reader of §1.
+
+Proof. The unit routing cylinders are disjoint. Within a cylinder the
+two selected prefixes differ at $t$, so their deleted subtrees are
+disjoint too. Every deletion is below routing depth $M$ and is disjoint
+from $R=0^M$. In particular it does not remove $J$.
+
+The low prefix has $1+(M-j)+1=M-j+2=k-j-2$ hits. Its unread
+set is $Y\cup U_j$, of size $j+2$, and its residual is AND on that
+set. The high prefix has $1+1+M+1=M+3=k-1$ hits, unread set
+$X\cup U_j$, and residual OR on that set. All these prefixes are live.
+The scan sends an all-zero $U_j$ to $B_X$, an all-one $U_j$ to $B_Y$,
+and a mixed $U_j$ to $J$ at its first change of value.
+
+For a mixed scan the low AND is zero and the high OR is one, exactly
+the respective old $t$ replies at $J$. On an all-zero scan the low
+history has old $x=1$, so $B_X$ goes through $J$ to zero. The high
+history obtains $x\lor x'$: if $x=1$ it goes through $J$ to one,
+and if $x=0$ it reads $x'$. On an all-one scan the low history
+obtains $y\land y'$: if $y=0$ it goes through $J$ to zero, and if
+$y=1$ it reads $y'$. The high history has old $y=0$, so it goes
+through $J$ to one. These six cases cover every assignment extending
+either replaced prefix. Every other input follows the original
+complete threshold tree. The scan index strictly advances, its exits
+have at most two further calls, and $J$ terminates. The retained tree
+also terminates. Thus every input has a correct finite run.
+
+A replaced run has $n-j-2$ prefix calls, at most $j$ scan calls and
+at most two tail calls, hence at most $n$ calls. The two prefixes
+cost $C_{I_j}+C_X$ and $C_{I_j}+C_Y$, and the scan costs at most
+$C_{U_j}$. The exhaustive tail charges are
+
+| Scan exit | Low-prefix tail charge | High-prefix tail charge |
+| --- | --- | --- |
+| all zero | $c_x+c_t\le C_Y$ | $\max(C_X,c_x+c_t)=C_X$ |
+| all one | $\max(C_Y,c_y+c_t)=C_Y$ | $c_y+c_t\le C_X$ |
+| mixed | $c_t\le C_Y$ | $c_t\le C_X$ |
+
+Here the two maximum equalities use $c_t\le c_{x'}$ and
+$c_t\le c_{y'}$, respectively; the mixed inequalities follow from
+these as well. Thus each complete replaced run costs at most
+$C_{I_j}+C_X+C_Y+C_{U_j}=W$. Repeated $x,y,t$ calls and every
+postcertificate call are included in these sums. Every untouched
+$R=0^M$ input still queries all $n$ coordinates once, paying exactly
+$n,W$ on that same run.
+
+The complete tree contributes $2^n-1$ running vertices. Delete exactly
+$2\sum_{j=1}^M(2^{j+2}-1)$ distinct vertices. Add $M$ states $V_j$,
+$2(M-1)$ states $Z_i,O_i$, and four private states, or $3M+2$
+in all. The existing $J$ is counted once in the retained tree and
+is not added. Consequently
+
+$$
+\begin{aligned}
+m_B&=(2^n-1)-2\sum_{j=1}^M(2^{j+2}-1)+(3M+2)\\
+   &=2^n-16(2^M-1)+5M+1.
+\end{aligned}
+$$
+
+This counts every installed vertex, including unnecessary complete-tree
+vertices after certification. The retained zero-routing subtree alone
+has $2^{n-M}-1=2^{2M+5}-1$ vertices. Since $2^M\ge M+1$,
+its count is at least $32(M+1)^2-1$, strictly exceeding
+$G=2(M+4)(M+1)$. This proves the strict inequality in (WTF.38).
+
+Apply exactly Theorem 4.1, rather than placing a shape promise on the
+upper domain. Each coordinate state installs the original absolute
+literal $a_i=LLL L^{s_i}R$, with the one successor for branch and
+three separately installed zero successors for alpha, beta and absent.
+Retain every Boolean running state. Add its two profile states $D,T$
+at $RLR,RRR$, its two literal original-entry latches and all $r$
+mandated distinct latches, including unused ones. The all-vector proof
+above applies to the static selected replies of every finite branch
+image, not only the comb witnesses. The eleven profiles in §1 supply
+all remaining sources. Supplier 2.1 supplies actual cube origins for
+the untouched cap-attaining inputs, so the lift attains both (WTF.39)
+maxima on one actual source.
+
+The domain is exactly $\mathcal U_*$ of (WTF.3), with the original
+$\rho$ and no size or depth bound. Every finite absolute address and
+all four replies retain their original meaning. Both occurrences of
+each repeated class, all different-class disequalities, the canonical
+restricted partitions and every blocking guard remain in the complete
+predecessor outputs. Handoff enters literally the unchanged COMPLETE
+$e_0$ or $e_1$ on that same register. Convention 1.3's separate
+$K=8$ reader, including every whole-row halt, is unchanged.
+All actual native invocations, including root, constant, absent, repeated
+and postcertificate calls, are paid as in Definitions 1.4 and 3.1.
+The construction grants no source copy, archive, equality, inverse,
+source-dependent selector, counter, computed address or additional
+control port. Assumption 1.5's acquisition, authentication, export,
+isolation, handoff, lawful entry, binding and continuity services
+remain separately supplied and priced. $\square$
+
+**Theorem 11.4 (one forced separator for every fixed-history completion).**
+For each $j=2,\ldots,M$, keep exactly Definition 11.2's displayed low
+and high histories at $V_j$. They represent the live cells
+
+$$
+L_j=(k-j-2,n-k),\qquad
+H_j=(k-1,n-k-j-1).
+\tag{WTF.40}
+$$
+
+All $2(M-1)$ cells are distinct. Cross-fill $(x,x')=(1,0)$ and
+$(y,y')=(0,1)$ on both inputs. Every assignment on $U_j$ belongs
+to Theorem 7.1's conflict band, and for every such assignment the first
+differing common-old state is the same installed $J$ of Definition
+11.2. In particular, for every joint choice
+$(\omega_j)_{j=2}^M\in\prod_{j=2}^M\{0,1\}^{U_j}$, all $M-1$
+first separators are that one $J$.
+
+Proof. The hit counts were computed in Theorem 11.3. Subtracting them
+from prefix length $n-j-2$ gives respectively $n-k$ and
+$n-k-j-1$ zeros. All counts lie in $\mathcal D_{n,k}$, and both
+residuals are nonconstant. Within either list the varying coordinate
+makes the cells distinct, while every $L_j$ has fewer than $k-1$
+hits and every $H_j$ has exactly $k-1$. Their hit and reverse-zero
+gaps are both $j+1$, consistent with Theorem 9.1.
+
+Their common old set is $I_j$, the private sets are precisely $X,Y$,
+and their common unread set is $U_j$. Notation 6.2 specializes to
+
+$$
+a=b=2,\quad u=j,\quad q=j+2,\quad v=1,\quad
+\xi=\eta=1,\quad \Delta=\delta=j+1,\quad \lambda=1.
+\tag{WTF.41}
+$$
+
+Thus the band (WTF.22) is the entire integer interval $[0,j]$.
+If $w=|\omega|$, the two cross-filled total weights are
+
+$$
+|\theta^-|=k-j-1+w\le k-1,\qquad
+|\theta^+|=k+w\ge k.
+\tag{WTF.42}
+$$
+
+Each extends its own fixed prefix and agrees with the other outside
+$I_j$, so Supplier 2.1 realizes both as actual inverse origins.
+
+Before leaving the scan both runs read identical $U_j$ bits. A mixed
+assignment goes directly to $J$. An all-zero assignment goes through
+$B_X$, whose common $x=1$ reply goes to $J$. An all-one assignment
+goes through $B_Y$, whose common $y=0$ reply goes to $J$.
+These are all assignments. No $v_i$, or any other differing coordinate
+of $I_j$, is queried on this suffix before $J$. At $J$ the old
+$t$ replies differ, zero on the low history and one on the high.
+Thus this is the first different reply and is a paid requery on both
+runs. In the native lift its literal is $a_t$ and its replies on
+these actual origins are beta and branch.
+
+The conclusion holds separately for each $j$ and every allowed
+$\omega$. Taking their finite product proves the joint statement;
+no compatibility between different inputs' completions is required.
+As $M$ grows these are arbitrarily many cell-disjoint fixed-history
+collisions with the same unavoidable first separator. The statement
+does not quantify over other choices of the incoming histories.
+$\square$
+
+**Proposition 11.5 (favorable representatives on the same table).**
+The table $B_M$ also admits an injective live-cell representative map
+$f_{\rm good}$ whose image consists entirely of retained original-tree
+vertices.
+
+Proof. For $(h,z)\in\mathcal D_{n,k}$ put $d=h+z\le n-1$.
+If $d\le M$, choose a prefix of the routing tree with $h$ ones and
+$z$ zeros, and take its vertex at depth $d$. Every such vertex is
+retained, since the deletions start at depths $n-j-2>M$.
+
+If $d>M$ and $h\ge2$, set exactly $a=\min(h,M)$ routing bits to
+one, taking the first $a$ for definiteness. There are enough routing
+zeros: $M-a\le z$, since either $a=M$ or $d>M$ and $a=h$.
+The routing vector has at least two ones, so its whole cylinder is
+untouched. In the next $d-M$ positions of its fixed remaining order,
+put $h-a$ ones and $z-(M-a)$ zeros. These counts are nonnegative
+and sum to $d-M$, so the complete tree contains that prefix.
+
+If $d>M$ and $h=0$ or $1$, use $R=0^M$. Here $z\ge M$.
+In its next $d-M$ positions put $h$ ones and $z-M$ zeros. There
+are enough positions and this cylinder too is untouched. In all cases
+the resulting vertex is running because $d<n$, has the required
+counts and is live. Its preceding prefixes are live as well, since
+neither count can exceed its final live value. Actual cube completions
+realize each chosen history.
+
+Different cells cannot select the same retained vertex: its unique
+inherited tree prefix has one fixed pair of exposed counts. Thus the
+map is injective. This is an existence assertion on $B_M$, distinct
+from allowing arbitrary representatives to be fixed in advance.
+$\square$
+
+**Proposition 11.6 (a fixed representative image with no external pack
+candidate).** There is one lawful live-cell representative system $f$
+on $B_M$ choosing both cells $L_j,H_j$ at $V_j$ for all $j\ge2$,
+with the following two properties.
+
+First, for $\omega_j$ having its sole one at $u_M$, the packs are
+exactly $\{V_j,Z_M,J\}$, and all these packs lie in $\operatorname{im}f$.
+Second, for the one fixed collision $L_2,H_2$, every allowed completion
+has its entire pack in that same image. More precisely:
+
+| $(u_{M-1},u_M)$ | Exact pack |
+| --- | --- |
+| $(0,0)$ | $\{V_2,B_X,J\}$ |
+| $(0,1)$ | $\{V_2,Z_M,J\}$ |
+| $(1,0)$ | $\{V_2,O_M,J\}$ |
+| $(1,1)$ | $\{V_2,B_Y,J\}$ |
+
+Consequently, writing $P_2(\omega)$ for these packs,
+
+$$
+\bigcup_{\omega\in\{0,1\}^{U_2}}
+       \bigl(P_2(\omega)\setminus\operatorname{im}f\bigr)
+=\varnothing.
+\tag{WTF.43}
+$$
+
+Proof. The following five distinct live cells have the indicated
+actual representative histories, in addition to all (WTF.40):
+
+| State | Live cell | History reaching it |
+| --- | --- | --- |
+| $Z_M$ | $(k-1,n-k-2)$ | high $j=2$ prefix, then $u_{M-1}=0$ |
+| $O_M$ | $(k-3,n-k)$ | low $j=2$ prefix, then $u_{M-1}=1$ |
+| $B_X$ | $(k-1,n-k-1)$ | high $j=2$ prefix, then $U_2=(0,0)$ |
+| $B_Y$ | $(k-2,n-k)$ | low $j=2$ prefix, then $U_2=(1,1)$ |
+| $J$ | $(k-1,n-k)$ | untouched zero-routing prefix defining $J$ |
+
+For the first and third rows start with high cell
+$H_2=(k-1,n-k-3)$ and add respectively one or two fresh zeros.
+For the second and fourth start with low cell
+$L_2=(k-4,n-k)$ and add respectively one or two fresh ones.
+The fifth prefix was specified in Definition 11.2. Every resulting
+cell is live and is realized by actual cube completions. The first,
+third and fifth have $k-1$ hits and zero counts $n-k-2,n-k-1,n-k$;
+the other two have $k-3,k-2$ hits and $n-k$ zeros. They are pairwise
+distinct. They also avoid (WTF.40): its low hits are at most $k-4$,
+and its high zero counts are at most $n-k-3$.
+
+Choose these five representatives and the displayed $2(M-1)$
+collision histories simultaneously. For every other cell use the
+history constructed in Proposition 11.5. The distinct cell assignments
+are consistent and give one lawful full system $f$, as also permitted
+by the general representative construction in PE Theorem 4.2.
+
+For a one-hot-at-$u_M$ completion with $j\ge2$, $V_j$ first reads
+a zero and completes the negative certificate, because the low
+prefix already has $n-k$ zeros. The zero scan reaches $Z_M$ without
+an intervening one. There $u_M=1$ completes the high history's
+positive certificate, since it started with $k-1$ hits. The next
+state is $J$. This proves the first claimed pack and its containment.
+
+For $j=2$, an initial zero at $V_2$ completes the negative certificate;
+an initial one completes the positive certificate. If $U_2=00$,
+the first new positive hit is $x=1$ at $B_X$. If $U_2=01$, it is
+$u_M=1$ at $Z_M$. If $U_2=10$, the first new negative zero is
+$u_M=0$ at $O_M$. If $U_2=11$, it is $y=0$ at $B_Y$.
+Theorem 11.4 supplies the same first separator $J$ in all four cases.
+These identify the exact first-exposure packs, not just subsets of
+longer paths. Their states all belong to the chosen image, proving
+(WTF.43). Containment for every full pack at every $j$ is not
+asserted; the all-completion assertion of Theorem 11.4 concerns only
+the first separator. $\square$
+
+**Theorem 11.7 (two universal whole-table charging principles fail).**
+Consider the class of all Definition 3.1 threshold tables feasible at
+$(n,W)$, with $n\ge6$, $3\le k\le n-2$ and original distinct
+positive selected positions. For a fixed representative system, let
+$E$ be any cell-disjoint collection of its fixed-history collisions
+satisfying Theorem 7.1 with $\lambda=v=1$. Write $s(e,\omega)$
+and $P(e,\omega)$ for their first separators and packs.
+
+There is no dimension-independent finite constant $C$ for which,
+for every table, every lawful representative system and every such
+$E$, one can jointly choose allowed completions $(\omega_e)_{e\in E}$
+so that
+
+$$
+\left|\{e\in E:s(e,\omega_e)=q\}\right|\le C
+\quad\text{for every installed running state }q.
+\tag{WTF.44}
+$$
+
+Also false is the principle with those same universal quantifiers
+which permits joint completion choices and requires an injection
+$e\mapsto q_e$ into $Q_B\setminus\operatorname{im}f$ with
+$q_e\in P(e,\omega_e)$. It fails even when injectivity is dropped
+and $E$ consists of only one collision.
+
+Proof. Given $C$, choose an integer $M\ge2$ with $M-1>C$.
+Theorem 11.3 gives a complete cap-feasible table, and Proposition
+11.6 gives one lawful representative system. Take the $M-1$ pairs
+$\{L_j,H_j\}$, $2\le j\le M$, for $E$. They are cell-disjoint
+and satisfy all stipulated parameters by (WTF.41). For every joint
+completion choice Theorem 11.4 gives $s(e,\omega_e)=J$ for all
+$e$. Thus its multiplicity is $M-1>C$, contradicting (WTF.44).
+The joint existential choice of completions cannot repair this failure.
+
+For the external-pack principle keep that same table and representative
+system but take $E=\{\{L_2,H_2\}\}$. By (WTF.43), no allowed
+completion supplies even one state of its pack outside the image.
+Hence the asserted assignment does not exist, before any question of
+injectivity. These are counterexamples to principles quantified over
+whole feasible tables and arbitrary fixed lawful representative
+systems, with the actual incoming histories held fixed.
+
+The first statement rules out bounded reuse of these first separators
+as a universal replacement for injective charging. The second rules
+out accepting an arbitrary representative system and subsequently
+repairing its collisions solely with external states from these packs,
+even after coordinating completions. Neither asserts a false numerical
+inequality $m_B<G$: Theorem 11.3 instead gives $m_B>G$. Other installed
+states and a new jointly chosen representative system are different
+possible sources of compensation. In particular Proposition 11.5
+shows that this very table has a favorable injective choice. $\square$
+
+**Proposition 11.8 (scope, suppliers and the unchanged strict-subgrid
+question).** The preceding obstruction concerns first separators of
+fixed histories and external packs for arbitrary fixed representatives
+over all cap-feasible whole tables. It does not refute a theorem
+restricted to minimum or subgrid tables, favorable joint selection of
+representatives, a count using other installed states, or a global
+compensation or no-larger replacement theorem. The original question
+for general $n\ge6$, $3\le k\le n-2$ remains whether
+
+$$
+\exists\, B:\quad
+m_B<k(n-k+1),\qquad
+q_B(\theta)\le n,\qquad L_B(\theta)\le W
+\quad\text{for every }\theta\in\{0,1\}^n,
+\tag{WTF.45}
+$$
+
+with correctness and termination on every input, or whether every
+such table instead has $m_B\ge k(n-k+1)$. By Theorem 4.1 these
+are the unchanged original full-fiber alternatives at
+$H<k(n-k+1)+4+r$, $p\le n+1$, $\ell\le3+W$.
+Neither alternative is resolved by Theorems 11.3–11.7.
+
+Proof. The example is strictly above the grid, and PCA Theorem 26.1
+already supplies a smaller table at both caps. It therefore cannot
+witness (WTF.45) or obstruct a restriction to installed-state minima.
+Proposition 11.5 supplies favorable representatives on this same
+example. Theorem 11.7 excludes exactly its two displayed universal
+witness-selection principles, not compensation by other vertices or
+replacement of an entire table. These establish the stated logical
+boundaries.
+
+The reused mathematics is PE Theorem 5.1's paid mixed-private AND/OR
+motif and inequalities, Theorem 7.1's certificate construction, and
+Theorem 4.1's exact native transport. PCA Lemma 24.1 and the NBP/TMC
+suppliers of §2 provide actual origins, all-address interpretation,
+complete rows and the original reader. The further deduction is the
+unbounded all-completion first-separator obstruction for the specified
+cell-disjoint histories, its fixed-representative external-pack consumer
+and the explicit favorable-choice contrast. The qualitative warning
+in §9, elementary tree counts, positional uniqueness and generic
+Boolean path facts are suppliers, rather than additional claims of
+new general mathematics.
+
+The primary comparison remains exactly Comparison 10.2. Wegener,
+[Chapter 14 §4, printed pp. 423–425][WBP], proves synchronous
+symmetric normalization for BP1; printed p. 424 restricts its graph-path
+realization assertion to BP1. Sinha, [§2.1.3, printed p. 17][SINHA],
+allows union cycles without semantic cycles and describes leveling
+with $(l+1)s$ states. Neither supplies a cardinality-preserving BP1
+replacement under the present paid-repeat hypotheses. These comparisons
+support the restrictions stated here and do not establish worldwide
+novelty of the specified obstruction.
+
+Theorems 55.2, 59.1 and 63.1–66.1 of
+[Native long-time phase diffusion](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md)
+concern the stationary Q height law, supplied continuous wrapped phase
+records, finite-sample Bayes risks or calibration recovery. Those
+sources, observations and targets differ from $\mathcal U_*$,
+fixed absolute native queries and literal complete entries here.
+No map identifying their stochastic path resources with all installed
+states and both original uniform caps is a premise above. Thus those
+results do not replace either alternative in (WTF.45); no phase record,
+conditioning, sensor or calibration service is imported into $B_M$.
+Assumption 1.5's separate service and physical-price boundaries remain
+in force throughout. $\square$
+
+## 追加锚（本行以下为增补区）

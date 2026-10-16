@@ -1879,3 +1879,2120 @@ further class-wide reduction or dual certificate. It does not close the
 continuing AURIC FIB ATOM research goal.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. An isolated algebraic specification for the complete-output optimum
+
+**Definition 13.1 (the fixed states and algebraic variables).** Retain
+Definition 4.2 without changing its input resources, comparison class or
+output norm. Index the basis $(+,-,2)$ by $0,1,2$ only inside the matrices
+in §§13–16; these indices are not the five original failure labels.
+For $0<y<58$ put
+
+$$
+\begin{aligned}
+p_y&=\left(\frac y{128},\frac{64-y}{128},\frac12\right),\\
+d_y&=\left(\frac y{128},
+ \frac{y(58-y)}{128(y+6)},\frac{y}{2(y+6)}\right),\\
+a_y&=(\sqrt{p_{y0}},\sqrt{p_{y1}},\sqrt{p_{y2}})^T,
+\qquad \xi_y=(\sqrt{d_{y0}},\sqrt{d_{y1}},\sqrt{d_{y2}})^T,\\
+\rho_y&=a_ya_y^T,\qquad B_y=\xi_y\xi_y^T.
+\end{aligned}
+\tag{CG.111}
+$$
+
+The vectors $p_y,a_y$ are also defined by the same formulas for
+$58\leq y<64$. All radicals are the positive real roots. The input is normalized,
+$\operatorname{tr}B_y=s_y=y/(y+6)$, and
+$\xi_y=\sqrt{s_y}\,a_{y+6}$. For
+$U_{e,n}=\operatorname{diag}(e,n,1)$, $e,n\in\{\pm1\}$, the actual
+inputs and live targets are $U_{e,n}\rho_yU_{e,n}^T$ and
+$U_{e,n}B_yU_{e,n}^T$. Indeed (CG.7) has
+$e=(-1)^{\beta/\pi}$ and $n=e(-1)^m$, which run through all four
+pairs. The five separate failure densities remain $w_\ell f_y(t)P_f$
+with the $w,f_y$ of (CG.50), not functions of $e,n$.
+
+Let $x=(\lambda,\alpha_1,\alpha_2,\beta_1,\beta_2,z)$ and define
+
+$$
+\begin{aligned}
+v_5&=(\alpha_1,\alpha_2,-1)^T,
+&v_{27}&=(\beta_1,\beta_2,1)^T,\\
+R_y&=\frac{v_yv_y^T}{v_y^Tv_y},
+&A_5&=\lambda R_5,\qquad A_{27}=(1-\lambda)R_{27},\\
+\zeta&=\left(z,\frac{59\lambda}{128},\frac\lambda2\right),
+&Z_d&=\operatorname{diag}\zeta,\\
+N&=A_5\odot\rho_5+A_{27}\odot\rho_{27},
+&S_0&=Z_d-N.
+\end{aligned}
+\tag{CG.112}
+$$
+
+Here $\odot$ is entrywise multiplication. For $i<j$ set
+
+$$
+S_{ij}=\begin{pmatrix}
+\displaystyle\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{ii}p_{yj}
+&-N_{ij}\\
+-N_{ij}&\displaystyle\zeta_i-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{yi}
+\end{pmatrix}.
+\tag{CG.113}
+$$
+
+The two distinct uses of the letter $\beta$ are separated: $\beta_1,
+\beta_2$ here are algebraic coordinates, not the original history phase
+$\beta\in\{0,\pi\}$. Define
+
+$$
+\begin{aligned}
+F(x)&=\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+       -\sum_i\zeta_i+\frac6{11}\lambda,\\
+g(x)&=(1000\det S_0,\det S_{01},\det S_{02}),\\
+\mathcal L(x,\eta)&=F(x)+\sum_{k=0}^2\eta_k g_k(x),\\
+\Psi(x,\eta)&=(\nabla_x\mathcal L,g_0,g_1,g_2).
+\end{aligned}
+\tag{CG.114}
+$$
+
+These nine equations have real algebraic coefficients and rational
+dependence on their nine variables. Their chart denominators are
+$1+\alpha_1^2+\alpha_2^2$ and $1+\beta_1^2+\beta_2^2$, both positive.
+
+**Proposition 13.2 (root isolation and strict arithmetic margins).** Let
+$c$ have the following exact rational decimal coordinates, in order
+$(x,\eta)$, and let $C=\prod_{i=0}^8[c_i-10^{-24},c_i+10^{-24}]$.
+
+| Coordinate | Exact rational center |
+| --- | --- |
+| $\lambda$ | $0.479508042205945691075728241615$ |
+| $\alpha_1$ | $1.412018697539825943102823246594$ |
+| $\alpha_2$ | $1.185897402486986028204155873343$ |
+| $\beta_1$ | $0.413330945620125544606320492846$ |
+| $\beta_2$ | $0.809647491041060318009094562763$ |
+| $z$ | $0.066998926272600209516864472757$ |
+| $\eta_0$ | $0.279795267654829218213193898783$ |
+| $\eta_1$ | $0.199570407911600478528148253443$ |
+| $\eta_2$ | $0.091392615490799158339482855657$ |
+
+There is exactly one zero $u_*=(x_*,\eta_*)$ of $\Psi$ in $C$.
+The strict bounds below hold throughout $C$, before imposing $\Psi=0$:
+
+$$
+\begin{gathered}
+\frac{47}{100}<\lambda<\frac{49}{100},\qquad \eta_k>0,\\
+\zeta_0-\lambda p_{50}>\frac6{125},\qquad
+(S_0)_{00}>\frac6{125},\qquad
+\det S_0[\{0,1\}]>\frac{23}{10000},\\
+(S_{01})_{00}>\frac1{10},\qquad (S_{02})_{00}>\frac1{10},\\
+(S_{12})_{00}>\frac{69}{1000},\qquad
+\det S_{12}>\frac{11}{2000}.
+\end{gathered}
+\tag{CG.115}
+$$
+
+For any point of $C$, form the following matrices and quantities:
+
+$$
+\begin{aligned}
+H&=1000\eta_0\operatorname{adj}S_0,\qquad
+Q^{01}=\eta_1\operatorname{adj}S_{01},\qquad
+Q^{02}=\eta_2\operatorname{adj}S_{02},\qquad Q^{12}=0,\\
+r_0&=H_{00}+Q^{01}_{11}+Q^{02}_{11},\qquad
+r_1=H_{11}+Q^{01}_{00},\qquad r_2=H_{22}+Q^{02}_{00},\\
+m&=(0,1-r_1,1-r_2),\qquad q_y=p_y\cdot m,\\
+(C_y)_{ii}&=H_{ii}p_{yi}
+ +\sum_{j>i}Q^{ij}_{00}p_{yj}
+ +\sum_{j<i}Q^{ji}_{11}p_{yj},\\
+(C_y)_{ij}&=H_{ij}(\rho_y)_{ij}
+                  +Q^{ij}_{01}(\rho_y)_{ji}\quad(i<j),
+\qquad (C_y)_{ji}=(C_y)_{ij},\\
+\Delta_y&=B_y-C_y,\qquad
+\delta_y=\operatorname{tr}(R_y\Delta_y)\quad(y=5,27),\qquad
+T_{16}=\frac1{10}I_3-\Delta_{16}.
+\end{aligned}
+\tag{CG.116}
+$$
+
+The following additional inequalities hold throughout $C$:
+
+$$
+\begin{gathered}
+H_{00}>0,\qquad Q^{01}_{00}>0,\qquad Q^{02}_{00}>0,\\
+\frac{49}{100}<m_1<\frac12,\qquad
+\frac{34}{100}<m_2<\frac{35}{100},\\
+\delta_5>\frac3{1000},\qquad \delta_{27}>\frac{37}{250},\qquad
+q_5<\frac{60}{121},\quad q_{27}>\frac{36}{121},\quad q_{16}>\frac7{20},\\
+(T_{16})_{00}>\frac{97}{1000},\qquad
+\det T_{16}[\{0,1\}]>\frac{45}{10000},\qquad
+\det T_{16}>\frac{48}{10^6},\\
+0.14817810291080132013<F(x)<0.14817810291080132014,\\
+0.14817810291080132013<\delta_{27}<0.14817810291080132014.
+\end{gathered}
+\tag{CG.117}
+$$
+
+Proof. The finite arithmetic part is specified using directed dyadic
+enclosures, so the strict comparisons and the exact root have different
+roles. Put $D=2^{224}$. Represent an interval by its integer endpoints
+$[a/D,b/D]$. Embed a rational $q$ by
+$[\lfloor Dq\rfloor/D,\lceil Dq\rceil/D]$. Addition and negation
+are exact endpoint operations. For multiplication take the minimum and
+maximum of the four endpoint products, rounded down and up to multiples
+of $1/D$. For division take the four quotients, with the same directed
+rounding, only when the denominator interval excludes zero. For a
+nonnegative interval its square-root enclosure has integer endpoints
+
+$$
+\left[\left\lfloor\sqrt{aD}\right\rfloor,
+       \left\lceil\sqrt{bD}\right\rceil\right].
+\tag{CG.118}
+$$
+
+The integer endpoints in (CG.118) are again divided by $D$. Integer
+square comparison establishes their direction; no floating-point
+operation is required. Construct off-diagonal entries of $\rho_y,B_y$
+as square roots of the corresponding products of rational diagonal
+entries, and keep their diagonal entries rational.
+
+For differentiation, evaluate (CG.112)–(CG.114) in the truncated
+polynomial algebra on six formal increments, keeping degrees at most
+two. At a base point $x$, the variable $x_i$ is replaced by
+$[x_i]+X_i$. Multiply by polynomial convolution and discard degrees
+above two. For inversion, if the constant term is $a$ and the remaining
+terms are $v$, use
+
+$$
+(a+v)^{-1}=a^{-1}-a^{-2}v+a^{-3}v^2\pmod{\deg>2}.
+\tag{CG.119}
+$$
+
+The linear coefficients give first derivatives. The coefficient of
+$X_iX_j$ gives the $ij$ Hessian entry when $i\ne j$, and twice the
+coefficient of $X_i^2$ gives the diagonal entry. Evaluate sums in
+increasing index order, determinants by their first-row expansion,
+and divisions as multiplication by (CG.119). Thus, writing $\mathscr I$
+for this enclosure calculus, the full Jacobian is enclosed by
+
+$$
+D\Psi=
+\begin{pmatrix}
+F_{xx}+\sum_k\eta_k(g_k)_{xx}&
+ [\nabla g_0\ \nabla g_1\ \nabla g_2]\\
+[\nabla g_0\ \nabla g_1\ \nabla g_2]^T&0_{3\times3}
+\end{pmatrix}.
+\tag{CG.120}
+$$
+
+Let $M$ be the entrywise rational midpoint of
+$\mathscr I(D\Psi(c))$. Rational elimination gives an inverse
+$\mathcal R=M^{-1}$, with $\mathcal RM=I_9$ verified over $\mathbb Q$.
+Enclose each entry of $\mathcal R$ before interval matrix multiplication.
+The resulting arithmetic bounds are
+
+| Quantity | Strict rational upper bound |
+| --- | --- |
+| $\|\mathcal R\Psi(c)\|_\infty$ | $1/10^{28}$ |
+| $\sup_{u\in C}\|I_9-\mathcal R D\Psi(u)\|_\infty$ | $1/10^{15}$ |
+
+For the second row, take the maximum of the sums of interval absolute
+bounds along each row of $I_9-\mathcal R\mathscr I(D\Psi(C))$.
+Endpoint embedding may enlarge $C$ by less than $1/D$ per endpoint;
+this only enlarges the derivative enclosure. Applying the same endpoint
+operations directly to (CG.112), (CG.113) and (CG.116) gives every
+comparison in (CG.115) and (CG.117). The bounds for $F$ and $\delta_{27}$
+can also be enclosed more tightly as follows, with rational endpoints:
+
+$$
+\begin{aligned}
+0.14817810291080132013688243935582
+ &<F(x)<0.14817810291080132013689280825907,\\
+0.14817810291080132013685287501998
+ &<\delta_{27}<0.14817810291080132013692237259040.
+\end{aligned}
+\tag{CG.121}
+$$
+
+Only the weaker strict bounds (CG.117) are needed below. All inputs to
+these calculations are the rational center, radius, positive radicals
+and displayed expressions; no fitted residual is asserted to equal zero.
+
+For completeness, the enclosure bounds imply existence, not just a
+small numerical residual. On the exact rational closed box $C$, define
+$T(u)=u-\mathcal R\Psi(u)$. The derivative bound and the mean-value
+formula make $T$ Lipschitz with constant $k<10^{-15}$ in the maximum
+norm. For $\epsilon=10^{-24}$ and $b<10^{-28}$,
+
+$$
+\|T(u)-c\|_\infty\leq b+k\epsilon<\epsilon.
+\tag{CG.122}
+$$
+
+Thus $T$ maps $C$ strictly into itself and is a contraction. The complete
+metric space $C$ has a unique fixed point. Since $\mathcal R$ is
+invertible, its fixed points are precisely the zeros of $\Psi$.
+The derivative bound also makes $D\Psi(u_*)$ invertible. Clearing the
+positive chart denominators gives polynomial equations over the real
+algebraic numbers with a nonsingular isolated zero; the coordinates
+of that zero are algebraic. Only uniqueness in $C$ is asserted. The
+equations may have other zeros outside $C$. $\square$
+
+**Corollary 13.3 (exact ranks at the isolated point).** At $u_*$,
+
+$$
+\begin{gathered}
+S_0\succeq0,\quad\operatorname{rank}S_0=2,\qquad
+S_{01},S_{02}\succeq0,\quad
+\operatorname{rank}S_{01}=\operatorname{rank}S_{02}=1,\qquad
+S_{12}\succ0,\\
+Z_d\succeq\lambda\operatorname{diag}(p_5)\succeq0,
+\end{gathered}
+\tag{CG.123}
+$$
+
+and the $H,Q^{01},Q^{02}$ of (CG.116) are nonzero positive semidefinite
+rank-one matrices.
+
+Proof. The last three components of $\Psi=0$ give precisely
+$\det S_0=\det S_{01}=\det S_{02}=0$. The leading two-dimensional
+block of $S_0$ is positive definite by (CG.115). Its Schur complement is
+zero because its determinant is zero and that leading block is
+invertible. Thus $S_0$ is positive semidefinite of rank two.
+Each active two-dimensional block has positive first pivot and zero
+determinant, giving positive semidefiniteness and rank one by the same
+Schur-complement argument. The two strict leading minors of $S_{12}$
+give positive definiteness. This does not use the false general
+criterion that nonnegative leading minors alone imply semidefiniteness.
+The last matrix inequality follows from
+$\zeta_1=\lambda p_{51}$, $\zeta_2=\lambda p_{52}$ and the strict
+coordinate-zero slack in (CG.115). Positive multipliers and the spectral
+formula for an adjugate of a positive matrix of corank one give the
+stated ranks and positivity of $H,Q^{01},Q^{02}$. $\square$
+
+## 14. A full-class lower witness on the original output space
+
+**Theorem 14.1 (unrestricted lower certificate).** Evaluating (CG.112)
+at $u_*$, every allowed common CPTP map in (CG.20) satisfies
+
+$$
+E(\Phi)\geq F(x_*).
+\tag{CG.124}
+$$
+
+This includes complex maps with population transfer and reverse
+coherence, arbitrary countably additive time laws and all additional
+zero-ideal output sectors.
+
+Proof. Use the output-first, unnormalized Choi convention
+
+$$
+J_\Lambda=\sum_{i,j}\Lambda(|i\rangle\langle j|)
+                         \otimes|i\rangle\langle j|.
+\tag{CG.125}
+$$
+
+It is the tensor-factor swap of the input-first convention (CG.54).
+For a CP live map $\Lambda$ with input effect $G_L=\Lambda^\dagger(I_3)$,
+the correct identities are
+
+$$
+\operatorname{Tr}_{\rm out}J_\Lambda=G_L^T,\qquad
+\operatorname{tr}((A\otimes\rho^T)J_\Lambda)
+ =\operatorname{tr}(A\Lambda(\rho)),\qquad
+\operatorname{tr}((I\otimes Z)J_\Lambda)
+ =\operatorname{tr}(Z^TG_L).
+\tag{CG.126}
+$$
+
+In particular the last transpose can be suppressed for the present real
+diagonal $Z_d$, but not for an arbitrary matrix $Z$. Define
+
+$$
+W=\frac14\sum_{e,n\in\{\pm1\}}
+(U_{e,n}\otimes U_{e,n})
+(A_5\otimes\rho_5^T+A_{27}\otimes\rho_{27}^T)
+(U_{e,n}\otimes U_{e,n})^\dagger.
+\tag{CG.127}
+$$
+
+The conjugate input representation in a general Choi covariance formula
+is $\overline U$; all four present $U_{e,n}$ are real, so it equals $U$.
+In output-input order the character spaces are
+
+$$
+\begin{aligned}
+&\langle|00\rangle,|11\rangle,|22\rangle\rangle,\qquad
+\langle|01\rangle,|10\rangle\rangle,\\
+&\langle|02\rangle,|20\rangle\rangle,\qquad
+\langle|12\rangle,|21\rangle\rangle.
+\end{aligned}
+\tag{CG.128}
+$$
+
+Indeed an entry $|ai\rangle\langle bj|$ survives the group average
+exactly when the products of its two coordinate signs agree. On the
+first space $W_{ii,jj}=N_{ij}$. On the $ij$ space its diagonal entries
+are $\sum_y(A_y)_{ii}p_{yj}$ and
+$\sum_y(A_y)_{jj}p_{yi}$, and its off-diagonal entry is $N_{ij}$.
+Consequently the full nine-dimensional inequality is
+
+$$
+S:=I_3\otimes Z_d-W
+ =S_0\oplus S_{01}\oplus S_{02}\oplus S_{12}\succeq0.
+\tag{CG.129}
+$$
+
+The direct-sum equality uses the order (CG.128). In particular the
+three two-dimensional spaces have not been suppressed. A real symmetric
+positive semidefinite witness is also positive on complex vectors,
+so (CG.129) bounds an arbitrary complex Hermitian positive Choi matrix.
+
+For each of the four $y=5$ histories choose a mathematical output effect
+with live part $U_{e,n}R_5U_{e,n}^\dagger$, identity on the entire
+canonical five-label failure register at every time, and zero on other
+sectors. For the four $y=27$ histories choose live part
+$U_{e,n}R_{27}U_{e,n}^\dagger$ and zero on every nonlive sector.
+Give these effects weights $\lambda/4$ and $(1-\lambda)/4$,
+respectively. The eight weights are positive and sum to one. They are
+coefficients of a lower witness, not preparation priors or labels
+accessible to the simulator. The $y=16$ errors remain in the original
+maximum.
+
+For normalized full outputs and an effect $0\preceq M\preceq I$,
+
+$$
+\operatorname{tr}M(\Omega-\omega)
+ \leq\frac12\|\Omega-\omega\|_{1,\mathrm{cq}}.
+\tag{CG.130}
+$$
+
+To see the factor, $\operatorname{tr}(\Omega-\omega)=0$ and
+$2M-I$ is a Hermitian contraction, whose pairing is bounded by the
+trace norm. This argument also applies to measures using a common
+dominating scalar measure. Summing the eight ideal payoffs gives
+
+$$
+\operatorname{tr}(A_5B_5)+\operatorname{tr}(A_{27}B_{27})
+                         +\frac6{11}\lambda.
+\tag{CG.131}
+$$
+
+Now let $\Phi$ be any allowed common channel, without assuming covariance.
+Compress its live output to $V$ to obtain the CP map $\Lambda$.
+Let $G_f$ be the input effect of its entire canonical failure register,
+including any stopped quantum support and singular time measures there.
+The uncounted-by-the-test, but still present, output effect is
+
+$$
+G_o=I-G_L-G_f\succeq0.
+\tag{CG.132}
+$$
+
+It includes live mass outside $V$, abort, rejection and all remaining
+zero-ideal sectors. The eight weighted simulated live payoffs are
+$\operatorname{tr}(WJ_\Lambda)$, and the weighted failure payoff is
+$\operatorname{tr}(D_fG_f)$ for
+$D_f=\lambda\operatorname{diag}(p_5)$: averaging the four actual input
+signs gives $\operatorname{diag}(p_5)$. Equations (CG.126) and (CG.132)
+give the exact budget identity
+
+$$
+\begin{aligned}
+\operatorname{tr}Z_d-\operatorname{tr}(WJ_\Lambda)
+                    -\operatorname{tr}(D_fG_f)
+={}&\operatorname{tr}(S J_\Lambda)
+   +\operatorname{tr}((Z_d-D_f)G_f)
+   +\operatorname{tr}(Z_dG_o)\geq0.
+\end{aligned}
+\tag{CG.133}
+$$
+
+Every term on the right pairs positive semidefinite matrices. Thus the
+simulated payoff is at most $\operatorname{tr}Z_d$. Subtract this from
+(CG.131), apply (CG.130), and bound the weighted average error by the
+original maximum. This proves (CG.124).
+
+The failure effect is constant on the exact time interval. Atoms and
+singular continuous mass therefore enter $G_f$ with their entire mass.
+Wrong stopped support in that register is also included in $G_f$.
+Other wrong-support and extra mass enters $G_o$. The half full norm in
+(CG.130) continues to count it all. No output-fixing reduction, finite
+time partition, minimax interchange, strong duality theorem or channel
+covariance restriction is needed for this lower proof. $\square$
+
+## 15. The complementary common channel and exact-time equality
+
+**Theorem 15.1 (a legitimate same-point common instrument).** Evaluate
+all quantities in (CG.116) at $u_*$. Define
+
+$$
+h=\frac{He_0}{\sqrt{H_{00}}},\qquad
+b^{0j}=\frac{Q^{0j}e_0}{\sqrt{Q^{0j}_{00}}}\quad(j=1,2),\qquad
+K_0=\operatorname{diag}(h),\qquad
+K_{0j}=b^{0j}_0|0\rangle\langle j|
+                  +b^{0j}_1|j\rangle\langle0|.
+\tag{CG.134}
+$$
+
+There is one CPTP instrument on all of $M_3(\mathbb C)$ given by
+
+$$
+\begin{aligned}
+\Lambda_*(A)&=K_0AK_0^\dagger+K_{01}AK_{01}^\dagger
+                                 +K_{02}AK_{02}^\dagger,\\
+\Phi_{*,\mathrm{live}}(A)&=\Lambda_*(A),\\
+\Phi_{*,\ell}(A)(dt)&=w_\ell\operatorname{tr}(\operatorname{diag}(m)A)
+                   h_0(t)\,dt\,P_f\quad(\ell=0,1,2,3,4),\\
+h_0(t)&=\frac2{(1+t)^2}.
+\end{aligned}
+\tag{CG.135}
+$$
+
+It assigns zero mass to all additional sectors. It has a specified
+extension to the whole original five-mode complex input algebra.
+
+Proof. The pivots in (CG.117) are positive. For a positive semidefinite
+rank-one matrix $A$ with $A_{00}>0$,
+$A=(Ae_0)(Ae_0)^\dagger/A_{00}$. Corollary 13.3 therefore implies
+$H=hh^T$ and $Q^{0j}=b^{0j}(b^{0j})^T$. The live Choi matrix of
+(CG.134) is exactly
+
+$$
+J_*=H\oplus Q^{01}\oplus Q^{02}\oplus0
+\tag{CG.136}
+$$
+
+in (CG.128). In particular the live map is CP on the whole complex
+algebra. Its action for arbitrary complex $A$, without imposing
+$A_{ij}=A_{ji}$, has entries
+
+$$
+\begin{aligned}
+(\Lambda_*A)_{ii}
+ &=H_{ii}A_{ii}+\sum_{j>i}Q^{ij}_{00}A_{jj}
+                         +\sum_{j<i}Q^{ji}_{11}A_{jj},\\
+(\Lambda_*A)_{ij}
+ &=H_{ij}A_{ij}+Q^{ij}_{01}A_{ji}\quad(i<j),\\
+(\Lambda_*A)_{ji}
+ &=H_{ji}A_{ji}+Q^{ij}_{10}A_{ij}\quad(i<j).
+\end{aligned}
+\tag{CG.137}
+$$
+
+Thus $C_y$ in (CG.116) is the actual live output on $\rho_y$. The
+reverse-coherence terms are part of a Kraus map, not a physical
+transposition gate.
+
+It remains to prove trace preservation as an exact identity. At a root,
+the adjugate identity gives
+
+$$
+S_0H=S_{01}Q^{01}=S_{02}Q^{02}=0.
+\tag{CG.138}
+$$
+
+The determinant differential is
+$d\det S=\operatorname{tr}(\operatorname{adj}(S)\,dS)$. Consequently,
+when $\eta$ is held fixed at its value at the point of differentiation,
+
+$$
+d_x\mathcal L
+ =\sum_{y\in\{5,27\}}\operatorname{tr}(dA_y\,\Delta_y)
+   +\sum_i(r_i-1)d\zeta_i+\frac6{11}d\lambda.
+\tag{CG.139}
+$$
+
+To verify (CG.139) directly, use (CG.137) to expand
+
+$$
+\operatorname{tr}(S_0H)+\sum_{i<j}\operatorname{tr}(S_{ij}Q^{ij})
+ =\sum_i\zeta_i r_i
+             -\sum_{y\in\{5,27\}}\operatorname{tr}(A_y C_y).
+\tag{CG.140}
+$$
+
+This is linear in the entries of $\zeta,A_y$, holding $H,Q$ fixed.
+Its differential, combined with $dF$, proves (CG.139), including the
+factor $1000$ in $H$. In this first differential $H,Q$ are the
+adjugate coefficients at that point; differentiating them again would
+not be the determinant differential being used.
+
+The $z$ stationarity equation gives $r_0-1=0$, because only
+$\zeta_0=z$ depends on $z$ in (CG.139). The Kraus column masses are
+$\sum_aK_a^\dagger K_a=\operatorname{diag}(r_0,r_1,r_2)$ by
+(CG.134). Thus, exactly at $u_*$,
+
+$$
+\sum_{a\in\{0,01,02\}}K_a^\dagger K_a
+                      +\operatorname{diag}(m)=I_3.
+\tag{CG.141}
+$$
+
+The two strict bounds on $m$ in (CG.117) make its diagonal nonnegative.
+Each failure density in (CG.135) is CP, with Kraus densities
+$\sqrt{w_\ell m_j h_0(t)}\,|f\rangle\langle j|$ for $j=1,2$.
+Their integrals are countably additive and remain positive at every
+ancillary amplification. Since $\int_0^1h_0(t)dt=1$ by (CG.90) and
+$\sum_\ell w_\ell=1$, (CG.141) proves joint trace preservation.
+
+Let $E:\mathbb C^3\to\mathbb C^5$ have the three orthonormal columns
+in (CG.6), and put $P_V=EE^\dagger$. A concrete five-dimensional
+extension is
+
+$$
+\begin{aligned}
+\widehat\Phi_{*,\mathrm{live}}(A)
+ &=E\Lambda_*(E^\dagger AE)E^\dagger,\\
+\widehat\Phi_{*,\ell}(A)(dt)
+ &=h_0(t)\left[
+ w_\ell\operatorname{tr}(E\operatorname{diag}(m)E^\dagger A)
+ +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)
+ \right]dt\,P_f.
+\end{aligned}
+\tag{CG.142}
+$$
+
+Each summand is a CP compression/Kraus or trace-and-prepare map.
+Its total effect is $E I_3E^\dagger+(I_5-P_V)=I_5$ by
+(CG.141), so it is CPTP, including on non-Hermitian inputs by linearity.
+Every one of the twelve inputs lies in $V$, so the extension changes
+none of their outputs. The complementary input subspace is sent to
+original failure index $2$, not to a new history label. $\square$
+
+**Theorem 15.2 (matching error for all twelve complete outputs).** The
+single channel (CG.135) has
+
+$$
+e_5=e_{27}=F(x_*)=\delta_{27},\qquad
+e_{16}<\frac{71}{484}<\frac{37}{250}<\delta_{27},
+\tag{CG.143}
+$$
+
+where $e_y$ denotes each of its four actual-history errors at height $y$.
+In particular $E(\Phi_*)=F(x_*)$ in precisely (CG.20).
+
+Proof. First extract the exact eigenvector and equal-error identities
+from the same root; stationarity alone is not being asserted to prove
+optimality. In the two $v_5$ coordinates of (CG.139) only $A_5$ varies,
+with its nonzero scalar weight $\lambda$. Likewise the two $v_{27}$
+coordinates vary only $A_{27}$, with weight $1-\lambda>0$.
+For a real symmetric $\Delta$, $v=(a,b,\sigma)^T$, $\sigma=\pm1$,
+and $\delta=v^T\Delta v/(v^Tv)$, the chart derivatives are
+
+$$
+\frac{\partial\delta}{\partial a}
+ =\frac{2((\Delta v)_0-\delta v_0)}{v^Tv},\qquad
+\frac{\partial\delta}{\partial b}
+ =\frac{2((\Delta v)_1-\delta v_1)}{v^Tv}.
+\tag{CG.144}
+$$
+
+Here $\Delta_y$ is held fixed as the coefficient of $dA_y$ in
+(CG.139). Vanishing of these two components, and
+$v^T(\Delta v-\delta v)=0$, force the remaining component to vanish
+because $v_2=\sigma\ne0$. Hence
+
+$$
+\Delta_5v_5=\delta_5v_5,\qquad
+\Delta_{27}v_{27}=\delta_{27}v_{27}.
+\tag{CG.145}
+$$
+
+Each $B_y$ has rank one and each $C_y\succeq0$ by Theorem 15.1, so
+$\Delta_y=B_y-C_y$ has at most one positive eigenvalue: a
+two-dimensional strictly positive subspace would intersect
+$\xi_y^\perp$, where the quadratic form is nonpositive. Both endpoint
+$\delta_y$ are positive by (CG.117). Therefore
+$\operatorname{tr}(\Delta_y)_+=\delta_y$ for $y=5,27$.
+
+The $\lambda$ equation in (CG.139), with $r_0=1$ and
+$q_5=p_{51}(1-r_1)+p_{52}(1-r_2)$, gives
+
+$$
+\delta_5+\frac6{11}-q_5=\delta_{27}.
+\tag{CG.146}
+$$
+
+Complementarity (CG.138), evaluated in (CG.140), gives
+$\sum_y\operatorname{tr}(A_yC_y)=\sum_i\zeta_i r_i$.
+Substitution into the definition of $F$, using
+$\zeta_i=\lambda p_{5i}$ for $i=1,2$, yields
+
+$$
+\begin{aligned}
+F(x_*)&=\lambda\delta_5+(1-\lambda)\delta_{27}
+              +\sum_i\zeta_i(r_i-1)+\frac6{11}\lambda\\
+ &=\lambda\left(\delta_5+\frac6{11}-q_5\right)
+                         +(1-\lambda)\delta_{27}=\delta_{27}.
+\end{aligned}
+\tag{CG.147}
+$$
+
+Next compute the original half norm, including its exact-time part.
+At an unsigned input the live ideal-minus-simulated block is
+$\Delta_y$, and the five stopped differences are
+$w_\ell(f_y-q_yh_0)P_f\,dt$. Their trace sums satisfy
+
+$$
+\operatorname{tr}\Delta_y=q_y-(1-s_y),\qquad
+\int_0^1(f_y-q_yh_0)dt=1-s_y-q_y.
+\tag{CG.148}
+$$
+
+Using $\|X\|_1=2\operatorname{tr}X_+-\operatorname{tr}X$ on a
+Hermitian matrix and the corresponding signed-density identity, these
+trace terms cancel. Since $w_\ell\geq0$, $\sum w_\ell=1$, and each
+stopped state has trace one, the complete half norm is exactly
+
+$$
+e_y=\operatorname{tr}(\Delta_y)_+
+                  +\int_0^1(f_y(t)-q_yh_0(t))_+dt.
+\tag{CG.149}
+$$
+
+This equality sums the norms in the five separately named sectors;
+it does not replace their output alphabet by one pooled label. This
+channel has no mass in extra or singular sectors, so their actual
+contributions to its full norm are zero. The lower certificate allowed
+arbitrary mass there.
+
+Exact-time signs follow from the elementary rational function
+
+$$
+\frac{f_y(t)}{h_0(t)}
+ =3y\left(\frac{1+t}{y+6t}\right)^2,\qquad
+\left(\frac{f_y}{h_0}\right)'(t)
+ =\frac{6y(y-6)(1+t)}{(y+6t)^3}.
+\tag{CG.150}
+$$
+
+The denominators are positive throughout $[0,1]$. Thus
+
+$$
+\min_{[0,1]}\frac{f_5}{h_0}=\frac{60}{121},\qquad
+\max_{[0,1]}\frac{f_{27}}{h_0}=\frac{36}{121},\qquad
+\max_{[0,1]}\frac{f_{16}}{h_0}=\frac{48}{121}.
+\tag{CG.151}
+$$
+
+The strict bounds on $q_5,q_{27}$ in (CG.117) give
+$f_5-q_5h_0>0$ and $f_{27}-q_{27}h_0<0$ at every exact time.
+Consequently (CG.145)–(CG.149) give
+$e_5=\delta_5+6/11-q_5=\delta_{27}=e_{27}$.
+
+At the middle height the three positive leading minors of $T_{16}$
+in (CG.117) prove $T_{16}\succ0$. Hence every eigenvalue of
+$\Delta_{16}$ is strictly less than $1/10$. Its at-most-one-positive
+property implies $\operatorname{tr}(\Delta_{16})_+<1/10$.
+The positive part must be retained in the time estimate:
+
+$$
+\begin{aligned}
+\int_0^1(f_{16}-q_{16}h_0)_+dt
+ &=\int_0^1h_0(t)
+       \left(\frac{f_{16}(t)}{h_0(t)}-q_{16}\right)_+dt\\
+ &\leq\left(\frac{48}{121}-q_{16}\right)_+
+ \leq\frac{48}{121}-\frac7{20}.
+\end{aligned}
+\tag{CG.152}
+$$
+
+The last right-hand side is positive, and $q_{16}>7/20$.
+Together with (CG.149) this gives
+
+$$
+e_{16}<\frac1{10}+\frac{48}{121}-\frac7{20}
+ =\frac{71}{484}<\frac{37}{250}<\delta_{27}.
+\tag{CG.153}
+$$
+
+Finally $K_0$ commutes with all four $U_{e,n}$. Each of $K_{01}$ and
+$K_{02}$ transforms by a single sign character, and
+$\operatorname{diag}(m)$ is invariant. Thus (CG.135) is covariant on
+every complex input. Its four errors at each height are identical by
+unitary invariance and unchanged failure densities. This proves
+(CG.143) for all twelve actual histories, without supplying a
+history index to the map. $\square$
+
+## 16. Exact minimax value and the remaining native-control obligation
+
+**Theorem 16.1 (the original full-output minimax).** With the exact
+isolated point of Proposition 13.2 and the whole-complex common channel
+of Theorem 15.1,
+
+$$
+\boxed{
+\inf_{\Phi\ \mathrm{common\ CPTP}}
+\max_{(x,\beta,m)\in\mathcal H}
+ \frac12\|\Phi(\rho_{x,\beta,m})-\Omega_{x,\beta,m}\|_{1,\mathrm{cq}}
+ =E(\Phi_*)=F(x_*)=\delta_{27},
+\quad
+0.14817810291080132013<E_*<0.14817810291080132014.
+}
+\tag{CG.154}
+$$
+
+The symbol $x_*$ on the right is the six-coordinate algebraic variable
+of Definition 13.1; the history height $x$ on the left is still the
+original scalar $y/256$.
+
+Proof. Theorem 14.1 bounds every allowed channel below by $F(x_*)$.
+Theorem 15.2 proves the reverse inequality using one legitimate channel
+at the very same exact point. Proposition 13.2 supplies the strict
+decimal enclosure. This is a matching witness and attainer argument,
+not an inference from KKT stationarity to global optimality. $\square$
+
+**Corollary 16.2 (relation to the earlier results).** The exact-value
+and identified-simulator questions in Open problems 7.3 and 11.2 have
+the answer (CG.154) in the enlarged comparison class (CG.20). Theorem
+8.4's attainment result, Theorem 9.3's strict inequality
+$L_{\rm full}<E_*$, the scalar-live construction of §10 and the
+fixed-filter construction of §12 remain valid with their stated scope.
+No uniqueness of a minimizing channel follows.
+
+Proof. Theorems 14.1 and 15.2 directly fulfill the simultaneous
+feasibility and matching-lower requirements of Proposition 11.1.
+All quantities and classes in the earlier results are unchanged.
+Uniqueness in Proposition 13.2 concerns only a zero in a specified
+parameter box; it is not a classification of optimal channels or
+other algebraic zeros. $\square$
+
+**Convention 16.3 (mathematical attribution and control boundary).** The
+algebraic ansatz (CG.112)–(CG.116), its rational center and the
+complementary three-Kraus construction are credited supplied
+mathematics. The particular instance-specific contribution is their
+root isolation, strict inequalities, full-class witness and exact-time
+attaining-channel deduction for (CG.20). The original histories,
+calibrated target law and common-input contract retain Attribution 7.2;
+the attainment, strict lower gap and fixed-filter upper facts are
+reused from §§8–12. These are ordinary computer-assisted and analytic
+proofs; no Lean/kernel verification or worldwide priority is asserted.
+
+The finite-matrix Choi/Kraus and joint CP/TP framework is established
+in Heinosaari, Jivulescu, Reeb and Wolf, *Extending quantum operations*,
+[arXiv:1205.0641v3](https://arxiv.org/html/1205.0641v3), §2.1 and §6.1.
+Their Theorem 5 concerns at-most-qubit pairs and is not a qutrit
+pairwise substitute for a common channel. The full diagonal-sign
+covariance form, including population transfer and transposed
+coherence terms, is established in Nechita and Park, *Random covariant
+quantum channels*, [arXiv:2403.03667v2, §5](https://arxiv.org/html/2403.03667v2),
+[DOI:10.1007/s00023-025-01558-y](https://doi.org/10.1007/s00023-025-01558-y).
+The explicit block calculation (CG.128)–(CG.129) is the required
+specialization here. Jenčová, *Comparison of quantum channels and
+statistical experiments*,
+[arXiv:1512.07016v2](https://arxiv.org/html/1512.07016v2), Theorem 4,
+uses one common channel and the $2\epsilon$ trace-norm convention.
+These finite-dimensional literature results do not by themselves
+settle exact-time outputs; (CG.130)–(CG.133) and (CG.148)–(CG.153)
+provide the needed measure-level comparison directly.
+
+The attaining instrument acts on one normalized reached-old-live-cut
+specimen. The fixed metadata can be tensored onto every output in their
+same state. No height, parity, waveform, callback, helper specimen or
+survival-mass prior is furnished to it. All live coherences and five
+original labels are retained, with index $4$ still denoting mode $13$;
+the output time is exactly $t\in[0,1]$, equivalently $6+t$.
+The instrument specifies a joint output law and has no post-failure
+operation or acceptance renormalization. Mathematical sign averaging
+and real matrices install no physical conjugation gate.
+
+Realizing this particular common CPTP instrument using only the
+original native calibrated-actuator menu remains a separate interface
+obligation. Neither the source-indexed $K_x$ of (CG.14), an ideal
+continuous phase-record law nor a linear-observation coercivity lemma
+supplies that correspondence. The result provides the exact benchmark
+for such an interface, without constructing the interface or granting
+extra observations or controls. It asserts neither finite physical
+storage of an exact time, efficient synthesis, uniqueness of the
+optimizer, an unconditional-prefix optimum nor completion of the
+continuing research programme.
+
+## 追加锚（本行以下为增补区）
+
+## 17. Equality identifies the sign-averaged live part of every optimizer
+
+**Convention 17.1 (credited point and a necessary finite output test).**
+All quantities with a star in §§17–20 refer to the exact point $u_*$
+and channel of §§13–16. In particular, the root, ranks, strict margins,
+invertibility of $D\Psi(u_*)$ and value $E_*=F(x_*)$ are the credited
+ordinary computer-assisted premises of Proposition 13.2, Corollary 13.3
+and Theorem 16.1. The deductions below use those premises without
+introducing another numerical certificate. The basis indices $0,1,2$
+mean $(+,-,2)$, and the Choi order and normalization are exactly
+(CG.125), with no factor $1/3$.
+
+Define a common CPTP output operation $\mathcal C$ that keeps the live
+compression to $V$, sends its complementary trace to a scalar other
+flag, and sends the trace of the entire canonical failure register to
+a scalar failure flag. It discards cross terms between $V$ and its
+orthogonal live complement. All additional output sectors also go to
+other. Every original failure label, time and stopped quantum support
+contributes its entire mass to failure, including singular measures;
+none is selected or normalized. This is only a necessary lower test of
+the unchanged complete output task (CG.20).
+
+Its output algebra, target and arbitrary common channel have the forms
+
+$$
+\begin{aligned}
+\mathcal A_c&=M_3(\mathbb C)\oplus\mathbb C\oplus\mathbb C,\\
+\Omega^c_{y,U}&=(UB_yU^\dagger,\ a_y^{\mathrm f},\ 0),
+& a_y^{\mathrm f}&=1-s_y=\frac6{y+6},\\
+\Theta(A)&=(\Lambda(A),\ \operatorname{tr}(G_fA),
+                                     \operatorname{tr}(G_oA)),\\
+J_\Lambda&\succeq0,\quad G_f,G_o\succeq0,
+&\operatorname{Tr}_{\rm out}J_\Lambda+G_f^T+G_o^T&=I_3,\\
+E_c(\Theta)&=\max_{y,U}\frac12\left(
+ \|UB_yU^\dagger-\Lambda(U\rho_yU^\dagger)\|_1
+ +|a_y^{\mathrm f}-\operatorname{tr}(G_fU\rho_yU^\dagger)|
+ +\operatorname{tr}(G_oU\rho_yU^\dagger)\right).
+\end{aligned}
+\tag{CG.155}
+$$
+
+Here $y\in\{5,16,27\}$ and $U$ runs over the same four actual signs
+as (CG.111). The superscript on $a_y^{\mathrm f}$ distinguishes this
+scalar failure mass from the input vector $a_y$ of that equation.
+The input effects are $G_f,G_o$; the transposes in the Choi budget
+are essential for complex maps. Choi positivity and positive scalar
+functionals make this budget necessary and sufficient for one CPTP
+$\Theta$. Contractivity gives $E_c(\mathcal C\Phi)\leq E(\Phi)$.
+The effects in Theorem 14.1 factor through $\mathcal C$, so its same
+budget proof gives $E_c(\Theta)\geq F(x_*)$ for every finite-output
+$\Theta$, including ones not supplied as reductions of a particular
+full-output channel. The credited $\mathcal C\Phi_*$ supplies equality.
+Consequently $\min_\Theta E_c(\Theta)=E_*$. This auxiliary equality
+does not replace the original comparison by its finite marginal.
+
+**Theorem 17.2 (rigidity of the averaged live Choi matrix).** For every
+CPTP $\Theta$ in (CG.155) with $E_c(\Theta)=E_*$, its mathematical
+average under the four actual signs has live Choi matrix
+
+$$
+\overline J_\Lambda=H_*\oplus Q_*^{01}\oplus Q_*^{02}\oplus0
+\tag{CG.156}
+$$
+
+in precisely the output-input block order (CG.128). Before averaging,
+$G_o=0$, $G_f|0\rangle=0$ and
+$\operatorname{range}J_\Lambda\subseteq\ker S_*$.
+
+Proof. Let $e_h$ be an individual finite-output error, $M_h$ the endpoint
+effect used in Theorem 14.1, $\pi_h=\lambda_*/4$ at height $5$ and
+$\pi_h=(1-\lambda_*)/4$ at height $27$. Put
+$P_h=\operatorname{tr}M_h(\Omega_h^c-\Theta(\rho_h))$.
+Equations (CG.130)–(CG.133), now on $\mathcal A_c$, give
+
+$$
+\begin{aligned}
+E_*&\leq\sum_h\pi_hP_h\leq\sum_h\pi_he_h\leq E_*,\\
+0&=\operatorname{tr}(S_*J_\Lambda)
+ +\operatorname{tr}((Z_{d,*}-D_{f,*})G_f)
+ +\operatorname{tr}(Z_{d,*}G_o),
+\qquad D_{f,*}=\lambda_*\operatorname{diag}(p_5).
+\end{aligned}
+\tag{CG.157}
+$$
+
+Every weight is strictly positive, so every endpoint test saturates:
+$P_h=e_h=E_*$. Each of the three nonnegative budget terms is zero.
+The credited inequalities imply $Z_{d,*}\succ0$ and
+$Z_{d,*}-D_{f,*}=\kappa P_0$ with $\kappa>0$. Thus $G_o=0$ and
+$(G_f)_{00}=0$. Positivity gives $G_f|0\rangle=0$, since a zero
+positive diagonal entry has zero row and column. Likewise, for positive
+$S,J$, $\operatorname{tr}(SJ)=\|S^{1/2}J^{1/2}\|_2^2=0$
+forces $\operatorname{range}J\subseteq\ker S$.
+
+Average the channel by (CG.60), with the two scalar flags fixed.
+This is a mathematical operation on candidates. It permutes the four
+actual input/target pairs at each height and contracts their maximum
+error, while the lower bound in Convention 17.1 prevents any decrease
+below $E_*$. Thus the averaged channel also satisfies (CG.157).
+Its Choi matrix is the average of conjugations by $U\otimes U$;
+the input representation is $\overline U=U$ here. Its character blocks
+are (CG.128). Their ranges lie in the respective slack kernels.
+The credited ranks (CG.123) therefore imply that for some real numbers
+$\widetilde\eta_k\geq0$,
+
+$$
+\begin{aligned}
+\overline H&=1000\widetilde\eta_0\operatorname{adj}S_{0,*},\\
+\overline Q^{01}&=\widetilde\eta_1\operatorname{adj}S_{01,*},
+&\overline Q^{02}&=\widetilde\eta_2\operatorname{adj}S_{02,*},
+&\overline Q^{12}&=0.
+\end{aligned}
+\tag{CG.158}
+$$
+
+Indeed a positive Hermitian operator supported on a one-dimensional
+real kernel is a nonnegative real multiple of its rank-one real
+adjugate. This also proves that all surviving blocks are real; no
+complex-conjugation operation has been imposed on the channel.
+
+Define $\widetilde r_i$, $\widetilde C_y$ using (CG.116) with these
+blocks, and put
+$\widetilde\Delta_y=B_y-\widetilde C_y$ and
+$\widetilde\delta_y=\operatorname{tr}(R_{y,*}\widetilde\Delta_y)$.
+Covariance makes the averaged failure effect diagonal. The budget,
+$G_o=0$ and $G_f|0\rangle=0$ give
+
+$$
+\widetilde r_0=1,\qquad
+\overline G_f=\operatorname{diag}(0,1-\widetilde r_1,
+                                      1-\widetilde r_2),\qquad
+\widetilde q_y=p_{y1}(1-\widetilde r_1)
+                         +p_{y2}(1-\widetilde r_2).
+\tag{CG.159}
+$$
+
+Saturation for the unsigned endpoint histories reads
+
+$$
+\widetilde\delta_5+\frac6{11}-\widetilde q_5
+             =E_*=\widetilde\delta_{27}.
+\tag{CG.160}
+$$
+
+There is a further consequence of Helstrom equality that is needed to
+identify the coefficients. Hold the averaged channel and its output
+differences fixed. Vary just the rank-one live projector $R_y$ in its
+two real chart coordinates of (CG.112), keeping the failure/other
+parts of $M_y$ fixed. Every perturbed $M_y$ remains an effect, and
+its pairing with that fixed difference is at most $e_y=E_*$. At the
+credited projector equality holds, so its first derivative vanishes:
+
+$$
+\operatorname{tr}(dR_5\,\widetilde\Delta_5)=0,\qquad
+\operatorname{tr}(dR_{27}\,\widetilde\Delta_{27})=0
+\quad\text{in both projector coordinates at each endpoint}.
+\tag{CG.161}
+$$
+
+This is a local maximum of a differentiable scalar pairing, not an
+assumption that an arbitrary optimizer satisfies the ansatz equations.
+Equivalently, using (CG.144) with $\widetilde\Delta_y$ fixed,
+its first two coordinates give
+$(\widetilde\Delta_yv_y)_i=\widetilde\delta_y(v_y)_i$ for $i=0,1$.
+The identity
+$v_y^T(\widetilde\Delta_yv_y-\widetilde\delta_yv_y)=0$ and
+$(v_y)_2=\pm1$ give the third coordinate. Thus these projectors are
+also eigenprojectors of the averaged live differences.
+
+Now evaluate the FIRST differential of (CG.114) at $x_*$ with
+$\eta=\widetilde\eta$ held fixed. The determinant differential used
+in (CG.139) is valid for these coefficients too. It says
+
+$$
+\left.d_x\mathcal L(x,\widetilde\eta)\right|_{x_*}
+ =\sum_{y=5,27}\operatorname{tr}(dA_y\,\widetilde\Delta_y)
+   +\sum_i(\widetilde r_i-1)d\zeta_i+\frac6{11}d\lambda.
+\tag{CG.162}
+$$
+
+In this identity $\overline H,\overline Q$ are fixed adjugate
+coefficients at $x_*$. Differentiating them as functions of $x$ would
+produce an incorrect extra term. The $z$ coefficient is zero by
+$\widetilde r_0=1$. The four projector coefficients are zero by
+(CG.161) and the positive weights $\lambda_*,1-\lambda_*$. Since
+$d\zeta_1=p_{51}d\lambda$, $d\zeta_2=p_{52}d\lambda$, the remaining
+$\lambda$ coefficient is
+
+$$
+\widetilde\delta_5-\widetilde\delta_{27}
+ -\widetilde q_5+\frac6{11}=0
+\tag{CG.163}
+$$
+
+by (CG.160). This essential equal-payoff equation completes all six
+components of $\nabla_x\mathcal L(x_*,\widetilde\eta)=0$.
+
+Let $G=[\nabla g_0\ \nabla g_1\ \nabla g_2]_{x_*}$, a real
+$6$ by $3$ matrix. The credited Jacobian has the form
+
+$$
+D\Psi(u_*)=\begin{pmatrix}A&G\\G^T&0\end{pmatrix}.
+\quad
+Gc=0\ \Longrightarrow\
+D\Psi(u_*)\binom{0}{c}=0\ \Longrightarrow\ c=0.
+\tag{CG.164}
+$$
+
+Here $A$ is its $6$ by $6$ Hessian block, not an input operator.
+Invertibility of $D\Psi(u_*)$ therefore makes $G$ injective. Subtracting the
+credited equation $\nabla F(x_*)+G\eta_*=0$ from (CG.162)'s
+stationarity gives $G(\widetilde\eta-\eta_*)=0$.
+Hence $\widetilde\eta=\eta_*$, proving (CG.156). The argument uses
+nonsingularity at the credited point, not uniqueness of arbitrary
+solutions of $\Psi$ outside its box. $\square$
+
+**Corollary 17.3 (population transfer is necessary for every full optimizer).**
+For any optimal common full-output map $\Phi$ of (CG.20), let $\Lambda$
+be its live compression to $V$, and define
+$T_{ij}=\langle i|\Lambda(|j\rangle\langle j|)|i\rangle$.
+Its sign-averaged live Choi matrix is (CG.156), and
+
+$$
+\begin{aligned}
+T_{01}&=(Q_*^{01})_{00}>0,&T_{10}&=(Q_*^{01})_{11}>0,\\
+T_{02}&=(Q_*^{02})_{00}>0,&T_{20}&=(Q_*^{02})_{11}>0.
+\end{aligned}
+\tag{CG.165}
+$$
+
+Proof. The reduction $\mathcal C\Phi$ has error at most $E_*$ and
+at least $E_*$ by Convention 17.1. It has precisely the same live
+compression, so Theorem 17.2 applies. Directly on the original full
+outputs, equality also holds throughout (CG.130)–(CG.133): the same
+positive endpoint weights and saturated lower bound force every
+endpoint effect to attain its individual half norm, and force every
+nonnegative budget term to vanish. Thus the support and effect conclusions
+of Theorem 17.2 hold before reduction as well.
+
+In the unnormalized output-input convention,
+$T_{ij}=\langle ij|J_\Lambda|ij\rangle$. Every $U\otimes U$
+conjugation fixes these diagonal entries. For $i<j$, $|ij\rangle$
+is coordinate $0$ and $|ji\rangle$ coordinate $1$ in its block,
+which gives exactly the four indices in (CG.165). The two coordinate-$0$
+positivities are (CG.117). The other two follow without new arithmetic:
+
+$$
+(Q_*^{01})_{11}=\eta_{1,*}(S_{01,*})_{00}>0,\qquad
+(Q_*^{02})_{11}=\eta_{2,*}(S_{02,*})_{00}>0.
+\tag{CG.166}
+$$
+
+These are the diagonal entries of the two-dimensional adjugates, using
+(CG.115) and $\eta_{1,*},\eta_{2,*}>0$. Averaging has supplied no
+physical sign gate. Equation (CG.156) identifies an averaged live map,
+not the whole unaveraged channel or its exact-time failure laws. $\square$
+
+## 18. A strict complete-output gap for zero-transfer live implementations
+
+**Theorem 18.1 (Schur live maps cannot approach the credited optimum).**
+Call a common full-output map zero-transfer when its live compression
+satisfies $T_{ij}=0$ for every $i\ne j$ in the fixed basis $(+,-,2)$.
+For a CP trace-nonincreasing live map this condition is equivalent to
+having diagonal Kraus operators, and to
+$\Lambda(A)=C\odot A$ with $C\succeq0$, $0\leq C_{ii}\leq1$.
+There exists a constant $\epsilon_0>0$, depending only on this fixed
+twelve-history task, such that every zero-transfer common full-output
+map satisfies
+
+$$
+E(\Phi)\geq E_*+\epsilon_0.
+\tag{CG.167}
+$$
+
+This is an existential gap in the original half full cq norm. No
+numerical value of $\epsilon_0$ or solution of the restricted minimax
+is asserted.
+
+Proof. The Schur characterization is a mature finite-dimensional fact;
+its trace-nonincreasing version is Theorem 2 in de Vicente and Streltsov,
+[*The power of the resource theory of genuine quantum coherence*,
+arXiv:1604.08031v2](https://arxiv.org/html/1604.08031v2), §II.2.
+For clarity, its exact zero-transfer hypothesis here can be checked
+without imposing covariance. A finite Kraus family exists for any
+finite-dimensional CP map, and
+
+$$
+T_{ij}=\sum_a|(L_a)_{ij}|^2.
+\tag{CG.168}
+$$
+
+All terms are nonnegative. Zero off-diagonal $T_{ij}$ therefore makes
+every $L_a$ diagonal in every Kraus representation. Writing its diagonal
+as $l_a$ gives $C=\sum_a l_al_a^\dagger\succeq0$ and
+$\Lambda(A)=C\odot A$. Conversely a spectral factorization of $C$
+gives diagonal Kraus operators and no transfer. The effect is
+$\operatorname{diag}(C_{ii})$, so trace nonincrease is exactly
+$C_{ii}\leq1$. This standard characterization is an intermediate step;
+the task-specific conclusion is the strict gap (CG.167).
+
+Consider ALL finite-output candidates (CG.155), independently of whether
+they came from a full instrument. Their Choi/effect feasible set
+$\mathcal K$ is compact: it is closed in the real vector space of
+Hermitian triples, and its positive variables obey
+
+$$
+\operatorname{tr}J+\operatorname{tr}G_f+\operatorname{tr}G_o=3.
+\tag{CG.169}
+$$
+
+Thus each positive variable is bounded. Let $\mathcal K_0$ impose the
+closed conditions $J_{ij,ij}=0$ for all $i\ne j$. This subset is
+nonempty, for example $J=0,G_f=I,G_o=0$, and compact. The twelve
+finite-output errors are continuous functions of the triple, as is
+their maximum. Hence
+
+$$
+\mu_0=\min_{\mathcal K_0}E_c
+\quad\text{exists},\qquad \mu_0\geq E_*.
+\tag{CG.170}
+$$
+
+If $\mu_0=E_*$, a minimizing finite-output channel in $\mathcal K_0$
+would satisfy Theorem 17.2. Its transition diagonals are unchanged by
+sign averaging, yet (CG.165)–(CG.166), applied to that theorem's same
+blocks, give four strictly positive transfers. This contradicts its
+membership in $\mathcal K_0$. Therefore $\mu_0>E_*$; define
+$\epsilon_0=\mu_0-E_*$. This excludes equality for the relaxed finite
+output task itself, not by assuming that a marginal optimizer lifts to
+a full optimizer.
+
+For every original full-output zero-transfer $\Phi$, the reduction
+$\mathcal C\Phi$ belongs to $\mathcal K_0$ and retains its live map.
+Consequently
+$E(\Phi)\geq E_c(\mathcal C\Phi)\geq\mu_0$, which proves (CG.167).
+The finite test contracts the complete norm; it supplies a lower bound
+on the unchanged exact-time task, without identifying that norm with
+a survival marginal or discarding its singular/other outcomes. $\square$
+
+**Definition 18.2 (a conditional diagonal closure).** Fix the common
+calibrated basis of $V$. Consider an implementation class with one
+specimen and independent initial apparatus, whose only live interactions
+have Kraus operators diagonal on that specimen. More generally, if $R$
+is an actually retained apparatus/record, allow live Kraus operators
+$\sum_j P_j\otimes B_{a,j}$ on $V\otimes R$. Allow operations
+$I_V\otimes B$ on $R$, choices from actually acquired classical records,
+independent randomization, finite composition, and summation over
+unobserved branch records. Failure branches are absorbing and never
+return population to a live direction. All apparatus, selection rules,
+permissions and numerical coefficients are common, rather than
+programmed by an unknown source height. No additional specimen-bearing
+interaction is included in this definition.
+
+**Corollary 18.3 (obstruction for exactly that closure).** Every common
+CPTP implementation built from Definition 18.2, with all outcomes
+included in the original comparison, satisfies (CG.167).
+
+Proof. A live Kraus operator $\sum_jP_j\otimes B_{a,j}$ leaves each
+specimen subspace $|j\rangle\otimes R$ invariant. Record-local operations
+have the same property, and products of such operators retain it.
+Thus an input $|j\rangle\langle j|\otimes\tau_R$ has live specimen
+support only on $|j\rangle$ along every surviving branch. Sums,
+independent mixtures and tracing out the record preserve this support.
+An absorbing branch contributes no later live mass. Hence the resulting
+live map has $T_{ij}=0$ for $i\ne j$, and Theorem 18.1 applies.
+The same conclusion holds for any explicitly defined limit of these
+live maps in Choi norm, because those zero diagonal entries form a closed
+set. No continuous control limit is presumed available by this statement.
+$\square$
+
+## 19. Equal effects and reference marginals do not fix live successors
+
+**Theorem 19.1 (a same-effects pair at the credited point).** Reuse $h$,
+$b^{01},b^{02}$ and $K_0,K_{01},K_{02}$ from (CG.134). Define
+
+$$
+D_0=K_0,\qquad
+D_{0j}=b^{0j}_1P_0+b^{0j}_0P_j,\qquad
+U_{0j}=|0\rangle\langle j|+|j\rangle\langle0|
+                        +\sum_{k\notin\{0,j\}}P_k
+\quad(j=1,2).
+\tag{CG.171}
+$$
+
+Replace the three live Kraus operators in (CG.135) by $D_0,D_{01},D_{02}$
+and leave its five failure CP densities unchanged. Call this full
+instrument $\Phi_D$; call the credited instrument $\Phi_K=\Phi_*$.
+Both are CPTP on the full complex algebra. They have identical
+classical live-branch probabilities, identical failure labels/times and
+identical unnormalized reference marginals in every corresponding branch,
+for arbitrary joint specimen/reference inputs. Nevertheless their live
+successors differ, and their original complete-output performances satisfy
+
+$$
+E(\Phi_K)=E_*,\qquad E(\Phi_D)\geq E_*+\epsilon_0>E_*.
+\tag{CG.172}
+$$
+
+Proof. The fixed swaps are unitary and
+
+$$
+\begin{aligned}
+K_{0j}&=U_{0j}D_{0j},\\
+D_{0j}^\dagger D_{0j}
+ &=|b^{0j}_1|^2P_0+|b^{0j}_0|^2P_j
+ =K_{0j}^\dagger K_{0j},\\
+\sum_{a\in\{0,01,02\}}D_a^\dagger D_a
+       +\operatorname{diag}(m_*)&=I_3.
+\end{aligned}
+\tag{CG.173}
+$$
+
+The last equation reuses (CG.141). The diagonal entries of $D_{0j}$
+need not be positive; their signed amplitudes are retained. These are
+diagonal Kraus operators, not replacements by square-root effects that
+silently remove phase data. Kraus conjugations and the unchanged positive
+failure densities prove complete positivity at every reference
+amplification. Equation (CG.173) proves joint trace preservation.
+
+For any complex joint operator $X$ on $V\otimes R$ and any branch $a$,
+cyclicity of the partial trace on the specimen gives
+
+$$
+\begin{aligned}
+\operatorname{Tr}_V[(K_a\otimes I_R)X(K_a^\dagger\otimes I_R)]
+ &=\operatorname{Tr}_V[(K_a^\dagger K_a\otimes I_R)X]\\
+ &=\operatorname{Tr}_V[(D_a^\dagger D_a\otimes I_R)X]\\
+ &=\operatorname{Tr}_V[(D_a\otimes I_R)X(D_a^\dagger\otimes I_R)].
+\end{aligned}
+\tag{CG.174}
+$$
+
+This includes entangled, mixed and history-correlated references; no
+factorization of $X$ has been used. Tracing the reference proves equality
+of the corresponding classical branch probabilities. Failure CP maps
+are identical, so their joint stopped-state/reference measures agree
+on every Borel set, with the same five labels, exact-time laws and
+absorbing successor. In particular, complete failure records are equal,
+not only their integrated probabilities.
+
+The live difference is already explicit on the operator test $P_0$:
+
+$$
+\begin{aligned}
+\Lambda_D(P_0)&=P_0,\\
+\Lambda_K(P_0)&=|h_0|^2P_0
+        +|b^{01}_1|^2P_1+|b^{02}_1|^2P_2,\\
+|b^{01}_1|^2+|b^{02}_1|^2&>0.
+\end{aligned}
+\tag{CG.175}
+$$
+
+Here $h_0$ is coordinate $0$ of $h$, not the time density $h_0(t)$.
+The equality $\Lambda_D(P_0)=P_0$ uses $r_{0,*}=1$; strict positivity
+uses (CG.166). This test is not an extra supplied preparation.
+The difference also occurs on actual catalogue inputs. For every sign
+at height $y$,
+
+$$
+\bigl(\Lambda_D(U\rho_yU^\dagger)
+             -\Lambda_K(U\rho_yU^\dagger)\bigr)_{22}
+ =\frac{(Q_*^{02})_{00}}2-\frac y{128}(Q_*^{02})_{11}.
+\tag{CG.176}
+$$
+
+The right side is a strictly decreasing affine function of $y$, so it
+vanishes at at most one of the three distinct heights. Thus the live
+successors differ for at least eight of the twelve actual histories.
+All four signs and all complex coherence entries remain part of the
+maps; diagonal statistics have only been used to witness inequality.
+Since every $D_a$ is diagonal, $\Phi_D$ is zero-transfer and (CG.167)
+gives its strict performance separation. The value for $\Phi_K$ is
+credited Theorem 16.1, not a new minimax calculation.
+
+For the original five-mode algebra use the same fixed isometry $E$ and
+$P_V$ as (CG.142). Set $\widehat K_a=EK_aE^\dagger$ and
+$\widehat D_a=ED_aE^\dagger$, and use for BOTH instruments the full
+failure measures
+
+$$
+ h_0(t)\left[w_\ell\operatorname{tr}
+       (E\operatorname{diag}(m_*)E^\dagger A)
+  +\mathbf1_{\ell=2}\operatorname{tr}((I_5-P_V)A)\right]dt\,P_f.
+\tag{CG.177}
+$$
+
+Their common total effect is $I_5$. The complementary live support is
+sent to original failure label $2$ with its entire mass; cross operators
+between $V$ and its complement have the same zero image in both
+instruments. Thus the equality of effects and reference marginals
+extends to arbitrary complex five-mode/reference inputs. On the actual
+inputs the complete outputs and errors are those already stated.
+
+The local Kraus label $a$ can be kept as an internal generated record
+when defining the branch comparison in (CG.174). The canonical live
+output in (CG.20) sums over it. No claim of the same error for a different
+joint task that exposes this extra label is being made. This is the
+instance-specific strengthening of the mature distinction between an
+effect and an instrument; the repository's
+`StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law`
+and `FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal`
+already supply the corresponding general lesson and finite Born identity.
+Here the same-effects pair straddles the exact benchmark and the strict
+zero-transfer gap. $\square$
+
+## 20. A conditional synthesis interface and its native boundary
+
+**Definition 20.1 (explicit additional services).** A conditional
+realization of $\Phi_K$ consists of the following COMMON services,
+with parameters fixed by $u_*$ before receiving the specimen:
+
+1. A calibrated diagonal instrument on $V$ with distinguishable live
+   operations $A\mapsto D_aAD_a^\dagger$, $a=0,01,02$, and complementary
+   effect $M=\operatorname{diag}(m_*)$. Its complete branch operations,
+   including signed/complex amplitudes, are supplied. Equivalently its
+   complementary precursor can have Kraus operator $\sqrt M$ before the
+   absorbing router. The instrument acts on the sole specimen and tensors
+   by identity on every retained reference.
+2. On a live record $01$ or $02$, the corresponding fixed calibrated
+   swap $U_{01}$ or $U_{02}$ on that specimen; on record $0$, identity.
+   This is control by a generated branch, not by an unknown height,
+   sign or history. Each swap fixes the remaining active basis direction.
+3. An absorbing router for the complementary branch, with stopped
+   successor $f$, original-label distribution
+   $w=(0,1/4,1/2,1/4,0)$, and no later specimen operation. For the
+   five-dimensional completion it also routes $V^\perp$ to original
+   label $2$, using a supplied calibrated support decomposition
+   $V\oplus V^\perp$ and exactly (CG.177).
+4. An EXACT-TIME output service with normalized law
+   $h_0(t)dt=2(1+t)^{-2}dt$ on $[0,1]$. It is independent of the
+   specimen, reference and branch conditional state. The router records
+   the label and this exact time together and preserves the old archive,
+   source/epoch, aligned clock, permissions and declared controller
+   updates. For a physical first-failure realization, this service must
+   additionally make the absorbing event occur at that actual elapsed
+   time, with live output at terminal time $1$ and no later positive-
+   carrier action on a failed branch. An ideal timestamp register alone
+   is not that physical timing service.
+
+The live branch record may be discarded under the fixed canonical output
+interpretation after its swap. Independent randomness here supplies no
+readable history, helper specimen, survival prior, reset, retry or
+source-bound programme. The services and their permissions are hypotheses
+of this interface, not consequences of the comparison class.
+
+**Proposition 20.2 (conditional whole-complex construction).** If the
+services of Definition 20.1 are supplied with their stated complete
+operations, they realize the common CPTP law (CG.135) and its five-mode
+extension (CG.142). Their canonical output performance is $E_*$.
+The exact random timestamp has inverse CDF
+
+$$
+H_0(t)=\int_0^t\frac2{(1+s)^2}ds=\frac{2t}{1+t},\qquad
+H_0^{-1}(u)=\frac{u}{2-u}\quad(0\leq u\leq1).
+\tag{CG.178}
+$$
+
+Proof. On each live branch the composite Kraus operator is $D_0=K_0$
+or $U_{0j}D_{0j}=K_{0j}$ by (CG.173). Summing these unnormalized
+branches gives exactly $\Lambda_*$. The complementary precursor and
+absorbing trace-and-prepare router compose to the CP density
+$w_\ell h_0(t)\operatorname{tr}(MA)dt\,P_f$.
+At reference amplification its reference factor is
+$\operatorname{Tr}_V[(M\otimes I_R)X]$, so the construction preserves
+the entire stipulated joint operation, not just scalar probabilities.
+The complementary five-mode branch adds precisely the second term in
+(CG.177). Completeness is (CG.173) plus the complementary support effect,
+and no branch mass is divided by its probability. These operator
+identities hold for every complex matrix unit and therefore every
+complex input, including all actual coherences. The performance statement
+reuses Theorem 16.1 on the same canonical complete outputs.
+
+Integration and inversion give (CG.178); $2-u\geq1$ throughout the
+unit interval. This specifies a measurable random variable with the
+required density. It proves neither finite-bit exact time storage nor
+that a device emits its first absorbing failure at that time. The latter
+claim depends on the additional physical timing service explicitly
+required in Definition 20.1. A time-bin approximation or a timestamp
+written after another failure would change the output contract.
+$\square$
+
+**Convention 20.3 (source correspondence, attribution and remaining scope).**
+The native objects used here are the actual twelve histories of §§2–4,
+not a replacement source. The following correspondence fixes the limits
+of applying Corollary 18.3 or Proposition 20.2 to those objects.
+
+| Source and mathematical contract | Consequence and unsupplied bridge |
+| --- | --- |
+| `OriginalControlComposition.OriginalControl`, `FiniteC1Control`, `concatenate_original` and its owning Scribe | These are regularity, strict-domain and literal chronological composition statements about real paths. They construct no common actuator, unknown-height sensor or swap on $M_3$. The private absolute-continuity and concatenation lemmas support those same path conclusions. |
+| [Acquired Continuation Limits][ACR], Definitions 2.3–2.5 and Proposition 4.1 | One normalized unresolved specimen, fixed common metadata and all-outcome error; the calibrated $K_x$ and complete original failure densities are source-indexed targets. Their dependence on $x$ neither makes $x$ readable nor installs a common implementation. |
+| [Quantum Carrier Minimum](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md), Definition 1.3, (QC.8)–(QC.17), Theorem 3.1 | A fixed calibrated qutrit correspondence retains every separate failure CP measure and every actual joint reference. The prescribed no-failure kernels are diagonal in $(+,-,2)$, conditional on the waveform and calibrated instrument services. Encoding, decoding, clocks, recording and operations remain declared resources; the representation theorem acquires none of them. |
+| [Instrument Boundaries](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md), §§4–5.2, Proposition 17.2 and Definition 17.3 | Canonical prescribed no-failure filters and full stopped successors are conditional CP instruments. The known-height/full-orbit rigidity and programme contracts differ from this approximate three-height common-channel task. They do not show that every callable native operation belongs to Definition 18.2. |
+| [Probability/Phase Transport](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), §8.5 and §9.1 | The actual fields include $P=\partial_k$ and $Q=(1/2-k/r)\partial_u-(k/r)\partial_v$, with $[P,Q]=-(\partial_u+\partial_v)/r\ne0$. Probability-changing paths and this noncommuting geometry cannot be identified with an exhaustive Schur operation menu. The relative-path convention itself asserts no additional physical actuator. |
+
+The current source sections and path supplier named in this table
+are taken at revision `3c285d3b1e09bcfe8dcc9818db0665914d81bbdf`;
+the historical links [AC] and [IB] retain their earlier fixed attribution
+for the credited target. No earlier source hypothesis is replaced by a
+stronger service in Definition 20.1. The five-mode support decomposition
+and conditional swaps in that definition are resources in their own
+right, not arbitrary rotations authorized by geometric reachability.
+
+The new task-specific deductions are (CG.156)–(CG.166), the strict gap
+(CG.167) for the explicitly defined subclass, and the same-effects
+benchmark/separation pair (CG.171)–(CG.177) with its conditional synthesis.
+Their provenance is `repo-derived` ordinary mathematics conditional on
+the credited certificate, rather than another certificate for (CG.154).
+The finite Choi/Kraus framework is reused from the repository's
+`FiniteKrausRepresentation` (including `choi_of_kraus`,
+`choi_PSD_iff_CP_map` and `krausRepresentation`) and its cited Physlib
+source at `6a09b2d1761a0d4430083045a247eb121d8da260`.
+These declarations are source references here, not new compiled
+applications. Standard CP/TP facts are also literature-attested in
+Heinosaari, Jivulescu, Reeb and Wolf,
+[*Extending quantum operations*, arXiv:1205.0641v3](https://arxiv.org/html/1205.0641v3),
+§§2.1 and 6.1. Their at-most-qubit Theorem 5 is not used as a qutrit
+compatibility criterion.
+
+The Schur equivalence is the cited de Vicente–Streltsov §II.2 result,
+not new mathematical content. Sign covariance and its population and
+reverse-coherence blocks are literature-attested in Nechita and Park,
+[*Random covariant quantum channels*, arXiv:2403.03667v2](https://arxiv.org/html/2403.03667v2),
+§5, especially Proposition 5.3. Covariance there permits population
+transfer and does not imply diagonal Kraus operators. The present
+trace-decreasing live block is handled by its explicit positive Choi
+budget, rather than importing a trace-preserving hypothesis. The
+Helstrom support/equality argument, determinant first differential and
+finite-dimensional compactness used above are mature tools; their
+particular equality-to-stationarity composition and all-optimizer
+consequence are proved in §17.
+
+A related recent joint-operation contract is Definition 1 and Proposition 1
+of Muñoz-Moller, Leppäjärvi and Heinosaari,
+[*Adversarial Information Gain in Non-ideal Quantum Measurements*,
+arXiv:2602.20941v1](https://arxiv.org/html/2602.20941v1): meter/instrument
+compatibility requires one joint instrument with both prescribed
+marginals; its conjugate-instrument characterization uses meters on
+a dilation ancilla. Equality of effects in (CG.173) grants no such
+access. Jing, Guo, Zhu, Yao and Wang,
+[*Programmable Open Quantum Systems*, arXiv:2512.08279v1](https://arxiv.org/html/2512.08279v1),
+Propositions 3–4, instead concern retrieving a fixed-generator
+Lindbladian semigroup from its programme family on arbitrary inputs.
+Those hypotheses supply neither the diagonal instrument nor the swaps
+and exact-time service required here; their exclusions are not a native
+impossibility theorem for this stopped task. These comparisons bound
+the claimed reuse and assert no worldwide originality.
+
+The source result `SchurHornEntropyMonotonicity.spectral_readout_entropy_le`
+concerns a finite unitary conjugate of a diagonal nonnegative spectrum
+and its doubly stochastic diagonal readout. It supplies no equality
+classification for this trace-decreasing live map or exact-time stopped
+instrument; no entropy inference is used here.
+
+The all-optimizer necessity does not establish uniqueness of the whole
+channel or its failure laws. The subclass gap does not establish
+impossibility for the full native operation menu. Exact synthesis in
+Definition 20.1 is conditional on actually supplied operations and
+permissions, and is distinct from acquiring them from the original
+unresolved specimen. The global original acquisition/physical realization
+problem and the continuing programme remain open. No Lean/kernel evidence,
+physical efficiency bound or finite exact-clock implementation is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 21. The original experiment across an actual acquisition cut
+
+**Convention 21.1 (unchanged source, processor and output).** In §§21–25,
+the experiment remains (CG.20), with the credited value and instrument
+of Theorem 16.1 and the all-optimizer conclusion of Theorem 17.2.
+The fixed isometry $E:\mathbb C^3\to\mathbb C^5$ has columns
+$(|+\rangle,|-\rangle,|2\rangle)$ from (CG.6). In these coordinates,
+the twelve ACTUAL normalized reached-old-live-cut inputs are
+
+$$
+\rho_{y,e,n}=U_{e,n}\rho_yU_{e,n}^\dagger,\qquad
+U_{e,n}=\operatorname{diag}(e,n,1),\qquad y\in\{5,16,27\},
+\tag{CG.179}
+$$
+
+where $\rho_y$ and $B_y$ are exactly (CG.111). The correspondence to
+the original source parameters, rather than a newly prepared ensemble, is
+
+$$
+x=y/256,\qquad e=(-1)^{\beta/\pi},\qquad n=e(-1)^m.
+\tag{CG.180}
+$$
+
+| Original $(\beta,m)$ | $(e,n)$ |
+| --- | --- |
+| $(0,0)$ | $(1,1)$ |
+| $(0,1)$ | $(1,-1)$ |
+| $(\pi,0)$ | $(-1,-1)$ |
+| $(\pi,1)$ | $(-1,1)$ |
+
+The ideal live block is $U_{e,n}B_yU_{e,n}^\dagger$. Each of the five
+failure sectors has the entire measure
+$w_\ell f_y(t)dt\,P_f$, where
+$w=(0,1/4,1/2,1/4,0)$ and $f_y(t)=6y/(y+6t)^2$ on $[0,1]$.
+Its total mass is $6/(y+6)$, complementary to the live mass $y/(y+6)$.
+The objective is the maximum over these twelve histories of HALF the
+complete cq trace norm. All complex live coherences, exact failure
+labels/times, singular measures, aborts, rejections, wrong support and
+additional zero-ideal sectors remain in that norm. No subsequent
+acquisition outcome is conditioned upon. The earlier reach probabilities
+(CG.8) are not source priors.
+
+There is one common CPTP processor on the entire complex input algebra,
+with the original five-mode completion and common metadata of Definition
+3.1. Its coefficients cannot depend on $y,e,n$ or a readable history.
+The compressed live map $\Lambda:M_3\to M_3$ is CP and TNI; it is
+generally not TP. The finite necessary output test $\mathcal C$ of
+Convention 17.1 is used only to obtain lower bounds for this full task.
+
+**Definition 21.2 (actual tagged acquisition factorization).** An
+acquisition cut lies after receiving the sole normalized specimen and
+before later execution. Its placement in the original aligned clock and
+the duration of acquisition are obligations of the implementation; this
+definition grants no extra execution time. In the finite version its entire retained
+input-dependent quantum payload and an actual classical record have algebra
+
+$$
+\mathcal B=\bigoplus_{\alpha\in A}M_{d_\alpha}(\mathbb C),
+\qquad |A|<\infty,\quad 1\leq d_\alpha<\infty.
+\tag{CG.181}
+$$
+
+The implementation supplies common CP maps $\mathcal E_\alpha$ and
+common full-output CPTP maps $\mathcal R_\alpha$ such that
+
+$$
+\begin{aligned}
+\mathcal E_\alpha &:M_3\longrightarrow M_{d_\alpha},
+&\sum_\alpha\mathcal E_\alpha^\dagger(I_{d_\alpha})&=I_3,\\
+\Phi&=\sum_\alpha\mathcal R_\alpha\mathcal E_\alpha,
+&p_\alpha(\rho)&=\operatorname{tr}\mathcal E_\alpha(\rho).
+\end{aligned}
+\tag{CG.182}
+$$
+
+These are identities on ALL complex matrix units, not a fit only to
+twelve densities. The actual five-mode implementation must restrict to
+(CG.182); its action outside $V$ retains its own full TP contract.
+Only the sum of encoder branches is TP. Each branch is CP/TNI, including
+branches destined for failure or abort. Every decoder includes all its
+outcomes and is TP; its live compression $\mathcal R_\alpha^L$ is TNI.
+The record $\alpha$ is generated in the implementation from this input,
+and may be kept internally or discarded by the canonical interpretation.
+It is not an unknown source label granted to the implementation.
+
+The block $M_{d_\alpha}$ counts JOINTLY every quantum system accessible
+to later execution that can influence its output: the specimen if retained,
+quantum memory and controller parts, accessible environment, returned
+systems, and any retained entanglement share. There is no later source
+callback, helper specimen, copy, retry, source-dependent timing port or
+uncounted quantum bypass. A passive inaccessible reference is allowed,
+but neither operation can use it. All identities tensor by its identity.
+Independent local ancillary states can be absorbed into the encoder and
+decoder. Independent blank ancillas introduced later remain free. A
+receiver's share of entanglement with an encoder system is not such a
+blank and must be counted in the joint payload. Fixed common classical
+metadata and actually acquired classical records remain available.
+
+An algebraic Kraus decomposition, Choi decomposition or sign average
+does not by itself supply this classical record, an observable hardware
+flag, encoding access or later controlled operations. A coherent sum of
+putative branch subspaces is one quantum payload until a classical
+direct-sum factorization is actually supplied.
+
+**Convention 21.3 (alphabet, integral and closure scope).** The primary
+version is (CG.181). The same necessity statements below also cover
+countable classical $A$ with finite-dimensional fibres when (CG.182)
+converges as CP instruments and its total effect is $I_3$. They cover
+an explicitly supplied integral factorization
+
+$$
+\Phi=\int \mathcal R_\alpha\mathcal E_\alpha\,d\nu(\alpha),
+\qquad
+\int \mathcal E_\alpha^\dagger(I)\,d\nu(\alpha)=I_3,
+\tag{CG.183}
+$$
+
+provided the fibre dimensions are measurable finite integers, the encoder
+and live-decoder Kraus fields are measurable, and the effects and live
+Choi matrices are integrable. Decoders are full-output TP almost
+everywhere. Encoder densities are CP, but need not individually be TNI
+relative to $\nu$; it is their integrated instrument that has total
+effect $I_3$. Branch probabilities are integrals of unnormalized encoder
+traces. These hypotheses specify the integral model; no disintegration
+theorem or arbitrary infinite-dimensional coding theorem is presumed.
+The lower-dimensional class has $d_\alpha\leq2$ everywhere or almost
+everywhere. Its closure statement below concerns convergence of the
+reduced finite Choi/effect triples (CG.155), not compactness of the
+complete exact-time output space. A limit without an actual tagged
+factorization carries the class obstruction but no inferred branch flag
+or branch-probability interpretation.
+
+## 22. Every optimal live map requires three-dimensional coherence
+
+**Theorem 22.1 (a strict homogeneous Schmidt witness for every optimizer).**
+Use the output-input, unnormalized Choi convention (CG.125), and put
+
+$$
+\begin{aligned}
+|\Omega\rangle&=|00\rangle+|11\rangle+|22\rangle,
+&W_3&=|\Omega\rangle\langle\Omega|-2I_9,\\
+t_*&=\operatorname{tr}H_*+\operatorname{tr}Q_*^{01}
+                             +\operatorname{tr}Q_*^{02},
+&\delta_*&=\mathbf1^TH_*\mathbf1-2t_*.
+\end{aligned}
+\tag{CG.184}
+$$
+
+For every optimal full-output common processor, and also every optimal
+finite-test channel in (CG.155), its actual live Choi matrix satisfies
+
+$$
+\operatorname{tr}(W_3J_\Lambda)=\delta_*>\frac{19}{10}.
+\tag{CG.185}
+$$
+
+In particular its live Choi matrix has Schmidt number exactly three:
+it admits no decomposition into positive rank-one terms whose vectors,
+viewed as $3$ by $3$ matrices, all have rank at most two. Equivalently,
+every Kraus representation of the live CP map contains a rank-three
+operator. This is a coherent bottleneck dimension statement; it is not
+an entropic coherent-information or capacity formula.
+
+Proof. The mature Schmidt-number definition and maximally-entangled
+overlap bound are Terhal–Horodecki,
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/pdf/quant-ph/9911117v4),
+Definition 1 and Lemma 1. For the present unnormalized convention,
+write $|L\rangle\!\rangle=\sum_{a,i}L_{ai}|ai\rangle$. The exact
+homogeneous bound is
+
+$$
+\operatorname{rank}L\leq2
+\quad\Longrightarrow\quad
+|\operatorname{tr}L|^2\leq2\|L\|_F^2
+\quad\Longrightarrow\quad
+\langle\!\langle L|W_3|L\rangle\!\rangle\leq0.
+\tag{CG.186}
+$$
+
+Indeed $|\operatorname{tr}L|$ is at most the sum of its singular values,
+and Cauchy–Schwarz bounds their squared sum by twice their sum of
+squares when at most two are nonzero. This holds for arbitrary complex
+$L$. Summing gives the bound on the entire homogeneous cone
+
+$$
+\mathfrak S_2=\left\{\sum_s|L_s\rangle\!\rangle
+ \langle\!\langle L_s|:\operatorname{rank}L_s\leq2\right\}.
+\tag{CG.187}
+$$
+
+There is no trace-one condition in (CG.186)–(CG.187). The
+Choi/Kraus–Schmidt equivalence is the standard vectorization identity;
+Chruściński–Kossakowski,
+[*On partially entanglement breaking channels*, quant-ph/0511244v1](https://arxiv.org/pdf/quant-ph/0511244v1),
+§2, (6)–(13), give it for TP channels with normalized Choi states.
+Here it is applied directly to positive rank-one Choi sums, so no TP
+assumption is imposed on the live map or an individual branch. Sekatski,
+[*The bottleneck dimension of quantum operations*, arXiv:2608.25010v1](https://arxiv.org/pdf/2608.25010v1),
+§II.A, (2) and Definition 1, states the corresponding classical-assisted
+single-channel bottleneck and CP-map Schmidt number. No independently
+programmable family of instruments is supplied here.
+
+Theorem 17.2 fixes $\overline J_\Lambda=J_*$ for every channel in the
+statement. Each actual sign satisfies
+$(U_{e,n}\otimes U_{e,n})|\Omega\rangle=|\Omega\rangle$.
+Consequently its conjugation fixes $W_3$, and hence
+
+$$
+\operatorname{tr}(W_3J_\Lambda)
+ =\operatorname{tr}(W_3\overline J_\Lambda)
+ =\mathbf1^TH_*\mathbf1
+    -2(\operatorname{tr}H_*+\operatorname{tr}Q_*^{01}
+                              +\operatorname{tr}Q_*^{02}).
+\tag{CG.188}
+$$
+
+The two off-diagonal character blocks have zero pairing with
+$|\Omega\rangle$. Its squared norm is $3$, not $1$; dividing the Choi
+matrix by $3$ would divide both sides of (CG.185) by $3$. The real-sign
+input representation is $\overline U=U$, as in §14. This invariance is
+why the averaged live matrix constrains every unaveraged optimizer,
+without asserting their equality.
+
+The following additional coarse rational enclosures follow from the
+credited box $C$ in Proposition 13.2, using just (CG.112), (CG.113) and
+the adjugate formulas (CG.116). They hold throughout that box; no root
+identity is needed for these new inequalities.
+
+| Quantity | Strict lower bound | Strict upper bound |
+| --- | --- | --- |
+| $(H)_{00}$ | $968/1000$ | $970/1000$ |
+| $(H)_{11}$ | $498/1000$ | $500/1000$ |
+| $(H)_{22}$ | $655/1000$ | $656/1000$ |
+| $(H)_{01}$ | $695/1000$ | $696/1000$ |
+| $(H)_{02}$ | $796/1000$ | $798/1000$ |
+| $(H)_{12}$ | $571/1000$ | $573/1000$ |
+| $\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02}$ | $35/1000$ | $36/1000$ |
+
+For an exact arithmetic specification of these comparisons, embed
+each endpoint $c_i\pm10^{-24}$ on the directed grid with denominator
+$D=2^{224}$, as in (CG.118). Form $v_yv_y^T/(v_y^Tv_y)$ for
+$y=5,27$, then $A_y,N,\zeta,S_0,S_{01},S_{02}$ in their displayed
+order. Embed the rational diagonal entries of $\rho_y$ directly and
+its off-diagonal entries as directed square roots of $p_{yi}p_{yj}$.
+For each adjugate entry use the signed transposed minor: for a $3$ by
+$3$ matrix $\operatorname{adj}(S)_{ij}=(-1)^{i+j}
+\det S[\widehat j,\widehat i]$, with each two-dimensional determinant
+evaluated as $ad-bc$. For a two-dimensional adjugate use
+$\left(\begin{smallmatrix}d&-b\\-c&a\end{smallmatrix}\right)$.
+Multiply by $1000\eta_0,\eta_1,\eta_2$ respectively. Round every
+product and quotient outwards on that same grid; square roots use
+(CG.118). All divided chart denominators are positive. These operations
+give the seven strict comparisons in the table. Their coarse endpoints
+alone give the new margin
+
+$$
+\begin{aligned}
+\delta_*
+ &=2(H_{01}+H_{02}+H_{12})
+       -(H_{00}+H_{11}+H_{22})
+       -2(\operatorname{tr}Q^{01}+\operatorname{tr}Q^{02})\\
+ &>\frac{2(695+796+571)-(970+500+656)-2\cdot36}{1000}
+   =\frac{963}{500}>\frac{19}{10}.
+\end{aligned}
+\tag{CG.189}
+$$
+
+By (CG.186), (CG.185) excludes $J_\Lambda\in\mathfrak S_2$.
+Every vector in $\mathbb C^3\otimes\mathbb C^3$ has Schmidt rank
+at most three, so the Schmidt number is exactly three. No whole-channel
+or exact-time failure-law uniqueness is used or obtained. $\square$
+
+## 23. Strict complete-output separation for acquisition through qubits
+
+**Theorem 23.1 (classical-assisted lower-dimensional acquisition gap).**
+There is a task-dependent constant $\epsilon_2>0$ such that every common
+full-output processor whose compressed live Choi matrix belongs to
+$\mathfrak S_2$ satisfies
+
+$$
+E(\Phi)\geq E_*+\epsilon_2.
+\tag{CG.190}
+$$
+
+In particular this holds for every actual factorization of Definition
+21.2 or Convention 21.3 with $d_\alpha\leq2$, allowing all its classical
+records, independent blanks, arbitrary common decoders and all outcomes.
+It also holds for the closure of this class in reduced Choi/effect
+triples. The gap is existential; neither a numerical additive error gap
+nor the restricted optimum is asserted.
+
+Proof. The standard bottleneck mechanism in Sekatski §II.A is especially
+simple for the actual live submap. Choose encoder Kraus matrices
+$C_{\alpha u}:\mathbb C^3\to\mathbb C^{d_\alpha}$ and live-decoder
+Kraus matrices $D_{\alpha v}:\mathbb C^{d_\alpha}\to\mathbb C^3$.
+Their products give
+
+$$
+\Lambda(A)=\sum_{\alpha,u,v}
+ L_{\alpha vu}A L_{\alpha vu}^\dagger,
+\qquad L_{\alpha vu}=D_{\alpha v}C_{\alpha u},
+\qquad \operatorname{rank}L_{\alpha vu}\leq d_\alpha.
+\tag{CG.191}
+$$
+
+This uses the same joint implementation, not separately attained output
+laws. The live-decoder budget is $\sum_vD_{\alpha v}^\dagger
+D_{\alpha v}\preceq I_{d_\alpha}$; equality need not hold. Thus
+the product-rank argument gives $J_\Lambda\in\mathfrak S_2$ without
+treating a live branch as TP or dividing by a branch probability.
+
+For compactness, normalized rank-at-most-two vectors form a compact
+set, and their rank-one projectors do also. Their convex hull in the
+finite-dimensional Hermitian matrix space is compact. Consequently
+$\mathfrak S_2\cap\{J:\operatorname{tr}J\leq3\}$ is compact, including
+$J=0$. This is the homogeneous form of Terhal–Horodecki's compact
+Schmidt-number sets. Positive countable sums and the integrals specified
+in (CG.183) stay in that cone by closedness and integrability.
+
+Let $\mathcal K$ be ALL finite-output triples in (CG.155) and put
+
+$$
+\mathcal K_2=\{(J,G_f,G_o)\in\mathcal K:J\in\mathfrak S_2\},
+\qquad \mu_2=\min_{\mathcal K_2}E_c.
+\tag{CG.192}
+$$
+
+The budget $\operatorname{Tr}_{\rm out}J+G_f^T+G_o^T=I_3$ gives
+$\operatorname{tr}J+\operatorname{tr}G_f+\operatorname{tr}G_o=3$.
+Positivity makes $\mathcal K_2$ compact; it is nonempty, for example
+at $J=0,G_f=I_3,G_o=0$. The maximum of twelve continuous finite-output
+errors is continuous, so $\mu_2$ exists. Convention 17.1 gives
+$\mu_2\geq E_*$. Equality would supply an optimizer in $\mathcal K_2$,
+contradicting Theorem 22.1. Hence $\epsilon_2=\mu_2-E_*>0$.
+
+The reduction $\mathcal C\Phi$ retains the live map and contracts the
+complete norm. Therefore
+$E(\Phi)\geq E_c(\mathcal C\Phi)\geq\mu_2$. Any convergent sequence
+of reduced triples with Schmidt number at most two has a limit in
+$\mathcal K_2$, proving exactly the stated closure result. Neither
+compactness of the complete output space nor a lift of an arbitrary
+finite triple to an optimal exact-time law is needed. $\square$
+
+## 24. A positive acquired high-dimensional mass on every original input
+
+**Theorem 24.1 (uniform unconditional branch-mass necessity).** Suppose
+an ACTUAL tagged factorization in Definition 21.2 or Convention 21.3
+realizes a common processor attaining $E_*$. Let
+$A_{\geq3}=\{\alpha:d_\alpha\geq3\}$ and define
+
+$$
+\begin{aligned}
+\Lambda_H&=\sum_{\alpha\in A_{\geq3}}
+                 \mathcal R_\alpha^L\mathcal E_\alpha,\\
+p_H^{\rm acq}(\rho)&=\sum_{\alpha\in A_{\geq3}}
+                         \operatorname{tr}\mathcal E_\alpha(\rho),
+&p_H^L(\rho)&=\operatorname{tr}\Lambda_H(\rho).
+\end{aligned}
+\tag{CG.193}
+$$
+
+Use the corresponding integrals in the integral model. Then, for EVERY
+normalized $\rho\in M_3$, and thus for each of all twelve original
+inputs individually,
+
+$$
+p_H^{\rm acq}(\rho)\ \geq\ p_H^L(\rho)
+ \ \geq\ \frac{\delta_*^2}{24}
+ \ >\ \frac{361}{2400}\ >\ \frac3{20}.
+\tag{CG.194}
+$$
+
+The probability is measured on the original normalized reached-cut
+specimen, before any new postselection. The stronger middle quantity
+counts branches that both traverse a high-dimensional acquisition block
+and later contribute to the canonical supported live output. No source
+prior, external entangled test preparation or observed extra flag is
+required for this bound.
+
+Proof. Decompose the actual live channel into the low- and high-block
+contributions $\Lambda=\Lambda_L+\Lambda_H$. Their Choi matrices are
+positive, and (CG.191) puts $J_L$ in $\mathfrak S_2$. Equations
+(CG.185)–(CG.186) give
+
+$$
+\delta_*\leq\operatorname{tr}(W_3J_H).
+\tag{CG.195}
+$$
+
+The high-block contribution is a finite-dimensional CP submap even if
+the supplied classical alphabet is infinite. Choose any finite Kraus
+representation $\Lambda_H(A)=\sum_s L_s A L_s^\dagger$ of this aggregate
+map. It need not be the observed encoder record. Full TP of the processor
+and positivity of the other output branches imply
+
+$$
+\Lambda_H^\dagger(I)\preceq I_3,\qquad
+t_H:=\sum_s\|L_s\|_F^2=\operatorname{tr}J_H\leq3.
+\tag{CG.196}
+$$
+
+For a unit vector $\psi$, let $P=|\psi\rangle\langle\psi|$,
+$Q=I-P$, and set
+
+$$
+\begin{aligned}
+p&=\sum_s\|L_s\psi\|^2=p_H^L(P),\\
+a_s&=\operatorname{tr}(QL_s),
+&b_s&=\operatorname{tr}(PL_s)=\langle\psi|L_s|\psi\rangle.
+\end{aligned}
+\tag{CG.197}
+$$
+
+Hilbert–Schmidt Cauchy–Schwarz on the rank-two projection $Q$, and
+then on the unit vector $\psi$, give
+
+$$
+\sum_s|a_s|^2\leq2(t_H-p),\qquad
+\sum_s|b_s|^2\leq p.
+\tag{CG.198}
+$$
+
+For the first inequality, take an orthonormal basis with first vector
+$\psi$: the squared modulus of the sum of the other two diagonal entries
+is bounded by twice the squared Frobenius norm of the other two columns. Equivalently
+$\|L_sQ\|_F^2=\|L_s\|_F^2-\|L_s\psi\|^2$.
+Trace and Frobenius norm are invariant under this simultaneous basis
+change. Thus the calculation includes all complex phases, not just real
+matrix entries or the sign-invariant subfamily.
+
+Since $\operatorname{tr}L_s=a_s+b_s$, another Cauchy–Schwarz inequality
+over $s$ yields
+
+$$
+\begin{aligned}
+\operatorname{tr}(W_3J_H)
+ &=\sum_s|a_s+b_s|^2-2t_H\\
+ &\leq2(t_H-p)+p+2\sqrt{2(t_H-p)p}-2t_H\\
+ &=2\sqrt{2(t_H-p)p}-p
+ \leq2\sqrt{6p}.
+\end{aligned}
+\tag{CG.199}
+$$
+
+Here $0\leq p\leq t_H\leq3$. Combining (CG.195) with (CG.199)
+and squaring nonnegative quantities gives $p\geq\delta_*^2/24$.
+For any mixed normalized input, a spectral decomposition and linearity
+of $p_H^L$ give the same lower bound. Finally,
+$\mathcal R_\alpha^L$ is TNI, so summing its trace inequalities gives
+$p_H^L\leq p_H^{\rm acq}$. The strict arithmetic in (CG.194) follows
+from $\delta_*>19/10$ and
+$(19/10)^2/24=361/2400>3/20$.
+
+All sums defining low/high submaps are positive CP sums; in (CG.183)
+they are integrals over the measurable dimension sets. Closedness of
+$\mathfrak S_2$, integrable effects and the finite input/output live
+algebras justify the same split and finite Kraus representation of the
+aggregate high submap. This proves the countable and specified integral
+versions without interpreting a limiting virtual split as an actual flag.
+$\square$
+
+## 25. Abstract sufficiency, counterexamples and the native boundary
+
+**Proposition 25.1 (an explicit sufficient acquisition factorization).**
+For the credited channel $\Phi_*$ there is an abstract factorization
+(CG.182) with fibre dimensions $3,2,2,1,1$, and a scalar extra branch
+for its original five-mode completion. In that factorization the sole
+three-dimensional branch has actual-input probability
+
+$$
+p_3(\rho_{y,e,n})
+ =H_{00,*}\frac y{128}
+   +H_{11,*}\frac{64-y}{128}+\frac{H_{22,*}}2.
+\tag{CG.200}
+$$
+
+It is independent of the four signs. For $y=5,16,27$ respectively it
+belongs to $(595/1000,596/1000)$, $(635/1000,637/1000)$ and
+$(676/1000,678/1000)$. These are probabilities for this construction,
+not an optimal lower bound for arbitrary factorizations.
+
+Proof. Retain the signed amplitudes of (CG.134). On the qutrit branch
+use encoder Kraus matrix $C_0=K_0$ and decode by the live identity.
+On branch $0j$, $j=1,2$, use a two-dimensional carrier with basis
+$|q_0\rangle,|q_1\rangle$ and put
+
+$$
+\begin{aligned}
+C_{0j}&=b^{0j}_1|q_0\rangle\langle0|
+                +b^{0j}_0|q_1\rangle\langle j|,\\
+V_{0j}&=|j\rangle\langle q_0|+|0\rangle\langle q_1|,
+&V_{0j}^\dagger V_{0j}&=I_2,
+&V_{0j}C_{0j}&=K_{0j}.
+\end{aligned}
+\tag{CG.201}
+$$
+
+The decoder $X\mapsto V_{0j}XV_{0j}^\dagger$ is TP into the live
+output. For each $k=1,2$, a scalar acquisition branch has Kraus row
+$C_{f,k}=\sqrt{m_{k,*}}\langle k|$. Its decoder sends scalar $s$ to
+the entire five-labelled failure law
+$s\,w_\ell h_0(t)dt\,P_f$ with $h_0(t)=2/(1+t)^2$.
+This decoder is TP since $\sum_\ell w_\ell=1$ and
+$\int_0^1h_0(t)dt=1$. Equation (CG.141) gives the JOINT encoder
+normalization
+
+$$
+C_0^\dagger C_0+
+ \sum_{j=1}^2C_{0j}^\dagger C_{0j}
+ +\sum_{k=1}^2C_{f,k}^\dagger C_{f,k}=I_3.
+\tag{CG.202}
+$$
+
+The branch products and failure maps give exactly (CG.135) on every
+complex matrix, including at arbitrary passive reference amplification.
+For five modes, compress the supported branches by
+$A\mapsto E^\dagger AE$. Add the scalar CP branch
+$A\mapsto\operatorname{tr}((I_5-EE^\dagger)A)$, decoded to original
+failure label $2$ with law $h_0(t)dt$. Its effect completes $EE^\dagger$
+to $I_5$, and the resulting full map is precisely (CG.142), including
+the discarded cross-support entries. No new output label is exposed.
+
+The table in Theorem 22.1 makes each diagonal entry of $H_*$ positive.
+Its rank-one factorization $H_*=hh^T$ makes $C_0$ rank three;
+both other live matrices have rank two by (CG.165)–(CG.166).
+The qutrit encoder effect is
+$C_0^\dagger C_0=\operatorname{diag}(H_{00,*},H_{11,*},H_{22,*})$,
+which proves (CG.200). The more precise rational enclosures from the
+same endpoint calculation used in Theorem 22.1 are
+
+$$
+\begin{aligned}
+0.968927785409&<H_{00,*}<0.968927785410,\\
+0.498837910301&<H_{11,*}<0.498837910302,\\
+0.655285923793&<H_{22,*}<0.655285923794.
+\end{aligned}
+\tag{CG.203}
+$$
+
+Substitution of $y=5,16,27$ in (CG.200) gives the stated coarse
+probability intervals. Every branch is unnormalized throughout.
+$\square$
+
+**Proposition 25.2 (boundaries of the resource inference).** A nominal
+three-dimensional output span does not imply the obstruction (CG.185),
+and a three-dimensional carrier does not suffice for optimal performance.
+Omitting an accessible entanglement share from the cut can invalidate
+the dimension obstruction. None of these facts supplies a native
+acquisition or timing service.
+
+Proof. The qutrit dephasing channel has Kraus matrices $P_0,P_1,P_2$
+of rank one and has a measure-and-prepare factorization with scalar
+quantum fibres, despite its three-dimensional output span. Its witness
+pairing is $3-2\cdot3=-3$. Conversely the qutrit identity channel has
+Choi matrix $|\Omega\rangle\langle\Omega|$ of Schmidt number three.
+If it always outputs live, its canonical failure mass at height $5$ is
+zero, whereas the ideal mass is $6/11$. The effect of the entire failure
+register therefore gives $E\geq6/11>E_*$. Three-dimensional coherence
+is necessary here, not a sufficient performance specification.
+
+At the rank-two boundary $L=\operatorname{diag}(1,1,0)$,
+$|\operatorname{tr}L|^2=2\|L\|_F^2=4$; the non-strict sign in
+(CG.186) is essential. For $L=I_3$, its witness pairing is $9-6=3$.
+These also distinguish homogeneous CP/TNI calculations from an
+incorrect trace-one or TP restriction on each live branch.
+
+Finally, standard qutrit teleportation uses a maximally entangled qutrit
+pair, a nine-outcome Bell measurement at the encoder and a controlled
+unitary on the retained receiver share to realize the identity channel.
+For each Bell outcome $(a,b)\in\{0,1,2\}^2$, the unnormalized receiver
+state is $W_{ab}\rho W_{ab}^\dagger/9$ for the corresponding qutrit
+Weyl unitary. The correction $W_{ab}^\dagger$ gives $\rho/9$, and
+the nine outcomes sum to $\rho$, also at reference amplification.
+Counting only the classical Bell outcome would assign scalar fibres to
+a Schmidt-number-three channel. That assignment fails Definition 21.2:
+the retained receiver qutrit is an accessible quantum payload, and is
+not an independent blank. Counting it jointly removes the contradiction.
+This is a counterexample to the omitted-share premise, not a permitted
+extra resource for the original experiment. $\square$
+
+**Convention 25.3 (mathematical correspondence and remaining supply).**
+The new source-specific consequences are the positive witness (CG.185),
+its all-optimizer use, the strict complete-output class gap (CG.190),
+and especially the unconditional bound (CG.194) on each original input
+of an actual joint acquisition factorization. They are `repo-derived`
+ordinary deductions conditional on the credited C137/C138 premises.
+The Schmidt-number overlap inequality, Choi/Kraus equivalence and
+classical-assisted compression mechanism used inside their proofs are
+`literature-attested` by the three primary sources cited in Theorem 22.1;
+they are not new results. The finite Choi and actual flagged-port
+foundations are also present in `FiniteKrausRepresentation`, including
+its private/public proof dependencies, and
+`CoherentFlagPort.FlagPort`, `flagged_cptp_roundtrip` and
+`port_component_lower_bound`. The latter exact probe-preservation
+hypothesis is not the present approximate complete-output objective;
+Theorems 22.1 and 24.1 supply that missing task-specific relation.
+No new kernel-verified application is presumed from these references.
+
+Definition 21.2 constrains what an ACTUAL acquisition/execution
+implementation must retain. Proposition 25.1 is an abstract sufficient
+factorization of one channel, not a conclusion that its encoder
+instrument, classical flags, coherent storage, decoding isometries or
+permissions are supplied by the original source. Even keeping the whole
+qutrit by the calibrated isometry $E$ requires actual access and retention.
+The prescribed diagonal no-failure kernels in Quantum Carrier Minimum
+do not install (CG.201). `OriginalControl` remains a path predicate,
+and probability-changing noncommuting fields in Probability/Phase
+Transport prevent identifying Definition 18.2 with an exhaustive native
+operation menu. Existing classical replay, preselected allocation and
+profinite separation similarly supply no such quantum acquisition map.
+
+The exact failure-time law in Proposition 25.1 is a mathematical output
+measure. A physical implementation additionally needs the absorbing
+event to occur at that elapsed time, no later positive-carrier action
+after failure, terminal live output at time $1$, and all matching old
+archives, clocks and controller updates. An internal acquisition record
+destining a later failure, or a timestamp sampled from $h_0$, does not
+by itself satisfy this physical timing condition. The native acquisition,
+actuation and first-failure timing services remain to be supplied or
+derived under the original permissions. No global native impossibility,
+exhaustive Schur menu, optimizer whole-channel uniqueness, numerical
+restricted error gap, sharp branch-mass bound or native realization
+is asserted.
+
+## 追加锚（本行以下为增补区）
