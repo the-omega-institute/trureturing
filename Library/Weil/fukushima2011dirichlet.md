@@ -1403,3 +1403,139 @@ real zero duals and exact finite head annihilation, independently of the
 shifted-tail separation estimate. The constructed inputs have not been
 placed in the strict-subhalf spectral class used above; no signed-tail
 obstruction or change to (UG9) follows.
+
+
+## Split the prime index before taking a high-frequency minimum
+
+Retain the original minimal even form, (WF1), the original pole probability,
+and every prime power. The following is a paper application of the existing
+Fourier leakage argument, theta coefficient bounds and classical Chebyshev
+partial summation. It supplies an alternative high-block allowance and its
+inverse consumer, with no new general-method, originality or Lean claim.
+It does not identify a low-block sign or establish the endpoint half-bound.
+
+Write the full prime off-diagonal operator in (WF1) as $\mathcal B_p$,
+distinct from the negative-edge metric $C_-^*C_-$, and put
+$S_M=\sum_{2\le n\le M}\Lambda(n)/\sqrt n$ for an integer $M\ge2$.
+Since $b_n(x)=w_ns(x)s(x+\log n)$, its complete finite part is exactly
+
+$$
+ \mathcal B_{p,\le M}
+ =M_s\sum_{2\le n\le M}w_n(\tau_n+\tau_n^*)M_s,
+ \qquad
+ |\langle \mathcal B_{p,\le M}v,v\rangle|
+ \le2S_M\|sv\|_2^2. \tag{PS1}
+$$
+
+This uses the same $sv$ at both ends of every translation and keeps the
+shifted adjoint. The [existing full theta coefficient bound](lenz2010compactness.md#full-prime-off-diagonal-tail)
+with $C_\Phi=144/5$ gives
+$\|b_n\|_\infty\le(C_\Phi/2)w_ne^{-3n/2}$.
+Reuse $w_n\le n$ and the geometric tail, and set $\vartheta=e^{-3/2}$:
+
+$$
+ \|\mathcal B_p-\mathcal B_{p,\le M}\|\le\beta_M,\qquad
+ \beta_M=\frac{144}{5}\,\vartheta^{M+1}
+       \frac{M+1-M\vartheta}{(1-\vartheta)^2}. \tag{PS2}
+$$
+
+The original operator is not truncated: (PS2) pays for all omitted
+prime powers in operator norm.
+
+The [existing theta derivative bounds (WC2)–(WC3)](../Analytic/romik2021orthogonal.md)
+supply $s\in H^3(\mathbb R)$ and permit one additional derivative in the Fourier-tail argument of (WF5). For $N\ge2$ and
+$\widehat v=0$ on $|\xi|<N$, the same convolution support and Young
+inequality, now followed by Cauchy--Schwarz with $|\omega|^{-3}$, give
+
+$$
+ \begin{aligned}
+ \|\mathbf1_{|\mathsf D|<N/2}sv\|_2
+ &\le \eta_{N,3}\|v\|_2,\\
+ \eta_{N,3}^2&=\frac{32}{5\pi}\|s'''\|_2^2N^{-5}.
+ \end{aligned} \tag{PS3}
+$$
+
+Indeed $(2\pi)^{-1}\int_{|\omega|>N/2}|\omega|^{-6}d\omega
+=32/(5\pi N^5)$ in the existing unitary Fourier convention.
+With $m_N=m(N/2)$, define
+
+$$
+ a_{N,M}=m_N-8-2S_M,\qquad
+ \Delta_{N,M}=m_N\eta_{N,3}^2+\beta_M. \tag{PS4}
+$$
+
+The high-frequency part of $sv$ contributes at least
+$m_N(\|sv\|_2^2-\eta_{N,3}^2\|v\|_2^2)$ to the flat energy.
+Combine this with (WF1), $c_\Gamma>-8$ and (PS1)--(PS2). Every
+$v$ in the actual minimal high form domain satisfies
+
+$$
+ \widetilde D(v)\ge
+ \left(\tfrac12-\Delta_{N,M}\right)\|v\|_2^2
+       +a_{N,M}\|sv\|_2^2. \tag{PS5}
+$$
+
+All terms other than the flat energy are bounded on $L^2$; its existing
+closed Fourier realization and the same minimal-domain passage as (WF1)
+justify the inequality on that domain. This uses no maximal-domain
+identification. If $a_{N,M}\ge0$, the first term alone is a complete
+high-block lower bound.
+
+### A sufficient algebraic bandwidth near the endpoint
+
+Fix a classical constant $C_\psi\ge1$ with
+$\Psi(t)\le C_\psi t$ for $t\ge1$. Reuse the inclusive
+[half-weighted Chebyshev allowance](desogus2026threegates.md),
+$S_M\le2C_\psi\sqrt M$; no PNT remainder or RH is required.
+For all sufficiently large $N$, take the single analytic choice
+
+$$
+ M_N=\left\lfloor\left(\frac{m_N-8}{8C_\psi}\right)^2\right\rfloor\ge2.
+ \tag{PS6}
+$$
+
+Then $a_{N,M_N}\ge(m_N-8)/2>0$. The existing symbol bounds give
+$m_N\asymp\log N$, so $M_N\asymp(\log N)^2$. Consequently (PS2)
+is $o(N^{-A})$ for every fixed $A>0$, whereas (PS3) gives
+
+$$
+ \Delta_{N,M_N}=O\!\left(\frac{1+\log N}{N^5}\right).
+ \tag{PS7}
+$$
+
+The constants depend on the original theta derivative supplier and the
+fixed Chebyshev constant. They are not numerically evaluated here.
+For all sufficiently small $\varepsilon>0$, a sufficient bandwidth can
+therefore be chosen of order
+$O((\varepsilon^{-1}\log(1/\varepsilon))^{1/5})$ to have
+$\Delta_{N,M_N}\le\varepsilon/2$. This is an alternative sufficient
+asymptotic schedule, not a claim that it improves every previously used
+fixed bandwidth or that any saved matrix is positive at these parameters.
+
+### Use the same constrained inverse and ground term
+
+For $0<\varepsilon\le1/2$, set $c=1/2-\varepsilon$ and retain the actual
+high restriction of $\widetilde A-cI+c|v_0\rangle\langle v_0|$.
+Choose $N,M$ with $a_{N,M}\ge0$ and
+$\Delta_{N,M}\le\varepsilon/2$. Equation (PS5) gives, on its actual
+high form domain,
+
+$$
+ C[q]\ge\int V(x)|q(x)|^2dx+c|\langle v_0,q\rangle|^2,
+ \qquad
+ V(x)=\varepsilon-\Delta_{N,M}+a_{N,M}s(x)^2\ge\varepsilon/2.
+ \tag{PS8}
+$$
+
+Thus the existing variational inverse, projection shorting and rank-one
+ground correction in (WH4), (WH6)--(WH8) apply in place of
+(WH1)--(WH3). Substitute $\delta_{\rm PS}=\varepsilon-\Delta_{N,M}$,
+$a_{N,M}$, $V=\delta_{\rm PS}+a_{N,M}s^2$ and $w=V^{-1}$ throughout
+the multiplier-dependent definitions; in particular
+$V_{\max}=\delta_{\rm PS}+9a_{N,M}/5$. The same sharp high projection
+and original closed domain are used; no projection is commuted through
+a multiplier. This is the original-form consumer of the estimate.
+It supplies neither the same-band low Schur sign nor a cofinal full-form
+certificate. The one-half variance bound, the projected signed comparison,
+Robin and RH remain unresolved; no numerical experiment or new Lean
+verification is claimed.
