@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
-  normalized_sha256: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
-cas_ref: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
-coverage_gids:
-  - gid: D5/S3/Quantum/Tomography/FutureProbabilityResidualCorrelation.future_probability_residual_correlation
-    target_statement_id: sha256:baa44535051bdbd067c5612d9e24a09ac863b7d8bce63470a356a1afd9843cc2
-receipts:
-  unresolved_subitems: []

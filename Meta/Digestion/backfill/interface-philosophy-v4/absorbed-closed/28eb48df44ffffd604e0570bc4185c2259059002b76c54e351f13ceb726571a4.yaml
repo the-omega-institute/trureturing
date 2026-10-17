@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:28eb48df44ffffd604e0570bc4185c2259059002b76c54e351f13ceb726571a4
-  normalized_sha256: sha256:28eb48df44ffffd604e0570bc4185c2259059002b76c54e351f13ceb726571a4
-cas_ref: sha256:28eb48df44ffffd604e0570bc4185c2259059002b76c54e351f13ceb726571a4
-coverage_gids:
-  - gid: D5/S0/Naming/TranslationComposition.translation_composition
-    target_statement_id: sha256:291be4663b97e01fcd96b69e35559f92e42c7b3448fab1828bdfd4403408fcea
-receipts:
-  unresolved_subitems: []

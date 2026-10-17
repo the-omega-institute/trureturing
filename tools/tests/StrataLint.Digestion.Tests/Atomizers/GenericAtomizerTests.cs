@@ -13,8 +13,7 @@ public sealed class GenericAtomizerTests
     private static AtomizedTheoryDocument Atomize(string markdown) =>
         AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            Encoding.UTF8.GetBytes(markdown),
-            TheoryAtomizerRules.None);
+            Encoding.UTF8.GetBytes(markdown));
 
     private static string[] Fingerprints(AtomizedTheoryDocument document) =>
         document.Claims.Select(static claim => claim.Fingerprints.RawSha256).ToArray();
@@ -82,8 +81,7 @@ public sealed class GenericAtomizerTests
 
         var document = AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None);
+            bytes);
 
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -304,9 +302,9 @@ public sealed class GenericAtomizerTests
         var markdown = "# 卷首\n\n## 定理 1.1\n\n证。\n";
         var bytes = Encoding.UTF8.GetBytes(markdown);
         Assert.Equal(
-            Fingerprints(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None)),
+            Fingerprints(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes)),
             Fingerprints(AtomizerRegistry.Atomize(
-                AtomizerRegistry.GenericId, bytes, DigestionTestSupport.Rules)));
+                AtomizerRegistry.GenericId, bytes)));
     }
 
     [Fact]
@@ -315,8 +313,8 @@ public sealed class GenericAtomizerTests
         var bytes = System.Text.Encoding.UTF8.GetBytes(
             "## T1. 包络\n\n定义与记号。\n\n**定理 T1**。主张。\n\n**结案判据**:核验单调性。\n");
 
-        var first = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var second = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var first = GenericAtomizer.Atomize(bytes);
+        var second = GenericAtomizer.Atomize(bytes);
 
         var claim = Assert.Single(first.Claims);
         var plan = Assert.Single(first.ClausePlans);
@@ -341,7 +339,7 @@ public sealed class GenericAtomizerTests
     {
         var bytes = System.Text.Encoding.UTF8.GetBytes("## T0. 单款\n\n只有一段散文主张。\n");
 
-        var document = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var document = GenericAtomizer.Atomize(bytes);
 
         Assert.Single(document.Claims);
         Assert.Empty(document.ClausePlans);

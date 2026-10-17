@@ -49,7 +49,7 @@ public sealed partial class DigestionLedgerTests
         const string gid = "D5/S0/Carrier/Probe";
         const string targetPath = "D5/S0/Carrier/Probe.lean";
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(GenericAtomizer.Atomize(source).Claims);
         var target = Encoding.UTF8.GetBytes(Lean(gid));
         var definition = Encoding.UTF8.GetBytes("current scribe definition\n");
         var emission = Encoding.UTF8.GetBytes("# Current emitted narrative\n");
@@ -102,7 +102,7 @@ public sealed partial class DigestionLedgerTests
     public void TailCannotAppearBeforeAbsorptionAndExternalAuthorizationReceipt()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
-        var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
+        var atom = Assert.Single(GenericAtomizer.Atomize(source).Claims);
         var targetPath = "D5/X_Assumptions/Probe.lean";
         var target = Encoding.UTF8.GetBytes(Lean("D5/X_Assumptions/Probe"));
         var snapshot = Snapshot([
@@ -259,7 +259,7 @@ public sealed partial class DigestionLedgerTests
             syntheticAtom,
             DigestionMigrationState.Partial,
             DigestionTruthState.Open,
-            atomizer: AtomizerRegistry.NoAtomizerId);
+            atomizer: AtomizerRegistry.GenericId);
         var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
         var ledgerEntry = Assert.Single(ledgerSource.Entries);
         var falseFingerprint = "sha256:" + new string('0', 64);

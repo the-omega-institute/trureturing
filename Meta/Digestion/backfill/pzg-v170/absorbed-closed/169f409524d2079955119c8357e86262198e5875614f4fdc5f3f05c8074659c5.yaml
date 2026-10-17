@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
-  normalized_sha256: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
-cas_ref: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
-coverage_gids:
-  - gid: D5/S1/Solenoid/Connectivity/CharacterCompletionDuality.character_completion_duality
-    target_statement_id: sha256:5bd5f1ab1bd0084f411a6dfc05e210e7bdfb18a15b7038289dd18f3e82c6217f
-receipts:
-  unresolved_subitems: []
