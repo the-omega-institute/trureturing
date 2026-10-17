@@ -130,4 +130,83 @@ For $t=1$, $q\equiv7\pmod8$ and the prefactor is one; for $t\ge2$, $q\equiv3\pmo
 
 The theorem extends the original integral Fibonacci construction beyond two odd-depth primes. Failure of its product test excludes the stated full kernel at every ternary index and square cofactor satisfying the hypotheses. It does not assert a violating family that survives all earlier support restrictions, independence from every previous Cassels condition, prime-family infinitude, or a universal WSS exclusion.
 
+## 84. Composite cuts without an eligible individual prime
+
+**Theorem 84.1 (composite-cut residue constraint).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. Let $d>1$ divide $D$, and put $e=D/d$. Suppose
+
+$$\left(\frac d p\right)=1\quad(p\mid e),\qquad \left(\frac e p\right)=1\quad(p\mid d),$$
+
+where each $p$ is prime. The case $e=1$ is permitted. There exist integers $u,v$ with $d=u^2-5v^2$, normalized as follows:
+
+- if $d\equiv1\pmod4$, then $v$ is even and $u\equiv1+v\pmod4$; $u$ may have either sign;
+- if $d\equiv3\pmod4$, then $u>0$ is even and $v$ is odd.
+
+For every such representation, put
+
+$$\chi_d=\begin{cases}(u/5),&d\equiv1\pmod4,\\(u/2\,/5),&d\equiv3\pmod4.\end{cases}$$
+
+Then
+
+$$\boxed{\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right)=\left(\frac{-2}{d}\right)\chi_d,\qquad s_p^2\equiv5\pmod p.}$$
+
+The symbol with denominator $d$ is a Jacobi symbol. Each factor on the left is nonzero and independent of the chosen root; an empty product is one. Thus failure of this test excludes the full kernel $D$ from the stated original integral orbit. No elliptic-rank or Selmer premise is imposed.
+
+**Proof.** We retain $\mathcal O_0=\mathbb Z[\phi]$, $\phi=(1+\sqrt5)/2$, and the multiplicative Rédei convention of §83. The imported original-support inputs give $D\equiv19\pmod{120}$ and $(5/p)=1$, $p>5$, for every $p\mid D$. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48).
+
+For the triple $(5,-D,d)$, the discriminants $5,-D,\Delta(d)$ have three-way gcd one. Both $(5,-D)$ and $(5,d)$ are locally split: use the $5$-splitting at their odd support primes, the fact that every support prime is a square modulo five, and $5\equiv1\pmod4$ at two. For $(-D,d)$, a prime $p\mid e$ contributes $(d/p)$. If $p\mid d$, write $d=pd'$ and $D=pd'e$. The odd Hilbert-symbol formula gives
+
+$$(-D,d)_p=\left(\frac{-1}{p}\right)\left(\frac{-d'e}{p}\right)\left(\frac{d'}p\right)=\left(\frac e p\right).$$
+
+At two, $-D\equiv1\pmod4$ makes the odd-unit symbol one; infinity is trivial because $d>0$, and all other finite places are unit pairs. Thus the two cut conditions are exactly the remaining local requirements, including the overlapping support $d\mid D$.
+
+The actual Fibonacci element $\beta=-1-F_N\sqrt5$ has norm $-D C^2$, trace $-2$, and belongs to $1+4\mathcal O_0$. The finite-place proof in §83 shows that it defines a minimally ramified field over $\mathbb Q(\sqrt{-5D})$. That proof applies to the entire $D$, with every valuation in $C$ retained. At each $p\mid d$, choose the unit conjugate $\beta\equiv-2\pmod p$, including when $p\mid C$. Since $d>0$, there is no infinite factor. Consequently
+
+$$\mathcal R(5,-D,d)=\prod_{p\mid d}\left(\frac{-2}{p}\right)=\left(\frac{-2}{d}\right),\qquad \mathcal R(5,d,-D)=\left(\frac{-2}{d}\right).$$
+
+The last equality is Rédei reciprocity for the admissible composite triple. It does not multiply symbols whose individual prime arguments might be inadmissible.
+
+For generator existence, the norm-Euclidean property of $\mathcal O_0$ used in Theorem 81.3 makes the product of one prime ideal above each $p\mid d$ principal. This ideal has norm $d$, so a generator has norm $\pm d$; multiplying by $\phi$ if necessary gives norm $d$.
+
+If $d\equiv1\pmod4$, use the six-element norm kernel $\{\pm\phi^{2k}:k=0,1,2\}$ modulo $4\mathcal O_0$ to arrange $\gamma\equiv1\pmod{4\mathcal O_0}$. Writing $\gamma=1+4(m+n\phi)=u+v\sqrt5$ gives $u=1+4m+2n$, $v=2n$. Here $u$ is nonzero odd and may be negative. Since the norm is positive, both real signs agree with $\operatorname{sgn}(u)$; no positivity assertion is needed.
+
+If $d\equiv3\pmod4$, powers of $\phi^2$ arrange $\gamma\equiv1\pmod{2\mathcal O_0}$. Multiplication by $-1$ if needed makes it totally positive while preserving this congruence. Writing $\gamma=1+2(m+n\phi)$ gives integral $u,v$ with $u+v$ odd. The norm condition forces $u$ even and $v$ odd, and positivity gives $u>0$.
+
+For every normalized representation, squarefreeness gives $\gcd(u,v)=1$: a common prime would have its square dividing $d$. It also gives $\gcd(u,d)=1$, since a prime $p\mid u,d$, necessarily different from five, would divide $v$ as well. Furthermore $5\nmid u$ and $\gcd(2u,d)=1$.
+
+Put $E_d=\mathbb Q(\sqrt5,\sqrt d)$, $K_d=\mathbb Q(\sqrt{5d})$, and $F_d=E_d(\sqrt\gamma)$. Since $d>1$ is squarefree and $5\nmid d$, Corollary 5.2 applies without degeneration. At odd primes outside $5d$, $\gamma$ is a unit. At five it is a unit and $d$ is locally a square. At each $p\mid d$, squarefreeness and $\gcd(u,d)=1$ give one conjugate of valuation one and the other the unit $2u$. Because $\gamma\bar\gamma=d$ is a square in $E_d$, these conjugates define the same extension over $E_d$. Locally $E_d=K_d$ by $5$-splitting, so the unit description proves unramifiedness.
+
+For $d\equiv1\pmod4$, $\gamma\in1+4\mathcal O_0$ gives an étale quadratic polynomial at two. If $d\equiv1\pmod8$, $K_d$ and $E_d$ have the same unramified quadratic local field; if $d\equiv5\pmod8$, $K_d$ is split and $E_d$ is unramified quadratic. Thus $F_d/K_d$ is unramified there. A negative real sign of $\gamma$ changes none of these finite-place arguments.
+
+For $d\equiv3\pmod4$, Corollary 5.2 supplies $\alpha=2(u+\sqrt d)$. Set $\varpi=1+\sqrt d$ and $c_0=(1+d)/2$. Then
+
+$$\frac{\alpha}{\varpi^2}=\frac{u+\sqrt d}{c_0+\sqrt d}\in1+2\mathcal O_{\mathbb Q_2(\sqrt d)},\qquad N\!\left(\frac{\alpha}{\varpi^2}\right)=5\left(\frac{2v}{1-d}\right)^2.$$
+
+Both $u,c_0$ are even, $c_0+\sqrt d$ is a unit, and the numerator differs from the denominator by the even integer $u-c_0$. The removed factor is a square. This verifies Definition 7.5's conductor-two condition for both $d\equiv3,7\pmod8$; it does not assert unramifiedness at two. Hence the field satisfies the exact minimal-ramification requirements.
+
+Now evaluate $\mathcal R(5,d,-D)$. Its infinite factor is $\operatorname{sgn}(u)$: the field is real when $\gamma$ is totally positive, while a totally negative $\gamma$ gives the nontrivial infinite Artin factor. At each $p\mid d$, the unit conjugate gives $(2u/p)$. At each $p\mid e$, the factor is $(u+v s_p\,/p)$. The two residues have product $d$ and are nonzero; $(d/p)=1$ makes their characters equal. Therefore
+
+$$\left(\frac{-2}{d}\right)=\operatorname{sgn}(u)\left(\frac{2u}{d}\right)\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right).$$
+
+If $d\equiv1\pmod4$, let $w=|u|>0$ and $s=\operatorname{sgn}(u)$. As $(-1/d)=1$, reciprocity for Jacobi symbols gives
+
+$$\left(\frac u d\right)=\left(\frac w d\right)=\left(\frac d w\right)=\left(\frac{-5}{w}\right)=\left(\frac{-1}{w}\right)\left(\frac w5\right).$$
+
+Here $(w/5)=(u/5)$. If $v\equiv0\pmod4$, then $d\equiv1\pmod8$, $u\equiv1\pmod4$; if $v\equiv2\pmod4$, then $d\equiv5\pmod8$, $u\equiv3\pmod4$. For positive $u$ this gives $(2/d)(-1/w)=1$; for negative $u$, replacing $u$ by $w=-u$ reverses that sign. Thus
+
+$$\left(\frac{2u}{d}\right)=s\left(\frac u5\right),\qquad \operatorname{sgn}(u)\left(\frac{2u}{d}\right)=\left(\frac u5\right)=\chi_d.$$
+
+This explicitly cancels the real sign rather than assuming a positive primary generator.
+
+If $d\equiv3\pmod4$, write $u=2^t w$ with $t\ge1$ and $w>0$ odd. The reciprocity sign in $(w/d)$ cancels the factor $(-1/w)$ from the norm identity, giving $(w/d)=(w/5)$. Hence
+
+$$\left(\frac{2u}{d}\right)=\left(\frac2d\right)^{t+1}\left(\frac w5\right)=\left(\frac{u/2}{5}\right).$$
+
+Indeed $t=1$ implies $d\equiv7\pmod8$ and prefactor one; $t\ge2$ implies $d\equiv3\pmod8$ and prefactor $(-1)^{t+1}=(-1)^{t-1}$, exactly the required power of $(2/5)=-1$. The Jacobi convention covers $w=1$. Combining these formulas proves the boxed constraint. ∎
+
+**Proposition 84.2 (scope of the cut hypothesis).** At the level of quadratic-character conditions, the admissible-cut hypothesis need not supply any individual prime eligible for Theorem 83.1.
+
+**Proof.** Consider four abstract support primes, three of type $1\pmod4$ and one of type $3\pmod4$, with all pairwise Legendre characters equal to $-1$. This character assignment respects quadratic reciprocity. Every two-versus-two cut has both required products equal to $+1$ at each vertex. In contrast, each individual prime has three outgoing nonresidue characters, so none meets Theorem 83.1's hypothesis. This compares the conditions only; it asserts no actual block or prime family realizing this pattern. ∎
+
+The endpoint $d=D$ is allowed and yields $\chi_D=(-2/D)=1$ because $D\equiv19\pmod{120}$; no separate novelty claim is made for that endpoint. The theorem retains the full original integral orbit. It does not establish a violating numerical support surviving all previous restrictions, independence from all earlier Cassels conditions, prime-family infinitude, or a universal WSS exclusion.
+
 ## 追加锚（本行以下为增补区）
