@@ -14,10 +14,17 @@ triage: anchor
 
 # Root-Delta-fine rings and displayed Problem 4.4
 
-The source is arXiv:2608.30734v2, revised 2026-10-11. Its standing convention
+## Locator
+
+The source is arXiv:2608.30734v2, DOI `10.48550/arXiv.2608.30734`, at
+https://arxiv.org/html/2608.30734v2, revised 2026-10-11. The cited clauses are
+Introduction S1.p1, S1.p4, S1.p6 and S1.p7, Definition 2.1, and the displayed
+Problem 4.4 in Section 4, HTML S4.Thmtheorem4. Its standing convention
 in Introduction paragraph S1.p1 is an arbitrary associative ring with identity,
 which need not be commutative. The formalization includes infinite rings and
 the trivial ring and is polymorphic in the carrier universe.
+
+## Definitions and resolution
 
 Introduction S1.p6 gives the explicit characterization used here:
 
