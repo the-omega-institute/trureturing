@@ -229,4 +229,131 @@ private theorem support_dichotomy (b c : Fin 3 → Fin 3 → Prop)
         h0.1, by simpa only [← h05] using h5.1,
         h1.1, by simpa only [← h13] using h3.1⟩
 
+private def zero_perm : Equiv.Perm (Fin 3) :=
+  Equiv.swap 0 1 * Equiv.swap 1 2
+
+private theorem witness_support (i j : Fin 3) :
+    0 < witness i (zero_perm j) ↔ i ≠ j := by
+  fin_cases i <;> fin_cases j <;>
+    norm_num [witness, zero_perm, Equiv.Perm.mul_apply,
+      Equiv.swap_apply_def, Matrix.cons_val_two, Fin.ext_iff]
+
+private theorem witness_lt_one (i j : Fin 3) : witness i j < 1 := by
+  fin_cases i <;> fin_cases j <;> norm_num [witness]
+
+private theorem product_positive {B C : Matrix (Fin 3) (Fin 3) ℝ}
+    (hB : B ∈ Matrix.colStochastic ℝ (Fin 3))
+    (hC : C ∈ Matrix.colStochastic ℝ (Fin 3)) (i j : Fin 3) :
+    0 < (B * C) i j ↔ ∃ k, 0 < B i k ∧ 0 < C k j := by
+  rw [Matrix.mul_apply, Finset.sum_pos_iff_of_nonneg
+    (fun k _ => mul_nonneg (hB.1 i k) (hC.1 k j))]
+  simp only [Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨k, hk⟩
+    exact ⟨k, pos_of_mul_pos_left hk (hC.1 k j),
+      pos_of_mul_pos_right hk (hB.1 i k)⟩
+  · rintro ⟨k, hk, hkc⟩
+    exact ⟨k, mul_pos hk hkc⟩
+
+private theorem indivisible {B C : Matrix (Fin 3) (Fin 3) ℝ}
+    (hB : B ∈ Matrix.colStochastic ℝ (Fin 3))
+    (hC : C ∈ Matrix.colStochastic ℝ (Fin 3))
+    (p q : Equiv.Perm (Fin 3)) (hprod : B * C = witness.submatrix p q) :
+    (∃ r : Equiv.Perm (Fin 3), B = r.permMatrix ℝ) ∨
+    (∃ r : Equiv.Perm (Fin 3), C = r.permMatrix ℝ) := by
+  let f : Equiv.Perm (Fin 3) := (p.trans zero_perm).trans q.symm
+  have hh : ∀ i j, 0 < (B * C) i (f j) ↔ i ≠ j := by
+    intro i j
+    rw [hprod]
+    change 0 < witness (p i) (q (q.symm (zero_perm (p j)))) ↔ i ≠ j
+    rw [q.apply_symm_apply, witness_support]
+    exact p.injective.ne_iff
+  rcases support_dichotomy (fun i k => 0 < B i k) (fun k j => 0 < C k (f j))
+    (fun i j => (hh i j).symm.trans (product_positive hB hC i (f j))) with hs | hs
+  · left
+    apply permutation_of_single_columns hB hs
+    intro i
+    have hpos : 0 < (B * C) i (q.symm (p i)) := by
+      rw [hprod]
+      change 0 < witness (p i) (q (q.symm (p i)))
+      rw [q.apply_symm_apply]
+      generalize p i = t
+      fin_cases t <;> norm_num [witness]
+    obtain ⟨k, hk, _⟩ := (product_positive hB hC _ _).mp hpos
+    exact ⟨k, hk⟩
+  · right
+    apply permutation_of_single_rows hC
+    intro k i j hi hj
+    have heq := hs k (f.symm i) (f.symm j)
+      (by simpa only [f.apply_symm_apply] using hi)
+      (by simpa only [f.apply_symm_apply] using hj)
+    exact f.symm.injective heq
+
+private theorem power_reduction (m : ℕ) (p q : Equiv.Perm (Fin 3))
+    (hm : witness.submatrix p q ∈ genPow m) :
+    ∃ u v : Equiv.Perm (Fin 3), witness.submatrix u v ∈ gen := by
+  induction m generalizing p q with
+  | zero =>
+    change witness.submatrix p q = 1 at hm
+    have hentry := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℝ => M 0 0) hm
+    change witness (p 0) (q 0) = 1 at hentry
+    exact False.elim ((witness_lt_one (p 0) (q 0)).ne hentry)
+  | succ m ih =>
+    change ∃ g ∈ gen, ∃ w ∈ genPow m, witness.submatrix p q = g * w at hm
+    obtain ⟨g, hg, w, hw, hprod⟩ := hm
+    rcases indivisible (gen_stochastic hg) (power_stochastic hw) p q hprod.symm
+      with ⟨r, hr⟩ | ⟨r, hr⟩
+    · subst g
+      have heq : w = witness.submatrix (r.symm.trans p) q := by
+        calc
+          w = (r⁻¹).permMatrix ℝ * (r.permMatrix ℝ * w) := by
+            rw [← Matrix.mul_assoc, ← Matrix.permMatrix_mul]
+            simp
+          _ = (r⁻¹).permMatrix ℝ * witness.submatrix p q := by rw [hprod]
+          _ = witness.submatrix (r.symm.trans p) q := by
+            rw [PEquiv.toMatrix_toPEquiv_mul]
+            rfl
+      exact ih (r.symm.trans p) q (heq ▸ hw)
+    · subst w
+      have heq : g = witness.submatrix p (r.trans q) := by
+        calc
+          g = (g * r.permMatrix ℝ) * (r⁻¹).permMatrix ℝ := by
+            rw [Matrix.mul_assoc, ← Matrix.permMatrix_mul]
+            simp
+          _ = witness.submatrix p q * (r⁻¹).permMatrix ℝ := by rw [hprod]
+          _ = witness.submatrix p (r.trans q) := by
+            rw [PEquiv.mul_toMatrix_toPEquiv]
+            rfl
+      exact ⟨p, r.trans q, heq ▸ hg⟩
+
+private theorem permutation_values : ∀ f : Fin 3 → Fin 3,
+    Function.Injective f →
+    f = ![0, 1, 2] ∨ f = ![0, 2, 1] ∨ f = ![1, 0, 2] ∨
+      f = ![1, 2, 0] ∨ f = ![2, 0, 1] ∨ f = ![2, 1, 0] := by
+  decide
+
+private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
+    witness.submatrix p q ∉ gen := by
+  intro h
+  rcases h with h | h
+  · change witness.submatrix p q = swap12 at h
+    have heq : witness (p 0) (q 1) = 1 := by
+      have hh := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℝ => M 0 1) h
+      simpa [Matrix.submatrix_apply, swap12, Equiv.Perm.permMatrix,
+        Equiv.toPEquiv_apply] using hh
+    exact (witness_lt_one (p 0) (q 1)).ne heq
+  · have hs := hull_shape h
+    rcases permutation_values p p.injective with hp | hp | hp | hp | hp | hp
+    all_goals
+      rcases permutation_values q q.injective with hq | hq | hq | hq | hq | hq
+      all_goals
+        norm_num [Matrix.submatrix_apply, hp, hq, witness, Matrix.cons_val_two] at hs
+
+/-- The Eq. (10) generators do not cover all stochastic matrices in twenty factors. -/
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨p, q, hg⟩ := power_reduction 20 (Equiv.refl _) (Equiv.refl _)
+    (h.1 witness witness_stochastic)
+  exact orbit_not_gen p q hg
+
 end D5.S3.Quantum.Matrix.StochasticGeneratorSetRefutation
