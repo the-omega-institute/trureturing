@@ -4,8 +4,7 @@
    mirror-E: none(waiver:noncomputational)
    anchors: []
    utility: none
-   digest: Joint moment of ordered real defects under the literal
-     positive semidefinite constraint. -/
+   digest: Joint moment of ordered real defects under the literal positive semidefinite constraint. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
 import Mathlib.Analysis.Matrix.PosDef
 
