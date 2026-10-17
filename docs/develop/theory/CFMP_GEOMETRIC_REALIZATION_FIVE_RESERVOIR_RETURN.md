@@ -1745,3 +1745,358 @@ this argument. Even if the sixth label is witnessed, its additional
 face roles remain outside the published five-label case analysis.
 No actual realization of the residual low-label pattern, six-label
 flat exclusion, or six-label geometric realization is claimed here.
+
+## 300. Exact assumptions and conclusion
+
+Retain the actual paired-framework hypotheses of Section130 and a
+nonempty flat set, with exactly six distinct reservoir labels. Use the
+genuine escape and upper-gap label to write
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Here p counts original flat pi slots. The arbitrary-reservoir upper-
+witness theorem supplies genuine witnesses for M,Z,U and excludes all
+their flat transverse occurrences. C,D already occur in genuine tau.
+Suppose V is the only unwitnessed reservoir, so p_V=2 and v<=m-2.
+All degrees and counts below refer to the original face quotient.
+
+**Theorem.** After naming the larger of C,D by A and the smaller by B,
+with values a,b, the following necessary conclusions hold:
+
+1. a>=1+v+b, in particular a>b and a>v.
+2. Exactly two actual axial-flat owners have V transversely. One has
+   frame (A,V,B,Q,V,B); the other has frame (U,V,L,T,V,L), where L=A or B.
+   They are distinct. Their selected A and U slots are unique, so
+   p_A=p_U=1 and m-2<u<=m.
+3. If an owner F_V selects V transversely, it is unique and has
+   transverse companion B. The degree of V is six or seven. Without
+   F_V its degree is exactly six.
+4. The original source flat sigma=(M,C,D,O,C,D) and the two owners
+   above have their other selected axial labels O,Q,T in {B,V} union S.
+   Across these three actual owners there is at most one B pi slot.
+   If F_V exists none of O,Q,T is V; otherwise they contain at most
+   two V slots, counting repetitions.
+
+Thus an unwitnessed sixth label must be a degree-six or degree-seven
+actual edge with this specific flat-owner configuration. In particular,
+if all six reservoir edges have degree at least eight, every reservoir
+is genuinely witnessed and every flat owner selects its axes. This
+last conclusion is not an exclusion of axial flats or a six-reservoir
+geometric-realization theorem.
+
+## 301. Count every V occurrence
+
+A transverse-selected flat must select an unwitnessed reservoir, because
+its two pi slots exhaust that label's original equation. Consequently
+it must select V, and there is at most one such actual owner F_V.
+A flat axial zero occurrence of V must belong to F_V. This owner cannot
+have V on both axes: the transverse-flat inequality would require
+v-l>=sqrt((v+1)^2)=v+1 with l>1. Thus F_V has at most one axial V slot.
+
+If F_V exists, its two transverse V pi slots exhaust p_V=2; all axial
+V slots are zero and belong to F_V. If F_V does not exist, all axial V
+slots have angle pi, and there are exactly two of them.
+Every other V occurrence is transverse zero in an axial-flat owner.
+Let k be the number of these actual owners. Each contributes exactly
+two transverse V slots, irrespective of any additional V axis.
+Therefore the exact degrees are
+
+    degree(V)=2+2*k+t,  t in {0,1}, if F_V exists;
+    degree(V)=2+2*k,                 otherwise.
+
+The second formula counts any axial V slots in these same owners
+separately, as original slots. Minimum degree six implies k>=2 in
+both cases.
+
+All transverse labels of any flat belong to {C,D,V}: M,Z,U have no
+flat transverse occurrences. Each of the k owners thus has pair {V,C}
+or {V,D}. It differs from sigma, whose pair is {C,D}.
+
+## 302. Every such owner uses U or the larger low label
+
+Every axial-flat owner has at least one selected H axis: two special
+axes violate the fixed-pair special barrier. None of the k owners has
+a selected M axis, since sigma already uses the unique M pi slot.
+None has selected Z, since p_Z=0. Their selected H axes therefore lie
+in {C,D,U,V}.
+
+Consider one without a U axis, with pair {V,L}, where L=C or D. Let
+X be its selected H axis of largest cosh value x. Its other axis is
+either H-valued and at most x, or special and has shifted value less
+than v+l. The axial-flat product implies respectively
+
+    (x-1)^2 >= (v+l)^2, or (x-1)*(v+l) > (v+l)^2.
+
+In either case x>=1+v+l. Thus X is neither V nor L; it must be the
+other member of {C,D}. The latter is strictly larger than L and V.
+Such an owner therefore selects the larger low label A and has pair
+{V,B}, with a>=1+v+b.
+
+Since A is witnessed by tau, p_A<=1. There is at most one owner of
+this kind. Since U is witnessed, p_U<=1, and there is at most one of
+the k owners with a U axis. These two possibilities exhaust them.
+Thus k<=2. Together with k>=2 this forces exactly one of each kind.
+In particular A and U each supply one selected slot and no others.
+The selected U value is at most m by maximality of M, giving
+m-2<u<=m. The precise frames in the statement follow by interchanging
+the axial positions when necessary.
+
+Substituting k=2 into the exact degree formulas proves degree(V)=6 or7,
+and degree(V)=6 if F_V is absent. If F_V exists its companion is C orD,
+since the other three reservoirs cannot be transverse in any flat.
+It cannot be A, because transverse selection would require v>a,
+whereas a>=1+v+b. Its companion is therefore B.
+
+## 303. Remaining selected slots and open cases
+
+The three owners sigma, the selected-A owner and the selected-U owner
+are distinct, by their transverse pairs or their unique selected slots.
+Their respective first axes M,A,U exhaust the pi budgets of these three
+witnessed labels. Z cannot be selected. Their other axes O,Q,T are
+therefore in {B,V} union S. The genuine B witness gives p_B<=1, so at
+most one of those original slots has label B, including repeated labels
+within or between owners. The complete V equation gives at most two V
+pi slots; if F_V exists its transverse slots already use both.
+
+No number of low-only genuine owners is bounded here. The special
+opposite axes, the actual remaining face pairings and every genuine
+angle equation are still to be satisfied. The theorem does not assert
+that these necessary residual roles are realizable. It leaves open
+both the displayed saturated degree-six/seven cases and the separate
+case in which all six reservoir labels are genuinely witnessed.
+
+## 304. Statement and exact input
+
+Retain the actual finite paired-frame face quotient of Section130:
+connected circular normal links, every original degree at least six,
+frames (R,A,B,O,A,B) with distinct transverse A,B in H, common positive
+generalized lengths, and every original angle equation 2*pi. Assume
+exactly six reservoir labels and a nonempty flat set. No original slot,
+repeated axis, self-gluing or special edge is removed.
+
+**Theorem.** Every reservoir has a genuine occurrence. Every flat owner
+therefore selects its axial pair. This is a structural theorem; it
+neither excludes all axial flats nor gives six-reservoir realization.
+
+Choose the maximal pi-selected reservoir M and genuine escape
+
+    tau=(Z,M,C,D,M,C), H={M,C,D,Z,U,V},
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0.
+
+The upper-gap theorem182 supplies U outside M,C,D,Z with u>T(m,z)>m-2.
+The arbitrary-reservoir upper-witness theorem296–298 witnesses U and
+excludes every flat transverse occurrence of M,Z,U. C,D are witnessed
+in tau. Consequently only V can be unwitnessed. If it is, v<=m-2.
+
+We first prove a complete-star lemma that allows additional low labels,
+then show that an unwitnessed V would violate it. Only the weak escape
+inequalities above are used; the five-label strict-source theorem191
+is not imported.
+
+## 305. One upper-gap label cannot have value at most m
+
+**Lemma.** In the same actual framework suppose the reservoir set is
+{M,Z,U} disjoint union L, where C,D belong to L, every B in L has
+1<b<=m-2, and U is genuinely witnessed with u>m-2. Suppose the escape
+and pi data of Section304 hold and Z has no flat transverse occurrence.
+Then u>m. Labels in L need not be genuinely witnessed.
+
+**Proof.** Suppose u<=m. Every H value except Z is at most m, so Z is
+largest. We have m>3,z>m+2,c,d<m-2. All transverse Z owners are genuine.
+An owner with axial Z and pair {M,B}, b<m, is genuine: axial selection
+would select Z, transverse M selection would spend two pi slots of M,
+and transverse B selection would require b>m. An axial Z owner with
+pair {M,U} is also genuine, since both M and U are witnessed and hence
+neither can be selected transversely. These are all axial Z owners
+whose genuineness will be used. Other axial Z zero slots are not
+assumed absent.
+
+Take the maximal axial Z run through tau with pair {M,C}. Each owner
+is genuine and has at most one Z axis, since (z-1)^2>=(m+c)^2 would
+make two Z axes flat. At each such slot the exact individual response
+has positive coefficients with sum greater than one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The arctangent addition formula gives theta_Z+2*beta_M>pi.
+A wholly axial Z circle would have at least six such owners and exceed
+the complete M/Z genuine capacity 3*pi. Thus the run is proper.
+Each boundary owner has frame (B,Z,A,Q,Z,A), {A,B}={M,C}.
+For H axes q<=z; for special axes q<1+z+a. Hence q<1+z+a.
+The transverse Z cosine numerator is strictly increasing in q and at
+1+z+a equals
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Each boundary Z angle exceeds pi/2. Both distinct boundary slots must
+belong to one owner rho, since two owners would exceed Z's 2*pi budget.
+Their total is greater than pi. The run's axial angle sum is less than
+pi and its doubled transverse M sum is at most pi; summing its strict
+per-owner inequality forces exactly one run owner, tau.
+The return is (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+The complete special-star exclusions of Section176 apply to pairs
+{Z,M} and {Z,C}. Their required inputs are: genuine transverse Z
+owners, m,z>3, z>2*c+3, actual M/Z capacities pi and 2*pi, special
+minimum degree six, and every other axis below 1+z+a. All hold here.
+Those weighted-star arguments make no claim that all L labels are
+witnessed. Thus no special axis occurs in an owner of either pair.
+
+For the companion-C return, genuineness gives
+q>(z-c)^2/(m+1)-1>=m, so Q=Z. Any owner of pair {Z,C} with an axis
+other than Z has that value at most m; the same cosine numerator bound
+makes its two Z angles obtuse, so it must be rho. The alternative with
+both axes Z has four Z angles of cosine
+z*(c+1)/(2*z*z+c-1)<1/2; its expense exceeds 4*pi/3 and cannot coexist
+with rho. Thus rho is the only owner with that pair. Its residual
+{Z,Z,C} faces transport every Z slot back into rho, in either axial or
+transverse role. Together with tau this closes at most four original
+Z intervals, contradicting connectedness and degree six.
+Hence rho=(C,Z,M,Q,Z,M), with Q in H and q>c.
+
+No owner uses only M and Z: the standard two-value vertex response of
+Section157, with all values greater than three, makes its six-angle
+M/Z expense greater than pi. It would differ from tau and rho, each
+already costing more than pi of M/Z. Now any owner with pair {Z,M}
+has only H axes and at least one axis B other than M,Z, with b<=m.
+Its other axis r<=z. Put
+
+    L0=(z+m)^2-(b-1)*(r-1),
+    J0=(b+1)*(r+1)-(z-m)^2.
+
+Both are positive, and the exact expansion gives
+
+    L0-2*J0 >= (m-3)*(m+1)+(z-m)*(m-1)+3*(z-m)^2 >0.
+
+The transverse-sum coefficient kappa squared exceeds 8/9, so its four
+M/Z transverse slots cost more than pi. Together with tau and rho,
+this forbids every such owner other than rho itself.
+
+If Q=M or Z, the residual face multiset {Z,M,Q} forces its next Z slot
+back into this unique pair-{Z,M} owner, closing at most four intervals.
+If Q=B in L, B!=C because q>c. An axial Z target would have pair {M,B};
+it is genuine as checked above and costs theta_Z+2*beta_M>pi by b<=m-2.
+A transverse Z target either has pair {Z,M}, hence is rho, or pair
+{Z,B} with an M axis. The latter is genuine and costs
+
+    theta_M+2*gamma_Z>pi,
+
+since its positive response coefficients have sum
+2*sqrt(z*z-1)/(z+b)*sqrt((m-1)/(m+1))>1.
+Either new role differs from tau and rho by its fixed pair and violates
+the remaining M/Z budget. Thus this Q case also closes the short circle.
+These exclusions hold for every B in L, including an unwitnessed one.
+Only Q=U remains: rho=(C,Z,M,U,Z,M).
+
+Across rho's residual {Z,M,U} faces, the Z roles are axial with pair
+{M,U}, transverse with pair {Z,M} (only rho), or transverse with pair
+{Z,U} and an M axis. If the third role never occurs, the complementary
+arc of the complete Z circle is a single axial {M,U} run with
+n=degree(Z)-3>=3 original intervals. All are genuine as checked above.
+At each such interval its M response is
+
+    beta=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A=(sqrt(m*m-1)+sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>1/2,
+    B=(sqrt(m*m-1)-sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>=0.
+
+For theta>=pi/2, theta+beta>pi/2. Otherwise t>1 and
+cot(theta)=(t-1/t)/2<t/2<A*t, giving the same strict bound.
+Assigning one beta per axial Z interval uses at most the two actual
+M slots in its owner, including an owner with both axes Z. Therefore
+these intervals cost more than 3*pi/2 of M/Z, while tau and rho leave
+less than pi. This contradiction forces a third distinct genuine owner
+eta=(M,Z,U,Q,Z,U). Its actual M/Z expense obeys theta_M+2*gamma_Z<pi.
+
+## 306. The exact third-owner contradiction
+
+Here 1<u<=m<z, u>m-2, and q<q0=1+z+u. Set
+
+    k=z+u, h=z-u, alpha=sqrt((m-1)/(m+1)),
+    L=k*k-(m-1)*(q-1)>0, J=(m+1)*(q+1)-h*h>0.
+
+The exact axial and transverse responses give
+
+    tan(theta/2)^2=alpha^2*J/L,
+    gamma=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A+B=2*sqrt(z*z-1)*alpha/k, A*B*t*t=(h/k)*L/J.
+
+Both A,B are positive. Increasing q to q0 strictly decreases L/J:
+L remains positive up to q0, where L0=k*(k-m+1)>0, while J is positive
+and increasing. Thus
+
+    A+B+A*B*t*t > F(u)
+      =2*sqrt(z*z-1)*alpha/(z+u)
+       +(z-u)*(z+u-m+1)/[(m+1)*(z+u+2)-(z-u)^2].
+
+On u<=v<=m the first term of F decreases. The second numerator
+N(v)=(z-v)*(z+v-m+1)>0 has derivative m-1-2*v<3-m<0.
+Its denominator J0(v)>0 has derivative m+1+2*(z-v)>0.
+Consequently F(u)>=F(m). At m, J0(m)=(z+1)*(3*m+2-z)>0 and
+
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms increase strictly in z on m+2<=z<3*m+2: their derivative
+signs follow from m*z+1>0 and 2*m+2>0 respectively. Hence
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+For the final inequality, the squared comparison with 1-1/m reduces
+to (m-1)*(2*m*m+m+1)>0. All denominators are positive since m>3.
+Therefore A+B+A*B*t*t>1. If gamma>=pi/2 then theta+2*gamma>pi.
+Otherwise the positive tangent branch yields
+
+    tan(gamma)=(A+B)*t/(1-A*B*t*t)>t,
+
+and again theta+2*gamma>pi. This contradicts eta's actual complete-
+budget bound. The lemma is proved. No absent axial Z zero occurrence
+was silently replaced by a genuine one: every used run has its fixed
+pair and genuineness checked, and the connected residual arc cannot
+exit that pair without the expressly enumerated transverse boundary.
+
+## 307. The saturated sixth label forces the forbidden u<=m case
+
+Suppose V is unwitnessed. Every transverse-selected flat must select V,
+and there is at most one such owner F_V. Every axial zero V slot lies
+in F_V. If F_V exists it has at most one V axis, since two would require
+v-b>=v+1 for a positive companion. Its two transverse slots exhaust
+p_V=2. Without F_V exactly two axial V slots have angle pi and no axial
+V slot is zero.
+
+Let k be the number of axial-flat owners with V transverse. Each has
+two such slots. The exact V degree is 2+2*k+t, t in {0,1}, when F_V
+exists, and 2+2*k otherwise. Therefore k>=2.
+Every one has pair {V,C} or {V,D}, since M,Z,U have no flat transverse
+occurrence. It differs from the source sigma, whose pair is {C,D}.
+It cannot select M, already selected once in sigma, or Z. It has at
+least one selected H axis, by the special-edge barrier. Its selected
+H axes are consequently among C,D,U,V.
+
+If such an owner has no U axis, choose its largest selected H value x.
+For pair {V,B}, where B=C or D, the other axis is H-valued and at most
+x, or special with shifted value less than v+b. Axial flatness implies
+x>=1+v+b in either case. Thus X is neither V nor B; it is the other
+low label A, strictly larger than both. Every owner without U therefore
+selects that same larger label A. Since A is witnessed, p_A<=1, so
+there is at most one such owner. Also p_U<=1, giving at most one owner
+with U selected. Since k>=2, both kinds must occur and U is selected.
+Maximality of M gives u<=m.
+
+Apply the complete-star lemma with L={C,D,V}. All its premises hold:
+c,d<m-2 and v<=m-2; U is genuinely witnessed and u>T>m-2;
+Z has no flat transverse occurrence; the original source data remain
+unchanged. The lemma instead gives u>m, contradiction.
+Thus V is witnessed too. No flat can select a transverse pair of any
+reservoir, since that would exhaust a witnessed edge's equation.
+Every flat therefore selects its axes, proving the theorem.
+
+## 308. Remaining six-reservoir problem
+
+This proves six-reservoir genuine witnesses and axial-flat classification
+without a seed, degree-eight strengthening, or extra incidence premise.
+It excludes the entire unwitnessed-sixth branch, not all flat fields.
+With all six labels witnessed, the additional reservoir may exceed the
+upper-gap threshold and participate in new genuine return roles. The
+published five-reservoir role exhaustion does not cover those roles.
+No six-reservoir realization or unrestricted CFMP conclusion follows.
