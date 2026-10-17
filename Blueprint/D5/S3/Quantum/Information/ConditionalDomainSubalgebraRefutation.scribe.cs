@@ -74,7 +74,10 @@ internal sealed class ConditionalDomainSubalgebraRefutationDocument : IScribeDoc
                             + "Therefore no unital star subalgebra has carrier B_nu for this density state. "
                             + "This contradicts the first of the two carrier equalities in claim, "
                             + "while both marginal invertibility hypotheses hold."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("parzygnat-2021-two-qubit-conditional-domain-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
