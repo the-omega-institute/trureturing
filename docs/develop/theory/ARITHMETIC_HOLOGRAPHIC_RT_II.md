@@ -1476,3 +1476,72 @@ The construction uses a scalar Hadamard matrix of order k followed by row groupi
 The cap w_t≤3/k and physical weighted-basis characterization are the channel results of §66. The entropy minimization under a probability cap is the standard concavity/majorization principle, proved directly here. The real-frame equality analysis extends §67 from equal three-row blocks to a possible final lower-dimensional block. Hadamard matrices and the Sylvester recursion are classical; the MUB and orthogonal-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . No novelty claim is made for these established ingredients.
 
 The entropy is that of the shared classical variable in an exact finite LOSR decomposition. Local private randomness is absorbed into the arbitrary local channels. The theorem supplies an exact physical resource optimum for the stated families and a general equality criterion, with all coherent inputs and passive references retained. It is not a classification of arbitrary channels or an unrestricted positive-error diamond formula.
+
+## 69. Exact shared entropy for five and seven qubit fibres
+
+### 69.1 Resource statement
+
+For the uniform multi-fibre channel F_(k,2), fixed MC encodings, and exact finite physical LOSR implementations of §§66–68, the following minima are attained by common physical channels:
+
+    k=5: minimum branches 2, minimum entropy H(3/5,2/5);
+    k=7: minimum branches 3, minimum entropy H(3/7,3/7,1/7).
+
+Here H is the Shannon entropy in bits of the shared branch variable, and the product factors may be arbitrary local CPTP maps C^(2k)→C^k. A single choice of channel acts on all coherent inputs and passive references. Local private randomness is already included in those factors.
+
+The lower bounds are §68's universal packed-weight bounds. It remains to construct orthogonal matrices with column-block squared norms (3/5,2/5) and (3/7,3/7,1/7), respectively. These finite cases complete the packed entropy optimum for every integer 3≤k≤9, using the previously proved cases; they do not imply existence at arbitrary k.
+
+### 69.2 Five fibres from one Fourier pair and its complement
+
+For j=0,...,4 put θ_j=2πj/5 and let T be the 2×5 real matrix with columns
+
+    sqrt(2/5)(cos θ_j, sin θ_j)^T.
+
+The finite Fourier sums Σ_j exp(iθ_j)=Σ_j exp(2iθ_j)=0 imply TT^T=I_2. Every column of T has squared norm 2/5. Choose any three orthonormal rows spanning the orthogonal complement of the row space of T and collect them in U. The stacked matrix O=[U;T] is a real orthogonal 5×5 matrix. Each full column has squared norm one, so every column of U has squared norm 3/5.
+
+Consequently O satisfies §68's equality criterion. Its first block gives unit Bloch vectors sqrt(5/3)U[:,j], with branch weight 3/5. Pad T[:,j] with a zero coordinate and multiply by sqrt(5/2) to obtain the other unit Bloch vectors, with branch weight 2/5. Choosing the eigenbases and their coordinatewise conjugates as in §66 supplies the asserted common two-product-channel implementation.
+
+The existence of an orthonormal complement here is ordinary finite-dimensional orthogonal completion. It is used only once, and its constant column norm follows from the full-column norm identity; no iterative constant-diagonal decomposition theorem is assumed.
+
+### 69.3 Seven fibres from a centered spherical frame
+
+Define
+
+    a=(-1+sqrt(7))/6,    b=(-1−sqrt(7))/6,
+    x_0=(0,0,1)^T,
+    x_(z,j)=(sqrt(1−z²)cos(2πj/3),
+             sqrt(1−z²)sin(2πj/3),z)^T,
+
+for z∈{a,b} and j=0,1,2. Both heights lie in (−1,1), so these are seven real unit vectors. Let X be the 3×7 matrix with these columns, in any fixed order.
+
+The three horizontal directions in each triangle sum to zero. Since a+b=−1/3, the sum of all seven vectors is zero. Moreover a²+b²=4/9. Within each triangle, the sine/cosine first moments and mixed second moment vanish, while the squared cosine and sine sums are both 3/2. Thus
+
+    X X^T = diag((3/2)(2−a²−b²),
+                 (3/2)(2−a²−b²),1+3a²+3b²)
+          = (7/3) I_3,
+    X 1_7=0.
+
+Put R=sqrt(3/7)X and c=(1,...,1)/sqrt(7). The three rows of R and the row c are orthonormal. Choose a 3×7 matrix U whose rows form an orthonormal basis of their orthogonal complement. Then O=[R;U;c] is a real orthogonal 7×7 matrix. Each column of R has squared norm 3/7 and each entry of c has squared norm 1/7, so each column of U has squared norm
+
+    1−3/7−1/7=3/7.
+
+This is exactly the row-block condition of §68. Divide the R and U column blocks by sqrt(3/7); pad the c block with two zeros and divide by sqrt(1/7). The resulting unit Bloch vectors, with weights 3/7,3/7,1/7, define the three common product channels by the conjugate-record construction. All local environments can have dimension two. For the last branch all directions are the same north-pole direction; this is allowed, since distinct fibre input labels are kept orthogonal by their distinct output labels.
+
+In particular, for every pair of different fibres f,g the weighted Bloch inner product is zero because distinct columns of O are orthogonal. Therefore each weighted squared basis overlap is 1/2, for both choices of eigenvector label. Within a fibre the two eigenvectors are orthogonal. These facts verify all encoded matrix units, not only basis populations or a collection of independently chosen pair maps. Hence the implementation remains exact after every passive reference extension.
+
+### 69.4 Completion of the finite range and attribution
+
+Combining these two constructions with §§66–68 gives the following optimal positive-weight distributions for the specified channel:
+
+    k=3: (1);
+    k=4: (3/4,1/4);
+    k=5: (3/5,2/5);
+    k=6: (1/2,1/2);
+    k=7: (3/7,3/7,1/7);
+    k=8: (3/8,3/8,1/4);
+    k=9: (1/3,1/3,1/3).
+
+For k=3 use the three Pauli bases; k=4,8 use §68's scalar Hadamard construction; k=6 uses §66 with a Hadamard matrix of order two; and k=9 uses §67's explicit balanced frame. In every case both the number of listed weights and their Shannon entropy are globally minimal over exact finite physical LOSR decompositions.
+
+The Fourier frame and Naimark-complement principles are standard; see Novikov and Sevost'yanova, Maltsev equal-norm tight frames, §2 and Theorem4, https://www.mathnet.ru/eng/im9137 . The identities X1=0 and XX^T=(7/3)I identify the seven-vector configuration as a centered unit-norm tight frame, equivalently a real spherical2-design; this equivalence is classical, explicitly reviewed in Heineken, Morillas and Tarazaga, Balanced frames: a useful tool in signal processing with good properties, Proposition3.5, https://arxiv.org/html/1904.00920 . The elementary moment computation is supplied above, without a novelty claim for spherical designs or a general projection-decomposition theorem.
+
+The physical resource conclusion uses these standard frame ingredients in the exact common-channel equality criterion. It concerns the stated finite range and fixed MC channel family, with arbitrary physical product competitors and all reference extensions. No general-k existence or positive-error diamond optimum is asserted.
