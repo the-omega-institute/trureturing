@@ -7,7 +7,6 @@
    digest: A hexagon with an equilibrium clique refutes the general-network activity bound. -/
 
 import D5.S3.TotalVariation.CycleSingleCutMinimax
-import Mathlib.Analysis.Real.Pi.Bounds
 
 set_option autoImplicit false
 set_option maxRecDepth 3000
