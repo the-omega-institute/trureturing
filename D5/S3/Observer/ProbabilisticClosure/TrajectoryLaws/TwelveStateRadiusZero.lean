@@ -144,7 +144,6 @@ private theorem future_integrals (D : Set (ℕ → Bool)) (hD : MeasurableSet D)
     Finset.sum_ite_irrel,Finset.sum_ite_eq',Finset.mem_univ,↓reduceIte]
   norm_num [prob,next,mass,rate,advance,Fintype.sum_bool,Fintype.sum_prod_type,Fin.sum_univ_succ]
   <;> norm_num [Fin.succ,Fin.instOfNat,Fin.ofNat]
-  <;> simp only [show (⟨2,by decide⟩ : Fin 6) = (2 : Fin 6) from rfl]
   <;> ring
 
 /-- Actual whole-past posterior candidate, at the fixed time-zero hidden state. -/

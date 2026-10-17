@@ -73,9 +73,9 @@ theorem actual_halfline_decoders :
   let fL (r : ℕ) (v : ℕ → Bool) : Label := fixedMAP r (fun k => v (r-1-k.val))
   let fR (r : ℕ) (v : ℕ → Bool) : Fin 3 := residueMAP r (fun k => v k.val)
   obtain ⟨gL,hL,hLc⟩ := measurable_eventual_decoder fL (fun r =>
-    (measurable_of_finite (fixedMAP r)).comp (measurable_pi_lambda _ fun k => measurable_pi_apply _))
+    (measurable_of_finite (fixedMAP r)).comp (Measurable.of_eval fun k => measurable_pi_apply _))
   obtain ⟨gR,hR,hRc⟩ := measurable_eventual_decoder fR (fun r =>
-    (measurable_of_finite (residueMAP r)).comp (measurable_pi_lambda _ fun k => measurable_pi_apply _))
+    (measurable_of_finite (residueMAP r)).comp (Measurable.of_eval fun k => measurable_pi_apply _))
   refine ⟨gL,gR,hL,hR,?_⟩
   have hp := actual_map_recovery.{0}.2.1
   have hf := actual_future_residue_recovery.2

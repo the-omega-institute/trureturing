@@ -6,6 +6,7 @@
    utility: none
    digest: Adjoining a new prime strictly decreases the coprime Mobius coefficient. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Weil.Mertens.CoprimeMobiusCertificateError
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Data.Finset.NatDivisors

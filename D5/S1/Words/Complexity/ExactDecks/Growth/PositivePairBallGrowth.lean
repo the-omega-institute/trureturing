@@ -6,6 +6,7 @@
    utility: none
    digest: Actual positive-word cutoff balls have weighted Lyndon polynomial growth. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ExactDecks.Growth.PositiveWordBall
 
 set_option autoImplicit false

@@ -21,7 +21,7 @@ private theorem three_dvd_sigma_twice_square {t : ℕ} (ht : t ≠ 0) :
   have hshape : 2 * t ^ 2 = 2 ^ (2 * b + 1) * r ^ 2 := by
     rw [htr, mul_pow, ← pow_mul, show b * 2 = 2 * b by omega, pow_succ]
     ring
-  rw [hshape, isMultiplicative_sigma.map_mul_of_coprime hcop,
+  rw [hshape, (isMultiplicative_sigma (k := 1)).map_mul_of_coprime hcop,
     sigma_one_apply_prime_pow Nat.prime_two]
   apply dvd_mul_of_dvd_left
   rw [Nat.geomSum_eq (by decide : 2 ≤ 2)]

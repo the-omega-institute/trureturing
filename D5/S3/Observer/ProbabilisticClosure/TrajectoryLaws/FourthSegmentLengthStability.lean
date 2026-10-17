@@ -188,7 +188,7 @@ private lemma common_mass {r s : unitInterval}
 private lemma stopped_probability (r : unitInterval) :
     IsProbabilityMeasure (explicitStoppedWordLaw .p r) := by
   rw [← (actual_fourth_segment_stopped_word_law r .p).2]
-  exact Measure.isProbabilityMeasure_map (measurable_stopped_read_word .p).aemeasurable
+  infer_instance
 
 private lemma word_tv_ordered {r s : unitInterval}
     (hr : (r : ℝ) ∈ Set.Icc (1 / 3 : ℝ) (2 / 5))

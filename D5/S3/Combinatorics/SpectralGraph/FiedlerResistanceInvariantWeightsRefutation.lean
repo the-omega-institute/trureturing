@@ -317,7 +317,7 @@ private lemma lap_congr {n : Nat} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
   ext i j
   by_cases hij : i = j
   · subst j
-    simp only [wLap, if_pos rfl]
+    simp only [wLap, if_pos rfl, if_true]
     apply Finset.sum_congr rfl
     intro k hk
     exact hw _ (by simpa only [SimpleGraph.mem_edgeSet] using (Finset.mem_filter.mp hk).2)

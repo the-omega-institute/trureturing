@@ -844,6 +844,30 @@ theorem motor_return {w : ℕ} (rom : Fin w → Bool) :
     simp [motorCheckpoint,encodeCopy,copyCheckpoint,i.isLt]
   simpa only [copyTime,Nat.add_zero,he] using And.intro hh ht
 
+private theorem motor_return_from {w : ℕ} (rom : Fin w → Bool) (start : Motor w)
+    (hr : start = motorEntry w) :
+    (motorRun rom start (copyTime w)).pc = .halt ∧
+      (motorRun rom start (copyTime w)).tape = rom := by
+  rw [hr]
+  exact motor_return rom
+
+private theorem runtime_render (r : State) (value : Fin (runtimeSize+1))
+    (hs : r.stage = .runtimeCopy) (hr : r.runtime = motorEntry (runtimeSize+1))
+    (hv : r.native.accumulator.val = value.val) :
+    ∃ t, ∃ a : State, run r 0 0 t = a ∧ a.stage = .render ∧
+      a.runtime.tape = word value ∧ a.addressed = r.addressed ∧
+      a.operation = r.operation ∧ a.committed = r.committed := by
+  have hrom : runtimeROM r = word value := by
+    funext j
+    change decide (j.val < r.native.accumulator.val) = decide (j.val < value.val)
+    rw [hv]
+  let clock := copyTime (runtimeSize+1)
+  let target := motorRun (runtimeROM r) r.runtime clock
+  have htarget := motor_return_from (runtimeROM r) r.runtime hr
+  obtain ⟨t,_,ht⟩ := runtime_exit r clock hs htarget.1
+  exact ⟨t,{r with runtime := target,stage := .render},ht,rfl,
+    htarget.2.trans hrom,rfl,rfl,rfl⟩
+
 theorem native_render (p : State) (z : Runtime) (op : Operation) (d : Runtime)
     (hps : p.stage = .nativeKey)
     (hkey : p.nativeKey = keyEntry (word (runtimeCodec z)) (operationCodec op))
@@ -859,20 +883,10 @@ theorem native_render (p : State) (z : Runtime) (op : Operation) (d : Runtime)
   obtain ⟨tn,_,hn⟩ := native_exit k n hks hsafe hnp
   let r : State := {k with native := v,stage := .runtimeCopy}
   have hnr : run k 0 0 tn = r := by simpa only [hkn,hv] using hn
-  have hrom : runtimeROM r = word (optionalRuntimeCodec (some d)) := by
-    funext j
-    change decide (j.val < v.accumulator.val) = decide (j.val < (optionalRuntimeCodec (some d)).val)
-    rw [hva]
-  let w := runtimeSize+1
-  let clock := copyTime w
-  let target := motorRun (runtimeROM r) r.runtime clock
-  have htarget : target.pc = .halt ∧ target.tape = word (optionalRuntimeCodec (some d)) := by
-    have hr : r.runtime = motorEntry w := hkr.trans hpr
-    simpa only [target,hr,hrom] using motor_return (word (optionalRuntimeCodec (some d)))
-  obtain ⟨tr,_,hr⟩ := runtime_exit r clock rfl htarget.1
-  let a : State := {r with runtime := target,stage := .render}
-  have hra : run r 0 0 tr = a := hr
-  refine ⟨tk+tn+tr,a,?_,rfl,htarget.2,hka,hko.trans hpo,hkc.trans hpc⟩
+  obtain ⟨tr,a,hra,has,hat,haa,hao,hac⟩ :=
+    runtime_render r (optionalRuntimeCodec (some d)) rfl (hkr.trans hpr) hva
+  refine ⟨tk+tn+tr,a,?_,has,hat,haa.trans hka,hao.trans (hko.trans hpo),
+    hac.trans (hkc.trans hpc)⟩
   rw [run_add,run_add,hk,hnr,hra]
 
 

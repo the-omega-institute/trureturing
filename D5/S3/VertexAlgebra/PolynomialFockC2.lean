@@ -204,8 +204,8 @@ theorem actual_c2_modes :
     apply Submodule.sum_mem
     intro m hm
     obtain ⟨i, hi, hmi⟩ := supportCondition m hm
-    have factor : monomial m (coeff m p) =
-        (X i : Fock) * monomial (m - Finsupp.single i 1) (coeff m p) := by
+    have factor : monomial m (AddMonoidAlgebra.coeff p m) =
+        (X i : Fock) * monomial (m - Finsupp.single i 1) (AddMonoidAlgebra.coeff p m) := by
       rw [X, monomial_mul, one_mul]
       have hle : Finsupp.single i 1 ≤ m :=
         Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hmi)
@@ -243,10 +243,10 @@ theorem actual_c2_modes :
       by_cases hi : i = 0
       · subst i; simp
       · simp [hi, hvanish i (by omega)]
-    have hcoeff := congrArg (MvPolynomial.coeff (Finsupp.single () (m 0))) hkill
+    have hcoeff := congrArg ((fun p => AddMonoidAlgebra.coeff p (Finsupp.single () (m 0)))) hkill
     rw [show kill p = MvPolynomial.killCompl hf p from rfl,
       MvPolynomial.coeff_killCompl] at hcoeff
-    simp only [coeff_zero, Finsupp.mapDomain_single, f] at hcoeff
+    simp only [MvPolynomial.coeff_zero, Finsupp.mapDomain_single, f] at hcoeff
     exact (MvPolynomial.mem_support_iff.mp hm) (by simpa [← hmSingle] using hcoeff)
   have c2Ideal : C2 = I.restrictScalars ℂ :=
     le_antisymm (c2Kernel.trans kernelIdeal) idealC2

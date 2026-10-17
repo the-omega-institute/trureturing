@@ -7,6 +7,7 @@
    digest: Compatible C-star states extend uniquely and yield normalized cyclic completed GNS expectations. -/
 
 import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
+import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.Analysis.Normed.Operator.Extend
 import Mathlib.Topology.Algebra.StarSubalgebra
 import Mathlib.Analysis.Normed.Lp.lpSpace
@@ -54,11 +55,17 @@ private theorem state_bound (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) (a : A) : ‖
       apply Complex.ext <;> simp [(Complex.nonneg_iff.mp hpos).2]
     rw [← he, Complex.norm_real]
     exact abs_of_nonneg (Complex.nonneg_iff.mp hpos).1
-  simp only [PositiveLinearMap.preGNS_inner_def, PositiveLinearMap.ofPreGNS_toPreGNS,
-    star_one, one_mul, mul_one, hf, RCLike.one_re, one_mul, map_star, norm_star] at hcs
-  rw [hr, hf, norm_one, one_mul, CStarRing.norm_star_mul_self] at hp
-  change ‖f a‖ * ‖f a‖ ≤ (f (star a * a)).re at hcs
-  nlinarith [norm_nonneg (f a), norm_nonneg a]
+  rw [hr] at hp
+  rw [hf, norm_one] at hp
+  have hp' : (f (star a * a)).re ≤ ‖a‖ * ‖a‖ := by
+    simpa [CStarRing.norm_star_mul_self, pow_two] using hp
+  have hcs' : ‖f a‖ * ‖f a‖ ≤ (f (star a * a)).re := by
+    convert hcs using 1 <;>
+      simp [PositiveLinearMap.preGNS_inner_def,
+        PositiveLinearMap.ofPreGNS_toPreGNS, star_one, one_mul, mul_one, hf,
+        RCLike.one_re, map_star, norm_star, PositiveLinearMap.preGNS_norm_sq]
+  apply (sq_le_sq₀ (norm_nonneg (f a)) (norm_nonneg a)).mp
+  nlinarith [hcs', hp']
 
 /-- The normalized expectation and cyclic orbit in the actual completed GNS Hilbert space. -/
 private theorem normalized_gns (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) :

@@ -10,6 +10,7 @@
    mark indices are the old P marks shifted by one; index zero is in Q.
    This proves the native tuple/domain part of that propagation, without
    assuming the next pairing, next walk, or any abstract realization. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
 
 set_option autoImplicit false

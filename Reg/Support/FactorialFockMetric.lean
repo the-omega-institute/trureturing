@@ -426,8 +426,8 @@ abbrev signature := complexSignature
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {σ : Type u} (p : Polynomial σ) (d : Occupation σ),
-    r.readout () () (MvPolynomial.coeff d (diagonal σ p))
-      (scale d * MvPolynomial.coeff d p)
+    r.readout () () ((diagonal σ p).coeff d)
+      (scale d * p.coeff d)
 
 theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.FactorialFockMetric.diagonal_coeff.{u})) ↔
     arena.{u}.Law complexEqual := Iff.rfl
@@ -556,7 +556,7 @@ abbrev signature := complexSignature
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {σ : Type u} (p : Polynomial σ) (d : Occupation σ),
-    r.readout () () (coefficientEmbedding σ p d) (MvPolynomial.coeff d p)
+    r.readout () () (coefficientEmbedding σ p d) (p.coeff d)
 
 theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.FactorialFockMetric.coefficientEmbedding_coeff.{u})) ↔
     arena.{u}.Law complexEqual := Iff.rfl
@@ -619,7 +619,7 @@ abbrev signature := complexSignature
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {σ : Type u} (p : Polynomial σ) (d : Occupation σ),
-    r.readout () () (embedding σ p d) (scale d * MvPolynomial.coeff d p)
+    r.readout () () (embedding σ p d) (scale d * p.coeff d)
 
 theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.FactorialFockMetric.embedding_coeff.{u})) ↔
     arena.{u}.Law complexEqual := Iff.rfl
@@ -717,7 +717,7 @@ abbrev arena : Arena where
   signature := signature
   Law r := ∀ {σ : Type u} (d : Occupation σ) (a : ℂ) (q : Polynomial σ),
     r.readout () () (inner (MvPolynomial.monomial d a) q)
-      ((weight d : ℂ) * conj a * MvPolynomial.coeff d q)
+      ((weight d : ℂ) * conj a * q.coeff d)
 
 theorem sourceBridge : (type_of% (@D5.S3.VertexAlgebra.FactorialFockMetric.inner_monomial_left.{u})) ↔
     arena.{u}.Law complexEqual := Iff.rfl

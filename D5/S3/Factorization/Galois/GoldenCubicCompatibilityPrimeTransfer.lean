@@ -464,7 +464,7 @@ theorem actual_prime_transfer_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
       exact orderOf_eq_one_iff.mpr hpmod3
     letI : (Ideal.span {((p.1 : ℕ) : ℤ)}).IsMaximal := inferInstance
     letI : qE.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap qE
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under qE
         (show (qE.under ℤ).IsMaximal by
           rw [← (inferInstance : qE.LiesOver
             (Ideal.span {((p.1 : ℕ) : ℤ)})).over]
@@ -576,7 +576,7 @@ theorem actual_prime_transfer_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
       exact orderOf_eq_one_iff.mpr hpmod3
     letI : (Ideal.span {(p : ℤ)}).IsMaximal := inferInstance
     letI : qE.IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap qE
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under qE
         (show (qE.under ℤ).IsMaximal by
           rw [← hEoverInt.over]
           infer_instance)

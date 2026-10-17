@@ -6,6 +6,7 @@
    utility: none
    digest: A quadratic logarithmic majorant bounds finite weighted sums by three moments. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.Interpolation.EnvelopeKMonotone
 
 open Set
