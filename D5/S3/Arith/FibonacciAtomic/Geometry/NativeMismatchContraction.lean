@@ -26,7 +26,11 @@ private theorem mass_self (q : ℚ) (s : Source) : mass q s s = 0 := by
 
 private theorem mass_of_of (q : ℚ) (b c : Bool) (h : b ≠ c) :
     mass q (.of b) (.of c) = 1 := by
-  simp [mass, ActualImageAlphaSeparation.frontier, h]
+  have hn : (FreeMagma.of b : Source) ≠ .of c := by
+    intro he
+    injection he with he
+    exact h he
+  simp [mass, ActualImageAlphaSeparation.frontier, hn]
 
 private theorem mass_of_mul (q : ℚ) (b : Bool) (u v : Source) :
     mass q (.of b) (.mul u v) = 1 := by
@@ -51,8 +55,8 @@ private theorem mass_mul_mul (q : ℚ) (s u t v : Source) :
       cases hb
     simp only [mass, ActualImageAlphaSeparation.frontier, if_neg he]
     rw [Finset.sum_union hd,
-      Finset.sum_image (fun _ _ _ _ h => List.cons_injective _ h),
-      Finset.sum_image (fun _ _ _ _ h => List.cons_injective _ h)]
+      Finset.sum_image (fun _ _ _ _ h => List.cons_injective h),
+      Finset.sum_image (fun _ _ _ _ h => List.cons_injective h)]
     simp only [List.length_cons, pow_succ, Finset.sum_mul]
     ring
 
