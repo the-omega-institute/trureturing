@@ -1949,8 +1949,10 @@ capacity bounds, but its height is independent of this allocation.
 $\alpha/2$ at each $z$ orientation and $\beta/2$ at each $w$
 orientation. Failure requires total $pb$ masses $\alpha V,\beta W$.
 The capacity conditions are $tc_z\ge V$, $tc_w\ge W$; the latter is
-stronger since $V<W$ and $c_z>c_w$. Contrast is always $\sqrt\alpha$
-in normalized units. This proves necessity of (RC.83), and the table
+stronger since $V<W$ and $c_z>c_w$. The available normalized contrast
+$\sum_jp_j|z_j|$ is always $\sqrt\alpha$; arbitrary binary reports can
+attenuate the actual contrast, while the deterministic reports in §75
+attain this available value. This proves necessity of (RC.83), and the table
 proves sufficiency of all moments, capacities and contrast.
 
 The $z$ contribution is $\alpha b_z$ since $f=0$. Set $C_w=tc_w$.
@@ -2431,7 +2433,7 @@ borrowed; they are not claims of literature-wide novelty.
 | --- | --- |
 | Halaseh–Magron–Skomra, arXiv:2604.15072v1, Theorem 1.1, PDF p.2; Theorem 3.3, p.14 [HMS67] | The polynomial generalized moment theorem assumes $h_1\equiv1$, $b_1>0$ and $b$ in the relative interior of the moment cone for dual attainment. Primal attainment/no gap alone in Theorem 3.3 does not assert dual attainment. Section 68 proves the required continuous rational two-sheet and contrast-slack interface directly. |
 | Dritschel–Rovnyak, arXiv:0903.3639v1, Theorem 2.1, PDF p.4 [DR67] | A full-circle nonnegative operator Laurent polynomial has a same-degree analytic factor $P^*P$, with zeros allowed. The scalar case applies to already nonnegative (RC.70), without selecting multipliers, roots or common weights. |
-| Dette–Melas, arXiv:1105.3575v1, (3.2)–(3.4), PDF p.5, Theorem 3.1, p.6 [DM67] | The complete-class support bound requires the distinguished information-matrix entry and the specified ordinary and extended Chebyshev systems on an interval. The present nine functions include $b_j,b_jz^2,b_jzw$, all identically zero on the pure sheet; nine pure-sheet evaluations have zero determinant. There is no direct three-atom transfer to this two-sheet problem. |
+| Dette–Melas, arXiv:1105.3575v1, (3.2)–(3.4), PDF p.5, Theorem 3.1, p.6 [DM67] | The complete-class support bound requires $\Psi_0=1$, the distinguished diagonal information-matrix entry in (3.2), and either the two ordinary Chebyshev systems in (3.3) or the corresponding pair in (3.4) on an interval; the stronger extended-Chebyshev notion is defined separately and is not a hypothesis of Theorem 3.1. The present nine functions include $b_j,b_jz^2,b_jzw$, all identically zero on the pure sheet; nine pure-sheet evaluations have zero determinant. There is no direct three-atom transfer to this two-sheet problem. |
 | Martin–Goldsztejn–Granvilliers–Jermann, DOI 10.1007/s10898-014-0201-3, author manuscript, §§3.1–3.3, PDF pp.8–12, conclusion p.13 [MG67] | Certified tracing starts from a given regular initial curve, with $C^2$ data and stable one-at-a-time activity changes. It certifies feasibility/local optimality/connectivity on that component; other singularities stop tracing. It provides neither this full-circle global inequality nor a complete two-parameter atlas. |
 | Leppäjärvi–Sedlák, arXiv:2212.11225v2, §6.1, Definition 7, PDF p.15 [LS67] | Finite-output instrument postprocessing requires equality of the per-output CP compositions, not merely of effects. Equations (RC.102)–(RC.103) separately prove the all-complex Borel/reference extension used here. |
 | Hsieh–Tavakoli–Ku–Skrzypczyk, arXiv:2603.27676v1, (1)–(3), Result 1, PDF pp.1–2 [HT67] | The finite-dimensional interactive-instrument robustness SDP measures noise mixing into noninteractive instruments. This is not the maximum-per-actual-label integrated whole-fibre rate norm, and gives no value of the original activity frontier. |
