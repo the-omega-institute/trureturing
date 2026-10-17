@@ -198,7 +198,8 @@ private theorem tensor_apply_product {a b c d κ ι : Type*}
     (ρ : Matrix a a ℂ) (σ : Matrix c c ℂ) :
     krausApply (krausTensor K L) (ρ ⊗ₖ σ) = krausApply K ρ ⊗ₖ krausApply L σ := by
   classical
-  simp only [krausApply.eq_1, MatrixMap.of_kraus, LinearMap.sum_apply,
+  repeat rw [krausApply.eq_1]
+  simp only [MatrixMap.of_kraus, LinearMap.sum_apply,
     LinearMap.coe_mk, AddHom.coe_mk, krausTensor.eq_1,
     Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, Fintype.sum_prod_type]
   ext ⟨i,k⟩ ⟨j,l⟩
@@ -228,7 +229,8 @@ private theorem bell_output (i j : Fin 2 × Fin 2) :
      krausApply (krausTensor witness witness) (Matrix.single 0 1 1 ⊗ₖ Matrix.single 0 1 1) +
      krausApply (krausTensor witness witness) (Matrix.single 1 0 1 ⊗ₖ Matrix.single 1 0 1) +
      krausApply (krausTensor witness witness) (Matrix.single 1 1 1 ⊗ₖ Matrix.single 1 1 1))) i j = _
-  simp only [tensor_apply_product, witness_apply]
+  repeat rw [tensor_apply_product]
+  repeat rw [witness_apply]
   rcases i with ⟨i,k⟩
   rcases j with ⟨j,l⟩
   fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
@@ -242,10 +244,12 @@ private theorem bell_output_lower :
       bell_density_is_state.2⟩
   have hpair := coherence_pair_le
     (krausApply (krausTensor witness witness) bellDensity) (0,0) (1,1)
-    (by decide) (by norm_num [bell_output])
+    (by decide) (by rw [bell_output, bell_output]; norm_num)
   have hvalue : (225/272 : ℝ) ≤
       maxCoherence (krausApply (krausTensor witness witness) bellDensity) := by
-    convert hpair using 1; norm_num [bell_output, Real.sqrt_sq_eq_abs]
+    convert hpair using 1
+    rw [bell_output, bell_output, bell_output]
+    norm_num
   exact hvalue.trans (le_csSup (output_bdd _) ⟨ρ, rfl⟩)
 
 /-- Entangled Bell inputs violate the conjectured tensorization equality. -/
@@ -257,7 +261,6 @@ theorem result : ¬ claim := by
   have hu := witness_output_upper
   have hl := bell_output_lower
   rw [heq, max_self] at hl
-  norm_num at hu hl ⊢
   linarith
 
 end D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
