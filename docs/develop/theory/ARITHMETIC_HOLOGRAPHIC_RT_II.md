@@ -358,3 +358,93 @@ At t=1, the edge attainer equals rho and its norm is exactly the corner expressi
 The exact zero-error region agrees with the PIO reachable geometry and the independently proved full-support necessity in §54; that geometry and its construction are not claimed as new. The pure-source boundary uses §53's explicit Schmidt-support proof, following the standard method of George–Chitambar, Phys. Rev. A109,062418 (2024), https://link.aps.org/accepted/10.1103/PhysRevA.109.062418 . PIO predecessors are Shi et al., Scientific Reports7,14806 (2017), https://www.nature.com/articles/s41598-017-13687-4 , and Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature priority claim is made for the auxiliary Cauchy–Schwarz, Choi-minor or convexity arguments. The conclusion is the complete all-output trace-norm optimum on the physical two-qubit MC source/target family, not the original coherent multisector RT optimum.
 
 For an explicit low-coherence example, take r=3/4, c=1/10 and the pure target P=9/10, w=3/10. Here q=1/4>c, D=√29/20 and t=22/29. The exact error is 13/(5√29), attained by (22/29)ρ+(7/29)|00⟩⟨00|. This lies outside the source region of §56 and exceeds the negativity lower bound 2(w−c)=2/5.
+
+## 58. Exact common-channel obstruction for encoded amplitude damping
+
+This is a coherent logical-channel problem with arbitrary reference inputs, not a collection of independently optimized state conversions.
+
+### 58.1 Model and theorem
+
+Let L=C² be the logical input, and X=Y=C² the two physical local systems. Define V:L->X tensor Y by V|0>=|00>, V|1>=|11>, and J(Z)=VZV*. For t in [0,1], let D_t be the logical amplitude-damping channel with Kraus matrices K_0=|0><0|+sqrt(t)|1><1| and K_1=sqrt(1-t)|0><1|. The target channel is T_t=J composed with D_t, from L to X tensor Y.
+
+Competitors are F=Phi composed with J, where Phi is any finite convex mixture of product qubit CPTP maps A tensor B. Local product ancillas are allowed; communication, postselection, and additional shared entanglement are not. Neither code-support preservation nor exact action on either basis state is imposed. Diamond norm includes arbitrary passive references and is not divided by two.
+
+Then
+
+    inf_Phi ||Phi composed with J - T_t||_diamond
+       = (8/9)(sqrt(t)-t).
+
+The infimum is attained by two product-CPTP branches: with probability a=(2t+sqrt(t))/3 use identity on both physical systems, and with probability 1-a reset both to |0>. The same random choice and same physical channel act on every logical input. At t=0 or t=1, a single branch suffices.
+
+### 58.2 Unrestricted all-product lower bound
+
+Use the fixed reference input Omega=sqrt(1/3)|0>_R|0>_L+sqrt(2/3)|1>_R|1>_L. On R tensor X tensor Y define the Hermitian witness H as follows. On the span of |0,00>,|1,11> its matrix is
+
+    [[1/3,2sqrt(2)/3],[2sqrt(2)/3,-1/3]].
+
+On |1,00> it is +1; on each of the other five computational basis vectors it is -1. The displayed block squares to identity, so ||H||_infty=1.
+
+For an arbitrary product channel A tensor B put
+
+    a0=<0|A(|0><0|)|0>, b0=<0|B(|0><0|)|0>,
+    a1=<1|A(|1><1|)|1>, b1=<1|B(|1><1|)|1>,
+    z_A=<0|A(|0><1|)|1>, z_B=<0|B(|0><1|)|1>.
+
+All four probabilities lie in [0,1]. Complete positivity, through a two-by-two Choi principal minor, gives |z_A|<=sqrt(a0 a1) and |z_B|<=sqrt(b0 b1). Directly expanding the reference output sigma=(id_R tensor [(A tensor B) composed with J])(|Omega><Omega|) gives
+
+    9 Tr(H sigma)
+      =4a0b0+12(1-a1)(1-b1)+4a1b1+8 Re(z_A z_B)-9.
+
+For example, the R=0 diagonal contribution is (4a0b0-3)/9; the R=1 contribution is [12(1-a1)(1-b1)+4a1b1-6]/9; and the two coherent terms give 8 Re(z_A z_B)/9. Thus leakage outside the code is included explicitly, not discarded.
+
+Put z=sqrt(a1b1). The nonconstant part of the preceding expression is at most
+
+    4[(sqrt(a0b0)+z)^2+3(1-a1)(1-b1)]
+      <=4[(1+z)^2+3(1-z)^2]
+      =16(1-z+z^2)<=16.
+
+Here a0b0<=1, and a1+b1>=2sqrt(a1b1) proves (1-a1)(1-b1)<=(1-z)^2. Finally 0<=z<=1. Consequently Tr(H sigma)<=7/9 for every product channel, and affinity gives the same bound for every finite LOSR mixture. The argument uses no code-support or calibration assumption.
+
+The ideal reference output has weights 1/3 on |0,00>, 2t/3 on |1,11>, 2(1-t)/3 on |1,00>, and coherent matrix entry sqrt(2t)/3 between the first two vectors. Therefore
+
+    Tr[H (id_R tensor T_t)(|Omega><Omega|)]
+      =7/9+(8/9)(sqrt(t)-t).
+
+Trace-norm duality with ||H||_infty=1 yields the claimed diamond lower bound. The one fixed input and witness apply to the whole allowed physical class.
+
+### 58.3 One common physical attainer and its full diamond norm
+
+Put k=sqrt(t)-t>=0, a=t+k/3=(2t+sqrt(t))/3. Since 0<=t<=sqrt(t)<=1, a lies in [0,1]. The two-branch physical channel above has encoded action
+
+    F_a(Z)=a VZV*+(1-a)Tr(Z)|00><00|.
+
+Its difference from the target has population mismatch d=a-t=k/3 and coherence mismatch e=sqrt(t)-a=2k/3. In the code basis, Delta=T_t-F_a acts by
+
+    Delta(|0><0|)=0,
+    Delta(|1><1|)=d(|00><00|-|11><11|),
+    Delta(|0><1|)=e|00><11|,
+    Delta(|1><0|)=e|11><00|.
+
+Let an arbitrary normalized pure input with any reference be |0>u+|1>v, where ||u||²=1-q, ||v||²=q and 0<=q<=1. Its output difference is the sum of the positive rank-one term d|00><00| tensor |v><v| and an operator supported on the orthogonal vectors |00>u, |11>v. The latter has matrix
+
+    [[0,e sqrt(q(1-q))],[e sqrt(q(1-q)),-dq]]
+
+in their normalized basis, with the zero-vector endpoints interpreted by continuity. Its trace norm is sqrt(d²q²+4e²q(1-q)). The triangle inequality therefore gives
+
+    ||(Delta tensor id)(|Psi><Psi|)||_1
+      <=dq+sqrt(d²q²+4e²q(1-q))
+      =(k/3)[q+sqrt(16q-15q²)] <= 8k/9.
+
+The final inequality follows by squaring the nonnegative right side of sqrt(16q-15q²)<=8/3-q: the difference of the two squares is 16(q-2/3)². Equality occurs at q=2/3, with u and v orthogonal. In that case the positive rank-one term is orthogonal to the two-dimensional block, so the triangle inequality is also equality. This is exactly the reference input Omega used above.
+
+Mixed density inputs follow by convexity. To cover arbitrary trace-class operator inputs in the diamond norm, first use the Jordan decomposition for Hermitian inputs. For a general operator Z, add a reference qubit and use the Hermitian block operator (1/2)[[0,Z],[Z*,0]], whose trace norm is ||Z||_1 and whose image has trace norm ||(Delta tensor id)(Z)||_1. Since Delta preserves Hermiticity, the density-input bound thus applies to all operators and arbitrary finite references. This proves the exact diamond norm and attainment.
+
+### 58.4 Compatibility consequence and scope
+
+Both logical basis targets are individually exactly attainable: |00> remains |00>, and |11> can be sent to (1-t)|00><00|+t|11><11| by shared random resets. In fact one common identity/reset mixture with weight t matches both basis outputs simultaneously. It multiplies the logical off-diagonal by t, whereas T_t requires sqrt(t). For 0<t<1 the theorem proves that no alternative physical finite-LOSR channel can remove this coherent discrepancy completely, even by allowing leakage or changing the basis outputs. The actual optimum accepts a small population error, choosing a=(2t+sqrt(t))/3 rather than t.
+
+For t=1/4 the exact unhalved diamond error is 2/9 and the optimal identity weight is 1/3. Thus this is a strict common-channel obstruction even though separate basis-state conversion errors vanish. It complements §54's exact-support channel normal form, but its lower bound is stronger in scope because competitors here need not preserve the code. It does not rely on optimizing sector states independently and identifying those optimizers with a channel.
+
+Sections 38–39 give common coherent implementations with isometric pure flat-sector targets; Sections 40–44 develop restricted-control and Schur-channel statements. The target here is a nonunital logical noise channel with mixed basis output, not a pure flat-target encoding isometry, so those formulas do not directly supply this value. Section 57 gives exact MC state-conversion errors but does not itself optimize this reference-sensitive common-channel task. The present two-label model is a concrete coherent consumer, not a proof of general RT recovery or a gravitational dictionary.
+
+Amplitude damping, Choi positivity, trace-norm duality and diamond norm are standard. A primary background reference is Watrous, The Theory of Quantum Information (2018), §3.3, Definition 3.43 and Theorem 3.51, https://cs.uwaterloo.ca/~watrous/TQI/ . No literature-priority claim is made for these ingredients or for a general nonlocal-channel classification. The precise result established here is the stated finite-LOSR diamond optimum and its explicit physical attainer.
