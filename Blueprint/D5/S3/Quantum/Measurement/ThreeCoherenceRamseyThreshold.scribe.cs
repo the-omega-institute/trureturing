@@ -15,7 +15,7 @@ internal sealed class ThreeCoherenceRamseyThresholdDocument : IScribeDocumentDef
         H("The exact three-coherence Ramsey threshold"),
         Blocks(
             Node("signal", "signal", "The pure Ramsey signal", SignalFormula(),
-                "For integer energy labels n and complex amplitude vectors chi and psi, the signal is p(t) = |Σ_j χ̄_j exp(−i n_j t) ψ_j|². Here chi denotes χ, psi denotes ψ, and i is the imaginary unit. With unit vectors this is the probability of the rank-one measurement onto χ after the evolution of ψ. The expression itself is defined for arbitrary vectors. This is the pure-state interference pattern of page 2 with the Hamiltonian of Eq. (1).",
+                "For integer energy labels n and complex amplitude vectors chi and psi, the signal is p(t) = |Σ_j χ̄_j exp(−i n_j t) ψ_j|². Here chi denotes χ, psi denotes ψ, and i is the imaginary unit. The expressions val(n(j)) : ℂ and val(t) : ℂ are the canonical embeddings ℤ → ℂ and ℝ → ℂ, respectively. With unit vectors this is the probability of the rank-one measurement onto χ after the evolution of ψ. The expression itself is defined for arbitrary vectors. This is the pure-state interference pattern of page 2 with the Hamiltonian of Eq. (1).",
                 AssessedProvenance.FromLiterature(Source)),
             Node("mixed-signal", "mixedSignal", "Finite mixtures of pure signals", MixedSignalFormula(),
                 "The function is the finite sum Σ_l w_l p_l(t), where p_l(t) = signal n chi (psi l) t. For nonnegative weights summing to one it is the interference pattern of the state Σ_l w_l |ψ_l⟩⟨ψ_l| with the same χ and Hamiltonian throughout. The definition also permits arbitrary real weights. This restates the mixed-state signal in Eq. (2).",
@@ -121,8 +121,10 @@ internal sealed class ThreeCoherenceRamseyThresholdDocument : IScribeDocumentDef
     private static Formula SignalFormula()
     {
         Formula d = V("d"), n = V("n"), chi = V("chi"), psi = V("psi"), t = V("t");
+        Formula nj = Parenthesized(Seq(Call("val", At(n, V("j"))), Colon, Sp, Complexes()));
+        Formula tc = Parenthesized(Seq(Call("val", t), Colon, Sp, Complexes()));
         Formula phase = At(Exp, new Formula.Negate(
-            Multiply(Multiply(At(n, V("j")), t), Named("i"))));
+            Multiply(Multiply(nj, tc), Named("i"))));
         Formula amplitude = SumFin("j", d,
             Multiply(Multiply(Seq(Overline, Grp(At(chi, V("j")))), phase), At(psi, V("j"))));
         Formula body = Equal(Call("signal", n, chi, psi, t),
@@ -147,7 +149,7 @@ internal sealed class ThreeCoherenceRamseyThresholdDocument : IScribeDocumentDef
     private static Formula MomentFormula()
     {
         Formula q = V("q"), p = V("p"), period = Multiply(D(2), Pi);
-        Formula integral = Seq(new Formula.Power(new Formula.Subscript(Int, D(0)), period),
+        Formula integral = Seq(Seq(Int, Underscore, Grp(D(0)), Caret, Grp(period)),
             Sp, Power(At(p, V("t")), q), Sp, Mathrm, Grp(V("d")), V("t"));
         return Disp(All("q", Naturals(), All("p", Arrow(Reals(), Reals()),
             Equal(Call("moment", q, p), Multiply(Fraction(D(1), period), integral)))));
