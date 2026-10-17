@@ -1228,3 +1228,123 @@ The retained-matrix contraction proof extends §64's vector argument to two arbi
 Birkhoff and doubly substochastic decompositions are established matrix theory; see Lei Cao, A short note on doubly substochastic analog of Birkhoff's theorem, https://arxiv.org/abs/1801.01232 . Unistochastic matrices and the distinction from bistochastic matrices are standard; see Bengtsson, Ericsson, Kuś, Tadej and Życzkowski, Birkhoff's polytope and unistochastic matrices, N=3 and N=4, https://arxiv.org/abs/math/0402325 . For channel and diamond facts see Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . PIO/zero-communication background remains credited to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These standard ingredients are not claimed novel, and no global priority claim is made for the family result.
 
 The theorem concerns the specified two-fibre compression channels and fixed MC encodings, with unrestricted physical LOSR competitors for that target family. It does not classify arbitrary logical channels or assert full RT recovery. This is paper mathematics without a formal-kernel claim.
+
+## 66. Exact shared-randomness cost for uniform multi-fibre compression
+
+### 66.1 Channel family and resource statements
+
+Let d≥2 and k≥2. The logical input has orthonormal labels |f,i>, with 1≤f≤k and 1≤i≤d; the logical output has labels |f>. Fix MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. Define the logical map F_(k,d) on all matrix units by
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/d)|f><g|  when f≠g.
+
+This is CPTP. Consider exact physical implementations Φ∘J_in=J_out∘F, where Φ=Σ_(t=1)^r w_t(A_t⊗B_t), all w_t>0, Σ_t w_t=1, and A_t,B_t are arbitrary local CPTP maps C^(kd)→C^k. The same channel must implement every encoded matrix unit, hence all coherent inputs and passive references. Arbitrary local ancillas and physical outputs are allowed; exactness, rather than an imposed ansatz, will force the needed output structure.
+
+The following resource statements hold.
+
+1. A single product channel implements F_(k,d) iff k mutually unbiased orthonormal bases exist in C^d.
+2. Every exact r-branch implementation satisfies
+
+    k(d−1)≤r(d²−1),  hence r≥ceil(k/(d+1)).                 (1)
+
+   More strongly, every branch weight obeys w_t≤(d+1)/k. Its Shannon entropy is therefore at least max{0,log₂(k/(d+1))}.
+3. An exact finite implementation exists for every k,d, with at most d^(k−1) product branches.
+4. If a real Hadamard matrix of order r exists, then for d=2 and k=3r the minimum number of product branches is exactly r, and the minimum Shannon entropy of the shared branch variable is exactly log₂r. More generally the same branch minimum r holds for any 3(r−1)<k≤3r obtained by restricting this construction. For d=2, every restriction to at most three whole fibres admits one product implementation.
+
+The last assertion concerns coordinate-fibre restrictions, not every subspace of the logical input. The entropy counts the shared classical branch variable in an exact finite LOSR decomposition; local private randomness is already absorbed into the arbitrary CPTP factors.
+
+### 66.2 Complete positivity and branchwise pure-output records
+
+Put u=(1,...,1)/sqrt(d). The nonzero Choi block of F has diagonal blocks I_d and off-diagonal blocks uu*. It is the sum of the positive matrices
+
+    I_k⊗(I_d−uu*) + J_k⊗uu*,
+
+where J_k is the all-ones matrix. Thus F is completely positive. The matrix-unit prescription is trace preserving, including distinct labels in one fibre.
+
+For each input basis state, exactness gives
+
+    Σ_t w_t A_t(|f,i><f,i|)⊗B_t(|f,i><f,i|)=|ff><ff|.
+
+A convex combination of density matrices equals a rank-one projector only if every positive-weight term equals that projector: take expectations on its orthogonal complement, whose summands are nonnegative. Taking marginals therefore forces each local output to be |f><f|. In Stinespring dilations the corresponding vectors have the form
+
+    U_A,t|f,i>=|f> e_(t,f,i),
+    U_B,t|f,i>=|f> h_(t,f,i).
+
+For each fixed t,f the d records e_(t,f,i) form an orthonormal family, as do the h records, because the dilation is isometric. No relation between different fibres has yet been assumed.
+
+For two distinct fibres f,g define the cross-record matrices
+
+    R_(t,fg)[i,j]=<e_(t,g,j),e_(t,f,i)>,
+    T_(t,fg)[i,j]=<h_(t,g,j),h_(t,f,i)>.
+
+They are d×d contractions, being cross-Gram matrices of two orthonormal families (up to entrywise conjugation, which preserves norm). The actual branch coefficient of |ff><gg| is R_ij T_ij. The target requires
+
+    Σ_t w_t R_(t,fg)[i,j] T_(t,fg)[i,j]=1/d.             (2)
+
+### 66.3 Saturation forces common spans and averaged unbiasedness
+
+Fix f≠g and a row i. Equation (2) and Cauchy–Schwarz imply the chain
+
+    1=Σ_j |Σ_t w_t R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t Σ_j|R_t[i,j]T_t[i,j]|
+      ≤Σ_t w_t ||R_t[i,:]||₂ ||T_t[i,:]||₂
+      ≤Σ_t w_t=1.
+
+All inequalities are equalities. Positivity of every w_t implies that each branch row has both norms one and equal entrywise magnitudes: |R_t[i,j]|=|T_t[i,j]|. Equality in each triangle inequality, together with the strictly positive target value 1/d, forces every nonzero product R_t[i,j]T_t[i,j] to have phase zero. Hence
+
+    R_t[i,j]T_t[i,j]=|R_t[i,j]|²,
+    Σ_t w_t |R_(t,fg)[i,j]|²=1/d.                       (3)
+
+This includes zero entries without assigning their phase.
+
+A square contraction R_t with every row norm one has R_t R_t*≤I and trace d, hence R_t R_t*=I. It is unitary. A unitary cross-Gram matrix between two orthonormal d-frames forces their spans to coincide: every vector of the first frame has projection norm one onto the span of the second. For each branch t, compare every fibre with fibre 1. All e frames therefore span the same d-dimensional environment space; the same is true independently of the h frames. Identify the former space with C^d. Then (3) is exactly averaged unbiasedness of k orthonormal bases in C^d, with the same weights for every pair.
+
+Conversely, suppose such bases e_(t,f,i) and weights satisfy (3). Choose h_(t,f,i)=conjugate(e_(t,f,i)) in a fixed coordinate system. The two local isometries displayed above then have cross-coefficient |<e_(t,g,j),e_(t,f,i)>|². Their mixture implements (2). Within a fibre both records are orthonormal, so the remaining matrix units also agree. Thus these weighted basis families characterize exact finite implementation with r branches. This converse uses one globally consistent conjugate family, with no entry-dependent choice of channel.
+
+For r=1, condition (3) is precisely the definition of k mutually unbiased bases. This proves the first resource statement in both directions.
+
+### 66.4 Weighted Hilbert–Schmidt packing and branch entropy
+
+Let H_0(d) be the real Hilbert space of traceless Hermitian d×d matrices, with inner product Tr(XY) and dimension d²−1. For each t,f put P_(t,f,i)=|e_(t,f,i)><e_(t,f,i)|. For real vectors x∈R^d with Σ_i x_i=0 define
+
+    V_f x = ( sqrt(w_t) Σ_i x_i P_(t,f,i) )_(t=1)^r
+             ∈ ⊕_(t=1)^r H_0(d).
+
+Within a fibre, orthogonality of the projectors and Σ_t w_t=1 give <V_f x,V_f y>=Σ_i x_i y_i. Thus each V_f is an isometry on the (d−1)-dimensional zero-sum space. For f≠g, equation (3) gives
+
+    <V_f x,V_g y>
+       =Σ_ij x_i y_j Σ_t w_t Tr(P_(t,f,i)P_(t,g,j))
+       =(1/d)(Σ_i x_i)(Σ_j y_j)=0.
+
+The k image subspaces are mutually orthogonal. Counting dimensions proves (1).
+
+For the stronger weight statement, combine the V_f into an isometry V from the direct sum of k zero-sum spaces into ⊕_t H_0(d). The orthogonal projection VV* is at most the identity. Its t-th diagonal block is w_t Σ_f Q_(t,f), where Q_(t,f) is the orthogonal projection onto the traceless diagonal subspace for basis (t,f). Taking the trace on that block gives
+
+    w_t k(d−1)≤d²−1,
+
+so w_t≤(d+1)/k. Consequently −Σ_t w_t log₂w_t≥log₂(k/(d+1)); nonnegativity of entropy supplies the stated maximum with zero. This argument allows arbitrary positive, unequal weights and arbitrarily large original local environments.
+
+### 66.5 Finite implementations and sharp qubit constructions
+
+Finite existence for arbitrary k,d needs no assumption about complete MUB sets. Take one fixed standard basis in C^d and assign each fibre f a cyclic shift s_f∈Z/d of that basis, with s_1=0. Average uniformly over the d^(k−1) choices of the remaining shifts. For distinct fibres the difference s_f−s_g is uniform, so every squared overlap averages to 1/d. The converse above produces an exact finite physical channel.
+
+For the sharp qubit family let H be an r×r real Hadamard matrix, H*H=rI, with entries ±1. Label the k=3r fibres by (a,c), where a∈{X,Y,Z} is a Pauli axis and 1≤c≤r a column of H. At branch t, weight 1/r, let the two basis projectors in fibre (a,c) be
+
+    P_(t,(a,c),i)=[I+(-1)^i H_(t,c) σ_a]/2,  i∈{0,1}.
+
+Choose arbitrary normalized representatives e for these rank-one projectors, and use their coordinatewise conjugates on the other party. For a≠b, the squared overlap of any representatives is Tr(P_a P_b)=1/2. For a=b and c≠c',
+
+    Tr(P_(t,(a,c),i)P_(t,(a,c'),j))
+       =[1+(-1)^(i+j)H_(t,c)H_(t,c')]/2.
+
+Hadamard column orthogonality makes its branch average 1/2. Thus all distinct fibres satisfy (3), simultaneously, and this one r-branch channel implements all coherent matrix units. The lower bound k≤3r' for any implementation with r' branches forces r'≥r. The weight bound is w_t≤1/r for any implementation; its entropy is at least log₂r, attained by the uniform construction.
+
+Restricting to any k fibres with 3(r−1)<k≤3r preserves this r-branch construction and yields ceil(k/3)=r as lower bound. For d=2, independently, any specified subset of at most three fibres admits one product realization by assigning those fibres distinct Pauli eigenbases. Such independently feasible restrictions need not share a single product realization for the full channel when k>3.
+
+Real Hadamard matrices are not asserted to exist at every order. Orders r=2^s are available by the classical recursion H_1=[1], H_(2r)=[[H_r,H_r],[H_r,−H_r]], whose product with its transpose is 2r I. Therefore the exact resource families include k=3·2^s for every s≥0, as well as any other given Hadamard order. For r=1 the construction is the usual three Pauli bases. The cases k=1 or d=1, outside the main assumptions, admit a single product channel and require no packing argument.
+
+### 66.6 Attribution and mathematical boundary
+
+The orthogonal traceless-subspace description and the classical MUB bound k≤d+1 are standard; see Boykin, Sitharam, Tiep and Wocjan, Mutually Unbiased Bases and Orthogonal Decompositions of Lie Algebras, https://arxiv.org/abs/quant-ph/0506089 . Pauli/generalized-spin constructions of MUBs are established; see Pittenger and Rubin, Mutually Unbiased Bases, Generalized Spin Matrices and Separability, https://arxiv.org/abs/quant-ph/0308142 . The Hadamard recursion is classical, and its elementary verification is included above. PIO/zero-communication background remains Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These ingredients are not claimed new.
+
+The channel statement extends §65's saturated two-fibre contractions to a single common implementation for all fibres. Its physical equality analysis identifies the exact weighted-basis resource, gives a branch and entropy obstruction for arbitrary product CPTP factors, and supplies sharp finite families. It is an exact-implementation resource theorem, not a positive-error diamond optimum or a classification of arbitrary RT channels. Equality of the prescribed linear maps includes all reference extensions; no global-priority claim is made.
