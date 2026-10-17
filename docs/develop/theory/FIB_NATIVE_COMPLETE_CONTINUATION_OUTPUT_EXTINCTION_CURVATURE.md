@@ -1070,3 +1070,717 @@ Source-final approval, actual quantum access and calibration, coherent storage o
 [RCpin]: https://github.com/the-omega-institute/trureturing/blob/321589a8be98de4fe179f99f6e593d8784952db1/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md
 
 ## 追加锚（本行以下为增补区）
+
+## 16. Evaluated conditional certificate at the original extinction event
+
+**Definition 16.1 (antecedents and exact centre).** Retain Assumption 1.2 and the fixed-source correspondences of Definitions 9.1 and 15.1. The following hypotheses are named separately throughout §§16–24.
+
+- $\mathsf H_{\rm root}$ is OE Assumption 1.2(1): the same isolated CG root in its nine-coordinate radius-$10^{-24}$ box, its stipulated dictionary and ranks, and root TP. The exact reconstruction is OE Definition 2.1, including its positive-pivot adjugates; no off-root rank identity is used.
+- $\mathsf H_{\rm original}$ comprises the original twelve-history HALF stopped-cq minimax, JR's sharp worst-history JOINT and supported unaveraged equality face before height optimization, and FA/RC's arbitrary-complex multi-Kraus actual-label rigidity, capacity, same-law reduction and coherent one-high constructor, at precisely their retained scopes. It includes the compulsory positive high acquisition, the whole-fibre convention, all five separate failure Borel maps and their conditional passive-reference operators, and absolute FIRST clock $6+a$. These interfaces are not consequences of interval arithmetic.
+- $\mathsf H_{\rm sections}$ is the supplied OE event existence/isolation, its common exact embeddings into both branch sections, their isolation in the complete prescribed boxes, Appendix 12's comparison enclosures and Appendix 14's exact preconditioners with uniform scaled defects. In particular $q_6<0.000172$ and $q_7<0.01$ on those entire boxes and the entire multiplier interval. No new source or event isolation is asserted.
+- $\mathsf H_{\rm contacts}$ is the supplied complete seven-contact inventory, exact event double-factor identities, Bernstein quotient enclosures and covering leaves, and the old-weight, height, report, separation and proper-tangent margins in OE §§6–7 and Appendices 16–17. The complete tables consist of $24$ signed cases, $147$ leaves, $831$ control intervals and $126$ power-coefficient intervals. Their ordering, coverage and lower-control comparisons are finite data checks; their originating coefficient enclosures and root certificates remain inherited. Counting or authenticating these tables does not regenerate their coefficients.
+
+The full-cylinder and no-split deductions of §§10–14, using the exact slack identities and rounding argument of QS §§5–7, are reused. The positive-mass-at-every-zero count theorem of QS §8 is not an antecedent: here $p_4^e=0$ exactly. Every conclusion below is conditional on all four named hypotheses.
+
+Set exactly
+
+$$
+t=1000,\qquad A=\log1001,\qquad
+ a_s=\frac{\sqrt\alpha}{s_0},\qquad
+ s_e=\frac{k_e}{a_s},\qquad
+ \varepsilon_0=2\cdot10^{-153},\qquad
+ c_{-,0}=394256130000,\quad c_{+,0}=657236410000.
+$$
+
+The decimal enclosure $s_e\in[0.125205844467,0.125205844468]$ is only a location bound. The centre in every window is the exact common event $k_e/a_s$, never a decimal endpoint, midpoint or independently chosen nearby source. The window has mathematical width $2\cdot10^{-153}$; no operational resolution or practical widening is implicit.
+
+**Definition 16.2 (pinned mathematical suppliers).** OE, CG, GC, JR, FA and RC mean the respective original-source files at `321589a8be98de4fe179f99f6e593d8784952db1`; QS means its file at `4751be04555dc6a71e83e0c8f5dcdc5e26d104de`. GC denotes [Global actual counts][GCpin]. The finite numerical mathematical suppliers are the supplied C313 candidate tables and C316 independently reconstructed arithmetic tables. They are fallible mathematical data, with no additional logical authority. The rational witnesses, defining functions and outward comparisons used here are specified in this appendix and the pinned OE tables; no inaccessible numerical file is a required premise. The attributions in Definitions 8.2 and 15.3 apply to the standard analytic tools; this evaluated source-specific application is `repo-derived`, with no literature-wide novelty claim.
+
+The fixed OE and QS source identities have SHA-256 digests `eef92ebbb4ff32147059580e8648fef47280d0fd33eaec2c1c51ccb81b348f29` and `70bfdb1e28b51dc604cb98ede4861b79d437aa485bb390480363047c6dead5c7`, respectively. These identify mathematical suppliers; neither digest certifies a root, TP or any original physical bridge.
+
+**Definition 16.3 (original-source dictionary and comparison boxes).** All symbols retain Definition 9.2, with $a_{\rm src},b_{\rm src},c_{\rm src},d_{\rm src}$ reserved for source amplitudes, $a,b$ for the two response derivatives, $\beta$ for the source fraction and $\beta_B$ for a bordered inverse bound. In particular
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=a_{\rm src}e_0e_1^T+b_{\rm src}e_1e_0^T,\quad
+S=c_{\rm src}e_0e_2^T+d_{\rm src}e_2e_0^T,\quad
+M=\operatorname{diag}(0,m_1,m_2),\quad
+\Delta_\rho=
+\begin{pmatrix}
+11/64&(\sqrt{999}-\sqrt{295})/128&(\sqrt{27}-\sqrt5)/16\\
+(\sqrt{999}-\sqrt{295})/128&-11/64&(\sqrt{37}-\sqrt{59})/16\\
+(\sqrt{27}-\sqrt5)/16&(\sqrt{37}-\sqrt{59})/16&0
+\end{pmatrix},\\
+(K_0,K_1,K_2)=(D,T,S),\quad
+N_{ij}=\operatorname{tr}(K_i\Delta_\rho K_j^T),\quad
+G=\operatorname{diag}(s_0,1,1)N\operatorname{diag}(s_0,1,1),\\
+\theta=\frac{a_{\rm src}b_{\rm src}}{h_0h_1},\quad
+\omega=\frac{c_{\rm src}d_{\rm src}}{h_0h_2},\quad
+\delta=\theta+\omega=s_0^2,\quad \alpha=\theta/\delta,\quad\beta=\omega/\delta,\\
+u=\cos\phi,\quad v=\sin\phi,\quad z=u/\sqrt\alpha,\quad w=v/\sqrt\beta,\quad
+h=(1,z,w)^T,\quad L_h=s_0D+zT+wS,\quad
+n_h=(0,d_{\rm src}w/h_2,-b_{\rm src}z/h_1)^T,\\
+\ell_h=h^TGh,\quad f_h=n_h^T\Delta_\rho n_h,\quad
+c_h=\frac{h_1^2h_2^2\delta+a_{\rm src}^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+{h_0^2\delta+b_{\rm src}^2z^2+d_{\rm src}^2w^2},\quad
+b_{\rm label}=1000c_h\xi,\\
+\Gamma_\xi=(1,u,v,u^2,uv,\xi c_h,\xi c_hu^2,\xi c_huv),\quad
+H_\xi=\ell_h+1000c_h\xi f_h,\\
+V_f=m_2h_1^2/b_{\rm src}^2,\quad W_f=m_1h_2^2/d_{\rm src}^2,\quad
+\mu=\alpha V_f+\beta W_f,\quad
+B=(1,0,0,\alpha,0,\mu/1000,\alpha V_f/1000,0),\\
+\int\Gamma_\xi\,d\pi=B,\quad K(\pi)=\int|u|\,d\pi\ge\kappa=a_ss,\quad
+J(\pi)=\int|H_\xi|\,d\pi,\quad
+T_{\rm actual}=(H_{\rm high}+J)/2,\quad H_{\rm high}=(1-\delta)N_{00}.
+\end{gathered}
+$$
+
+The matrix $\Delta_\rho$ is GC.28 with the height orientation $27-5$. Coefficient weights, physical acquired probabilities and endpoint/failure-line groups are distinct. The eight displayed moments give both full covariances $\int hh^T\,d\pi=I_3$ and $\int b_{\rm label}n_hn_h^T\,d\pi=M$, including the cross entries; they are never optimized separately.
+
+For every interval comparison the source rectangle is exactly the nine integer endpoint pairs of OE Appendix 12 divided by $2^{224}$, varied independently. It is not the product of the coarser decimal bounds below. The event rectangle is exactly the $22$ rows of OE Appendix 15.1 divided by $2^{150}$. In that order it is
+
+$$
+(x_0,\ldots,x_6,p_0,p_1,p_2,p_3,p_5,p_6,Y_0,\ldots,Y_7,\lambda).
+$$
+
+The omitted event weight is $p_4=0$. Seven inserts this zero and removes $\lambda$; six takes the $O=(0,1,2,3,5,6)$ angle and weight sublists, then $Y$, then unused $x_4$. Full branch centres are OE Appendix 13's exact decimals under these same embeddings. Every angle and weight has radius $10^{-8}$, including the six unused $x_4$ and seven signed $p_4$; every $Y$ has radius $10^{-4}$; $\lambda\in[190.449003333,190.449005333]$. The event existence box, with radii $10^{-10},10^{-7},10^{-6}$, is distinct from its refined event rectangle and from these branch boxes.
+
+The endpoint/height/report/base dictionary is precisely the seven-row table in Definition 9.3: indices $0,1,2,3$ are pure, $4,5,6$ saturated; the signs are $(+,+,-,+,+,-,-)$ for height and $(+,-,-,+,+,-,+)$ for report. Bases are $(0,\pi,\pi,0,0,\pi,3\pi/2)$. Thus the old occupied indices are $0,1,2,3,5,6$, not the first six indices. The original margin weakenings are
+
+$$
+p_*=11/250,\quad h_*=3/1000,\quad u_*=79/100,\quad
+\Delta=29/100,\quad q_B=1/8000,\quad h_{\lambda,0}=9/10^7.
+$$
+
+**Proposition 16.4 (outward source and event scalars).** Under the named hypotheses the following are closed outward rational intervals. Every decimal in this appendix is exact; no floating-point rounding convention is implicit.
+
+| Quantity | Lower | Upper |
+| --- | --- | --- |
+| $h_0$ | $0.984341295186$ | $0.984341295187$ |
+| $h_1$ | $0.706284581667$ | $0.706284581668$ |
+| $h_2$ | $0.809497327848$ | $0.809497327849$ |
+| $a_{\rm src}$ | $0.0656644991486$ | $0.0656644991487$ |
+| $b_{\rm src}$ | $0.145993080138$ | $0.145993080139$ |
+| $c_{\rm src}$ | $0.0154967056182$ | $0.0154967056183$ |
+| $d_{\rm src}$ | $0.0987837797518$ | $0.0987837797519$ |
+| $m_1$ | $0.49685026325$ | $0.496850263251$ |
+| $m_2$ | $0.344473928321$ | $0.344473928322$ |
+| $\theta$ | $0.0137891493902$ | $0.0137891493903$ |
+| $\omega$ | $0.00192116160276$ | $0.00192116160277$ |
+| $\delta$ | $0.015710310993$ | $0.0157103109931$ |
+| $\alpha$ | $0.877713330842$ | $0.877713330843$ |
+| $\beta$ | $0.122286669157$ | $0.122286669158$ |
+| $s_0$ | $0.125340779449$ | $0.125340779450$ |
+| $a_s$ | $7.47453115047$ | $7.47453115048$ |
+| $k_e$ | $0.935854984693$ | $0.935854984694$ |
+| $\lambda_e$ | $190.449004332$ | $190.449004333$ |
+
+Proof. The first nine comparisons follow by integer comparison with OE Appendix 12. The remaining source entries follow by positive multiplication, division and square roots in Definition 16.3; $k_e=\sum_{i\in O}p_i\sigma_i u_i$ is evaluated on the exact event rectangle and $\lambda_e$ is its last coordinate. The interval prescription in §17 specifies these operations. The source pivots are retained through $\mathsf H_{\rm root}$; the displayed positive amplitudes, $\theta,\omega,\alpha,\beta,s_0$ exclude every subsequent scalar source denominator. They do not establish TP throughout the rectangle. $\square$
+
+## 17. Finite arithmetic, derivative tensors and residual witnesses
+
+**Definition 17.1 (directed intervals and ordinary derivatives).** For $D_{300}=2^{300}$ enclose a rational $x$ by $[\lfloor D_{300}x\rfloor,\lceil D_{300}x\rceil]/D_{300}$. After addition, multiplication, reciprocal, or square-root operations round the lower endpoint down and upper endpoint up on that grid. Products use all four endpoint products; a square has lower endpoint zero if its interval crosses zero. A reciprocal is taken only after zero exclusion. For a nonnegative $[l,h]$, integer comparisons $m^2\le D_{300}^2l$ and $n^2\ge D_{300}^2h$ give the outward square-root endpoints. Exact rational arithmetic with no rounding is also admissible. The final tiny radii in §22 use exact fractions and relative square-root enclosures: for $x>0$, choose an integer $e$ with $1\le2^{-2e}x<4$, enclose that rescaled square root on a dyadic grid and rescale by $2^e$. Thus no fixed absolute grid can underflow a positive radius.
+
+For ordinary, unnormalized derivative jets, products and quotients obey
+
+$$
+\begin{aligned}
+(fg)^{(j)}&=\sum_{i=0}^j\binom ji f^{(i)}g^{(j-i)},\\
+q^{(0)}&=1/d^{(0)},\qquad
+q^{(j)}=-\frac1{d^{(0)}}\sum_{i=1}^j\binom ji d^{(i)}q^{(j-i)}
+\quad(q=1/d).
+\end{aligned}
+$$
+
+The corresponding multi-index identities give all partial derivatives. No Taylor factorial is omitted when a tensor is formed. Whole-circle bounds use $u,v\in[-1,1]$, $u'=-v$, $v'=u$, $u''=-u$, $v''=-v$, through the required order, allowing the two zeroth-order coordinates to vary independently for an upper enclosure. In the zeroth capacity denominator retain the nonnegative squares:
+
+$$
+d_{\rm cap}=h_0^2\delta+(b_{\rm src}^2/\alpha)u^2+
+(d_{\rm src}^2/\beta)v^2\ge h_0^2\delta>0.0152221568385.
+$$
+
+Derivatives of $d_{\rm cap}$ use the product identities, not the derivative of this lower bound. Use the $\Gamma,H$ formulas of Definition 16.3 for normalized angular derivatives. On branch boxes use Definition 10.1's cleared polynomials, $r_c=1+x^2$ and the specified three bases. For a polynomial $\sum c_jx^j$, its $m$th jet is exactly $\sum_{j\ge m}j!c_jx^{j-m}/(j-m)!$. Moment derivatives still use the normalized rational columns. These prescriptions determine every matrix and tensor below from the pinned source/event/branch rectangles.
+
+For a tensor enclosure $\mathbf T$ put $\operatorname{maj}(\mathbf T)=(\sum_{i_1,\ldots,i_d}\sup|\mathbf T_{i_1\cdots i_d}|^2)^{1/2}$. This full Frobenius bound dominates the Euclidean multilinear operator norm by Cauchy–Schwarz. It includes both orders of each symmetric mixed pair, and every order of a third derivative with multiplier indices. Norms in what follows are Euclidean unless explicitly marked $\infty$ or scaled.
+
+**Proposition 17.2 (finite inverse verification).** Let $\mathbf C$ enclose an $n$-square matrix $C$ and let $R$ be a displayed rational candidate. Define
+
+$$
+q_R=\max_i\sum_j\sup|\delta_{ij}-(R\mathbf C)_{ij}|,\qquad
+r_R=\max_i\sum_j|R_{ij}|.
+$$
+
+If $q_R<1$, then $C$ is invertible and
+
+$$
+\|C^{-1}\|_\infty\le\frac{r_R}{1-q_R},\qquad
+\|C^{-1}\|_2\le\frac{n r_R}{1-q_R}.
+$$
+
+For a parameter response $Cv=-f$ and any rational trial $v_0$,
+
+$$
+\|v-v_0\|_\infty\le
+\frac{\|R(\mathbf C v_0+\mathbf f)\|_\infty}{1-q_R}.
+$$
+
+Proof. The geometric series in $I-RC$ has infinity norm at most $(1-q_R)^{-1}$, and $(RC)^{-1}R=C^{-1}$. The stated Euclidean bound follows even from the coarser inequality $\|T\|_2\le n\|T\|_\infty$. Applying $(RC)^{-1}$ to $R(Cv_0+f)$ proves the response estimate. This is a finite residual proof, with no significance attached to a candidate's numerical origin. $\square$
+
+**Definition 17.3 (witness ordering).** Section 24 gives rational candidates $R_A,R_Q,R_B,R_6,R_7$ and trial responses $v_6^0,v_7^0$, all with denominator $10^{30}$. The matrices they precondition are, respectively, $S_7A_7$, the specified $15$-row minor of $Q_e$, the full off-root enclosure of $\mathcal B_e$, and the separate full $F_{6,X}$ and $F_{7,X}$ event Jacobians. Their entries are computed by Definition 17.1 from the exact source/event rectangles. Thus the source specifies both the candidate and every expression it multiplies; neither a solver midpoint nor a box corner is substituted for the actual source.
+
+## 18. Evaluated recipe I: full-cylinder coercivity
+
+**Proposition 18.1 (global normalized-function bounds).** Under the four named hypotheses the following selected rational upper bounds hold on the complete domains in §§10–12:
+
+| Input | Selected value | Domain or meaning |
+| --- | --- | --- |
+| $d_{\max}$ | $4$ | Both closed report half-circles, all eight signed endpoint cases |
+| $M_H$ | $369.125719756$ | $|\partial_\phi H_\eta|$ on each entire endpoint circle |
+| $M_3$ | $3991698.40169$ | Third angular derivative of each normalized signed event gap |
+| $M_\phi$ | $17.2182040803$ | $\|\partial_\phi\Gamma_\xi\|_2$ on $X$ |
+| $M_\xi$ | $3.7587270313$ | $\|\partial_\xi\Gamma_\xi\|_2$ on $X$ |
+| $L$ | $17.6236937289$ | At least $\sqrt{M_\phi^2+M_\xi^2}$ |
+| $K_G$ | $1059.0362612$ | Every row norm of $(S_7A_7)^{-1}S_7$ |
+
+Proof. On pure charts $d_0=(1+x^2)^2\le4$. On saturated charts
+
+$$
+d_1=D_c(1+x^2)^2\le
+16\left(h_0^2\delta+b_{\rm src}^2/\alpha+d_{\rm src}^2/\beta\right)<4.
+$$
+
+Here $|U|,|V|\le1+x^2$ and $1+x^2\le2$, and the positive denominator lower bound in Definition 17.1 excludes poles. Evaluating normalized angular jets, with the nonnegative denominator squares retained, gives
+
+$$
+\begin{gathered}
+\max_\eta\sup|H_\eta'|\le M_H,\qquad
+\max_{\eta,\epsilon,\sigma}\sup
+|Y_e\cdot\Gamma_\eta'''-\epsilon H_\eta'''-
+\lambda_e\sigma u'''|\le M_3,\\
+\operatorname{maj}(\partial_\phi\Gamma_\xi)\le M_\phi,
+\qquad \operatorname{maj}(\partial_\xi\Gamma_\xi)\le M_\xi.
+\end{gathered}
+$$
+
+These are interval comparisons using the source rows and event $Y,\lambda$, with $\xi\in[0,1]$; no cleared-polynomial derivative replaces a normalized derivative. The $L$ comparison follows by squaring its positive endpoints. For the left inverse take precisely the minor rows $S_7=(0,1,2,3,4,5,7)$. The $R_A$ witness gives
+
+$$
+q_{R_A}\le4.62721429217\cdot10^{-17},\qquad
+r_{R_A}\le151.290894457,\qquad
+\frac{7r_{R_A}}{1-q_{R_A}}<1059.0362612.
+$$
+
+Proposition 17.2 and $\|S_7\|_2=1$ bound the whole left inverse and therefore each of its rows. This supplies a finite witness for $K_G$, not just the inherited nonzero determinant. $\square$
+
+**Proposition 18.2 (evaluated gap constants).** With exactly the inputs above, the constants of Definition 10.1 have outward intervals
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $\gamma_*$ | $3.28515625\cdot10^{-7}$ | $3.28515625\cdot10^{-7}$ |
+| $\rho$ | $4.11498555177\cdot10^{-14}$ | $4.11498555178\cdot10^{-14}$ |
+| $d_{\rm off}$ | $5.60019691210\cdot10^{-60}$ | $5.60019691211\cdot10^{-60}$ |
+| $c_{\rm sh}$ | $5.60019691210\cdot10^{-61}$ | $5.60019691211\cdot10^{-61}$ |
+| $c_e$ | $5.35200636714\cdot10^{-64}$ | $5.35200636715\cdot10^{-64}$ |
+
+Consequently $D_e\ge c_e\mathfrak d^2$ on the entire fractional cylinder, including height zeros and both report axes.
+
+Proof. Substitute $q_B=1/8000$, $\Delta=29/100$, $d_{\max}=4$ into $\gamma_*=q_B\Delta^2/(8d_{\max})$. In the minimum defining $\rho$, the smallest member is $\gamma_* /(2M_3)$; compare it with $1/2,\Delta/4,u_*/2,h_* /(2M_H)$ by positive cross multiplication. Then substitute successively into $d_{\rm off}=q_B(\rho/2)^4/d_{\max}$, $c_{\rm sh}=\min(\gamma_*/4,d_{\rm off}/10)$ and $c_e=c_{\rm sh}\Delta^2/88$. Here $d_{\rm off}/10$ is the smaller member. These exact rational operations give the table. Theorem 10.2 supplies the full-cylinder consequence using the inherited exact event factors and complete leaves, with the factor $\Delta^2/88$ retained. No uncomputed off-support minimum is introduced. The contact-$6$ chart change has $x_6+1>1.49$ on its refined event rectangle, so its denominator also excludes zero. $\square$
+
+## 19. Evaluated recipe II: separate responses and complete branch boxes
+
+**Definition 19.1 (both exact differentiated systems).** Use the full original row orders in OE Definition 4.2. In either branch the first eight rows are the moment equations. If $I_6=O$, $I_7=\{0,\ldots,6\}$, their derivatives in the half-angle and weight columns are $p_i\Gamma_i'$ and $\Gamma_i$. All value rows $P_i$ precede all derivative rows $P_i'$. A value row has $x_i$ entry $P_i'$, $Y$ entries $\Gamma_{{\rm num},i}$ and parameter derivative $-\sigma_iW_{{\rm num},i}$. A derivative row has $x_i$ entry $P_i''$, $Y$ entries $\Gamma_{{\rm num},i}'$ and parameter derivative $-\sigma_iW_{{\rm num},i}'$. Other entries vanish except the displayed moment derivatives. Six has the extra final row $P_4'(x_4)$ and final column $x_4$, with entries $P_4''$ and $\Gamma_{{\rm num},4}'$ in that row; its parameter derivative is $-\sigma_4W_{{\rm num},4}'$. It has no value row $P_4$ and no weight column $p_4$. These formulas specify every entry without deleting the unused stationary angle.
+
+For $J_b=F_{b,X}$ and $f_b=F_{b,\lambda}$ at the exact event, solve separately
+
+$$
+J_6v_6=-f_6,\qquad J_7v_7=-f_7,\qquad
+ a=D_Xk_6v_6,\quad b=D_Xk_7v_7.
+$$
+
+The half-angle entries of $D_Xk_b$ are $p_i\sigma_i u_i'$ and its weight entries are $\sigma_i u_i$; all $Y$ entries and the six unused $x_4$ entry are zero. This is ordinary differentiation in the original coordinates, not an adopted coarse derivative centre from OE Appendix 17.
+
+**Proposition 19.2 (finite event solves, including the small six response).** The §24 witnesses and the exact event rectangle give the following outward bounds:
+
+| System | $\|I-R_b\mathbf J_b\|_\infty$ upper | $\|R_b\|_\infty$ upper | Euclidean inverse upper | $\|v_b-v_b^0\|_\infty$ upper |
+| --- | --- | --- | --- | --- |
+| $F_6$ | $2.17417396081\cdot10^{-12}$ | $180427.008196$ | $3788967.17213$ | $1.4\cdot10^{-17}$ |
+| $F_7$ | $3.05254308934\cdot10^{-11}$ | $20074.3549344$ | $441635.808571$ | $2.01\cdot10^{-15}$ |
+
+In particular
+
+$$
+\begin{gathered}
+2.83264015392\cdot10^{-11}\le a\le2.83266211059\cdot10^{-11},\\
+6.84687781515\cdot10^{-8}\le b\le6.84688086610\cdot10^{-8},\qquad 0<a<b.
+\end{gathered}
+$$
+
+For the finer finite radius arithmetic, valid enclosing numerator pairs over the common denominator $2^{300}$ are
+
+| Response | Lower numerator | Upper numerator |
+| --- | --- | --- |
+| $a$ | $57701899015645180801507086161464628207517552637740592529000272967303177339112552$ | $57702346280673657739636734338700593324400679155032278880682627172333162791904725$ |
+| $b$ | $139473364350334886308524521683639965870471236860830251914350418378478490115253344307$ | $139473426499093092021104729933967577407226047730929850475068499216778116583941517911$ |
+
+Proof. Apply Proposition 17.2 separately to the two matrices specified in Definition 19.1. Direct row sums of the rational witnesses and interval matrix products give the table; the response residual divided by $1-q_R$ is at most $1.391471993503\cdot10^{-17}$ on six and $2.008571892572\cdot10^{-15}$ on seven. Multiplication by the complete $D_Xk_b$, enclosing each solution coordinate by $v_b^0$ plus its error interval, gives intervals contained in the displayed dyadic bounds for $a,b$. Positive cross multiplication proves $0<a<b$. This also permits the weaker supplied coordinate errors $1.81773432464\cdot10^{-17}$ and $2.22563824343\cdot10^{-15}$, but the tighter residual estimates just stated suffice for these particular rational trial vectors. At the event the independent response identity of Theorem 2.3 still reads $b-a=-p_4'd_6'>0$, with $d_6'=\dot P_4/d_4$; a cleared derivative is not used without $d_4$. $\square$
+
+**Proposition 19.3 (uniform Euclidean bounds on the entire prescribed branch boxes).** The following rational selections are valid. The columns $P,Q,R,K_1,K_2$ bound respectively $F_\lambda,F_{XX},F_{X\lambda},D_Xk,D_X^2k$ in the norms of Definition 11.1.
+
+| Input | Six branch | Seven branch |
+| --- | --- | --- |
+| Dimension $n_b$ | $21$ | $22$ |
+| $\max r_b/\min r_b$ | $10000$ | $10000$ |
+| $\|R_{{\rm pre},b}\|_\infty$ upper | $180427.008196$ | $20074.3549344$ |
+| Selected inherited $q_b$ | $0.000172$ | $0.01$ |
+| $N_b$ | $37896189865.9$ | $4460967763.2$ |
+| $P_b$ | $2.05021657197$ | $2.05140973139$ |
+| $Q_b$ | $3047.45994554$ | $3047.66871219$ |
+| $R_b$ | $1.3729251606$ | $1.38551774339$ |
+| $K_{1b}$ | $2.22683824561$ | $2.37112622335$ |
+| $K_{2b}$ | $3.12608472396$ | $3.46246784408$ |
+| $U_b$ upper | $77695396477.6$ | $9151272680.85$ |
+| $W_b$ upper | $6.9714662338\cdot10^{35}$ | $1.13857025534\cdot10^{33}$ |
+| $T_b$ upper | $1.55243276375\cdot10^{36}$ | $2.69969378957\cdot10^{33}$ |
+
+Proof. Appendix 14's exact integer matrices divided by $2^{151}$ give the two preconditioner row sums. For a radius-scaled defect, Proposition 17.2 in the scaled infinity norm, followed by the two norm conversions, gives the sufficient bound
+
+$$
+\|F_{b,X}^{-1}\|_2\le
+\frac{n_b\,10000\,\|R_{{\rm pre},b}\|_\infty}{1-q_b}\le N_b.
+$$
+
+Thus the scaled defect is never treated as an unscaled Euclidean contraction. The table's $N_b$ inequalities are exact rational comparisons with this expression. Differentiate the full row formulas of Definition 19.1 on the full boxes, not just their root tubes. In a moment row the only nonzero second partials are $p_i\Gamma_i''$ and both orders of $\Gamma_i'$ in the $(p_i,x_i)$ pair. In a value row they are $P_i''$ and both $(x_i,Y_j)$ orders of $\Gamma_{{\rm num},i,j}'$; in a derivative row they are $P_i'''$ and both orders of $\Gamma_{{\rm num},i,j}''$. The same derivative-row formula applies to six's unused $x_4$. Parameter mixed derivatives are $-\sigma_iW_{{\rm num},i}'$ in a value row and $-\sigma_iW_{{\rm num},i}''$ in a derivative row. This exhausts the entries; $F_{\lambda\lambda}=0$ exactly. For $k$ the nonzero second entries are $p_i\sigma_i u_i''$ and both orders of $\sigma_i u_i'$ in the mixed weight/angle pair.
+
+The interval jets of Definition 17.1 and full Frobenius sums of these entries give exactly the selected $P,Q,R,K_1,K_2$ bounds. All weight intervals, signed seven $p_4$, all $Y$ intervals and the whole multiplier interval participate. In succession the displayed selections satisfy
+
+$$
+U_b\ge N_bP_b,\qquad
+W_b\ge N_b(Q_bU_b^2+2R_bU_b),\qquad
+T_b\ge\max(1,K_{2b}U_b^2+K_{1b}W_b).
+$$
+
+Using these upward rational majorants instead of equality in Definition 11.2 preserves every bound in Theorem 11.3 and conservatively reduces its allowed inverse intervals. Subsequent constants use these displayed selections. This harmless outward selection does not alter either original system. The chart conversion for $C_{\rm br}$ remains $|d\phi/dx|\le2$. $\square$
+
+**Proposition 19.4 (evaluated same-target inversion constants).** With $a,b$ the exact responses enclosed in Proposition 19.2 and the selections in Proposition 19.3, the inverse-branch construction of §11 gives
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $\tau$ | $7.08160038482\cdot10^{-12}$ | $7.08165527648\cdot10^{-12}$ |
+| $l_6$ | $2.12447462628\cdot10^{-11}$ | $2.12450207211\cdot10^{-11}$ |
+| $u_6$ | $3.54080019241\cdot10^{-11}$ | $3.54082763824\cdot10^{-11}$ |
+| $l_7$ | $6.84616964962\cdot10^{-8}$ | $6.84617270606\cdot10^{-8}$ |
+| $u_7$ | $6.84758597519\cdot10^{-8}$ | $6.84758903163\cdot10^{-8}$ |
+| $h_6$ | $4.56161487323\cdot10^{-48}$ | $4.56165023171\cdot10^{-48}$ |
+| $h_7$ | $2.62311244785\cdot10^{-45}$ | $2.62313278041\cdot10^{-45}$ |
+| $d_{\rm branch}$ | $9.69103505306\cdot10^{-59}$ | $9.69123536949\cdot10^{-59}$ |
+| $C$ | $23534926445.3$ | $23535230490.2$ |
+| $A_w$ | $1.23767289311\cdot10^{41}$ | $1.23768088777\cdot10^{41}$ |
+| $A_q$ | $4.47081574303\cdot10^{37}$ | $4.47084462190\cdot10^{37}$ |
+| $D_{\rm loc}$ | $4.89608747299\cdot10^{75}$ | $4.89615072495\cdot10^{75}$ |
+| $C_{\rm br}$ | $7.31422176501\cdot10^{21}$ | $7.31431625654\cdot10^{21}$ |
+
+Proof. Evaluate Definition 11.2 with the exact dyadic response enclosures and positive denominators. Here $\tau=a/4<(b-a)/4$, $h_b=\tau/T_b<h_{\lambda,0}$, and $l_6h_6<l_7h_7$ throughout the enclosures. Compare these choices before taking each minimum. Outward square roots and reciprocal endpoints then give the last five rows from $C=1/(2l_6)$, $A_w=K_GL\sqrt{C/c_e}$, $A_q=\sqrt{2C/(c_ep_*)}$, $D_{\rm loc}=\sqrt{6(A_w^2+A_q^2+A_q^4)}$ and $C_{\rm br}=(2U_6+1)/l_6$. The table proves $0<l_6\le u_6<l_7\le u_7$. The inherited multiplier embedding margin is greater than $9.999\cdot10^{-7}>h_{\lambda,0}$, so both inverse intervals remain inside $I$. Theorem 11.3 supplies the six feasible comparator, its $Cd^2$ slack bound and its $C_{\rm br}d$ joint-coordinate bound. The targets are the same $\kappa$ but the two inverse multipliers are separate. $\square$
+
+## 20. Evaluated recipe III: no-split localization and all active subsets
+
+**Proposition 20.1 (full coordinate-box derivative and LICQ bounds).** On the entire prescribed box $\mathcal X$ of Definition 12.1, selected rational bounds are
+
+$$
+M_{Hx}=738.534183019,\qquad
+L_Q=4896.33417097,\qquad L_J=106981.054612.
+$$
+
+For the complete $18\times15$ matrix $Q_e$, in row order $(p_O,\phi_O,r_O)$ and column order $(Y_0,\ldots,Y_7,\lambda,\nu_O)$,
+
+$$
+\sigma_{\min}(Q_e)\ge\sigma:=\frac{3125}{11338247023}
+>2.75615797897\cdot10^{-7}.
+$$
+
+Proof. Since $0<p_i^e<1$, the bounding box gives $|p_i|\le2$. With $r_i\in[-1,1]$, either endpoint orientation gives $\xi_i\in[-1,2]$. Form $\mathcal M,\mathcal J,\mathcal K$ as in Definition 12.1 and differentiate their signed extensions on this whole box. For each height use the Frobenius majorant of its $(\phi_i,r_i)$ gradient. For the two Lipschitz constants use
+
+$$
+L_Q^2\ \ge\sum_{j=0}^7\operatorname{maj}(D_x^2\mathcal M_j)^2+
+                    \operatorname{maj}(D_x^2\mathcal K)^2,
+\qquad
+L_J\ge\operatorname{maj}(D_x^2\mathcal J).
+$$
+
+The inward-coordinate columns $-E_r^T$ are constant. A summand $p_i f(\phi_i,r_i)$ contributes $p_i f_{\phi\phi}$, $p_i f_{\phi r}$ in both orders, $f_\phi$ in both weight/angle orders and $f_r$ in both weight/inward orders; $f_{rr}=0$. These entries, the jets in §17 and $|p_i|\le2$, $\xi_i\in[-1,2]$ give the three selected bounds. No differentiability of the actual absolute height outside the small chart ball is claimed.
+
+Every entry of the full event matrix has the explicit block form
+
+$$
+Q_e=\begin{pmatrix}
+ (\Gamma_i)_{{i\in O}}&(-\sigma_i u_i)_{{i\in O}}&0\\
+ (p_i\partial_\phi\Gamma_i)_{{i\in O}}&(p_i\sigma_i v_i)_{{i\in O}}&0\\
+ (p_i(1-2\eta_i)\partial_\xi\Gamma_i)_{{i\in O}}&0&-I_6
+\end{pmatrix},
+$$
+
+where each left block is written as six rows with eight moment columns. Select the rows
+
+$$
+S_Q=(0,1,2,3,4,5,6,7,10,12,13,14,15,16,17)
+$$
+
+without discarding any of the $15$ columns. For $C_Q=S_QQ_e$, the rational $R_Q$ witness gives
+
+$$
+q_{R_Q}\le6.70862769012\cdot10^{-15},\qquad
+r_{R_Q}\le241882.603157,\qquad
+\|C_Q^{-1}\|_2\le3628239.04736=\frac{11338247023}{3125}.
+$$
+
+For every $v\in\mathbb R^{15}$, $\|Q_ev\|_2\ge\|C_Qv\|_2\ge\sigma\|v\|_2$. This proves the claimed full-matrix bound. The same lower bound holds for every column subfamily by extending its coefficient vector by zeros in all other columns. In particular it covers all moment columns plus any active subset of the contrast and six inward constraints, not merely the fully active face. $\square$
+
+**Proposition 20.2 (both inward orientations and weighted multipliers).** The six event raw inward derivatives $\chi_i$ and actual inward multipliers $\nu_i^e=p_i^e\chi_i$ have the following outward intervals, in old-index order $O$:
+
+| $i$ | $\chi_i$ lower | $\chi_i$ upper | $\nu_i^e$ lower | $\nu_i^e$ upper |
+| --- | --- | --- | --- | --- |
+| $0$ | $4.20961943005$ | $4.20961943006$ | $1.13857262586$ | $1.13857262587$ |
+| $1$ | $7.50977258619$ | $7.50977258620$ | $2.03009156569$ | $2.03009156570$ |
+| $2$ | $5.12142026146$ | $5.12142026147$ | $0.949641731466$ | $0.949641731467$ |
+| $3$ | $7.51922807131$ | $7.51922807132$ | $1.39280806906$ | $1.39280806907$ |
+| $5$ | $2.34997011081$ | $2.34997011082$ | $0.104038333905$ | $0.104038333906$ |
+| $6$ | $2.36005407132$ | $2.36005407133$ | $0.104488083402$ | $0.104488083403$ |
+
+Also $\|y_e\|_2\le301.183623108$ for $y_e=(Y_e,\lambda_e,\nu^e)$. The resulting constants of Definition 12.1 satisfy
+
+| Constant | Lower | Upper |
+| --- | --- | --- |
+| $R_{\rm chart}$ | $2.03105019982\cdot10^{-6}$ | $2.03105019983\cdot10^{-6}$ |
+| $m_\mu$ | $2.07229686535\cdot10^{-63}$ | $2.07229686536\cdot10^{-63}$ |
+| $C_\mu$ | $11477402472800$ | $11477402472900$ |
+| $R_x$ | $9.02772587376\cdot10^{-77}$ | $9.02772587377\cdot10^{-77}$ |
+
+Proof. Use the original inward derivative, including the saturated endpoint's minus sign,
+
+$$
+\chi_i=(1-2\eta_i)c_i
+(Y_{e,5}+Y_{e,6}u_i^2+Y_{e,7}u_iv_i-\epsilon_i1000f_i).
+$$
+
+Equivalently, by the occupied event equality,
+$\chi_i=R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp}$.
+The correction is zero for $\epsilon_iH_i^{\rm opp}\ge0$ and $2|H_i^{\rm opp}|$ for the opposite sign; it includes zero opposite height without a new sign assumption. Interval substitution on the event rectangle yields the table from the raw formula, and multiplication by each actual coefficient weight yields $\nu^e$. All $18$ event stationarity coordinates are those of $Q_ey_e=\nabla\mathcal J(x_e)$, by the contact equations and this inward identity. The norm bound follows by summing the squares of the eight $Y$ coordinates, the contrast multiplier and these six multipliers.
+
+Evaluate $R_{\rm chart}$ from Definition 12.1: its smallest member is $h_* /(2M_{Hx})$. The smaller member in $m_\mu$ is $p_*c_{\rm sh}\Delta^2$, and $C_\mu=2(L_J+L_Q\cdot301.183623108)/\sigma$ is the conservative choice using the selected norm bound. In $R_x$, the smallest member is $m_\mu/(2C_\mu)$. Exact positive rational comparisons and relative square roots give the displayed intervals.
+
+Theorems 12.2–12.3 now apply uniformly to every global maximizing fractional six-law whenever their displayed $d$ gates hold. Their no-split assignment uses one cell per original atom, forces one positive atom in each old cell and no atom in cell $4$, and first controls the overshoot $0\le K-\kappa\le Cd^2/\lambda_e$. Full-matrix LICQ and the positive multipliers then force that overshoot to zero and identify all endpoint constraints. This application does not assume locality, active contrast, or a positive seventh event mass. $\square$
+
+## 21. Evaluated recipe IV: full bordered Jacobian and multiplier variation
+
+**Definition 21.1 (all off-root entries).** For an old contact define the signed normalized gap
+
+$$
+g_i(\phi;Y,\lambda)=Y\cdot\Gamma_{\eta_i}(\phi)
+ -\epsilon_iH_{\eta_i}(\phi)-\lambda\sigma_i\cos\phi.
+$$
+
+On the endpoint face use $z=(p_O,\phi_O)$ and $w=(z,Y_0,\ldots,Y_7,\lambda)$. At any point of the enclosing rectangle, not just an exact contact root, the full Hessian block is
+
+$$
+H_{p_ip_j}=0,\qquad
+H_{p_i\phi_j}=H_{\phi_jp_i}=\delta_{ij}g_i',\qquad
+H_{\phi_i\phi_j}=\delta_{ij}p_i g_i''.
+$$
+
+The moment block has $A_{j,p_i}=\Gamma_{i,j}$ and $A_{j,\phi_i}=p_i\Gamma_{i,j}'$, while $q_{p_i}=\sigma_i u_i$, $q_{\phi_i}=-p_i\sigma_i v_i$. These formulas form every entry of
+
+$$
+\mathbf B_e=\begin{pmatrix}H&A^T&-q\\A&0&0\\-q^T&0&0\end{pmatrix}
+$$
+
+by interval evaluation on the exact event rectangle. The block sizes are $12,8,1$, in precisely that order. The mixed $g_i'$ terms are enclosed as raw expressions; they are not set to zero on a rectangular box by imposing root equations at its other points. This is the full $21\times21$ fixed-contrast face system, distinct from $F_6,F_7$ and the $22$-variable event system.
+
+**Proposition 21.2 (bordered inverse and full Jacobian Lipschitz constant).** Valid selected bounds are
+
+$$
+\beta_B=2674263171960,\qquad L_B=11399894.7864.
+$$
+
+Consequently the constants of Definition 13.1 have enclosures
+
+$$
+\begin{gathered}
+1.64007994346\cdot10^{-20}\le R_f\le1.64007994347\cdot10^{-20},\\
+11477402472800\le C_{\rm joint}\le11477402472900.
+\end{gathered}
+$$
+
+Proof. For the §24 candidate $R_B$, multiplication against all $441$ off-root interval entries gives
+
+$$
+\|I-R_B\mathbf B_e\|_\infty\le9.29214770243\cdot10^{-9},\qquad
+\|R_B\|_\infty\le127345864148.
+$$
+
+The tighter row-sum comparison specified by the witness, rather than rounding both inputs up before division, gives
+
+$$
+\frac{21\|R_B\|_\infty}{1-\|I-R_B\mathbf B_e\|_\infty}
+<2674263171960.
+$$
+
+Proposition 17.2 supplies the Euclidean inverse bound. It uses neither positivity of an unrestricted Hessian nor an inverse involving a zero-weight seventh angle.
+
+For the uniform Lipschitz bound use the scalar face Lagrangian
+$\mathscr L_f=Y\cdot(\mathcal M-B)-\mathcal J+\lambda(\kappa-\mathcal K)$.
+The system $\Psi$ is its complete $w$ gradient. On the product of the face coordinate box with $|Y_j-Y_{e,j}|\le1$, $|\lambda-\lambda_e|\le1$, the only third derivative families are
+
+$$
+\begin{aligned}
+D^3_{zzz}\mathscr L_f&=\sum_jY_jD^3_z\mathcal M_j-D^3_z\mathcal J-
+\lambda D^3_z\mathcal K,\\
+D^3_{zzY_j}\mathscr L_f&=D^2_z\mathcal M_j,
+\qquad D^3_{zz\lambda}\mathscr L_f=-D^2_z\mathcal K.
+\end{aligned}
+$$
+
+Each mixed family occurs in all three index positions; entries with two multiplier indices vanish. Thus a sufficient, fully off-root bound is
+
+$$
+L_B^2\ge
+\operatorname{maj}\!\left(\sum_jY_jD^3\mathcal M_j-D^3\mathcal J-
+\lambda D^3\mathcal K\right)^2
++3\sum_j\operatorname{maj}(D^2\mathcal M_j)^2
++3\operatorname{maj}(D^2\mathcal K)^2.
+$$
+
+Use $|p_i|\le2$, the entire circle and the normalized jets through order three from §17. The resulting upper bound is at most the selected $11399894.7864$. This covers the required ball of radius $R_{\rm chart}$, since all its multiplier variations are at most $1/2<1$. In particular the multiplier/Hessian terms are not silently dropped. Finally $R_f=1/(2\beta_BL_B)<R_{\rm chart}$ and $C_{\rm joint}=1+C_\mu$ give the two enclosures by exact arithmetic. $\square$
+
+## 22. Evaluated recipe V: every radius gate and HALF coefficient
+
+**Proposition 22.1 (all eight finite gates).** Using the outward selections above in the conservative recipe, the eight members of the minimum in Definition 14.1 have the following enclosures:
+
+| Member | Lower | Upper |
+| --- | --- | --- |
+| $1$ | $1$ | $1$ |
+| $k_e/2$ | $0.467927492346$ | $0.467927492347$ |
+| $d_{\rm branch}$ | $9.69103505306\cdot10^{-59}$ | $9.69123536949\cdot10^{-59}$ |
+| $p_* /(2A_w)$ | $1.77751795454\cdot10^{-43}$ | $1.77752943628\cdot10^{-43}$ |
+| $R_x/D_{\rm loc}$ | $1.84384149527\cdot10^{-152}$ | $1.84386531564\cdot10^{-152}$ |
+| $R_f/(2C_{\rm joint}D_{\rm loc})$ | $1.45927328554\cdot10^{-109}$ | $1.45929213772\cdot10^{-109}$ |
+| $R_f/(2C_{\rm br})$ | $1.12114371729\cdot10^{-42}$ | $1.12115820122\cdot10^{-42}$ |
+| $R_f/(2\beta_B)$ | $3.06641463088\cdot10^{-33}$ | $3.06641463089\cdot10^{-33}$ |
+
+The minimum is $R_x/D_{\rm loc}$. For the resulting recipe constants,
+
+| Output | Lower | Upper |
+| --- | --- | --- |
+| $d_*$ | $1.84384149527\cdot10^{-152}$ | $1.84386531564\cdot10^{-152}$ |
+| $\varepsilon_{\rm recipe}=d_* /a_s$ | $2.46683231115\cdot10^{-153}$ | $2.46686417986\cdot10^{-153}$ |
+| $c_{-,\rm recipe}$ | $394256134925$ | $394259192598$ |
+| $c_{+,\rm recipe}$ | $657227911192$ | $657236404565$ |
+
+Proof. Substitute the exact fractional expressions from §§18–21, not a point selected from each displayed interval. Interval minima take the minimum of lower endpoints and the minimum of upper endpoints; positive ratios use lower numerator/upper denominator and upper numerator/lower denominator. Relative square roots as in Definition 17.1 retain positivity through $R_x$ and $d_*$. These operations applied to the displayed defining formulas yield the enclosures above. In particular compare the upper endpoint of $R_x/D_{\rm loc}$ with the lower endpoint of each of the other seven members; all seven comparisons are strict.
+
+For the loss coefficients retain the exact conversion
+
+$$
+c_{-,\rm recipe}=\frac{\alpha}{4s_0^2}\left(\frac1{u_6}-\frac1{l_7}\right),\qquad
+c_{+,\rm recipe}=\frac{\alpha}{4s_0^2}\left(\frac1{l_6}-\frac1{u_7}\right).
+$$
+
+The response numerator pairs in Proposition 19.2 and the original source rectangle suffice for these exact fractional calculations; $u_6<l_7$ proves positivity. Rounding the first interval down and the second up is essential. Explicitly
+
+$$
+394256130000<394256134925\le c_{-,\rm recipe},\qquad
+c_{+,\rm recipe}\le657236404565<657236410000.
+$$
+
+The factor $\alpha/(4s_0^2)$ contains both the original HALF factor and the factor from twice integrating the curvature; it is not replaced by $\alpha/(2s_0^2)$. $\square$
+
+**Proposition 22.2 (strict comparisons at the selected mathematical width).** Put $d_0=a_s\varepsilon_0$. Its outward interval is
+
+$$
+1.4949062300940\cdot10^{-152}\le d_0\le
+1.4949062300941\cdot10^{-152}.
+$$
+
+For every $0<d<d_0$ all eight defining $d_*$ gates hold. In addition the frozen-Jacobian map satisfies its contraction and self-mapping bounds and both candidate solutions lie in its uniqueness ball.
+
+Proof. The selected-width upper endpoint is strictly below $1.84384149527\cdot10^{-152}$, the lower bound on $d_*$. For transparency, conservative outward comparisons obtained directly from the preceding tables are
+
+$$
+\begin{gathered}
+\beta_BL_BR_f\le\tfrac12,\qquad
+\beta_Bd_0<4.00\cdot10^{-140}<R_f/2,\\
+D_{\rm loc}d_0<7.320\cdot10^{-77}<9.02772587376\cdot10^{-77}\le R_x,\\
+C_{\rm joint}D_{\rm loc}d_0<8.402\cdot10^{-64}<R_f/2,\\
+C_{\rm br}d_0<1.094\cdot10^{-130}<R_f/2,\qquad
+A_wd_0<1.851\cdot10^{-111}<p_*/2.
+\end{gathered}
+$$
+
+The first inequality follows from the exact choice $R_f=1/(2\beta_BL_B)$; the others follow by multiplying the upper endpoints, and $R_f/2\ge8.2003997173\cdot10^{-21}$. The $k_e/2$ gate keeps $\kappa>0$. Branch derivative windows and the inherited boxes give positive old weights, occupied-height/report signs, and physical seven $p_4>0$ on the strict left side. The positive $c_e$, $\sigma$, $m_\mu$, $1-q_b$, $l_b,u_b$, source fractions and capacity/chart denominators have all been excluded from zero before use. The $R_x$ gate supplies full-column LICQ and positive active multipliers; the two joint-placement gates and $\beta_Bd\le R_f/2$ supply, separately, uniqueness-ball placement and self-mapping. None of these conclusions is inferred from a small residual alone. $\square$
+
+**Theorem 22.3 (evaluated original HALF loss and same-strength short-alphabet optimum).** Under $\mathsf H_{\rm root}$, $\mathsf H_{\rm original}$, $\mathsf H_{\rm sections}$ and $\mathsf H_{\rm contacts}$, for exactly $t=1000$, $A=\log1001$ and
+
+$$
+s_e-2\cdot10^{-153}<s<s_e,\qquad
+s_e=\frac{k_e}{\sqrt\alpha/s_0},
+$$
+
+every global maximizing fractional law represented by at most six supported atoms, with all eight original moments and $K\ge a_ss$, equals the endpoint six branch at its own target strength, up to permutation. Its contrast is active. In the original full-complex multi-Kraus comparison class,
+
+$$
+\begin{gathered}
+\mathcal T_A^{\rm full}(s)=V_7(s),\\
+\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)
+=\mathcal T_A^{(\le6\ {\rm supported\ nonzero\ low})}(s)=V_6(s),\\
+394256130000\,(s-s_e)^2
+\le\mathcal T_A^{\rm full}(s)-\mathcal T_A^{(\le7\ {\rm TOTAL})}(s)
+\le657236410000\,(s-s_e)^2.
+\end{gathered}
+$$
+
+Proof. Proposition 22.2 puts $d=a_s(s_e-s)$ strictly inside every gate of the already proved Theorem 14.2, with the conservative rational majorants justified in Proposition 19.3. Apply that theorem; Proposition 22.1 weakens its loss constants in the correct directions. This instantiates the five-part sufficiency result rather than adding another symbolic sufficiency proof.
+
+The short-alphabet transfer is the original compulsory-high-label sandwich of Theorem 14.2: at most seven TOTAL permits at most six supported nonzero low labels, while the common six-law constructor has those six low fibres and one counted high fibre, including its supported-zero complementary subspace in that same high label. The full left-side branch has seven supported low labels plus one high label. Hidden terminal Kraus multiplicity and saturated failure-line groups supply no additional or free actual labels. Both $V_6,V_7$ are evaluated at this same $s$, using their separate inverse multipliers. Uniqueness here is of the fractional coefficient law, not of every full instrument, time law or physical implementation. $\square$
+
+## 23. Exhaustion of finite inputs and retained mathematical boundaries
+
+**Definition 23.1 (correspondence with every item of Definition 15.2).** Items 1 and 2 remain the explicit hypotheses $\mathsf H_{\rm root}$, $\mathsf H_{\rm original}$, $\mathsf H_{\rm sections}$ and $\mathsf H_{\rm contacts}$; none is recertified. Item 3 has the original normalized whole-circle bounds, denominator bounds, left-inverse witness and evaluated coercivity in §18. Item 4 has both separate event response solves, the full branch-box preconditioner-to-Euclidean conversion, complete derivative tensors and all inverse/localization constants in §19. Item 5 has the prescribed entire $18$-variable coordinate box, all $15$ columns of $Q_e$, its row-minor witness and all-subset implication, both inward orientations and weighted multipliers in §20. Item 6 has all $441$ off-root bordered entries specified by formulas, its rational inverse witness, the full multiplier-dependent third tensor and the contraction/self-mapping constants in §21. Item 7 has the exact event-centred conversion, all eight finite minimum members, every strict positivity/placement gate and outward HALF constants in §22. These provide a fully evaluated conditional finite certificate; no in-scope finite numerical input is replaced by an unknown neighbourhood or unspecified minimum.
+
+**Definition 23.2 (unchanged original programme and physical scope).** Theorem 22.3 concerns only the exact selected event and its stated mathematical width at $t=1000$. The unchanged through-2027 programme of Definition 15.4 remains open at its full scope: all budgets and feasible contrasts, the separate strong branch, all actual counts and coefficient orientations/failure allocations/live decompositions, selected roots and positive common weights, universal necessity, complete ordering, connected coverage, degeneracies, gluing, and a common original attainer at every requested point. Universal or dense seven-original-fractional-low and universal eight-low questions, higher-count seeds with matching necessity, actual affine coexistence and sharp strong counts remain unresolved; the supplier-scope maximum minimum TOTAL bound remains $\{8,9,10\}$.
+
+No connection to multiplier ranges below $1/4$, across $(23/5,190.449003333)$, or to a later event or transverse-budget atlas follows. All remaining original $K(s)$, source-coefficient evaluations, physical orientations, coefficient gluing, transition-root isolation/multiplicities, height/report sign intervals and next terms, critical five-label/static-contact interpolation, floor/rising/strong/degenerate thresholds and uniform JOINT limits retain their original obligations. Finite prescribed-product statements do not imply an unbounded uniform or infinite-product limit.
+
+The original experiment still has one unknown specimen, all twelve histories, the original five separately labelled Borel failure components, HALF full stopped-cq error, actual-label TV, independent minimax and sharp worst-history JOINT requirements, the supported unaveraged face, arbitrary complex multi-Kraus competitors and admitted time laws. There is no LOSR, PPT, diamond, entropy, marginal-prior, postselection or endpoint-splitting replacement. Whole-fibre activity, live coherences, conditional passive references, FIRST at $6+a$, no copies/retries, and one common coherent high completion remain compulsory.
+
+The source-root/rank/TP, minimax, JOINT, unaveraged face, full-class reduction, event existence/isolation and preconditioner-defect antecedents remain as named. Source-final approval, actual quantum access and calibration, coherent storage and accounting of all accessible shares, acquisition duration, whole-fibre actuation, absolute FIRST alignment, archive/source/epoch/controller interfaces, native permissions and the original quantum-native interpretation require their own bridges. The evaluated conditional finite theorem is distinct from actual physical realization and from completion of that programme. It supplies neither Lean/kernel evidence, empirical certification nor source-final approval.
+
+## 24. Exact finite rational matrix and response witnesses
+
+**Definition 24.1 (numerators, index order and verification expressions).** Every row below is an ordered integer tuple, divided entrywise by the single denominator $10^{30}$. No omitted entries or symmetry completions are intended. The candidates' signs and large entries are part of the witness. A candidate is not asserted to equal an inverse; its role is exclusively the finite residual comparison of Proposition 17.2.
+
+$R_A$ has shape $7\times7$ and preconditions the moment minor with rows $(0,1,2,3,4,5,7)$ and columns $0,\ldots,6$. $R_Q$ has shape $15\times15$ and preconditions the row-selected $Q_e$ of Proposition 20.1 in its full column order. $R_B$ has shape $21\times21$ and preconditions the off-root expression matrix of Definition 21.1, in order $(p_O,\phi_O,Y_0,\ldots,Y_7,\lambda)$. $R_6,R_7$ have shapes $21\times21$, $22\times22$ and the exact distinct variable/equation orders in Definition 19.1. Their trial-vector orders agree with their columns as solution coordinates. This fixes every product $R\mathbf C$ and $R(\mathbf Cv^0+\mathbf f)$ without a hidden permutation.
+
+**Definition 24.2 ($R_A$ numerator rows).**
+
+| Row | Complete ordered numerator tuple |
+| --- | --- |
+| $0$ | `(31737910926053939448391921664429,266527118770831506733466896224,787376107689580961099874288897,-34933164258995628976654594075686,846410818370904913849263560264,-72258513359967424349667716127504,-3201502673099777140977057184798)` |
+| $1$ | `(12667435304939248299981780811336,-261872145663266837273537843487,792242693678294748423085495267,-13776252225892100358750964769662,-835193634964695482558436225455,-27384385268640230905661505665463,3198919726327857923334436221955)` |
+| $2$ | `(-32320877543483270686331715610720,-266829574367123818456246257038,-786438849907547734651584918493,36134782633671476764514594815536,830310823373975921036818163485,70840917110803255864900265584635,-10110737920594132551540296760882)` |
+| $3$ | `(-11930404478798956880373005032933,262088209363097392047098008383,-792938713659840044155497083609,13513126548348493658907890206576,-841729809500782155989362900588,22855785500493348520675273043002,10113780379898176978551667568096)` |
+| $4$ | `(-23062945391123617987340004690733,-2355322485288158529825713946,6576922594148671118772383676,25586345969529642830712368166797,-5501794784935423615815449607,54271434100572793600706696305976,-962098767964990364128852906)` |
+| $5$ | `(23683309192102894617118796210412,2418677654574891657636269977,-6753833419286508111553198161,-26274586026020314908803683282133,5649786043948859434519719411,-51762908528429899493198000831034,8240297346822244292722621262160)` |
+| $6$ | `(225571990309763188552226648205,23036727175023821408639883,-64326975350093723096967580,-250252640641569009925611061432,53811461583367843013132485,3437670445168156762244987690385,-8239794760586404511727242253629)` |
+
+**Definition 24.3 ($R_Q$ numerator rows).**
+
+| Row | Complete ordered numerator tuple |
+| --- | --- |
+| $0$ | `(10617417280624238269989441816204239,-10595129149144259376897614651683837,13567408186798587944027291109672339,-13588696318278566837119118274192742,-1,0,-33227631929810584178894481943378743,-33221296066878815504487613704783717,-1,0,0,0,0,0,0)` |
+| $1$ | `(263181593231302675051490368810,-263243888681272844037763457790,-263403276441957458132880529885,263465571891927627119153618864,-1,0,326160692721109788519433653,-244788039570568978963547586,-1,0,0,0,0,0,0)` |
+| $2$ | `(796700837009544257670890829019,796090266025145610643936889572,-796028306236249653754269955818,-796762796798440214560557762775,0,0,-856923559838360430732861789,737354986634136827649660933,-1,0,0,0,0,0,0)` |
+| $3$ | `(11782424769356480990555279778890230,-11753180278351515810513678272072178,15050408209722845077333719201113199,-15079652700727810257375320707931253,-1,0,-36872698549742145646670560757856234,-36853263923092319433208050852767719,-1,0,0,0,0,0,0)` |
+| $4$ | `(838667517963498118101598471818,-838469234035542902893842580925,838405667909181510737093979716,-838603951837136725944849870612,-1,0,538089872703714690024311252,-795508224375646067697804850,-1,0,0,0,0,0,0)` |
+| $5$ | `(-15260108761325032819074531274828648,15260954451673886261938452310906510,-19542829951313798383740025558979578,19527878573479285446476063553373682,8679765427246597952822488826128,5425922058412896447218480701904,47777103849637085839183670411785935,47814559487156959075258701126938016,118043887196259474007677680544424,0,0,0,0,0,0)` |
+| $6$ | `(20617422218029986831369862895329822,-20612302728214788823176740208012914,26391622859468864946712171811153062,-26387016664663306540556301254661345,-7427915049651571289349052929451,-2297769571104843059644190879177,-64542574373399897341531980584003018,-64584758857031424171245347947167468,-186105735967664851377690178414896,0,0,0,0,0,0)` |
+| $7$ | `(-3202345963753570238553901539149,3199954881251681681737504021237,-10111248281214620555106107281036,10113639370922785985791151160045,8239687264277741035829893390168,-8239687271484017909698539751269,-510831541898454103460080924,2580798573502793466306173758,9468136193901153018922175018,0,0,0,0,0,0)` |
+| $8$ | `(22369262737844748173293771101347462,-22318548388285903951887748421708764,28579101987994138728456002097077649,-28629816337552982949862024776716349,-1,0,-70005499296629136359587860554548826,-69980374408617582283092302968804534,-1,0,0,0,0,0,0)` |
+| $9$ | `(162610035973320589199944739214764,-162342973822020210283592650573497,207627715707536270972285991948661,-208155899958917464080953825762610,217164704993389189317744015228,43957395087425002998001157451,-508924283859283965110738355900520,-508952191399386043832166333531484,-2431857102566397349588408640942,-1000000000000000000000000000000,0,0,0,0,0)` |
+| $10$ | `(162237836268356337374275800326474,-161971043205009021446888290762153,207327038323389381498928682539848,-207854840478636545719124062229702,-23120003524680368827681626624,284129095424528661635551752153,-507467006329608653803249696484754,-507494351553447194964046878375416,-2426981621616476435085742042049,0,-1000000000000000000000000000000,0,0,0,0)` |
+| $11$ | `(111468955908830372839997561206529,-111285872255174838820867565327823,142328479949601884099628446285713,-142690581693457602393983292960890,148886805450401523991770948309,30131284749782751233079848159,-348866895289297423460725122028434,-348886008502894116397090337322221,-1667089643982155665909104097319,0,0,-1000000000000000000000000000000,0,0,0)` |
+| $12$ | `(111457139865604513249802074361006,-111274177781497778092529176278620,142433757988882622662907562550091,-142795549605551599841495371849702,-15809066016012189317427862947,194638598578254210632339080168,-348629788230386976626106556690716,-348649010532916619193656957585340,-1665954757266869827843466621871,0,0,0,-1000000000000000000000000000000,0,0)` |
+| $13$ | `(12181990110364060190269906034774,-12204815525997882668205104454034,15659593535866016050239964254691,-15592495925693648415206821071193,-44272194538545157097944764240,0,-38139477130422517307783856943329,-38199159448722345893071411821400,0,0,0,0,0,-1000000000000000000000000000000,0)` |
+| $14$ | `(12170073828324115115165652344223,-12192910044589068008050708862382,15612034546801596376528371007470,-15544924733303475564747436298383,0,-44273597233167918895878190930,-38156041173437028966490655503170,-38215716718365856484799943262243,0,0,0,0,0,0,-1000000000000000000000000000000)` |
+
+**Definition 24.4 ($R_B$ numerator rows).**
+
+| Row | Complete ordered numerator tuple |
+| --- | --- |
+| $0$ | `(45547641937174628809218981056,2081174387758645567851094349,-1317898621474605896362395648,-46310924196114618558287524470,-117595090173993310647985839,117601582829943388227830549,-63602549764055151499609803384,-5377011934414854619808138716,4945222997005969802662910241,-80053546321711251209749222772,-4265172726708610677973810902,-4265293727403057174220913977,-1639688472817418709180259381048945,263285422943909710999807660425,796430765543607944300166872845,-1818925607202547311843994953780293,838827502999242742340826528865,2368355021244300019029967813018897,-3197473763153421117505505215767438,-3202207570841814883326784345800,-3454229909648427036613827247830292)` |
+| $1$ | `(2081174387758645567851094349,20473584032223268455060361642,-16864387929716046568813776504,-5690370761034715854408484348,-4904169786412663487646227,4904440555261063798451085,-23815882955046475014658727703,3798157244477182754387692082,64369834737864379364947663614,24174658987923735120382338816,-177874188362853975057095342,-177879234559501823644959370,-14147928069380471648755087699393627,-263197369813268254616739197689,795966124861799459548887841839,-15695973755531748389568195882501513,-838384499579546274208855900304,20368600601760014906967679753168907,-27512473253284624508098313332585455,3199847108414001650379196382165,-29803988348802782852393903393168794)` |
+| $2$ | `(-1317898621474605896362395648,-16864387929716046568813776504,13909783813109971330631051134,4272504605768701599927075550,33827595805517665715311904,-33829463493538131097266439,18956086999530394649938178882,-3305455492296830811731483388,-53070762379066534514771405072,-20668799185227138024147258386,1226926556426288973830137871,1226961363683784731443744292,16344861158563530955494808003224866,-263440673979214110769259850409,-795928378902667476901496332393,18132767574830280158811584690975048,838337017894780200218706322718,-23536479026565839104752242469764598,31787025559428573817647595244930176,-10111219037369131469665054168343,34430976374562282864445640414151794)` |
+| $3$ | `(-46310924196114618558287524470,-5690370761034715854408484348,4272504605768701599927075550,47728795247312863530189604793,88675204197458806884040004,-88680100129689524304711533,68462340298699050889389711169,4884296492342107423334602135,-16244299915515421070409562300,76547694037874573166642694840,3216248755953266835208520437,3216339999229429144832679034,-556248021727227797025710131509090,263352620840027628747990288853,-796468511473362275271256938435,-617871990113338052965049893719750,-838780021357369363513335938736,785422526816845645339515877992313,-1067359336509362910288840696539000,10113579500026846597057406771603,-1172765289817296383172490383196885)` |
+| $4$ | `(-117595090173993310647985839,-4904169786412663487646227,33827595805517665715311904,88675204197458806884040004,64117308617372171372611444,-64120848659942669836331288,-98182925114925104526885263,-247951553735555921263110578,-82585570781348903949060235,136181713151782167106621998,2325534132591312969823977106,2325600106764701189400315698,-61677964457209418455839452337699,-154767643348071770876622,532088505002880167759220,-68427511759601787959246099361219,-776873192456504737695697,95811984323439974566989666824547,-124760084694317702550385831610065,8239560908060639598412363701711,-129930283802161052271558840579005)` |
+| $5$ | `(117601582829943388227830549,4904440555261063798451085,-33829463493538131097266439,-88680100129689524304711533,-64120848659942669836331288,64124388897965873212027623,98188345987106079467526296,247965243627951175080438462,82590130492955321519453749,-136189232011701220235174500,-2325662529899404125831729172,-2325728507715356067810865680,61681369818796617922088661064492,154776188373709971975438,-532117882654556469203080,68431289776955383524902138387724,776916085151667396683151,-81711107578761441151910641240070,115040878213152420795449831571779,-8239560908290541492857128341339,129937457508384460006139450623179)` |
+| $6$ | `(-63602549764055151499609803384,-23815882955046475014658727703,18956086999530394649938178882,68462340298699050889389711169,-98182925114925104526885263,98188345987106079467526296,111344153021823414967531592912,4434203149970335969942273510,-72428925287936328476062025000,83520393124690139470927174214,-3561093697101179637734868021,-3561194723445937028258674659,-12658349675848480436530480406767194,137848531551862076481363004,-364413876073633937812436008,-14047264258435681860156333250297611,236745185613597482312592784,18202458971309009741724163802821346,-24590644947474897340594675407735053,-69884644351095662819723855,-26669472243180240768418612537349374)` |
+| $7$ | `(-5377011934414854619808138716,3798157244477182754387692082,-3305455492296830811731483388,4884296492342107423334602135,-247951553735555921263110578,247965243627951175080438462,4434203149970335969942273510,2512312475310301848204893251,12437349346413509266602059849,15265516550052162957276702274,-8993200336622566048692116654,-8993455468959695929515919432,-31985416659865956585958429817647476,-249216861725808053582188912,747719589448895583440206084,-35481976069585012035597513489316441,-797530350674378832493771234,46043138856111144905030724847059313,-62193251568851927602300720756846215,3058979138510143029177213173,-67376725863521429269249035147012753)` |
+| $8$ | `(4945222997005969802662910241,64369834737864379364947663614,-53070762379066534514771405072,-16244299915515421070409562300,-82585570781348903949060235,82590130492955321519453749,-72428925287936328476062025000,12437349346413509266602059849,202517531147805704986375533484,78994134172865848957052893746,-2995377813776894676939175669,-2995462791061244032069724858,-10646639469017839283196352639315697,142638556219473900210101616,-381048427635799928175214422,-11815402836030193829525615695461610,261481470861871724113807314,15307481600590987488044734135515007,-20680063658903927190976140181995999,-203340717950146835549522903,-22431615034947584618417656010267964)` |
+| $9$ | `(-80053546321711251209749222772,24174658987923735120382338816,-20668799185227138024147258386,76547694037874573166642694840,136181713151782167106621998,-136189232011701220235174500,83520393124690139470927174214,15265516550052162957276702274,78994134172865848957052893746,178792671017760953506454515001,4939309353409481865324307640,4939449479003483266891296908,17559362942715520906609987942617768,-125559199336207097581919078,322157738447819125298213106,19484605739746622168160159738123904,-175034153716497996397380146,-25255375503618129500417121613933033,34117827187081795977868644894731472,-258602101669192033604897128,36993905958999463420984951839428478)` |
+| $10$ | `(-4265172726708610677973810902,-177874188362853975057095342,1226926556426288973830137871,3216248755953266835208520437,2325534132591312969823977106,-2325662529899404125831729172,-3561093697101179637734868021,-8993200336622566048692116654,-2995377813776894676939175669,4939309353409481865324307640,84347099378746196268120858035,84349492261345174113072070845,-2237059144668024346782626653008345,-5613420852932408727716617,19298844674344590090237848,-2481865156799984973106718442129012,-28177182803073599990233298,3278328581938023260520425394215732,-4441742337746919592814925718508400,4885197482482824801192438137,-4712570074367315995954405732056266)` |
+| $11$ | `(-4265293727403057174220913977,-177879234559501823644959370,1226961363683784731443744292,3216339999229429144832679034,2325600106764701189400315698,-2325728507715356067810865680,-3561194723445937028258674659,-8993455468959695929515919432,-2995462791061244032069724858,4939449479003483266891296908,84349492261345174113072070845,84351885211828965717650641363,-2237122608852798781743976777301557,-5613580102713120285853949,19299392172361021605367060,-2481935566001847966489977460741583,-28177982174847073000557770,3160374350347108397802856623728531,-4255757331938880559730527627083400,-4583068726965697451743930078,-4712703767487891269305253791023379)` |
+| $12$ | `(-1639688472817418709180259381048945,-14147928069380471648755087699393627,16344861158563530955494808003224866,-556248021727227797025710131509090,-61677964457209418455839452337699,61681369818796617922088661064492,-12658349675848480436530480406767194,-31985416659865956585958429817647476,-10646639469017839283196352639315697,17559362942715520906609987942617768,-2237059144668024346782626653008345,-2237122608852798781743976777301557,-7955110456620175263455912389069398167009,-19977224352033607459782998090565,68671297062725550971309542076959,-8825654319716933921708619893973743834187,-100236064248596273742696254116770,11447988177119528919524817445901853740763,-15464108507823830104139246024214097936560,533346240607979351206104155681649,-16758168797922170749549415914850161026336)` |
+| $13$ | `(263285422943909710999807660425,-263197369813268254616739197689,-263440673979214110769259850409,263352620840027628747990288853,-154767643348071770876622,154776188373709971975438,137848531551862076481363004,-249216861725808053582188912,142638556219473900210101616,-125559199336207097581919078,-5613420852932408727716617,-5613580102713120285853949,-19977224352033607459782998090565,-567979232660352872973120,1618361567371063510977033,-22152121955114627253739562681268,-1461238409145143135327955,28790926550624112392111465354010,-38883572207094091529863097486034,4143233301829832865705467,-42073171468252157278469454686421)` |
+| $14$ | `(796430765543607944300166872845,795966124861799459548887841839,-795928378902667476901496332393,-796468511473362275271256938435,532088505002880167759220,-532117882654556469203080,-364413876073633937812436008,747719589448895583440206084,-381048427635799928175214422,322157738447819125298213106,19298844674344590090237848,19299392172361021605367060,68671297062725550971309542076959,1618361567371063510977033,-4630285038812231476427621,76154720818264690630830084275245,4242679504768166752033652,-98940970652028134921199609811742,133629595524736435106733552712399,-12433420281337608270703234,144632550835818272117627043889090)` |
+| $15$ | `(-1818925607202547311843994953780293,-15695973755531748389568195882501513,18132767574830280158811584690975048,-617871990113338052965049893719750,-68427511759601787959246099361219,68431289776955383524902138387724,-14047264258435681860156333250297611,-35481976069585012035597513489316441,-11815402836030193829525615695461610,19484605739746622168160159738123904,-2481865156799984973106718442129012,-2481935566001847966489977460741583,-8825654319716933921708619893973743834187,-22152121955114627253739562681268,76154720818264690630830084275245,-9791463806876637404835150511657307882311,-111178820536123668662730649725706,12700763811979961176381694119031154472450,-17156376175408226201875681378801229165577,591650480830159122694784195290837,-18592049412089688134883309652620314311377)` |
+| $16$ | `(838827502999242742340826528865,-838384499579546274208855900304,838337017894780200218706322718,-838780021357369363513335938736,-776873192456504737695697,776916085151667396683151,236745185613597482312592784,-797530350674378832493771234,261481470861871724113807314,-175034153716497996397380146,-28177182803073599990233298,-28177982174847073000557770,-100236064248596273742696254116770,-1461238409145143135327955,4242679504768166752033652,-111178820536123668662730649725706,-4088234710022616455677276,144345708417851115344475080478556,-194966456789738306992829402811680,13269647837976404310935425,-211131500213082471695391338770117)` |
+| $17$ | `(2368355021244300019029967813018897,20368600601760014906967679753168907,-23536479026565839104752242469764598,785422526816845645339515877992313,95811984323439974566989666824547,-81711107578761441151910641240070,18202458971309009741724163802821346,46043138856111144905030724847059313,15307481600590987488044734135515007,-25255375503618129500417121613933033,3278328581938023260520425394215732,3160374350347108397802856623728531,11447988177119528919524817445901853740763,28790926550624112392111465354010,-98940970652028134921199609811742,12700763811979961176381694119031154472450,144345708417851115344475080478556,-16474540176346220708179009541281391437740,22254056502568283886044952617022468995877,-771041241424383159530779443112046,24116234763115798935610404959408732092851)` |
+| $18$ | `(-3197473763153421117505505215767438,-27512473253284624508098313332585455,31787025559428573817647595244930176,-1067359336509362910288840696539000,-124760084694317702550385831610065,115040878213152420795449831571779,-24590644947474897340594675407735053,-62193251568851927602300720756846215,-20680063658903927190976140181995999,34117827187081795977868644894731472,-4441742337746919592814925718508400,-4255757331938880559730527627083400,-15464108507823830104139246024214097936560,-38883572207094091529863097486034,133629595524736435106733552712399,-17156376175408226201875681378801229165577,-194966456789738306992829402811680,22254056502568283886044952617022468995877,-30061116231107848097961041048552444345776,1042234736635659089180132318654501,-32576559934253758734209138101864831975907)` |
+| $19$ | `(-3202207570841814883326784345800,3199847108414001650379196382165,-10111219037369131469665054168343,10113579500026846597057406771603,8239560908060639598412363701711,-8239560908290541492857128341339,-69884644351095662819723855,3058979138510143029177213173,-203340717950146835549522903,-258602101669192033604897128,4885197482482824801192438137,-4583068726965697451743930078,533346240607979351206104155681649,4143233301829832865705467,-12433420281337608270703234,591650480830159122694784195290837,13269647837976404310935425,-771041241424383159530779443112046,1042234736635659089180132318654501,-314677873750197844916334618,1123484867842316095845728650955639)` |
+| $20$ | `(-3454229909648427036613827247830292,-29803988348802782852393903393168794,34430976374562282864445640414151794,-1172765289817296383172490383196885,-129930283802161052271558840579005,129937457508384460006139450623179,-26669472243180240768418612537349374,-67376725863521429269249035147012753,-22431615034947584618417656010267964,36993905958999463420984951839428478,-4712570074367315995954405732056266,-4712703767487891269305253791023379,-16758168797922170749549415914850161026336,-42073171468252157278469454686421,144632550835818272117627043889090,-18592049412089688134883309652620314311377,-211131500213082471695391338770117,24116234763115798935610404959408732092851,-32576559934253758734209138101864831975907,1123484867842316095845728650955639,-35302617700138686390346992005382113250832)` |
+
+**Definition 24.5 ($R_6$ numerator rows).**
+
+| Row | Complete ordered numerator tuple |
+| --- | --- |
+| $0$ | `(852046108493326468179215951693,87015917689723715146612120,-242980296192480025796496650,-945271566323537841948467817926,203260370986150035025184700,-8323144188802964238483938759518,9961027153314440121154473688013,-471223486587275057542190671,-35308039195988488795249418022,1717701231137023298073338648,-1823311049756509151699165228,35413842776654133491945555870,387083295001659246938520,261108567475575838620439,8891114729805665903443810853,3739268046377961468012716053,-2571975946674959146020901539,2573520160475516471984914016,-133184654794705456822566,-94942420972681885667974,-1)` |
+| $1$ | `(-848526116399082662892753474249,-86656435568641301707629121,241976490514443475262906846,941366439115978542303518345446,-202420657158679493955623325,8288759427870666439259051450884,-9919875933350280951267285132343,469276757494946597504125413,-1756900487566239527791091151,35142446600682374083370048893,-35247807332999175932918743216,1862750769131701581569293106,-385484167765893748402450,-260029869874481694474250,3741853733064226224853742013,8860225852481132499096542046,2561350541654460783997418076,-2562888375964148307413168075,132634439345941834654934,94550192702520347761585,0)` |
+| $2$ | `(850740249910233111147518022832,86882555795516130972247560,-242607900963932366309869640,-943822829012337081282168293447,202948851107813447422447752,-8310388013792093830732556658079,9945760734425932831657256404920,-470501282438483982826759957,5835301313080072917521022431,42942142334829554597967553036,-42836509060527068455260918921,-5940771613932639984814158859,386490045366326942918478,260708388587886144678152,-3751617679729014896518069117,3733537188359627316940273014,10048706118971158551362855277,2569575945066489615785691884,-132980534004919167745965,-94796910801235793724122,-1)` |
+| $3$ | `(-852114737940298115224304905343,-87022926529091969677493590,242999867437728929494382245,945347704767441450359122283149,-203276742925077962830026544,8323814590060653098921789748415,-9961829480533574276785807558240,471261442053490052083392001,-43138060058614359737074934323,-5790343267995351085877777569,5895869544443748096416726720,43032265012713290977794752528,-387114473258567082874115,-261129598892076402463104,3757678934729835505472034936,-3739569231836757188245690959,2572183110682969005187449460,10074763571653805504970864786,133195382370493383734193,94950068265217528410351,0)` |
+| $4$ | `(16106718478324909175023008,1644912024584934391770,-4593196527207577108380,-17869013017688943904155006,3842347897184769598218,32863009540863165225784658613751,-51811252372176849355820515623671,2635900050754679120536010092,-2011820932281277236396438239,2009790426552265829184004861,-1781880111512169707322296368,1783844775033307605120990708,-36874862469132283511343191699,-24874084310801202815053760483,-71027848761214359232429,70685538185845159145285,-48619543112954936743543,48648734276095042589341,12687620189170321567437270349,9044535791292925566818212077,0)` |
+| $5$ | `(18030985303016791611985328,1841429374950564658315,-5141944908728597483033,-20003820861148700780145361,4301392524892586194192,-36771309747983284486550945611202,57972877115149303404084550842858,-2949371513127665773217127786,-2252172825338774025930510455,2249899735447324969471147526,-1994761015141009629932485042,1996960396667587029870246670,-41280295804911710873436470210,-27845786790004246107081367604,-79513533364466424201720,79130327004843556193810,-54428111380279973939230,54460790006547982919118,14203407942409209592717368129,10125084892051364978197304728,-1)` |
+| $6$ | `(36048021509943837188540671647,263289539647337027453362964394,796416613786158981317905755318,237314550118109105357347710908,838848161431688167136518288127,8671098243584825326199805766815,-9978472176404786490979663527859,-3202317499659742826751973587751,48643164602348311224780740188,4847856601001433820573816955,-4858014265498196201475711044,-48632949731764029245353518204,2965463753633933496995606413,2000365302792984723100004180,-8039877402393800442514359866,160131736403969032023972949,645240621265089689268133078,-7553702059021311430510176641,-1020334050665384349197886375,-727358456725794505794873475,0)` |
+| $7$ | `(38855989501233321118713725256,-263161849832203733080419955383,795844019841243110843040908883,234065796748832807058595688486,-838206253285578355735874203929,8637892986941072046386632516758,-9940127511338068487873588050756,3198898614163641936120247830451,4855560762670766251502406285,48377107349191188601437773111,-48366576503004060389284955328,-4865677762926705949291851432,-2962824901748349085690799654,-1998585254817465102051348941,-171409620337904917723543352,7993805253866343648527549465,7528414137520096368985644498,-637095905470622781715112505,1019426094724184636930455469,726711208472405951254074846,0)` |
+| $8$ | `(460897278704854668154072282564,-263481708340607107613067192397,-795787317410199138669002933750,-233765176294833459805812881884,838131099349093035040766410201,-15687553672436877729723772752592,14799063703384964983871077995711,-10110123291969443869468513107970,-3869018668607102541708067452,-49350058694647550218691485306,49372615902491285642667286853,3845981142306389805390310030,2626532240009771729484501671,1771737709875666643320540205,-929951006267470289790420783,-9092236579127431092286067057,-6773016748962894119955832804,1391309916455581269496465661,-903717091928150550254215929,-644226534312879486882794945,-1)` |
+| $9$ | `(464198710328013953825102113788,263354018525478311452079826114,-796473316217215514146388770020,-237615170620973441612801436593,-838773007495192339073848866611,-15727214868070523384667590222337,14845362220259848208332922722382,10113542177467147709214578978494,-49629712197980955490514172881,-3874899759528756476702134243,3851969993243126024253062384,49652651230524801618449303153,-2629271930690831045858243786,-1773585779059469877274145530,9141238028804941360469952002,938299589050416611398955765,-1400638009955247991168776277,6799488048169388822384962288,904659743709596175405450345,644898515949222001158425482,-1)` |
+| $10$ | `(797757888973710507567604,81471688106193430941,-227498777613674172104,-885043475629047715922280,190309612183616146926,7052865845977372972664970941116,-4862979230122287782938373787299,8239556773106428381036502238262,-99644506861508610061700296,99543936905803167749916376,-88255650465185544744354136,88352959288536235563418915,-1826393903833243902890623713,-1232001230830637474659041780,-3517974611795864280853,3501020136410490216003,-2408102192190983502288,2409548016224890619815,628411622878590961995534286,447971434362550891566324020,0)` |
+| $11$ | `(-797801934753996936360861,-81476186318149073672,227511338268119211670,885092340618050386841359,-190320119551177774716,7052911464004130769139953750237,-4862847005779670430412375352183,-8239556773108031330150842351488,99650008430489166000794153,-99549432922118894367886895,88260523233030468584671268,-88357837428992464757662464,1826494742628718807959559066,1232069252038921087563991863,3518168846085422652849,-3501213434610154627127,2408235148243854333790,-2409681052104546758621,-628446318718836874879337798,-447996167745504851301155930,0)` |
+| $12$ | `(-49650299264036577447663589032028,-5070578118911032429307434092,14158910299530310647076096486,55082718747157859940568807944364,-11844356951323944080659708613,485004972938070554971756661390789,-580447436129719668677541040190090,27459062245672097614346970186,-103220858564784832339278869988,-100106849878781590241853422921,343782225733266107130624378215,346895711747395970942622435972,-22556057994239714407182003,-15215278124432356028910139,218949251011046572341220485823,-217894050193375554745443267876,149873785208791539390248119798,-149963769396925328677830044547,7760915638271849094637297,5532470094231666171317617,0)` |
+| $13$ | `(-5070578118911032429307434092,-517837008861747894628146,1445990493846332411297083,5625368478126710224502167914,-1209614807567874293195336,49531536361234816478283855023,-59278677318048508118976402347,2804279576408766299459585,250133404443311927025965666697,-249999163912441223483449819771,-250337818565694087165053561974,250203578630710033461109032477,-2303556188176370787722,-1553872936809768364535,22360374414353783916218819,-22252611152974708454877854,15305985001958002812867885,-15315174712033520105029100,792589966253031933874,565008111112441362995,0)` |
+| $14$ | `(14158910299530310647076096486,1445990493846332411297083,-4037734793984540466138308,-15708088075114209054677020391,3377687347614583653878464,-138310181578912944728713563560,165527767275835837931285217910,-7830575142722349044165011,756702685181592740867386822213,756034684059916477730442109499,-756033287293857235703537179977,-756704083996101810831240392699,6432372142473143360864,4338982067370702815280,-62438350849181112387199313,62137436374407404610829959,-42739913202485480581617229,42765574237102551680279050,-2213201329968768859465,-1577709479302172083978,-1)` |
+| $15$ | `(55082718747157859940568807944364,5625368478126710224502167914,-15708088075114209054677020391,-61109518966710507060214051629181,13140291042783115101955415066,-538071127693514806526233568891636,643956297258435590921661278051872,-30463457927928890988139725804,377979580612102330313192457991,374354830777100277907666716968,-117692482665193862708255768988,-121317979563269397460622229545,25023998182448750179984314,16880036938567959854941990,-242905283394294712681542117908,241734629224569609044385820157,-166272020120682797596807002389,166371849805501134073022685359,-8610065591950919368891165,-6137797731228601546921646,-1)` |
+| $16$ | `(-11844356951323944080659708613,-1209614807567874293195336,3377687347614583653878464,13140291042783115101955415066,-2825537683958973450012330,115700652519665854592899771883,-138468986630681295470933643519,6550513080631964077073896,796944265654034299658173332924,-796269426548209935781771710377,796267575276429492263123616943,-796942411391959469986545514378,-5380873957632997080613,-3629689808334822800462,52231570033622870515414916,-51979845969013308617915453,35753230815766508962211928,-35774697047793909608403947,1851409889796715008272,1319801725063704868397,0)` |
+| $17$ | `(485004972938070554971756661390789,49531536361234816478283855023,-138310181578912944728713563560,-538071127693514806526233568891636,115700652519665854592899771883,-45732625970845948697784011455353428,70301820074305015189409273905098194,-3556375122613620237198908336283,9581140645942529802310158453766,9543830747178564557574451213572,-13985132751567844852672507773005,-14022855786567992902072691957600,13023980097465024550234931094658,68632633005014842348288491397553,-2138788227573516453984831251202,2128480582874394569885240120950,-1464030070649899821297600856353,1464909073986789971553118293421,15834823524703877857252508622138,-11282587617239622012902905301780,-1)` |
+| $18$ | `(-580447436129719668677541040190090,-59278677318048508118976402347,165527767275835837931285217910,643956297258435590921661278051872,-138468986630681295470933643519,70301820074305015189409273905098195,-108683051200588886645605760399589835,5505040176107497449569322899321,-11087513868436604373590366905500,-11044249071840661934241256558843,12960098104838438230662874294087,13004040203527188546813801758448,47559641821743928043826447558931,-64844203616000931863439653323622,2559673018606335314767231911317,-2547336967901747264891116205283,1752131520997940846556241357584,-1753183500383134706105809095374,-24964908855568154071747801136709,17787891428344102097051197904201,0)` |
+| $19$ | `(27459062245672097614346970186,2804279576408766299459585,-7830575142722349044165011,-30463457927928890988139725804,6550513080631964077073896,-3556375122613620237198908336283,5505040176107497449569322899321,-278923634248980691914112174,-3042397810760818620596950510261,3038803530926010003936757685408,-9605354953037223393786996314812,9608949216957638742525960408792,89671397095439236988417033582540,-57101380237323302618652630264415,-121089725566073541253722214,120506147513904578193119426,-82887588958071364554325369,82937354648504608994953735,1270090984228282587152964735,-904959402880081931229503980,-1)` |
+| $20$ | `(-17944842609173035791144321597,-1832631980675348581794642,5117379363441399150641727,19908252982456072703159864088,-4280842702842004889557971,34150491904366278926714950024854,-53774437505107815162143958691192,2735027904123803915399373719,-18719959682485984621530968907,-9369161131883364100129919618,14970813835872028191237224411,13037101333753956809858140470,-40948759243408147301665572012,-23672532688931954824238286711,79133658951285881430303082,-78752283352853332283454868,54168082099775771781663961,-54200604604520162824361966,-13123433055385759156145220363,9350589114165146886826507028,28193169838546411847371568539)` |
+
+**Definition 24.6 ($R_7$ numerator rows).**
+
+| Row | Complete ordered numerator tuple |
+| --- | --- |
+| $0$ | `(852010611584610055331425307372,87012292538389394828875497,-242970173442891880738720947,-945232185569177797800114219523,203251902999778595492150128,-8164773925760047851760441838848,9711475317275934329063634064875,-458529008504601471591816698,-34491928120093955544097691150,2028836230488939771167357728,-2656977162998007936223244300,35120075946700412377947103702,-7483440262619015013267350130,7300121144174505253069753674,-114714566719533582505317526,8891271265046981067612988648,3739112265540298599314110879,-2571868796141097344320514043,2573412945608497379140482408,-1,-61172157740292623513617197,43395980618117690223384485)` |
+| $1$ | `(-848490766135995877782286785948,-86652825393613908968384239,241966409584186663445322800,941327221052278816801980199367,-202412224155444277343210891,8131043427629161278997299992188,-9671355051483390211896418833775,456634723126346863540117334,-2569640026983417852707057362,34832596969254850724748460573,-34417585280001128187741105381,2155303982934042477487340863,7452524505479128919688932353,-7269962719109980046118155824,114240655315065822523259421,3741697844504829336519057426,8860380989753486469643772388,2561243833783300364142804465,-2562781604025605186316699796,0,60919441943005050381803914,-43216702164551549568100419)` |
+| $2$ | `(850704807404608806280614961468,86878936200142852839824361,-242597793728621327169424257,-943783508613508946892637661737,202940396099604309711012932,-8152260471378072804831497701146,9696591365256026253796126924347,-457826260102391369193727824,6650161604958822147867838888,43252800484037618053888271461,-43668897484640527502446807621,-6234088212458156414931325710,-7471971030378417335717831107,7288932869550965626772317204,-114538753462406651106066016,-3751461384395946939134930158,3733381646274001357665926293,10048813105284512880884496401,2569468894518575952189126259,-1,-61078404378314646092386475,43329471290515537571648500)` |
+| $3$ | `(-852079238172425149548326574411,-87019301085763907726606365,242989743872787367359994784,945308320841094155620237524293,-203268274256638715179197944,8165431570825951963553070240097,-9712257543934397693328993901271,458565941473322817400286160,-43954236869509907333416213129,-6101503328224520791604678941,6729602806685448217653210991,43326055504596662810533154629,7484043028550986783672222753,-7300709144368340593612682759,114723806591877433905595984,3757522386880133382022266192,-3739413438451472035950515483,2572075951518492253956091189,10074870795156621366690103512,0,61177084951759151234801203,-43399476018332451086462499)` |
+| $4$ | `(-10312545339503600248619724926,-1053177272319902387835541,2940856481959497352440762,11440878361727086744383841423,-2460115445190619058291374,98824592266050364168838345760,-117545518989035092857733017654,5549932272424232021367877,-194194460463924323030468533491,-76267234567620200469011788671,194219876077932392794126603825,76200792349432033740771619160,1609037033067404882277591611143,-1610486568500669788328421568753,1048733593213149639139447510,45476545188465046678718309,-45257376191785993266148396,31129323046965072481656804,-31148013085770946943901434,28193169838546411847371568539,740414076579124044126444,-525255215829100362115115)` |
+| $5$ | `(7397869709189242574633245401,755513598709374767600110,-2109670539204460420041701,-8207297489837127025110444022,1764803250209063995996319,-70893405418296366710056045625,84323162299111853411855068186,-3981332880927278249716125,-171726276477590126926975437383,-62692317626842719600185986269,171583234876388097287565363128,62874153527698860760574804733,1556219523652634044883710392873,-1554891745660914454898694355111,-964306942688792089473231381,-32623328679058741066551592,32466104286016371849635012,-22331118890168646686227235,22344526489106990427399035,0,25380985578061046223770867186,376800248905650201861044)` |
+| $6$ | `(-8241545567501645028580367469,-841674697635741166483083,2350263868485299412268463,9143282986521742398086086330,-1966066851137746149173529,78978307831578420114679628113,-93939635571133811676807233154,4435376351221354379085568,187644135069943766239750797989,74646157278171156486465934991,-195975852067542912007391715169,-66357995243613551811142528842,-1741279732870457476185865989614,1657253871568150916435944180466,-54598831663017923413130386456,36343793611027500017078514,-36168638863712616242250431,24877828502171816288758622,-24892765145008860335026295,-1,591721650674481670836600,20244743791458864115330616934)` |
+| $7$ | `(-14012789284820196919226473493,263284427145386515771546423982,796430889763143439005382544768,292852695952811319006094408986,838836219144912156470441880946,232018540609535994599875018942544,-361918055062767064716780266426965,-3184414648723848104101682664429,1199593589166422138577826969563,443637342711478876179100869426,-1180566070829090750598602201233,-462928341186262294938743520968,-10553794700090939441822429816581,10297681789426740795954982586918,-160148276217697262551540664552,-7819117866379108808345446301,-59563874331984725384986118,796353571552319007276951744,-7704905737491118873933040080,-1,-87102773148438074287782894029,60607302737105731283755786593)` |
+| $8$ | `(19763918649866794443868684421,-263163799625823079086820882607,795849464378791197288224763535,255246800380131651742210052526,-838210807806003318179433450205,93817599955815008653986503982486,-144161993781422372763353872168402,3205726360120671170279035457705,443802247868385646427597927477,215721579495298613267001400907,-496755269376158661843592598483,-162868651375795343790383596801,-4024980677819693259758508761021,3923211169567952644024854255856,-63838441685704983821220770262,-87216882829384112520883751,7910018273605453118523352598,7586045228739748854020142563,-694761598384944152572767900,-1,-31810486170400704703267129828,24118375837277628620772463841)` |
+| $9$ | `(512025013481088443539028276079,-263476486878157360823871924349,-795801897644784738147597749175,-290486982136968178257690806569,838143296156560033943930026179,-243795101571578650928298538929892,374239379699111729259478635155779,-10128407698471397899597714583677,-1179349142012122740813827491563,-497491271597313057872233869556,1250138019737136816424103744953,426971067552552961076236040217,10778723071850611309854535984310,-10511496542063654691002247459718,167376181712475247264652108927,-1155415492908667607727026642,-8867858692735199980793564735,-6927350302912199018223223907,1545736132237204498578384552,0,87013359064228505045754734662,-63286086310910164504159824896)` |
+| $10$ | `(482211947320278719025861680361,263355858142292260757186242150,-796478453100790401234598265974,-257599301264260773806146739461,-838768710336626374148926100784,-96093680114671569346030586669407,141482766066581921841003560565887,10107100246311306533298265052777,-463772879974817108178231168161,-161763253494478584432592693142,426903605002121254551740260286,198727365614765856835047423088,3797541471708039760918444954480,-3706947320288838746307205395995,56571891677487604181230106457,9061802762427854048325423490,1017352026266655190275609922,-1455012546502084920260798890,6853895231176175380899578271,0,31879455231891356311293389937,-21424975510947468096065241449)` |
+| $11$ | `(37453244485327032952388719070,3824943752294411930641534,-10680643157336137519896120,-41551139927330333215510530057,8934681225390722536681815,-167098499431003622488831323348102,263305348687752417395881129532336,-13394106935970002685494106019,-861089282361320432937388609484,-328282535579819217573737320461,879611827830214721483696735245,309957156884732610933927511209,7895873975572868110898607837834,-7702043201682424618014228946767,121312312314081785642631258624,-165162344427917023895848219,164366363441071778104435873,-113055905051354589680059877,113123783792227147234054597,0,64403004790313286453448336162,-45887831712017330856799625904)` |
+| $12$ | `(-37767043646273048304147328435,-3856990752671266187588950,10770130113865335393506972,41899272993629966638987908668,-9009539772637440294420428,175554946563070605524176913444827,-270380020190419782785774472534836,8253063386844692997412363480360,868222550217467463888687125012,331139562229369829080188583874,-887088580114519189005063940631,-312472358513751959936575661198,-7962197138181591036844204893473,7764911845372264552008033877138,-123563303493452385725879769142,166546144571631184892465407,-165743494518614679241289203,114003135354967034468940499,-114071582812708439669026195,-1,-64315560636319405829283983021,46721248270480539490457488686)` |
+| $13$ | `(325708994532255262226441994,33263302040236217088237,-92883316026109284904009,-361345998013652107944294097,77699704748631745382474,5596193988832233985122012577541,-2567425418836848230454714123802,-8239673539145454694604772636720,-7407082904014966964664752848,-2961423764536458647726971052,7756467750295808987717999860,2613761023758169820491804449,68833996960704556753554694448,-65317740332039936664188917436,2289635692809995010127729945,-1436320454407680728683988,1429398272619298516441661,-983181181396367601952135,983771483164439462816752,0,-66999131274962990162453888,-848033310988935937961046874)` |
+| $14$ | `(-49648230793653167568630470015425,-5070366874652262558951615217,14158320428229431110632035534,55080423957920834724384178176423,-11843863506129705453329388746,475776445425035645631311831252906,-565905590075036765039458792102524,26719331579077035730540348554,-150777157158191074219192489371,-118237260516599171844621712712,392361488752165061930235010154,364014047099976056785430831585,436073875415727840101956037286,-425391532053249392639637487998,6684629518044143710500034511,218940129413636299142524058735,-217884972556458415640651797791,149867541349428168554631359673,-149957521788750150281852453753,0,3564614529844037000580626073,-2528763881517980221376617772)` |
+| $15$ | `(-5070366874652262558951615217,-517815435366076340009040,1445930252748986602556503,5625134120866728895584332467,-1209564414066890896087088,48589065311291765208029978414,-57793579191623778441544818282,2728733966663745655317344,250128547716753608177949471535,-250001015495711207495734065163,-250332857368042759520546041269,250205326854949516462247755327,44534407318534228647765445,-43443464115464518843098563,682673350808435221370274,22359442863629545914030491,-22251684091752404708563875,15305347342625939162243221,-15314536669850931782955034,0,364039224441726736112898,-258252115205380664852489)` |
+| $16$ | `(14158320428229431110632035534,1445930252748986602556503,-4037566578788233075388461,-15707433663852947987003331963,3377546630512239424831227,-135678457396165578494220422328,161380829655522800921478001174,-7619624145258417061840219,756716246940050246192295991360,756039854358217186078585859893,-756047140773850257596518356013,-756708965678152618166525057874,-124356367987737931921432875,121310055202113471963814956,-1906273902363680147555713,-62435749618545347914412709,62134847680104516979394702,-42738132624201778558051101,42763792589760034305034916,-1,-1016530778839072523496384,721134444259828239472438)` |
+| $17$ | `(55080423957920834724384178176423,5625134120866728895584332467,-15707433663852947987003331963,-61106973096252509173132192750792,13139743607958868823561427094,-527832873483854629014728473587843,627823375037063188496467155746567,-29642790643729510541698259383,430739186473609613592495335618,394468955459864427127999973084,-171586979203555083516984602252,-140309294129799934352157258537,-483786301161457531966820296272,471935163832620193659230484747,-7416019100172481604961159656,-242895163769798535305248246905,241724558370443705057524637686,-166265093098000006169783736951,166364918623835426274272913933,-1,-3954631945827032253612656597,2805445117719955712121919533)` |
+| $18$ | `(-11843863506129705453329388746,-1209564414066890896087088,3377546630512239424831227,13139743607958868823561427094,-2825419969844393861126238,113499135597920462783629169410,-134999947814078942591063100629,6374046187322842181266109,796932920832670210782888303906,-796273751659205267446361367304,796279164131686299646414529258,-796938327717191465329619050970,104027865171645514747026944,-101479532337054776152582452,1594655808175977305761130,52229394025475991035320024,-51977680447888262933349308,35751741308147222601841153,-35773206645874571682282990,0,850358759386781053209326,-603250786043285150566056)` |
+| $19$ | `(475776445425035645631311831252906,48589065311291765208029978414,-135678457396165578494220422328,-527832873483854629014728473587843,113499135597920462783629169410,-4559341237396505515868947581681778,5423044200932079859125854598678370,-256049982035840904921051730715,221754645041914048896240868442609,90433068870036206683214282201702,-230722616125064212308593766183441,-90396697078033770349851523674998,-1945553482064219701504486913036072,1910817310690118906034484467550629,38741123544493083752354047924041,-2098092013917914082586929635556,2087980499955605449709641508526,-1436172950536147464773977587611,1437035228464163145529554551614,-1,-34159517936668053496563316088,24233014382088384586044501694)` |
+| $20$ | `(-565905590075036765039458792102524,-57793579191623778441544818282,161380829655522800921478001174,627823375037063188496467155746567,-134999947814078942591063100629,5423044200932079859125854598678370,-6450363522704114684955593640029346,304555043794251649251993806066,-345419771474085336418139510847166,-138505411928183520866414057864212,354484042530972068107260593780916,133350069523652232553773489349123,3065704597766976052833987353128704,-2942886929215955353528336291365527,-17742677581317619393590995333164,2495545987164714339941744654342,-2483518989337446247337078577096,1708235682615401574524033619184,-1709261306948750963001681583632,0,40630557356322047408410009610,-28823617552023860328025566688)` |
+| $21$ | `(26719331579077035730540348554,2728733966663745655317344,-7619624145258417061840219,-29642790643729510541698259383,6374046187322842181266109,-256049982035840904921051730715,304555043794251649251993806066,-14379619749188089027965743,-3025390628670397886837308665487,3045287365963882727830443719647,-9622727969786163775825411541838,9602827322381373666570264919867,-155949643337024195038166769783,89823518430453525962923231208835,-57103776249708543119361207059726,-117827640990518792602452657,117259784181037541313512958,-80654647028596858333324462,80703072061179940769953109,-1,-1918378883838782182233614,1360912152465063668367667)` |
+
+**Definition 24.7 (trial-response numerator vectors).** The following ordered tuples, divided by $10^{30}$, are $v_6^0$ and $v_7^0$.
+
+| System | Complete ordered numerator vector |
+| --- | --- |
+| $F_6$ | `(387521929964427174746934,979100650740504887500063,325944740798946740020256,-537536742816068237726973,74308661359821586294783,83186304067390603209892,97846282646480832747558,844243013420664775130455,-975309442121823751286479,33220349260748705692933,3680471655269082806369,-3680674861339645090840,474700458200195626187390846719,1191786167972662060036,-4096935588865697143737,526647898181687791353236142554,5980618831341026624709,-683128797075607746464702138300,922780293828629644825876716589,-31824406829692475856758,87267426747824557830166738)` |
+| $F_7$ | `(591706237710313626481332,775759873810462533731531,529816112627228411526220,-741737496920879640211892,43365143679504542269901815,-42386858260074227003031222,47593687406626566548350407,288056216939313751688436471,110665109426478714278284663,-295070809850404798835219871,-103582008653132743802485101,-215437486660296051354374145,217250782572115272679275125,-1881803774074144653917146,474688560003744110081291483700,-23327043344114195472,-703894685178098369674,526661098203005930945739276559,3142237433088094327330,-630044723844981912900898006553,839133100949273643478036890437,4223233273933315161991599)` |
+
+**Proposition 24.8 (verification of the displayed finite witnesses).** With the exact source/event rectangles of Definition 16.3 and the interval expressions specified in §§17–21, the rational rows in Definitions 24.2–24.7 satisfy the residual, row-norm and response inequalities in Propositions 18.1, 19.2, 20.1 and 21.2.
+
+Proof. For each matrix form every entry of $E=I-R\mathbf C$, take its absolute interval upper endpoint, sum along each complete row and take the maximum. For responses form every row of $\mathbf Cv^0+\mathbf f$, then multiply by $R$ before taking absolute interval row endpoints. The source intervals are the nine OE Appendix 12 pairs, and the event intervals are the 22 OE Appendix 15.1 pairs; use the explicit derivatives of Definitions 19.1, 20.1 and 21.1. Directed multiplication and positive division by $1-q_R$ give the displayed residual inequalities. The actual inverse bounds follow from Proposition 17.2, without asserting that any candidate is an actual source or exact inverse. The interval products retain all off-root gap terms and every row and column, including six's unused stationary direction. These finite comparisons and the specified derivative majorants supply the arithmetic content of the conditional certificate; no proof-review conclusion is used as a mathematical premise. $\square$
+
+[GCpin]: https://github.com/the-omega-institute/trureturing/blob/321589a8be98de4fe179f99f6e593d8784952db1/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md
+
+## 追加锚（本行以下为增补区）
