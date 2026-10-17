@@ -42,10 +42,10 @@ internal sealed class SpectrumCompressionDocument : IScribeDocumentDefinition
                 H("Ordered boundary and middle positions"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural N at least 67 and middle position j from 6 through N-10, " +
                     "the sixteen natural step positions 1,2,3,4,5,j,N-9 through N are strictly increasing. " +
-                    "These positions and A are shared by the exact ray moments, the cofactor checker and " +
+                    "These positions and A are shared by the arbitrary-defect cone estimate and " +
                     "the spectrum compression proof. The latter remains with the scalar endpoint and " +
                     "handles positive middle mass by barycentric weights and zero middle mass without division."))), DescribeRole.Theorem),
-            Paragraph(Text("These statements concern real scalar spectra and finite cofactor certificates. Connecting " +
+            Paragraph(Text("These statements concern real scalar spectra and ordered step synthesis. Connecting " +
                     "the boundary inequalities to a physical APPT model, constructing an attaining state, and " +
                     "determining a purity supremum require additional results.")))));
 }

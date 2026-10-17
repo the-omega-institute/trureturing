@@ -3,23 +3,18 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniformSpectralBound.three_row_scalar_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/SpectrumCompression.A
+   utility: none
    digest: Three-row scalar purity bound with the natural integer optimizer. -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.FullRowCofactor
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.SpectrumCompression
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.RaySoundness
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarConeSoundness
+import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
 
 set_option autoImplicit false
 
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound
 open scoped BigOperators Matrix
 open Finset Matrix
-open NonnegativeKernelCircuit NonnegativeKernelCofactor
-open D5.S3.Arith.Lattices.CofactorKernel (cofactor augment kernel_cross_identity)
 open UniformSpectralBound.SharedSpectral
-open ScalarCertificate
 noncomputable section
 
 private def middleColumn : Fin 3 → ℝ := ![-3,-6,-1]
@@ -417,100 +412,13 @@ theorem three_row_scalar_bound (N : ℕ) (hN : 67 ≤ N)
     let t : ℕ := (3*N+4)/8
     ∑ i, (l i)^2 ≤ (9*(N : ℝ)+16*(t : ℝ))/(3*(N : ℝ)+2*(t : ℝ))^2 := by
   classical
-  -- The support and ray certificates supply the finite arithmetic for this bound.
-  -- fixedGood is constructed here; it is not a hypothesis of the result.
+  -- The arbitrary-defect proof supplies fixedGood with no success premise.
   have fixedGood : ∀ (j : ℕ), 6 ≤ j → j ≤ N-10 →
       ∀ x : Fin 16 → ℝ, (∀ q, 0 ≤ x q) → (∀ r, 0 ≤ (A *ᵥ x) r) →
         spectralGood (Real.sqrt (target N))
           (synth (d := N) (positions N j) x) := by
     intro j hj hj' x hx hAx
-    have hpositions : positions N j = positions₁₆ N j := by
-      rw [positions_literal N j hN]
-      rfl
-    have hp : ∀ q, positions N j q ≤ N := by
-      rw [hpositions]
-      exact positions₁₆_le N j hN hj'
-    have hrays (i : Fin 187) :
-        spectralGood (Real.sqrt (target N))
-          (synth (d := N) (positions N j)
-            (fun q => ((originalRay i).gap q : ℝ))) := by
-      apply spectralGood_of_square _ _ (Real.sqrt_nonneg _)
-      · rw [mass_synth (positions N j) hp, hpositions,
-          ray_mass_identity (originalRay i) (originalRay_valid i).moments N j hN]
-        exact (ray_mass_positive (originalRay i) (originalRay_valid i)
-          (N : ℝ) (j : ℝ) (by exact_mod_cast hN) (by exact_mod_cast hj)).le
-      · rw [square_synth (positions N j) hp, mass_synth (positions N j) hp,
-          Real.sq_sqrt (target_nonneg N), hpositions]
-        simpa only [target, bulkValue, bulkIndex] using
-          original_ray_gram_bound i N j hN hj hj'
-
-    -- Good is the actual promoted norm-to-mass property after projection and
-    -- synthesis at these SAME N,j and positions, not an abstract assumed cone.
-    let K : PointedCone ℝ (Fin 19 → ℝ) := {
-      carrier := {z | spectralGood (Real.sqrt (target N))
-        (synth (d := N) (positions N j) (project z))}
-      zero_mem' := by
-        change spectralGood (Real.sqrt (target N))
-          (synth (d := N) (positions N j) (project 0))
-        simp only [map_zero]
-        exact spectralGood_zero N _
-      add_mem' := by
-        intro u v hu hv
-        change spectralGood (Real.sqrt (target N))
-          (synth (d := N) (positions N j) (project (u+v)))
-        simp only [map_add]
-        exact spectralGood_add _ _ _ hu hv
-      smul_mem' := by
-        intro a z hz
-        change spectralGood (Real.sqrt (target N))
-          (synth (d := N) (positions N j) (project ((a : ℝ) • z)))
-        simp only [map_smul]
-        exact spectralGood_smul _ (a : ℝ) _ a.property hz }
-
-    have hull_le : PointedCone.hull ℝ (cofactorCandidates bR) ≤ K := by
-      apply Submodule.span_le.mpr
-      intro w hw
-      have hwdata : InKernel bR w ∧ w ≠ 0 := by
-        rcases hw with ⟨k, hk, ρ, σ, η, hη, hweq, hwK, hw0⟩
-        exact ⟨hwK, hw0⟩
-      obtain ⟨S, ε, a, hε, ha, heq⟩ :=
-        cofactor_candidate_ordered_full bR bR_full_span hw
-      -- FullSupport 19 3 is definitionally Support4. The local orderedCof is
-      -- definitionally the private generic orderedCof bR, including the ordering.
-      have hwfull : w = a • (ε • orderedCof S) := heq
-      have hvn : ∀ q, 0 ≤ (ε • orderedCof S) q := by
-        intro q
-        have h := hwdata.1.1 q
-        rw [hwfull] at h
-        change 0 ≤ a * (ε • orderedCof S) q at h
-        exact nonneg_of_mul_nonneg_right h ha
-      have hv0 : ε • orderedCof S ≠ 0 := by
-        intro hz
-        apply hwdata.2
-        rw [hwfull, hz, smul_zero]
-      obtain ⟨t, d, hd, hcat⟩ :=
-        oriented_full_cofactor_in_catalog S ε hε hvn hv0
-      have hwcat : w = (a*d) • (fun q => (zZ t q : ℝ)) := by
-        rw [hwfull, hcat, smul_smul]
-      change spectralGood (Real.sqrt (target N))
-        (synth (d := N) (positions N j) (project w))
-      rw [hwcat]
-      simp only [map_smul, project_catalog_owner t]
-      exact spectralGood_smul _ (a*d) _ (mul_pos ha hd).le (hrays t)
-
-    have hkernel : InKernel bR (liftGap x) := by
-      apply (liftGap_kernel x).mpr
-      exact ⟨hx, by simpa only [aR_eq_A] using hAx⟩
-    have hmem : liftGap x ∈ PointedCone.hull ℝ (cofactorCandidates bR) :=
-      (nonnegKernel_iff_mem_hull_cofactorCandidates bR (liftGap x)).mp hkernel
-    have hgood := hull_le hmem
-    change spectralGood (Real.sqrt (target N))
-      (synth (d := N) (positions N j) (project (liftGap x))) at hgood
-    have hproject : project (liftGap x) = x := by
-      funext q
-      change Fin.append x (aR *ᵥ x) (Fin.castAdd 3 q) = x q
-      exact Fin.append_left _ _ _
-    rwa [hproject] at hgood
+    exact structural_fixed_good N j hN hj hj' x hx hAx
 
   have hrows : ∀ r, 0 ≤ slackMap N hN l r := by
     intro r
