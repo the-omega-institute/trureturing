@@ -1594,4 +1594,154 @@ A negative Gamma gives a nonzero entry of the alternating pairing on a pure Selm
 
 The epsilon=0 formula extends section 96 to cut sides containing an even number of primes13mod24. The epsilon=1 formula handles an odd number and requires the explicit primitive norm certificate's5-character. Cuts containing primes3mod4 on the chosen side are not included: for their indicator v one has A^T v=diag(delta)v+(delta^T v)delta, which need not vanish, so the same two classes cannot simply be reused. No nonempty realized original-support family, converse, independence from every earlier condition, or universal WSS exclusion is asserted.
 
+## 98. Pairing distinct left and right cuts in a three-prime support
+
+### 98.1. Exact criterion and hypotheses
+
+**Theorem 98.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=qrs C^2, where q,r,s are distinct primes and qrs is the full positive squarefree kernel. Assume
+
+ q=r=s=19 modulo 24,
+ (r/q)=(s/q)=(s/r)=+1.
+
+Actual original support also gives (5/q)=(5/r)=(5/s)=1 and all three primes greater than 5. Reciprocity gives (q/r)=(q/s)=(r/s)=-1.
+
+There exist primitive integers a,b,c with c>0, gcd(a,b,c)=1, q not dividing bc, and
+
+ a^2-rs b^2=5qrs c^2.
+
+For every such certificate, r does not divide bc either, and the sign
+
+ Xi=(b/q)(b/r)=(b/(qr))
+
+is independent of the allowed certificate choice. If Xi=-1, the curve E_D:Y^2=X(X+5D)(X-15D), D=qrs, has rational rank exactly one. Consequently there is no admissible repetition B_(Nk)=D c'^2 with k>1 odd, 3 not dividing k and c' a positive integer.
+
+This criterion treats distinct extra left and right kernel directions. It does not require any of the cut primes to be 1 modulo 4. It makes no converse assertion for Xi=+1, no claim that a numerical original block realizes the negative sign, and no universal WSS conclusion.
+
+### 98.2. The nonsymmetric matrix and the actual Selmer directions
+
+**Proof.**
+
+The source convention of Theorem 95.1 has off-diagonal A_ij=[q_j/q_i] and zero row sums. In the order (q,r,s), the character hypotheses give
+
+ A=[[0,0,0],[1,1,0],[1,1,0]],
+ A^T=[[0,1,1],[0,1,1],[0,0,0]].
+
+Both matrices have rank one. With 1=(1,1,1), write
+
+ v=(1,1,0), w=(0,1,1).
+
+Then ker A=span{1,v} and ker A^T=span{1,w}. These spaces differ: the right cut qr is not a left direction, and the left direction rs is not a right cut. Indeed A^T v=(1,1,0) and Aw=(0,1,1) are nonzero.
+
+All three primes have delta_i=[-1/q_i]=1 and t_i=[2/q_i]=1. Theorem 95.1 parametrizes the full Selmer group by (y0,x,y) in F_2 x ker A^T x ker A, with
+
+ b1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b2=5^y0 product q_i^y_i,
+ a=y0, epsilon=y0+delta^T x,
+ x0=y0+t^T x+delta^T y.
+
+The choices (0,w,0) and (0,0,v) therefore give precisely
+
+ lambda=(rs,1), mu=(1,qr)
+
+in the Kummer pair order (X,X+5D). Both sign and five-exponent vanish because each chosen direction contains two primes. These are the genuine extra directions; using the same indicator in both slots would fail Selmer membership.
+
+The actual golden class S=(-15,5) and the two rational torsion generators have parameter vectors (1,0,0),(0,1,0),(1,0,1). Together with (0,w,0),(0,0,v), they form a basis of the full five-dimensional Selmer space. Thus S,lambda,mu form a basis of its three-dimensional quotient by rational torsion. Theorem 85.1 supplies exact rational torsion E_D[2] and the actual non-torsion original point; no extra Selmer class is assumed to be a rational point.
+
+### 98.3. Primary pairing and existence of the normalized certificate
+
+Use Shukla–Stoll, The Cassels-Tate pairing on 2-Selmer groups of elliptic curves, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10), Theorem 5.6 and the introduction on printed page 2. The tangent Hilbert product computes the alternating Cassels pairing with multiplicative convention (-1)^(2 times the additive value). The rational Kummer image lies in its radical, without Sha finiteness. The short-model translation x=X-10D/3, with roots -10D/3,-25D/3,35D/3, preserves all Kummer coordinates and root differences. This source normalization is the one used in sections 96–97. Primary URL: https://arxiv.org/pdf/2302.01640 .
+
+Put l=rs and K=5qrs. The triple of lambda is (l,1,l), with conics
+
+ H1: z2^2-l z3^2=20qrs t^2,
+ H2: z1^2-z3^2=15q t^2,
+ H3: z2^2-l z1^2=K t^2.
+
+Local solubility of the Selmer covering implies local solubility of every conic. The Hasse principle for conics gives a rational point on H3. Its t coordinate is nonzero because l is squarefree and nonsquare, so alpha^2-l beta^2=K has a rational point.
+
+At q, l is a square unit by the directed characters. There is a local point beta=1, alpha=sqrt(l(1+5q)), since l is a square and 1+5q is a square unit in Q_q. Both coordinates are q-units. A smooth rational conic with a rational point is parametrized by rational lines, and Q is dense in Q_q. Thus a rational affine point can be chosen sufficiently close to this local point to have alpha,beta both q-integral and beta a q-unit. Clearing denominators and dividing their gcd gives primitive integers a,b,c with c>0 and q not dividing bc. This proves the claimed certificate existence; no independent assumption on a norm solution is required.
+
+Tangency points on H3 and H1 are (c,b,a) and (c,2a,2b). On H2 use (1,(15q+1)/2,(1-15q)/2). Put
+
+ A0=(15q+1)/2, B0=(1-15q)/2,
+ L2=A0 z1-B0 z3-15q t,
+ L3=a z2-l b z1-Kc t.
+
+The triple of mu is (1,qr,qr), so
+
+ <lambda,mu>=product_p (L2(P_p)L3(P_p),qr)_p,
+
+including the real place. Rational scaling of a tangent has global Hilbert product one, and scaling a local projective point changes L2 L3 by a square. We use primitive tangents and avoid zero evaluations.
+
+### 98.4. All places except q and r
+
+At infinity, qr is positive. At 2, qr=19^2=1 modulo 8 is a square. At 3 it is1 modulo 3, and at 5 it is a square by actual 5-splitting. At s,
+
+ (qr/s)=(q/s)(r/s)=(-1)(-1)=+1,
+
+so qr is a local square there as well. All these contributions are one, even in the presence of certificate denominators.
+
+At any odd prime p not dividing 30qrs, both projected conics H2,H3 are smooth over Z_p with nondegenerate quadratic forms. A primitive local covering point has primitive projections to both: if an entire projected triple vanished modulo p, the other equation would force the fourth coordinate to vanish. The two rational tangency sections are primitive; this is immediate for H2 and follows from gcd(a,b,c)=1 for H3, including primes dividing c. Their tangent forms are primitive.
+
+A primitive tangent to a smooth conic at an integral section has even valuation at any other integral section when its value is nonzero. Explicitly, choose unimodular coordinates sending the tangency section to (1,0,0). The conic has form uXZ+vY^2+wYZ+hZ^2=0, with u,v units, and its tangent is Z=0 up to a unit. Away from the reduced tangency point the evaluation is a unit. Near it, X is a unit and Y,Z are divisible by p, so Z(uX+wY+hZ)=-vY^2 gives an even valuation. This proves the assertion uniformly, including denominator primes. Zero tangent evaluations can be avoided because the smooth locally soluble covering has infinitely many nearby points and each tangent zero set is finite.
+
+Thus both tangent evaluations have even valuation. Since qr is a unit, the odd-prime Hilbert product is one. This accounts for all auxiliary primes without imposing affine integrality on a chosen norm solution.
+
+### 98.5. The q-adic unit-norm contribution
+
+By certificate normalization, alpha=a/c and beta=b/c are q-integral and beta is a unit; the norm equation also makes alpha a unit. Choose
+
+ t=1, z1=-beta, z2=alpha,
+
+and the root z3 of z3^2=beta^2-15q satisfying z3=beta modulo q. Hensel applies because beta is a unit. This point satisfies all three conics. Direct evaluation gives
+
+ L3=2rs b^2/c,
+ L2=-beta modulo q.
+
+Both are q-units. Since the second Hilbert argument qr has valuation one, its unit factor r does not enter these unit evaluations. Therefore
+
+ (L3,qr)_q=(2rs/c/q)=(2/q)(c/q)=-(c/q),
+ (L2,qr)_q=(-b/c/q)=-(b/q)(c/q).
+
+Here (rs/q)=1 and q=19 modulo 24 gives (2/q)=(-1/q)=-1. Multiplication yields exactly (b/q).
+
+### 98.6. The r-adic ramified-norm contribution
+
+Primitiveness forces r not to divide c. Otherwise the norm equation first gives r|a and then, modulo r^2, r|b, a contradiction. Since the right side has valuation one and the two norm terms have opposite valuation parity, v_r(b)=0 and v_r(a)>=1. In particular
+
+ beta^2=-5q modulo r.
+
+This is a square unit, consistently with (-1/r)=(q/r)=-1 and (5/r)=1. Use t=1,z1=-beta,z2=alpha, and choose a Hensel root z3=-2beta modulo r of z3^2=beta^2-15q. Then
+
+ L3=2rs b^2/c,
+ L2=beta(3beta+1)^2/2 modulo r.
+
+If the latter square factor vanishes, choose the other root z3=2beta modulo r; its reduction is
+
+ L2=-3beta(beta-1)^2/2 modulo r.
+
+It is a unit in that exceptional case since r>3. Thus one branch always makes L2 a unit. As r=19 modulo 24, (-3/r)=1 and (2/r)=-1, so either allowed branch gives
+
+ (L2,qr)_r=-(b/r)(c/r).
+
+For L3 both Hilbert arguments have valuation one. Keeping every unit factor gives
+
+ (L3,qr)_r=(-1/r)(2s/c/r)(q/r)=-(c/r),
+
+because (-1/r)=(2/r)=(q/r)=-1 and(s/r)=1. The possibly relevant units s and q have not been discarded. The product of the two local tangent factors is (b/r).
+
+Together with all other places this proves
+
+ <lambda,mu>=(b/q)(b/r)=Xi.
+
+### 98.7. Choice independence, rank and original-index scope
+
+The primary pairing theorem is independent of its rational tangency points and local choices. The calculation applies to every primitive certificate with the stated q-unit normalization. Thus Xi is independent of those choices. In particular b cannot be assigned a preferred character by invoking rational approximation. Replacing b by -b has no effect because (-1/q)(-1/r)=+1. The r-unit conclusion above ensures that every character in Xi is nonzero.
+
+If Xi=-1, the alternating pairing on the three-dimensional pure Selmer quotient has rank at least two and radical dimension at most one. The full rational Kummer image modulo torsion lies in this radical and has dimension equal to the rational Mordell–Weil rank. The rank is therefore at most one; the actual original point makes it exactly one. Corollary 94.2 excludes all stipulated repetitions for N>=81. ∎
+
+This uses neither rank parity nor finiteness of Sha, and does not equate Selmer classes with rational points. It addresses an actual residue stratum with genuinely different left and right directions, outside the all 1 modulo 4 cut-side restriction of section 97. Passing this sign test is not shown to imply repetition or any additional rational rank. No numerical realization, independence from every earlier residue condition, infinitude, or global WSS exclusion is asserted.
+
 ## 追加锚（本行以下为增补区）
