@@ -95,9 +95,9 @@ Every other public declaration is a definition used by a public statement. The b
 
 **Argued, not formalized.**
 - *Mechanism.* The clique adds activity without current. Its 55 edges carry total flux 55/8 of the activity A = 61/8, while their nearly equal observables add only 121/1600000 to D_a. The bound of Eq. (8) scales as 1/√A, so equilibrium activity attached to a driven cycle lowers the bound while χ_ab barely changes.
-- *What survives.* The proved Eq. (9) carries the factor √N*, which grows with the number of edges; with N* = 61 it holds here. A bound of the form of Eq. (8) for general networks needs some such dependence on the edges that carry no current.
+- *What survives.* The proved Eq. (9) carries the factor √N*, which grows with the number of edges; with N* = 61 it holds here. One possible correction of Eq. (8) for general networks is a dependence on the edges that carry no current.
 
-**Open.** The largest constant c_N for which |χ_ab| ≤ c_N γ √(σ/(2A)) holds for every network on N states.
+**Open.** The smallest constant c_N for which |χ_ab| ≤ c_N γ √(σ/(2A)) holds for every network on N states.
 
 **Effect on the paper.** Eq. (8) holds for unicyclic networks, as proved there, but not for arbitrary networks; Eq. (9) remains the general bound.
 
