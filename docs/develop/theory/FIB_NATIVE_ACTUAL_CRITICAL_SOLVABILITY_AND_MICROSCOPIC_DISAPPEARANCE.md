@@ -2680,3 +2680,833 @@ The original datum and each applicable $\delta$ are fixed before $s\downarrow0$.
 Zero-response occurrence, the absolute sign of $C_4$, finer nonnegative-$C_4$ selection, centered crossover, analytic/native $L^2$ preparation and physical three-dimensional realization remain unresolved. The nonnegative branch still permits bounded, divergent or mixed subsequential $r_s$. The complete original every-ground-state decision of Definition 9.1, original A and the full target are not settled by this conditional theorem. This ordinary proof makes no Lean/kernel, independent-review, publication or lifecycle claim.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 29. The actual adjoint row and its late-return comparison
+
+**Definition 29.1 (fixed data, common space and factor order).** Fix one admitted original datum of Definitions 1.1–2.2 before taking $s\downarrow0$. Retain the conditional analytic antecedents there, P §§76, 87–88, 97 and 104–107, R (8.3), and the mode decay of Entire-height response escape, Theorem 3.1. In particular these include the original positive-cutoff negative attainment, the both-face all-height heat bounds, the specified compact reconstruction and simple critical mode, and the common-bridge inverse-determinant moments. The signed nonzero $\kappa$, the jointly realized rational vector (1.2), its positive denominator margin on $\overline I$, both original Dirichlet faces, all real phase frequencies, raw unit source and $j_0$ remain fixed. Every native form and operator domain is exactly (1.5), transported by the original $\mathcal U_s$ and determinant-one $\mathcal T_s$. No actual state is restricted by parity or reality.
+
+Work on complex $L^2(\mathbb R^4,d\xi)$ by restriction to $\Omega_s$ followed by zero extension. In §§29–35 suppress tildes only on the sheared free operator, heat and field: thus $C_s$ here denotes $\mathcal T_s C_s\mathcal T_s^{-1}$ from (2.2), and its free form is (2.5). Put
+
+$$
+\begin{aligned}
+\gamma&=\chi_c/a,&T&=s^{-2},&Q_s(t)&=e^{-tC_s},&R_s(h)&=(C_s+h)^{-1},\\
+q_s(t;\eta,\xi)&=\text{the kernel of }Q_s(t),&
+F_s&=j_0^{-1}\int_1^Tq_s(u;0,\cdot)\,du,\\
+U_s^{>}&=s^5W_1\circ\Xi_s\circ\mathscr L_s,&
+\widetilde U_s&=F_s+U_s^{>},\\
+H_s&=\int_0^TQ_s(t)\,dt,&
+\mathcal N_s&=F_sH_s,&\mathcal B_s(h)&=R_s(h)\widetilde U_s.
+\end{aligned}
+\tag{29.1}
+$$
+
+A field in an operator product denotes multiplication. In particular multiplication is after the return in $\mathcal N_s$, and $`\mathcal B_s(h)^*=\widetilde U_sR_s(h)`$. P (104.9)'s sheared product is $H_sF_s$, whose adjoint is $\mathcal N_s$. The split is at original heat time one. Both integrals in (29.1) use the $B$ clock, with shifted factor $e^{\lambda s^2t}$; $a$ enters only through $\gamma$ and the actual spectral parameter
+
+$$
+h_s=-\epsilon_c(s)/a=r_ss^8/a.
+\tag{29.2}
+$$
+
+At zero parameter write $\mathcal N_0=K_{\rm rec}^*$, with precisely P (104.1)'s bounded specified reconstruction. The expression $\mathcal N_0g=V\int_0^\infty P_tg\,dt$ is used only where that integral or its bounded-adjoint interpretation is justified. It is not an inverse on arbitrary $L^2$ right sides.
+
+**Theorem 29.2 (late comparison at the actual spectral parameter).** For $g\in L^1\cap L^2$ complex, $0<s<s_0$ and $0<h\le1$,
+
+$$
+\| (\mathcal B_s(h)^*-\mathcal N_s)g\|_2
+ \le C(h+s^5)(\|g\|_1+\|g\|_2)
+       +Cs^7h^{-1/4}\|g\|_1.
+\tag{29.3}
+$$
+
+Consequently, on the actual path with $h_s\le1$ and P (100.3)'s $r_s\ge c>0$,
+
+$$
+\| (\mathcal B_s(h_s)^*-\mathcal N_s)g\|_2
+ \le C_g(h_s+s^5).
+\tag{29.4}
+$$
+
+Proof. P (104.4), symmetry and semigroup composition give, uniformly in both endpoints and including zero extension,
+
+$$
+\begin{aligned}
+\|Q_s(t)\|_{2\to2}&\le1,\\
+\|Q_s(t)\|_{1\to\infty}&\le
+ \begin{cases}Ct^{-7/2},&0<t\le T,\\Cs^4t^{-3/2},&t\ge T,\end{cases}\\
+\|Q_s(t)\|_{1\to2}&\le
+ \begin{cases}Ct^{-7/4},&0<t\le T,\\Cs^2t^{-3/4},&t\ge T.\end{cases}
+\end{aligned}
+\tag{29.5}
+$$
+
+For the middle line apply the column identity at time $t/2$ and Cauchy–Schwarz between the two endpoints. The overlap of the two time regimes changes only the constant. P (104.6) gives $\|F_s\|_2+\|F_s\|_\infty\le C$. The short-field part of the difference in (29.3) is
+
+$$
+F_s\int_0^T(e^{-ht}-1)Q_s(t)g\,dt
+ +F_s\int_T^\infty e^{-ht}Q_s(t)g\,dt.
+$$
+
+On $(0,1)$ use $|e^{-ht}-1|\le ht$, the multiplier supremum and $L^2$ contraction. On $(1,T)$ use the multiplier $L^2$ norm and the $1\to\infty$ bound. The first term is bounded by
+$Ch\|g\|_2+Ch\|g\|_1\int_1^\infty t^{-5/2}dt$.
+The second is at most $Cs^4\|g\|_1\int_T^\infty t^{-3/2}dt=Cs^5\|g\|_1$.
+
+The fixed-cutoff multiplier $W_1$ is bounded by Definition 1.2, so $\|U_s^{>}\|_\infty\le Cs^5$. Its return on $(0,T)$ costs
+$Cs^5(\|g\|_2+\|g\|_1\int_1^\infty t^{-7/4}dt)$.
+On $(T,\infty)$ it costs at most
+
+$$
+Cs^7\|g\|_1\int_T^\infty e^{-ht}t^{-3/4}dt
+ \le Cs^7h^{-1/4}\|g\|_1.
+$$
+
+These estimates prove (29.3). Finally
+$s^7h_s^{-1/4}=a^{1/4}s^5r_s^{-1/4}\le Cs^5$, proving (29.4). Absolute kernel bounds apply to complex inputs. Contraction uses $C_s\ge0$; the shifted heat has not been treated as a raw-measure Markov semigroup. Both native deaths remain in every heat operator. $\square$
+
+
+## 30. Two-endpoint coefficients and their input-height weights
+
+**Definition 30.1 (finite path coefficients).** Use the ordered Engel convolution of (2.6),
+$(f*k)(\xi)=\int f(\eta)k(\eta^{-1}\xi)d\eta$.
+For $\eta=(A,\mathbf z_\eta)$ and $\xi=(B,\mathbf z_\xi)$ let $H=A+W$ be the height bridge from $A$ to $B$ in time $t$, with $W$ starting at zero. Set
+
+$$
+\begin{aligned}
+M_\vartheta[H]&=\int_0^t(1+\nu\vartheta H_u)^{-2}
+                    u(H_u)u(H_u)^{\mathsf T}\,du,\\
+\mathsf q_j(t;\eta,\xi)
+ &=h_t(B-A)\mathbb E_{A,B}^t\left[
+ \left.\frac1{j!}\partial_\vartheta^j
+ \{e^{\lambda\vartheta^2t}\gamma_{M_\vartheta[H]}
+                       (\mathbf z_\xi-\mathbf z_\eta)\}\right|_{\vartheta=0}\right],\\
+(\mathsf Q_j(t)g)(\xi)&=\int\mathsf q_j(t;\eta,\xi)g(\eta)d\eta,
+ \qquad 0\le j\le4.
+\end{aligned}
+\tag{30.1}
+$$
+
+The functions $u,h_t,\gamma_M$ are exactly (3.1). Differentiation is finite on each path in its neighborhood of zero; (30.1) defines coefficients, not a globally pole-free family for nonzero $\vartheta$. On finite safe paths it is the Taylor coefficient of the original sheared, shifted Gaussian. In particular $\mathsf Q_0(t)=P_t$. At the source endpoint zero the coefficients, in order, are
+
+$$
+p_0,\quad \nu p_1,\quad \nu^2p_2+\lambda tp_0,\quad
+\nu^3p_3+\nu\lambda tp_1,\quad
+\nu^4p_4+\nu^2\lambda tp_2+\tfrac12\lambda^2t^2p_0.
+\tag{30.2}
+$$
+
+Thus their field integrals on $[1,\infty)$ divided by $j_0$ are exactly $\mathcal V_j$ of (23.1), with $\mathcal V_0=V$. Return coefficients have no additional $j_0^{-1}$.
+
+**Lemma 30.2 (weighted ordered kernels).** There are signed kernels $k_{jm}(t)$, $0\le m\le j\le4$, such that
+
+$$
+\mathsf Q_j(t)g=\sum_{m=0}^j(r^{j-m}g)*k_{jm}(t),
+\qquad
+\|k_{jm}(t)\|_b\le Ct^{m/2-(7/2)(1-1/b)}
+\quad(1\le b\le\infty).
+\tag{30.3}
+$$
+
+Each kernel may be a finite sum of differentiated-Gaussian terms. Consequently, whenever the displayed input norms are finite and $1\le p_m\le q\le\infty$,
+
+$$
+\|\mathsf Q_j(t)g\|_q
+ \le C\sum_{m=0}^j
+ t^{m/2-(7/2)(1/p_m-1/q)}\|r^{j-m}g\|_{p_m}.
+\tag{30.4}
+$$
+
+Proof. The triangular matrix
+
+$$
+D_A=\begin{pmatrix}1&0&0\\A&1&0\\A^2/2&A&1\end{pmatrix}
+\quad\text{satisfies}\quad u(A+W)=D_Au(W),\qquad\det D_A=1.
+$$
+
+The phase component of $\eta^{-1}\xi$ is $D_A^{-1}(\mathbf z_\xi-\mathbf z_\eta)$. Conjugate the covariance by $D_A^{-1}$. Derivatives of $(1+\nu\vartheta(A+W))^{-2}$ at zero are polynomials in $A$ and $W$. Every coefficient of order $j$, after extracting $A^{j-m}$, has relative bridge degree $m$. A clock factor $t^\ell$ contributes degree $2\ell$, so is included in the same count. The remaining expression depends only on $\eta^{-1}\xi$, giving the factor order in (30.3).
+
+Matrix differentiation produces a polynomial in whitened phase variables times a Gaussian. Its absolute value is bounded by a fixed inflated-covariance Gaussian times the corresponding powers of the relative bridge supremum, with clock powers retained. Phase integration of this majorant, then height integration and Brownian scaling, give $\|k_{jm}(t)\|_1\le Ct^{m/2}$. Taking the phase supremum and using P (107.5) on the relative zero-start bridge gives $\|k_{jm}(t)\|_\infty\le Ct^{(m-7)/2}$. Its layer-cake proof works for every nonnegative real moment order, not only integers: the integral $\int_L^\infty v^{\alpha-1}e^{-cv^2/t}dv$ is finite for $\alpha>0$, with the zero-order case supplied separately. Interpolation proves the remaining $L^b$ bounds. Young's inequality with $1+1/q=1/p_m+1/b$ proves (30.4).
+
+Young's inequality here is the classical graded-group convolution inequality of Fischer–Ruzhansky, *Sobolev spaces on graded groups*, [arXiv:1311.0192v1, §2.1, (2.2)](https://arxiv.org/html/1311.0192v1#S2.SS1). The group (2.6) is graded and unimodular, its Haar measure is unit Lebesgue measure, and the factors have the order used in that inequality. It supplies the norm step, not the native coefficient decomposition. $\square$
+
+
+## 31. The global return expansion on the noncompact seed
+
+**Definition 31.1 (the fixed left coordinate).** With the original $p,V,\mu$ of (2.7), put
+
+$$
+g_0=Vp/\mu,\qquad
+G_jg=\int_0^\infty\mathsf Q_j(t)g\,dt
+\tag{31.1}
+$$
+
+on inputs and in norms for which this integral converges. The coordinate is exactly R (8.3): $\langle g_0,f\rangle=\mu^{-1}\int Vpf$. P §§87–88 and Entire-height response escape Theorem 3.1 give
+
+$$
+\begin{gathered}
+|g_0(\xi)|\le C(1+\mathfrak d(\xi))^{-10},\quad
+ g_0\in L^1\cap L^2,\quad \langle g_0,p\rangle=1,\\
+G_0g_0=p/(\gamma\mu),\qquad
+\gamma\mathcal N_0g_0=g_0,
+\qquad \mathfrak d(\xi)=d_E(0,\xi).
+\end{gathered}
+\tag{31.2}
+$$
+
+The identities follow from the specified reconstruction of $Vp$ and its adjoint; they introduce no arbitrary zero-energy inverse. Homogeneous volume growth seven implies
+
+$$
+r^ng_0\in L^p\quad\text{if }(10-n)p>7,
+\qquad r^ng_0\in L^\infty\quad(0\le n\le5).
+\tag{31.3}
+$$
+
+**Theorem 31.2 (return remainder with complete endpoint and time tails).** On the entire common output space,
+
+$$
+\left\|H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\|_\infty
+ \le Cs^5(1+|\log s|).
+\tag{31.4}
+$$
+
+Moreover $G_jg_0\in L^4$ for $j=1,2,3$, and $G_4g_0\in L^\infty$.
+
+Proof. Fix $\ell>0$ so that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$, and put $L=\ell/s$. Use auxiliary killing at $\pm L$ in addition to the original realization. On a path staying in this strip all interpolation covariances $M_\vartheta$, $0\le\vartheta\le s$, are comparable to $M_0$. Finite Gaussian differentiation through order five, as in (23.3), bounds the fifth derivative of the combined shifted density by inflated-Gaussian majorants with input factors $|A|^{5-m}$ and relative degree $m$, $0\le m\le5$. Indeed $|H|\le|A|+\sup|W|$, and clock derivatives contribute their degree-two time powers. Constants are uniform on these paths and $0<t\le T$, since $\vartheta\sqrt t\le1$.
+
+For $t<1$, use the $L^1$ kernel bound against the bounded inputs $r^{5-m}g_0$. The resulting powers $t^{m/2}$ are integrable. For $t\ge1$, (30.4)'s majorant, now at total degree five, uses the following inputs in order $m=5,4,3,2,1,0$:
+
+$$
+g_0\in L^1,\quad rg_0\in L^1,\quad r^2g_0\in L^1,\quad
+r^3g_0\in L^{7/6},\quad r^4g_0\in L^{7/5},\quad
+r^5g_0\in L^{7/4}.
+\tag{31.5}
+$$
+
+Their time powers in $L^\infty$ are respectively $-1,-3/2,-2,-2,-2,-2$. All memberships are strict instances of (31.3). Taylor's integral remainder on $(0,T)$ is therefore bounded by $Cs^5(1+\log T)$. This estimate does not assume a third or fourth absolute $L^1$ height moment of $g_0$.
+
+We restore the original faces, noncompact input and canonical coefficient times. First split input heights at $|A|=L/4$. For inner input, a path leaving the auxiliary strip has relative height supremum at least $3L/4$. When $|\xi_r|\le L/2$ the deleted-path inverse-determinant bound applies; when $|\xi_r|>L/2$ the relative endpoint displacement is at least $L/4$. In both cases the kernel supremum is at most
+
+$$
+Ct^{-7/2}e^{-cL^2/t}.
+\tag{31.6}
+$$
+
+For surviving original paths, the covariance comparison needed for this bound follows from the fixed positive lower and upper bounds of $(k-\alpha_\kappa)/d_0$ on $\overline I$. It applies even when such paths leave the auxiliary strip. Integrating (31.6) against $|g_0|$ and over $t\in(0,T)$ costs $CL^{-5}$.
+
+For outer input, (31.2) gives supremum $CL^{-10}$ and $L^1$ norm $CL^{-3}$. On $t\le T$ the positive shifted heat has row mass at most $e^{\lambda s^2t}\le e^\lambda$, while (29.5) supplies its $1\to\infty$ bound. Thus the outer native contribution is at most
+
+$$
+C\int_0^T\min\{L^{-10},t^{-7/2}L^{-3}\}\,dt\le CL^{-8}.
+\tag{31.7}
+$$
+
+The same estimate bounds the auxiliary contribution, so deleting it in the preceding Taylor argument is harmless.
+
+For a coefficient of total degree $j\le4$ and relative degree $m$, put $n=j-m$. On inner input, removing the safe-path indicator costs at most $CL^{m-5}M_n(L)$ in the integrated supremum norm, where
+
+$$
+M_n(L)=\int_{|r|\le L/4}|r|^n|g_0|\le
+ \begin{cases}C,&n<3,\\C(1+\log L),&n=3,\\CL^{n-3},&n>3.\end{cases}
+\tag{31.8}
+$$
+
+To obtain the bound use the relative-moment version of (31.6) and integrate $t^{(m-7)/2}e^{-cL^2/t}$ on $(0,\infty)$. For (31.8), split homogeneous annuli below and above $L$: above $L$, the factor $|r|^n\le L^n$ on the truncated height region and the mass tail is $O(L^{-3})$. Each quantity $s^jL^{m-5}M_n(L)$ is $O(s^5)$ or smaller.
+
+For outer coefficient input, integrate below $L^2$ with the $L^1$ kernel bound and $\|r^ng_0\mathbf1_{|r|>L/4}\|_\infty\le CL^{n-10}$. The result is $CL^{j-8}$. Above $L^2$, choose
+
+$$
+1\le p<\frac7{m+2},\qquad p>\frac7{10-n}.
+\tag{31.9}
+$$
+
+Such a choice exists for every $j\le4$. The input tail is bounded by $CL^{n-10+7/p}$ and the integrated kernel factor is $CL^{m+2-7/p}$, again giving $CL^{j-8}$. Its prefactor $s^j$ makes it $O(s^8)$.
+
+Finally restore coefficient times $t>T$. For $n=0,1,2$ use input $L^1$ and integrate $t^{(m-7)/2}$; after $s^j$ the costs are $O(s^{5+n})$. For $n=3$ use $p=7/6$, and for $n=4$ use $p=7/5$; (30.4) gives $O(s^7)$ in either case. Thus every omitted coefficient time tail is $O(s^5)$ or smaller. The bounds also cover outputs outside $I_s$: the native kernel is zero there, and a safe path cannot have such an endpoint. This proves (31.4) on the full output space.
+
+For the asserted $L^4$ integrals, all small-time terms are integrable by the finite weighted $L^4$ input norms and the $L^1$ kernel bounds. At large time the unweighted terms for $j=1,2,3$ have powers $-17/8,-13/8,-9/8$. The inputs with one or two height powers lie in $L^1$ and have still more negative powers. The exceptional $r^3g_0$ input for $j=3$ may use $p=7/6$, giving exponent $-17/8$. For $G_4g_0$ in $L^\infty$, the unweighted exponent is $-3/2$, those with one or two input powers are smaller, and the inputs with three or four powers use $7/6,7/5$, giving respectively $-5/2,-5/2$. Small times use bounded weighted inputs. All these time integrals converge absolutely in their stated norms. $\square$
+
+
+## 32. Early-field remainders in the consumed mixed norms
+
+**Lemma 32.1 (integrated field estimate).** Set $\mathcal V_0=V$ and retain exactly (23.1)'s other coefficients. For $1<p<\infty$ and an integer $0\le n\le4$ satisfying $n<5-7/p$, put $\alpha_p=5-7/p$. Then
+
+$$
+\left\|F_s-\sum_{k=0}^ns^k\mathcal V_k\right\|_p\le C
+\begin{cases}
+s^{n+1},&n+1<\alpha_p,\\
+s^{n+1}(1+|\log s|),&n+1=\alpha_p,\\
+s^{\alpha_p},&n+1>\alpha_p.
+\end{cases}
+\tag{32.1}
+$$
+
+This is an estimate for the early field $F_s$, not for the long Coulomb field $U_s^{>}$.
+
+Proof. Consider a source-started coefficient or Taylor derivative of total order $m$. Its phase $L^p$ norm is bounded, by Minkowski and the inflated-Gaussian estimate, by a constant times
+$h_t(r)\mathbb E[S^m(\det M_0)^{-\alpha/2}]$, where $\alpha=1-1/p$. Concavity, equivalently Hölder, gives
+
+$$
+\mathbb E[S^m(\det M_0)^{-\alpha/2}]
+ \le\left(\mathbb E[S^{m/\alpha}(\det M_0)^{-1/2}]\right)^\alpha.
+\tag{32.2}
+$$
+
+P (107.5), with its layer-cake extension to the nonnegative real moment $m/\alpha$, leaves the factor
+$h_t(r)^{1/p}t^{(m-7\alpha)/2}$.
+Its $L^p(dr)$ norm is $t^{(m-7+7/p)/2}$, since $\int h_t(r)dr=1$. Clock terms have the identical estimate with their total degree. Thus
+
+$$
+\|\text{order-}m\text{ source Gaussian}\|_p
+ \le Ct^{(m-7+7/p)/2}.
+\tag{32.3}
+$$
+
+On the same fixed safe strip $(-L,L)$, $L=\ell/s$, the bound is uniform for the finite Taylor remainder at interpolation parameters $0\le\vartheta\le s$, $1\le t\le T$. Pathwise Taylor expansion through $n$ therefore costs
+$Cs^{n+1}\int_1^Tt^{(n+1-7+7/p)/2}dt$.
+Integrating this power gives the three alternatives in (32.1).
+
+For completeness retain the exit restriction in (32.2). P (107.5) supplies an extra $e^{-cL^2/t}$ after taking its $\alpha$ power; the remaining height density still has unit integral in the calculation above. Hence the integrated deletion cost for coefficient degree $k$ is at most
+
+$$
+C\int_1^Tt^{(k-7+7/p)/2}e^{-cL^2/t}dt
+ \le CL^{k-5+7/p}.
+\tag{32.4}
+$$
+
+The substitution $t=L^2v$ proves this bound. For every retained $k\le n<5-7/p$, its full time tail above $T$ is bounded by $CT^{(k-5+7/p)/2}$. Multiplication by $s^k$ makes both costs $O(s^{5-7/p})$. Original surviving paths leaving the safe strip have comparable covariance by their original denominator margins, so their order-zero deletion has the same estimate. Outside $I_s$, the native field is zero and the retained safe path cannot end; the coefficient deletion bound applies there as well. These controls restore both original faces and the whole output, with the exact $j_0^{-1}$. Only the early integral is compared; no $L^p$ integrability of the full native Coulomb tail is required. $\square$
+
+
+## 33. The joint fourth-order seed row and its actual consumer
+
+**Definition 33.1 (coefficient rows).** On the fixed seed of Definition 31.1 define
+
+$$
+\mathcal N_mg_0=\sum_{k+j=m}\mathcal V_k(G_jg_0),\qquad 0\le m\le4.
+\tag{33.1}
+$$
+
+Each summand is a pointwise product. This notation gives rows on this input, not bounded coefficient operators on arbitrary $L^2$. On another specified input the same notation is used only if the corresponding return integrals and products exist in the required norms. In particular $\mathcal N_0g_0$ agrees with Definition 29.1's bounded reconstruction adjoint. These rows are not a new scalar coefficient.
+
+**Theorem 33.2 (joint noncompact seed expansion).** Each row in (33.1) belongs to complex $L^2$, and
+
+$$
+\left\|\mathcal N_sg_0-\sum_{m=0}^4s^m\mathcal N_mg_0\right\|_2
+ \le Cs^{33/8}+Cs^5(1+|\log s|)=o(s^4).
+\tag{33.2}
+$$
+
+Proof. Multiply (31.4)'s return remainder by $F_s$, whose $L^2$ norm is uniformly bounded. This costs $Cs^5(1+|\log s|)$. For the retained term $s^jG_jg_0$ expand the field only through order $4-j$. Use, in order $j=0,1,2,3,4$, the Hölder pairs
+
+$$
+(p_j,q_j)=(8,8/3),\ (4,4),\ (4,4),\ (4,4),\ (2,\infty),
+\qquad 1/p_j+1/q_j=1/2.
+\tag{33.3}
+$$
+
+The zeroth return is $p/(\gamma\mu)\in L^{8/3}$ by (31.2) and the mode decay; the other four return norms are Theorem 31.2. Each retained field coefficient is in the corresponding $L^{p_j}$ by (32.3), because its degree is at most $4-j<5-7/p_j$. Thus all coefficient products are in $L^2$. Lemma 32.1 gives the field remainders at these five degrees and exponents as
+
+$$
+O(s^{33/8}),\quad O(s^{13/4}),\quad O(s^3),\quad O(s^2),\quad O(s).
+\tag{33.4}
+$$
+
+After multiplication by $s^j$, their powers are $33/8,17/4,5,5,5$. Hölder and the finite sum prove (33.2). The proof expands the ordered joint product; it requires no separate $L^2$ Taylor expansions of $\mathcal V_2,\mathcal V_3,\mathcal V_4$ or of the higher return coefficients. $\square$
+
+**Corollary 33.3 (the live row in the actual equation).** Fix any sequence $s\downarrow0$ along which $\epsilon_c(s)=o(s^4)$. For every choice of actual normalized complex ground states $\psi_s\in D(S)$, put $f_s=\mathcal T_s\mathcal U_s\psi_s$, extended by zero. Uniformly over these choices,
+
+$$
+\begin{aligned}
+\langle(I-\gamma\mathcal N_s)g_0,f_s\rangle&=o(s^4),\\
+\left\langle\left(I-\gamma\sum_{m=0}^4s^m\mathcal N_m\right)g_0,f_s\right\rangle&=o(s^4),\\
+\sum_{m=1}^4s^m\langle\mathcal N_mg_0,f_s\rangle&=o(s^4).
+\end{aligned}
+\tag{33.5}
+$$
+
+In particular the premise holds in Theorem 27.1's conditional zero-response, $C_4\ge0$ branch. Neither that branch nor zero-response occurrence is inferred from (33.5).
+
+Proof. P (105.2), conjugated by the exact shear, is the original-domain equation
+
+$$
+f_s=\gamma\mathcal B_s(h_s)f_s,\qquad
+\|f_s\|_2=1,\qquad h_s=-\epsilon_c(s)/a>0.
+\tag{33.6}
+$$
+
+The bounded adjoint pairing at each $h_s>0$ gives
+$\langle(I-\gamma\mathcal B_s(h_s)^*)g_0,f_s\rangle=0$.
+It does not require $g_0$ to belong to a native form domain. By the stated premise $h_s=o(s^4)$; P (100.3) gives $r_s\ge c$. Theorem 29.2 therefore permits replacing the adjoint by $\mathcal N_s$ with error $O(h_s+s^5)=o(s^4)$. Theorem 33.2 and unit norm permit the fourth-order polynomial replacement. Finally $\gamma\mathcal N_0g_0=g_0$ cancels order zero, proving all three identities. Both moving faces, the full actual complement and every complex phase remain in the equation. No divergence of $r_s$ is assumed, so bounded-$r_s$ sequences satisfying the premise are included. The last sentence follows from (27.1) and (1.7). $\square$
+
+
+## 34. The first still-unproved correction-row bridge
+
+**Proposition 34.1 (the particular first Fredholm correction).** Let $A=I-\gamma\mathcal N_0$. There is a unique $g_1\in L^2$ satisfying
+
+$$
+Ag_1=\gamma\mathcal N_1g_0,\qquad \langle p,g_1\rangle=0.
+\tag{34.1}
+$$
+
+It is real and odd under $\sigma$. This assertion supplies no weighted tail estimate for $g_1$.
+
+Proof. P §§87–88 factor $K_{\rm rec}=TM$ and $K_0=MT$, with compact $T$ and bounded $M=V^{1/2}$. The nonzero spectral correspondence of these products and the simple top eigenvalue of the selfadjoint $K_0$ give
+$\ker A=\mathbb Cg_0$ and $\ker A^*=\mathbb Cp$.
+One can also check the second equality directly from $K_{\rm rec}p=\gamma^{-1}p$ and P (88.2), then use the Fredholm index zero of identity minus compact. The nonzero pairing $\langle p,g_0\rangle=1$ fixes the kernel ambiguity. The coefficient kernels satisfy reflection parity $j$ in (30.1); the field coefficients have parity $k$ by (23.1). Thus $\mathcal N_1g_0$ is real odd, in $L^2$ by Theorem 33.2, and orthogonal to the even $p$. The Fredholm alternative therefore gives a solution, and subtraction of its $g_0$ coordinate enforces (34.1)'s normalization. Reflection and conjugation preserve this equation and normalization, so uniqueness gives oddness and reality. These are properties of this fixed correction, not of actual states. This is the classical compact Fredholm alternative applied to the specified bounded reconstruction, not inversion of $\mathcal E$ on arbitrary $L^2$. $\square$
+
+**Definition 34.2 (the unproved particular-input estimates).** The next needed row estimates on an actual sequence as in Corollary 33.3 are
+
+$$
+\begin{aligned}
+s\left\|\mathcal N_sg_1-\sum_{j=0}^3s^j\mathcal N_jg_1\right\|_2&=o(s^4),\\
+s\|(\mathcal B_s(h_s)^*-\mathcal N_s)g_1\|_2&=o(s^4),
+\end{aligned}
+\tag{34.2}
+$$
+
+including existence of the coefficient rows in the first line. They are not consequences established by Proposition 34.1. To specify the first missing joint integral, let $q_\vartheta^L$ denote the auxiliary killed, combined shifted Gaussian kernel on the fixed safe strip $(-L,L)$, with original endpoint measure. Its Taylor remainder of order three contributes
+
+$$
+sF_s(\xi)\int_0^T\!\int
+ \left[\frac{s^4}{3!}\int_0^1(1-v)^3
+  \left.\partial_\vartheta^4q_\vartheta^L(t;\eta,\xi)
+          \right|_{\vartheta=vs}dv\right]g_1(\eta)d\eta\,dt
+\tag{34.3}
+$$
+
+in full $L^2(d\xi)$. The prefactor is $s^5$, but the endpoint/time integral still requires a quantitative bound. The deleted-path contribution with $|\eta_r|>\ell/(4s)$ and the late return $t\ge s^{-2}$ must also be controlled. These terms retain the original two-face kernel in the comparison; the auxiliary strip estimates it and does not replace it.
+
+For example, the fourth-derivative large-time portion of the seed argument would be integrable for this particular correction under the sufficient input conditions
+
+$$
+g_1,rg_1\in L^1,\qquad r^2g_1\in L^{7/6},\qquad
+r^3g_1\in L^{7/5},\qquad r^4g_1\in L^{7/4},
+\tag{34.4}
+$$
+
+together with the corresponding small-time and source-tail bounds. The time powers for relative degrees $4,3,2,1,0$ would then be $-3/2,-2,-2,-2,-2$. Proposition 34.1 does not prove these memberships or tail bounds. Conditions (34.4) are sufficient for that portion of this method, not necessary conditions for (34.2), for a different proof, or for the original actual-selection target.
+
+P (104.9) gives only
+
+$$
+s\|(\mathcal N_s-\mathcal N_0)g_1\|_2
+ \le s d_s\|g_1\|_2=o(s),\qquad d_s\to0,
+\tag{34.5}
+$$
+
+without a polynomial rate. For the late difference, (29.3) on the dense class $L^1\cap L^2$, $h_s\to0$, and the uniform operator bounds from P (104.2) at $r_s\ge c$ give strong convergence on each fixed $L^2$ input. Its correction factor again supplies only $o(s)$. Neither observation reaches (34.2); neither is a lower bound proving that (34.2) fails.
+
+The remaining finite corrected row would additionally require the actually consumed estimates for $g_2$ through order two, $g_3$ through order one and the final correcting row through order zero. No such chain is constructed here. Its fourth scalar has not been identified with the sole owned quartic scalar $C_4=D_4-h[\Upsilon]$ of (24.5), including the field-clock products and threshold term. Accordingly (33.5) gives no conclusion $cC_4=0$ at a microscopic weak limit $cp$.
+
+
+## 35. Attribution and mathematical scope of the seed identity
+
+**Definition 35.1 (source attribution and unresolved target).** Theorems 29.2, 31.2 and 33.2, Lemmas 30.2 and 32.1, and Corollary 33.3 are `repo-derived` conditional consequences for the one original datum. Their analytic suppliers are P §76's both-face all-height heat, P §§87–88's specified compact reconstruction and simple mode, P §97's exact shear and common conditional Gaussian, P §104's native time split and multiplier/column bounds, P §105's actual original-domain equation, and P §107's bridge moments. R (8.3) owns the left coordinate, and Entire-height response escape Theorem 3.1 supplies the full homogeneous mode decay used in (31.2). The coefficient fields and clock products are reused exactly from (23.1), and the previously obtained fourth-order spectral law remains Theorem 27.1. These are ordinary conditional antecedents at their stated scopes.
+
+The intermediate methods are classical Gaussian matrix differentiation, finite Taylor expansion, Brownian bridge reflection and scaling, Minkowski, Hölder, interpolation, Young convolution and the compact Fredholm alternative. The convolution norm step is the Fischer–Ruzhansky formula cited in Lemma 30.2; the Engel group, Haar measure and ordered convolution also coincide with Bahouri–Barilari–Gallagher–Léautaud, [arXiv:2206.10396v1, (3.6)–(3.13)](https://arxiv.org/pdf/2206.10396v1), as in R Definition 23.1. The global native face/input/time estimates are the proofs above, not an application of a local compact positive-time heat expansion beyond its quantifiers. This attribution asserts no literature-wide priority.
+
+The new conclusion is the live actual-equation seed identity (33.5) under its explicit $\epsilon_c=o(s^4)$ premise. It gives no absolute response or quartic sign, zero-response occurrence, corrected fourth-scalar identification or $cC_4=0$. The particular correction estimates (34.2) are still unproved. Missing proof is neither an actual-state counterexample nor a theorem that this route or another actual-state argument is impossible. The original every-actual-choice goal of Definition 9.1 remains unresolved, including nonnegative-quartic finer scale and response-zero mixed selection. The prior negative-response, positive-response and negative-quartic conclusions retain precisely their original hypotheses.
+
+All constants fix the same admitted signed nonzero $\kappa$, original rational vector, denominator margin, source, interval, $a,\varepsilon$ and $j_0$ before $s\downarrow0$; no parameter-uniform statement through a denominator pole is made. Both moving Dirichlet faces, every real phase and the entire complex horizontal domains (1.5) remain in the actual equation. The original microscopic unitary has Jacobian $j_0s^7$, the shear has determinant one and fixes the source, and the field clock is $B$, independently of kinetic $a$. No actual-state parity, positive $L^2$ complement gap, arbitrary $L^2$ zero-energy inverse, uncut native response, assumed $r_s$ growth, norm-to-energy inference or trial-to-actual substitution enters. No analytic preparation or physical-space/dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）
+
+
+## 36. The first return coefficient and both time boundaries
+
+**Definition 36.1 (particular-input hypotheses and notation).** Fix exactly Definition 29.1's original admitted datum and conditional analytic antecedents. Retain the common complex space, restrictions and zero extensions, operators, coefficients and normalization of (29.1), (30.1), (31.1), (31.2) and (33.1). Thus $G_0$ denotes the specified heat reconstruction only where justified. Here $g_1$ always means Proposition 34.1's normalized correction, not R (16.5)'s different forcing. Write $\mathcal E=-X^2-Y^2$, $P_t=e^{-t\mathcal E}$ and $\mathcal G=\int_0^\infty k_t\,dt$ for the canonical heat and its specified fundamental solution. Convolution has exactly (2.6)'s order and unit Lebesgue Haar measure. Put
+
+$$
+\begin{aligned}
+D_1&=2\nu Y(rY)=2\nu rY^2,&v&=\nu\Psi,&F&=rYp,\\
+W&=-2\nu F*(Y^{\rm R}\mathcal G),&
+q&=\mathcal V_1p+Vv,&Y^{\rm R}&=\partial_y.
+\end{aligned}
+\tag{36.1}
+$$
+
+The particular $\Psi$ is R Theorem 16.2's canonical form/$L^2$ representative. The symbol $v$ here means $\nu\Psi$, rather than R (16.7)'s residual. The multiplier $\mathcal V_1=\nu V_1$ is unchanged from (23.1). Inner products are conjugate linear in their first slot.
+
+**Theorem 36.2 (coefficient heat equation and specified reconstruction).** For the fixed $g_0$,
+
+$$
+\begin{gathered}
+(\partial_t+\mathcal E)\mathsf Q_1(t)g_0=-D_1P_tg_0
+\quad\text{in distributions for }t>0,\\
+\lim_{t\downarrow0}\|\mathsf Q_1(t)g_0\|_2
+=\lim_{t\to\infty}\|\mathsf Q_1(t)g_0\|_2=0,\qquad
+\int_0^\infty\|\mathsf Q_1(t)g_0\|_2dt<\infty,\\
+\mathcal E G_1g_0=-D_1p/(\gamma\mu),\qquad
+\gamma\mu G_1g_0=W.
+\end{gathered}
+\tag{36.2}
+$$
+
+Proof. On a fixed finite slab $(-L,L)$ define, only for $|\nu\vartheta|L<1/4$,
+
+$$
+\mathcal E_\vartheta^L=-X^2-(1+\nu\vartheta r)^{-2}Y^2
+\tag{36.3}
+$$
+
+with both slab endpoints Dirichlet. First restrict phase Fourier frequencies to a fixed bounded set. On this set its potential and parameter derivative are bounded multipliers on the finite height interval, on a common height Dirichlet operator domain. Integrating the two heat equations gives the classical bounded-perturbation variation-of-constants identity. Its derivative at zero is therefore
+
+$$
+\begin{gathered}
+(\partial_t+\mathcal E^L)\mathsf Q_1^L(t)=-D_1P_t^L,\qquad
+\mathsf Q_1^L(0)=0,\\
+\mathsf Q_1^L(t)u=-\int_0^tP_{t-b}^LD_1P_b^Lu\,db .
+\end{gathered}
+\tag{36.4}
+$$
+
+Finite differentiation of the conditional Gaussian on this safe slab gives precisely (30.1)'s first coefficient with the slab-survival indicator. The derivative of $e^{\lambda\vartheta^2t}$ at zero vanishes. Thus (36.4) has exactly the asserted coefficient, sign and absence of an order-one clock term; no rational family through a pole has been defined.
+
+Lemma 30.2's absolute kernel calculation applies with the survival indicator and gives, uniformly in slab size,
+
+$$
+\|\mathsf Q_1^L(t)g\|_2+\|\mathsf Q_1(t)g\|_2
+\le C(\|rg\|_2+\sqrt t\,\|g\|_2).
+\tag{36.5}
+$$
+
+For fixed $t$, $\mathsf Q_1^L(t)g\to\mathsf Q_1(t)g$ in $L^2$ when $g,rg\in L^2$. Indeed restrict input first to $|r|\le L/4$. An omitted path has relative height supremum at least $3L/4$. Integrate the inflated Gaussian over every phase and then the height endpoint. Brownian reflection bounds its relative-kernel $L^1$ norm by $Ct^{m/2}e^{-cL^2/t}$ for degrees $m=0,1$, after changing the exponential constant. Ordered Young controls these terms against the corresponding input norms. The remaining input is controlled by (36.5) and its weighted $L^2$ tail tends to zero. The order-zero argument also gives $P_t^Lg\to P_tg$. Compact testing now passes (36.4) to the first equation of (36.2). Phase Fourier cutoff and density remove the preliminary bounded-frequency restriction, since $\mathcal E\varphi,D_1\varphi\in L^2$ for compact smooth $\varphi$. These are the global two-endpoint bounds of Lemma 30.2 and P (107.5).
+
+The initial boundary requires cancellation. Approximate $g_0$ in $\|g\|_2+\|rg\|_2$ by functions $u$ with compact height support and bounded phase Fourier support. For these functions
+
+$$
+\sup_L\sup_{0\le b\le1}\|D_1P_b^Lu\|_2\le C_u.
+\tag{36.6}
+$$
+
+On the bounded frequency set the multiplier of $D_1$ has absolute value at most $C(1+|r|^5)$. The nonnegative Fourier potential dominates the absolute killed height heat by the free one-dimensional heat applied to $|\widehat u|$. Gaussian moment integration, or weighted $L^2$ convolution followed by the Gaussian moments, bounds all height moments through order five for $b\le1$, independently of the slab. Compact initial height support and integration over the bounded frequency set give (36.6). Contraction in (36.4) yields $\|\mathsf Q_1^L(t)u\|_2\le C_ut$. Pass $L\to\infty$ and then approximate $g_0$ using (36.5). This proves $\mathsf Q_1(t)g_0\to0$ in $L^2$ at time zero, which does not follow from a size estimate alone.
+
+For $t\ge1$, Lemma 30.2 gives
+
+$$
+\|\mathsf Q_1(t)g_0\|_2
+\le C(t^{-5/4}\|g_0\|_1+t^{-7/4}\|rg_0\|_1).
+\tag{36.7}
+$$
+
+The inputs are integrable by (31.2)–(31.3); both powers are integrable and tend to zero. Together with (36.5) this proves absolute $L^2$ convergence of $G_1g_0$ and the terminal boundary. Likewise $\int_0^\infty P_tg_0dt$ converges absolutely in $L^2$, by contraction below one and $Ct^{-7/4}\|g_0\|_1$ above one, and equals the owned $p/(\gamma\mu)$ in (31.2).
+
+Integrate the tested coefficient equation from $\delta$ to $M$, and pass $\delta\downarrow0$, $M\to\infty$ using both boundaries. This gives $\mathcal E G_1g_0=-D_1p/(\gamma\mu)$. The ordered convolution and noncompact input-cutoff argument in R (16.4)–(16.9) give $W\in L^2$ and
+
+$$
+\mathcal EW=-2\nu Y(rYp)=-D_1p .
+\tag{36.8}
+$$
+
+No factors of convolution are exchanged. The $L^2$ difference $d=\gamma\mu G_1g_0-W$ is distributionally $\mathcal E$-harmonic and is smooth by inherited canonical hypoellipticity. Take real smooth compact dilated cutoffs $\eta_R$, equal to one on an exhausting neighborhood, with $|\nabla_H\eta_R|\le C/R$. Testing against $\eta_R^2d$ and taking real parts gives, by the product rule,
+
+$$
+b[\eta_Rd]=\int|\nabla_H\eta_R|^2|d|^2
+\le CR^{-2}\|d\|_2^2.
+\tag{36.9}
+$$
+
+Every fixed compact set consequently has zero horizontal derivative as $R\to\infty$. Bracket generation makes $d$ constant and infinite Haar volume makes that $L^2$ constant zero. This proves (36.2) without an arbitrary zero-energy inverse, a maximal-domain theorem or $\Psi\in D(\mathcal E)$. The cutoff energy argument is a classical intermediate uniqueness tool within this particular reconstruction. $\square$
+
+
+## 37. Identification of the owned normalized particular correction
+
+**Theorem 37.1 (the source-forced first charge).** The unique correction of Proposition 34.1 is exactly
+
+$$
+g_1=\frac{\mathcal V_1p+Vv}{\mu}
+=\frac{\mathcal V_1p+\nu V\Psi}{\mu},
+\qquad Ag_1=\gamma\mathcal N_1g_0,\qquad
+\langle p,g_1\rangle=0.
+\tag{37.1}
+$$
+
+Proof. The specified reconstruction in R Theorem 16.2 gives
+
+$$
+v=W+\gamma G_0q,\qquad q=\mathcal V_1p+Vv.
+\tag{37.2}
+$$
+
+This right side is an admitted multiplier source:
+
+$$
+q/\sqrt V=(\mathcal V_1/\sqrt V)p+\sqrt Vv\in L^2
+\tag{37.3}
+$$
+
+by R Theorem 4.1, bounded $V$ and the owned $v\in L^2$. Thus $G_0q$ is precisely P Theorem 87.2's reconstruction with multiplication by $\sqrt V$; no inverse on arbitrary $L^2$ is used. Also $q\in L^2$. Since $p,V$ are even under $\sigma$ and $\mathcal V_1,v$ are odd, $\langle p,q/\mu\rangle=0$. Theorems 36.2 and (31.2) give
+
+$$
+\begin{aligned}
+A(q/\mu)
+&=(\mathcal V_1p+V(v-\gamma G_0q))/\mu\\
+&=(\mathcal V_1p+VW)/\mu\\
+&=\gamma(\mathcal V_1G_0g_0+VG_1g_0)
+=\gamma\mathcal N_1g_0.
+\end{aligned}
+\tag{37.4}
+$$
+
+The already owned normalized Fredholm uniqueness of Proposition 34.1 now identifies $q/\mu=g_1$. Fixed canonical parity is used only to normalize this correction, never to restrict any actual state. The classical compact Fredholm alternative retains its stated reconstruction scope. $\square$
+
+
+## 38. Full-spatial first-field control and consumed products
+
+**Theorem 38.1 (particular height weights).** Put $\omega(r)=1+|r|$. With all phases integrated on the full group,
+
+$$
+\begin{gathered}
+V_1\in L^2,\qquad \omega g_1\in L^1,\qquad \omega^5g_1\in L^2,\\
+g_1,rg_1\in L^1,\qquad
+r^2g_1\in L^{7/6},\quad r^3g_1\in L^{7/5},
+\quad r^4g_1\in L^{7/4},\\
+\|\mathbf1_{|r|>L}r^ng_1\|_2=o(L^{n-5})
+\quad(0\le n\le5).
+\end{gathered}
+\tag{38.1}
+$$
+
+Proof. For the unscaled first source Gaussian coefficient $p_1(t)$ of (3.2), the majorants of Lemma 30.2 give
+
+$$
+\|p_1(t)\|_1\le C\sqrt t,\qquad
+\|p_1(t)\|_\infty\le Ct^{-3},\qquad
+\|p_1(t)\|_2\le Ct^{-5/4}.
+\tag{38.2}
+$$
+
+For the first inequality integrate its inflated Gaussian over every phase and then the height endpoint, leaving the first Brownian-supremum moment. The second is the coefficient supremum P (107.8). The third is $\|u\|_2^2\le\|u\|_1\|u\|_\infty$. Integrating this strictly integrable $L^2$ bound on $[1,\infty)$ with the original $j_0^{-1}$ proves $V_1\in L^2$. A height supremum has not been substituted for full-spatial integrability.
+
+The owned bounds imply $\omega V\in L^2$, $\omega^5V\in L^\infty$, and $|\mathcal V_1|\le C\omega^{-4}$. For the first, $V\le C(1+\mathfrak d)^{-5}$ and $|r|\le C\mathfrak d$ give $\omega V\le C(1+\mathfrak d)^{-4}$, square integrable in homogeneous dimension seven. The other two are the height estimates of R (2.7) and R (3.4)/P (107.4), respectively. The mode supplies $\omega p\in L^2$ and the particular response supplies $v\in L^2$. Applying Hölder to (37.1) gives
+
+$$
+\begin{aligned}
+\|\omega Vv\|_1&\le\|\omega V\|_2\|v\|_2,&
+\|\omega\mathcal V_1p\|_1&\le\|\mathcal V_1\|_2\|\omega p\|_2,\\
+\|\omega^5Vv\|_2&\le C\|v\|_2,&
+\|\omega^5\mathcal V_1p\|_2&\le C\|\omega p\|_2.
+\end{aligned}
+\tag{38.3}
+$$
+
+Thus both asserted weighted norms hold without a weighted $\Psi$ norm or pointwise response decay.
+
+For $0\le\theta\le1$, Hölder gives $\omega^{1+4\theta}g_1\in L^{p_\theta}$, $1/p_\theta=1-\theta/2$, by factoring its absolute value as $|\omega g_1|^{1-\theta}|\omega^5g_1|^\theta$. Taking $\theta=2/7,4/7,6/7$ gives
+
+$$
+(p_\theta,1+4\theta)
+=(7/6,15/7),\quad(7/5,23/7),\quad(7/4,31/7).
+\tag{38.4}
+$$
+
+The weights exceed $2,3,4$, proving the consumed memberships. Finally,
+
+$$
+\|\mathbf1_{|r|>L}r^ng_1\|_2
+\le CL^{n-5}\|\mathbf1_{|r|>L}\omega^5g_1\|_2
+=o(L^{n-5})
+\tag{38.5}
+$$
+
+for $L\ge1$ and $0\le n\le5$. Absolute continuity of the $L^2$ integral proves the little-o, including every weighted $L^2$ input through order five. Hölder and interpolation are classical intermediate inequalities; this is a particular-charge estimate, not a universal weighted response theorem. $\square$
+
+**Theorem 38.2 (every consumed coefficient product).** For $0\le j\le3$, $G_jg_1$ converges absolutely in $L^4$. Each product $\mathcal V_k(G_jg_1)$ with $k+j\le3$ is $L^2$, so
+
+$$
+\mathcal N_jg_1=\sum_{k+b=j}\mathcal V_k(G_bg_1)\in L^2
+\qquad(0\le j\le3).
+\tag{38.6}
+$$
+
+Proof. In the ordered decomposition (30.3) put $n=j-m$. On $0<t<1$ use the weighted $L^2$ inputs of Theorem 38.1 and kernel $L^{4/3}$ to obtain the integrable output-$L^4$ powers $t^{m/2-7/8}$. On $t\ge1$ use input exponents
+
+$$
+p_0=p_1=1,\qquad p_2=7/6,\qquad p_3=7/5.
+\tag{38.7}
+$$
+
+The time power is $m/2-(7/2)(1/p_n-1/4)$. Its largest value for $n=0,j\le3$ is $-9/8$; for $n\ge1$ it is at most $-13/8$. Hence all integrals converge absolutely in $L^4$. The coefficient bound of Lemma 32.1 gives $\mathcal V_k\in L^4$ for $k\le3$, since $k<5-7/4=13/4$. Hölder gives every asserted product. Young here is the classical ordered group inequality cited in Lemma 30.2, on the same Haar measure, with no additional $j_0$ in a return. No bounded coefficient operator on arbitrary $L^2$ is asserted. $\square$
+
+
+## 39. The complete early native remainder on the particular charge
+
+**Theorem 39.1 (full-output third-order first-correction row).** For fixed sufficiently small $\ell>0$ there is $\varepsilon_1(L)\to0$ such that
+
+$$
+\left\|\mathcal N_sg_1-\sum_{j=0}^3s^j\mathcal N_jg_1\right\|_2
+\le Cs^3\varepsilon_1(\ell/s)+C(s^{13/4}+s^4+s^5).
+\tag{39.1}
+$$
+
+Consequently the first line of (34.2) holds:
+
+$$
+s\left\|\mathcal N_sg_1-\sum_{j=0}^3s^j\mathcal N_jg_1\right\|_2=o(s^4).
+\tag{39.2}
+$$
+
+Proof. Set $L=\ell/s$, $T=s^{-2}$, choosing $\ell$ so $(-L,L)\Subset I_s$ and $\nu\ell<1/4$. Retain the original killed heat, adding killing at the two safe faces only for estimation. Along safe paths every interpolation covariance for $0\le\vartheta\le s$ is comparable to the canonical covariance. Finite Gaussian differentiation through order four has the inflated-Gaussian bounds of Lemma 30.2, with input degree $n$, relative degree $m$ and $n+m=4$. Derivatives of $e^{\lambda\vartheta^2t}$ are bounded by $Ct^{k/2}$ at order $k$ on $t\le T$, since $\vartheta\sqrt t\le1$. Their time powers contribute the corresponding relative degree, so the clock products are included. This is finite safe-path Taylor expansion, not a global rational family through a pole.
+
+On $0<t<1$ use $F_s\in L^\infty$, return output $L^2$, weighted inputs $r^ng_1\in L^2$ and kernel $L^1$. The time powers $t^{m/2}$ are integrable. On $1<t<T$ use $F_s\in L^2$ and return output $L^\infty$, with the five input/relative degrees and input exponents
+
+$$
+(n,m,p)=(0,4,1),(1,3,1),(2,2,7/6),(3,1,7/5),(4,0,7/4).
+\tag{39.3}
+$$
+
+Their powers $m/2-7/(2p)$ are respectively $-3/2,-2,-2,-2,-2$. Thus Taylor's integral fourth derivative, before the exterior correction factor $s$ in (34.3), costs $Cs^4$ in the final product $L^2$ norm. No boundedness of $g_1$ at time zero is needed.
+
+For noncompact input split at $|r|=L/4$ and put
+
+$$
+\varepsilon_1(L)=\|\mathbf1_{|r|>L/4}\omega^5g_1\|_2\longrightarrow0.
+\tag{39.4}
+$$
+
+The original shifted heat is an $L^2$ contraction because $C_s\ge0$. The extra-killed heat is also a contraction because its form is a Dirichlet restriction of that form. Their outer-input returns have norms at most
+
+$$
+T\|\mathbf1_{|r|>L/4}g_1\|_2
+\le CL^{-3}\varepsilon_1(L).
+\tag{39.5}
+$$
+
+Bounded $F_s$ therefore gives $Cs^3\varepsilon_1(L)$. For each retained coefficient with $n+m=j\le3$, its outer-input return on $(0,T)$ has $L^2$ bound
+
+$$
+CT^{1+m/2}\|\mathbf1_{|r|>L/4}r^ng_1\|_2.
+\tag{39.6}
+$$
+
+Multiply by $s^j$ and use (38.5) to obtain the same $Cs^3\varepsilon_1(L)$ bound. This includes input outside $\Omega_s$, discarded by native restriction. Hence no compact-support assumption is made on $g_1$.
+
+For inner input $|\eta_r|\le L/4$, an original surviving path missing from the safe-strip kernel must leave a safe face and has relative height supremum at least $3L/4$. For output height beyond $L/2$ the relative displacement is at least $L/4$, giving the corresponding endpoint estimate directly. The full-output argument of (31.6) and P (107.5) give the absolute kernel bound
+
+$$
+Ct^{-7/2}e^{-cL^2/t}.
+\tag{39.7}
+$$
+
+Original surviving covariances stay comparable to the canonical covariance even outside the auxiliary strip, by the fixed original denominator margins on $\overline I$. Integrate (39.7) on $(0,T)$ against $\|g_1\|_1$, then multiply by $\|F_s\|_2$. The cost is $CL^{-5}=Cs^5$, with every output phase included. Beyond either original face the native kernel is zero and the safe path cannot end; the omitted coefficient-path estimates below give exactly the required zero-extension comparison.
+
+Restore omitted coefficient paths for inner input. For $n+m=j\le3$, their integrated return supremum is at most $CL^{m-5}M_n(L)$, where
+
+$$
+M_n(L)=\int_{|r|\le L/4}|r|^n|g_1|
+\le
+\begin{cases}
+\|g_1\|_1,&n=0,\\
+CL^{n-1}\|rg_1\|_1,&n\ge1.
+\end{cases}
+\tag{39.8}
+$$
+
+To obtain the bound use the relative-moment version of (39.7) and integrate $t^{(m-7)/2}e^{-cL^2/t}$ on $(0,\infty)$. Since $m\le3$ it converges, and $t=L^2b$ gives $L^{m-5}$. The estimate retains the same relative bridge exit event and inverse-determinant moments and covers complete output. After $s^j$ these costs are $O(s^5)$ for $n=0$ and $O(s^6)$ otherwise. Multiplication by $\|F_s\|_2$ preserves them.
+
+Finally restore every coefficient time tail $t>T$ on the full input. Use (38.7) and return output $L^\infty$. For $n=0$ the power is $(j-7)/2$, whose tail after $s^j$ is $O(s^5)$. For $n\ge1$ the power is $(j-8)/2$, whose corresponding tail is $O(s^6)$. All are integrable for $j\le3$. Multiplication by $\|F_s\|_2$ is legitimate, so no infinite-time coefficient boundary is omitted.
+
+Combining the safe Taylor remainder, outer input, original-path exits, coefficient-path exits and time tails gives
+
+$$
+\left\|F_s\left(H_sg_1-\sum_{j=0}^3s^jG_jg_1\right)\right\|_2
+\le Cs^3\varepsilon_1(L)+C(s^4+s^5).
+\tag{39.9}
+$$
+
+This is a joint-product estimate; it asserts no separate $L^2$ expansion of the unmultiplied return. For each retained $s^jG_jg_1$, Theorem 38.2 gives $L^4$. Expand its field through degree $3-j$. Lemma 32.1 at exponent four gives, for $j=0,1,2,3$, field remainder powers
+
+$$
+s^{13/4},\quad s^3,\quad s^2,\quad s.
+\tag{39.10}
+$$
+
+The factors $s^j$ make these $s^{13/4},s^4,s^4,s^4$. Hölder and (39.9) prove (39.1), including all field-return cross terms and original clock coefficients. Multiplying by $s$ proves (39.2): $\varepsilon_1(\ell/s)\to0$ and $17/4>4$. Both original deaths have only been estimated by auxiliary killing. Taylor, Brownian reflection, ordered Young and Hölder are the classical intermediate tools attributed in §§30–35; the complete native first-charge accounting is the deduction here. $\square$
+
+
+## 40. Actual-height late control and the exact corrected actual equation
+
+**Theorem 40.1 (late first-correction remainder).** On every actual sequence of Corollary 33.3, including bounded-$r_s$ sequences,
+
+$$
+s\|(\mathcal B_s(h_s)^*-\mathcal N_s)g_1\|_2=o(s^4).
+\tag{40.1}
+$$
+
+Together with Theorems 38.2 and 39.1 this establishes both estimates and coefficient existence in (34.2). It supersedes exactly the first-$g_1$ unproved boundary of Definition 34.2 and its corresponding assertion in Definition 35.1.
+
+Proof. Theorem 38.1 puts this fixed $g_1$ in $L^1\cap L^2$. Apply the owned fixed-input bound (29.3):
+
+$$
+\|(\mathcal B_s(h)^*-\mathcal N_s)g_1\|_2
+\le C\left[(h+s^5)(\|g_1\|_1+\|g_1\|_2)
++s^7h^{-1/4}\|g_1\|_1\right].
+\tag{40.2}
+$$
+
+This bound uses the original two-face heat, short field and complete long field; no long Coulomb multiplier is assigned an $L^2$ norm. At the actual $h_s=r_ss^8/a$, P (100.3)'s $r_s\ge c>0$ gives $s^7h_s^{-1/4}=a^{1/4}s^5r_s^{-1/4}\le Cs^5$. Since $\epsilon_c(s)=o(s^4)$ gives $h_s=o(s^4)$, the norm is $O_{g_1}(h_s+s^5)$ and its exterior factor $s$ proves (40.1). No divergence of $r_s$ is assumed. $\square$
+
+**Theorem 40.2 (exact actual equation retaining the full complement).** On each prescribed sequence $s\downarrow0$ with actual $\epsilon_c(s)=o(s^4)$, take every actual normalized complex ground-state choice and let $f_s=\mathcal T_s\mathcal U_s\psi_s$. Define the justified $L^2$ vectors
+
+$$
+\begin{aligned}
+R_m&=\mathcal N_mg_0+\mathcal N_{m-1}g_1\qquad(m=2,3,4),\\
+\delta_{0,s}&=\mathcal B_s(h_s)^*g_0-\sum_{m=0}^4s^m\mathcal N_mg_0,\\
+\delta_{1,s}&=\mathcal B_s(h_s)^*g_1-\sum_{j=0}^3s^j\mathcal N_jg_1.
+\end{aligned}
+\tag{40.3}
+$$
+
+Then $\|\delta_{0,s}\|_2+s\|\delta_{1,s}\|_2=o(s^4)$ and, exactly,
+
+$$
+\begin{aligned}
+0&=\langle(I-\gamma\mathcal B_s(h_s)^*)(g_0+sg_1),f_s\rangle\\
+&=-\gamma\sum_{m=2}^4s^m\langle R_m,f_s\rangle
+-\gamma\langle\delta_{0,s}+s\delta_{1,s},f_s\rangle.
+\end{aligned}
+\tag{40.4}
+$$
+
+In particular, with $\alpha_s=\langle g_0,f_s\rangle$, $z_s=f_s-\alpha_sp$,
+
+$$
+\begin{gathered}
+\langle g_0,z_s\rangle=0,\\
+\sum_{m=2}^4s^m
+\left[\alpha_s\langle R_m,p\rangle+\langle R_m,z_s\rangle\right]
+=-\langle\delta_{0,s}+s\delta_{1,s},f_s\rangle=o(s^4).
+\end{gathered}
+\tag{40.5}
+$$
+
+The remainder is uniform over actual normalized choices along each such fixed-datum sequence.
+
+Proof. Theorem 33.2 and the actual-height application of Theorem 29.2 give $\|\delta_{0,s}\|_2=o(s^4)$, as in Corollary 33.3. Theorems 39.1 and 40.1 give $s\|\delta_{1,s}\|_2=o(s^4)$. Every $R_m$ is $L^2$ by Theorems 33.2 and 38.2.
+
+The original actual equation is precisely (33.6): $f_s=\gamma\mathcal B_s(h_s)f_s$, $\|f_s\|_2=1$, on the transported original operator domain. At $h_s>0$ it is a bounded-operator equation. Pairing against the fixed $L^2$ vector $g_0+sg_1$ therefore needs no native form-domain membership of the test. Substituting (40.3) gives
+
+$$
+\begin{aligned}
+(I-\gamma\mathcal B_s(h_s)^*)(g_0+sg_1)
+&=Ag_0+s(Ag_1-\gamma\mathcal N_1g_0)\\
+&\quad-\gamma\sum_{m=2}^4s^m(\mathcal N_mg_0+\mathcal N_{m-1}g_1)
+-\gamma(\delta_{0,s}+s\delta_{1,s}).
+\end{aligned}
+\tag{40.6}
+$$
+
+The first two terms vanish by (31.2) and (37.1), canceling precisely orders zero and one. This proves (40.4). Since $\langle g_0,p\rangle=1$, substitution of $f_s=\alpha_sp+z_s$ gives (40.5), retaining every complement pairing. Unit norm bounds the remainder by its $L^2$ norm independently of the actual choice.
+
+The second-, third- and fourth-order rows have not been canceled. No vanishing, parity, reality, positive $L^2$ gap or polynomial rate of $z_s$ is used. No scalar is identified with, substituted for or used to redefine (24.5)'s $C_4=D_4-h[\Upsilon]$. In particular this identity gives no conclusion $cC_4=0$. The adjoint pairing is the classical Hilbert-space identity, applied here to the exact original actual equation, never a trial state. $\square$
+
+
+## 41. Attribution and remaining original mathematical obligations
+
+**Definition 41.1 (mathematical attribution).** Theorems 36.2–40.2 are conditional repository-derived deductions for the one fixed original datum. The reconstruction, simple mode and particular response remain owned by P §§87–88, R §§4, 5 and 16, and Entire-height response escape Theorem 3.1. The coefficient calculus, field estimates, seed row and fixed-input actual-height bound are exactly §§29–33; normalized Fredholm uniqueness remains Proposition 34.1. The additional conclusions are the first coefficient heat dictionary and its two time boundaries, normalized particular identification, consumed weights and products, both native first-correction remainders and the exact actual-equation consumer.
+
+The ordered derivative transfer in (36.8) and (37.2) is R (16.4)–(16.12), corresponding to Bahouri–Barilari–Gallagher–Léautaud, *Spectral summability for the quartic oscillator with applications to the Engel group*, [arXiv:2206.10396v1](https://arxiv.org/pdf/2206.10396v1), (3.6)–(3.13), (3.24)–(3.25) and (5.12). Young is the classical convolution inequality of Fischer–Ruzhansky, *Sobolev spaces on graded groups*, [arXiv:1311.0192v1, §2.1, (2.2)](https://arxiv.org/html/1311.0192v1#S2.SS1), as cited in Lemma 30.2. These tools use exactly the same Engel law, unit Haar measure and homogeneous dimension seven. Bounded finite-time perturbation, cutoff energy uniqueness, Gaussian moments, Hölder, interpolation and the compact Fredholm alternative are intermediate classical tools within the source-specific proofs, not new standalone results. The Colin de Verdière–Hillairet–Trélat local heat theorem keeps P §§104 and 107's compact positive-time/interior-endpoint scope; it supplies no unproved moving-face, time-zero, noncompact or infinite-time estimate. Those are proved here or supplied by §§29–33 at their explicit global scope. The analytic heat, hypoellipticity, reconstruction, mode, domain and attainment antecedents remain conditional. No literature-wide priority or absence claim is made.
+
+**Definition 41.2 (unresolved original selection).** The first-row requirements (34.2) are established by Theorems 38.2, 39.1 and 40.1. Later correction rows for $g_2$ through order two, $g_3$ through order one and the final row through order zero remain unproved here. Their final scalar has not been identified with the unchanged (24.5) $C_4$, including its field-clock and threshold terms. Thus $cC_4=0$, the absolute response and quartic signs, zero-response occurrence, and finer nonnegative-$C_4$ actual scale/profile selection remain unresolved. The original every-actual-choice target of Definition 9.1 is not established; the preceding conditional conclusions retain their precise scope.
+
+Every actual statement retains the same fixed admitted signed nonzero $\kappa$, full jointly realized rational vector, positive denominator margins, both original Dirichlet faces, all real phases, raw unit source and $j_0$ density, original microscopic unitary and determinant-one source-fixing shear, and full complex horizontal form/operator domains (1.5). The $B$ field heat clock is independent of kinetic $a$. No actual-state parity or reality, arbitrary zero-energy $L^2$ inverse, positive $L^2$ complement gap, uncut native response, assumed $r_s$ growth, global family through a denominator pole, norm-to-energy inference or trial-to-actual substitution is introduced. Neither an actual-state counterexample nor analytic preparation, empirical selection or physical-space/dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）

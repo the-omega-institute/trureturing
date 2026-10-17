@@ -1582,3 +1582,421 @@ retain their full original obligations. No new capture word, reader,
 decoder, grant, return marker, initialization or task output is supplied.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Installed native continuation closure and the retained structural distinction
+
+**Definition 13.1 (fixed pair, suffixes and observations).** Fix precisely
+Proposition 11.2's two actual first Readies $P_0,P_1$, their complete
+entrance histories $h_0,h_1$, common tally $b$, and Definition 12.1's
+retained first-store locations $C_L=\{c_0,\ldots,c_{e-1}\}$. The installed
+second/main graph and actual capture remain those of Definition 2.3.
+Write $X\equiv_{C_L}Y$ with exactly Definition 12.1's complete-record
+meaning; neither record discards its first word. The targets throughout
+this section are $h_\sigma,P_\sigma$, not a later current cut.
+
+A prescribed native suffix starts at this actual first Ready and follows
+only the installed joint control. At a prescribed enabled IN either raw
+bit may be supplied; elsewhere the next action is the prescribed enabled
+non-IN row. Include every finite prefix, including withholding the next
+input, incomplete gates, unterminated lengths, noncanonical source and
+history frames, frame faults, rejected requests, unfinished computation,
+partial loans, banks, copies, checks, ACKs and returns. Include actual
+source01 calls and all actually reached original journal/frozen-prefix
+work, and choice00 through the original client, Stop, snapshot, verifier,
+INITIAL consumer and absorbing halt. A helper occurs only at its real
+static call edge with its current resources and retained arguments.
+No arbitrary internal entry, new scheduler, later bootstrap invocation,
+new code supply or new source/read/authority interface is included.
+
+Pair later supplies by the same bit at corresponding actual IN sites.
+This is a physical-prefix domain, wider than Definition 1.4's canonical
+source-frame domain. It does not extend the lawful Supply domain of $Q$.
+Native acquired observations mean actually read/received retained material,
+released bits and control outcomes available through these installed
+paths under their current rights. A mathematical complete successor, a
+joint selection across owners, and an actual structural probe record are
+not thereby acquired observations. An external party's separately retained
+bootstrap input is additional initial information if used by that party.
+
+**Lemma 13.2 (closed control and operand coverage).** For every reached
+row in Definition 13.1, native instruction selection, enabledness,
+ordinary operand selection, tests, finite effects and released/constructed
+ordinary data depend only on coordinates outside $C_L$ and the current
+supplied bit, when there is an IN. No such row writes $C_L$ or reactivates
+its first version. This property follows from the installed construction;
+it is not an assumed noninterference interface.
+
+Proof. First cover control edges. Definition 2.1 takes GCA's entire
+finite graph, changes only ClientImage's successful tail, and retains
+all original/failure edges. Its static call expansion has the ordered
+acyclic helper dependencies of Definition 2.1 and ARC Definition 2.1.
+Sequence joins fixed exits, tests have their two literal successors,
+and a while back edge returns to its testing row. Consequently entering
+a helper cannot acquire a new successor from a runtime word. In particular
+revisiting the testing PC of Tail66 is an ordinary loop visit, not evidence
+of a new outer return. The starting occurrence here is Proposition 11.2's
+actual first Ready; no PC-only return classifier is used.
+
+ARC Definition 4.2's one-time activation goes from the original normalized
+acquisition return through first bootstrap, capture $L$, second bootstrap
+and the main prelude of Definition 4.3. Only that chain constructs the
+fresh-version stores. After its first Ready, the outer receiver's exits
+are exactly ARC Definition 5.2's 00, 01 and 1. Their further edges are
+exhausted by the following construction families.
+
+| Installed family and control joins | Native material, finite effects and current guards |
+| --- | --- |
+| Outer receiver and history ingress: ARC 5.2–5.3, GCA 3.1–3.3 | Tail66/Base70, literal IN6/EX70/WR70/MR70, the preserved ingress-latch tests, mode block, length/payload counter, seals and real68 descriptors. Branches select fixed source, client-loan or history labels. Both mode values and both raw IN values have their displayed edges. |
+| Annex word work: Definition 2.1, ARC 2.1–2.3 and 3.1–3.5, GCA 2.1–2.2 | Two-pass64/65 bank emission; scratch66/67 and descriptors68; native scratch staged on69 before import; F-bounded imports on69/70/73 and closed owned imports on26/28/29. Literal field/bit tests, parity, seals and role labels are the only control effects. Imports require the actual read token and preserve/restore the stated heads. |
+| Cover, both binders, Issue, Call, reconstruction and view work: GCA 4–6, Definitions 4–6 | Manifest, frozen completed $M$, selectors, code descriptions, represented states/events/finite slots and construction directory are ordinary bank words. All lookup, Step, input extraction, role fold, patch formatting, decoding, direct arrows and checks use the preceding word/native expansions. SourceEntrySet/SourceExitSet are represented label tests, not live call edges. |
+| History channels and all callbacks: ARC 7.1–7.3, Definitions 7.1–7.4 | Real sender71, mailbox72, receiver73, measured endpoint placements on69 and descriptors68; distinct current invocation/read/mailbox slots. Both copies, seals, print, pre-bank Seek73, imports, binding comparisons, ACK and resource return have their fixed edges. Successful completion appends one item and returns invocation before Ready. |
+| Source01 and its returns: ARC 4.1 and 5.2–5.4, CAP 2.2–2.3 and 4.4–4.6 | The actual inlined $F^A$ starts at header Base, uses original13/17 and producer work1–12, source16, directory/counters/rows/journals, original channels48/49 and acquired28/29. Seven tags select five source operations or Reserve/Raise; source/counter/semantic/unified-row and dependency delivery culminate in the actual row ACK, source-token TOK and idle CTL. Only that last successor changes to InnerReturn; normalization then CaptureCAP uses closed28/29 and returns to the outer receiver. |
+| Journal and frozen-prefix work, only at its installed calls: CAP 4.6, 6.2a and 6.3 | The real retained query, owner-held frozen end/count/last references, complete index scans on18/19, producer descriptors17 and actually copied row/dependency blocks are the operands. Actor queries, where reached, use their retained three-field packet, actual49/48 channels and full workspace return; producer-local scans return to their retained frozen continuation. Verifier/consumer scans use their already acquired snapshots. No idle or busy-cut helper invocation is added. |
+| Source/client/Stop and terminal work after00: ARC 5.2, CAP 2.2, 4.6, 6.3, 6.5, 6.7 and 8.1 | The twelve original workspace TOKs and CTL enter the parked24–27 client. Its table interpreter and complete packet/output31 are ordinary material; actual49 copies acquire them at producer21. The frozen SEG-P1 list/dependencies and proposal travel on50 to32–39; expected bindings and SEG-R1 receipt travel on51 to40–47. Enumeration, prior/candidate replay, all checks, target43 writes/seal/OUT, ACKs, loans/returns and final halt retain their original rows and current guards. |
+
+The failure edges complete this cover. ARC Definition 5.3 and CAP
+Definition 4.6 retain raw ingress and the frame-fault successor, including
+noncanonical source payloads. GCA preserves the first-detecting malformed,
+occurrence, range, descriptor and binding reasons in both history modes.
+Definition 7.4 and CYCLE Definition 8.5 specify the handler rejection
+publication and the already-held callback fault/one-ACK cleanup separately;
+they release only held resources and append an item only at actual return.
+CAP Definitions 6.3 and 6.5 retain structural refusal, typed no-row and
+verifier/consumer failure with no task output. No success invariant is
+needed to include an interior or failing row of these graphs. If a fault
+has no enabled further edge, none is supplied by this cover.
+
+There are no other outgoing edges: the listed source and history returns
+join their stated outer/retained continuation; 00 takes the original
+terminal route; helper loops and branches stay within their expansions.
+This follows by induction over sequence, finite case, while and hygienic
+inlining, using the complete three-way outer dispatch, seven-way source
+dispatch, two-mode history dispatch and their specified failure joins.
+The original boot constructors and the activation chain have no return
+edge from these joins. CAP Definition 8.1 also forbids a later controller
+table installation. Thus this is a cover of actual prescribed prefixes,
+not a union of callable routine names or a claim that every routine is
+freely reachable from Ready.
+
+Now check operands, including possible data-dependent indirection. Original
+CAP finite effects name its original physical fields; these cannot alias
+the later distinct first-version store. Its finite public-word permutation
+permutes only the twelve named ordinary ports. CAP Definition 4.4's S/W
+references and generated gates resolve to ordinary source/work cells on16;
+PR57.D4's interpreter seeks those ordinary addresses. They cannot select
+an optional finite-location socket. The policy/controller interpreter
+scans its retained ordinary table and simulated tape, and writes ordinary
+state/packets; it does not replace native fetch. These facts also hold for
+its finite raw or unfinished computation. An out-of-range ordinary seek
+has its actual boundary guard, not a finite-store escape.
+
+Annex macro induction starts with ordinary empty/copy/literal-cons/tail
+and field/bit tests. Its native expansion uses64–68 and the explicitly
+positioned import/export ports, so composition adds only those ordinary
+operands and the named latch/parity/stage/marker effects. In particular
+Step's represented bootstrap WRITE, CTL/version selection or finite-slot
+read/write is a tuple operation on bank words. ARC Definition 6.2 and RCA
+Definitions 12.2–12.4 supply no dereference from a represented slot number
+to the live slot. Call uses its manifest's prescribed first-bootstrap
+word, as in Lemma 12.2, not the current contents of $C_L$. The same holds
+when Call represents older source, snapshot or interpreter rows.
+
+For physical finite effects, ARC Definition 6.2 permits only named finite
+literal/designated-latch assignments, named current/predecessor markers,
+fixed stage/version/cursor selections, halt and receipt selection. In the
+post-Ready expansions just covered, the named fields are current original
+control/ownership or annex parity/stage/invocation/read/mailbox fields.
+Bootstrap constructors/selections belong to the earlier activation chain;
+their simulated counterparts belong to bank data. No listed expansion
+names a $C_L$ destination or selects $L$ as its active version. Dynamic
+word length, a code numeral, a descriptor permission or a historical token
+cannot change this finite operand set. This proves the claimed native
+read/effect coverage, including raw-data branches, without requiring a
+successful parse, service completion or a future Ready. Structural rule
+selection's full-pattern inspection is a different operation, treated in
+Proposition 13.5. ∎
+
+**Theorem 13.3 (all finite installed native suffixes).** For every finite
+prescribed native continuation
+
+$$
+P_0=X^0_0\longrightarrow X^0_1\longrightarrow\cdots
+\longrightarrow X^0_m
+$$
+
+there is a continuation of exactly $m$ native rows from $P_1$, using the
+paired supplied bits, such that at every $0\le j\le m$
+
+$$
+X^0_j\equiv_{C_L}X^1_j,\qquad
+(c_0,\ldots,c_{e-1})(X^\sigma_j)=w_\sigma.
+$$
+
+Conversely the same holds starting from $P_1$. Corresponding native
+labels, supplied/released bits, ordinary operands and updates, current
+heads/latches/owners/tokens, receipts and completion/refusal/halt outcomes
+agree. All complete successors still retain their own unequal $C_L$.
+No termination premise is needed for this finite-prefix assertion.
+
+Proof. Proposition 11.2 supplies the base relation and the two retained
+words. At related reached cuts Lemma 13.2 selects the same physical row
+from the same active executable map and current PC. Check all native leaves:
+
+| Leaf | Guard, operand and successor comparison |
+| --- | --- |
+| RD | Same ordinary port/head/cell/symbol, named latch and literal equality branch. A source boundary test retains its actual private-latch restriction. |
+| WR | Same current writer/writability guard, literal or designated latch, target symbol bits and ordered finite effects. Raw source bytes are kept as raw bytes. |
+| ML/MR | Same token, boundary/existing neighbor, head-track updates and destination identity; no allocation is hidden. |
+| EX | Same ordinary R guard; preserve its old cell identity/head, replace its symbol by blank and construct the same new unmarked R. |
+| BF | Same three actual operand subfields and literal eight-entry Boolean table, hence the same result latch. |
+| IN | Same prescribed ingress/current permission; consume the paired raw bit into its input latch, without a tape write. Later matching WR and tests remain separate rows. |
+| OUT | Same permitted output latch and released bit, with the actual receipt and control successor. |
+| TOK | Same named present source/destination availability slots and source=1/destination=0 guard; perform both updates. Equal principal does not collapse a transfer. |
+| CTL | Same designated-latch test and literal successor; apply its named local finite effects in written order, including intermediate values used by later effects, seals, phase and halt. |
+
+The closed suffix contains no boot variant for installing finite bits or
+an ordinary port's initial L/R boundaries; ordinary EX remains as above.
+All other coordinates persist. Every executed row also appends its real
+ordinary/F receipt. If core meter work, a marker role or the two meter
+heads alias, UAS Definition 2.3 combines them on the same physical identity
+and preserves the core's updated read mark. The same aliases and updates
+occur on both sides. Thus one native step preserves $\equiv_{C_L}$ and
+both first words. Its guard fails on one side exactly when it fails on
+the other; this is physical enabledness, not a comparison of $Q$ domains.
+Induct on $j$; symmetry gives the converse.
+
+A withheld bit supplies no next executed IN. A busy/unauthorized attempt
+or a disabled boundary move has no row/receipt. An enabled raw Supply
+outside the canonical task language still has the paired physical IN
+successor. An executed refusal keeps its work, output status and changed
+receipt/work state. These three cases have not been identified. The last
+halt CTL is paired like every other row and admits no later row. Divergent
+or unfinished routes are covered through each of their finite prefixes;
+no return, completion, bounded growth or full-input witness is inferred. ∎
+
+**Corollary 13.4 (adaptive native acquisition cannot recover the target
+word).** Consider any finite adaptive acquisition/use scheme confined to
+Definition 13.1's installed paths, starting with common actually acquired
+material and common public parameters. Its later supplies and decisions
+may depend on that material and its subsequent actual native acquisitions,
+released outputs and available outcomes. It obtains the same acquired
+material and makes the same decisions on $P_0,P_1$. It cannot correctly
+determine the first-Ready target bit $c_p$ on both, nor faithfully emit
+that target's full raw record or any one of
+
+$$
+S(h_\sigma),\quad B(h_\sigma),\quad T(h_\sigma),\quad
+M_{\rm ret}(h_\sigma)
+$$
+
+on both histories. This remains true with arbitrarily growing annex
+retention, any finite number of source/history returns, and all actually
+reached original journal, frozen-prefix and final Stop work.
+
+Proof. Induct over the finite adaptive decision tree, and within each
+chosen fragment over its actual native rows. Equal acquired arguments
+choose the same next branch/bit, and Theorem 13.3 gives equal subsequent
+acquired values and outcomes, including a chosen early stop. This does
+not allow a decision node to inspect hidden coordinates merely because
+a complete successor exists mathematically. All actual authorized reads
+and copied bodies are among the equal ordinary data. Growing storage
+retains functions of these same arguments and changes no step of the
+induction. The common result cannot be both $c_p=0$ and $c_p=1$.
+A recovered raw record supplies this coordinate; a faithful body of any
+listed independent view supplies it by Theorem 11.4. Those targets belong
+to its stated $\mathcal D_0\cup\mathcal D_1$ domain. No memory value at a
+later00/terminal cut is required. ∎
+
+Unlike Corollary 12.4's one-flight statement, the obstruction excludes
+recomposition of the fixed installed native routes as acquisition of this
+distinction from common data. A distinguishing dependency must enter the
+acquisition/use construction. Additional externally retained bootstrap
+information, including a bit used to choose different later Supply, is
+such a dependency and is allowed when genuinely available. An independently
+established legitimate structural interface could also provide one. The
+corollary neither supplies nor excludes either mechanism; it prevents
+counting repetitions or alternate orderings of the existing native routes
+as its acquisition proof.
+
+**Proposition 13.5 (finite extraction from each actual structural
+occurrence).** Use precisely Definition 2.5's incidence realization and
+Definition 8.5's UAS ordered stencil. From the finite-component probe
+slice of every actually executed patch after either first Ready, including
+the patch for final halt if reached, a fixed finite mathematical extractor
+returns the entire $e$-bit first word $w_\sigma$. Corresponding slices on
+the paired continuations differ. This statement concerns actual occurrence
+probes, not the represented T body computed from receiver73.
+
+Proof. Let $r_j$ be the socket of $c_j$ at its fixed catalog position in
+$F_{q_{\mathrm{gc}}}$. UAS Definition 4.1 prescribes, on every row, the
+root route followed by a full depth-first inspection of that finite
+component. UAS Definition 2.2 probes both child slots of every visited
+vertex and its parent slot on each nonroot return. The catalog and fixed
+ordered scaffold therefore identify each $r_j$ during this finite scan.
+Follow the known scaffold in depth-first order, using the probe outcomes
+to account for an optional terminal visit at each socket; record the two
+child-slot occupancy bits at each selected $r_j$. Actual occurrence
+records retain the probed endpoint and optional partner, as specified by
+Definition 3.1 and CYCLE Definition 5.3, so no graph-renaming inference
+or traversal of a lost past carrier is needed.
+
+All these first-store bits are present at Ready and remain unchanged by
+Theorem 13.3. UAS Definition 2.1 encodes their values by
+
+$$
+\begin{aligned}
+(r_j.\mathsf L\ne\varnothing,\ r_j.\mathsf R=\varnothing)&\mapsto0,\\
+(r_j.\mathsf L=\varnothing,\ r_j.\mathsf R\ne\varnothing)&\mapsto1.
+\end{aligned}
+$$
+
+Reading the $e$ pairs in store order returns $w_\sigma$. This algorithm
+uses only that occurrence's finite scan and the fixed installation/catalog;
+its finite size is independent of future source or annex growth. At $c_p$
+the occupied sides are different, proving unequal actual probe slices.
+A cut with no later executed row has no such later occurrence; the
+proposition does not create one at halt or at unavailable input.
+
+The slice belongs to the mathematical actual $T$ occurrence relation.
+UAS Assumption 1.2 and Definition 2.3 grant no actor read from a probe or
+from membership in the finite rule table. There is no resident probe tape.
+CYCLE Definitions 5.2–5.4 format/check probes from represented states;
+Definitions 6–7's FromM/CheckT import the actual receiver73 and work on
+that delivered representation. They do not sample this live slice. In
+particular GENERAL12's canonical delivered T remains distinct from the
+actual $P_1$ occurrence records. The extractor supplies mathematical
+recoverability of the missing word in bounded local occurrence material,
+with no asserted executable cost, authorized acquisition or task port. ∎
+
+**Proposition 13.6 (equal suffix row charges, actual entrance bills).**
+At each pair of corresponding post-Ready rows in Theorem 13.3, native
+opcode counts/allocations agree. Under exactly UAS Definitions 4.1–4.2's
+ordered probe/assignment/birth tariff, their structural row charges also
+agree, although their actual probe records differ. Every run keeps its
+own entire pre-Ready/foundation and rule-apparatus bill.
+
+Proof. Complete ordinary records, head positions and finite-location
+presence sets agree. The common row/effect list determines equal ordered
+cell-role lists $\mathcal D_i$, append sites $\mathcal A_i$, old head-slot
+routes $\mathcal J_{i,\mathrm{old}}$, fresh-socket lists $\mathcal Z_i$,
+route lengths and alias partitions. Repeated roles are inspected equally
+often. Designated targets, including unchanged assignments, depend on the
+actual ordered effects, not on whether the final bit changes value. Hence
+the counts $e_i,s_i,t_i,r_i,a_i$ in Definition 8.5 agree as well. This
+includes all copy, marker, receipt and meter-alias targets.
+
+Put $q=q_{\mathrm{gc}}$ and let $c$ count present finite locations at the
+pre-row cut. The full finite component has $2q-1+c$ vertices. Each present
+0 or 1 contributes exactly one terminal child, so changing its occupied
+side does not change that number. Its inspection has
+$3(2q-1+c)-1=6q+3c-4$ probes, with the same root-route length $d_r$.
+Thus UAS's exact formula on these actual rows gives equal
+
+$$
+\begin{aligned}
+p_i={}&d_r+6q+3c-4
+ +\sum_{x\in\mathcal D_i}(|\pi_x|+68)
+ +\sum_{z\in\mathcal A_i}(|\pi_z|+2)\\
+ &+\sum_{w\in\mathcal J_{i,\mathrm{old}}}|w|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2),\\
+v_i={}&24e_i+s_i,\\
+w_i={}&3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\\
+g_i={}&1+p_i+w_i+v_i.
+\end{aligned}
+$$
+
+Probe partners/sides are not identified by these equal counts. No equality
+is asserted for a different optimized stencil, a value-dependent tariff
+or an extra export routine. For a paired length-$m$ suffix write its common
+row charges as $\gamma_1,\ldots,\gamma_m$. The complete structural bills
+remain, separately for $\sigma=0,1$,
+
+$$
+G_\sigma(b+m)=\rho_\sigma+g_{\sigma,0}
+ +\sum_{i=1}^{b}g_{\sigma,i}
+ +\sum_{j=1}^{m}\gamma_j,
+\qquad
+g_{\sigma,0}=1+8(195+2q+c_{\sigma,0}).
+$$
+
+The first sum includes every original preparation, load, capture and
+foundation-dependent row. It is not replaced by the other run's sum or
+removed on account of equal later increments. Each actual native bill
+is still Definition 8.5's
+$(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n)$ at $n=b+m$.
+Proposition 11.2 and Theorem 13.3 pair these counts, while retaining each
+word's values, all dead material, every real allocation and one real
+receipt per executed row. Original Stop work and every actual loan/copy/
+ACK/return have these same complete accounts; no service subtotal replaces
+them. The structural tariff is the explicitly admitted atomic primitive
+model, not a lower ordinary-tape realization or a physical energy law. ∎
+
+**Convention 13.7 (reuse, parameter boundary and remaining recovery).**
+This is a repo-derived application to the fixed source at
+`8711c854eb102a2b6aeab11cc065bfc481afac50`. Proposition 11.2 supplies
+the actual pair; Theorem 11.4 supplies its independent target inverses;
+Theorem 12.3 supplies the existing wrong-target flight. The additional
+content is the complete installed-suffix operand/control closure, its
+adaptive acquisition consequence, and the actual local probe extractor
+with equal suffix row charges. No loading theorem, four-view inverse,
+codec, generic quotient or new native operation is introduced.
+
+The induction method is standard. Rushby's
+[Noninterference, Transitivity, and Channel-Control Security Policies,
+Chapter 2, Definition 4 and Theorem 1](https://www.csl.sri.com/papers/csl-92-2/csl-92-2.pdf)
+uses output/step consistency and local respect for its unwinding theorem.
+Here the two reached states, partial native guard consistency and actual
+read/effect cover are supplied by Lemma 13.2 and Theorem 13.3; no total
+security-policy instance or structural-probe noninterference is claimed.
+At Convention 10.4's exact mathlib revision,
+`StateTransition.Respects`/`tr_reaches` transport a supplied simulation,
+allowing positive-length matching fragments; they do not supply our
+one-row/one-receipt cover. `Function.factorsThrough_iff` requires fibre
+constancy and a nonempty result type; the constant acquired-data fibre
+here cannot carry the unequal Boolean target bit. These are reused
+methods, not new library results or Lean-checked applications.
+
+For contextual comparisons, repository `StrictOneHoleContexts` and its
+owning Scribe quantify over their supplied partial signature and all
+its finite generator words, with arbitrary off-slot parameters. That
+family is not the installed entry/authority family here. Abate et al.,
+[Journey Beyond Full Abstraction, arXiv:1807.04603v6, §§1–2 and 6](https://arxiv.org/pdf/1807.04603v6),
+distinguish observational equivalence, robust relational properties and
+context/trace back-translation; their finite-prefix back-translation still
+constructs a source context, and stated determinacy assumptions matter.
+Neither a generic context theorem nor a trace translation constructs an
+original-$Q$ entry or licenses task-undefined Supply. Convention 10.4's
+`NativeFullSourceProducer` (including its private traversal lemmas),
+`NativeSourceSelectorCode` and their owning Scribes retain their actual
+abstract/numerical source-read premises. `OriginalNativeServiceBridge`
+and its `PaidTraceResidual` consumer still require supplied Architecture,
+Protocol arrival/start/step and an actual return cut. No such telescope
+is silently instantiated for $G_{\mathrm{gc}}$ by this section.
+
+The unchanged alpha/beta ordered nonassociative source, independent view
+meanings, current ownership/tokens and complete costs remain essential.
+No claim of worldwide novelty, Lean certification or full-programme
+completion is made. The closure class fixes this installed second/main
+graph and these two reached first Readies; it classifies neither arbitrary
+other raw stores nor possible legitimate future interfaces. It covers raw
+later *physical* input without admitting it into the original task.
+The target $M_{\rm ret}$ is used only on Theorem 11.4's stated first-Ready
+domain; no off-domain value at final00 is invented.
+
+In particular equal acquired native data is no equality, separation or
+admission theorem for original $Q$. AIF Definition 2.6's complete original
+successor remains mathematical task output, including all coordinates
+it actually contains, with no actor permission inferred. Empty response
+retains only running/terminal type and actual terminal output. The full
+original installed-entry, lawful adaptive/semantic experiment and
+complete-response correspondence obligations 10.2–10.3 persist, including
+$w_1$, added phases, terminal and remaining raw/full-domain comparisons.
+Full-receipt rigidity still forbids inserting driver rows into an identical
+original one-step successor. A faithful recovery construction still needs
+actual distinguishing acquired material, its real entry/current authority,
+all paid retention/copy/check/use work, and a faithful use connecting it
+to the unchanged original task. The bounded structural slice gives an
+exact candidate *material* for this distinction; it supplies none of
+that missing acquisition/use or original-response interface.
+
+## 追加锚（本行以下为增补区）

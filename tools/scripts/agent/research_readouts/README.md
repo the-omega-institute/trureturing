@@ -1,6 +1,37 @@
-# Research prediction readings
+# Research readings
 
 This is the input contract for `readouts.py`, subordinate to `CLAUDE.md` and the existing specification. It computes readings for `skills/autonomous-research/SKILL.md`; it does not judge mathematics, proof shape, admission or research value. Existing §3.2 evaluation and mathematical settlement supply the evidence. No value function f is registered by this contract, and no expected value or ordering is computed.
+
+## Compiled declaration dependencies
+
+For sharpness/boundary source screening, `compiled_dependencies.py` reads an explicitly finite module domain at a fixed commit. Provide this JSON on stdin:
+
+```json
+{
+  "revision": "<full HEAD commit SHA>",
+  "domain": {
+    "modules": ["D5.S3.ConceptDynamics.DefinitionEscapeAdjudication.ParetoWeakPreorder", "D5.S3.ConceptDynamics.DefinitionEscapeAdjudication.QuotientParetoWeakOrder"],
+    "complete": true
+  },
+  "targets": ["D5.S3.ConceptDynamics.DefinitionEscape.Adjudication.pareto_weak_reflexive_transitive"]
+}
+```
+
+Run `make -s -C tools compiled-dependencies < request.json`. The command builds only the reader, named modules and their compiler dependencies through `make lean`, including its existing cache ensure and reader lock. Lake owns incremental compiler reuse; there is no dependency-result cache, standing database, ledger or program-byte reuse key. Runtime data is temporary and removed when the command exits. The supported environment is the repository's pinned Lean/Lake toolchain, Git, make, .NET SDK and Python 3 on a platform supported by the existing cache entry. The entry resolves the repository from its own path and accepts invocation from other working directories.
+
+The input has exactly the three displayed fields; module and target lists must be nonempty and duplicate-free. `domain.complete` is the caller's assertion that the list is its entire intended user population. It does **not** assert that the list covers all D5, or all reverse dependencies. If that population is not known, use `false`. The returned `domain` must accompany any reading. Unknown targets, unreadable modules, missing required values, a caller-incomplete population, a different/changing HEAD or modified Lean/Lake source inputs prevent a complete result. No incomplete result supplies an exact external user count. Successful acquisition from a clean fixed revision is required for exit 0; incomplete results exit 2 with named gaps and observed partial data.
+
+`DEPENDENCY_NO_BUILD=1` skips compiler/cache acquisition and reads available artifacts. It always reports `freshness_unverified` or a named acquisition failure and exits 2; it cannot certify artifact freshness or an exact zero. Missing reader/stamp files report `missing_artifacts`, failed builds report `build_failed` with their exit code, and compiler read failures retain their original `raw.*` detail, including missing `.olean.server` / `.olean.private` parts. The default build path can repair missing artifacts; a failed repair remains an acquisition failure, separate from an empty source selection.
+
+The `compiled-dependencies-v1` output contains every declaration in each successfully read domain module, with its compiler name, user name, owner, kind, private/internal flags and two edge records. `type` contains constants in the compiled type **and constructor names for an inductive**. `value` contains constants in the raw proof/definition value, using `CompiledAxioms.declarationDependencyParts`; `none` is `status: no_value` and `forward: null`, whereas `some []` has an observed empty direct list. Theorems, definitions and opaques missing a value produce `MISSING_REQUIRED_VALUE`. Axioms, inductives, constructors and recursors can legitimately have no value. Module `imports` are separate edges, associated with declarations by their owner module.
+
+Each edge record has `forward` (what the declaration/module references) and `reverse` (which domain declarations/modules reference it), each with `direct` and `transitive` lists. Direct means one constant occurrence edge or one import edge; transitive includes direct edges and all positive-length paths of the **same kind**, excluding the starting node. Type and value paths are never mixed. Intermediate declarations/modules must belong to the explicit domain; outgoing constants/imports outside it are terminal boundaries. `boundary_constants` names the unexpanded constants. A complete result is exact only for these restricted paths, and makes no claim about paths that leave and then reenter the domain. Include additional modules and rebuild when such paths matter.
+
+For each requested target, `external_value_users` selects public non-internal theorem/definition/opaque declarations in other domain modules with a raw value path to it; `value_paths` supplies one shortest witness per selected user. Private declarations and Lean internal-detail implementation constants remain graph vertices, and are excluded from this user list. User counts are distinct declaration identities, never a sum of intermediates or paths. Compiler kinds and Lean's `Name.isInternalDetail` determine this filter; these flags do not authenticate author intent or source-level relevance. Inspect the named users before treating them as research sources.
+
+**Raw expression occurrence is not a live path after reduction and dead-term removal under `CLAUDE.md` §3.2.** It establishes neither indispensability, an escape witness nor research value. Imports and type references supply no proof-use evidence. This command is a source-screening readout, not a proof-shape or admission judge; the existing §3.2/§3.3 evaluation remains responsible for those conclusions. No whole-D5 ranking or historical selection conclusion follows from a finite query.
+
+`make -C tools compiled-dependencies-test` runs the protocol and graph tests without Lean preparation. `make ci-unit UNIT=tests-lean` also exercises the production `compiled-dependencies` make entry, its normal Python acquisition and the built `dependencyReadout` executable on the existing compiler fixtures. Its private core-only native project needs the pinned toolchain and the built .NET producer, and starts without the executable or a project cache. It checks JSON value users, type/import-only non-users and named unknown declarations from a path containing spaces and a different working directory. `make compiled-judge-test` runs the real public/server/private compiler fixtures through the existing compiled-judge test program, including import-only/type-only/value/helper cases, inductive constructor edges and absent versus empty values.
 
 ## Carrier and acquisition
 

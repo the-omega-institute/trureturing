@@ -4339,3 +4339,597 @@ owners, assume homogeneous angles on a segment, discard slots, or
 replace the original angle equations by a formal graph equation.
 The finite bounds permit a bounded role analysis but do not prove
 five-reservoir exclusion or realization.
+
+## 222. Setting and response
+
+Retain the exact paired five-reservoir hypotheses and the proved
+whole-high-core and single-high-M conclusions. In particular each
+transverse pair consists of distinct reservoir labels; the actual
+quotient has complete circular edge links and degree at least six;
+all original edge angle sums are 2*pi. The only flat owner has pair
+{C,D} and no Z or U slot. Put P={M,Z,U}, with
+ m>1+c+d>3, z>m, u>m, c,d<m-2.
+The interacting high core has at most four actual owners and contains
+ tau=(Z,M,C,D,M,C).
+For X=Z or U write x=x_X. Its entire original star is genuine and
+has total angle 2*pi. We classify owners containing X and no other
+label from P. A special edge has a fixed transverse pair throughout
+its complete star and occurs only axially.
+
+## 223. Special axes in a pair {X,B} satisfy q<x
+
+Let B=C or D, with value b<x-2. Suppose a special edge e has fixed
+pair {X,B}, with value q. Its entire star is genuine since the sole
+flat has pair {C,D}. Its n>=6 original axial angles theta_i sum to
+2*pi. For its transverse X angle use the individual response
+ beta(theta)=atan(lambda_plus*cot(theta/2))
+            +atan(lambda_minus*cot(theta/2)),
+ lambda_plus/minus=(sqrt(x^2-1) +/- sqrt(b^2-1))/(x+b)
+                    *sqrt((q-1)/(q+1)).
+Both parameters lie in (0,1). Thus beta is positive, decreasing and
+convex. An owner has two transverse X slots and at most two e axes,
+so its actual X expense is at least the sum of beta over its e slots.
+The complete X budget and Jensen give
+ 2*pi>=sum_i beta(theta_i)>=n*beta(2*pi/n)>=6*beta(pi/3).
+Write s=lambda_plus+lambda_minus, p=lambda_plus*lambda_minus>0.
+Since beta(pi/3)<=pi/3<pi/2, tangent addition has positive denominator
+and yields
+ sqrt(3)*s/(1-3*p)<=sqrt(3), hence s+3*p<=1.
+In particular s<=1. Consequently
+ (q-1)/(q+1)<=(x+b)^2/[4*(x^2-1)]
+             <(x-1)/(x+1),
+using b<x-2. The increasing inverse of (q-1)/(q+1) gives q<x.
+
+## 224. At most two single-high transverse-X owners
+
+Any such owner has pair {X,B}, B=C or D. Its axes r,o can only be
+X,C,D, or special. Thus r,o<=x: the low labels are smaller and
+Section 223 bounds special axes; repeated X axes are allowed.
+The transverse X angle beta has cosine
+ N/sqrt(D_r*D_o),
+ N=b*(r+o)+x*(r*o+b^2-x^2+1),
+ D_r=r^2+x^2+b^2+2*r*x*b-1,
+ D_o=o^2+x^2+b^2+2*o*x*b-1.
+The denominators are positive for positive cosh values. The sign of
+the derivative in r is the sign of
+ (b+x*o)*D_r-N*(r+x*b)
+ =(x^2-1)*[-b^3+b*o*r+b*x^2+b+o*x+r*x]>0,
+since x>b>1. The derivative in o is positive by symmetry. These
+rational comparisons do not require the interpolating data to be a
+genuine tetrahedron. Therefore its cosine is at most its value at
+r=o=x, namely
+ x*(b+1)/(2*x^2+b-1).
+This expression is increasing in b, with derivative
+ 2*x*(x^2-1)/(2*x^2+b-1)^2>0.
+Since b<x-2,
+ cos(beta)<x*(x-1)/(2*x^2+x-3)<1/2;
+the final denominator exceeds twice the numerator by 3*(x-1)>0.
+Thus beta>pi/3. Each actual owner has two such transverse X slots,
+so three distinct owners would exceed the complete X budget 2*pi.
+There are at most two single-high transverse-X owners. Any additional
+axial X slots only increase their actual X expense.
+
+## 225. At most five genuine axial-X owners with pair {C,D}
+
+Each such owner has exactly one X axis: two would give flat product
+(x-1)^2>(c+d)^2, contrary to genuineness. Suppose g>=6 such owners
+exist, with axial angles theta_i whose sum is at most 2*pi.
+At least one has theta_i<=pi/3. The dominant-axis response estimate
+used in §116.1 applies to x>1+c+d and gives lambda_X^2>1/3, where
+ lambda_X^2=K*(x-1)/(x+1),
+ K=(sqrt(c^2-1)+sqrt(d^2-1))^2/(c+d)^2.
+Precisely, §96.5 supplies the dominant-axis identity
+ tan(theta_i/2)^2+2*lambda_X^2>1.
+For the selected theta_i<=pi/3, its first term is at most1/3;
+hence lambda_X^2>1/3. This part of §116.1 does not use its flat
+opposite-axis hypothesis, which is needed only for the second,
+opposite-axis bound. No flat opposite axis is assumed here.
+Once lambda_X^2>1/3 holds, Jensen gives
+ sum_i B_lambda_X(theta_i)>=g*B_lambda_X(2*pi/g)
+                            >=g*B_lambda_X(pi/3)>g*pi/4.
+Each owner has four C/D transverse slots, of expense
+4*B_lambda_X(theta_i). Their total therefore exceeds g*pi>=6*pi,
+contradicting the entire genuine C/D budget, which is at most4*pi.
+Thus g<=5.
+
+## 226. Whole-star counts and scope
+
+The complete X star has at most four interacting-core owners, two
+single-high transverse owners, and five axial-{C,D} owners. This is
+an exhaustive cover: a noninteracting owner containing X either has
+X transverse or has low distinct pair {C,D} and X axial.
+Each interacting or transverse owner contributes at most four X
+slots, whereas each axial-{C,D} owner contributes one. For Z, tau
+is one interacting owner and has only one Z slot, so degree(Z)<=26.
+For U, tau has no U slot, so at most three core owners contribute,
+and degree(U)<=25. The corresponding owner counts are at most11
+for Z and10 for U. No claim of five-reservoir exclusion follows.
+
+
+## 227. At least three interacting owners and a joint transverse budget
+
+Retain the exact paired five-reservoir hypotheses, including distinct
+transverse labels, original face pairings and complete circular edge
+links of degree at least six. Let P={M,Z,U}. Reuse the whole-high-core
+result: an actual owner containing two distinct labels from P is genuine,
+has original P-angle expense greater than pi, and there are at most four
+such owners. Denote this set by K and its cardinality by k.
+The escape owner is tau=(Z,M,C,D,M,C), where all four labels differ.
+Theorem 173.1 supplies an actual owner containing Z and U, so K contains
+at least one owner distinct from tau. No new ascent assertion is used.
+
+## 228. The core has at least three actual owners
+
+Suppose k=2, with K={tau,rho}, where rho contains Z and U. The two faces
+incident to tau's axial Z slot have labels {Z,M,C}. Each such face has
+two distinct P labels, so its paired face belongs to an owner in K.
+These two faces cannot pair to each other: Z occurs only once in tau,
+and pairing both incident ends of its normal edge interval together
+would make that interval the complete Z normal circle, of degree one.
+This contradicts the actual complete link and degree assumption.
+Consequently both faces pair to faces of rho.
+
+In particular rho contains M,Z,C and U, four distinct labels. Every
+face of a paired frame consists of the two distinct transverse labels
+and one axis label. A rho face with labels {M,Z,C} therefore forces
+its transverse pair to be a two-element subset of {M,Z,C}, and one
+axis to be the third label. Because rho also contains U, its other
+axis must be U. U occurs exactly once in rho.
+
+Both faces incident to this U axis contain two distinct P labels:
+each pair subset of {M,Z,C} contains M or Z, in addition to U.
+Their partners must therefore belong to K. They cannot belong to tau,
+which has no U slot. They must be paired to one another in rho.
+The unique U normal interval consequently forms its entire edge circle,
+forcing degree(U)=1. This is again a contradiction. Thus 3<=k<=4.
+The argument retains repeated owners elsewhere and does not assume
+that different faces have different neighboring owners.
+
+## 229. At most two single-high transverse owners in total
+
+Let T be the set of genuine owners containing exactly one distinct P
+label and having that label transverse in its chosen paired frame.
+Write j=|T|. For M, the single-high-return theorem makes any such owner
+the symmetric exceptional owner, whose two transverse M angles each
+exceed pi/3. For Z or U, Section 224 gives
+the same strict lower bound for the two transverse high angles.
+Thus every owner in T consumes more than 2*pi/3 of genuine P budget.
+Owners in K and T are disjoint by definition. Summing original slots
+of distinct actual owners does not duplicate an angle, even when labels
+or neighbors repeat. Since the entire genuine P capacity is 5*pi,
+ k*pi+(2*j/3)*pi<5*pi.
+For k=3 this forces j<=2; for k=4 it forces j<=1. In particular j<=2
+across all three high labels together. Any extra axial high slots in a
+T owner only increase its expense and do not weaken the argument.
+
+This is a joint necessary incidence and angle-budget restriction.
+It does not assert a realizable contracted graph, exclude all remaining
+three- or four-owner configurations, or prove five-reservoir realization.
+
+## 230. At most nine actual owners contain any high label
+
+Partition all genuine owners containing a label from P into K, T, and A.
+The first two classes are defined above. The remaining class A consists
+exactly of single-high axial owners with transverse pair {C,D}: if its
+unique high label is not transverse, distinct transverse labels force
+that low pair. Each A owner has exactly one high slot. Two high axes
+would either give two distinct P labels and put it in K, or repeat the
+same X with x>=m>1+c+d, forcing axial flatness. Let g=|A|.
+
+Write Theta_A for the sum of its high axial angles, and B_A for the
+sum of beta_C+beta_D, counted once per A owner. The dominant-axis
+inequality gives pi<2*theta+beta_C+beta_D for each A owner. Summing
+(with a weak inequality allowed when A is empty) yields
+ g*pi<=2*Theta_A+B_A.
+The actual C/D transverse expense of A is 2*B_A, so B_A<=2*pi from
+the complete genuine C/D budget at most4*pi. Distinct owner classes
+have disjoint original high slots. The strict expense of K and the
+lower expense of T therefore give
+ Theta_A<(5-k-2*j/3)*pi.
+Consequently
+ g<12-2*k-4*j/3.
+
+For k=3, the allowed j=0,1,2 imply respectively g<=5,4,3. Thus the
+number of all high-containing owners, including the unique flat, is
+ 1+k+j+g<=9.
+For k=4, j=0,1 imply respectively g<=3,2, and the same count is at
+most8. The flat contributes one owner and exactly one high slot M;
+its other axis is C,D or special. These are upper bounds on the actual
+union, not sums of stars that count an interacting owner repeatedly.
+
+As an optional original-slot consequence, each K owner has at most six
+high slots and tau has exactly three. Each T owner has at most four,
+since its distinct transverse pair has only one high label. Each A
+owner has one, and the flat has one. Therefore the sum of the three
+actual degrees is at most
+ 1+3+6*(k-1)+4*j+g.
+The same finite cases give at most27 when k=3 and at most28 when k=4.
+In particular degree(M)+degree(Z)+degree(U)<=28. All these statements
+use original slot counts and all three complete angle budgets; they
+still do not exclude the remaining finite high-core configurations.
+
+## 231. Exact target and inputs
+
+Retain the actual paired five-reservoir hypotheses and the conclusions
+through §230. In particular transverse labels are distinct, all original
+edge links are complete circles of degree at least six, and all shared
+positive lengths satisfy the original edge angle equations. Write
+P={M,Z,U}. The interacting core K consists of actual owners containing
+two distinct P labels. It has 3<=|K|<=4, and all its owners are genuine.
+The escape tau=(Z,M,C,D,M,C) belongs to K; its four labels are distinct.
+Theorem 173.1 supplies an owner containing Z and U, hence U occurs in K.
+A genuine owner cannot have low pair {C,D} and two high axes, since both
+axis values are at least m>1+c+d and the axial flat-product inequality
+would hold strictly. Every face contains its two transverse labels and
+one axis label, including repeated labels as an actual multiset.
+
+Call a face marked when it contains two distinct P labels. Its paired
+face is marked and belongs to an owner in K. A label's original edge
+slots each give one normal interval with two ends at its incident faces.
+If all these ends within a specified owner set are paired internally,
+they form closed components of that label's actual normal link. Since
+that link is one complete circle, any nonempty such closed subset is
+the whole circle. Thus a closed subset with fewer than six slots is
+impossible. This retains loops and repeated visits to the same owner.
+
+## 232. A high label cannot occur in only one core owner
+
+Suppose a high label X occurs in exactly one member omega of K.
+If X is axial and not transverse in omega, its pair must contain a
+high label: otherwise its pair is {C,D}, and the other high required
+by membership in K is the other axis, the excluded genuine flat case.
+All faces incident to X are then marked and contain X. Their partners
+must remain in omega, the only core owner containing X. There are at
+most two X slots, giving a forbidden closed link subset.
+
+If X is transverse with another high label, every face incident to X
+is marked. The same reasoning closes at most four X slots in omega.
+If X is transverse with a low label, some axis carries a distinct high
+label Y. Every face incident to an axial Y slot is marked and contains
+X. Its partner must again stay in omega. Y is not transverse in this
+case, so at most two Y slots form a forbidden closed link subset.
+These cases exhaust the paired frame. Hence every high label occurring
+in K occurs in at least two distinct actual owners of K.
+
+## 233. Three core owners are impossible
+
+Suppose K={tau,rho,eta}. Since tau has no U slot, Section 232 forces both
+rho and eta to contain U. The two faces incident to tau's unique axial
+Z have labels {M,Z,C}. They cannot pair to one another: this would close
+its single Z interval and force degree(Z)=1. Their partners lie in K.
+
+If they meet different owners, both rho and eta have a face {M,Z,C}.
+In each, U must be the other axis: the transverse pair lies in that face,
+one axis is its remaining label, and U is distinct from all three.
+Thus each has exactly one U slot. All faces incident to either U slot
+are marked, since the transverse pair contains M or Z. Tau has no U,
+so these two slots close within rho and eta. This forces degree(U)<=2,
+a contradiction. Consequently both tau faces meet the same owner rho.
+
+Rho contains the four distinct labels M,Z,C,U. Up to swapping the
+transverse pair and the two axes, there are exactly three possibilities:
+
+ (i)  (Z,M,C,U,M,C),
+ (ii) (M,Z,C,U,Z,C),
+ (iii)(C,M,Z,U,M,Z).
+
+In (i), rho's Z axis is unique and its two incident {M,Z,C} faces are
+paired to tau's two Z faces. Their two Z intervals close, forcing
+degree(Z)=2.
+
+In (ii), rho's other two faces are {U,Z,C}. They cannot pair to each
+other, which would close rho's unique U interval. They cannot pair to
+tau, which has no U. They therefore both meet eta. Eta has one of
+three roles at such a face, with its other axis Q arbitrary:
+
+ (a) (U,Z,C,Q,Z,C),
+ (b) (Z,U,C,Q,U,C),
+ (c) (C,U,Z,Q,U,Z).
+
+For (a), every U slot in rho and eta is axial; eta has at most two,
+including Q=U. All their U-incident faces are marked, hence paired
+inside K, and tau has no U. At most three U slots close, contradiction.
+For (b), every Z-incident face in tau, rho, and eta is marked: tau's
+one Z is axial; rho's two transverse Z slots meet axes M and U;
+eta has one Z axis, or two when Q=Z, with pair {U,C}. No other Z slot
+occurs in these owners. Thus their complete Z link closes with at most
+1+2+2=5 slots, contradiction.
+For (c), every U-incident face in rho and eta is marked, since eta's
+transverse pair is {U,Z}; eta has at most three U slots, including
+Q=U. With rho's one U axis and no U in tau, at most four U slots close.
+Again this contradicts degree at least six.
+
+In (iii), rho's other two faces are {U,M,Z}. They cannot pair to each
+other, which closes its unique U interval, or to tau, which has no U.
+Both meet eta. A face {U,M,Z} forces eta's transverse pair to contain
+two of these high labels and one axis to carry the third. Hence every
+U-incident face in eta is marked, including any repeated U in its other
+axis. Eta has at most three U slots. All U slots in K, at most rho's
+one plus eta's three, close internally, contradiction.
+
+Every case is excluded. Therefore |K|=4.
+
+## 234. Joint consequences and remaining scope
+
+The already proved joint budget for a four-owner core gives at most one
+single-high transverse owner, at most eight actual owners containing any
+high label, and total degree(M)+degree(Z)+degree(U)<=28. Each high label
+occurs in at least two of the four core owners by Section 232.
+The proof excludes the entire three-core incidence pattern using the
+actual face pairing and complete links; its applicability relies on the
+previous angle-derived core bounds. Four-core patterns and the external
+low-only region remain, so five-reservoir realization is not proved.
+
+## 235. Precise surviving-pattern target
+
+Retain the exact mixed-flat five-reservoir hypotheses and the proved
+three-core exclusion. Thus the interacting high core K has exactly
+four actual owners. Put P={M,Z,U}, and retain the escape
+ tau=(Z,M,C,D,M,C),
+with distinct M,Z,C,D, m>1+c+d, c,d<m-2, z>1+m+c, and u>m.
+Every K owner is genuine; its faces carrying two distinct P labels
+pair only to other K faces. All original normal edge links are complete
+circles of degree at least six. The total genuine M/Z budget is 3*pi.
+Every owner has a fixed paired frame with distinct transverse labels.
+Repeated axes, self-gluings, and repeated normal-circle visits remain
+allowed. No connectedness of the marked-face graph is assumed.
+
+**Claim.** Tau's two faces {M,Z,C}, incident to its unique Z axis, are
+paired to two faces of one and the same other actual owner.
+
+They cannot pair to each other, because this closes tau's one Z normal
+interval and forces degree(Z)=1. Suppose instead they meet two distinct
+owners rho and eta. Write xi for the fourth K owner. We exclude exactly
+this incidence pattern using actual angle and face-pairing constraints.
+
+## 236. The only exceptional neighboring role
+
+A genuine owner with a face {M,Z,C} has one of three frames, with its
+other axis Q arbitrary:
+ (i)  (Z,M,C,Q,M,C),
+ (ii) (M,Z,C,Q,Z,C),
+ (iii)(C,M,Z,Q,M,Z).
+The public opposite-star argument in Section 210 gives genuine M/Z
+expense greater than pi in (i) and (ii): respectively
+ theta_Z+2*beta_M>pi,  theta_M+2*beta_Z>pi.
+These inequalities depend only on m,z,c, so apply with arbitrary Q.
+They follow from the positive individual response whose two parameters
+sum to more than one, using c<m-2 and z>m+2.
+
+In (iii), if Q is not U, its value q<1+m+z. For Q in {M,Z,C,D}
+this is immediate; for special Q it is its fixed-pair barrier for {M,Z}.
+Writing k=z+m, h=z-m, the exact paired quantities obey
+ L-2*J>k^2-(3*c+1)*k-4*(c+1)+2*h^2>0,
+ K_pair=(sqrt(m^2-1)+sqrt(z^2-1))^2/(m+z)^2>8/9.
+The strict polynomial bound is the one proved in Section 210: at
+z=m+c+1 its right side is 2*(2*m^2-m*c+m-c-1)>0, and its derivative
+in z-(m+c+1)>=0 is 4*m+3*c+5+6*(z-m-c-1)>0.
+Hence beta_M+beta_Z=2*atan(sqrt(K_pair*L/J))>pi/2.
+The four original transverse M/Z slots alone have expense greater than pi.
+
+Thus the only neighboring role not already known to consume more than
+pi of M/Z budget is
+ E=(C,M,Z,U,M,Z).
+Tau itself has M/Z expense greater than pi. If neither rho nor eta has
+role E, the three distinct owners tau,rho,eta exceed the complete M/Z
+budget 3*pi. Therefore at least one, say rho, must have role E.
+
+## 237. The exceptional neighbor forces a short U link
+
+Rho has one U axis and two incident faces {U,M,Z}. Their partners cannot
+be tau, which has no U slot. They cannot pair to each other, since this
+closes rho's unique U normal interval at degree one.
+
+Eta has a face {M,Z,C}. If eta contains U, that U is its other axis
+and is unique: its two transverse labels lie in {M,Z,C}, and its first
+axis is the remaining label. Every U-incident face of eta is then
+marked. In particular, if both rho U faces pair to eta, eta's two U
+faces are exactly those paired faces. The two U intervals close,
+forcing degree(U)=2. Thus avoiding these immediate contradictions
+requires at least one rho face {U,M,Z} to pair to xi.
+
+A face {U,M,Z} in xi forces its transverse pair to consist of two of
+these three high labels, and one axis to carry the third. Every U slot
+in xi then has both incident faces marked, whether U is transverse,
+axial, or also repeats at its other axis. Xi contains at most three U
+slots: at most two transverse and one additional axis, or at most two
+axes when U is not transverse.
+
+Every U slot in K now has both incident faces marked: rho's unique
+axis, eta's possible unique axis, and xi's at most three slots. Tau
+has none. All their interval ends therefore pair inside K. This is a
+nonempty closed subset of the actual U normal circle with at most
+1+1+3=5 original slots. Completeness of the circle forces degree(U)<=5,
+contradicting the standing minimum degree six. No assumption about
+single-high owners outside K is needed: marked interval ends cannot
+exit to them.
+
+The supposed two-distinct-neighbor pattern is impossible. Hence both
+marked tau faces meet the same actual owner, proving the claim. Other
+four-core return patterns and the external low-only boundary remain;
+no five-reservoir exclusion or realization is asserted.
+
+## 238. Exact setting
+
+Retain the mixed-flat five-reservoir hypotheses and the proved conclusion
+that the interacting high core K has exactly four actual owners. Put
+P={M,Z,U}; all three cosh values exceed three. Every K owner is genuine
+and has original P-angle expense greater than pi. The complete genuine
+P budget is 5*pi. An entirely high-labelled owner means one whose six
+original edge slots all have labels in P; repeated labels are allowed.
+Such an owner belongs to K, because its transverse pair is distinct.
+
+We prove a stronger angle bound for one entirely high-labelled owner,
+then exclude the concrete remaining pattern containing two of them.
+No assumption on how their faces are paired, or on low-only cells
+outside the high neighborhood, is added.
+
+## 239. The stronger original-angle bound
+
+Let its paired frame be (r,a,b,o,a,b), with r,a,b,o>3. Write theta_r,
+theta_o for its two axial angles and beta_a,beta_b for the paired
+transverse angles. Put s=beta_a+beta_b. All angles are genuine, and
+the hyperideal vertex inequalities give theta_r+s<pi and theta_o+s<pi.
+The exact paired response gives
+ tan(theta_r/2)*tan(s/2)=lambda_r,
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+and the analogous identity for o. Since a,b>3,
+ kappa>sqrt(8/9),
+while r,o>3 give sqrt((r-1)/(r+1)),sqrt((o-1)/(o+1))>1/sqrt(2).
+Thus lambda_r,lambda_o>2/3.
+
+For positive A,B with A+B=t<pi/2,
+ tan(A)*tan(B)=[cos(A-B)-cos(t)]/[cos(A-B)+cos(t)]
+              <=[1-cos(t)]/[1+cos(t)]=tan(t/2)^2.
+The denominator is positive and the quotient is increasing in cos(A-B),
+so this bound does not assume A=B. If theta_r+s<=3*pi/4, taking
+A=theta_r/2, B=s/2 gives
+ lambda_r<=tan(3*pi/16)^2<tan(pi/5)^2=5-2*sqrt(5)<2/3,
+a contradiction. Here 3/16<1/5, tangent is increasing on (0,pi/2),
+and 5-2*sqrt(5)<2/3 follows by squaring 13<6*sqrt(5).
+Consequently theta_r+s>3*pi/4, and similarly theta_o+s>3*pi/4.
+The total angle expense in its six original high slots is therefore
+ theta_r+theta_o+2*beta_a+2*beta_b>3*pi/2.
+Repeated axis or transverse labels do not change this original-slot sum.
+
+## 240. Exclusion and scope
+
+If two of the four distinct K owners were entirely high-labelled,
+their combined genuine P expense would exceed 3*pi. Each of the other
+two K owners consumes more than pi, so the four owners alone would
+exceed the complete 5*pi budget. This is impossible. Therefore at most
+one actual owner in the quotient is entirely high-labelled.
+
+This excludes every remaining four-core incidence pattern with two
+such owners, independently of loops and parallel face pairings. Patterns
+with zero or one entirely high-labelled owner, the external low-only
+boundary, and five-reservoir realization remain unresolved.
+
+## 241. The branch containing an entirely high-labelled owner
+
+Suppose one such owner exists. The four K owners then have combined
+original genuine P expense greater than 3*pi/2+3*pi=9*pi/2.
+Every single-high transverse owner has original P expense greater than
+2*pi/3 by the preceding single-high classification. Its addition would
+make the total greater than 31*pi/6>5*pi. Therefore no single-high
+transverse owner exists in this branch.
+
+Every genuine high-containing owner outside K is consequently in the
+class A of single-high axial owners with distinct transverse pair {C,D}.
+Each has exactly one high axis: two distinct high axes would put it in
+K, and two equal high axes would force flatness. Let g=|A|, let Theta_A
+be the sum of their original high axial angles, and let B_A be the sum
+of beta_C+beta_D counted once per actual A owner. The dominant-axis
+inequality gives g*pi<=2*Theta_A+B_A, with equality allowed only for
+the empty sum. Each owner contributes two original copies of each
+transverse angle, so 2*B_A is its total original C/D expense summed
+over A. The complete genuine C/D budget is at most4*pi, hence
+B_A<=2*pi. The strict four-core expense leaves Theta_A<pi/2.
+It follows that g*pi<3*pi, so g<=2.
+
+The unique flat owner contributes one additional high-containing owner.
+Thus in this branch there are at most 1+4+2=7 actual owners containing
+any high label, and every genuine one outside the interacting core is
+single-high axial with pair {C,D}. This conclusion does not restrict
+the size of the external low-only region or eliminate the branch.
+
+## 242. Exact target and inherited facts
+
+Retain all mixed-flat five-reservoir hypotheses and the four-owner
+interacting core K. Use the proved forced double-face return: both
+marked {M,Z,C} faces of tau=(Z,M,C,D,M,C) pair to one other owner rho.
+Write eta,xi for the other two core owners. Transverse labels in each
+chosen frame are distinct. All original edge links are complete circles
+of degree at least six, and all original edge angle sums hold.
+
+We reuse: m>1+c+d, c,d<m-2, z>1+m+c, u>m; the genuine M/Z capacity
+3*pi; no special edge has a fixed pair contained in P={M,Z,U}; and every
+high label occurring in K occurs in at least two distinct K owners.
+Marked faces, those with two distinct P labels, pair inside K. A nonempty
+closed set of original normal intervals for one actual edge is its whole
+normal circle, so a closed set of at most five slots is impossible.
+
+We prove rho has one of the following roles, up to the usual interchange
+of the transverse pair and axes:
+ (A) (M,Z,C,Q,Z,C), with Q arbitrary;
+ (B) (C,M,Z,U,M,Z).
+No exclusion of these two remaining roles is asserted.
+
+## 243. The axial-Z role is impossible
+
+The three roles at a face {M,Z,C} are axial Z with pair {M,C}, axial M
+with pair {Z,C}, and axial C with pair {M,Z}. In the first, rho's other
+axis cannot also be Z, because (z-1)^2>(m+c)^2 would make rho flat.
+Its unique Z slot therefore has its two incident faces paired to tau's
+two Z faces. The two original Z intervals close and force degree(Z)=2.
+This excludes the first role. The axial-M role is exactly (A).
+
+## 244. Setup for the axial-C role with Q not U
+
+Suppose rho=(C,M,Z,Q,M,Z), with Q not U. A special Q is impossible by
+the fixed-pair exclusion for {M,Z}. Thus Q is one of M,Z,C,D. Tau and
+rho have no U, so the two other core owners eta and xi must both contain
+U by the two-owner occurrence property.
+
+After removing the two face occurrences paired to tau, rho's remaining
+two faces have multiset labels {Q,M,Z}. This description remains valid
+when Q=C and the two axial labels coincide. They cannot pair to each
+other: every Z-incident face of tau and rho would then be paired within
+those two owners. Tau has one Z slot and rho at most three, so a nonempty
+closed Z subset would have at most four slots. They cannot pair to an
+unused tau face, which has labels {D,M,C} and contains no Z.
+
+If the two faces meet eta and xi separately, each target owner has a
+face not containing U and also contains U. Consequently U is the other
+axis and is unique in each target. Their transverse pairs contain M or
+Z, so every incident U face is marked. All U slots in K, at most two,
+would close internally, contradiction. Thus both remaining rho faces
+meet the same owner, say eta.
+
+Eta contains U but has a face {Q,M,Z}, not containing U, so it has
+exactly one U axis. All its U faces are marked. They cannot pair to
+each other (degree U one), or to tau or rho (no U), so both meet xi.
+
+## 245. Exhaustion of Q and the target frame
+
+If Q=M or Z, the face {Q,M,Z} has only the two distinct high labels
+M,Z. Distinct transverse labels therefore force eta's transverse pair
+to be {M,Z}, with axes Q and U. Its U faces are {U,M,Z}. A matching
+face in xi forces two high transverse labels and the third high axis;
+every U face of xi is marked, and xi has at most three U slots. Together
+with eta's one, all U slots in K close with degree at most four.
+
+It remains that Q=C or D is low. Eta has one of three roles:
+ (i)  (Q,M,Z,U,M,Z),
+ (ii) (Z,M,Q,U,M,Q),
+ (iii)(M,Z,Q,U,Z,Q).
+In (i), its U faces are again {U,M,Z}. The same xi role and closed-U
+argument gives degree(U)<=4.
+
+In (ii), every Z face in tau, rho, and eta is marked. Their original Z
+counts are respectively one, two, and one. Xi has a face {U,M,Q}, so
+it can contain Z only as its other axis, at most once. If present, that
+Z axis has a transverse pair containing U or M, hence both its faces
+are marked. All Z slots in K therefore close, with at most 1+2+1+1=5
+slots. This contradicts minimum degree six.
+
+In (iii), use the exact M/Z angle expenses. Tau consumes more than pi.
+Eta has axis M and pair {Z,Q}, with q<m-2 and z>m+2, so its individual
+response gives theta_M+2*beta_Z>pi, as in the established Section210
+role estimate (replace its low C by Q). Rho has pair {M,Z} and both
+axes low, C and Q. Write a=z>b=m>3 and r=c,o=q. Then
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0,
+using r<=b and o<=a. Also K_pair>8/9. Hence its transverse sum
+beta_M+beta_Z=2*atan(sqrt(K_pair*L/J)) exceeds pi/2, and its four
+original M/Z slots consume more than pi. The three distinct owners
+tau,rho,eta exceed the entire genuine M/Z budget 3*pi, contradiction.
+
+All Q other than U are excluded in the axial-C role. This leaves
+precisely (B), together with the unexcluded axial-M family (A).
+The argument retains repeated low axes, arbitrary other labels in xi,
+and self-pairings. It does not replace the external low-only boundary
+by closed equations or prove five-reservoir realization.
+
+Continuation: [Five-reservoir exceptional return chains, Sections 246–253](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).
