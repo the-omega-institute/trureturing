@@ -1038,3 +1038,510 @@ The unrestricted original-root question is still whether $n_{\rm det}(3,0)\ge9$ 
 | George E. Collins, *Quantifier Elimination for Real Closed Fields by Cylindrical Algebraic Decomposition*, [§§1–3](https://link.springer.com/content/pdf/10.1007/3-540-07407-4_17.pdf) | Quantifier elimination applies to finite ordered-field formulas made from polynomial equalities and inequalities, including the rational formulas of Section 9. Sign-invariant cells and algebraic sample points give the decision and algebraic-witness consequences used there. Computational feasibility of either calibration system is a distinct question. |
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 原根完整目标的联合源秩投影
+
+**定义 13.1（全部原根槽的源与响应矩阵）。** Retain exactly
+$\mathcal W_3$, the original clocks and complete targets of Definition
+1.1. Let
+
+$$
+\begin{aligned}
+\mathcal S&=\{(w,e):w\in\{J,M\}^7,\ e\in\{0,1\}\},\\
+\mathcal V&=\bigcup_{i=1}^7\{J,M\}^i,\\
+\mathcal P&=\left\{\begin{pmatrix}a&b\\c&1-a\end{pmatrix}:
+ 0<a<1,\ b,c>0,\ bc=a(1-a)\right\}.
+\end{aligned}
+\tag{13.1}
+$$
+
+Thus $|\mathcal S|=256$, $|\mathcal V|=254$, and $\mathcal P$
+is exactly the set of legal sources, without symmetry or boundedness
+restrictions. Fix one source tuple
+$\mathbf P=(P_q)_{q\in\mathcal S}\in\mathcal P^{\mathcal S}$.
+Sources may coincide, including within a terminal pair. For a prefix
+$v=E_1\cdots E_i$, put
+
+$$
+A_v=E_i\cdots E_1,\qquad
+\mathcal D_v=\{(w,e)\in\mathcal S:v\text{ is a prefix of }w\},
+\qquad
+\mathcal D_\varnothing=\mathcal S.
+\tag{13.2}
+$$
+
+Order slots lexicographically with $J<M$ and $0<1$, and let $q_v$
+be the first slot in $\mathcal D_v$. For any legal source define
+
+$$
+\begin{aligned}
+t_v(P)&=\operatorname{tr}(A_vP),\\
+\ell_v(P)&=\bigl(t_v(P)-1,\ i\,t_v(P),\ i^2t_v(P),\ i^3t_v(P)\bigr).
+\end{aligned}
+\tag{13.3}
+$$
+
+For coefficient blocks $x_q=(x_{q0},x_{q1},x_{q2},x_{q3})^{\mathsf T}$,
+the normalized complete world associated with a nonzero block is
+
+$$
+g_q(T)=\sum_{j=0}^3x_{qj}T^j,\qquad
+\delta_q=-x_{q0},\qquad W_q=(P_q,g_q,\delta_q).
+\tag{13.4}
+$$
+
+It has initial reading zero, and its reading at the original clock
+$i=|v|$ is exactly $\ell_v(P_q)x_q$.
+This is the coordinate change
+$(\delta,\beta_1,\beta_2,\beta_3)=(-x_{q0},x_{q1},x_{q2},x_{q3})$
+in Definition 9.1; it imposes no initial-root or zero-drift promise.
+
+Define $B(\mathbf P)$ to have one row for each $v\in\mathcal V$
+and $q\in\mathcal D_v\setminus\{q_v\}$. Its action on the single
+stacked vector $x=(x_q)_{q\in\mathcal S}\in\mathbb R^{1024}$ is
+
+$$
+\bigl(B(\mathbf P)x\bigr)_{v,q}
+ =\ell_v(P_q)x_q-\ell_v(P_{q_v})x_{q_v}.
+\tag{13.5}
+$$
+
+All other blocks of this row are zero. At depth $i$ there are $2^i$
+prefixes, each with $2^{8-i}$ descendant slots. The numbers of rows
+at successive depths are therefore
+
+$$
+\bigl(2^i(2^{8-i}-1)\bigr)_{i=1}^7
+ =(254,252,248,240,224,192,128),\qquad
+\sum_{i=1}^7(256-2^i)=1538.
+\tag{13.6}
+$$
+
+Hence $B(\mathbf P)$ has exactly $1538$ rows and $1024$ columns.
+Writing $P_q=(\begin{smallmatrix}a_q&b_q\\c_q&1-a_q\end{smallmatrix})$,
+its entries are integer affine polynomials in the $768$ ambient
+source coordinates, since
+
+$$
+t_v(P_q)=(A_v)_{22}+
+ ((A_v)_{11}-(A_v)_{22})a_q+(A_v)_{21}b_q+(A_v)_{12}c_q.
+\tag{13.7}
+$$
+
+The $256$ equations $b_qc_q=a_q(1-a_q)$ and every strict source
+inequality in (13.1) remain imposed. The count $768$ is an ambient
+coordinate count, not the dimension of an unconstrained legal-source
+space.
+
+**定义 13.2（逐槽增益与完整同源差异）。** Let $G_q$ and $D_w$
+be the constant $4\times1024$ matrices specified by
+
+$$
+G_qx=x_q\quad(q\in\mathcal S),\qquad
+D_wx=x_{(w,0)}-x_{(w,1)}\quad(w\in\{J,M\}^7).
+\tag{13.8}
+$$
+
+In particular $D_w$ retains all four coefficient differences. In
+the zero-initial-reading coordinates, two complete terminal targets
+are distinct exactly when
+
+$$
+P_{(w,0)}\ne P_{(w,1)}\quad\text{or}\quad D_wx\ne0.
+\tag{13.9}
+$$
+
+A source difference alone already distinguishes complete targets.
+When the sources agree, a gain difference is necessary and sufficient;
+the drift difference is then minus the constant-coefficient difference.
+The separation guard below uses this full four-component map, without
+requiring a prescribed coefficient to differ.
+
+Write $[B;T]$ for vertical row concatenation and use exact real rank.
+For later polynomial notation set
+
+$$
+s_w(\mathbf P)=2(a_{(w,0)}-a_{(w,1)})^2
+ +(b_{(w,0)}-b_{(w,1)})^2+(c_{(w,0)}-c_{(w,1)})^2.
+\tag{13.10}
+$$
+
+This is $\|P_{(w,0)}-P_{(w,1)}\|_F^2$. For a real matrix $C$ let
+
+$$
+\mu_k(C)=\sum_{\substack{I,J\text{ row and column sets}\\|I|=|J|=k}}
+                  \det(C_{I,J})^2,\qquad
+\mu_0(C)=1,
+\tag{13.11}
+$$
+
+and set $\mu_k(C)=0$ when $k$ exceeds its row or column count.
+These are existing minor expressions used below to write the
+source criterion as a finite polynomial formula.
+
+**定理 13.3（完整原根障碍的精确源秩等价）。** For every fixed
+$\mathbf P\in\mathcal P^{\mathcal S}$, there exist gains, drifts and
+shared prefix responses solving the entire system of Theorem 9.3
+with these prescribed slot sources if and only if, with
+$r=\operatorname{rank}B(\mathbf P)$, both conditions hold:
+
+$$
+\begin{aligned}
+\operatorname{rank}[B(\mathbf P);G_q]&>r
+ &&\text{for every }q\in\mathcal S,\\
+P_{(w,0)}\ne P_{(w,1)}\quad\text{or}\quad
+\operatorname{rank}[B(\mathbf P);D_w]&>r
+ &&\text{for every }w\in\{J,M\}^7.
+\end{aligned}
+\tag{13.12}
+$$
+
+Consequently there is no complete-target decoder on all of
+$\mathcal W_3$ with at most eight total readings if and only if
+one legal tuple of $256$ sources satisfies (13.12). The statement
+retains both initial actions, all actual prefixes, all early stops
+and arbitrary deterministic policies. It imposes no gain shape,
+sign, degree-equality, root, common-drift or particular-ancestor
+promise. Only the two slots of each leaf must give different complete
+targets; targets at different leaves may repeat.
+
+Equivalently the exact source-only condition, with no coefficient
+or shared-response quantifiers, is
+
+$$
+\begin{aligned}
+\Phi(\mathbf P)=\bigvee_{r=0}^{1024}\Bigl[&
+ \mu_r(B)>0\ \land\ \mu_{r+1}(B)=0\\
+ &\land\ \bigwedge_{q\in\mathcal S}\mu_{r+1}([B;G_q])>0\\
+ &\land\ \bigwedge_{w\in\{J,M\}^7}
+   \bigl(s_w(\mathbf P)>0\ \lor\ \mu_{r+1}([B;D_w])>0\bigr)
+ \Bigr],
+ \qquad B=B(\mathbf P).
+\end{aligned}
+\tag{13.13}
+$$
+
+The original-root obstruction is exactly
+$\exists\mathbf P\in\mathcal P^{\mathcal S}:\Phi(\mathbf P)$.
+This eliminates jointly the $1024$ free gain/drift coordinates of
+Definition 9.1 and the $254$ shared responses of Theorem 9.3,
+leaving $768$ ambient source coordinates with all $256$ rank-one
+equations retained. These are exact counts of variables and matrix
+sizes; they give no bound on the arithmetic work needed to decide
+the displayed existence statement.
+
+Proof, elimination of the actual shared responses. For a fixed source
+tuple and a single vector $x$, the prefix equations of Theorem 9.3
+are exactly
+
+$$
+\ell_v(P_q)x_q=z_v
+\quad(v\in\mathcal V,\ q\in\mathcal D_v).
+\tag{13.14}
+$$
+
+Subtracting the equation for $q_v$ from all the others gives
+$B(\mathbf P)x=0$. Conversely every $x$ in this kernel gives all
+of (13.14) by the one choice
+$z_v=\ell_v(P_{q_v})x_{q_v}$. Thus (13.5) eliminates all shared
+response variables without dropping any ancestor equation. Every
+coefficient block must still be nonzero, and (13.9) is exactly the
+remaining terminal complete-target distinction.
+
+Proof, necessity of the guards. Put $U=\ker B(\mathbf P)$. For any
+linear map $T$ on $\mathbb R^{1024}$, rank-nullity gives
+
+$$
+\begin{aligned}
+\operatorname{rank}[B;T]-\operatorname{rank}B
+ &=\dim U-\dim(U\cap\ker T)\\
+ &=\operatorname{rank}(T|_U).
+\end{aligned}
+\tag{13.15}
+$$
+
+An actual solution of Theorem 9.3 supplies $x\in U$ with
+$G_qx\ne0$ at every slot. If its leaf sources coincide,
+(13.9) also requires $D_wx\ne0$. Each required restriction $T|_U$
+is therefore nonzero, and (13.15) proves every corresponding strict
+rank inequality in (13.12). A leaf with unequal sources already has
+distinct targets; no additional coefficient inequality is necessary
+for that leaf.
+
+Proof, one simultaneous legal coefficient vector. Suppose (13.12)
+holds. Form the finite list of maps
+
+$$
+\mathcal T=\{G_q:q\in\mathcal S\}
+ \ \cup\ \{D_w:P_{(w,0)}=P_{(w,1)}\}.
+\tag{13.16}
+$$
+
+List its members as $T_1,\ldots,T_m$, where $256\le m\le384$.
+By (13.15), every $T_j|_U$ is nonzero. Choose $u_j\in U$ and one
+scalar component $L_j$ of $T_j$ with $L_j(u_j)\ne0$. Consider
+
+$$
+u(t)=\sum_{j=1}^m t^{j-1}u_j\in U.
+\tag{13.17}
+$$
+
+For each $j$, the scalar polynomial $L_j(u(t))$ is nonzero: its
+coefficient of $t^{j-1}$ is exactly $L_j(u_j)\ne0$. Every one
+has finitely many real roots. Their finite union omits an integer
+$t_*$, and the single choice $x=u(t_*)$ satisfies all
+$T_jx\ne0$ simultaneously. This is the finite-subspace avoidance
+argument already used in Section 10, now applied to the gain and
+complete-target guards of the full tree. It does not choose a
+different coefficient vector for each map, action or leaf.
+In particular $U=\{0\}$ cannot satisfy the gain guards, so no
+zero-kernel exception has been omitted.
+
+Reconstruct every $W_q$ by (13.4). Each gain is nonzero, every drift
+is a real constant, and all leaf pairs are distinct by (13.9).
+Set the $254$ responses as after (13.14). These are legal fixed
+worlds satisfying every reading in their common actual histories.
+They therefore solve exactly the system in Theorem 9.3. This proves
+the asserted equivalence for each fixed source tuple.
+
+Proof, actual children and stopping. The finite-tree equivalence
+itself is the prior result of Theorem 9.3 and Definition 1.2. To
+make explicit its use by the projection, for each prefix $v$ let
+
+$$
+H_v=(0,E_1,z_{E_1},\ldots,E_i,z_v),\qquad
+K_v=\{W_q:q\in\mathcal D_v\},\qquad H_\varnothing=(0).
+\tag{13.18}
+$$
+
+Every member of $K_v$ realizes every reading of $H_v$. Write
+$i=|v|$. For $i<7$, each next atom $E\in\{J,M\}$ and every real
+response $z$ define the actual child precisely by
+
+$$
+C_{v,E,z}=K_v\cap\mathcal F(H_v,E,z)
+ =\{W\in K_v:g_W(i+1)\operatorname{tr}(EA_vP_W)+\delta_W=z\},
+\tag{13.19}
+$$
+
+where $A_\varnothing=I$. At the selected response it satisfies
+
+$$
+K_{vE}\subseteq C_{v,E,z_{vE}}.
+\tag{13.20}
+$$
+
+Equality is unnecessary; additional compatible worlds in the child
+cannot remove a losing subfamily. At a leaf $w$, $K_w$ contains its
+two distinct complete targets and hence has $L_0$. Upward induction,
+using (13.20), upward monotonicity and both action conjuncts in
+(1.3), gives
+$L_{7-|v|}(K_v,H_v)$ at every prefix, including the empty one.
+Every such node contains a descendant distinct pair, so early
+stopping also fails. The root union lies in $\mathcal I_0$, and
+upward monotonicity gives $L_7(\mathcal I_0,(0))$.
+Conversely Theorem 9.3 unfolds this root predicate into fixed
+terminal pairs and their shared actual ancestor responses, so the
+necessity argument above applies to every original-root obstruction.
+The two actions have separate response witnesses on the same fixed
+collection of worlds. No unchosen response is acquired by a policy.
+
+Proof, reversal of initial-reading translation. For each arbitrary
+observed initial reading $a\in\mathbb R$, trace one implies
+$a=g(0)+\delta$. The map
+
+$$
+(P,g,\delta)\longmapsto(P,g,\delta-a)
+\tag{13.21}
+$$
+
+is a bijection from the entire initial-$a$ fiber to $\mathcal I_0$;
+its inverse adds $a$ to the drift. On every action word it subtracts
+$a$ from every reading, changes no clock and preserves all response
+partitions. In particular the worlds constructed above translate to
+$\delta_q=a-x_{q0}$ and keep every gain and source unchanged.
+A decoder on the whole $\mathcal I_0$ transports to all of
+$\mathcal W_3$ by subtracting the actual initial $a$ from its
+history, executing the selected atoms with their immediate readings,
+and adding $a$ to the returned drift. Actions and early stops
+transport in exactly the same way. A full-domain decoder restricts
+to $\mathcal I_0$. This is the reversible normalization of Theorem
+9.3, so the fixed-source equivalence proves the stated original-root
+equivalence without an initial-root promise.
+
+Finally, for real matrices $\mu_r(C)>0$ and $\mu_{r+1}(C)=0$
+express exactly $\operatorname{rank}C=r$; the vanishing of a sum
+of squared real minors is the vanishing of every such minor.
+On this rank stratum, (13.15) makes each guard equivalent to
+$\mu_{r+1}([B;T])>0$. Equation (13.10) expresses source inequality
+by $s_w>0$. This proves (13.13), including all rank drops. It is
+a finite polynomial formula with rational coefficients by (13.7).
+No gain sample has been divided out anywhere. Constant and
+lower-degree gains, either sign, sampled and repeated roots, varying
+drifts, nonsymmetric sources and repetitions between leaves all
+remain in the equivalence. ∎
+
+**命题 13.4（所有增益守卫成立仍不能删除同源分离守卫）。**
+Set every one of the $256$ sources to
+
+$$
+P_* =\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}.
+\tag{13.22}
+$$
+
+This is a legal source tuple for which every gain inequality in
+(13.12) holds, while the separation inequality for $w_*=M^7$
+fails. Thus retaining the gain guards alone is not an equivalent
+source criterion for Theorem 9.3.
+
+Proof. The matrix $P_*$ is strictly positive, has trace one and
+has determinant zero. For every $h\in\mathbb R^4$, the diagonal
+coefficient vector $x_q=h$ at all slots lies in $\ker B$, because
+every descendant of a given prefix then has the same source and
+coefficient block. Each $G_q|_{\ker B}$ is therefore surjective,
+so every gain guard holds by (13.15); a nonzero $h$ makes all gains
+nonzero at once.
+
+For an arbitrary $x\in\ker B$, put $d=D_{w_*}x$. The two slots
+of $w_*$ share the responses at every all-$M$ prefix, since both
+are equal to its reference descendant's response in (13.5).
+Subtract their equalities at clocks $1,2,3,4$. Direct multiplication
+gives
+
+$$
+\begin{gathered}
+M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\quad
+M^4=\begin{pmatrix}2&3\\3&5\end{pmatrix},\\
+\bigl(\operatorname{tr}(M^iP_*)\bigr)_{i=1}^4
+ =\left(\frac32,\frac52,4,\frac{13}2\right).
+\end{gathered}
+\tag{13.23}
+$$
+
+Hence those four exact response-difference equations are $Rd=0$,
+where
+
+$$
+R=\begin{pmatrix}
+1/2&3/2&3/2&3/2\\
+3/2&5&10&20\\
+3&12&36&108\\
+11/2&26&104&416
+\end{pmatrix}
+ =\frac12\begin{pmatrix}
+1&3&3&3\\3&10&20&40\\6&24&72&216\\11&52&208&832
+\end{pmatrix}.
+\tag{13.24}
+$$
+
+Subtracting $3,6,11$ times the first row of $2R$ from its next
+three rows leaves the lower-right block
+
+$$
+\begin{pmatrix}1&11&31\\6&54&198\\19&175&799\end{pmatrix}.
+$$
+
+Subtracting $6$ and $19$ times its first row from its other rows
+leaves the last $2\times2$ determinant
+
+$$
+\det\begin{pmatrix}-12&12\\-34&210\end{pmatrix}
+ =-2520+408=-2112.
+$$
+
+The two preceding pivots are one, so
+
+$$
+\det R=\frac{-2112}{2^4}=-132\ne0.
+\tag{13.25}
+$$
+
+Therefore $d=0$ for every $x\in\ker B$. Equation (13.15) gives
+$\operatorname{rank}[B;D_{w_*}]=\operatorname{rank}B$.
+Its two sources are equal, so neither alternative in that leaf's
+separation guard holds. Any kernel vector would give identical
+complete targets at that leaf. This tuple is a counterexample to
+omitting the separation conditions, not a losing-tree realization
+and not a universal failure result for other source tuples. ∎
+
+## 14. 源秩投影的数学对应与未定可行性
+
+**定义 14.1（原根源可行域及其适用边界）。** Define
+
+$$
+\mathfrak S_7=\{\mathbf P\in\mathcal P^{\mathcal S}:
+                         \Phi(\mathbf P)\}.
+\tag{14.1}
+$$
+
+Theorem 13.3 identifies its nonemptiness with failure of every
+full-domain at-most-eight-reading decoder, and its emptiness with
+existence of such a decoder. Nonemptiness asserts the existence of
+one legal source tuple satisfying every gain guard and every applicable
+same-source separation guard; its one common coefficient vector
+then exists by (13.17). An emptiness proof must show that every
+legal source tuple fails at least one of those guards. Checking
+only a specified history, source band, sign, gain shape or root
+stratum cannot replace this universal source-tuple condition.
+Neither alternative is determined by Proposition 13.4 or by the
+rank equivalence itself. No feasible tuple, universal guard failure,
+explicit eight-reading full-domain inverse or nine-reading upper
+bound is supplied here.
+
+The explicit $1538\times1024$ response matrix, its joint guarded
+projection and the legal equal-source counterexample are
+repository-derived deductions. Initial-reading translation, the
+$256$-slot tree and its actual-history equivalence are the prior
+results of Section 9. Finite-subspace avoidance, rank-nullity and
+minor characterizations of rank are established tools within the
+projection proof, not separate new general theorems.
+
+| Mathematical source | Correspondence and retained hypotheses |
+| --- | --- |
+| This volume, Definitions 1.1–1.2 and 9.1; Theorem 9.3 | The full legal model, losing-history recursion, normalized complete-target coordinates and all $256$ terminal slots are reused. Equation (13.5) eliminates their common responses; (13.12) also eliminates the normalized gain/drift coordinates while retaining their legality and terminal distinctions. |
+| This volume, Corollary 9.4 and proof of Theorem 10.2 | Real-closed-field elimination already gives abstract decidability, algebraic-witness transfer and semialgebraic policy existence. Finite hyperplane avoidance already occurs in the fixed-linear-readout proof. The present result is the explicit source-dependent formula (13.12)–(13.13), without an evaluated feasibility or complexity conclusion. |
+| [FIB 自校准关系数学 IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Theorem 3.1 and Definition 11.1 | On its prescribed six-reading $JMMJM$ ancestor, gain and drift are uniquely forced once a legal source is supplied. That source graph neither acquires an unknown source nor supplies losing responses on the other original-root actions. The tuple in (13.1) is an existential mathematical witness variable, not an observed class label. |
+| [FIB JMMJM Terminal-Root Decoders and the Simultaneous Core](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md), Theorems 8.1–9.1 | Its inclusion-minimal triple has root seven, common drift, nonzero ancestor and sixth samples and two different proper sixth collision pairs. Those restrictions define its own simultaneous core; they are not imposed on $\mathfrak S_7$. |
+| [FIB JMMJM Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Definitions 1.2 and 7.1; Proposition 7.2 | The source chart and PP/PT/TP/TT conditions keep one literal $JMMJM$ ancestor and terminal nonvanishing. Their actual-child distinctions are consistent with (13.19), but a three-world conditioned system is not the unrestricted original-root source locus. |
+| [FIB JMMJM Zero-Sixth Root Rigidity and Terminal Collision Geometry](https://github.com/the-omega-institute/trureturing/blob/7a5bd6a6bce1b3213422b7b3a1eca2d6c10ec707/docs/develop/theory/FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorems 2.1, 4.1 and Proposition 7.1 | Its whole-class rigidity, three-terminal-coordinate injections and exact TT system assume the specified ancestor, common drift, root six and terminal nonvanishing where stated. They neither eliminate the full original-root coefficient vector nor give an unknown class label. The guard formula retains the zero-sixth and terminal-root possibilities without any such promises. |
+
+Yanjun Li, Kiryung Lee and Yoram Bresler, *A Unified Framework for
+Identifiability Analysis in Bilinear Inverse Problems with Applications
+to Subspace and Sparsity Models*,
+[Definition 2.7 and Theorem 2.8, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1),
+require both first-factor orbit identification among all compatible
+pairs and conditional second-factor identification for a nonzero pair
+in the specified constrained bilinear problem and ambiguity group.
+Only the conditional part resembles source-supplied recovery; it does
+not supply unknown-source acquisition or an adaptive reading bound.
+Theorem 13.3 instead constructs each original complete world and its
+shared ancestors explicitly.
+
+Choudhary and Mitra, *Identifiability Scaling Laws in Bilinear Inverse
+Problems*,
+[Proposition 1 and Remark 5, arXiv:1402.2637v2](https://arxiv.org/html/1402.2637v2),
+retain the constrained realizable factor-product set in their
+rank-two-nullspace intersection criterion. Remark 5 restricts the
+necessity statement to observations realizable in the original
+factor problem, rather than every freely chosen lifted observation.
+Here the source equations, the common kernel vector and the guard
+avoidance jointly supply realizability; independently fitted pair
+responses or unconstrained lifted differences cannot replace them.
+No bilinear sample threshold is imported.
+
+Perrucci and Roy, *Elementary Recursive Quantifier Elimination Based
+on Thom Encoding and Sign Determination*,
+[Theorem 1, arXiv:1609.02879v2](https://arxiv.org/html/1609.02879v2),
+concerns finite first-order formulas with polynomial atoms over a
+subring of a real closed field and elimination of a quantified block.
+The rational polynomial formulas (13.1), (13.7) and (13.13) are in
+that language. This is the established elimination setting already
+used in Corollary 9.4; the ranks and one-vector construction above
+give a specific projection directly, without invoking that theorem
+to decide $\mathfrak S_7$. These citations delimit the mathematical
+correspondences and make no external-priority or exhaustive-literature
+claim. The unrestricted eight-versus-nine original-root feasibility
+question remains undetermined.
+
+## 追加锚（本行以下为增补区）
