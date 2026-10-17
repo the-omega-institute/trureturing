@@ -19,7 +19,7 @@ internal static class DigestionAlignmentFixture
             new DigestionLedgerSource(
                 "source",
                 sourcePath,
-                AtomizerRegistry.GictId,
+                AtomizerRegistry.GenericId,
                 acknowledgedStale.ToImmutableArray(),
                 GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
                 entries.ToImmutableArray()),
@@ -43,7 +43,7 @@ internal static class DigestionAlignmentFixture
         DigestionFingerprints fingerprints) => new(
             "source",
             "docs/source.md",
-            AtomizerRegistry.GictId,
+            AtomizerRegistry.GenericId,
             atomId,
             fingerprints,
             [],
@@ -95,14 +95,11 @@ internal static class DigestionAlignmentFixture
         {
             RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
             new(sourcePath, ImmutableArray.CreateRange(sourceBytes)),
-            new(
-                TheoryAtomizerDataLoader.DataPath,
-                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
         };
         entries.AddRange((casObjects ?? []).Select(static item =>
             new RawRepositoryEntry(item.RelativePath, item.Bytes)));
         entries.AddRange(extraEntries ?? []);
         var raw = RawRepositorySnapshot.Create(entries);
-        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
     }
 }

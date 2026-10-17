@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cd6b24f216bf25eeafc818bb9e8bc0e4ea701d27303aa97116fd69a544747a10
-  normalized_sha256: sha256:cd6b24f216bf25eeafc818bb9e8bc0e4ea701d27303aa97116fd69a544747a10
-cas_ref: sha256:cd6b24f216bf25eeafc818bb9e8bc0e4ea701d27303aa97116fd69a544747a10
-coverage_gids:
-  - gid: D5/S3/Factorization/Cyclotomic/GeometricSpectrumFactorization.geometric_sum_eq_cyclotomic_product
-    target_statement_id: sha256:8e81345db3cc9cf64745f519410a868c879f422c9e83d4eea7588cfc63fde4c7
-receipts:
-  unresolved_subitems: []

@@ -339,7 +339,7 @@ public sealed partial class DigestionAlignmentTests
         var childCapture = DigestionCasStore.Capture(childBytes);
         var baseline = WithAtomizer(
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
+            AtomizerRegistry.GenericId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var childId = childCapture.Reference["sha256:".Length..];
         var parentEntry = Assert.Single(source.Entries) with
@@ -374,7 +374,7 @@ public sealed partial class DigestionAlignmentTests
 
             """;
         var historicalSourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + historicalClaim);
-        var atomized = PzgAtomizer.Atomize(historicalSourceBytes, DigestionTestSupport.Rules);
+        var atomized = GenericAtomizer.Atomize(historicalSourceBytes);
         var parent = Assert.Single(atomized.Claims);
         var children = Assert.Single(atomized.ClausePlans).Children;
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
@@ -383,7 +383,7 @@ public sealed partial class DigestionAlignmentTests
             .ToImmutableArray();
         var baseline = WithAtomizer(
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
+            AtomizerRegistry.GenericId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var baselineParent = Assert.Single(source.Entries);
         var childIds = childCaptures

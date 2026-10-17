@@ -137,7 +137,7 @@ public sealed class ScopedTableAtomizationTests
     }
 
     private static AtomizedTheoryDocument Atomize(byte[] bytes) =>
-        AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None);
+        AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes);
 
     private static string Text(DigestionAtom atom) => Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
 
