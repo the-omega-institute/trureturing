@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The actual all-primes orthogonal Sonin trace grows at least as sqrt(V)/log(V)^3 for a fixed bump. On the original qualifying cofinal family, the unchanged full-support completion has a geometric defect exceeding the Robin budget scale. The complete same-test arithmetic comparison remains unresolved.
+claim: Actual orthogonal Sonin traces have Euler-weighted lower bounds. On the enlarged completed-support family, the remote pole-null correction has trace at least a constant times N_X/R_X^7, exceeding the original Robin budget along its qualifying cofinal family despite its negligible full signed arithmetic cost. The joint same-test comparison remains unresolved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1296,18 +1296,249 @@ with this prescribed $S_X$ by $o(L_X)$. A future joint lower bound
 formed with that same family therefore transfers from the pole-null
 test back to $H_X$.
 
-The stronger comparison using every prime through the completed
-test's support remains unfinished. That support reaches
-$R_X+\tau$ in logarithmic coordinates, so the prime-count estimate
-for the enlarged family only gives $C_S\ll_\psi e^{R_X/2}$.
-Combined with (35), the resulting upper bound in (34), divided by
-$L_X$, is $O_\psi(e^{A_X/2})$; it does not establish an $o(1)$
-payment. Completing this stronger comparison requires a sharper
-trace estimate or a joint signed bound that retains the growing
-correction on the same enlarged place set. Neither (37) nor this
-insufficient upper estimate refutes such a comparison.
+For the enlarged all-primes-through-completed-support family,
+$C_S\ll_\psi e^{R_X/2}$ gives only an $O_\psi(N_X)$ upper bound
+in (34). The following actual lower estimate rules out a negligible
+payment for that specified family and completion. The joint signed
+comparison on the enlarged place set remains unfinished.
 
 The joint lower bound itself also remains unfinished: the residual
 for $H_X$ contains the complete prime-power term and the growing
 metric correction $\Delta_{S_X}(h_{H_X})$. Robin's inequality and
 RH remain unproved.
+
+## The enlarged support family retains a large remote trace
+
+Keep WT11--WT14's actual remote completion, including its original
+radius and pole deficit. Let
+$\sigma=\sup\{|x|:\psi(x)\ne0\}$, so
+$0<\sigma<\tau<\log2$. Its actual outer support radius is
+$R_X+\sigma$. For this section use exactly
+
+$$
+V_X^+=e^{R_X+\sigma},\qquad S_X^+=S(V_X^+),\qquad
+T_S(G)=\operatorname{Tr}(D_S(h_G)P_S).
+$$
+
+The following paper application reuses the actual Sonin vectors (19),
+the complete fixed-away envelope (21), the polynomial inequality (22)
+and WT11--WT14. Its additional estimate resolves the two first Euler
+peaks sufficiently to retain the zero of the remote cosine multiplier.
+It asserts no literature priority, optimal logarithmic exponent or Lean
+verification. On the unchanged qualifying cofinal source family,
+
+$$
+\boxed{
+T_{S_X^+}(e_X)\gg_\psi\frac{N_X}{R_X^7},\qquad
+\frac{T_{S_X^+}(e_X)}{M_XL_X}\longrightarrow+\infty.}
+\tag{38}
+$$
+
+This concerns the enlarged place set $S_X^+$, whereas (37) uses the
+original support's $S_X$. Both estimates retain the true orthogonal
+projection.
+
+### Locate the Euler peaks relative to the cosine zero
+
+First write $V=e^{R+\sigma}$, $\ell=\log V$ and retain $E_V$ and
+$\alpha_V$ from (20). Give $U_p=\log(V/p)$ the probability weights
+$p^{-1/2}/E_V$ over the actual primes $p\le V$. Partial summation of
+the owned ordinary PNT gives the fixed moments
+
+$$
+\mu_k(V)=\frac1{E_V}\sum_{p\le V}\frac{\log^k(V/p)}{\sqrt p}
+\longrightarrow 2^k k!\qquad(0\le k\le4).
+\tag{39}
+$$
+
+For this application, primes $p\le\sqrt V$ cost
+$O(V^{1/4}\ell^k)=o(E_V)$. On the remaining range the change of
+variable $u=\log(V/p)$ gives the limiting density
+$\tfrac12e^{-u/2}du$; Chebyshev's bound supplies an integrable
+polynomial-times-exponential majorant. Thus (39) uses only fixed
+moments, without a growing-frequency PNT assertion.
+
+Put $\chi_V(t)=\mathbb E e^{-itU}$. The finite Euler expansion already
+used before (20) reads
+
+$$
+\log|\alpha_V(t)|=-E_V\Re(e^{it\ell}\chi_V(t))+O(\log\ell).
+$$
+
+For independent copies $U,U'$, the cosine Taylor bound gives
+$|\chi_V(t)|^2=\mathbb E\cos(t(U-U'))
+\le1-\operatorname{Var}(U)t^2+O(t^4)$, uniformly in $V$.
+By (39), $\operatorname{Var}(U)\to4$ and the fourth moments are
+bounded. Fix sufficiently small $\varepsilon_0>0$ so that
+$|\chi_V(t)|\le1-t^2$ for $|t|\le\varepsilon_0$ and large $V$.
+For one fixed $C_0>10\pi$, this bounds
+$C_0/\ell\le|t|\le\varepsilon_0$ by
+$E_V-C_0^2E_V/\ell^2+O(\log\ell)$. On
+$\varepsilon_0\le|t|\le V^4$, use (21) at this fixed
+$\varepsilon_0$. Its constants are not used at a shrinking cutoff.
+
+On $|v|\le C_0$, where $v=t\ell$, the bounded third moment gives
+uniformly
+
+$$
+\frac{\log|\alpha_V(t)|}{E_V}
+=-\cos v-\mu_1\frac v\ell\sin v
++\frac{\mu_2v^2}{2\ell^2}\cos v
++O(\ell^{-3})+O(\log\ell/E_V).
+$$
+
+Near an odd multiple $k\pi$, put $v=k\pi+s/\ell$. For bounded $s$
+and the finitely many relevant odd $k$, (39) gives uniformly
+
+$$
+\log|\alpha_V(t)|
+=E_V-\frac{E_V}{\ell^2}
+\left[2(k\pi)^2+\frac{(s-2k\pi)^2}{2}+o(1)\right].
+\tag{40}
+$$
+
+These neighborhoods include every contender for the maximum on the
+$E_V/\ell^2$ scale. Indeed, with
+$d(v)=\operatorname{dist}(v,\pi+2\pi\mathbb Z)$, the preceding uniform
+expansion bounds the loss below by
+$c\,d(v)^2-Cd(v)/\ell-C/\ell^2$. A loss of $O(\ell^{-2})$
+therefore forces $d(v)=O(\ell^{-1})$. Formula (40) then shows that
+$k=\pm1$ have limiting minimum loss $2\pi^2$, while all
+$|k|\ge3$ have loss at least $18\pi^2$.
+
+Fix $0<b<\min(1,\pi(2-\sigma)/4)$ and set
+
+$$
+\begin{aligned}
+t_V&=\frac\pi\ell+\frac{2\pi}{\ell^2},\\
+J_V&=\{t:\bigl||t|-t_V\bigr|\le b/\ell^2\},\\
+I_V^+&=[t_V-b/(2\ell^2),t_V+b/(2\ell^2)].
+\end{aligned}
+$$
+
+The full frequency bounds above imply, with errors uniform on the
+indicated sets,
+
+$$
+\begin{aligned}
+\inf_{I_V^+}\log|\alpha_V|
+&\ge E_V-(2\pi^2+b^2/8+o(1))E_V/\ell^2,\\
+\sup_{[-V^4,V^4]\setminus J_V}\log|\alpha_V|
+&\le E_V-(2\pi^2+b^2/2+o(1))E_V/\ell^2.
+\end{aligned}
+\tag{41}
+$$
+
+In particular these are separated by a fixed positive multiple of
+$E_V/\ell^2$ eventually. They retain every competing odd peak and
+both ordinate signs of the real Mellin variable.
+
+### Concentrate a full actual subspace inside the two peaks
+
+Use the same $f_0$, finite vanishing order $m$ and moments as (19).
+Set $n_V=\lfloor\sqrt V/\ell^5\rfloor$ and use the actual subspace
+
+$$
+\mathcal E_V^+=\{\alpha_Vf_0P:\deg P<n_V\}
+\subseteq\alpha_V\mathcal K.
+$$
+
+Its dimension is $n_V$. For
+$H_P=\int_{I_V^+}|P|^2$, the finite-order lower bound at zero gives
+
+$$
+\|\alpha_Vf_0P\|_2^2
+\ge c\ell^{-2m}\exp\bigl(2\inf_{I_V^+}\log|\alpha_V|\bigr)H_P.
+$$
+
+Apply the existing interval polynomial bound (22) with half-width
+$b/(2\ell^2)$ and (19)'s moment bound. By (41), the normalized mass
+in $[-V^4,V^4]\setminus J_V$ is at most
+
+$$
+\exp\!\left[-c_bE_V/\ell^2
++O_{f_0,b}\bigl(n_V\log(n_V+2)+n_V\log\ell
++\log(n_V\ell)\bigr)\right]=o(1).
+$$
+
+Here $n_V\log(n_V+2)=O(\sqrt V/\ell^4)=o(E_V/\ell^2)$.
+For $|t|>V^4$, the same Gevrey envelope and polynomial argument used
+in (23) give
+$\exp[O(E_V/\ell^2+n_V\log V+n_V\log\ell)-cV^2]=o(1)$.
+These bounds are uniform over all nonzero polynomials in the subspace,
+including cancellations on $I_V^+$. Every unit vector of
+$\mathcal E_V^+$ therefore has mass $1-o(1)$ in $J_V$, in the true
+$\alpha_V$-weighted norm.
+
+For $t=\pm[\pi/\ell+s/\ell^2]\in J_V$, $|s-2\pi|\le b$ and
+$R=\ell-\sigma$ give
+
+$$
+Rt=\pm\left[\pi+\frac{s-\pi\sigma}{\ell}
++O_\psi(\ell^{-2})\right],\qquad
+1+\cos(Rt)\ge c_\psi\ell^{-2}.
+$$
+
+The last bound follows because $s-\pi\sigma$ stays bounded away from
+zero by the fixed choice of $b$. Also
+$\widehat\psi(t)\ge\widehat\psi(0)/2$ there eventually. Thus the
+actual multiplier (30), positive projection order and an orthonormal
+basis of $\mathcal E_V^+$ give
+
+$$
+\boxed{
+T_{S(V)}(\varepsilon q_R)
+\gg_\psi\varepsilon\ell^{-2}n_V
+\gg_\psi\frac{\varepsilon\sqrt V}{(\log V)^7}.}
+\tag{42}
+$$
+
+The cosine zero has not been dropped: its quadratic loss is the
+additional factor $\ell^{-2}$. The inverse metric remains in the
+actual orthogonal projection throughout.
+
+### Transfer the estimate to the original Robin scales
+
+By WT11 and $V_X^+=e^{R_X+\sigma}$,
+$\varepsilon_X\sqrt{V_X^+}\asymp_\psi N_X$, proving (38)'s
+first bound. Reuse the
+[whole-horizon comparison](../Estimation/trureturing2026pricegapconvexity.md#the-whole-horizon-growth-hypothesis-fails)
+and WT4--WT5: $N_X\sim\mathsf P_X^{\rm Weil}\sim\mathsf P_X$,
+$\mathsf P_X/S_X\to\infty$,
+$S_X\ge L_X\sqrt{b_X}\log b_X$ and
+$b_X/\ell_X\to\infty$. Since
+$\ell_X=(d/8)X^{1-\eta}\log X$, these imply
+
+$$
+\frac{N_X}{M_XL_XR_X^7}
+\gg\frac{\sqrt{\ell_X}}{M_XR_X^7}
+=\sqrt{\frac d8}\,
+\frac{X^{\eta/2}}{\sqrt{\log X}\,R_X^7}
+\longrightarrow\infty.
+\tag{43}
+$$
+
+WT13 supplies $R_X=O((\log X)^8)$ and the original fixed parameters
+have $\eta>0$, including $\Theta=1$. No new clock ceiling or source
+window is chosen. Existence of the qualifying cofinal family remains
+a hypothesis of this source application.
+
+For each $X$ keep this same enlarged $S_X^+$ on both tests and put
+$\mathcal D_S(G)=\mathscr W(G)-T_S(G)$. Linearity, WT13 and (38)
+now give
+
+$$
+\boxed{
+\frac{\mathcal D_{S_X^+}(H_X+e_X)-\mathcal D_{S_X^+}(H_X)}
+{M_XL_X}
+=\frac{\mathscr W(e_X)-T_{S_X^+}(e_X)}{M_XL_X}
+\longrightarrow-\infty.}
+\tag{44}
+$$
+
+Thus a negligible arithmetic--trace transfer on this enlarged family
+fails for the specified completion. This leaves (37)'s original-family
+transfer intact. A successful enlarged-family comparison would have to
+retain the growing correction jointly with the original test; (44)
+does not exclude such cancellation or determine the sign of its full
+Weil functional. The strict Robin estimate and RH remain unproved.
