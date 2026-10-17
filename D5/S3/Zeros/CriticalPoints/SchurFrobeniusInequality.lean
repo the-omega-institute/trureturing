@@ -225,7 +225,8 @@ private theorem diagonal_sum (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro i _
-    exact Finset.add_sum_erase _ _ (Finset.mem_univ i)
+    exact Finset.add_sum_erase (Finset.univ : Finset (Fin n))
+      (fun j => ‖A i j‖ ^ 2) (Finset.mem_univ i)
   refine ⟨by linarith, ?_⟩
   constructor
   · intro h i j hij
