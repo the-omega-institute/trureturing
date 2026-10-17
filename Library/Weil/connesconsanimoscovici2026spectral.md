@@ -7589,3 +7589,217 @@ physical error premises remain. An interval for an actual far-row
 pairing is not an exact derivative or an actual paid-comparison sign.
 Actual-center/full-border signs, good-block payment, retained/cofinal
 positivity, Robin tail and RH remain unresolved.
+
+### Retain the old/new directional Gram before pricing the family
+
+The uniform physical cross payment above is greater than111.74,
+although the saved masked cross is about10.64041669 and both individual
+directional norm certificates have small errors. Retain that SAME
+masked cross and the two saved feature arrays. A two-sided application
+of the original moment and forward-vector estimates can pay their
+cross without repeating either feature action or contraction.
+
+Use the ACTUAL-symbol full jets $j_b,j_d$ from the existing synthesis
+interface, with $x_m=M/m$, $M=32768$, $R=56$:
+
+$$
+j_v(m)=\frac{2(-1)^m}{\pi m}
+\left[x_mB_v(x_m^2)-s_mA_v(x_m^2)\right].
+$$
+
+Here $s_m$ is the true far symbol. The original moments, symbol budget
+$|s_m|\le S$, weight $w_F$, and sharp bounds
+$\|b-j_b\|_{W_F}\le\epsilon_b^\sharp$,
+$\|d-j_d\|_{W_F}\le\epsilon_d^\sharp$ all refer to this actual
+synthesis. The approximate-symbol finite samples in the signed-proxy
+calculation are not used in this application. In particular no new
+symbol-error identification is required. Both forward bounds are
+copied from accepted packets, without rescaling them again.
+
+For each omitted antidiagonal $R\le n\le2R-2$, form the ordered
+bilinear coefficients
+
+$$
+\begin{aligned}
+a_n&=\sum_{k+l=n}(h_b)_{A_k}(h_d)_{A_l},\\
+g_n&=\sum_{k+l=n}
+\left[(h_b)_{A_k}(h_d)_{B_l}+(h_b)_{B_k}(h_d)_{A_l}\right],\\
+b_n&=\sum_{k+l=n}(h_b)_{B_k}(h_d)_{B_l}.
+\end{aligned}
+$$
+
+The omitted jet cross is exactly
+
+$$
+w_F\alpha\sum_{n=R}^{2R-2}
+\left(a_nU_{2n+2}-g_nT_{2n+3}+b_nV_{2n+4}\right),
+\qquad \alpha=\frac4{\pi^2M}.
+$$
+
+The two mixed orientations are included in $g_n$; no additional
+factor2 is inserted. The original decreasing-tail moment bounds give
+
+$$
+U_p\le\frac{S^2}{p-1},\qquad
+|T_p|\le\frac S{p-1},\qquad
+V_p\le\frac1{p-1}.
+$$
+
+Consequently the absolute masking payment is bounded upward by
+
+$$
+e_{\rm mask}=\operatorname{up}\left[
+w_F\alpha_{\rm up}\sum_{n=R}^{2R-2}
+\left(\frac{S^2|a_n|}{2n+1}
++\frac{S|g_n|}{2n+2}+\frac{|b_n|}{2n+3}\right)\right].
+$$
+
+Absolute AA and BB coefficients pay BOTH signs; the earlier one-sided
+norm estimate cannot simply be negated to supply a cross lower.
+Feature uncertainty is propagated before taking absolute uppers.
+No omitted moment is produced or reconstructed.
+
+Reuse the original moment-matrix error $e_H=112\,2^{-640}$,
+full moment TRACE upper $H_*$, prefactor halfwidth $r_\alpha$,
+and saved squared feature-norm uppers $H_b,H_d$. The same midpoint
+interface, now bilinear, supplies
+
+$$
+e_{\rm mid}=\operatorname{up}\left[
+w_F\sqrt{H_bH_d}
+\left(\alpha_{\rm up}e_H+r_\alpha(H_*+e_H)\right)\right].
+$$
+
+The retained entry intervals have width at most two640-grid units,
+so midpoint errors remain at most $2^{-640}$ entrywise after masking.
+Thus $e_H$ controls the SAME masked matrix; it is not inferred by
+assuming that masking contracts operator norm. The full true moment
+Gram is PSD and masking contracts its Frobenius norm, giving the
+previous bound $\|H_0\|\le H_*+e_H$. The masked moment matrix
+and its rounded center need not be PSD.
+For the saved full-jet norm uppers $J_{j_b},J_{j_d}$, the separate
+forward-vector certificates and Cauchy give
+
+$$
+e_{\rm forw}=\operatorname{up}\left[
+\epsilon_b^\sharp\sqrt{J_{j_d}}
++\epsilon_d^\sharp\sqrt{J_{j_b}}
++\epsilon_b^\sharp\epsilon_d^\sharp\right].
+$$
+
+This is a payment using actual vector errors, not a square root of
+the old Gram error. With the SAVED masked cross interval $I_0$,
+
+$$
+\langle b,d\rangle_{W_F}\in
+\left(I_0+[-e,e]\right)\cap I_{\rm coarse},\qquad
+e=e_{\rm mask}+e_{\rm mid}+e_{\rm forw}.
+$$
+
+An empty intersection stops the application. The existing
+`projected_energy` estimate uses this signed interval on the SAME
+$(u_F,d,b)$, with the saved $(E,J_d,J_b)$ and entire
+$\theta/\kappa$ interval. Intersect its resulting $\zeta$ interval
+with the accepted one, then retain the corresponding interval for
+$\phi=fQ_R\rho^*=\zeta+c\theta$. All intersections preserve the
+same actual row and parameter uncertainty.
+
+#### Apply the existing paid square completion to the new response
+
+Use the saved old reference values, with $k_0=t_0^{-1}$:
+
+$$
+q_0=k_0\alpha_0^2+D_0+y_0Q_Ry_0^*,\qquad
+d_0=k_0\alpha_0+\rho Q_Ry_0^*,\qquad
+h_{11}=k_0+\rho Q_R\rho^*.
+$$
+
+Keep the earlier SAME-row negative-square upper $F_-$ and inverse-loss
+payments $C_0+C_2s^2$, $s=\alpha-\alpha_0$. They are valid uppers
+from the earlier source certificate; a new source-energy lower is
+never substituted for any of these far-row uppers. For any one fixed
+new reciprocal coefficient $k>0$ and fee $D>0$, the existing expansion
+gives the all-real lower
+
+$$
+\mathcal E_{D,k}(\alpha_0+s)
+\ge K+Hs^2-2B|s|,
+$$
+
+where directed choices are
+
+$$
+\begin{aligned}
+K&=\operatorname{down}\left[q_{0,\rm lo}+D-D_0
++(k-k_0)\alpha_0^2+2\theta_{\rm lo}-F_--C_0\right],\\
+H&=\operatorname{down}\left[h_{11,\rm lo}+k-k_0-C_2\right],\\
+B&=\operatorname{up}|d_0+(k-k_0)\alpha_0+\phi|.
+\end{aligned}
+$$
+
+These translations preserve the old reference definitions while
+changing the paid recipe. If $H>0$, scalar square completion gives
+
+$$
+\mathcal E_{D,k}(\alpha)\ge
+K-\operatorname{up}(B^2/H)\qquad(\alpha\in\mathbb R).
+$$
+
+A nonpositive floor is inconclusive and supplies neither a feasible
+negative row nor an actual-source upper. No restriction on physically
+legal $\alpha$ is invented. The consumer evaluates the fixed current
+$(k,D)$ and the already saved energy LOWER-endpoint $(k_{\min},D_{\min})$.
+Monotonicity of the existing fixed pricing rule makes a strictly
+positive endpoint floor an exclusion for every recipe obtained solely
+by improving its source-energy upper. That exclusion would still give
+no lower bound for an actual center with a smaller justified charge.
+
+The following displays enclose the exported balls, or round scalar
+upper/lower certificates in the indicated direction. Exact rational
+caps and640-bit packet endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Bilinear omitted-moment masking payment |<1.055086e-128|
+| Bilinear moment/prefactor rounding payment |<2.575728e-185|
+| Total additional bilinear cross-error payment |<4.932753e-67|
+| Actual physical $\langle b,d\rangle_{W_F}$ |contained in[10.6404166919614235901773440,10.6404166919614235901773441]|
+| Refined actual $\zeta$ |contained in[−8.423007,0.178344]|
+| Refined actual $fQ_R\rho^*$ |contained in[−32.541761,−23.910682]|
+| New fixed-recipe all-real lower, rounded down |−2.756762331|
+| New energy-endpoint all-real lower, rounded down |−2.959238524|
+| Retained stronger fixed-recipe lower, rounded down |−0.572919446|
+| Retained stronger energy-endpoint lower, rounded down |−0.779703304|
+
+The small additional payment does not remove the saved masked-cross
+uncertainty: the final physical-cross interval still has width about
+$5.56\times10^{-27}$, rather than $4.94\times10^{-67}$. Both the
+physical cross and $\zeta$ strictly narrow. The $\zeta$ interval still
+contains zero; the strictly negative reference-$\rho$ pairing is not
+the sign of the paid expression.
+
+Both new paid-floor exclusion flags are false. These two square-completion
+lowers are weaker than the preceding timelike joint floors, so retain
+the preceding stronger floors for the SAME fixed and energy-endpoint
+recipes. No old valid lower is replaced. Improved marginal pairing
+intervals alone have not improved the paid positivity certificate;
+the source response and its self-term must retain enough joint
+information to control that comparison. Neither negative lower
+constructs a feasible negative row or supplies an actual negative upper.
+
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/a4bc1a53695fd8ec65150026e1cc3271dfad061b/docs/reports/weil-c27)
+retain packet SHA256 `5cfba16d5428c1c61618a861a8167ca6828f46142d7bd7993d4d84b20de6e980` and source SHA256
+`a35c3222a788508622b92adc6525bc73a26cdc2070c26eb5a701a62015e991a5`. There is one new bilinear error application,
+one application of the existing common projection and two scalar paid
+floor applications, at fixed1024 working/640 export bits. No finite
+direction, feature, quadratic or cross is repeated, and no source,
+sine, moment, tail, inverse, solve or trace producer is invoked. There
+is no parameter/source/precision/cutoff scan or retry.
+
+This is a conditional application of the original jet/moment/forward
+certificates, Cauchy, existing common projection and scalar square
+completion. It asserts no generic theorem, novelty or Lean proof.
+The actual-form/domain, common-source/lift and physical error premises
+remain. Actual-center/full-border/good-block/cofinal positivity,
+Robin and RH remain unresolved.
