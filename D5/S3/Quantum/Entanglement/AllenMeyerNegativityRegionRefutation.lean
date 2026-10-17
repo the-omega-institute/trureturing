@@ -434,10 +434,10 @@ private theorem family_separator (a b c d : ℝ)
   let r := Real.sqrt (a ^ 2 + b ^ 2 + c ^ 2)
   have hrs : r ^ 2 = a ^ 2 + b ^ 2 + c ^ 2 := Real.sq_sqrt (by positivity)
   apply separator_algebra a b c d r _ _ _ ha hd (Real.sqrt_nonneg _) hrs
-    (by nlinarith) (by rw [family_whole a b c d hd hn, hrs]) ?_
+    (by nlinarith only [hn, hrs]) (by rw [family_whole a b c d hd hn, hrs]) ?_
     (fun hapos => family_pair_gram a b c d hapos hn) hz hdelta
   rw [family_swap]
-  exact family_pair_loose b a c d ha hd (by nlinarith)
+  exact family_pair_loose b a c d ha hd (by nlinarith only [hn])
 
 private def witnessRaw : Fin 3 × Fin 3 × Fin 3 → ℂ := fun p =>
   if p = (0, 0, 0) then 5 else if p = (1, 0, 1) then 3
@@ -594,7 +594,7 @@ private theorem witness_bounds :
     rw [witness_scale.2.2, hpt, hscalar, traceNorm_smul_nonneg _ _ (by norm_num)]
   obtain ⟨hzlo, hzhi⟩ := witness_whole
   obtain ⟨hxlo, hylo⟩ := witness_pairs
-  unfold negativity
+  delta negativity
   rw [hxscale, hyscale, hzscale]
   constructor
   · linarith
