@@ -89,7 +89,7 @@ private lemma supporting_line_pos {c x y : ℝ} (hc : 0 < c) (hx : 0 < x)
     by_contra hne
     have hu_ne : (c + x) / (c + y) ≠ 1 := by
       intro h
-      have := (div_eq_one_iff_eq (ne_of_gt (add_pos hc hy))).mp h
+      have ratio_eq := (div_eq_one_iff_eq (ne_of_gt (add_pos hc hy))).mp h
       exact hne (by linarith)
     have strictc := mul_lt_mul_of_pos_left (Real.log_lt_sub_one_of_pos hu hu_ne) hc
     linarith
@@ -146,7 +146,8 @@ private lemma radius_pos : 0 < jensenShannon p a := by
   have h2 := term_nonneg_eq (c := (1/15:ℝ)) (x := (1/10:ℝ)) (by norm_num) (by norm_num)
   have strict : 0 < term (2/3) (1/2) := by
     rcases h0.1.eq_or_lt with heq | hlt
-    · exact False.elim (by have := h0.2 heq.symm; norm_num at this)
+    · have equal_masses := h0.2 heq.symm
+      norm_num at equal_masses
     · exact hlt
   rw [js_three]
   change 0 < term (2/3) (1/2) + term (4/15) (2/5) + term (1/15) (1/10)
@@ -166,11 +167,11 @@ private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
     (hm : Majorizes a r) (hball : jensenShannon p r ≤ jensenShannon p a) : r = a := by
   have bounds := majorized_bounds hm
   have h0 := supporting_line (c := (2/3:ℝ)) (x := r 0) (y := (1/2:ℝ))
-    (by norm_num) (hr.1 0) (by norm_num)
+    (by norm_num) (le_trans (by norm_num : (0:ℝ) ≤ 1/10) (bounds 0).1) (by norm_num)
   have h1 := supporting_line (c := (4/15:ℝ)) (x := r 1) (y := (2/5:ℝ))
-    (by norm_num) (hr.1 1) (by norm_num)
+    (by norm_num) (le_trans (by norm_num : (0:ℝ) ≤ 1/10) (bounds 1).1) (by norm_num)
   have h2 := supporting_line (c := (1/15:ℝ)) (x := r 2) (y := (1/10:ℝ))
-    (by norm_num) (hr.1 2) (by norm_num)
+    (by norm_num) (le_trans (by norm_num : (0:ℝ) ≤ 1/10) (bounds 2).1) (by norm_num)
   norm_num at h0 h1 h2
   have total : r 0 + r 1 + r 2 = 1 := by
     simpa [IsProbVec, D5.S3.TotalVariation.CycleSingleCutMinimax.Probability,
@@ -206,5 +207,84 @@ private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
   · exact h0.2 equal0
   · exact h1.2 equal1
   · exact h2.2 equal2
+
+private lemma ball_log_identity :
+    60 * (jensenShannon p b - jensenShannon p a) =
+      Real.log ((4:ℝ) * 5^55 * 7^35 / 3^144) := by
+  have l4 : Real.log (4:ℝ) = 2 * Real.log 2 := by
+    convert Real.log_pow (2:ℝ) 2 using 1 <;> norm_num
+  have l6 : Real.log (6:ℝ) = Real.log 2 + Real.log 3 := by
+    rw [← Real.log_mul (by norm_num : (2:ℝ) ≠ 0) (by norm_num : (3:ℝ) ≠ 0)]
+    norm_num
+  have l8 : Real.log (8:ℝ) = 3 * Real.log 2 := by
+    convert Real.log_pow (2:ℝ) 3 using 1 <;> norm_num
+  have l9 : Real.log (9:ℝ) = 2 * Real.log 3 := by
+    convert Real.log_pow (3:ℝ) 2 using 1 <;> norm_num
+  have l10 : Real.log (10:ℝ) = Real.log 2 + Real.log 5 := by
+    rw [← Real.log_mul (by norm_num : (2:ℝ) ≠ 0) (by norm_num : (5:ℝ) ≠ 0)]
+    norm_num
+  have l87 : Real.log (8/7:ℝ) = 3 * Real.log 2 - Real.log 7 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l8]
+  have l45 : Real.log (4/5:ℝ) = 2 * Real.log 2 - Real.log 5 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l4]
+  have l67 : Real.log (6/7:ℝ) = Real.log 2 + Real.log 3 - Real.log 7 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l6]
+  have l65 : Real.log (6/5:ℝ) = Real.log 2 + Real.log 3 - Real.log 5 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l6]
+  have l109 : Real.log (10/9:ℝ) = Real.log 2 + Real.log 5 - 2 * Real.log 3 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l10, l9]
+  have l89 : Real.log (8/9:ℝ) = 3 * Real.log 2 - 2 * Real.log 3 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l8, l9]
+  have l23 : Real.log (2/3:ℝ) = Real.log 2 - Real.log 3 := by
+    rw [Real.log_div (by norm_num) (by norm_num)]
+  have l43 : Real.log (4/3:ℝ) = 2 * Real.log 2 - Real.log 3 := by
+    rw [Real.log_div (by norm_num) (by norm_num), l4]
+  have ja : jensenShannon p a = (11/6:ℝ) * Real.log 2 + Real.log 3 / 2 -
+      (5/12:ℝ) * Real.log 5 - (7/12:ℝ) * Real.log 7 := by
+    rw [js_three]
+    change term (2/3) (1/2) + term (4/15) (2/5) + term (1/15) (1/10) = _
+    norm_num [term]
+    rw [l87, l67, l45, l65]
+    ring
+  have jb : jensenShannon p b = (28/15:ℝ) * Real.log 2 - (19/10:ℝ) * Real.log 3 +
+      Real.log 5 / 2 := by
+    rw [js_three]
+    change term (2/3) (8/15) + term (4/15) (1/3) + term (1/15) (2/15) = _
+    norm_num [term]
+    rw [l109, l89, l23, l43]
+    ring
+  have numerator : Real.log ((4:ℝ) * 5^55 * 7^35) =
+      2 * Real.log 2 + 55 * Real.log 5 + 35 * Real.log 7 := by
+    rw [Real.log_mul (by positivity) (by positivity),
+      Real.log_mul (by positivity) (by positivity), l4, Real.log_pow, Real.log_pow]
+    norm_num
+  have quotient : Real.log ((4:ℝ) * 5^55 * 7^35 / 3^144) =
+      2 * Real.log 2 + 55 * Real.log 5 + 35 * Real.log 7 - 144 * Real.log 3 := by
+    rw [Real.log_div (by positivity) (by positivity), numerator, Real.log_pow]
+    norm_num
+  rw [ja, jb, quotient]
+  ring
+
+private lemma second_in_ball : jensenShannon p b < jensenShannon p a := by
+  have certificate : (4:ℕ) * 5^55 * 7^35 < 3^144 := by norm_num
+  have real_certificate : (4:ℝ) * 5^55 * 7^35 < 3^144 := by exact_mod_cast certificate
+  have negative : Real.log ((4:ℝ) * 5^55 * 7^35 / 3^144) < 0 :=
+    Real.log_neg (by positivity) ((div_lt_one (by positivity)).mpr real_certificate)
+  linarith [ball_log_identity]
+
+private lemma not_majorizes : ¬ Majorizes b a := by
+  intro h
+  have h2 := h.1 2 (by decide)
+  norm_num [a, b, prefixSum, desc, List.ofFn_succ, List.mergeSort, List.merge] at h2
+
+/-- The Jensen--Shannon ball at `p = (2/3,4/15,1/15)` with threshold `J(p,a)`
+has no majorization-minimizer, where `a = (1/2,2/5,1/10)`. -/
+theorem result : ¬ claim := by
+  intro h
+  obtain ⟨r, hr, hmin⟩ := h 3 p probability_data.1 (jensenShannon p a) radius_pos
+  have forced : r = a := unique_candidate hr.1
+    (hmin a ⟨probability_data.2.1, le_rfl⟩) hr.2
+  subst r
+  exact not_majorizes (hmin b ⟨probability_data.2.2, second_in_ball.le⟩)
 
 end D5.S3.Divergence.JensenShannonBallMajorizationRefutation
