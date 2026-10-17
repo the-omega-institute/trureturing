@@ -4339,3 +4339,109 @@ owners, assume homogeneous angles on a segment, discard slots, or
 replace the original angle equations by a formal graph equation.
 The finite bounds permit a bounded role analysis but do not prove
 five-reservoir exclusion or realization.
+
+## 222. Setting and response
+
+Retain the exact paired five-reservoir hypotheses and the proved
+whole-high-core and single-high-M conclusions. In particular each
+transverse pair consists of distinct reservoir labels; the actual
+quotient has complete circular edge links and degree at least six;
+all original edge angle sums are 2*pi. The only flat owner has pair
+{C,D} and no Z or U slot. Put P={M,Z,U}, with
+ m>1+c+d>3, z>m, u>m, c,d<m-2.
+The interacting high core has at most four actual owners and contains
+ tau=(Z,M,C,D,M,C).
+For X=Z or U write x=x_X. Its entire original star is genuine and
+has total angle 2*pi. We classify owners containing X and no other
+label from P. A special edge has a fixed transverse pair throughout
+its complete star and occurs only axially.
+
+## 223. Special axes in a pair {X,B} satisfy q<x
+
+Let B=C or D, with value b<x-2. Suppose a special edge e has fixed
+pair {X,B}, with value q. Its entire star is genuine since the sole
+flat has pair {C,D}. Its n>=6 original axial angles theta_i sum to
+2*pi. For its transverse X angle use the individual response
+ beta(theta)=atan(lambda_plus*cot(theta/2))
+            +atan(lambda_minus*cot(theta/2)),
+ lambda_plus/minus=(sqrt(x^2-1) +/- sqrt(b^2-1))/(x+b)
+                    *sqrt((q-1)/(q+1)).
+Both parameters lie in (0,1). Thus beta is positive, decreasing and
+convex. An owner has two transverse X slots and at most two e axes,
+so its actual X expense is at least the sum of beta over its e slots.
+The complete X budget and Jensen give
+ 2*pi>=sum_i beta(theta_i)>=n*beta(2*pi/n)>=6*beta(pi/3).
+Write s=lambda_plus+lambda_minus, p=lambda_plus*lambda_minus>0.
+Since beta(pi/3)<=pi/3<pi/2, tangent addition has positive denominator
+and yields
+ sqrt(3)*s/(1-3*p)<=sqrt(3), hence s+3*p<=1.
+In particular s<=1. Consequently
+ (q-1)/(q+1)<=(x+b)^2/[4*(x^2-1)]
+             <(x-1)/(x+1),
+using b<x-2. The increasing inverse of (q-1)/(q+1) gives q<x.
+
+## 224. At most two single-high transverse-X owners
+
+Any such owner has pair {X,B}, B=C or D. Its axes r,o can only be
+X,C,D, or special. Thus r,o<=x: the low labels are smaller and
+Section 223 bounds special axes; repeated X axes are allowed.
+The transverse X angle beta has cosine
+ N/sqrt(D_r*D_o),
+ N=b*(r+o)+x*(r*o+b^2-x^2+1),
+ D_r=r^2+x^2+b^2+2*r*x*b-1,
+ D_o=o^2+x^2+b^2+2*o*x*b-1.
+The denominators are positive for positive cosh values. The sign of
+the derivative in r is the sign of
+ (b+x*o)*D_r-N*(r+x*b)
+ =(x^2-1)*[-b^3+b*o*r+b*x^2+b+o*x+r*x]>0,
+since x>b>1. The derivative in o is positive by symmetry. These
+rational comparisons do not require the interpolating data to be a
+genuine tetrahedron. Therefore its cosine is at most its value at
+r=o=x, namely
+ x*(b+1)/(2*x^2+b-1).
+This expression is increasing in b, with derivative
+ 2*x*(x^2-1)/(2*x^2+b-1)^2>0.
+Since b<x-2,
+ cos(beta)<x*(x-1)/(2*x^2+x-3)<1/2;
+the final denominator exceeds twice the numerator by 3*(x-1)>0.
+Thus beta>pi/3. Each actual owner has two such transverse X slots,
+so three distinct owners would exceed the complete X budget 2*pi.
+There are at most two single-high transverse-X owners. Any additional
+axial X slots only increase their actual X expense.
+
+## 225. At most five genuine axial-X owners with pair {C,D}
+
+Each such owner has exactly one X axis: two would give flat product
+(x-1)^2>(c+d)^2, contrary to genuineness. Suppose g>=6 such owners
+exist, with axial angles theta_i whose sum is at most 2*pi.
+At least one has theta_i<=pi/3. The dominant-axis response estimate
+used in §116.1 applies to x>1+c+d and gives lambda_X^2>1/3, where
+ lambda_X^2=K*(x-1)/(x+1),
+ K=(sqrt(c^2-1)+sqrt(d^2-1))^2/(c+d)^2.
+Precisely, §96.5 supplies the dominant-axis identity
+ tan(theta_i/2)^2+2*lambda_X^2>1.
+For the selected theta_i<=pi/3, its first term is at most1/3;
+hence lambda_X^2>1/3. This part of §116.1 does not use its flat
+opposite-axis hypothesis, which is needed only for the second,
+opposite-axis bound. No flat opposite axis is assumed here.
+Once lambda_X^2>1/3 holds, Jensen gives
+ sum_i B_lambda_X(theta_i)>=g*B_lambda_X(2*pi/g)
+                            >=g*B_lambda_X(pi/3)>g*pi/4.
+Each owner has four C/D transverse slots, of expense
+4*B_lambda_X(theta_i). Their total therefore exceeds g*pi>=6*pi,
+contradicting the entire genuine C/D budget, which is at most4*pi.
+Thus g<=5.
+
+## 226. Whole-star counts and scope
+
+The complete X star has at most four interacting-core owners, two
+single-high transverse owners, and five axial-{C,D} owners. This is
+an exhaustive cover: a noninteracting owner containing X either has
+X transverse or has low distinct pair {C,D} and X axial.
+Each interacting or transverse owner contributes at most four X
+slots, whereas each axial-{C,D} owner contributes one. For Z, tau
+is one interacting owner and has only one Z slot, so degree(Z)<=26.
+For U, tau has no U slot, so at most three core owners contribute,
+and degree(U)<=25. The corresponding owner counts are at most11
+for Z and10 for U. No claim of five-reservoir exclusion follows.
+
