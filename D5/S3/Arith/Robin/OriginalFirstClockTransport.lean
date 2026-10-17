@@ -11,6 +11,7 @@ import D5.S3.Arith.Robin.FinitePulseKernelTransport
 import D5.S3.Arith.Robin.GA2ForcedPrimeSource
 import D5.S3.Arith.Robin.EulerLayerPhaseSeparation
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
+import D5.S3.Arith.Robin.OriginalFirstClockBufferEstimates
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
@@ -33,6 +34,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 open D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
+open D5.S3.Arith.Robin.OriginalFirstClockBufferEstimates
 
 -- Literal source expressions; these notations create no second price producer.
 local notation "λ₀" => D5.S3.Arith.Robin.ActualRobinClockCovariance.g
@@ -393,116 +395,6 @@ theorem complete_original_first_clock_exclusion (X : OriginalWindow) {ell R : �
 #print axioms complete_original_first_clock_exclusion
 
 -- BEGIN good_edge_prime_buffer: original integer comparisons.
-private theorem buffer_log_size {x z : ℝ}
-    (hx : 256 ≤ x) (hzl : x-2 ≤ z) (hzu : z ≤ x+1) :
-    5 < Real.log z ∧ Real.log z ≤ x/20 := by
-  have hx0 : 0 < x := by linarith
-  have hz0 : 0 < z := by linarith
-  have he5 : Real.exp (5 : ℝ) < 243 := by
-    rw [show (5 : ℝ) = (5 : ℕ)*1 by norm_num, Real.exp_nat_mul]
-    have hp := pow_lt_pow_left₀ Real.exp_one_lt_three
-      (Real.exp_pos _).le (by decide : (5 : ℕ) ≠ 0)
-    norm_num at hp ⊢
-    exact hp
-  have hlow : 5 < Real.log z :=
-    (Real.lt_log_iff_exp_lt hz0).mpr (by linarith)
-  have hlog256 : Real.log (256 : ℝ) ≤ 8 := by
-    rw [show (256 : ℝ) = 2^8 by norm_num, Real.log_pow]
-    have h2 := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
-    norm_num at h2 ⊢
-    linarith
-  have hx1 : 0 < x+1 := by linarith
-  have hs := Real.log_le_sub_one_of_pos
-    (div_pos hx1 (by norm_num : (0 : ℝ) < 256))
-  rw [Real.log_div hx1.ne' (by norm_num : (256 : ℝ) ≠ 0)] at hs
-  have hup : Real.log (x+1) ≤ x/20 := by linarith
-  exact ⟨hlow, (Real.log_le_log hz0 hzu).trans hup⟩
-
-private theorem buffer_density_left {x h : ℝ}
-    (hx : 256 ≤ x) (hh : 0 < h) (hsmall : h ≤ x/20) :
-    (81/100)*w₀ (x-h) ≤ w₀ x := by
-  have hx0 : 0 < x := by linarith
-  have hz : (19/20)*x ≤ x-h := by linarith
-  have hz1 : 1 < x-h := by linarith
-  have hz0 : 0 < x-h := by linarith
-  have hlx : 1 < Real.log x :=
-    (Real.lt_log_iff_exp_lt hx0).mpr
-      (Real.exp_one_lt_three.trans_le (by linarith))
-  have hlz0 : 0 < Real.log (x-h) := Real.log_pos hz1
-  have hs := Real.log_le_sub_one_of_pos (div_pos hx0 hz0)
-  rw [Real.log_div hx0.ne' hz0.ne'] at hs
-  have hratio : x/(x-h)-1 ≤ 1/19 := by
-    apply (sub_le_iff_le_add).mpr
-    apply (div_le_iff₀ hz0).mpr
-    linarith
-  have hlz : (18/19)*Real.log x ≤ Real.log (x-h) := by linarith
-  have hlmono : Real.log (x-h) ≤ Real.log x :=
-    Real.log_le_log hz0 (by linarith)
-  have hsqx : ((19/20)*x)^2 ≤ (x-h)^2 :=
-    (sq_le_sq₀ (by positivity) hz0.le).mpr hz
-  have hsql : ((18/19)*Real.log x)^2 ≤ (Real.log (x-h))^2 :=
-    (sq_le_sq₀ (by positivity) hlz0.le).mpr hlz
-  have hden : (81/100)*(x^2*(Real.log x)^2) ≤
-      (x-h)^2*(Real.log (x-h))^2 := by
-    have hm := mul_le_mul hsqx hsql (sq_nonneg _) (sq_nonneg _)
-    convert! hm using 1 <;> ring
-  have hdx : 0 < x^2*(Real.log x)^2 :=
-    mul_pos (sq_pos_of_pos hx0) (sq_pos_of_pos (by linarith))
-  have hdz : 0 < (x-h)^2*(Real.log (x-h))^2 :=
-    mul_pos (sq_pos_of_pos hz0) (sq_pos_of_pos hlz0)
-  change (81/100)*((Real.log (x-h)+1)/
-      ((x-h)^2*(Real.log (x-h))^2)) ≤
-    (Real.log x+1)/(x^2*(Real.log x)^2)
-  rw [← mul_div_assoc, div_le_div_iff₀ hdz hdx]
-  have hm := mul_le_mul_of_nonneg_left hden
-    (show 0 ≤ Real.log x+1 by linarith)
-  have hn := mul_le_mul_of_nonneg_right
-    (show Real.log (x-h)+1 ≤ Real.log x+1 by linarith)
-    (show 0 ≤ (81/100)*(x^2*(Real.log x)^2) by positivity)
-  nlinarith
-
-private theorem buffer_density_right {x h : ℝ}
-    (hx : 256 ≤ x) (hh : 0 < h) (hsmall : h ≤ x/20) :
-    (81/100)*w₀ x < w₀ (x+h) := by
-  have hx0 : 0 < x := by linarith
-  have hz0 : 0 < x+h := by linarith
-  have hlx : 1 < Real.log x :=
-    (Real.lt_log_iff_exp_lt hx0).mpr
-      (Real.exp_one_lt_three.trans_le (by linarith))
-  have hz : x+h ≤ (21/20)*x := by linarith
-  have hs := Real.log_le_sub_one_of_pos (div_pos hz0 hx0)
-  rw [Real.log_div hz0.ne' hx0.ne'] at hs
-  have hratio : (x+h)/x-1 ≤ 1/20 := by
-    apply (sub_le_iff_le_add).mpr
-    apply (div_le_iff₀ hx0).mpr
-    linarith
-  have hlz : Real.log (x+h) ≤ (21/20)*Real.log x := by linarith
-  have hlmono : Real.log x ≤ Real.log (x+h) :=
-    Real.log_le_log hx0 (by linarith)
-  have hlz0 : 0 < Real.log (x+h) := by linarith
-  have hsqx : (x+h)^2 ≤ ((21/20)*x)^2 :=
-    (sq_le_sq₀ hz0.le (by positivity)).mpr hz
-  have hsql : (Real.log (x+h))^2 ≤ ((21/20)*Real.log x)^2 :=
-    (sq_le_sq₀ hlz0.le (by positivity)).mpr hlz
-  have hden : (x+h)^2*(Real.log (x+h))^2 ≤
-      (21/20)^4*(x^2*(Real.log x)^2) := by
-    have hm := mul_le_mul hsqx hsql (sq_nonneg _) (sq_nonneg _)
-    convert! hm using 1 <;> ring
-  have hdx : 0 < x^2*(Real.log x)^2 :=
-    mul_pos (sq_pos_of_pos hx0) (sq_pos_of_pos (by linarith))
-  have hdz : 0 < (x+h)^2*(Real.log (x+h))^2 :=
-    mul_pos (sq_pos_of_pos hz0) (sq_pos_of_pos hlz0)
-  change (81/100)*((Real.log x+1)/(x^2*(Real.log x)^2)) <
-    (Real.log (x+h)+1)/((x+h)^2*(Real.log (x+h))^2)
-  rw [← mul_div_assoc, div_lt_div_iff₀ hdx hdz]
-  have hm := mul_le_mul_of_nonneg_left hden
-    (show 0 ≤ (81/100)*(Real.log x+1) by positivity)
-  have hn := mul_le_mul_of_nonneg_right
-    (show Real.log x+1 ≤ Real.log (x+h)+1 by linarith) hdx.le
-  have hc : (81/100)*(21/20)^4 < (1 : ℝ) := by norm_num
-  nlinarith [mul_pos (sub_pos.mpr hc)
-    (mul_pos (by linarith : 0 < Real.log x+1) hdx)]
-
 private theorem buffer_price_integrable {s t : ℝ}
     (hs : 1 < s) (hst : s ≤ t) : IntervalIntegrable λ₀ volume s t := by
   have hc : ContinuousOn λ₀ (Icc s t) := by
@@ -592,33 +484,6 @@ private theorem buffer_prime_not_dvd_5040 {q : ℕ} (hq : q.Prime)
   · have h : (q : ℝ) ≤ 7 := by exact_mod_cast Nat.le_of_dvd (by norm_num : 0 < 7) hd
     linarith
 
-private theorem buffer_integer_removal_comparison {p N q M : ℕ}
-    (hmax : originalMaximizes p N) (hM : 1 ≤ M)
-    (hdiv : 5040*p ∣ M) (hmul : M*q=N) (hq : q.Prime) :
-    Real.log (Real.log (Real.log (N : ℝ))) -
-      Real.log (Real.log (Real.log (M : ℝ))) ≤ Real.log (1+1/(q : ℝ)) := by
-  have hMq : 1 ≤ M*q := by nlinarith [hq.pos]
-  have hd := golden_resource_objective_single_layer_delta 0 hM hq
-  rw [golden_resource_sigma_identity 0 hMq,
-    golden_resource_sigma_identity 0 hM] at hd
-  simp only [zero_mul, sub_zero] at hd
-  rw [hmul] at hd
-  have hbound := hmax.2.2 M hM hdiv
-  dsimp only [originalObjective] at hbound
-  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos (by exact_mod_cast hq.one_lt)
-  have hmarg : goldenLayerMarginal q (M.factorization q+1) ≤ goldenLayerMarginal q 1 := by
-    by_cases he : M.factorization q = 0
-    · simp only [he, zero_add, le_refl]
-    · exact (golden_layer_strict_decrease hq (by omega : 1 ≤ (1 : ℕ))
-        (by omega : 1 < M.factorization q+1)).le
-  have hfirst : goldenLayerMarginal q 1*Real.log (q : ℝ) =
-      Real.log (1+1/(q : ℝ)) := by
-    rw [golden_layer_marginal_one_eq_log_one_add_inv hq]
-    exact div_mul_cancel₀ _ hlogq.ne'
-  have hm := mul_le_mul_of_nonneg_right hmarg hlogq.le
-  rw [hfirst] at hm
-  linarith
-
 private theorem buffer_left_prime_exclusion {p U q : ℕ}
     (hp : p.Prime) (hU : 0 < U) (h5040 : 5040 ∣ U)
     (hmax : originalMaximizes p (p*U)) {a : ℝ}
@@ -676,7 +541,8 @@ private theorem buffer_left_prime_exclusion {p U q : ℕ}
         Real.log_mul (by exact_mod_cast (by omega : M ≠ 0))
           (by exact_mod_cast hq.ne_zero)]
     linarith
-  have hcmp := buffer_integer_removal_comparison hmax hM hdiv hMq hq
+  have hcmp := buffer_integer_removal_comparison hM hMq hq
+    (by simpa only [originalObjective] using (hmax.2.2 M hM hdiv))
   rw [← ha, hlog] at hcmp
   have heq : h*λ₀ (firstClock q)=Real.log (1+1/(q : ℝ)) := by
     rw [hclock.2.2, golden_layer_marginal_one_eq_log_one_add_inv hq]

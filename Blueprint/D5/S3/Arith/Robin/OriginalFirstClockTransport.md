@@ -118,3 +118,4 @@ This is an application of the existing source stack and the forced fixed-price i
 - Dependency: [D5/S3/Arith/Robin/FinitePulseKernelTransport](FinitePulseKernelTransport.md)
 - Dependency: [D5/S3/Arith/Robin/GA2ForcedPrimeSource](GA2ForcedPrimeSource.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)
+- Dependency: [D5/S3/Arith/Robin/OriginalFirstClockBufferEstimates](OriginalFirstClockBufferEstimates.md)
