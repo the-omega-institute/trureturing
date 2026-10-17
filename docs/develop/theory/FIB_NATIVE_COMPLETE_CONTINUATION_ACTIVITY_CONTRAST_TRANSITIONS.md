@@ -1279,13 +1279,26 @@ effects continue to sum to $M_2\succ0$. $\square$
 supported law in ordered local weight/angle coordinates is constant
 on the platform and analytic on the active side. It is continuous but
 not differentiable across the seam: on the right
-$dk/ds=1/s_0$, whereas on the left $k$ is constant. Its actual
-contrast is $s_c$ before the seam and the request $s$ after it.
+$dk/ds=1/s_0$, whereas on the left $k$ is constant. Its available
+contrast $s_0k$ is $s_c$ on the platform and the request $s$ on the
+active side. Section 13's deterministic sign-report realization attains
+that available contrast. Other legal platform reports may attenuate
+actual contrast while satisfying $\mathsf V(F)\ge s$; after the seam,
+every optimizer has $\mathsf V(F)=s$ by Theorem 8.1.
 The value is $C^1$ although that law is not. Aggregate uniqueness
-does not imply uniqueness of the whole instrument, time laws,
-hidden Kraus representation or its supported-zero completion.
+does not imply uniqueness of the whole instrument, binary report,
+time laws, hidden Kraus representation or its supported-zero completion.
 Optimizers may split labels or retain extra $\mathcal J_0$ outcomes;
 the five/six statements are minima, not counts of every implementation.
+
+Indeed, keep the entire acquisition record and all its CP maps fixed.
+If $F_{\rm sign}$ is the full plus effect of the sign report, the legal
+report kernel that changes a minus report to plus with probability
+$1-q$ has plus effect $qF_{\rm sign}+(1-q)I_5$. On the platform its
+actual contrast is $qs_c$, so every $q\in[s/s_c,1]$ meets the request.
+At $s=0$, $q=0$ is the deterministic all-plus report. These report
+choices preserve acquisition-record TV and every quantum/resource
+interface; they need not attain the available contrast.
 
 ## 13. One common original instrument for all the interfaces
 
@@ -1611,9 +1624,14 @@ bounds, and do not replace the source premises.
 | $3$ | $(0.03614,0.03616)$ | $+$ | $(17.237,17.242)$ |
 | $4$ | $(0.05627,0.05629)$ | $-$ | $(0.8519,0.8571)$ |
 
-The pure frame determinant lies in $(1.5240,1.5244)$, and a five-weight
-moment minor lies in $(-0.015478,-0.015475)$. Distinct projection-line
-determinants exceed $0.04598$ in magnitude. These data establish the
+Use the normalized circle vectors
+$\bar h_i=(1,\cos\phi_i,\sin\phi_i)^T$ and
+$\bar r_i=(\cos\phi_i,\sin\phi_i)^T$. Throughout the strip,
+$\det(\bar h_0,\bar h_1,\bar h_2)\in(1.5240,1.5244)$ and
+$|\det(\bar r_i,\bar r_j)|>0.0459$ for every $i<j$.
+The invertible diagonal rescalings to $h_i$ and $(z_i,w_i)^T$
+preserve nondegeneracy. A five-weight moment minor lies in
+$(-0.015478,-0.015475)$. These data establish the
 geometric match required by $\mathrm M$ with the original physical
 moments, not merely matching scalar thresholds. Multipliers are
 converted by AC.64–.65 with the physical factor $1/t$.
@@ -1666,8 +1684,10 @@ AC.85 and $3/25=0.12$ give slack on the stated rectangle; evaluating
 the common dual there gives AC.86. The same original instrument from
 §13 attains every listed interface. $\square$
 
-The strip application gives neither a numerical enclosure for $\chi$
-nor a specified positive width of the active neighborhood. It does
+The qualitative strip application in this section gives neither a numerical
+enclosure for $\chi$ nor a specified positive width of the active
+neighborhood; §§19–23 supply quantitative response bounds and an explicit
+right interval on the same strip. It does
 not locate later zero-weight, collision, extra-zero, height-sign or
 curvature seams, or extend the threshold curve outside the strip.
 Analytic dependence on the strip and a pointwise local seam are not
@@ -1819,9 +1839,9 @@ obstruction with quantitative coefficient mass, impossibility of
 all-common-contact optimal failure allocation, strict all-optimizer
 saturation and finite-budget growth, the single-platform structure,
 and automatic first-seam response and regularity under $\mathrm M$.
-The strip application pays $\mathrm M$ and the whole pure angle-box
-containment only on AC.80. It does not supply numerical $\chi$ or a
-specified active-side width.
+The qualitative strip application in §14 pays $\mathrm M$ and the whole
+pure angle-box containment only on AC.80. Quantitative bounds for $\chi$
+and a specified active-side width are supplied in §§19–23.
 
 The following parts of the original programme remain unresolved.
 The full weak finite frontier requires evaluated global roots and
