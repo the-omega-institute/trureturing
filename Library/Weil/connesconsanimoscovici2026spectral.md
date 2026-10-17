@@ -8422,3 +8422,123 @@ This is the existing negative-index-one projection and Cauchy argument
 applied to a stated missing interface. It neither constructs a new
 physical row nor proves actual paid/center/full-border/good-block or
 cofinal positivity, Robin or RH.
+
+
+#### Use the saved raw-coordinate cap as a complement response
+
+The existing absolute-coordinate certificate can be tested against the
+same projection without supplying a new physical far row. Keep the real
+finite form and all common-source/domain assumptions above. In the
+original block factorization, the tail of $T$ is the identity and its
+first row is $-\Sigma_{0,\mathrm{tail}}/\Sigma_{00}$. Therefore the real row
+
+$$
+n=(1,\Sigma_{0,\mathrm{tail}}/\Sigma_{00})
+$$
+
+satisfies $Pn^*=0$ and $n[0]=1$. With $\delta=-\Sigma_{00}>0$, define
+$\xi=-\delta n$. Since $Q=\gamma P-e_0e_0^*/\delta$,
+
+$$
+Q\xi^*=e_0,\qquad Q(\xi,\xi)=-\delta,\qquad Q(f,\xi)=f[0].
+$$
+
+This is a reference row in the same full finite real form domain; it is
+not asserted to be a new source-generated far row. Write
+$\lambda=y_0[0]$ in the RAW original coordinate, so $v[0]=\lambda\omega$.
+Removing the same $y_0,v$ components gives
+
+$$
+\begin{aligned}
+T_\xi&=Q(\xi_\perp,\xi_\perp)
+=-\delta+\frac{\lambda^2}{b}-\frac{\lambda^2\omega^2}{a}
+=-\delta+\frac{\lambda^2t}{ba},\\
+\ell_\xi&=Q(f,\xi_\perp)
+=f[0]+\lambda\left(\frac{t\theta}{ba}
+-\frac{\gamma\omega\zeta}{a}\right).
+\end{aligned}
+$$
+
+Here $\theta=\theta_\varepsilon$ is still the transported response.
+The accepted cap $C\ge|f[0]|$ and $\lambda$ use the same raw units,
+with no division by $\sqrt\delta$. This follows from the saved
+$\lambda=\alpha_0\rho[0]+\beta_J[0]$ definition and the original
+homogeneous coordinate-cap derivation. A cap for source energy would
+not be interchangeable with $C$.
+
+Let $I_d$ enclose the second term of $\ell_\xi$ using the saved
+common-source responses and shared finite parameters. Then
+$I_\ell=[-C,C]+I_d$ encloses the actual $\ell_\xi$. Under a certified
+$0<T_\xi\le T_{\xi,\mathrm{up}}$, the preceding PSD Cauchy estimate gives
+
+$$
+r_\xi=\frac{\operatorname{dist}(0,I_\ell)^2}{T_{\xi,\mathrm{up}}}
+\le R.
+$$
+
+The implementation requires a strictly positive directed lower for
+$T_\xi$ before division. A zero-containing cross gives $r_\xi=0$;
+an unresolved norm sign also supplies no positive gain. Algebraic
+identities come from the same reference form, not overlap of separately
+evaluated scalar intervals.
+
+For each paid recipe let $L_F$ be the saved lower for precisely the
+$F$ in the full $F+R$ decomposition. The augmented lower is $L_F+r_\xi$;
+only afterward take its maximum with the previously retained lower.
+Adding $r_\xi$ directly to an unrelated older lower would not follow
+from that decomposition.
+
+
+The single saved-scalar application certifies that this projected
+coordinate direction is nondegenerate, but its cross interval contains
+zero:
+
+| Quantity | Outward range or exact result |
+|---|---|
+| $T_\xi$ | $[3.460702373153308560,3.460702373153308561]\cdot10^{-31}$ |
+| $I_d$ | contained in $[-2.135953295,-2.133377122]\cdot10^{-16}$ |
+| $I_\ell$ | contained in $[-6.503116871,2.233786454]\cdot10^{-16}$; exact saved interval contains0 |
+| Certified $r_\xi$ | $0$ |
+| Fixed retained lower | unchanged, $-0.472489775052793370265\ldots$ |
+| Energy-endpoint retained lower | unchanged, $-0.674685241069653953208\ldots$ |
+
+Thus this use of the saved absolute coordinate cap supplies no positive
+residual gain. It does not show that the actual residual is zero or
+that an actual paid energy is negative.
+
+The entire saved $I_d$ is inside $[-C,C]$, where the accepted cap is
+$C>4.367163575891468984\cdot10^{-16}$. To see the resulting limitation
+of these particular observations, use the exact common plane row
+
+$$
+f_H=-\frac{\theta}{b}y_0+
+\frac{\gamma\zeta+\omega\theta}{a}v.
+$$
+
+It satisfies $Q(f_H,y_0)=\theta$ and $P(f_H,w)=\zeta$; the latter
+follows from $w=v-\omega y_0$ and $w[0]=0$. It also has
+$f_H[0]=-d$ and $R(f_H)=0$. Consequently the two responses and this
+absolute-coordinate cap ALONE permit zero residual for every common
+realization covered by these enclosures. This does not assert that
+$f_H$ satisfies every earlier scalar constraint, a paid sign or the
+original source-to-row image condition. A positive residual lower for
+the actual source still needs a noncancellation relation for
+$f[0]+d=f_\perp[0]$, or another residual direction.
+
+The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/d7497eef7232569ed88113c4d1cdc7e2ec7342ef/docs/reports/weil-c27)
+retain source SHA256
+`47f34f89cfddfecb581fe626415d303df64de0b5c5004935ebfb0c42285c0a19`
+and packet SHA256
+`7f6c5d4dc3175e4cd508aadef54d65588bf4c003fddfd01f1c22f8b1748198bb`.
+The one1024-working/640-export application stores assembly time<0.580244
+seconds, excluding serialization. It reads four accepted scalar
+packets, makes one coordinate-complement application and two lower
+additions, with no old plane-floor/source/matrix/inverse/solve/tail
+supplier or accepted scientific fixture replay and no parameter,
+source, precision or cutoff scan/retry.
+
+This applies the existing projection and PSD Cauchy inequality. No new
+generic theorem, literature novelty or Lean proof is claimed. All
+original common-form, source-energy and physical-error premises remain;
+actual paid/center/full-border/good-block/cofinal positivity, Robin and
+RH remain unresolved.
