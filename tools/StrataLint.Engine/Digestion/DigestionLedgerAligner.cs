@@ -107,22 +107,6 @@ internal static partial class DigestionLedgerAligner
             conflictedSources.Add(source.SourceId);
         }
 
-        TheoryAtomizerRules? atomizerRules;
-        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var loadedRules))
-        {
-            if (mode == DigestionAlignmentMode.Ingest)
-            {
-                throw new FormatException(
-                    $"Atomizer data file is missing: {TheoryAtomizerDataLoader.DataPath}");
-            }
-
-            atomizerRules = null;
-        }
-        else
-        {
-            atomizerRules = loadedRules;
-        }
-
         var alignments = ImmutableDictionary.CreateBuilder<string, DigestionReceiptAlignment>(
             StringComparer.Ordinal);
         var matchedAtoms = ImmutableDictionary.CreateBuilder<string, DigestionAtom>(StringComparer.Ordinal);
@@ -203,45 +187,22 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-            var validateGenreProjection = mode == DigestionAlignmentMode.Admission;
-            if (!registeredAtomizer)
-            {
-                genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
-                if (validateGenreProjection
-                    && source.Atomizer == AtomizerRegistry.NoAtomizerId
-                    && !GenreRegistryChecksEqual(
-                        source.GenreRegistryCheck,
-                        GenreRegistryCheck.NoGenreRegistry))
-                {
-                    findings.Add(GenreRegistryProjectionFinding(
-                        source,
-                        source.GenreRegistryCheck,
-                        GenreRegistryCheck.NoGenreRegistry));
-                }
-                continue;
-            }
-
+            _ = AtomizerRegistry.Require(source.Atomizer);
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
                 findings.Add($"source path is dangling: {source.SourcePath}");
                 continue;
             }
-
-            if (atomizerRules is null)
-            {
-                continue;
-            }
+            DigestionSourceEligibility.Require(snapshot, source.SourcePath);
 
             AtomizedTheoryDocument atomized;
             var atomizedContentKinds = new Dictionary<string, string>(StringComparer.Ordinal);
             try
             {
                 atomized = contentKindAtomizerResolver is null
-                    ? atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan(), atomizerRules)
+                    ? atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan())
                     : contentKindAtomizerResolver(source.Atomizer)(
                         sourceFile.RawBytes.AsSpan(),
-                        atomizerRules,
                         atomizedContentKinds);
             }
             catch (Exception exception) when (
@@ -293,7 +254,7 @@ internal static partial class DigestionLedgerAligner
             }
 
             genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
-            if (validateGenreProjection
+            if (mode == DigestionAlignmentMode.Admission
                 && !GenreRegistryChecksEqual(
                     source.GenreRegistryCheck,
                     atomized.GenreRegistryCheck))

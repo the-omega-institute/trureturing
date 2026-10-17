@@ -228,7 +228,7 @@ public sealed partial class BackfillInventoryLoaderTests
             (sourcePath,
                 "source_id = \"delta-v0.1\"\n"
                 + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"pzg-v1\"\n"
+                + "atomizer = \"generic-v1\"\n"
                 + "genre_registry_check = \"collected\"\n"
                 + $"unregistered_genres = {unregisteredGenres}\n"),
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
@@ -245,7 +245,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var metadata =
             "source_id = \"delta-v0.1\"\n"
             + "path = \"docs/delta.md\"\n"
-            + "atomizer = \"pzg-v1\"\n"
+            + "atomizer = \"generic-v1\"\n"
             + "genre_registry_check = \"collected\"\n"
             + "unregistered_genres = [\"另一体\", \"未登记体\"]\n"
             + "acknowledged_stale = [\"old-one\"]\n";
@@ -281,7 +281,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var metadata = """
             source_id = "delta-v0.1"
             path = "docs/delta.md"
-            atomizer = "pzg-v1"
+            atomizer = "generic-v1"
             genre_registry_check = "collected"
             unregistered_genres = ["另一体", "未登记体"]
             """ + "\n";
@@ -327,7 +327,7 @@ public sealed partial class BackfillInventoryLoaderTests
                 (sourcePath,
                     "source_id = \"delta-v0.1\"\n"
                     + "path = \"docs/delta.md\"\n"
-                    + "atomizer = \"pzg-v1\"\n"
+                    + "atomizer = \"generic-v1\"\n"
                     + projection),
                 Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
         }
@@ -356,7 +356,7 @@ public sealed partial class BackfillInventoryLoaderTests
         string? second)
     {
         var source = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "pzg-v1")))
+            Source("delta-v0.1", "docs/delta.md", "generic-v1")))
             .RequireDigestionSources());
         var tokens = second is null
             ? System.Collections.Immutable.ImmutableArray.Create(first)
@@ -380,7 +380,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var noncanonical = """
             path = "docs/delta.md"
             source_id = "delta-v0.1"
-            atomizer = "pzg-v1"
+            atomizer = "generic-v1"
             genre_registry_check = "collected"
             unregistered_genres = []
             """ + "\n";
@@ -551,13 +551,13 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var raw = RawRepositorySnapshot.Create(
             files.Select(static file => RawRepositoryEntry.FromText(file.Path, file.Text)));
-        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
     }
 
     private static (string Path, string Text) Source(string sourceId, string path, string atomizer) =>
         ($"{BackfillInventoryLoader.RootPath}{sourceId}/source.toml",
             $"source_id = \"{sourceId}\"\npath = \"{path}\"\natomizer = \"{atomizer}\"\n"
-            + $"genre_registry_check = \"{(atomizer == AtomizerRegistry.NoAtomizerId ? "no-registry" : "collected")}\"\n"
+            + $"genre_registry_check = \"{(atomizer == AtomizerRegistry.GenericId ? "no-registry" : "collected")}\"\n"
             + "unregistered_genres = []\n");
 
     private static (string Path, string Text) Atom(

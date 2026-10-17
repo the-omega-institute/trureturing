@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e46c9251537ebd9e777989ef1b02421ab21ceb77cf3907c117bcdc07946cf01e
-  normalized_sha256: sha256:e46c9251537ebd9e777989ef1b02421ab21ceb77cf3907c117bcdc07946cf01e
-cas_ref: sha256:e46c9251537ebd9e777989ef1b02421ab21ceb77cf3907c117bcdc07946cf01e
-coverage_gids:
-  - gid: D5/S3/Entropy/Submodularity/PredictiveMemoryMonotonicity.predictive_memory_monotone_under_refinement
-    target_statement_id: sha256:960efa3cf5ddb35a42528633a8eda0515637b32bf941e59cbb9ec9a25b7ec1b1
-receipts:
-  unresolved_subitems: []

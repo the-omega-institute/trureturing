@@ -58,18 +58,16 @@ internal static class GenericAtomizer
         "[^\\p{L}\\p{N}]+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
-        AtomizeWithContentKinds(bytes, rules, contentKinds: null);
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes) =>
+        AtomizeWithContentKinds(bytes, contentKinds: null);
 
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
-        ReadOnlyMemory<byte> bytes,
-        TheoryAtomizerRules rules) =>
+        ReadOnlyMemory<byte> bytes) =>
         AtomizerRegistry.CaptureContentKinds(kinds =>
-            AtomizeWithContentKinds(bytes.Span, rules, kinds));
+            AtomizeWithContentKinds(bytes.Span, kinds));
 
     internal static AtomizedTheoryDocument AtomizeWithContentKinds(
         ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules _,
         IDictionary<string, string>? contentKinds)
     {
         var document = AtomizeStructure(bytes, contentKinds);

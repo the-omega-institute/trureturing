@@ -246,10 +246,13 @@ internal static class AdmissionPlanePolicy
 internal sealed class AdmissionPlaneFileMapEntry
 {
     private readonly FileMapGlob glob;
+    private readonly ImmutableArray<FileMapGlob> exclusions;
 
-    internal AdmissionPlaneFileMapEntry(string pattern, FileMapAdmissionPlane admissionPlane)
+    internal AdmissionPlaneFileMapEntry(string pattern, FileMapAdmissionPlane admissionPlane,
+        ImmutableArray<string> exclude = default)
     {
         glob = FileMapGlob.CreateForAdmissionPlane(pattern);
+        exclusions = exclude.IsDefault ? [] : exclude.Select(FileMapGlob.Create).ToImmutableArray();
         Pattern = pattern;
         AdmissionPlane = admissionPlane;
     }
@@ -258,7 +261,7 @@ internal sealed class AdmissionPlaneFileMapEntry
 
     internal FileMapAdmissionPlane AdmissionPlane { get; }
 
-    internal bool Matches(string path) => glob.IsMatch(path);
+    internal bool Matches(string path) => glob.IsMatch(path) && !exclusions.Any(value => value.IsMatch(path));
 }
 
 internal sealed class AdmissionPlaneFileMap
@@ -319,7 +322,7 @@ internal static class AdmissionPlaneFileMapLoader
                 location,
                 "admission_plane must be judge or content"),
         };
-        return new AdmissionPlaneFileMapEntry(pattern, admissionPlane);
+        return new AdmissionPlaneFileMapEntry(pattern, admissionPlane, FileMapGlob.ParseExclusions(table, location));
     }
 
     private static FormatException Invalid(string location, string message) =>
