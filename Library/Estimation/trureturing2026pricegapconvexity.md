@@ -8325,7 +8325,22 @@ all-primes-through-completed-support family, the same added term has
 which exceeds $M_XL_X$ along the original qualifying cofinal family.
 Its full signed arithmetic cost remains $o(L_X)$, so a negligible
 arithmetic--trace transfer fails for this enlarged family and specified
-completion. A joint signed comparison must retain that growing
-correction together with the added remote prime powers and original
-$H_X$ trace. Such a comparison is not excluded by this lower bound.
-The original strict Robin upper and RH remain unproved.
+completion. A joint signed comparison using this unmodified Sonin trace
+must retain the growing correction together with the added remote
+prime powers and original $H_X$ trace. Such a comparison is not excluded
+by this lower bound.
+
+The [exact pole-compensated negative cutoff comparison](../Weil/connesconsanimoscovici2024semilocal.md#exact-pole-compensation-pays-the-remote-negative-cutoff-overlap)
+gives a separate quantitative payment on the same enlarged place set:
+$\widetilde n_{R_X+\sigma}(e_X)=o(L_X)$ and
+$\|\mathsf R T_{e_X}\mathsf P\|_{\mathcal S_1}=o(L_X)$.
+These are nonnegative operator allowances beyond WT12's signed
+arithmetic cost. Consequently the completed test $H_X+e_X$ and
+$H_X$ differ by $o(L_X)$ in the entire negative-overlap plus boundary
+allowance of that same compensated lower comparison. This uses the
+existing pole-compensating unitary and weighted Hankel estimate,
+retains WT13's original radius, and is a paper application without
+Lean certification. The negative cutoff overlap of $H_X$ itself
+remains uncontrolled; the large unmodified positive Sonin trace is
+unchanged. The original strict signed upper, Robin and RH remain
+unproved.

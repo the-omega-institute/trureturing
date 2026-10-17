@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: Actual orthogonal Sonin traces have Euler-weighted lower bounds. On the enlarged completed-support family, the remote pole-null correction has trace at least a constant times N_X/R_X^7, exceeding the original Robin budget along its qualifying cofinal family despite its negligible full signed arithmetic cost. The joint same-test comparison remains unresolved.
+claim: The remote completion has a large unmodified Sonin trace on the enlarged support family. Under exact pole compensation, its actual negative cutoff overlap and boundary allowance are o(L_X) on that same family. The original test on the compensated operator and the full signed comparison remain uncontrolled.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1557,7 +1557,178 @@ $$
 
 Thus a negligible arithmetic--trace transfer on this enlarged family
 fails for the specified completion. This leaves (37)'s original-family
-transfer intact. A successful enlarged-family comparison would have to
-retain the growing correction jointly with the original test; (44)
+transfer intact. A successful enlarged-family comparison using this unmodified Sonin trace
+would have to retain the growing correction jointly with the original test; (44)
 does not exclude such cancellation or determine the sign of its full
 Weil functional. The strict Robin estimate and RH remain unproved.
+
+## Exact pole compensation pays the remote negative cutoff overlap
+
+A different auxiliary operator gives a small **negative cutoff overlap**
+for the same remote completion on the enlarged family. This does not
+change (38)--(44)'s large trace of the unmodified positive Sonin
+projection. The construction and weighted Hankel estimate are reused
+from bramble_trace's [versioned manuscript](https://rstation.ai/api/v1/papers/riemann_hypothesis_2/versions/2/download),
+Lemma 4.1, equation (5.2), the explicit support estimate at the end of
+§6, and Theorem 7.1. They are source inputs, without a complete proof
+audit or Lean certification. The application below quantifies their
+cost on WT11's actual changing test; the source's fixed-test little-$o$
+statement is not used uniformly in that test.
+
+Write $\mathsf R=1_{(-\infty,0)}$ and $\mathsf P=I-\mathsf R$ in
+logarithmic physical coordinates. For $\ell\ge1$, use every prime
+$p\le V=e^\ell$, the source's semilocal multiplier $\omega_V$, and its
+exact pole compensation
+
+$$
+\chi_\ell(t)=4\int_0^\ell\cosh(v/2)\frac{\sin(tv)}v\,dv,
+\qquad \widetilde\omega_\ell=\omega_Ve^{i\chi_\ell},
+\qquad \widetilde K_\ell=
+\mathsf R\widetilde{\mathcal F}_\ell\mathsf R.
+\tag{45}
+$$
+
+Here $\widetilde{\mathcal F}_\ell$ is the resulting Fourier involution.
+For a positive-definite compact smooth $G$, let
+$\widetilde n_\ell(G)$ be the positive localized trace of
+$\widetilde K_\ell\widetilde K_\ell^*$ with multiplier
+$\widehat G$ in Mellin coordinates. In particular,
+$\widetilde n_\ell(f*f^*)=\|T_f\widetilde K_\ell\|_{\rm HS}^2$.
+This is linear in the nonnegative multiplier. It is not a Sonin
+projection trace. Put $b(G)=\|\mathsf R T_G\mathsf P\|_{\mathcal S_1}$.
+The source's signed comparison, with its support contract, is
+$\mathscr W(G)\ge-\widetilde n_\ell(G)-b(G)$ and includes the poles.
+The existing smooth Boas--Kac factorization supplies its convolution
+factor for positive-definite compact smooth $G$.
+
+### Retain a quantitative phase error at every real frequency
+
+Set $a_0=0.8274$ and
+$\eta(v)=9.39v^{1.515}e^{-a_0\sqrt v}$. Apply the owned
+[Johnston--Yang cumulative bound](johnstonyang2022pnt.md) to
+$E(y)=\Psi(y)-y$. For
+
+$$
+S_\ell(t)=\sum_{n\le e^\ell}\Lambda(n)n^{-1/2+it},
+$$
+
+Stieltjes integration, retaining the finite lower endpoint, gives for
+all real $t$
+
+$$
+\left|S_\ell(t)-
+\frac{e^{(1/2+it)\ell}-1}{1/2+it}\right|
+\le C(1+|t|)\bigl[1+e^{\ell/2}\eta(\ell)\bigr].
+\tag{46}
+$$
+
+Indeed the endpoint at $e^\ell$ is bounded by
+$e^{\ell/2}\eta(\ell)$, and the integral error by
+$(1+|t|)\int_1^{e^\ell}|E(y)|y^{-3/2}dy$.
+Above a fixed threshold the logarithmic derivative of
+$e^{v/2}\eta(v)$ is at least $1/3$, so this integral is at most
+$C[1+e^{\ell/2}\eta(\ell)]$. The initial finite interval and lower
+endpoint supply the constant. No uniform oscillatory PNT assertion is
+needed.
+
+The complete finite-prime phase sum differs from $S_\ell(t)$ by exactly
+those proper powers $p^k>e^\ell$ with $p\le e^\ell$. Their absolute
+contribution is $O(\ell)$ by the source's complete $k\ge2$ estimate
+following (5.2). Thus none is omitted. Differentiating (45) cancels
+(46)'s continuous main term exactly. Its second, decaying-exponential
+endpoint term is uniformly bounded. The archimedean derivative grows
+as $O(\log(2+|t|))$. For the compensated phase
+$\widetilde\omega_\ell=e^{i\widetilde\varphi_\ell}$ this proves
+
+$$
+|\widetilde\varphi_\ell'(t)|
+\le C(1+|t|)\bigl[1+\ell+e^{\ell/2}\eta(\ell)\bigr]
+\qquad(t\in\mathbb R).
+$$
+
+### Apply the source estimate to the actual moving factor
+
+Keep WT7's fixed nonnegative real even $u$ and $\psi=u*u^*$. If
+$a=\sup\{|x|:u(x)\ne0\}$, nonnegativity and evenness give
+$\sigma=2a$. For $\ell=R+\sigma$ the centered factor
+
+$$
+f_R(y)=u(y+R/2)+u(y-R/2)
+$$
+
+has autocorrelation $q_R$ and support in $[-\ell/2,\ell/2]$.
+Moreover $|\widehat f_R|\le2|\widehat u|$ and
+$\|f_R\|_{H^1}^2\le4\|u\|_{H^1}^2$, uniformly in $R$.
+The weighted phase integral in source Lemma 4.1 is consequently at
+most $C_u[1+\ell+e^{\ell/2}\eta(\ell)]$.
+Reuse its Theorem 7.1 bound
+$\|\widetilde\varphi_\ell''\|_\infty=O(e^{\ell/2}\ell)$ for the
+second-derivative error. The moving trace-class remainder is retained:
+the explicit §6 support estimate gives
+$b(q_R)=O_u((1+\ell)^3)$.
+The source's Mellin reflection preserves the even weight
+$\widehat q_R$. Lemma 4.1 therefore yields
+
+$$
+\boxed{
+\widetilde n_\ell(q_R)
+\le C_u\left[e^{\ell/2}\eta(\ell)
++e^{\ell/4}\sqrt\ell+(1+\ell)^3\right].}
+\tag{47}
+$$
+
+This controls the full negative compression, not merely a signed
+arithmetic cancellation. It uses the explicit weighted estimate at
+the changing $f_R$, without turning a fixed-test asymptotic into a
+uniform one.
+
+### The original completion changes this lower allowance below scale
+
+Now use exactly $\ell_X=R_X+\sigma$ and the enlarged place set
+$S_X^+$ from (38). WT11 gives
+$\varepsilon_X\ll_u N_Xe^{-\ell_X/2}$. Multiplying (47) proves
+
+$$
+\boxed{
+0\le\widetilde n_{\ell_X}(e_X)
+\le C_uN_X\left[\eta(\ell_X)
++(1+\ell_X)^3e^{-\ell_X/4}\right]
+=o(L_X),\qquad b(e_X)=o(L_X).}
+\tag{48}
+$$
+
+The boundary estimate uses
+$b(e_X)=\varepsilon_Xb(q_{R_X})\ll_u
+\varepsilon_X(1+\ell_X)^3$.
+For the limit, retain WT13's original
+$Z_X=1+A_X+\log X$, $R_X=KZ_X^2$ and fixed
+$a_0\sqrt K>3$. The same exponential slack gives
+$\eta(\ell_X)=O(e^{-3Z_X})$; the other term in (48) decays faster
+than $e^{-cZ_X}$ for every fixed $c$. The already owned
+$N_X\ll L_Xe^{A_X/2}$ pays both terms. No larger radius, different
+clock or new qualifying family is selected.
+
+For $H_X'=H_X+e_X$, keep the same compensated operator at
+$\ell_X$ on both tests. Linearity of the positive localized trace
+and the trace-norm triangle inequality give
+
+$$
+\boxed{
+\begin{aligned}
+\widetilde n_{\ell_X}(H_X')-
+\widetilde n_{\ell_X}(H_X)&=o(L_X),\\
+|b(H_X')-b(H_X)|&\le b(e_X)=o(L_X).
+\end{aligned}}
+\tag{49}
+$$
+
+Thus adding the actual remote correction $e_X$, which makes
+$H_X+e_X$ pole-null, changes the entire negative-overlap plus boundary
+allowance in this compensated lower comparison by $o(L_X)$. WT12 had paid only its full signed arithmetic
+cost; (48) pays a distinct nonnegative operator contribution.
+There is no estimate here for $\widetilde n_{\ell_X}(H_X)$.
+The original test on the same compensated operator still needs its
+signed comparison. The unmodified positive Sonin trace remains large
+as in (38), and no small corrected Sonin trace, uniform spectral
+perturbation estimate, all-integer Robin inequality or RH proof is
+asserted.
