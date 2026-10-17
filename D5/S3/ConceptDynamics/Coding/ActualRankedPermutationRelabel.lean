@@ -6,6 +6,7 @@ import D5.S3.ConceptDynamics.Coding.ActualRelabelParallelPhase
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualRelabelResidue
@@ -56,7 +57,7 @@ theorem p_target {n m : ℕ} (e : Fin n ≃ Fin m) (a : Edge (P e)) :
 
 theorem p_unique {n m : ℕ} (e : Fin n ≃ Fin m) (a : Edge (P e)) :
     a = pEdge e a.source := by
-  apply edge_eq_coordinates rfl (p_target e a)
+  apply edge_eq_coordinates (a := a) (b := pEdge e a.source) rfl (p_target e a)
   have h := a.number.isLt
   have he := (p_target e a).symm
   simp only [P, if_pos he] at h
@@ -86,7 +87,7 @@ theorem ranked_left {n m : ℕ} (e : Fin n ≃ Fin m) (q : CountMat m n)
   simp only [split_join]
   change join (P e) q (pEdge e (e.symm (split (P e) q a).2.source))
     (split (P e) q a).2 _ = a
-  rw [hp]
+  simp only [hp]
   exact join_split (P e) q a
 
 theorem ranked_right {n m : ℕ} (e : Fin n ≃ Fin m) (q : CountMat m n)
@@ -97,7 +98,7 @@ theorem ranked_right {n m : ℕ} (e : Fin n ≃ Fin m) (q : CountMat m n)
   simp only [split_join]
   change join q (P e) (split q (P e) b).1
     (pEdge e (split q (P e) b).1.target) _ = b
-  rw [hp]
+  simp only [hp]
   exact join_split q (P e) b
 
 /-- The actual ranked elementary recoding is a graph relabel in this case.
@@ -114,12 +115,13 @@ theorem ranked_coordinate {n m : ℕ} (e : Fin n ≃ Fin m) (q : CountMat m n)
     (elementaryHomeomorph (P e) q x).val t = (rankedRelabel e q).edge (x.val t) := by
   rw [elementary_coordinate]
   have hp : (split (P e) q (x.val (t+1))).1 = pEdge e (x.val t).target := by
-    rw [p_unique]
+    rw [p_unique e (split (P e) q (x.val (t+1))).1]
     exact congrArg (pEdge e) (x.property t).symm
   change join q (P e) (split (P e) q (x.val t)).2
-    (split (P e) q (x.val (t+1))).1 _ =
-    join q (P e) (split (P e) q (x.val t)).2 (pEdge e (x.val t).target) _
-  rw [hp]
+    (split (P e) q (x.val (t+1))).1 (x.property t) =
+    join q (P e) (split (P e) q (x.val t)).2 (pEdge e (x.val t).target)
+      (split_target (P e) q (x.val t))
+  simp only [hp]
 
 theorem ranked_timed {n m : ℕ} (e : Fin n ≃ Fin m) (q : CountMat m n) :
     timed (rankedRelabel e q) = TimedEquiv.elementary (P e) q := by

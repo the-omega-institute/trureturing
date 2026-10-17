@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.ActualWordEnumeratedLoop
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.PresentationTimeCochain
@@ -35,9 +36,11 @@ theorem time_calibration (F : Presentation) {m : ℕ}
   have h₀ : value (d := d) b b (vertex F).time LinearMap.id =
       (Fintype.card (Orbit F d) : ZMod 3) := by
     change dyadicGyration d (vertex F).matrix (rows b b LinearMap.id) = _
-    rw [vertex_matrix, rows_id]
+    rw [vertex_matrix]
+    change dyadicGyration d (counts A) (rows b b LinearMap.id) = _
+    rw [rows_id]
     have h := dyadicGyration_nonnegative (d := d) hd A (1 : CountedMatrixOverlap.CountMat _ _)
-    have hi : counts (1 : CountedMatrixOverlap.CountMat (Fintype.card F.V) _) = 1 := by
+    have hi : counts (1 : CountedMatrixOverlap.CountMat (Fintype.card F.V) (Fintype.card F.V)) = 1 := by
       simp only [counts, Matrix.map_one, map_zero, map_one]
     change dyadicGyration d (counts A) 1 = _
     change dyadicGyration d (counts A) (counts 1) = _ at h

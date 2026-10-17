@@ -12,6 +12,7 @@ import D5.S3.ConceptDynamics.Coding.PositiveWordBeamTransport
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualWordMatrixPath
@@ -81,7 +82,9 @@ theorem relabel_time (r : Relabel G H) :
     (reindex r.vertex).toLinearMap.comp (timeMap G) =
       (timeMap H).comp (reindex r.vertex).toLinearMap := by
   classical
-  ext z w
+  apply LinearMap.ext
+  intro z
+  funext w
   change (∑ v : V, z v * algebraMap ℤ D
       (StandardBeamEndpointRows.adjacency G v (r.vertex.symm w))) =
     ∑ v : W, z (r.vertex.symm v) * algebraMap ℤ D
@@ -98,7 +101,9 @@ def relabelEdge {n m : ℕ} (r : Relabel G H)
   r := (reindex r.vertex).toLinearMap
   s := (timeMap G).comp (reindex r.vertex).symm.toLinearMap
   sr := by
-    ext z v
+    apply LinearMap.ext
+    intro z
+    funext v
     change timeMap G ((reindex r.vertex).symm (reindex r.vertex z)) v = timeMap G z v
     rw [LinearEquiv.symm_apply_apply]
   rs := by
@@ -116,12 +121,15 @@ def countedBased {n : ℕ} (A : CountMat n n) : Based :=
 theorem time_counted {n : ℕ} (A : CountMat n n) :
     timeMap (CountedOrderTypeGyration.countedGraph A) = (counts A).toLinearMapRight' := by
   unfold timeMap
+  change ((StandardBeamEndpointRows.adjacency
+    (CountedMatrixBeamDiagram.countedGraph A)).map (algebraMap ℤ D)).toLinearMapRight' = _
   rw [CountedMatrixBeamDiagram.adjacency_counted]
   rfl
 
 theorem counted_matrix {n : ℕ} (A : CountMat n n) :
     (countedBased A).matrix = counts A := by
-  change rows _ _ (timeMap (CountedOrderTypeGyration.countedGraph A)) = _
+  change rows (Pi.basisFun D (Fin n)) (Pi.basisFun D (Fin n))
+    (timeMap (CountedOrderTypeGyration.countedGraph A)) = _
   rw [time_counted, rows_right]
 
 /-- The original ranked R,S, in their original chronological direction. -/
@@ -168,7 +176,10 @@ theorem vertex_matrix_entry (F : Presentation)
   rw [vertex_matrix]
   have h := relabel_adjacency (ActualPositiveWordPeriodicCochain.chart F) i
     ((ActualPositiveWordPeriodicCochain.chart F).vertex j)
-  rw [Equiv.symm_apply_apply, CountedMatrixBeamDiagram.adjacency_counted] at h
+  rw [Equiv.symm_apply_apply] at h
+  change StandardBeamEndpointRows.adjacency
+    (CountedMatrixBeamDiagram.countedGraph (ActualPositiveWordPeriodicCochain.matrix F)) i j = _ at h
+  rw [CountedMatrixBeamDiagram.adjacency_counted] at h
   exact congrArg (algebraMap ℤ D) h
 
 /-- Relabel leaves cost one RS edge; positive leaves cost three because both
@@ -190,15 +201,26 @@ def dictionary : ∀ {F H : Presentation} (w : Word F H),
 namespace Path
 variable {X Y Z : Based} {n m : ℕ}
 
+private theorem forward_mpr {k l : ℕ} (h : k = l)
+    (e : Path X Y l = Path X Y k) (u : Path X Y k) :
+    (e.mpr u).forward = u.forward := by
+  subst l
+  have he : e = rfl := Subsingleton.elim _ _
+  cases he
+  rfl
+
 theorem append_forward (u : Path X Y n) (v : Path Y Z m) :
     (u.append v).forward = v.forward.comp u.forward := by
   induction u with
-  | nil X => simp only [SourceOnly.FiniteKernelLadder.Path.append,
-      Nat.zero_add, SourceOnly.FiniteKernelLadder.Path.forward, LinearMap.comp_id]
-  | cons e tail ih =>
-      simpa only [SourceOnly.FiniteKernelLadder.Path.append,
-        Nat.add_right_comm, SourceOnly.FiniteKernelLadder.Path.forward, LinearMap.comp_assoc] using
-        congrArg (fun f => f.comp e.r) ih
+  | nil X =>
+      simp only [SourceOnly.FiniteKernelLadder.Path.append]
+      rw [forward_mpr (Nat.zero_add m).symm]
+      exact (LinearMap.comp_id _).symm
+  | @cons X Y W k e tail ih =>
+      simp only [SourceOnly.FiniteKernelLadder.Path.append]
+      rw [forward_mpr (k := (k+m)+1) (l := (k+1)+m) (by omega)]
+      simpa only [SourceOnly.FiniteKernelLadder.Path.forward,
+        LinearMap.comp_assoc] using congrArg (fun f => f.comp e.r) (ih v)
 
 end Path
 
@@ -214,7 +236,7 @@ theorem dictionary_forward : ∀ {F H : Presentation} (w : Word F H),
     (dictionary w).forward = endpointMap w
   | _, _, .relabel r => by
       simp only [dictionary, SourceOnly.FiniteKernelLadder.Path.forward,
-        LinearMap.id_comp, relabelEdge, endpointMap]
+        relabelEdge, endpointMap, LinearMap.id_comp]
   | _, _, .positive R S old next => by
       simp only [dictionary, SourceOnly.FiniteKernelLadder.Path.forward,
         LinearMap.id_comp, relabelEdge, positiveEdge, endpointMap,
@@ -228,7 +250,9 @@ private theorem right_cast {n m : ℕ} (R : CountMat n m) (z : Fin n → ℤ) :
         ((CountedMatrixBeamDiagram.integerCounts R).toLinearMapRight' z j) := by
   ext j
   simp only [Matrix.toLinearMapRight'_apply, Matrix.vecMul, counts,
-    Matrix.map_apply, CountedMatrixBeamDiagram.integerCounts, map_sum, map_mul]
+    Matrix.map_apply, CountedMatrixBeamDiagram.integerCounts, dotProduct, map_sum, map_mul,
+    Nat.castRingHom]
+  rfl
 
 /-- Exact finite coefficient equality with the existing B transport, before
 passing to a colimit. Thus no injective-colimit shortcut is being used. -/
@@ -250,5 +274,6 @@ theorem dictionary_forwardRows {F H : Presentation} (w : Word F H) :
       (endpointMap w) := by
   unfold SourceOnly.FiniteKernelLadder.Path.forwardRows
   rw [dictionary_forward]
+  rfl
 
 end SourceOnly.ActualWordMatrixPath

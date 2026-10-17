@@ -137,6 +137,20 @@ private theorem integerGyrationValue_nat {n m d : ℕ} [NeZero d]
   classical
   simp only [signedGyrationLift, orderTypeGyrationLift, Ring.choose_natCast, Nat.cast_prod]
 
+/-- The signed integer lift on natural matrices gives the original forward
+orbit-offset residue, including zero entries and empty dimensions. -/
+theorem integerGyrationValue_nat_mod_three {n m d : ℕ} [NeZero d]
+    (hd : 3 ∣ d) (R : CountMat n m) (S : CountMat m n) :
+    (integerGyrationValue d (R.map (Nat.castRingHom ℤ))
+      (S.map (Nat.castRingHom ℤ)) : ZMod 3) =
+      ZMod.castHom hd (ZMod 3) (relativeForwardGyration (d := d) R S) := by
+  have h : relativeForwardGyration (d := d) R S =
+      (orderTypeGyrationLift (d := d)
+        (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2)) : ZMod d) :=
+    relativeForwardGyration_eq_order_types
+      (Sum.elim (fun ij => R ij.1 ij.2) (fun ji => S ji.1 ji.2))
+  rw [integerGyrationValue_nat, h, map_intCast]
+
 /-- Concrete integer lifts of the actual orbit triangle. No polynomial triangle
     or signed-domain cocycle is postulated. -/
 theorem orderTypeGyrationLift_positive_triangle_mod_three

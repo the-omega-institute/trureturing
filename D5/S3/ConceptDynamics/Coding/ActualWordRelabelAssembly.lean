@@ -5,6 +5,7 @@ import D5.S3.ConceptDynamics.Coding.ActualRelabelCharts
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualRelabelResidue
@@ -13,19 +14,28 @@ open TwoSidedFiniteInduction TypedPositiveSplitWord
 open SourceOnly.ActualWordMatrixPath (dictionary)
 open SourceOnly.FiniteKernelLadder (Based Path)
 
-/-- Consumed finite-list helper. The predecessor supplied this computation
-only as a local anonymous proof, not as a callable library declaration. -/
+private theorem path_weight_mpr {X Y : Based} {k l : ℕ} (h : k = l)
+    (e : Path X Y l = Path X Y k) (u : Path X Y k) (d : ℕ) [NeZero d] :
+    (e.mpr u).weight d = u.weight d := by
+  subst l
+  have he : e = rfl := Subsingleton.elim _ _
+  cases he
+  rfl
+
+/-- Weight is additive under actual path concatenation. -/
 theorem path_append_weight {X Y Z : Based} {n m : ℕ}
     (u : Path X Y n) (v : Path Y Z m) (d : ℕ) [NeZero d] :
     (u.append v).weight d = u.weight d + v.weight d := by
   induction u with
   | nil X =>
-      simp only [SourceOnly.FiniteKernelLadder.Path.append,
-        Nat.zero_add, SourceOnly.FiniteKernelLadder.Path.weight, zero_add]
-  | cons e tail ih =>
-      simpa only [SourceOnly.FiniteKernelLadder.Path.append, Nat.add_right_comm,
-        SourceOnly.FiniteKernelLadder.Path.weight, add_assoc] using
-        congrArg (fun z => e.weight d + z) ih
+      simp only [SourceOnly.FiniteKernelLadder.Path.append]
+      rw [path_weight_mpr (Nat.zero_add m).symm]
+      exact (zero_add _).symm
+  | @cons X Y W k e tail ih =>
+      simp only [SourceOnly.FiniteKernelLadder.Path.append]
+      rw [path_weight_mpr (k := (k+m)+1) (l := (k+1)+m) (by omega)]
+      simpa only [SourceOnly.FiniteKernelLadder.Path.weight, add_assoc] using
+        congrArg (fun z => e.weight d + z) (ih v)
 
 /-- Actual matrix dictionary weight is the same P1 localized cochain.
 Both positive-leaf charts and every relabel-leaf phase are retained. -/

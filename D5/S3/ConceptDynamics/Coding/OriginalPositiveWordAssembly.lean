@@ -9,6 +9,7 @@ import D5.S3.ConceptDynamics.Coding.ResponsePositiveShiftConsumer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.OriginalPositiveWordAssembly
@@ -58,8 +59,12 @@ theorem positive_word :
     have h := TowerWord.forward_literal A y
     have hi : TowerWord.inCount A = 0 := full_inCount F (a+b+1)
     rw [hi] at h
-    simpa only [Int.natCast_zero,neg_zero,
-      StandardBeamHomeomorphisms.translate_zero] using h
+    simp only [Int.natCast_zero, neg_zero] at h
+    refine h.trans ?_
+    apply Subtype.ext
+    funext t
+    change ((TowerWord.forward A).eval y).val (t+0) = ((TowerWord.forward A).eval y).val t
+    rw [add_zero]
   refine ⟨w,?_,?_⟩
   · change (TowerWord.forward A).letters+(0+R.letters) = _
     rw [TowerWord.forward_letters]
@@ -74,11 +79,23 @@ theorem positive_word :
       _ = time G (-(((a+c)+(b+d+1):ℕ):ℤ))
           (R.eval (J.homeomorph ((TowerWord.forward A).eval
             (time G (-(a:ℤ)) x)))) := by
-        rw [FullOutResponseIdentification.numberedLift_eq_tower_negative F pair x,
-          hinput] <;> rfl
+        have ht := FullOutResponseIdentification.numberedLift_eq_tower_negative F pair x
+        have hl := hinput (time F.graph (-(a:ℤ)) x)
+        have he : numberedLift G pair x =
+            J.homeomorph ((TowerWord.forward A).eval (time G (-(a:ℤ)) x)) :=
+          ht.trans (congrArg J.homeomorph hl)
+        exact congrArg (fun z => time G (-(((a+c)+(b+d+1):ℕ):ℤ)) (R.eval z)) he
       _ = time G (-(((a+c)+(b+d+1):ℕ):ℤ)+(-(a:ℤ))) (w.eval x) := by
-        rw [Word.eval_time,relabel_homeomorph_time,Word.eval_time,
-          StandardBeamHomeomorphisms.translate_add] <;> rfl
+        change time G (-(((a+c)+(b+d+1):ℕ):ℤ)) (w.eval (time F.graph (-(a:ℤ)) x)) = _
+        refine (congrArg (time G (-(((a+c)+(b+d+1):ℕ):ℤ)))
+          (Word.eval_time w (-(a:ℤ)) x)).trans ?_
+        let y : History G := w.eval x
+        change time G (-(((a+c)+(b+d+1):ℕ):ℤ)) (time G (-(a:ℤ)) y) = _
+        apply Subtype.ext
+        funext t
+        change y.val (t+(-(((a+c)+(b+d+1):ℕ):ℤ))+(-(a:ℤ))) =
+          y.val (t+(-(((a+c)+(b+d+1):ℕ):ℤ)+(-(a:ℤ))))
+        exact congrArg y.val (by omega)
       _ = time G (-(a:ℤ)-(((a+c)+(b+d+1):ℕ):ℤ)) (w.eval x) := by
         congr 1 <;> omega
 

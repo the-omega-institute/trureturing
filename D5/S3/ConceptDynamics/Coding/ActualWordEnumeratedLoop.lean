@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.ActualWordRelabelAssembly
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualWordEnumeratedLoop
@@ -50,7 +51,7 @@ theorem rows_coefficients {W : Type}
     (f : (V → D) →ₗ[D] (W → D)) (i : Fin n) (j : Fin m) :
     rows (coefficientBasis e) (coefficientBasis q) f i j =
       f (coefficientBasis e i) (q j) := by
-  change (coefficientBasis q).repr (f (coefficientBasis e i)) j = _
+  simp only [rows, Matrix.transpose_apply, LinearMap.toMatrix_apply]
   exact coefficient_repr q _ j
 
 end Coefficients
@@ -108,7 +109,7 @@ theorem word_rebased {F : Presentation} (w : Word F F)
       let c := coefficientBasis e
       let C := changeRows b c
       let Cinv := changeRows c b
-      let s : Module.End D (F.V → D) := (vertex F).time * ↑a⁻¹
+      let s : Module.End D (F.V → D) := ((vertex F).time : Module.End D (F.V → D)).comp (↑a⁻¹ : Module.End D (F.V → D))
       C * Cinv = 1 ∧ Cinv * C = 1 ∧
       (∀ i j, C i j = if (ActualPositiveWordPeriodicCochain.chart F).vertex i = e j
         then 1 else 0) ∧

@@ -5,6 +5,7 @@ import D5.S3.ConceptDynamics.Coding.FiniteRelabelBeamTransport
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.PositiveWordBeamTransport
@@ -50,10 +51,13 @@ theorem rowEquiv_intStage : ∀ {F H : Presentation} (w : Word F H)
         (CountedMatrixBeamColimit.rowMap R S
           (FiniteRelabelBeamTransport.rowMap old.symm
             (intStage (rowTransition _) N z))) = _
-      rw [FiniteRelabelBeamTransport.rowMap_intStage,
-        CountedMatrixBeamColimit.rowMap_intStage,
-        FiniteRelabelBeamTransport.rowMap_intStage]
-      rfl
+      exact (congrArg (fun x => FiniteRelabelBeamTransport.rowMap next
+        (CountedMatrixBeamColimit.rowMap R S x))
+        (FiniteRelabelBeamTransport.rowMap_intStage old.symm N z)).trans
+          ((congrArg (FiniteRelabelBeamTransport.rowMap next)
+            (CountedMatrixBeamColimit.rowMap_intStage R S N
+              (FiniteRelabelBeamTransport.reindex old.symm z))).trans
+            (FiniteRelabelBeamTransport.rowMap_intStage next N _))
   | _, _, .comp first second, N, z => by
       change rowEquiv second (rowEquiv first (intStage (rowTransition _) N z)) = _
       rw [rowEquiv_intStage first, rowEquiv_intStage second]
@@ -90,10 +94,25 @@ theorem image_atCut : ∀ {F H : Presentation} (w : Word F H)
       have hA := FiniteRelabelBeamTransport.image_atCut old.symm hU
       have hB := CountedMatrixBeamDiagram.image_atCut R S (relabeledEssential (S*R) next) hA
       have hC := FiniteRelabelBeamTransport.image_atCut next hB
-      simpa only [Set.image_image] using hC
+      have he : (Word.positive R S old next).eval '' U =
+          next.homeomorph '' (elementaryHomeomorph R S '' (old.homeomorph.symm '' U)) := by
+        rw [Set.image_image, Set.image_image]
+        rfl
+      exact he.symm ▸ hC
   | _, _, .comp first second, U, N, hU => by
       have hC := image_atCut second (image_atCut first hU)
-      simpa only [Set.image_image] using hC
+      have he : (Word.comp first second).eval '' U = second.eval '' (first.eval '' U) := by
+        rw [Set.image_image]
+        rfl
+      exact he.symm ▸ hC
+
+private theorem endpointRow_congr {F : Presentation} {U V : Set (Hist F)} {N : ℤ}
+    (hU : AtCut F.graph U N) (hV : AtCut F.graph V N) (h : U = V) :
+    letI : Finite (Parts F.graph U N) := hU.1
+    letI : Finite (Parts F.graph V N) := hV.1
+    endpointRow F.graph U N = endpointRow F.graph V N := by
+  cases h
+  rfl
 
 /-- Actual endpoint rows, not merely their potentially noninjective colimit
 classes, compose by the stated finite row expression. -/
@@ -103,13 +122,13 @@ theorem endpointRow_image : ∀ {F H : Presentation} (w : Word F H)
     letI : Finite (Parts H.graph (w.eval '' U) N) := (image_atCut w hU).1
     endpointRow H.graph (w.eval '' U) N = endpointMap w (endpointRow F.graph U N)
   | _, _, .relabel r, _, _, hU => FiniteRelabelBeamTransport.endpointRow_image r hU
-  | _, _, .positive R S old next, U, N, hU => by
+  | F, H, .positive R S old next, U, N, hU => by
       have hA := FiniteRelabelBeamTransport.image_atCut old.symm hU
       have hB := CountedMatrixBeamDiagram.image_atCut R S (relabeledEssential (S*R) next) hA
       letI : Finite (Parts _ U N) := hU.1
       letI : Finite (Parts _ (old.homeomorph.symm '' U) N) := hA.1
-      letI : Finite (Parts _ (elementaryHomeomorph R S ''
-        (old.homeomorph.symm '' U)) N) := hB.1
+      letI : Finite (Parts (CountedMatrixBeamDiagram.countedGraph (S*R))
+        (elementaryHomeomorph R S '' (old.homeomorph.symm '' U)) N) := hB.1
       letI : Finite (Parts _ (next.homeomorph '' (elementaryHomeomorph R S ''
         (old.homeomorph.symm '' U))) N) :=
         (FiniteRelabelBeamTransport.image_atCut next hB).1
@@ -117,11 +136,17 @@ theorem endpointRow_image : ∀ {F H : Presentation} (w : Word F H)
           next.homeomorph '' (elementaryHomeomorph R S '' (old.homeomorph.symm '' U)) := by
         rw [Set.image_image, Set.image_image]
         rfl
-      rw [he, FiniteRelabelBeamTransport.endpointRow_image next hB,
-        CountedMatrixBeamDiagram.endpointRow_image R S (relabeledEssential (S*R) next) hA,
-        FiniteRelabelBeamTransport.endpointRow_image old.symm hU]
-      rfl
-  | _, _, .comp first second, U, N, hU => by
+      have hC := FiniteRelabelBeamTransport.image_atCut next hB
+      have hrow := endpointRow_congr (F := H)
+        (image_atCut (Word.positive R S old next) hU) hC he
+      exact hrow.trans ((FiniteRelabelBeamTransport.endpointRow_image next hB).trans
+        ((congrArg (FiniteRelabelBeamTransport.reindex next)
+          (CountedMatrixBeamDiagram.endpointRow_image R S
+            (relabeledEssential (S*R) next) hA)).trans
+          (congrArg (fun z => FiniteRelabelBeamTransport.reindex next
+            ((CountedMatrixBeamDiagram.integerCounts R).toLinearMapRight' z))
+            (FiniteRelabelBeamTransport.endpointRow_image old.symm hU))))
+  | F, H, .comp first second, U, N, hU => by
       have hA := image_atCut first hU
       letI : Finite (Parts _ U N) := hU.1
       letI : Finite (Parts _ (first.eval '' U) N) := hA.1
@@ -130,8 +155,10 @@ theorem endpointRow_image : ∀ {F H : Presentation} (w : Word F H)
       have he : (Word.comp first second).eval '' U = second.eval '' (first.eval '' U) := by
         rw [Set.image_image]
         rfl
-      rw [he, endpointRow_image second hA, endpointRow_image first hU]
-      rfl
+      have hrow := endpointRow_congr (F := H)
+        (image_atCut (Word.comp first second) hU) (image_atCut second hA) he
+      exact hrow.trans ((endpointRow_image second hA).trans
+        (congrArg (endpointMap second) (endpointRow_image first hU)))
 
 theorem beam_coordinate {F H : Presentation} (w : Word F H) (U : Beam F.graph) :
     beamCoordinate H.graph (imageBeam w U) = rowEquiv w (beamCoordinate F.graph U) := by
@@ -142,7 +169,13 @@ theorem beam_coordinate {F H : Presentation} (w : Word F H) (U : Beam F.graph) :
   rw [beamCoordinate_at H.graph H.essential _ N hI,
     beamCoordinate_at F.graph F.essential U N hN]
   unfold coordinateAt
-  rw [imageBeam_val, endpointRow_image w hN, rowEquiv_intStage]
+  letI : Finite (Parts F.graph U.val N) := hN.1
+  letI : Finite (Parts H.graph (imageBeam w U).val N) := hI.1
+  letI : Finite (Parts H.graph (w.eval '' U.val) N) := (image_atCut w hN).1
+  have hrow := endpointRow_congr hI (image_atCut w hN) (imageBeam_val w U)
+  exact (congrArg (intStage (rowTransition H.graph) N) hrow).trans
+    ((congrArg (intStage (rowTransition H.graph) N) (endpointRow_image w hN)).trans
+      (rowEquiv_intStage w N (endpointRow F.graph U.val N)).symm)
 
 def imageObject {F H : Presentation} (w : Word F H) (A : Object F.graph) : Object H.graph :=
   ⟨A.Tag, A.finiteTag, fun i => imageBeam w (A.beam i)⟩

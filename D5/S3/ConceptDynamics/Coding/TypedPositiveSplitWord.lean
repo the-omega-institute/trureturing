@@ -161,7 +161,8 @@ theorem incoming_literal (F T : Presentation) (p : F.E → T.E) (x : Hist F) :
     ActualInSplit.lift F.graph p x =
       time (TwoSidedFiniteInduction.incoming F T p).graph (-1) ((incoming F T p).eval x) := by
   apply (InSplitNumberedRecoding.newRelabel F.graph p).homeomorph.symm.injective
-  have hn := Word.numbered_letter (InSplitNumberedRecoding.R F.graph p)
+  have hn := Word.numbered_letter (F := F)
+    (H := TwoSidedFiniteInduction.incoming F T p) (InSplitNumberedRecoding.R F.graph p)
     (InSplitNumberedRecoding.S F.graph p) (InSplitNumberedRecoding.oldRelabel F.graph p)
     (InSplitNumberedRecoding.newRelabel F.graph p) x
   have ht := relabel_inverse_time (InSplitNumberedRecoding.newRelabel F.graph p)

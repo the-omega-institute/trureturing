@@ -6,6 +6,7 @@ import D5.S3.ConceptDynamics.Coding.CentredResponseCorrection
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.ResponsePositiveShiftConsumer
@@ -38,7 +39,9 @@ theorem output_literal (z : Hist (response G hG pair S)) :
       -(((a+c)+(b+d+1):ℕ):ℤ) := by
     rw [hr.1,hr.2.2.2.1]
     omega
-  simpa only [he] using terminal_literal r z
+  have h := terminal_literal r z
+  rw [he] at h
+  exact h
 
 /-- Exact original-history equality, with centring still kept separate. -/
 theorem original_centred (x : History G) :
@@ -63,8 +66,7 @@ theorem uncentred_time (s : ℤ) (x : History G) :
   apply legalWord_ext
   funext j
   change x.val (t+(j.val:ℤ)+s) = x.val (t+s+(j.val:ℤ))
-  congr 1
-  omega
+  exact congrArg x.val (by omega)
 
 /-- Compose ONLY the already constructed U centring law with the now
 constructed response-output word. The full original input word is NOT a
@@ -74,8 +76,15 @@ theorem original_uncentred (x : History G) :
       ((word G hG pair S).eval (CentredResponseCorrection.uncentred G pair x)) := by
   rw [original_centred G hG pair S x,
     CentredResponseCorrection.centred_eq_uncentred_negative,uncentred_time,
-    Word.eval_time,StandardBeamHomeomorphisms.translate_add]
-  change time G (-(((a+c)+(b+d+1):ℕ):ℤ)+(-(a:ℤ))) _ =
-    time G (-(a:ℤ)-(((a+c)+(b+d+1):ℕ):ℤ)) _
-  congr 1 <;> omega
+    ]
+  have ht := Word.eval_time (word G hG pair S) (-(a:ℤ))
+    (CentredResponseCorrection.uncentred G pair x)
+  refine (congrArg (time G (-(((a+c)+(b+d+1):ℕ):ℤ))) ht).trans ?_
+  let y : History G := (word G hG pair S).eval (CentredResponseCorrection.uncentred G pair x)
+  change time G (-(((a+c)+(b+d+1):ℕ):ℤ)) (time G (-(a:ℤ)) y) = _
+  apply Subtype.ext
+  funext t
+  change y.val (t+(-(((a+c)+(b+d+1):ℕ):ℤ))+(-(a:ℤ))) =
+    y.val (t+(-(a:ℤ)-(((a+c)+(b+d+1):ℕ):ℤ)))
+  exact congrArg y.val (by omega)
 end D5.S3.ConceptDynamics.Coding.ResponsePositiveShiftConsumer

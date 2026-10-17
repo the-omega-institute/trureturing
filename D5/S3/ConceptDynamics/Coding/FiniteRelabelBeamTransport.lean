@@ -6,6 +6,7 @@ import D5.S3.ConceptDynamics.Coding.CountedMatrixBeamColimit
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.FiniteRelabelBeamTransport
@@ -175,20 +176,20 @@ def partsEquiv (r : Relabel G H) (U : Set (History G)) (N : ℤ) :
     apply Subtype.ext
     change r.homeomorph.symm '' (r.homeomorph '' P.val.val) = P.val.val
     simp only [Set.image_image, Function.comp_def, Homeomorph.symm_apply_apply,
-      Set.image_id]
+      Set.image_id']
   right_inv Q := by
     apply Subtype.ext
     apply Subtype.ext
     change r.homeomorph '' (r.homeomorph.symm '' Q.val.val) = Q.val.val
     simp only [Set.image_image, Function.comp_def, Homeomorph.apply_symm_apply,
-      Set.image_id]
+      Set.image_id']
 
 theorem parts_endpoint (r : Relabel G H) (U : Set (History G)) (N : ℤ)
     (P : Parts G U N) :
     RayAt.endpoint H ((partsEquiv r U N P).val) = r.vertex (RayAt.endpoint G P.val) := by
   let x := RayAt.representative G P.val
   have hx : x ∈ P.val.val := by rw [RayAt.set_eq G P.val]; exact self_mem_ray G x N
-  exact (RayAt.endpoint_of_mem H _ (r.homeomorph x) ⟨x, hx, rfl⟩).trans
+  exact (RayAt.endpoint_of_mem H (partsEquiv r U N P).val (r.homeomorph x) ⟨x, hx, rfl⟩).trans
     (image_endpoint r x N)
 
 theorem image_atCut (r : Relabel G H) {U : Set (History G)} {N : ℤ}
@@ -226,20 +227,28 @@ theorem beam_coordinate (r : Relabel G H) (hG : Essential G) (hH : Essential H)
     (U : Beam G) :
     beamCoordinate H (imageBeam r U) = rowMap r (beamCoordinate G U) := by
   obtain ⟨N, hN⟩ := U.property
+  letI : Finite (Parts G U.val N) := hN.1
+  letI : Finite (Parts H (r.homeomorph '' U.val) N) := (image_atCut r hN).1
   rw [beamCoordinate_at H hH _ N (image_atCut r hN), beamCoordinate_at G hG U N hN]
   unfold coordinateAt
+  change intStage (rowTransition H) N (endpointRow H (r.homeomorph '' U.val) N) =
+    rowMap r (intStage (rowTransition G) N (endpointRow G U.val N))
   rw [endpointRow_image r hN, rowMap_intStage]
 
 def imageObject (r : Relabel G H) (A : Object G) : Object H :=
-  ⟨A.Tag, A.finiteTag, fun i => imageBeam r (A.beam i)⟩
+  ⟨ULift.{d} (Fin (Fintype.card A.Tag)), inferInstance,
+    fun i => imageBeam r (A.beam ((Fintype.equivFin A.Tag).symm i.down))⟩
 
 theorem object_coordinate (r : Relabel G H) (hG : Essential G) (hH : Essential H)
     (A : Object G) :
     objectValue H (imageObject r A) = rowMap r (objectValue G A) := by
   unfold objectValue
-  change (∑ i : A.Tag, beamCoordinate H (imageBeam r (A.beam i))) = _
-  simp_rw [beam_coordinate r hG hH]
-  exact (map_sum _ _ _).symm
+  rw [map_sum]
+  let e : (imageObject r A).Tag ≃ A.Tag :=
+    Equiv.ulift.trans (Fintype.equivFin A.Tag).symm
+  apply Fintype.sum_equiv e
+  intro i
+  exact beam_coordinate r hG hH (A.beam _)
 
 /-- Conjugate only after the actual subset/coordinate diagram is proved. -/
 def beamEquiv (r : Relabel G H) (hG : Essential G) (hH : Essential H) :

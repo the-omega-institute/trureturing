@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.ActualWordMatrixPath
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualRelabelResidue
@@ -27,6 +28,10 @@ theorem actual_Q_mul_P {n m : ℕ} {A : CountMat n n} {B : CountMat m m}
   rw [Q_mul_P]
   ext j k
   have h := SourceOnly.ActualWordMatrixPath.relabel_adjacency r (r.vertex.symm j) k
+  change StandardBeamEndpointRows.adjacency
+    (CountedMatrixBeamDiagram.countedGraph A) (r.vertex.symm j) (r.vertex.symm k) =
+    StandardBeamEndpointRows.adjacency (CountedMatrixBeamDiagram.countedGraph B)
+      (r.vertex (r.vertex.symm j)) k at h
   have hz : (A (r.vertex.symm j) (r.vertex.symm k) : ℤ) = (B j k : ℤ) := by
     simpa only [CountedMatrixBeamDiagram.adjacency_counted,
       CountedMatrixBeamDiagram.integerCounts, Equiv.apply_symm_apply] using h
@@ -42,10 +47,7 @@ theorem rows_standard {n m : ℕ} (f : (Fin n → D) →ₗ[D] (Fin m → D))
 
 theorem rows_right_standard {n m : ℕ} (M : Matrix (Fin n) (Fin m) D) :
     rows (Pi.basisFun D (Fin n)) (Pi.basisFun D (Fin m)) M.toLinearMapRight' = M := by
-  classical
-  ext i j
-  rw [rows_standard]
-  simp [Matrix.toLinearMapRight'_apply, Matrix.vecMul, dotProduct]
+  exact SourceOnly.ActualWordMatrixPath.rows_right M
 
 theorem reindex_rows {n m : ℕ} (e : Fin n ≃ Fin m) :
     rows (Pi.basisFun D (Fin n)) (Pi.basisFun D (Fin m))
@@ -66,7 +68,9 @@ theorem backward_map {n m : ℕ} (e : Fin n ≃ Fin m) (A : CountMat n n) :
     (timeMap (countedGraph A)).comp (reindex e).symm.toLinearMap =
       (counts (Q e A)).toLinearMapRight' := by
   classical
-  ext z i
+  apply LinearMap.ext
+  intro z
+  funext i
   rw [SourceOnly.ActualWordMatrixPath.time_counted]
   change (∑ k : Fin n, z (e k) * counts A k i) =
     ∑ j : Fin m, z j * counts (Q e A) j i

@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.CountedRelativeGyrationTransport
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.RankedTimeRecoding
@@ -19,6 +20,9 @@ open CountedRelativeGyrationTransport
 /-- Literal transport of numbered edges through an equality of matrices. -/
 def edgeCast {n : ℕ} {A B : CountMat n n} (h : A = B) : Edge A ≃ Edge B :=
   Equiv.cast (congrArg (fun M : CountMat n n => Edge M) h)
+
+theorem edgeCast_symm_apply {n : ℕ} {A B : CountMat n n} (h : A = B) (a : Edge B) :
+    edgeCast h (edgeCast h.symm a) = a := by cases h; rfl
 
 theorem edgeCast_source {n : ℕ} {A B : CountMat n n} (h : A = B) (a : Edge A) :
     (edgeCast h a).source = a.source := by cases h; rfl
@@ -74,7 +78,7 @@ theorem join_right_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
     intro q r hqr
     change (fiberEquiv A 1 i k).symm (p q) < (fiberEquiv A 1 i k).symm (p r)
     apply (fiber_number_lt_iff A 1 i k (p q) (p r)).mpr
-    simpa [p, fiberKey, Sigma.Lex.lt_def, Prod.Lex.toLex_lt_toLex] using hqr
+    exact Sigma.Lex.right _ _ (Prod.Lex.toLex_lt_toLex.mpr (Or.inl hqr))
   have ha : f a = a := congrFun (rank_identity f hf) a
   apply edge_eq_coordinates
   · exact edgeCast_source _ _
@@ -94,7 +98,7 @@ theorem join_left_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
     intro q r hqr
     change (fiberEquiv 1 A i k).symm (p q) < (fiberEquiv 1 A i k).symm (p r)
     apply (fiber_number_lt_iff 1 A i k (p q) (p r)).mpr
-    simpa [p, fiberKey, Sigma.Lex.lt_def, Prod.Lex.toLex_lt_toLex] using hqr
+    exact Sigma.Lex.right _ _ (Prod.Lex.toLex_lt_toLex.mpr (Or.inr ⟨rfl, hqr⟩))
   have ha : f a = a := congrFun (rank_identity f hf) a
   apply edge_eq_coordinates
   · exact edgeCast_source _ _
@@ -105,14 +109,14 @@ theorem split_right_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
     split A 1 (edgeCast (Matrix.mul_one A).symm a) = (a,identityEdge a.target) := by
   have hj : edgeCast (Matrix.mul_one A).symm a = join A 1 a (identityEdge a.target) rfl := by
     apply (edgeCast (Matrix.mul_one A)).injective
-    rw [Equiv.apply_symm_apply, join_right_identity]
+    rw [edgeCast_symm_apply, join_right_identity]
   rw [hj, split_join]
 
 theorem split_left_identity {n : ℕ} (A : CountMat n n) (a : Edge A) :
     split 1 A (edgeCast (Matrix.one_mul A).symm a) = (identityEdge a.source,a) := by
   have hj : edgeCast (Matrix.one_mul A).symm a = join 1 A (identityEdge a.source) a rfl := by
     apply (edgeCast (Matrix.one_mul A)).injective
-    rw [Equiv.apply_symm_apply, join_left_identity]
+    rw [edgeCast_symm_apply, join_left_identity]
   rw [hj, split_join]
 
 /-- Actual forward convention: the S-half at t joins the R-half at t+1. -/
@@ -129,8 +133,7 @@ theorem recoding_time {n : ℕ} (A : CountMat n n) :
   change edgeCast (Matrix.one_mul A)
     ((elementaryHomeomorph A 1 ((castTimed (Matrix.mul_one A).symm).equiv x)).val t) =
       x.val (t+1)
-  rw [elementary_coordinate, cast_coordinate, cast_coordinate,
-    split_right_identity, split_right_identity]
+  simp only [elementary_coordinate, cast_coordinate, split_right_identity]
   simpa only [x.property t] using join_left_identity A (x.val (t+1))
 
 /-- For I,A the A-half stays at t; the identity half is at its target. -/
@@ -147,8 +150,7 @@ theorem recoding_identity {n : ℕ} (A : CountMat n n) :
   change edgeCast (Matrix.mul_one A)
     ((elementaryHomeomorph 1 A ((castTimed (Matrix.one_mul A).symm).equiv x)).val t) =
       x.val t
-  rw [elementary_coordinate, cast_coordinate, cast_coordinate,
-    split_left_identity, split_left_identity]
+  simp only [elementary_coordinate, cast_coordinate, split_left_identity]
   simpa only [← x.property t] using join_right_identity A (x.val t)
 
 /-- The genuine original-ranked primitive-orbit sum, at ALL nonzero periods. -/

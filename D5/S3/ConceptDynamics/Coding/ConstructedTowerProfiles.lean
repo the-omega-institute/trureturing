@@ -6,6 +6,7 @@ import D5.S3.ConceptDynamics.Coding.ResponseTwoSidedConsumer
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.ConstructedTowerProfiles
@@ -115,6 +116,8 @@ variable {a b c d : ℕ} (pair : TablePair G G a b c d) (S : SameTableConjugacy 
 theorem response_profile : Profile (terminal G hG pair S) (a+c) (b+d+1) := by
   let F := response G hG pair S
   let H := original G hG
+  letI : TopologicalSpace H.E := H.topology
+  letI : DiscreteTopology H.E := H.discrete
   let C := local_of_conjugacy hG hG pair S
   let cb := responseCode G pair C.seamG
   let P := numberedOutput G pair S C.seamG

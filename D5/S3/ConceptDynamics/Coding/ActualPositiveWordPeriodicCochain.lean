@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.TypedPositiveSplitWord
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.ActualPositiveWordPeriodicCochain
@@ -96,6 +97,7 @@ def orbitChart (F : Presentation) (d : ℕ) [NeZero d] :
     intro x y h
     change SamePathOrbit ((primitiveChart F d).symm (primitiveChart F d x))
       ((primitiveChart F d).symm (primitiveChart F d y))
+    change SamePathOrbit x y at h
     simpa only [Equiv.symm_apply_apply] using h)
   invFun := Quotient.map (primitiveChart F d).symm (fun _ _ h => h)
   left_inv o := by
@@ -130,6 +132,7 @@ def inCharts {F H : Presentation} (P : Hist F ≃ Hist H)
     change (chart H).homeomorph.symm
       (P ((chart F).homeomorph (time _ s x))) = _
     rw [relabel_homeomorph_time,hP,relabel_inverse_time]
+    rfl
 
 def relabelMap {F H : Presentation} (r : Relabel F.graph H.graph) :
     TimedEquiv (matrix F) (matrix H) :=
@@ -143,6 +146,7 @@ def chartComparison {F : Presentation} {n : ℕ} {A : CountMat n n}
   time s x := by
     change (chart F).homeomorph.symm (r.homeomorph (time _ s x)) = _
     rw [relabel_homeomorph_time,relabel_inverse_time]
+    rfl
 
 def wordMap {F H : Presentation} (w : Word F H) : TimedEquiv (matrix F) (matrix H) :=
   inCharts w.eval.toEquiv (Word.eval_time w)
@@ -254,6 +258,7 @@ def loopInChart {F : Presentation} {n : ℕ} {A : CountMat n n}
   time s x := by
     change r.homeomorph.symm (h (r.homeomorph (time _ s x))) = _
     rw [relabel_homeomorph_time,ht,relabel_inverse_time]
+    rfl
 
 theorem historyGyration_in_any_chart {F : Presentation} {n : ℕ} {A : CountMat n n}
     (r : Relabel (countedGraph A) F.graph) (h : Hist F ≃ Hist F)

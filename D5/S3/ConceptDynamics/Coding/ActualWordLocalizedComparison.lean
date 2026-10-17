@@ -5,6 +5,7 @@ import D5.S3.ConceptDynamics.Coding.CountedLocalizedGyrationResidue
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace D5.S3.ConceptDynamics.Coding.ActualWordLocalizedComparison

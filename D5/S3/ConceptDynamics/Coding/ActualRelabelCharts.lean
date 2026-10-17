@@ -7,6 +7,7 @@ import D5.S3.ConceptDynamics.Coding.ActualWordLocalizedComparison
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 namespace SourceOnly.ActualRelabelResidue
@@ -54,7 +55,9 @@ theorem charted_weight (cG : Relabel (countedGraph A) G)
   let cr := countedInCharts cG cH r
   have hf : (reindex r.vertex).toLinearMap.comp (reindex cG.vertex).toLinearMap =
       (reindex cH.vertex).toLinearMap.comp (reindex cr.vertex).toLinearMap := by
-    ext z w
+    apply LinearMap.ext
+    intro z
+    funext w
     change z (cG.vertex.symm (r.vertex.symm w)) =
       z (cG.vertex.symm (r.vertex.symm (cH.vertex (cH.vertex.symm w))))
     rw [cH.vertex.apply_symm_apply]
@@ -69,7 +72,9 @@ theorem charted_weight (cG : Relabel (countedGraph A) G)
       (reindex cH.vertex).toLinearMap =
     (reindex cG.vertex).toLinearMap.comp
       ((timeMap (countedGraph A)).comp (reindex cr.vertex).symm.toLinearMap) := by
-    ext z v
+    apply LinearMap.ext
+    intro z
+    funext v
     change timeMap G ((reindex r.vertex).symm (reindex cH.vertex z)) v =
       reindex cG.vertex (timeMap (countedGraph A) ((reindex cr.vertex).symm z)) v
     rw [hb]
@@ -84,8 +89,7 @@ theorem charted_weight (cG : Relabel (countedGraph A) G)
     (reindex cH.vertex) (reindex cG.vertex)
     ((timeMap (countedGraph A)).comp (reindex cr.vertex).symm.toLinearMap)
     ((timeMap G).comp (reindex r.vertex).symm.toLinearMap) hs
-  change dyadicGyration d _ _ = dyadicGyration d _ _
-  rw [hr, ht]
+  exact congrArg₂ (dyadicGyration d) hr ht
 
 theorem charted_residue (cG : Relabel (countedGraph A) G)
     (cH : Relabel (countedGraph B) H) (r : Relabel G H)
@@ -160,13 +164,13 @@ theorem positive_leaf_residue {F H : Presentation} {n m : ℕ}
   have hp : (SourceOnly.ActualWordMatrixPath.positiveEdge R S).weight d =
       dyadicGyration d (SourceOnly.ActualWordMatrixPath.counts R)
         (SourceOnly.ActualWordMatrixPath.counts S) := by
-    change dyadicGyration d
-      (rows _ _ (SourceOnly.ActualWordMatrixPath.counts R).toLinearMapRight')
-      (rows _ _ (SourceOnly.ActualWordMatrixPath.counts S).toLinearMapRight') = _
-    rw [rows_right_standard, rows_right_standard]
+    exact congrArg₂ (dyadicGyration d)
+      (rows_right_standard (SourceOnly.ActualWordMatrixPath.counts R))
+      (rows_right_standard (SourceOnly.ActualWordMatrixPath.counts S))
   simp only [SourceOnly.ActualWordMatrixPath.dictionary,
     SourceOnly.FiniteKernelLadder.Path.weight, hp,
     chart_backward_residue old d hd, chart_forward_residue next d hd,
     ActualWordLocalizedComparison.localizedCochain, add_zero, add_assoc]
+  rfl
 
 end SourceOnly.ActualRelabelResidue

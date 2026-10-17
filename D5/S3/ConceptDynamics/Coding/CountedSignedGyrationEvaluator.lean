@@ -304,6 +304,19 @@ def prunedShard {n m : ℕ} (k : ℕ)
         (fun b => SkeletonMinimal (Fin.cons i tail,b)),
       ∑ l ∈ rankVectors S (Fin.cons i tail,b), vectorTerm S (Fin.cons i tail,b) l
 
+/-- Splitting the first outside vertex gives exactly the sum of all shards. -/
+theorem prunedEvaluator_eq_shards {n m : ℕ} (k : ℕ)
+    (R : Matrix (Fin n) (Fin m) ℤ) (S : Matrix (Fin m) (Fin n) ℤ) :
+    prunedEvaluator (k+1) R S = ∑ i : Fin n, prunedShard k R S i := by
+  classical
+  unfold prunedEvaluator prunedShard
+  let f (a : Fin (k+1) → Fin n) : ℤ :=
+    ∑ b ∈ (middleWords R S a).filter (fun b => SkeletonMinimal (a,b)),
+      ∑ l ∈ rankVectors S (a,b), vectorTerm S (a,b) l
+  change (∑ a, f a) = ∑ i, ∑ tail, f (Fin.cons i tail)
+  exact ((Fin.consEquiv (fun _ : Fin (k+1) => Fin n)).sum_comp f).symm.trans
+    (Fintype.sum_prod_type _)
+
 /-- Exact equality with the signed lift of the actual polynomial. No
 coefficient table or desired calibration occurs in this theorem. -/
 theorem signedGyrationLift_eq_supportedEvaluator {n m : ℕ} (d : ℕ) [NeZero d]
@@ -321,6 +334,14 @@ theorem signedGyrationLift_eq_supportedEvaluator {n m : ℕ} (d : ℕ) [NeZero d
   apply Finset.sum_congr rfl
   intro l hl
   exact rankedTerm_eq_vectorTerm S (a,b) l hl
+
+/-- The integer-valued canonical gyration is evaluated by the same signed support sum. -/
+theorem integerGyrationValue_eq_supportedEvaluator {n m : ℕ} (d : ℕ) [NeZero d]
+    (R : Matrix (Fin n) (Fin m) ℤ) (S : Matrix (Fin m) (Fin n) ℤ)
+    (hR : ∀ i j, R i j = 0 ∨ R i j = 1)
+    (hS : ∀ j i, S j i = -1 ∨ S j i = 0 ∨ S j i = 1) :
+    integerGyrationValue d R S = supportedEvaluator d R S :=
+  signedGyrationLift_eq_supportedEvaluator d R S hR hS
 
 end SignedSupport
 
