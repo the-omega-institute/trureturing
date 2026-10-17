@@ -252,4 +252,77 @@ def native_stationary_bounded_execution_registration :
   familyRecord := none
   options := #[]
 
+abbrev rowsArena : Arena where
+  signature := stationarySignature
+  Law R := ∀ (h T t : Nat) (u : Source),
+    u.length = h → t ≤ T → (T = 0 ∨ h % 2 = 0) → ∀ active : Bool,
+    let P := rowParameters h T active
+    let U := rowUpdates h T t u active
+    let bit := R.readout () () u
+    let final := canonical (if bit then .halt1 else .halt0)
+    P.start ≤ t + U ∧ t + U ≤ P.start + P.last ∧
+    (U = 0 ∨ (0 < U ∧ t + U = alignmentBudget h T - rightClock u)) ∧
+    Run (controlProgram P) (Observer.NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 final U ∧
+    controlProgram P final = .halt ∧
+    (∀ z a, Run (controlProgram P) (Observer.NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 z a → controlProgram P z = .halt → z = final ∧ a = U) ∧
+    (∀ z a, Run (controlProgram P) (Observer.NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 z a → RowPoint P (t + U) u U z a)
+
+private theorem rows_bad_law : ¬ rowsArena.Law stationaryBad := by
+  intro law
+  have wrong := law 1 0 0 (.of true) rfl (by decide) (Or.inl rfl) false
+  obtain ⟨_, _, _, _, _, unique, _⟩ :=
+    native_bounded_rows_execution 1 0 0 (.of true) rfl (by decide) (Or.inl rfl) false
+  have eq := unique _ _ wrong.2.2.2.1 wrong.2.2.2.2.1
+  have mode := congrArg Control.mu eq.1
+  change Mode.halt1 = Mode.halt0 at mode
+  cases mode
+
+def rowsFamily : Registration rowsArena (type_of% (@native_bounded_rows_execution)) where
+  actual := stationaryActual
+  bridge := Iff.rfl
+  variation := ⟨@native_bounded_rows_execution, stationaryBad, rows_bad_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rows_bad_law
+  dependence := by
+    intro i
+    refine ⟨(), .of true, .of false, ?_⟩
+    change (false : Bool) ≠ true
+    decide
+
+def native_bounded_rows_execution_registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@native_bounded_rows_execution) (Realization stationarySignature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.rowsUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.rowsFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨rowsArena⟩
+  objectArena := .source ⟨rowsArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source rowsArena ⟨rowsFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize stationarySignature stationaryActual.readout stationaryActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "value"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl

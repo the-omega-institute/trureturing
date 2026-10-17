@@ -295,40 +295,90 @@ private theorem cursor_balance {c d : Option Address} {s : History}
     rw [cursor_frontier] at balance
     cases r <;> simp [acquisitionStep, pending, branches, leafVisits] at hr balance ⊢ <;> omega
 
+/-- A finite actual execution carrying a mathematical predicate at every point. -/
+inductive RefinedRun (P : Parameters) (obs : Nat → Address → Reply)
+    (I : Control → Nat → Prop) : Control → Nat → Control → Nat → Prop
+  | refl (x : Control) (a : Nat) : I x a → RefinedRun P obs I x a x a
+  | read {x : Control} {p : Address} {k : Reply → Control} {a : Nat}
+      {y : Control} {b : Nat} : I x a → controlProgram P x = .read p k →
+      RefinedRun P obs I (k (obs a p)) a y b → RefinedRun P obs I x a y b
+  | update {x z : Control} {a : Nat} {y : Control} {b : Nat} :
+      I x a → controlProgram P x = .update z → RefinedRun P obs I z (a + 1) y b →
+      RefinedRun P obs I x a y b
+
+private theorem refined_run {P : Parameters} {obs : Nat → Address → Reply}
+    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
+    (path : RefinedRun P obs I x a y b) : Run (controlProgram P) obs x a y b := by
+  induction path with
+  | refl => exact .refl _ _
+  | read _ hop _ ih => exact .read hop ih
+  | update _ hop _ ih => exact .update hop ih
+
+private theorem refined_prefix {P : Parameters} {obs : Nat → Address → Reply}
+    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
+    (path : RefinedRun P obs I x a y b) (halt : controlProgram P y = .halt) :
+    ∀ z e, Run (controlProgram P) obs x a z e → I z e := by
+  induction path with
+  | refl x a good =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read hop _ => cases halt.symm.trans hop
+    | update hop _ => cases halt.symm.trans hop
+  | read good hop tail ih =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read h rest => cases hop.symm.trans h; exact ih halt _ _ rest
+    | update h _ => cases hop.symm.trans h
+  | update good hop tail ih =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read h _ => cases hop.symm.trans h
+    | update h rest => cases hop.symm.trans h; exact ih halt _ _ rest
+
 private theorem one_update_polling (P : Parameters) (u : Source)
-    (active : P.active = true) (d : Nat) :
+    (active : P.active = true) (I : Control → Nat → Prop)
+    (pollGood : ∀ a, rightClock u + a ≤ 2 * P.pollDepth → I (canonical .poll) a)
+    (updateGood : ∀ a, rightClock u + a < 2 * P.pollDepth → I (canonical .update) a)
+    (d : Nat) :
     ∀ a, rightClock u + a + d = 2 * P.pollDepth →
-      Run (controlProgram P) (NativePollingAlignment.observations u)
-        (canonical .poll) a (fresh 0) (a + d) := by
+      ∀ final lastEpoch,
+      RefinedRun P (NativePollingAlignment.observations u) I
+        (fresh 0) (a + d) final lastEpoch →
+      RefinedRun P (NativePollingAlignment.observations u) I
+        (canonical .poll) a final lastEpoch := by
   induction d with
   | zero =>
-    intro a clock
+    intro a clock final lastEpoch continuation
     have reply : NativePollingAlignment.observations u a (rights P.pollDepth) = .alpha :=
       (right_clock_readout P.pollDepth (substitution^[a] u)).2.1.mpr
         (by rw [right_clock_iterate]; omega)
-    apply Run.read (p := rights P.pollDepth)
+    apply RefinedRun.read (pollGood a (by omega)) (p := rights P.pollDepth)
       (k := fun r => match r with
         | .absent => canonical .update
         | .alpha => fresh 0
         | .beta | .branch => canonical .error)
       (by simp [controlProgram, Valid, canonical, active])
     rw [reply]
-    simpa using Run.refl (fresh 0) a
+    simpa using continuation
   | succ d ih =>
-    intro a clock
+    intro a clock final lastEpoch continuation
     have reply : NativePollingAlignment.observations u a (rights P.pollDepth) = .absent :=
       (right_clock_readout P.pollDepth (substitution^[a] u)).1.mpr
         (by rw [right_clock_iterate]; omega)
-    apply Run.read (p := rights P.pollDepth)
+    apply RefinedRun.read (pollGood a (by omega)) (p := rights P.pollDepth)
       (k := fun r => match r with
         | .absent => canonical .update
         | .alpha => fresh 0
         | .beta | .branch => canonical .error)
       (by simp [controlProgram, Valid, canonical, active])
     rw [reply]
-    apply Run.update (z := canonical .poll)
+    apply RefinedRun.update (updateGood a (by omega)) (z := canonical .poll)
       (by simp [controlProgram, Valid, canonical, active])
-    convert ih (a + 1) (by omega) using 1 <;> omega
+    apply ih (a + 1) (by omega) final lastEpoch
+    convert continuation using 1 <;> omega
 
 private theorem right_clock_size (u : Source) : rightClock u ≤ 2 * u.length - 1 := by
   induction u with
@@ -377,8 +427,14 @@ theorem native_one_update_alignment (h T t : Nat) (u : Source)
     unfold alignmentBudget at lower
     omega
   refine ⟨by omega, by omega, by omega, by omega, by omega, ?_⟩
-  simpa using one_update_polling (activeParameters h T) (substitution^[t] u) rfl
+  have certified := one_update_polling (activeParameters h T) (substitution^[t] u) rfl
+    (fun _ _ => True) (by intros; trivial) (by intros; trivial)
     (alignmentBudget h T - t - rightClock u) 0 (by simpa using clock)
+    (fresh 0) (alignmentBudget h T - t - rightClock u) (by
+      simpa only [Nat.zero_add] using RefinedRun.refl (P := activeParameters h T)
+        (obs := NativePollingAlignment.observations (substitution^[t] u))
+        (I := fun _ _ => True) (fresh 0) (alignmentBudget h T - t - rightClock u) trivial)
+  exact refined_run certified
 
 private theorem trial_geometry (h τ N : Nat) (u y : Source)
     (spec : BoundedPreorderTrial.TrialSpec h τ N u y)
@@ -421,49 +477,6 @@ def TrialPoint (P : Parameters) (τ : Nat) (u : Source) (z : Control) : Prop :=
     frontier H = a.1 :: rightsPending a.1 ∧
     branches H < P.h ∧ leafVisits H < P.h ∧ a.1.length < P.h ∧
     (z = atPrefix j H a.1 (queryMode N a.1) ∨ z = atPrefix j H a.1 .value)
-
-/-- A finite actual execution carrying a mathematical predicate at every point. -/
-inductive RefinedRun (P : Parameters) (obs : Nat → Address → Reply)
-    (I : Control → Nat → Prop) : Control → Nat → Control → Nat → Prop
-  | refl (x : Control) (a : Nat) : I x a → RefinedRun P obs I x a x a
-  | read {x : Control} {p : Address} {k : Reply → Control} {a : Nat}
-      {y : Control} {b : Nat} : I x a → controlProgram P x = .read p k →
-      RefinedRun P obs I (k (obs a p)) a y b → RefinedRun P obs I x a y b
-  | update {x z : Control} {a : Nat} {y : Control} {b : Nat} :
-      I x a → controlProgram P x = .update z → RefinedRun P obs I z (a + 1) y b →
-      RefinedRun P obs I x a y b
-
-private theorem refined_run {P : Parameters} {obs : Nat → Address → Reply}
-    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
-    (path : RefinedRun P obs I x a y b) : Run (controlProgram P) obs x a y b := by
-  induction path with
-  | refl => exact .refl _ _
-  | read _ hop _ ih => exact .read hop ih
-  | update _ hop _ ih => exact .update hop ih
-
-private theorem refined_prefix {P : Parameters} {obs : Nat → Address → Reply}
-    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
-    (path : RefinedRun P obs I x a y b) (halt : controlProgram P y = .halt) :
-    ∀ z e, Run (controlProgram P) obs x a z e → I z e := by
-  induction path with
-  | refl x a good =>
-    intro z e other
-    cases other with
-    | refl => exact good
-    | read hop _ => cases halt.symm.trans hop
-    | update hop _ => cases halt.symm.trans hop
-  | read good hop tail ih =>
-    intro z e other
-    cases other with
-    | refl => exact good
-    | read h rest => cases hop.symm.trans h; exact ih halt _ _ rest
-    | update h _ => cases hop.symm.trans h
-  | update good hop tail ih =>
-    intro z e other
-    cases other with
-    | refl => exact good
-    | read h _ => cases hop.symm.trans h
-    | update h rest => cases hop.symm.trans h; exact ih halt _ _ rest
 
 private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source)
     (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
@@ -667,9 +680,7 @@ private theorem trial_root (h : Nat) (v : Source) :
     · simp only [Nat.add_comm 1, List.take_succ_cons]
       exact ⟨.branch, _, rfl⟩
 
-/-- The independent bounded rows finish the increasing stationary trials with
-the original parity; every halt-ended actual run has that same endpoint. -/
-theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : Source)
+private theorem stationary_refined_execution (P : Parameters) (τ : Nat) (u y : Source)
     (hu : u.length = P.h) (hy : y = substitution^[τ] u)
     (start : P.start ≤ τ) (covers : τ ≤ P.start + P.last)
     (regime : P.h % 2 = 0 ∨ τ = 0)
@@ -677,18 +688,11 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
     (response : ∀ p, obs epoch p = readout p y) :
     let bit := decide ((composition u).2 % 2 = 1)
     let final := canonical (if bit then .halt1 else .halt0)
-    Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
-    controlProgram P final = .halt ∧
-    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
-      controlProgram P z = .halt → z = final ∧ a = epoch) ∧
-    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
-      a = epoch ∧ (z = final ∨ TrialPoint P τ u z)) := by
+    RefinedRun P obs (fun z a => a = epoch ∧ (z = final ∨ TrialPoint P τ u z))
+      (fresh 0) epoch final epoch := by
   dsimp only
   let final := canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0)
   let I (z : Control) (a : Nat) : Prop := a = epoch ∧ (z = final ∨ TrialPoint P τ u z)
-  have halt : controlProgram P final = .halt := by
-    dsimp only [final]
-    split <;> simp [controlProgram, Valid, canonical]
   obtain ⟨single, _, K, lower, upper, complete, minimal, _⟩ :=
     BoundedPreorderTrial.bounded_preorder_trial P.h τ P.start u y hu hy start
   have good (N j : Nat) (hN : N ≤ τ) (hj : j ≤ P.last) (offset : P.start + j = N)
@@ -749,14 +753,149 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
           rw [ite_eq_right notDone]
           exact ih (j + 1) (by omega)) tail [] ⟨[], r⟩ (by simpa using root)
       simpa [atPrefix, fresh, queryMode, branches, leafVisits, betas] using run
-  have certified := build (K - P.start) 0 (by omega)
+  exact build (K - P.start) 0 (by omega)
+
+/-- The independent bounded rows finish the increasing stationary trials with
+the original parity; every actual prefix retains the licensed trial relation. -/
+theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : Source)
+    (hu : u.length = P.h) (hy : y = substitution^[τ] u)
+    (start : P.start ≤ τ) (covers : τ ≤ P.start + P.last)
+    (regime : P.h % 2 = 0 ∨ τ = 0)
+    (obs : Nat → Address → Reply) (epoch : Nat)
+    (response : ∀ p, obs epoch p = readout p y) :
+    let bit := decide ((composition u).2 % 2 = 1)
+    let final := canonical (if bit then .halt1 else .halt0)
+    Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
+    controlProgram P final = .halt ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      controlProgram P z = .halt → z = final ∧ a = epoch) ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      a = epoch ∧ (z = final ∨ TrialPoint P τ u z)) := by
+  dsimp only
+  let final := canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0)
+  have halt : controlProgram P final = .halt := by
+    dsimp only [final]
+    split <;> simp [controlProgram, Valid, canonical]
+  have certified := stationary_refined_execution P τ u y hu hy start covers regime
+    obs epoch response
   have run := refined_run certified
   refine ⟨run, halt, ?_, refined_prefix certified halt⟩
+  intro z a other hz
+  exact D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution.run_halt_unique other run hz halt
+
+private theorem refined_mono {P : Parameters} {obs : Nat → Address → Reply}
+    {I J : Control → Nat → Prop} {x y : Control} {a b : Nat}
+    (path : RefinedRun P obs I x a y b) (weaken : ∀ z e, I z e → J z e) :
+    RefinedRun P obs J x a y b := by
+  induction path with
+  | refl x a h => exact .refl x a (weaken x a h)
+  | read h hop _ ih => exact .read (weaken _ _ h) hop ih
+  | update h hop _ ih => exact .update (weaken _ _ h) hop ih
+
+/-- Active polling is available only for a positive historical bound. -/
+def rowParameters (h T : Nat) (active : Bool) : Parameters :=
+  if active && decide (0 < T) then activeParameters h T else ⟨h, 0, T, 0, false⟩
+
+/-- The common entry depends only on the installed regime and bounds. -/
+def rowInitial (T : Nat) (active : Bool) : Control :=
+  if active && decide (0 < T) then canonical .poll else fresh 0
+
+/-- The number of genuine Updates is comparison data, never a retained field. -/
+def rowUpdates (h T t : Nat) (u : Source) (active : Bool) : Nat :=
+  if active && decide (0 < T) then alignmentBudget h T - t - rightClock u else 0
+
+/-- Polling fields are canonical; trial fields belong to the stationary image. -/
+def RowPoint (P : Parameters) (τ : Nat) (u : Source) (U : Nat) (z : Control) (a : Nat) : Prop :=
+  a ≤ U ∧ ((P.active = true ∧ (z = canonical .poll ∨ z = canonical .update)) ∨
+    (a = U ∧ (z = canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0) ∨
+      TrialPoint P τ u z)))
+
+/-- Static, direct and active rows have one common source-independent entry,
+and every actual finite prefix satisfies the polling or compressed-trial relation. -/
+theorem native_bounded_rows_execution (h T t : Nat) (u : Source)
+    (hu : u.length = h) (ht : t ≤ T) (regime : T = 0 ∨ h % 2 = 0) (active : Bool) :
+    let P := rowParameters h T active
+    let U := rowUpdates h T t u active
+    let bit := decide ((composition u).2 % 2 = 1)
+    let final := canonical (if bit then .halt1 else .halt0)
+    P.start ≤ t + U ∧ t + U ≤ P.start + P.last ∧
+    (U = 0 ∨ (0 < U ∧ t + U = alignmentBudget h T - rightClock u)) ∧
+    Run (controlProgram P) (NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 final U ∧
+    controlProgram P final = .halt ∧
+    (∀ z a, Run (controlProgram P) (NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 z a → controlProgram P z = .halt → z = final ∧ a = U) ∧
+    (∀ z a, Run (controlProgram P) (NativePollingAlignment.observations (substitution^[t] u))
+      (rowInitial T active) 0 z a → RowPoint P (t + U) u U z a) := by
+  dsimp only
+  let P := rowParameters h T active
+  let U := rowUpdates h T t u active
+  let obs := NativePollingAlignment.observations (substitution^[t] u)
+  let final := canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0)
+  have reached : P.start ≤ t + U ∧ t + U ≤ P.start + P.last ∧
+      (U = 0 ∨ (0 < U ∧ t + U = alignmentBudget h T - rightClock u)) ∧
+      RefinedRun P obs (RowPoint P (t + U) u U) (rowInitial T active) 0 final U := by
+    by_cases flag : (active && decide (0 < T)) = true
+    · simp only [P, U, rowParameters, rowUpdates, rowInitial, flag, ite_true]
+      let Q := activeParameters h T
+      let d := alignmentBudget h T - t - rightClock u
+      have aligned := native_one_update_alignment h T t u hu ht
+      have lower : Q.start ≤ t + d := aligned.2.2.1
+      have upper : t + d ≤ Q.start + Q.last := by
+        have b := aligned.2.2.2.2.1
+        dsimp only [Q, activeParameters] at lower ⊢
+        omega
+      have positive : 0 < T := by
+        have both : active = true ∧ 0 < T := by simpa using flag
+        exact both.2
+      have even : h % 2 = 0 := by rcases regime with rfl | even; omega; exact even
+      have stationary := stationary_refined_execution Q (t + d) u
+        (substitution^[t + d] u) hu rfl lower upper (Or.inl even) obs d (by
+          intro p
+          change readout p (substitution^[d] (substitution^[t] u)) = _
+          rw [← Function.iterate_add_apply, Nat.add_comm d t])
+      have tail := refined_mono stationary (J := RowPoint Q (t + d) u d) (by
+        intro z a good
+        obtain ⟨rfl, good⟩ := good
+        exact ⟨le_rfl, Or.inr ⟨rfl, good⟩⟩)
+      have clock : rightClock (substitution^[t] u) + d = 2 * Q.pollDepth := by
+        rw [right_clock_iterate]
+        have pos := aligned.1
+        dsimp [d, Q, activeParameters, alignmentBudget] at *
+        omega
+      have full := one_update_polling Q (substitution^[t] u) rfl
+        (RowPoint Q (t + d) u d)
+        (by intro a ha; exact ⟨by omega, Or.inl ⟨rfl, Or.inl rfl⟩⟩)
+        (by intro a ha; exact ⟨by omega, Or.inl ⟨rfl, Or.inr rfl⟩⟩)
+        d 0 (by simpa using clock) final d (by
+          simpa only [final, obs, decide_eq_true_eq, Nat.zero_add] using tail)
+      exact ⟨lower, upper, Or.inr ⟨aligned.1, aligned.2.1⟩, full⟩
+    · simp only [P, U, rowParameters, rowUpdates, rowInitial, flag, Bool.false_eq_true,
+        ite_false, Nat.add_zero]
+      have ordinary : h % 2 = 0 ∨ t = 0 := by
+        rcases regime with zero | even
+        · exact Or.inr (by omega)
+        · exact Or.inl even
+      have stationary := stationary_refined_execution ⟨h, 0, T, 0, false⟩ t u
+        (substitution^[t] u) hu rfl (Nat.zero_le t) (by simpa using ht)
+        ordinary obs 0 (by intro p; rfl)
+      refine ⟨Nat.zero_le t, by simpa using ht, Or.inl trivial, ?_⟩
+      exact refined_mono stationary (by
+        intro z a good
+        obtain ⟨rfl, good⟩ := good
+        exact ⟨le_rfl, Or.inr ⟨rfl, good⟩⟩)
+  have halt : controlProgram P final = .halt := by
+    dsimp [final]
+    split <;> simp [controlProgram, Valid, canonical]
+  have run := refined_run reached.2.2.2
+  refine ⟨reached.1, reached.2.1, reached.2.2.1, run, halt, ?_,
+    refined_prefix reached.2.2.2 halt⟩
   intro z a other hz
   exact D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution.run_halt_unique other run hz halt
 
 #print axioms reachable_compressed_frontier_and_trial_simulation
 #print axioms native_one_update_alignment
 #print axioms native_stationary_bounded_execution
+#print axioms native_bounded_rows_execution
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
