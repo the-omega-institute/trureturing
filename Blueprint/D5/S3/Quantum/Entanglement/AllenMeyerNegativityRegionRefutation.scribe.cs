@@ -23,20 +23,23 @@ internal sealed class AllenMeyerNegativityRegionRefutationDocument : IScribeDocu
                     + "and real coefficients in vectors are included in the complex numbers. "
                     + "The definitions below apply to arbitrary vectors; unit normalization is imposed in claim.")),
             Node("pairAB", "Tracing out C", PairFormula(true),
-                "The reduced matrix on A and B is the partial trace over C of |psi⟩⟨psi|. "
+                "The reduced matrix on A and B is partialTraceRight of rankOneDensity of the "
+                    + "amplitude ((i, j), k) ↦ psi(i, j, k). The rank-one density has entries "
+                    + "v(p) times the complex conjugate of v(q), and partialTraceRight sums its "
+                    + "entries at (p, k), (q, k) over k. "
                     + "For p = (i, j) and q = (i', j'), its entry sums over the common C index. "
                     + "This is the A|B reduced state used in the negativity region following equation (13)."),
             Node("pairAC", "Tracing out B", PairFormula(false),
-                "The reduced matrix on A and C is the partial trace over B of |psi⟩⟨psi|. "
+                "The reduced matrix on A and C is partialTraceRight of rankOneDensity of the "
+                    + "amplitude ((i, k), j) ↦ psi(i, j, k). Its rank-one entries are traced over "
+                    + "the common final index j. "
                     + "For p = (i, k) and q = (i', k'), its entry sums over the common B index. "
                     + "This is the A|C reduced state used in the same region."),
-            Node("whole", "The pure state across A|BC", WholeFormula(),
-                "The outer product |psi⟩⟨psi| is regarded as a bipartite matrix with first factor A "
-                    + "and second factor B × C. Its row and column labels retain all three indices. "
-                    + "For a unit vector this is the pure density matrix of the complete system."),
             Node("negativityTriple", "The three partial-transpose negativities", TripleFormula(),
                 "The coordinates are the negativities of the AB and AC reduced matrices and of the pure "
-                    + "state across A|BC, in that order. The notation Γ transposes the second factor: "
+                    + "state rankOneDensity(psi) = |psi⟩⟨psi| across A|BC, in that order. Its entry "
+                    + "at p, q is psi(p) times the complex conjugate of psi(q). "
+                    + "The notation Γ transposes the second factor: "
                     + "for row (i, j) and column (k, l), the transposed entry is the original entry at "
                     + "row (i, l) and column (k, j). The subscript-one norm is the trace norm. "
                     + "Each coordinate is (‖rho^Γ‖₁ − 1)/2. Allen and Meyer use twice this value and "
@@ -149,24 +152,29 @@ internal sealed class AllenMeyerNegativityRegionRefutationDocument : IScribeDocu
         Formula Address(string name) => traceC
             ? Tuple(Coordinate(name, 1), Coordinate(name, 2), V(index))
             : Tuple(Coordinate(name, 1), V(index), Coordinate(name, 2));
+        var amplitude = Parenthesized(Seq(
+            Typed(Parenthesized(Seq(V("r"), Comma, Sp, V(index))),
+                Product(Parenthesized(PairType()), FinThree())), Sp, Mapsto, Sp,
+            At(V("psi"), Address("r"))));
+        var reduced = Call("partialTraceRight", Call("rankOneDensity", amplitude));
         return All("psi", Vectors(), All("p", PairType(), All("q", PairType(),
-            Equal(Call(traceC ? "pairAB" : "pairAC", V("psi"), V("p"), V("q")),
+            Seq(Equal(Call(traceC ? "pairAB" : "pairAC", V("psi"), V("p"), V("q")),
+                    At(reduced, V("p"), V("q"))), Sp, Eq, Sp,
                 SumOver(index, FinThree(), Multiply(At(V("psi"), Address("p")),
                     Conjugate(At(V("psi"), Address("q")))))))));
     }
-
-    private static Formula WholeFormula() => All("psi", Vectors(),
-        All("p", TripleType(), All("q", TripleType(), Equal(Call("whole", V("psi"), V("p"), V("q")),
-            Multiply(At(V("psi"), V("p")), Conjugate(At(V("psi"), V("q"))))))));
 
     private static Formula Negativity(Formula matrix) => new Formula.Fraction(
         Subtract(new Formula.Subscript(new Formula.Norm(new Formula.Power(Parenthesized(matrix), Gamma)), D(1)),
             D(1)), D(2));
 
     private static Formula TripleFormula() => All("psi", Vectors(),
-        Equal(Call("negativityTriple", V("psi")),
-            Tuple(Negativity(Call("pairAB", V("psi"))), Negativity(Call("pairAC", V("psi"))),
-                Negativity(Call("whole", V("psi"))))));
+        And(Equal(Call("negativityTriple", V("psi")),
+                Tuple(Negativity(Call("pairAB", V("psi"))), Negativity(Call("pairAC", V("psi"))),
+                    Negativity(Call("rankOneDensity", V("psi"))))),
+            All("p", TripleType(), All("q", TripleType(),
+                Equal(Call("rankOneDensity", V("psi"), V("p"), V("q")),
+                    Multiply(At(V("psi"), V("p")), Conjugate(At(V("psi"), V("q")))))))));
 
     private static Formula FamilyFormula()
     {

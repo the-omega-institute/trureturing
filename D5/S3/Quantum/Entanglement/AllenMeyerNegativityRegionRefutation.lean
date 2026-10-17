@@ -32,23 +32,30 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.QuantumBounds.NegativityReductionInclusionRefutation (negativity)
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
+open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceRight)
 open D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
   (traceNorm_isometry traceNorm_smul_nonneg)
 
 def pairAB (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ) :
     Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  fun p q => ∑ c, ψ (p.1, p.2, c) * star (ψ (q.1, q.2, c))
+  partialTraceRight (rankOneDensity (fun p : (Fin 3 × Fin 3) × Fin 3 =>
+    ψ (p.1.1, p.1.2, p.2)))
 
 def pairAC (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ) :
     Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  fun p q => ∑ b, ψ (p.1, b, p.2) * star (ψ (q.1, b, q.2))
+  partialTraceRight (rankOneDensity (fun p : (Fin 3 × Fin 3) × Fin 3 =>
+    ψ (p.1.1, p.2, p.1.2)))
 
-def whole (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ) :
-    Matrix (Fin 3 × (Fin 3 × Fin 3)) (Fin 3 × (Fin 3 × Fin 3)) ℂ :=
-  vecMulVec ψ (star ψ)
+private theorem pairAB_entry (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ)
+    (p q : Fin 3 × Fin 3) :
+    pairAB ψ p q = ∑ c, ψ (p.1, p.2, c) * star (ψ (q.1, q.2, c)) := rfl
+
+private theorem pairAC_entry (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ)
+    (p q : Fin 3 × Fin 3) :
+    pairAC ψ p q = ∑ b, ψ (p.1, b, p.2) * star (ψ (q.1, b, q.2)) := rfl
 
 def negativityTriple (ψ : Fin 3 × Fin 3 × Fin 3 → ℂ) : ℝ × ℝ × ℝ :=
-  (negativity (pairAB ψ), negativity (pairAC ψ), negativity (whole ψ))
+  (negativity (pairAB ψ), negativity (pairAC ψ), negativity (rankOneDensity ψ))
 
 def familyState (a b c d : ℝ) : Fin 3 × Fin 3 × Fin 3 → ℂ := fun p =>
   if p = (0, 0, 0) then (d : ℂ)
@@ -84,18 +91,21 @@ private def schmidtPT (x : Fin 3 → ℝ) : Matrix (Fin 3 × Fin 3) (Fin 3 × Fi
 private def edge (i j : Fin 3) (s : ℂ) : Fin 3 × Fin 3 → ℂ := fun p =>
   if p = (i, j) then 1 else if p = (j, i) then s else 0
 
-private def swapU : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
-  Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin 3) (Fin 3))
-
 private theorem swap_entry (p q : Fin 3 × Fin 3) :
-    swapU p q = if p.1 = q.2 ∧ p.2 = q.1 then 1 else 0 := by
+    ConicalDesignConcurrenceComparability.swap 3 p q =
+      if p.1 = q.2 ∧ p.2 = q.1 then 1 else 0 := by
   rcases p with ⟨i, j⟩
   rcases q with ⟨k, l⟩
-  simp [swapU.eq_1, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
-    Equiv.toPEquiv_apply, Prod.mk.injEq, and_comm]
+  simp [ConicalDesignConcurrenceComparability.swap, Matrix.one_apply, Prod.mk.injEq]
 
-private theorem swap_unitary : swapU ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
-  rw [swapU.eq_1, mem_unitaryGroup_iff]
+private theorem swap_unitary :
+    ConicalDesignConcurrenceComparability.swap 3 ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
+  have hperm : ConicalDesignConcurrenceComparability.swap 3 =
+      Equiv.Perm.permMatrix ℂ (Equiv.prodComm (Fin 3) (Fin 3)) := by
+    ext ⟨i, j⟩ ⟨k, l⟩
+    simp [swap_entry, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
+      Equiv.toPEquiv_apply, Prod.mk.injEq, and_comm]
+  rw [hperm, mem_unitaryGroup_iff]
   simp [Matrix.star_eq_conjTranspose, ← Matrix.permMatrix_mul]
 
 set_option maxHeartbeats 1000000 in
@@ -138,11 +148,11 @@ private theorem schmidt_norm (x : Fin 3 → ℝ) (hx : ∀ i, 0 ≤ x i) :
     ring
   have hupper := psd_sub_bound P Q hP hQ
   rw [← hsplit, htrace] at hupper
-  have hcert : (swapU * schmidtPT x).trace.re = (x 0 + x 1 + x 2) ^ 2 := by
-    change (∑ p, ∑ q, swapU p q * schmidtPT x q p).re = _
+  have hcert : ((ConicalDesignConcurrenceComparability.swap 3) * schmidtPT x).trace.re = (x 0 + x 1 + x 2) ^ 2 := by
+    change (∑ p, ∑ q, (ConicalDesignConcurrenceComparability.swap 3) p q * schmidtPT x q p).re = _
     simp [swap_entry, schmidtPT.eq_1, Fintype.sum_prod_type, Fin.sum_univ_three]
     ring
-  have hlower := unitary_bound (schmidtPT x) swapU swap_unitary
+  have hlower := unitary_bound (schmidtPT x) (ConicalDesignConcurrenceComparability.swap 3) swap_unitary
   rw [hcert] at hlower
   exact le_antisymm hupper hlower
 
@@ -199,7 +209,7 @@ private def blockVec (j : Fin 3) (x y z : ℝ) : Fin 3 × Fin 3 → ℂ :=
 
 private theorem family_pair_trace (a b c d : ℝ) :
     (pairAB (familyState a b c d)).trace.re = d ^ 2 + 2 * (a ^ 2 + b ^ 2 + c ^ 2) := by
-  simp [pairAB.eq_1, familyState.eq_1, Matrix.trace, Fintype.sum_prod_type,
+  simp [pairAB_entry, familyState.eq_1, Matrix.trace, Fintype.sum_prod_type,
     Fin.sum_univ_three]
   ring
 
@@ -236,7 +246,7 @@ private theorem family_pair_loose (a b c d : ℝ) (hb : 0 ≤ b) (hd : 0 ≤ d)
     ext ⟨i, j⟩ ⟨k, l⟩
     change pairAB (familyState a b c d) (i, l) (k, j) = _
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      simp [pairAB.eq_1, familyState.eq_1, P, Q, rankOneDensity,
+      simp [pairAB_entry, familyState.eq_1, P, Q, rankOneDensity,
         single.eq_1, blockVec.eq_1, edge.eq_1, vecMulVec_apply, Fin.sum_univ_three,
         Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_pow] <;> ring
   have hQt : 2 * Q.trace.re = 2 * b ^ 2 + 4 * b * d := by
@@ -279,7 +289,7 @@ private theorem family_pair_gram (a b c d : ℝ) (ha : 0 < a)
     ext ⟨i, j⟩ ⟨k, l⟩
     change pairAB (familyState a b c d) (i, l) (k, j) = _
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      simp [pairAB.eq_1, familyState.eq_1, P, Q, v, w, z, rankOneDensity,
+      simp [pairAB_entry, familyState.eq_1, P, Q, v, w, z, rankOneDensity,
         single.eq_1, blockVec.eq_1, edge.eq_1, vecMulVec_apply, Fin.sum_univ_three,
         Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_pow] <;>
       field_simp (discharger := first | exact hane | exact pow_ne_zero _ hane | norm_num) <;> ring
@@ -299,7 +309,7 @@ private theorem family_swap (a b c d : ℝ) :
     pairAC (familyState a b c d) = pairAB (familyState b a c d) := by
   ext ⟨i, j⟩ ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    simp [pairAC.eq_1, pairAB.eq_1, familyState.eq_1, Fin.sum_univ_three]
+    simp [pairAC_entry, pairAB_entry, familyState.eq_1, Fin.sum_univ_three]
 
 private theorem separator_algebra (a b c d r x y z : ℝ)
     (ha : 0 ≤ a) (hd : 0 ≤ d) (hr : 0 ≤ r)
@@ -377,7 +387,7 @@ set_option maxHeartbeats 1000000 in
 -- The finite matrix certificates are expanded entry by entry.
 private theorem family_whole (a b c d : ℝ) (hd : 0 ≤ d)
     (hn : d ^ 2 + 2 * (a ^ 2 + b ^ 2 + c ^ 2) = 1) :
-    2 * negativity (whole (familyState a b c d)) =
+    2 * negativity (rankOneDensity (familyState a b c d)) =
       4 * d * Real.sqrt (a ^ 2 + b ^ 2 + c ^ 2) + 2 * (a ^ 2 + b ^ 2 + c ^ 2) := by
   let r := Real.sqrt (a ^ 2 + b ^ 2 + c ^ 2)
   have hr : 0 ≤ r := Real.sqrt_nonneg _
@@ -415,7 +425,7 @@ private theorem family_whole (a b c d : ℝ) (hd : 0 ≤ d)
     · exact hd
     · exact hr
     · exact hr)
-  rw [negativity.eq_1, whole.eq_1, heq]
+  rw [negativity.eq_1, heq]
   change 2 * ((traceNorm (partialTranspose (rankOneDensity _)) - 1) / 2) = _
   rw [hnorm]
   change 2 * (((d + r + r) ^ 2 - 1) / 2) =
@@ -425,11 +435,11 @@ private theorem family_whole (a b c d : ℝ) (hd : 0 ≤ d)
 private theorem family_separator (a b c d : ℝ)
     (ha : 0 ≤ a) (hd : 0 ≤ d)
     (hn : d ^ 2 + 2 * (a ^ 2 + b ^ 2 + c ^ 2) = 1)
-    (hz : 14 / 11 ≤ 2 * negativity (whole (familyState a b c d)))
-    (hdelta : 2 * negativity (whole (familyState a b c d)) -
+    (hz : 14 / 11 ≤ 2 * negativity (rankOneDensity (familyState a b c d)))
+    (hdelta : 2 * negativity (rankOneDensity (familyState a b c d)) -
       2 * negativity (pairAC (familyState a b c d)) ≤ 2 / 209) :
     2 * negativity (pairAB (familyState a b c d)) ≤
-      5 * (2 * negativity (whole (familyState a b c d)) -
+      5 * (2 * negativity (rankOneDensity (familyState a b c d)) -
         2 * negativity (pairAC (familyState a b c d))) := by
   let r := Real.sqrt (a ^ 2 + b ^ 2 + c ^ 2)
   have hrs : r ^ 2 = a ^ 2 + b ^ 2 + c ^ 2 := Real.sq_sqrt (by positivity)
@@ -452,7 +462,7 @@ set_option maxHeartbeats 1000000 in
 private theorem witness_scale :
     pairAB witness = (5000 / 175013 : ℂ) • pairAB witnessRaw ∧
     pairAC witness = (5000 / 175013 : ℂ) • pairAC witnessRaw ∧
-    whole witness = (5000 / 175013 : ℂ) • whole witnessRaw := by
+    rankOneDensity witness = (5000 / 175013 : ℂ) • rankOneDensity witnessRaw := by
   have hs : (Real.sqrt (175013 / 5000) : ℂ) * Real.sqrt (175013 / 5000) = 175013 / 5000 := by
     rw [← Complex.ofReal_mul,
       Real.mul_self_sqrt (show (0 : ℝ) ≤ 175013 / 5000 by norm_num)]
@@ -472,23 +482,23 @@ private theorem witness_scale :
       _ = _ := by rw [hi]
   refine ⟨?_, ?_, ?_⟩
   · ext p q
-    simp only [pairAB.eq_1, witness.eq_1, Matrix.smul_apply, smul_eq_mul, hmul,
+    simp only [pairAB_entry, witness.eq_1, Matrix.smul_apply, smul_eq_mul, hmul,
       Finset.mul_sum]
   · ext p q
-    simp only [pairAC.eq_1, witness.eq_1, Matrix.smul_apply, smul_eq_mul, hmul,
+    simp only [pairAC_entry, witness.eq_1, Matrix.smul_apply, smul_eq_mul, hmul,
       Finset.mul_sum]
   · ext p q
-    simp only [whole.eq_1, witness.eq_1, vecMulVec_apply, Pi.star_apply,
+    simp only [rankOneDensity, witness.eq_1, vecMulVec_apply, Pi.star_apply,
       Matrix.smul_apply, smul_eq_mul, hmul]
 
 set_option maxHeartbeats 1000000 in
 -- The finite matrix certificates are expanded entry by entry.
 private theorem witness_unit : ∑ i, Complex.normSq (witness i) = 1 := by
   have ht := congrArg (fun M => M.trace.re) witness_scale.2.2
-  have hn : (whole witness).trace.re = ∑ i, Complex.normSq (witness i) := by
-    simp [whole.eq_1, Matrix.trace, vecMulVec_apply, Complex.mul_conj]
+  have hn : (rankOneDensity witness).trace.re = ∑ i, Complex.normSq (witness i) := by
+    simp [rankOneDensity, Matrix.trace, vecMulVec_apply, Complex.mul_conj]
   rw [hn] at ht
-  norm_num [whole.eq_1, witnessRaw.eq_1, Matrix.trace, vecMulVec_apply,
+  norm_num [rankOneDensity, witnessRaw.eq_1, Matrix.trace, vecMulVec_apply,
     Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.trace_smul] at ht
   simpa only [Fintype.sum_prod_type, Fin.sum_univ_three] using ht
 
@@ -500,8 +510,8 @@ private def witnessFrame (r s : ℝ) : Matrix (Fin 3 × Fin 3) (Fin 3) ℝ :=
 set_option maxHeartbeats 1000000 in
 -- The finite matrix certificates are expanded entry by entry.
 private theorem witness_whole :
-    46 ≤ traceNorm (partialTranspose (whole witnessRaw)) - 175013 / 5000 ∧
-    traceNorm (partialTranspose (whole witnessRaw)) - 175013 / 5000 ≤ 460203 / 10000 := by
+    46 ≤ traceNorm (partialTranspose (rankOneDensity witnessRaw)) - 175013 / 5000 ∧
+    traceNorm (partialTranspose (rankOneDensity witnessRaw)) - 175013 / 5000 ≤ 460203 / 10000 := by
   let r := Real.sqrt (90001 / 10000)
   let s := Real.sqrt (401 / 400)
   have hr : r ^ 2 = 90001 / 10000 := Real.sq_sqrt (by norm_num)
@@ -563,22 +573,22 @@ private theorem witness_pairs :
       175013 / 5000 + 2 / 17 + 1 / 1000 := by
     change (∑ p, ∑ q, reflectionU p q * pairAB witnessRaw (q.1, p.2) (p.1, q.2)).re = _
     norm_num [reflectionU.eq_1, rankOneDensity, edge.eq_1, vecMulVec_apply,
-      pairAB.eq_1, witnessRaw.eq_1,
+      pairAB_entry, witnessRaw.eq_1,
       Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.one_apply]
-  have hty : (swapU * partialTranspose (pairAC witnessRaw)).trace.re = 81 := by
-    change (∑ p, ∑ q, swapU p q * pairAC witnessRaw (q.1, p.2) (p.1, q.2)).re = _
-    norm_num [swap_entry, pairAC.eq_1, witnessRaw.eq_1,
+  have hty : ((ConicalDesignConcurrenceComparability.swap 3) * partialTranspose (pairAC witnessRaw)).trace.re = 81 := by
+    change (∑ p, ∑ q, (ConicalDesignConcurrenceComparability.swap 3) p q * pairAC witnessRaw (q.1, p.2) (p.1, q.2)).re = _
+    norm_num [swap_entry, pairAC_entry, witnessRaw.eq_1,
       Fintype.sum_prod_type, Fin.sum_univ_three]
   have hx := unitary_bound (partialTranspose (pairAB witnessRaw)) reflectionU hU
-  have hy := unitary_bound (partialTranspose (pairAC witnessRaw)) swapU swap_unitary
+  have hy := unitary_bound (partialTranspose (pairAC witnessRaw)) (ConicalDesignConcurrenceComparability.swap 3) swap_unitary
   rw [htx] at hx
   rw [hty] at hy
   constructor <;> linarith
 
 private theorem witness_bounds :
-    14 / 11 ≤ 2 * negativity (whole witness) ∧
-    2 * negativity (whole witness) - 2 * negativity (pairAC witness) ≤ 2 / 209 ∧
-    5 * (2 * negativity (whole witness) - 2 * negativity (pairAC witness)) <
+    14 / 11 ≤ 2 * negativity (rankOneDensity witness) ∧
+    2 * negativity (rankOneDensity witness) - 2 * negativity (pairAC witness) ≤ 2 / 209 ∧
+    5 * (2 * negativity (rankOneDensity witness) - 2 * negativity (pairAC witness)) <
       2 * negativity (pairAB witness) := by
   have hpt {a b : Type} (M : Matrix (a × b) (a × b) ℂ) (s : ℂ) :
       partialTranspose (s • M) = s • partialTranspose M := rfl
@@ -589,8 +599,8 @@ private theorem witness_bounds :
   have hyscale : traceNorm (partialTranspose (pairAC witness)) =
       (5000 / 175013) * traceNorm (partialTranspose (pairAC witnessRaw)) := by
     rw [witness_scale.2.1, hpt, hscalar, traceNorm_smul_nonneg _ _ (by norm_num)]
-  have hzscale : traceNorm (partialTranspose (whole witness)) =
-      (5000 / 175013) * traceNorm (partialTranspose (whole witnessRaw)) := by
+  have hzscale : traceNorm (partialTranspose (rankOneDensity witness)) =
+      (5000 / 175013) * traceNorm (partialTranspose (rankOneDensity witnessRaw)) := by
     rw [witness_scale.2.2, hpt, hscalar, traceNorm_smul_nonneg _ _ (by norm_num)]
   obtain ⟨hzlo, hzhi⟩ := witness_whole
   obtain ⟨hxlo, hylo⟩ := witness_pairs
@@ -609,7 +619,7 @@ theorem result : ¬ claim := by
   have hz := congrArg (fun p : ℝ × ℝ × ℝ => p.2.2) ht
   change negativity (pairAB (familyState a b c d)) = negativity (pairAB witness) at hx
   change negativity (pairAC (familyState a b c d)) = negativity (pairAC witness) at hy
-  change negativity (whole (familyState a b c d)) = negativity (whole witness) at hz
+  change negativity (rankOneDensity (familyState a b c d)) = negativity (rankOneDensity witness) at hz
   obtain ⟨hlarge, hgap, hstrict⟩ := witness_bounds
   have hsep := family_separator a b c d ha hd hn (by rwa [hz]) (by rwa [hz, hy])
   rw [hx, hy, hz] at hsep
