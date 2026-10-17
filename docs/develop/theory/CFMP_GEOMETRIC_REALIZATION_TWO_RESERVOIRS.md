@@ -3555,3 +3555,243 @@ makes u>c. The argument has preserved every actual slot and allows
 repeated axes and self-glued faces. The residual faces {Z,M,U} still
 admit roles not excluded by the small-D estimates; those are the
 remaining joint-star cases, not a closed five-reservoir contradiction.
+
+
+## 197. Statement and exact dependencies
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths, and original 2*pi
+edge equations. Assume exactly five reservoir labels and a nonempty flat set.
+Choose the maximal-selected escape tau=(Z,M,C,D,M,C) and write the five cosh
+lengths as z,m,c,d,u. The existing five-witness theorem and exact upper-gap
+result give m>3, z>m+2, c,d<m-2, M's genuine budget pi, all Z slots genuine,
+and
+
+ s=sqrt((z-1)/(z+1)),
+ T=2*sqrt(m^2-1)*s-m,
+ m-2<T<m, u>T.
+
+Use the proved forced-return proposition: if u<=m, the complete Z circle
+contains tau as its one-slot dominant {M,C} run, with both boundary slots
+in rho=(C,Z,M,U,Z,M). Those two Z angles exceed pi/2. Every owner with
+fixed pair {Z,M} is rho. The original tau and rho each consume more than
+pi of the total actual M/Z capacity 3*pi.
+
+Define the exact second-role threshold
+
+ T2=2*sqrt(z^2-1)*sqrt((m-1)/(m+1))-z.
+
+**Proposition 197.1.** If u<=m, the complete Z circle contains an actual owner
+eta, distinct from tau and rho, with frame
+
+ eta=(M,Z,U,Q,Z,U).
+
+Its axial M angle theta and transverse Z angle gamma satisfy
+ theta+2*gamma<pi,
+and consequently u>T2. In all cases,
+
+ u>min(m,T2)>T.
+
+These are necessary conditions, not five-reservoir exclusion.
+
+## 198. A lower cost for every axial residual slot
+
+Assume u<=m and consider any genuine axial Z slot with pair {M,U}.
+Let its angle be theta and its owner's transverse M angle be beta.
+The exact paired response is
+
+ beta=atan(A*cot(theta/2))+atan(B*cot(theta/2)),
+ A=[sqrt(m^2-1)+sqrt(u^2-1)]/(m+u)*s,
+ B=[sqrt(m^2-1)-sqrt(u^2-1)]/(m+u)*s>=0.
+
+Write alpha=sqrt((m-1)/(m+1)). Since u>1,
+ sqrt(u^2-1)>alpha*(u-1),
+while sqrt(m^2-1)=alpha*(m+1). Thus A>alpha*s>1/2,
+because m,z>3 imply alpha,s>1/sqrt(2).
+
+It follows that theta+beta>pi/2. For theta>=pi/2 this follows from
+beta>0. For 0<theta<pi/2, put t=cot(theta/2)>1. Then
+ tan(pi/2-theta)=cot(theta)=(t-1/t)/2<t/2<A*t,
+so atan(A*t)>pi/2-theta and beta is at least that arctangent.
+This includes u=m, when B=0.
+
+## 199. Actual continuation forces the third owner
+
+The residual faces of rho have actual multiset {Z,M,U}. A Z slot across
+one is axial with fixed pair {M,U}, transverse with pair {Z,M} and axial
+U, or transverse with pair {Z,U} and axial M. These are exhaustive,
+since the three labels are distinct. The pair-{Z,M} owner is uniquely
+rho by the forced-return proposition.
+
+Suppose no owner of the third role occurs in the complete Z circle.
+The tau Z slot is the entire axial {M,C} arc between the two distinct
+transverse rho Z slots. The other arc contains every remaining Z slot.
+On leaving a residual rho face, it must enter an axial {M,U} slot or
+immediately return to rho. Actual face transport preserves {M,U}
+along an axial run. A transverse boundary has pair {Z,M} or {Z,U};
+under the supposition it must be rho. Consequently the other arc is
+one axial {M,U} run with
+
+ n=degree(Z)-3>=3
+
+actual slots. This also excludes the immediate-return empty arc.
+
+Every owner of that run differs from tau and rho by its fixed pair.
+An owner has at most two axial Z slots and exactly two transverse M
+slots. For one Z slot, assigning one beta uses at most its actual M
+expense; for two Z slots, their angles and beta values agree by the
+symmetry of its two equal Z axes, so assigning beta to both uses
+exactly its two transverse M angles. The sum of theta+beta over all
+run slots is therefore at most the actual M/Z expense of these owners.
+No actual angle is counted twice beyond its original occurrence.
+Any additional M axis only increases the available expense.
+
+By Section 198, this sum exceeds n*pi/2>=3*pi/2. But the distinct owners
+tau and rho each already consume more than pi of the total M/Z
+capacity 3*pi. The remaining owners have capacity strictly below pi,
+a contradiction. Hence an actual owner eta of the third role occurs.
+This is a connected normal-circle argument and includes repeated
+owners, repeated axes, and self-glued faces.
+
+## 200. The exact threshold forced by eta
+
+The fixed pair {Z,U} makes eta distinct from tau and rho. It is genuine
+because every Z occurrence is genuine. Its axial M angle theta and
+two transverse Z angles gamma are actual M/Z slots. Since tau and rho
+consume more than 2*pi together, their remaining complete capacity
+implies theta+2*gamma<pi, even if eta contains additional M or Z axes.
+
+Its exact response is
+ gamma=atan(A2*t)+atan(B2*t), t=cot(theta/2)>0,
+ A2/B2=[sqrt(z^2-1) +/- sqrt(u^2-1)]/(z+u)
+       *sqrt((m-1)/(m+1)).
+Both parameters are positive since z>m>=u. If A2+B2>=1, then
+atan(A2*t)+atan(B2*t)>atan(t): if the left sum is at least pi/2,
+the claim is immediate; otherwise its tangent is
+(A2+B2)*t/(1-A2*B2*t^2)>t. This would give theta+2*gamma>pi,
+contradiction. Thus A2+B2<1, which is exactly u>T2.
+
+Finally put alpha=sqrt((m-1)/(m+1)), beta=s. Then
+ T=2*(m+1)*alpha*beta-m,
+ T2=2*(z+1)*alpha*beta-z,
+so T2-T=(z-m)*(2*alpha*beta-1)>0. Also m>T.
+If u<=m the established u>T2 implies u>min(m,T2); if u>m the
+same conclusion is immediate. Both possible minima strictly exceed T.
+The actual third owner and this improved gap are the conclusions;
+no claim is made that its remaining face continuations are impossible.
+
+
+## 201. Statement and dependencies
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths, original 2*pi edge
+equations, exactly five reservoir labels, and a nonempty flat set. Choose
+M maximal among pi-selected reservoir labels, its source flat and escape
+ tau=(Z,M,C,D,M,C), H={M,C,D,Z,U}.
+Use cosh lengths m,z,c,d,u. The established five-witness and upper-gap
+theorems give
+ m>3, z>m+2, u>T>m-2,
+where T=2*sqrt(m^2-1)*sqrt((z-1)/(z+1))-m.
+All five reservoir labels have genuine witnesses; every flat selects its axes.
+
+Use Proposition 197.1: if u<=m, the
+complete Z circle contains an actual genuine owner
+ eta=(M,Z,U,Q,Z,U),
+whose axial M angle theta and transverse Z angle gamma obey
+ theta+2*gamma<pi.
+That result uses the distinct tau/rho M/Z expenditures and the complete
+residual circle, not a seed or a distinct-owner assumption.
+
+**Proposition 201.1.** Necessarily u>m. Consequently U is not pi-selected and
+has no flat occurrence; its complete genuine angle budget is 2*pi.
+The source's opposite axis cannot be U. This excludes only the lower
+fifth-reservoir branch; it does not prove five-reservoir realization.
+
+## 202. Exact response with the actual other-axis bound
+
+Suppose u<=m. Then z>m>=u>m-2>1. Let q be eta's other axis.
+If Q is a reservoir, q<=z, since all H values other than Z are <=m.
+If Q is special, its actual fixed pair {Z,U} gives q<1+z+u.
+Therefore in all cases
+ q<q0=1+z+u.
+
+Put k=z+u, h=z-u>0 and alpha=sqrt((m-1)/(m+1)).
+For the genuine owner eta define
+ L=k^2-(m-1)*(q-1)>0,
+ J=(m+1)*(q+1)-h^2>0.
+Its axial half-angle and transverse response are
+ tan(theta/2)^2=(m-1)/(m+1)*J/L,
+ gamma=atan(A*t)+atan(B*t), t=cot(theta/2)>0,
+ A/B=[sqrt(z^2-1) +/- sqrt(u^2-1)]/k*alpha.
+Both A and B are positive, and
+ A+B=2*sqrt(z^2-1)*alpha/k,
+ A*B=h/k*(m-1)/(m+1),
+ A*B*t^2=h/k*L/J.
+
+We will prove
+ A+B+A*B*t^2>1.
+This implies gamma>atan(t)=(pi-theta)/2. If gamma>=pi/2 this is
+immediate. Otherwise 1-A*B*t^2>0 and
+ tan(gamma)=(A+B)*t/(1-A*B*t^2)>t.
+It then contradicts the actual inequality theta+2*gamma<pi.
+
+## 203. Reducing the cost bound to u=m
+
+For fixed z,u,m the ratio L/J decreases strictly as q increases:
+L has negative derivative and stays positive up to q0, whereas J has
+positive derivative and stays positive from the actual q onward.
+Indeed at q0,
+ L0=k*(k-m+1)>0,
+ J0=(m+1)*(k+2)-h^2>0.
+Thus
+ A+B+A*B*t^2
+ > 2*sqrt(z^2-1)*alpha/(z+u)
+   +(z-u)*(z+u-m+1)/[(m+1)*(z+u+2)-(z-u)^2]
+ = F(u).
+
+Here z,m are fixed. On the full interval from the actual u to m,
+the first term of F decreases strictly. The numerator
+ N(v)=(z-v)*(z+v-m+1)
+is positive and satisfies N'(v)=m-1-2*v<3-m<0, since v>=u>m-2.
+The denominator
+ J0(v)=(m+1)*(z+v+2)-(z-v)^2
+is positive and strictly increasing: J0'(v)=m+1+2*(z-v)>0,
+because v<=m<z. Hence N(v)/J0(v) also decreases strictly.
+Consequently F(u)>=F(m), including equality when u=m.
+
+At v=m, the denominator factors exactly as
+ J0(m)=(z+1)*(3*m+2-z)>0.
+It follows that
+ F(m)=2*sqrt(z^2-1)*alpha/(z+m)
+      +(z-m)/(3*m+2-z).
+
+## 204. The remaining bound is strictly greater than one
+
+For fixed m, both terms in this last expression are strictly increasing
+in z on m+2<=z<3*m+2. For the first term, the derivative of
+sqrt(z^2-1)/(z+m) is
+ (m*z+1)/[sqrt(z^2-1)*(z+m)^2]>0.
+For the second term, the derivative is
+ (2*m+2)/(3*m+2-z)^2>0.
+Our actual z is greater than m+2, and J0(m)>0 ensures it lies in this
+interval. Therefore
+
+ F(m)>sqrt((m+3)*(m-1))/(m+1)+1/m
+      =sqrt(1-4/(m+1)^2)+1/m>1.
+
+The final strict inequality follows by squaring the positive quantities
+sqrt(1-4/(m+1)^2) and 1-1/m. The difference of their squares is positive
+because
+ (2*m-1)*(m+1)^2-4*m^2
+   =2*m^3-m^2-1=(m-1)*(2*m^2+m+1)>0.
+All denominators are positive since m>3.
+
+Combining Sections 202--204 gives theta+2*gamma>pi, contradicting the forced
+third owner's complete-budget bound. Thus u>m.
+Maximality of the selected reservoir M gives p_U=0. Every flat selects
+its axes, so a U axis in a flat would be pi-selected; a U transverse slot
+would be a flat zero, which the five-witness theorem excludes for U.
+Hence every U occurrence is genuine and its original edge equation is
+its genuine 2*pi budget. In particular U cannot be an axis of the source
+flat. The proof preserves original occurrences and the whole remaining
+u>m branch is still open.
