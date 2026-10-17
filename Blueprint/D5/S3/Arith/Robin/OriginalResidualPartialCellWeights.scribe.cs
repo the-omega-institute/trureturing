@@ -122,5 +122,30 @@ internal sealed class OriginalResidualPartialCellWeightsDocument : IScribeDocume
                         + "assuming an energy allowance. It does not prove a sharp finite endpoint "
                         + "maximizer, a signed residual estimate, an analytic Mobius-prefix rate, "
                         + "the complete cutoff payments, strict Robin above 5040 or RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-partial-cell-response-projection-interface"),
+                DeclarationHandle.Create(Prefix + "response_projection_interface"),
+                H("Exact public interface to the unchanged original projection"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural N>=3, on S(N)={m in N:N<=m<2N}, "
+                        + "the exact original Gram entries satisfy G00=sum w(m), "
+                        + "G01=sum w(m)*m/N, G10=G01, and G11=sum w(m)*(m/N)^2; "
+                        + "the original determinant Delta(N)>0. For every real a,b, "
+                        + "sum A(N,a,b,m)=0 and sum m*A(N,a,b,m)=0. "
+                        + "For every real a,b and every natural m in S(N), "
+                        + "A(N,a,b,m)=log(N)*omega(a,b,m)-c0*w(m)-c1*[w(m)*m/N]. "
+                        + "There are no endpoint order, strictness or upper-bound hypotheses "
+                        + "on a,b in this interface.")),
+                    Paragraph(Text(
+                        "This single additive theorem binds the original private Gram-entry, "
+                        + "positive-determinant, exact-moment and on-block coefficient proofs "
+                        + "directly. The separate response-adjoint module is its actual consumer. "
+                        + "No original definition, proof, accepted energy content or owner import "
+                        + "is replaced. It makes no interval-sign, cofinal or RH assertion. "
+                        + "This interface and its Reg/Scribe additions have completed local scoped "
+                        + "validation; repository PR and CI acceptance remain separate delivery steps."))),
                 DescribeRole.Theorem))));
 }
