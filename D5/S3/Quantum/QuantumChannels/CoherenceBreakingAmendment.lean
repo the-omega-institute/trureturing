@@ -22,11 +22,10 @@ open D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
   (IsKrausChannel)
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
   (all_density_tomographically_complete)
-open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (trace_standard)
 open D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant (pair_permutation)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
-  (phase phase_unit moment_four)
+  (phase moment_four)
 
 namespace D5.S3.Quantum.QuantumChannels.CoherenceBreakingAmendment
 
@@ -272,8 +271,13 @@ private theorem phase_trace {d : ℕ}
     (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ) :
     LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ) (F * conjugation (monomial σ ω)) =
       ∑ p, ∑ q, (ω p * star (ω q)) * F (single (σ p) (σ q) 1) p q := by
-  rw [trace_standard]
-  simp only [Module.End.mul_apply, monomial_single, map_smul, Matrix.smul_apply, smul_eq_mul]
+  calc
+    _ = ∑ p, ∑ q, (F * conjugation (monomial σ ω)) (single p q 1) p q := by
+      rw [LinearMap.trace_eq_matrix_trace ℂ (Matrix.stdBasis ℂ (Fin d) (Fin d))]
+      simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_prod_type,
+        Matrix.stdBasis, ← Matrix.single_eq_of_single_single]
+    _ = _ := by
+      simp only [Module.End.mul_apply, monomial_single, map_smul, Matrix.smul_apply, smul_eq_mul]
 
 private theorem nonzero_trace {d : ℕ}
     (F : Module.End ℂ (Matrix (Fin d) (Fin d) ℂ))
@@ -350,7 +354,8 @@ theorem result : claim := by
   obtain ⟨w, hw⟩ := nonzero_trace (residual K) σ k l hkl (by simpa [hσk, hσl] using hentry)
   refine ⟨monomial σ (fun c => phase (w c)),
     monomial_unitary σ _ (fun c => (by
-      simpa only [Complex.star_def, mul_comm] using phase_unit (w c))), ?_⟩
+      simp only [phase, Complex.star_def, map_pow, ← mul_pow, Complex.conj_I,
+        mul_neg, Complex.I_mul_I, neg_neg, one_pow])), ?_⟩
   intro hcb
   exact hw (breaking_trace_zero K hK σ _ n (by omega) hcb)
 

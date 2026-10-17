@@ -27,7 +27,7 @@ private def rot (i : Fin d) : (Fin d → Fin 4) ≃ (Fin d → Fin 4) :=
   Equiv.piCongrRight (fun j => if j = i then finRotate 4 else Equiv.refl _)
 private theorem phase_rot (s : Fin 4) : phase (finRotate 4 s) = I * phase s := by
   fin_cases s <;> norm_num [phase, finRotate_apply, Fin.add_def]
-theorem phase_unit (s : Fin 4) : conj (phase s) * phase s = 1 := by
+private theorem phase_unit (s : Fin 4) : conj (phase s) * phase s = 1 := by
   simp only [phase, map_pow, ← mul_pow, Complex.conj_I, neg_mul,
     Complex.I_mul_I, neg_neg, one_pow]
 private theorem rot_apply (i j : Fin d) (z : Fin d → Fin 4) :
