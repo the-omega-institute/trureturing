@@ -92,7 +92,7 @@ Every public declaration is bind-only; the definitions are used by public statem
 
 ### What the settlement shows
 
-**Refuted by `result`:** eight vectors f₀, …, f₇ in ℂ⁸ have Pauli orbits that are SICs and images under every Pauli operator that are orthonormal bases. The 512 vectors D(x, z)f_k form a SIC-compound whose eight defining SICs are Hoggar SICs.
+**Established by `result`**, which refutes the non-existence claim: eight vectors f₀, …, f₇ in ℂ⁸ have Pauli orbits that are SICs and images under every Pauli operator that are orthonormal bases. The 512 vectors D(x, z)f_k form a SIC-compound whose eight defining SICs are Hoggar SICs.
 
 **Argued, not formalized** (search seat, recomputed in part by the orchestrator, recorded in #18207).
 - *Clifford equivalence.* Explicit words U_k in Hadamard, phase and controlled-NOT gates satisfy U_k f₀ ∝ f_k. Conjugation by each U_k permutes the Pauli operators up to phases, so every orbit is unitarily equivalent to the standard Hoggar SIC.
