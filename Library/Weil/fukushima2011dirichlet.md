@@ -988,3 +988,199 @@ This is a conditional paper application of existing block and rank-one
 inverse tools. It supplies no evaluated entries, low or complementary-low
 signs, cofinal certificate, endpoint half-bound, RH/Robin proof or Lean
 certification.
+
+## Verified zero height and a whole-projector strip-tail budget
+
+This is a conditional application of (WF7)–(WF8), (FF1)–(FF7), the
+existing compact theta–Weil identity and the existing inverse-fourth
+zero count. Fourier modulation and the spectral-projector contradiction
+are reused tools. No new general theorem, originality, numerical gap or
+Lean certification is asserted. The purpose is to bind a finite verified
+zero height to the actual whole-subcritical-projector map without a
+finite generator Gram or a matrix-sign calculation.
+
+Fix $0<\varepsilon\le1/2$, put $\tau=\varepsilon/8$ and take the
+unchanged $p,K_p,N_0,R,N$ of (WF7), (WF6), (FF2), (FF7). Fix one
+admissible smooth transition-width-two cutoff of (FF1)–(FF2), and charge
+that same cutoff throughout. Define
+
+$$
+W=M_{\chi_R}U^{-1}p_NU,\qquad a_R=s\chi_R,\qquad
+\mathcal A_2(R)=\int_{\mathbb R}e^{|x|/2}|a_R''(x)|\,dx.
+\tag{VH1}
+$$
+
+The cutoff is smooth and compact, so $\mathcal A_2(R)<\infty$.
+No quantitative bound for its second derivative is inferred from its
+Lipschitz bound. Equations (FF1), (FF2), (WF8) and the bandwidth choice
+in (FF7) give
+
+$$
+\begin{aligned}
+\|(I-W)P_\varepsilon\|_{\nu\to\mathcal F}
+&\le\frac{\sqrt7}{8}\tau+
+ \frac{78K_p}{\varepsilon}\frac{1+\log N}{N}\\
+&\le\left(\frac{\sqrt7}{8}+\frac13\right)\tau<\tau.
+\end{aligned}
+\tag{VH2}
+$$
+
+This is the whole original spectral subspace estimate. It omits only
+the midpoint approximation used to make (FF4) finite, not any part of
+the actual energy. The map $W$ generally has infinite rank; (FF8)'s
+finite generator count is not asserted for it. For every even complex
+$h\in L^2(\nu)$, $Wh$ is
+compact smooth and even: $p_NUh$ has compact Fourier support and bounded
+derivatives of every order, while $\rho$ is smooth and positive on the
+cutoff support.
+
+### Keep the frequency translation before taking a strip bound
+
+Put $f=\Phi Wh=a_Rp_NUh$. Use the unitary Fourier transform on $Uh$
+and the nonunitary transform $\widehat f(z)=\int e^{-izx}f(x)dx$ on
+physical tests. Fubini gives
+
+$$
+\widehat f(z)=\frac1{\sqrt{2\pi}}
+\int_{-2N}^{2N}p(\xi/N)\widehat{Uh}(\xi)
+\widehat{a_R}(z-\xi)\,d\xi.
+\tag{VH3}
+$$
+
+This is the usual multiplication/modulation rule, already used for
+[cosine packets](../../D5/S3/Weil/ZeroInfinitude/CosinePacket.lean),
+`paperFT_cosineModulation`; it is not a new Fourier construction.
+Let $H>2N$, $|\Re z|>H$ and $|\Im z|\le1/2$. Two integrations by parts
+on $a_R$, before combining the modulated factors, imply
+
+$$
+|\widehat{a_R}(z-\xi)|
+\le\frac{\mathcal A_2(R)}{|z-\xi|^2}
+\le\frac{\mathcal A_2(R)}{(|\Re z|-2N)^2}.
+$$
+
+There are no boundary terms because $a_R$ is compact smooth. Since
+$0\le p\le1$, Plancherel and Cauchy–Schwarz on $[-2N,2N]$ give
+
+$$
+|\widehat f(z)|
+\le\sqrt{\frac{2N}{\pi}}
+\frac{\mathcal A_2(R)}{(|\Re z|-2N)^2}\|h\|_\nu.
+\tag{VH4}
+$$
+
+Thus differentiating a modulated factor at frequency up to $2N$ is
+unnecessary for this bound. That direct two-derivative bound would
+introduce an $N^2$ term before squaring; (VH4) retains the frequency
+separation instead. Its loss is the explicit separation requirement
+$H>2N$.
+
+### Reuse the inclusive verified head and the strict actual zero tail
+
+For an integer $H\ge5$ set
+
+$$
+\begin{aligned}
+L_H&=\lfloor\log_2(H+4)\rfloor+1,\\
+\mathscr R_4(H)&=\frac{256}{H}
+\left[\left(\frac2{H^3}+\frac1{2H^2}\right)L_H+
+\frac{2/H^2+1/H}{H+4}\right].
+\end{aligned}
+\tag{VH5}
+$$
+
+The existing
+[`finite_inverse_fourth_tail_le`](../../D5/S3/Weil/BurnolGram/ExplicitWeilFourthMomentTail.lean)
+applies with $\gamma=\Im\rho$, full analytic multiplicities, $A=128$,
+$T=H$, $L=L_H$, and its proved actual unit-window count. Taking the
+supremum over finite subsets of $|\Im\rho|>H$ gives
+
+$$
+\sum_{|\Im\rho|>H}\frac{m_\rho}{(\Im\rho)^4}
+\le\mathscr R_4(H).
+\tag{VH6}
+$$
+
+This uses the finite ordinate-tail estimate directly. The neighboring
+`zeroData_fourth_moment_tail_rational` additionally assumes a finite
+head containing a spectral ball of radius $H+1$ and bounds its spectral
+envelope; that corollary alone cannot be applied to the height-$H$
+head. Zeros at height exactly $H$ remain in the head, counted with their
+full multiplicity. The two-sided count already includes negative
+ordinates, so no extra factor two is inserted.
+
+Suppose all nontrivial zeros through height $H$ lie on the critical line.
+The existing compact-test formula gives
+
+$$
+q(Wh):=D(Wh)-\tfrac12\operatorname{Var}_\nu(Wh)
+=\sum_\rho m_\rho\widehat f(z_\rho)
+ \overline{\widehat f(\overline{z_\rho})},\qquad
+z_\rho=\Im\rho-i(\Re\rho-1/2).
+$$
+
+Its inclusive head is nonnegative. Off the critical line the paired
+product is retained, not replaced by an absolute square. Apply (VH4)
+to both factors in that product, then use (VH6). The complete real
+slack therefore satisfies, for all even complex $h\in L^2(\nu)$,
+
+$$
+\begin{aligned}
+q(Wh)&\ge-\mathcal E_H\|h\|_\nu^2,\\
+\mathcal E_H&=\frac{2N}{\pi}\mathcal A_2(R)^2
+ \left(1-\frac{2N}{H}\right)^{-4}\mathscr R_4(H).
+\end{aligned}
+\tag{VH7}
+$$
+
+All prime powers remain in $D$. Only the zero-side remainder is bounded
+absolutely. This is an all-input estimate for this specified map, not
+an operator-norm tail claim on bare $L^2(\nu)$ without smoothing.
+
+### A sufficient fixed-gap supplier, with its unpaid inputs
+
+If $\mathcal E_H\le\varepsilon/2$, (VH2) and (VH7) exclude every
+centered unit $h\in\operatorname{ran}P_\varepsilon$. Indeed,
+$q(h)\le-\varepsilon$ and $\|h\|_{\mathcal F}\le\sqrt{3/2}$.
+The polarized form $q$ is bounded by the product of the $\mathcal F$
+norms: apply Cauchy–Schwarz to the energy and covariance parts, then to
+the resulting two scalar components. Consequently
+
+$$
+|q(Wh)-q(h)|
+\le\tau(2\sqrt{3/2}+\tau)<3\tau=3\varepsilon/8,
+\qquad q(Wh)<-5\varepsilon/8.
+$$
+
+This contradicts (VH7). Constants are treated separately using $T1=0$;
+no projection of a noncompact source is discarded. The spectral theorem
+then gives the conditional all-form-domain conclusion
+
+$$
+D(h)\ge(1/2-\varepsilon)\operatorname{Var}_\nu(h)
+\qquad(h\in\mathcal F_{\min,\mathrm{even}}).
+\tag{VH8}
+$$
+
+The published finite-height premise can be reused at
+$H_0=3\cdot10^{12}$: Platt–Trudgian,
+[*The Riemann hypothesis is true up to $3\cdot10^{12}$*,
+arXiv:2004.09765v1](https://arxiv.org/pdf/2004.09765v1), Theorem 1,
+printed p.2, verifies through $3000175332800$. This result is already
+used in the [finite-height Robin supplier](../Analytic/polak2026finiterobinca.md).
+No zero verification is repeated here. No bounds establishing
+$2N<H_0$ and $\mathcal E_{H_0}\le\varepsilon/2$ have been supplied
+for (VH1). A numerical improvement to the actual spectral gap does not
+follow from these conditional formulas alone.
+
+Finally $K_p>0$ because $s$ is nonzero and the cutoff $p$ changes from
+one to zero. The unchanged (FF7) gives
+$\delta\le\varepsilon^2/(1872K_p)$ and
+$N\ge2\delta^{-1}\log(2/\delta)$. Hence $N\to\infty$ as
+$\varepsilon\downarrow0$. For a fixed verified height $H_0$, the
+hypothesis $H_0>2N$ of this particular absolute shifted-tail bound
+therefore fails eventually. Even success at one fixed gap would not
+supply a cofinal half-bound by this same formula. This restriction
+concerns this supplier; it does not rule out signed tails, a different
+justified approximation map or a different height-to-form transfer.
+The endpoint half-bound, RH and strict Robin remain unresolved.
