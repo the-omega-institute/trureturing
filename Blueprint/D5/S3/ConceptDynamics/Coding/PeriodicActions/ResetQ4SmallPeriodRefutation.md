@@ -14,7 +14,7 @@ The readout chi_add is the original native plus/quotient readout. For each origi
 
 $$claim = \operatorname{FactorsThrough}\left(chi_{add}, O_{5}\right)$$
 
-*Formalization.* `D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.claim` (`✓ std3`).
+*Formalization.* `D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.claim` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -36,7 +36,7 @@ This minus-side computation is the exact native readout for every h. Indeed, toC
 
 $$\neg claim$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,10 +48,10 @@ The same argument is carried out for every universe u, every index type in Type 
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.claim`
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.result`
-- Dependency: [D5/S3/ConceptDynamics/Coding/ResetAlternatingHistories](ResetAlternatingHistories.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/ResetQ4OriginalLocalizedCubes](ResetQ4OriginalLocalizedCubes.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes](ResetQ4UnitCubes.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/ResetStandardBeamGeometry](ResetStandardBeamGeometry.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories](TwistedPeriodicHistories.md)
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.claim`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.result`
+- Dependency: [D5/S3/ConceptDynamics/Coding/ResetAlternatingHistories](../ResetAlternatingHistories.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/ResetQ4OriginalLocalizedCubes](../ResetQ4OriginalLocalizedCubes.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/ResetQ4UnitCubes](../ResetQ4UnitCubes.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/ResetStandardBeamGeometry](../ResetStandardBeamGeometry.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/TwistedPeriodicHistories](../TwistedPeriodicHistories.md)

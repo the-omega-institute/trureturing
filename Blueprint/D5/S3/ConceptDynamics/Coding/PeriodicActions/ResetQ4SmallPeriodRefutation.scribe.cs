@@ -1,11 +1,11 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PeriodicActions;
 
 internal sealed class ResetQ4SmallPeriodRefutationDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.";
+    private const string Prefix = "D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.";
     private static Formula I(string name) => FormulaDsl.Id(name);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(

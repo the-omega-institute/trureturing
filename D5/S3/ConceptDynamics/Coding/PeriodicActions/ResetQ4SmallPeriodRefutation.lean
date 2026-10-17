@@ -1,9 +1,9 @@
-/- GID: D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation
+/- GID: D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation
    generality: I
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Logic.Function.Basic, mathlib/module/Mathlib.GroupTheory.QuotientGroup.Basic]
-   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.claim; result=D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.result; claim=D5/S3/ConceptDynamics/Coding/ResetQ4SmallPeriodRefutation.claim
+   anchors: [mathlib/module/Mathlib.GroupTheory.QuotientGroup.Basic]
+   utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.claim; result=D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.result; claim=D5/S3/ConceptDynamics/Coding/PeriodicActions/ResetQ4SmallPeriodRefutation.claim
    digest: Whole actions on periods one through five do not determine the quartic native cubic character. -/
 import D5.S3.ConceptDynamics.Coding.ResetAlternatingHistories
 import D5.S3.ConceptDynamics.Coding.TwistedPeriodicHistories
