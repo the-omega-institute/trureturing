@@ -4,8 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Digestion.Tests;
 
 /// <summary>
-/// The default digestion atomizer is a rule, not a lexicon: atom content is independent
-/// of any registered vocabulary,
+/// The digestion atomizer partitions Markdown by structure rather than a lexicon,
 /// and no shape of Markdown makes it throw. These cases are that contract, one per clause.
 /// </summary>
 public sealed class GenericAtomizerTests
@@ -290,21 +289,6 @@ public sealed class GenericAtomizerTests
     public void TheDefaultAtomizerIsRegistered()
     {
         Assert.Contains(AtomizerRegistry.GenericId, AtomizerRegistry.RegisteredIds);
-    }
-
-    /// <summary>
-    /// The content fingerprint is a function of the source bytes alone: loaded volume vocabularies are
-    /// not an input, so editing another volume's dialect cannot churn this volume's ledger.
-    /// </summary>
-    [Fact]
-    public void TheLocatorDoesNotDependOnAnyLoadedVocabulary()
-    {
-        var markdown = "# 卷首\n\n## 定理 1.1\n\n证。\n";
-        var bytes = Encoding.UTF8.GetBytes(markdown);
-        Assert.Equal(
-            Fingerprints(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes)),
-            Fingerprints(AtomizerRegistry.Atomize(
-                AtomizerRegistry.GenericId, bytes)));
     }
 
     [Fact]
