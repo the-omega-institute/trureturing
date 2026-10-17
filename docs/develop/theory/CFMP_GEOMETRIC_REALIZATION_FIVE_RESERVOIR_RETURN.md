@@ -1309,3 +1309,794 @@ action is added. The strict-angle construction and Luo–Yang existence
 step are reused; the new five-reservoir input is the complete flat
 exclusion. No example separating this class from every earlier criterion,
 Lean certification, or unrestricted CFMP conclusion is claimed.
+
+## 288. An eight-tetrahedron example and its exact scope
+
+The following actual finite ideal face pairing has eight tetrahedra, five actual
+global edges of degrees `(16,8,8,8,8)`, and one connected closed orientable
+ideal-vertex link of genus 4. It is a connected orientable compact 3-manifold
+after truncation. Every tetrahedron has a vertex-induced paired frame
+`(R,A,B,O,A,B)`, and every simultaneous choice of paired frames across all eight tetrahedra
+forces the union of their transverse reservoir labels to contain all five actual edges.
+
+Thus this is a concrete strict separation from the paired-frame class with at
+most four transverse reservoirs. Its minimum edge degree is 8, so it also lies
+outside a blanket minimum-degree-at-least-9 hypothesis. No local label appears
+three times, in any vertex frame. This is not a claim of separation from every
+older geometric criterion, nor of minimality among all such triangulations.
+No unrestricted CFMP or public priority claim is made.
+
+## 289. Local labels and all sixteen face pairs
+
+Use tetrahedra `P0,M0,P1,M1,P2,M2,P3,M3` with vertices `1,2,3,4`.
+The label words in edge order `(12,13,14,34,24,23)` are:
+
+| Type | Both copies' label word | Forced transverse pair |
+|---|---|---|
+| 0 | `(4,0,1,2,0,1)` | `{0,1}` |
+| 1 | `(1,0,2,3,0,2)` | `{0,2}` |
+| 2 | `(2,0,3,4,0,3)` | `{0,3}` |
+| 3 | `(3,0,4,1,0,4)` | `{0,4}` |
+
+`Fj` means the face opposite vertex `j`. A map `q1q2q3q4` sends vertex `j` to
+`qj`; restrict it to the stated source face. The omitted vertex is mapped to the
+omitted target vertex, so the listed full permutation also fixes its parity.
+
+| Source | Target | Full vertex map |
+|---|---|---|
+| `P0:F3` | `P3:F1` | `3214` |
+| `P0:F4` | `P3:F2` | `1432` |
+| `M3:F1` | `M0:F4` | `4123` |
+| `M3:F2` | `M0:F3` | `2341` |
+| `P1:F3` | `M1:F3` | `1234` |
+| `P1:F4` | `P0:F1` | `2341` |
+| `M0:F1` | `P0:F2` | `2143` |
+| `M0:F2` | `M1:F4` | `1432` |
+| `P2:F3` | `M2:F3` | `1234` |
+| `P2:F4` | `P1:F1` | `2341` |
+| `M1:F1` | `P1:F2` | `2143` |
+| `M1:F2` | `M2:F4` | `1432` |
+| `P3:F3` | `M3:F3` | `1234` |
+| `P3:F4` | `P2:F1` | `2341` |
+| `M2:F1` | `P2:F2` | `2143` |
+| `M2:F2` | `M3:F4` | `1432` |
+
+Every one of the 32 faces appears once, and every map preserves all three edge
+labels of its face. Give `P0,...,P3` positive vertex-order orientation and
+`M0,...,M3` negative orientation. Each pairing has
+`s(target)=-sign(map)*s(source)`, so it reverses the induced face orientations.
+The dual graph is connected; for example the face table connects `P0` to
+`P1,P3,M0`, then `P1` to `P2,M1`, `P2` to `M2`, and `P3` to `M3`.
+
+## 290. Actual global edge equivalence classes
+
+The exact classes below are computed from the face identifications. They are
+also proved directly by the first-return cycles in Section 291: every displayed
+occurrence is visited, while label preservation prevents classes from merging.
+There is consequently no gap between a prescribed color and an actual edge.
+
+- Edge `0`, degree 16: `M0:13`, `M0:24`, `P0:13`, `P0:24`, `M1:13`, `M1:24`, `P1:13`, `P1:24`, `M2:13`, `M2:24`, `P2:13`, `P2:24`, `M3:13`, `M3:24`, `P3:13`, `P3:24`.
+- Edge `1`, degree 8: `M0:14`, `M0:23`, `P0:14`, `P0:23`, `M1:12`, `P1:12`, `M3:34`, `P3:34`.
+- Edge `2`, degree 8: `M0:34`, `P0:34`, `M1:14`, `M1:23`, `P1:14`, `P1:23`, `M2:12`, `P2:12`.
+- Edge `3`, degree 8: `M1:34`, `P1:34`, `M2:14`, `M2:23`, `P2:14`, `P2:23`, `M3:12`, `P3:12`.
+- Edge `4`, degree 8: `M0:12`, `P0:12`, `M2:34`, `P2:34`, `M3:14`, `M3:23`, `P3:14`, `P3:23`.
+
+The five lists are disjoint and exhaust all 48 local edges.
+
+## 291. All oriented normal first-return circles
+
+A state `T:a>b/Ff` is an ordered local edge with endpoints `a,b` and exiting
+face `Ff`. Cross that face with its stated map, carry both endpoints in their
+order, then exit through the other face containing the image edge. Each list
+below is cyclic: its last state transitions to its first state exactly,
+including the ordered endpoints. Every underlying local edge occurs once.
+
+### Actual edge 0: 16 sectors
+
+1. `M0:1>3/F2`
+2. `M1:1>3/F2`
+3. `M2:1>3/F2`
+4. `M3:1>3/F2`
+5. `M0:2>4/F1`
+6. `P0:1>3/F4`
+7. `P3:1>3/F4`
+8. `P2:2>4/F3`
+9. `M2:2>4/F1`
+10. `P2:1>3/F4`
+11. `P1:2>4/F3`
+12. `M1:2>4/F1`
+13. `P1:1>3/F4`
+14. `P0:2>4/F3`
+15. `P3:2>4/F3`
+16. `M3:2>4/F1`
+
+### Actual edge 1: 8 sectors
+
+1. `M0:1>4/F2`
+2. `M1:1>2/F3`
+3. `P1:1>2/F4`
+4. `P0:2>3/F4`
+5. `P3:4>3/F1`
+6. `P0:4>1/F2`
+7. `M0:3>2/F4`
+8. `M3:4>3/F2`
+
+### Actual edge 2: 8 sectors
+
+1. `M0:3>4/F1`
+2. `P0:4>3/F1`
+3. `P1:3>2/F1`
+4. `P2:2>1/F3`
+5. `M2:2>1/F4`
+6. `M1:4>1/F3`
+7. `P1:4>1/F2`
+8. `M1:3>2/F4`
+
+### Actual edge 3: 8 sectors
+
+1. `M1:3>4/F1`
+2. `P1:4>3/F1`
+3. `P2:3>2/F1`
+4. `P3:2>1/F3`
+5. `M3:2>1/F4`
+6. `M2:4>1/F3`
+7. `P2:4>1/F2`
+8. `M2:3>2/F4`
+
+### Actual edge 4: 8 sectors
+
+1. `M0:1>2/F3`
+2. `M3:4>1/F3`
+3. `P3:4>1/F2`
+4. `P0:2>1/F3`
+5. `P3:2>3/F4`
+6. `P2:3>4/F2`
+7. `M2:4>3/F2`
+8. `M3:2>3/F1`
+
+Thus each actual edge has a circular normal link, with no endpoint reversal.
+The displayed cycles also cover every ordered-edge/exiting-face state: cyclic
+shifts choose each of the 48 local edges, reversing the ordered endpoints
+chooses either endpoint order, and reversing traversal chooses either exiting
+face. These four choices per local edge give all 192 states. Each has the
+same first-return length as its displayed cycle and no endpoint reversal.
+
+## 292. Every vertex-link corner fan
+
+There is one link triangle `(T,v)` for each of the 32 local tetrahedron vertices.
+Its corner `(T;v,w)` is the endpoint at `v` of edge `vw`. Its two incident sides
+come from the two faces containing that edge. The following ten cyclic lists
+are all the actual link-vertex fans. Here `T:v>w` means the corner `(T;v,w)`;
+it does not mean a directed edge in a new triangulation.
+
+- Label 0, endpoint fan 0: `M0:1>3`, `M1:1>3`, `M2:1>3`, `M3:1>3`, `M0:2>4`, `P0:1>3`, `P3:1>3`, `P2:2>4`, `M2:2>4`, `P2:1>3`, `P1:2>4`, `M1:2>4`, `P1:1>3`, `P0:2>4`, `P3:2>4`, `M3:2>4`.
+- Label 0, endpoint fan 1: `M0:3>1`, `M1:3>1`, `M2:3>1`, `M3:3>1`, `M0:4>2`, `P0:3>1`, `P3:3>1`, `P2:4>2`, `M2:4>2`, `P2:3>1`, `P1:4>2`, `M1:4>2`, `P1:3>1`, `P0:4>2`, `P3:4>2`, `M3:4>2`.
+- Label 1, endpoint fan 0: `M0:1>4`, `M1:1>2`, `P1:1>2`, `P0:2>3`, `P3:4>3`, `P0:4>1`, `M0:3>2`, `M3:4>3`.
+- Label 1, endpoint fan 1: `M0:4>1`, `M1:2>1`, `P1:2>1`, `P0:3>2`, `P3:3>4`, `P0:1>4`, `M0:2>3`, `M3:3>4`.
+- Label 2, endpoint fan 0: `M0:3>4`, `P0:4>3`, `P1:3>2`, `P2:2>1`, `M2:2>1`, `M1:4>1`, `P1:4>1`, `M1:3>2`.
+- Label 2, endpoint fan 1: `M0:4>3`, `P0:3>4`, `P1:2>3`, `P2:1>2`, `M2:1>2`, `M1:1>4`, `P1:1>4`, `M1:2>3`.
+- Label 3, endpoint fan 0: `M1:3>4`, `P1:4>3`, `P2:3>2`, `P3:2>1`, `M3:2>1`, `M2:4>1`, `P2:4>1`, `M2:3>2`.
+- Label 3, endpoint fan 1: `M1:4>3`, `P1:3>4`, `P2:2>3`, `P3:1>2`, `M3:1>2`, `M2:1>4`, `P2:1>4`, `M2:2>3`.
+- Label 4, endpoint fan 0: `M0:1>2`, `M3:4>1`, `P3:4>1`, `P0:2>1`, `P3:2>3`, `P2:3>4`, `M2:4>3`, `M3:2>3`.
+- Label 4, endpoint fan 1: `M0:2>1`, `M3:1>4`, `P3:1>4`, `P0:1>2`, `P3:3>2`, `P2:4>3`, `M2:3>4`, `M3:3>2`.
+
+Every consecutive pair, including last-to-first, is joined by the relevant
+face map from Section 289. All ten fans are disjoint. The two fans at edge 0 have
+length 16; the other eight have length 8. They exhaust all 96 local corners,
+and each corner has exactly two incident side identifications. Therefore every
+link vertex has a circular fan and a disc neighborhood. All 96 triangle sides
+are paired by a fixed-point-free involution, so every link-edge interior also
+has a disc neighborhood, and the resulting surfaces have no boundary. These
+are local manifold checks; Euler characteristic is not being used to assume
+surface manifoldness.
+
+For complete explicit connectivity evidence, the following 31 face-induced
+identifications form a spanning tree on all 32 link triangles:
+
+- `M0:1 ~ M3:2`
+- `M0:1 ~ M3:4`
+- `M0:1 ~ M1:1`
+- `M3:2 ~ P3:2`
+- `M3:2 ~ M2:4`
+- `M3:4 ~ M0:3`
+- `M3:4 ~ P3:4`
+- `M1:1 ~ P1:1`
+- `M1:1 ~ M2:1`
+- `P3:2 ~ P0:2`
+- `P3:2 ~ P2:3`
+- `M2:4 ~ P2:4`
+- `M0:3 ~ P0:4`
+- `M0:3 ~ M1:3`
+- `P1:1 ~ M1:2`
+- `M2:1 ~ P2:1`
+- `M2:1 ~ M3:1`
+- `P2:3 ~ P1:4`
+- `P2:4 ~ P3:3`
+- `P2:4 ~ M2:3`
+- `P0:4 ~ P1:3`
+- `M1:2 ~ P1:2`
+- `M1:2 ~ M0:4`
+- `P2:1 ~ M2:2`
+- `M3:1 ~ M0:2`
+- `M3:1 ~ P3:1`
+- `P1:4 ~ M1:4`
+- `P3:3 ~ P0:1`
+- `P3:3 ~ P0:3`
+- `M2:3 ~ M3:3`
+- `P1:3 ~ P2:2`
+
+There is therefore exactly one actual ideal vertex and one connected link.
+The link is orientable directly: order the three corner labels of triangle
+`(T,v)` by increasing `w != v`, then give it sign `s(T)*(-1)^(v-1)`.
+Every side identification reverses the induced side orientations. This is
+checked directly on the 96 directed side occurrences by restricting the
+signed vertex permutations in Section 289.
+
+After the local and global surface checks, its cell counts are
+`V=10`, `E=48`, `F=32`, hence `chi=10-48+32=-6=2-2*4`.
+The sole link is a closed orientable genus-4 surface. Truncation produces the
+required compact connected orientable 3-manifold: face interiors have ordinary
+paired neighborhoods, every original edge has a circular normal link without
+reversal, and the actual ideal vertex link is the verified surface above.
+
+## 293. Exactly five transverse reservoirs under all vertex frames
+
+Each type has exactly two equal opposite edge pairs, namely the pair labeled 0
+and the pair labeled `i+1`. The remaining opposite pair has two distinct labels,
+also distinct from `0,i+1`. Vertex permutations preserve opposite-pair incidence.
+Hence a frame `(R,A,B,O,A,B)` with `A!=B` must use precisely the two equal pairs
+as its transverse pairs. It follows that type `i` always forces `{0,i+1}`.
+
+For a local word `(r,a,b,o,a,b)` with four distinct labels, exactly eight of the
+24 vertex permutations yield paired frames. Their four words, each appearing
+twice, are
+
+- `(r,a,b,o,a,b)`;
+- `(r,b,a,o,b,a)`;
+- `(o,a,b,r,a,b)`;
+- `(o,b,a,r,b,a)`.
+
+The other sixteen permutations fail the required equalities. Across all 24
+permutations there are twelve distinct words, each occurring twice, and every
+word has multiplicity profile `(2,2,1,1)`. Indeed the unequal opposite pair
+must remain the axial pair; its stabilizer in the 24 vertex permutations has
+order eight. The four displayed words each occur twice. This accounts for all
+192 vertex-frame choices over the eight tetrahedra, and no triple-repeated
+label can appear by reframing.
+
+The union of the forced pairs `{0,1},{0,2},{0,3},{0,4}` is all five proved-distinct
+actual global edges. No reservoir set of size at most four works, even with
+independent vertex-frame choices in every tetrahedron. Conversely, all five
+work in the displayed frames. The minimum is exactly five.
+
+For reference, there is already an elementary strict angle structure: assign
+angle `pi/8` to each occurrence of edge 0 and `pi/4` to every other occurrence.
+Each edge sum is `2*pi`, and every local vertex sum is `5*pi/8 < pi`. This checks
+the angle-structure hypotheses directly. It does not by itself replace the
+common-length, nondegeneracy, and face-isometry steps of a geometric realization.
+
+## 294. Even multiplicities in the five cyclic-type family
+
+This is a **structural obstruction only for the five cyclic types**
+`sigma_i=(i,i+1,i+2,i+3,i+1,i+2)`, `i mod 5`, retaining their five distinct global
+label names. It is not a nonexistence theorem for six-tetrahedron paired examples.
+
+The face-color triples are `T_i={i,i+1,i+2}`. A copy of type `i` has two faces of
+triple `T_i` and two of triple `T_(i+1)`. Every allowed color-preserving map
+between faces with the same triple extends to an even permutation of the four
+listed vertices. For same-type maps the possibilities are identity or `2143`.
+For a low face of type `i` mapped to a high face of type `i-1`, the four full
+maps are `4213`, `3124`, `2431`, `1342`, all even; reverse maps are even too.
+These exhaust the possibilities because each triangle has three distinct colors.
+
+Suppose an orientable face pairing exists, and let `d_i` be the number of
+positive copies minus the number of negative copies of type `i`, where signs
+are relative to its listed vertex order. Every allowed face map is even, so
+it must pair opposite signs. Counting faces of triple `T_i` gives
+
+`2*d_i + 2*d_(i-1) = 0`.
+
+Thus `d_i=-d_(i-1)` around an odd five-cycle, forcing every `d_i=0`.
+Every type multiplicity must be even. In particular `(2,1,1,1,1)` is impossible
+in this specified family, independent of the face matching choices.
+If all five original types occur and each nominal color is to be exactly one
+actual global edge, each type occurs at least twice and every edge degree is
+at least 12. This five-type family, with all five types present, therefore
+cannot give a degree below nine. The eight-tetrahedron example instead uses
+the four types in Section 289.
+
+## 295. Genuine realization of this original triangulation
+
+The verified truncation is a connected orientable compact 3-manifold with
+one nonempty boundary component, a closed surface of genus four. Every
+original edge degree is at least eight, hence at least six. Taking H to be
+the five actual global edges and S empty gives the required vertex-induced
+paired frames with distinct transverse labels. All hypotheses of the
+realization theorem in Sections 284–287 are therefore satisfied.
+
+Applying Section 287 gives a genuine nondegenerate hyperideal realization
+of this same eight-tetrahedron face pairing with totally geodesic boundary.
+No subdivision or separate per-tetrahedron length assignment is introduced.
+The explicit strict angle structure in Section 293 is consistent with that
+application, while the common-length and nondegeneracy conclusions use the
+completed realization theorem.
+
+This example requires five reservoirs under every simultaneous choice of
+paired vertex frames and has minimum degree eight. It consequently separates
+the displayed five-reservoir paired class from the at-most-four-reservoir
+paired class on this original triangulation, and does not satisfy a blanket
+minimum-degree-at-least-nine hypothesis. No claim of census novelty, global
+minimality, or separation from every earlier geometric criterion is made.
+
+## 296. Assumptions and statement
+
+Retain the assumptions of Section 130: an actual finite ideal face
+pairing with connected circular edge links, every original degree at
+least six, fixed vertex-induced paired frames (R,A,B,O,A,B) with
+A,B in H and A!=B, one common positive generalized length field, and
+all original angle sums 2*pi. Axes can repeat and self-gluings are
+allowed. There is no bound on the number of reservoir labels.
+
+Assume a flat exists. Choose M maximal in cosh-length among all
+pi-selected reservoir labels, and write m=x_M, as in Section 132.
+
+**Theorem.** Every reservoir U with u=x_U>m-2 has a genuine occurrence.
+Every flat transverse occurrence of such U has angle pi; consequently,
+after the genuine witness is established, there are no flat transverse
+occurrences of U at all. An axial U occurrence can still be flat zero
+in an owner selecting a different, lower reservoir transversely; this
+last possibility is not excluded by the theorem.
+
+The result extends the genuine-witness step of Sections 184–186 to an
+arbitrary number of reservoir labels. It does not extend the entire
+five-reservoir return classification or assert general flat exclusion.
+
+## 297. Transverse zero occurrences are impossible
+
+Consider a flat owner with reservoir pair {U,A}. If it selects A,A,
+the transverse-flat inequality of Lemma 111.1 requires
+
+    a-u >= sqrt((r+1)*(o+1)) > 2.
+
+Since A is selected, a<=m; whereas u>m-2. This is impossible.
+If the owner instead selects its axes, each selected H axis has shifted
+value at most m-1<u+1<u+a. Each selected special axis has shifted value
+strictly below u+a by the fixed-pair special-edge barrier, Theorem112.1.
+The product of the two shifted axis values is therefore strictly less
+than (u+a)^2, contrary to the axial-flat condition of Section130.
+Thus the only possible flat selection is the transverse U,U pair.
+This proves the first assertion without any bound on |H|, including
+u>m, when selecting U itself is also impossible by maximality of M.
+
+## 298. Saturation and the original axial runs
+
+Suppose U has no genuine occurrence. Then every original U slot is
+flat and its complete edge equation gives exactly two pi slots.
+Every transverse U slot has angle pi by Section297 above. Every axial
+zero U slot belongs to an owner selecting a transverse reservoir P.
+
+For a fixed unordered reservoir pair {P,Q}, there is at most one such
+actual zero owner: only the strictly larger pair value can be selected,
+and one owner already contributes two pi slots to that selected global
+label. This uses the full selected-label equation, not an assumption
+that different visits around U correspond to different owners.
+
+Furthermore no axial-zero owner can have two U axes. If it did, its
+transverse-selected value p and companion q would satisfy
+
+    p-q >= sqrt((u+1)^2)=u+1.
+
+Since q>1 and u>m-2, this gives p>u+2>m. But P is a pi-selected
+reservoir, contradicting the definition of M. Therefore each actual
+zero owner supplies at most one original axial U occurrence.
+
+First suppose every U occurrence is axial. By the original-slot
+transport in Section131, its fixed reservoir pair is constant around
+the connected U circle. There is at most one zero owner, supplying at
+most one U occurrence. Together with the exactly two pi slots, this
+gives degree(U)<=3, contrary to minimum degree six.
+
+Otherwise U has a transverse occurrence. Its flat owner selects U,U,
+and its two transverse U slots exhaust the two pi slots in the complete
+U equation. These are the only transverse occurrences of U. Every
+other U occurrence is axial and zero.
+
+Remove these two distinct original transverse intervals from the U
+normal circle. The remaining original intervals form at most two
+consecutive axial runs, possibly empty. The two removed intervals may
+belong to the same tetrahedron, as indeed they do; they remain two
+separate intervals in the actual normal link. The complementary
+reservoir pair is constant along each run by Section131. The preceding
+fixed-pair argument allows at most one zero owner in each run, and the
+no-two-U-axes argument allows at most one U occurrence of that owner.
+Thus each run has at most one original interval, giving
+
+    degree(U)<=2+1+1=4.
+
+This again contradicts minimum degree six. Repeated visits, parallel
+face pairings and self-gluings change which endpoints are paired, but
+not the count of original intervals in these complete runs. Therefore
+U must have a genuine occurrence.
+
+A flat transverse U owner would already contribute 2*pi to U and
+leave no positive genuine contribution. Hence no such owner remains.
+This proves the theorem. QED.
+
+## 299. The exact six-reservoir boundary
+
+The genuine escape tau=(Z,M,C,D,M,C) of Theorem134.1 witnesses four
+distinct reservoir labels. The upper-gap theorem of Section182 supplies
+another actual label U outside those four with u>T(m,z)>m-2. The theorem
+above witnesses U without using reservoir cardinality.
+
+For exactly six labels H={M,C,D,Z,U,V}, the only possibly unwitnessed
+label is therefore V, and it must satisfy v<=m-2. If V is unwitnessed,
+every transverse-selected flat owner must select V, since all five
+other labels are genuinely witnessed. There is at most one such actual
+owner. Every flat axial zero slot of any label belongs to that owner,
+if it exists. Transverse zero slots in axial-flat owners are still
+possible and are not discarded.
+
+This identifies the first five-label cardinality issue precisely:
+the witness of the upper-gap label does not require five labels, but
+Section187's conclusion that every reservoir is witnessed, and hence
+that every flat owner selects its axes, does not follow for six from
+this argument. Even if the sixth label is witnessed, its additional
+face roles remain outside the published five-label case analysis.
+No actual realization of the residual low-label pattern, six-label
+flat exclusion, or six-label geometric realization is claimed here.
+
+## 300. Exact assumptions and conclusion
+
+Retain the actual paired-framework hypotheses of Section130 and a
+nonempty flat set, with exactly six distinct reservoir labels. Use the
+genuine escape and upper-gap label to write
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Here p counts original flat pi slots. The arbitrary-reservoir upper-
+witness theorem supplies genuine witnesses for M,Z,U and excludes all
+their flat transverse occurrences. C,D already occur in genuine tau.
+Suppose V is the only unwitnessed reservoir, so p_V=2 and v<=m-2.
+All degrees and counts below refer to the original face quotient.
+
+**Theorem.** After naming the larger of C,D by A and the smaller by B,
+with values a,b, the following necessary conclusions hold:
+
+1. a>=1+v+b, in particular a>b and a>v.
+2. Exactly two actual axial-flat owners have V transversely. One has
+   frame (A,V,B,Q,V,B); the other has frame (U,V,L,T,V,L), where L=A or B.
+   They are distinct. Their selected A and U slots are unique, so
+   p_A=p_U=1 and m-2<u<=m.
+3. If an owner F_V selects V transversely, it is unique and has
+   transverse companion B. The degree of V is six or seven. Without
+   F_V its degree is exactly six.
+4. The original source flat sigma=(M,C,D,O,C,D) and the two owners
+   above have their other selected axial labels O,Q,T in {B,V} union S.
+   Across these three actual owners there is at most one B pi slot.
+   If F_V exists none of O,Q,T is V; otherwise they contain at most
+   two V slots, counting repetitions.
+
+Thus an unwitnessed sixth label must be a degree-six or degree-seven
+actual edge with this specific flat-owner configuration. In particular,
+if all six reservoir edges have degree at least eight, every reservoir
+is genuinely witnessed and every flat owner selects its axes. This
+last conclusion is not an exclusion of axial flats or a six-reservoir
+geometric-realization theorem.
+
+## 301. Count every V occurrence
+
+A transverse-selected flat must select an unwitnessed reservoir, because
+its two pi slots exhaust that label's original equation. Consequently
+it must select V, and there is at most one such actual owner F_V.
+A flat axial zero occurrence of V must belong to F_V. This owner cannot
+have V on both axes: the transverse-flat inequality would require
+v-l>=sqrt((v+1)^2)=v+1 with l>1. Thus F_V has at most one axial V slot.
+
+If F_V exists, its two transverse V pi slots exhaust p_V=2; all axial
+V slots are zero and belong to F_V. If F_V does not exist, all axial V
+slots have angle pi, and there are exactly two of them.
+Every other V occurrence is transverse zero in an axial-flat owner.
+Let k be the number of these actual owners. Each contributes exactly
+two transverse V slots, irrespective of any additional V axis.
+Therefore the exact degrees are
+
+    degree(V)=2+2*k+t,  t in {0,1}, if F_V exists;
+    degree(V)=2+2*k,                 otherwise.
+
+The second formula counts any axial V slots in these same owners
+separately, as original slots. Minimum degree six implies k>=2 in
+both cases.
+
+All transverse labels of any flat belong to {C,D,V}: M,Z,U have no
+flat transverse occurrences. Each of the k owners thus has pair {V,C}
+or {V,D}. It differs from sigma, whose pair is {C,D}.
+
+## 302. Every such owner uses U or the larger low label
+
+Every axial-flat owner has at least one selected H axis: two special
+axes violate the fixed-pair special barrier. None of the k owners has
+a selected M axis, since sigma already uses the unique M pi slot.
+None has selected Z, since p_Z=0. Their selected H axes therefore lie
+in {C,D,U,V}.
+
+Consider one without a U axis, with pair {V,L}, where L=C or D. Let
+X be its selected H axis of largest cosh value x. Its other axis is
+either H-valued and at most x, or special and has shifted value less
+than v+l. The axial-flat product implies respectively
+
+    (x-1)^2 >= (v+l)^2, or (x-1)*(v+l) > (v+l)^2.
+
+In either case x>=1+v+l. Thus X is neither V nor L; it must be the
+other member of {C,D}. The latter is strictly larger than L and V.
+Such an owner therefore selects the larger low label A and has pair
+{V,B}, with a>=1+v+b.
+
+Since A is witnessed by tau, p_A<=1. There is at most one owner of
+this kind. Since U is witnessed, p_U<=1, and there is at most one of
+the k owners with a U axis. These two possibilities exhaust them.
+Thus k<=2. Together with k>=2 this forces exactly one of each kind.
+In particular A and U each supply one selected slot and no others.
+The selected U value is at most m by maximality of M, giving
+m-2<u<=m. The precise frames in the statement follow by interchanging
+the axial positions when necessary.
+
+Substituting k=2 into the exact degree formulas proves degree(V)=6 or7,
+and degree(V)=6 if F_V is absent. If F_V exists its companion is C orD,
+since the other three reservoirs cannot be transverse in any flat.
+It cannot be A, because transverse selection would require v>a,
+whereas a>=1+v+b. Its companion is therefore B.
+
+## 303. Remaining selected slots and open cases
+
+The three owners sigma, the selected-A owner and the selected-U owner
+are distinct, by their transverse pairs or their unique selected slots.
+Their respective first axes M,A,U exhaust the pi budgets of these three
+witnessed labels. Z cannot be selected. Their other axes O,Q,T are
+therefore in {B,V} union S. The genuine B witness gives p_B<=1, so at
+most one of those original slots has label B, including repeated labels
+within or between owners. The complete V equation gives at most two V
+pi slots; if F_V exists its transverse slots already use both.
+
+No number of low-only genuine owners is bounded here. The special
+opposite axes, the actual remaining face pairings and every genuine
+angle equation are still to be satisfied. The theorem does not assert
+that these necessary residual roles are realizable. It leaves open
+both the displayed saturated degree-six/seven cases and the separate
+case in which all six reservoir labels are genuinely witnessed.
+
+## 304. Statement and exact input
+
+Retain the actual finite paired-frame face quotient of Section130:
+connected circular normal links, every original degree at least six,
+frames (R,A,B,O,A,B) with distinct transverse A,B in H, common positive
+generalized lengths, and every original angle equation 2*pi. Assume
+exactly six reservoir labels and a nonempty flat set. No original slot,
+repeated axis, self-gluing or special edge is removed.
+
+**Theorem.** Every reservoir has a genuine occurrence. Every flat owner
+therefore selects its axial pair. This is a structural theorem; it
+neither excludes all axial flats nor gives six-reservoir realization.
+
+Choose the maximal pi-selected reservoir M and genuine escape
+
+    tau=(Z,M,C,D,M,C), H={M,C,D,Z,U,V},
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0.
+
+The upper-gap theorem182 supplies U outside M,C,D,Z with u>T(m,z)>m-2.
+The arbitrary-reservoir upper-witness theorem296–298 witnesses U and
+excludes every flat transverse occurrence of M,Z,U. C,D are witnessed
+in tau. Consequently only V can be unwitnessed. If it is, v<=m-2.
+
+We first prove a complete-star lemma that allows additional low labels,
+then show that an unwitnessed V would violate it. Only the weak escape
+inequalities above are used; the five-label strict-source theorem191
+is not imported.
+
+## 305. One upper-gap label cannot have value at most m
+
+**Lemma.** In the same actual framework suppose the reservoir set is
+{M,Z,U} disjoint union L, where C,D belong to L, every B in L has
+1<b<=m-2, and U is genuinely witnessed with u>m-2. Suppose the escape
+and pi data of Section304 hold and Z has no flat transverse occurrence.
+Then u>m. Labels in L need not be genuinely witnessed.
+
+**Proof.** Suppose u<=m. Every H value except Z is at most m, so Z is
+largest. We have m>3,z>m+2,c,d<m-2. All transverse Z owners are genuine.
+An owner with axial Z and pair {M,B}, b<m, is genuine: axial selection
+would select Z, transverse M selection would spend two pi slots of M,
+and transverse B selection would require b>m. An axial Z owner with
+pair {M,U} is also genuine, since both M and U are witnessed and hence
+neither can be selected transversely. These are all axial Z owners
+whose genuineness will be used. Other axial Z zero slots are not
+assumed absent.
+
+Take the maximal axial Z run through tau with pair {M,C}. Each owner
+is genuine and has at most one Z axis, since (z-1)^2>=(m+c)^2 would
+make two Z axes flat. At each such slot the exact individual response
+has positive coefficients with sum greater than one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The arctangent addition formula gives theta_Z+2*beta_M>pi.
+A wholly axial Z circle would have at least six such owners and exceed
+the complete M/Z genuine capacity 3*pi. Thus the run is proper.
+Each boundary owner has frame (B,Z,A,Q,Z,A), {A,B}={M,C}.
+For H axes q<=z; for special axes q<1+z+a. Hence q<1+z+a.
+The transverse Z cosine numerator is strictly increasing in q and at
+1+z+a equals
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Each boundary Z angle exceeds pi/2. Both distinct boundary slots must
+belong to one owner rho, since two owners would exceed Z's 2*pi budget.
+Their total is greater than pi. The run's axial angle sum is less than
+pi and its doubled transverse M sum is at most pi; summing its strict
+per-owner inequality forces exactly one run owner, tau.
+The return is (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+The complete special-star exclusions of Section176 apply to pairs
+{Z,M} and {Z,C}. Their required inputs are: genuine transverse Z
+owners, m,z>3, z>2*c+3, actual M/Z capacities pi and 2*pi, special
+minimum degree six, and every other axis below 1+z+a. All hold here.
+Those weighted-star arguments make no claim that all L labels are
+witnessed. Thus no special axis occurs in an owner of either pair.
+
+For the companion-C return, genuineness gives
+q>(z-c)^2/(m+1)-1>=m, so Q=Z. Any owner of pair {Z,C} with an axis
+other than Z has that value at most m; the same cosine numerator bound
+makes its two Z angles obtuse, so it must be rho. The alternative with
+both axes Z has four Z angles of cosine
+z*(c+1)/(2*z*z+c-1)<1/2; its expense exceeds 4*pi/3 and cannot coexist
+with rho. Thus rho is the only owner with that pair. Its residual
+{Z,Z,C} faces transport every Z slot back into rho, in either axial or
+transverse role. Together with tau this closes at most four original
+Z intervals, contradicting connectedness and degree six.
+Hence rho=(C,Z,M,Q,Z,M), with Q in H and q>c.
+
+No owner uses only M and Z: the standard two-value vertex response of
+Section157, with all values greater than three, makes its six-angle
+M/Z expense greater than pi. It would differ from tau and rho, each
+already costing more than pi of M/Z. Now any owner with pair {Z,M}
+has only H axes and at least one axis B other than M,Z, with b<=m.
+Its other axis r<=z. Put
+
+    L0=(z+m)^2-(b-1)*(r-1),
+    J0=(b+1)*(r+1)-(z-m)^2.
+
+Both are positive, and the exact expansion gives
+
+    L0-2*J0 >= (m-3)*(m+1)+(z-m)*(m-1)+3*(z-m)^2 >0.
+
+The transverse-sum coefficient kappa squared exceeds 8/9, so its four
+M/Z transverse slots cost more than pi. Together with tau and rho,
+this forbids every such owner other than rho itself.
+
+If Q=M or Z, the residual face multiset {Z,M,Q} forces its next Z slot
+back into this unique pair-{Z,M} owner, closing at most four intervals.
+If Q=B in L, B!=C because q>c. An axial Z target would have pair {M,B};
+it is genuine as checked above and costs theta_Z+2*beta_M>pi by b<=m-2.
+A transverse Z target either has pair {Z,M}, hence is rho, or pair
+{Z,B} with an M axis. The latter is genuine and costs
+
+    theta_M+2*gamma_Z>pi,
+
+since its positive response coefficients have sum
+2*sqrt(z*z-1)/(z+b)*sqrt((m-1)/(m+1))>1.
+Either new role differs from tau and rho by its fixed pair and violates
+the remaining M/Z budget. Thus this Q case also closes the short circle.
+These exclusions hold for every B in L, including an unwitnessed one.
+Only Q=U remains: rho=(C,Z,M,U,Z,M).
+
+Across rho's residual {Z,M,U} faces, the Z roles are axial with pair
+{M,U}, transverse with pair {Z,M} (only rho), or transverse with pair
+{Z,U} and an M axis. If the third role never occurs, the complementary
+arc of the complete Z circle is a single axial {M,U} run with
+n=degree(Z)-3>=3 original intervals. All are genuine as checked above.
+At each such interval its M response is
+
+    beta=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A=(sqrt(m*m-1)+sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>1/2,
+    B=(sqrt(m*m-1)-sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>=0.
+
+For theta>=pi/2, theta+beta>pi/2. Otherwise t>1 and
+cot(theta)=(t-1/t)/2<t/2<A*t, giving the same strict bound.
+Assigning one beta per axial Z interval uses at most the two actual
+M slots in its owner, including an owner with both axes Z. Therefore
+these intervals cost more than 3*pi/2 of M/Z, while tau and rho leave
+less than pi. This contradiction forces a third distinct genuine owner
+eta=(M,Z,U,Q,Z,U). Its actual M/Z expense obeys theta_M+2*gamma_Z<pi.
+
+## 306. The exact third-owner contradiction
+
+Here 1<u<=m<z, u>m-2, and q<q0=1+z+u. Set
+
+    k=z+u, h=z-u, alpha=sqrt((m-1)/(m+1)),
+    L=k*k-(m-1)*(q-1)>0, J=(m+1)*(q+1)-h*h>0.
+
+The exact axial and transverse responses give
+
+    tan(theta/2)^2=alpha^2*J/L,
+    gamma=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A+B=2*sqrt(z*z-1)*alpha/k, A*B*t*t=(h/k)*L/J.
+
+Both A,B are positive. Increasing q to q0 strictly decreases L/J:
+L remains positive up to q0, where L0=k*(k-m+1)>0, while J is positive
+and increasing. Thus
+
+    A+B+A*B*t*t > F(u)
+      =2*sqrt(z*z-1)*alpha/(z+u)
+       +(z-u)*(z+u-m+1)/[(m+1)*(z+u+2)-(z-u)^2].
+
+On u<=v<=m the first term of F decreases. The second numerator
+N(v)=(z-v)*(z+v-m+1)>0 has derivative m-1-2*v<3-m<0.
+Its denominator J0(v)>0 has derivative m+1+2*(z-v)>0.
+Consequently F(u)>=F(m). At m, J0(m)=(z+1)*(3*m+2-z)>0 and
+
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms increase strictly in z on m+2<=z<3*m+2: their derivative
+signs follow from m*z+1>0 and 2*m+2>0 respectively. Hence
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+For the final inequality, the squared comparison with 1-1/m reduces
+to (m-1)*(2*m*m+m+1)>0. All denominators are positive since m>3.
+Therefore A+B+A*B*t*t>1. If gamma>=pi/2 then theta+2*gamma>pi.
+Otherwise the positive tangent branch yields
+
+    tan(gamma)=(A+B)*t/(1-A*B*t*t)>t,
+
+and again theta+2*gamma>pi. This contradicts eta's actual complete-
+budget bound. The lemma is proved. No absent axial Z zero occurrence
+was silently replaced by a genuine one: every used run has its fixed
+pair and genuineness checked, and the connected residual arc cannot
+exit that pair without the expressly enumerated transverse boundary.
+
+## 307. The saturated sixth label forces the forbidden u<=m case
+
+Suppose V is unwitnessed. Every transverse-selected flat must select V,
+and there is at most one such owner F_V. Every axial zero V slot lies
+in F_V. If F_V exists it has at most one V axis, since two would require
+v-b>=v+1 for a positive companion. Its two transverse slots exhaust
+p_V=2. Without F_V exactly two axial V slots have angle pi and no axial
+V slot is zero.
+
+Let k be the number of axial-flat owners with V transverse. Each has
+two such slots. The exact V degree is 2+2*k+t, t in {0,1}, when F_V
+exists, and 2+2*k otherwise. Therefore k>=2.
+Every one has pair {V,C} or {V,D}, since M,Z,U have no flat transverse
+occurrence. It differs from the source sigma, whose pair is {C,D}.
+It cannot select M, already selected once in sigma, or Z. It has at
+least one selected H axis, by the special-edge barrier. Its selected
+H axes are consequently among C,D,U,V.
+
+If such an owner has no U axis, choose its largest selected H value x.
+For pair {V,B}, where B=C or D, the other axis is H-valued and at most
+x, or special with shifted value less than v+b. Axial flatness implies
+x>=1+v+b in either case. Thus X is neither V nor B; it is the other
+low label A, strictly larger than both. Every owner without U therefore
+selects that same larger label A. Since A is witnessed, p_A<=1, so
+there is at most one such owner. Also p_U<=1, giving at most one owner
+with U selected. Since k>=2, both kinds must occur and U is selected.
+Maximality of M gives u<=m.
+
+Apply the complete-star lemma with L={C,D,V}. All its premises hold:
+c,d<m-2 and v<=m-2; U is genuinely witnessed and u>T>m-2;
+Z has no flat transverse occurrence; the original source data remain
+unchanged. The lemma instead gives u>m, contradiction.
+Thus V is witnessed too. No flat can select a transverse pair of any
+reservoir, since that would exhaust a witnessed edge's equation.
+Every flat therefore selects its axes, proving the theorem.
+
+## 308. Remaining six-reservoir problem
+
+This proves six-reservoir genuine witnesses and axial-flat classification
+without a seed, degree-eight strengthening, or extra incidence premise.
+It excludes the entire unwitnessed-sixth branch, not all flat fields.
+With all six labels witnessed, the additional reservoir may exceed the
+upper-gap threshold and participate in new genuine return roles. The
+published five-reservoir role exhaustion does not cover those roles.
+No six-reservoir realization or unrestricted CFMP conclusion follows.

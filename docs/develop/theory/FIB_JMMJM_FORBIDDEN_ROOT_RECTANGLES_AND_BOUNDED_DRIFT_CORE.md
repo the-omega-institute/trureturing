@@ -1304,3 +1304,454 @@ empirical conclusion, numerical stability, resource or computational
 cost guarantee, or global completion claim is supplied.
 
 ## 追加锚（本行以下为增补区）
+
+## 10. A uniform two-world bound on actual terminal-root components
+
+**Definition 10.1 (the component of one actual continuation).** Keep
+the entire history (1.2), its normalization (1.3), every equation
+(1.6), and source legality (1.5). For arbitrary normalized responses
+$\sigma,\theta\in\mathbb R$ and $F\in\{J,M\}$, put
+
+$$
+\begin{aligned}
+\mathcal R^7_{MF}(H;\sigma,\theta)=\{W\in\mathcal F(H):\;&
+ f_W(7)=0,\quad v_M(W)=\sigma,\\
+ &d_W+f_W(7)\operatorname{tr}(FMQP_W)=\theta\}.
+\end{aligned}
+\tag{10.1}
+$$
+
+This is the root-seven component of the single actual history
+$(H,M,D_0+\lambda\sigma,F,D_0+\lambda\theta)$, with immediate
+readings at original clocks six and seven. The ambient fiber imposes
+no root-seven promise. Source, gain shape and drift are
+initially variable in (10.1); studying this component supplies no
+root-class label for that ambient fiber.
+
+**Theorem 10.2 (uniform root-seven component bound).** For every
+$D_0,Y,z\in\mathbb R$, every $\lambda\ne0$, every
+$\sigma,\theta\in\mathbb R$ and either terminal action $F$,
+
+$$
+\bigl|\mathcal R^7_{MF}(H;\sigma,\theta)\bigr|\le2.
+\tag{10.2}
+$$
+
+Equivalently, for every fixed $d,\sigma\in\mathbb R$,
+
+$$
+\bigl|\{W\in\mathcal F(H):f_W(7)=0,\ d_W=d,
+                                      \ v_M(W)=\sigma\}\bigr|\le2.
+\tag{10.3}
+$$
+
+Empty and singleton components are included. The bound is on complete
+worlds, retaining all six ancestor readings, all strictly positive
+rank-one trace-one sources without a symmetry requirement, arbitrary
+constant drift, both signs of the nonzero gain, every actual degree at most three,
+sampled roots and repeated roots. It is uniform over the whole
+component, without a finite-cardinality premise on the ambient fiber.
+
+**Proof, the terminal response and the two exceptional reconstruction
+branches.** In (10.1) the actual terminal response is $d_W$ for
+either $F$, so every retained world has $d_W=\theta$.
+Conversely the set in (10.3) is exactly
+$\mathcal R^7_{MF}(H;\sigma,d)$ for either terminal action. It
+therefore suffices to prove (10.3), with $d$ now fixed.
+
+First let $d=0$. The credited zero-drift calculation in Lemma 7.2,
+equivalently Terminal-Root, Theorem 4.1, gives exactly
+
+$$
+\begin{gathered}
+k=j/\ell=5/8,\qquad f(T)=cT(T-5)(T-7),\quad c>0,\\
+j=1/c,\quad \ell=8/(5c),\quad
+\sigma=-6c-156/5,\quad f(4)=12c\ne0.
+\end{gathered}
+\tag{10.4}
+$$
+
+Thus the actual sixth response fixes $c=-(\sigma+156/5)/6$,
+and the fourth reading fixes $r=y/(12c)-1-1/c$. These fix the
+whole world, subject to all remaining equations and source legality.
+Although $k=5/8$ throughout this branch, $k$ alone does not fix
+the amplitude $c$. At most one world survives the fixed response.
+
+Next suppose $d\ne0$ but $d=y$. Positivity of the clock-four
+trace in (1.6) forces $f(4)=0$. The entire roots-$\{4,7\}$
+class has at most two worlds by the credited late-root bound of
+Lemma 7.2, equivalently Terminal-Root, Theorem 5.1. Its proof
+includes every exceptional drift and the exclusion of roots
+$4,5,7$ by rank-one legality. Taking an actual sixth-response
+subset cannot increase its cardinality. This handles the branch
+where the clock-four sample cannot reconstruct $r$.
+
+**Proof, the sixth-$M$ polynomial at every remaining drift.** Assume
+henceforth $d\ne0$ and $d\ne y$. Set
+
+$$
+\begin{gathered}
+A=24-d,\quad B=48-d,\quad C_*=312/5-d,\quad
+n_1=168+21d,\quad k=j/\ell>0,\quad \nu=\sigma-d,\\
+N_d(k)=84Bk^2+n_1k-70A,\\
+Q_{6,d}(k)=-3Bk^2+(36-d/2)k+A.
+\end{gathered}
+\tag{10.5}
+$$
+
+The root-seven interpolation (7.1) and the first four actual
+equations give
+
+$$
+\begin{aligned}
+20d\ell k(k+1)
+ &=84Bk(k+1)-70A(k+1)-35C_*k=N_d(k),\\
+\ell k(k+1)f(6)
+ &=A(k+1)-3Bk(k+1)+\tfrac52 C_*k=Q_{6,d}(k).
+\end{aligned}
+\tag{10.6}
+$$
+
+For the first identity the coefficient of $k$ is
+$84B-70A-35C_*=168+21d$; for the second it is
+$A-3B+5C_*/2=36-d/2$. The other coefficients are exactly
+those displayed in (10.5). These identities divide by no gain
+sample. Since $d\ne0$, $k>0$ and $\ell>1$, they imply
+
+$$
+N_d(k)\ne0,\qquad
+\ell=\frac{N_d(k)}{20d\,k(k+1)},\qquad
+f(6)=\frac{20d\,Q_{6,d}(k)}{N_d(k)}.
+\tag{10.7}
+$$
+
+The actual sixth-$M$ trace is $1+2(k+1)\ell$. Consequently its
+response equation is exactly
+
+$$
+\nu=\frac{20d\,Q_{6,d}(k)}{N_d(k)}
+                         +\frac{2Q_{6,d}(k)}k,
+\tag{10.8}
+$$
+
+and hence every legal world supplies a positive root of
+
+$$
+\begin{aligned}
+\Pi_{d,\nu}(k)
+ &=\nu kN_d(k)-20dkQ_{6,d}(k)-2Q_{6,d}(k)N_d(k)\\
+ &=p_4k^4+p_3k^3+p_2k^2+p_1k+p_0,
+\end{aligned}
+\tag{10.9}
+$$
+
+with the complete coefficient list
+
+$$
+\begin{aligned}
+p_4&=504B^2,\\
+p_3&=6B(14\nu+45d-840),\\
+p_2&=(168+21d)\nu-557d^2+40272d-689472,\\
+p_1&=-2A(35\nu+66d-2352),\\
+p_0&=140A^2.
+\end{aligned}
+\tag{10.10}
+$$
+
+For an explicit expansion of every coefficient, put
+$q_2=-3B$, $q_1=36-d/2$, $q_0=A$ and $n_2=84B$,
+$n_0=-70A$. Multiplication in (10.9) gives respectively
+
+$$
+\begin{array}{c|l}
+\text{coefficient}&\text{uncollected expression}\\ \hline
+p_4&-2q_2n_2\\
+p_3&\nu n_2-20dq_2-2(q_2n_1+q_1n_2)\\
+p_2&\nu n_1-20dq_1-2(q_2n_0+q_1n_1+q_0n_2)\\
+p_1&\nu n_0-20dq_0-2(q_1n_0+q_0n_1)\\
+p_0&-2q_0n_0.
+\end{array}
+\tag{10.11}
+$$
+
+Substitution of $A=24-d$, $B=48-d$ and $n_1=168+21d$
+in these five expressions gives (10.10), without suppressing any
+coefficient or parameter restriction.
+
+**Proof, at most two positive roots for every real $d,\nu$.** The
+following count applies to (10.9) for all real parameters, including
+values outside the current reconstruction branch. At $d=24$,
+
+$$
+\Pi_{24,\nu}(k)
+ =k^2\bigl(290304k^2+(2016\nu+34560)k+672\nu-43776\bigr).
+\tag{10.12}
+$$
+
+After discarding the root $k=0$, which is outside $k>0$, the
+remaining polynomial is a nonzero quadratic. At $d=48$,
+
+$$
+\Pi_{48,\nu}(k)
+ =(1176\nu-39744)k^2+(1680\nu+39168)k+80640.
+\tag{10.13}
+$$
+
+Its constant term is positive. Its quadratic coefficient vanishes
+only at $\nu=1656/49$, where its linear coefficient is
+$4701312/49\ne0$. Thus it has degree two or one and is never
+the zero polynomial. Both exceptional drifts therefore give at
+most two distinct positive roots.
+
+For $d\notin\{24,48\}$, the polynomial has degree exactly four
+and $p_4,p_0>0$. If it had three distinct positive roots, factor
+their three real linear factors. The remaining factor is linear
+with a real root. The product of all four roots is $p_0/p_4>0$,
+so that fourth root is positive as well, including any coincidence
+with the first three. Viete's coefficient formulas for four positive
+roots force
+
+$$
+p_3<0,\qquad p_2>0,\qquad p_1<0.
+\tag{10.14}
+$$
+
+These three inequalities are incompatible with (10.10). To see
+this on the entire real drift axis, put
+
+$$
+\begin{aligned}
+L_3&=14\nu+45d-840,&L_1&=35\nu+66d-2352,\\
+R_3(d)&=-\tfrac12(1249d^2-81984d+1358784),\\
+R_1(d)&=\tfrac15(-2983d^2+206832d-3390912).
+\end{aligned}
+\tag{10.15}
+$$
+
+The two exact decompositions of the middle coefficient are
+
+$$
+p_2=\frac{n_1L_3}{14}+R_3(d)
+     =\frac{n_1L_1}{35}+R_1(d).
+\tag{10.16}
+$$
+
+The quadratic inside $-2R_3$ has positive leading coefficient and
+discriminant
+
+$$
+81984^2-4\cdot1249\cdot1358784=-67108608<0.
+\tag{10.17}
+$$
+
+Equivalently it is
+$1249(d-40992/1249)^2+67108608/(4\cdot1249)>0$.
+Thus $R_3(d)<0$ for every real $d$.
+
+If $d<-8$, then $A>0$, so $p_1<0$ forces $L_1>0$.
+Here $n_1<0$ and $R_1<0$, the latter because all three terms
+in its numerator are negative for $d<0$. The second decomposition
+in (10.16) gives $p_2<0$.
+
+If $-8\le d<48$, then $B>0$, so $p_3<0$ forces $L_3<0$.
+Here $n_1\ge0$, and the first decomposition in (10.16) again
+gives $p_2<0$, including $d=-8$.
+
+If $d>48$, then $A<0$, so $p_1<0$ forces $L_1<0$,
+while $n_1>0$. Writing $e=d-48>0$ gives the exact identity
+
+$$
+5R_1(48+e)=-2983e^2-79536e-335808<0.
+\tag{10.18}
+$$
+
+The second decomposition in (10.16) yields $p_2<0$ here too.
+These intervals exhaust all remaining drifts. Each contradicts
+the necessary $p_2>0$ in (10.14). Hence (10.9) is a nonzero
+polynomial with at most two distinct positive roots for every
+real $d,\nu$.
+
+**Proof, complete-world reconstruction and all legality filters.**
+Return to $d\ne0,y$. Each positive root $k$ arising from a legal
+world determines $\ell$ by (10.7), then $j=k\ell$. The first
+four samples are exactly
+
+$$
+f(0)=-d,\quad f(1)=\frac A{k\ell},\quad
+f(2)=\frac B\ell,\quad f(3)=\frac{C_*}{(k+1)\ell}.
+\tag{10.19}
+$$
+
+They uniquely determine the entire degree-at-most-three gain by
+(7.2)–(7.3). Positivity and $d\ne y$ make $f(4)\ne0$, so
+the same actual fourth reading gives
+
+$$
+r=\frac{y-d}{f(4)}-1-k\ell,\qquad
+u=\ell-1,\qquad v=(k-1)\ell+1.
+\tag{10.20}
+$$
+
+Thus each legal positive $k$ gives at most one complete world.
+In particular every retained candidate must still satisfy
+
+$$
+\begin{gathered}
+\ell>1,\quad v>0,\quad 0<r<1,\quad
+(\ell-1)((k-1)\ell+1)=r(1-r),\\
+\zeta-d=f(5)((k+2)\ell-r).
+\end{gathered}
+\tag{10.21}
+$$
+
+The last line is the original fifth-reading equation, not a
+new adjustable response. All six equations (1.6), the root-seven
+condition and the sixth-response equation remain imposed.
+An eliminated root of (10.9) is only a necessary candidate;
+it is not asserted to satisfy these filters or to define a world.
+
+No division by $f(1),f(2),f(3),f(5)$ or $f(6)$ occurred.
+Thus the drifts $24,48,312/5,\zeta$ are retained, including
+the degree exceptions (10.12)–(10.13). The possible zero-sixth
+response is also retained: at $\nu=0$ the exact factorization is
+
+$$
+\Pi_{d,0}(k)=-2Q_{6,d}(k)(N_d(k)+10dk),\qquad
+N_d(k)+10dk=10dk\bigl(2(k+1)\ell+1\bigr)\ne0
+\tag{10.22}
+$$
+
+on the present legal chart. It therefore forces $Q_{6,d}(k)=0$,
+exactly $f(6)=0$, without an additional legal exception. The gain
+is nonzero because $f(0)=-d\ne0$ in this branch; (10.4) has
+$c>0$, and the credited late-root class likewise retains nonzero
+gain. No leading gain coefficient, root difference or discriminant
+of a gain was divided out, so all degree drops and repeated roots
+within the stated domain are included.
+
+There are at most two positive $k$ values, each with at most one
+world in this branch. Together with the zero-drift and $d=y$
+branches this proves (10.3) and hence (10.2). Finally (1.3) gives
+$g=\lambda f$ and $\delta=D_0+\lambda d$. For either sign of
+$\lambda$, the response map is bijective and preserves complete
+worlds and actual children, so the same count holds in raw readings.
+∎
+
+## 11. Mathematical correspondence and the remaining joint condition
+
+**Definition 11.1 (component count and actual-child condition).**
+For any known $K\subseteq\mathcal F(H)$, with no cardinality
+restriction, its actual children after sixth $M$ and terminal $F$
+are
+
+$$
+K_{M,\sigma;F,\theta}
+ =K\cap\mathcal F(H,M,D_0+\lambda\sigma,
+                         F,D_0+\lambda\theta).
+\tag{11.1}
+$$
+
+Theorem 10.2 bounds their root-seven parts by two for every real
+$\sigma,\theta$ and both $F$. These parts may be empty, singletons
+or pairs. Its new cardinality content concerns the interior drift
+range left after Theorem 6.1's exterior-drift injectivity and the
+credited exceptional-drift inverses in Lemma 7.2. Those stronger
+injections on their respective known classes remain prior results.
+The roots-$\{4,7\}$ size bound used when $d=y$ is likewise
+prior content. At $d=\zeta$, the credited roots-$\{5,7\}$
+size bound already gives the same upper bound, while (10.9) also
+covers that case without dividing by $f(5)$. The additional count
+therefore concerns $0<d<312/5$ outside
+$\{24,48,y,\zeta\}$, although Theorem 10.2 has no such exclusions.
+The uniform quartic count (10.9)–(10.18) controls this remaining
+variable-source, variable-shape component without acquiring either
+label.
+
+The complete actual-child condition remains exactly (1.9).
+A surviving pair can satisfy $L_0$, so the upper bound two does
+not make its terminal child a uniquely recoverable target. The
+ambient child may also contain non-root-seven worlds. Thus the
+component count supplies neither an injective response nor an
+inverse on the ambient fiber. It does not bound the non-root-seven
+part of a mixed child.
+
+In particular the simultaneous feasibility problem (7.13)–(7.16)
+still requires three distinct legal $k_h$ at one common
+$d,y,\zeta$, with the actual $J$ collision pair $\{1,2\}$ and
+actual $M$ collision pair $\{1,3\}$. The latter pair is compatible
+with the cardinality upper bound two; the bound supplies neither
+that pair nor the other pair nor their common realization. Rank
+one, the same fourth and fifth readings, the sign restrictions
+and every actual-child quantifier must hold jointly. Neither
+nonemptiness nor emptiness of this full system follows from the
+quartic root count.
+
+As an inhabited instance within the proof's credited zero-drift
+branch, take normalized data $D_0=0$, $\lambda=1$ and
+
+$$
+P=\begin{pmatrix}2/5&3/5\\2/5&3/5\end{pmatrix},\qquad
+f(T)=T(T-5)(T-7),\qquad d=0.
+\tag{11.2}
+$$
+
+Its source entries are positive, its trace is one, and
+$uv=r(1-r)=6/25$, so it is legal. Its gain coefficient vector
+is $(0,35,-12,1)$. The full actual trace and reading table is
+
+$$
+\begin{array}{c|c|c|c|c}
+i&A_i&\operatorname{tr}(A_iP)&f(i)&
+       d+f(i)\operatorname{tr}(A_iP)\\ \hline
+0&I&1&0&0\\
+1&J&1&24&24\\
+2&L&8/5&30&48\\
+3&J+L&13/5&24&312/5\\
+4&C&12/5&12&144/5\\
+5&Q&19/5&0&0\\
+6&MQ&31/5&-6&-186/5\\
+7&FMQ&\operatorname{tr}(FMQP)>0&0&0.
+\end{array}
+\tag{11.3}
+$$
+
+Every row follows by the matrices (1.4), (1.7), the polynomial
+samples and trace multiplication; the last row holds for either
+$F$. This is one world on $H(144/5,0)$, with sixth-$M$ response
+$-186/5$ and terminal response zero. It demonstrates nonemptiness
+of a component, not sharpness of the bound two or a losing-set
+realization. It is an instance of the already credited zero-drift
+family (10.4), rather than an additional decoder theorem.
+
+The new model-specific deduction is Theorem 10.2 with its
+parameter-uniform positive-root argument. Polynomial interpolation,
+the factor theorem and Viete's formulas are established tools used
+inside that deduction. The relevant permanent correspondences are:
+
+| Mathematical source | Hypotheses and use |
+| --- | --- |
+| [Terminal-Root Decoders and the Simultaneous Core](FIB_JMMJM_TERMINAL_ROOT_DECODERS_AND_SIMULTANEOUS_CORE.md), Lemma 2.1, Theorems 4.1 and 5.1, Sections 8–9 | The interpolation, zero-drift inverse and roots-$\{4,7\}$ size bound are reused through Lemmas 7.1–7.2. Its rational system has extra nonvanishing hypotheses; (10.6) derives the needed identities directly and therefore retains the exceptional drifts. The simultaneous system remains joint. |
+| [IX](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IX.md), Theorem 3.1 | The complete compatible fiber is a rational graph over its legal source set. Conditional recovery of gain and drift from a supplied source does not identify that source. The count here concerns variable sources in one actual component, rather than a restatement of conditional rank five. |
+| [Whole-Class Affine Decoders](FIB_JMMJM_WHOLE_CLASS_AFFINE_DECODERS.md), Sections 4–8; [VIII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VIII.md), Theorem 2.1 | Fixed-source, fixed-shape and known-initial-root inverses retain their supplied class labels. None provides such a label for (10.1) or its ambient fiber. The zero-drift branch in (10.4) is credited reuse. |
+| [VII](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VII.md), Sections 4 and 8–11 | Pair exclusion and the specialized $H_*$ gain-ray and known-band inverses retain their own hypotheses. None of their coefficient arrays, slice certificates or local inverses is a premise of (10.9)–(10.18). The arbitrary late readings in Theorem 10.2 are not restricted to $H_*$. |
+| [Nonzero-Terminal Collision Sparsity and Ratio Diversity](FIB_JMMJM_NONZERO_TERMINAL_COLLISION_SPARSITY_AND_RATIO_DIVERSITY.md), Sections 4–7 | Its terminal stratum requires $f(7)\ne0$. The nonzero-ratio cancellation and terminal matrix inverse do not apply when $f(7)=0$; they supply no cardinality bound for the component in (10.1). |
+| [Zero-Sixth Root Rigidity and Terminal Collision Geometry](https://github.com/the-omega-institute/trureturing/blob/7a5bd6a6bce1b3213422b7b3a1eca2d6c10ec707/docs/develop/theory/FIB_JMMJM_ZERO_SIXTH_ROOT_RIGIDITY_AND_TERMINAL_COLLISION_GEOMETRY.md), Theorems 2.1, 4.1 and 6.1 | Its repeated-sixth rigidity implies that a world with $f(6)=f(7)=0$ cannot have a repeated root at six. Its three-terminal-coordinate injections require $f(7)\ne0$. Neither result gives the root-seven component count. Equation (10.22) retains a zero sixth gain with $f(7)=0$, including the simple-sixth-root possibilities. |
+| Y. Li, K. Lee and Y. Bresler, [*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models*, arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1), Theorems 2.8 and 3.3 | Theorem 2.8 separates identification of the first-factor orbit among all compatible pairs from identification of the second factor conditional on the first. Theorem 3.3's BGPC sufficient condition assumes an entrywise nonvanishing gain vector, full row rank of the signal matrix, and a full-column-rank sensing matrix with indecomposable row space. Those hypotheses do not cover arbitrary sampled zeros, the affine drift and the complete-world target here. Neither theorem is a premise for the quartic bound. |
+
+These correspondences distinguish the repository deduction from
+its standard algebraic tools; they assert no external priority or
+exhaustive classification. The uniform count asserts no two-world
+sharpness, numerical stability or computational cost bound.
+
+The original-root problem still quantifies over all legal worlds,
+all deterministic policies and stops, both initial actions and
+every actual history on one unresettable trajectory. A resolution
+would require either a jointly realizable obstruction with the
+original-root and earlier-history bridges, or a lawful complete-target
+decoder on that full domain. No root acquisition, earlier-parent
+gluing, exact losing triple, $L_2$ witness, eight-reading decoder
+or nine-reading upper bound is supplied by the component count.
+The alternative $n_{\mathrm{det}}(3,0)\ge9$ versus an everywhere
+at-most-eight-reading decoder remains unresolved by these deductions.
+
+## 追加锚（本行以下为增补区）
