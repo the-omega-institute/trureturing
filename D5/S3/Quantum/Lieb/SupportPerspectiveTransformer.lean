@@ -6,6 +6,11 @@
    utility: none
    digest: The supported spectral perspective contracts under every finite complex-linear positive map with exact kernel inclusion. -/
 
+
+
+import D5.S3.Quantum.Lieb.SupportPerspectiveTransport
+import Mathlib.LinearAlgebra.Complex.Module
+
 /-!
 Source candidate; current elaboration, kernel and axiom checks are pending.
 
@@ -19,9 +24,6 @@ zero output support. Kernel inclusion is converted to reconstruction; the
 signed sandwich support theorem cancels the ambient compensation. The actual
 all-Hilbert operator-convex supplier and continuity remain explicit premises.
 -/
-
-import D5.S3.Quantum.Lieb.SupportPerspectiveTransport
-import Mathlib.LinearAlgebra.Complex.Module
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

@@ -62,7 +62,21 @@ internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDef
         return Seq([.. items]);
     }
 
-    private static Formula Transformer() => Seq(
+    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Complex => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Mat(string n) => Call("Matrix", F.Id(n), F.Id(n), Complex);
+    private static Formula Binder(string name, Formula type) => Seq(F.Id(name), Colon, Sp, type, Comma, Esc);
+    private static Formula Instance(string name, string n) => Seq(OpenBracket, Call(name, F.Id(n)), CloseBracket, Comma, Sp);
+    private static Formula Carrier(string n) => Seq(Binder(n, Call("Type", F.Id("u"))),
+        Instance("Fintype", n), Instance("DecidableEq", n));
+    private static Formula Transformer() => Disp(Seq(Forall, Sp, Binder("u", Call("Level")),
+        Carrier("n"), Carrier("m"), Binder("f", Seq(Real, Sp, To, Sp, Real)),
+        Binder("Phi", Call("PositiveLinearMap", Complex, Mat("n"), Mat("m"))),
+        Binder("A", Mat("n")), Binder("B", Mat("n")),
+        Call("OperatorConvexOnAll", F.Id("u"), Call("Ici", D(0)), F.Id("f")), Comma, Sp,
+        Call("ContinuousOn", F.Id("f"), Call("Ici", D(0))), Comma, Sp,
+        Call("PSD", F.Id("A")), Comma, Sp, Call("PSD", F.Id("B")), Comma, Sp,
+        Call("ker", F.Id("B")), Subseteq, Sp, Call("ker", F.Id("A")), Sp, Implies, Sp,
         Call("persp", F.Id("f"), Call("Phi", F.Id("A")), Call("Phi", F.Id("B"))), Le,
-        Call("Phi", Call("persp", F.Id("f"), F.Id("A"), F.Id("B"))));
+        Call("Phi", Call("persp", F.Id("f"), F.Id("A"), F.Id("B")))));
 }

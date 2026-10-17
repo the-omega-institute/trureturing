@@ -6,6 +6,19 @@
    utility: none
    digest: Finite positive unital matrix-map Jensen via spectral effects and rectangular isometric dilation. -/
 
+
+
+import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
+import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
+import Mathlib.Algebra.Order.Module.PositiveLinearMap
+import Mathlib.Analysis.CStarAlgebra.Matrix
+import Mathlib.Data.Matrix.Basis
+import Mathlib.LinearAlgebra.Matrix.Block
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Nlinarith
+import Mathlib.Tactic.Ring
+
 /-!
 Source candidate; current elaboration, kernel and axiom checks are pending.
 
@@ -19,17 +32,6 @@ rectangularCFCAmbient proof in CanonicalChannelDPI. The public diagonal-CFC
 supplier is used directly. Internal contraction and spectral-effect helpers
 are consumed on the positive-unital Jensen proof path.
 -/
-
-import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
-import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
-import Mathlib.Algebra.Order.Module.PositiveLinearMap
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.Data.Matrix.Basis
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Nlinarith
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

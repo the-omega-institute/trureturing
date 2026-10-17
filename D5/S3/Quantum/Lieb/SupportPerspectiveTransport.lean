@@ -6,6 +6,11 @@
    utility: none
    digest: Signed support transport and fixed-ambient positive unitalization for the supported spectral perspective. -/
 
+
+
+import D5.S3.Quantum.Lieb.PositiveMapJensen
+import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
+
 /-!
 Source candidate; current elaboration, kernel and axiom checks are pending.
 
@@ -19,9 +24,6 @@ Singleton square-root Kraus normalization supplies the support identities.
 Signed support and CFC localization feed SupportPerspectiveTransformer;
 coordinate compensation unitalizes the map on the full output carrier.
 -/
-
-import D5.S3.Quantum.Lieb.PositiveMapJensen
-import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

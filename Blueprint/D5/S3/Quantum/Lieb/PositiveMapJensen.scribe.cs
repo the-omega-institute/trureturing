@@ -10,6 +10,14 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Proposed finite positive-map Jensen bridge; no compilation or admission claim.",
         H("PositiveMapJensen"), Blocks(
+            Describe.Lean(DescribeId.Create("rectangular-congruence"),
+                DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.congruence_mono"),
+                H("Rectangular congruence preserves order"), StatementSource.FromAuthor(Congruence()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For arbitrary finite decidable carriers n and m, matrices A,B in M_n(C) "
+                    + "with A <= B, and any rectangular V from C^m to C^n, one has "
+                    + "V* A V <= V* B V. This consumed helper applies the existing "
+                    + "positive-semidefinite congruence theorem to B-A."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rectangular-cfc"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.cfc_intertwining"),
                 H("Rectangular spectral intertwining"), StatementSource.FromAuthor(Intertwining()),
@@ -61,16 +69,37 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
         items.Add(Close);
         return Seq([.. items]);
     }
-    private static Formula Intertwining() => Seq(
+    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Complex => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Mat(string n, string m) => Call("Matrix", F.Id(n), F.Id(m), Complex);
+    private static Formula Binder(string name, Formula type) => Seq(F.Id(name), Colon, Sp, type, Comma, Esc);
+    private static Formula Instance(string name, string n) => Seq(OpenBracket, Call(name, F.Id(n)), CloseBracket, Comma, Sp);
+    private static Formula Carriers(bool mixed = true) => Seq(
+        Forall, Sp, Binder("u", Call("Level")),
+        mixed ? Binder("v", Call("Level")) : Seq(),
+        Binder("n", Call("Type", F.Id("u"))), Binder("m", Call("Type", F.Id(mixed ? "v" : "u"))),
+        Instance("Fintype", "n"), Instance("DecidableEq", "n"),
+        Instance("Fintype", "m"), Instance("DecidableEq", "m"));
+    private static Formula Congruence() => Disp(Seq(Carriers(),
+        Binder("A", Mat("n", "n")), Binder("B", Mat("n", "n")), Binder("V", Mat("n", "m")),
+        F.Id("A"), Le, F.Id("B"), Sp, Implies, Sp,
+        Call("adjoint", F.Id("V")), F.Id("A"), F.Id("V"), Le,
+        Call("adjoint", F.Id("V")), F.Id("B"), F.Id("V")));
+    private static Formula Intertwining() => Disp(Seq(Carriers(),
+        Binder("A", Mat("n", "n")), Binder("B", Mat("m", "m")), Binder("V", Mat("n", "m")),
+        Binder("f", Seq(Real, Sp, To, Sp, Real)),
         Call("Hermitian", F.Id("A")), Comma, Sp, Call("Hermitian", F.Id("B")), Comma, Sp,
         F.Id("A"), F.Id("V"), Eq, F.Id("V"), F.Id("B"), Implies, Esc,
         Call("cfc", F.Id("f"), F.Id("A")), F.Id("V"), Eq,
-        F.Id("V"), Call("cfc", F.Id("f"), F.Id("B")));
-    private static Formula Jensen() => Seq(
-        Call("OperatorConvexOnAll", Call("Ici", D(0)), F.Id("f")), Comma, Sp,
+        F.Id("V"), Call("cfc", F.Id("f"), F.Id("B"))));
+    private static Formula Jensen() => Disp(Seq(Carriers(false),
+        Binder("f", Seq(Real, Sp, To, Sp, Real)),
+        Binder("Phi", Call("PositiveLinearMap", Complex, Mat("n", "n"), Mat("m", "m"))),
+        Binder("A", Mat("n", "n")),
+        Call("OperatorConvexOnAll", F.Id("u"), Call("Ici", D(0)), F.Id("f")), Comma, Sp,
         Call("ContinuousOn", F.Id("f"), Call("Ici", D(0))), Comma, Sp,
         Call("PositiveComplexLinear", F.Id("Phi")), Comma, Sp,
         Call("Phi", D(1)), Eq, D(1), Comma, Sp, D(0), Le, F.Id("A"), Implies, Esc,
         Call("cfc", F.Id("f"), Call("Phi", F.Id("A"))), Le,
-        Call("Phi", Call("cfc", F.Id("f"), F.Id("A"))));
+        Call("Phi", Call("cfc", F.Id("f"), F.Id("A")))));
 }
