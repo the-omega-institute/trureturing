@@ -147,4 +147,133 @@ private theorem stationary : IsStationaryNetwork rates prob := by
   · intro m
     fin_cases m <;> norm_num [rates.eq_1, prob.eq_1, Fin.sum_univ_succ, Fin.succ, Fin.ofNat, Fin.mk.injEq]
 
+set_option maxHeartbeats 2000000 in
+private theorem activity_value : activity rates prob = 61/8 := by
+  unfold activity
+  rw [edge_sum _ (by intro m n h; simp only [flux_value, h, zero_div])]
+  simp (disch := decide) only [hex.eq_1, clique.eq_1, Finset.sum_insert, Finset.sum_singleton]
+  norm_num [Fin.ext_iff, flux_value, rates.eq_1]
+
+set_option maxHeartbeats 2000000 in
+private theorem entropy_value : entropyRate rates prob =
+    (3/800) * Real.log (201/199) := by
+  have log_reverse : Real.log (199/201 : ℝ) = -Real.log (201/199) := by
+    rw [show (199/201 : ℝ) = (201/199)⁻¹ by norm_num, Real.log_inv]
+  unfold entropyRate
+  rw [edge_sum _ (by intro m n h; simp only [flux_value, h, zero_div, lt_self_iff_false, if_false])]
+  simp (disch := decide) only [hex.eq_1, clique.eq_1, Finset.sum_insert, Finset.sum_singleton]
+  norm_num [Fin.ext_iff, flux_value, rates.eq_1, log_reverse]
+  ring
+
+set_option maxHeartbeats 2000000 in
+private theorem asym_value : asym rates prob obsA obsB = 3 * Real.sqrt 3 / 3200 := by
+  unfold asym
+  rw [edge_sum _ (by intro m n h; simp only [flux_value, h, zero_div, mul_zero])]
+  simp (disch := decide) only [hex.eq_1, clique.eq_1, Finset.sum_insert, Finset.sum_singleton]
+  simp only [obsA.eq_1, obsB.eq_1]
+  dsimp only [Matrix.cons_val]
+  norm_num [Fin.ext_iff, flux_value, rates.eq_1]
+  ring
+
+set_option maxHeartbeats 2000000 in
+private theorem diffusion_a_value : diffusion rates prob obsA = 300121/1600000 := by
+  unfold diffusion
+  rw [edge_sum _ (by intro m n h; simp only [flux_value, h, zero_div, mul_zero])]
+  simp (disch := decide) only [hex.eq_1, clique.eq_1, Finset.sum_insert, Finset.sum_singleton]
+  simp only [obsA.eq_1]
+  dsimp only [Matrix.cons_val]
+  norm_num [Fin.ext_iff, flux_value, rates.eq_1]
+
+set_option maxHeartbeats 2000000 in
+private theorem diffusion_b_value : diffusion rates prob obsB = 3/16 := by
+  unfold diffusion
+  rw [edge_sum _ (by intro m n h; simp only [flux_value, h, zero_div, mul_zero])]
+  simp (disch := decide) only [hex.eq_1, clique.eq_1, Finset.sum_insert, Finset.sum_singleton]
+  simp only [obsB.eq_1]
+  dsimp only [Matrix.cons_val]
+  norm_num [Fin.ext_iff, flux_value, rates.eq_1]
+  nlinarith [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+
+private theorem flux_bounds (m n : Fin 16) (h : 0 < flux rates prob m n) :
+    199/3200 ≤ flux rates prob m n ∧ flux rates prob m n ≤ 201/3200 := by
+  rw [flux_value] at h ⊢
+  simp only [rates.eq_1] at h ⊢
+  split_ifs at h ⊢ <;> norm_num at *
+
+private theorem ratio_value : scaleRatio rates prob = 201/199 := by
+  have hmax : IsGreatest {x : ℝ | ∃ m n, x = flux rates prob m n ∧ 0 < x}
+      (201/3200) := by
+    refine ⟨⟨1, 0, ?_, by norm_num⟩, ?_⟩
+    · norm_num [flux_value, rates.eq_1]
+    · rintro x ⟨m, n, rfl, hx⟩
+      exact (flux_bounds m n hx).2
+  have hmin : IsLeast {x : ℝ | ∃ m n, x = flux rates prob m n ∧ 0 < x}
+      (199/3200) := by
+    refine ⟨⟨0, 1, ?_, by norm_num⟩, ?_⟩
+    · norm_num [flux_value, rates.eq_1]
+    · rintro x ⟨m, n, rfl, hx⟩
+      exact (flux_bounds m n hx).1
+  simp only [scaleRatio.eq_1]
+  rw [hmax.csSup_eq, hmin.csInf_eq]
+  norm_num
+
+private theorem numerical_violation :
+    ¬ (|3 * Real.sqrt 3 / 3200| /
+      Real.sqrt ((300121/1600000) * (3/16)) ≤
+    (201/199) / Real.tan (Real.pi / 16) *
+      Real.sqrt (((3/800) * Real.log (201/199)) / (2 * (61/8)))) := by
+  have tangent_lower : (3 : ℝ)/16 < Real.tan (Real.pi / 16) := by
+    exact lt_trans (by linarith [Real.pi_gt_three])
+      (Real.lt_tan (by positivity) (by linarith [Real.pi_pos]))
+  have tangent_pos : 0 < Real.tan (Real.pi / 16) := by linarith
+  have gamma_pos : 0 ≤ (201/199 : ℝ) / Real.tan (Real.pi / 16) := by positivity
+  have gamma_bound : (201/199 : ℝ) / Real.tan (Real.pi / 16) < 1072/199 := by
+    apply (div_lt_iff₀ tangent_pos).2
+    nlinarith
+  have log_bound : Real.log (201/199 : ℝ) < 2/199 := by
+    have h := Real.log_lt_sub_one_of_pos (by norm_num : (0 : ℝ) < 201/199)
+      (by norm_num : (201/199 : ℝ) ≠ 1)
+    norm_num at h ⊢
+    exact h
+  have log_nonneg : 0 ≤ Real.log (201/199 : ℝ) :=
+    le_of_lt (Real.log_pos (by norm_num))
+  have left_square : (|3 * Real.sqrt 3 / 3200| /
+      Real.sqrt ((300121/1600000) * (3/16)))^2 = (45/600242 : ℝ) := by
+    norm_num [div_pow, mul_pow, Real.sq_sqrt, sq_abs]
+  have right_square :
+      ((201/199) / Real.tan (Real.pi / 16) *
+        Real.sqrt (((3/800) * Real.log (201/199)) / (2 * (61/8))))^2 =
+      ((201/199) / Real.tan (Real.pi / 16))^2 *
+        (3/12200 * Real.log (201/199)) := by
+    rw [mul_pow, Real.sq_sqrt (by positivity)]
+    ring
+  have gamma_square : ((201/199 : ℝ) / Real.tan (Real.pi / 16))^2 < (1072/199)^2 := by
+    nlinarith
+  have right_bound : ((201/199 : ℝ) / Real.tan (Real.pi / 16))^2 *
+      (3/12200 * Real.log (201/199)) < (1072/199)^2 * (3/12200 * (2/199)) := by
+    calc
+      _ ≤ (1072/199 : ℝ)^2 * (3/12200 * Real.log (201/199)) :=
+        mul_le_mul_of_nonneg_right gamma_square.le (by positivity)
+      _ < _ := mul_lt_mul_of_pos_left (by nlinarith) (by norm_num)
+  intro h
+  have squared := mul_self_le_mul_self (by positivity :
+    (0 : ℝ) ≤ |3 * Real.sqrt 3 / 3200| /
+      Real.sqrt ((300121/1600000) * (3/16))) h
+  rw [← sq, ← sq, left_square, right_square] at squared
+  norm_num at right_bound
+  linarith
+
+theorem result : ¬ claim := by
+  intro h
+  have positive_flux : ∃ m n, 0 < flux rates prob m n := by
+    exact ⟨1, 0, by norm_num [flux_value, rates.eq_1]⟩
+  have positive_diffusion : 0 < diffusion rates prob obsA * diffusion rates prob obsB := by
+    rw [diffusion_a_value, diffusion_b_value]
+    norm_num
+  have bound := h 16 (by decide) rates prob obsA obsB stationary
+    positive_flux positive_diffusion
+  rw [asym_value, diffusion_a_value, diffusion_b_value, ratio_value,
+    entropy_value, activity_value] at bound
+  exact numerical_violation bound
+
 end D5.S3.StatisticalMechanics.CrossCorrelationActivityBoundRefutation
