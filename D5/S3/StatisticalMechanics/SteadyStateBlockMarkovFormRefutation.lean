@@ -62,53 +62,53 @@ private theorem generator : IsMarkovGenerator L := by
   constructor
   · intro i j hij
     fin_cases i <;> fin_cases j <;>
-      first | exact (hij rfl).elim | norm_num [L]
+      first | exact (hij rfl).elim | norm_num [L.eq_1]
   · intro j
-    fin_cases j <;> norm_num [L, Fin.sum_univ_succ]
+    fin_cases j <;> norm_num [L.eq_1, Fin.sum_univ_succ]
 
 private theorem orthogonal : U ∈ Matrix.orthogonalGroup (Fin 4) ℝ := by
   apply (Matrix.mem_orthogonalGroup_iff (Fin 4) ℝ).mpr
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [U, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [U.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem symmetry : U * L = L * U := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [U, L, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [U.eq_1, L.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem probability : Probability p := by
   constructor
   · intro i
-    fin_cases i <;> norm_num [p]
-  · norm_num [p, Fin.sum_univ_succ]
+    fin_cases i <;> norm_num [p.eq_1]
+  · norm_num [p.eq_1, Fin.sum_univ_succ]
 
 private theorem stationary : L *ᵥ p = 0 := by
   ext i
-  fin_cases i <;> norm_num [L, p, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num [L.eq_1, p.eq_1, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem frame : Vᵀ * V = 1 := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [V, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [V.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem restriction : Vᵀ * L * V = A := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [V, L, A, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [V.eq_1, L.eq_1, A.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem invariant : L * V = V * A := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [L, V, A, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [L.eq_1, V.eq_1, A.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem eigenframe : U * V = V := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [U, V, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [U.eq_1, V.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem contains_stationary : ∃ c, V *ᵥ c = p := by
   refine ⟨![1/2, 1/32, 0], ?_⟩
   ext i
-  fin_cases i <;> norm_num [V, p, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
+  fin_cases i <;> norm_num [V.eq_1, p.eq_1, Matrix.mulVec, dotProduct, Fin.sum_univ_succ]
 
 private theorem projector : V * Vᵀ = (1/2 : ℝ) • (1 + U) := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [U, V, Matrix.mul_apply, Fin.sum_univ_succ]
+  fin_cases i <;> fin_cases j <;> norm_num [U.eq_1, V.eq_1, Matrix.mul_apply, Fin.sum_univ_succ]
 
 private theorem eigenspace (x : Fin 4 → ℝ) (hx : U *ᵥ x = (1 : ℝ) • x) :
     ∃ c, V *ᵥ c = x := by
@@ -124,7 +124,7 @@ private def K : Matrix (Fin 3) (Fin 3) ℂ := fun i j =>
     ((A.map Complex.ofReal) *ᵥ ((A.map Complex.ofReal) *ᵥ e)) i] j
 
 private theorem cyclic_det : K.det = (41/4096 : ℂ) := by
-  norm_num [K, e, A, Matrix.det_fin_three, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
+  norm_num [K.eq_1, e.eq_1, A.eq_1, Matrix.det_fin_three, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
     Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail]
 
 private theorem irreducible (X : Matrix (Fin 3) (Fin 3) ℂ)
@@ -137,7 +137,7 @@ private theorem irreducible (X : Matrix (Fin 3) (Fin 3) ℂ)
     hinv.star_right.eq
   have h10 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 0) hstar
   have h20 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 0) hstar
-  norm_num [A, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.star_apply,
+  norm_num [A.eq_1, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.star_apply,
     Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at h10 h20
   have hz1 : X 1 0 = 0 := by
     linear_combination (20/41 : ℂ) * h10 + (16/41 : ℂ) * h20
@@ -145,7 +145,7 @@ private theorem irreducible (X : Matrix (Fin 3) (Fin 3) ℂ)
     linear_combination (-16/41 : ℂ) * h10 + (20/41 : ℂ) * h20
   have hXe : X *ᵥ e = (X 0 0) • e := by
     ext i
-    fin_cases i <;> simp [e, hz1, hz2]
+    fin_cases i <;> simp [e.eq_1, hz1, hz2]
   have hstep (z : Fin 3 → ℂ) (hz : X *ᵥ z = (X 0 0) • z) :
       X *ᵥ ((A.map Complex.ofReal) *ᵥ z) =
         (X 0 0) • ((A.map Complex.ofReal) *ᵥ z) := by
@@ -203,12 +203,12 @@ private theorem obstruction (S : Matrix (Fin 3) (Fin 3) ℂ)
     exact Matrix.trace_conj' hS _
   have ht : Matrix.trace B = -5/2 := by
     have hr := congrArg Complex.re htrace
-    norm_num [Matrix.trace_fin_three, A, Matrix.cons_val_two, Matrix.vecHead,
+    norm_num [Matrix.trace_fin_three, A.eq_1, Matrix.cons_val_two, Matrix.vecHead,
       Matrix.vecTail] at hr ⊢
     exact hr
   have ht2 : Matrix.trace (B * B) = 9/8 := by
     have hr := congrArg Complex.re htrace2
-    norm_num [Matrix.trace_fin_three, Matrix.mul_apply, Fin.sum_univ_succ, A,
+    norm_num [Matrix.trace_fin_three, Matrix.mul_apply, Fin.sum_univ_succ, A.eq_1,
       Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at hr ⊢
     exact hr
   have hnonneg := metzler_trace B hB.1
