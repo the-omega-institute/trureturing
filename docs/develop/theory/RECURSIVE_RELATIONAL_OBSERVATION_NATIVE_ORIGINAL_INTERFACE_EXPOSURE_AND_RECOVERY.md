@@ -1362,3 +1362,219 @@ source-effect mismatch; it proves no general impossibility of simulation,
 full abstraction or recovery under other separately specified contracts.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Original source entry already changes material before header input
+
+**Definition 17.1 (same-start source prefixes and their setup checkpoint).**
+Keep Assumption 1.2 and Definitions 1.3–1.4. Fix an authentic outer Ready
+$P$, and a nonempty returning history sequence $H:P\longrightarrow R$
+of Lemma 15.1. On an alternative continuation of this very $P$, supply
+outer01 and execute its installed receiver, import and dispatch. Let
+$e_P$ be the actual cut immediately after that dispatch, at the first
+header-Base/setup label of $F^A$. This is SOURCECALL Lemma 2.3's entry
+and GCA Definition 5.3's physical entry successor, including its actual
+code version and bank-parity control component. It is not an entry
+chosen inside the subsequent header routine.
+
+Let $b$ be the number of constructed ordinary cells on port13 at $P$,
+including all old headers, delimiters, statuses, blank and retired
+material. In the first header Base(13;$d$), $d$ denotes the actual
+producer work port assigned to its output role by the installed finite
+role permutation. Thus $d\in\{1,\ldots,12\}$; no globally fixed numbered
+output port is assumed. Let $s_P$ be the cut just after this Base has
+completed, including its Finish and final positioning. Let $i_P$ be
+the reached cut immediately before the first original header IN, and
+$z_{P,c}$ the cut just after Supply$(c)$ there, before its matching EX13.
+The setup through $i_P$ has no external IN. These checkpoints concern
+the original header on13, not an activation or gate Base on70.
+
+A source-entry comparison path here means a finite path of the actual
+installed native controller beginning at $P$, taking this outer01
+dispatch, and ending at or after $e_P$. It follows prescribed control
+and current guards; it may end inside the setup, wait at an IN, remain
+unfinished, or continue through any physically defined later work.
+Later supplied source bits need not be canonical, and no completed
+event, journal invocation, counter update or return is required.
+Unexecuted disabled trials may be interspersed but are not rows.
+No new scheduler entry, code installation, cancellation, reset,
+reclamation or jump to an internal helper is supplied by this path
+class. This native path domain asserts neither original-$Q$ admission
+for its added rows nor coverage of all original semantic protocols.
+
+The starting authority is ARC Definition 5.1's actual Ready relation:
+the twelve work tokens are at the producer, the source-service token
+is at its dispatcher, heads13/17 are at R, and the original client is
+parked on24–27. ARC Definition 5.2's stored outer01 selects the source
+phase by its actual CTL. The original header prelude needs the current
+producer workspace/ingress authority, not a historical permission or
+a loan from the verifier or consumer. CAP Definition 4.6 retains its
+later source-token admission after complete frame acquisition/parsing.
+The occupied verifier/INITIAL consumer and the original waiting packet
+are unchanged. A snapshot or retained query is not another incoming
+edge at this current PC.
+
+**Theorem 17.2 (source-entry prefix obstruction).** For every $P,H,R$
+of Definition 17.1, the finite prescribed setup reaches $s_P$ and
+$i_P$ without any further input after $e_P$. The Base subinterval itself
+adds exactly $b+2$ cells to $A_{55}$, all on its actual original work
+port $d$; its meter receipts are additional material. Every finite
+source-entry comparison path ending at a cut $y$ at or after $s_P$
+satisfies
+
+$$
+A_{55}(y)\ \ge\ A_{55}(P)+b+2
+             \ =\ A_{55}(R)+b+2\ >\ A_{55}(R).
+$$
+
+For every earlier endpoint $e_P\le y<s_P$ on that source-entry path,
+the physical source-prelude PC differs from every outer Ready PC.
+Consequently every endpoint in the stated class, including $e_P$
+itself and all unfinished source prefixes, satisfies
+
+$$
+O^+(y)\ne O^+(R).
+$$
+
+In particular this holds for each $z_{P,c}$ whose bit is lawful at the
+first header IN, although that individual IN has
+$\Delta A_{55}=\Delta\mu=0$ and exactly one receipt relative to $i_P$.
+No service-completion premise is used for the comparison path.
+
+Proof. ARC Definition 5.2 retains the whole choice block on70. Its
+Tail/Base, literal length, descriptor and import work uses the annex
+scratch, descriptors and banks. GCA Definition 3.1 preserves all three
+outer successors; GENERAL Definitions 2.1–2.3 retain this source arm
+without a hook inside $F^A$. Thus outer01 actually enters the original
+header setup, leaves port13 unchanged, and constructs no cell on0–55
+before $e_P$. In particular port13 still has precisely $b$ ordinary
+cells there. Its heads and producer tokens have the stated current
+values; the gate bits are not the first two source-header bits.
+
+CAP Definition 4.6 places a Base before the physical header block on13.
+Expand that Base by CAP Definition 3.3. Home(13); MR(13); New($d$)
+positions actual heads. New is Tail, not a clearing or allocation
+operation. The scan visits all $b$ existing ordinary cells of13 and
+executes Append($d$,1) once for each. On the existing R it executes
+Append($d$,0); Finish($d$) then appends sep and positions the newest
+word by Last. By CAP Definition 3.1 every one of these $b+2$ Appends
+is the actual EX($d$); WR($d$,symbol); MR($d$). Each EX converts the
+old R into an ordinary cell and constructs the next R; the next Append
+uses that new boundary. The ordinary cells are distinct even when
+$d$ held old words or its role has been reused. The output word is
+exactly $1^b0\mathsf{sep}$. All other Base operations are reads and
+moves. Hence this subinterval adds exactly $b+2$ cells to $A_{55}$,
+including two cells when $b=0$.
+
+Every tape scanned in this setup is finite at the fixed reached $P$.
+Home, Tail and Last terminate at their existing boundaries or the newly
+constructed word; the Base loop visits exactly those $b$ cells. The
+remaining positioning or literal work before the first unrolled header
+IN uses CAP's same finite routines. This establishes the two finite
+checkpoints without assuming future source bits or completion of a
+source computation.
+
+TMC PR57.D1 and Theorem 14.2's per-row allocation argument give
+monotonicity of $A_{55}$ on every actual suffix. WR of a blank, a status
+or an old word, token return, loss of a handle and retirement do not
+delete constructed cells. GENERAL Lemma 2.6 preserves these same
+effects in the incidence carrier. Additional setup allocations only
+increase the bound. Thus the $b+2$ cells persist at every $y$ at or
+after $s_P$, irrespective of later raw input, refusal, fault, return
+or halt. Lemma 15.1 gives $A_{55}(R)=A_{55}(P)$ and proves the displayed
+strict inequality.
+
+Before $s_P$ the path is still in the first header prelude. CAP's
+static inlining and ARC Definition 4.1's separately numbered $F^A$
+give this prelude only its prescribed internal successors and header
+continuation. Its loops do not return to outer Ready. GENERAL
+Definition 2.1's fresh numbering, with the finite parity product,
+keeps those physical source PCs disjoint from the outer Ready PCs.
+The sole changed source exit is the final idle CTL into InnerReturn,
+after the original row/delivery/ACK/source-token route; ARC Definition
+5.4 places CaptureCAP and its Ready afterward. None is an early exit
+from Base. Therefore the physical control coordinate already separates
+every $e_P\le y<s_P$ from $R$. At later cuts $A_{55}$ separates them.
+Both are retained by $O^+$.
+
+Finally the original first header body is IN(5); EX13; WR13,5; MR13.
+At $z_{P,c}$ only that IN has occurred since $i_P$. It changes the
+actual latch/control and receipt, and no ordinary cell. The earlier
+Base cells remain. SOURCECALL Lemma 2.3 and GENERAL Theorem 9.1 supply
+the unchanged-row original action here; they do not identify $i_P$
+with the different starting cut $P$. This proves the last assertion. ∎
+
+**Corollary 17.3 (a primitive-prefix replacement must avoid this entry).**
+A replacement of a Lemma 15.1 history sequence that is required to
+preserve its complete original physical endpoint cannot start at the
+same $P$, dispatch outer01, and stop anywhere from $e_P$ onward on the
+prescribed source path. This excludes unfinished source-entry work
+and every legal return formed from it, even when no original service
+has completed. There is no memory-size or history-length threshold.
+
+Proof. Complete physical endpoint equality requires equality of
+original constructed material and physical control, hence of the
+coordinates selected in Theorem 17.2. The theorem contradicts that
+necessary condition. Any growing supplementary material, or finite
+recoding of retained words or the independent $S,B,M_J,T$ expressions,
+may still be kept; it cannot remove actual cells on the fixed original
+ports or change the actual PC at an unfinished endpoint. Discarding
+those coordinates changes the stipulated physical response.
+
+For an explicit unfinished instance, use Proposition 16.1's first
+Ready and accepted AcquisitionOffset0 flight as $P,H,R$. On the
+alternative branch supply outer01, run the genuine header setup,
+Supply0 at its first header IN, and stop before EX13. This is a lawful
+prefix of ReadE's $000\,U(0)$, with no source event or journal completion.
+Its original work cells already exceed $R$'s by at least $b+2$.
+The locally neutral IN of Proposition 16.2 is therefore retained
+without changing the common starting cut of the comparison.
+
+All actual rows keep their own labels, output releases, full successors
+and receipts. Base has $b+2$ actual Appends, so its Appends alone cost
+$3(b+2)$ rows; the prefix through this first IN costs at least
+$3(b+2)+1$ rows in addition to any other required work. These are
+source bounds, not a measured running time or a complete bill. Every
+actual $L$-row comparison retains Convention 16.3's exact bill
+$(L,2L,\Delta b_{\mathrm{ctl}}+8\Delta A+8L)$, including all original
+and annex cells, retired material, copies and receipts, and GENERAL's
+separate incidence tariff and foundation. No extra row is hidden as
+a free setup, and no group of rows is renamed one Advance. ∎
+
+**Convention 17.4 (response contract and remaining paths).** Theorem
+17.2 and Corollary 17.3 are `repo-derived` source-model deductions.
+The comparison contract remains Definition 1.3: lawful original
+Supply/Advance or an originally admitted finite protocol, actual
+labels and released outputs, and the complete original joint
+successor after each executed action. Enabled noncanonical task
+undefinedness, unexecuted disabled/unauthorized `none`, and executed
+refusal remain distinct. A proposed response bridge retaining the
+stipulated original material and physical control must pass their
+endpoint-equality test, which fails here. This does not assert
+$Q$-inequivalence merely from unequal endpoints or add a terminal
+state readout. In particular an absorbing halt still has only its
+original output in the empty response.
+
+The native path class fixes outer01 from $P$ and includes endpoints
+only from $e_P$ onward. It does not classify cuts still in the outer
+receiver, a separately admitted packet-free scan at another real
+entry, producer-local frozen journal continuations, verifier/consumer
+snapshot lookups, outer00 or paths first using history choice1.
+No exhaustive control-graph or all-primitive impossibility theorem is
+inferred. The actual journal entries remain CAP Definition 4.6's
+installed-caller or already-held frozen-continuation entries, not
+additional scheduler choices at $P$ or inside this prelude.
+
+For a proposed refinement of an actual admitted row, the operational
+completion interface remains
+[NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY Definitions 5.1–5.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md#5-the-positive-local-completion-interface).
+No second conditional simulator is supplied here. The structural
+inverse of `CompletedNativeCanonicalCoding.canonical_coding` retains
+its structural meaning and grants no current entry or execution.
+The simulation and full-abstraction contracts in Convention 16.5
+also retain their own observations and matching-relation premises.
+Thus this obstruction removes the actual source-entry prefix route
+from an endpoint-preserving construction, while Corollary 16.4's
+original admission/response, full-domain recovery and lower
+realization obligations remain.
+
+## 追加锚（本行以下为增补区）
