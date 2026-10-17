@@ -1121,4 +1121,138 @@ It follows that $\log B_{243}>100\log10>200$. Since the Lucas sequence is strict
 **Sources and scope.** The analytic inputs are Patrick Ingram, *Multiples of integral points on elliptic curves*, [arXiv:0802.2651v2](https://arxiv.org/pdf/0802.2651), Lemmas 8 and 10, equation (9), and Sinnou David, *Minorations de formes linéaires de logarithmes elliptiques*, Mémoires de la SMF 62 (1995), [Theorem 2.1](https://www.numdam.org/issue/MSMF_1995_2_62__1_0.pdf). The direct parameter check above retains David's projective-height convention. The original arithmetic and real-arc inputs are §92. This gives an explicit cutoff for repeated full kernels on the actual rank-one stratum, with arbitrary positive $C$. It leaves the $N=81$ case and all higher-rank cases open; it is not a universal WSS exclusion.
 
 
+## 94. Exact elliptic-logarithm separation at the remaining original index 81
+
+**Theorem 94.1 (the original block at 81).** Put
+
+$$B=B_{81}=L_{81}^2+3=7177905237579946589743592924684179.$$
+
+There are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and
+
+$$B_{81k}=Bc^2.$$
+
+**Proof.** The complete factorization in §89 makes $B$ squarefree, and the descent calculation in §90 gives $\operatorname{rank}E_B(\mathbb Q)=1$. Suppose such a repetition exists. The actual Kummer and primitivity argument of §92 gives $K=mR$ and $a=|m|$ with $a^2>B$. The explicit estimates in the proof of Theorem 93.1 give, for $s=\log B$,
+
+$$a<10^{30}s^{5/2},\qquad \log|\Lambda|\le-\frac{a^2s}{6}, \tag{94.1}$$
+
+where $\Lambda\ne0$ is a principal real logarithm of the multiple on
+
+$$y^2=x^3-8775B^2x-236250B^3.$$
+
+Since $10^{33}<B<10^{34}$ and $\log10<5/2$, one has $40<s<85<100$. Therefore
+
+$$a<10^{35}<M:=10^{40},\qquad \frac{a^2s}{6}>B>10^{33}. \tag{94.2}$$
+
+We will obtain incompatible lower and upper bounds for $|\Lambda|$.
+
+**The normalized real logarithm.** On $y_0^2=z(z+1)(z-3)$, with differential $dz/(2y_0)$, define
+
+$$u_0(B)=\int_0^{1/\sqrt B}\frac{dv}{\sqrt{1-2v^2-3v^4}},\qquad
+\omega_0=K_{\rm ell}(1/2),$$
+
+where $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The substitution $v=1/\sqrt z$ in the integral from $B$ to infinity gives $u_0$. The ordered roots $3,0,-1$ have real-period parameter $1/4$, so the full real period is $2K_{\rm ell}(1/2)/\sqrt4=\omega_0$.
+
+The short coordinates satisfy
+
+$$x=45Bz-30B,\qquad y=135\sqrt5\,B^{3/2}y_0.$$
+
+Thus its invariant differential is $1/\sqrt{45B}$ times the normalized differential, and its real period is
+
+$$\omega=\frac{\omega_0}{\sqrt{45B}}.$$
+
+Put $\alpha=u_0(B)/\omega_0$. The sign of the actual point or multiplier can be absorbed into the integer $m$, so for some integers $m,b$,
+
+$$|\Lambda|=\omega|m\alpha+b|,\qquad 1\le|m|<M. \tag{94.3}$$
+
+The intervals below also establish $0<u_0<\omega_0/2$. Any principal-period shift would in any event be absorbed into $b$.
+
+**Rational intervals for the two integrals.** For an integer $q>1$ and a positive even integer $T$, define
+
+$$A(q,T)=\sum_{h=0}^{T-1}\frac{(-1)^h}{(2h+1)q^{2h+1}},\qquad
+E(q,T)=\frac1{(2T+1)q^{2T+1}}.$$
+
+The alternating series gives $A(q,T)<\arctan(1/q)<A(q,T)+E(q,T)$. Machin's identity $\pi=16\arctan(1/5)-4\arctan(1/239)$ follows exactly from
+
+$$\tan(4\arctan(1/5))=\frac{120}{119},\qquad
+\frac{120\cdot239-119}{119\cdot239+120}=1,$$
+
+and the angle $4\arctan(1/5)-\arctan(1/239)$ lying in $(0,\pi/2)$. Set
+
+$$\pi_L=16A(5,200)-4\bigl(A(239,60)+E(239,60)\bigr),$$
+
+$$\pi_U=16\bigl(A(5,200)+E(5,200)\bigr)-4A(239,60).$$
+
+Then $\pi_L<\pi<\pi_U$. Define
+
+$$S=\sum_{h=0}^{239}\frac{\binom{2h}{h}^2}{64^h},\qquad
+T_{240}=\frac{\binom{480}{240}^2}{64^{240}},$$
+
+$$K_L=\frac{\pi_L S}{2},\qquad
+K_U=\frac{\pi_U}{2}\left(S+\frac43T_{240}\right).$$
+
+Expanding the complete elliptic integral gives $K_{\rm ell}(1/2)=(\pi/2)\sum_{h\ge0}\binom{2h}{h}^2/64^h$. The ratio of successive summands is $(2h+1)^2/[16(h+1)^2]<1/4$. Hence
+
+$$K_L<\omega_0<K_U.$$
+
+For the incomplete integral, set
+
+$$R_0=\left\lfloor\sqrt{B\,10^{360}}\right\rfloor,\qquad
+x_L=\frac{10^{180}}{R_0+1},\qquad x_U=\frac{10^{180}}{R_0}.$$
+
+The strict integer-square inequalities $R_0^2<B10^{360}<(R_0+1)^2$ give $x_L<1/\sqrt B<x_U$. Define
+
+$$w=\frac2B+\frac3{B^2},$$
+
+$$V=\sum_{h=0}^{4}\sum_{i=0}^{h}
+\frac{\binom{2h}{h}}{4^h}\binom hi
+\frac{2^{h-i}3^i}{(2h+2i+1)B^{h+i}},$$
+
+$$u_L=x_LV,\qquad
+u_U=x_U\left(V+\frac{w^5}{1-w}\right).$$
+
+All denominators are positive. In the positive expansion $(1-z)^{-1/2}=\sum_{h\ge0}c_hz^h$, one has $0<c_h=\binom{2h}{h}/4^h\le1$. Integrating its first five terms with $z=2v^2+3v^4$ gives exactly $B^{-1/2}V$. On the integration interval $z\le w<1$, so the entire omitted integral is at most $B^{-1/2}w^5/(1-w)$. Consequently
+
+$$u_L<u_0(B)<u_U.$$
+
+Finally put
+
+$$\alpha_L=\frac{u_L}{K_U},\qquad \alpha_U=\frac{u_U}{K_L}.$$
+
+**A finite rational separation certificate.** Take
+
+$$p=200202472053660572292891,\qquad
+q=28593120581134066096406246353512955933058.$$
+
+The preceding finite sums and integer operations give the following exact rational inequalities:
+
+$$\gcd(p,q)=1,\qquad M<q<10^{50},$$
+
+$$\max\left\{\left|\frac pq-\alpha_L\right|,
+\left|\frac pq-\alpha_U\right|\right\}<\frac1{2Mq}, \tag{94.4}$$
+
+$$1<K_L<K_U,\qquad 0<u_L<u_U<\frac12.$$
+
+Together with the displayed square-root bracket, these form a finite certificate using only rational arithmetic; the sums, truncation lengths and integers determining every entry are specified above. In particular $0<\alpha_L<\alpha<\alpha_U$, and (94.4) implies $|\alpha-p/q|<1/(2Mq)$.
+
+For any integers $m,b$ with $1\le|m|\le M$, the integer $mp+bq$ is nonzero: otherwise coprimality would give $q\mid m$, contrary to $q>M$. Thus
+
+$$|m\alpha+b|\ge\frac1q-|m|\left|\alpha-\frac pq\right|>\frac1{2q}.$$
+
+Because $\omega_0>1$ and $45B<10^{36}$, one has $\omega>10^{-18}$. Equations (94.3)–(94.4) give
+
+$$|\Lambda|>\frac{10^{-18}}{2\cdot10^{50}}>10^{-69}. \tag{94.5}$$
+
+On the other hand, (94.1)–(94.2) give
+
+$$|\Lambda|<e^{-10^{33}}<24\cdot10^{-132}<10^{-130},$$
+
+where the middle inequality follows from $e^x>x^4/4!$ for $x>0$. This contradicts (94.5) and proves the theorem. $\square$
+
+**Corollary 94.2 (rank-one nonrepetition for all original indices at least 81).** Let $j,C$ be positive integers, $N=3^j\ge81$, and $B_N=DC^2$ with $D$ its full positive squarefree kernel. If $E_D$ has rational rank one, then there are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and $B_{Nk}=Dc^2$.
+
+**Proof.** Theorem 93.1 excludes $j\ge5$. The only remaining value is $j=4$, whose original block is the squarefree $B$ of Theorem 94.1. That theorem excludes its repetitions as well. $\square$
+
+The result uses exact rational integral bounds and a fixed rational approximation; no floating-point approximation or finite scan over multipliers is a premise. Its rank-one hypothesis remains essential in the passage to $K=mR$. It leaves higher-rank blocks and original indices below $81$ outside its conclusion and does not settle the full WSS problem.
+
+
 ## 追加锚（本行以下为增补区）
