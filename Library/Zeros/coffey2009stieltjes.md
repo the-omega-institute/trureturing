@@ -591,3 +591,94 @@ is still required. Finite truncation with a small omitted-tail allowance
 is not a verification over all Fibonacci indices, a Robin estimate,
 the endpoint half-variance bound, or a proof of RH. This application
 has no new Lean certification.
+
+
+## CS9. A classical bound pays the growing low-prime prefix
+
+The [classical uniform Laguerre bound](../Estimation/plewa2018laguerre.md)
+as reproduced in Plewa, Section 4, equation (19), applies to the actual
+finite CS18 row with the same inclusive integer cutoff. This is a
+parameter application of that existing estimate, not a new polynomial
+or prime-distribution theorem, numerical validation or priority claim.
+
+There are constants $C_0,N_0$ such that for every integer $N\ge N_0$
+and every integer $N/3\le n\le N$,
+
+$$
+\boxed{|Q_n(N)|\le\eta_N
+:=C_0N^{3/4}(\log N)^{1/4}=o(N).}
+\tag{CS27}
+$$
+
+To apply the source, its standard function at degree $n-1$ and
+parameter $1$ is exactly
+$\mathcal L_{n-1}^1(u)=\sqrt{u/n}\,e^{-u/2}L_{n-1}^{(1)}(u)$.
+The cited estimate, with $\nu=4n$, therefore gives
+
+$$
+|L_{n-1}^{(1)}(u)|\le Cn^{1/4}e^{u/2}u^{-3/4},
+\qquad(4n)^{-1}<u\le2n.
+$$
+
+Its constant is independent of $n,u$. For all sufficiently large $N$,
+$(4n)^{-1}<\log2$ and $\log N\le2n$ hold throughout
+$N/3\le n\le N$. Consequently the bound holds on the entire growing
+interval $\log2\le u\le\log N$ needed by both finite sums. It is not
+an application of a fixed-$u$ asymptotic with uncontrolled constants.
+Using only that primes form a subset of the integers gives
+
+$$
+\begin{aligned}
+\left|\sum_{p\le N}\frac{\log p}{p}
+ L_{n-1}^{(1)}(\log p)\right|
+&\le Cn^{1/4}(\log N)^{1/4}\sum_{2\le m\le N}m^{-1/2}
+\le2CN^{3/4}(\log N)^{1/4},\\
+\left|\sum_{2\le m\le N}\frac1m
+ L_{n-1}^{(1)}(\log m)\right|
+&\le Cn^{1/4}(\log2)^{-3/4}\sum_{2\le m\le N}m^{-1/2}
+\le2C(\log2)^{-3/4}N^{3/4}.
+\end{aligned}
+$$
+
+The triangle inequality proves CS27 after absorbing the fixed second
+constant. Indeed $\eta_N/N=C_0(\log N/N)^{1/4}\to0$.
+No cancellation or prime-counting theorem is used. Both sums keep
+$p\le N$ and $2\le m\le N$ exactly, and the unit endpoint is not moved.
+
+For the original adjacent Fibonacci triple $a,b,c$, all three indices
+lie in $[c/3,c]$. Keep CS25's single integer
+$X_c=\lceil\exp(c^4)\rceil$ and define the actual remaining middle by
+
+$$
+Q_n^{\rm mid}=Q_n(X_c)-Q_n(c),\qquad
+\lambda_n^{\rm mid}=h_n^*-Q_n^{\rm mid},\qquad n\in\{a,b,c\}.
+$$
+
+Thus the middle sums have $c<p\le X_c$ and $c<m\le X_c$;
+$h^*=H+U-B$ remains whole. In particular all proper prime powers and
+the unit endpoint remain in their existing channels. With
+$q_n=Q_n(c)$ and $r_n=Q_n-Q_n(X_c)$, the exact relation is
+$\lambda_n^{\rm mid}-\lambda_n=q_n+r_n$.
+Let $\mathcal M(z_a,z_b,z_c)$ denote CS8's linear matrix map. Then
+
+$$
+K_j^{\rm mid}-K_j
+=\mathcal M(q_a+r_a,q_b+r_b,q_c+r_c),
+$$
+
+with the original off-diagonal combination retained. Applying the
+same row-sum allowance as CS26 gives, for every sufficiently large
+Fibonacci index,
+
+$$
+\boxed{\|K_j^{\rm mid}-K_j\|_{\rm op}
+\le5\left(\eta_c+C_*e^{-\delta c^2}\right)=o(c).}
+\tag{CS28}
+$$
+
+This pays the actual growing low-prime prefix and carries the already
+paid remote tail, leaving the actual middle interval in the original
+signed matrix. It does not bound the sign of that middle or establish
+its eventual positivity. The original complete joint estimate, Robin,
+the endpoint half-variance bound and RH remain unresolved. This
+application has no new Lean certification.
