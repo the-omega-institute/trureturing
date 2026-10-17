@@ -11,6 +11,9 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.Analysis.MeanInequalitiesPow
 public import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Finset.Sort
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.FunProp
@@ -151,7 +154,6 @@ private theorem moment_one_formula {ι : Type*} [Fintype ι]
       (fun j => continuous_const.mul (character_continuous _))]
     apply Finset.sum_congr rfl
     intro j _
-    change average (fun t => (z i * star (z j)) * character (n i - n j) t) = _
     unfold average
     rw [intervalIntegral.integral_const_mul]
     rw [mul_left_comm]
@@ -388,6 +390,216 @@ private theorem equal_spacing_bound (T : ℝ) (hT : 5 / 4 < T)
     ring
   rw [heq] at hmax
   exact (div_le_iff₀ (sq_pos_of_pos hu)).mp hmax
+
+private def cubicEnergy (n : Fin 3 → ℤ) : Fin 10 → ℤ :=
+  ![3 * n 0, 2 * n 0 + n 1, 2 * n 0 + n 2, n 0 + 2 * n 1,
+    n 0 + n 1 + n 2, n 0 + 2 * n 2, 3 * n 1, 2 * n 1 + n 2,
+    n 1 + 2 * n 2, 3 * n 2]
+
+private def cubicCoefficient {R : Type*} [CommSemiring R] (a b c : R) : Fin 10 → R :=
+  ![a ^ 3, 3 * a ^ 2 * b, 3 * a ^ 2 * c, 3 * a * b ^ 2, 6 * a * b * c,
+    3 * a * c ^ 2, b ^ 3, 3 * b ^ 2 * c, 3 * b * c ^ 2, c ^ 3]
+
+private theorem character_add (k m : ℤ) (t : ℝ) :
+    character (k + m) t = character k t * character m t := by
+  simp [character, Int.cast_add, add_mul, Complex.exp_add]
+
+private theorem character_nat_mul (q : ℕ) (k : ℤ) (t : ℝ) :
+    character ((q : ℤ) * k) t = character k t ^ q := by
+  simp only [character, Int.cast_mul, Int.cast_natCast]
+  rw [show (q : ℂ) * (k : ℂ) * t * I = q * ((k : ℂ) * t * I) by ring,
+    Complex.exp_nat_mul]
+
+private theorem cubic_expansion (n : Fin 3 → ℤ) (a b c : ℂ) (t : ℝ) :
+    trigPoly n ![a, b, c] t ^ 3 = trigPoly (cubicEnergy n) (cubicCoefficient a b c) t := by
+  simp only [trigPoly, cubicEnergy, cubicCoefficient, Fin.sum_univ_succ,
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.isValue,
+    Fin.succ_zero_eq_one, Fin.succ_one_eq_two]
+  have htwo (k : ℤ) : character (2 * k) t = character k t ^ 2 := character_nat_mul 2 k t
+  have hthree (k : ℤ) : character (3 * k) t = character k t ^ 3 := character_nat_mul 3 k t
+  simp only [character_add, htwo, hthree]
+  ring
+
+private theorem cubic_collision (n : Fin 3 → ℤ) (h01 : n 0 < n 1) (h12 : n 1 < n 2)
+    (i j : Fin 10) : cubicEnergy n i = cubicEnergy n j ↔
+      i = j ∨
+      (n 0 + n 2 = 2 * n 1 ∧
+        ((i = 2 ∧ j = 3) ∨ (i = 3 ∧ j = 2) ∨ (i = 4 ∧ j = 6) ∨
+         (i = 6 ∧ j = 4) ∨ (i = 5 ∧ j = 7) ∨ (i = 7 ∧ j = 5))) ∨
+      (2 * n 0 + n 2 = 3 * n 1 ∧ ((i = 2 ∧ j = 6) ∨ (i = 6 ∧ j = 2))) ∨
+      (n 0 + 2 * n 2 = 3 * n 1 ∧ ((i = 5 ∧ j = 6) ∨ (i = 6 ∧ j = 5))) := by
+  fin_cases i <;> fin_cases j <;> norm_num [cubicEnergy] <;> omega
+
+private theorem cubic_moment_formula (n : Fin 3 → ℤ) (a b c : ℝ) :
+    moment 3 (fun t => Complex.normSq (trigPoly n ![(a : ℂ), b, c] t)) =
+      ∑ i : Fin 10, ∑ j : Fin 10, if cubicEnergy n i = cubicEnergy n j then
+        cubicCoefficient a b c i * cubicCoefficient a b c j else 0 := by
+  have hcoeff (i : Fin 10) : cubicCoefficient (a : ℂ) b c i =
+      ((cubicCoefficient (R := ℝ) a b c i : ℝ) : ℂ) := by
+    fin_cases i <;> simp [cubicCoefficient]
+  calc
+    _ = moment 1 (fun t => Complex.normSq
+        (trigPoly (cubicEnergy n) (cubicCoefficient (a : ℂ) b c) t)) := by
+      simp only [moment, pow_one, ← map_pow, cubic_expansion]
+    _ = _ := by
+      rw [moment_one_formula]
+      simp only [hcoeff, Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul,
+        Complex.ofReal_re]
+
+private theorem spacing_bound (n : Fin 3 → ℤ) (h01 : n 0 < n 1) (h12 : n 1 < n 2)
+    (a b c : ℝ) (ha : 0 ≤ a) (hc : 0 ≤ c) :
+    moment 3 (fun t => Complex.normSq (trigPoly n ![(a : ℂ), b, c] t)) ≤
+      equalMoment a b c := by
+  rw [cubic_moment_formula]
+  simp_rw [cubic_collision n h01 h12]
+  by_cases h0 : n 0 + n 2 = 2 * n 1
+  · have h1 : ¬2 * n 0 + n 2 = 3 * n 1 := by omega
+    have h2 : ¬n 0 + 2 * n 2 = 3 * n 1 := by omega
+    simp [h0, h1, h2, Fin.sum_univ_succ, cubicCoefficient, equalMoment]
+    ring_nf
+    exact le_rfl
+  · by_cases h1 : 2 * n 0 + n 2 = 3 * n 1
+    · have h2 : ¬n 0 + 2 * n 2 = 3 * n 1 := by omega
+      simp [h0, h1, h2, Fin.sum_univ_succ, cubicCoefficient, equalMoment]
+      nlinarith [mul_nonneg (by positivity : 0 ≤ 6 * a * b ^ 2 * c)
+        (by nlinarith [sq_nonneg (a - b)] : 0 ≤ 3 * a ^ 2 + 2 * b ^ 2 + 3 * c ^ 2 - a * b)]
+    · by_cases h2 : n 0 + 2 * n 2 = 3 * n 1
+      · simp [h0, h1, h2, Fin.sum_univ_succ, cubicCoefficient, equalMoment]
+        nlinarith [mul_nonneg (by positivity : 0 ≤ 6 * a * b ^ 2 * c)
+          (by nlinarith [sq_nonneg (b - c)] : 0 ≤ 3 * a ^ 2 + 2 * b ^ 2 + 3 * c ^ 2 - b * c)]
+      · simp [h0, h1, h2, Fin.sum_univ_succ, cubicCoefficient, equalMoment]
+        nlinarith [mul_nonneg (by positivity : 0 ≤ 6 * a * b ^ 2 * c)
+          (by positivity : 0 ≤ 3 * a ^ 2 + 2 * b ^ 2 + 3 * c ^ 2)]
+
+private theorem subunit_equal_bound (T : ℝ) (hT : 5 / 4 < T)
+    (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
+    (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) (hone : a + b + c ≤ 1) :
+    equalMoment a b c ≤ T * (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by
+  let s := a + b + c
+  by_cases hzero : s = 0
+  · have hazero : a = 0 := by dsimp [s] at hzero; linarith
+    have hbzero : b = 0 := by dsimp [s] at hzero; linarith
+    have hczero : c = 0 := by dsimp [s] at hzero; linarith
+    simp [hazero, hbzero, hczero, equalMoment]
+  · have hs : 0 < s := lt_of_le_of_ne (by dsimp [s]; positivity) (Ne.symm hzero)
+    have hnorm : a / s + b / s + c / s = 1 := by
+      rw [← add_div, ← add_div]
+      exact div_self hzero
+    have hscaled := equal_spacing_bound T hT hsym (a / s) (b / s) (c / s)
+      (by positivity) (by positivity) (by positivity) hnorm
+    have heq : equalMoment a b c = s ^ 6 * equalMoment (a / s) (b / s) (c / s) := by
+      dsimp [equalMoment]
+      field_simp
+    have hu : (a / s) ^ 2 + (b / s) ^ 2 + (c / s) ^ 2 =
+        (a ^ 2 + b ^ 2 + c ^ 2) / s ^ 2 := by field_simp
+    rw [hu] at hscaled
+    have hmul := mul_le_mul_of_nonneg_left hscaled (pow_nonneg hs.le 6)
+    rw [← heq] at hmul
+    have hcancel : s ^ 6 * (T * ((a ^ 2 + b ^ 2 + c ^ 2) / s ^ 2) ^ 2) =
+        T * s ^ 2 * (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by field_simp
+    rw [hcancel] at hmul
+    have hsone : s ^ 2 ≤ 1 := by dsimp [s]; nlinarith
+    have hTzero : 0 ≤ T := by linarith
+    have hmul2 := mul_le_mul_of_nonneg_right hsone
+      (mul_nonneg hTzero (sq_nonneg (a ^ 2 + b ^ 2 + c ^ 2)))
+    nlinarith only [hmul, hmul2]
+
+private theorem coefficient_bound (T : ℝ) (hT : 5 / 4 < T)
+    (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
+    (n : Fin 3 → ℤ) (hn : StrictMono n) (z : Fin 3 → ℂ) (hz : ∑ i, ‖z i‖ ≤ 1) :
+    moment 3 (fun t => Complex.normSq (trigPoly n z t)) ≤
+      T * moment 1 (fun t => Complex.normSq (trigPoly n z t)) ^ 2 := by
+  have hvec : (fun i => (‖z i‖ : ℂ)) = ![(‖z 0‖ : ℂ), ‖z 1‖, ‖z 2‖] := by
+    funext i
+    fin_cases i <;> rfl
+  have hnorm : ‖z 0‖ + ‖z 1‖ + ‖z 2‖ ≤ 1 := by
+    simpa [Fin.sum_univ_succ, add_assoc] using hz
+  calc
+    _ ≤ moment 3 (fun t => Complex.normSq (trigPoly n (fun i => (‖z i‖ : ℂ)) t)) :=
+      moment_abs_le n z 3
+    _ ≤ equalMoment ‖z 0‖ ‖z 1‖ ‖z 2‖ := by
+      rw [hvec]
+      exact spacing_bound n (hn (by decide)) (hn (by decide)) _ _ _
+        (norm_nonneg _) (norm_nonneg _)
+    _ ≤ T * (‖z 0‖ ^ 2 + ‖z 1‖ ^ 2 + ‖z 2‖ ^ 2) ^ 2 :=
+      subunit_equal_bound T hT hsym _ _ _ (norm_nonneg _) (norm_nonneg _) (norm_nonneg _) hnorm
+    _ = _ := by rw [moment_one_injective n z hn.injective]; simp [Fin.sum_univ_succ, add_assoc]
+
+private theorem pure_representation {d : ℕ} (n : Fin d → ℤ) (χ ψ : Fin d → ℂ)
+    (hχ : IsUnitVector χ) (hψ : IsUnitVector ψ) (hsparse : IsThreeSparse ψ) :
+    ∃ (e : Fin 3 → ℤ) (z : Fin 3 → ℂ), StrictMono e ∧ (∑ i, ‖z i‖ ≤ 1) ∧
+      ∀ t, signal n χ ψ t = Complex.normSq (trigPoly e z t) := by
+  classical
+  let S := (Function.support ψ).toFinite.toFinset
+  have hS : S.card ≤ 3 := by
+    rw [← Set.ncard_eq_toFinset_card]
+    exact hsparse
+  let energy := fun j : Fin d => -n j
+  obtain ⟨F, hsubset, hcard⟩ := Infinite.exists_superset_card_eq (S.image energy) 3
+    ((Finset.card_image_le).trans hS)
+  let e := F.orderEmbOfFin hcard
+  let Z := fun h : ℤ => ∑ j ∈ S with energy j = h, star (χ j) * ψ j
+  have hmap : ∀ j ∈ S, energy j ∈ F := fun j hj =>
+    hsubset (Finset.mem_image_of_mem energy hj)
+  have hsum (f : ℤ → ℝ) : ∑ i, f (e i) = ∑ h ∈ F, f h := by
+    rw [← Finset.image_orderEmbOfFin_univ F hcard, Finset.sum_image]
+    exact fun i _ j _ hij => e.injective hij
+  have hsumC (f : ℤ → ℂ) : ∑ i, f (e i) = ∑ h ∈ F, f h := by
+    rw [← Finset.image_orderEmbOfFin_univ F hcard, Finset.sum_image]
+    exact fun i _ j _ hij => e.injective hij
+  refine ⟨e, fun i => Z (e i), e.strictMono, ?_, ?_⟩
+  · rw [hsum (fun h => ‖Z h‖)]
+    calc
+      _ ≤ ∑ h ∈ F, ∑ j ∈ S with energy j = h, ‖star (χ j) * ψ j‖ := by
+        apply Finset.sum_le_sum
+        intro h _
+        exact norm_sum_le _ _
+      _ = ∑ j ∈ S, ‖star (χ j) * ψ j‖ := Finset.sum_fiberwise_of_maps_to hmap _
+      _ ≤ ∑ j, ‖χ j‖ * ‖ψ j‖ := by
+        simp only [norm_mul, norm_star]
+        exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+          (fun _ _ _ => by positivity)
+      _ ≤ 1 := by
+        have hcs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ (fun j => ‖χ j‖) (fun j => ‖ψ j‖)
+        simp only [← Complex.normSq_eq_norm_sq] at hcs
+        rw [hχ, hψ] at hcs
+        have hnonneg : 0 ≤ ∑ j, ‖χ j‖ * ‖ψ j‖ := by positivity
+        nlinarith
+  · intro t
+    unfold signal
+    congr 1
+    rw [trigPoly, hsumC (fun h => Z h * character h t)]
+    simp only [Z, Finset.sum_mul]
+    have hfiber : (∑ h ∈ F, ∑ j ∈ S with energy j = h,
+        (star (χ j) * ψ j) * character h t) =
+        ∑ j ∈ S, (star (χ j) * ψ j) * character (energy j) t := by
+      calc
+        _ = ∑ h ∈ F, ∑ j ∈ S with energy j = h,
+            (star (χ j) * ψ j) * character (energy j) t := by
+          apply Finset.sum_congr rfl
+          intro h _
+          apply Finset.sum_congr rfl
+          intro j hj
+          rw [(Finset.mem_filter.mp hj).2]
+        _ = _ := Finset.sum_fiberwise_of_maps_to hmap _
+    rw [hfiber]
+    rw [← Finset.sum_subset (Finset.subset_univ S)]
+    · apply Finset.sum_congr rfl
+      intro j _
+      simp only [character, energy, Int.cast_neg]
+      ring
+    · intro j _ hj
+      have hzero : ψ j = 0 := by simpa only [S, Set.Finite.mem_toFinset, Function.mem_support, not_not] using hj
+      simp [hzero]
+
+private theorem pure_bound (T : ℝ) (hT : 5 / 4 < T)
+    (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
+    {d : ℕ} (n : Fin d → ℤ) (χ ψ : Fin d → ℂ)
+    (hχ : IsUnitVector χ) (hψ : IsUnitVector ψ) (hsparse : IsThreeSparse ψ) :
+    moment 3 (signal n χ ψ) ≤ T * moment 1 (signal n χ ψ) ^ 2 := by
+  obtain ⟨e, z, he, hz, hsignal⟩ := pure_representation n χ ψ hχ hψ hsparse
+  simp_rw [show signal n χ ψ = (fun t => Complex.normSq (trigPoly e z t)) from funext hsignal]
+  exact coefficient_bound T hT hsym e he z hz
 
 private theorem signal_bound (T : ℝ) (hT : 5 / 4 < T)
     (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
