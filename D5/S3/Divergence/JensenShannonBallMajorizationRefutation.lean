@@ -20,15 +20,9 @@ set_option linter.style.longLine false
 noncomputable section
 open scoped BigOperators
 open D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
+open D5.S3.TotalVariation.CycleSingleCutMinimax
 
 namespace D5.S3.Divergence.JensenShannonBallMajorizationRefutation
-
-/-- Nonnegative finite probability vectors, including boundary points. -/
-def IsProbVec {d : ℕ} (q : Fin d → ℝ) : Prop :=
-  D5.S3.TotalVariation.CycleSingleCutMinimax.Probability q
-
-/-- Equation (2.3): `Majorizes x y` means that `y` is majorized by `x`. -/
-def Majorizes {d : ℕ} (x y : Fin d → ℝ) : Prop := moreMixed y x
 
 /-- Jensen--Shannon divergence with natural logarithms and the `0 log 0 = 0` convention.
 If just one coordinate is zero its weighted logarithm vanishes; if both are zero both
@@ -37,14 +31,16 @@ def jensenShannon {d : ℕ} (p q : Fin d → ℝ) : ℝ :=
   (1 / 2 : ℝ) * ∑ i, (p i * Real.log (2 * p i / (p i + q i)) +
     q i * Real.log (2 * q i / (p i + q i)))
 
-/-- Equation (3.1), restricted to its majorization-minimum clause. -/
+/-- Equation (3.1), restricted to its majorization-minimum clause.
+In Eq. (2.3), `moreMixed r q` is `r ≺ q`: the descending partial sums of `r` are at most
+those of `q`, and their total sums agree. -/
 def IsMajorizationMinimizer {d : ℕ} (B : Set (Fin d → ℝ)) (r : Fin d → ℝ) : Prop :=
-  r ∈ B ∧ ∀ q ∈ B, Majorizes q r
+  r ∈ B ∧ ∀ q ∈ B, moreMixed r q
 
 /-- The Jensen--Shannon clause of Question 1, with a positive divergence threshold. -/
 def claim : Prop :=
-  ∀ (d : ℕ) (p : Fin d → ℝ), IsProbVec p → ∀ t : ℝ, 0 < t →
-    ∃ r, IsMajorizationMinimizer {q | IsProbVec q ∧ jensenShannon p q ≤ t} r
+  ∀ (d : ℕ) (p : Fin d → ℝ), Probability p → ∀ t : ℝ, 0 < t →
+    ∃ r, IsMajorizationMinimizer {q | Probability q ∧ jensenShannon p q ≤ t} r
 
 private def term (c x : ℝ) : ℝ :=
   (c * Real.log (2 * c / (c + x)) + x * Real.log (2 * x / (c + x))) / 2
@@ -124,11 +120,8 @@ private def p : Fin 3 → ℝ := ![2/3, 4/15, 1/15]
 private def a : Fin 3 → ℝ := ![1/2, 2/5, 1/10]
 private def b : Fin 3 → ℝ := ![8/15, 1/3, 2/15]
 
-private lemma probability_data : IsProbVec p ∧ IsProbVec a ∧ IsProbVec b := by
-  rw [IsProbVec.eq_1, IsProbVec.eq_1, IsProbVec.eq_1]
-  rw [D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1,
-    D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1,
-    D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1]
+private lemma probability_data : Probability p ∧ Probability a ∧ Probability b := by
+  rw [Probability.eq_1, Probability.eq_1, Probability.eq_1]
   rw [p.eq_1, a.eq_1, b.eq_1]
   norm_num [p.eq_1, a.eq_1, b.eq_1, Fin.sum_univ_succ, Fin.forall_fin_succ]
 
@@ -168,7 +161,7 @@ private lemma descending_data :
     change ([(8/15:ℝ), 1/3, 2/15].mergeSort (fun x y => decide (y ≤ x))) = _
     exact List.mergeSort_of_pairwise (by norm_num)
 
-private lemma majorized_bounds {r : Fin 3 → ℝ} (h : Majorizes a r) :
+private lemma majorized_bounds {r : Fin 3 → ℝ} (h : moreMixed r a) :
     ∀ i, 1/10 ≤ r i ∧ r i ≤ 1/2 := by
   have h1 := h.1 1 (by decide)
   have h2 := h.1 2 (by decide)
@@ -191,8 +184,8 @@ private lemma majorized_bounds {r : Fin 3 → ℝ} (h : Majorizes a r) :
   simp only [List.mem_cons, List.not_mem_nil, or_false] at membership
   rcases membership with heq | heq | heq <;> rw [heq] <;> constructor <;> linarith
 
-private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
-    (hm : Majorizes a r) (hball : jensenShannon p r ≤ jensenShannon p a) : r = a := by
+private lemma unique_candidate {r : Fin 3 → ℝ} (hr : Probability r)
+    (hm : moreMixed r a) (hball : jensenShannon p r ≤ jensenShannon p a) : r = a := by
   have bounds := majorized_bounds hm
   have h0 := supporting_line (c := (2/3:ℝ)) (x := r 0) (y := (1/2:ℝ))
     (by norm_num) (le_trans (by norm_num : (0:ℝ) ≤ 1/10) (bounds 0).1) (by norm_num)
@@ -202,8 +195,7 @@ private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
     (by norm_num) (le_trans (by norm_num : (0:ℝ) ≤ 1/10) (bounds 2).1) (by norm_num)
   norm_num at h0 h1 h2
   have total : r 0 + r 1 + r 2 = 1 := by
-    simpa [IsProbVec, D5.S3.TotalVariation.CycleSingleCutMinimax.Probability,
-      Fin.sum_univ_succ, add_assoc] using hr.2
+    simpa [Probability, Fin.sum_univ_succ, add_assoc] using hr.2
   have logdiff : Real.log (6/7:ℝ) - Real.log (6/5:ℝ) = Real.log (5/7:ℝ) := by
     rw [← Real.log_div (by norm_num) (by norm_num)]
     congr 1
@@ -295,7 +287,7 @@ private lemma second_in_ball : jensenShannon p b < jensenShannon p a := by
     Real.log_neg (by positivity) ((div_lt_one (by positivity)).mpr real_certificate)
   linarith [ball_log_identity]
 
-private lemma not_majorizes : ¬ Majorizes b a := by
+private lemma not_majorizes : ¬ moreMixed a b := by
   intro h
   have h2 := h.1 2 (by decide)
   rw [prefixSum.eq_1] at h2
