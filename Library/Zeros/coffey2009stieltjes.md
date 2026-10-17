@@ -682,3 +682,144 @@ signed matrix. It does not bound the sign of that middle or establish
 its eventual positivity. The original complete joint estimate, Robin,
 the endpoint half-variance bound and RH remain unresolved. This
 application has no new Lean certification.
+
+## CS10. Two weaker signed targets on the actual middle
+
+Keep the actual middle and the full $h^*$ from CS9. Instead of requiring
+positivity of the whole $K_j^{\rm mid}$, consider the following pair of
+**unproved** estimates: there is one $C>0$ such that for every sufficiently
+large adjacent Fibonacci triple $a,b,c$,
+
+$$
+\boxed{\lambda_c^{\rm mid}\ge-Cc^2,\qquad
+2\lambda_a^{\rm mid}+2\lambda_b^{\rm mid}-\lambda_c^{\rm mid}
+\ge-Cc^2.}
+\tag{CS29}
+$$
+
+The first scalar is half the second diagonal entry of $K_j^{\rm mid}$;
+the second is $(2,-1)K_j^{\rm mid}(2,-1)^{\mathsf T}/2$.
+Thus positive semidefiniteness would imply both. Their exact arithmetic
+requirements, keeping every term of $h^*$, are
+
+$$
+\begin{aligned}
+Q_c^{\rm mid}&\le h_c^*+Cc^2,\\
+2Q_a^{\rm mid}+2Q_b^{\rm mid}-Q_c^{\rm mid}
+&\le2h_a^*+2h_b^*-h_c^*+Cc^2.
+\end{aligned}
+\tag{CS30}
+$$
+
+CS28 transfers each scalar to the actual Li coefficients with $o(c)$
+error. Increasing a constant would therefore give
+$\lambda_c\ge-C'c^2$ and
+$\lambda_c\le2\lambda_a+2\lambda_b+C'c^2$, whence
+
+$$
+|\lambda_c|\le2|\lambda_a|+2|\lambda_b|+C'c^2.
+$$
+
+Since $a/c\in[1/3,1/2]$,
+$2a^3+2b^3=2c^3[1-3(a/c)+3(a/c)^2]\le2c^3/3$.
+Choose $D\ge3C'$ large enough to cover the two Fibonacci seeds before
+the eventual recurrence begins. Induction would then give
+$|\lambda_{F_j}|\le DF_j^3$: the recurrence is at most
+$2Dc^3/3+C'c^2\le Dc^3$. The existing
+[Fibonacci absolute-growth criterion](lagarias2007li.md#fibonacci-sampled-absolute-growth-a-paper-criterion)
+would imply RH.
+
+This is a sufficient unpaid target, not an estimate of the actual
+middle or a new unconditional RH result. Deriving another sufficient
+condition alone does not supply arithmetic cancellation. The argument
+is a paper application of the existing matrix transport and growth
+criterion, without Lean certification or a priority claim.
+
+## CS11. The prescribed absolute PNT allowance cannot pay that target
+
+Keep CS8's $\varepsilon$, $M=1.515$ and $d=0.8274$, and CS7's
+$p_n(u)=L_{n-1}^{(2)}(u)$. For integers $3\le L<X$, the same finite
+Stieltjes integration by parts underlying CS23 gives, with
+$k_n(u)=e^{-u}L_{n-1}^{(1)}(u)$,
+
+$$
+\begin{aligned}
+Q_n(X)-Q_n(L)={}&\int_{\log L}^{\log X}T(u)e^{-u}p_n(u)\,du\\
+&+k_n(\log X)T(\log X)-k_n(\log L)T(\log L).
+\end{aligned}
+$$
+
+Both endpoints remain. For the second CS30 combination define
+
+$$
+J_c(u)=2p_a(u)+2p_b(u)-p_c(u),\qquad
+\mathcal A_j=\int_{\log c}^{\log X_c}
+\varepsilon(u)|J_c(u)|\,du.
+\tag{CS31}
+$$
+
+This is an absolute **comparison allowance**, obtained by replacing
+$e^{-u}|T(u)|$ with its CS8 upper bound. It is not the actual signed
+integral or its absolute value. Adding the absolute values of the two
+joint endpoint terms only increases this allowance. Even this integral
+part satisfies
+
+$$
+\boxed{\mathcal A_j^{1/c}\longrightarrow\infty.}
+\tag{CS32}
+$$
+
+To apply the classical terminating Laguerre series already cited in
+CS8, take the single analytical interval
+$I_c=[4c^2,4c^2+1]$. It is contained in
+$[\log c,\log X_c]$ for all sufficiently large $c$.
+For $1\le r\le n-1$, the absolute ratio of the $r$-th subleading
+term of $p_n$ to $u^{n-1}/(n-1)!$ is
+
+$$
+\binom{n+1}{r}\frac{(n-1)!}{(n-1-r)!}\,u^{-r}
+\le\frac1{r!}\left(\frac{n^2-1}{u}\right)^r\le4^{-r},
+\qquad n\le c,\ u\ge4c^2.
+$$
+
+Their sum is at most $\sum_{r\ge1}4^{-r}=1/3$. Thus
+
+$$
+\frac23\frac{u^{n-1}}{(n-1)!}
+\le|p_n(u)|\le\frac43\frac{u^{n-1}}{(n-1)!},
+\qquad 1\le n\le c,\ u\ge4c^2.
+\tag{CS33}
+$$
+
+For $n=1$ the subleading sum is empty. Taking ratios gives
+$|p_b|/|p_c|\le2(c/u)^{c-b}\le2(4c)^{-a}$ and
+$|p_a|/|p_c|\le2(4c)^{-b}$ on $I_c$.
+As $a,b\to\infty$, the triangle inequality therefore gives
+$|J_c|\ge|p_c|/2\ge u^{c-1}/[3(c-1)!]$ there for every sufficiently
+large Fibonacci index. The two lower degrees cannot cancel the highest
+degree on this range. Using just the first positive summand of
+$\varepsilon$ and $\sqrt{4c^2+1}\le2c+1$ yields
+
+$$
+\mathcal A_j\ge\frac{9.39}{3}\,
+\frac{(4c^2)^{c-1+M}}{(c-1)!}\,e^{-d(2c+1)}.
+\tag{CS34}
+$$
+
+Replacing $(c-1)!$ by $c^{c-1}$ in the denominator of CS34 gives a
+coarser lower bound. The $c$-th root of that coarser bound divided by
+$c$ has limit $4e^{-2d}>0$, proving CS32. This is a finite-series
+parameter application on one fixed analytical interval, with no
+numerical execution, cutoff optimization, new Laguerre theorem or
+literature-priority claim.
+
+Consequently this particular absolute PNT comparison allowance cannot
+have a polynomial or subexponential upper bound in $c$, even when the
+Fibonacci combination is formed before taking its absolute value.
+This does not lower-bound actual $T$, $Q_n^{\rm mid}$, a Li coefficient
+or the signed joint form. It does not rule out further signed arithmetic
+information, exact endpoint cancellation or a different representation.
+What remains unpaid is an estimate of the actual same-source middle
+with both endpoints, sufficient for CS29 or another valid RH route.
+Robin, the complete joint estimate, endpoint half-variance and RH remain
+unresolved; no new Lean certification is asserted.
