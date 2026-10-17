@@ -83,7 +83,7 @@ private theorem invariant_decoder (E : Set (ℤ → Bool)) (hE : MeasurableSet E
   let f (n : ℕ) (v : ℕ → Bool) : Bool := decide ((fun i : I n => v (pick n i)) ∈ S n)
   have hf (n : ℕ) : Measurable (f n) :=
     (measurable_of_finite (fun w : (i : I n) → Bool => decide (w ∈ S n))).comp
-      (measurable_pi_lambda _ fun i => measurable_pi_apply _)
+      (Measurable.of_eval fun i => measurable_pi_apply _)
   have hread (n : ℕ) (z : ℤ → Bool) :
       f n (if left then before z else after z) = decide (translate (a n) z ∈ C n) := by
     have he := measurableCylinders.eq_cylinder (hC n)
@@ -237,7 +237,7 @@ theorem actual_output_ergodic :
     Ergodic (fun z : ℤ → Bool => fun t => z (1+t)) (visible : Measure (ℤ → Bool)) := by
   classical
   change Ergodic (translate 1) (visible : Measure (ℤ → Bool))
-  refine ⟨translate_preserving 1,⟨?_⟩⟩
+  refine Ergodic.of_preimage_eq (translate_preserving 1) ?_
   intro E hE hi
   obtain ⟨c,hc⟩ := state_event E hE hi
   have hshift : (joint : Measure Process).map (shift 1) = joint :=
@@ -285,7 +285,7 @@ theorem actual_output_ergodic :
   have hproj : MeasurePreserving (Prod.snd : Process → ℤ → Bool)
       (joint : Measure Process) (visible : Measure (ℤ → Bool)) := ⟨measurable_snd,rfl⟩
   rw [← hproj.aeconst_preimage hE.nullMeasurableSet]
-  apply eventuallyConst_set.mpr
+  apply Filter.eventuallyEmptyOrUniv_iff.mpr
   cases hb : c (false,0) with
   | false =>
     right

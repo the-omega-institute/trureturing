@@ -45,10 +45,10 @@ internal sealed class DifferentialTestingEscapeDocument : IScribeDocumentDefinit
                             + "the proof only bridges the source directory predicate and performs "
                             + "the cardinality-ratio arithmetic.")),
                     Paragraph(Text(
-                        "Pinned Mathlib was searched for PMF.toOuterMeasure_uniformOfFintype_apply, "
-                            + "Fintype cardinality bridges, and ENNReal subtraction/division. "
-                            + "No repository declaration packages this source-specific directory "
-                            + "notation with the uniform outer-measure statement."))),
+                        "PMF.toOuterMeasure_apply_fintype converts the event mass to a finite sum; "
+                            + "the constant PMF.ofFintype mass gives the cardinality ratio. "
+                            + "Fintype cardinality bridges and ENNReal arithmetic connect that ratio "
+                            + "to the imported escaped-directory count."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(
             GidRef.Create("D5/S0/Diagonal/EscapeCount"))]));

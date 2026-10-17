@@ -6,6 +6,7 @@
    utility: none
    digest: A smaller leading source can be promoted without decreasing evaluation. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleEvaluation
 
 set_option autoImplicit false

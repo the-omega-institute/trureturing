@@ -505,13 +505,14 @@ def denseExecution (w : List Bool) :
           (input reversed : List Bool) (dictionary : List Conventional.Name),
           EvalsToInTime denseMachine.step
             (denseWordCfg .copy .clauseFirst
-              (clause.flatMap Conventional.literalWord ++ [true,false] ++ input)
+              (clause.literals.flatMap Conventional.literalWord ++ [true,false] ++ input)
               [] (dictionaryStream dictionary) [] [] reversed [])
             (some (denseWordCfg .copy .bodyFirst input [] (dictionaryStream dictionary) [] []
-              ((clause.flatMap (denseLiteralWord dictionary) ++ [true,false]).reverse ++ reversed) []))
-            ((clause.map (denseLiteralClock dictionary)).sum+2) := by
+              ((clause.literals.flatMap (denseLiteralWord dictionary) ++ [true,false]).reverse ++ reversed) []))
+            ((clause.literals.map (denseLiteralClock dictionary)).sum+2) := by
         intro clause
-        induction clause with
+        generalize clause.literals = literals
+        induction literals with
         | nil =>
           intro input reversed dictionary
           have first : denseMachine.step
@@ -541,7 +542,7 @@ def denseExecution (w : List Bool) :
               ((denseClauseWord dictionary clause).reverse ++ reversed) []))
             (denseClauseClock dictionary clause) := by
         intro clause input reversed dictionary
-        let rest := clause.flatMap Conventional.literalWord ++ [true,false] ++ input
+        let rest := clause.literals.flatMap Conventional.literalWord ++ [true,false] ++ input
         have first : denseMachine.step
             (denseWordCfg .copy .bodyFirst (false::true::rest)
               [] (dictionaryStream dictionary) [] [] reversed []) =
@@ -610,6 +611,7 @@ def denseExecution (w : List Bool) :
         apply single
         dsimp [FinTM2.step, TM2.step, denseMachine, haltList, TM2.stepAux, denseWordCfg, denseWordStacks,
           denseLocal, denseWordState]
+        dsimp only [cond]
         congr 2
         funext k
         cases k with

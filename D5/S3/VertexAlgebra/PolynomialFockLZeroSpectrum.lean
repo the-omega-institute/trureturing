@@ -161,19 +161,19 @@ theorem lZero_spectrum (N : ℕ) :
         rw [hc]
         exact hpower k e (monomial d 1) (energy d : ℂ) ih
   have hcoeff (p : Fock) (d : ℕ →₀ ℕ) :
-      coeff d (L 0 p) = (energy d : ℂ) * coeff d p := by
+      AddMonoidAlgebra.coeff (L 0 p) d = (energy d : ℂ) * AddMonoidAlgebra.coeff p d := by
     conv_lhs => rw [p.as_sum]
     simp only [map_sum, coeff_sum]
     have hterm (e : ℕ →₀ ℕ) :
-        L 0 (monomial e (coeff e p)) =
-          (energy e : ℂ) • monomial e (coeff e p) := by
-      have hm : monomial e (coeff e p) = (coeff e p) • monomial e (1 : ℂ) := by
+        L 0 (monomial e (AddMonoidAlgebra.coeff p e)) =
+          (energy e : ℂ) • monomial e (AddMonoidAlgebra.coeff p e) := by
+      have hm : monomial e (AddMonoidAlgebra.coeff p e) = (AddMonoidAlgebra.coeff p e) • monomial e (1 : ℂ) := by
         simp only [smul_monomial, smul_eq_mul, mul_one]
       rw [hm, map_smul, hmonomial, smul_comm]
     simp_rw [hterm, coeff_smul]
     by_cases hd : d ∈ p.support
     · simp [coeff_monomial, hd, Finset.sum_ite_eq', mul_comm]
-    · have hz : coeff d p = 0 := Finsupp.notMem_support_iff.mp hd
+    · have hz : AddMonoidAlgebra.coeff p d = 0 := Finsupp.notMem_support_iff.mp hd
       simp [coeff_monomial, hd, hz]
   have hspan : lZeroEigenspace N =
       Submodule.span ℂ (Set.range (fun d : EnergyFiber N => monomial d.1 (1 : ℂ))) := by
@@ -183,11 +183,11 @@ theorem lZero_spectrum (N : ℕ) :
         LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero] at hp
       have hs : ↑(b.repr p).support ⊆ {d : ℕ →₀ ℕ | energy d = N} := by
         intro d hd
-        have hnonzero : coeff d p ≠ 0 := by
+        have hnonzero : AddMonoidAlgebra.coeff p d ≠ 0 := by
           have hd' : (b.repr p) d ≠ 0 := Finsupp.mem_support_iff.mp hd
-          change coeff d p ≠ 0 at hd'
+          change AddMonoidAlgebra.coeff p d ≠ 0 at hd'
           exact hd'
-        have heq := congrArg (coeff d) hp
+        have heq := congrArg ((fun p => AddMonoidAlgebra.coeff p d)) hp
         rw [hcoeff, coeff_smul] at heq
         have hcast : (energy d : ℂ) = (N : ℂ) :=
           (mul_right_cancel₀ hnonzero) (by simpa [smul_eq_mul] using heq)

@@ -6,6 +6,7 @@
    utility: none
    digest: Quadratic power diagonals connect Hanna A397244 to Fibbinary parity. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.AbsoluteReciprocalSquareFibbinaryParity
 import D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
 

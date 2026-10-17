@@ -112,7 +112,7 @@ private lemma cost_prod_le (c : ℕ → ℚ) (T S : Finset ℕ)
   have heq : (∏ p ∈ T, c p) = ∏ p ∈ S ∪ T, c p :=
     prod_subset subset_union_right (fun p _ hp => hout p hp)
   rw [heq]
-  exact prod_le_prod_of_subset_of_one_le subset_union_left
+  exact prod_le_prod_of_subset_of_one_le₀ subset_union_left
     (fun p _ => (h1 p).trans' (by norm_num)) (fun p _ _ => h1 p)
 
 /-- The divisor count satisfies a uniform fourth-power bound. -/
@@ -137,7 +137,7 @@ theorem tau_pow_four_le (n : ℕ) : ArithmeticFunction.sigma 0 n ^ 4 ≤ 9 ^ 4 *
       _ = ∏ p ∈ n.primeFactors, (n.factorization p + 1 : ℚ) ^ 4 := by
         rw [ht, prod_pow]
       _ ≤ ∏ p ∈ n.primeFactors, tauCost p * (p : ℚ) ^ n.factorization p :=
-        prod_le_prod (fun _ _ => by positivity)
+        prod_le_prod₀ (fun _ _ => by positivity)
           (fun p hp => tau_prime_bound p _ (Nat.prime_of_mem_primeFactors hp))
       _ = (∏ p ∈ n.primeFactors, tauCost p) * n := by rw [prod_mul_distrib, ← hnq]
       _ ≤ (9 : ℚ) ^ 4 * n := mul_le_mul_of_nonneg_right hc (by positivity)
@@ -258,7 +258,7 @@ theorem sigma_pow_four_le (n : ℕ) : ArithmeticFunction.sigma 1 n ^ 4 ≤ 3 * n
     calc
       _ = ∏ p ∈ n.primeFactors, geom p (n.factorization p) ^ 4 := by rw [hs, prod_pow]
       _ ≤ ∏ p ∈ n.primeFactors, sigmaCost p * (p : ℚ) ^ (5 * n.factorization p) :=
-        prod_le_prod (fun p _ => by positivity)
+        prod_le_prod₀ (fun p _ => by positivity)
           (fun p hp => sigma_prime_bound p _ (Nat.prime_of_mem_primeFactors hp))
       _ = (∏ p ∈ n.primeFactors, sigmaCost p) * (n : ℚ) ^ 5 := by
         rw [prod_mul_distrib, hnq, ← prod_pow]

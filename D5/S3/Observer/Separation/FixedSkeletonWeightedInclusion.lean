@@ -720,7 +720,7 @@ private theorem localExponent_one_le (s : Skeleton (R ⊕ S))
     (φ : ∀ i,X i → Y i → Z i) (hφ : ∀ i z,∃ x y,φ i x y=z) (k : S) :
     1 ≤ localExponent s φ hφ k := by
   classical
-  apply Finset.one_le_prod
+  apply Finset.one_le_prod₀
   intro i hi
   exact actualTau_one_le φ hφ i.val
 set_option maxHeartbeats 1600000 in

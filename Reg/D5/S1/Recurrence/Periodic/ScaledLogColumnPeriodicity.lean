@@ -19,7 +19,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ _ n => coeff n (derivative ℚ (log ℚ) * (1 + X)))
+  realize signature (fun _ _ n => coeff n (derivative (R := ℚ) (log ℚ) * (1 + X)))
     (fun e => nomatch e)
 def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 def arena : Arena where
@@ -52,8 +52,8 @@ def family : Registration arena (type_of% log_derivative_mul) where
   dependence := by
     intro i
     refine ⟨(), (0 : ℕ), (1 : ℕ), ?_⟩
-    change (coeff (R := ℚ) 0 (derivative ℚ (log ℚ) * (1 + X)) : ℚ) ≠
-      coeff (R := ℚ) 1 (derivative ℚ (log ℚ) * (1 + X))
+    change (coeff (R := ℚ) 0 (derivative (R := ℚ) (log ℚ) * (1 + X)) : ℚ) ≠
+      coeff (R := ℚ) 1 (derivative (R := ℚ) (log ℚ) * (1 + X))
     erw [log_derivative_mul]
     norm_num
 

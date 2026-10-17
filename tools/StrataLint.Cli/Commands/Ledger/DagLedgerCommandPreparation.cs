@@ -96,7 +96,7 @@ internal static class DagLedgerCommandPreparation
             RawLeanReportArtifact.ReadFile(path, snapshot);
 
         public LeanAxiomReport Load(LeanReportScope scope) =>
-            RawLeanReportArtifact.ReadFileForScope(path, scope, validateMaterials: true);
+            RawLeanReportArtifact.ReadFileForScopeOrFull(path, scope);
     }
 
     /// Bytes that will not decode are a fault in the repository we were handed, not a verdict about

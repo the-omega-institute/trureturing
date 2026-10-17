@@ -205,9 +205,9 @@ omit [CompleteSpace ℋ] [Nontrivial ℋ] in
 omit [CompleteSpace ℋ] [Nontrivial ℋ] in
 theorem blockDiagonal_nonneg {A B : L ℋ} (hA : 0 ≤ A) (hB : 0 ≤ B) :
     0 ≤ blockDiagonal (ℋ := ℋ) A B := by
-  have hApos : A.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive A).mp hA
-  have hBpos : B.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive B).mp hB
-  refine (ContinuousLinearMap.nonneg_iff_isPositive _).mpr ?_
+  have hApos : A.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive (f := A)).mp hA
+  have hBpos : B.IsPositive := (ContinuousLinearMap.nonneg_iff_isPositive (f := B)).mp hB
+  refine (ContinuousLinearMap.nonneg_iff_isPositive (f := _)).mpr ?_
   rw [ContinuousLinearMap.isPositive_iff_complex]
   intro z
   have hAz := (ContinuousLinearMap.isPositive_iff_complex A).mp hApos (hsumProj ℋ 0 z)

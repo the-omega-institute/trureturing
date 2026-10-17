@@ -608,18 +608,18 @@ theorem actual_record_rising : ∀ n, 4 ≤ n → signedCount false n 2 ≤ sign
         rw [hN, hv]
         push_cast
         ring
-  have qDerivative : substQ K * PowerSeries.derivative ℚ q = (1+q)^2 := by
-    have hd := congrArg (PowerSeries.derivative ℚ) qQuadratic
+  have qDerivative : substQ K * PowerSeries.derivative (R := ℚ) q = (1+q)^2 := by
+    have hd := congrArg (PowerSeries.derivative (R := ℚ)) qQuadratic
     simp only [map_add, Derivation.leibniz, PowerSeries.derivative_X,
       PowerSeries.derivative_pow, pow_one, smul_eq_mul] at hd
     dsimp [K]
     simp only [map_sub, map_mul, map_pow, map_one, map_ofNat, substX]
-    linear_combination (1+q) * hd - PowerSeries.derivative ℚ q * qQuadratic
-  have polyDerivative : PowerSeries.derivative ℚ P * (1+PowerSeries.X)^2 + K = N := by
-    have d2 : PowerSeries.derivative ℚ (2 : PowerSeries ℚ) = 0 := by
+    linear_combination (1+q) * hd - PowerSeries.derivative (R := ℚ) q * qQuadratic
+  have polyDerivative : PowerSeries.derivative (R := ℚ) P * (1+PowerSeries.X)^2 + K = N := by
+    have d2 : PowerSeries.derivative (R := ℚ) (2 : PowerSeries ℚ) = 0 := by
       rw [show (2 : PowerSeries ℚ) = 1+1 by ring]
       simp only [map_add, PowerSeries.derivative_one, add_zero]
-    have d3 : PowerSeries.derivative ℚ (3 : PowerSeries ℚ) = 0 := by
+    have d3 : PowerSeries.derivative (R := ℚ) (3 : PowerSeries ℚ) = 0 := by
       rw [show (3 : PowerSeries ℚ) = 1+1+1 by ring]
       simp only [map_add, PowerSeries.derivative_one, add_zero]
     dsimp [P, K, N]
@@ -629,19 +629,19 @@ theorem actual_record_rising : ∀ n, 4 ≤ n → signedCount false n 2 ≤ sign
     norm_num
     ring
   let T : PowerSeries ℚ := substQ P + 1 + PowerSeries.X
-  have TDerivative : PowerSeries.derivative ℚ T = substQ V := by
+  have TDerivative : PowerSeries.derivative (R := ℚ) T = substQ V := by
     have hp := congrArg substQ polyDerivative
     simp only [map_add, map_mul, map_pow, map_one, substX] at hp
     have hc := congrArg substQ certificate
     simp only [map_mul] at hc
-    have hcalc : substQ K * PowerSeries.derivative ℚ T = substQ N := by
+    have hcalc : substQ K * PowerSeries.derivative (R := ℚ) T = substQ N := by
       dsimp [T]
-      have chain : PowerSeries.derivative ℚ (substQ P) =
-          substQ (PowerSeries.derivative ℚ P) * PowerSeries.derivative ℚ q := by
+      have chain : PowerSeries.derivative (R := ℚ) (substQ P) =
+          substQ (PowerSeries.derivative (R := ℚ) P) * PowerSeries.derivative (R := ℚ) q := by
         rw [substApply, substApply]
         exact PowerSeries.derivative_subst hq
       rw [map_add, map_add, PowerSeries.derivative_one, PowerSeries.derivative_X, chain]
-      linear_combination hp + substQ (PowerSeries.derivative ℚ P) * qDerivative
+      linear_combination hp + substQ (PowerSeries.derivative (R := ℚ) P) * qDerivative
     have hK : substQ K ≠ 0 := by
       intro he
       have hc0 := congrArg PowerSeries.constantCoeff he

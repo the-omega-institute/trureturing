@@ -613,8 +613,7 @@ def endpointB : unitInterval := ⟨2/5, by norm_num⟩
 lemma endpoint_probability (phase : ActivePhase) (r : unitInterval) :
     IsProbabilityMeasure (explicitStoppedWordLaw phase r) := by
   rw [← (actual_fourth_segment_stopped_word_law r phase).2]
-  exact Measure.isProbabilityMeasure_map
-    (measurable_stopped_read_word phase).aemeasurable
+  exact inferInstance
 
 lemma endpoint_p_word (r : unitInterval) (j : ℕ) :
     (explicitStoppedWordLaw .p r).real {some (pWord j 1)} =

@@ -79,8 +79,8 @@ theorem full_field : (⨆ r : ℕ, field r) = MeasurableSpace.comap exterior inf
         ((measurable_pi_apply (Fin.last n)).comp measurable_snd).comp (Measurable.of_comap_le le_rfl)
       exact hm.mono (le_iSup field (n+1)) le_rfl
     letI : MeasurableSpace (ℤ → Bool) := ⨆ r, field r
-    have hmL : Measurable before := measurable_pi_lambda _ hL
-    have hmR : Measurable after := measurable_pi_lambda _ hR
+    have hmL : Measurable before := Measurable.of_eval hL
+    have hmR : Measurable after := Measurable.of_eval hR
     exact (hmL.prodMk hmR).comap_le
 
 /-- A positive event cannot retain a uniform strict posterior interval at all sufficiently

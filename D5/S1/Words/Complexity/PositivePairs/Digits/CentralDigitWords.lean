@@ -6,6 +6,7 @@
    utility: none
    digest: Direction-major and scale-minor digits build literal positive words. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Digits.ActualLyndonDirections
 import D5.S1.Words.Complexity.PositivePairs.Span.LiteralPowerSubstitution
 

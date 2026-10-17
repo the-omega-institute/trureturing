@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Every actual c edge of the same frame inventory witness has a selected terminal label. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2FrameInventory
 
 set_option autoImplicit false

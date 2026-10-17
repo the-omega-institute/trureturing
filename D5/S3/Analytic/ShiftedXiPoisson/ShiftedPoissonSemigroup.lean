@@ -214,7 +214,7 @@ def poissonKernel (y : ℝ≥0) : Measure ℝ :=
 
 instance (y : ℝ≥0) : IsProbabilityMeasure (poissonKernel y) := by
   unfold poissonKernel
-  exact Measure.isProbabilityMeasure_map (by fun_prop)
+  exact inferInstance
 
 /-- The concrete Poisson kernel has Fourier multiplier `exp (-y |t|)`. -/
 lemma charFun_poissonKernel (y : ℝ≥0) (t : ℝ) :
