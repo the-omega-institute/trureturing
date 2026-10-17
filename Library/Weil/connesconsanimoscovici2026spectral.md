@@ -9867,3 +9867,142 @@ a generic-method novelty or Lean-proof claim.
 
 
 The [joint-budget consumer, directed result and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/58635d877caf1fe56e3708faa14394e19d2f9154/docs/reports/weil-c27) retain the single application and its common-source bindings.
+
+
+### Consume the reference energies as a complete scalar norm bound
+
+Keep the SAME source, lift, conditional mean $\bar x=\beta_J+B^Tm$,
+remaining-energy upper $\overline\Delta$, nominal denominator $a_0$,
+nominal center $\widehat q_c$ and complete actual-minus-nominal payment
+$\epsilon_R$. These quantities are consumed from the preceding packets;
+the matrix contractions that produced them are not repeated.
+
+Write $d_p=-1/p>0$, so that
+$\widehat G=\mathcal W-d_p e_0e_0^T$. For the exact positive semidefinite
+forms $\mathcal W,S$, ordinary PSD trace monotonicity gives
+
+$$
+\mathcal W S\mathcal W\preceq
+\operatorname{tr}(S\mathcal W)\mathcal W.
+$$
+
+It follows by the triangle inequality that
+
+$$
+\|S^{1/2}\widehat Gv\|
+\le\sqrt{\operatorname{tr}(S\mathcal W)\,v^T\mathcal Wv}
++d_p|v_0|\sqrt{S_{00}}.
+$$
+
+Both forms may be singular. These are applications of existing PSD
+trace, Cauchy--Schwarz and norm inequalities, without a new generic
+theorem or positivity claim for the full interval-entry box.
+
+Reuse uniform saved upper bounds $\tau,R_\mu,R_\rho$ for
+$\operatorname{tr}(S\mathcal W)$,
+$\bar x^T\mathcal W\bar x$ and $\rho^T\mathcal W\rho$.
+With directed scalar enclosures define
+
+$$
+\begin{aligned}
+K_\mu&=\sqrt{\tau R_\mu}+d_p|\bar x_0|\sqrt{S_{00}},\\
+K_\rho&=\sqrt{\tau R_\rho}+d_p|\rho_0|\sqrt{S_{00}},\\
+H_+&=|c+u|+d_p|\rho_0|\,|\bar x_0|+\sqrt{R_\rho R_\mu}.
+\end{aligned}
+$$
+
+Each right side denotes its directed uniform upper. In particular,
+$|\widehat h|\le H_+$ and
+$\|S^{1/2}\widehat g\|\le H_+K_\rho/a_0+K_\mu$.
+The first coordinate $\bar x_0$ is a new scalar combination of the
+already saved finite row, observations and regression. No new vector or
+matrix action is needed.
+
+For the SAME conditional residual $rr^T\preceq\overline\Delta S$, put
+
+$$
+L_N=\sqrt{\overline\Delta}
+\left(H_+K_\rho/a_0+K_\mu\right),\qquad
+\Lambda_N=K_\rho^2/a_0+d_p S_{00}.
+$$
+
+Then $\widehat g^Tr\le L_N$. Moreover,
+
+$$
+r^T\widehat Hr
+=\frac{(\rho^T\widehat Gr)^2}{a_0}
+-r^T\mathcal Wr+d_p r_0^2
+\le\overline\Delta\Lambda_N.
+$$
+
+The negative $-r^T\mathcal Wr$ is dropped in the upper-bound direction.
+This is a sufficient norm majorant, not an assertion that the current
+curvature is positive or that component extrema are simultaneously
+attainable. Reusing the saved COMPLETE center and inverse/denominator
+payment gives another full comparison bound,
+
+$$
+\boxed{
+z_{\rm crit}-Q_J
+\le U_N=\operatorname{ub}(\widehat q_c)
++2L_N+\overline\Delta\Lambda_N+\operatorname{ub}(\epsilon_R).
+}
+$$
+
+All original source-energy, physical-majorant, source/lift/domain,
+positive-reference, normalization, full epsilon/512-metadata and
+positive actual-denominator premises remain. The same nominal inverse
+and $a_0$ are used, so the original complete perturbation payment applies
+without being recalculated.
+
+The single scalar application now certifies a strictly negative complete
+upper. Its directed values include
+
+| Sufficient bound | Saved enclosure |
+|---|---|
+| Linear support upper $L_N$ | $[57.877991,57.877992]$ |
+| Curvature upper $\Lambda_N$ | $[0.10457128,0.10457129]$ |
+| Complete budget upper $U_N$ | $[-30.503107,-30.503106]$ |
+
+These intervals enclose computed bound values, not attainable target
+ranges. Under the stated inherited premises, the existing lower bound
+$z\ge Q_J$ and positive actual comparison denominator give
+
+$$
+\boxed{
+\det N_2=A(z-z_{\rm crit})
+\ge A_{\rm lo}(-U_N)
+\ge1.2028613\cdot10^6>0.
+}
+$$
+
+Thus the fixed optimistic comparison is excluded from the desired
+negative-determinant route. This conclusion uses no unseen $z$ upper.
+It does not establish the admissibility of its optimistic coefficients,
+exclude other source/parameter choices, or transfer the sign to the
+actual full target. The old positive sufficient upper and new negative
+one refer to the SAME comparison; replacing the unresolved gradient
+contraction by a scalar majorant is enough to decide this conditional
+fixed-case sign. The source itself and its original allowance have not
+changed.
+
+The sole1024-working/640-export scalar application takes<0.228457seconds,
+excluding serialization. Its8469-byte packet has SHA256
+`5e0cbe77aac75340a29b40987bf820efa3272e6b421c40ba769cc38cdd9aef9a`;
+the source has SHA256
+`e61f59d027c536bdcd8e1761123c502cf865ee46a40b74cd15a5308de5c8ba37`.
+There are zero new vector/matrix reference actions or contractions,
+source/far queries, target reconstructions, inverse/solves, old scientific
+producer/fixture replays or source/precision scans.
+
+This consumes a different sufficient majorant of the SAME unresolved
+comparison. It is not a rerun of the source, the previous scientific
+producer, its fixtures or a different precision. The new application
+uses only saved scalar inputs and scalar inequalities. It does not
+assert an unseen far inverse-energy upper, comparison-parameter
+eligibility, transfer to the actual target, or actual-center/full-border/
+cofinal positivity. Robin and RH remain unresolved; no Lean-proof or
+generic-method novelty is claimed.
+
+
+The [scalar norm consumer, directed fixed-comparison certificate and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/7e5a0a22485af3938723588bbc78117c81e5caef/docs/reports/weil-c27) retain the source, single application and inherited comparison bindings.
