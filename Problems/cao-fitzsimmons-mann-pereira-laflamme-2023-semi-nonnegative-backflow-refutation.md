@@ -61,17 +61,17 @@ The module takes:
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.lean` (220 lines).
-- It defines `IsHPTP`, `IsSemiPositive`, `IsSemiNonnegative`, `krausApply`, `IsKrausChannel`, `traceDistance` and `claim`, and proves `result : ¬ claim`.
-- It reuses the density predicate of `CoPRelativeQuantumnessRefutation`, the Kraus map `MatrixMap.of_kraus` and the trace norm of `FiniteTraceDistance`. It also reuses the diagonal trace-norm lemma `diagonal_norm` of `ChenKatoBrandaoTraceNormCMIRefutation`, made public by removing only `private`.
+The canonical source is `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.lean` (216 lines).
+- It defines `IsHPTP`, `IsSemiPositive`, `IsSemiNonnegative`, `traceDistance` and `claim`, and proves `result : ¬ claim`.
+- It reuses the density predicate of `CoPRelativeQuantumnessRefutation`, the Kraus action `krausApply` and the normalization `IsKrausChannel` of `OutputMaximalCoherenceTensorizationRefutation`, and the trace norm of `FiniteTraceDistance`. It also reuses the diagonal trace-norm lemma `diagonal_norm` of `ChenKatoBrandaoTraceNormCMIRefutation`, made public by removing only `private`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations: `result` is the designated refutation result of the `utility` header and is exempt. The newly public `ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm` is registered in `Reg/D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.lean`, `declared_validated`.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.lean.json`, statement `sha256:8a0d91345362825d6b64fc031e1d283717cb3cf531d2d7b81f833feb22fc991f`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.lean.json`, statement `sha256:2f244fc4d5f4910437aa699f7069856fbd672e058b76180929ab5e5289d87bae`.
 
 Declaration statements:
 - `result`: `sha256:ecdc3caab3f17d5e83bf6eb017699bdda224072e784c69d138c8753534e515de`;
-- `claim`: `sha256:a6b3d112e7be3ca59d65574d1ccff2f1a3ba5c9fc2dfca8f97989eabe9247272`.
+- `claim`: `sha256:f6953d2de7b2e24bce47a42225dca26e204aa59d343d89f4e7b9b0d8aed9c020`.
 
 ## Triage
 

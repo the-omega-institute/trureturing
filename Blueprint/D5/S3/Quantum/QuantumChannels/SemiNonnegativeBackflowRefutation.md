@@ -42,31 +42,7 @@ $$\forall d \in \mathbb{N},\; \forall Psi \in \operatorname{LinearMap}\left(\mat
 
 Definition 2 requires a density matrix with a density image, allowing singular matrices. Hermiticity and trace preservation are separate hypotheses in the statement below. Theorem 2 characterizes this property for HPTP maps by a pair of channels with composition Psi after Phi equal to Xi.
 
-**Definition 1.4 (The finite Kraus action).**
-
-$$\forall d \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{krausApply}\left(K, X\right) = \sum_{r:iota} (K\left(r\right) \cdot X \cdot \operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right))$$
-
-*Formalization.* `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.krausApply` (`✓ std3`).
-
-*Citation.* Ningping Cao; Maxwell Fitzsimmons; Zachary Mann; Rajesh Pereira; Raymond Laflamme (2023). *Quantum Maps Between CPTP and HPTP*. URL: <https://arxiv.org/abs/2308.01894v1>.
-
-*Commentary.*
-
-The action of a finite family K is the sum of K(r) X K(r) adjoint. This is the finite Kraus form of the completely positive maps in the source's channel contexts. The action is defined without assuming that the family is normalized.
-
-**Definition 1.5 (Kraus normalization).**
-
-$$\forall d \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{IsKrausChannel}\left(K\right) \Leftrightarrow (\sum_{r:iota} (\operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right) \cdot K\left(r\right)) = 1)$$
-
-*Formalization.* `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.IsKrausChannel` (`✓ std3`).
-
-*Citation.* Ningping Cao; Maxwell Fitzsimmons; Zachary Mann; Rajesh Pereira; Raymond Laflamme (2023). *Quantum Maps Between CPTP and HPTP*. URL: <https://arxiv.org/abs/2308.01894v1>.
-
-*Commentary.*
-
-The adjoint products sum to the identity matrix. This is the trace-preservation condition for the finite Kraus action, giving the CPTP channels used in Theorem 2.
-
-**Definition 1.6 (Trace distance).**
+**Definition 1.4 (Trace distance).**
 
 $$\forall d \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall sigma \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \operatorname{traceDistance}\left(rho, sigma\right) = \frac{\Vert rho - sigma\Vert_{1}}{2} = \frac{\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\operatorname{CFC.sqrt}\left(\operatorname{Matrix.conjTranspose}\left(rho - sigma\right) \cdot \left(rho - sigma\right)\right)\right)\right)}{2}$$
 
@@ -78,9 +54,9 @@ $$\forall d \in \mathbb{N},\; \forall rho \in \operatorname{Matrix}\left(\operat
 
 Trace distance is one half of the trace norm of the difference. The trace norm is the real part of the trace of the positive square root of the adjoint product, as displayed explicitly. CFC.sqrt denotes that positive matrix square root. This is the trace-distance meaning of information backflow in the Outlook and its cited works.
 
-**Definition 1.7 (The no-backflow conjunct).**
+**Definition 1.5 (The no-backflow conjunct).**
 
-$$\operatorname{claim} \Leftrightarrow (\forall d \in \mathbb{N},\; \forall Psi \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right),\; ((\operatorname{IsHPTP}\left(Psi\right)) \land ((\operatorname{IsSemiNonnegative}\left(Psi\right)) \land (\neg (\operatorname{IsSemiPositive}\left(Psi\right))))) \Rightarrow (\forall iota \in \operatorname{Type},\; \forall kappa \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{Fintype}\left(kappa\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall L \in kappa \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{IsKrausChannel}\left(K\right)) \Rightarrow ((\operatorname{IsKrausChannel}\left(L\right)) \Rightarrow ((\forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; Psi\left(\operatorname{krausApply}\left(K, X\right)\right) = \operatorname{krausApply}\left(L, X\right)) \Rightarrow (\forall sigmaOne \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall sigmaTwo \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; ((\operatorname{Matrix.PosSemidef}\left(sigmaOne\right)) \land (\operatorname{Matrix.trace}\left(sigmaOne\right) = 1)) \Rightarrow (((\operatorname{Matrix.PosSemidef}\left(sigmaTwo\right)) \land (\operatorname{Matrix.trace}\left(sigmaTwo\right) = 1)) \Rightarrow (\operatorname{traceDistance}\left(\operatorname{krausApply}\left(L, sigmaOne\right), \operatorname{krausApply}\left(L, sigmaTwo\right)\right) \le \operatorname{traceDistance}\left(\operatorname{krausApply}\left(K, sigmaOne\right), \operatorname{krausApply}\left(K, sigmaTwo\right)\right))))))))$$
+$$\operatorname{claim} \Leftrightarrow (\forall d \in \mathbb{N},\; \forall Psi \in \operatorname{LinearMap}\left(\mathbb{C}, \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right), \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right),\; ((\operatorname{IsHPTP}\left(Psi\right)) \land ((\operatorname{IsSemiNonnegative}\left(Psi\right)) \land (\neg (\operatorname{IsSemiPositive}\left(Psi\right))))) \Rightarrow (\forall iota \in \operatorname{Type},\; \forall kappa \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] [\operatorname{Fintype}\left(kappa\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall L \in kappa \to \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\sum_{r:iota} (\operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right) \cdot K\left(r\right)) = 1) \Rightarrow ((\sum_{r:kappa} (\operatorname{Matrix.conjTranspose}\left(L\left(r\right)\right) \cdot L\left(r\right)) = 1) \Rightarrow ((\forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; Psi\left(\sum_{r:iota} (K\left(r\right) \cdot X \cdot \operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right))\right) = \sum_{r:kappa} (L\left(r\right) \cdot X \cdot \operatorname{Matrix.conjTranspose}\left(L\left(r\right)\right))) \Rightarrow (\forall sigmaOne \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; \forall sigmaTwo \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; ((\operatorname{Matrix.PosSemidef}\left(sigmaOne\right)) \land (\operatorname{Matrix.trace}\left(sigmaOne\right) = 1)) \Rightarrow (((\operatorname{Matrix.PosSemidef}\left(sigmaTwo\right)) \land (\operatorname{Matrix.trace}\left(sigmaTwo\right) = 1)) \Rightarrow (\operatorname{traceDistance}\left(\sum_{r:kappa} (L\left(r\right) \cdot sigmaOne \cdot \operatorname{Matrix.conjTranspose}\left(L\left(r\right)\right)), \sum_{r:kappa} (L\left(r\right) \cdot sigmaTwo \cdot \operatorname{Matrix.conjTranspose}\left(L\left(r\right)\right))\right) \le \operatorname{traceDistance}\left(\sum_{r:iota} (K\left(r\right) \cdot sigmaOne \cdot \operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right)), \sum_{r:iota} (K\left(r\right) \cdot sigmaTwo \cdot \operatorname{Matrix.conjTranspose}\left(K\left(r\right)\right))\right))))))))$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.claim` (`✓ std3`).
 
@@ -90,7 +66,7 @@ $$\operatorname{claim} \Leftrightarrow (\forall d \in \mathbb{N},\; \forall Psi 
 
 The Outlook conjectures absence of information backflow for semi-nonnegative trace-preserving maps that are not semi-positive, also in higher dimensions. Here the map is complex-linear and HPTP. The claim quantifies over every dimension, every such map, every two normalized finite Kraus families K and L, and every two input density matrices. The composition hypothesis says that applying Psi after the K channel equals the L channel on every matrix, as in Theorem 2. The conclusion compares the two trace distances in this common channel context. It is the no-backflow conjunct; the separate assertion about nonuniqueness of the intermediate map is not part of this statement.
 
-**Theorem 1.8 (A qutrit context doubles trace distance).**
+**Theorem 1.6 (A qutrit context doubles trace distance).**
 
 $$\neg (\operatorname{claim})$$
 
@@ -115,12 +91,11 @@ Take the input states diag(5/8,1/8,1/4) and diag(1/8,5/8,1/4). Phi sends them to
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.IsHPTP`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.IsKrausChannel`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.IsSemiNonnegative`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.IsSemiPositive`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.claim`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.krausApply`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/SemiNonnegativeBackflowRefutation.traceDistance`
 - Dependency: [D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation](../Information/ChenKatoBrandaoTraceNormCMIRefutation.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation](OutputMaximalCoherenceTensorizationRefutation.md)
 - Dependency: [D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation](../../QuantumChannels/CoPRelativeQuantumnessRefutation.md)
