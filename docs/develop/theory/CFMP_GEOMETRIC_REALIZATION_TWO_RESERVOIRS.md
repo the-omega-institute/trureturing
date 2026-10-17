@@ -4547,3 +4547,115 @@ The same finite cases give at most27 when k=3 and at most28 when k=4.
 In particular degree(M)+degree(Z)+degree(U)<=28. All these statements
 use original slot counts and all three complete angle budgets; they
 still do not exclude the remaining finite high-core configurations.
+
+## 231. Exact target and inputs
+
+Retain the actual paired five-reservoir hypotheses and the conclusions
+through §230. In particular transverse labels are distinct, all original
+edge links are complete circles of degree at least six, and all shared
+positive lengths satisfy the original edge angle equations. Write
+P={M,Z,U}. The interacting core K consists of actual owners containing
+two distinct P labels. It has 3<=|K|<=4, and all its owners are genuine.
+The escape tau=(Z,M,C,D,M,C) belongs to K; its four labels are distinct.
+Theorem 173.1 supplies an owner containing Z and U, hence U occurs in K.
+A genuine owner cannot have low pair {C,D} and two high axes, since both
+axis values are at least m>1+c+d and the axial flat-product inequality
+would hold strictly. Every face contains its two transverse labels and
+one axis label, including repeated labels as an actual multiset.
+
+Call a face marked when it contains two distinct P labels. Its paired
+face is marked and belongs to an owner in K. A label's original edge
+slots each give one normal interval with two ends at its incident faces.
+If all these ends within a specified owner set are paired internally,
+they form closed components of that label's actual normal link. Since
+that link is one complete circle, any nonempty such closed subset is
+the whole circle. Thus a closed subset with fewer than six slots is
+impossible. This retains loops and repeated visits to the same owner.
+
+## 232. A high label cannot occur in only one core owner
+
+Suppose a high label X occurs in exactly one member omega of K.
+If X is axial and not transverse in omega, its pair must contain a
+high label: otherwise its pair is {C,D}, and the other high required
+by membership in K is the other axis, the excluded genuine flat case.
+All faces incident to X are then marked and contain X. Their partners
+must remain in omega, the only core owner containing X. There are at
+most two X slots, giving a forbidden closed link subset.
+
+If X is transverse with another high label, every face incident to X
+is marked. The same reasoning closes at most four X slots in omega.
+If X is transverse with a low label, some axis carries a distinct high
+label Y. Every face incident to an axial Y slot is marked and contains
+X. Its partner must again stay in omega. Y is not transverse in this
+case, so at most two Y slots form a forbidden closed link subset.
+These cases exhaust the paired frame. Hence every high label occurring
+in K occurs in at least two distinct actual owners of K.
+
+## 233. Three core owners are impossible
+
+Suppose K={tau,rho,eta}. Since tau has no U slot, Section 232 forces both
+rho and eta to contain U. The two faces incident to tau's unique axial
+Z have labels {M,Z,C}. They cannot pair to one another: this would close
+its single Z interval and force degree(Z)=1. Their partners lie in K.
+
+If they meet different owners, both rho and eta have a face {M,Z,C}.
+In each, U must be the other axis: the transverse pair lies in that face,
+one axis is its remaining label, and U is distinct from all three.
+Thus each has exactly one U slot. All faces incident to either U slot
+are marked, since the transverse pair contains M or Z. Tau has no U,
+so these two slots close within rho and eta. This forces degree(U)<=2,
+a contradiction. Consequently both tau faces meet the same owner rho.
+
+Rho contains the four distinct labels M,Z,C,U. Up to swapping the
+transverse pair and the two axes, there are exactly three possibilities:
+
+ (i)  (Z,M,C,U,M,C),
+ (ii) (M,Z,C,U,Z,C),
+ (iii)(C,M,Z,U,M,Z).
+
+In (i), rho's Z axis is unique and its two incident {M,Z,C} faces are
+paired to tau's two Z faces. Their two Z intervals close, forcing
+degree(Z)=2.
+
+In (ii), rho's other two faces are {U,Z,C}. They cannot pair to each
+other, which would close rho's unique U interval. They cannot pair to
+tau, which has no U. They therefore both meet eta. Eta has one of
+three roles at such a face, with its other axis Q arbitrary:
+
+ (a) (U,Z,C,Q,Z,C),
+ (b) (Z,U,C,Q,U,C),
+ (c) (C,U,Z,Q,U,Z).
+
+For (a), every U slot in rho and eta is axial; eta has at most two,
+including Q=U. All their U-incident faces are marked, hence paired
+inside K, and tau has no U. At most three U slots close, contradiction.
+For (b), every Z-incident face in tau, rho, and eta is marked: tau's
+one Z is axial; rho's two transverse Z slots meet axes M and U;
+eta has one Z axis, or two when Q=Z, with pair {U,C}. No other Z slot
+occurs in these owners. Thus their complete Z link closes with at most
+1+2+2=5 slots, contradiction.
+For (c), every U-incident face in rho and eta is marked, since eta's
+transverse pair is {U,Z}; eta has at most three U slots, including
+Q=U. With rho's one U axis and no U in tau, at most four U slots close.
+Again this contradicts degree at least six.
+
+In (iii), rho's other two faces are {U,M,Z}. They cannot pair to each
+other, which closes its unique U interval, or to tau, which has no U.
+Both meet eta. A face {U,M,Z} forces eta's transverse pair to contain
+two of these high labels and one axis to carry the third. Hence every
+U-incident face in eta is marked, including any repeated U in its other
+axis. Eta has at most three U slots. All U slots in K, at most rho's
+one plus eta's three, close internally, contradiction.
+
+Every case is excluded. Therefore |K|=4.
+
+## 234. Joint consequences and remaining scope
+
+The already proved joint budget for a four-owner core gives at most one
+single-high transverse owner, at most eight actual owners containing any
+high label, and total degree(M)+degree(Z)+degree(U)<=28. Each high label
+occurs in at least two of the four core owners by Section 232.
+The proof excludes the entire three-core incidence pattern using the
+actual face pairing and complete links; its applicability relies on the
+previous angle-derived core bounds. Four-core patterns and the external
+low-only region remain, so five-reservoir realization is not proved.
