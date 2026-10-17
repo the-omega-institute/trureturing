@@ -348,8 +348,8 @@ private theorem middle_barycentric {N : ℕ} (g : Fin N → ℝ)
   simp only [div_self hM, one_smul, div_mul_cancel₀ _ hM]
   exact gaps_split g
 
--- The fixed-cone fact is the remaining mathematical dependency, to be proved
--- by the cofactor and scalar estimates inside the substantive scalar proof.
+-- The fixed-cone estimate follows from arbitrary ordered defects,
+-- scalar interval estimates and constructive bulk subtraction.
 private theorem norm_from_fixed_cones (N : ℕ) (hN : 67 ≤ N) (c : ℝ)
     (fixedGood : ∀ (j : ℕ), 6 ≤ j → j ≤ N-10 →
       ∀ x : Fin 16 → ℝ, (∀ q, 0 ≤ x q) → (∀ r, 0 ≤ (A *ᵥ x) r) →

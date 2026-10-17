@@ -34,8 +34,8 @@ internal sealed class SpectrumCompressionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/SpectrumCompression.A"),
                 H("Three boundary rows"), StatementSource.FromAuthor(Disp(MatrixStatement())),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A has three rows and sixteen ordered gap slots. Its minus-identity slack block retains " +
-                    "every original row equation."))),
+                Blocks(Paragraph(Text("A has three rows and sixteen ordered gap slots. Each row retains " +
+                    "the complete original boundary inequality."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("appt-quadbit-spectrumcompression"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/SpectrumCompression.positions_strict"),
