@@ -57,7 +57,7 @@ private theorem mass_mul_mul (q : ℚ) (s u t v : Source) :
     rw [Finset.sum_union hd,
       Finset.sum_image (fun _ _ _ _ h => List.cons_injective h),
       Finset.sum_image (fun _ _ _ _ h => List.cons_injective h)]
-    simp only [List.length_cons, pow_succ, ← Finset.mul_sum]
+    simp only [List.length_cons, pow_succ, ← Finset.sum_mul]
     ring
 
 private theorem mass_le_one (q : ℚ) (hq : 0 < q) (hhalf : q ≤ 1 / 2)
