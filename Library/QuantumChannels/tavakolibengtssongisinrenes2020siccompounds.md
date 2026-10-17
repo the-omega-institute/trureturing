@@ -5,7 +5,7 @@ year: 2020
 title: "Compounds of symmetric informationally complete measurements and their application in quantum key distribution"
 doi: 10.1103/PhysRevResearch.2.043122
 url: https://arxiv.org/abs/2007.01007v1
-claim: "A SIC-compound is a set of d³ unit vectors in ℂ^d that splits into d SICs and into d² orthonormal bases; one exists for d = 2 and d = 4 and none for d = 3, the abstract reports evidence against existence for d = 5, 6, 7, 8, and whether one can be formed from the exceptional (Hoggar) SICs of dimension 8 is left open."
+claim: "A SIC-compound is a set of d³ unit vectors in ℂ^d that splits into d SICs and into d² orthonormal bases; one exists for d = 2 and d = 4 and none for d = 3 with the Weyl–Heisenberg group, the introduction reports evidence against existence for d = 5, 6, 7, 8, and whether one can be formed from the exceptional (Hoggar) SICs of dimension 8 is left open."
 strata_touched:
   - D5/S3/Quantum/Measurement/HoggarSicCompoundRefutation
 license: citation-only
@@ -21,12 +21,14 @@ A. Tavakoli, I. Bengtsson, N. Gisin and J. M. Renes, *Compounds of symmetric inf
 DOI: 10.1103/PhysRevResearch.2.043122
 
 Source: https://arxiv.org/abs/2007.01007v1; the text was read from the PDF.
-- page 1: the abstract, Eq. (1), and properties I and II of a SIC-compound;
+- page 1: the abstract and the introduction, with Eq. (1) and properties I and II of a SIC-compound;
 - pages 2–3: the paragraph "On existence in d = 5, 6, 7, 8", with the open question on the exceptional SICs of dimension 8.
 
 ## Source statements
 
-Abstract: "A SIC-compound is defined to be a collection of d³ vectors in d-dimensional Hilbert space that can be partitioned in two different ways: into d SICs and into d² orthonormal bases. … For d = 3 we prove that no SIC-compound exists and for d = 5, 6, 7, 8 we give evidence in support of the same conclusion."
+Abstract: "A SIC-compound is defined to be a collection of d³ vectors in d-dimensional Hilbert space that can be partitioned in two different ways: into d SICs and into d² orthonormal bases. While a priori their existence may appear unlikely when d > 2, we surprisingly answer it in the positive through an explicit construction for d = 4."
+
+Introduction: "We address the existence of SIC-compounds for d = 3, . . . , 8. For d = 3 we prove that no SIC-compound exists and for d = 5, 6, 7, 8 we give evidence in support of the same conclusion."
 
 Eq. (1): "A SIC is a maximal set (size d²) of d-dimensional states, {|φ_k⟩}, with the property that the overlap between any pair of states has the same magnitude: |⟨φ_k|φ_l⟩|² = (dδ_{k,l} + 1)/(d + 1)".
 
