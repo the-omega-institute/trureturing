@@ -91,7 +91,10 @@ internal sealed class OutputMaximalCoherenceTensorizationRefutationDocument : IS
                             + "normalized modulus (9/32)/(17/50) = 225/272. Thus the product-channel "
                             + "output supremum is at least 225/272, exceeding 3/4 by 21/272. "
                             + "This contradicts Eq. (29) for two copies of the same qubit channel."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-baek-park-kim-nha-2022-output-coherence-tensorization-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
