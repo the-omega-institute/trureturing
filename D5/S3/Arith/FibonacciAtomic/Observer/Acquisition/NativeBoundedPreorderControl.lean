@@ -294,6 +294,92 @@ private theorem encoded_execution (P : Parameters) (e : Nat) (positive : 0 < P.h
       obtain ⟨z, eq, orig, valid, safe⟩ := reverse w c rest
       exact ⟨z, eq, .update row orig, valid, safe⟩
 
+/-- Actual intermediate executions with the number of POLL Reads exposed.
+The count is a mathematical label, never a selector argument. -/
+inductive PollingRun (P : Parameters) (obs : Nat → Address → Reply) :
+    Control → Nat → Control → Nat → Nat → Prop where
+  | refl (z : Control) (a : Nat) : PollingRun P obs z a z a 0
+  | read {z : Control} {p : Address} {next : Reply → Control} {a : Nat}
+      {final : Control} {b n : Nat} :
+      controlProgram P z = .read p next →
+      PollingRun P obs (next (obs a p)) a final b n →
+      PollingRun P obs z a final b (n + if z.mu == .poll then 1 else 0)
+  | update {z next final : Control} {a b n : Nat} :
+      controlProgram P z = .update next → PollingRun P obs next (a + 1) final b n →
+      PollingRun P obs z a final b n
+
+private def pollLevel (z : Control) : Nat := if z.mu == .poll then 0 else 1
+
+private theorem query_not_poll (N : Nat) (p : Address) : queryMode N p ≠ .poll := by
+  unfold queryMode
+  split <;> decide
+
+private theorem virtual_not_poll (P : Parameters) (z : Control) (r : Reply) :
+    (virtualDelta P z r).mu ≠ .poll := by
+  cases r with
+  | absent => simp [virtualDelta, canonical]
+  | branch =>
+    simp only [virtualDelta]
+    split
+    · split <;> simp [fresh, canonical]
+    · split
+      · exact query_not_poll _ _
+      · decide
+  | alpha | beta =>
+    simp only [virtualDelta]
+    split
+    · decide
+    · split
+      · exact query_not_poll _ _
+      · split
+        · simp only [canonical]
+          split <;> decide
+        · decide
+
+private theorem polling_count (P : Parameters) (obs : Nat → Address → Reply)
+    {z final : Control} {a b : Nat}
+    (path : Run (controlProgram P) obs z a final b) (halt : controlProgram P final = .halt) :
+    ∃ n, PollingRun P obs z a final b n ∧ a + pollLevel z + n = b + pollLevel final := by
+  induction path with
+  | refl z a => exact ⟨0, .refl z a, by omega⟩
+  | @read z p next a final b row tail ih =>
+    obtain ⟨n, counted, balance⟩ := ih halt
+    have valid := (terminating_valid P obs (.read row tail) halt).1
+    have modeBalance : pollLevel z + (if z.mu == .poll then 1 else 0) =
+        pollLevel (next (obs a p)) := by
+      cases mode : z.mu with
+      | value =>
+        simp only [controlProgram, ite_eq_left valid, mode] at row
+        cases row
+        simp [pollLevel, mode, virtual_not_poll]
+      | guard =>
+        simp only [controlProgram, ite_eq_left valid, mode] at row
+        cases row
+        by_cases accept : DelayedOriginalReadout.guardAccept (P.start + z.j)
+            (obs a (z.p.dropLast ++ DelayedOriginalReadout.rights
+              ((P.start + z.j) / 2 + 1))) = true
+        all_goals simp [pollLevel, mode, canonical, accept]
+      | poll =>
+        simp only [controlProgram, ite_eq_left valid, mode] at row
+        cases row
+        cases obs a (DelayedOriginalReadout.rights P.pollDepth) <;>
+          simp [pollLevel, mode, canonical, fresh]
+      | update | halt0 | halt1 =>
+        simp [controlProgram, valid, mode] at row
+      | error =>
+        simp only [controlProgram, ite_eq_left valid, mode] at row
+        cases row
+        simp [pollLevel, mode, canonical]
+    exact ⟨_, .read row counted, by omega⟩
+  | @update z next a final b row tail ih =>
+    obtain ⟨n, counted, balance⟩ := ih halt
+    have valid := (terminating_valid P obs (.update row tail) halt).1
+    have modeBalance : pollLevel z = pollLevel next + 1 := by
+      cases mode : z.mu <;> simp only [controlProgram, ite_eq_left valid, mode] at row
+      all_goals try cases row
+      simp [pollLevel, mode, canonical]
+    exact ⟨n, .update row counted, by omega⟩
+
 /-- The finite bit table recognizes exactly the valid padded controls. -/
 def TableContract (P : Parameters) (e : Nat) : Prop :=
   (∀ z, Valid P z → (controlBits P.h e z).length = bankWidth P.h e ∧
@@ -375,14 +461,20 @@ def Specification (h T t : Nat) (u : Source) (active bit : Bool) : Prop :=
   let final := canonical (if bit then .halt1 else .halt0)
   P.h = h ∧ TableContract P e ∧
   P.start ≤ t + U ∧ t + U ≤ P.start + P.last ∧
-  (U = 0 ∨ (0 < U ∧ t + U = alignmentBudget h T - DelayedOriginalReadout.rightClock u)) ∧
+  (U = 0 ∨ (0 < U ∧
+    t + U = alignmentBudget h T - DelayedOriginalReadout.rightClock u)) ∧
   Run (sourceProgram (rowTable P e)) (actualObservation (substitution^[t] u))
     (encode P.h e initial) 0 (encode P.h e final) U ∧
   (rowTable P e).instruction (encode P.h e final) = .halt bit ∧
   (∀ w a, Run (sourceProgram (rowTable P e)) (actualObservation (substitution^[t] u))
     (encode P.h e initial) 0 w a →
-    ∃ z, w = encode P.h e z ∧ Valid P z ∧ z.mu ≠ .error ∧ RowPoint P (t + U) u U z a) ∧
-  PhysicalRealization P e (substitution^[t] u) initial final U bit
+    ∃ z, w = encode P.h e z ∧ Valid P z ∧ z.mu ≠ .error ∧
+      RowPoint P (t + U) u U z a) ∧
+  PhysicalRealization P e (substitution^[t] u) initial final U bit ∧
+  (∃ n, PollingRun P (NativePollingAlignment.observations (substitution^[t] u))
+    initial 0 final U n ∧ n = if active && decide (0 < T) then U + 1 else 0) ∧
+  (∀ N, N ≤ t + U → BoundedPreorderTrial.TrialSpec h (t + U) N u
+    (substitution^[t + U] u))
 
 /-- A single installed table for each bound and regime computes every promised
 source's original parity, with compressed fields at every actual finite prefix. -/
@@ -411,7 +503,8 @@ theorem native_bounded_preorder_control (h T t : Nat) (u : Source)
   obtain ⟨lower, upper, clock, run, halt, _, prefixes⟩ :=
     native_bounded_rows_execution h T t u hu ht regime active
   have compiled := encoded_execution P e positive fits y run halt
-  have finalValid := (terminating_valid P (NativePollingAlignment.observations y) (.refl final U) halt).1
+  have finalValid :=
+    (terminating_valid P (NativePollingAlignment.observations y) (.refl final U) halt).1
   have fixed : (rowTable P e).instruction (encode P.h e final) = .halt bit := by
     have hi := encoded_halt P e positive fits final finalValid halt
     have mode : (final.mu == .halt1) = bit := by dsimp [final]; cases bit <;> rfl
@@ -426,12 +519,30 @@ theorem native_bounded_preorder_control (h T t : Nat) (u : Source)
       · simp [rowTable, error, opcode, controlProgram, Valid, canonical]
       · intro r
         simp [rowTable, error, controlProgram, Valid, canonical]
-  refine ⟨size, table, lower, upper, clock, compiled.1, fixed, ?_, ?_⟩
+  refine ⟨size, table, lower, upper, clock, compiled.1, fixed, ?_, ?_, ?_, ?_⟩
   · intro w a pref
     obtain ⟨z, eq, orig, valid, safe⟩ := compiled.2 w a pref
     exact ⟨z, eq, valid, safe, prefixes z a orig⟩
   · exact D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed_halt
       compiled.1 fixed false
+  · obtain ⟨n, counted, balance⟩ := polling_count P _ run halt
+    refine ⟨n, counted, ?_⟩
+    have phaseFinal : pollLevel final = 1 := by dsimp [final, pollLevel]; cases bit <;> rfl
+    rw [phaseFinal] at balance
+    by_cases flag : (active && decide (0 < T)) = true
+    · have phaseInitial : pollLevel (rowInitial T active) = 0 := by
+        simp [rowInitial, flag, pollLevel, canonical]
+      rw [phaseInitial] at balance
+      simp only [flag, ite_true]
+      omega
+    · have zero : rowUpdates h T t u active = 0 := by simp [rowUpdates, flag]
+      have phaseInitial : pollLevel (rowInitial T active) = 1 := by
+        simp [rowInitial, flag, pollLevel, fresh]
+      rw [phaseInitial, zero] at balance
+      simp only [flag, Bool.false_eq_true, ite_false]
+      omega
+  · exact (BoundedPreorderTrial.bounded_preorder_trial h (t + U) P.start u
+      (substitution^[t + U] u) hu rfl lower).1
 
 #print axioms native_bounded_preorder_control
 
