@@ -2449,3 +2449,212 @@ certificates for the whole actual branch. The exact central census and
 the local basis and ambient no-quartet theorems retain their independent
 proofs. The ray pair in §70 limits a sufficient pair-gap method and does
 not provide two additional mutually unbiased bases.
+
+## 72. The actual branch in a controlled Fourier normal form
+
+### 72.1 Exact factorization and scope
+
+The corrected cosine relation in §71.4 is attained by the actual curve,
+not only by the isolated example there. The following product-monomial
+factorization gives a legitimate reduction of the fixed-pair problem.
+It does not use the rank-two no-quartet assertion discussed in §71.
+
+Use the ordered \(\mathbb C^2\otimes\mathbb C^3\) convention of §71.2.
+For the moment allow \(-1\le b\le1\), with the two endpoints understood
+only as algebraic limits of the actual open branch. Set
+
+\[
+ c=\sqrt{1+b^2},\qquad h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ \omega=\frac{-1+i\sqrt3}{2},
+\]
+
+\[
+ F_2=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+ K=\begin{pmatrix}b&h(1+ib)\\h(1-ib)&-b\end{pmatrix},\quad
+ V_0=\frac{J_3+(\omega-1)I_3}{\sqrt3},\quad
+ W_0=\frac{J_3+(\bar\omega-1)I_3}{\sqrt3}.
+ \tag{72.1}
+\]
+
+Both \(V_0,W_0\) are flat unitaries. Define positive \(p,q\) and the
+unit-modulus number \(z\) by
+
+\[
+ p=\sqrt{\frac{1+b/\sqrt3}{2}},\quad
+ q=\sqrt{\frac{1-b/\sqrt3}{2}},\quad z=\frac{1-ib}{c},\qquad
+ R_\beta=\begin{pmatrix}p&q\\q&-p\end{pmatrix},\qquad
+ U=\operatorname{diag}(1,z)R_\beta.
+ \tag{72.2}
+\]
+
+The identity \(pq=hc/(2\sqrt3)\) gives, by direct multiplication,
+\(K=U\operatorname{diag}(\sqrt3,-\sqrt3)U^*\). Therefore the tensor
+identity in §71.2 yields
+
+\[
+ H_0(b)=(A\otimes I_3)\operatorname{diag}(V_0,W_0)
+       (R_\beta\operatorname{diag}(1,\bar z)\otimes I_3),
+ \qquad A=F_2U/\sqrt2.
+ \tag{72.3}
+\]
+
+Indeed the two controlled eigenblocks before multiplication by
+\(F_2/\sqrt2\) are
+\((J_3+(-3/2\pm i\sqrt3/2)I_3)/\sqrt3=V_0,W_0\).
+Equation (72.3) holds on the whole closed algebraic interval, including zero.
+
+### 72.2 Product-monomial normalization for positive parameters
+
+For \(0<b\le1\), define \(0<\alpha,\beta<\pi/4\) by
+
+\[
+ C=\cos\alpha=\sqrt{\frac{1+h/\sqrt3}{2}},\qquad
+ S=\sin\alpha=\sqrt{\frac{1-h/\sqrt3}{2}},\qquad
+ \cos\beta=p,\quad\sin\beta=q.
+ \tag{72.4}
+\]
+
+Then
+
+\[
+ CS=\frac{b}{\sqrt3c},\qquad
+ \cos2\alpha=\frac h{\sqrt3},\qquad
+ \cos2\beta=\frac b{\sqrt3},\qquad
+ \boxed{\cot2\alpha\cot2\beta=\frac12}.
+ \tag{72.5}
+\]
+
+For the last equality, square the positive quantities and use
+\((3-h^2)(3-b^2)=4h^2b^2\). In particular \(\alpha+\beta>\pi/4\),
+since
+\(\cos(2\alpha+2\beta)=\sin2\alpha\sin2\beta(1/2-1)<0\).
+
+Write
+
+\[
+ A=\begin{pmatrix}a&d\\e&f\end{pmatrix}
+ =\frac1{\sqrt2}
+   \begin{pmatrix}p+zq&q-zp\\p-zq&q+zp\end{pmatrix},
+\]
+
+and put
+
+\[
+ \xi=\frac{p+zq}{\sqrt2C},\qquad
+ \delta=\frac{c(1+ih)}2,\qquad
+ D=\operatorname{diag}(1,\delta),\qquad
+ R_\alpha=\begin{pmatrix}C&S\\S&-C\end{pmatrix}.
+ \tag{72.6}
+\]
+
+Both \(\xi\) and \(\delta\) have modulus one. The following identities
+specify the phases without an implicit choice of square root:
+
+\[
+ |a|^2=C^2,\quad |d|^2=|e|^2=S^2,\qquad
+ a\bar d=\frac{b\omega^2}{\sqrt3c}=CS\omega^2,\qquad
+ e\bar a=\frac{b(1+ih)}{2\sqrt3}=CS\delta.
+ \tag{72.7}
+\]
+
+They follow by expanding the entries above and using
+\(p^2-q^2=b/\sqrt3\), \(pq=hc/(2\sqrt3)\), and
+\(h^2=(3-b^2)/(1+b^2)\). Thus
+\(a=\xi C\), \(d=\xi\omega S\), and \(e=\xi\delta S\).
+Unitarity of \(A\), with \(S>0\), gives
+\(f=-\xi\delta\omega C\). Consequently
+
+\[
+ A=\xi D R_\alpha\operatorname{diag}(1,\omega).
+ \tag{72.8}
+\]
+
+Define
+
+\[
+ \mathcal H(\alpha,\beta)
+ =(R_\alpha\otimes I_3)\operatorname{diag}(V_0,\omega W_0)
+  (R_\beta\otimes I_3).
+ \tag{72.9}
+\]
+
+Substitution in (72.3) proves
+
+\[
+ \boxed{H_0(b)=\xi(D\otimes I_3)\mathcal H(\alpha,\beta)
+                 (\operatorname{diag}(1,\bar z)\otimes I_3).}
+ \tag{72.10}
+\]
+
+The scalar and both outer factors are unitary monomial matrices. Hence
+\(\mathcal H\) is a genuine complex Hadamard matrix, and (72.10) is a
+permitted equivalence of the fixed-pair problem. In particular it is stronger
+than merely expressing the two matrices as equivalent under arbitrary local
+unitaries, which would not suffice for that purpose.
+
+### 72.3 The corrected phase condition on the actual curve
+
+For \(V=V_0\) and \(W=\omega W_0\), direct entrywise multiplication gives
+
+\[
+ 3v_{jk}\bar w_{jk}=
+ \begin{cases}\omega,&j=k,\\\bar\omega,&j\ne k.\end{cases}
+ \tag{72.11}
+\]
+
+Thus every relative phase in (72.11) has cosine \(-1/2\), exactly as
+required by the corrected equation
+\(\cos\varphi=-\cot2\alpha\cot2\beta\) from §71.4.
+The expression with an additional factor \(1/3\) does not hold.
+Dephasing \(V\) and \(W\) gives the two opposite order-three Fourier
+orientations, as in the example in §71.4.
+
+In [Chen--Yu, arXiv:1610.04875v3](https://arxiv.org/pdf/1610.04875v3),
+Lemma 13(ii), this matrix is the displayed normal form
+\(H_2(\alpha,\beta,0,V_0,\omega W_0)\). This identifies the actual
+curve within that formula; it does not import the subsequent exclusion claim.
+
+### 72.4 Zero, negative parameters, and endpoint limits
+
+The expressions (72.2), (72.4), and (72.6) contain no division by \(b\) or
+\(S\). At zero they give
+
+\[
+ h=\sqrt3,\quad c=1,\quad p=q=1/\sqrt2,\quad z=1,\quad
+ \alpha=0,\quad\beta=\pi/4,\quad\xi=1,\quad\delta=-\omega^2.
+ \tag{72.12}
+\]
+
+Here \(A=I_2\), and (72.8) follows directly from
+\(\operatorname{diag}(1,-\omega^2)\operatorname{diag}(1,-1)
+\operatorname{diag}(1,\omega)=I_2\). Therefore (72.10) also holds at zero.
+No cotangent product is asserted at zero, where one factor is undefined;
+the undivided flatness relation is instead identically zero.
+
+For a negative parameter write \(b=-t\), \(t>0\), and set
+
+\[
+ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+
+Interchanging \(P(t)\) and \(Q(t)\) in the original matrix gives
+
+\[
+ H_0(-t)=(Z\otimes I_3)H_0(t)(X\otimes I_3)
+ =\xi(t)(ZD(t)\otimes I_3)\mathcal H(\alpha(t),\beta(t))
+   (\operatorname{diag}(1,\bar z(t))X\otimes I_3).
+ \tag{72.13}
+\]
+
+This supplies explicit outer product-monomial factors while keeping the
+normal-form angles in the stated positive range. It avoids silently moving
+\(\beta\) outside the source convention.
+
+At \(b=1\), one has \(h=1\) and \(\alpha=\beta\), with
+\(\cos2\alpha=1/\sqrt3\). Equation (72.9) is then exactly the
+phase-normalization example of §71.4. All displayed denominators remain
+nonzero; the negative endpoint follows from (72.13). These endpoint identities
+are algebraic limits and do not enlarge the actual open parameter branch.
+The factorization proves neither an exhaustive classification of rank-two
+Hadamard matrices nor a whole-branch no-quartet theorem.
