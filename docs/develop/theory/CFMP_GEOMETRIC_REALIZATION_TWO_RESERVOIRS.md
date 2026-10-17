@@ -1744,7 +1744,7 @@ of a compact 3-manifold with all boundary components of genus at least
 two), this gives a conditional hyper-ideal realization of the original
 triangulation. The existing strict-angle-structure and Luo--Yang inputs
 supply the common positive generalized zero-curvature field. Corollary
-8.2 removes its flat blocks. Common edge lengths make paired truncated
+144.2 removes its flat blocks. Common edge lengths make paired truncated
 faces isometric, the full 2*pi equations remove edge singularities, and
 the truncation triangles give totally geodesic boundary.
 
