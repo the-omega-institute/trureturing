@@ -10,6 +10,7 @@ internal sealed class EJMTriangleCacheReceiptsDocument : IScribeDocumentDefiniti
         "Complete triangle mirror and transition kernel receipts",
         H("Complete triangle mirror and transition kernel receipts"),
         Blocks(
+            Paragraph(Text("The finite proof blocks form 22 imported interval groups. The complete mirror and transition receipts consume every group by exhaustive interval dispatch.")),
             Paragraph(Text("The interval-dispatched receipts cover every one of the 41294 rows. The transition guard restricts verification to the original unknown coordinates and preserves all 342224 actual value transitions. The cache association theorem applies these receipts only after proving that the actual coordinate is unknown. No external generator check, producer premise, partial sample or native evaluator is an acceptance theorem.")),
             Node("mirror-accepted", "mirror_accepted", "Every original row has an exact mirror",
                 "All finite chunks of the mirror check are consumed by exhaustive index dispatch. The receipt supplies the whole assignment equality and exact lower equality.", DescribeRole.Theorem),
