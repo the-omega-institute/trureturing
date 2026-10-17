@@ -4311,4 +4311,43 @@ then there are no j>=1 and prime P distinct from Q such that
 
 Proof. The displayed rational point reduces to a finite nonsingular point of Y^2=X^3, because both coordinates are nonzero modulo Q. Hence it belongs to G_0(Q) but not G_1(Q). Theorem 74.2 contradicts the proposed golden factorization. This conclusion concerns only the depth-three role in this factorization; it asserts neither non-WSS status for Q in other settings nor existence of such certificates for infinitely many primes.
 
+## 75. A quartic prime family excluded from the depth-three role
+
+The construction below is an elementary rational-conic parametrization, not a new general method for constructing theta-congruent twists. This application supplies explicit certificates for Theorem 74.3 while retaining the original golden blocks. General twist-point parametrizations via products of linear factors modulo squares are classical: see M. Kan, *theta-congruent numbers and elliptic curves*, Acta Arith. 94(2) (2000), 153–160, lemma proof on p.154, [primary journal text](https://matwbn.icm.edu.pl/ksiazki/aa/aa94/aa9422.pdf). All identities and local-unit assertions needed here are proved below.
+
+**Definition 75.1 (the represented prime family).** Put
+
+$$\mathcal F(m,n)=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4.$$
+
+Let $\mathcal Q$ be the set of primes $Q>5$ represented as $Q=\mathcal F(m,n)$ by integers $m,n$. This definition asserts neither infinitely many prime values nor infinitely many members in the actual golden prime supports.
+
+**Theorem 75.2 (uniform quartic-family exclusion).** For every $Q\in\mathcal Q$, every $j\ge1$, and every prime $P\ne Q$,
+
+$$\boxed{L_{3^j}^{\,2}+3\ne P^2Q^3.}$$
+
+Thus the depth-three prime in an actual surviving $P^2Q^3$ block cannot be represented by $\mathcal F$ over the integers.
+
+**Proof.** Choose $m,n$ with $Q=\mathcal F(m,n)$ and put
+
+$$u=m^2+mn-n^2,\qquad v=m^2-4mn-n^2,\qquad r=m^2+n^2.$$
+
+The identity $v+2iu=(1+2i)(m+in)^2$ and its norm, or direct polynomial expansion, give
+
+$$4u^2+v^2=5r^2,\qquad Q=3u^2+v^2=5r^2-u^2.$$
+
+Consequently $T=(-15u^2,75uvr)$ is an integral point on $E_Q:Y^2=X(X+5Q)(X-15Q)$. Indeed,
+
+$$X(T)+5Q=5v^2,\qquad X(T)-15Q=-75r^2,$$
+
+and the product of the three factors is $5625u^2v^2r^2=Y(T)^2$.
+
+We verify that both coordinates are $Q$-adic units. First $\gcd(m,n)=1$: otherwise a common divisor $d>1$ would have $d^4\mid Q$ by homogeneity, contradicting primality. If $Q\mid u$, the equation $Q=3u^2+v^2$ implies $Q\mid v$. Then $u-v=5mn$ and $Q>5$ imply $Q\mid m$ or $Q\mid n$. Substitution in $u=m^2+mn-n^2$ forces the other divisibility, contradicting coprimality. Hence $Q\nmid u$. If $Q\mid v$, then $Q\mid3u^2$, again impossible. If $Q\mid r$, the equation $Q=5r^2-u^2$ forces $Q\mid u$. Thus $Q\nmid uvr$, and $Q\nmid75$ gives the required unit coordinates. This also excludes zero $u,v,r$, since zero is divisible by $Q$. There are no omitted zero-coordinate exceptions. Theorem 74.3 proves the conclusion. ∎
+
+**Lemma 75.3 (compatibility with the required prime class).** Every $Q\in\mathcal Q$ satisfies $Q\equiv19\pmod{120}$.
+
+**Proof.** Coprimality excludes both $m,n$ being even. If they have opposite parity, $u,v$ are odd, and $Q=3u^2+v^2$ is divisible by four, impossible. Thus both are odd. Hence $u$ is odd, $r\equiv2\pmod8$, and $Q=5r^2-u^2\equiv3\pmod8$. Modulo five, $u\equiv(m+3n)^2$, so $Q\equiv-(m+3n)^4\equiv-1\pmod5$ because $Q\ne5$. Finally $Q\equiv v^2\equiv1\pmod3$ because $Q\ne3$. These combine to give $19$ modulo $120$. ∎
+
+The lemma is a compatibility check, not the exclusion argument. The family is not disjoint from actual golden prime support: $\mathcal F(1,1)=19=L_3^2+3$. This example is not a new individual exclusion. The theorem is uniform in all integer parameters and all original layers; it does not replace exact golden support by unrestricted splitting. No assertion is made that infinitely many represented primes have pure ternary golden period, that every other cross-level necessary condition is independent of the representation, or that a member cannot be WSS in another depth vector. The parametrization and congruence lemma are elementary; the global exclusion uses Section 74's height and reduction obstruction. This is a paper proof with no Lean certification claim.
+
+
 ## 追加锚（本行以下为增补区）
