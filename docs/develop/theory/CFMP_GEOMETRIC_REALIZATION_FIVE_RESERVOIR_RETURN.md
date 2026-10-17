@@ -3915,3 +3915,271 @@ one axis has the stated source-companion order; it does not provide the
 missing receiver in Corollary 340.1. Other source inventories, the
 remaining M/U-axis patterns, and the full six-edge and general CFMP
 geometric-realization questions are not settled by these implications.
+
+## 341. The actual-circle Z/U high-axis theorem
+
+The opposite-companion receiver in Corollary 340.1 need not be assumed
+in the following source setting. Theorem 332.1 and Corollary 340.1 will
+exclude both changed-pair exits from the transported MCD/VCD faces under
+a nonpositive Z/U axial excess; the actual D normal circle then gives a
+contradiction. All source hypotheses are stated directly.
+
+**Definition 341.1 and hypotheses.**
+
+Consider a finite face-paired tetrahedral quotient with exactly the six
+actual global edge labels M,V,C,D,Z,U. Every actual edge has a connected
+circular normal link. Each tetrahedron owner has one fixed vertex-induced
+paired frame, in edge order (12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B),
+
+with R,A,B,O four distinct global labels. An actual owner is a tetrahedron
+of the quotient before its faces are identified; a normal-link interval
+is one original local edge occurrence, not an owner or a role vector.
+Face pairings identify original face occurrences and preserve their
+actual global edge labels. Distinct-face self-gluings and repeated
+visits to the same owner in a normal circle are allowed.
+
+There is one shared positive generalized length at each actual edge;
+write its cosh as m,v,c,d,z,u, respectively. Original generalized
+dihedral angles are nonnegative and sum to 2*pi around each actual edge.
+There is a unique flat owner
+
+    sigma=(M,C,D,V,C,D),
+
+whose M and V axial angles are pi and whose C and D transverse angles
+are zero. Every other owner is genuine and has all angles in (0,pi).
+Assume there is a genuine owner
+
+    tau=(Z,M,C,D,M,C),
+
+and retain the exact scalar hypotheses
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2.                         (341.1)
+
+All genuine paired frames have the usual strict tests, with shared
+coshes r,a,b,o:
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0.                     (341.2)
+
+**Theorem 341.2 (repo-derived).** Under these hypotheses, every genuine
+owner eta whose two axes are Z,U and whose
+transverse pair is either {V,C} or {V,D} satisfies
+
+    theta_Z(eta)+theta_U(eta)>pi.                  (341.3)
+
+No degree lower bound is needed for this implication beyond the stated
+connected circular links. The usual degree-at-least-six source setting
+therefore satisfies the topological hypothesis, but no degree estimate
+is being substituted for connectedness.
+
+## 342. Original capacities and the unique source pair
+
+**Proof of Theorem 341.2.** The unique flat sigma already contributes pi at each of M and V.
+Consequently all genuine original M slots together have total pi, and
+the same is true of V. All genuine D slots together have total 2*pi.
+Any subset of these slots has at most the corresponding capacity,
+because all original angles are nonnegative.
+
+In particular every genuine owner in which M is transverse contributes
+two distinct original M slots of the same angle beta_M, so
+
+    2*beta_M<=pi.                                (342.1)
+
+This remains true when its faces are self-glued or another owner has
+the same role vector. Such identifications do not identify original
+slots in the zero-curvature sum.
+
+Sigma is the only owner with transverse pair {C,D}. To see this without
+an additional face-reduction premise, any such owner's two distinct
+axes lie in {M,V,Z,U}. By (341.1), z,u>m>v, so the smallest possible
+product of their shifted coshes is (m-1)*(v-1). Hence its L is at most
+
+    (c+d)^2-(m-1)*(v-1)<=0.
+
+It cannot be genuine by (341.2). By the unique-flat premise it is sigma.
+This proves the precise unique-CD-owner fact used in the link argument.
+
+## 343. Global exclusion of the opposite-M exit
+
+For transverse pair {V,C}, (341.3) is already Theorem 332.1 with r=u>m.
+It remains to consider a genuine
+
+    eta=(Z,V,D,U,V,D)
+
+and suppose, for contradiction,
+
+    theta_Z(eta)+theta_U(eta)<=pi.                 (343.1)
+
+We first exclude any actual owner with fixed frame, up to exchanging
+axes or transverse labels,
+
+    kappa=(W,M,D,C,M,D).                          (343.2)
+
+Such an owner is not sigma and is therefore genuine. Four distinct
+labels give W in {V,Z,U}. Let w be its cosh. The exact transverse-M
+cosine formula has positive denominator sqrt(D(w)*D(c)), where
+
+    D(t)=t^2+m^2+d^2+2*t*m*d-1>0,
+
+and numerator
+
+    N(w)=d*(w+c)+m*(w*c+d^2-m^2+1).              (343.3)
+
+By (342.1), beta_M(kappa)<=pi/2, hence N(w)>=0. Its slope is
+d+m*c>0. At w0=1+m+d, exact expansion gives
+
+    N(w0)=[d+m*(1+m+d)]*(1+c+d-m)<0,             (343.4)
+
+the final inequality following from m>1+c+d. Thus
+
+    w>1+m+d.                                    (343.5)
+
+Since v<=m-2, W is Z or U. Apply Theorem 332.1 after interchanging the
+low labels C,D, using W as its first high axis and the other member
+of {Z,U} as its second high axis. Indeed its first axial value is
+w>1+m+d, its second is greater than m, its transverse pair is {V,D},
+and its remaining scalar and genuine hypotheses are precisely (341.1)
+and those of eta. This gives (341.3), contrary to (343.1).
+
+Therefore no owner of type (343.2) exists anywhere in the quotient under
+(343.1). No premise that kappa is a source-face partner was used.
+
+## 344. Global exclusion of the opposite-V exit
+
+Continue under (343.1). Suppose there were an actual owner with fixed frame
+
+    rho=(W,V,D,C,V,D).                            (344.1)
+
+It is not sigma and is genuine; four distinct labels give
+W in {M,Z,U}. The owners tau,rho,eta are distinct: tau has no V label;
+rho has C, while eta does not. Strict genuineness supplies exactly the
+six L/J tests in (333.3). The original M and V capacities give
+
+    2*beta_M(tau)<=pi,
+    2*beta_V(rho)+2*beta_V(eta)<=pi.
+
+All numerical premises of Corollary 340.1 are (341.1). That corollary
+therefore gives (341.3), contradicting (343.1). Equivalently, Theorem 333.2
+charges more than 3*pi to tau's one D slot, rho's two V and two D slots,
+and eta's two V and two D slots, although their capacities are at most
+pi+2*pi. This uses no M slot of eta.
+
+Consequently no owner of type (344.1) exists anywhere under (343.1).
+Again the owner need not meet a source face. The published theorem's
+conditional inventory is applied only after an actual rho is supposed
+to exist; it has not been promoted to a forced receiver claim.
+
+## 345. Exact original-face transitions
+
+Retain the hypotheses of Section 341 and the supposition (343.1).
+In a fixed paired frame (R,A,B,O,A,B), the four original faces are
+
+    F4=(123): {R,A,B},  F3=(124): {R,A,B},
+    F2=(134): {O,A,B},  F1=(234): {O,A,B}.        (345.1)
+
+Every face therefore contains both transverse labels and one axis.
+All three labels on each face are distinct. If a face has label set
+{X,C,D}, its owner's transverse pair is exactly one of
+
+    {C,D}, {X,C}, {X,D}.                         (345.2)
+
+There is no further possibility: the fixed transverse pair occurs in
+every face and must consist of two members of that three-label set.
+Because the four frame labels are distinct, the remaining face label
+is an axis, not a third repeated transverse label.
+
+For X=M, the three possibilities in (345.2) are respectively:
+
+    sigma;
+    a D-axis owner with transverse pair {M,C};
+    an owner (W,M,D,C,M,D), excluded in Section 343.
+
+For X=V, they are respectively:
+
+    sigma;
+    a D-axis owner with transverse pair {V,C};
+    an owner (W,V,D,C,V,D), excluded in Section 344.
+
+The first possibility is sigma itself, not a new owner with the same
+role vector, by Section 342. These classifications use the fixed chosen
+frame of each receiving owner. No change of frame, metric equality or
+identification of distinct labels is performed.
+
+Every original D corner of a face {M,C,D} consequently pairs to a D
+corner in sigma or to the unique axial D interval of an owner with
+pair {M,C}. The analogous statement for a {V,C,D} face uses pair {V,C}.
+The D corner is unique in either face, so label-preserving face gluing
+sends it to the original D corner just classified, even if some coshes
+happen to be equal.
+
+## 346. A closed subset of the actual D normal circle
+
+Before gluing, take one separate closed interval for every original
+local edge whose actual global label is D. Its two endpoints are its
+two original edge-in-face incidences. The actual face pairings glue
+these endpoints in pairs. By hypothesis the resulting finite normal
+link is one connected circle. Distinct intervals remain distinct edges
+of this circle, including repeated visits to an owner and loops.
+
+Let S consist of the following original D intervals:
+
+1. Both transverse D intervals of sigma, its local edges 14 and 23.
+2. Every axial D interval of every owner whose fixed transverse pair
+   is {M,C} or {V,C}.
+
+This selection is by actual original interval. It contains both sigma
+intervals even if their endpoints are glued together, and it includes
+each axial interval of every distinct owner separately.
+
+Each sigma D interval has one endpoint on an MCD face and the other on
+a VCD face. More explicitly, edge 14 is on F3 and F2, while edge 23 is
+on F4 and F1. Each axial D interval with pair MC has both endpoints on
+MCD faces; each axial D interval with pair VC has both endpoints on
+VCD faces. Section 345 therefore proves the following endpoint-level
+statement:
+
+    Every endpoint of an interval in S is paired to an endpoint
+    of another interval in S, possibly the same interval.       (346.1)
+
+Thus the image of S is a nonempty union of complete connected components
+of the normal-link graph. Indeed an endpoint-gluing vertex has its two
+incident half-edges paired by the actual face identification; (346.1)
+leaves no half-edge leaving S. A finite edge path starting in S stays
+in S, so connectedness forces S to contain every original D interval.
+This is a statement about the actual D circle, not a separately marked
+graph or an assumed connected source-face graph.
+
+But eta has two original D intervals, both transverse with companion
+V and axes Z,U. It is not sigma, and neither interval is an axial D
+interval with pair MC or VC. They therefore lie outside S. This
+contradicts connectedness and proves that (343.1) is impossible. Together
+with the source-companion case, it proves (341.3). QED.
+
+## 347. Original occurrences and scope
+
+No number of MCD or VCD partners is prescribed. A source face may pair
+to another face of the same owner; two faces may have the same receiving
+owner; an axial chain may contain arbitrarily many distinct owners or
+revisit an owner in the full normal-link traversal. The argument uses
+only endpoint closure (346.1), not a count of such chains or a claim that
+a particular chain has two different owners. Loops in the link and
+multiple edges cause no change to that closure argument. Four-distinctness
+ensures that an axial D owner has one D interval, whereas a transverse
+D owner has two; those two cases are never merged.
+
+The unique-CD-owner fact is used exactly in the first case of (345.2).
+The global opposite-M and opposite-V exclusions are both necessary to
+the closure proof; proving absence only among the four source-face
+partners would not suffice for a transported axial chain. Their global
+use is justified in Sections 343–344 by actual-slot budgets and the two
+published angle implications.
+
+The unique-flat and strict source-normal-form hypotheses remain explicit
+premises of Theorem 341.2. Its conclusion concerns the Z/U axial expense
+in that setting, without assuming an opposite-companion receiver. It
+does not exclude the unique flat source, settle the remaining M/U or
+M/Z high-axis patterns, or prove six-edge or general CFMP realization.
