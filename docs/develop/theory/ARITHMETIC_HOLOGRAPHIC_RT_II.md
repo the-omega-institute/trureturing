@@ -2133,3 +2133,131 @@ The rational qutrit-environment product of §73 has error below 1/3 and therefor
 Kraus rank, Choi rank and minimal pure Stinespring environment dimension are standard equivalent channel resources; see [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The general obstruction to strong channel approximation by much smaller Kraus rank is established background: [Lancien and Winter, Approximating quantum channels by completely positive maps with small Kraus rank, Quantum 8,1320 (2024), §2](https://quantum-journal.org/papers/q-2024-04-30-1320/) explicitly distinguishes diamond approximation from unreferenced output-state approximation and notes the Choi-rank obstruction. The present argument uses the uniform fibre target's support and an adapted normalized reference input to obtain the explicit 2/k bound and the sharp four-fibre resource threshold. It does not claim that the general rank-obstruction principle is new.
 
 Unlike §72's calibration reduction, which preserves shared weights but may enlarge local environments, this proof acts directly on the original effective Choi matrix. It therefore supports the stated dimension-restricted conclusion even for leakage-bearing and nonconjugate competitors. The unrestricted one-product optimum with no environment bound remains open.
+
+## 75. Growing only one local environment beats the two-qubit threshold
+
+### 75.1 The asymmetric resource threshold
+
+Use the four-fibre, two-dimensional-fibre channel F_(4,2) of §§66 and 74, with fixed MC input and output encodings. Its logical input basis is |f,i>, where 1≤f≤4 and i∈{0,1}, and
+
+    F_(4,2)(|f,i><f,j|)=δ_ij|f><f|,
+    F_(4,2)(|f,i><g,j|)=(1/2)|f><g|  for f≠g.
+
+There is a single physical product channel A⊗B, with local Kraus ranks exactly two and three respectively, whose encoded unhalved diamond error from J_out F_(4,2) is strictly below 3/8. Exchanging the parties gives the same statement for ranks (3,2).
+
+By §74, every physical product with both local Kraus ranks at most two has error at least 1/2, with equality attained by the tetrahedral product. Consequently, if one side is allowed local Kraus rank at most two, increasing the other side's bound from two to three is necessary and sufficient to permit error strictly below 1/2. This is an environment-resource threshold, not a formula for the optimum at budget (2,3). All competitors in the lower statement may have leakage and unequal, nonconjugate local maps. The explicit upper construction below calibrates the basis outputs, which is a valid construction rather than an assumption on those competitors.
+
+More generally, among all physical product channels with these fixed local input and output dimensions, the minimum product of the two local Kraus ranks permitting error strictly below 1/2 is exactly six. It is attained at (2,3) or (3,2).
+
+Local environment dimensions mean pure Stinespring dimensions, equivalently local Kraus ranks. No statement about bare unpurified mixed-ancilla dimensions is intended.
+
+### 75.2 Exact local isometries
+
+For a Hermitian matrix H define its Cayley unitary
+
+    U(H)=(I+iH)(I−iH)^(-1).
+
+The inverse exists because H has real spectrum. Commutation of the two polynomial factors gives U(H)*U(H)=I.
+
+Let A_1=0_(2×2), B_1=0_(3×3), and set
+
+    A_2=[[-15,17+9i],[17−9i,−6]],
+    A_3=[[-1,19+22i],[19−22i,−37]],
+    A_4=[[2,−2−14i],[−2+14i,8]],
+
+    B_2=[[14,−13+6i,−10+4i],
+         [−13−6i,7,−4+8i],
+         [−10−4i,−4−8i,4]],
+    B_3=[[-2,−12+19i,1+10i],
+         [−12−19i,37,−7+2i],
+         [1−10i,−7−2i,−2]],
+    B_4=[[-4,3−18i,6−8i],
+         [3+18i,−11,10i],
+         [6+8i,−10i,7]].
+
+Define a_(f,i)=U(A_f/32)e_i in C² and b_(f,i)=U(B_f/32)e_i in C³, using the first two columns in the latter case. Each fibre therefore gives an orthonormal pair of local records. In fixed computational bases define local isometries from C⁸ by
+
+    V_A|f,i>=|f>⊗overline(a_(f,i)),
+    V_B|f,i>=|f>⊗overline(b_(f,i)).
+
+Orthogonality of the output labels and of each record pair proves V_A*V_A=V_B*V_B=I_8. Tracing the respective record spaces defines CPTP maps A:C⁸→C⁴ and B:C⁸→C⁴, with Kraus ranks at most two and three. No shared randomness is used.
+
+Let G_A and G_B be the 8×8 Gram matrices of the un-conjugated columns a_(f,i) and b_(f,i), in the order (1,0),(1,1),...,(4,0),(4,1). The explicit complex conjugates in V_A,V_B fix the coefficient convention: tracing the records on |f,i><g,j| gives (G_A)_(fi,gj)(G_B)_(fi,gj), with no additional transpose.
+
+After the physical MC input encoding, both output labels agree. The resulting logical channel has coefficient matrix G_A⊙G_B. Let K have diagonal 2×2 blocks I₂ and off-diagonal blocks J₂/2, and put
+
+    D=G_A⊙G_B−K.
+
+Thus D is Hermitian, its diagonal fibre blocks vanish, and the physical channel difference is the MC output embedding of the collapsed-fibre coefficient map D. These identities specify its action on all 64 input matrix units, including coherent cross-fibre inputs.
+
+### 75.3 A literal rational certificate
+
+The following Hermitian matrix Z=(R+iS)/10000 is a certificate for the entire channel difference:
+
+    R=[[3324,−180,664,−877,806,322,871,−719],
+       [−180,2843,304,753,−57,1073,−136,816],
+       [664,304,2460,−144,782,225,1320,358],
+       [−877,753,−144,3598,−803,662,−60,609],
+       [806,−57,782,−803,3616,−45,494,−930],
+       [322,1073,225,662,−45,2854,222,991],
+       [871,−136,1320,−60,494,222,3274,−147],
+       [−719,816,358,609,−930,991,−147,3374]],
+
+    S=[[0,157,205,530,671,−353,−293,596],
+       [−157,0,−234,1036,508,100,67,−433],
+       [−205,234,0,4,104,534,−176,−377],
+       [−530,−1036,−4,0,−266,137,430,322],
+       [−671,−508,−104,266,0,95,809,191],
+       [353,−100,−534,−137,−95,0,−233,649],
+       [293,−67,176,−430,−809,233,0,230],
+       [−596,433,377,−322,−191,−649,−230,0]].
+
+All entries of D and Z are Gaussian rational numbers. Direct exact elimination gives
+
+    Z−D>0,  Z+D>0,
+    (3/8)I₂−Z_ff>0  for f=1,2,3,4.                    (1)
+
+For an explicit reproducible positivity check, use the ordinary Hermitian LDL* elimination without pivoting. If M=L diag(p_1,...,p_n)L*, with unit diagonal in L, its recursion is
+
+    p_j=M_jj−Σ_(h<j)|L_jh|²p_h,
+    L_ij=(M_ij−Σ_(h<j)L_ih p_h overline(L_jh))/p_j.
+
+The following integers are strict lower bounds for 10⁶ times the successive exact rational pivots:
+
+    Z−D: 332399,282582,5553,16199,4216,2071,1765,1489;
+    Z+D: 332399,282582,167838,100819,22930,37115,2394,3241;
+    (3/8)I₂−Z_11: 42599,77307;
+    (3/8)I₂−Z_22: 128999,13590;
+    (3/8)I₂−Z_33: 13399,81352;
+    (3/8)I₂−Z_44: 47599,21945.
+
+Every listed bound is positive, so the recursion proves (1) using rational arithmetic. The matrices above, rather than rounded eigenvalues or a numerical optimizer, determine the certificate.
+
+### 75.4 Full-reference diamond bound and resource consequence
+
+For completeness, the coefficient norm from §72 can be used directly here. On any normalized pure input with arbitrary reference write
+
+    |ψ>=Σ_(f,i)|f,i>⊗r_(f,i),
+    T_f e_i=r_(f,i),  ρ=direct_sum_f(T_f*T_f).
+
+Then ρ is block diagonal, positive semidefinite and has trace one. After identifying the MC output isometrically with C⁴, the output difference is TDT*, where T=direct_sum_f T_f maps into direct_sum_f R. Polar decomposition, including singular blocks, gives
+
+    ||TDT*||₁=||√ρ D √ρ||₁.
+
+Since −Z≤D≤Z, the trace-norm dual bound gives
+
+    ||√ρ D √ρ||₁≤Tr(ρZ)
+      =Σ_f Tr(ρ_ff Z_ff)
+      ≤max_f λ_max(Z_ff)<3/8.                           (2)
+
+For example, the first inequality follows by writing the positive and negative spectral projections of √ρD√ρ and applying the two operator inequalities separately. The last strict inequality follows from all four strict 2×2 inequalities in (1), so its margin is uniform over all input states and all references. The standard pure-input characterization of the diamond norm for Hermiticity-preserving channel differences now proves the asserted bound. Isometric MC output embedding preserves this norm.
+
+If either local Kraus rank in this construction were smaller than its stated value two or three, their product would be at most four. Section 74 would then force error at least 1/2, contradicting (2). Thus the two local Kraus ranks are exactly two and three. Exchanging the parties exchanges their resource dimensions without changing G_A⊙G_B or the error.
+
+For any local CPTP map C⁸→C⁴, a pure Stinespring isometry C⁸→C⁴⊗C^a requires 8≤4a. Therefore each local Kraus rank is an integer at least two. If the product ab is smaller than six, it must be four, with a=b=2; §74 then rules out error below 1/2. The displayed ranks (2,3) attain error below 3/8, so the minimum product resource for beating 1/2 is exactly six. This argument uses the fixed full local input and output dimensions, not only their encoded subspaces.
+
+The lower bound for budget (2,2) comes directly from §74 applied to the original effective Choi matrix. No dimension-preserving use of the calibration theorem is made. The threshold conclusion therefore concerns actual original physical channels, even though the upper witness happens to be calibrated.
+
+### 75.5 Attribution and scope
+
+Cayley unitary parametrization, Stinespring dilations and positive-semidefinite trace-norm certificates are standard linear algebra and channel theory; see [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/) and [Watrous, Simpler semidefinite programs for completely bounded norms, §3.2](https://arxiv.org/abs/1207.5726). Sections 72 and 73 supply the block-Gram channel norm and the earlier symmetric qutrit-environment certificate; §74 supplies the unrestricted small-rank obstruction. The present finite asymmetric construction establishes that only one environment needs to grow to beat the sharp two-qubit-environment threshold. It does not determine the exact optimum at budget (2,3), establish error below 1/3 at that budget, or determine the unrestricted-environment one-product optimum.
