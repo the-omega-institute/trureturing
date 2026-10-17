@@ -460,3 +460,134 @@ trace/determinant conditions remain unpaid; a norm is not imposed as
 the necessary intermediate mechanism for any particular finite triple.
 The original Robin estimate and endpoint half-variance bound also
 remain unresolved.
+
+## CS8. A uniform arithmetic tail for growing Li tests
+
+The following parameter application controls the omitted part of the
+actual ordered CS18 row simultaneously for growing degrees. It uses
+the existing PNT supplier and the classical finite Laguerre series;
+it is not a new prime-distribution estimate or a priority claim.
+The finite signed head, the original joint inequalities and RH remain
+unresolved. No numerical execution or practical cutoff claim is made.
+
+For an integer $X\ge3$, let $Q_n(X)$ be the bracket in CS18 before
+taking its limit, with the same cutoff in both sums, and put $U=\log X$.
+The exact finite-endpoint identity behind CS20 gives
+
+$$
+Q_n-Q_n(X)=\int_U^\infty T(u)e^{-u}p_n(u)\,du
+ -e^{-U}L_{n-1}^{(1)}(U)T(U).
+\tag{CS23}
+$$
+
+In particular the upper boundary term is retained. The
+[Johnston--Yang estimate](../Weil/johnstonyang2022pnt.md),
+Theorem 1.1, and the Rosser--Schoenfeld complete higher-power bound
+already used in CS5 give, for $u\ge\log2$,
+
+$$
+\begin{gathered}
+|T(u)|\le e^u\varepsilon(u),\\
+\varepsilon(u)=9.39u^M e^{-d\sqrt u}
+ +\kappa e^{-u/2}+2e^{-u},\qquad
+M=1.515,\quad d=0.8274,\quad\kappa=1.42620.
+\end{gathered}
+$$
+
+Indeed $T=(\psi(e^u)-e^u)-A(u)+\{e^u\}+1$. This uses the
+all-prime-power PNT statement and the full $A$, with no global RH
+premise or discarded prime powers.
+
+Coffey's equation (64), with $(\nu,n)=(1,n)$ and $(2,n+1)$,
+is the classical terminating-series identity
+
+$$
+L_{n-1}^{(\alpha)}(u)
+=\sum_{k=0}^{n-1}(-1)^k
+ \binom{n-1+\alpha}{n-1-k}\frac{u^k}{k!},
+\qquad \alpha\in\{1,2\}.
+$$
+
+For $u\ge1$ and $1\le n\le N$, each $u^k/k!$ is at most
+$u^{N-1}$ and the binomial coefficient sum is at most $2^{N+1}$.
+Applying this bound to both terms of CS23 gives the explicit allowance
+
+$$
+\boxed{
+\sup_{1\le n\le N}|Q_n-Q_n(X)|\le\mathcal E_N(U)
+:=2^{N+1}\left[
+U^{N-1}\varepsilon(U)
++\int_U^\infty u^{N-1}\varepsilon(u)\,du\right],
+\quad U\ge1.
+}
+\tag{CS24}
+$$
+
+All terms on the right refer to one common cutoff. This controls both
+signs of the omitted ordered tail, rather than assigning separate
+values to its divergent prime and integer sums.
+
+One deterministic analytical cutoff is
+$X_N=\lceil\exp(N^4)\rceil$. There are constants $C_*>0$ and an
+integer $N_0$ such that, for every $N\ge N_0$ and every integer $X$
+with $\log X\ge N^4$,
+
+$$
+\mathcal E_N(\log X)\le C_*e^{-\delta N^2},
+\qquad \delta=d/4>0.
+\tag{CS25}
+$$
+
+Here the constants are independent of $n,N,X$. To verify the uniform
+quantifier, completing squares gives, for $u\ge1$,
+
+$$
+\varepsilon(u)\le C_\varepsilon u^M e^{-d\sqrt u},
+\qquad C_\varepsilon=9.39+\kappa e^{d^2/2}+2e^{d^2/4}.
+$$
+
+Since $\log u/\sqrt u$ decreases on $[e^2,\infty)$, for all
+sufficiently large $N$ and every $u\ge N^4$,
+
+$$
+\frac{(N+1)\log2+(N-1+M)\log u}{\sqrt u}
+\le\frac{(N+1)\log2+4(N-1+M)\log N}{N^2}
+\le d/2.
+$$
+
+Thus the integrand and endpoint in CS24 are bounded by
+$C_\varepsilon e^{-d\sqrt u/2}$, giving
+
+$$
+\mathcal E_N(U)\le
+C_\varepsilon\left(1+\frac{4\sqrt U}{d}+\frac8{d^2}\right)
+e^{-d\sqrt U/2}.
+$$
+
+Absorbing this polynomial factor into $e^{d\sqrt U/4}$ proves CS25.
+The threshold is an analytical existence statement; no scan, numerical
+optimization or efficient computation is asserted.
+
+For the actual adjacent Fibonacci triple $a,b,c$, set $N=c$ and use
+the common integer $X_c$. Define
+$\lambda_n^{(X)}=h_n^*-Q_n(X)$ for $n\in\{a,b,c\}$, retaining
+the actual full $h^*=H+U-B$. Let $K_j^{(X)}$ be CS8 with these
+three values substituted. With $\epsilon_c=C_*e^{-\delta c^2}$,
+the diagonal errors are at most $2\epsilon_c$ and the off-diagonal
+error at most $3\epsilon_c$. The maximum absolute row sum therefore
+gives the whole real symmetric matrix allowance
+
+$$
+\boxed{\|K_j-K_j^{(X_c)}\|_{\mathrm{op}}\le5\epsilon_c}
+\quad\text{for every sufficiently large }j.
+\tag{CS26}
+$$
+
+Every mixed contribution and the unit endpoint remain in the original
+exact split. This upgrades fixed-degree convergence to a simultaneous
+bound for this growing family. It supplies no eventual sign for the
+finite-head matrices $K_j^{(X_c)}$; that common-source signed comparison
+is still required. Finite truncation with a small omitted-tail allowance
+is not a verification over all Fibonacci indices, a Robin estimate,
+the endpoint half-variance bound, or a proof of RH. This application
+has no new Lean certification.
