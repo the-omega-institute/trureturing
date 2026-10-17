@@ -10,6 +10,9 @@ import D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration
 import Mathlib.Order.PiLex
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.ZMod.Basic
+import Mathlib.Dynamics.PeriodicPts.Lemmas
+import Mathlib.NumberTheory.Divisors
+import Mathlib.SetTheory.Cardinal.Finite
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -811,5 +814,47 @@ theorem relativeForwardGyration_eq_order_types {n m d : ℕ} [NeZero d]
       apply Finset.sum_congr rfl
       intro w _
       exact numbered_word_sum_eq_order_types w z
+
+/-- A positive fixed-period set is the disjoint union of its genuine
+minimal-period strata. Only that fixed-period set must be finite; the whole
+dynamical space may be infinite. Empty strata are allowed. -/
+theorem periodic_card_eq_sum_minimalPeriod {α : Type*} (f : α → α)
+    (n : ℕ) (hn : 0 < n)
+    [Finite {x : α // Function.IsPeriodicPt f n x}] :
+    Nat.card {x : α // Function.IsPeriodicPt f n x} =
+      ∑ d ∈ n.divisors, Nat.card {x : α // Function.minimalPeriod f x = d} := by
+  classical
+  let periodicStrataEquiv : {x : α // Function.IsPeriodicPt f n x} ≃
+      Σ d : {d : ℕ // d ∈ n.divisors},
+        {x : α // Function.minimalPeriod f x = d.val} := {
+    toFun := fun x => ⟨⟨Function.minimalPeriod f x.val,
+      Nat.mem_divisors.mpr ⟨x.property.minimalPeriod_dvd, hn.ne'⟩⟩,
+      ⟨x.val, rfl⟩⟩
+    invFun := fun y => ⟨y.2.val, by
+      rw [Function.isPeriodicPt_iff_minimalPeriod_dvd, y.2.property]
+      exact Nat.dvd_of_mem_divisors y.1.property⟩
+    left_inv := fun _ => rfl
+    right_inv := by
+      rintro ⟨⟨d, hd⟩, x, hx⟩
+      dsimp only at hx
+      subst d
+      rfl }
+  haveI (d : {d : ℕ // d ∈ n.divisors}) :
+      Finite {x : α // Function.minimalPeriod f x = d.val} := by
+    let inclusion : {x : α // Function.minimalPeriod f x = d.val} →
+        {x : α // Function.IsPeriodicPt f n x} := fun x => ⟨x.val, by
+      rw [Function.isPeriodicPt_iff_minimalPeriod_dvd, x.property]
+      exact Nat.dvd_of_mem_divisors d.property⟩
+    exact Finite.of_injective inclusion (fun x y h =>
+      Subtype.ext (congrArg
+        (fun z : {x : α // Function.IsPeriodicPt f n x} => z.val) h))
+  calc
+    _ = Nat.card (Σ d : {d : ℕ // d ∈ n.divisors},
+        {x : α // Function.minimalPeriod f x = d.val}) :=
+      Nat.card_congr periodicStrataEquiv
+    _ = ∑ d : {d : ℕ // d ∈ n.divisors},
+        Nat.card {x : α // Function.minimalPeriod f x = d.val} := Nat.card_sigma
+    _ = _ := Finset.sum_coe_sort n.divisors
+      (fun d => Nat.card {x : α // Function.minimalPeriod f x = d})
 
 end D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration

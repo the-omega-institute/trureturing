@@ -44,9 +44,24 @@ RelativeForwardGyration sums these offsets over the actual source quotient, thro
 
 This uses the classical finite-orbit transversal and necklace/least-rotation method. It supplies one dependency for the original SGCC objective. Full SGCC, image exhaustion, the localized triangle and the full beam/word comparison are not established here.
 
+**Theorem 1.4 (Partition a fixed-period set by its minimal periods).**
+
+$$\forall A: \operatorname{Type}*, f: A \to A, n: \mathbb{N},\ 0 < n \Rightarrow \operatorname{Finite}(\{x: A \mid \operatorname{IsPeriodicPt}(f,n,x)\}) \Rightarrow\ \operatorname{Nat.card}(\{x: A \mid \operatorname{IsPeriodicPt}(f,n,x)\}) = \sum_{d \in \operatorname{divisors}(n)} \operatorname{Nat.card}(\{x: A \mid \operatorname{minimalPeriod}(f,x) = d\})$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.periodic_card_eq_sum_minimalPeriod` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For an arbitrary self-map f and a positive natural number n, a point is fixed by the nth iterate exactly when its minimal period divides n. Sending a periodic point to its minimal period and to itself gives a bijection with the disjoint union of the minimal-period strata indexed by the divisors of n.
+
+Assume only that the set fixed by the nth iterate is finite. Every divisor stratum injects into that set, so each stratum is finite. Cardinality of the disjoint union is therefore the sum of the stratum cardinalities. The ambient type may be infinite or empty, the strata may be empty, and f need not be invertible. Positivity of n ensures that its divisor set contains every occurring minimal period.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.numberedWordEquiv`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.orbitBasisEquiv`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.periodic_card_eq_sum_minimalPeriod`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.relativeForwardGyration_eq_order_types`
 - Dependency: [D5/S3/ConceptDynamics/Coding/CountedOrderTypeGyration](CountedOrderTypeGyration.md)
