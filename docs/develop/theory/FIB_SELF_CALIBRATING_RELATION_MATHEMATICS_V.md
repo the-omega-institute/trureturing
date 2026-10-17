@@ -2202,3 +2202,777 @@ The mathematical dependencies are precisely the positive normalization (1.2), th
 For the literature correspondence, the scaling orbit in Li–Lee–Bresler, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), explains why positive trace normalization removes source/gain scale while leaving drift in the target. It supplies no prescribed-word reading threshold here. Whole-set discrimination in van den Bos–Vaandrager, [Theorem 6.1](https://arxiv.org/html/1907.11034v2), has finite suspension-automaton and injective-split hypotheses; those hypotheses are not transferred to this continuous class. Likewise the generic-linear-map quantifier in Breiding–Gesmundo–Michałek–Vannieuwenhoven, *Algebraic compressed sensing*, [Answer 9](https://arxiv.org/html/2108.13208v2), does not apply to the fixed $M/J$ words and their gain-weighted original-clock observations. Vieta exchange, interpolation, trace normalization, interval inclusion and the failure recursion are the reused methods. The concrete companion, its common-history six-world consumer, and this entire-known-class inverse with its joint exclusions are repo-derived calculations; no external priority assertion is made. The unrestricted root question remains the one stated in Open Problem 8.2. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 20. JMJ 实际第四子历史的全部二目标分类
+
+**定义 20.1（不受限 JMJ 父纤维与源坐标）。** Retain the complete-target domain $\mathcal W_3$, original clocks and immediate atomic readings of Definition 1.1. With the same $H_2$ as in Definition 16.1, put
+
+$$
+\begin{gathered}
+H_z=(H_2,J,z)=(0,J,24,M,48,J,z),\qquad
+\mathcal G_z=\mathcal F(H_z),\qquad z\in\mathbb R,\\
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+N=JL=\begin{pmatrix}1&1\\1&0\end{pmatrix}.
+\end{gathered}                                                     \tag{20.1}
+$$
+
+Here $H_z$ ends at original clock three. Write the normalized source and its three trace coordinates as
+
+$$
+P=\begin{pmatrix}r&b\\c&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad c=\frac{r(1-r)}b>0,\qquad
+j=b+c,\quad \ell=1+b,\quad T=r+j.                              \tag{20.2}
+$$
+
+These coordinates cover every strictly positive rank-one trace-one source, without symmetry. Given $(r,b,d)$ with these strict inequalities and arbitrary $d\in\mathbb R$, let $g$ be the unique polynomial of degree at most three with
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-d,\frac{24-d}j,\frac{48-d}\ell,\frac{z-d}T\right).
+                                                                  \tag{20.3}
+$$
+
+This is a bijective parametrization of $\mathcal G_z$: its source and drift recover $(r,b,d)$, and interpolation gives exactly the four original readings. The polynomial is nonzero because those readings are not all equal. Thus arbitrary signs, lower degrees, sampled zeros, repeated roots and drifts remain in this chart.
+
+The following table records actual cumulative matrices and traces; each fifth row is conditional on its indicated fourth action:
+
+$$
+\begin{array}{c|c|c}
+\text{clock and actions}&A_i&\operatorname{tr}(A_iP)\\ \hline
+0&I&1\\
+1:J&J&j\\
+2:JM&L&\ell\\
+3:JMJ&N&T\\
+4:JMJJ&L&\ell\\
+4:JMJM&L^2=2L-I&2\ell-1\\
+5:JMJJJ&N&T\\
+5:JMJJM&ML=J+L&j+\ell\\
+5:JMJMJ&JL^2&2T-j\\
+5:JMJMM&ML^2&T+2\ell-1.
+\end{array}                                                       \tag{20.4}
+$$
+
+These are alternative response functions of one fixed complete target. Only the chosen action and its immediate reading are acquired.
+
+**定理 20.2（第四 J 的唯一无序失败对与第四 M 的全域二目标排除）。** Set
+
+$$
+\mathcal I_{JMJ}=\left(\frac{144}5,\frac{216}5\right),\qquad
+\psi(t)=t(t-6)(t-7).
+                                                                  \tag{20.5}
+$$
+
+For every $z\in\mathcal I_{JMJ}$ define
+
+$$
+\begin{gathered}
+a=\frac z{36}-\frac45,\qquad
+q_a(B)=B^2-\left(a+\frac45\right)B+\frac65a-a^2,\\
+\Delta_a=5a^2-\frac{16}5a+\frac{16}{25},\qquad
+B_\pm=\frac{a+4/5\ \pm\sqrt{\Delta_a}}2,\\
+R_B=\begin{pmatrix}a&B\\4/5-B&6/5-a-B\end{pmatrix},\qquad
+s_B=\operatorname{tr}R_B=\frac65-B,\\
+W_B=\left(\frac{R_B}{s_B},s_B\psi,0\right),\qquad
+\mathcal B_z=\{W_{B_-},W_{B_+}\}.
+\end{gathered}                                                     \tag{20.6}
+$$
+
+The notation $\mathcal B_z$ concerns JMJ; it is separate from the JMMJ family $\mathcal A_y$ of Definition 11.2. For all real $z,v$ and every pair $K$ of distinct complete targets in $\mathcal F((H_z,J,v))$,
+
+$$
+L_3(K,(H_z,J,v))
+\quad\Longleftrightarrow\quad
+z\in\mathcal I_{JMJ},\quad v=\frac{144}5,\quad K=\mathcal B_z.
+                                                                  \tag{20.7}
+$$
+
+For all real $z,v$, no pair of distinct targets in $\mathcal F((H_z,M,v))$ has $L_3$. Both statements begin with the unrestricted chart (20.2)–(20.3); the zero drift and cubic ray in (20.6) are forced conclusions. The theorem classifies two-target sets only.
+
+Proof. We first obtain consequences shared by both fourth actions. For two targets, the recursion (1.1) says that $L_s$ holds exactly when their readings agree on every continuation prefix of length at most $s$: at each level a child with two targets must retain the same pair. This follows by induction on $s$, and includes every early stop. Inclusion monotonicity is already Lemma 9.3; it is not a principle extracting a losing pair from a larger family.
+
+Use the terminal reconstruction inside Theorem 7.1, with the terminal clock specified here. If $Q$ is an invertible nonnegative cumulative matrix with no zero row, then $QP$ is strictly positive rank one. For
+
+$$
+X=g(n)QP=\begin{pmatrix}\alpha&\beta\\\gamma&\epsilon\end{pmatrix},
+$$
+
+the four terminal response functions for chronological two-action suffixes $MM,MJ,JM,JJ$ at clock $n$ are
+
+$$
+\begin{aligned}
+\alpha+\beta+\gamma+2\epsilon+d,&\qquad
+\alpha+\gamma+\epsilon+d,\\
+\alpha+\beta+\epsilon+d,&\qquad
+\alpha+\epsilon+d.
+\end{aligned}                                                     \tag{20.8}
+$$
+
+Their differences recover $\beta,\gamma,\epsilon$. If $\epsilon\ne0$, rank one gives $\alpha=\beta\gamma/\epsilon$ and then $d$. If $\epsilon=0$, positivity of $(QP)_{22}$ forces $g(n)=0$, so $X=0$ and the common terminal value is $d$. Thus the four functions determine $X,d$, including negative and zero gains. For a common nonzero $X$, the trace of $Q^{-1}X=g(n)P$ recovers $g(n)$, then $P$. Shared readings at clocks $0,1,2,3$ and their positive trace factors then recover the same entire $g$ by (20.3).
+
+Suppose a distinct pair has $L_3$ after its fourth action, whose matrix is $A_4=L$ or $L^2$. Equality of all four clock-six readings applies (20.8) with $Q=A_4,n=6$. A nonzero reconstructed $X$ would make the complete targets equal, so both sixth gains are zero and the drifts agree. Fixing fifth $J$ and applying (20.8) to the four clock-seven readings, with $Q=JA_4,n=7$, likewise forces both seventh gains to vanish. Consequently, for one common real $d$,
+
+$$
+\begin{gathered}
+g_i(t)=(t-6)(t-7)\left(\beta_i t-\frac d{42}\right),\\
+\begin{array}{c|ccccc}
+t&1&2&3&4&5\\ \hline
+g_i(t)&30\beta_i-5d/7&40\beta_i-10d/21&
+36\beta_i-2d/7&24\beta_i-d/7&10\beta_i-d/21.
+\end{array}
+\end{gathered}                                                     \tag{20.9}
+$$
+
+No leading coefficient was presumed nonzero. This normal form includes quadratic gains and repeated sixth or seventh roots before further constraints are imposed.
+
+The two $\beta_i$ must differ. Otherwise the common nonzero gain cannot vanish at both $2,4$, since it already vanishes at $6,7$. A nonzero sample at $2$ fixes $\ell$ through the shared ancestor; a nonzero sample at $4$ fixes it through either actual fourth trace in (20.4). If $g(5)\ne0$, the two common fifth responses in that table then fix $T,j$. If $g(5)=0$, the three roots $5,6,7$ force the samples at $1,2,3$ to be nonzero, so the ancestors already fix $j,\ell,T$. In either case (20.2) gives the same source and hence the same complete target, a contradiction. Thus $\beta_1\ne\beta_2$. Moreover
+
+$$
+d\notin\{24,48,z\},\qquad g_i(1)g_i(2)g_i(3)\ne0.             \tag{20.10}
+$$
+
+Indeed equality of $d$ with one of these readings would, by its positive trace, force both gains to vanish at that early clock. Its affine expression in (20.9) would force $\beta_1=\beta_2$.
+
+For fourth $J$, the equal clock-two and clock-four responses imply
+
+$$
+0=g_1(2)g_2(4)-g_2(2)g_1(4)
+  =\frac{40d}7(\beta_1-\beta_2).
+                                                                  \tag{20.11}
+$$
+
+This cancellation uses only $\ell_i>0$, without division by either gain sample. Hence $d=0$. The clock-one reading then gives $\beta_i>0$. Put $R_i=\beta_iP_i$. The same original ancestor readings give
+
+$$
+\operatorname{tr}(JR_i)=\frac45,\qquad
+\operatorname{tr}(LR_i)=\frac65,\qquad
+\operatorname{tr}(NR_i)=\frac z{36}.
+                                                                  \tag{20.12}
+$$
+
+Solving these linear equations yields exactly $R_B$ in (20.6), with $a=z/36-4/5$. Its determinant is $q_a(B)$. Distinct complete targets require distinct roots. Strict positivity gives $a>0$ and both roots in $(0,4/5)$, so
+
+$$
+q_a(4/5)=a(2/5-a)>0,
+$$
+
+which forces $0<a<2/5$, equivalently $z\in\mathcal I_{JMJ}$.
+
+Conversely, for $0<a<2/5$ the discriminant satisfies
+
+$$
+\Delta_a=5\left(a-\frac8{25}\right)^2+\frac{16}{125}>0.
+                                                                  \tag{20.13}
+$$
+
+Both endpoint values $q_a(0)=a(6/5-a)$ and $q_a(4/5)=a(2/5-a)$ are positive. The vertex $(a+4/5)/2$ lies in $(0,4/5)$ and has negative value $-\Delta_a/4$. Thus exactly two distinct roots lie inside that interval. Also $6/5-a-B>0$ there. Every entry of $R_B$ is strictly positive, its determinant is zero, and $s_B>0$, proving legality of both worlds. At $a=0$ the first diagonal entry is zero; at $a=2/5$ a root lies at $B=4/5$ and has zero entries. These endpoints do not yield a distinct strictly positive pair.
+
+For each of these same worlds the complete response table is
+
+$$
+\begin{array}{c|c}
+\text{actual prefix or next action}&\text{readings or response}\\ \hline
+JMJJ&(0,24,48,z,144/5)\\
+\text{fifth }J&5z/18\\
+\text{fifth }M&20\\
+\text{clock }6\text{ after either fifth action}&0\\
+\text{clock }7\text{ after any fifth/sixth actions}&0.
+\end{array}                                                       \tag{20.14}
+$$
+
+Here $\psi(0),\ldots,\psi(7)=(0,30,40,36,24,10,0,0)$; the fifth traces against $R_B$ are $a+4/5$ and $2$. In particular the actual fifth-$M$ matrix after fourth $J$ is $ML=J+L$, as in (20.4). These equalities prove $L_3$ at the stated fourth-$J$ child, and force its response $144/5$. The two roots exhaust every possible distinct pair, proving both directions of (20.7).
+
+It remains to exclude fourth $M$. Suppose it had a distinct $L_3$ pair. Use (20.9)–(20.10) and put
+
+$$
+\begin{gathered}
+x_i=g_i(2),\quad D=48-d,\quad C_1=24-d,\quad C_3=z-d,\quad
+\pi=x_1x_2,\\
+g_i(1)=\frac34x_i-\frac{5d}{14},\quad
+g_i(3)=\frac9{10}x_i+\frac d7,\quad
+g_i(4)=\frac35x_i+\frac d7,\quad
+g_i(5)=\frac14x_i+\frac d{14}.
+\end{gathered}                                                     \tag{20.15}
+$$
+
+Then $x_1\ne x_2$, $\ell_i=D/x_i>0$ and $\pi>0$. The case $D=0$ would force $x_1=x_2=0$ and has already been excluded. Equality of the actual fourth-$M$ reading gives
+
+$$
+\begin{aligned}
+0&=\frac1{x_1-x_2}\left[
+\left(\frac35x_1+\frac d7\right)\left(\frac{2D}{x_1}-1\right)
+-\left(\frac35x_2+\frac d7\right)\left(\frac{2D}{x_2}-1\right)
+\right]\\
+&=-\frac35-\frac{2dD}{7\pi},\qquad
+\pi=-\frac{10dD}{21}>0.
+\end{aligned}                                                     \tag{20.16}
+$$
+
+Hence $d<0$ or $d>48$, so $dC_1<0$. On the other hand, $j_i=C_1/g_i(1)>0$ forces
+
+$$
+T_1=g_1(1)g_2(1)>0,\qquad T_3=g_1(3)g_2(3)\ne0.
+$$
+
+For affine numerator and denominator, the divided difference of $(px+q)/(ux+v)$ is $(pv-uq)/[(ux_1+v)(ux_2+v)]$. Applying it to (20.15), the divided differences of $g(5)/g(3)$, $g(5)/g(1)$ and $g(5)/x$ are respectively
+
+$$
+-\frac d{35T_3},\qquad -\frac d{7T_1},\qquad -\frac d{14\pi}.
+                                                                  \tag{20.17}
+$$
+
+The two fifth trace factors after fourth $M$ are $T_i+2\ell_i-1$ and $2T_i-j_i$, where $T_i=C_3/g_i(3)$. Equality of fifth $M$, then of fifth $J$, gives respectively
+
+$$
+\begin{aligned}
+0&=-\frac{dC_3}{35T_3}-\frac{dD}{7\pi}-\frac14,\\
+0&=-\frac{2dC_3}{35T_3}+\frac{dC_1}{7T_1}.
+\end{aligned}                                                     \tag{20.18}
+$$
+
+Substituting (20.16) in the first yields $dC_3/(35T_3)=1/20$. The second then yields $T_1=10dC_1/7<0$, contradicting $T_1>0$. Every divided denominator was proved nonzero in (20.10), (20.15)–(20.16). Neither $g(4)$ nor $g(5)$, a discriminant, a leading gain coefficient or an unproved minor was divided out. This proves the unrestricted fourth-$M$ pair exclusion. ∎
+
+**例 20.3（同一有理对的全部实际后继）。** At $z_0=936/25$, (20.6) has $a=6/25$ and roots $B=8/25,18/25$. The two complete worlds are
+
+$$
+\begin{aligned}
+W_1&=\left(\frac1{11}\begin{pmatrix}3&4\\6&8\end{pmatrix},
+\frac{22}{25}\psi,0\right),\\
+W_2&=\left(\frac16\begin{pmatrix}3&9\\1&3\end{pmatrix},
+\frac{12}{25}\psi,0\right).
+\end{aligned}                                                     \tag{20.19}
+$$
+
+Their positive unnormalized sources are $\frac1{25}(\begin{smallmatrix}6&8\\12&16\end{smallmatrix})$ and $\frac1{25}(\begin{smallmatrix}6&18\\2&6\end{smallmatrix})$, both of determinant zero. Both actual JMJJM reading arrays are
+
+$$
+(0,24,48,936/25,144/5,20).
+                                                                  \tag{20.20}
+$$
+
+Fifth $J$ instead reads $52/5$ on both. Every sixth and seventh response is zero under every intervening choice, verifying all eight length-three suffixes of this same pair after fourth $J$. Their alternative fourth-$M$ responses are $912/25,1152/25$, respectively, since in general that response is $144/5+24B$. Thus this pair has $L_3$ after fourth $J$ and is separated by fourth $M$ at $H_{z_0}$; it is not an $L_4$ family at that parent.
+
+## 21. 任意基数族的第四动作条件与完整联合第四图
+
+**定理 21.1（同父条件等价、支持下界与三目标必要性）。** For every $z\in\mathcal I_{JMJ}$ and every family
+
+$$
+\mathcal B_z\subseteq K\subseteq\mathcal G_z
+$$
+
+of arbitrary cardinality,
+
+$$
+\begin{aligned}
+L_4(K,H_z)\quad\Longleftrightarrow\quad
+\exists v\in\mathbb R:\quad
+L_3\bigl(K\cap\mathcal F((H_z,M,v)),(H_z,M,v)\bigr).
+\end{aligned}                                                     \tag{21.1}
+$$
+
+In particular this is an equivalence for the whole unrestricted $\mathcal G_z$. Every fourth-$M$ $L_3$ child, for any real $z$, contains at least three distinct targets. An $L_4$ family containing $\mathcal B_z$ has at least four distinct targets. For any real $z$ and any $K\subseteq\mathcal G_z$ with $|K|\le3$,
+
+$$
+L_4(K,H_z)\ \Longrightarrow\
+|K|=3\text{ and both fourth response functions are constant on }K.
+                                                                  \tag{21.2}
+$$
+
+Any deterministic decoder succeeding on the whole $\mathcal G_z$ by clock seven, for $z\in\mathcal I_{JMJ}$, must choose fourth $M$ at this reached history.
+
+Proof. The forward implication in (21.1) is the fourth-$M$ clause of (1.1). The fourth-$J$ response-$144/5$ child contains the same fixed $\mathcal B_z$ with $L_3$, by Theorem 20.2. Lemma 9.3 therefore supplies the fourth-$J$ clause for $K$, so the displayed fourth-$M$ clause also suffices. Equivalently, any fixed $\mathcal D\subseteq\mathcal F((H_z,M,v))$ with $L_3$ can be joined to $\mathcal B_z$ at this same $z$ to give $L_4$; this does not assert the existence of such a $\mathcal D$.
+
+A losing fourth-$M$ child cannot be a singleton by (1.1), or a pair by Theorem 20.2. Its cardinality is therefore at least three. The two members of $\mathcal B_z$ have different fourth-$M$ predictions $144/5+24B_\pm$. Such a child contains at most one of them, and its union with $\mathcal B_z$ contains at least four distinct targets. This proves the support lower bound, including for infinite $K$.
+
+If $|K|\le3$ and $L_4$ holds, its losing fourth-$M$ child must be all three targets, so that response is constant. A losing fourth-$J$ child of size two would have to be $\mathcal B_z$ by Theorem 20.2, contradicting constancy of fourth $M$. Therefore its fourth-$J$ losing child also contains all three, proving (21.2). This argument makes no assertion that an arbitrary larger losing family has a losing pair.
+
+Finally a decoder cannot stop on a parent containing the two distinct worlds $\mathcal B_z$, and choosing fourth $J$ leaves their $L_3$ response child with only three reads left. Thus any successful whole-parent decoder must choose fourth $M$. Existence of that decoder is not proved by this necessary action. ∎
+
+**定理 21.2（所有联合第四响应的充要图，包括相等响应）。** Fix arbitrary real $z,U,V$, denoting common fourth-$J$ and fourth-$M$ predictions by $U,V$. Put $C=2U-V$. All worlds in $\mathcal G_z$ with these two predictions are exactly the following filtered interpolants (20.3).
+
+If $U\ne V$, choose $0<r<1$ and $d\in\mathbb R$ with
+
+$$
+C-d\ne0,\qquad b=\frac{V-U}{C-d}>0,
+\qquad c=\frac{r(1-r)}b,\quad j=b+c,\quad \ell=1+b,\quad T=r+j,
+                                                                  \tag{21.3}
+$$
+
+and impose the single remaining equation
+
+$$
+C-2d=\frac{4(24-d)}j-\frac{6(48-d)}\ell+\frac{4(z-d)}T.
+                                                                  \tag{21.4}
+$$
+
+If $U=V$, set $d=U$, choose any $0<r<1,b>0$, define $c,j,\ell,T$ as above, and impose
+
+$$
+0=U+\frac{4(24-U)}j-\frac{6(48-U)}\ell+\frac{4(z-U)}T.
+                                                                  \tag{21.5}
+$$
+
+The equal-response stratum has exactly $g(4)=0,d=U=V$. In the unequal-response stratum $g(4)=C-d$ has the sign of $V-U$; hence all its drifts satisfy $d<C$ for $V>U$, and $d>C$ for $V<U$.
+
+Proof. For every one of the same worlds, the actual fourth matrices in (20.4) give
+
+$$
+\begin{gathered}
+U=d+\ell g(4),\qquad V=d+(2\ell-1)g(4),\\
+C=d+g(4),\qquad V-U=b\,g(4),\\
+g(4)=d+\frac{4(24-d)}j-\frac{6(48-d)}\ell+\frac{4(z-d)}T.
+\end{gathered}                                                     \tag{21.6}
+$$
+
+The last identity is interpolation of the same polynomial (20.3), using the coefficient row $(-1,4,-6,4)$ at clock four. If $U\ne V$, $b>0$ forces $g(4)\ne0$, so (21.3) and (21.4) follow. Conversely these conditions give $g(4)=C-d$ and $b g(4)=V-U$. Substitution in the first line of (21.6) recovers exactly $U,V$. If $U=V$, positivity of $b$ forces $g(4)=0$ and $d=U$; the last line is exactly (21.5), and its converse is immediate by the same substitution. All source traces divided by here are positive. The interpolant is nonzero and reproduces all ancestors by Definition 20.1. Thus this is the complete joint fiber, including its zero-fourth-gain stratum. Membership in it supplies neither $L_4$ nor existence of a three-target losing family. ∎
+
+The affine bijection of Lemma 9.2 transports (20.7), (21.1)–(21.6), and all actual responses for either sign of its nonzero scale. In particular at $(a_0,J,b_0,M,2b_0-a_0,J,c_0)$ with $b_0\ne a_0$, the normalized window is
+
+$$
+\frac65<\frac{c_0-a_0}{b_0-a_0}<\frac95.
+                                                                  \tag{21.7}
+$$
+
+The fourth-$J$ witness response is $a_0+(144/5)(b_0-a_0)/24$. The case $b_0=a_0$ is outside this bijection. Transport preserves a reached history and its entire compatible fiber; it does not force a root policy to reach that history.
+
+## 22. 指定 JMJJJJJ 八读的整个兼容世界集
+
+**定理 22.1（含全部零层的充要生成式）。** Fix any real data
+
+$$
+\mathbf z=(0,24,48,z,u,w,x,y)
+                                                                  \tag{22.1}
+$$
+
+at original clocks $0,\ldots,7$ for the prescribed seven-action word $JMJJJJJ$. Its cumulative matrices are
+
+$$
+(I,J,L,N,L,N,L,N).
+                                                                  \tag{22.2}
+$$
+
+No action or reading is omitted. Define data quantities
+
+$$
+D_E=48+2u-3x,\qquad D_O=3z-2w-y,\qquad C_*=48+6u+x.
+                                                                  \tag{22.3}
+$$
+
+The following construction gives exactly all compatible complete worlds. All displayed equalities and strict filters apply; a branch whose conditions fail contributes no world. Identical output triples are counted once. This is a solution-set parametrization and permits multiple compatible worlds.
+
+First select the possible positive trace ratio $\rho=T/\ell$:
+
+$$
+\mathscr P(\mathbf z)=
+\begin{cases}
+\{D_O/D_E\}\cap(0,\infty),&D_E\ne0,\\
+\varnothing,&D_E=0,\ D_O\ne0,\\
+(0,\infty),&D_E=D_O=0.
+\end{cases}                                                       \tag{22.4}
+$$
+
+For every selected $\rho$, use its appropriate branch below.
+
+For $\rho=1$, let $Y\in\mathbb R[t]$, $\deg Y\le3$, interpolate
+
+$$
+(Y(2),Y(3),Y(4),Y(5))=(48,z,u,w).
+$$
+
+Require $Y(6)=x$, $Y(7)=y$, and set
+
+$$
+\ell=\frac{Y(1)-Y(0)}{24},\qquad 1<\ell<2.
+                                                                  \tag{22.5}
+$$
+
+When these filters hold, this stratum contributes its one world
+
+$$
+P=\begin{pmatrix}\ell-1&\ell-1\\2-\ell&2-\ell\end{pmatrix},
+\qquad d=\frac{Y(0)}{1-\ell},\qquad g=\frac{Y-d}{\ell}.
+                                                                  \tag{22.6}
+$$
+
+For $\rho\ne1$, define the drift and interpolant
+
+$$
+\begin{gathered}
+d=\frac{\rho C_*-4(z+w)}{8(\rho-1)},\\
+(h(2),h(3),h(4),h(5))=
+\left(48-d,\frac{z-d}\rho,u-d,\frac{w-d}\rho\right),
+\qquad \deg h\le3,\\
+h_0=h(0)=480+15u-25d-\frac{20z+4w-24d}\rho,\\
+h_1=h(1)=192+4u-8d-\frac{6z+w-7d}\rho.
+\end{gathered}                                                     \tag{22.7}
+$$
+
+There are exactly three reconstruction cases.
+
+1. If $d\ne0$ and $h_1\ne0$, set
+
+$$
+\ell=-\frac{h_0}d,\quad j=\frac{\ell(24-d)}{h_1},\quad
+r=\rho\ell-j,\quad b=\ell-1,\quad c=j-b.
+                                                                  \tag{22.8}
+$$
+
+Require
+
+$$
+\ell>1,\quad j>0,\quad 0<r<1,\quad c>0,\quad
+(\ell-1)c=r(1-r).
+                                                                  \tag{22.9}
+$$
+
+Exactly when these filters hold, output the single world
+
+$$
+\left(\begin{pmatrix}r&\ell-1\\c&1-r\end{pmatrix},\frac h\ell,d\right).
+                                                                  \tag{22.10}
+$$
+
+In particular $d=24,h_1\ne0$ fails $j>0$ and contributes no world.
+
+2. If $d=0$, require $h_0=0$ and $h_1>0$. Set
+
+$$
+k=\frac{24}{h_1}>0,\qquad \gamma=\rho-k,
+$$
+
+and take every real root of
+
+$$
+(\gamma^2+k-1)\ell^2+(2-\rho)\ell-1=0.
+                                                                  \tag{22.11}
+$$
+
+Keep exactly those roots satisfying
+
+$$
+\ell>1,\qquad 0<\gamma\ell<1,\qquad 1+(k-1)\ell>0.
+                                                                  \tag{22.12}
+$$
+
+Each retained root gives
+
+$$
+P=\begin{pmatrix}
+\gamma\ell&\ell-1\\1+(k-1)\ell&1-\gamma\ell
+\end{pmatrix},\qquad g=h/\ell,\qquad d=0.
+                                                                  \tag{22.13}
+$$
+
+3. If $d\ne0$ and $h_1=0$, require $d=24$ and
+
+$$
+\ell=-h_0/24>1.
+$$
+
+Take every real root $r$ of
+
+$$
+r^2-\ell r+(\ell-1)(\rho\ell-\ell+1)=0,
+                                                                  \tag{22.14}
+$$
+
+keeping exactly those with
+
+$$
+0<r<1,\qquad c=\rho\ell-r-\ell+1>0.
+                                                                  \tag{22.15}
+$$
+
+Each gives $P=(\begin{smallmatrix}r&\ell-1\\c&1-r\end{smallmatrix})$, $g=h/\ell$, $d=24$.
+
+The inverse equations retain their full degree and root strata. For (22.11), write $A_2=\gamma^2+k-1$ and $A_1=2-\rho$. If $A_2\ne0$, use discriminant $A_1^2+4A_2$: negative gives no real roots, zero gives one repeated root, and positive gives two distinct real roots, each still subject to (22.12). If $A_2=0,A_1\ne0$, the sole candidate is $\ell=1/A_1$. If $A_2=A_1=0$, the equation is $-1=0$ and has no roots; it is never an identically zero equation. Equation (22.14) is monic, with discriminant
+
+$$
+\ell^2-4(\ell-1)(\rho\ell-\ell+1).
+                                                                  \tag{22.16}
+$$
+
+Its negative, zero and positive signs give zero, one and two real candidates before the strict filters. A boundary root with a zero source entry is rejected; a repeated legal root yields one world. This root convention also covers empty legal-root sets when real roots exist but all fail positivity.
+
+Proof. For any compatible world put $h=\ell g$. At even clocks $2,4,6$ the readings are $h(t)+d$; at odd clocks $3,5,7$ they are $\rho h(t)+d$. Thus the six successive values of $h$ at $2,\ldots,7$ must be
+
+$$
+48-d,\quad (z-d)/\rho,\quad u-d,\quad (w-d)/\rho,
+\quad x-d,\quad (y-d)/\rho.
+                                                                  \tag{22.17}
+$$
+
+A polynomial of degree at most three on these six successive nodes is characterized by its two vanishing fourth differences. Multiplying the first by $\rho$ and leaving the second in its denominator-cleared form gives
+
+$$
+\begin{aligned}
+0&=\rho C_*-4(z+w)-8d(\rho-1),\\
+0&=z+6w+y-4\rho(u+x)+8d(\rho-1).
+\end{aligned}                                                     \tag{22.18}
+$$
+
+Their sum is $\rho D_E-D_O$. Therefore (22.4) is necessary. Conversely, for $\rho\ne1$, the selected ratio and drift formula make both equations (22.18) hold. Interpolation at $2,3,4,5$ then gives the required $h(6)=x-d$ from the first difference, and $h(7)=(y-d)/\rho$ from the second. The extrapolation coefficient rows at $0,1$, on those four nodes, are $(10,-20,15,-4)$ and $(4,-6,4,-1)$; they give exactly $h_0,h_1$ in (22.7). There is no leading-degree assumption on this interpolant.
+
+The still unaccounted-for initial and first readings, and the definition of the trace ratio, are exactly
+
+$$
+h_0=-\ell d,\qquad jh_1=\ell(24-d),\qquad r+j=\rho\ell.
+                                                                  \tag{22.19}
+$$
+
+If $dh_1\ne0$, these identities force (22.8); (22.9) is precisely strict positivity, trace one and determinant zero for its source. If $d=0$, (22.19) forces $h_0=0,h_1>0$, $j=k\ell$ and $r=\gamma\ell$. Substitution in $bc=r(1-r)$ gives (22.11), while the four strictly positive source entries are exactly (22.12). If $d\ne0,h_1=0$, the first-clock equation forces $d=24$; the initial equation fixes $\ell$, and $j=\rho\ell-r$ gives (22.14) and (22.15). This proves that the three cases exhaust all denominators, including $d=0,h_1=0$, which cannot satisfy the first-clock equation.
+
+For $\rho=1$, $T=\ell$ implies $r+c=1$. Rank one gives $(r-b)(1-r)=0$, so strict positivity forces $b=r$, $c=1-r$, $j=1$, $\ell=1+r\in(1,2)$. All readings at clocks $2,\ldots,7$ are samples of $Y=\ell g+d$. Its initial and first equations are
+
+$$
+Y(0)=(1-\ell)d,\qquad Y(1)-Y(0)=24\ell.
+                                                                  \tag{22.20}
+$$
+
+These force (22.5)–(22.6), as well as both later consistency checks. Conversely those checks and (22.20) recover all eight readings, including the first two, for the positive source in (22.6). No division by $\rho-1$ is used in this branch.
+
+Finally every output in the $\rho\ne1$ branches has all four entries positive, trace one and determinant zero, hence rank one. Equations (22.19) give the initial and first readings; (22.17)–(22.18) give the other six. Thus the same entire polynomial $g=h/\ell$ works throughout the full word. In either ratio branch $g$ cannot be zero, since that would make the initial and first readings both equal the same $d$, contradicting $0\ne24$. This proves sufficiency as well as necessity. The only divisors used are positive source traces or the quantities explicitly separated as nonzero. ∎
+
+Constant, linear, quadratic and cubic gains are all retained by degree-at-most-three interpolation. A zero sampled gain is not an illegal source and need not be removed; neither its sample nor a gain leading coefficient or discriminant is inverted. Repeated gain roots are also allowed. The tests $d=0$, $h_1=0$ and $\rho=1$ separate reconstruction equations, not a restriction to generic gains. In particular no nonzero-fourth, fifth, sixth or seventh-gain promise is hidden in Theorem 22.1.
+
+## 23. 增益超平面、正则纤维及两类尖锐碰撞区域
+
+**定理 23.1（正则纤维基数与退化层的全部比值）。** For a gain
+
+$$
+g(t)=a_0+a_1t+a_2t^2+a_3t^3,\qquad
+\mathcal E(g)=a_1+9a_2+64a_3,
+$$
+
+every world compatible with (22.1) satisfies
+
+$$
+D_E=-8\ell\mathcal E(g),\qquad D_O=-8T\mathcal E(g).
+                                                                  \tag{23.1}
+$$
+
+If $D_E\ne0$, the whole compatible eight-read fiber has at most two worlds. Its ratio $\rho=D_O/D_E$ is fixed. At $\rho=1$ it has at most one world. At $\rho\ne1$ it can have two only at the common drift $d=0$ or $d=24$, in the respective quadratic branches of Theorem 22.1. All other drifts give at most one world.
+
+If $D_E=0,D_O\ne0$, the fiber is empty. If $D_E=D_O=0$, all compatible gains satisfy $\mathcal E(g)=0$, and the construction (22.4)–(22.16) must retain every $\rho>0$. This includes $\rho=1$, both exceptional drifts and every other drift, with all their zero and lower-degree intersections. There is no finite-cardinality assertion for this degenerate fiber and no assertion that different positive ratios cannot give the same data.
+
+At the JMJ ancestors, the gain hyperplane has the equivalent positive-trace equation
+
+$$
+7d+\frac{25(24-d)}j-\frac{31(48-d)}\ell+\frac{13(z-d)}T=0,
+                                                                  \tag{23.2}
+$$
+
+or, clearing only positive denominators,
+
+$$
+7dj\ell T+25(24-d)\ell T-31(48-d)jT+13(z-d)j\ell=0.
+                                                                  \tag{23.3}
+$$
+
+These equations supplement the full-data conditions and source filters; they do not replace them.
+
+Proof. Evaluating the monomials $1,t,t^2,t^3$ at the actual even clocks gives
+
+$$
+g(2)+2g(4)-3g(6)=-8\mathcal E(g).
+$$
+
+The odd clocks give $3g(3)-2g(5)-g(7)=-8\mathcal E(g)$. The drift cancels in both combinations, proving (23.1). Also direct interpolation on $0,1,2,3$ gives
+
+$$
+2\mathcal E(g)=-7g(0)+25g(1)-31g(2)+13g(3).
+                                                                  \tag{23.4}
+$$
+
+Substitution of (20.3) proves (23.2)–(23.3). Since $\ell,T>0$, the zero-data alternatives follow. In the regular case $D_E\ne0$, Theorem 22.1 fixes the ratio, then either the unique $\rho=1$ candidate or the common $d,h$ for $\rho\ne1$. Only its two displayed non-identically-zero quadratic equations can contribute more than one world. At $d=24$, the $h_1\ne0$ branch fails $j>0$, so two worlds there necessarily have $h_1=0$ and share $\ell,g$. At $d=0$ they share $h=\ell g$. This proves the cardinality and drift claims. When both data quantities vanish, the necessary ratio equation is $0=0$, and the complete construction, with its remaining filters, is still over all positive ratios. ∎
+
+**定理 23.2（正则零漂移碰撞的精确区域）。** In the regular stratum $D_E\ne0$, a two-world fiber at $d=0$ is equivalent to the zero-drift consistency conditions in Theorem 22.1 together with the following strict chamber. Put
+
+$$
+q=\frac{24}{h(1)},\qquad a=\rho-q,\qquad
+\mathscr D=\rho^2-4a(1-a).
+$$
+
+The exact inequalities for two distinct legal worlds are
+
+$$
+0<\rho<1,\qquad 0<a<\rho/2,\qquad \mathscr D>0.
+                                                                  \tag{23.5}
+$$
+
+Their explicit forms are
+
+$$
+\begin{gathered}
+\sigma_\pm=1-\frac\rho2\ \pm\frac{\sqrt{\mathscr D}}2,\qquad
+R_\sigma=\begin{pmatrix}a&1-\sigma\\q-1+\sigma&\sigma-a\end{pmatrix},\\
+W_\sigma=\left(R_\sigma/\sigma,\sigma h,0\right).
+\end{gathered}                                                     \tag{23.6}
+$$
+
+Equivalently, choose $\rho,a$ satisfying (23.5), put $q=\rho-a$, choose $z\in\mathbb R$, and interpolate the one polynomial $h$ from
+
+$$
+h(0)=0,\qquad h(1)=24/q,\qquad h(2)=48,\qquad h(3)=z/\rho,
+                                                                  \tag{23.7}
+$$
+
+retaining $\mathcal E(h)\ne0$. The two worlds (23.6) give exactly a regular two-world fiber for their induced full word, with even readings $h(t)$ and odd readings $\rho h(t)$ at clocks $2,\ldots,7$. Each source has its second column strictly larger entrywise than its first.
+
+Proof. In the zero-drift branch, $q=j/\ell>0$ and $a=r/\ell>0$. Set $\sigma=1/\ell$ and $R=P/\ell$. Its entries are exactly those in (23.6), with trace $\sigma$. Its determinant is
+
+$$
+F(\sigma)=\sigma^2+(\rho-2)\sigma+1-q-a^2.
+                                                                  \tag{23.8}
+$$
+
+The exact legal interval is
+
+$$
+\max(0,1-q,a)<\sigma<1,
+                                                                  \tag{23.9}
+$$
+
+and
+
+$$
+F(a)=(a-1)(\rho-1),\quad
+F(1-q)=a(1-\rho),\quad F(1)=a(1-a).
+                                                                  \tag{23.10}
+$$
+
+If two roots are legal, then $a<1$ and $F(a)>0$, forcing $\rho<1$; positivity already gives $\rho>0$. Now $1-q=1-\rho+a>a>0$, so it is the lower endpoint in (23.9). The vertex $1-\rho/2$ must lie above it, which is exactly $a<\rho/2$. The discriminant must be strictly positive and equals $\mathscr D$. These are all the inequalities in (23.5).
+
+Conversely (23.5) puts the vertex strictly between $1-q$ and $1$, both endpoint values in (23.10) are positive, and the vertex value is $-\mathscr D/4<0$. Thus both distinct roots (23.6) lie in the legal interval. This proves sharpness and full positivity. Since $(R_\sigma)_{22}-(R_\sigma)_{21}=1-\rho>0$, positivity and rank one give the same strict column inequality in the first row. All original-clock readings follow by substitution of (23.7); regularity is $D_E=-8\mathcal E(h)\ne0$. Theorem 22.1 proves that these two roots exhaust the compatible fiber. Equality at a chamber boundary either fails the strict endpoint/vertex criterion or makes the roots coincide. It cannot supply two distinct legal worlds; the full filters still decide any remaining single root. ∎
+
+**定理 23.3（正则漂移二十四碰撞的精确区域）。** In the regular stratum, a two-world fiber at drift $24$ is equivalent to the drift-$24$ consistency conditions in Theorem 22.1 together with
+
+$$
+1<\ell<2,\qquad
+\ell<T<(\ell-1)+\frac{\ell^2}{4(\ell-1)}.
+                                                                  \tag{23.11}
+$$
+
+Here $T=\rho\ell$ is common. Let $r_-<r_+$ be the two roots of
+
+$$
+Q(r)=r^2-\ell r+(\ell-1)(T-\ell+1).
+                                                                  \tag{23.12}
+$$
+
+The two sources and their common gain are
+
+$$
+\begin{gathered}
+P_r=\begin{pmatrix}r&\ell-1\\T-r-\ell+1&1-r\end{pmatrix},\\
+g(0)=-24,\qquad g(1)=0,\qquad g(2)=24/\ell,\qquad
+g(3)=(z-24)/T,\qquad \deg g\le3,
+\end{gathered}                                                     \tag{23.13}
+$$
+
+with $\mathcal E(g)\ne0$. Conversely any $\ell,T,z$ satisfying these conditions gives exactly two compatible worlds for the induced eight-read word, at drift $24$. Here $\rho=T/\ell>1$, and each source's first column strictly dominates its second entrywise.
+
+Proof. The reconstruction in (22.14) gives precisely (23.12). Two roots in $(0,1)$ have sum $\ell$, forcing $1<\ell<2$. The endpoint value
+
+$$
+Q(1)=(\ell-1)(T-\ell)>0
+$$
+
+forces $T>\ell$. The discriminant is positive exactly when $T<(\ell-1)+\ell^2/[4(\ell-1)]$. Conversely those bounds give a vertex $\ell/2\in(0,1)$ with negative value, while $Q(0),Q(1)>0$. Thus both distinct roots lie strictly in $(0,1)$. For each root the remaining entry is positive because
+
+$$
+T-r-\ell+1=\frac{r(1-r)}{\ell-1}>0.
+$$
+
+They therefore pass every source filter. The common gain (23.13) and equal traces $\ell,T$ give the full common word; its clock-one reading is $24$ despite the different $j=T-r$, since $g(1)=0$. Regularity and exhaustiveness follow from Theorems 22.1 and 23.1. Finally $r_++r_-=\ell$ and both roots below $1$ imply $r_\pm>\ell-1$; rank one gives the strict column dominance in the second row as well. At either non-strict $T$ boundary a root reaches a zero-entry boundary or the roots coincide. These cases cannot give a distinct legal pair, although a repeated legal root remains one world in Theorem 22.1. ∎
+
+The chambers (23.5) and (23.11) concern regular data and the common interpolants specified above. Their inequalities alone are not consistency tests for arbitrary eight numbers; the full-data equations of Theorem 22.1 remain necessary. In the degenerate gain hyperplane, neither chamber nor the regular two-world bound removes the other ratios retained in (22.4).
+
+## 24. 实际末次 M、完整词例与任意族的碰撞叶条件
+
+**命题 24.1（同一时钟六历史的末次动作）。** At the clock-six prefix $JMJJJJ$, the matrix is $L$. The final-$J$ matrix is $N$, and the final-$M$ matrix is
+
+$$
+ML=J+L=\begin{pmatrix}1&1\\2&1\end{pmatrix}.
+                                                                  \tag{24.1}
+$$
+
+For a regular zero-drift pair (23.6), final $M$ has the same reading on both worlds,
+
+$$
+z_7^M=h(7)(q+1),
+                                                                  \tag{24.2}
+$$
+
+including $h(7)=0$. For a regular drift-$24$ pair (23.13),
+
+$$
+z_7^M(r)=24+g(7)(T-r+\ell),\qquad
+z_7^M(r_+)-z_7^M(r_-)=-g(7)(r_+-r_-).
+                                                                  \tag{24.3}
+$$
+
+Thus it splits that pair exactly when $g(7)\ne0$. If $g(7)=0$, both final actions read $24$ on this pair. In particular the zero-seventh-gain stratum is retained, rather than inferred away from regularity.
+
+If a known family at this same clock-six history has $L_1$ and contains a regular drift-$24$ final-$J$ collision pair with $g(7)\ne0$, it must contain a target outside that pair. These assertions concern the indicated reached prefix, with no change of clock or gain.
+
+Proof. The final-$M$ trace is $j+\ell$. In (23.6), $j=q\ell$ and $g=h/\ell$, giving (24.2). In (23.13), $j=T-r$ and the gain is common, giving (24.3). Both pairs already share their final-$J$ reading by construction. If the final-$M$ difference is nonzero, any losing final-$M$ child needs two distinct targets and contains at most one member of this pair, so it needs an outside target. If that difference is zero, the same pair survives both final choices and has $L_1$ at this clock-six history. This does not assert failure at an earlier node. ∎
+
+**例 24.2（两个正则碰撞的全部八读）。** A zero-drift pair from (23.5) is
+
+$$
+\begin{gathered}
+P_1=\begin{pmatrix}1/8&1/4\\7/16&7/8\end{pmatrix},\qquad
+P_2=\begin{pmatrix}2/11&9/11\\2/11&9/11\end{pmatrix},\\
+h(t)=\frac{24}{11}t(29-9t),\qquad
+g_1=\frac45h,\quad g_2=\frac{11}{20}h,\quad d_1=d_2=0.
+\end{gathered}                                                     \tag{24.4}
+$$
+
+The two positive trace-one sources have determinant zero. Their $\ell$ values are $5/4,20/11$, with common $q=11/20$, $\rho=13/20$, $a=1/10$. Their full JMJJJJJ arrays are both
+
+$$
+(0,24,48,468/55,-672/11,-1248/11,-3600/11,-18564/55).
+                                                                  \tag{24.5}
+$$
+
+Here $D_E=9984/11\ne0$. On the same clock-six prefix, final $M$ instead reads $-44268/55$ on both, by (24.2).
+
+A drift-$24$ pair from (23.11) is
+
+$$
+\begin{gathered}
+P_+=\begin{pmatrix}7/10&1/5\\21/20&3/10\end{pmatrix},\qquad
+P_-=\begin{pmatrix}1/2&1/5\\5/4&1/2\end{pmatrix},\\
+g(t)=2(t-1)(12-t),\qquad d=24.
+\end{gathered}                                                     \tag{24.6}
+$$
+
+Both sources are positive rank-one trace-one, with common $\ell=6/5$, $T=39/20$, $\rho=13/8$ and roots $r_+=7/10,r_-=1/2$ of (23.12). Their full JMJJJJJ arrays are both
+
+$$
+(0,24,48,471/5,408/5,666/5,96,141).
+                                                                  \tag{24.7}
+$$
+
+Here $D_E=-384/5\ne0$. Actual final $M$ at the common clock-six prefix reads $171,183$, respectively. Their difference is $-12=-60(1/5)$, as (24.3) predicts. Each example uses one fixed source, one entire quadratic gain and one drift through every ancestor and descendant. A collision of this prescribed word is not a certificate of $L_4$ at $H_z$.
+
+**定理 24.3（任意基数 L4 族的全 J 叶约束）。** Let $z\in\mathbb R$ and $K\subseteq\mathcal G_z$ have arbitrary cardinality. If $L_4(K,H_z)$, there exist actual successive responses $u,w,x,y$ along four further $J$ actions for which
+
+$$
+\left|K\cap\mathcal F((H_z,J,u,J,w,J,x,J,y))\right|\ge2.
+                                                                  \tag{24.8}
+$$
+
+For that one full eight-read history, either $D_E=D_O=0$ and every compatible gain obeys (23.2)–(23.4), with the full positive-ratio construction of Theorem 22.1, or $D_E\ne0$ and its entire compatible fiber is exactly one of the two-world types (23.5) or (23.11). In the regular case $\rho=1$, or $d\notin\{0,24\}$, cannot support this leaf. The final-$M$ consequences of Proposition 24.1 apply at its same clock-six prefix.
+
+Proof. Specify $J$ in the universal action clause of (1.1), successively four times. The corresponding actual children have $L_3,L_2,L_1,L_0$ on one nested sequence of literal histories, yielding (24.8). Only now, at this terminal leaf, may two targets be selected. Theorems 22.1 and 23.1 apply to its full compatible fiber. In the regular case that fiber has at most two worlds, so the two targets exhaust it and Theorems 23.2–23.3 give exactly its chamber. In the degenerate case both data combinations vanish and the full generator remains over every $\rho>0$. No cardinality bound is added there. This argument extracts a pair only at $L_0$, and does not assert that the pair had $L_3$ or $L_4$ at an earlier node. ∎
+
+**约定 24.4（复用、文献对应与未决范围）。** The underlying complete-target domain and failure recursion are Definition 1.1; terminal rank-one reconstruction is the argument (7.1); inclusion monotonicity and affine transport are Lemmas 9.3 and 9.2. They are used within the concrete new JMJ classifications, not renamed as additional method theorems. The new mathematical content is the sharp unrestricted pair window and other-action exclusion, their whole-family and joint-fourth constraints, the complete prescribed-word solution set with all singular filters, and the two sharp regular collision chambers with actual final-$M$ behavior.
+
+Interpolation, fourth differences, rank-one completion, quadratic root exchange and strict positive-real filtering are standard tools. The literature correspondences in Conventions 8.1 and Theorem 19.1 continue to apply: Li–Lee–Bresler, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), concern whole-fiber identifiability modulo a specified scaling orbit; here positive trace normalization removes that scale, while drift stays in the complete target. Van den Bos–Vaandrager, [Theorem 6.1](https://arxiv.org/html/1907.11034v2), has suspension-automaton, incompatible-state and injective-split hypotheses, which are not established for this continuous domain. Breiding–Gesmundo–Michałek–Vannieuwenhoven, [Answer 9](https://arxiv.org/html/2108.13208v2), treats generic linear maps, not these fixed original-clock words. The conic-involution analogy in Theorem 16.2 does not import pencil invariance or integrability. All concrete conditions used here are proved directly above; these applications carry no external priority or literature-completeness claim.
+
+For $z\in\mathcal I_{JMJ}$, the unresolved other-action obligation in (21.1) is an actual fourth-$M$ $L_3$ family of at least three fixed complete targets sharing the entire same $H_z$, or a proof resolving all such children. Constructing such a family and joining it to $\mathcal B_z$ would supply an actual JMJ $L_4$ obstruction; it is not supplied here. For example $z=936/25$ gives the explicit J arm (20.19), but no common fourth-$M$ losing family is asserted there. A candidate $L_4$ family of exactly three worlds must have both fourth predictions constant and obey Theorem 21.2. That necessary joint chart is not its existence proof. Outside $\mathcal I_{JMJ}$ the J-arm pair disappears, while larger losing families remain undecided.
+
+Theorem 22.1 enumerates every compatible world for one prescribed word, including nonunique and degenerate fibers. It does not provide a unique decoder on that word or on the whole unrestricted JMJ branch. Likewise the necessary action at a reached $H_z$ does not make that history inevitable for a policy starting at the original root. The earlier JJ and initial-M obligations in (18.12), the other unresolved local systems and bridges in Open Problems 4.2 and 8.2, and their original-root quantifiers remain unchanged. No actual JMJ $L_4$ family, unrestricted whole-branch inverse, unrestricted eight-read lower bound, nine-read upper bound or resolution of the original root question is established by Sections 20–24.
+
+## 追加锚（本行以下为增补区）

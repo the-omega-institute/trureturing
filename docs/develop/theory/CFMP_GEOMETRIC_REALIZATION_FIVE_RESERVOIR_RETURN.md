@@ -4607,3 +4607,5 @@ Together with Theorem 341.2, this leaves the M/U high-axis
 pattern separate under the same source normal form. No full
 unique-flat exclusion or general six-edge geometric realization
 result is claimed.
+
+Continuation: [six-edge high-axis expenses and the remaining owner count](CFMP_GEOMETRIC_REALIZATION_SIX_EDGE_HIGH_AXES.md).
