@@ -12,6 +12,19 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
         H("Archimedean Jump Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("archimedean-jump-density-geometric-series"),
+                DeclarationHandle.Create(
+                    "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum"),
+                H("Actual jump density as a positive rate series"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n "
+                    + "of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). "
+                    + "This is the original density-series proof used by the Levy decomposition; "
+                    + "the extended periodic comparison consumes the same declaration directly."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("archimedean-jump-decomposition"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition."
