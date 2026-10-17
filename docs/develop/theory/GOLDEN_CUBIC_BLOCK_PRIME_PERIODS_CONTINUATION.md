@@ -611,4 +611,84 @@ $$Nk\ge N(6N+1)^2.$$
 
 These are necessary restrictions. They do not assert existence of either surviving form, exclude all original-support squares, or establish a universal WSS exclusion. The remaining possibility $Q_q(L_t)=q$ times a square at an original-support prime is not ruled out here.
 
+## 89. An original-support residue sieve and prime relative indices at N=81
+
+**Theorem 89.1 (residue condition on the square part).** Let $j,C,c,k$ be positive integers, let $N=3^j\ge81$, and suppose $k$ is odd, $3\nmid k$, and
+
+$$B_N=DC^2,\qquad B_{Nk}=Dc^2,\qquad B_n=L_n^2+3,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Write $k=s^2$ or $k=rs^2$ as in Theorem 88.1. Every prime $q\mid s$ is an invertible square residue modulo $L_N^2$. In particular, $q\equiv1\pmod8$.
+
+If no prime divisor of the full block $B_N$ is an invertible square residue modulo $L_N^2$, then $k=1$ or $k$ is prime. This applies, in particular, when $B_N$ itself is prime.
+
+**Proof.** For odd $q$, the recurrence $V_0=2$, $V_1=X$, $V_{m+2}=XV_{m+1}+V_m$ makes $V_q$ an odd polynomial. Thus the integral quotient
+
+$$Q_q(X)=\frac{V_q(X)^2+3}{X^2+3}$$
+
+is even, and $Q_q(0)=1$. Consequently $Q_q(X)\equiv1\pmod{X^2}$. For any positive odd $m$, $X\mid V_m(X)$ and $L_{Nm}=V_m(L_N)$, so $L_N\mid L_{Nm}$.
+
+If $q\mid s$, then $q^2\mid k$. Set $t=Nk/q$. The two-step descent in §88 supplies a positive integer $y$ with $Q_q(L_t)=qy^2$. Since $t$ is an odd multiple of $N$, reduction modulo $L_N^2$ gives
+
+$$qy^2\equiv1\pmod{L_N^2}.\tag{89.1}$$
+
+Both $q$ and $y$ are units modulo $L_N^2$. Multiplying by the inverse square of $y$ proves the asserted square-residue condition.
+
+The Lucas sequence modulo $4$ has period $6$, with $L_n\equiv0\pmod4$ for $n\equiv3\pmod6$. Thus $4\mid L_N$. Equation (89.1) modulo $16$ makes $y$ odd and $q\equiv1$ or $9\pmod{16}$, giving $q\equiv1\pmod8$.
+
+If every prime factor of $B_N$ fails the condition, no prime divides $s$. Hence $s=1$, and Theorem 88.1 leaves $k=1$ or $k=r$ prime. If $B_N$ itself is prime, its residue $B_N\equiv3\pmod8$ excludes its sole prime factor. ∎
+
+The support here is the full support of $B_N$, including primes of even original depth. A prime $D$ does not imply that $B_N$ is prime: the factors in $C$ must still be tested.
+
+**Theorem 89.2 (all composite relative indices excluded at N=81).** Let $C,c,k$ be positive integers, let $k$ be odd with $3\nmid k$, and suppose
+
+$$B_{81}=DC^2,\qquad B_{81k}=Dc^2,$$
+
+where $D$ is the full positive squarefree kernel of $B_{81}$. Then $k=1$ or $k$ is prime.
+
+**Proof.** The integer Lucas recurrence gives
+
+$$L_{81}=84722519070079276,$$
+
+$$B_{81}=7177905237579946589743592924684179
+=59779\cdot120074026624398979403194983601.$$
+
+Write $A=59779$ and $Q=120074026624398979403194983601$. The deterministic certificate below proves that $A$ and $Q$ are distinct primes. This is therefore the complete prime support, and $B_{81}$ is squarefree.
+
+Now $A\equiv3\pmod8$, so $A$ fails the necessary condition in Theorem 89.1. Also $19\mid L_{81}$ and $Q\equiv12\pmod{19}$. The nonzero squares modulo $19$ are
+
+$$1,4,9,16,6,17,11,7,5,$$
+
+which do not include $12$. Thus $Q$ also fails the condition. Theorem 89.1 gives the conclusion. ∎
+
+**Deterministic certificate for the full factorization.** We use the following elementary primality criterion. Suppose $n>1$, $n-1=FR$, all prime factors of $F$ are proved prime, $F^2>n$, and for each prime $p\mid F$ there is an integer $a$ such that
+
+$$a^{n-1}\equiv1\pmod n,\qquad
+\gcd\bigl(a^{(n-1)/p}-1,n\bigr)=1.$$
+
+Then $n$ is prime. Indeed, for any prime divisor $\ell$ of $n$, the order of $a$ modulo $\ell$ divides $n-1$ and does not divide $(n-1)/p$. Its $p$-adic valuation is exactly $v_p(n-1)$, so $p^{v_p(F)}\mid\ell-1$. Applying this for every $p\mid F$ gives $F\mid\ell-1$. Every prime divisor of $n$ would therefore exceed $F>\sqrt n$, which is impossible for composite $n$.
+
+The base primes $3,5,113,587$ are verified by trial division through their integer square roots. Apply the following rows in their displayed order. In each row, $a^{n-1}\equiv1\pmod n$. The final column records $a^{(n-1)/p}\bmod n$, whose difference from $1$ has gcd $1$ with $n$.
+
+| $n$ | $F$ | $R=(n-1)/F$ | $p$ | $a$ | Modular residue |
+|---|---|---|---|---|---|
+| 59779 | $3^6=729$ | 82 | 3 | 5 | 3307 |
+| 3955001 | $5^4\cdot113=70625$ | 56 | 5 | 2 | 1851186 |
+| 3955001 | $5^4\cdot113=70625$ | 56 | 113 | 2 | 589905 |
+| 142380037 | 3955001 | 36 | 3955001 | 2 | 92298902 |
+| 56563464519948259 | $142380037\cdot587=83577081719$ | 676782 | 142380037 | 2 | 44969241392553102 |
+| 56563464519948259 | $142380037\cdot587=83577081719$ | 676782 | 587 | 2 | 8097665163801458 |
+| 120074026624398979403194983601 | 56563464519948259 | 2122819520400 | 56563464519948259 | 2 | 101756090298249446324490326895 |
+
+For every distinct $n$ in the table, $F^2>n$. Each prime factor used in $F$ is a base prime or a prime proved by an earlier row. The table therefore certifies both $A$ and $Q$.
+
+**Corollary 89.3 (integral-point indices at N=81).** Under the hypotheses and notation of Theorem 85.1 with $N=81$, every affine integral point $K\ne\pm R$ with $\delta(K)=(5,D,5D)$ has
+
+$$X(K)=5DB_{81r},$$
+
+where $r\ge11$ is prime.
+
+**Proof.** Theorem 85.1 gives the repeated-kernel equation at an odd relative index $k>1$ coprime to $3$. Theorem 89.2 makes $k$ prime, and Theorem 86.1 excludes $5$ and $7$. ∎
+
+Theorem 89.2 excludes every composite relative index at this exact original block, including arbitrarily large ones. The surviving prime-index case remains open. Neither existence of a repeated kernel nor a universal WSS exclusion follows, and the finite certificate is not extrapolated to other original indices.
+
 ## 追加锚（本行以下为增补区）
