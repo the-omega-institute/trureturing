@@ -1307,3 +1307,370 @@ The original sharp target is still $\delta^*_{\mathcal R}(\beta)=U(\beta)$: eith
 All statements retain the original coordinates and physical/passive bijection, finite references, arbitrary complex recoveries and native applicability limits of the phase-gain volume. No free physical $D$ gates, source preparation, native encoder/decoder apparatus, physical realization or kernel verification is a conclusion of these ordinary channel arguments.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. An actual real-Kraus family with coupled third-column data
+
+**Definition 18.1 (fixed model and the restricted method).** Retain Definition 1.1 and the [phase-gain volume, Definitions 1.1–1.4](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#1-actual-channels-physical-coordinates-and-the-native-contract). Thus the passive input and output are $\mathbb C^3$ and the entire $\mathbb C^5$, with fixed real bases $|0\rangle,|1\rangle,|2\rangle$ and $e_0,\ldots,e_4$. For the family below set
+
+$$
+a=1-\beta,\qquad 0<\beta\leq\tfrac12,\qquad
+0<t<\sqrt{a\beta},\qquad
+r_\beta=\sqrt{\beta/a},\qquad
+s_t=\sqrt{1-(2+\beta/a)t^2}.
+$$
+
+Here $s_t$ is a family parameter, distinct from the abbreviation $s=\sqrt a$ in Sections 11–17. In particular $s_t^2>a^2>0$. For a complex unit $u\in\operatorname{span}(|0\rangle,|1\rangle)$ and $\varphi\in\mathbb R$, use exactly the restricted inputs of (R.74):
+
+$$
+X(u,\varphi)=e^{-i\varphi}|u\rangle\langle2|
+             +e^{i\varphi}|2\rangle\langle u|,\qquad
+\mu_N(u,\varphi)=\tfrac12\|N(X(u,\varphi))\|_1.
+$$
+
+Their preimages are the orthogonal pure states $(e^{-i\varphi}u\pm|2\rangle)/\sqrt2$. The stronger proposed method would require, for every original-class encoder, some such pair with $\mu_N\leq\sqrt a$. This requirement is separate from Theorem 17.1: (R.74) gives a necessary condition for improvement and asserts no sufficiency.
+
+**Theorem 18.2 (actual channel, phase outputs and joint complement).** The two real matrices
+
+$$
+\begin{aligned}
+K_0&=\sqrt a(e_0\langle0|+e_1\langle1|)
+       +(s_t e_4-r_\beta t e_1)\langle2|,\\
+K_1&=\sqrt\beta(e_2\langle0|+e_3\langle1|)
+       +t(e_0+e_3)\langle2|
+\end{aligned}
+\tag{R.75}
+$$
+
+define the actual complex-linear CPTP map $N_{\beta,t}(X)=K_0XK_0^T+K_1XK_1^T$. Its physical channel belongs to $\mathcal R_\beta$. Its encoder Choi rank is two, while the Choi rank of its actual complement is five.
+
+**Proof.** Direct multiplication, including the third-column cross terms, gives
+
+$$
+\begin{aligned}
+K_0^TK_0&=\begin{pmatrix}
+a&0&0\\0&a&-\sqrt\beta t\\0&-\sqrt\beta t&1-2t^2
+\end{pmatrix},\qquad
+K_1^TK_1=\begin{pmatrix}
+\beta&0&0\\0&\beta&\sqrt\beta t\\0&\sqrt\beta t&2t^2
+\end{pmatrix},\\
+K_0^TK_0+K_1^TK_1&=I_3.
+\end{aligned}
+\tag{R.76}
+$$
+
+These real Kraus matrices therefore give complete positivity and trace preservation on all complex matrices. For $f_\pm=(e_0\pm ie_1)/\sqrt2$ and $g_\pm=(e_2\pm ie_3)/\sqrt2$,
+
+$$
+N_{\beta,t}(\chi_\pm)
+=a|f_\pm\rangle\langle f_\pm|
+ +\beta|g_\pm\rangle\langle g_\pm|.
+\tag{R.77}
+$$
+
+The four vectors are orthonormal, so these states have orthogonal supports and nonzero spectra $(a,\beta)$; their difference has spectrum $(a,\beta,0,-\beta,-a)$ and is purely imaginary Hermitian. In physical coordinates, with precisely $D=\operatorname{diag}(1,i,i,i,1)$ and $L=\operatorname{diag}(1,i,i)$ from (P.1), the actual matrices are $K_\alpha^{\rm ph}=DK_\alpha L^\dagger$. Consequently $N^{\rm ph}(\theta_\pm)=D N_{\beta,t}(\chi_\mp)D^\dagger$, with the sign reflection of (P.2). This verifies the actual original-model spectrum condition; these coordinate identities supply no physical gates.
+
+Use the same real environment basis $|0_E\rangle,|1_E\rangle$ and the actual dilation in (R.1). Its entries are $\Gamma(X)_{\alpha\gamma}=\operatorname{Tr}(K_\alpha X K_\gamma^T)$. Writing $E_{ij}=|i\rangle\langle j|$ gives
+
+$$
+\begin{gathered}
+D_\beta=\Gamma(E_{00})=\Gamma(E_{11})=\operatorname{diag}(a,\beta),
+\qquad \Gamma(E_{01})=0,\\
+C_0=\Gamma(E_{02})=t\begin{pmatrix}0&\sqrt a\\0&0\end{pmatrix},\qquad
+C_1=\Gamma(E_{12})=t\begin{pmatrix}-\sqrt\beta&0\\0&\sqrt\beta\end{pmatrix},\\
+\sigma=\Gamma(E_{22})=\operatorname{diag}(1-2t^2,2t^2),\qquad
+J_0=\begin{pmatrix}
+D_\beta&0&C_0\\0&D_\beta&C_1\\C_0^T&C_1^T&\sigma
+\end{pmatrix}.
+\end{gathered}
+\tag{R.78}
+$$
+
+The symbol $D_\beta$ is an environment density, distinct from the physical coordinate matrix $D$. For the fixed phase-input basis matrix $H$ in (R.2), the Choi reference transformation remains $J_p=(H^T\otimes I_2)J_0(\bar H\otimes I_2)$. It follows that
+
+$$
+J_p=\begin{pmatrix}
+D_\beta&0&C\\0&D_\beta&\bar C\\C^\dagger&C^T&\sigma
+\end{pmatrix},\qquad
+\tau=D_\beta,\qquad
+C=\frac{C_0+iC_1}{\sqrt2}
+ =\frac{t}{\sqrt2}\begin{pmatrix}-i\sqrt\beta&\sqrt a\\0&i\sqrt\beta\end{pmatrix},
+\qquad\operatorname{Tr}C=0.
+\tag{R.79}
+$$
+
+The left reference factor is $H^T$, as proved in (R.2), rather than $H^\dagger$. In particular $C\ne0$. Directly,
+
+$$
+\begin{gathered}
+C^\dagger D_\beta^{-1}C+C^TD_\beta^{-1}\bar C
+ =t^2\operatorname{diag}(\beta/a,2),\\
+S=\sigma-C^\dagger D_\beta^{-1}C-C^TD_\beta^{-1}\bar C
+ =\operatorname{diag}(s_t^2,0),\qquad
+\operatorname{rank}J_\Gamma=2+2+1=5.
+\end{gathered}
+\tag{R.80}
+$$
+
+The rank identity is the actual-support congruence (R.5), applied to the positive definite $D_\beta$ and this nonzero $S$. The two encoder matrices are linearly independent, as is already seen from their $|0\rangle$ columns, so the encoder Choi rank is two. All blocks above come from (R.75); no independently realized choice of $C$ or $S$ enters the construction. The fact that $\tau$ is real diagonal here does not restrict the full class to real or commuting complementary outputs. $\square$
+
+## 19. Exact minimum over every complex restricted direction
+
+**Theorem 19.1 (continuum restricted minimum and attainment).** For every parameter in Definition 18.1,
+
+$$
+\min_{\substack{u\in\operatorname{span}(|0\rangle,|1\rangle),\ \|u\|=1\\
+                 \varphi\in\mathbb R}}
+\mu_{N_{\beta,t}}(u,\varphi)
+=\sqrt a\,s_t+\sqrt\beta\,t>\sqrt a.
+\tag{R.81}
+$$
+
+**Proof.** Absorb the unrestricted phase into $c=e^{-i\varphi}u=c_0|0\rangle+c_1|1\rangle$, with $|c_0|^2+|c_1|^2=1$. Define
+
+$$
+p=c_0e_0+c_1e_1,\qquad q=c_0e_2+c_1e_3,\qquad
+w_0=e_0+e_3,\qquad A_t=\sqrt a\,s_t,\qquad B_t=\sqrt\beta\,t.
+$$
+
+The $w_0$ here is a vector, distinct from the outside-support probability $w$ of (R.10). Substitution of the actual Kraus matrices gives
+
+$$
+H_t:=N_{\beta,t}(X(u,\varphi))
+=A_t(pe_4^\dagger+e_4p^\dagger)
+ +B_t(qw_0^\dagger+w_0q^\dagger-pe_1^\dagger-e_1p^\dagger).
+\tag{R.82}
+$$
+
+Let $P_U$ project onto $U=\operatorname{span}(p,e_4)$, let $P=I-P_U$, and put $\xi=Pw_0$. The vector $q$ is unit and lies in $U^\perp$, whence
+
+$$
+PH_tP=B_t(q\xi^\dagger+\xi q^\dagger).
+\tag{R.83}
+$$
+
+For this actual matrix, the reflection $Z=P_U-P$ is unitary and self-adjoint, and its two-block pinching is $(H_t+ZH_tZ^\dagger)/2=P_UH_tP_U+PH_tP$. Triangle inequality and unitary invariance therefore give, for every complex $c$,
+
+$$
+\|H_t\|_1\geq\|P_UH_tP_U\|_1+\|PH_tP\|_1.
+\tag{R.84}
+$$
+
+In the orthonormal basis $(p,e_4)$, the first block and its half norm are
+
+$$
+P_UH_tP_U=
+\begin{pmatrix}-2B_t\operatorname{Re}c_1&A_t\\A_t&0\end{pmatrix},\qquad
+\tfrac12\|P_UH_tP_U\|_1
+=\sqrt{A_t^2+B_t^2(\operatorname{Re}c_1)^2}.
+\tag{R.85}
+$$
+
+For the second block, write $z=\langle q,\xi\rangle$, using the inner product conjugate-linear in its first variable. On $\operatorname{span}(q,\xi)$ the two possibly nonzero eigenvalues of $q\xi^\dagger+\xi q^\dagger$ are
+
+$$
+\operatorname{Re}z\ \pm\sqrt{\|\xi\|^2-(\operatorname{Im}z)^2}.
+$$
+
+Indeed splitting $\xi=zq+\xi_\perp$ gives the matrix with diagonal $(2\operatorname{Re}z,0)$ and off-diagonal magnitude $\|\xi_\perp\|$. Cauchy–Schwarz gives $\|\xi\|^2-|z|^2\geq0$, so the two displayed eigenvalues have opposite signs or include zero. Thus in this compression
+
+$$
+\tfrac12\|q\xi^\dagger+\xi q^\dagger\|_1
+=\sqrt{\|\xi\|^2-(\operatorname{Im}\langle q,\xi\rangle)^2}.
+\tag{R.86}
+$$
+
+Here $\|\xi\|^2=2-|c_0|^2=1+|c_1|^2$ and $\langle q,\xi\rangle=\bar c_1$. Combining the two blocks proves
+
+$$
+\begin{aligned}
+\mu_{N_{\beta,t}}(u,\varphi)
+&\geq\sqrt{A_t^2+B_t^2(\operatorname{Re}c_1)^2}
+       +B_t\sqrt{1+(\operatorname{Re}c_1)^2}\\
+&\geq A_t+B_t.
+\end{aligned}
+\tag{R.87}
+$$
+
+This is a pointwise inequality over the whole complex unit sphere. At $c_0=0,c_1=i$, (R.82) is
+
+$$
+H_t=iA_t(e_1e_4^\dagger-e_4e_1^\dagger)
+    +iB_t(e_3e_0^\dagger-e_0e_3^\dagger),
+$$
+
+a direct sum on two orthogonal planes with eigenvalues $A_t,-A_t,B_t,-B_t,0$. Hence the lower bound is actually attained. Finally
+
+$$
+A_t^2=a-(2-\beta)t^2,\qquad
+A_t^2-(\sqrt a-B_t)^2=2t(\sqrt{a\beta}-t)>0.
+$$
+
+Since $B_t<\beta\sqrt a<\sqrt a$, both sides compared before squaring are nonnegative. It follows that $A_t+B_t>\sqrt a$, proving (R.81). $\square$
+
+**Corollary 19.2 (special parameter and endpoint scope).** The admissible choice
+
+$$
+t^2=\frac{a\beta}{2(2-\beta)}
+\quad\Longrightarrow\quad
+\min_{u,\varphi}\mu_{N_{\beta,t}}(u,\varphi)
+=\sqrt{\frac{2a}{2-\beta}}.
+\tag{R.88}
+$$
+
+At $\beta=1/2$ this is $\sqrt{2/3}>1/\sqrt2$.
+
+**Proof.** At this parameter $s_t^2=1-\beta/2$, so $A_t=\sqrt{a(2-\beta)/2}$ and $B_t=\beta\sqrt{a/[2(2-\beta)]}$. Their sum gives (R.88), and $0<t^2<a\beta$ since $2(2-\beta)>1$.
+
+For fixed positive beta the construction also extends to $t=0$ and $t=\sqrt{a\beta}$. The same pinching and attaining direction give the minimum $A_t+B_t$ at both endpoints. At $t=0$, $s_t=1$ and (R.75) is exactly the existing upper family (P.11); its individual optimum $U(\beta)$ is already proved in (P.12)–(P.16). At $t=\sqrt{a\beta}$, $s_t=a$ and $A_t+B_t=\sqrt a(a+\beta)=\sqrt a$. Neither endpoint is a strict restricted-method counterexample. At $\beta=1/2$ every interior $t$ still gives the strict inequality (R.81).
+
+At $\beta=0$ the stipulated positive-$t$ interval is empty. The formulas dividing by beta in the tilted and kernel calculations below are not used there. Trace-norm contraction gives $\mu_N(u,\varphi)\leq1=\sqrt a$ for every actual channel and each such input; the isometric instance of (P.11) attains the zero class optimum. These zero-beta statements use the existing endpoint result, without extending the positive-beta inverse or kernel-rank calculations across its rank change. $\square$
+
+## 20. The same joint kernel selects a tilted exclusion pair
+
+**Theorem 20.1 (tilted pair, consumed two-Kraus factorization and diamond exclusion).** For the same actual encoder (R.75), let
+
+$$
+v=\frac{\sqrt\beta\,|2\rangle-t|1\rangle}{\sqrt{\beta+t^2}},\qquad
+\psi_\pm=\frac{|0\rangle\pm v}{\sqrt2}.
+\tag{R.89}
+$$
+
+These are orthogonal unit pure inputs, and their exact output half distance is
+
+$$
+m_{\rm tilt}^2:=
+\left[\tfrac12\|N_{\beta,t}(P_{\psi_+}-P_{\psi_-})\|_1\right]^2
+=a+\frac{\beta(2\beta-1)t^2}{\beta+t^2}\leq a,
+\qquad P_\psi=|\psi\rangle\langle\psi|.
+\tag{R.90}
+$$
+
+**Proof.** The original-input Choi matrix in (R.78) has the real kernel vector
+
+$$
+\kappa=-\frac{t}{\sqrt a}|0\rangle\otimes|0_E\rangle
+       +\left(|2\rangle-\frac{t}{\sqrt\beta}|1\rangle\right)\otimes|1_E\rangle,
+\qquad J_0\kappa=0.
+\tag{R.91}
+$$
+
+To see the actual kernel equation without choosing separate blocks, contract $\kappa$ with the Gram map $\mathcal F(|i\rangle\otimes|\alpha_E\rangle)=K_\alpha|i\rangle$. The reality of the Kraus matrices gives $J_0=\mathcal F^T\mathcal F$. Its image is
+
+$$
+-\frac{t}{\sqrt a}K_0|0\rangle
+ +K_1\left(|2\rangle-\frac{t}{\sqrt\beta}|1\rangle\right)=0.
+$$
+
+The rank five in (R.80) makes this the whole one-dimensional kernel in dimension six. The two logical factors in (R.91) are orthogonal and nonzero, so its logical Schmidt directions are precisely $|0\rangle$ and $v$. This is a kernel of the same $C_0,C_1,\sigma$ and, by (R.2), the same phase $C,S$.
+
+The kernel relation has a concrete factorization consumer in this family proof. For two actual real Kraus matrices, real orthonormal $u,v$ and real coefficients $\lambda,\eta$ with $\eta\ne0$ and $\lambda K_0u+\eta K_1v=0$, put $x=K_0u$ and $y=K_0v-(\lambda/\eta)K_1u$. Expanding the two Kraus contributions and then using TP gives
+
+$$
+\begin{gathered}
+N(uv^T+vu^T)=xy^T+yx^T,\\
+x^Ty=(K_0u)^TK_0v+(K_1u)^TK_1v=u^Tv=0,\\
+\tfrac12\|N(uv^T+vu^T)\|_1=\|x\|\,\|y\|.
+\end{gathered}
+\tag{R.92}
+$$
+
+For nonzero $x,y$, the last equality follows from the two eigenvalues $\pm\|x\|\|y\|$ on their orthogonal span; if either vector vanishes both sides are zero. Apply this calculation to (R.75) with $u=|0\rangle$, $v$ from (R.89), $\lambda=-t/\sqrt a$ and $\eta=\sqrt{(\beta+t^2)/\beta}$. The needed relation is exactly (R.91). With $c=\sqrt\beta/\sqrt{\beta+t^2}$, direct multiplication gives
+
+$$
+K_0v=c\left(s_t e_4-\frac{t}{\sqrt{a\beta}}e_1\right),\qquad
+K_1v=ct\,e_0.
+\tag{R.93}
+$$
+
+Consequently $x=\sqrt a\,e_0$, $\sqrt a\,y=f$, where
+
+$$
+\begin{gathered}
+f=c\left(A_t e_4+B_t e_2-\frac{t}{\sqrt\beta}e_1\right),\qquad f\perp e_0,\\
+N_{\beta,t}(P_{\psi_+}-P_{\psi_-})
+=N_{\beta,t}(|0\rangle\langle v|+|v\rangle\langle0|)
+=e_0f^T+fe_0^T.
+\end{gathered}
+\tag{R.94}
+$$
+
+Thus (R.92) gives half norm $\|f\|$; the full output eigenvalues are $\|f\|,-\|f\|,0,0,0$. In particular
+
+$$
+\begin{aligned}
+\|f\|^2
+&=\frac{\beta}{\beta+t^2}\left(A_t^2+B_t^2+\frac{t^2}{\beta}\right)\\
+&=\frac{a\beta+(1-2a\beta)t^2}{\beta+t^2}
+ =a+\frac{\beta(2\beta-1)t^2}{\beta+t^2},
+\end{aligned}
+$$
+
+proving (R.90). The tilted difference has a nonzero $0$–$1$ component for $t>0$, whereas every $X(u,\varphi)$ in Definition 18.1 has only plane–$2$ coherences. Hence this witness lies outside that restricted family of differences.
+
+Reuse the same-recovery contraction argument of Theorems 4.3 and 14.2. It also applies to any orthogonal-support density matrices $\rho,\sigma$. For a single arbitrary complex CPTP recovery $R:M_5\to M_3$, put $d_R=\|RN-\mathrm{id}_3\|_\diamond$. Then
+
+$$
+\begin{aligned}
+2=\|\rho-\sigma\|_1
+&\leq\|(\mathrm{id}-RN)(\rho)\|_1
+      +\|RN(\rho-\sigma)\|_1
+      +\|(\mathrm{id}-RN)(\sigma)\|_1\\
+&\leq2d_R+\|N(\rho-\sigma)\|_1,\\
+\delta_N&\geq1-\tfrac12\|N(\rho-\sigma)\|_1.
+\end{aligned}
+\tag{R.95}
+$$
+
+The contraction step uses only the Hermitian argument: its positive and negative parts are sent to PSD operators whose traces are preserved, so triangle inequality bounds the output norm by the sum of those traces. Each individual error term is bounded by the unhalved diamond norm. Infimizing the same $R$ proves the last line; no separately optimized recoveries have been combined. Using (R.89) yields
+
+$$
+\delta_{N_{\beta,t}}
+\geq1-\sqrt{a+\frac{\beta(2\beta-1)t^2}{\beta+t^2}}
+\geq1-\sqrt a=U(\beta).
+\tag{R.96}
+$$
+
+For $0<\beta<1/2$ and $t>0$ the first lower bound is strictly greater than $U(\beta)$. At $\beta=1/2$ it equals $U(\beta)$; this establishes no equality for the encoder's optimum. Product inputs are legitimate lower witnesses in the original diamond norm with all finite references, and impose no restriction on its supremum. $\square$
+
+**Corollary 20.2 (method refutation with the original target retained).** For every positive beta the actual family (R.75) has $\mu_N(u,\varphi)>\sqrt a$ for every restricted complex $u,\varphi$, yet has $\delta_N\geq U(\beta)$ by its actual tilted pair. Thus the universal restricted-third-direction method in Definition 18.1 fails throughout $0<\beta\leq1/2$. The threshold consequence $\mu_N(u,\varphi)>\sqrt a$ of (R.74) is not sufficient for improvement. This is consistent with Theorem 17.1, which stated it only as necessary. The family is excluded from improvement of the original sharp curve; it is not a counterexample to that curve.
+
+**Proof.** Combine the exact attained minimum (R.81) with (R.96). The strict minimum includes all complex directions, while the exclusion uses the different pure inputs (R.89) of this same encoder. Returning to physical coordinates uses exactly $L\psi_\pm$ as the witness pair and $R^{\rm ph}=\operatorname{Ad}_L\circ R\circ\operatorname{Ad}_{D^\dagger}$. Equation (P.16) transports the full complex recovery domain and full-reference diamond norm bijectively, so the physical encoder obeys the same lower bound. This transport leaves the native candidate inputs $\theta_\pm$ and their passive sign reflection unchanged. $\square$
+
+## 21. Additional Kraus terms and the remaining unreferenced directions
+
+**Definition 21.1 (boundary of the consumed factorization).** Equation (R.92) used exactly two actual real Kraus matrices and a real orthogonal pair. If a channel has additional Kraus matrices and the same relation $\lambda K_0u+\eta K_1v=0$, the expansion instead reads
+
+$$
+\begin{aligned}
+N(uv^T+vu^T)
+&=xy^T+yx^T+\sum_{\gamma\geq2}
+ \left[(K_\gamma u)(K_\gamma v)^T+(K_\gamma v)(K_\gamma u)^T\right],\\
+x^Ty&=-\sum_{\gamma\geq2}(K_\gamma u)^T(K_\gamma v).
+\end{aligned}
+\tag{R.97}
+$$
+
+Indeed the relation combines only the first two summands, and TP makes the sum of all column inner products $u^Tv=0$. The residual therefore also supplies the trace cancellation: the isolated two-term part need not be traceless. Complementary Choi rank at most five neither removes this residual nor bounds its trace norm. The encoder rank two in Theorem 18.2 is a property of that family, not a consequence of the complementary rank bound for the whole class. A full-class kernel route still needs a bound on every remaining contribution in the same actual output, or a different uniform certificate. The all-third-column domain and rank-nine real compression in Theorem 1.3 are retained.
+
+The family above needs no reference entanglement for its exclusion, since (R.89) is already an orthogonal pure pair. For the whole original class, neither a useful unrestricted orthogonal pure pair for every encoder nor the necessity of reference entanglement has been established. There is a separate mixed-state route before adding a reference. In this particular qutrit domain, take a nonzero traceless Hermitian input $X$. Its Jordan parts $X_+,X_-$ have disjoint supports and the same trace $c=\|X\|_1/2>0$, so $X=c(\rho-\sigma)$ with $\rho\sigma=0$. Their ranks sum to at most three, so after changing the sign of $X$ if needed, one state is pure and the other has rank at most two. Spectral decomposition supplies exactly
+
+$$
+\rho=|v\rangle\langle v|,\qquad
+\sigma=p|w_1\rangle\langle w_1|+(1-p)|w_2\rangle\langle w_2|,
+\qquad 0\leq p\leq1,
+\tag{R.98}
+$$
+
+where $v,w_1,w_2$ are orthonormal; a zero-weight direction can be completed arbitrarily. Consequently the minimum of $\|N(X)\|_1/\|X\|_1$ over all nonzero traceless Hermitian qutrit inputs is the minimum of $\|N(\rho-\sigma)\|_1/2$ over these orthogonal-support pairs. Equation (R.95) applies to all of them. This Jordan reduction only delineates the remaining contraction method: it proves neither that mixed inputs are necessary in the original class nor that a reference is necessary or sufficient for its sharp bound. Failure to find a restricted pair, or even an unrestricted pure pair, would not exclude an orthogonal-support mixed witness.
+
+## 22. Mathematical attribution and the unresolved original problem
+
+**Definition 22.1 (model-specific content and reused ingredients).** The fixed physical/passive correspondence, arbitrary complex recovery domain and finite-reference convention are those of (P.1)–(P.6) and (P.16). The attained upper-family optimum at $t=0$ is already (P.11)–(P.16), with its matched fidelity certificate in Theorem 8.1. Complementary Choi support and rank accounting reuse (R.2)–(R.5); the same-recovery trace-distance obstruction is already in Theorems 4.3, 14.2 and 17.1. The exact-recovery interfaces remain owned by [FiniteKrausReversibility](../../../Blueprint/D5/S3/Quantum/Recovery/FiniteKrausReversibility.md) and [OrthogonalSyndromeChannel](../../../Blueprint/D5/S3/Quantum/Recovery/OrthogonalSyndromeChannel.md); they do not supply the positive-error continuum minimum here.
+
+The new model-specific composition is the forward actual family (R.75), its coupled blocks and distinct encoder/complement ranks (R.78)–(R.80), the all-complex exact minimum with attainment (R.81)–(R.88), and the same-kernel tilted exclusion (R.89)–(R.96). The reflection pinching, two-dimensional spectral calculations, Gram rank facts, real two-Kraus expansion and qutrit Jordan decomposition are standard finite-dimensional matrix ingredients used inside those proofs and their explicit method boundary. They are not asserted as new general theorems. The standard channel and norm interfaces retain the attribution in Definitions 10.1 and 17.2; these calculations require no additional literature theorem. No global novelty or kernel-verification assertion is attached to this composition.
+
+**Definition 22.2 (sharp target and resource boundary).** For $0<\beta\leq1/2$, the original full-class task remains to prove $\delta_N\geq U(\beta)$ for every actual original real-Kraus encoder, or to give an actual encoder and one arbitrary complex CPTP recovery with a rigorous full-reference unhalved diamond upper certificate strictly below $U(\beta)$. Together with the existing upper family, the former would give $\delta^*_{\mathcal R}(\beta)=U(\beta)$. Equations (R.81) and (R.96) settle only the restricted method and the displayed same-channel exclusion. They supply neither the uniform lower proof nor an improving recovery. The larger complex-class optimization remains separate. At half beta only a lower bound is asserted for the new encoder's optimum; at beta zero the existing isometry already gives class optimum zero.
+
+Every physical application still requires the actual source encoder and supplied inputs, common source-fiber membership, finite-history transport and joint legality of the native words in the phase-gain volume. The coordinate matrices, the pinching reflection and the tilted mathematical test states provide no native gate, input preparation, encoder/decoder apparatus or hardware resource. The standard matrix arguments and their source exposition are ordinary conditional mathematics, with no physical-realization or broader-programme conclusion.
+
+## 追加锚（本行以下为增补区）
