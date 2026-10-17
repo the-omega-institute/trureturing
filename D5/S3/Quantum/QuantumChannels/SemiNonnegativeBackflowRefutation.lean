@@ -76,9 +76,9 @@ private theorem psi_hptp : IsHPTP psi := by
   constructor
   · intro X
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [psi, conjTranspose_apply]
+    fin_cases i <;> fin_cases j <;> simp [psi.eq_1, conjTranspose_apply]
   · intro X
-    simp [psi, trace, Fin.sum_univ_three]
+    simp [psi.eq_1, trace, Fin.sum_univ_three]
     ring
 
 private def faceState : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![1 / 2, 1 / 2, 0]
@@ -89,11 +89,12 @@ private theorem face_density : IsDensity faceState := by
     rw [posSemidef_diagonal_iff]
     intro i
     fin_cases i <;> norm_num [Complex.le_def, Matrix.cons_val_two, vecHead, vecTail]
-  · norm_num [faceState, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
+  · norm_num [faceState.eq_1, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
 
 private theorem psi_face : psi faceState = faceState := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [psi, faceState, Matrix.diagonal, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff]
+  fin_cases i <;> fin_cases j <;> norm_num [psi.eq_1, faceState.eq_1, Matrix.diagonal,
+    Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff]
 
 private theorem psi_sn : IsSemiNonnegative psi :=
   ⟨faceState, face_density, psi_face.symm ▸ face_density⟩
@@ -101,7 +102,7 @@ private theorem psi_sn : IsSemiNonnegative psi :=
 private theorem psi_not_sp : ¬ IsSemiPositive psi := by
   rintro ⟨ρ, _, hpos, hout, _⟩
   have hn : 0 ≤ -(ρ 2 2) := by
-    simpa [psi] using (hout.1.diag_nonneg (i := 2))
+    simpa [psi.eq_1] using (hout.1.diag_nonneg (i := 2))
   exact (not_le_of_gt (hpos.diag_pos (i := 2))) (neg_nonneg.mp hn)
 
 private def proj : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![1, 1, 0]
@@ -127,41 +128,47 @@ private def phi (X : Matrix (Fin 3) (Fin 3) ℂ) : Matrix (Fin 3) (Fin 3) ℂ :=
 
 private theorem xi_normalized : IsKrausChannel xiKraus := by
   unfold IsKrausChannel
-  simp only [xiKraus, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+  simp only [xiKraus.eq_1, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
     Matrix.conjTranspose_single, Matrix.single_mul_single_same]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [proj, diagonal_conjTranspose, diagonal_mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat]
+    norm_num [proj.eq_1, diagonal_conjTranspose, diagonal_mul_diagonal, Matrix.single,
+      Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat]
 
 private theorem phi_normalized : IsKrausChannel phiKraus := by
   unfold IsKrausChannel
-  simp only [phiKraus, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+  simp only [phiKraus.eq_1, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
     Matrix.conjTranspose_single, Matrix.single_mul_single_same]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [faceState, diagonal_conjTranspose, diagonal_mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat]
+    norm_num [faceState.eq_1, diagonal_conjTranspose, diagonal_mul_diagonal, Matrix.single,
+      Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat]
 
 private theorem xi_action (X : Matrix (Fin 3) (Fin 3) ℂ) : krausApply xiKraus X = xi X := by
-  simp only [krausApply, of_kraus, xiKraus, Fin.sum_univ_succ,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single, Matrix.single_mul_mul_single]
+  simp only [krausApply.eq_1, of_kraus, xiKraus.eq_1, Fin.sum_univ_succ,
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single,
+      Matrix.single_mul_mul_single]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [proj, xi, diagonal_conjTranspose, Matrix.diagonal_mul,
-      Matrix.mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat] <;> ring
+    norm_num [proj.eq_1, xi.eq_1, diagonal_conjTranspose, Matrix.diagonal_mul,
+      Matrix.mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff,
+        map_ofNat] <;> ring
 
 private theorem phi_action (X : Matrix (Fin 3) (Fin 3) ℂ) : krausApply phiKraus X = phi X := by
-  simp only [krausApply, of_kraus, phiKraus, Fin.sum_univ_succ,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single, Matrix.single_mul_mul_single]
+  simp only [krausApply.eq_1, of_kraus, phiKraus.eq_1, Fin.sum_univ_succ,
+    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single,
+      Matrix.single_mul_mul_single]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [faceState, phi, diagonal_conjTranspose, Matrix.diagonal_mul,
-      Matrix.mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat] <;> ring
+    norm_num [faceState.eq_1, phi.eq_1, diagonal_conjTranspose, Matrix.diagonal_mul,
+      Matrix.mul_diagonal, Matrix.single, Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff,
+        map_ofNat] <;> ring
 
 private theorem context (X : Matrix (Fin 3) (Fin 3) ℂ) :
     psi (krausApply phiKraus X) = krausApply xiKraus X := by
   rw [phi_action, xi_action]
   ext i j
-  fin_cases i <;> fin_cases j <;> simp [psi, phi, xi] <;> ring
+  fin_cases i <;> fin_cases j <;> simp [psi.eq_1, phi.eq_1, xi.eq_1] <;> ring
 
 private def sigmaPlus : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![5 / 8, 1 / 8, 1 / 4]
 private def sigmaMinus : Matrix (Fin 3) (Fin 3) ℂ := diagonal ![1 / 8, 5 / 8, 1 / 4]
@@ -173,20 +180,21 @@ private theorem inputs_density : IsDensity sigmaPlus ∧ IsDensity sigmaMinus :=
       rw [posSemidef_diagonal_iff]
       intro i
       fin_cases i <;> norm_num [Complex.le_def, Matrix.cons_val_two, vecHead, vecTail]
-    · norm_num [sigmaPlus, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
+    · norm_num [sigmaPlus.eq_1, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
   · constructor
     · change (diagonal ![(1 / 8 : ℂ), 5 / 8, 1 / 4]).PosSemidef
       rw [posSemidef_diagonal_iff]
       intro i
       fin_cases i <;> norm_num [Complex.le_def, Matrix.cons_val_two, vecHead, vecTail]
-    · norm_num [sigmaMinus, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
+    · norm_num [sigmaMinus.eq_1, trace, Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
 
 private theorem distance_before : traceDistance (phi sigmaPlus) (phi sigmaMinus) = 1 / 4 := by
   unfold traceDistance
   rw [show phi sigmaPlus - phi sigmaMinus =
       diagonal (fun i => ((![1 / 4, -(1 / 4), 0] : Fin 3 → ℝ) i : ℂ)) by
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [phi, sigmaPlus, sigmaMinus, Matrix.cons_val_two, vecHead, vecTail]]
+    fin_cases i <;> fin_cases j <;> norm_num [phi.eq_1, sigmaPlus.eq_1, sigmaMinus.eq_1,
+      Matrix.cons_val_two, vecHead, vecTail]]
   rw [D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
   norm_num [Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
 
@@ -195,7 +203,8 @@ private theorem distance_after : traceDistance (xi sigmaPlus) (xi sigmaMinus) = 
   rw [show xi sigmaPlus - xi sigmaMinus =
       diagonal (fun i => ((![1 / 2, -(1 / 2), 0] : Fin 3 → ℝ) i : ℂ)) by
     ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [xi, sigmaPlus, sigmaMinus, Matrix.cons_val_two, vecHead, vecTail]]
+    fin_cases i <;> fin_cases j <;> norm_num [xi.eq_1, sigmaPlus.eq_1, sigmaMinus.eq_1,
+      Matrix.cons_val_two, vecHead, vecTail]]
   rw [D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm]
   norm_num [Fin.sum_univ_three, Matrix.cons_val_two, vecHead, vecTail]
 
