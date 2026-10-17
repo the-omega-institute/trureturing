@@ -2122,4 +2122,113 @@ These are all places. The global product formula therefore gives exactly
 
 This proof explains directly the distinction between full support and odd-depth support. The general product hypothesis on (19/p) is used to identify the locally selected character with the root-independent character in the statement; it is not silently imposed at even-depth primes. This proves the same product assertion directly by Hilbert reciprocity. ∎
 
+## 102. Earlier-support dihedral restrictions, with proven simultaneous independence
+
+The target is the original ternary sequence, not arbitrary rational points. This section extends the direct Hilbert proof of §101. The original recurrence and support inputs are the dossier's TBN3 and GPC5–GPC10: for every prime p dividing B_(3^h), h>=1, p>5, (5/p)=1 and p=1 modulo 3. We use the exact Pell identity, not an odd-valuation assertion about primitive divisors.
+
+Primary background: quadratic Hilbert reciprocity and its odd-local formula, as used in Stevenhagen, Redei reciprocity, governing fields, and negative Pell, arXiv:1806.06250v3, especially section 8, equations (48)–(50), the local arguments in Lemma 8.1, and the global product formula in the proof of Theorem 7.9; https://arxiv.org/pdf/1806.06250 . Chebotarev's natural-density theorem is Milne, Algebraic Number Theory, Theorem 8.31, https://www.jmilne.org/math/CourseNotes/ANT.pdf . The new field-degree calculations are proved below. We do not apply a Redei symbol to an unverified minimally ramified field.
+
+### 102.1. Statement
+
+**Theorem 102.1.**
+
+Write K=Q(sqrt5), O=Z[phi], phi=(1+sqrt5)/2. Let j>h>=1 be integers, N=3^j, M=3^h, and p any prime dividing B_M=L_M^2+3. Choose a totally positive algebraic integer gamma_p in O of norm p. Such a choice always exists, as proved in section 102.3. Put
+
+ F_p=K(sqrt p,sqrt(gamma_p)).
+
+For the actual later block B_N=D C^2, D its full positive squarefree kernel and C a positive integer, suppose (p/q)=1 for every q dividing D. Define chi_p(q) as the quadratic residue character of gamma_p at either of the two primes of K over q. This is a nonzero, root-independent sign. Then
+
+ product_(q|D) chi_p(q)=1.
+
+No assumption about (p/q) is made at primes occurring only in C. If D=Q is prime, the assumption is automatic and Q splits completely in F_p. Both the field and the signs on p-split primes are independent of the totally positive integral norm-p choice.
+
+Consequently fix any finite collection of distinct primes p_1,...,p_t, t>=1, each dividing a ternary block of index 3^h with 1<=h<=J. Every unique odd-depth prime Q of a block B_(3^j) with j>J splits completely in their compositum L=F_(p_1)...F_(p_t).
+
+The degrees and maximal abelian field are exactly
+
+ [L:Q]=2*4^t,
+ L_ab=K(sqrt(p_1),...,sqrt(p_t)).
+
+Among rational primes Q=19 modulo 120 satisfying (p_i/Q)=1 for all i, every one of the 2^t possible character vectors (chi_(p_i)(Q)) occurs in an abstract Chebotarev class of natural density 1/(32*4^t). Only the all-positive vector is permitted for the stated actual unique odd-depth role. Thus the simultaneous new signs remove a proportion 1-2^(-t) of this precisely specified abstract quadratic candidate set, whose density is 1/(32*2^t).
+
+These densities do not assert realization by an exact golden clock, independence from all previous higher-order tests, existence of WSS primes, or exclusion of every support. The general multi-prime product statement retains its explicit p-splitting premise. No rank or Sha premise occurs.
+
+### 102.2. The exact recurrence at every earlier support prime
+
+**Proof.**
+
+Let f=F_M modulo p. The odd-index identities give
+
+ B_M=5F_M^2-1,   5f^2=1,
+ F_(3n)=5F_n^3-3F_n.
+
+Thus f is nonzero and F_(3M)=-2f modulo p. The value -2f is fixed by tripling, since 5(-2f)^3-3(-2f)=(-8+6)f=-2f. Induction gives F_N=-2f modulo p for every j>h. Therefore
+
+ B_N=5F_N^2-1=3 modulo p.
+
+In particular p divides neither D nor C. The two roots of 5 modulo p are f^(-1) and -f^(-1). For beta=-1-F_N sqrt5, its residues at these roots are respectively 1 and -3. The support condition p=1 modulo 3 gives (-3/p)=1, so both residues are nonzero squares. Hensel's lemma makes beta a square in both completions of K over p.
+
+Also F_N=2 modulo 4 by the same recurrence starting at F_3=2. In the full ring O,
+
+ beta=(F_N-1)-2F_N phi=1 modulo 4O,
+ Norm(beta)=-D C^2.
+
+This is the precise original-index and dyadic input. Earlier blocks have disjoint rational prime support by B_N=3 modulo p and p>3; no primitive-divisor theorem is used.
+
+### 102.3. Norm-p generators, signs, and choice
+
+The ring O is norm-Euclidean. Indeed for x in K, round both rational coefficients in the basis 1,phi to integers. The difference is a+b phi with |a|,|b|<=1/2. Its norm is a^2+ab-b^2. Its absolute value is at most a^2+|ab|+b^2<=3/4<1. This proves the Euclidean division inequality, hence O is a PID.
+
+Since (5/p)=1, p splits as two distinct prime ideals of norm p. A generator of either ideal has rational norm p or -p. Multiplying by phi, whose norm is -1, achieves norm p. Its two real embeddings then have the same sign; multiplying by -1 if needed makes it totally positive. This yields gamma_p, integral with ideal valuation vector (1,0) at the two primes over p and zero at all other finite primes.
+
+Every totally positive unit of O is a square. Here is a direct verification. If a totally positive unit epsilon>1 has norm 1, write epsilon=(a+b sqrt5)/2 with integers a,b of the same parity. Its conjugate is epsilon^(-1), so b=(epsilon-epsilon^(-1))/sqrt5 is a positive integer. Hence epsilon-epsilon^(-1)>=sqrt5 and epsilon>=(3+sqrt5)/2=phi^2. Dividing any positive unit by a suitable power of phi^2 puts it in [1,phi^2), where it must be 1. Thus all totally positive units are phi^(2m), m integral.
+
+Two totally positive norm-p generators of the same prime ideal consequently differ by a square unit. Generators of the other ideal differ by a square unit from the conjugate gamma_bar. Since gamma_p*gamma_bar=p becomes a square after adjoining sqrt p, both choices give the same F_p. At a split prime q with (p/q)=1, their residue characters also agree. This proves the asserted choice independence, without imposing a minimal dyadic normalization on gamma_p.
+
+### 102.4. Direct Hilbert product, all places and all cofactors
+
+Apply Hilbert reciprocity over K to (beta,gamma_p). The product over every finite and infinite place equals 1.
+
+At the real places gamma_p is positive, so the symbols are 1. At the place over 2, beta belongs to 1+4O. The polynomial T^2-T+(1-beta)/4 is etale over the local integer ring, so K_2(sqrt beta) is an unramified quadratic algebra. Gamma_p is a unit because its norm p is odd. Units are norms from an unramified quadratic extension; the local symbol is 1. This holds for every integral norm-p choice, without any claim that F_p is minimally ramified at 2.
+
+At the prime over 5 both entries are units: p>5 and actual B_N is prime to 5. The odd-residue-characteristic unit-unit symbol is 1. At both primes over p, beta is a local square by section 102.2; hence those factors are 1 even where gamma_p has valuation 1.
+
+At any other odd rational prime ell, gamma_p is a unit. The trace beta+beta_bar=-2 forbids simultaneous positive valuations of the two conjugates at a split ell. At an inert ell it forbids any positive beta valuation, because conjugation fixes that prime. For split ell not dividing D, the only possible nonzero valuation is 2v_ell(C), so the symbol is 1. This covers all even-depth primes and all their exponents; no p-splitting hypothesis was used there.
+
+For q|D, actual support splits q in K, and q is different from p,2,5. The beta valuations at its two primes are 0 and 1+2v_q(C). At the unit prime the symbol is 1. At the odd-valuation prime the odd-local formula gives precisely the residue character of gamma_p. The two conjugate residue values of gamma_p multiply to p, which is a square modulo q by hypothesis. Their characters agree and equal chi_p(q). Thus this pair of places contributes chi_p(q), including when q divides C.
+
+All places have been enumerated. The global formula proves product_(q|D) chi_p(q)=1.
+
+### 102.5. Unique odd-depth support makes the quadratic premise automatic
+
+Suppose D=Q is prime. Actual support gives Q=19 modulo 120, in particular Q=3 modulo 4. From Q C^2=3 modulo p and p not dividing C,
+
+ (Q/p)=(3/p)=(-1/p),
+
+because (-3/p)=1. Quadratic reciprocity with Q=3 modulo 4 gives (p/Q)=(Q/p)(-1/p)=1. Thus the product theorem applies without an additional assumption and yields chi_p(Q)=1.
+
+The prime Q is unramified in F_p: over K, square roots of p and gamma_p can ramify only over 2 or p; K itself ramifies only at 5. Actual Q is distinct from these. Since Q splits in K and in Q(sqrt p), and its remaining character is 1, Q splits completely in F_p. This proves the claim for each earlier support prime, and therefore in every finite compositum of such fields. Even-depth primes of the current block remain unrestricted by the quadratic premise.
+
+### 102.6. Simultaneous independence proved by prime valuations
+
+For t distinct earlier primes, consider the 2t squareclasses p_i,gamma_i in K^*/K^(*)^2. At the two primes above p_i their valuation vectors are respectively (1,1) and (1,0), after choosing the order of the two primes. Every p_l,gamma_l with l different from i has vector (0,0) there. If a product of these 2t elements is a square in K, valuation at the second prime over p_i first forces the exponent of p_i to be even; the first prime then forces the exponent of gamma_i to be even. This holds for every i. Hence all 2t classes are independent, and elementary multiquadratic theory gives [L:K]=2^(2t).
+
+Equivalently, the classes gamma_i,gamma_bar_i are independent: their valuation vectors are (1,0),(0,1). Over K the Galois group H is the independent sign changes of all their square roots, so H=(Z/2)^(2t). Conjugation of K interchanges gamma_i and gamma_bar_i. It lifts to an order-two automorphism sigma interchanging their chosen square roots for every i. Therefore L is Galois over Q and
+
+ Gal(L/Q)=H semidirect <sigma>,
+
+where sigma swaps the two coordinates of every pair. Its commutator subgroup is the t-dimensional subspace generated by simultaneous sign changes of the two square roots in a single pair. This subgroup is central. The fixed field of the commutator contains K and every sqrt(p_i)=sqrt(gamma_i)*sqrt(gamma_bar_i). Their degree over Q is 2^(t+1), exactly the abelian quotient degree, so the fixed field is precisely E=K(sqrt(p_1),...,sqrt(p_t)). Thus E is the maximal abelian subfield. Each individual F_p has dihedral group of order 8 as the t=1 case. No linear-disjointness premise was assumed.
+
+### 102.7. Exact densities and the comparison with quadratic restrictions
+
+Let A=Q(zeta_120), of degree 32. The intersection L intersect A is an abelian subfield of L, hence lies in E. The quadratic subfields of E correspond to squareclasses generated by 5,p_1,...,p_t. Any class involving some p_i has odd valuation there and its quadratic field ramifies at that prime. A is unramified at each p_i>5. Thus the only nontrivial quadratic subfield of E that can lie in A is K. Since every subfield of a multiquadratic field is itself multiquadratic, L intersect A=K. Consequently
+
+ [LA:Q]=(2*4^t)*32/2=32*4^t.
+
+The automorphism tau_19 of A, sending zeta_120 to zeta_120^19, fixes K. For each sign vector epsilon in {+1,-1}^t, let z_epsilon in Gal(L/E) change both square roots in pair i by epsilon_i. This is central, and fixes K. The compatible pair (z_epsilon,tau_19) therefore defines a central element of Gal(LA/Q), with singleton conjugacy class. Chebotarev gives natural density 1/(32*4^t) for its rational primes.
+
+These primes are exactly those with Q=19 modulo 120, (p_i/Q)=1 for every i, and chi_(p_i)(Q)=epsilon_i. Indeed the quadratic conditions put Frobenius over L in Gal(L/E), and its action on sqrt(gamma_i) is the character chi_(p_i)(Q). Finite ramified primes do not affect density. Summing over the 2^t sign vectors gives density 1/(32*2^t) for the listed quadratic candidate set; only the all-positive vector survives the unique odd-depth theorem. For each finite t there are nonempty excluded abstract classes, not merely a restatement of those quadratic restrictions.
+
+For any fixed J one may take all primes of the first J blocks, or any distinct subset. There is at least one new prime at every level because each B_(3^h)>1 and the supports are disjoint by section 102.2. This supplies a growing collection of independent dihedral restrictions on later unique odd-depth support. We do not infer a new density-zero theorem for actual clocks from these abstract densities, nor assert independence from the other higher-order necessary conditions already in the repository. We do not compute or force the mixed determinant of §100. The result is a uniform original-index restriction on the unique odd-depth role, and a conditional product balance for general odd-depth support. ∎
+
 ## 追加锚（本行以下为增补区）
