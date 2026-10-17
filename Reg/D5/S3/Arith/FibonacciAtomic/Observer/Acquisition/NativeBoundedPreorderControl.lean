@@ -188,7 +188,9 @@ abbrev stationaryArena : Arena where
     Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
     controlProgram P final = .halt ∧
     (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
-      controlProgram P z = .halt → z = final ∧ a = epoch)
+      controlProgram P z = .halt → z = final ∧ a = epoch) ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      a = epoch ∧ (z = final ∨ TrialPoint P τ u z))
 
 private theorem stationary_bad_law : ¬ stationaryArena.Law stationaryBad := by
   intro law
@@ -199,7 +201,7 @@ private theorem stationary_bad_law : ¬ stationaryArena.Law stationaryBad := by
     (Or.inr rfl) obs 0 (by intro p; rfl)
   have correct := native_stationary_bounded_execution P 0 (.of true) (.of true) rfl rfl
     (by decide) (by decide) (Or.inr rfl) obs 0 (by intro p; rfl)
-  have eq := correct.2.2 _ _ wrong.1 wrong.2.1
+  have eq := correct.2.2.1 _ _ wrong.1 wrong.2.1
   have mode := congrArg Control.mu eq.1
   change Mode.halt1 = Mode.halt0 at mode
   cases mode

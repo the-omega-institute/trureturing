@@ -411,6 +411,60 @@ private theorem trial_geometry (h τ N : Nat) (u y : Source)
 def atPrefix (j : Nat) (H : History) (p : Address) (mu : Mode) : Control :=
   ⟨p, p.length, branches H, leafVisits H, j, decide (betas H % 2 = 1), mu⟩
 
+/-- A licensed proper trial prefix and its exact compressed control fields.
+All quantified reports and frontiers are mathematical comparison data. -/
+def TrialPoint (P : Parameters) (τ : Nat) (u : Source) (z : Control) : Prop :=
+  ∃ N j H a tail,
+    P.start + j = N ∧ N ≤ τ ∧ j ≤ P.last ∧
+    trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail ∧
+    H.IsPrefix (acquisitionTrace [] (BoundedPreorderTrial.virtualSource u τ N)) ∧
+    frontier H = a.1 :: rightsPending a.1 ∧
+    branches H < P.h ∧ leafVisits H < P.h ∧ a.1.length < P.h ∧
+    (z = atPrefix j H a.1 (queryMode N a.1) ∨ z = atPrefix j H a.1 .value)
+
+/-- A finite actual execution carrying a mathematical predicate at every point. -/
+inductive RefinedRun (P : Parameters) (obs : Nat → Address → Reply)
+    (I : Control → Nat → Prop) : Control → Nat → Control → Nat → Prop
+  | refl (x : Control) (a : Nat) : I x a → RefinedRun P obs I x a x a
+  | read {x : Control} {p : Address} {k : Reply → Control} {a : Nat}
+      {y : Control} {b : Nat} : I x a → controlProgram P x = .read p k →
+      RefinedRun P obs I (k (obs a p)) a y b → RefinedRun P obs I x a y b
+  | update {x z : Control} {a : Nat} {y : Control} {b : Nat} :
+      I x a → controlProgram P x = .update z → RefinedRun P obs I z (a + 1) y b →
+      RefinedRun P obs I x a y b
+
+private theorem refined_run {P : Parameters} {obs : Nat → Address → Reply}
+    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
+    (path : RefinedRun P obs I x a y b) : Run (controlProgram P) obs x a y b := by
+  induction path with
+  | refl => exact .refl _ _
+  | read _ hop _ ih => exact .read hop ih
+  | update _ hop _ ih => exact .update hop ih
+
+private theorem refined_prefix {P : Parameters} {obs : Nat → Address → Reply}
+    {I : Control → Nat → Prop} {x y : Control} {a b : Nat}
+    (path : RefinedRun P obs I x a y b) (halt : controlProgram P y = .halt) :
+    ∀ z e, Run (controlProgram P) obs x a z e → I z e := by
+  induction path with
+  | refl x a good =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read hop _ => cases halt.symm.trans hop
+    | update hop _ => cases halt.symm.trans hop
+  | read good hop tail ih =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read h rest => cases hop.symm.trans h; exact ih halt _ _ rest
+    | update h _ => cases hop.symm.trans h
+  | update good hop tail ih =>
+    intro z e other
+    cases other with
+    | refl => exact good
+    | read h _ => cases hop.symm.trans h
+    | update h rest => cases hop.symm.trans h; exact ih halt _ _ rest
+
 private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source)
     (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
     (j : Nat) (hj : j ≤ P.last) (offset : P.start + j = N)
@@ -418,10 +472,12 @@ private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source
     (split : trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail)
     (obs : Nat → Address → Reply) (epoch : Nat)
     (response : ∀ p, obs epoch p = readout p y)
+    (I : Control → Nat → Prop)
+    (good : ∀ mu, mu = .value ∨ mu = queryMode N a.1 → I (atPrefix j H a.1 mu) epoch)
     (final : Control) (lastEpoch : Nat)
-    (continuation : Run (controlProgram P) obs
+    (continuation : RefinedRun P obs I
       (virtualDelta P (atPrefix j H a.1 .value) a.2) epoch final lastEpoch) :
-    Run (controlProgram P) obs
+    RefinedRun P obs I
       (atPrefix j H a.1 (queryMode N a.1)) epoch final lastEpoch := by
   obtain ⟨_, _, hb, hl, hp⟩ := trial_geometry P.h τ N u y spec H a tail split
   have member : a ∈ trial P.h (BoundedPreorderTrial.virtualSource u τ N) := by
@@ -438,9 +494,9 @@ private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source
           hn, root, spec.guard_accept a member root] using decoded
   have valid : Valid P (atPrefix j H a.1 .value) := by
     simpa [Valid, atPrefix] using And.intro hp ⟨hb, Nat.le_of_lt hl, hj⟩
-  have value : Run (controlProgram P) obs (atPrefix j H a.1 .value) epoch
+  have value : RefinedRun P obs I (atPrefix j H a.1 .value) epoch
       final lastEpoch := by
-    apply Run.read (p := a.1 ++ rights (halfCeil N))
+    apply RefinedRun.read (good .value (Or.inl rfl)) (p := a.1 ++ rights (halfCeil N))
       (k := fun r => virtualDelta P (atPrefix j H a.1 .value) (decodeLabel N r))
       (by rw [controlProgram, ite_eq_left valid]; simp only [atPrefix, offset])
     rw [response, label]
@@ -452,7 +508,8 @@ private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source
     have validGuard : Valid P (atPrefix j H a.1 .guard) := by
       simp [Valid, atPrefix, offset, hp, hb, Nat.le_of_lt hl, hj, positive, nonroot]
     simp only [queryMode, ite_eq_right direct]
-    apply Run.read (p := a.1.dropLast ++ rights (N / 2 + 1))
+    apply RefinedRun.read (good .guard (Or.inr (by simp [queryMode, direct])))
+      (p := a.1.dropLast ++ rights (N / 2 + 1))
       (k := fun r => if guardAccept N r then
         { atPrefix j H a.1 .guard with mu := .value } else canonical .error)
       (by rw [controlProgram, ite_eq_left validGuard]; simp only [atPrefix, offset])
@@ -575,23 +632,27 @@ private theorem trial_continuation (P : Parameters) (τ N : Nat) (u y : Source)
     (j : Nat) (hj : j ≤ P.last) (offset : P.start + j = N)
     (obs : Nat → Address → Reply) (epoch : Nat)
     (response : ∀ p, obs epoch p = readout p y)
+    (I : Control → Nat → Prop)
+    (good : ∀ H a tail,
+      trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail →
+      ∀ mu, mu = .value ∨ mu = queryMode N a.1 → I (atPrefix j H a.1 mu) epoch)
     (final : Control) (lastEpoch : Nat)
     (onLast : ∀ H a, trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ [a] →
-      Run (controlProgram P) obs (virtualDelta P (atPrefix j H a.1 .value) a.2)
+      RefinedRun P obs I (virtualDelta P (atPrefix j H a.1 .value) a.2)
         epoch final lastEpoch) :
     ∀ tail H a, trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail →
-      Run (controlProgram P) obs (atPrefix j H a.1 (queryMode N a.1))
+      RefinedRun P obs I (atPrefix j H a.1 (queryMode N a.1))
         epoch final lastEpoch := by
   intro tail
   induction tail with
   | nil =>
     intro H a split
     exact guard_value_progress P τ N u y spec j hj offset H a [] split
-      obs epoch response final lastEpoch (onLast H a split)
+      obs epoch response I (good H a [] split) final lastEpoch (onLast H a split)
   | cons next tail ih =>
     intro H a split
     apply guard_value_progress P τ N u y spec j hj offset H a (next :: tail) split
-      obs epoch response final lastEpoch
+      obs epoch response I (good H a (next :: tail) split) final lastEpoch
     rw [virtual_next P τ N u y spec j offset H a next tail split]
     exact ih (H ++ [a]) next (by simpa using split)
 
@@ -619,16 +680,34 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
     Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
     controlProgram P final = .halt ∧
     (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
-      controlProgram P z = .halt → z = final ∧ a = epoch) := by
+      controlProgram P z = .halt → z = final ∧ a = epoch) ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      a = epoch ∧ (z = final ∨ TrialPoint P τ u z)) := by
   dsimp only
   let final := canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0)
+  let I (z : Control) (a : Nat) : Prop := a = epoch ∧ (z = final ∨ TrialPoint P τ u z)
   have halt : controlProgram P final = .halt := by
     dsimp only [final]
     split <;> simp [controlProgram, Valid, canonical]
   obtain ⟨single, _, K, lower, upper, complete, minimal, _⟩ :=
     BoundedPreorderTrial.bounded_preorder_trial P.h τ P.start u y hu hy start
+  have good (N j : Nat) (hN : N ≤ τ) (hj : j ≤ P.last) (offset : P.start + j = N)
+      (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
+      (H : History) (a : BoundedPreorderTrial.Report) (tail : History)
+      (split : trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail)
+      (mu : Mode) (hm : mu = .value ∨ mu = queryMode N a.1) :
+      I (atPrefix j H a.1 mu) epoch := by
+    obtain ⟨_, front, hb, hl, hp⟩ := trial_geometry P.h τ N u y spec H a tail split
+    have pref : H.IsPrefix (acquisitionTrace [] (BoundedPreorderTrial.virtualSource u τ N)) :=
+      (show H.IsPrefix (trial P.h (BoundedPreorderTrial.virtualSource u τ N))
+        from ⟨a :: tail, split.symm⟩).trans (List.take_prefix _ _)
+    refine ⟨rfl, Or.inr ⟨N, j, H, a, tail, offset, hN, hj, split, pref,
+      front, hb, hl, hp, ?_⟩⟩
+    rcases hm with rfl | rfl
+    · exact Or.inr rfl
+    · exact Or.inl rfl
   have build : ∀ d j, P.start + j + d = K →
-      Run (controlProgram P) obs (fresh j) epoch final epoch := by
+      RefinedRun P obs I (fresh j) epoch final epoch := by
     intro d
     induction d with
     | zero =>
@@ -642,14 +721,15 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
         · exact (spec.completion complete).2.2 even
         · exact spec.endpoint_parity (by omega)
       obtain ⟨r, tail, root⟩ := trial_root P.h (BoundedPreorderTrial.virtualSource u τ K)
-      have run := trial_continuation P τ K u y spec j hj offset obs epoch response final epoch
+      have run := trial_continuation P τ K u y spec j hj offset obs epoch response I
+        (good K j upper hj offset spec) final epoch
         (by
           intro H a split
           rw [virtual_finish P τ K u y spec j offset covers H a split]
           have done : branches (acquisitionTrace []
               (BoundedPreorderTrial.virtualSource u τ K)) < P.h := complete
           rw [ite_eq_left done, ← split, parityEq]
-          exact .refl _ _) tail [] ⟨[], r⟩ (by simpa using root)
+          exact .refl _ _ ⟨rfl, Or.inl rfl⟩) tail [] ⟨[], r⟩ (by simpa using root)
       simpa [atPrefix, fresh, queryMode, branches, leafVisits, betas] using run
     | succ d ih =>
       intro j eq
@@ -659,7 +739,8 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
       have spec := single N (by omega)
       have rejected := minimal N (by dsimp [N]; omega) hN
       obtain ⟨r, tail, root⟩ := trial_root P.h (BoundedPreorderTrial.virtualSource u τ N)
-      have run := trial_continuation P τ N u y spec j hj rfl obs epoch response final epoch
+      have run := trial_continuation P τ N u y spec j hj rfl obs epoch response I
+        (good N j (by omega) hj rfl spec) final epoch
         (by
           intro H a split
           rw [virtual_finish P τ N u y spec j rfl covers H a split]
@@ -668,8 +749,9 @@ theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : S
           rw [ite_eq_right notDone]
           exact ih (j + 1) (by omega)) tail [] ⟨[], r⟩ (by simpa using root)
       simpa [atPrefix, fresh, queryMode, branches, leafVisits, betas] using run
-  have run := build (K - P.start) 0 (by omega)
-  refine ⟨run, halt, ?_⟩
+  have certified := build (K - P.start) 0 (by omega)
+  have run := refined_run certified
+  refine ⟨run, halt, ?_, refined_prefix certified halt⟩
   intro z a other hz
   exact D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution.run_halt_unique other run hz halt
 
