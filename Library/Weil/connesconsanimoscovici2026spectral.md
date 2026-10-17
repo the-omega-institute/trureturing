@@ -7992,3 +7992,241 @@ This reuses standard indefinite projection, concavity and scalar
 quadratic minimization; it claims no generic theorem, novelty or Lean
 proof. Actual-center/full-border/good-block/cofinal positivity, Robin
 and RH remain unresolved.
+
+
+### Recover a source response from saved finite outputs
+
+The previous response interval uses common Hilbert norms and a signed
+old/new Gram. The original computation also retains the complete finite
+Cauchy output and old approximate jet on modes $M+1$ through $2M$,
+$M=32768$. These are stronger observations of the same source. Reuse them
+before asking for another source, elementary sine or tail-moment supplier.
+The new interface applies ordinary algebra and polynomial interpolation;
+it asserts no new generic inequality or algorithm.
+
+Keep the original real weighted space $W_F=w_FI$, $\kappa=33/32$, and
+
+$$
+u_F=v+r+C_{\rm phys}\ell,\qquad
+v_m=\frac{(-1)^m}{2}C(m),\qquad
+C(m)=\sum_{n=1281}^{M}\frac{z_n}{m+n},\qquad
+\sum_n|z_n|\le Z.
+$$
+
+The saved source intervals and the exact384-bit source integers define
+these same $z_n$. The smooth remainder has its existing bound
+$\|r\|_{W_F}\le\epsilon_{\rm sm}$. Retain the old and zero-coordinate
+directions $b=\mathsf Bv_b,d=\mathsf Bv_d$, with complete short features
+$h_b,h_d$. Their actual jets are
+
+$$
+j_h(m)=\frac{2(-1)^m}{\pi m}
+\left[xB_h(x^2)-s_mA_h(x^2)\right],\qquad x=M/m.
+$$
+
+The desired response is $\zeta=\kappa\langle u_F,d\rangle_{W_F}$.
+The physical source, lift, reference form, weights and errors remain
+unchanged. No relation between independently chosen interval endpoints
+is asserted.
+
+#### Eliminate the shared approximate symbol
+
+The stored old finite jet $\widetilde j_b(m)$ uses the original
+approximate symbol $\widetilde s_m$. It is not the actual physical
+operator. All its coefficient and output uncertainty is retained.
+For $0\le t\le1$, a coefficient bound supplies
+
+$$
+|A_b(t)|\ge
+|h_{b,A_0}|-\sum_{k=1}^{55}|h_{b,A_k}|>0.
+$$
+
+Consequently each already saved finite jet determines an enclosing
+interval for the SAME approximate symbol by
+
+$$
+\widetilde s_m=
+\frac{xB_b(x^2)-\pi m(-1)^m\widetilde j_b(m)/2}{A_b(x^2)}.
+$$
+
+Use it with $h_d$ and the already saved $C(m)$ to evaluate one new
+finite functional
+
+$$
+\widetilde\mu_{d,\rm fin}
+=\frac{\kappa w_F}{\pi}
+\sum_{m=M+1}^{2M}\frac{C(m)}m
+\left[xB_d(x^2)-\widetilde s_mA_d(x^2)\right].
+$$
+
+This is a new contraction of old outputs. It does not repeat their
+Cauchy convolution, old jet evaluation or elementary sine evaluations.
+Failure to certify the nonzero denominator stops this interface;
+there is no midpoint division or precision retry.
+
+#### A tail interpolation from the same saved source outputs
+
+Set $U(x)=\sum_nz_n/(1+(n/M)x)$, so that $C(m)=U(M/m)/m$.
+Use exactly13 saved sample modes
+
+$$
+m_i=M+1+\left\lfloor\frac{i(M-1)}{12}\right\rfloor,
+\quad x_i=M/m_i,\quad U_i=m_iC(m_i),\quad 0\le i\le12.
+$$
+
+Their rational nodes satisfy $1/2\le x_i<1$ and are distinct. Let
+$P_{12}$ be their explicit Lagrange interpolation polynomial. Every
+coefficient retains the saved sample uncertainty, including its
+amplification by the interpolation bases.
+
+Apply the classical reciprocal-kernel difference formula in Carl de Boor,
+[*Divided Differences*](https://arxiv.org/abs/math/0502036v1),
+section7 Example8 equations(38)–(39), together with the interpolation
+remainder in section1 Example6 equation(16). With $a_n=n/M\in(0,1]$,
+
+$$
+U(x)-P_{12}(x)=
+(-1)^{13}\prod_{i=0}^{12}(x-x_i)
+\sum_n\frac{z_na_n^{13}}
+{(1+a_nx)\prod_{i=0}^{12}(1+a_nx_i)}.
+$$
+
+For one kernel $1/(1+ax)$, multiply its interpolation error by
+$1+ax$. The resulting degree13 polynomial vanishes at every $x_i$;
+evaluation at $x=-1/a$ determines its leading factor as
+$(-a)^{13}/\prod_i(1+ax_i)$. Summing over the signed source coefficients
+gives the displayed identity. This uses no positivity of those coefficients.
+
+For $0\le x\le1/2$, each $|x-x_i|\le x_i$, and
+$a/(1+ax_i)$ increases on $0\le a\le1$. Thus
+
+$$
+|U(x)-P_{12}(x)|\le
+E_U:=Z\prod_{i=0}^{12}\frac{x_i}{1+x_i}.
+$$
+
+This bound uses signed source coefficients through their absolute sum;
+it assumes neither positivity nor a fitted empirical remainder.
+For $m>2M$, replacing $C(m)$ by $P_{12}(M/m)/m$ therefore has weighted
+principal-source error at most
+
+$$
+\delta_v=\frac{\sqrt{w_F}E_U}{2\sqrt{2M}},
+$$
+
+because $\sum_{m>2M}m^{-2}\le(2M)^{-1}$. The finite band is unchanged.
+The old source-power polynomial was not retained and is not regenerated;
+this polynomial is obtained directly from the saved outputs.
+
+#### Reuse the saved real kernels and physical errors
+
+Write $L(x)$ for the original approximate smooth symbol polynomial,
+and set
+
+$$
+F_0=P_{12}\bigl(xB_d(x^2)-L(x)A_d(x^2)\bigr),\qquad
+F_1=P_{12}A_d(x^2).
+$$
+
+The original archived real kernels use the normalization
+
+$$
+K_q=M^{q-1}\sum_{m\ge2M+1}m^{-q}.
+$$
+
+Their saved range covers every coefficient used here. The nonoscillatory
+tail term is exactly
+
+$$
+\widetilde\mu_{d,\rm tail}
+=\frac{\kappa w_F}{\pi M}\sum_p(F_0)_pK_{p+2}.
+$$
+
+The existing phase-gap cap and Abel estimate bound the omitted oscillatory
+part by
+
+$$
+R_{\rm osc}=\frac{2\kappa w_F}{\pi(2M+1)^2}
+\left[\sum_p|(F_1)_p|\left(\frac M{2M+1}\right)^p\right]
+\mathrm{PhaseCap}.
+$$
+
+No new phase, logarithm, sine or Hurwitz kernel is supplied.
+The global approximate-symbol error still has to be paid. The inherited
+uniform symbol allowance gives a jet error $\beta_d$; use the original
+Hilbert error contract
+
+$$
+R_{\rm fun}=\kappa\left[J_d\delta_v+(P+\delta_v)\beta_d\right],
+\quad J_d\ge\|j_d\|_{W_F},\quad P\ge\|v\|_{W_F}.
+$$
+
+Here $J_d$ denotes a norm upper, rather than the squared-norm upper used
+in the earlier Gram sections. In this application it is bounded by the
+saved physical norm plus the saved sharp forward error. Thus the actual
+principal pairing is enclosed by the finite and nonoscillatory terms
+with radius $R_{\rm fun}+R_{\rm osc}$.
+
+For the mixed source, reuse the saved $a=P_0\ell$ and weighted physical
+kernel $K_0$. One new cached action $a^TK_0$, followed by its contraction
+with $h_d$, supplies $\kappa a^TK_0h_d$. Its physical Gram error is paid
+using the original homogeneous error coefficient and the saved lift
+norm. Add the separate smooth and proxy-forward allowances. The kernel
+already contains the original far weight and is not assumed PSD.
+These operations give an enclosure of the actual $\zeta$; intersect it
+with the previous interval and stop on inconsistency.
+
+The fixed1024-working/640-export application gives the following
+outward displays; the packet's exact rational bounds and640-bit
+interval endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Nonzero old $A_b$ absolute lower |$>1037.446293$|
+| Source absolute-sum upper $Z$ |$<2161.865701$|
+| Uniform interpolation error $E_U$ |$<0.016074441$|
+| Principal-source tail norm error $\delta_v$ |$<0.000017270703$|
+| Functional interpolation/symbol error $R_{\rm fun}$ |$<0.000066044862$|
+| Oscillatory tail allowance $R_{\rm osc}$ |$<0.000584639478$|
+| Physical mixed error allowance |$<4.458569\times10^{-65}$|
+| Smooth remainder allowance |$<5.240841\times10^{-12}$|
+| Proxy forward allowance |$<3.723887\times10^{-67}$|
+| Previous $\zeta$ |contained in$[-8.423006305,0.178343401]$|
+| New $\zeta$ |contained in$[-7.591449537,-7.590148168]$|
+| Previous fixed all-real lower, rounded down |$-0.484608778$|
+| Retained fixed all-real lower, rounded down |$-0.472489776$|
+| Previous energy-endpoint all-real lower, rounded down |$-0.687084970$|
+| Retained energy-endpoint all-real lower, rounded down |$-0.674685242$|
+
+The actual same-source response interval is strictly narrower, and both
+retained paid lower bounds strictly improve. Both exclusion flags remain
+false. All four saved bounding quadratics select the new lower zeta
+endpoint; this constructs no source realizing that endpoint and supplies
+no negative actual paid value. Even after the response is localized to
+this narrow negative interval, these particular paid estimates do not
+establish positivity. Further sharpening of this scalar alone has not
+been shown sufficient.
+
+The application binds16 invoked and66 inherited paths. Stored assembly
+time is<1.118949seconds, excluding serialization. The old producers and
+accepted fixtures are reused without replay.
+
+The reusable packet retains the recovered approximate finite symbols,
+13 interpolation coefficients and nodes, and physical left-kernel
+action. They remain observations and enclosures of the same source;
+they do not identify arbitrary interval choices with realizable rows.
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/d4741a6243a16170ee2634c7cb6e9f18fc34fb0c/docs/reports/weil-c27) retain source
+SHA256 `da93886e4aa00ef58ab4c446486c671996f6f22eaed8d251b7fa8d6d064d94d2` and packet SHA256 `2f6fa2f46f91dfa0449d5bec2523cdbd91a0e7587284f8e417ccb5bd2068ee03`.
+
+The application uses one fixed13-node interpolation and the original
+finite band, at1024 working/640 export bits. It repeats no old producer
+or accepted fixture and performs no source/parameter/precision/cutoff
+scan. It reuses the previous plane bound with the new response interval
+and the same saved transported theta and actual-row positive-energy
+upper. Stronger earlier floors remain retained. A positive paid floor
+would exclude only the specified recipe or monotone pricing family;
+a negative lower remains inconclusive for its actual sign. No claim is
+made about an actual smaller-charge center, full-border or cofinal
+positivity, Robin or RH. This is an application of known interpolation,
+scalar algebra and the existing physical certificates; no generic
+theorem, novelty or Lean proof is asserted.
