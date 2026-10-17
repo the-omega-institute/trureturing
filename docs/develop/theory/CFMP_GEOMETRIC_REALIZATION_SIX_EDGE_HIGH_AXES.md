@@ -1812,3 +1812,454 @@ This does not cover the other four-P-slot class, whose two axes and
 exactly one transverse label belong to P. It also does not eliminate
 the cheap single-P axial families of Section 378 or prove full six-edge
 flat exclusion. No general degree-weighted infeasibility claim is made.
+
+## 395. The remaining four-P-slot class
+
+Let
+
+    m>3, r,p,o>=m, 1<q<=m-2,
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+For the paired frame (r,p,q,o,p,q), with edge order
+(12,13,14,34,24,23), use the genuine angles determined by
+
+    x=sqrt(L/J),
+    theta_r/2=atan(sqrt((r-1)/(r+1))/x),
+    theta_o/2=atan(sqrt((o-1)/(o+1))/x),
+    beta_p=atan(Kplus*x)+atan(Kminus*x),
+    Kplus=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q),
+    Kminus=(sqrt(p^2-1)-sqrt(q^2-1))/(p+q).
+
+Every inverse tangent in these formulas is its ordinary real branch.
+In particular theta_r,theta_o,beta_p are in (0,pi).
+
+**Theorem 395.1.** The quantitative strict inequality is
+
+    E:=theta_r+theta_o+2*beta_p
+      >4*pi/3 + 3/(m+2) - 4/m^2
+      >4*pi/3.                                             (395.1)
+
+This theorem holds over the entire range m>3. It requires neither
+high-label upper gaps nor the source-flat
+condition, the special tau, or tau's angle budget. It does not claim the
+stronger individual estimates theta_r+beta_p>2*pi/3 or
+ theta_o+beta_p>2*pi/3. No coordinatewise monotonicity of E is used.
+
+## 396. An elementary angle-distortion estimate
+
+For u>3, put a=sqrt(1-u^(-2)). For phi in (0,pi), let psi be the unique
+angle in (0,pi) whose positively oriented vector is proportional to
+
+    (cos(phi), a*sin(phi)).
+
+Then
+
+    |psi-phi|<1/u^2.                                        (396.1)
+
+Indeed, phi and psi are on the same side of pi/2, so their difference
+has absolute value less than pi/2. If delta=|psi-phi|, the angle-between-
+vectors formula gives
+
+    tan(delta)=(1-a)*|sin(phi)*cos(phi)|
+               /(cos(phi)^2+a*sin(phi)^2)
+              <=(1-a)/(2*sqrt(a)).
+
+The inequality follows by expanding
+(|cos(phi)|-sqrt(a)*sin(phi))^2>=0; it also holds when the numerator is
+zero. Using delta<=tan(delta), 1-a=1/(u^2*(1+a)), and a>1/2 gives
+
+    delta<=1/(2*u^2*sqrt(a)*(1+a))<1/u^2.
+
+This proves (396.1), including phi=pi/2.
+
+## 397. Replacing the two axes by two positive scalars
+
+Define
+
+    z=sqrt((r+1)*(o+1)), y=sqrt((r-1)*(o-1)),
+    h=(z+y)/2, k=(z-y)/2.
+
+These letters z,y are local auxiliary scalars, not the named source
+labels Z or V. The following bounds hold:
+
+    h>=m, 1<=k<=h/m.                                        (397.1)
+
+The first follows from z>=m+1 and y>=m-1. For the second,
+
+    z^2-(y+2)^2
+      =2*(sqrt(r-1)-sqrt(o-1))^2>=0,
+
+so z>=y+2 and k>=1. Finally,
+
+    y/z=sqrt((r-1)/(r+1))*sqrt((o-1)/(o+1))
+       >=(m-1)/(m+1),
+
+which rearranges to k/h<=1/m.
+
+Set
+
+    alpha=(theta_r+theta_o)/2, X=sqrt(L*J)>0,
+    Np=p*(h^2+k^2+q^2-p^2)+2*q*h*k,
+    Nh=h*(p^2+q^2+k^2-h^2)+2*k*p*q.
+
+Because h+k=z and h-k=y, the original factors become
+
+    L=(p+q)^2-(h-k)^2,
+    J=(h+k)^2-(p-q)^2.                                     (397.2)
+
+Both alpha and beta_p lie in (0,pi). The half-angle formulas yield
+
+    cot(alpha)=Nh/(sqrt(h^2-1)*X),
+    cot(beta_p)=Np/(sqrt(p^2-1)*X).                          (397.3)
+
+For completeness, if a_r=sqrt((r-1)/(r+1)) and
+ a_o=sqrt((o-1)/(o+1)), then
+
+    a_r*a_o=(h-k)/(h+k),
+    a_r+a_o=2*sqrt(h^2-1)/(h+k).
+
+Consequently
+
+    cot(alpha)=((h+k)*x^2-(h-k))/(2*sqrt(h^2-1)*x).
+
+Substitution of (397.2) and x^2=L/J gives its expression in (397.3). Similarly,
+
+    Kplus+Kminus=2*sqrt(p^2-1)/(p+q),
+    Kplus*Kminus=(p-q)/(p+q),
+
+and the tangent-addition formula gives the second expression in (397.3).
+These cotangent identities remain valid at right angles, since their
+positive sine denominators never vanish.
+
+## 398. An exact comparison-angle sum
+
+Define alpha0,beta0 in (0,pi) by
+
+    cot(alpha0)=Nh/(h*X), cot(beta0)=Np/(p*X).
+
+Equations (397.3) identify alpha as the angle-distortion of alpha0 with
+u=h, and beta_p as that of beta0 with u=p. More explicitly, their
+positively oriented vectors are respectively proportional to
+
+    (cos(alpha0),sqrt(1-h^(-2))*sin(alpha0)),
+    (cos(beta0),sqrt(1-p^(-2))*sin(beta0)).
+
+Thus, by (396.1) and h,p>=m,
+
+    E/2=alpha+beta_p>alpha0+beta0-2/m^2.                     (398.1)
+
+Put T0=alpha0+beta0. Its range is (0,pi): initially it is in (0,2*pi),
+and
+
+    cot(alpha0)+cot(beta0)
+      =[2*(q^2+k^2)+2*q*k*(p/h+h/p)]/X>0.
+
+Since both individual sines are positive, this gives sin(T0)>0 and
+hence the asserted range.
+
+Three exact polynomial identities now give a simple cosine formula:
+
+    Np^2+p^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Nh^2+h^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Np*Nh-p*h*L*J
+      =-2*(h*k+p*q)*(h*q+k*p)*(h^2+p^2-q^2-k^2).
+
+All factors in the first two right-hand sides are positive. Therefore
+
+    cos(T0)=-(h^2+p^2-q^2-k^2)/(2*(h*p+k*q)).                (398.2)
+
+The proof uses comparison angles defined by (397.3), not an assumption
+that an actual Euclidean tetrahedron or quotient exists.
+
+## 399. An exact bound on the comparison cosine
+
+Let
+
+    R=(m+5)/(m+2).
+
+We claim that the scalar bounds (397.1), p>=m and q<=m-2 imply
+
+    h^2+p^2-q^2-k^2>=R*(h*p+k*q).                           (399.1)
+
+The function q^2+k^2+R*k*q increases in each positive variable q,k.
+Thus the left side of (399.1) minus its right side is at least
+
+    F=(1-1/m^2)*h^2+p^2-R*h*p
+        -(m-2)^2-R*h*(m-2)/m.
+
+Write A=h-m>=0 and B=p-m>=0. Exact expansion gives
+
+    F=((m-1)*(m-3)/m)*A
+        +(m*(m-1)/(m+2))*B
+        +(1-1/m^2)*A^2+B^2-R*A*B.                          (399.2)
+
+The constant term is zero. Since m>3, both displayed linear
+coefficients are positive, 1-1/m^2>=8/9, and R<=8/5. Hence the
+quadratic part is bounded below by
+
+    (8/9)*(A^2+B^2)-(8/5)*A*B
+      >=(4/45)*(A^2+B^2)>=0.
+
+This proves (399.1), including boundary ties among r,p,o.
+
+By (398.2), (399.1), and T0 in (0,pi),
+
+    cos(T0)<=-(m+5)/(2*(m+2))<-1/2,
+
+so T0>2*pi/3. The ordinary cosine is 1-Lipschitz on the real line;
+therefore
+
+    T0-2*pi/3
+      >=cos(2*pi/3)-cos(T0)
+      >=3/(2*(m+2)).                                      (399.3)
+
+Combining (398.1) and (399.3) proves the first strict inequality in (395.1).
+The remaining margin is positive because
+
+    3/(m+2)-4/m^2
+      =(3*m^2-4*m-8)/(m^2*(m+2))>0,
+    3*m^2-4*m-8=3*(m-3)^2+14*(m-3)+7>0.
+
+This completes the analytic derivation.
+
+## 400. At most two owners have four or five P slots
+
+In the six-label source application, every mixed four-P-slot owner
+has axes r,o in P={M,Z,U}, high transverse label p in P, and low
+transverse label q in {V,C,D}. The existing source inequalities give
+r,p,o>=m, 1<q<=m-2 and m>2+sqrt(5)>3. Genuine owners have strict L,J>0.
+Therefore the bound applies directly, with each original high slot
+counted exactly once: E=theta_r+theta_o+2*beta_p.
+
+Together with the double-P-pair refinement in Sections 390-394,
+this covers every genuine owner having at least four P slots: the
+four-slot double-P transverse class, the mixed four-slot class, and
+the five-slot class. If tau is a distinct three-P-slot genuine owner
+with P expense >pi and the total genuine P capacity is 5*pi, at most
+two such four-or-five-slot owners can coexist with tau. Indeed k of
+them would give total expense strictly greater than pi+k*(4*pi/3),
+so k<3. Repeated roles are separate owners; original slots retain
+their multiplicities.
+
+The mixed four-slot branch needs no maximum gap. The union still
+retains the five-slot branch requirements of Section 393: no gap for
+high axis M, z<u+m+1 for high axis Z, and u<z+m+1 for high axis U.
+Those gaps come from the complete-star theorem of Sections 318-321
+only under all of that theorem's original hypotheses. This local
+expense refinement alone is not a global six-edge exclusion.
+
+## 401. Original degrees and the precise residual families
+
+Work in the full six-actual-edge source setting of the published
+continuation, with exactly six distinct actual labels
+
+    P={M,Z,U}, Q={V,C,D}.
+
+There are finitely many original tetrahedra, each with a fixed
+vertex-induced paired frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), and four distinct actual labels. The unique flat
+owner is sigma=(M,C,D,V,C,D); every other owner is genuine. The named
+genuine source is tau=(Z,M,C,D,M,C). Every actual edge has a connected
+original normal-circle quotient, original degree at least six, and
+total angle 2*pi. Loops, self-gluings between distinct face occurrences,
+repeated owners' role vectors, and equal numerical coshes at distinct
+labels remain permitted.
+
+The source scalar hypotheses are
+
+    c,d,v>1, m>1+c+d, v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.
+
+The last two gaps must either be hypotheses or follow from the
+published complete-star maximum-gap theorem with its own hypotheses.
+This proof does not infer them from the preceding scalar inequalities.
+The full original degree/circle setting above is retained because the
+older two-high-axis expense theorems, including the M/U V/C branch,
+have those dependencies. The mixed-four-slot scalar theorem in
+Sections 395-399 itself
+uses no gap or degree hypothesis.
+
+Call an owner cheap axial-P if its fixed frame, up to independently
+interchanging axes and transverse labels, is one of
+
+    A(P0)=(P0,V,C,D,V,C),
+    B(P0)=(P0,V,D,C,V,D),       P0 in {M,Z,U}.
+
+The word "cheap" names this residual role family. It does not assert
+that every such owner actually spends less than pi. Let a be the number
+of its genuine original owners, and f the number of genuine owners
+having five original P slots. Then
+
+    a+f>=3, f<=2, and a>=2.
+
+In particular, if f=0 then a>=3. These are owner counts, not counts of
+distinct role vectors, labels, face receivers, or normal-link vertices.
+No full flat-exclusion conclusion is claimed.
+
+## 402. The complete original-slot role table
+
+Let n_P(T) be the number of original slots of a tetrahedron T whose
+actual labels lie in P. An axial slot contributes one; a transverse
+label contributes two. Every frame has at least one P label, since Q
+has only three labels and the frame has four distinct labels.
+
+There are 360 ordered fixed words: choose four distinct labels, then
+order them in the four positions (R,A,B,O). The following is an
+exhaustive partition. Interchanging the two axes or the two transverse
+labels preserves the count and angle expense, but is not used to merge
+original owners.
+
+| P-label placement | Fixed words | n_P | Strict P-expense bound |
+|---|---:|---:|---|
+| One P axis, opposite V, transverse C,D | 12 | 1 | No genuine owner |
+| One P axis, opposite C or D, transverse V and the other low label | 24 | 1 | >0; precisely A(P0), B(P0) |
+| One transverse P label, paired with V, both axes C,D | 12 | 2 | >2*atan(2)>2*pi/3 |
+| One transverse P label, paired with C or D, the other two lows axial | 24 | 2 | >pi |
+| Two P labels, both axial, both transverse labels low | 36 | 2 | >pi |
+| Two P labels, one axial and one transverse | 144 | 3 | >pi |
+| Two P labels, both transverse, both axes low | 36 | 4 | >4*pi/3 |
+| Three P labels, both axes high and one transverse label high | 36 | 4 | >4*pi/3 |
+| Three P labels, both transverse labels high and one axis high | 36 | 5 | >4*pi/3 |
+
+The entries sum to 360. Here "high" means a label in P and "low"
+means a label in Q; numerical ties do not change the partition.
+
+For a direct combinatorial check: a frame with one P label uses all
+three low labels. Its 72 fixed words split into 36 with P axial and
+36 with P transverse, with the subdivisions shown. A frame with two
+P labels chooses its two high labels in three ways and its two low
+labels in three ways. Each of the nine four-label sets has four words
+with both P labels axial, sixteen with one axial and one transverse,
+and four with both transverse, giving 36,144,36. A frame with three
+P labels chooses its remaining low label in three ways. For each such
+set there are twelve words with the low label axial and twelve with it
+transverse, giving the final two classes of 36 words each.
+
+## 403. Dependencies of every role charge
+
+The first row is impossible by the published unique-C/D-pair theorem:
+the transverse C,D pair occurs only at sigma. It is not a role deletion
+based on a choice of face pairing or on a numerical search.
+
+Rows four through six use the published P-expense classification in
+Sections 376-377, including the separately established receiver-free
+two-high-axis cases. In particular, row five does not silently assume
+that a desired receiver exists. Row three uses the exact transverse
+P/V lemma of Section 380.
+
+Rows seven and nine use the double-P-pair refinement, Sections 390-394.
+The four-slot case in row seven needs no maximum gap. The five-slot
+case in row nine needs no gap when its high axis is M, needs
+z<u+m+1 when its high axis is Z, and needs u<z+m+1 when its high axis
+is U. These requirements are retained in the full hypotheses above.
+
+Row eight uses Theorem 395.1:
+for m>3, r,p,o>=m, 1<q<=m-2 and strict genuine factors L,J>0,
+
+    theta_r+theta_o+2*beta_p
+      >4*pi/3+3/(m+2)-4/m^2>4*pi/3.
+
+The source hypotheses imply m>2+sqrt(5)>3, all P coshes are at least
+m, and all Q coshes are at most m-2. Thus the theorem applies to each
+owner of row eight, including ties among different labels' coshes.
+
+These dependencies are mathematical premises of this counting
+corollary. This file does not replace their proofs or narrow their
+topological assumptions.
+
+## 404. The genuine P degree and angle budgets
+
+The three actual P edges have original degree at least six, so the
+total original P degree is at least eighteen. The flat source sigma
+has exactly one P slot, at its M axis. In the ordered label list
+(M,Z,U), the componentwise genuine degree requirement is therefore
+
+    genuine P degrees >= (5,6,6).
+
+Tau contributes (2,1,0), so the genuine owners other than tau must
+contribute at least (3,5,6), componentwise. These three requirements
+remain separate; the following sum is only a necessary consequence:
+
+    sum over genuine T of n_P(T) >= 17.                 (404.1)
+
+The total angle on the three P edges is 6*pi. Sigma uses pi at M and
+zero at Z,U, so the total genuine P expense is exactly
+
+    sum over genuine T of expense_P(T) = 5*pi.         (404.2)
+
+Both formulas count original incidences, even when owners repeat in
+an actual edge circle. Neither formula replaces degree by graph
+valence or counts a transverse label only once.
+
+For every genuine owner, the role table gives the strict bound
+
+    expense_P(T) > (pi/3)*(n_P(T)-I_f(T)-I_a(T)),       (404.3)
+
+where I_f is one on a five-P-slot owner and zero otherwise, while I_a
+is one on a cheap axial-P owner and zero otherwise. These two classes
+are disjoint. For a cheap owner, (404.3) is the positivity of its genuine
+axial angle. For a five-slot owner, its right side is 4*pi/3. For all
+other rows, the displayed bound is at least the required n_P*pi/3,
+with strictness as stated.
+
+Summing (404.3), then applying (404.1) and (404.2), gives
+
+    5*pi > (pi/3)*(17-f-a).
+
+Thus f+a>2; since both are integer owner counts,
+
+    f+a>=3.                                           (404.4)
+
+## 405. At least two cheap axial-P owners
+
+The source tau has three P slots, is not a five-slot owner, is not a
+cheap axial-P owner, and has P expense greater than pi. Every owner
+with at least four P slots has P expense greater than 4*pi/3 by rows
+seven through nine. Hence there can be at most two such owners:
+three of them together with tau would already spend more than 5*pi.
+In particular,
+
+    f<=2.                                             (405.1)
+
+There are at least six genuine original owners. Indeed the six actual
+edge angle sums total 12*pi, the unique flat sigma contributes 2*pi,
+and every genuine paired tetrahedron has total six-slot angle strictly
+less than 2*pi. Therefore the genuine count g satisfies
+
+    10*pi < 2*pi*g, so g>=6.                           (405.2)
+
+Suppose a<=1. Equations (404.4) and (405.1) force a=1 and f=2. By (405.2), besides
+these three owners and tau, there are at least two further genuine
+owners. Each is neither cheap axial-P nor five-slot. The role table
+shows that every such genuine owner spends strictly more than
+2*pi/3 on P. Counting only the two five-slot owners, tau, and these
+two further owners gives
+
+    total genuine P expense
+      >2*(4*pi/3)+pi+2*(2*pi/3)=5*pi,
+
+contradicting (404.2). Thus a>=2. Equation (404.4) also directly gives a>=3
+when f=0.
+
+## 406. Individual residual counts and the remaining boundary
+
+This strengthens the former assertion that at least two owners lie
+outside the expensive P classes: at least two must now be in the
+specific axial residual families A(P0) or B(P0), rather than only in
+the broader residual union that also includes transverse P/V owners.
+
+The two forced owners are distinct original tetrahedra, but can have
+the same role vector or high label. They need not both receive a
+source VCD face, and the two source VCD faces may still have the same
+receiver. The count asserts no new face-incidence pairing.
+
+In subsequent budget arguments the six counts A(M),A(Z),A(U),B(M),
+B(Z),B(U) must remain available separately. Their V,C,D costs and
+their individual M,Z,U degree contributions need not be interchangeable.
+The present integer count is not a complete joint budget or a
+six-edge flat-exclusion theorem.
