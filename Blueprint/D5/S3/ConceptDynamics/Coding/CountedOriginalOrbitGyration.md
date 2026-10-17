@@ -58,7 +58,7 @@ RelativeForwardGyration sums these offsets over the actual source quotient, thro
 
 This uses the classical finite-orbit transversal and necklace/least-rotation method. It supplies one dependency for the original SGCC objective. Full SGCC, image exhaustion, the localized triangle and the full beam/word comparison are not established here.
 
-**Theorem 1.4 (Partition a fixed-period set by its minimal periods).**
+**Theorem 1.5 (Partition a fixed-period set by its minimal periods).**
 
 $$\forall A: \operatorname{Type}*, f: A \to A, n: \mathbb{N},\ 0 < n \Rightarrow \operatorname{Finite}(\{x: A \mid \operatorname{IsPeriodicPt}(f,n,x)\}) \Rightarrow\ \operatorname{Nat.card}(\{x: A \mid \operatorname{IsPeriodicPt}(f,n,x)\}) = \sum_{d \in \operatorname{divisors}(n)} \operatorname{Nat.card}(\{x: A \mid \operatorname{minimalPeriod}(f,x) = d\})$$
 
