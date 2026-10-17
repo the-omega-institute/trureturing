@@ -100,4 +100,71 @@ private theorem rho_marginalB : partialTraceLeft rho = marginalB (5/100) (1/100)
       marginalA.eq_1, marginalB.eq_1, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
       Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
 
+
+private noncomputable def rhoPT : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+  fun p q =>
+    if p = q then (Function.uncurry
+      ![![244853/500000, 49/200000, 49/1000000],
+        ![224959/500000, 2027/200000, 9947/1000000],
+        ![47/125000, 1981/50000, 1/250000]]) p
+    else if (p = (0, 1) ∧ q = (2, 0)) ∨ (p = (2, 0) ∧ q = (0, 1)) then 693/5000
+    else if (p = (0, 2) ∧ q = (1, 0)) ∨ (p = (1, 0) ∧ q = (0, 2)) then 693/10000
+    else if (p = (1, 1) ∧ q = (2, 2)) ∨ (p = (2, 2) ∧ q = (1, 1)) then 99/5000
+    else 0
+
+private theorem rho_pt_eq : partialTransposeB rho = rhoPT := by
+  ext ⟨i, j⟩ ⟨k, l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
+      Fin.reduceFinMk, partialTransposeB, rho.eq_1, rho0.eq_1, chi.eq_1, rhoPT.eq_1,
+      marginalA.eq_1, marginalB.eq_1, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
+      Matrix.cons_val_two, map_ofNat]
+
+private noncomputable def K : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+  let a : Fin 3 × Fin 3 → ℂ :=
+    Function.uncurry ![![0, 1, 0], ![0, 0, 0], ![-1, 0, 0]]
+  let b : Fin 3 × Fin 3 → ℂ :=
+    Function.uncurry ![![0, 0, 7], ![-1, 0, 0], ![0, 0, 0]]
+  let c : Fin 3 × Fin 3 → ℂ :=
+    Function.uncurry ![![0, 0, 0], ![0, 1, 0], ![0, 0, -1]]
+  (1/2 : ℂ) • vecMulVec a (star a) + (1/50 : ℂ) • vecMulVec b (star b) +
+    (1/2 : ℂ) • vecMulVec c (star c)
+
+private theorem K_hermitian : K.IsHermitian := by
+  exact (((posSemidef_vecMulVec_self_star _).smul (by norm_num [Complex.le_def])).add
+    ((posSemidef_vecMulVec_self_star _).smul (by norm_num [Complex.le_def])) |>.add
+    ((posSemidef_vecMulVec_self_star _).smul (by norm_num [Complex.le_def]))).isHermitian
+
+set_option maxHeartbeats 1000000 in
+-- The certificate checks all 81 entries of the rational projector product.
+private theorem K_idempotent : K * K = K := by
+  ext ⟨i, j⟩ ⟨k, l⟩
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [K.eq_1, Matrix.mul_apply, Matrix.vecMulVec_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.cons_val_two, map_ofNat]
+
+private theorem reflection_unitary : (1 - (2 : ℂ) • K) ∈ unitaryGroup (Fin 3 × Fin 3) ℂ := by
+  rw [mem_unitaryGroup_iff, star_eq_conjTranspose, conjTranspose_sub, conjTranspose_one,
+    conjTranspose_smul, K_hermitian.eq]
+  simp only [sub_mul, mul_sub, Matrix.one_mul, Matrix.mul_one, Matrix.smul_mul,
+    Matrix.mul_smul, K_idempotent, star_ofNat, smul_smul]
+  module
+
+private theorem reflection_trace :
+    ((1 - (2 : ℂ) • K) * partialTransposeB rho).trace =
+      1 + 2 * (8168881/50000000 : ℂ) := by
+  rw [rho_pt_eq]
+  norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
+    Fin.reduceFinMk, K.eq_1, rhoPT.eq_1, Matrix.trace, Matrix.mul_apply, Matrix.vecMulVec_apply,
+    Matrix.one_apply, Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.cons_val_two,
+    map_ofNat]
+
+private theorem rho_negativity_lower : (8168881/50000000 : ℝ) ≤ negativity rho := by
+  have h := (traceNorm_eq_max_re_tr_U (partialTransposeB rho)).2
+    ⟨⟨1 - (2 : ℂ) • K, reflection_unitary⟩, rfl⟩
+  rw [reflection_trace] at h
+  norm_num at h
+  rw [negativity.eq_1]
+  linarith
+
 end D5.S3.Quantum.Entanglement.FixedMarginalNegativityRefutation
