@@ -9,19 +9,6 @@
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-public import Mathlib.Analysis.MeanInequalitiesPow
-public import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Fin.VecNotation
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 
 /-! # The sharp three-coherence Ramsey threshold -/
 
@@ -304,13 +291,13 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
     unfold thresholdD thresholdN at hv ⊢
     linear_combination hv + (r - α) * hstat
   apply (div_le_iff₀ (denominator_positive r hr)).2
-  have hquartic : 0 ≤
+  have hquartic : 0 <
       (T - 1) * r ^ 4 + (4 * T + 2 * α * (T - 1)) * r ^ 3 +
       (8 * T - 30 + 8 * α * T + 3 * α ^ 2 * (T - 1)) * r ^ 2 +
       (16 * T + 16 * α * T - 60 * α + 12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1)) * r +
       (20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
         16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4) := by positivity
-  nlinarith only [hidentity, mul_nonneg (sq_nonneg (r - α)) hquartic]
+  nlinarith only [hidentity, mul_nonneg (sq_nonneg (r - α)) hquartic.le]
 
 private def equalMoment (a b c : ℝ) : ℝ :=
   (a ^ 2 + b ^ 2 + c ^ 2) ^ 3 +
