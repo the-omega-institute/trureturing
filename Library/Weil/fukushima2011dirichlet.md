@@ -814,7 +814,7 @@ finite matrix signs or RH assumption.
 
 This excludes that sufficient pointwise gradient route at rate
 $e^{-t}$. It excludes neither a weaker gradient estimate nor an
-integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharper-exterior.md)
+integrated or directly estimated global half-bound. The [accepted conditional $921/2000=0.4605$ lower bound](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails)
 remains reusable, while positivity on
 the complete critical quotient, the one-half bound, Robin and RH
 remain unresolved. No precise smaller optimal curvature constant is
@@ -988,3 +988,554 @@ This is a conditional paper application of existing block and rank-one
 inverse tools. It supplies no evaluated entries, low or complementary-low
 signs, cofinal certificate, endpoint half-bound, RH/Robin proof or Lean
 certification.
+
+## Verified zero height and a whole-projector strip-tail budget
+
+This is a conditional application of (WF7)–(WF8), (FF1)–(FF7), the
+existing compact theta–Weil identity and the existing inverse-fourth
+zero count. Fourier modulation and the spectral-projector contradiction
+are reused tools. No new general theorem, originality, numerical gap or
+Lean certification is asserted. The purpose is to bind a finite verified
+zero height to the actual whole-subcritical-projector map without a
+finite generator Gram or a matrix-sign calculation.
+
+Fix $0<\varepsilon\le1/2$, put $\tau=\varepsilon/8$ and take the
+unchanged $p,K_p,N_0,R,N$ of (WF7), (WF6), (FF2), (FF7). Fix one
+admissible smooth transition-width-two cutoff of (FF1)–(FF2), and charge
+that same cutoff throughout. Define
+
+$$
+W=M_{\chi_R}U^{-1}p_NU,\qquad a_R=s\chi_R,\qquad
+\mathcal A_2(R)=\int_{\mathbb R}e^{|x|/2}|a_R''(x)|\,dx.
+\tag{VH1}
+$$
+
+The cutoff is smooth and compact, so $\mathcal A_2(R)<\infty$.
+No quantitative bound for its second derivative is inferred from its
+Lipschitz bound. Equations (FF1), (FF2), (WF8) and the bandwidth choice
+in (FF7) give
+
+$$
+\begin{aligned}
+\|(I-W)P_\varepsilon\|_{\nu\to\mathcal F}
+&\le\frac{\sqrt7}{8}\tau+
+ \frac{78K_p}{\varepsilon}\frac{1+\log N}{N}\\
+&\le\left(\frac{\sqrt7}{8}+\frac13\right)\tau<\tau.
+\end{aligned}
+\tag{VH2}
+$$
+
+This is the whole original spectral subspace estimate. It omits only
+the midpoint approximation used to make (FF4) finite, not any part of
+the actual energy. The map $W$ generally has infinite rank; (FF8)'s
+finite generator count is not asserted for it. For every even complex
+$h\in L^2(\nu)$, $Wh$ is
+compact smooth and even: $p_NUh$ has compact Fourier support and bounded
+derivatives of every order, while $\rho$ is smooth and positive on the
+cutoff support.
+
+### Keep the frequency translation before taking a strip bound
+
+Put $f=\Phi Wh=a_Rp_NUh$. Use the unitary Fourier transform on $Uh$
+and the nonunitary transform $\widehat f(z)=\int e^{-izx}f(x)dx$ on
+physical tests. Fubini gives
+
+$$
+\widehat f(z)=\frac1{\sqrt{2\pi}}
+\int_{-2N}^{2N}p(\xi/N)\widehat{Uh}(\xi)
+\widehat{a_R}(z-\xi)\,d\xi.
+\tag{VH3}
+$$
+
+This is the usual multiplication/modulation rule, already used for
+[cosine packets](../../D5/S3/Weil/ZeroInfinitude/CosinePacket.lean),
+`paperFT_cosineModulation`; it is not a new Fourier construction.
+Let $H>2N$, $|\Re z|>H$ and $|\Im z|\le1/2$. Two integrations by parts
+on $a_R$, before combining the modulated factors, imply
+
+$$
+|\widehat{a_R}(z-\xi)|
+\le\frac{\mathcal A_2(R)}{|z-\xi|^2}
+\le\frac{\mathcal A_2(R)}{(|\Re z|-2N)^2}.
+$$
+
+There are no boundary terms because $a_R$ is compact smooth. Since
+$0\le p\le1$, Plancherel and Cauchy–Schwarz on $[-2N,2N]$ give
+
+$$
+|\widehat f(z)|
+\le\sqrt{\frac{2N}{\pi}}
+\frac{\mathcal A_2(R)}{(|\Re z|-2N)^2}\|h\|_\nu.
+\tag{VH4}
+$$
+
+Thus differentiating a modulated factor at frequency up to $2N$ is
+unnecessary for this bound. That direct two-derivative bound would
+introduce an $N^2$ term before squaring; (VH4) retains the frequency
+separation instead. Its loss is the explicit separation requirement
+$H>2N$.
+
+### Reuse the inclusive verified head and the strict actual zero tail
+
+For an integer $H\ge5$ set
+
+$$
+\begin{aligned}
+L_H&=\lfloor\log_2(H+4)\rfloor+1,\\
+\mathscr R_4(H)&=\frac{256}{H}
+\left[\left(\frac2{H^3}+\frac1{2H^2}\right)L_H+
+\frac{2/H^2+1/H}{H+4}\right].
+\end{aligned}
+\tag{VH5}
+$$
+
+The existing
+[`finite_inverse_fourth_tail_le`](../../D5/S3/Weil/BurnolGram/ExplicitWeilFourthMomentTail.lean)
+applies with $\gamma=\Im\rho$, full analytic multiplicities, $A=128$,
+$T=H$, $L=L_H$, and its proved actual unit-window count. Taking the
+supremum over finite subsets of $|\Im\rho|>H$ gives
+
+$$
+\sum_{|\Im\rho|>H}\frac{m_\rho}{(\Im\rho)^4}
+\le\mathscr R_4(H).
+\tag{VH6}
+$$
+
+This uses the finite ordinate-tail estimate directly. The neighboring
+`zeroData_fourth_moment_tail_rational` additionally assumes a finite
+head containing a spectral ball of radius $H+1$ and bounds its spectral
+envelope; that corollary alone cannot be applied to the height-$H$
+head. Zeros at height exactly $H$ remain in the head, counted with their
+full multiplicity. The two-sided count already includes negative
+ordinates, so no extra factor two is inserted.
+
+Suppose all nontrivial zeros through height $H$ lie on the critical line.
+The existing compact-test formula gives
+
+$$
+q(Wh):=D(Wh)-\tfrac12\operatorname{Var}_\nu(Wh)
+=\sum_\rho m_\rho\widehat f(z_\rho)
+ \overline{\widehat f(\overline{z_\rho})},\qquad
+z_\rho=\Im\rho-i(\Re\rho-1/2).
+$$
+
+Its inclusive head is nonnegative. Off the critical line the paired
+product is retained, not replaced by an absolute square. Apply (VH4)
+to both factors in that product, then use (VH6). The complete real
+slack therefore satisfies, for all even complex $h\in L^2(\nu)$,
+
+$$
+\begin{aligned}
+q(Wh)&\ge-\mathcal E_H\|h\|_\nu^2,\\
+\mathcal E_H&=\frac{2N}{\pi}\mathcal A_2(R)^2
+ \left(1-\frac{2N}{H}\right)^{-4}\mathscr R_4(H).
+\end{aligned}
+\tag{VH7}
+$$
+
+All prime powers remain in $D$. Only the zero-side remainder is bounded
+absolutely. This is an all-input estimate for this specified map, not
+an operator-norm tail claim on bare $L^2(\nu)$ without smoothing.
+
+### A sufficient fixed-gap supplier, with its unpaid inputs
+
+If $\mathcal E_H\le\varepsilon/2$, (VH2) and (VH7) exclude every
+centered unit $h\in\operatorname{ran}P_\varepsilon$. Indeed,
+$q(h)\le-\varepsilon$ and $\|h\|_{\mathcal F}\le\sqrt{3/2}$.
+The polarized form $q$ is bounded by the product of the $\mathcal F$
+norms: apply Cauchy–Schwarz to the energy and covariance parts, then to
+the resulting two scalar components. Consequently
+
+$$
+|q(Wh)-q(h)|
+\le\tau(2\sqrt{3/2}+\tau)<3\tau=3\varepsilon/8,
+\qquad q(Wh)<-5\varepsilon/8.
+$$
+
+This contradicts (VH7). Constants are treated separately using $T1=0$;
+no projection of a noncompact source is discarded. The spectral theorem
+then gives the conditional all-form-domain conclusion
+
+$$
+D(h)\ge(1/2-\varepsilon)\operatorname{Var}_\nu(h)
+\qquad(h\in\mathcal F_{\min,\mathrm{even}}).
+\tag{VH8}
+$$
+
+The published finite-height premise can be reused at
+$H_0=3\cdot10^{12}$: Platt–Trudgian,
+[*The Riemann hypothesis is true up to $3\cdot10^{12}$*,
+arXiv:2004.09765v1](https://arxiv.org/pdf/2004.09765v1), Theorem 1,
+printed p.2, verifies through $3000175332800$. This result is already
+used in the [finite-height Robin supplier](../Analytic/polak2026finiterobinca.md).
+No zero verification is repeated here. No bounds establishing
+$2N<H_0$ and $\mathcal E_{H_0}\le\varepsilon/2$ have been supplied
+for (VH1). A numerical improvement to the actual spectral gap does not
+follow from these conditional formulas alone.
+
+Finally $K_p>0$ because $s$ is nonzero and the cutoff $p$ changes from
+one to zero. The unchanged (FF7) gives
+$\delta\le\varepsilon^2/(1872K_p)$ and
+$N\ge2\delta^{-1}\log(2/\delta)$. Hence $N\to\infty$ as
+$\varepsilon\downarrow0$. For a fixed verified height $H_0$, the
+hypothesis $H_0>2N$ of this particular absolute shifted-tail bound
+therefore fails eventually. Even success at one fixed gap would not
+supply a cofinal half-bound by this same formula. This restriction
+concerns this supplier; it does not rule out signed tails, a different
+justified approximation map or a different height-to-form transfer.
+The endpoint half-bound, RH and strict Robin remain unresolved.
+
+## A fixed unwindowed transfer to the original variance gap
+
+The [existing saved comparison](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails)
+already supplies the conditional global constant $921/2000=0.4605$.
+The application below uses the same original even minimal form and
+accepted scalar suppliers, and supplies $15/32>921/2000$. It reuses the
+Fourier commutator, whole-projector argument, weighted theta tails,
+actual zero count and published verified height. It introduces no new
+generic method, priority claim or Lean certification.
+
+### The unwindowed image has an actual paired zero formula
+
+Put $W_N=U^{-1}p_NU$, without a spatial multiplier. For every even
+complex $h\in L^2(\nu)$, $g=p_NUh$ belongs to $H^1$, and (WF2) puts
+$h_N=U^{-1}g$ in the original minimal form domain. Its physical test is
+$f=\Phi h_N=sg$.
+
+Use the scaled smooth cutoffs from the
+[theta mixed-nullity passage](lagarias2004li.md#mixed-nullity-needs-a-domain-bridge),
+with uniformly bounded scaled derivatives. Then
+$(\chi_R-1)g\to0$ in $H^1$, so (WF2) gives
+$\chi_Rh_N\to h_N$ in the actual form norm. Compact frequency support
+makes every derivative of $g$ bounded. The original (WC2) tails therefore
+give
+
+$$
+\int e^{|x|/2}\left(|(\chi_R-1)f|
+ +|((\chi_R-1)f)''|\right)dx\longrightarrow0.
+\tag{UG1}
+$$
+
+The existing closed-strip integration-by-parts bound and actual
+multiplicity-weighted inverse-fourth summability let the compact paired
+zero formula pass to this limit. Consequently
+
+$$
+q(h_N)=\sum_\rho m_\rho\widehat f(z_\rho)
+ \overline{\widehat f(\overline{z_\rho})}.
+\tag{UG2}
+$$
+
+Only this specified noncompact image is added to the compact-test
+identity. No maximal-domain equality or discarded critical-projection
+tail is used. The energy and every prime power pass through the original
+closed form. The sign and normalization of the off-line paired product
+remain those in (VH7).
+
+### A prescribed smooth frequency cutoff
+
+Let $w=15/16$. Define the even trapezoid $p_0$ to equal one on
+$[-33/32,33/32]$, decrease linearly to zero at $\pm63/32$, and vanish
+outside. Let $b_0(x)=64(1-64|x|)_+$, fix one nonnegative even smooth
+unit-mass $b_1$ supported in $[-1/64,1/64]$, and put
+$b=b_0*b_1$, $p=p_0*b$.
+This one fixed construction has the original (WF7) hypotheses,
+$L_p\le16/15$ and $\|b\|_2^2\le128/3$.
+The four translates in $p_0''*b$ have disjoint supports. Young's
+inequality, Cauchy–Schwarz and Plancherel in the stated normalization give
+
+$$
+\begin{gathered}
+\|p'\|_2^2\le\frac{32}{15},\qquad
+\|p''\|_2^2\le\frac{131072}{675},\\
+C_p^2\le\tfrac12(\|p'\|_2^2+\|p''\|_2^2)<100.
+\end{gathered}
+\tag{UG3}
+$$
+
+Here $\check p_0=(2\pi)^{-1}\int e^{ix\xi}p(\xi)d\xi$ in the
+(WF7) definition of $C_p$; the subscript does not denote the trapezoid.
+For the last bound apply Cauchy–Schwarz with weight $(1+x^2)^{-1}$.
+
+### Charge the constants from accepted original-theta inputs
+
+The accepted
+[derivative supplier](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
+gives $S_j=\|s^{(j)}\|_2^2$ with
+$S_0<1/2$, $S_1<2$, $S_2<42$, $S_3<28000$. Thus
+$\|s\|_{H^3}^2=S_0+3S_1+3S_2+S_3<28133$.
+These saved inputs are reused without recomputing theta derivatives.
+
+The same (WC1) series constants admit the elementary bounds
+$C_0<60$, $C_1<650$, $C_2<7200$. To check them, use
+$P_{1,a}=a-2z$, $P_{2,a}=a^2-4(a+1)z+4z^2$,
+$3<\pi<22/7$ and $e^3>20$ (its positive Taylor polynomial through
+degree eight exceeds twenty). Coefficient caps are respectively
+$59n^4$, $(1281/2)n^6$, $6969n^8$; the omitted tail after $n=1$
+is at most $2^{4+2j}/7992$ times that coefficient cap, because
+$e^{-3\pi}<1/8000$ and the shared ratio is below $1/1000$.
+
+It follows that $A_1<19$, $A_2<885$, $B_2<1250$ in (WC1)–(WC2).
+For $\zeta=\pi/2-3/8>9/8$, the same scalar maxima give
+$M_1<1$, $M_3<(8/3)^3/20<1$ and
+$M_5<(40/9)^5/32<55$. Therefore
+
+$$
+\begin{gathered}
+K_0<8,\quad K_1<152,\quad K_2<550000,\\
+\|(s^2)'\|_\infty<2432,\qquad
+\sum_n\|b_n'\|_\infty<3648,\\
+\mathcal A_*:=\int e^{|x|/2}|s''(x)|dx
+ \le K_2\int_1^\infty u^{-3/4}e^{-3u/8}du<2^{21}.
+\end{gathered}
+\tag{UG4}
+$$
+
+For the prime sum use (WC4) and $r=e^{-3/4}<1/2$; its bracket is
+less than $3/2$. For the last integral use $u^{-3/4}\le1$ and
+$\int_1^\infty e^{-3u/8}du<8/3$.
+
+Reuse the principal coefficient $64$ obtained explicitly in the proof
+above (WF7), before its conservative enlargement to $128$. Keep the
+old $K_p$ definition and all old consumers intact, and define this
+application's sharper constant by
+
+$$
+\begin{aligned}
+K_p^\sharp&=64L_p\|s\|_{H^3}^2+
+ C_p\left(8\|(s^2)'\|_\infty+2\sum_n\|b_n'\|_\infty\right)\\
+&<\frac{1024}{15}\,28133+267520
+ =\frac{32820992}{15}<9\cdot2^{18}.
+\end{aligned}
+\tag{UG5}
+$$
+
+### One fixed reuse of the complete saved high rows
+
+Fix $\varepsilon=1/32$, $a=15/32$, $N=2^{40}$ and
+$H=3\cdot10^{12}$. The proof of (WF3) gives
+$m(N/2)\ge\tfrac12\log N>40/3$.
+The saved $m(32)$ upper bound is below $22/3$.
+For each accepted positive cell let $J_i$ and $s_{i,-}^2$ be its saved
+joint floor and squared-theta lower endpoint. The single fixed rational
+application checks
+
+$$
+J_i+6s_{i,-}^2>31/64\qquad(0\le i<128).
+\tag{UG6}
+$$
+
+The [fixed rational application](https://github.com/the-omega-institute/trureturing-experiments/blob/9188d87ac0c5bf1f36e248f2cb3c835af6f05c9e/docs/reports/theta-mixed-matrix/verified-height-unwindowed-gap.md)
+checks all 128 cells and its
+[exact saved result](https://github.com/the-omega-institute/trureturing-experiments/blob/9188d87ac0c5bf1f36e248f2cb3c835af6f05c9e/docs/reports/theta-mixed-matrix/verified-height-unwindowed-gap-result.json)
+has every fixed budget comparison true. These are new inequalities on
+the accepted data, with no theta,
+operator action, Gram or old producer executed. They bound the complete
+$W(x)+m(N/2)s(x)^2$ on every cell. On the entire exterior reuse the
+[saved $W$ floor](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/sharper-exterior.md),
+which exceeds $31/64$ before adding the positive symbol term.
+The same (WF5) leakage, with $m(N/2)\le16N$ and $S_2<42$, is below
+$2^{-70}<1/128$. Hence the full even high restriction is at least
+$61/128=a+\varepsilon/4$.
+
+The whole-projector argument of (WF8) now applies with this supplied
+high restriction and $K_p^\sharp$. It does not require the separate
+coarse sufficient choice $N_0(\varepsilon)$. Since $\log2<7/10$,
+
+$$
+\|(I-W_N)P_\varepsilon\|_{\nu\to\mathcal F}
+\le\frac{6K_p^\sharp}{\varepsilon}\frac{1+\log N}{N}
+<\frac{783}{65536}<\frac1{80}.
+\tag{UG7}
+$$
+
+### Pay the actual zero tail on this same map
+
+The (VH3)–(VH7) strip argument applies with $s$ in place of $a_R$;
+(WC2) removes its integration-by-parts boundary terms. At the fixed $H$,
+$L_H=42$ and $\mathscr R_4(H)<2^{-109}$.
+Also $3H>8N$, so $(1-2N/H)^{-4}<256$. Using
+$2N/\pi<N$ and (UG4) gives
+
+$$
+q(W_Nh)\ge-\mathcal E\|h\|_\nu^2,\qquad
+\mathcal E<2^{40}2^{42}2^8 2^{-109}=2^{-19}.
+\tag{UG8}
+$$
+
+The inclusive verified head is precisely the already published
+Platt–Trudgian input; the strict tail keeps all actual multiplicities
+and off-line paired factors. No zero computation is repeated.
+
+For a centered unit $h\in\operatorname{ran}P_\varepsilon$,
+$q(h)\le-1/32$ and $\|h\|_{\mathcal F}\le\sqrt{47/32}<49/40$.
+The same polarized-form bound as in (VH8) and (UG7) imply
+
+$$
+|q(W_Nh)-q(h)|<\frac1{80}
+ \left(\frac{49}{20}+\frac1{80}\right)=\frac{197}{6400},
+\qquad q(W_Nh)<-\frac3{6400}<-2^{-19},
+$$
+
+contradicting (UG8). Constants reduce the actual operator separately.
+The original spectral theorem therefore gives
+
+$$
+D(h)\ge\frac{15}{32}\operatorname{Var}_\nu(h)
+\qquad(h\in\mathcal F_{\min,\mathrm{even}}).
+\tag{UG9}
+$$
+
+This is a conditional paper deduction under the inherited actual
+form/domain and accepted scalar-supplier premises, plus the checked
+finite inequality (UG6). The accompanying rational application records
+the same input commit and all fixed budget comparisons. The literal
+windowed (FF7)/(VH1) choices retain their own unpaid conditions.
+No cofinal family is supplied; the fixed-height separation barrier
+remains. The one-half bound, full Robin, RH and Lean certification
+remain unresolved.
+
+The [fixed-head remainder construction (FH1)–(FH4)](lagarias2004li.md#a-fixed-verified-head-cannot-absorb-the-absolute-smoothed-remainder)
+also excludes absorbing the whole absolute paired tail into this fixed
+head with a vanishing ambient-norm error uniformly on the entire original
+form remainder, even after these same unwindowed maps. It uses actual
+real zero duals and exact finite head annihilation, independently of the
+shifted-tail separation estimate. The constructed inputs have not been
+placed in the strict-subhalf spectral class used above; no signed-tail
+obstruction or change to (UG9) follows.
+
+
+## Split the prime index before taking a high-frequency minimum
+
+Retain the original minimal even form, (WF1), the original pole probability,
+and every prime power. The following is a paper application of the existing
+Fourier leakage argument, theta coefficient bounds and classical Chebyshev
+partial summation. It supplies an alternative high-block allowance and its
+inverse consumer, with no new general-method, originality or Lean claim.
+It does not identify a low-block sign or establish the endpoint half-bound.
+
+Write the full prime off-diagonal operator in (WF1) as $\mathcal B_p$,
+distinct from the negative-edge metric $C_-^*C_-$, and put
+$S_M=\sum_{2\le n\le M}\Lambda(n)/\sqrt n$ for an integer $M\ge2$.
+Since $b_n(x)=w_ns(x)s(x+\log n)$, its complete finite part is exactly
+
+$$
+ \mathcal B_{p,\le M}
+ =M_s\sum_{2\le n\le M}w_n(\tau_n+\tau_n^*)M_s,
+ \qquad
+ |\langle \mathcal B_{p,\le M}v,v\rangle|
+ \le2S_M\|sv\|_2^2. \tag{PS1}
+$$
+
+This uses the same $sv$ at both ends of every translation and keeps the
+shifted adjoint. The [existing full theta coefficient bound](lenz2010compactness.md#full-prime-off-diagonal-tail)
+with $C_\Phi=144/5$ gives
+$\|b_n\|_\infty\le(C_\Phi/2)w_ne^{-3n/2}$.
+Reuse $w_n\le n$ and the geometric tail, and set $\vartheta=e^{-3/2}$:
+
+$$
+ \|\mathcal B_p-\mathcal B_{p,\le M}\|\le\beta_M,\qquad
+ \beta_M=\frac{144}{5}\,\vartheta^{M+1}
+       \frac{M+1-M\vartheta}{(1-\vartheta)^2}. \tag{PS2}
+$$
+
+The original operator is not truncated: (PS2) pays for all omitted
+prime powers in operator norm.
+
+The [existing theta derivative bounds (WC2)–(WC3)](../Analytic/romik2021orthogonal.md)
+supply $s\in H^3(\mathbb R)$ and permit one additional derivative in the Fourier-tail argument of (WF5). For $N\ge2$ and
+$\widehat v=0$ on $|\xi|<N$, the same convolution support and Young
+inequality, now followed by Cauchy--Schwarz with $|\omega|^{-3}$, give
+
+$$
+ \begin{aligned}
+ \|\mathbf1_{|\mathsf D|<N/2}sv\|_2
+ &\le \eta_{N,3}\|v\|_2,\\
+ \eta_{N,3}^2&=\frac{32}{5\pi}\|s'''\|_2^2N^{-5}.
+ \end{aligned} \tag{PS3}
+$$
+
+Indeed $(2\pi)^{-1}\int_{|\omega|>N/2}|\omega|^{-6}d\omega
+=32/(5\pi N^5)$ in the existing unitary Fourier convention.
+With $m_N=m(N/2)$, define
+
+$$
+ a_{N,M}=m_N-8-2S_M,\qquad
+ \Delta_{N,M}=m_N\eta_{N,3}^2+\beta_M. \tag{PS4}
+$$
+
+The high-frequency part of $sv$ contributes at least
+$m_N(\|sv\|_2^2-\eta_{N,3}^2\|v\|_2^2)$ to the flat energy.
+Combine this with (WF1), $c_\Gamma>-8$ and (PS1)--(PS2). Every
+$v$ in the actual minimal high form domain satisfies
+
+$$
+ \widetilde D(v)\ge
+ \left(\tfrac12-\Delta_{N,M}\right)\|v\|_2^2
+       +a_{N,M}\|sv\|_2^2. \tag{PS5}
+$$
+
+All terms other than the flat energy are bounded on $L^2$; its existing
+closed Fourier realization and the same minimal-domain passage as (WF1)
+justify the inequality on that domain. This uses no maximal-domain
+identification. If $a_{N,M}\ge0$, the first term alone is a complete
+high-block lower bound.
+
+### A sufficient algebraic bandwidth near the endpoint
+
+Fix a classical constant $C_\psi\ge1$ with
+$\Psi(t)\le C_\psi t$ for $t\ge1$. Reuse the inclusive
+[half-weighted Chebyshev allowance](desogus2026threegates.md),
+$S_M\le2C_\psi\sqrt M$; no PNT remainder or RH is required.
+For all sufficiently large $N$, take the single analytic choice
+
+$$
+ M_N=\left\lfloor\left(\frac{m_N-8}{8C_\psi}\right)^2\right\rfloor\ge2.
+ \tag{PS6}
+$$
+
+Then $a_{N,M_N}\ge(m_N-8)/2>0$. The existing symbol bounds give
+$m_N\asymp\log N$, so $M_N\asymp(\log N)^2$. Consequently (PS2)
+is $o(N^{-A})$ for every fixed $A>0$, whereas (PS3) gives
+
+$$
+ \Delta_{N,M_N}=O\!\left(\frac{1+\log N}{N^5}\right).
+ \tag{PS7}
+$$
+
+The constants depend on the original theta derivative supplier and the
+fixed Chebyshev constant. They are not numerically evaluated here.
+For all sufficiently small $\varepsilon>0$, a sufficient bandwidth can
+therefore be chosen of order
+$O((\varepsilon^{-1}\log(1/\varepsilon))^{1/5})$ to have
+$\Delta_{N,M_N}\le\varepsilon/2$. This is an alternative sufficient
+asymptotic schedule, not a claim that it improves every previously used
+fixed bandwidth or that any saved matrix is positive at these parameters.
+
+### Use the same constrained inverse and ground term
+
+For $0<\varepsilon\le1/2$, set $c=1/2-\varepsilon$ and retain the actual
+high restriction of $\widetilde A-cI+c|v_0\rangle\langle v_0|$.
+Choose $N,M$ with $a_{N,M}\ge0$ and
+$\Delta_{N,M}\le\varepsilon/2$. Equation (PS5) gives, on its actual
+high form domain,
+
+$$
+ C[q]\ge\int V(x)|q(x)|^2dx+c|\langle v_0,q\rangle|^2,
+ \qquad
+ V(x)=\varepsilon-\Delta_{N,M}+a_{N,M}s(x)^2\ge\varepsilon/2.
+ \tag{PS8}
+$$
+
+Thus the existing variational inverse, projection shorting and rank-one
+ground correction in (WH4), (WH6)--(WH8) apply in place of
+(WH1)--(WH3). Substitute $\delta_{\rm PS}=\varepsilon-\Delta_{N,M}$,
+$a_{N,M}$, $V=\delta_{\rm PS}+a_{N,M}s^2$ and $w=V^{-1}$ throughout
+the multiplier-dependent definitions; in particular
+$V_{\max}=\delta_{\rm PS}+9a_{N,M}/5$. The same sharp high projection
+and original closed domain are used; no projection is commuted through
+a multiplier. This is the original-form consumer of the estimate.
+It supplies neither the same-band low Schur sign nor a cofinal full-form
+certificate. The one-half variance bound, the projected signed comparison,
+Robin and RH remain unresolved; no numerical experiment or new Lean
+verification is claimed.

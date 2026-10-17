@@ -11192,6 +11192,270 @@ cannot replace those data. The earlier stopped rank-one endpoint family
 remains a separate insufficient construction. There is no actual
 retained/cofinal positivity, Robin, Lean or RH conclusion here.
 
+#### A whole-space Young gain on the saved nineteen channels
+
+The existing inverse-order, variational projection and good-block Woodbury
+interfaces can consume the accepted uniform surplus without a new complete
+initial-trial matrix. Keep the SAME actual form/domain, original exact
+support trial $Y$, residual $R$, retained basis and sound-cache premises.
+Write $J_0=\{1281,\ldots,32768\}$, including the selected support
+$E=\{1281,\ldots,2048\}$, and $\mathcal F=\{32769,\ldots\}$.
+Use the original nineteen channels and their saved matrices
+
+$$
+A=U_{J_0}^*W_{J_0}U_{J_0},\qquad
+\beta=U_{J_0}^*W_{J_0}R_{J_0},\qquad
+s=1+33\delta_{\rm ch},\qquad\rho=1/32.
+$$
+
+Here $A$ includes $E$ even though $R_E=0$ allows its omission from the
+production of $\beta$. The charge $\delta_{\rm ch}$ is the original
+nineteen-channel far Gram upper, decoded with its original640-bit grid
+and1024-bit working precision. It is not any later source-defect charge.
+
+The old comparison restricted to the residual range cannot by itself be
+inverted as a full-space statement. Instead apply the SAME Young argument
+to every exterior vector, including vectors with nonzero $E$ components.
+This gives the full exterior inverse majorant
+
+$$
+\mathcal V=
+\left[W_{J_0}-W_{J_0}U_{J_0}(A+sI)^{-1}U_{J_0}^*W_{J_0}\right]
+\oplus(1+\rho)W_{\mathcal F}
+\succeq(\Lambda+UU^*)^{-1}\succeq T^{-1}.
+$$
+
+Indeed, in the existing Woodbury variational upper bound insert
+$z=(A+sI)^{-1}U_{J_0}^*W_{J_0}x_{J_0}$. Young's inequality pays the far
+mixed term by $\rho\|x_{\mathcal F}\|_W^2$ and
+$\rho^{-1}z^*U_{\mathcal F}^*W_{\mathcal F}U_{\mathcal F}z$.
+The additional far channel Gram costs another
+$z^*U_{\mathcal F}^*W_{\mathcal F}U_{\mathcal F}z$.
+Their combined channel charge is therefore
+$(1+\rho^{-1})\delta_{\rm ch}=33\delta_{\rm ch}$.
+No cancellation specific to $R_E=0$ is used in this full-vector argument.
+
+Woodbury also gives
+
+$$
+\mathcal V^{-1}=
+\left[\Lambda_{J_0}+s^{-1}U_{J_0}U_{J_0}^*\right]
+\oplus\frac{\Lambda_{\mathcal F}}{1+\rho}.
+$$
+
+Consequently $H_{\rm ext}\succeq T+gI\succeq\mathcal V^{-1}+gI$ and
+
+$$
+K_g:=\mathcal V-(\mathcal V^{-1}+gI)^{-1}
+=g\mathcal V^2(I+g\mathcal V)^{-1}\succ0.
+$$
+
+This uses inverse order followed by functional calculus of the single
+operator $\mathcal V$. It does not assume operator monotonicity of
+$t^{-1}-(t+g)^{-1}$.
+
+All original far payments remain in
+
+$$
+L_*=Q-R^*\mathcal VR-\mathcal E_{\mathcal F},\qquad
+\mathcal E_{\mathcal F}=(1+\rho)
+(F_{\rm up}-R_{\mathcal F}^*W_{\mathcal F}R_{\mathcal F})\succeq0.
+$$
+
+The signed far core is still only part of its paid positive Gram upper;
+its complete operator allowance is retained. Thus
+
+$$
+S_N\succeq L_*+R^*K_gR.
+$$
+
+To use the saved thin observations, set
+
+$$
+\Phi=\iota_{J_0}W_{J_0}U_{J_0},\qquad C_A=I+A/s,\qquad
+\ell_\Lambda=\max_{n\in J_0}W_n^{-1}.
+$$
+
+Only finite middle weights enter this maximum because $\Phi$ has no far
+component; all selected $E$ weights still enter. The identities
+$\Phi^*R=\beta$ and
+$K_g^{-1}=\mathcal V^{-1}+g^{-1}\mathcal V^{-2}$ give
+
+$$
+\Phi^*K_g^{-1}\Phi
+=AC_A+g^{-1}C_A(U_{J_0}^*U_{J_0})C_A
+\preceq D_g:=AC_A+\frac{\ell_\Lambda}{g}C_AAC_A.
+$$
+
+The last step uses $U_{J_0}^*U_{J_0}\preceq\ell_\Lambda A$.
+For $D_g\succ0$, square completion in the common channel vector $z$ yields
+
+$$
+v^*R^*K_gRv\ge2\Re z^*\beta v-z^*D_gz,
+\qquad
+\boxed{S_N\succeq\mathcal L_g^{(19)}
+:=L_*+\beta^*D_g^{-1}\beta.}
+$$
+
+This is a joint gain for all retained coefficients. No unsaved
+unweighted-channel Gram, complete $Q$ or residual Gram is supplied by
+this derivation. It cannot be added to another projection of the SAME
+$K_g$ without paying their common observation Gram.
+
+A necessary screen reuses the SAME saved exact256-bit full1281-coordinate
+direction $v$. With $u=\beta v$ and the already saved $\ell_v=v^*L_*v$,
+it evaluates $\ell_v+u^*D_g^{-1}u$ once. A strictly negative upper rejects
+this fixed sufficient target before a new good-block action. A positive
+lower passes only this direction and requires the fully paid test
+
+$$
+\Sigma_*+\beta_V^*(D_g+\Omega_\beta)^{-1}\beta_V,\qquad
+\beta_V=\beta_{\rm bad}-\beta_GX,\qquad
+\Omega_\beta=\beta_GP^{-1}\beta_G^*.
+$$
+
+Here $P,X,\Sigma_*$ are the saved1263-positive block, old18-column lift
+and18-coordinate complement. The old lift and the archived two-row
+metric do not provide the inverse action on the nineteen new right sides.
+If needed, that action is a new query using the saved $P$ as input; the
+old lift solve is not repeated. This is the existing Woodbury interface
+with its required good-block payment, not a different inverse algorithm.
+
+The [fixed staged application and new joint metric](https://github.com/the-omega-institute/trureturing-experiments/tree/29e7df207a22d193d516c767dd801a59e760d833/docs/reports/weil-c27)
+retain these exact common-object bindings.
+
+The one fixed application takes102.73939seconds; its new19-RHS solve takes
+93.58200seconds. The consumer uses1024-bit working precision and a
+640-bit output grid, with the exact original charge and all finite middle
+weights retained.
+
+| Quantity | Rounded value or enclosing interval |
+|---|---:|
+| Accepted $g$ | $0.360851119703494$ |
+| All-middle reciprocal bound $\ell_\Lambda$ | $3.30451557620074$ |
+| Original channel-tail charge $\delta_{\rm ch}$ | $0.000106746688356027$ |
+| Original $s=1+33\delta_{\rm ch}$ | $1.00352264071575$ |
+| Saved $v^*L_*v$ | $[-1.177716570,-1.177716569]\cdot10^{-31}$ |
+| New direction gain $(\beta v)^*D_g^{-1}(\beta v)$ | $[2.250035340,2.250035341]\cdot10^{-31}$ |
+| New sufficient target on that SAME $v$ | $[1.072318771,1.072318772]\cdot10^{-31}$ |
+| First paid-complement leading minor | $[-3.207347831,3.207347831]\cdot10^{-16}$ |
+
+All19 leading minors of $D_g$ are certified positive, and the saved-direction
+screen has a strictly positive lower endpoint. The consumer therefore completes the new1263-by19 inverse
+action,19-by19 $\Omega_\beta$ and19-by18 $\beta_V$, using the saved old
+18-column lift. All19 leading minors of $D_g+\Omega_\beta$ also pass.
+The first leading minor of the resulting18-coordinate complement contains
+zero. The fixed application stops there: neither positivity nor failure
+of this sufficient target is established. The earlier positive scalar is
+only a necessary-direction result.
+
+The new inverse actions and their joint metric are archived for reuse;
+they need not be produced again. No original channel, residual, trial,
+far Gram, positive-prefix, old lift or inertia fixture is replayed.
+Reconstructing the saved positive block supplies input to the new right
+sides, rather than repeating the original target producer. There is no
+parameter, weight, cutoff, source, direction or precision scan. The stopped
+whole-norm contraction and rank-one endpoint families remain stopped.
+Under the inherited actual form/domain, exact-trial, normalization and
+sound-cache premises, the common lower-bound bridge and the displayed
+necessary pass are available. The paid full-target sign, actual retained
+and cofinal Weil positivity, Robin, RH and Lean verification remain open.
+
+
+#### Keep the paid channel border before eliminating its inverse
+
+The existing one-negative-core determinant and Schur/Haynsworth interfaces
+also apply directly to the SAME fixed nineteen-channel lower target.
+Reuse its newly saved joint arrays
+
+$$
+D=D_g+\Omega_\beta\succ0,\qquad B=\beta_V,\qquad
+C=\Sigma_*+B^*D^{-1}B.
+$$
+
+The matrices have dimensions19,19-by18 and18 respectively. Both the old
+inertia $\operatorname{inertia}(\Sigma_*)=(17,1,0)$ and the19 positive
+leading-minor certificates for $D$ are already available. They are inputs
+to this application; their computations are not repeated.
+
+Instead of evaluating the inverse in $C$, retain the coupled border
+
+$$
+\mathcal Z=\begin{pmatrix}D&B\\B^*&-\Sigma_*\end{pmatrix}.
+$$
+
+Schur's determinant identity gives
+
+$$
+\det\mathcal Z=\det D\,\det(-C)=\det D\,\det C,
+$$
+
+because the lower block has even dimension18. The gain $B^*D^{-1}B$ is
+positive semidefinite, so the old17 strictly positive eigenvalues give
+at least17 strictly positive eigenvalues of $C$. Since $\det D>0$,
+
+$$
+\boxed{C\succ0\iff\det\mathcal Z>0,\qquad
+n_-(C)=1\iff\det\mathcal Z<0.}
+$$
+
+The second equivalence concerns a nonzero determinant; no zero direction
+occurs in that case. The updated good block
+$P+\beta_G^*D_g^{-1}\beta_G$ remains positive, so its Schur
+complement $C$ transports this classification to the fixed1281 lower target
+$\mathcal L_g^{(19)}=L_*+\beta^*D_g^{-1}\beta$.
+A zero-containing determinant enclosure classifies neither sign. These
+are applications of the already owned inertia and determinant methods,
+not a new RH criterion or a new determinant algorithm.
+
+The new entry enclosure is formed from the saved $D,B,\Sigma_*$ before
+explicit inverse elimination. The SAME $B$ fills both off-diagonal blocks;
+$D$ and $\Sigma_*$ may be symmetrized by averaging their transpose
+entries. This preserves their actual symmetric matrices. The accepted
+positivity premise refers to the actual $D$, while the serialized box
+need only contain it. No independently chosen endpoint matrix is used
+as a Loewner upper or lower bound.
+
+A single37-by37 FLINT determinant uses the unchanged1024-bit working
+precision. Its absolute export grid is $640\cdot37+64=23744$ bits,
+following the existing degree-aware rule. Supporting its exact decimal
+endpoint strings is a serialization setting, not a precision increase.
+No old determinant, inertia, inverse action, $D_g$, joint metric, residual,
+source, far Gram or trial producer is rerun. There is no balancing,
+parameter, basis, direction, cutoff, weight or precision scan.
+
+The [source and exact archived result](https://github.com/the-omega-institute/trureturing-experiments/tree/0f72c75a1653fedddf023a8c9cdb32b7a41459c7/docs/reports/weil-c27)
+are pinned at source/data commit `0f72c75a1653fedddf023a8c9cdb32b7a41459c7`.
+The single application takes0.119342seconds and returns
+`inconclusive-coupled-border-determinant`.
+
+| Quantity | Value or enclosing interval |
+|---|---:|
+| Working precision | 1024bits |
+| Saved matrix-entry grid | 640bits |
+| Coupled-border dimension | 37 |
+| Determinant export grid | 23744bits |
+| New native determinant calls | 1 |
+| Coupled-border determinant | $[-1.391,1.391]\cdot10^{-1859}$ |
+| New solve, inverse, source or Gram calls | 0 |
+| Old determinant or inertia fixture replays | 0 |
+
+The exact dyadic determinant endpoints have opposite signs. The displayed
+rounded enclosure therefore certifies neither positivity nor a negative
+direction of the fixed lower target; it is not an exact-zero certificate.
+Both target-sign flags remain false. The application stops without a new
+minor, determinant, balancing, precision or parameter retry.
+
+This archive supplies the result of the previously missing coupled-border
+application; no accepted19-RHS action or earlier scientific certificate
+needs recomputation. Under the inherited actual form/domain, original
+exact-trial, normalization and sound-cache premises, the earlier common
+lower-bound bridge remains available. The paid fixed-target sign, actual
+retained/cofinal Weil positivity, Robin, RH and Lean verification remain
+open. A bounded certificate for this single trial cannot supply a uniform
+cofinal estimate or the core-density and continuity bridge needed to pass
+to all admissible tests.
+
 
 ### Complete original-source restricted inertia at eta one
 
