@@ -1674,3 +1674,284 @@ The new model-specific composition is the forward actual family (R.75), its coup
 Every physical application still requires the actual source encoder and supplied inputs, common source-fiber membership, finite-history transport and joint legality of the native words in the phase-gain volume. The coordinate matrices, the pinching reflection and the tilted mathematical test states provide no native gate, input preparation, encoder/decoder apparatus or hardware resource. The standard matrix arguments and their source exposition are ordinary conditional mathematics, with no physical-realization or broader-programme conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 23. Common-Gram comparison and exact restricted witness transport
+
+**Definition 23.1 (one original Kraus list and its output blocks).** Retain Definition 1.1, the physical/passive correspondence (P.1)–(P.2), and the full complex recovery and finite-reference conventions (P.6), (P.16). Fix $0<\beta\leq1/2$, $a=1-\beta$, and any finite original real Kraus list from (R.8)–(R.9), of length $n$. In the real output frame $(b_1,g_1,b_2,g_2,h)$ extend $J$ by $Jh=0$. Thus $J^T=-J$ and $J^2=-I$ on the active four-space $U=h^\perp$. Define, from this same list,
+
+$$
+\begin{gathered}
+A=[x_\alpha]\in M_{5\times n}(\mathbb R),\qquad
+T=[t_\alpha]\in M_{5\times n}(\mathbb R),\\
+B=AA^T,\qquad C_{\rm out}=AT^T,\qquad D=TT^T,\qquad
+Q=\operatorname{diag}(a,a,\beta,\beta,0).
+\end{gathered}
+\tag{R.99}
+$$
+
+Here $C_{\rm out}$ is an output-space matrix; it is not the complementary environment block $C$ of (R.3), (R.79). The $D$ in (R.99) is the actual output $N(E_{22})$, not the physical coordinate matrix of (P.1). The positive matrix $D_\perp$ below is an index-space projection residual and is not the complementary Schur residual $S$ of (R.4), (R.80). No Kraus terms or third-column components are omitted in these definitions.
+
+**Theorem 23.2 (common-index residual and the full complex restricted action).** For the data in Definition 23.1,
+
+$$
+\begin{gathered}
+B\succeq0,\quad Bh=0,\quad B+JBJ^T=Q,\quad
+\operatorname{Tr}B=\operatorname{Tr}D=1,\\
+\operatorname{Tr}C_{\rm out}=\operatorname{Tr}(JC_{\rm out})=0,\qquad
+0\preceq B\preceq Q\preceq aI_5,\qquad
+2\leq k:=\operatorname{rank}B\leq4.
+\end{gathered}
+\tag{R.100}
+$$
+
+The Moore–Penrose inverse $B^+$ is taken on the actual support, including singular $B$. The matrix $P_A=A^TB^+A$ is the orthogonal projection onto $\operatorname{ran}(A^T)$ in the original real Kraus-index space. In particular,
+
+$$
+\begin{gathered}
+AP_A=A,\qquad \operatorname{ran}C_{\rm out}\subseteq\operatorname{ran}B,\\
+D=C_{\rm out}^TB^+C_{\rm out}+D_\perp,\qquad
+D_\perp=T(I-P_A)T^T\succeq0,\\
+q:=\operatorname{Tr}(C_{\rm out}^TB^+C_{\rm out})
+ =\|TP_A\|_F^2\in[0,1],\qquad
+\operatorname{Tr}D_\perp=1-q.
+\end{gathered}
+\tag{R.101}
+$$
+
+Use the real seven-dimensional space and its associated minima
+
+$$
+\begin{gathered}
+\mathcal H_0=\{X=X^\dagger:\operatorname{Tr}X=0,\ X_{22}=0\}
+ =\left\{\begin{pmatrix}
+\eta&z&w\\ \bar z&-\eta&v\\ \bar w&\bar v&0
+\end{pmatrix}:\eta\in\mathbb R,\ z,w,v\in\mathbb C\right\},\\
+m_0(N)=\min_{0\ne X\in\mathcal H_0}\frac{\|N(X)\|_1}{\|X\|_1},\qquad
+m_{\min}(N)=\min_{\substack{0\ne X=X^\dagger\\\operatorname{Tr}X=0}}
+\frac{\|N(X)\|_1}{\|X\|_1}.
+\end{gathered}
+\tag{R.102}
+$$
+
+Both minima exist by normalizing to the compact unit sphere in the indicated real vector space. In particular $m_{\min}(N)\leq m_0(N)$. All complex coordinates $z,w,v$ are retained. The nine original matrix-unit images are
+
+$$
+\left[N(E_{ij})\right]_{i,j=0}^2
+=\begin{pmatrix}
+B&BJ^T&C_{\rm out}\\
+JB&JBJ^T&JC_{\rm out}\\
+C_{\rm out}^T&C_{\rm out}^TJ^T&D
+\end{pmatrix},
+\qquad E_{ij}=|i\rangle\langle j|.
+\tag{R.103}
+$$
+
+Consequently, on precisely $\mathcal H_0$, the channel action is
+
+$$
+\begin{aligned}
+\mathcal L_{B,C_{\rm out}}(X)
+={}&\eta(B-JBJ^T)+zBJ^T+\bar zJB\\
+&+wC_{\rm out}+\bar wC_{\rm out}^T
+ +vJC_{\rm out}+\bar vC_{\rm out}^TJ^T
+=N(X).
+\end{aligned}
+\tag{R.104}
+$$
+
+The following estimates are ingredients for reducing this same-channel witness problem:
+
+$$
+\begin{gathered}
+c_{\rm pl}:=\tfrac12\|B-JBJ^T\|_1=\|ZZ^T\|_1,\\
+m_{\min}(N)\leq m_0(N)
+\leq\min\{c_{\rm pl},\|C_{\rm out}\|_1\}
+\leq\min\{c_{\rm pl},\sqrt q\}.
+\end{gathered}
+\tag{R.105}
+$$
+
+Thus $c_{\rm pl}\leq\sqrt a$ or $q\leq a$ already gives an $\mathcal H_0$ witness at most $\sqrt a$. The same conclusion holds when $\operatorname{rank}C_{\rm out}\leq1$.
+
+**Proof.** The phase relation (R.8) gives $B+JBJ^T=Q$ and $Bh=0$. The first two column norms are equal because $J$ is an isometry on $U$; tracing the phase identity gives $\operatorname{Tr}B=1$. Equation (R.9) gives $\operatorname{Tr}D=1$ and exactly the two displayed cross traces. Positivity gives $B\preceq Q$, and $a\geq\beta$ gives $Q\preceq aI_5$. Since $Q$ has rank four, $4\leq2\operatorname{rank}B$, while $Bh=0$ gives the upper rank bound. No nondegeneracy of $a-\beta$ is used, so $\beta=1/2$ is included.
+
+Take a real thin singular-value decomposition $A=U_A\Sigma V_A^T$, with $k$ positive singular values. Then $B^+=U_A\Sigma^{-2}U_A^T$ on its support and $P_A=V_AV_A^T$. This proves the projection and support assertions even when $B$ is singular. Orthogonal splitting of $T=TP_A+T(I-P_A)$ gives
+
+$$
+\begin{aligned}
+C_{\rm out}^TB^+C_{\rm out}
+ &=TA^TB^+AT^T=TP_AT^T=(TP_A)(TP_A)^T,\\
+TT^T&=(TP_A)(TP_A)^T+
+       [T(I-P_A)][T(I-P_A)]^T.
+\end{aligned}
+$$
+
+Tracing proves (R.101). In particular $\operatorname{rank}D_\perp\leq\min(5,n-k)$, with no rank-one restriction. The original Kraus Choi rank is the rank of the stacked real matrix $(A;JA;T)$. Its row space is the orthogonal sum of $\operatorname{ran}(A^T)$ and the row space of $T(I-P_A)$: the rows of $JA$ and $TP_A$ already lie in the former. Thus the original rank is $k+\operatorname{rank}D_\perp\leq9$, consistent with Theorem 1.3, rather than bounded by four. At $q=0$, $TP_A=0$ and $C_{\rm out}=0$; at $q=1$, $D_\perp=0$ and $T=TP_A$. These are exact endpoint statements.
+
+Each entry of (R.103) follows by expanding the original Kraus sum on $E_{ij}$; substitution gives (R.104). On a general input the third diagonal contribution is $X_{22}D$, including $X_{22}D_\perp$. It vanishes in (R.104) because $X_{22}=0$, not because the original channel lacks a residual. The real dimension in (R.102) is $1+2+2+2=7$.
+
+For (R.105), $E_{00}-E_{11}$ has trace norm two. In the complex phase frame $(f_1^+,f_2^+,f_1^-,f_2^-,h)$ of (R.7), its output has off-diagonal block $ZZ^T$ and the adjoint block, with zero diagonal blocks. The singular values are therefore doubled, proving the expression for $c_{\rm pl}$. This is exactly the $0$-versus-$1$ distance already used in Theorem 4.3, so $c_{\rm pl}=f(\tau,\bar\tau)$ in the owning complementary notation; no additional plane certificate is being assumed.
+
+The input $E_{02}+E_{20}\in\mathcal H_0$ also has trace norm two and output $C_{\rm out}+C_{\rm out}^T$. Triangle inequality bounds its ratio by $\|C_{\rm out}\|_1$. The common factorization $C_{\rm out}=A(TP_A)^T$ and Schatten Hölder give
+
+$$
+\|C_{\rm out}\|_1\leq\|A\|_F\|TP_A\|_F=\sqrt q,
+\qquad
+\|C_{\rm out}\|_F^2\leq\|A\|_{\rm op}^2\|TP_A\|_F^2\leq aq.
+$$
+
+When $\operatorname{rank}C_{\rm out}\leq1$, its trace and Frobenius norms agree, giving $\|C_{\rm out}\|_1\leq\sqrt{aq}\leq\sqrt a$. These standard norm steps are used only inside the common-Gram reduction. The condition $q\leq a$ is equivalent to $\operatorname{Tr}D_\perp\geq\beta$ and is not a condition on $\operatorname{Tr}S$. At $q=0$, the displayed cross input is a nonzero zero-output witness, so $m_0(N)=m_{\min}(N)=0$ without any normalization. $\square$
+
+**Theorem 23.3 (actual normalized comparison and exact feasible realization).** For $q>0$ put $r=\sqrt q$ and form, from every term of the original list,
+
+$$
+K_\alpha^\sharp=
+\left(x_\alpha,Jx_\alpha,\frac{(TP_A)_\alpha}{r}\right),\qquad
+N^\sharp(X)=\sum_\alpha K_\alpha^\sharp X(K_\alpha^\sharp)^T.
+\tag{R.106}
+$$
+
+This is an actual real-Kraus CPTP encoder in the same phase class, with
+
+$$
+\begin{gathered}
+B^\sharp=B,\qquad C_{\rm out}^\sharp=C_{\rm out}/r,\qquad
+D^\sharp=C_{\rm out}^TB^+C_{\rm out}/q,\\
+q^\sharp=1,\qquad D_\perp^\sharp=0.
+\end{gathered}
+\tag{R.107}
+$$
+
+It admits at most $k=\operatorname{rank}B\leq4$ real Kraus matrices for the entire channel on all complex inputs. This bound belongs to $N^\sharp$. At $q=1$ the original and comparison channels coincide; no such identity or original rank bound is asserted when $q<1$.
+
+The normalized comparison domain has the following exact constructive description. For fixed $\beta,J,h,Q$ as above, a real pair $(B,C_{\rm out})$ is feasible if and only if
+
+$$
+\begin{gathered}
+B=B^T\succeq0,\qquad Bh=0,\qquad B+JBJ^T=Q,\\
+\operatorname{ran}C_{\rm out}\subseteq\operatorname{ran}B,\qquad
+\operatorname{Tr}C_{\rm out}=\operatorname{Tr}(JC_{\rm out})=0,\\
+\operatorname{Tr}(C_{\rm out}^TB^+C_{\rm out})=1.
+\end{gathered}
+\tag{R.108}
+$$
+
+Here feasibility means realization by one actual channel of the form (R.106) with $q=1$, rather than separate positivity conditions on unrelated blocks. In the reverse direction, choose a real full-column-rank factor with $k$ columns and set
+
+$$
+AA^T=B,\qquad T=C_{\rm out}^TB^+A,\qquad
+K_\alpha=(A_\alpha,JA_\alpha,T_\alpha).
+\tag{R.109}
+$$
+
+These matrices supply the required common realization.
+
+**Proof.** The first two columns of (R.106) retain their original summed norms one and their skew inner product zero. The third summed squared norm is $\|TP_A\|_F^2/r^2=1$. Since $AP_A=A$ and $(JA)P_A=JA$, the two summed cross inner products with $TP_A$ equal those with $T$ and hence vanish. Division by $r$ preserves their zero values. This proves every TP entry; the actual Kraus sum proves CP on the complex matrix algebra. Its first two columns are unchanged, so both actual phase outputs and their spectra are unchanged. Multiplying the blocks proves (R.107).
+
+All three rows of column maps $A,JA,TP_A/r$ vanish on $\ker P_A$. Choose a real $n\times k$ matrix $W$ with orthonormal columns spanning $\operatorname{ran}P_A$, so $WW^T=P_A$. Define $\widehat K_j=\sum_\alpha W_{\alpha j}K_\alpha^\sharp$. Expanding their Kraus sum replaces the index contraction $I_n$ by $WW^T=P_A$; the omitted index directions have all three output columns zero. Thus $\sum_j\widehat K_jX\widehat K_j^T=N^\sharp(X)$ for every complex $X$. Tensoring this identity with any finite reference preserves it. This proves the comparison rank bound without truncating an original channel. When $q=1$, (R.101) gives $T=TP_A$ and $r=1$, proving the endpoint identity.
+
+Necessity of (R.108) follows from (R.100)–(R.101). For sufficiency, spectral factorization gives the real factor $A$ in (R.109). Its columns lie in $h^\perp$ by $Bh=0$. The range condition gives $BB^+C_{\rm out}=C_{\rm out}$, hence
+
+$$
+AT^T=BB^+C_{\rm out}=C_{\rm out},\qquad
+TT^T=C_{\rm out}^TB^+BB^+C_{\rm out}
+     =C_{\rm out}^TB^+C_{\rm out}.
+$$
+
+Trace of the phase identity gives $\operatorname{Tr}B=1$, because $J$ is an isometry on $h^\perp$. The two first-column norms, their skew inner product, the two cross traces in (R.108), and the final trace one in (R.108) now give precisely $\sum_\alpha K_\alpha^TK_\alpha=I_3$. In particular the normalization is an actual TP condition, not an independent assignment of a third block. The joint Gram matrix is
+
+$$
+\begin{pmatrix}
+B&C_{\rm out}\\ C_{\rm out}^T&C_{\rm out}^TB^+C_{\rm out}
+\end{pmatrix}
+=\begin{pmatrix}A\\T\end{pmatrix}
+ \begin{pmatrix}A\\T\end{pmatrix}^{T}\succeq0,
+$$
+
+of rank $k$, also for singular $B$. Since $JQ=JB-BJ^T$ on the active space, direct expansion gives $N(\chi_\pm)=(Q\pm iJQ)/2$. In the frame (R.7) these are the orthogonal-support states with nonzero spectra $(a,\beta)$, including $a=\beta=1/2$. This proves membership in the actual original real phase class. The full-column-rank factor gives $P_A=I_k$ and hence $q=1$, as required. The support, phase, $Bh=0$, trace and normalization conditions in (R.108) are all used; omitting them does not license this realization. $\square$
+
+**Theorem 23.4 (exact inverse-damping transport on $\mathcal H_0$).** For $q>0$ and the actual comparison of Theorem 23.3, define the input map, in the original $0,1$ versus $2$ splitting,
+
+$$
+\begin{gathered}
+F=\operatorname{diag}(1,1,-1),\qquad
+\Gamma_r=\frac{1+r}{2}\,\mathrm{id}_3+
+          \frac{1-r}{2}\operatorname{Ad}_F,\\
+\Gamma_r\begin{pmatrix}H&\xi\\\xi^\dagger&d\end{pmatrix}
+=\begin{pmatrix}H&r\xi\\r\xi^\dagger&d\end{pmatrix}.
+\end{gathered}
+\tag{R.110}
+$$
+
+The map is CPTP for $0\leq r\leq1$. On $\mathcal H_0$ exactly, $N(Y)=N^\sharp(\Gamma_r(Y))$. For any nonzero comparison witness in that space, set
+
+$$
+X^\sharp=\begin{pmatrix}H&\xi\\\xi^\dagger&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}H&\xi/r\\\xi^\dagger/r&0\end{pmatrix}.
+\quad
+\begin{gathered}
+N(Y)=N^\sharp(X^\sharp),\qquad
+\|X^\sharp\|_1\leq\|Y\|_1,\\
+m_{\min}(N)\leq m_0(N)\leq m_0(N^\sharp).
+\end{gathered}
+\tag{R.111}
+$$
+
+The inverse construction is a Hermitian test-operator construction, with no assertion of a CP state-preparation map. For a general complex matrix $Y$, the full discrepancy is
+
+$$
+N(Y)-N^\sharp(\Gamma_r(Y))
+=Y_{22}(D-D^\sharp)
+=Y_{22}\,[D_\perp-(1-q)D^\sharp].
+\tag{R.112}
+$$
+
+**Proof.** Both coefficients in (R.110) are nonnegative and sum to one, so this is a convex mixture of two unitary channels. Triangle inequality and unitary invariance give $\|\Gamma_r(Y)\|_1\leq\|Y\|_1$ for every matrix $Y$. Equations (R.103), (R.107) show that damping precisely cancels the factor $1/r$ in every plane–third cross image, including its complex conjugate. The plane block is unchanged. The only remaining difference is the $22$ image, proving (R.112) and the claimed equality when $Y_{22}=0$.
+
+For the specified inverse, $Y\in\mathcal H_0$, $Y\ne0$, and $\Gamma_r(Y)=X^\sharp$. Norm contraction therefore gives the first two identities of (R.111) and
+
+$$
+\frac{\|N(Y)\|_1}{\|Y\|_1}
+\leq\frac{\|N^\sharp(X^\sharp)\|_1}{\|X^\sharp\|_1}.
+$$
+
+Minimize over the comparison witnesses to obtain (R.111). The inverse need not preserve positivity and is not used as a physical preprocessing operation. An unrestricted witness for $m_{\min}(N^\sharp)$ cannot replace $X^\sharp$ here unless it also satisfies $X^\sharp_{22}=0$; (R.112) identifies the missing term. No division by $q$ is used at $q=0$, which was already settled by Theorem 23.2. $\square$
+
+**Assumption 23.5 (sufficient lemma G, unproved).** For every $0<\beta\leq1/2$, $a=1-\beta$, and every real pair $(B,C_{\rm out})$ satisfying all of (R.108), there exists a nonzero complex Hermitian $X\in\mathcal H_0$ such that
+
+$$
+\|\mathcal L_{B,C_{\rm out}}(X)\|_1
+\leq\sqrt a\,\|X\|_1.
+\tag{R.113}
+$$
+
+No proof or counterexample to G is supplied. Theorem 23.2 already treats the part with $c_{\rm pl}\leq\sqrt a$ or $\operatorname{rank}C_{\rm out}\leq1$. Thus the remaining part of G has $c_{\rm pl}>\sqrt a$, $\operatorname{rank}C_{\rm out}\geq2$ and $\operatorname{rank}B\in\{2,3,4\}$. None of these three possible ranks of $B$ is discarded. The original unnormalized branch $q\leq a$ is another settled ingredient, whereas the domain of G itself has $q=1$.
+
+**Theorem 23.6 (conditional implication for the unchanged sharp target).** If G holds, every actual original real-Kraus encoder in Definition 1.1 at positive beta satisfies
+
+$$
+m_{\min}(N)\leq\sqrt a,\qquad
+\delta_N\geq1-\sqrt a=U(\beta),\qquad
+\delta^*_{\mathcal R}(\beta)=U(\beta).
+\tag{R.114}
+$$
+
+These consequences include arbitrary complex inputs and recoveries on the whole output and all finite complex references in the original unhalved diamond convention. Failure of G would refute this sufficient seven-dimensional route only; it would not by itself refute the full $m_{\min}$ claim or the original diamond target.
+
+**Proof.** The $q=0$ branch is already a zero-output witness. For every $q>0$, Theorem 23.3 gives one actual comparison whose pair $(B,C_{\rm out}/r)$ satisfies (R.108). G gives $m_0(N^\sharp)\leq\sqrt a$, and Theorem 23.4 transports that restricted witness to the same original channel, proving $m_{\min}(N)\leq m_0(N)\leq\sqrt a$.
+
+Reuse the Jordan domain (R.98): every nonzero traceless Hermitian qutrit input, up to sign and scale, is the difference of one pure state and a density of rank at most two on its orthogonal complement. Applying (R.95) to these actual orthogonal-support states gives $\delta_N\geq1-m_{\min}(N)$. This uses one arbitrary complex CPTP recovery at a time; product lower witnesses are admissible within the full-reference diamond supremum and do not restrict that supremum. Combining with the attained upper family (P.11)–(P.16) proves the conditional class equality. At beta zero the existing isometric family already attains the nonnegative class optimum zero, without extending the positive-beta rank assumptions.
+
+Conversely, failure of G means that one feasible normalized actual channel has no required $\mathcal H_0$ witness. Its minimum over all traceless Hermitian inputs can still be smaller, and its full-reference recovery lower certificate can arise by another method. Thus neither of the broader targets follows negatively from that failure. The original alternative remains an actual original-class encoder and one complex CPTP recovery with a rigorous full-reference diamond upper certificate strictly below $U(\beta)$; no such object is constructed here. $\square$
+
+**Definition 23.7 (overlap, attribution and mathematical boundary).** The repo-derived content is the normalized common-Gram comparison (R.101), (R.106)–(R.109), its exact restricted action and inverse-damping transport (R.104), (R.110)–(R.112), and the resulting conditional route (R.113)–(R.114). The SVD projection, Schatten inequalities, unitary-mixture contraction and Jordan decomposition are standard ingredients inside this composition. The plane exclusion reuses Theorem 4.3, the recovery obstruction reuses (R.95), and the unrestricted pure-versus-rank-two domain remains (R.98); none is an additional standalone general result.
+
+For calibration, the actual family (R.75) has $P_A=I_2$, $q=1$, $D_\perp=0$, $c_{\rm pl}=1$ and $\operatorname{rank}C_{\rm out}=2$. Nevertheless its complementary residual is $S=\operatorname{diag}(s_t^2,0)\ne0$. These statements follow by inserting its two independent first columns into (R.99)–(R.101), and by (R.80). Its already established tilted difference (R.89) has $X_{22}=0$ and is therefore an $\mathcal H_0$ witness. This calibrates the hard normalized region without proving G for arbitrary feasible pairs.
+
+The minimum in (R.102) agrees, by the Jordan argument already in (R.98), with the minimum trace-distance ratio and the orthogonal-support formulation of [G. Chiribella and K. Goswami, *Maximum and minimum causal effects of physical processes*, arXiv:2404.07683v3, Definition 3, (13), PDF p.5; Proposition 6, (14), PDF p.6; Section III.A, (24) and its following paragraph, PDF p.8](https://arxiv.org/pdf/2404.07683v3). The pure-state reduction there is automatic for qubit input. It does not license a pure-versus-pure restriction for this qutrit domain or show that mixed states are necessary in this real class. That source supplies no $\sqrt a$ estimate for G.
+
+The exact-isometry interface is [F. Ticozzi and L. Viola, *Quantum Information Encoding, Protection, and Correction from Trace-Norm Isometries*, arXiv:0912.0963v1, Section II, Definition 1, Lemma 1, (4)–(8), Theorem 1, PDF pp.2–3; Section IV, Definitions 4–5, (16), PDF p.7; DOI 10.1103/PhysRevA.81.032313](https://arxiv.org/pdf/0912.0963v1). Its stochastic-isometry formula (6) permits unitary or antiunitary components. For a complex CPTP channel every nonzero compressed block must be CP; an antiunitary block acts as unitary-conjugated transposition, whose Choi swap has a negative eigenvalue on the antisymmetric subspace. Thus such a block is excluded here. The exact CPTP left-inverse structure is $\rho\mapsto U(\rho\otimes\tau)U^\dagger$ on its support, as also treated by the existing exact-recovery interfaces in Definition 22.1. A rank-two pure output then requires two orthogonal qutrit copies and hence output dimension at least six. This is an exact-recovery obstruction. Definitions 4–5 and (16) assume a perturbation of an actual specified isometry; neither that premise nor the sharp positive-error bound is furnished by the exact dimension count or by a lower trace-distance ratio alone.
+
+These two primary interfaces have only the attributed roles above. The model-specific comparison is repo-derived ordinary finite-dimensional mathematics, with no global novelty, exhaustive literature coverage or kernel-verification assertion. Universal identities rest on the displayed proofs, rather than finite numerical checks. G and the positive-beta all-encoder sharp lower bound remain unproved here. The larger complex encoder class is unchanged and separate. All physical uses still require the actual encoder and supplied inputs, common source-fiber membership, finite-history transport and native-word joint legality of the phase-gain volume. The comparison encoder, inverse damping, coordinate frames and mathematical witnesses supply no native gates, state preparation, physical encoder/decoder apparatus or hardware resources.
+
+## 追加锚（本行以下为增补区）
