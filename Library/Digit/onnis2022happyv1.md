@@ -14,6 +14,12 @@ triage: anchor
 
 # Onnis's square convergence prohibition
 
+## Verified locator
+
+- URL: https://arxiv.org/abs/2203.03381v1
+- Locator: Section 1.2, "Variant of happy numbers", and Section 3,
+  "Conjecture 1", in the exact versioned source.
+
 The exact source is arXiv:2203.03381v1. Section 1.2 defines the map by:
 
 > To determine whether a given number k is a term of this sequence, start with k, take the square of the product of its nonzero digits, apply the same process to the result, and continue until 1 is reached or a loop is entered. If 1 is reached, k is a term of this sequence.
