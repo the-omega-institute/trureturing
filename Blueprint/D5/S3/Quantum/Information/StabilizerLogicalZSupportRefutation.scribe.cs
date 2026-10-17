@@ -81,7 +81,10 @@ internal sealed class StabilizerLogicalZSupportRefutationDocument : IScribeDocum
                             + "Z-free word. Consequently no nontrivial logical word has a Z factor in "
                             + "every stabilizer translate. This refutes the universal support assertion; "
                             + "Proposition 3 remains a sufficient condition when its support hypothesis holds."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zheng-liu-2024-logical-z-support-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
