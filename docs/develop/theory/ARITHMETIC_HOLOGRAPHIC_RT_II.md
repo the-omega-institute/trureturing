@@ -2909,3 +2909,160 @@ This is a necessary condition, not a sufficiency or minimal-environment theorem.
 ### 80.8. Attribution and boundary
 
 The proof uses the standard Pauli-space dimension, Hilbert--Schmidt projection contraction, and trace-norm duality; see [Watrous, The Theory of Quantum Information, Chapters 1 and 3](https://cs.uwaterloo.ca/~watrous/TQI/) for matrix-norm and channel-norm background. The full-reference Gram norm and one-sided reference-tag comparison use the framework proved in section 72. The attaining physical product and exact arbitrary-reference norm are section 79's tetrahedral-marker theorem. No external numerical optimizer or numerical nonfinding is used as evidence for (1)--(3). The unrestricted four-fibre optimum with both environments arbitrary remains open between sqrt(3)-3/2 and 1/4.
+
+## 81. A subnormalized centroid-support witness for original local environment bounds
+
+### 81.1. Original-channel theorem, including output leakage
+
+Let k>=2 be an integer and let F_(k,2):C^(2k)->C^k be the uniform qubit-fibre target,
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g| for f!=g.
+
+Fix the MC input and output encodings J_in and J_out. Let A,B:C^(2k)->C^k be arbitrary CPTP maps. If B admits a pure Stinespring environment of dimension d (equivalently, has Kraus rank at most d), then their unhalved, arbitrary-reference diamond error obeys
+
+    delta=||(A tensor B)J_in-J_out F_(k,2)||diamond
+         >= max{0,(k-d^2+1)/k}.                         (1)
+
+Necessarily d>=2: B's Stinespring isometry maps an input of dimension 2k into an output-environment space of dimension kd, so 2k<=kd. The environment dimension and output leakage of A are unrestricted. B need not be fibre-calibrated, either. The same bound holds with the parties exchanged. Consequently an actual local Kraus rank d must satisfy
+
+    d^2 >= k(1-delta)+1.                                (2)
+
+At k=4, the exact minimum over all original physical products with either local Kraus rank at most two is 1/4. The lower bound follows from (1), and the eta=3/4 tetrahedral-marker product of section 79 attains it with local Kraus ranks (4,2). This permits arbitrary nonconjugate local maps and arbitrary output leakage on both sides. Any product with error strictly below 1/4 must therefore have both local Kraus ranks at least three. It remains open whether such a product exists: the unrestricted four-fibre optimum is still only known to lie in [sqrt(3)-3/2,1/4].
+
+The proof below is direct on the original Stinespring records and a normalized reference input. It uses neither calibration nor an error-monotonicity assertion for unitary polar replacement.
+
+### 81.2. A pointwise centroid-support inequality for contractions
+
+Let A_0:C^2->E be a contraction, let H:C^2->C^d be a contraction, and let Z=diag(1,-1). Identify E tensor C^d with coefficient matrices E-by-d, preserving the Hilbert--Schmidt inner product. Set
+
+    C=A_0 H^T/sqrt(2),
+    D=A_0 Z H^T/sqrt(2).
+
+For any fixed matrix S of the same size, define the complex linear subspace
+
+    L_S={S X : X is d-by-d and Tr X=0},
+
+and let Q_S be its Hilbert--Schmidt orthogonal projection. Its dimension is at most d^2-1. Then
+
+    ||(I-Q_S)D||_F^2
+       <= 1+||S||_F^2-2 Re Tr(S^* C).                  (3)
+
+The assertion is universal in S. S is not assumed normalized, maximally entangled, or of a prescribed rank.
+
+First suppose H=U is an isometry, U^*U=I_2. Define
+
+    N=conjugate(U) Z U^T.
+
+Since U^T conjugate(U)=I_2, one has D=C N. The matrix N is Hermitian and traceless, and ||N||op=1; its nonzero eigenvalues are 1 and -1. Thus S N belongs to L_S. Orthogonal projection and multiplication by a contraction give
+
+    ||(I-Q_S)D||_F^2
+       <= ||D-S N||_F^2
+        = ||(C-S)N||_F^2
+       <= ||C-S||_F^2
+       <= 1+||S||_F^2-2 Re Tr(S^* C).                  (4)
+
+The last inequality uses ||C||_F^2=Tr(A_0^*A_0)/2<=1.
+
+For a general contraction H, take a thin singular value decomposition
+
+    H=L diag(s_1,s_2)V^*,  0<=s_1,s_2<=1,
+    L^*L=I_2,  V^*V=I_2.
+
+Zero singular vectors can be completed to an orthonormal pair because d>=2. For epsilon=(epsilon_1,epsilon_2) in {+1,-1}^2 set
+
+    U_epsilon=L diag(epsilon_1,epsilon_2)V^*,
+    p_epsilon=((1+epsilon_1 s_1)(1+epsilon_2 s_2))/4.
+
+Every U_epsilon is an isometry, the p_epsilon are nonnegative and sum to one, and H=sum_epsilon p_epsilon U_epsilon. Both C and D depend linearly on H. For fixed A_0 and S, the function
+
+    H -> ||(I-Q_S)D||_F^2+2 Re Tr(S^* C)
+
+is convex: its first term is a squared norm of a linear map and its second term is real-linear. Averaging (4) over this explicit isometric decomposition proves (3). This convexity step is applied to the support-loss expression, not to a claim that polar normalization decreases channel error.
+
+### 81.3. The full subnormalized Gram witness
+
+For f=1,...,k, let A_f:C^2->E_A and H_f:C^2->C^d be contractions. Their columns are a_fi and h_fi. Define the actual product records and their forward Gram by
+
+    x_fi=a_fi tensor h_fi,
+    K_(fi,gj)=<x_fi,x_gj>.
+
+Let T have diagonal blocks I_2 and off-diagonal blocks J_2/2. Define
+
+    c_f=(x_f0+x_f1)/sqrt(2),
+    d_f=(x_f0-x_f1)/sqrt(2),
+    C_f=Mat(c_f)=A_f H_f^T/sqrt(2),
+    D_f=Mat(d_f)=A_f Z H_f^T/sqrt(2),
+    S=(1/k)sum_f C_f,
+    a=k-k||S||_F^2.
+
+Apply (3) to every fibre with this one common S and Q=Q_S. Summing gives
+
+    sum_f ||(I-Q)D_f||_F^2 <= a.                       (5)
+
+Let B:C^k->E_A tensor C^d have columns d_f. Choose an isometry V whose range is ker(QB), and put
+
+    r=dim ker(QB),   Pi=VV^*.
+
+In particular r>=max{0,k-d^2+1}. The identity QBV=0 and Hilbert--Schmidt projection contraction imply
+
+    Tr(Pi B^*B)=||BV||_F^2
+               =||(I-Q)BV||_F^2
+              <=||(I-Q)B||_F^2 <=a.                  (6)
+
+Apply the plus/minus change of basis to K and T, and order all plus coordinates before all minus coordinates. The complete transformed matrices are
+
+    Khat=[[Cgram,X],[X^*,M]],
+    That=diag(J_k,I_k),
+
+where M=B^*B and X is the actual plus/minus cross block. No cross coupling is discarded. With s=ones/sqrt(k),
+
+    s^*(Cgram-J_k)s=k||S||_F^2-k=-a.
+
+The orthogonal projection Phat=diag(ss^*,Pi) therefore satisfies
+
+    Tr Phat(Khat-That) <= -a+(a-r)=-r.                 (7)
+
+Conjugating back gives an explicit projection P on the full original coefficient space. The positive-part variational principle yields
+
+    Tr(T-K)_+ >= Tr P(T-K) >= r
+               >=max{0,k-d^2+1}.                     (8)
+
+This argument does not assume TrK=2k. Equivalently,
+
+    ||K-T||_1+2k-TrK >=2r.                            (9)
+
+Thus it retains the full loss deficit of subnormalized correct-output records. It proves the desired four-fibre independent-contraction lemma Tr(T-K)_+>=1 whenever d=2, even without requiring the A_f to be orthonormal frames.
+
+### 81.4. Direct application to the original physical channel
+
+Choose Stinespring isometries V_A,V_B of the original local maps, with B environment dimension d. For each f let A_f and H_f be their correct-output blocks:
+
+    A_f e_i=(<f|_out tensor I_EA)V_A|f,i>,
+    H_f e_i=(<f|_out tensor I_EB)V_B|f,i>.
+
+Projection of an isometry is a contraction, so A_f^*A_f<=I_2 and H_f^*H_f<=I_2. Their records determine exactly the K of section 81.3. The original B isometry is square when d=2, but that additional block-unitary compatibility is not needed: (8) holds for all independent contraction blocks.
+
+Use the normalized maximally entangled logical/reference input
+
+    |Omega>=(1/sqrt(2k))sum_(f,i) |f,i>_R tensor |f,i>_logical.
+
+Let sigma be the original product-channel output after the input MC encoding, and let tau be the target output. Let W send |f,i> to |f,i>_R tensor |ff>_out and set P_good=WW^*. Directly from the Stinespring inner products,
+
+    P_good sigma P_good = W K^T W^*/(2k),
+    tau = W T W^*/(2k).
+
+The transpose is because K is the forward Gram; T is real symmetric. Pinching into the good subspace and its orthogonal complement is trace-norm contractive on Hermitian operators. The target vanishes on the complementary subspace, and the corresponding actual block is positive. Since sigma has trace one,
+
+    ||sigma-tau||_1
+       >= ||K-T||_1/(2k) + 1-TrK/(2k)
+        = Tr(T-K)_+/k
+       >= max{0,(k-d^2+1)/k}.                         (10)
+
+All off-diagonal coherences between these two support sectors were handled by a valid CPTP pinching lower bound; none is assumed absent. The retained matrix K includes every within-fibre and cross-fibre coherence in the good sector. The diamond norm is at least the error on this one normalized reference input, so (10) proves (1) for the original maps, including arbitrary leakage and every reference permitted in the definition.
+
+### 81.5. Attribution, resource interpretation, and boundary
+
+The proof uses standard singular value decomposition, an explicit convex decomposition of a rectangular contraction into isometries, Hilbert--Schmidt projection contraction, the positive-part variational principle, and trace-norm contractivity of pinching; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/) for the matrix and channel background. The new pointwise inequality (3) transfers a common centroid-support witness through the contraction decomposition and, crucially, retains the missing Choi trace in (9)--(10). Section 79 supplies the attaining physical product and its exact arbitrary-reference error. The normalized Choi and Stinespring conventions agree with sections 72 and 74, but no calibration theorem is used here.
+
+The resource d is the dimension of a pure Stinespring environment, or local Kraus rank. A mixed ancilla's purification must be included. Equation (2) is a necessary bound, not a sufficiency statement for arbitrary k,d. At k=4,d=2 the exact value 1/4 is established by the matching construction. The general arbitrary-rank four-fibre optimum remains unresolved; this result does not prove ||G entrywise-multiplied by H-T||_1>=2 when both Gram factors have unrestricted rank.
