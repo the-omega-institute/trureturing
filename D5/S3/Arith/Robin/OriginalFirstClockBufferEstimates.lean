@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/OriginalFirstClockBufferEstimates
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/OriginalFirstClockBufferEstimates
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
