@@ -1089,3 +1089,331 @@ Luo–Yang, arXiv:1404.5365 的 Theorems 1.4、6.3 的严格正角前提及共�
 证明依赖顺序为：原始余弦差及横向选择符号，接第 111.2 节的实际出现计数；再接第 112.1 节长度界及第 113 节有限保护闭包。四度路线从第 111.2 节接第 115.1 节，不使用第 112.1 节；随后由第 96 节的两条正余项推出第 116.1 节，再把可能两次出现的另一侧角量按二分之一计入，完成第 116.2 节。这明确区分两条路线的度数前提，避免形式化时误用六度结论。
 
 [cfmp_intrinsic_protection_check.py](../../../tools/scripts/agent/cfmp/cfmp_intrinsic_protection_check.py) 是标准库辅助脚本。两份固定表都重算面槽、实际标签、有向端点首次返回、独立角扇、型次数、横边对及有理角。一个仍映射遗漏顶点、却破坏实际边标签的错误面映射被拒绝。解析检查包含 6,000 个独立原始余弦差测试，出现 1,541 个 $A$ 横向平坦和 1,412 个 $B$ 横向平坦实例，最大相对恒等式误差约 $1.35\times10^{-15}$；3,000 个既有主边需求反检；188 个精确角容量计数；以及 3,000 个平坦对边响应传递样本。采样的最小余量不被当作统一常数，连续证明由正文承担。
+
+## 130. Fixed assumptions and previously proved inputs
+
+Take an actual finite ideal tetrahedron face pairing with complete edge links
+that are circles, and its actual global edge set E. All counts below count
+local edge occurrences, retaining repeated labels, distinct-face self-gluing,
+and repeated tetrahedra along an edge link. Assume every edge degree is at
+least six. Fix a partition E = H disjoint-union S. Every tetrahedron has a
+chosen vertex-induced frame with actual labels, in the standard order
+(12,13,14,34,24,23),
+
+    (R, A, B, O, A, B),       A,B in H, A != B.
+
+The labels R,O can belong to either part and can repeat. A local occurrence
+is called axial or transverse according to this fixed frame. These are roles
+of occurrences, not global roles assigned to H labels. Every S occurrence
+is necessarily axial.
+
+Suppose one common positive global generalized length field is given. Write
+x_e = cosh(ell_e)>1. All its original extended angle sums are exactly 2*pi.
+Positive-length classification says each tetrahedron is genuine, with all
+angles positive, or flat, with two opposite pi angles and four zeros.
+
+The following inputs are reused from this volume and the main
+[geometric-realization volume](CFMP_GEOMETRIC_REALIZATION.md):
+
+1. Section 95 of this volume and Section 50 of the main volume: a vector (r,a,b,o,a,b) is flat
+   in its axial pair precisely when
+
+       (r-1)(o-1) >= (a+b)^2.                         (A)
+
+2. Lemma 111.1: if the transverse a,a pair is selected by a flat block,
+
+       a>b,       a-b >= sqrt((r+1)(o+1)).           (T)
+
+   In particular, for one fixed reservoir pair only its strictly larger
+   numerical label can be selected transversely.
+
+3. Lemma 101.1 and Theorem 112.1: for every e in S its actual reservoir pair P(e)={A_e,B_e}
+   is constant along its complete star, and
+
+       x_e < 1+x_(A_e)+x_(B_e).                     (S)
+
+   This input uses all global angle equations and degree at least six. It
+   does NOT assume genuine witnesses for all H labels.
+
+4. Theorem 96.1: in a genuine block (r,a,b,o,a,b), if r>=1+a+b, and theta
+   is its r angle and beta,delta its transverse angles, then
+
+       2*theta+beta+delta > pi.                     (D)
+
+5. Section 95's six-length formula: in a genuine block
+   (z,m,c,d,m,c), the cosine at either m transverse occurrence has positive
+   denominator and numerator
+
+       N(z) = c(z+d)+m(zd+c^2-m^2+1).              (N)
+
+No additional assumption that H labels have genuine appearances is made.
+
+For any e let p_e be its number of flat pi occurrences. Nonnegative angles
+and the full edge equation imply p_e<=2. If p_e=2, e has no genuine
+occurrence. Conversely, an edge without a genuine occurrence has p_e=2.
+
+## 131. Actual axial runs and fixed reservoir pairs
+
+Read the fixed axial/transverse role of each occurrence around a complete
+normal circle of an edge e. A maximal consecutive axial run has a constant
+unordered pair of actual reservoir labels.
+
+Indeed, at an axial occurrence with pair {A,B}, either face containing the
+target edge has the other two face-edge labels A,B. If the next target
+occurrence is axial, those two labels are exactly the next frame's reservoir
+pair. The actual face map preserves all three edge labels. This remains
+true when the target label itself equals A or B: the tracked target edge
+slot is fixed, and the two remaining face-edge slots are still transported
+as the complementary two slots.
+
+If the whole star is axial, the same argument gives a constant pair around
+the entire circle. If there are transverse occurrences, their total number
+is even: each tetrahedron containing the target as a reservoir label has
+exactly two such local slots, since its two reservoir labels are distinct.
+Hence a nonempty proper maximal axial run has two distinct transverse
+boundary occurrences. They may lie in the same tetrahedron, but are still
+two different local occurrences in the full edge sum.
+
+At a role change from an axial run with pair {A,B} to a transverse target
+occurrence of label M, provided M,A,B are distinct, the target block has
+reservoir pair {M,C}, where C is one of A,B, and one axial label D is the
+other one. Its other axial label is denoted Z. Thus the same actual paired
+face reads M,C,D on both sides. This is an actual face transport assertion,
+not a choice of unrelated endpoint length data.
+
+## 132. Maximal selected H labels cannot be saturated
+
+Let F be the full nonempty flat set. There is at least one H label with a
+flat pi occurrence. A transverse selection is already such a label. An
+axial flat with both selected labels in S is impossible: applying (S) to
+both axes in that block makes their shifted product strictly smaller than
+(a+b)^2, contradicting (A).
+
+Choose M among ALL H labels with a flat pi occurrence so that
+m=x_M is maximal. Equal numerical values on different labels are allowed.
+
+### Lemma 132.1
+
+Every flat transverse occurrence of M has angle pi, not zero.
+
+Proof. Its block has reservoir values m,c. Selecting c,c would require
+c>m by (T), contrary to the choice of M, since the selected label is in H.
+If the block were axial-flat, every H-valued selected axis has value at
+most m; every S-valued selected axis has value strictly below 1+m+c by
+(S). If both axes are in H, their shifted product is at most (m-1)^2.
+If exactly one is in S, it is strictly smaller than (m-1)(m+c).
+If both are in S, it is strictly smaller than (m+c)^2. All three bounds
+contradict (A) for reservoir pair m,c. The only remaining flat selection
+is the transverse M,M pair. QED.
+
+### Lemma 132.2
+
+p_M=1, and M has a genuine occurrence.
+
+Proof. Suppose p_M=2. Then every M occurrence is flat.
+
+First suppose all its occurrences are axial. Their reservoir pair is
+constant around the circle. Every zero occurrence must belong to a block
+selecting the strictly larger member P of that pair transversely, by (T).
+Each such block contributes two pi occurrences to the same actual edge P,
+so its global angle equation permits at most one such block. This one
+block can contain at most two axial M occurrences. Together with the two
+pi occurrences of M, this gives degree(M)<=4, a contradiction.
+
+Otherwise there is a transverse M occurrence. By Lemma 132.1 its block
+selects M,M and already supplies all two pi occurrences of M. Therefore
+the entire circle has exactly two transverse occurrences, both in this
+one block; every other occurrence is axial and zero. Removing the two
+transverse occurrences leaves at most two axial runs. In each nonempty
+run the reservoir pair is constant, and all its zero blocks must select
+the same strictly larger reservoir label P. Its 2*pi budget allows at
+most one such block. If this one block supplied two axial M occurrences,
+its axes would both have value m. Formula (T) would then give
+
+       x_P-x_Q >= m+1,
+
+so x_P>m. But P is a pi-selected H label, contradicting maximality of m.
+Consequently each run has at most one occurrence. Again degree(M)<=4.
+
+Both alternatives contradict degree(M)>=6. Thus p_M cannot be two;
+it is one because M was selected. The remaining pi of its total angle
+must come from genuine occurrences, so M has a genuine witness. QED.
+
+Note carefully: this does not say every flat M occurrence is pi. Axial
+zero occurrences in other reservoir runs have not yet been excluded.
+
+## 133. The maximal selected edge has a dominant axial pi occurrence
+
+The pi occurrence of M must be axial. A transverse pi would contribute
+two pi occurrences to M, contradicting Lemma 132.2. Choose its flat block
+sigma, with reservoir labels A,B and values a,b, and opposite axis value o.
+Then
+
+       m >= 1+a+b.                                (L)
+
+If the opposite label is in H, it is also pi-selected, hence o<=m;
+(A) implies (m-1)^2>=(a+b)^2. If the opposite label is in S, (S) gives
+o-1<a+b, so (A) implies the stronger m>1+a+b. In particular M,A,B are
+three distinct actual labels and m>a,b.
+
+The entire M star cannot be axial. Otherwise its reservoir pair is the
+same {A,B} everywhere. The genuine witness from Lemma 132.2 supplies genuine
+witnesses for A and B too. Neither reservoir label can then be selected
+twice by a transverse-flat block. Thus every flat M occurrence is axial-pi,
+and there is exactly one of them. There are g=degree(M)-1>=5 genuine M
+occurrences, with total angle pi.
+
+No genuine block can contain two of these axial M occurrences: its axes
+would both be m, and (L) and (A) would make it flat. They therefore belong
+to distinct genuine blocks. Applying (D) and summing their four distinct
+transverse slots gives
+
+       2*sum(beta_i+delta_i) > 2*g*pi-4*pi >= 6*pi.
+
+All these slots belong to the same two actual edges A,B, whose full
+combined budget is only 4*pi. This contradiction excludes the all-axial
+case. It is precisely the existing Section 112 budget argument, with its
+required witnesses and occurrence distinctness proved here.
+
+## 134. Exact genuine escape theorem
+
+Take the proper maximal axial run containing sigma. It has two distinct
+transverse boundary M occurrences. Both are genuine: by Lemma 132.1 a flat
+transverse M occurrence would contribute two pi angles, contradicting
+p_M=1. Call their angles u,v. The flat pi at sigma and nonnegativity of
+all other M angles imply u+v<=pi. At least one endpoint has angle at most
+pi/2. Select that endpoint block tau.
+
+By actual face transport, tau has reservoir labels {M,C}, shared axial
+label D, and other axial label Z, where {C,D}={A,B}. Write c=x_C,
+d=x_D, z=x_Z. After a vertex relabel its six values are
+
+       (z,m,c,d,m,c).
+
+Its transverse M angle is at most pi/2, so N(z)>=0 in (N). The coefficient
+of z in N is c+md>0. At z0=1+m+c there is the exact factorization
+
+       N(z0) = [c+m(1+m+c)]*(1+c+d-m) <= 0,        (F)
+
+where the last inequality is (L). If z<z0 then N(z)<N(z0)<=0, a
+contradiction. Thus
+
+       z >= 1+m+c > m.                            (E)
+
+If m>1+a+b, (F) is strictly negative and z>1+m+c follows.
+
+The label Z cannot be special: if Z were in S, its actual reservoir pair
+in tau would be {M,C}, and (S) would give z<1+m+c. Hence Z belongs to H.
+Because z>m and M was maximal among pi-selected H labels, Z has NO flat
+pi occurrence anywhere in the original pairing. It already has a genuine
+witness, namely tau.
+
+We have proved the following precise theorem.
+
+**Theorem 134.1 (four-label genuine escape).** Under the assumptions of
+§130, if F is nonempty, there are four distinct actual H labels
+M,C,D,Z and a genuine tetrahedron tau with frame
+
+       (Z,M,C,D,M,C),
+
+such that M is maximal in value among all pi-selected H labels, p_M=1,
+Z has no flat pi occurrence, and
+
+       x_M >= 1+x_C+x_D,
+       x_Z >= 1+x_M+x_C > x_M.
+
+In particular x_Z>x_M>x_C,x_D. The source flat block has M as an axial
+label outside its reservoir pair {C,D}; the genuine escape block has two
+distinct axial H labels D,Z outside its reservoir pair {M,C}.
+
+Every equation and budget used above belongs to the same global length
+field and the complete actual occurrence quotient. The theorem is not a
+local-star construction and does not prescribe independent local angles.
+
+## 135. Combinatorial realization corollaries
+
+For a framed block sigma define its set of external axial H labels by
+
+       X_sigma = ({R_sigma,O_sigma} intersect H) \ {A_sigma,B_sigma},
+
+and put X=union_sigma X_sigma. These are sets of actual labels; repeated
+occurrences of the same external label are counted once in X_sigma.
+
+**Corollary 135.1 (no two distinct external H axes).** If every block
+satisfies |X_sigma|<=1, then every common positive zero-curvature
+generalized length field under the §130 assumptions is genuine.
+
+Proof. A flat set would give the escape block tau of Theorem 134.1, where
+both D and Z are distinct members of X_tau. QED.
+
+**Corollary 135.2 (three reservoir labels, without seeds).** If |H|<=3,
+every such field is genuine.
+
+Proof. Every block already uses two distinct H labels transversely, so
+at most one distinct H label remains available outside that pair.
+Apply Corollary 135.1; equivalently, Theorem 134.1 requires four distinct H
+labels. QED.
+
+**Corollary 135.3 (at most two external labels globally).** If |X|<=2,
+every such field is genuine.
+
+Proof. The source flat block in Theorem 134.1 places M in X, while its
+escape block places D,Z in X. They are three distinct labels, since
+x_Z>x_M>x_D. QED.
+
+**Geometric realization consequence.** On the original finite connected
+orientable ideal triangulation of a compact 3-manifold with all boundary
+components of genus at least two, assume all degrees are at least six
+and the stated paired-label frames exist. If any of the conditions in
+Corollaries 135.1--135.3 holds, the prescribed triangulation has a genuine
+hyper-ideal realization with totally geodesic boundary.
+
+Indeed, main Section 42 and the already cited Luo--Yang Theorem 6.3 supply
+a strict angle structure and a common positive generalized length field
+with every actual edge angle sum 2*pi. The applicable corollary excludes
+all flats. Common lengths make paired right-angled hexagonal faces
+isometric; complete 2*pi edge sums remove edge singularities, and the
+truncation triangles form totally geodesic boundary. This realizes the
+original pairing, not a subdivision.
+
+No initial genuine-witness, repeated-label-type seed, or protective core
+hypothesis is needed. Repeated axial external labels remain permitted by
+the local criterion; only two DISTINCT external H axial labels in one
+block are forbidden.
+
+## 136. Scope and the remaining obstruction
+
+This proof reuses the local angle formulas, flat classification, transverse
+flat inequality, and special-edge length barrier explicitly listed above.
+Its new step is the complete-star maximal-selected argument, which
+derives an unsaturated witness and then transports the remaining pi angle
+budget through an actual role-changing run to obtain a genuine escape.
+It is not the main Section 51 logarithmic certificate, the main Section 63
+flat-corner ascent, or the fixed two-reservoir budget of Section 116.
+
+The three-H corollary removes the two three-label seed blocks required by
+the existing Section 108.2 statement. This is a statement-level removal of
+that premise. The actual triangulations of Sections 109 and 114 inhabit the three-reservoir
+class and already have the earlier certificates given there. This consequence
+does not assert a new census type or an explicit example outside every earlier
+sufficient criterion.
+
+The tempting global condition |X|<=1 does not capture the main new
+phenomenon: a role change from an external axis M with pair {A,B}
+already creates a distinct external shared axis A or B. The genuinely
+stronger analytic consequence here is the additional larger escape axis
+Z, giving three external labels and a genuine block with four distinct
+H labels.
+
+The escape does NOT close unrestricted CFMP or even the entire paired
+framework. Its destination Z is explicitly NOT pi-selected. It therefore
+has no inherited remaining-half-circle budget, and cannot simply be fed
+back into the same maximal-selected argument. A proof of unrestricted
+ascent would need an additional mechanism that transfers a flat-pi
+obligation to Z, or an independent full-2*pi estimate for Z. Neither
+shared face lengths nor the present inequalities establish that mechanism.
+
+The entire full flat set is used when selecting M. Selecting a maximum
+only within one flat face-component would not justify comparisons with
+pi-selected H axes in another component. No such component-local
+substitution is made here.
