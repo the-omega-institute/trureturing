@@ -1052,3 +1052,279 @@ original-task factor or cost equality without its premises. The
 construction asserts no global literature novelty or absence theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Retained bootstrap input and the canonical decoder boundary
+
+**Definition 11.1 (two words in the same first store).** Keep Assumption
+1.2, the actual preparation, activation entrance, fixed first-bootstrap
+slot sequence, capture frame and second-bootstrap word of Definition 2.3.
+Here [CSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md)
+means the callable storage atlas, and
+[OPEN_ROW](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OPEN_ROW_COMPLETION_AND_AUTHORITY.md)
+means open-row completion and authority. Their fresh-bit convention and
+Load predicate are used only for ARC's selected RCA bootstrap.
+
+In the first capture-ingress Base(69) of $L$, let $t$ be the testing row
+of its inlined Tail(66), and $u$ the testing row of its following Home(69).
+ARC Definitions 2.1–2.2 give, respectively, RD(66,4) testing R and
+RD(69,4) testing L, with their own move/back edges. They have distinct
+state numbers $q_t<q_u$ and empty extra-effect lists. Put $w_0=E(L)$.
+Form $w_1$ by exchanging these two complete seven-field row records,
+keeping their state and successor numbers, all other records, the two
+empty positional effect annotations, and all remaining effect, initial
+and entry fields. This is a change of supplied bits, not of initialization,
+slot capacity, native graph numbering or captured metadata.
+
+Let $e=|w_0|$ and let $c_0,\ldots,c_{e-1}$ be the actual raw first-version
+bit locations in bootstrap cursor order. If $b_t$ is the bit offset of
+the first field $U(q_t)$ in $w_0$, define the particular location
+
+$$
+p=b_t+q_t,\qquad c_p.
+$$
+
+Offsets are zero based. These are finite syntactic parameters of the
+fixed expansion and serializer, not new stored addresses or actor queries.
+
+**Proposition 11.2 (actual loading and first Ready).** Both $w_0,w_1$
+satisfy OPEN_ROW Definition 3.1's $\mathsf{Load}_L$ at that same
+first-bootstrap entrance, each using exactly $4e+2$ native rows and
+receipts. They have the same decoded state-indexed transition/effect map,
+but $w_0[p]=0$ and $w_1[p]=1$. With the unchanged subsequent supplies of
+Definition 2.3, each reaches its own first actual Ready $P_\sigma$,
+$\sigma\in\{0,1\}$. These are alternative histories of the same
+initialized source. At these cuts ordinary tape tracks, original source
+and parked-client data, active main control, current latches/owners/tokens
+and native receipt count agree; the retained first-store values are
+$c_j=w_\sigma[j]$.
+
+Proof. For a row $(q,\mathrm{op},i,j,s,q_0,q_1)$ its seven unary fields
+have total length $7+q+\mathrm{op}+i+j+s+q_0+q_1$. Exchanging the two
+complete summands preserves the exact fixed length $e$. RCA Definition
+12.2's serializer removes archival framing; the two empty effect
+annotations leave its effect suffix unchanged. At offset $b_t+q_t$,
+the shorter old first field has its terminating zero and the moved
+$U(q_u)$ still has a one. Thus the words differ at the stated actual
+slot. RCA Definition 12.3 and ARC Definition 6.2 search the full row
+list by stored state number, with uniqueness, type, successor and entry
+checks. They do not fetch by list ordinal or require sorted records.
+Every state therefore has its identical row and associated effect.
+
+Length and map equality alone do not prove Load. RCA Definition 14.1
+selects the fixed NEXT/INPUT/WRITE/ADVANCE/DONE bootstrap. Its WRITE is
+the fresh control-bit constructor using the actual preceding boot input,
+not an ordinary literal WR in $L$. CSA Definition 3.3 constructs either
+latched value at the designated absent socket; UAS Definition 2.3 keeps
+wrong supplied bits in the raw store while the fixed bootstrap remains
+active. At cursor $j<e$, NEXT selects $c_j$, which is still absent;
+the current installation owner and fresh-version authority are unchanged.
+INPUT consumes the binary $w_\sigma[j]$. No intervening row overwrites
+its designated latch. WRITE has that value operand, a fresh destination
+and the same owner/phase/cursor guard, so constructs precisely that bit.
+It has no additional comparison with $w_0[j]$. ADVANCE selects $c_{j+1}$
+or the fixed end. The raw destination does not alias the active bootstrap
+or its cursor. Induction proves every guard, the installed prefix, and
+the final NEXT/DONE; only DONE enables the complete table. This proves
+Load and the count. A literal-value boot variant would require a
+different argument; it is not substituted for this selected variant.
+
+After DONE the keyed $L$ maps and unchanged initial/entry fields give
+the same next actual row at every step. The native capture on 69 uses
+its sentinel, measured Base, real bit ingress, descriptor, seal and fixed
+return, with precisely the same supplied frame. It neither imports its
+own raw control slots as data nor validates their serialization against
+$w_0$. The second bootstrap installs the identical $E(G_{\mathrm{gc}})$.
+The empty bank, ordered initial69 fields, closed imports/head restoration,
+ManifestPrefix validation, invocation TOK and Ready then follow Definition
+2.3 and ARC Definition 4.3 row by row. Literal descriptions emitted into
+initial69 remain those of the fixed graph; they are not copies of the
+changed raw first store. The later identical boot and initialization
+leave identical current latches and live finite fields. All these paths
+have identical native row counts and ordinary tracks. This supplies the
+actual join to Ready rather than applying Lemma 2.4 outside its canonical
+code premise. Inactive first-version slots persist by RCA Definition
+14.1; neither the second store nor the main prelude overwrites them. ∎
+
+**Definition 11.3 (post-first-Ready selection domain).** Let
+$\mathcal D_\sigma$ consist of all actual finite prefixes extending
+$P_\sigma$, before outer00, with subsequent source/mode/history input
+restrictions exactly as in Definition 1.4. No later Ready, successful
+conversion or correct off-domain historical answer is required. Put
+$\mathcal D=\mathcal D_0\cup\mathcal D_1$. The selected memory
+$M_{\rm ret}$ on this domain has exactly Definitions 3.1–3.2 and CYCLE
+Definitions 6.1–6.2's seven physical families, schemas and ordering,
+with the unchanged acquired construction directory. Family1 includes
+the existing $c_j$ by their fixed catalog identities; it is not enlarged
+by a history field, complementary full state, selector bit or new archive.
+Construction relations mean actual construction occurrences, including
+partial spans, rather than the truth of a later historical payload.
+
+**Theorem 11.4 (retained-input extension of the four history inverses).**
+The selection of Definition 11.3 is well-defined on $\mathcal D$ and
+agrees with $M_J$ on $\mathcal D_0$. From each of
+$S,B,T,M_{\rm ret}$ separately a finite mathematical inverse recovers
+the consumed typed input, complete actual history and full raw endpoint.
+In particular, for each such $V$,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h',\qquad h,h'\in\mathcal D.
+$$
+
+Moreover $\mathcal D_0\subsetneq\mathcal D$. This containment concerns
+post-first-Ready prefixes, not all earlier cuts of $\mathcal C_{\mathrm{gc}}$.
+
+Proof. The first-version raw slots are constructed once and retained.
+After first Ready the unchanged main graph writes its named current
+control/token fields and ordinary banks/scratch; it has no instruction
+targeting those inactive first-store locations. Thus at every cut of
+$\mathcal D_\sigma$, family1 still yields the entire word $w_\sigma$
+in the original cursor order. These basic slot records, seed/binding
+and actual meter are selected before any construction-role fold. No
+callable payload or reconstruction of an old answer is needed to find
+them. In particular $P_1$ has $c_p=1$, whereas every $\mathcal D_0$
+endpoint has $c_p=0$, proving strictness on the stated domain.
+
+Use Definition 4.2's counted reconstruction, with one change to its
+mathematical input rule: at the first fresh-bootstrap INPUT sites supply
+the word just read from $c_0,\ldots,c_{e-1}$ instead of the constant
+$E(L)$. All other fixed sites retain their prescribed words; seed
+conversion is unchanged. Keep the actual installed raw word as well as
+its decoded map. Count $n$ from the actual family6 meter and stop after
+exactly $n$ rows. For each subsequent variable IN use Lemma 4.1: the
+already derived prestate determines its wire identity and matching-write
+ordinal. Use the retained bit if that write is within $n$, otherwise
+the unique matching occupied latch. The unchanged main graph preserves
+that table even while executing an old decoder or a rejection path;
+its virtual INs in bank data are not new external INs.
+
+Induction on the reconstructed ordinal proves equality with the actual
+complete prestate. At first-boot IN the selected retained bit is the
+actual one; Proposition 11.2 gives its actual WRITE and DONE semantics.
+Other fixed INs and later durable/pending INs receive their actual bits.
+Every non-IN then has the actual guard, core, ordered effects and receipt.
+The resulting $n$-row history and raw endpoint are exact, including all
+native work of any later converter. This reconstruction executes the
+installed canonical routines as they stand; it does not replace their
+internal simulated inputs or assume that their answers are faithful.
+
+Only after this induction fold the actual history through the unchanged
+ConstructionDirectory. The exchange changed neither PCs/call paths nor
+the captured main directory. Definitions 3.2 and CYCLE 6.2 consequently
+identify every actual construction site: add the old R on EX immediately,
+keep raw partial fields, and close a span only at its actual completion.
+An unsealed or rejected payload is not promoted to an authentic object.
+This gives the same seven-family selection at every claimed later
+history/converter cut, without using that selection as its own history
+witness. On $\mathcal D_0$ both the physical selection and the input
+rule coincide with the old ones, proving agreement. Reselecting all
+families checks the resulting body, rather than assuming its annotations.
+
+For S and B, Lemma 3.3's raw geometric inverse first supplies $W$ and
+these basic records. The local pattern construction of Definition 2.5
+includes both actual boot-bit values, as in UAS Definitions 2.3–2.4;
+no canonical-code hypothesis is needed for that raw inversion. For T,
+its own occurrence operands/input bits and receipt-preserving patch
+checks recover the actual native history from the same paid foundation.
+For memory the basic records supply the induction directly. Conversely,
+equal actual histories give equal endpoints, occurrences and the
+specified selected construction relations. This proves the four separate
+kernels and the inverses, without defining one view by another. ∎
+
+**Proposition 11.5 (a retained but canonically undecoded target).** At
+the authentic raw first Ready $P_1$, the mathematical inverse of Theorem
+11.4 recovers $c_p=1$. The unchanged canonical reconstruction of
+Definition 4.2 instead returns $W(P_0)$, with $c_p=0$. Consequently the
+full endpoint check of $D_S,D_B$ in Definition 6.1 fails on the true
+S/B bodies of $P_1$, and $D_M$'s full reselection check fails on its
+true $M_{\rm ret}$ body. These are failures of the indicated checks
+whenever evaluated; a binding check rejecting earlier does not repair
+them. No current delivery of these target bodies is presumed.
+
+Proof. First Ready has no post-Ready variable input. Its seed, capture,
+other fixed words and receipt count are those of $P_0$ by Proposition
+11.2. Definition 4.2 explicitly supplies canonical $w_0$ at its first
+bootstrap sites, even when its endpoint data contain $w_1$. Its counted
+reconstruction is therefore the canonical $P_0$ history. The recovered
+raw slot $c_p$ differs from the actual target slot. S/B raw endpoint
+equality must compare this location, and memory reselection must compare
+its family1 entry. Each equality is false. In contrast Theorem 11.4
+uses that existing entry as its first-bootstrap input and recovers $P_1$.
+Thus the same authentic target separates retained mathematical recovery
+from this installed canonical decoding rule. Support and boundary also
+distinguish the targets at the finite socket for $c_p$; this is not merely
+two descriptions of one raw endpoint. ∎
+
+**Corollary 11.6 (separately fixed original-entry charts).** For each
+$\sigma$ separately, supply actual gate01 from $P_\sigma$ and fix its
+complete actual $F^A$ entry $e_\sigma$. On canonical seven-tag running
+prefixes of that one call whose next row is an unchanged original row,
+excluding the pre-row and successor of the changed final idle CTL,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h'
+\ \Longleftrightarrow\ h\sim_Q h',
+\qquad V\in\{S,B,T,M_{\rm ret}\}.
+$$
+
+Proof. Proposition 11.2 establishes ARC Definition 5.1's actual source
+dispatcher, producer/workspace authority, heads, completed ACKs and
+parked-client relation also at $P_1$. ARC Definition 5.2's paid gate01
+route therefore really enters $F^A$ before header Base. Its complete
+fixed prefix, including raw $w_\sigma$ and meter, is the common parameter.
+Within $F^A$, ARC Definitions 4.1, 5.2 and Proposition 5.5 preserve CAP
+Definition 4.6's actual guards, operands, latch5 INs, seven branches,
+records, outputs, copies, ACK, source TOK and original successors up to
+the last idle CTL. None reads the inactive first store; no bank assignment
+is inserted. The same static renumbering/parity correspondence applies.
+This proves the required original-row correspondence directly for this
+entry; it does not delete SOURCECALL Lemma 2.3's canonical-acquired premise.
+
+At any stated cut an extendible canonical Supply or its prescribed
+enabled original non-IN Advance has a successful original response.
+Equality of the partial $Q$ maps forces the same test to execute with
+equal labels, released outputs and complete original successors. From
+their original13/latch5/receipt coordinates, SOURCECALL Lemma 3.2 and
+Theorem 3.3 reconstruct the same successor suffix from the fixed full
+$e_\sigma$; deleting its last row gives $h=h'$. Their matching-write
+induction needs this actual entry and unchanged reader, not a new
+canonical boot claim. Identical histories give the entire same partial
+response map, including lawful adaptive/semantic protocols. Theorem
+11.4 supplies each view direction. No extra receipt is inserted. ∎
+
+**Convention 11.7 (scope and provenance).** The result is a repo-derived
+partial answer to obligation 10.2, using the cited definitions at source
+snapshot `5ec70b8a566f8725d192938929ab499e7c9111f2`: an actual noncanonical
+load has recoverable retained input, while canonical code constants in
+the installed decoder are insufficient for that target. The new content
+is this joint construction and failure, not a general replay, permutation
+or quotient theorem. Convention 10.4's library/literature boundaries
+apply: encoding laws and simulation transport require their supplied
+inverses/relations; they supply neither this actual load nor a native
+read of its retained bits. No Lean certification or worldwide novelty
+claim is made for these source arguments.
+
+Neither boot task-admissibility for $w_1$, cross-entry $Q$ equality nor
+an original experiment at every added cut follows. Enabled noncanonical
+task-undefined Supply, unexecuted `none` and executed refusal remain
+distinct. Proposition 11.5 does not extend the successful paid cycle to
+$\mathcal D_1$; mathematical access to family1 grants no current code
+read, decoder replacement or permission. Using this inverse in a paid
+extension requires actually acquired material supplying its first-store
+bits and a faithful paid use of that input; the existing canonical rule
+instead retains its restricted successful target domain. This is an
+input and acquisition obligation, not a new runtime mechanism or a proof
+that all alternative decoders fail. Obligations 10.2–10.3 on the remaining
+raw/full domain, final00 suffix and terminal cases remain.
+
+Native bills retain Definition 8.5's actual
+$(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n)$ for each history, including its first-store bits,
+dead banks, all partial work, copies and receipts. The $4e+2$ equality
+is only the native first-bootstrap count. Structural bills retain the
+separately declared atomic model's actual ordered-stencil sum and paid
+foundation; no equality of those bills is inferred from equal native
+counts. The mathematical inverse has no asserted native execution cost.
+The ordered alpha/beta algebra, actual growing source, occupied original
+verifier/INITIAL consumer, current authority and absorbing halt are the
+unchanged programme, not consequences of the recoding.
+
+## 追加锚（本行以下为增补区）
