@@ -762,3 +762,92 @@ under the unchanged original hypotheses, not a claim that the strengthened
 special-star scalar inequalities or the entire residual family are
 inconsistent. The complete special-axis stars remain required in the
 next case analysis.
+
+## 269. Inherited actual hypotheses and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+268 of the return continuation, including distinct transverse labels,
+actual shared positive lengths, complete connected circular edge links,
+and minimum original degree six. Assume neither of the two remaining
+interacting owners eta,xi contains M. Sections 264–268 give the exact
+six-slot M circle with two distinct genuine owners
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+and
+ Theta=theta_M(A_1)+theta_M(A_2)<2*pi/3.
+The unique flat owner is sigma=(M,C,D,O,C,D), with O=C,D or special.
+We prove O is C or D. This excludes the whole special-O subcase,
+regardless of whether the two R_i labels coincide or their stars overlap.
+It does not exclude the remaining low-O, special-R_i configurations or
+the cases in which eta or xi contains M.
+
+## 270. The response transfer applies with two owners
+
+Put s=c+d and
+ K=(sqrt(c^2-1)+sqrt(d^2-1))^2/s^2,
+ T=(m-1)/(m+1), lambda_M^2=K*T.
+At least one of the two genuine M angles is less than pi/3, since their
+sum is less than 2*pi/3. The transfer calculation in Section 209, which
+explicitly uses only the existence of one angle at most pi/3, therefore
+applies. It does not require three axial-M owners. Its conclusions are
+ K*T>1/3,
+ F(m)=2*(m-1)/s^2-T*(c-d)^2/s^2<1/3.
+The flat source supplies the actual product inequality
+ (m-1)*(o-1)>=s^2.
+Consequently
+ lambda_O^2=K*(o-1)/(o+1)
+             >=K/[1+2*(m-1)/s^2]>1/7,
+as in the same transfer calculation. For clarity about the last step,
+0<T<1 and (c-d)^2/s^2<1 give
+ 1+2*(m-1)/s^2=1+F(m)+T*(c-d)^2/s^2<7/3.
+Also K>1/3 follows from K*T>1/3 and T<1. Therefore the displayed
+ratio is strictly greater than (1/3)/(7/3)=1/7.
+
+## 271. The two M owners already spend more than two pi on C/D
+
+For 0<lambda<1 define
+ b_lambda(theta)=atan(lambda*cot(theta/2)), 0<theta<pi.
+This is strictly decreasing and strictly convex, as established in the
+paired response calculation. A genuine pair-CD owner with chosen M
+axis has actual transverse C/D expense 4*b_lambda_M(theta_M).
+Jensen and Theta<2*pi/3 give
+ 4*[b_lambda_M(theta_M(A_1))+b_lambda_M(theta_M(A_2))]
+ >=8*b_lambda_M(Theta/2)
+ >8*b_lambda_M(pi/3)>2*pi,
+because lambda_M>1/sqrt(3) and cot(pi/6)=sqrt(3).
+These are the original four transverse slots of each of two distinct
+owners. Any additional C/D axial slots are omitted as nonnegative.
+
+## 272. A special flat opposite axis forces a disjoint excess
+
+Suppose O is special. Its connected actual normal circle propagates
+fixed transverse pair {C,D}, because O occurs only axially. The unique
+flat owner supplies exactly one O slot of angle pi. Every other O slot
+is genuine. There are h=degree(O)-1>=5 such original slots, with angles
+phi_j in (0,pi) satisfying sum_j phi_j=pi.
+
+No genuine O owner is A1 or A2: one containing M and O with fixed pair
+{C,D} has exactly the same six shared lengths as sigma, so would be
+flat. Thus the genuine O-star owners are disjoint from A1,A2.
+An owner may have two O axes. Charging 2*b_lambda_O(phi_j) for each
+original O slot counts its transverse sum once per axial occurrence,
+hence at most twice, which its actual four C/D transverse slots pay.
+Repeated visits to an owner do not introduce extra charges.
+
+The total genuine transverse C/D expense of these O owners is at least
+ 2*sum_j b_lambda_O(phi_j)
+ >=2*h*b_lambda_O(pi/h)
+ >=10*b_lambda_O(pi/5).
+The last inequality follows since x*b_lambda_O(pi/x) increases in x:
+its derivative is b_lambda_O(v)-v*b_lambda_O'(v)>0.
+Since lambda_O>1/sqrt(7) and
+ cot(pi/10)^2=5+2*sqrt(5)>7,
+we have b_lambda_O(pi/5)>pi/4. The O owners therefore consume more
+than 5*pi/2 of C/D angle. Together with the disjoint A1,A2 expense,
+the actual genuine C/D cost exceeds 2*pi+5*pi/2>4*pi, contradicting
+the combined original C and D budgets.
+
+Thus O cannot be special. In the no-extra-core-M case, the flat opposite
+label must be C or D, the low values must be balanced by Section 267,
+and at least one R_i must be special by Section 268. All remaining
+special-axis stars still need their complete original equations; no
+closure of the five-reservoir family is asserted.
