@@ -244,7 +244,8 @@ private theorem family_pair_loose (a b c d : ℝ) (hb : 0 ≤ b) (hd : 0 ≤ d)
       Fintype.sum_prod_type, Fin.sum_univ_three]
     simp only [← Complex.ofReal_pow, Complex.ofReal_re]
     ring
-  simpa only [hQt] using negativity_upper _ P Q hP hQ hsplit
+  rw [← hQt]
+  exact negativity_upper _ P Q hP hQ hsplit
     ((family_pair_trace a b c d).trans hn)
 
 set_option maxHeartbeats 1000000 in
@@ -288,7 +289,8 @@ private theorem family_pair_gram (a b c d : ℝ) (ha : 0 < a)
     dsimp [z]
     simp only [← Complex.ofReal_pow, Complex.ofReal_re]
     ring
-  simpa only [hQt] using negativity_upper _ P Q hP hQ hsplit
+  rw [← hQt]
+  exact negativity_upper _ P Q hP hQ hsplit
     ((family_pair_trace a b c d).trans hn)
 
 set_option maxHeartbeats 1000000 in
@@ -592,7 +594,8 @@ private theorem witness_bounds :
     rw [witness_scale.2.2, hpt, hscalar, traceNorm_smul_nonneg _ _ (by norm_num)]
   obtain ⟨hzlo, hzhi⟩ := witness_whole
   obtain ⟨hxlo, hylo⟩ := witness_pairs
-  simp only [negativity.eq_1, hxscale, hyscale, hzscale]
+  unfold negativity
+  rw [hxscale, hyscale, hzscale]
   constructor
   · linarith
   constructor <;> linarith
