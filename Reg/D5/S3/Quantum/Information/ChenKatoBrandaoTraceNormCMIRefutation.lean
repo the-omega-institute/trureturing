@@ -30,10 +30,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p indices => ∑ i ∈ indices, |p.2 i|) (fun e => nomatch e)
+  realize signature (fun _ p indices => ∑ i ∈ indices, |p.2 i|) (fun e => Empty.elim e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature
@@ -44,7 +44,7 @@ theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have he := h (n := ULift.{u} Unit) (fun _ => 1)
   rw [diagonal_norm] at he
-  simpa [rejected, realize] using he
+  simp [rejected, realize] at he
 
 def source_registration : Registration arena.{u} (type_of% @diagonal_norm.{u}) where
   actual := actual
@@ -79,7 +79,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ p indices => ∑ i ∈ indices, |p.2 i|) (fun e => nomatch e))
+    (realize signature (fun _ p indices => ∑ i ∈ indices, |p.2 i|) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
