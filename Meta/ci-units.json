@@ -1037,6 +1037,8 @@
     "tools/Architecture/BannedSymbols.txt",
     "tools/Architecture/BannedSymbols.Guid.txt",
     "[tests-instruction-contract]",
+    "skills/autonomous-research/*",
+    "tools/scripts/agent/research_readouts/*",
     "tools/StrataLint.Engineering/*",
     "tools/StrataLint.Runtime/*",
     "CLAUDE.md",
@@ -1952,8 +1954,8 @@
     "tests-instruction-contract": {
       "dotnet": true,
       "lean": "none",
-      "project": "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
-      "command": "",
+      "project": "",
+      "command": "make -C tools research-readouts-test && make -C tools test TEST_PROJECT=tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
       "cache-dependency-path": "tools/tests/StrataLint.InstructionContract.Tests/packages.lock.json\ntools/StrataLint.TestEvidence/packages.lock.json\ntools/StrataLint.Engineering/packages.lock.json\ntools/StrataLint.Runtime/packages.lock.json\ntools/StrataLint.Engine/packages.lock.json\ntools/Trureturing.Truth/packages.lock.json\ntools/TestSupport/StrataLint.TestSupport/packages.lock.json\n"
     },
     "tests-integration-mirror": {
