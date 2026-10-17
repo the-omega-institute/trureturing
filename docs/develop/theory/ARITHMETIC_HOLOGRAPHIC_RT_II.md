@@ -3950,3 +3950,221 @@ In particular delta(t) converges to 1/4, although both ranks are four and every 
 The proof uses Schur positivity and its trace-norm contraction consequence, the section-81 algebraic support witness, and the original reference/output pinching with its complete trace deficit. It does not claim that arbitrary local frames factor as a qubit core times markers. Nor does it complete arbitrary transferred contraction blocks into physical channels.
 
 The two-sided path certifies a nontrivial family of simultaneous rank-raising directions, not the complete feasible cone around equality. Any sub-quarter product must fail the qubit-core factorization on both sides and satisfy the quantitative escape condition (11), in addition to the section-83 transversal conditions. General nonfactorizable bilateral deformations remain unresolved. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
+
+## 85. Second-order stability against original bilateral rank-raising paths
+
+This result does not assume a qubit-core factorization of either perturbed correct-output Gram. It concerns paths through any section-82 quarter-error equality pair having a rank-two party. Original output leakage and arbitrary finite environment dimensions are permitted.
+
+The small parameter measures a smooth Stinespring amplitude. A channel mixture with new Kraus weight proportional to t generally has new-environment amplitude sqrt(t) and is not covered by the C^2-in-t hypothesis below. Nonnegative second-order curvature does not exclude higher-order improvement or imply full local minimality.
+
+### 85.1. Statement
+
+Let (A_0,B_0) be an original four-fibre quarter-error pair with B_0 of Kraus rank two. Use the environment isometries and independent simultaneous target-preserving bit swaps of section 82 to put the pair in marker-aligned coordinates:
+
+    a_fi^0=conjugate(b_fi^0) tensor m_i,
+    ||m_i||=1, <m_0,m_1>=3/4,
+    sum_f |b_fi^0><b_fi^0|=2 I_2 for i=0,1.          (1)
+
+The two original maps are calibrated by the equality theorem. Write B_i for the 2-by-4 matrix with columns b_fi^0 and put
+
+    H_i^0=B_i^* B_i,  P_i=H_i^0/2.
+
+Thus B_i B_i^*=2I_2 and P_i is a rank-two orthogonal projection.
+
+Let A(t) be any family of original CPTP maps C^8->C^4 converging to A_0 as t goes to zero from above. Let B(t) admit a C^2 path of Stinespring isometries
+
+    V(t):C^8 -> C^4 tensor (E_old direct-sum E_new),
+    dim E_old=2,   V(0)=V_0 direct-sum 0,
+
+where V_0 is a minimal Stinespring isometry of B_0. The fixed finite dimension of E_new is unrestricted. Set
+
+    R=(I_out tensor P_new) V'(0).
+
+For each bit i, let R_i:C^4->E_new have columns
+
+    r_fi=(<f|_out tensor I_new)R|f,i>.
+
+Define the squared wrong-output norm by
+
+    ||R_wrong||_F^2
+       =sum_(f,i) ||[(I_out-|f><f|) tensor I_new]R|f,i>||^2.
+
+Let delta(t) be the unhalved arbitrary-reference diamond error of the original product A(t) tensor B(t) from the fixed RT target. Then
+
+    delta(t) >= 1/4+c(R)t^2+o(t^2),
+
+    c(R)=(1/8)[||R_wrong||_F^2
+                  +sum_(i=0,1)||R_i(I_4-P_i)||_F^2] >=0.   (2)
+
+Equivalently the asserted asymptotic lower bound means
+
+    liminf_(t->0+) [delta(t)-1/4]/t^2 >= c(R).        (3)
+
+If A(t)-A_0=O(t) in channel norm, for example if A(t) also has a C^2 Stinespring presentation, there are constants C and epsilon>0 such that
+
+    delta(t) >= 1/4+c(R)t^2-Ct^3
+    for 0<=t<=epsilon.                              (4)
+
+In particular positive c(R) gives a strict error gap for all sufficiently small positive t, independently of the other party's allowed path. If c(R)=0, (2)--(4) do not exclude higher-order escape.
+
+The conclusions are symmetric after exchanging the parties. For a general equality pair the coordinates used in (1) are obtained only by the allowed simultaneous swaps and fixed environment isometries; the theorem makes no unallowed rotation of the input-bit basis.
+
+### 85.2. A rank-two Ky Fan consumer of the original contraction witness
+
+For arbitrary original channels A,B define their correct-output record Grams G,H and K=G entrywise-multiplied by H, as in section 81. The target matrix T has diagonal two-by-two blocks I_2 and off-diagonal blocks J_2/2. For a Hermitian matrix Z, write Lambda_2(Z) for the sum of its two largest eigenvalues, and define
+
+    f(A,B)=Lambda_2(T-K)/4.                          (5)
+
+The original normalized reference input
+
+    |Omega>=(1/sqrt(8))sum_(f,i)|f,i>_R tensor |f,i>_logical
+
+has actual compression K^T/8 on the orthonormal support {|f,i>_R tensor |ff>_out}; the target compression is T/8. Retaining the complementary positive trace gives
+
+    delta(A,B) >= Tr(T-K)_+/4 >= f(A,B).             (6)
+
+This is an original-output pinching lower bound, not an assumption that good/bad cross coherences vanish. The forward-Gram transpose does not change eigenvalues. Both G and H depend real-linearly on their respective channels; in particular f is a function of the physical channels, independent of the chosen environments.
+
+Whenever B has Kraus rank two, the section-81 support argument yields a rank-two projection witness, even if its nullspace has dimension larger than one. Here are the details of this refinement. For the original correct-output contraction blocks A_f and B_f, form
+
+    C_f=A_f B_f^T/sqrt(2),
+    D_f=A_f Z B_f^T/sqrt(2), Z=diag(1,-1),
+    S=(1/4)sum_f C_f, a=4-4||S||_F^2.
+
+Let Q project in coefficient-matrix space onto {SX:Tr X=0}. This space has complex dimension at most three. Section 81's pointwise contraction inequality gives
+
+    sum_f ||(I-Q)D_f||_F^2 <=a.
+
+Let D_col be the matrix with vectorized D_f as its four columns. Since rank(Q D_col)<=3, choose any unit vector v in ker(Q D_col). Then
+
+    ||D_col v||^2=||(I-Q)D_col v||^2
+                 <=sum_f||(I-Q)D_f||_F^2<=a.
+
+In the full plus/minus coordinates, with s=ones/2, the plus Rayleigh value of K-T is -a and the minus Rayleigh value at v is at most a-1. Therefore the rank-two orthogonal projection diag(ss^*,vv^*) satisfies
+
+    Tr diag(ss^*,vv^*)(Khat-That) <= -1.
+
+The actual plus/minus cross block remains in Khat; its trace against this specified projection is zero, and no implication from separate scalar tests is used. Ky Fan's variational principle now gives
+
+    Lambda_2(T-K)>=1,
+    f(A,B)>=1/4 whenever B has Kraus rank two.        (7)
+
+This holds for all original A, including arbitrary leakage and rank. Selecting one kernel vector is essential here: (7) is a statement about the two-largest-eigenvalue sum, not merely the full positive part.
+
+### 85.3. Smoothness at every equality member, including boundary disphenoids
+
+At the equality pair, section 82 gives balanced disphenoid parameters x^2,y^2,z^2>=2/7 with sum one. The eigenvalues of K_0-T in plus/minus coordinates are
+
+    plus:  -1/2, x^2/2, y^2/2, z^2/2;
+    minus: -1/2, (7/2)x^2-1, (7/2)y^2-1, (7/2)z^2-1.
+
+Consequently the two largest eigenvalues of T-K_0 are both 1/2, and every other eigenvalue is at most zero. The two-dimensional cluster has a spectral gap of at least 1/2, even when one of the remaining eigenvalues is zero at a disphenoid boundary. The sum of the isolated top cluster is real-analytic in the Hermitian entries in a neighborhood of T-K_0; the degeneracy within the two-dimensional cluster causes no problem.
+
+In the original bit coordinates after the allowed marker alignment, its spectral projection is
+
+    P_0=(J_4/4) tensor I_2.                          (8)
+
+Thus f is smooth near (A_0,B_0), f(A_0,B_0)=1/4, and its derivative is
+
+    df=-(1/4)Tr(P_0 dK).                            (9)
+
+There is also a useful global witness minimum with A_0 fixed. For an arbitrary original B, let H_i be the Gram of its four correct-output records in bit sector i. One has H_i>=0 and Tr H_i<=4. The aligned A_0 Gram obeys (G_i^0)^T=H_i^0=2P_i<=2I_4. Since Tr(P_0 T)=5,
+
+    Tr(P_0 K)=(1/4)sum_i Tr(H_i^0 H_i)
+                  <=(1/2)sum_i Tr H_i<=4,
+
+and hence the rank-two variational principle gives
+
+    f(A_0,B)>=Tr(P_0(T-K))/4>=1/4                  (10)
+
+for every original B. This proof uses the fixed-bit tight frames in (1), which hold for every allowed disphenoid, not just the regular tetrahedron.
+
+### 85.4. Polar separation of the old environment and the physical new-noise tangent
+
+Decompose the perturbed isometry by its orthogonal environment sectors:
+
+    V(t)=W(t) direct-sum R(t),
+    R(t)=tR+O(t^2),
+    W(t)^*W(t)=I_8-R(t)^*R(t).
+
+The old block W(t) is square: its codomain has dimension 4 times 2=8. At t=0 it is the unitary V_0, so it is invertible for sufficiently small t. Its polar factor
+
+    U(t)=W(t)[I_8-R(t)^*R(t)]^(-1/2)
+
+is therefore an 8-by-8 unitary, with U(0)=V_0. Let Bbar(t) be the original CPTP map obtained by tracing the old two-dimensional environment of U(t). It has Kraus rank two and retains the original output dimension four. This is an actual physical comparison channel, constructed from the square old block; no arbitrary contraction-block completion is assumed.
+
+Put D=R^*R. The C^2 hypothesis and the matrix square-root expansion imply, in any finite-dimensional channel norm,
+
+    B(t)-Bbar(t)=t^2 Psi_R+O(t^3),
+
+    Psi_R(X)=Tr_new(R X R^*)
+                    -(1/2) B_0(DX+XD).              (11)
+
+Indeed W(t)=U(t)[I-(t^2/2)D+O(t^3)], U(t)=V_0+O(t), and the environment-orthogonal old/new sectors contribute incoherently after partial trace. Wrong-output coherences within either sector are not discarded.
+
+The coefficient Psi_R is a genuine one-sided physical tangent at B_0. For 0<=s<=||D||op^(-1), with the evident interpretation if D=0, the isometry
+
+    V_s^R=V_0 sqrt(I_8-sD) direct-sum sqrt(s)R        (12)
+
+defines an original CPTP map C_s satisfying C_0=B_0 and C'_0=Psi_R. Combining (10) with differentiability shows
+
+    d_B f(A_0,B_0)[Psi_R]>=0.                       (13)
+
+The polar factor is used solely to identify the rank-two comparison and the order-t^2 remainder. No monotonicity of the approximation error under polar replacement is asserted or needed.
+
+### 85.5. Exact derivative and the flat new-environment directions
+
+We now evaluate (13). For each fibre let B_f=[b_f0^0,b_f1^0] be the unitary base frame. In the auxiliary physical path (12), the derivative of the old correct-output column (f,i) is
+
+    -(1/2)B_f D_ff e_i.
+
+This follows from calibration of V_0: input components in any other fibre have an orthogonal output label. Let E_i be the 2-by-4 matrix with columns B_f D_ff e_i. The derivative of the bit-i correct-output Gram is then
+
+    dot H_i=R_i^*R_i-(1/2)(B_i^*E_i+E_i^*B_i).       (14)
+
+Using B_i B_i^*=2I_2 and <b_fi^0,B_f D_ff e_i>=D_(fi,fi), one obtains
+
+    Tr(H_i^0 dot H_i)
+       =Tr(H_i^0 R_i^*R_i)-2 sum_f D_(fi,fi).
+
+Equations (8)--(9), with the forward-Gram identity (G_i^0)^T=H_i^0, therefore give
+
+    d_B f[Psi_R]
+       =-(1/16)sum_i Tr(H_i^0 dot H_i)
+       =[2||R||_F^2-sum_i Tr(H_i^0 R_i^*R_i)]/16
+       =[||R_wrong||_F^2
+                     +sum_i||R_i(I_4-P_i)||_F^2]/8
+       =c(R).                                      (15)
+
+All traces here are real. Orthogonality of the correct/wrong output projections on each column gives ||R||_F^2=||R_wrong||_F^2+sum_i||R_i||_F^2; H_i^0=2P_i then gives the last equality. This calculation independently exhibits the nonnegativity required by the physical tangent argument.
+
+The exact zero-coefficient condition is
+
+    c(R)=0 iff R_wrong=0 and R_i=R_iP_i for i=0,1.   (16)
+
+Equivalently, there must be two common, bit-dependent linear maps L_i:C^2->E_new such that
+
+    r_fi=L_i b_fi^0 for every f,
+    L_i=(1/2)R_i B_i^*.                             (17)
+
+Indeed R_iP_i=R_i is equivalent to R_i=(R_i B_i^*/2)B_i. These are conditions on the first-order new-environment amplitude only. They neither impose a full finite-t qubit-core factorization nor classify the possible higher-order path. No conclusion that all flat directions are harmless is made.
+
+### 85.6. Completion of the asymptotic proof
+
+By (7), f(A(t),Bbar(t))>=1/4 for every sufficiently small t. Smoothness from section 85.3, convergence A(t)->A_0 and Bbar(t)->B_0, and (11) imply
+
+    f(A(t),B(t))-f(A(t),Bbar(t))
+       =t^2 d_B f(A_0,B_0)[Psi_R]+o(t^2)
+       =c(R)t^2+o(t^2).                             (18)
+
+For precision, this follows by integrating the derivative of the smooth function f along the line segment between Bbar(t) and B(t). Its derivative converges uniformly on that segment to d_B f(A_0,B_0), while the channel difference is t^2 Psi_R+O(t^3). The segment consists of CPTP maps, and in any case f is defined smoothly on a neighborhood in the ambient Hermitian coefficient space.
+
+Combining (6), (7), and (18) proves (2)--(3). If A(t)-A_0=O(t), then Bbar(t)-B_0=O(t) and the smooth derivative is locally Lipschitz. The error in replacing it by its value at the base is O(t) times O(t^2), and the remainder in (11) is O(t^3). This proves (4).
+
+### 85.7. Interpretation and boundary
+
+The result includes arbitrary coherent first-order changes inside the old two-dimensional environment, arbitrary first-order output leakage, arbitrary finite rank-raising new-environment directions, and simultaneous changes of the other original channel. It requires neither qubit-core factorization of the perturbed Grams nor their calibration. The square old-sector polar factor is available because a rank-two channel C^8->C^4 has a unitary minimal Stinespring isometry.
+
+New-environment leakage or failure to preserve either tight-frame row space forces a positive quadratic gap. Only the explicitly identified directions (16)--(17) can remain flat to this order. Even in that flat class, a smooth bilateral path can at most improve by o(t^2), or by O(t^3) under the Lipschitz condition. These statements concern the smooth amplitude parameter, and do not apply after a singular reparameterization t=sqrt(s) as if the same differentiability hypothesis held in s.
+
+This is a second-order obstruction, not a complete feasible-cone or local-minimum theorem. Higher-order nonfactorizable bilateral escape and the unrestricted quarter-optimum problem remain open.
