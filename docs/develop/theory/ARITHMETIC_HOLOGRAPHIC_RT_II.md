@@ -2728,3 +2728,184 @@ When |eta|<1, the markers a_0,a_1 are linearly independent. For each fixed j, th
 while the B-environment records span C^2. In a calibrated Stinespring map (1), the Kraus operators indexed by an environment basis are linearly independent precisely when those records span the environment: a linear combination of the Kraus operators vanishes if and only if its environment covector annihilates every record. Thus the local Kraus ranks are exactly (4,2), in particular at eta=3/4. The construction uses no shared randomness or communication.
 
 The tetrahedral Bloch identity is the same standard qubit geometry used in sections 70 and 73; the marker is an ordinary Stinespring environment record. The norm facts and the Hermiticity-preserving diamond formulation are standard; see [Watrous, The Theory of Quantum Information, section 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The explicit calculation above optimizes this entire complex marker family and gives a common physical implementation attaining 1/4. It supplies an upper bound for the unrestricted problem, not a proof that all original leakage-bearing product channels have error at least 1/4. Sections 72 and 78 retain their stated unrestricted scope.
+
+## 80. A Pauli-kernel obstruction for a calibrated qubit environment
+
+### 80.1. Statement and exact four-fibre consequence
+
+Let k >= 2. For every f=1,...,k, let (a_f0,a_f1) be an orthonormal pair in an arbitrary common finite-dimensional complex Hilbert space A, and let (b_f0,b_f1) be an orthonormal basis of a common two-dimensional Hilbert space B. Define
+
+    x_fi = a_fi tensor b_fi,
+    K_(fi,gj) = <x_fi,x_gj>.
+
+Let T have diagonal 2-by-2 blocks I_2 and every off-diagonal block J_2/2. There is an explicit product-dependent orthogonal projection P such that
+
+    Tr P(K-T) <= -r,
+    ||K-T||_1 >= 2r,
+    r = k - dim_R span{N_1,...,N_k} >= k-3,             (1)
+
+where N_f are the traceless Hermitian qubit involutions defined below. In particular, for k=4,
+
+    ||K-T||_1 >= 2.                                    (2)
+
+This holds with arbitrary complex, nonconjugate A records and no bound on their dimension. The only resource restriction is that the B records all lie in one common two-dimensional space. The parties can be interchanged.
+
+For the calibrated physical product channels determined by these records, the unhalved arbitrary-reference diamond error satisfies
+
+    delta >= r/k >= (k-3)/k  (k>=4).                    (3)
+
+At k=4 the minimum over this entire calibrated class is exactly 1/4: the tetrahedral-marker construction of section 79 attains 1/4 with local environment dimensions (4,2). Thus (2) supplies a matching lower bound for every calibrated (arbitrary,2) product, not only conjugate-paired or fibre-independent marker competitors. It does not determine the unrestricted two-sided environment optimum.
+
+A physical scope extension is valid: the party with Kraus rank two must be exactly fibre-calibrated, but the other party may initially have arbitrary output leakage. Calibrating only the other party does not increase the error and leaves the rank-two party unchanged. Section 80.5 gives this comparison. No claim is made here for an arbitrary uncalibrated rank-two party.
+
+### 80.2. Coefficient matrices and the common Pauli space
+
+Choose orthonormal bases in A and B, and identify a bipartite vector with its coefficient matrix, isometrically for the Hilbert--Schmidt inner product. Let A_f and B_f be the matrices whose columns are a_f0,a_f1 and b_f0,b_f1, respectively. Thus A_f^* A_f=I_2 and B_f is a 2-by-2 unitary matrix. With Z=diag(1,-1), put
+
+    C_f = A_f B_f^T / sqrt(2),
+    D_f = A_f Z B_f^T / sqrt(2),
+    N_f = conjugate(B_f) Z B_f^T.                       (4)
+
+These are the coefficient matrices of
+
+    c_f = (x_f0+x_f1)/sqrt(2),
+    d_f = (x_f0-x_f1)/sqrt(2).
+
+Since B_f^T conjugate(B_f)=I_2,
+
+    D_f = C_f N_f.                                     (5)
+
+Moreover N_f is Hermitian, has trace zero, and N_f^2=I_2. It lies in the real three-dimensional space of traceless Hermitian 2-by-2 matrices. Let
+
+    L = {v in R^k : sum_f v_f N_f = 0},
+    r = dim_R L = k-dim_R span{N_f}.
+
+Choose a real k-by-r matrix V whose columns form an orthonormal basis of L. Its complexification is an isometric inclusion C^r -> C^k, and Pi=VV^T is an orthogonal projection on C^k. All identities below remain valid for complex linear combinations of its columns.
+
+### 80.3. A variance bound restricted to the actual Pauli kernel
+
+Put
+
+    S = (1/k) sum_f C_f,
+    E_f = C_f-S,
+    a = sum_f ||E_f||_F^2 = k-k||S||_F^2.              (6)
+
+The final equality uses ||C_f||_F=1. Define a linear map Zeta:C^k -> A tensor B by giving its f-th column the coefficient matrix E_f N_f. Since N_f is unitary,
+
+    ||Zeta||_F^2 = sum_f ||E_f N_f||_F^2 = a.           (7)
+
+Let D:C^k -> A tensor B have columns d_f. For every v in the complexification of L, (5) gives
+
+    Mat(Dv) = sum_f v_f C_f N_f
+            = sum_f v_f E_f N_f + S sum_f v_f N_f
+            = Mat(Zeta v).
+
+Consequently DV=Zeta V. If M=D^*D is the Gram matrix of the original d_f, then
+
+    Tr(Pi M) = ||DV||_F^2 = ||Zeta V||_F^2
+             = Tr(Pi Zeta^*Zeta) <= Tr(Zeta^*Zeta)=a.  (8)
+
+The projection contraction in (8) is essential: the bound is a, not r times a. No d_f is replaced, no equality frame is independently chosen, and their mutual Gram matrix and phases are unchanged.
+
+This is a restricted-environment statement. The three-dimensional nullity bound does not extend to arbitrary B environments: the matrices then need not lie in one common three-dimensional Pauli space.
+
+### 80.4. An explicit full-matrix dual witness
+
+Apply the orthogonal plus/minus change of basis on each input fibre and then order all plus coordinates before all minus coordinates. The complete transformed matrices are
+
+    Khat = [ C   X ],       That = [ J_k  0 ],
+           [ X^* M ]               [ 0   I_k ],
+
+where C is the Gram matrix of c_f and X is their actual cross-Gram block with d_f. X is not assumed to vanish or deleted from the matrix under study.
+
+Let s=(1,...,1)^T/sqrt(k) and define the orthogonal projection
+
+    Phat = diag(ss^*, Pi).
+
+Its rank is r+1. The plus Rayleigh value is
+
+    s^*(C-J_k)s = k||S||_F^2-k = -a.
+
+Equation (8) gives the minus-block trace at most a-r. Hence
+
+    Tr Phat(Khat-That) <= -a+(a-r) = -r.               (9)
+
+Conjugating Phat back yields P in (1). Since Tr(K-T)=0, W=I-2P is a Hermitian contraction with
+
+    Tr W(K-T) = -2 Tr P(K-T) >= 2r.
+
+Trace-norm duality proves (1). Equivalently, the sum of the r+1 smallest eigenvalues of K-T is at most -r. For four generic Pauli directions r=1, the two smallest eigenvalues sum to at most -1. The witness remains valid in the presence of every plus/minus cross coupling, because it is a legitimate test against the full matrix.
+
+For the associated calibrated channels, the actual retained output coefficient is the transpose of the forward Gram K used here: for the normalized maximally entangled logical/reference input, the physical output difference has matrix (K-T)^T/(2k) on the orthonormal support {|f,i>_reference tensor |ff>_output}. Transposition preserves trace norm. Equivalently, the uniform logical density rho=I_(2k)/(2k) is allowed in the exact full-reference norm formula. Therefore
+
+    delta >= ||K-T||_1/(2k) >= r/k,
+
+which proves (3). At k=4, section 79's eta=3/4 tetrahedral marker has full diamond error 1/4, so the lower bound is attained in this class.
+
+### 80.5. Allowing leakage on the other party only
+
+Suppose B:C^(2k)->C^k is exactly fibre-calibrated and has Kraus rank two, while A is an arbitrary CPTP map. B admits records as in section 80.1, is covariant under the input/output fibre phases of section 72, and remains unchanged under that phase action. Independently averaging only A over those phases therefore cannot increase the product's error from the covariant target.
+
+The twirled A has the section-72 zero-charge block Q>=0 and wrong-output blocks P_(a,f)>=0, with Q_ff+sum_(a!=f)P_(a,f)=I_2. Replace Q by Q'=Q+directsum_f(I_2-Q_ff), and delete the wrong-output blocks. This repairs A only; B and its two-dimensional environment are unchanged.
+
+The same reference-tag comparison as section 72 now has correct-output coefficient block Q_ff entrywise-multiplied by I_2, namely diag(Q_ff), which is bounded above by I_2. Thus the missing correct-output population D is positive. Every wrong A output is orthogonal to the correct output/tag sector because B's output is already f. The wrong-output population X is positive and has Tr X=Tr D. All cross-fibre coefficients are unchanged. On every normalized tagged reference input the original twirled error is C-D+X, whereas the repaired error is C, with C,D supported on the correct sector and X on its orthogonal complement. Hence
+
+    ||C||_1 <= ||C-D||_1+Tr D
+             = ||C-D||_1+Tr X = ||C-D+X||_1.
+
+Taking the arbitrary-reference supremum shows that repairing A cannot increase the diamond error. The repaired pair obeys (3), so the same lower bound applies to the original A with leakage. In particular, the exact four-fibre infimum is 1/4 when B is fibre-calibrated of Kraus rank two and A is any CPTP map, with the symmetric statement obtained by exchanging parties.
+
+This argument does not calibrate an arbitrary rank-two B while preserving its rank. The unrestricted calibration theorem can increase local Kraus ranks, so no such implication is used or claimed.
+
+### 80.6. Fixed-marker subclass
+
+For any four qubit bases u_fj, let n_f be their Bloch axes, let the other party use conjugate(u_fj), and attach arbitrary fixed bit markers m_0,m_1 with forward overlap eta=<m_0,m_1>, |eta|<=1. This eta is the complex conjugate of section 79's reverse-overlap parameter; their real optimizing value 3/4 agrees. Set
+
+    R_fg=n_f dot n_g,
+    A_eta=[[1,eta],[conjugate(eta),1]],
+    B_eta=[[1,-eta],[-conjugate(eta),1]].
+
+Then K=(J_4 tensor A_eta+R tensor B_eta)/2, while
+
+    T=(J_4 tensor J_2)/2+I_4 tensor(I_2-J_2/2).
+
+For any unit v in ker R, the rank-two projection P_v=|v><v| tensor I_2 satisfies Tr P_v(K-T)=-1 exactly. This is a simpler special-case dual witness; it requires neither tetrahedral geometry nor real eta. The broader Pauli-kernel theorem above does not require this marker structure at all.
+
+### 80.7. A fixed-dimensional calibrated environment resource law
+
+Let the qubit-fibre target T have diagonal blocks I_2 and off-diagonal blocks J_2/2. Let a_f0,a_f1 be orthonormal pairs in an arbitrary A environment, and let b_f0,b_f1 be orthonormal pairs in one common B environment of dimension d>=2. The local B channel is exactly fibre-calibrated; the A channel can initially have arbitrary output leakage, since the one-sided comparison in section 80.5 calibrates A without modifying B.
+
+With A_f and B_f the matrices of these frames, B_f is now d-by-2 and B_f^*B_f=I_2. Define
+
+    C_f=A_f B_f^T/sqrt(2),
+    D_f=A_f Z B_f^T/sqrt(2),
+    N_f=conjugate(B_f) Z B_f^T,   Z=diag(1,-1).
+
+Then D_f=C_fN_f because B_f^T conjugate(B_f)=I_2. Every N_f is a d-by-d traceless Hermitian matrix, with eigenvalues 1,-1 and d-2 zeros; in particular ||N_f||op=1. Put
+
+    m=dim_R span{N_1,...,N_k} <= d^2-1,
+    r=k-m.
+
+Choose a real k-by-r isometry V spanning the kernel of v -> sum_f v_fN_f and set Pi=VV^T. Let S=k^(-1)sum_f C_f, E_f=C_f-S, and a=sum_f||E_f||_F^2=k-k||S||_F^2. Let D have columns Mat^(-1)(D_f), and let Zeta have columns Mat^(-1)(E_fN_f). The kernel identity gives DV=Zeta V, while the contraction property gives
+
+    ||Zeta||_F^2=sum_f||E_fN_f||_F^2
+               <=sum_f||E_f||_F^2=a.
+
+Therefore Tr(Pi D^*D)=||DV||_F^2<=a. In the complete plus/minus representation Khat=[[C,X],[X^*,M]], with C and M the original plus/minus Grams and X their original cross block, choose the projection Phat=diag(ss^*,Pi), s=ones/sqrt(k). Its plus expectation is -a for Khat-That and its minus trace is at most a-r. Thus Tr Phat(Khat-That)<=-r. Since Tr(K-T)=0,
+
+    ||K-T||_1 >=2r,
+    delta >= ||K-T||_1/(2k) >=r/k
+          >=max{0, (k-d^2+1)/k}.                       (10)
+
+The diamond inequality uses the normalized maximally entangled logical/reference input. Its physical error is represented by (K-T)^T/(2k) on the orthonormal support {|f,i>_reference tensor |ff>_output}, and transposition preserves trace norm.
+
+Consequently a necessary local environment resource condition is
+
+    d^2 >= k(1-delta)+1.                               (11)
+
+This is a necessary condition, not a sufficiency or minimal-environment theorem. It applies when the dimension-d party is exactly fibre-calibrated, with arbitrary original leakage permitted only on the other party by the one-sided repair. An arbitrary uncalibrated dimension-d party is not covered. At d=2 the result specializes to section 80's qubit theorem and its exact four-fibre value 1/4. The unrestricted four-fibre optimum with both local environments arbitrary remains open.
+
+
+### 80.8. Attribution and boundary
+
+The proof uses the standard Pauli-space dimension, Hilbert--Schmidt projection contraction, and trace-norm duality; see [Watrous, The Theory of Quantum Information, Chapters 1 and 3](https://cs.uwaterloo.ca/~watrous/TQI/) for matrix-norm and channel-norm background. The full-reference Gram norm and one-sided reference-tag comparison use the framework proved in section 72. The attaining physical product and exact arbitrary-reference norm are section 79's tetrahedral-marker theorem. No external numerical optimizer or numerical nonfinding is used as evidence for (1)--(3). The unrestricted four-fibre optimum with both environments arbitrary remains open between sqrt(3)-3/2 and 1/4.
