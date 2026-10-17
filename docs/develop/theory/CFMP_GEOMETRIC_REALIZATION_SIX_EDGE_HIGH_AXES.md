@@ -1487,3 +1487,141 @@ claim enters the proof. In the remaining region v>min(c,d), this argument does n
 one or both axial-P residual families from Section 378, depending on
 the strict opposite-axis orders in Lemma 383.1. Full six-edge flat
 exclusion remains open.
+
+## 386. A weaker actual-incidence theorem for the source VCD faces
+
+The low-V exclusion of Sections 382–385 also follows from a local
+incidence argument with fewer hypotheses. The result below derives
+actual receiving owners; it does not assume an inventory of them.
+
+Consider a finite tetrahedral face pairing with exactly six distinct
+actual edge labels M,V,C,D,Z,U. Each original owner has a fixed
+vertex-induced paired frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), with four distinct actual labels. Each original
+face is paired to a distinct other original face occurrence by a
+label-preserving vertex map. Distinct-face self-gluings, loops and
+repeated role vectors are allowed. A face paired to itself is outside
+this convention. Distinct labels may have equal numerical coshes.
+
+There is a distinguished flat owner
+
+    sigma=(M,C,D,V,C,D).
+
+Every other owner is genuine. For axes r,o and pair a,b its strict
+genuine tests are L=(a+b)^2-(r-1)*(o-1)>0 and
+J=(r+1)*(o+1)-(a-b)^2>0. Assume only
+
+    z,u>=m>v>1, c,d>1,
+    (m-1)*(v-1)>=(c+d)^2.                            (386.1)
+
+The actual V normal link is the quotient of the original local V-edge
+intervals by the endpoint identifications induced by the face pairing.
+Assume that this quotient is one connected circle and has original
+degree at least two. Here original degree counts original intervals,
+not graph valence; no intervals are collapsed when roles repeat.
+
+**Theorem 386.1 (actual VCD receiver ordering).** Each original VCD
+face of sigma pairs to a face of an external genuine owner of type
+
+    A(P)=(P,V,C,D,V,C), necessarily v>d; or
+    B(P)=(P,V,D,C,V,D), necessarily v>c,
+    P in {M,Z,U}.                                    (386.2)
+
+The displayed forms permit exchanging the axes or transverse positions
+within the same fixed frame. The two target face occurrences are
+distinct, but their receiving owners need not be distinct.
+
+Consequently v>min(c,d). If v<=d, both source faces use the B family;
+if v<=c, both use the A family. The theorem assumes no tau owner,
+upper gap, angle equation, high-axis expense inequality, or normal-circle
+condition at another label. In particular degree six is not needed.
+Only the strict L test of the genuine receivers will enter its proof.
+
+## 387. Exhaustive fixed-pair alternatives at a VCD face
+
+Any owner with fixed transverse pair CD has two distinct axes selected
+from {M,V,Z,U}. Their shifted product is at least
+(m-1)*(v-1)>=(c+d)^2 by (386.1), so its L test is nonpositive.
+Every owner other than sigma is genuine. Hence sigma is the unique
+actual owner with pair CD, even among repeated copies of its role.
+
+Every original face of a fixed paired frame contains the two transverse
+labels and one axis. A face with label set VCD therefore has exactly
+one of these three alternatives:
+
+- pair CD, whose owner is sigma;
+- pair VC, with D axial and the other axis P in {M,Z,U};
+- pair VD, with C axial and the other axis P in {M,Z,U}.
+
+The latter two are exactly A(P) and B(P), and are genuine. These are
+alternatives for original face occurrences, not just numerical edge
+lengths. Equality of coshes at distinct labels changes none of them.
+
+## 388. The source self-gluing and its original normal interval
+
+Sigma's original V edge is 34. Its incident faces 134 and 234 are
+exactly its two VCD faces; its other faces have label set MCD. Since
+M and V are distinct actual labels, a VCD face cannot pair to an MCD
+face. Thus an internal partner for either VCD face would have to be
+the other VCD face of sigma.
+
+The three edge labels of each face are distinct. There is exactly one
+label-preserving vertex map between these two source faces:
+
+    134 -> 234: 1 -> 2, 3 -> 4, 4 -> 3.              (388.1)
+
+It reverses the endpoints 3 and 4 of the tetrahedron's V edge. No
+orientation-preserving self-gluing is silently imposed. If the ambient
+quotient convention excludes this reversal, the pairing is already
+impossible. If it allows the reversal while satisfying the stated
+original-normal-interval convention, the argument below still applies.
+
+The tetrahedron-edge vertices 3 and 4 are different objects from the
+two endpoints of its normal interval. The latter are the edge-in-face
+incidences on faces 134 and 234. Under (388.1), these two normal
+endpoints are paired with each other. Every original face has precisely
+one partner, so each normal endpoint has precisely one paired endpoint.
+There is no remaining endpoint through which another original interval
+can attach. In particular recurring actual labels or quotient vertices
+do not introduce further normal-endpoint identifications.
+
+The one original V interval of sigma would therefore form a complete
+connected component with its endpoints joined. This component is a
+one-interval loop: its graph vertex has valence two, but its original
+degree is one. Connectedness would make it the entire actual V normal
+circle, contrary to original degree at least two. Thus neither source
+VCD face pairs within sigma.
+
+Both source faces have actual partners, so Section 387 forces each
+partner to be an external A(P) or B(P) owner. This is the promised
+existence deduction. It uses no count of distinct receiving owners.
+If both partners belong to the same owner, its two different target
+faces and two transverse V intervals remain separate original objects.
+The argument is independent of a receiver's global orientation and
+uses every compatible label-preserving local face map.
+
+## 389. Strict receiver ordering and the surviving scope
+
+Write either receiving owner with axes p,b and pair v,a, where
+{a,b}={c,d} and p is one of m,z,u. Then p>=m. Put
+
+    F=(p-1)*(v-1)-(a+b)^2 >= 0,
+    L=(v+a)^2-(p-1)*(b-1) > 0,
+    f(x)=(x+a)^2*(x-1).
+
+The exact identity
+
+    f(v)-f(b)=(v-1)*L+(b-1)*F>0                      (389.1)
+
+retains strictness even when F=0. Since
+f'(x)=(x+a)*(3*x+a-2)>0 for a,x>1, it follows that v>b.
+For A(P) the opposite low axis is D, giving v>d; for B(P) it is C,
+giving v>c. Numerical equality with that opposite label is excluded.
+This proves Theorem 386.1.
+
+In particular v<=c and v<=d is impossible under the weaker hypotheses
+of Section 386. In the middle-V region, one family is forced at both
+source faces, but the two partners may still be the same actual owner.
+If v exceeds both c and d, either family remains possible. These
+statements do not exclude those remaining regions, establish a complete
+quotient there, or assert full six-edge flat exclusion.
