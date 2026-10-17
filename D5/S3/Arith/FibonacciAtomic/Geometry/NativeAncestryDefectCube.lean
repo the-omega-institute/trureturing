@@ -717,7 +717,10 @@ private theorem intrinsic_volume (t : Source) :
   have him : (directionSpan t).subtype '' (Real.sqrt 2 • parallelepiped b) =
       parallelepiped (fun p : positions t => gapVector t.length (offset t p.val)) := by
     calc
-      _ = (Real.sqrt 2 • (directionSpan t).subtype) '' parallelepiped b := by
+      _ = ((Real.sqrt 2 • (directionSpan t).subtype :
+          directionSpan t →ₗ[ℝ] EuclideanSpace ℝ (Fin (t.length-1))) :
+          directionSpan t → EuclideanSpace ℝ (Fin (t.length-1))) ''
+          parallelepiped b := by
         rw [← Set.image_smul, ← Set.image_comp]
         rfl
       _ = _ := by
