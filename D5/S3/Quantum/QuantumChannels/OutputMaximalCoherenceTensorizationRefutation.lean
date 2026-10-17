@@ -261,6 +261,6 @@ theorem result : ¬ claim := by
   have hu := witness_output_upper
   have hl := bell_output_lower
   rw [heq, max_self] at hl
-  linarith
+  exact (by norm_num : ¬ ((225/272 : ℝ) ≤ 3/4)) (hl.trans hu)
 
 end D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
