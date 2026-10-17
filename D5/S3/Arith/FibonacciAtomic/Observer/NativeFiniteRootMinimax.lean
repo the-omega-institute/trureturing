@@ -161,7 +161,7 @@ private theorem computedOldMask_spec (C : LiteralRow) (θ : Classes C → Option
   have hb := newbornCode_spec C θ p
   cases h : newbornCode C θ p <;> simp_all
 
-@[irreducible] def computedTarget (C : LiteralRow) (θ : Classes C → Option Bool) : LiteralRow :=
+def computedTarget (C : LiteralRow) (θ : Classes C → Option Bool) : LiteralRow :=
   (NativePredecessorRowRecovery.back C (computedOldMask C θ)).getD (.of (.inl true))
 
 private theorem computedTarget_spec (C : LiteralRow) (θ : Classes C → Option Bool) :

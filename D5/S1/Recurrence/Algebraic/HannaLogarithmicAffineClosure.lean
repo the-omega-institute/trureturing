@@ -7,13 +7,10 @@
    digest: Hanna's logarithmic integer-series closure under every positive affine extraction. -/
 
 import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
-import Batteries.Tactic.OpenPrivate
 
 open PowerSeries Finset
 open D5.S1.Recurrence.Periodic.StirlingTransformTotientPeriod (T)
 open D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
-open private q T_window coeff_transform reconstruction map_transform from
-  D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
 
 namespace D5.S1.Recurrence.Algebraic.HannaLogarithmicAffineClosure
 
