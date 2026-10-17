@@ -726,7 +726,7 @@ material.write_text("new build material\\n")
                          "lakefile.toml", "Directory.Build.props", "tools/StrataLint.Cli/obj/new",
                          "Meta/FILEMAP.toml", "Library/operative/new.lean", "build/lean-cache/new",
                          "lean-report-inputs.json", str(report), str(report) + ".sha256", str(logs / "new")]
-        cover_inputs = ["Golden/Frozen/state/new.json", "Meta/Digestion/atomizers.toml",
+        cover_inputs = ["Golden/Frozen/state/new.json", "Meta/Digestion/backfill/probe/source.toml",
                         "Meta/Digestion/atoms/sha256/new", "Meta/Digestion/backfill/chain/absorbed-closed/new.yaml",
                         "Meta/Digestion/backfill/first/residual-open/atom.yaml", "Library/source with space.md",
                         "Library/chain.md", "Library/block-tail.json", "tools/Authorizations/digestion-tail/new.json"]

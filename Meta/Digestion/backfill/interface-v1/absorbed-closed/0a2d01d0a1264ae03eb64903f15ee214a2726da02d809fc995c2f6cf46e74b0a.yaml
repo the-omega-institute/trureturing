@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
-  normalized_sha256: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
-cas_ref: sha256:0a2d01d0a1264ae03eb64903f15ee214a2726da02d809fc995c2f6cf46e74b0a
-coverage_gids:
-  - gid: D5/S0/Tower/Hardness/RationalSpectrum.rational_tower_hardness_spectrum
-    target_statement_id: sha256:eb100e66498fb672850a6fd7e0cad522bf3c946fef90ebdf3a683b189f1fb503
-receipts:
-  unresolved_subitems: []

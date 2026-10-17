@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d6217fbb74f9e0e21959b52b41e7aa06321a3896843eb38888cb2ba9dab4bbb7
-  normalized_sha256: sha256:d6217fbb74f9e0e21959b52b41e7aa06321a3896843eb38888cb2ba9dab4bbb7
-cas_ref: sha256:d6217fbb74f9e0e21959b52b41e7aa06321a3896843eb38888cb2ba9dab4bbb7
-coverage_gids:
-  - gid: D5/S3/QuantumContext/ParallelogramNormLaw.inner_product_norm_parallelogram_law
-    target_statement_id: sha256:4508bd84ed50b7dd80dc2cd9f542f963e46cc495daf65798cd7e03b32ffc8e28
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d73d13a85384e8ec9b2845b111d923cc86b9a594e5b16c0a438e4713c55b7836
-  normalized_sha256: sha256:d73d13a85384e8ec9b2845b111d923cc86b9a594e5b16c0a438e4713c55b7836
-cas_ref: sha256:d73d13a85384e8ec9b2845b111d923cc86b9a594e5b16c0a438e4713c55b7836
-coverage_gids:
-  - gid: D5/S3/ConceptDynamics/Interpretation/FreshIndependentCheckpointGuarantee.fresh_independent_checkpoint_deployment_guarantee
-    target_statement_id: sha256:6cde611b7f21f715f7ecc01c188e7af18b5bbff467b43530ceee603ebacb2fa9
-receipts:
-  unresolved_subitems: []

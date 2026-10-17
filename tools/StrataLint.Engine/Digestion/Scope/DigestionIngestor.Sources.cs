@@ -5,13 +5,8 @@ namespace StrataLint.Engine;
 internal static partial class DigestionIngestor
 {
     /// <summary>
-    /// Every theory document is digested by something. A volume nobody has written a
-    /// dialect for used to sit in the tree with no source declaration at all — not refused,
-    /// not digested, just unaccounted — because the declaration was a hand-written file and
-    /// nothing checked that one existed. It is derivable from the path, so ingest derives
-    /// it: the default atomizer, and a source id slugged from the file name. What remains
-    /// hand-written is only what is genuinely a decision — that this path is a canonical
-    /// volume at all, which belongs to FILEMAP membership and source eligibility.
+    /// Registers eligible canonical regular Markdown inputs with generic-v1 and a
+    /// source id derived from the file stem. FILEMAP owns source eligibility.
     /// </summary>
     internal static BackfillInventoryDocument RegisterDefaultTheorySources(
         BackfillInventoryDocument document,
@@ -27,11 +22,15 @@ internal static partial class DigestionIngestor
             static source => source.SourcePath,
             StringComparer.Ordinal);
         var registered = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var manifest = snapshot.TryGetFile(FileMapLoader.RelativePath, out _)
+            ? FileMapLoader.LoadSnapshot(snapshot) : null;
         foreach (var path in snapshot.Files.Keys
                      .Select(static path => path.Value)
                      .Where(static path => path.StartsWith(
                          DigestionOpaquePathPolicy.TheoryRootPath,
                          StringComparison.Ordinal))
+                     .Where(path => path.EndsWith(".md", StringComparison.Ordinal)
+                         && DigestionSourceEligibility.IsEligible(snapshot, path, manifest))
                      .Where(path => !declaredPaths.Contains(path))
                      .Where(path => registrationPaths is null || registrationPaths.Contains(path))
                      .Order(StringComparer.Ordinal))

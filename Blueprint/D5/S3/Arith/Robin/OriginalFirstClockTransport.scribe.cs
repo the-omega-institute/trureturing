@@ -32,6 +32,51 @@ internal sealed class OriginalFirstClockTransportDocument : IScribeDocumentDefin
                     Paragraph(Text("goodEdges includes every consecutive-label pair satisfying the original source conditions: N_p=p*U, N_r=r*U, U>0, 5040 divides U, A<C, and the literal strict inventory throughout the closed edge [A,C]. This finite set and selectedDomain, its full interval union, are independent of ell and R. OriginalBounds requires ell<=A<C<=R and p,r>2*R for every edge in that fixed complete set; bounds never select or remove an edge. The theorem excludes [q,firstClock(q)] for every prime q on this entire domain. It selects the actual edge containing a contact and applies the actual upper integer theorem. No favorable subset is chosen; the lower canonical endpoint and least attainment remain in the source data."))
                 ), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("good-edge-prime-buffer"),
+                DeclarationHandle.Create(Prefix + "good_edge_prime_buffer"),
+                H("A prime buffer around the unchanged original good edge"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let X be the original complete-label window, with ell>=243 and "
+                        + "OriginalBounds(X,ell,R), and let (p,r) be an unchanged GoodEdge. "
+                        + "Put a=log(canonicalSource(p)) and b=log(canonicalSource(r)). "
+                        + "If a>=256, every prime q lies outside the closed interval [a-2,b+1]. "
+                        + "Both original canonical integers p*U and r*U, the common positive "
+                        + "5040-divisible U, and its exact strict inventory at every point of "
+                        + "[a,b] remain hypotheses. The original bounds apply to all good edges "
+                        + "and do not select a favorable subset.")),
+                    Paragraph(Text(
+                        "For a prime q in [a-2,a), the actual inventory gives q dividing U. "
+                        + "Here q>16, so q does not divide 5040. Writing U=5040*q*v gives "
+                        + "the legal deletion competitor M=p*5040*v, with 5040*p dividing M "
+                        + "and M*q=p*U. The exact next Euler marginal is bounded by the "
+                        + "first marginal, retaining arbitrary multiplicity of q. For a prime "
+                        + "q in (b,b+1], the actual upper inventory excludes q from U, and "
+                        + "the original label bounds give q different from r. Thus q does "
+                        + "not divide r*U, and the original legal integer insertion comparison "
+                        + "applies. Complete first-clock exclusion covers the central closed "
+                        + "interval [a,b], including its endpoints.")),
+                    Paragraph(Text(
+                        "For h=log(q) and the relevant endpoint x>=256, one has "
+                        + "5<h<=x/20. The literal Robin density satisfies "
+                        + "(81/100)*w(x-h)<=w(x) and (81/100)*w(x)<w(x+h). "
+                        + "The price integral is exactly the log-log difference. Its backward "
+                        + "and forward quadratic bounds, obtained from the original curve "
+                        + "slopes, contradict the corresponding integer comparison because "
+                        + "(5/2)*(81/100)>2. No real-center or fixed-price maximizer replaces "
+                        + "the original nonlinear integer objective.")),
+                    Paragraph(Text(
+                        "The range 243<=a<256 is not included. This excludes primes only: "
+                        + "proper prime powers and their von Mangoldt contributions remain. "
+                        + "The affine correction gamma in the separate residual accounting "
+                        + "is unchanged, with no sign or cancellation supplied here. The "
+                        + "theorem gives neither good-edge existence nor cofinality, a PC "
+                        + "cutoff identification, a prescribed residual sign, strict Robin "
+                        + "for all integers above 5040, or RH."))
+                ), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("first-error-decay"),
                 DeclarationHandle.Create(Prefix + "first_error_decay"),
                 H("The literal uniform error decreases to zero"),

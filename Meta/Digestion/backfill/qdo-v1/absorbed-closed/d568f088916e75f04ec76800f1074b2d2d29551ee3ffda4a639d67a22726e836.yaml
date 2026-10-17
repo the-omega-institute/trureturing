@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
-  normalized_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
-cas_ref: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
-coverage_gids:
-  - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
-    target_statement_id: sha256:6945d015d2ed4acee0cc5eae1eb004bf6f28d413dfee17fc762883317fbed9c5
-receipts:
-  unresolved_subitems: []

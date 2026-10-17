@@ -22,7 +22,7 @@ def production(repository):
         cas = root / "Meta/Digestion/atoms/sha256"
         cas.mkdir(parents=True)
         ids = []
-        sources = ("contextual-spacetime-arithmetic", "contextual-spacetime-arithmetic-ml", "pzg-v170")
+        sources = ("contextual-spacetime-arithmetic", "contextual-spacetime-arithmetic-ml", "ordered-simplex-l2-projection")
         for source in sources:
             text = f"## 定理 prime {source}\n" + "\n".join(
                 f"$x_{i}$ 因为构造存在素数" for i in range(14)) + "\n"
@@ -32,7 +32,7 @@ def production(repository):
             (ledger / "residual-open").mkdir(parents=True)
             (ledger / "residual-open" / f"{atom}.yaml").write_text("invalid: [")
             metadata = (repository / "Meta/Digestion/backfill" / source / "source.toml").read_bytes()
-            if source == "pzg-v170" and b'default_dispatch = "excluded"' not in metadata:
+            if source == sources[2] and b'default_dispatch = "excluded"' not in metadata:
                 metadata += b'default_dispatch = "excluded"\n'
             (ledger / "source.toml").write_bytes(metadata)
             (cas / atom).write_text(text)

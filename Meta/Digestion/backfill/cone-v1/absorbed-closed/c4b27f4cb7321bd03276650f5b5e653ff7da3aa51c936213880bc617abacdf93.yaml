@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:c4b27f4cb7321bd03276650f5b5e653ff7da3aa51c936213880bc617abacdf93
-  normalized_sha256: sha256:c4b27f4cb7321bd03276650f5b5e653ff7da3aa51c936213880bc617abacdf93
-cas_ref: sha256:c4b27f4cb7321bd03276650f5b5e653ff7da3aa51c936213880bc617abacdf93
-coverage_gids:
-  - gid: D5/S3/Resource/DivideConquer.resource_functional_subadditive
-    target_statement_id: sha256:8afd4f8415662f3abe09ab8b3e7e07a7134303973a79007ad39d74aba61c2243
-receipts:
-  unresolved_subitems: []

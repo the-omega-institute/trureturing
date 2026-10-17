@@ -130,4 +130,403 @@ For $t=1$, $q\equiv7\pmod8$ and the prefactor is one; for $t\ge2$, $q\equiv3\pmo
 
 The theorem extends the original integral Fibonacci construction beyond two odd-depth primes. Failure of its product test excludes the stated full kernel at every ternary index and square cofactor satisfying the hypotheses. It does not assert a violating family that survives all earlier support restrictions, independence from every previous Cassels condition, prime-family infinitude, or a universal WSS exclusion.
 
+## 84. Composite cuts without an eligible individual prime
+
+**Theorem 84.1 (composite-cut residue constraint).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. Let $d>1$ divide $D$, and put $e=D/d$. Suppose
+
+$$\left(\frac d p\right)=1\quad(p\mid e),\qquad \left(\frac e p\right)=1\quad(p\mid d),$$
+
+where each $p$ is prime. The case $e=1$ is permitted. There exist integers $u,v$ with $d=u^2-5v^2$, normalized as follows:
+
+- if $d\equiv1\pmod4$, then $v$ is even and $u\equiv1+v\pmod4$; $u$ may have either sign;
+- if $d\equiv3\pmod4$, then $u>0$ is even and $v$ is odd.
+
+For every such representation, put
+
+$$\chi_d=\begin{cases}(u/5),&d\equiv1\pmod4,\\(u/2\,/5),&d\equiv3\pmod4.\end{cases}$$
+
+Then
+
+$$\boxed{\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right)=\left(\frac{-2}{d}\right)\chi_d,\qquad s_p^2\equiv5\pmod p.}$$
+
+The symbol with denominator $d$ is a Jacobi symbol. Each factor on the left is nonzero and independent of the chosen root; an empty product is one. Thus failure of this test excludes the full kernel $D$ from the stated original integral orbit. No elliptic-rank or Selmer premise is imposed.
+
+**Proof.** We retain $\mathcal O_0=\mathbb Z[\phi]$, $\phi=(1+\sqrt5)/2$, and the multiplicative Rédei convention of §83. The imported original-support inputs give $D\equiv19\pmod{120}$ and $(5/p)=1$, $p>5$, for every $p\mid D$. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48).
+
+For the triple $(5,-D,d)$, the discriminants $5,-D,\Delta(d)$ have three-way gcd one. Both $(5,-D)$ and $(5,d)$ are locally split: use the $5$-splitting at their odd support primes, the fact that every support prime is a square modulo five, and $5\equiv1\pmod4$ at two. For $(-D,d)$, a prime $p\mid e$ contributes $(d/p)$. If $p\mid d$, write $d=pd'$ and $D=pd'e$. The odd Hilbert-symbol formula gives
+
+$$(-D,d)_p=\left(\frac{-1}{p}\right)\left(\frac{-d'e}{p}\right)\left(\frac{d'}p\right)=\left(\frac e p\right).$$
+
+At two, $-D\equiv1\pmod4$ makes the odd-unit symbol one; infinity is trivial because $d>0$, and all other finite places are unit pairs. Thus the two cut conditions are exactly the remaining local requirements, including the overlapping support $d\mid D$.
+
+The actual Fibonacci element $\beta=-1-F_N\sqrt5$ has norm $-D C^2$, trace $-2$, and belongs to $1+4\mathcal O_0$. The finite-place proof in §83 shows that it defines a minimally ramified field over $\mathbb Q(\sqrt{-5D})$. That proof applies to the entire $D$, with every valuation in $C$ retained. At each $p\mid d$, choose the unit conjugate $\beta\equiv-2\pmod p$, including when $p\mid C$. Since $d>0$, there is no infinite factor. Consequently
+
+$$\mathcal R(5,-D,d)=\prod_{p\mid d}\left(\frac{-2}{p}\right)=\left(\frac{-2}{d}\right),\qquad \mathcal R(5,d,-D)=\left(\frac{-2}{d}\right).$$
+
+The last equality is Rédei reciprocity for the admissible composite triple. It does not multiply symbols whose individual prime arguments might be inadmissible.
+
+For generator existence, the norm-Euclidean property of $\mathcal O_0$ used in Theorem 81.3 makes the product of one prime ideal above each $p\mid d$ principal. This ideal has norm $d$, so a generator has norm $\pm d$; multiplying by $\phi$ if necessary gives norm $d$.
+
+If $d\equiv1\pmod4$, use the six-element norm kernel $\{\pm\phi^{2k}:k=0,1,2\}$ modulo $4\mathcal O_0$ to arrange $\gamma\equiv1\pmod{4\mathcal O_0}$. Writing $\gamma=1+4(m+n\phi)=u+v\sqrt5$ gives $u=1+4m+2n$, $v=2n$. Here $u$ is nonzero odd and may be negative. Since the norm is positive, both real signs agree with $\operatorname{sgn}(u)$; no positivity assertion is needed.
+
+If $d\equiv3\pmod4$, powers of $\phi^2$ arrange $\gamma\equiv1\pmod{2\mathcal O_0}$. Multiplication by $-1$ if needed makes it totally positive while preserving this congruence. Writing $\gamma=1+2(m+n\phi)$ gives integral $u,v$ with $u+v$ odd. The norm condition forces $u$ even and $v$ odd, and positivity gives $u>0$.
+
+For every normalized representation, squarefreeness gives $\gcd(u,v)=1$: a common prime would have its square dividing $d$. It also gives $\gcd(u,d)=1$, since a prime $p\mid u,d$, necessarily different from five, would divide $v$ as well. Furthermore $5\nmid u$ and $\gcd(2u,d)=1$.
+
+Put $E_d=\mathbb Q(\sqrt5,\sqrt d)$, $K_d=\mathbb Q(\sqrt{5d})$, and $F_d=E_d(\sqrt\gamma)$. Since $d>1$ is squarefree and $5\nmid d$, Corollary 5.2 applies without degeneration. At odd primes outside $5d$, $\gamma$ is a unit. At five it is a unit and $d$ is locally a square. At each $p\mid d$, squarefreeness and $\gcd(u,d)=1$ give one conjugate of valuation one and the other the unit $2u$. Because $\gamma\bar\gamma=d$ is a square in $E_d$, these conjugates define the same extension over $E_d$. Locally $E_d=K_d$ by $5$-splitting, so the unit description proves unramifiedness.
+
+For $d\equiv1\pmod4$, $\gamma\in1+4\mathcal O_0$ gives an étale quadratic polynomial at two. If $d\equiv1\pmod8$, $K_d$ and $E_d$ have the same unramified quadratic local field; if $d\equiv5\pmod8$, $K_d$ is split and $E_d$ is unramified quadratic. Thus $F_d/K_d$ is unramified there. A negative real sign of $\gamma$ changes none of these finite-place arguments.
+
+For $d\equiv3\pmod4$, Corollary 5.2 supplies $\alpha=2(u+\sqrt d)$. Set $\varpi=1+\sqrt d$ and $c_0=(1+d)/2$. Then
+
+$$\frac{\alpha}{\varpi^2}=\frac{u+\sqrt d}{c_0+\sqrt d}\in1+2\mathcal O_{\mathbb Q_2(\sqrt d)},\qquad N\!\left(\frac{\alpha}{\varpi^2}\right)=5\left(\frac{2v}{1-d}\right)^2.$$
+
+Both $u,c_0$ are even, $c_0+\sqrt d$ is a unit, and the numerator differs from the denominator by the even integer $u-c_0$. The removed factor is a square. This verifies Definition 7.5's conductor-two condition for both $d\equiv3,7\pmod8$; it does not assert unramifiedness at two. Hence the field satisfies the exact minimal-ramification requirements.
+
+Now evaluate $\mathcal R(5,d,-D)$. Its infinite factor is $\operatorname{sgn}(u)$: the field is real when $\gamma$ is totally positive, while a totally negative $\gamma$ gives the nontrivial infinite Artin factor. At each $p\mid d$, the unit conjugate gives $(2u/p)$. At each $p\mid e$, the factor is $(u+v s_p\,/p)$. The two residues have product $d$ and are nonzero; $(d/p)=1$ makes their characters equal. Therefore
+
+$$\left(\frac{-2}{d}\right)=\operatorname{sgn}(u)\left(\frac{2u}{d}\right)\prod_{p\mid e}\left(\frac{u+v s_p}{p}\right).$$
+
+If $d\equiv1\pmod4$, let $w=|u|>0$ and $s=\operatorname{sgn}(u)$. As $(-1/d)=1$, reciprocity for Jacobi symbols gives
+
+$$\left(\frac u d\right)=\left(\frac w d\right)=\left(\frac d w\right)=\left(\frac{-5}{w}\right)=\left(\frac{-1}{w}\right)\left(\frac w5\right).$$
+
+Here $(w/5)=(u/5)$. If $v\equiv0\pmod4$, then $d\equiv1\pmod8$, $u\equiv1\pmod4$; if $v\equiv2\pmod4$, then $d\equiv5\pmod8$, $u\equiv3\pmod4$. For positive $u$ this gives $(2/d)(-1/w)=1$; for negative $u$, replacing $u$ by $w=-u$ reverses that sign. Thus
+
+$$\left(\frac{2u}{d}\right)=s\left(\frac u5\right),\qquad \operatorname{sgn}(u)\left(\frac{2u}{d}\right)=\left(\frac u5\right)=\chi_d.$$
+
+This explicitly cancels the real sign rather than assuming a positive primary generator.
+
+If $d\equiv3\pmod4$, write $u=2^t w$ with $t\ge1$ and $w>0$ odd. The reciprocity sign in $(w/d)$ cancels the factor $(-1/w)$ from the norm identity, giving $(w/d)=(w/5)$. Hence
+
+$$\left(\frac{2u}{d}\right)=\left(\frac2d\right)^{t+1}\left(\frac w5\right)=\left(\frac{u/2}{5}\right).$$
+
+Indeed $t=1$ implies $d\equiv7\pmod8$ and prefactor one; $t\ge2$ implies $d\equiv3\pmod8$ and prefactor $(-1)^{t+1}=(-1)^{t-1}$, exactly the required power of $(2/5)=-1$. The Jacobi convention covers $w=1$. Combining these formulas proves the boxed constraint. ∎
+
+**Proposition 84.2 (scope of the cut hypothesis).** At the level of quadratic-character conditions, the admissible-cut hypothesis need not supply any individual prime eligible for Theorem 83.1.
+
+**Proof.** Consider four abstract support primes, three of type $1\pmod4$ and one of type $3\pmod4$, with all pairwise Legendre characters equal to $-1$. This character assignment respects quadratic reciprocity. Every two-versus-two cut has both required products equal to $+1$ at each vertex. In contrast, each individual prime has three outgoing nonresidue characters, so none meets Theorem 83.1's hypothesis. This compares the conditions only; it asserts no actual block or prime family realizing this pattern. ∎
+
+The endpoint $d=D$ is allowed and yields $\chi_D=(-2/D)=1$ because $D\equiv19\pmod{120}$; no separate novelty claim is made for that endpoint. The theorem retains the full original integral orbit. It does not establish a violating numerical support surviving all previous restrictions, independence from all earlier Cassels conditions, prime-family infinitude, or a universal WSS exclusion.
+
+## 85. An integral-class height gap without a rank bound
+
+**Theorem 85.1 (exact index recovery and a uniform height gap).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. On
+
+$$E_D:Y^2=X(X+5D)(X-15D)$$
+
+put
+
+$$R=(5D B_N,25D^2L_N C F_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$, and $R,S$ are non-torsion. Every affine integral point $K$ with full two-descent squareclasses
+
+$$\delta(K)=(5,D,5D)$$
+
+has $X(K)=5D B_n$ for a positive odd integer $n$ satisfying
+
+$$\boxed{v_3(n)=j.}$$
+
+If $n=N$, then $K=\pm R$. Otherwise $n\ge5N$ and
+
+$$\boxed{\widehat h(K)>3\widehat h(R).}$$
+
+No elliptic-rank or Selmer-dimension premise is imposed.
+
+**Proof.** TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md) give $D\equiv19\pmod{120}$ and, for every $q\mid D$, $q>5$, $(5/q)=1$, $\rho(q)=6N$, and $q\equiv1\pmod{6N}$. In particular $7,11\nmid D$.
+
+We use complete two-descent, prime-to-residue-characteristic torsion injection at good reduction, and canonical heights as in [Silverman, *The Arithmetic of Elliptic Curves*, VII.3, VIII.9 and X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The estimate proved in §74 applies to every positive twist parameter $D$: its fixed-coordinate duplication formula does not require primality. With $z=X/(5D)$,
+
+$$\frac12h(z)-c_0\le\widehat h\le\frac12h(z)+u_0,\qquad c_0=\frac{\log144}{6},\quad u_0=\frac{\log24}{6}.$$
+
+Indeed the duplication map is $(z^2+3)^2/[4z(z+1)(z-3)]$, and the same numerator/denominator estimates and gcd bound apply. The bounded difference $|h(X/(5D))-h(X)|\le\log(5D)$ disappears in the canonical-height doubling limit.
+
+At seven, translating $X=t+D$ gives $Y^2=t^3-D^2t$. The character sum cancels under $t\mapsto-t$, since $-1$ is a nonsquare modulo seven, so the reduced curve has eight points. At eleven the curve with $D=1$ has character values
+
+$$0,1,1,1,0,-1,0,-1,1,1,1\qquad(X=0,\ldots,10),$$
+
+whose sum is four. Its nonzero twists therefore have sixteen or eight points. Torsion injection at seven bounds every primary torsion part other than the seven-primary part by eight; injection at eleven excludes the seven-primary part as well. Thus the rational torsion order divides eight.
+
+The three-coordinate two-descent classes of the four rational two-torsion points are
+
+$$\begin{aligned}
+\delta(O)&=(1,1,1),\\
+\delta(T_0)&=(-3,5D,-15D),\\
+\delta((-5D,0))&=(-5D,1,-5D),\\
+\delta((15D,0))&=(15D,5D,3).
+\end{aligned}$$
+
+None of the three nonzero torsion points has trivial descent class: use the negative first coordinate in the first two cases and the nonsquare third coordinate $3$ in the last. Hence none is a double of a rational point. This excludes four-torsion, and therefore eight-torsion, proving $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$. The displayed point $R$ has nonzero $Y$, so it and its torsion translate $S$ are non-torsion. Direct calculation gives
+
+$$\delta(R)=(5,D,5D),\qquad \delta(S)=(-15,5,-3).$$
+
+Now let $K$ be as in the theorem. Its three root factors are nonzero. Integrality and squarefreeness of $5,D,5D$ imply that there are integers $a,b,\ell$ with
+
+$$X(K)=5a^2,\qquad X(K)+5D=D b^2,\qquad X(K)-15D=5D\ell^2.$$
+
+A rational square times a squarefree integer can be integral only when its square root coordinate is integral. The first two equations give $D\mid a^2$, hence $D\mid a$. Writing $a=Dc$ yields
+
+$$X(K)=5D^2c^2,\qquad \ell^2+3=Dc^2,\qquad b^2=5(Dc^2+1).$$
+
+Thus $b=5f$ and $\ell^2+4=5f^2$. None of $c,\ell,f$ is zero; in particular $\ell=0$ would give $Dc^2=3$, impossible for $D\ge19$. Replace $\ell,f$ by their positive absolute values.
+
+The integral negative-Pell classification used in §76 gives $(\ell,f)=(L_n,F_n)$ for a positive odd $n$. For completeness, $\ell,f$ have the same parity. The solution with $\ell=1$ has $f=1$. If $\ell>1$, then $\ell\ge4$, $f\ge2$, and
+
+$$\ell'=(3\ell-5f)/2,\qquad f'=(3f-\ell)/2$$
+
+are positive integers satisfying the same equation with $\ell'<\ell$. Positivity follows from $9\ell^2-25f^2=4\ell^2-20>0$ and $9f^2-\ell^2=4f^2+4>0$. The inverse transformation multiplies $(\ell'+f'\sqrt5)/2$ by $\phi^2$. Iteration therefore gives precisely the positive odd powers of $\phi$, proving the classification. Consequently $X(K)=5D B_n$ and $B_n=Dc^2$.
+
+Choose any $q\mid D$ and view $\phi$ in $\mathbb F_q$. The original rank is $\operatorname{ord}_q(-\phi^2)=6N$. Put $a=\phi^2$. Because $N$ is odd, $a^{3N}=1$, and the order of $-a$ is twice the odd order of $a$. Hence $\operatorname{ord}(a)=3N$. Since $n$ is odd,
+
+$$B_n=a^n+a^{-n}+1\pmod q.$$
+
+The divisibility $q\mid B_n$ and $q\ne3$ imply that $a^n$ is a nontrivial cube root of unity. Therefore
+
+$$\operatorname{ord}(a^n)=3,\qquad \gcd(3N,n)=N,\qquad v_3(n)=j.$$
+
+Thus $n=Nk$ with $k$ positive odd and $3\nmid k$. If $n=N$, equality of $X$-coordinates gives $K=\pm R$. Otherwise $k\ge5$.
+
+To quantify the gap, put $x=L_N\ge4$. The odd-index identity
+
+$$L_{5N}=x^5+5x^3+5x$$
+
+gives $B_{5N}>x^{10}$. With $t=x^2\ge16$,
+
+$$\frac{x^{10}}{(x^2+3)^3}=t^2\left(\frac{t}{t+3}\right)^3\ge\frac{16^5}{19^3}>144,$$
+
+where the final comparison is $1{,}048{,}576>987{,}696$. Hence $B_{5N}>144B_N^3$. For $n\ge5N$, the height estimate gives
+
+$$\begin{aligned}
+\widehat h(K)&\ge\tfrac12\log B_{5N}-c_0\\
+&>\tfrac32\log B_N+\tfrac12\log144-c_0\\
+&>3\bigl(\tfrac12\log B_N+u_0\bigr)\ge3\widehat h(R).
+\end{aligned}$$
+
+The last strict comparison follows from
+
+$$\tfrac12\log144-c_0-3u_0=\tfrac13\log144-\tfrac12\log24>0,$$
+
+which is equivalent to $144^2>24^3$. This proves the height gap. ∎
+
+**Corollary 85.2 (primitivity in the full Mordell–Weil lattice).** Under the hypotheses of Theorem 85.1, the common class of $R,S$ in $E_D(\mathbb Q)/E_D(\mathbb Q)_{\mathrm{tors}}$ is primitive. Equivalently, if $S=[m]H+T$ with $m\ge1$, $H\in E_D(\mathbb Q)$ and rational torsion $T$, then $m=1$.
+
+**Proof.** The descent class $\delta(S)=(-15,5,-3)$ differs from every torsion class listed above. For $O$ and $(-5D,0)$ use the second coordinate; for $T_0$ the ratio of first coordinates is $5$; for $(15D,0)$ the ratio of third coordinates is $-1$. Thus $S$ cannot be a double plus torsion, excluding even $m$.
+
+Suppose $m\ge3$ is odd. Since the torsion is two-torsion, absorb $T$ into $H'=H+T$ to get $S=[m]H'$. Put $K=H'+T_0$. Then $[m]K=R$.
+
+The point $K$ is integral at every prime. On this integral Weierstrass model, a nonintegral rational point lies in the formal subgroup and has negative $X$ valuation. Its nonzero multiples remain in that subgroup and have negative $X$ valuation; see [Silverman IV.1--2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). If $K$ were nonintegral anywhere, $R=[m]K$ would be nonintegral, contrary to its displayed coordinates. The points are non-torsion, so the multiple is not $O$. This includes $2,3,5$ and primes dividing $D$, and requires no prime-to-residue-characteristic condition on $m$. The model is also minimal everywhere: its discriminant $2^8 3^2 5^6D^6$ has every valuation below twelve.
+
+Odd multiplication preserves the two-descent class, so $\delta(K)=\delta(R)$. Also $\widehat h(K)=\widehat h(R)/m^2\le\widehat h(R)$. Theorem 85.1 forces $K=\pm R$, and then $R=[m]K=\pm[m]R$ contradicts non-torsion. Thus $m=1$. ∎
+
+These statements impose an integral-index and divisibility restriction for every actual squarefree kernel. They do not assert that the primitive point generates a group of rank greater than one, impose a universal rank bound, or exhibit a newly excluded prime family. The rank-one generation conclusions in §§76--78 retain their own hypotheses.
+
+## 86. Excluding two infinite multiplier families
+
+**Theorem 86.1 (five and seven cannot enter the relative index).** Let $j,C$ be positive integers, $N=3^j$, and $B_n=L_n^2+3$ for positive odd $n$. Let $D$ be the full positive squarefree kernel of $B_N$, so $B_N=D C^2$. If
+
+$$B_{Nk}=D c^2$$
+
+for a positive integer $c$ and a positive odd integer $k$ with $3\nmid k$, then
+
+$$\boxed{\gcd(k,35)=1.}$$
+
+Thus every multiplier divisible by five or seven is excluded, including arbitrary powers and additional factors.
+
+**Proof.** For odd $n$, the Lucas multiplication formula is $L_{nm}=V_m(L_n)$, where
+
+$$V_0(X)=2,\qquad V_1(X)=X,\qquad V_{m+2}(X)=X V_{m+1}(X)+V_m(X).$$
+
+Indeed the two Binet roots $\phi^n$ and $-\phi^{-n}$ have sum $L_n$ and product $-1$. Modulo $X^2+3$, the first six values $V_0,\ldots,V_5$ are $2,X,-1,0,-1,-X$, while $V_6=2$ and $V_7=X$. The recurrence therefore gives $V_{m+6}=V_m$ in this quotient for every $m\ge0$. For positive odd $m$ with $3\nmid m$, one has $V_m\equiv\pm X\pmod{X^2+3}$, proving
+
+$$B_n\mid B_{nm}.$$
+
+Suppose $p\mid k$ for $p\in\{5,7\}$, and put $t=Nk/p$. Then $t$ is a positive odd multiple of three, and $t/N$ is odd and not divisible by three. Thus $B_N\mid B_t$, so every prime in $D$ divides $B_t$. The Lucas recurrence modulo four has period six, with values $2,1,3,0,3,3$. Consequently
+
+$$x=L_t\equiv0\pmod4,\qquad x\ge4.$$
+
+For $p=5$, direct multiplication gives
+
+$$B_{5t}=B_t Q_5(x),\qquad Q_5(X)=X^8+7X^6+14X^4+8X^2+1.$$
+
+Since $Q_5(X)\equiv-5\pmod{X^2+3}$, the gcd of $B_t$ and $Q_5(x)$ divides five. But five never divides $L_t^2+3$, because $-3$ is a nonsquare modulo five. Hence
+
+$$\gcd(B_t,Q_5(x))=1.$$
+
+The number $A_5=x^4+\tfrac72x^2$ is an integer, and
+
+$$Q_5(x)-A_5^2=\tfrac74x^4+8x^2+1>0,\qquad (A_5+1)^2-Q_5(x)=\frac{x^2(x^2-4)}4>0.$$
+
+Thus $Q_5(x)$ lies strictly between consecutive integer squares.
+
+For $p=7$, the corresponding identities are
+
+$$B_{7t}=B_t Q_7(x),\qquad Q_7(X)=X^{12}+11X^{10}+44X^8+78X^6+60X^4+16X^2+1.$$
+
+Now $Q_7(X)\equiv7\pmod{X^2+3}$, so the gcd divides seven. Since $t$ is odd, the exact Pell identity is
+
+$$5F_t^2=L_t^2+4=B_t+1.$$
+
+If seven divided $B_t$, this would give $F_t^2\equiv3\pmod7$, impossible. Therefore $\gcd(B_t,Q_7(x))=1$ as well. Set
+
+$$A_7=x^6+\tfrac{11}2x^4+\tfrac{55}8x^2+1\in\mathbb Z,$$
+
+where integrality uses $4\mid x$. Exact subtraction gives
+
+$$Q_7(x)-A_7^2=\frac{3x^2(8x^4+37x^2+48)}{64}>0,$$
+
+and
+
+$$(A_7+1)^2-Q_7(x)=\frac{104x^6+593x^4+736x^2+192}{64}>0.$$
+
+Hence $Q_7(x)$ also lies strictly between consecutive integer squares.
+
+For either $p$, the positive nonsquare integer $Q_p(x)$ has a prime divisor $\ell$ of odd valuation. Coprimality gives $\ell\nmid B_t$, hence $\ell\nmid B_N$ and $\ell\nmid D$. Nevertheless
+
+$$v_\ell(B_{Nk})=v_\ell(B_{pt})=v_\ell(Q_p(x))$$
+
+is odd, contradicting $B_{Nk}=D c^2$. This proves the theorem. The odd valuation is obtained from the explicit nonsquare factor and its exact gcd; it is not inferred from primitive-divisor existence. ∎
+
+**Corollary 86.2 (the next possible integral index).** Under the hypotheses and notation of Theorem 85.1, every affine integral point $K$ with $\delta(K)=(5,D,5D)$ has
+
+$$X(K)=5D B_{Nk},\qquad \gcd(k,210)=1.$$
+
+If $K\ne\pm R$, then $k\ge11$, so its index is at least $11N$.
+
+**Proof.** Theorem 85.1 gives $n=Nk$ with $k$ positive odd, $3\nmid k$, and $B_n=Dc^2$ for a positive integer $c$. Apply Theorem 86.1. The least positive integer greater than one and coprime to $210$ is eleven. ∎
+
+These conclusions retain the original integral orbit and the full squarefree kernel. They exclude two infinite families of relative indices without an elliptic-rank or Selmer premise. They do not exclude every remaining index or squarefree kernel, and do not solve the WSS problem. The polynomial proof is self-contained; classical background on square classes of individual Fibonacci and Lucas terms is [Ribenboim, *Square classes of Fibonacci and Lucas numbers*, Portugaliae Mathematica 46 (1989), 159–175](https://geodesic.mathdoc.fr/item/PORMA_1989__46_2_115659/). No exhaustive priority claim is made for this application to the quotient blocks.
+
+## 87. A growing least-prime-factor restriction on the relative index
+
+**Theorem 87.1 (uniform prime-factor bound).** Let $j,C,c,k$ be positive integers, let $N=3^j$, and suppose $k$ is odd and $3\nmid k$. Write $B_n=L_n^2+3$ for positive odd $n$. Suppose
+
+$$B_N=D C^2,\qquad B_{Nk}=D c^2,$$
+
+where $D$ is the full positive squarefree kernel of $B_N$. Then every prime $p\mid k$ satisfies
+
+$$\boxed{40p>N-1.}$$
+
+In particular, if $k>1$, its least prime factor $P^-(k)$ and the index $n=Nk$ satisfy
+
+$$P^-(k)>\frac{N-1}{40},\qquad n>\frac{N(N-1)}{40}.$$
+
+For each fixed prime $p\ge5$, all $j$ with $3^j\ge40p+1$ therefore exclude $p\mid k$. The same threshold for the largest prime in a fixed finite set excludes every factor from that set. The primes two and three are already excluded by the hypotheses. Theorem 86.1 remains stronger for five and seven at small $j$.
+
+**Proof.** We give the polynomial, denominator and size estimates explicitly.
+
+**Lucas quotient and gcd.** Define $V_0(X)=2$, $V_1(X)=X$, and $V_{m+2}(X)=XV_{m+1}(X)+V_m(X)$. For odd $t$, the Binet roots have product $-1$, so $L_{tm}=V_m(L_t)$. As in §86, the residues of $V_0,\ldots,V_5$ modulo $X^2+3$ are $2,X,-1,0,-1,-X$, with $V_6=2,V_7=X$. The period-six recurrence gives $V_m\equiv\pm X$ for odd $m$ with $3\nmid m$. Consequently $B_t\mid B_{tm}$ for such $m$.
+
+For a prime $p\ge5$, put
+
+$$Q_p(X)=\frac{V_p(X)^2+3}{X^2+3}\in\mathbb Z[X].$$
+
+It is monic of degree $2p-2$ and positive for every real $X$. Its remainder modulo $X^2+3$ is $\varepsilon_p p$, where $\varepsilon_p=1$ for $p\equiv1\pmod6$ and $\varepsilon_p=-1$ for $p\equiv5\pmod6$. To check this exact constant, set $X=z-z^{-1}$. For odd $p$,
+
+$$V_p(X)=z^p-z^{-p},\qquad V_p'(X)=p\frac{z^p+z^{-p}}{z+z^{-1}}.$$
+
+At $z=\exp(i\pi/3)$, one has $X=i\sqrt3$, $z+z^{-1}=1$, $V_p'(X)=p$, and $V_p(X)=\varepsilon_p X$. Division at this simple root of $X^2+3$ gives
+
+$$Q_p(i\sqrt3)=\frac{V_p(i\sqrt3)V_p'(i\sqrt3)}{i\sqrt3}=\varepsilon_p p.$$
+
+The conjugate root has the same value, proving the remainder formula. Thus
+
+$$\gcd\bigl(B_t,Q_p(L_t)\bigr)\mid p. \tag{87.1}$$
+
+The derivative formula also gives the polynomial identity
+
+$$(X^2+4)(V_p')^2=p^2(V_p^2+4). \tag{87.2}$$
+
+At a root of $V_p^2+3$, its right side is $p^2\ne0$, so $V_p'$ is nonzero. Since $V_p$ is also nonzero there, all roots of $V_p^2+3$ are simple. Removing the two roots of $X^2+3$ leaves $Q_p$ squarefree of positive degree. In particular $Q_p$ is not a square in $\mathbb Q[X]$.
+
+**An effective bound for square values.** Let $f\in\mathbb Z[X]$ be monic of degree $2d$, positive for real $x\ge1$, and not a square in $\mathbb Q[X]$. Matching coefficients from degree $2d-1$ down to degree $d$ gives a unique monic polynomial $A\in\mathbb Q[X]$ of degree $d$ for which
+
+$$g=f-A^2\ne0,\qquad \deg g\le d-1.$$
+
+Let $H$ be the sum of absolute values of the nonleading coefficients of $A$, and let $M$ be a positive integer clearing their denominators. Let $G$ be the sum of absolute values of the coefficients of $g$. If $e=\deg g$ and $g_e$ is its leading coefficient, put
+
+$$R_0=1+\sum_{i<e}\left|\frac{g_i}{g_e}\right|,\qquad T=2+\left\lceil\max(1,2H,2MG,R_0)\right\rceil,$$
+
+where the empty sum is zero. For an integer $x\ge T$, one has $A(x)>x^d/2$ and $|g(x)|\le Gx^{d-1}$. Therefore
+
+$$\left|\sqrt{f(x)}-A(x)\right|=\frac{|g(x)|}{\sqrt{f(x)}+A(x)}<\frac{2G}{x}<\frac1M.$$
+
+If $\sqrt{f(x)}$ were an integer, the difference would belong to $M^{-1}\mathbb Z$ and hence vanish. This would give $g(x)=0$, impossible for $x>R_0$, where its leading term dominates the lower terms. Thus $f(x)$ is nonsquare for every integer $x\ge T$.
+
+This is an elementary polynomial form of Runge's method; see [Levin, *Variations on a theme of Runge: effective determination of integral points on certain varieties*, Journal de Théorie des Nombres de Bordeaux 20 (2008), 385–417, introduction and Theorem 1.2](https://jtnb.centre-mersenne.org/item/10.5802/jtnb.634.pdf). The argument here supplies its own explicit bounds.
+
+**Root location and uniform coefficient bounds.** Every complex root $r$ of $Q_p$ has modulus at most two. Choose a nonzero $z$ with $r=z-z^{-1}$ and put $w=z^p$. Since $V_p(r)=w-w^{-1}=\pm i\sqrt3$, one has
+
+$$w^2\mp i\sqrt3\,w-1=0.$$
+
+Its roots $(\pm i\sqrt3\pm1)/2$ have modulus one. Thus $|z|=1$, and $r=z-\bar z$ has $|r|\le2$.
+
+Write $\|P\|_1$ for the sum of absolute coefficient values. The coefficients of $V_p$ are nonnegative, and $\|V_p\|_1=L_p\le2^p$. Regarding $V_p(X)^2+3$ as a polynomial in $Y=X^2$, synthetic division by $Y+3$ gives
+
+$$\begin{aligned}
+\|Q_p\|_1&\le(4^p+3)(1+3+\cdots+3^{p-1})\\
+&<(4^p+3)3^p/2\le12^p<2^{4p}.
+\end{aligned}$$
+
+The penultimate inequality uses $4^p\ge3$.
+
+Apply the square-root construction to $f=Q_p$ and $d=p-1$. If $r_1,\ldots,r_{2d}$ are the roots of $f$, then
+
+$$Z^{2d}f(1/Z)=\prod_{h=1}^{2d}(1-r_hZ).$$
+
+The formal square root with constant term one is the product of the series $(1-r_hZ)^{1/2}$. Its coefficients through degree $d$ are exactly those in $A=X^d+a_1X^{d-1}+\cdots+a_d$. The coefficient of degree $m$ in each factor has modulus at most $2^m$, because $|\binom{1/2}{m}|\le1$ and $|r_h|\le2$. Counting weak compositions of $i$ into $2d$ nonnegative parts therefore gives, for $1\le i\le d$,
+
+$$|a_i|\le2^i\binom{2d+i-1}{i}\le2^{2d+2i}\le2^{4d}<2^{4p}.$$
+
+The complex factorization is used only to bound coefficients. Its product is the unique normalized formal square root of a rational polynomial, so the coefficients agree with the rational coefficient-matching construction above.
+
+For the denominator bound, expand the square root of the original reversed polynomial with integer coefficients. The Catalan-number formula
+
+$$\binom{1/2}{m}=\frac{(-1)^{m-1}\operatorname{Cat}_{m-1}}{2^{2m-1}}$$
+
+shows that $M=2^{2d}$ clears every coefficient through degree $d$. Hence
+
+$$\|A\|_1\le1+d\,2^{4p}\le p\,2^{4p}\le2^{5p},\qquad H\le2^{5p},\qquad G\le\|f\|_1+\|A\|_1^2\le2^{11p}.$$
+
+Since $M^2g$ has integer coefficients and $g_e\ne0$, one has $|g_e|\ge M^{-2}$. Thus
+
+$$R_0\le1+M^2G\le1+2^{15p},\qquad 2MG\le2^{1+2p+11p}\le2^{14p},\qquad 2H\le2^{5p+1}\le2^{6p}.$$
+
+All inequalities hold for $p\ge5$. The integer threshold consequently satisfies
+
+$$T\le3+2^{15p}\le2^{16p}<2^{20p}. \tag{87.3}$$
+
+Thus $Q_p(x)$ is nonsquare for every integer $x\ge2^{20p}$. The universal root and coefficient estimates prove this for all $p\ge5$; no finite list of tested primes enters the argument.
+
+**The exceptional gcd prime and the original index.** Suppose $p\mid k$ and $40p\le N-1$. Then $p\ge5$ and $p<N$. Put $t=Nk/p$. It is odd, $t\ge N$, and $v_3(t)=j$. Since $t/N$ is odd and coprime to three, $B_N\mid B_t$.
+
+We claim $p\nmid B_t$. For $p=5$, this follows because $-3$ is a nonsquare modulo five. For $p>5$, suppose instead that $p\mid B_t$. The identity $5F_t^2=B_t+1$ makes five a square in $\mathbb F_p$. Choose $\phi=(1+\sqrt5)/2$ in that field and put $a=\phi^2$. The odd-index Binet formula gives
+
+$$B_t=a^t+a^{-t}+1\pmod p.$$
+
+Thus $a^t$ is a nontrivial cube root of unity. If $h=\operatorname{ord}(a)$, then $h/\gcd(h,t)=3$, and therefore
+
+$$v_3(h)=v_3(t)+1=j+1.$$
+
+Since $h\mid p-1$, this forces $3^{j+1}\mid p-1$, contradicting $p<N=3^j$. This proves the claim. Equation (87.1) now yields $\gcd(B_t,Q_p(L_t))=1$.
+
+Every prime in $D$ divides $B_t$. The assumed equality
+
+$$B_{Nk}=B_{pt}=B_tQ_p(L_t)=D c^2$$
+
+therefore forces $Q_p(L_t)$ to be a square: each of its prime factors is outside both $B_t$ and $D$ and must have even valuation.
+
+Finally, for odd $N\ge3$, Binet gives $L_N=\phi^N-\phi^{-N}>\phi^{N-1}$. After division by $\phi^{N-1}$, this follows from $\phi-1=\phi^{-1}$ and $1-2N<-1$. Since $\phi>\sqrt2$,
+
+$$L_t\ge L_N>2^{(N-1)/2}\ge2^{20p}.$$
+
+Equation (87.3) says that $Q_p(L_t)$ is not a square, a contradiction. Thus $40p>N-1$ for every prime divisor of $k$, proving all stated consequences. ∎
+
+**Corollary 87.2 (integral points at growing relative indices).** Under the hypotheses and notation of Theorem 85.1, any affine integral point $K\ne\pm R$ with $\delta(K)=(5,D,5D)$ has $X(K)=5D B_{Nk}$, where
+
+$$\gcd(k,210)=1,\qquad P^-(k)>\frac{N-1}{40},\qquad Nk>\frac{N(N-1)}{40}.$$
+
+**Proof.** Theorem 85.1 supplies the positive odd multiplier $k>1$, $3\nmid k$, and the same-kernel equation. Apply Theorems 86.1 and 87.1. ∎
+
+The constraint grows with the original ternary index and requires no elliptic-rank or Selmer premise. The constants are sufficient and deliberately coarse. The theorem asserts neither existence of repeated kernels nor exclusion of prime factors growing beyond its bound; it gives no complete index classification, prime-support infinitude, or universal WSS exclusion.
+
 ## 追加锚（本行以下为增补区）

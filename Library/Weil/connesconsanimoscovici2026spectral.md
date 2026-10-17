@@ -10545,3 +10545,386 @@ source-energy, two-sided inverse-reference, complete original
 remain. This is a source-specific application of established methods,
 without a generic novelty or Lean-proof claim. The stronger-target
 sign, actual retained/cofinal positivity, Robin and RH remain unresolved.
+
+
+### Retain exact first-row stationarity before paying the norm
+
+The preceding free coefficient ellipse discards the first equation of
+$Cp=k$. Retain that equation for the SAME exact source-dependent
+minimizer. This changes the coefficient set; it does not refine the
+stopped nominal-response estimator or select a new fixed vector.
+The Schur elimination and quadratic minimization used here are standard:
+[Boyd--Vandenberghe, *Convex Optimization*, Appendix A.5.5,
+pp.650--651](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Their source-specific application below is repo-derived, without a
+claim of a new general matrix inequality.
+
+All quantities in this section are real, as in the inherited even
+finite frame. Write
+
+$$
+C=\begin{pmatrix}A&c\\c&b\end{pmatrix},\qquad
+k=\binom{k_1}{k_2},\qquad s=b-c^2/A.
+$$
+
+The first source is fixed independently of the uncertain second
+source, so $A$ and $k_1$ are independent of that uncertainty. The exact
+relations are
+
+$$
+\begin{aligned}
+p_1&=k_1/A-(c/A)p_2,\\
+p_2&=(k_2-ck_1/A)/s,\\
+p^*Cp&=k_1^2/A+sp_2^2.
+\end{aligned}
+$$
+
+In the existing positive-source representation,
+
+$$
+s=D_{\rm lo}
++f_b(C_0+t_+f_r^*f_r)^{-1}f_b^*\ge D_{\rm lo}.
+$$
+
+Hence the inherited $p^*Cp\le E_+$ also gives
+
+$$
+D_{\rm lo}p_2^2\le E_+-k_1^2/A.
+$$
+
+This constraint is used together with the signed Schur ratio, rather
+than permitting $p_1$ and $p_2$ to vary independently in the former
+ellipse.
+
+Use the inherited inverse reference $R$, transport $T$, measured pair
+$m=(m_1,m_2)$ and conditional core row
+
+$$
+b_V=b_{J,V}+m\Gamma+q,\qquad q^*q\preceq\overline\Delta S_F.
+$$
+
+The saved trace packet already supplies $R(\Gamma T)^*$, the two
+regression reference actions. The only new mixed source quantities are
+the two scalar entries
+
+$$
+\ell=(r_VT)R(\Gamma T)^*.
+$$
+
+No reference vector action is repeated. With the saved reference
+energies $E_r=r_VTRT^*r_V^*$, $E_{\rm res}$ and
+$E_{\rm complete}$, a reference centre and a complete radius for the
+actual cross entry are
+
+$$
+\begin{aligned}
+c_{\rm ref}
+&=G_{12}+m_1+(r_VT)R(b_{J,V}T)^*+\ell m^*,\\
+|c-c_{\rm ref}|
+&\le\sqrt{E_rE_{\rm res}}
++\frac{\eta}{1-\eta}\sqrt{E_rE_{\rm complete}}.
+\end{aligned}
+$$
+
+Here the finite reference cross is saved, not recontracted. The
+conditional part uses Cauchy in the reference metric. The inverse
+part uses the existing two-sided relative certificate. In particular,
+$A=t_+^{-1}+G_{11}+r_VTP_+^{-1}T^*r_V^*$ is enclosed using the same
+$E_r$ and $\eta$.
+
+The second diagonal also has an available lower bound. Set
+
+$$
+B_J=D_{\rm lo}+G_{22}+2m_2+Q_J,
+\qquad Q_J=mG^{-1}m^*.
+$$
+
+The saved mean reference energy $E_{\rm mean}$ and residual reference
+energy upper give, by reverse triangle and the two-sided certificate,
+
+$$
+b\ge B_J+
+\frac{\bigl(\sqrt{\operatorname{lb}E_{\rm mean}}
+-\sqrt{E_{\rm res}}\bigr)_+^2}{1+\eta}.
+$$
+
+Its upper is the previously accepted $c_2$. The saved finite negative
+coordinate plus the intersected far-coordinate interval enclose
+$k_2$. These data enclose $s$ and the Schur ratio for $p_2$. Intersect
+that interval with the energy bound above. Denote the resulting
+interval by $[p_-,p_+]$. Empty or uncertified positive denominator
+intervals stop the application.
+
+Let $K$ be the saved five-response Euclidean Gram in its existing
+order. Put
+
+$$
+x=k_1/A,\qquad y=c/A,\qquad
+h_0=(1,-x,0,0,0)^*,\qquad
+h_2=(0,y,-1,-m_1,-m_2)^*.
+$$
+
+For each SAME realization, the nominal reference-family norm squared
+is exactly
+
+$$
+\mathcal N(p_2)=(h_0+p_2h_2)^*K(h_0+p_2h_2).
+$$
+
+The exact $K$ is PSD, so this quadratic is convex in real $p_2$.
+Consequently
+
+$$
+\mathcal N(p_2)\le
+\max\{\mathcal N(p_-),\mathcal N(p_+)\}.
+$$
+
+Three scalar contractions of the saved Gram enclose the constant,
+half-linear and quadratic coefficients. Upward evaluation at both
+endpoints gives $N_{\rm stat,0}$. This endpoint comparison holds for
+every realization even though $x,y,m,p_2$ are dependent. Interval
+hulls need not have jointly attainable corners; no such attainability
+or PSD property of a full entry box is used.
+
+Reuse the preceding conditional Euclidean trace $\tau_Q$ and the
+complete inverse-reference error bound $e_{\rm inv}$. With
+$P_2=\max(|p_-|,|p_+|)$ the complete bound is
+
+$$
+\begin{aligned}
+e_{\rm cond}&\le
+P_2\sqrt{\overline\Delta\tau_Q},\\
+N_{\rm stat}&=
+\bigl(\sqrt{N_{\rm stat,0}}+e_{\rm cond}+e_{\rm inv}\bigr)^2,\\
+U_{\rm stat}&=-\mu+\delta N_{\rm stat}.
+\end{aligned}
+$$
+
+The SAME family still has positive energy at most $E_+$, so the
+accepted inverse-reference norm payment remains applicable.
+The margin $\mu$, endpoint parameters and complete original $\delta$
+are unchanged. Strict $U_{\rm stat}<0$ would exclude only the SAME
+stronger endpoint comparison under all inherited premises. A
+nonnegative sufficient upper is inconclusive about its actual sign.
+
+The single directed application gives:
+
+| Computed sufficient quantity | Enclosure |
+|---|---:|
+| Signed exact second coefficient interval | $[8.6391331,12.4704686]\cdot10^{-18}$ |
+| Signed exact first coefficient interval | $[1.6769537,4.3412752]\cdot10^{-19}$ |
+| Nominal norm-squared upper $N_{\rm stat,0}$ | $[3.0020727,3.0020728]\cdot10^{101}$ |
+| Conditional response norm upper | $[1.6107661,1.6107662]\cdot10^{50}$ |
+| Complete norm-squared upper $N_{\rm stat}$ | $[5.0266447,5.0266448]\cdot10^{101}$ |
+| Original gain payment upper | $[2.1536571,2.1536572]\cdot10^{-33}$ |
+| Complete sufficient quadratic upper | $[5.4658264,5.4658265]\cdot10^{-34}$ |
+| Sufficient coefficient threshold lower | $[3.1971117,3.1971118]\cdot10^{-135}$ |
+
+The normalized inherited margin remains in
+$[1.6070745,1.6070746]\cdot10^{-33}$ and the original gain coefficient
+remains in $[4.2844825,4.2844826]\cdot10^{-135}$. The complete
+norm-squared upper is smaller than the preceding response-ellipse
+upper by a factor in $(3.12,3.13)$. Its original gain payment still
+exceeds the certified margin by a factor in $(1.34,1.35)$.
+The complete sufficient upper is positive, so this application is
+inconclusive about the SAME stronger comparison's actual sign.
+The threshold is sufficient only, not maximal.
+
+The signed coefficient intervals show that the exact first-row
+constraint supplies information discarded by the previous ellipse.
+They do not establish a jointly attained worst source or determine the
+second-row source response. This estimator stops here. No present
+formula, precision, source, direction or parameter retry follows.
+Further joint information includes
+$sp_2=k_2-ck_1/A$ coupled with the SAME residual $q$ that contributes
+to both $c,k_2$ and the physical response; separately enclosing these
+quantities has not settled the full payment.
+
+The258-line source has SHA256
+`e16031be55706d509027664c7bb0132a7a862e0fc1b1c31caeaec57dd0f28972`;
+the9170-byte packet has SHA256
+`169e858deb9f06ca677098da032849450074f794627eb0174711717abc5ca1b8`.
+The one1024-working/640-export application takes<0.038870seconds
+excluding serialization. Its only new geometric contractions are the
+two mixed scalar dots and three contractions of the saved response
+Gram. All accepted reference actions, Grams, traces, energies,
+normalized margin, original complete allowance and scientific
+producers/fixtures are reused without replay. No new inverse, solve,
+reference vector action, source/far query or fixed vector is selected.
+
+The [source and directed packet at the immutable experimental commit](https://github.com/the-omega-institute/trureturing-experiments/tree/54668e4c10f8df1043cb23534502d0ca2bc7dd20/docs/reports/weil-c27)
+retain the sole application. All inherited actual/common-source,
+domain, exact-frame, physical and Euclidean PSD, conditional-source,
+two-sided reference, complete original512metadata allowance and
+endpoint/charge/baseline-order premises remain. This is a
+source-specific application of established inequalities. No generic
+novelty, actual stronger-target sign, actual retained/cofinal
+positivity, Robin, RH or Lean proof is claimed.
+
+
+### Compare the same source's negative energy and physical cost jointly
+
+The preceding scalar norm upper remains valid. A different comparison
+retains the source-dependent negative energy until after the physical
+cost is added. All saved norm and error bounds are reused unchanged.
+This is a source-specific application of standard Schur elimination,
+energy completion and quadratic norm expansion; the mathematical
+method is not claimed as new. The Schur identities are those already
+cited from Boyd--Vandenberghe, Appendix A.5.5.
+
+For each SAME real source realization, reuse the exact minimizer and
+write
+
+$$
+\alpha=k_1^2/A,\qquad
+h=b-c^2/A>0,\qquad
+\beta=k_2-ck_1/A,\qquad p_2=\beta/h.
+$$
+
+The accepted pointwise energy identity gives
+
+$$
+p^*Cp=\alpha+\beta^2/h\le E_+,
+\qquad\beta^2\le eh,\quad e=E_+-\alpha\ge0.
+$$
+
+Here $E_+$ is the inherited uniform energy cap, whereas $\alpha,h$
+and $\beta$ are the SAME realization's exact quantities. The saved
+first-row remaining-energy upper already encloses $e$.
+
+Let $n_0,\gamma,\rho_H$ denote the three saved coefficients of the
+nominal Euclidean norm quadratic:
+
+$$
+\mathcal N_{\rm nom}
+=n_0+2p_2\gamma+p_2^2\rho_H,\qquad \rho_H\ge0.
+$$
+
+These are coefficients of the SAME nominal reference response, with
+the actual source-dependent coefficients retained. The conditional
+row and inverse-reference effects are still separate paid errors.
+Substituting $p_2=\beta/h$ and using the energy inequality only on
+the nonnegative square term gives
+
+$$
+\mathcal N_{\rm nom}
+\le n_0+\frac{2\beta\gamma+e\rho_H}{h}.
+$$
+
+The sign of $\beta\gamma$ is kept. No absolute cross support is
+substituted. In particular, $\beta$ in the energy, cross and negative
+quadratic belongs to one realization.
+
+The previous nominal norm-squared upper $N_0$ and complete norm-error
+uppers $e_{\rm cond},e_{\rm inv}$ are unchanged. Set
+
+$$
+\varepsilon=e_{\rm cond}+e_{\rm inv},\qquad
+K_{\rm err}=2\sqrt{N_0}\,\varepsilon+\varepsilon^2.
+$$
+
+Triangle and $\mathcal N_{\rm nom}\le N_0$ imply
+
+$$
+\|Aw\|^2\le\mathcal N_{\rm nom}+K_{\rm err}.
+$$
+
+This is the expansion of the existing complete norm payment. It
+neither sharpens its components nor drops their cross terms.
+
+The old endpoint's exact quadratic on this family is
+$-d+\alpha+\beta^2/h$. The SAME strengthened endpoint lower comparison
+adds at most $\delta\|Aw\|^2$ under the inherited baseline ordering.
+Consequently its family quadratic satisfies
+
+$$
+Q_{\rm str}(w)\le-\Omega/h,
+$$
+
+where
+
+$$
+\boxed{
+\Omega=
+\bigl(d-\alpha-\delta(n_0+K_{\rm err})\bigr)h
+-\beta^2-2\delta\beta\gamma-\delta e\rho_H.
+}
+$$
+
+This comparison forms the SAME source's negative energy minus its
+physical cost before taking a uniform bound. It uses the original
+$\delta$, endpoint $t_+$ and charge floor $D_{\rm lo}$. No new
+source, minimizer, reference action, inverse, Gram or trace is needed.
+
+Evaluate the saved scalar enclosures outward, using the accepted
+upper for $e$ and the upper for $\rho_H$. The exact $\rho_H$ is
+nonnegative, so these substitutions have the required direction.
+The interval products enclose every common realization without
+asserting that their corners can occur simultaneously. Round the
+resulting lower $\underline\Omega$ to the640grid before normalization.
+For the saved $h\in[h_-,h_+]$,
+
+$$
+Q_{\rm str}(w)\le
+\begin{cases}
+-\underline\Omega/h_+,&\underline\Omega>0,\\
+-\underline\Omega/h_-,&\underline\Omega\le0.
+\end{cases}
+$$
+
+Only a strictly negative complete upper excludes this endpoint lower
+comparison. Monotonicity then covers the inherited dominated parameter
+range $0<t\le t_+$ and $D\ge K\ge D_{\rm lo}$ for each SAME source.
+The exact witnessing vector may depend on that source; a common fixed
+vector is not asserted. The comparison is the particular sufficient
+lower comparison used by this proof route. Its failure does not
+determine the actual retained Weil form or its cofinal limit.
+
+The single directed application gives:
+
+| Computed sufficient quantity | Enclosure |
+|---|---:|
+| Complete squared-error cost upper $K_{\rm err}$ | $[2.0245720,2.0245721]\cdot10^{101}$ |
+| Complete coefficient $d-\alpha-\delta(n_0+K_{\rm err})$ | $[7.1552412,7.1552413]\cdot10^{-32}$ |
+| Signed cross gain $-2\delta\beta\gamma$ | $[3.5658829,4.0047579]\cdot10^{-31}$ |
+| Conditional energy-cost upper $\delta\overline e\,\overline\rho_H$ | $[9.0037697,9.0037698]\cdot10^{-31}$ |
+| Rounded sufficient numerator lower $\underline\Omega$ | $[2.0929367,2.0929368]\cdot10^{-30}$ |
+| Complete uniform quadratic upper | $[-3.6680036,-3.6680035]\cdot10^{-33}$ |
+
+Thus the rounded numerator lower is strictly positive and the
+complete uniform upper is strictly negative. Under ALL inherited
+premises, every admissible SAME source has a source-dependent
+negative vector for this particular strengthened endpoint LOWER
+comparison, throughout its dominated range
+$0<t\le t_+$ and $D\ge K\ge D_{\rm lo}$.
+This excludes that sufficient comparison route. It does not establish
+a common fixed vector, an actual retained/cofinal Weil sign, Robin
+or RH. The original allowance and every saved error payment remain.
+
+The positive sufficient upper from the preceding norm estimate was
+inconclusive. The new result comes from retaining the SAME source's
+negative energy and physical cost in one numerator. It does not
+invalidate the older norm bound or sharpen its components.
+Under the stated premises, this lower-comparison route now stops;
+continued research requires the actual retained form or a different
+comparison with an explicitly justified bridge to it.
+
+The170-line source has SHA256
+`d64767daa7375eb460e44d7051b5c966c1ed38ec85797dbb86191fb753503d03`;
+the7434-byte packet has SHA256
+`cdb77c01221bd7289c5c593c928360471075b4d43850aec7bc75c410d9cf09da`.
+The sole1024-working/640-export scalar application takes
+<0.029441seconds excluding serialization. It performs zero new
+geometric contractions, Grams, traces, reference actions, inverses,
+solves, source/far queries or fixed-vector selections. All accepted
+scientific producers and fixtures are reused without replay; no
+source, direction, parameter, precision or present-formula retry is
+performed.
+
+The [source and directed packet at the immutable experimental commit](https://github.com/the-omega-institute/trureturing-experiments/tree/d21b88f6c9c4db3a7d16b0668680a33a63b4025e/docs/reports/weil-c27)
+retain the single application. This is a numerical certificate for
+the specified conditional comparison, not a Lean proof or a generic
+novelty claim. All inherited actual/common-source, domain,
+exact20frame, physical and Euclidean PSD, conditional-source,
+two-sided reference, complete original512metadata allowance,
+normalization, endpoint-charge and baseline-order premises remain.

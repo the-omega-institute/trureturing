@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:936d8737620f1c6b45aa78ba39149d05c8f579cd813d3389ce73bebc0a6c72cd
-  normalized_sha256: sha256:936d8737620f1c6b45aa78ba39149d05c8f579cd813d3389ce73bebc0a6c72cd
-cas_ref: sha256:936d8737620f1c6b45aa78ba39149d05c8f579cd813d3389ce73bebc0a6c72cd
-coverage_gids:
-  - gid: D5/S1/Eigenstructure/GoldenFiberCapacityPairs.golden_fiber_capacity_pairs
-    target_statement_id: sha256:7bd8e9b67dae7093d198bea45e86a2483acf621a6c1f1894dde82c2dc5e2c656
-receipts:
-  unresolved_subitems: []

@@ -9,7 +9,7 @@ internal enum DigestionAtomContextError
     ATOM_ABSENT,
     ATOM_AMBIGUOUS,
     SOURCE_MISSING,
-    ATOMIZER_NONE,
+    ATOMIZER_UNSUPPORTED,
     OCCURRENCE_MISSING,
     OCCURRENCE_AMBIGUOUS,
 }
@@ -100,14 +100,14 @@ internal static class DigestionAtomContextProjection
         if (!snapshot.TryGetFile(source.SourcePath, out var file))
             throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING,
                 $"source_id={source.SourceId} source_path={source.SourcePath}");
-        if (source.Atomizer == AtomizerRegistry.NoAtomizerId)
-            throw new DigestionAtomContextException(DigestionAtomContextError.ATOMIZER_NONE,
-                $"source_id={source.SourceId}");
+        if (!AtomizerRegistry.IsRegistered(source.Atomizer))
+            throw new DigestionAtomContextException(DigestionAtomContextError.ATOMIZER_UNSUPPORTED,
+                $"unsupported atomizer: {source.Atomizer}; expected generic-v1");
         try
         {
-            var rules = TheoryAtomizerDataLoader.Load(snapshot);
+            DigestionSourceEligibility.Require(snapshot, source.SourcePath);
             var atomizer = AtomizerRegistry.Require(source.Atomizer).Atomize;
-            var document = sourceDocument ?? atomizer(file.RawBytes.AsSpan(), rules);
+            var document = sourceDocument ?? atomizer(file.RawBytes.AsSpan());
             var entries = ledger.RequireDigestionEntries();
             var byAtomId = entries.ToLookup(static entry => entry.AtomId, StringComparer.Ordinal);
             var byId = byAtomId
@@ -129,7 +129,7 @@ internal static class DigestionAtomContextProjection
                 .ToLookup(static entry => entry.Fingerprints.RawSha256, StringComparer.Ordinal);
             var roots = HistoricalRoots(document.Claims, file.RawBytes,
                 byId.Values.Where(entry => rootIds.Contains(entry.AtomId)), snapshot, text, blocks);
-            var stream = MaterializedStream(roots, byHash, byId, atomizer, rules, snapshot, out var spans);
+            var stream = MaterializedStream(roots, byHash, byId, atomizer, snapshot, out var spans);
             return new SourceStream(source, stream, spans, byHash, byAtomId, file.RawBytes, text, blocks);
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
@@ -198,7 +198,6 @@ internal static class DigestionAtomContextProjection
         ILookup<string, DigestionLedgerEntry> byHash,
         IReadOnlyDictionary<string, DigestionLedgerEntry> byId,
         TheoryAtomizer atomizer,
-        TheoryAtomizerRules rules,
         RepositorySnapshot snapshot,
         out ImmutableArray<DigestionAtom> spans)
     {
@@ -217,7 +216,7 @@ internal static class DigestionAtomContextProjection
                 continue;
             }
 
-            var plan = DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, rules, snapshot);
+            var plan = DigestionDecomposition.Plan(entry, atom.RawBytes, atomizer, snapshot);
             var materialized = DigestionDecomposition.Materialize(entry, plan, byId);
             if (!materialized.NewEntries.IsEmpty)
                 throw new FormatException($"chain atom is absent for parent {entry.AtomId}");

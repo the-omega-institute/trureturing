@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:4518125e4a46499c056c1c8f8c5ed7524577150277498e1be02ba78edf18b4e7
-  normalized_sha256: sha256:4518125e4a46499c056c1c8f8c5ed7524577150277498e1be02ba78edf18b4e7
-cas_ref: sha256:4518125e4a46499c056c1c8f8c5ed7524577150277498e1be02ba78edf18b4e7
-coverage_gids:
-  - gid: D5/S3/Quantum/Tomography/OneStepProbabilityInnovation.one_step_probability_innovation
-    target_statement_id: sha256:dd6902e08253e4a8fe26884bacbc2bc981bec1cc7b1177c01508087b6fcd0a67
-receipts:
-  unresolved_subitems: []

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
-  normalized_sha256: sha256:3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
-cas_ref: sha256:3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
-coverage_gids:
-  - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
-    target_statement_id: sha256:36d504c4cee4de616c632026e20a188c25bc4723596f1300412ca2c5f43ffd81
-receipts:
-  unresolved_subitems: []
