@@ -229,15 +229,47 @@ $$
 \mathscr L
 =Y\cdot(\mathcal M-B)-J+\lambda(\kappa-K)-\nu\cdot r.
 $$
-At the event, let $R_i$ be the dual gap on the endpoint opposite to the occupied endpoint of ray $i$.
+At the event, write
+$$
+H_i^{\rm occ}=H_{\eta_i}(u_i,v_i),\qquad
+H_i^{\rm opp}=H_{1-\eta_i}(u_i,v_i),\qquad
+\epsilon_i=\operatorname{sgn}H_i^{\rm occ}.
+$$
+The occupied height is nonzero by [OE, Proposition 7.1]. Let
+$$
+R_i=Y_e\cdot\Gamma_{1-\eta_i}(u_i,v_i)
+-|H_i^{\rm opp}|-\lambda_e|u_i|
+$$
+be the dual gap on the endpoint opposite to the occupied endpoint of ray $i$.
 
 **Proposition 5.2 (strict complementarity, LICQ and tangent SOSC).** At the event,
 $$
-\nu_i=p_iR_i>0\quad(i\in O),\qquad \lambda_e>0.
+\nu_i=p_i\left(R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp}\right)
+\ge p_iR_i>0\quad(i\in O),\qquad \lambda_e>0.
 $$
 The gradients of the eight moment equations, the active contrast equation and the six inward endpoint constraints have rank $15$. On the critical tangent, the Lagrangian Hessian is positive definite.
 
-**Proof.** The opposite endpoint of each old ray is not in the event zero set. The full-circle dual inequality and compactness of the circle therefore give $R_i>0$; all old weights are positive, so $\nu_i=p_iR_i>0$. The multiplier $\lambda_e$ is positive by the event interval.
+**Proof.** At fixed weight and direction, inward interpolation gives
+$$
+\Gamma_i(r_i)=(1-r_i)\Gamma_{\eta_i}+r_i\Gamma_{1-\eta_i},\qquad
+H_i(r_i)=(1-r_i)H_i^{\rm occ}+r_iH_i^{\rm opp}.
+$$
+The nonzero occupied height fixes the sign of $H_i(r_i)$ near $r_i=0$, even when the opposite height has the other sign or is zero. Thus
+$$
+\left.\frac{d}{dr_i}|H_i(r_i)|\right|_{r_i=0^+}
+=\epsilon_i(H_i^{\rm opp}-H_i^{\rm occ}).
+$$
+The contrast is independent of $r_i$. Using stationarity of $\mathscr L$ in $r_i$ and the occupied equality
+$Y_e\cdot\Gamma_{\eta_i}=|H_i^{\rm occ}|+\lambda_e|u_i|$ yields
+$$
+\begin{aligned}
+\nu_i
+&=p_i\left(Y_e\cdot(\Gamma_{1-\eta_i}-\Gamma_{\eta_i})
+-\epsilon_i(H_i^{\rm opp}-H_i^{\rm occ})\right)\\
+&=p_i\left(R_i+|H_i^{\rm opp}|-\epsilon_iH_i^{\rm opp}\right).
+\end{aligned}
+$$
+The added term is zero when $\epsilon_iH_i^{\rm opp}\ge0$, including $H_i^{\rm opp}=0$, and is $2|H_i^{\rm opp}|$ when the heights have opposite signs. The opposite endpoint of each old ray is not in the event zero set by [OE, Theorem 6.3 and Proposition 7.1], so the full-circle dual inequality gives $R_i>0$. All old weights are positive; hence $\nu_i\ge p_iR_i>0$ without a restriction on the opposite height. The multiplier $\lambda_e$ is positive by the event interval.
 
 With $dr=0$, the first nine rows have rank nine: the moment rows have rank eight and $DK$ is nonzero on $\ker A$. The six $r$ rows are independent coordinate rows, so the complete active family has rank $15$. A critical tangent has $dr=0$, $A\,dz=0$ and $DK\,dz=0$. The last condition only restricts the tangent subspace of $\ker A$, on which $H$ is positive definite. This is the required tangent second-order condition; no non-tangent Hessian positivity is invoked. $\square$
 
