@@ -40,7 +40,7 @@ public sealed class BackfillInventoryWriterTests
             RawRepositoryEntry.FromText(sourcePath, CanonicalSourceMetadataText()),
             RawRepositoryEntry.FromText(atomPath, CanonicalAtomText()),
         ]);
-        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
         var entry = Assert.Single(BackfillInventoryLoader.Load(snapshot).RequireDigestionEntries());
 
         var rewritten = BackfillInventoryWriter.WriteAtom(entry);
@@ -60,7 +60,7 @@ public sealed class BackfillInventoryWriterTests
         var source = new DigestionLedgerSource(
             SourceId,
             SourcePath,
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [],
             GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
             []);
@@ -76,7 +76,7 @@ public sealed class BackfillInventoryWriterTests
         new(
             SourceId,
             SourcePath,
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             AtomId,
             new DigestionFingerprints(RawHash, NormalizedHash),
             coverage,
@@ -93,7 +93,7 @@ public sealed class BackfillInventoryWriterTests
     private static string CanonicalSourceMetadataText() => $$"""
         source_id = "{{SourceId}}"
         path = "{{SourcePath}}"
-        atomizer = "{{AtomizerRegistry.NoAtomizerId}}"
+        atomizer = "{{AtomizerRegistry.GenericId}}"
         genre_registry_check = "no-registry"
         unregistered_genres = []
         """ + "\n";

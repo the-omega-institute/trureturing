@@ -1895,3 +1895,1031 @@ $$
 定理 50–51 以相同安装状态和回复数列匹配历史读出中的声明坐标，但准备字面可能已改变。加入字面地址、不可见环境、来源身份或更细事件身份会扩展目标，必须重新保护这些坐标。第 4 节的 $U^{-1}U=I$ 与两次历史追加也继续不同：末端算子读出相同不会删除正历史。静态关系图可以同时表示多张成功策略截面，关系存在性与截面多重性只说明声明合同的实现空间；它既不说明不相容分支同属一个配置，也不推出某种经验本体或自由意志主张。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 30. 零分隔编码与原生分隔位的回零门
+
+**定义 30.1（同一排斥链中的多块编码）。** 对每个整数 $m\geq1$，取长度 $n=4m-1$ 的开放布尔链，令
+
+$$
+\mathcal K_n=\operatorname{span}\{|z_1\cdots z_n\rangle:z_jz_{j+1}=0\},
+\qquad \mathcal L_m=\mathcal H_F^{\otimes m}.
+\tag{30.1}
+$$
+
+第 $a$ 个数据块占位置 $4a-3,4a-2,4a-1$，第 $a$ 个分隔位为 $s_a=4a$（$1\leq a<m$）。沿用定义 43.1 的五模式，定义等距映射
+
+$$
+V_m|x_1\rangle\otimes\cdots\otimes|x_m\rangle
+ =|x_1\,0\,x_2\,0\cdots0\,x_m\rangle,
+\qquad x_a\in\Sigma_F,
+\qquad \mathcal C_m=V_m\mathcal L_m.
+\tag{30.2}
+$$
+
+编码域为 $\mathcal L_m$ 的全部复密度算子，包括块间纠缠态；链上输入为 $V_m\rho V_m^\dagger$。分隔位初始化为零是前提。编码使用 $3m$ 个数据位置、$m-1$ 个分隔位置，$\dim\mathcal C_m=5^m$。编码是端口间的数学映射，不包含未知来源的取得、编码装置的安装、路由或运输供应。
+
+**假设 30.2（逐位置独立控制与一个固定块相位）。** 在 $\mathcal K_n$ 上，令 $P_j^0=|0\rangle\langle0|_j$、$n_j=I-P_j^0$，边界 $P_0^0=P_{n+1}^0=I$，并提供
+
+$$
+T_j=P_{j-1}^0X_jP_{j+1}^0,\qquad e^{-i\theta T_j}\quad(1\leq j\leq n,\ \theta\geq0).
+\tag{30.3}
+$$
+
+位置可以独立寻址，每次仅打开所选的一项，未选项和漂移均为零。对每个数据块另外提供同一个固定相位门
+
+$$
+F_a=\exp(i\phi P_{13}^{(a)}),\qquad
+P_{13}^{(a)}=n_{4a-3}n_{4a-1},\qquad \phi\in\mathbb R,\quad \sin\phi\ne0.
+\tag{30.4}
+$$
+
+只要求可重复调用 $F_a$，不提供任意可调相位或其精确逆。$P_{13}$ 指块内第一、第三位置共同激活的投影；在五模式上它是 $|101\rangle\langle101|=|25\rangle\langle25|$，不同于假设 45.1 的 $|N\rangle\langle N|$。门参数是无量纲数学参数；这些独立控制、零漂移、固定相位及初始化均不由原固定总和 $K$ 菜单推出。PXP 生成元及无 $11$ 合法域沿用命题 43；其一般背景为 Turner 等，[arXiv:1806.10933v2](https://arxiv.org/html/1806.10933v2)，§§II.1–II.2。
+
+**命题 30.3（合法编码与精确分隔回零）。** 在假设 30.2 下，每个数据位置脉冲和每个 $F_a$ 都保持 $\mathcal C_m$。在数据块 $a,a+1$ 之间，单独施加一个分隔位脉冲 $e^{-i\pi T_{s_a}}$，则
+
+$$
+e^{-i\pi T_{s_a}}V_m=V_m E_a,\qquad
+E_a=I-2A_aB_{a+1},\qquad
+A=P_3^0|_{\mathcal H_F},\quad B=P_1^0|_{\mathcal H_F}.
+\tag{30.5}
+$$
+
+这里 $A_aB_{a+1}$ 表示两个不同逻辑块上的张量积投影，$\operatorname{rank}A=\operatorname{rank}B=3$。该脉冲终点所有分隔位精确回到零，$E_a^2=I$；途中可离开编码域，但始终留在无 $11$ 合法域。$E_a$ 是纠缠门，无须另提供跨块酉或跨块相位服务。
+
+**证明。** 零分隔切断相邻数据块之间的 $11$ 冲突，故 (30.2) 把每个五模式张量基向量送到不同的合法链基向量，确为等距。无分隔的两个直接相邻三位窗口则没有此性质：左窗口末位和右窗口首位同时为一的四对组合被排除，合法六位字只有 $25-4=21$ 个。这是 [《原生延拓与金字塔关联》§12](AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) 已有的 $21/25$ 障碍，本编码通过显式增加并初始化一个位置规避它，不将相邻原生窗口直接视作独立端口。一般合法链维数为 $F_{n+2}=F_{4m+1}$（$F_0=0,F_1=1$），由末位零或一的递推得到；$\mathcal C_m$ 只是其中指定的 $5^m$ 维子空间。
+
+每个 $T_j$ 仅在两邻位为零时翻转第 $j$ 位，所以它没有合法与非法基态之间的矩阵元。数据脉冲不改变分隔位；分隔位为零时，块首尾的外邻投影均为恒等，三个块内限制恰为命题 43 的 $H_1,H_2,H_3$。因此其指数保持整个编码域。$F_a$ 是对角门，也保持该域。$T_j$ 的谱含于 $\{0,1,-1\}$，故非负参数通过 $2\pi$ 周期已经给出数据脉冲的逆。
+
+固定其余所有基位，记相邻块的接缝位为 $r,\ell$。若 $r=\ell=0$，分隔位上的生成元是 $X$，且
+
+$$
+e^{-itX}|0\rangle=\cos t\,|0\rangle-i\sin t\,|1\rangle;
+\tag{30.6}
+$$
+
+若其中一位为一，生成元为零，分隔位保持零。在 $t=\pi$，前一情形得到 $-|0\rangle$，后一情形得到 $|0\rangle$，逐基向量即得 (30.5)。途中分隔位为一的分量仅在 $r=\ell=0$ 时出现，故仍无相邻激活。线性性把结论推广至任意叠加、混态及外部参考纠缠输入。
+
+在每块选 $|\mathbf0\rangle=|000\rangle$、$|\mathbf1\rangle=|101\rangle$。$A,B$ 在这两个向量上的特征值分别为 $1,0$；$E_a$ 在其四维乘积子空间中为 $\operatorname{diag}(-1,1,1,1)$。它把 $(|\mathbf0\rangle+|\mathbf1\rangle)^{\otimes2}/2$ 送到系数矩阵
+
+$$
+\frac12\begin{pmatrix}-1&1\\1&1\end{pmatrix},
+\tag{30.7}
+$$
+
+其行列式为 $-1/2$，所以输出 Schmidt 秩为二，确有纠缠。这也满足 Brylinski–Brylinski 对角门矩形相位的非可分判据，见 [*Universal quantum gates*，Proposition 2.1](https://arxiv.org/html/quant-ph/0108062v1)。这里的推导为 `repo-derived` 的指定编码、原生分隔脉冲及回零接口对应；不将受阻条件相位的一般机制认作新的通用原理。$\square$
+
+## 31. 固定非实相位下的有限多块射影通用性
+
+**定理 31.1（编码域上的输入无关有限字）。** 固定任意 $\phi$ 满足 $\sin\phi\ne0$，采用假设 30.2。对每个整数 $m\geq1$、每个 $U\in U(\mathcal L_m)$ 和每个 $\varepsilon>0$，存在一个有限物理脉冲字 $w=w(m,\phi,U,\varepsilon)$、一个 $|z|=1$ 及一个逻辑酉 $W$，使
+
+$$
+wV_m=V_mW,\qquad \|W-zU\|_{\rm op}<\varepsilon.
+\tag{31.1}
+$$
+
+该字只由数据位置脉冲、固定块相位 $F_a$ 及命题 30.3 的完整分隔位 $\pi$ 脉冲组成。每个这种完整操作的终点全部分隔位均为零，微观过程中全链合法。字和参数不依赖未知输入态，无中途测量、后选择或其他块的经典结果。对任意有限维参考 $R$ 及任意密度算子 $\rho\in\mathsf D(\mathcal L_m\otimes R)$，同时有
+
+$$
+\left\|(W\otimes I_R)\rho(W^\dagger\otimes I_R)
+ -(U\otimes I_R)\rho(U^\dagger\otimes I_R)\right\|_1<2\varepsilon.
+\tag{31.2}
+$$
+
+这是任意有限块数上的近似射影通用性，不主张任意目标的精确有限综合、完整物理链 $\mathcal K_{4m-1}$ 上的通用性，或统一脉冲数、时间、能量及校准成本界。
+
+**证明。** 先补足固定相位与命题 45 的可调相位之间的差别。只作被动坐标变换 $D$，命题 43、45 已给数据脉冲闭包 $SO(5)$；$D$ 与 $P_{13}$ 对易，所以固定相位在该帧仍为 $F=\operatorname{diag}(1,1,1,1,e^{i\phi})$。非负幂 $F^k$ 的闭包包含 $F^{-1}$：若相位为单位根，逆是一个非负幂；否则圆周紧性给正整数 $k_j\to\infty$ 满足 $F^{k_j}\to I$，从而 $F^{k_j-1}\to F^{-1}$。因此单块有限字的闭包是紧群 $G_\phi$，其 Lie 代数包含 $\mathfrak{so}(5)$ 及其 $F$ 共轭。
+
+沿用命题 45 的矩阵单位 $E_{uv}$ 与 $J_{uv}=E_{uv}-E_{vu}$。对 $0\leq u<4$，
+
+$$
+FJ_{u4}F^{-1}
+ =\cos\phi\,J_{u4}-i\sin\phi\,(E_{u4}+E_{4u}).
+\tag{31.3}
+$$
+
+因 $\sin\phi\ne0$，实线性相减给 $i(E_{u4}+E_{4u})$，再用
+
+$$
+[J_{u4},i(E_{u4}+E_{4u})]=2i(E_{uu}-E_{44})
+\tag{31.4}
+$$
+
+取得全部迹零虚对角方向。它们与全部 $J_{uv}$ 交换，取得所有虚对称非对角方向。故该 Lie 代数包含 $\mathfrak{su}(5)$，而 $G_\phi$ 包含 $SU(5)$，在 $PU(5)$ 中满射。这是命题 45 在本固定 $P_{13}$ 相位合同中实际使用的适配，不假定固定角能连续调节。
+
+此处也能精确说明行列式边界。记 $C_\phi=\overline{\{e^{ik\phi}:k\in\mathbb Z\}}\subseteq U(1)$，则
+
+$$
+G_\phi=\{Q\in U(5):\det Q\in C_\phi\}.
+\tag{31.5}
+$$
+
+一侧来自所有数据门行列式为一、$\det F=e^{i\phi}$。另一侧由 $SU(5)\subseteq G_\phi$ 得到：行列式映射的紧像恰为 $C_\phi$，选同一行列式的群中元素后，二者之商属于 $SU(5)$。当 $\phi/(2\pi)$ 为有理数且 $\sin\phi\ne0$，$C_\phi$ 有限，$G_\phi\ne U(5)$；例如 $\phi=\pi/2$。当该比值无理时 $C_\phi=U(1)$。两种情形的射影像都为整个 $PU(5)$，所以不能把固定非实角一概表述为全 $U(5)$ 控制。
+
+现在在 $PU(5^m)$ 中取全部逻辑有限字的闭包 $G_m$。数据脉冲和 $E_a$ 有精确可用的逆，$F_a$ 的逆在其幂闭包中，故 $G_m$ 是群。它含每个块上的全部局部射影酉。命题 30.3 证明了相邻块门 $E_a$ 把一个乘积向量送到非乘积向量，因此它是 Brylinski–Brylinski Theorem 1.3 的 imprimitive 门；该定理的参数在这里为 $d=5$、两个独立逻辑因子 $\mathcal H_F$ 以及 $V=E_a$。由 [该文 Theorem 1.3](https://arxiv.org/html/quant-ph/0108062v1)，完整局部酉加此门通用。完整局部酉在这里属于闭包，而不是被额外提供的精确门：任选该定理给出的有限电路，把其中有限多个局部门分别作射影逼近，乘积的算子范数误差不超过各门误差之和。所以每条相邻边上的全部 $PU(25)$ 都在 $G_m$ 中。
+
+尤其相邻逻辑 SWAP 的射影类在 $G_m$ 中。相邻交换生成任意块置换，故共轭运输给任意两个块上的 $PU(25)$，不需要另外提供物理远程门。Brylinski–Brylinski [Theorem 5.1](https://arxiv.org/html/quant-ph/0108062v1) 的中间事实是全部二 qudit 门可组成任意有限 $m$ qudit 酉；其因子在此为已编码的 $m$ 个五维端口，二块门和路由都只在上述闭包中使用。于是 $G_m=PU(5^m)$。$m=1$ 由前面的单块证明覆盖。闭包的定义给 (31.1) 的一个有限原生字；每个完整操作精确保码和回零由命题 30.3 逐次复合得到。这个论证没有把闭包中的中间门当作精确可调用门。
+
+最后以 $zU$ 代替 $U$，对任意参考输入把两个共轭之差展开为
+
+$$
+((W-zU)\otimes I)\rho(W^\dagger\otimes I)
+ +(zU\otimes I)\rho((W-zU)^\dagger\otimes I).
+\tag{31.6}
+$$
+
+用 $\|AXB\|_1\leq\|A\|_{\rm op}\|X\|_1\|B\|_{\rm op}$ 及 $\|\rho\|_1=1$ 得 (31.2)。引用的通用门定理为 `literature-attested` 的中间输入；本结论的 `repo-derived` 内容是固定相位适配、单链合法编码、原生分隔回零及射影有限字量词的共同对应。该存在量词不提供有效率综合，也不供应未知源、控制器安装或可实现硬件。$\square$
+
+## 32. 同一个第一块读口下的两种未来商
+
+**定义 32.1（来源、已得记录与末次模式律）。** 固定 $m\geq1$、同一个源域 $X$、记录映射 $r:X\to M$ 及已达到的记录 $h$，候选纤维为 $X_h=r^{-1}(h)\ne\varnothing$。对每个 $x\in X_h$，令 $\rho_x\in\mathsf D(\mathcal L_m)$ 是该来源在同一个初始化编码、控制及末端接口上的联合态。$h$ 不被解释为免费取得 $\rho_x$。本节允许的未来字在整个纤维上共同合法，并在末端只读第一块的五模式：
+
+$$
+R_w(x)(s)=\operatorname{tr}\!\left[\rho_xW_w^\dagger(\Pi_s\otimes I)W_w\right],
+\quad s\in\{N,2,3,5,25\}.
+\tag{32.1}
+$$
+
+不读其他块、不取中途结果，也不向观察者提供其他块的经典输出。$\mathcal Q_{\rm loc}$ 包含任意有限的块内数据及固定相位字，只能给张量积门；$\mathcal Q_{\rm cpl}$ 再包含完整分隔 $\pi$ 脉冲。未来等价定义为同一菜单中每个有限字的完整概率律相等，正是定义 4.1、9.3 的响应商拉回到 $X_h$。这里比较全部有限字；若实际资源只允许一个真子菜单，应以那个子菜单重新取商，不能沿用下面的完整性结论。
+
+**命题 32.2（局部边缘商与耦合联合态商）。** 在定义 32.1 的同一读口和假设 30.2 下，对任意 $x,y\in X_h$，
+
+$$
+\begin{aligned}
+x\sim_{\rm loc}y
+ &\Longleftrightarrow\operatorname{tr}_{2\cdots m}\rho_x
+                  =\operatorname{tr}_{2\cdots m}\rho_y,\\
+x\sim_{\rm cpl}y
+ &\Longleftrightarrow\rho_x=\rho_y.
+\end{aligned}
+\tag{32.2}
+$$
+
+因此局部未来商恰保留第一块的约化态，耦合未来商恰保留此编码端口的联合密度态；它们不因此识别在 $(h,\rho_x)$ 相同的来源间仍可不同的来源身份、不可访问环境或额外关系。若 $\rho_x\ne\rho_y$，存在一个有限、输入无关的合法耦合字及一个末次第一块模式，给出严格不同的概率。
+
+**证明。** 局部字为 $W_1\otimes\cdots\otimes W_m$，将 (32.1) 化为第一块边缘对 $W_1^\dagger\Pi_sW_1$ 的配对，其他块上的门消失。边缘相等因此充分。反向，定理 31.1 的单块部分使这些实际有限字的效果在极限中包含所有秩一投影；概率连续，所以相等的全部实际有限字概率给全部秩一投影的相等配对，进而给相等边缘。
+
+耦合字的效果在定理 31.1 的闭包中为 $U^\dagger P U$，其中 $d=5^m$、$P=\Pi_s\otimes I$，$P$ 的秩为 $k=5^{m-1}$，且 $1\leq k<d$。其酉轨道是全部秩 $k$ 投影。令 $\Delta=\rho_x-\rho_y$。若全部实际字概率相等，连续性给 $\operatorname{tr}(\Delta Q)=0$ 对每个秩 $k$ 投影 $Q$ 成立。取 $\Delta$ 的正交特征基，任意 $k$ 个特征值之和均为零。对任意两个指标，选其余 $k-1$ 个共同指标作差，得这两个特征值相等；$k=1$ 时共同集合为空。由 $\operatorname{tr}\Delta=0$ 得 $\Delta=0$。反向由 (32.1) 立即成立。
+
+若 $\Delta\ne0$，上述论证反向给一个秩 $k$ 投影 $Q$，使 $c=|\operatorname{tr}(\Delta Q)|>0$。选 $U$ 将 $P$ 共轭到 $Q$，再选定理 31.1 的字满足 $\|W-zU\|_{\rm op}<c/8$。由 (31.2) 和测量的迹范数收缩，对两个输入各自的该事件概率误差小于 $c/4$，故实际差仍大于 $c/2$。这把极限分离变成一个真正有限的可读延拓，没有执行极限门。
+
+此识别是整族可选未来的概率函数识别，不是一次末读取得未知密度态。一般非正交纯态不能被一份输入上的仪器确定标成不同状态名：若某效果在 $|\psi\rangle$ 上概率一、在 $|\chi\rangle$ 上概率零，则 $E|\psi\rangle=|\psi\rangle$、$E|\chi\rangle=0$，从而 $\langle\chi|\psi\rangle=0$。例如 $|N\rangle$ 与 $(|N\rangle+|2\rangle)/\sqrt2$ 不满足该必要条件。估计一族概率还需另供重复来源与统计资源。
+
+若另一个原接口已经允许各块独立旋转后的完整联合乘积读出，则既有产品效果张成结论已经识别联合密度态，见 [《二阶关系完成》§§64–65](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) 及 [混态续篇 C-108](AURIC_FIB_ATOM_HIDDEN_RELATIONS_MIXED_STATE_CAPACITY_AND_CERTIFICATION.md)。此时不能说纠缠门才使联合态可识别；(32.2) 的差别专属于只输出第一块模式的同一个受限接口。本命题为该接口经定理 31.1 的 `repo-derived` 推论，不重新认领一般产品效果完备性。$\square$
+
+## 33. 可读联合关系与内生发布响应
+
+**命题 33.1（相同局部边缘的两块关系见证）。** 在 $m=2$ 的同一个七位编码链上，取命题 30.3 的 $|\mathbf0\rangle=|N\rangle$、$|\mathbf1\rangle=|25\rangle$，并令
+
+$$
+\begin{aligned}
+\rho_{\mathrm{eq}} &= \tfrac12\bigl(|\mathbf0\mathbf0\rangle\langle\mathbf0\mathbf0|
+                     +|\mathbf1\mathbf1\rangle\langle\mathbf1\mathbf1|\bigr),\\
+\rho_{\mathrm{neq}} &= \tfrac12\bigl(|\mathbf0\mathbf1\rangle\langle\mathbf0\mathbf1|
+                     +|\mathbf1\mathbf0\rangle\langle\mathbf1\mathbf0|\bigr).
+\end{aligned}
+\tag{33.1}
+$$
+
+两态在每个块的边缘都相同，但存在只用块内字、一次原生分隔 $\pi$ 脉冲及第一块末次模式读的有限延拓，使两态的 $25$ 模式概率差严格大于 $1/2$。无其他块的测量或经典结果。
+
+**证明。** 两边缘均为 $(|\mathbf0\rangle\langle\mathbf0|+|\mathbf1\rangle\langle\mathbf1|)/2$，而两态的联合经典关系分别为相等与不等。令 $H$ 在第一块的这两个向量上是 Hadamard，其他三个模式上为恒等。对 (30.5) 的 $E=E_1$，理想酉
+
+$$
+U_*=(H\otimes I)E(H\otimes I)
+\tag{33.2}
+$$
+
+在第二块为 $\mathbf0$ 时对第一块施加 $-X$，第二块为 $\mathbf1$ 时施加恒等。因此它把相等关系的第一块确定送到 $\mathbf1$，不等关系的第一块确定送到 $\mathbf0$；理想 $25$ 概率分别为一和零。
+
+取任意 $0<\delta<1/8$，由定理 31.1 的单块部分选有限局部字 $L$ 及 $|z|=1$ 使 $\|L-zH\|_{\rm op}<\delta$。实际字为 $(L\otimes I)E(L\otimes I)$，与 $z^2U_*$ 的算子范数距离小于 $2\delta$。由 (31.2) 的同一展开及测量收缩，两输入的各自事件概率误差小于 $2\delta$，所以实际概率差大于 $1-4\delta>1/2$。$E$ 由一个完整分隔脉冲精确实现，两个 $L$ 均保持分隔零，故全过程合法、末端回零。此见证把已有边缘不足的关系落实为本链上无旁支读数的有限可读延拓，而不是新增自由联合观察假设。$\square$
+
+**定义 33.2（同一记录纤维上的发布响应）。** 保留定义 32.1 的 $X,r,h$。另明确一个公布值空间 $Y$、每个来源允许公布的集合 $\Lambda_x\subseteq Y$，以及实际公布 $p$ 后的确定目标响应 $F_x(p)$；如果预测对象是概率律，则 $Y$ 和 $F_x(p)$ 都取该概率律类型。$F_x$ 由来源、所公布的值及公布后的合法续接共同决定，不把公布前的概率响应当作公布后仍不变。记录选择器只能公布 $p=f(h)$。在此纤维上合法且处处正确的公布值必须且只须属于
+
+$$
+\mathcal P_h=\bigcap_{x\in X_h}\{p\in\Lambda_x:F_x(p)=p\}.
+\tag{33.3}
+$$
+
+该式复用定义 40.1 的共同合法动作条件和定义 4.1 的来源纤维因子化：同一已得记录对应同一公布值，响应则保持其实际来源与公布值的双重指标。
+
+**命题 33.3（合法耦合通用性不保证自预测不动点）。** 定理 31.1 和命题 32.2 不推出 (33.3) 非空。即使只有一个已知编码来源、公布后只使用本控制合同中的精确合法动作和同一个第一块模式读口，也可以没有共同正确公布值。
+
+**证明。** 对任意 $m\geq1$，取候选纤维只有一个来源 $x$，其第一块为 $|N\rangle=|000\rangle$，其他块为任意固定编码态，分隔为零。公布字母为 $Y=\{0,1\}$，两值都合法。公布后，固定控制器在 $p=0$ 时施加第一数据位置的 $e^{-i\pi T_1/2}$，在 $p=1$ 时不施加数据门，随后都读第一块模式。把实际结果 $2$ 记为一、其余模式记为零；在本来源上只有 $N,2$ 会出现。命题 43 给第一分支确定输出 $2$、第二分支确定输出 $N$，所以
+
+$$
+F_x(0)=1,\qquad F_x(1)=0,\qquad \mathcal P_h=\varnothing.
+\tag{33.4}
+$$
+
+这只是一个已声明初态与公布反馈规则的数学实例，没有推断实际源可被免费准备。它已满足控制前提，并与有限块通用性相容，故反驳由该通用性推出共同不动点的蕴含。反之，若另一个实际发布规则使 (33.3) 非空，其中的值才给该纤维的正确公布；门程序存在、未来概率分离及一次末读取得预测值是不同量词。命题 33.1 的两态若仍在同一个记录纤维中，局部未来相同也不能抹掉它们在耦合延拓下的响应差，须保留实际来源、已得记录与所选择延拓的对应。$\square$
+
+## 34. 六结果联合读出的编码消费者
+
+**假设 34.4（此消费者的末端产品读口）。** 本节在 $m=2$ 编码和假设 30.2 之外，另允许末端分别读两个逻辑块的模式，把两个实际结果共同写入经典记录，再作固定结果合并。没有中途测量；本权限独立于定义 32.1 的仅第一块读口，不能用于该节的观察者比较。采用 [《复合通信与校准》C-116.1、(C121.4)、C-125.3 及§126](AURIC_FIB_ATOM_HIDDEN_RELATIONS_COMPOUND_COMMUNICATION_AND_CALIBRATION.md) 的原端口标识 $|B_j\rangle_A,|f(B_j)\rangle_B$，$0\leq j\leq4$。令 $e_j$ 依次为本卷五模式，声明端口识别
+
+$$
+C_A|B_j\rangle_A=e_j,\qquad C_B|f(B_j)\rangle_B=e_j,
+\qquad C=C_A\otimes C_B.
+\tag{34.5}
+$$
+
+原联合输入 $\sigma$ 的数学编码为 $V_2C\sigma C^\dagger V_2^\dagger$。这里分别假设输入和该编码已供应，不从原匹配子空间的等距 $J$ 推出它们，也不供应 C-121 的批量源、通道控制、校准或完整处理器。
+
+**命题 34.2（保留秩二十补空间的近似经典输出测量）。** 在假设 34.4 下，对每个 $\varepsilon>0$，存在一个与未知输入无关的有限合法脉冲字及固定末端合并，实现一个六结果经典输出通道 $\mathcal M_\varepsilon$，逼近原 (C121.4) 的六结果 PVM 经典输出通道 $\mathcal M$。对任意有限参考 $R$ 和任意原端口联合输入 $\sigma\in\mathsf D(A\otimes B\otimes R)$，
+
+$$
+\left\|[(\mathcal M_\varepsilon-\mathcal M)\otimes\operatorname{id}_R](\sigma)\right\|_1<2\varepsilon,
+\qquad \|\mathcal M_\varepsilon-\mathcal M\|_\diamond\leq2\varepsilon,
+\tag{34.6}
+$$
+
+从而全部六结果分布的总变差小于 $\varepsilon$，包括与参考上任意后续测量所得结果的联合分布。补结果 $*$ 保留；对原 $\rho_{t,\eta}(X)$，其概率与 $20\eta/25$ 的差小于 $\varepsilon$。结论只逼近经典输出测量，不断言实现保留补空间相干的粗粒 Lüders 仪器。
+
+**证明。** 由原定义 $Je_j=|B_j,f(B_j)\rangle$，有 $CJe_j=|jj\rangle$。原五个秩一 PVM 向量在编码逻辑坐标中为
+
+$$
+\widehat a_\pm=(|00\rangle\mp i|44\rangle)/\sqrt2,\quad
+\widehat b_\pm=(|11\rangle\mp i|33\rangle)/\sqrt2,\quad
+\widehat o=|22\rangle.
+\tag{34.7}
+$$
+
+它们是五个正交归一向量，按 $a_+,a_-,b_+,b_-,o$ 排列为 $v_0,\ldots,v_4$；补投影 $\widehat Q=I-\sum_{j=0}^4|v_j\rangle\langle v_j|$ 的秩为二十。把这五向量补成整个二十五维空间的一组正交归一基 $v_0,\ldots,v_{24}$，选酉 $U_0$ 将 $v_j$ 送到 $|j,0\rangle$，其余二十个基向量送到第二指标不为零的二十个产品基向量。于是先施加 $U_0$ 再产品读出，把 $(j,0)$ 记为第 $j$ 个结果，所有 $(j,k)$、$k\ne0$ 记为 $*$，恰给全部六个原投影的概率。
+
+用定理 31.1 选有限字 $W$ 射影逼近 $U_0$，误差小于 $\varepsilon$。它作用于整个 $25$ 维编码逻辑域，故没有限制输入只在匹配子空间。对任意参考先用 (31.2)，再用产品测量、结果合并及丢弃量子输出组成的 CPTP 映射的迹范数收缩，得 (34.6) 第一式及统一 $2\varepsilon$ 通道界。这里完全有界迹范数的估计也直接来自 (31.6) 对任意迹类算子的同一个 $2\varepsilon$ 上界，故给所写 diamond 界，而非仅无参考态的估计。经典输出的迹范数为分布 $\ell^1$ 距离，除以二得总变差界；参考后续测量再用收缩即可。原 (C121.5) 的 $*$ 概率为 $20\eta/25$，单事件误差受总变差控制，所以得到补结果界，未丢弃 $\eta>0$ 的质量。
+
+最后，产品细读后合并二十个结果会在所选补空间基上去相干。即使随后再施加 $U_0^\dagger$，对逻辑输入 $\tau=C\sigma C^\dagger$ 的该分支也是 $\sum_{\ell=5}^{24}|v_\ell\rangle\langle v_\ell|\tau|v_\ell\rangle\langle v_\ell|$，一般不等于 $\widehat Q\tau\widehat Q$；例如 $(v_5+v_6)/\sqrt2$ 的纯态相干项被前者删去。因而经典输出近似不供应粗粒 Lüders 后态。此消费者是 C-125.3 / §126 所缺联合控制接口在本零分隔合同下的 `repo-derived` 补足，额外只声明末端产品读口和输入编码，不把控制对应升级为原来源制备或完整物理供应。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 35. 交替位置编码与单处固定相位
+
+**定义 55.1（合法开链与固定复线性编码）。** 对每个整数 $n\geq0$，令 $\Sigma_n$ 为长度 $n$、不含相邻 $11$ 的布尔字集，并沿用定义 30.1 的合法空间记号
+
+$$
+\mathcal K_n=\operatorname{span}_{\mathbb C}\{|x\rangle:x\in\Sigma_n\},
+\qquad \mathcal K_0=\mathbb C,\qquad
+d_n=\dim\mathcal K_n=F_{n+2},
+\qquad F_0=0,\quad F_1=1.
+\tag{VII.1}
+$$
+
+维数公式由 $d_0=1,d_1=2$ 及末位分解 $d_n=d_{n-1}+d_{n-2}$ 得到。对每个 $k\geq2$，置 $N=2k-1$、$\mathcal L_k^{\mathrm{alt}}=(\mathbb C^2)^{\otimes k}$，固定复线性等距
+
+$$
+\iota_k|b_1\cdots b_k\rangle
+ =|b_1\,0\,b_2\,0\,\cdots\,0\,b_k\rangle,\qquad
+\mathcal C_k^{\mathrm{alt}}=\operatorname{ran}\iota_k,\qquad
+P_k^{\mathrm{alt}}=\iota_k\iota_k^\dagger.
+\tag{VII.2}
+$$
+
+每个基像合法且各不相同，故此映射确为等距。本编码与定义 30.1 的五维块编码是不同的指定子空间；其偶位置为已供应的零，不是从未知输入中取得的观察结果。允许的编码输入为整个 $\mathsf D(\mathcal L_k^{\mathrm{alt}}\otimes R)$，其中 $R$ 是任意有限维被动参考；不要求逻辑位之间或它们与 $R$ 之间乘积分离。
+
+**假设 55.2（无漂移的逐位菜单与同址复用）。** 令 $P_j^0=|0\rangle\langle0|_j$、$n_j=I-P_j^0$，开边界为 $P_0^0=P_{n+1}^0=I$。在整个 $\mathcal K_n$ 上提供独立控制
+
+$$
+H_j^{(n)}=\left.P_{j-1}^0X_jP_{j+1}^0\right|_{\mathcal K_n},
+\qquad e^{-itH_j^{(n)}},\quad 1\leq j\leq n,\quad t\in\mathbb R.
+\tag{VII.3}
+$$
+
+一次仅开启所选控制，其余驱动及漂移均为零；允许任意有限串行字及空字。每个 $H_j^{(n)}$ 是互不相交的二态翻转块和零块之直和，谱含于 $\{-1,0,1\}$，所以只允许非负参数也给同一菜单，逆可由 $2\pi$ 周期取得。这是命题 43 的 PXP 限制在一般开链上的独立控制合同；原固定总和 $K$ 的等待菜单不供应该权限。
+
+当 $n\geq3$ 时，再只安装一个固定门
+
+$$
+S_{\star,n}=\exp\!\left(\frac{i\pi}{2}n_1n_3\right),
+\qquad S_{\star,n}^4=I,\qquad
+S_{\star,n}^{-1}=S_{\star,n}^3.
+\tag{VII.4}
+$$
+
+同一个物理位置对 $(1,3)$ 可以反复调用；不提供其他位置的相位安装，也不提供连续可调相位。对每个 $n\geq1$，记 $\mathcal V_n$ 为纯翻转有限字集；对 $n\geq3$，记 $\mathcal W_n$ 为再允许 $S_{\star,n}$ 的有限字集。两者均含空字和每个字的逆。字及参数可以依赖尺寸、目标和精度，不能依赖未知输入或参考态。综合过程中不使用测量、后选择、额外量子旁路或可访问参考。每个翻转只连接两个合法字，对角相位也保持合法域，故包括脉冲中途在内始终没有到非法域的泄漏。
+
+本合同是无量纲参数下的理想数学菜单。输入及编码初始化的供应是前提；不包含其免费取得、硬件供应、容错或任何综合成本界。
+
+**命题 55.3（窗口隔离、相邻交换与第一窗口接口）。** 采用定义 55.1 和假设 55.2。对 $1\leq a<k$，允许窗口 $(2a-1,2a,2a+1)$ 取任意五模式，所有其他偶位置仍为零、所有其他奇位置任意，所得子空间记为 $\mathcal M_a$。则
+
+$$
+\mathcal M_a\simeq\mathcal K_3\otimes
+                    (\mathbb C^2)^{\otimes(k-2)}.
+\tag{VII.5}
+$$
+
+窗口内三个控制保持 $\mathcal M_a$，在此识别下分别为命题 43 的 $H_1,H_2,H_3$ 张量恒等。因此对每个 $\delta>0$，相邻逻辑交换 $\operatorname{SWAP}_{a,a+1}$ 有一个仅用该窗口翻转的有限字 $A$ 满足
+
+$$
+\|A\iota_k-\iota_k\operatorname{SWAP}_{a,a+1}\|_{\mathrm{op}}<\delta.
+\tag{VII.6}
+$$
+
+第一窗口还满足：对每个 $Q\in U(4)$ 和每个 $\delta>0$，存在仅用该窗口翻转及 $S_{\star,N}$ 的有限字 $B$，使
+
+$$
+\|B\iota_k-\iota_k(Q\otimes I_{2^{k-2}})\|_{\mathrm{op}}<\delta.
+\tag{VII.7}
+$$
+
+这里的 $Q$ 按第一、第二逻辑位的固定输入顺序作用，包含其指定的整体标量。
+
+**证明。** 窗口外邻位 $2a-2,2a+2$ 为零，或在开边界缺席；故窗口首尾控制的外邻投影恒为一。窗口外奇位与窗口之间仍隔着零，任意五模式与这些奇位的组合都合法；三个控制也不改变窗口外任何位。逐基向量得到 (VII.5) 及张量限制，线性性使其同时覆盖任意相干输入和参考纠缠，而非仅覆盖已知外位取值。
+
+在基序 $000,100,010,001,101$ 上，令 $T$ 交换 $100,001$，固定 $000,101$，并把 $010$ 取负。交换的行列式为负，辅助方向的负号再给一个负号，故 $\det T=1$。它为实正交矩阵，且与命题 45 的 $D_3=\operatorname{diag}(1,i,i,i,1)$ 对易。因此
+
+$$
+T\in D_3SO(5)D_3^\dagger,\qquad
+T\iota_2=\iota_2\operatorname{SWAP}.
+\tag{VII.8}
+$$
+
+复用命题 45 的翻转闭包结论，在完整五维窗口上以算子范数逼近 $T$，再张量恒等及限制到 $\iota_k$，得 (VII.6)。这不把闭包中的 $T$ 当作精确有限原生门。
+
+在第一窗口，(VII.4) 恰为 $|101\rangle$ 上的固定 $i$ 相位。定理 31.1 证明的单块部分在 $\phi=\pi/2$ 时已给出此窗口字闭包包含 $SU(5)$，这里直接复用该结论。令 $\mathcal B=\operatorname{ran}\iota_2=\operatorname{span}\{000,100,001,101\}$；对指定 $Q$ 取整个五维上的扩张
+
+$$
+\widehat Q
+ =\iota_2Q\iota_2^\dagger+
+       (\det Q)^{-1}|010\rangle\langle010|.
+\tag{VII.9}
+$$
+
+两项作用于正交补空间，故 $\widehat Q$ 为酉且行列式为一。逼近 $\widehat Q$ 再用第一窗口的 (VII.5)，得到 (VII.7)。补方向承担行列式，逻辑端的标量无需舍弃。$\square$
+
+## 36. 一处安装上的任意有限逻辑位控制
+
+**定理 56.1（交替码的普通算子范数通用性）。** 对每个 $k\geq2$、每个 $U\in U(\mathcal L_k^{\mathrm{alt}})$ 及每个 $\varepsilon>0$，在假设 55.2 的同一个物理安装下存在有限字 $W\in\mathcal W_{2k-1}$，使
+
+$$
+\|W\iota_k-\iota_kU\|_{\mathrm{op}}<\varepsilon.
+\tag{VII.10}
+$$
+
+这个字对全部编码输入共同有效，无须在 (VII.10) 外另加整体相位。设 $R$ 是任意有限参考，$\rho\in\mathsf D(\mathcal L_k^{\mathrm{alt}}\otimes R)$，记实际及理想输出为
+
+$$
+\begin{aligned}
+\omega_W&=(W\iota_k\otimes I_R)\rho
+                       (W\iota_k\otimes I_R)^\dagger,\\
+\omega_U&=(\iota_kU\otimes I_R)\rho
+                       (\iota_kU\otimes I_R)^\dagger .
+\end{aligned}
+\tag{VII.11}
+$$
+
+同一个 $W$ 同时满足
+
+$$
+\|\omega_W-\omega_U\|_1<2\varepsilon,\qquad
+\operatorname{tr}\!\left[
+ ((I_{\mathcal K_N}-P_k^{\mathrm{alt}})\otimes I_R)\omega_W
+ \right]<\varepsilon^2.
+\tag{VII.12}
+$$
+
+第二项是实际物理输出离开交替码的概率；离开整个合法域的概率始终为零。结论不要求近似字的中间终点精确回到交替码，也不声称任意目标可精确有限综合或具有统一高效的脉冲数、时间及精度成本。
+
+**证明。** 标准有限门分解作为中间输入：Barenco 等，*Elementary gates for quantum computation*，[arXiv:quant-ph/9503016v1](https://arxiv.org/html/quant-ph/9503016v1)，§8 的一般门构造，给任意 $U(2^k)$ 一个不使用额外工作位的精确有限二比特门分解。这里只使用该有限存在结论，不重复其分解，也不把它的二比特门计数当作本原生菜单的脉冲复杂度。若采用其单比特门加 XOR 表述，$k\geq2$ 允许把每个单比特门与另一个逻辑位上的恒等合为一个二比特门。
+
+相邻逻辑交换生成任意逻辑位排列，故对分解中的每个有序逻辑位对，先用一个有限相邻交换序列将其依序送到第一、第二逻辑位置，在第一窗口作用指定二比特门，再作逆排列。所有相位调用始终位于物理位置 $(1,3)$；被路由的是逻辑数据。把全部这些理想操作展开为有限逻辑序列 $g_1,\ldots,g_L$，有 $g_L\cdots g_1=U$。各项或为相邻交换，或为第一逻辑位对上的指定 $U(4)$。取正数 $\delta_j$ 满足 $\sum_j\delta_j<\varepsilon$，用命题 55.3 分别选实际全链酉字 $A_j$，使
+
+$$
+\|A_j\iota_k-\iota_kg_j\|_{\mathrm{op}}<\delta_j.
+\tag{VII.13}
+$$
+
+置 $W=A_L\cdots A_1$。无需假定实际近似前缀保码，精确的混合望远镜恒等式为
+
+$$
+\begin{aligned}
+W\iota_k-\iota_kg_L\cdots g_1
+ =\sum_{j=1}^L A_L\cdots A_{j+1}
+ (A_j\iota_k-\iota_kg_j)g_{j-1}\cdots g_1 .
+\end{aligned}
+\tag{VII.14}
+$$
+
+空前缀或后缀取恒等。右侧理想前缀始终作用于逻辑域，实际后缀只用全合法域上的酉性，故算子范数小于 $\sum_j\delta_j$。特别地，前一窗口近似残留在辅助方向的振幅不需要被下一窗口精确清除。若 $U=I$，亦可直接取空字。这证明 (VII.10) 及输入无关性。
+
+令 $A=W\iota_k$、$B=\iota_kU$，二者均为等距。张量 $I_R$ 不改变 $\|A-B\|_{\mathrm{op}}$；使用
+
+$$
+\begin{aligned}
+\omega_W-\omega_U
+ &=((A-B)\otimes I_R)\rho(A^\dagger\otimes I_R)\\
+ &\quad +(B\otimes I_R)\rho((A-B)^\dagger\otimes I_R)
+\end{aligned}
+\tag{VII.15}
+$$
+
+及迹范数乘积界，得到第一项 (VII.12)。又因 $(I-P_k^{\mathrm{alt}})B=0$，
+
+$$
+\|(I-P_k^{\mathrm{alt}})A\|_{\mathrm{op}}
+ \leq\|A-B\|_{\mathrm{op}}<\varepsilon.
+\tag{VII.16}
+$$
+
+把左侧算子张量参考恒等，其平方为泄漏概率的统一上界，得第二项。窗口的精确合法性由假设 55.2 与命题 55.3 保证。本推导增加的是指定交替码上的同址相位复用、行列式补偿及泄漏容许下的有限字组合，不重新认领标准门分解或定理 31.1 的局部相位论证。$\square$
+
+## 37. 同一复线性编码的零相位精确距离
+
+**定理 57.1（翻转菜单的尖锐射影障碍）。** 固定 $k\geq2$ 及定义 55.1 的同一个复线性编码。按逻辑计算基的固定顺序，令 $U_\diamond=\operatorname{diag}(1,i,1,\ldots,1)$。只允许假设 55.2 的翻转字，不使用任何相位安装，则
+
+$$
+\inf_{\substack{V\in\mathcal V_{2k-1}\\ \alpha\in\mathbb R}}
+ \|e^{i\alpha}V\iota_k-\iota_kU_\diamond\|_{\mathrm{op}}
+ =\sqrt{\,2-\sqrt2\,}.
+\tag{VII.17}
+$$
+
+把 $\mathcal V_{2k-1}$ 换成其算子范数闭包也得到同一个等式。允许 $V$ 在交替码外产生合法振幅，不能降低该界。
+
+**证明。** 对整个 $\mathcal K_n$ 定义被动对角标架
+
+$$
+D_n|x\rangle=
+ \begin{cases}
+ |x\rangle,&|x|\text{ 为偶数},\\
+ i|x\rangle,&|x|\text{ 为奇数},
+ \end{cases}
+\qquad
+A_j^{(n)}=D_n^\dagger(-iH_j^{(n)})D_n,
+\tag{VII.18}
+$$
+
+其中 $|x|$ 是 Hamming 重量。每条翻转边连接相反奇偶性，故 $A_j^{(n)}$ 是实反对称矩阵。每个翻转字及其极限均为 $V=D_nRD_n^\dagger$，其中 $R\in SO(d_n)$；特别地 $V_{xx}=R_{xx}\in[-1,1]$。$D_n$ 只改变坐标，不是可调用的门。
+
+取 $U_\diamond$ 的相位分别为 $1,i$ 的两个编码基像 $|x\rangle,|y\rangle$。全输出列范数满足
+
+$$
+\begin{aligned}
+\|e^{i\alpha}V|x\rangle-|x\rangle\|^2
+ &=2-2R_{xx}\cos\alpha\geq2-2|\cos\alpha|,\\
+\|e^{i\alpha}V|y\rangle-i|y\rangle\|^2
+ &=2-2R_{yy}\sin\alpha\geq2-2|\sin\alpha|.
+\end{aligned}
+\tag{VII.19}
+$$
+
+这些是整个 $\mathcal K_N$ 中的列距离，未投影掉码外分量。算子范数平方不小于两列下界的最大值；$\min(|\cos\alpha|,|\sin\alpha|)\leq1/\sqrt2$，所以该最大值至少为 $2-\sqrt2$。另一方面，取空字 $V=I$ 和 $\alpha=\pi/4$，所有目标对角元为 $1$ 或 $i$，故
+
+$$
+\|e^{i\pi/4}\iota_k-\iota_kU_\diamond\|_{\mathrm{op}}
+ =\max\{|e^{i\pi/4}-1|,\ |e^{i\pi/4}-i|\}
+ =\sqrt{2-\sqrt2}.
+\tag{VII.20}
+$$
+
+上下界相合，且上界已由有限字取得，闭包不改变结论。$\square$
+
+**推论 57.2（固定编码菜单内的零处与一处）。** 对每个 $k\geq2$，在假设 55.2 的独立翻转、固定复线性编码和相干酉综合资源次序内，实现任意逻辑酉的任意精度逼近所需的可重复非实相位安装数最小为一。
+
+**证明。** 零处时，即使忽略整体相位，(VII.17) 也排除通用性；一处时定理 56.1 已足够。计数对象是物理相位安装，不是调用次数；一处安装作用于位置对 $(1,3)$，并非一个单位置相位算子。此最小性不量化改变编码、实化编码、测量辅助、后选择或新增复 Hamiltonian 的其他模型，也不涵盖没有该位置对的 $k=1$。$\square$
+
+## 38. 整个合法开链空间的控制闭包
+
+**定理 58.1（全尺寸翻转代数与同一相位的精确行列式类）。** 对假设 55.2 中每个 $n\geq1$，使用 (VII.18) 的标架，有
+
+$$
+\operatorname{Lie}_{\mathbb R}\{A_1^{(n)},\ldots,A_n^{(n)}\}
+ =\mathfrak{so}(d_n),\qquad
+\overline{\mathcal V_n}=D_nSO(d_n)D_n^\dagger.
+\tag{VII.21}
+$$
+
+对每个 $n\geq3$，只加入原来同一处固定相位 (VII.4)，令
+
+$$
+r_n=\operatorname{rank}(n_1n_3|_{\mathcal K_n})=F_{n-2},
+\qquad C_n=\langle i^{r_n}\rangle\subseteq U(1).
+\tag{VII.22}
+$$
+
+则整个合法空间上的算子范数闭包恰为
+
+$$
+\overline{\mathcal W_n}
+ =\{Q\in U(d_n):\det Q\in C_n\},\qquad
+SU(d_n)\subseteq\overline{\mathcal W_n},\qquad
+[\overline{\mathcal W_n}]=PU(d_n).
+\tag{VII.23}
+$$
+
+方括号表示除去整体相位的像。特别地，对每个 $U\in U(\mathcal K_n)$ 和每个 $\varepsilon>0$，存在 $|z|=1$ 及一个输入无关有限字 $W\in\mathcal W_n$，使
+
+$$
+\|W-zU\|_{\mathrm{op}}<\varepsilon;
+\quad U\in SU(d_n)\text{ 时可以取 }z=1.
+\tag{VII.24}
+$$
+
+本结论作用于全部 $F_{n+2}$ 维合法空间，既不限制为交替码，也不要求分隔位初始化。对任意合法输入及任意有限被动参考，实际输出与目标酉通道的输出迹范数距离小于 $2\varepsilon$，全过程到非法域的泄漏精确为零。$C_n$ 是有限群，故字面上的 $U(d_n)$ 稠密性不成立。
+
+**证明。** 先证明 (VII.21) 的 Lie 代数等式。由 (VII.18)，生成代数 $\mathfrak g_n$ 包含于 $\mathfrak{so}(d_n)$。$n=1$ 的唯一控制给 $\mathfrak{so}(2)$；$n=2$ 在基序 $00,10,01$ 上给两个坐标旋转 $J_{00,10},J_{00,01}$，其括号给第三个方向，故为 $\mathfrak{so}(3)$。这里及下文 $J_{pq}=E_{pq}-E_{qp}$。$n=3$ 正是命题 45 已有的 $\mathfrak{so}(5)$，不另行重证。
+
+现设 $n\geq4$，归纳已知长度 $n-1$ 的结论。按同一实际链的末位分解
+
+$$
+\begin{aligned}
+\mathcal K_n&=\mathcal A\oplus\mathcal B,\\
+\mathcal A&=\operatorname{span}\{|x0\rangle:x\in\Sigma_{n-1}\},
+ &a&=d_{n-1},\\
+\mathcal B&=\operatorname{span}\{|u01\rangle:u\in\Sigma_{n-2}\},
+ &b&=d_{n-2}.
+\end{aligned}
+\tag{VII.25}
+$$
+
+前 $n-1$ 个控制保持两个分支，在 $\mathcal A$ 上的限制恰为长度 $n-1$ 的控制及其标架。它们在 $\mathcal B$ 上的限制仍实反对称，但不预设两个分支可以独立控制。令 $\mathfrak l$ 为这些分块对角生成元的 Lie 代数，则归纳假设给 $\pi_{\mathcal A}(\mathfrak l)=\mathfrak{so}(a)$。置
+
+$$
+\mathfrak k=\{X\in\mathfrak{so}(a):
+                    \operatorname{diag}(X,0)\in\mathfrak l\}.
+\tag{VII.26}
+$$
+
+这是 $\mathfrak{so}(a)$ 的理想：给 $Y\in\mathfrak{so}(a)$，取其提升 $\operatorname{diag}(Y,Z)\in\mathfrak l$，与 $\operatorname{diag}(X,0)$ 交换即得 $\operatorname{diag}([Y,X],0)$。第 $n-1$ 个控制在 $\mathcal B$ 上被末位的一阻断，而其 $\mathcal A$ 分量是 $B=A_m^{(m)}$、$m=n-1$，所以 $B\in\mathfrak k$。
+
+以下直接从这个种子取得整个理想，不用简单 Lie 代数分类。在长度 $m$ 的合法基中取
+
+$$
+p=0^m,\qquad q=0^{m-1}1,\qquad
+r=0^{m-2}10.
+\tag{VII.27}
+$$
+
+末位控制 $B$ 在 $p,q$ 上是 $J_{pq}$，在 $r$ 的行列上均为零，其余翻转块与这些指标不交。因此
+
+$$
+[J_{rp},B]=J_{rq}\in\mathfrak k.
+\tag{VII.28}
+$$
+
+对任意其他指标 $x$，理想性质给 $[J_{xr},J_{rq}]=J_{xq}\in\mathfrak k$；再用 $[J_{xq},J_{qy}]=J_{xy}$ 得到所有坐标旋转。于是 $\mathfrak k=\mathfrak{so}(a)$，从而
+
+$$
+\mathfrak{so}(a)\oplus0\subseteq\mathfrak l\subseteq\mathfrak g_n.
+\tag{VII.29}
+$$
+
+这一步证明了所需的分支独立性，而没有从第一投影满射直接假定它。
+
+最后一个控制在 (VII.25) 的分块形式为
+
+$$
+A_n^{(n)}=\mathcal J(M),\qquad
+\mathcal J(C)=
+ \begin{pmatrix}0&C\\-C^{\mathsf T}&0\end{pmatrix}.
+\tag{VII.30}
+$$
+
+每个 $\mathcal B$ 基态 $|u01\rangle$ 恰与 $\mathcal A$ 基态 $|u00\rangle$ 配对。因此 $M$ 的列 $u$ 仅在互异行 $p(u)=u00$ 上有系数 $\sigma_u=(-1)^{|u|}$。特别地，$\mathcal A$ 中合法态 $r_0=0^{n-2}10$ 对应一个零行。对任意 $X\in\mathfrak{so}(a)$，
+
+$$
+[\operatorname{diag}(X,0),\mathcal J(M)]=\mathcal J(XM).
+\tag{VII.31}
+$$
+
+分别取 $X=J_{r_0,p(u)}$，零行及匹配结构使
+
+$$
+J_{r_0,p(u)}M=\sigma_u e_{r_0}e_u^{\mathsf T}.
+\tag{VII.32}
+$$
+
+由 (VII.29)–(VII.32) 得 $\mathcal J(e_{r_0}e_u^{\mathsf T})\in\mathfrak g_n$。再与 $\operatorname{diag}(J_{x,r_0},0)$ 交换，得到每个 $\mathcal J(e_xe_u^{\mathsf T})$，故全部跨分支矩形方向都已取得。对 $u\ne v$，
+
+$$
+[\mathcal J(e_xe_u^{\mathsf T}),\mathcal J(e_xe_v^{\mathsf T})]
+ =\operatorname{diag}(0,-J_{uv}).
+\tag{VII.33}
+$$
+
+这给整个 $0\oplus\mathfrak{so}(b)$。它与 (VII.29) 及全部跨分支方向共同张成 $\mathfrak{so}(a+b)$，归纳闭合。
+
+乘积极限与交换子极限沿用命题 45 的论证；每个所需逆都在有限菜单中。它们把上述 Lie 括号和实线性组合的指数放入翻转字闭包，全部平面旋转又生成 $SO(d_n)$。反向包含由每个 $A_j^{(n)}$ 实反对称立即成立，得 (VII.21)。此全尺寸归纳不以有限尺寸的矩阵秩或数值外推为前提。
+
+现在加入 (VII.4)。投影 $P=n_1n_3|_{\mathcal K_n}$ 非零且非恒等：$101$ 延拓给前者，$0^n$ 给后者。$n=3$ 时秩为一；$n\geq4$ 时强制前缀 $1010$，余下任意合法长度 $n-4$ 尾链，所以秩为 $d_{n-4}=F_{n-2}$，得到 (VII.22)。$S_{\star,n}$ 与 $D_n$ 对易，在 $P$ 的像上为 $i$、在核上为一。
+
+在此被动标架中取闭群的 Lie 代数 $\mathfrak h$。由 (VII.21)，$\mathfrak h$ 包含全部 $J_{pq}$；它也在 $S_{\star,n}$ 共轭下不变。对满足 $|p\rangle\in\operatorname{ran}P$、$|q\rangle\in\ker P$ 的计算基指标，
+
+$$
+\begin{aligned}
+S_{\star,n}J_{pq}S_{\star,n}^{-1}
+ &=i(E_{pq}+E_{qp}),\\
+[J_{pq},i(E_{pq}+E_{qp})]
+ &=2i(E_{pp}-E_{qq}).
+\end{aligned}
+\tag{VII.34}
+$$
+
+两非空指标集之间的完全二分图连通，故这些对角差张成全部迹零虚对角矩阵。再与全部 $J_{uv}$ 交换，得到所有 $i(E_{uv}+E_{vu})$。它们与实反对称部分共同张成 $\mathfrak{su}(d_n)$，所以闭群包含 $SU(d_n)$。
+
+每个翻转生成元迹零，翻转脉冲行列式为一，而 $\det S_{\star,n}=i^{r_n}$，故全部字及其极限的行列式均在有限群 $C_n$ 中。反之，任意 $Q$ 若行列式在 $C_n$，可取整数 $s$ 使 $\det Q=\det S_{\star,n}^s$，于是 $QS_{\star,n}^{-s}\in SU(d_n)$；两因子均在闭群中。这证明 (VII.23)，不把一个固定角替换成连续相位权限。$D_nSU(d_n)D_n^\dagger=SU(d_n)$，所以该等式也在原坐标成立。
+
+对给定 $U$ 选 $z$ 满足 $z^{d_n}\det U=1$，则 $zU\in SU(d_n)$，闭包定义给 (VII.24) 的一个有限字。若 $\det U=1$，取 $z=1$。对任意参考输入，用 (VII.15) 的同一两项展开，其中 $A=W$、$B=zU$，得迹范数界；$z$ 在通道中消去。原生脉冲及相位都保持整个 $\mathcal K_n$，故合法域泄漏为零。另一方面，$\operatorname{diag}(e^{i\pi/4},1,\ldots,1)$ 的行列式不在 $C_n\subseteq\{1,i,-1,-i\}$，由行列式连续性，它不在该闭包中，字面 $U(d_n)$ 稠密性因此被排除。
+
+取 $n=2k-1$，本定理处理的是整个 $F_{2k+1}$ 维合法链，回答了区别于 $2^k$ 维交替码的全空间控制问题。编码定理 56.1 的无附加相位结论与这里的行列式限制相容：其目标只固定码上的作用，辅助方向可补偿行列式。本定理是同一独立菜单上的全链推导；不从 PXP 背景文献、编码空间通用性或小尺寸结论直接推断全链控制，也不据此主张文献原创性、有效率综合或物理资源供应。$\square$
+
+## 39. 全合法链的第一位置二值未来商
+
+**命题 59.1（同一二值读口的全链概率识别）。** 固定 $n\geq3$ 及假设 55.2 的菜单。沿用定义 32.1 的实际来源域、已得记录 $h$ 及非空候选纤维 $X_h$，但现在每个来源给整个合法链上的态 $\rho_x\in\mathsf D(\mathcal K_n)$。另明确允许末次只读第一物理位置的二值 PVM $\{n_1,I-n_1\}$，无其他位置的经典输出。令
+
+$$
+R_w(x)=\operatorname{tr}(\rho_xw^\dagger n_1w),
+\qquad w\in\mathcal W_n.
+\tag{VII.35}
+$$
+
+比较的是全部有限字的完整二值概率律，则
+
+$$
+\bigl[\forall w\in\mathcal W_n,\ R_w(x)=R_w(y)\bigr]
+ \quad\Longleftrightarrow\quad \rho_x=\rho_y.
+\tag{VII.36}
+$$
+
+若两态不同，有一个共同合法、输入无关的真正有限字使该二值律不同。此商只保留端口态，不区分在 $(h,\rho_x)$ 相同的来源间仍不同的身份或不可访问环境。
+
+**证明。** 第一位为一强制第二位为零，故 $n_1|_{\mathcal K_n}$ 的秩为 $q=d_{n-2}=F_n$，且 $0<q<d_n$。由定理 58.1，其在字闭包中的共轭轨道是全部秩 $q$ 投影。复用命题 32.2 证明中的固定秩投影分离论证，把其 $(d,k)$ 换成这里的 $(d_n,q)$：全部这种投影与迹零 Hermitian 差 $\Delta=\rho_x-\rho_y$ 的配对均为零，当且仅当 $\Delta=0$。概率的连续性把全部实际字的相等提升到闭包，因此给 (VII.36)；反向由 (VII.35) 立即得到。
+
+若 $\Delta\ne0$，该同一分离论证给秩 $q$ 投影 $Q$，使 $c=|\operatorname{tr}(\Delta Q)|>0$。选 $U$ 使 $U^\dagger n_1U=Q$，再由 (VII.24) 取 $\|w-zU\|_{\mathrm{op}}<c/8$。两个输入各自的事件概率误差小于 $c/4$，故实际字的概率差仍大于 $c/2$，并未执行一个无限极限门。
+
+这里消费的是定理 58.1 对整个合法空间的控制，输入不再受五维块或交替码限制；末端二值读口是另外声明的观察权限。概率函数的识别不等于一份未知输入上的确定态名取得：命题 32.2 的非正交态障碍仍适用，估计概率族还需要重复来源及统计资源。端口态不能自动替代定义 41.1 的实际记录或对可回流环境的联合描述；公布反馈的共同正确值仍须满足定义 33.2 的交集条件，命题 33.3 已表明控制通用性不保证该交集非空。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 40. 第一位置读口的尖锐全链对比率
+
+**定义 60.1（原生概率对比与来源范围）。** 固定 $n\geq3$，沿用假设 55.2 的整个合法链、有限字集 $\mathcal W_n$ 和命题 59.1 的末端二值读口。以下简记
+
+$$
+\begin{aligned}
+d&=F_{n+2},&q&=F_n,&P&=n_1|_{\mathcal K_n},\\
+P_w&=w^\dagger Pw,&p_\rho(w)&=\operatorname{tr}(\rho P_w),\\
+D(\rho,\sigma)&=\tfrac12\|\rho-\sigma\|_1,&
+B_n(\rho,\sigma)&=\sup_{w\in\mathcal W_n}
+                  |p_\rho(w)-p_\sigma(w)|.
+\end{aligned}
+\tag{VIII.1}
+$$
+
+$F_0=0,F_1=1$，故 $2\leq q<d/2$。$B_n$ 比较理想二值概率函数；一次实际读口只返回一个比特，并不返回 $p_\rho(w)$。对既有历史 $h$ 的来源纤维 $X_h$，可将 $\rho,\sigma$ 限于其中的端口态。下述统一常数的尖锐性和设置数下界则在整个 $\mathsf D(\mathcal K_n)$ 上取量词；这一数学定义域不授予任意态的制备权限。受限测量范数与最佳支配常数的研究框架见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*](https://arxiv.org/html/0810.2327v2)，引言及 §1。
+
+**定理 60.2（Fibonacci 秩读口的最佳对比常数）。** 令 $A=\rho-\sigma$ 的特征值为 $\lambda_1\geq\cdots\geq\lambda_d$。则
+
+$$
+\begin{aligned}
+B_n(\rho,\sigma)
+ &=\max\left\{\sum_{i=1}^q\lambda_i,
+                    -\sum_{i=d-q+1}^d\lambda_i\right\},\\
+c_nD(\rho,\sigma)&\leq B_n(\rho,\sigma)\leq D(\rho,\sigma),\\
+c_n&=\frac{d-q}{d-1}=\frac{F_{n+1}}{F_{n+2}-1}.
+\end{aligned}
+\tag{VIII.2}
+$$
+
+两个常数在全部态对上均最佳。$c_n>1/\varphi$ 且 $c_n\to1/\varphi$，其中 $\varphi=(1+\sqrt5)/2$。若 $B_n(\rho,\sigma)>b$，存在真正有限字 $w$ 使概率差大于 $b$；不要求上确界在有限字中取得。
+
+**证明。** 定理 58.1 给 $SU(d)\subseteq\overline{\mathcal W_n}$。任意两个秩 $q$ 投影酉共轭；将实现共轭的酉乘以适当标量即可令行列式为一而不改共轭。因此实际 $P_w$ 的闭包恰为全部秩 $q$ 投影。这只消费共轭轨道，不把 (VII.23) 的有限行列式类改成 $U(d)$ 稠密性。
+
+所需谱极值是 Fan 的成熟变分工具，见 [Fan 原文 Theorem 1，刊页 653](https://doi.org/10.1073/pnas.35.11.652) 及 [仓内来源说明](../../../Library/Eigenstructure/fan1949weyl.md)。这里的有限维步骤可直接核对：在 $A$ 的特征基中，任意秩 $q$ 投影 $R$ 满足
+
+$$
+\operatorname{tr}(AR)=\sum_i\lambda_i r_i,
+\qquad 0\leq r_i\leq1,\qquad \sum_i r_i=q.
+\tag{VIII.3}
+$$
+
+把权重移向较大特征值，最大值为前 $q$ 项之和；最小值为后 $q$ 项之和。相应谱投影达到两端。连续性及上述轨道闭包给 (VIII.2) 第一式。由于 $\operatorname{tr}A=0$，正负谱质量均为 $D$；任何效果与 $A$ 的配对都在 $[-D,D]$ 内，故上界成立。
+
+设 $A\ne0$，正、负特征值个数分别为 $r,s\geq1$。若 $r<q$，前 $q$ 项保留全部正质量，只扣去其余 $d-r$ 个非正特征值中绝对值最小的 $q-r$ 项。它们的绝对值之和至多 $(q-r)D/(d-r)$，包括零特征值时仍成立。因此
+
+$$
+\sum_{i=1}^q\lambda_i
+ \geq\frac{d-q}{d-r}D\geq\frac{d-q}{d-1}D.
+\tag{VIII.4}
+$$
+
+若 $s<q$，对 $-A$ 作同一论证。其余情形 $r,s\geq q$ 时，前 $q$ 个正特征值至少占正质量的 $q/r$，最负 $q$ 项至少占负质量的 $q/s$，故
+
+$$
+B_n(\rho,\sigma)\geq\frac{q}{\min(r,s)}D
+ \geq\frac{q}{\lfloor d/2\rfloor}D\geq c_nD.
+\tag{VIII.5}
+$$
+
+最后一步使用实际 Fibonacci 秩：$d=3q-F_{n-2}\leq3q-1$。于是 $q\geq(d+1)/3$，且
+$q(3d-2)-d^2\geq(d-2)/3>0$，等价地 $2q/d>(d-q)/(d-1)$；再用 $q/\lfloor d/2\rfloor\geq2q/d$。$A=0$ 的情形直接成立。
+
+取任意单位向量 $\psi\in\operatorname{ran}P$，定义同一族见证
+
+$$
+\rho_0=|\psi\rangle\langle\psi|,
+\qquad \rho_1=\frac{I-\rho_0}{d-1}.
+\tag{VIII.6}
+$$
+
+两态支撑正交，$D(\rho_0,\rho_1)=1$；差的谱为 $1,-1/(d-1),\ldots,-1/(d-1)$。谱公式给 $B_n=c_n$，并且空字的原 $P$ 已达到此值。因此任何更大的统一下界常数都失败。另取 $u\in\operatorname{ran}P$、$v\in\ker P$ 为单位向量，两纯态的 $D$ 与空字概率差都为一，证明上界常数最佳。
+
+递推式给 $\varphi F_{n+1}-F_{n+2}=(-1)^n\varphi^{-(n+1)}$，从而 $\varphi F_{n+1}-(F_{n+2}-1)>0$。结合 Fibonacci 比值极限即得 $c_n>1/\varphi$ 及所述极限。最后，若全部实际字概率差均不大于 $b$，其上确界也不大于 $b$，证明严格阈值的有限字结论。$\square$
+
+## 41. 同一极值态对的有限份自适应读出
+
+**假设 61.1（逐份一次末端比特合同）。** 两个已知候选为 (VIII.6)，先验各为 $1/2$。另行供应至多 $M$ 份样本，在假设 $i$ 下联合态为 $\rho_i^{\otimes M}$；测量装置各次独立初始化，无跨份量子记忆。每份样本只可施加一个 $\mathcal W_n$ 有限字，再作一次原二值终端测量。字可依赖既往完整经典记录，可提前停止，也容许输入无关的经典随机化；禁止同份追加测量、跨份联合量子操作或额外量子读口。此为统计资源假设，不由定理 58.1 或命题 59.1 产生。
+
+**定理 61.2（原生一次比特合同的精确错误率）。** 在假设 61.1 下，对每个整数 $M\geq0$，最优等先验平均错误率为
+
+$$
+e_n(M)=\tfrac12\beta_n^M,
+\qquad \beta_n=\frac{q-1}{d-1}\in(0,1).
+\tag{VIII.7}
+$$
+
+因而对 $0<\epsilon<1/2$，达到 $e_n(M)\leq\epsilon$ 的最小整数预算为
+$\left\lceil\log(1/(2\epsilon))/\log(1/\beta_n)\right\rceil$。这是供应样本份数，不是物理历时。
+
+**证明。** 任一允许效果 $R=P_w$ 的秩为 $q$。令 $a=\langle\psi|R|\psi\rangle\in[0,1]$；结果一的两假设概率为
+
+$$
+\Pr_0(Y=1)=a,
+\qquad \Pr_1(Y=1)=\frac{q-a}{d-1}.
+\tag{VIII.8}
+$$
+
+空字的基准比特 $X$ 满足 $\Pr_0(X=1)=1$、$\Pr_1(X=1)=\beta_n$。对它施加假设无关的随机核
+
+$$
+\Pr(Y=1\mid X=1)=a,
+\qquad \Pr(Y=1\mid X=0)=\frac{q(1-a)}{d-q}.
+\tag{VIII.9}
+$$
+
+因 $q<d-q$，这是合法的 $[0,1]$ 概率。在假设一之下，输出一的概率为
+$a(q-1)/(d-1)+q(1-a)/(d-1)=(q-a)/(d-1)$；假设零之下为 $a$。故每个允许单份实验都是同一基准实验的经典退化。
+
+对自适应策略，依次取独立基准比特，按已模拟的历史选择 (VIII.9)，便可在两个假设下同时模拟整个记录和最终决策。源的乘积合同保证每一步条件概率恰为 (VIII.8)。提前停止可填充至 $M$ 步并忽略多余比特。输入无关随机种子可一并模拟。因此完整原记录是 $M$ 个独立基准比特的假设无关后处理。这里直接消费 [《递归关系观察：波粒事件》定理 296.2](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#296-信息退化可见结果被怎样压缩同样属于边界) 的有限实验 Bayes 风险单调性，不另立一般 Blackwell 定理。
+
+基准记录在假设零下恒为全一；在假设一下，全一的概率为 $\beta_n^M$。对有限记录分布 $p_0,p_1$，等先验最优错误率为 $\frac12\sum_z\min\{p_0(z),p_1(z)\}$，因为每个记录上分别选择较大似然即可。这里仅全一贡献重叠，得 (VIII.7)。重复原空字 $M$ 次，全一判零、否则判一，恰好达到该界；$M=0$ 时取无观测猜测。$\square$
+
+两态虽然正交，所有有限 $M$ 的上述受限错误率仍严格正。若另授效果 $\rho_0$ 的二值测量，一份即可无误区分两支撑；它不是秩 $q\geq2$ 的原生一次末端效果。故 (VIII.7) 不约束更强的联合测量、同份序贯测量或未知端口上的任务，也不是任意态对的多份公式。
+
+## 42. 保留统一对比的预设有限菜单及其设置数
+
+**定义 62.1（最大单设置对比）。** 一个输入无关的预设菜单为非空有限字列表 $\mathcal F=(w_1,\ldots,w_m)$，其效果为 $P_j=P_{w_j}$。定义
+
+$$
+B_{\mathcal F}(\rho,\sigma)
+ =\max_{1\leq j\leq m}|\operatorname{tr}((\rho-\sigma)P_j)|.
+\tag{VIII.10}
+$$
+
+列表在看到未知输入及其测量记录之前固定。这里比较各二值实验中的最大概率差，不是把多个结果概率求和的单一 POVM 范数。
+
+**定理 62.2（严格次尖锐菜单存在与指数设置代价）。** 对任意 $0<\chi<c_n$，存在这样的实际有限字菜单，使对全部密度态对同时有
+
+$$
+\chi D(\rho,\sigma)\leq B_{\mathcal F}(\rho,\sigma)
+ \leq D(\rho,\sigma).
+\tag{VIII.11}
+$$
+
+反之，任何在全部密度态对上满足 (VIII.11) 下界的 $m$ 设置菜单都满足
+
+$$
+m\geq\tfrac12\exp\!\left(
+                  \frac{2\chi^2(d-1)^3}{d^2}\right).
+\tag{VIII.12}
+$$
+
+**证明。** 先在紧集
+$\mathcal S=\{A=A^\dagger:\operatorname{tr}A=0,\ \|A\|_1=2\}$ 上取有限覆盖。每个 $A\in\mathcal S$ 都是两个密度态之差：其正负部分各有迹一。定理 60.2 给某个真正有限字满足 $|\operatorname{tr}(AP_w)|>\chi$。对固定字，这是 $\mathcal S$ 上的开条件。所有这些开集覆盖 $\mathcal S$，紧致性给有限子覆盖。对非零态差除以其 $D$，便得 (VIII.11)；零差直接成立。所选字和参数只依赖 $n,\chi$，不依赖输入。这一存在证明没有把闭包中的门当作已执行的无限字。
+
+为证下界，对每个单位向量 $v$ 使用同一见证族
+$\rho_v=|v\rangle\langle v|$、$\sigma_v=(I-\rho_v)/(d-1)$，其 $D=1$。对固定秩 $q$ 投影 $Q$，置 $S=\langle v|Q|v\rangle$，有
+
+$$
+\operatorname{tr}((\rho_v-\sigma_v)Q)=\frac{dS-q}{d-1}.
+\tag{VIII.13}
+$$
+
+仅在此证明中，以复单位球面上的酉不变概率选择 $v$。其分布可由独立标准复 Gaussian 坐标归一化得到，因为 Gaussian 密度只依赖向量范数。各坐标模平方为独立均值一指数变量；前 $q$ 项与其余项之和分别具有密度 $x^{q-1}e^{-x}/(q-1)!$ 和 $y^{d-q-1}e^{-y}/(d-q-1)!$，由指数密度的卷积归纳即可得到。作 $s=x/(x+y),t=x+y$ 的变量替换并积分 $t$，得
+
+$$
+f_S(s)=\frac{(d-1)!}{(q-1)!(d-q-1)!}
+             s^{q-1}(1-s)^{d-q-1},\qquad 0<s<1.
+\tag{VIII.14}
+$$
+
+因此，对 $0<u<1$ 及 $Z_u\sim\operatorname{Bin}(d-1,u)$，
+
+$$
+\Pr(S\geq u)=\Pr(Z_u\leq q-1),
+\qquad \Pr(S\leq u)=\Pr(Z_u\geq q).
+\tag{VIII.15}
+$$
+
+例如第一式右侧是 $\sum_{k=0}^{q-1}\binom{d-1}{k}u^k(1-u)^{d-1-k}$，其导数为 $-f_S(u)$，在 $u=0$ 为一；第二式取补集。这直接给出所需 Beta—二项关系。
+
+使用 Hoeffding 的成熟二项尾界，见 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Theorem 2：若 $Z\sim\operatorname{Bin}(N,u)$、$b\geq0$，则任一方向离开均值至少 $Nb$ 的概率不超过 $e^{-2Nb^2}$。其所需一步也可直接推出：Bernoulli 变量 $X$ 的中心化对数矩母函数 $g(t)=\log\mathbb E e^{t(X-u)}$ 满足 $g(0)=g'(0)=0$，而 $g''(t)$ 是一个 Bernoulli 方差，至多 $1/4$。故 $g(t)\leq t^2/8$；独立相乘、指数 Markov 及 $t=4b$ 给上尾，$t=-4b$ 给下尾。
+
+令 $p=q/d$、$a=\chi(d-1)/d$。在上阈值 $u=p+a\in(0,1)$，
+
+$$
+(d-1)u-(q-1)=1-p+(d-1)a\geq(d-1)a;
+\tag{VIII.16}
+$$
+
+在下阈值 $u=p-a\in(0,1)$，$q-(d-1)u=p+(d-1)a\geq(d-1)a$。结合 (VIII.15) 及尾界得
+
+$$
+\Pr\{|S-q/d|\geq a\}
+ \leq2e^{-2(d-1)a^2}.
+\tag{VIII.17}
+$$
+
+阈值在 $[0,1]$ 外时相应尾事件为空；在端点也因 (VIII.14) 无原子而为零。由 (VIII.13)，固定设置满足对比至少 $\chi$ 的球面概率不超过 (VIII.17)。若 $m$ 个设置对所有见证态对均满足 (VIII.11)，这些事件的并集必须覆盖整个球面。因此 $1\leq2m e^{-2(d-1)a^2}$，即 (VIII.12)。这里的酉不变测度只是排除小菜单的数学见证，不是供应随机控制或随机制备的资源。$\square$
+
+对固定 $\chi>0$ 且 $\chi<c_n$，(VIII.12) 的指数随 $d=F_{n+2}$ 线性增长。这不与有限维线性坐标的精确可识别性冲突：本定理要求相对于迹距离的统一正对比裕量，且用最大单设置误差衡量。它不提供任意层析、加权结果范数、自适应设置或联合测量的样本下界；也不提供最小菜单、有效字综合或字长上界。若来源域不含全部见证族，不能沿用这里的设置数下界。框架层析参见 Scott，[*Tight informationally complete quantum measurements*](https://arxiv.org/html/quant-ph/0604049v6)，§§III、VI。
+
+## 43. 有限实际记录下的共同来源置信纤维
+
+**假设 63.1（固定历史后的重复来源与独立初始化）。** 固定已得历史 $h$、实际来源 $x\in X_h$ 和端口态 $\rho_x$。先固定满足 (VIII.11) 的实际菜单及整数 $N\geq1$。条件于这一个来源和历史，另行供应 $mN$ 份态 $\rho_x^{\otimes mN}$；第 $j$ 组 $N$ 份分别执行 $w_j$ 和原末端二值测量。装置每份独立初始化，实际效果恰为已知 $P_j$，无跨次返回环境。记录包含设置、样本数和全部比特；记各组一的计数为 $K_j$、频率为 $\widehat p_j=K_j/N$。样本数预先固定，不作未计入的可选停止。
+
+**命题 63.2（原生未来与独立端口协议的同一置信纤维）。** 给定 $0<\delta<1$，置
+
+$$
+\begin{aligned}
+t&=\sqrt{\frac{\log(2m/\delta)}{2N}},\\
+\mathcal C_{\widehat p}
+ &=\{\tau\in\mathsf D(\mathcal K_n):
+          \max_j|\operatorname{tr}(\tau P_j)-\widehat p_j|\leq t\},\\
+X_{h,\widehat p}
+ &=\{y\in X_h:\rho_y\in\mathcal C_{\widehat p}\},
+\qquad r=\min\{1,2t/\chi\}.
+\end{aligned}
+\tag{VIII.18}
+$$
+
+则对每个固定 $x\in X_h$ 有 $\Pr_x\{x\in X_{h,\widehat p}\mid h\}\geq1-\delta$。任何非空 $\mathcal C_{\widehat p}$ 的迹距离直径至多 $r$。对该集合内任意 $\sigma,\tau$，同时有
+
+$$
+\sup_{w\in\mathcal W_n}|p_\sigma(w)-p_\tau(w)|\leq r.
+\tag{VIII.19}
+$$
+
+进一步，固定任意已声明的有限端口协议 $\Pi$：仅接收端口输入 $A$，有限辅助系统以同一已知态 $\eta$ 独立初始化，采用固定有限分支的量子仪器和经典反馈，终止时保留完整记录，不含被省略的输入相关返回环境。其完整无条件记录律满足
+
+$$
+\operatorname{TV}(\mathsf P_\sigma^\Pi,
+                   \mathsf P_\tau^\Pi)\leq D(\sigma,\tau)\leq r.
+\tag{VIII.20}
+$$
+
+**证明。** 假设 63.1 下，第 $j$ 组为 $N$ 个独立 Bernoulli 试验，均值为 $\operatorname{tr}(\rho_xP_j)$。Hoeffding 双侧界及 $m$ 项并合给
+
+$$
+\Pr_x\left\{\max_j|\widehat p_j-
+               \operatorname{tr}(\rho_xP_j)|>t\mid h\right\}
+ \leq2m e^{-2Nt^2}=\delta.
+\tag{VIII.21}
+$$
+
+这复用 [《递归关系观察：波粒事件》定理 22.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#22-从精确恢复到有误差的关系重建) 的独立重复取样与共同置信事件方法；这里的消费者是 (VIII.11) 的指定原生菜单。(VIII.21) 中失败事件的补事件 $\{\max_j|\widehat p_j-\operatorname{tr}(\rho_xP_j)|\leq t\}$ 在 $\Pr_x(\cdot\mid h)$ 下的概率至少为 $1-\delta$；在该联合成功事件上，$\rho_x\in\mathcal C_{\widehat p}$，从而 $x\in X_{h,\widehat p}$。若 $\sigma,\tau$ 同属该集合，逐坐标三角不等式给 $B_{\mathcal F}(\sigma,\tau)\leq2t$；(VIII.11) 给 $D(\sigma,\tau)\leq2t/\chi$，再用 $D\leq1$。定理 60.2 的上界于是给 (VIII.19)，无需对无限字族另取并合界。
+
+为核对 (VIII.20) 的协议量词，把每条完整记录 $z$ 的复合分支记为辅助扩张上的 CP 映射 $\mathcal I_z$，把预先的独立初始化记为 $J_\eta(\tau)=\tau\otimes\eta$。其输入效果为 $E_z=(\mathcal I_z\circ J_\eta)^*(I)\geq0$。完整性给 $\sum_zE_z=I$；反馈只决定各分支内已声明的复合映射。因此 $\mathsf P_\tau^\Pi(z)=\operatorname{tr}(\tau E_z)$。对任何记录事件 $S$，$E_S=\sum_{z\in S}E_z$ 是效果，故 $|\operatorname{tr}((\sigma-\tau)E_S)|\leq D(\sigma,\tau)$。对 $S$ 取最大便得完整记录总变差界。只要每个协议满足同一初始化合同，这一确定性结论在同一个置信事件上对全部这样的协议成立；它不授予其中未声明的操作。$\square$
+
+在非空纤维中选一个估计态，只能得到上述置信保证，不是有限比特给出无误精确态名。若集合为空，应报告该置信集合为空，不用任意态替换它。对 $0<\epsilon<1$，充分的预设每组样本数为
+
+$$
+N\geq\frac{2\log(2m/\delta)}{\chi^2\epsilon^2},
+\tag{VIII.22}
+$$
+
+此时 $r\leq\epsilon$，总消耗为 $mN$ 份所供应样本。该充分预算与 (VIII.12) 的设置数障碍是不同方向的结论，不把两者合称最优层析复杂度。可靠置信区域参见 Christandl–Renner，[*Reliable Quantum State Tomography*](https://arxiv.org/abs/1108.5329v2)。
+
+若按训练记录选择未来字或协议，(VIII.19)–(VIII.20) 的确定性统一界仍可用，但物理预测必须作用于一份另行供应的、条件于固定 $x,h$ 与训练记录独立的留出输入，及该协议独立初始化的辅助系统。它不是已消耗样本的测后条件态预测。对于输入相关的隐环境，局部边缘 $\rho_x$ 不决定回流记录；这里直接保留 [《观察者内生三轴几何与预测接口》定义 9.3 的共同环境例](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) 的边界。对稀有后选择事件的条件律也须另给事件概率下界，不能从完整无条件记录界直接保留同一常数。
+
+相同单份边缘不供应假设 63.1。复用 [《四角相干与单份认证》命题 C-121.5](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md) 的共同标签机制：取单位向量 $u\in\operatorname{ran}P_j$、$v\in\ker P_j$，仅抽一次公平比特 $L$，随后全部样本按 $L$ 同时取 $u$ 或同时取 $v$。每份边缘均为 $(|u\rangle\langle u|+|v\rangle\langle v|)/2$，但 $\widehat p_j=L$，对其边缘均值的误差恒为 $1/2$，不随 $N$ 缩小。共同标签造成的联合关联不能被边缘相等消去。
+
+若还要求保留一个实际参考 $R$，可另假定供应 $\tau_{AR}\otimes\rho_x^{\otimes mN}$ 且 $\operatorname{tr}_R\tau_{AR}=\rho_x$；测量后面的独立份不会物理作用于 $AR$。然而本置信纤维只约束 $A$ 的边缘，不识别未知 $AR$ 相关，也不提供带参考的联合迹距离证书。这样的联合供应不是从一个未知 $AR$ 输入免费复制出来的资源。
+
+## 追加锚（本行以下为增补区）
+
+
+## 44. 固定相位菜单的实际有限字达到
+
+**定理 64.1（Native58 的有限字加强）。** 保留定义 55.1、假设 55.2、(VII.18) 的被动标架及定理 58.1 已证明的全尺寸翻转 Lie 代数。对每个 $n\geq1$，实际翻转字集本身满足
+
+$$
+\mathcal V_n=D_nSO(d_n)D_n^\dagger.
+\tag{IX.1}
+$$
+
+对每个 $n\geq3$，仍只使用同址固定门 $S_{\star,n}$，实际有限字集本身满足
+
+$$
+\boxed{\mathcal W_n=\{Q\in U(d_n):\det Q\in\langle i^{F_{n-2}}\rangle\}}.
+\tag{IX.2}
+$$
+
+因此 $SU(d_n)\subseteq\mathcal W_n$；每个酉通道都有一个精确有限原生字实现。这里“原生”仅指假设 55.2 的理想菜单，参数仍可取任意实数。结论没有给出已评价的脉冲数、持续时间、参数精度或硬件实现。
+
+**证明。** 在被动标架中记 $\widetilde{\mathcal W}_n=D_n^\dagger\mathcal W_nD_n$，$A_j=A_j^{(n)}$，并定义
+
+$$
+\mathfrak L=\operatorname{span}_{\mathbb R}
+ \{\operatorname{Ad}_g A_j:g\in\widetilde{\mathcal W}_n,\ 1\leq j\leq n\}.
+\tag{IX.3}
+$$
+
+这里 $g$ 总是一个实际有限字，不是字集闭包中的元素。$\mathfrak L$ 是有限维实向量空间，因而闭；每个实际字的共轭保持它。对每个生成其线性张成的方向 $X=\operatorname{Ad}_gA_j$，都有精确恒等式
+
+$$
+e^{tX}=g e^{tA_j}g^{-1}\in\widetilde{\mathcal W}_n
+\qquad(t\in\mathbb R).
+\tag{IX.4}
+$$
+
+字的逆可用，特别是固定相位的逆就是其三次幂。对 $Y\in\mathfrak L$，曲线 $e^{tX}Ye^{-tX}$ 全在 $\mathfrak L$ 内；在零点求导给 $[X,Y]\in\mathfrak L$。对 $X$ 的有限实线性组合使用双线性，故 $\mathfrak L$ 是 Lie 代数。这一步只对有限维向量空间取导数，没有执行一个交换子极限字。
+
+由定理 58.1 的翻转代数等式，$\mathfrak{so}(d_n)\subseteq\mathfrak L$。该定理的 (VII.25)–(VII.33) 是全 $n$ 归纳：被末位阻断的控制产生第一块中的非零理想，孤立匹配边的括号给全部第一块旋转，再由最后控制的匹配与一个零行得到全部矩形跨块方向和第二块旋转。因此这里复用的是该全尺寸证明，不是有限尺寸的秩外推。
+
+设 $P=n_1n_3|_{\mathcal K_n}$。对每个 $n\geq3$，$P$ 的像和核均非零，$S_{\star,n}$ 在两者上分别为 $i$ 和 $1$。$\mathfrak L$ 在这个实际门的共轭下不变。于是对计算基指标 $p\in\operatorname{ran}P$、$q\in\ker P$，它同时包含
+
+$$
+J_{pq},\qquad i(E_{pq}+E_{qp}),\qquad
+[J_{pq},i(E_{pq}+E_{qp})]=2i(E_{pp}-E_{qq}).
+\tag{IX.5}
+$$
+
+两个非空指标集之间的完全二分图连通；沿路径相加，以上对角差张成全部迹零纯虚对角矩阵。再与全部 $J_{uv}$ 交换，得到每个 $i(E_{uv}+E_{vu})$。这些与实反对称方向张成 $\mathfrak{su}(d_n)$。反向，(IX.3) 的每个方向都是迹零反 Hermitian，故
+$\mathfrak L=\mathfrak{su}(d_n)$。
+
+从 (IX.3) 的实际共轭方向中选一组基 $X_1,\ldots,X_{d_n^2-1}$，考虑
+
+$$
+\mathcal F(t_1,\ldots,t_{d_n^2-1})
+ =e^{t_1X_1}\cdots e^{t_{d_n^2-1}X_{d_n^2-1}}.
+\tag{IX.6}
+$$
+
+它在零点的微分是 $(t_j)\mapsto\sum_jt_jX_j$，为到 $T_I SU(d_n)$ 的同构。逆函数定理给 $SU(d_n)$ 中一个恒等邻域，邻域的每个点都是 (IX.4) 的有限字乘积。故 $\widetilde{\mathcal W}_n\cap SU(d_n)$ 是开子群。开子群的全部陪集均开，因而它也闭；$SU(d_n)$ 连通，迫使此子群为整个 $SU(d_n)$。没有把稠密子群当成整个群。
+
+同一论证把 (IX.3) 中的字限于翻转字，所得代数恰为 $\mathfrak{so}(d_n)$：一侧来自定理 58.1，另一侧来自正交共轭保持实反对称性。选实际共轭基，在连通 $SO(d_n)$ 上使用 (IX.6) 的相应维数版本，即得 (IX.1)，包括 $n=1,2$。$n=0$ 的空菜单仅给一维空间上的恒等。
+
+所有翻转脉冲行列式为一，而定理 58.1 已给
+$\operatorname{rank}P=F_{n-2}$，所以每个实际字的行列式在 $C_n=\langle i^{F_{n-2}}\rangle$ 内。反之，若 $\det Q\in C_n$，选整数 $k$ 使 $\det Q=\det S_{\star,n}^k$，则
+$QS_{\star,n}^{-k}\in SU(d_n)\subseteq\mathcal W_n$，故 $Q\in\mathcal W_n$。被动共轭不改变 $SU$ 或行列式，得到原坐标中的 (IX.2)。对任意 $U$ 取 $|z|=1$ 使 $z^{d_n}\det U=1$，则 $zU$ 有精确有限字，且其酉通道等于 $U$ 的通道。
+
+例如 $n=3,5,8$ 时，$C_n$ 的阶分别为 $4,2,1$。$n=8$ 虽有 $\det S_{\star,8}=1$，该门的相位支撑仍是非零真子空间，故 (IX.5) 仍成立；不能因行列式为一而删去其控制作用。$\square$
+
+本定理应用的是成熟的共轭基与逆函数方法，见 D. D'Alessandro，[*Uniform finite generation of compact Lie groups and universal quantum gates*，Lemma 1、Theorem 2](https://arxiv.org/html/quant-ph/0111133v1)。其接口是连通有限维 Lie 群、所给单参数子群及实参数；本证明把每个共轭和逆都落实为当前固定相位菜单中的字。[《合法门、状态机与 Shor 读出》Theorem 11.2](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#11-a-phase-restriction-has-an-exact-blind-sector-one-extra-quadrature-removes-it) 已在另一项“某一位置增加第二正交驱动”的菜单下使用精确控制原理。这里增加的是 Native58 的固定相位、全合法链应用，不认领该一般控制方法，也不把两种菜单的权限互换。
+
+## 45. 原支持三维输入的精确末次秩二边缘
+
+**定义 65.1（固定复线性支持与读效果）。** 在 $\mathcal K_3$ 的基序 $000,100,010,001,101$ 中，固定
+
+$$
+E_N=\left(\frac{|000\rangle+|101\rangle}{\sqrt2},
+          \frac{|100\rangle+|001\rangle}{\sqrt2},|010\rangle\right),
+\qquad n_1=\operatorname{diag}(0,1,0,0,1).
+\tag{IX.7}
+$$
+
+$E_N^\dagger E_N=I_3$，读扇区秩二，其正交补秩三。此 $E_N$ 与 [GC §21 的五基字典](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md#21-the-fixed-complex-linear-five-mode-dictionary) 对应。GC 的同一源根满足 (GC.6)，从而其
+$M=\operatorname{diag}(0,m_1,m_2)$ 满足 $0\preceq M\prec I_3$、$\operatorname{rank}M=2$。严格上界来自 $D^\dagger D\succ0$ 和根 TP，源根条件本身仍是 GC Assumption 1.2 的未验证供应。
+
+**定理 65.2（精确支持效果，不是完整仪器）。** 在假设 55.2 的 $n=3$ 菜单和命题 59.1 另行声明的末次二值 PVM 下，存在一个实际有限字 $U\in\mathcal W_3$，使
+
+$$
+E_N^\dagger U^\dagger n_1UE_N=M.
+\tag{IX.8}
+$$
+
+因此同一个字对全部复 qutrit 输入 $\rho$ 精确给出一结果概率
+$\operatorname{tr}(M\rho)$。对任意有限被动参考及联合态 $X$，丢弃被测系统后，该结果的未归一参考算子恰为
+$\operatorname{Tr}_3[(M\otimes I_R)X]$。
+
+**证明。** 选等距 $A:\operatorname{ran}M\to\operatorname{ran}n_1$ 和
+$B:\mathbb C^3\to\ker n_1$，定义
+
+$$
+J=A\sqrt M+B\sqrt{I_3-M}.
+\tag{IX.9}
+$$
+
+两项的像正交，故 $J^\dagger J=M+(I_3-M)=I_3$，且
+$J^\dagger n_1J=M$。在两个五维空间中分别补齐 $E_N$ 与 $J$ 的三个正交列，得到酉 $U_0$ 满足 $U_0E_N=J$。在输入的二维未指定正交补中选一个单位基向量，将它对应的输出列乘以 $(\det U_0)^{-1}$；其余列不变。所得 $U$ 仍酉，仍有 $UE_N=J$，而 $\det U=1$。定理 64.1 使这个 $U$ 本身成为实际有限字，得到 (IX.8)。将效果恒等式张量 $I_R$ 并对被测系统取偏迹，给参考算子恒等式；无需对参考态作实性或乘积分离假设。$\square$
+
+原读口在未作这个字时的初等压缩是
+
+$$
+E_N^\dagger n_1E_N=\operatorname{diag}(1/2,1/2,0),
+\tag{IX.10}
+$$
+
+由 (IX.7) 的三列逐项配对即可得到；它通常不等于原 $M$。定理 65.2 解决的是支持效果的精确匹配，而非仅按比特个数判断的障碍。效果只决定结果概率及其丢弃系统后的参考边缘：它不指定条件量子后态、GC 的低/高取得分支、完整 live 通道、整个未来可访问纤维成本或真实 FIRST 时刻。甚至“允许末次 PVM 的概率”也不自动给出可复用的 Lüders 后态服务。GC §§23–25 分别保留这些仪器障碍及另加装置前提的条件构造；那些前提没有由本定理授权。原生仪器与时钟缺口，以及原全部预算、全部对比、源与 minimax 的目标，均不因此完成。
+
+## 追加锚（本行以下为增补区）

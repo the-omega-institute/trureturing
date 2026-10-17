@@ -34,16 +34,16 @@ internal static class DecomposeAtomCommand
                 repository,
                 loaded,
                 Decode,
-                [parent.SourcePath, TheoryAtomizerDataLoader.DataPath, DigestionCasStore.RootPath + id]);
+                [parent.SourcePath, FileMapLoader.RelativePath, ":(glob)Meta/FILEMAP.*.toml", DigestionCasStore.RootPath + id]);
             raw = loaded.Raw;
             snapshot = loaded.Snapshot;
             ledger = loaded.Document;
             parent = ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
             if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
                 throw new FormatException($"CAS_MISSING atom_id={id}");
-            var rules = TheoryAtomizerDataLoader.Load(snapshot);
+            DigestionSourceEligibility.Require(snapshot, parent.SourcePath);
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
-            var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
+            var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, snapshot, splitAt);
             var existingChildren = DigestionQuerySelection.ReadAtoms(repository,
                 plan.Children.Select(static child => child.Fingerprints.RawSha256[7..]).Distinct(StringComparer.Ordinal).ToArray());
             loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(raw, existingChildren.Raw));
@@ -76,7 +76,7 @@ internal static class DecomposeAtomCommand
                 ledger = loaded.Document;
                 entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
             }
-            var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot, rules);
+            var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot);
             foreach (var child in plan.Children)
             {
                 var childId = child.Fingerprints.RawSha256[7..];

@@ -7,36 +7,24 @@ namespace StrataLint.Tests;
 
 internal sealed class DecomposeFixture
 {
-    internal const string Dialect = "dialect:decompose-probe";
+    internal const string Dialect = AtomizerRegistry.GenericId;
     internal const string Bold = "**Theorem 1.1** First assertion.\n\n**Second** Second assertion.\n";
     internal static string Eight => "**Theorem 1.1** First obligation α.\n\n"
         + string.Concat(Enumerable.Range(2, 7)
             .Select(index => $"**Clause {index}** Independent obligation {index} α.\n\n"));
-    internal static string RulesText => AtomizerRulesFixture.Minimal + "\n\n" + """
-        [[dialect]]
-        id = "decompose-probe"
-        claim = "^\\*\\*(?<kind>Theorem)\\s+(?<number>[0-9]+\\.[0-9]+)"
-
-        [[dialect.genre]]
-        dialect = "decompose-probe"
-        token = "Theorem"
-        kind = "theorem"
-        """ + "\n";
-
     internal DecomposeFixture(string text = Bold, string atomizer = Dialect)
     {
         Parent = Entry(text, atomizer);
         var source = new DigestionLedgerSource("probe", "docs/probe.md", atomizer, [],
-            GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])), [Parent]);
-        Current = RawRepositorySnapshot.Create(
+            GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry), [Parent]);
+        Current = DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(
         [
-            RawRepositoryEntry.FromText(TheoryAtomizerDataLoader.DataPath, RulesText),
             RawRepositoryEntry.FromText("docs/probe.md", text),
             new RawRepositoryEntry("Meta/Digestion/backfill/probe/source.toml",
                 BackfillInventoryWriter.WriteSourceMetadata(source)),
             new RawRepositoryEntry(PathFor(Parent), BackfillInventoryWriter.WriteAtom(Parent)),
             RawRepositoryEntry.FromText(DigestionCasStore.RootPath + Parent.AtomId, text),
-        ]);
+        ]), ["docs/*.md"]);
         Baseline = Current;
         Gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), Current, Baseline,
             currentReader: () => Current);
@@ -51,7 +39,6 @@ internal sealed class DecomposeFixture
     internal ImmutableArray<IngestCommand.LedgerUpdate> LedgerWrites { get; private set; } = [];
     internal RepositorySnapshot Snapshot => Decode(Current);
     internal BackfillInventoryDocument Document => BackfillInventoryLoader.Load(Snapshot);
-    internal TheoryAtomizerRules Rules => TheoryAtomizerDataLoader.Load(Snapshot);
     internal string[] Args(string? atomId = null, bool dryRun = false) =>
         ["--atom", atomId ?? Parent.AtomId, .. dryRun ? new[] { "--dry-run" } : []];
 
@@ -111,7 +98,7 @@ internal sealed class DecomposeFixture
         + $"{DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}/{entry.AtomId}.yaml";
 
     internal static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
 
     internal static DigestionAtom Atom(string text) =>
         DigestionAtom.FromFrozenCas([.. Encoding.UTF8.GetBytes(text)]);

@@ -1,0 +1,8 @@
+**引理 3.1（二元后验的同测度 TV 不等式）。** 设 $\mu,\nu$ 是 $\{0,1\}\times Y$ 上的概率律，$Y$ 为标准 Borel 空间；记二元条件概率为 $a(y),b(y)$，$Y$ 边缘为 $\mu_Y,\nu_Y$。则
+
+$$
+\int|a-b|\,d\mu_Y\le2\,\operatorname{TV}(\mu,\nu),
+\qquad \operatorname{TV}(\mu,\nu)=\sup_B|\mu(B)-\nu(B)|.
+\tag{3.1}
+$$
+

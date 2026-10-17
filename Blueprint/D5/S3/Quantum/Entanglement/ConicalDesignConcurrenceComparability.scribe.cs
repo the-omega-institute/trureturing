@@ -14,6 +14,9 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
         "Conical two-design concurrence bounds have a uniform ratio ordering.",
         H("Comparability of conical-design concurrence bounds"),
         Blocks(
+            Node("traceNorm_smul_nonneg", "Nonnegative homogeneity of the trace norm", TraceNormSmulFormula(),
+                "Multiplication of a complex matrix by a nonnegative real scalar multiplies its trace norm by the same scalar. This includes zero and allows convex trace-norm estimates to pass from pure states to mixtures.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("traceNorm_isometry", "Rectangular isometries preserve the trace norm", TraceNormIsometryFormula(),
                 "For finite index types M and N, a complex rectangular matrix V with adjoint times V equal to the identity preserves the trace norm under X mapped to V X V adjoint. The square matrix X is arbitrary. This invariance is used in the normal form of the concurrence bound and in the projection dilation.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -80,6 +83,17 @@ internal sealed class ConicalDesignConcurrenceComparabilityDocument : IScribeDoc
     private static Formula MatrixInputs(Formula body) => DesignInputs(All("rho", MatrixType(Pairs(F.Id("d"))), body));
     private static Formula SumOver(Formula i, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, type)), Sp, body);
+
+    private static Formula TraceNormSmulFormula()
+    {
+        Formula n = F.Id("n"), x = F.Id("X"), c = F.Id("c");
+        Formula instances = Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Sp);
+        return Disp(All("n", Seq(F.Id("Type"), Star), Seq(instances,
+            All("X", MatrixType(n), All("c", RealType(), Imp(Le(D(0), c),
+                Eqn(Call("traceNorm", Call("smul", Cast(c, ComplexType()), x)),
+                    Mul(c, Call("traceNorm", x)))))))));
+    }
 
     private static Formula TraceNormIsometryFormula()
     {

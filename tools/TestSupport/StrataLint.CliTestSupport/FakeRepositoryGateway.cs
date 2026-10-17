@@ -11,7 +11,8 @@ internal sealed class FakeRepositoryGateway(
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
     Func<RawRepositorySnapshot>? currentReader = null,
-    Func<string, RawRepositorySnapshot>? revisionReader = null)
+    Func<string, RawRepositorySnapshot>? revisionReader = null,
+    bool addSourcePolicy = true)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -90,17 +91,17 @@ internal sealed class FakeRepositoryGateway(
     {
         ReadCount++;
         ReadCurrentCount++;
-        return WithAtomizerData(
-            currentReader?.Invoke()
+        var snapshot = currentReader?.Invoke()
             ?? current
-            ?? throw new InvalidOperationException("current snapshot should not be read"));
+            ?? throw new InvalidOperationException("current snapshot should not be read");
+        return addSourcePolicy ? DigestionTestSupport.WithSourcePolicy(snapshot) : snapshot;
     }
 
     private RawRepositorySnapshot ReadWholeRevision(string revision)
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
-        return WithAtomizerData(
+        return (
             revisionReader?.Invoke(revision)
             ?? baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
@@ -116,12 +117,8 @@ internal sealed class FakeRepositoryGateway(
     // A path selects itself and, as a directory, everything under it.
     private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> paths) =>
         RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
-            GitRepositoryGateway.MatchesPathSelection(entry.Path, path))));
+            GitRepositoryGateway.MatchesPathSelection(entry.Path, path))),
+            snapshot.PathInventory.IsDefault ? default : snapshot.PathInventory.Where(entry => paths.Any(path =>
+                GitRepositoryGateway.MatchesPathSelection(entry.Path, path))).ToImmutableArray());
 
-    private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
-        snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)
-            ? snapshot
-            : RawRepositorySnapshot.Create(snapshot.Entries.Add(new RawRepositoryEntry(
-                TheoryAtomizerDataLoader.DataPath,
-                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes))));
 }

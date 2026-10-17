@@ -18,14 +18,15 @@ internal static partial class DigestionQuerySelection
         var targets = loaded.Document.RequireDigestionEntries().Where(entry => entry.AtomId == atomId).ToArray();
         if (targets.Length != 1) return loaded;
         var target = targets[0];
-        loaded = Load(Merge(loaded.Raw, repository.ReadCurrent([Literal(target.SourcePath), Literal(TheoryAtomizerDataLoader.DataPath)])));
+        loaded = Load(Merge(loaded.Raw, repository.ReadCurrent([Literal(target.SourcePath), Literal(FileMapLoader.RelativePath), ":(glob)Meta/FILEMAP.*.toml"])));
         if (!loaded.Snapshot.TryGetFile(target.SourcePath, out var sourceFile))
             throw new DigestionAtomContextException(DigestionAtomContextError.SOURCE_MISSING,
                 $"source_id={target.SourceId} source_path={target.SourcePath}");
-        if (target.Atomizer == AtomizerRegistry.NoAtomizerId)
-            throw new DigestionAtomContextException(DigestionAtomContextError.ATOMIZER_NONE, $"source_id={target.SourceId}");
-        var atomized = AtomizerRegistry.Require(target.Atomizer).Atomize(sourceFile.RawBytes.AsSpan(),
-            TheoryAtomizerDataLoader.Load(loaded.Snapshot));
+        DigestionSourceEligibility.Require(loaded.Snapshot, target.SourcePath);
+        if (!AtomizerRegistry.IsRegistered(target.Atomizer))
+            throw new DigestionAtomContextException(DigestionAtomContextError.ATOMIZER_UNSUPPORTED,
+                $"source_id={target.SourceId} atomizer={target.Atomizer}");
+        var atomized = AtomizerRegistry.Require(target.Atomizer).Atomize(sourceFile.RawBytes.AsSpan());
         sourceDocument = atomized;
         var raw = loaded.Raw;
         var targetSpan = atomized.Claims.Concat(atomized.ClausePlans.SelectMany(static plan => plan.Children))

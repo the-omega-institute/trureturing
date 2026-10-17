@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:92330dbf570e695112ed8df0b64994c701f6502941afa1071c11d53699a4b80b
-  normalized_sha256: sha256:92330dbf570e695112ed8df0b64994c701f6502941afa1071c11d53699a4b80b
-cas_ref: sha256:92330dbf570e695112ed8df0b64994c701f6502941afa1071c11d53699a4b80b
-coverage_gids:
-  - gid: D5/S1/Deficit/Beatty/FiberCapacityPair.golden_fiber_capacity_pair
-    target_statement_id: sha256:cd6ffb8ed1faee35f39704c71eb5b15f6e9572a0a30316519449acc806ad06db
-receipts:
-  unresolved_subitems: []

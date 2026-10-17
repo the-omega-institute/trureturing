@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fdac53693102dcd881b31b36504f98a539e626e1cbbc8fed375c9aa176c9dabb
-  normalized_sha256: sha256:fdac53693102dcd881b31b36504f98a539e626e1cbbc8fed375c9aa176c9dabb
-cas_ref: sha256:fdac53693102dcd881b31b36504f98a539e626e1cbbc8fed375c9aa176c9dabb
-coverage_gids:
-  - gid: D5/S3/PrimeForms/ErdosStrausResidueReduction.es_mod_24_reduction
-    target_statement_id: sha256:51a53e3cdf4d3150b5fcec92478f09a0daf6c7c069d06d9c858b4365ff50f1ea
-receipts:
-  unresolved_subitems: []

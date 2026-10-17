@@ -24,7 +24,7 @@ public sealed class HistoricalReferenceOwnershipTests
         var parent = Target(f);
         var original = f.Current;
         var closure = DigestionDecomposition.ValidatedClosure([parent.AtomId],
-            f.Document.RequireDigestionEntries().ToDictionary(e => e.AtomId), f.Snapshot, f.Rules);
+            f.Document.RequireDigestionEntries().ToDictionary(e => e.AtomId), f.Snapshot);
         Assert.Equal(nested ? 7 : 3, closure.Count);
         var replay = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(replay.Success, replay.Error);
@@ -130,6 +130,8 @@ public sealed class HistoricalReferenceOwnershipTests
             RawRepositoryEntry.FromText(foreign.SourcePath, first + second),
             RawRepositoryEntry.FromText(BackfillInventoryLoader.RootPath + "unrelated/residual-open/" + new string('f', 64) + ".yaml", "broken: ["),
         }));
+        f.Current = DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(
+            f.Current.Entries.Where(entry => entry.Path != FileMapLoader.RelativePath)));
         var query = DigestionQuerySelection.ReadContext(f.Gateway, left.AtomId);
         var scoped = DigestionAtomContextProjection.Resolve(query.Snapshot, query.Document, left.AtomId);
         Assert.DoesNotContain(f.Gateway.ScopedCurrentReads.SelectMany(paths => paths),
@@ -137,9 +139,9 @@ public sealed class HistoricalReferenceOwnershipTests
         var complete = RawRepositorySnapshot.Create(f.Current.Entries.Where(entry => !entry.Path.Contains("unrelated", StringComparison.Ordinal)));
         var snapshot = DecomposeFixture.Decode(complete);
         var document = BackfillInventoryLoader.Load(snapshot);
-        Assert.Empty(GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(first + second), f.Rules).Claims);
+        Assert.Empty(GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(first + second)).Claims);
         Assert.Equal(5, DigestionDecomposition.ValidatedClosure([f.Parent.AtomId],
-            document.RequireDigestionEntries().ToDictionary(entry => entry.AtomId), snapshot, f.Rules).Count);
+            document.RequireDigestionEntries().ToDictionary(entry => entry.AtomId), snapshot).Count);
         var closure = DigestionAtomContextProjection.Resolve(snapshot, document, left.AtomId);
         Same(scoped.Previous, closure.Previous);
         Same(scoped.Current, closure.Current);
@@ -177,6 +179,8 @@ public sealed class HistoricalReferenceOwnershipTests
                 RawRepositoryEntry.FromText(foreign.SourcePath, text),
             }));
         }
+        f.Current = DigestionTestSupport.WithSourcePolicy(RawRepositorySnapshot.Create(
+            f.Current.Entries.Where(entry => entry.Path != FileMapLoader.RelativePath)));
         return f;
 
         string Raw(DigestionLedgerEntry entry) => Encoding.UTF8.GetString(f.Current.Entries.Single(e =>

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:03682508f70cb8bd4b556025433cbc480080e6afdd794d278153ab6cc2295c77
-  normalized_sha256: sha256:03682508f70cb8bd4b556025433cbc480080e6afdd794d278153ab6cc2295c77
-cas_ref: sha256:03682508f70cb8bd4b556025433cbc480080e6afdd794d278153ab6cc2295c77
-coverage_gids:
-  - gid: D5/S1/Depth/ContinuedFractions/GaussInfiniteFiber.gauss_map_interior_fiber_infinite
-    target_statement_id: sha256:d9d99c51ffde9c99155f66d0acb959c067d3b3b2106f2d120589e07624b0bba8
-receipts:
-  unresolved_subitems: []

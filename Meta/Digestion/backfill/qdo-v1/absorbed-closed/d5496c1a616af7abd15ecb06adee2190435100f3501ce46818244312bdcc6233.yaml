@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
-  normalized_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
-cas_ref: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
-coverage_gids:
-  - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
-    target_statement_id: sha256:1852b851afdab783a70de9ace3043539b2e971391762da4b9ce2cab933c3ccea
-receipts:
-  unresolved_subitems: []
