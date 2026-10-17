@@ -2557,3 +2557,214 @@ The quotient has exactly zero, one, two, three, or four singular original fibre 
 The new exclusion uses the exact adaptive objective and simultaneous common stresses of sections 91–92, the quotient of Lemma 95.2, and the fixed-direction argument of Lemma 95.3. It does not require the sharp three-vector theorem or the doubly rank-seven support-size reduction. Section 94 separately excludes all doubly rank-seven subquarter calibrated local minima.
 
 A hypothetical global subquarter optimum can still lie at a calibrated minimum whose rank-seven kernel has smaller coordinate support, whose opposite Gram has rank at most five, or whose two ranks are both at most six, subject to the earlier reductions. Neither a missing whole fibre nor a single missing coordinate is covered by Theorem 95.1. In smaller opposite ranks, annihilating R need not annihilate the full opposite kernel. No rank-preservation assertion under calibration or unsupported reduction to extreme Grams is used. The unrestricted quarter lower bound for the original channels, including leakage, remains open.
+
+## 96. Small-support bounds for one rank-seven side
+
+### 96.1. Original domain and common-witness compression
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four two-coordinate fibres, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain 𝓔={G=G*≥0:G_ff=I₂}, sections 91 and 95 give
+
+\[
+ \begin{aligned}
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W],\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,\
+                  \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g).
+ \end{aligned}                                                     \tag{1}
+\]
+
+Assume (G,H) is a local minimum on the full domain 𝓔×𝓔, with rank G=7 and 0<t=F(G,H)<1/2. Fix a nonzero vector a spanning ker G, and put S=supp(a). The opposite full rank is not specified. Section 95 supplies a common norming witness with first stress αaa*, α>0, and
+
+\[
+ W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}}
+       \quad(i,j\text{ in different fibres}).                 \tag{2}
+\]
+
+Every cross-fibre denominator is nonzero by the original matrix-unit bound |1/2−G_ijH_ij|≤t<1/2.
+
+**Lemma 96.1.** Every common norming density and witness is supported on S. The full error t equals the exact adaptive norm of the principal coefficient on S, retaining the original intersections of S with the fibres. In addition, G_S minimizes that principal norm with H_S fixed over the full feasible principal Gram domain.
+
+**Proof.** Equation (2) makes every cross-fibre entry of W with an endpoint outside S vanish. The coefficient L=T−G⊙H has zero entire fibre blocks, so 2Tr(LW)=2Tr(L_SW_S). Put s=Tr ρ_S. Compression preserves 0≤W_S≤ρ_S and block diagonality. If s=0, the objective would be zero. If 0<s<1, the normalized principal pair would have value t/s>t and would extend by zero to a feasible original witness, a contradiction. Hence s=1. Positivity and W≤ρ make both matrices supported on S. Every principal witness also extends by zero, so the two norm values are equal.
+
+For any feasible principal Gram G′_S, complete it to the original domain by assigning all missing coordinates new mutually orthogonal records, orthogonal to the principal records. Every original fibre identity block is preserved. The same common witness exposes G's one-party face. Its objective at this completed Gram is therefore at least t, and its principal adaptive norm is at least that fixed-witness value. The original G_S attains t. This proves the asserted global one-party minimum. ∎
+
+This statement uses a common norming witness and makes no claim that every normer belongs to the common-witness subset, or that a full-domain local minimum projects to a joint local minimum of the principal problem.
+
+### 96.2. Supports with at most three coordinates
+
+**Theorem 96.2.** At any positive calibrated local minimum on the full domain with rank G=7 and |S|≤3,
+
+\[
+ F(G,H)\ge\kappa:=\frac{\sqrt{21-9\sqrt[3]{9}}}{6}>\frac14.
+                                                                    \tag{3}
+\]
+
+In particular, a hypothetical subquarter minimum with one rank-seven side must have at least four coordinates in that side's kernel support. The same conclusions hold with the parties interchanged.
+
+**Proof.** The case t≥1/2 is immediate, since κ<1/3 as verified below. Assume 0<t<1/2. Lemma 95.2 supplies a PSD unit-diagonal quotient R with
+
+\[
+ G_S=H_S\odot\overline R,\qquad
+ \operatorname{rank}G_S=n-1,\qquad h+r\le n,\qquad n-1\le hr,
+ \quad n=|S|,\ h=\operatorname{rank}H_S,\ r=\operatorname{rank}R.
+                                                                    \tag{4}
+\]
+
+The integers h,r are positive. If n=1, rank G_S=0 contradicts its unit diagonal. If n=2 and both coordinates lie in one fibre, G_S=I₂ contradicts rank G_S=1. Otherwise the two coordinates lie in different fibres, and (4) forces h=r=1.
+
+We will use the following normalized principal witness whenever S has at most one coordinate in each fibre. Set K_S=(G⊙H)_S and L_S=T_S−K_S. Then T_S=(I_n+J_n)/2 and Tr L_S=0. The original block-diagonal density I_n/n on S, extended by zero, gives
+
+\[
+ t\ge\frac{2}{n}\operatorname{Tr}((L_S)_+)
+       =\frac{\|L_S\|_1}{n}.                                  \tag{5}
+\]
+
+If H_S has rank one, write H_S=vv* with |v_i|=1. Then K_S=diag(v)G_Sdiag(overline v) has rank n−1. For a unit vector x in its kernel,
+
+\[
+ x^*L_Sx=x^*T_Sx\ge\frac12,\qquad
+ \operatorname{Tr}((L_S)_+)\ge\frac12,\qquad \|L_S\|_1\ge1.
+                                                                    \tag{6}
+\]
+
+For n=2, this gives t≥1/2, a contradiction.
+
+Now let n=3. Equation (4) leaves exactly (h,r)=(1,2) or (2,1). First suppose the three coordinates are in three different fibres. If h=1, (5)–(6) give t≥1/3. If r=1, write R=uu* with |u_i|=1 and choose a diagonal unitary V with V²=diag(u). The reciprocal gauge
+
+\[
+ G'_S=VG_SV^*,\qquad H'_S=V^*H_SV                         \tag{7}
+\]
+
+makes G′_S=H′_S=:Q, preserves their entrywise product, and extends by arbitrary diagonal phases outside S to the full original domain. The common principal matrix Q is PSD with diagonal one and rank two. The sharp complex three-vector theorem of section 93 gives
+
+\[
+ E:=\sum_{i<j}|1/2-Q_{ij}^{\,2}|^2
+       \ge\frac{21-9\sqrt[3]{9}}{16}.                         \tag{8}
+\]
+
+Here L_S has squared Frobenius norm 2E. If its positive and negative eigenvalues each have total absolute mass s, their squared sums are each at most s². Hence ∥L_S∥₁=2s≥2√E. Equation (5) now gives t≥κ.
+
+It remains to treat the genuinely different three-coordinate occupancy (2,1). Here H_S contains I₂, so h≥2 and (4) forces (h,r)=(2,1). The same reciprocal gauge (7) makes the principal Grams equal. This gauge is a homeomorphism of the full domain and preserves F and local minimality. In this one fixed gauge write
+
+\[
+ G_S=H_S=Q=
+ \begin{pmatrix}
+ 1&0&x\\0&1&y\\\overline x&\overline y&1
+ \end{pmatrix},
+ \qquad |x|^2+|y|^2=1,\qquad a_S=a_3(-x,-y,1).
+                                                                    \tag{9}
+\]
+
+The norm equality follows from positivity and rank two. All three kernel coordinates are nonzero, so a₃,x,y are nonzero. A common witness in this fixed gauge satisfies
+
+\[
+ W_{13}=\frac{\alpha|a_3|^2x}{2\overline x},\qquad
+ W_{23}=\frac{\alpha|a_3|^2y}{2\overline y},\qquad \alpha>0.
+                                                                    \tag{10}
+\]
+
+All other cross-fibre entries contributing to its full eight-coordinate objective vanish. The target has zero entry 12, rather than the three-singleton value 1/2. Consequently
+
+\[
+ \begin{aligned}
+ t&=4\operatorname{Re}\left[
+      (1/2-x^2)\overline{W_{13}}+
+      (1/2-y^2)\overline{W_{23}}\right]\\
+  &=\alpha|a_3|^2\left[
+       \operatorname{Re}\frac{\overline x}{x}
+       +\operatorname{Re}\frac{\overline y}{y}-2\right]\le0.
+ \end{aligned}                                                     \tag{11}
+\]
+
+The factor four is the factor two in (1) and the two orientations of each Hermitian edge. Each ratio in the last line has modulus one, so this contradiction to t>0 retains arbitrary complex phases. The reversed occupancy is identical after interchanging the fibres.
+
+Finally κ>1/4 follows from 9<(25/12)³, and κ<1/3 follows from 9>(17/9)³. The preceding cases prove (3). ∎
+
+### 96.3. A two-fibre unitary best-response fact
+
+We next analyze the four-coordinate occupancy consisting of two whole original fibres. Its principal Grams have the form
+
+\[
+ G_S=\begin{pmatrix}I_2&X\\X^*&I_2\end{pmatrix},\qquad
+ H_S=\begin{pmatrix}I_2&Y\\Y^*&I_2\end{pmatrix},\qquad
+ \|X\|_{\rm op},\|Y\|_{\rm op}\le1.
+                                                                    \tag{12}
+\]
+
+For M=J₂/2−X⊙Y, the exact two-fibre adaptive norm is ∥M∥op. To verify the upper bound, put C=W₁₂, A=W₁₁, B=W₂₂. Positivity of W and ρ−W gives
+
+\[
+ \begin{aligned}
+ \|C\|_1&\le\sqrt{\operatorname{Tr}A\,\operatorname{Tr}B},\\
+ \|C\|_1&\le\sqrt{\operatorname{Tr}(\rho_1-A)
+                           \,\operatorname{Tr}(\rho_2-B)},\\
+ 2\|C\|_1&\le\sqrt{\operatorname{Tr}\rho_1\,
+                          \operatorname{Tr}\rho_2}\le\frac12.
+ \end{aligned}                                                     \tag{13}
+\]
+
+The first inequality follows by factoring a positive block matrix as blocks P*P,P*Q,Q*P,Q*Q and applying the Hilbert–Schmidt product inequality; the second is the same argument for ρ−W. Adding and applying the scalar Cauchy–Schwarz inequality gives the third. Thus the objective 4Re Tr(MC*) is at most ∥M∥op. For unit left and right singular vectors u,v attaining that norm, equality is realized by
+
+\[
+ \rho=\operatorname{diag}(uu^*/2,vv^*/2),\qquad
+ W=\frac14\binom{u}{v}\binom{u}{v}^{*},\qquad
+ \rho-W=\frac14\binom{u}{-v}\binom{u}{-v}^{*}\ge0.               \tag{14}
+\]
+
+**Lemma 96.3.** If Y is a 2×2 unitary with no zero entry, every contraction X minimizing ∥J₂/2−X⊙Y∥op is unitary.
+
+**Proof.** Independent row and column phases on Y, and reciprocal phases on X, preserve the product and contraction conditions. Thus assume
+
+\[
+ Y=\begin{pmatrix}c&s\\s&-c\end{pmatrix},
+ \qquad c,s>0,\qquad c^2+s^2=1.                             \tag{15}
+\]
+
+Indeed three entries can be made positive real, after which orthogonality forces the displayed negative fourth entry. Put
+
+\[
+ P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+ J=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+ \Theta(X)=JXJ.
+                                                                    \tag{16}
+\]
+
+This involution preserves contractions and satisfies Y⊙Θ(X)=P(Y⊙X)P. It preserves the objective because P J₂P=J₂. Complex conjugation also preserves the objective and commutes with Θ. Averaging these four symmetries gives a minimizing contraction
+
+\[
+ X_0=\frac{X+\overline X+\Theta(X)+\Theta(\overline X)}4
+       =\begin{pmatrix}a&b\\b&-a\end{pmatrix},
+       \qquad a,b\in\mathbb R.                              \tag{17}
+\]
+
+Its norm √(a²+b²) must equal one. If it were smaller, compare with the exact-target matrix
+
+\[
+ X_{\rm tar}=
+   \begin{pmatrix}1/(2c)&1/(2s)\\1/(2s)&-1/(2c)\end{pmatrix},
+ \qquad Y\odot X_{\rm tar}=J_2/2,\qquad
+ \|X_{\rm tar}\|_{\rm op}=\frac1{2cs}\ge1.
+                                                                    \tag{18}
+\]
+
+The interior contraction X₀ would have positive error. For sufficiently small ε>0, (1−ε)X₀+εX_tar would remain a contraction while its complete matrix error decreased by the factor 1−ε, contradicting minimality. Thus X₀ is unitary.
+
+A unitary is an extreme point of the operator-norm unit ball. Here is the needed elementary argument. If a unitary Q is an average of contractions A_k, the contractions B_k=Q*A_k average to I. For each unit vector v, Re(v*B_kv)≤1 and their average equals one, so each equals one. Equality in Cauchy–Schwarz gives B_kv=v for every v, hence A_k=Q. Applying this to the four contractions in (17) gives X=X₀, in particular X is unitary. Undoing the reciprocal phases proves the lemma. ∎
+
+### 96.4. The remaining two-full-fibre quotient has rank one
+
+**Theorem 96.4.** Under the positive-subhalf hypotheses of section 96.1, suppose S consists of two complete original fibres. Then
+
+\[
+ \operatorname{rank}H_S=3,\qquad \operatorname{rank}R=1.
+                                                                    \tag{19}
+\]
+
+**Proof.** Equation (4) now has n=4. Since H_S contains I₂, h≥2, so h+r≤4 and hr≥3 leave only (h,r)=(2,2) or (3,1).
+
+If h=2, (12) implies Y is unitary: the eigenvalues of that block Gram are 1 plus or minus the two singular values of Y. Its entries are nonzero by t<1/2. Lemma 96.1 and the exact two-fibre norm make X a global minimizer of ∥J₂/2−X′⊙Y∥op over all contractions X′. Lemma 96.3 forces X to be unitary, hence rank G_S=2. This contradicts rank G_S=|S|−1=3. Therefore (h,r)=(3,1). ∎
+
+Theorem 96.4 is a necessary reduction, not an exclusion of all support on two full fibres. Its remaining rank-one quotient permits a reciprocal gauge with equal principal Grams, but the full opposite kernel may have additional vectors. The earlier affine face directions cannot be used without proving that they annihilate those vectors.
+
+Together, Theorems 96.2 and 96.4 exclude all kernel supports with at most three coordinates at subquarter values and exclude the opposite-principal-rank-two alternative for two complete active fibres. Section 95 separately excludes full-support rank-(7,6) positive-subhalf minima. The remaining smaller-support and lower-rank cases, including the (3,1) principal-rank pair in (19), are open here. These statements concern full-domain calibrated local minima. Calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels; the original unrestricted quarter optimum remains open.
