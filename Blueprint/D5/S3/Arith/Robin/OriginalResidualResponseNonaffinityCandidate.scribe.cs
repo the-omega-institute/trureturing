@@ -1,4 +1,4 @@
-// SOURCE_ONLY / UNAPPLIED / UNCOMPILED. No Scribe emitter or Lean check has run.
+// Exposition of the unchanged original arithmetic response and its affine defect.
 using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
@@ -20,6 +20,18 @@ internal sealed class OriginalResidualResponseNonaffinityCandidateDocument : ISc
                 + "R(N,m)=1+C(N)*m-sum_(1<=d<=N)c(N,d)*floor(m/d). "
                 + "The floors are natural division, then cast to the reals; the constant, linear "
                 + "term and every original Mobius row remain. The complete block is S(N)={m in N:N<=m<2N}.")),
+            Describe.Lean(
+                DescribeId.Create("original-response-four-point-gap"),
+                DeclarationHandle.Create(Prefix + "response_four_point_gap"),
+                H("An original prime/composite four-point gap"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural N>=3 there are distinct internal prime/composite base indices "
+                    + "p,c with N<p,c<2N such that every real affine error E(m)=R(N,m)-alpha-beta*m/N "
+                    + "satisfies 1-log(2)/log(N)<=E(c)-E(c-1)-E(p)+E(p-1). The four slots may "
+                    + "overlap. This supplier is consumed by the quantitative defect and the "
+                    + "collision-aware lower energy of the actual original response adjoint."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("original-response-quantitative-affine-defect"),
                 DeclarationHandle.Create(Prefix + "response_affine_defect_lower_bound"),

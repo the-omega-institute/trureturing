@@ -11,18 +11,7 @@ import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
 import Mathlib.NumberTheory.Bertrand
 import Mathlib.Tactic
 
-/-!
-UNCOMPILED candidate. This file has not been submitted to Lean, the kernel,
-Reg, a current report or CI. It does not modify an original/frozen owner.
-
-The final theorem concerns the literal original `response`, with its original
-natural floors and every original Mobius row. Its affine coordinates are
-exactly the original partial-cell Gram coordinates `(1, m/N)`.
-
-Every private helper below is consumed by the final nonaffinity proof. There
-are no added axioms, admitted goals, `sorry`, surrogate response definitions,
-good-height hypotheses or supplied sign assumptions.
--/
+/-! The literal original Mobius response on its complete block. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -260,58 +249,44 @@ private theorem exists_internal_prime {N : ℕ} (hN : 3 ≤ N) :
     exact ⟨N, rfl⟩
   rcases (Nat.dvd_prime hp).mp htwo with hbad | hbad <;> omega
 
-/-- No affine vector in the original Gram coordinates equals the exact response
-on its complete original integer block, for any N ≥ 3. -/
-theorem response_not_affine_on_original_block {N : ℕ} (hN : 3 ≤ N) :
-    ¬∃ α β : ℝ, ∀ m ∈ Ico N (2 * N),
-      response N m = α + β * ((m : ℝ) / N) := by
-  classical
-  rintro ⟨α, β, hAff⟩
+/-- The exact original arithmetic increment gap annihilates every affine
+function in the original coordinates. The four slots may overlap. -/
+theorem response_four_point_gap {N : ℕ} (hN : 3 ≤ N) :
+    ∃ p c : ℕ, N < p ∧ p < 2 * N ∧ N < c ∧ c < 2 * N ∧ p ≠ c ∧
+      ∀ α β : ℝ,
+        1 - Real.log (2 : ℝ) / Real.log (N : ℝ) ≤
+          ((response N c - α - β * ((c : ℝ) / N)) -
+            (response N (c - 1) - α - β * (((c - 1 : ℕ) : ℝ) / N))) -
+          ((response N p - α - β * ((p : ℝ) / N)) -
+            (response N (p - 1) - α - β * (((p - 1 : ℕ) : ℝ) / N))) := by
   obtain ⟨p, hp, hNp, hpN⟩ := exists_internal_prime hN
   obtain ⟨c, hNc, hcN, htwo, hcprime⟩ := exists_internal_even_composite hN
-  have hAff_step (t : ℕ) (hNt : N < t) (htN : t < 2 * N) :
-      response N t - response N (t - 1) = β / (N : ℝ) := by
-    rw [hAff t (Finset.mem_Ico.mpr ⟨by omega, htN⟩),
-      hAff (t - 1) (Finset.mem_Ico.mpr ⟨by omega, by omega⟩),
-      Nat.cast_sub (show 1 ≤ t by omega), Nat.cast_one]
-    ring
-  have hprime_step := response_increment (N := N) (t := p) (by omega)
-  rw [hAff_step p hNp hpN,
-    prime_filtered_coefficient_sum hN hp hNp hpN] at hprime_step
-  have hcomposite_step := response_increment (N := N) (t := c) (by omega)
-  rw [hAff_step c hNc hcN] at hcomposite_step
-  have hcomposite_sum :=
+  have hpinc := response_increment (N := N) (t := p) (by omega)
+  rw [prime_filtered_coefficient_sum hN hp hNp hpN] at hpinc
+  have hcinc := response_increment (N := N) (t := c) (by omega)
+  have hcdiv :=
     even_composite_filtered_coefficient_sum_le hN hNc hcN htwo hcprime
-  have hL : 0 < Real.log (N : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hlog2 : Real.log (2 : ℝ) < Real.log (N : ℝ) :=
-    Real.log_lt_log (by norm_num) (by exact_mod_cast (show 2 < N by omega))
-  have hratio : Real.log (2 : ℝ) / Real.log (N : ℝ) < 1 :=
-    (div_lt_one hL).mpr hlog2
-  linarith
+  have hgap : 1 - Real.log (2 : ℝ) / Real.log (N : ℝ) ≤
+      (response N c - response N (c - 1)) -
+        (response N p - response N (p - 1)) := by
+    linarith only [hpinc, hcinc, hcdiv]
+  refine ⟨p, c, hNp, hpN, hNc, hcN, ?_, ?_⟩
+  · intro hpc
+    exact hcprime (hpc ▸ hp)
+  · intro α β
+    have hstep (t : ℕ) (ht : 0 < t) :
+        (response N t - α - β * ((t : ℝ) / N)) -
+            (response N (t - 1) - α - β * (((t - 1 : ℕ) : ℝ) / N)) =
+          response N t - response N (t - 1) - β / (N : ℝ) := by
+      rw [Nat.cast_sub (show 1 ≤ t by omega), Nat.cast_one]
+      ring
+    rw [hstep c (by omega), hstep p (by omega)]
+    linarith only [hgap]
 
-/-!
-UNCOMPILED INSERTION FRAGMENT r2067. This file is not a standalone module.
-No parser, elaborator, kernel, build, report, registry or CI has run on it.
-
-Insert this body immediately before the final
-`end D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate`
-in the COMPLETE r2036 candidate. There are intentionally no imports or new
-namespace commands: the original `response` open, finite-sum scope, imports
-and PRIVATE helper context are required. Importing r2036 separately would
-not expose those private helpers. The original r2036 file is unchanged.
-
-The response gap below is derived by calling r2036's actual original
-prime/composite coefficient suppliers and literal-floor increment identity.
-It is not an assumed gap. Four error terms then cancel the same affine
-function in the exact original coordinates (1,m/N). The four index slots
-need not be distinct; adjacent prime/composite indices and a repeated
-midpoint are allowed throughout.
--/
 
 /-- Every affine function in the original Gram coordinates has a definite
 pointwise defect from the original response somewhere on its original block.
-This is a conditional source extension of the uncompiled r2036 context. -/
+The original prime/composite slots may overlap. -/
 theorem response_affine_defect_lower_bound {N : ℕ} (hN : 3 ≤ N) :
     ∀ α β : ℝ, ∃ m ∈ Ico N (2 * N),
       (1 - Real.log (2 : ℝ) / Real.log (N : ℝ)) / 4 ≤
@@ -321,34 +296,9 @@ theorem response_affine_defect_lower_bound {N : ℕ} (hN : 3 ≤ N) :
   by_contra! hsmall
   let δ : ℝ := 1 - Real.log (2 : ℝ) / Real.log (N : ℝ)
   let E : ℕ → ℝ := fun m => response N m - α - β * ((m : ℝ) / N)
-  obtain ⟨p, hp, hNp, hpN⟩ := exists_internal_prime hN
-  obtain ⟨c, hNc, hcN, htwo, hcprime⟩ := exists_internal_even_composite hN
-
-  -- Actual suppliers: the prime divisor sum is 1, and the even-composite
-  -- divisor sum is at most log(2)/log(N), in the ORIGINAL coefficient owner.
-  have hpinc := response_increment (N := N) (t := p) (by omega)
-  rw [prime_filtered_coefficient_sum hN hp hNp hpN] at hpinc
-  have hcinc := response_increment (N := N) (t := c) (by omega)
-  have hcomposite :=
-    even_composite_filtered_coefficient_sum_le hN hNc hcN htwo hcprime
-  have hresponse_gap : δ ≤
-      (response N c - response N (c - 1)) -
-        (response N p - response N (p - 1)) := by
-    dsimp only [δ]
-    linarith only [hpinc, hcinc, hcomposite]
-
-  -- Subtracting any affine function changes every increment by the same
-  -- beta/N. Consequently the four-point combination cancels it exactly.
-  have herror_step (t : ℕ) (ht : 0 < t) :
-      E t - E (t - 1) =
-        response N t - response N (t - 1) - β / (N : ℝ) := by
-    dsimp only [E]
-    rw [Nat.cast_sub (show 1 ≤ t by omega), Nat.cast_one]
-    ring
+  obtain ⟨p, c, hNp, hpN, hNc, hcN, _, hgap⟩ := response_four_point_gap hN
   have herror_gap : δ ≤ (E c - E (c - 1)) - (E p - E (p - 1)) := by
-    rw [herror_step c (by omega), herror_step p (by omega)]
-    linarith only [hresponse_gap]
-
+    simpa only [δ, E] using hgap α β
   have hsmallE (m : ℕ) (hm : m ∈ Ico N (2 * N)) : |E m| < δ / 4 := by
     simpa only [E, δ] using hsmall m hm
   have hc0 : |E c| < δ / 4 :=
@@ -364,5 +314,24 @@ theorem response_affine_defect_lower_bound {N : ℕ} (hN : 3 ≤ N) :
   have hp_lo : -(δ / 4) < E p := (abs_lt.mp hp0).1
   have hpprev_hi : E (p - 1) < δ / 4 := (abs_lt.mp hp1).2
   linarith only [herror_gap, hc_hi, hcprev_lo, hp_lo, hpprev_hi]
+
+
+/-- The complete original response is not affine in its original Gram coordinates. -/
+theorem response_not_affine_on_original_block {N : ℕ} (hN : 3 ≤ N) :
+    ¬∃ α β : ℝ, ∀ m ∈ Ico N (2 * N),
+      response N m = α + β * ((m : ℝ) / N) := by
+  rintro ⟨α, β, hAff⟩
+  obtain ⟨m, hm, hdefect⟩ := response_affine_defect_lower_bound hN α β
+  have hL : 0 < Real.log (N : ℝ) :=
+    Real.log_pos (by exact_mod_cast (show 1 < N by omega))
+  have hlog2 : Real.log (2 : ℝ) < Real.log (N : ℝ) :=
+    Real.log_lt_log (by norm_num) (by exact_mod_cast (show 2 < N by omega))
+  have hgap : 0 < 1 - Real.log (2 : ℝ) / Real.log (N : ℝ) :=
+    sub_pos.mpr ((div_lt_one hL).mpr hlog2)
+  have hz : response N m - α - β * ((m : ℝ) / N) = 0 := by
+    rw [hAff m hm]
+    ring
+  rw [hz, abs_zero] at hdefect
+  linarith
 
 end D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate

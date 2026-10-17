@@ -1,10 +1,3 @@
-/- SOURCE_ONLY / UNAPPLIED / UNCOMPILED.
-Both sourceSelection paths below are static candidates, not compiler-derived
-binding evidence. No Lean, report, registry or CI has checked this file.
-The only mathematical module imported below is supplied by this same package;
-it has not yet been integrated into the canonical repository.
--/
-
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate
 import Reg.Support.DependentFamily
@@ -107,7 +100,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  -- UNVERIFIED raw path: N,hN,alpha,beta; Exists predicate; right And clause;
+  -- Original source path: N,hN,alpha,beta; Exists predicate; right And clause;
   -- left operand of LE.le. N is lexical state binder 0; no parameter coordinate.
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate
@@ -208,7 +201,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  -- UNVERIFIED raw path: N,hN; Not; Exists alpha; Exists beta; forall m,hm;
+  -- Original source path: N,hN; Not; Exists alpha; Exists beta; forall m,hm;
   -- left operand of Eq. N is parameter coordinate 0 and m is lexical binder 4.
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate
@@ -229,6 +222,100 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end Nonaffinity
+
+
+namespace FourPoint
+
+abbrev signature := QuantitativeDefect.signature
+
+def actual : Realization signature :=
+  realize signature (fun _ _ N => 1 - Real.log (2 : ℝ) / Real.log (N : ℝ))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ N => 4 * (∑ m ∈ Ico N (2 * N), |response N m|) + 1)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {N : ℕ}, 3 ≤ N →
+    ∃ p c : ℕ, N < p ∧ p < 2 * N ∧ N < c ∧ c < 2 * N ∧ p ≠ c ∧
+      ∀ α β : ℝ, R.readout () () N ≤
+        ((response N c - α - β * ((c : ℝ) / N)) -
+          (response N (c - 1) - α - β * (((c - 1 : ℕ) : ℝ) / N))) -
+        ((response N p - α - β * ((p : ℝ) / N)) -
+          (response N (p - 1) - α - β * (((p - 1 : ℕ) : ℝ) / N)))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨p, c, hNp, hpN, hNc, hcN, _, hgap⟩ := h (N := 3) (by norm_num)
+  have he := hgap 0 0
+  simp only [rejected, realize, sub_zero, zero_mul] at he
+  have hb (m : ℕ) (hm : m ∈ Ico 3 (2 * 3)) :
+      |response 3 m| ≤ ∑ k ∈ Ico 3 (2 * 3), |response 3 k| :=
+    single_le_sum (fun k _ => abs_nonneg (response 3 k)) hm
+  have hp0 := hb p (mem_Ico.mpr ⟨by omega, hpN⟩)
+  have hp1 := hb (p - 1) (mem_Ico.mpr ⟨by omega, by omega⟩)
+  have hc0 := hb c (mem_Ico.mpr ⟨by omega, hcN⟩)
+  have hc1 := hb (c - 1) (mem_Ico.mpr ⟨by omega, by omega⟩)
+  linarith [le_abs_self (response 3 c), neg_abs_le (response 3 (c - 1)),
+    neg_abs_le (response 3 p), le_abs_self (response 3 (p - 1))]
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 3, 4, ?_⟩
+  have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hlog3 : 0 < Real.log (3 : ℝ) := Real.log_pos (by norm_num)
+  have hlog4 : 0 < Real.log (4 : ℝ) := Real.log_pos (by norm_num)
+  have hlog34 : Real.log (3 : ℝ) < Real.log (4 : ℝ) :=
+    Real.log_lt_log (by norm_num) (by norm_num)
+  have hr : Real.log (2 : ℝ) / Real.log (4 : ℝ) <
+      Real.log (2 : ℝ) / Real.log (3 : ℝ) :=
+    (div_lt_div_iff₀ hlog4 hlog3).mpr (mul_lt_mul_of_pos_left hlog34 hlog2)
+  change 1 - Real.log (2 : ℝ) / Real.log (3 : ℝ) ≠
+    1 - Real.log (2 : ℝ) / Real.log (4 : ℝ)
+  exact ne_of_lt (by linarith)
+
+def family : Registration arena (type_of% @response_four_point_gap) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨response_four_point_gap, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@response_four_point_gap) (Realization signature) Type Unit where
+  unitName := `OriginalResidualResponseNonaffinityCandidate.response_four_point_gap.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate.FourPoint.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ _ N => 1 - Real.log (2 : ℝ) / Real.log (N : ℝ)) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  -- Full-family proof is attempted; exact source binding still needs the native report.
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FourPoint
 
 end
 end Reg.D5.S3.Arith.Robin.OriginalResidualResponseNonaffinityCandidate
