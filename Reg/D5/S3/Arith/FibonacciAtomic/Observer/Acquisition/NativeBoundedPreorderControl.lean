@@ -164,4 +164,90 @@ def native_one_update_alignment_registration :
   familyRecord := none
   options := #[]
 
+abbrev stationarySignature := Reg.Support.SingleDependentReadout.signature
+  Unit (fun _ => Source) (fun _ => Bool)
+
+def stationaryActual : Realization stationarySignature :=
+  realize stationarySignature
+    (fun _ _ u => decide ((GenealogicalFiberTransport.composition u).2 % 2 = 1))
+    (fun e => nomatch e)
+
+def stationaryBad : Realization stationarySignature :=
+  realize stationarySignature (fun _ _ _ => true) (fun e => nomatch e)
+
+abbrev stationaryArena : Arena where
+  signature := stationarySignature
+  Law R := ∀ (P : Parameters) (τ : Nat) (u y : Source),
+    u.length = P.h → y = substitution^[τ] u → P.start ≤ τ → τ ≤ P.start + P.last →
+    (P.h % 2 = 0 ∨ τ = 0) →
+    ∀ (obs : Nat → ActualTreeReadoutAcquisition.Address → ActualTreeReadoutAcquisition.Reply)
+      (epoch : Nat),
+    (∀ p, obs epoch p = ActualTreeReadoutAcquisition.readout p y) →
+    let bit := R.readout () () u
+    let final := canonical (if bit then .halt1 else .halt0)
+    Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
+    controlProgram P final = .halt ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      controlProgram P z = .halt → z = final ∧ a = epoch)
+
+private theorem stationary_bad_law : ¬ stationaryArena.Law stationaryBad := by
+  intro law
+  let P : Parameters := ⟨1, 0, 0, 0, false⟩
+  let obs : Nat → ActualTreeReadoutAcquisition.Address → ActualTreeReadoutAcquisition.Reply :=
+    fun _ p => ActualTreeReadoutAcquisition.readout p (.of true)
+  have wrong := law P 0 (.of true) (.of true) rfl rfl (by decide) (by decide)
+    (Or.inr rfl) obs 0 (by intro p; rfl)
+  have correct := native_stationary_bounded_execution P 0 (.of true) (.of true) rfl rfl
+    (by decide) (by decide) (Or.inr rfl) obs 0 (by intro p; rfl)
+  have eq := correct.2.2 _ _ wrong.1 wrong.2.1
+  have mode := congrArg Control.mu eq.1
+  change Mode.halt1 = Mode.halt0 at mode
+  cases mode
+
+def stationaryFamily : Registration stationaryArena
+    (type_of% (@native_stationary_bounded_execution)) where
+  actual := stationaryActual
+  bridge := Iff.rfl
+  variation := ⟨@native_stationary_bounded_execution, stationaryBad, stationary_bad_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ stationary_bad_law
+  dependence := by
+    intro i
+    refine ⟨(), .of true, .of false, ?_⟩
+    change (false : Bool) ≠ true
+    decide
+
+def native_stationary_bounded_execution_registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@native_stationary_bounded_execution) (Realization stationarySignature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.stationaryUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.stationaryFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨stationaryArena⟩
+  objectArena := .source ⟨stationaryArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source stationaryArena ⟨stationaryFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize stationarySignature stationaryActual.readout stationaryActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "value"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl

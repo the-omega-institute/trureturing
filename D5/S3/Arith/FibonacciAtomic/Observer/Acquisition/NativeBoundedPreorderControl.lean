@@ -459,7 +459,222 @@ private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source
     rw [response, spec.guard_accept a member nonroot]
     simpa [atPrefix] using value
 
+private theorem virtual_next (P : Parameters) (τ N : Nat) (u y : Source)
+    (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
+    (j : Nat) (offset : P.start + j = N)
+    (H : History) (a next : BoundedPreorderTrial.Report) (tail : History)
+    (split : trial P.h (BoundedPreorderTrial.virtualSource u τ N) =
+      H ++ a :: next :: tail) :
+    virtualDelta P (atPrefix j H a.1 .value) a.2 =
+      atPrefix j (H ++ [a]) next.1 (queryMode N next.1) := by
+  have splitNext : trial P.h (BoundedPreorderTrial.virtualSource u τ N) =
+      (H ++ [a]) ++ next :: tail := by simpa using split
+  obtain ⟨_, front, _, hl, _⟩ := trial_geometry P.h τ N u y spec H a (next :: tail) split
+  obtain ⟨_, frontNext, hbNext, _, depthNext⟩ :=
+    trial_geometry P.h τ N u y spec (H ++ [a]) next tail splitNext
+  have step : cursorStep a.1 a.2 = some next.1 := by
+    have same : pending (cursorStep a.1 a.2) = next.1 :: rightsPending next.1 := by
+      rw [cursor_frontier]
+      change acquisitionStep (a.1 :: rightsPending a.1) a = _
+      rw [← front, ← frontNext]
+      simp [ActualTreeReadoutAcquisition.frontier, List.foldl_append]
+    cases eq : cursorStep a.1 a.2 with
+    | none => simp [eq, pending] at same
+    | some p => simpa [eq, pending] using congrArg List.head? same
+  have honest := (spec.reached a (by rw [split]; simp)).2
+  cases reply : a.2 with
+  | absent => exact (honest reply).elim
+  | branch =>
+    have path : a.1 ++ [false] = next.1 := by simpa [cursorStep, reply] using step
+    have counts : branches H + 1 < P.h := by
+      simpa [branches, reply] using hbNext
+    have depth : a.1.length + 1 < P.h := by simpa [← path] using depthNext
+    have len : a.1.length + 1 = next.1.length := by simpa using congrArg List.length path
+    simp [virtualDelta, atPrefix, reply, counts, Nat.ne_of_lt counts, depth, path, offset]
+    simp [branches, leafVisits, betas, reply, len]
+  | alpha =>
+    have path : nextPath a.1 = some next.1 := by simpa [cursorStep, reply] using step
+    simp [virtualDelta, atPrefix, reply, Nat.ne_of_lt hl, path, offset]
+    simp [branches, leafVisits, betas, reply, show (Reply.alpha == Reply.beta) = false by decide]
+    rfl
+  | beta =>
+    have path : nextPath a.1 = some next.1 := by simpa [cursorStep, reply] using step
+    have bits : Bool.xor (decide (betas H % 2 = 1)) true =
+        decide ((betas H + 1) % 2 = 1) := by
+      rcases (show betas H % 2 = 0 ∨ betas H % 2 = 1 by omega) with hm | hm
+      all_goals simp [Nat.add_mod, hm]
+    simp only [Bool.xor_true] at bits
+    simp [virtualDelta, atPrefix, reply, Nat.ne_of_lt hl, path, offset, bits]
+    simp [branches, leafVisits, betas, reply] at bits ⊢
+
+private theorem virtual_finish (P : Parameters) (τ N : Nat) (u y : Source)
+    (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
+    (j : Nat) (offset : P.start + j = N) (covers : τ ≤ P.start + P.last)
+    (H : History) (a : BoundedPreorderTrial.Report)
+    (split : trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ [a]) :
+    virtualDelta P (atPrefix j H a.1 .value) a.2 =
+      if branches (acquisitionTrace [] (BoundedPreorderTrial.virtualSource u τ N)) < P.h
+      then canonical (if decide (betas (H ++ [a]) % 2 = 1) then .halt1 else .halt0)
+      else fresh (j + 1) := by
+  classical
+  let v := BoundedPreorderTrial.virtualSource u τ N
+  obtain ⟨_, _, _, hl, _⟩ := trial_geometry P.h τ N u y spec H a [] split
+  have finalCursor (hc : BoundedPreorderTrial.Completes P.h v) :
+      cursorStep a.1 a.2 = none := by
+    have full : acquisitionTrace [] v = H ++ a :: [] :=
+      (spec.completion hc).1.symm.trans split
+    have suffix := (reachable_compressed_frontier_and_trial_simulation v).2.2 H a [] full
+    have endRun := suffix.2.2
+    generalize eq : cursorStep a.1 a.2 = c at endRun
+    cases endRun
+    rfl
+  have leafComplete (hr : a.2 ≠ .branch) : BoundedPreorderTrial.Completes P.h v := by
+    by_contra rejected
+    have last := (spec.rejection rejected).2.1
+    simpa [split, hr] using last
+  have honest := (spec.reached a (by rw [split]; simp)).2
+  cases reply : a.2 with
+  | absent => exact (honest reply).elim
+  | branch =>
+    have rejected : ¬ BoundedPreorderTrial.Completes P.h v := by
+      intro complete
+      have impossible := finalCursor complete
+      simp [cursorStep, reply] at impossible
+    have reject := spec.rejection rejected
+    have count : branches H + 1 = P.h := by simpa [split, branches, reply] using reject.1
+    have next : j < P.last := by have before := reject.2.2; omega
+    change ¬ branches (acquisitionTrace [] v) < P.h at rejected
+    simp [virtualDelta, atPrefix, count, next, rejected, v]
+  | alpha =>
+    have complete := leafComplete (by simp [reply])
+    have path : nextPath a.1 = none := by simpa [cursorStep, reply] using finalCursor complete
+    obtain ⟨leaves, forks, _⟩ := spec.completed_counts complete
+    have lc : leafVisits H + 1 = P.h := by simpa [split, leafVisits, reply] using leaves
+    have bc : branches H = P.h - 1 := by simpa [split, branches, reply] using forks
+    change branches (acquisitionTrace [] v) < P.h at complete
+    simp [virtualDelta, atPrefix, Nat.ne_of_lt hl, path, lc, bc, complete, v]
+    simp [betas, reply, show (Reply.alpha == Reply.beta) = false by decide]
+    by_cases hm : List.countP (fun r => r.2 == Reply.beta) H % 2 = 1 <;> simp [hm]
+  | beta =>
+    have complete := leafComplete (by simp [reply])
+    have path : nextPath a.1 = none := by simpa [cursorStep, reply] using finalCursor complete
+    obtain ⟨leaves, forks, _⟩ := spec.completed_counts complete
+    have lc : leafVisits H + 1 = P.h := by simpa [split, leafVisits, reply] using leaves
+    have bc : branches H = P.h - 1 := by simpa [split, branches, reply] using forks
+    change branches (acquisitionTrace [] v) < P.h at complete
+    have bits : !decide (betas H % 2 = 1) = decide ((betas H + 1) % 2 = 1) := by
+      rcases (show betas H % 2 = 0 ∨ betas H % 2 = 1 by omega) with hm | hm
+      all_goals simp [Nat.add_mod, hm]
+    simp [virtualDelta, atPrefix, Nat.ne_of_lt hl, path, lc, bc, complete, v, bits]
+    simp [betas, reply] at bits ⊢
+    rcases (show betas H % 2 = 0 ∨ betas H % 2 = 1 by omega) with hm | hm
+    all_goals simp only [betas] at hm; simp [Nat.add_mod, hm]
+
+private theorem trial_continuation (P : Parameters) (τ N : Nat) (u y : Source)
+    (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
+    (j : Nat) (hj : j ≤ P.last) (offset : P.start + j = N)
+    (obs : Nat → Address → Reply) (epoch : Nat)
+    (response : ∀ p, obs epoch p = readout p y)
+    (final : Control) (lastEpoch : Nat)
+    (onLast : ∀ H a, trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ [a] →
+      Run (controlProgram P) obs (virtualDelta P (atPrefix j H a.1 .value) a.2)
+        epoch final lastEpoch) :
+    ∀ tail H a, trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail →
+      Run (controlProgram P) obs (atPrefix j H a.1 (queryMode N a.1))
+        epoch final lastEpoch := by
+  intro tail
+  induction tail with
+  | nil =>
+    intro H a split
+    exact guard_value_progress P τ N u y spec j hj offset H a [] split
+      obs epoch response final lastEpoch (onLast H a split)
+  | cons next tail ih =>
+    intro H a split
+    apply guard_value_progress P τ N u y spec j hj offset H a (next :: tail) split
+      obs epoch response final lastEpoch
+    rw [virtual_next P τ N u y spec j offset H a next tail split]
+    exact ih (H ++ [a]) next (by simpa using split)
+
+private theorem trial_root (h : Nat) (v : Source) :
+    ∃ r tail, trial h v = (⟨[], r⟩ : BoundedPreorderTrial.Report) :: tail := by
+  cases v with
+  | of b => cases b <;> exact ⟨_, [], rfl⟩
+  | mul x y =>
+    simp only [trial, acquisitionTrace, BoundedPreorderTrial.cutLength]
+    split
+    · exact ⟨.branch, [], rfl⟩
+    · simp only [Nat.add_comm 1, List.take_succ_cons]
+      exact ⟨.branch, _, rfl⟩
+
+/-- The independent bounded rows finish the increasing stationary trials with
+the original parity; every halt-ended actual run has that same endpoint. -/
+theorem native_stationary_bounded_execution (P : Parameters) (τ : Nat) (u y : Source)
+    (hu : u.length = P.h) (hy : y = substitution^[τ] u)
+    (start : P.start ≤ τ) (covers : τ ≤ P.start + P.last)
+    (regime : P.h % 2 = 0 ∨ τ = 0)
+    (obs : Nat → Address → Reply) (epoch : Nat)
+    (response : ∀ p, obs epoch p = readout p y) :
+    let bit := decide ((composition u).2 % 2 = 1)
+    let final := canonical (if bit then .halt1 else .halt0)
+    Run (controlProgram P) obs (fresh 0) epoch final epoch ∧
+    controlProgram P final = .halt ∧
+    (∀ z a, Run (controlProgram P) obs (fresh 0) epoch z a →
+      controlProgram P z = .halt → z = final ∧ a = epoch) := by
+  dsimp only
+  let final := canonical (if decide ((composition u).2 % 2 = 1) then .halt1 else .halt0)
+  have halt : controlProgram P final = .halt := by
+    dsimp only [final]
+    split <;> simp [controlProgram, Valid, canonical]
+  obtain ⟨single, _, K, lower, upper, complete, minimal, _⟩ :=
+    BoundedPreorderTrial.bounded_preorder_trial P.h τ P.start u y hu hy start
+  have build : ∀ d j, P.start + j + d = K →
+      Run (controlProgram P) obs (fresh j) epoch final epoch := by
+    intro d
+    induction d with
+    | zero =>
+      intro j eq
+      have offset : P.start + j = K := by omega
+      have hj : j ≤ P.last := by omega
+      have spec := single K upper
+      have parityEq : betas (trial P.h (BoundedPreorderTrial.virtualSource u τ K)) % 2 =
+          (composition u).2 % 2 := by
+        rcases regime with even | zero
+        · exact (spec.completion complete).2.2 even
+        · exact spec.endpoint_parity (by omega)
+      obtain ⟨r, tail, root⟩ := trial_root P.h (BoundedPreorderTrial.virtualSource u τ K)
+      have run := trial_continuation P τ K u y spec j hj offset obs epoch response final epoch
+        (by
+          intro H a split
+          rw [virtual_finish P τ K u y spec j offset covers H a split]
+          have done : branches (acquisitionTrace []
+              (BoundedPreorderTrial.virtualSource u τ K)) < P.h := complete
+          rw [ite_eq_left done, ← split, parityEq]
+          exact .refl _ _) tail [] ⟨[], r⟩ (by simpa using root)
+      simpa [atPrefix, fresh, queryMode, branches, leafVisits, betas] using run
+    | succ d ih =>
+      intro j eq
+      let N := P.start + j
+      have hN : N < K := by dsimp [N]; omega
+      have hj : j ≤ P.last := by dsimp [N] at hN; omega
+      have spec := single N (by omega)
+      have rejected := minimal N (by dsimp [N]; omega) hN
+      obtain ⟨r, tail, root⟩ := trial_root P.h (BoundedPreorderTrial.virtualSource u τ N)
+      have run := trial_continuation P τ N u y spec j hj rfl obs epoch response final epoch
+        (by
+          intro H a split
+          rw [virtual_finish P τ N u y spec j rfl covers H a split]
+          have notDone : ¬ branches (acquisitionTrace []
+              (BoundedPreorderTrial.virtualSource u τ N)) < P.h := rejected
+          rw [ite_eq_right notDone]
+          exact ih (j + 1) (by omega)) tail [] ⟨[], r⟩ (by simpa using root)
+      simpa [atPrefix, fresh, queryMode, branches, leafVisits, betas] using run
+  have run := build (K - P.start) 0 (by omega)
+  refine ⟨run, halt, ?_⟩
+  intro z a other hz
+  exact D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution.run_halt_unique other run hz halt
+
 #print axioms reachable_compressed_frontier_and_trial_simulation
 #print axioms native_one_update_alignment
+#print axioms native_stationary_bounded_execution
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
