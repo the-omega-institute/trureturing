@@ -1348,3 +1348,77 @@ Real Hadamard matrices are not asserted to exist at every order. Orders r=2^s ar
 The orthogonal traceless-subspace description and the classical MUB bound k≤d+1 are standard; see Boykin, Sitharam, Tiep and Wocjan, Mutually Unbiased Bases and Orthogonal Decompositions of Lie Algebras, https://arxiv.org/abs/quant-ph/0506089 . Pauli/generalized-spin constructions of MUBs are established; see Pittenger and Rubin, Mutually Unbiased Bases, Generalized Spin Matrices and Separability, https://arxiv.org/abs/quant-ph/0308142 . The Hadamard recursion is classical, and its elementary verification is included above. PIO/zero-communication background remains Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These ingredients are not claimed new.
 
 The channel statement extends §65's saturated two-fibre contractions to a single common implementation for all fibres. Its physical equality analysis identifies the exact weighted-basis resource, gives a branch and entropy obstruction for arbitrary product CPTP factors, and supplies sharp finite families. It is an exact-implementation resource theorem, not a positive-error diamond optimum or a classification of arbitrary RT channels. Equality of the prescribed linear maps includes all reference extensions; no global-priority claim is made.
+
+## 67. Balanced real frames and exact nine-fibre randomness cost
+
+### 67.1 Exact equality criterion for qubit fibres
+
+Use the uniform multi-fibre compression channel F_(k,2) and fixed MC input/output encodings of §66. A physical branch is an arbitrary product of local CPTP maps; branch count and Shannon entropy refer to an exact finite LOSR decomposition, with positive weights and one common channel on all coherent inputs and passive references.
+
+For every integer r≥1, the following are equivalent:
+
+1. F_(3r,2) has an exact implementation using r product branches.
+2. There exists a real orthogonal matrix O of size 3r whose rows are grouped into r consecutive blocks of three, such that the restriction of every column to every block has squared norm 1/r.
+
+When these conditions hold, the minimum branch count is r and the minimum shared entropy is log₂r. Every r-branch implementation has uniform weights. The balanced-block condition concerns Euclidean norms, not equal magnitudes of all individual entries; it is weaker than a real Hadamard construction.
+
+Proof. By the physical equality analysis of §66, each positive branch supplies a family of qubit orthonormal bases in one common two-dimensional environment. Write its rank-one projectors as
+
+    P_(t,f,i)=[I+(-1)^i n_(t,f)·σ]/2,
+
+where n_(t,f)∈R³ is a unit Bloch vector. Averaged unbiasedness is equivalent to
+
+    Σ_t w_t n_(t,f)·n_(t,g)=0  for f≠g.
+
+Thus the 3r vectors with t-th block sqrt(w_t)n_(t,f) are orthonormal columns in R^(3r). They form a square orthogonal matrix O. Its t-th three-row block has total squared Frobenius norm three, while summing its 3r column-block norms gives 3r w_t. Consequently w_t=1/r, and every column-block norm is 1/sqrt(r).
+
+Conversely, from such O define n_(t,f)=sqrt(r) times its t-th column block, and choose the corresponding qubit eigenbases. Orthogonality of distinct columns gives average Bloch inner product zero with weights 1/r. Using conjugate records on the second party, the common physical construction in §66 implements every encoded matrix unit exactly. Its branch lower bound and weight/entropy lower bound give the stated minima. This is an equality criterion for the physical resource problem, with arbitrary original local environments already covered by §66.
+
+### 67.2 An explicit order-three balanced block construction
+
+Let I and J be the 3×3 identity and all-ones matrices and define
+
+    S=[[0,-1,1],[1,0,-1],[-1,1,0]],
+    C=−(I+J+sqrt(5)S)/4,
+    A=(C+2I)/3,    B=(C−I)/3.
+
+Equivalently, C is the real circulant matrix with first row (−1/2,(−1+sqrt(5))/4,(−1−sqrt(5))/4). Its subsequent rows are cyclic right shifts. The square root occurs in these exact orthogonality identities; no broader physical interpretation is needed.
+
+Then the real 9×9 block matrix
+
+    O=[[A,B,B],[B,A,B],[B,B,A]]                           (1)
+
+is orthogonal, and every column in every three-row block has squared norm 1/3.
+
+Proof. We have S^T=−S, S²=J−3I, JS=SJ=0 and J²=3J. Hence
+
+    (I+J+sqrt(5)S)(I+J−sqrt(5)S)
+       =(I+J)²−5S²=16I.
+
+Therefore C is orthogonal, and each diagonal entry is −1/2. Let P=J/3 be the orthogonal projection onto the uniform direction in the outer block index. Since A−B=I and A+2B=C, equation (1) is
+
+    O=P⊗C+(I−P)⊗I.
+
+The two summands act on orthogonal outer subspaces; thus O O^T=I. For every standard coordinate vector e_j,
+
+    ||A e_j||²=(1+4+4 C_jj)/9=1/3,
+    ||B e_j||²=(1+1−2 C_jj)/9=1/3.
+
+These are exactly all column-block norms of (1). The preceding criterion gives an exact implementation of F_(9,2) with three product branches and shared entropy log₂3; neither quantity can be smaller. All local environments in this construction have dimension two. The local isometries map |f,i> to |f> times the eigenvector of the Bloch direction sqrt(3) O_(block t,column f), and the second party uses its coordinatewise conjugate. This explicitly fixes one physical map per branch for all fibres and inputs.
+
+There is no real Hadamard matrix of order three: the inner product of two ±1 rows of length three is an odd integer, hence cannot vanish. Thus this attainer is outside the Hadamard-order hypothesis of §66, rather than an invocation of an unknown Hadamard matrix. Restrictions to seven or eight fibres still have branch minimum three by ceil(k/3), but no entropy equality is asserted for those restrictions. Every restriction to at most three whole fibres has a single product implementation as in §66.
+
+### 67.3 Tensor extension with existing real Hadamard orders
+
+If H is a real Hadamard matrix of order h and O is the 9×9 matrix (1), then (H/sqrt(h))⊗O is a balanced orthogonal matrix with 3h row blocks of size three. Indeed both factors are orthogonal, and every resulting column-block squared norm is (1/h)(1/3)=1/(3h). The criterion therefore gives
+
+    minimum branches for F_(9h,2) = 3h,
+    minimum shared entropy = log₂(3h).
+
+In particular h=2^s follows from the classical Sylvester recursion, giving an infinite exact family with 3·2^s branches. This tensor statement assumes a given Hadamard H and does not assert Hadamard existence at arbitrary orders. Nor does the nine-dimensional construction prove that balanced orthogonal frames exist for every integer r.
+
+### 67.4 Attribution and scope
+
+The Bloch-sphere parametrization, orthogonal projectors, and tensor products of orthogonal matrices are standard. The MUB/traceless-subspace background is credited in §66 to Boykin, Sitharam, Tiep and Wocjan, https://arxiv.org/abs/quant-ph/0506089 , and the Pauli construction to Pittenger and Rubin, https://arxiv.org/abs/quant-ph/0308142 . Hadamard recursion and its tensor closure are classical. The balanced-frame reduction here uses the actual physical saturation theorem of §66 to certify resource minima, and the displayed real matrix supplies an explicit attainer beyond its Hadamard-order hypothesis. No priority claim is made for the underlying block-matrix identities.
+
+These statements concern exact finite physical implementation of the specified uniform multi-fibre channel family. They retain full coherent-input and arbitrary-reference equality. They give neither a general positive-error diamond formula nor arbitrary-channel or full-RT recovery.
