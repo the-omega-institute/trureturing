@@ -87,7 +87,10 @@ internal sealed class AllenMeyerNegativityRegionRefutationDocument : IScribeDocu
                             + "on the square roots then show z ≥ 14/11, z − y ≤ 2/209 and x > 5(z − y). "
                             + "A family state with this triple would satisfy both opposing inequalities. "
                             + "Therefore this vector's negativity triple is absent from the family."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("allen-meyer-2017-negativity-region-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
