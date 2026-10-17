@@ -6,6 +6,7 @@
    utility: none
    digest: The fifth iterate of A396798 repeats 5,1,1,5 modulo eight above degree one. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Residue.IterateProductFourFiveFourthModEight
 
 open PowerSeries

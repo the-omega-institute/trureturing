@@ -489,9 +489,7 @@ private theorem actual_upper_bank_atlas :
       change 1 - y ∈ Complex.slitPlane
       rw [Complex.mem_slitPlane_iff]
       right
-      simp only [sub_im, one_im, y, add_im, ofReal_im, mul_im, ofReal_re, I_im,
-        zero_sub, neg_ne_zero]
-      positivity
+      simpa only [sub_im, one_im, zero_sub, neg_ne_zero] using hyim.ne'
     have hGagree : G =ᶠ[𝓝 y] CompositionContinuation.continued
         (⟨(first : ℕ) - 1, by omega⟩ :: suffix) := by
       have hopen : IsOpen (Metric.ball (x : ℂ) r ∩ {z : ℂ | 0 < z.im}) :=

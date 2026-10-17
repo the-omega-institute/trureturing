@@ -1,1 +1,1 @@
-{"statement_id":"sha256:1bb1444f726ce2202980914a9735a6422f071df1086d05d4c41a8b37aadfb62e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),17:PureCubicSuborder),19:pure_cubic_suborder)","kind":"theorem"}]}
+{"statement_id":"sha256:2d9324263c56b2b990fb947175d64d8255eb9f8c3af34b505470255ef26fc5b1","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Lattices),17:PureCubicSuborder),19:pure_cubic_suborder)","kind":"theorem"}]}

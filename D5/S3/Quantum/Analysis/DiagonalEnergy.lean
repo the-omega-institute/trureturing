@@ -51,7 +51,7 @@ private theorem traceClass_of_positive_diagonal (e : HilbertBasis ι ℂ H)
   classical
   obtain ⟨q,b,hb⟩ := range_basis e
   refine ⟨Set.range e,b,?_⟩
-  rw [CFC.abs_of_nonneg A ((ContinuousLinearMap.nonneg_iff_isPositive _).mpr hA)]
+  rw [CFC.abs_of_nonneg A ((ContinuousLinearMap.nonneg_iff_isPositive (f := A)).mpr hA)]
   apply q.summable_iff.mp
   convert ha using 1
   ext i
@@ -241,7 +241,7 @@ private theorem cap_order (e : HilbertBasis ι ℂ H) (h : ι → ℝ) (hh : ∀
     IsSelfAdjoint (cap e h hh m hm) ∧ 0 ≤ cap e h hh m hm ∧
       cap e h hh m hm ≤ m • ContinuousLinearMap.id ℂ H := by
   have hp := cap_positive e h hh m hm
-  refine ⟨hp.isSelfAdjoint,(ContinuousLinearMap.nonneg_iff_isPositive _).mpr hp,?_⟩
+  refine ⟨hp.isSelfAdjoint,(ContinuousLinearMap.nonneg_iff_isPositive (f := cap e h hh m hm)).mpr hp,?_⟩
   rw [ContinuousLinearMap.le_def]
   have heq : m • ContinuousLinearMap.id ℂ H - cap e h hh m hm =
       multiplier e (fun i => m-capCoeff m (h i)) ⟨m,hm.le⟩ (fun i => by

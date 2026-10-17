@@ -422,7 +422,7 @@ theorem Finset.prod_pow_le_prod_range {f : ℕ → ℝ} {N : ℕ} (hf0 : ∀ i, 
     calc f (d * k) ^ d = ∏ _i ∈ Finset.range d, f (d * k) := by
           rw [Finset.prod_const, Finset.card_range]
       _ ≤ ∏ i ∈ Finset.range d, f (d * k + i) := by
-          refine Finset.prod_le_prod (fun i _ ↦ hf0 _) fun i hi ↦ ?_
+          refine Finset.prod_le_prod₀ (fun i _ ↦ hf0 _) fun i hi ↦ ?_
           rw [Finset.mem_range] at hi
           exact hmono _ _ (Nat.le_add_right _ _) (by omega)
 

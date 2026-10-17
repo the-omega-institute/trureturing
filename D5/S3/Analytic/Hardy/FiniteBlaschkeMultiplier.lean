@@ -330,7 +330,7 @@ theorem fibre_root {m : Nat} (B : FiniteBlaschkeData m) (alpha : Circle) (z : Co
       simp only [denominator, eval_prod, eval_sub, eval_one, eval_mul, eval_C, eval_X,
         Finset.prod_ne_zero_iff, Finset.mem_univ, forall_const] at h
       exact fun j => norm_pos_iff.mpr (h j)
-    have hlt := Finset.prod_lt_prod (s := Finset.univ)
+    have hlt := Finset.prod_lt_prod₀ (s := Finset.univ)
       (fun j _ => hqj j) (fun j _ => (hfactor j).le)
       ⟨⟨0, hm⟩, Finset.mem_univ _, hfactor ⟨0, hm⟩⟩
     have hn := congrArg norm hr'

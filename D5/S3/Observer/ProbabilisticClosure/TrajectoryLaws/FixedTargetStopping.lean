@@ -48,7 +48,7 @@ theorem past_succ (r : ℕ) : pastField r ≤ pastField (r+1) := by
     push_cast
     omega
   exact MeasurableSpace.comap_le_comap_of_eq_comp _
-    (measurable_pi_lambda _ fun k => measurable_pi_apply k.succ) he
+    (Measurable.of_eval fun k => measurable_pi_apply k.succ) he
 
 private theorem enlarged_mono {U : Type*} [MeasurableSpace U]
     {m k : MeasurableSpace Process} (h : m ≤ k) :
@@ -58,7 +58,7 @@ private theorem enlarged_mono {U : Type*} [MeasurableSpace U]
 private theorem enlarged_le {U : Type*} [MeasurableSpace U] (r : ℕ) :
     enlarged (U := U) (pastField r) ≤ (inferInstance : MeasurableSpace (Process × U)) := by
   have h : pastField r ≤ (inferInstance : MeasurableSpace Process) :=
-    (measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd).comap_le
+    (Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd).comap_le
   exact enlarged_mono h
 
 /-- One nested filtration for the fixed time-zero target, completed under the product law.
@@ -131,7 +131,7 @@ theorem actual_completed_posterior {U : Type*} [MeasurableSpace U]
     (integrable_const (μ := (joint : Measure Process)) (1 : ℝ)).indicator
       (ht (measurableSet_singleton a))
   have hp : Measurable (pastWord r) :=
-    measurable_pi_lambda _ fun k => (measurable_pi_apply _).comp measurable_snd
+    Measurable.of_eval fun k => (measurable_pi_apply _).comp measurable_snd
   have hb := product_condExp (joint : Measure Process) ν hp.comap_le (targetIndicator a) hti
   have hf : StronglyMeasurable (fun z : Process × U => targetIndicator a z.1) := by
     exact ((stronglyMeasurable_const.indicator (ht (measurableSet_singleton a))).comp_measurable
@@ -173,7 +173,7 @@ theorem local_positive_error {U : Type*} [MeasurableSpace U]
       (htm (measurableSet_singleton a))).congr
     exact Filter.Eventually.of_forall fun z => by simp [f,targetIndicator,Set.indicator]
   have hgood : ∀ᵐ z ∂μ, z ∈ B → target z.1 = a := by
-    simpa only [ae_iff,_root_.not_imp,Set.inter_def,Set.mem_setOf_eq] using hz
+    simpa only [ae_iff,Classical.not_imp,Set.inter_def,Set.mem_setOf_eq] using hz
   have hi : ∫ z in B, f z ∂μ = μ.real B := by
     calc
       _ = ∫ _ in B, (1 : ℝ) ∂μ := setIntegral_congr_ae hBm (hgood.mono fun z hz hb => by

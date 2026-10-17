@@ -47,7 +47,7 @@ theorem local_global_residual_empty_iff_expressible
   have criterion := complete_observation_expressibility_tfae q target
   constructor
   · intro emptyResidual
-    apply (criterion.out 2 0).mp
+    apply (criterion.out 3 1).mp
     intro x y sameComponents
     by_contra differentTarget
     have escaped : (x, y) ∈ localGlobalResidual target q := by
@@ -55,7 +55,7 @@ theorem local_global_residual_empty_iff_expressible
     rw [emptyResidual] at escaped
     exact escaped
   · intro expressible
-    have fiberConstant := (criterion.out 0 2).mp expressible
+    have fiberConstant := (criterion.out 1 3).mp expressible
     ext pair
     constructor
     · rintro ⟨sameReadout, differentTarget⟩

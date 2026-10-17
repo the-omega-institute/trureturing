@@ -9,6 +9,7 @@
    Consume the supplied actual pieces and exact inventories of that same
    prior cycle, rather than selecting new cycle slices. Whole-edge route
    enumeration and native c coordinates earn the ordered Hamilton path. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeSpecialChildAssembly
 
 set_option autoImplicit false

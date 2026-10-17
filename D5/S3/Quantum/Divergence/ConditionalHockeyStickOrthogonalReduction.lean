@@ -162,9 +162,9 @@ private theorem dsum_psd {n : Type u} {m : Type v} [Fintype n] [DecidableEq n]
     cases i <;> cases j <;>
       simp [M, f, Matrix.submatrix_apply, Matrix.blockDiagonal'_apply']
   letI : ∀ b : Bool, Fintype (bif b then ULift.{u} m else ULift.{v} n) :=
-    fun b => by cases b <;> dsimp <;> infer_instance
+    fun b => by cases b <;> dsimp [cond] <;> infer_instance
   letI : ∀ b : Bool, DecidableEq (bif b then ULift.{u} m else ULift.{v} n) :=
-    fun b => by cases b <;> dsimp <;> infer_instance
+    fun b => by cases b <;> dsimp [cond] <;> infer_instance
   rw [heq]
   exact (posSemidef_blockDiagonal M hM).submatrix _
 

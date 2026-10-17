@@ -5,7 +5,7 @@
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Resource/MinimumRetrievalTime.claim; result=D5/S3/Resource/MinimumRetrievalTime.result; claim=D5/S3/Resource/MinimumRetrievalTime.claim
    digest: Actual uniform iid span retrieval admits a rank-three four-column pair (2,6) that no five-column code Pareto dominates. -/
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Probability.ProductMeasure
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Analysis.SpecificLimits.Basic
@@ -17,6 +17,9 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Tactic
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -34,7 +37,7 @@ def minimumTime {Ω : Type*} (recovered : ℕ → Ω → Prop) (sample : Ω) : �
 
 def uniformSamples (alphabet : Type*) [Fintype alphabet] [Nonempty alphabet]
     [MeasurableSpace alphabet] : Measure (ℕ → alphabet) :=
-  Measure.infinitePi (fun _ => (PMF.uniformOfFintype alphabet).toMeasure)
+  Measure.infinitePi (fun _ => (uniformPmf alphabet).toMeasure)
 
 def prefixSpan {K V alphabet : Type*} [Field K] [AddCommGroup V] [Module K V]
     (columns : alphabet → V) (sample : ℕ → alphabet) (time : ℕ) : Submodule K V :=
@@ -73,7 +76,7 @@ theorem retrieval_time_probability_bridge {K V alphabet : Type*}
       (∫⁻ sample, retrievalTime columns file sample ∂uniformSamples alphabet).toReal := by
   classical
   let μ := uniformSamples alphabet
-  let oneDraw := (PMF.uniformOfFintype alphabet).toMeasure
+  let oneDraw := (uniformPmf alphabet).toMeasure
   let ratio : ℝ≥0∞ := 1 - (Fintype.card alphabet : ℝ≥0∞)⁻¹
   have hmeas : ∀ time, MeasurableSet {sample | recovered columns file time sample} := by
     intro time
@@ -151,7 +154,8 @@ theorem retrieval_time_probability_bridge {K V alphabet : Type*}
   have hsingleton : ∀ index : alphabet, oneDraw {index} =
       (Fintype.card alphabet : ℝ≥0∞)⁻¹ := by
     intro index
-    rw [PMF.toMeasure_uniformOfFintype_apply _ (measurableSet_singleton index)]
+    rw [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ (measurableSet_singleton index),
+      uniformPmf_toOuterMeasure_apply]
     simp
   have havoid : ∀ (time : ℕ) (index : alphabet),
       μ {sample | ∀ draw < time, sample draw ≠ index} = ratio ^ time := by
@@ -292,9 +296,10 @@ theorem old_code_actual_expectations {K V : Type*} [Field K] [AddCommGroup V]
         Set.pi (Finset.range time) (fun _ => allowed) := by ext sample; simp
     rw [hevent]
     dsimp only [μ, uniformSamples]
-    rw [Measure.infinitePi_pi (fun _ : ℕ => (PMF.uniformOfFintype (Fin 4)).toMeasure)
+    rw [Measure.infinitePi_pi (fun _ : ℕ => (uniformPmf (Fin 4)).toMeasure)
       (fun _ _ => allowed.to_countable.measurableSet)]
-    simp only [PMF.toMeasure_uniformOfFintype_apply allowed allowed.to_countable.measurableSet,
+    simp only [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ allowed.to_countable.measurableSet,
+      uniformPmf_toOuterMeasure_apply,
       Fintype.card_fin, Finset.prod_const, Finset.card_range]
     rfl
   have htailFirst : ∀ time,
@@ -461,9 +466,10 @@ theorem five_column_three_kernel_obstruction {K V W : Type*} [Field K]
         Set.pi (Finset.range time) (fun _ => allowed) := by ext sample; simp
     rw [hevent]
     dsimp only [μ, uniformSamples]
-    rw [Measure.infinitePi_pi (fun _ : ℕ => (PMF.uniformOfFintype (Fin 5)).toMeasure)
+    rw [Measure.infinitePi_pi (fun _ : ℕ => (uniformPmf (Fin 5)).toMeasure)
       (fun _ _ => allowed.to_countable.measurableSet)]
-    simp only [PMF.toMeasure_uniformOfFintype_apply allowed allowed.to_countable.measurableSet,
+    simp only [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ allowed.to_countable.measurableSet,
+      uniformPmf_toOuterMeasure_apply,
       Fintype.card_fin, Finset.prod_const, Finset.card_range]
     rfl
   have hmisses : ∀ index time, μ (misses index time) = ((4 : ℝ≥0∞) / 5) ^ time := by
@@ -553,9 +559,10 @@ theorem five_column_bad_pairs_obstruction {K V : Type*} [Field K]
       simp [only]
     rw [hevent]
     dsimp only [μ, uniformSamples]
-    rw [Measure.infinitePi_pi (fun _ : ℕ => (PMF.uniformOfFintype (Fin 5)).toMeasure)
+    rw [Measure.infinitePi_pi (fun _ : ℕ => (uniformPmf (Fin 5)).toMeasure)
       (fun _ _ => allowed.to_countable.measurableSet)]
-    simp only [PMF.toMeasure_uniformOfFintype_apply allowed allowed.to_countable.measurableSet,
+    simp only [PMF.toMeasure_apply_eq_toOuterMeasure_apply _ allowed.to_countable.measurableSet,
+      uniformPmf_toOuterMeasure_apply,
       Fintype.card_fin, Finset.prod_const, Finset.card_range]
     rfl
   have hpair : ∀ (first second : Fin 5), first ≠ second → ∀ time,
