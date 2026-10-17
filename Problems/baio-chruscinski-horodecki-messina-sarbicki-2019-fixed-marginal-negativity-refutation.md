@@ -59,20 +59,21 @@ The source defines the two-qubit maximal states by maximizing concurrence or neg
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.lean` (354 lines).
-- It defines `negativity`, `orderedMarginal` (used for both marginals), `candidate` and `claim`, and proves `result : ¬ claim`.
+The canonical source is `D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.lean` (352 lines).
+- It defines `orderedMarginal` (used for both marginals), `candidate` and `claim`, and proves `result : ¬ claim`.
 - It reuses:
+  - the negativity (‖R^Γ‖₁ − 1)/2 of `NegativityReductionInclusionRefutation`, with the partial transpose of `KickedIsingNegativityRefutation`;
   - the trace norm and its variational and triangle lemmas from `FiniteTraceDistance`;
-  - `partialTransposeB` and `IsDensity` from `StructuredNegativityCoincidenceRefutation`;
+  - `IsDensity` from `StructuredNegativityCoincidenceRefutation`;
   - the partial traces of `PartialTraceMutualInformation`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations: `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.lean.json`, statement `sha256:ef4df54776ed001a016ec315fce1071c3921bab7226515e7ba467944933a2b21`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.lean.json`, statement `sha256:6ff9f0753649dd1fabc166057b13a8a28697412539d3e9d93af03ba7b73b0b57`.
 
 Declaration statements:
 - `result`: `sha256:7aadee2510d1ebfdafebf17606f8cc843f7b492fcff1a308493af139d5c7c939`;
-- `claim`: `sha256:e0ba9f0fef710b10e4f209cc31988db082cde77437e4415d43ba07df22c06413`.
+- `claim`: `sha256:746d198ce7849cdc78994702a51521857bb1e9bdb718659b9589d6c5b41972d6`.
 
 ## Triage
 
