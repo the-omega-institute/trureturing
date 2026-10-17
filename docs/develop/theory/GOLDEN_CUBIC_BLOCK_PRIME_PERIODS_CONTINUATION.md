@@ -2231,4 +2231,511 @@ These primes are exactly those with Q=19 modulo 120, (p_i/Q)=1 for every i, and 
 
 For any fixed J one may take all primes of the first J blocks, or any distinct subset. There is at least one new prime at every level because each B_(3^h)>1 and the supports are disjoint by section 102.2. This supplies a growing collection of independent dihedral restrictions on later unique odd-depth support. We do not infer a new density-zero theorem for actual clocks from these abstract densities, nor assert independence from the other higher-order necessary conditions already in the repository. We do not compute or force the mixed determinant of §100. The result is a uniform original-index restriction on the unique odd-depth role, and a conditional product balance for general odd-depth support. ∎
 
+## 103. The selected cyclotomic tower and the missing dihedral layer
+
+This section identifies the norm-conic characters of §100 with relative Artin symbols and proves that their quadratic layer is absent from the first selected-prime cyclotomic Kummer tower, even after arbitrary rational quadratic corrections. It does not evaluate the mixed determinant, exhibit an actual support satisfying §100, or exclude an additional actual golden prime. Noncontainment of fields does not rule out identities between their residue signs at the particular marked primes of an original block.
+
+### 103.1. Canonical positive selected squareclasses
+
+**Theorem 103.1.** Let j>=1, N=3^j and B_N=L_N^2+3=D C^2, where D is the complete positive squarefree kernel and C is an arbitrary positive integer. Put
+
+ zeta=zeta_(3N), t=zeta+zeta^(-1), L=Q(t), G=Gal(L/Q).
+
+For every prime q|B_N there is a distinguished prime P_q=(q,t-3) of L. For every d|D there is a unique totally positive squareclass delta_d in L*/L*2 with odd valuation exactly at the P_q for q|d and even valuation at every other finite prime. These classes satisfy
+
+ delta_1=1, delta_d delta_e=delta_(de) for coprime d,e|D,
+ delta_D=[3-t], Norm_(L/Q)(delta_d)=[d].
+
+If h is the number of primes dividing D, all hN classes g(delta_q), q|D and g in G, are independent. For positive representatives A_q, let
+
+ T=L(sqrt(g(A_q)):q|D, g in G).
+
+Then
+
+ [T:L]=2^(hN), Gal(T/Q)=(F_2[G])^h semidirect G,
+ T_ab=L(sqrt(q):q|D).
+
+Here T_ab denotes the maximal abelian subfield over Q. No assertion that the selected ideals themselves are principal is required.
+
+### 103.2. Class-number and unit input for the actual ternary fields
+
+**Proof.** The required parity theorem concerns exactly the full cyclotomic fields Q(zeta_(3^(j+1))). We use [Ichimura–Nakajima, *On the 2-part of the class numbers of cyclotomic fields of prime power conductors*, Theorem 1(II), printed page 318](https://www.jstage.jst.go.jp/article/jmath/64/1/64_1_317/_pdf/-char/en), and [Dummit, *A note on the equivalence of the parity of class numbers and the signature ranks of units in cyclotomic fields*, Proposition 1](https://www.cambridge.org/core/journals/nagoya-mathematical-journal/article/note-on-the-equivalence-of-the-parity-of-class-numbers-and-the-signature-ranks-of-units-in-cyclotomic-fields/DFAAD1914CA2C856EA78ECBE4E2E2BC9).
+
+In the first theorem write K_n=Q(zeta_(p^(n+1))) and n_0=v_p(ell^(p-1)-1). For p=3 and ell=2, its parameters are n_0=1, varpi_(p,ell)=1 because 2 is primitive modulo 9, M_(p,ell)=ell(p-1)varpi_(p,ell)-1=3, and phi(p-1)=1. The theorem therefore makes h(K_n)/h(K_(n-1)) odd whenever 3^n>3, hence for every n>=2.
+
+The base h(Q(zeta9))=1 follows directly. Its degree is six, it has three complex places, and its discriminant has absolute value 3^9. Minkowski's bound is
+
+ (4/pi)^3 (6!/6^6) sqrt(3^9)
+ < (4/3)^3 (720/6^6) 141=3760/729<6.
+
+The primes 2 and 5 have exact order six modulo 9, so their primes have norms 2^6 and 5^6. The only prime ideal of norm at most five is the principal prime (1-zeta9) above 3, of norm 3. Every ideal class has an integral representative of norm less than six, so every class is principal. The stated ratio theorem now makes every h(Q(zeta_(3^(j+1)))) odd.
+
+Dummit's Proposition 1, from condition (1) to conditions (4) and (5), applies to these prime-power conductors. It gives odd narrow class number for L and
+
+ O_L^(times,+)=O_L^(times,2).
+
+In particular Cl(L) also has odd order. Odd ordinary real class number alone is not being substituted for this full-field input, and no assertion that the class numbers equal one for all j is made.
+
+### 103.3. The exact marked factorization and original orders
+
+Put P(X)=X^3-3X. The minimal polynomial of t is f_j(X)=P composed j times (X)+1, of degree N. Indeed P(zeta+zeta^(-1))=zeta^3+zeta^(-3), and the real cyclotomic degree is N. For alpha=phi^2, where phi=(1+sqrt5)/2, one has alpha+alpha^(-1)=3. Hence
+
+ Norm_(L/Q)(3-t)=f_j(3)=alpha^N+alpha^(-N)+1=L_N^2+3=B_N.
+
+Every conjugate of 3-t is positive, since every conjugate of t lies between -2 and 2.
+
+All support primes q exceed 5. The identity 5F_N^2=B_N+1 makes 5 a square modulo q. At either golden embedding alpha^N is a nontrivial cube root of unity. Since 3N is a power of 3 and q!=3, alpha has exact order 3N. Thus q=1 modulo 3N and splits completely in L. The original Fibonacci rank and golden-matrix order remain rho(q)=6N and tau_q=6N, as proved for the original Lucas block; they have not been replaced by generic residue-class conditions. The two embeddings of phi need not individually have the same order, whereas their squares have the stated exact order 3N.
+
+The cyclotomic discriminant is supported at 3, so f_j has distinct roots modulo every such q. Exactly one prime over q divides 3-t, namely P_q=(q,t-3). Writing h_q=v_q(B_N), its residue degree one and the norm identity give the exact ideal factorization
+
+ (3-t)=product_(q|B_N) P_q^(h_q).
+
+Every original valuation is retained, including even-depth primes and primes dividing both D and C.
+
+### 103.4. Positive classes and their full Galois module
+
+For d|D set I_d=product_(q|d) P_q and let H^+=|Cl^+(L)|, which is odd. Then I_d^(H^+)=(A_d) for a totally positive algebraic integer A_d. This gives the required parity class. If x,y are two positive representatives of that parity, (x/y)=J^2. The absence of 2-torsion in Cl(L) makes J=(u), so x/y=u^2 epsilon for a totally positive unit epsilon. The unit theorem in section 103.2 makes epsilon a square. This proves uniqueness, including fractional representatives with denominators.
+
+Multiplicativity follows from valuation parity. The complete marked factorization and positivity give delta_D=[3-t]. Also Norm(A_d)=d^(H^+), because A_d is positive and its ideal is I_d^(H^+), proving Norm(delta_d)=[d].
+
+Choose A_q with (A_q)=P_q^(H^+). The sole odd valuation of g(A_q) is at g(P_q). These hN prime ideals are distinct, so inspecting each valuation proves independence of all their squareclasses. This proves the degree over L.
+
+For an explicit splitting of the Galois group, choose radicals r_(q,g)^2=g(A_q). Their monomials form an L-basis by independence. A generator tau of the cyclic group G extends semilinearly by r_(q,g) mapping to r_(q,tau g). This automorphism has order N and supplies the claimed semidirect product. Its commutator subgroup is the sum of the augmentation kernels in the h regular permutation blocks, of dimension h(N-1). The product of the radicals in the q-block is, up to sign, q^((H^+-1)/2)sqrt(q). Thus L and all sqrt(q) belong to its fixed field. Their total degree N*2^h is the abelian-quotient degree, so the maximal abelian subfield is exactly the one asserted. This proves Theorem 103.1. ∎
+
+### 103.5. The normalized norm-conic Artin comparison
+
+**Theorem 103.2.** Impose the full hypotheses of §100: N=3^j>=81, B_N=D C^2 with arbitrary C>0 and complete squarefree kernel D=p_0...p_s, s>=1, p_0=19 modulo 24, p_i=1 modulo 24 for i>=1, and every mutual Legendre symbol +1. Actual support also gives p_i>5, (5/p_i)=1 and the original orders in section 103.3.
+
+For each i>=1 take any permitted primitive certificate
+
+ a_i^2-p_i b_i^2=5D c_i^2, c_i>0,
+ p_j not dividing b_i c_i for j>=1 different from i.
+
+Put p=p_i, e=D/p, m=-5e, write a_i=p k, and set
+
+ gamma=b_i+k sqrt(p), E_i=Q(sqrt(p),sqrt(m)).
+
+There is a uniquely specified epsilon_i in {1,-1,2,-2} at the dyadic squareclass level such that
+
+ F_i=E_i(sqrt(epsilon_i gamma))
+
+is an everywhere-unramified quadratic extension of E_i. It is Galois over Q with group D4 of order eight, and E_i is its maximal abelian subfield. At every prime P of E_i above p_j, j>=1, its relative Frobenius sign is
+
+ Frob_P(F_i/E_i)=(-1)^(H_ij),
+
+where H is exactly the mixed matrix of §100. These are relative Frobenius elements; the underlying rational p_j can ramify in F_i/Q.
+
+### 103.6. Primitive arithmetic and the nondegenerate dihedral field
+
+**Proof.** Write a,b,c for the fixed certificate. Reduction modulo p gives a=p k. Primitiveness excludes p|c; otherwise the equation forces p|b as well. It then excludes p|b. Rearrangement yields
+
+ b^2-p k^2=m c^2,
+ gamma gamma_bar=m c^2, gamma_bar=b-k sqrt(p).
+
+The triple (k,b,c) is primitive. The squareclasses p,m,pm are nontrivial and distinct over Q, so [E_i:Q]=4. For any nonzero rational epsilon, neither epsilon gamma nor epsilon gamma_bar is a square in the real field Q(sqrt p): its norm is the negative number epsilon^2 m c^2. Their product has class m, also nonsquare in this real field. All three possible nonzero relations between their two squareclasses are therefore excluded.
+
+The field Q(sqrt p,sqrt(epsilon gamma),sqrt(epsilon gamma_bar)) has degree four over Q(sqrt p). The product of the radicals, divided by epsilon c, is a square root of m, so the field equals E_i(sqrt(epsilon gamma)) and has degree eight over Q. The two independent radical sign changes form C2 x C2; the nontrivial automorphism of Q(sqrt p) lifts to an involution swapping the radicals. The resulting nonabelian semidirect product is D4. Its commutator is the simultaneous sign change, fixing exactly E_i. This proves the degree and maximal-abelian-field claims for each certificate and every rational twist, without a generic nondegeneracy assumption.
+
+### 103.7. Every odd place, including primitive denominator primes
+
+At p, m is a nonzero square modulo p from b^2=m c^2, hence a square in Q_p. The two completions of E_i over p are Q_p(sqrt p), with residue field F_p. The element gamma is a unit with residue b. An odd-local quadratic extension generated by a unit is unramified or split, with relative Frobenius sign (b/p).
+
+Now let q|5e. Here q!=p, v_q(m)=1, and p is a square in Q_q, by mutual positivity or, for q=5, by (p/5)=(5/p)=1. The integer b is a q-unit even if q|c. Indeed q|b would imply q|k; if q|c this contradicts primitiveness, and if q does not divide c the norm equation has left valuation at least two and right valuation one.
+
+At the two Q_q branches of Q(sqrt p), gamma and gamma_bar have unit sum 2b and valuations 0 and 1+2v_q(c). Passing to E_i adjoins sqrt(m), a ramified quadratic extension with residue field F_q. At the branch where gamma is a unit it has residue 2b. At the other branch use
+
+ gamma=(c sqrt(m))^2/gamma_bar.
+
+Its class is represented by a unit with residue (2b)^(-1). Thus the extension over E_i is unramified at both primes, with the same sign (2b/q). This treats every q|5e, including p_0 and 5, and retains all valuations of c.
+
+At an odd ell not dividing 5D, if ell does not divide c, both conjugates are units. If ell|c, primitiveness makes b,k units, and reduction shows (p/ell)=1. At the two split branches the unit sum and norm give valuations 0 and 2v_ell(c). Removing local squares leaves units, hence unramified quadratic algebras. Base change to E_i preserves unramifiedness. This includes three and every auxiliary denominator prime.
+
+Multiplication by epsilon in {1,-1,2,-2} is an odd-local unit twist, so all these unramifiedness conclusions persist. The signs become (epsilon b/p) and (2 epsilon b/q), respectively.
+
+### 103.8. The dyadic normalization and the exact row
+
+One has p=1 modulo 8, e=3 modulo 8 and m=-5e=1 modulo 8. Thus p and m are squares in Q_2, and E_i has four dyadic completions equal to Q_2. Choose r^2=p in Q_2. The nonzero elements b+k r and b-k r have square product m c^2, hence the same Q_2-squareclass. Changing the sign of sqrt(m) does not change gamma. All four dyadic places see one common class [a_2]=[b+k r].
+
+The group Q_2*/Q_2*2 is independently generated by [-1],[2],[5], and its split or unramified subgroup is {1,[5]}. The nontrivial unramified class can be verified from X^2-X-1, the polynomial of (1+sqrt5)/2, whose reduction is separable and irreducible over F_2. Exactly one epsilon in {1,-1,2,-2} sends [a_2] into this subgroup. Explicitly, write a_2=2^v u with u a unit, use a factor 2 iff v is odd, and choose the sign so that the resulting odd unit is 1 modulo 4. After removing an even power of two its residue is 1 or 5 modulo 8. The subgroup generated by [-1],[2] intersects {1,[5]} trivially, proving uniqueness. The choice is independent of r.
+
+This twist makes F_i/E_i unramified at every dyadic place, and section 103.7 treats every odd finite place. Since m<0, E_i is totally imaginary and has no real ramification condition. It is therefore an everywhere-unramified quadratic extension. Unramifiedness at 2 was established by this construction, not inferred from positivity in a different field.
+
+For j!=i with j>=1, the local sign is (2 epsilon b/p_j)=(b/p_j), because p_j=1 modulo 24 makes -1 and 2 squares. This is the exact off-diagonal entry of §100, at both primes over p_j. At p it is (epsilon b/p)=(b/p). The equation gives
+
+ (b/p)=(c/p)(m/p)_4.
+
+The denominator factor is one. For every odd ell|c with ell!=5,p, reduction of a^2-pb^2=5D c^2 and primitiveness give (p/ell)=1; at five the same character follows from actual five-splitting. The prime p cannot divide c, and (2/p)=1. Quadratic reciprocity for p=1 modulo 4, with every prime multiplicity of the positive c retained, gives (c/p)=1. Hence the diagonal sign is (m/p)_4, exactly as in §100.
+
+The resulting row is independent of allowed certificate choices because §100 proves this for the pairing; no claim that the fields obtained from different certificates are identical is needed. At p_0 and 5 the signs remain (2 epsilon b/q), and the twist need not preserve them. They are not columns of H and cannot be dropped to manufacture a row-sum relation. This proves Theorem 103.2. ∎
+
+### 103.9. Exact intersection and the multiplicative squareclass obstruction
+
+**Theorem 103.3.** Under Theorem 103.2, let T be the selected cyclotomic field of Theorem 103.1, and let R/Q be any finite multiquadratic extension containing sqrt(-5). For every i>=1,
+
+ F_i intersect T R=E_i, [F_i T R:T R]=2.
+
+In the common base E_i L, the norm-conic class [epsilon_i gamma_i] is not in the subgroup generated by rational squareclasses and all selected classes g(delta_q).
+
+**Proof.** Put W=T R. The group V=Gal(W/L) embeds into the product of the two elementary abelian groups Gal(T/L) and Gal(LR/L), so it is elementary abelian. It is normal in Gal(W/Q), with odd-order quotient Gal(L/Q). Any 2-group quotient P of Gal(W/Q) is elementary abelian: P/image(V) is both an odd-order quotient and a 2-group, hence trivial.
+
+The field E_i lies in W, since sqrt(p_i),sqrt(D/p_i) belong to T and sqrt(-5) belongs to R. The intersection I=F_i intersect W is Galois over Q and its Galois group is a 2-group quotient of Gal(W/Q), hence elementary abelian. Inside F_i it therefore lies in the maximal abelian subfield E_i. The reverse inclusion was just proved, yielding I=E_i and the degree assertion.
+
+If the asserted squareclass nonmembership failed, there would be an equality in E_i L
+
+ epsilon_i gamma_i=r product_(q,g) g(A_q)^(n_(q,g)) u^2,
+
+with r in Q*, n_(q,g) in {0,1} and u in (E_i L)*. Enlarge R to contain sqrt(r). Every factor on the right becomes a square in W, contradicting [F_i W:W]=2. ∎
+
+The norm-conic quadratic layer therefore cannot be obtained by a direct multiplicative identification with the first selected-prime classes, even after all rational quadratic corrections. This is not a proof of independence of their signs at the actual marked primes t=3. No auxiliary-prime density statement is substituted for those marked conditions, and no new determinant value or actual prime exclusion follows from the intersection theorem alone.
+
+## 104. Quartic reciprocity and a certificate-free determinant condition
+
+This section removes a specific norm-certificate dependence from §100. Its conclusions are conditional on the complete actual support. No ternary block realizing the three-prime quartic pattern below is asserted, and the criterion is not a newly established solved WSS family.
+
+### 104.1. The actual support and the complete statement
+
+**Theorem 104.1.** Let N=3^j>=81 and B_N=L_N^2+3=D C^2 with arbitrary C>0 and full positive squarefree kernel D=p_0...p_s, s>=1. Assume p_0=19 modulo 24, every p_i for i>=1 is 1 modulo 24, and every mutual Legendre symbol is +1. Actual support retains p_i>5, (5/p_i)=1, rho(p_i)=tau_(p_i)=6N, and order 3N for the squared golden unit. Let H be the mixed matrix of §100 and write [epsilon]=(1-epsilon)/2 for a sign.
+
+For I a subset of {1,...,s}, put
+
+ d_I=product_(i in I) p_i, e_I=D/d_I,
+ W_I=product_(i in I) (-5e_I/p_i)_4, W_empty=+1.
+
+If x_I is its indicator, then
+
+ x_I^T H x_I=[W_I].                                    (104.1)
+
+In particular, for distinct i,j,
+
+ H_ij+H_ji=[(p_j/p_i)_4]+[(p_i/p_j)_4].                 (104.2)
+
+All quartic symbols have nonzero quadratic-residue arguments. Thus the known quadratic form q(x)=x^T H x is
+
+ q(x)=sum_i h_i x_i+sum_(i<j) t_ij x_i x_j,
+ h_i=[(-5(D/p_i)/p_i)_4],
+ t_ij=[(p_j/p_i)_4]+[(p_i/p_j)_4].                      (104.3)
+
+If w(q) is the largest dimension of a totally singular subspace for q, then
+
+ rank E_D(Q)<=1+2 dim ker H<=1+2w(q).                   (104.4)
+
+For s=2, if
+
+ (p_1/p_2)_4 (p_2/p_1)_4=-1,
+ (-5p_0 p_2/p_1)_4=(-5p_0 p_1/p_2)_4=-1,              (104.5)
+
+then det H=1 and rank E_D(Q)=1. Consequently no B_(Nk)=D C'^2 occurs with k>1 odd, 3 not dividing k and C'>0 an integer.
+
+### 104.2. Why the composite-cut pairing extends beyond nullity two
+
+**Proof.** For I empty the pairing is trivial. For I nonempty abbreviate d=d_I,e=e_I. The classes
+
+ lambda_(d)=(d,1)=sum_(i in I) lambda_i,
+ mu_(d)=(1,d)=sum_(i in I) mu_i
+
+belong to Selmer by §100. Here d>1 is squarefree and e>=p_0>1. The nullity-two hypothesis in §96 was used to identify a full three-dimensional pure Selmer basis and to make its final rank-one deduction. Neither is needed to compute this single pairing. We give the all-place calculation rather than import that rank deduction into a larger Selmer space.
+
+The covering triple for lambda_(d) is(d,1,d), with conics
+
+ H1: z2^2-d z3^2=20de t^2,
+ H2: z1^2-z3^2=15e t^2,
+ H3: z2^2-d z1^2=5de t^2.
+
+The covering and hence H3 are everywhere locally soluble. The conic Hasse principle provides a rational point on H3. Its t-coordinate cannot be zero because d is nonsquare, so normalize t=1 to obtain rational a,b with
+
+ a^2-d b^2=5de.
+
+No global affine-integrality premise is imposed. Tangency points on H3 and H2 are respectively (1,b,a) and (1,A0,B0), where
+
+ A0=(15e+1)/2, B0=(1-15e)/2.
+
+Use tangents
+
+ L2=A0 z1-B0 z3-15e t,
+ L3=a z2-d b z1-5de t.
+
+The primary formula of [Shukla–Stoll, *The Cassels–Tate pairing on 2-Selmer groups of elliptic curves*, arXiv:2302.01640v1, §3.2 equations (3.9)–(3.10) and Theorem 5.6](https://arxiv.org/pdf/2302.01640), in the convention of §§96 and 100, gives
+
+ <lambda_(d),mu_(d)>=product_v (L2(P_v)L3(P_v),d)_v.     (104.6)
+
+The first tangent has trivial second argument because the second triple is (1,d,d). The translation x=X-10D/3 to the short model preserves root differences and Kummer coordinates. The multiplicative convention is (-1)^(2 times the additive pairing). Rational tangent rescalings have global product one by Hilbert reciprocity; local projective rescaling changes the tangent product by a square.
+
+### 104.3. Infinity, two, three, five, and other support primes
+
+The second Hilbert argument d is a square at all these places. At infinity use positivity. At 2 use d=1 modulo 8, at 3 use d=1 modulo 3, and at 5 use (d/5)=product_(p|d)(5/p)=1. At each q|e, mutual Legendre positivity gives (d/q)=1, and d is a q-unit, so Hensel lifting makes it a square in Q_q. All their factors in (104.6) are one, independently of rational tangent denominators.
+
+### 104.4. Every good odd prime and every auxiliary denominator
+
+Let ell not divide 30D. If d is a square in Q_ell its factor is one. Otherwise d is a nonsquare unit. The norm equation forces a,b to be ell-integral: a negative minimum valuation cannot give the unit right side, while cancellation of equally negative valuations would make d a square in the residue field.
+
+Choose a primitive integral local covering point. Its t-coordinate is a unit, because t=0 modulo ell would force z1=z2=0 by H3 and then z3=0 by H2, contradicting primitiveness. Normalize t=1. On H3 put M3=a z2-d b z1,V3=a z1-b z2,c3=5de. On H2 put M2=A0 z1-B0 z3,V2=A0 z3-B0 z1,c2=15e. The exact identities are
+
+ (M3-c3)(M3+c3)=d V3^2,
+ (M2-c2)(M2+c2)=V2^2.
+
+All entries are integral, and 2,c2,c3,d are units. If L_k=M_k-c_k has positive valuation, M_k+c_k is a unit, so that valuation is even. Unit evaluations have valuation zero. Tangent zeros can be avoided because a smooth locally soluble covering has infinitely many nearby points whereas each tangent has finitely many zeros on it. For a nonsquare unit d, (z,d)_ell depends only on the parity of v_ell(z), proving that the contribution is one.
+
+This accounts for every auxiliary prime. Where d is locally square, a denominator in a or b is harmless because the second Hilbert argument is already a square. Where it is a nonsquare unit, the preceding argument proves integrality rather than presuming it.
+
+### 104.5. Every ramified prime in the composite cut
+
+Fix p|d and write d=p d' with d' a p-unit. In a^2-d b^2=5de the two left valuations have opposite parity and the right valuation is one. Thus v_p(b)=0 and v_p(a)>=1, even for rational a,b. Dividing by d gives b^2+5e=a^2/d and hence b^2=-5e modulo p.
+
+Choose t=1,z1=-b,z2=a and the Hensel root z3 of z3^2=b^2-15e satisfying z3=-2b modulo p. It exists because p>3 and b is a unit, and all three covering equations hold. Then
+
+ L3=2d b^2, L2=b(3b+1)^2/2 modulo p.
+
+If 3b+1=0 modulo p, the other root z3=2b gives L2=-3b(b-1)^2/2 modulo p, a unit in this exceptional case. Since p=1 modulo 24, the characters of -1,2,-3 are all +1. The chosen L2 has residue character (b/p).
+
+There is no omitted factor from the composite unit d':
+
+ (L3,d)_p=(2d b^2,d)_p=(2,d)_p(d,d)_p=(-2,d)_p=1.
+
+The last equality is (-2/p)=1, using v_p(d)=1. For the unit L2, the local symbol is (L2/p)=(b/p)=(-5e/p)_4. Multiplication over all p|d and the already checked remaining places proves
+
+ <lambda_(d),mu_(d)>=product_(p|d)(-5e/p)_4.            (104.7)
+
+No dimension or nullity premise entered this local identity. If a common primitive denominator c is introduced for the rational a,b, the proof does not assert that (c/p)=1 separately for every p|d; the composite tangent calculation already retains all denominator contributions.
+
+### 104.6. Bilinearity and the exact opposite-entry law
+
+Bilinearity and the sums in section 104.2 turn (104.7) into (104.1). For distinct i,j put M=-5D/(p_i p_j). For their two-element subset it gives
+
+ H_ii+H_ij+H_ji+H_jj=[(M/p_i)_4]+[(M/p_j)_4].
+
+The known diagonal entries are
+
+ H_ii=[(M/p_i)_4]+[(p_j/p_i)_4],
+ H_jj=[(M/p_j)_4]+[(p_i/p_j)_4].
+
+All individual factors are quadratic residues, so quartic multiplicativity is legitimate. Cancelling the M-terms proves (104.2), and expanding x^T H x gives (104.3). H need not be symmetric; its additive asymmetry is precisely the known mutual quartic matrix.
+
+### 104.7. The two-direction determinant and the higher-dimensional boundary
+
+For s=2 write H=[[h_1,x],[y,h_2]] and t=t_12. Equation (104.2) gives y=x+t, so over F_2
+
+ det H=h_1 h_2+x(x+t)=h_1 h_2+(1+t)x.
+
+When the mutual quartic signs are opposite, t=1 and det H=h_1 h_2. Conditions (104.5) therefore force determinant one without evaluating either off-diagonal norm-certificate sign. Theorem 100.1 gives rank at most one; the actual original non-torsion point gives rank exactly one, and Corollary 94.2 excludes the stated repetitions. If t=0, the unknown bit x remains. If t=1 and either h_i=0, this proves a singular H, not the existence of a repetition or higher rational rank.
+
+For arbitrary s, ker H is totally singular for q: q vanishes there, and its polarization is H+H^T, which also vanishes on two right-kernel vectors. Thus dim ker H<=w(q), proving (104.4) from Theorem 100.1. All of q is computable from rational quartic data, with no conic certificate needed for this bound.
+
+The bound from q alone has an exact algebraic limit. Given any quadratic form q on F_2^s, choose a basis starting with a maximum totally singular subspace U. Construct a bilinear refinement A with columns on U zero, their transposed entries equal to the prescribed polar coefficients, and any refinement of q on the remaining block. This is consistent because q and its polarization vanish on U. Then U is contained in ker A, while every refinement's kernel is totally singular. Consequently dim ker A=w(q). Thus one cannot improve this bound using q alone for arbitrary matrices; this is not a claim that all such matrices occur on actual support.
+
+For example, the matrices
+
+ [[1,1,1],[0,1,1],[0,0,1]],
+ [[1,1,0],[0,1,1],[1,0,1]]
+
+have the same h_i=1 and t_ij=1, but determinants one and zero. Opposite mutual quartic signs and negative diagonal signs in three directions therefore do not by themselves imply full rank. If all t_ij and h_i vanish, H is alternating and must be singular for odd s. These observations describe the determinant criterion's limits, not rational-point existence. This completes the proof. ∎
+
+To obtain a concrete new golden-prime exclusion from (104.5), one still needs a certified original N=3^j>=81 and a complete factorization B_N=p_0 p_1 p_2 C^2 with exactly the stipulated three odd-depth primes, residue types, mutual Legendre signs and quartic signs. Primes of even depth and overlap between D and C cannot be omitted. No such instance, independence from all previous golden-support restrictions, finiteness of Sha, or rational-rank parity is asserted here. The theorem preserves a conditional certificate-free determinant test and the exact field-theoretic boundary, rather than a new solved WSS family.
+
+## 105. Common-cut quartic forms beyond maximal Legendre nullity
+
+### 105.1. Actual hypotheses and cut spaces
+
+Let N=3^j>=81 and let
+
+ B_N=L_N^2+3=D C^2,  D=q_1...q_h,
+
+be the complete factorization into the positive squarefree kernel D and an arbitrary positive integer C. The q_i are distinct primes. The original block supplies q_i>5, q_i=1 modulo 3, (5/q_i)=1, D=19 modulo 120, the exact original Fibonacci rank and golden-matrix order rho(q_i)=tau_(q_i)=6N, and order 3N for the squared golden unit. These are retained as actual-support hypotheses, not replaced by congruences. The full factorization must account for primes of even valuation and for primes shared by C and D; no squarefreeness of B_N or coprimality of C and D is imposed.
+
+All vector spaces and matrices below are over F_2, and 1 denotes the all-one vector. For a prime p=1 modulo 4 and a nonzero quadratic residue a modulo p, (a/p)_4 is the sign represented by a^((p-1)/4) modulo p. Put
+
+ delta_i=[-1/q_i],  t_i=[2/q_i],  [epsilon]=(1-epsilon)/2.
+
+Let A_ij=[q_j/q_i] for i!=j, with zero row sums, and let K=ker A, K'=ker A^T. Theorem 95.1 gives
+
+ A+A^T=diag(delta)+delta delta^T,
+ A1=A^T1=0,  delta^T1=t^T1=1,
+ dim K=dim K'=r+1.
+
+It also gives the full Selmer parametrization by (y0,x,y) in F_2 x K' x K, with pair coordinates
+
+ b1=(-1)^(y0+delta^T x) 3^y0 5^(y0+t^T x+delta^T y) product q_i^x_i,
+ b2=5^y0 product q_i^y_i.
+
+The two rational torsion classes have parameters (0,1,0) and (1,0,1). The pure Selmer quotient has dimension 2r+1. The actual non-torsion golden point has class S with parameters (1,0,0), and S is in the radical of the Cassels pairing. The rational Kummer image lies in the radical without a finiteness assumption on Sha. The exact rational torsion is E_D[2] for
+
+ E_D: Y^2=X(X+5D)(X-15D).
+
+For v in K let d_v=product_(v_i=1) q_i and e_v=D/d_v. Theorem 95.1's cut equivalence says
+
+ (d_v/p)=1 for p|e_v, and (e_v/p)=1 for p|d_v.       (105.1)
+
+Define
+
+ U4={v in K: v_i=0 whenever delta_i=1},
+ U0={v in U4: t^T v=0},
+ U24={v in K: v_i=0 unless q_i=1 modulo 24}.
+
+Thus U24 is a subspace of U0. No additional restriction is imposed on the other support primes or on any individual mutual Legendre symbol. The rank-one conclusions below are conditional on complete actual support and the stated quartic signs. No actual ternary block realizing the new four-prime criterion is established here; its applicability remains unresolved.
+
+### 105.2. The exact common-cut quotient
+
+**Lemma 105.1.** The map U4 -> (K intersect K')/<1> induced by inclusion is an isomorphism. Explicitly, a vector v in K belongs to K' precisely when all its coordinates at primes 3 modulo 4 have the same value. For v in K intersect K', its unique representative in U4 modulo <1> is v+(delta^T v)1.
+
+**Proof.** For v in K, reciprocity gives
+
+ A^T v=diag(delta)v+delta(delta^T v).
+
+At a coordinate with delta_i=1 this vanishes exactly when v_i=delta^T v; at a coordinate with delta_i=0 it vanishes automatically. Because delta^T1=1, the set of delta_i=1 coordinates is nonempty and has odd size. A constant value c on them therefore has delta^T v=c. Complementing by c1 makes all those coordinates zero, and only one of v,v+1 can do so. Conversely every vector in U4 belongs to K'. This proves every assertion. In particular dim U4<=r. ∎
+
+For v in U0, the full local Selmer formula above yields the classes
+
+ lambda_v=(d_v,1),  mu_v=(1,d_v).                    (105.2)
+
+Their parameters are (0,v,0) and (0,0,v). Both maps are linear, because multiplying squarefree products corresponds to adding their indicators modulo rational squares. For any subspace U of U0, S and these two copies of U are independent modulo the torsion: a relation in parameters forces a vector of U to equal a multiple of 1, hence to be zero, and then forces the coefficient of S to be zero. Here 1 is not in U4.
+
+### 105.3. Certificate-free quartic values on the common-cut space
+
+**Theorem 105.2.** For v in U0, put W(0)=1 and, otherwise,
+
+ W(v)=product_(p|d_v) (-5e_v/p)_4.                   (105.3)
+
+Every rational quartic symbol in (105.3) is defined. The exact multiplicative pairing is
+
+ <lambda_v,mu_v>=W(v).                              (105.4)
+
+Consequently q(v)=[W(v)] is a quadratic form on U0. In any basis of a subspace U of U0, if H_U is the mixed matrix <lambda_(v_i),mu_(v_j)> in additive bits, then
+
+ q(x)=x^T H_U x.
+
+This statement does not require nullity two, maximal nullity, or pairwise residue positivity.
+
+**Proof of (105.4), including the local extension.** For v nonzero, write d=d_v,e=e_v. All p|d are 1 modulo 4 and, by actual support, 1 modulo 12. The condition t^T v=0 makes d=1 modulo 8. Also d=1 modulo 3 and (d/5)=1. The cut gives (e/p)=1 at each p|d, so -5e is a nonzero square modulo such p and (105.3) is defined. Since d omits every prime 3 modulo 4 and D=3 modulo 4, d and e are both greater than one.
+
+The covering triple of lambda_v is (d,1,d). Write its conics as
+
+ H1: z2^2-d z3^2=20D t0^2,
+ H2: z1^2-z3^2=15e t0^2,
+ H3: z2^2-d z1^2=5D t0^2.
+
+Here t0 is a projective coordinate, distinct from the vector t. The class is in Selmer, so each conic is everywhere locally soluble. The conic Hasse principle supplies rational alpha,beta with alpha^2-d beta^2=5D. A projective rational point on H3 has t0 nonzero since d is nonsquare. As e=3 modulo 8, -5e=1 modulo 8. There is a 2-adic norm point alpha=0, beta=sqrt(-5e). Rational parametrization and weak approximation give a rational norm point sufficiently close that alpha,beta are 2-adically integral. Clear denominators to obtain primitive integers a,b,c with c>0 odd and
+
+ a^2-d b^2=5D c^2,  alpha=a/c, beta=b/c.
+
+Set A0=(15e+1)/2, B0=(1-15e)/2, and use primitive rational tangents
+
+ L2=A0 z1-B0 z3-15e t0,
+ L3=a z2-d b z1-5D c t0.
+
+Use the primary Cassels tangent formula of Shukla–Stoll, *The Cassels–Tate pairing on 2-Selmer groups of elliptic curves*, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10) and Theorem 5.6, with the rational-image radical inclusion stated in its introduction: https://arxiv.org/pdf/2302.01640 . The second triple (1,d,d) gives
+
+ <lambda_v,mu_v>=product_l (L2(P_l)L3(P_l),d)_l.      (105.5)
+
+Here ( , )_l denotes the Hilbert symbol at the place l. The normalization is that of sections 96–104: the translation X -> X-10D/3 preserves Kummer coordinates and root differences, and the sign is (-1)^(2 times the additive Cassels pairing). A rational tangent scaling has global product one by Hilbert reciprocity. A local projective scaling changes the product of two tangents by a square.
+
+At infinity, 2, 3 and 5, d is a local square for the separate reasons just stated. At each prime of e, it is a square by (105.1). All these factors are one, regardless of tangent denominators.
+
+At an odd ell not dividing 30D, choose a primitive integral local covering point. Its projection to either conic is primitive, because otherwise another covering equation forces the fourth coordinate also to vanish modulo ell. The tangency points (1,A0,B0) on H2 and (c,b,a) on H3 are primitive over Z_ell, and the conics are smooth with unit diagonal coefficients. A primitive tangent to a smooth conic evaluates to even valuation at any integral section, if nonzero. To verify this, take unimodular coordinates carrying the tangency section to (1,0,0); the conic becomes uXZ+vY^2+wYZ+hZ^2=0 with u,v units and tangent Z=0. Away from the reduced tangency point Z is a unit. Near it, X is a unit, Y,Z are divisible by ell, and Z(uX+wY+hZ)=-vY^2 proves even valuation. Tangent zeros can be avoided on a smooth locally soluble covering, since they are finite and local neighborhoods contain infinitely many points. Hence both tangent valuations are even and the factor against the unit d is one. This includes every prime dividing c; global affine integrality is not assumed.
+
+Fix p|d. Primitiveness forces p not dividing c: otherwise the equation first forces p|a and then p|b modulo p^2. With c a unit, opposite valuation parities force b a unit and a divisible by p. Thus beta^2=-5e modulo p. Choose
+
+ t0=1, z1=-beta, z2=alpha,
+ z3^2=beta^2-15e, z3=-2beta modulo p.
+
+Hensel's lemma applies because p>3 and beta is a unit. At this point L3=2d b^2/c exactly and
+
+ L2=beta(3beta+1)^2/2 modulo p.
+
+If 3beta+1 vanishes, choose the opposite Hensel root; then L2=-3beta(beta-1)^2/2 modulo p is a unit. Since p=1 modulo 12, (-1/p)=(-3/p)=1. The possibly negative (2/p) must be retained. The odd-prime Hilbert formula gives
+
+ (L3,d)_p=(2/p)(c/p),
+ (L2,d)_p=(beta/p)(2/p).
+
+For the first formula, (d,d)_p=(d,-1)_p=1, so the unit d/p has not been silently discarded. Their product is (b/p), hence
+
+ (L2L3,d)_p=(-5e/p)_4(c/p).
+
+Multiplying all local factors proves (105.5) equals (c/d)W(v). Only the product (c/d), not each individual (c/p), is now simplified. Since d=1 modulo 4 and c is positive odd and coprime to d, reciprocity gives (c/d)=(d/c). For each odd ell|c, primitiveness and a^2-d b^2=5D c^2 imply that a,b are units modulo ell and a^2=d b^2 modulo ell; therefore (d/ell)=1. This also holds at ell=5, either by the same equation or by actual 5-splitting. Thus (d/c)=1 including all valuation multiplicities. This proves (105.4). Its proof used no dimension assumption. Bilinearity of the two maps (105.2) now proves the quadratic-form assertion. ∎
+
+The polarization can be evaluated without introducing undefined individual quartic symbols: for v,w in U0 it is [W(v+w)W(v)W(w)]. If some mutual prime symbols are negative, one must keep these composite cut products. Splitting them into (q_i/q_j)_4 is not allowed unless the separate arguments are quadratic residues.
+
+### 105.4. The lambda–lambda block and intersecting cuts
+
+**Theorem 105.3.** For every v,w in U0,
+
+ [<lambda_v,lambda_w>]=L(v,w),  L(v,w)=sum_i t_i v_i w_i.             (105.6)
+
+In particular this block vanishes on U24. On U0 it is alternating, since t^T v=0.
+
+**Proof.** The zero-vector case is immediate. Write d=d_v, f=d_w, e=D/d, and choose a primitive norm certificate a^2-d b^2=5D c^2 with c odd as above. At every p|f with p not dividing d, the d-cut gives that d is a p-adic square. There is a norm point beta=1, alpha=sqrt(d+5D), with both coordinates units. Weak approximation on the rational conic permits the certificate to have a,b,c all units at these finitely many primes, simultaneously with the 2-adic normalization. At p|d, b,c are automatically units by the preceding valuation argument.
+
+Use the rational tangency point (t0,z2,z3)=(c,2a,2b) on H1 and (c,b,a) on H3, with
+
+ L1=2a z2-2d b z3-20D c t0,
+ L3=a z2-d b z1-5D c t0.
+
+The second triple is (f,1,f), so the product is product_l (L1L3,f)_l. At infinity, 2, 3 and 5, f is a square because w is in U0. At any support prime not dividing f, the f-cut makes f a square. At every good odd prime the same primitive-tangent proof given above applies to H1 and H3, including primes of c; factors 2 in the H1 tangency point and tangent are units there. These contributions are all one.
+
+If p|f but p does not divide d, choose t0=1,z1=-beta,z2=alpha and the Hensel root z3=-beta modulo p. It exists since p divides e and beta is a unit. The tangent evaluations are units and satisfy
+
+ L1=4d b^2/c modulo p,  L3=2d b^2/c modulo p.
+
+Their product has residue character (8d^2 b^4/c^2/p)=(2/p). Since f has p-valuation one, the local Hilbert factor is precisely (2/p).
+
+If p divides both f and d, use the Hensel root z3=-2beta modulo p. The exact identity L3=2d b^2/c and the norm equation give
+
+ L1/d=8b^2/c modulo p,  L3/d=2b^2/c.
+
+Both tangents have valuation one. After removing their product's rational square factor d^2, its unit residue is 16b^4/c^2, a square. The Hilbert factor against f is therefore one. This overlapping-cut case is essential and uses no coprimality of d and f.
+
+The complete product is product_(p|f,p not dividing d)(2/p). Its additive bit is sum_i t_i w_i(1-v_i). As t^T w=0, this equals sum_i t_i v_iw_i, proving (105.6). ∎
+
+Thus the form (105.6), not pairwise Legendre positivity, is the exact condition needed for an isotropic lambda subspace. For a subspace U of U0 satisfying sum t_i v_iw_i=0 for all v,w in U, both Theorems 105.2 and 105.3 apply with zero lambda block. U24 is an explicit canonical such subspace. A different isotropic subspace may contain paired 13 modulo 24 primes; no square-multiplier restriction is introduced by doing so.
+
+### 105.5. Rank bound and complete coverage
+
+**Corollary 105.4.** Let U be any subspace of U0 isotropic for (105.6), put u=dim U, and let w(q|U) be the largest dimension of a subspace on which q vanishes identically. Then
+
+ rank E_D(Q) <= 1+2(r-u+dim ker H_U)
+             <= 1+2(r-u+w(q|U)).                    (105.7)
+
+If u=r and q|U has no nonzero zero, the rank is one and every repetition B_(Nk)=D C'^2 with k>1 odd, 3 not dividing k, and integer C'>0 is excluded by Corollary 94.2.
+
+**Proof.** On the independent subspace consisting of lambda_U and mu_U, the additive alternating matrix is
+
+ [[0,H_U],[H_U^T,J_U]],
+
+where J_U is not assumed zero or known. If H_U has rank k, choose a nonsingular k-by-k minor and restrict to the corresponding lambda rows and mu columns. The resulting 2k-by-2k alternating matrix has determinant equal to the square of that minor's determinant, independently of its bottom-right block. Hence the full pure pairing has rank at least 2k, so its radical has dimension at most (2r+1)-2k=1+2(r-u+dim ker H_U). The rational Kummer image modulo exact rational torsion lies in that radical and has dimension the Mordell–Weil rank. Further, H_U x=0 implies q(x)=0, so the whole kernel is totally singular for q and dim ker H_U<=w(q|U). The actual original point gives rank at least one. No Sha finiteness or rank parity is used. ∎
+
+For the canonical choice U24, full coverage u=r has a concrete check. Restrict vectors of K to the nonempty set of coordinates with q_i not equal to 1 modulo 24. Its kernel is U24 and its image contains the restricted all-one vector. Thus u=r exactly when this image is the one-dimensional span of that vector. This can be tested on the complete actual support without solving any norm conic. When u<r, (105.7) retains the explicit deficit r-u; same-cut quartics have not evaluated the missing left/right directions.
+
+In dimension two, q is anisotropic exactly when its values at all three nonzero vectors are one. Equivalently all three composite quartic products are negative. Then every mixed refinement H_U is invertible: in a basis its diagonal entries are both one and its off-diagonal entries x,y satisfy x+y=1, so det H_U=1+xy=1. Thus (105.3) determines this determinant without determining either individual off-diagonal entry.
+
+For dimensions at least three, a quadratic form over F_2 always has a nonzero zero, so this particular q-only rank-one deduction cannot hold. A direct proof in dimension three suffices by restriction: if all seven nonzero values were one, basis values would force every pair polarization to one; the sum of three basis vectors would then have value 3+3=0. This limitation does not preclude additional arithmetic information on H_U or the other blocks.
+
+### 105.6. A four-prime all-nonresidue criterion
+
+**Corollary 105.5.** Suppose the full actual kernel is D=p0 p1 p2 p3 with p0=19 modulo 24, p1,p2,p3=1 modulo 24, and every mutual Legendre symbol between distinct support primes equal to -1. If
+
+ product_(p|p1p2) (-5p0p3/p)_4 = -1,
+ product_(p|p1p3) (-5p0p2/p)_4 = -1,
+ product_(p|p2p3) (-5p0p1/p)_4 = -1,                 (105.8)
+
+then rank E_D(Q)=1 and there is no stipulated original-kernel repetition.
+
+**Proof.** Reciprocity is symmetric here because exactly one prime is 3 modulo 4. The matrix A is the four-by-four all-one matrix: every off-diagonal bit is one and each row-sum-zero diagonal is also one. It has rank one, so r=2. Its kernel is the even-weight subspace. U24 consists of the vectors with coordinate zero at p0 and even weight on the other three coordinates; it has dimension two. Its three nonzero cuts are exactly p1p2,p1p3,p2p3. Every quartic argument in (105.8) is a quadratic residue, since each is the product of -5 and two mutual nonresidues. Equations (105.8) make q anisotropic. Corollary 105.4 proves the result. ∎
+
+This stratum has A nonzero and nullity three, so it is outside both the maximal-nullity hypotheses of sections 100 and 104 and the nullity-two hypothesis of section 96. No individual symbol (p_i/p_j)_4 is used: those individual arguments are nonresidues and such symbols would be undefined in the convention here. The result is conditional on a complete actual ternary block, not on four generic primes satisfying the displayed congruences and characters.
+
+### 105.7. Distinct-kernel and dyadic limitations
+
+**Proposition 105.6.** In the distinct-kernel residue stratum of section 98, U4=U0=U24=0, so the quartic form (105.3) evaluates no nonconstant common-cut direction. For a general U0, its lambda block is zero precisely on subspaces isotropic for (105.6); even dyadic parity alone does not suffice.
+
+**Proof.** In section 98 all three support primes are 19 modulo 24 and
+
+ A=[[0,0,0],[1,1,0],[1,1,0]],
+ K=<111,110>, K'=<111,011>.
+
+Their intersection is <111>. Lemma 105.1 therefore gives U4=U0=U24=0. Same-cut quartic data evaluate no nonconstant direction at all, although the pure Selmer quotient has the additional lambda=(rs,1) and mu=(1,qr) and their mixed certificate sign Xi. This is an exact domain obstruction to recovering the section 98 determinant from (105.3); it is not an impossibility theorem for all possible marked-prime comparisons.
+
+For U0 containing primes 13 modulo 24, equation (105.6) is a second independent obstruction. The fact that each cut has an even number of such primes only says L(v,v)=0; it does not say L(v,w)=0 for different cuts. The block argument in Corollary 105.4 therefore requires an isotropic U and may not be used on all of U0 without checking (105.6). Similarly, on U4 outside U0 the correct first class is (5d_v,1). Section 97's full local calculation retains the primitive certificate character (c/5) in the self mixed pairing; the pure quartic formula (105.3) is not asserted there.
+
+Thus the common-cut quartic form does not by itself evaluate the whole nonsymmetric left/right kernel pairing, and the pairwise quadratic symbols alone do not supply the missing pairing entries in this argument. ∎
+
+The certificate-free rank-one criterion of Corollary 105.4 requires a certified complete B_(3^j)=D C^2, both Legendre kernels, an isotropic common-cut subspace U of dimension r, and an anisotropic q on U. Corollary 105.5 specifies one such sufficient arithmetic pattern. No existence of an actual block meeting it, converse, independence from every previous golden-support restriction, finiteness of Sha, rational-rank parity, or universal WSS exclusion is asserted.
+
 ## 追加锚（本行以下为增补区）
