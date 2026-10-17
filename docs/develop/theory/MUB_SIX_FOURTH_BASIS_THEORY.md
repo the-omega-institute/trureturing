@@ -3793,3 +3793,792 @@ v'\sim H_0R^m\Theta H_0^*v
 **证明。** 共同无偏的定义保证 `v` 与 `H_0*v` 的每个分量均有模 `1/sqrt(6)`，上述缩放恒等式直接给出命题 46.1 的两个实际平坦条件。缩放使 `Delta` 乘以非零因子，故非零性不变。`L` 为分块循环置换，而 `H` 为两 circulant block 矩阵，所以 `H_0` 保持每个二维 mode 子空间，并在其上酉作用；故它保持逐模正交和 mode-local 性质。对 `w,w'` 应用第 33 节，再以 `H_0` 传回即可。证毕。
 
 此推论不把输入侧 `Delta(v)` 与输出侧 `Delta(H_0*v)` 视为同一个量，也不将全局正交替换为逐模正交。命题 46.1 留下的退化情形，是至少一个 channel 为单一 Fourier mode；它未断言另一个 channel 也为单一 mode。这一排除结论本身尚不给出实际 completion 的 affinity 下界。
+
+## 47. 实参数支的常值 channel 纤维与两个例外参数
+
+### 47.1 常值第一 channel 的精确分类
+
+沿用第 46 节的 `a,p,q,H,S`，令 `L=diag(S²,S)`、`H_0=LH`，并记 `P=p-1`、`Q=q-1`、`A_0=2+p`、`B_0=2+q`。于是：
+
+```math
+\sqrt6 H_0=\begin{pmatrix}
+J+PI&J+QI\\J+\overline QI&-J-\overline PI
+\end{pmatrix}.
+```
+
+这里仍使用第 46 节所引的 Szöllősi block construction；本节分类其实际共同平坦方程中第一 channel 为常值的纤维。
+
+**命题 47.1。** 固定 `-1<a<1`。对单位相位向量 `x,y`，要求 `x` 为常值且 `H(x,y)^T` 逐项有模一。以公共相位把 `x` 归一为 `(1,1,1)` 后，所有可能的 `y` 恰为：
+
+1. 对每个参数都有的两个常值向量 `y=gamma(1,1,1)`，其中：
+
+   ```math
+   |\gamma|=1,\qquad \operatorname{Re}(\overline{A_0}B_0\gamma)=0.
+   ```
+
+2. 仅在以下两个参数出现的三个额外非恒定向量：
+
+   ```math
+   a=\pm\sqrt{\frac{37-\sqrt{73}}{72}}.
+   \tag{47.1}
+   ```
+
+   此时置：
+
+   ```math
+   s=\frac{11+\sqrt{73}}8,\quad h=\sqrt s,\quad
+   t=\frac{2a^2}{3},\quad
+   \eta=-\frac{a(5s-3)}{6h(2s-3)},
+   ```
+
+   ```math
+   d=\eta h-i\left(\frac{a\eta(s+1)}s+\frac{3t}{2h}\right),\qquad
+   m=d\left(\frac12+i\frac\eta t\right),\qquad
+   \alpha=m+d,\quad\beta=m-2d.
+   \tag{47.2}
+   ```
+
+   三个额外向量是 `(alpha,alpha,beta)` 的三个不同置换。
+
+因此，第一 channel 为常值的 projective 纤维通常恰有两个点，在式 (47.1) 的两个参数处恰有五个点。三个额外点的第二 channel 均有完整的三模 Fourier 支撑。
+
+**证明。** 由于 `L` 只置换行，输出逐项模一对 `H` 与 `H_0` 等价。设 `sigma=sum y_j`，则两个未归一化输出 channel 为：
+
+```math
+(A_0+\sigma)\mathbf1+Qy,\qquad
+(\overline{B_0}-\sigma)\mathbf1-\overline Py.
+```
+
+若 `y` 有三个不同的单位相位，两个输出 channel 各自等模迫使对应实线性泛函为零。`P,Q` 非零，故：
+
+```math
+\sigma=-A_0,\qquad \sigma=\overline{B_0}.
+```
+
+这与 `Re(A_0+conjugate(B_0))=3` 矛盾。若 `y` 为常值，输出条件就是命题第一项；`A_0B_0!=0`，所以恰有两个相反的相位解。
+
+非恒定情形中，`y` 必恰有两个不同分量。`H_0` 与同步坐标置换交换，所以可写：
+
+```math
+y=(m+d,m+d,m-2d),\qquad d\ne0.
+```
+
+记 `t=|d|²`、`eta=Im(m conjugate(d))`。输入分量模一等价于：
+
+```math
+\operatorname{Re}(m\overline d)=t/2,\qquad
+|m|^2+2t=1,\qquad \eta^2=t-\frac94t^2.
+\tag{47.3}
+```
+
+像第 46 节那样写 `p+q=-1+ih`，则：
+
+```math
+1<h\le\sqrt3,\qquad
+p=\frac{a-1+i(h+a/h)}2,\quad
+q=\frac{-a-1+i(h-a/h)}2,\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2}.
+\tag{47.4}
+```
+
+两个输出 channel 的等模条件为：
+
+```math
+\operatorname{Re}\bigl(\overline Q(A_0+3m)\overline d\bigr)=0,
+\qquad
+\operatorname{Re}\bigl(P(3m-\overline{B_0})\overline d\bigr)=0.
+\tag{47.5}
+```
+
+写 `d=X+iY`，代入 `m conjugate(d)=t/2+i eta`，解这个实二元线性系统得到：
+
+```math
+X=\eta h,\qquad
+Y=-\frac{a\eta(1+h^2)}{h^2}-\frac{3t}{2h}.
+\tag{47.6}
+```
+
+这里没有除以可能为零的参数：未约分的分母所含因子满足：
+
+```math
+a^2h^2-a^2+h^4-9h^2=-\frac{4h^2(h^2+3)}{1+h^2}<0.
+```
+
+令 `N=A_0+B_0m`，第一输出 channel 的范数条件为 `|N|²+2|Q|²t=6`，亦即：
+
+```math
+\operatorname{Re}(\overline{A_0}B_0m)=-3at.
+\tag{47.7}
+```
+
+把式 (47.6) 代入 `|d|²=t` 和式 (47.7)，再用式 (47.3)–(47.4)，由于 `t>0`，得到：
+
+```math
+9h(1+h^2)t-6a(1+h^2)\eta-2h(h^2+3)=0,
+```
+
+```math
+9a(1+h^2)t-6h^3\eta-a(7h^2+3)=0.
+\tag{47.8}
+```
+
+具体地，`|d|²-t` 的展开余项是第一个左侧乘以 `-t/(2h³)`；式 (47.7) 左侧移项后乘以 `t`，展开余项是第二个左侧乘以 `-t/(2h²)`。
+
+若 `2h²=3`，消去式 (47.8) 中的 `t` 就给出 `a(5h²-3)=0`，与式 (47.4) 矛盾。否则唯一解为：
+
+```math
+\eta=-\frac{a(5h^2-3)}{6h(2h^2-3)},\qquad
+ t=\frac{3h^4-4h^2-3}{3(1+h^2)(2h^2-3)}.
+\tag{47.9}
+```
+
+此时式 (47.3) 中最后一个条件的余项恰为：
+
+```math
+\eta^2-t+\frac94t^2
+=-\frac{h^2(h^2+3)(4h^4-11h^2+3)}{9(1+h^2)^2(2h^2-3)^2}.
+```
+
+故 `4h⁴-11h²+3=0`。二次多项式 `4s²-11s+3` 的两个根中，只有 `s=(11+sqrt(73))/8` 落在 `(1,3]`。式 (47.4) 随即给出式 (47.1)，而 `t=(37-sqrt(73))/108=2a²/3`。式 (47.6) 和 (47.9) 唯一确定 `d`，再由 `m=d(1/2+i eta/t)` 唯一确定 `m`。这证明非恒定解至多是命题中三个置换。
+
+反过来，对式 (47.1) 的任一符号，式 (47.2) 满足：
+
+```math
+4s^2-11s+3=0,\quad 9a^2+s-6=0,\quad
+|d|^2=t,\quad \eta^2=t-\frac94t^2,\quad |m|^2=1-2t.
+```
+
+因此 `|alpha|=|beta|=1`。式 (47.5) 保证两个输出 channel 各自等模；式 (47.7) 保证第一个归一化输出 channel 的平方范数为三，酉性又使第二个的平方范数为三。故两个 channel 均逐项模一，三个置换都可达。由于 `t>0`、`t<1/2`，`d,m` 均非零，故三个置换彼此不同，且其第二 channel 的 Fourier 分量模为 `sqrt(3)|m|,sqrt(3)|d|,sqrt(3)|d|`，全部非零。证毕。
+
+### 47.2 例外射线的精确正交图
+
+**推论 47.2。** 固定式 (47.1) 的任一参数，令 `y_j` 为命题 47.1 的三个非恒定向量，并置：
+
+```math
+v_j=\frac1{\sqrt6}(\mathbf1,y_j),\qquad
+w_j=\Theta_0v_j=\frac1{\sqrt6}(-\overline{y_j},\mathbf1),
+\qquad \Theta_0(x,y)=(-\overline y,\overline x).
+```
+
+这六条实际共同无偏射线的诱导正交图恰为 `K_{3,3}`。加入六条 canonical mode-local 射线后，十二条射线的诱导正交图恰为不相交并 `K_6 ⊔ K_{3,3}`。
+
+**证明。** 第 35 节的反酉恒等式在此 `I+J` block 形式中为 `H_0 Theta_0=-Theta_0 H_0`，所以 `v_j,w_j` 均共同无偏于实际列基对 `(I,H_0*)`。两个不同位置的 `(1,1,-2)` 型向量内积为 `-3`，故当 `j!=k` 时：
+
+```math
+\langle y_j,y_k\rangle=3|m|^2-3t=3-9t,\qquad
+\langle v_j,v_k\rangle=1-\frac32t=1-a^2>0.
+```
+
+`w_j,w_k` 的内积是其共轭，也非零。又 `sum y_j=3m` 与 `j` 无关，所以所有交叉内积都为零：
+
+```math
+\langle v_j,w_k\rangle
+=\frac{\overline{\sum y_j}-\overline{\sum y_k}}6=0.
+```
+
+这就给出六个不同顶点的 `K_{3,3}`，特别是其中没有正交三角形。
+
+为核对与 canonical 射线的关系，令 `f_l` 为逐项模一的第 `l` 个 Fourier mode，`A_l,B_l` 为归一化 `H_0` 的相应 mode entries，取两个相反相位 `gamma_l^±` 满足 `Re(conjugate(A_l)B_l gamma_l^±)=0`。这里 `A_lB_l!=0`。六条 canonical 射线为：
+
+```math
+c_l^\pm=\frac1{\sqrt6}(f_l,\gamma_l^\pm f_l),\qquad l=0,1,2.
+```
+
+它们在同一 mode 内成正交对，不同 mode 之间也正交，故给出 `K_6`。对 `l=0`：
+
+```math
+\langle v_j,c_0^\pm\rangle=\frac{1+\gamma_0^\pm\overline m}{2},\qquad
+\langle w_j,c_0^\pm\rangle=\frac{\gamma_0^\pm-m}{2},
+```
+
+因 `|m|<1` 均非零。对 `l=1,2`，`v_j` 的第一 channel 与 `f_l` 正交，但第二 channel 的对应 Fourier 分量非零，所以 `v_j` 与 `c_l^±` 不正交；`w_j` 则由共轭 Fourier 分量得到同样结论。因此两个子图之间没有边。证毕。
+
+### 47.3 基方向与结论范围
+
+对三个额外非恒定点，`(x,y)/sqrt(6)` 共同无偏于 `(I,H*)`。在第 46 节的实际列基方向 `(I,H_0)` 中，应使用 `v=H_0(x,y)^T/sqrt(6)`，于是 `H_0*v=(x,y)^T/sqrt(6)`。其输出侧 `Delta` 为零，而六维向量的总 mode 支撑仍是完整的。因此第 46 节的“两条 channel 均满支撑”不能弱化为“向量不是 mode-local”。对推论 47.2 的全部射线同时乘以 `H_0`，所有内积和图结论保持。
+
+命题 47.1 只分类第一 channel 为零 Fourier mode 的纤维；它没有分类第一 channel 为另外两个单模的情形，也没有分类两条 channel 都满支撑的情形。推论 47.2 只给出这十二条显式射线的诱导图，不排除它们与其余共同无偏射线之间的边，因而尚不排除由其他射线参与的 completion 或 quartet。
+
+## 48. 实参数支上完整的零自相关行列式层
+
+### 48.1 非零单模 channel 的刚性
+
+沿用第 46–47 节的实参数 `-1<a<1`、`p,q,H,H_0`，其中 `H_0=diag(S²,S)H`。写 `p+q=-1+ih`、`s=h²`，并记 `P=p-1`、`Q=q-1`。则：
+
+```math
+1<s\le3,\qquad a^2=\frac{s(3-s)}{1+s},\qquad
+P=\frac{a-3+i(h+a/h)}2,\quad Q=\frac{-a-3+i(h-a/h)}2.
+```
+
+令 `omega=exp(2 pi i/3)`、`f_l=(1,omega^l,omega^{2l})`。单位相位向量 `x,y` 的酉 Fourier 坐标分别记为 `u,z`，即 `x=sum_l u_l f_l/sqrt(3)`，`y=sum_l z_l f_l/sqrt(3)`。本节继续采用 Szöllősi 的 paired-circulant construction；所分类的是该实参数支的实际共同平坦方程。
+
+**命题 48.1。** 若 `x,y` 逐项有模一，`H(x,y)^T` 也逐项有模一，且 `x` 只支撑于 Fourier mode `1` 或 `2`，则 `y` 必支撑于同一个 mode。
+
+**证明。** 因 `H_0` 与同步坐标置换交换，反射置换交换 modes `1,2`，故只需处理第一个。用公共相位归一化 `x=f_1`，于是 `u_1=sqrt(3)`、其余 `u_l=0`。
+
+单位相位三元组的 Fourier 支撑只能是单模或完整三模：若一个 Fourier 分量为零，对应三个单位复数之和为零，它们必组成等边三角形，从而原三元组为某个单模。若 `y` 是不同于 `1` 的单模，则第一个输出 channel 有且仅有两个非零 Fourier 分量，与上述支撑性质矛盾。这里涉及的 mode entries 都非零：`P,Q,2+p,2+q` 均非零。
+
+剩下只需排除 `z_0 z_1 z_2!=0`。令：
+
+```math
+\zeta=\frac{z_2}{\overline{z_0}},\qquad r=|\zeta|^2>0.
+```
+
+`H_0(x,y)^T` 的两个 Fourier channel 在除以 `sqrt(6)` 前分别为：
+
+```math
+\bigl((2+q)z_0,\ P\sqrt3+Qz_1,\ Qz_2\bigr),
+```
+
+```math
+\bigl(-\overline{(2+p)}z_0,\ \overline Q\sqrt3-\overline Pz_1,
+-\overline Pz_2\bigr).
+```
+
+令 `X=conjugate(z_0)z_1`、`Y=conjugate(z_2)z_0`。从两个输出 channel 的循环自相关方程中分别减去 `|Q|²`、`|P|²` 倍的输入自相关方程，得到：
+
+```math
+QX+\overline QY
+=-\frac{P\overline{(2+q)}\overline{z_0}+\overline P Qz_2}{\sqrt3},
+```
+
+```math
+\overline PX+PY
+=\frac{(2+p)\overline Q\overline{z_0}+Q\overline Pz_2}{\sqrt3}.
+\tag{48.1}
+```
+
+该系统的行列式 `QP-conjugate(QP)` 非零，因为：
+
+```math
+\operatorname{Im}(PQ)=-\frac{h(s+3)}{1+s}<0.
+```
+
+解得：
+
+```math
+\sqrt3z_1=A+B\zeta,\qquad
+\sqrt3\overline{z_2}z_0=(C+D\zeta)\overline{z_0},
+\tag{48.2}
+```
+
+其中本证明内的标量 `A,B,C,D` 为：
+
+```math
+A=\frac{a(5s^2+2s-3)+ih(5s^2-12s-9)}{2s(s+3)},\qquad
+B=-\frac{a(s+1)-ih(s+3)}{2s},
+```
+
+```math
+C=-\frac{a(s^2+4s+3)+ih(s^2-12s-9)}{2s(s+3)},\qquad
+D=\frac{a(s+1)-ihs}{s}.
+```
+
+输入自相关、输入范数和第一个输出 channel 的范数分别给出：
+
+```math
+A+C+(B+\overline A+D)\zeta+\overline Br=0,
+\tag{48.3}
+```
+
+```math
+|C+D\zeta|^2(1+r)+|A+B\zeta|^2r-9r=0,
+\tag{48.4}
+```
+
+```math
+2\operatorname{Re}\bigl(\overline P Q(A+B\zeta)\bigr)r
+-a|C+D\zeta|^2=0.
+\tag{48.5}
+```
+
+具体地，式 (48.2) 给出 `|z_0|²=|C+D zeta|²/(3r)`，而输入平方范数为三。第一个输出 channel 的平方范数条件是 `2 Re(conjugate(P)Q sqrt(3)z_1)=3a|z_0|²`。因此三式保留的是同一个实际 `y` 和同一个 `zeta`，没有独立放松各个相位。
+
+若 `a=0`，则 `s=3`、`p=q=omega`，以及：
+
+```math
+A=0,\qquad B=i\sqrt3,\qquad C=i\sqrt3,\qquad D=-i\sqrt3.
+```
+
+式 (48.3) 给出 `r=1`，式 (48.4) 给出 `|1-zeta|²=1`，故 `Re(zeta)=1/2`。因 `conjugate(P)Q=3`，式 (48.5) 又迫使 `Im(zeta)=0`，与 `|zeta|²=1` 矛盾。
+
+现设 `a!=0`，故 `1<s<3`。式 (48.3) 中 `zeta` 的系数是非零数：
+
+```math
+B+\overline A+D
+=\frac{3(s+1)[ah+i(3-s)]}{h(s+3)}.
+```
+
+解得：
+
+```math
+\operatorname{Re}\zeta
+=\frac{(2s^2+9s+9)r-8s^2+6s}{6(2s+3)},
+```
+
+```math
+\operatorname{Im}\zeta
+=-\frac{a[(2s^3+7s^2-9)r-8s^3+14s^2-18]}{6h(s-3)(2s+3)}.
+\tag{48.6}
+```
+
+定义：
+
+```math
+F(s,r)=(s+3)^2(2s+3)r^2+(5s^3-48s^2-99s-54)r
++20s^3-21s^2-18s+27.
+```
+
+将式 (48.6) 代入 `|zeta|²=r` 后，余项恰为：
+
+```math
+|\zeta|^2-r=-\frac{F(s,r)}{9(s-3)(s+1)(2s+3)}.
+```
+
+因此 `F(s,r)=0`。再将式 (48.6) 代入式 (48.4)、(48.5) 的左侧，各乘以共同的非零分母：
+
+```math
+9s(s-3)(s+1)(s+3)^2(2s+3),
+```
+
+并在变量 `r` 上对 `F` 取多项式余式，依次得到：
+
+```math
+-27s(s-3)(s+1)\,[K(s)r-L(s)],\qquad
+9a(s+1)\,[J(s)r-M(s)],
+\tag{48.7}
+```
+
+其中：
+
+```math
+K(s)=(s+3)^2(s+6),\qquad L(s)=16s^3+30s^2+72s+54,
+```
+
+```math
+J(s)=(s+3)^2(2s+3)(2s^2+3s+9),\qquad
+M(s)=28s^5+207s^4-108s^3-918s^2-324s+243.
+```
+
+这里仅使用 `h²=s` 与 `a²=s(3-s)/(1+s)`。式 (48.7) 中消去的因子均非零，故必须同时有 `Kr=L` 与 `Jr=M`。然而：
+
+```math
+JL-KM=9s(s+3)^3(4s^4-19s^3+51s^2+279s+189)>0.
+\tag{48.8}
+```
+
+最后的不等式来自 `s>0` 及：
+
+```math
+4s^4-19s^3+51s^2+279s+189
+=s^2(4s^2-19s+51)+279s+189>0,
+```
+
+其中二次式 `4s²-19s+51` 首项系数为正、判别式为 `-455`。这与 `Kr=L`、`Jr=M` 矛盾，完成全部情形。证毕。
+
+### 48.2 完整的零行列式层及 completion 的必要条件
+
+对上述实际单位相位向量，定义循环自相关行：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad
+d_k=\overline{z_k}z_{k+1},\qquad k\in\mathbb Z/3\mathbb Z,
+\qquad
+\Delta(x,y)=\det\begin{pmatrix}c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1\end{pmatrix}.
+```
+
+**推论 48.2。** 固定 `-1<a<1`。实际共同平坦射线中 `Delta=0` 的全部解恰为六条 canonical mode-local 射线；仅当：
+
+```math
+a=\pm\sqrt{\frac{37-\sqrt{73}}{72}}
+```
+
+时，还包括第 47 节的六条额外射线。因此完整零行列式层的正交图通常为 `K_6`，在这两个参数处恰为 `K_6 ⊔ K_{3,3}`。
+
+任一不同于 canonical mode-local 基的正交 completion 至少包含三条 `Delta!=0` 射线。若它使用了上述任一额外零行列式射线，则至少包含四条 `Delta!=0` 射线。
+
+**证明。** 每个输入 channel 的 Fourier 支撑只能是完整三模或单模。第 46 节排除两个 channel 均满支撑时的 `Delta=0`。第一 channel 为零模时，命题 47.1 给出全部解；第一 channel 为另外两个单模时，命题 48.1 说明两个 channel 必在同一 mode，故只能是 canonical 射线。
+
+若只有第二 channel 为单模，则应用第 35、47 节的反酉对称 `Theta_0(x,y)=(-conjugate(y),conjugate(x))`。它交换 channel 并保持实际共同平坦条件；此情形中的非 canonical 解恰为常值第一 channel 的三个例外点的 Theta_0 像，与前一种情形合起来正好是第 47 节的六条额外射线。反过来，每条列出的射线都有一个自相关行为零，故确实满足 `Delta=0`。完整图即推论 47.2 已计算的图。
+
+完全落在该层中的六射线正交基只能是 canonical `K_6`。因此非 canonical completion 必包含一条 `Delta!=0` 射线。该射线在三个 rank-two mode 子空间中均有非零投影，所以不可能同时正交于某一 mode 中的两条 canonical 射线。一个含此射线的 completion 至多使用三条 canonical 射线。若 completion 没有额外零行列式射线，就至少有三条非零行列式射线。
+
+若 completion 含有一条额外零行列式射线，则根据两个子图间没有边的事实，它不能包含任何 canonical 射线。又 `K_{3,3}` 的团数为二，所以它至多使用两条额外零行列式射线，从而至少有四条非零行列式射线。这也蕴含一般的三条下界。证毕。
+
+在实际列基方向 `(I,H_0)` 中，对每条共同无偏单位射线 `v` 应把上述 `Delta` 施于单位相位坐标 `sqrt(6)H_0*v` 的两个 channel。对所有射线同时作这一酉基变换并恢复共同归一化，内积及正交图不变，故以上分类和计数原样适用。`Delta!=0` 亦强迫两个 channel 都满支撑。
+
+本节把非 canonical completion 的剩余问题限制到至少三条实际满 channel 支撑射线的正交兼容性。它不把全局正交替换为第 33 节所要求的逐模正交，也没有分类 `Delta!=0` 的全部射线、建立 affinity 下界或排除 quartet。
+
+## 49. 实参数支上 canonical 射线的显式隔离半径
+
+### 49.1 实际相位 Jacobian 与射线间距
+
+沿用第 46–48 节的归一化矩阵 `H_0` 和参数 `-1<a<1`。令 `omega=exp(2 pi i/3)`、`f_l=(1,omega^l,omega^{2l})`，故 `f_l` 逐项模一、范数为 `sqrt(3)`。写 `s=h²`、`P=p-1`、`Q=q-1`、`A=2+p`、`B=2+q`。`sqrt(6)H_0` 的三个 Fourier blocks 是：
+
+```math
+T_0=\begin{pmatrix}A&B\\\overline B&-\overline A\end{pmatrix},
+\qquad
+T_1=T_2=\begin{pmatrix}P&Q\\\overline Q&-\overline P\end{pmatrix}.
+```
+
+记 `(a_0,b_0)=(A,B)`、`(a_1,b_1)=(a_2,b_2)=(P,Q)`，并置：
+
+```math
+n_l=|a_l|^2,\qquad m_l=|b_l|^2,\qquad k_l=\sqrt{n_lm_l}>0.
+```
+
+于是 `(n_0,m_0)=(3+2a,3-2a)`，另两个 mode 均为 `(3-a,3+a)`。六个 canonical 单位相位代表是：
+
+```math
+z_{l,\varepsilon}=(f_l,g_{l,\varepsilon}f_l),\qquad
+ g_{l,\varepsilon}=\frac{\varepsilon i a_l\overline{b_l}}{k_l},
+\qquad \varepsilon\in\{1,-1\}.
+```
+
+**命题 49.1。** 设 `a!=0`。对任一 canonical 单位射线 `c=z_{l,epsilon}/sqrt(6)`，以及与其不同的、共同无偏于 `(I,H_0*)` 的单位射线 `v`，有：
+
+```math
+\min_{|\lambda|=1}\|v-\lambda c\|_2\ge\frac{|a|}{80}.
+\tag{49.1}
+```
+
+同一结论经公共酉变换 `H_0` 后适用于实际列基对 `(I,H_0)`。常数不声称最优。
+
+一般的非退化相位 Jacobian 所给出的局部唯一性可见 Jaming–Matolcsi–Móra–Szöllősi–Weiner，[arXiv:0902.0882v2，Theorem 4.1 与 Corollary 4.2](https://arxiv.org/abs/0902.0882v2)。这里计算该实参数支的实际 Jacobian，并直接给出式 (49.1) 的统一定量半径。
+
+**证明。** 固定 `l,epsilon`，简记 `g=g_{l,epsilon}`，定义实际残差映射：
+
+```math
+R(\theta)=\left|H_0\bigl(z_{l,\varepsilon}\odot e^{i\theta}\bigr)\right|^2-\mathbf1,
+\qquad \theta\in\mathbb R^6.
+```
+
+绝对值、平方和指数均逐项作用。每个实相位 channel 都唯一写为：
+
+```math
+\theta_x(j)=t_x+\xi\omega^j+\overline\xi\omega^{-j},\qquad
+\theta_y(j)=t_y+\eta\omega^j+\overline\eta\omega^{-j}.
+```
+
+公共相位不改变 `R`。在均值零的五维子空间中 `t_x+t_y=0`。置 `d=t_y-t_x`、`w=(xi,eta)`，有：
+
+```math
+\|\theta\|_2^2=\frac32d^2+6\|w\|_2^2.
+\tag{49.2}
+```
+
+令 `U=a_l+b_lg`、`V=conjugate(b_l)-conjugate(a_l)g`，则 `|U|²=|V|²=6`。下标按三循环取值，并记 `(a_+,b_+)=(a_{l+1},b_{l+1})`、`(a_-,b_-)=(a_{l-1},b_{l-1})`。两个输出残差中 `omega^j` 的系数，其导数为 `(i/6)Mw`，其中：
+
+```math
+M_{11}=\overline U a_+-U\overline{a_-},\qquad
+M_{12}=\overline U b_+g-U\overline{b_-}\overline g,
+```
+
+```math
+M_{21}=\overline V\overline{b_+}-Vb_-,\qquad
+M_{22}=-\overline V\overline{a_+}g+Va_-\overline g.
+\tag{49.3}
+```
+
+两个零频率导数分别为 `-epsilon k_l d/3` 与其相反数。于是实际 Jacobian `J=DR(0)` 满足：
+
+```math
+\|J\theta\|_2^2=\frac{2k_l^2}{3}d^2+\frac16\|Mw\|_2^2.
+\tag{49.4}
+```
+
+这保留了全部五个去公共相位方向；第六个残差只由总范数守恒消去。
+
+以下给出 `M` 的精确行列式。为展开方便，暂记 `alpha=a_l`、`beta=b_l`、`n=|alpha|²`、`m=|beta|²`、`k=sqrt(nm)`。代入 `g=epsilon i alpha conjugate(beta)/k`，得到 `M=M_0+(epsilon/k)M_1`，其中：
+
+```math
+M_0=\begin{pmatrix}
+\overline\alpha a_+-\alpha\overline{a_-}&\overline\beta b_+-\beta\overline{b_-}\\
+\beta\overline{b_+}-\overline\beta b_-&\alpha\overline{a_+}-\overline\alpha a_-
+\end{pmatrix},
+```
+
+```math
+M_1=\begin{pmatrix}
+-im(\overline\alpha a_++\alpha\overline{a_-})&in(\overline\beta b_++\beta\overline{b_-})\\
+in(\beta\overline{b_+}+\overline\beta b_-)&-im(\alpha\overline{a_+}+\overline\alpha a_-)
+\end{pmatrix}.
+```
+
+在 `det(M_0+(epsilon/k)M_1)` 中，一次交叉项：
+
+```math
+(M_0)_{11}(M_1)_{22}+(M_1)_{11}(M_0)_{22}
+-(M_0)_{12}(M_1)_{21}-(M_1)_{12}(M_0)_{21}
+```
+
+恒为零。将 `p=(a-1+i(h+a/h))/2`、`q=(-a-1+i(h-a/h))/2` 和 `a²=s(3-s)/(1+s)` 代入剩余的 `det M_0+det M_1/(nm)`，化简得：
+
+```math
+l=0:\quad\det M=\frac{72a(s+3)^2}{4s^2-3s+9},
+\qquad
+l=1:\quad\det M=-36a.
+\tag{49.5}
+```
+
+mode `2` 由同步反射 `j -> -j` 得到相同的奇异值。因此去公共相位的实际 Jacobian 恰在 `a!=0` 时可逆；`a=0` 时式 (49.5) 为零。第一分母是 `(1+s)(9-4a²)>0`，而：
+
+```math
+\frac{(s+3)^2}{4s^2-3s+9}\ge1
+```
+
+来自 `3s(3-s)>=0`。所以三个 mode 都有 `|det M|>=36|a|`。
+
+每个 `sqrt(6)H_0` 的 mode coefficient 的模不超过 `sqrt(5)`，故式 (49.3) 的每个矩阵元的模不超过 `2sqrt(30)`。于是：
+
+```math
+\|M\|_{op}\le\|M\|_F\le4\sqrt{30}<24,
+\qquad \sigma_{\min}(M)\ge\frac{36|a|}{24}=\frac32|a|.
+```
+
+均值方向的奇异值为 `2k_l/3>1`；由式 (49.2)–(49.4)，其余四个实方向的最小奇异值为 `sigma_min(M)/6`。因此在均值零子空间上：
+
+```math
+\|J\theta\|_2\ge\frac{|a|}{4}\|\theta\|_2.
+\tag{49.6}
+```
+
+为控制真实非线性残差，令 `Z(t)=H_0(z_{l,epsilon} odot exp(i t theta))`。酉性给出：
+
+```math
+\|Z(t)\|_2=\sqrt6,\quad
+\|Z'(t)\|_2=\|\theta\|_2,\quad
+\|Z''(t)\|_2=\|\theta\odot\theta\|_2\le\|\theta\|_2^2.
+```
+
+逐项平方模的二阶导数是 `2|Z'|²+2 Re(conjugate(Z) odot Z'')`，所以对所有 `t`：
+
+```math
+\left\|\frac{d^2}{dt^2}R(t\theta)\right\|_2
+\le2(1+\sqrt6)\|\theta\|_2^2<8\|\theta\|_2^2.
+```
+
+积分形式的 Taylor 公式遂给出：
+
+```math
+\|R(\theta)-R(0)-J\theta\|_2\le4\|\theta\|_2^2.
+\tag{49.7}
+```
+
+若 `theta` 均值为零、非零且 `R(theta)=R(0)=0`，式 (49.6)–(49.7) 强迫 `||theta||_2>=|a|/16`。
+
+最后令 `z=sqrt(6)v`，选公共相位使 `rho=||z-z_{l,epsilon}||_2` 最小，并取主值相位差 `beta_j in [-pi,pi]`。弧弦不等式给出：
+
+```math
+|\beta_j|\le\frac\pi2|e^{i\beta_j}-1|\le2|e^{i\beta_j}-1|,
+\qquad\|\beta\|_2\le2\rho.
+```
+
+减去 `beta` 的均值所得 `theta` 满足 `||theta||<=||beta||`，且只改变 `z` 的公共相位，故仍有 `R(theta)=0`。因两射线不同，`theta!=0`。因此 `rho>=|a|/32`，除以 `sqrt(6)<5/2` 即得式 (49.1)。证毕。
+
+### 49.2 完整 completion 的定量分离
+
+**推论 49.2。** 设 `a!=0`，`C` 为实际列基对 `(I,H_0)` 的非 canonical unitary completion，`C_can` 为同一参数的 canonical completion。对全部 unitary monomial 矩阵 `M` 取下确界，有：
+
+```math
+\inf_M\|C-C_{can}M\|_F\ge\frac{\sqrt3\,|a|}{80}.
+\tag{49.8}
+```
+
+若 `C` 含有第 47 节的一条例外零行列式射线，则右侧可加强为 `sqrt(6)|a|/80`。
+
+**证明。** 第 48 节保证非 canonical completion 至少含三条非 canonical 射线。无论如何指定列置换和各列相位，这三列与分配给它们的 canonical 列之间的距离都至少为 `|a|/80`。平方求和再开方，得到式 (49.8)。若含例外射线，由第 47 节两个子图间没有边，`C` 不能含任何 canonical 列，因而六列都可使用同一距离下界。证毕。
+
+式 (49.8) 排除 canonical completion 周围的明确邻域，但没有排除更远的 completion。该界在 `a=0` 退化；它既不控制两条非 canonical 射线之间的距离，也不建立 affinity 下界或排除三条满 channel 支撑射线的正交兼容性。
+
+## 50. 实参数支上两条 canonical 射线的共同正交刚性
+
+本节沿用第 46–49 节的实参数支与 [Szöllősi 的 paired-circulant 构造，§2](https://arxiv.org/abs/0811.3930)，取 `-1<a<1, a!=0`。它约束同一个实际共同无偏向量与两条 canonical 射线的正交关系，不以逐模正交替代全局正交。
+
+### 50.1 参数、实际基方向与结论
+
+沿用 `h>0, s=h²`，并置
+
+```math
+P=p-1=\frac{a-3+i(h+a/h)}2,\qquad
+Q=q-1=\frac{-a-3+i(h-a/h)}2,\qquad A=P+3,\quad B=Q+3.
+```
+
+此时 `1<s<3, a²=s(3-s)/(1+s)`，三个归一化 Fourier 块为
+
+```math
+T_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\\bar B&-\bar A\end{pmatrix},
+\qquad
+T_1=T_2=\frac1{\sqrt6}\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+```
+
+记其未归一化首行为 `(alpha_l,beta_l)`，并定义
+
+```math
+g_l^\varepsilon=
+\frac{\varepsilon i\alpha_l\overline{\beta_l}}{|\alpha_l||\beta_l|},
+\qquad b_l^\varepsilon=(1,g_l^\varepsilon)^T,
+\qquad \varepsilon\in\{1,-1\}.
+```
+
+所有分母均非零，因为
+
+```math
+|A|^2=3+2a,\quad |B|^2=3-2a,\quad
+|P|^2=3-a,\quad |Q|^2=3+a.
+```
+
+令 `f_l=(1,omega^l,omega^(2l))`。输入侧六条 canonical 射线由单位向量 `(f_l,g_l^epsilon f_l)/sqrt(6)` 代表；它们组成正交基，且每个 `T_l b_l^epsilon` 的两个分量均有模一。
+
+**命题 50.1。** 对这个实参数支，若单位相位输入 `(x,y)` 与 `H0(x,y)` 都逐项有模一，且其射线正交于两条不同的 canonical 输入射线，则该射线本身是 canonical。因而：
+
+1. 含两条 canonical 射线的实际共同无偏正交三元组全部由 canonical 射线组成。
+2. 任一非 canonical 六元正交 completion 至多包含一条 canonical 射线。
+3. 在第 47、48 节的两个例外参数之外，任一非 canonical completion 至少包含五条 `Delta!=0` 的射线；在整个 `a!=0` 实支上，至少包含四条。
+
+在实际列基对 `(I,H0)` 中，对单位向量 `v` 使用输入 `sqrt(6)H0* v`。公共酉变换 `H0` 保持全部内积，把上述 canonical 输入基传为实际 canonical completion。因此命题中的正交性与计数也成立于这个列基约定；`Delta` 始终在上述输入侧计算。
+
+### 50.2 两个全局正交条件强制八个三维子空间之一
+
+**证明。** 单位相位三元组若有一个 Fourier 系数为零，就必为单模。若共同平坦输入的一个完整二维 mode 投影为零，则两个 channel 都是单模。它们只能取同一个 mode：否则某个输出 channel 恰有两个非零 Fourier 系数，这不可能是单位相位三元组。这里使用了所有 `T_l` 的四个矩阵元非零。因此，整个 mode 投影为零的输入必为 canonical。
+
+反设有非 canonical 射线满足命题的两个正交条件。它在三个 mode 上均非零。两条给定 canonical 射线不能来自同一个 mode，否则它们张成该完整 mode，导致上述矛盾。因此它们来自两个不同的 mode。
+
+在这两个 mode 内，输入分量必须分别沿另一个 canonical 方向，故两个输入 channel 的逐模质量相等。两条输入 channel 的总平方范数都为三，遂使第三个 mode 的两条输入质量也相等。前两个 mode 的两个输出质量同样相等；输出 channel 的总平方范数也都为三，故第三个 mode 的两个输出质量相等。
+
+非零二维向量 `(u,z)` 若满足 `|u|=|z|`，且在 `T_l` 下的两个输出质量相等，则
+
+```math
+\operatorname{Re}\bigl(\alpha_l\overline{\beta_l}
+ u\overline z\bigr)=0,
+\qquad \frac zu=g_l^\varepsilon
+```
+
+对某个符号 `epsilon` 成立。因此该输入必落在选定每个 mode 一个 canonical 方向的八个三维子空间之一：
+
+```math
+z_l=g_lu_l,\qquad
+ g_l=g_l^{\varepsilon_l},\qquad
+(\varepsilon_0,\varepsilon_1,\varepsilon_2)\in\{1,-1\}^3.
+```
+
+以下证明每个这样的子空间内，共同平坦射线只能是单模。
+
+### 50.3 四条实际 channel 的 autocorrelation 满秩证书
+
+写 `T_l b_l=(U_l,V_l)^T`。四条实际 Fourier channel 系数分别为
+
+```math
+(u_l),\qquad(g_lu_l),\qquad(U_lu_l),\qquad(V_lu_l),
+```
+
+其中 `g_l,U_l,V_l` 均为单位复数。令 `c_l=conjugate(u_l)u_(l+1)`，下标模三。四条相位条件给出 `Lc=0`，矩阵 `L` 的第 `l` 列为
+
+```math
+L_{\cdot l}=\begin{pmatrix}
+1\\\overline{g_l}g_{l+1}\\
+\overline{U_l}U_{l+1}\\\overline{V_l}V_{l+1}
+\end{pmatrix}.
+```
+
+先设 `epsilon_2=-epsilon_1`。此时 `b1,b2` 正交，平方范数均为二。分别相加 `L` 的前两行与后两行，得到
+
+```math
+(A_0,0,B_0),\qquad(C_0,0,D_0),
+```
+
+其中
+
+```math
+A_0=\langle b_0,b_1\rangle,\quad B_0=\langle b_2,b_0\rangle,
+\qquad C_0=\langle T_0b_0,T_1b_1\rangle,\quad
+D_0=\langle T_1b_2,T_0b_0\rangle.
+```
+
+令
+
+```math
+C=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+K=\begin{pmatrix}-a/h&-h-ia\\-h+ia&a/h\end{pmatrix}.
+```
+
+直接相乘给出
+
+```math
+C^*(\sqrt6T_1)=-3I-iK,\qquad
+\sqrt6T_0=\sqrt6T_1+3C,\qquad
+R:=T_0^*T_1=-\frac{I+iK}{2}.
+```
+
+这里 `K*=K, Tr(K)=0`。取酉矩阵 `E=(b1/sqrt(2),b2/sqrt(2))`，记 `K'=E*KE`。在此基中展开 `R* b0`，利用 `||b0||²=2` 与 `Tr(K')=0`，恰得
+
+```math
+A_0D_0-B_0C_0=2iK'_{21}.
+```
+
+该量非零。否则 Hermitian 性使 `K'` 为 `diag(k,-k)`；而 `E` 的四个矩阵元平方模均为 `1/2`，所以 `K=E diag(k,-k) E*` 的两个对角元都为零，与 `K11=-a/h!=0` 矛盾。因此两条行和强制 `c0=c2=0`，再由第一行得到 `c1=0`。
+
+现在设 `epsilon_1=epsilon_2`。此时 `b1=b2`、`T1b1=T2b2`，所以 `L` 的每行都有形式 `(rho,1,conjugate(rho))`，对应四个单位复数
+
+```math
+1,\qquad r=\overline{g_0}g_1,\qquad
+u=\overline{U_0}U_1,\qquad v=\overline{V_0}V_1.
+```
+
+三个不同的 `rho` 已足以使秩为三：将每行乘以 `rho`，就得到行形 `(rho²,rho,1)` 的 Vandermonde 矩阵。
+
+置 `k0=|A||B|, k1=|P||Q|, e=epsilon_0 epsilon_1`。由二维输出的显式公式，
+
+```math
+r=\frac{eP\overline Q\overline A B}{k_0k_1},\qquad
+\frac{V_l}{U_l}=
+-\frac{\varepsilon_l i\overline{\alpha_l\beta_l}}
+ {|\alpha_l||\beta_l|},\qquad
+t:=\frac vu=\frac{e\overline{PQ}AB}{k_0k_1}.
+```
+
+下列精确虚部恒等式给出 `r!=1` 及 `t notin {1,r,r^(-1)}`：
+
+```math
+\operatorname{Im}(P\overline Q\overline A B)
+=-\frac{3a(s+3)}{2h}\ne0,
+```
+
+```math
+\operatorname{Im}(P\overline A)=3\operatorname{Im}P>0,\qquad
+\operatorname{Im}(\overline Q B)=-3\operatorname{Im}Q<0,
+```
+
+```math
+\operatorname{Im}(AB\overline{PQ})
+=\frac32\bigl((3-a)\operatorname{Im}Q+(3+a)\operatorname{Im}P\bigr)>0.
+```
+
+其中 `Im P=(h+a/h)/2, Im Q=(h-a/h)/2` 在本支均为正。第一式也可由 `P conjugate(A)=-(3-a)/2+3i Im P` 与 `conjugate(Q) B=-(3+a)/2-3i Im Q` 直接得到。中间两式分别结合
+
+```math
+\frac rt=\frac{P\overline A}{\overline P A},\qquad
+rt=\frac{\overline Q B}{Q\overline B}
+```
+
+排除 `t=r`、`t=r^(-1)`；最后一式排除 `t=1`。
+
+若四个 `rho` 只有至多两个值，因为 `r!=1`，必有 `u,v in {1,r}`，从而 `v/u in {1,r,r^(-1)}`，矛盾。因此这一符号情形也有 `rank L=3`。
+
+两种情形穷尽八个选择。于是 `c0=c1=c2=0`，在三循环上这意味着至多一个 `u_l` 非零；该射线必为 canonical，完成核心刚性证明。
+
+### 50.4 对实际 completion 的约束
+
+若非 canonical completion 包含两条 canonical 射线，其余每条都正交于这两条，因而也必 canonical，矛盾。所以它至多含一条 canonical 射线。
+
+除第 47、48 节的两个参数 `a=±sqrt((37-sqrt(73))/72)` 外，`Delta=0` 射线恰是 canonical 六条，故任一非 canonical completion 至少含五条 `Delta!=0` 射线。在例外参数处，若它含一条 canonical 射线，其他五条也均有 `Delta!=0`，因为例外射线与 canonical 射线之间没有正交边；若它不含 canonical 射线，其 `Delta=0` 部分位于 `K3,3`，最多只能取两条，故至少四条满足 `Delta!=0`。命题得证。
+
+此外，结合第 49 节已证的逐射线距离，对任一非 canonical completion `C`，至多一列为 canonical，故至少五列与任意 canonical 射线的 projective 距离不小于 `|a|/80`。因此，在全部列相位与排列构成的单项式酉矩阵 `M` 上，
+
+```math
+\inf_M\|C-C_{\mathrm{can}}M\|_F\ge\frac{\sqrt5\,|a|}{80}.
+```
+
+若含例外射线，第 49 节的 `sqrt(6)|a|/80` 下界仍然成立。
+
+本节没有排除只含一条 canonical 射线的混合正交三元组，也没有排除三条 `Delta!=0` 射线的正交兼容性；没有由这些计数推出 affinity 下界或 quartet 排除。
