@@ -1172,3 +1172,968 @@ Every collision here uses finite exact-real algebra and continuity, actual stric
 The conclusions do not establish adaptive-path lower bounds, unrestricted atom optima, off-image noise decoding, general neural-network performance, empirical or Lean/kernel certification, worldwide originality, or absence of other literature.
 
 ## 追加锚（本行以下为增补区）
+
+<a id="erased-final-gain-model"></a>
+## 14. An erased-final-gain mechanism and its actual-source domain
+
+Sections 1–13 give three sufficient prefix mechanisms. The additional mechanism below uses a rank-one prefix kernel whose determinant polar has one strict sign. Its positive tangent section is empty. Instead it uses exact transfer at a sampled gain zero, two coefficient signs at different boundary rays, and a finite determinant correction between actual positive sources. Section 16 proves the coefficient conditions on an entire four-parameter legal family, for every final word. Section 17 proves a strict-one-sign diagnostic delimiting this particular transfer-sign method.
+
+For these additional collision results the drift is constant. Retain precisely
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,\qquad k\in\mathbb R,
+$$
+$$
+z_i=(1+ki)\operatorname{tr}(A_iS)+\delta,\qquad
+D(\tau)=\delta\quad\text{for every real }\tau,\qquad i=0,1,2,3,4.
+\tag{14.1}
+$$
+The target remains the whole triple $(S,k,D)$. Here $A_0=I$ and $A_{i+1}=W_iA_i$, with each $W_i$ a predetermined finite word in the same $M,J$ as in Definition 1.1, including the empty word. Multiplication acts on the left and executes from right to left. Only scalar reads advance the index; all intermediate atoms in a word are unread. Sampled zero and negative gains remain in the domain.
+
+**Actual realization and fibres.** For every source in (14.1), take
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,\qquad
+f=\binom{p}{r},\qquad \ell=(1,q/p).
+\tag{14.2}
+$$
+Then $f\ell=S$ because $s=qr/p$. For $A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$,
+$$
+\ell Af=ap+br+cq+es=\operatorname{tr}(AS).
+$$
+The row $\ell$ is fixed throughout this run. The identities
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0)
+$$
+show, atom by atom, that every recorded and unread column is positive on every prescribed word. Different candidate runs may have different fixed rows.
+
+For a fixed effective target, its original gain/relation representations are exactly $R=S/t$, $\alpha=t>0$, $\beta=tk$, with $D$ unchanged: necessity follows from $S=\alpha R$ and $k=\beta/\alpha$, and substitution proves sufficiency. If $R=f\ell=f'\ell'$ are two positive factorizations, equality of their first columns gives $f'=\mu f$ for $\mu>0$; equality of the other column then gives $\ell'=\ell/\mu$. These are representation fibres only. Distinct $S$ or distinct $k$ give distinct effective targets.
+
+On the four-dimensional auxiliary space of real $2\times2$ matrices put
+$$
+\mathsf B X=\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^4,
+\qquad
+\mathsf C X=\bigl(i\operatorname{tr}(A_iX)\bigr)_{i=1}^4,
+\qquad \mathsf T_k=\mathsf B+k\mathsf C.
+\tag{14.3}
+$$
+Subtracting the initial reading proves the exact equivalence
+$$
+\text{equal five data}\quad\Longleftrightarrow\quad
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1,
+\qquad \delta_1-\delta_0=\operatorname{tr}(S_0-S_1).
+\tag{14.4}
+$$
+Indeed the initial equality is exactly the second equation; after subtracting it, each remaining equality is exactly one coordinate of the first. Conversely adding that initial equality to the four quotient equations recovers every original reading. Thus the quotient removes exactly one entire constant polynomial, with no independent per-reading offsets.
+
+Write
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+Expanding two-by-two determinants gives the symmetric bilinear form and the exact finite identity
+$$
+\mathfrak b\left(\begin{pmatrix}p&q\\r&s\end{pmatrix},
+\begin{pmatrix}P&Q\\R&T\end{pmatrix}\right)=sP+pT-rQ-qR,
+$$
+$$
+\det(X+tY)=\det X+t\mathfrak b(X,Y)+t^2\det Y.
+\tag{14.5}
+$$
+All operators and boundary matrices below are proof devices on this auxiliary space. They are neither acquired inverse operations nor additional sources.
+
+<a id="fixed-polar-prefix-invertibility"></a>
+**Lemma 14.1 (prefix trace invertibility from strict fixed polar sign).** Let a legal prefix $I,A_1,A_2,A_3$ satisfy
+$$
+\ker\mathsf B_{\rm pre}=\mathbb RN,\qquad
+\mathsf B_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^3,
+\tag{14.6}
+$$
+where $N\ne0$ has rank one and $\mathfrak b(S,N)$ has one strict fixed sign on every strictly positive rank-one $S$. Orient $N$ so that this sign is positive. Then $\operatorname{tr}N>0$, and
+$$
+\mathcal L_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)\bigr)_{i=0}^3
+\tag{14.7}
+$$
+is invertible.
+
+**Proof.** Write $N=(\begin{smallmatrix}n_{11}&n_{12}\\n_{21}&n_{22}\end{smallmatrix})$. Its polar on the actual positive rank-one sources $(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, $u,v>0$, is
+$$
+n_{11}+n_{22}uv-n_{12}v-n_{21}u>0.
+\tag{14.8}
+$$
+Taking $u=v\downarrow0$ gives $n_{11}\ge0$. Taking $u=v\to\infty$ and dividing by $u^2$ gives $n_{22}\ge0$. Taking $(u,v)=(T^{-2},T)$ and dividing by $T$ gives $n_{12}\le0$ as $T\to\infty$; using $(u,v)=(T,T^{-2})$ gives $n_{21}\le0$.
+
+If $\operatorname{tr}N=0$, both diagonal entries vanish. Since $\det N=0$, at least one off-diagonal entry also vanishes. Nonzeroness then makes $N$ a negative nonzero multiple of $E_{12}$ or $E_{21}$, where $E_{ab}$ is the matrix unit. Equation (14.6) forces the corresponding trace-paired off-diagonal entry of every $A_i$ to vanish. Every legal endpoint is nonnegative integral with determinant $\pm1$. A triangular such endpoint has diagonal product one, hence both diagonal entries one. All four endpoints would therefore lie in $\operatorname{span}\{I,E_{12}\}$ or $\operatorname{span}\{I,E_{21}\}$, making $\operatorname{rank}\mathsf B_{\rm pre}\le1$. This contradicts (14.6), whose kernel dimension one makes that rank three. Hence $\operatorname{tr}N>0$.
+
+If $\mathcal L_{\rm pre}Y=0$, all three prefix differences vanish, so $Y=tN$. Its initial trace is zero, and $\operatorname{tr}N>0$ forces $t=0$. The four-dimensional map (14.7) is injective, hence invertible. One may normalize $\operatorname{tr}N=1$, in which case $\mathcal L_{\rm pre}N=(1,1,1,1)^{\mathsf T}$. ∎
+
+<a id="erased-final-gain-certificate"></a>
+## 15. A prefix-only coefficient certificate at the erased final gain
+
+**Theorem 15.1 (four prefix tests, every final word).** Assume Lemma 14.1's prefix hypotheses, and define
+$$
+\mathbf d=(1,4/3,2,4)^{\mathsf T},\qquad
+\mathsf P=\mathcal L_{\rm pre}^{-1}
+\operatorname{diag}(\mathbf d)\mathcal L_{\rm pre},\qquad
+X_\star=\mathcal L_{\rm pre}^{-1}\mathbf d.
+\tag{15.1}
+$$
+Suppose the following four prefix-only coefficient tests hold:
+$$
+(X_\star)_{21}\ge0,\qquad (X_\star)_{12}\le0,
+\qquad
+(\mathsf P E_{12})_{21}<0,\qquad
+(\mathsf P E_{21})_{12}>0.
+\tag{15.2}
+$$
+For every predetermined finite legal final word $W$, including the empty word, set $A_4=WA_3$. Then there is $\epsilon_0>0$ such that every $0<\epsilon<\epsilon_0$ gives a finite collision of distinct strictly positive rank-one effective sources, at slopes
+$$
+k_0=-1/4,\qquad k_1=-1/4+\epsilon,
+\tag{15.3}
+$$
+with one entire constant drift per run and with all five original observations equal. The first run has its final gain zero, and the second has all five sampled gains strictly positive. The threshold may depend on the fixed final word; no single threshold or source pair for all words is asserted.
+
+**Proof: exact transfer including the erased reading.** Put $k_\circ=-1/4$. The fourth row of $\mathsf T_{k_\circ}Y$ is $-\operatorname{tr}Y$. If $\mathsf T_{k_\circ}Y=0$, then $\operatorname{tr}Y=0$, and its first three rows give
+$$
+(1-i/4)\operatorname{tr}(A_iY)=0\qquad(i=1,2,3).
+$$
+These three gains are nonzero, so $\mathcal L_{\rm pre}Y=0$. Lemma 14.1 gives $Y=0$. Thus $\mathsf T_{k_\circ}$ is invertible for every final word, even when $\mathsf B$ is singular. Set
+$$
+\mathsf H=\mathsf T_{k_\circ}^{-1}\mathsf C,
+\qquad f_i=\operatorname{tr}(A_iS).
+$$
+The fourth row of $\mathsf T_{k_\circ}\mathsf H S=\mathsf C S$ gives
+$$
+\operatorname{tr}(\mathsf H S)=-4f_4.
+\tag{15.4}
+$$
+For $i=0,1,2,3$, let $d_i=(1-i/4)^{-1}$, the entries of $\mathbf d$. The other three rows, together with (15.4) at $i=0$, give
+$$
+\operatorname{tr}(A_i\mathsf H S)
+=i d_i f_i-4d_i f_4
+=4(d_i-1)f_i-4d_i f_4.
+$$
+Here $id_i=4(d_i-1)$. Applying the exact prefix inverse yields
+$$
+\boxed{\ \mathsf H S=4\bigl(\mathsf P S-S-f_4X_\star\bigr).\ }
+\tag{15.5}
+$$
+This identity holds on every auxiliary full matrix, with no determinant restriction. In the normalization of Lemma 14.1, $X_\star=\mathsf P N$ also follows directly from (15.1). No inverse or determinant condition on the final multiplier was used.
+
+**Proof: opposite signs at finite actual sources.** Let $F(S)=\mathfrak b(S,\mathsf H S)$. On rank-one $S$, (14.5) gives $\mathfrak b(S,S)=2\det S=0$, so (15.5) implies
+$$
+F(S)/4=\mathfrak b(S,\mathsf P S)
+-\operatorname{tr}(A_4S)\mathfrak b(S,X_\star).
+\tag{15.6}
+$$
+Write $b_4=(A_4)_{12}\ge0$ and $c_4=(A_4)_{21}\ge0$. Substitution of the auxiliary boundary matrices into this identity gives exactly
+$$
+F(E_{12})/4=-(\mathsf P E_{12})_{21}
++c_4(X_\star)_{21}>0,
+$$
+$$
+F(E_{21})/4=-(\mathsf P E_{21})_{12}
++b_4(X_\star)_{12}<0.
+\tag{15.7}
+$$
+The strict terms in (15.2) keep these inequalities strict even if either final off-diagonal entry is zero.
+
+Replace these boundary matrices by the actual positive rank-one sources
+$$
+S_+(t)=\begin{pmatrix}t&1\\t^2&t\end{pmatrix}
+=\binom{1}{t}(t,1),\qquad
+S_-(t)=\begin{pmatrix}t&t^2\\1&t\end{pmatrix}
+=\binom{t}{1}(1,t),\qquad t>0.
+\tag{15.8}
+$$
+Since $\mathsf H$ is linear, each $F(S_\pm(t))$ is a polynomial of degree at most four. Write
+$$
+F(S_\pm(t))=c_\pm+\sum_{j=1}^4a_{\pm,j}t^j,
+\qquad c_+=F(E_{12})>0>c_-=F(E_{21}).
+$$
+Let $A_\pm=\sum_{j=1}^4|a_{\pm,j}|$ and choose the finite positive values
+$$
+t_\pm=\min\{1/2,\ |c_\pm|/[4(1+A_\pm)]\}.
+\tag{15.9}
+$$
+For $0<t\le1$, the nonconstant terms have magnitude at most $A_\pm t$. At (15.9) this is strictly less than $|c_\pm|/4$. Hence $S^+=S_+(t_+)$ and $S^-=S_-(t_-)$ have the required opposite strict signs. Their entries and factors are strictly positive; the boundary matrices have not been used as sources.
+
+**Proof: finite determinant-corrected sources.** Take the positive factors $S^\pm=f^\pm\ell^\pm$ displayed in (15.8), and interpolate the factors:
+$$
+f(\theta)=(1-\theta)f^++\theta f^-,\qquad
+\ell(\theta)=(1-\theta)\ell^++\theta\ell^-,\qquad
+S(\theta)=f(\theta)\ell(\theta),\quad0\le\theta\le1.
+$$
+All these sources are positive rank one. Let $m_f$ and $m_\ell$ be the smallest entries among the two endpoint columns and among the two endpoint rows, respectively. Every entry of $S(\theta)$ is at least $m=m_fm_\ell>0$. Write
+$$
+S(\theta)=V_0+\theta V_1+\theta^2V_2,
+$$
+$$
+V_0=f^+\ell^+,\quad
+V_1=(f^--f^+)\ell^++f^+(\ell^--\ell^+),\quad
+V_2=(f^--f^+)(\ell^--\ell^+),
+$$
+and set
+$$
+K=1+\max_{a,b}\sum_{j=0}^2|(\mathsf HV_j)_{ab}|,
+\qquad \eta=\min\{F(S^+),-F(S^-)\}>0.
+$$
+Then every entry of $\mathsf HS(\theta)$ has magnitude less than $K$, and its determinant has magnitude at most $2K^2$. Choose any
+$$
+0<\epsilon<\min\{m/(2K),\ \eta/(4K^2),\ 1/4\}.
+\tag{15.10}
+$$
+Any further prescribed positive upper bound may be imposed. The polynomial
+$$
+g_\epsilon(\theta)=F(S(\theta))+
+\epsilon\det(\mathsf HS(\theta))
+$$
+has degree at most four. Its correction at either endpoint has magnitude less than $\eta/2$, so its endpoint signs are opposite and strict. The intermediate value theorem gives a zero in $(0,1)$. The polynomial is nonzero because of those signs; successive division by distinct root factors bounds its number of roots by four. Its smallest root in that interval, $\theta_\epsilon$, is therefore an exact finite root choice. Put
+$$
+S_1=S(\theta_\epsilon),\qquad
+S_0=S_1+\epsilon\mathsf H S_1.
+\tag{15.11}
+$$
+Every entry of $S_0$ is greater than $m/2$. The exact determinant identity (14.5) gives
+$$
+\det S_0=\epsilon\bigl[F(S_1)+
+\epsilon\det(\mathsf H S_1)\bigr]=0.
+$$
+Thus $S_0,S_1$ are finite strictly positive rank-one matrices, not merely tangent vectors or limiting boundary matrices. Their exact quotient equality is
+$$
+\mathsf T_{k_\circ}S_0
+=\mathsf T_{k_\circ}S_1+\epsilon\mathsf C S_1
+=\mathsf T_{k_\circ+\epsilon}S_1.
+\tag{15.12}
+$$
+
+**Proof: all five original equations and whole drifts.** Define
+$$
+\Delta=\operatorname{tr}(S_0-S_1)
+=\epsilon\operatorname{tr}(\mathsf HS_1)
+=-4\epsilon\operatorname{tr}(A_4S_1)<0,
+\qquad D_0(\tau)=0,\quad D_1(\tau)=\Delta
+\quad(\tau\in\mathbb R).
+\tag{15.13}
+$$
+The strict inequality holds because every legal endpoint is a nonzero nonnegative matrix and $S_1$ is entrywise positive. In particular $S_0\ne S_1$. Equation (15.12) and the initial trace identity give the following five original equalities, with their actual recorded gains:
+$$
+\begin{aligned}
+\operatorname{tr}S_0
+&=\operatorname{tr}S_1+\Delta,\\
+\tfrac34\operatorname{tr}(A_1S_0)
+&=(\tfrac34+\epsilon)\operatorname{tr}(A_1S_1)+\Delta,\\
+\tfrac12\operatorname{tr}(A_2S_0)
+&=(\tfrac12+2\epsilon)\operatorname{tr}(A_2S_1)+\Delta,\\
+\tfrac14\operatorname{tr}(A_3S_0)
+&=(\tfrac14+3\epsilon)\operatorname{tr}(A_3S_1)+\Delta,\\
+0&=4\epsilon\operatorname{tr}(A_4S_1)+\Delta.
+\end{aligned}
+\tag{15.14}
+$$
+The last equality also follows directly from (15.13); it checks the erased final reading rather than discarding it. The first gains are $1,3/4,1/2,1/4,0$; the second are $1,3/4+\epsilon,1/2+2\epsilon,1/4+3\epsilon,4\epsilon$. The slopes differ, and (15.13) shows the sources and whole drifts differ as well. These targets are not representation fibres.
+
+Finally realize each source by (14.2), with $k_j$ its specified slope. Each run uses one unchanged positive row, and every unread atom on the original predetermined words preserves its positive column. No word is chosen in response to data. This proves the theorem on the full actual-source model. The collisions at these admissible slopes obstruct uniform recovery on the arbitrary-real-slope domain; no assertion of collisions at every slope is needed. ∎
+
+The theorem assumes no invertibility of the zero-slope quotient $\mathsf B$, no survivor-span condition, and no final-word length bound. Prefix geometry ensures the particular pencil member $\mathsf T_{-1/4}$ is invertible for all final words; other pencil members may be singular. The only reciprocal gains used in (15.1) are the four fixed nonzero gains at indices $0,1,2,3$. No unknown or zero gain is divided out.
+
+<a id="erased-gain-four-parameter-family"></a>
+## 16. Complete four-parameter legal coverage
+
+**Theorem 16.1 (every final word after a rank-one fixed-sign prefix family).** For all positive integers $h,u,b$, all integers $a\ge2h+1$, and every predetermined finite legal word $W$, including empty, the endpoints
+$$
+A_0=I,\qquad A_1=L^hU^u,\qquad
+A_2=L^{h+a}U^u,\qquad
+A_3=U^bL^{h+a}U^u,\qquad A_4=WA_3
+\tag{16.1}
+$$
+have the finite actual-target collisions of Theorem 15.1. All four coefficient tests hold uniformly throughout the stated parameter range, with no remaining test on $W$.
+
+**Proof: legal words and exact prefix inverse.** Put $c=h+a$. Since $U=JM$ and $L=MJ$, successive prefix multipliers can be $L^hU^u$, $L^a$, $U^b$. Chronologically the first block is $u$ repetitions of $(M,J)$ followed by $h$ repetitions of $(J,M)$; the next is $a$ repetitions of $(J,M)$; the next is $b$ repetitions of $(M,J)$. The final block is exactly $W$. These are finite forward words, with no reads inside their blocks. Empty $W$ still supplies the distinct scalar read at index four. Direct multiplication gives
+$$
+A_1=\begin{pmatrix}1&u\\h&1+hu\end{pmatrix},\quad
+A_2=\begin{pmatrix}1&u\\c&1+cu\end{pmatrix},\quad
+A_3=\begin{pmatrix}1+bc&u+b(1+cu)\\c&1+cu\end{pmatrix}.
+\tag{16.2}
+$$
+For an arbitrary auxiliary full matrix $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, introduce $x=p+s$ and $y=q+us$. Its four prefix traces are
+$$
+f_0=x,\qquad f_1=x+hy+ur,\qquad
+f_2=x+cy+ur,\qquad
+f_3=f_2+b\bigl[cp+(1+cu)r\bigr].
+\tag{16.3}
+$$
+They have the exact linear inverse
+$$
+\begin{aligned}
+x&=f_0,& y&=(f_2-f_1)/a,&
+r&=(f_1-x-hy)/u,\\
+p&=\bigl((f_3-f_2)/b-(1+cu)r\bigr)/c,&
+s&=x-p,&q&=y-us.
+\end{aligned}
+\tag{16.4}
+$$
+Each divisor is a fixed positive integer. The first two differences in (16.3), when all three prefix differences vanish, give $ay=0$ and $ur=0$. The third gives $bcp=0$. Therefore
+$$
+\ker\mathsf B_{\rm pre}=\mathbb RN,\qquad
+N=\begin{pmatrix}0&-u\\0&1\end{pmatrix}.
+\tag{16.5}
+$$
+Conversely this $N$ makes all three differences zero, so the kernel assertion is exact. This nonzero $N$ has rank one, trace one, and
+$$
+\mathfrak b(S,N)=p+ur>0
+\tag{16.6}
+$$
+on every actual positive source. Thus the family has precisely the required strict fixed-polar-sign geometry. In particular there is no positive source with $\mathfrak b(S,N)=0$.
+
+**Proof: the first two coefficient tests.** Apply (16.4) to $\mathbf d=(1,4/3,2,4)^{\mathsf T}$. Define
+$$
+Y_\star=\frac2{3a},\qquad
+R_\star=\frac{a-2h}{3au},\qquad
+P_\star=\frac{2/b-(1+cu)R_\star}{c},\qquad
+Q_\star=Y_\star-u+uP_\star.
+$$
+The result is
+$$
+X_\star=\begin{pmatrix}P_\star&Q_\star\\
+R_\star&1-P_\star\end{pmatrix}.
+\tag{16.7}
+$$
+The parameter restrictions give $a\ge3$, $c=h+a\ge4$, and $R_\star>0$. Hence
+$$
+P_\star<\frac2{bc}\le\frac12,\qquad
+Y_\star\le\frac29,
+$$
+$$
+Q_\star<\frac29-\frac u2\le-\frac5{18}<0.
+\tag{16.8}
+$$
+Thus $(X_\star)_{21}>0$ and $(X_\star)_{12}<0$, stronger than the first two required weak inequalities. No lower bound on $P_\star$ is needed.
+
+**Proof: the last two coefficient tests.** The prefix trace vector of $E_{12}$ is $(0,h,c,c)^{\mathsf T}$. After multiplication by $\operatorname{diag}(\mathbf d)$ it is $(0,4h/3,2c,4c)^{\mathsf T}$. Formula (16.4) then gives
+$$
+y=\frac{2c-4h/3}{a}=2+\frac{2h}{3a},\qquad
+(\mathsf P E_{12})_{21}
+=\frac{4h/3-hy}{u}
+=-\frac{2hc}{3au}<0.
+\tag{16.9}
+$$
+The prefix trace vector of $E_{21}$ is $(0,u,u,u+b(1+cu))^{\mathsf T}$. Its scaled vector is $(0,4u/3,2u,4u+4b(1+cu))^{\mathsf T}$. Its inverse has
+$$
+x=0,\qquad y=\frac{2u}{3a}>0,\qquad
+r=\rho=\frac43-\frac{2h}{3a},
+$$
+$$
+p=\frac{2u}{bc}+\frac{(1+cu)(4-\rho)}c>0,
+\qquad 4-\rho=\frac{8a+2h}{3a}>0.
+$$
+Since $s=-p$, its remaining off-diagonal entry is
+$$
+(\mathsf P E_{21})_{12}=y+up>0.
+\tag{16.10}
+$$
+Equations (16.8)–(16.10) prove all four tests for every allowed tuple, independently of the final word. The complete finite construction, all five equations, entire drifts, and original positive realizations now follow from Theorem 15.1. The final word is fixed before constructing the sources; the construction may depend on it. ∎
+
+Both diagonals vary during this prefix: $(A_1)_{22}=1+hu>1$ and $(A_3)_{11}=1+bc>1$. Hence neither the lower-right-one hypothesis of Theorem 3.1 nor its upper-left-one mirror holds throughout the prefix. The concrete earlier families and Theorem 5.1 start with $L^n$ or, in their mirrors, $U^n$, whereas (16.2) has both off-diagonal entries positive and trace $2+hu>2$. The permutation-first mechanism starts with $J$, which also differs from (16.2). These are comparisons with the literal earlier hypotheses, not an exhaustive classification of other possible collision proofs.
+
+<a id="strict-one-sign-method-boundary"></a>
+## 17. A strict-one-sign diagnostic for the erased-gain method
+
+**Proposition 17.1 (full survivor spans with a strictly negative erased-gain transfer form).** There is a legal five-read history with a rank-one strict-fixed-polar-sign prefix, invertible $\mathsf B$, and four independent survivors after deletion of any endpoint, for which
+$$
+\mathfrak b\bigl(S,\mathsf T_{-1/4}^{-1}\mathsf C S\bigr)<0
+\tag{17.1}
+$$
+on every strictly positive rank-one actual source. Thus opposite transfer-form signs at this fixed erased-final-gain slope are not a universal consequence of those geometric and span conditions.
+
+**Proof: legal history and prefix geometry.** Take
+$$
+A_0=I,\quad
+A_1=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad
+A_2=LM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix},\quad
+A_3=ULM^2=\begin{pmatrix}3&4\\2&3\end{pmatrix}.
+$$
+The predetermined final multiplier is
+$$
+W=MJM=L^2J=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+A_4=WA_3=\begin{pmatrix}2&3\\7&10\end{pmatrix}.
+\tag{17.2}
+$$
+The chronological blocks are $(M,M)$, $(J,M)$, $(M,J)$, and $(M,J,M)$, with readings only at the displayed endpoints. They are finite forward words with actual indices $0,1,2,3,4$.
+
+The three trace-free endpoint triples $(a-e,b,c)$ of $A_1,A_2,A_3$ are
+$$
+(-1,1,1),\quad(-2,1,2),\quad(0,4,2).
+$$
+Their determinant is $6+4-8=2\ne0$. This proves independence of the first four matrices: applying the linear projection $(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})\mapsto(a-e,b,c)$ kills $I$ and makes the other three independent. The first three rows of $\mathsf B$ in entry order $(p,q,r,s)$ are
+$$
+(0,1,1,1),\qquad(0,2,1,2),\qquad(2,2,4,2).
+\tag{17.3}
+$$
+Their first two equations give $q=-s$ and $r=0$; the third gives $p=0$. Hence their kernel is precisely
+$$
+\mathbb RN,\qquad N=\begin{pmatrix}0&-1\\0&1\end{pmatrix},
+\qquad\mathfrak b(S,N)=p+r>0.
+\tag{17.4}
+$$
+The last quotient row on $N$ is $(10-7)-1=2\ne0$, so $\mathsf B$ is invertible. Lemma 14.1 also makes $\mathsf T_{-1/4}$ invertible.
+
+**Proof: every deletion leaves full span.** The five matrices satisfy
+$$
+3I-4A_1-6A_2+A_3+2A_4=0.
+\tag{17.5}
+$$
+The four entry checks, in row order, are
+$$
+3-4-6+3+4=0,\qquad -4-6+4+6=0,
+$$
+$$
+-4-12+2+14=0,\qquad 3-8-18+3+20=0.
+$$
+Since the first four matrices are independent, the space of five-matrix relations has dimension one. Every coefficient in (17.5) is nonzero. A dependence among any four survivors would extend to a relation with a zero coefficient, contradicting that one-dimensional relation space. This includes deletion of the initial endpoint as well as all four possible noninitial erasures.
+
+**Proof: exact inverse and transfer coefficients.** For this prefix the four trace values are
+$$
+f_0=p+s,\quad f_1=p+q+r+2s,\quad
+f_2=p+2q+r+3s,\quad f_3=3p+2q+4r+3s.
+$$
+Their linear inverse on arbitrary full matrices is
+$$
+x=f_0,\quad y=f_2-f_1,\quad r=f_1-x-y,
+\quad p=(f_3-f_2-3r)/2,\quad s=x-p,\quad q=y-s.
+\tag{17.6}
+$$
+Indeed $x=p+s$ and $y=q+s$, and direct substitution recovers $r,p,s,q$ in that order. Applying (17.6) to $\mathbf d$ gives
+$$
+X_\star=\begin{pmatrix}3/2&7/6\\-1/3&-1/2\end{pmatrix}.
+\tag{17.7}
+$$
+Applying it instead to $(f_0,4f_1/3,2f_2,4f_3)$ gives all entries of $\mathsf P S$:
+$$
+\begin{aligned}
+(\mathsf P S)_{11}&=(11p+8q+12r+11s)/2,\\
+(\mathsf P S)_{12}&=(31p+40q+40r+47s)/6,\\
+(\mathsf P S)_{21}&=(-p-4q+2r-5s)/3,\\
+(\mathsf P S)_{22}&=-(9p+8q+12r+9s)/2.
+\end{aligned}
+\tag{17.8}
+$$
+For example the scaled inverse first gives $y=(2p+8q+2r+10s)/3$ and $r=(-p-4q+2r-5s)/3$; its $p$ equation then gives the first line of (17.8), and $s=x-p$, $q=y-s$ give the other entries. Thus (17.8) is a direct prefix inversion, without a numerical or lifted-source step. In particular $(\mathsf P E_{12})_{21}=-4/3$ and $(\mathsf P E_{21})_{12}=20/3$, but both weak inequalities on $X_\star$ in (15.2) fail. This prefix is (16.1) with $h=u=a=b=1$, outside $a\ge2h+1$.
+
+**Proof: strict sign on the entire actual source domain.** Put $\mathsf H=\mathsf T_{-1/4}^{-1}\mathsf C$ and $F(S)=\mathfrak b(S,\mathsf H S)$. Equations (17.2) and (17.7) give
+$$
+f_4=2p+7q+3r+10s,\qquad
+6\mathfrak b(S,X_\star)=-3p+2q-7r+9s.
+\tag{17.9}
+$$
+Using (17.8) in the determinant polar, before any rank-one simplification, gives
+$$
+\begin{aligned}
+6\mathfrak b(S,\mathsf P S)={}&-27p^2+8q^2-40r^2+33s^2\\
+&-22pq-67pr+6ps-44qr+34qs-11rs.
+\end{aligned}
+\tag{17.10}
+$$
+Multiplication of the two expressions in (17.9) gives
+$$
+\begin{aligned}
+6f_4\mathfrak b(S,X_\star)={}&-6p^2+14q^2-21r^2+90s^2\\
+&-17pq-23pr-12ps-43qr+83qs-43rs.
+\end{aligned}
+\tag{17.11}
+$$
+For rank-one $S$, subtracting (17.11) from (17.10) in the exact transfer identity (15.6) yields
+$$
+\begin{aligned}
+6F(S)/4={}&-21p^2-6q^2-19r^2-57s^2\\
+&-5pq-44pr+18ps-qr-49qs+32rs.
+\end{aligned}
+$$
+Now use exactly the actual constraint $ps=qr$. The $18ps-qr$ term becomes $17qr$. Completing squares proves the identity
+$$
+\boxed{\quad F(S)=-\frac23\left[
+21p^2+5pq+44pr+49qs
++6\left(q-\frac{17r}{12}\right)^2
++\frac{167}{24}\left(r-\frac{384s}{167}\right)^2
++\frac{3375}{167}s^2\right].\quad}
+\tag{17.12}
+$$
+For an explicit check, the first square contributes $6q^2-17qr+(289/24)r^2$. The second contributes $(167/24)r^2-32rs+(6144/167)s^2$. Their $r^2$ coefficients sum to $19$, and adding the last square makes the $s^2$ coefficient $(6144+3375)/167=57$. This recovers the displayed polynomial after $ps=qr$. Every bracket term in (17.12) is nonnegative on the actual domain, and $21p^2>0$. Therefore $F(S)<0$ for every strictly positive rank-one source, proving (17.1). All such sources have the fixed-row, positive-unread-state realization (14.2) on the exact words (17.2). ∎
+
+This diagnostic proves only a method boundary. Even with strict fixed prefix polar sign, invertible $\mathsf B$, and all survivor spans full, the two-strict-sign hypothesis for transfer at $k=-1/4$ can fail everywhere. It does not prove that the history recovers the target. It does not exclude collisions at other slopes, nonlocal transfers, equal-slope constructions, or other finite actual-source mechanisms. Its recovery status is not determined by (17.12). In particular neither a failed coefficient test nor a transfer form with one strict sign is a recovery certificate.
+
+<a id="erased-gain-credits-and-residual"></a>
+## 18. Mathematical attribution, exact residual, and limits
+
+The unchanged original recovery programme supplies the whole effective target, the counted initial read, arbitrary real affine-gain slopes, positive-scale fibres, and predetermined finite-word contract. The delivered companion source supplies the three mechanisms and all proofs retained in Sections 1–13, including the complete lower and upper support in Section 8. The following additional mathematical inputs are credited by their results rather than by any purported assessment or hidden dependency.
+
+| Mathematical input result | Direct content here | Scope retained |
+|---|---|---|
+| Erased-final-gain prefix proposal | Lemma 14.1 and Theorem 15.1, including the exact transfer identity, four coefficient tests, actual positive approximants, finite determinant correction, all five equations, and entire drifts | Certified strict-fixed-polar-sign rank-one prefixes; every final word; no exhaustive geometric-class assertion |
+| Four-parameter legal family in that proposal | Theorem 16.1, with all endpoint, kernel, inverse, parameter, and coefficient calculations | Every $h,u,b\ge1$, every $a\ge2h+1$, every predetermined final word including empty |
+| Full-class audit's strict-one-sign diagnostic | Proposition 17.1, with the exact legal final word, full survivor spans, operator entries, polynomial expansion, and square completion | A limitation of the fixed erased-gain two-sign method only |
+| Constant-drift quotient and finite transfer interface already in the companion and proposals | Equations (14.3)–(14.5) and the complete finite proof in Theorem 15.1 | Actual common sources and one entire drift per run; no tangent-only or independently lifted substitute |
+
+Every mathematical premise used for the additional certificate, family, and diagnostic has been derived directly in Sections 14–17. Section 8 contains the retained complete proof of the credited bounds
+$$
+C_{\mathrm{fix}}(d)=d+5\quad(d\ge1),\qquad
+5\le C_{\mathrm{fix}}(0)\le6.
+\tag{18.1}
+$$
+Those read bounds are existing results. The new covered family does not improve the read count. The proposal's separate auxiliary determinant observation is not used. Neither historical nested sources nor supplier confidence, purported review, or hosted checks are premises of any proof here. These are ordinary conditional textual mathematics under the stated model, without an external priority or originality assertion.
+
+To state the remaining geometric obligation precisely, let $\mathscr G$ be all legal first-four prefixes whose three difference rows have a kernel line generated by a nonzero rank-one matrix with one strict fixed determinant-polar sign on every positive rank-one actual source. Lemma 14.1 and the invertibility of $\mathsf T_{-1/4}$ hold throughout $\mathscr G$. Theorem 15.1 proves collisions only where (15.2) holds; Theorem 16.1 verifies those tests on the whole declared four-parameter family. No assertion is made that these inequalities exhaust $\mathscr G$.
+
+For prefixes in $\mathscr G$ failing those tests, the unproved universal obstruction would still require, for every such prefix and every legal final word, finite positive rank-one sources and real slopes satisfying
+$$
+(S_0,k_0)\ne(S_1,k_1),\qquad
+(\mathsf B+k_0\mathsf C)S_0=(\mathsf B+k_1\mathsf C)S_1.
+\tag{18.2}
+$$
+Their entire drifts would then be fixed by (14.4). Equation (18.2) states the missing theorem, not a proof of it. Proposition 17.1 prevents replacing that obligation by a universal claim of opposite transfer signs at $-1/4$. It does not refute (18.2). The full strict-fixed-polar-sign rank-one class remains unresolved, as do the other residual prefix geometries in Section 13 unless another theorem applies with its literal hypotheses.
+
+The unrestricted constant-drift question still requires either finite actual-target collisions for every remaining predetermined legal five-read history, or an explicitly legal five-read history with a global inverse and a necessary-and-sufficient actual-source image criterion for the entire $(S,k,D)$ at every real slope. Neither completion is established here. The global five-versus-six alternative in (18.1) remains open. The bounded appended delivery does not complete the unchanged global research programme.
+
+All additional collisions use the actual indices $0,1,2,3,4$, a single fixed positive row in each run, positive columns at every unread atom, predetermined finite forward cumulative words, distinct effective targets, and one whole constant drift in each run. The erased gain is checked rather than normalized away. Arbitrary zero and negative gains remain part of the model even though the constructed counterexamples use the particular admissible slopes (15.3). No reset, copy, inverse acquisition, adaptive path, or combination of unexecuted alternatives occurs. The finite exact-real constructions assert no bit, time, stability, physical acquisition cost, adaptive lower bound, unrestricted atom optimum, empirical or general neural-network result, Lean/kernel certification, or worldwide originality.
+
+<a id="global-actual-fibre-domain"></a>
+## 19. Global pencil geometry on the fixed-polar-sign prefix class
+
+The results below describe the entire actual fibre over every proposed five-read vector for every prefix in the class $\mathscr G$ of Section 18 and every legal final word. They also give a finite positive-gain collision for the exact history of Proposition 17.1. The negative erased-gain transfer form in that proposition remains valid and coexists with this collision at other slopes. The exact Section 17 history is consequently excluded as a recovering candidate. Section 23 states the current residual; Sections 14–18 retain their prior conditional statements and proofs.
+
+Retain the matrices $M,J,U,L$ of Definition 1.1. Fix legal cumulative endpoints
+$$
+A_0=I,\qquad A_{i+1}=W_iA_i\quad(0\le i\le3),
+$$
+where each $W_i$ is a predetermined finite $M/J$ word, including the empty word. The final multiplier is arbitrary subject to that contract. The actual model is
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix},\qquad
+p,q,r,s>0,\qquad ps=qr,\qquad k\in\mathbb R,
+$$
+$$
+z_i=(1+ik)\operatorname{tr}(A_iS)+\delta\quad(i=0,1,2,3,4),
+\qquad D(\tau)=\delta\quad(\tau\in\mathbb R).
+\tag{19.1}
+$$
+The target is the whole $(S,k,D)$. A read after an empty word still advances the reading index. Unread atoms do not advance it. All zero and negative gains remain admissible.
+
+For clarity, every positive determinant-zero matrix here is an actual source, with the complete realization
+$$
+\alpha=1,\qquad \beta=k,\qquad R=S,
+\qquad f=\binom p r,\qquad \ell=(1,q/p).
+\tag{19.2}
+$$
+Indeed $s=qr/p$ gives $f\ell=S$, and for $A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$,
+$$
+\ell Af=ap+br+cq+es=\operatorname{tr}(AS).
+$$
+The column is positive throughout every recorded and unread atom because
+$$
+M\binom{x}{y}=\binom{y}{x+y},\qquad
+J\binom{x}{y}=\binom{y}{x}\qquad(x,y>0).
+$$
+The row $\ell$ is fixed for that entire run. A different candidate run may have its own fixed positive row. The only gain/relation representations of a fixed effective target are $R=S/b$, $\alpha=b>0$, $\beta=bk$, with $D$ unchanged: these follow necessarily from $S=\alpha R$, $k=\beta/\alpha$, and substitution proves sufficiency. For a fixed relation, equality of first columns in two positive factorizations forces $f'=\mu f$, $\mu>0$, and equality of second columns then forces $\ell'=\ell/\mu$. These freedoms do not identify different effective targets.
+
+On auxiliary full real matrices define
+$$
+\mathsf B X=\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^4,
+\qquad
+\mathsf C X=\bigl(i\operatorname{tr}(A_iX)\bigr)_{i=1}^4,
+\qquad \mathsf T_k=\mathsf B+k\mathsf C.
+\tag{19.3}
+$$
+For arbitrary proposed data $z=(z_0,\ldots,z_4)\in\mathbb R^5$ put
+$$
+y=(z_i-z_0)_{i=1}^4.
+$$
+Subtracting the initial equation of (19.1), and then restoring it, proves both directions of
+$$
+(S,k,D)\text{ realizes }z
+\quad\Longleftrightarrow\quad
+\mathsf T_kS=y,\quad
+S>0\text{ entrywise},\quad\det S=0,\quad
+D(\tau)=z_0-\operatorname{tr}S\text{ for every }\tau.
+\tag{19.4}
+$$
+Strict positivity makes such a determinant-zero matrix nonzero rank one. In particular two runs collide exactly when
+$$
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1,
+\qquad \delta_1-\delta_0=\operatorname{tr}(S_0-S_1).
+\tag{19.5}
+$$
+There is one entire drift per run, rather than independently adjustable offsets at different indices.
+
+Use the determinant polar
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+For $X=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ and $Y=(\begin{smallmatrix}P&Q\\R&T\end{smallmatrix})$, direct expansion gives
+$$
+\mathfrak b(X,Y)=sP+pT-rQ-qR,
+\qquad
+\det(X+uY)=\det X+u\mathfrak b(X,Y)+u^2\det Y.
+\tag{19.6}
+$$
+In particular the polar is symmetric bilinear. Auxiliary linear inverses used below are proof devices, never additional acquisitions.
+
+**Definition 19.1 (the quantified prefix class).** The class $\mathscr G$ consists of all legal prefixes $I,A_1,A_2,A_3$ for which
+$$
+\mathsf B_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)-\operatorname{tr}X\bigr)_{i=1}^3
+$$
+has kernel exactly $\mathbb RN$, with $N\ne0$ of rank one, and $\mathfrak b(S,N)$ has one strict fixed sign on every strictly positive rank-one $S$. This is the same class as in Section 18; it imposes no coefficient tests from (15.2).
+
+<a id="global-pencil-rank-and-erasure"></a>
+**Lemma 19.2 (all-slope rank and a nonsingular erased-gain member).** For every prefix in $\mathscr G$ and every legal final word, the prefix trace map
+$$
+\mathcal L_{\rm pre}X=
+\bigl(\operatorname{tr}(A_iX)\bigr)_{i=0}^3
+$$
+is invertible, $\operatorname{rank}\mathsf T_k\ge3$ for every real $k$, and $\mathsf T_{-1/4}$ is invertible. Thus every singular member of the full pencil has rank exactly three.
+
+**Proof.** Orient $N=(\begin{smallmatrix}n_{11}&n_{12}\\n_{21}&n_{22}\end{smallmatrix})$ so that its polar is strictly positive. On the positive rank-one matrices $(\begin{smallmatrix}uv&u\\v&1\end{smallmatrix})$, it is
+$$
+n_{11}+n_{22}uv-n_{12}v-n_{21}u>0\qquad(u,v>0).
+$$
+Taking $u=v$ to zero and then to infinity, dividing by $u^2$ in the latter limit, gives $n_{11},n_{22}\ge0$. Taking $(u,v)=(T^{-2},T)$, dividing by $T$ and taking $T$ to infinity gives $n_{12}\le0$; the choice $(T,T^{-2})$ gives $n_{21}\le0$.
+
+If $\operatorname{tr}N=0$, its diagonal entries vanish. Its zero determinant then forces at least one off-diagonal entry to vanish. Nonzeroness makes it a negative multiple of $E_{12}$ or $E_{21}$. The prefix equations force the trace-paired off-diagonal entry of every $A_i$ to vanish. Each endpoint is nonnegative integral and unimodular, since it is a product of $M,J$. A triangular such endpoint has diagonal product one, hence both diagonal entries one. All four prefix matrices would lie in the same two-dimensional span of $I$ and one off-diagonal matrix unit. Their three difference rows could not have rank three, contradicting the one-dimensional kernel of $\mathsf B_{\rm pre}$. Therefore $\operatorname{tr}N>0$.
+
+Normalize $\operatorname{tr}N=1$. If $\mathcal L_{\rm pre}X=0$, then $\mathsf B_{\rm pre}X=0$, so $X=tN$; its zero initial trace gives $t=0$. The four-dimensional trace map is thus invertible. Also $\mathcal L_{\rm pre}N=(1,1,1,1)^{\mathsf T}$.
+
+In its invertible coordinates $f_i=\operatorname{tr}(A_iX)$, $0\le i\le3$, the first three rows of $\mathsf T_k$ are
+$$
+g_if_i-f_0,\qquad g_i=1+ik,\qquad i=1,2,3.
+\tag{19.7}
+$$
+At most one of these three gains vanishes. If none vanishes, the separate nonzero $f_i$ coefficients prove independence. If $g_j=0$, its row is $-f_0$; the other two rows have separate nonzero $f_i$ coefficients and are independent of it. This proves rank at least three at every real $k$.
+
+At $k=-1/4$, the last row is $-f_0$, independently of $A_4$, and the first three gains are $3/4,1/2,1/4$. A vector in the kernel therefore has $f_0=0$ and then $f_1=f_2=f_3=0$. Prefix trace invertibility makes that vector zero. Hence $\mathsf T_{-1/4}$ is invertible for every final word, including empty. A singular four-dimensional member now has rank exactly three. ∎
+
+<a id="global-exact-actual-fibre-theorem"></a>
+## 20. An exhaustive actual-fibre theorem and the finite-or-arc alternative
+
+**Theorem 20.1 (global actual fibres for every datum and final word).** Fix any prefix in $\mathscr G$, any legal final word, and any proposed $z\in\mathbb R^5$. Represent $\mathsf T_t$ as a $4\times4$ matrix in source-entry order $(p,q,r,s)$, and define
+$$
+\Pi(t)=\det\mathsf T_t,\qquad
+m_y(t)=\operatorname{adj}(\mathsf T_t)y,
+\qquad
+\mathcal M_y(t)=\operatorname{reshape}_{2\times2}m_y(t),
+\qquad Q_y(t)=\det\mathcal M_y(t).
+\tag{20.1}
+$$
+Here the reshape puts the four coordinates into $(p,q,r,s)$ order. The polynomial $\Pi$ is nonzero of degree at most four, each entry of $\mathcal M_y$ has degree at most three, and $Q_y$ is either the zero polynomial or has degree at most six.
+
+The entire actual fibre of $z$ consists exactly of the following candidates, with one entire drift attached to each source.
+
+1. **Regular slopes.** For every real $t$ with $\Pi(t)\ne0$, retain
+   $$
+   S(t)=\mathcal M_y(t)/\Pi(t),\qquad k=t,
+   \qquad D_t(\tau)=z_0-\operatorname{tr}S(t)\quad(\tau\in\mathbb R)
+   \tag{20.2}
+   $$
+   if and only if $Q_y(t)=0$ and all four entries of $S(t)$ are strictly positive. If $Q_y$ is nonzero, only its distinct real roots can pass. If $Q_y\equiv0$, the same strict inequalities are applied at every real slope outside the roots of $\Pi$.
+2. **Singular slopes.** For each distinct real root $t$ of $\Pi$, discard it if $\mathsf T_tX=y$ is inconsistent. Otherwise choose a particular full matrix $X_t$ and a nonzero generator $K_t$ of $\ker\mathsf T_t$. Form
+   $$
+   q_t(u)=\det X_t+u\mathfrak b(X_t,K_t)+u^2\det K_t.
+   \tag{20.3}
+   $$
+   Retain exactly the matrices $S=X_t+uK_t$ satisfying $q_t(u)=0$ and all four strict entry inequalities, with
+   $$
+   k=t,\qquad D(\tau)=z_0-\operatorname{tr}(X_t+uK_t)
+   \quad(\tau\in\mathbb R).
+   \tag{20.4}
+   $$
+   A nonzero $q_t$ contributes at most its two distinct real roots, including the linear and constant cases. If $q_t\equiv0$, all real $u$ are considered subject to strict positivity.
+
+This is a necessary-and-sufficient actual image criterion: the datum is in the image precisely when at least one candidate survives. It applies to every real slope, including all gain erasures and negative gains.
+
+**Proof of polynomial claims and regular candidates.** Each entry of $\mathsf T_t$ has degree at most one, so determinant expansion gives $\deg\Pi\le4$. Lemma 19.2 gives $\Pi(-1/4)\ne0$, so this polynomial is not identically zero and has at most four distinct real roots. Each adjugate entry is a signed determinant of a $3\times3$ submatrix and has degree at most three. Multiplication by the fixed vector $y$ preserves that bound. Expanding the two-by-two determinant gives the stated degree bound for nonzero $Q_y$, without excluding the identically-zero case.
+
+For $\Pi(t)\ne0$, the cofactor identity
+$$
+\mathsf T_t\operatorname{adj}(\mathsf T_t)=\Pi(t)I
+$$
+gives the unique auxiliary solution $S=\mathcal M_y(t)/\Pi(t)$ of $\mathsf T_tS=y$. Its determinant is
+$$
+\det S=Q_y(t)/\Pi(t)^2.
+$$
+Consequently determinant zero and strict entry positivity are exactly the regular retention conditions. This division is by a known nonsingular pencil determinant at the candidate slope, not by a sampled gain.
+
+**Proof of all singular branches and strict positivity handling.** At every root $t$ of $\Pi$, Lemma 19.2 gives rank three. If the system is consistent, its entire auxiliary solution set is exactly the affine line $X_t+\mathbb RK_t$; if inconsistent, it supplies no source. Formula (19.6) makes its determinant exactly (20.3). A nonzero polynomial of degree at most two has at most two distinct real roots, with a nonzero constant having none. Repeated roots are included only once. If all three coefficients vanish, the determinant is zero for every $u$, rather than just at selected roots.
+
+The positivity set on this line is exactly
+$$
+I_t=\bigcap_{a,b\in\{1,2\}}
+\{u\in\mathbb R:(X_t)_{ab}+u(K_t)_{ab}>0\}.
+\tag{20.5}
+$$
+Each factor is an open half-line, all of $\mathbb R$, or empty, according to its coefficients. The intersection is an open interval, possibly unbounded, all of $\mathbb R$, or empty. No zero entry at a boundary is retained. In the nonzero-polynomial branch retain exactly its real roots in $I_t$; in the identically-zero branch retain all of $I_t$. Changing $X_t$ to another particular solution or rescaling $K_t$ only reparametrizes this same affine line and does not change the retained sources. Thus all singular cases, including zero determinant polynomials and empty positive intersections, are covered without division by a gain or by $\Pi(t)$.
+
+**Proof of both directions and all five original equations.** An actual target producing $z$ satisfies $\mathsf T_kS=y$ by (19.4). If $\Pi(k)\ne0$, uniqueness of the auxiliary solution puts it in (20.2), where determinant zero is exactly $Q_y(k)=0$. If $\Pi(k)=0$, consistency and rank three put it on exactly the line above, and determinant zero is exactly $q_k(u)=0$. Positivity passes in either case, and the initial reading fixes its whole drift as displayed. No actual target is omitted.
+
+Conversely, every retained candidate is a strictly positive determinant-zero matrix, hence rank one, and satisfies $\mathsf T_kS=y$. Set $\delta=z_0-\operatorname{tr}S$, a single constant for the whole run. Its original equations are explicitly
+$$
+\begin{aligned}
+\operatorname{tr}S+\delta&=z_0,\\
+(1+k)\operatorname{tr}(A_1S)+\delta
+&=(\mathsf T_kS)_1+z_0=z_1,\\
+(1+2k)\operatorname{tr}(A_2S)+\delta
+&=(\mathsf T_kS)_2+z_0=z_2,\\
+(1+3k)\operatorname{tr}(A_3S)+\delta
+&=(\mathsf T_kS)_3+z_0=z_3,\\
+(1+4k)\operatorname{tr}(A_4S)+\delta
+&=(\mathsf T_kS)_4+z_0=z_4.
+\end{aligned}
+\tag{20.6}
+$$
+If $1+jk=0$, the quotient equation is $y_j=-\operatorname{tr}S$, so (20.6) enforces $z_j=\delta$ at that erased reading. Such an equation has been checked, not discarded. Negative gains need no separate normalization. Realization (19.2) supplies one common actual source, one fixed positive row, and positive columns through every unread atom of the same prescribed history. This proves sufficiency and necessity on the actual model. ∎
+
+<a id="global-finite-or-arc-dichotomy"></a>
+**Corollary 20.2 (finite multiplicity at most fourteen, or a continuous arc).** Every fibre in Theorem 20.1 is either finite with at most fourteen actual targets or contains a nontrivial continuous arc of distinct actual targets. The empty fibre is included in the finite alternative. Fourteen is an upper bound, not a claimed sharp optimum.
+
+**Proof.** A nonzero degree-at-most-$m$ polynomial has at most $m$ distinct real roots: divide successively by the distinct root factors; a product of more than $m$ such factors cannot divide it. If $Q_y\ne0$, at most six regular slopes pass, each with exactly one auxiliary source and a uniquely attached drift. There are at most four singular slopes. At a consistent singular slope with nonzero $q_t$, at most two values of $u$ pass, so this part contributes at most eight targets.
+
+At a consistent singular slope with $q_t\equiv0$, an empty $I_t$ contributes none. If $u_0\in I_t$, strict positivity gives an open interval about $u_0$ contained in $I_t$. For an explicit neighborhood, put
+$$
+m=\min_{a,b}(X_t+u_0K_t)_{ab}>0,
+\qquad L=1+\max_{a,b}|(K_t)_{ab}|.
+$$
+For $|u-u_0|<m/(2L)$, every entry remains greater than $m/2$. All such matrices have determinant zero. Since $K_t\ne0$, different $u$ give different sources. Equations (20.4) give a continuous attached whole drift at the same slope. Restricting to this interval yields a continuous injective arc of distinct actual targets with identical data. Therefore when $Q_y\ne0$, absence of such an arc leaves at most $6+4\cdot2=14$ targets.
+
+Now suppose $Q_y\equiv0$. If a positive regular candidate exists at $t_0$, then $\Pi(t_0)\ne0$. Continuity gives an interval about $t_0$ on which $\Pi$ stays nonzero and all four entries of the rational matrix $\mathcal M_y(t)/\Pi(t)$ stay strictly positive. Its determinant is identically zero there, so every parameter value passes Theorem 20.1. The map
+$$
+t\longmapsto\bigl(S(t),t,D_t\bigr)
+$$
+is continuous; the slope coordinate makes it injective even if some sources coincide. It supplies a nontrivial continuous arc. If $Q_y\equiv0$ but there is no positive regular point, the regular branch contributes nothing. Only the singular branches remain. A singular zero polynomial with a positive point supplies the arc just proved; otherwise at most eight targets survive the nonzero singular polynomials. This includes the case where none survive. These cases exhaust all data and rule out an unclassified infinite discrete fibre. An arc contains infinitely many targets, so the finite and arc alternatives are exclusive. ∎
+
+A complete fibre description and a finite multiplicity bound are not a globally recovering inverse or a uniqueness theorem. They do not establish that a history ever has two passing targets, or that some history always has at most one.
+
+<a id="fixed-sign-prefix-zero-slope-uniqueness"></a>
+## 21. Equal-slope uniqueness at zero
+
+**Proposition 21.1 (limited fixed-slope uniqueness).** For every prefix in $\mathscr G$, every legal final word, and every proposed datum, there is at most one actual target in its fibre with $k=0$.
+
+**Proof.** If $\mathsf B=\mathsf T_0$ is invertible, its quotient equation has at most one auxiliary solution. If it is singular, its first three rows have rank three and kernel $\mathbb RN$, so its full kernel is exactly $\mathbb RN$. Starting from an actual solution $S$, every other auxiliary solution is $S+tN$. Since $\det S=\det N=0$, (19.6) gives
+$$
+\det(S+tN)=t\mathfrak b(S,N).
+$$
+With the orientation of Lemma 19.2, the coefficient is strictly positive for this actual $S$. Hence determinant zero forces $t=0$. Once $S$ is fixed, the initial equation fixes the entire constant drift. If there is no actual solution there is no target to compare. This proves the at-most-one statement. ∎
+
+This proposition is only at the common slope zero. It gives neither uniqueness between different slopes nor uniqueness at other singular pencil members. In particular it permits the distinct-slope collision below.
+
+<a id="section17-finite-positive-gain-nonlocal-collision"></a>
+## 22. A finite positive-gain collision for the exact Section 17 history
+
+**Theorem 22.1 (nonlocal collision with slopes zero and one).** The exact history of Proposition 17.1, with final multiplier $W=MJM$ and final endpoint $A_4=(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$, has a finite collision of distinct strictly positive rank-one sources and distinct slopes $k_0=0$, $k_1=1$. Both lists of sampled gains are strictly positive. Each run has one entire constant drift, one fixed positive row, and positive columns throughout the same prescribed words.
+
+**Proof of the exact history and its quotient.** The endpoints and successive chronological blocks are
+$$
+\begin{gathered}
+A_0=I,\qquad
+A_1=M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+A_2=LM^2=\begin{pmatrix}1&1\\2&3\end{pmatrix},\\
+A_3=ULM^2=\begin{pmatrix}3&4\\2&3\end{pmatrix},\qquad
+W=MJM=L^2J=\begin{pmatrix}0&1\\1&2\end{pmatrix},\qquad
+A_4=WA_3=\begin{pmatrix}2&3\\7&10\end{pmatrix},
+\end{gathered}
+\tag{22.1}
+$$
+$$
+(M,M),\qquad(J,M),\qquad(M,J),\qquad(M,J,M).
+$$
+There are no reads inside those finite blocks. The readings are exactly $0,1,2,3,4$, and all blocks are fixed before either run.
+
+The quotient matrix $\mathsf B$, in entry order $(p,q,r,s)$, has rows
+$$
+(0,1,1,1),\quad(0,2,1,2),\quad
+(2,2,4,2),\quad(1,7,3,9).
+\tag{22.2}
+$$
+The first three homogeneous equations give $q=-s$, $r=0$, $p=0$. Their kernel is therefore $\mathbb RN$ with
+$$
+N=\begin{pmatrix}0&-1\\0&1\end{pmatrix},\qquad
+\mathfrak b(S,N)=p+r>0.
+$$
+The last row on $N$ is two, so $\mathsf B$ is invertible, and this is a member of $\mathscr G$.
+
+The first four endpoint matrices are independent: the triples $(a-e,b,c)$ of $A_1,A_2,A_3$ are $(-1,1,1)$, $(-2,1,2)$, $(0,4,2)$, with determinant $6+4-8=2$. Projecting a relation among the first four matrices to those triples kills $I$ and hence all three other coefficients; the coefficient of $I$ then vanishes. The relation
+$$
+3I-4A_1-6A_2+A_3+2A_4=0
+$$
+has entry sums $3-4-6+3+4=0$, $-4-6+4+6=0$, $-4-12+2+14=0$, and $3-8-18+3+20=0$. It is the unique relation up to scale because the first four are independent. All five coefficients are nonzero, so deletion of any endpoint leaves four independent survivors. This collision is not a deletion-span failure.
+
+**Proof of the finite transfer identity.** For an arbitrary full source matrix $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$, define
+$$
+\mathsf H_0S=\begin{pmatrix}P&Q\\R&T\end{pmatrix},
+$$
+$$
+\begin{aligned}
+P&=\tfrac72p+4q+5r+\tfrac92s,\\
+Q&=\tfrac94p-\tfrac32q+r-\tfrac{11}4s,\\
+R&=-2q-2s,\\
+T&=-\tfrac54p+\tfrac92q+\tfrac{27}4s.
+\end{aligned}
+\tag{22.3}
+$$
+Its useful combined entry is $Q+T=p+3q+r+4s$. The four traces are
+$$
+f_1=p+q+r+2s,\quad f_2=p+2q+r+3s,
+\quad f_3=3p+2q+4r+3s,\quad f_4=2p+7q+3r+10s.
+$$
+The four rows of (22.2) applied to $\mathsf H_0S$ give
+$$
+\begin{aligned}
+Q+R+T&=p+q+r+2s=f_1,\\
+2Q+R+2T&=2p+4q+2r+6s=2f_2,\\
+2P+2Q+4R+2T&=9p+6q+12r+9s=3f_3,\\
+P+7Q+3R+9T&=8p+28q+12r+40s=4f_4.
+\end{aligned}
+\tag{22.4}
+$$
+Thus $\mathsf B\mathsf H_0=\mathsf C$ on every full matrix. Invertibility of $\mathsf B$ proves exactly $\mathsf H_0=\mathsf B^{-1}\mathsf C$, and consequently
+$$
+\mathsf B(S+\mathsf H_0S)=(\mathsf B+\mathsf C)S=\mathsf T_1S.
+\tag{22.5}
+$$
+This is a finite transfer identity, with no infinitesimal approximation or small-parameter requirement.
+
+**Proof of finite rank-one sources and strict positivity.** Let $v$ be the unique positive real root of
+$$
+2915v^2-1742v-2784=0.
+\tag{22.6}
+$$
+Define
+$$
+S_1=\begin{pmatrix}1&1/10\\v&v/10\end{pmatrix},
+\qquad
+S_0=\begin{pmatrix}
+49/10+(109/20)v&11/5+(29/40)v\\
+(4v-1)/5&-4/5+(31/40)v
+\end{pmatrix}.
+\tag{22.7}
+$$
+Substituting $p=1$, $q=1/10$, $r=v$, $s=v/10$ into (22.3) gives
+$$
+\mathsf H_0S_1=
+\begin{pmatrix}
+39/10+(109/20)v&21/10+(29/40)v\\
+-(v+1)/5&-4/5+(27/40)v
+\end{pmatrix},
+$$
+so $S_0=S_1+\mathsf H_0S_1$ exactly. The determinant of $S_1$ is zero. Expanding that of $S_0$ gives
+$$
+\det S_0=-\frac{87}{25}-\frac{871}{400}v+\frac{583}{160}v^2
+=\frac{2915v^2-1742v-2784}{800}.
+\tag{22.8}
+$$
+For the coefficient check, the constant is $(49/10)(-4/5)-(11/5)(-1/5)=-87/25$. The linear coefficient is
+$$
+\frac{1519}{400}-\frac{109}{25}-\frac{44}{25}+\frac{29}{200}
+=-\frac{871}{400},
+$$
+and the quadratic coefficient is $3379/800-29/50=583/160$.
+
+At $v_*=32/31$, the lower-right entry of $S_0$ is zero, while its two upper entries are strictly positive and its lower-left entry is positive because $v_*>1/4$. Its determinant is therefore strictly negative there. The quadratic (22.8) has positive leading coefficient and tends to positive infinity as $v$ tends to positive infinity. Continuity supplies a finite root larger than $32/31$. The polynomial (22.6) has positive leading coefficient and negative constant, and its discriminant is $1742^2+4\cdot2915\cdot2784>0$. Its two real roots have negative product, so exactly one is positive. Hence the chosen root satisfies
+$$
+v>32/31>0.
+\tag{22.9}
+$$
+This proves existence, uniqueness, finiteness, and the required strict bound for the exact root choice. Every entry of $S_1$ is positive. The two upper entries of $S_0$ are positive, its lower-left is positive by $v>1/4$, and its lower-right is positive by $v>32/31$. Equations (22.6)–(22.8) make both sources determinant zero, hence nonzero rank one. They are distinct since
+$$
+(S_0)_{21}-(S_1)_{21}=-(v+1)/5<0.
+$$
+No boundary source or limiting source is used.
+
+**Proof of one whole drift and all five original readings.** Take
+$$
+k_0=0,\qquad k_1=1,\qquad
+D_0(\tau)=0,\qquad D_1(\tau)=\Delta\quad(\tau\in\mathbb R),
+$$
+$$
+\Delta=\operatorname{tr}(S_0-S_1)=\frac{31}{10}+\frac{49}{8}v.
+\tag{22.10}
+$$
+Indeed the trace of $\mathsf H_0S_1$ is $39/10-4/5+(109/20+27/40)v=31/10+(49/8)v$. Equations (22.5) and (22.7) give $\mathsf T_0S_0=\mathsf T_1S_1$. Its four coordinates, together with the initial trace identity, are precisely the five original equalities
+$$
+\begin{aligned}
+\operatorname{tr}S_0&=\operatorname{tr}S_1+\Delta,\\
+\operatorname{tr}(A_1S_0)&=2\operatorname{tr}(A_1S_1)+\Delta,\\
+\operatorname{tr}(A_2S_0)&=3\operatorname{tr}(A_2S_1)+\Delta,\\
+\operatorname{tr}(A_3S_0)&=4\operatorname{tr}(A_3S_1)+\Delta,\\
+\operatorname{tr}(A_4S_0)&=5\operatorname{tr}(A_4S_1)+\Delta.
+\end{aligned}
+\tag{22.11}
+$$
+Thus both runs have identical complete data with the displayed whole drifts. Their sampled gains are, respectively,
+$$
+(1,1,1,1,1),\qquad(1,2,3,4,5).
+$$
+Both are strictly positive. Their sources, slopes, and drifts differ, so the targets are not merely two representations of one effective target.
+
+For explicit original common-source realizations one may take
+$$
+f_1=\binom1v,\qquad \ell_1=(1,1/10),
+$$
+$$
+f_0=\binom{49/10+(109/20)v}{(4v-1)/5},\qquad
+\ell_0=\left(1,\frac{11/5+(29/40)v}{49/10+(109/20)v}\right),
+\qquad \alpha_j=1,\quad\beta_j=k_j,\quad R_j=S_j.
+\tag{22.12}
+$$
+The determinant-zero identities give $f_j\ell_j=S_j$. Both factors are positive. Each row remains unchanged throughout its run. The $M,J$ positivity identities from Section 19 prove positive columns at every unread atom of the very same blocks in (22.1). Inverting $\mathsf B$ was only an algebraic proof device. No inverse operation, reset, copy, alternate history, additional read, or adaptive choice is acquired. ∎
+
+<a id="one-sign-barrier-coexists-with-nonlocal-collision"></a>
+**Compatibility with Proposition 17.1.** That proposition concerns the separate fixed slope $a=-1/4$ and $\mathsf H_a=\mathsf T_a^{-1}\mathsf C$. Its exact identity on positive rank-one $S$ is
+$$
+\mathfrak b(S,\mathsf H_aS)=-\frac23\left[
+21p^2+5pq+44pr+49qs
++6\left(q-\frac{17r}{12}\right)^2
++\frac{167}{24}\left(r-\frac{384s}{167}\right)^2
++\frac{3375}{167}s^2\right]<0.
+\tag{22.13}
+$$
+Its proof in Section 17 remains intact. Algebraically the square terms contribute $6q^2-17qr+(289/24)r^2$, $(167/24)r^2-32rs+(6144/167)s^2$, and $(3375/167)s^2$; the $r^2$ and $s^2$ coefficients become $19$ and $57$. Together with $ps=qr$ these give exactly the transfer polynomial (17.12), and $21p^2>0$ gives strict negativity. This says that opposite transfer signs at the single erased-final-gain slope are unavailable for this history. It places no prohibition on the finite transfer $\mathsf B^{-1}\mathsf C$ between slopes zero and one. Thus (22.13) and Theorem 22.1 coexist.
+
+The conclusion of Theorem 22.1 is for exactly $A_4=(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$, $W=MJM$. It excludes this history as a globally recovering five-read history. It does not prove collision for every final word after the same prefix and does not address the different endpoint $(\begin{smallmatrix}5&7\\7&10\end{smallmatrix})$. The prior equation (17.12) alone still has its original method-only implication; the exclusion now follows from the separate finite witness (22.7)–(22.12).
+
+<a id="global-fibres-attribution-and-current-residual"></a>
+## 23. Attribution and the updated exact residual
+
+The complete companion supplies the actual-source model, representation fibres, quotient interface, determinant polar, the three earlier certificate classes, the erased-final-gain coefficient mechanism, the four-parameter family, and the strict-one-sign diagnostic retained in Sections 1–18. All their original proofs and conditional scopes remain part of this text. The supplied *Global actual-source fibre decomposition and a finite nonlocal collision across the strict-one-sign barrier; the full quantified completion remains open* supplies the global pencil analysis and the finite distinct-slope witness developed in Sections 19–22. The unchanged original programme supplies the whole target, arbitrary real slopes, counted initial read, and predetermined cumulative finite-word contract.
+
+| Supplied mathematical content | Results here | Exact scope |
+|---|---|---|
+| Fixed-polar-sign prefix trace invertibility, already in the companion | Lemma 19.2, with its full proof | Every prefix in $\mathscr G$; no coefficient-test hypothesis |
+| Global pencil rank, adjugate and singular-line fibre analysis | Lemma 19.2, Theorem 20.1, Corollary 20.2 | Every prefix in $\mathscr G$, every legal final word including empty, every proposed five-read vector, all real slopes |
+| Equal-slope zero uniqueness | Proposition 21.1 | A common slope of zero only, for every history just quantified |
+| Finite nonlocal barrier collision | Theorem 22.1 | Exactly the Section 17 history with final multiplier $MJM$ and endpoint $(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$, slopes zero and one |
+| Strictly negative erased-gain form | Proposition 17.1 and (22.13) | A boundary of the two-sign method at $-1/4$; compatible with Theorem 22.1 |
+
+Every premise used for the appended results is proved in the complete text. Supplier attribution conveys no independent approval or formal certification. The supplier's abstention concerns the full quantified completion: the global fibre theorem and the isolated collision are substantive bounded results and do not constitute that completion. No nested source, supplier confidence, opaque log reference, or unprovided classification is a premise.
+
+Theorem 20.1 replaces a local transfer test by an exhaustive actual-fibre description throughout $\mathscr G$, but it does not prove multiplicity or singleton fibres uniformly. To exclude every remaining history in this class, the still-missing statement is
+$$
+\begin{gathered}
+\text{for every legal prefix in }\mathscr G
+\text{ and every legal final word, there exist }y,S_0,S_1,k_0,k_1\\
+S_j>0\text{ entrywise},\quad \det S_j=0,\quad
+(S_0,k_0)\ne(S_1,k_1),\qquad
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1=y.
+\end{gathered}
+\tag{23.1}
+$$
+Whole drifts would then be fixed by (19.5). In the exhaustive description, this requires some datum with two passing regular candidates, a regular and a singular candidate, two distinct retained points on singular branches, or a positive arc. No proof makes one of these occur for every remaining history. Theorem 15.1 still covers only its literal coefficient conditions, Theorem 16.1 still covers its declared family, and Theorem 22.1 additionally disposes of the exact Section 17 history. Other final words after that prefix and the remaining full class are unresolved unless an earlier theorem applies with its actual hypotheses. In particular the new current residual does not include the already excluded exact Section 17 history as a candidate for recovery.
+
+Alternatively, constant-drift completion would require one legal predetermined five-read history with at most one actual target for every datum, a global inverse, and a necessary-and-sufficient actual-source image criterion for the whole target at all real slopes. The general fibre description supplies the image criterion for histories in $\mathscr G$, but supplies no such global uniqueness theorem. The exact Section 17 history cannot serve as that recovering history because of (22.11). Equal-slope uniqueness at zero, invertibility at $-1/4$, or a strictly signed transfer form at that single slope cannot replace the missing global uniqueness or multiplicity argument.
+
+Other residual prefix geometries from Section 13 remain in the original unrestricted programme. The retained bounds, credited with complete support in Section 8, are still
+$$
+C_{\mathrm{fix}}(d)=d+5\quad(d\ge1),\qquad
+5\le C_{\mathrm{fix}}(0)\le6.
+\tag{23.2}
+$$
+Neither the upper bound of fourteen on finite fibre size nor the finite pair improves these read bounds or resolves the five-versus-six alternative. The bounded integration does not complete the original all-history or through-2027 research objective.
+
+All appended conclusions concern the actual strictly positive rank-one common-source model, one fixed positive row per run, positive columns through all unread atoms, the exact indices $0,1,2,3,4$, predetermined cumulative finite left words, and one whole constant drift per run. No independently lifted source or representation-fibre ambiguity is substituted. The arguments are ordinary unexecuted symbolic textual mathematics. They assert no adaptive lower bound, unrestricted atom optimum, bit or precision bound, time bound, stability result, physical acquisition cost, empirical or general neural-network conclusion, Lean/kernel certification, missing-literature claim, or worldwide originality.

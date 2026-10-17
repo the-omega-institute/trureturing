@@ -4582,3 +4582,249 @@ rt=\frac{\overline Q B}{Q\overline B}
 若含例外射线，第 49 节的 `sqrt(6)|a|/80` 下界仍然成立。
 
 本节没有排除只含一条 canonical 射线的混合正交三元组，也没有排除三条 `Delta!=0` 射线的正交兼容性；没有由这些计数推出 affinity 下界或 quartet 排除。
+
+## 51. 实分支上反射对称三点轨道的正交排除
+
+本节保留 §46 的实际共同平坦条件，排除一个含三条共享相位向量的满支撑子情形。配对 circulant 构造沿用 [Szöllősi, §2](https://arxiv.org/abs/0811.3930)；以下结论只涉及同步坐标置换轨道，不把不同轨道的三条实际射线替换为独立概率变量。
+
+### 51.1 参数、轨道与命题
+
+取 \(-1<a<1\)，令 \(p,q\) 为虚部为正的单位复数，满足
+\[
+\Re p=(a-1)/2,\qquad \Re q=(-a-1)/2.
+\]
+写 \(p+q=-1+ih\)、\(s=h^2\)，则
+\[
+h>0,\quad 1<s\le3,\quad a^2=\frac{s(3-s)}{1+s},
+\quad p=\frac{a-1+i(h+a/h)}2,\quad
+q=\frac{-a-1+i(h-a/h)}2.
+\]
+本节允许 \(a=0\)。定义
+\[
+C=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
+D=\begin{pmatrix}p&q\\\bar q&-\bar p\end{pmatrix},\quad
+N=D-C,\quad T_0=\frac{D+2C}{\sqrt6},\quad T_1=T_2=\frac N{\sqrt6}.
+\]
+它们是实际矩阵
+\[
+H_0=\frac1{\sqrt6}
+\begin{pmatrix}J+(p-1)I&J+(q-1)I\\
+J+(\bar q-1)I&-J-(\bar p-1)I\end{pmatrix}
+\]
+的 Fourier mode 块，其中 \(J\) 为三阶全一矩阵。各 \(T_\ell\) 酉且行列式为 \(-1\)，并有 \(C^*C=D^*D=2I\)、\(N^*N=6I\)。同步置换同时作用于两个 channel 的三个坐标，与 \(H_0\) 交换；记三循环为 \(S\)。
+
+**命题 51.1。** 设单位向量 \(v\) 与 \(H_0v\) 的所有坐标模均为 \(1/\sqrt6\)。若 \([v]\) 被一个同步换位固定，则其同步 \(S_3\) 轨道中的不同射线两两不正交。特别地，\(v,Sv,S^2v\) 不可能构成正交三元组。
+
+换位在每个 channel 中都有一个不动坐标，且这些坐标非零，因此这里的射影不动必为向量本身不动。适当同步置换及调整一个整体相位后可写
+\[
+\sqrt6v=(x,y),\qquad x=(r,1,1),\quad y=g(t,1,1),
+\qquad |r|=|t|=|g|=1.
+\]
+轨道中不同向量的内积均为实数
+\[
+\langle v,Sv\rangle=\langle v,S^2v\rangle
+=\frac{1+\Re r+\Re t}{3}.
+\]
+故只要存在一个正交对，就有 \(\Re(r+t)=-1\)，且三条循环平移全部正交。这一条件还蕴含 \(r,t\ne1\)；两个 channel 的 Fourier 值分别正比于
+\((r+2,r-1,r-1)\) 和 \((t+2,t-1,t-1)\)，所以它们均为满支撑。下面直接排除此实际共享相位情形。
+
+### 51.2 由假设轨道得到实际配对 completion
+
+令 \(L(z)=J+(z-1)I\)、\(X=L(r)\)、\(Y=gL(t)\)，并定义
+\[
+K=\frac1{\sqrt6}\begin{pmatrix}X&-\bar Y\\Y&\bar X\end{pmatrix}.
+\]
+前三列是 \(v\) 的三个循环平移；后三列是其在
+\(\Theta(x,y)=(-\bar y,\bar x)\) 下的像。恒等式
+\(H_0\Theta=-\Theta H_0\) 保证这六列及其 \(H_0\) 像全部平坦，所用相位始终来自同一个 \(r,t,g\)。
+
+\(K\) 的 mode 块为
+\[
+U_0=\frac1{\sqrt6}\begin{pmatrix}r+2&-\bar g(\bar t+2)\\
+g(t+2)&\bar r+2\end{pmatrix},\qquad
+U_1=U_2=\frac1{\sqrt6}\begin{pmatrix}r-1&-\bar g(\bar t-1)\\
+g(t-1)&\bar r-1\end{pmatrix}.
+\]
+由 \(\Re(r+t)=-1\)，各块均形如
+\(\bigl(\begin{smallmatrix}u&-\bar z\\z&\bar u\end{smallmatrix}\bigr)\)，且 \(|u|^2+|z|^2=1\)。因此 \(U_0,U_1\in SU(2)\)，\(K\) 酉，\(K\) 与 \(H_0K\) 均为归一化复 Hadamard 矩阵。
+
+mode 块为 \(W_0,W_1,W_1\) 的矩阵，其空间对角二阶块为 \((W_0+2W_1)/3\)，非对角二阶块为 \((W_0-W_1)/3\)。平坦性遂给出
+\[
+\|U_0-U_1\|_F^2=6,\qquad
+\|T_0U_0-T_1U_1\|_F^2=6.
+\]
+设 \(Q=T_1^*T_0\)、\(R=U_0U_1^*\)。两者属于 \(SU(2)\)，其迹为实数；上述等式以及 \(H_0\) 的非对角块平坦性给出
+\[
+\operatorname{tr}R=\operatorname{tr}(QR)=\operatorname{tr}Q=-1.
+\]
+Cayley–Hamilton 恒等式给出 \(Q^2+Q+I=0\)、\(Q^*=-I-Q\)，从而
+\[
+\operatorname{tr}(Q^*R)=2,\qquad
+\|Q-R\|_F^2=4-2\Re\operatorname{tr}(Q^*R)=0.
+\]
+故 \(R=Q\)、\(U_0=QU_1\)。这一步依赖实际酉 mode 块，不能由各 mode 的独立模长条件替代。
+
+### 51.3 三个实际 Bloch 约束的矛盾
+
+由 \(Q=T_1^*T_0\) 及 \(Q^2+Q+I=0\)，有 \(T_0Q=-T_0-T_1\)。代回空间块后，\(K\) 的对角、非对角块分别为
+\(T_1^*DU_1/\sqrt6\)、\(T_1^*CU_1/\sqrt6\)；\(H_0K\) 的相应块分别为
+\(-CU_1/\sqrt6\)、\(-DU_1/\sqrt6\)。因此
+\[
+CU_1,\quad DU_1,\quad T_1^*CU_1,\quad T_1^*DU_1
+\]
+的每个元素模均为一。
+
+取 \(U_1\) 的第一列 \(\eta=(\eta_0,\eta_1)^T\)，则 \(\|\eta\|=1\)。令 \(Z=\operatorname{diag}(1,-1)\)，并用通常的 Pauli 矩阵 \(\sigma_x,\sigma_y,\sigma_z\)。上述平坦性蕴含
+\[
+\eta^*B_0\eta=\eta^*B_1\eta=\eta^*B_2\eta=0,
+\quad B_0=C^*ZC,\quad
+B_1=(N^*C)^*Z(N^*C),\quad B_2=(N^*D)^*Z(N^*D).
+\]
+只使用 \(s=h^2\)、\(a^2=s(3-s)/(1+s)\) 展开可得
+\[
+\begin{aligned}
+B_0&=2\sigma_x,\\
+B_1&=-4a\sigma_x-\frac{4h(s+3)}{s+1}\sigma_y
+                  +\frac{4(s+3)}{s+1}\sigma_z,\\
+B_2&=8a\sigma_x+\frac{8h^3}{s+1}\sigma_y
+                  +\frac{4(s+3)}{s+1}\sigma_z.
+\end{aligned}
+\]
+定义来自同一实际列的实坐标
+\[
+b_x=2\Re(\bar\eta_0\eta_1),\quad
+b_y=2\Im(\bar\eta_0\eta_1),\quad
+b_z=|\eta_0|^2-|\eta_1|^2.
+\]
+其满足 \(b_x^2+b_y^2+b_z^2=1\)。\(B_0\) 方程给出 \(b_x=0\)，\(B_1\) 方程给出 \(b_z=hb_y\)；代入 \(B_2\) 方程得到 \(12hb_y=0\)。由于 \(h>0\)，这强制 \(b=0\)，与单位长度矛盾。对应三个系数行的行列式为
+\[
+-\frac{96h(s+3)}{s+1}\ne0.
+\]
+命题 51.1 得证。
+
+上述矛盾也有明确的平方和形式。令
+\[
+L_0=b_x,\quad L_1=-\frac{a(s+1)}{s+3}b_x-hb_y+b_z,\quad
+L_2=\frac{2a(s+1)}{s+3}b_x+\frac{2hs}{s+3}b_y+b_z,
+\quad d=3h(s+1)(s+3)>0.
+\]
+三个平坦性方程等价于 \(L_0=L_1=L_2=0\)，而恒等式
+\[
+\begin{aligned}
+db_x&=dL_0,\\
+db_y&=(s+3)^2(L_2-L_1)-3a(s+1)(s+3)L_0,\\
+db_z&=2sh(s+3)L_1+h(s+3)^2L_2-6ah(s+1)L_0
+\end{aligned}
+\]
+平方相加后，左边为 \(d^2\|b\|^2=d^2>0\)，右边在三个约束上为零。所有分母在该分支严格为正，故可直接清除分母形成多项式证书。
+
+### 51.4 一般同步置换轨道中的限制
+
+若一个同步 \(S_3\) 轨道中的正交三元组使用了两种奇偶性的置换，统一左乘一个置换后，可写成 \(v,R_{12}v,R_{13}v\)，其中后两者为不同换位。用单位模坐标写 \(\sqrt6v=(x,y)\)，设 \(z_j=(x_j,y_j)\)、\(A_{jk}=\langle z_j,z_k\rangle\)，则 \(\|z_j\|^2=2\)。前两条正交关系给出
+\(\Re A_{12}=\Re A_{13}=-1\)；第三条是三循环正交关系，给出
+\(\Re(A_{12}+A_{13}+A_{23})=0\)。于是 \(\Re A_{23}=2\)，故
+\[
+\|z_2-z_3\|^2=4-2\Re A_{23}=0.
+\]
+因此 \(v\) 被剩余换位固定，命题 51.1 排除此情形。
+
+所以，同一个同步 \(S_3\) 轨道若包含实际正交三元组，它只能来自无换位稳定子的六点轨道中的三个循环平移。本节尚未排除这一剩余情形，也未排除由不同轨道选出的三条射线。对实际 column pair \((I,H_0)\)，统一施加 \(H_0\) 即得到相同结论，因为它保留正交性并与同步置换交换。
+
+### 51.5 一般循环正交三元组的严格换位正性
+
+**命题 51.2。** 在命题 51.1 的同一实分支上，设 \(v\) 与 \(H_0v\) 均平坦，且 \(v,Sv,S^2v\) 正交归一。则对每个同步换位 \(R\)，
+\[
+\langle v,Rv\rangle>0.
+\]
+该内积因 \(R=R^*\) 而为实数。结论也约束无换位稳定子的六点轨道，但不声称此类循环正交三元组一定存在或已被全部排除。
+
+**证明。** 写 \(\sqrt6v=(x,y)\)，令 \(X,Y\) 为首列分别为 \(x,y\) 的 circulant 矩阵，改用
+\[
+K=\frac1{\sqrt6}\begin{pmatrix}X&-Y^*\\Y&X^*\end{pmatrix}.
+\]
+其后三列是 \(\Pi\Theta v\) 的循环平移，其中 \(\Pi\) 同步交换坐标 \(1,2\)。由于 \(\Pi H_0=H_0\Pi\)、\(H_0\Theta=-\Theta H_0\)，\(K,H_0K\) 的每个元素模均为 \(1/\sqrt6\)。定义
+\[
+\lambda_{x,k}=\sum_{j=0}^2x_j\omega^{-jk},\qquad
+U_k=\frac1{\sqrt6}\begin{pmatrix}\lambda_{x,k}&-\overline{\lambda_{y,k}}\\
+\lambda_{y,k}&\overline{\lambda_{x,k}}\end{pmatrix}.
+\]
+循环正交关系恰好给出 \(|\lambda_{x,k}|^2+|\lambda_{y,k}|^2=6\)，故三个实际 \(U_k\) 都属于 \(SU(2)\)，\(K\) 酉。
+
+若任一 channel 有一个 Fourier 坐标为零，单位模三元组的单模性质会使剩余某 mode 的平方模为九，与上述总能量六矛盾。因此这里的两个 channel 自动满支撑；结合实际双平坦性，§46 还给出 \(\Delta\ne0\)。
+
+形如 \(\bigl(\begin{smallmatrix}u&-\bar z\\z&\bar u\end{smallmatrix}\bigr)\) 的矩阵构成实四元数代数；记 \(|A|_q^2=\det A\)，则 \(A^*A=|A|_q^2I\)。设
+\[
+V=(U_1+U_2)/2,\quad W=(U_1-U_2)/2,\quad
+R_0=VU_0^*,\quad S_0=WU_0^*,\quad t^2=\det V.
+\]
+有 \(0\le t^2\le1\)、\(|R_0|_q^2=t^2\)、\(|S_0|_q^2=1-t^2\) 及 \(\Re\operatorname{tr}(R_0^*S_0)=0\)。\(K,H_0K\) 的空间对角二阶块平坦性给出
+\[
+|I+2R_0|_q^2=|Q+2R_0|_q^2=3,\qquad Q=T_1^*T_0.
+\]
+写 \(Q=-I/2+i n\cdot\sigma\)、\(R_0=bI+i r\cdot\sigma\)，其中 \(n,r\in\mathbb R^3\)，则
+\[
+|n|^2=3/4,\quad b=1/2-t^2,\quad n\cdot r=3b/2,
+\quad |r|^2=t^2-b^2.
+\]
+实 Cauchy–Schwarz 不等式遂给出
+\[
+\frac94b^2\le\frac34(t^2-b^2),\qquad
+(1-2t^2)^2\le t^2,\qquad
+(4t^2-1)(t^2-1)\le0.
+\]
+由于 \(t^2\le1\)，必有 \(t^2\ge1/4\)，从而
+\[
+k=\tfrac12\Re\operatorname{tr}(U_1^*U_2)=2t^2-1\ge-1/2.
+\]
+令 \(z_j=(x_j,y_j)\)、\(r_{jk}=\Re\langle z_j,z_k\rangle\)，并令 \(\eta_k\) 为 \(U_k\) 第一列。循环正交性蕴含 \(r_{01}+r_{12}+r_{20}=0\)，直接 Fourier 展开给出
+\[
+\langle\eta_1,\eta_2\rangle
+=\frac{\omega r_{01}+r_{12}+\omega^2r_{20}}3,\qquad
+k=r_{12}/2,\qquad
+\langle v,R_{12}v\rangle=\frac{1+2k}{3}\ge0.
+\]
+
+下面排除等号。若 \(k=-1/2\)，则 \(t^2=b=1/4\)，Cauchy–Schwarz 等号强制 \(r=n/2\)。因此
+\[
+R_0=(I+Q)/2,\qquad A=I-R_0=(I-Q)/2,
+\qquad |A|_q^2=|S_0|_q^2=3/4.
+\]
+\(K\) 的两个非对角空间块为 \(M_+/3,M_-/3\)，其中
+\[
+M_\pm=(A\pm i\sqrt3S_0)U_0.
+\]
+\(H_0K\) 的相应块为 \(-T_1M_-/3,-T_1M_+/3\)，因为 \(Q-R_0=-A\)。故 \(M_+\) 及 \(T_1M_+\) 的每个元素模均为 \(\sqrt{3/2}\)。每一列 \(\xi\) 必满足同一实际 \(T_1\) 的双平坦方向条件
+\[
+\Re\bigl((p-1)\overline{(q-1)}\xi_0\bar\xi_1\bigr)=0.
+\]
+由于 \(p-1,q-1\ne0\)，这里只有两条可能的复直线，其 component ratios 为相反的单位复数，故两条直线正交。而
+\[
+\Re\det(A+i\sqrt3S_0)=|A|_q^2-3|S_0|_q^2=-3/2
+\]
+说明 \(M_+\) 可逆，两列必须选择不同直线。每列范数为 \(\sqrt3\)，所以 \(M_+^*M_+=3I\)。展开得到 \(A^*S_0=S_0^*A\)；Hermitian 四元数矩阵只能是实标量，故 \(S_0=cA\)，\(c\in\mathbb R\)，等范数进一步给出 \(c=\pm1\)。于是
+\[
+\{U_1,U_2\}=\{U_0,QU_0\},\qquad
+M_+=(1\pm i\sqrt3)AU_0,\qquad
+A=-\frac{\sqrt{3/2}}2T_1^*C.
+\]
+\(M_+,T_1M_+\) 的平坦性强制 \(T_1^*CU_0,CU_0\) 的元素模均为一；\(K\) 的对角块为
+\((2I+Q)U_0/3=T_1^*DU_0/\sqrt6\)，故 \(T_1^*DU_0\) 也有该性质。\(U_0\) 第一列遂满足 §51.3 中三个矛盾的实际 Bloch 约束，排除等号。对 \(Sv,S^2v\) 重复同一论证即覆盖全部三个同步换位。证毕。
+
+### 51.6 一个被严格符号条件排除的满支撑相位族
+
+**命题 51.3。** 取 \(c=(\sqrt3-1)/2\)，令 \(0<\theta<\pi\)、\(\cos\theta=c\)，并设
+\[
+x=(1,e^{i\theta},e^{-i\theta}),\qquad
+y=(1,e^{-i\theta},e^{i\theta}),\qquad v=(x,y)/\sqrt6.
+\]
+这三条循环平移 \(v,Sv,S^2v\) 正交归一，两个 channel 的 Fourier transforms 均为满支撑，但对上述实分支的任何参数，\(H_0v\) 都不平坦。
+
+**证明。** 等式 \(2c^2+2c-1=0\) 给出两 channel 的总循环相关
+\(2(2\cos\theta+\cos2\theta)=0\)，故循环平移正交；但
+\[
+\langle v,R_{12}v\rangle=1-\frac{2\sqrt3}{3}<0,
+\]
+与命题 51.2 的必要条件矛盾。各 channel 的零 mode 值为 \(1+2c=\sqrt3\)，其余两 mode 值的乘积为
+\((1-c)^2-3(1-c^2)=-6c\ne0\)，因此满支撑也成立。证毕。
+
+第 52 节及后续推导见同主题[理论续卷](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION.md)。

@@ -246,7 +246,7 @@ private lemma cauchy_expectation_derivative (gamma : ℝ) (a : ℝ≥0) (ha : a 
 private lemma closed_expression_derivative (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     HasDerivAt (fun u : ℝ => 2 * Real.log (a+u) - Real.log (4*a) - Real.log u)
       (2 / (a+b) - b⁻¹) b := by
-  have hd := (((((hasDerivAt_id b).const_add a).log (by positivity)).const_mul 2).sub_const
+  have hd := (((((hasDerivAt_id b).const_add a).log (add_pos ha hb).ne').const_mul 2).sub_const
     (Real.log (4*a))).sub ((hasDerivAt_id b).log hb.ne')
   simpa [div_eq_mul_inv] using! hd
 

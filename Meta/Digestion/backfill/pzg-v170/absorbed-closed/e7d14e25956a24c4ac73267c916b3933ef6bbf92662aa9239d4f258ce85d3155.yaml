@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:e7d14e25956a24c4ac73267c916b3933ef6bbf92662aa9239d4f258ce85d3155
-  normalized_sha256: sha256:e7d14e25956a24c4ac73267c916b3933ef6bbf92662aa9239d4f258ce85d3155
-cas_ref: sha256:e7d14e25956a24c4ac73267c916b3933ef6bbf92662aa9239d4f258ce85d3155
-coverage_gids:
-  - gid: D5/S1/Recurrence/FibonacciPowerSumMod16Obstruction.even_power_sum_obstruction
-    target_statement_id: sha256:6331184f8f1536542001ac3ca4cc3f7e1eba9a1cd62ac8a03ad26f21887925d2
-receipts:
-  unresolved_subitems: []

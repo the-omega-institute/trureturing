@@ -37,8 +37,6 @@ theorem vectorDependence : ObservationalDependence vectorSignature vectorActual 
   intro h
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [vectorActual, realize, B_formula, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
-  change (0 : ℂ) = 1 at hh
-  norm_num at hh
 
 @[reducible] def formulaArena : Arena where
   signature := vectorSignature
@@ -836,8 +834,6 @@ theorem scalarDependence : ObservationalDependence scalarSignature scalarActual 
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [scalarActual, realize, scalarB, B_formula, Matrix.cons_val_succ,
     Matrix.cons_val_zero] at hh
-  change (0 : ℂ) = 1 at hh
-  norm_num at hh
 @[reducible] def hermitianArena : Arena :=
   ⟨scalarSignature, fun R => ∀ (t : ℝ) (a : Vec), (R.readout () t a).IsHermitian⟩
 theorem hermitianNegative : ¬ hermitianArena.Law scalarRejected := by

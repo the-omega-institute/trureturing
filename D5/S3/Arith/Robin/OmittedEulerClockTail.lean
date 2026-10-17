@@ -262,7 +262,7 @@ private lemma finite_euler_defect (S T : Finset ℕ) (hST : S ⊆ T)
   have hD0 : 0 ≤ eulerProduct (T \ S) s :=
     prod_nonneg fun q hq => hn q (Finset.mem_sdiff.mp hq).1
   have hD1 : eulerProduct (T \ S) s ≤ 1 := by
-    apply prod_le_one (fun q hq => hn q (Finset.mem_sdiff.mp hq).1)
+    apply prod_le_one₀ (fun q hq => hn q (Finset.mem_sdiff.mp hq).1)
     intro q hq
     dsimp [localFactor]
     linarith [(hx q (Finset.mem_sdiff.mp hq).1).1]
@@ -273,7 +273,7 @@ private lemma finite_euler_defect (S T : Finset ℕ) (hST : S ⊆ T)
     apply sum_le_sum
     intro q hq
     apply mul_le_of_le_one_right (hx q (Finset.mem_sdiff.mp hq).1).1
-    apply prod_le_one
+    apply prod_le_one₀
     · intro r hr
       have hrT := (Finset.mem_sdiff.mp (mem_filter.mp hr).1).1
       linarith [(hx r hrT).2]

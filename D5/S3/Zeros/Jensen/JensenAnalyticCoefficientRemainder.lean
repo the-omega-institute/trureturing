@@ -6,6 +6,7 @@
    utility: none
    digest: Entire coefficient series identify every derivative of the actual finite correction remainder. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Zeros.Jensen.JensenFiniteCoefficientRemainder
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas

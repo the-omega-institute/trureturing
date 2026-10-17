@@ -246,7 +246,7 @@ private theorem determinant_bound (d : S → Instruction (S ⊕ O)) (E : Set (S 
   have hp : (∏ i, M.row i ⬝ᵥ M.row i) ≤ (16 : ℝ) ^ Fintype.card (U d E) := by
     calc
       _ ≤ ∏ _i : Fin (Fintype.card (U d E)), (16 : ℝ) :=
-        Finset.prod_le_prod (fun i _ => Finset.sum_nonneg fun j _ => mul_self_nonneg _) (fun i _ => hs i)
+        Finset.prod_le_prod₀ (fun i _ => Finset.sum_nonneg fun j _ => mul_self_nonneg _) (fun i _ => hs i)
       _ = _ := by simp
   rw [Matrix.det_mul,Matrix.det_transpose,hd] at hH
   have hsq : ((A d E).det.natAbs : ℝ)^2 ≤ ((4 : ℝ)^Fintype.card (U d E))^2 := by

@@ -6,6 +6,7 @@
    utility: none
    digest: Multi-scale central digits are injective with exact length control. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.PositivePairs.Digits.CentralDigitData
 
 set_option autoImplicit false
@@ -66,7 +67,7 @@ private theorem multiScaleWord_cutoff_injective
               (cutoffMagnus r (positivePairWords r index).1 -
                 cutoffMagnus r (positivePairWords r index).2) bounded := by
             simp [actualLeadingDifference, cutoffRestriction, cutoffLift,
-              Finsupp.mapDomain_apply Subtype.val_injective]
+              Finsupp.mapDomain_apply_of_injective Subtype.val_injective]
           rw [hcoeffAt]
           simp only [Pi.sub_apply, cutoffMagnus, cutoffRestriction,
             toRationalWordPolynomial, MonoidAlgebra.coeff_mapRingHom]

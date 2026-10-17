@@ -260,7 +260,7 @@ private lemma gaussian_factor_norm_le (v s : ℝ) (hv : 0≤v) :
 private lemma product_norm_le_one {ι : Type*} (s : Finset ι) (f : ι → ℂ)
     (hf : ∀ i ∈ s, ‖f i‖ ≤ 1) : ‖∏ i ∈ s, f i‖ ≤ 1 := by
   rw [norm_prod]
-  exact prod_le_one (by intros; positivity) hf
+  exact prod_le_one₀ (by intros; positivity) hf
 
 private lemma product_difference_norm {ι : Type*} (s : Finset ι) (f h : ι → ℂ)
     (hf : ∀ i ∈ s, ‖f i‖ ≤ 1) (hh : ∀ i ∈ s, ‖h i‖ ≤ 1) :
@@ -723,7 +723,7 @@ private lemma centered_bernoulli_product_envelope {m : ℕ} (p : Fin m → ℝ) 
   rw [norm_prod]
   calc
     _ ≤ ∏ i, Real.exp (-2*(p i * (1 - p i))*Real.sin (s/2)^2) :=
-      prod_le_prod (by intro i hi; exact norm_nonneg _)
+      prod_le_prod₀ (by intro i hi; exact norm_nonneg _)
         (by intro i hi; exact centered_bernoulli_gaussian_envelope _ _)
     _ = _ := by rw [← Real.exp_sum]; congr 1; simp only [sum_mul,mul_sum]
 

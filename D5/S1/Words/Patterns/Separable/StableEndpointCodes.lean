@@ -8,6 +8,9 @@
 
 import D5.S1.Words.Patterns.Separable.CappedExploration
 
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf uniformPmf_toOuterMeasure_apply)
+
 /-!
 Only bounded endpoint shapes and stop kinds are stored. The terminal permutation
 is not part of a code. Sizes, states and literal value offsets are reconstructed
@@ -665,8 +668,8 @@ theorem stable_finite_mass_sums (state : Option Bool) (m B K H n : ℕ)
   have mass (event : Avoider n → Prop) : actualMass n event =
       (Nat.card {π : Avoider n // event π} : ℝ) / Nat.card (Avoider n) := by
     let : Nonempty (Avoider n) := ⟨identityAvoider n⟩
-    change ((PMF.uniformOfFintype (Avoider n)).toOuterMeasure {π | event π}).toReal = _
-    rw [PMF.toOuterMeasure_uniformOfFintype_apply]
+    change ((uniformPmf (Avoider n)).toOuterMeasure {π | event π}).toReal = _
+    rw [uniformPmf_toOuterMeasure_apply]
     simp only [ENNReal.toReal_div, ENNReal.toReal_natCast, Nat.card_eq_fintype_card]
     rfl
   have sourcePositive : actualMass n (Allowed state) ≠ 0 := by

@@ -21,14 +21,14 @@ open Maths Maths.AdditiveTransport
 noncomputable section
 
 /-- The max-plus semiring uses the dual real order and one absorbing bottom. -/
-abbrev MaxPlus := Tropical (WithTop (OrderDual ℝ))
+abbrev MaxPlus := MinTropical (WithTop (OrderDual ℝ))
 
 /-- This is the actual extended real score, with bottom denoting no path. -/
-def maxScore (x : MaxPlus) : WithBot ℝ := Tropical.untrop x
+def maxScore (x : MaxPlus) : WithBot ℝ := MinTropical.untrop x
 
-def realEntry (x : ℝ) : MaxPlus := Tropical.trop ((OrderDual.toDual x : OrderDual ℝ) : WithTop (OrderDual ℝ))
+def realEntry (x : ℝ) : MaxPlus := MinTropical.trop ((OrderDual.toDual x : OrderDual ℝ) : WithTop (OrderDual ℝ))
 
-private theorem maxScore_injective : Function.Injective maxScore := Tropical.untrop_injective
+private theorem maxScore_injective : Function.Injective maxScore := MinTropical.untrop_injective
 private theorem maxScore_zero : maxScore (0 : MaxPlus) = ⊥ := rfl
 private theorem maxScore_real (x : ℝ) : maxScore (realEntry x) = (x : WithBot ℝ) := rfl
 private theorem realEntry_mul (x y : ℝ) : realEntry x * realEntry y = realEntry (x+y) := rfl
@@ -78,14 +78,14 @@ private theorem transition_witness {n : ℕ} (f : ZMod n → Fin 5 → ℝ)
 private theorem sum_eq_term (g : Fin 3 → MaxPlus) : ∃ r : Fin 3, (∑ s, g s) = g r := by
   rw [Fin.sum_univ_three]
   rcases le_total (g 0) (g 1) with h | h
-  · rw [Tropical.add_eq_left h]
+  · rw [MinTropical.add_eq_left h]
     rcases le_total (g 0) (g 2) with h2 | h2
-    · exact ⟨0,Tropical.add_eq_left h2⟩
-    · exact ⟨2,Tropical.add_eq_right h2⟩
-  · rw [Tropical.add_eq_right h]
+    · exact ⟨0,MinTropical.add_eq_left h2⟩
+    · exact ⟨2,MinTropical.add_eq_right h2⟩
+  · rw [MinTropical.add_eq_right h]
     rcases le_total (g 1) (g 2) with h2 | h2
-    · exact ⟨1,Tropical.add_eq_left h2⟩
-    · exact ⟨2,Tropical.add_eq_right h2⟩
+    · exact ⟨1,MinTropical.add_eq_left h2⟩
+    · exact ⟨2,MinTropical.add_eq_right h2⟩
 
 private theorem mul_entry_term_le (A B : Matrix (Fin 3) (Fin 3) MaxPlus) (s r t : Fin 3) :
     maxScore (A s r) + maxScore (B r t) ≤ maxScore ((A*B) s t) := by

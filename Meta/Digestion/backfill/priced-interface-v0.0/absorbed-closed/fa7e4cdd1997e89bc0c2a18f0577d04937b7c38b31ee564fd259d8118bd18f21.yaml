@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:fa7e4cdd1997e89bc0c2a18f0577d04937b7c38b31ee564fd259d8118bd18f21
-  normalized_sha256: sha256:fa7e4cdd1997e89bc0c2a18f0577d04937b7c38b31ee564fd259d8118bd18f21
-cas_ref: sha256:fa7e4cdd1997e89bc0c2a18f0577d04937b7c38b31ee564fd259d8118bd18f21
-coverage_gids:
-  - gid: D5/S0/Naming/GraphPairingCriterion.graph_pairing_separating_iff
-    target_statement_id: sha256:203b0271bf3f1e3e077c346fe453f8acf14a454832e426b818fb6ad3faccf867
-receipts:
-  unresolved_subitems: []

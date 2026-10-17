@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
-  normalized_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
-cas_ref: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
-coverage_gids:
-  - gid: D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
-    target_statement_id: sha256:8780492361ca50908420eaee41122e029cff218c4d612b83d6157472a047728a
-receipts:
-  unresolved_subitems: []

@@ -51,7 +51,7 @@ internal sealed class CycleCayleyMeasureWeakLimitDocument
             F.Seq(F.Pi, F.Sp, F.Open, j, F.Sp, F.Plus, F.Sp, F.D(1), F.Close),
             cycleSize);
         Formula cayleyPoint = F.Seq(F.Minus, Call("cot", angle));
-        Formula phaseLaw = Call("uniformOfFintype", Call("Fin", finSize));
+        Formula phaseLaw = Call("uniformPmf", Call("Fin", finSize));
         Formula pushedLaw = Call("map",
             F.Seq(j, F.Sp, F.Mapsto, F.Sp, cayleyPoint), phaseLaw);
         Formula measureDefinition = Call("asProbabilityMeasure",

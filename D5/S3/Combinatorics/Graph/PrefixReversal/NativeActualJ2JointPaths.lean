@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The six literal joint components retain the complete support and exact uncut edge inventory of the same supplied native cycle. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2Components
 import D5.S3.Combinatorics.Graph.Walks.ActualPathFamilyInventory
 import D5.S3.Combinatorics.Graph.Walks.ActualPartitionTransport

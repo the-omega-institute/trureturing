@@ -50,8 +50,23 @@ $\operatorname{minimumExchangeLength}\left(\operatorname{B}\left(t\right), \oper
 
 This construction chooses a new common positive baseline for the supplied units. It does not embed an arbitrary previously fixed inert matrix into the family.
 
+**Theorem 1.2 (The construction preserves supplied constants).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/RationalUnitPositiveFamily.positiveFamily_with_constants`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/RationalUnitPositiveFamily.positiveFamily_with_constants` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the given rational augmentation-ideal matrix units, supply positive integers c,K and integer group matrices Z(a,b) whose rational casts equal c times e(a,b). Assume the absolute integer coefficients of both truncated sums from Z are strictly below K for every t<=d. The construction produces F with F.c=c and F.K=K, retaining every clause of PositiveFamily: exact factors, positivity, augmentation, positive tau, and rectangular exchange minima.
+
+This is the original construction with its clearing and positivity inputs exposed at its original owner. The existing theorem26_2 prepares those inputs by its original common-denominator and finite-maximum arguments and consumes this result. The supplied constants are never replaced by newly chosen ones. A specialization to c=K=card(H) still requires the actual clearing and bound proofs; existence alone does not identify them.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/RationalUnitPositiveFamily.positiveFamily_with_constants`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/RationalUnitPositiveFamily.theorem26_2`
 - Dependency: [D5/S3/ConceptDynamics/Coding/InertGroupBlockConjugacy](InertGroupBlockConjugacy.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/InvolutionUniformExchange](InvolutionUniformExchange.md)

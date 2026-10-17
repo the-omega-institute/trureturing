@@ -34,7 +34,7 @@ public sealed class ValidatedPolicy
     public string FileMapSha256 { get; }
     public string DomainsSha256 { get; }
 
-    internal bool IsDigestionSource(RepoPath path) => Manifest.Match(path.Value) is [{ DigestionSource: true }];
+    internal bool IsDigestionSource(RepoPath path) => Manifest.Match(path.Value) is [{ DigestionSource: true, Symlink: null }];
 
     internal static ValidatedPolicy Create(FileMapManifest manifest, ImmutableArray<DomainSyntax> domains)
     {

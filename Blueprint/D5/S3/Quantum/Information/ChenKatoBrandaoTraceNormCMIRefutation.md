@@ -28,7 +28,19 @@ $$\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall n \in \mathb
 
 Definition 2, PDF p. 14, verbatim: I_1(A:C|B) := ||rho_ABC - rho_A tensor rho_BC||_1 - ||rho_AB - rho_A tensor rho_B||_1. The input coordinates are (A times B) times C. partialTraceRight traces the right factor; partialTraceLeft traces the left factor. The maps R and S reassociate the product indices in opposite directions. AB, A, B and BC are the literal reduced matrices. The tensor product A tensor BC is reassociated back to the input coordinates before subtraction. No rank condition is imposed.
 
-**Definition 1.3 (Chen–Kato–Brandão Conjecture III.2).**
+**Theorem 1.3 (Trace norm of a real diagonal matrix).**
+
+$$\forall n \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{DecidableEq}\left(n\right)] \forall d \in n \to \mathbb{R},\; \operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\operatorname{CFC.sqrt}\left(\operatorname{Matrix.conjTranspose}\left(\operatorname{Matrix.diagonal}\left(\operatorname{fun} (i:n) \mapsto \operatorname{Complex.ofReal}\left(d\left(i\right)\right)\right)\right) \cdot \operatorname{Matrix.diagonal}\left(\operatorname{fun} (i:n) \mapsto \operatorname{Complex.ofReal}\left(d\left(i\right)\right)\right)\right)\right)\right) = \sum_{i:n} (|d\left(i\right)|)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The trace norm of a complex diagonal matrix with real entries is the sum of their absolute values. The positive square root of its adjoint product is diagonal with entries equal to those absolute values. The index type is any finite type with decidable equality, including the empty type.
+
+**Definition 1.4 (Chen–Kato–Brandão Conjecture III.2).**
 
 $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{N},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(iota\right)] \forall K \in iota \to \operatorname{Matrix}\left(\operatorname{Fin}\left(nPrime\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; (\sum_{i:iota} (\operatorname{conjTranspose}\left(K\left(i\right)\right) \cdot K\left(i\right)) = 1) \Rightarrow ((\operatorname{localContraction}\left(K\right) < 1) \Rightarrow (\exists eta \in \mathbb{R},\; (eta < 1) \land (\forall dA \in \mathbb{N},\; \forall dB \in \mathbb{N},\; \forall rho \in \operatorname{DensityState}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right))\right),\; \operatorname{let} L:iota \to \operatorname{Matrix}\left(((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(nPrime\right)), ((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)) \times \operatorname{Fin}\left(n\right)), \mathbb{C}\right) := \operatorname{fun} (i:iota) \mapsto \operatorname{Matrix.kronecker}\left((1:\operatorname{Matrix}\left((\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), (\operatorname{Fin}\left(dA\right) \times \operatorname{Fin}\left(dB\right)), \mathbb{C}\right)), K\left(i\right)\right), \operatorname{I1}\left(\operatorname{ofKraus}\left(L, L, \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)\right) \le eta \cdot \operatorname{I1}\left(\operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)\right)))))$$
 
@@ -40,7 +52,7 @@ $$claim \Leftrightarrow (\forall n \in \mathbb{N},\; \forall nPrime \in \mathbb{
 
 Conjecture III.2, PDF p. 17, verbatim: For any channel E: C to CPrime with local contraction ratio eta_1,C < 1, there exists a global constant eta < 1 such that for any tripartite system ABC and any state rho_ABC, I_1(A:CPrime|B)_E(rho) <= eta I_1(A:C|B)_rho. All dimensions range over natural numbers. The finite Kraus family is arbitrary and its completeness equation is the channel hypothesis. L_i is the literal identity on AB kronecker K_i, and the bound applies uniformly to every DensityState on the input product carrier, including singular states.
 
-**Theorem 1.4 (A flagged qubit measurement refutes the conjecture).**
+**Theorem 1.5 (A flagged qubit measurement refutes the conjecture).**
 
 $$\neg claim$$
 
@@ -62,6 +74,7 @@ Take the channel from a qubit to four classical outcomes that measures the compu
 
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.I1`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.claim`
+- Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.diagonal_norm`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.localContraction`
 - Truth anchor: `D5/S3/Quantum/Information/ChenKatoBrandaoTraceNormCMIRefutation.result`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)

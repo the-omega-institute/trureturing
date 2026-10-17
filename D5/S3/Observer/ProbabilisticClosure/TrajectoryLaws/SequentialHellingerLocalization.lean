@@ -158,7 +158,7 @@ theorem common_energy_localization
   have hDa K n : StronglyMeasurable[ℱ (n + 1)] (D K n) :=
     (hd n).indicator (ℱ.mono (Nat.le_succ n) _ (cut_measurable he K n))
   have hD2 K n : MemLp (D K n) 2 μ :=
-    (hd2 n).indicator (ℱ.le n _ (cut_measurable he K n))
+    (hd2 n).indicator ((ℱ.le n _ (cut_measurable he K n)).nullMeasurableSet)
   have hD0 K n : μ[D K n | ℱ n] =ᵐ[μ] 0 := by
     filter_upwards [condExp_indicator ((hd2 n).integrable (by norm_num))
       (cut_measurable he K n), hd0 n] with ω h1 h2
@@ -223,7 +223,7 @@ theorem common_energy_localization
     let RY : ℝ≥0 := ⟨2 * ((K : ℝ) + 1), by positivity⟩
     have hbD n : eLpNorm (fun ω => ∑ i ∈ range n, D K i ω) 1 μ ≤
         (RD : ℝ≥0∞) := by
-      rw [eLpNorm_one_eq_lintegral_enorm,
+      rw [eLpNorm_one_eq_lintegral_enorm (hmi.integrable n).aestronglyMeasurable,
         ← ofReal_integral_norm_eq_lintegral_enorm (hmi.integrable n)]
       rw [← ENNReal.ofReal_coe_nnreal]
       change ENNReal.ofReal _ ≤ ENNReal.ofReal (2 * ((K : ℝ) + 1) + 1)
@@ -242,7 +242,7 @@ theorem common_energy_localization
         _ ≤ _ := by linarith [(hjoint K n).1]
     have hbY n : eLpNorm (fun ω => ∑ i ∈ range n, Y K i ω) 1 μ ≤
         (RY : ℝ≥0∞) := by
-      rw [eLpNorm_one_eq_lintegral_enorm,
+      rw [eLpNorm_one_eq_lintegral_enorm (hsi n).aestronglyMeasurable,
         ← ofReal_integral_norm_eq_lintegral_enorm (hsi n)]
       rw [← ENNReal.ofReal_coe_nnreal]
       change ENNReal.ofReal _ ≤ ENNReal.ofReal (2 * ((K : ℝ) + 1))
@@ -372,7 +372,7 @@ private lemma normalized_product_zero
     have heq := hm.setIntegral_eq (i := 0) (j := n) (Nat.zero_le n) MeasurableSet.univ
     simpa using heq.symm
   have hb n : eLpNorm (fun ω => ∏ i ∈ range n, r i ω / ρ i ω) 1 μ ≤ (1 : ℝ≥0) := by
-    rw [eLpNorm_one_eq_lintegral_enorm,
+    rw [eLpNorm_one_eq_lintegral_enorm (hm.integrable n).aestronglyMeasurable,
       ← ofReal_integral_norm_eq_lintegral_enorm (hm.integrable n)]
     simp only [Real.norm_eq_abs, abs_of_nonneg (hnonneg n _), hint, ENNReal.ofReal_one]
     exact le_rfl
@@ -387,7 +387,7 @@ private lemma normalized_product_zero
     intro n
     calc
       _ ≤ ∏ i ∈ range n, Real.exp (-(1 - ρ i ω)) := by
-        apply prod_le_prod (fun i _ => (hρ i ω).le)
+        apply prod_le_prod₀ (fun i _ => (hρ i ω).le)
         intro i _
         have h := Real.add_one_le_exp (ρ i ω - 1)
         simpa only [sub_add_cancel, neg_sub] using h
@@ -572,7 +572,7 @@ theorem trajectory_hellinger_likelihood_limits
     | zero => simpa [Z] using (memLp_top_const (1 : ℝ) (μ := P))
     | succ n ih =>
       simpa only [Z, prod_range_succ, Pi.mul_def] using
-        ((hWtop n).mul ih : MemLp (Z n * W n) ∞ P)
+        (ih.mul (hWtop n) : MemLp (Z n * W n) ∞ P)
   have hWmean n : P[W n | F n] =ᵐ[P] 1 := by
     have hwi : Integrable (r n * (fun x => (ρ n x)⁻¹)) P := by
       simpa only [W, div_eq_mul_inv, Pi.mul_def] using (hWtop n).integrable le_top
@@ -701,7 +701,7 @@ private lemma full_prefix_filtration {A : Type*} [MeasurableSpace A] :
       (⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n) inferInstance id := by
     letI : MeasurableSpace (ℕ → A) :=
       ⨆ n : ℕ, (Filtration.piLE (X := fun _ : ℕ => A)) n
-    apply measurable_pi_lambda
+    apply Measurable.of_eval
     intro n
     have hc : Measurable[Filtration.piLE (X := fun _ : ℕ => A) n]
         (fun x : ℕ → A => x n) := by
@@ -826,7 +826,7 @@ theorem trajectory_hellinger_dichotomy
       1 - bhattacharyya (p (H n x)) (q (H n x))) :=
     (measurable_of_countable (fun u : Fin n → A =>
       1 - bhattacharyya (p (List.ofFn u)) (q (List.ofFn u)))).comp
-        (measurable_pi_lambda _ (fun i => measurable_pi_apply (i : ℕ)))
+        (Measurable.of_eval (fun i => measurable_pi_apply (i : ℕ)))
   have hC : MeasurableSet C :=
     measurableSet_lt (Measurable.ennreal_tsum (fun n => (hm n).ennreal_ofReal)) measurable_const
   have hsum x (hx : x ∈ C) : Summable (fun n =>

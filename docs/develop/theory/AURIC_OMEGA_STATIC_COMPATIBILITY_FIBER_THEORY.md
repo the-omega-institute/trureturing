@@ -2549,3 +2549,1339 @@ $$
 这里消费的是定理 58.1 对整个合法空间的控制，输入不再受五维块或交替码限制；末端二值读口是另外声明的观察权限。概率函数的识别不等于一份未知输入上的确定态名取得：命题 32.2 的非正交态障碍仍适用，估计概率族还需要重复来源及统计资源。端口态不能自动替代定义 41.1 的实际记录或对可回流环境的联合描述；公布反馈的共同正确值仍须满足定义 33.2 的交集条件，命题 33.3 已表明控制通用性不保证该交集非空。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 第一位置读口的尖锐全链对比率
+
+**定义 60.1（原生概率对比与来源范围）。** 固定 $n\geq3$，沿用假设 55.2 的整个合法链、有限字集 $\mathcal W_n$ 和命题 59.1 的末端二值读口。以下简记
+
+$$
+\begin{aligned}
+d&=F_{n+2},&q&=F_n,&P&=n_1|_{\mathcal K_n},\\
+P_w&=w^\dagger Pw,&p_\rho(w)&=\operatorname{tr}(\rho P_w),\\
+D(\rho,\sigma)&=\tfrac12\|\rho-\sigma\|_1,&
+B_n(\rho,\sigma)&=\sup_{w\in\mathcal W_n}
+                  |p_\rho(w)-p_\sigma(w)|.
+\end{aligned}
+\tag{VIII.1}
+$$
+
+$F_0=0,F_1=1$，故 $2\leq q<d/2$。$B_n$ 比较理想二值概率函数；一次实际读口只返回一个比特，并不返回 $p_\rho(w)$。对既有历史 $h$ 的来源纤维 $X_h$，可将 $\rho,\sigma$ 限于其中的端口态。下述统一常数的尖锐性和设置数下界则在整个 $\mathsf D(\mathcal K_n)$ 上取量词；这一数学定义域不授予任意态的制备权限。受限测量范数与最佳支配常数的研究框架见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*](https://arxiv.org/html/0810.2327v2)，引言及 §1。
+
+**定理 60.2（Fibonacci 秩读口的最佳对比常数）。** 令 $A=\rho-\sigma$ 的特征值为 $\lambda_1\geq\cdots\geq\lambda_d$。则
+
+$$
+\begin{aligned}
+B_n(\rho,\sigma)
+ &=\max\left\{\sum_{i=1}^q\lambda_i,
+                    -\sum_{i=d-q+1}^d\lambda_i\right\},\\
+c_nD(\rho,\sigma)&\leq B_n(\rho,\sigma)\leq D(\rho,\sigma),\\
+c_n&=\frac{d-q}{d-1}=\frac{F_{n+1}}{F_{n+2}-1}.
+\end{aligned}
+\tag{VIII.2}
+$$
+
+两个常数在全部态对上均最佳。$c_n>1/\varphi$ 且 $c_n\to1/\varphi$，其中 $\varphi=(1+\sqrt5)/2$。若 $B_n(\rho,\sigma)>b$，存在真正有限字 $w$ 使概率差大于 $b$；不要求上确界在有限字中取得。
+
+**证明。** 定理 58.1 给 $SU(d)\subseteq\overline{\mathcal W_n}$。任意两个秩 $q$ 投影酉共轭；将实现共轭的酉乘以适当标量即可令行列式为一而不改共轭。因此实际 $P_w$ 的闭包恰为全部秩 $q$ 投影。这只消费共轭轨道，不把 (VII.23) 的有限行列式类改成 $U(d)$ 稠密性。
+
+所需谱极值是 Fan 的成熟变分工具，见 [Fan 原文 Theorem 1，刊页 653](https://doi.org/10.1073/pnas.35.11.652) 及 [仓内来源说明](../../../Library/Eigenstructure/fan1949weyl.md)。这里的有限维步骤可直接核对：在 $A$ 的特征基中，任意秩 $q$ 投影 $R$ 满足
+
+$$
+\operatorname{tr}(AR)=\sum_i\lambda_i r_i,
+\qquad 0\leq r_i\leq1,\qquad \sum_i r_i=q.
+\tag{VIII.3}
+$$
+
+把权重移向较大特征值，最大值为前 $q$ 项之和；最小值为后 $q$ 项之和。相应谱投影达到两端。连续性及上述轨道闭包给 (VIII.2) 第一式。由于 $\operatorname{tr}A=0$，正负谱质量均为 $D$；任何效果与 $A$ 的配对都在 $[-D,D]$ 内，故上界成立。
+
+设 $A\ne0$，正、负特征值个数分别为 $r,s\geq1$。若 $r<q$，前 $q$ 项保留全部正质量，只扣去其余 $d-r$ 个非正特征值中绝对值最小的 $q-r$ 项。它们的绝对值之和至多 $(q-r)D/(d-r)$，包括零特征值时仍成立。因此
+
+$$
+\sum_{i=1}^q\lambda_i
+ \geq\frac{d-q}{d-r}D\geq\frac{d-q}{d-1}D.
+\tag{VIII.4}
+$$
+
+若 $s<q$，对 $-A$ 作同一论证。其余情形 $r,s\geq q$ 时，前 $q$ 个正特征值至少占正质量的 $q/r$，最负 $q$ 项至少占负质量的 $q/s$，故
+
+$$
+B_n(\rho,\sigma)\geq\frac{q}{\min(r,s)}D
+ \geq\frac{q}{\lfloor d/2\rfloor}D\geq c_nD.
+\tag{VIII.5}
+$$
+
+最后一步使用实际 Fibonacci 秩：$d=3q-F_{n-2}\leq3q-1$。于是 $q\geq(d+1)/3$，且
+$q(3d-2)-d^2\geq(d-2)/3>0$，等价地 $2q/d>(d-q)/(d-1)$；再用 $q/\lfloor d/2\rfloor\geq2q/d$。$A=0$ 的情形直接成立。
+
+取任意单位向量 $\psi\in\operatorname{ran}P$，定义同一族见证
+
+$$
+\rho_0=|\psi\rangle\langle\psi|,
+\qquad \rho_1=\frac{I-\rho_0}{d-1}.
+\tag{VIII.6}
+$$
+
+两态支撑正交，$D(\rho_0,\rho_1)=1$；差的谱为 $1,-1/(d-1),\ldots,-1/(d-1)$。谱公式给 $B_n=c_n$，并且空字的原 $P$ 已达到此值。因此任何更大的统一下界常数都失败。另取 $u\in\operatorname{ran}P$、$v\in\ker P$ 为单位向量，两纯态的 $D$ 与空字概率差都为一，证明上界常数最佳。
+
+递推式给 $\varphi F_{n+1}-F_{n+2}=(-1)^n\varphi^{-(n+1)}$，从而 $\varphi F_{n+1}-(F_{n+2}-1)>0$。结合 Fibonacci 比值极限即得 $c_n>1/\varphi$ 及所述极限。最后，若全部实际字概率差均不大于 $b$，其上确界也不大于 $b$，证明严格阈值的有限字结论。$\square$
+
+## 41. 同一极值态对的有限份自适应读出
+
+**假设 61.1（逐份一次末端比特合同）。** 两个已知候选为 (VIII.6)，先验各为 $1/2$。另行供应至多 $M$ 份样本，在假设 $i$ 下联合态为 $\rho_i^{\otimes M}$；测量装置各次独立初始化，无跨份量子记忆。每份样本只可施加一个 $\mathcal W_n$ 有限字，再作一次原二值终端测量。字可依赖既往完整经典记录，可提前停止，也容许输入无关的经典随机化；禁止同份追加测量、跨份联合量子操作或额外量子读口。此为统计资源假设，不由定理 58.1 或命题 59.1 产生。
+
+**定理 61.2（原生一次比特合同的精确错误率）。** 在假设 61.1 下，对每个整数 $M\geq0$，最优等先验平均错误率为
+
+$$
+e_n(M)=\tfrac12\beta_n^M,
+\qquad \beta_n=\frac{q-1}{d-1}\in(0,1).
+\tag{VIII.7}
+$$
+
+因而对 $0<\epsilon<1/2$，达到 $e_n(M)\leq\epsilon$ 的最小整数预算为
+$\left\lceil\log(1/(2\epsilon))/\log(1/\beta_n)\right\rceil$。这是供应样本份数，不是物理历时。
+
+**证明。** 任一允许效果 $R=P_w$ 的秩为 $q$。令 $a=\langle\psi|R|\psi\rangle\in[0,1]$；结果一的两假设概率为
+
+$$
+\Pr_0(Y=1)=a,
+\qquad \Pr_1(Y=1)=\frac{q-a}{d-1}.
+\tag{VIII.8}
+$$
+
+空字的基准比特 $X$ 满足 $\Pr_0(X=1)=1$、$\Pr_1(X=1)=\beta_n$。对它施加假设无关的随机核
+
+$$
+\Pr(Y=1\mid X=1)=a,
+\qquad \Pr(Y=1\mid X=0)=\frac{q(1-a)}{d-q}.
+\tag{VIII.9}
+$$
+
+因 $q<d-q$，这是合法的 $[0,1]$ 概率。在假设一之下，输出一的概率为
+$a(q-1)/(d-1)+q(1-a)/(d-1)=(q-a)/(d-1)$；假设零之下为 $a$。故每个允许单份实验都是同一基准实验的经典退化。
+
+对自适应策略，依次取独立基准比特，按已模拟的历史选择 (VIII.9)，便可在两个假设下同时模拟整个记录和最终决策。源的乘积合同保证每一步条件概率恰为 (VIII.8)。提前停止可填充至 $M$ 步并忽略多余比特。输入无关随机种子可一并模拟。因此完整原记录是 $M$ 个独立基准比特的假设无关后处理。这里直接消费 [《递归关系观察：波粒事件》定理 296.2](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#296-信息退化可见结果被怎样压缩同样属于边界) 的有限实验 Bayes 风险单调性，不另立一般 Blackwell 定理。
+
+基准记录在假设零下恒为全一；在假设一下，全一的概率为 $\beta_n^M$。对有限记录分布 $p_0,p_1$，等先验最优错误率为 $\frac12\sum_z\min\{p_0(z),p_1(z)\}$，因为每个记录上分别选择较大似然即可。这里仅全一贡献重叠，得 (VIII.7)。重复原空字 $M$ 次，全一判零、否则判一，恰好达到该界；$M=0$ 时取无观测猜测。$\square$
+
+两态虽然正交，所有有限 $M$ 的上述受限错误率仍严格正。若另授效果 $\rho_0$ 的二值测量，一份即可无误区分两支撑；它不是秩 $q\geq2$ 的原生一次末端效果。故 (VIII.7) 不约束更强的联合测量、同份序贯测量或未知端口上的任务，也不是任意态对的多份公式。
+
+## 42. 保留统一对比的预设有限菜单及其设置数
+
+**定义 62.1（最大单设置对比）。** 一个输入无关的预设菜单为非空有限字列表 $\mathcal F=(w_1,\ldots,w_m)$，其效果为 $P_j=P_{w_j}$。定义
+
+$$
+B_{\mathcal F}(\rho,\sigma)
+ =\max_{1\leq j\leq m}|\operatorname{tr}((\rho-\sigma)P_j)|.
+\tag{VIII.10}
+$$
+
+列表在看到未知输入及其测量记录之前固定。这里比较各二值实验中的最大概率差，不是把多个结果概率求和的单一 POVM 范数。
+
+**定理 62.2（严格次尖锐菜单存在与指数设置代价）。** 对任意 $0<\chi<c_n$，存在这样的实际有限字菜单，使对全部密度态对同时有
+
+$$
+\chi D(\rho,\sigma)\leq B_{\mathcal F}(\rho,\sigma)
+ \leq D(\rho,\sigma).
+\tag{VIII.11}
+$$
+
+反之，任何在全部密度态对上满足 (VIII.11) 下界的 $m$ 设置菜单都满足
+
+$$
+m\geq\tfrac12\exp\!\left(
+                  \frac{2\chi^2(d-1)^3}{d^2}\right).
+\tag{VIII.12}
+$$
+
+**证明。** 先在紧集
+$\mathcal S=\{A=A^\dagger:\operatorname{tr}A=0,\ \|A\|_1=2\}$ 上取有限覆盖。每个 $A\in\mathcal S$ 都是两个密度态之差：其正负部分各有迹一。定理 60.2 给某个真正有限字满足 $|\operatorname{tr}(AP_w)|>\chi$。对固定字，这是 $\mathcal S$ 上的开条件。所有这些开集覆盖 $\mathcal S$，紧致性给有限子覆盖。对非零态差除以其 $D$，便得 (VIII.11)；零差直接成立。所选字和参数只依赖 $n,\chi$，不依赖输入。这一存在证明没有把闭包中的门当作已执行的无限字。
+
+为证下界，对每个单位向量 $v$ 使用同一见证族
+$\rho_v=|v\rangle\langle v|$、$\sigma_v=(I-\rho_v)/(d-1)$，其 $D=1$。对固定秩 $q$ 投影 $Q$，置 $S=\langle v|Q|v\rangle$，有
+
+$$
+\operatorname{tr}((\rho_v-\sigma_v)Q)=\frac{dS-q}{d-1}.
+\tag{VIII.13}
+$$
+
+仅在此证明中，以复单位球面上的酉不变概率选择 $v$。其分布可由独立标准复 Gaussian 坐标归一化得到，因为 Gaussian 密度只依赖向量范数。各坐标模平方为独立均值一指数变量；前 $q$ 项与其余项之和分别具有密度 $x^{q-1}e^{-x}/(q-1)!$ 和 $y^{d-q-1}e^{-y}/(d-q-1)!$，由指数密度的卷积归纳即可得到。作 $s=x/(x+y),t=x+y$ 的变量替换并积分 $t$，得
+
+$$
+f_S(s)=\frac{(d-1)!}{(q-1)!(d-q-1)!}
+             s^{q-1}(1-s)^{d-q-1},\qquad 0<s<1.
+\tag{VIII.14}
+$$
+
+因此，对 $0<u<1$ 及 $Z_u\sim\operatorname{Bin}(d-1,u)$，
+
+$$
+\Pr(S\geq u)=\Pr(Z_u\leq q-1),
+\qquad \Pr(S\leq u)=\Pr(Z_u\geq q).
+\tag{VIII.15}
+$$
+
+例如第一式右侧是 $\sum_{k=0}^{q-1}\binom{d-1}{k}u^k(1-u)^{d-1-k}$，其导数为 $-f_S(u)$，在 $u=0$ 为一；第二式取补集。这直接给出所需 Beta—二项关系。
+
+使用 Hoeffding 的成熟二项尾界，见 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Theorem 2：若 $Z\sim\operatorname{Bin}(N,u)$、$b\geq0$，则任一方向离开均值至少 $Nb$ 的概率不超过 $e^{-2Nb^2}$。其所需一步也可直接推出：Bernoulli 变量 $X$ 的中心化对数矩母函数 $g(t)=\log\mathbb E e^{t(X-u)}$ 满足 $g(0)=g'(0)=0$，而 $g''(t)$ 是一个 Bernoulli 方差，至多 $1/4$。故 $g(t)\leq t^2/8$；独立相乘、指数 Markov 及 $t=4b$ 给上尾，$t=-4b$ 给下尾。
+
+令 $p=q/d$、$a=\chi(d-1)/d$。在上阈值 $u=p+a\in(0,1)$，
+
+$$
+(d-1)u-(q-1)=1-p+(d-1)a\geq(d-1)a;
+\tag{VIII.16}
+$$
+
+在下阈值 $u=p-a\in(0,1)$，$q-(d-1)u=p+(d-1)a\geq(d-1)a$。结合 (VIII.15) 及尾界得
+
+$$
+\Pr\{|S-q/d|\geq a\}
+ \leq2e^{-2(d-1)a^2}.
+\tag{VIII.17}
+$$
+
+阈值在 $[0,1]$ 外时相应尾事件为空；在端点也因 (VIII.14) 无原子而为零。由 (VIII.13)，固定设置满足对比至少 $\chi$ 的球面概率不超过 (VIII.17)。若 $m$ 个设置对所有见证态对均满足 (VIII.11)，这些事件的并集必须覆盖整个球面。因此 $1\leq2m e^{-2(d-1)a^2}$，即 (VIII.12)。这里的酉不变测度只是排除小菜单的数学见证，不是供应随机控制或随机制备的资源。$\square$
+
+对固定 $\chi>0$ 且 $\chi<c_n$，(VIII.12) 的指数随 $d=F_{n+2}$ 线性增长。这不与有限维线性坐标的精确可识别性冲突：本定理要求相对于迹距离的统一正对比裕量，且用最大单设置误差衡量。它不提供任意层析、加权结果范数、自适应设置或联合测量的样本下界；也不提供最小菜单、有效字综合或字长上界。若来源域不含全部见证族，不能沿用这里的设置数下界。框架层析参见 Scott，[*Tight informationally complete quantum measurements*](https://arxiv.org/html/quant-ph/0604049v6)，§§III、VI。
+
+## 43. 有限实际记录下的共同来源置信纤维
+
+**假设 63.1（固定历史后的重复来源与独立初始化）。** 固定已得历史 $h$、实际来源 $x\in X_h$ 和端口态 $\rho_x$。先固定满足 (VIII.11) 的实际菜单及整数 $N\geq1$。条件于这一个来源和历史，另行供应 $mN$ 份态 $\rho_x^{\otimes mN}$；第 $j$ 组 $N$ 份分别执行 $w_j$ 和原末端二值测量。装置每份独立初始化，实际效果恰为已知 $P_j$，无跨次返回环境。记录包含设置、样本数和全部比特；记各组一的计数为 $K_j$、频率为 $\widehat p_j=K_j/N$。样本数预先固定，不作未计入的可选停止。
+
+**命题 63.2（原生未来与独立端口协议的同一置信纤维）。** 给定 $0<\delta<1$，置
+
+$$
+\begin{aligned}
+t&=\sqrt{\frac{\log(2m/\delta)}{2N}},\\
+\mathcal C_{\widehat p}
+ &=\{\tau\in\mathsf D(\mathcal K_n):
+          \max_j|\operatorname{tr}(\tau P_j)-\widehat p_j|\leq t\},\\
+X_{h,\widehat p}
+ &=\{y\in X_h:\rho_y\in\mathcal C_{\widehat p}\},
+\qquad r=\min\{1,2t/\chi\}.
+\end{aligned}
+\tag{VIII.18}
+$$
+
+则对每个固定 $x\in X_h$ 有 $\Pr_x\{x\in X_{h,\widehat p}\mid h\}\geq1-\delta$。任何非空 $\mathcal C_{\widehat p}$ 的迹距离直径至多 $r$。对该集合内任意 $\sigma,\tau$，同时有
+
+$$
+\sup_{w\in\mathcal W_n}|p_\sigma(w)-p_\tau(w)|\leq r.
+\tag{VIII.19}
+$$
+
+进一步，固定任意已声明的有限端口协议 $\Pi$：仅接收端口输入 $A$，有限辅助系统以同一已知态 $\eta$ 独立初始化，采用固定有限分支的量子仪器和经典反馈，终止时保留完整记录，不含被省略的输入相关返回环境。其完整无条件记录律满足
+
+$$
+\operatorname{TV}(\mathsf P_\sigma^\Pi,
+                   \mathsf P_\tau^\Pi)\leq D(\sigma,\tau)\leq r.
+\tag{VIII.20}
+$$
+
+**证明。** 假设 63.1 下，第 $j$ 组为 $N$ 个独立 Bernoulli 试验，均值为 $\operatorname{tr}(\rho_xP_j)$。Hoeffding 双侧界及 $m$ 项并合给
+
+$$
+\Pr_x\left\{\max_j|\widehat p_j-
+               \operatorname{tr}(\rho_xP_j)|>t\mid h\right\}
+ \leq2m e^{-2Nt^2}=\delta.
+\tag{VIII.21}
+$$
+
+这复用 [《递归关系观察：波粒事件》定理 22.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#22-从精确恢复到有误差的关系重建) 的独立重复取样与共同置信事件方法；这里的消费者是 (VIII.11) 的指定原生菜单。(VIII.21) 中失败事件的补事件 $\{\max_j|\widehat p_j-\operatorname{tr}(\rho_xP_j)|\leq t\}$ 在 $\Pr_x(\cdot\mid h)$ 下的概率至少为 $1-\delta$；在该联合成功事件上，$\rho_x\in\mathcal C_{\widehat p}$，从而 $x\in X_{h,\widehat p}$。若 $\sigma,\tau$ 同属该集合，逐坐标三角不等式给 $B_{\mathcal F}(\sigma,\tau)\leq2t$；(VIII.11) 给 $D(\sigma,\tau)\leq2t/\chi$，再用 $D\leq1$。定理 60.2 的上界于是给 (VIII.19)，无需对无限字族另取并合界。
+
+为核对 (VIII.20) 的协议量词，把每条完整记录 $z$ 的复合分支记为辅助扩张上的 CP 映射 $\mathcal I_z$，把预先的独立初始化记为 $J_\eta(\tau)=\tau\otimes\eta$。其输入效果为 $E_z=(\mathcal I_z\circ J_\eta)^*(I)\geq0$。完整性给 $\sum_zE_z=I$；反馈只决定各分支内已声明的复合映射。因此 $\mathsf P_\tau^\Pi(z)=\operatorname{tr}(\tau E_z)$。对任何记录事件 $S$，$E_S=\sum_{z\in S}E_z$ 是效果，故 $|\operatorname{tr}((\sigma-\tau)E_S)|\leq D(\sigma,\tau)$。对 $S$ 取最大便得完整记录总变差界。只要每个协议满足同一初始化合同，这一确定性结论在同一个置信事件上对全部这样的协议成立；它不授予其中未声明的操作。$\square$
+
+在非空纤维中选一个估计态，只能得到上述置信保证，不是有限比特给出无误精确态名。若集合为空，应报告该置信集合为空，不用任意态替换它。对 $0<\epsilon<1$，充分的预设每组样本数为
+
+$$
+N\geq\frac{2\log(2m/\delta)}{\chi^2\epsilon^2},
+\tag{VIII.22}
+$$
+
+此时 $r\leq\epsilon$，总消耗为 $mN$ 份所供应样本。该充分预算与 (VIII.12) 的设置数障碍是不同方向的结论，不把两者合称最优层析复杂度。可靠置信区域参见 Christandl–Renner，[*Reliable Quantum State Tomography*](https://arxiv.org/abs/1108.5329v2)。
+
+若按训练记录选择未来字或协议，(VIII.19)–(VIII.20) 的确定性统一界仍可用，但物理预测必须作用于一份另行供应的、条件于固定 $x,h$ 与训练记录独立的留出输入，及该协议独立初始化的辅助系统。它不是已消耗样本的测后条件态预测。对于输入相关的隐环境，局部边缘 $\rho_x$ 不决定回流记录；这里直接保留 [《观察者内生三轴几何与预测接口》定义 9.3 的共同环境例](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) 的边界。对稀有后选择事件的条件律也须另给事件概率下界，不能从完整无条件记录界直接保留同一常数。
+
+相同单份边缘不供应假设 63.1。复用 [《四角相干与单份认证》命题 C-121.5](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md) 的共同标签机制：取单位向量 $u\in\operatorname{ran}P_j$、$v\in\ker P_j$，仅抽一次公平比特 $L$，随后全部样本按 $L$ 同时取 $u$ 或同时取 $v$。每份边缘均为 $(|u\rangle\langle u|+|v\rangle\langle v|)/2$，但 $\widehat p_j=L$，对其边缘均值的误差恒为 $1/2$，不随 $N$ 缩小。共同标签造成的联合关联不能被边缘相等消去。
+
+若还要求保留一个实际参考 $R$，可另假定供应 $\tau_{AR}\otimes\rho_x^{\otimes mN}$ 且 $\operatorname{tr}_R\tau_{AR}=\rho_x$；测量后面的独立份不会物理作用于 $AR$。然而本置信纤维只约束 $A$ 的边缘，不识别未知 $AR$ 相关，也不提供带参考的联合迹距离证书。这样的联合供应不是从一个未知 $AR$ 输入免费复制出来的资源。
+
+## 追加锚（本行以下为增补区）
+
+
+## 44. 固定相位菜单的实际有限字达到
+
+**定理 64.1（Native58 的有限字加强）。** 保留定义 55.1、假设 55.2、(VII.18) 的被动标架及定理 58.1 已证明的全尺寸翻转 Lie 代数。对每个 $n\geq1$，实际翻转字集本身满足
+
+$$
+\mathcal V_n=D_nSO(d_n)D_n^\dagger.
+\tag{IX.1}
+$$
+
+对每个 $n\geq3$，仍只使用同址固定门 $S_{\star,n}$，实际有限字集本身满足
+
+$$
+\boxed{\mathcal W_n=\{Q\in U(d_n):\det Q\in\langle i^{F_{n-2}}\rangle\}}.
+\tag{IX.2}
+$$
+
+因此 $SU(d_n)\subseteq\mathcal W_n$；每个酉通道都有一个精确有限原生字实现。这里“原生”仅指假设 55.2 的理想菜单，参数仍可取任意实数。结论没有给出已评价的脉冲数、持续时间、参数精度或硬件实现。
+
+**证明。** 在被动标架中记 $\widetilde{\mathcal W}_n=D_n^\dagger\mathcal W_nD_n$，$A_j=A_j^{(n)}$，并定义
+
+$$
+\mathfrak L=\operatorname{span}_{\mathbb R}
+ \{\operatorname{Ad}_g A_j:g\in\widetilde{\mathcal W}_n,\ 1\leq j\leq n\}.
+\tag{IX.3}
+$$
+
+这里 $g$ 总是一个实际有限字，不是字集闭包中的元素。$\mathfrak L$ 是有限维实向量空间，因而闭；每个实际字的共轭保持它。对每个生成其线性张成的方向 $X=\operatorname{Ad}_gA_j$，都有精确恒等式
+
+$$
+e^{tX}=g e^{tA_j}g^{-1}\in\widetilde{\mathcal W}_n
+\qquad(t\in\mathbb R).
+\tag{IX.4}
+$$
+
+字的逆可用，特别是固定相位的逆就是其三次幂。对 $Y\in\mathfrak L$，曲线 $e^{tX}Ye^{-tX}$ 全在 $\mathfrak L$ 内；在零点求导给 $[X,Y]\in\mathfrak L$。对 $X$ 的有限实线性组合使用双线性，故 $\mathfrak L$ 是 Lie 代数。这一步只对有限维向量空间取导数，没有执行一个交换子极限字。
+
+由定理 58.1 的翻转代数等式，$\mathfrak{so}(d_n)\subseteq\mathfrak L$。该定理的 (VII.25)–(VII.33) 是全 $n$ 归纳：被末位阻断的控制产生第一块中的非零理想，孤立匹配边的括号给全部第一块旋转，再由最后控制的匹配与一个零行得到全部矩形跨块方向和第二块旋转。因此这里复用的是该全尺寸证明，不是有限尺寸的秩外推。
+
+设 $P=n_1n_3|_{\mathcal K_n}$。对每个 $n\geq3$，$P$ 的像和核均非零，$S_{\star,n}$ 在两者上分别为 $i$ 和 $1$。$\mathfrak L$ 在这个实际门的共轭下不变。于是对计算基指标 $p\in\operatorname{ran}P$、$q\in\ker P$，它同时包含
+
+$$
+J_{pq},\qquad i(E_{pq}+E_{qp}),\qquad
+[J_{pq},i(E_{pq}+E_{qp})]=2i(E_{pp}-E_{qq}).
+\tag{IX.5}
+$$
+
+两个非空指标集之间的完全二分图连通；沿路径相加，以上对角差张成全部迹零纯虚对角矩阵。再与全部 $J_{uv}$ 交换，得到每个 $i(E_{uv}+E_{vu})$。这些与实反对称方向张成 $\mathfrak{su}(d_n)$。反向，(IX.3) 的每个方向都是迹零反 Hermitian，故
+$\mathfrak L=\mathfrak{su}(d_n)$。
+
+从 (IX.3) 的实际共轭方向中选一组基 $X_1,\ldots,X_{d_n^2-1}$，考虑
+
+$$
+\mathcal F(t_1,\ldots,t_{d_n^2-1})
+ =e^{t_1X_1}\cdots e^{t_{d_n^2-1}X_{d_n^2-1}}.
+\tag{IX.6}
+$$
+
+它在零点的微分是 $(t_j)\mapsto\sum_jt_jX_j$，为到 $T_I SU(d_n)$ 的同构。逆函数定理给 $SU(d_n)$ 中一个恒等邻域，邻域的每个点都是 (IX.4) 的有限字乘积。故 $\widetilde{\mathcal W}_n\cap SU(d_n)$ 是开子群。开子群的全部陪集均开，因而它也闭；$SU(d_n)$ 连通，迫使此子群为整个 $SU(d_n)$。没有把稠密子群当成整个群。
+
+同一论证把 (IX.3) 中的字限于翻转字，所得代数恰为 $\mathfrak{so}(d_n)$：一侧来自定理 58.1，另一侧来自正交共轭保持实反对称性。选实际共轭基，在连通 $SO(d_n)$ 上使用 (IX.6) 的相应维数版本，即得 (IX.1)，包括 $n=1,2$。$n=0$ 的空菜单仅给一维空间上的恒等。
+
+所有翻转脉冲行列式为一，而定理 58.1 已给
+$\operatorname{rank}P=F_{n-2}$，所以每个实际字的行列式在 $C_n=\langle i^{F_{n-2}}\rangle$ 内。反之，若 $\det Q\in C_n$，选整数 $k$ 使 $\det Q=\det S_{\star,n}^k$，则
+$QS_{\star,n}^{-k}\in SU(d_n)\subseteq\mathcal W_n$，故 $Q\in\mathcal W_n$。被动共轭不改变 $SU$ 或行列式，得到原坐标中的 (IX.2)。对任意 $U$ 取 $|z|=1$ 使 $z^{d_n}\det U=1$，则 $zU$ 有精确有限字，且其酉通道等于 $U$ 的通道。
+
+例如 $n=3,5,8$ 时，$C_n$ 的阶分别为 $4,2,1$。$n=8$ 虽有 $\det S_{\star,8}=1$，该门的相位支撑仍是非零真子空间，故 (IX.5) 仍成立；不能因行列式为一而删去其控制作用。$\square$
+
+本定理应用的是成熟的共轭基与逆函数方法，见 D. D'Alessandro，[*Uniform finite generation of compact Lie groups and universal quantum gates*，Lemma 1、Theorem 2](https://arxiv.org/html/quant-ph/0111133v1)。其接口是连通有限维 Lie 群、所给单参数子群及实参数；本证明把每个共轭和逆都落实为当前固定相位菜单中的字。[《合法门、状态机与 Shor 读出》Theorem 11.2](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#11-a-phase-restriction-has-an-exact-blind-sector-one-extra-quadrature-removes-it) 已在另一项“某一位置增加第二正交驱动”的菜单下使用精确控制原理。这里增加的是 Native58 的固定相位、全合法链应用，不认领该一般控制方法，也不把两种菜单的权限互换。
+
+## 45. 原支持三维输入的精确末次秩二边缘
+
+**定义 65.1（固定复线性支持与读效果）。** 在 $\mathcal K_3$ 的基序 $000,100,010,001,101$ 中，固定
+
+$$
+E_N=\left(\frac{|000\rangle+|101\rangle}{\sqrt2},
+          \frac{|100\rangle+|001\rangle}{\sqrt2},|010\rangle\right),
+\qquad n_1=\operatorname{diag}(0,1,0,0,1).
+\tag{IX.7}
+$$
+
+$E_N^\dagger E_N=I_3$，读扇区秩二，其正交补秩三。此 $E_N$ 与 [GC §21 的五基字典](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md#21-the-fixed-complex-linear-five-mode-dictionary) 对应。GC 的同一源根满足 (GC.6)，从而其
+$M=\operatorname{diag}(0,m_1,m_2)$ 满足 $0\preceq M\prec I_3$、$\operatorname{rank}M=2$。严格上界来自 $D^\dagger D\succ0$ 和根 TP，源根条件本身仍是 GC Assumption 1.2 的未验证供应。
+
+**定理 65.2（精确支持效果，不是完整仪器）。** 在假设 55.2 的 $n=3$ 菜单和命题 59.1 另行声明的末次二值 PVM 下，存在一个实际有限字 $U\in\mathcal W_3$，使
+
+$$
+E_N^\dagger U^\dagger n_1UE_N=M.
+\tag{IX.8}
+$$
+
+因此同一个字对全部复 qutrit 输入 $\rho$ 精确给出一结果概率
+$\operatorname{tr}(M\rho)$。对任意有限被动参考及联合态 $X$，丢弃被测系统后，该结果的未归一参考算子恰为
+$\operatorname{Tr}_3[(M\otimes I_R)X]$。
+
+**证明。** 选等距 $A:\operatorname{ran}M\to\operatorname{ran}n_1$ 和
+$B:\mathbb C^3\to\ker n_1$，定义
+
+$$
+J=A\sqrt M+B\sqrt{I_3-M}.
+\tag{IX.9}
+$$
+
+两项的像正交，故 $J^\dagger J=M+(I_3-M)=I_3$，且
+$J^\dagger n_1J=M$。在两个五维空间中分别补齐 $E_N$ 与 $J$ 的三个正交列，得到酉 $U_0$ 满足 $U_0E_N=J$。在输入的二维未指定正交补中选一个单位基向量，将它对应的输出列乘以 $(\det U_0)^{-1}$；其余列不变。所得 $U$ 仍酉，仍有 $UE_N=J$，而 $\det U=1$。定理 64.1 使这个 $U$ 本身成为实际有限字，得到 (IX.8)。将效果恒等式张量 $I_R$ 并对被测系统取偏迹，给参考算子恒等式；无需对参考态作实性或乘积分离假设。$\square$
+
+原读口在未作这个字时的初等压缩是
+
+$$
+E_N^\dagger n_1E_N=\operatorname{diag}(1/2,1/2,0),
+\tag{IX.10}
+$$
+
+由 (IX.7) 的三列逐项配对即可得到；它通常不等于原 $M$。定理 65.2 解决的是支持效果的精确匹配，而非仅按比特个数判断的障碍。效果只决定结果概率及其丢弃系统后的参考边缘：它不指定条件量子后态、GC 的低/高取得分支、完整 live 通道、整个未来可访问纤维成本或真实 FIRST 时刻。甚至“允许末次 PVM 的概率”也不自动给出可复用的 Lüders 后态服务。GC §§23–25 分别保留这些仪器障碍及另加装置前提的条件构造；那些前提没有由本定理授权。原生仪器与时钟缺口，以及原全部预算、全部对比、源与 minimax 的目标，均不因此完成。
+
+## 追加锚（本行以下为增补区）
+
+## 46. 固定四分之一相位的调用秩与精确谱前沿
+
+**定义 66.1（原维数、实帧与至多调用合同）。** 固定 $\mathcal H=\mathbb C^d$ 的一组实正交基及其中的逐坐标共轭，$d\geq2$。设 $P=P^T=P^2$ 是非零、非恒等的实投影，$\operatorname{rank}P=p$，唯一收费门为正向固定相位 $S=\exp(i\pi P/2)$。实控制允许任意有限个 $SO(d)$ 元素；终端只读一个固定实投影 $R=R^T=R^2$ 的二值 PVM $\{R,I-R\}$，$\operatorname{rank}R=r\in\{0,\ldots,d\}$。令
+
+$$
+\begin{aligned}
+q&=\min(p,d-p),& h&=\min(r,d-r),&m&=\lfloor d/2\rfloor,\\
+\mathcal U_{\leq k}
+ &=\bigcup_{j=0}^{k}
+   \{O_j S O_{j-1}S\cdots S O_0:O_0,\ldots,O_j\in SO(d)\},\\
+B_k(\rho,\sigma)
+ &=\max_{U\in\mathcal U_{\leq k}}
+       |\operatorname{tr}((\rho-\sigma)U^\dagger R U)|,
+\qquad k\in\mathbb Z_{\geq0}.
+\end{aligned}
+\tag{IX.11}
+$$
+
+$j=0$ 项为 $SO(d)$。每次 $S$ 计一次，$S^{-1}=S^3$ 若实际采用则计三次；不另供负向相位或连续可调相位。每个固定 $j$ 的参数空间是紧空间 $SO(d)^{j+1}$，有限并仍紧，故 (IX.11) 的最大值确实存在于有限字中。控制字可依赖已知候选对 $(\rho,\sigma)$ 和预先固定的共同经典记录，但对两个未知输入标签必须相同；不提供标签相关旁信息。不使用辅助量子系统、可访问参考、中途测量、后选择或任何非酉 CPTP 预处理。
+
+输入域为全部满足 $\operatorname{Re}\rho=\operatorname{Re}\sigma$ 的密度态对，实部按上述同一实帧逐项取得。因此 $\Delta=\rho-\sigma=iA$，其中 $A$ 为实反对称矩阵。以降序非负数 $a_1\geq\cdots\geq a_m\geq0$ 表示其反对称块权重，包含零块；于是
+
+$$
+\operatorname{spec}(\Delta)
+ =\{a_1,-a_1,\ldots,a_m,-a_m\}
+   \cup\{0\ \text{若 }d\text{ 为奇数}\},
+\qquad
+D(\rho,\sigma)=\tfrac12\|\Delta\|_1=\sum_{j=1}^{m}a_j.
+\tag{IX.12}
+$$
+
+这种实部与反对称块分解是既有工具，见 Wu 等，[*Resource theory of imaginarity: quantification and state conversion*，arXiv:2103.01805v1，式 (36)–(37)](https://arxiv.org/html/2103.01805v1#S3.E36)。此输入域称为旧盲态对：每个实对称效果与 $iA$ 的迹配对均为零，因而任何零相位字的读数相同。该定义只约束态对，不授予任意态的原生制备权限。
+
+$B_k$ 是二值概率分布的总变差，即同一事件的概率差绝对值；它采用定义 60.1 的受限测量对比口径。一般框架及其与迹距离的归一化见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*，arXiv:0810.2327v2，引言式 (1)–(3) 及 §1](https://arxiv.org/html/0810.2327v2)。相对于固定实基的实 Kraus 操作比这里的实酉控制更宽；Wu 等，[*Operational Resource Theory of Imaginarity*，arXiv:2007.14847v2，Theorem 2、式 (5) 及随后关于二维像的论述](https://arxiv.org/html/2007.14847v2#Thmtheorem2)，采用的是该更宽菜单。参考文稿《AURIC 受限量子读出与相位资源理论》P.6 的单相位合同与此处相接；P.8/C4 中的实 CPTP 反对称平面合并不在 (IX.11) 的操作类内。
+
+**定理 66.2（每次调用的普适谱上界）。** 对定义 66.1 的全部维数、投影和旧盲态对，令 $t_k=\min(kq,h)$，空和为零，则
+
+$$
+B_k(\rho,\sigma)\leq\sum_{j=1}^{t_k}a_j\leq D(\rho,\sigma).
+\tag{IX.13}
+$$
+
+特别地，$B_0=0$；$r=0,d$ 时所有预算的对比均为零。
+
+**证明。** 对含 $j\leq k$ 次调用的字 $U$，先只作代数上的整体标量归一化。置
+
+$$
+\widehat S=
+\begin{cases}
+S=I+(i-1)P,&p\leq d/2,\\
+-iS=I+(-i-1)(I-P),&p>d/2.
+\end{cases}
+\qquad
+\operatorname{rank}(\widehat S-\overline{\widehat S})=q.
+\tag{IX.14}
+$$
+
+将 $U$ 中每个 $S$ 换为 $\widehat S$ 得 $\widehat U$，只改变整体相位，所以 $Q=U^\dagger RU=\widehat U^\dagger R\widehat U$。乘积差的望远镜展开以及实控制 $O=\bar O$ 给
+
+$$
+\begin{aligned}
+\operatorname{rank}(\widehat U-\overline{\widehat U})&\leq jq,\\
+Q-\bar Q
+ &=(\widehat U^\dagger-\widehat U^T)R\widehat U
+     +\widehat U^T R(\widehat U-\overline{\widehat U}),\\
+\operatorname{rank}(Q-\bar Q)&\leq2jq.
+\end{aligned}
+\tag{IX.15}
+$$
+
+这里的标量归一化没有增添一个可调用的门。又因 $Q,\bar Q$ 都是秩 $r$ 投影，分别对它们及其补投影使用秩的次可加性，得到 $\operatorname{rank}(Q-\bar Q)\leq2h$。
+
+令 $H=(Q-\bar Q)/2$。这是 Hermitian 矩阵，$\bar H=-H$，故每个正特征值 $b$ 的共轭特征向量具有特征值 $-b$。两个投影之差介于 $-I$ 和 $I$ 之间，因此
+
+$$
+\operatorname{rank}H=2s,\qquad
+s\leq\min(jq,h)\leq t_k,\qquad
+H=H_+-H_-,\qquad
+0\preceq H_\pm\preceq\tfrac12 I,\quad
+\operatorname{rank}H_\pm=s.
+\tag{IX.16}
+$$
+
+实对称矩阵 $(Q+\bar Q)/2$ 与 $iA$ 的迹配对为零，所以 $\operatorname{tr}(\Delta Q)=\operatorname{tr}(\Delta H)$。复用定理 60.2 所用的 Fan 谱极值：对秩不超过 $s$、满足 $0\preceq C\preceq I/2$ 的矩阵，将其写成超水平谱投影的积分 $C=\int_0^{1/2}\mathbf1_{(u,\infty)}(C)\,du$。每个积分中的投影秩不超过 $s\leq m$，而 $\Delta$ 和 $-\Delta$ 的前 $s$ 个特征值都是 $a_1,\ldots,a_s$，故
+
+$$
+\operatorname{tr}(\pm\Delta C)\leq\tfrac12\sum_{v=1}^{s}a_v,
+\qquad
+|\operatorname{tr}(\Delta H)|\leq\sum_{v=1}^{s}a_v
+ \leq\sum_{v=1}^{t_k}a_v.
+\tag{IX.17}
+$$
+
+将第一项分别用于 $H_+,H_-$ 及 $\pm\Delta$，即得第二项的双向界。对全部有限字取最大值得 (IX.13)。$j=0$ 或 $h=0$ 时 $s=0$，也包含在此论证内。$\square$
+
+**定理 66.3（有足够旁观方向时的精确有限字）。** 在定义 66.1 的合同下，若
+
+$$
+d-2h\geq q,
+\qquad\text{则对每个 }k\geq0\text{ 有}\qquad
+\boxed{B_k(\rho,\sigma)=\sum_{j=1}^{\min(kq,h)}a_j}.
+\tag{IX.18}
+$$
+
+等号由一个含至多 $k$ 次正向 $S$ 的实际有限字取得。单调用特例与参考文稿 P.6 在 $\theta=\pi/2$ 的公式相同；多调用等式由下述原维数分批构造给出。条件 $d-2h\geq q$ 是充分条件；不以它作为必要条件。无此条件的普适等式以及任意其他固定角度的精确预算前沿，均不由本定理判定；预算仍为至多调用，不涉及恰好调用的分类。
+
+**证明。** 若 $h=0$ 或 $k=0$，定理 66.2 已给结论。以下 $h,k\geq1$。取 (IX.12) 的实正交反对称块基，记前 $h$ 个平面为 $\operatorname{span}_{\mathbb R}\{e_v,f_v\}$，使
+
+$$
+A|_{\operatorname{span}\{e_v,f_v\}}
+ =a_v\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad
+u_v=\frac{e_v+f_v}{\sqrt2},
+\qquad
+R_0=\sum_{v=1}^{h}|\nu_v\rangle\langle\nu_v|.
+\tag{IX.19}
+$$
+
+$h\leq m$ 保证这些平面存在，零权重也允许。令 $W$ 为它们的实正交补，$\dim W=d-2h\geq q$。这里 $W$ 是原来同一 $d$ 维系统中的方向；无额外张量因子，也不要求其初态已被置零。
+
+置 $t=\min(kq,h)$，将 $\{1,\ldots,t\}$ 分成 $L=\lceil t/q\rceil\leq k$ 个非空批次 $J_1,\ldots,J_L$，每批大小 $b_\alpha\leq q$。在 $W$ 的一组固定实正交基中，为每批选 $q-b_\alpha$ 个方向，令 $Z_\alpha$ 是其投影，置
+
+$$
+E_\alpha=\sum_{v\in J_\alpha}|e_v\rangle\langle e_v|+Z_\alpha,
+\qquad
+\operatorname{rank}E_\alpha=q,
+\qquad
+Z_\alpha R_0=R_0Z_\alpha=0.
+\tag{IX.20}
+$$
+
+不同批次的填充方向可以复用，且全部 $E_\alpha$ 在同一实基中对角，因而对易。写 $\varepsilon=1$ 当 $p\leq d/2$，否则 $\varepsilon=-1$，并令 $T_\alpha=\exp(i\varepsilon\pi E_\alpha/2)$。
+
+任意两个同秩非平凡实投影均可由 $SO(d)$ 共轭：先取正交共轭；若行列式为负，再乘一个与目标投影对易的单方向反射即可校正行列式。这只是选取允许的实控制，不增加相位。于是存在 $O_\alpha\in SO(d)$，在 $p\leq d/2$ 时使 $O_\alpha P O_\alpha^T=E_\alpha$，在 $p>d/2$ 时使 $O_\alpha P O_\alpha^T=I-E_\alpha$。因此一次实际正向调用给
+
+$$
+V_\alpha=O_\alpha S O_\alpha^T
+ =\begin{cases}
+T_\alpha,&p\leq d/2,\\
+iT_\alpha,&p>d/2.
+\end{cases}
+\tag{IX.21}
+$$
+
+第二行是同一个正向物理门的恒等式，并未免费使用 $S^{-1}$。
+
+令 $R_h=R$ 若 $r=h$，否则 $R_h=I-R$；这是证明中对终端事件的换名，绝对概率差不变。上述实投影共轭性质给 $O_*\in SO(d)$，使 $O_*^T R_hO_*=R_0$。取实际字 $U=O_*V_L\cdots V_1$。展开 (IX.21) 并合并相邻实控制，这恰含 $L$ 次正向 $S$。整体标量在 $U^\dagger R_hU$ 中消去；每个已选平面上 $T_L\cdots T_1$ 将 $e_v$ 乘以 $e^{i\varepsilon\pi/2}$、保持 $f_v$ 不变，未选平面保持恒等。在 $W$ 上它虽可施加相位，但 $R_0$ 在那里为零。故
+
+$$
+\begin{aligned}
+U^\dagger R_hU
+ &=\sum_{v=1}^{t}
+   \left|\frac{e^{-i\varepsilon\pi/2}e_v+f_v}{\sqrt2}\right\rangle
+   \left\langle\frac{e^{-i\varepsilon\pi/2}e_v+f_v}{\sqrt2}\right|
+     +\sum_{v=t+1}^{h}|\nu_v\rangle\langle\nu_v|,\\
+\operatorname{tr}(\Delta U^\dagger R_hU)
+ &=-\varepsilon\sum_{v=1}^{t}a_v.
+\end{aligned}
+\tag{IX.22}
+$$
+
+第一式的每个已选向量都是对应 $iA$ 块的特征向量，特征值 $-\varepsilon a_v$；每个未选实向量的期望为零。这也直接核对了第二式的符号与归一化。若 $R_h=I-R$，$\operatorname{tr}\Delta=0$ 只将总迹换号。因此原固定 $R$ 的绝对对比为 $\sum_{v\leq t}a_v$，与定理 66.2 上界相合。全程在原维数内给出有限乘积，不使用闭包或无限逼近。$\square$
+
+**推论 66.4（固定读口的饱和调用数与完整迹距离）。** 保留定理 66.3 的维数条件，令 $\ell=\#\{v:a_v>0\}$、$B_\infty=\sup_{k\geq0}B_k$，并令 $K_{\mathrm{sat}}$ 是取得 $B_\infty$ 的最小非负调用预算。则
+
+$$
+B_\infty=\sum_{v=1}^{h}a_v,
+\qquad
+K_{\mathrm{sat}}=
+ \left\lceil\frac{\min(\ell,h)}{q}\right\rceil,
+\qquad
+\bigl(\exists k:\ B_k=D\bigr)\ \Longleftrightarrow\ \ell\leq h.
+\tag{IX.23}
+$$
+
+$\ell=0$ 时 $K_{\mathrm{sat}}=0$。这些是同一个固定读口的概率对比结论；当 $B_\infty<1$ 时并不提供一次完美区分。
+
+**证明。** 预算 $\lceil h/q\rceil$ 已由 (IX.18) 取得前 $h$ 项之和。若 $s=\min(\ell,h)>0$，前 $s$ 项严格为正，故当 $kq<s$ 时至少遗漏第 $kq+1$ 个严格正项，而当 $kq\geq s$ 时所遗漏的前 $h$ 项全为零。这给最小预算；$s=0$ 时空字已足够。由 (IX.12)，$D-B_\infty=\sum_{v>h}a_v$，它为零当且仅当 $\ell\leq h$，包括 $h=0$ 和零差。$\square$
+
+## 47. 同址 FIB 相位的全部预算与尖锐混态见证
+
+**定义 67.1（全合法链上的旧盲对比）。** 固定 $n\geq3$，采用定义 55.1、假设 55.2 的整个 $\mathcal K_n$，保留 (VII.18) 的同一被动实帧 $D_n$、(VII.4) 位于物理位置对 $(1,3)$ 的同一正向相位，以及命题 59.1 的同一末端第一位置二值 PVM。以下下标 $n$ 的 $p$ 专指相位支撑秩，$r$ 专指读口秩：
+
+$$
+\begin{aligned}
+d&=F_{n+2},&
+p&=\operatorname{rank}(n_1n_3|_{\mathcal K_n})=F_{n-2},&
+r&=\operatorname{rank}(n_1|_{\mathcal K_n})=F_n,\\
+\widetilde\rho&=D_n^\dagger\rho D_n,&
+\widetilde\sigma&=D_n^\dagger\sigma D_n,&
+\widetilde\rho-\widetilde\sigma&=iA,\quad A\in M_d(\mathbb R),\quad A^T=-A.
+\end{aligned}
+\tag{IX.24}
+$$
+
+仅对满足最后一项的旧盲密度态对定义 $B_{n,k}$，即在至多 $k$ 次实际 $S_{\star,n}$、其余为任意有限纯翻转字的菜单中，最大化该同一终端事件的概率差绝对值。$D_n$ 只改变坐标，不能作为门；$n_1n_3$ 和 $n_1$ 均与它对易。定理 64.1 的 (IX.1) 已给纯翻转字恰为 $D_nSO(d)D_n^\dagger$，故这里的任意实控制均有有限原生翻转字实现，不消耗任何相位调用。相位计数使用 (IX.1) 的零相位精确实现；(IX.2) 的无预算通用性不提供给定调用预算的结论。
+
+整个输入域是这些全链密度态对，不限定到交替编码或五维窗口，不另加辅助、参考或 CPTP 合并权限。若固定历史 $h_0$ 已给非空来源纤维 $X_{h_0}$，可将态对限于其中相容来源的端口态；优化字依赖这两个候选及共同已得记录，不能依赖未知来源标签。原生制备、取得记录的成本及一次读口不能直接返回精确概率的边界，与定义 60.1 相同。
+
+**定理 67.2（FIB 旧盲态对的精确调用前沿）。** 对定义 67.1 的每个 $n\geq3$、每个旧盲态对和每个整数 $k\geq0$，以 (IX.12) 的 $a_v$ 表示其被动实帧差的权重，则
+
+$$
+\boxed{B_{n,k}(\rho,\sigma)
+ =\sum_{v=1}^{\min(kF_{n-2},F_n)}a_v}.
+\tag{IX.25}
+$$
+
+每个最大值均由同一物理相位安装上的有限字达到。若 $\ell=\#\{v:a_v>0\}$，取得无限预算固定读口值的最小调用数为
+
+$$
+B_{n,\infty}=\sum_{v=1}^{F_n}a_v,
+\qquad
+K_{n,\mathrm{sat}}
+ =\left\lceil\frac{\min(\ell,F_n)}{F_{n-2}}\right\rceil;
+\qquad
+\exists k:\ B_{n,k}=D
+\ \Longleftrightarrow\ \ell\leq F_n.
+\tag{IX.26}
+$$
+
+零差的最小调用数为零。对整个旧盲输入域取最坏情形，固定读口饱和所需的调用数恰为
+
+$$
+\max_{\rho,\sigma\text{ 旧盲}}K_{n,\mathrm{sat}}
+ =\left\lceil\frac{F_n}{F_{n-2}}\right\rceil
+ =\begin{cases}2,&n=3,\\3,&n\geq4.\end{cases}
+\tag{IX.27}
+$$
+
+**证明。** 相位秩与读口秩分别复用定理 58.1 的 (VII.22) 及命题 59.1；有限实控制复用定理 64.1。Fibonacci 递推给
+$d-2r=F_{n-1}\geq F_{n-2}=p>0$，故 $r<d/2$，又 $p\leq r$，于是 $q=p$、$h=r$，恰满足定理 66.3 的维数条件。将该定理及推论 66.4 代入，得到 (IX.25)–(IX.26)。构造中的每个实控制用 (IX.1) 的有限纯翻转字替代；每个 $V_\alpha$ 仍只含一次位于 $(1,3)$ 的 $S_{\star,n}$，故实际调用数保持不变。
+
+最小调用公式至多为 $\lceil r/p\rceil$。下述命题 67.3 给出全部 $m=\lfloor d/2\rfloor$ 个权重严格为正的有效旧盲密度态对；$m\geq r$，故该对达到此调用数下界。最后 $n=3$ 时 $(r,p)=(2,1)$；$n\geq4$ 时
+$F_n=2F_{n-2}+F_{n-3}$ 且 $0<F_{n-3}\leq F_{n-2}$，所以 $2<r/p\leq3$，给 (IX.27)。这些比值只计相位调用，不给翻转脉冲数、持续时间或参数精度的界。$\square$
+
+**命题 67.3（尖锐统一系数、正交混态与八维例）。** 在定义 67.1 的输入域上，令 $m=\lfloor F_{n+2}/2\rfloor$、$t=\min(kF_{n-2},F_n)$，则最佳统一下界系数为 $t/m$：
+
+$$
+\frac{t}{m}D(\rho,\sigma)
+ \leq B_{n,k}(\rho,\sigma)\leq D(\rho,\sigma).
+\tag{IX.28}
+$$
+
+左侧系数对每个 $n,k$ 均尖锐，包括 $k=0$。特别地，对每个 $n\geq4$，都有支撑正交、$D=1$ 的旧盲混态对，在读口无限预算饱和后仍不能达到完整迹距离。
+
+**证明。** 当 $0<t<m$ 时，降序非负权重满足
+$(m-t)\sum_{v\leq t}a_v\geq t\sum_{v>t}a_v$：将每个 $a_u\geq a_v$（$u\leq t<v$）求和即可。整理得前 $t$ 项之和至少为 $t/m$ 倍总和；$t=0,m$ 直接成立。结合 (IX.25) 得 (IX.28)。
+
+为给出有效密度态见证，在被动实帧内任取 $m$ 个两两正交实平面，实正交单位基为 $e_v,f_v$，定义
+
+$$
+\begin{aligned}
+|\psi_v^\pm\rangle&=\frac{e_v\mp i f_v}{\sqrt2},\\
+\widetilde\rho_\pm
+ &=\frac1m\sum_{v=1}^{m}|\psi_v^\pm\rangle\langle\psi_v^\pm|,
+\qquad \rho_\pm=D_n\widetilde\rho_\pm D_n^\dagger,\\
+\widetilde\rho_+-\widetilde\rho_-
+ &=\frac{i}{m}\bigoplus_{v=1}^{m}
+           \begin{pmatrix}0&1\\-1&0\end{pmatrix}
+       \ \oplus\ 0_{d-2m}.
+\end{aligned}
+\tag{IX.29}
+$$
+
+每个符号下有 $m$ 个正交单位向量，故两算子均正、迹为一；两个符号的全部向量也互相正交。它们的实部同为
+$\frac1{2m}\sum_v(|e_v\rangle\langle e_v|+|f_v\rangle\langle f_v|)$，所以是旧盲态对。全部 $a_v=1/m$，$\ell=m$、$D=1$，由 (IX.25) 得 $B_{n,k}=t/m$；任何更大的统一系数在此失效。奇数维时未用的一维带零本征值，仍是同一 $d$ 维系统中的合法密度态。$n\geq3$ 时 $m\geq2$，因此这些态确为混态。$n\geq4$ 时 $d-2r=F_{n-1}\geq2$，所以 $m>r$，该见证的无限预算值 $r/m$ 严格小于一；$n=3$ 则 $m=r=2$，无限预算值为一。
+
+$n=4$ 时 $(d,p,r,m)=(8,1,3,4)$。在原合法基序中取
+$(e_1,f_1)=(|0000\rangle,|0001\rangle)$、
+$(e_2,f_2)=(|0010\rangle,|0100\rangle)$、
+$(e_3,f_3)=(|0101\rangle,|1000\rangle)$、
+$(e_4,f_4)=(|1001\rangle,|1010\rangle)$，并按 (IX.29) 先在被动实帧中定义态再共轭回物理坐标。八个字恰为全部合法长度四链，故这个选择确有四个完整实平面。此符号态对满足
+
+$$
+D(\rho_+,\rho_-)=1,
+\qquad
+B_{4,k}(\rho_+,\rho_-)
+ =\begin{cases}
+0,&k=0,\\
+1/4,&k=1,\\
+1/2,&k=2,\\
+3/4,&k\geq3.
+\end{cases}
+\tag{IX.30}
+$$
+
+因此它也同时给出一次相位不能合并全部四个反对称平面、三次达到固定读口上限但仍非一次完美区分的见证。完整迹距离为一与当前固定秩读口的最大对比为 $3/4$ 相容。定理 60.2 的常数针对全部密度态对；(IX.28) 的常数针对本节旧盲子域，两者的量词域不同。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 48. 固定初始五人口的全单纯形相位增益
+
+**定义 68.1（物理坐标、共同实部与增益域）。** 固定同一个 $\mathcal K_3$，物理坐标从始至终按
+
+$$
+(e_0,e_1,e_2,e_3,e_4)
+=(|000\rangle,|100\rangle,|010\rangle,|001\rangle,|101\rangle),
+\qquad D_3=\operatorname{diag}(1,i,i,i,1)
+\tag{X.1}
+$$
+
+排列。对物理密度态 $\rho^{\mathrm{ph}},\sigma^{\mathrm{ph}}$，记被动实帧矩阵
+$\rho=D_3^\dagger\rho^{\mathrm{ph}}D_3$、$\sigma=D_3^\dagger\sigma^{\mathrm{ph}}D_3$。
+$D_3$ 是对角坐标变换，保留每一个人口，不是可调用的物理门。
+给定按 (X.1) 排列的概率向量
+$z^{\mathrm{ph}}=(z_{000},z_{100},z_{010},z_{001},z_{101})$，定义
+
+$$
+\begin{aligned}
+\mathcal E(z^{\mathrm{ph}})
+ &=\{(\rho,\sigma):\rho,\sigma\succeq0,\quad
+       \operatorname{tr}\rho=\operatorname{tr}\sigma=1,\quad
+       \operatorname{diag}\rho=\operatorname{diag}\sigma=z^{\mathrm{ph}},\quad
+       \operatorname{Re}\rho=\operatorname{Re}\sigma\},\\
+\Delta&=\rho-\sigma=iA,\qquad A\in M_5(\mathbb R),\quad A^T=-A,\\
+\operatorname{spec}(\Delta)&=(a_1,a_2,0,-a_2,-a_1),\qquad
+       a_1\geq a_2\geq0,\qquad
+       D=\tfrac12\|\Delta\|_1=a_1+a_2,\\
+G(z^{\mathrm{ph}})&=\max_{(\rho,\sigma)\in\mathcal E(z^{\mathrm{ph}})}a_2.
+\end{aligned}
+\tag{X.2}
+$$
+
+实部在同一被动实帧中逐项取得；同对角不足以替代共同实部条件。
+这里只固定初始人口，后续允许的控制可以重新分配人口。
+物理占据读数为
+$\langle n_1\rangle=z_{100}+z_{101}$、$\langle n_2\rangle=z_{010}$、
+$\langle n_3\rangle=z_{001}+z_{101}$，并沿用占据参数
+$\kappa=\langle n_1n_3\rangle=z_{101}$。
+
+仅为计算公式，把人口值降序排列，写成 $z_1\geq\cdots\geq z_5\geq0$、
+$\sum_jz_j=1$；这些下标是排序位置，不替换物理标签。置
+
+$$
+P=z_1,\qquad Q=z_1+z_2,\qquad U=z_4+z_5.
+\tag{X.3}
+$$
+
+对等和非负向量，$z\prec r$ 表示所有降序前缀满足
+$\sum_{j=1}^lz_j\leq\sum_{j=1}^lr_j$，$1\leq l\leq4$。
+以下构造结束后必须把两态的行、列同时恢复到 (X.1) 的物理顺序。
+人口排序、共轭对称化和谱构造均是存在性论证，不是已经发生的源操作。
+
+**定理 68.2（全人口单纯形的耦合最优值及同时达到）。** 对每个上述初始人口向量，
+$\mathcal E(z^{\mathrm{ph}})$ 非空紧，(X.2) 的最大值达到，且对物理人口的任意排列协变。
+若 $U=0$，则 $G=0$。若 $U>0$，定义
+
+$$
+\begin{aligned}
+x_*&=\max\left\{\tfrac12,Q,\sqrt P,1-\sqrt U\right\},\\
+y_*&=\max\left\{\tfrac12,\frac{P}{x_*},1-\frac{U}{1-x_*}\right\};\\
+G(z^{\mathrm{ph}})
+ &=\boxed{2\sqrt{x_*(1-x_*)y_*(1-y_*)}}.
+\end{aligned}
+\tag{X.4}
+$$
+
+此时 $1/2\leq y_*\leq x_*<1$。有同一个可行共轭态对同时满足
+
+$$
+a_1=a_2=G(z^{\mathrm{ph}}),\qquad D=2G(z^{\mathrm{ph}}),
+\qquad \operatorname{rank}\rho=\operatorname{rank}\sigma=2.
+\tag{X.5}
+$$
+
+秩二在这里指两个密度矩阵的秩，不是 Kraus 秩、控制群的秩或未知标签数。
+若 $U=0$，可选相同的两态达到平衡零权重；这不表示该域的全部零增益最大化态对都相同。
+精确端点为
+
+$$
+G>0\ \Longleftrightarrow\ \#\{x:z_x>0\}\geq4,
+\qquad
+G=\tfrac12\ \Longleftrightarrow\ \max_xz_x\leq\tfrac14.
+\tag{X.6}
+$$
+
+因此 (X.5) 的平衡见证具有 $D=1$ 当且仅当 $\max_xz_x\leq1/4$。
+本定理优化的是 $a_2$，没有额外固定 $D$。
+
+**证明。** 先将整个态对域精确化为共轭存在域，再在同一个实部谱上优化两个乘积。
+
+(一) 对任意 $(\rho,\sigma)\in\mathcal E(z^{\mathrm{ph}})$，写
+$\rho=R_0+iC_1$、$\sigma=R_0+iC_2$，其中 $R_0$ 实对称，$C_1,C_2$ 实反对称。
+逐项复共轭保正性、迹与对角，故
+
+$$
+\tau=\frac{\rho+\bar\sigma}{2}
+ =R_0+i\frac{C_1-C_2}{2},\qquad
+\bar\tau=\frac{\bar\rho+\sigma}{2},\qquad
+\tau-\bar\tau=\rho-\sigma.
+\tag{X.7}
+$$
+
+两者仍有初始对角 $z^{\mathrm{ph}}$；反之，任意该对角的密度态 $\tau$ 与 $\bar\tau$
+都在 $\mathcal E(z^{\mathrm{ph}})$ 中。这保留的是同一个差矩阵，因而保留全部 $a_j$、$D$
+及任何固定读效果的概率差。它不声称对两个未知输入实施同一个实 CPTP 预处理，
+也不声称实际来源历史纤维对该代数替换封闭。
+
+写 $\tau=R_\tau+iC$。$R_\tau=(\tau+\bar\tau)/2$ 实对称半正、迹一、对角为
+$z^{\mathrm{ph}}$，$C$ 实反对称。这里 $R_\tau$ 专指实部；终端读口另记 $R_{\mathrm{read}}$。
+对实向量 $v\in\ker R_\tau$，有
+$v^\dagger\tau v=v^TR_\tau v=0$。半正性给 $\tau v=0$，所以 $Cv=0$；
+实核的复线性张成也被 $C$ 消去。反对称性又给
+$\operatorname{ran}C\subseteq\mathcal S=\operatorname{ran}R_\tau$，
+只在 $\mathcal S$ 上使用逆平方根，定义并在核上延零：
+
+$$
+K=\left.(R_\tau|_{\mathcal S})^{-1/2}
+           C|_{\mathcal S}(R_\tau|_{\mathcal S})^{-1/2}\right.\oplus0,
+\qquad K^T=-K,\quad K\in M_5(\mathbb R),\qquad
+C=R_\tau^{1/2}KR_\tau^{1/2}.
+\tag{X.8}
+$$
+
+$\tau,\bar\tau\succeq0$ 在支撑上的合同变换给 $I_{\mathcal S}\pm iK|_{\mathcal S}\succeq0$。
+由于 $iK$ 为 Hermitian，全部特征值位于 $[-1,1]$，即 $\|K\|\leq1$。
+反过来，实反对称收缩 $K$ 使 $I\pm iK\succeq0$，故 (X.8) 确实产生正的共轭态。
+这也是正块矩阵收缩分解在 $A=B=R_\tau$、$X=C$ 时的支撑版：
+$\bar\tau=R_\tau-iC$ 的实化为
+$\left(\begin{smallmatrix}R_\tau&C\\-C&R_\tau\end{smallmatrix}\right)$。
+所复用的一般工具见 Moslehian–Kian–Xu，
+[*Positivity of $2\times2$ block matrices of operators*，Theorem 5.11](https://arxiv.org/html/1904.08680)。
+上面的支撑证明同时保证 $K$ 实且反对称，没有假定 $R_\tau$ 可逆。
+
+(二) 令 $s_j$ 为降序奇异值。所需的精确指标不等式为
+
+$$
+s_{i+j-1}(XY)\leq s_i(X)s_j(Y),\qquad i+j-1\leq5.
+\tag{X.9}
+$$
+
+为核对指标，取 $Y$ 的前 $j-1$ 个右奇异方向之正交补 $E_Y$，以及
+$X$ 的前 $i-1$ 个右奇异方向之正交补 $E_X$。
+$E_Y\cap Y^{-1}(E_X)$ 的余维至多 $i+j-2$；在该空间上
+$\|XYv\|\leq s_i(X)\|Yv\|\leq s_i(X)s_j(Y)\|v\|$。
+奇异值极小极大原理给 (X.9)，包括零奇异值和重数。
+
+设 $r_1\geq\cdots\geq r_5\geq0$ 是 $R_\tau$ 的谱，$H=R_\tau^{1/2}$。
+先由 (X.9) 得 $s_i(HK)\leq s_i(H)\|K\|\leq\sqrt{r_i}$，
+再对 $(HK)H$ 分别取 $(i,j)=(1,4),(2,3)$。
+由于 $\Delta=2iC$，$C$ 的奇异值恰为
+$(a_1/2,a_1/2,a_2/2,a_2/2,0)$，故确切使用第四个奇异值：
+
+$$
+\frac{a_2}{2}=s_4(C)
+ \leq\min\{\sqrt{r_1r_4},\sqrt{r_2r_3}\}.
+\tag{X.10}
+$$
+
+两个上界中的 $r$ 必须是同一个可行实部谱，不能分别最大化后拼合。
+反对称标准平面和逐项实、虚部分解复用 Wu 等，
+[*Resource theory of imaginarity: quantification and state conversion*，式 (36)–(37)](https://arxiv.org/html/2103.01805v1#S3.E36)。
+(X.9) 的完整极小极大推导给出了这里实际使用的指标版本。
+
+(三) 实 Schur–Horn 定理给
+
+$$
+\operatorname{diag}(O\operatorname{diag}(r)O^T)=z^{\mathrm{ph}}
+\text{ 对某个 }O\in O(5)
+\quad\Longleftrightarrow\quad z\prec r.
+\tag{X.11}
+$$
+
+这里需要实正交而非仅复酉的版本。精确出处是 Kaftal–Weiss，
+[*An infinite dimensional Schur–Horn theorem and majorization theory with applications to operator ideals*，Theorem 1.1(ii)](https://arxiv.org/html/0710.5566v2)：
+有限维 Horn 定理给 orthostochastic 矩阵 $T_{ij}=O_{ij}^2$，且 $z=Tr$。
+对应参数为 $N=5$、$\xi=z$、$\eta=r$；实正交矩阵的平方条目恰好给 (X.11) 的对角。
+这个标准工具只是下述耦合优化的中间步骤。
+
+对每个 $z\prec r$，在谱坐标的实标准基 $g_1,\ldots,g_5$ 中置
+
+$$
+\begin{aligned}
+u&=\sqrt{r_1}g_1-i\sqrt{r_4}g_4,&
+v&=\sqrt{r_2}g_2-i\sqrt{r_3}g_3,\\
+C_r&=\sqrt{r_1r_4}(g_1g_4^T-g_4g_1^T)
+       +\sqrt{r_2r_3}(g_2g_3^T-g_3g_2^T),\\
+T_r&=\operatorname{diag}(r)+iC_r
+       =uu^\dagger+vv^\dagger+r_5g_5g_5^T,\\
+\tau_r&=OT_rO^T,&\sigma_r&=\bar\tau_r.
+\end{aligned}
+\tag{X.12}
+$$
+
+每项均半正，迹为 $\sum_jr_j=1$；实部由 (X.11) 给指定人口。
+同一个 $O$ 同时作用于这两个完整矩阵。其两个差权重是
+$2\sqrt{r_1r_4}$ 和 $2\sqrt{r_2r_3}$ 的降序排列，故对每个可行 $r$，(X.10)
+中的最小值上界均由同一个态对达到。因而得到精确的共同谱优化：
+
+$$
+G(z^{\mathrm{ph}})
+ =2\max_{\substack{r_1\geq\cdots\geq r_5\geq0\\
+                    \sum_jr_j=1,\ z\prec r}}
+       \sqrt{\min\{r_1r_4,r_2r_3\}}.
+\tag{X.13}
+$$
+
+若先为降序人口构造 $O_\downarrow$，取把物理人口变成降序人口的置换矩阵 $\Pi$，
+令 $O=\Pi^TO_\downarrow$，便逐行、逐列恢复 (X.1)。人口有重数时任选满足该等式的置换，
+结论不依赖其选择。这个正交矩阵是密度态存在构造的参数，没有被计为制备或预处理。
+
+原态对域由半正、迹、实部和对角的闭条件给出，在有限维有界；
+$(\operatorname{diag}z^{\mathrm{ph}},\operatorname{diag}z^{\mathrm{ph}})$ 保证其非空。
+有序奇异值连续，$a_2$ 连续，故原域和 (X.13) 的紧谱域都取得最大值。
+
+(四) 若 $U=0$，则至多三个初始人口非零。
+对任意正密度矩阵 $M$，$|M_{ij}|^2\leq M_{ii}M_{jj}$；
+零人口强制整行、整列为零。因此 $A$ 支撑在至多三维实空间，反对称秩至多二，$a_2=0$。
+
+若 $U>0$，则 $P,Q<1$。取
+
+$$
+0<\varepsilon\leq
+\min\left\{\frac{1-P}{3},\frac{1-Q}{2},U,\frac14\right\},
+\qquad r=(1-3\varepsilon,\varepsilon,\varepsilon,\varepsilon,0).
+\tag{X.14}
+$$
+
+它降序且有迹一；前三个前缀分别为 $1-3\varepsilon$、$1-2\varepsilon$、
+$1-\varepsilon$，至少为 $P,Q,1-U$，第四个为一。因此 $z\prec r$，
+(X.12) 给 $a_2=2\varepsilon>0$。从此可在正最优值上工作。
+
+(五) 对任意可行谱 $r$，把
+$(r_1,r_2,r_3,r_4+r_5,0)$ 重新降序排列为 $r'$。
+原前四个坐标只增加其中一个，故这四个数的每个降序序统计量都不少于原值；
+新的第五坐标为零，前四个前缀不减而总和仍一。
+因此 $r\prec r'$，仍有 $z\prec r'$，且
+$r'_1r'_4\geq r_1r_4$、$r'_2r'_3\geq r_2r_3$。
+在正最优值处，$r'_4>0$；故不损失最优值地只考虑
+$(a,b,c,d,0)$，$a\geq b\geq c\geq d>0$、$a+b+c+d=1$。
+这一步只是移动存在构造的实部谱，不是对源态的非酉操作。
+
+下面把两个乘积平衡，且保留所有主序约束。
+若 $ad>bc$，固定 $a$，先把 $d$ 连续转给 $c$，直到 $c=b$ 或已达到 $ad=bc$。
+此段 $a,a+b$ 不变，$a+b+c=1-d$ 增加，且 $bc$ 严格增加。
+若中间两项相等但乘积仍未平衡，继续从 $d$ 向 $b,c$ 等量转移；
+此段第一前缀不变，第二、第三前缀增加，$bc$ 仍严格增加。
+排序只可能在 $d=0$ 或 $b=c=a$ 处成为终端限制；
+前者给 $ad-bc\leq0$，后者也给 $ad-bc=a(d-a)\leq0$。
+连续性保证在该限制之前或同时遇到 $ad=bc$；初始较小乘积严格正，故相遇处仍正。
+
+若 $ad<bc$，固定 $d$，先把 $b$ 连续转给 $a$，直到 $b=c$ 或已达到相等。
+此段第一前缀增加，第二、第三前缀不变，$ad$ 严格增加。
+若到 $b=c$ 时仍未相等，就同时从 $b,c$ 等量转给 $a$；
+第一、第二前缀增加，第三前缀 $1-d$ 不变。
+在 $c$ 降到 $d$ 之前必相遇，因为该端点为 $b=c=d$，给
+$ad-bc=d(a-d)\geq0$。
+相遇前的较小乘积 $ad$ 严格增加，且全程排序成立。
+初始 $b=c$ 时直接跳过第一段；其他首尾重数不改变前缀比较；
+初始 $ad=bc$ 时无需转移。
+
+两种符号情形都把谱沿连续主序增大路径送到正乘积相等处，且不降低较小乘积。
+因此 (X.13) 可精确限制到 $ad=bc$；没有把两个不同谱的最好值相乘。
+
+(六) 对降序正四元组满足 $ad=bc$，定义 $x=a+b$、$y=a+c$。
+由迹一和 $bc=ad$ 得 $(a+b)(a+c)=a$，从而
+
+$$
+\begin{aligned}
+(a,b,c,d,0)
+ &=(xy,x(1-y),(1-x)y,(1-x)(1-y),0),\\
+\tfrac12&\leq y\leq x<1,\qquad
+ad=bc=x(1-x)y(1-y).
+\end{aligned}
+\tag{X.15}
+$$
+
+反之，该参数区间且 $y<1$ 给正的降序四元组和相等乘积。
+其三个非平凡前缀恰把 $z\prec r$ 化成
+
+$$
+xy\geq P,\qquad x\geq Q,\qquad (1-x)(1-y)\leq U.
+\tag{X.16}
+$$
+
+第四前缀为一，自动满足。
+在固定 $x$ 时，$y(1-y)$ 在 $[1/2,1)$ 上不增，故最优选最小可行 $y$：
+
+$$
+\ell(x)=\max\left\{\tfrac12,\frac P x,1-\frac U{1-x}\right\},
+\qquad y=\ell(x).
+\tag{X.17}
+$$
+
+$\ell(x)\leq x$ 分别等价于 $x\geq1/2$、$x^2\geq P$、$(1-x)^2\leq U$；
+再加 $x\geq Q$，精确可行 $x$ 区间即 $[x_*,1)$。
+$U>0$ 给 $P,Q<1$，故 $x_*<1$；且 $x\geq\sqrt P>P$ 以及 $U>0$
+保证 $\ell(x)<1$。这里 $P>0$ 来自迹一。
+因此边界零人口和人口重数均未被排除。
+
+(七) 令
+
+$$
+F(x,y)=x(1-x)y(1-y),\qquad
+F(x)=F(x,\ell(x)),\qquad
+G(z^{\mathrm{ph}})^2=4\max_{x\in[x_*,1)}F(x).
+\tag{X.18}
+$$
+
+三个可能的活动分支及实际导数为
+
+$$
+\begin{array}{c|c|c}
+\ell(x)&F(x)&F'(x)\\ \hline
+\tfrac12&\dfrac{x(1-x)}4&\dfrac{1-2x}4\\[3pt]
+P/x&P(1+P-x-P/x)&P(-1+P/x^2)\\[3pt]
+1-U/(1-x)&U(1+U-(1-x)-U/(1-x))&U(1-U/(1-x)^2).
+\end{array}
+\tag{X.19}
+$$
+
+对整个 $x\geq x_*$，第一行由 $x\geq1/2$、第二行由 $x\geq\sqrt P$、
+第三行由 $x\geq1-\sqrt U$，分别给非正导数。
+第三行最后一个条件意味着 $(1-x)^2\leq U$，导数方向正是非正。
+$\ell$ 是三个连续函数的最大值，故 $F$ 连续；
+分支两两相等只产生有限个线性或二次方程根，在此 $P,U>0$ 时不存在整段重合。
+把任意紧子区间 $[x_*,b]\subset[x_*,1)$ 按这些根切开，
+每段 $F$ 均不增，切点的左右值相等。因此 $F$ 在整个可行区间全局不增，
+包括每个分支切换和多重相等点。
+最大值为 $F(x_*)$，(X.4) 成立；特别地 $y=1/2$ 分支的值和导数都含因子 $1/4$。
+
+(八) 将 (X.15) 中的 $x,y$ 取为 $x_*,y_*$，用这个同一个谱代入 (X.12)。
+$r_5=0$ 且四个谱值严格正，$u,v$ 非零并处于正交支撑，
+所以 $T_r=uu^\dagger+vv^\dagger$ 的秩恰二，$\bar T_r$ 同样秩二。
+两个乘积相等给 $a_1=a_2=2\sqrt{F(x_*)}=G$，所以 $D=2G$。
+正交变换、恢复人口标签和被动返回物理坐标都保持密度矩阵秩。
+
+已有 $U=0$ 与 $U>0$ 的两种论证给出 (X.6) 第一项。
+由 $x(1-x),y(1-y)\leq1/4$ 得 $G\leq1/2$，
+等号强制 $x_*=y_*=1/2$，再由 $x_*y_*\geq P$ 得 $P\leq1/4$。
+反之，$P\leq1/4$ 给 $Q\leq1/2$，又前三个人口之和至多 $3/4$，
+所以 $U\geq1/4$。于是 (X.4) 中 $x_*=y_*=1/2$，$G=1/2$。
+最后 $D=2G$ 给平衡见证的 $D=1$ 条件。
+任意物理人口置换可同时共轭两态，反向置换也可用，
+故它在两个固定人口域之间给保持 $a_1,a_2$ 的双射，证明排列协变。$\square$
+
+## 49. 正交边界的双重谱接口
+
+**定理 69.1（固定人口的 $D=1$ 谱与第二权重）。** 在定义 68.1 的同一个共同实部域内，
+$D=1$ 等价于两态支撑正交；在此边界还必有 $\sigma=\bar\rho$。
+对 $0\leq\eta\leq1/2$，权重 $(a_1,a_2)=(1-\eta,\eta)$ 可行当且仅当
+
+$$
+z\prec\left(\frac{1-\eta}{2},\frac{1-\eta}{2},
+             \frac\eta2,\frac\eta2,0\right).
+\tag{X.20}
+$$
+
+$D=1$ 子域非空当且仅当 $P\leq1/2$。
+仅在该非空域上，它的完整第二权重区间为
+
+$$
+0\leq\eta\leq\eta_{\max}^{(1)}(z),\qquad
+\eta_{\max}^{(1)}(z)
+ =\min\{\tfrac12,1-2P,2U\}.
+\tag{X.21}
+$$
+
+每个区间值均达到。若 $P>1/2$，则报告空域，而非负端点的区间。
+$\eta_{\max}^{(1)}>0$ 当且仅当 $P<1/2$ 且至少四个人口为正。
+此 $D=1$ 限制优化不同于定理 68.2 的无固定 $D$ 优化。
+
+**证明。** 对迹一正矩阵 $\rho,\sigma$，若 $\mathsf P_+$ 是 $\rho-\sigma$ 的正谱投影，
+则 $D=\operatorname{tr}((\rho-\sigma)\mathsf P_+)\leq1$。
+等号迫使 $\operatorname{tr}(\rho\mathsf P_+)=1$、
+$\operatorname{tr}(\sigma\mathsf P_+)=0$；半正性使 $\rho$ 支撑于 $\mathsf P_+$，
+$\sigma$ 支撑于其正交补。反之，正交支撑立即给 $D=1$。
+
+在共同实部域中再写 $\rho=R_0+iC$、$\sigma=R_0+iE$，置
+$t=\|R_0\|_F^2>0$。由两个正矩阵乘积的迹非负，
+
+$$
+\begin{aligned}
+0&\leq\operatorname{tr}(\rho\bar\rho)=t-\|C\|_F^2,
+&0&\leq\operatorname{tr}(\sigma\bar\sigma)=t-\|E\|_F^2,\\
+0&=\operatorname{tr}(\rho\sigma)=t+\langle C,E\rangle_F,
+&t&=-\langle C,E\rangle_F
+ \leq\|C\|_F\|E\|_F\leq t.
+\end{aligned}
+\tag{X.22}
+$$
+
+全链相等给 $\|C\|_F=\|E\|_F=\sqrt t$，且 Cauchy–Schwarz 负等号给 $E=-C$。
+因此 $\sigma=\bar\rho$。两共轭支撑等秩且正交，在五维至多各秩二。
+
+取 $\rho$ 支撑上的正特征值 $w_j$ 及正交单位特征向量
+$\psi_j=x_j+iy_j$，其中 $1\leq j\leq s=\operatorname{rank}\rho\leq2$。支撑正交给 $\psi_j^T\psi_l=0$，
+而通常正交性给 $\psi_j^\dagger\psi_l=\delta_{jl}$。
+分别取实、虚部即得
+$e_j=\sqrt2x_j$、$f_j=\sqrt2y_j$ 合成一个实正交向量组。
+于是
+
+$$
+\operatorname{Re}\rho
+ =\frac12\sum_jw_j(e_je_j^T+f_jf_j^T),\qquad
+\operatorname{spec}(\rho-\bar\rho)
+ =(w_1,-w_1,\ldots,w_s,-w_s,\underbrace{0,\ldots,0}_{5-2s}),
+\qquad \sum_{j=1}^sw_j=1.
+\tag{X.23}
+$$
+
+把 $w$ 补零到长度二并降序排列，便是 $(1-\eta,\eta)$。
+实部谱恰为 (X.20) 右侧，因此 (X.11) 给必要性。
+反过来，若 (X.20) 成立，用实 Schur–Horn 取同一个实正交 $O$。
+在谱坐标取 $\psi_j=(g_{2j-1}+ig_{2j})/\sqrt2$，置
+
+$$
+\rho=O\bigl((1-\eta)|\psi_1\rangle\langle\psi_1|
+                 +\eta|\psi_2\rangle\langle\psi_2|\bigr)O^T,
+\qquad \sigma=\bar\rho.
+\tag{X.24}
+$$
+
+$\psi_1,\psi_2,\bar\psi_1,\bar\psi_2$ 两两正交，
+所以这是迹一正态、正交支撑、指定初始人口与指定差权重的同时见证。
+$\eta=0$ 的零权重与 $\eta=1/2$ 的重数均允许；恢复物理顺序如 (X.12)。
+
+(X.20) 的前三个前缀分别等价于
+
+$$
+\eta\leq1-2P,\qquad \eta\leq1-Q,\qquad \eta\leq2U.
+\tag{X.25}
+$$
+
+第四前缀自动成立，总和相等。
+由于 $Q\leq2P$，有 $1-2P\leq1-Q$，故中间约束冗余。
+$P\leq1/2$ 时 $\eta=0$ 可行；$P>1/2$ 时第一约束不可能，
+从而得到非空判据和 (X.21)，严格正条件也随即成立。
+
+同对角正交态对的 $M=2$ 存在阈值 $\max_xz_x\leq1/2$ 是已知结果：
+Korzekwa–Czachórski–Puchała–Życzkowski，
+[*Distinguishing classically indistinguishable states and channels*，Propositions 4、7](https://arxiv.org/html/1812.09083v3)，
+DOI [10.1088/1751-8121/ab30f7](https://doi.org/10.1088/1751-8121/ab30f7)。
+其 Proposition 4 对相同完全退相干输出的 $M$ 个正交态给 $\max z_x\leq1/M$，
+Proposition 7 在 $M=2$ 时证明充分性；其一般输入假设只有同对角。
+这里额外的共同实部要求由 (X.22)–(X.24) 单独衔接，
+(X.21) 则保留指定差谱与原生第二次调用增益所需的接口，不把已知存在阈值当作新结论。$\square$
+
+## 50. 同一第一位置读口的固定人口消费者
+
+**定理 70.1（初始人口对原生第二次相位增益的精确约束）。** 固定假设 55.2 的 $n=3$ 菜单、
+定理 64.1 的零相位精确有限字和定义 67.1 的同一第一位置二值读口。
+在 (X.1) 的被动实帧中，唯一收费门及终端投影分别为
+
+$$
+S_{13}=\operatorname{diag}(1,1,1,1,i),\qquad
+R_{\mathrm{read}}=n_1|_{\mathcal K_3}
+ =\operatorname{diag}(0,1,0,0,1),\qquad
+(d,p,r,q,h)=(5,1,2,1,2).
+\tag{X.26}
+$$
+
+对 $(\rho,\sigma)\in\mathcal E(z^{\mathrm{ph}})$，
+以下 $B_k$ 是物理态对
+$(D_3\rho D_3^\dagger,D_3\sigma D_3^\dagger)$ 的 $B_{3,k}$。
+定理 67.2 的 $n=3$ 特例使固定初始人口的新增约束和达到式为
+
+$$
+\begin{aligned}
+\max_{\mathcal E(z^{\mathrm{ph}})}(B_2-B_1)&=G(z^{\mathrm{ph}}),\\
+(B_0,B_1,B_2)_{\mathrm{balanced}}&=(0,G,2G),\\
+\{(B_1,B_2):\mathcal E(z^{\mathrm{ph}}),\ D=1\}
+ &=\{(1-\eta,1):0\leq\eta\leq\eta_{\max}^{(1)}(z)\}
+ \quad(P\leq1/2).
+\end{aligned}
+\tag{X.27}
+$$
+
+当 $P>1/2$ 时最后一集合为空。
+正增益平衡见证的第一、第二个值分别由至多一、两次正向调用同一个 $S_{13}$ 达到，
+其饱和最小预算为二；它可完美区分当且仅当 $P\leq1/4$。
+在 $D=1$ 子域中，$\eta=0$ 恰为一次达到完美对比，$\eta>0$ 恰需两次；
+若 $\eta_{\max}^{(1)}>0$，同一个初始人口域同时含这两类态对。
+
+**证明。** (X.26) 给 $d-2h=1=q$，恰满足定理 66.3 的旁观方向条件；
+定理 64.1 的 (IX.1) 把所需 $SO(5)$ 实控制实现为有限纯翻转字。
+直接复用定理 67.2，而非重新提出一个无人口约束的调用定理：
+在这里 $B_0=0$、$B_1=a_1$、$B_k=a_1+a_2=D$ 对全部 $k\geq2$ 成立。
+因此 $B_2-B_1=a_2$，(X.4)、(X.5)、(X.20)–(X.21) 分别给 (X.27)。
+$G>0$ 时遗漏的第二权重严格为正，故一次不能饱和而两次能；
+平衡见证的 $B_2=2G=1$ 正是 (X.6) 的第二端点。
+$D=1$ 子域上的 $B_1=1-\eta$ 给最后的调用分类。
+
+这些达到字始终在原五维系统内；同一个字作用于两个未知输入标签，
+可以依赖已知候选对及共同取得的经典记录。
+只计同一安装上正向固定相位的实际调用，不计安装数或把逆当免费门；
+$S_{13}^{-1}=S_{13}^3$ 若使用须计三次，此处达到构造无需它。
+定理 67.2 的实平面共轭构造没有辅助系统、可访问参考、中间测量、后选择或非酉平面合并。
+这里也没有增加这些权限。
+
+对任意已选有限字 $W$，令
+$p_\rho(W)=\operatorname{tr}(D_3\rho D_3^\dagger W^\dagger n_1W)$。
+$B_k$ 是同一个二值事件的理想概率差最大值；等先验已知候选对在该设置下的最佳错误率为
+$(1-|p_\rho(W)-p_\sigma(W)|)/2$。
+这是定义 60.1 的归一化；它不把一次读出的比特解释为精确概率。
+当差为一时，一个比特足以理想区分这个已知正交候选对；
+当差小于一时，单份结果不能保证每次都确定标签。
+
+固定人口域的存在性并不供应这些态的制备，也不保证给定实际来源历史纤维含有任一见证。
+若态对来自固定的 $X_{h_0}$，须另外检验它们确在该纤维及字在其共同菜单中合法。
+数学共轭替换 (X.7)、谱转移 (五) 和 Schur–Horn 参数 $O$
+均不构成该历史纤维上的实际操作。
+本结论不给纯翻转脉冲数量、时间、精度、层析或重复采样成本界。$\square$
+
+## 51. 同人口的相位分离与联合可达性的障碍
+
+**命题 71.1（同一 $z$、同一 $\kappa$ 的一次与两次见证）。** 在固定物理顺序 (X.1) 下，取
+
+$$
+\begin{aligned}
+\psi&=\tfrac12(e_0+ie_1-e_3-ie_4),&
+\alpha&=(e_0+ie_1)/\sqrt2,&\beta&=(e_3+ie_4)/\sqrt2,\\
+\rho_{\mathrm p}&=|\psi\rangle\langle\psi|,&
+\rho_{\mathrm m}&=\tfrac12\bigl(|\alpha\rangle\langle\alpha|
+                                   +|\beta\rangle\langle\beta|\bigr),&
+\sigma_{\mathrm p}&=\bar\rho_{\mathrm p},\qquad
+\sigma_{\mathrm m}=\bar\rho_{\mathrm m}.
+\end{aligned}
+\tag{X.28}
+$$
+
+它们均为被动实帧态；物理态分别是 $D_3\rho D_3^\dagger$ 及 $D_3\sigma D_3^\dagger$。
+两对共享完全相同的初始人口
+$z^{\mathrm{ph}}=(1/4,1/4,0,1/4,1/4)$，故都有
+$\langle n_1\rangle=\langle n_3\rangle=1/2$、$\langle n_2\rangle=0$、$\kappa=1/4$。
+每对内部均有共同实部及 $D=1$，但差权重分别为 $(1,0)$ 与 $(1/2,1/2)$。
+前者一次相位即完美区分；后者一次的最佳对比仅 $1/2$，两次达到一。
+
+**证明。** $\psi=(\alpha-\beta)/\sqrt2$ 归一化，且 $\psi^T\psi=0$，
+所以 $\psi\perp\bar\psi$，纯态对正交且差谱为 $(1,-1,0,0,0)$。
+$\alpha,\beta,\bar\alpha,\bar\beta$ 两两正交；
+混态对各在两个方向上有本征值 $1/2$，因此差谱为 $(1/2,1/2,0,-1/2,-1/2)$。
+直接对角计算给所述 $z^{\mathrm{ph}}$ 和占据。
+
+还可在同一菜单中明确读出概率。令 $J_0,J_1$ 分别把实平面
+$\operatorname{span}\{e_0,e_1\}$、$\operatorname{span}\{e_3,e_4\}$ 上的
+$e_0,e_3$ 乘以 $i$，其余方向不动。
+每个 $J_j$ 都是同一个秩一 $S_{13}$ 的 $SO(5)$ 共轭，只计一次正向调用。
+取实秩二投影
+
+$$
+T=|(e_0+e_1)/\sqrt2\rangle\langle(e_0+e_1)/\sqrt2|
+       +|(e_3+e_4)/\sqrt2\rangle\langle(e_3+e_4)/\sqrt2|.
+\tag{X.29}
+$$
+
+$J_0^\dagger TJ_0$ 在第一平面投到 $\alpha$，在第二平面为实方向。
+故它在纯态对上给概率 $(3/4,1/4)$，在混态对上也给 $(3/4,1/4)$。
+对混态再用 $J_1$，效果
+$(J_1J_0)^\dagger T(J_1J_0)$ 投到 $\alpha,\beta$ 的张成，给 $(1,0)$。
+纯态的一次完美设置则取实正交
+$e=(e_0-e_3)/\sqrt2$、$f=(e_1-e_4)/\sqrt2$，
+使 $\psi=(e+if)/\sqrt2$；一次相位把 $e$ 乘 $i$，
+随后实读投影包含 $(e+f)/\sqrt2$ 并以 $e_2$ 补秩二，即给 $(1,0)$。
+每个实秩二投影均可由 $SO(5)$ 共轭回固定的 $R_{\mathrm{read}}$，
+再用 (IX.1) 实现有限纯翻转字。
+这些是相同安装的不同已知候选对设置；同一候选对的两个未知标签始终使用相同字。
+
+控制顺序不可删去：实效果直接作用于原旧盲对时没有对比；
+对角相位紧接对角人口读口也没有对比，因为两者对易。
+但先相位、再实混合可以读出相干。
+例如 $(e_1\pm ie_4)/\sqrt2$ 经原安装的 $S_{13}$ 变成
+$(e_1\mp e_4)/\sqrt2$，随后实秩二投影可以完美区分。
+因此不存在“初始一次相位后接任意实控制仍一律盲”的推论。$\square$
+
+**命题 71.2（正交边界的界不控制无固定 $D$ 的增益）。** 在同一物理顺序取
+
+$$
+z^{\mathrm{ph}}=(\tfrac12,\tfrac18,\tfrac18,\tfrac18,\tfrac18).
+\tag{X.30}
+$$
+
+则 $\eta_{\max}^{(1)}=0$，但
+
+$$
+x_*=y_*=\frac1{\sqrt2},\qquad
+G=\sqrt2-1,\qquad D_{\mathrm{balanced}}=2(\sqrt2-1)<1.
+\tag{X.31}
+$$
+
+**证明。** $P=1/2,Q=5/8,U=1/4$，故 (X.4) 给所述 $x_*,y_*$；
+$2x_*(1-x_*)=\sqrt2-1$，而 (X.21) 中 $1-2P=0$。
+同时见证由 (X.12) 的同一个可行谱
+
+$$
+r=\left(\tfrac12,\frac{\sqrt2-1}{2},
+                   \frac{\sqrt2-1}{2},\frac32-\sqrt2,0\right)
+\tag{X.32}
+$$
+
+及一个实现 (X.30) 的实 Schur–Horn 矩阵取得，二者乘积相等，
+两密度矩阵都秩二。因而 $D=1$ 上第二权重只能为零，与整个域的严格正最大值完全相容。
+也可直接给一个较弱的非正交见证：取对角为 (X.30)、
+$\rho_{01}=-i/4$、$\rho_{23}=-i/8$ 及其共轭条目，其他非对角项为零，
+置 $\sigma=\bar\rho$。两个二乘二块均行列式零且半正，
+剩余人口为 $1/8$，其权重为 $(1/2,1/4)$、$D=3/4$。
+这两个达到水平不同的构造均表明 $\eta_{\max}^{(1)}$ 不能作为无固定 $D$ 的 $a_2$ 上界。
+
+零增益也不等于相同态：在
+$z^{\mathrm{ph}}=(1/2,1/2,0,0,0)$，
+$(e_0+ie_1)/\sqrt2$ 及其共轭的纯密度矩阵正交，$D=1$ 而 $a_2=G=0$。
+(X.5) 在 $G=0$ 时选择相同态只是一个平衡见证，不是全部最大化态对的分类。$\square$
+
+**命题 71.3（不同总迹距离的极值不能拼成联合可达谱）。** 固定
+
+$$
+z^{\mathrm{ph}}=(\tfrac25,\tfrac25,\tfrac1{10},\tfrac1{10},0).
+\tag{X.33}
+$$
+
+同一人口域能达到 $(a_1,a_2)=(2/5,2/5)$、$D=4/5$，
+也存在 $D=1$ 态对；但 $(a_1,a_2)=(3/5,2/5)$ 不可达。
+
+**证明。** 在 $\operatorname{span}\{e_0,e_2\}$ 和
+$\operatorname{span}\{e_1,e_3\}$ 上各放同一个块
+
+$$
+\begin{pmatrix}2/5&-i/5\\ i/5&1/10\end{pmatrix},
+\qquad \rho|_{\mathbb Ce_4}=0,\qquad \sigma=\bar\rho.
+\tag{X.34}
+$$
+
+每块迹 $1/2$、行列式零且半正；整体迹一，人口为 (X.33)。
+每块差权重 $2/5$，所以总 $D=4/5$。
+另一方面 $P=2/5\leq1/2$，(X.21) 给
+$\eta_{\max}^{(1)}=\min(1/2,1/5,1/5)=1/5$，故 $D=1$ 子域非空。
+若 $(3/5,2/5)$ 可达，则其 $D=1$ 而第二权重 $2/5>1/5$，矛盾。
+
+因此，分别存在某个总距离和某个第二权重的见证不保证它们在同一态对上同时达到。
+定理 68.2 的平衡谱优化允许改变 $D$；其谱集中和平衡步骤没有承诺保留指定的总距离。
+对一般给定 $D_0\in[0,1]$，完整联合区域
+
+$$
+\mathcal J(z^{\mathrm{ph}},D_0)
+ =\{(a_1,a_2): (\rho,\sigma)\in\mathcal E(z^{\mathrm{ph}}),\quad
+                   a_1+a_2=D_0\}
+\tag{X.35}
+$$
+
+的必要充分刻画仍为未决；(X.4) 与 (X.21) 不结算该问题。$\square$
+
+## 52. 固定人口结论的文献对应与模型范围
+
+**约定 72.1（数学来源与适用范围）。** 定理 68.2 的承重内容是 (X.13) 的共同谱优化、
+保持主序的秩四集中与双乘积平衡、(X.15)–(X.19) 的精确标量解，
+以及它在定理 70.1 中对同址原生相位读出的消费者。
+这些是此处的综合推导，不作优先权或全局原创性断言。
+实 Schur–Horn、正块矩阵的收缩分解、反对称标准形和奇异值极小极大方法
+均作为已知中间工具使用；其条件与参数对应分别列在证明中。
+Korzekwa 等 Propositions 4、7 的 $M=2$ 阈值与这里的指定差谱接口有不同量词，
+实 Kraus 资源理论的可转换性也不扩大定义 67.1 的实酉菜单。
+
+全部结论属于五维密度矩阵与理想有限控制的量子信息理论。
+固定初始人口不是沿控制历史逐时固定人口；共同实部也不是仅共同对角。
+正人口不要求密度矩阵满秩，特别是 (X.5) 的正增益见证可以五个人口都正而态秩为二。
+数学构造不提供源制备、实际历史纤维成员资格或硬件实现；
+二值概率函数不等于单份样本输出。
+本节不涉及连续量子场论或引力推导，
+也不对其他链长、其他相位角、全部来源或 minimax 采样方案给出完成性结论。
+
+## 追加锚（本行以下为增补区）
