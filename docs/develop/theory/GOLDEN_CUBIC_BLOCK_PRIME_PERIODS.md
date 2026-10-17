@@ -4880,4 +4880,87 @@ is a positive prime greater than $5$, distinct from $q$, with $(5/r)=1$. Then $q
 
 For a potentially additional family one may impose $qr\equiv19\pmod{120}$; otherwise the old squarefree-kernel congruence already excludes it. All certificate and primality premises are retained. No existence or infinitude of prime values, previously surviving numerical pair, independence from every earlier support condition, exhaustive priority claim, or universal WSS exclusion is asserted.
 
+
+## 81. A fixed-golden-field residue test from the original orbit
+
+Write $\mathcal R(a,b,c)=(-1)^{[a,b,c]}$ for the multiplicative version of Stevenhagen's additive Rédei symbol. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48). The defining hypotheses are pairwise Hilbert symbols $+1$ at every place and $\gcd(\Delta(a),\Delta(b),\Delta(c))=1$; the discriminants need not be pairwise coprime. All infinite and dyadic conditions below are retained.
+
+**Theorem 81.1 (the original Fibonacci coordinate supplies the extension).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1,$$
+
+and put $D=qr$. If $B_N=L_N^2+3=D C^2$ for $N=3^j$, where $j,C$ are positive integers, then
+
+$$\boxed{\mathcal R(5,-D,q)=\mathcal R(5,q,-D)=1.}$$
+
+**Proof.** For $(5,-D,q)$ the discriminants are $5,-D,q$, whose three-way gcd is one. The Hilbert symbols $(5,q)_p$ are trivial by $5$-splitting and $q\equiv1\pmod8$. For $(5,-D)_p$, the places $q,r,5$ give $(5/q),(5/r),(-D/5)=1$; at $2$ both arguments are $1\pmod4$. For $(-D,q)_p$, the places $q,r$ give $(r/q),(q/r)=1$, using $(-q,q)_q=1$, while $q$ is a square at $2$. All other finite places are unit pairs; the infinite symbols are trivial. Thus the primary theorem applies, including the shared ramified argument $q$.
+
+The original identities and the Fibonacci recurrence modulo four give
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+Indeed, $N\equiv3\pmod6$ and the Fibonacci recurrence modulo four has period six. In $K_0=\mathbb Q(\sqrt5)$, with $\mathcal O_0=\mathbb Z[\phi]$ and $\phi=(1+\sqrt5)/2$, set
+
+$$\beta=-1-F_N\sqrt5=(F_N-1)-2F_N\phi\equiv1\pmod{4\mathcal O_0},\qquad N_{K_0/\mathbb Q}(\beta)=-D C^2.$$
+
+Put $E=\mathbb Q(\sqrt5,\sqrt{-D})$, $K=\mathbb Q(\sqrt{-5D})$, and $F=E(\sqrt\beta)$. The norm-field construction in Corollary 5.2 makes $F/K$ cyclic quartic and $F/E$ quadratic. We check that $F/K$ is unramified at every finite place, which suffices for Definition 7.6 here.
+
+At an odd $p\nmid5D$, the elements $\beta,\bar\beta$ cannot have a common prime divisor above $p$, since their sum is $-2$. At a split prime dividing $C$, exactly one has positive valuation, and that valuation is even; an inert prime cannot divide either. Hence adjoining $\sqrt\beta$ is unramified, as are the quadratic factors defining $E$ and $K$ at such $p$. This includes every additional prime and repeated power in $C$.
+
+At $p=q$ or $r$, choose the split place of $K_0$ where $F_N\sqrt5\equiv1\pmod p$. There $\beta\equiv-2$ is a unit; at the conjugate place its valuation is $1+2v_p(C)$. Since $\beta\bar\beta=-D C^2$ is a square in $E$, either conjugate defines the same quadratic extension of $E$. Locally $E/K$ is trivial because $5$ is a square in $\mathbb Q_p$, and the unit description makes $F/K$ unramified. At $5$, $-D$ is a square in $\mathbb Q_5$, so again locally $E=K$; $\beta$ is a unit with residue $-1$, and its quadratic extension is unramified.
+
+At $2$, the ring $\mathcal O_0\otimes\mathbb Z_2$ is unramified quadratic. Write $\beta=1+4t$. The element $(1+\sqrt\beta)/2$ satisfies $T^2-T-t$, whose derivative is a unit modulo two, so adjoining $\sqrt\beta$ is unramified. Also $5\equiv-D\equiv5\pmod8$ and $-5D\equiv1\pmod8$: $K$ is split at two and $E$ is unramified quadratic. Thus $F/K$ is unramified there as well. This uses the full golden integer ring.
+
+The resulting extension is minimally ramified in the primary definition. Equations (45)--(48) evaluate the third argument $q$ at the conjugate-unit place, giving
+
+$$\mathcal R(5,-D,q)=(-2/q)=1.$$
+
+This remains valid when $q\mid C$, since the unit residue is still $-2$. Rédei reciprocity proves the other equality. ∎
+
+**Theorem 81.2 (an explicit residue test).** Under the prime hypotheses of Theorem 81.1, suppose
+
+$$q=u^2-5v^2,\qquad u>0,\quad u\equiv1\pmod4,\quad4\mid v.$$
+
+For either root $s^2\equiv5\pmod r$, every original block in Theorem 81.1 requires
+
+$$\boxed{\left(\frac{u+vs}{r}\right)=\left(\frac{2u}{q}\right)=\left(\frac{u}{5}\right).}$$
+
+Thus the opposite sign excludes $D$ as the squarefree kernel for every $C$ and every ternary index.
+
+**Proof.** The element $\gamma=u+v\sqrt5$ has norm $q$, is totally positive, and is $1\pmod{4\mathcal O_0}$. Primality gives $\gcd(u,v)=1$ and $q\nmid2u$. The field $F_q=\mathbb Q(\sqrt5,\sqrt q,\sqrt\gamma)$ is minimally ramified over $K_q=\mathbb Q(\sqrt{5q})$. At odd primes outside $5q$, $\gamma$ is a unit. At $5$ it is a unit and $q$ splits. At $q$, the conjugate unit is $2u$; since $\gamma\bar\gamma=q$ is a square in $E_q=\mathbb Q(\sqrt5,\sqrt q)$, one has $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$, allowing that unit conjugate or its corresponding conjugate prime. The same local argument as in Theorem 81.1 gives unramified extension at these primes. At two, $\gamma\equiv1\pmod{4\mathcal O_0}$ and $q\equiv1\pmod8$ give unramified extension by the same étale quadratic polynomial.
+
+The negative third argument in $\mathcal R(5,q,-D)$ includes infinity. Total positivity of $\gamma$ makes that factor $+1$. The finite factors at $q,r$ are $(2u/q)$ and $(u+vs/r)$. The two choices of $s$ have product of residues $q$, whose Legendre symbol modulo $r$ is $+1$, so the factor is independent of the choice. Hence
+
+$$\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\left(\frac{u+vs}{r}\right).$$
+
+Theorem 81.1 gives the first boxed equality. Since $q\equiv1\pmod8$, $u>0$ is odd and $u\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac{2u}{q}\right)=\left(\frac{u}{q}\right)=\left(\frac{q}{u}\right)=\left(\frac{-5v^2}{u}\right)=\left(\frac{-5}{u}\right)=\left(\frac{u}{5}\right).$$
+
+Coprimality makes all these symbols defined and removes $v^2$. ∎
+
+**Theorem 81.3 (the primary generator exists on actual golden support).** Let $q$ be a prime. If $q\equiv1\pmod{24}$, $(5/q)=1$, and the original golden rank is $\rho(q)=6N$ with $N$ odd, then integers $u,v$ satisfying the representation and sign conditions of Theorem 81.2 exist. Therefore that representation is not an extra existence premise for an actual pair in Theorem 81.1.
+
+**Proof.** The triple $(5,-1,q)$ is admissible: $\phi$ has norm $-1$, the pair $(5,q)$ is locally split, $(-1,q)_p=1$ at every place because $q\equiv1\pmod4$, and $\gcd(5,-4,q)=1$. The norm element $\phi$ defines
+
+$$F_0=\mathbb Q(\sqrt5,i,\sqrt\phi)=\mathbb Q(\sqrt5,i,\sqrt{1+2i}).$$
+
+For example, if $w^2=\phi$, then $(w+i/w)^2=1+2i$, or equivalently $(\phi+i)^2=\phi(1+2i)$. At odd primes $\phi$ is a unit; the norm-field construction is unramified at the remaining odd ramified place $5$. At two this is exactly the $2$-minimally ramified model displayed immediately before Stevenhagen's Definition 7.5 for $(a,b)=(-1,5)$. Thus
+
+$$\mathcal R(5,-1,q)=\left(\frac{\phi\bmod q}{q}\right).$$
+
+Either split embedding gives the same sign because $N(\phi)=-1$ and $(-1/q)=1$. Binet's formula identifies the original rank with the order of $-\phi^2$. From $\operatorname{ord}_q(-\phi^2)=6N$ and $N$ odd, its $3N$-th power is $-1$, giving $\phi^{6N}=1$. Since $q\equiv1\pmod8$ and $6N\mid q-1$, one has $6N\mid(q-1)/2$, so $\phi$ is a quadratic residue. Reciprocity now gives $\mathcal R(5,q,-1)=1$.
+
+The ring $\mathcal O_0$ is norm-Euclidean: rounding both coefficients in the basis $1,\phi$ leaves $t+s\phi$ with $|t|,|s|\le1/2$, and
+
+$$|N(t+s\phi)|=|t^2+ts-s^2|\le5/16<1.$$
+
+Thus a prime above $q$ has a generator of norm $\pm q$; multiplication by $\phi$ if needed gives a generator $\pi$ of norm $q$. The unit group of $\mathcal O_0/4\mathcal O_0$ has twelve elements. Its norm-to-$(\mathbb Z/4)^\times$ kernel has six elements, exactly $\{\pm\phi^{2k}:k=0,1,2\}$: $\phi$ has norm $-1$, $\phi^2$ has order three modulo four, and $-1$ has order two. Since $N(\pi)\equiv1\pmod4$, multiplication by one of these global norm-one units produces $\delta\equiv1\pmod{4\mathcal O_0}$ with norm $q$.
+
+The finite-prime argument of Theorem 81.2, which uses norm $q$ and the primary congruence but not positivity, makes $\mathbb Q(\sqrt5,\sqrt q,\sqrt\delta)$ a permitted minimally ramified field. Its infinite Artin factor is $\mathcal R(5,q,-1)=1$. The two real signs of $\delta$ agree because its norm is positive, so triviality of this factor forces total positivity.
+
+Finally write $\delta=1+4(m+n\phi)=u+v\sqrt5$, with $u=1+4m+2n$ and $v=2n$. If $n$ were odd, then $q=u^2-5v^2\equiv5\pmod8$, contradicting $q\equiv1\pmod8$. Thus $4\mid v$, $u\equiv1\pmod4$, and total positivity gives $u>0$. ∎
+
+For an actual block, the existing rank input TBN3 supplies $\rho(q)=6N$, so Theorems 81.2--81.3 give a residue test using a constructible primary prime generator in the fixed golden field and the second prime. They do not require the auxiliary norm certificate of §80 or use weak approximation to choose its sign. The relation with every earlier Cassels and support condition has not been classified; no independence from all prior tests, previously surviving numerical pair, prime-family infinitude, or universal WSS exclusion is asserted. The residue type $(7,13)$ remains outside these statements.
+
 ## 追加锚（本行以下为增补区）
