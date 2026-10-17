@@ -2012,3 +2012,586 @@ $Q$ 的固定相干关系作为数学定义存在，不等于制备或参考供�
 原恢复目标及其全部输入、参考与共同恢复量词保持原义。
 
 ## 追加锚（本行以下为增补区）
+
+## 136. 同一五态源上的数守恒效应与已供应参考
+
+**定义 C-136.1（物理粒子数与固定源的记号）。** 保持 (C128.1)–(C128.2)
+的物理五态、能量基 $\mathcal B$、$\psi,\eta,Q,P_Q,P$ 及两个零假设域不变，记
+
+$$
+\begin{aligned}
+\widehat N&=\operatorname{diag}(0,1,1,1,2)_{(e_0,e_1,e_2,e_3,e_4)},\\
+S&=\operatorname{span}(e_0,e_4),\qquad \Pi_S=P_{e_0}+P_{e_4},\\
+\psi_-&=(e_0-e_4)/\sqrt2,\qquad P_-=P_{\psi_-}.
+\end{aligned}
+\tag{C136.1}
+$$
+
+$\widehat N$ 是物理粒子数算符，不是恢复问题中的通道 $N$。
+(C128.1) 的等距矩阵 $E=(\psi,\eta,e_2)$ 在此亦记作 $E_N$；
+它始终是固定嵌入 $\mathbb C^3\to\mathcal K_3$，不是以下联合宣告效果 $\mathsf E$。
+相干数仍按物理能量基 $\mathcal B$ 定义，不按 $\widehat N$ 的本征基定义。
+复振幅、全部有限混态分解及 $\mathcal F_Q=\mathcal F_{\rm all}\cap\mathsf D(Q)$
+的量词均沿用 C-128.1、C-129.1。
+
+**假设 C-136.2（单输入与参考的共同供应）。** 每次试验供应一份未知系统输入，
+目标为 $P$，零假设为 $\mathcal F_{\rm all}$ 或 $\mathcal F_Q$ 中的任意态。
+参考空间 $R$ 为有限维，带固定整数电荷表示
+$\widehat N_R=\sum_\ell\ell R_\ell$；允许各电荷有简并。
+若供应参考，则它是一个固定、已给定的密度态 $\zeta$，与系统输入独立，
+目标和每个零假设下均为同一个 $\zeta$。每次试验重新供应一份；
+不附参考返还、保持、跨试验复用、重置或制备服务。
+所有设置均不依赖未知的实际假设标签，也不附额外源副本或可访问的标签旗标。
+
+**定义 C-136.3（新声明的测量比较菜单）。** 无参考时允许全部
+$0\preceq T\preceq I$、$[T,\widehat N]=0$ 的系统效果。
+有参考时允许全部
+
+$$
+0\preceq\mathsf E\preceq I,\qquad
+[\mathsf E,L]=0,\qquad
+L=\widehat N\otimes I_R+I\otimes\widehat N_R.
+\tag{C136.2}
+$$
+
+这是按效果声明的数学菜单，未把 C-130.1 的独立翻转、相位调用预算与末端
+$n_1$ PVM 合成能力扩充为 (C136.2)。无条件宣告概率为
+
+$$
+\alpha^\zeta(\mathsf E)=\operatorname{Tr}(\mathsf E(P\otimes\zeta)),\qquad
+\beta^\zeta_{\mathcal F}(\mathsf E)
+=\sup_{\rho\in\mathcal F}\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C136.3}
+$$
+
+令 $A^0_{\mathcal F}(\delta)$ 为无参考菜单在
+$\beta_{\mathcal F}(T)\le\delta$ 下的最大目标功效，
+$A^\zeta_{\mathcal F}(\delta)$ 为 (C136.2) 在
+$\beta^\zeta_{\mathcal F}(\mathsf E)\le\delta$ 下的最大目标功效，$0\le\delta\le1$。
+下文的构造与有限维紧性给出这些最大值的存在。
+不加上标的 $A_{\mathcal F}$ 保留 C-128.2 的不限系统效果含义。
+效果只规定一个事件的概率，不规定条件输出态或测量仪器。
+
+## 137. 无参考前沿与任意有限参考下的承诺不增益
+
+**定理 C-137.1（全域与承诺域的分别逆向界和达到）。** 在 C-136.2 的共同供应下，
+对每个 $\delta\in[0,1]$ 及每个固定有限参考 $\zeta$，
+
+$$
+A^0_{\mathcal F_{\rm all}}(\delta)=\delta,\qquad
+A^0_{\mathcal F_Q}(\delta)
+=A^\zeta_{\mathcal F_Q}(\delta)=\min\{1,3\delta/2\}.
+\tag{C137.1}
+$$
+
+证明。令 $\mathcal D_{\widehat N}$ 为物理粒子数去相位。
+$e_0,e_4$ 各只有两个非零 $\mathcal B$ 坐标，故
+
+$$
+\mathcal D_{\widehat N}(P)=\tfrac12(P_{e_0}+P_{e_4})\in\mathcal F_{\rm all}.
+\tag{C137.2}
+$$
+
+对每个数守恒 $T$，
+$\alpha(T)=\operatorname{Tr}(T\mathcal D_{\widehat N}(P))
+\le\beta_{\mathcal F_{\rm all}}(T)$。
+反向取 $T=\delta\Pi_S$，其功效为 $\delta$，风险至多 $\delta$；
+零假设 $P_{e_0}$ 达到此风险，故第一式是全部复数、混态零假设下的精确前沿。
+
+承诺域使用固定嵌入的压缩恒等式
+
+$$
+P_Q\Pi_SP_Q=P,
+\tag{C137.3}
+$$
+
+因为 $\Pi_S\psi=\psi$、$\Pi_S\eta=\Pi_Se_2=0$。
+由 C-129.1 的完整八射线凸包，承诺域的最大目标重叠恰为 $2/3$。
+所以数守恒效果 $T=t\Pi_S$ 的承诺风险为 $2t/3$、目标功效为 $t$。
+取 $t=\min\{1,3\delta/2\}$ 给出达到。
+
+逆向直接消费 (C131.4) 的实际混态见证
+$\sigma_Q=\frac23P+\frac13P_{e_2}\in\mathcal F_Q$。
+对任意固定 $\zeta\succeq0$、$\operatorname{Tr}\zeta=1$，有
+
+$$
+\sigma_Q\otimes\zeta\succeq\tfrac23P\otimes\zeta,
+\qquad
+\beta^\zeta_{\mathcal F_Q}(\mathsf E)
+\ge\operatorname{Tr}(\mathsf E(\sigma_Q\otimes\zeta))
+\ge\tfrac23\alpha^\zeta(\mathsf E).
+\tag{C137.4}
+$$
+
+它约束每个正联合效果，甚至不必假定其数守恒；结合功效至多一给所需上界。
+$\mathsf E=t\Pi_S\otimes I_R$ 满足 (C136.2)，并在每个 $\zeta$ 下达到上述风险与功效。
+这同时涵盖混参考、简并电荷及 $\delta=0,2/3,1$。
+(C137.2) 不能用于承诺域的逆向界：$\psi_-\perp Q$，且
+$\operatorname{Tr}((I-P_Q)\mathcal D_{\widehat N}(P))=1/2$。
+这里复用 C-129.1 的复数分类和混态支撑桥、C-131.1 的正序见证，不另作分类证明。证毕。
+
+## 138. 指定两电荷参考的全部复效果及其精确约化域
+
+**定义 C-138.1（指定的一份参考）。** 取
+
+$$
+R=\operatorname{span}(f_0,f_2),\qquad
+\widehat N_Rf_0=0,\quad\widehat N_Rf_2=2f_2,\qquad
+r=(f_0+f_2)/\sqrt2,\quad\zeta_r=P_r.
+\tag{C138.1}
+$$
+
+$A^r_{\mathcal F}$ 是 $A^{\zeta_r}_{\mathcal F}$ 的简记。
+$e_if_j$ 表示 $e_i\otimes f_j$，不把两个参考电荷误作额外系统能级。
+
+**定理 C-138.2（全部联合块与相同功效下的全域约化）。** 对 (C138.1)，
+(C136.2) 的全部允许效果恰为下表总电荷块上的 Hermitian 正收缩算符：
+
+| 总电荷 | 有序基 | 维数 | 效果块 |
+| --- | --- | ---: | --- |
+| $0$ | $e_0f_0$ | 1 | $x_0$ |
+| $1$ | $e_1f_0,e_2f_0,e_3f_0$ | 3 | $A_1$ |
+| $2$ | $e_0f_2,e_4f_0$ | 2 | $M$ |
+| $3$ | $e_1f_2,e_2f_2,e_3f_2$ | 3 | $A_3$ |
+| $4$ | $e_4f_2$ | 1 | $x_4$ |
+
+即 $\mathsf E=x_0\oplus A_1\oplus M\oplus A_3\oplus x_4$，
+$0\le x_0,x_4\le1$、$0\preceq A_1,A_3\preceq I_3$、$0\preceq M\preceq I_2$，
+初始块允许任意复非对角元。其有效系统效果为
+
+$$
+\begin{aligned}
+T&=(I\otimes\langle r|)\mathsf E(I\otimes|r\rangle)=T_S\oplus H,\\
+T_S&=\frac12\begin{pmatrix}x_0+M_{11}&M_{12}\\M_{21}&M_{22}+x_4\end{pmatrix}_{(e_0,e_4)},
+\qquad H=\frac{A_1+A_3}{2}\quad\text{于 }\operatorname{span}(e_1,e_2,e_3).
+\end{aligned}
+\tag{C138.2}
+$$
+
+对全零假设 $\mathcal F_{\rm all}$，每个允许复效果在相同目标功效下，
+均可换成风险不增加的允许效果，其有效形式为
+
+$$
+T(a,c)=\begin{pmatrix}a&c\\c&a\end{pmatrix}_{(e_0,e_4)}\oplus0,
+\qquad 0\le c\le\tfrac14,\quad c\le a\le1-c.
+\tag{C138.3}
+$$
+
+此实参数域中的每一点反过来均由允许联合效果实现。
+
+证明。总电荷块维数为 $1+3+2+3+1=10$，对易恰排除异块矩阵元。
+直接与 $r$ 收缩得 (C138.2)。参考没有电荷差一模式，故系统粒子数一子空间
+与 $S$ 之间没有有效矩阵元，未对 $A_1,A_3,M$ 作实数假设。
+
+先将 $A_1,A_3$ 置零。这删除正块 $H$，保持目标功效，且每个零假设上的接受概率不增加。
+定义基置换 $V,J$ 为
+
+$$
+\begin{gathered}
+Ve_0=e_4,\quad Ve_4=e_0,\quad Ve_1=e_2,\quad Ve_2=e_1,\quad Ve_3=e_3,\\
+Jf_0=f_2,\quad Jf_2=f_0,\quad W=V\otimes J.
+\end{gathered}
+\tag{C138.4}
+$$
+
+有 $V\widehat NV^\dagger=2I-\widehat N$、
+$J\widehat N_RJ^\dagger=2I-\widehat N_R$、$Jr=r$，从而
+$WLW^\dagger=4I-L$。
+所以 $\mathsf E\mapsto W\mathsf EW^\dagger$ 将允许效果映回允许效果；
+与原效果取平均仍合法。它保持目标，因为 $V\psi=\psi$。
+同时 $V$ 在能量基上置换为
+
+$$
+(b_1,b_2,b_3,b_4,b_5)\longmapsto(b_3,b_4,b_1,b_2,b_5).
+\tag{C138.5}
+$$
+
+因此它双向保持每个复三支持纯态集合，进而保持全部有限凸混合
+$V\mathcal F_{\rm all}V^\dagger=\mathcal F_{\rm all}$。
+平均后风险不超过两个相同风险的平均，目标功效不变。
+有效二阶块于是有相等对角元 $a$ 和实非对角元 $c$。
+这是允许效果集合中的数学对称化，不安装 $V$ 或 $J$ 为可执行门；
+不要求、也不使用 $V$ 保持 $Q$。
+
+若 $c<0$，功效 $p=a+c\in[0,1]$，而零假设 $P_{e_0}$ 给风险至少 $a\ge p$。
+改取允许效果 $p\Pi_S\otimes I_R$，功效和全域风险均为 $p$。
+因此相同功效的全域最优化可限制到 $c\ge0$。
+
+对称化后的联合非零块写成
+
+$$
+x_0=x_4=x,\qquad M=\begin{pmatrix}b&2c\\2c&b\end{pmatrix}.
+\tag{C138.6}
+$$
+
+块约束精确为 $0\le x\le1$、$2c\le b\le1-2c$，且 $a=(x+b)/2$。
+这给出 (C138.3) 的必要性。反向给定该域中的 $(a,c)$，取
+$b=\max\{2c,2a-1\}$、$x=2a-b$。
+由 $c\le1/4$、$a\le1-c$ 得 $b\le1-2c$；由 $a\ge c$ 得 $b\le2a$，
+故 $x\ge0$，而 $b\ge2a-1$ 得 $x\le1$。
+所有块约束均成立，(C138.2) 恰实现指定 $T(a,c)$。
+这证明精确域与全部复效果的约化，而非对某个实效果子类的猜测。证毕。
+
+## 139. 十个复能量压缩与指定参考的精确全域风险
+
+**定理 C-139.1（固定模型中的全部压缩谱）。** 在 (C138.3) 的参数域内，令
+
+$$
+d(a,c)=\sqrt{a^2/16+c^2/2},\qquad q_\pm(a,c)=3a/4\pm d(a,c).
+\tag{C139.1}
+$$
+
+$T(a,c)$ 在所有复数与有限混合零假设上的精确风险为
+
+$$
+\beta_{\mathcal F_{\rm all}}(T(a,c))
+=q(a,c):=q_+(a,c)=\frac{3a}{4}+\sqrt{\frac{a^2}{16}+\frac{c^2}{2}}.
+\tag{C139.2}
+$$
+
+证明。对任意 Hermitian $T$，令 $\Pi_J=\sum_{j\in J}P_{b_j}$。
+本题中三支持纯向量均位于某个 $|J|=3$ 的坐标子空间，复 Rayleigh 原理及线性性给
+
+$$
+\beta_{\mathcal F_{\rm all}}(T)
+=\max_{\substack{J\subseteq\{1,\ldots,5\}\\|J|=3}}
+\lambda_{\max}\!\left((\Pi_JT\Pi_J)|_{\operatorname{ran}\Pi_J}\right).
+\tag{C139.3}
+$$
+
+每个最大特征向量本身就是归一化三支持复零假设，故右端是实际达到的风险；
+支持小于三与有限凸混合均已包含。这消费固定基多级相干的标准主压缩条件，
+取 Ringbauer 等 [arXiv:1707.05282v3](https://arxiv.org/pdf/1707.05282v3)
+式 (1)、Theorem 2／式 (10) 中的 $d=5,k=3,W=\delta I-T$。
+此一般工具在下列固定矩阵计算内使用。
+
+由 (C128.1)，
+
+$$
+[T(a,c)]_{\mathcal B}=\frac12
+\begin{pmatrix}
+a&a&c&c&0\\a&a&c&c&0\\c&c&a&a&0\\c&c&a&a&0\\0&0&0&0&0
+\end{pmatrix}.
+\tag{C139.4}
+$$
+
+十个压缩的全部三个特征值（含重数）如下，指标均指固定能量基：
+
+| $J$ | $\operatorname{spec}((\Pi_JT(a,c)\Pi_J)|_{\operatorname{ran}\Pi_J})$ |
+| --- | --- |
+| $\{1,2,3\}$ | $0,q_-(a,c),q_+(a,c)$ |
+| $\{1,2,4\}$ | $0,q_-(a,c),q_+(a,c)$ |
+| $\{1,3,4\}$ | $0,q_-(a,c),q_+(a,c)$ |
+| $\{2,3,4\}$ | $0,q_-(a,c),q_+(a,c)$ |
+| $\{1,2,5\}$ | $0,0,a$ |
+| $\{3,4,5\}$ | $0,0,a$ |
+| $\{1,3,5\}$ | $0,(a-c)/2,(a+c)/2$ |
+| $\{1,4,5\}$ | $0,(a-c)/2,(a+c)/2$ |
+| $\{2,3,5\}$ | $0,(a-c)/2,(a+c)/2$ |
+| $\{2,4,5\}$ | $0,(a-c)/2,(a+c)/2$ |
+
+第一类的重复坐标反对称组合为零方向，其余二阶矩阵为
+$\begin{pmatrix}a&c/\sqrt2\\c/\sqrt2&a/2\end{pmatrix}$，特征方程给 $q_\pm$。
+第二类只剩一个相同坐标对，第三类只剩跨两对的一行一列，分别给表中余谱。
+由 $a\ge c\ge0$，$q_+\ge a\ge(a+c)/2$，所以 (C139.3) 的最大值恰为 (C139.2)。
+当 $a=c=0$ 时表中全部特征值均为零。
+这枚举的是复 Hilbert 空间上的全部主压缩，而非实振幅抽样。证毕。
+
+## 140. 指定参考的固定功效最优效果与闭式前沿
+
+**定理 C-140.1（残余反对称响应与两处分段阈值）。** 对 (C138.1) 的参考和全部
+$\delta\in[0,1]$，令
+
+$$
+\delta_*=(9+\sqrt{17})/16.
+\tag{C140.1}
+$$
+
+全零假设前沿为
+
+$$
+A^r_{\mathcal F_{\rm all}}(\delta)=g(\delta):=
+\begin{cases}
+4\delta/3,&0\le\delta\le3/8,\\[3pt]
+(1+6\delta-\sqrt{1+4\delta^2})/4,&3/8\le\delta\le\delta_*,\\[3pt]
+1,&\delta_*\le\delta\le1.
+\end{cases}
+\tag{C140.2}
+$$
+
+在每个固定目标功效 $p\in[0,1]$，可取最小风险有效效果
+
+$$
+T_p=pP+\max\{0,p-1/2\}P_-.
+\tag{C140.3}
+$$
+
+证明。C-138.2 将每个允许复联合效果在相同功效下约化到风险不增的 $T(a,c)$。
+置 $p=a+c$，则 (C138.3) 的精确域等价于
+
+$$
+0\le p\le1,\qquad0\le c\le\min\{p/2,1/4\},\qquad
+T(a,c)=pP+(p-2c)P_-.
+\tag{C140.4}
+$$
+
+固定 $p$ 增大 $c$ 时，$T(a,c)$ 按正半定序减小，
+故每个零假设的接受概率及其上确界均不增加。
+取最大的允许 $c$ 就得到 (C140.3)。因此它既给达到候选，也给全部允许效果的逆向界。
+代入 (C139.2) 得固定功效的精确最小风险
+
+$$
+r_{\min}(p)=
+\begin{cases}
+3p/4,&0\le p\le1/2,\\[3pt]
+\bigl(3(p-1/4)+\sqrt{(p-1/4)^2+1/2}\bigr)/4,&1/2\le p\le1.
+\end{cases}
+\tag{C140.5}
+$$
+
+两支在 $p=1/2$ 一致，值为 $3/8$；在 $p=1$ 值为 $\delta_*$。
+第一支严格递增；第二支以 $a=p-1/4$ 写，其导数为
+$3/4+a/(4\sqrt{a^2+1/2})>0$。
+故 $r_{\min}$ 连续且严格递增，所有风险额度的最优功效由反解及功效上限一确定。
+
+在曲线支，$4\delta-3a=\sqrt{a^2+1/2}\ge0$。
+平方给 $8a^2-24\delta a+16\delta^2-1/2=0$；
+两根中加号根使 $4\delta-3a<0$，故只能取
+$a=(6\delta-\sqrt{1+4\delta^2})/4$。
+加上 $1/4$ 即为 (C140.2) 中支。
+两公共端点分别给 $p=1/2,1$，与直线及饱和支一致。
+下一定理给每个 $p$ 的允许联合效果，故此逆向界对全部 $\delta$ 实际达到。证毕。
+
+## 141. 逐点联合达到、参考增益与锐效果边界
+
+**定理 C-141.1（全部风险额度上的守恒联合效果）。** 定义
+
+$$
+\chi=(e_0f_2+e_4f_0)/\sqrt2,\qquad
+B_0=P_{e_0f_0},\quad B_4=P_{e_4f_2}.
+\tag{C141.1}
+$$
+
+对每个 $p\in[0,1]$，效果
+
+$$
+\mathsf E_p=
+\begin{cases}
+2pP_\chi,&0\le p\le1/2,\\[3pt]
+P_\chi+(2p-1)(B_0+B_4),&1/2\le p\le1
+\end{cases}
+\tag{C141.2}
+$$
+
+在其余子空间为零，满足 (C136.2)，有效效果恰为 $T_p$。
+取 $p=g(\delta)$ 对每个 $\delta\in[0,1]$ 达到 (C140.2)。
+
+证明。三个投影互相正交，分别位于总电荷 $2,0,4$，
+且所有系数均在 $[0,1]$，故 $0\preceq\mathsf E_p\preceq I$、$[\mathsf E_p,L]=0$。
+当 $p\le1/2$，(C138.2) 给 $a=c=p/2$，即有效效果 $pP$；
+当 $p\ge1/2$，给 $a=p-1/4,c=1/4$，即 $pP+(p-1/2)P_-$。
+目标功效为 $p$，全域风险由 C-139.1 精确等于 $r_{\min}(p)$。
+$\delta=0$ 取零效果；$\delta=3/8$ 取 $P_\chi$；
+$\delta=\delta_*$ 取 $P_\chi+B_0+B_4$。
+整个 $\delta\ge\delta_*$ 区间继续用后一效果，风险为 $\delta_*\le\delta$、功效为一，
+无需用尽风险额度。所有假设均使用同一份规定参考态。证毕。
+
+**推论 C-141.2（四个前沿及功效一的风险阈值）。** 结合 C-137.1、C-131.1，
+全部 $\delta\in[0,1]$ 上有
+
+| 测量菜单 | $\mathcal F_{\rm all}$ 前沿 | $\mathcal F_Q$ 前沿 | 全域功效一的最小风险 | 承诺域功效一的最小风险 |
+| --- | --- | --- | --- | --- |
+| 无参考、全部数守恒系统效果 | $\delta$ | $\min\{1,3\delta/2\}$ | $1$ | $2/3$ |
+| 一份指定 $r$、全部总数守恒联合效果 | $g(\delta)$ | $\min\{1,3\delta/2\}$ | $(9+\sqrt{17})/16$ | $2/3$ |
+| 不限系统效果的比较放松 | $\min\{1,4\delta/3\}$ | $\min\{1,3\delta/2\}$ | $3/4$ | $2/3$ |
+
+无参考的承诺增益为 $\min\{1,3\delta/2\}-\delta$。
+指定参考在全域上的额外增益精确为
+
+$$
+g(\delta)-\delta=
+\begin{cases}
+\delta/3,&0\le\delta\le3/8,\\[3pt]
+(1+2\delta-\sqrt{1+4\delta^2})/4,&3/8\le\delta\le\delta_*,\\[3pt]
+1-\delta,&\delta_*\le\delta\le1,
+\end{cases}
+\qquad A^r_{\mathcal F_Q}(\delta)-A^0_{\mathcal F_Q}(\delta)=0.
+\tag{C141.3}
+$$
+
+证明。前三个定理及 (C131.1) 分别给表中各行，取前沿首次等于一的位置得阈值。
+逐支相减得 (C141.3)。中支的 $1+2\delta>\sqrt{1+4\delta^2}$ 对 $\delta>0$ 成立，
+所以全域参考增益在 $0<\delta<1$ 严格为正，在两端为零。
+承诺域恒等来自 C-137.1 的同一混态逆向见证，不是对参考形状的数值观察。证毕。
+
+**命题 C-141.3（有效 $tP$ 与功效一不是同一锐测量要求）。** 在指定参考模型中，
+$0\le t\le1$ 时，全五维有效效果 $tP$ 可实现当且仅当 $t\le1/2$。
+功效一则可达到，其 (C140.3) 最优代表为
+$T_1=P+\frac12P_-$，不同于全空间的锐效果 $P$。
+
+证明。充分性由 (C141.2) 的第一支给出。
+必要性不预设对称实效果：若某个允许复联合效果的有效效果为 $tP$，
+(C138.2) 中 $M$ 是二阶正收缩算符，故 $|M_{12}|\le1/2$，
+因为 $\|M-I_2/2\|\le1/2$，其非对角元模亦至多 $1/2$。
+因此所有允许有效效果均有 $|T_{04}|\le1/4$，而 $tP$ 的该元为 $t/2$，故 $t\le1/2$。
+功效一时 (C141.2) 第二支已经给出实际允许效果。
+在约化族中，固定功效 $p>1/2$ 必须保留至少 $p-1/2$ 的 $P_-$ 响应，
+因为 $p-2c\ge p-1/2$。
+另一方面，承诺域内 $P_Q\Pi_SP_Q=P$，
+所以 $\Pi_S$ 在 $Q$ 上与锐 $P$ 有相同事件统计，仍不等于全空间效果 $P$。
+以上均是概率效果的陈述，不推出仪器、可重复性、参考保持或非扰动。证毕。
+
+## 142. 任意有限参考的精确半定规划与缺失差二模式的结论
+
+**定理 C-142.1（固定有限参考的精确优化及最大值存在）。** 对 C-136.2
+中的每个固定有限参考态和整数电荷表示，定义线性有效效果映射
+
+$$
+\Phi_\zeta(\mathsf E)
+=\operatorname{Tr}_R\!\left[(I\otimes\sqrt\zeta)\mathsf E(I\otimes\sqrt\zeta)\right].
+\tag{C142.1}
+$$
+
+令 $\Gamma_q$ 为 $L$ 的谱投影，$I_q$ 为其子空间恒等算符。
+$A^\zeta_{\mathcal F_{\rm all}}(\delta)$ 精确等于下列有限 Hermitian 半定规划的最大值：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&\operatorname{Tr}(P\Phi_\zeta(\mathsf E)),\\
+\text{约束}\quad&\mathsf E=\bigoplus_q\mathsf E_q,\qquad0\preceq\mathsf E_q\preceq I_q,\\
+&\Pi_J\Phi_\zeta(\mathsf E)\Pi_J\preceq\delta\Pi_J
+\quad\text{对每个 }J\subseteq\{1,\ldots,5\},\ |J|=3.
+\end{aligned}
+\tag{C142.2}
+$$
+
+承诺域将十个压缩约束换成 C-129.1 八射线 $w$ 的八个标量约束
+$\langle w|\Phi_\zeta(\mathsf E)|w\rangle\le\delta$，其最大值恒为
+$\min\{1,3\delta/2\}$。
+
+证明。正夹心和偏迹给 $0\preceq\Phi_\zeta(\mathsf E)\preceq I$；
+上界使用 $\Phi_\zeta(I)=\operatorname{Tr}_R(I\otimes\zeta)=I$。
+迹的循环性给每个系统密度态的恒等式
+
+$$
+\operatorname{Tr}(\Phi_\zeta(\mathsf E)\rho)
+=\operatorname{Tr}(\mathsf E(\rho\otimes\zeta)).
+\tag{C142.3}
+$$
+
+不要求 $\zeta$ 满秩、纯或与 $\mathsf E$ 对易。
+(C139.3) 的复主压缩条件使十个 LMI 精确等价于全部有限混合全零假设的风险约束；
+总电荷块条件精确等价于 (C136.2)。固定 $\zeta$ 后，所有映射和约束均为线性或半定的。
+有限个正收缩块的直积是紧集，十个 LMI 切出闭子集，且零效果在全部 $\delta\in[0,1]$ 可行。
+连续线性目标在非空紧集上取得最大值，不需严格可行性前提。
+承诺域的八个约束由 (C129.3) 精确给出；其值和达到效果已由 C-137.1 证明。
+这给任意混参考及简并电荷的精确有限优化，不给一般 $\zeta$ 的全域闭式公式。证毕。
+
+**定理 C-142.2（无参考差二模式时的全域前沿）。** 若固定参考满足
+
+$$
+R_{\ell+2}\zeta R_\ell=0\qquad\text{对所有整数 }\ell,
+\tag{C142.4}
+$$
+
+则对全部 $\delta\in[0,1]$，有 $A^\zeta_{\mathcal F_{\rm all}}(\delta)=\delta$。
+
+证明。选参考电荷本征基 $f_\alpha$，电荷为 $\ell_\alpha$，
+简并指标保留在 $\alpha$ 中。由 (C142.3)，有效矩阵元为
+
+$$
+T_{ij}=\sum_{\alpha,\beta}\mathsf E_{i\alpha,j\beta}\zeta_{\beta\alpha},
+\qquad
+\mathsf E_{i\alpha,j\beta}\ne0\ \Longrightarrow\
+n_i+\ell_\alpha=n_j+\ell_\beta,
+\tag{C142.5}
+$$
+
+其中 $(n_0,n_1,n_2,n_3,n_4)=(0,1,1,1,2)$。
+$i=0,j=4$ 时，允许项须有 $\ell_\alpha=\ell_\beta+2$。
+(C142.4) 及其伴随使相应 $\zeta_{\beta\alpha}$ 全为零，故 $T_{04}=0$。
+于是目标功效与风险满足
+
+$$
+\operatorname{Tr}(TP)=\tfrac12(T_{00}+T_{44})
+\le\max\{T_{00},T_{44}\}\le\beta_{\mathcal F_{\rm all}}(T),
+\tag{C142.6}
+$$
+
+最后一步只用 $P_{e_0},P_{e_4}\in\mathcal F_{\rm all}$。
+即使参考有差一模式，其他有效矩阵元也不改变此论证。
+$\mathsf E=\delta\Pi_S\otimes I_R$ 给风险和功效均为 $\delta$ 的守恒达到。
+指定参考 $P_r$ 去相位后满足 (C142.4)，故其全域增益消失。
+此结论只有所写方向；存在差二模式本身不在此推出任意参考的严格增益、
+某条统一闭式曲线或充分实现条件。一般情形保留 (C142.2) 的精确有限规划。证毕。
+
+## 143. 源承诺、能量相干与参考资源的适用范围
+
+**命题 C-143.1（支持承诺与粒子数对称性不同）。** $Q$ 不在一般物理粒子数
+$U(1)$ 作用下不变，$\mathcal F_{\rm all}$ 也不是该作用的不变态集合。
+因此 (C137.1)、(C140.2) 比较的是在明确供应条件下的检测能力，
+不把源承诺或给定参考的制备成本定为零。
+
+证明。$\psi_-\perp Q$，并且
+
+$$
+e^{-i\theta\widehat N}\psi
+=e^{-i\theta}(\cos\theta\,\psi+i\sin\theta\,\psi_-).
+\tag{C143.1}
+$$
+
+当 $\sin\theta\ne0$ 时该向量不在 $Q$。
+另一方面，$P_{b_1}\in\mathcal F_{\rm all}$ 是一支持能量零假设，
+但 $b_1=(e_0-e_1)/\sqrt2$ 具有粒子数差一相干，故
+$[P_{b_1},\widehat N]\ne0$。
+物理能量基相干数、数守恒测量限制和源的支持承诺是三个不同条件。
+(C137.3) 解释承诺域中数守恒效果何以已给目标统计，却不供应支持于 $Q$ 的源，
+也不认证其承诺真实性或建立其 SSR／参考系制备兼容性。证毕。
+
+**约定 C-143.2（引文的条件与固定模型增量）。** 固定基相干凸包、纯态最大
+三项权重和主压缩条件使用 Ringbauer 等，
+*Certification and Quantification of Multilevel Quantum Coherence*，
+[arXiv:1707.05282v3](https://arxiv.org/pdf/1707.05282v3)，式 (1)、式 (9)、Theorem 2／式 (10)。
+在这里取同一 $\mathcal B$、$d=5,k=3,W=\delta I-T$；
+纯态重叠和混态正序见证已经用于 C-131.1，未作为新增一般相干理论重立。
+
+先验输入信息与已供应不对称资源态对测量能力的不同作用，见 Ahmadi、Jennings、Rudolph，
+*The WAY theorem and the quantum resource theory of asymmetry*，
+[arXiv:1209.0921v1](https://arxiv.org/pdf/1209.0921v1)，
+Section II E.1 “The possession of prior information” 与
+Section II E.2 “The possession of asymmetry resource states”。
+该文的测量／区分论证带有自己的本征态系综和装置条件；
+这里仅借用先验与资源供应须分列的背景，不从该文导出八射线或四个本模型前沿。
+
+电荷模式的必要性背景见 Marvian、Spekkens，
+*Modes of asymmetry: the application of harmonic analysis to symmetric quantum dynamics and quantum reference frames*，
+[arXiv:1312.0680v2](https://arxiv.org/pdf/1312.0680v2)，Sections II、V，Lemma 17、Proposition 18。
+这些条目以给定参考态与 $G$ 协变联合模拟通道为前提，给出必要模式包含关系。
+本处 (C142.5) 直接在声明的守恒联合效果中证明缺失差二模式的结论，
+不把必要模式条件当作测量仪器的实现、参考保持或充分条件。
+
+本模型的增量是把 C-128.1 的同一源与能量基、C-129.1 的八射线／混态支撑桥、
+C-131.1 的实际混态见证，接到指定两电荷参考的精确块域 (C138.3)、
+全部十个压缩谱、固定功效残余响应 (C140.3)、闭式前沿 (C140.2)
+及逐点守恒联合达到 (C141.2)，并接到任意有限参考的 (C142.2)、(C142.4)–(C142.6)。
+支持、正序、主压缩、模式选择和有限凸优化均为这些固定模型证明内部消费的标准工具。
+此综合不附全局原创性、优先权或新一般资源理论的断言。
+
+**适用边界 C-143.3（效果、供应与原恢复任务）。** C-136.2 是额外声明的比较菜单。
+C-130.1–C-130.2 在其理想独立控制与最终硬币合同内的承诺域原生结果仍按原义成立；
+它们没有供应本处全部总数守恒联合效果，(C141.2) 也没有给出原翻转／相位／末端
+$n_1$ 菜单的合成证明。数学对称化不等于安装新的控制服务。
+
+每次参考与系统独立且在所有假设下相同，重新供应一份；
+没有假设相关参考、免费制备或重置、参考催化返还、跨试验复用、额外副本、
+可访问环境或未计价相位时钟。效果达到不确定测后参考态，
+故不推出保持、重复测量或非扰动服务，也不构成对守恒测量限制的违反。
+$Q$ 支持与参考供应各自承担资源前提；所得前沿不比较其总制备成本或转换率。
+
+[相位增益与 qutrit 恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+的原目标仍为正 $\beta$、整个实 Kraus 编码器类 $M_3\to M_5$ 的尖锐 diamond 恢复曲线，
+包括全部复 qutrit 输入、被动参考及共同恢复量词；该全类目标仍未解决。
+单个 $P$ 的检测前沿不构造统一恢复通道，不改变该目标或其完成判据。
+以上为所列假设下的普通数学推导，不附 Lean／形式内核、硬件实现、源认证或经验保证。
+
+## 追加锚（本行以下为增补区）
