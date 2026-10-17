@@ -9,7 +9,8 @@
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
-import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import D5.S3.Quantum.Matrix.MonomialDiagonalPreserving
+import Mathlib.GroupTheory.GroupAction.MultipleTransitivity
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 
 /-! # Amendment of incoherent channels with finite coherence-breaking index -/
@@ -19,10 +20,11 @@ noncomputable section
 open Matrix
 open scoped BigOperators ComplexOrder
 open D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
-  (IsKrausChannel)
+  (IsKrausChannel krausApply)
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
   (all_density_tomographically_complete)
-open D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Commutant (pair_permutation)
+open D5.S3.Quantum.Matrix.MonomialDiagonalPreserving
+  (monomial monomial_apply monomial_eq_diagonal_mul)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
   (phase moment_four)
@@ -33,31 +35,22 @@ namespace D5.S3.Quantum.QuantumChannels.CoherenceBreakingAmendment
 def IsIncoherentKraus {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ) : Prop :=
   ∀ s j, ∃ k, ∀ i, i ≠ k → K s i j = 0
 
-/-- The channel associated to a finite Kraus family. -/
-def channel {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ)
-    (X : Matrix (Fin d) (Fin d) ℂ) : Matrix (Fin d) (Fin d) ℂ :=
-  ∑ s, K s * X * (K s)ᴴ
-
 /-- Every density matrix is mapped to a diagonal matrix. -/
 def IsCoherenceBreaking {d : ℕ}
     (Φ : Matrix (Fin d) (Fin d) ℂ → Matrix (Fin d) (Fin d) ℂ) : Prop :=
   ∀ ρ, ρ.PosSemidef → ρ.trace = 1 → ∀ i j, i ≠ j → Φ ρ i j = 0
 
-/-- Conjugation by the specified matrix. -/
-def unitaryConj {d : ℕ} (U X : Matrix (Fin d) (Fin d) ℂ) :
-    Matrix (Fin d) (Fin d) ℂ := U * X * Uᴴ
-
 /-- The same conjugation is inserted between every pair of consecutive channels. -/
 def amended {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ)
     (U : Matrix (Fin d) (Fin d) ℂ) (n : ℕ) :=
-  channel K ∘ (unitaryConj U ∘ channel K)^[n - 1]
+  krausApply K ∘ (LinearMap.mulLeftRight ℂ (U, Uᴴ) ∘ krausApply K)^[n - 1]
 
 /-- The finite-index amendment conjecture, with a single unitary in every slot. -/
 def claim : Prop :=
   ∀ (d r : ℕ) (K : Fin r → Matrix (Fin d) (Fin d) ℂ),
     IsKrausChannel K → IsIncoherentKraus K →
-    ∀ n : ℕ, 2 ≤ n → IsCoherenceBreaking (channel K)^[n] →
-      (∀ k, 1 ≤ k → k < n → ¬ IsCoherenceBreaking (channel K)^[k]) →
+    ∀ n : ℕ, 2 ≤ n → IsCoherenceBreaking (krausApply K)^[n] →
+      (∀ k, 1 ≤ k → k < n → ¬ IsCoherenceBreaking (krausApply K)^[k]) →
       ∃ U ∈ Matrix.unitaryGroup (Fin d) ℂ, ¬ IsCoherenceBreaking (amended K U n)
 
 private def offDiag {d : ℕ} :
@@ -74,18 +67,8 @@ private def offDiag {d : ℕ} :
       c * (if i = j then 0 else X i j)
     by_cases h : i = j <;> simp [h]
 
-private def conjugation {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ) :
-    Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) := MatrixMap.conj U
-
-private def channelLinear {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ) :
-    Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) :=
-  (MatrixMap.of_kraus K K).copy (channel K) (by
-    funext X
-    simp only [channel.eq_1, MatrixMap.of_kraus, LinearMap.sum_apply,
-      LinearMap.coe_mk, AddHom.coe_mk])
-
 private def residual {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ) :
-    Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) := offDiag ∘ₗ channelLinear K
+    Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) := offDiag ∘ₗ (MatrixMap.of_kraus K K)
 
 private theorem residual_diagonal {d r : ℕ}
     (K : Fin r → Matrix (Fin d) (Fin d) ℂ) (hK : IsIncoherentKraus K)
@@ -95,8 +78,9 @@ private theorem residual_diagonal {d r : ℕ}
   · subst j
     change (if i = i then 0 else _) = 0
     exact ite_eq_left rfl
-  · change (if i = j then 0 else channel K (single a a 1) i j) = 0
-    rw [ite_eq_right hij, channel.eq_1]
+  · change (if i = j then 0 else krausApply K (single a a 1) i j) = 0
+    rw [ite_eq_right hij, krausApply.eq_1, MatrixMap.of_kraus]
+    simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
     simp only [Matrix.sum_apply]
     apply Finset.sum_eq_zero
     intro s _
@@ -151,47 +135,44 @@ private theorem density_ext {d : ℕ}
       congrArg F (realPart_add_I_smul_imaginaryPart X).symm
     _ = 0 := by rw [map_add, map_smul, hre, him, smul_zero, add_zero]
 
-private def monomial {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ) :
-    Matrix (Fin d) (Fin d) ℂ := (σ⁻¹).permMatrix ℂ * diagonal ω
-
 private theorem monomial_action {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
     (X : Matrix (Fin d) (Fin d) ℂ) (i j : Fin d) :
-    conjugation (monomial σ ω) X i j =
+    LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) X i j =
       ω (σ.symm i) * star (ω (σ.symm j)) * X (σ.symm i) (σ.symm j) := by
-  change unitaryConj (monomial σ ω) X i j = _
-  rw [unitaryConj.eq_1, monomial.eq_1, Matrix.conjTranspose_mul]
-  have he : ((σ⁻¹).permMatrix ℂ * diagonal ω) * X *
-      ((diagonal ω)ᴴ * ((σ⁻¹).permMatrix ℂ)ᴴ) =
-      (σ⁻¹).permMatrix ℂ * (diagonal ω * X * (diagonal ω)ᴴ) *
-        ((σ⁻¹).permMatrix ℂ)ᴴ := by simp only [Matrix.mul_assoc]
-  rw [he, Matrix.conjTranspose_permMatrix]
-  change ((σ.symm.toPEquiv.toMatrix * (diagonal ω * X * (diagonal ω)ᴴ) *
-      σ.toPEquiv.toMatrix : Matrix (Fin d) (Fin d) ℂ)) i j = _
-  rw [PEquiv.toMatrix_toPEquiv_mul, PEquiv.mul_toMatrix_toPEquiv]
-  simp only [Matrix.submatrix_apply, Function.id_def, Matrix.diagonal_conjTranspose,
-    Matrix.mul_diagonal, Matrix.diagonal_mul, Pi.star_apply]
+  rw [LinearMap.mulLeftRight_apply]
+  simp only [Matrix.mul_apply, monomial_apply, Matrix.conjTranspose_apply,
+    Function.comp_apply]
+  simp only [ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
+    mul_zero, apply_ite, star_zero]
   ring
 
 private theorem monomial_unitary {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
-    (hω : ∀ c, ω c * star (ω c) = 1) : monomial σ ω ∈ unitaryGroup (Fin d) ℂ := by
+    (hω : ∀ c, ω c * star (ω c) = 1) :
+    monomial σ.symm (ω ∘ σ.symm) ∈ unitaryGroup (Fin d) ℂ := by
   apply Matrix.mem_unitaryGroup_iff.mpr
-  change monomial σ ω * (monomial σ ω)ᴴ = 1
-  have he : conjugation (monomial σ ω) (1 : Matrix (Fin d) (Fin d) ℂ) = 1 := by
+  change monomial σ.symm (ω ∘ σ.symm) * (monomial σ.symm (ω ∘ σ.symm))ᴴ = 1
+  have he : LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)
+        (1 : Matrix (Fin d) (Fin d) ℂ) = 1 := by
     ext i j
     rw [monomial_action]
     by_cases hij : i = j
     · subst j
       simpa only [Matrix.one_apply_eq, mul_one] using hω (σ.symm i)
     · simp [hij, σ.symm.injective.ne hij]
-  change monomial σ ω * 1 * (monomial σ ω)ᴴ = 1 at he
-  simpa only [Matrix.mul_one] using he
+  change monomial σ.symm (ω ∘ σ.symm) * 1 * (monomial σ.symm (ω ∘ σ.symm))ᴴ = 1 at he
+  simpa only [Matrix.mul_one, monomial_eq_diagonal_mul] using he
 
 private theorem monomial_projection {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
     (X : Matrix (Fin d) (Fin d) ℂ) :
-    offDiag (conjugation (monomial σ ω) X) =
-      conjugation (monomial σ ω) (offDiag X) := by
+    offDiag (LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) X) =
+      LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) (offDiag X) := by
   ext i j
-  change (if i = j then 0 else conjugation (monomial σ ω) X i j) = _
+  change (if i = j then 0 else LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) X i j) = _
   rw [monomial_action, monomial_action]
   change (if i = j then 0 else _) =
     _ * _ * (if σ.symm i = σ.symm j then 0 else _)
@@ -200,7 +181,8 @@ private theorem monomial_projection {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fi
   · simp [hij, σ.symm.injective.ne hij]
 
 private theorem monomial_single {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
-    (a b : Fin d) : conjugation (monomial σ ω) (single a b 1) =
+    (a b : Fin d) : LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) (single a b 1) =
       (ω a * star (ω b)) • single (σ a) (σ b) 1 := by
   ext i j
   rw [monomial_action]
@@ -215,34 +197,46 @@ private theorem monomial_single {d : ℕ} (σ : Equiv.Perm (Fin d)) (ω : Fin d 
 private theorem composite_formula {d r : ℕ} (K : Fin r → Matrix (Fin d) (Fin d) ℂ)
     (hK : IsIncoherentKraus K) (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ)
     (m : ℕ) (X : Matrix (Fin d) (Fin d) ℂ) :
-    offDiag (channel K ((unitaryConj (monomial σ ω) ∘ channel K)^[m] X)) =
-      ((residual K * conjugation (monomial σ ω)) ^ m * residual K) X := by
+    offDiag (krausApply K ((LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) ∘ krausApply K)^[m] X)) =
+      ((residual K * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) ^ m * residual K) X := by
   have hbridge (Y : Matrix (Fin d) (Fin d) ℂ) :
-      residual K (conjugation (monomial σ ω) (channel K Y)) =
-        residual K (conjugation (monomial σ ω) (residual K Y)) := by
-    rw [← residual_projection K hK (conjugation (monomial σ ω) (channel K Y)),
+      residual K (LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) (krausApply K Y)) =
+        residual K (LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) (residual K Y)) := by
+    rw [← residual_projection K hK (LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) (krausApply K Y)),
       monomial_projection]
     rfl
-  change residual K ((unitaryConj (monomial σ ω) ∘ channel K)^[m] X) =
-    ((residual K * conjugation (monomial σ ω)) ^ m) (residual K X)
+  change residual K ((LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) ∘ krausApply K)^[m] X) =
+    ((residual K * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) ^ m) (residual K X)
   rw [Module.End.pow_apply]
   exact (show Function.Semiconj (residual K)
-    (unitaryConj (monomial σ ω) ∘ channel K)
-    (residual K * conjugation (monomial σ ω) :
+    (LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) ∘ krausApply K)
+    (residual K * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ) :
       Module.End ℂ (Matrix (Fin d) (Fin d) ℂ)) from hbridge).iterate_right m X
 
 private theorem breaking_trace_zero {d r : ℕ}
     (K : Fin r → Matrix (Fin d) (Fin d) ℂ) (hK : IsIncoherentKraus K)
     (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ) (n : ℕ) (hn : 1 ≤ n)
-    (hcb : IsCoherenceBreaking (amended K (monomial σ ω) n)) :
+    (hcb : IsCoherenceBreaking (amended K (monomial σ.symm (ω ∘ σ.symm)) n)) :
     LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ)
-      (residual K * conjugation (monomial σ ω)) = 0 := by
-  have hz : (residual K * conjugation (monomial σ ω)) ^ (n - 1) * residual K = 0 := by
+      (residual K * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) = 0 := by
+  have hz : (residual K * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) ^ (n - 1) *
+        residual K = 0 := by
     apply density_ext
     intro ρ hρ ht
     rw [← composite_formula K hK σ ω]
     ext i j
-    change (if i = j then 0 else amended K (monomial σ ω) n ρ i j) = 0
+    change (if i = j then 0 else amended K (monomial σ.symm (ω ∘ σ.symm)) n ρ i j) = 0
     split_ifs with hij
     · rfl
     · exact hcb ρ hρ ht i j hij
@@ -269,10 +263,12 @@ private theorem character_sum {d : ℕ} (p q k l : Fin d) (hkl : k ≠ l) :
 private theorem phase_trace {d : ℕ}
     (F : Module.End ℂ (Matrix (Fin d) (Fin d) ℂ))
     (σ : Equiv.Perm (Fin d)) (ω : Fin d → ℂ) :
-    LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ) (F * conjugation (monomial σ ω)) =
+    LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ) (F * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) =
       ∑ p, ∑ q, (ω p * star (ω q)) * F (single (σ p) (σ q) 1) p q := by
   calc
-    _ = ∑ p, ∑ q, (F * conjugation (monomial σ ω)) (single p q 1) p q := by
+    _ = ∑ p, ∑ q, (F * LinearMap.mulLeftRight ℂ
+      (monomial σ.symm (ω ∘ σ.symm), (monomial σ.symm (ω ∘ σ.symm))ᴴ)) (single p q 1) p q := by
       rw [LinearMap.trace_eq_matrix_trace ℂ (Matrix.stdBasis ℂ (Fin d) (Fin d))]
       simp [Matrix.trace, LinearMap.toMatrix_apply, Fintype.sum_prod_type,
         Matrix.stdBasis, ← Matrix.single_eq_of_single_single]
@@ -285,11 +281,15 @@ private theorem nonzero_trace {d : ℕ}
     (hentry : F (single (σ k) (σ l) 1) k l ≠ 0) :
     ∃ w : Fin d → Fin 4,
       LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ)
-        (F * conjugation (monomial σ (fun c => phase (w c)))) ≠ 0 := by
+        (F * LinearMap.mulLeftRight ℂ
+          (monomial σ.symm ((fun c => phase (w c)) ∘ σ.symm),
+            (monomial σ.symm ((fun c => phase (w c)) ∘ σ.symm))ᴴ)) ≠ 0 := by
   have havg :
       (∑ w : Fin d → Fin 4, star (phase (w k)) * phase (w l) *
         LinearMap.trace ℂ (Matrix (Fin d) (Fin d) ℂ)
-          (F * conjugation (monomial σ (fun c => phase (w c))))) =
+          (F * LinearMap.mulLeftRight ℂ
+          (monomial σ.symm ((fun c => phase (w c)) ∘ σ.symm),
+            (monomial σ.symm ((fun c => phase (w c)) ∘ σ.symm))ᴴ))) =
         (4 : ℂ) ^ d * F (single (σ k) (σ l) 1) k l := by
     simp_rw [phase_trace, Finset.mul_sum]
     rw [Finset.sum_comm]
@@ -320,14 +320,14 @@ private theorem nonzero_trace {d : ℕ}
 /-- Every incoherent channel with finite coherence-breaking index at least two is amendable. -/
 theorem result : claim := by
   intro d r K _hchannel hK n hn _hpower hminimal
-  have hnot : ¬ IsCoherenceBreaking (channel K) := by
+  have hnot : ¬ IsCoherenceBreaking (krausApply K) := by
     simpa only [Function.iterate_one] using hminimal 1 (by omega) (by omega)
   have hnonzero : residual K ≠ 0 := by
     intro hz
     apply hnot
     intro ρ _ _ i j hij
     have he := congrArg (fun F : Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) => F ρ i j) hz
-    change (if i = j then 0 else channel K ρ i j) = 0 at he
+    change (if i = j then 0 else krausApply K ρ i j) = 0 at he
     simpa only [ite_eq_right hij] using he
   obtain ⟨a, b, hab⟩ : ∃ a b : Fin d, residual K (single a b 1) ≠ 0 := by
     by_contra h
@@ -350,9 +350,11 @@ theorem result : claim := by
     apply hentry
     change (if k = k then 0 else _) = 0
     exact ite_eq_left rfl
-  obtain ⟨σ, hσk, hσl⟩ := pair_permutation k l a b hkl habne
+  obtain ⟨σ, hσk, hσl⟩ : ∃ σ : Equiv.Perm (Fin d), σ k = a ∧ σ l = b :=
+    (MulAction.is_two_pretransitive_iff.mp
+      (Equiv.Perm.isMultiplyPretransitive (Fin d) 2)) hkl habne
   obtain ⟨w, hw⟩ := nonzero_trace (residual K) σ k l hkl (by simpa [hσk, hσl] using hentry)
-  refine ⟨monomial σ (fun c => phase (w c)),
+  refine ⟨monomial σ.symm ((fun c => phase (w c)) ∘ σ.symm),
     monomial_unitary σ _ (fun c => (by
       simp only [phase, Complex.star_def, map_pow, ← mul_pow, Complex.conj_I,
         mul_neg, Complex.I_mul_I, neg_neg, one_pow])), ?_⟩
