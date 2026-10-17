@@ -2546,3 +2546,94 @@ Rearranging proves (2). The argument concerns the same physical product on both 
 Unitary Schur decomposition is standard; see the [LAPACK Users’ Guide, Eigenvalues, Eigenvectors and Schur Factorization](https://www.netlib.org/lapack/lug/node50.html). Contraction positivity and Frobenius norms are standard matrix analysis; the channel normalization and Stinespring facts follow [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). Sections 72 and 76 supply the existing calibration comparison and two-test spectral-deficit framework. The contraction calculation above proves the exact auxiliary support envelope, including explicit extremizers, and its amplitude-anchor application gives (2).
 
 Sharpness in (1) is local to one anchor and one Schmidt sign-pair. It neither proves simultaneous compatibility of all fibre extremizers nor supplies a channel attaining (2). Finite LOSR mixtures can realize the target exactly, so (2) is specifically a one-product obstruction, with arbitrary local environments and original leakage. No general RT recovery theorem or literature priority for the underlying classical matrix tools is asserted.
+
+## 78. A Schmidt-truncated common anchor for coherent fibre approximation
+
+### 78.1. The high-purity centroid lemma
+
+Let c_f be unit bipartite vectors with exactly two equal nonzero Schmidt coefficients, in arbitrary common finite-dimensional local spaces. Let p_f be nonnegative weights summing to one and let c_bar=sum_f p_f c_f. Suppose
+
+    ||c_bar||^2 >= 1-epsilon/2,   0 <= epsilon < 1/2.
+
+There is a unit vector c_star with exactly two equal Schmidt coefficients such that
+
+    Re<c_star,c_bar> >= 1-u(epsilon)/2,
+    u(epsilon)=(1-sqrt(1-2epsilon))/2.                 (1)
+
+The bound is sharp as a statement about these centroids, already in local dimension three. The anchor is constructed from the two leading Schmidt directions of the centroid; the centroid itself is not asserted to have Schmidt rank two.
+
+Proof. Identify vectors with coefficient matrices, preserving the Hilbert--Schmidt inner product, and set S=sqrt(2) Mat(c_bar). Every sqrt(2) Mat(c_f) has singular values 1,1,0,... . By convexity of the operator and nuclear norms,
+
+    ||S||op <= 1,   ||S||_* <= 2,
+    ||S||_F^2 >= 2-epsilon.                           (2)
+
+Write its singular values as x_1>=x_2>=...>=0, and set L=x_1+x_2. For unequal local dimensions use a rectangular singular value decomposition, appending zero singular values as needed; both local dimensions are at least two. First
+
+    sum_j x_j^2 <= x_1^2+x_2 sum_(j>=2) x_j
+                  <= x_1^2+x_2(2-x_1) <= x_1+x_2=L.  (3)
+
+The last difference is (1-x_1)(x_1-x_2)>=0. Hence L>=2-epsilon>3/2. Also L<=2. Put u=2-L, so 0<=u<1/2. The total tail mass is at most u, and therefore its squared mass is at most u^2. For fixed L, the convex function x^2+(L-x)^2 on L/2<=x<=1 is largest at x=1: the other endpoint differs by 2(1-L/2)^2. Consequently
+
+    ||S||_F^2 <= 1+(L-1)^2+(2-L)^2
+               =2-2u+2u^2.                          (4)
+
+Combining (2) and (4) gives 2u(1-u)<=epsilon. Since u<1/2, inversion of this increasing function yields u<=u(epsilon). Choose a singular value decomposition S=sum_j x_j |a_j><b_j| and define Mat(c_star)=(|a_1><b_1|+|a_2><b_2|)/sqrt(2). Then c_star is a normalized equal-Schmidt rank-two vector and
+
+    <c_star,c_bar>=L/2=1-u/2.
+
+Repeated singular values cause no difficulty: choose any orthonormal singular vector pairs for the two leading values. This proves (1), with the usual conjugation of the right singular vectors when passing from coefficient matrices to bipartite vectors.
+
+For sharpness choose orthonormal local basis vectors e_0,e_1,e_2, and take c_1=(|00>+|11>)/sqrt(2), c_2=(|00>+|22>)/sqrt(2) with weights 1-u,u, where 0<=u<1/2. Then S=diag(1,1-u,u), its squared norm is 2-2u+2u^2, and its maximal overlap with any normalized equal-Schmidt rank-two vector is (2-u)/2 by the variational characterization of the sum of the two largest singular values. Thus (1) is attained for epsilon=2u(1-u), covering [0,1/2). This sharpness does not assert that this two-vector family simultaneously saturates any channel approximation bound below.
+
+### 78.2. The same anchor controls every Schmidt sign-pair
+
+Suppose also that each c_f is presented through local orthonormal pairs as
+
+    c_f=(a_(f,0) tensor b_(f,0)+a_(f,1) tensor b_(f,1))/sqrt(2),
+    d_f=(a_(f,0) tensor b_(f,0)-a_(f,1) tensor b_(f,1))/sqrt(2).
+
+Let Q_star be the rank-three projection onto the product of the two local Schmidt supports of c_star, with its own line removed. The sharp support inequality of section 77 applies to this constructed anchor and every actual pair c_f,d_f. Thus
+
+    sum_f p_f ||(I-Q_star)d_f||^2
+       <=2 sum_f p_f(1-|<c_star,c_f>|)
+       <=2(1-Re<c_star,c_bar>) <=u(epsilon).          (5)
+
+Only the anchor is newly chosen. The vectors d_f remain the original joint records, with their mutual Gram matrix and all phases unchanged. No independent choice of equality frames is made.
+
+### 78.3. An unrestricted channel consequence
+
+For the uniform collapsed-fibre channel F_(k,2), with the fixed MC input and output encodings of sections 66 and 72, write delta for the unhalved diamond error of one common physical product of CPTP maps. Arbitrary original output leakage and arbitrary finite local environments are permitted. For integers 4<=k<=12,
+
+    delta >= (sqrt(12k)-6)/k.                         (6)
+
+For k=4 this is sqrt(3)-3/2, approximately 0.23205. Together with the strict upper construction in section 73, the unrestricted four-fibre optimum lies in [sqrt(3)-3/2,1/3). Equality in (6), and the exact channel optimum, are not asserted. For k>12 the existing section 77 bound 2(k-3)/(3k) is stronger than the threshold 1/2 supplied by this high-purity argument.
+
+Proof. Apply section 72's calibration comparison to the original product. It suffices to lower-bound the error delta of the resulting calibrated product, since that error does not exceed the original error. No environment-dimension resource constraint is imposed here. Its actual records determine c_f,d_f as above. The two normalized coherent inputs
+
+    |psi_+->=k^(-1/2) sum_f (|f,0> +/- |f,1>)/sqrt(2)
+
+give logical outputs C^T/k and M^T/k, where C and M are the Gram matrices of c_f and d_f. Their ideal outputs are J_k/k and I_k/k. As in section 77, trace-zero normalization gives
+
+    ||k^(-1) sum_f c_f||^2 >=1-delta/2,
+    delta >= ||M-I_k||_1/k.                          (7)
+
+These normalized state tests lower-bound the full arbitrary-reference diamond norm; the output MC embedding preserves trace norms.
+
+If delta>=1/2, (6) already follows, because (sqrt(12k)-6)/k<=1/2 for 4<=k<=12, equivalently (sqrt(k)-sqrt(12))^2>=0. Otherwise apply (5) with p_f=1/k and epsilon=delta. For B with columns d_f,
+
+    Tr B*(I-Q_star)B <= k u(delta),   rank(Q_star B)<=3.
+
+The variational principle bounds the sum of the k-3 smallest eigenvalues of M=B*B by k u(delta). Since Tr M=k, the second test in (7) yields
+
+    delta >= 2(k-3)/k-2u(delta)
+           =1-6/k+sqrt(1-2delta).                    (8)
+
+In particular delta-1+6/k is nonnegative. Squaring the inequality sqrt(1-2delta)<=delta-1+6/k is therefore legitimate and gives
+
+    delta^2+(12/k)delta+36/k^2-12/k >=0.
+
+Its nonnegative root is (sqrt(12k)-6)/k. This proves (6). At k=12, (8) rules out delta<1/2; for k>12 it does so as well. The proof uses one common physical channel and one common Schmidt-truncated anchor for all fibres. It does not replace either party's local records or assume simultaneous attainment of the auxiliary inequalities.
+
+### 78.4. Attribution and scope
+
+Singular value decomposition, the operator/nuclear norm triangle inequalities, and the variational characterization of the sum of the two largest singular values are standard matrix-analysis ingredients; see [Watrous, The Theory of Quantum Information, Chapter 1](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf) for singular values, Schatten norms, and their variational formulations. No priority claim is made for these ingredients. The original-channel calibration and trace-norm tests are the results of sections 72 and 77. The centroid lemma proves the particular sharp high-purity tradeoff (1), and (5) transports its constructed anchor to all original Schmidt sign-pairs simultaneously. This is a paper theorem concerning the fixed uniform fibre family. The channel lower bound is not an exact optimum, does not restrict the environment dimension, and does not apply to arbitrary finite LOSR mixtures, which can realize the target exactly.
