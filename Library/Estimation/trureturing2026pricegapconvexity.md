@@ -3533,6 +3533,104 @@ literature-priority claim, Lean declaration or kernel certification.
 The full Robin comparison and RH remain unproved.
 
 
+## A local frequency cut controls a compact band without a clock ceiling
+
+Keep MB1--MB3's actual source, every original full window and tie,
+CR45--CR47's fixed $a$, the positive outgoing weights $\delta_i$,
+and the original individual legal heights $\tau_i$. Reuse the
+[Huxley density exponent recorded in Guth--Maynard, equation (1.3)](../Analytic/guthmaynard2024largevalues.md#the-zero-density-input-for-cumulative-contributions).
+For each fixed $3/4\le\sigma<1$ and fixed $\varepsilon>0$, it gives
+
+$$
+N(\sigma,T)\ll_{\sigma,\varepsilon}T^{d_H(\sigma)+\varepsilon},
+\qquad d_H(\sigma)=\frac{3(1-\sigma)}{3\sigma-1}.
+$$
+
+Fix $5/6<\sigma_0<\sigma_1<1$. Define
+$e_h(\sigma)=\sigma-1/2+h[d_H(\sigma)-1]$. Since
+
+$$
+e_{1/2}(\sigma)
+=\frac{(1-\sigma)(5-6\sigma)}{2(3\sigma-1)}<0,
+$$
+
+compactness permits a fixed $0<h<1/2$ with
+
+$$
+\epsilon_H:=-\max_{\sigma\in[\sigma_0,\sigma_1]}e_h(\sigma)>0.
+\tag{HR1}
+$$
+
+The local lower cut is $B_i^h$. Its upper mask remains the actual
+$\tau_i\in[(\sqrt{B_i}-4)/4,(\sqrt{B_i}-4)/2]$; hence the lower
+cut lies below every legal upper height at a common source start.
+For the complete coefficient, DH3's proof already supplies
+$|c_{B,a}(\rho)|\le(a+2)B^{\beta-1/2}/\gamma$ for $\gamma\ge1$.
+This retains the original $-aB^{\rho-1/2}/\rho$ subtraction.
+
+Apply DH3's finite-bin argument directly in the clock $B$. Choose
+disjoint half-open bins $J_j$ covering $[\sigma_0,\sigma_1]$,
+closing the last bin at $\sigma_1$, with width at most
+$\epsilon_H/4$. Write their endpoints as $\sigma_j,\sigma_{j+1}$.
+At each fixed left endpoint $\sigma_j$, dyadic
+summation of the cited density bound gives
+$\sum_{\gamma>T,\,\beta\ge\sigma_j}m_\rho/\gamma
+\ll T^{d_H(\sigma_j)-1+\varepsilon}$.
+Choose one fixed $\varepsilon>0$ with
+$h\varepsilon\le\epsilon_H/4$ and
+$d_H(\sigma_j)+\varepsilon<1$ for every bin. Then
+
+$$
+\begin{aligned}
+\sum_{\substack{\gamma>B^h\\
+\beta\in J_j}}
+ m_\rho|c_{B,a}(\rho)|
+&\ll B^{\sigma_{j+1}-1/2+h[d_H(\sigma_j)-1+\varepsilon]}\\
+&\le B^{-\epsilon_H/2}.
+\end{aligned}
+\tag{HR2}
+$$
+
+Only finitely many fixed real-part parameters are used. Extending
+this positive bound beyond $\tau_i$ is an upper estimate for the
+selected subhead. Summing the bins and the original residence gives
+
+$$
+\boxed{
+\mathcal R_X^{\rm band}:=
+2\sum_{i<m}\delta_i
+\sum_{\substack{B_i^h<\gamma\le\tau_i\\
+                 \sigma_0\le\beta\le\sigma_1}}
+ m_\rho|c_{B_i,a}(\rho)|
+\ll L_Xb_X^{-\epsilon_H/2}
+=o(L_X)=o(M_XL_X).}
+\tag{HR3}
+$$
+
+Here $b_X=\min_{i<m}B_i\to\infty$ and
+$\sum_{i<m}\delta_i=L_X$. The constants are uniform over original
+windows, ties and legal height assignments. No upper bound on the
+core clocks or restriction $\Theta<1$ is used, so HR3 also applies
+when $\Theta=1$ on its original supplied parameter range.
+
+For a concrete nonempty choice, take
+$\sigma_0=9/10$, $\sigma_1=99/100$ and $h=499/1000$.
+The identity $d_H''(\sigma)=36/(3\sigma-1)^3>0$ makes $e_h$ convex,
+and its endpoint values are $-93/8500$ and $-69/49250$.
+Thus $\epsilon_H=69/49250$ gives
+$\mathcal R_X^{\rm band}\ll L_Xb_X^{-69/98500}$.
+
+Deleting exactly this subset from the original weighted real head
+changes that head by at most $\mathcal R_X^{\rm band}$. All low
+frequencies and real parts outside the fixed band remain in its
+complement. No estimate uniform as $\sigma_1\uparrow1$ is established here,
+and no sign for that complement is supplied. It is a paper application
+of the cited density estimate and existing coefficient bound, with
+no new density theorem, literature-priority claim or Lean
+certification. The full signed comparison, Robin inequality and RH
+remain unproved.
+
+
 ## Existing bounded-variation quadrature transports every original core tie
 
 Reuse N1--N2, PG1 and the actual real-parameter finite envelope from
