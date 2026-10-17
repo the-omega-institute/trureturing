@@ -1021,3 +1021,678 @@ bridges remain unsupplied. The complete original quantum/count/source/
 native problem is retained with these obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A strict positive-residual norm gap from the original attained target
+
+**Theorem 8.1 (strict separation from the zero positive residual).**
+Retain the same root, all its source-enclosure and supplier premises in
+Assumption 1.1, and the finite globally entire-cylinder feasible dual
+and the same finite jointly attaining law in Assumption 1.4. If
+
+$$
+t\ge\max\{t_0,10000\},\qquad 0<\lambda<\infty,
+$$
+
+then, in exactly the normalization (IC.8),
+
+$$
+\|R_+\|_{\rm op}>\frac{t}{500}.
+\tag{IC.34}
+$$
+
+This is the real Euclidean operator norm of the symmetric dual
+coefficient matrix $Q-t\mathsf F$. It is neither a quantum trace or
+diamond distance nor a physical resource or actual-label count. No
+inertia premise on $R_-$ is needed. The domain here is FC Assumption
+17.1 with its own additional cutoff $10000$; it does not extend the
+$30000$ premise of
+[RB Assumption 1.3](https://github.com/the-omega-institute/trureturing/blob/36adbdd8df3bc6615cae0f0f5fd1207239025477/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_RANK_ONE_BUDGET_EXCLUSION.md).
+Here and below RB denotes that fixed source.
+
+Proof. Use the static source expressions of (IC.1)–(IC.4), with
+$A_\ell=E_{\ell,11}$, $B_\ell=E_{\ell,22}$ and
+$a_\ell=-E_{\ell,12}$. FC Propositions 18.1 and 24.1 and the
+positive-denominator estimates in FC Proposition 34.2 give
+
+$$
+\begin{gathered}
+\alpha>0.876,\quad\beta>0.121,\quad\mu<12,\quad
+\mathfrak c(x)>1/25,\\
+0<A_\ell<B_\ell<0.02,\quad 0<a_\ell<0.00032,\quad
+0<l_u<0.0052,\quad0<l_v<0.013,\\
+0.0075<e<0.008,\qquad 0<d_*<0.022.
+\end{gathered}
+\tag{IC.35}
+$$
+
+Every decimal in this argument is an exact terminating rational.
+These are static enclosures, with no small-saturated-mass or
+large-budget inertia premise. In particular the coarse rectangle of
+FC18, and also its FC24 widening to $m_1<0.51$, suffice for these
+short bounds. Source membership in the nine GC6.1 dyadic rows supplies
+the same root throughout. Evaluating source expressions on a rectangle
+does not assume TP at any of its off-root points.
+
+The circle identity and $2|uv|\le1$ give
+
+$$
+\begin{aligned}
+|\ell|&\le B_\ell+a_\ell+l_u+l_v
+ <0.03852<1/20,\\
+|f|&\le e+d_*<3/100.
+\end{aligned}
+\tag{IC.36}
+$$
+
+These are the same uniform-height mechanisms used in RB.22–RB.23;
+only static inputs are being reused, not RB's rank-one hypotheses.
+Put $a_*=\sqrt\alpha$, $b_*=\sqrt\beta$ and
+$x_*=(a_*,-b_*)$. This notation is local to this proof. It does not
+refer to a negative-pure kernel contact. The point is unit and
+
+$$
+\begin{gathered}
+\alpha\beta-(8/25)^2>
+0.876\cdot0.121-(8/25)^2=899/250000>0,\\
+f(x_*)=-2ea_*b_*-d_*\beta<-3/625.
+\end{gathered}
+\tag{IC.37}
+$$
+
+For this same law, the last three moments give
+
+$$
+\Lambda:=\int b_xxx^T\,d\pi
+=\begin{pmatrix}U&0\\0&V_2\end{pmatrix}\succ0,
+\qquad\operatorname{tr}\Lambda=\mu.
+\tag{IC.38}
+$$
+
+This is FC Proposition 17.3, including its zero mixed entry, not a new
+choice of failure marginal. Cauchy–Schwarz for coefficient mass one
+gives $K\le\sqrt{\int u^2\,d\pi}=a_*$. Also
+
+$$
+J_t\le\int|\ell|\,d\pi+\int b_x|f|\,d\pi
+<\frac1{20}+\frac3{100}\mu<\frac{41}{100}.
+\tag{IC.39}
+$$
+
+Let $S_+=R_+$ and suppose, for contradiction,
+$\|S_+\|_{\rm op}\le t/500$. Then $Q=t\mathsf F+S_+$.
+Write $\mathcal L_\alpha(P_y)=y_0+\alpha y_3$. The target pairing
+already underlying (IC.15) and RB.31 is now
+
+$$
+\begin{aligned}
+y\cdot B
+&=\mathcal L_\alpha(P_y)+\frac1t\operatorname{tr}(Q\Lambda)\\
+&=\mathcal L_\alpha(P_y)-d_*V_2
+                         +\frac1t\operatorname{tr}(S_+\Lambda),\\
+\mathcal L_\alpha(P_y)-\lambda a_*
+&=J_t+\lambda(K-a_*)+d_*V_2
+                         -\frac1t\operatorname{tr}(S_+\Lambda).
+\end{aligned}
+\tag{IC.40}
+$$
+
+The sign is fixed by $\operatorname{tr}(\mathsf F\Lambda)=-d_*V_2$;
+RB's substitution $Q=-t\mathsf F-\rho ww^T$ has a different sign.
+The standard PSD trace inequality gives
+$|\operatorname{tr}(S_+\Lambda)|\le\mu\|S_+\|_{\rm op}$.
+For example it follows by summing the Rayleigh bounds against the
+nonnegative eigenvalues of $\Lambda$. Since $\lambda(K-a_*)\le0$
+and $V_2\le\mu<12$, (IC.40) implies
+
+$$
+\mathcal L_\alpha(P_y)-\lambda a_*
+<\frac{41}{100}+\frac{11}{500}\,12+\frac{12}{500}
+=\frac{349}{500}.
+\tag{IC.41}
+$$
+
+Evaluate $P_y$ at the four points $(\epsilon a_*,\tau b_*)$,
+$\epsilon,\tau\in\{\pm1\}$. Their equal average is
+$\mathcal L_\alpha(P_y)$: the $u,v,uv$ terms cancel and
+$u^2=\alpha$. At each point pure feasibility gives
+$P_y-\lambda a_*\ge|\ell|\ge0$. Consequently at the particular
+point $x_*$,
+
+$$
+B_*:=P_y(x_*)-\lambda a_*<\frac{349}{125},\qquad
+B_*+\ell(x_*)<\frac{1421}{500}.
+\tag{IC.42}
+$$
+
+This is sign averaging of polynomial evaluations. The pure four-corner
+law has zero failure moments, whereas $B_5(t)=\mu/t>0$, so it is
+not being substituted for the original feasible law.
+
+Use global saturated feasibility at $x_*$ with report sign $+$ and
+height sign $-$, whether or not this point is occupied or this sign
+maximizes its saturated height. By (IC.8), after division by $D_c$,
+
+$$
+\begin{aligned}
+0&\le B_*+\ell(x_*)+
+\mathfrak c(x_*)x_*^T(2t\mathsf F+S_+)x_*,\\
+B_*+\ell(x_*)&\ge\mathfrak c(x_*)
+               [2t|f(x_*)|-x_*^TS_+x_*]\\
+&>\mathfrak c(x_*)\left(\frac6{625}-\frac1{500}\right)t
+>\frac{19}{62500}t\ge\frac{76}{25}.
+\end{aligned}
+\tag{IC.43}
+$$
+
+Here $x_*^TS_+x_*\le\|S_+\|_{\rm op}\le t/500$.
+The bracket is strictly greater than $(19/2500)t>0$ before
+multiplication by the lower capacity bound. The lower bound at
+$10000$ exceeds the upper bound (IC.42) by
+
+$$
+\frac{76}{25}-\frac{1421}{500}=\frac{99}{500}>0.
+\tag{IC.44}
+$$
+
+This contradiction proves the strict inequality, including at the
+endpoint $t=10000$ whenever the supplied premises hold. The equality
+threshold of these particular coarse upper and lower expressions is
+$177625/19<10000$; no sharp cutoff is asserted. $\square$
+
+## 9. The complete paired inventory on the separated indefinite domain
+
+**Corollary 9.1 (at most two directed paired groups).** Under Theorem
+8.1's hypotheses, suppose separately that $R_-$ is indefinite. Every
+compatible paired group in the complete inventory, including unused
+ones, has $\ell(x)>0$, $\eta_1(x)\ge0$ and $R_+x=0$.
+There are at most two such directed groups.
+
+Proof. Theorem 4.1 already proves the positive-pure and common-kernel
+necessity for every supplied pair. Its local ingredients are the
+value-and-tangency argument of
+[RC Theorem 70.1](https://github.com/the-omega-institute/trureturing/blob/321589a8be98de4fe179f99f6e593d8784952db1/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_RESIDUAL_CONTACT_CURVE.md)
+and the negative-pair exclusion in FC Theorem 34.3. In the complete
+endpoint setting used here, the nonzero pure-height fact is FC19/20.
+At a compatible pair, the two smooth nonnegative signed gaps and
+their angular derivatives vanish. Thus $x^TR_\sigma x=0$ and
+$(x^\perp)^TR_\sigma x=0$. These two equations give
+$R_\sigma x=0$, rather than inferring a kernel vector from a quadratic
+isotropic zero alone. Indefiniteness makes $R_-$ invertible, excluding
+the negative sign. For the positive sign Theorem 8.1 gives $R_+\ne0$.
+A nonzero $2\times2$ matrix has kernel dimension at most one. A kernel
+line meets the directed circle in two distinct antipodes; an invertible
+$R_+$ gives no pair. Existence of either allowed direction as a contact
+is not implied. $\square$
+
+The algebraic zero-$R_+$ possibilities retained by Theorem 4.1 and
+Definition 6.2 are therefore excluded only in Theorem 8.1's additional
+domain. This does not exclude weak-zero saturated heights. No inertia
+theorem is transported to $10000$: FC34.3's full dichotomy uses its
+small-mass range, and RB Corollary 7.2 supplies indefiniteness only at
+$t\ge\max(t_0,2000000000)$. At the latter range its own supplied
+finite attained-class premises can supply the separate inertia premise.
+
+Both independent columns of every allowed pair remain in (IC.31),
+with all nonnegative masses and all fractions
+$\xi=a_1/(a_0+a_1)$ for positive total mass. Antipodes remain separate.
+The bound concerns only paired groups, with no saturated-singleton,
+total-group or actual minimum-count bound. Negative pure singletons,
+reverse singletons, other saturated singletons and unused contacts
+remain in the complete inventory.
+
+## 10. Original capacity slack and the pure-coordinate obstruction
+
+**Theorem 10.1 (positive conserved slack at the enclosed original source).**
+Retain Assumption 1.1 and any feasible finite law of Definition 1.3,
+with finite $t\ge t_0$. Write $\zeta=\xi\mathfrak c=b_x/t$,
+distinct from the endpoint heights $\eta_j$, and define
+
+$$
+\begin{gathered}
+\chi_c(x,\zeta)=N_c(x)-\zeta D_c(x)=(1-\xi)N_c(x)\ge0,\\
+A_c=N_u\alpha+N_v\beta,\qquad C_c=D_uU+D_vV_2,\\
+\int\chi_c\,d\pi=A_c-C_c/t>1/200,\qquad
+1/2000<N_uD_v-N_vD_u<1/1000.
+\end{gathered}
+\tag{IC.45}
+$$
+
+Every feasible endpoint representation therefore has positive
+pure-coordinate mass. If eight occupied groups are saturated
+singletons, at least one other occupied group carries pure mass.
+For fixed directions and allowed endpoint coordinates, if exactly one
+group carries all the slack and no other non-saturated coordinate is
+activated, its pure mass cannot be removed by a slack-preserving
+reweighting.
+
+Proof. Expand the slack using $v^2=1-u^2$:
+
+$$
+\chi_c=N_v+(N_u-N_v)u^2-D_v\zeta
+                                -(D_u-D_v)\zeta u^2.
+\tag{IC.46}
+$$
+
+Integrating the original moment rows gives $A_c-C_c/t$, using
+$\int\zeta\,d\pi=\mu/t$, $\int\zeta u^2\,d\pi=U/t$
+and $\mu-U=V_2$. This identity holds before any contact or height
+assumption. It is a source-specific linear combination of the existing
+rows, not an additional constraint imposed on a new marginal.
+
+Here are strict rational bounds obtained from all nine GC Definition
+6.1 rows and the uncancelled axial formulas (IC.3):
+
+| Expression | Strict rational outer interval |
+| --- | --- |
+| $D_u$ | $(0.039505688487,0.039505688488)$ |
+| $D_v$ | $(0.095020185595,0.095020185596)$ |
+| $N_u$ | $(0.008354546087,0.008354546088)$ |
+| $N_v$ | $(0.006115032697,0.006115032698)$ |
+| $A_c$ | $(0.008080683454,0.008080683455)$ |
+| $C_c$ | $(0.667238599501,0.667238599502)$ |
+
+The enclosure has an exact source-bound reconstruction. Divide each
+of the nine integer endpoint pairs of GC6.1 by $2^{224}$. Form
+$r_s=c_{\rm src}dh_1/(abh_2)$, $\alpha=(1+r_s)^{-1}$,
+$\beta=1-\alpha$ and
+$\delta=ab/(h_0h_1)+c_{\rm src}d/(h_0h_2)$. Then evaluate
+(IC.3) and $V,W,U,V_2,A_c,C_c$ by endpoint addition, subtraction,
+the minimum and maximum of four endpoint products, and reciprocal
+only for positive intervals. These formulas require no radicals and
+no TP simplification. Outward rounding to denominator $10^{12}$
+gives the displayed table. Thus the integer comparisons are
+reconstructible from the actual source rows, without a sampled root.
+
+For the determinant, it already suffices to subtract
+$[0.006115032697,0.006115032698]
+ [0.039505688487,0.039505688488]$ from
+$[0.008354546087,0.008354546088]
+ [0.095020185595,0.095020185596]$ by these outward rules.
+Both endpoints are strictly between $1/2000$ and $1/1000$.
+Also $A_c>0.008$, $C_c<0.7$ and $C_c/A_c<100$.
+FC24's dyadic bound
+$264.809031388577<t_0<264.809031388578$ gives $t_0>250$;
+its coarse rectangle alone does not give that fact. Hence for all
+$t\ge t_0$,
+
+$$
+A_c-C_c/t>0.008-0.7/250=13/2500>1/200.
+\tag{IC.47}
+$$
+
+These are expression inequalities at the stipulated root. They supply
+neither source existence nor off-root TP.
+
+On a saturated endpoint $\chi_c=0$; on a pure endpoint
+$\chi_c=N_c(x)>0$. A compatible pair with masses $(a_0,a_1)$
+contributes exactly $a_0N_c(x)$. Thus positive total slack requires
+a positive pure coordinate, even if it belongs to a fractional label.
+If one fixed group alone carries slack, conservation fixes its pure
+mass to $(A_c-C_c/t)/N_c(x)>0$. Making its saturated mass zero leaves
+that group occupied. The argument does not prohibit transferring slack
+to other original contacts or changing directions in another law.
+$\square$
+
+## 11. A mixed-tag fixed-support interpolation interface
+
+**Definition 11.1 (eight selected original saturated singleton groups).**
+Under Assumptions 1.1 and 1.4, select eight occupied groups of
+$\mathscr G$, each a saturated singleton, with eight pairwise distinct
+finite slopes $z_i$. All other columns and their weights stay fixed,
+including both coordinates of every pair and every unused contact.
+Use the actual direction tags and maximizing height tags:
+
+$$
+\begin{gathered}
+x_i=\epsilon_i(1,z_i)^T/s_i,\quad s_i=\sqrt{1+z_i^2},\quad
+\epsilon_i\in\{\pm1\},\quad d_i=d_c(z_i),\quad n_i=n_c(z_i),\\
+\mathcal W(z)=d_c(z)\sqrt{1+z^2},\qquad
+\mathcal V(z)=d_c(z)E(z)+t n_c(z)\bar f(z),\\
+H_i=\mathcal V(z_i)+\epsilon_i\mathcal W(z_i)(l_u+l_vz_i)
+=(1+z_i^2)d_i\eta_1(x_i),\\
+\sigma_i\in\operatorname{argmax}_{\sigma\in\{\pm1\}}
+                                      \sigma\eta_1(x_i),\qquad
+\rho_i=\frac{p_i}{(1+z_i^2)d_i}>0,\\
+P_8(z)=\prod_{i=1}^8(z-z_i),\qquad
+\mathcal L_r(F)=\sum_{i=1}^8\frac{z_i^rF_i}{P_8'(z_i)}
+\quad(r=0,1,2),\\
+\mathcal R=\begin{pmatrix}
+\mathcal L_0(\epsilon\mathcal W)&\mathcal L_1(\epsilon\mathcal W)&\mathcal L_2(\epsilon\mathcal W)\\
+\mathcal L_0(\epsilon z\mathcal W)&\mathcal L_1(\epsilon z\mathcal W)&\mathcal L_2(\epsilon z\mathcal W)\\
+\mathcal L_0(\sigma H)&\mathcal L_1(\sigma H)&\mathcal L_2(\sigma H)
+\end{pmatrix}.
+\end{gathered}
+\tag{IC.48}
+$$
+
+The evaluations in a tagged row use its actual $\epsilon_i,\sigma_i$.
+Either maximizing description is retained at zero saturated height;
+$\sigma_iH_i=0$ there. $\mathcal W$ differs from the source scalar
+$W$ of (IC.4), and $\mathcal R$ differs from $R_\pm$.
+
+**Theorem 11.2 (exact criterion and nonnegative whole-singleton pivot).**
+In Definition 11.1, $\det\mathcal R=0$ if and only if there is a
+nonzero signed change of just those eight endpoint masses preserving
+all eight $\Gamma$ moments, achieved $K$ and attained $J_t$.
+If $a=(a_0,a_1,a_2)^T\ne0$ is in $\ker\mathcal R$, put
+
+$$
+\begin{gathered}
+A(z)=a_0+a_1z+a_2z^2,\qquad
+\delta\rho_i=\frac{A(z_i)}{P_8'(z_i)},\qquad
+\delta p_i=(1+z_i^2)d_i\delta\rho_i,\\
+\tau_* =\min_{\delta\rho_i<0}
+                  \frac{\rho_i}{-\delta\rho_i}>0.
+\end{gathered}
+\tag{IC.49}
+$$
+
+For $0\le\tau\le\tau_*$ the changed masses are nonnegative and
+retain all those joint data. At $\tau_*$ at least one selected
+entire singleton group has zero mass and is omitted. Simultaneous
+zeros are permitted; every remaining positive mass is finite and
+strictly positive. Other groups and all fixed original coordinates,
+capacities and heights stay fixed.
+
+Proof. Let $\mathbb P_j$ denote polynomials of degree at most $j$.
+Multiplying the original augmented column $(\Gamma(x_i,1),|u_i|)$
+by the positive factor $(1+z_i^2)d_i$ gives, in original row order,
+
+$$
+\big((1+z_i^2)d_i,\ \epsilon_i\mathcal W_i,
+ \epsilon_i z_i\mathcal W_i,\ d_i,\ z_i d_i,
+ (1+z_i^2)n_i,\ n_i,\ z_i n_i,\ \mathcal W_i\big)^T.
+\tag{IC.50}
+$$
+
+The six polynomial rows span $d_c\mathbb P_2+n_c\mathbb P_2$.
+This equals $\mathbb P_4$ here: the nonzero determinant
+$D_uN_v-D_vN_u$, supplied by Theorem 10.1, makes $d_c,n_c$
+span $1,z^2$; their multiples by $z$ and $z^2$ then span all
+five monomials through degree four. If that determinant were zero
+without the original source-enclosure premise, the span would instead
+have dimension three. The necessity argument below would then require
+that explicit nondegeneracy premise. Sufficiency does not require it.
+
+Reuse the distinct-node leading-coefficient identity in Carl de Boor,
+[*Divided Differences*, Example 9, (41)](https://arxiv.org/html/math/0502036v1):
+$\sum_i F(z_i)/P_8'(z_i)=0$ for $\deg F\le6$.
+Thus each vector $A(z_i)/P_8'(z_i)$ with $\deg A\le2$
+annihilates all rows in $\mathbb P_4$. These vectors are three
+independent directions, since a nonzero quadratic cannot vanish at
+eight distinct nodes. The five-row Vandermonde matrix has rank five,
+so they exhaust its kernel. This is standard barycentric interpolation
+used inside the original tagged problem, not a new interpolation theorem.
+
+The contact equation is indispensable for the remaining rows. With
+the actual original failure polynomial
+
+$$
+q(z)=(y_5+y_6)+y_7z+y_5z^2,\qquad
+L_c(z)=d_c(z)p_y(z)+n_c(z)q(z)\in\mathbb P_4,
+$$
+
+the saturated contact equality, after the same positive scaling, is
+
+$$
+L_c(z_i)+\epsilon_i\mathcal W_i(y_1+y_2z_i)
+                         -\sigma_iH_i-\lambda\mathcal W_i=0.
+\tag{IC.51}
+$$
+
+There is no missing $t$ in (IC.50): its failure intensity is
+$\zeta=b_x/t=\mathfrak c$; the height in (IC.51) uses
+$\ell+t\mathfrak c f$. No fitted external quadratic replaces $q$.
+
+For the barycentric change, the first two rows of $\mathcal R a=0$
+preserve the directed first moments. Its third row preserves $J_t$,
+since the scaled absolute height is $\sigma_iH_i$.
+Summing (IC.51) against $\delta\rho$ gives
+$\delta J_t+\lambda\delta K=0$ because the polynomial and first
+two tagged sums vanish. As $\lambda>0$, $\delta K=0$ too. This
+proves sufficiency for all nine rows and height. Conversely a nonzero
+fixed-support change preserving the nine rows annihilates
+$\mathbb P_4$, so it has exactly the barycentric form. The first
+two tagged sums vanish. Contact equality and preserved $K$ force
+the height sum to vanish, giving $\mathcal R a=0$. This proves
+necessity without assuming independence of any other original rows.
+
+The direction is nonzero and preserves the mass row. All scale
+factors are positive, so it has both signs. Hence the finite minimum
+in (IC.49) exists and is strictly positive. At its value all masses
+remain nonnegative and at least one is zero. Because each selected
+group is a singleton, that zero deletes a whole group. Contact equality
+preserves optimality at the original achieved $K$. Omission of a zero
+coefficient is before the unknown-input experiment, not postselection.
+$\square$
+
+For a common maximizing height sign $\sigma$, the algebraic identity
+$\mathcal V\in\mathbb P_4$ would give
+
+$$
+\mathcal L_r(\sigma H)=
+\sigma l_u\mathcal L_r(\epsilon\mathcal W)
++\sigma l_v\mathcal L_r(\epsilon z\mathcal W),
+\tag{IC.52}
+$$
+
+and thus a singular matrix. But FC Theorems 12.1 and 12.3 allow at
+most three saturated contacts per report/height tag, hence at most six
+admitting any one common maximizing height sign. Eight such contacts
+with a common height sign have no instance in this original source
+class. Weak-zero double descriptions do not evade that cap. An eligible
+eight-point configuration must have mixed height signs. In that case
+$\mathcal L_r(\sigma\mathcal V)$ need not vanish: multiplication
+by varying $\sigma_i$ prevents the polynomial annihilation used in
+(IC.52). No mixed-sign singularity or original attained eight-point
+instance satisfying $\det\mathcal R=0$ is supplied. The theorem is
+a criterion on fixed occupied support, not a universal removal theorem.
+An antipodal pair has equal slope and is outside its distinct-slope
+hypothesis while remaining two admitted labels in the full problem.
+
+## 12. Full-group directions and a capacity-faithful method obstruction
+
+**Definition 12.1 (fixed complete-group equations and whole-pair exit).**
+On the contact chart, let $p_{gj}$ be the endpoint masses of group $g$,
+with an absent endpoint identically zero. Put
+$\rho_{gj}=p_{gj}/[(1+z_g^2)d_c(z_g)]$. In a pair the two
+coordinates are independent; no fixed fraction is imposed. The full
+nine-row preservation equations are equivalently
+
+$$
+\begin{aligned}
+\sum_g d_c(z_g)(1,z_g,z_g^2)
+                  (\delta\rho_{g0}+\delta\rho_{g1})&=0,\\
+\sum_g n_c(z_g)(1,z_g,z_g^2)\delta\rho_{g1}&=0,\\
+\sum_g\mathcal W(z_g)(1,\epsilon_g,\epsilon_g z_g)
+                  (\delta\rho_{g0}+\delta\rho_{g1})&=0.
+\end{aligned}
+\tag{IC.53}
+$$
+
+Indeed (IC.50) gives these rows directly, with the failure rows zero
+on the pure sheet; replacing $1+z^2$ and $1$ by $1,z^2$ is an
+invertible row operation. On contacts, preserving these equations
+preserves $J_t$ by $g=y\cdot\Gamma-\lambda k$. Opposite-height
+singletons at a common directed angle remain different groups in the
+sums. All unused coordinates remain in the complete inventory, whether
+held fixed or admitted as additional variables in another direction.
+
+For an initially occupied pair with $\rho_{g0},\rho_{g1}>0$, a
+single affine nonnegative pivot deletes the whole group exactly when
+
+$$
+\delta\rho_{g0}<0,\quad\delta\rho_{g1}<0,\quad
+\frac{\rho_{g0}}{-\delta\rho_{g0}}
+=\frac{\rho_{g1}}{-\delta\rho_{g1}}=\tau_*,
+\tag{IC.54}
+$$
+
+and every other coordinate stays nonnegative up to that pivot. This
+follows by solving both affine zero equations; either one alone leaves
+the group occupied. An initially zero coordinate must be zero at exit,
+and no ratio with its zero initial mass is taken. The height-preserving
+merge condition remains exactly $\eta_0\eta_1\ge0$ for two positive
+endpoint masses, including either weak zero; the strict opposite-sign
+loss and its physical HALF factor remain Definition 1.5. No rank or
+endpoint-deletion argument replaces these whole-group conditions.
+
+**Proposition 12.2 (quartic data and contrast still miss a directed row).**
+For the actual positive axial coefficients of (IC.3), there are two
+three-atom saturated coefficient probability laws on the directed circle
+with identical scaled polynomial data through degree four and identical
+$K$, but different $v$ first moments. Each uses the original positive
+capacity $n_c/d_c$. They are method-level counterexamples; neither law
+is asserted to have the original target $B(t)$ or to be on an attained
+optimal face.
+
+Proof. Set $L_0=1+D_u/D_v$, $x_j=L_0+j$ for $j=1,2,3$, and
+use six distinct slopes $\zeta=\pm\sqrt{x_j}$, all with direction
+tag $+$. Let
+
+$$
+P_6(z)=\prod_{j=1}^3(z^2-x_j),\qquad
+b_\zeta=1/P_6'(\zeta),\qquad
+a_\zeta=b_\zeta(1+\zeta^2)d_c(\zeta).
+\tag{IC.55}
+$$
+
+There are three positive and three negative $a_\zeta$, since the
+derivatives at six ordered simple real roots alternate in sign. The
+de Boor leading-coefficient identity annihilates polynomials through
+degree four against $b_\zeta$. In particular
+$\sum a_\zeta=0$, so the positive and negative parts have a common
+strictly positive normalizer $M_0$. Divide each part by $M_0$ to
+obtain the two probability laws, with saturated capacity $n_c/d_c$.
+Their reweighted masses $p/[(1+z^2)d_c]$ agree on all quartics.
+
+The six polynomial rows of (IC.50) consequently agree. The $u$ and
+$K$ rows agree as well: on this positive-$u$ arc both have scaled
+value $\mathcal W(z)$, which is even, whereas
+$b_{-\zeta}=-b_\zeta$. The sole unmatched augmented row is $v$,
+whose unnormalized difference is
+
+$$
+\begin{gathered}
+\sum_\zeta b_\zeta\zeta\mathcal W(\zeta)
+=[x_1,x_2,x_3]g
+=\frac{g(x_1)-2g(x_2)+g(x_3)}2>0,\\
+g(x)=(D_u+D_vx)\sqrt{1+x},\qquad
+g''(x)=\frac{4D_v+3D_vx-D_u}{4(1+x)^{3/2}}.
+\end{gathered}
+\tag{IC.56}
+$$
+
+The first equality follows by grouping the two roots at each $x_j$:
+$P_6'(\zeta)=2\zeta\prod_{k\ne j}(x_j-x_k)$.
+The divided difference and its convexity sign are standard tools, with
+equal spacing one. At $x\ge x_1=2+D_u/D_v$ the numerator of $g''$
+is at least $10D_v+2D_u>0$. Strict convexity proves the strict
+difference for the original coefficients, without substituting
+synthetic source amplitudes. Dividing by the common $M_0$ preserves
+the inequality. These laws need not match $B(t)$, contact equality
+or $J_t$, so they refute only the proposed sufficiency of quartic
+data plus $K$ for recovering every original row, not $U_7$ or $U_8$.
+
+The full labelled test space has a related direct obstruction to a
+global scalar Chebyshev-system transfer. Its nonzero combination
+$k-u=|u|-u$ vanishes on the whole positive-$u$ directed arc and is
+positive on the negative-$u$ arc. Its nonzero combination $\chi_c$
+from (IC.46) vanishes on the entire saturated sheet and is positive
+on the pure sheet. These infinite zero sets violate the finite-zero
+property of a scalar Chebyshev system on the complete labelled domain.
+Invertible row changes, positive pointwise scaling and injective
+reparametrization preserve the obstruction. Piecewise systems or
+additional relations on a special finite contact inventory are not
+excluded. This explains the missing premise of the Dette–Melas
+interface in Definition 6.1; it is not a nonexistence theorem for all
+possible original-law compression methods. $\square$
+
+## 13. Attribution, same-law transfer and the unresolved mixed relation
+
+**Definition 13.1 (mathematical sources and conditional synthesis).**
+The strict norm gap combines the original attained target and its full
+failure covariance with four nonnegative sign-corner evaluations and
+the negative failure height at the source direction
+$(\sqrt\alpha,-\sqrt\beta)$. The PSD trace bound,
+Cauchy–Schwarz and sign averaging are standard intermediate tools.
+RB Proposition 5.1, especially RB.31, supplies the prior original
+target/failure-trace mechanism; RB.22–RB.23 supplies the uniform-height
+mechanism. The different substitution and trace sign in (IC.40) are
+essential. RB's own cutoffs and rank-one conclusion are unchanged.
+Corollary 9.1 credits RC70.1 and FC34.3 for the local kernel and
+negative-pair arguments; rank-nullity itself is standard.
+
+The capacity-slack and interpolation statements use FC.26/FC.57,
+GC12.2's joint moments, FC3.3's complete compatible groups and FC4.2's
+contact equality. GC Proposition 19.1 already supplies positive
+capacity reweighting and the polynomial-quadrature boundary;
+(IC.48)–(IC.51) keep the remaining directed and height tags explicitly
+in a fixed original support calculation. The source nondegeneracy and
+strict slack in Theorem 10.1 are conditional expression consequences
+of GC6.1's actual nine source rows. The leading-coefficient and
+divided-difference identities are reused from de Boor, Example 9,
+(41); the zero-integral support and finite-dimensional moment
+interfaces retain the di Dio–Schmüdgen attribution in Definition 6.1.
+No generic interpolation, convexity, quadrature, stationarity or
+rank theorem is claimed as new. These are repo-derived conditional
+source-specific deductions and a method obstruction, with no worldwide
+priority claim.
+
+**Open problem 13.2 (mixed signs, slack transfer and complete original coverage).**
+It remains to supply a relation forcing the mixed-tag determinant to
+vanish on each face that needs this fixed-support removal, or a different
+original-law construction preserving all joint rows and deleting whole
+groups. Singularity is not established for mixed signs; nonsingularity
+would exclude only that particular fixed-support direction, not every
+alternative law, direction or activation of unused contacts. Equal
+slopes, antipodes, pure groups, paired groups and simultaneous pair
+exit remain in the full problem. The positive slack requires another
+pure-bearing group beside eight saturated singletons. Starting with
+nine occupied groups and deleting only one leaves eight, so that pivot
+alone cannot establish seven groups. Universal $U_7$, universal $U_8$
+where required, and all-alternative eight-/nine-low necessity remain
+the complete-group problems of §7.
+
+Theorem 8.1 constructs neither a finite dual nor a jointly attaining
+tuple. It does not extend to $\lambda=0$, absent or nonfinite duals,
+unattained values, unsupplied boundaries or infinite budget. Its
+paired-group consequence also requires the separate indefinite $R_-$
+premise. The algebraic possibility of zero $R_+$ below the stated
+domain is not resolved. Neither result bounds saturated singletons or
+the total original alphabet.
+
+All restrictions concern the same law. A permitted pivot changes that
+law's selected coefficient masses while preserving its complete eight
+moments, achieved $K$, within-label absolute $J_t$ and pointwise
+capacity. Under the inherited common constructor it therefore preserves
+the complete complex forgotten-label live map and each of the five
+Borel failure maps, with arbitrary passive-reference conditional
+operators. It does not say that the labelled acquisition instrument
+or its probability measure stays identical. The resulting height
+remains $(H_0+J_t)/2$, with the original HALF factor. One specimen,
+twelve histories, both zero failure targets, all supported-zero
+competitors and the counted coherent high completion remain as in
+Assumption 1.1. The $1+$ minimum-count identity is still an equality
+of minima under its supplier, not of counts of every instrument.
+
+All source/root/isolation/Jacobian/rank/TP, stopped-cq minimax,
+sharp worst-history JOINT cost, separate unaveraged equality,
+full-complex multi-Kraus necessity, physical capacity and constructor
+suppliers remain distinct conditional premises. Accessible shares and
+the whole counted fibre stay in the resource accounting; survivors
+are strictly positive at finite budget, controls are TP, FIRST is
+absolute $6+a$, and no positive-carrier action follows failure.
+No copy, helper, oracle, reset, retry, postselection, acceptance or
+survival division is supplied. All-budget/all-contrast evaluated
+roofs, branch ordering and coverage, complete root/multiplicity and
+collision data, coefficients and orientations, capacity/rank/count
+transitions, endpoint/threshold/budget/degenerate gluing, next terms
+and uniform joint limits remain required. Native access/calibration,
+coherently counted storage, whole-fibre actuation, duration, absolute
+clock alignment, archive/source/epoch/controller permissions and the
+general native-instrument/count bridge remain unsupplied. These
+ordinary conditional arguments assert no kernel, physical or native
+certification of those remaining premises.
+
+## 追加锚（本行以下为增补区）
