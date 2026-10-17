@@ -1255,4 +1255,343 @@ where the middle inequality follows from $e^x>x^4/4!$ for $x>0$. This contradict
 The result uses exact rational integral bounds and a fixed rational approximation; no floating-point approximation or finite scan over multipliers is a premise. Its rank-one hypothesis remains essential in the passage to $K=mR$. It leaves higher-rank blocks and original indices below $81$ outside its conclusion and does not settle the full WSS problem.
 
 
+## 95. Repetition forces a proper admissible cut in the original squarefree support
+
+### 95.1. The full Selmer group and a necessary cut
+
+**Theorem 95.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_n=L_n^2+3 for odd n. Write B_N=D C^2, with D its full positive squarefree kernel, and list its distinct primes q_1,...,q_h. Define an h by h matrix A over F_2 by
+
+A_ij=[q_j/q_i] for i!=j, and A_ii=sum_{j!=i} A_ij,
+
+where [a/p]=(1-(a/p))/2 is the additive Legendre symbol. Then
+
+ dim Sel_2(E_D/Q)=1+2 dim ker A,
+
+where E_D: Y^2=X(X+5D)(X-15D), and Sel_2 denotes the full group, not its quotient by rational torsion.
+
+If k>1 is odd, 3 does not divide k, and B_(Nk)=D c^2 for a positive integer c, then dim ker A>=2. Equivalently, there must be a divisor d of D with 1<d<D such that, on writing e=D/d,
+
+ (d/p)=1 for every p|e, and (e/p)=1 for every p|d.
+
+Thus the absence of a proper admissible cut excludes every such repetition, for any number of prime factors in D. The criterion is necessary, not sufficient, for repetition.
+
+The original-block inputs are TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md): q_i>5, q_i=1 mod 3, (5/q_i)=1, and D=19 mod 120. The existing torsion theorem is Theorem 85.1; the rank-one nonrepetition conclusion for every actual N>=81 is Corollary 94.2. The local Selmer equations below are taken directly from Feng, Liu, Pan and Tian, Quadratic twists of tiling number elliptic curves, arXiv:2405.11132v1, section 3.1.1 (pages 9–10 in printed numbering), with matrix convention from section 3.1.2 and the general local matrix equation in section 3.1.3. See the [primary paper](https://arxiv.org/pdf/2405.11132). The reduction is supplied in full; no parity theorem or finiteness of Sha is used.
+
+**Proof of the Selmer formula and repetition obstruction.**
+
+Set d_i=[-1/q_i], t_i=[2/q_i], and write d,t for the resulting column vectors. Since D=3 mod 4, sum_i d_i=1. Quadratic reciprocity gives
+
+ A+A^T=diag(d)+d d^T.
+
+The paper's model is y^2=x(x-m)(x+3m). Here m=-5D is squarefree, negative, and 1 mod 24. Its odd bad primes other than 3 are 5,q_1,...,q_h. On this ordered list the source's zero-row-sum matrix is diag(0,A): the off-diagonal symbols involving 5 vanish because (5/q_i)=(q_i/5)=1. The vectors for -1, 2, 3 and -3 are respectively
+
+ (0,d), (1,t), (1,d), (1,0).
+
+The real condition forces the second descent squareclass positive. At 2 the first class is odd, and at 3 the second class has zero valuation. Thus all possible Selmer classes have unique representatives
+
+ b_1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b_2=2^b 5^y0 product q_i^y_i,
+
+with all exponents in F_2. The local condition at 3 gives b=y0+a. Indeed m=1 mod 3, each q_i=1 mod 3, and 2 and 5 are both -1 mod 3.
+
+For m=1 mod 8 the two local conditions at 2, stated in section 3.1.1, are
+
+ [-1/b_1]+[2/b_1]+[-1/(b_2/2^b)]=0,
+ [-1/b_1]+b=0.
+
+Substituting the representatives and b=y0+a gives exactly
+
+ epsilon=y0+d^T x,
+ x0=y0+t^T x+d^T y.
+
+At the odd primes the source's general matrix equation gives
+
+ (diag(0,A)+diag(0,d))(x0,x)^T+diag(1,0,...,0)(y0,y)^T
+       =epsilon(0,d)^T+a(1,d)^T,
+ diag(0,A)(y0,y)^T=(y0+a)(1,t)^T.
+
+The coordinate at 5 in the first equation is y0=a; the coordinate at 5 in the second gives the same equality. Consequently b=0. At the other primes the second equation is Ay=0. Substitution in the first gives
+
+ (A+diag(d))x=(epsilon+a)d=(d^T x)d,
+
+hence A^T x=0 by reciprocity. No equation remains on y0; x0 and epsilon have already been determined uniquely. Conversely any triple
+
+ (y0,x,y) in F_2 x ker A^T x ker A
+
+determines a unique class satisfying every local condition. The source says these conditions are sufficient as well as necessary; all good places impose no further conditions. This is a vector-space parametrization of the full Selmer group, proving the displayed dimension formula.
+
+The rational torsion is E_D[2] by Theorem 85.1 and has F_2-dimension 2. The Selmer injection therefore gives
+
+ rank E_D(Q)<=2 dim ker A-1.
+
+Also A times the all-one vector is zero. If dim ker A=1, the actual non-torsion original point from Theorem 85.1 forces rank exactly one. Corollary 94.2 then excludes the repetition. This proves dim ker A>=2 without invoking any parity of the Mordell–Weil rank or any assertion about Sha.
+
+**Proof of the cut equivalence.**
+
+For a subset S of {1,...,h}, let v be its indicator vector and d_S=product_{i in S} q_i. If i is outside S, the i-th coordinate of Av is sum_{j in S}[q_j/q_i], so it vanishes exactly when (d_S/q_i)=1. If i belongs to S, the zero-row-sum diagonal converts the i-th coordinate into sum_{j outside S}[q_j/q_i], which vanishes exactly when ((D/d_S)/q_i)=1. Therefore Av=0 is precisely the pair of cut conditions in the statement. The constant vectors correspond to d_S=1 and d_S=D. A vector outside their one-dimensional span exists exactly when dim ker A>=2. This proves the equivalence, including h=1 where there is no proper cut.
+
+### 95.2. Explicit support patterns and comparison with earlier cut tests
+
+**Corollary 95.2.** Under the hypotheses of Theorem 95.1, suppose exactly one prime dividing D is 3 mod 4. Form the graph on the primes of D whose edges are the pairs with Legendre symbol -1. If this graph is a tree, there is no admissible repeated kernel. The same conclusion holds when D has three prime factors and all three mutual symbols are -1.
+
+**Proof.** Quadratic reciprocity makes A symmetric. If the graph is a tree, take a leaf i with neighbor j. The i-th equation of Av=0 is v_i+v_j=0. Delete the leaf, substitute v_i=v_j in the neighbor equation, and obtain the Laplacian equations for the smaller tree. Induction proves that every coordinate is equal. Thus ker A consists only of constant vectors, and Theorem 95.1 excludes repetition.
+
+In the three-prime all-nonresidue case, A has zero diagonal and all off-diagonal entries one. Its kernel is the span of (1,1,1), so Theorem 95.1 again applies. ∎
+
+The latter character pattern can be stated with residue types (1,1,19) modulo 24 and 5-splitting; no assertion that an actual original block realizes it is needed for the conditional support criterion.
+
+For two primes the criterion reduces to the nonresidue case already treated in section 78. For three or more primes it applies to a support configuration not covered by that two-prime statement. Sections 83 and 84 evaluate a residue invariant after a directed singleton or composite cut is available. In the no-proper-cut case, every proper-cut test of section 84 is unavailable. A singleton satisfying the directed condition of section 83 would give a proper admissible cut: multiply reciprocity over the other primes to recover the other cut condition, since sum d_i=1 makes d_i sum_{j!=i}d_j=0. Hence no such singleton exists either when h>1. The new necessary condition requires a proper cut to exist before those higher residue tests can be applied. It does not assert that passing any or all cut tests produces a repetition.
+
+The Selmer matrix method is classical. Its application here is the original-orbit repetition obstruction obtained from the specialized reduction and Corollary 94.2. The existence of a proper admissible cut is not shown here to imply repetition or additional rational rank. No numerical original support realizing the graph patterns or infinitude of such original blocks is asserted. Repetition on supports with dim ker A>=2 remains open here, and this does not give a universal WSS exclusion.
+
+## 96. Quartic pairing on a unique proper composite cut
+
+### 96.1. The conditional quartic obstruction
+
+**Theorem 96.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=D C^2 with D the full positive squarefree kernel. Use the matrix A of Theorem 95.1, with off-diagonal entries [q_j/q_i] and zero row sums, and assume dim ker A=2. Let D=de be a proper admissible cut: d,e>1, (d/p)=1 for all p|e, and (e/p)=1 for all p|d. Assume every prime factor of d is 1 modulo 24.
+
+Define the rational quartic symbol (a/p)_4 for a nonzero quadratic residue modulo a prime p=1 mod4 by a^((p-1)/4) modulo p, interpreted as a sign. Then an admissible repetition B_(Nk)=D c^2, with k>1 odd, 3 not dividing k and c a positive integer, necessarily satisfies
+
+ product_{p|d} (-5e/p)_4 = +1.
+
+In particular, a negative product excludes every such repetition. The proof will establish the stronger rank bound rank E_D(Q)<=1 for a negative product; the actual original point makes this rank exactly one.
+
+This is a conditional proper-cut family. It includes section 79's two-prime type (1,19) when d is the first prime, but permits composite d or e and more than two prime factors. It assumes neither finiteness of Sha nor Mordell–Weil rank parity. A positive product does not settle repetition; cuts without the stated residue condition are outside this calculation.
+
+### 96.2. Selmer directions
+
+**Proof.**
+
+The actual-block inputs are q>5, q=1 mod3 and (5/q)=1 for every q|D, and D=19 mod120. Theorem 95.1 gives the full Selmer parametrization
+
+ (y0,x,y) in F_2 x ker A^T x ker A,
+
+where the pair convention is (X,X+5D),
+ b1=(-1)^epsilon 3^a 5^x0 product q_i^x_i,
+ b2=5^y0 product q_i^y_i,
+ a=y0, epsilon=y0+delta^T x, x0=y0+t^T x+delta^T y,
+ delta_i=[-1/q_i], t_i=[2/q_i].
+
+Let v be the indicator of the primes dividing d. The cut conditions give Av=0. Each prime in d is 1 mod24, so diag(delta)v=0, delta^T v=0 and t^T v=0. The reciprocity identity A+A^T=diag(delta)+delta delta^T therefore gives A^T v=0. In the displayed parametrization the triples (0,v,0) and (0,0,v) give the full Selmer classes
+
+ lambda=(d,1), mu=(1,d).
+
+The all-one vector lies in both kernels: A1=0, and A^T1=A1+delta+delta(sum delta_i)=0 because sum delta_i=1. The vector v is nonconstant since the cut is proper. Since the two kernels both have dimension two, each is spanned by 1 and v.
+
+For completeness these are exactly the two extra pure Selmer directions. The actual translated golden point S has class (-15,5), corresponding to (y0,x,y)=(1,0,0). The two rational torsion generators T_- and T_0 have classes (-5D,1) and (-3,5D), corresponding respectively to (0,1,0) and (1,0,1). Thus S,T_-,T_0,lambda,mu form a full Selmer basis. Modulo the two-dimensional rational torsion image, S,lambda,mu form a basis of the three-dimensional pure Selmer space.
+
+### 96.3. Pairing convention and conic construction
+
+Shukla and Stoll, The Cassels-Tate pairing on 2-Selmer groups of elliptic curves, arXiv:2302.01640v1, section 3.2, equations (3.9)–(3.10), give the tangent-form product of Hilbert symbols. Theorem 5.6 identifies it with the Cassels–Tate pairing. Their introduction on printed page 2 explicitly places the rational Kummer image inside the image of 4-Selmer, which is the pairing kernel. The pairing is alternating, and rational torsion is in its radical, so it descends to the pure Selmer quotient. These assertions require no finiteness of Sha. See the [primary paper](https://arxiv.org/pdf/2302.01640). Section 79 uses the same convention and formula for two prime factors; the composite places are checked below.
+
+The primary paper uses a short cubic. The rational translation x=X−10D/3 gives roots −10D/3, −25D/3, 35D/3. Their differences, and the three Kummer coordinates x−e_i, agree with those of the original model with roots 0, −5D, 15D. Thus its tangent-form formula applies without a twist or isogeny. The multiplicative pairing sign is obtained from the additive Cassels–Tate value by (-1)^(2 value).
+
+The triple for lambda is (d,1,d). Its covering has conics
+
+ H1: z2^2-d z3^2=20de t^2,
+ H2: z1^2-z3^2=15e t^2,
+ H3: z2^2-d z1^2=5de t^2.
+
+Every conic is locally soluble because lambda is a Selmer class. The conic Hasse principle gives rational a,b with
+
+ a^2-d b^2=5de.
+
+Indeed a rational point on H3 cannot have t=0, since d>1 is squarefree and hence nonsquare; normalize t=1. The tangency points on H3 and H1 are (1,b,a) and (1,2a,2b), respectively. On H2 take (t,z1,z3)=(1,(15e+1)/2,(1-15e)/2). Put
+
+ A0=(15e+1)/2, B0=(1-15e)/2,
+ L2=A0 z1-B0 z3-15e t,
+ L3=a z2-d b z1-5de t.
+
+The triple for mu is (1,d,d), so the multiplicative pairing is
+
+ <lambda,mu>=product_w (L2(P_w)L3(P_w),d)_w.
+
+The first tangent factor is trivial. Dividing a conic equation, or multiplying a tangent form by a nonzero rational scalar, has no effect on this global product by Hilbert reciprocity. Local points are chosen away from the tangent zero loci.
+
+### 96.4. Places not dividing d
+
+At infinity d is positive. At 2 it is 1 modulo8, at 3 it is 1 modulo3, and at 5 it is a quadratic residue because every prime in d is 5-split. Therefore d is a square at these places. At every p|e, the cut condition (d/p)=1 makes d a local square. All these pairing factors equal one.
+
+Consider an odd prime p not dividing 30de. If d is a square locally its contribution again equals one. Otherwise d is a nonsquare unit. The norm equation forces a and b to be p-integral: a negative minimum valuation could not cancel, since such cancellation would make d a square in the residue field. Choose a primitive integral point of the covering. Its t-coordinate must be a unit, since t=0 modulo p would force z1=z2=0 from H3 and then z3=0 from H2, contradicting primitivity. Normalize t=1.
+
+The following exact identities give the needed parity of tangent valuations. On H3 set M3=a z2-d b z1, W3=a z1-b z2, c3=5de. Then
+
+ (M3-c3)(M3+c3)=d W3^2.
+
+On H2 set M2=A0 z1-B0 z3, W2=A0 z3-B0 z1, c2=15e. Then
+
+ (M2-c2)(M2+c2)=W2^2.
+
+Here all quantities are p-integral, and 2,c2,c3,d are units. If L_i=M_i-c_i has positive valuation, M_i+c_i is a unit, so its valuation is even. A unit evaluation already has even valuation zero. Avoiding zero evaluations is legitimate: the locally soluble smooth covering has an infinite p-adic neighborhood, while each tangent cuts out only finitely many points. For a nonsquare unit d, the Hilbert symbol (z,d)_p depends only on the parity of v_p(z). Thus all these factors are one, including any auxiliary primes in denominators of the rational conic solution at places where d is locally square.
+
+### 96.5. Every ramified prime dividing d
+
+Fix p|d and write d=p d' with d' a p-unit. In the norm equation, the two left terms have valuation parity respectively even and odd, whereas 5de has valuation one. Thus v_p(b)=0 and v_p(a)>=1. Dividing the equation by d yields
+
+ b^2+5e=a^2/d,
+
+so b^2=-5e modulo p. In particular the quartic symbol in the statement is defined. Choose a local covering point
+
+ t=1, z1=-b, z2=a,
+
+and choose z3 with z3^2=b^2-15e and z3=-2b modulo p. Hensel's lemma applies since p>3 and b is a unit. The other covering equations then hold. At this point
+
+ L3=2d b^2,
+ L2=b(3b+1)^2/2 modulo p.
+
+If 3b+1=0 modulo p, choose instead the root z3=2b modulo p. It gives
+
+ L2=-3b(b-1)^2/2 modulo p.
+
+This is a unit in the exceptional case, since b=-1/3 cannot equal 1 modulo p>3. A choice with L2 a unit therefore always exists. Because p=1 modulo24,
+
+ (2/p)=(-1/p)=(-3/p)=1.
+
+The composite unit d' causes no extra factor: directly
+
+ (L3,d)_p=(2d b^2,d)_p=(2,d)_p(d,d)_p=(-2,d)_p=(-2/p)=1.
+
+For the chosen unit L2, (L2,d)_p=(L2/p)=(b/p). As b^2=-5e modulo p, this is exactly (-5e/p)_4. The sign of b does not matter because (-1/p)=1. Multiplying over all p|d, together with the already checked remaining places, proves
+
+ <lambda,mu>=product_{p|d}(-5e/p)_4.
+
+### 96.6. Rank bound and original-orbit exclusion
+
+If this product is -1, the alternating pairing on the pure Selmer space has rank at least two. That space has dimension three by Theorem 95.1, so its radical has dimension at most one. The image of E_D(Q)/2E_D(Q), modulo the injected rational torsion image, has dimension rank E_D(Q) and lies in this radical. Hence rank E_D(Q)<=1. Theorem 85.1 supplies the actual non-torsion original point, giving rank exactly one. Corollary 94.2 now excludes all admissible repeated kernels for N>=81. ∎
+
+This does not infer rational rank from the mere existence of the extra Selmer classes. The nontrivial pairing is the necessary additional input. A positive product, higher-nullity matrices, and proper cuts with primes outside 1 modulo24 remain outside this rank-one conclusion. The criterion does not assert a numerical actual block satisfying the negative product, an infinite actual-support family, independence from every earlier residue test, or universal WSS exclusion.
+
+## 97. The unique-cut pairing with primes 13 modulo 24
+
+### 97.1. Conditional arithmetic criterion
+
+**Theorem 97.1.**
+
+Let j,C be positive integers, N=3^j>=81 and B_N=L_N^2+3=D C^2 with D the full positive squarefree kernel. Let A be the zero-row-sum Legendre matrix of Theorem 95.1 and assume dim ker A=2. Choose a proper admissible cut D=de: d,e>1, (d/p)=1 for p|e, and (e/p)=1 for p|d. Assume every prime dividing d is 1 modulo4. Actual support then makes every such prime 1 modulo12, allowing both 1 and13 modulo24.
+
+Put epsilon=[2/d]=(1-(2/d))/2 in F_2, where (2/d) is the Jacobi symbol; equivalently epsilon is the sum of [2/p] over p dividing d. Set l=5^epsilon d and eta=5^(1-epsilon). Thus d is 1 modulo8 when epsilon=0 and 5 modulo8 when epsilon=1. There exist primitive integers a,b,c with c>0 odd and
+
+ a^2-l b^2=5de c^2,
+
+which can additionally be chosen so that v_2(a/c)>=3 and b/c=3 modulo4. For any such choice, put
+
+ Gamma=(c/d) product_{p|d}(-eta e/p)_4.
+
+Here (c/d) is the ordinary Jacobi symbol, and the rational quartic symbols are defined for nonzero quadratic residues modulo p=1 mod4. Every displayed symbol is defined. The exact multiplicative Cassels pairing of the two extra Selmer directions is Gamma. Consequently Gamma=-1 forces rank E_D(Q)=1 and excludes every admissible repetition B_(Nk)=D c'^2 for k>1 odd, 3 not dividing k and c'>0 integral.
+
+The certificate factor simplifies as follows:
+
+ epsilon=0: (c/d)=1, so Gamma=product_{p|d}(-5e/p)_4;
+ epsilon=1: (c/d)=(c/5), so Gamma=(c/5) product_{p|d}(-e/p)_4.
+
+The second line retains the primitive conic-certificate character. It is not discarded or chosen freely. Both lines are independent of the permitted certificate choice because they compute a fixed pairing.
+
+### 97.2. Existing source and Selmer membership
+
+**Proof.**
+
+Theorem 95.1 supplies
+
+ Sel_2(E_D/Q) = F_2 x ker A^T x ker A
+
+in its specified pair coordinates (X,X+5D). Write delta_i=[-1/q_i], t_i=[2/q_i], and let v indicate the primes in d. The cut gives Av=0. Since all those primes are 1 modulo4, diag(delta)v=0 and delta^T v=0. Reciprocity therefore gives A^T v=0. Moreover t^T v=epsilon. Substitution in Theorem 95.1 gives exactly
+
+ lambda=(5^epsilon d,1)=(l,1), mu=(1,d).
+
+The factor5 in lambda for epsilon=1 is essential. Using (d,1) in that case would violate the local2 relation determining x0.
+
+Both kernels have basis 1,v. As in section 96, the full Selmer basis consists of the actual golden class S=(-15,5), the two rational torsion classes (-5D,1),(-3,5D), and lambda,mu. In the coordinates (free bit,x,y) they are (1,0,0),(0,1,0),(1,0,1),(0,v,0),(0,0,v). Thus the pure Selmer quotient has dimension three with basis S,lambda,mu.
+
+The pairing input is Shukla–Stoll, arXiv:2302.01640v1, section 3.2 equations(3.9)–(3.10), Theorem 5.6 and the introduction on printed page2. It is the tangent-form Hilbert product, with multiplicative convention (-1)^(2 times the additive value). The rational Kummer image lies in its radical, without any assumption on finiteness of Sha. The translation x=X-10D/3 gives their short model with roots -10D/3,-25D/3,35D/3 and preserves every Kummer coordinate and root difference. Section96 already establishes this normalization and the prime1mod24 subcase. See the [primary paper](https://arxiv.org/pdf/2302.01640).
+
+### 97.3. Norm certificate, dyadic normalization and tangent forms
+
+The triple of lambda is (l,1,l). Its three conics are
+
+ H1: z2^2-l z3^2=20de t^2,
+ H2: z1^2-z3^2=3eta e t^2,
+ H3: z2^2-l z1^2=5de t^2.
+
+They are everywhere locally soluble because lambda is a Selmer class. The conic Hasse principle supplies a rational point on H3. Its t coordinate cannot vanish, since l>1 is squarefree and nonsquare. Thus the affine conic alpha^2-l beta^2=5de has a rational point.
+
+For epsilon=0, d=1 mod8 and e=3 mod8, so -5e=1 mod8. For epsilon=1, d=5 mod8 and e=7 mod8, so -e=1 mod8. In either case there is a 2-adic point alpha=0, beta=sqrt(-eta e). Choose the root beta=3 mod4. A conic with a rational point is rational: lines through that point give a rational parametrization and its inverse away from a single point. Density of Q in Q_2 therefore provides rational affine points arbitrarily close to this chosen 2-adic point. Choose one with v_2(alpha)>=3 and beta=3 mod4. Clear denominators and divide the common gcd, choosing c>0. Then alpha=a/c, beta=b/c, gcd(a,b,c)=1, and c is odd, proving the promised certificate existence. This is a local normalization of a rational conic point, not an assertion that its primitive denominator has an arbitrarily prescribed character modulo5.
+
+Put h=3eta e and K=5de. Tangency points on H3 and H1 are (t,z1,z2)=(c,b,a) and (t,z2,z3)=(c,2a,2b). On H2 take (1,(h+1)/2,(1-h)/2). With A0=(h+1)/2 and B0=(1-h)/2 choose
+
+ L2=A0 z1-B0 z3-h t,
+ L3=a z2-l b z1-K c t.
+
+The triple of mu is (1,d,d), so the pairing is product_w (L2(P_w)L3(P_w),d)_w. Rational tangent scalings have global product one by reciprocity. Scaling a local projective point multiplies the product by a square.
+
+### 97.4. Every place away from the primes dividing d and from 2
+
+At infinity d>0. At3, d=1 mod3. At5, actual5-splitting gives (d/5)=1. At every p|e the cut gives (d/p)=1. Thus d is a local square at all these places, so their contributions are one even if the norm point has denominators there.
+
+Let p be an odd prime not dividing30de. Choose a primitive integral local projective covering point. The projections onto H2 and H3 are both primitive: if the three coordinates of either projection vanished modulo p, the remaining conic equation would force the fourth coordinate to vanish too. The H2 tangency point is integral and primitive at p. So is (c,b,a) on H3, since gcd(a,b,c)=1. Both conics are smooth over Z_p and the tangent coefficient vectors are primitive, since their quadratic forms are nondegenerate modulo p.
+
+For a smooth conic over Z_p, p odd, the tangent line at an integral section restricts to a divisor twice that section. Accordingly its evaluation at another integral section, in primitive projective coordinates, has even valuation when nonzero: away from the reduced tangency point the evaluation is a unit; near it, a local parameter gives a unit times its square. This applies to both L2 and L3, including p|c. One can avoid their finitely many zero points on the smooth locally soluble covering. Hence each tangent evaluation has even valuation. Since d is a unit, the Hilbert product is one, whether d is a square unit or a nonsquare unit.
+
+This projective argument is necessary for epsilon=1: at a denominator prime, l may be a local square even when d is not. The affine integrality argument used in section 96 would not justify dropping those primes. Primitive normalization of L3 has retained their global scaling effect.
+
+### 97.5. Ramified primes dividing d
+
+Fix p|d. The certificate equation and primitiveness imply p does not divide c. Indeed, if p|c, reduction first forces p|a; since l has valuation one, comparison modulo p^2 then forces p|b, contradicting the common gcd. Therefore comparing the opposite-parity valuations of a^2 and l b^2 gives v_p(b)=0 and v_p(a)>=1. In particular
+
+ beta^2=-eta e modulo p, where beta=b/c.
+
+The local point t=1,z1=-beta,z2=alpha extends by Hensel to z3=-2beta modulo p, satisfying z3^2=beta^2-h. At that point
+
+ L3=2l b^2/c,
+ L2=beta(3beta+1)^2/2 modulo p.
+
+If 3beta+1 vanishes, use the other Hensel root z3=2beta modulo p; then
+
+ L2=-3beta(beta-1)^2/2 modulo p.
+
+This is a unit in the exceptional case, since p>3. Thus a choice always makes L2 a unit. The actual prime p is1mod12, so (-1/p)=(-3/p)=1, and (5/p)=1. The character of2 can be either sign. Writing l=p l', the odd-prime Hilbert formula gives
+
+ (L3,d)_p=(2/p)(c/p),
+ (L2,d)_p=(beta/p)(2/p)=(b/p)(c/p)(2/p).
+
+For the first equality, the possibly nonsquare unit d/p appears twice and cancels, while l'/ (d/p)=5^epsilon has positive character. Thus the product is (b/p), with both the2-character and the c-character from these two displayed factors cancelling. Since b^2=-eta e c^2 modulo p,
+
+ (b/p)=(-eta e/p)_4 (c/p).
+
+This proves the contribution claimed in Gamma. It also shows explicitly why pairs of primes13mod24 may be included: their individual2-characters need not be positive.
+
+### 97.6. The dyadic place
+
+If epsilon=0, d=1mod8 is a square in Q_2 and the factor is one.
+
+Suppose epsilon=1. Then d=5mod8, l=5d=1mod8 and h=3e. By the chosen certificate, alpha=a/c has valuation at least3, beta=b/c is3mod4, and c is odd. The norm identity gives beta^2+e=alpha^2/l. Therefore
+
+ beta^2-3e=4beta^2-3alpha^2/l
+              =4beta^2(1-3alpha^2/(4l beta^2)).
+
+The parenthesized unit is1mod16 and has a square root s=1mod8. Choose z3=-2beta s together with t=1,z1=-beta,z2=alpha. Then z3=-2beta mod16 and all covering equations hold. At this point L3=2l b^2/c has valuation one.
+
+Modulo4 the difference between L2 and beta(3beta+1)^2/2 is zero: the replacement e=-beta^2 changes its coefficients by multiples divisible by32, and z3=-2beta modulo16 changes the evaluation by a multiple of16. Because beta=3mod4, 3beta+1 has valuation one, so L2=2mod4. Its valuation is also one. Thus v_2(L2 L3)=2.
+
+For d=5mod8, the quadratic extension Q_2(sqrt d) is unramified and (u,d)_2=(-1)^v_2(u). Equivalently this follows from the standard Q_2 Hilbert-symbol formula. The local contribution is therefore one. No dyadic sign is omitted.
+
+### 97.7. Simplifying the certificate character
+
+We have proved the exact pairing Gamma=(c/d) product_{p|d}(-eta e/p)_4. Since d=1mod4, c is positive odd and coprime to d, quadratic reciprocity gives (c/d)=(d/c).
+
+For every prime p|c with p not dividing5d, primitiveness and the norm equation imply a,b are units modulo p and (l/p)=1. Consequently (d/p)=(5/p)^epsilon. For epsilon=0 this says (d/p)=1 at every such prime; at p=5 the same holds from actual5-splitting. Hence (d/c)=1 in that case.
+
+For epsilon=1, 5 does not divide c: if it did, the equation a^2-5d b^2=5de c^2 would force both a and b divisible by5 as above. Thus (d/c)=(5/c)=(c/5). This proves both simplified formulas, including prime powers in c through their valuation multiplicities.
+
+The pairing is independent of all allowed choices. Therefore the primitive certificate character in the second formula is an invariant under the stated normalizations; weak approximation above does not authorize changing it to a preferred sign.
+
+### 97.8. Original-orbit consequence and scope
+
+A negative Gamma gives a nonzero entry of the alternating pairing on a pure Selmer space of dimension three. Its radical has dimension at most one. The rational Kummer image modulo torsion lies in this radical and has dimension equal to the rational Mordell–Weil rank. Hence the rank is at most one. The actual golden point is non-torsion by Theorem 85.1, so the rank is exactly one. Corollary 94.2 excludes every stipulated repetition for N>=81, without Sha finiteness or rank parity. ∎
+
+The epsilon=0 formula extends section 96 to cut sides containing an even number of primes13mod24. The epsilon=1 formula handles an odd number and requires the explicit primitive norm certificate's5-character. Cuts containing primes3mod4 on the chosen side are not included: for their indicator v one has A^T v=diag(delta)v+(delta^T v)delta, which need not vanish, so the same two classes cannot simply be reused. No nonempty realized original-support family, converse, independence from every earlier condition, or universal WSS exclusion is asserted.
+
 ## 追加锚（本行以下为增补区）
