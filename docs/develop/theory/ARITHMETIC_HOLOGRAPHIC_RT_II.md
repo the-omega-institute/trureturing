@@ -686,3 +686,85 @@ For an explicit genuinely two-direction example take α=4/5, β=1/5 and l=m=2/5.
 ### 60.6 Attribution and scope
 
 The exact-code branch classification reuses §54 and the PIO-to-zero-communication construction described by Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . Standard diamond semidefinite programs are due to Watrous; see Simpler semidefinite programs for completely bounded norms, https://arxiv.org/abs/1207.5726 . Channel-conversion SDPs also occur in dynamical coherence theory, for different free superchannels, in Saxena–Chitambar–Gour, Phys. Rev. Research2,023298 (2020), https://doi.org/10.1103/PhysRevResearch.2.023298 . These constructions and general optimization machinery are not claimed as new. The result here is the proved unrestricted-output reduction for the specified physical LOSR/code model, the resulting exact simultaneous-coherence projection, and the sharp common-channel family above. It does not classify arbitrary diagonal-algebra-preserving channels, all logical channels, or general RT recovery.
+
+## 61. Pairwise coherent implementability does not imply a common qutrit LOSR channel
+
+### 61.1. Fixed-code model and a saturated-path constraint
+
+For d≥2 let L=C^d and X=Y=C^d, with fixed MC encoding V|i>=|ii> and J(T)=VTV*. Physical maps are finite LOSR mixtures Φ=Σ_b w_b A_b⊗B_b of local CPTP maps. One map Φ must act on all logical inputs, including all reference extensions. Suppose Φ∘J has output supported on the MC code for every logical input. Define p_i as the probability of the physical output |ii> on logical input |i><i|, and define λ_ij as the coefficient of |ii><jj| in Φ(J(|i><j|)). Other output matrix-unit coefficients are not assumed absent in this general constraint.
+
+Let i_0,...,i_m be a path of distinct labels with 0<p_i0≤p_i1≤...≤p_im. If for each adjacent pair
+
+    λ_(i_(r−1),i_r)=p_(i_(r−1)) exp(iθ_r),
+
+then a necessary condition for one common physical implementation is
+
+    λ_(i_0,i_m)=p_i0 exp(i(θ_1+...+θ_m)).
+
+This is a dimension-independent compatibility condition on saturated retained coherences. It is stronger than checking each adjacent pair's magnitude separately.
+
+Proof. Apply §54's full-support normal form to J(I/d). Every positive-weight product branch has one deterministic label map f_b and a code action
+
+    |ii><jj| -> C_b,ij |f_b(i)f_b(i)><f_b(j)f_b(j)|,
+
+where C_b is a positive-semidefinite unit-diagonal correlation matrix, the entrywise product of the two local Gram matrices. This positivity also follows directly by using tensor products of their Gram vectors. Let E_i be the event f_b(i)=i under branch weights w_b. Then P(E_i)=p_i and
+
+    λ_ij=E[1_(E_i∩E_j) C_b,ij].
+
+For p_i≤p_j, equality λ_ij=p_i exp(iθ) in the bounds
+
+    |λ_ij|≤E[1_(E_i∩E_j)|C_b,ij|]≤P(E_i∩E_j)≤p_i
+
+forces E_i⊆E_j up to zero-weight branches and C_b,ij=exp(iθ) on E_i. This follows equally by integrating the nonnegative quantity 1−Re(exp(−iθ)C_b,ij) over E_i after the event inclusion has been established. Along the path, E_i0 is contained in every E_ir. On this event all adjacent Gram inner products have unit modulus and the prescribed phase. Equality in Cauchy–Schwarz for unit Gram vectors makes successive vectors proportional, so their endpoint inner product is exp(iΣ_r θ_r). Thus C_b,i0im has that value on E_i0. Since E_i0⊆E_im, the displayed formula for λ gives the conclusion. The unit-Gram-vector step is the usual equality case of Cauchy–Schwarz, not a new correlation-matrix theorem. The use of a single branch space for the entire path is essential.
+
+### 61.2. A continuous qutrit counterexample family with explicit complete positivity
+
+Take d=3, 0<q<1 and 0<p≤q(1−q). Define the logical channel E_(p,q) by
+
+    E(11)=p11+(1−p)33,
+    E(22)=q22+(1−q)33,
+    E(33)=33,
+    E(12)=p12, E(23)=q23, E(13)=0,
+
+and by adjoints on reversed off-diagonal matrix units. Here ij denotes |i><j| on L; the input labels are1,2,3.
+
+This is CPTP. In the input-first Choi matrix, the block on |1,1>,|2,2>,|3,3> is
+
+    K=[[p,p,0],[p,q,q],[0,q,1]],
+
+and the only additional nonzero entries are the nonnegative diagonal entries1−p on |1,3> and1−q on |2,3>. Every principal minor of K is nonnegative: its diagonal entries are p,q,1; its two-by-two principal determinants are p(q−p),p,q(1−q); and its full determinant is p[q(1−q)−p]. Hence K≥0. The displayed diagonal outputs each have trace one and off-diagonal outputs have trace zero, so the map is trace preserving.
+
+At the concrete boundary point p=1/4,q=1/2, complete positivity and trace preservation can also be read directly from four Kraus matrices:
+
+    D1=diag(1/2,1/2,0), D2=diag(0,1/2,1),
+    L1=(sqrt(3)/2)|3><1|, L2=(1/sqrt(2))|3><2|.
+
+Their adjoint products sum to identity; their off-diagonal coefficients are1/4 on12,1/2 on23, and0 on13, as required. This example is a genuinely qutrit channel rather than three unrelated prescribed output states.
+
+### 61.3. Every two-label restriction has one finite physical implementation
+
+For each pair {i,j}, restrict the logical input to span{|i>,|j>} while retaining the full qutrit output and the same physical encoding J. Exact implementability means equality of the two channels on that entire two-dimensional input algebra, including its off-diagonal units and all references; it does not require the output to remain within the chosen pair of labels.
+
+Let I denote identity on both physical qutrits and R3 the product channel resetting both to |3>. For a deterministic label function f:{1,2,3}→{1,2,3}, define the local CPTP map M_f(T)=Σ_i <i|T|i>|f(i)><f(i)|. The product M_f⊗M_f destroys every off-diagonal code matrix unit and maps |ii><ii| to |f(i)f(i)><f(i)f(i)|.
+
+The following are three distinct allowed choices of a common physical channel, one for each restriction:
+
+- On {1,2}, use p I+(q−p)(M_f⊗M_f)+(1−q)R3, where f(1)=3,f(2)=2,f(3)=3. The weights are nonnegative because p≤q(1−q)≤q. Input1 has survival p, input2 survival q, and the12 coherence multiplier is p.
+- On {2,3}, use q I+(1−q)R3. Input2 has survival q, input3 remains3, and the23 coherence multiplier is q.
+- On {1,3}, use p(M_id⊗M_id)+(1−p)R3. Input1 has survival p, input3 remains3, and the13 coherence is killed.
+
+Direct checking of the four matrix units in each restricted algebra proves exact channel equality. By linearity the same equality holds after tensoring with every passive reference. These constructions use at most three product-CPTP branches and act on all coherent inputs of their respective pair; no input-dependent branch selection or postselection is used.
+
+### 61.4. No common full-code implementation exists
+
+Suppose a single finite physical LOSR channel Φ satisfied Φ∘J=J∘E_(p,q) on the full qutrit input. Its output is then code-supported on every input, so the saturated-path constraint applies. The survival probabilities are p_1=p, p_2=q, p_3=1. Since p≤q and both adjacent retained coherences saturate their smaller survival probability, λ12=p and λ23=q, that constraint forces λ13=p. But E_(p,q) has λ13=0 and p>0, a contradiction.
+
+This excludes every finite physical LOSR realization of the full channel, including competitors initially allowed to leak outside the code: exact equality to the target itself forces code support, which is the premise of §54. It does not merely exclude the pairwise constructions displayed above. The contradiction occurs at the action on a single coherent matrix unit, so matching all three basis populations is insufficient.
+
+There is also a strictly positive, though not quantified here, unrestricted diamond separation. In fixed dimension the set of local CPTP maps is compact; its set of product channels is compact; and its convex hull is compact in the finite-dimensional real space of Hermiticity-preserving linear maps. This convex hull is exactly the finite LOSR class by the finite-dimensional convex-hull theorem. Restriction through J is continuous. Therefore the encoded physical channel set is compact. The continuous diamond distance to J∘E_(p,q) attains its minimum; the minimum cannot be zero because exact equality has just been excluded. This establishes positivity only, not an exact numerical value or an explicit uniform lower bound across the family. As p approaches zero the obstruction may vanish.
+
+### 61.5. Relation to existing theory and known ingredients
+
+The argument consumes §54's arbitrary-dimensional common-channel normal form. Sections58–60 settle particular two-dimensional channel problems; the present family proves that exact feasibility of all coordinate two-dimensional restrictions does not certify a common higher-dimensional physical channel. The quantifier over pairs here means every coordinate-label pair, not every arbitrary two-dimensional subspace. The fixed qutrit encoding and all coherent matrix units are retained throughout, so the obstruction concerns common implementation rather than independent state conversion.
+
+Choi positivity, Gram representations and equality in Cauchy–Schwarz, and finite-dimensional convex-hull compactness are standard ingredients. PIO constructions and their relation to zero-communication transformations of maximally correlated systems are established background: Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . Their forward PIO construction is not asserted to classify all arbitrary-dimensional local CPTP maps. A standard reference for Choi matrices and channels is Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . No literature-priority claim is made for these ingredients. The result established here is the explicit CPTP family with pairwise coherent implementations and the proved obstruction to one full-code physical LOSR implementation; it is not a general gravitational or RT recovery theorem.
