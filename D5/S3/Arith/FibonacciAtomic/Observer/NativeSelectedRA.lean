@@ -351,7 +351,7 @@ def Progressing (schedule : Nat → Bool) (w : World) : Prop :=
   ∀ n : Nat, (trajectory schedule w n).returned = false →
     ∃ m : Nat, n ≤ m ∧ schedule m = false
 
-private theorem trajectory_add (schedule : Nat → Bool) (w : World) (m k : Nat) :
+theorem trajectory_add (schedule : Nat → Bool) (w : World) (m k : Nat) :
     trajectory schedule w (m+k) =
       trajectory (fun i => schedule (m+i)) (trajectory schedule w m) k := by
   induction k with

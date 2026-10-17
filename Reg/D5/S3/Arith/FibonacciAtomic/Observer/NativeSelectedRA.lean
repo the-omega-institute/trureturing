@@ -590,4 +590,83 @@ noncomputable def guard_search_registration :
   familyRecord := none
   options := #[]
 
+
+abbrev additionSignature : Signature where
+  Params := (Nat → Bool) × World
+  State _ := Nat
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := World
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def additionActual : Realization additionSignature :=
+  realize additionSignature (fun _ p n => trajectory p.1 p.2 n) (fun i => nomatch i)
+
+def additionBad : Realization additionSignature :=
+  realize additionSignature (fun _ _ n => ⟨.entry,.of (decide (n = 1)),false⟩) (fun i => nomatch i)
+
+abbrev additionArena : Arena where
+  signature := additionSignature
+  Law R := ∀ (σ : Nat → Bool) (w : World) (m k : Nat),
+    R.readout () (σ,w) (m+k) =
+      R.readout () ((fun i => σ (m+i)),R.readout () (σ,w) m) k
+
+private theorem addition_bad : ¬ additionArena.Law additionBad := by
+  intro h
+  have no := congrArg World.source (h (fun _ => false) ⟨.entry,.of true,false⟩ 1 1)
+  simp [additionBad,realize] at no
+  cases no
+
+private theorem addition_dependence : ObservationalDependence additionSignature additionActual := by
+  intro i
+  refine ⟨((fun _ => false),⟨.entry,.of false,false⟩),0,1,?_⟩
+  intro e
+  have no := congrArg World.config e
+  simp [additionActual,realize,trajectory,worldEvent,step,
+    _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout] at no
+
+def trajectory_addProof : Registration additionArena (type_of% (@trajectory_add)) where
+  actual := additionActual
+  bridge := Iff.rfl
+  variation := ⟨@trajectory_add,additionBad,addition_bad⟩
+  sensitivity := ⟨fun i => ⟨additionBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,addition_bad⟩,fun i => nomatch i⟩
+  dependence := addition_dependence
+
+noncomputable def trajectory_add_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_add)
+      (Realization additionSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_add
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.trajectory_addProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨additionArena⟩
+  objectArena := .source ⟨additionArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source additionArena ⟨trajectory_addProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize additionSignature (fun _ p n => trajectory p.1 p.2 n) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA

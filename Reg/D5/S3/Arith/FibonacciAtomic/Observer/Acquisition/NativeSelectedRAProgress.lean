@@ -43,7 +43,7 @@ private theorem frontier_bad : ¬ frontierArena.Law frontierBad := by
   have no := (h (.of true) (fun _ => false) 0).1
   simpa [frontierBad,realize,Safe,Frontier,go] using no
 
-private theorem frontier_dependence :
+theorem frontier_dependence :
     ObservationalDependence frontierSignature frontierActual := by
   intro i
   refine ⟨(.of false,fun _ => false),0,1,?_⟩
@@ -87,7 +87,7 @@ noncomputable def reachable_scan_frontier_registration :
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","fn","arg","fn","arg","arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false}] }
@@ -143,7 +143,7 @@ noncomputable def reachable_scan_frontier_progress_registration :
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","fn","arg","fn","arg","arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false}] }
@@ -201,7 +201,7 @@ noncomputable def finite_interference_terminates_registration :
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","arg","arg"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false}] }

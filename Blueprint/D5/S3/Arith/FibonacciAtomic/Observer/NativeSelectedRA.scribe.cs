@@ -34,6 +34,8 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
             Def("World", "Proof-side execution world", "World pairs the observer configuration with the independently updated authentic source register and the external Return flag. Neither the source nor this flag is an argument of step or privateStep."),
             Def("worldEvent", "One actual event", "A writer event applies substitution only to the authentic source. An observer event executes exactly step: a local successor, the authentic reply at its materialized address, or the separate Return. The returned execution world is absorbing."),
             Def("trajectory", "An active execution schedule", "The natural index enumerates actual writer or observer events. Each event acts on the preceding complete world; idle waiting is excluded."),
+            Theorem("trajectory_add", "The actual continuation of an event prefix", TrajectoryAdd(),
+                "For every event schedule, whole initial world and natural m and k, the prefix of length m plus k is the shifted schedule's prefix of length k from the actual world at m. In the formula shift s m maps i to s applied to m plus i."),
             Def("Progressing", "Every pending observer step executes", "At every active index n where Return has not occurred, some observer event occurs at an index m at least n. No progress is required after Return."),
             Theorem("cleanup_progressing", "Cleanup returns on every progressing schedule", ProgressCleanup(),
                 "A progressing pending call has a first observer event after each of its finite prefixes. Before that event only writer updates occur and the private configuration is unchanged. Each local cleanup step therefore executes after a finite writer prefix. Induction on the counted cleanup sequence reaches Ready and its separate Return on every such schedule. No bound on interference, final source or schedule is supplied to the producer; this cleanup conclusion needs no finite-interference premise."),
@@ -69,6 +71,9 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
         DescribeId.Create("selected-ra-"+n.Replace('_','-')),DeclarationHandle.Create(Prefix+n),
         H(title),StatementSource.FromAuthor(Disp(f)),AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))),DescribeRole.Theorem);
+    private static Formula TrajectoryAdd() => All("s",Arr(V("Nat"),V("Bool")),All("w",V("World"),
+        All("m",V("Nat"),All("k",V("Nat"),EqOf(Call("trajectory",V("s"),V("w"),Add(V("m"),V("k"))),
+            Call("trajectory",Call("shift",V("s"),V("m")),Call("trajectory",V("s"),V("w"),V("m")),V("k")))))));
     private static Formula Cleanup()
     {
         Formula count=Add(Add(Length(Call("operand",V("w"))),Length(Call("guardPath",V("w")))),D(6));
