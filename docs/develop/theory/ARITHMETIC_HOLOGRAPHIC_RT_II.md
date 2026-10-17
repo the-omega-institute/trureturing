@@ -1796,3 +1796,133 @@ Every implementation with at most r positive product branches obeys the explicit
 Indeed, (2) implies M_k(δ)≥k/(3r), hence 10δ+B√δ≥a. Solving this quadratic in √δ, with a rationalized positive root, gives (16). It applies to unrestricted physical channels, all coherent logical inputs and arbitrary reference systems. It does not presume that approximate branches retain exact fibre outputs or a common physical environment plane.
 
 The exact δ=0 cap and its MUB/Bloch resource interpretation are supplied by §66; its classical mutually unbiased basis and traceless-projector ingredients are credited there, including [Boykin, Sitharam, Tiep and Wocjan](https://arxiv.org/abs/quant-ph/0506089) and [Pittenger and Rubin](https://arxiv.org/abs/quant-ph/0308142). The diamond-norm convention is [Watrous, The Theory of Quantum Information, §3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 70 treats one product and four fibres with a stronger numerical lower bound and an explicit upper construction. The present theorem supplies a different resource conclusion: simultaneous quantitative control of every shared weight, the branch count and the entropy for arbitrary k and finite mixtures. It asserts no matching positive-error construction or general RT recovery theorem.
+
+## 72. Exact physical calibration reduction for collapsed-fibre channels
+
+### 72.1 Channel class and resource-preserving conclusion
+
+Partition an input basis into k≥2 nonempty fibres X_f of sizes d_f, with N=Σ_f d_f. Let K be an N×N positive semidefinite matrix whose diagonal fibre blocks are K_ff=I_(d_f). Define the channel F_K:C^N→C^k by
+
+    F_K(|f,i><g,j|)=K_(fi,gj)|f><g|.
+
+Its Choi matrix is K on the span of |f,i>_in|f>_out and zero on the orthogonal complement; K≥0 and K_ff=I give complete positivity and trace preservation. Fix the MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|.
+
+For any finite physical LOSR channel L=Σ_t w_t(A_t⊗B_t), with fixed positive weights summing to one and arbitrary local CPTP maps C^N→C^k, there are local CPTP maps A'_t,B'_t with the same weights such that
+
+    A'_t(|f,i><f,j|)=B'_t(|f,i><f,j|)=δ_ij|f><f|,          (1)
+    ||Σ_t w_t(A'_t⊗B'_t)J_in−J_out F_K||diamond
+       ≤ ||LJ_in−J_out F_K||diamond.                      (2)
+
+The diamond norm is unhalved and includes arbitrary references. Each replacement local map has a Stinespring environment of dimension at most N. Thus exact fibre calibration can be imposed when minimizing error, without restricting the original physical outputs or increasing the number, weights or entropy of shared branches. This is a target-specific error comparison; it does not assert that deleting the diagonal of an arbitrary operator is trace-norm contractive.
+
+Let G denote the compact set of positive semidefinite N×N matrices with diagonal fibre blocks I_(d_f). For any fixed branch weights, the unrestricted physical minimum is exactly
+
+    min_(G_t,H_t∈G)  ν(Σ_t w_t G_t⊙H_t−K),               (3)
+    ν(D)=max_(ρ=⊕_f ρ_f≥0, Trρ=1) ||√ρ D √ρ||₁.          (4)
+
+Here ⊙ denotes entrywise product. The finite minimum is attained. The same equality of infima holds for a fixed finite branch budget or weights subject to any prescribed constraint, because the construction preserves the original weights. Attainment holds for fixed weights and for a compact allowed set of weights; no attainment is asserted for arbitrary nonclosed weight constraints. Formula (3) is generally a nonconvex Gram-factor optimization, not a claim of an overall semidefinite program or a solved four-fibre optimum.
+
+### 72.2 Independent local phase twirling
+
+Let Γ=(Z/3Z)^k, ω=exp(2πi/3), D_θ|f,i>=ω^(θ_f)|f,i>, and d_θ|f>=ω^(θ_f)|f>. For each local map set
+
+    A_θ=Ad(d_θ) A Ad(D_θ*),    Abar=|Γ|^(-1)Σ_θ A_θ,
+
+and define Bbar similarly, using independent local phases. The input encoding satisfies
+
+    (Ad(D_θ*)⊗Ad(D_φ*))J_in=J_in Ad(D_(θ+φ)*).
+
+The target is covariant with the corresponding output rotations. Therefore simultaneous conjugation of every branch by the same θ,φ leaves the diamond error of the mixture unchanged. Averaging independently over θ and φ gives Σ_t w_t(Abar_t⊗Bbar_t), whose error is no larger by convexity. This is independent local randomization within each product map, not extra shared branches.
+
+Use input-first Choi matrices. The coordinate |f,i>_in|a>_out has character θ↦ω^(θ_a−θ_f). Zero charge consists of a=f and gives one N×N positive block Q. Each nonzero character e_a−e_f, a≠f, uniquely specifies that ordered pair, and gives a positive d_f×d_f block P_(a,f). Thus the twirled local map is exactly described by
+
+    Q≥0,  P_(a,f)≥0 (a≠f),
+    Q_ff+Σ_(a≠f)P_(a,f)=I_(d_f).
+
+Write P_(f,f)=Q_ff. Its full action is
+
+    Abar(|f,i><f,j|)=Σ_a P_(a,f)[i,j]|a><a|,
+    Abar(|f,i><g,j|)=Q_fg[i,j]|f><g|  (f≠g).             (5)
+
+These conditions are both necessary and sufficient by Choi positivity and the partial-trace condition. They include arbitrary population leakage and all within-fibre input coherences.
+
+### 72.3 Two local CP repairs and their surviving coefficients
+
+For each branch and each party replace Q by
+
+    Q'=Q+⊕_f(I_(d_f)−Q_ff),                              (6)
+
+and set every nonzero-charge block P_(a,f), a≠f, to zero. Each added block is positive by the completeness relation. Hence Q'≥0 and Q'_ff=I, so (6) defines a CPTP map satisfying (1). The cross-fibre Q_fg are unchanged. Repair both parties this way. For f≠g the effective encoded product coefficient remains Q^A_fg[i,j]Q^B_fg[i,j], whereas all within-fibre effective matrix units become δ_ij|ff><ff|, exactly as in the target.
+
+The Choi rank of the repaired local map is rank Q'≤N, proving the stated finite environment bound. Conversely every G,H∈G gives local maps of this form, and their encoded product is J_out F_(G⊙H). The Schur product theorem supplies positivity; the diagonal fibre blocks remain I.
+
+### 72.4 Reference tags prove the error comparison
+
+Let Δ' be the difference between the repaired mixture and J_out F_K. By the preceding formulas it vanishes on all within-fibre input matrix units and maps every cross-fibre matrix unit to a scalar multiple of |ff><gg|. For a normalized arbitrary pure input with reference R, write
+
+    |ψ>=Σ_(f,i)|f,i>⊗|r_(f,i)>.
+
+Introduce an orthogonal reference tag and define the equally normalized input
+
+    |ψhat>=Σ_(f,i)|f,i>⊗|f>_tag⊗|r_(f,i)>.
+
+The output (Δ'⊗id)(|ψhat><ψhat|) is the isometric embedding of (Δ'⊗id)(|ψ><ψ|) under
+
+    |ff>_out⊗|r> ↦ |ff>_out⊗|f>_tag⊗|r>.
+
+This identity holds for every surviving cross term and hence preserves its entire trace norm, with all input coherences and arbitrary reference vectors retained. Denote the tagged repaired error by C. It is supported on
+
+    S=⊕_f (span{|ff>_out|f>_tag}⊗R).
+
+On the same tagged input, the unrepaired twirled mixture has error C−D+X, where D≥0 is the missing correct-output population supported on S, and X≥0 is supported on S-perpendicular. We now verify these assertions without assuming calibration.
+
+For one branch and fibre put M_f=P^A_(f,f)⊙P^B_(f,f). Both factors are positive contractions, so the Schur product theorem gives
+
+    0≤M_f≤I⊙P^B_(f,f)=diag(P^B_(f,f))≤I.                 (7)
+
+Consequently the correct-output deficit on that fibre is the positive operator
+
+    Σ_(i,j)(I−M_f)[i,j]|r_(f,i)><r_(f,j)|,
+
+placed in output |ff> and tag |f>. Weighted sums of these deficits define D≥0. For any wrong output pair (a,b)≠(f,f), its coefficient matrix is P^A_(a,f)⊙P^B_(b,f)≥0. These positive operators have output |ab> and tag |f>, and are orthogonal to S: equality with a correct sector would require simultaneously a=b=g and f=g, contradicting (a,b)≠(f,f). Their weighted sum is X≥0. Equation (5) shows that every cross-fibre output term is in S and agrees with its repaired value, so no omitted coherence connects S to its orthogonal complement. Trace preservation gives Tr X=Tr D.
+
+The orthogonal supports and the triangle inequality therefore imply
+
+    ||(Δ'⊗id)(|ψ><ψ|)||₁=||C||₁
+      ≤||C−D||₁+Tr D
+      =||C−D||₁+Tr X
+      =||(Δbar⊗id)(|ψhat><ψhat|)||₁
+      ≤||Δbar||diamond.                                 (8)
+
+Here Δbar is the twirled original error. For a Hermiticity-preserving map the diamond norm is maximized on a pure state with a reference; alternatively mixed input states follow by convexity and purification. Taking the supremum in (8), and then using the twirling comparison, proves (2).
+
+### 72.5 Exact reference norm and finite attainment
+
+For any Hermitian block matrix D with D_ff=0, define Ψ_D(|f,i><g,j|)=D_(fi,gj)|f><g|. The same tagging argument preserves the output error norm for every pure input. Let T_f have columns r_(f,i) and set T=⊕_f T_f, viewing its ranges as mutually orthogonal reference-tag sectors. The tagged output, after identifying each correct output/tag sector with its reference space, is exactly T D T*. Normalization says Σ_f Tr(T_f*T_f)=1. Polar decomposition of each T_f, with harmless reference padding if needed, shows
+
+    ||T D T*||₁=||√ρ D √ρ||₁,    ρ=⊕_f T_f*T_f.
+
+Conversely any block-diagonal density matrix ρ is realized by taking T_f=√ρ_f on orthogonal reference sectors. This proves ||Ψ_D||diamond=ν(D), and the output encoding J_out preserves that norm. Combining this with the repaired Gram masks proves (3)–(4).
+
+Each G∈G has trace N and bounded entries, so G is compact. The diamond norm is continuous in its finite-dimensional map coefficients. Thus the minimum in (3) exists and is physically realized by the finite local Choi factors already constructed. Allowing at most r branches uses the compact probability simplex, with zero-weight branches discarded; it does not require a limit with unbounded shared support.
+
+### 72.6 A quantitative four-fibre consequence
+
+For the uniform four-fibre qubit target of §70, reduction (2) allows restriction to calibrated products with arbitrary environments. Let δ be the error of such a product and let R_fg,T_fg be its two 2×2 cross-Gram contractions. Actual matrix-unit coefficients give |R_fg[i,j]T_fg[i,j]−1/2|≤δ. For each row, expansion and Cauchy–Schwarz as in §71 give
+
+    Σ_j|R_fg[i,j]−conj(T_fg[i,j])|²≤4δ,
+    ||R_fg[i,:]||₂²≥1−4δ,
+    ||R_fg[i,j]|²−1/2|≤δ+2√δ.                            (9)
+
+Anchor the first party's orthonormal frames at the first fibre. Summing the middle estimate in (9) over two rows bounds each other frame's squared residual outside the anchor plane by 8δ. A unitary polar extension on that plane therefore gives a common-plane orthonormal frame at Frobenius distance at most 4√δ, including singular overlap cases. Changing two frames changes each squared cross overlap by at most 16√δ. Thus the four corresponding unit Bloch vectors obey
+
+    |n_f·n_g|≤2δ+36√δ  (f≠g).
+
+Their 4×4 Gram matrix has rank at most three and trace four, so Tr G²≥16/3. Its four diagonal squares sum to four, forcing some off-diagonal modulus to be at least 1/3. Therefore
+
+    δ+18√δ≥1/6,
+    δ≥[1/(3(18+√(324+2/3)))]².                          (10)
+
+The same bound holds for every original unrestricted product by (2). Together with §70's explicit tetrahedral product, the one-product optimum lies between the number in (10), approximately 8.56×10^(-5), and 1/2. The lower value improves §70's 1/40000 but is not claimed optimal; the principal conclusion is the exact resource-preserving reduction for the entire collapsed-fibre channel class.
+
+The Choi, Schur-product and Hermiticity-preserving diamond facts used here are standard; see [Watrous, The Theory of Quantum Information, §§2.2,3.3,4.1.3](https://cs.uwaterloo.ca/~watrous/TQI/) and [Watrous, Simpler semidefinite programs for completely bounded norms](https://arxiv.org/abs/1207.5726). Sections 54 and 63–65 describe exact-support Gram constructions; §§70–71 retain unrestricted physical leakage in quantitative obstructions. The reduction above compares unrestricted approximation with calibrated implementations at the same shared resource by a reference-tagged trace-compensation argument. It asserts no general diagonal-repair contraction, no four-fibre exact optimum and no arbitrary-channel or full-RT theorem.
