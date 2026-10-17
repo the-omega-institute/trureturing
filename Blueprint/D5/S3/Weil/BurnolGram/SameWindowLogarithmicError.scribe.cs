@@ -69,5 +69,52 @@ internal sealed class SameWindowLogarithmicErrorDocument : IScribeDocumentDefini
                     + "h*(2+log(1+1/h))=2h+h*log(1+h)-h*log h. The logarithmic Fourier "
                     + "estimate alone does not identify the closed Gamma, pole and prime "
                     + "Weil form or supply a signed negative trial."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "Fix a>0, smooth even p, and M,M1>=0 with |p|<=M and |p'|<=M1 on [-a,a]. "
+                + "Let f=1_{(-a,a)}p, U(t)=integral exp(-i*t*x)*f(x) dx, and, for h>0, "
+                + "V_h(t)=integral exp(-i*t*x)*T_h(x) dx, with T_h the actual "
+                + "sameWindowSmoothTrial. Set V_h=0 for h<=0 only to make the indexed "
+                + "family total. Write W(t)=1+log(1+|t|) and F_h(t) for the actual "
+                + "sameWindowErrorFourier. All these transforms use the angular kernel; "
+                + "the error energy and Gamma quadratic integral both carry 1/(2*pi).")),
+            Paragraph(Text(
+                "The target f is integrable because p is continuous on the compact "
+                + "original window, and every T_h is integrable as a Weil test. For every "
+                + "real t, the angular kernel is continuous and has norm one. Its products "
+                + "with f and T_h are therefore separately integrable. Expanding the "
+                + "integrand and applying integral_sub with these two actual premises "
+                + "gives F_h(t)=U(t)-V_h(t). Domination by the respective L1 norm also "
+                + "proves continuity of U and of every positive-width V_h; no continuity "
+                + "of the zero extension at its endpoints is required.")),
+            Paragraph(Text(
+                "For each actual smooth trial, the existing closed-strip Fourier bound "
+                + "at strip width zero gives |V_h(t)|<=C_h/(1+t^2). The elementary "
+                + "inequality 0<=W(t)<=2*(1+t^2) then bounds W(t)*|V_h(t)|^2 by "
+                + "2*C_h^2/(1+t^2), an integrable function. To obtain membership of the "
+                + "target itself, choose the one fixed width h0=a/8. It is positive and "
+                + "satisfies 4*h0<=a. The weighted error theorem supplies integrability "
+                + "of W*|F_h0|^2. The exact identity U=V_h0+F_h0 and "
+                + "|z+w|^2<=2*(|z|^2+|w|^2) supply an integrable majorant for W*|U|^2. "
+                + "Thus target membership is proved from the actual approximation, "
+                + "rather than imposed as a further hypothesis.")),
+            Paragraph(Text(
+                "As h tends to zero through positive values, eventually h<a/4 and "
+                + "hence 4h<=a. At those widths the proved weighted theorem supplies "
+                + "integrability of W*|F_h|^2, and its normalized integral tends to zero. "
+                + "Since normSq(V_h-U)=|F_h|^2, this is exactly the error premise of "
+                + "actual_gamma_quadratic_tendsto_of_log_weight_error, with index type "
+                + "the real line and filter nhdsWithin 0 (Ioi 0). Its other premises "
+                + "are the frequency continuity and target membership established above. "
+                + "Consequently (1/(2*pi))*integral (2*pi*Zeta23.mu(t))*normSq(V_h(t)) dt "
+                + "tends to (1/(2*pi))*integral (2*pi*Zeta23.mu(t))*normSq(U(t)) dt.")),
+            Paragraph(Text(
+                "This application concerns the actual Gamma density and the raw "
+                + "transform of the original zero extension, for every fixed smooth "
+                + "even p and positive radius a. Each T_h may use the already established "
+                + "smooth archimedean identity directly. The application does not require "
+                + "a raw/L2 Fourier identification and does not assert a closed Gamma "
+                + "form or domain, convergence of the full pole and prime terms, "
+                + "a signed negative trial, or the Riemann hypothesis."))
+        )));
 }
