@@ -376,3 +376,87 @@ $B$--$Q$ contribution is retained through $h^*$, rather than omitted
 from a determinant expansion. CS16--CS19 control the higher-power
 channel; they supply no growth bound for $Q_n$ or $\lambda_n$, no
 signed Robin estimate, and no proof of RH.
+
+## CS7. The critical primary-prime energy is an RH-level premise
+
+The staircase of the actual same-cutoff row CS18 is
+
+$$
+T(u)=\vartheta(e^u)-\lfloor e^u\rfloor+1,
+\qquad T(u)=0\quad(0\le u<\log2).
+$$
+
+Its Stieltjes measure has weight $\log p$ at each primary prime and
+weight $-1$ at each integer at least two. Applying the derivative
+identity in CS5 to this single staircase gives, for each fixed $n$,
+
+$$
+Q_n=\int_0^\infty T(u)e^{-u}p_n(u)\,du=c_n(T).
+\tag{CS20}
+$$
+
+The lower boundary term is zero. The existing PNT supplier makes the
+upper boundary term tend to zero and the last integral absolutely
+convergent for each fixed polynomial $p_n$. This does not imply a
+uniform bound as $n$ grows. It preserves the common cutoff in CS18;
+neither divergent summand is separately assigned a value.
+
+Define, for $\eta\in\{\vartheta,\psi\}$,
+
+$$
+J_\eta=\int_2^\infty
+ \frac{|\eta(x)-x|^2}{x^2(\log x)^2}\,dx.
+$$
+
+The change of variable $x=e^u$ identifies $\mathcal N(T)^2$ with
+the same integral using $\vartheta(x)-\lfloor x\rfloor+1$ in the
+numerator. Its difference from $\vartheta(x)-x$ is $\{x\}+1$,
+a bounded function with finite weighted norm on $[2,\infty)$.
+The Rosser--Schoenfeld bound in CS5 also gives a finite weighted norm
+for $\psi-\vartheta$, since
+$\int_2^\infty dx/[x(\log x)^2]<\infty$. Thus
+
+$$
+\mathcal N(T)<\infty
+\quad\Longleftrightarrow\quad J_\vartheta<\infty
+\quad\Longleftrightarrow\quad J_\psi<\infty.
+\tag{CS21}
+$$
+
+The [classical Cramér square-mean estimate](../Arith/cramer1922mittelwert.md),
+printed p.147, supplies **under RH**
+$M(X):=\int_2^X|\psi(t)-t|^2/t\,dt=O(X)$.
+For $k\ge1$, its contribution to $J_\psi$ on $[2^k,2^{k+1}]$ is at most
+
+$$
+\frac{M(2^{k+1})}{2^k(k\log2)^2}=O(k^{-2}).
+$$
+
+Summing proves $J_\psi<\infty$ under RH. The classical mean-square
+result is reused with its stated weight and hypothesis; the dyadic
+transfer is its parameter application to CS21.
+
+Conversely, if $\mathcal N(T)<\infty$, the already established CS6
+and CS20 give $Q_n=o(n)$. The exact CS3/CS18 split and CS7/CS17 then give
+$\lambda_n=H_n+o(n)=O(n\log n)$. This absolute growth implies RH
+by Lagarias's published all-index criterion, Theorem 2.2(3), equation
+(2.22), already used in the [Fibonacci growth application](lagarias2007li.md).
+No new completeness assertion, zero truncation or sign-sensitive
+Theorem 6.1 is needed. Consequently the exact strength of this proposed
+budget is
+
+$$
+\boxed{\mathcal N(T)<\infty\quad\Longleftrightarrow\quad\mathrm{RH}.}
+\tag{CS22}
+$$
+
+This is a paper application of classical sources and the existing
+coefficient interface, without Lean certification or a priority claim.
+It classifies a possible sufficient route; no unconditional finite
+energy or new actual prime estimate has been acquired. Proving that
+energy finite remains a legitimate RH strategy, but assuming it does
+not supply an independently available reserve. The original signed
+trace/determinant conditions remain unpaid; a norm is not imposed as
+the necessary intermediate mechanism for any particular finite triple.
+The original Robin estimate and endpoint half-variance bound also
+remain unresolved.
