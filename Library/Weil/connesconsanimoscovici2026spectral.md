@@ -9429,3 +9429,110 @@ without a generic-method novelty or Lean-proof claim. Actual-center,
 full-border/cofinal positivity, Robin and RH remain open.
 
 The [new two-profile source, directed cross terms, partial complete metric and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/d90d6869c73e1fbcdb4321e0879b55902b4abd81/docs/reports/weil-c27) preserve this same-source application and all explicit payments.
+
+
+### Price the remaining far inverse energy from the saved correlations
+
+Reuse the two paid far pairings and the finite joint metric on the SAME
+positive block. Write
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$,
+$m=(u,v)$ and $s=d-c^2/a>0$. The classical projection inequality gives
+
+$$
+z=f_gP^{-1}f_g^*\ge Q_J,
+\qquad
+Q_J=\frac{u^2}{a}+\frac{(v-cu/a)^2}{s}.
+$$
+
+This is a lower bound, not the missing upper. One saved-data application
+returns
+
+$$
+\boxed{Q_J\in[0.086276954471713906,\ 0.086630925124381975].}
+$$
+
+It reuses every old source query and inverse action. No new source or far
+functional, target reconstruction, inverse, solve or parameter scan runs.
+The interval is for functionals of one source; its endpoints are not
+asserted jointly attainable.
+
+For the earlier joint border use the SAME complete reduced row
+$\beta=\beta_J+fV$, with the already saved18-coordinate far row. Choose
+only the fixed optimistic comparison
+$t_+=\mathrm{cap}/h_{\mathrm{lo}}$ and the saved refined common charge
+$D=\overline D$. Eligibility of $t_+$ is not asserted. Let $p=(\Sigma_0)_{00}<0$;
+the18-by17 core elimination map $T_\Sigma$ has first row
+$-(\Sigma_0)_{0,1:}/p$ and remaining block $I_{17}$. The reference
+inverse $R$ of the17-dimensional positive core and its accepted Neumann
+constant $\eta<1$ are reused. A single new reference action on
+$\beta T_\Sigma$ supplies its energy and its cross with $\rho T_\Sigma$;
+the archived $\rho T_\Sigma R T_\Sigma^*\rho^*$ is consumed directly. The relative inverse error
+is bounded by $\eta/(1-\eta)$ in the reference metric, with its bilinear
+Cauchy allowances retained.
+
+Put
+
+$$
+\begin{aligned}
+\mathfrak a&=t_+^{-1}+a+\rho\Sigma_0^{-1}\rho^*,\\
+\mathfrak c&=c+u+\rho\Sigma_0^{-1}\beta^*,\\
+\mathfrak d&=\overline D+d+2v+\beta\Sigma_0^{-1}\beta^*.
+\end{aligned}
+$$
+
+Then the existing border identity becomes
+
+$$
+\det N_2=\mathfrak a z+\mathfrak a\mathfrak d-\mathfrak c^2.
+$$
+
+The first entry is enclosed by
+
+$$
+\mathfrak a\in[39434.061125466995953787,\
+39434.061125466995953788]>0.
+$$
+
+Thus this comparison requires
+
+$$
+z<z_{\mathrm{crit}}
+=\mathfrak c^2/\mathfrak a-\mathfrak d,
+\qquad
+z-Q_J<\Delta=z_{\mathrm{crit}}-Q_J.
+$$
+
+The calculation is inconclusive about that budget. The saved canonical
+18-coordinate far-row box, transported through the weak core directions,
+produces enclosures for both $z_{\mathrm{crit}}$ and $\Delta$ contained
+in $[-7\cdot10^{192},7\cdot10^{192}]$ that cross zero. These are wide
+containing intervals, not a claim that either exact quantity varies over
+them or that the actual source has intrinsic uncertainty of that size.
+The undivided determinant coefficients remain saved. The new projection
+floor does not turn an inconclusive budget into a target sign.
+
+Consequently the positive floor does not settle the required joint
+inequality $z<z_{\mathrm{crit}}$. The current canonical row box also fails
+to provide a useful threshold for that comparison. A useful next input must retain shared
+source constraints in the core transport or supply a sufficient joint
+comparison directly. Increasing the arithmetic precision of this same
+box does not add those constraints. No source or precision retry follows.
+Any future exclusion with $t_+$ would apply only to $0<t\le t_+$ and
+$D\ge\overline D$ on this SAME lower target, not to every admissible
+charge or the actual full center.
+
+The sole1024-working/640-export application takes<0.121972seconds,
+excluding serialization. Its11131-byte packet has SHA256
+`11ccabd6110436b2b29f1a910c6c36a5fd8479af19d183cf614826ed9ad746c6`;
+the source has SHA256
+`a478b8d52e52384be98b6f385e65df9a4364d6b882a5fd82a119c9752ca3fd9f`.
+It makes one new17-reference action, two new reference bilinears and one
+explicit two-dimensional projection calculation. No old scientific
+producer or fixture is replayed. All inherited common-form/domain,
+residual, source/lift, complete-far, normalization and comparison premises
+remain. These are conditional numerical applications of existing
+projection, Schur and Neumann methods, without generic-method novelty
+or a Lean-proof claim. Actual-center/full-border/cofinal positivity,
+Robin and RH remain open.
+
+The [saved-data consumer, directed energy budget and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/3115ead2bc655c55bf3b25435f9d20a979cd3872/docs/reports/weil-c27) preserve the accepted source and its single application.
