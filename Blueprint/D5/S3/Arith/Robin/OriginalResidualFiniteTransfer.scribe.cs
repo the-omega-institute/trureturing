@@ -33,7 +33,7 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                 + "IE-C050/source.unsafe_or_external (Nat.add). The missing source-reconstruction "
                 + "binding certificate is tracked at https://github.com/the-omega-institute/trureturing/issues/17873. "
                 + "This is an unfinished audit, not a failure of the compiled inequality or evidence "
-                + "of a judge defect. The other new helper audits and full-positive transfer audit are validated.")),
+                + "of a judge defect. The finite inequality and its source-bound audit are separate obligations.")),
             Def("mass", "Absolute block mass",
                 "For every natural N and real sequence a, A=mass(N,a)=sum(N<=m<2N,abs(a(m)))."),
             Def("variation", "Variation of the zero extension",
@@ -66,6 +66,24 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
             Def("centered", "The nonzero integer mean",
                 "For all natural d,m, centered(d,m)=(m mod d)/d-(d-1)/(2*d). For d>=1 "
                 + "the subtracted mean is the exact average on integer residues, including residue zero."),
+            Def("periodicPrimitive", "The original periodic primitive",
+                "For every natural d,m, put r=m mod d. Then P(d,m)=r*(r-d)/(2*d). "
+                + "The same primitive supplies both the single-scale estimate and the joint dyadic range."),
+            Helper("primitive_step", "The original primitive step across every residue",
+                "For every natural d>0 and m, P(d,m+1)-P(d,m)=centered(d,m). "
+                + "The equality includes the wrap from the final residue to zero."),
+            Helper("centered_pair_by_parts", "Shared signed summation by parts",
+                "For every natural N>0, real sequences a,f,P, real s and identity "
+                + "P(m+1)-P(m)=f(m) at every natural m, sum(N<=m<2*N,a(m)*f(m))="
+                + "a(2*N-1)*(P(2*N)+s)-a(N)*(P(N)+s)"
+                + "-sum(N<=m<2*N-1,(a(m+1)-a(m))*(P(m+1)+s)). "
+                + "The arbitrary constant cancels in this signed equality."),
+            Helper("centered_pair_of_primitive_range", "Shared primitive-range variation supplier",
+                "For every natural N>0, real sequences a,f,P and real s,C, assume "
+                + "P(m+1)-P(m)=f(m) and abs(P(m)+s)<=C for all natural m. Then "
+                + "abs(sum(N<=m<2*N,a(m)*f(m)))<=C*variation(N,a). "
+                + "No sign or moment condition is imposed on a, and both endpoint jumps are retained. "
+                + "The single-scale bounds and the joint dyadic centered bound use this same supplier."),
             Helper("centered_floor", "The original quotient decomposition",
                 "For every natural d>0 and m, floor(m/d)=m/d-centered(d,m)-(d-1)/(2*d), "
                 + "where the quotient on the left is natural division and the other quotient is real."),
@@ -85,7 +103,7 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
                         + "S(N,d,a)=sum(N<=m<2*N,a(m)*centered(d,m)). Then abs(S)<=d*V/16, "
                         + "where V=variation(N,a) includes both zero-extension jumps. No sign or "
                         + "moment hypothesis is imposed, including at N=1.")),
-                    Paragraph(Text("For the original private primitive P=r*(r-d)/(2*d), r=m mod d, "
+                    Paragraph(Text("For the original periodic primitive P=r*(r-d)/(2*d), r=m mod d, "
                         + "0<=r<=d and (2*r-d)^2>=0 give -d/8<=P<=0. Hence Q=P+d/16 "
                         + "satisfies abs(Q)<=d/16. The unchanged primitive_step supplies the wrap. "
                         + "Q is not the zero-based prefix: Q(0)=d/16. Before taking absolute values, "

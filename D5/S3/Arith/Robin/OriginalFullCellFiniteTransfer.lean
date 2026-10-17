@@ -63,13 +63,13 @@ def meanCorrection (N q : ℕ) (b : ℕ → ℝ) : ℝ :=
   totalMass N b/(2*Real.log N)*(polePrefix q-reciprocalPrefix N q+
     (mobiusPrefix q+2)*Real.log ((N : ℝ)/(q + 1 : ℕ))/(q + 1 : ℕ))
 
-private def centeredPair (N : ℕ) (b : ℕ → ℝ) (d : ℕ) : ℝ :=
+def centeredPair (N : ℕ) (b : ℕ → ℝ) (d : ℕ) : ℝ :=
   ∑ m ∈ Ico N (2 * N), b m*centered d m
 
-private def centeredLogPair (N : ℕ) (b : ℕ → ℝ) (d : ℕ) : ℝ :=
+def centeredLogPair (N : ℕ) (b : ℕ → ℝ) (d : ℕ) : ℝ :=
   Real.log ((N : ℝ)/d)*centeredPair N b d
 
-private def lowError (N q : ℕ) (b : ℕ → ℝ) : ℝ :=
+def lowError (N q : ℕ) (b : ℕ → ℝ) : ℝ :=
   ((∑ d ∈ Ioc 0 q, (ArithmeticFunction.moebius d : ℝ)*centeredLogPair N b d)-
     (mobiusPrefix q+2)*centeredLogPair N b (q + 1))/Real.log N
 
@@ -480,7 +480,7 @@ private theorem transfer_identity {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
   rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, htel]
   linear_combination hlo
 
-private theorem transfer_of_low_bound {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
+theorem transfer_of_low_bound {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
     (b F : ℕ → ℝ) (ε c : ℝ) (hε : 0 ≤ ε) (hc : 0 ≤ c)
     (hb : ∀ m ∈ Ico N (2 * N), 0 ≤ b m)
     (herr : ∀ k ∈ Ico (q + 1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) (A : ℝ) (hlow : |lowError N q b| ≤ A) :

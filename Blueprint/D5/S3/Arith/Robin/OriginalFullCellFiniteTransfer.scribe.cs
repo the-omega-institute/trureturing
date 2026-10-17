@@ -52,6 +52,27 @@ internal sealed class OriginalFullCellFiniteTransferDocument : IScribeDocumentDe
                 "For every N,q,b, put h=q+1, u=log(N/h), L=log N. "
                 + "C(N,q,b)=A(N,b)/(2*L)*(R(q)-U(N,q)+(M(q)+2)*u/h). "
                 + "M(q) is the unchanged actual inclusive Mobius prefix."),
+            Def("centeredPair", "The actual centered block sum",
+                "For every natural N,d and signed real sequence b, S(N,b,d)="
+                + "sum(N<=m<2*N,b(m)*centered(d,m)), using the original centered kernel."),
+            Def("centeredLogPair", "The logarithmic centered block sum",
+                "For every natural N,d and signed b, T(N,b,d)=log(N/d)*S(N,b,d)."),
+            Def("lowError", "The complete actual low error",
+                "For every natural N,q and signed b, put h=q+1. The exact low error is "
+                + "[sum(1<=d<=q,mu(d)*T(N,b,d))-(M(q)+2)*T(N,b,h)]/log N. "
+                + "The original actual Mobius indices and literal boundary coefficient remain."),
+            Describe.Lean(DescribeId.Create("original-full-cell-transfer-of-low-bound"),
+                DeclarationHandle.Create(Prefix + "transfer_of_low_bound"),
+                H("Full transfer from an actual low bound"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For all natural N>=3 and q<=N-2, real sequences b,F and real e,c>=0, "
+                    + "assume b(m)>=0 on the complete block and abs(F(k)-M(k))<=e*k+c "
+                    + "for q+1<=k<N. For every real A satisfying abs(lowError(N,q,b))<=A, "
+                    + "the exact full transfer obeys abs(E-Z-C)<=((e+c/h)/log N)*N*totalMass(N,b)"
+                    + "*(1+2*log(N/h)^2+2*log(N/h)*(1+log(2*N/h)))+A. "
+                    + "The replacement sign is positive, and the exact decomposition retains the "
+                    + "full mean, first moment and literal -2*K(N,b,h)/log N. "
+                    + "Both the sharp single-scale payment and the dyadic low payment use this supplier."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-full-cell-finite-transfer"),
                 DeclarationHandle.Create(Prefix + "originalFullCell_finite_transfer"),
                 H("Finite full-positive transfer"), StatementSource.FromAuthor(TransferFormula()),
@@ -95,7 +116,7 @@ internal sealed class OriginalFullCellFiniteTransferDocument : IScribeDocumentDe
                         + "The complete block, nonnegative b, e,c>=0, actual F prefix-error "
                         + "hypothesis and full range 0<=q<=N-2 are unchanged.")),
                     Paragraph(Text("The original-owner centered_pair_variation_sharp_bound supplies "
-                        + "abs(S(d))<=d*V/16. Shared private centered-log and low-error sums consume "
+                        + "abs(S(d))<=d*V/16. Shared centered-log and low-error sums consume "
                         + "this estimate with V/16, using all actual Mobius indices and the literal +2. "
                         + "At q=0 the low error is exactly zero because centered(1,m)=0; "
                         + "the mean remains C(N,0,b)=A(N,b) for N>1. Neither the high error "

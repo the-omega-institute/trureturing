@@ -192,5 +192,82 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Sharp
 
+namespace LowBoundSupplier
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {N q : ℕ}, 3 ≤ N → q ≤ N-2 →
+    ∀ (b F : ℕ → ℝ) (ε c : ℝ), 0 ≤ ε → 0 ≤ c →
+    (∀ m ∈ Ico N (2*N), 0 ≤ b m) →
+    (∀ k ∈ Ico (q+1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) →
+    ∀ (A : ℝ), |lowError N q b| ≤ A →
+    |pairing N b-R.readout () ⟨N,q,b⟩ F-meanCorrection N q b| ≤
+      (ε+c/(q+1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
+        (1+2*Real.log ((N : ℝ)/(q+1 : ℕ))^2+
+          2*Real.log ((N : ℝ)/(q+1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q+1 : ℕ)))))+A
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (N := 3) (q := 1) (by norm_num) (by norm_num)
+    (fun _ => 0) mobiusPrefix 0 0 le_rfl le_rfl (by intro m _; exact le_rfl)
+    (by intro k _; simp) 0 (by simp [lowError, centeredLogPair, centeredPair])
+  norm_num [rejected, realize,
+    _root_.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer.pairing,
+    totalMass, variation, meanCorrection] at he
+
+def registration : Registration arena (type_of% @transfer_of_low_bound) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨transfer_of_low_bound, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@transfer_of_low_bound) (Realization signature) Type Unit where
+  unitName := `OriginalFullCellFiniteTransfer.transfer_of_low_bound.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer.LowBoundSupplier.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p F => replacement p.1 p.2.1 p.2.2 F)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer
+    definition := none
+    coordinates := #[0, 1, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms registration
+#print axioms audit
+
+end LowBoundSupplier
+
 end
 end Reg.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer

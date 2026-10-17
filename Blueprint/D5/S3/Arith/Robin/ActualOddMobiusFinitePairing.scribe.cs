@@ -13,6 +13,19 @@ internal sealed class ActualOddMobiusFinitePairingDocument : IScribeDocumentDefi
                 + "prefix M(N)=sum from 1 to N of mu(n), and its odd restriction "
                 + "O(N). Every kernel P is a real-valued function on the actual "
                 + "integer inputs, with J(n)=P(n)-P(n+1).")),
+            Describe.Lean(DescribeId.Create("actual-odd-mobius-coefficient"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.oddCoefficient"),
+                H("The actual odd coefficient"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every natural n, oddCoefficient(n)=mu(n) when n is odd and zero otherwise. "
+                    + "The original actual Mobius value, including zero, is retained."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("actual-odd-mobius-twice-coefficient"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.twice_coefficient"),
+                H("The actual doubled coefficient"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every natural m, mu(2*m)=-oddCoefficient(m). Thus an odd m pairs "
+                    + "with its double using exactly mu(2*m)=-mu(m), including mu(m)=0. "
+                    + "For even m the doubled value vanishes by the repeated prime factor."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-mobius-prefix-abel"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/ActualOddMobiusFinitePairing.prefix_abel"),

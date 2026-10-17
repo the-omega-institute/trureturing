@@ -62,10 +62,10 @@ def replacement (N q : ℕ) (a F : ℕ → ℝ) : ℝ :=
 def centered (d m : ℕ) : ℝ :=
   (m % d : ℕ)/(d : ℝ)-((d : ℝ)-1)/(2 * d)
 
-private def periodicPrimitive (d m : ℕ) : ℝ :=
+def periodicPrimitive (d m : ℕ) : ℝ :=
   (m % d : ℕ)*((m % d : ℕ)-(d : ℝ))/(2 * d)
 
-private theorem primitive_step {d : ℕ} (hd : 0 < d) (m : ℕ) :
+theorem primitive_step {d : ℕ} (hd : 0 < d) (m : ℕ) :
     periodicPrimitive d (m + 1)-periodicPrimitive d m = centered d m := by
   have hd0 : (d : ℝ) ≠ 0 := by positivity
   have hr := Nat.mod_lt m hd
@@ -183,42 +183,43 @@ private theorem pair_mass_bound {N d : ℕ} (a : ℕ → ℝ) (hd : 0 < d)
         (mul_one _)
 
 /-- The constant cancels in the signed telescope, before any absolute values. -/
-private theorem centered_pair_by_parts {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
-    (hd : 0 < d) (s : ℝ) :
-    (∑ m ∈ Ico N (2 * N), a m*centered d m) =
-      a (2 * N - 1)*(periodicPrimitive d (2 * N)+s)-
-        a N*(periodicPrimitive d N+s)-
+theorem centered_pair_by_parts {N : ℕ} (hN : 0 < N) (a f P : ℕ → ℝ)
+    (hstep : ∀ m, P (m+1)-P m = f m) (s : ℝ) :
+    (∑ m ∈ Ico N (2 * N), a m*f m) =
+      a (2 * N - 1)*(P (2 * N)+s)-
+        a N*(P N+s)-
           ∑ m ∈ Ico N (2 * N - 1),
-            (a (m+1)-a m)*(periodicPrimitive d (m+1)+s) := by
-  have hp (n : ℕ) : (∑ m ∈ range n, centered d m) = periodicPrimitive d n := by
+            (a (m+1)-a m)*(P (m+1)+s) := by
+  have hp (n : ℕ) : (∑ m ∈ range n, f m) = P n-P 0 := by
     rw [range_eq_Ico]
-    simp_rw [← primitive_step hd]
-    rw [sum_Ico_sub _ (Nat.zero_le n)]
-    simp [periodicPrimitive]
-  have he := sum_Ico_by_parts a (centered d) (by omega : N < 2 * N)
+    simp_rw [← hstep]
+    exact sum_Ico_sub P (Nat.zero_le n)
+  have he := sum_Ico_by_parts a f (by omega : N < 2 * N)
   simp only [smul_eq_mul] at he
   simp_rw [hp] at he
   have hcancel : (∑ m ∈ Ico N (2 * N - 1), (a (m+1)-a m)) =
       a (2 * N - 1)-a N := sum_Ico_sub a (by omega)
   have hs : (∑ m ∈ Ico N (2 * N - 1),
-      (a (m+1)-a m)*(periodicPrimitive d (m+1)+s)) =
-      (∑ m ∈ Ico N (2 * N - 1), (a (m+1)-a m)*periodicPrimitive d (m+1))+
+      (a (m+1)-a m)*(P (m+1)+s)) =
+      (∑ m ∈ Ico N (2 * N - 1), (a (m+1)-a m)*P (m+1))+
         (a (2 * N - 1)-a N)*s := by
     simp_rw [mul_add]
     rw [sum_add_distrib, ← sum_mul, hcancel]
-  rw [he, hs]
-  ring
+  simp_rw [mul_sub] at he
+  rw [sum_sub_distrib, ← sum_mul, hcancel] at he
+  rw [hs]
+  linear_combination he
 
-private theorem centered_pair_of_primitive_range {N d : ℕ} (hN : 0 < N)
-    (a : ℕ → ℝ) (hd : 0 < d) (s C : ℝ)
-    (hp : ∀ m, |periodicPrimitive d m+s| ≤ C) :
-    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ C*variation N a := by
-  rw [centered_pair_by_parts hN a hd s]
+theorem centered_pair_of_primitive_range {N : ℕ} (hN : 0 < N)
+    (a f P : ℕ → ℝ) (hstep : ∀ m, P (m+1)-P m = f m) (s C : ℝ)
+    (hp : ∀ m, |P m+s| ≤ C) :
+    |∑ m ∈ Ico N (2 * N), a m*f m| ≤ C*variation N a := by
+  rw [centered_pair_by_parts hN a f P hstep s]
   calc
-    _ ≤ |a (2 * N - 1)*(periodicPrimitive d (2 * N)+s)| +
-        |a N*(periodicPrimitive d N+s)| +
+    _ ≤ |a (2 * N - 1)*(P (2 * N)+s)| +
+        |a N*(P N+s)| +
         |∑ m ∈ Ico N (2 * N - 1),
-          (a (m + 1)-a m)*(periodicPrimitive d (m+1)+s)| :=
+          (a (m + 1)-a m)*(P (m+1)+s)| :=
       (abs_sub _ _).trans (add_le_add (abs_sub _ _) le_rfl)
     _ ≤ |a (2 * N - 1)| *C + |a N| *C +
         ∑ m ∈ Ico N (2 * N - 1), |a (m + 1)-a m| *C := by
@@ -235,7 +236,7 @@ private theorem centered_pair_of_primitive_range {N d : ℕ} (hN : 0 < N)
 theorem centered_pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
     (hd : 0 < d) :
     |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)*variation N a := by
-  apply centered_pair_of_primitive_range hN a hd 0 d
+  apply centered_pair_of_primitive_range hN a (centered d) (periodicPrimitive d) (primitive_step hd) 0 d
   intro m
   simpa only [add_zero] using (primitive_bound hd m).trans
     (by have := Nat.cast_nonneg (α := ℝ) d; linarith)
@@ -258,7 +259,7 @@ private theorem primitive_midpoint_bound {d : ℕ} (hd : 0 < d) (m : ℕ) :
 theorem centered_pair_variation_sharp_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
     (hd : 0 < d) :
     |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)/16*variation N a := by
-  exact centered_pair_of_primitive_range hN a hd ((d : ℝ)/16) ((d : ℝ)/16)
+  exact centered_pair_of_primitive_range hN a (centered d) (periodicPrimitive d) (primitive_step hd) ((d : ℝ)/16) ((d : ℝ)/16)
     (primitive_midpoint_bound hd)
 
 private theorem pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)

@@ -34,10 +34,10 @@ def mobiusPrefix (N : ℕ) : ℝ :=
 def oddMobiusPrefix (N : ℕ) : ℝ :=
   ∑ n ∈ (Ioc 0 N).filter Odd, (ArithmeticFunction.moebius n : ℝ)
 
-private def oddCoefficient (n : ℕ) : ℝ :=
+def oddCoefficient (n : ℕ) : ℝ :=
   if Odd n then (ArithmeticFunction.moebius n : ℝ) else 0
 
-private theorem twice_coefficient (m : ℕ) :
+theorem twice_coefficient (m : ℕ) :
     (ArithmeticFunction.moebius (2*m) : ℝ) = -oddCoefficient m := by
   classical
   by_cases hm : Odd m
