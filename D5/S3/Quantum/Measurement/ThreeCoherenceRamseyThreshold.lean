@@ -1,23 +1,21 @@
 /- GID: D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: The exact three-coherence Ramsey third-moment threshold. -/
 
-module
-
-public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+import D5.S3.Quantum.Measurements.IQP.LidarRestrictedAnticoncentrationRefutation
 
 /-! # The sharp three-coherence Ramsey threshold -/
-
-public section
 
 noncomputable section
 
 open Complex Real MeasureTheory Finset
 open scoped BigOperators
+open D5.S3.Quantum.Measurements.IQP.LidarRestrictedAnticoncentrationRefutation
+open OpLidarTwinProbability (normSq_finite_sum)
 
 namespace D5.S3.Quantum.Measurement.ThreeCoherenceRamseyThreshold
 
@@ -116,16 +114,12 @@ private theorem moment_one_formula {ι : Type*} [Fintype ι]
   classical
   have hpoint (t : ℝ) : (Complex.normSq (trigPoly n z t) : ℂ) =
       ∑ i, ∑ j, (z i * star (z j)) * character (n i - n j) t := by
-    rw [Complex.normSq_eq_conj_mul_self, mul_comm]
-    simp only [trigPoly, map_sum, Finset.sum_mul, Finset.mul_sum]
-    rw [Finset.sum_comm]
+    rw [trigPoly, normSq_finite_sum (fun j => z j * character (n j) t)]
     apply Finset.sum_congr rfl
     intro i _
     apply Finset.sum_congr rfl
     intro j _
-    rw [map_mul]
-    change (z i * character (n i) t) * (star (z j) * star (character (n j) t)) = _
-    rw [← character_mul_star]
+    rw [star_mul, ← character_mul_star]
     ring
   have hcast : (moment 1 (fun t => Complex.normSq (trigPoly n z t)) : ℂ) =
       ∑ i, ∑ j, if n i = n j then z i * star (z j) else 0 := by
