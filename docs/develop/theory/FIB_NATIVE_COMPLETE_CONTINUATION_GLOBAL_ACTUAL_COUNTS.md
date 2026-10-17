@@ -2454,3 +2454,523 @@ permission. The full original mathematical and physical target of
 §11 is unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 21. The fixed complex-linear five-mode dictionary
+
+**Definition 21.1 (coordinate identification and operational algebras).**
+Retain the original source and all the separately scoped suppliers of
+Assumption 1.2. Write Native for
+[the static compatibility-fibre owner](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md),
+with its ideal independently addressed menu in Assumption 55.2. Define
+one COMPLEX-linear map by its ordered orthonormal bases:
+
+$$
+\begin{array}{c|ccccc}
+\text{GC vector}&e_0&e_1&e_2&e_3&e_{13}\\ \hline
+\mathcal V\text{ image}&|000\rangle&|100\rangle&|010\rangle&|001\rangle&|101\rangle
+\end{array}
+\qquad \mathcal V:\mathbb C^5\longrightarrow\mathcal K_3.
+\tag{GC.89}
+$$
+
+For a finite weak law with $m$ occupied low labels, its acquisition
+output is the CLASSICAL direct sum
+
+$$
+\mathcal A_{\rm acq}=\left(\bigoplus_{j=1}^m M_2(\mathbb C)\right)
+                         \oplus M_5(\mathbb C).
+\tag{GC.90}
+$$
+
+Each label is genuinely generated and dephased. Every conditional
+decoder is TP on its entire matrix block, with a live five-mode output
+and the five separately labelled Borel failure measures of §2.
+Decoder Kraus indices are traced out unless the original instrument
+actually records them. A coherent Hilbert sum before measurement and
+this classical algebra after measurement are different interfaces.
+
+**Theorem 21.2 (full complex and reference correspondence).** The map
+$\mathcal V$ is unitary and transports the specified five-mode source,
+controls, effects and full instruments without any real-input restriction.
+In particular, with $E$ from (GC.1),
+
+$$
+\begin{gathered}
+E_N=\mathcal VE=
+ \left(\frac{|000\rangle+|101\rangle}{\sqrt2},
+       \frac{|100\rangle+|001\rangle}{\sqrt2},|010\rangle\right),\\
+E_N^\dagger E_N=I_3,\qquad P_N=E_NE_N^\dagger=\mathcal VP\mathcal V^\dagger,\\
+n_1=\operatorname{diag}(0,1,0,0,1),\qquad
+ E_N^\dagger n_1E_N=\operatorname{diag}(1/2,1/2,0),\\
+S_{\star,3}=\operatorname{diag}(1,1,1,1,i).
+\end{gathered}
+\tag{GC.91}
+$$
+
+The three restricted native flips have, respectively, the edge lists
+
+$$
+\{000\leftrightarrow100,\ 001\leftrightarrow101\},\qquad
+\{000\leftrightarrow010\},\qquad
+\{000\leftrightarrow001,\ 100\leftrightarrow101\}.
+\tag{GC.92}
+$$
+
+An encoder $C_j$ in (GC.44), or $C_H$ in (GC.51), becomes
+$C_j\mathcal V^\dagger$ or $C_H\mathcal V^\dagger$. Every live
+output matrix $A$ from a conditional fibre becomes $\mathcal VA$.
+The failure output $P_f$, original labels and physical clock are kept.
+These substitutions preserve every complex matrix unit and every
+conditional reference operator.
+
+Proof. A complex-linear map sending an orthonormal basis to an
+orthonormal basis is unitary. Applying it to the three columns of $E$
+gives (GC.91); their norms are one and their supports disjoint.
+The two occupied-first-site native basis vectors are $100,101$.
+Their squared overlaps with the first two columns are $1/2$, and
+with the third column zero; mixed entries vanish. The flip edges are
+Native Proposition 43's restricted operators, and $n_1n_3$ is the
+projector onto $101$ on $\mathcal K_3$, giving the fixed phase.
+Thus no passive real-frame matrix such as Native's $D_3$ is being
+mistaken for an available gate or inserted into the source dictionary.
+
+For arbitrary complex $X$, input conjugation gives
+$(C_j\mathcal V^\dagger)(\mathcal VX\mathcal V^\dagger)
+(C_j\mathcal V^\dagger)^\dagger=C_jXC_j^\dagger$.
+Conjugating each live Kraus matrix gives the corresponding live output
+identity. Effects transform by the inverse pullback. Tensor these
+identities with $I_R$ for any finite passive reference $R$; partial
+trace on the five-mode factor gives the failure reference operators
+in (GC.54), with $EME^\dagger$ replaced in native coordinates by
+$E_NME_N^\dagger$. All five weights, including the two separate zeros,
+are retained. Summing the encoder effects is still $I_5$, and each
+conditional decoder remains TP on its ENTIRE block. Hence the
+correspondence applies to the complete instrument, not merely its
+probabilities on the twelve histories. $\square$
+
+The dictionary is a coordinate identification. It supplies no preparation,
+control, acquisition or read service. A terminal PVM probability formula
+alone supplies neither its Lüders post-state nor a reusable carrier.
+In particular the elementary compressed effect in (GC.91) is not the
+original $M$. Native Theorem 65.2 matches that supported effect after
+an exact word, while leaving the full acquisition and chronological
+instrument requirements distinct.
+
+## 22. A four-axis common-law witness with five actual outputs
+
+**Theorem 22.1 (one finite feasible law, including every signed history).**
+At the source of Assumption 1.2 define
+
+$$
+\begin{aligned}
+h_{z,\pm}&=(1,\pm1/\sqrt\alpha,0),&p_{z,\pm}&=\alpha/2,
+ &B_z&=m_2h_1^2/b^2=V,\\
+h_{w,\pm}&=(1,0,\pm1/\sqrt\beta),&p_{w,\pm}&=\beta/2,
+ &B_w&=m_1h_2^2/d^2=W,\\
+c_z&=\mathfrak c(h_{z,+})=\mathfrak c(h_{z,-})>0,
+ &c_w&=\mathfrak c(h_{w,+})=\mathfrak c(h_{w,-})>0,\\
+A_{\rm axes}&=\log\left(1+\max\{B_z/c_z,B_w/c_w\}\right)<\infty.
+\end{aligned}
+\tag{GC.93}
+$$
+
+Use failure capacity $b_j=B_z$ on each $z$ atom and $b_j=B_w$
+on each $w$ atom. For every finite $A\ge A_{\rm axes}$ this SAME
+four-atom law satisfies all the complete joint equations (GC.9) and
+has achieved contrast $\sqrt\theta<s_0$. Thus for every request
+$0\le s\le\sqrt\theta$ it has the §10 weak constructor with error
+$E_*$, sharp joint cost $\mathsf C(s)$ and exactly five actual
+acquisition labels, each with positive probability on EVERY one of
+the original twelve histories. It is a feasible witness, not a
+height optimizer or a minimum-alphabet theorem.
+
+Proof. Each point lies on the original ellipse. The opposite signs
+cancel both first moments; $zw=0$ pointwise. The three diagonal
+entries of $\sum phh^T$ are $\alpha+\beta,1,1$, so this is exactly
+$I_3$, including all off-diagonals. On the $z$ pair
+$n_h=(0,0,-bz/h_1)^T$, giving
+
+$$
+\sum_{z\text{ pair}}p_jb_jn_{h_j}n_{h_j}^T
+ =\operatorname{diag}(0,0,B_zb^2/h_1^2)
+ =\operatorname{diag}(0,0,m_2).
+\tag{GC.94}
+$$
+
+On the $w$ pair the result is $\operatorname{diag}(0,m_1,0)$.
+Consequently the complete covariance is $M$ for the very law that
+has the complete live Gram $I_3$. These are not independently
+chosen marginal decompositions. Positivity of the capacity follows
+from (GC.8), and it depends only on squared coordinates. The stated
+$A$ makes every $b_j\le(e^A-1)\mathfrak c(h_j)$. Finally
+$s_0\sum p_j|z_j|=s_0\sqrt\alpha=\sqrt\theta$; since
+$\omega>0$, this is strictly below $s_0$.
+
+Each live $K_h$ has rank two by §10. Its kernel is spanned by
+$(s_0,-bz/h_1,-dw/h_2)^T$. On a $z$ axis the third coordinate
+of this vector is zero, and on a $w$ axis the second is zero.
+Every signed $U_{\epsilon,\chi}a_y$ has all three coordinates
+nonzero. It therefore lies in none of these four kernels. Each
+low acquisition mass
+$p_j\langle U_{\epsilon,\chi}a_y,
+(K_h^\dagger K_h+b_jn_hn_h^T)U_{\epsilon,\chi}a_y\rangle$
+is strictly positive. The single high mass is
+$(1-\delta)\sum_i h_i^2p_{yi}>0$. These exhaust the five
+acquisition outputs and sum to one by root TP and (GC.52).
+
+Proposition 10.1 now applies to this common law on the entire complex
+$M_5$ input and all passive references. Its four qubit fibres have
+positive terminal survivor effects and activity at most $A$; its
+high fibre has dimension five, zero rate and the coherent complement.
+The sharp-cost and $E_*$ identifications use their separate inherited
+suppliers, including the unaveraged JR face. The witness does not
+reverify those suppliers or choose an optimal height. $\square$
+
+## 23. The literal pre-read menu does not acquire a low quantum fibre
+
+**Theorem 23.1 (supported unitary-cut obstruction).** Fix any one
+$y\in\{5,16,27\}$. At a cut reached using only native unitary
+words before the permitted terminal read, the joint accessible quantum
+image of the four signed original inputs has dimension at least three.
+This remains true with an independently initialized accessible ancilla
+and with input-independent classical randomization. Thus the literal
+unitary-only acquisition cut has $\mathsf W=1$. It cannot implement
+the low/high acquisition of Theorem 22.1, whose worst-history high
+probability is strictly below one. The comparison with the original
+sharp $\mathsf C(s)$ is at its inherited weak scope.
+
+Proof. Put $v_{\epsilon,\chi}=(\epsilon a_{y0},\chi a_{y1},a_{y2})^T$.
+Then
+
+$$
+\sum_{\epsilon,\chi}\epsilon v_{\epsilon,\chi}=4a_{y0}e_0,
+\quad
+\sum_{\epsilon,\chi}\chi v_{\epsilon,\chi}=4a_{y1}e_1,
+\quad
+\sum_{\epsilon,\chi}v_{\epsilon,\chi}=4a_{y2}e_2.
+\tag{GC.95}
+$$
+
+All coefficients on the right are nonzero, so the COMPLEX span is
+three-dimensional. The isometry $E_N$ and every native word preserve
+that dimension. Appending an independent pure ancilla and applying a
+joint unitary is also an isometry on this span. An independent mixed
+ancilla has support of rank at least one; the joint support initially
+has dimension three times that rank, and a unitary preserves it.
+Every future-accessible input-bearing share is included here; removing
+one by an irreversible channel would leave the stipulated unitary-only
+menu.
+
+If the seed is recorded, each seed label has input effect $p_jI$;
+conditional on any positive-weight seed the joint span is still at
+least three. If the seed is forgotten, the support of a positive
+mixture contains the support of every positive-weight term, so mixing
+cannot turn this into a two-dimensional acquisition fibre. This also
+covers a continuous seed: positivity of the mixture excludes a smaller
+support unless the almost-everywhere images already lie in it. Thus
+no actually generated label at this cut has joint fibre dimension below
+three, and the total high probability is one.
+
+For the §10 weak acquisition only $H$ is high. Its probability is
+$(1-\delta)\sum_i h_i^2p_{yi}$, independent of signs. Root TP gives
+$h_i^2\le1$, and $0<\delta<1$, hence
+
+$$
+\mathsf W_{\rm GC}=(1-\delta)\max_y\sum_i h_i^2p_{yi}<1.
+\tag{GC.96}
+$$
+
+Under the original weak sharp-cost supplier this equals
+$\mathsf C(s)$ for the stated witness requests. $\square$
+
+A terminal bit cannot retroactively create an earlier acquisition cut
+or authorize a later quantum output. This theorem concerns the literal
+menu before that read; it is not a no-go for every conceivable optimizer,
+every stronger measurement interface or the strong boundary. Its joint
+span is essential: the two-dimensional marginal of a larger accessible
+joint carrier does not qualify as a low fibre.
+
+## 24. The specified full high completion has a separate Choi obstruction
+
+**Theorem 24.1 (full-$M_5$ obstruction for GC.51).** Consider an upgrade
+of the native $\mathcal K_3$ menu allowing any finite adaptive sequence
+of the same two-outcome read with effects $\{n_1,I-n_1\}$, intervening
+native unitaries and input-independent randomization, but no additional
+quantum carrier or other nonunitary primitive. Allow arbitrary hidden
+Kraus multiplicities for that read and classical merging of complete
+records. No actual branch of such an instrument can equal
+$X\mapsto C_HXC_H^\dagger$ from (GC.51) on the full complex
+$M_5$. Identify its five-dimensional output with $\mathcal K_3$ by
+any fixed unitary if needed.
+
+Proof. If a read outcome $b$ has effect $P_b$, its Kraus operators
+$L_{b\mu}$ obey $\sum_\mu L_{b\mu}^\dagger L_{b\mu}=P_b$.
+For $v\in\ker P_b$, the sum $\sum_\mu\|L_{b\mu}v\|^2$
+is zero, so every $L_{b\mu}=L_{b\mu}P_b$. Each Kraus matrix
+therefore has rank at most $\operatorname{rank}P_b\le3$.
+Every trajectory containing a read has Kraus rank at most three,
+even after pre/post unitaries and further reads. A trajectory with
+no read is a scalar-weighted unitary and has scalar input effect.
+
+In contrast the particular coherent high encoder has effect
+
+$$
+C_H^\dagger C_H=(1-\delta)ED^\dagger DE^\dagger+P^\perp.
+\tag{GC.97}
+$$
+
+Its eigenvalues are $(1-\delta)h_0^2,(1-\delta)h_1^2,
+(1-\delta)h_2^2,1,1$. The first three are strictly between zero
+and one. Thus $C_H$ has rank five and nonscalar effect.
+Its Choi matrix is the single positive ray
+$|C_H\rangle\!\rangle\langle\!\langle C_H|$. If positive Kraus
+terms sum to this ray, expectation on any vector orthogonal to
+$|C_H\rangle\!\rangle$ is a sum of nonnegative squares equal
+to zero. Every nonzero Kraus vector must be collinear with
+$|C_H\rangle\!\rangle$. A measured trajectory violates its
+rank five, while an unmeasured trajectory violates its nonscalar
+effect. Classical merging and hiding Kraus indices are positive sums,
+so neither helps. For a convergent countable sum the same squares
+vanish termwise. For an integrable random seed they vanish almost
+everywhere; a finite basis of the orthogonal complement suffices.
+The argument is the Choi-ray mechanism already used in Native
+Proposition 44, now applied to this specified nonunitary encoder.
+A normalized maximally entangled five-dimensional input and passive
+reference distinguishes any unequal CP maps. $\square$
+
+This is specifically the full completion (GC.51). Its supported
+restriction $C_HE$ has rank THREE, so the preceding rank-five
+argument does not follow after replacing the full $M_5$ problem by
+that restriction. Theorem 23.1 supplies the separate supported-cut
+cost obstruction. Neither theorem excludes all lawful full completions
+or all optimizers of the original problem. Matching the supported
+effect in Native Theorem 65.2 is compatible with both obstructions:
+an effect and a complete conditional quantum map are different data.
+
+## 25. A conditional orthogonal layout and rank-five legal-chain tree
+
+**Assumption 25.1 (counterfactual apparatus interfaces).** Fix one finite
+weak common law from (GC.9) with $m\ge1$ occupied low labels and its
+actual encoders (GC.44), (GC.51). In addition to Native Assumption
+55.2, suppose the following operations are supplied independently:
+an initialization embedding of the sole five-mode specimen in the
+chosen legal chain with added positions in their specified zero state;
+a nondestructive, reusable, exact Lüders read of the first-position
+PVM; classical feedback retaining the complete read record; and
+branch-dependent routing/isolation to the stipulated output carriers.
+Every other input-bearing quantum share must become permanently
+inaccessible before the acquisition cut. Routing, removal and terminal
+environment disposal are actual supplied operations, not an inference
+from a dimension count. Controls, initialization, reads and routing
+must finish by their required cut on a supplied aligned clock. These
+are counterfactual added permissions, not services authorized by the
+original theory or by unitary controllability.
+
+For a general layout, also suppose an exact complete read of its
+orthogonal sectors is supplied. The special $m=4$ case below derives
+that sector read from the reusable rank-five detector instead. If a
+chronological decoder is wanted, independently supply the causal
+reservoir, calibrated coupling, survivor output and real clock required
+by JRH §66; finite acquisition dimension does not supply them.
+
+**Theorem 25.2 (exact columns and complete acquisition).** Under these
+assumptions, an orthogonal-layout acquisition has Hilbert output space
+and dephased output algebra
+
+$$
+\begin{gathered}
+\mathcal H_\oplus=\left(\bigoplus_{j=1}^m\mathbb C^2\right)
+                          \oplus\mathbb C^5,
+\qquad \dim\mathcal H_\oplus=2m+5,\\
+\mathcal A_{\rm acq}=\left(\bigoplus_{j=1}^mM_2\right)\oplus M_5,
+\qquad \dim_{\mathbb C}\mathcal A_{\rm acq}=4m+25.
+\end{gathered}
+\tag{GC.98}
+$$
+
+For $d_n\ge2m+5$, its column isometry can be obtained by an exact
+finite native word on $\mathcal K_n$. With the sector read and the
+specified routing, the resulting acquisition branches are exactly
+$\operatorname{Ad}_{C_j}$ and $\operatorname{Ad}_{C_H}$ on ALL
+complex input matrices, including their passive-reference extensions.
+For the four-axis law, $m=4$, the orthogonal Hilbert layout has dimension
+$13=d_5$, whereas its cq algebra has complex vector dimension $41$.
+Within this layout $n=5$ is the smallest chain length, since $d_4=8$.
+This is not a universal ancilla or instrument-dimension minimum.
+
+Proof. Stack the actual columns, without replacing coefficient weights
+by acquisition probabilities:
+
+$$
+\mathcal A\psi=C_1\psi\oplus\cdots\oplus C_m\psi\oplus C_H\psi.
+\tag{GC.99}
+$$
+
+Equation (GC.52) gives $\mathcal A^\dagger\mathcal A=I_5$ on
+the full complex input, including its complementary two dimensions.
+Choose a sector embedding $J_\oplus:\mathcal H_\oplus\to\mathcal K_n$
+and the supplied input embedding $I_{\rm init}:\mathbb C^5\to\mathcal K_n$.
+Complete the five columns of $I_{\rm init}$ and $J_\oplus\mathcal A$
+to orthonormal bases. Their basis correspondence is a unitary $U_0$
+with $U_0I_{\rm init}=J_\oplus\mathcal A$. Since $2m+5>5$,
+there is an unused input column; multiplying its output column by
+$(\det U_0)^{-1}$ gives $U\in SU(d_n)$ with the same prescribed
+five columns. Native Theorem 64.1 supplies this $U$ as an ACTUAL
+finite word, without invoking an approximate matrix completion.
+
+Let $Q_j$ be the output sector projections. Then
+$Q_jUI_{\rm init}=J_jC_j$, also for $H$. The supplied sector
+Lüders read, followed by the inverse sector identification, gives the
+claimed CP map in each branch. Tensoring these exact matrix identities
+with $I_R$ proves the complete reference statement. When $d_n>2m+5$,
+complete the sector read with the orthogonal remainder. Its Kraus map
+on every initialized $M_5$ input is zero, so it generates no additional
+actual label there; it is still included in the full apparatus read.
+All occupied conditional output carriers and their full-domain TP
+decoders are the specified ones after routing, not enlarged padding
+blocks. Summing their effects gives $I_5$ exactly.
+
+For $m=4$, identify the original native specimen with $\mathcal K_3$
+by §21 and explicitly supply
+
+$$
+I_{\rm init}|x\rangle=|x00\rangle\in\mathcal K_5
+\qquad(x\in\Sigma_3).
+\tag{GC.100}
+$$
+
+All five images are legal and orthonormal. This is an initialized
+mapping, not a free operation on an unknown source. The five output
+sectors have dimensions $5,2,2,2,2$ and exhaust $\mathcal K_5$.
+The dimension statements in (GC.98) follow by adding Hilbert dimensions
+or, respectively, matrix-block dimensions. Since $d_n$ increases and
+$d_4<13=d_5$, the layout-specific minimum follows. $\square$
+
+**Theorem 25.3 (the rank-five detector reads exactly five leaves).**
+For $m=4$, Assumption 25.1's reusable first-position Lüders detector
+on $\mathcal K_5$ suffices for the entire sector read, using the
+conditional splits
+
+$$
+13\longrightarrow5\mid8,\qquad
+8\longrightarrow4\mid4,\qquad
+4\longrightarrow2\mid2.
+\tag{GC.101}
+$$
+
+The complete path record has exactly five possible leaves: the single
+high prefix and the four low three-bit prefixes. No random seed or
+readable hidden Kraus label is added.
+
+Proof. On $\mathcal K_5$, $n_1$ has rank $F_5=5$ and complement
+rank eight. On a known $r$-dimensional sector $S$, suppose a prescribed
+split has dimensions $a,r-a$. A rank-five projector whose restriction
+to $S$ is the first split projector and which commutes with $P_S$
+exists exactly when
+
+$$
+a\le5,\qquad r-a\le8.
+\tag{GC.102}
+$$
+
+Necessity is the rank bound for the projector and its complement.
+For sufficiency, add $5-a$ orthogonal padding directions in $S^\perp$;
+this is possible iff $5-a\le13-r$, the second inequality. Any two
+rank-five projectors on $\mathcal K_5$ are unitarily conjugate.
+Multiply a conjugating unitary by a scalar to make its determinant one,
+without changing its projector conjugation. Native Theorem 64.1 gives
+it and its inverse exactly. Conjugating the detector before the read
+and undoing that conjugation afterward therefore realizes the padded
+Lüders projector. The post-state assertion uses the stipulated Lüders
+instrument; equality of effects alone would not suffice.
+
+Apply this with $(r,a)=(13,5),(8,4),(4,2)$, using the last split
+in each four-sector. All inequalities hold. The initial read isolates
+$H$ from the sum of the four low sectors. Its low result splits that
+sum into two pairs, and the final conditional read separates each pair.
+At a child node the padded projection commutes with its known parent
+sector and restricts to the prescribed child. Thus the product of path
+Kraus projectors is exactly the final sector projector, not a finer
+measurement within it. The two outcomes at every node sum to identity
+on its parent; all trajectories are retained and no acceptance division
+occurs. With outcome one selecting the root high sector, the complete
+codes can be chosen as $1,000,001,010,011$. They are in bijection
+with $H,L_1,L_2,L_3,L_4$. The high path has one read and a low path
+three; no reset is used, and each is a complete branch.
+
+Every conjugating word and detector projection remains within the legal
+chain. For Theorem 22.1 each leaf has strictly positive probability on
+each original history, so these are five actual outputs, not five
+formal possible labels padded by zeros. $\square$
+
+**Proposition 25.4 (whole-fibre and decoder completion conditions).**
+The preceding construction realizes the original acquisition resource
+only if the ENTIRE future-accessible quantum fibre, after recording a
+leaf and routing, is the stated $\mathbb C^2$ or $\mathbb C^5$.
+A retained input-bearing chain, controller, detector environment or
+correlated share must be counted jointly. A same-effect
+measure-and-prepare detector need not implement this acquisition.
+
+Proof. The branch column identity requires the coherent map $C_j$,
+not only the effect $C_j^\dagger C_j$. Measuring a basis within a
+sector and preparing a fixed state can have that same sector effect
+while deleting its off-diagonal matrix units, so it fails (GC.99).
+The Lüders tree preserves them. The supplied routing must identify each
+sector with the declared output carrier and make every other quantum
+output either independent conditional on the record or permanently
+inaccessible before the cut. If another input-bearing share remains
+accessible, its joint algebra is larger than (GC.90), violating the
+claimed cost interface even if the displayed carrier marginal has rank
+two. No rank-of-populated-history argument exempts it.
+
+For the high decoder the two prescribed matrices in native coordinates
+are explicitly
+
+$$
+A_0=\mathcal VE[I_3\ 0],\qquad
+A_1=\mathcal VEJ_0[0\ I_2],\qquad
+A_0^\dagger A_0+A_1^\dagger A_1=I_5.
+\tag{GC.103}
+$$
+
+Consequently $x\mapsto A_0x\otimes|0\rangle+A_1x\otimes|1\rangle$
+is an isometry. Discarding its two-component environment yields the
+specified high TP decoder; its index is not another acquisition label.
+Retaining an accessible returning environment changes that interface.
+The low full-domain TP decoders, all reference/Borel identities and
+whole-fibre activity bounds are exactly those of Proposition 10.1.
+Their causal monitor is direct reuse of JRH Theorem 66.1 and
+(JRH.54)–(JRH.56); no additional monitor construction is needed here.
+Scheduling and causal coupling are precisely the extra assumptions,
+not consequences of the column completion. $\square$
+
+Finite column dilations and measurement trees are established methods.
+Andersson–Oi, [*Binary search trees for generalized measurement*,
+§§II–IV](https://arxiv.org/html/0712.2665v1), explicitly supplies an
+initialized probe, joint unitary, nondestructive output and adaptive
+probe read/reset. The present application proves its own no-reset,
+fixed-rank legal-chain tree (GC.101) for the GC columns. Lloyd–Viola,
+[*Control of open quantum system dynamics*, Eqs. 3–7](https://arxiv.org/html/quant-ph/0008101v1),
+also requires an independent initialized apparatus, controlled coupling,
+read and feedback; its continuous-time enactment is a scaled approximate
+construction. Oreshkov–Brun,
+[*Weak measurements are universal*](https://arxiv.org/html/quant-ph/0503017v4),
+uses an adjustable two-outcome family depending on the current walk
+coordinate. None of these interfaces is supplied by a literal terminal
+bit, nor do they certify the prescribed FIRST clock or activity.
+These methods are credited applications, without a literature-priority
+claim for their general principles.
+
+Theorems 25.2–25.3 concern the weak high completion of dimension five.
+The original
+root existence/isolation, ranks and root TP, complete minimax, separate
+unaveraged face, sharp JOINT cost and full-class rigidity/capacity remain
+Assumption 1.2's conditional supplies. Extra apparatus permissions are
+not authorized by this application. The all-budget/all-contrast roof,
+sharp optimal actual counts, coefficients and orientations, global
+ordering, connected coverage, all gluing and joint limits in §§11,20
+remain unchanged; the finite witness and conditional apparatus do not
+complete that original mathematical or native programme.
+
+## 追加锚（本行以下为增补区）
