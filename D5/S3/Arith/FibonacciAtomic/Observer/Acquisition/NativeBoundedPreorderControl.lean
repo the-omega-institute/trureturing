@@ -22,7 +22,7 @@ open NativeBoundedPreorderRows
 open GenealogicalFiberTransport (Source substitution composition)
 open ActualTreeReadoutAcquisition (Address Reply readout)
 open D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord (Bank Table Flag Opcode RawReply
-  replyFlag rawReply actualObservation sourceProgram)
+  replyFlag rawReply actualObservation sourceProgram Execution ready)
 open D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution (Instruction Run)
 
 /-- The seven mode codes use the installation order. Code seven is unused. -/
@@ -410,6 +410,18 @@ def PhysicalRealization (P : Parameters) (e : Nat) (y : Source)
         (D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.physical w)
         (D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.physical
           ((D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed T w).next r)))) ∧
+  (∀ right : Bool, ∀ w : Bank k, ∀ a : Nat,
+    (∀ p, T.instruction w = .read p →
+      Execution T obs (ready right w) a
+        (ready (!right) (T.delta w (replyFlag (obs a p)))) a
+        (.read p (obs a p) :: List.replicate
+          (w.card + (T.delta w (replyFlag (obs a p))).card + if right then 6 else 4)
+          (.read [] (obs a [])))) ∧
+    (T.instruction w = .update →
+      Execution T obs (ready right w) a (ready (!right) (T.delta w 4)) (a + 1)
+        (.update :: List.replicate
+          (w.card + (T.delta w 4).card + if right then 6 else 4)
+          (.read [] (obs (a + 1) []))))) ∧
   ∃ last events,
     D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.Execution T obs
       (D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.ready false z) 0
@@ -447,7 +459,8 @@ def PhysicalRealization (P : Parameters) (e : Nat) (y : Source)
       ∀ a b c : Nat, ∀ event es bit',
       D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.Execution T obs w a v b [event] →
       D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.Execution T obs v b u c es →
-      (D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed T u).instruction = .halt bit' →
+      (D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed T u).instruction =
+        .halt bit' →
       D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.remaining T obs w a =
         D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.remaining T obs v b + 1) ∧
     D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.SourceRankInvariant T
@@ -523,8 +536,13 @@ theorem native_bounded_preorder_control (h T t : Nat) (u : Source)
   · intro w a pref
     obtain ⟨z, eq, orig, valid, safe⟩ := compiled.2 w a pref
     exact ⟨z, eq, valid, safe, prefixes z a orig⟩
-  · exact D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed_halt
-      compiled.1 fixed false
+  · obtain ⟨count, width, routing, legal, implementation⟩ :=
+      D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.installed_halt
+        compiled.1 fixed false
+    refine ⟨count, width, routing, legal, ?_, implementation⟩
+    intro right w a
+    exact D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord.native_transfer
+      (rowTable P e) (actualObservation y) right w a
   · obtain ⟨n, counted, balance⟩ := polling_count P _ run halt
     refine ⟨n, counted, ?_⟩
     have phaseFinal : pollLevel final = 1 := by dsimp [final, pollLevel]; cases bit <;> rfl
