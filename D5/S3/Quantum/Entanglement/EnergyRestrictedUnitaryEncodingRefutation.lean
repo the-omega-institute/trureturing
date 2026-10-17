@@ -249,7 +249,7 @@ private theorem compression_pairing {H : Type} [NormedAddCommGroup H] [InnerProd
     (D : Fin 2 → H) (E : H →L[ℂ] H) (z : Fin 2 → ℂ) :
     star z ⬝ᵥ (compression D E *ᵥ z) =
       ⟪∑ i, z i • D i, E (∑ i, z i • D i)⟫_ℂ := by
-  simp [compression, dotProduct, Matrix.mulVec, Fin.sum_univ_two]
+  simp [compression.eq_1, dotProduct, Matrix.mulVec, Fin.sum_univ_two]
   ring
 
 private theorem compression_pos {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
