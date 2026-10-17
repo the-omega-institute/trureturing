@@ -97,7 +97,10 @@ internal sealed class CrossCorrelationActivityBoundRefutationDocument : IScribeD
                             + "The factor involving total activity therefore makes the proposed bound too small. "
                             + "This counterexample concerns the extension to arbitrary networks; the complete graph "
                             + "introduces cycles beyond the hexagon."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gu-2023-cross-correlation-activity-bound-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
