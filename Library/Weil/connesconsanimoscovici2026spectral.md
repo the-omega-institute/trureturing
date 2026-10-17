@@ -8846,3 +8846,291 @@ and RH remain unresolved.
 
 
 The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/7f62b16b30d65c182492885e6f78bed549ffce06/docs/reports/weil-c27) retain the full fixed-row application and the original input bindings.
+
+
+#### Bound the complete residual before another source query
+
+The full-row rectangular enclosure does not require another source query
+to obtain a sharper residual UPPER. Reuse the SAME real comparison form,
+raw coordinate, accurate transported response and positive-plane response:
+
+$$
+Q=\gamma P-e_0e_0^*/\delta,\quad
+R=\gamma P(f,f)-f[0]^2/\delta+\theta^2/b-s^2/a,\quad
+s=\gamma\zeta+\omega\theta,\quad \omega=\chi+g/b.
+$$
+
+Here $\chi$ denotes the saved coordinate ratio, $b,a,\delta>0$, and the saved scalar
+$A_{\rm up}$ bounds precisely $P(f,f)$ for the same fixed18-coordinate
+row. The original raw $\kappa=33/32$ normalization is already in $f$;
+no additional $\kappa$ or pivot normalization is inserted.
+Let $I_0,I_\theta,I_s$ enclose $f[0],\theta,s$ for one common realization.
+Set $d_0=\operatorname{dist}(0,I_0)$,
+$d_s=\operatorname{dist}(0,I_s)$ and
+$m_\theta=\max_{x\in I_\theta}|x|$. Directed denominator bounds give
+
+$$
+0\le R\le U_R:=
+\gamma A_{\rm up}
+-\frac{d_0^2}{\delta_{\rm up}}
++\frac{m_\theta^2}{b_{\rm lo}}
+-\frac{d_s^2}{a_{\rm up}}.
+$$
+
+Every termwise inequality holds for the actual common realization.
+Correlations need not be discarded from the model or asserted to attain
+separate interval endpoints. A negative $U_R$, or an upper below the
+accepted positive residual lower, is inconsistent and stops the
+application. The smaller of $U_R$ and the saved full-row upper remains
+an upper for that SAME residual.
+
+This upper can screen a different question from actual paid-energy
+sign. Keep a saved lower $L_F$ of the SAME $F$, and an already retained
+paid lower $L_{\rm previous}$, fixed. Any valid future lower $r$ of
+this residual satisfies $r\le R\le U_R$. Therefore
+
+$$
+\max\{L_{\rm previous},L_F+r\}
+\le C_R:=\max\{L_{\rm previous},L_F+U_R\}.
+$$
+
+A negative $C_R$ prevents positive certification by refining this
+residual alone, even with exact knowledge of $R$. A nonnegative $C_R$
+is inconclusive. The statement does not bound actual paid energy from
+above and does not exclude a stronger joint $F$ estimate or changed
+recipe. In particular, $L_F$ is a LOWER for $F$, so substituting it
+into an actual-energy upper would reverse the role of the available
+information.
+
+
+The saved-scalar application gives the outward enclosure
+
+$$
+0.0001193399383345589672\le R\le
+2.364814143855336105831392.
+$$
+
+The upper replaces the previous rectangular upper of approximately
+$7.35265\cdot10^{194}$. This is an upper-enclosure improvement, not
+an improvement of a residual or paid LOWER certificate. With the SAME
+saved $L_F$ and previous paid lower, the resulting fixed and
+energy-endpoint certificate ceilings respectively lie in
+
+$$
+\begin{aligned}
+C_{R,\rm fixed}&\in
+[1.892324368802542735566375,\ 1.892324368802542735566376],\\
+C_{R,\rm endpoint}&\in
+[1.690128902785682152622539,\ 1.690128902785682152622541].
+\end{aligned}
+$$
+
+Both are positive, so this diagnostic does not rule out further
+residual estimation. It also certifies no positive paid lower. It uses
+only saved scalars; no physical source, feature, matrix, reference,
+inverse, solve, analytic tail or previous producer is reevaluated.
+
+#### One common-source covector before bounding errors
+
+Fix exactly one trial by a prescribed rule. Let $e$ be the exact
+dyadic midpoint of the saved complete18-coordinate row. Let
+$\Sigma_0$ be the exact symmetric midpoint of the original saved core,
+and construct $T_0,\delta_0$ from it. Keep the same exact positive
+$R_{\rm ref}$ and exact $\gamma$. Define
+
+$$
+Q_0=\gamma T_0R_{\rm ref}T_0^*-e_0e_0^*/\delta_0,
+\qquad c=Q_0e^*,\qquad z=eT_0.
+$$
+
+One exact reference action constructs $c$. This uses $Q_0$ only to
+choose a fixed exact covector. It neither replaces the actual $Q$ by
+$Q_0$ nor asserts $Q_0\preceq Q_{\rm true}$.
+There is no inverse or solve, alternative direction, parameter scan,
+precision scan or cutoff change.
+
+The abstract actual-$Q$ Riesz representer of $x\mapsto xc$ is
+$u=(Q^{-1}c)^*$. It is used in the proof, not computed. The original
+form has inertia one negative and17positive directions, since
+
+$$
+Q(x,x)=\gamma(x_{\rm tail}+x[0]t)R_{\rm ref}
+(x_{\rm tail}+x[0]t)^*-x[0]^2/\delta,
+$$
+
+where $t$ is the first row of $T$. Removing the timelike $y_0$ and
+orthogonal spacelike $v=\rho+(g/b)y_0$ leaves a positive definite
+space. Define
+
+$$
+\begin{aligned}
+d_y&=y_0c,& d_v&=\rho c+(g/b)d_y,\\
+L_c&=fc+(\theta/b)d_y-(s/a)d_v,\\
+D_c&=c^*Q^{-1}c+d_y^2/b-d_v^2/a\ge0.
+\end{aligned}
+$$
+
+These are the cross and squared norm of the representer projected
+to the SAME positive residual space. The Hilbert variational identity
+therefore gives, for every real $\tau$,
+
+$$
+R\ge2\tau L_c-\tau^2D_c.
+$$
+
+Thus an enclosure $L_c\in I_c$ and positive upper $D_c\le U_D$
+supply
+
+$$
+R\ge r_c:=\frac{\operatorname{dist}(0,I_c)^2}{U_D}.
+$$
+
+No positive numerical LOWER for $D_c$ is required. If $U_D<0$, the
+inputs contradict structural nonnegativity and the application stops.
+If $U_D=0$, then $D_c=L_c=0$ and there is no gain, so no physical
+functional need be queried. An interval $I_c$ containing0 gives
+$r_c=0$.
+
+The actual-core dependence in the dual norm has an explicit block
+formula. Because $c_{\rm tail}=\gamma R_{\rm ref}z^*$,
+
+$$
+c^*Q^{-1}c=\gamma zR_{\rm ref}z^*
+-\delta(c[0]-t c_{\rm tail})^2.
+$$
+
+This supplies no new inverse. Anchor its cancellation exactly at
+
+$$
+q_{\rm inv,0}=ec,\qquad
+k_0=c[0]-t_0c_{\rm tail}=-e[0]/\delta_0,\qquad
+\Delta k=-(t-t_0)c_{\rm tail}.
+$$
+
+Then the interval implementation uses
+
+$$
+c^*Q^{-1}c=q_{\rm inv,0}
+-(\delta-\delta_0)k_0^2
+-\delta\bigl(2k_0\Delta k+(\Delta k)^2\bigr).
+$$
+
+Finite row actions are also anchored at exact midpoint products, with
+all original interval variations retained. The actual $g/b$ remains
+in $d_v$; neither the plane nor its readouts are replaced by midpoint
+values. The projected cross reuses the saved accurate $\theta$ and $s$;
+the fixed $c$ and finite row actions retain their inherited same-source
+bindings.
+
+For the one new physical quantity $fc$, use linearity to form $Hc$
+from the saved112-by18feature map BEFORE estimating any errors.
+The complete physical contract is applied to this one aggregate.
+A safe lift cap is
+
+$$
+L_c^{\rm lift}=\sum_{j=0}^{17}|c_j|
+\sqrt{(V^*V)_{jj,\rm up}}\ge\|Vc\|.
+$$
+
+The existing uniform sharp-forward and raw mixed allowances scale
+by this SAME lift cap divided by their saved positive reference cap;
+the raw mixed allowance already includes $\kappa$. One new masked
+physical quadratic is evaluated in the original weighted kernel.
+Its broad Gram-error cap and its full directional-jet cap are both
+paid; take their minimum. The latter retains the omitted signed
+antidiagonal moments, anchor bound, moment and prefactor rounding,
+and actual-symbol forward allowance. The full high-support moment
+Gram does not depend on whether low physical support ends at1280or2048.
+No extra $\kappa$ or weight is inserted in this physical norm.
+
+The existing finite functional, cached analytic tail and saved
+physical left-kernel action then evaluate this aggregate once.
+Original source, approximate-symbol, forward, smooth, raw-mixed and
+new Abel allowances all remain. Common source permits this direct
+linear functional; it does not authorize guessing correlations from
+the previously saved marginal coordinate boxes or discarding any
+error payment. Accepted original-coordinate suppliers and their
+fixtures are not rerun.
+
+Retain $\max\{r_{\rm old},r_c\}$, check it does not exceed the
+saved $U_R$, and add it only to each saved SAME-$F$ lower before taking
+the maximum with the previous paid certificate. The two lower bounds
+for the SAME residual are never added. A positive output, if obtained,
+would concern only the fixed-source paid comparisons under their
+inherited premises. It would not settle actual-center/full-border,
+cofinal, Robin or RH positivity.
+
+
+The variational identity is literature-attested: Kurz, Pauly,
+Praetorius, Repin and Sebastian, *Functional a posteriori error estimates
+for boundary element methods*, Theorem4 proof, lower-bound paragraph,
+[DOI10.1007/s00211-021-01188-6](https://doi.org/10.1007/s00211-021-01188-6).
+Only its stated Hilbert-space identity is used; no PDE-specific
+regularity, approximation or divergence-free conclusion is imported.
+The block elimination, Riesz projection and Cauchy steps are standard.
+The result here is their source-specific application with the original
+physical-error contracts, without a new generic theorem, originality
+or Lean-proof claim.
+
+
+The single fixed1024-working/640-export application supplies the
+following outward enclosures. Saved exact fractions and grid endpoints
+are authoritative.
+
+| Quantity | Directed range or lower certificate |
+|---|---|
+| Projected dual norm $D_c$ | $[0.000473029422163194849593401045,\ 0.000473029422163194849593401047]$ |
+| New actual aggregate $fc$ | $[-0.062357225190587662283111460115,\ -0.062321776681492458365870736146]$ |
+| Projected cross $L_c$ | $[0.000393412340550746747861519848,\ 0.000552651839094430769431308305]$ |
+| New retained residual lower $r_c$ | exact lower in $[0.000327195862341560763228991826,\ 0.000327195862341560763228991827]$ |
+| Previous retained residual lower | exact lower in $[0.000119339938334558967200315853,\ 0.000119339938334558967200315854]$ |
+| Fixed retained paid lower | exact lower in $[-0.472162579190451809501787039320,\ -0.472162579190451809501787039319]$ |
+| Energy-endpoint retained paid lower | exact lower in $[-0.674358045207312392445622899610,\ -0.674358045207312392445622899609]$ |
+
+The residual lower increases by more than
+$0.000207855924007001796028675973$; both retained paid lower
+certificates improve by the same amount. They remain below0, so
+neither recipe is certified positive. This does not establish a
+negative actual paid energy.
+
+The aggregate physical-norm-squared upper is at most
+$0.003645779633808749843771299565$, using the fully paid directional
+jet bound instead of the broad Gram cap, which exceeds
+$0.089001135794317123782524109570$. These are physical norm bounds,
+not $D_c$ or bounds on the source residual $R$.
+The new functional's complete explicit allowance is at most
+$0.000017724254513063006656728984$; its new Abel part alone is at most
+$0.000016648856539851024265837724$.
+The projected cross additionally retains the saved plane-response
+uncertainties. The successful aggregation therefore resolves part of
+the rectangular transport loss while retaining finite, nonzero
+analytic payments.
+
+The new source and packet have SHA256
+`2379245eacc259969067e7940fa8c1a9b9f7050b0ca901f204fad3d3af1b8cef`
+and
+`c0aa04f3fbf6d523d0846003a8d2b8385a3d6d3fc891a882d14953a9e88f27c7`.
+The packet is48397bytes and assembly takes<0.921542seconds, excluding
+serialization. It makes one exact reference action, one core-variation
+profile, one aggregated feature column, one masked physical quadratic,
+one directional-norm application, one finite functional, one cached
+tail and one mixed dot. Original-coordinate queries, new inverse or
+solve, old scientific producers and fixture replays are all0.
+There is no alternative direction, source, precision, parameter,
+cutoff scan or retry.
+
+The saved-scalar envelope source and packet separately retain SHA256
+`c9430f825ffa6cb5a745d22e971e2c16c5a53894ee5a4f894a177c7e31180ece`
+and
+`7ca0ccd8a23dee5a0a60b793d21c07d287652d017afa387e28eb3a6243122d94`.
+That packet is13420bytes and assembly takes<0.251660seconds,
+excluding serialization. It supplies one upper and two certificate
+ceilings without any physical response or old scientific replay.
+
+These are conditional, fixed-source applications of existing methods.
+All inherited source, physical-error, reference-form and paid-comparison
+premises remain. Actual paid/center/full-border/good-block and cofinal
+positivity, Robin and RH remain unresolved.
+
+
+The [two application sources, directed packets and README](https://github.com/the-omega-institute/trureturing-experiments/tree/1c806b85586413d33d44e75865907ff683478220/docs/reports/weil-c27) retain the scalar envelope and the single common-source trial with their original bindings.
