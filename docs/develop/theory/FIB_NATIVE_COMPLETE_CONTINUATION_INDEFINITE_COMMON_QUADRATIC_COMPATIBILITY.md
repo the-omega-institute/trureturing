@@ -1696,3 +1696,664 @@ ordinary conditional arguments assert no kernel, physical or native
 certification of those remaining premises.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Full failure covariance and three-pure whole-group activation
+
+**Definition 14.1 (same-source endpoint Gram and canonical joint columns).**
+Retain the complete source and comparison premises of Assumption 1.1,
+with the quantities of Definitions 1.2–1.3. For any nonnegative common
+law with moments $B(t)$, let $\rho_0,\rho_1$ be its pure and saturated
+endpoint measures, respectively:
+
+$$
+\begin{gathered}
+d\rho_0(x)=\int(1-\xi)\,d\pi(x,\xi),\qquad
+d\rho_1(x)=\int\xi\,d\pi(x,\xi),\qquad S=\int1\,d\rho_1,\\
+a(x)=(1,u,v)^T,\quad D_3=\operatorname{diag}(1,\alpha,\beta),\quad
+M_j=\int a(x)a(x)^T\,d\rho_j(x),\quad M_0+M_1=D_3,\\
+c_{\min}=\min\{N_u/D_u,N_v/D_v\}>0,\quad
+T_3=\frac{\mu+\max(V,W)}{c_{\min}},\quad
+C=\frac{\mu}{tc_{\min}},\quad m=\min(\alpha,\beta)>0.
+\end{gathered}
+\tag{IC.57}
+$$
+
+The measure notation denotes integration against the indicated endpoint
+projections; no disintegration hypothesis is added. On an endpoint law
+these are its actual sheet measures. The rank of $M_0$ concerns directed
+pure coordinates, not physical state purity, Kraus multiplicity or actual
+label count. The exact capacity minimum is FC Proposition 34.2's
+positive-denominator weighted mean of the two axial ratios.
+
+When Assumption 1.4 is also supplied, retain the entire inventory and
+partition of Definition 1.5 and the polytope of (IC.31). For an endpoint
+column indexed by $i$, write
+
+$$
+H_i=\begin{pmatrix}\Gamma_i\\\kappa_i\end{pmatrix},\qquad
+H=\begin{pmatrix}A\\\kappa^T\end{pmatrix},\qquad
+\kappa_i=|u_i|.
+\tag{IC.58}
+$$
+
+Here $A$ has eight rows; $H$ has nine. The notation $H$ in this
+section is a moment matrix, distinct from the signed heights $H_i$
+in §11. An index set $I$ is called canonical here only when it has
+nine strictly positive coordinates in nine distinct complete groups
+and $H_I$ is invertible, as supplied by FC Theorem 6.1 for its
+nonconstant critical edge. No occupied pure coordinate has an occupied
+saturated companion in such a support. Its companion remains available
+if the complete group is a pair. For $j=7,8$, $U_j$ has FC Definition
+5.1's complete vertex/edge meaning, equivalently the union of contrast
+images of coordinate faces using at most $j$ complete groups by FC
+Theorem 5.2; thus $U_7$ agrees with (IC.32).
+
+**Theorem 14.2 (uniform original pure rigidity and one-companion deletion).**
+Under Definition 14.1, every nonnegative law with the same original
+$B(t)$ satisfies the full three-dimensional bound
+
+$$
+M_0\succeq\left[1-\frac{\mu+\max(V,W)}{tc_{\min}}\right]D_3.
+\tag{IC.59}
+$$
+
+If $t>T_3$, every finite such endpoint law has at least three distinct
+positive pure coordinates. Now also impose Assumption 1.4 and fix
+$w^0\in\mathcal P(r)$ with a canonical support $I$, exactly three
+pure and six saturated coordinates. If one occupied pure coordinate
+$p\in I$ has its zero-weight saturated companion $j$ in its own
+compatible complete group, there is a finite law in $\mathcal P(r)$
+with at most eight occupied complete groups. It preserves the same
+$B(t)$, active $K=r$, $J_t$ and original absolute height.
+The alternative condition $C(1+1/m)<1$ suffices for all these rigidity
+and deletion conclusions.
+
+Proof. The bound is a supporting step for the whole-group conclusion.
+All integrals in it use the single positive saturated measure $\rho_1$.
+The three original failure rows and the circle identity give
+
+$$
+\int\mathfrak c(x)\,d\rho_1=\frac\mu t,\qquad
+\int\mathfrak c(x)xx^T\,d\rho_1
+=\frac1t\operatorname{diag}(\alpha V,\beta W).
+\tag{IC.60}
+$$
+
+In particular the mixed entry is zero and both diagonal entries are
+strictly positive. These are GC Proposition 12.2's full failure
+covariance, in angular coordinates, not separately chosen scalar
+marginals. Since $\mathfrak c\ge c_{\min}$,
+
+$$
+S\le\frac\mu{tc_{\min}},\qquad
+\int xx^T\,d\rho_1\preceq
+\frac1{tc_{\min}}\operatorname{diag}(\alpha V,\beta W).
+\tag{IC.61}
+$$
+
+For $z=(z_0,z_1,z_2)^T$, put
+$L_z(x)=z_1u/\sqrt\alpha+z_2v/\sqrt\beta$ and
+$q_z^2=z_1^2+z_2^2$. The standard Cauchy–Schwarz inequality for
+this same positive measure bounds its odd cross term. It gives
+
+$$
+\begin{aligned}
+z^TD_3^{-1/2}M_1D_3^{-1/2}z
+&=\int(z_0+L_z)^2\,d\rho_1\\
+&\le\left(|z_0|\sqrt S+
+                  \sqrt{\int L_z^2\,d\rho_1}\right)^2\\
+&\le\frac{(\sqrt\mu\,|z_0|+
+                      \sqrt{\max(V,W)}\,q_z)^2}{tc_{\min}}\\
+&\le\frac{\mu+\max(V,W)}{tc_{\min}}\|z\|^2.
+\end{aligned}
+\tag{IC.62}
+$$
+
+The last inequality is ordinary Euclidean Cauchy–Schwarz. Subtracting
+from $D_3$ proves (IC.59), including the degenerate case $S=0$ as
+an inequality. At $t>T_3$ its right side is positive definite. A sum
+of fewer than three positive rank-one pure coordinate matrices has
+rank at most two, so cannot equal $M_0$. This inference holds for
+every common endpoint law with $B(t)$, including laws reached by
+activation. It uses neither an initial-rank assumption alone nor
+small mass measured only at the starting law. Finally
+$\max(V,W)\le\mu/m$, so $C(1+1/m)<1$ implies $t>T_3$.
+
+For the claimed deletion, keep all inventory columns and define
+
+$$
+\delta_j=1,\qquad \delta_I=-H_I^{-1}H_j,\qquad
+\delta_i=0\quad(i\notin I\cup\{j\}),\qquad
+\tau=\min_{i\in I:\delta_i<0}\frac{w_i^0}{-\delta_i}.
+\tag{IC.63}
+$$
+
+The mass row gives $\sum_{i\in I}\delta_i=-1$. Thus the minimum
+is over a nonempty finite set and $0<\tau<\infty$. On
+$0\le s\le\tau$, $w(s)=w^0+s\delta$ is nonnegative, has
+$Hw(s)=(B(t),r)^T$, and activates only the saturated column $j$.
+Every changed column is a contact of the same supplied dual, so
+$g_i=y\cdot\Gamma_i-\lambda\kappa_i$ and $J_t$ is unchanged.
+At $s=\tau$ at least one old coordinate dies.
+
+None of the three old pure coordinates can die: no pure coordinate
+is activated, and such a death would leave at most two positive pure
+coordinates in another nonnegative law with the same $B(t)$,
+contradicting (IC.59). Consequently an old saturated coordinate
+$q\in I$ dies. Its group is different from the group of $p,j$,
+and all its other coordinates remain zero. The nine original groups
+were distinct, and the only newly positive coordinate belongs to an
+already occupied group. Hence the death of $q$ empties its whole
+group and leaves at most eight. Ties can empty more groups and cause
+no difficulty. The parent $p$ remains positive; its paired fraction
+at exit is $w_j(\tau)/(w_p(\tau)+w_j(\tau))\in[0,1]$.
+FC Theorem 3.3 merges all occupied compatible groups, retaining
+$(B,r,J_t)$ and producing exactly one original fractional low label
+per remaining group. Zero total masses are omitted. $\square$
+
+**Corollary 14.3 (a sufficient original finite range).** Retain all
+source premises of Assumption 1.1. For finite $t\ge\max(t_0,800)$,
+every nonnegative same-$B(t)$ law satisfies
+
+$$
+M_0\succ\frac2{25}D_3.
+\tag{IC.64}
+$$
+
+In particular Theorem 14.2's exact-three-pure deletion applies
+throughout this range whenever its separate attained-face and
+companion premises hold.
+
+Proof. The integer endpoints in all nine rows of the pinned GC
+Definition 6.1, divided by $2^{224}$, lie strictly inside FC18's
+coarse intervals for the seven amplitudes and
+$0.49<m_1<0.50$, $0.34<m_2<0.35$. Each containment follows
+by multiplying its rational endpoints by $2^{224}$ and comparing
+the corresponding original integer pair. Use the cancelled formulas
+
+$$
+r_s=\frac{c_{\rm src}dh_1}{abh_2},\quad
+\alpha=\frac1{1+r_s},\quad\beta=1-\alpha,\quad
+\delta=\frac{ab}{h_0h_1}+\frac{c_{\rm src}d}{h_0h_2}.
+$$
+
+Exact outward rational interval evaluation of these expressions and
+(IC.3)–(IC.4) gives the following sufficient bounds. The capacity
+entry is a lower bound for
+$\min(N_u,N_v)/\max(D_u,D_v)$, hence also for $c_{\min}$.
+
+| Expression | Coarse rectangle | Original nine dyadic rows |
+| --- | --- | --- |
+| uniform capacity lower bound | $0.063190656152$ | $0.064355091074$ |
+| upper bound for $V$ | $8.218570560831$ | $8.062157279213$ |
+| upper bound for $W$ | $33.674855184265$ | $33.364535594888$ |
+| upper bound for $\mu$ | $11.379968841496$ | $11.156300845208$ |
+
+All lower inequalities and upper inequalities in the table are strict;
+all decimals are exact rationals. To obtain the first row, form the
+lower endpoints of $N_u,N_v$ and upper endpoints of $D_u,D_v$
+by addition, the extrema of four endpoint products, and reciprocal
+only for positive intervals, then take the indicated minimum divided
+by maximum. The remaining rows use those same outward operations on
+$V=m_2h_1^2/b^2$, $W=m_1h_2^2/d^2$ and
+$\mu=\alpha V+\beta W$. Lower endpoints round down and upper
+endpoints round up to denominator $10^{12}$. No radical, TP
+simplification, centre evaluation or sampled corner is involved.
+In particular the coarse capacity lower bound is exactly
+$7898832019/125000000000>1/16$, consistent with FC24.1.
+
+The shorter comparisons in FC (FC.147) follow independently from
+these same containing intervals:
+
+$$
+\begin{gathered}
+V<\frac{0.35(0.707)^2}{(0.1459)^2}<\frac{411}{50},\qquad
+W<\frac{0.50(0.810)^2}{(0.0987)^2}<\frac{842}{25},\\
+\alpha<0.879,\quad\beta<0.124,\qquad
+\mu<0.879\frac{411}{50}+0.124\frac{842}{25}
+=\frac{114017}{10000}<12.
+\end{gathered}
+$$
+
+Thus $c_{\min}>1/16$, $\max(V,W)<34$ and
+$T_3<16(12+34)=736$. For $t\ge800$,
+$1-T_3/t>1-736/800=2/25$. Apply (IC.59).
+These expression enclosures preserve the stipulated single source;
+they supply no root existence or off-root TP. $\square$
+
+**Corollary 14.4 (exact-three-pure critical supports have no paired pure parent).**
+Under Assumptions 1.1 and 1.4 with $t>T_3$, let
+$r\in[r_-,r_+]\setminus U_8$ and take the canonical edge
+representation of FC Theorem 6.1 at $r$. If it has exactly three
+positive pure coordinates, none belongs to a compatible paired group.
+
+Proof. FC Theorem 6.1 gives nine positive columns in nine distinct
+groups, rank $A_I=8$ and rank $H_I=9$. For any occupied pure
+coordinate in a pair, its companion has zero weight and is available
+in the complete inventory. Theorem 14.2 would give another law at
+the same $(B,r,J_t)$ with at most eight groups. FC Theorems 3.3
+and 5.2 would put $r$ in $U_8$, a contradiction. This excludes
+only the stated critical support pattern; it asserts no universal
+$U_8$ or $U_7$ coverage. $\square$
+
+**Corollary 14.5 (an exact-three-pure antipodal obstruction at the original target).**
+For any finite nonnegative same-$B(t)$ endpoint law, if its pure
+support consists of exactly three distinct points and contains an
+antipodal pair, then
+
+$$
+m<2S\le\frac{2\mu}{tc_{\min}}.
+\tag{IC.65}
+$$
+
+Consequently such a pure pattern is impossible whenever
+$2\mu/(tc_{\min})\le m$, including equality in this sufficient
+condition. No contact or optimality premise is needed.
+
+Proof. Write the pure points as $x,-x,y$, with strictly positive
+masses $a,b,c$ and $y\ne\pm x$. Choose a unit $n\perp x$.
+The original zero first moments and angular covariance give
+
+$$
+ c\,n\cdot y=-\int n\cdot z\,d\rho_1(z),\qquad
+ n^T\operatorname{diag}(\alpha,\beta)n
+ =c(n\cdot y)^2+\int(n\cdot z)^2\,d\rho_1(z).
+$$
+
+Without the failure rows, $|\int n\cdot z\,d\rho_1|\le S$
+and $|n\cdot y|\le1$ would give only $m\le2S$.
+Here (IC.60) is positive definite. In particular $S>0$, and
+$\int(n\cdot z)^2\,d\rho_1<S$: equality would put the
+entire saturated measure on $\{n,-n\}$, forcing its positive
+capacity-weighted covariance in (IC.60) to have rank at most one.
+Cauchy–Schwarz for $\rho_1$ now gives
+$|\int n\cdot z\,d\rho_1|<S$, hence also
+$c(n\cdot y)^2<S$. Adding the two strict bounds proves
+$m<2S$ and (IC.61) completes (IC.65). If $S=0$ the finite
+original positive failure covariance already fails, rather than
+giving an equality exception. Zero pure masses are outside the
+exact-three-positive premise; coincident points are collected first.
+No synthetic angular example is asserted to be an original attained
+face. $\square$
+
+## 15. Four pure coordinates and two available companions
+
+**Theorem 15.1 (two-companion whole-group deletion on the original face).**
+Retain Assumptions 1.1 and 1.4 and $t>T_3$. Suppose
+$w^0\in\mathcal P(r)$ has nine positive coordinates $I$ in
+nine distinct complete groups, $H_I$ invertible, and exactly four
+pure and five saturated coordinates. Suppose two distinct occupied
+pure coordinates $p_1,p_2$ have available zero-weight saturated
+companions $j_1,j_2$ in their own compatible groups. Then another
+finite law in $\mathcal P(r)$ uses at most eight complete groups,
+with the same $B(t)$, $K=r$, $J_t$ and original absolute height.
+The condition $C(1+1/m)<1$ also suffices, and the sufficient
+original range of Corollary 14.3 supplies $t>T_3$.
+
+Proof. Retain every column and set, for $z_1,z_2\ge0$,
+
+$$
+\begin{gathered}
+w_{j_1}(z)=z_1,\qquad w_{j_2}(z)=z_2,\\
+w_I(z)=w_I^0-H_I^{-1}(H_{j_1}z_1+H_{j_2}z_2),\qquad
+w_i(z)=0\quad(i\notin I\cup\{j_1,j_2\}),\\
+\mathcal D=\{z\in\mathbb R_{\ge0}^2:w_I(z)\ge0\}.
+\end{gathered}
+\tag{IC.66}
+$$
+
+Strict old positivity gives a small feasible quadrant. The set is
+closed, and the mass row gives $z_1+z_2\le1$ on it, so it is
+bounded. Every feasible point preserves $H w=(B,r)^T$; contact
+equality preserves $J_t$. No pure coordinate is activated.
+A nonselected old coordinate dying empties its group, since its
+unused companions stay zero. A selected parent $p_i$ dying with
+$z_i=0$ also empties its group. Any positive satellite belongs to
+an original group, so either event leaves at most eight groups.
+
+Follow each coordinate axis to its finite first exit. Existence and
+strict positivity of the exit time follow from the mass row, exactly
+as in (IC.63). Unless an exit already empties a group, on the first
+axis the only dying coordinate is $p_1$, and on the second it is
+$p_2$. Ties with any other old coordinate empty a group: on that
+axis the other selected satellite is still zero. Thus it remains
+only to consider these two exclusive exits.
+
+Write the selected parent weights as
+
+$$
+w_{p_1}=u_1-c_{11}z_1-c_{12}z_2,\qquad
+w_{p_2}=u_2-c_{21}z_1-c_{22}z_2,\qquad u_1,u_2>0,
+\quad C_p=(c_{ij})_{i,j=1}^2.
+\tag{IC.67}
+$$
+
+The exclusive axis exits imply, with $u_1,u_2$ retaining their
+original intercept meanings from (IC.67),
+
+$$
+c_{11},c_{22}>0,\qquad
+r_2:=u_2-c_{21}u_1/c_{11}>0,\qquad
+r_1:=u_1-c_{12}u_2/c_{22}>0.
+\tag{IC.68}
+$$
+
+These strict inequalities include zero or negative off-diagonal
+coefficients; no sign is presumed for them.
+
+If $\det C_p>0$, solve both parent equations:
+
+$$
+z^*=\frac1{\det C_p}
+\begin{pmatrix}u_1c_{22}-c_{12}u_2\\c_{11}u_2-c_{21}u_1\end{pmatrix}
+\in\mathbb R_{>0}^2.
+\tag{IC.69}
+$$
+
+The numerators are $u_1c_{22}-c_{12}u_2=c_{22}r_1>0$ and
+$c_{11}u_2-c_{21}u_1=c_{11}r_2>0$ by (IC.68).
+Along $z=s z^*$,
+$0\le s\le1$, the selected weights are exactly $(1-s)u_i$.
+If any nonselected old coordinate first reaches zero at or before
+$s=1$, that event empties its group, with all preceding weights
+nonnegative. If none does, the endpoint is feasible and both selected
+parents vanish, leaving only the two other pure coordinates. This
+contradicts the uniform same-$B(t)$ rigidity of Theorem 14.2.
+A simultaneous nonselected zero at $s=1$ is already the required
+whole-group exit, whether or not both parents also vanish.
+
+If $\det C_p\le0$, then
+$c_{12}c_{21}\ge c_{11}c_{22}>0$. The off-diagonal entries
+are nonzero and have the same sign. They cannot both be positive:
+(IC.68) would imply
+$c_{21}<u_2c_{11}/u_1$ and
+$c_{12}<u_1c_{22}/u_2$, whose product contradicts that inequality.
+Hence both are strictly negative. The direction
+
+$$
+d=(-c_{12},c_{11})^T\in\mathbb R_{>0}^2,\qquad
+C_p d=(0,\det C_p)^T
+\tag{IC.70}
+$$
+
+keeps $p_1$ constant and makes $p_2$ nondecreasing on $z=sd$.
+This includes $\det C_p=0$, when both parents are constant.
+Along this ray the old total mass is $1-s(d_1+d_2)$, while the
+selected parents retain their positive initial masses. Thus at least
+one nonselected old coordinate has negative derivative. Its finite
+positive first-exit minimum gives a feasible endpoint with a dead
+nonselected coordinate, hence a whole-group deletion. Zero
+coefficients and determinant zero introduce no missing case.
+
+In every case an entire original group disappears, and only satellites
+of already occupied groups were activated. Every remaining paired
+fraction is its saturated mass divided by its positive total mass,
+so is legal. FC Theorem 3.3 merges the endpoint law without height
+loss. The finite surviving coefficient masses are strictly positive
+after zero coordinates and zero groups are omitted. $\square$
+
+**Corollary 15.2 (the exact-four-pure critical restriction).**
+Under Assumptions 1.1 and 1.4 with $t>T_3$, a canonical
+FC6.1 representation at $r\notin U_8$ having exactly four pure
+coordinates has at most one occupied pure coordinate belonging to
+a compatible paired group.
+
+Under the additional indefinite premise of Corollary 9.1 and its
+budget range, the complete paired inventory has at most two directed
+antipodal groups. The two allowed groups cannot both be occupied at
+their pure coordinates in such an exact-four-pure critical support.
+
+Proof. Two such occupied pure parents give the two available zero
+companions in Theorem 15.1, since the canonical positive coordinates
+are in distinct groups. Its deletion contradicts $r\notin U_8$
+by FC Theorem 5.2. Corollary 9.1 supplies the separate common-kernel
+cap on the indefinite branch. The restriction concerns pure-parent
+occupancy: it places no analogous restriction on occupying two paired
+groups only at saturated coordinates, and it supplies no deletion
+for an exact-five-pure support. Losing two of five pure coordinates
+would still leave three, so that proof's contradiction is absent.
+Neither zero-paired nor one-paired exact-four supports are excluded.
+$\square$
+
+## 16. Whole-interval eight-group coverage on the supplied rank-one face
+
+**Theorem 16.1 (mandatory pure-coordinate activation covers the rank-one face).**
+Retain Assumptions 1.1 and 1.4, finite
+$t\ge\max(t_0,30000)$, and the same symmetric original remainder
+$R_-=Q+t\mathsf F$ of (IC.8). Suppose $R_-$ is nonzero rank-one
+negative semidefinite. Then its supplied complete attained face has
+
+$$
+U_8=[r_-,r_+],\qquad n_t(r)\le8
+\quad\text{for every }r\in[r_-,r_+].
+\tag{IC.71}
+$$
+
+Here $n_t$ is FC Definition 2.3's minimum supported-nonzero low
+actual count, under its original suppliers. No existence of a
+rank-one attained face is assumed beyond the stated conditional
+entry, or inferred from this conclusion. No pure-rank lower bound
+is required in this theorem.
+
+Proof. FC Proposition 34.2 gives $S<300/t\le1/100$ for every
+same-$B(t)$ law. Every $w\in\mathcal P$ is height optimal at
+its own achieved $K$ by FC Theorem 4.2. Apply FC Theorems 34.1
+and 34.3 at precisely this scope. There is a unique directed
+negative-height pure contact $x_*$ on $\ker R_-$. Its saturated
+endpoint is also a contact with $\eta_1(x_*)\le0$, including zero,
+and the two endpoints form a compatible complete group $G_*$.
+Every $w\in\mathcal P$ has the quantitative pure-coordinate bound
+
+$$
+w_{*,0}\,\ell_-(x_*)>1/30000,\qquad
+\ell_-(x_*)=\max\{-\ell(x_*),0\}>0.
+\tag{IC.72}
+$$
+
+This is FC (FC.149): after merging, $w_{*,0}=p(1-\xi)$.
+It applies to the pure coordinate, not merely to total mass of $G_*$.
+Uniqueness uses the source positivity on $u\ge0$ and the two
+directed points of the kernel line; it does not identify antipodes.
+
+The endpoints of the attained contrast interval already belong to
+$U_8$, as FC Theorem 6.1 explicitly states and proves. Indeed a
+minimizing or maximizing vertex of $\mathcal P$ has independent
+positive columns of $A$, since a nonzero kernel vector on positive
+support gives opposite feasible perturbations. It therefore has at
+most $\operatorname{rank}A\le8$ positive coordinates and at most
+eight groups. This also handles a singleton interval and a
+constant-$K$ face without any contrast division.
+
+Suppose some other $r\in[r_-,r_+]$ were outside $U_8$.
+FC Theorem 6.1 supplies a nonconstant edge strictly bracketing $r$
+and its relative-interior law $w^0$ at $K=r$. Its support $I$
+consists of exactly nine strictly positive columns in nine distinct
+groups, with rank $A_I=8$ and invertible $H_I$. By (IC.72) its
+pure column $p=(x_*,0)$ is in $I$. Its saturated companion
+$j=(x_*,1)$ has zero weight, because two occupied coordinates
+of $G_*$ would violate the distinct-group property. The companion
+remains available in the complete inventory.
+
+Activate it by (IC.63). The mass row again supplies a nonempty
+negative old-coordinate set and a finite positive first exit
+$\tau$. Throughout the segment all weights are nonnegative,
+$H w=(B(t),r)^T$, and contact equality preserves $J_t$.
+At the endpoint $w(\tau)\in\mathcal P$, (IC.72) still holds.
+Thus the selected pure parent $p$ cannot die. At least one other
+old coordinate dies. Its group differs from $G_*$, and every
+unused coordinate of that group remains zero: $j$ is the only
+activated coordinate. Consequently this death empties a whole group.
+The surviving activated group $G_*$ has a positive pure parent
+and legal fraction, and no new group was created. There are at most
+eight occupied groups at the same $(B,r,J_t)$.
+
+FC Theorems 3.3 and 5.2 now put $r$ in $U_8$, a contradiction.
+This proves (IC.71) on the entire attained interval, with its
+endpoints already covered. Other old pure coordinates are allowed
+to die: each such death empties its own distinct original group.
+Only the selected parent could leave a newly activated companion
+behind, and that parent's pure mass is mandatory. A hypothesis
+that only the total mass of $G_*$ is positive would not prevent
+the parent from dying while its satellite survives; it is not a
+substitute for (IC.72). $\square$
+
+**Corollary 16.2 (conditional original minimum counts on this branch).**
+Under Theorem 16.1's hypotheses and the inherited GC actual-count
+suppliers, for each $r\in[r_-,r_+]$ there is a finite original
+height-optimal weak instrument with at most eight supported-nonzero
+low actual labels. Under GC (GC.10)'s equality of minima,
+
+$$
+n_{\rm tot}(s,t)=1+n_t(r)\le9,\qquad s=s_0r/\sqrt\alpha.
+\tag{IC.73}
+$$
+
+Proof. Merge a law realizing (IC.71) within each compatible complete
+group. GC Proposition 12.2 supplies exactly the common live Gram,
+full failure covariance and pointwise capacity premises of GC
+Proposition 10.1. That constructor supplies the finite original
+instrument, with one low label per occupied group and its counted
+coherent high completion. GC.10 then gives the stated bound on the
+minimum total count. It is not a total-count identity for every
+instrument, does not give an exact minimum of nine, and does not
+supply seven-low compression. $\square$
+
+## 17. Conditional correspondence and the remaining complete-group relation
+
+**Definition 17.1 (bearing mathematical interfaces and attribution).**
+Theorems 14.2, 15.1 and 16.1 use the original $B(t)$, complete
+inventory, compatible fractions and within-label absolute height of
+§1, with the nine-row preservation problem of §7. Their
+source-specific content is, respectively, the full failure-covariance
+pure bound consumed by exact-three activation, two-companion
+whole-group deletion with uniform pure rigidity, and whole-interval
+coverage from the mandatory pure kernel coordinate. The rational
+source consequences use the actual nine rows of the pinned GC6.1
+and the capacity expressions (IC.3). The positive-measure
+Cauchy–Schwarz, Loewner bounds, rank inequalities, finite linear
+pivots and two-by-two coefficient calculation are standard tools
+inside these consumers, not separate new generic theorems.
+
+FC Theorems 3.3 and 4.2 supply the complete groups, activity and
+all-optima correspondence; FC Theorems 5.2 and 6.1 supply the exact
+coordinate-face criterion, canonical critical ranks and contrast
+endpoint coverage. GC Propositions 10.1 and 12.2 supply the full
+same-law dictionary and finite constructor; GC Theorem 15.1 supplies
+the compatible merge and the opposite-height HALF loss. FC32–34's
+pure replacement and inertia results supply the mandatory pure mass
+and unique compatible negative kernel group used by Theorem 16.1.
+The exact-three argument and this mandatory-coordinate argument
+have different premises: only the former needs uniform pure-rank
+rigidity.
+
+For the separate inventory interface, let PC denote
+[*Finite-face positive-contact cap*, §§1–6](https://github.com/the-omega-institute/trureturing/blob/36adbdd8df3bc6615cae0f0f5fd1207239025477/docs/develop/theory/FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_FACE_POSITIVE_CONTACT_CAP.md).
+Its own Assumptions 1.1 and 2.3 retain their stated suppliers,
+including its GC/RTII revision
+`c9635edd5272c1183f71a44e4d199f94a741c57d` and original supplier
+revision `321589a8be98de4fe179f99f6e593d8784952db1`.
+At finite $t\ge\max(t_0,800)$, PC Theorem 5.2 caps the complete
+positive pure inventory by three; FC's negative pure test has at
+most two distinct zeros and zero-height pure contacts are excluded.
+Thus, when these PC premises are also retained, any canonical
+nine-group support in this range has three, four or five pure
+coordinates. Corollaries 14.4 and 15.2 give the corresponding new
+restrictions in the first two cases. At the range of Theorem 16.1,
+PC Corollary 6.2 also caps pure-containing groups by four on its
+rank-one branch; the stronger whole-interval conclusion (IC.71)
+uses mandatory pure-coordinate mass rather than that inventory cap.
+A five-pure inventory in that range retains PC's indefinite-branch
+restriction. None of these citations constructs such an inventory.
+
+The literature interfaces in Definitions 6.1 and 13.1 retain their
+credited scopes: di Dio–Schmüdgen's positive-measure support and
+finite-dimensional moment results, de Boor's divided differences,
+and the additional hypotheses required by Dette–Melas and
+Nailwal–Zalar. No quadrature node is identified with an original
+fractional actual label. The source-specific compositions here are
+repo-derived conditional deductions. No worldwide priority or
+literature-absence claim is attached to them.
+
+**Definition 17.2 (unchanged original quantum correspondence).**
+Every activation above changes coefficient masses within the same
+complete inventory and the same $B(t)$; it preserves all eight
+$\Gamma$ rows, the full live Gram, the complete physical failure
+covariance including its cross entry, active $K=r$, $J_t$ and
+$(H_0+J_t)/2$. The two available satellite columns are not replaced
+by an independent failure allocation. Both coordinates and all legal
+fractions of every paired group remain available. Unused contacts,
+weak-zero height descriptions, opposite-height singleton groups,
+report-chart endpoints and distinct directed antipodes retain the
+conventions of §§1–7 and 13. A zero group is omitted before the
+unknown input, with no division by its mass and no postselection.
+
+Through GC Propositions 12.2 and 10.1 the resulting finite law has
+the original complex forgotten-label live CP map and all five Borel
+failure maps, with arbitrary passive-reference conditional operators.
+This preserves the twelve stopped-cq errors with HALF and both
+separate zero-target failure components. The labelled acquisition
+instrument can change; equality of the forgotten-label maps does
+not assert equality of its labelled probability measure. Its minimum
+actual counts have exactly the interpretation used in Corollary 16.2.
+
+All source, root, isolation, Jacobian, rank, TP, stopped-cq minimax,
+sharp worst-history JOINT cost, separate unaveraged equality,
+full-complex multi-Kraus rigidity, physical capacity and constructor
+suppliers remain the distinct premises of §1. The original whole
+future-accessible fibre counts specimen, memory, controller,
+accessible environments and entangled shares jointly. Entire-fibre
+activity, strictly positive finite-budget survivors, TP survivor
+controls, absolute FIRST $6+a$ and absence of further
+positive-carrier action after failure remain the inherited bounds.
+No extra specimen, copy, helper, history oracle, reset, retry,
+acceptance or survival division is introduced. Necessity retains
+its original finite, convergent countable and stipulated measurable
+scopes; the realizing instruments used here are finite.
+
+**Open problem 17.3 (seven groups and the uncovered original domains).**
+On the supplied rank-one branch in Theorem 16.1's range, (IC.71)
+removes nine-low necessity but leaves the problem of removing a
+further whole group: $U_7=[r_-,r_+]$ is not established. For the
+indefinite branch, Corollaries 14.4 and 15.2 leave canonical
+exact-three-pure supports with no paired pure parent,
+exact-four-pure supports with at most one paired pure parent, and
+the permitted exact-five-pure supports. A missing relation must
+either delete a whole group while preserving all nine joint rows
+and nonnegativity, possibly by a different law or additional unused
+contacts, or evaluate complete coordinate-face coverage including
+every alternative original table. Fixed-support rank, positive
+initial pure Gram, one endpoint death, saturated-only paired
+occupancy, or an unevaluated local stationary inventory does not
+supply that relation. No original attained instance realizing any
+remaining critical pattern is supplied here.
+
+The rank-one theorem covers exactly one separately supplied finite,
+entire-cylinder feasible, jointly attained positive-multiplier face
+at $t\ge\max(t_0,30000)$. It supplies neither nonemptiness of
+that branch nor all-budget/all-contrast dual attainment. The
+exact-three and exact-four activation results require $t>T_3$
+and their stated companion premises. At $t=T_3$ the pure bound
+is only semidefinite and supplies no strict rank conclusion;
+below it these activation proofs require another uniform invariant.
+The smaller-budget rank-one domain, $\lambda=0$, absent or
+nonfinite duals, unattained values and unsupplied boundary requests
+retain the unresolved entries of §§7 and 13. Supplied interval
+endpoints are included by Theorem 16.1; arbitrary boundary duals
+are not thereby constructed. No universal $U_8$ outside the
+stated rank-one domain, universal $U_7$, or all-alternative
+higher-count obstruction follows.
+
+The full programme still requires the all-budget evaluated roof,
+branch ordering, complete selected and unused root inventories with
+multiplicities and collisions, positive joint weights, coefficient
+and orientation data, capacity/rank/count transitions,
+endpoint/threshold/budget/degenerate gluing, next terms and uniform
+joint limits of §§7 and 13. Source existence and its separate
+minimax and physical-necessity suppliers are not discharged by
+expression enclosures or contact pivots. Native source access,
+calibration, jointly counted coherent storage and accessible
+shares, whole-fibre actuation, duration, absolute clock alignment,
+archive/source/epoch/controller permissions and the general
+native-instrument/count correspondence remain unsupplied.
+
+## 追加锚（本行以下为增补区）

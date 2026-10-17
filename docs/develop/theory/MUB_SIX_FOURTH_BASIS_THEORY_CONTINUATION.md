@@ -3863,3 +3863,578 @@ These results impose mixed-orthogonality constraints without a covariance
 hypothesis. They do not prove that an arbitrary further orthonormal
 basis must contain a canonical ray, classify the remaining nonzero-mode
 fibres away from the center, or settle the general fourth-basis problem.
+
+## 60. Single-canonical orthogonality rigidity on the open real branch
+
+### 60.1 Actual rays and statement
+
+Use the actual seed and input-ray convention of §58.1. Thus, with
+\(J_3\) the three-by-three all-ones matrix,
+
+\[
+ \begin{gathered}
+ |b|<1,\qquad c=\sqrt{1+b^2},\qquad d=\sqrt{3-b^2},\qquad
+ k=\sqrt{4b^4-3b^2+9},\qquad a=bd/c,\quad h=d/c,\\
+ P=\frac{a-3+i(h+b)}2,\qquad Q=\frac{-a-3+i(h-b)}2,\\
+ M=\sqrt6H_0=
+ \begin{pmatrix}J_3+PI&J_3+QI\\J_3+\bar QI&-J_3-\bar PI\end{pmatrix}.
+ \end{gathered}
+\tag{60.1}
+\]
+
+All three square roots are positive. An actual common-flat input ray
+is represented by a unit vector \(w\) such that every coordinate of
+both \(w\) and \(H_0w\) has modulus \(1/\sqrt6\). The corresponding
+common-unbiased column ray for the bases \((I,H_0)\) is \(H_0w\).
+This common unitary transport preserves orthogonality.
+
+With \(f_l(j)=\omega^{lj}\), \(\omega=e^{2\pi i/3}\), the canonical
+input rays of §58.1 have the equivalent explicit phases
+
+\[
+ g_0=\frac{-2b^3+i(b^2+3)}{ck},\qquad
+ g_1=g_2=\frac{b+i}{c},\qquad
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,\epsilon g_lf_l),
+ \quad l\in\mathbb Z_3,\quad\epsilon\in\{1,-1\}.
+\tag{60.2}
+\]
+
+**Proposition 60.1 (repo-derived).** For every \(|b|<1\), the actual
+common-flat input rays orthogonal to any specified \(c_l^\epsilon\)
+are exactly the other five canonical rays. Equivalently, among common-
+unbiased column rays for \((I,H_0)\), the rays orthogonal to a specified
+\(H_0c_l^\epsilon\) are exactly the other five \(H_0c_j^\delta\).
+No covariance condition is imposed on the ray or on a basis containing it.
+
+The zero-mode cases are Proposition 58.1 and the central seed is
+Proposition 59.1. The new part is \(l=1,2\), \(0<|b|<1\).
+The proof below gives an explicit positive sextic identity in the original
+flatness equations. Algebraic enumeration of common-unbiased vectors is
+also considered by Brierley–Weigert,
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2);
+that enumeration is not a premise of the parameter-uniform identity here.
+
+### 60.2 Canonical-complement coordinates and all flatness equations
+
+First select \(c_1^+\). Let \(C\) have the following five columns in
+unit-entry normalization, in the displayed order:
+
+\[
+ (0,+),(0,-),(1,-),(2,+),(2,-),\qquad
+ m=(0,0,1,2,2),\qquad \boldsymbol g=(g_0,-g_0,-g_1,g_1,-g_1).
+\tag{60.3}
+\]
+
+Thus column \(j\) is \((f_{m_j},\boldsymbol g_jf_{m_j})\). Directly from (60.1)–(60.2),
+
+\[
+ C^*C=6I_5,\qquad M^*M=6I_6,\qquad |(MC)_{rj}|^2=6.
+\]
+
+Every vector orthogonal to \(c_1^+\) is uniquely \(Cz\).
+For \(z\ne0\), the unit vector \(Cz/(\sqrt6\|z\|)\) is actual
+common-flat if and only if
+
+\[
+ |(Cz)_r|^2=\|z\|^2,\qquad |(MCz)_r|^2=6\|z\|^2
+ \quad(0\le r\le5).
+\tag{60.4}
+\]
+
+Define
+
+\[
+ \alpha_j=P+3\,\mathbf1_{m_j=0},\qquad
+ \beta_j=Q+3\,\mathbf1_{m_j=0},\qquad
+ o_j=\alpha_j+\beta_j\boldsymbol g_j,\qquad
+ p_j=\bar\beta_j-\bar\alpha_j\boldsymbol g_j.
+\]
+
+For \(v\in\mathbb C^5\) and \(r\in\mathbb Z_3\), put
+
+\[
+ q(v,r)=\sum_{\substack{i\ne j\\m_j-m_i=r\pmod3}}
+                 \bar v_i v_j\bar z_i z_j.
+\]
+
+Use the ordered generators
+
+\[
+ \begin{array}{c|cccccccccc}
+ s&0&1&2&3&4&5&6&7&8&9\\\hline
+ q_s&q(\mathbf1,0)&q(o,0)&q(\mathbf1,1)&\overline{q_2}&
+ q(\boldsymbol g,1)&\overline{q_4}&q(o,1)&\overline{q_6}&q(p,1)&\overline{q_8}\\
+ \gamma_s&0&0&1&2&1&2&1&2&1&2
+ \end{array}
+\tag{60.5}
+\]
+
+Conjugation exchanges \(z\) and \(\bar z\), as well as conjugating
+coefficients. Thus \(q_0,q_1\) are real and the other eight generators
+are four conjugate pairs. Equations (60.4) are equivalent to
+\(q_s=0\) for all ten generators. Indeed, in each three-coordinate
+channel the squared moduli have only Fourier grades \(0,1,2\).
+The grade-zero diagonals cancel by \(|\boldsymbol g_j|^2=1\) and
+\(|o_j|^2=|p_j|^2=6\); the omitted bottom-channel means follow from
+\(C^*C=6I_5\) and \(M^*M=6I_6\). The remaining coefficients are
+exactly the four grade-one autocorrelations and their conjugates.
+This keeps every original input and output flatness condition.
+
+### 60.3 The explicit sextic coefficient matrix
+
+All tuple and matrix indices in this subsection are zero-based.
+Let \(\mathcal A\) be the lexicographically ordered 15 weakly increasing
+pairs from \(\{0,\ldots,4\}\), and let \(\mathcal T\) be the analogous
+35 triples. Write \(z^u=\prod_{j\in u}z_j\) without multinomial factors,
+and \(\operatorname{gr}(u)=\sum_{j\in u}m_j\pmod3\).
+The cubic grade sizes are \((13,11,11)\).
+
+Order coefficient positions lexicographically as pairs
+\((u,v)\in\mathcal T^2\) with equal grade, omitting only the five
+pure-cube diagonals \(((j,j,j),(j,j,j))\). Position \((u,v)\)
+is the coefficient of \(\overline{z^u}z^v\). There are
+\(13^2+11^2+11^2-5=406\) positions. Every omitted coefficient is zero
+in every source below, since every canonical column itself satisfies
+(60.4).
+
+For \(s=0,\ldots,9\), then \(u\in\mathcal A\), then
+\(v\in\mathcal A\), in those orders, retain the source polynomial
+
+\[
+ q_s\overline{z^u}z^v
+ \quad\hbox{exactly when}\quad
+ \operatorname{gr}(v)-\operatorname{gr}(u)+\gamma_s=0\pmod3.
+\tag{60.6}
+\]
+
+There are 750 sources. Their 406-dimensional coefficient rows
+\(R_0,\ldots,R_{749}\) are specified by (60.5)–(60.6): a quadratic
+term \(a_{ij}\bar z_i z_j\) contributes \(a_{ij}\) at the position
+obtained by sorting \((i)+u\) and \((j)+v\), with contributions added
+when positions coincide.
+
+For coefficient arithmetic let
+
+\[
+ \mathbb F=\mathbb Q(b)(i,c,d,k),\qquad
+ \mathbb L=\mathbb Q(b)(i,c,d),
+\]
+
+with the quadratic relations in (60.1) and \(i^2=-1\).
+These are multiquadratic fields of degrees 16 and 8 over \(\mathbb Q(b)\).
+Let \(\tau\) change the sign of \(k\) and exchange canonical indices
+0 and 1 in every tuple, followed by sorting. On coefficient rows it is
+the induced position permutation followed by \(k\)-conjugation.
+It permutes the source rows by
+\((s,u,v)\mapsto(s,\tau u,\tau v)\), as follows directly from (60.2).
+
+Define 750 \(\tau\)-fixed source rows by scanning the original indices
+in increasing order and processing each orbit at its smallest index.
+Retain a fixed row; for a two-row orbit beginning with \(R\), append
+\(R+\tau R\) and \(k(R-\tau R)\), in that order. This basis change
+is invertible, using only division by \(2k\).
+
+Encode a fixed coefficient vector by scanning its original 406 positions
+in increasing order and processing each position orbit at its smallest
+index. A fixed position has value \(A\in\mathbb L\) and contributes
+one coordinate \(A\). For a two-position orbit the values are
+\(A+kB,A-kB\); append \(A,B\), in that order. This is an injective
+\(\mathbb L\)-linear encoding into 406 coordinates. Denote the resulting
+ordered \(750\times406\) source matrix by \(\mathcal B\).
+Its entries lie in \(\mathbb L\). These rules specify every entry
+and every index of \(\mathcal B\); they impose no symmetry on a candidate
+ray.
+
+### 60.4 A positive diagonal target
+
+Let \(X(z)\) be the 30 mixed cubic monomials, omitting the five pure
+cubes, and let \(e\) select the monomial \(z_0z_1z_2\). Put \(x=b^2\) and
+
+\[
+ \begin{aligned}
+ S(x)={}&767x^6-9225x^5+26487x^4-16011x^3
+              +25758x^2+34992x+5832,\\
+ T(x)={}&5408x^{10}-18831x^9-691668x^8+4787046x^7-4239945x^6\\
+       &-13850757x^5-10793574x^4-49618656x^3
+              -57874581x^2-23737698x-3306744,\\
+ D(x)={}&3(x+1)(x+3)^2S(x),\qquad
+ G(x)=D(x)I_{30}-T(x)ee^*.
+ \end{aligned}
+\tag{60.7}
+\]
+
+The coefficient vector of \(X^*G X\) is \(\tau\)-fixed: both its mixed
+cubic diagonal and the selected monomial are invariant under exchanging
+indices 0 and 1. Let \(t\in\mathbb L^{406}\) be its encoding from §60.3.
+
+**Lemma 60.2.** On \(0\le x\le1\),
+\(D(x)\ge157464\), \(-T(x)\ge3306744\), and
+\(G(x)\succeq157464I_{30}\).
+
+**Proof.** In the Bernstein basis
+\(\binom njx^j(1-x)^{n-j}\), the degree-nine coefficients of
+\(D/3306744\), in increasing order of \(j\), are
+
+\[
+ \left(\frac1{21},\frac{50}{567},\frac{4051}{27216},
+ \frac{89515}{381024},\frac{21635}{61236},\frac{165247}{321489},
+ \frac{67265}{91854},\frac{121699}{118098},
+ \frac{254800}{177147},\frac{39200}{19683}\right).
+\]
+
+The degree-ten coefficients of \(-T/3306744\) are
+
+\[
+ \left(1,\frac{481}{280},\frac{64063}{22680},\frac{50411}{11340},
+ \frac{3200957}{476280},\frac{33686543}{3429216},
+ \frac{59929859}{4286520},\frac{35809987}{1837080},
+ \frac{55250306}{2066715},\frac{4979375}{137781},
+ \frac{19917500}{413343}\right).
+\]
+
+The first list has minimum \(1/21\), the second minimum 1.
+The Bernstein basis is nonnegative and sums to one on this interval.
+The two scalar bounds and the matrix bound follow. \(\square\)
+
+### 60.5 The finite minor and source identity
+
+Let \(\rho=(\rho_1,\ldots,\rho_{405})\) and
+\(\kappa=(\kappa_1,\ldots,\kappa_{405})\) be the ordered integer lists
+in §60.8. The entries of each list are distinct, and the entries of
+\(\kappa\) are exactly \(\{0,\ldots,405\}\setminus\{385\}\).
+Define
+
+\[
+ V=\mathcal B[\rho,\kappa],\qquad w=\mathcal B[\rho,385].
+\tag{60.8}
+\]
+
+**Lemma 60.3.** The following exact identities hold in \(\mathbb L\):
+
+\[
+ N_{\mathbb L/\mathbb Q(b)}(\det V)=\mathcal R(b^2),\qquad
+ t_{385}\det V-t_\kappa\operatorname{adj}(V)w=0,
+\tag{60.9}
+\]
+
+where \(\mathcal R\) is the explicit rational function in §60.7.
+Moreover \(\det V\ne0\) at every real parameter \(0<|b|<1\).
+
+**Proof.** The following finite row recurrence gives the two identities
+using only the entries specified in §60.3 and the lists in §60.8.
+For \(r=1,\ldots,405\), set
+
+\[
+ \begin{aligned}
+ Y_{r,0}&=\mathcal B[\rho_r,:],\\
+ Y_{r,s}&=Y_{r,s-1}-(Y_{r,s-1})_{\kappa_s}N_s
+                     &&(1\le s<r),\\
+ p_r&=(Y_{r,r-1})_{\kappa_r},\qquad N_r=Y_{r,r-1}/p_r.
+ \end{aligned}
+\tag{60.10}
+\]
+
+Also set \(u_0=t\) and
+\(u_r=u_{r-1}-(u_{r-1})_{\kappa_r}N_r\).
+Substitution of (60.2), (60.5)–(60.7) into this recurrence, reducing
+coefficients by
+
+\[
+ i^2=-1,\qquad c^2=1+b^2,\qquad d^2=3-b^2,
+\]
+
+gives the exact finite identities
+
+\[
+ p_r\ne0\quad(1\le r\le405),\qquad u_{405}=0,\qquad
+ \prod_{r=1}^{405}\prod_{\eta\in\{1,-1\}^3}
+ p_r(\eta_1i,\eta_2c,\eta_3d)=\mathcal R(b^2).
+\tag{60.11}
+\]
+
+Here \(b\) is fixed in each conjugate product. The inner product always
+has eight factors, including repeated factors when a pivot lies in a
+proper subfield. Equations (60.10)–(60.11), with all tuple rules,
+integer lists and polynomial coefficients given in this section,
+are a finite rational identity specification; no sampling of the real
+parameter is used.
+
+The row operations on the selected minor are lower triangular with unit
+diagonal, and the resulting diagonal is \((p_1,\ldots,p_{405})\).
+Consequently \(\det V=\prod_rp_r\), giving the norm identity.
+The zero target remainder means that \(t\) is in the span of the selected
+rows over \(\mathbb L\). Solving the \(\kappa\)-coordinates by the adjugate
+formula and retaining coordinate 385 gives the second identity in (60.9).
+The factorization and exact Sturm counts in §60.7 show
+\(\mathcal R(b^2)\ne0\) for \(0<|b|<1\). Thus the minor is nonzero
+at every such parameter. \(\square\)
+
+All entries of the original matrix and target are defined on this
+interval: their denominators involve only the positive quantities
+\(c,k\), and the descent uses \(2k\). Define the explicit row of
+source multipliers
+
+\[
+ \lambda=\frac{t_\kappa\operatorname{adj}(V)}{\det V}.
+\]
+
+The selected coordinates and the remaining identity in (60.9) give
+
+\[
+ \lambda\mathcal B[\rho,:]=t.
+\tag{60.12}
+\]
+
+Equivalently, \(\lambda_r\) is the determinant of \(V\) with row \(r\)
+replaced by \(t_\kappa\), divided by \(\det V\).
+Undoing the injective coordinate encoding and the invertible source
+basis change expresses \(X^*G X\) as a linear combination of the ten
+original quadratics times bidegree-\((2,2)\) forms. After replacing each
+conjugate pair \(q,\bar q\) by \(\operatorname{Re}q,\operatorname{Im}q\),
+taking the Hermitian part gives real Hermitian quartic multipliers for
+the ten real quadratic constraints. No rank assertion for unselected
+sources is needed.
+
+### 60.6 Rigidity, transports, and the orthogonality component
+
+**Proof of Proposition 60.1.** For \(0<|b|<1\), let \(Cz\) be any
+actual common-flat vector orthogonal to \(c_1^+\). Every generator in
+(60.5) vanishes, so (60.12) gives \(X(z)^*G X(z)=0\).
+Lemma 60.2 implies that every mixed cubic monomial vanishes.
+If two coordinates \(z_i,z_j\) were nonzero, then \(z_i^2z_j\ne0\),
+a contradiction. Hence precisely one canonical coordinate is nonzero.
+Conversely, each of the other five canonical rays is common-flat and
+orthogonal to the selected member. This treats every missing-mode,
+repeated-coordinate and singular candidate without division by a
+candidate coordinate.
+
+At \(b=0\), the conclusion is Proposition 59.1; since \(a=bd/c\),
+this is exactly the case \(a=0\), not a limiting argument.
+For the remaining nonzero-mode choices, synchronous reflection
+\(R(x,y)=(R_3x,R_3y)\), \((R_3x)_j=x_{-j}\), commutes with \(M\)
+because its blocks are linear combinations of \(I,J_3\).
+It exchanges modes 1 and 2 and preserves all original flatness equations.
+The antiunitary
+
+\[
+ \Theta(x,y)=(-\bar y,\bar x)
+\]
+
+satisfies \(M\Theta=-\Theta M\) by block multiplication, preserves
+coordinate moduli and orthogonality, and obeys
+
+\[
+ \Theta c_l^\epsilon
+   =(-\epsilon\bar g_l)c_{-l}^{-\epsilon}.
+\tag{60.13}
+\]
+
+Thus \(R\Theta\) flips the canonical sign at a fixed nonzero mode.
+Reflection and this antiunitary prove all four nonzero-mode cases.
+Proposition 58.1 supplies both zero-mode cases throughout the open branch.
+Finally the common unitary map \(w\mapsto H_0w\) gives the column-ray
+statement, with canonical rays \(H_0c_l^\epsilon\). \(\square\)
+
+**Corollary 60.4.** For a fixed \(|b|<1\), define a graph whose vertices
+are all actual common-flat input projective rays, with an edge between
+two distinct vertices exactly when the rays are orthogonal. The six
+canonical rays form a connected component isomorphic to \(K_6\).
+Any orthonormal common-flat input basis containing one canonical ray
+is exactly the canonical basis. The unitary image graph on common-
+unbiased column rays for \((I,H_0)\) has the same properties.
+
+**Proof.** The canonical rays are pairwise orthogonal. Proposition 60.1
+says that every neighbor of a canonical vertex is one of the other five
+canonical vertices, so no edge joins this \(K_6\) to a noncanonical
+vertex. In an orthonormal basis containing one canonical member, the
+other five rays must therefore be five distinct members of the remaining
+canonical set. The unitary transport preserves every edge. \(\square\)
+
+This is a connected-component statement about the orthogonality graph.
+It does not assert topological isolation in the common-flat ray space,
+or that every common-flat orthonormal basis intersects the canonical set.
+The genuine noncanonical endpoint ray in §59.4 shows why the restriction
+\(|b|<1\) cannot simply be replaced by \(|b|\le1\); no limiting
+interior existence claim follows from that example. The general
+fourth-basis problem remains outside Proposition 60.1.
+
+### 60.7 Exact determinant-norm factors and their real domain
+
+Let \(K(x)=4x^2-3x+9\). The rational function in (60.9) is
+
+\[
+ \mathcal R(x)=
+ \frac{2^{1988}3^{660}x^{80}(1-x)^{16}(3-x)^{40}(3-2x)^{32}
+       (x+3)^{88}\prod_{j=1}^{11}P_j(x)^{e_j}}
+      {(x+1)^{270}K(x)^{62}},
+\tag{60.14}
+\]
+
+where
+
+\[
+ (e_1,\ldots,e_{11})=(16,4,16,4,4,4,4,2,2,2,2).
+\]
+
+The following tuples list every coefficient of \(P_j\) in ascending
+powers of \(x\); that is, \(P_j(x)=\sum_r(p_j)_r x^r\).
+
+\[
+ \begin{aligned}
+ p_{1}=(&-9,-24,5).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{2}=(&-9,-30,7).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{3}=(&-9,-33,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{4}=(&-9,21,-19,3).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{5}=(&-324,-351,270,-75,8).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{6}=(&-81,-189,-216,-12,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{7}=(&-81,378,-405,-192,32).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{8}=(&81,-189,99,129,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{9}=(&2916,11664,20169,5643,-4185,\\
+ &585,16).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{10}=(&-4100625,47949975,-210851586,212963742,-40916421,\\
+ &-73185093,43808328,-10234752,991232).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ p_{11}=(&1282705047207776784384,17215318528057824712704,117232526299052210372352,\\
+ &505282761775449928525824,1409704380811059458455152,2335901061655227495757752,\\
+ &1474962677995745920220001,-1909801390330985930605773,-3511486262570731457658129,\\
+ &1661019846163040543381397,7657048978562045876624982,3359618446652249049989226,\\
+ &-6226967472725127178769526,-4670182461179383581430458,4999955256271492464436875,\\
+ &4307642585746602561959265,-3242410090449421741867395,-1772334863614797885415233,\\
+ &2649027185702825742609660,-539028424008867911993172,-1505112163740993757788180,\\
+ &904965947457086549690748,496032837243307130120103,-739936700875474171595451,\\
+ &322173056215180488319353,-26849528299681425805437,-38267528432505658185546,\\
+ &22066478208799721613306,-6399100142306834162886,1141753511451204587430,\\
+ &-119446066296363146931,3523669184413730247,1014933738876390331,\\
+ &-186302374215273975,16125516781605400,-772113170228400,\\
+ &16726464040000).
+ \end{aligned}
+\]
+
+For each listed polynomial use the Sturm chain starting with
+\(P_j,P_j'\) and repeatedly taking minus the polynomial remainder.
+Omit zero entries when counting endpoint sign variations. The exact
+variation pairs are
+
+\[
+ \begin{array}{c|rrrrrrrrrrr}
+ j&1&2&3&4&5&6&7&8&9&10&11\\\hline
+ V_j(0)&1&1&1&2&2&2&2&1&2&4&16\\
+ V_j(1)&1&1&1&2&2&2&2&1&2&4&16
+ \end{array}
+\tag{60.15}
+\]
+
+None of these polynomials vanishes at either endpoint. Sturm's theorem
+therefore gives no root of any \(P_j\) in \((0,1)\).
+The other factors in (60.14) are nonzero on \(0<x<1\), and
+\(K(x)=4(x-3/8)^2+135/16>0\). Thus \(\mathcal R(x)\ne0\)
+on \((0,1)\). Its only relevant excluded parameter values are the
+central seed \(b=0\) and the endpoints \(b=\pm1\); in particular
+\(b=\pm\sqrt3/2\) require no extra chart for this minor.
+
+### 60.8 Ordered minor data
+
+The two following lists are read by concatenating their displayed rows.
+They are the source and coefficient orders used in (60.8)–(60.11).
+Their entries are the zero-based indices fixed in §60.3.
+
+\[
+ \begin{aligned}
+ \rho=(&62,63,64,67,68,69,72,73,74,12,18,30,32,40,42,49,54,58,13,14,\\
+ &52,53,57,59,0,1,2,3,5,10,11,20,24,34,44,46,48,61,71,6,\\
+ &7,8,9,17,19,22,23,27,28,29,31,35,36,39,41,50,51,55,56,60,\\
+ &66,70,15,16,25,26,33,37,38,43,45,47,21,65,4,197,198,199,289,294,\\
+ &299,164,204,209,224,272,273,274,277,217,238,218,283,196,201,208,249,257,269,213,\\
+ &222,239,161,163,172,174,180,194,276,281,286,298,192,291,159,211,216,221,230,232,\\
+ &234,271,165,166,176,178,186,188,200,203,207,212,237,241,243,250,251,259,260,261,\\
+ &275,280,285,297,175,185,240,242,160,162,235,253,263,278,187,244,246,290,219,171,\\
+ &173,182,215,231,293,191,202,205,258,262,236,181,292,179,177,284,206,227,270,193,\\
+ &155,157,255,265,153,220,167,154,168,152,228,156,252,195,233,158,150,151,229,210,\\
+ &245,422,367,388,389,372,355,352,310,312,387,401,411,400,410,391,392,311,413,337,\\
+ &412,326,336,335,416,356,314,431,359,396,440,393,390,365,366,424,430,323,317,417,\\
+ &397,436,324,325,398,338,402,346,418,415,414,441,345,399,368,419,420,444,374,357,\\
+ &432,358,304,348,375,404,377,332,305,429,369,342,448,306,344,331,426,322,409,334,\\
+ &406,407,363,309,362,353,379,329,351,380,330,307,376,300,303,129,92,118,90,140,\\
+ &131,134,141,85,86,147,112,114,115,117,116,144,110,142,111,149,135,136,108,91,\\
+ &81,83,120,121,95,122,78,77,79,137,75,76,124,487,637,505,655,506,656,566,\\
+ &716,567,717,518,668,488,669,486,636,485,635,477,627,464,614,516,666,508,658,562,\\
+ &712,563,713,583,582,733,732,564,714,489,597,747,544,694,454,460,631,605,538,688,\\
+ &546,697,588,738,494,539,572,722,473,623,475,625,549,699,556,513,586,510,660,576,\\
+ &726,541,693,452,550).
+ \end{aligned}
+\]
+
+\[
+ \begin{aligned}
+ \kappa=(&365,366,367,378,379,380,391,392,393,28,61,83,240,280,107,163,333,353,146,137,\\
+ &328,332,349,344,0,1,2,3,9,26,27,216,196,244,286,316,309,363,399,10,\\
+ &11,12,13,60,215,194,195,231,232,82,239,271,272,279,106,181,182,207,208,362,\\
+ &375,398,52,53,76,77,86,100,101,108,159,161,193,374,8,297,298,299,364,376,\\
+ &389,40,187,213,287,291,165,167,189,370,44,263,219,294,305,320,158,242,288,241,\\
+ &396,48,37,39,166,168,190,222,330,341,228,276,220,373,15,324,369,348,17,19,\\
+ &21,290,50,51,81,184,103,212,304,307,319,358,42,55,57,72,73,264,94,95,\\
+ &329,340,227,275,80,102,54,58,131,132,118,176,202,191,277,62,66,257,387,293,\\
+ &295,192,368,18,252,281,325,334,92,273,134,237,253,331,233,217,160,110,289,354,\\
+ &63,65,85,105,7,347,116,104,79,6,87,84,32,157,22,14,4,5,16,175,\\
+ &93,292,371,45,49,397,346,308,31,33,43,171,197,172,198,56,59,30,98,211,\\
+ &200,133,144,268,113,318,41,352,321,67,260,151,150,382,383,296,351,169,174,266,\\
+ &64,235,170,224,164,267,153,322,115,251,139,259,310,68,386,114,302,402,401,395,\\
+ &218,394,155,300,123,243,124,229,269,355,388,261,283,234,284,221,313,69,38,78,\\
+ &88,135,89,120,384,356,148,323,327,20,236,173,122,75,162,186,210,109,179,255,\\
+ &199,250,258,35,34,403,141,254,274,282,138,404,99,390,140,400,117,225,178,127,\\
+ &96,90,306,119,121,156,129,130,29,377,25,97,311,270,145,201,335,338,345,147,\\
+ &342,36,112,372,111,278,285,246,245,205,206,226,180,125,126,337,339,350,336,142,\\
+ &317,143,315,249,262,203,204,209,265,343,405,247,91,154,136,128,183,230,46,47,\\
+ &185,238,326,256,23,248,314,303,70,71,223,177,214,188,360,361,357,381,359,312,\\
+ &301,149,152,74,24).
+ \end{aligned}
+\]
