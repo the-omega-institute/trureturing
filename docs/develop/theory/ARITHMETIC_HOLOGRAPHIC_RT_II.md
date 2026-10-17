@@ -3484,3 +3484,248 @@ No regular-tetrahedron uniqueness claim is made. The unrestricted optimum with b
 The equality proof refines section 81's original-channel centroid-support witness by retaining the first party's trace deficit and following every equality through the SVD convex decomposition. It then uses three normalized coherent inputs together with the full normalized reference test. Section 79 supplies the original attaining product; sections 82.9--82.12 identify the complete rank-two-party equality family and its exact full-reference norm. The linear algebra, Stinespring equivalence, trace-norm duality, and channel-norm background are standard; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/).
 
 No regular-tetrahedron uniqueness is asserted: the allowed disphenoids form a continuum. The minimum rank product eight is an original-channel statement, because both channels' calibration was proved from equality before the calibrated normal form was used. The classification is complete only when at least one party has local Kraus rank two. It does not classify quarter-error products whose two ranks are both at least three, or decide whether such products can beat quarter error. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
+
+## 83. Transversal frame certificates and bilateral stability at quarter error
+
+The bounds in this section are dimension-free and apply to original CPTP maps, allowing output leakage and arbitrary Kraus ranks on both sides. They give an exact global best-response obstruction when either party is fixed at its corresponding channel in a section-82 quarter-error equality pair. There is also a quantitative bilateral stability estimate. Neither result rules out simultaneous changes of both parties producing error below 1/4.
+
+### 83.1. General transversal theorem for original channels
+
+Let k>=2 be an integer and let F_(k,2):C^(2k)->C^k be the uniform qubit-fibre target
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  for f!=g.
+
+Fix the input and output MC encodings. For original CPTP maps A,B:C^(2k)->C^k, let
+
+    delta=||(A tensor B)J_in-J_out F_(k,2)||diamond,
+
+where the norm is unhalved and permits arbitrary references.
+
+A transversal sigma=(i_1,...,i_k) selects one bit i_f in {0,1} from each fibre. For any Stinespring presentations, define the correct-output environment records
+
+    a_f=(<f|_out tensor I)V_A|f,i_f>,
+    b_f=(<f|_out tensor I)V_B|f,i_f>,
+    G_sigma=(<a_f,a_g>)_(f,g),
+    H_sigma=(<b_f,b_g>)_(f,g).
+
+These are positive semidefinite Gram matrices, with diagonal entries at most one. Define
+
+    L_A,sigma=||G_sigma||op,  L_B,sigma=||H_sigma||op,
+    t_A,sigma=Tr G_sigma/k <=1,
+    t_B,sigma=Tr H_sigma/k <=1.
+
+These quantities are intrinsic to the original channels: the transposed Gram is the corresponding correct-output Choi compression, so changing or enlarging a Stinespring environment does not change them.
+
+**Transversal bound.** For every transversal sigma,
+
+    delta >= max{0,
+       (k+1)/k - (2/k^2) Tr(G_sigma^T H_sigma)}        (1)
+
+and consequently
+
+    delta >= max{0,
+       [k+1-2 L_A,sigma t_B,sigma]/k,
+       [k+1-2 L_B,sigma t_A,sigma]/k}.                (2)
+
+In particular, with
+
+    L_* = min_(sigma, party in {A,B}) L_party,sigma,
+
+one has
+
+    delta >= max{0, [k+1-2L_*]/k}.                  (3)
+
+The maximum with zero is explicit: a negative right-side expression is a vacuous certificate, not a negative error estimate.
+
+#### 83.1.1. A normalized reference input and a full-output witness
+
+Use the normalized reference input
+
+    |Omega_sigma>=(1/sqrt(k))sum_f |f>_R tensor |f,i_f>_logical.
+
+Let omega be its original product-channel output after the input MC encoding, and let tau be the target output. The orthonormal correct-output reference/output support has basis
+
+    {|f>_R tensor |ff>_out : f=1,...,k}.
+
+On this support the actual output compression is K_sigma^T/k, where K_sigma=G_sigma entrywise-multiplied by H_sigma. The target is entirely supported there, with coefficient matrix
+
+    T_sigma/k,   T_sigma=(I_k+J_k)/2.
+
+The form of T_sigma is the same for every transversal: between distinct fibres the target coefficient is 1/2 independently of the selected bits. The transpose occurs because the Grams are forward inner products.
+
+The complementary actual block is positive and has trace 1-Tr K_sigma/k. Pinching therefore gives the valid original-channel bound
+
+    ||omega-tau||_1
+       >= [||K_sigma-T_sigma||_1+k-Tr K_sigma]/k
+        = (2/k) Tr(T_sigma-K_sigma)_+.               (4)
+
+For s=ones/sqrt(k), positive-part duality bounds the last expression below by
+
+    (2/k)<s,(T_sigma-K_sigma)s>
+      = (k+1)/k-(2/k^2)Tr(G_sigma^T H_sigma).         (5)
+
+Transposition leaves this real uniform-vector Rayleigh value unchanged. This proves (1).
+
+Equivalently, (5) is one explicit full-output trace-norm witness, without needing to pinch. Put
+
+    |chi_sigma>=(1/sqrt(k))sum_f |f>_R tensor |ff>_out,
+    Q_sigma=|chi_sigma><chi_sigma|,
+    W_sigma=I-2Q_sigma.
+
+The actual and target outputs have trace one, so W_sigma is a Hermitian contraction and
+
+    Tr W_sigma(omega-tau)
+       =2Tr Q_sigma(tau-omega)
+       =(k+1)/k-(2/k^2)Tr(G_sigma^T H_sigma).         (6)
+
+Thus the witness tests the full physical output, including any unpinched cross-sector coherences. It never assumes that these coherences vanish. The transversal input retains all cross-fibre coherences among its selected bits; no independent pairwise record replacement or unsupported two-test implication is used.
+
+Since G_sigma^T is positive and G_sigma^T<=L_A,sigma I,
+
+    Tr(G_sigma^T H_sigma) <= L_A,sigma Tr H_sigma.
+
+Exchanging the two matrices gives the symmetric estimate. Substituting in (1) proves (2), and t_A,sigma,t_B,sigma<=1 proves (3).
+
+### 83.2. Four-fibre exclusion criterion and robust frame excess
+
+At k=4, the bound in section 83.1 yields
+
+    delta >= max{0, 5/4-L_*/2}.                     (7)
+
+In particular, any one party and any one transversal with Gram operator norm at most two certify delta>=1/4, irrespective of the other party's dimension, Kraus rank, phases, or output leakage.
+
+A product with delta<=1/4-eta, eta>0, must satisfy
+
+    L_A,sigma >=2+2eta,
+    L_B,sigma >=2+2eta                               (8)
+
+for every one of the 16 transversals. Thus all 32 party/transversal frame norms must exceed two for a strict improvement. This is a necessary condition only.
+
+For a chosen party and transversal, write e=(L_party,sigma-2)_+. A weaker but convenient nonnegative-excess form of (7) is
+
+    delta >= max{0, 1/4-e/2}.                       (9)
+
+When L_party,sigma<2, the raw bound (7) is stronger than (9) and exceeds 1/4. No near-equality assumption is needed for either estimate.
+
+### 83.3. Exact global best responses for every disphenoid equality member
+
+Consider any original quarter-error pair (A_0,B_0) having a rank-two party. Exchange the parties if necessary so that B_0 has rank two. The classification in section 82 allows an environment isometry and independent simultaneous input-bit swaps to write its calibrated records as
+
+    a_(f,i)^0=conjugate(b_(f,i)^0) tensor m_i,
+    ||m_i||=1, <m_0,m_1>=3/4,
+    N_f=conjugate(B_f^0)Z(B_f^0)^T,
+    sum_f N_f=0.                                    (10)
+
+The allowed disphenoids include every x^2,y^2,z^2>=2/7 with sum one. The following argument uses balance, not equal axis lengths.
+
+For each fixed i in the relabelled coordinates, balance gives
+
+    sum_f |conjugate(b_(f,i)^0)><conjugate(b_(f,i)^0)|
+       =2I_2.
+
+Conjugating gives the same tight-frame identity for b_(f,i)^0. Hence its four-vector Gram H_0 has nonzero eigenvalues 2,2 and satisfies
+
+    H_0^2=2H_0,  Tr H_0=4,  ||H_0||op=2.
+
+Because the marker is fixed within that bit sector and has norm one, the other party's Gram is G_0=conjugate(H_0)=H_0^T. Therefore
+
+    ||G_0||op=||H_0||op=2,
+    Tr(G_0^T H_0)=Tr(H_0^2)=8.                     (11)
+
+In the original unpermuted labels, the two fixed-bit sets become two complementary transversals. This is why section 83.1 allows arbitrary transversals: the constant-bit Grams in the original labels need not themselves have norm two. The actual witness uses the corresponding selected input labels, so it does not require changing either physical channel.
+
+It follows from (7) that
+
+    delta(A_0,B)>=1/4  for every original CPTP B,
+    delta(A,B_0)>=1/4  for every original CPTP A.     (12)
+
+Since the partner (A_0,B_0) attains 1/4, the global best-response minimum in each line is exactly 1/4. In particular fixing the rank-four equality party blocks every unilateral escape that raises the other party's rank to three or higher, even with leakage. The second line is also consistent with section 81's original rank-two-party theorem.
+
+The same one-party tight-frame certificate applies to any balanced fixed-marker construction with arbitrary unit markers: their overlap is irrelevant to the selected single-marker Gram. Quarter attainment, however, is being asserted here only for the classified equality family.
+
+### 83.4. Bilateral stability for arbitrary original-channel perturbations
+
+Fix a section-82 quarter-error equality pair (A_0,B_0), having one rank-two party, and fix one of its marker-aligned transversals in the original labels. For arbitrary original CPTP maps A,B of arbitrary ranks, denote the corresponding Grams by G,H and set
+
+    DeltaG=G-G_0,   DeltaH=H-H_0.
+
+The matrices DeltaG and DeltaH are Hermitian; they need not be positive or trace zero because the perturbed channels may leak. Define the real witness value
+
+    g(A,B)=5/4-(1/8)Tr(G^T H).                      (13)
+
+Equation (1) says delta(A,B)>=max{0,g(A,B)}. From (11), g(A_0,B_0)=1/4. The global best-response witness itself, not merely its optimized norm, satisfies
+
+    g(A,B_0)>=1/4,  g(A_0,B)>=1/4.                 (14)
+
+Indeed Tr(G^T H_0)<=2Tr G<=8, and similarly for the other term. Expanding the bilinear trace gives the exact identity
+
+    g(A,B)=g(A,B_0)+g(A_0,B)-g(A_0,B_0)
+              -(1/8)Tr(DeltaG^T DeltaH).
+
+Therefore
+
+    delta(A,B)>=max{0,
+           1/4-(1/8)Tr(DeltaG^T DeltaH)}.            (15)
+
+The trace in (15) is real but can have either sign. Hilbert--Schmidt Cauchy--Schwarz yields the explicit norm bound
+
+    delta(A,B)>=max{0,
+           1/4-||DeltaG||_F ||DeltaH||_F/8}.          (16)
+
+There is also a channel-intrinsic estimate with no chosen Stinespring alignment. Put
+
+    d_A=||A-A_0||diamond, d_B=||B-B_0||diamond.
+
+Then
+
+    delta(A,B)>=max{0,1/4-d_A d_B}.                  (17)
+
+To prove (17), let E=A-A_0 and F=B-B_0, and apply E tensor F, with the reference unchanged, to the fixed encoded normalized input from section 83.1. Call the resulting Hermitian output Y. Both channel differences are trace-annihilating, so Tr Y=0. The cross term in (13) is precisely
+
+    -2Tr(Q_sigma Y)=-(1/8)Tr(DeltaG^T DeltaH).
+
+For a trace-zero Hermitian Y and a projection Q_sigma,
+
+    |2Tr(Q_sigma Y)|<=||Y||_1.
+
+The diamond-norm composition bound, or applying E and F successively with all other systems as references, gives
+
+    ||Y||_1<=||E tensor F||diamond<=d_A d_B.
+
+Combining this with (15) proves (17). The Gram and channel-distance bounds are both valid; one may use whichever is stronger. They are nontrivial only when their explicit right sides are positive.
+
+Thus arbitrary sufficiently small simultaneous channel perturbations can improve quarter error by at most a product of their local sizes. A unilateral perturbation cannot improve it at all. This is a stability theorem for all original channels, not only calibrated perturbations or fixed-rank paths. It does not prove local minimality under simultaneous changes: a positive bilinear cross term in (15) is not excluded.
+
+### 83.5. A stronger bound for local convex-noise perturbations
+
+For the fixed equality pair of section 83.4, arbitrary original CPTP maps A_1,B_1, and 0<=epsilon,eta<=1, let
+
+    A_epsilon=(1-epsilon)A_0+epsilon A_1,
+    B_eta=(1-eta)B_0+eta B_1.
+
+Then
+
+    delta(A_epsilon,B_eta)>=max{0,1/4-epsilon eta}.   (18)
+
+This is a single physical product of two local channels; it requires no shared randomness. Each local convex mixture can be represented by an orthogonal direct sum of local Stinespring environments.
+
+For proof, use the same fixed input and witness g, rather than minimizing the norm independently for the four terms. Its values on (A_0,B_0), (A_1,B_0), and (A_0,B_1) are at least 1/4 by (11)--(14). On any original product output, the expectation of Q_sigma is at most one, whereas its target expectation is 5/8. Thus
+
+    g(A_1,B_1)=2[5/8-Tr(Q_sigma omega_11)]>=-3/4.
+
+Bilinearity of the physical product output now gives
+
+    g(A_epsilon,B_eta)
+       >= (1-epsilon eta)(1/4)+(epsilon eta)(-3/4)
+        =1/4-epsilon eta,
+
+which proves (18). This improves the factor-four estimate obtained from (17) and d_A<=2epsilon, d_B<=2eta.
+
+If the two local direct-sum perturbations add equal new-environment amplitudes t, so epsilon=eta=t^2, the permitted improvement is at most t^4. This last interpretation has the explicit orthogonal-direct-sum scope. Arbitrary coherent Stinespring perturbations need not be such local mixtures, and are covered only by (15)--(17), not by an assumed mixture decomposition.
+
+### 83.6. Boundary of the conclusion
+
+The argument provides a full-output dual witness and exact global best-response certificates for every member of the disphenoid equality family. It permits arbitrary original leakage, dimensions, and both local ranks at least three in its comparisons. Its additional necessary condition for beating quarter is that all 32 party/transversal frame norms exceed two; its stability estimate requires both parties to change.
+
+It does not prove a universal quarter lower bound. In particular one cannot infer that every pair of local frame collections has a transversal of norm at most two, nor that the bilinear term in (15) is nonpositive. The genuinely unrestricted four-fibre optimum remains open between sqrt(3)-3/2 and 1/4. No mean-rank-two assumption, polar-completion monotonicity, or false centroid/two-test variance bound is used.
