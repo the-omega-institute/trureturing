@@ -1321,3 +1321,169 @@ angle equations or realize a degree-six quotient. It is not a
 counterexample to six-edge flat exclusion. It refutes only the proposed
 per-owner H expense from these scalar and partial-budget premises.
 A complete-star or joint collection argument remains necessary.
+
+## 382. Complete hypotheses and precise scope
+
+Consider a finite face-paired tetrahedral quotient with exactly six
+actual edge labels M,V,C,D,Z,U. Each original tetrahedron owner has one
+fixed vertex-induced paired frame, in edge order (12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),
+
+with four distinct actual labels R,A,B,O. Face maps preserve actual
+labels. Every actual normal link is one connected circle of original
+degree at least six. Loops, repeated role vectors, repeated visits and
+distinct-face self-gluings are allowed in these hypotheses. Original
+edge occurrences remain distinct angle slots and link intervals.
+
+There is one shared positive generalized length at each actual label;
+write its cosh as m,v,c,d,z,u. Original angles are nonnegative and sum
+to 2*pi at each actual edge. The unique flat owner is
+
+    sigma=(M,C,D,V,C,D),
+
+with axial M,V angles pi and transverse C,D angles zero. Every other
+owner is genuine, with all its angles in (0,pi), and an actual genuine
+source owner
+
+    tau=(Z,M,C,D,M,C)
+
+exists. Assume
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1 and z<u+m+1.                              (382.1)
+
+The two gaps are retained explicitly. Under the stated complete-star
+hypotheses they are supplied by Sections 318–321 of the preceding
+continuation: the larger of Z,U has a wholly genuine star, the two
+largest other values are the smaller of z,u and m, and the theorem
+requires the connected degree-at-least-six circle, complete angle
+sum and fixed four-distinct frames. Neither gap follows from bare
+connectedness. The M/Z expense uses u<z+m+1; the M/U expenses use
+z<u+m+1. The M/U V/C branch separately uses actual D degree at least
+six. These dependencies are not weakened here.
+
+The genuine paired tests and angle responses are those of the fixed
+frames. For axes r,o and pair a,b,
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0.
+
+**Theorem 382.1 (restricted low-V exclusion, repo-derived).**
+No quotient satisfying these hypotheses can also satisfy
+
+    v<=c and v<=d.                                    (382.2)
+
+Thus a surviving low-sixth, unique-flat normal form must have
+v>min(c,d). This closes only the region (382.2), not the full six-edge
+flat-exclusion problem.
+
+## 383. A strict opposite-axis ordering lemma
+
+**Lemma 383.1 (repo-derived).** Let a,b,v>1 and p>=m>1. Suppose
+
+    (m-1)*(v-1)>=(a+b)^2
+
+and an owner with axes p,b and transverse pair v,a is genuine. Then
+v>b.
+
+Indeed p>=m and v-1>0 give
+
+    (p-1)*(v-1)>=(a+b)^2.
+
+Its strict L test gives (v+a)^2>(p-1)*(b-1). Multiply by v-1>0:
+
+    (v+a)^2*(v-1) > (a+b)^2*(b-1).                   (383.1)
+
+The right side is f(b) for f(x)=(x+a)^2*(x-1). On x>1,
+
+    f'(x)=(x+a)*(3*x+a-2)>0.
+
+Thus (383.1) is f(v)>f(b), forcing v>b. The proof does not require
+numerical inequality between a and b, or between any other distinct
+labels. In particular v=b is excluded by the strict genuine test.
+No face partner, circle degree, gap, or partial budget is used in this
+scalar lemma.
+
+Apply it with p in {m,z,u}. An axial-P residual owner of the form
+(P,V,C,D,V,C) requires v>d; an owner of the form (P,V,D,C,V,D)
+requires v>c. Consequently both families are absent under (382.2).
+
+## 384. Every genuine owner then spends more than pi on H
+
+Put P={M,Z,U} and H={M,Z,U,V}. An expense is the sum of the owner's
+original slots with labels in the specified set; two transverse
+occurrences are always counted separately.
+
+We use Theorems 341.2 and 348.2 from the preceding continuation
+and the implications of Sections 356–380 above, with exactly
+the hypotheses retained here. The role classification is exhaustive:
+
+1. Every genuine owner containing at least two P labels has P expense
+   greater than pi (Section 376). This covers all placements of those
+   labels, including three-H/one-low placements. Its H expense is at
+   least its P expense and is therefore greater than pi.
+
+2. A genuine owner with exactly one P label uses that label and all
+   three labels V,C,D, because its frame has four distinct labels.
+   If its fixed pair is PC or PD, its two P slots cost more than pi
+   (Section 377), so its H expense again exceeds pi.
+
+3. Its fixed pair cannot be CD: the two distinct axes would belong
+   to {M,V,Z,U}, with shifted product at least
+   (m-1)*(v-1)>=(c+d)^2. Its strict genuine L test would fail.
+   The unique owner of that pair is the flat sigma.
+
+4. If its pair is VC or VD, its axes are P and the other low label.
+   Section 383 excludes both possibilities under (382.2).
+
+5. The only remaining pair is PV, with axes C,D. Section 380 gives
+
+       H expense = 2*beta_P+2*beta_V
+                 > 4*arctan(2) > 4*pi/3 > pi.
+
+There is no zero-P owner, since only three labels lie outside P.
+The cases cover actual labels, not numerical cosh values, so equal
+lengths at distinct labels do not merge classes or lose an owner.
+They do not infer that any particular receiving owner exists.
+
+## 385. At least six genuine owners and the strict H contradiction
+
+For completeness, the total-angle count of Section 378 applies here.
+For any genuine owner with axes r,o and pair a,b, put
+
+    K=[sqrt(a^2-1)+sqrt(b^2-1)]/(a+b),
+    S=beta_a+beta_b=2*arctan(K*sqrt(L/J)).
+
+We have 0<K<1 and S in (0,pi). The paired half-angle identity gives
+
+    tan(theta_r/2)*tan(S/2)=K*sqrt((r-1)/(r+1))<1.
+
+Both half angles lie in (0,pi/2), so theta_r+S<pi. Apply this to
+both axes and add: every genuine owner's total six-slot angle is
+strictly less than 2*pi. Sigma has total angle exactly 2*pi.
+
+If there are N original owners, the six complete actual edge equations
+sum to 12*pi. There is at least one genuine owner, namely tau, so
+
+    12*pi < 2*N*pi.
+
+Thus N>=7 and the number G=N-1 of genuine owners is at least six.
+
+The complete H capacity is 8*pi. Sigma uses exactly 2*pi on H,
+one pi at M and one at V. Hence the genuine H capacity is exactly
+6*pi. But Section 384 gives a strict H expense greater than pi for
+every one of the G genuine owners. Summing disjoint original slots,
+
+    6*pi = sum_genuine H_expense > G*pi >= 6*pi,
+
+a contradiction. Strictness still holds when G is exactly six.
+This proves the theorem.
+
+No pairing inventory, auxiliary-circle replacement or quotient-existence
+claim enters the proof. In the remaining region v>min(c,d), this argument does not eliminate
+one or both axial-P residual families from Section 378, depending on
+the strict opposite-axis orders in Lemma 383.1. Full six-edge flat
+exclusion remains open.
