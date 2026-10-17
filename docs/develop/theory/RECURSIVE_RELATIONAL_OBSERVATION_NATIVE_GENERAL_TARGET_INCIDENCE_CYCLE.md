@@ -1328,3 +1328,257 @@ verifier/INITIAL consumer, current authority and absorbing halt are the
 unchanged programme, not consequences of the recoding.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Current acquisition can accept an Image of the wrong raw target
+
+**Definition 12.1 (the paired request).** Reuse exactly Definition 11.1's
+two first-store words and Proposition 11.2's reached first Readies
+$P_0,P_1$. Let $h_\sigma$ be the complete actual history ending at
+$P_\sigma$. Write $C_L=\{c_0,\ldots,c_{e-1}\}$ for their retained,
+inactive first-version raw bit locations. Their common acquisition and
+first-Ready tallies are $a,b$; set $d=b-a$. From each Ready actually
+supply the existing outer choice1, the separate HistoryMode1, and the
+complete frame
+
+$$
+w=111\,U(d+2)\,0U(d).
+$$
+
+This is GCA Definition 3.2's AcquisitionOffset$(d)$: its payload has
+$d+2$ bits. Gate, mode and whole frame together have $2d+10$ bits.
+The same finite word is supplied at the corresponding actual IN sites.
+The parameter $d$ specifies a finite reachability witness; no current
+meter read, internal self-selection algorithm or externally supplied
+distinguishing bit is included.
+
+For complete native physical records write $X\equiv_{C_L}Y$ when all
+coordinates other than the values at these particular locations agree.
+Their existence, identities and version tags agree as well. This is a
+relation used in a proof: both records retain their own full $C_L$ values.
+It is not a quotient of a physical successor or a task readout. At the
+paired Readies the active main table, ordinary tapes and heads, current
+PC/latches/owners/tokens, parked client, source and meter agree by
+Proposition 11.2. The first-store values are the two respective words;
+in particular $c_p(P_0)=0$ and $c_p(P_1)=1$.
+
+**Lemma 12.2 (actual native continuation of this request).** Along the
+canonical finite flight of Definition 12.1 from $P_0$, each executed
+native row has an enabled counterpart from the related $P_1$ state.
+They have the same native row label, supplied or released bit, ordinary
+operand identities and updates, and next current control. The complete
+successors remain related by $\equiv_{C_L}$, with each actual first word
+unchanged. This holds through all eight publications and the sole final
+Ready, including every intermediate allocation, bank, copy, check and
+token-transfer row.
+
+Proof. The relevant physical instructions are the expansions of
+Definitions 2.1, 7.1–7.2, ARC Definitions 2.1–2.2 and 5.2–5.3, and
+GCA Definition 3.1. Their data and control dependencies are as follows.
+
+| Reached work | Actual operands and guards |
+| --- | --- |
+| Gate, mode and frame ingress | Ordinary70, scratch66/67, descriptors68, the installed latch6/latch5 tests and current invocation slots. Each matching WR uses its actual supplied bit. |
+| Manifest, cover, binder and package work | Already imported manifest and frozen empty predecessor $M$; ordinary64–71 fields and current parity. ARC Definition 4.3's earlier $L$ description is a literal emitted word, not a copy of $C_L$. |
+| Boundary, Issue and Call | Literal word operations on represented states and code from the manifest. ARC Definition 6.1 supplies prescribed $E(L)$ at represented first-bootstrap sites. A simulated read of a represented old slot reads bank data. |
+| Publication and callbacks | The actual sender71, mailbox72, receiver73, descriptors68, staged placements69, positioned length/data heads, seals and distinct current invocation/read/availability slots of ARC Definitions 7.1–7.3. |
+| View construction, checks and return | The received word, acquired binding, PublicCode and ordinary work fields of Definitions 5–7; then the named ACK, mailbox return, five-field item append and invocation return. |
+
+The physical current instruction is selected from the identical active
+$G_{\mathrm{gc}}$ table. Its old first bootstrap is not reentered.
+The manifest's capture field is the identical acquired
+$\Delta(G_{\mathrm{gc}})$, and its first-bootstrap description remains
+the prescribed one. ARC Definition 7.1's service binding contains
+version tags, actual capture placement/field zero and the seed delivery
+reference. Definition 5.1 adds acquired origin references, target
+version/phase and selector arithmetic. Neither tuple adds a read or
+comparison with the current contents of $C_L$. The stage/body checkers
+read representations obtained from the delivered Image; they do not
+inspect live first-store slots. The rows in the table therefore have no
+native operand, branch or authority test depending on those values.
+Their finite effects name current stage/parity/token/marker locations,
+not a destination in $C_L$.
+
+For the physical local cases, RD reads the same marked ordinary cell and
+branches on the same symbol. WR has the same current writer/writability
+guard and literal or latched value. ML/MR have the same existing neighbor
+and current token. EX sees the same R, retains its old identity and
+constructs the same new R. BF has the same latch operands. IN is supplied
+the same next bit at the same site; OUT releases the same latched bit.
+TOK tests the same current source/destination slots, then performs both
+actual updates. CTL tests the same designated latch and applies the same
+ordered finite effects. No post-Ready row here is a boot-bit constructor.
+Every unmentioned coordinate persists, and each row appends its actual
+ordinary/F receipt, including the original meter-head alias rule. Thus
+the complete successor differs only in the retained $C_L$ values.
+
+Induction over the finite canonical flight proves both continued
+enabledness and the asserted relation; existence of that canonical
+flight is Theorem 8.2 at target $k=b$. The induction constructs the
+second physical flight, rather than invoking Theorem 8.2 on a
+noncanonical installation. Lemma 2.6 transfers each actual row
+to its incidence patch. Such a patch can test the full finite raw
+pattern, including $C_L$; equality of structural probe records or
+structural tariffs is not part of the native-row assertion. ∎
+
+**Theorem 12.3 (accepted canonical publications for a noncanonical
+target).** Both requests of Definition 12.1 have finite executions
+through the actual CoverRef, PackageRef and Image callbacks and all five
+View callbacks, with their installed successful checks, ACKs and final
+Ready. Corresponding receiver73 payloads, imported values and acquired
+bindings are identical. Their computed target tally is $k=b$. In both
+flights the received Image is the full HistoricalImage of $h_0,P_0$;
+the five received natural bodies are, in order,
+
+$$
+S(h_0),\quad B(h_0),\quad M_J(h_0),\quad T(h_0),\quad S(h_0).
+$$
+
+On the $P_1$ flight the named actual length-$b$ target is $h_1,P_1$.
+Its retained bit is $c_p=1$, whereas the accepted Image and decoded
+S/B/M bodies have $c_p=0$. They are therefore not faithful
+representations of that target. All these deliveries have genuine
+current channel authority; successful checking here denotes the actual
+successful control branch, not a new authenticity premise on
+$\mathcal D_1$.
+
+Proof. On $P_0$ the acquired manifest and empty $M$ supply the authentic
+first predecessor. GCA's binder parses the stated frame and computes
+$a+d=b$, within its inclusive range. Theorem 8.2 supplies the canonical
+positive flight and its actual payloads. Apply Lemma 12.2 from
+$P_0\equiv_{C_L}P_1$ to that entire finite execution. In particular
+Boundary returns the same numerical $a,b$ on the second flight; they
+also are that flight's actual acquisition/first-Ready tallies by
+Proposition 11.2. The acquired cover and package numbers and all
+expected source/version/selector fields agree.
+
+The transferred CoverRef route really serializes its immutable record
+on71, initializes the distinct mailbox72 and receiver73, copies through
+both actual length-tested loops, seals and prints, and performs its
+ACK/mailbox return. ClientCover clears its internal numeral and imports
+the current receiver to obtain $c$. ClientIssue similarly obtains $p$
+from its own completed PackageRef delivery, checks the current invocation
+slot and transfers that slot to Call. These are ARC Definitions 7.1–7.3's
+fixed entries; no internal helper is called out of turn and no printed
+historical right is used as present authority.
+
+Issue and Call use the equal copied manifest and $I_b$. Their prescribed
+first-bootstrap reservoir is $w_0$, so Call's serialized value is the
+canonical $h_0,P_0$ Image. The second flight physically copies that
+same value, not the raw word in its live $C_L$. At ClientImage the
+current placement is used to Seek73 before bank work; the F-bounded
+importer preserves head73 while rebuilding64–68. The equal imported
+tuple passes the same finite codec/source/version/$p,c,k,\varrho$
+checks. CYCLE Definition 8.3's CheckImageValue is precisely this parser
+and comparison subgraph; it does not compare the represented endpoint
+with the receiver's live complete state. Thus the first checked Image
+already witnesses the claimed mismatch, before that Image's ACK.
+
+For completeness, the installed suffix also really executes. RenderS
+uses this acquired raw projection. Each following callback clears its
+candidate, imports its own current receiver and checks the same canonical
+body and binding as in the $P_0$ flight. Hence every arrow and final
+Equal/CheckImageValue takes the same successful branch. The actual
+FinalReturn ACKs once, returns mailbox availability, appends one
+five-field completed item with the eight received bindings, returns
+invocation to the outer client and executes Ready. No earlier callback
+is treated as a return. All partial and final current successors still
+contain their respective first words.
+
+Finally, Proposition 11.2 gives the unequal actual target bit and
+Theorem 11.4 retains the true four independent inverses on
+$\mathcal D_0\cup\mathcal D_1$. The acquired Image's raw projection
+instead has the canonical value zero at that same identity. Full raw
+equality fails there. Lemma 3.3's geometric inversion and the memory
+family1 entry give the same failure for the displayed S/B/M bodies.
+Since $h_0\ne h_1$, Theorem 11.4 also gives $T(h_0)\ne T(h_1)$;
+the received T records are the canonical $h_0$ records. None
+of these comparisons identifies endpoint inequality with
+$Q$-inequivalence. ∎
+
+**Corollary 12.4 (the missing acquisition distinction).** On the actual
+pair in Theorem 12.3, the complete received words and bindings of this
+flight, its released bits, native completion and existing successful
+checks do not determine the actual target bit $c_p$. Consequently they
+cannot by themselves certify recovery of the actual raw target or any
+of its four independent views on both histories. An exact extension on
+this pair must acquire a distinguishing dependency beyond those common
+values before using them as a raw-target certificate.
+
+Proof. All the indicated acquired values and outcomes agree, while
+the required bit is zero on one actual target and one on the other.
+Any function of only those common values and the same fixed public
+parameters has the same value on the pair. A recovered full raw target
+would give its $c_p$ coordinate; any recovered independent view would
+give it by Theorem 11.4. Either contradicts the unequal bits. Repeated
+copying, canonical replay and checks using only those same arguments
+preserve this obstruction. A differing future supplied bit chosen from
+retained external bootstrap knowledge would be additional input; its
+actual acquisition, authority and faithful use would require their own
+proof. The corollary asserts no impossibility for all other installed
+routes and no new permission to read $C_L$. ∎
+
+**Proposition 12.5 (costs and complete-successor scope).** Let $N$ be
+the actual number of native rows from first Ready through the final
+Ready in Theorem 12.3. Both flights execute exactly $N$ such rows, with
+the same native opcode counts, ordinary allocations and channel lengths.
+Their full native bills are Definition 8.5's bills at $n=b+N$, including
+all setup, banks, descriptor staging, two copies, prints, imports,
+checks, ACKs and return. The full eight-publication subaccount is
+$17(L_C+L_P+L_I+L_0+\cdots+L_4)+56$ native rows. Structural bills retain
+each run's actual paid foundation and ordered-stencil sum. Neither the
+received equality nor the native count equality supplies equality of
+complete original-task responses.
+
+Proof. Lemma 12.2 pairs every actual native row and every created
+ordinary identity, including all receipt cells; Proposition 11.2 pairs
+their initial counts and first-store sizes. Apply Definition 8.5 and
+its CYCLE Proposition 10.2 subaccount with these actual lengths.
+The argument does not identify different raw finite patterns or their
+structural probes. In particular both complete physical successors
+retain $C_L$, rather than replacing that coordinate by the received
+Image. AIF Definition 2.6 includes the complete original joint successor
+after an executed original action. Whether a particular added row is
+admitted there, and its complete original response correspondence, are
+additional questions; actor access to equal received words supplies
+neither such an admission nor a response-map comparison. ∎
+
+**Convention 12.6 (mathematical provenance and remaining domain).**
+Theorem 12.3 is a repo-derived source-model result. Its new content is
+the explicit current-authorized, successfully checked acquisition of a
+wrong raw target on the reached pair, beyond Proposition 11.5's check
+failure on a true body with no delivery presumed. Sections 1–8 retain
+their canonical positive hypotheses. The second physical completion is
+not a faithful $\mathcal D_1$ paid view cycle.
+
+The equality-preservation method is the familiar step/output-consistency
+argument; see John Rushby's
+[Noninterference, Transitivity, and Channel-Control Security Policies,
+Chapter 2](https://www.csl.sri.com/papers/csl-92-2/). No general security
+policy theorem is claimed. At Convention 10.4's pinned mathlib revision,
+StateTransition.Respects/tr_reaches transports a supplied transition
+relation and Function.factorsThrough_iff requires fibre constancy.
+The native operand and current-authority verification in Lemma 12.2,
+not those general results alone, supplies this concrete witness.
+Convention 10.4's numerical selector/replay results likewise grant no
+new physical read. OriginalNativeServiceBridge's Architecture and
+ReadUpdate.Protocol require their actual arrival/start/step data;
+its PaidTraceResidual consumer's savedCut/sourceTrace still use that
+supplied architecture. No G_gc instance or original-$Q$ correspondence
+is inferred from those declarations. This source-model derivation is
+not a Lean certificate or a worldwide novelty claim.
+
+The raw first load, the current native history-frame entry and the
+actual successful flight have the scopes stated in §§11–12. Original
+task admission of $w_1$ and of the added phases, lawful adaptive/semantic
+experiment correspondence, released labels and complete original
+successors remain obligations 10.2–10.3. Enabled task-undefined Supply,
+unexecuted unauthorized/disabled `none` and executed refusal remain
+distinct. No equality or separation of the cross-entry $Q$ maps is
+asserted. The actual original source, Stop/snapshot/INITIAL consumers
+and absorbing halt remain unchanged; this flight makes no claim about
+their alternative acquisition routes. Preacquisition, other raw inputs,
+unfinished flights, final00 without later Ready and terminal comparisons
+retain their full original obligations. No new capture word, reader,
+decoder, grant, return marker, initialization or task output is supplied.
+
+## 追加锚（本行以下为增补区）
