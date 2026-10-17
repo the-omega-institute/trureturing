@@ -90,8 +90,8 @@ Every public declaration is bind-only; the definitions are used by public statem
 **Refuted by `result`:** the qutrit map Ψ above is HPTP, SN and not SP, and in the context Ψ ∘ Φ = Ξ it doubles the trace distance of Φσ₊ and Φσ₋.
 
 **Argued, not formalized** (orchestrator, recorded in #18048).
-- *Physical domain.* The states with a density image under Ψ form the facet {A ⊕ 0 : tr A = 1, A ≥ 1/4}. On it Ψ acts as A ↦ 2A − 1/2, which doubles every traceless difference.
-- *Mechanism.* The source's qubit argument relies on the physical domain being a single pure state. In dimension 3 the domain can be a facet of positive dimension, as the source anticipates, and an expanding map on that facet signals backflow. The expanding block is the qubit repolarization of Dominy and Lidar (search seat, recorded in #18048).
+- *Physical domain.* The states with a density image under Ψ form the set {A ⊕ 0 : tr A = 1, A ≥ 1/4}, a portion of the rank-two face {A ⊕ 0 : tr A = 1, A ≥ 0} of the state space. On it Ψ acts as A ↦ 2A − 1/2, which doubles every traceless difference.
+- *Mechanism.* The source's qubit argument relies on the physical domain being a single pure state. In dimension 3 the domain can be a set of positive dimension inside a face of the state space, as the source anticipates for its facets, and an expanding map on that facet signals backflow. The expanding block is the qubit repolarization of Dominy and Lidar (search seat, recorded in #18048).
 
 **Open.** The second conjunct, that non-SP SNTP maps are not uniquely defined in higher dimensions, is not addressed.
 
