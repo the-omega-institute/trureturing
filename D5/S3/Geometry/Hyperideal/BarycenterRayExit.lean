@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/Hyperideal/BarycenterRayExit
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Geometry/Hyperideal/SupportRatioExit]
+   anchors: []
    utility: none
    digest: Every non-barycentric point of the common cut body reaches an original support trace. -/
 
