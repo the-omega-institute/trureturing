@@ -93,7 +93,10 @@ internal sealed class FixedMarginalNegativityRefutationDocument : IScribeDocumen
                             + "Hence N(σ) < N(ρ) although their marginals agree, contradicting the conjecture. "
                             + "The coherences of χ join |00⟩, |12⟩ and |21⟩, rather than the three "
                             + "equally indexed basis vectors used by the candidate."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("baio-chruscinski-horodecki-messina-sarbicki-2019-fixed-marginal-negativity-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, BlockSequence prose) =>
