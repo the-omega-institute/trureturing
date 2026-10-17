@@ -68,6 +68,7 @@ private theorem spectral_sqrt_inverse_products (Q : Matrix n n ℂ) (hQ : Q.PosS
     rw [hmul]
     apply cfc_congr
     intro x hx
+    change Real.sqrt x * (Real.sqrt x)⁻¹ = if x = 0 then 0 else 1
     by_cases h : x = 0
     · simp [h]
     · have hx0 : 0 ≤ x := by
@@ -265,7 +266,7 @@ theorem supportedPerspective_transformer {f : ℝ → ℝ}
           (cfc_predicate _ _)
       have hJ : cfc f (ambientUnitalization Φ B hB i X) ≤
           ambientUnitalization Φ B hB i (cfc f X) :=
-        ambient_unitalized_jensen hconv hcont Φ B hB i X hX
+        ambient_unitalized_jensen (@hconv) hcont Φ B hB i X hX
       have h := congruence_mono hJ R
       rw [hR, hLeft, hRight] at h
       exact h

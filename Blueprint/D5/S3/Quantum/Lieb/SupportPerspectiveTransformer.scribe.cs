@@ -38,8 +38,10 @@ internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDef
                     + "Phi(persp(f,A,B)) using signed sandwich support. Thus a "
                     + "negative value of f(0) does not require a positivity claim "
                     + "for f(X).")), Paragraph(Text(
-                    "All source, including the frozen Jensen/support dependencies, "
-                    + "still requires actual Lean elaboration and kernel checking. "
+                    "The Jensen and support transport modules have passed explicit "
+                    + "targeted Lean builds. The current transformer repair has not "
+                    + "yet passed elaboration; the scoped axiom report, registration "
+                    + "binding and Scribe compilation and emission remain pending. "
                     + "The finite-effect to rectangular-isometry to endomorphism "
                     + "contraction bridge remains an explicit authored dependency; "
                     + "it is not an assumed new axiom. The analytic supplier is "

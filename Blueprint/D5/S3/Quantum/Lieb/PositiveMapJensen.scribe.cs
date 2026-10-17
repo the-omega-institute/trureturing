@@ -8,7 +8,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Lieb;
 internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Proposed finite positive-map Jensen bridge; no compilation or admission claim.",
+        "Finite positive-map Jensen bridge; scoped report and Scribe checks remain pending.",
         H("PositiveMapJensen"), Blocks(
             Describe.Lean(DescribeId.Create("rectangular-congruence"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.congruence_mono"),
@@ -50,8 +50,9 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
                     + "complete-positivity hypothesis, and no trace assumption. "
                     + "An empty output carrier is trivial; an empty input with a "
                     + "nonempty output contradicts unitality.")), Paragraph(Text(
-                    "Both the Lean and this Scribe document are uncompiled source "
-                    + "proposals. No validated information-audit "
+                    "This Lean module has passed its explicit targeted build. "
+                    + "Scribe compilation, emission, the scoped axiom report and "
+                    + "registration binding remain pending. No validated information-audit "
                     + "registration, kernel result, official acceptance or novelty "
                     + "claim is supplied by this document."))), DescribeRole.Theorem))));
 

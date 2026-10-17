@@ -64,9 +64,10 @@ internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefin
                     + "on Phi.")), Paragraph(Text(
                     "SupportPerspectiveTransformer consumes these interfaces and supplies "
                     + "the exact kernel-inclusion reconstruction, mixed spectral products "
-                    + "and final congruence cancellations. The full three-module proof "
-                    + "and these Scribe sources await current elaboration, kernel, "
-                    + "axiom and registration checks. Identity regularization and "
+                    + "and final congruence cancellations. The Jensen and transport "
+                    + "modules have passed their explicit targeted Lean builds. "
+                    + "The transformer repair, scoped axiom report, registration "
+                    + "binding and these Scribe sources remain unchecked. Identity regularization and "
                     + "trace data processing remain outside this source endpoint."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
