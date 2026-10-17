@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:16677d67c14209de298db492c078505bdb917bc9f83f3fac0d4a51d5853ffcb9
+  normalized_sha256: sha256:16677d67c14209de298db492c078505bdb917bc9f83f3fac0d4a51d5853ffcb9
+cas_ref: sha256:16677d67c14209de298db492c078505bdb917bc9f83f3fac0d4a51d5853ffcb9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section heading only: it names Theorem 3.2 and contains no independent proposition, assumptions, formula, or conclusion. The immediately following claim atom carries the mathematical assertion; this receipt settles only the heading and does not settle its enclosing theorem or proof.'
+    previous_atom_id: 154b6e3638e2bf1c3c57d59807c035b19bcbc6552628830d59ecf542c1b0dbc4
+    next_atom_id: 8a87eefcffd000efb59ddd5336f31f6546ceb6ba82fd0ab2f3b611a43311a7e1
