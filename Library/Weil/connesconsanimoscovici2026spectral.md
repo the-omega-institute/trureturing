@@ -9134,3 +9134,91 @@ positivity, Robin and RH remain unresolved.
 
 
 The [two application sources, directed packets and README](https://github.com/the-omega-institute/trureturing-experiments/tree/1c806b85586413d33d44e75865907ff683478220/docs/reports/weil-c27) retain the scalar envelope and the single common-source trial with their original bindings.
+
+#### The saved common covector cannot pay either fixed comparison
+
+The common-trial packet also permits a stopping test without another
+source query. Keep its exact covector $c$, actual form, plane and both
+saved SAME-$F$ lower certificates fixed. Write
+
+$$
+I_c=[\ell_-,\ell_+],\qquad
+D_c\in[d_-,d_+],\qquad d_->0,
+\qquad
+C_c=\frac{\max\{|\ell_-|,|\ell_+|\}^2}{d_-}.
+$$
+
+For any nonempty closed refinement $J\subseteq I_c$ and any valid
+upper $U$ from a refined dual-norm interval contained in
+$[d_-,d_+]$, one has $U\ge d_-$ and hence
+
+$$
+\frac{\operatorname{dist}(0,J)^2}{U}\le C_c.
+$$
+
+This includes singleton refinements, so eliminating the interval width
+in this same observation cannot exceed $C_c$. Equivalently, the
+existing convex-endpoint helper is applied to $z^2/d_-$ on $I_c$;
+no original response, trial construction, physical error, inverse,
+reference action or old experiment is recomputed.
+
+For each unchanged SAME-$F$ lower $L_F$ and previous retained paid
+lower $L_{\rm old}$, the most optimistic retained lower from this
+one-direction recipe is bounded by
+
+$$
+\max\{L_{\rm old},L_F+C_c\}.
+$$
+
+The one exact-rational saved-data application gives outward ranges:
+
+| Quantity | Range containing the exact certificate ceiling |
+|---|---|
+| One-direction residual-certificate capacity $C_c$ | $[0.000645676655497943832123311,\ 0.000645676655497943832123312]$ |
+| Fixed retained-certificate ceiling | $[-0.471844098397295426432892720,\ -0.471844098397295426432892719]$ |
+| Energy-endpoint retained-certificate ceiling | $[-0.674039564414156009376728580,\ -0.674039564414156009376728579]$ |
+
+The capacity is less than0.14%of the required $-L_F$ in either
+unchanged recipe. The source has SHA256
+`8bcf41f185202bac5eb189720e62e19b437a1c978cd5605e2443e273c2d31d59`;
+the7656-byte packet has SHA256
+`914ec78b2be3b1ba1ebed01fb0a205802f9258786fbf02318c0fe7ba3cb971f0`.
+Assembly takes<0.009150seconds, excluding serialization.
+
+
+Both ceilings are negative. This rules out positive certification by
+refining this same covector's saved intervals while holding the
+SAME-$F$ certificates fixed. The positive lower for $D_c$ is needed
+for this stopping test; it was not needed for the original residual
+lower. The calculation reuses the accepted exact convex-endpoint
+helper, without replaying its fixtures or any scientific producer.
+
+The geometric missing part can be stated independently. In the
+positive residual space, let $u_c$ be the projected actual-$Q$ Riesz
+representer and $f_\perp$ the residual of $f$ after the original
+indefinite plane. Since $D_c>0$, orthogonal decomposition gives
+
+$$
+R=\frac{L_c^2}{D_c}+R_{\perp c},\qquad
+R_{\perp c}=\left\|f_\perp-\frac{L_c}{D_c}u_c\right\|_Q^2\ge0.
+$$
+
+The observed one-dimensional contribution is at most $C_c$; the
+unobserved orthogonal contribution has no new upper or positive
+lower here. Any extension which keeps $L_F$ and certifies positivity
+by adding separate lower bounds for these two orthogonal terms must
+supply an independent remainder lower strictly exceeding
+$-L_F-C_c$. Merely renaming the previous total-residual lower as a
+remainder would not justify adding it to the common-trial lower.
+A joint bound which also improves $F$ is outside this fixed-recipe
+test and requires its own common-source estimate.
+
+Thus the stopping result limits a particular lower-certificate
+algorithm and its observed component. It is not an upper for total
+$R$, actual paid energy, the actual finite border or the full Weil
+form. The two actual comparison signs, actual-center/full-border,
+good-block/cofinal positivity, Robin and RH remain unresolved.
+This is a source-specific application of the existing projection and
+convexity results, without a generic novelty or Lean-proof claim.
+
+The [fixed-trial source, exact packet and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/fbfefa527018d4388fd9c2cb4dd5c0d2130f7043/docs/reports/weil-c27) preserve this conditional stopping result; the common-trial supplier is reused without replay.
