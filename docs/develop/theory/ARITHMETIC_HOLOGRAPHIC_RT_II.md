@@ -995,3 +995,99 @@ For z_i=1/sqrt(m), the constrained optimum has w_i=1/m and error1−1/sqrt(m). T
 Section54 supplies the general physical normal-form perspective, while §§61–62 exhibit a qutrit obstruction and unrestricted leakage bounds. This family gives a complete all-dimensional common-implementation criterion and an exact coherent diamond projection under a stated basis-output constraint. Pure-output forcing, Bessel/Cauchy–Schwarz, Choi positivity, and Euclidean ℓ₁-ball projection are standard ingredients. The physical conclusion concerns the same pair of local channels on the entire input algebra, not independent state conversions.
 
 For standard channel, dilation and diamond facts see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . PIO and zero-communication MC constructions are established background, as discussed by Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These citations are not claimed to state the exact family characterization above, and no literature-priority claim is made. This is paper mathematics, not a compiled formal theorem or a full RT recovery result.
+
+## 64. Unrestricted physical diamond projection for coherent star compression
+
+### 64.1. Statement and scope
+
+Use §63's m-leaf star-compression channel E_z, with m≥1, logical input C^(m+1) labelled1,...,m,h, logical output C², and ||z||₂≤1. Its basis action sends every leaf to0 and the hub to1; E_z(ih)=z_i01, with distinct leaf–leaf coherences killed. The input and output MC encodings are J_in and J_out.
+
+For all finite physical LOSR channels Φ from the two local (m+1)-dimensional inputs to the two local qubit outputs, without restrictions on their populations, code support, or other matrix-unit coefficients,
+
+    inf_Φ ||Φ∘J_in−J_out∘E_z||_diamond
+       = min_{||w||₁≤1} ||z−w||₂.                         (1)
+
+The norm is the unhalved diamond norm, including arbitrary passive references. The optimum is attained by one product of local CPTP maps. Thus the exact-basis-output restriction in §63's projection calculation can be removed for this entire family: a calibrated optimizer exists even among unrestricted physical competitors. This is not an assertion that arbitrary physical competitors are calibrated.
+
+Explicitly, if ||z||₁≤1 the optimum is zero. Otherwise let τ>0 solve Σ_i max(|z_i|−τ,0)=1. Then
+
+    w_i=exp(i arg z_i)max(|z_i|−τ,0),
+    optimum=sqrt(Σ_i min(|z_i|,τ)²).                      (2)
+
+For z_i=1/sqrt(m), the unrestricted optimum is exactly1−1/sqrt(m), attained by w_i=1/m. This includes m=1, when the value is zero. Every coordinate pair nevertheless has an exact physical implementation, as in §63.
+
+### 64.2. A retained-coherence constraint for every physical competitor
+
+For an arbitrary Φ define the retained coefficients
+
+    λ_i=<00|Φ(|ii><hh|)|11>,    1≤i≤m.
+
+Then, without assuming anything about Φ's basis outputs or leakage,
+
+    ||λ||₁≤1.                                             (3)
+
+Proof. In one product branch A⊗B choose Stinespring isometries and write
+
+    U_A|i>=|0>a_(0,i)+|1>a_(1,i),
+    U_B|i>=|0>b_(0,i)+|1>b_(1,i),
+
+for every leaf and hub label. Define C_A:C^m→H_EA by C_A e_i=a_(0,i). It is a contraction: it is the composition of the isometric inclusion of the leaf subspace, U_A, and the output-0 coordinate projection. Thus ||C_A||≤1. Also ||a_(1,h)||≤1. For
+
+    α_i=<a_(1,h),a_(0,i)>,
+
+the vector α is the coordinatewise conjugate of C_A* a_(1,h), with the inner product conjugate-linear in its first variable. Hence Σ_i|α_i|²≤1. The same construction gives β_i=<b_(1,h),b_(0,i)> with Σ_i|β_i|²≤1.
+
+The actual channel formula gives λ_i^(b)=α_iβ_i. Consequently
+
+    Σ_i|λ_i^(b)|≤sqrt(Σ_i|α_i|²)sqrt(Σ_i|β_i|²)≤1.
+
+A finite LOSR mixture has λ_i=Σ_b w_b λ_i^(b). The triangle inequality proves (3). In particular the environment vectors a_(0,i) have not been assumed orthogonal or normalized; contraction of their column map replaces the calibrated orthonormal-record premise. Arbitrary product ancillas and larger local environments are absorbed into the Stinespring representations. No code projection, postselection, or physical retraction is used.
+
+### 64.3. A normalized two-dimensional-reference witness
+
+Let Δ=J_out∘E_z−Φ∘J_in and d=z−λ. We claim
+
+    ||Δ||_diamond≥||d||₂.                                 (4)
+
+If d=0 the claim is immediate. Otherwise set r=||d||₂ and
+
+    |a>=Σ_i conj(d_i)|i>/r.
+
+This is a normalized vector in the leaf subspace. First, the trace-norm-one matrix unit |a><h| satisfies
+
+    <00|Δ(|a><h|)|11>=Σ_i conj(d_i)d_i/r=r.
+
+The trace norm dominates any matrix element, so the definition of the diamond norm already implies (4).
+
+The same constant can be witnessed using a positive input state and a two-dimensional passive reference. Take
+
+    |Ψ>=(|0>_R|a>+|1>_R|h>)/sqrt(2),
+    H=|0,00><1,11|+|1,11><0,00|.
+
+The input is normalized and H is Hermitian with operator norm1. In (id_R⊗Δ)(|Ψ><Ψ|), the indicated off-diagonal entry is r/2 and its adjoint is r/2. Its other entries do not contribute to the expectation of H. Therefore
+
+    Tr[H (id_R⊗Δ)(|Ψ><Ψ|)]=r,
+
+and trace-norm duality proves (4) with no omitted factor of two. This explicitly handles arbitrary competitor populations, extra coherences and leakage: the reference blocks and the two selected output entries isolate the coefficient difference.
+
+Combining (3) and (4), every physical competitor obeys
+
+    ||Δ||_diamond≥||z−λ||₂≥min_{||w||₁≤1}||z−w||₂.
+
+The witness depends on the competitor through d, which is permitted in the supremum defining its diamond error. It is a bound for one common channel on all inputs, not separate sector optimizations.
+
+### 64.4. Matching finite common-channel attainment
+
+Section63 constructs, for every ||w||₁≤1, a single product of two local CPTP maps Φ_w satisfying Φ_w∘J_in=J_out∘E_w on all encoded matrix units and all reference extensions. It also proves
+
+    ||J_out∘E_z−J_out∘E_w||_diamond=||z−w||₂,
+
+by an explicit CPTP compression followed by the off-diagonal qubit map. Choose the Euclidean projection w onto the unit ℓ₁ ball. The finite-dimensional ball is compact, so this choice attains the minimum; §63's threshold proof gives exactly (2). The corresponding product channel supplies the upper bound equal to the lower bound above. Both local environments may be taken of dimension m+1.
+
+For the symmetric vector, permutation symmetry or the threshold formula gives w_i=1/m and ||z−w||₂=1−1/sqrt(m). Thus the common-channel error approaches1 in this normalization as the number of individually compatible leaf–hub pairs grows. This is a dimension-dependent exact result, rather than a compactness-only separation.
+
+### 64.5. Relation to existing theory
+
+Section63 established exact implementability and the calibrated projection. The new step is (3) for actual unrestricted local CPTP outputs, followed by the normalized reference witness. Neither pure basis outputs nor exact code support is assumed in this step. Section62's leakage estimate is not needed for this family.
+
+Stinespring dilation, adjoint contraction, Cauchy–Schwarz, trace-norm duality and the diamond norm are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The known local incoherent-operation background and the finite constructions used in §63 retain their attribution to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No priority claim is made for these ingredients. The result concerns the stated all-dimensional coherent star family and fixed MC encodings, not all logical channels or full RT recovery; it is a paper proof without a formal-kernel claim.
