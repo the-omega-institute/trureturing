@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 import D5.S3.QuantumBounds.PeritoTensorBlockBound
+import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 
 set_option linter.style.longLine false
 
@@ -248,18 +249,28 @@ private def controlled (t u : Fin 2 → ℝ) :
 private theorem controlled_unitary (t u : Fin 2 → ℝ)
     (ht : ∀ j, 0 < t j) :
     controlled t u ∈ Matrix.unitaryGroup (Unit × Fin 2 × Unit × Fin 2) ℂ := by
-  rw [Matrix.mem_unitaryGroup_iff]
-  ext x y
-  rcases x with ⟨⟨⟩, b, ⟨⟩, f⟩
-  rcases y with ⟨⟨⟩, c, ⟨⟩, g⟩
-  have hrot := congrFun (congrFun
-    (Matrix.mem_unitaryGroup_iff.mp (rotation_unitary (t b) (u b) (ht b))) f) g
-  by_cases hbc : b = c
-  · subst c
-    simpa [controlled.eq_1, Matrix.mul_apply, Matrix.star_apply,
-      Fintype.sum_prod_type, Matrix.one_apply, ite_and] using hrot
-  · simp [controlled.eq_1, Matrix.mul_apply, Matrix.star_apply,
-      Fintype.sum_prod_type, hbc, Ne.symm hbc]
+  let e : (Unit × Fin 2 × Unit × Fin 2) ≃ (Fin 2 × Fin 2) :=
+    { toFun := fun x => (x.2.1, x.2.2.2)
+      invFun := fun x => ((), x.1, (), x.2)
+      left_inv := by rintro ⟨⟨⟩, b, ⟨⟩, f⟩; rfl
+      right_inv := by intro x; rfl }
+  let W := D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled
+    (rotation (t 0) (u 0)) (rotation (t 1) (u 1))
+  have hbase := D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled_unitary
+    (rotation (t 0) (u 0)) (rotation (t 1) (u 1))
+    (rotation_unitary (t 0) (u 0) (ht 0)) (rotation_unitary (t 1) (u 1) (ht 1))
+  have heq : controlled t u = W.submatrix e e := by
+    ext x y
+    rcases x with ⟨⟨⟩, b, ⟨⟩, f⟩
+    rcases y with ⟨⟨⟩, c, ⟨⟩, g⟩
+    fin_cases b <;> fin_cases c <;>
+      simp [controlled.eq_1, W, e,
+        D5.S3.Quantum.Dynamics.PositivePauliClockOrder.controlled.eq_1,
+        Matrix.blockDiagonal_apply]
+  rw [Matrix.mem_unitaryGroup_iff] at hbase ⊢
+  rw [heq, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_submatrix,
+    ← Matrix.submatrix_mul _ _ e e e e.bijective, ← Matrix.star_eq_conjTranspose, hbase]
+  exact Matrix.submatrix_one_equiv e
 
 private def input0 : Unit × Fin 2 → ℂ := fun x => if x.2 = 0 then 1 else 0
 
