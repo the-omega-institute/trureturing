@@ -7,7 +7,8 @@
    digest: Eight orthogonal Hoggar fiducials give a SIC-compound in complex dimension eight. -/
 
 import D5.S3.Quantum.Measurement.HoggarSicSumNegativity
-import D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation
+
+set_option linter.style.longLine false
 
 open scoped BigOperators
 open D5.S3.Quantum.Measurement.HoggarSicSumNegativity (bitSign)
@@ -15,7 +16,6 @@ open D5.S3.Quantum.Measurement.HoggarSicSumNegativity (bitSign)
 namespace D5.S3.Quantum.Measurement.HoggarSicCompoundRefutation
 
 set_option maxRecDepth 4000
-set_option linter.style.longLine false
 
 private noncomputable def phase (z b : Fin 8) : ℂ :=
   GaussianInt.toComplex (bitSign z.val b.val)
@@ -120,9 +120,9 @@ private theorem pair_overlap (x z y t : Fin 8) (u : Fin 8 → ℂ) :
       Complex.normSq (star u ⬝ᵥ pauli (x ^^^ y) (z ^^^ t) u) := by
   have hi := pauli_inner x z u (pauli (x ^^^ y) (z ^^^ t) u)
   have hx : (x ^^^ (x ^^^ y) : Fin 8) = y :=
-    D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.xor_cancel x y
+    xor_cancel_left (α := Fin (2 ^ 3)) x y
   have hz : (z ^^^ (z ^^^ t) : Fin 8) = t :=
-    D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.xor_cancel z t
+    xor_cancel_left (α := Fin (2 ^ 3)) z t
   rw [pauli_mul, hx, hz] at hi
   have hs : star (pauli x z u) ⬝ᵥ
       (fun b => phase z (x ^^^ y) * pauli y t u b) =
@@ -237,8 +237,8 @@ theorem result : ¬ claim := by
       have hn : ¬ (j.1 ^^^ l.1 = 0 ∧ j.2 ^^^ l.2 = 0) := by
         intro hp
         apply he
-        exact Prod.ext ((D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.xor_zero j.1 l.1).mp hp.1)
-          ((D5.S3.Quantum.Entanglement.FourMUBBoundEntanglementRefutation.xor_zero j.2 l.2).mp hp.2)
+        exact Prod.ext ((xor_eq_zero_iff (α := Fin (2 ^ 3))).mp hp.1)
+          ((xor_eq_zero_iff (α := Fin (2 ^ 3))).mp hp.2)
       rw [if_neg hn, if_neg he]
       norm_num
   · intro j k l
