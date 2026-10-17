@@ -10861,7 +10861,7 @@ upper for $e$ and the upper for $\rho_H$. The exact $\rho_H$ is
 nonnegative, so these substitutions have the required direction.
 The interval products enclose every common realization without
 asserting that their corners can occur simultaneously. Round the
-resulting lower $\underline\Omega$ to the640grid before normalization.
+resulting lower $\underline\Omega$ to the640 grid before normalization.
 For the saved $h\in[h_-,h_+]$,
 
 $$
@@ -10928,3 +10928,150 @@ novelty claim. All inherited actual/common-source, domain,
 exact20frame, physical and Euclidean PSD, conditional-source,
 two-sided reference, complete original512metadata allowance,
 normalization, endpoint-charge and baseline-order premises remain.
+
+## One propagated positive row for the actual prime slack
+
+Keep the SAME actual $c=27$ clipped prime operator, common form/domain,
+global cancellation $H_{\rm ext}-T=A_\Gamma-\Lambda-C_{\rm p}$,
+and $\Lambda\preceq A_\Gamma-(59/10)I$. Reuse the
+[weighted Schur formula](liu2026tailcompensation.md#a-source-formula-application-to-the-actual-prime-block-at-c9).
+The particular old endpoint lower comparison remains excluded.
+The application here only sharpens a global bound on the actual
+prime operator; it supplies no sign of the actual retained form.
+
+Put $L=\log27/2$ and
+
+$$
+q_0(x)=1+\frac{29}{50}(x/L)^2,\qquad
+q_1=C_{\rm p}q_0,\qquad
+R_1=\mathop{\rm ess\,sup}_{x\in(-L,L)}
+\frac{C_{\rm p}^2q_0(x)}{q_1(x)}.
+$$
+
+This is one canonical positive-weight propagation, not a new Schur
+theorem or a weight optimization. Both $q_0$ and $q_1$ are even.
+The shift $-\log2$ is active everywhere on $[0,L]$, so
+$q_1\ge(\log2)/\sqrt2>0$ there and, by reflection, on the full
+interval. Its upper bound is finite because the prime sum is finite.
+
+### Exact ordered clipping and a finite ratio certificate
+
+For $x\in[0,L]$ use $e=\exp(L-x)\in[1,\sqrt{27}]$.
+A signed shift has factor $a=n$ or $1/n$, with weight
+$w_n=(\log p)/\sqrt n$ when $n=p^k$. It is active exactly when
+
+$$
+a<e<27a.
+$$
+
+An ordered two-step path $(a,b)$ contributes to $C_{\rm p}^2q_0$
+only when, in addition, $ab<e<27ab$. Thus both its intermediate
+and final points must remain in the interval. The possible switches
+$a,27a,ab,27ab$ are rational. Group equal factors and sort those in
+$(1,\sqrt{27})$ exactly; their membership is decided by rational
+squares. This supplies the exact cell order independently of the
+uncertain logarithms. A rational sample between consecutive switch
+labels only selects the constant active set; it is not sampled
+quadrature or a numerical maximum search. Isolated switch points
+do not change the operator or its essential bound.
+
+On an exact normalized cell $[l,r]$, write $z=(1-t)l+tr$.
+Each term $1+(29/50)(z+s)^2$ has degree-two Bernstein coefficients
+
+$$
+1+\frac{29}{50}(l+s)^2,\quad
+1+\frac{29}{50}(l+s)(r+s),\quad
+1+\frac{29}{50}(r+s)^2.
+$$
+
+Let $D_i,N_i$ be the resulting coefficients of $q_1$ and
+$C_{\rm p}^2q_0$. All three $D_i$ are certified positive. Since
+the Bernstein basis functions $B_i(t)$ are nonnegative,
+
+$$
+\frac{\sum_iN_iB_i(t)}{\sum_iD_iB_i(t)}
+=\sum_i\frac{D_iB_i(t)}{\sum_jD_jB_j(t)}\frac{N_i}{D_i}
+\le\max_i\frac{N_i}{D_i}.
+$$
+
+The saved rational logarithm enclosures and outward Arb arithmetic
+enclose the exact endpoints, weights and coefficients. Exporting
+each cell upper outward to the 640 grid preserves the direction.
+The bound below is the maximum of those certified cell uppers,
+not a claim that the true essential maximum attains it.
+
+### Global slack and the complete source budget
+
+Weighted Schur gives $C_{\rm p}\preceq\overline R_1 I$ and hence
+
+$$
+H_{\rm ext}-T\succeq gI,\qquad
+g=59/10-\overline R_1.
+$$
+
+When $g>0$, taking the infimum over the SAME legal finite $E$
+coordinate gives $\Pi\succeq gI$ on $O$. No preservation of
+Fourier bands by $C_{\rm p}$ is assumed. For the SAME archived
+full $u=\mathcal Mw_0$, use its accepted complete squared-norm
+upper $N$ and $0<h_{\rm lo}\le h=\langle w_0,u\rangle$.
+The full far action remains included in $N$. Standard Cauchy gives
+
+$$
+uu^*\preceq NI\preceq\frac Ng\Pi,\qquad
+\mathcal M+\rho uu^*\preceq\mathcal M+\Pi=\mathcal A,
+\quad 0\le\rho\le\frac gN.
+$$
+
+The coefficient $\rho$ is distinct from the normalized parameter
+$\tau=h\rho$ and the shrink parameter $\tau/(1+\tau)$.
+In particular the inherited excluded coefficient endpoint is
+$t_+\simeq2.531919772\cdot10^{-5}$; the earlier $0.0272333894$
+is a normalized $\tau$ cap, not that coefficient. The directed
+comparison below uses $g/N$ and the exact saved $t_+$.
+
+The single directed application supplies:
+
+| Certified sufficient quantity | Directed bound |
+|---|---:|
+| Row upper $\overline R_1$ | $<5.53914888029651$ |
+| Actual slack lower $g$ | $>0.36085111970349$ |
+| Complete-source directional budget upper $N/g$ | $<12585.2937174196$ |
+| One eligible rank-one coefficient $\rho_{\rm cert}=g/N$ | $>7.9457819773874\cdot10^{-5}$ |
+| Its normalized parameter lower $h_{\rm lo}\rho_{\rm cert}$ | $>0.08546502014787$ |
+
+In particular, under the stated premises,
+
+$$
+\boxed{H_{\rm ext}-T\succeq\frac9{25}I,\qquad
+\Pi\succeq\frac9{25}I.}
+$$
+
+This strengthens the inherited $1/632$ floor using the actual
+nonlocal prime operator. The complete-source norm and far bound
+are unchanged. The supplied coefficient satisfies
+$\rho_{\rm cert}>3t_+$, beyond the range of the stopped endpoint
+exclusion. This comparison of scales is an eligibility result;
+the missing actual joint retained-sign estimate is separate.
+It does not evaluate or revive the excluded lower construction.
+The value is one certified sufficient coefficient, not a maximum
+of all eligible coefficients.
+
+All original actual common-form/domain, SAME-source, unitary mass,
+finite-short and sound-cache premises remain. This is a conditional
+numerical application of established weighted Schur, Bernstein and
+rank-one inequalities, without a Lean or generic novelty claim.
+An eligible coefficient does not establish the joint retained
+Gamma/pole/prime sign, cofinal positivity, Robin or RH.
+
+The 233-line source has SHA256 `0b72a6ba263c545fd6ed03958c8d4e8ff82faf05197eb9eee03dc02a81c3f767`; the 138683-byte
+directed packet has SHA256 `935b2c0707c3187fa652730b1e40d5937a4e071158b7cb9f1f4a6a78f8459ce6`. The single application
+uses 102 exact support cells and 9350 active ordered path-cell
+contributions, with 1024 working/640 export bits. It takes
+<0.103267seconds excluding serialization. Accepted logarithms,
+full-source energies, complete far bounds and endpoint data are read
+without replaying their producers or fixtures. There is no new
+source action, Gram, inverse, solve or far query and no propagation
+order, weight, parameter, precision or partition scan.
+
+The [source and directed packet](https://github.com/the-omega-institute/trureturing-experiments/tree/e08384fdadbf3cf9cd135c824c8d85a480439502/docs/reports/weil-c27)
+retain this one application.
