@@ -2000,3 +2000,1422 @@ exact candidate *material* for this distinction; it supplies none of
 that missing acquisition/use or original-response interface.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 14. Actual reference-entry recovery from an original primitive response
+
+**Definition 14.1 (two first-call domains and the fixed reference).**
+Keep Assumption 1.2's single initialized apparatus, Definition 11.1's
+words $w_0,w_1$, Proposition 11.2's actual first Readies $P_0,P_1$,
+and the unchanged original task of Definition 1.3. From each $P_\sigma$
+actually supply the existing outer choice01 and follow its prescribed
+paid dispatch to the complete actual entry $e_\sigma$ immediately before
+$F^A$'s header Base/setup. Fix these two complete entry histories as
+mathematical parameters, with $e_0$ the reference. They include their own
+bootstrap, capture, current resources and absolute receipts. Their
+current original admission is Corollary 11.6's admission; no original
+task admission of the earlier $w_1$ bootstrap or outer choice is inferred.
+
+Let $\mathcal I_\sigma$ be the actual single-call interval described in
+SOURCECALL Definition 3.1: canonically extendible seven-tag prefixes
+from $e_\sigma$, through the successor of the call's final idle CTL,
+without a subsequent InnerReturn row. For $\sigma=1$ the source-body
+correspondence is supplied by Corollary 11.6, rather than by assuming a
+canonical first bootstrap. Let $\Gamma_\sigma$ be exactly that corollary's
+running domain in this first call: next row is unchanged original,
+with the pre-row of the changed final idle CTL and its successor
+excluded. Put
+
+$$
+\Gamma=\Gamma_0\cup\Gamma_1,\qquad
+\mathcal I=\mathcal I_0\cup\mathcal I_1.
+$$
+
+These intervals contain the actual ingress half-states, pending latch
+writes, source overwrites, all seven service or maintenance branches,
+accepted and refused values, and original record/delivery/check/ACK/token
+work. An unfinished prefix needs no future input or eventual return.
+The interval $\mathcal I$ is only a decoding domain; it grants no
+original experiment at an excluded cut.
+
+Write $n(h)$ for the absolute actual native receipt count at $h$, from
+the original meter entrance, and $p(h)$ for the current frame's consumed
+source-IN word in its actual site order. Write
+$m(h)=n(h)-n(e_\sigma)$ on $\mathcal I_\sigma$. SOURCECALL Definition
+2.2's $\mathsf P_7$ is the prefix language. At an IN cut of $\Gamma$,
+the lawful source supplies are exactly
+$\{\operatorname{Supply}(b):p(h)b\in\mathsf P_7\}$; at a non-IN cut,
+the prescribed enabled original Advance is available. These are the
+actual current ingress, owner, workspace, source-token and phase
+conditions of Corollary 11.6, ARC Definitions 4.1 and 5.1–5.2, and CAP
+Definition 4.6. Historical permissions supply none of these guards.
+
+**Definition 14.2 (actual counterpart and existing response selection).**
+For $h\in\mathcal I_\sigma$, its counterpart $\tau h$ is the history
+from the other actual entry $e_{1-\sigma}$ that consumes the identical
+source-IN bits at corresponding sites and executes exactly $m(h)$
+source-body rows. Theorem 13.3 supplies this actual continuation in both
+directions, including its entry dispatch. Define the reference-entry
+counterpart by
+
+$$
+\nu(h)=
+\begin{cases}
+h,&h\in\mathcal I_0,\\
+\tau h,&h\in\mathcal I_1.
+\end{cases}
+$$
+
+The construction refers to actual prescribed paths, not an invocation,
+a physical erasure, an installed decoder or a new snapshot. Its
+well-definedness and interval preservation are used explicitly below.
+
+Let
+
+$$
+K(z)=\bigl(\operatorname{old}_{13}(z),\ \operatorname{latch}_5(z),\ n(z)\bigr),
+$$
+
+where $\operatorname{old}_{13}$ is precisely the actual original13 byte
+record used by SOURCECALL Theorem 3.3. For an executed original primitive
+response $R$ with actual successor $z$, let $\operatorname{sel}(R)=K(z)$.
+This selection is available mathematically from the existing complete
+original joint successor, by AIF Definitions 2.5–2.6 and SOURCECALL
+Definitions 1.3–1.4. It neither specifies the other response coordinates
+nor grants an actor access to these three. The count is the actual
+absolute receipt count, including the paid entrance and all intervening
+work, not an event count or a newly started source-call clock.
+
+**Theorem 14.3 (one original response recovers the actual reference
+counterpart).** For every $h\in\Gamma$ and every lawful original
+primitive $a$ that executes at $h$, its existing response $R_h(a)$,
+together with the fixed full reference entry $e_0$, determines exactly
+$\nu(h)$. More explicitly, let $D_{e_0}$ be SOURCECALL Theorem 3.3's
+inverse returning the actual suffix after $e_0$, and let $\star$ attach
+that suffix to the fixed history $e_0$. Then
+
+$$
+e_0\star\operatorname{dropLast}
+ \bigl(D_{e_0}(\operatorname{sel}(R_h(a)))\bigr)=\nu(h).
+$$
+
+Thus the response determines the consumed source-frame word with its IN
+sites, the ordered source-body occurrences, and their exact stopping
+row offset $m(h)$ across the two entries. The returned object is an
+actual history on the reference-entry tree. It does not identify the
+unknown actual entrance sheet, its retained first word, or the literal
+full physical history $h$ when $h\in\Gamma_1$. Whether additional
+coordinates of the full original response determine those objects is
+not asserted. Execution of a primitive is meant here, including a
+primitive on a service-refusal path; semantic acceptance is not required.
+
+Proof. First apply Theorem 13.3 to the actual gate01 dispatches from
+Proposition 11.2's paired Readies. They reach their respective
+$e_\sigma$ with equal absolute receipt counts. Apply the same supplied
+theorem to each finite source-body prefix. Corresponding active control,
+ordinary operands, current heads/latches/owners/tokens and receipts
+agree, and the consumed source bits agree. Consequently they have the
+same $\mathsf P_7$ prefix and immediate lawful supply set, the same
+unchanged next-row status, and the same final-idle boundary. This gives
+$\tau(\mathcal I_\sigma)=\mathcal I_{1-\sigma}$ and
+$\tau(\Gamma_\sigma)=\Gamma_{1-\sigma}$.
+
+The fixed graph, already consumed bits and prescribed number of actual
+rows uniquely determine these finite paths. No future completion word
+is used. Applying the construction twice returns the original path.
+The retained opposite values at $c_p$ make the two actual trees
+disjoint, so $\tau$ is a fixed-point-free involution. In particular
+$\nu(h)$ is well-defined and is the actual reference-entry counterpart,
+not an arbitrarily chosen compatible prefix. Theorem 13.3 also gives
+
+$$
+K(z)=K(\nu(z)),\qquad z\in\mathcal I.
+$$
+
+The ordinary original13 record, latch5 and real receipts are among its
+preserved coordinates. This uses no assertion about membership or
+nonmembership of $C_L$ in the entire original response.
+
+Only now apply SOURCECALL Theorem 3.3, at the one fixed actual entry
+$e_0$. Since $\nu(z)\in\mathcal I_0$, the supplied $K(z)$ is an actual
+image of that inverse, and hence
+
+$$
+e_0\star D_{e_0}(K(z))=\nu(z),\qquad z\in\mathcal I.
+$$
+
+Here SOURCECALL Lemma 3.2 supplies its matching-write rule: for an IN
+with pre-ordinal $j$, the matching WR is after ordinal $j+3$ for
+header/length and $j+2$ for payload. Before that write, the occupied
+latch5 supplies the bit; after it, the retained wire bit supplies it.
+The published inverse already handles partial descriptors, invalid
+intermediate source packets and downstream work. Its proof is not
+replaced by an assumption that the current source tree or frame is
+complete. In particular it is not applied with $e_1$ silently substituted
+for its fixed parameter.
+
+Let $h^+$ be the successor of the stated original action. Corollary
+11.6's original-row correspondence makes this exactly one actual native
+row, with its actual label, outputs, control effects and receipt.
+Canonical Supply extends the same frame prefix; Advance adds no input.
+Thus $h^+\in\mathcal I_\sigma$. At the upper boundary, the allowed
+source-token return can land immediately before the changed final idle
+CTL. This landing cut is in $\mathcal I_\sigma$ even though it is not
+in $\Gamma_\sigma$. Neither that CTL nor its successor is used as an
+original test. No InnerReturn row is crossed by this argument.
+
+The counterpart successor has exactly one final occurrence beyond the
+counterpart of $h$. The displayed inverse therefore returns
+$\nu(h^+)$; removing its last actual occurrence returns $\nu(h)$, as
+claimed. Its suffix retains the actual source bits, their sites and all
+native row progress. When the actual history is on sheet1, the attached
+reference prefix instead has $w_0$ and $c_p=0$; it is not the actual
+sheet1 prefix with $w_1$ and $c_p=1$.
+
+This is a repo-derived original-response consequence of the cited
+source suppliers. The finite-execution transport uses the standard
+forward-simulation method of Lynch and Vaandrager,
+[Forward and Backward Simulations, Part I: Untimed Systems, §3.2,
+Lemma 3.8 and Theorem 3.10](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf).
+That method requires related starts and matching-step witnesses and
+provides matching execution fragments and trace inclusion. Here the
+actual starts and exact one-row witnesses come from Theorem 13.3;
+original-response recovery additionally uses the expressly original
+selection and SOURCECALL's inverse. Trace inclusion alone supplies no
+equality of complete original successors. All selections and inverses
+in this theorem are mathematical; no current acquisition or runtime
+extraction procedure follows. ∎
+
+**Corollary 14.4 (one original primitive separates every off-counterpart
+pair).** For $h,k\in\Gamma$ with $k\notin\{h,\tau h\}$, there is one
+original primitive experiment $a$, lawful and executed at $h$, for which
+the partial original responses at $h,k$ differ. If it executes lawfully
+at both, the difference is already witnessed by their successor
+original13/latch5/absolute-receipt selections. Consequently
+
+$$
+\begin{aligned}
+h\sim_Q k&\quad\Longrightarrow\quad\nu(h)=\nu(k),\\
+\nu(h)=\nu(k)&\quad\Longleftrightarrow\quad k\in\{h,\tau h\},
+\qquad h,k\in\Gamma.
+\end{aligned}
+$$
+
+Proof. At a prescribed non-IN row of $h$, take Advance. At an IN row,
+choose one constant bit $b$ with $p(h)b\in\mathsf P_7$ and take
+Supply$(b)$. Such a bit exists: an extendible proper frame prefix has
+an extension, while a completed frame is not followed by another
+source IN within this call. Corollary 11.6 supplies a successful
+original primitive at every stated cut. This is one constant one-node
+test for the comparison, not a branch that inspects hidden state or a
+claim of one globally fixed test for all cuts.
+
+If at $k$ that Supply is physically enabled but outside the canonical
+task domain, its partial response is undefined there. This differs
+from the defined response at $h$; it is not a returned value or a
+refusal. A disabled or unauthorized attempt instead has the defined,
+unexecuted `none` response and no receipt. If the action executes on a
+refusal path, its actual label/output and complete changed successor
+remain an executed response. These cases are not identified.
+
+It remains to consider execution of the same lawful primitive at both
+cuts. Both successors lie in the decoding intervals just proved. If
+their selected triples were equal, Theorem 14.3 would recover the same
+actual reference-entry predecessor from each response. Thus
+$\nu(h)=\nu(k)$. The involution and disjoint entry trees then give
+$k=h$ on the same sheet and $k=\tau h$ on the other, a contradiction.
+So the triples, and therefore the complete original responses, differ.
+Equality of all original partial response maps implies equality for
+this one test, proving the implication.
+
+The quantifier does not require simultaneous lawful execution when
+there is a task-domain distinction. When both executions occur, each
+adds one actual receipt, one tick and two native fee units. Their
+absolute successor counts are $n(h)+1,n(k)+1$; no order between counts
+on different branches has been assumed. All gate/setup, retention,
+source work, copies, checks, ACKs and returns keep their actual costs.
+Definition 8.5 and Proposition 13.6 retain each history's own full
+native and structural entrance bills. The mathematical recovery has
+no asserted native execution cost and inserts no driver row.
+
+Theorem 11.4 already gives the separate history inverse of each
+$S,B,T,M_{\rm ret}$ on this domain. The corollary localizes any remaining
+failure of original-$Q$ recovery of those independent views to the
+actual synchronized mates. It proves neither equality nor separation
+of their complete $Q$ responses, and decides neither inclusion nor
+exclusion of retained inactive $C_L$ in those responses. The substantive
+conclusion is which actual cross-entry histories can remain ambiguous,
+with the response-to-counterpart inverse; a bound on fibre cardinality
+alone would not determine that correspondence.
+
+This remains a first-call result with the two fixed actual parameters.
+Obligations 10.2–10.3 remain for alternative bootstrap task admission,
+other raw inputs, added stages, rolling entries, changed return,
+unfinished history flights, final00 without later Ready and terminal
+comparisons, and for genuine acquired material and its authorized paid
+use. The unchanged original task, parked client, occupied verifier and
+INITIAL consumer, absorbing halt, and alpha/beta ordered nonassociative
+source are retained. No faithful paid $\mathcal D_1$ cycle or extension
+of the four-view theorem to those remaining domains is implied. ∎
+
+**Proposition 14.5 (an actual cross-entry payload-write witness).** From
+each actual $e_\sigma$, follow the prescribed header/setup and supply
+the TagRead header 010 and length $U(1)=10$. At the actual payload IN,
+supply 0 on sheet 0 and 1 on sheet 1, stopping immediately after
+that IN and before its matching WR. The resulting cuts $h_0,h_1$ are
+in $\Gamma$, are not counterparts, and the same original Advance
+executes WR(13,5) at both with different complete original successors.
+
+Proof. SOURCECALL Definition 2.2 and CAP Definition 4.6 make both frames
+010100 and 010101 canonical: their respective one-letter addresses are
+L and R. Corollary 11.6 supplies the actual ingress and current
+producer/workspace permissions at these entries. The header/length
+and payload positioning use their real measured blocks, descriptors
+and paid rows. The payload loop is RD(length); IN; WR; MR(payload);
+MR(length), so the stated cuts exist immediately before the original
+WR and latch5 still holds the supplied bit. Theorem 13.3 pairs the
+common preceding path and its actual operand identities; the two
+payload IN choices take the same row count and do not branch before
+this WR. In each run the preallocated payload cell is the actual
+current writable original13 destination.
+
+Advance therefore writes 0 and 1 respectively at that corresponding
+cell and adds one receipt in each run. The complete original
+successors differ at an expressly original wire bit, as well as the
+retained latch5. Since the consumed source words differ,
+$h_1\ne\tau h_0$. This witness uses the published matching-write
+pattern to illustrate Theorem 14.3 and Corollary 14.4; the local reader
+pattern itself is already SOURCECALL Lemma 3.2's result. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 15. One fixed Ready recovers rolling source prefixes before sealing
+
+**Definition 15.1 (one start and two different domains).** Fix the
+apparatus of Assumption 1.2, its installed $G_{\mathrm{gc}}$, and one
+complete actual canonical-acquired Ready history $P$, including its
+actual state $X(P)$ and absolute receipt count $n(P)$. Earlier source
+and history work in $P$ is fixed. The original input-completeness
+conditions of SOURCECALL Convention 1.1 remain in force for the
+independent-view conclusions. The parameter is this one $P$ throughout,
+not a new full entry supplied at each later call.
+
+Let $\mathcal R_P$ be the following tree of actual finite histories
+extending $P$. After $P$ every outer choice is 01, or its as-yet
+unfinished prefix. At each dispatched source reader the consumed word
+is a prefix in SOURCECALL Definition 2.2's seven-tag language
+$\mathsf P_7$. If execution continues to another call, it first follows
+the existing source row/dependency delivery, checks, ACK, source-token
+TOK, changed final idle CTL, InnerReturn, normalization, CaptureCAP and
+actual Ready return. No history1 or outer00 occurs after $P$.
+Execution otherwise follows only the installed control and its actual
+current guards. A finite endpoint may lie anywhere on this path:
+in a gate, setup, header, unterminated unary length, preallocated
+payload, IN/EX/WR interval, incomplete descriptor, source overwrite,
+service/refusal, counter/row, loan/copy/check/ACK/token transfer, or
+partial return/capture. It may also be $P$ itself or a later Ready.
+
+Every earlier completed return is actual. The current finite prefix
+requires neither a future input, a future complete frame, nor an
+eventual return. In particular $\mathcal R_P$ is not defined by
+supplying a completed current descriptor or a future frame to its
+decoder. There is no fixed bound on the number of calls, length,
+payload, capacity or actual native work.
+
+Define $\Gamma_P\subset\mathcal R_P$ to contain precisely the running
+cuts inside an actually dispatched $F^A$ whose prescribed next row is
+an unchanged original row, with its current original guard and input
+site. As in SOURCECALL Theorem 3.4, exclude the pre-row of the changed
+final idle CTL and its successor. Gate, InnerReturn, normalization and
+CaptureCAP cuts are not in $\Gamma_P$. Thus decoding a row in
+$\mathcal R_P$ will not assert its original-$Q$ admission. Each new
+source-body entry and each actual return mentioned here is an
+occurrence of the installed path, not a test for equality of a PC
+with an entry label.
+
+Use exactly Definition 14.2's existing selection
+
+$$
+K(h)=\bigl(\operatorname{old}_{13}(X(h)),\operatorname{latch}_5(X(h)),n(h)\bigr).
+$$
+
+Here $\operatorname{old}_{13}$ is SOURCECALL Theorem 3.3's original13
+byte record, with the same port/creation-position identities. The
+count $n(h)$ is absolute native receipts from the original meter
+entrance, not source events or a reset call clock. None of endpoint17,
+endpoint head/frontier data, annex70, completed-cycle $M$, or a rolling
+entry is an additional varying argument.
+
+**Lemma 15.2 (cross-call durability and exhaustive actual input
+sources).** On $\mathcal R_P$, every source IN with pre-ordinal $j$
+has the same predetermined matching wire identity $d$ and post-WR
+ordinal $w$ as SOURCECALL Lemma 3.2:
+
+$$
+w=\begin{cases}
+j+3,&\text{header or length},\\
+j+2,&\text{preallocated payload}.
+\end{cases}
+$$
+
+Between that IN and its matching WR there is no other IN or overwrite
+of latch5. Once written, the input symbol at $d$ survives every later
+row of this source-only tree, including later calls and their full
+returns/captures. All actual external INs after $P$ are exhausted by
+these source sites and the outer receiver's first/second gate sites.
+At the latter sites the bits are respectively 0 and 1. Return,
+normalization, CaptureCAP and the other intervening computed work
+supply no independent input.
+
+Proof. The local matching-write statement is the supplied reader
+fact, not a new ingress mechanism. CAP Definition 4.6 gives header
+`IN; EX; WR; MR` and length `IN; EX; WR; RD(test); MR`. Their old
+append R has a fixed identity before IN, and EX preserves that
+identity as the new wire cell. The length test uses a different
+latch. The payload is already Zero-preallocated and positioned; its
+positive iteration is `RD(length); IN; WR; MR(payload); MR(length)`.
+The destination therefore exists before its IN. Neither reader
+branches or reuses latch5 before the stated WR. This proves the
+ordinals and the pending interval, also when the finite history stops
+before that WR has executed.
+
+For persistence through a call, each block's sep and status are
+separate from its wire cells. Sealing writes its own status at
+base+length+1, not a wire cell. Descriptor and request construction
+read the retained blocks and append their own material. Source
+modification writes the addressed source16/workspace, not an earlier
+13 wire bit. Later blocks start at their measured current R; the
+Base, Zero and descriptor routines expressly work on nonempty ports.
+Thus even equal input words in different calls occupy distinct actual
+created blocks. Head movement and changes to a head track are not
+overwrites of the retained wire symbol.
+
+The cross-call join is important. ARC Definition 4.1's InnerReturn
+selects identity roles and performs the paid Tail13 and Tail17 scans.
+These reposition heads and retain bytes. ARC Definition 5.4's
+CaptureCAP imports the closed delivered28/29 material, resolves its
+real dependencies, appends the cycle item in the annex bank and
+restores those archive heads. Its importer/bank work has the actual
+read and write ports of ARC §§2–3; it does not reuse an old13 wire
+cell. The next call again appends beyond the current R. Induction
+over these joins proves persistence through arbitrarily many later
+calls. This is also the restriction of Lemma 4.1's global
+post-matching-WR preservation to the present tree; no immutable
+completed endpoint descriptor is assumed in its place.
+
+For exhaustion, $P$ is already an actual Ready, after its fixed
+initialization/acquisition and any fixed earlier history work. ARC
+Definition 5.2's only post-Ready choices are 00, 01 and 1. The present
+tree takes only the first and second reception of 01, both on the
+actual gate reader with latch6. Their value rule applies even when
+the endpoint precedes their EX, WR, test, seal or import. The 01
+successor enters $F^A$ before header Base; it does not consume a gate
+bit as a source header. Inside that body CAP Definition 4.6 gives
+the source latch5 sites above, including all seven tags. Original
+computed commands, generation, parsing, copies and callbacks use
+literal writes or reads, not additional external IN. ARC Definitions
+4.1, 5.4 and 6.1 similarly give no external IN in the actual return,
+normalization, closed imports or bank work. A represented IN in data
+being interpreted in a bank is not a physical IN of this run. There
+is no new boot invocation, history ingress, resumed client or
+independent scheduling choice on these paths. The finite installed
+branch/loop/inlining construction therefore exhausts the possible
+post-$P$ physical input sites by the stated two families. ∎
+
+**Lemma 15.3 (current original admission at every later source
+entry).** Every actually reached source-body entry in
+$\mathcal R_P$ has SOURCECALL Lemma 2.3's unchanged-original-row
+correspondence through the row before the changed final idle CTL.
+At a cut $h\in\Gamma_P$ whose next row is IN, put $p(h)$ for this
+call's actually consumed source word. The lawful source supplies are
+exactly
+
+$$
+\{\operatorname{Supply}(b):p(h)b\in\mathsf P_7\}.
+$$
+
+At a prescribed non-IN cut of $\Gamma_P$ its current original
+Advance is enabled. Each executed such original primitive is exactly
+one actual native row, with its actual legality, label, released
+output, complete original joint successor and receipt. Its successor
+is in $\mathcal R_P$, even when it lands immediately before the
+excluded changed idle CTL.
+
+Proof. At $P$, ARC Definition 5.1's outer relation gives the producer
+its twelve workspace tokens and source/directory/journal/counter
+resources, heads13/17 at R, source-service token at the dispatcher,
+completed row/dependency ACKs, and the parked original24–27 client.
+The actual choice receiver uses its own current resources and
+completes its physical choice block, seal, descriptor and import.
+Its 01 edge then enters the original header Base/setup. In particular
+this is not a new semantic source-service entry at an arbitrary
+interior cut: CAP Definition 4.6 still acquires and parses the complete
+source frame before taking the source-availability token into the
+selected service.
+
+ARC Definition 4.1 inlines that complete body, changes only the last
+idle CTL successor, and preserves its external latch5 INs. ARC
+Proposition 5.5 preserves bank parity by finite control product;
+there is no compiler assignment inside $F^A$. Static renumbering
+therefore preserves each original row's operands, actual current
+owner/token/phase guard, core and ordered finite effects, response
+and next original position up to the excluded last row. CAP
+Definitions 4.6–4.7 and Lemma 6.7 supply all seven source/maintenance
+branches, value refusals, descriptors, records, both delivery stages,
+checks, ACKs and explicit token returns. At a partial handover the
+next row has that handover's actual guard; the proof never grants a
+helper all tokens before the transfer finishes. At ingress the
+canonical-prefix rule is exactly SOURCECALL Definition 2.2, not a
+new physical filter. A proper extendible prefix at an IN has at least
+one extending bit.
+
+If this call actually completes, its genuine row ACK and source TOK
+precede the changed idle CTL. The latter's installed edge enters
+InnerReturn. The paid normalization and closed28/29 CaptureCAP of
+Lemma 15.2 restore ARC Definition 5.1's relation with the genuinely
+updated source/counters/journals, longer $M$ and retained parked
+client. They do not restore an old source snapshot. ARC Proposition
+5.5 and CAP Lemma 6.7 prove precisely these resource and continuation
+joins. Induction on the number of completed returns establishes the
+same current relation at every next dispatch. No return premise is
+used for an unfinished current call.
+
+This establishes the row correspondence separately at each actual
+entry, without making that entry a decoder input. A lawful Supply
+extends the current canonical prefix; Advance consumes no input.
+Their one-row successors consequently remain in $\mathcal R_P$.
+The allowed source-token return can land at the pre-row of the changed
+idle CTL. That landing is decodable but admits no next original
+primitive by this lemma. Neither the changed CTL nor any added
+return/capture row is inserted into the original one-step response.
+Selection of $K$ from the complete original successor is the existing
+AIF Definitions 2.5–2.6/SOURCECALL Definition 1.4 selection, not an
+assumption that every annex coordinate is in that successor. ∎
+
+**Theorem 15.4 (one fixed-Ready, unsealed rolling inverse).** There is
+one finite mathematical decoder $D_P$ on the actual image
+$K(\mathcal R_P)$ such that
+
+$$
+P\star D_P(K(h))=h,\qquad h\in\mathcal R_P.
+$$
+
+Here $D_P$ returns the complete actual suffix after $P$, and $\star$
+attaches it to the fixed history. It recovers every consumed input
+with its actual site and call, all intervening original and added
+occurrences, actual call/return progress and the complete endpoint.
+It needs no separately supplied rolling entry, current sealed frame,
+endpoint frontier/descriptor, annex input reservoir or future
+completion. In particular $K$ is injective on this whole tree, not
+only on sealed-source or non-IN cuts.
+
+Proof. Start the literal native interpretation once at $X(P)$ with
+its actual count $n(P)$. Given an image triple with last coordinate
+$n$, perform exactly $n-n(P)$ native rows. This is ARC Definitions
+6.2–6.3's actual local row interpretation, with this graph's finite
+code and Lemma 2.6's incidence correspondence. It is mathematical
+execution of the already declared relation, not a new observer
+machine, installed Step operation or assumed service simulator.
+
+At a non-IN, the reconstructed complete prestate determines the
+actual prescribed row, current guard, operands, core, ordered finite
+effects, event, output and receipt. At an outer gate IN, use 0 at
+its first site and 1 at its second site, identified by the already
+reconstructed installed control. At a source IN with pre-ordinal
+$j<n$, the reconstructed prestate fixes its wire identity $d$ and
+$w=j+3$ or $j+2$ from Lemma 15.2. Supply
+
+$$
+b_j=\begin{cases}
+\operatorname{old}_{13}(X(h))[d],&w\le n,\\
+\operatorname{latch}_5(X(h)),&j<n<w.
+\end{cases}
+$$
+
+The notation $h$ here names the actual endpoint witnessing membership
+in the image; the procedure receives only its triple. At $j=n$ it
+stops and supplies nothing. All lookup identities come from the
+reconstructed prestate, not a parsed endpoint descriptor.
+
+Induct on the number of interpreted rows. Initially the complete
+state is the actual $X(P)$. Given equality at pre-ordinal $j$, a
+non-IN has the same actual successor by local determinacy. An outer
+IN has the actual supplied bit by the source-only site rule, including
+an unfinished outer gate. These cases need no endpoint70 or latch6.
+At a source IN the identity and matching ordinal are therefore the
+actual ones. If $w\le n$, its straight-line matching WR has occurred
+before this endpoint, and cross-call durability preserves its bit
+at $d$. If $j<n<w$, that IN has occurred but its WR has not; the
+pending-latch rule forbids another input or latch5 overwrite before
+the endpoint. Thus endpoint latch5 is exactly its actual input.
+Either case supplies the true bit and gives the same complete next
+state, occurrence and receipt. Lemma 15.2 proves that there is no
+third unknown physical input case.
+
+For header/length, the $w\le n$ case implies that the old R has
+actually undergone EX and WR. For payload, preallocation alone does
+not satisfy this test. A reserved zero or an EX-created blank is
+therefore never mistaken for a consumed bit before its matching
+write. Pending input, partially written unary words, unfinished
+counter/descriptor fields and temporarily invalid source16 packets
+are handled without treating any of them as a finished parsed object.
+
+The induction executes the actual changed idle edge and every later
+InnerReturn, Tail, bank/import, CaptureCAP and Ready row when the
+endpoint includes them. A subsequent entry is produced by this same
+execution; no new state is supplied at it. Completed return progress
+is the actual path through ACK/token/normalization/capture joins of
+Lemma 15.3. Repeated visits to a while-test PC, including Tail66's
+testing row, remain ordinary occurrences on that path. They are not
+classified as returns by PC equality. Nor does the procedure split
+at a guessed last Ready: its only stopping test is the receipt
+countdown.
+
+Every native row interpretation and lookup concerns finite current
+material. The countdown decreases once per actual row, so the
+procedure terminates at $n$, even for a finite cut of a call with no
+supplied future terminator or return. It returns the exact suffix,
+including actual outer bits, source bits/sites and all receipts.
+The fixed $P$ then gives the entire history and endpoint. Equal
+image triples give identical executions, proving injectivity.
+Behavior or decidable image recognition on arbitrary nonimage
+triples is not required. ∎
+
+**Theorem 15.5 (original-response inverse and four separate rolling
+kernels).** For $h\in\Gamma_P$ and every lawful original primitive
+$a$ that executes there, write $R_h(a)$ for its existing complete
+response and $\operatorname{sel}(R_h(a))=K(h^+)$ for Definition
+14.2's selection from its actual original successor. Then
+
+$$
+P\star\operatorname{dropLast}
+ \bigl(D_P(\operatorname{sel}(R_h(a)))\bigr)=h.
+$$
+
+Consequently, for each independently defined $V\in\{S,B,T,M_J\}$
+separately,
+
+$$
+V(h)=V(k)\quad\Longleftrightarrow\quad h=k
+\quad\Longleftrightarrow\quad h\sim_Q k,
+\qquad h,k\in\Gamma_P.
+$$
+
+Different numbers of earlier calls and different rolling entries may
+be compared here, with only the one $P$ fixed. $Q$ remains the entire
+unchanged original partial response map, including its actually
+admitted semantic and finite adaptive experiments; it is not replaced
+by a primitive-only task.
+
+Proof. Lemma 15.3 makes $h^+$ exactly one actual occurrence beyond
+$h$, still in $\mathcal R_P$. The existing original response supplies
+its $K$, without adding any output field or actor read permission.
+Theorem 15.4 recovers $h^+$ from that triple. Deleting the final
+occurrence in its nonempty suffix gives $h$. In particular an allowed
+successor may lie outside $\Gamma_P$, just before the changed idle
+CTL; it remains inside the decoding domain. The proof does not
+execute that excluded CTL as an original test.
+
+To prove $h\sim_Q k\Rightarrow h=k$, choose Advance if the next
+original row at $h$ is non-IN. At an IN choose one constant $b$ with
+$p(h)b\in\mathsf P_7$ and use Supply$(b)$. Lemma 15.3 supplies such
+a currently lawful executed one-node experiment. This is an
+existential separating experiment for the specified comparison, not
+a hidden-state branch in an adaptive procedure and not one globally
+fixed bit for all inputs. Equality of the entire partial response
+maps forces the same experiment to be defined and executed at $k$
+with the same complete response. Their selected successor triples
+are then equal. Inverting and deleting the last occurrence gives
+$h=k$.
+
+Specifically, an enabled Supply leaving the canonical prefix language
+is task-undefined; it is not a returned value. A disabled or
+unauthorized attempt instead has unexecuted `none` and adds no receipt.
+An executed primitive on a refusal path has its actual label, output
+and changed complete successor. It is an executed response and the
+same inverse applies. None of these cases substitutes for equality
+with the stated lawful executed response. If the test executes
+lawfully at both unequal cuts, their $K(h^+)$ selections already
+separate them.
+
+Identical histories give the same actual current state and input
+position, hence identical original lawful domains and every complete
+response, including all lawful semantic/adaptive experiments and the
+unchanged empty running/terminal readout. This proves the reverse
+$Q$ direction without translating those protocols to a new machine.
+Finally $\Gamma_P\subset\mathcal C_{\mathrm{gc}}$; Corollary 4.4
+supplies each separate history inverse of the independently defined
+support, terminal boundary, occurrence order and selected joint
+memory. Applying those four existing implications and their converses
+proves the displayed four kernels. No view is defined by $K$, history
+or $Q$ in this argument. ∎
+
+**Proposition 15.6 (actual unfinished input after arbitrarily many
+returned calls).** In this one initialization let $P$ be its canonical
+first Ready. For every $c\ge1$ and $r\ge1$, there is a common actual
+prefix that completes $c-1$ source-only ReadE calls, each with gate01
+and frame 0000, through its real Ready return, then enters call $c$
+with gate01, the TagRead header010 and $r$ complete positive unary
+length iterations. At its next length IN, either bit $b=0,1$ is
+lawful. Stop immediately after that IN, before EX and WR, obtaining
+$z_{c,r,b}\in\Gamma_P$. These two endpoints have the same original13
+record and absolute receipt count, and latch5 equal to their respective
+$b$. Their current length block is unsealed and its complete descriptor
+has not been constructed.
+For $b=1$ the consumed length is still unterminated. The same original
+Advance executes the next EX at both and has different complete
+original successors.
+
+Proof. ReadE's canonical frame has header000, length $U(0)=0$ and
+empty payload, hence 0000. CAP Definitions 4.6–4.7 and Lemma 6.7
+supply its actual finite original route, including complete row and
+dependency acquisition/checks/ACK/source-token return. ARC Proposition
+5.5 supplies the full changed return, normalization, CaptureCAP and
+Ready. Induction constructs each finite number $c-1$ of such returns
+with their actual growing retained material; no bound or future calls
+are installed in advance.
+
+At the next actual entry, Lemma 15.3 gives the original header and
+length reader with current producer resources. After header010,
+each length1 follows `IN; EX; WR; RD(test); MR` back to the next IN.
+After $r$ such iterations, supplying0 gives $U(r)$, whose $r$-bit
+TagRead payload can be any address. Supplying1 gives the unfinished
+prefix $1^{r+1}$, extendible, for example, by0 followed by $r+1$
+payload bits. Thus both choices are canonical. These extensions prove
+admissibility; none is given to the decoder or required to arrive.
+
+IN changes latch5, control and the meter but neither writes13 nor
+moves its head. Both endpoints follow the same common path through
+$c-1$ actual returns, the current gate/header/setup and the first $r$
+length iterations; their last IN has the same row and count. Their
+13 records are therefore equal. EX is the immediate next original
+row at the current R, with the actual writer token, and does not test
+or overwrite latch5. Both Advances execute it and retain their unequal
+latch5 values in the original successor. The matching WR remains a
+separate subsequent row. The current length descriptor cannot yet
+be complete: its final wire write, sep/status construction and native
+17 descriptor work have not occurred.
+
+For $c\ge2$ these are later-call, unfinished-input members outside
+the first-call domain of §14 and outside SOURCECALL Definition 4.1's
+sealed-current-frame chart. Theorem 15.4 nevertheless uses the same
+first $P$ for all $c,r,b$. Following any of these paths further to an
+interior sep/status/descriptor cut gives the corresponding incomplete
+descriptor cases. Completing a length $U(d)$, $d\ge1$, and stopping
+after a payload IN gives the existing IN/pre-WR pattern of Proposition
+14.5 at any such later call; its local matching-write fact is reused,
+not a new result. All these finite cuts retain their actual setup,
+allocation, delivery and earlier return costs. ∎
+
+**Proposition 15.7 (later-entry original correspondence for the fixed
+GENERAL11 pair).** Keep exactly Proposition 11.2's actual first
+Readies $P_0,P_1$, their retained words and common absolute tally.
+Define $\mathcal R_\sigma$ by Definition 15.1's source-only physical
+path restriction from $P_\sigma$, and $\Gamma_\sigma$ by its
+unchanged-original-row restriction. Do not impose a canonical first
+bootstrap on sheet1. At every later actual source entry on either
+sheet, Lemma 15.3's current original-row correspondence and canonical
+Supply rule hold. Pair identical supplied bits at corresponding
+physical sites and the same native suffix row offset from the first
+Readies. Theorem 13.3's counterpart map restricts to an involution
+$\tau$ with
+
+$$
+\tau(\mathcal R_\sigma)=\mathcal R_{1-\sigma},\qquad
+\tau(\Gamma_\sigma)=\Gamma_{1-\sigma},\qquad
+K(z)=K(\tau z).
+$$
+
+Proof. Corollary 11.6 proves current original admission at the two
+first entries, using the actual relation of ARC Definition 5.1 at
+both $P_\sigma$, not original-task admission of $w_1$. To propagate
+it, suppose a source call has actually completed on either side.
+Its installed active body is the same $F^A$ and has no first-store
+operand or intervening bank assignment (Lemma 13.2). CAP Lemma 6.7
+therefore gives the actual original row/dependency checks, ACK,
+workspace return and source-token TOK before the changed idle edge.
+The latter enters the same InnerReturn, normalization and CaptureCAP
+expansions. Their closed28/29 imports use the copies just actually
+delivered, with present owner/read tokens, and restore their heads.
+They leave precisely the outer relation with the new source state,
+complete counters/journals, longer $M$ and parked24–27. No correctness
+of a canonical decoder on the noncanonical first-word target is
+required for this source return.
+
+Equivalently, Theorem 13.3 transports each such full finite fragment
+from sheet0 to sheet1 with equal current heads/owners/tokens,
+checks/ACKs and completion outcome. The relation just listed concerns
+these actual coordinates; the inactive unequal $C_L$ does not change
+it. Conversely its symmetric transport applies from sheet1. Induction
+over completed returns gives this relation at every later real Ready
+on both sides. The next gate01 again finishes its own choice reception,
+seal/descriptor/import and enters header Base. ARC Definitions 4.1
+and 5.2's unchanged-body correspondence now applies directly at that
+current entry: original guards, operands, input sites, seven branches,
+outputs, original successors and receipts are preserved up to the
+changed final idle CTL. Partial token and input states use their
+actual current phase; past permission is not reused. This proves
+the later original admission, including sheet1, rather than applying
+a canonical-bootstrap theorem outside its domain.
+
+Now restrict the supplied physical pairing of Theorem 13.3. Same bits
+at the same actual source sites give the same $\mathsf P_7$ prefix
+and immediate lawful Supply set. Both outer gates have the prescribed
+01 sites. Corresponding full return/capture joins are the actual
+joins just proved, so the transported finite histories stay in
+$\mathcal R_{1-\sigma}$. The next unchanged-row status and the final
+idle boundary agree, proving preservation of $\Gamma_\sigma$.
+This is a correspondence of these currently admitted source primitives;
+it is not equality of the two entire $Q$ experiment families.
+
+Local determinacy and identical supplied prefixes make this
+counterpart unique for a given actual suffix row offset. Symmetry
+makes $\tau^2$ the identity. The two full history trees are disjoint
+because they retain opposite $c_p$ values, by Theorem 13.3; $\tau$ has
+no fixed point. That theorem also preserves original13, latch5 and
+each actual receipt, and the starting absolute tallies agree. Hence
+$K(z)=K(\tau z)$, without any assertion about $C_L$'s membership in
+a complete original task response. This proves all stated claims. ∎
+
+**Corollary 15.8 (rolling reference-counterpart recovery, with mate
+ambiguity retained).** On
+$\mathcal R_0\cup\mathcal R_1$ define the actual reference counterpart
+
+$$
+\nu(z)=\begin{cases}
+z,&z\in\mathcal R_0,\\
+\tau z,&z\in\mathcal R_1.
+\end{cases}
+$$
+
+For $h\in\Gamma_0\cup\Gamma_1$ and any lawful executed original
+primitive $a$, the single fixed reference $P_0$ and its existing
+response determine $\nu(h)$:
+
+$$
+P_0\star\operatorname{dropLast}
+ \bigl(D_{P_0}(\operatorname{sel}(R_h(a)))\bigr)=\nu(h).
+$$
+
+For $h,k$ in this union,
+
+$$
+\begin{aligned}
+h\sim_Q k&\ \Longrightarrow\ \nu(h)=\nu(k),\\
+\nu(h)=\nu(k)&\ \Longleftrightarrow\ k\in\{h,\tau h\}.
+\end{aligned}
+$$
+
+Every off-counterpart pair has a separating one-original-primitive
+experiment; if it executes lawfully at both, their existing successor
+$K$ selections already differ. Separately on each $\Gamma_\sigma$,
+each of $S,B,T,M_{\rm ret}$ has the history and original-$Q$ kernel
+of Theorem 15.5; on sheet0 this memory agrees with $M_J$.
+
+Proof. Proposition 15.7 is needed before making an original-response
+claim at later sheet1 entries. It gives $\nu(z)\in\mathcal R_0$ and
+$K(z)=K(\nu(z))$ for every endpoint in this union. Theorem 15.4,
+applied only at the fixed canonical reference $P_0$, therefore gives
+
+$$
+P_0\star D_{P_0}(K(z))=\nu(z).
+$$
+
+By the proved current correspondence, an executed original primitive
+from either $\Gamma_\sigma$ adds exactly one actual row, lands in
+$\mathcal R_\sigma$, and supplies that triple in its original
+response. The counterpart successor is one row beyond the counterpart
+predecessor, so deleting the final occurrence proves the response
+formula, including the landing immediately before changed idle.
+
+Choose Advance or one constant canonical-extending Supply at $h$,
+as in Theorem 15.5. If the response at $k$ is task-undefined or
+unexecuted `none`, it differs from this executed response. If both
+execute lawfully and their successor triples agree, the formula
+recovers the same $\nu(h)=\nu(k)$. Disjointness and the involution
+of Proposition 15.7 identify precisely $k=h$ or $k=\tau h$.
+This proves the separation statement and the two displayed claims.
+No synchronization of different branches' absolute counts is assumed;
+equal selected triples would itself force equal successor counts.
+
+For the within-sheet conclusions, the matching-write/exhaustion
+proof of Lemma 15.2 and the induction of Theorem 15.4 also start at
+the fixed actual $P_1$: their premises concern its current installed
+rows and resources, supplied by Proposition 15.7, rather than a
+canonical first input. Thus each sheet separately has an exact
+history inverse and the original-response predecessor argument.
+Theorem 11.4 supplies the four independent history kernels on these
+post-first-Ready/pre-00 domains and the stated memory agreement.
+These are existing view inverses, not a new union-domain equality
+between views and $Q$.
+
+The recovered history is the actual reference-sheet history. At a
+sheet1 cut it contains $w_0$ at its reference entrance, not the actual
+$w_1$ entrance. The corollary does not determine the actual entrance
+sheet from $K$, does not assert which other coordinates occur in a
+complete original response, and proves neither equality nor separation
+of synchronized mates' complete responses. In particular the
+opposite retained $c_p$ and the four views can distinguish those
+histories while their complete original-$Q$ comparison remains
+unsettled. No actor acquisition or physical erasure of a sheet is
+part of $\nu$. ∎
+
+**Convention 15.9 (new content, costs and remaining programme).** The
+additional source-model result is completeness of the smaller original
+response selection from one fixed Ready across all finite source-only
+rolling prefixes, with the actual cross-call input and current-entry
+proofs above. SOURCECALL Lemma 3.2 and Theorem 3.3 already supply local
+matching-write and fixed-full-entry recovery; its Theorem 4.3 supplies
+repeated sealed-current-frame recovery. TARGET_AND_CURRENT §§2–3
+supplies its finite completed-cycle rectangles and final TagRead
+IN/pre-WR cuts. AIF §4 and UAS §3 supply larger full-input/joint-memory
+recovery. Corollary 4.4 and Theorem 11.4 supply the independent view
+inverses, Theorem 13.3 supplies physical pairing, and §14 supplies
+first-call reference-counterpart recovery. Theorems 15.4–15.5 remove
+the per-call full-entry and current-sealing restrictions for the
+specified one-start source-only original-row union; Corollary 15.8
+uses the proved later-entry correspondence, not a new pairing theorem.
+There is no coordinate-optimality or field-drop minimality claim.
+
+The proofs are repo-derived applications to the declared native and
+atomic/incidence source model. Convention 10.4's library boundaries
+apply. `NativeSerialMachine.replay_deterministic` and
+`reached_prefix_replay` require their actual replay/run premises;
+`NativeFullSourceProducer.native_source_producer` and its private
+traversal invariants concern their own source-blind serial acquisition.
+They do not supply this original13/pending-latch/site correspondence.
+At the exact mathlib revision in Convention 10.4,
+`StateTransition.Respects`/`tr_reaches` require an already proved
+matching relation, and `Function.factorsThrough_iff` requires fibre
+constancy. Neither establishes the concrete input or current-entry
+facts used here. The standard simulation obligations are also explicit
+in CompCert v3.16,
+[`Smallstep.fsim_properties`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v):
+related actual starts, matching steps/traces, final observations and
+well-founded stutter. That method alone gives no equality of our
+complete receipt-bearing original successors. The PH
+`OriginalNativeServiceBridge.Architecture` and its ReadUpdate
+`Protocol.arrival/start/step`, including the actual `savedCut` consumer
+in `ReadExecution.PaidTraceResidual`, still require their supplied
+architecture and real return interpretation. No PH telescope,
+currentReturn marker, new phase field or local helper entry is
+installed here. These are source proofs, with no new Lean
+certification or worldwide literature-novelty claim.
+
+For every actual prefix retain Definition 8.5's native bill
+
+$$
+(\mathrm{ticks},\mathrm{fee},\mathrm{bits})
+=\bigl(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n\bigr),
+$$
+
+with that prefix's actual nonmeter cell count $A$, control stores and
+retired data. All entrance, gate, Base, allocation, partial ingress,
+source/code/scratch, descriptors/counters/rows, sender/mailbox/receiver,
+checks, ACKs, source/workspace tokens, changed idle, normalization,
+bank/capture and Ready rows remain in $n$. The one primitive used in
+separation adds one actual receipt, one tick and two native fee units;
+it adds no driver row. Structural costs keep their own paid foundation
+and actual ordered-stencil sums in the admitted atomic model.
+Proposition 13.6's paired-suffix tariff statement retains each
+entrance's separate bill; equal native counts alone are not equality
+of arbitrary structural bills. The finite mathematical decoder is
+defined on its stated actual image. It has no asserted native runtime,
+efficiency bound or actor execution price; it supplies no uniform actor
+procedure for acquiring its inputs or detecting live completion.
+
+Only $\Gamma_P$ and the two bounded source-only original-row sheets
+have the original-response conclusions. Recovering added rows in
+$\mathcal R_P$ grants no original-$Q$ admission there. The original
+full-programme obligations 10.2–10.3 persist for gates/modes/history,
+banks/copies/checks/changed returns and other added cuts, arbitrary
+raw/noncanonical and preacquisition domains, bootstrap task admission
+including $w_1$, later history1 interleavings, unfinished history
+flights, final00 without later Ready and terminal comparisons.
+Synchronized-mate complete-response equality/separation remains open.
+The actual original installed semantic/adaptive protocols, current
+owner/token/input/code/scratch/receiver bindings and full successor
+are retained, not replaced by a trace-valued or terminal diagnostic
+task. The admitted primitive basis is used as declared; any optional
+finer-phase implementation has its own continuing-authority duties.
+
+A fixed full mathematical start or complete mathematical successor
+is not material already acquired by an actor. Genuine acquisition
+of distinguishing input, current authorized access, its paid
+retention/copy/check/use/ACK/return and a faithful paid sheet1 view
+cycle remain separate obligations; Theorem 13.4's acquired-data
+limitation is unchanged. Support, boundary, occurrence time and joint
+retained memory keep their independent meanings on the same ordered
+alpha/beta source, with the original parked client, occupied verifier
+and INITIAL consumer and absorbing halt. No new initialization,
+observer, memory complement, permission, future advice or erased
+receipt is used. This intermediate source-only recovery result does
+not complete the full programme.
+
+## 追加锚（本行以下为增补区）
+## 16. Returned history rejections obstruct the smaller original-response inverse
+
+**Definition 16.1 (one actual mixed family).** Fix Assumption 1.2's
+installation and one actual canonical-acquired Ready history $P$, with
+its entire already paid prefix fixed as in Definition 15.1. First
+actually supply outer01 and the canonical ReadE frame0000. Complete
+its original source computation, row/dependency deliveries and checks,
+final ACK, source TOK, changed idle edge, InnerReturn, identity-role
+normalization, Tail13/Tail17, closed CaptureCAP and actual Ready. Denote
+this derived common history by $P_*$. CAP Lemmas 4.7 and 6.7 and ARC
+Proposition 5.5 supply this finite fragment under the retained pointwise
+supply/termination premises. $P_*$ is notation for that executed common
+prefix, not another initialization or a later entry supplied to a decoder.
+
+For $L\ge2$, $1\le r<L$, put
+
+$$
+\mathcal X_{L,r}=\{x\in\{0,1\}^L:|x|_1=r\},\qquad
+w_x=000\,U(L)\,x,\qquad U(L)=1^L0.
+$$
+
+From $P_*$ execute the following installed path for each $x$.
+
+1. Acquire outer1, transfer its invocation slot, and separately acquire
+   HistoryMode1 by GCA Definition 3.1. Acquire the **whole** frame $w_x$
+   on70: three header bits, its terminating unary length, and exactly
+   $L$ payload bits. Complete its F/seal, measured length, actual
+   descriptor and F-bounded import. The mode is neither a header bit
+   nor a bit inferred from the frame.
+2. Execute Recover: freeze the predecessor $M$ of $P_*$, run Boundary,
+   append the immutable cover, and Publish CoverRef. Complete its
+   actual sender71/mailbox72/receiver73 setup, copies, completion
+   records, print, check, ACK and mailbox return. Transfer to
+   ClientCover; position73 before bank work, import/check the received
+   CoverRef, retain its acquired $c$, and transfer the invocation to Bind.
+3. Bind resolves that authentic cover and tests the retained mode-one
+   selector. GCA Definition 3.2 requires tag111; tag000 takes its
+   first-detecting MalformedRecovery reason0000. Execute the complete
+   GCA Definition 6.3 rejection route: Publish Rejection, print,
+   transfer to ClientImage's rejection branch, positioned receiver
+   import, reason/raw-request check, ACK, mailbox return, five-field
+   completed-item append, invocation return, and the actual Ready CTL.
+   Call the resulting history $R_x$.
+4. Actually acquire outer01, including its seal/descriptor/import and
+   dispatch. Execute the unchanged original header Base/setup of
+   $F^A$. At its first original IN5 supply0. Write $h_x$ for the cut
+   immediately after this IN and before its matching EX13, and $h_x^+$
+   for the actual successor of that EX13.
+
+Recover and ClientCover precede the failed tag test. There is no
+Issue, PackageRef, Call/Image or successful five-view suffix on this
+rejection branch. GENERAL Definition 2.1 extends only the successful
+ClientImage tail and Definition 7.4 retains this rejection route.
+The completed history item has GCA's five fields, including the actual
+separate mode, whole frame, typed rejection and bindings actually
+received, as specified in Definition 7.2. Its predecessor excludes the
+current selecting flight.
+
+Every frame here is physically complete. Definition 1.4 includes its
+typed rejection in $\mathcal C_{\mathrm{gc}}$; this is neither a source
+frame-fault nor an unexecuted disabled attempt. No second flight enters
+a busy mailbox or invocation. The source prefix at $h_x$ is the proper
+canonical prefix0, extendible, for example, to ReadE0000. No completion
+of this last source call is assumed. The post-$P$ external supply has
+exactly $2L+15$ bits: six for the common outer01/ReadE, $2L+6$ for
+outer1/mode1/whole history frame, and three for the final outer01/IN5.
+Callbacks and represented historical inputs add no physical external IN.
+
+**Lemma 16.2 (full native cost depends on length and weight, not payload
+order).** For fixed $P,L,r$, the histories $R_x$ of Definition 16.1
+have equal absolute native receipt counts. At corresponding completed
+word operations and native channel phases they have the same nonmeter
+arena sizes, register lengths, bank parity, descriptor bases/lengths/
+creation counts, positioned heads and current resource slots, allowing
+the retained raw bits and their copies to differ. These assertions
+include every retained old bank, scratch word and descriptor. The same
+native count and size equalities hold at $h_x$ and at $h_x^+$.
+This is equality of total native costs at the stated cuts; individual
+bit-test cuts and the complete receipt contents are not equated.
+
+Proof. Use RCA Definition 11.5's actual cost recurrence, relocated by
+ARC §2 and instantiated with the full $r_{\mathrm{gc}}$ of Definition
+2.1. The following induction describes the quantities on which that
+recurrence depends, including its nonempty-arena entry heads. The word
+"opaque" below describes uses of existing data in this proof; it adds
+no runtime tag, register, field or permission.
+
+First separate two kinds of actual test. RCA Definition 11.3 implements
+a word empty test by Field followed by RD(test sep), and a word
+first-bit test, after nonemptiness, by Field followed by RD(test0).
+Both bit successors of that latter RD have one testing occurrence.
+Native binary import instead uses its finite symbol classifier before
+selecting a literal cons. The displayed FieldRead graph of RCA
+Definition 13.2 tests F, then0, then1. Its scan rows per zero and one
+are respectively
+
+$$
+\begin{array}{c|c|c}
+ &\text{scan rows outside the compiled cons}&\text{count}\\
+0&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{MR}&3\\
+1&\mathrm{RD(F)},\mathrm{CTL(0)},\mathrm{CTL(1)},\mathrm{MR}&4.
+\end{array}
+$$
+
+Positioning, accumulator initialization, Reverse and delimiter exits
+are additional work. RCA Lemma 13.2a gives the full-prefix scan subtotal
+$2h+4+3s+3z+4o$, excluding those compiled operations, for entry distance
+$h$, $s$ fields, $z$ zeros and $o$ ones. ARC's binary field import uses
+the same literal-bit selection inside its F-bounded scan. Thus its
+bit-classification contribution is $3z+4o$, with its own actual entry
+and exit rows added. In particular, equal lengths alone do not equate
+import costs.
+
+For one compiled assignment, suppose corresponding source fields have
+the same lengths and actual heads. Expand all five steps of RCA
+Definition 11.3. They give the following exact recurrence comparison.
+
+| Expanded work | Why its cost, constructions and resulting positions agree |
+| --- | --- |
+| Purpose CTL, Tail66 and actual Base of the other bank | Home/Tail visit the same distances. Base tests R and counts every existing ordinary cell, independent of its binary value. Its appended unary base is the same. |
+| Dry emission of all $r_{\mathrm{gc}}$ fields | Field uses LastBank and the fixed preceding field skips. SegmentCount has $5l+1$ rows for a field of length $l$. Literal cons0/cons1 each count one extra cell; tail skips the same first position or takes the common empty case. Every field sep is counted. |
+| Real emission of all fields, F and seal | SegmentCopy also has $5l+1$ rows, using latched-bit WR without a binary classifier. Either literal cons uses EX/WR/MR once. Empty/copy/tail have the same respective emitted lengths as their dry passes. Both bank tapes retain the same number of cells in every old and new version. |
+| Closed descriptor count | Its R/F tests traverse the same retained descriptor prefix and append one unary mark per preceding F. They do not classify payload0 against payload1 or read the meter. |
+| Complete descriptor and parity CTL | Owner/port, actual unary base, payload length, flags10 and creation ordinal agree. LastScratch offsets1/0, unary copies including their terminal zeros, F, seal and parity change therefore have equal costs and equal scratch/descriptor sizes. |
+
+For example, LastBank's $2d+2\ell+5$ and Field's extra
+$2\sum_{j<i}(l_j+1)$ use the actual head distance $d$ and version length
+$\ell$. A changed payload bit affects neither. Tail first establishes
+append positions on retained scratch; LastScratch includes its sep/L
+tests. The proof does not replace these quantities by empty-tape prices.
+The induction retains the lengths of *all* registers, including dead
+macro temporaries, since every assignment copies all fields. Different
+literal bit branches have the same field index and the same following
+head positions and parity; they do not add different-sized bank words.
+Intermediate scans may leave different data in latch4, but every use
+selects its bit before compiler work or performs its own new RD.
+
+Now expand RCA Definition 12.1's macros. Reverse, Cat and Take move or
+copy one bit at a time with one equally sized literal-cons arm for
+either bit and the same cursor-length schedule. Length conses1 per
+bit. Frame emits the actual unary length and copies the word; it does
+not interpret that word as a number. ReadFrame/ReadList and fixed-arity
+tuple operations inspect their framing and unary lengths, retaining
+opaque field contents. On this route every comparison involving $x$
+is Equal between two authentic copies *within the same run*. Both
+cursors therefore tail to joint exhaustion, with successful first-bit
+comparisons throughout. Neither run compares its request with the
+other run's request. There is no mismatch-dependent early exit.
+All other semantic comparisons have identical operands. These facts
+preserve the assignment/test and length/head schedule just proved.
+They cover complete tuple/list serialization and parsing, rather than
+merely a unit price for one macro call.
+
+The application to the actual phases is as follows. Costs in each row
+are evaluated at that phase's actual complete predecessor, using the
+recurrence above.
+
+| Phase | Actual operands and complete cost comparison |
+| --- | --- |
+| Outer1 and separate mode1 | Both native receivers have the same inputs and incoming geometry. Their Bases, literal lengths, descriptors, seals, native imports and mode copy agree. The invocation TOK and reserve CTL are included. |
+| Whole-frame ingress and import | The three tag bodies have four rows each, the $L+1$ unary-length bodies five each, and the tested payload body $6L+1$. Length recovery, Seek, F/seal, construction of $U(2L+4)$, ordinal and descriptor are the RCA native recipes, not this body subtotal. They depend on $L$ and the common pre-import geometry. The frame has $L+r$ ones and $L-r+4$ zeros. Its complete import has the same cons/Reverse length schedule and the same aggregate binary-test cost. |
+| Recover and cover archive | Frozen $M$, manifest, completed-cycle cardinality and Boundary's represented predecessor are those of the one fixed $P_*$. Its represented rows, inputs, events, receipts and $a,b$ are identical. The varying current mode/frame are persistent fields copied by the compiler, never Boundary's reservoir. Thus every represented Step and every actual word operation implementing it has the same length schedule. Cover creation/count, framing, bank-list append and physical71 export are included. |
+| CoverRef and ClientCover | The CoverRef word $(c,a,b)$ with its common service/source prefix is identical. Export, placements, descriptor staging, both copies, completion records, print, check/ACK/mailbox return, positioned73 import and acquired-$c$ checks have the common numeric geometry. Invocation transfers into ClientCover and Bind are actual rows. |
+| Bind and first failure | The acquired cover and all lookup operands agree except the retained raw selector. The fixed mode and tag000 take the same first failing tag test before any $x$ is interpreted as an offset, source index, unary value, program or loop bound. No Issue/Prefix/Call for this selector is executed. The retained reason is0000. |
+| Rejection publication and callback | The serialized raw request is the existing fixed pair $(1,w_x)$. Fixed-arity list/Frame encoding puts $x$ once between bit words depending only on $P_*,L$. The whole Rejection therefore has one common length and a common number of ones plus $r$. All native copies/print transport it without bit-dependent branches. The complete receiver import balances its zero/one tests, and its authentic reason/request equality checks run to exhaustion. |
+| Final checked return | Include the final ACK, mailbox TOK, five-field item with the actually received bindings, its complete $M$ AppendItem, invocation TOK and Ready CTL. The fields have the same lengths; variable request copies remain data. The retained bank/scratch/descriptor induction applies to every assignment in this return. |
+| Next outer01 and original header | The gate has identical supplied bits. Its native metadata, import and bank work have the same geometry and cost. The original source resources and data have survived the history flight; its original header setup is the same computation on those data. Its first IN5(0) and matching EX13 each add exactly one actual receipt. |
+
+For completeness, the channel row in this table includes ARC Definition
+7.1 and GCA Definition 6.2's entire native construction. Each sender
+export measures Base and dry-counts before real copy/F/seal/descriptor.
+Mailbox and receiver are separately measured and initialized, with their
+actual writable setup descriptors. Immediately stage each of the three
+placement descriptors on69 by its dry bit count and real copy, then
+write that stage's own descriptor once. No descriptor stages itself.
+Reload sender payload length, endpoint bases and counter positions before
+*each* six-row copy, retaining the terminal test, seal and handoff. Append
+sealed completion records on71 with their actual owner/port/base/length/
+origin and flags10; they preserve the last-three placement records on69.
+These numeric words agree because all their ordinary-cell construction
+counts and descriptor counts agree, including prior bank work. Reposition
+receiver and length for the $5l+1$ print; position73 from its still-current
+placement **before** callback bank work; import to the existing F.
+The two-copy-plus-print $17l+7$ is only a disjoint subtotal. Allocation,
+all closed scans and staging, completion records, import, comparisons,
+ACKs and returns are additionally accounted for by the displayed
+recurrence comparison. This argument applies separately to CoverRef
+and Rejection, with their respective real incoming arenas.
+
+There is no hidden conversion of transient bit-test time into later
+metadata. The current measured bases are counts of cells on their named
+ordinary ports; creation ordinals count descriptors; list IDs count list
+items; payload numerals are constructed lengths. Completion records copy
+those placement/origin words and finite seal flags. Boundary's tallies
+and receipt fields describe the fixed frozen predecessor. The five-field
+history item records inputs, outcome and received bindings, with no
+current callback timestamp. None of these routines reads a live meter
+end or supplies its current receipt count to a word register (ARC
+Definition 5.1, GCA Definitions 3.3 and 6.2, RCA Definition 13.2).
+The public output bits are emitted by OUT and are not fed back as
+independent control input. Different last ingress bits may remain in
+latch6; the next receiver overwrites that latch at its own IN before
+its write/test. No later guard is licensed by a stale data latch.
+
+More explicitly, during a native import prefix the extra testing CTLs
+for1 may give different receipt counts on corresponding bit positions.
+They append meter receipts but construct no nonmeter cell, change no
+bank parity, and change no position or numeric placement field. The
+compiled cons and all ensuing geometry-dependent work consequently
+remain paired even at those differing clocks. At completion of each
+whole variable import the numbers of zero and one bits agree, so the
+accumulated difference is zero. Whole-frame import and whole-Rejection
+import are the variable native imports here; CoverRef, mode, gate and
+numeric staging imports have identical contents. At the checkpoint just
+after the $j$th bit's cons and source MR,
+write $v_x,v_y$ for the two whole imported words. Starting that import
+at equal counts, its transient difference, in $\mathbb Z$, is exactly
+
+$$
+n_x(j)-n_y(j)=|v_x[0:j]|_1-|v_y[0:j]|_1.
+$$
+
+All intervening compiled-work summands agree by the same actual
+length/head recurrence. This difference vanishes at the complete
+field's end. Word operations on opaque subwords still use the single
+word first-bit RD, not the asymmetric native importer. Thus no equality
+of arbitrary prefix weights or per-bit completion times is assumed.
+
+Starting at the identical $P_*$, apply these facts through all phases.
+At every completed native variable import the total counts agree;
+between such imports all expanded costs agree by the field/head
+induction. All prior versions and retired data remain, so the same
+induction gives equal total nonmeter construction counts. The physical
+finite resource slots are transferred in the same order and have the
+same values at each named return. GCA Definition 6.3 returns those
+resources through an actual checked rejection, not by restoring an
+old snapshot. This proves the assertions at $R_x$. The last table row
+then gives the native count/size equalities through the actual final
+gate, header setup, IN and EX. Lemma 16.3 separately verifies their
+unchanged original-task admission. Equivalently, if $x_0=0^{L-r}1^r$,
+the full count for every $x$ is the exact RCA recurrence evaluated
+on this specified flight for
+$x_0$, at consecutive actual successors. No numerical execution count,
+unit-cost replay, omitted bank term or guessed interpreter constant is
+being substituted for that recurrence. $\square$
+
+**Lemma 16.3 (actual original admission and selected successors).** At
+each $h_x$, the matching header EX13 is currently enabled and has
+SOURCECALL Lemma 2.3's unchanged original Advance correspondence.
+The original13 byte record is the same for all $x$, both at $h_x$
+and at $h_x^+$, and latch5 is0 at both cuts. If their common pre-EX
+count is $N_{P,L,r}$, their post-EX count is $N_{P,L,r}+1$.
+
+Proof. The common ReadE already returned through its original ACK,
+source TOK, normalization and CaptureCAP. The later history computation
+uses the authorized annex64–73 and its represented old-state data;
+it does not execute a current producer13 write or private-source
+operation. GCA Theorem 6.4 and ARC Definitions 5.1–5.5 preserve the
+parked original client and restore the actual outer relation after
+the rejection: twelve producer workspace tokens, identity roles,
+source/directory/journal/counter resources, heads13/17 at R, source
+availability at its dispatcher, completed original ACKs, and distinct
+idle mailbox/outer invocation slots. Verifier and INITIAL consumer
+remain occupied in their original roles. Serialized historical token
+bits do not perform any of these current transfers.
+
+The subsequent gate01 uses its own current resources and then its
+installed CTL enters the original header Base/setup. That prelude
+has current producer work/ingress authority and actual finite tapes;
+source-service admission still occurs later, after full frame parsing,
+as CAP Definition 4.6 specifies. The prelude's reads, moves and work
+constructions use the same original data and positions on every branch.
+In particular its actual Base and all older original work material are
+retained and paid; no source-entry allocation is suppressed. History
+work and gate work have changed no13 byte. The original header prelude
+positions13 at its actual append R. Hence the complete original13 byte
+record, including its actual marks and port/creation-position identities,
+is common before the first header IN and afterward.
+
+SOURCECALL Lemma 2.3 applies at each such *actually returned* entry.
+It does not require that the preceding completed cycles were source-only.
+At the first header IN both bits are canonical-extending; Supply0 is
+therefore a lawful original experiment. Its one actual IN overwrites
+latch5 with0 without writing or moving13, then enters the original
+EX13 successor. The producer still holds that port's current write/
+construction authority and its marked R exists. Thus the next prescribed
+EX is enabled by these actual resources. It replaces that same R by
+blank, constructs the next R, retains the old cell's identity and adds
+one receipt. It does not change latch5 and releases no OUT bit. The
+original EX label and operands correspond in both runs, with the same
+retained bank-parity alternative. The two selected13 records therefore
+also
+agree after this EX. Lemma 16.2 gives equality of the absolute counts
+before it; one actual row gives equality at $N+1$.
+Neither a PC-label coincidence nor a new entry or scheduler supplies
+this enabledness. $\square$
+
+**Theorem 16.4 (a completed-return collision of K and its original
+response selection).** With exactly Definition 15.1's
+
+$$
+K(h)=\bigl(\operatorname{old}_{13}(X(h)),\operatorname{latch}_5(X(h)),n(h)\bigr),
+$$
+
+the $\binom Lr$ distinct histories $h_x$, $x\in\mathcal X_{L,r}$, have
+one common $K$. Their actual original Advance responses also have one
+common existing selected successor:
+
+$$
+\begin{aligned}
+K(h_x)&=(B_{P,L,r},0,N_{P,L,r}),\\
+\operatorname{sel}\bigl(\mathcal R_{h_x}(\mathrm{Advance})\bigr)
+ &=K(h_x^+)=(B^+_{P,L,r},0,N_{P,L,r}+1).
+\end{aligned}
+$$
+
+Here $B$ and $B^+$ name the corresponding original13 records, not a
+natural boundary view. The response before selection is still the
+complete original response, including its actual legality, label,
+released output and full original joint successor. It has not been
+redefined to be this triple. There is no history inverse, nor any
+of the four independent view inverses, through this $K$ or this selected
+response on a mixed domain containing this class. Its fibres have no
+uniform finite cardinality bound.
+
+Proof. Lemmas 16.2–16.3 prove the displayed equalities at the lawful
+unchanged original row and its one-step successor. If $x\ne y$, their
+actual supplied history bits differ, and the matching WR70 places them
+at the same respective created wire positions: before frame import
+all ingress allocations and positioning depend only on $L$. Those
+immutable bits survive every subsequent publication, ACK, $M$ append,
+Ready and source reentry by Lemma 4.1. Thus $h_x\ne h_y$, and likewise
+$h_x^+\ne h_y^+$. An inverse of the common selected value would have
+to return two different histories. Corollary 4.4 supplies, separately
+for each $V\in\{S,B,T,M_J\}$, the different values $V(h_x)\ne V(h_y)$
+and $V(h_x^+)\ne V(h_y^+)$. It therefore also forbids recovery of
+any one of those independent views through the selected value. This
+last implication reuses the existing history kernels; it is not
+another four-view or larger-input replay theorem.
+
+For a literal pair take $L=2,r=1$:
+
+$$
+x=01,\quad y=10,\qquad w_x=00011001,\quad w_y=00011010.
+$$
+
+Both histories separately acquire outer1 and mode1, complete the entire
+rejected flight and true Ready, then outer01/header IN5(0). They have
+19 actual external supplied bits after the same $P$. Their equal
+native clocks follow from Lemma 16.2's full expansion comparison,
+not from their eight-bit frame lengths alone. More generally
+$|\mathcal X_{L,1}|=L$ is unbounded, already giving arbitrarily large
+fibres without a counting assumption on native runtime. $\square$
+
+**Proposition 16.5 (the missing distinction is already checked raw
+request material).** On this class the raw-request field of the
+actually received Rejection is
+
+$$
+\sigma_x=(1,000\,U(L)\,x).
+$$
+
+It is injective in $x$. It has an existing paid acquisition and check
+at the rejection callback; no additional current read at $h_x$ is
+part of this assertion.
+
+Proof. GCA Definition 6.3 specifies this exact mode-one pair, and ARC
+Definition 7.1 supplies its source/service binding and reason0000.
+The handler retains the actual imported mode/frame, serializes that
+pair, exports71, and uses the actual initialized72/73 channel. The
+mailbox availability, handler/client invocation slots and receiver
+seal/read token are current live resources, transferred by the
+specified TOKs. After receiver completion and mandatory print the
+installed ClientImage rejection branch positions73 from staging
+before bank work, imports the complete sealed word to F, checks its
+type/binding and compares its reason and request with the retained
+actual expected values. Only afterward does it ACK, return the
+mailbox, append the five-field item and return invocation/Ready.
+ARC Definitions 7.1–7.3 and GCA Definitions 6.2–6.3 thus give both
+material source and actual use, with the entire bill of Lemma 16.2.
+The field recovers $x$ on this family by its existing length framing.
+
+This is the already supplied acquisition of newly supplied request
+data. It does not read an old hidden bootstrap distinction, establish
+a new original-$Q$ projection, or authorize a later arbitrary history
+call. The completed item also retains mode/frame. GENERAL §§3–4 and
+UAS §§3.3–3.5 already supply the four independent inverses and mixed
+history recovery from their larger actual input/joint-memory data.
+They are suppliers, not a new K-plus-history-bank recovery result here.
+The new necessary condition is concrete: any claimed history inverse
+on this mixed class must preserve a distinction between these checked
+request values; factoring it through the unchanged $K$ cannot do so.
+$\square$
+
+**Convention 16.6 (costs, reuse and precise remaining scope).** These
+are ordinary source-model proofs under the declared native and atomic
+incidence foundations, with no current Lean certification or claim
+of measured native execution. The new content is the equal-total-cost
+obstruction *after a complete checked history rejection and real
+return*, at a later admitted original row and its selected successor.
+RCA's earlier immediate-ingress collision, TARGET_CURRENT's finite
+source rectangle, GENERAL15's source-only inverse, and GENERAL4/UAS3's
+larger-input mixed recovery do not establish this returned class.
+None is restated as new content.
+
+Every prefix keeps Definition 8.5's bill
+
+$$
+(\mathrm{ticks},\mathrm{fee},\mathrm{bits})
+=(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n).
+$$
+
+For this equal-length/equal-weight family Lemma 16.2 equates the native
+counts and constructed nonmeter sizes at the specified cuts, including
+retired banks, unary bases, descriptors, copies and completion records.
+Each EX Advance additionally costs one receipt, one tick and two native
+fee units and makes its actual ordinary-cell construction. No receipt,
+source Base or acquisition work is erased. The alternative structural
+tariff remains each actual ordered-stencil sum of Definition 8.5,
+with its apparatus and foundation; equality of arbitrary structural
+bills or event words is not inferred from equal $n$.
+
+The library boundaries of Conventions 10.4 and 15.9 apply. Inspection
+of `NativeSerialMachine.replay_deterministic`/`reached_prefix_replay`,
+`NativeFullSourceProducer`'s private traversal invariants and their
+owning Scribes supplies no opaque-payload cost lemma or new physical
+entry. PH `OriginalNativeServiceBridge.Architecture` and its ReadUpdate
+`Protocol.arrival/start/step` require their actual supplied architecture
+and protocol; no G_gc instance or currentReturn marker is inferred.
+At Convention 10.4's pinned mathlib revision, `Function.factorsThrough_iff`
+expresses a factorization only after its fibre-constancy premise;
+`StateTransition.Respects`/`tr_reaches` require an already proved
+simulation. CompCert v3.16's cited `Smallstep.fsim_properties` similarly
+requires actual initial/final and step/trace matching. None identifies
+this selected-value equality with complete original-response equality.
+The cost comparison here is derived from the owning RCA/ARC/GCA
+expansions, not from an external full-abstraction or replay theorem;
+no worldwide novelty or search-miss nonexistence claim is made.
+
+Only noninjectivity and history/view recovery failure of $K$ and the
+existing selected original response are concluded. In particular,
+$K(h_x)=K(h_y)$ establishes neither $h_x\sim_Q h_y$ nor its negation,
+and neither equality nor separation of their complete original
+responses is asserted. All original labels, lawful Supply domains,
+prescribed enabled Advances, admitted semantic and finite adaptive
+protocols, released outputs, full successors and empty/terminal
+behavior remain as in Definition 1.3. Added history/gate/callback rows
+are not thereby admitted as original experiments. No70/73 field or
+trace-valued terminal readout is added to $Q$.
+
+The mixed class includes completed rejections; this theorem does not
+settle a restriction to successful history flights. Raw bootstrap and
+noncanonical source domains, unfinished history work, arbitrary added
+cuts, changed returns, final00 without later Ready, terminal
+comparisons, synchronized-mate full-response comparison and obligations
+10.2–10.3 remain at their stated scopes. A faithful original-response
+or operational recovery route must still prove its actual acquisition,
+current entry/authority, binding, paid retention/copy/check/use, ACK
+and return correspondence. A mathematical decoder has no actor
+permission or granted runtime. The same alpha/beta ordered source,
+parked original client, occupied verifier/INITIAL consumer and absorbing
+halt remain. No new initialization, primitive, scheduler, marker,
+head normalization or memory complement is supplied. There is no
+coordinate-minimality, physical-law or whole-programme completion claim.
+
+## 追加锚（本行以下为增补区）
