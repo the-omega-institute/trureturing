@@ -8571,8 +8571,7 @@ this new column. The mixed term is one new112-component dot product
 of the stored left-kernel row with $h_0$, multiplied once by $\kappa$.
 No kernel positivity is assumed.
 
-Write $N_{
-m pr}$ for the saved principal-source norm cap, $\Delta$ for the
+Write $N_{\mathrm{pr}}$ for the saved principal-source norm cap, $\Delta$ for the
 saved source-tail interpolation error, $\epsilon_0$ for the transported
 physical forward error and $\epsilon_{\rm sm}$ for the saved smooth
 source remainder. If $A_{0,k}$ are the new first-column
@@ -8589,12 +8588,12 @@ The actual-symbol jet norm is at most $N_0+\epsilon_0$. Consequently
 the source/symbol allowance is
 
 $$
-\kappa\bigl((N_0+\epsilon_0)\Delta+(N_{\rm pr}+\Delta)\beta_0\bigr).
+\kappa\bigl((N_0+\epsilon_0)\Delta+(N_{\mathrm{pr}}+\Delta)\beta_0\bigr).
 $$
 
 Pay the new analytic-tail Abel allowance and transported two-sided
 physical mixed error separately, together with
-$\kappa\epsilon_{\rm sm}N_0$ and $\kappa N_{\rm pr}\epsilon_0$.
+$\kappa\epsilon_{\rm sm}N_0$ and $\kappa N_{\mathrm{pr}}\epsilon_0$.
 The approximate symbols are not substituted for actual symbols
 without this allowance. The smooth polynomial uses its640-bit export
 grid; the uniform symbol error uses its832-bit analytic grid.
@@ -8653,4 +8652,4 @@ error transport and PSD Cauchy argument, with no new generic theorem,
 literature novelty or Lean claim. Actual paid/center/full-border/good-block
 and cofinal positivity, Robin and RH remain unresolved.
 
-The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/0ffd32997fc8e56f4dfa8014138d8d1976263e67/docs/reports/weil-c27) retain this application and its original input bindings.
+The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/3366fa48c777581c99fdb0d5c132b1615285cfd0/docs/reports/weil-c27) retain this application and its original input bindings.
