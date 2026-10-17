@@ -220,7 +220,7 @@ private theorem entry_permutation (X : Matrix ((n × n)) ((n × n)) ℂ)
   simpa [Matrix.submatrix_apply] using hc.symm
 
 omit [Fintype n] in
-private theorem pair_permutation (a b c d : n) (hab : a≠b) (hcd : c≠d) :
+theorem pair_permutation (a b c d : n) (hab : a≠b) (hcd : c≠d) :
     ∃ e : Equiv.Perm n, e a=c ∧ e b=d := by
   let f := Equiv.swap a c
   have hfc : f b≠c := by
