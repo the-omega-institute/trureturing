@@ -397,3 +397,906 @@ The remaining problem is to decide each lower-versus-upper endpoint and supply a
 All statements are ordinary conditional mathematics under the exact model. Source preparation is not independent review, kernel verification, or completion of the programme. No adaptive impossibility, optimal atom count, precision bound, noisy stability, physical-resource conclusion, general neural-network result, empirical assertion, or external-priority claim is made. Reading index, atomic-operation count, elapsed time, bit precision, and acquisition cost remain distinct resources.
 
 ## 追加锚（本行以下为增补区）
+
+## 追加结果：记录 $M$ 或 $JMJ$ 的完整 $d=1$ stratum
+
+本节固定 $d=1$，故实际记录索引恰为 $0,1,2,3,4,5$。沿用前文的
+$\mathcal R_+$、$\mathcal L$、$\mathcal I$、$\Lambda$、$B$、$C$ 和
+$T_k=B+kC$。假设历史位于仍可能统一恢复的 identically singular 分支：
+
+$$
+\operatorname{rank}T_k=3,\qquad
+\ker T_k=\mathbb R K\quad(k\in\mathbb R),
+$$
+
+其中 $K\ne0$ 为一个共同的 safe kernel 生成元，并作归一化
+
+$$
+\operatorname{tr}K=\operatorname{tr}(A_iK)=1\qquad(0\le i\le5).
+\tag{10.1}
+$$
+
+本节记
+
+$$
+U=JM=\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+本节只分类实际记录的累计矩阵。它不把 regular pencil 排除在含有同一矩阵的其它历史之外。
+
+### 定理 10.1（记录 $M$ 的完整合法分类）
+
+若某个记录位置的累计矩阵为
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+$$
+
+则必有
+
+$$
+K=E_{22}=\begin{pmatrix}0&0\\0&1\end{pmatrix},
+$$
+
+并且全部六个记录矩阵按实际时间恰为
+
+$$
+I,\quad\text{一个 }\{U,U,M\}\text{ 的排列},\quad
+H_a,\quad H_b,\qquad H_h=U^hM,\quad1\le a<b.
+\tag{10.2}
+$$
+
+也就是说，$H_a,H_b$ 在记录索引 $4,5$，而 $\{U,U,M\}$ 在索引
+$1,2,3$；由于两个 $U$ 相同，前缀有三个实际排列。反之，每个
+$1\le a<b$ 及每个前缀排列都由一个合法的单向 $M/J$ 历史实现，并满足
+(10.1)、$\operatorname{rank}T_k=3$ 以及
+
+$$
+\ker T_k=\mathbb R E_{22}\qquad(k\in\mathbb R).
+\tag{10.3}
+$$
+
+这些历史的每个固定斜率切片 $(S,D)\mapsto(z_0,\ldots,z_5)$ 都是全局单射；
+但每一条都存在两个斜率不同、来源严格为正的实际碰撞。因此，满足本节假设且
+记录 $M$ 的历史不能统一恢复未知斜率目标。
+
+#### 证明
+
+把共同 safe 生成元写成
+
+$$
+K=\begin{pmatrix}a&-b\\-c&e\end{pmatrix},
+\qquad a,b,c,e\ge0,\qquad a+e=1.
+$$
+
+在记录的 $M$ 位置，
+
+$$
+1=\operatorname{tr}(MK)=e-b-c.
+$$
+
+与 $a+e=1$ 相减得 $a+b+c=0$，故 $a=b=c=0$，$e=1$。于是每个
+记录矩阵 $A$ 都满足 $\operatorname{tr}(AE_{22})=A_{22}=1$。每个合法累计
+矩阵仍是非负整数矩阵且行列式为 $1$ 或 $-1$，因为两个原子 $M,J$
+具有这些性质。
+
+先看记录 $M$ 的前后邻接。若 $A$ 是同一历史中 $M$ 的记录前驱，则存在
+非负整数 unimodular 矩阵 $V$ 使 $M=VA$。写
+
+$$
+A=\begin{pmatrix}u&v\\w&1\end{pmatrix}.
+$$
+
+零的左上角迫使 $u=0$ 或 $w=0$。若 $w=0$，unimodularity 给出 $u=1$，而
+
+$$
+V=MU^{-v}=\begin{pmatrix}0&1\\1&1-v\end{pmatrix}
+$$
+
+的非负性只允许 $v=0,1$，所以 $A=I$ 或 $U$。若 $u=0$，则
+$-vw=\det A=\pm1$，故 $v=w=1$，即 $A=M$。同理，若 $A=WM$ 是
+$M$ 的记录后继，写 $W=\left(\begin{smallmatrix}x&y\\z&t\end{smallmatrix}\right)$。
+由 $A_{22}=z+t=1$，只有两种情形：$(z,t)=(0,1)$ 时 $W=U^y$ 且
+$A=H_y$；$(z,t)=(1,0)$ 时 $W=U^xJ$ 且 $A=U^{x+1}$。这些 $V,W$
+是已有历史中实际执行的累计左乘积，不是逆操作。
+
+令 $M$ 是首次记录的 $M$。对它之前的每个记录位置，整段实际左乘积 $V$
+都满足 $M=VA$，所以上述前驱结论说明此前只能记录 $I$ 或 $U$。在 $M$
+之后，若当前记录矩阵为 $U^b$ 且 $b\ge2$，任何后继 $B=VU^b$ 的条件
+$B_{22}=1$ 给出 $V_{21}b+V_{22}=1$，故 $V=U^c$，以后只能记录上三角剪切。
+若当前为 $H_h$ 且 $h\ge1$，同一计算因 $(H_h)_{12}=h+1\ge2$ 给出后继只能是
+$U^cH_h=H_{h+c}$。若当前为 $U$，由后继的第二行和为一，后继只能是某个
+$U^b$ 或某个 $H_h$。因此整个实际历史中的记录矩阵只能来自 $I,U^b,H_h$，
+其中 $H_0=M$。
+
+若出现 $U^b$ 且 $b\ge2$，正的 $H_h$ 不可能在它之前（否则其后继只能仍为
+$H$），也不可能在它之后（上面的上三角结论）。于是所有记录矩阵落在
+
+$$
+\operatorname{span}\{I,E_{12},M\}.
+$$
+
+又因 $\operatorname{tr}(AE_{22})=1$ 对全部记录成立，$\mathcal L(E_{22})$ 是
+常数向量，而 $\Lambda$ 消去常数向量，故
+$\operatorname{rank}B\le3-1=2$，与 $\operatorname{rank}T_0=3$ 矛盾。
+因而不存在 $b\ge2$，记录矩阵只可能是 $I,U,H_h$。
+
+还需把记录次数固定下来。若完全没有 $U$ 记录，全部记录矩阵落在
+$\operatorname{span}\{I,M,E_{11}+E_{12}\}$，因为 $H_h=M+h(E_{11}+E_{12})$。
+这使 $\operatorname{rank}\mathcal L\le3$；又因非零的常数向量
+$\mathcal L(E_{22})$ 被 $\Lambda$ 消去，故 $\operatorname{rank}B\le2$，直接矛盾。
+若恰有一个 $U$ 记录，删去这一非初始位置后，剩余矩阵才全部落在同一个至多三维空间，
+与下述删点引理矛盾。这两种情形分别使用全表秩和删点秩，不能合并为同一全表张成断言。
+若没有 $H$，全表只有 $I,U$；若恰有一个 $H$，全表张成至多三维，仍由常数像给出
+$\operatorname{rank}B\le2$。若恰有两个 $H$，删去其中任意一个后，剩余张成落在
+$\operatorname{span}\{I,U,\text{剩下的 }H\}$，与删点引理矛盾。因此至少有两个 $U$
+和三个 $H$。连同 $A_0=I$，六次记录恰好用完，故恰有一个 $I$、两个 $U$、三个 $H$。
+三个 $H$ 参数也必须互异：若三者全同，全表张成至多三维；若只有两个不同参数，删去
+只出现一次的那个参数所在记录，剩下两个 $H$ 相同，剩余只有 $I,U,H$ 三种矩阵。
+这两种重复情形分别违反全表秩或删点引理。由于 $H_0=M$，
+另两个参数为正整数 $a,b$。正的 $H$ 一旦出现，后继参数只能增加；互异性给出
+$a<b$。所以 $M$ 与两个 $U$ 必在前三个非初始位置，且整个列表正是 (10.2)。
+
+现在证明所用删点引理。若删去某个非初始位置 $j$ 后剩余矩阵张成至多三维，非退化
+trace pairing 给出非零矩阵 $X$ 消灭所有剩余累计矩阵。因 $I$ 保留，
+$\operatorname{tr}X=0$，所以 $X$ 不是 $\mathbb R E_{22}$。在斜率
+$k=-1/j$ 下，向量
+
+$$
+(1-i/j)\operatorname{tr}(A_iX)
+$$
+
+在所有剩余位置因 $X$ 的消灭性质为零，在 $j$ 位置因增益为零也为零，故
+$T_{-1/j}X=0$，违反 (10.3)。因此任何非初始删点后都必须保留四维矩阵张成。
+以上计数、重复和边界情形均在实际记录索引上完成。
+
+反向合法性也逐项成立。三种前缀分别由
+
+$$
+I\xrightarrow{(M,J)}U,\quad I\xrightarrow{M}M,\quad
+U\xrightarrow{J}M,\quad M\xrightarrow{J}U,\quad U\xrightarrow{\varnothing}U
+$$
+
+实现。若前缀末项为 $M$，用实际左乘积 $U^a$ 到达 $H_a$；若末项为 $U$，
+用实际左乘积 $U^aJ$ 到达 $U^aJU=U^aM=H_a$，再用 $U^{b-a}$ 到达
+$H_b$。这些乘积都由有限的实际 $M,J$ 原子组成，词内不插入记录，所以索引
+仍为 $0,\ldots,5$。所有中间未读状态也由正列保持正性。
+
+为验证反向的秩和固定斜率结论，设两个 $U$ 的实际索引为 $j<\ell$，三个
+$H$ 的实际索引按时间为 $i_1<i_2<i_3$，对应互异参数
+$h_1,h_2,h_3\in\{0,a,b\}$。对任意
+
+$$
+S=\begin{pmatrix}p&q\\r&s\end{pmatrix}\in\mathcal R_+,
+$$
+
+定义
+
+$$
+A=p+s,\qquad t=p+r,\qquad v=q-p,\qquad
+\zeta=A+\delta_0,\qquad \eta=\delta_1+k(A+r).
+$$
+
+其正性域精确为
+
+$$
+r>0,\qquad t>r,\qquad v>r-t,\qquad
+s=\frac{r(p+v)}p,\quad p=t-r.
+\tag{10.4}
+$$
+
+整条 affine drift 被写成
+
+$$
+D(x)=\zeta-A+[\eta-k(A+r)]x.
+$$
+
+直接按实际记录位置展开，得到
+
+$$
+\begin{aligned}
+z_0&=\zeta,\\
+z_j&=\zeta+r+\eta j,\qquad z_\ell=\zeta+r+\eta\ell,\\
+z_{i_h}&=\zeta+\eta i_h+r+(1+ki_h)(h_ht+v),\qquad h=1,2,3.
+\end{aligned}
+\tag{10.5}
+$$
+
+其中使用了 $\operatorname{tr}(US)=A+r$ 与
+$\operatorname{tr}(H_hS)-A=r+h(p+r)+(q-p)=r+ht+v$。因此数据坐标
+
+$$
+\zeta=z_0,\qquad
+\eta=\frac{z_\ell-z_j}{\ell-j},\qquad
+r=z_j-\zeta-j\eta,\qquad
+Y_h=z_{i_h}-\zeta-\eta i_h-r
+\tag{10.6}
+$$
+
+是六个实际读取的可逆线性重排；反向由 (10.5) 重建全部原始读数。
+
+固定任意真实 $k$，把 $\mathbf a=(h_1,h_2,h_3)^{\mathsf T}$、
+$\mathbf e=(1,1,1)^{\mathsf T}$、$\mathbf i=(i_1,i_2,i_3)^{\mathsf T}$、
+$\mathbf w=(i_1h_1,i_2h_2,i_3h_3)^{\mathsf T}$，并设
+
+$$
+P_k=[\mathbf a+k\mathbf w,\ \mathbf e+k\mathbf i].
+\tag{10.7}
+$$
+
+则 $Y=P_k(t,v)^{\mathsf T}$。每个 $1+ki_h$ 至多有一个零，任取两个非零的
+$g_h=1+ki_h$，它们对应的 $h_h$ 不同，故相应二行行列式
+$g_ug_v(h_u-h_v)\ne0$。所以 $P_k$ 对每个实 $k$ 都有秩二，即使第三个
+$H$ 读数被增益擦除。于是固定斜率下 $t,v$ 唯一，(10.4) 恢复 $p,q,r,s$，
+再由 $\zeta,\eta$ 恢复整条 $D$。这证明每个固定斜率切片全局单射，并且没有把
+擦除的读数当成除数。
+
+同一计算也给出整个满矩阵 quotient 的精确核。对任意实矩阵 $X$ 以及 affine drift，
+令 $r=X_{21}$、$t=X_{11}+r$、$v=X_{12}-X_{11}$，并以
+$\zeta=\operatorname{tr}X+\delta_0$、$\eta=\delta_1+k(\operatorname{tr}X+r)$
+定义相同坐标。若六个读数全为零，两个 $U$ 读数先给 $r=\zeta=\eta=0$，三行
+$P_k$ 的秩二再给 $t=v=0$。于是 $X=sE_{22}$，且唯一补偿漂移为
+
+$$
+\delta_0=-s,\qquad \delta_1=-ks.
+$$
+
+反向代入立即消去每个读数。因此
+
+$$
+\ker T_k=\mathbb R E_{22},\qquad \operatorname{rank}T_k=3
+\tag{10.8}
+$$
+
+对所有实 $k$ 成立。这也验证了 (10.1) 的共同核与所有三种前缀排列，而非只验证
+一个抽象矩阵表。
+
+最后给出每条分类历史的实际不同斜率碰撞。对 (10.7) 定义精确双线性尾映射
+
+$$
+F(t,v,k)=P_k\binom tv,\qquad
+J(t,v,k)=\det_3[\mathbf a+k\mathbf w,\ \mathbf e+k\mathbf i,\ t\mathbf w+v\mathbf i].
+$$
+
+多重线性展开给出
+
+$$
+J(t,v,k)=J_0(t,v)+k(tL_t+vL_v),
+$$
+
+其中
+
+$$
+J_0(t,v)=\det_3[\mathbf a,\mathbf e,t\mathbf w+v\mathbf i],\quad
+L_t=\det_3[\mathbf a,\mathbf i,\mathbf w],\quad
+L_v=\det_3[\mathbf w,\mathbf e,\mathbf i].
+\tag{10.9}
+$$
+
+这里 $\mathbf w=(i_1h_1,i_2h_2,i_3h_3)^{\mathsf T}$ 是实际索引与对应 $H$ 参数的逐项乘积，
+$\mathbf i=(i_1,i_2,i_3)^{\mathsf T}$ 是实际尾索引向量；二者不是新的读数。$k^2$ 的系数恰为
+
+$$
+\det_3[\mathbf w,\mathbf i,t\mathbf w+v\mathbf i]=0,
+$$
+
+因为第三列是前两列的线性组合。不能有
+$L_t=L_v=0$。事实上，若 $L_v=0$，则 $\mathbf w=A\mathbf e+B\mathbf i$。
+若 $A=0$，三个互异 $h_h=w_h/i_h$ 全相等，矛盾。若 $A\ne0$ 且
+$\mathbf a=C\mathbf e+D\mathbf i$，则三个互异 $i_h$ 都是非零二次式
+$D x^2+(C-B)x-A$ 的根，矛盾。故 $\mathbf a,\mathbf i,\mathbf e$ 独立，进而
+$L_t=A\det_3[\mathbf a,\mathbf i,\mathbf e]\ne0$。
+
+取明确允许的正源形状
+
+$$
+(r_*,t_*,v_*)=(1,2,0)\quad\text{若 }L_t\ne0,\qquad
+(r_*,t_*,v_*)=(1,2,1)\quad\text{若 }L_t=0.
+$$
+
+两种情形都满足 $p_*=t_*-r_*=1>0$、$q_*=p_*+v_*>0$、
+$s_*=q_*/p_*>0$。令
+
+$$
+L_*=t_*L_t+v_*L_v=2L_t+v_*L_v\ne0,\qquad
+k_*=-\frac{J_0(t_*,v_*)}{L_*}.
+\tag{10.10}
+$$
+
+于是 $J(t_*,v_*,k_*)=0$。由 $P_{k_*}$ 秩二，$\mathbf b=t_*\mathbf w+v_*\mathbf i$
+在 $P_{k_*}$ 的列空间中，存在 $X=(X_t,X_v)^{\mathsf T}$ 使
+$P_{k_*}X=\mathbf b$。为明确记录所有除数，选两个非零增益的实际尾索引
+$u=i_\mu<w=i_\nu$，其中 $1\le\mu<\nu\le3$，并在 (10.11) 中明确约定
+$h_u:=h_\mu$、$h_w:=h_\nu$：它们分别是实际累计矩阵 $A_u=H_{h_\mu}$、
+$A_w=H_{h_\nu}$ 的参数，而非用实际索引直接索引长度为三的参数表。令
+
+$$
+R_u=\frac{u(h_ut_*+v_*)}{1+k_*u},\qquad
+R_w=\frac{w(h_wt_*+v_*)}{1+k_*w},\qquad
+X_t=\frac{R_u-R_w}{h_u-h_w},\qquad X_v=R_u-h_uX_t.
+\tag{10.11}
+$$
+
+这里只除以特意选取的非零增益和 $h_u-h_w\ne0$；第三行由 $J=0$ 自动满足，
+即使第三增益为零。
+
+取任意非零实数 $\varepsilon$ 满足
+
+$$
+|\varepsilon|<\min\left\{
+\frac1{2(1+|X_t|)},
+\frac{1+v_*}{2(1+|X_t+X_v|)}
+\right\}.
+\tag{10.12}
+$$
+
+定义两次实际运行
+
+$$
+(k_0,t_0,v_0)=(k_*,t_*+\varepsilon X_t,v_*+\varepsilon X_v),
+$$
+
+$$
+(k_1,t_1,v_1)=(k_*+\varepsilon,t_*,v_*),\qquad
+r_0=r_1=1,\quad
+\zeta_0=\zeta_1=\eta_0=\eta_1=0.
+$$
+
+由 $P_k$ 对 $k$ 的仿射性和 (10.11)，有逐项的精确有限恒等式
+
+$$
+P_{k_0}\binom{t_0}{v_0}
+=P_{k_*}\binom{t_*}{v_*}+\varepsilon\mathbf b
+=P_{k_*+\varepsilon}\binom{t_*}{v_*}
+=P_{k_1}\binom{t_1}{v_1}.
+\tag{10.13}
+$$
+
+把 $p_b=t_b-1$、$q_b=p_b+v_b$、$s_b=q_b/p_b$，并令
+
+$$
+S_b=\begin{pmatrix}p_b&q_b\\1&s_b\end{pmatrix},\qquad
+A_b=p_b+s_b,\qquad D_b(x)=-A_b-k_b(A_b+1)x.
+\tag{10.14}
+$$
+
+(10.12) 给出 $p_0>1/2$、$q_0>(1+v_*)/2$，而
+$p_1=1$、$q_1=1+v_*>0$。所以两个 $S_b$ 都严格正、秩一，且每条运行使用
+一整条 affine 漂移 $D_b$。在每次运行中取
+
+$$
+\alpha_b=1,\quad \beta_b=k_b,\quad R_b=S_b,\quad
+c_b=\binom{p_b}{1},\quad \ell_b=(1,q_b/p_b).
+\tag{10.15}
+$$
+
+于是 $c_b\ell_b=S_b$，每个 $M,J$ 原子都把正列送到正列，固定行 $\ell_b$
+在全部读与未读状态保持不变。代入实际记录方程，$I$ 位置给 $z_0=0$，两个
+$U$ 位置给 $z_i=1$，三个 $H$ 位置给
+
+$$
+z_{i_h}=1+(1+k_bi_h)(h_ht_b+v_b).
+$$
+
+由 (10.13) 三个尾读数逐项相等。两次运行的斜率相差非零的 $\varepsilon$，所以是不同的
+有效目标；这不是 representation scale，也没有重置来源、改变行、组合未执行历史或
+为各读数另选漂移。等式在增益为零或为负的样本处仍按未除增益的原始方程成立。
+
+因此，记录 $M$ 的每一条合法分类历史都保留固定斜率的 rank-three common kernel，
+却必有实际的不同斜率碰撞。
+
+### 定理 10.2（记录 $N=JMJ$ 的镜像分类）
+
+若某个记录位置的累计矩阵为
+
+$$
+N=JMJ,
+$$
+
+则全部结论由 $J$-共轭精确搬运：
+
+$$
+K=E_{11},\qquad
+I,\quad\text{一个 }\{L,L,N\}\text{ 的排列},\quad
+L^aN,\quad L^bN,\qquad
+L=MJ=JUJ,\quad1\le a<b.
+\tag{10.16}
+$$
+
+这些历史的每个固定斜率切片仍全局单射，并且每一条都有不同斜率的严格正来源碰撞。
+
+#### 证明
+
+令 $A'_i=JA_iJ$、$K'=JKJ$。若 $A_{i+1}=W_iA_i$，则
+$A'_{i+1}=(JW_iJ)A'_i$，而 $JW_iJ$ 仍是有限 $M/J$ 词；初始矩阵仍为 $I$，且
+$N$ 变为 $M$。迹的共轭不变性给出
+$\operatorname{tr}(A_iS)=\operatorname{tr}(A'_iS')$（取 $S'=JSJ$），所以
+读数、实际索引和整条漂移均保持。由定理 10.1，$K'=E_{22}$，故 $K=E_{11}$，
+且 $H_h$ 共轭为 $L^hN$。
+
+反向碰撞不引入物理共轭操作：对定理 10.1 中构造的每个原始端点，直接取
+$S_b=JS'_bJ$、$c_b=Jc'_b$、$\ell_b=\ell'_bJ$，并沿原历史使用同一 $k_b,D_b$。
+这些因子仍严格为正、在原始 $M/J$ 词的全部未读状态保持正，且
+$\operatorname{tr}(A_iS_b)=\operatorname{tr}(A'_iS'_b)$。所以 (10.16) 的每个历史
+也有同样的实际碰撞。
+
+### 余下边界
+
+定理 10.1–10.2 只处理 $d=1$ identically singular common-safe-kernel 分支中实际记录
+$M$ 或 $JMJ$ 的历史。它们不处理记录事件集合中不含这两个矩阵的其它 kernel 方向，也不
+处理 regular pencils；特别是，regular 五读 $d=0$ 分支仍在原问题内。对 $d\ge2$，
+共同 safe kernel 的记录信号一般是次数至多 $d-1$ 的多项式，不能由本节的常值超平面分类
+替代。全局 sharp endpoint、所有斜率的统一逆、以及覆盖其余合法历史的普适碰撞仍未结算。
+原有界保持为
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+本节增加的是完整的实际记录 $M/JMJ$ stratum 分类、每个 $a<b$ 的合法历史、固定斜率
+全局逆和严格正来源的不同斜率碰撞；它不把该 stratum 的结论外推成全历史 endpoint 结论。
+
+
+## 11. Diagonal generators and the complete legal-chain normal form
+
+Continue at $d=1$ with the six actual nodes $0,\ldots,5$ and hypotheses (10.1): for every real $k$, the pencil has rank three and the same safe kernel line. These hypotheses are the necessary residual supplied by Theorem 5.1 and Corollary 6.3. The results of Sections 11–15 extend the preceding mathematical proposal *Diagonal safe-kernel word normal form and a two-or-three initial lower-shear restriction at the unrecorded affine endpoint*. That proposal supplies the diagonal classification and collision route; it is preceding mathematical work, with ordinary conditional proofs. Section 10 uses the preceding proposal *Exact affine-drift classification and different-slope collisions in the common-safe-kernel stratum recording M or JMJ*. Neither proposal is independent certification. The complete arguments and source realizations used here are given below.
+
+We first record two consequences of the residual hypotheses. The whole matrix list spans four dimensions. Indeed $\mathcal L(K)=\mathbf1\ne0$ is killed by $\Lambda$, so
+
+$$
+3=\operatorname{rank}B\le\operatorname{rank}\mathcal L-1\le3.
+\tag{11.1}
+$$
+
+Also deletion of any noninitial read must leave four-dimensional matrix span. If the survivors spanned at most three dimensions, choose $X\ne0$ annihilating them under the nondegenerate trace pairing. Since $I$ survives, $\operatorname{tr}X=0$, so $X\notin\mathbb RK$ because $\operatorname{tr}K=1$. At $k=-1/j$ the vector $(1-i/j)\operatorname{tr}(A_iX)$ vanishes at every survivor and at the erased position $j$. Thus $X\in\ker T_{-1/j}$, a contradiction. This argument includes repeated endpoints and uses the actual noninitial index $j$, which is a nonzero integer.
+
+### Theorem 11.1 (mixed positive diagonal generators are excluded)
+
+If the normalized common safe generator $K$ is diagonal, then it is $E_{22}$ or $E_{11}$.
+
+**Proof.** Suppose instead that $K=\operatorname{diag}(a,e)$ with $a,e>0$ and $a+e=1$. Every recorded endpoint is nonnegative integral and unimodular. For
+
+$$
+A=\begin{pmatrix}u&v\\w&t\end{pmatrix},
+\qquad au+et=1,
+$$
+
+if $u,t\ge1$, positivity of $a,e$ forces $u=t=1$. Then $1-vw=\pm1$ gives $vw=0$ or $2$. Thus these endpoints are $I$, upper or lower shears, or the two positive matrices
+
+$$
+P_0=\begin{pmatrix}1&1\\2&1\end{pmatrix},\qquad
+Q_0=\begin{pmatrix}1&2\\1&1\end{pmatrix}.
+$$
+
+If $u=0$, unimodularity forces $v=w=1$ and $t=1/e$ to be an integer $m\ge2$, giving
+
+$$
+Z_m=\begin{pmatrix}0&1\\1&m\end{pmatrix}.
+$$
+
+If $t=0$, the analogous endpoint is $JZ_\ell J$ for the integer $\ell=1/a\ge2$. Both diagonal entries cannot be zero because $au+et=1$. This exhausts all endpoints; if a displayed reciprocal is not an integer, its case simply does not occur.
+
+The following order restrictions concern existing left multipliers, not inverse acquisitions. A nontrivial upper shear $U^h$ and lower shear $L^g$, with $h,g\ge1$ and $L=MJ$, cannot coexist in one chain: $L^g(U^h)^{-1}$ has upper-right entry $-h$, and $U^h(L^g)^{-1}$ has lower-left entry $-g$. Every actual multiplier is nonnegative. A positive endpoint remains positive under every later nonnegative invertible multiplier, because each multiplier row is nonzero. Moreover
+
+$$
+Q_0P_0^{-1}=\begin{pmatrix}3&-1\\1&0\end{pmatrix},\qquad
+P_0Q_0^{-1}=\begin{pmatrix}0&1\\-1&3\end{pmatrix},
+$$
+
+so $P_0$ and $Q_0$ cannot both occur. Neither can coexist with $Z_m$: it cannot precede the zero of $Z_m$, whereas
+
+$$
+P_0Z_m^{-1}=\begin{pmatrix}1-m&1\\1-2m&2\end{pmatrix},\qquad
+Q_0Z_m^{-1}=\begin{pmatrix}2-m&1\\1-m&1\end{pmatrix}
+$$
+
+have negative entries for every $m\ge2$. Conjugation by $J$ gives the same exclusion for $JZ_\ell J$ and exchanges $P_0,Q_0$. Consequently a chain containing a positive endpoint lies in the span of $I$, one shear direction, and that one positive endpoint, of dimension at most three. Repetition adds no dimension.
+
+If $Z_m$ occurs, no nontrivial lower shear can precede it, since $Z_m(L^g)^{-1}$ has upper-left entry $-g$. None can follow it: its second column is positive and stays positive, whereas a lower shear has zero upper-right entry. The mirrored zero-diagonal endpoint cannot coexist with $Z_m$ either. Its positive first column prevents it from preceding the zero in the first column of $Z_m$; the positive second column of $Z_m$ prevents the opposite order. Positive endpoints were already excluded. Thus every endpoint in a chain containing $Z_m$ lies in $\{I,U^h,Z_m\}$, a space of dimension at most three. Its mirror has the same property. If there is no positive or zero-diagonal endpoint, only one shear direction can occur, giving span at most two.
+
+In all cases $\operatorname{rank}\mathcal L\le3$. The nonzero constant image $\mathcal L(K)=\mathbf1$ is killed by $\Lambda$, so $\operatorname{rank}B\le2$, contrary to (11.1). A diagonal safe matrix has nonnegative diagonal entries summing to one. Removing the case in which both are positive leaves exactly $E_{22}$ and $E_{11}$. ∎
+
+The exclusion also has a complete actual-source collision interpretation. For any legal history in the mixed diagonal hyperplane, the span calculation gives $\dim\ker B\ge2$. Choose two independent kernel vectors $X_0,X_1$. If either is outside the safe-cone union, retain it as $X$. Otherwise orient both safe and take their nonzero combination $\Phi(X_1)X_0-\Phi(X_0)X_1$; it has $\Phi=0$ and is therefore unsafe. This supplies an unsafe $X\ne0$ in $\ker B$.
+
+For completeness the full positive-secant construction is as follows. Write $X=(\begin{smallmatrix}a_0&b_0\\c_0&e_0\end{smallmatrix})$ and $\delta=\det X$. The coefficients $a_0,-b_0,-c_0,e_0$ contain both strict signs, so
+
+$$
+F(x,y)=e_0xy+a_0-c_0x-b_0y
+$$
+
+takes both signs on the positive quadrant. The limits at $(\epsilon,\epsilon)$, $(T,T)/T^2$, $(T,T^{-2})/T$, and $(T^{-2},T)/T$ isolate respectively $a_0,e_0,-c_0,-b_0$. Choose opposite-sign positive points and their straight segment. Every entry of $E_0(x,y)=(\begin{smallmatrix}xy&x\\y&1\end{smallmatrix})$ on that compact segment has a positive lower bound $m_0$. With endpoint values $F_-<0<F_+$, choose
+
+$$
+\tau>\max\left\{\frac{\max|X_{ab}|}{m_0},
+\frac{|\delta|}{\min(-F_-,F_+)}\right\}.
+$$
+
+Both divisors are positive. Continuity supplies a segment point with $F=-\delta/\tau$, including when $\delta=0$. Then
+
+$$
+S_0=\tau E_0(x,y),\qquad S_1=S_0+X
+$$
+
+are distinct strictly positive matrices of rank one: the second determinant is $\tau F+\delta=0$, and its entries are positive by the strict bound on $\tau$. Since $BX=0$ and the second-difference quotient has exactly affine evaluation as its kernel, the one entire affine polynomial
+
+$$
+H(t)=\operatorname{tr}X+t\bigl(\operatorname{tr}(A_1X)-\operatorname{tr}X\bigr)
+$$
+
+satisfies $H(i)=\operatorname{tr}(A_iX)$ at all six nodes. Give both runs slope zero, with $D_0=0$ and $D_1=-H$. Their observation difference at every actual index is $\operatorname{tr}(A_iX)-H(i)=0$. For each endpoint set $\alpha_b=1$, $\beta_b=0$, $R_b=S_b$, $c_b=(p_b,r_b)^{\mathsf T}$ and $\ell_b=(1,q_b/p_b)$. Positivity and $p_bs_b=q_br_b$ give $c_b\ell_b=S_b$ and $\ell_bA_ic_b=\operatorname{tr}(A_iS_b)$. Each actual atom preserves positive columns with this fixed positive row. This supplies positive read and unread states on the original prescribed words, one whole affine drift per run, and a target distinction beyond the scale fibre. Thus the rank exclusion is supported by an actual collision, rather than by dimension alone.
+
+### Theorem 11.2 (all chains in the $E_{22}$ hyperplane)
+
+Put
+
+$$
+D_h=L^h=\begin{pmatrix}1&0\\h&1\end{pmatrix}\quad(h\ge0).
+$$
+
+A legal recorded chain starting at $I$ and satisfying $(A_i)_{22}=1$ has the following exact description. If every upper-right entry is zero, it is a nondecreasing list of $D_h$ starting at $D_0=I$. Otherwise choose an integer $w$ and sign $\sigma\in\{1,-1\}$ with
+
+$$
+w\ge0\quad(\sigma=1),\qquad w\ge1\quad(\sigma=-1),\qquad
+m=\min(w,w+\sigma),
+$$
+
+and define
+
+$$
+P=\begin{pmatrix}w+\sigma&1\\w&1\end{pmatrix},\qquad
+Q=JP=\begin{pmatrix}w&1\\w+\sigma&1\end{pmatrix},
+$$
+
+$$
+T_\nu=\begin{pmatrix}\nu w+\sigma&\nu\\w&1\end{pmatrix}
+=U^{\nu-1}P\quad(\nu\ge1).
+\tag{11.2}
+$$
+
+There is an initial phase of $a\ge1$ readings
+
+$$
+D_{h_0},\ldots,D_{h_{a-1}},\qquad
+h_0=0,\quad0\le h_0\le\cdots\le h_{a-1}\le m,
+$$
+
+then a possibly empty phase consisting of $P,Q$ in any order with repetitions, then a possibly empty final phase of $T_\nu$ with $\nu\ge2$ nondecreasing, with repetitions. At least one of the last two phases is nonempty. Conversely every such list is a legal chain in this hyperplane. Without a final phase the orientation of the pair need not be unique; no uniqueness of that choice is required.
+
+**Proof.** Write an endpoint as $A=(\begin{smallmatrix}u&v\\w&1\end{smallmatrix})$ with $u-vw=\pm1$. If $v=0$, then $u=1$, so $A=D_w$. The multiplier from $D_h$ to $D_g$ is $L^{g-h}$; nonnegativity forces $g\ge h$. Once $v>0$, a later endpoint cannot have upper-right entry zero, because that entry is $V_{11}v+V_{12}$ and the first row of the nonnegative invertible multiplier $V$ is nonzero.
+
+Suppose $v=1$ and a later endpoint still has upper-right entry one. The bottom-right equation is $V_{21}+V_{22}=1$. If the bottom row is $(0,1)$, unimodularity gives $V_{11}=1$, and the upper-right equation gives $V_{12}=0$, hence $V=I$. If it is $(1,0)$, unimodularity gives $V_{12}=1$ and the upper-right equation gives $V_{11}=0$, hence $V=J$. Therefore the entire $v=1$ phase consists of just one pair of row swaps $P,Q$, with arbitrary swaps and repetitions.
+
+If $v\ge2$, the later bottom-right equation $V_{21}v+V_{22}=1$ forces $V_{21}=0$, $V_{22}=1$. Unimodularity gives $V_{11}=1$, so $V=U^c$ for an integer $c\ge0$. Thereafter the bottom row $(w,1)$ and determinant sign $\sigma$ stay fixed. The endpoints are precisely $T_\nu$, with nondecreasing $\nu\ge2$. Nonnegativity gives the stated restrictions on $w,\sigma$. The earlier $v=1$ pair, if present, must be $P=T_1,Q=JP$. To see this explicitly, write its last endpoint as $A=(\begin{smallmatrix}x&1\\y&1\end{smallmatrix})$. In the first transition to a final endpoint with upper-right entry $\nu\ge2$, the multiplier bottom row is $(0,1)$ or $(1,0)$ because its entries sum to one. In the first case unimodularity gives the top row $(1,\nu-1)$, so the old endpoint is $P$ for the new bottom row and determinant sign, and the new endpoint is $U^{\nu-1}P$. In the second case the top row is $(\nu-1,1)$, the old endpoint is $Q$, and the new endpoint is $U^{\nu-1}JQ=U^{\nu-1}P$. All earlier $v=1$ endpoints differ from it by $I$ or $J$. If there is no final phase, take either member of the $v=1$ pair as $P$; nonnegative entries again give the stated restrictions.
+
+From an initial $D_h$ to a first endpoint $T_\nu$, the existing multiplier is
+
+$$
+T_\nu D_h^{-1}
+=\begin{pmatrix}\nu(w-h)+\sigma&\nu\\w-h&1\end{pmatrix}.
+$$
+
+Its nonnegativity is exactly $h\le m$: for $\sigma=1$ this is $h\le w$; for $\sigma=-1$, $w-h=0$ would make the top-left entry negative, so $h\le w-1$. A first $Q$ gives the same condition by swapping the two $v=1$ rows. All earlier $h$ obey it by their monotonicity. This proves necessity, including a first positive upper-right entry greater than one.
+
+Conversely $D_h\to D_g$ uses $L^{g-h}$. From $D_h$ to $P$ use the actual left multiplier $UL^{w-h}$ for $\sigma=1$, and $ML^{w-h-1}$ for $\sigma=-1$. These exponents are nonnegative by $h\le m$. Prepend $J$ to reach $Q$, or prepend $U^{\nu-1}$ to reach $T_\nu$. Within the pair phase use $I$ or $J$; from $P$ to $T_\nu$ use $U^{\nu-1}$, from $Q$ use $U^{\nu-1}J$, and within the final phase use $U^{\nu'-\nu}$. The all-$D$ case uses the first rule alone. Since $U=JM$ and $L=MJ$, every multiplier is a finite $M/J$ word, with empty words for repetitions and no extra reads inside a word. These words preserve positivity at every unread state. This proves sufficiency. ∎
+
+This theorem is a legality and hyperplane equivalence. It does not assert rank three or recovery for every listed chain.
+
+## 12. Six-read rank consequences and the one-initial-zero-entry class
+
+### Proposition 12.1 (a final phase and at most three initial lower-shear readings)
+
+Under (10.1) with $K=E_{22}$, the normal form of Theorem 11.2 has a nonempty final phase and $1\le a\le3$.
+
+**Proof.** An all-$D$ list has span at most two. Without a final phase, any other list lies in $\operatorname{span}\{I,E_{21},P,Q\}$. Full span requires a nonzero $D_h$, a $P$, and a $Q$. Each of these three categories must occur at least twice among the noninitial reads: deleting its sole occurrence leaves span at most three, contrary to the deletion condition preceding Theorem 11.1. Together with $I$ this would require at least seven reads, whereas there are six. Thus a final phase is necessary. If $a\ge4$, at most two positive-upper-right endpoints remain. Delete one of these noninitial endpoints. The surviving $D$ matrices span at most two dimensions, and at most one other endpoint remains, so the surviving span is at most three. This again contradicts the deletion condition. ∎
+
+### Theorem 12.2 (exact classification when $a=1$)
+
+Suppose (10.1), $K=E_{22}$, and $a=1$, so $I$ is the only recorded endpoint with upper-right entry zero. Then among the other five endpoints there are exactly two $Q$ readings and three $T_\nu$ readings with distinct positive integer parameters, and
+
+$$
+d_*=w+\sigma-1\ne0.
+\tag{12.1}
+$$
+
+At most one of the three $T$ readings is $T_1=P$; it lies in the pair phase, with the two $Q$ readings. Every other $T$ parameter is at least two, and those readings form the final strictly increasing phase. Conversely every such six-entry list, with this order, is legal and satisfies (10.1), $\ker T_k=\mathbb RE_{22}$ and $\operatorname{rank}T_k=3$ at every real slope. Every prescribed-slope slice has a global positive-source inverse. Each of these histories nevertheless has the different-slope collision constructed in Section 14.
+
+**Proof of necessity.** Count $P$ as $T_1$. If no $Q$ occurs, all endpoints lie in $\operatorname{span}\{I,P,R\}$, where
+
+$$
+R=\begin{pmatrix}w&1\\0&0\end{pmatrix},\qquad
+T_\nu=P+(\nu-1)R.
+$$
+
+That span is at most three. If exactly one $Q$ occurs, deleting it gives the same failure. Thus there are at least two $Q$ reads. There must be at least three $T$ reads: with none, the full span is at most two; with one, it is at most three; with two, deleting one leaves only $I,Q$ and one $T$. The six total reads force exactly two $Q$ reads and three $T$ reads. If the three parameters have only one distinct value, full span fails. If they have exactly two distinct values, delete the parameter occurring only once, leaving just $I,Q$ and one $T$ value. Thus the three parameters are distinct.
+
+To check the remaining parameter degeneracy, use the trace coefficients on $(p,q,r)$. The matrices $P-I,Q-I,R$, all with lower-right entry zero, have respective coefficient vectors
+
+$$
+\mathbf p=(w+\sigma-1,w,1)^{\mathsf T},\quad
+\mathbf q=(w-1,w+\sigma,1)^{\mathsf T},\quad
+\mathbf r=(w,0,1)^{\mathsf T}.
+$$
+
+Subtracting the first column from the second and expanding gives
+
+$$
+\det_3[\mathbf p,\mathbf q,\mathbf r]
+=\sigma(w+\sigma-1).
+$$
+
+If $d_*=0$, the span of $I,Q,P,R$ is at most three, contradicting full span. Hence (12.1) holds. It implies $w\ge1$: for $\sigma=1$, $w=0$ is excluded; for $\sigma=-1$, nonnegativity already required $w\ge1$ and (12.1) additionally excludes $w=2$. The order assertions follow from Theorem 11.2; distinctness allows at most one $T_1$. Converse legality follows from that theorem, and the exact rank and inverse are proved next. ∎
+
+In this class $N=JMJ$ cannot be recorded, because $N_{22}=0$. A recorded $M$ is exactly $T_1$ in the case $w=1,\sigma=-1$. The alternative $Q=M$ would require $w=0,\sigma=1$, already excluded by $d_*=0$. Thus in the residual with neither $M$ nor $N$ recorded, the case $w=1,\sigma=-1$ requires all three $T$ parameters to be at least two. All other allowed $w,\sigma$ are retained. This statement concerns recorded cumulative matrices; unread $M$ atoms remain allowed.
+
+## 13. Exact all-slope rank and a global inverse on every prescribed-slope slice
+
+Take any list in Theorem 12.2. Let $j<\ell$ be the two actual $Q$ indices, and let $i_1<i_2<i_3$ be the three actual $T$ indices. Define their parameters by
+
+$$
+A_{i_b}=T_{\nu_b},\qquad h_b=\nu_b-1\quad(b=1,2,3).
+$$
+
+The $h_b$ are distinct; they are attached to the actual $i_b$, including a possible early $T_1$. For a source $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})\in\mathcal R_+$ put
+
+$$
+a_S=p+s,\qquad
+u=(w-1)p+(w+\sigma)q+r,\qquad
+t=wp+r,\qquad v=\sigma(p-q).
+\tag{13.1}
+$$
+
+The symbol $u$ is a source coordinate, distinct from the integer tail parameter $\nu_b$. Since $w\ge1$, $w+\sigma\ge0$ and $r>0$, one has $u>0$. The linear map $(p,q,r)\mapsto(u,t,v)$ has inverse
+
+$$
+p=\frac{u-t+\sigma(w+\sigma)v}{d_*},\qquad
+q=p-\sigma v,\qquad r=t-wp.
+\tag{13.2}
+$$
+
+Indeed $u-t=-p+(w+\sigma)q$, so the numerator in the first equation equals $d_*p$. No sign of $d_*$ is assumed; only its nonvanishing is used.
+
+For $D(x)=\delta_0+\delta_1x$, set
+
+$$
+\zeta=a_S+\delta_0,\qquad
+\eta=\delta_1+k(a_S+u).
+$$
+
+The exact original equations at all six positions become
+
+$$
+\begin{aligned}
+z_0&=\zeta,\\
+z_j&=\zeta+u+\eta j,\qquad z_\ell=\zeta+u+\eta\ell,\\
+z_{i_b}&=\zeta+u+\eta i_b+(1+ki_b)(h_bt+v)\quad(b=1,2,3).
+\end{aligned}
+\tag{13.3}
+$$
+
+These follow from $\operatorname{tr}(QS)=a_S+u$ and
+
+$$
+\operatorname{tr}((T_{\nu_b}-Q)S)
+=(\nu_b-1)(wp+r)+\sigma(p-q)=h_bt+v.
+$$
+
+The whole drift, rather than separate sampled values, is
+
+$$
+D(x)=\zeta-a_S+[\eta-k(a_S+u)]x.
+\tag{13.4}
+$$
+
+The output coordinates change invertibly to
+
+$$
+\zeta=z_0,\qquad
+\eta=\frac{z_\ell-z_j}{\ell-j},\qquad
+u=z_j-\zeta-j\eta,\qquad
+Y_b=z_{i_b}-\zeta-u-\eta i_b.
+\tag{13.5}
+$$
+
+Equations (13.3) reconstruct all original outputs, so this is a linear isomorphism of the six data coordinates.
+
+Define
+
+$$
+\mathbf a=(h_1,h_2,h_3)^{\mathsf T},\quad
+\mathbf e=(1,1,1)^{\mathsf T},\quad
+\mathbf i=(i_1,i_2,i_3)^{\mathsf T},\quad
+\boldsymbol\omega=(i_1h_1,i_2h_2,i_3h_3)^{\mathsf T},
+$$
+
+$$
+P_k=[\mathbf a+k\boldsymbol\omega,\ \mathbf e+k\mathbf i].
+\tag{13.6}
+$$
+
+Then $Y=P_k(t,v)^{\mathsf T}$. Its row $b$ is $(1+ki_b)(h_b,1)$. The gain with intercept one has at most one zero among three distinct actual nodes. Any two surviving rows $b,c$ have determinant
+
+$$
+(1+ki_b)(1+ki_c)(h_b-h_c)\ne0.
+$$
+
+Thus $P_k$ has rank two for every real $k$, including an erased third row and arbitrary negative gains. For a prescribed $k$, recover $\zeta,\eta,u$ from (13.5), choose any two nonerased rows and set
+
+$$
+V_b=\frac{Y_b}{1+ki_b},\qquad V_c=\frac{Y_c}{1+ki_c},\qquad
+t=\frac{V_b-V_c}{h_b-h_c},\qquad v=V_b-h_bt.
+$$
+
+Equations (13.2) then give $p,q,r$, actual positivity gives $p>0$, and $s=qr/p$ recovers the source. Finally (13.4) recovers the entire original affine drift. The divisors are the positive integer $\ell-j$, selected nonzero gains, distinct $h_b-h_c$, $d_*\ne0$, and $p>0$. Each step returns the actual parameters, so equal data at a fixed slope give equal targets globally. At a zero gain the original equation is retained; no erased gain is divided out.
+
+To establish the exact quotient rank, apply the same linear coordinates to an arbitrary real full matrix $X$ and an affine compensating drift. If all six observations vanish, (13.5) gives $\zeta=\eta=u=0$, and rank two of $P_k$ gives $t=v=0$. Equations (13.2) give $p=q=r=0$; $s$ is free and the drift is $-s(1+kx)$. Conversely this cancels every observation because every endpoint has lower-right entry one. Since $\ker\Lambda$ is exactly affine evaluation, these homogeneous full-matrix equations characterize $\ker T_k$. Hence
+
+$$
+\ker T_k=\mathbb RE_{22},\qquad\operatorname{rank}T_k=3\quad(k\in\mathbb R).
+\tag{13.7}
+$$
+
+Also $\operatorname{tr}(A_iE_{22})=1$ at every node. This completes the converse in Theorem 12.2. The full-matrix calculation analyzes a linear kernel; positive sources in the inverse and collision are the single rank-one sources explicitly displayed.
+
+## 14. Exact finite different-slope collisions for every $a=1$ list
+
+For the actual vectors in (13.6), define
+
+$$
+\begin{aligned}
+J(t,v,k)&=\det_3[\mathbf a+k\boldsymbol\omega,\ \mathbf e+k\mathbf i,
+ t\boldsymbol\omega+v\mathbf i],\\
+J_0(t,v)&=\det_3[\mathbf a,\mathbf e,t\boldsymbol\omega+v\mathbf i],\\
+L_t&=\det_3[\mathbf a,\mathbf i,\boldsymbol\omega],\qquad
+L_v=\det_3[\boldsymbol\omega,\mathbf e,\mathbf i].
+\end{aligned}
+$$
+
+Multilinearity gives
+
+$$
+J(t,v,k)=J_0(t,v)+k(tL_t+vL_v),
+\tag{14.1}
+$$
+
+because the quadratic coefficient is exactly
+
+$$
+\det_3[\boldsymbol\omega,\mathbf i,t\boldsymbol\omega+v\mathbf i]=0.
+$$
+
+The vector $\boldsymbol\omega$ consists of the actual index–parameter products, and $\mathbf i$ of actual tail indices. The last column is a linear combination of the first two.
+
+The constants $L_t,L_v$ cannot both vanish. If $L_v=0$, independence of $\mathbf e,\mathbf i$ gives $\boldsymbol\omega=A\mathbf e+B\mathbf i$, so $h_b=B+A/i_b$. All $i_b$ are positive integers. Distinct $h_b$ force $A\ne0$. If $\mathbf a=C\mathbf e+E\mathbf i$, then
+
+$$
+A+(B-C)i_b-Ei_b^2=0\quad(b=1,2,3).
+$$
+
+The three distinct nodes would be roots of a nonzero polynomial of degree at most two, contradicting the root bound. Thus $\det_3[\mathbf a,\mathbf i,\mathbf e]\ne0$, and $L_t=A\det_3[\mathbf a,\mathbf i,\mathbf e]\ne0$.
+
+The linear coefficient in actual source coordinates is
+
+$$
+tL_t+vL_v=(wL_t+\sigma L_v)p-\sigma L_vq+L_tr.
+\tag{14.2}
+$$
+
+Its three coefficients cannot all vanish: the coefficient of $r$ would give $L_t=0$, and that of $q$ would give $L_v=0$. Choose a strictly positive triple explicitly by the following symbolic rule. Start at $p=q=r=1$. If (14.2) is nonzero there, keep this triple. Otherwise select any coordinate with a nonzero coefficient and replace its value by $2$, leaving the others $1$; (14.2) then equals that nonzero coefficient. Set $s=qr/p>0$ and define $u,t,v$ by (13.1). With
+
+$$
+F_*=tL_t+vL_v\ne0,\qquad k_*=-\frac{J_0(t,v)}{F_*},
+$$
+
+one has $J(t,v,k_*)=0$. This is an unexecuted symbolic source selection for each actual history.
+
+Rank two of $P_{k_*}$ implies that $\mathbf b=t\boldsymbol\omega+v\mathbf i$ is in its range, since the displayed three-column determinant vanishes. Its preimage $(X_t,X_v)$ is unique. To exhibit every divisor, select rows $b,c$ with nonzero gains $g_b=1+k_*i_b$, $g_c=1+k_*i_c$, and put
+
+$$
+R_b=\frac{i_b(h_bt+v)}{g_b},\qquad
+R_c=\frac{i_c(h_ct+v)}{g_c},\qquad
+X_t=\frac{R_b-R_c}{h_b-h_c},\qquad X_v=R_b-h_bX_t.
+\tag{14.3}
+$$
+
+Two such rows always exist and have different parameters. The zero determinant ensures the third equation $P_{k_*}(X_t,X_v)^{\mathsf T}=\mathbf b$ as well, even when that row has zero gain.
+
+Hold $u$ fixed and define
+
+$$
+\Delta_p=\frac{-X_t+\sigma(w+\sigma)X_v}{d_*},\qquad
+\Delta_q=\Delta_p-\sigma X_v,\qquad
+\Delta_r=X_t-w\Delta_p.
+$$
+
+Choose any nonzero real $\epsilon$ with
+
+$$
+|\epsilon|<\min\left\{
+\frac{p}{2(1+|\Delta_p|)},\quad
+\frac{q}{2(1+|\Delta_q|)},\quad
+\frac{r}{2(1+|\Delta_r|)}\right\}.
+\tag{14.4}
+$$
+
+All three upper bounds are strictly positive. Run $1$ uses $(p_1,q_1,r_1)=(p,q,r)$ and $k_1=k_*+\epsilon$. Run $0$ uses
+
+$$
+(p_0,q_0,r_0)=(p,q,r)+\epsilon(\Delta_p,\Delta_q,\Delta_r),\qquad k_0=k_*.
+$$
+
+The inverse linear formulas (13.2) give the same $u$ in both runs, while $(t_0,v_0)=(t+\epsilon X_t,v+\epsilon X_v)$ and $(t_1,v_1)=(t,v)$. Each perturbed entry is greater than half its original positive value. Set, for $b=0,1$,
+
+$$
+s_b=\frac{q_br_b}{p_b},\qquad
+S_b=\begin{pmatrix}p_b&q_b\\r_b&s_b\end{pmatrix},\qquad a_b=p_b+s_b,
+$$
+
+$$
+D_b(x)=-a_b-k_b(a_b+u)x.
+\tag{14.5}
+$$
+
+Both $S_b$ are strictly positive and of rank one. Each $D_b$ is one entire allowed affine polynomial, giving $\zeta=\eta=0$ in (13.3). The equality of tail data is the exact finite identity
+
+$$
+\begin{aligned}
+P_{k_0}\binom{t_0}{v_0}
+&=P_{k_*}\binom tv+\epsilon\mathbf b\\
+&=P_{k_*+\epsilon}\binom tv
+=P_{k_1}\binom{t_1}{v_1}.
+\end{aligned}
+\tag{14.6}
+$$
+
+Consequently at the actual initial index both readings are zero. At the two actual $Q$ indices both readings equal $u$. At each of the three actual $T$ indices the two readings are
+
+$$
+u+(1+k_0i_b)(h_bt_0+v_0),\qquad
+u+(1+k_1i_b)(h_bt_1+v_1),
+$$
+
+and (14.6) makes them equal row by row. This verifies every original observation equation at the six actual nodes. No sampled gain was required to be positive or nonzero; erased and negative samples satisfy these undivided identities. The collision is finite and exact, rather than an inference from a singular derivative alone.
+
+For each run choose the original parameters
+
+$$
+\alpha_b=1,\quad\beta_b=k_b,\quad R_b=S_b,\qquad
+c_b=(p_b,r_b)^{\mathsf T},\quad\ell_b=(1,q_b/p_b).
+\tag{14.7}
+$$
+
+The only new source divisor is $p_b>0$. These positive factors multiply to $S_b$, since $p_bs_b=q_br_b$, and $\ell_bA_ic_b=\operatorname{tr}(A_iS_b)$. Along exactly the original words, $M$ sends a positive column $(x,y)^{\mathsf T}$ to $(y,x+y)^{\mathsf T}$ and $J$ sends it to $(y,x)^{\mathsf T}$. Every read and unread state is therefore positive with the same unchanged row during its run. The fixed parameters and the single polynomial (14.5) are used at every node. The two slopes differ by $\epsilon\ne0$, so the effective targets differ irrespective of any exceptional coincidence of source entries. There is no reset, lifted-source replacement, row change, alternative-history combination, or per-read choice of drift. The argument supplies an affine-drift collision; it does not assert a constant-drift collision.
+
+## 15. Mirror realization, exact residual, and unchanged endpoint bounds
+
+Conjugation by $J$ exchanges $E_{22}$ and $E_{11}$ and exchanges upper and lower entries. For an original history put $A'_i=JA_iJ$ and $K'=JKJ$. Then $A'_0=I$ and each multiplier is $JW_iJ$, a finite $M/J$ word, including the empty word when $W_i$ is empty. The six actual indices, traces, pencil ranks and safety are preserved under the source isomorphism $S'=JSJ$. Apply Sections 11–14 in the primed coordinates. To realize their collisions on the original history, set
+
+$$
+S_b=JS'_bJ,\qquad c_b=Jc'_b,\qquad\ell_b=\ell'_bJ,
+$$
+
+and keep $k_b,D_b$ unchanged. Both factors are strictly positive, fixed within their run, and multiply to $S_b$. Moreover $\operatorname{tr}(A_iS_b)=\operatorname{tr}(A'_iS'_b)$ at every original node. The original $M/J$ atoms preserve positivity throughout their unread states as well. Thus conjugation is a mathematical correspondence realizing sources on the original words, without requesting a conjugation acquisition or combining observations of two histories.
+
+Combining the results gives the following necessary restriction on the entire diagonal-kernel part of the surviving $d=1$ branch. Mixed positive diagonal generators are excluded by Theorem 11.1. For $E_{22}$, Theorem 11.2 gives the complete legal-chain normal form, Proposition 12.1 requires a final phase and $a\le3$, and Sections 12–14 exclude every $a=1$ list by actual different-slope collisions. Therefore a uniformly recovering diagonal-kernel history must have exactly
+
+$$
+a=2\quad\text{or}\quad a=3
+$$
+
+initial lower-shear readings $D_h$, including $A_0=I$. These are exactly its endpoints with $(A_i)_{12}=0$; no later endpoint can return to that zero entry. In the $E_{11}$ branch the corresponding number of initial upper-shear readings, or endpoints with $(A_i)_{21}=0$, is two or three. The initial shears may repeat $I$ or may be nontrivial; neither possibility is silently excluded. Section 10 separately excludes every recorded-$M/JMJ$ list under the common-safe-kernel hypotheses.
+
+The remaining $d=1$ diagonal residual is precisely the normal-form candidates with $a=2$ or $3$, still subject to every all-real-slope rank, transverse and quadratic necessary test and to exclusion of recorded $M$ or $JMJ$ for recovery. No global inverse or universal collision for these candidates is established. Every non-diagonal normalized safe generator remains in scope, with any off-diagonal entries and determinant allowed by the safe cone; those generators are not classified by the diagonal argument. Regular pencils remain for every degree, including the regular five-read $d=0$ branch. For $d\ge2$ the common safe signal has degree at most $d-1$, so the constant-hyperplane chain argument does not classify those histories. These residuals leave the original all-history endpoint goal unchanged.
+
+The credited numerical intervals are exactly
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+The goal remains to choose each endpoint over all predetermined finite-word cumulative histories and provide a matching legal history with a common-source inverse for every real slope, all zero and negative gain samples, and the entire degree-bounded drift; alternatively an endpoint obstruction must realize collisions for every remaining history. A legal normal form is not rank sufficiency, and rank or local nonsingularity is not global recovery sufficiency.
+
+The suppliers credited in Sections 2, 7 and 8 retain their original roles: the positive-secant and fixed-slope criteria, the exact drift quotient, the recorded-clock common-kernel theorem, the critical and quadratic necessary tests, the affine and polynomial recovery constructions, the fixed-prefix continuation optima, the six-read constant-drift result and the representation scales. Section 10's recorded-event classification and finite tail transfer are credited to the preceding recorded-stratum proposal. The mixed diagonal exclusion, complete diagonal legal-chain description, one-initial-zero-entry classification, all-slope inverse and finite collision in Sections 11–14 are credited to the preceding diagonal-stratum proposal named above. Their incorporation supplies proofs and the resulting precise residual in this owning volume; it is not a claim of new priority over those suppliers. No independent review, Lean verification, universal obstruction, improved numerical optimum, adaptive impossibility, optimal atom count, precision or noisy guarantee, physical or empirical claim, general neural-network conclusion, external priority or programme completion is asserted.
+
+## 追加锚（本行以下为增补区）
