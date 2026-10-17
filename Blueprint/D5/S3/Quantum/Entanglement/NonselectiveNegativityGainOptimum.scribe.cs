@@ -19,9 +19,9 @@ internal sealed class NonselectiveNegativityGainOptimumDocument : IScribeDocumen
                 Math(In(NegativityFormula())),
                 Text(
                     ". Here Γ is partial transposition on the second factor: the entry with row (i, j) and column (k, l) becomes the original entry with row (i, l) and column (k, j).")),
-            Node("pure", "The outer product of a two-qubit vector", PureFormula(),
-                "Theorem 2 writes a pure input as ρ = ψψ†. The outer product has entries ψ(i) times the conjugate of ψ(j). This definition accepts every vector; for a unit vector it is the pure-state density matrix.",
-                DescribeRole.Definition),
+            Paragraph(Text("The rank-one density ψψ†, also written ψψᴴ, is "),
+                Ref("D5/S3/Quantum/PureState/PureStateHandshake.rankOneDensity"),
+                Text(". Its entries are ψ(i) times the conjugate of ψ(j); for a unit vector it is the pure-state density matrix.")),
             Node("measured", "The non-selective measurement map", MeasuredFormula(),
                 "Theorem 2 gives the post-measurement state as the sum of the basis projectors weighted by the squared overlaps with the input vector. Here the columns u_j of U give those basis vectors, and the coefficient is (UᴴρU)_jj. For unitary U and ρ = ψψ† this is |⟨u_j, ψ⟩|². The definition itself accepts arbitrary matrices U and ρ; smul denotes scalar multiplication.",
                 DescribeRole.Definition),
@@ -81,9 +81,6 @@ internal sealed class NonselectiveNegativityGainOptimumDocument : IScribeDocumen
     private static Formula NegativityFormula() => All(Rho, MatrixType(), Equal(Call("negativity", Rho),
         new Formula.Fraction(Subtract(TraceNorm(Transposed(Rho)), D(1)), D(2))));
 
-    private static Formula PureFormula() => All(Psi, VectorType(),
-        Equal(Call("pure", Psi), Call("vecMulVec", Psi, Call("star", Psi))));
-
     private static Formula MeasuredFormula()
     {
         var u = X("U");
@@ -97,7 +94,7 @@ internal sealed class NonselectiveNegativityGainOptimumDocument : IScribeDocumen
     private static Formula ClaimFormula()
     {
         var u = X("U");
-        var rho = Call("pure", Psi);
+        var rho = Mul(Psi, Adjoint(Psi));
         var value = Call("negativity", Call("measured", u, rho));
         var bound = Add(new Formula.Fraction(Call("negativity", rho), D(2)), new Formula.Fraction(D(1), D(4)));
         var normalized = Equal(SumOver(X("i"), Index(), Call("normSq", At(Psi, X("i")))), D(1));

@@ -7,6 +7,7 @@
    digest: The global two-qubit non-selective measurement optimum is N/2 + 1/4. -/
 
 import D5.S3.QuantumBounds.NegativityReductionInclusionRefutation
+import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
@@ -24,11 +25,10 @@ open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
   (traceNorm traceNorm_add_le exists_svd_sqrt_eigenvalues)
 open D5.S3.QuantumBounds.NegativityReductionInclusionRefutation (negativity)
+open D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
 open D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
   (traceNorm_isometry traceNorm_smul_nonneg)
-
-def pure (ψ : Fin 2 × Fin 2 → ℂ) := vecMulVec ψ (star ψ)
 
 def measured (U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :=
@@ -37,9 +37,9 @@ def measured (U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
 
 def claim : Prop := ∀ ψ : Fin 2 × Fin 2 → ℂ, (∑ i, Complex.normSq (ψ i)) = 1 →
   (∀ U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ,
-    negativity (measured U (pure ψ)) ≤ negativity (pure ψ) / 2 + 1 / 4) ∧
+    negativity (measured U (rankOneDensity ψ)) ≤ negativity (rankOneDensity ψ) / 2 + 1 / 4) ∧
   (∃ U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ,
-    negativity (measured U (pure ψ)) = negativity (pure ψ) / 2 + 1 / 4)
+    negativity (measured U (rankOneDensity ψ)) = negativity (rankOneDensity ψ) / 2 + 1 / 4)
 
 private theorem measured_diagonal (U ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) :
     measured U ρ = U * diagonal (fun j => (Uᴴ * ρ * U) j j) * Uᴴ := by
@@ -53,14 +53,15 @@ private theorem measured_diagonal (U ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 
   ring
 
 private theorem pure_trace (ψ : Fin 2 × Fin 2 → ℂ)
-    (hψ : (∑ i, Complex.normSq (ψ i)) = 1) : (pure ψ).trace = 1 := by
-  rw [pure, Matrix.trace_vecMulVec]
+    (hψ : (∑ i, Complex.normSq (ψ i)) = 1) : (rankOneDensity ψ).trace = 1 := by
+  rw [rankOneDensity, Matrix.trace_vecMulVec]
   change (∑ i, ψ i * star (ψ i)) = 1
   simp only [RCLike.star_def, Complex.mul_conj]
   exact_mod_cast hψ
 
 private theorem pure_square (ψ : Fin 2 × Fin 2 → ℂ)
-    (hψ : (∑ i, Complex.normSq (ψ i)) = 1) : pure ψ * pure ψ = pure ψ := by
+    (hψ : (∑ i, Complex.normSq (ψ i)) = 1) :
+    rankOneDensity ψ * rankOneDensity ψ = rankOneDensity ψ := by
   have hn : star ψ ⬝ᵥ ψ = 1 := by
     rw [dotProduct_comm]
     exact pure_trace ψ hψ
@@ -92,10 +93,10 @@ private theorem pinching_trace (U ρ : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) 
 private theorem reflection_trace (U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (hU : U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ) (ψ : Fin 2 × Fin 2 → ℂ)
     (hψ : (∑ i, Complex.normSq (ψ i)) = 1) :
-    (((2 : ℂ) • measured U (pure ψ) - pure ψ) *
-      ((2 : ℂ) • measured U (pure ψ) - pure ψ)).trace = 1 := by
-  have hp := pinching_trace U (pure ψ) hU
-  have hc := Matrix.trace_mul_comm (pure ψ) (measured U (pure ψ))
+    (((2 : ℂ) • measured U (rankOneDensity ψ) - rankOneDensity ψ) *
+      ((2 : ℂ) • measured U (rankOneDensity ψ) - rankOneDensity ψ)).trace = 1 := by
+  have hp := pinching_trace U (rankOneDensity ψ) hU
+  have hc := Matrix.trace_mul_comm (rankOneDensity ψ) (measured U (rankOneDensity ψ))
   simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul, Matrix.mul_smul,
     Matrix.trace_sub, Matrix.trace_smul, smul_eq_mul]
   rw [pure_square ψ hψ, pure_trace ψ hψ, hc, ← hp]
@@ -140,25 +141,25 @@ private theorem upper_bound (ψ : Fin 2 × Fin 2 → ℂ)
     (hψ : (∑ i, Complex.normSq (ψ i)) = 1)
     (U : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
     (hU : U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ) :
-    negativity (measured U (pure ψ)) ≤ negativity (pure ψ) / 2 + 1 / 4 := by
-  let X := (2 : ℂ) • measured U (pure ψ) - pure ψ
-  have hρ : (pure ψ).IsHermitian := (Matrix.posSemidef_vecMulVec_self_star ψ).1
+    negativity (measured U (rankOneDensity ψ)) ≤ negativity (rankOneDensity ψ) / 2 + 1 / 4 := by
+  let X := (2 : ℂ) • measured U (rankOneDensity ψ) - rankOneDensity ψ
+  have hρ : (rankOneDensity ψ).IsHermitian := (Matrix.posSemidef_vecMulVec_self_star ψ).1
   have hX : X.IsHermitian :=
-    ((measured_hermitian U (pure ψ) hρ).smul (by norm_num [IsSelfAdjoint])).sub hρ
+    ((measured_hermitian U (rankOneDensity ψ) hρ).smul (by norm_num [IsSelfAdjoint])).sub hρ
   have hf : (∑ p, ∑ q, ‖partialTranspose X p q‖ ^ 2) = 1 := by
     rw [partialTranspose_frobenius, ← gram_trace, hX.eq]
     exact congrArg Complex.re (reflection_trace U hU ψ hψ)
   have hb := traceNorm_frobenius (partialTranspose X)
   rw [hf, Real.sqrt_one, mul_one] at hb
-  have he : (2 : ℂ) • partialTranspose (measured U (pure ψ)) =
-      partialTranspose (pure ψ) + partialTranspose X := by
+  have he : (2 : ℂ) • partialTranspose (measured U (rankOneDensity ψ)) =
+      partialTranspose (rankOneDensity ψ) + partialTranspose X := by
     ext p q
     simp [X, partialTranspose]
-  have ht := traceNorm_add_le (partialTranspose (pure ψ)) (partialTranspose X)
-  have hs : traceNorm ((2 : ℂ) • partialTranspose (measured U (pure ψ))) =
-      2 * traceNorm (partialTranspose (measured U (pure ψ))) := by
+  have ht := traceNorm_add_le (partialTranspose (rankOneDensity ψ)) (partialTranspose X)
+  have hs : traceNorm ((2 : ℂ) • partialTranspose (measured U (rankOneDensity ψ))) =
+      2 * traceNorm (partialTranspose (measured U (rankOneDensity ψ))) := by
     simpa only [Complex.ofReal_ofNat] using
-      traceNorm_smul_nonneg (partialTranspose (measured U (pure ψ))) 2 (by norm_num)
+      traceNorm_smul_nonneg (partialTranspose (measured U (rankOneDensity ψ))) 2 (by norm_num)
   rw [← he, hs] at ht
   unfold negativity
   linarith
@@ -297,20 +298,20 @@ private theorem rotation_unitary (s t : ℝ) (hst : s ^ 2 + t ^ 2 = 1) :
       Fintype.sum_prod_type, Fin.sum_univ_two, ← pow_two, hc, hrev, mul_comm]
 
 private theorem schmidt_pure (x : Fin 2 → ℝ) :
-    pure (schmidt x) = correlated (x 0 ^ 2) (x 1 ^ 2) (x 0 * x 1) := by
+    rankOneDensity (schmidt x) = correlated (x 0 ^ 2) (x 1 ^ 2) (x 0 * x 1) := by
   ext ⟨i, j⟩ ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    simp [pure.eq_1, schmidt.eq_1, correlated.eq_1, Matrix.vecMulVec_apply,
+    simp [rankOneDensity, schmidt.eq_1, correlated.eq_1, Matrix.vecMulVec_apply,
       Pi.star_apply, pow_two, mul_comm]
 
 private theorem rotation_readout (x : Fin 2 → ℝ) (s t : ℝ) :
-    measured (rotation s t) (pure (schmidt x)) = correlated
+    measured (rotation s t) (rankOneDensity (schmidt x)) = correlated
       (s ^ 2 * (s * x 0 + t * x 1) ^ 2 + t ^ 2 * (t * x 0 - s * x 1) ^ 2)
       (t ^ 2 * (s * x 0 + t * x 1) ^ 2 + s ^ 2 * (t * x 0 - s * x 1) ^ 2)
       (s * t * ((s * x 0 + t * x 1) ^ 2 - (t * x 0 - s * x 1) ^ 2)) := by
   ext ⟨i, j⟩ ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    simp [measured.eq_1, pure.eq_1, schmidt.eq_1, rotation.eq_1, correlated.eq_1,
+    simp [measured.eq_1, rankOneDensity, schmidt.eq_1, rotation.eq_1, correlated.eq_1,
       Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
       Matrix.mul_apply, Matrix.conjTranspose_apply, Fintype.sum_prod_type, Fin.sum_univ_two] <;>
     ring
@@ -319,7 +320,7 @@ private theorem schmidt_measured (x : Fin 2 → ℝ) (s t : ℝ)
     (hx : x 0 ^ 2 + x 1 ^ 2 = 1) (hst : s ^ 2 + t ^ 2 = 1)
     (hd : Real.sqrt 2 * (s ^ 2 - t ^ 2) = x 0 - x 1)
     (hp : 2 * Real.sqrt 2 * s * t = x 0 + x 1) :
-    measured (rotation s t) (pure (schmidt x)) =
+    measured (rotation s t) (rankOneDensity (schmidt x)) =
       correlated (x 0 ^ 2 / 2 + 1 / 4) (x 1 ^ 2 / 2 + 1 / 4)
         (x 0 * x 1 / 2 + 1 / 4) := by
   let P := (s * x 0 + t * x 1) ^ 2
@@ -366,8 +367,8 @@ private theorem schmidt_measured (x : Fin 2 → ℝ) (s t : ℝ)
 private theorem schmidt_attainment (x : Fin 2 → ℝ) (hn : ∀ i, 0 ≤ x i)
     (hx : x 0 ^ 2 + x 1 ^ 2 = 1) :
     ∃ U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ,
-      negativity (measured U (pure (schmidt x))) =
-        negativity (pure (schmidt x)) / 2 + 1 / 4 := by
+      negativity (measured U (rankOneDensity (schmidt x))) =
+        negativity (rankOneDensity (schmidt x)) / 2 + 1 / 4 := by
   obtain ⟨s, t, hst, hd, hp⟩ := rotation_parameters (x 0) (x 1) (hn 0) hx
   refine ⟨rotation s t, rotation_unitary s t hst, ?_⟩
   rw [schmidt_measured x s t hx hst hd hp, schmidt_pure]
@@ -387,7 +388,7 @@ theorem result : claim := by
     ⟨(V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (Z : Matrix (Fin 2) (Fin 2) ℂ),
       Matrix.kronecker_mem_unitary V.prop Z.prop⟩
   have heq : ψ = (L : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) *ᵥ schmidt x := he
-  have hpure : pure ψ = L.val * pure (schmidt x) * L.valᴴ := by
+  have hpure : rankOneDensity ψ = L.val * rankOneDensity (schmidt x) * L.valᴴ := by
     rw [heq]
     exact (D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment.conjugate_outer
       L.val (schmidt x)).symm
@@ -401,12 +402,12 @@ theorem result : claim := by
       congrArg Complex.re ht
   obtain ⟨U, hU, hopt⟩ := schmidt_attainment x hn hx
   refine ⟨L.val * U, (unitaryGroup (Fin 2 × Fin 2) ℂ).mul_mem L.prop hU, ?_⟩
-  rw [hpure, measured_transport L.val U (pure (schmidt x)) L.prop]
+  rw [hpure, measured_transport L.val U (rankOneDensity (schmidt x)) L.prop]
   change negativity (((V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (Z : Matrix (Fin 2) (Fin 2) ℂ)) *
-      measured U (pure (schmidt x)) *
+      measured U (rankOneDensity (schmidt x)) *
       ((V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (Z : Matrix (Fin 2) (Fin 2) ℂ))ᴴ) =
     negativity (((V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (Z : Matrix (Fin 2) (Fin 2) ℂ)) *
-      pure (schmidt x) *
+      rankOneDensity (schmidt x) *
       ((V : Matrix (Fin 2) (Fin 2) ℂ) ⊗ₖ (Z : Matrix (Fin 2) (Fin 2) ℂ))ᴴ) / 2 + 1 / 4
   rw [negativity_local _ V Z, negativity_local _ V Z]
   exact hopt

@@ -6,6 +6,7 @@ import Reg.Support.DependentFamily
 
 namespace Reg.D5.S3.Quantum.Entanglement.NonselectiveNegativityGainOptimum
 open _root_.D5.S3.Quantum.Entanglement.NonselectiveNegativityGainOptimum
+open _root_.D5.S3.Quantum.PureState.PureStateHandshake (rankOneDensity)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.QuantumBounds.NegativityReductionInclusionRefutation (negativity)
 open _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm traceNorm_nonneg)
@@ -29,10 +30,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ ψ U => negativity (measured U (pure ψ))) (fun e => nomatch e)
+  realize signature (fun _ ψ U => negativity (measured U (rankOneDensity ψ))) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ ψ U => negativity (measured U (pure ψ)) + 1)
+  realize signature (fun _ ψ U => negativity (measured U (rankOneDensity ψ)) + 1)
     (fun e => nomatch e)
 
 /-- Keep the normalization, universal bound, and attained equality. -/
@@ -40,9 +41,9 @@ abbrev arena : Arena where
   signature := signature
   Law r := ∀ ψ : Fin 2 × Fin 2 → ℂ, (∑ i, Complex.normSq (ψ i)) = 1 →
     (∀ U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ,
-      r.readout () ψ U ≤ negativity (pure ψ) / 2 + 1 / 4) ∧
+      r.readout () ψ U ≤ negativity (rankOneDensity ψ) / 2 + 1 / 4) ∧
     (∃ U ∈ unitaryGroup (Fin 2 × Fin 2) ℂ,
-      negativity (measured U (pure ψ)) = negativity (pure ψ) / 2 + 1 / 4)
+      negativity (measured U (rankOneDensity ψ)) = negativity (rankOneDensity ψ) / 2 + 1 / 4)
 
 private def basisVector : Fin 2 × Fin 2 → ℂ :=
   fun p => if p = (0, 0) then 1 else 0
@@ -55,22 +56,22 @@ theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨U, hU, hopt⟩ := (result basisVector basisVector_normalized).2
   have hbad := (h basisVector basisVector_normalized).1 U hU
-  change negativity (measured U (pure basisVector)) + 1 ≤ _ at hbad
+  change negativity (measured U (rankOneDensity basisVector)) + 1 ≤ _ at hbad
   linarith
 
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨U, _, hopt⟩ := (result basisVector basisVector_normalized).2
   refine ⟨basisVector, 0, U, ?_⟩
-  have hz : negativity (measured 0 (pure basisVector)) = -1 / 2 := by
-    have hm : measured 0 (pure basisVector) = 0 := by simp [measured]
+  have hz : negativity (measured 0 (rankOneDensity basisVector)) = -1 / 2 := by
+    have hm : measured 0 (rankOneDensity basisVector) = 0 := by simp [measured]
     have hp : partialTranspose
         (0 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) = 0 := rfl
     rw [hm, negativity, hp]
     simp [_root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm]
-  have hn := traceNorm_nonneg (partialTranspose (pure basisVector))
-  change negativity (measured 0 (pure basisVector)) ≠
-    negativity (measured U (pure basisVector))
+  have hn := traceNorm_nonneg (partialTranspose (rankOneDensity basisVector))
+  change negativity (measured 0 (rankOneDensity basisVector)) ≠
+    negativity (measured U (rankOneDensity basisVector))
   rw [hz, hopt]
   unfold negativity
   linarith
@@ -104,7 +105,8 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ ψ U => negativity (measured U (pure ψ))) (fun e => nomatch e))
+    (realize signature (fun _ ψ U => negativity (measured U (rankOneDensity ψ)))
+      (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
