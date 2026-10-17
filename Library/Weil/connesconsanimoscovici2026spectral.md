@@ -10166,3 +10166,382 @@ premises remain. This applies existing block minimization, Rayleigh and
 Cauchy methods without a generic novelty or Lean-proof claim. The
 stronger-target sign, actual retained/cofinal positivity, Robin and RH
 remain unresolved.
+
+### Normalize a coherent source-dependent negative family
+
+The accepted negative border budget supplies an exact source-dependent
+family, even though the preceding fixed nominal direction failed. No
+second nominal vector is selected. The new calculation bounds the norm
+of the exact family before paying the stronger-base allowance.
+
+Write the saved negative pivot as $-d<0$, put
+$J=[T,e_0]$ and $\mathcal D=\operatorname{diag}(I_2,J)$. The existing
+congruence gives
+
+$$
+\mathcal D^*A^*L_*A\mathcal D
+=\operatorname{diag}(C_0,-d),\qquad
+C_0=\operatorname{diag}(G_{JJ},P_+)\succ0.
+$$
+
+For each SAME actual source realization, write its two rows on
+$A\mathcal D$ as $[F,k]$ and define
+
+$$
+\Lambda=\operatorname{diag}(t_+,D_{\rm lo}^{-1}),\qquad
+C=\Lambda^{-1}+FC_0^{-1}F^*,\qquad
+p=C^{-1}k,\qquad v=-C_0^{-1}F^*p.
+$$
+
+These are exact mathematical objects, not a computation using the
+reference inverse. Standard block minimization gives the coefficient
+vector $w=\mathcal D(v,1)$ and
+
+$$
+\begin{aligned}
+(Aw)^*T_0(Aw)&=-d+k^*C^{-1}k,\\
+v^*C_0v&=p^*(C-\Lambda^{-1})p\le k^*C^{-1}k,\\
+\frac{\det N}{\det C}&=1-\frac{k^*C^{-1}k}{d},
+\qquad N=C-kk^*/d.
+\end{aligned}
+$$
+
+Here $T_0=L_*+t_+r^*r+b^*b/D_{\rm lo}$ is the SAME endpoint
+comparison. This family allows its exact vector to depend on the
+source; it does not assert one common fixed vector for every source.
+
+The restricted-border identification is essential. Its two good rows
+are $(a,c)$ and $(c+u,d_J+v_m)$, where
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d_J\end{smallmatrix}\right)$
+and the measured pair is $m=(u,v_m)$. Their inverse metric is exactly
+
+$$
+\begin{pmatrix}
+a&c+u\\c+u&d_J+2v_m+Q_J
+\end{pmatrix},\qquad Q_J=mG_{JJ}^{-1}m^*.
+$$
+
+Consequently setting the good far energy to $Q_J$ in the accepted
+complete budget gives THIS restricted twenty-profile border. It does
+not assert that the full good far energy attains its projection lower.
+The existing bound $z_{\rm crit}-Q_J\le U_{\rm adm}<0$ therefore
+supplies the inherited $\det N\ge\Delta_N>0$ for the restricted
+family as well.
+
+Use the saved complete positive-core energy upper $E_b$, reference
+source energy upper $E_r$ and reference factor $\eta<1$. Two diagonal
+uppers and a determinant upper are
+
+$$
+\begin{aligned}
+C_{11}&\le c_1=t_+^{-1}+\operatorname{ub}a+E_r/(1-\eta),\\
+C_{22}&\le c_2=D_{\rm lo}+\operatorname{ub}d_J
++2\operatorname{ub}v_m+\operatorname{ub}Q_J+E_b,\\
+\det C&\le c_1c_2\le\overline\Delta_C.
+\end{aligned}
+$$
+
+Here $\overline\Delta_C$ rounds the product upwards. The complete $E_b$ already includes the SAME conditional mean and
+residual; no separate source extremes are asserted jointly attainable.
+With downward $\vartheta=\Delta_N/\overline\Delta_C$, define
+
+$$
+\mu=d_{\rm lo}\vartheta>0,\qquad
+E_+=d_{\rm up}(1-\vartheta).
+$$
+
+Then this exact family has old-target quadratic at most $-\mu$ and
+positive-part energy at most $E_+$. Dividing by a determinant UPPER is
+what turns the border determinant LOWER into a primal energy gap.
+
+The new Euclidean calculation uses $H=A^*A$ and the existing actual
+positive inverse enclosure $P_+^{-1}\preceq R/(1-\eta)$. If
+$H_{gg}=Y^*Y$ and $H_{VV}=V^*V$, the trace bound is
+
+$$
+\operatorname{tr}(H_+C_0^{-1})\le
+\tau:=\operatorname{ub}\operatorname{tr}(H_{gg}G_{JJ}^{-1})
++\frac{\operatorname{ub}\operatorname{tr}(T^*H_{VV}TR)}{1-\eta}.
+$$
+
+Here $H_+$ is the full positive-coordinate block of
+$\mathcal D^*H\mathcal D$, including its mixed good/core entries.
+Those entries contribute zero to its trace against block-diagonal
+$C_0^{-1}$; they are not assumed zero in the Gram. The PSD trace
+inequality and triangle inequality give
+
+$$
+\|Aw\|^2\le
+N_{\rm fam}:=\left(\sqrt{\operatorname{ub}(H_{VV})_{00}}
++\sqrt{\tau E_+}\right)^2.
+$$
+
+Thus the complete sufficient stronger-target upper is
+
+$$
+-\mu+\delta N_{\rm fam},\qquad
+\delta=2\kappa\epsilon,
+$$
+
+and a certified sufficient coefficient allowance is any
+$0\le\delta'<\delta_{\rm cert}$, where
+$\delta_{\rm cert}$ is a downward bound for $\mu/N_{\rm fam}$.
+This allowance is not a maximal perturbation or an actual generalized
+spectral gap. All exact PSD, common-source, reference, normalization,
+full original allowance and domain premises remain.
+
+The single directed application gives these outward enclosures of the
+computed certificate values. They are not ranges of attainable source
+values or actual eigenvalues.
+
+| Certificate quantity | Enclosure of its computed value |
+|---|---|
+| Joint Euclidean energy trace upper $\tau$ | $[1.0100202,1.0100203]\cdot10^{134}$ |
+| Normalized old negative margin lower $\mu$ | $[1.6070745,1.6070746]\cdot10^{-33}$ |
+| Family norm squared upper $N_{\rm fam}$ | $[1.1732857,1.1732858]\cdot10^{103}$ |
+| Sufficient coefficient threshold lower $\delta_{\rm cert}$ | $[1.3697212,1.3697213]\cdot10^{-136}$ |
+| Complete stronger-family quadratic upper | $[4.8662150,4.8662151]\cdot10^{-32}$ |
+
+The original allowance gives
+$\delta\in[4.2844825,4.2844826]\cdot10^{-135}$.
+Its norm payment upper is contained in
+$[5.0269224,5.0269225]\cdot10^{-32}$, exceeding the certified
+negative margin in this sufficient bound. Thus the stronger-target test
+is inconclusive. Neither the positive sufficient upper nor the smaller
+sufficient coefficient threshold establishes a stronger-form sign or an
+upper limit on its true tolerance. For a separately justified gain bound
+$0\preceq E\preceq\delta'I$ with
+$0\le\delta'<1.3697212\cdot10^{-136}$, the same family certificate
+would remain strictly negative; no such replacement for the actual
+allowance is assumed.
+
+The new information is the correctly normalized exact-family gap and
+norm bound. The uniform trace discards directional source geometry;
+a further method must preserve that geometry or supply an independently
+stronger joint estimate. No direction, parameter, source, precision or
+norm-refinement retry follows this inconclusive application.
+
+The sole1024-working/640-export application takes<0.043857seconds,
+excluding serialization. Its5733-byte packet has SHA256
+`6d81b66716ed241500982bdc3e46cf5b096a1e4922759b1ff26b255f763b2018`;
+the225-line source has SHA256
+`ccd86c9281ad3ed832659dae760fec62ef97c3d62dce938033e36f945c70fe33`.
+One joint Euclidean geometry trace is new. There is no fixed-vector
+selection, new reference action, inverse, solve, source/far query or
+accepted producer/fixture replay. The original reference, complete
+source energies, determinant certificate and all original allowances
+are reused.
+
+The complete source and directed result are retained at [the immutable experimental commit](https://github.com/the-omega-institute/trureturing-experiments/tree/2d9951b20841ea1c839db256382ce33b1712e79e/docs/reports/weil-c27).
+This is an application of existing block minimization, determinant,
+PSD trace and energy inequalities, without generic novelty or a Lean
+proof. The actual stronger-target sign, retained/cofinal positivity,
+Robin and RH remain unresolved.
+
+
+### Pay the same family's norm through its source responses
+
+Keep the preceding exact source-dependent minimizer, normalized margin
+$\mu$ and energy cap $E_+$. No new nominal vector is chosen. With
+$\Lambda=\operatorname{diag}(t_+,D_{\rm lo}^{-1})$ and
+$p=C^{-1}k$, the accepted relations imply
+
+$$
+p^*\Lambda^{-1}p\le p^*Cp=k^*C^{-1}k\le E_+.
+$$
+
+This coefficient ellipse holds for the SAME actual source as $p$, the
+measured pair $m$ and the conditional residual. It does not require a
+numerical inverse of $C$.
+
+Let $H=A^*A$ be the saved twenty-profile Euclidean Gram. The physical
+columns of $A$ are ordered as two good profiles followed by the eighteen
+old lifted columns. Write $e_-$ for coordinate $2$ in this order, and
+$H_{VV}$ for the eighteen-column Gram. Put
+
+$$
+Q=TRT^*,\qquad \gamma_\eta=\frac{\eta}{1-\eta}.
+$$
+
+Here $R$ is only the accepted positive inverse REFERENCE. The exact
+minimizer and its negative margin continue to use the actual positive
+core inverse $P_+^{-1}$.
+
+The good source row is the first row of $G_{JJ}$; the second row is
+the second row of $G_{JJ}$ plus the measured $m$. Consequently its
+reference responses have exact good coordinates $e_1$ and
+$e_2+G_{JJ}^{-1}m^*$. Define five coefficient columns in the original
+frame by
+
+$$
+\begin{aligned}
+z_-&=e_-,&
+z_r&=\binom{e_1}{Q\rho^*},&
+z_{b0}&=\binom{e_2}{Q\beta_J^*},\\
+z_{b1}&=\binom{G_{JJ}^{-1}e_1}{QB_1^*},&
+z_{b2}&=\binom{G_{JJ}^{-1}e_2}{QB_2^*}.
+\end{aligned}
+$$
+
+The rows $B_1,B_2$ belong to the already saved conditional regression.
+The measured-source response is
+$z_b(m)=z_{b0}+m_1z_{b1}+m_2z_{b2}$. The new Gram is
+
+$$
+\mathcal G_5=[z_-,z_r,z_{b0},z_{b1},z_{b2}]^*
+H[z_-,z_r,z_{b0},z_{b1},z_{b2}].
+$$
+
+The negative-column norm $h_0$ is reused. The two regression reference
+actions are reused; only the previously unsaved $\rho$ and $\beta_J$
+response products and the new Euclidean contractions are computed.
+No inverse, solve or new physical source query is needed.
+
+Let $E(m)$ be the two-response Gram of $z_r,z_b(m)$ in $H$, and
+$n(m)=(z_-^*Hz_r,z_-^*Hz_b(m))$. The reference nominal family
+$x_0=z_--z_rp_1-z_b(m)p_2$ satisfies
+
+$$
+\|Ax_0\|^2\le N_0:=h_0+E_+\ell_2
++2\sqrt{E_+s_0},
+$$
+
+where $\ell_2$ bounds the largest eigenvalue of
+$\Lambda^{1/2}E(m)\Lambda^{1/2}$ and
+$s_0$ bounds $n(m)\Lambda n(m)^*$. This follows by applying the
+coefficient ellipse to both the quadratic term and the complete
+negative-column cross term. The source $m$ remains shared throughout
+these contractions. Interval uppers do not assert simultaneous
+attainability of their endpoints.
+
+For the real two-by-two response matrix, diagonal uppers $a,d$ and an
+absolute offdiagonal upper $c$ give the elementary Rayleigh upper; choose
+
+$$
+\ell_2=\frac{a+d+\sqrt{(a-d)^2+4c^2}}2.
+$$
+
+This is a response-space bound. It is not an eigenvalue enclosure for
+the original indefinite physical operator.
+
+The SAME conditional residual $q=y-mB$ obeys
+$q^*q\preceq\overline\Delta S_F$. Its response cost is controlled by
+one new nonnegative trace,
+
+$$
+\tau_Q=\operatorname{tr}(H_{VV}QS_FQ),\qquad
+\|VQq^*p_2\|\le
+\sqrt{E_+\overline\Delta\tau_Q/D_{\rm lo}}.
+$$
+
+The trace inequality follows directly from the outer-product order;
+$S_F$ need not be invertible. The bound uses this same source's
+$p_2$, with $D_{\rm lo}|p_2|^2\le E_+$. Neither an independence
+assumption nor an independent selection of $p_2$ and $q$ is used.
+
+Finally, let $f_P$ be the positive-core source column multiplied by the
+SAME exact $p$. Its actual inverse energy is at most $E_+$. The accepted
+two-sided inverse-reference relation gives
+
+$$
+R\preceq(1+\eta)P_+^{-1},\qquad
+f_P^*Rf_P\le(1+\eta)E_+.
+$$
+
+With the already saved
+$\tau_P=\operatorname{tr}(T^*H_{VV}TR)$, relative inverse perturbation
+and the PSD trace bound give
+
+$$
+\|VT(P_+^{-1}-R)f_P\|
+\le\gamma_\eta\sqrt{\tau_P(1+\eta)E_+}.
+$$
+
+Thus the full trace enters only the inverse-reference ERROR. The
+complete norm bound is
+
+$$
+N_{\rm dir}=\left(
+\sqrt{N_0}
++\sqrt{E_+\overline\Delta\tau_Q/D_{\rm lo}}
++\gamma_\eta\sqrt{\tau_P(1+\eta)E_+}
+\right)^2.
+$$
+
+All cross terms between nominal, conditional and inverse-error vectors
+are paid by this triangle inequality. The complete sufficient comparison
+is still $-\mu+\delta N_{\rm dir}$ with the original $\delta$.
+No smaller baseline allowance, replacement source or truncated parameter
+range is assumed.
+
+These are applications of existing block minimization, ellipsoid
+support, Schur conditioning and relative inverse inequalities. For the
+related use of positive metrics on indefinite systems,
+[Vecharynski--Knyazev, Definition2.2, Theorem2.3 and Corollary2.4](https://arxiv.org/abs/1104.4530)
+assume a nonsingular real symmetric matrix and an SPD preconditioner,
+and compare the preconditioned spectrum with that of its absolute
+value. Their result does not supply this physical Euclidean norm or
+commute absolute value with a general congruence. The response Gram and
+error payment above supply the required source-specific metric
+comparison; no general-method novelty is claimed.
+
+
+The sole directed application yields the following outward enclosures of
+COMPUTED certificate values. They are not source-attainable ranges or
+actual eigenvalues.
+
+| Certificate quantity | Outward enclosure |
+|---|---|
+| Nominal reference family norm-squared upper $N_0$ | $[8.3700696,8.3700697]\cdot10^{101}$ |
+| Conditional response norm upper | $[3.3845050,3.3845051]\cdot10^{50}$ |
+| Inverse-reference error norm upper | $[1.3616977,1.3616978]\cdot10^{24}$ |
+| Complete family norm-squared upper $N_{\rm dir}$ | $[1.5708394,1.5708395]\cdot10^{102}$ |
+| Original gain payment upper | $[6.7302343,6.7302344]\cdot10^{-33}$ |
+| Complete sufficient quadratic upper | $[5.1231598,5.1231599]\cdot10^{-33}$ |
+| Sufficient coefficient threshold lower | $[1.0230672,1.0230673]\cdot10^{-135}$ |
+
+The original $\delta$ remains in
+$[4.2844825,4.2844826]\cdot10^{-135}$, and the preceding normalized
+margin lower remains in $[1.6070745,1.6070746]\cdot10^{-33}$.
+The new norm upper improves the earlier trace upper by a factor in
+$(7.46,7.48)$, but its complete gain payment still exceeds the
+certified margin. The coefficient threshold is sufficient only, not
+maximal. The positive sufficient upper is inconclusive about the
+actual stronger-target sign or the exact family's optimal tolerance.
+
+Even deleting the other two terms from THIS estimator leaves its
+nominal-only computed expression
+
+$$
+-\mu+\delta N_0>1.97\cdot10^{-33}.
+$$
+
+This comparison concerns only fixed computed sufficient bounds.
+It is not a lower bound for the exact physical quadratic or family
+norm. It shows that sharpening just the conditional or inverse-error
+payment, while leaving this nominal upper unchanged, cannot make this
+estimator negative. A next estimate must preserve more of the joint
+$p,C,m,q$ relation or provide an independent joint comparison. No
+source, direction, parameter, precision or present-formula retry
+follows.
+
+The single1024-working/640-export application takes<0.046938seconds
+excluding serialization. Its263-line source has SHA256
+`961c1ab5dd31d8e351cd824df8d25266c9c530060dd74bec9e6fa5901b3e8aac`;
+the11399-byte packet has SHA256
+`6e12d77e100465978d3a9eb777280de15c1942256cbedf62c337fbe120f1c7d3`.
+One five-response Gram, one conditional Euclidean trace and two
+previously unsaved reference-vector products are new. The two saved
+regression reference actions, previous accepted normalized margin,
+full trace and all scientific producers and fixtures are reused without
+replay. No new inverse, solve, source/far query or fixed-vector
+selection is made.
+
+The [source and directed packet at the immutable experimental commit](https://github.com/the-omega-institute/trureturing-experiments/tree/f5eeb74c8594a9f168a21e6a9da1ff794fbe243d/docs/reports/weil-c27)
+retain the sole application. All inherited actual/common-source,
+domain, exact-frame, PSD physical and Euclidean, conditional source,
+source-energy, two-sided inverse-reference, complete original
+512-metadata allowance, endpoint/charge and baseline-order premises
+remain. This is a source-specific application of established methods,
+without a generic novelty or Lean-proof claim. The stronger-target
+sign, actual retained/cofinal positivity, Robin and RH remain unresolved.

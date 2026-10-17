@@ -4781,4 +4781,189 @@ A negative pairing value gives rank at least two for the alternating form on the
 
 This gives a quartic-symbol guard in the mutual-residue type $(1,19)$. The type $(7,13)$, the positive quartic-symbol subcase, and unrestricted higher-rank cases are not decided. No infinitude, previously surviving numerical pair, priority over all literature, or global WSS conclusion is asserted.
 
+
+## 80. Direct Cassels obstruction to the golden squareclass
+
+**Theorem 80.1 (pairing with the actual golden class).** Let $q,r$ be distinct primes satisfying
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1.$$
+
+Suppose integers $a,b,c$ satisfy the primitive norm-certificate conditions
+
+$$a^2-qb^2=5qr c^2,\quad \gcd(a,b,c)=1,\quad c>0,\quad \gcd(c,30qr)=1,$$
+$$24\mid a,\qquad b\equiv3c\pmod4,\qquad 5\nmid b.$$
+
+Put $D=qr$ and $E_D:y^2=x(x+5D)(x-15D)$. In the complete two-descent pair convention $(x,x+5D)$, let $\lambda=(q,1)$ and $\sigma=(-15,5)$. These are full two-Selmer classes, and their **multiplicative** Cassels pairing is
+
+$$\boxed{\langle\lambda,\sigma\rangle=-(b/5).}$$
+
+Consequently, a certificate with $(b/5)=+1$ excludes $D$ as the squarefree kernel of every original golden ternary block
+
+$$B_N=L_N^2+3=D C^2,\qquad N=3^j,\quad j\ge1,\quad C\in\mathbb Z_{>0}.$$
+
+This conclusion includes $C=1$ and does not require an independently supplied elliptic point or a Mordell--Weil generator.
+
+**Proof.** The corrected mutual-residue, type $(1,19)$ calculation in §§78--79 supplies both Selmer classes. The triple for $\lambda$ is $(q,1,q)$, with auxiliary conics
+
+$$H_1:z_2^2-qz_3^2=20qr t^2,\quad H_2:z_1^2-z_3^2=15r t^2,\quad H_3:z_2^2-qz_1^2=5qr t^2.$$
+
+Use conic points $(z_2,z_3,t)=(2a,2b,c)$ on $H_1$, $(z_2,z_1,t)=(a,b,c)$ on $H_3$, and $(z_1,z_3,t)=((15r+1)/2,(1-15r)/2,1)$ on $H_2$. Tangent forms, up to global rational factors, are
+
+$$L_1=a z_2-qb z_3-10qr c t,$$
+$$L_2=\frac{15r+1}{2}z_1-\frac{1-15r}{2}z_3-15r t,\qquad L_3=a z_2-qb z_1-5qr c t.$$
+
+The triple for $\sigma$ is $(-15,5,-3)$. The primary tangent formula [Shukla--Stoll, §3.2, (3.9)--(3.10)](https://arxiv.org/pdf/2302.01640) therefore gives
+
+$$\langle\lambda,\sigma\rangle=\prod_v(L_1(P_v),-15)_v(L_2(P_v),5)_v(L_3(P_v),-3)_v.$$
+
+Here each $P_v$ is a local point of the covering, chosen off the finite tangent-zero loci. Retaining the primitive integral norm point is important: its scaling contributions cannot be discarded.
+
+For $p\nmid30qr$, all three conics are smooth modulo $p$, their chosen conic points and tangents are primitive, and a primitive covering point projects primitively to each conic. Indeed, vanishing of all coordinates in one projection forces the remaining coordinate to vanish by another covering equation. A primitive tangent on a smooth unimodular conic has even valuation at any nonzero integral-projective evaluation: away from its tangency reduction it is a unit; near tangency, integral coordinates give
+
+$$a_0XZ+b_0Y^2+c_0YZ+d_0Z^2=0,\qquad a_0,b_0\in\mathbb Z_p^\times,$$
+
+with tangent $Z=0$ and $X$ a unit. Then $Z(a_0X+c_0Y+d_0Z)=-b_0Y^2$ proves even valuation. Since all three second Hilbert arguments are units, every good-prime contribution is one. This includes auxiliary primes dividing $a,b$ or $c$ individually.
+
+At $q$, the numbers $-15,5,-3$ are local squares. At $r$, the hypotheses make $5$ a square and $r\equiv1\pmod3$ makes $-3$ a square, hence $-15$ is a square too. These places contribute one. At the real place take $a>0$, permissible by changing its sign, so $a>\sqrt q\,|b|$. For $t=1$, $z_1=z$ large and positive, choose $z_2=+\sqrt{q(z^2+5r)}$ and $z_3=+\sqrt{z^2-15r}$. Then $L_1,L_3>0$, while the second argument of the $L_2$ factor is positive. The real contribution is one.
+
+For $p=2,3,5$ write $\alpha=a/c$, $\beta=b/c$. They are locally integral, $\alpha$ is divisible by $24$ in the relevant local sense, and $\beta$ is a unit at all three primes. At $3$ this follows from $\alpha^2-q\beta^2=5qr$; the other two cases follow from the hypotheses. Use
+
+$$t=1,\quad z_1=-\beta,\quad z_2=\alpha,\quad z_3^2=\beta^2-15r.$$
+
+The norm relation ensures the other conic equations. Set $\ell_1=L_1/c$, $\ell_3=L_3/c$ for these local calculations only; then $\ell_3=2q\beta^2$.
+
+At $2$, the identity $\beta^2-15r=\alpha^2/q-20r$ has valuation two and unit part $1\pmod8$, so $z_3$ exists with valuation one. Moreover,
+
+$$L_2\equiv3(1-\beta)\equiv2\pmod4,\qquad v_2(L_3)=1.$$
+
+Since $-15$ is a $2$-adic square and $-3$ has squareclass $5$, the factor is $(L_2L_3,5)_2=+1$: the extension $\mathbb Q_2(\sqrt5)$ is unramified and the valuation is even.
+
+At $3$, choose $z_3\equiv\beta\pmod3$. Then
+
+$$\ell_1\equiv1,\qquad L_2\equiv2\beta,\qquad \ell_3\equiv2\pmod3.$$
+
+The three normalized Hilbert factors are respectively $+1,+1,-1$. Restoring the two factors of $c$ contributes $(c,45)_3=(c,5)_3=1$, since both arguments are units. Thus the factor at $3$ is $-1$.
+
+At $5$, choose $z_3\equiv\beta\pmod5$. Hensel expansion gives
+
+$$z_3\equiv\beta-\frac{15r}{2\beta}\pmod{25},\qquad \ell_1\equiv\frac{5qr}{2}\pmod{25},\qquad L_2\equiv-\beta\pmod5.$$
+
+Thus $v_5(\ell_1)=1$. The unit part $qr/2$ is a nonresidue modulo $5$, as is the unit part $-3$ of $-15$, so the odd-prime Hilbert formula gives $(\ell_1,-15)_5=+1$. The other normalized factors are $(L_2,5)_5=(\beta/5)$ and $(\ell_3,-3)_5=1$. Restoring $c$ contributes $(c,45)_5=(c,5)_5=(c/5)$, giving total $(b/5)$. Multiplication over all places proves the boxed formula.
+
+If an original block existed, its genuine rational point $R=(5D B_N,25D^2L_N C F_N)$ and translate $S=R+(0,0)$ would satisfy
+
+$$X(S)=-15/C^2,\qquad X(S)+5D=5L_N^2/C^2.$$
+
+Its descent pair is exactly $\sigma=(-15,5)$. The rational Mordell--Weil image lies in the Cassels-pairing radical, as recalled in the cited paper's introduction, so $\langle\lambda,\sigma\rangle=+1$. Hence every such certificate must satisfy $(b/5)=-1$. A certificate with the opposite symbol excludes the original block for every $C$. No finiteness assumption on $\Sha$ is used. This argument does not use the rank-one guard of §79 and remains valid when that section's quartic symbol is $+1$. ∎
+
+**Certificate-choice independence.** The sign in Theorem 80.1 cannot be freely changed by choosing another normalized primitive norm certificate. For two such points $Q=(a,b,c)$ and $Q'=(a',b',c')$, put $G=aa'-qbb'-5qrcc'$. If $G\ne0$, the Gram determinant identity on $H_3$ gives, at a common evaluation point away from tangent zeros,
+
+$$2G L_3L'_3=5q^2r\det(Q,Q',P)^2.$$
+
+Thus $L'_3/L_3$ has squareclass $k=5q^2r/(2G)$. On $H_1$ the corresponding points are $(2a,2b,c)$ and $(2a',2b',c')$, their inner product is $4G$, and the quadratic-form determinant is $20q^2r$. Since $L_1$ is half the associated bilinear evaluation, $L'_1/L_1$ has the same squareclass $k$. The global pairing ratio is therefore
+
+$$\prod_v(k,-15)_v(k,-3)_v=\prod_v(k,5)_v=1$$
+
+by Hilbert reciprocity. If $G=0$, the two isotropic vectors are orthogonal in a nondegenerate ternary quadratic space and hence proportional; primitivity and $c,c'>0$ make the representatives equal. Consequently every admissible certificate has the same $(b/5)$. Weak approximation on the rational conic controls $\beta=b/c$, but does not control the $5$-character of the primitive global denominator $c$; the retained factor $(c/5)$ is essential.
+
+**Corollary 80.2 (an explicit conditional prime family).** Let $q$ be prime, $q\equiv1\pmod{24}$ and $(5/q)=1$. Suppose integers $A,b$ satisfy
+
+$$24\mid A,\quad b\equiv3\pmod4,\quad \gcd(qA,b)=1,\quad (b/5)=+1,$$
+
+and
+
+$$r=(qA^2-b^2)/5$$
+
+is a positive prime greater than $5$, distinct from $q$, with $(5/r)=1$. Then $qr$ cannot be the squarefree kernel of any original golden ternary block.
+
+**Proof.** Set $a=qA,c=1$. The norm equation and primitive certificate conditions follow immediately. Coprimality forces $\gcd(b,6)=1$, so $r\equiv-5\equiv19\pmod{24}$. Reduction modulo $q$ gives $(r/q)=(-5/q)=1$, and reciprocity gives $(q/r)=1$. Apply Theorem 80.1. ∎
+
+For a potentially additional family one may impose $qr\equiv19\pmod{120}$; otherwise the old squarefree-kernel congruence already excludes it. All certificate and primality premises are retained. No existence or infinitude of prime values, previously surviving numerical pair, independence from every earlier support condition, exhaustive priority claim, or universal WSS exclusion is asserted.
+
+
+## 81. A fixed-golden-field residue test from the original orbit
+
+Write $\mathcal R(a,b,c)=(-1)^{[a,b,c]}$ for the multiplicative version of Stevenhagen's additive Rédei symbol. We use [Stevenhagen, *Rédei reciprocity, governing fields, and negative Pell*](https://arxiv.org/pdf/1806.06250), Corollary 5.2, Definitions 7.5--7.8, Theorem 7.9, and equations (45)--(48). The defining hypotheses are pairwise Hilbert symbols $+1$ at every place and $\gcd(\Delta(a),\Delta(b),\Delta(c))=1$; the discriminants need not be pairwise coprime. All infinite and dyadic conditions below are retained.
+
+**Theorem 81.1 (the original Fibonacci coordinate supplies the extension).** Let $q,r$ be distinct primes with
+
+$$q\equiv1\pmod{24},\qquad r\equiv19\pmod{24},\qquad (5/q)=(5/r)=(q/r)=1,$$
+
+and put $D=qr$. If $B_N=L_N^2+3=D C^2$ for $N=3^j$, where $j,C$ are positive integers, then
+
+$$\boxed{\mathcal R(5,-D,q)=\mathcal R(5,q,-D)=1.}$$
+
+**Proof.** For $(5,-D,q)$ the discriminants are $5,-D,q$, whose three-way gcd is one. The Hilbert symbols $(5,q)_p$ are trivial by $5$-splitting and $q\equiv1\pmod8$. For $(5,-D)_p$, the places $q,r,5$ give $(5/q),(5/r),(-D/5)=1$; at $2$ both arguments are $1\pmod4$. For $(-D,q)_p$, the places $q,r$ give $(r/q),(q/r)=1$, using $(-q,q)_q=1$, while $q$ is a square at $2$. All other finite places are unit pairs; the infinite symbols are trivial. Thus the primary theorem applies, including the shared ramified argument $q$.
+
+The original identities and the Fibonacci recurrence modulo four give
+
+$$5F_N^2-1=D C^2,\qquad F_N\equiv2\pmod4.$$
+
+Indeed, $N\equiv3\pmod6$ and the Fibonacci recurrence modulo four has period six. In $K_0=\mathbb Q(\sqrt5)$, with $\mathcal O_0=\mathbb Z[\phi]$ and $\phi=(1+\sqrt5)/2$, set
+
+$$\beta=-1-F_N\sqrt5=(F_N-1)-2F_N\phi\equiv1\pmod{4\mathcal O_0},\qquad N_{K_0/\mathbb Q}(\beta)=-D C^2.$$
+
+Put $E=\mathbb Q(\sqrt5,\sqrt{-D})$, $K=\mathbb Q(\sqrt{-5D})$, and $F=E(\sqrt\beta)$. The norm-field construction in Corollary 5.2 makes $F/K$ cyclic quartic and $F/E$ quadratic. We check that $F/K$ is unramified at every finite place, which suffices for Definition 7.6 here.
+
+At an odd $p\nmid5D$, the elements $\beta,\bar\beta$ cannot have a common prime divisor above $p$, since their sum is $-2$. At a split prime dividing $C$, exactly one has positive valuation, and that valuation is even; an inert prime cannot divide either. Hence adjoining $\sqrt\beta$ is unramified, as are the quadratic factors defining $E$ and $K$ at such $p$. This includes every additional prime and repeated power in $C$.
+
+At $p=q$ or $r$, choose the split place of $K_0$ where $F_N\sqrt5\equiv1\pmod p$. There $\beta\equiv-2$ is a unit; at the conjugate place its valuation is $1+2v_p(C)$. Since $\beta\bar\beta=-D C^2$ is a square in $E$, either conjugate defines the same quadratic extension of $E$. Locally $E/K$ is trivial because $5$ is a square in $\mathbb Q_p$, and the unit description makes $F/K$ unramified. At $5$, $-D$ is a square in $\mathbb Q_5$, so again locally $E=K$; $\beta$ is a unit with residue $-1$, and its quadratic extension is unramified.
+
+At $2$, the ring $\mathcal O_0\otimes\mathbb Z_2$ is unramified quadratic. Write $\beta=1+4t$. The element $(1+\sqrt\beta)/2$ satisfies $T^2-T-t$, whose derivative is a unit modulo two, so adjoining $\sqrt\beta$ is unramified. Also $5\equiv-D\equiv5\pmod8$ and $-5D\equiv1\pmod8$: $K$ is split at two and $E$ is unramified quadratic. Thus $F/K$ is unramified there as well. This uses the full golden integer ring.
+
+The resulting extension is minimally ramified in the primary definition. Equations (45)--(48) evaluate the third argument $q$ at the conjugate-unit place, giving
+
+$$\mathcal R(5,-D,q)=(-2/q)=1.$$
+
+This remains valid when $q\mid C$, since the unit residue is still $-2$. Rédei reciprocity proves the other equality. ∎
+
+**Theorem 81.2 (an explicit residue test).** Under the prime hypotheses of Theorem 81.1, suppose
+
+$$q=u^2-5v^2,\qquad u>0,\quad u\equiv1\pmod4,\quad4\mid v.$$
+
+For either root $s^2\equiv5\pmod r$, every original block in Theorem 81.1 requires
+
+$$\boxed{\left(\frac{u+vs}{r}\right)=\left(\frac{2u}{q}\right)=\left(\frac{u}{5}\right).}$$
+
+Thus the opposite sign excludes $D$ as the squarefree kernel for every $C$ and every ternary index.
+
+**Proof.** The element $\gamma=u+v\sqrt5$ has norm $q$, is totally positive, and is $1\pmod{4\mathcal O_0}$. Primality gives $\gcd(u,v)=1$ and $q\nmid2u$. The field $F_q=\mathbb Q(\sqrt5,\sqrt q,\sqrt\gamma)$ is minimally ramified over $K_q=\mathbb Q(\sqrt{5q})$. At odd primes outside $5q$, $\gamma$ is a unit. At $5$ it is a unit and $q$ splits. At $q$, the conjugate unit is $2u$; since $\gamma\bar\gamma=q$ is a square in $E_q=\mathbb Q(\sqrt5,\sqrt q)$, one has $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$, allowing that unit conjugate or its corresponding conjugate prime. The same local argument as in Theorem 81.1 gives unramified extension at these primes. At two, $\gamma\equiv1\pmod{4\mathcal O_0}$ and $q\equiv1\pmod8$ give unramified extension by the same étale quadratic polynomial.
+
+The negative third argument in $\mathcal R(5,q,-D)$ includes infinity. Total positivity of $\gamma$ makes that factor $+1$. The finite factors at $q,r$ are $(2u/q)$ and $(u+vs/r)$. The two choices of $s$ have product of residues $q$, whose Legendre symbol modulo $r$ is $+1$, so the factor is independent of the choice. Hence
+
+$$\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\left(\frac{u+vs}{r}\right).$$
+
+Theorem 81.1 gives the first boxed equality. Since $q\equiv1\pmod8$, $u>0$ is odd and $u\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac{2u}{q}\right)=\left(\frac{u}{q}\right)=\left(\frac{q}{u}\right)=\left(\frac{-5v^2}{u}\right)=\left(\frac{-5}{u}\right)=\left(\frac{u}{5}\right).$$
+
+Coprimality makes all these symbols defined and removes $v^2$. ∎
+
+**Theorem 81.3 (the primary generator exists on actual golden support).** Let $q$ be a prime. If $q\equiv1\pmod{24}$, $(5/q)=1$, and the original golden rank is $\rho(q)=6N$ with $N$ odd, then integers $u,v$ satisfying the representation and sign conditions of Theorem 81.2 exist. Therefore that representation is not an extra existence premise for an actual pair in Theorem 81.1.
+
+**Proof.** The triple $(5,-1,q)$ is admissible: $\phi$ has norm $-1$, the pair $(5,q)$ is locally split, $(-1,q)_p=1$ at every place because $q\equiv1\pmod4$, and $\gcd(5,-4,q)=1$. The norm element $\phi$ defines
+
+$$F_0=\mathbb Q(\sqrt5,i,\sqrt\phi)=\mathbb Q(\sqrt5,i,\sqrt{1+2i}).$$
+
+For example, if $w^2=\phi$, then $(w+i/w)^2=1+2i$, or equivalently $(\phi+i)^2=\phi(1+2i)$. At odd primes $\phi$ is a unit; the norm-field construction is unramified at the remaining odd ramified place $5$. At two this is exactly the $2$-minimally ramified model displayed immediately before Stevenhagen's Definition 7.5 for $(a,b)=(-1,5)$. Thus
+
+$$\mathcal R(5,-1,q)=\left(\frac{\phi\bmod q}{q}\right).$$
+
+Either split embedding gives the same sign because $N(\phi)=-1$ and $(-1/q)=1$. Binet's formula identifies the original rank with the order of $-\phi^2$. From $\operatorname{ord}_q(-\phi^2)=6N$ and $N$ odd, its $3N$-th power is $-1$, giving $\phi^{6N}=1$. Since $q\equiv1\pmod8$ and $6N\mid q-1$, one has $6N\mid(q-1)/2$, so $\phi$ is a quadratic residue. Reciprocity now gives $\mathcal R(5,q,-1)=1$.
+
+The ring $\mathcal O_0$ is norm-Euclidean: rounding both coefficients in the basis $1,\phi$ leaves $t+s\phi$ with $|t|,|s|\le1/2$, and
+
+$$|N(t+s\phi)|=|t^2+ts-s^2|\le5/16<1.$$
+
+Thus a prime above $q$ has a generator of norm $\pm q$; multiplication by $\phi$ if needed gives a generator $\pi$ of norm $q$. The unit group of $\mathcal O_0/4\mathcal O_0$ has twelve elements. Its norm-to-$(\mathbb Z/4)^\times$ kernel has six elements, exactly $\{\pm\phi^{2k}:k=0,1,2\}$: $\phi$ has norm $-1$, $\phi^2$ has order three modulo four, and $-1$ has order two. Since $N(\pi)\equiv1\pmod4$, multiplication by one of these global norm-one units produces $\delta\equiv1\pmod{4\mathcal O_0}$ with norm $q$.
+
+The finite-prime argument of Theorem 81.2, which uses norm $q$ and the primary congruence but not positivity, makes $\mathbb Q(\sqrt5,\sqrt q,\sqrt\delta)$ a permitted minimally ramified field. Its infinite Artin factor is $\mathcal R(5,q,-1)=1$. The two real signs of $\delta$ agree because its norm is positive, so triviality of this factor forces total positivity.
+
+Finally write $\delta=1+4(m+n\phi)=u+v\sqrt5$, with $u=1+4m+2n$ and $v=2n$. If $n$ were odd, then $q=u^2-5v^2\equiv5\pmod8$, contradicting $q\equiv1\pmod8$. Thus $4\mid v$, $u\equiv1\pmod4$, and total positivity gives $u>0$. ∎
+
+For an actual block, the existing rank input TBN3 supplies $\rho(q)=6N$, so Theorems 81.2--81.3 give a residue test using a constructible primary prime generator in the fixed golden field and the second prime. They do not require the auxiliary norm certificate of §80 or use weak approximation to choose its sign. The relation with every earlier Cassels and support condition has not been classified; no independence from all prior tests, previously surviving numerical pair, prime-family infinitude, or universal WSS exclusion is asserted. The residue type $(7,13)$ remains outside these statements.
+
+
+The companion residue type $(7,13)$ is treated in [Theorem 82.1 of the continuation](GOLDEN_CUBIC_BLOCK_PRIME_PERIODS_CONTINUATION.md#82-the-second-mutual-residue-type), with its distinct dyadic minimality condition and negative Rédei value.
+
 ## 追加锚（本行以下为增补区）
