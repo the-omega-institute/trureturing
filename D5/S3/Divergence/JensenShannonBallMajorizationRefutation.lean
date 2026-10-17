@@ -8,6 +8,7 @@
 
 import D5.S3.TotalVariation.CycleSingleCutMinimax
 import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
+import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 For natural logarithms, a Jensen--Shannon sublevel set need not have a point majorized by
@@ -239,8 +240,6 @@ private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
 private lemma ball_log_identity :
     60 * (jensenShannon p b - jensenShannon p a) =
       Real.log ((4:ℝ) * 5^55 * 7^35 / 3^144) := by
-  have l4 : Real.log (4:ℝ) = 2 * Real.log 2 := by
-    convert Real.log_pow (2:ℝ) 2 using 1 <;> norm_num
   have l6 : Real.log (6:ℝ) = Real.log 2 + Real.log 3 := by
     rw [← Real.log_mul (by norm_num : (2:ℝ) ≠ 0) (by norm_num : (3:ℝ) ≠ 0)]
     norm_num
@@ -248,25 +247,22 @@ private lemma ball_log_identity :
     convert Real.log_pow (2:ℝ) 3 using 1 <;> norm_num
   have l9 : Real.log (9:ℝ) = 2 * Real.log 3 := by
     convert Real.log_pow (3:ℝ) 2 using 1 <;> norm_num
-  have l10 : Real.log (10:ℝ) = Real.log 2 + Real.log 5 := by
-    rw [← Real.log_mul (by norm_num : (2:ℝ) ≠ 0) (by norm_num : (5:ℝ) ≠ 0)]
-    norm_num
   have l87 : Real.log (8/7:ℝ) = 3 * Real.log 2 - Real.log 7 := by
     rw [Real.log_div (by norm_num) (by norm_num), l8]
   have l45 : Real.log (4/5:ℝ) = 2 * Real.log 2 - Real.log 5 := by
-    rw [Real.log_div (by norm_num) (by norm_num), l4]
+    rw [Real.log_div (by norm_num) (by norm_num), Real.log_four_eq]
   have l67 : Real.log (6/7:ℝ) = Real.log 2 + Real.log 3 - Real.log 7 := by
     rw [Real.log_div (by norm_num) (by norm_num), l6]
   have l65 : Real.log (6/5:ℝ) = Real.log 2 + Real.log 3 - Real.log 5 := by
     rw [Real.log_div (by norm_num) (by norm_num), l6]
   have l109 : Real.log (10/9:ℝ) = Real.log 2 + Real.log 5 - 2 * Real.log 3 := by
-    rw [Real.log_div (by norm_num) (by norm_num), l10, l9]
+    rw [Real.log_div (by norm_num) (by norm_num), Real.log_ten_eq, l9]
   have l89 : Real.log (8/9:ℝ) = 3 * Real.log 2 - 2 * Real.log 3 := by
     rw [Real.log_div (by norm_num) (by norm_num), l8, l9]
   have l23 : Real.log (2/3:ℝ) = Real.log 2 - Real.log 3 := by
     rw [Real.log_div (by norm_num) (by norm_num)]
   have l43 : Real.log (4/3:ℝ) = 2 * Real.log 2 - Real.log 3 := by
-    rw [Real.log_div (by norm_num) (by norm_num), l4]
+    rw [Real.log_div (by norm_num) (by norm_num), Real.log_four_eq]
   have ja : jensenShannon p a = (11/6:ℝ) * Real.log 2 + Real.log 3 / 2 -
       (5/12:ℝ) * Real.log 5 - (7/12:ℝ) * Real.log 7 := by
     rw [js_three]
@@ -284,7 +280,7 @@ private lemma ball_log_identity :
   have numerator : Real.log ((4:ℝ) * 5^55 * 7^35) =
       2 * Real.log 2 + 55 * Real.log 5 + 35 * Real.log 7 := by
     rw [Real.log_mul (by positivity) (by positivity),
-      Real.log_mul (by positivity) (by positivity), l4, Real.log_pow, Real.log_pow]
+      Real.log_mul (by positivity) (by positivity), Real.log_four_eq, Real.log_pow, Real.log_pow]
     norm_num
   have quotient : Real.log ((4:ℝ) * 5^55 * 7^35 / 3^144) =
       2 * Real.log 2 + 55 * Real.log 5 + 35 * Real.log 7 - 144 * Real.log 3 := by
