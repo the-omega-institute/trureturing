@@ -449,8 +449,13 @@ zero point mass because their source position is integrated against $dx$.
 This is a conditional paper application of the classical equality
 mechanism to the original theta family. It excludes neither a better
 actual norm estimate than the absolute certificate nor products above
-one approaching one, controlled approximate reconstruction, measure
-kernels, or a transfer defined only on $\mathcal R$.
+one approaching one, controlled approximate reconstruction, distribution
+kernels or a transfer defined only on $\mathcal R$. The
+[measure-kernel continuation](../Fourier/teschl2009mathematical.md#marginal-schur-certificates-also-exclude-singular-raw-edge-kernels)
+also excludes phased measure kernels with the displayed weighted marginal
+Schur product at most one, using an actual radial-invariant set with
+$K_+(Z)=0<K_-(Z)$. It does not exclude measure kernels outside that
+certificate class.
 
 The same mixed nullity removes the closed critical edge images jointly:
 for $e_\pm=(I-P_\pm)C_\pm$, where $P_\pm$ project onto
