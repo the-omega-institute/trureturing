@@ -1744,4 +1744,130 @@ If Xi=-1, the alternating pairing on the three-dimensional pure Selmer quotient 
 
 This uses neither rank parity nor finiteness of Sha, and does not equate Selmer classes with rational points. It addresses an actual residue stratum with genuinely different left and right directions, outside the all 1 modulo 4 cut-side restriction of section 97. Passing this sign test is not shown to imply repetition or any additional rational rank. No numerical realization, independence from every earlier residue condition, infinitude, or global WSS exclusion is asserted.
 
+## 99. Full pairing and Pfaffian on an actual nullity-three support
+
+### 99.1. Exact criterion
+
+**Theorem 99.1.**
+
+Let j,C be positive integers, N=3^j>=81, and B_N=L_N^2+3=D C^2, with D=pqr the full positive squarefree kernel and p,q,r distinct primes. Assume p and q are 1 modulo 24, r is 19 modulo 24, and all mutual Legendre symbols between the three primes are +1. Actual support supplies primes greater than 5 and (5/p)=(5/q)=(5/r)=1.
+
+Choose primitive integer certificates with positive last coordinate:
+
+ a_p^2-p b_p^2=5D c_p^2, q not dividing b_p c_p;
+ a_q^2-q b_q^2=5D c_q^2, p not dividing b_q c_q;
+ u^2-p v^2=-5D w^2, q not dividing v w;
+ U^2-p V^2=15D W^2, q not dividing V W.
+
+Each triple has gcd 1. All four certificates exist under the stated actual-support hypotheses. The last two also have q not dividing uU. Define signs
+
+ H_p=(-5qr/p)_4, H_q=(-5pr/q)_4,
+ X=(b_p/q), Y=(b_q/p), Z=(uU/q).
+
+The quartic symbols are rational quartic characters of nonzero quadratic residues. For a sign T put [T]=(1-T)/2 in F_2. Set h_p=[H_p], h_q=[H_q], x=[X], y=[Y], z=[Z].
+
+In the ordered pure Selmer basis consisting of the actual golden class S followed by lambda_p=(p,1), lambda_q=(q,1), mu_p=(1,p), mu_q=(1,q), the first row and column of the alternating pairing are zero and the remaining additive-bit matrix is
+
+ M=[[0,0,h_p,x],
+    [0,0,y,h_q],
+    [h_p,y,0,z],
+    [x,h_q,z,0]].
+
+Every displayed certificate sign is independent of its allowed choices. In particular, if
+
+ h_p h_q + x y = 1 in F_2,
+
+then rank E_D(Q)=1 and there is no B_(Nk)=D c'^2 for k>1 odd, 3 not dividing k, and positive integer c'. This is a conditional actual-support criterion; it asserts neither numerical realization, a converse, independence from all earlier tests, nor universal WSS exclusion.
+
+### 99.2. Full basis and primary pairing
+
+**Proof.**
+
+Use the exact parametrization in Theorem 95.1. The Legendre matrix A is zero, and delta=t=(0,0,1) in the prime order (p,q,r). Hence the full Selmer dimension is 7 and the pure dimension is 5. The parameter triples (y0,x,y) for S and the two rational torsion generators are (1,0,0),(0,1,0),(1,0,1), where 1 is the all-one vector. The four remaining classes have parameter triples (0,e_p,0),(0,e_q,0),(0,0,e_p),(0,0,e_q). All sign and five exponents in these four classes vanish because delta and t vanish on e_p,e_q. These seven vectors are independent: 1,e_p,e_q form a basis of each three-dimensional kernel. Thus the claimed pure basis is exact, not just a list of Selmer classes.
+
+Theorem 85.1 gives exact rational torsion E_D[2] and the actual non-torsion original point. The rational Kummer image is in the radical, so S has zero pairing with every class.
+
+The primary tangent formula is Shukla–Stoll, arXiv:2302.01640v1, section 3.2 equations (3.9)–(3.10), Theorem 5.6, with rational-image radical inclusion on printed page 2: https://arxiv.org/pdf/2302.01640 . Use the multiplicative convention (-1)^(2 times the additive pairing). The short-model translation x=X-10D/3 has roots -10D/3,-25D/3,35D/3 and preserves all root differences and Kummer coordinates. No Sha finiteness or rank parity is used.
+
+### 99.3. Certificate existence and all auxiliary places
+
+For lambda_p=(p,1), the triple is (p,1,p), and its conics are
+
+ H1: z2^2-p z3^2=20D t^2,
+ H2: z1^2-z3^2=15(D/p)t^2,
+ H3: z2^2-p z1^2=5D t^2.
+
+For mu_p=(1,p), the triple is (1,p,p), and its conics can be written
+
+ J1: z2^2-z3^2=20(D/p)t^2,
+ J2: z1^2-p z3^2=15D t^2,
+ J3: z1^2-p z2^2=-5D t^2.
+
+These are locally soluble because the full classes are in Selmer. The Hasse principle gives rational points on each conic. Each of H3,J2,J3 has nonsquare coefficient p, so a rational projective point has t nonzero and gives the displayed affine norm equation. At q, p is a square unit. Taking the second affine coordinate equal to 1 gives square-root first coordinates for p+5D, p+15D, and p-5D, respectively. They are all q-units. Rational parametrization of each conic and density of Q in Q_q supply rational points sufficiently close to these local points. Clearing denominators and dividing the gcd gives the three required primitive triples with q-unit last and second coordinates. The same argument with p,q exchanged supplies the lambda_q certificate. The norm equations also force q-unit first coordinates for the three p-norm certificates. This establishes existence with every stated normalization.
+
+For all pairings below whose second argument is p or q, that argument is a square at infinity, at 2, at 3, at 5, and at every different support prime. Here positivity, residue1 modulo 24, actual 5-splitting and mutual Legendre symbols are used separately. Thus only its own ramified prime and auxiliary good primes can contribute.
+
+At a good odd prime ell not dividing 30D, use primitive integral local covering points. Every conic projection is primitive: vanishing of one projected triple modulo ell forces the fourth coordinate to vanish by the other covering equation. Every tangency point obtained by clearing denominators is primitive. Its tangent form is primitive because all conic coefficients are units at ell. This includes primes in the certificate denominators.
+
+A primitive tangent to a smooth conic has even valuation at another integral point whenever its evaluation is nonzero. To check this universally, use unimodular coordinates taking the tangency section to (1,0,0). The conic becomes aXZ+bY^2+cYZ+dZ^2=0, with a,b units, and the tangent is Z=0 up to a unit. Away from the reduced tangency point the evaluation is a unit. Near it, X is a unit and Y,Z are divisible by ell, so Z(aX+cY+dZ)=-bY^2 gives even valuation. Zero evaluations may be avoided on the smooth local covering because each tangent has only finitely many zeros and a locally soluble smooth curve has infinitely many nearby points. Consequently every good-prime Hilbert factor against the unit second argument is 1. Rational rescaling of a tangent changes the global product by 1 through Hilbert reciprocity. These statements account for all denominator places, without assuming affine integrality of rational norm points.
+
+### 99.4. The lambda-lambda entry and mixed off-diagonal entries
+
+Write (a,b,c)=(a_p,b_p,c_p) and e=D/p. Primitive tangents for the lambda_p covering are
+
+ L1=2a z2-2p b z3-20D c t,
+ L2=A0 z1-B0 z3-15e t,
+ L3=a z2-p b z1-5D c t,
+ A0=(15e+1)/2, B0=(1-15e)/2.
+
+The tangency points are (c,2a,2b) on H1, (1,A0,B0) on H2 and (c,b,a) on H3. Factors 2 in L1 are units at all good odd places and cause no omitted global factor.
+
+For lambda_p against lambda_q, the second triple is (q,1,q), so the pairing is the product of (L1 L3,q). At q set t=1,z1=-b/c,z2=a/c and choose the Hensel root z3 of z3^2=(b/c)^2-15e with z3=-b/c modulo q. All three conics hold. The reductions are
+
+ L1=4p b^2/c modulo q,
+ L3=2p b^2/c modulo q.
+
+They are units. Their product has character (8p^2 b^4/c^2/q)=(2/q)=1. The preceding all-place argument proves <lambda_p,lambda_q>=+1. This vanishing has been derived, not assumed.
+
+For lambda_p against mu_q, the second triple is (1,q,q), so use (L2 L3,q). Choose instead z3=b/c modulo q at the same local point. Then
+
+ L2=-b/c modulo q,
+ L3=2p b^2/c modulo q.
+
+Their product character is (-2p b^3/c^2/q)=(b/q), since q=1 modulo 24 and (p/q)=1. All other factors are1, proving <lambda_p,mu_q>=X. Interchanging p and q proves <lambda_q,mu_p>=Y, with its separately normalized certificate.
+
+### 99.5. Mixed diagonal entries
+
+The local calculation of section 96 does not use nullity 2 until its final rank deduction. Applied to d=p,e=qr, it therefore gives <lambda_p,mu_p>=(-5qr/p)_4. For completeness the primitive-denominator version is checked here.
+
+Primitiveness and the norm equation force p not dividing b c, and p dividing a. Indeed p|c would first give p|a and then p|b modulo p^2; once c is a unit, valuation parity forces b a unit. Thus (b/c)^2=-5e modulo p. Choose z1=-b/c,z2=a/c,t=1 and z3=-2b/c modulo p. Then L3=2p b^2/c exactly, and L2 has reduction beta(3beta+1)^2/2, beta=b/c. If that reduction vanishes, choose the other root; it gives -3beta(beta-1)^2/2 and is a unit in that case. Since p=1 modulo 24, the unit L2 has character (beta/p). For the other factor,
+
+ (L3,p)_p=(-1/p)(2b^2/c/p)=(c/p).
+
+The product is (b/p). On the other hand (beta/p)=(-5e/p)_4, so (b/p)=(c/p)(-5e/p)_4.
+
+It remains to show (c/p)=1. For every odd ell|c with ell not dividing 5p, the norm equation and primitiveness give (p/ell)=1: otherwise reduction forces a,b both zero modulo ell, contrary to primitiveness. This applies also at ell=3 and the other support primes; alternatively the known support symbols already suffice there. At ell=5, (p/5)=1 by actual support. The prime p cannot divide c, and (2/p)=1. Since p=1 modulo4, quadratic reciprocity, including all valuation multiplicities in c, now gives (c/p)=1. Therefore the claimed quartic diagonal holds for every normalized primitive certificate. The identical argument gives <lambda_q,mu_q>=H_q.
+
+### 99.6. The mu-mu entry
+
+This entry is not assumed to vanish. Use the two primitive certificates for J3,J2, respectively (u,v,w) and (U,V,W). The relevant tangents are
+
+ T3=u z1-p v z2+5D w t,
+ T2=U z1-p V z3-15D W t.
+
+Against mu_q the second triple is (1,q,q), giving the product of (T2 T3,q). At q set t=1,z1=-u/w,z2=v/w. Choose a Hensel root z3 of z3^2=(v/w)^2-20e. Both choices reduce to plus or minus v/w. Since u^2=pv^2 and U^2=pV^2 modulo q, all these residues are units, and exactly one choice satisfies pV z3=uU/w modulo q. With this choice,
+
+ T2=-2uU/w modulo q,
+ T3=-2p v^2/w modulo q.
+
+These are units; the two equations J2,J3 and hence J1 hold. Their product has character (4p uU v^2/w^2/q)=(uU/q), using (p/q)=1. All other places were accounted for in section 99.3. Thus <mu_p,mu_q>=Z, with no unjustified vanishing of the second-coordinate block.
+
+### 99.7. Choice independence and Pfaffian consumer
+
+The primary pairing is alternating and independent of tangency points and local choices. Each calculation applies to all the stated primitive normalized certificates. Hence X,Y,Z, and the displayed diagonal signs, are individually invariant under those allowed choices; local approximation supplies certificates but cannot assign their characters freely.
+
+Converting multiplicative signs to additive bits gives exactly M. Its Pfaffian over F_2 is h_p h_q+x y: the third matching term is the lambda-lambda entry times z and is zero by the proved vanishing. A direct determinant expansion gives det M=(h_p h_q+x y)^2. Thus the stated criterion makes the pairing on the four-dimensional complement nondegenerate, even though z need not be zero. The pure Selmer space has dimension 5 and its remaining original rational class is in the radical, so its radical has dimension exactly1. The rational Kummer image modulo rational torsion lies in that radical and has dimension equal to the Mordell–Weil rank. This bounds the rank by 1; the actual original non-torsion point gives equality. Corollary 94.2 then excludes every stipulated repetition. ∎
+
+In particular, a single nonzero pairing entry would give only pairing rank at least 2 in this five-dimensional pure space. The determinant criterion is the additional requirement needed for rank 4. It depends on interactions of the two mixed directions and is not a reuse of the nullity-two rank argument. The mu-mu entry is evaluated fully, although the Pfaffian proves that its value does not affect this particular nondegeneracy test. No numerical actual support, sign realization, converse, or general higher-rank exclusion is asserted.
+
 ## 追加锚（本行以下为增补区）
