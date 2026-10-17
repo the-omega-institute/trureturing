@@ -6,7 +6,6 @@
    utility: none
    digest: Three-row scalar purity bound with the natural integer optimizer. -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.SpectrumCompression
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
 
 set_option autoImplicit false
