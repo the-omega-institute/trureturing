@@ -15,7 +15,7 @@ open D5.S3.Quantum.Measurement.HoggarSicSumNegativity (bitSign)
 namespace D5.S3.Quantum.Measurement.HoggarSicCompoundRefutation
 
 set_option maxRecDepth 4000
-set_option maxHeartbeats 2000000
+set_option linter.style.longLine false
 
 private noncomputable def phase (z b : Fin 8) : ℂ :=
   GaussianInt.toComplex (bitSign z.val b.val)
@@ -153,8 +153,12 @@ private theorem cast_dot (u v : Fin 8 → GaussianInt) :
     star (fun b => GaussianInt.toComplex (u b)) ⬝ᵥ
         (fun b => GaussianInt.toComplex (v b)) =
       GaussianInt.toComplex (∑ b : Fin 8, star (u b) * v b) := by
-  simp only [dotProduct, map_sum, map_mul, GaussianInt.toComplex_star,
-    Pi.star_apply, Complex.star_def]
+  change _ = GaussianInt.toComplex (star u ⬝ᵥ v)
+  rw [RingHom.map_dotProduct]
+  congr 1
+  funext b
+  simp only [Function.comp_def, Pi.star_apply, GaussianInt.toComplex_star,
+    Complex.star_def]
 
 private theorem cast_pauli (x z : Fin 8) (u : Fin 8 → GaussianInt) :
     pauli x z (fun b => GaussianInt.toComplex (u b)) =
