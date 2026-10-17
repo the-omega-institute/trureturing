@@ -837,3 +837,629 @@ or multiplicity reinterpretation, source erratum, complete census, or
 Only the transposition-fixed locus is classified exhaustively. The
 remaining free-orbit count, finiteness of the full locus, and arbitrary
 noncanonical orthogonal triples remain separate questions.
+
+## 65. The complete local graph on 36 named noncanonical ray germs
+
+### 65.1 Statement and exact parameter reflection
+
+Continue the actual family \(M(b)=\sqrt6H_0(b)\) of (60.1).
+Let \(X(x,y)=(y,x)\) and \(L=\operatorname{diag}(I_3,-I_3)\).
+Its block coefficients satisfy \(P(-b)=Q(b)\), so
+
+\[
+ M(-b)=LM(b)X.
+\tag{65.1}
+\]
+
+Thus \(X\) transports common-flat input rays at \(b\) to those at
+\(-b\). It is a fixed-parameter symmetry at zero, but not in general
+away from zero. Synchronous permutations \(R_p\) and the antiunitary
+\(\Theta(x,y)=(-\bar y,\bar x)\) preserve the common-flat locus at
+each parameter, by the identities in §63.4.
+
+**Theorem 65.1 (repo-derived full 36-ray graph germ).** The 36 central
+rays defined below are distinct and noncanonical. Each has a unique
+unrestricted analytic common-flat continuation near zero. For some
+\(\varepsilon>0\), their orthogonality graph at every
+\(0<|b|<\varepsilon\) is the disjoint union of two copies of
+\(K_{3,3}\) and two connected four-regular bipartite graphs on twelve
+vertices. In particular, there are 36 disjoint ray neighborhoods
+whose union contains no common-flat orthogonal triple at these
+parameters.
+
+The conclusion controls all edges between the 36 rays, including
+edges between different transported six-ray copies. It does not by
+itself claim that these neighborhoods cover the entire noncanonical
+locus, at zero or away from zero.
+
+### 65.2 Explicit rays, stabilizers, and distinctness
+
+Use the constants and seed rays from §61:
+
+\[
+ \begin{gathered}
+ \omega=\frac{-1+i\sqrt3}{2},\qquad
+ \gamma=-\frac{\sqrt3+5i}{2\sqrt7},\\
+ t=-\frac12-\frac{3\sqrt{21}}{28}
+       +i\left(-\frac{\sqrt3}{4}+\frac{3\sqrt7}{14}\right),
+ \qquad \delta=-\frac{3+i\sqrt7}{4},\\
+ \tau=\omega^2t,\quad \sigma=\omega^2\delta,\quad
+ f_m=(1,\omega^m,\omega^{2m}),\\
+ u_m=((1,1,\tau)\odot f_m,(\gamma,\gamma,\sigma)\odot f_m).
+ \end{gathered}
+\tag{65.2}
+\]
+
+For \(p=(p_0,p_1,p_2)\), define
+\(R_p(x,y)=((x_{p_0},x_{p_1},x_{p_2}),
+(y_{p_0},y_{p_1},y_{p_2}))\). Put
+
+\[
+ \begin{aligned}
+ \mathcal P_0&=((0,1,2),(0,2,1),(2,0,1)),\\
+ \mathcal P_1&=((0,1,2),(0,2,1),(1,0,2),
+                  (1,2,0),(2,0,1),(2,1,0)),\\
+ z_{s,p,e,c}&=d(X^c\Theta^eR_pu_s),\qquad d(v)=v/v_0,
+ \quad s=0,1,\quad p\in\mathcal P_s,\quad e,c\in\{0,1\}.
+ \end{aligned}
+\tag{65.3}
+\]
+
+Order this list lexicographically by \((s,p,e,c)\) and index its
+entries by \(0,\ldots,35\). Here the permutation order is exactly
+the displayed order in each \(\mathcal P_s\).
+
+The six-ray construction of §61 proves common flatness of \(u_0,u_1\).
+The symmetries and (65.1) prove it for every entry of (65.3).
+Distinctness can be checked without a numerical comparison. Both seeds
+have channel-ratio triple
+
+\[
+ (y_j/x_j)_{j=0}^2=(\gamma,\gamma,q),
+ \qquad q=\sigma/\tau=\frac{\sqrt3+2i}{\sqrt7}\ne\gamma.
+\tag{65.4}
+\]
+
+The unique repeated ratio is \(\gamma\). Under \(\Theta,X,X\Theta\)
+it becomes respectively \(-\gamma,\bar\gamma,-\bar\gamma\).
+These four values are distinct. Hence an element
+\(X^c\Theta^eR_p\) mapping one seed to either seed projectively must
+have \(e=c=0\), and then \(p\) fixes the unique \(q\)-position.
+The only possibilities are the identity and the transposition
+\((0\ 1)\). Both fix \(u_0\); only the identity fixes \(u_1\), since
+its first two upper coordinates are \(1,\omega\). Neither maps one
+seed to the other, since the upper-coordinate ratio on the repeated
+pair is one for \(u_0\) and is \(\omega\) or \(\omega^2\) for \(u_1\).
+
+Projectively these transformations form a group of order 24:
+\(S_3\) commutes with \(X,\Theta\), while
+\(\Theta^2=-I\), \(X^2=I\), and \(X\Theta=-\Theta X\).
+The two disjoint orbits therefore have sizes 12 and 24, and (65.3)
+selects them without repetition. Their ratio triples are nonconstant,
+whereas every central canonical ray has all three ratios equal to
+\(i\) or \(-i\). This also proves noncanonicity.
+
+### 65.3 Unrestricted continuations and reconstructible tangents
+
+The original five-phase Jacobians at \(u_0,u_1\) are invertible by
+(63.2)–(63.3). The analytic implicit-function theorem supplies unique
+unrestricted common-flat ray curves through these seeds. Transport
+by \(R_p,\Theta\), and by \(X\) with the parameter replaced by
+\(-b\), is an invertible transformation of the full original solution
+set. It therefore supplies unique unrestricted curves through all
+36 rays, not just curves within a symmetry-restricted ansatz.
+
+For completeness, the two seed phase tangents needed to reconstruct
+every comparison are, in coordinate order \(1,\ldots,5\),
+
+\[
+ \begin{aligned}
+ \alpha_0&=\frac1{84}(0,-48+20\sqrt{21},-104,-104,-56+20\sqrt{21}),\\
+ \alpha_1&=\frac1{84}(70-14\sqrt{21},59-17\sqrt{21},
+                 -32-14\sqrt{21},38,-21-17\sqrt{21}).
+ \end{aligned}
+\tag{65.5}
+\]
+
+Set \((v_s)_0=0\), \((v_s)_r=i(u_s)_r\alpha_{s,r}\).
+For a label \((s,p,e,c)\), first form
+
+\[
+ w=X^c\Theta^eR_pu_s,\qquad
+ v=(-1)^cX^c\Theta^eR_pv_s.
+\]
+
+The dephased value and velocity are then
+
+\[
+ z_r=\frac{w_r}{w_0},\qquad
+ \dot z_r=\frac{v_rw_0-w_rv_0}{w_0^2}.
+\tag{65.6}
+\]
+
+The sign \((-1)^c\) records the parameter reflection in (65.1).
+All derivatives are with respect to the real parameter \(b\).
+Shrinking finitely many implicit-function neighborhoods gives a
+common interval and 36 disjoint fixed ray neighborhoods, each
+containing exactly its named curve.
+
+### 65.4 A complete 38-orbit certificate for all 630 pairs
+
+For distinct indices \(j,k\), write
+
+\[
+ h_{jk}(0)=\sum_r\bar z_{jr}z_{kr},\qquad
+ h'_{jk}(0)=\sum_r(\overline{\dot z_{jr}}z_{kr}
+                              +\bar z_{jr}\dot z_{kr}).
+\tag{65.7}
+\]
+
+These are unnormalized overlaps. The following data reconstruct every
+pair comparison using only (65.2)–(65.7). Set
+\(A_\pm=(297\pm27\sqrt{21})/56>0\).
+The first two group generators, acting on the zero-based indices, are
+
+\[
+\begin{aligned}
+ R_{(1,0,2)}={}&(4\ 8)(5\ 9)(6\ 10)(7\ 11)
+ (12\ 20)(13\ 21)(14\ 22)(15\ 23)\\
+ & (16\ 28)(17\ 29)(18\ 30)(19\ 31)
+ (24\ 32)(25\ 33)(26\ 34)(27\ 35),\\
+ R_{(1,2,0)}={}&(0\ 4\ 8)(1\ 5\ 9)(2\ 6\ 10)(3\ 7\ 11)\\
+ &(12\ 24\ 28)(13\ 25\ 29)(14\ 26\ 30)(15\ 27\ 31)\\
+ &(16\ 32\ 20)(17\ 33\ 21)(18\ 34\ 22)(19\ 35\ 23).
+\end{aligned}
+\tag{65.8}
+\]
+
+Within each consecutive block \((4r,4r+1,4r+2,4r+3)\),
+\(\Theta\) exchanges the first with the third and the second with
+the fourth, while \(X\) exchanges the first with the second and the
+third with the fourth. Together these four permutations generate all
+24 actions. Unlisted indices in (65.8) are fixed.
+
+The 38 rows below are disjoint pair orbits under these generators;
+their sizes sum to \(\binom{36}{2}=630\). Thus the table covers all
+pairs, not just pairs inside transported six-ray bases. Each value
+follows by substitution in (65.7), in the exact field
+\(\mathbb Q(\sqrt3,\sqrt7,i)\), using
+\((\sqrt3)^2=3\), \((\sqrt7)^2=7\), and \(i^2=-1\).
+The last column is needed only when the central overlap is zero.
+
+| Representative | Orbit size | \(|h(0)|^2\) | \(|h'(0)|^2\) if \(h(0)=0\) |
+|---|---:|---:|---:|
+| \((0,1)\) | 6 | \(0\) | \(400/49\) |
+| \((0,2)\) | 6 | \(0\) | \(0\) |
+| \((0,3)\) | 6 | \(18\) | — |
+| \((0,4)\) | 12 | \(9/4\) | — |
+| \((0,5)\) | 12 | \(243/28\) | — |
+| \((0,6)\) | 12 | \(0\) | \(0\) |
+| \((0,7)\) | 12 | \(18/7\) | — |
+| \((0,12)\) | 24 | \(0\) | \(1075/84\) |
+| \((0,13)\) | 24 | \(27/7\) | — |
+| \((0,14)\) | 24 | \(0\) | \(11/14\) |
+| \((0,15)\) | 24 | \(36/7\) | — |
+| \((0,16)\) | 24 | \(A_+\) | — |
+| \((0,17)\) | 24 | \(A_+\) | — |
+| \((0,18)\) | 24 | \(81/7\) | — |
+| \((0,19)\) | 24 | \(99/14\) | — |
+| \((0,24)\) | 24 | \(A_-\) | — |
+| \((0,25)\) | 24 | \(A_-\) | — |
+| \((0,26)\) | 24 | \(81/7\) | — |
+| \((0,27)\) | 24 | \(99/14\) | — |
+| \((12,13)\) | 12 | \(0\) | \(100/49\) |
+| \((12,14)\) | 12 | \(0\) | \(0\) |
+| \((12,15)\) | 12 | \(36/7\) | — |
+| \((12,16)\) | 12 | \(A_-\) | — |
+| \((12,17)\) | 12 | \(A_-\) | — |
+| \((12,18)\) | 12 | \(0\) | \(0\) |
+| \((12,19)\) | 12 | \(18/7\) | — |
+| \((12,20)\) | 12 | \(0\) | \(25/3\) |
+| \((12,21)\) | 12 | \(27/7\) | — |
+| \((12,22)\) | 12 | \(0\) | \(0\) |
+| \((12,23)\) | 12 | \(18\) | — |
+| \((12,24)\) | 24 | \(9/4\) | — |
+| \((12,25)\) | 24 | \(243/28\) | — |
+| \((12,26)\) | 24 | \(81/7\) | — |
+| \((12,27)\) | 24 | \(99/14\) | — |
+| \((12,32)\) | 12 | \(A_+\) | — |
+| \((12,33)\) | 12 | \(A_+\) | — |
+| \((12,34)\) | 12 | \(0\) | \(0\) |
+| \((12,35)\) | 12 | \(18/7\) | — |
+
+The orbit reduction is valid for the derivatives in the table:
+transport changes an overlap to a unit-modulus scalar times the
+original overlap or its conjugate, evaluated at \(b\) or \(-b\).
+At a zero central overlap, differentiating the scalar contributes
+zero. Hence both \(|h(0)|\) and, on the zero-overlap stratum,
+\(|h'(0)|\) are invariant along a pair orbit.
+
+The table gives 486 nonedges at zero, 78 simple-zero edges, and
+66 edges with zero first derivative. Among the 78 simple-zero edges,
+the squared derivative values and multiplicities are
+
+\[
+ (400/49,6),\ (1075/84,24),\ (11/14,24),\
+ (100/49,12),\ (25/3,12).
+\tag{65.9}
+\]
+
+The 486 nonzero overlaps stay nonzero by continuity. For each of the
+78 simple-zero overlaps, \(h_{jk}(b)/b\to h'_{jk}(0)\ne0\), so it
+is nonzero on a sufficiently small punctured interval. A common
+interval works for all finitely many pairs. Normalizing the vectors
+divides overlaps by six and squared overlap derivatives by 36.
+
+### 65.5 Exact persistence and the bipartite graph
+
+There is no unresolved higher-order case among the remaining 66
+pairs. Their six orbit representatives are respectively obtained
+from the first ray by \(R\Theta\) with the following synchronous
+three-coordinate permutation:
+
+\[
+\begin{array}{c|cccccc}
+ (j,k)&(0,2)&(0,6)&(12,14)&(12,18)&(12,22)&(12,34)\\
+ R_3&I&(1\ 2)&I&(1\ 2)&(0\ 1)&(0\ 2).
+\end{array}
+\tag{65.10}
+\]
+
+Each \(R_3\) is real symmetric. The identity (63.7) therefore makes
+\(w^*R\Theta w=0\) for every vector \(w\), at every parameter.
+Conjugating by any of the 24 projective symmetries preserves this
+class of relations; when \(X\) occurs, both curves undergo the same
+parameter reflection. Uniqueness of each unrestricted ray curve
+identifies the transported curve with its named continuation.
+Consequently every pair in these six orbits persists exactly.
+
+The four connected components are indexed by the seed type \(s\)
+and the flag \(c\) in (65.3). The two parts in each component are
+\(e=0\) and \(e=1\). For \(s=0\), the four operations \(R\Theta\)
+with \(R_3\) the identity or a transposition give three distinct
+neighbors, hence \(K_{3,3}\). For \(s=1\), they give four distinct
+neighbors in the opposite part. These twelve-vertex graphs are
+connected because the three transpositions generate \(S_3\).
+The table excludes every other edge, including all edges between
+these components. Thus the graph is bipartite and triangle-free.
+
+An arbitrary common-flat orthogonal triple in the union of the 36
+neighborhoods would have to consist of three of these unique ray
+curves. Distinct orthogonal rays cannot coincide, and the graph has
+no triangle. This proves Theorem 65.1 without a covariance assumption
+on the candidate triple. \(\square\)
+
+## 66. Exact classification of all central common-flat rays
+
+### 66.1 Central census theorem
+
+At \(b=0\), write
+
+\[
+ M=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix},
+ \qquad A=J_3+(\omega-1)I_3,\qquad
+ \omega=\frac{-1+i\sqrt3}{2}.
+\]
+
+**Theorem 66.1 (repo-derived exact central census).** The entire
+projective common-flat input locus of this matrix consists of
+exactly 42 rays: the six canonical rays and the 36 noncanonical rays
+in (65.3).
+
+The following proof establishes an upper bound for every solution
+of the original equations. Finiteness, covariance, and completeness
+of a numerical sample are not assumptions.
+
+### 66.2 Equivalent Fourier correlations and all pole strata
+
+Let \(F=(\omega^{jk})_{0\le j,k\le2}\),
+\(D=\operatorname{diag}(1,\omega^2,\omega^2)\), and
+\(E=\operatorname{diag}(\omega,1,1)\). Entrywise multiplication gives
+
+\[
+ A=E\bar FD,\qquad \bar A=\bar EF\bar D,
+ \qquad \bar DD^{-1}=D.
+\tag{66.1}
+\]
+
+For a unit-entry input \((x,y)\), put \(\alpha=Dx\), \(\beta=Dy\),
+and \(t_j=\beta_j/\alpha_j=y_j/x_j\). The two Fourier inputs are
+\(v=\alpha+\beta\) and \(w=D(\alpha-\beta)\).
+For either \(F\) or \(\bar F\), the three squared output moduli of
+a vector \(h\in\mathbb C^3\) equal six exactly when
+
+\[
+ \sum_j|h_j|^2=6,\qquad
+ \sum_j\bar h_jh_{j+1}=0,
+\tag{66.2}
+\]
+
+where indices are modulo three. This is the direct expansion of the
+three Fourier squared moduli, using \(1+\omega+\omega^2=0\).
+With \(e_j=\bar\alpha_j\alpha_{j+1}\), the original six output
+conditions are therefore equivalent to
+
+\[
+ \begin{gathered}
+ \sum_j\operatorname{Re}t_j=0,\qquad
+ \sum_je_j(1+t_j^{-1})(1+t_{j+1})=0,\\
+ \sum_j\rho_je_j(1-t_j^{-1})(1-t_{j+1})=0,
+ \qquad (\rho_0,\rho_1,\rho_2)=(\omega^2,1,\omega).
+ \end{gathered}
+\tag{66.3}
+\]
+
+Here \(|e_j|=|t_j|=1\) and \(e_0e_1e_2=1\).
+
+No \(t_j=-1\) is possible. If exactly one ratio equals \(-1\),
+exactly one coordinate of \(v\) is zero, and its cyclic correlation
+has precisely one nonzero summand. If at least two ratios equal
+\(-1\), at most one coordinate of \(v\) is nonzero, with squared
+modulus at most four, contradicting its norm six. The identical
+argument with \(w\) excludes \(t_j=1\). Thus every ratio has the
+unique finite nonzero real Cayley parameter
+
+\[
+ t_j=\frac{1+iu_j}{1-iu_j},\qquad u_j\in\mathbb R\setminus\{0\}.
+\tag{66.4}
+\]
+
+This treats both the infinite-parameter and zero-parameter strata,
+including the cases where two or all three ratios equal a pole.
+
+### 66.3 Repeated-ratio rigidity for every original solution
+
+Write \((u_0,u_1,u_2)=(a,b,c)\), and define
+
+\[
+ B_j=\frac4{(1+iu_j)(1-iu_{j+1})},\quad
+ k_j=\rho_ju_ju_{j+1},\quad f_j=e_jB_j.
+\]
+
+The two correlation equations reduce to
+
+\[
+ f_0+f_1+f_2=0,\qquad k_0f_0+k_1f_1+k_2f_2=0.
+\tag{66.5}
+\]
+
+The \(k_j\) are pairwise distinct: equality of two would equate a
+nonreal cube root of unity with a nonzero real ratio. Consequently
+this system has rank two, its kernel is spanned by
+
+\[
+ K=(k_1-k_2,k_2-k_0,k_0-k_1),
+\]
+
+and every coordinate of \(K\) is nonzero. Write \(f=\lambda K\).
+The unit-modulus conditions on \(e_j\), together with
+\(\operatorname{Re}(\rho_j\bar\rho_k)=-1/2\) for \(j\ne k\), give
+
+\[
+ \frac{c^2(a^2+b^2+ab)}{1+c^2}
+ =\frac{a^2(b^2+c^2+bc)}{1+a^2}
+ =\frac{b^2(c^2+a^2+ca)}{1+b^2}.
+\tag{66.6}
+\]
+
+All cancelled denominators and common factors are positive.
+Suppose \(a,b,c\) were pairwise distinct. The first equality factors
+as \((a-c)T(a,b,c)=0\), where
+
+\[
+ T(a,b,c)=a^3c^2+a^2bc^2+a^2c^3-ab^2-abc-b^2c.
+\]
+
+Hence \(T(a,b,c)=T(b,c,a)=T(c,a,b)=0\). Put
+\(S=a+b+c\), \(P=ab+bc+ca\), and \(H(t)=St^2(S-t)+P\).
+The exact identities
+
+\[
+ T(a,b,c)-T(b,c,a)=(c-b)H(a),\qquad
+ H(a)-H(b)=SP(a-b)
+\tag{66.7}
+\]
+
+and their cyclic versions give \(H(a)=H(b)=H(c)=0\) and \(SP=0\).
+If \(S=0\), then \(P=0\), so
+\(a^2+b^2+c^2=S^2-2P=0\), a contradiction. If \(S\ne0\), then
+\(P=0\), and \(H(a)=Sa^2(b+c)=0\). Since \(a\ne0\), the three
+cyclic equations force \(b+c=c+a=a+b=0\), again a contradiction.
+Thus every original common-flat ray has two equal channel ratios.
+
+### 66.4 Exhaustive elimination of the repeated-ratio sector
+
+If \(a=b=c\), the norm equation gives
+\(3(1-a^2)/(1+a^2)=0\), so \(a=\pm1\). There are two possible
+all-equal ordered ratio triples.
+
+Otherwise the equal pair is unique. A cyclic relabeling places it
+at \((u_0,u_1,u_2)=(a,a,c)\), with \(c\ne a\). Equation (66.6)
+and the norm equation give respectively
+
+\[
+ \begin{gathered}
+ (a-c)(2ac^2-a+c^3-2c)=0,\\
+ N(a,c)=3-a^2+c^2-3a^2c^2=0.
+ \end{gathered}
+\tag{66.8}
+\]
+
+Let \(T_2=2ac^2-a+c^3-2c\), \(D_0=3a^2-1\),
+\(H_0=7a^2-5\), and \(L_0=H_0c+a(5a^2-7)\). Then
+
+\[
+ D_0T_2+L_0=-(2a+c)N.
+\tag{66.9}
+\]
+
+Since \(T_2=N=0\), this gives \(L_0=0\) without division.
+The case \(H_0=0\) is impossible: it would give
+\(a^2=5/7\) and \(L_0=-24a/7\ne0\). Therefore
+
+\[
+ c=\frac{a(7-5a^2)}{7a^2-5}.
+\tag{66.10}
+\]
+
+Also \(D_0=0\) is impossible because \(N=8/3\) when \(a^2=1/3\).
+The remaining substitution is the exact identity
+
+\[
+ H_0^2N\left(a,\frac{a(7-5a^2)}{H_0}\right)
+ =-3(a^2-1)(a^2+1)(25a^4-62a^2+25).
+\tag{66.11}
+\]
+
+The real factor \(a^2+1\) is positive. If \(a^2=1\), the norm
+forces \(c^2=1\). The unequal case has \(c=-a\), but then
+\(T_2(a,-a)=a(a^2+1)=2a\ne0\), impossible. Thus the repeated
+parameter lies among precisely four distinct real quartic roots:
+
+\[
+ 25a^4-62a^2+25=0,\qquad
+ a=\frac{\pm\sqrt{31+4\sqrt{21}}}{5}
+ \quad\hbox{or}\quad
+ a=\frac{\pm\sqrt{31-4\sqrt{21}}}{5}.
+\tag{66.12}
+\]
+
+The radicands are positive and unequal. None of these roots is
+zero or \(\pm1\), and none makes \(D_0H_0\) vanish. For each root,
+(66.10) leaves at most one \(c\). There are therefore at most four
+non-all-equal ratio triples for each of the three possible equal-pair
+positions.
+
+### 66.5 Exact projective phase counting and attainment
+
+Fix one possible ordered ratio triple. The numbers \(B_j,K_j\) from
+§66.3 are nonzero and fixed. The phase equations imply
+
+\[
+ e_j=\lambda K_j/B_j,\qquad
+ \lambda^3=\frac{B_0B_1B_2}{K_0K_1K_2}\ne0.
+\tag{66.13}
+\]
+
+There are exactly three distinct complex roots of the cubic, hence
+at most three admissible phase lifts. Each root determines at most
+one projective input ray: dephase \(x_0=\alpha_0=1\), then set
+\(\alpha_1=e_0\), \(\alpha_2=e_0e_1\). The third cyclic relation
+is precisely \(e_0e_1e_2=1\). These determine \(x=D^{-1}\alpha\)
+and \(y_j=t_jx_j\) uniquely. Unit-modulus requirements can remove
+cubic roots but cannot add any. Thus this counts projective rays,
+not algebraic multiplicities or different global phases.
+
+The all-equal sector has at most \(2\cdot3=6\) rays. The other
+sector has at most \(3\cdot4\cdot3=36\) rays. The sectors are
+disjoint, and a non-all-equal triple has only one equal pair, so no
+positional ambiguity affects this upper bound. The entire original
+locus has at most 42 rays; in particular, finiteness is a conclusion.
+
+The six canonical rays \((f_m,\pm if_m)\), \(m=0,1,2\), attain
+the first count. Section 65.2 constructs 36 distinct noncanonical
+rays, verifies original common flatness by the explicit seed and
+exact symmetries, and proves their distinctness and disjointness
+from the canonical set. They attain the other count. This proves
+Theorem 66.1. \(\square\)
+
+The exact central count now follows from the original equations and
+the displayed construction, independently of the numerical counts
+discussed in §64. It does not resolve how the external reported
+count was obtained or interpreted, and no external count is used as
+an upper-bound premise.
+
+## 67. Punctured central uniqueness and local quartet exclusion
+
+### 67.1 Complete-basis classification
+
+Let \(C(b)\) denote the unit-entry canonical **input** matrix of §62,
+so \(C(b)^*C(b)=6I_6\) and \(|M(b)C(b)|^2=6\) entrywise.
+
+**Theorem 67.1 (repo-derived punctured central classification).**
+There exists \(\varepsilon>0\) such that, for every
+\(0<|b|<\varepsilon\), any complete common-flat input basis is
+\(C(b)/\sqrt6\), up to column phases and permutation.
+
+**Proof.** Dephase the first coordinate of each unnormalized unit-entry
+column to one. An ordered complete basis is then a point of the
+compact torus \((S^1)^{30}\), subject to
+
+\[
+ |(M(b)z_k)_r|^2=6,\qquad z_j^*z_k=6\delta_{jk}.
+\tag{67.1}
+\]
+
+These equations are continuous in \(b\) and the phase coordinates.
+If the theorem were false, there would be a sequence
+\(0<|b_n|<1/n\) and noncanonical complete common-flat bases \(Z_n\).
+After passage to a subsequence in the compact torus, \(Z_n\to Z_*\).
+The limit satisfies (67.1) at zero. Its six column rays remain
+mutually orthogonal and distinct; no zero-coordinate or colliding-ray
+limit can occur.
+
+If one column of \(Z_*\) is canonical, Corollary 60.4 makes the
+entire limiting basis canonical. Apply a fixed permutation of its
+columns to match the ordering of \(C(0)\). The dephasing already
+removes all column-phase ambiguity. The sequence then eventually
+lies in the joint canonical-basis neighborhood of Theorem 62.1.
+That theorem forces \(Z_n\) to equal the moving canonical basis,
+contradicting its choice. This step uses the complete 30-phase basis
+germ, not a restriction fixing any individual ray.
+
+If no column of \(Z_*\) is canonical, Theorem 66.1 places all six
+among the 36 noncanonical rays of §65. Choose any three columns.
+They converge to three distinct centers of the fixed disjoint ray
+neighborhoods in Theorem 65.1. For sufficiently large \(n\), the
+three corresponding columns of \(Z_n\) lie in those neighborhoods
+and \(b_n\) lies in their common punctured interval. This is a
+common-flat orthogonal triple forbidden by Theorem 65.1.
+
+The two cases exhaust the exact central census. Both contradict the
+assumed sequence, proving the theorem. The canonical basis exists
+throughout the open branch, so the conclusion is uniqueness rather
+than an empty-locus assertion. \(\square\)
+
+### 67.2 Explicit transport to the fixed MUB pair
+
+**Corollary 67.2.** For \(0<|b|<\varepsilon\), the pair
+\((I_6,H_0(b))\) admits exactly one common-unbiased basis up to column
+phases and permutation, namely
+
+\[
+ B_{\rm can}(b)=H_0(b)C(b)/\sqrt6.
+\tag{67.2}
+\]
+
+Consequently this fixed pair cannot belong to a quartet of mutually
+unbiased bases on that punctured parameter interval.
+
+**Proof.** A unitary matrix \(B\) is unbiased to both members of the
+pair exactly when both \(B\) and \(H_0(b)^*B\) have entry moduli
+\(1/\sqrt6\). Set \(W=H_0(b)^*B\). Then \(W\) is unitary and both
+\(W\) and \(H_0(b)W=B\) are flat. Thus \(W\) is precisely a
+common-flat input basis in the convention of Theorem 67.1.
+That theorem gives \(W=C(b)/\sqrt6\) up to phases and permutation,
+which yields (67.2). Conversely (67.2) satisfies both flatness
+conditions by the defining canonical identities.
+
+A quartet extending the pair would supply two additional common-
+unbiased bases. Both would have the same column-ray set (67.2).
+Their relative unitary would therefore be monomial, with entry moduli
+zero or one, rather than all \(1/\sqrt6\). They cannot be mutually
+unbiased. \(\square\)
+
+### 67.3 Scope of the local conclusion
+
+The radius \(\varepsilon\) is positive but is not evaluated numerically.
+The parameter is restricted to the actual one-parameter family of
+(60.1). No exclusion on the entire open branch or for every
+six-dimensional Hadamard pair follows from this local argument.
+
+Zero is excluded from the uniqueness theorem: the explicit
+noncanonical complete central basis in §61 remains a genuine
+exception. The proof also does not classify every noncanonical
+single-ray branch approaching a canonical ray, or exclude every
+arbitrary noncanonical orthogonal triple near such rays. Compactness
+closes the complete-basis problem by using the full canonical-basis
+germ in precisely that limiting case.
