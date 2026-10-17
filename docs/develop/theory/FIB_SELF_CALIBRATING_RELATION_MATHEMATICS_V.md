@@ -1323,3 +1323,882 @@ and an arbitrary normalized sixth-$M$ response $v$ becomes $D_0+\lambda v$.
 Proof. Apply the bijection of Lemma 9.2 to Theorems 10.1, 11.1 and 12.1–12.3 and to each of their actual history arguments. The two windows are imposed on $y=(Y-D_0)/\lambda$, so negative $\lambda$ requires no assumption about the order of physical $Y$ endpoints. Every transported family shares the entire corresponding $H_J(Y)$; the displayed sixth response follows by substitution. These conditional implications do not supply a family satisfying the fifth-$M$ $L_2$ premise or the finer sixth-$M$ $L_1$ premise. ∎
 
 ## 追加锚（本行以下为增补区）
+## 13. 同一 JMMJMM 历史的联合实现方程
+
+**定义 13.1（三个固定目标的有理参数）。** Work in the complete-target domain $\mathcal W_3$ and the original-clock history convention of Definitions 1.1 and 9.1. For $\alpha,\beta>0$ and $d\in\mathbb R$, put
+
+$$
+\begin{gathered}
+h=1+\alpha\beta,\qquad
+P(\alpha,\beta)=\frac1h
+\begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},\\
+a=\frac1h,\qquad j=\frac{\alpha+\beta}{h},\qquad
+\ell=1+\frac\beta h,\qquad
+\tau=(1,j,\ell,j+\ell),\qquad b=(0,24,48,312/5),\\
+q_i=\frac{b_i-d}{\tau_i}\quad(0\le i\le3),\qquad
+f(T)=\sum_{i=0}^3q_i
+\prod_{\substack{0\le m\le3\\m\ne i}}\frac{T-m}{i-m}.
+\end{gathered}                                                     \tag{13.1}
+$$
+
+There is one polynomial $f$ for this target throughout all continuations. Denote its later samples by
+
+$$
+\begin{pmatrix}f_4\\f_5\\f_6\\f_7\end{pmatrix}=
+\begin{pmatrix}
+-1&4&-6&4\\
+-4&15&-20&10\\
+-10&36&-45&20\\
+-20&70&-84&35
+\end{pmatrix}
+\begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.                 \tag{13.2}
+$$
+
+Define the trace factors and response functions
+
+$$
+\begin{gathered}
+A=1+a+j,\qquad B=j+2\ell-a,\\
+Y=d+f_4A,\qquad Z=d+f_5B,\qquad V=d+f_6(A+B),\\
+R=d+f_7(2A+j),\qquad S=d+f_7(A+2B).
+\end{gathered}                                                     \tag{13.3}
+$$
+
+For $x=(\alpha_1,\beta_1,d_1,\alpha_2,\beta_2,d_2,
+\alpha_3,\beta_3,d_3)$, attach subscript $i$ to these functions evaluated on its $i$th coordinate triple. The jointly constrained map is
+
+$$
+F(x)=
+\begin{pmatrix}
+Z_1\\ Z_2\\ Z_3\\
+Y_1-Y_2\\ Y_1-Y_3\\
+V_1-V_2\\ V_1-V_3\\
+R_1-R_2\\ S_1-S_3
+\end{pmatrix}.                                                    \tag{13.4}
+$$
+
+In particular, the two terminal equalities concern the pairs $\{1,2\}$ and $\{1,3\}$ within the same three targets. All equations in (13.4), including the ancestor equalities, are simultaneous.
+
+## 14. 联合零点的完整有理盒证书
+
+**定义 14.1（中心、矩阵与区间运算）。** Let $\rho=10^{-8}$ and set
+
+$$
+x_0=\frac1{10^{15}}
+\begin{pmatrix}
+648261282725604\\
+1661406963929015\\
+2963341227084761\\
+267996473307519\\
+1637499998610191\\
+4652954721959948\\
+576125340775968\\
+10453577045282132\\
+15807600936593863
+\end{pmatrix},\qquad
+X=\{x\in\mathbb R^9:\|x-x_0\|_\infty\le\rho\}.                \tag{14.1}
+$$
+
+Use the rational matrix
+
+$$
+C=\frac1{10^6}
+\begin{pmatrix}
+1023801&217453&-1001127&168959&-262908&78207&-721314&-16353&132738\\
+391102&-378813&-8273&-294334&-2173&-136240&-5961&28487&1097\\
+864656&-1063712&44044&-826493&11566&-382564&31734&79992&-5840\\
+147048&-359545&162474&-20132&42668&-386529&117063&165543&-21542\\
+-65905&-1886&53887&5189&14152&33283&38826&-18326&-7145\\
+718648&4820697&-4559578&63606&-1197400&4024327&-3285186&-1551509&604549\\
+24068&-20689&-480&-16075&6305&-7441&-14419&1556&4154\\
+-858169&-695624&1582086&-540493&945650&-250181&935725&52312&-180525\\
+1329025&2475184&-3103628&1923192&-2606045&890200&-1860321&-186137&311185
+\end{pmatrix}.                                                    \tag{14.2}
+$$
+
+Every interval endpoint below is rational. For $U=[u_-,u_+]$ and $V=[v_-,v_+]$, the operations are
+
+$$
+\begin{aligned}
+U+V&=[u_-+v_-,u_++v_+],&
+-U&=[-u_+,-u_-],\\
+UV&=\bigl[\min_{\epsilon,\eta\in\{-,+\}}u_\epsilon v_\eta,
+          \max_{\epsilon,\eta\in\{-,+\}}u_\epsilon v_\eta\bigr],&
+V^{-1}&=[1/v_+,1/v_-]\quad(0\notin V),\\
+U/V&=UV^{-1},&
+\operatorname{mag}(U)&=\max(|u_-|,|u_+|).
+\end{aligned}                                                     \tag{14.3}
+$$
+
+Real constants are singleton intervals, subtraction is addition of the negative, and squares are products of the interval with itself. Evaluate (13.1)–(13.4) with the displayed parentheses, starting from $[x_{0i}-\rho,x_{0i}+\rho]$. In particular $\ell=1+\beta/h$, rather than an algebraically expanded expression. Linear combinations use the displayed terms; (13.2) uses its four columns in order.
+
+Here is an explicit derivative specification for the interval matrix $[DF](X)$. Gradients are row vectors in coordinate order $(\alpha,\beta,d)$; put $e_d=(0,0,1)$. Use
+
+$$
+\begin{gathered}
+Da=\frac{(-\beta,-\alpha,0)}{h^2},\qquad
+Dj=\frac{(1-\beta^2,1-\alpha^2,0)}{h^2},\qquad
+D\ell=\frac{(-\beta^2,1,0)}{h^2},\\
+D\tau=(0,Dj,D\ell,Dj+D\ell),\\
+Dq_i=-\frac{(b_i-d)D\tau_i}{\tau_i^2}
+      -\frac{e_d}{\tau_i}\quad(0\le i\le3),\\
+Df_s=\sum_{i=0}^3w_{si}Dq_i\quad(4\le s\le7),
+\end{gathered}                                                     \tag{14.4}
+$$
+
+where $w_{si}$ are the entries of (13.2). For each response in (13.3), use
+
+$$
+D(d+f_sT)=e_d+T Df_s+f_sDT,\qquad
+(s,T)=(4,A),(5,B),(6,A+B),(7,2A+j),(7,A+2B),                    \tag{14.5}
+$$
+
+with $DA=Da+Dj$ and $DB=Dj+2D\ell-Da$. Assemble the nine rows according to (13.4); a response has zero derivatives in the other two targets' coordinates. The notation $[DF](X)$ means precisely evaluation of (14.4)–(14.5) by (14.3), without algebraic substitution for the displayed gradients. Define
+
+$$
+\mathcal D_{ij}=[\delta_{ij},\delta_{ij}]
+                  -\sum_{k=1}^9 C_{ik}[DF]_{kj}(X),
+\qquad m_i=\sum_{j=1}^9\operatorname{mag}(\mathcal D_{ij}),      \tag{14.6}
+$$
+
+where $\delta_{ij}$ is the Kronecker symbol. Thus (13.1)–(14.6) specify the entire finite rational certificate.
+
+**定理 14.2（精确联合零点与投影）。** The map $F$ has exactly one zero $x_*$ in $X$. It is defined without a rounded equality by
+
+$$
+x^{(0)}=x_0,\qquad
+x^{(n+1)}=x^{(n)}-CF(x^{(n)}),\qquad
+x_*=\lim_{n\to\infty}x^{(n)}.                                  \tag{14.7}
+$$
+
+All these iterates lie in $X$, and
+
+$$
+\|x_*-x_0\|_\infty<\frac{40}{39}\,10^{-14}<2\cdot10^{-14}.
+                                                                  \tag{14.8}
+$$
+
+For $y_*=Y_1(x_*)$ and $v_*=V_1(x_*)$,
+
+$$
+\frac{29286821}{10^6}<y_*<\frac{29286822}{10^6},\qquad
+-\frac{45328099}{10^6}<v_*<-\frac{45328097}{10^6}.               \tag{14.9}
+$$
+
+Proof. All $\alpha_i,\beta_i$ are strictly positive throughout $X$. Therefore $h_i,j_i,\ell_i,j_i+\ell_i$ and their squared denominators in (14.4) are positive; their interval lower endpoints under (14.3) are positive as well. Product and quotient differentiation of (13.1) gives exactly (14.4), and (14.5) is the product rule for (13.3). Thus $F$ is continuously differentiable on a neighborhood of $X$, and every actual derivative matrix $DF(x)$ is enclosed by $[DF](X)$.
+
+The endpoint operations (14.3) give the following finite comparisons:
+
+$$
+\|CF(x_0)\|_\infty<\frac{37711955}{10^{23}}<10^{-14},            \tag{14.10}
+$$
+
+and, for each row, $m_i<n_i/10^{12}<c_i/10^6$, with all nine entries specified here:
+
+$$
+\begin{array}{c|r|r}
+i&n_i&c_i\\ \hline
+1&2619848233&2620\\
+2&654912347&655\\
+3&1903547437&1904\\
+4&2007031636&2008\\
+5&571807883&572\\
+6&19941425792&19942\\
+7&151118857&152\\
+8&3726043872&3727\\
+9&7932801408&7933
+\end{array}                                                       \tag{14.11}
+$$
+
+These inequalities follow by rational endpoint addition, multiplication, reciprocal and comparison from the integers in (14.1)–(14.2) and formulas (13.1)–(14.6). In particular they concern the whole box $X$. Since $19942/10^6<1/40$, they imply
+
+$$
+\sup_{x\in X}\|I-CDF(x)\|_\infty<\frac1{40}.                   \tag{14.12}
+$$
+
+Put $G(x)=x-CF(x)$. Integration of its derivative along the segment between two points of the convex box $X$ gives Lipschitz constant $1/40$. Also, for every $x\in X$,
+
+$$
+\begin{aligned}
+\|G(x)-x_0\|_\infty
+&\le\|G(x)-G(x_0)\|_\infty+\|CF(x_0)\|_\infty\\
+&<\frac1{40}\,10^{-8}+10^{-14}<10^{-8}.
+\end{aligned}                                                     \tag{14.13}
+$$
+
+Thus $G$ is a self-map and a contraction of the complete closed box $X$. The Banach contraction principle applies: the iterates (14.7) converge to its unique fixed point. The geometric-series error estimate is
+
+$$
+\|x_*-x_0\|_\infty
+\le\sum_{n=0}^\infty(1/40)^n\|CF(x_0)\|_\infty
+<\frac{40}{39}\,10^{-14}.
+$$
+
+At $x_0$, (14.12) makes $CDF(x_0)$ invertible, as is seen from the convergent series for $(I-(I-CDF(x_0)))^{-1}$. Since these are square matrices, $C$ is nonsingular. Hence $CF(x_*)=0$ is equivalent to $F(x_*)=0$. Every zero of $F$ in $X$ is a fixed point of $G$, proving the asserted uniqueness within $X$.
+
+For completeness the projections and terminal separations use the same endpoint rules, on $X'=\{x:\|x-x_0\|_\infty\le2\cdot10^{-14}\}$ or on $X$ as indicated:
+
+$$
+\begin{array}{c|c|c}
+\text{function}&\text{box}&\text{strict containing interval}\\ \hline
+Y_1&X'&(29286821500/10^9,\ 29286821501/10^9)\\
+V_1&X'&(-45328098035/10^9,\ -45328098033/10^9)\\
+R_1,\ R_2&X&(-22,-21)\\
+R_3&X&(-10,-9)\\
+S_1,\ S_3&X&(-41,-40)\\
+S_2&X&(-42,-41).
+\end{array}                                                       \tag{14.14}
+$$
+
+Each entry follows by substituting the coordinate endpoints in (13.1)–(13.3) with (14.3); no equality of responses is inferred from these containing intervals. Estimate (14.8) places $x_*$ in $X'$, so the first two rows imply (14.9). The equalities themselves are the exact equations $F(x_*)=0$. ∎
+
+## 15. 一个精确父历史的五目标失败族
+
+**定理 15.1（三目标实际子历史与五目标同父障碍）。** Use the exact limit $x_*$ of Theorem 14.2, and let
+
+$$
+\begin{gathered}
+W_i=(P(\alpha_{i*},\beta_{i*}),f_i,d_{i*})\quad(1\le i\le3),
+\qquad \mathcal T=\{W_1,W_2,W_3\},\\
+y_*=Y_1(x_*),\qquad v_*=V_1(x_*),\qquad
+\mathcal K=\mathcal A_{y_*}\cup\mathcal T,
+\end{gathered}                                                     \tag{15.1}
+$$
+
+where each $f_i$ is the single polynomial (13.1) at that coordinate triple, and $\mathcal A_{y_*}$ is exactly the already bound family (11.6), with complete targets (10.3). Then $y_*\in(144/5,156/5)$, all five elements of $\mathcal K$ are distinct legal complete targets, and
+
+$$
+\begin{gathered}
+\mathcal K\subseteq\mathcal F((H_p(y_*),M,0)),\qquad
+|\mathcal K|=5,\\
+\mathcal T\subseteq\mathcal F((H_p(y_*),M,0,M,v_*)),\qquad
+L_1(\mathcal T,(H_p(y_*),M,0,M,v_*)),\\
+L_2(\mathcal K,(H_p(y_*),M,0)),\qquad
+L_3(\mathcal K,H_p(y_*)).
+\end{gathered}                                                     \tag{15.2}
+$$
+
+In the displayed $L_1$ child, the final-$J$ collision pair is exactly $\{W_1,W_2\}$, and the final-$M$ collision pair is exactly $\{W_1,W_3\}$. In particular (15.2) obstructs every deterministic policy recovering this known five-target family from the stated parent within the remaining three original-clock readings, including policies with early stopping.
+
+Proof. The source in (13.1) has four strictly positive entries, trace one and determinant zero. Its rank is therefore one, with no symmetry requirement. The exact cumulative matrices along clocks $0,\ldots,6$ for the literal word $JMMJMM$ are
+
+$$
+I,\quad J,\quad
+\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\3&2\end{pmatrix},\quad
+\begin{pmatrix}3&2\\4&3\end{pmatrix}.                           \tag{15.3}
+$$
+
+Their traces against $P(\alpha,\beta)$ are respectively
+
+$$
+1,\quad j,\quad\ell,\quad j+\ell,\quad A,\quad B,\quad A+B.
+                                                                  \tag{15.4}
+$$
+
+The two possible final matrices are, in final-$J$ and final-$M$ order,
+
+$$
+\begin{pmatrix}4&3\\3&2\end{pmatrix},\qquad
+\begin{pmatrix}4&3\\7&5\end{pmatrix},
+$$
+
+with trace factors $2A+j$ and $A+2B$. Thus the response functions (13.3) are the actual fourth-$J$, fifth-$M$, sixth-$M$ and two final responses of the same fixed target. There is no change of source or gain between them.
+
+Lagrange interpolation at original clocks $0,1,2,3$ gives (13.2); multiplying $q_i$ by the first four traces in (15.4) and adding the same drift gives exactly the readings $0,24,48,312/5$. Every $f_i$ has degree at most three and is nonzero: if it were zero, these four readings would all be its constant drift. The coordinate box gives
+
+$$
+d_{1*}\in(2,3),\qquad d_{2*}\in(4,5),\qquad d_{3*}\in(15,16),
+                                                                  \tag{15.5}
+$$
+
+so the three complete targets are distinct. The single simultaneous equality $F(x_*)=0$ now gives
+
+$$
+\begin{gathered}
+Y_1=Y_2=Y_3=y_*,\qquad Z_1=Z_2=Z_3=0,\\
+V_1=V_2=V_3=v_*,\qquad R_1=R_2,\qquad S_1=S_3.
+\end{gathered}                                                     \tag{15.6}
+$$
+
+Consequently all three worlds realize the entire history
+
+$$
+(0,J,24,M,48,M,312/5,J,y_*,M,0,M,v_*).
+                                                                  \tag{15.7}
+$$
+
+The last four rows of (14.14) separate $R_3$ from $R_1=R_2$ and $S_2$ from $S_1=S_3$. For final $J$, the actual response $R_1$ retains exactly the two distinct targets $W_1,W_2$ in $\mathcal T$; for final $M$, response $S_1$ retains exactly $W_1,W_3$. Each child has $L_0$. This proves the $L_1$ assertion by the actual recursion (1.1), with different terminal collision pairs on this same $\mathcal T$.
+
+For the complementary two worlds, (14.9) places $y_*$ in the second window of Theorem 11.1. To specify the roots more narrowly, put $t_*=5(y_*-12)/96$. Then $9/10<t_*<901/1000$. Direct endpoint operations on $t\in[9/10,901/1000]$ give the following containing intervals for the quadratic (10.1):
+
+$$
+\begin{array}{c|c}
+\ell&\text{interval containing }Q_t(\ell)\\ \hline
+4/3&[2666666/10^9,\ 9868445/10^9]\\
+3/2&[-13250000/10^9,\ -4697750/10^9]\\
+8/5&[-11200000/10^9,\ -1789440/10^9]\\
+9/5&[19000000/10^9,\ 30235240/10^9].
+\end{array}                                                       \tag{15.8}
+$$
+
+The positive leading coefficient and the two sign changes isolate one root $\ell_-$ in $(4/3,3/2)$ and the other $\ell_+$ in $(8/5,9/5)$. These are precisely the two roots used by $\mathcal A_{y_*}$ in (11.6). On both root intervals, $1<\ell<8/3$ and $0<t_*\ell-1<1$; hence the sources (10.3) are strictly positive, trace one and rank one. Their gains $8T(T-5)(T-7)/(5\ell)$ are nonzero cubics, and their drifts are zero. Their different $\ell$ values give different sources, and (15.5) separates both complete targets from $\mathcal T$. Thus $|\mathcal K|=5$.
+
+Theorem 10.1 and Proposition 11.3 give these two worlds' whole parent history $H_p(y_*)$ and their following actual responses:
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&z_5&z_6&z_7\text{ for either final atom}\\ \hline
+J&J&0&-y_*/2&0\\
+J&M&0&-126/5&0\\
+M&J&0&48/5-y_*&0\\
+M&M&0&-156/5-48/(5\ell)&0.
+\end{array}                                                       \tag{15.9}
+$$
+
+This uses exactly the same $y_*$ as (15.7). After fifth $M$, all five worlds have the actual response $0$. In this child, sixth $J$ has the response $48/5-y_*$ retaining $\mathcal A_{y_*}$ with $L_1$, whereas sixth $M$ has response $v_*$ retaining $\mathcal T$ with $L_1$. The pair alone has different sixth-$M$ responses, as is also explicit in (15.9); it is the jointly realized triple that supplies this second sixth-action clause. Lemma 9.3 and (1.1), or equivalently the finer gluing implication of Theorem 12.3, give $L_2(\mathcal K,(H_p(y_*),M,0))$.
+
+At the parent, fifth $J$ has a response-$0$ child containing the same $\mathcal A_{y_*}$ with $L_2$, and fifth $M$ has the response-$0$ child $\mathcal K$ with the just established $L_2$. Applying (1.1) gives $L_3(\mathcal K,H_p(y_*))$. All inclusions concern fixed complete targets and their entire literal histories. Arbitrary discontinuous deterministic choices and early stopping are covered by that recursion. ∎
+
+**推论 15.2（两种符号的输运与原根边界）。** For every $D_0\in\mathbb R$ and $\lambda\ne0$, set $Y_*=D_0+\lambda y_*$. The transported family $\Phi_{D_0,\lambda}(\mathcal K)$ has exactly five distinct complete targets at the parent $H_J(Y_*)$ of (5.1), and
+
+$$
+\begin{gathered}
+L_1\bigl(\Phi_{D_0,\lambda}(\mathcal T),
+(H_J(Y_*),M,D_0,M,D_0+\lambda v_*)\bigr),\\
+L_2\bigl(\Phi_{D_0,\lambda}(\mathcal K),(H_J(Y_*),M,D_0)\bigr),\\
+L_3\bigl(\Phi_{D_0,\lambda}(\mathcal K),H_J(Y_*)\bigr).
+\end{gathered}                                                     \tag{15.10}
+$$
+
+The three failure predicates in (15.10) also hold on the respective whole compatible fibers by inclusion. They concern this one exact normalized $y_*$ and its affine images. An original-root lower bound additionally requires losing actual children for both actions throughout the necessary earlier histories, with one consistent realization along each selected path. A policy beginning at the original root need not reach $H_p(y_*)$ or any of these transported parents. Thus (15.2)–(15.10) do not settle the unrestricted eight-reading question of Open Problem 8.2, provide a nine-reading upper bound, or classify other $y$ values or all fifth-$M$ fibers.
+
+Proof. Apply the bijection in Lemma 9.2 to each fixed target, each full history and each selected actual response in Theorem 15.1. Its inverse preserves target distinction and the recursion for either sign of $\lambda$; in particular the sixth-$J$ response after fifth $M$ is $D_0+\lambda(48/5-y_*)$, and the triple's sixth-$M$ response is $D_0+\lambda v_*$. The whole-fiber implications follow from Lemma 9.3. These applications start at the displayed parents and supply no losing children at earlier nodes, which is the remaining hypothesis needed for a conclusion at the original root. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 16. 同一 JMM 祖先上的严格正圆锥曲线伴随点
+
+**定义 16.1（共同射线类与固定五目标的记号）。** Retain the complete-target domain, original clocks, acquisition rules and failure recursion of Definition 1.1. Put
+
+$$
+\begin{gathered}
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+h(T)=T(T-5)(T-7),\\
+H_2=(0,J,24,M,48),\qquad
+H_3=(H_2,M,312/5),\qquad H_M=(H_3,M,252/5),\\
+\mathscr R=\left\{R\in\mathbb R^{2\times2}:
+R_{ij}>0,\ \operatorname{rank}R=1,\
+\operatorname{tr}(JR)=1,\
+\operatorname{tr}(LR)=8/5\right\},\\
+\mathcal C=\left\{W(R)=
+\left(\frac R{\operatorname{tr}R},(\operatorname{tr}R)h,0\right):
+R\in\mathscr R\right\}.
+\end{gathered}                                                     \tag{16.1}
+$$
+
+Thus $\mathcal C$ contains every source satisfying the two trace constraints, rather than a selected finite subset. Equivalently, writing $s=\operatorname{tr}R$ and $a=R_{11}$ gives
+
+$$
+\begin{gathered}
+R(a,s)=
+\begin{pmatrix}
+a&8/5-s\\s-3/5&s-a
+\end{pmatrix},\qquad
+C(a,s)=a^2-as-s^2+\frac{11}5s-\frac{24}{25},\\
+\mathscr R=
+\left\{R(a,s):\frac35<s<\frac85,\quad 0<a<s,\quad C(a,s)=0\right\},
+\qquad W(a,s)=\left(\frac{R(a,s)}s,sh,0\right).
+\end{gathered}                                                     \tag{16.2}
+$$
+
+Indeed, the first trace constraint fixes the sum of the off-diagonal entries to $1$, and the second fixes $R_{11}+R_{12}+R_{22}=8/5$. These give exactly the entries in (16.2). Their determinant is $-C(a,s)$; positivity excludes rank zero and is equivalent to the displayed strict inequalities. The complete target determines $R$: the coefficient multiplying the fixed polynomial $h$ gives $\operatorname{tr}R$, and its normalized source then gives $R$. Hence $R\mapsto W(R)$ is injective.
+
+Use exactly $x_*,y_*,\mathcal T$ and $\mathcal K$ of Theorems 14.2 and 15.1, and write
+
+$$
+\mathcal K_5=\mathcal K=\{U_-,U_+\}\cup\mathcal T,\qquad
+U_\pm=W_{\ell_\pm}\in\mathcal A_{y_*},\qquad
+\ell_-<\ell_+.
+                                                                  \tag{16.3}
+$$
+
+The notation $W_{\ell}$ refers to (10.3), with $t=5(y_*-12)/96$. In particular $x_*$ is the limit (14.7), not a rounded solution of a new system, and $y_*=Y_1(x_*)$ is the same number used throughout Section 15. Every member of $\mathcal C$ is a complete legal target. Conversely, among worlds with the known promise $d=0$ and $g=\kappa h$, $\kappa\ne0$, compatibility with $H_2$ forces
+
+$$
+\kappa\operatorname{tr}(JP)=1,\qquad
+\kappa\operatorname{tr}(LP)=8/5.
+                                                                  \tag{16.4}
+$$
+
+Since $\operatorname{tr}(JP)>0$, one has $\kappa>0$; setting $R=\kappa P$ recovers precisely (16.1). This converse uses the stated gain and drift promise.
+
+**定理 16.2（固定精确点的合法不同伴随世界）。** Set
+
+$$
+\begin{gathered}
+t=\frac{5(y_*-12)}{96},\qquad q=\frac85t,\qquad
+s_0=\frac8{5\ell_-},\qquad a_0=q-s_0,\\
+a_1=\frac{66}5-13a_0-8s_0,\qquad
+s_1=21a_0+13s_0-\frac{99}5,\qquad
+B_{\rm new}=W(a_1,s_1).
+\end{gathered}                                                     \tag{16.5}
+$$
+
+Then $B_{\rm new}$ is a legal complete target in $\mathcal C$ distinct from every member of $\mathcal K_5$. The affine map in (16.5) preserves $C(a,s)$ and $3a+2s$ and is an involution. At this particular point,
+
+$$
+\begin{gathered}
+0.2810<a_1<0.2813,\qquad 1.1581<s_1<1.1585,\qquad
+0.002<a_1-a_0<0.0025,\\
+29.27<12(1+a_1+s_1)<29.28<y_*.
+\end{gathered}                                                     \tag{16.6}
+$$
+
+Every terminating decimal in this section and the sections below denotes its exact rational value.
+
+Proof. Multiplying the source $P_\ell$ of (10.3) by $s=8/(5\ell)$ gives $R(q-s,s)$, with $q=8t/5$. Direct substitution gives
+
+$$
+C(q-s,s)=s^2Q_t(\ell),\qquad s=\frac8{5\ell}.
+                                                                  \tag{16.7}
+$$
+
+Thus $W(a_0,s_0)=U_-$ as a complete target, including its gain and drift.
+
+For the root exchange, put $k=3a+2s$ and substitute $s=(k-3a)/2$. Then
+
+$$
+4C\left(a,\frac{k-3a}{2}\right)
+=a^2+\left(4k-\frac{66}5\right)a
+-k^2+\frac{22}5k-\frac{96}{25}.
+                                                                  \tag{16.8}
+$$
+
+The replacement $a'=66/5-4k-a$ preserves this quadratic, and $s'=(k-3a')/2$ gives
+
+$$
+(a',s')=\left(\frac{66}5-13a-8s,\ 
+21a+13s-\frac{99}5\right).
+                                                                  \tag{16.9}
+$$
+
+It preserves $k$, applying it twice returns $(a,s)$, and (16.8) proves preservation of $C$ even at a tangency. Positivity and distinction for the point in (16.5) require separate bounds.
+
+The projection (14.9) confines $y_*$ to $(29.286821,29.286822)$. On the closed interval with these endpoints, using $t=5(y-12)/96$ in the exact quadratic (10.1) gives
+
+$$
+\begin{array}{c|c}
+\ell&\text{strict containing interval for }Q_t(\ell)\\ \hline
+1.37728&(0.0000007397,\ 0.0000011329)\\
+1.37730&(-0.0000017816,\ -0.0000013884)\\
+1.6666&(-0.0000083124,\ -0.0000077913)\\
+1.6667&(0.0000042928,\ 0.0000048139).
+\end{array}                                                       \tag{16.10}
+$$
+
+These are rational endpoint comparisons under (14.3). For example each row encloses
+$(t^2-3/8)\ell^2+(11/8-3t)\ell+1$ with the same fixed rational $\ell$ in that row. The leading coefficient is positive, and the signs locate its two roots as
+
+$$
+1.37728<\ell_-<1.37730,\qquad
+1.6666<\ell_+<1.6667.
+                                                                  \tag{16.11}
+$$
+
+There are no additional roots, and both intervals satisfy $1<\ell<8/3$ and $0<t\ell-1<1$ as in Theorem 11.1.
+
+To bound (16.5), first retain the relation $a_0=q-s_0$ by using the equivalent formulas
+
+$$
+\begin{aligned}
+a_1&=\frac{66}5-13q+5s_0,&
+s_1&=21q-8s_0-\frac{99}5,\\
+a_1-a_0&=\frac{66}5-14q+6s_0,&
+a_1+s_1&=8q-3s_0-\frac{33}5.
+\end{aligned}                                                     \tag{16.12}
+$$
+
+Substitution of (16.11) and (14.9), with reciprocal endpoints reversed for $s_0=8/(5\ell_-)$, yields the strict rational enclosures
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{containing interval}\\ \hline
+a_1&(0.281075338,\ 0.281160770)\\
+s_1&(1.158256452,\ 1.158393158)\\
+a_1-a_0&(0.002200006,\ 0.002302390).
+\end{array}                                                       \tag{16.13}
+$$
+
+The wider bounds in (16.6) follow. In particular, the four entries of $R(a_1,s_1)$ have the strict lower bounds
+
+$$
+a_1>0.2810,\quad \frac85-s_1>0.4415,\quad
+s_1-\frac35>0.5581,\quad s_1-a_1>0.8768.
+                                                                  \tag{16.14}
+$$
+
+Equations (16.7)–(16.9) give determinant zero; positivity gives rank one and positive trace $s_1$. Consequently $R(a_1,s_1)/s_1$ has trace one, $s_1h$ is a nonzero cubic, and $B_{\rm new}$ is legal.
+
+Writing $q_1=a_1+s_1$, preservation of $3a+2s$ gives
+
+$$
+q_1-q=-\frac{a_1-a_0}{2}<0.
+                                                                  \tag{16.15}
+$$
+
+Both old $U$ worlds have $a+s=q$ and fourth-$J$ reading $12(1+q)=y_*$. The new world's fourth-$J$ reading is $12(1+q_1)$: the fourth cumulative matrix is $I+JL$, whose trace against $R(a,s)$ is $1+a+s$. Equations (16.12)–(16.13) give the last line of (16.6), distinguishing the new world from both $U$ worlds. Its drift is zero, whereas (15.5) gives strictly positive drifts for all members of $\mathcal T$, so it differs from those three as well.
+
+The root exchange used in (16.8) is Vieta's quadratic identity. Line-intersection involutions have established broader treatments, for example van der Kamp–McLaren–Quispel, *Generalised Manin transformations and QRT maps*, [Journal of Computational Dynamics 8, 183–211](https://doi.org/10.3934/jcd.2021009). Here a single conic and the single linear response $3a+2s$ suffice; no pencil, integrability or measure-preservation conclusion is used. The concrete positive point (16.5) and its history consumers below are the specific content of this construction. ∎
+
+## 17. 三个完整参数盒的实际联合响应
+
+**定义 17.1（两条实际延续的响应函数）。** Let $\mathcal B_i\subset\mathbb R^3$ be the projection of $X$ in (14.1) onto its $i$th triple $(\alpha_i,\beta_i,d_i)$, for $i=1,2,3$. Thus each coordinate interval has radius exactly $10^{-8}$ about the corresponding rational coordinate of $x_0$, without imposing $F=0$. For $\theta=(\alpha,\beta,d)\in\mathcal B_i$, use exactly the source, traces, samples and single interpolating gain of (13.1)–(13.2), and write $W(\theta)=(P(\alpha,\beta),f,d)$. Define
+
+$$
+\begin{aligned}
+\sigma(\theta)&=d+q_3(a+j),\\
+\zeta(\theta)&=d+f_4(2\ell-1),\\
+\mu(\theta)&=d+f_4(j+2\ell).
+\end{aligned}                                                     \tag{17.1}
+$$
+
+Here $a=1/(1+\alpha\beta)$ is the scalar from (13.1), distinct from the conic coordinate $R_{11}$ of (16.2). For any real pair $(\sigma,z)$ set
+
+$$
+\begin{gathered}
+\widehat A=\frac{\sigma}{24}-1,\qquad
+\widehat B=\frac z{12}-\frac85,\qquad
+\widehat C=1-\widehat B,\qquad
+\widehat D=\frac85-\widehat A-\widehat B,\\
+\widehat R(\sigma,z)=
+\begin{pmatrix}\widehat A&\widehat B\\\widehat C&\widehat D\end{pmatrix},
+\qquad
+\Delta(\sigma,z)=\widehat A\widehat D-\widehat B\widehat C.
+\end{gathered}                                                     \tag{17.2}
+$$
+
+**定理 17.2（整盒合法性、分离与联合排除）。** Every $\theta\in\mathcal B_i$ gives a legal complete target realizing all of $H_3$. Its actual third-$J$ response at $H_2$ is $\sigma(\theta)$, its next fourth-$M$ response along that continuation is $\zeta(\theta)$, and its fourth-$M$ response at $H_3$ is $\mu(\theta)$. Throughout each entire box,
+
+$$
+\begin{array}{c|c|c|c|c}
+i&\sigma(\mathcal B_i)&\zeta(\mathcal B_i)&
+\mu(\mathcal B_i)&d(\mathcal B_i)\\ \hline
+1&(35.488,35.489)&(29.350,29.352)&(50.787,50.789)&(2,3)\\
+2&(38.332,38.333)&(31.381,31.383)&(50.345,50.347)&(4,5)\\
+3&(35.469,35.471)&(35.566,35.569)&(48.338,48.341)&(15,16).
+\end{array}                                                       \tag{17.3}
+$$
+
+For the same joint response pair $(\sigma(\theta),\zeta(\theta))$, the strict exclusion bounds are
+
+$$
+\begin{array}{c|c}
+i&\text{quantity evaluated on }\mathcal B_i\\ \hline
+1&0.001486462<\Delta<0.001488988\\
+2&-0.015170242<\widehat C<-0.015168132<-15/1000\\
+3&-0.363958637<\widehat C<-0.363957400<-36/100.
+\end{array}                                                       \tag{17.4}
+$$
+
+In particular the first row gives $1/1000<\Delta<2/1000$ on the whole first box.
+
+Proof. The boxes have $\alpha,\beta>0$. The matrix (13.1) is therefore strictly entrywise positive, has trace one and determinant zero, and has rank one. Its positive traces at clocks $0,1,2,3$ are $(1,j,\ell,j+\ell)$. The polynomial (13.1) interpolates the four prescribed gain values there, so these readings, with the same drift $d$, are $0,24,48,312/5$. Those readings are unequal, hence the polynomial cannot be zero. This proves legality throughout the boxes without using $F=0$.
+
+At $H_2$ the cumulative matrix is $L$. Choosing third $J$ and then fourth $M$ gives
+
+$$
+JL=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+MJL=\begin{pmatrix}1&0\\2&1\end{pmatrix}.
+                                                                  \tag{17.5}
+$$
+
+Their traces against $P(\alpha,\beta)$ are $a+j$ and $2\ell-1$. The gain values at the actual clocks are $q_3$ and $f_4$, giving $\sigma$ and $\zeta$. On the other continuation, third $M$ followed by fourth $M$ has fourth matrix
+
+$$
+D=J+2L=\begin{pmatrix}2&1\\3&2\end{pmatrix},
+                                                                  \tag{17.6}
+$$
+
+with trace $j+2\ell$, giving $\mu$. These are alternative response functions of the same fixed world. Acquiring $\sigma,\zeta$ uses just the chosen $J,M$ continuation; it does not acquire $\mu$.
+
+For completeness, all bounds (17.3)–(17.4) follow from rational endpoint operations (14.3) on the three coordinate intervals in each $\mathcal B_i$. The expressions to substitute are
+
+$$
+\begin{gathered}
+H=1+\alpha\beta,\quad
+a=H^{-1},\quad j=(\alpha+\beta)/H,\quad \ell=1+\beta/H,\\
+q_0=-d,\quad q_1=(24-d)/j,\quad
+q_2=(48-d)/\ell,\quad
+q_3=(312/5-d)/(j+\ell),\\
+f_4=-q_0+4q_1-6q_2+4q_3,\\
+\sigma=d+q_3(a+j),\quad
+\zeta=d+f_4(2\ell-1),\quad
+\mu=d+f_4(j+2\ell).
+\end{gathered}                                                     \tag{17.7}
+$$
+
+All reciprocal denominators have strictly positive interval lower endpoints. Substitute the resulting rational intervals for $\sigma,\zeta$ into (17.2), before rounding them outward to (17.3). The comparisons with the rational endpoints in (17.4) are strict. Thus (17.4) encloses the compositions $\Delta\circ(\sigma,\zeta)$ and $\widehat C\circ(\sigma,\zeta)$ on the original parameter boxes; it is not inferred from the coarser printed marginal intervals alone. In particular these are bounds for every point of the radius-$10^{-8}$ boxes, rather than only for $x_*$ or a finite sample. ∎
+
+## 18. 六目标的实际 H3 障碍与更早 J 分支
+
+**定理 18.1（六目标 L4 与固定 K5 的一次最少增补）。** Define the single fixed family
+
+$$
+\mathcal K_6=\mathcal K_5\cup\{B_{\rm new}\},\qquad
+\mathcal C_3=\{U_-,U_+,B_{\rm new}\}.
+                                                                  \tag{18.1}
+$$
+
+It has exactly six distinct complete legal targets and satisfies
+
+$$
+\begin{gathered}
+\mathcal K_6\subseteq\mathcal F(H_3),\qquad
+L_3(\mathcal C_3,H_M),\qquad L_4(\mathcal K_6,H_3),\\
+\neg L_4(\mathcal K_5,H_3).
+\end{gathered}                                                     \tag{18.2}
+$$
+
+Consequently, among extensions of this fixed $\mathcal K_5$ by additional legal worlds at $H_3$, the minimum number of added worlds needed for $L_4$ is exactly one. This is a relative augmentation minimum, with $\mathcal K_5$ fixed.
+
+Proof. Distinction and legality follow from Theorems 15.1 and 16.2. For every conic world (16.2), the cumulative matrices along $JMM$ are
+
+$$
+I,\quad J,\quad L,\quad J+L,
+                                                                  \tag{18.3}
+$$
+
+and the values of the one fixed polynomial $h$ at clocks $0,\ldots,7$ are
+
+$$
+(0,24,30,24,12,0,-6,0).
+                                                                  \tag{18.4}
+$$
+
+The two trace constraints therefore give exactly the entire ancestor history $H_3$. The fourth-$M$ matrix is $D$ of (17.6), with trace $21/5$ against $R$, so every conic world reads $252/5$ there. The fifth reading is zero for either action, and the seventh reading is zero for either action after any preceding choices.
+
+After that fourth $M$, the complete sixth-response table, with fifth and sixth actions in chronological order, is
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&A_6&z_6&z_7\text{ for either }E_7\\ \hline
+M&M&\begin{pmatrix}5&3\\8&5\end{pmatrix}&-66&0\\
+M&J&\begin{pmatrix}5&3\\3&2\end{pmatrix}
+&-6(3+2s+3a)&0\\
+J&M&\begin{pmatrix}2&1\\5&3\end{pmatrix}
+&-6(37/5-s-a)&0\\
+J&J&D&-126/5&0.
+\end{array}                                                       \tag{18.5}
+$$
+
+Each matrix is $E_6E_5D$, and multiplying its trace against $R(a,s)$ by $h(6)=-6$ gives the displayed response. All fifth readings in this table are zero. The trace calculations use the same $R$ that gave (18.3), so the ancestor and descendant equalities hold jointly.
+
+For fifth $M$, the actual response $0$ retains $\mathcal C_3$. Sixth $M$ then retains all three at $-66$, whereas sixth $J$ retains the distinct pair $\{U_-,B_{\rm new}\}$ because (16.9) preserves $3a+2s$. Each selected sixth child has at least two complete targets and both final readings equal zero. Lemma 9.3 gives $L_1$ in each selected sixth child, and (1.1) gives $L_2$ after fifth $M$.
+
+For fifth $J$, the actual response is again $0$ on $\mathcal C_3$. Sixth $J$ retains all three at $-126/5$, whereas sixth $M$ retains $\{U_-,U_+\}$ because both have $a+s=q$. Again both final actions read zero on each retained pair. This gives $L_2$ after fifth $J$, and hence $L_3(\mathcal C_3,H_M)$. The two mixed-action rows use different collision pairs, within this one fixed three-target family.
+
+At $H_3$, fourth $J$ with actual response $y_*$ retains exactly $\mathcal K_5$ in $\mathcal K_6$: Theorem 15.1 gives its common response and $L_3$, while (16.6) excludes $B_{\rm new}$. Fourth $M$ with actual response $252/5$ retains exactly $\mathcal C_3$: the three $\mu$ intervals in (17.3) exclude every $W_i$. Both actions therefore have an actual $L_3$ child of the same $\mathcal K_6$, proving $L_4$ by (1.1). Every selected node has at least two distinct complete targets, which includes the impossibility of a successful early stop.
+
+To prove the relative minimum, consider one policy on the entire known $\mathcal K_5$ at $H_3$. Choose fourth $M$. By (17.3), each of its three $W_i$ responses is distinct from the other two and from $252/5$, so those children are singletons and permit immediate return of the corresponding whole target. In the response-$252/5$ child exactly $\{U_-,U_+\}$ remain. Choose fifth $M$, read $0$, and then sixth $J$. On this pair, (18.5) becomes
+
+$$
+z_6=-6(3+3q-s).
+                                                                  \tag{18.6}
+$$
+
+The two $s=8/(5\ell_\pm)$ values are different, and this response is injective in $s$. The policy returns the complete target by original clock six, with at most three additional readings from $H_3$. Thus $\mathcal K_5$ cannot have $L_4$ there. Zero additions fail and the one addition in (18.1) succeeds, proving the stated minimum. No comparison with other possible initial supports is part of that minimum.
+
+The abstract response-fiber recursion is (1.1), from [II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md), and its monotonicity and same-parent uses are Lemma 9.3 and Theorems 12.2–12.3. The $J$ arm here is exactly the existing five-target construction of Section 15. The additional content is the strictly positive companion furnishing the concrete other arm at their earlier common ancestor. ∎
+
+**定理 18.2（第三 J 的分离、条件强制与精确未决支臂）。** At $H_2$, one actual third-$J$ reading identifies every complete target of the known family $\mathcal K_6$. In particular,
+
+$$
+\neg L_1(\mathcal K_6,H_2),\qquad
+\neg L_5(\mathcal K_6,H_2).
+                                                                  \tag{18.7}
+$$
+
+For the whole unrestricted fiber $\mathcal F_2=\mathcal F(H_2)$, however, the exact reduction is
+
+$$
+\begin{aligned}
+L_5(\mathcal F_2,H_2)
+\quad\Longleftrightarrow\quad
+\exists z\in\mathbb R:\ 
+L_4\bigl(\mathcal F((H_2,J,z)),(H_2,J,z)\bigr).
+\end{aligned}                                                     \tag{18.8}
+$$
+
+Every deterministic policy that succeeds on all of $\mathcal F_2$ within eight total readings must choose third $J$ at this reached history. For every $D_0\in\mathbb R$ and $\lambda\ne0$, the corresponding assertion holds at
+
+$$
+(D_0,J,D_0+24\lambda,M,D_0+48\lambda).
+                                                                  \tag{18.9}
+$$
+
+Proof. The actual third-$J$ matrix is $JL$ of (17.5). For a conic world its response is $24(1+a)$, and for a member of $\mathcal T$ it is
+
+$$
+\sigma_i=d_{i*}
++(312/5-d_{i*})
+\frac{1+\alpha_{i*}+\beta_{i*}}
+{1+\alpha_{i*}+2\beta_{i*}+\alpha_{i*}\beta_{i*}}.
+                                                                  \tag{18.10}
+$$
+
+The two conic-root intervals (16.11), the correlated companion bounds (16.12), and (17.3) give the pairwise disjoint strict intervals
+
+$$
+\begin{array}{c|c}
+\text{world}&\text{third-}J\text{ response at }H_2\\ \hline
+U_-&(30.69,30.70)\\
+B_{\rm new}&(30.74,30.76)\\
+W_3&(35.469,35.471)\\
+W_1&(35.488,35.489)\\
+U_+&(35.53,35.54)\\
+W_2&(38.332,38.333).
+\end{array}                                                       \tag{18.11}
+$$
+
+Thus the acquired response singles out a target in this known six-element family. The same policy also fits every larger remaining horizon, proving (18.7).
+
+In contrast, $\mathcal F_2$ contains the six distinct targets, so it cannot be decoded by stopping at $H_2$. If a policy chooses third $M$, its actual response $312/5$ can leave all of $\mathcal K_6$ at $H_3$. By Theorem 18.1 and same-history monotonicity, this entire third-$M$ child has $L_4$. At original clock three there are exactly four remaining reads through clock seven, so that choice cannot guarantee success on $\mathcal F_2$ with eight total readings.
+
+The cardinality and third-$M$ clauses of the defining recursion for $L_5(\mathcal F_2,H_2)$ are therefore supplied by this concrete construction. Its only remaining clause is exactly the third-$J$ alternative on the right of (18.8). This proves both directions of that equivalence. Lemma 9.2 transports it and the action necessity for either sign of $\lambda$ in (18.9); the obstructing third-$M$ response becomes $D_0+312\lambda/5$. Equivalently, at $(a,J,b,M,2b-a)$ with $b\ne a$, take $D_0=a$ and $\lambda=(b-a)/24$.
+
+The existence assertion on the right of (18.8) remains unresolved. Formula (18.11) shows that $\mathcal K_6$ cannot supply it. The necessity of third $J$ is conditional on reaching (18.9) and on requiring success for its entire fiber; there is no claim that a root policy must reach that history. The case $b=a$ is outside the nonzero-scale transport.
+
+For clarity, along this particular ancestor chain a sufficient route to the original-root lower bound would require all three further existence assertions
+
+$$
+\begin{gathered}
+\exists z_3:\quad
+L_4\bigl(\mathcal F((H_2,J,z_3)),(H_2,J,z_3)\bigr),\\
+H_1=(0,J,24),\qquad
+\exists z_2:\quad
+L_5\bigl(\mathcal F((H_1,J,z_2)),(H_1,J,z_2)\bigr),\\
+\exists z_1:\quad
+L_6\bigl(\mathcal F((0,M,z_1)),(0,M,z_1)\bigr).
+\end{gathered}                                                     \tag{18.12}
+$$
+
+If the first held, (18.8) would give $L_5$ at $H_2$. With the second, the actual second-$M$ response $48$ and second-$J$ response $z_2$ would give $L_6$ at $H_1$. With the third, the actual first-$J$ response $24$ and first-$M$ response $z_1$ would give $L_7$ at the initial history $(0)$. None of the three assertions in (18.12) is established here, and this chain is not asserted to be necessary for every possible root proof.
+
+In the terminology of Open Problem 8.2 and [IV, Theorem 9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md), the unrestricted root eight-versus-at-least-nine question remains unresolved. Neither a root lower bound nor an unrestricted eight-read decoder nor a nine-read upper bound follows from this reached-history obstruction. ∎
+
+## 19. 整个已知无限类的恰两读完整目标逆
+
+**定理 19.1（整条正源曲线并三目标的精确逆与最少读数）。** Let
+
+$$
+\mathcal E=\mathcal C\cup\mathcal T,
+                                                                  \tag{19.1}
+$$
+
+with $\mathcal C$ the entire class (16.1) and $\mathcal T$ exactly the three fixed targets of (15.1). At $H_2$, the minimum remaining deterministic reading count on this known class is exactly two. One policy takes third $J$, immediately reads $\sigma$, takes fourth $M$, immediately reads $z$, and recovers the whole target by original clock four.
+
+More generally, for every selection $\theta_i\in\mathcal B_i$, $i=1,2,3$, the same minimum and an inverse of the same form hold for the known class
+
+$$
+\mathcal E_{\theta_1,\theta_2,\theta_3}
+=\mathcal C\cup\{W(\theta_1),W(\theta_2),W(\theta_3)\}.
+                                                                  \tag{19.2}
+$$
+
+The selected triples are part of the known class; they are not additional unknown continuously varying parameters promised only to lie in the boxes. All of these classes contain the entire infinite $\mathcal C$.
+
+Proof. For $R\in\mathscr R$ write
+
+$$
+R=\begin{pmatrix}A_0&B_0\\C_0&D_0'\end{pmatrix},\qquad
+C_0=1-B_0,\qquad D_0'=\frac85-A_0-B_0.
+                                                                  \tag{19.3}
+$$
+
+The two actual cumulative matrices are exactly (17.5), and $h(3)=24$, $h(4)=12$. Thus
+
+$$
+\sigma=24(1+A_0),\qquad z=12(8/5+B_0).
+                                                                  \tag{19.4}
+$$
+
+Both multipliers are nonzero known rational numbers. Consequently (17.2) reconstructs the entire $R$, and hence the entire target
+
+$$
+\left(\frac{\widehat R}{\operatorname{tr}\widehat R},
+(\operatorname{tr}\widehat R)h,\ 0\right).
+                                                                  \tag{19.5}
+$$
+
+In the conic coordinates this is equivalently
+
+$$
+a=\frac{\sigma}{24}-1,\qquad
+s=\frac{16}5-\frac z{12},\qquad W=W(a,s).
+                                                                  \tag{19.6}
+$$
+
+This proves injectivity of the two-read response on every member of $\mathcal C$, including every legal branch of the conic. For example the pairs $\mathcal A_y$ for all $y$ in the open windows (11.2) belong to $\mathcal C$, and different $y$ give different fourth-$J$ responses. Thus $\mathcal C$ is indeed infinite.
+
+Its exact joint response image can be expressed without a parametrization: a real pair $(\sigma,z)$ arises from $\mathcal C$ if and only if all four entries of $\widehat R(\sigma,z)$ are strictly positive and $\Delta(\sigma,z)=0$. For the reverse implication, these conditions give a positive rank-one matrix whose two trace constraints in (16.1) hold by (17.2); (19.4) then gives exactly the prescribed pair. Its trace is positive, so (19.5) is legal. The determinant condition has the explicit polynomial form
+
+$$
+5(\sigma-24)(504-5\sigma-10z)
+-4(5z-96)(156-5z)
+=14400\,\Delta(\sigma,z)=0.
+                                                                  \tag{19.7}
+$$
+
+This is a relation on the two responses of the same world. It retains strict source positivity, as required in addition to the polynomial equality.
+
+Theorem 17.2 now separates the entire joint image of $\mathcal C$ from each extra world's response pair, uniformly for every allowed point of each box. On the first box, $\Delta>1/1000$ contradicts (19.7). On the second and third boxes, respectively $\widehat C<-15/1000$ and $\widehat C<-36/100$ contradict strict positivity of the reconstructed source. The three $\sigma$ intervals in (17.3) are pairwise disjoint, so the three selected extra worlds also have different joint responses. These exclusions concern the entire specified parameter boxes and the entire conic class, not separate marginal comparisons or finitely many conic targets.
+
+For any fixed known selection in (19.2), denote its extra worlds' exact joint response pairs by
+$(\sigma_i,\zeta_i)=(\sigma(\theta_i),\zeta(\theta_i))$. A complete policy on every reachable history of this known class is therefore
+
+$$
+\operatorname{Decode}(\sigma,z)=
+\begin{cases}
+W(\theta_i),&
+(\sigma,z)=(\sigma_i,\zeta_i)\text{ for some }i,\\[2pt]
+\displaystyle
+\left(\frac{\widehat R(\sigma,z)}
+{\operatorname{tr}\widehat R(\sigma,z)},
+\bigl(\operatorname{tr}\widehat R(\sigma,z)\bigr)h,0\right),&
+\text{otherwise}.
+\end{cases}                                                       \tag{19.8}
+$$
+
+On reachable pairs the two cases are exclusive, the first index is unique, and the second case is guaranteed to have a legal positive rank-one reconstruction. Thus (19.8) is total on the known class. It may be extended arbitrarily on unreachable histories. The deterministic-policy model of Definition 1.1 requires no regularity or computability beyond dependence on the acquired history, so exact equality with these known response pairs is an allowed decision rule. For $\mathcal E$, the exact triples are those selected by the single inherited $x_*$ of Theorem 14.2, and (19.8) gives the asserted inverse without replacing them by decimal approximations.
+
+Only the actual third-$J$ and fourth-$M$ responses are acquired. The already acquired readings at clocks $0,1,2$ remain $0,24,48$, and the gain samples used by the inverse are those at original clocks three and four. No response along the unchosen third-$M$ continuation, no reset and no independent experiment is used. Early singleton stops may be added but are unnecessary for the two-read upper bound.
+
+To prove the matching lower bound, consider the two matrices
+
+$$
+R^{(1)}=
+\begin{pmatrix}2/5&3/5\\2/5&3/5\end{pmatrix},\qquad
+R^{(2)}=
+\begin{pmatrix}2/5&4/5\\1/5&2/5\end{pmatrix}.
+                                                                  \tag{19.9}
+$$
+
+Both have strictly positive entries, determinant zero, and satisfy $\operatorname{tr}(JR)=1$, $\operatorname{tr}(LR)=8/5$. They define distinct complete targets in $\mathcal C$ by injectivity in Definition 16.1; in particular their traces are $1$ and $4/5$. If the one chosen action at $H_2$ is third $M$, both read $312/5$, as does all of $\mathcal C$. If it is third $J$, both have $A_0=2/5$ and by (19.4) both read
+
+$$
+\sigma=24(1+2/5)=168/5.
+                                                                  \tag{19.10}
+$$
+
+A deterministic policy sees the same literal $H_2$ on these two worlds, so it must choose the same action or the same immediate stop there. Stopping cannot distinguish them, and either possible single read leaves this collision. One remaining read is therefore insufficient even on $\mathcal C$. This proves the exact minimum two for every class (19.2), including (19.1), and includes all deterministic early stops.
+
+In particular $\neg L_2(\mathcal E,H_2)$ and hence $\neg L_5(\mathcal E,H_2)$: after third $J$, every reachable response child is recovered by one fourth-$M$ read. Since $\mathcal K_6\subseteq\mathcal E$, closing the six-world support under all of $\mathcal C$ still does not realize the missing $JMJ$ alternative in (18.8). Membership in $\mathcal E$ is prior knowledge for this inverse. Neither $H_2$ nor the pair $(\sigma,z)$ certifies that membership for an unrestricted world in $\mathcal W_3$; the inverse therefore makes no claim of recovery on $\mathcal F(H_2)$.
+
+The mathematical dependencies are precisely the positive normalization (1.2), the entire conic class (16.1), the actual-word traces (17.5), and the whole-box joint exclusions (17.4). The exact three-world definition and its existence are reused from (13.1), (14.7) and (15.1); no new nine-variable existence assertion is needed. The known gain-space inverse of [III, Theorem 4.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_III.md), the complementary-parent inverses of Theorems 5.2 and 6.1, and the unrestricted systems of [IV, Theorems 9.2–9.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md) retain their own domains. None is identified with the earlier actual history and promised class of this theorem.
+
+For the literature correspondence, the scaling orbit in Li–Lee–Bresler, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1), explains why positive trace normalization removes source/gain scale while leaving drift in the target. It supplies no prescribed-word reading threshold here. Whole-set discrimination in van den Bos–Vaandrager, [Theorem 6.1](https://arxiv.org/html/1907.11034v2), has finite suspension-automaton and injective-split hypotheses; those hypotheses are not transferred to this continuous class. Likewise the generic-linear-map quantifier in Breiding–Gesmundo–Michałek–Vannieuwenhoven, *Algebraic compressed sensing*, [Answer 9](https://arxiv.org/html/2108.13208v2), does not apply to the fixed $M/J$ words and their gain-weighted original-clock observations. Vieta exchange, interpolation, trace normalization, interval inclusion and the failure recursion are the reused methods. The concrete companion, its common-history six-world consumer, and this entire-known-class inverse with its joint exclusions are repo-derived calculations; no external priority assertion is made. The unrestricted root question remains the one stated in Open Problem 8.2. ∎
+
+## 追加锚（本行以下为增补区）

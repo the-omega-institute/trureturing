@@ -304,3 +304,470 @@ For an arbitrary original A channel use the canonical Choi square-root Kraus dec
 The proof has retained all normal directions of the full original comparison space. In particular no extra A-environment direction, output leakage direction, or bit-frame phase has been silently omitted. The new one-dimensional B environment is a rank restriction on the physical channel, not a restriction to calibrated perturbations.
 
 At rank four the new B sector can have two rows. Then D*D may be nonzero scalar, the coefficient in (18) vanishes, and the exact compensated-marker paths of section 87 give higher-rank quarter-attainers. Thus the strict tail conclusion (3) cannot be extended to rank four with the same positive tail term. This obstruction does not exhibit a subquarter channel and does not decide whether a weaker unrestricted local minimum holds. The unrestricted quarter-optimum problem remains open.
+
+## 89. An unrestricted local quarter minimum from analytic descent at the scalar cone
+
+This section proves a path-free local theorem for the original product channels, with arbitrary Kraus rank and original output leakage on both sides. It uses the full comparison Hessian theorem of [section 86](ARITHMETIC_HOLOGRAPHIC_RT_II.md#86-local-quartic-stability-from-the-rank-two-ky-fan-minimum-manifold), the all-disphenoid minimized coefficient of [section 87](ARITHMETIC_HOLOGRAPHIC_RT_II.md#87-exact-anisotropic-quartic-coercivity-at-every-disphenoid-equality-pair), and the flat-noise and gauge identities proved in [section 88](#88-a-path-free-local-quarter-minimum-for-a-party-of-kraus-rank-at-most-three). The analytic descent and scalar-cone remainder argument below are additional proof steps; nonnegative quartic coefficients alone would not imply the conclusion.
+
+No unrestricted global optimum is asserted. The local center is any classified quarter-error pair with one party of Kraus rank two. The new theorem concerns all nearby channels, including ranks four and higher.
+
+### 89.1. The local theorem and the original-channel witness
+
+Let (A₀,B₀) be any original [section-82 quarter-error pair](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family) of CPTP maps C⁸→C⁴, with B₀ of Kraus rank two. Then there is a neighborhood U of (A₀,B₀) in the finite-dimensional space of channels such that
+
+\[
+ \delta(A,B)\ge\frac14\qquad ((A,B)\in U).                 \tag{1}
+\]
+
+Here δ is the original unhalved arbitrary-reference diamond error from the fixed four-fibre RT target. Neither perturbed party has a Kraus-rank restriction. The roles of A and B may be exchanged. This proves an unrestricted local minimum at these particular equality pairs, not a global minimum or a classification of all possible remote quarter-error pairs.
+
+Use forward Grams of the correct-output records of the full original Stinespring isometries. Set K=G⊙H and let T have diagonal blocks I₂ and all off-diagonal blocks J₂/2. Define
+
+\[
+ f(A,B)=\frac14\Lambda_2(T-K),\qquad
+ \delta(A,B)\ge\frac14\operatorname{Tr}(T-K)_+\ge f(A,B).
+                                                               \tag{2}
+\]
+
+The first inequality follows from the normalized maximally entangled logical/reference input. Its correct joint reference/output compression is Kᵀ/8 on {|f,i〉_R⊗|ff〉_out}. Pinching retains the complementary positive trace 1−Tr K/8 and gives (‖K−T‖₁+8−Tr K)/8=Tr(T−K)₊/4. Thus wrong outputs and their cross-sector coherences have not been silently calibrated away.
+
+At the base, the top two eigenvalues of T−K are 1/2,1/2 and the other six are at most zero, including boundary disphenoids. Hence f is real-analytic in a fixed neighborhood. It is enough to prove that f≥1/4 there on physical Stinespring isometries in fixed sufficiently large environments.
+
+### 89.2. Analytic comparison coordinates and the flat kernel
+
+Fix A-environment dimension d≥4 and B-environment dimension 2+p, where p≥2. Every nearby B-isometry has the unique old/new polar representation
+
+\[
+ V_B=U\sqrt{I-R^*R}\ \oplus\ R,
+ \quad U\in U(8),\quad
+ R:\mathbb C^8\longrightarrow\mathbb C^4\otimes\mathbb C^p.
+                                                               \tag{3}
+\]
+
+Indeed its old square block is invertible near the base. Both its polar factor and the positive square root in (3) are real-analytic. The comparison point x=(V_A,U) belongs to
+X=St(C⁸,C⁴⊗Cᵈ)×U(8).
+
+Section 86 supplies a local minimum manifold M⊂X, with f(m,0)=1/4, df(m,0)=0, and old Hessian kernel exactly TM. Its normal Hessian is positive definite, with all A-environment and original leakage directions included. In calibrated notation its points are
+
+\[
+ \begin{gathered}
+ C_f=S+\tfrac12 WN_f,\qquad \sum_fN_f=0,\qquad
+ N_f=\overline{B_f}ZB_f^T,\quad Z=\operatorname{diag}(1,-1),\\
+ S^*S=(\tfrac12-h/8)I_2,\quad W^*W=(h/2)I_2,\quad
+ S^*W=i\beta I_2,\quad h\sim\tfrac12,\quad\beta\sim0.
+ \end{gathered}                                             \tag{4}
+\]
+
+The manifold is real-analytic, not merely smooth: [S W] is a Stiefel frame times the positive square root of its positive-definite 4×4 scalar-block Gram; balance is a real-analytic regular constraint, whose differential is surjective because the four Bloch axes span three dimensions. The recovery of all these parameters is analytic. Choose an analytic normal frame locally and an analytic Stiefel polar retraction. The inverse function theorem then gives real-analytic coordinates x=χ(m,n), with n=0 precisely on M. In particular no analyticity of an unspecified nearest-point projection is assumed.
+
+At m define the tight fixed-bit matrices
+
+\[
+ B_i^m=[b_{1i},\ldots,b_{4i}],\quad B_i^m(B_i^m)^*=2I_2,
+ \quad P_i^m=(B_i^m)^*B_i^m/2.                            \tag{5}
+\]
+
+For each new environment coordinate, extract the four correct-output bit-i entries of R; together they form a p×4 matrix R_i. All other entries form R_wrong. The exact quadratic noise coefficient is
+
+\[
+ L_m(R)=\frac18\left(\|R_{\rm wrong}\|_F^2+
+                    \sum_i\|R_i(I-P_i^m)\|_F^2\right).
+                                                               \tag{6}
+\]
+
+This is the rowwise extension of section 88: the old attenuation contributes Tr(R*R)/8 and the new correct Gram contributes −Σ_i‖R_iP_i^m‖²/8. Its complex kernel consists exactly of calibrated records r_fi=L_i b_fi with L_i∈C^{p×2}.
+
+Let Π_m be the analytic orthogonal projection onto this kernel. For an arbitrary R, its kernel coefficients are L_i=R_i(B_i^m)*/2. Put
+
+\[
+ S_R=L_0+L_1,\qquad D_R=L_1-L_0,\qquad
+ R_\perp=(I-\Pi_m)R.
+                                                               \tag{7}
+\]
+
+Then L_m(R)=‖R_perp‖²/8 and ‖R‖²=‖R_perp‖²+‖S_R‖²+‖D_R‖². The p×2 matrix S_R is a physical environment-gauge coordinate. We next remove it exactly, rather than treating it as a small remainder.
+
+### 89.3. An exact common-component-zero gauge slice
+
+For Z∈C^{p×2}, apply the physical B-environment unitary
+
+\[
+ \exp\Omega(Z),\qquad
+ \Omega(Z)=\begin{bmatrix}0&-Z^*\\Z&0\end{bmatrix},       \tag{8}
+\]
+
+identically on each output. Re-form the old polar unitary U′ and new block R′, set x′=(V_A,U′), and let m′ be the analytic m-coordinate of x′. Define the p×2 real-analytic map Φ(Z;x,R)=S_{R′}, where the latter coefficients are extracted relative to m′.
+
+At x=m and R=0, Φ(0;m,0)=0 and
+
+\[
+ d_Z\Phi(0;m,0)[Z]=2Z.                                  \tag{9}
+\]
+
+To see the derivative, the old block has no linear change and the new block is ZU_m. Its correct records are Zb_fi, so L₀=L₁=Z. Changes of m′ make no first-order contribution because R′=0 at the evaluation point. The real-analytic inverse function theorem gives, for every nearby (x,R), a unique small Z producing S_{R′}=0. This is a gauge of the same physical channel and leaves A unchanged. No physical channel transfer or error-monotone polar replacement is asserted.
+
+The construction is equivariant under a residual new-environment unitary V∈U(p). The transformation R↦(I₄⊗V)R leaves U and x unchanged, and sends S_R,D_R to VS_R,VD_R. Moreover Ω(VZ)=diag(I₂,V)Ω(Z)diag(I₂,V)*. Thus Φ(VZ;x,VR)=VΦ(Z;x,R), and uniqueness makes the solved gauge equivariant.
+
+On this exact slice write D=D_R. Its flat part has records
+
+\[
+ r_{f0}=-\tfrac12 D b_{f0},\qquad
+ r_{f1}= \tfrac12 D b_{f1}.                              \tag{10}
+\]
+
+Choose an analytic orthonormal complex frame for the complement of Π_m on the one-new-coordinate space, and use the same frame in every new row. This identifies R_perp with Q∈C^{p×28}, isometrically and U(p)-equivariantly. Hence the gauge-fixed physical tuples have exact analytic coordinates (m,n,D,Q); every sufficiently nearby tuple has such a representation. The residual action is
+
+\[
+ (m,n,D,Q)\longmapsto(m,n,VD,VQ).                         \tag{11}
+\]
+
+Neither the gauge choice nor the frame for Q changes the fixed target bit basis.
+
+### 89.4. Simultaneous minimization of all genuinely normal variables
+
+Set y=(n,Q), viewed as a real vector. At D=0,y=0 the Hessian in y is positive definite: its n-block is the full old normal Hessian; its Q-block is the positive quadratic form ‖Q‖²/8; there is no mixed n,Q block because f is invariant under simultaneous sign reversal of all new records. The kernel identities in (6) also give no mixed y,D Hessian block.
+
+The analytic implicit-function theorem, followed by uniform normal convexity, supplies a unique analytic critical point y_*(m,D), with
+
+\[
+ f(m,y,D)\ge \psi(m,D)+a\|y-y_*(m,D)\|^2,
+ \qquad \psi(m,D)=f(m,y_*(m,D),D),\quad a>0.              \tag{12}
+\]
+
+All estimates hold on a fixed sufficiently small product neighborhood. In particular they are uniform neighborhood estimates, not limits along chosen paths.
+
+Uniqueness and (11) imply
+
+\[
+ n_*(m,VD)=n_*(m,D),\quad Q_*(m,VD)=VQ_*(m,D),\quad
+ \psi(m,VD)=\psi(m,D).                                  \tag{13}
+\]
+
+Differentiation at D=0 and the absent mixed Hessian give dy_*/dD=0. The sign symmetry then gives n_*=O(‖D‖²) and Q_*=O(‖D‖³). Consequently minimizing Q has no effect on the degree-four coefficient. At the base the degree-four coefficient of ψ is exactly the section-87 minimized form, with D equal to the difference in (7):
+
+\[
+ \psi(m_0,D)=\frac14+\sum_{a=1}^3c(u_a)r_a^2+O(\|D\|^6),
+ \quad \overline{D^*D}=r_0I_2+\sum_ar_a\sigma_a,
+ \quad c(u)=\frac{(1-u)(7u-1)^2}{256u^2}.
+                                                               \tag{14}
+\]
+
+Here u_a≥2/7 and Σu_a=1, so c(u_a)≥35/1024. The use of the symmetric records (10), instead of the section-87 records 0,D b_f1, is justified by the exact order-four gauge identity of section 88. Its proof works verbatim with a p×2 common coefficient in (8); it translates the full old tangent space bijectively, and terms of order three in the new amplitude do not affect the quartic coefficient on the quadratic kernel. No normal, leakage, or extra A direction is left outside the minimization in (12).
+
+### 89.5. Analytic descent through D↦D*D, including its singular vertex
+
+We prove the precise invariant-analytic fact needed here. Let ψ(m,D) be jointly real-analytic near (m₀,0), for D∈C^{p×2}, p≥2, and invariant under U(p) acting on the left. Then there is a jointly real-analytic function g(m,E), defined for all Hermitian 2×2 matrices E in an open neighborhood of zero, such that
+
+\[
+ \psi(m,D)=g(m,D^*D).                                    \tag{15}
+\]
+
+In particular the domain of g is not restricted to the singular positive-semidefinite cone.
+
+To prove this, complexify D and its conjugate to independent p×2 matrices Z,W. The convergent power series of ψ groups into homogeneous polynomials. Scalar unitary invariance forces each surviving term to have equal degree k in Z and W. Each such polynomial P_k is U(p)-invariant under (Z,W)↦(VZ,bar(V)W).
+
+The infinitesimal action of the skew-Hermitian matrices annihilates P_k. Its complex-linear extension is the action of all of gl(p,C), since the complex span of the skew-Hermitian matrices is gl(p,C). Exponentiation and connectedness of GL(p,C) therefore give invariance under (Z,W)↦(AZ,A^{-T}W).
+
+Let J=[I₂;0]. On the dense set where Z has rank two and WᵀZ is invertible, choose A taking Z to J. The first two rows of the transformed W are (WᵀZ)ᵀ. The stabilizer of J consists of blocks [[I₂,C],[0,B]]; its inverse-transpose action can remove every remaining row of W because the first two rows form an invertible matrix. Thus the transformed pair is exactly (J,[Eᵀ;0]), where E=WᵀZ. It follows that
+
+\[
+ P_k(Z,W)=q_k(W^TZ),\qquad
+ q_k(E):=P_k(J,[E^T;0]),                                 \tag{16}
+\]
+
+first on that dense set and hence as a polynomial identity everywhere. Each q_k is homogeneous of degree k. This argument includes p=2, for which there are no remaining rows to remove.
+
+It remains essential to prove convergence. Choose a fixed nonzero complex number t small enough that Z=tJ lies strictly inside the convergence neighborhood of the complexified series. For E sufficiently small, W=t^{-1}[Eᵀ;0] also lies inside that neighborhood. Equal bidegrees give
+
+\[
+ P_k(tJ,t^{-1}[E^T;0])=q_k(E).                           \tag{17}
+\]
+
+Therefore Σ_k q_k(E) converges normally on a full complex neighborhood of E=0, uniformly also on a smaller m-neighborhood. It defines the analytic g. Substitution in the original convergent series proves (15). Its restriction to Hermitian E is real: each homogeneous coefficient is real on positive-definite Hermitian E by the original reality of ψ, and thus on all Hermitian E by a real polynomial identity. This proves analytic descent and derivative control at the vertex, rather than appealing to smooth invariance alone.
+
+Apply this lemma to (13). From (14), the quadratic part of g(m₀,E) on traceless Hermitian E is
+
+\[
+ q(E)=\sum_ac(u_a)r_a^2
+     \ge\frac{35}{2048}\|E\|_F^2,
+ \qquad \overline E=\sum_ar_a\sigma_a,\quad\operatorname{Tr}E=0.
+                                                               \tag{18}
+\]
+
+### 89.6. Exact stationarity on every nearby scalar cone
+
+Fix any nearby m∈M and D with D*D=λI₂, λ≥0 small. In (10), the two records of each fibre are orthogonal with squared norms λ/4. Different fibres have different output labels. Hence
+
+\[
+ R^*R=\frac\lambda4 I_8,\qquad
+ V_B=\sqrt{1-\lambda/4}\,U_m\ \oplus\ R.                \tag{19}
+\]
+
+When λ>0 write D=√λ J_D with J_D*J_D=I₂. This B channel has the same qubit core b_fi in two isometric environment copies, with normalized bit markers of overlap
+
+\[
+ \tau=1-\lambda/2.                                      \tag{20}
+\]
+
+For m define T_i=√2(S+(−1)^iW/2). Equations (4) give T_i^*T_i=I₂ and T₀^*T₁=ηI₂, with η=1−h/2−2iβ. Thus a_fi=T_i conjugate(b_fi). The fixed-bit Gram of each party is a rank-two tight-frame Gram with nonzero eigenvalues 2,2, regardless of η and λ. The cross-bit product entries are ητ|〈b_f0,b_g1〉|².
+
+Let P₀=(J₄/4)⊗I₂. Tightness gives row and column sums two for each matrix of squared overlaps, including the cross-bit one. Hence P₀ is invariant under T−K, and its compression in the two uniform bit vectors is
+
+\[
+ \begin{bmatrix}
+  1/2&3/2-2\eta\tau\\
+  3/2-2\overline\eta\tau&1/2
+ \end{bmatrix}.                                         \tag{21}
+\]
+
+Its trace is one. The top-cluster gap persists uniformly near the original base, so (21) is still the top two-dimensional cluster. Consequently f=1/4 for every nearby m and every sufficiently small scalar D*D. This assertion includes complex marker overlaps; no restriction β=0 is used.
+
+These points are stationary in every original-channel Stinespring direction. Indeed, if either party is fixed at such a point, its two fixed-bit Grams H_i satisfy H_i≤2I₄. For any original other party with correct-bit Grams G_i, positivity and Tr G_i≤4 give
+
+\[
+ \operatorname{Tr}(P_0K)
+   =\frac14\sum_i\operatorname{Tr}(G_iH_i^T)\le4,
+ \quad \operatorname{Tr}(P_0T)=5,
+ \quad f\ge\frac14.                                    \tag{22}
+\]
+
+Equality at the point and differentiability imply zero derivative in each party separately, hence in the full product of Stinespring manifolds. This includes arbitrary original leakage and larger A environments.
+
+In the slice coordinates the scalar points have y=0 exactly. By the uniqueness of the normal critical point in (12),
+
+\[
+ y_*(m,D)=0,\qquad \psi(m,D)=\frac14
+      \quad\text{whenever }D^*D=\lambda I_2.             \tag{23}
+\]
+
+For λ>0 the derivative of D↦D*D at D=√λ J_D is onto the real space of Hermitian 2×2 matrices: use δD=J_D H/(2√λ) for a prescribed Hermitian H. Full stationarity, (15), and the chain rule therefore imply
+
+\[
+ g(m,\lambda I_2)=\frac14,\qquad d_Eg(m,\lambda I_2)=0.
+                                                               \tag{24}
+\]
+
+The same identities at λ=0 follow by continuity. Thus the required vanishing of the reduced gradient is proved on every nearby scalar ray, not inferred from the existence of a few equality paths.
+
+### 89.7. A uniform anisotropy remainder estimate and local positivity
+
+Fix any number 0<κ<35/2048. By (18), joint analyticity, and continuity of the Hessian, shrink the m,E-neighborhood so that for every traceless Hermitian H,
+
+\[
+ \frac12 d_E^2g(m,E)[H,H]\ge\kappa\|H\|_F^2.             \tag{25}
+\]
+
+For a physical D put E=D*D, λ=Tr(E)/2 and E₀=E−λI₂. The segment λI₂+sE₀, 0≤s≤1, remains inside the chosen neighborhood. Taylor's formula with integral remainder based at the scalar point, using both identities in (24), gives the exact estimate
+
+\[
+ \begin{split}
+ \psi(m,D)-\frac14
+  &=\int_0^1(1-s)\,
+      d_E^2g(m,\lambda I_2+sE_0)[E_0,E_0]\,ds\\
+  &\ge\kappa\|D^*D-\tfrac12\operatorname{Tr}(D^*D)I_2\|_F^2.
+ \end{split}                                             \tag{26}
+\]
+
+Together with (12), this proves the uniform gauge-slice bound
+
+\[
+ f(m,y,D)\ge\frac14+a\|y-y_*(m,D)\|^2
+       +\kappa\|D^*D-\tfrac12\operatorname{Tr}(D^*D)I_2\|_F^2.
+                                                               \tag{27}
+\]
+
+This is the needed remainder control relative to the scalar cone. An uncontrolled O(‖D‖⁶) term has not been dropped or absorbed into a quartic expression that vanishes there. Instead the exact scalar value and first derivative force the full remainder to be quadratic in the anisotropy.
+
+The local zero set of this witness is exactly y=0 with D*D scalar, by (23) and (27). It is a set of witness minima; the full diamond equality set is a subset, since M allows additional complex marker parameters. If desired, (27) also implies a quartic distance bound to this witness-minimum set in these local coordinates. Indeed, if the singular values of D are s₁,s₂, its squared distance to the scalar-Gram cone is (s₁−s₂)²/2, whereas the squared anisotropy is (s₁²−s₂²)²/2 and is at least twice the fourth power of that distance. The smooth y_* vanishes on the cone, so it introduces only a bounded local Lipschitz factor in this distance comparison.
+
+### 89.8. All physical ranks, exact quarter paths, and the global boundary
+
+For an arbitrary original channel use the canonical Choi square-root Kraus decomposition, in fixed environment dimension 32. It is continuous at rank changes. A fixed environment unitary aligns the base support of B with the old two coordinates and embeds A's rank-four base support in its 32 coordinates. Thus every sufficiently nearby physical channel pair has lifts in the above Stinespring neighborhood with d=32 and p=30. The old B square block remains invertible. The exact gauge slice in section 89.3 then applies. No spectral eigenvector selection, differentiable path, Choi-rank restriction, or calibration of the physical channels is needed. Combining (27) with (2) proves (1).
+
+There are genuine higher-rank quarter-attainers on the scalar cone. Start with a classified balanced qubit frame and original marker overlap η=3/4. Use the scalar B markers from (19)–(20) and change A's scalar overlap to (3/4)/τ. For small λ≥0 this is a permissible overlap of normalized marker vectors. The product Gram K is then exactly the original equality Gram, so the entire original reference-sensitive channel error remains 1/4. This explains the scalar zero modes without discarding them. It does not make all points in the larger witness-minimum manifold full diamond attainers.
+
+The proof is local at every section-82 equality member and includes its boundary disphenoids, because the spectral gap, balance regularity, old normal coercivity, and positive coefficient bound hold there. It establishes no lower bound of 1/4 for arbitrary distant product channels. The unrestricted global quarter-optimum problem remains open.
+
+## 90. An exact qutrit product separating global Gram certificates from diamond error
+
+**Proposition 90.1 (exact global certificate limitations; repo-derived).** There are original CPTP channels A,B:C⁸→C⁴, both calibrated on the four fixed fibres and both of Kraus rank three, for which the forward record Grams G,H satisfy Λ₂(T−G⊙H)=(1+√7)/4<1 and ‖G⊙H−T‖₁=(1+√7)/2<2, while the original unhalved arbitrary-reference diamond error is δ(A,B)=(1+2√2)/7>1/2. Here T has diagonal blocks I₂ and off-diagonal blocks J₂/2, and Λ₂ denotes the sum of the two largest eigenvalues. Thus these two proposed unrestricted global Gram inequalities cannot furnish a universal quarter diamond lower bound.
+
+This proposition concerns the limitations of these specific certificates. It does not give a product with diamond error below 1/4. The [local quarter-minimum theorem](#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) has its stated neighborhood hypothesis, and the unrestricted global quarter-optimum problem remains open.
+
+### 90.1. Original physical channels and the complete product Gram
+
+**Proof.** Let e₀,e₁,e₂ be the standard basis of C³ and put u=(e₁+e₂)/√2. Define four local orthonormal two-frames by
+
+\[
+ \begin{array}{ll}
+ b_{10}=(e_0+e_1)/\sqrt2,&b_{11}=(e_0-e_1)/\sqrt2,\\
+ b_{20}=(e_0+iu)/\sqrt2,&b_{21}=(e_0-iu)/\sqrt2,\\
+ b_{30}=u,&b_{31}=e_0,\\
+ b_{40}=(e_0+e_2)/\sqrt2,&b_{41}=(e_0-e_2)/\sqrt2.
+ \end{array}                                               \tag{1}
+\]
+
+Set a_fi=conjugate(b_fi). On the eight-dimensional local input with fixed basis |f,i〉, define Stinespring isometries
+
+\[
+ V_A|f,i\rangle=|f\rangle\otimes a_{fi},\qquad
+ V_B|f,i\rangle=|f\rangle\otimes b_{fi}.                    \tag{2}
+\]
+
+Each within-fibre frame in (1) is orthonormal, and different fibres in (2) have orthogonal output labels. Hence V_A*V_A=V_B*V_B=I₈. Tracing the C³ environments gives original CPTP channels A,B:C⁸→C⁴. The environment records span C³. The associated three Kraus operators are linearly independent, because a linear relation between them annihilates every record; thus each physical channel has Kraus rank exactly three. Equivalently the local frame operator has eigenvalues 4,3,1.
+
+Let H be the forward Gram of the b records, G=conjugate(H), and K=G⊙H. All 2×2 diagonal blocks of G,H are I₂, and K_fi,gj=|〈b_fi,b_gj〉|². In the ordered basis (10,11,20,21,30,31,40,41), the entire product Gram is
+
+\[
+ K=\frac18
+ \begin{bmatrix}
+ 8&0&3&3&2&4&2&2\\
+ 0&8&3&3&2&4&2&2\\
+ 3&3&8&0&4&4&3&3\\
+ 3&3&0&8&4&4&3&3\\
+ 2&2&4&4&8&0&2&2\\
+ 4&4&4&4&0&8&4&4\\
+ 2&2&3&3&2&4&8&0\\
+ 2&2&3&3&2&4&0&8
+ \end{bmatrix}.                                           \tag{3}
+\]
+
+The target T has diagonal blocks I₂ and off-diagonal blocks J₂/2. Therefore its full difference from this product Gram is
+
+\[
+ L:=T-K=\frac18
+ \begin{bmatrix}
+ 0&0&1&1&2&0&2&2\\
+ 0&0&1&1&2&0&2&2\\
+ 1&1&0&0&0&0&1&1\\
+ 1&1&0&0&0&0&1&1\\
+ 2&2&0&0&0&0&2&2\\
+ 0&0&0&0&0&0&0&0\\
+ 2&2&1&1&2&0&0&0\\
+ 2&2&1&1&2&0&0&0
+ \end{bmatrix}.                                           \tag{4}
+\]
+
+No plus/minus or cross-fibre block is omitted.
+
+### 90.2. Complete spectrum and the two global certificate limitations
+
+In the logical coefficient space define orthonormal vectors
+c₁=(|1,0〉+|1,1〉)/√2, c₂=(|2,0〉+|2,1〉)/√2, c₃=|3,0〉, c₄=(|4,0〉+|4,1〉)/√2. The orthogonal complement of their span is in ker L. In this four-dimensional span, L is the matrix
+
+\[
+ M=\begin{bmatrix}
+ 0&1/4&\sqrt2/4&1/2\\
+ 1/4&0&0&1/4\\
+ \sqrt2/4&0&0&\sqrt2/4\\
+ 1/2&1/4&\sqrt2/4&0
+ \end{bmatrix}.                                           \tag{5}
+\]
+
+The vector t=(c₁−c₄)/√2 has eigenvalue −1/2, and z=(−√2c₂+c₃)/√3 has eigenvalue zero. On the remaining orthonormal pair r=(c₁+c₄)/√2 and w=(c₂+√2c₃)/√3 the matrix is
+
+\[
+ \begin{bmatrix}1/2&\sqrt6/4\\\sqrt6/4&0\end{bmatrix},
+ \qquad \lambda_\pm=\frac{1\pm\sqrt7}{4}.                \tag{6}
+\]
+
+Normalized eigenvectors for λ_± are (λ_±r+(√6/4)w)/√(λ_±²+3/8). Together with t, z, the three minus-bit vectors of fibres 1,2,4, and |3,1〉, this is a complete orthonormal eigenbasis. In particular
+
+\[
+ \det(sI_8-L)
+   =\frac{s^5(2s+1)(8s^2-4s-3)}{16},\qquad
+ \operatorname{spec}(L)=
+ \left\{\frac{1+\sqrt7}{4},\frac{1-\sqrt7}{4},-\frac12,0^{\times5}\right\}.
+                                                               \tag{7}
+\]
+
+There is exactly one positive eigenvalue. Consequently
+
+\[
+ F(A,B):=\frac14\Lambda_2(L)=\frac{1+\sqrt7}{16}<\frac14,
+ \qquad
+ \|G\odot H-T\|_1=\frac{1+\sqrt7}{2}<2.                 \tag{8}
+\]
+
+The inequalities follow from √7<3. Since Tr L=0, the normalized maximally entangled logical/reference input has unhalved error ‖L‖₁/8=(1+√7)/16. It is therefore below 1/4 for this pair. This input-specific value is not the diamond error.
+
+### 90.3. A normalized coherent input gives error one half
+
+Let the fixed logical input encoding be |f,i〉↦|f,i〉_A⊗|f,i〉_B, and let the target output encoding be |f〉↦|ff〉. The original product and target are calibrated into that output code. For a coefficient matrix C define the logical map
+
+\[
+ \mathcal M_C(|f,i\rangle\langle g,j|)
+      =C_{fi,gj}|f\rangle\langle g|.                      \tag{9}
+\]
+
+Because the product Gram (3) is real symmetric, the original encoded channel difference is exactly −M_L followed by the output encoding. The usual forward-Gram transpose therefore causes no convention change here.
+
+The normalized no-reference input
+
+\[
+ |\psi_0\rangle=\frac12
+ (|1,0\rangle+|1,1\rangle+|4,0\rangle+|4,1\rangle)
+                                                               \tag{10}
+\]
+
+has output difference −(|1〉〈4|+|4〉〈1|)/4, and hence unhalved trace norm 1/2. The output encoding preserves this norm. Thus δ(A,B)≥1/2 already, despite both inequalities in (8).
+
+### 90.4. Exact arbitrary-reference diamond error
+
+The full norm can also be computed, without restricting the reference. Set
+
+\[
+ \mu=\frac1{2(2\sqrt2-1)},\qquad
+ v=c_1+\frac1{\sqrt2}c_2+c_3+c_4,\qquad
+ Z=2\mu vv^*-L.                                         \tag{11}
+\]
+
+We claim Z≥±L. The inequality Z+L≥0 is immediate. For the other one it is enough to check μvv*−L≥0. This matrix vanishes on ker L, equals 1/2 on t, and in the r,w coordinates of section 90.2 is
+
+\[
+ \begin{bmatrix}
+ 2\mu-1/2&\sqrt3\mu-\sqrt6/4\\
+ \sqrt3\mu-\sqrt6/4&3\mu/2
+ \end{bmatrix}.                                         \tag{12}
+\]
+
+Both diagonal entries are positive and its determinant is zero, using μ=1/[2(2√2−1)]. Hence (12) is positive semidefinite, proving the claim. Since every diagonal fibre block of L is zero,
+
+\[
+ Z_{ff}=2\mu v_fv_f^*\le2\mu I_2;
+ \qquad (\|v_1\|^2,\|v_2\|^2,\|v_3\|^2,\|v_4\|^2)
+          =(1,1/2,1,1).                                 \tag{13}
+\]
+
+For any positive-semidefinite coefficient matrix C, the map M_C is completely positive: its Choi matrix is an isometric embedding of C on {|f,i〉_reference⊗|f〉_output}. Thus Z±L≥0 imply M_Z±M_L are completely positive. Moreover (13) says M_Z*(I)≤2μI₈; explicitly this adjoint effect is the block-diagonal matrix with blocks Z_ffᵀ, which obey the same bound.
+
+For every normalized positive reference/input state ρ, set X=(id⊗M_L)(ρ), Y=(id⊗M_Z)(ρ). Then −Y≤X≤Y and Y≥0. If P₊ and P₋ are the positive and negative spectral projections of X, the order bounds give ‖X‖₁≤Tr((P₊+P₋)Y)≤Tr Y≤2μ. This is a bound on the actual 8→4 map, valid for every reference dimension. To pass from states to the defining diamond-norm optimization, first use the Jordan decomposition of any Hermitian input Q to obtain ‖(id⊗M_L)(Q)‖₁≤2μ‖Q‖₁. For a general input X, apply that bound after adjoining one reference qubit to the Hermitian dilation [[0,X],[X*,0]]/2; its trace norm is ‖X‖₁, and the output dilation has trace norm ‖(id⊗M_L)(X)‖₁. Thus δ(A,B)≤2μ for the full diamond norm.
+
+For a matching lower bound put
+
+\[
+ q=\frac{\sqrt2}{2\sqrt2-1},\qquad
+ p=(q/2,0,1-q,q/2),\qquad
+ |\psi\rangle=\sqrt{p_1}c_1+\sqrt{p_3}c_3+\sqrt{p_4}c_4.
+                                                               \tag{14}
+\]
+
+The numbers p_f are nonnegative and sum to one. Thus |ψ〉 is a normalized logical input with no reference. Its output difference is minus D_p M D_p, where D_p=diag(√p₁,…,√p₄) and M is (5). Direct substitution gives (Mp)_f=μ at every f for which p_f>0. Hence the unit vector (√p_f)_f is an eigenvector of D_p M D_p with eigenvalue μ. Congruence cannot increase the number of positive eigenvalues, so this matrix has exactly one positive eigenvalue, and its trace is zero. Its trace norm is therefore 2μ, attaining the upper bound. We have proved
+
+\[
+ \boxed{\displaystyle
+ \delta(A,B)=2\mu=\frac1{2\sqrt2-1}=\frac{1+2\sqrt2}{7}>\frac12.}
+                                                               \tag{15}
+\]
+
+This exact full-reference value makes the distinction from (8) quantitative.
+
+### 90.5. Scope of the certificate obstruction
+
+**Corollary 90.2.** Neither Λ₂(T−G⊙H)≥1 nor ‖G⊙H−T‖₁≥2 holds for all original product channels, even when both local record matrices consist of four exact orthonormal two-frames. The two assertions remain false when restricted to pairs of Kraus ranks exactly (3,3).
+
+**Proof.** The product Gram in (3) comes from the original isometries (2), and (8) violates both assertions. In particular no relaxation to independently chosen contraction blocks is needed.
+
+The [rank-two-party lower bounds](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds), [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), and subsequent one-sided, qubit-core, curvature and local results retain their stated hypotheses. Both parties in (2) have rank three, so the example lies outside the rank-two-party hypothesis. Section 89 supplies a lower bound in a neighborhood of the classified rank-two-side equality pairs, whereas (8) disproves an unrestricted global extension of the witness. Moreover the full diamond error (15) exceeds 1/4, so this example does not violate that local diamond lower bound even if tested without reference to its neighborhood hypothesis.
+
+For this pair, the normalized maximally entangled logical/reference input gives (1+√7)/16, while the coherent inputs (10) and (14) give respectively 1/2 and (1+2√2)/7. Thus a global quarter proof must retain sufficient input optimization, or a different full-reference dual bound, to distinguish these values. No conclusion about the existence of a subquarter original product follows from the failure of the two Gram certificates.
