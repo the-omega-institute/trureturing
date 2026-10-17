@@ -8,7 +8,6 @@
 
 import D5.S3.TotalVariation.CycleSingleCutMinimax
 import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
-import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 For natural logarithms, a Jensen--Shannon sublevel set need not have a point majorized by
