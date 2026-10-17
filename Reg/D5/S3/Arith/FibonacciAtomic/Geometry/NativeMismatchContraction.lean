@@ -144,11 +144,14 @@ noncomputable def rootRegistration :
 
 noncomputable def contractionRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@two_step_contraction) (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
+    (@two_step_contraction)
+    (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
   unitName := Lean.Name.str
-    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.two_step_contraction "__information_unit"
-  realizationName :=
-    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.contractionFamilyRegistration
+    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.two_step_contraction
+    "__information_unit"
+  realizationName := Lean.Name.str
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction
+    "contractionFamilyRegistration"
   realizationSource := none
   generated := false
   arena := .source ⟨contractionArena⟩
@@ -179,7 +182,8 @@ noncomputable def iterateRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@even_iterates) (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
   unitName := Lean.Name.str
-    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.even_iterates "__information_unit"
+    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.even_iterates
+    "__information_unit"
   realizationName :=
     `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.iterateFamilyRegistration
   realizationSource := none
