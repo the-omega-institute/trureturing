@@ -1541,3 +1541,424 @@ The absolute signs of $G_{\rm resp},G_{108}$, positive/zero response occurrence 
 The complete finite-$(s,A)$ quantum frontier, evaluated fixed-source coefficients through precontact/contact and degenerate gluing, all finite-budget contacts and optimizer/rank/actual-alphabet changes, endpoint uniform rates and joint critical limits retain their original universal-necessity and common-attainer obligations. The analytic differential-operator coefficients above supply no bridge to acquired mass, completely positive instrument resources, controller permissions, amplitude preparation or a joint native implementation. No physical-space or physical-$SO(3)$ selection, zero-leaf, torus, cutoff-free or parameter-uniform theorem is obtained. Finite analytic or numerical checks do not imply Lean, root or native certification, and this conditional finite theory does not complete the continuous quantum-first programme.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 24. 固定临界测试与参考主值的五阶包络
+
+**本节约定。** 本节固定一个已经准入的原始数据集。先固定该数据集及 §§1–3、J1–2、J29、J42–49、J53–55 所列的全部解析前提，再令 $s\downarrow0$。原始带符号有理源、原始密度 $dk\,dq/j_0$、两个 Dirichlet 死亡面、所有实相位频率和完整复二次型域与算子域均不改变。热算子使用原始的
+$B=-\varepsilon ^2\partial_k^2-(c_\kappa(k)\partial_q)^2$ 和
+$S=B-\lambda$；它的时钟不含动力学常数 $a$。本节另加的假设只有
+\[
+ C_{\rm resp}=0,\qquad C_4=0.
+\tag{24.1}
+\]
+不假定这两个等式在任何原始数据上实际出现。
+
+令
+\[
+ T=s^{-2},\qquad
+ F_s=j_0^{-1}\int_1^Tq_s(t;0,\cdot)\,dt,\qquad
+ H_s=\int_0^TQ_s(t)\,dt,\qquad
+ N_s=F_sH_s,\quad L_s=H_sF_s.
+\tag{24.2}
+\]
+这里 $q_s$ 是保留原始两面死亡和完整相位积分的场核，$Q_s$ 是同一原始热过程的返回核。令 $p$ 是 $L_s$ 的临界极限正模，归一化为 $\|p\|_2=1$，并以原有 J30–J49 的记号写
+\[
+ V_k=\mathcal V_k,\quad V_0=V,\qquad
+ G_j,\ N_j,\ g_0,\ldots,g_4 .
+\tag{24.3}
+\]
+这些符号只引用既有系数和电荷，不引入新电荷。令
+\[
+ G_s=\sum_{i=0}^4s^ig_i,\qquad
+ L_su_s=\ell_su_s,\qquad \|u_s\|_2=1,\quad u_s\geq0,
+\tag{24.4}
+\]
+其中 $u_s$ 是有限早期算子的辅助主向量，绝不是原始算子的实际本征态。
+
+**引理 24.1（衰减、矩和固定场的有限性）。** 存在只依赖固定数据的 $C$，使
+\[
+ |p(\xi)|\le C(1+d(\xi))^{-5},\qquad
+ |g_0(\xi)|\le C(1+d(\xi))^{-10}.
+\tag{24.5}
+\]
+因 Engel 齐次维数为 $7$，有
+\[
+ p\in L^{3/2}\cap L^2,\qquad
+ r^ng_0\in L^p\quad\text{当 }(10-n)p>7,
+\tag{24.6}
+\]
+并且 $r^ng_0$ 有界于 $0\le n\le6$。对于 $0\le n\le3$，$r^nw_s$ 也同时有一致的 $L^{3/2}$ 与 $L^2$ 界，其中
+\[
+ w_s=F_sp .
+\tag{24.7}
+\]
+此外
+\[
+ \|F_s-V\|_2\le Cs,\qquad
+ \|F_s-V\|_\infty\le Cs,\qquad
+ \left\|F_s-\sum_{k=0}^3s^kV_k\right\|_\infty\le Cs^4,
+\tag{24.8}
+\]
+并且
+\[
+ 0\le F_s(\xi)\le C(1+d(\xi))^{-5}.
+\tag{24.9}
+\]
+
+**证明。** (24.5) 是 E3.1 对 $p$ 与 $g_0$ 的既有衰减结论；(24.6) 由齐次球体体积 $O(R^7)$ 直接积分得到。J32.1 在 $(n,p)=(0,2)$ 给出 (24.8) 的第一式；J23.2 及有界的完整系数给出其余两式。为了得到 (24.9)，在 $1\le d(\xi)\le\delta/s$ 上用 J2.9 的 $R=d(\xi)$ 估计，在 $d(\xi)>\delta/s$ 上把半径固定为 $\delta/s$，得到 $F_s\le C_\delta s^5$。原始高度区间满足 $d(\xi)\le D/s$，区间外 $F_s=0$，故两段合并为 (24.9)。把 (24.9) 与 (24.5) 相乘并再次积分，便得到 (24.7) 的所有矩界。$\square$
+
+**引理 24.2（固定安全带上的有限参数导数）。** 取 $\ell>0$ 足够小，令 $L=\ell/s$，使得 $(-L,L)$ 落在两个原始面内且 $|\nu|\ell<1/4$。在附加死亡事件 $S_t<L$ 下，记
+\[
+ C_\theta^L=-X^2-(1+\nu\theta r)^{-2}Y^2-\lambda\theta^2,
+ \qquad |\theta|\le s.
+\tag{24.10}
+\]
+对 $0\le k\le6$，若输入矩属于所示空间，则
+\[
+ \|\partial_\theta^kQ_\theta^L(t)f\|_q
+ \le C_k\sum_{n=0}^k
+ t^{(k-n)/2-\frac72(1/p_n-1/q)}
+ \|r^nf\|_{p_n},
+\tag{24.11}
+\]
+而从原点出发的列核满足
+\[
+ \|\partial_\theta^kQ_\theta^L(t;0,\cdot)\|_\infty
+ \le C_kt^{(k-7)/2}.
+\tag{24.12}
+\]
+这些估计在 $0<t\le T$ 一致，并且对复值输入逐分量成立。
+
+**证明。** 杀死指标与 $\theta$ 无关。桥的协方差矩阵与固定矩阵 $M_0$ 一致可比；高斯核对 $\theta$ 的 $k$ 阶微分由固定放大的 $M_0$ 高斯乘以次数至多 $k$ 的多项式控制。把 $H=A+W$ 分开，并用行列式为一的对角伸缩 $D_A$ 共轭，展开 $(|A|+\sup|W|)^k$ 后，含 $|A|^n$ 的项只产生输入矩 $r^nf$，其余 $k-n$ 个因子给出 $t^{(k-n)/2}$。时钟因子满足
+\[
+ |\partial_\theta^b e^{\lambda\theta^2t}|
+ \le C_b t^{b/2}
+ \quad (|\theta|\sqrt t\le1).
+\tag{24.13}
+\]
+J3.3、P107.5 的桥矩与插值把每一项控制为 (24.11)；从原点取列上确界即得 (24.12)。固定的安全指示函数可在正 majorant 中删去。由于只在有限时间区间和固定参数带内微分，主导收敛定理适用于随后所有配对；没有定义经过极点的参数，也没有声称无限时间上的有界微分算子。$\square$
+
+**引理 24.3（固定输入的线性残差与早期向量速率）。** 有
+\[
+ \|(L_s-C_*)p\|_2\le Cs,\qquad
+ \|u_s-p\|_2\le Cs,
+\tag{24.14}
+\]
+其中 $C_*=\gamma^{-1}$，$\gamma=\chi_c/a$。
+
+**证明。** J29.5 给出
+\[
+ \|H_sf\|_2\le C(\|f\|_1+\|f\|_2)
+\tag{24.15}
+\]
+及带附加死亡的同样估计。先估计 $g_0$。在 $0<t\le1$，(24.11) 的一阶导数被
+\[
+ C(\|rg_0\|_2+\sqrt t\,\|g_0\|_2)
+\]
+控制；在 $t\ge1$，被
+\[
+ C(t^{-7/4}\|rg_0\|_1+t^{-5/4}\|g_0\|_1)
+\]
+控制。由 (24.6) 积分可得
+\[
+ \|(H_s^L-H_0^L)g_0\|_2\le Cs.
+\tag{24.16}
+\]
+输入支撑于 $d\le L/4$ 时，J31.6 的删路列核界为
+\[
+ Ct^{-7/2}e^{-cL^2/t};
+\tag{24.17}
+\]
+其列 $L^2$ 范数积分为 $O(L^{-3/2})$。外部种子 $L^2$ 范数为 $O(L^{-13/2})$，在 $0<t<T$ 的收缩代价为 $O(TL^{-13/2})=O(s^{9/2})$，而 $t>T$ 的规范尾为 $O(T^{-3/4})=O(s^{3/2})$。因此
+\[
+ \|H_sg_0-G_0g_0\|_2\le Cs.
+\tag{24.18}
+\]
+由 $Vp=\mu g_0$、$\mu G_0g_0=C_*p$ 以及 (24.8)，
+\[
+ (L_s-C_*)p
+ =H_s((F_s-V)p)+\mu(H_s-G_0)g_0,
+\tag{24.19}
+\]
+从而第一式成立。J53.3 给出 $L_s\to K_{\rm rec}$ 的范数收敛、$C_*$ 的代数简单性和固定围道上的一致 resolvent 界。于是
+\[
+ (z-L_s)^{-1}p-(z-C_*)^{-1}p
+ =(z-C_*)^{-1}(z-L_s)^{-1}(L_s-C_*)p
+\tag{24.20}
+\]
+沿围道积分，得到 Riesz 投影 $P_sp-p=O_{L^2}(s)$。其一维值域由 $u_s$ 张成；取正实标量并归一化即得第二式。这里仅处理辅助早期本征向量，未使用原始临界 Hamiltonian 的正谱隙。$\square$
+
+**定理 24.4（参考数据的固定主值包络）。** 对固定数据存在 $s_0>0$ 及有限常数 $C,A_0$，使 $0<s<s_0$ 时
+\[
+ \|(L_s-C_*)p\|_2\le Cs,\qquad
+ \|u_s-p\|_2\le Cs,
+\tag{24.21}
+\]
+并且
+\[
+ |\ell_s-C_*|\le Cs^5,\qquad
+ k_{\rm ref}(s^6)\le C_*+A_0s^5.
+\tag{24.22}
+\]
+这里 $k_{\rm ref}(s^6)$ 是 J53.1 在原始固定参考数据、完整无限时间场与返回项下的正紧 Birman–Schwinger 主范数。
+
+**证明。** 证明分为四个有限估计层次。
+
+首先，令
+\[
+ E_{i,s}=N_sg_i-\sum_{j=0}^{4-i}s^jN_jg_i\quad(i\le3),
+ \qquad E_{4,s}=(N_s-N_0)g_4,
+ \qquad E_s^{\rm row}=\sum_{i=0}^4s^iE_{i,s}.
+\tag{24.23}
+\]
+J33、J39、J46、J49 的行展开与范数收敛给出
+\[
+ \|E_s^{\rm row}\|_2=o(s^4).
+\tag{24.24}
+\]
+在 $C_4=0$ 时，J48.1 的剩余归一化系数 $\rho$ 为零，既有电荷方程精确地化为
+\[
+ (I-\gamma N_s)G_s=-\gamma E_s^{\rm row}.
+\tag{24.25}
+\]
+用 $N_s^*=L_s$ 左乘并与 $u_s$ 配对，得到
+\[
+ (\ell_s-C_*)\langle G_s,u_s\rangle
+ =\langle E_s^{\rm row},u_s\rangle .
+\tag{24.26}
+\]
+由 $\langle g_0,p\rangle=1$ 和 (24.14)，
+\[
+ \langle G_s,u_s\rangle=1+O(s),
+\tag{24.27}
+\]
+所以只需证明
+\[
+ |\langle E_s^{\rm row},u_s\rangle|\le Cs^5.
+\tag{24.28}
+\]
+
+其次，第四行不需要给 $g_4$ 加新权。由伴随性，
+\[
+ |\langle p,(N_s-N_0)g_4\rangle|
+ =|\langle (L_s-K_{\rm rec})p,g_4\rangle|
+ \le Cs\|g_4\|_2.
+\tag{24.29}
+\]
+它带有外部因子 $s^4$，故为 $O(s^5)$。将 $p$ 换成 $u_s$ 时，(24.24) 与 (24.14) 给出
+\[
+ |\langle E_s^{\rm row},u_s-p\rangle|=o(s^5).
+\tag{24.30}
+\]
+
+第三，处理种子标量的五阶余项。固定同一安全带，令
+\[
+ \phi_\theta(t)=j_0^{-1}\int p^2q_\theta^L(t;0,\xi)\,d\xi,\qquad
+ \psi_\theta(t)=\langle g_0,Q_\theta^L(t)g_0\rangle.
+\tag{24.31}
+\]
+反射 $\sigma=(-r,y,-z,w)$ 保持测度与安全带，反向 $X$、保持 $Y$，并把 $C_\theta^L$ 共轭为 $C_{-\theta}^L$；它固定源、$p$ 与 $g_0$。故 $\phi_\theta,\psi_\theta$ 关于 $\theta$ 精确偶对称，五阶导数在零处消失。由 (24.11)，对 $1\le t\le T$ 有
+\[
+ |\partial_\theta^6\phi_\theta(t)|\le Ct^{-1/2}.
+\tag{24.32}
+\]
+对 $\psi_\theta$，$t\ge1$ 时七个输入矩的时间指数分别为
+\[
+ -\tfrac12,\ -1,\ -\tfrac32,\ -\tfrac32,\ -\tfrac32,\ -\tfrac32,\ -\tfrac74,
+\tag{24.33}
+\]
+而 (24.6) 保证每个矩有限；$0<t<1$ 时使用有界的 $r^ng_0$。因此
+\[
+ \int_1^T|\partial_\theta^6\phi_\theta(t)|\,dt+
+ \int_1^T|\partial_\theta^6\psi_\theta(t)|\,dt
+ \le C\sqrt T.
+\tag{24.34}
+\]
+Taylor 公式、五阶奇项消失和 $T=s^{-2}$ 给出安全带内
+\[
+ \left|\int p^2\!\left(F_s-\sum_{k=0}^4s^kV_k\right)\right|
+ +\left|\left\langle g_0,\,
+ H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\rangle\right|
+ \le Cs^5.
+\tag{24.35}
+\]
+从安全带恢复原始两面和非紧输入时，J23.2 的删路、系数路径和时间尾估计分别为 $O(L^{-5})$、$O(L^{j-5})$ 和 $O(T^{(j-5)/2})$；乘上 $s^j$ 后均为 $O(s^5)$。返回项由 J31.2 的内外输入估计给出同样的 $O(s^5)$，外部安全种子为 $O(L^{-8})$，内层系数删路为 $O(s^5)$。故 (24.35) 是原始场与原始返回的估计，而不是仅在截断带内的形式展开。
+
+最后，对每个 $i\le3$ 使用精确有序恒等式。记 $m_i=4-i$、
+\[
+ R_i=H_sg_i-\sum_{j=0}^{m_i}s^jG_jg_i.
+\tag{24.36}
+\]
+则
+\[
+ E_{i,s}
+ =F_sR_i+
+ \sum_{j=0}^{m_i}s^j
+ \left[F_s-\sum_{k=0}^{m_i-j}s^kV_k\right]G_jg_i.
+\tag{24.37}
+\]
+$i=0$ 时，(24.35) 控制 $j=0$ 的 $p^2$ 项；$j=1$ 用
+$G_1g_0\in L^2$ 与场的 $O(s^4)$ 余项；$j=2,3$ 用
+$G_jg_0\in L^4$ 与场的 $O(s^3),O(s^2)$ 余项；$j=4$ 用
+$G_4g_0\in L^\infty$、$\|F_s-V\|_2=O(s)$。每项连同外部因子均为 $O(s^5)$。
+
+对 $i=1,2,3$，把 $g_i=g_i^{\rm in}+g_i^{\rm out}$，其中
+\[
+ \|g_i^{\rm out}\|_2\le C L^{-w_i},\qquad w_i=6-i.
+\tag{24.38}
+\]
+完整系数核 $Q_j(t)$ 对桥反向和相位反向均保持不变，因而
+\[
+ \left\langle w_s,\int_0^TQ_j(t)g_i^{\rm out}\,dt\right\rangle
+ =
+ \left\langle \int_0^TQ_j(t)w_s\,dt,g_i^{\rm out}\right\rangle .
+\tag{24.39}
+\]
+在 $t<1$ 使用 $r^nw_s\in L^2$，在 $t\ge1$ 使用
+$r^nw_s\in L^{3/2}$ 与输出 $L^2$，得到
+\[
+ \sum_{j=0}^{m_i}s^j
+ \left\|\int_0^TQ_j(t)w_s\,dt\right\|_2
+ \le Cs^{-5/6}.
+\tag{24.40}
+\]
+故外部返回在乘上 $s^i$ 后为 $O(s^{31/6})=o(s^5)$；原始和安全返回则为 $O(s^6)$。内层输入的 Taylor 余项、删路和时间尾分别由 (24.11) 与 J39、J46 的矩估计控制。具体地，$i=1$ 的四阶导数时间指数为
+\[
+ -\tfrac32,-2,-2,-2,-2,
+\tag{24.41}
+\]
+$i=2$ 的三阶导数四个指数均为 $-2$，$i=3$ 的二阶导数指数为
+\[
+ -\tfrac{23}{12},-\tfrac{73}{36},-\tfrac{77}{36}.
+\tag{24.42}
+\]
+它们均可积。对 $i=2$ 的输入矩 $n=0,1,2$，删路项在乘上系数后分别是 $s^5$；对 $i=3$ 的 $n=0,1$，分别是 $s^{23/6}$ 与 $s^{73/18}$，均高于所需阶数。由此
+\[
+ |\langle p,E_{i,s}\rangle|\le Cs^{5-i},\qquad i=1,2,3.
+\tag{24.43}
+\]
+合并 (24.29)、(24.35)、(24.37)、(24.43) 得 (24.28)，再由 (24.26)–(24.27) 得
+\[
+ |\ell_s-C_*|\le Cs^5.
+\tag{24.44}
+\]
+
+J55.1 在原始参考数据、$h=s^6$ 下给出完整主值关系
+\[
+ k_{\rm ref}(s^6)
+ =\ell_s+\mathscr A\,W_{1,\rm ref}(o)s^5+o(s^5),
+ \qquad
+ \mathscr A=\frac{C_*+j_0A_p^2}{\mu}.
+\tag{24.45}
+\]
+这里 $W_{1,\rm ref}(o)$ 是正的固定截断下的有限量。取
+\[
+ A_0=C+|\mathscr A W_{1,\rm ref}(o)|+1
+\tag{24.46}
+\]
+并缩小 $s_0$，即得第二个不等式。整个推导使用的是正紧主范数的精确谱坐标；没有把试探 Rayleigh 下界冒充为主值上界，也没有删去完整长时场、返回项或 $B$ 时钟。$\square$
+
+## 25. 与固定-$M_b$ 实际态消费者的接口
+
+**定理 25.1（固定参考锚到固定平移参数的传递）。** 在定理 24.4 的同一原始数据条件下，取一个满足共同零响应等式的平移参数 $b>0$，并把 $b$ 固定在 $s\downarrow0$ 之前。对每个这样的固定 $b$，J51–J57 的已建立消费者给出常数 $M_{0,b}$ 与 $C_b$，使对每个固定 $M\ge M_{0,b}$，
+\[
+ \limsup_{s\downarrow0}
+ \frac{k_b(Ms^8)-\ell_b-\mathscr A_bW_{1,b}(o)s^5}{s^5}
+ \le C_b(M^{-1/4}+M^{-1/2}).
+\tag{25.1}
+\]
+定理 24.4 的新信息只在参考项上使用：
+\[
+ k_{\rm ref}(s^6)\le C_*+A_0s^5.
+\tag{25.2}
+\]
+结合 J52.2 的固定-$b$ 相对系数
+\[
+ \Delta_b\sim-\frac{C_E}{j_0}b^{-5},\qquad C_E>0,
+\tag{25.3}
+\]
+可取 $b_0>0$，使 $0<b<b_0$ 时
+\[
+ A_0+\mathscr A\Delta_b<-2.
+\tag{25.4}
+\]
+随后对每个如此固定的 $b$ 选择一个有限 $M_b\ge M_{0,b}$，且仍然在令 $s\to0$ 之前固定，使
+\[
+ C_b(M_b^{-1/4}+M_b^{-1/2})<1.
+\tag{25.5}
+\]
+则
+\[
+ k_b(M_bs^8)<C_*
+\tag{25.6}
+\]
+对充分小的 $s$ 成立。
+
+**证明。** (25.1) 是 J55.2、P104.2、P104.14 和 J55.7 已有的固定-$M$ 主值消费者；其证明中的早期向量、长场交叉项、$D$ 项、方差界和实际态传递均保持原有范围，这里只把 (25.2) 代入它的参考端。由 J54.1，
+\[
+ \ell_b+\mathscr A_bW_{1,b}(o)s^5
+ =k_{\rm ref}(s^6)+\mathscr A_b\Delta_bs^5+o_b(s^5).
+\tag{25.7}
+\]
+将 (25.2)、(25.3) 和 (25.1) 合并，先固定 $b$，再固定 $M$，得到
+\[
+ \limsup_{s\downarrow0}\frac{k_b(Ms^8)-C_*}{s^5}
+ \le A_0+\mathscr A_b\Delta_b+
+ C_b(M^{-1/4}+M^{-1/2}).
+\tag{25.8}
+\]
+按 (25.4)–(25.5) 右侧严格为负，故 (25.6) 成立。J56.1 在完整复域上把 (25.6) 转成
+\[
+ \varepsilon_{c,b}(s)\ge-aM_bs^8,\qquad
+ 0<r_b(s)\le aM_b
+\tag{25.9}
+\]
+对充分小的 $s$ 成立。这里 $r_b>0$ 来自原始负值的取得，第二个不等式来自同一原始时钟字典。
+
+最后，P103.1 对每个预先给定的序列 $s_n\downarrow0$ 和每个实际归一化复 ground-state 选择 $\psi_{b,s_n}$ 给出
+\[
+ \liminf_{n\to\infty}
+ \operatorname{dist}_{L^2}
+ \bigl(U_{b,s_n}\psi_{b,s_n},\,\mathbb T p\bigr)
+ \ge
+ \left[
+ 2-2\left(1+\frac{\gamma_{K,b}}{\sqrt{aM_b}}\right)^{-1/2}
+ \right]^{1/2}>0.
+\tag{25.10}
+\]
+$K$ 按 P102–103 固定，$\gamma_{K,b}>0$ 是 P103.1 原有常数。式 (25.10) 直接量化实际原始态与临界模圆轨道的分离；它没有把 $u_s$ 当作实际 ground state，也没有替换实际最小化者为试探态。式 (25.1)–(25.10) 不重新证明 J51–J57 的消费者，只把新参考锚 (25.2) 接到其原有固定参数接口。$\square$
+
+**推论 25.2（量词顺序）。** 上述结论的量词是
+\[
+ \text{固定原始数据}\;\Longrightarrow\;
+ \text{固定 }b>0\;\Longrightarrow\;
+ \text{固定有限 }M_b\;\Longrightarrow\;
+ s\downarrow0.
+\tag{25.11}
+\]
+没有 $b=b(s)$、$b=0$ 的源、联合 $(b,s)$ 一致极限，也没有把不同 $b$ 的有限常数取成一个统一常数。若共同零响应集合没有实际元素，(25.1)–(25.10) 只是假设性条件推论，不产生原始数据的反例。
+
+## 26. 原始来源、初等工具与适用边界
+
+**命题 26.1（来源对应）。** 定理 24.4 只使用以下两类外部成熟工具，并在本卷声明的假设下核对其对应关系。
+
+1. Fischer–Ruzhansky, *Sobolev spaces on graded groups*, arXiv:1311.0192v1, §2.1 (2.1)–(2.2) 与 Proposition 2.2 (2.4)，给出齐次群的卷积、Young 不等式和齐次体积增长。这里 Engel 权重为 $(1,1,2,3)$，齐次维数为 $7$，输入 $L^{3/2}$ 到输出 $L^2$ 正好产生 $-7/12$ 的时间指数。该文献不提供原始两面边界、参数余项或长时尾估计；这些由 J23、J29–J32、J39、J46 自身承担。
+
+2. Colin de Verdière–Hillairet–Trélat, *Small-time asymptotics of hypoelliptic heat kernels near the diagonal*, Annales Henri Lebesgue 4 (2021), DOI 10.5802/ahl.93, Theorem A、Corollary 1.1、Theorem 3.2 及其证明，给出固定内部点的局部热核展开、三步旗与相应权重。原始向量场 $\epsilon\partial_k$ 与 $c_\kappa(k)\partial_q$ 在固定无极区间光滑、散度为零；原始 Dirichlet 实现和势 $-\lambda$ 仍保留。本文把物理时间 $s^2t$ 和密度 $j_0s^7$ 按 J2.3、J51.2 使用，且不把动力学常数 $a$ 放进热时钟。
+
+这些文献只承担其明确的卷积、体积和局部热核接口。它们没有被用来替代原始全局尾、两面死亡、移动电荷配对或固定-$M$ 的实际态消费者。所有导数、删路和长时估计均由 (24.10)–(24.12)、J23、J31、J39、J46 的显式界完成。
+
+**命题 26.2（复域与实际态边界）。** (24.11) 的估计对实值和复值输入逐分量成立，但定理 24.4 的 $p,u_s,g_i$ 是用于主值配对的实正代表。完整复二次型域、算子域和所有实相位频率均保留在原始定义中；因此 (25.10) 的量词仍覆盖每一个实际归一化复 ground-state 选择。辅助的 $u_s$ 只属于 $L_s=H_sF_s$ 的早期紧算子，不能被解释为原始 native Hamiltonian 的 ground state，也不能被用作物理态制备。
+
+**命题 26.3（不产生的结论）。** 以上增补不证明：
+
+- 共同零响应集合 $C_{\rm resp}=C_4=0$ 的非空性或实际出现；
+- 原始全族的响应符号、OriginalA、fullRT5 或 historical RT1；
+- $b\downarrow0$ 与 $s\downarrow0$ 的联合一致性、$b(s)$ 路径或 $b=0$ 源；
+- 任何物理空间维数、$SO(3)$ 选择、操作制备或量子资源结论；
+- Lean、kernel、冻结账本或其他机器认证。
+
+本批的新内容是固定一个已经准入的原始数据后，利用 (24.21)–(24.46) 得到参考主值的 $O(s^5)$ 绝对包络，并把它按 (25.1)–(25.11) 接入已经拥有的固定-$M_b$ 实际态消费者。所有其余边界按上述量词保留。
+
+## 追加锚（本行以下为增补区）
