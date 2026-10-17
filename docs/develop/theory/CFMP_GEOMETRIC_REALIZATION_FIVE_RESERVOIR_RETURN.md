@@ -1014,3 +1014,208 @@ the low flat-opposite pi slot. This excludes the entire assumed
 no-extra-core-M branch. At least one of the remaining interacting
 owners eta,xi must contain M. The residual cases with that extra core
 M occurrence remain open, with all original equations still required.
+
+## 278. Actual setting and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses and all public
+reductions through Section 277 of the return continuation. In particular
+all edge labels carry shared positive lengths, every original edge has
+a connected circular normal link of degree at least six, and chosen
+paired frames have two distinct transverse labels. Original face and
+edge occurrences, rather than neighboring owner names, are counted.
+Repeated axes, repeated neighbors and distinct-face self-gluings remain
+allowed.
+
+Write P={M,Z,U} and K={tau,rho,eta,xi} for the four distinct interacting
+genuine owners. Every face containing two distinct P labels is marked
+and pairs inside K. The source and forced common return are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+Tau's two {M,Z,C} faces pair to rho's two M-incident faces. The remaining
+tau faces are {M,C,D}, unmarked. The two unused rho faces are {U,Z,C},
+both incident to its unique U axis. The newly proved no-extra-core-M
+exclusion says at least one of eta,xi contains M.
+
+We prove that rho's two unused face occurrences pair to different
+owners eta and xi. Thus their common-return alternative is completely
+excluded. The surviving split return is not excluded here; this is not
+a proof of five-reservoir realization.
+
+The two rho faces cannot self-pair, since that would close rho's single
+U normal interval and force degree(U)=1. They cannot meet tau's unused
+faces. As they are marked, they must meet eta or xi. Suppose for
+contradiction that both meet eta. We separate whether eta contains M.
+
+## 279. A common receiver containing M is impossible
+
+Every face of a chosen paired frame contains both transverse labels.
+Since eta has an incoming face {U,Z,C} with no M, any M occurrence in
+eta is axial and opposite this face. There is exactly one such M axis:
+if both axes were M, every face would contain M. The incoming face has
+three distinct labels, so up to paired-frame symmetries there are exactly
+three possible roles:
+ (i) eta=(M,U,Z,C,U,Z),
+ (ii) eta=(M,U,C,Z,U,C),
+ (iii) eta=(M,Z,C,U,Z,C).
+The two incoming face occurrences are precisely the two faces of the
+non-M axis in each of these roles.
+
+In (ii), all Z intervals in tau,rho,eta form a closed subset of the
+actual Z circle. Tau has one Z axis, rho two transverse Z slots, and
+eta one Z axis. Their incident faces have all been paired in this chain:
+tau to rho across {M,Z,C}, then rho to eta across {U,Z,C}. There are
+exactly 1+2+1=4 slots, contradicting minimum degree six.
+In (iii), the unique U axes in rho and eta close across their two paired
+faces, giving a closed two-slot U circle, again impossible.
+
+In (i), eta's two remaining face occurrences are {M,U,Z}, incident to
+its unique M axis. They are marked. They cannot meet tau's unused faces,
+and all rho faces are occupied. Self-pairing would close eta's single
+M interval. Consequently both remaining eta faces must meet xi.
+
+An incoming {M,U,Z} face forces xi's transverse pair to contain two
+of these three distinct high labels, with its incident axis the third.
+Thus every xi face is marked, independently of its other axis. Its two
+remaining faces cannot meet tau's unmarked free faces; rho and eta
+have no unused faces. They must pair to each other.
+
+Now all M-incident faces of eta and xi are paired within these two
+owners. Eta's incoming {C,U,Z} faces have no M. Its M axis has its two
+ends paired to xi. Every xi face pairs either to eta or to xi itself.
+Hence their nonempty set of original M intervals is closed. Eta supplies
+one M slot; xi has at most three M slots. Indeed M is either transverse,
+with two slots and at most one additional M axis because the incoming
+axis is another high label, or axial, with at most two slots. The closed
+subset has at most four original M slots. Connectedness of the actual
+M circle contradicts minimum degree six. This excludes (i) as well.
+
+## 280. A common receiver without M forces an isolated M interval
+
+Suppose eta contains no M. Then xi contains M by Section 277. Again
+its incoming {U,Z,C} face has three distinct labels. The incident axis
+of eta is U, Z, or C.
+
+If this axis is U and eta's other axis is not U, eta has pair {Z,C}
+and a unique U slot. Its two U faces are exactly the two incoming faces;
+together with rho's unique U interval they close a two-slot circle.
+Thus this role could survive only if both eta axes are U. In that case
+all four eta faces have labels {U,Z,C} and are marked. This statement
+allows the two incoming faces to come from different repeated axes.
+
+If the incident axis is Z and the other axis is not Z, eta has pair
+{U,C} and a unique Z slot. The same original Z-circle argument as in
+Section 279 closes tau's one, rho's two and eta's one Z slots, impossible.
+Thus this role could survive only if both eta axes are Z. All four eta
+faces are again {U,Z,C} and marked, with all incoming choices allowed.
+
+If the incident axis is C, eta has transverse pair {U,Z}. Every one of
+its faces is marked, regardless of its other axis. These three cases
+exhaust the paired roles, so every remaining eta face is marked.
+
+Eta's two unused faces contain no M and therefore cannot meet tau's
+free {M,C,D} faces. All rho faces are occupied. If the eta faces pair
+to each other, every U-incident face of rho and eta is paired within
+those two owners: rho's other two faces are {M,Z,C}, with no U.
+Their U normal intervals form a nonempty closed subset of at most
+rho's one plus eta's three, namely four original slots. This violates
+minimum degree six, including all repeated-U possibilities. Therefore
+both remaining eta faces must pair to xi.
+
+Each such incoming xi face contains no M and contains two distinct
+high labels U,Z. Since xi contains M, M must be its unique opposite
+axis, by the same face-occurrence argument as in Section 279. Its two
+remaining face occurrences are precisely those incident to this M axis.
+Xi's transverse pair contains at least one of U,Z, since it is a pair
+of distinct labels from an incoming face containing both. Thus the two
+M-incident xi faces are marked. They cannot pair to tau's unmarked
+remaining faces, and rho and eta have no free faces. They must pair
+to each other, closing xi's unique M interval and forcing degree(M)=1.
+This final contradiction excludes the common receiver without M.
+
+Both common-receiver alternatives are impossible. Therefore rho's two
+unused faces split, one to eta and one to xi. No connectivity of a
+marked-face graph, closure of the external low-only region, or extra
+geometric inequality was assumed. The only circle closures used above
+are explicitly closed subsets of the original connected edge links.
+The actual split-return configurations remain open.
+
+## 281. Exact inherited setting and closing claim
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+277, and the complete forced-split theorem in Sections 278–280 of the
+return continuation. In particular the original finite face-paired
+carrier has positive lengths shared by global edge labels, angle sum
+2*pi at every original edge, and connected circular normal links with
+original degree at least six. The chosen paired frames have distinct
+transverse labels in H={M,C,D,Z,U}; these are five distinct actual global
+labels. Repeated axes, repeated neighboring owners, parallel face
+pairings and self-pairings of distinct faces remain allowed.
+
+Write P={M,Z,U}. The four distinct interacting genuine owners are
+K={tau,rho,eta,xi}. Every face containing two distinct P labels is marked
+and its partner belongs to K. The established actual source and return
+are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+Tau's two {M,Z,C} face occurrences pair to rho's two M-incident faces.
+Tau's other two faces are {M,C,D}. Rho's remaining two faces {U,Z,C}
+are, by the forced-split theorem, paired one to eta and one to xi.
+Thus every face occurrence of rho is occupied. Section 277 ensures
+that at least one of eta,xi contains M.
+
+We prove these inherited conclusions are inconsistent. Consequently
+there is no mixed-flat critical configuration under these original
+five-reservoir paired hypotheses. This closing statement concerns this
+inherited paired class; no unrestricted CFMP assertion is made here.
+A geometric realization corollary requires the separately applicable
+existence and original manifold hypotheses, and is not asserted in this
+local closing argument.
+
+## 282. Each remaining M owner has exactly one M interval
+
+Let V be the nonempty subset of {eta,xi} consisting of owners containing
+M. Each owner v in V receives one actual face with three distinct labels
+{U,Z,C}, none equal to M.
+
+Every face of a chosen paired frame contains its two transverse labels.
+Therefore M cannot be transverse in v. At least one of its axes is M
+because v contains M. Both axes cannot be M: every face contains an
+axis edge and would then contain M, contradicting the incoming face.
+Thus v has exactly one original M occurrence, an axial one. The incoming
+{U,Z,C} face is opposite that M axis.
+
+The transverse pair of v is a pair of distinct labels chosen from
+{U,Z,C}, so it contains at least one of U,Z. Both faces incident to the
+M axis therefore contain M and another distinct P label. They are
+marked. Their label multisets are exactly one of {M,U,Z}, {M,U,C}, or
+{M,Z,C}. Each contains exactly one M edge occurrence. Neither is the
+incoming M-free face from rho.
+
+## 283. Occupied faces force a closed circle of at most two slots
+
+A partner of any M-incident face of an owner in V lies in K, because
+that face is marked. It cannot lie in rho, whose four original face
+occurrences have already been paired: two to tau and one each to eta
+and xi. It cannot be one of tau's two {M,Z,C} faces, which are occupied
+by rho. Tau's only unused faces are {M,C,D}. These cannot match any of
+{M,U,Z}, {M,U,C}, {M,Z,C}, since C,D are distinct from M,U,Z and from
+each other.
+
+The partner therefore belongs to eta or xi. An owner in {eta,xi}\V has
+no M occurrence and cannot receive an M-labelled face. Hence every
+M-incident face of every owner in V pairs to an M-incident face of an
+owner in V. This assertion allows self-pairings and both possible
+receiver owners; it does not require their other faces to be paired in
+any particular way.
+
+Each owner in V has exactly one original M normal interval. The two
+endpoints of every such interval are paired to endpoints of intervals
+in the same set. The nonempty union of these intervals is consequently
+a closed union of components of the original M normal link. That link
+is a connected circle, so the subset is the entire M circle. It contains
+exactly |V|<=2 original intervals, contrary to degree(M)>=6.
+
+This contradiction excludes every surviving split return. Together
+with the complete common-return exclusion of Sections 278–280, it
+exhausts the two unused rho face occurrences. The preceding reductions
+therefore leave no mixed-flat configuration in the inherited paired
+five-reservoir class. No distinct-neighbor assumption, marked-graph
+connectedness, or closure of an external low-only region was introduced.
