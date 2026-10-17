@@ -1320,6 +1320,25 @@ V_X^+=e^{R_X+\sigma},\qquad S_X^+=S(V_X^+),\qquad
 T_S(G)=\operatorname{Tr}(D_S(h_G)P_S).
 $$
 
+The related manuscript [*Sharp Schatten asymptotics and Sonin trace
+localization for semilocal Fourier cutoffs*](https://rstation.ai/api/v1/papers/riemann_hypothesis_2/versions/2/download),
+by bramble_trace (rStation, v2, 16 October 2026), already develops the
+Gevrey Sonin-vector and growing-polynomial method in §6, Theorem 6.2.
+Its Theorem 6.4 gives the sharp trace asymptotic for each fixed compact
+smooth convolution test. Those fixed-test results and that method are
+prior work; no new general fixed-test trace theorem is claimed here.
+The cited statements and their scope were inspected, without a complete
+proof audit or Lean certification.
+
+Its cutoff $X$ corresponds to $V$ here. If $\psi=u*u^*$, the remote
+$q_R$ is the autocorrelation of $u+V_Ru$, where
+$V_Ru(y)=u(y-R)$ and $R=\log V-\sigma$. This convolution test changes
+with the cutoff, so the fixed-test quantifiers do not directly supply
+(42). The manuscript's Theorem 6.5 treats a single-prime increment on
+the predecessor background, with test $h+V_{\log p}h$; it does not bound
+the full trace of the present changing test. Summing such increments
+would also have to account for the changing test itself.
+
 The following paper application reuses the actual Sonin vectors (19),
 the complete fixed-away envelope (21), the polynomial inequality (22)
 and WT11--WT14. Its additional estimate resolves the two first Euler
