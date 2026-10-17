@@ -78,22 +78,18 @@ private theorem sum_pair (p : Fin 3 → Prop) [DecidablePred p] (a b : Fin 3)
   rw [← Equiv.sum_comp e.symm, Fintype.sum_prod_type]
   rfl
 
-private theorem sum_three (f : (Fin 3 → Fin 2) → ℝ) :
-    ∑ x, f x = ∑ a : Fin 2, ∑ b : Fin 2, ∑ c : Fin 2, f ![a, b, c] := by
-  rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 3 => Fin 2)),
-    Fintype.sum_prod_type]
-  congr 1
-  funext a
-  rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm, Fintype.sum_prod_type]
-  rfl
-
 private theorem sum_full
     (f : (↥(Finset.univ : Finset (Fin 3)) → Fin 2) → ℝ) :
     ∑ x, f x = ∑ a : Fin 2, ∑ b : Fin 2, ∑ c : Fin 2,
       f (fun i => ![a, b, c] i.val) := by
   rw [← Equiv.sum_comp (Equiv.arrowCongr
     (Equiv.subtypeUnivEquiv (fun i : Fin 3 => Finset.mem_univ i)).symm
-    (Equiv.refl (Fin 2))), sum_three]
+    (Equiv.refl (Fin 2))),
+    ← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 3 => Fin 2)),
+    Fintype.sum_prod_type]
+  congr 1
+  funext a
+  rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm, Fintype.sum_prod_type]
   rfl
 
 private theorem sum_empty (f : (Outside (Finset.univ : Finset (Fin 3)) → Fin 2) → ℝ) :
@@ -106,7 +102,9 @@ private theorem sqrt_product : Real.sqrt 49922 * Real.sqrt 49922 = 49922 :=
   Real.mul_self_sqrt (by norm_num)
 
 private theorem weight_square_sum : ∑ x, weight x * weight x = 49922 := by
-  rw [sum_three]
+  rw [← Equiv.sum_comp (Fin.consEquiv (fun _ : Fin 3 => Fin 2)),
+    Fintype.sum_prod_type]
+  simp_rw [← Equiv.sum_comp (finTwoArrowEquiv (Fin 2)).symm, Fintype.sum_prod_type]
   norm_num [weight.eq_1, Fin.sum_univ_two]
 
 private theorem normalized : ∑ x, Complex.normSq (psi x) = 1 := by
@@ -206,7 +204,7 @@ private theorem coherence_BC : l1Coherence (reducedState {1, 2} psi) = 50336 / 4
   norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
     funext_iff, Fin.forall_fin_succ]
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 2000000 in -- The full coherence expands all 64 matrix entries.
 private theorem coherence_ABC : l1Coherence (reducedState Finset.univ psi) =
     138434 / 49922 := by
   classical
