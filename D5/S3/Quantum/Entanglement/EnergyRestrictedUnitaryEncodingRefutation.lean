@@ -336,47 +336,29 @@ private theorem weighted_bounds {L : Type} (w f : L → ℝ)
 private theorem sqrt_average {L : Type} (w t : L → ℝ)
     (hw : ∀ i, 0 ≤ w i) (hs : HasSum w 1) (ht : ∀ i, 0 ≤ t i ∧ t i ≤ 1) :
     (∑' i, w i * Real.sqrt (t i)) ≤ Real.sqrt (∑' i, w i * t i) := by
-  let s := ∑' i, w i * t i
-  have hts := weighted_summable w t hw hs ht
-  have hss : 0 ≤ s := (weighted_bounds w t hw hs ht).1
-  have hsqrt := weighted_summable w (fun i => Real.sqrt (t i)) hw hs
-    (fun i => ⟨Real.sqrt_nonneg _, Real.sqrt_le_one.mpr (ht i).2⟩)
-  change _ ≤ Real.sqrt s
-  by_cases hz : s = 0
-  · have hzero (i : L) : w i * t i = 0 := by
-      apply le_antisymm
-      · calc
-          w i * t i ≤ ∑' j, w j * t j :=
-            hts.le_tsum i (fun j _ => mul_nonneg (hw j) (ht j).1)
-          _ = 0 := hz
-      · exact mul_nonneg (hw i) (ht i).1
-    have heach (i : L) : w i * Real.sqrt (t i) = 0 := by
-      rcases mul_eq_zero.mp (hzero i) with hi | hi <;> simp [hi]
-    simp [hz, heach]
-  · have hpos : 0 < Real.sqrt s := Real.sqrt_pos.mpr (lt_of_le_of_ne hss (Ne.symm hz))
-    have htangent (i : L) : Real.sqrt (t i) ≤ (t i + s) / (2 * Real.sqrt s) := by
-      apply (le_div_iff₀ (by positivity)).mpr
-      nlinarith [sq_nonneg (Real.sqrt (t i) - Real.sqrt s),
-        Real.sq_sqrt (ht i).1, Real.sq_sqrt hss]
-    calc
-      (∑' i, w i * Real.sqrt (t i)) ≤ ∑' i, (w i * t i + w i * s) / (2 * Real.sqrt s) := by
-        apply hsqrt.tsum_le_tsum
-        · intro i
-          convert mul_le_mul_of_nonneg_left (htangent i) (hw i) using 1
-          ring
-        · exact (hts.add (hs.summable.mul_right s)).div_const _
-      _ = (s + s) / (2 * Real.sqrt s) := by
-        rw [tsum_div_const, hts.tsum_add (hs.summable.mul_right s), tsum_mul_right,
-          hs.tsum_eq, one_mul]
-      _ = Real.sqrt s := by
-        apply (div_eq_iff (by positivity)).mpr
-        nlinarith [Real.sq_sqrt hss]
+  have hw2 (i : L) : (Real.sqrt (w i)) ^ (2 : ℝ) = w i := by
+    rw [Real.rpow_ofNat, Real.sq_sqrt (hw i)]
+  have ht2 (i : L) : (Real.sqrt (w i * t i)) ^ (2 : ℝ) = w i * t i := by
+    rw [Real.rpow_ofNat, Real.sq_sqrt (mul_nonneg (hw i) (ht i).1)]
+  have h := Real.inner_le_Lp_mul_Lq_tsum_of_nonneg
+    (f := fun i => Real.sqrt (w i)) (g := fun i => Real.sqrt (w i * t i))
+    Real.HolderConjugate.two_two (fun i => Real.sqrt_nonneg _)
+    (fun i => Real.sqrt_nonneg _)
+    (by simpa only [hw2] using hs.summable)
+    (by simpa only [ht2] using weighted_summable w t hw hs ht)
+  have hprod (i : L) :
+      Real.sqrt (w i) * Real.sqrt (w i * t i) = w i * Real.sqrt (t i) := by
+    rw [Real.sqrt_mul (hw i), ← mul_assoc, Real.mul_self_sqrt (hw i)]
+  simpa only [hw2, ht2, ← Real.sqrt_eq_rpow, hs.tsum_eq, Real.sqrt_one, one_mul,
+    hprod] using h
 
 private theorem overlap_bounds {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     (g v : H) (hg : ‖g‖ = 1) (hv : ‖v‖ = 1) :
     0 ≤ ‖⟪g, v⟫_ℂ‖ ^ 2 ∧ ‖⟪g, v⟫_ℂ‖ ^ 2 ≤ 1 := by
   refine ⟨sq_nonneg _, ?_⟩
-  nlinarith [residual_norm g v hg hv, sq_nonneg ‖v - ⟪g, v⟫_ℂ • g‖]
+  have h := norm_inner_le_norm (𝕜 := ℂ) g v
+  rw [hg, hv, mul_one] at h
+  nlinarith [norm_nonneg ⟪g, v⟫_ℂ]
 
 private theorem effect_probability_bounds {H : Type} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] (E : H →L[ℂ] H) (hE : 0 ≤ E) (hEc : 0 ≤ 1 - E)
