@@ -3120,3 +3120,260 @@ Indeed r≤2 by (3). Since H is PSD, it is a Gram matrix; adding the 8−n recor
 This is a necessary reduction, not an exclusion of those seven patterns. Higher-rank quotients, other lower-rank pairs, and the unrestricted original quarter lower bound remain open; the global interval remains [√3−3/2,1/4]. The global calibration comparison may enlarge ranks and does not transfer local minimality from arbitrary leaking channels. No convex extreme-point rank reduction or principal joint-local-minimum assumption has been used.
 
 The dependencies are the exact adaptive norm and common stresses of sections 91–92, the supported quotient of section 95, the sharp complex three-vector theorem of section 93, and the small-support and unitary best-response consumers of section 96. The new mechanism is the reciprocal full completion and its coefficient-level common-witness consequence; the rank-one support exhaustion retains every original fibre constraint.
+
+## 98. Curved common-stress tests and finite principal quotients
+
+The principal affine directions of §97 need not detect every remaining support. This section constructs curved directions that may move both kernels, retains their exact full-coordinate curvature costs, and reduces the rank-\((7,6)\) test to seven finite real quadratic forms. The forms are necessary conditions; their signs on the remaining configurations are not settled here.
+
+### 98.1. Original domain and common stresses
+
+Keep the original local CPTP maps \(\mathbb C^8\to\mathbb C^4\), four two-coordinate fibres, fixed correlated encodings, arbitrary reference, and unhalved diamond normalization. On the full calibrated domain,
+\[
+\begin{aligned}
+\mathcal E&=\{G\succeq0:G_{ff}=I_2\},\\
+F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}[(T-G\odot H)W],\\
+\mathcal C&=\{(\rho,W):\rho\succeq0,\ \rho\text{ is fibre-block diagonal},
+ \ \operatorname{Tr}\rho=1,\ 0\preceq W\preceq\rho\},\\
+T_{ff}&=I_2,\qquad T_{fg}=\tfrac12J_2\quad(f\ne g).
+\end{aligned}\tag{1}
+\]
+Initially assume only that \((G,H)\) is a local minimum on \(\mathcal E^2\), \(\operatorname{rank}G=7\), and \(0<t=F(G,H)<1/2\). Fix a nonzero \(a\) spanning \(\ker G\). Every cross-fibre entry of \(G,H\) is nonzero by the matrix-unit bound.
+
+Let \(\mathcal A\) be the full compact convex set of normers in (1). As in §§92, 95 and 97, define \(\mathcal A_0\) to be the complete set of normers satisfying
+\[
+b(W;G',H')=-2\operatorname{Tr}
+\bigl[((G'-G)\odot H+G\odot(H'-H))W\bigr]\ge0
+\quad\text{for every }(G',H')\in\mathcal E^2. \tag{2}
+\]
+This set is nonempty, compact and convex. Its complementary stresses satisfy
+\[
+\begin{aligned}
+P_A&=-2\overline H\odot W+Y_A=\alpha_Waa^*,&
+P_AG&=0,&\alpha_W&>0,\\
+P_B&=-2\overline G\odot W+Y_B\succeq0,&
+P_BH&=0,\\
+W_{ij}&=-\frac{\alpha_Wa_i\overline{a_j}}{2\overline{H_{ij}}}
+&&\text{on different original fibres},
+\end{aligned}\tag{3}
+\]
+where \(Y_A,Y_B\) are fibre-block diagonal. For a PSD matrix \(K\), write \(N_K\) for the orthogonal projection onto its kernel, \(P_K=I-N_K\), and \(K^+\) for its Moore--Penrose inverse.
+
+### 98.2. Exact curved realization with the original fibre blocks
+
+**Lemma 98.1.** Let \(K\in\mathcal E\), and let \(D=D^*\) have \(D_{ff}=0\) and \(N_KDN_K=0\). There is a smooth two-sided feasible path
+\[
+K(s)=K+sD+s^2C_K+O(s^3)\in\mathcal E,\qquad
+(C_K)_{ff}=0, \tag{4}
+\]
+such that every complementary PSD stress \(ZK=0\) obeys
+\[
+\operatorname{Tr}(ZC_K)=\operatorname{Tr}(ZDK^+D). \tag{5}
+\]
+In particular no hypothesis \(D\ker K=0\) is required.
+
+**Proof.** Factor \(K=V^*V\), so the fibre columns \(V_f\) are orthonormal. With \(N=N_K\), \(P=P_K\), put
+\[
+X=VK^+D(P/2+N),\qquad
+V^*X=PDP/2+PDN,\qquad V^*X+X^*V=D. \tag{6}
+\]
+The identities use \(KK^+=P\) and \(NDN=0\); they require no inverse of \(VV^*\). Therefore \(V_f^*X_f+X_f^*V_f=0\), and the exact fibrewise normalization
+\[
+V_f(s)=(V_f+sX_f)(I_2+s^2X_f^*X_f)^{-1/2} \tag{7}
+\]
+has orthonormal columns for both signs of sufficiently small real \(s\). Its Gram is feasible on all eight original coordinates. Expanding the positive inverse square root gives
+\[
+C_K=X^*X-\tfrac12(MK+KM),\qquad
+M=\operatorname{blockdiag}_f(X_f^*X_f). \tag{8}
+\]
+The fibre blocks vanish. Complementarity gives \(Z=NZN\), while
+\[
+XN=VK^+DN,\qquad NX^*XN=NDK^+DN. \tag{9}
+\]
+The \(M\)-terms in (8) vanish in trace against \(Z\), proving (5). Thus the displayed pseudoinverse cost is attained by an original-fibre feasible curve. \(\square\)
+
+### 98.3. One common form for paired curved tangents
+
+**Theorem 98.2.** Under §98.1, suppose full eight-coordinate Hermitian directions satisfy
+\[
+(D_A)_{ff}=(D_B)_{ff}=0,\quad
+N_GD_AN_G=N_HD_BN_H=0,\quad
+D_A\odot H+G\odot D_B=0. \tag{10}
+\]
+Then some common normer in \(\mathcal A_0\) satisfies
+\[
+-2\operatorname{Tr}[(D_A\odot D_B)W]
++\operatorname{Tr}(P_AD_AG^+D_A)
++\operatorname{Tr}(P_BD_BH^+D_B)\ge0. \tag{11}
+\]
+Moreover \(B_0=P_B/\alpha_W\) is the same matrix for every common normer, and the following fixed real quadratic form is nonnegative for every pair (10):
+\[
+\begin{split}
+q(D_A,D_B)={}&
+\sum_{\substack{i,j\\\text{different original fibres}}}
+\frac{\overline{a_i}a_j}{H_{ij}}(D_A)_{ij}(D_B)_{ij}\\
+&+a^*D_AG^+D_Aa+\operatorname{Tr}(B_0D_BH^+D_B)\ge0.
+\end{split}\tag{12}
+\]
+The sum is ordered and its terms occur in conjugate pairs. These are ordinary complex products, not absolute squares.
+
+**Proof.** Apply Lemma 98.1 to both directions. The full linear cancellation in (10) gives
+\[
+T-G(s)\odot H(s)=L+s^2K_2+O(s^3),\quad
+K_2=-(D_A\odot D_B+C_G\odot H+G\odot C_H). \tag{13}
+\]
+Fix this pair of directions. For fixed \(M>0\) and \(G',H'\in\mathcal E\), mix the two feasible curves with \(G',H'\) at weight \(Ms^2\). The coefficient expansion becomes
+\[
+L+s^2\bigl[K_2-M((G'-G)\odot H+G\odot(H'-H))\bigr]+o(s^2). \tag{14}
+\]
+With \(Q_W=2\operatorname{Tr}(K_2W)\), compactness and the maximum derivative formula imply
+\[
+\max_{(\rho,W)\in\mathcal A}
+\{Q_W+Mb(W;G',H')\}\ge0
+\quad\text{for every feasible pair}. \tag{15}
+\]
+For each \(M\), one normer satisfies all inequalities inside this maximum simultaneously. Otherwise compactness gives a finite inconsistent family; strict separation of its compact convex affine image from the nonnegative orthant gives nonnegative weights. Normalizing those weights and averaging the feasible drift pairs contradicts (15). Only affine drift variables are separated.
+
+For the simultaneous normer, the zero drift gives \(Q_W\ge0\). Letting \(M\) tend to infinity along a convergent subsequence gives a normer satisfying every inequality (2), hence belonging to the complete set \(\mathcal A_0\), and still satisfying \(Q_W\ge0\). This selection is made for the fixed direction; it exchanges no quadratic direction/witness quantifiers.
+
+Since \(C_G,C_H\) have zero fibre blocks, the stress identities give
+\[
+-2\operatorname{Tr}[(C_G\odot H)W]=\operatorname{Tr}(P_AC_G),
+\quad
+-2\operatorname{Tr}[(G\odot C_H)W]=\operatorname{Tr}(P_BC_H). \tag{16}
+\]
+Lemma 98.1 proves (11).
+
+For all common normers, the cross-fibre entries of the normalized second stress are fixed:
+\[
+\frac{(P_B)_{ij}}{\alpha_W}
+=a_i\overline{a_j}\frac{\overline{G_{ij}}}{\overline{H_{ij}}}.
+\tag{17}
+\]
+The remaining blocks are fixed by full complementarity and \(H_{ff}=I_2\):
+\[
+(P_B)_{ff}=-\sum_{g\ne f}(P_B)_{fg}H_{gf}. \tag{18}
+\]
+Thus \(B_0\) is independent of the common normer on every block. Its existence as a normalized stress already proves \(B_0\succeq0\) and \(B_0H=0\); (18) is not an unverified PSD completion. Reversing trace indices in the mixed term of (11) shows that its whole left side is \(\alpha_Wq(D_A,D_B)\). The strictly positive factor in (3) therefore proves (12), even though the selected normer may depend on the fixed direction. \(\square\)
+
+**Corollary 98.3.** Every Hermitian \(D\) with \(D_{ff}=0\) and \(N_HDN_H=0\) supplies an admissible pair by
+\[
+D_B=D,\qquad
+\mathcal R(D)_{ij}:=(D_A)_{ij}=-\frac{G_{ij}}{H_{ij}}D_{ij}
+\quad(f(i)\ne f(j)),\qquad (D_A)_{ff}=0. \tag{19}
+\]
+The real direction space has dimension exactly \(48-k^2\), where \(k=\dim\ker H\), and hence dimension \(44\) when \(\operatorname{rank}H=6\).
+
+**Proof.** Hermiticity, fibre zeros and full product cancellation are immediate. Equation (17), with reversed trace indices, gives
+\[
+a^*\mathcal R(D)a=-\operatorname{Tr}(B_0D)=0, \tag{20}
+\]
+because \(B_0=N_HB_0N_H\). This is exactly the rank-seven kernel-kernel tangent condition. The zero-fibre Hermitian space has dimension \(64-4\cdot4=48\). Its compression to \(\operatorname{Herm}(\ker H)\) is onto: an adjoint obstruction would be a Hermitian \(Z\) supported on \(\ker H\) and fibre-block diagonal. Then \(ZH=0\) and \(H_{ff}=I_2\) force each \(Z_{ff}=0\). Thus no nonzero obstruction exists, and the \(k^2\) real compression equations are independent. \(\square\)
+
+### 98.4. The reciprocal phase radical
+
+Write \(q(D)=q(\mathcal R(D),D)\). Its two positive terms are squared norms, and its mixed term uses only \(S=\operatorname{supp}a\):
+\[
+\begin{aligned}
+q(D)&=m(D_S)+\| (G^+)^{1/2}\mathcal R(D)a\|^2
+ +\|(H^+)^{1/2}DB_0^{1/2}\|_{\mathrm F}^2,\\
+m(X)&=-\sum_{\substack{i,j\in S\\f(i)\ne f(j)}}
+\frac{\overline{a_i}a_jG_{ij}}{H_{ij}^2}X_{ij}^{\,2}.
+\end{aligned}\tag{21}
+\]
+All square roots of PSD matrices are the positive ones.
+
+**Lemma 98.4.** For every real diagonal matrix \(A\), the reciprocal phase direction
+\[
+D^A=i(HA-AH),\qquad
+\mathcal R(D^A)=-i(GA-AG) \tag{22}
+\]
+is in the radical of the fixed form:
+\[
+q(D+D^A)=q(D) \tag{23}
+\]
+for every direction in Corollary 98.3. This is an algebraic identity from the common-stress data and does not assume that \(q\) is nonnegative.
+
+**Proof.** Both commutators are original-fibre tangents and satisfy full product cancellation. Put \(z=\operatorname{Tr}(B_0AD)\). The mixed-term polarization in (21) is
+\[
+-2i\sum_{i,j}(B_0)_{ji}(A_j-A_i)D_{ij}
+=-2i\{\operatorname{Tr}(B_0DA)-\operatorname{Tr}(B_0AD)\}
+=-4\operatorname{Im}z. \tag{24}
+\]
+The first cost polarization is
+\[
+2\operatorname{Re}\bigl[(\mathcal R(D^A)a)^*G^+\mathcal R(D)a\bigr]
+=2\operatorname{Re}\bigl[i\,a^*A\mathcal R(D)a\bigr]
+=2\operatorname{Im}z. \tag{25}
+\]
+Here \(\mathcal R(D^A)a=-iGAa\), \(\mathcal R(D)a\perp a\), and (17), together with the zero fibre blocks, gives \(a^*A\mathcal R(D)a=-z\). The second cost polarization is
+\[
+2\operatorname{Re}\operatorname{Tr}(B_0D^AH^+D)
+=2\operatorname{Re}(-iz)=2\operatorname{Im}z. \tag{26}
+\]
+Indeed \(B_0H=0\) removes the first commutator term, and
+\(N_HDB_0=N_HDN_HB_0=0\) permits replacing \(P_HD\) by \(D\) in the remaining trace. The three polarizations cancel. Taking \(D=D^A\) first proves \(q(D^A)=0\), and then proves (23). \(\square\)
+
+### 98.5. Coupled elimination of outside entries
+
+Now impose the additional rank-\((7,6)\), subquarter hypotheses of §97. Put \(n=|S|\), \(K=H_S\), and \(m_f=|S\cap f|\). The delivered frontier gives
+\[
+\operatorname{rank}K=n-2,\qquad
+\ker H\subseteq\mathbb C^S,\qquad
+\operatorname{range}B_0=\ker H,\qquad
+\operatorname{rank}B_0=2. \tag{27}
+\]
+Let \(\mathcal V\) be the full direction space of Corollary 98.3, and define
+\[
+\mathcal V_S=\{X=X^*:X_{ff}=0\text{ on }S\cap f,\ N_KXN_K=0\},
+\qquad
+\mathcal Z=\{D\in\mathcal V:D_S=0\}. \tag{28}
+\]
+Restriction \(\mathcal V\to\mathcal V_S\) is onto by zero extension, since the full opposite kernel is supported on \(S\).
+
+Consider the real-linear map
+\[
+\mathcal L(D)=
+\bigl((G^+)^{1/2}\mathcal R(D)a,\,
+      (H^+)^{1/2}DB_0^{1/2}\bigr). \tag{29}
+\]
+Its codomain has the real part of the usual vector/Frobenius inner product. Let \(\Pi\) be the orthogonal projection onto the **real** subspace \(\mathcal L(\mathcal Z)\). For \(X\in\mathcal V_S\), let \(X^0\) denote its full zero extension.
+
+**Theorem 98.5.** The exact effective quadratic form is
+\[
+q_{\mathrm{eff}}(X)
+=m(X)+\|(I-\Pi)\mathcal L(X^0)\|^2
+=\min_{\substack{D\in\mathcal V\\D_S=X}}q(D). \tag{30}
+\]
+The minimum is attained. Thus \(q\ge0\) on \(\mathcal V\) if and only if \(q_{\mathrm{eff}}\ge0\) on \(\mathcal V_S\).
+
+**Proof.** Every extension is \(X^0+Z\) with \(Z\in\mathcal Z\), and its mixed term is the same \(m(X)\). Minimizing the sum of the two squared costs is exactly orthogonal projection onto the finite-dimensional closed real subspace \(\mathcal L(\mathcal Z)\). This proves the formula, attainment and equivalence. \(\square\)
+
+In particular an exact negative value of \(q_{\mathrm{eff}}\) produces an actual full eight-coordinate paired tangent contradicting Theorem 98.2. The map \(\mathcal L\) retains the full reciprocal ratios and full pseudoinverses. The minimization couples the two costs; it neither minimizes them independently nor replaces them by principal pseudoinverses. The coefficients of \(q_{\mathrm{eff}}\) may depend on every outside Gram entry.
+
+### 98.6. Seven finite quadratic obstructions
+
+The principal zero-fibre Hermitian space has dimension \(n^2-\sum_fm_f^2\). The kernel compression in (28) is onto by the same adjoint argument as Corollary 98.3: a fibre-block-diagonal \(Z\) supported on \(\ker K\) satisfies \(ZK=0\), and \(K_{ff}=I_{m_f}\) forces \(Z_{ff}=0\). Since \(\dim\ker K=2\),
+\[
+\dim_{\mathbb R}\mathcal V_S=n^2-\sum_fm_f^2-4. \tag{31}
+\]
+The principal phase space
+\[
+\Gamma=\{i(KA-AK):A\text{ real diagonal on }S\} \tag{32}
+\]
+has dimension \(n-1\). All cross-fibre entries of \(K\) are nonzero, and the occupied-fibre graph is connected, so a phase direction vanishes exactly when \(A\) is scalar. Every such direction extends to (22). Lemma 98.4 and the minimizing formula therefore give
+\[
+q_{\mathrm{eff}}(X+X^A)=q_{\mathrm{eff}}(X),\qquad
+\dim_{\mathbb R}(\mathcal V_S/\Gamma)
+=n^2-\sum_fm_f^2-n-3. \tag{33}
+\]
+Consequently \(q_{\mathrm{eff}}\) is a real quadratic form on this quotient. For the seven unresolved occupancies, the quotient dimensions are
+\[
+\begin{array}{c|rrrrrrr}
+(m_f)&(2,1,1,0)&(1,1,1,1)&(2,2,1,0)&(2,1,1,1)&
+(2,2,2,0)&(2,2,1,1)&(2,2,2,1)\\ \hline
+\dim&3&5&8&10&15&17&26
+\end{array}. \tag{34}
+\]
+These are dimensions of the domain quotients; the forms may have further radical. In any real basis they give finite symmetric matrices that must be PSD at a hypothetical subquarter minimum. No determinant sign, negative direction or exclusion for any of the seven forms is established here.
+
+The curved construction applies on the full calibrated domain and retains the original fibre identities, complex phases, full kernels and common witness. It gives no rank-preserving calibration reduction and transfers no local minimality from leaking channels. Higher quotient ranks, unequal lower-rank cases, the seven listed supports and the unrestricted quarter optimum remain open; the global interval is still \([\sqrt3-\tfrac32,\tfrac14]\).
