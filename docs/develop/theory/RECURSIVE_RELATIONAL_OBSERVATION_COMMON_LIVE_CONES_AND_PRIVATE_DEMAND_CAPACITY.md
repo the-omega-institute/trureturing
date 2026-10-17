@@ -928,3 +928,577 @@ for all remaining duplicate incidences, or a complete correct original
 strict-subgrid realization at both original whole-run caps.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Propagation of all actual supports at a cell
+
+Retain the entire graph, source interfaces and notation of Sections 1–10.
+In particular both bounds (CL.2) hold on every complete actual run of
+this one stationary graph. Fix a consecutive gap $B=(a,b)$ and write
+$d(v)=h(v)+z(v)$ for the depth of a cell. Every support family below
+is the entire actual family at that cell, rather than a selection of
+representatives or the supports inherited from just one parent.
+
+For $v\in V_B$ put
+
+$$
+U_v=\bigcup_{S\in\mathcal S_v}S,\qquad
+\rho_v=|U_v|-d(v),\qquad
+\nu_v=|\{x\in X_B:\deg_{\Gamma_v}(x)>0\}|.
+\tag{CL.40}
+$$
+
+Thus $\nu_v$ counts only coordinates incident to a demand edge; isolated
+coordinates are still vertices of $\Gamma_v$. It is distinct from the
+number $u$ of genuinely never-live installed states. All these finite
+sets describe actual histories and provide no history store or selector.
+
+**Theorem 11.1 (actual descent of every alternative support).** Let
+$v\in V_B$, $d=d(v)$ and $A=a_v$. If
+
+$$
+w=v+(j_1,j_0)\in V_B,\qquad
+j_1,j_0\ge0,\qquad j=j_1+j_0,
+$$
+
+then every $S\in\mathcal S_v$ is contained in some member of
+$\mathcal S_w$. Consequently
+
+$$
+a_w=1\quad\Longrightarrow\quad
+|U_v|\le d+j,\qquad \rho_v\le j,\qquad \nu_v\le j a_v.
+\tag{CL.41}
+$$
+
+One has $0\le\rho_v\le b-d$. Either $j<\rho_v$ or
+$\nu_v>j a_v$ therefore forces $a_w\ge2$ and $e_w\ge1$.
+In particular, if either strict inequality holds, then
+
+$$
+e_{d+j}\ge
+|\{w\in V_B:w=v+(j_1,j_0),\ j_1,j_0\ge0,\ j_1+j_0=j\}|.
+\tag{CL.42}
+$$
+
+Proof. For each support $S$ choose one actual history at $v$ with that
+support. Append a reply word having $j_1$ ones and $j_0$ zeros. Its
+partial counts are bounded coordinatewise by the final live counts of
+$w$, so every prefix stays live. Repeated use of (CL.6) gives an actual
+extension, with fresh queries, whose final support contains $S$.
+Each extension is realized on a completion of its own exposed assignment.
+Different starting supports need no common completing input and need
+not follow the same coordinate sequence.
+
+If $\mathcal S_w=\{T\}$, each of these final supports is $T$.
+Thus $S\subseteq T$ for every $S\in\mathcal S_v$, and
+$U_v\subseteq T$ with $|T|=d+j$. This proves the first two necessary
+inequalities in (CL.41). The envelope (CL.9) puts $U_v$ inside $T_b$,
+while the nonempty family contains a set of size $d$; hence
+$0\le\rho_v\le b-d$.
+
+If $x$ is incident to a demanded edge, Theorem 4.1 supplies a support
+at $v$ containing $x$ and a support at $v$ omitting $x$, by the two
+opposite membership orientations. Under the singleton premise every
+such $x$ lies in $T$ and belongs to $T\setminus S$ for at least one
+$S\in\mathcal S_v$. Since each $S$ has size $d$ and is contained
+in $T$, finite union counting gives
+
+$$
+\nu_v\le\left|\bigcup_{S\in\mathcal S_v}(T\setminus S)\right|
+       \le\sum_{S\in\mathcal S_v}|T\setminus S|=a_v j.
+\tag{CL.43}
+$$
+
+This proves the last necessary inequality. Their contrapositives and
+(CL.5) give the ambiguity and excess conclusions. Each distinct forced
+cell contributes a different summand $e_w\ge1$ to its depth sum,
+proving (CL.42). Its hosts are not declared disjoint; any sharing is
+still retained in $D_B$. When $j=0$, the singleton premise gives
+$\rho_v=\nu_v=0$. When the displayed descendant set is empty, (CL.42)
+is the zero lower bound. No positive range is inferred from
+$\rho_v=0$. $\square$
+
+The union in Theorem 3.1 concerns different count cells at one shared
+host. The union $U_v$ instead concerns all alternative supports at one
+cell, including supports at different hosts. These are different
+constraints on the same actual graph.
+
+**Lemma 11.2 (a demanded cell has two internal live children).** If
+$\Gamma_v$ contains an edge, both $v_0=(g,z+1)$ and $v_1=(g+1,z)$,
+where $v=(g,z)$, are distinct live cells in $V_B$.
+
+Proof. An edge has an eligible witness from Section 5. For its gaps
+$r,s$ put $\ell=n-b$. By (CL.14)–(CL.15),
+
+$$
+r,s\ge\max(2,\ell+1),\qquad g+r\le K,\quad z+s\le L.
+\tag{CL.44}
+$$
+
+Thus $g\le K-2,z\le L-2$, so both children are live. Furthermore
+$d(v)=g+z\le n+1-r-s$. If $\ell=0$, this is at most
+$n-3=b-3$. If $\ell\ge1$, it is at most
+$n-2\ell-1=b-\ell-1\le b-2$. In both cases $d(v)+1<b$.
+Their depths are above $a$ because $v$ is interior. This also covers
+the formal endpoint $b=n$. No such conclusion is asserted merely from
+an edgeless demand graph. $\square$
+
+## 12. A correction across disjoint adjacent depth pairs
+
+Keep the combined chromatic and fixed-size cut bound $\kappa_v$ of
+(CL.19) in full. For each internal depth name its existing lower bound
+
+$$
+p_d=\max(1,\Lambda_d),\qquad
+\Lambda_d=\sum_{v\in V_d}(\kappa_v-1),\qquad
+P_B=\sum_{a<d<b}p_d=(\beta_B-1)+\Delta_B.
+\tag{CL.45}
+$$
+
+These are exactly the quantities of (CL.24), with $p_d$ naming its
+summand. An edge-containing graph has $\chi_v\ge2$ and
+$\tau(\chi_v)\ge2$, so $\kappa_v\ge2$. Thus $\kappa_v=1$ is
+equivalent to $\Gamma_v$ being edgeless under the original convention.
+
+**Theorem 12.1 (host saturation or ambiguity in both children).**
+If $\nu_v>\kappa_v$, then
+
+$$
+e_v\ge\kappa_v
+\quad\hbox{or}\quad
+a_{v_0}\ge2\ \hbox{and}\ a_{v_1}\ge2.
+\tag{CL.46}
+$$
+
+In particular $b_v=\kappa_v$ forces the second alternative. For either
+child $w$ whose demand graph is edgeless,
+
+$$
+\bigl(e_v-(\kappa_v-1)\bigr)+e_w\ge1.
+\tag{CL.47}
+$$
+
+Proof. The premise cannot hold for an edgeless graph, where
+$\nu_v=0,\kappa_v=1$. Both children are therefore live and internal
+by Lemma 11.2. Capacity (CL.20) gives $b_v\ge a_v\ge\kappa_v$.
+If the first alternative fails, integrality gives
+$b_v=a_v=\kappa_v$. Apply (CL.41) with $j=1$ separately to the two
+children: $\nu_v>a_v$ forbids a singleton support family at either.
+This proves (CL.46). In its first alternative the parent difference in
+(CL.47) is at least one; if that difference is zero, both children have
+$e_w\ge1$. The difference and all other excess terms are nonnegative,
+which proves (CL.47). No separate charge is assigned to an edge witness.
+$\square$
+
+**Theorem 12.2 (one further unit on adjacent depths).** If a cell
+$v\in V_d$ satisfies $\nu_v>\kappa_v$ and at least one of its children
+has $\kappa=1$, then $a<d<d+1<b$ and
+
+$$
+e_d+e_{d+1}\ge p_d+p_{d+1}+1.
+\tag{CL.48}
+$$
+
+Proof. Lemma 11.2 gives the two internal children. Since
+$\kappa_v\ge2$, one has $\Lambda_d\ge1$ and $p_d=\Lambda_d$.
+If $e_v\ge\kappa_v$, sum all other credited cell bounds
+$e_x\ge\kappa_x-1$ on depth $d$ to obtain
+$e_d\ge\Lambda_d+1=p_d+1$. Combine it with $e_{d+1}\ge p_{d+1}$.
+
+Otherwise Theorem 12.1 gives $e_{v_0},e_{v_1}\ge1$. If
+$\Lambda_{d+1}\ge1$, a child with $\kappa=1$ contributes one above
+its credited bound zero; all other cell bounds still give
+$e_{d+1}\ge\Lambda_{d+1}+1=p_{d+1}+1$. If
+$\Lambda_{d+1}=0$, both distinct children have credited bound zero,
+and together give $e_{d+1}\ge2=p_{d+1}+1$. In either case combine
+with $e_d\ge p_d$. The extra unit is above the existing maximum
+baseline, rather than an additional copy of it. $\square$
+
+Let $\mathcal T_B$ be the set of depths satisfying the trigger of
+Theorem 12.2 for at least one cell. Define
+
+$$
+\mu_B=\max\left\{|\mathcal M|:
+ \mathcal M\subseteq\mathcal T_B,\quad
+ \{d,d+1\}\cap\{d',d'+1\}=\varnothing
+ \text{ for distinct }d,d'\in\mathcal M\right\}.
+\tag{CL.49}
+$$
+
+The empty choice is permitted, with size zero. This is a finite
+mathematical index of this graph, not an executed optimization or a
+resource available during a run. Several triggering cells, edges or
+witnesses at one depth still give only that one depth pair.
+
+**Theorem 12.3 (disjoint-depth pool correction).** Every consecutive
+gap of every original graph satisfies
+
+$$
+\begin{aligned}
+E_B&\ge P_B+\mu_B=(\beta_B-1)+\Delta_B+\mu_B,\\
+D_B-E_B&\le D_B-(\beta_B-1)-\Delta_B-\mu_B,\\
+|Q_B|&\ge |V_B|+(\beta_B-1)+\Delta_B+\mu_B-D_B.
+\end{aligned}
+\tag{CL.50}
+$$
+
+Proof. Choose a largest subfamily in (CL.49). Apply (CL.48) to each
+of its pairs, and apply $e_d\ge p_d$ to every internal depth outside
+those pairs. Each depth occurs exactly once in the resulting sum.
+Thus $E_B\ge\sum_{a<d<b}p_d+\mu_B=P_B+\mu_B$.
+Subtract from $D_B$ for the second line and use (CL.10) for the third.
+The host and support data, including every duplicate incidence, are
+from the unchanged graph. No edge, witness, baseline or overlapping
+depth is charged twice.
+
+An empty interior has $P_B=\Delta_B=\mu_B=0$. An empty trigger set,
+or the absence of an internal adjacent pair, gives $\mu_B=0$ and
+recovers (CL.25). Isolated demand coordinates contribute nothing to
+$\nu_v$. These conventions include the last internal layer and all
+boundary deletions without inserting a fictitious child. $\square$
+
+**Corollary 12.4 (two distinct edges obstruct the old baseline).**
+If $\Delta_B=0$ and some $\Gamma_v$ has at least two distinct edges,
+then
+
+$$
+\mu_B\ge1,\qquad E_B\ge\beta_B.
+\tag{CL.51}
+$$
+
+In particular $E_B=\beta_B-1$ is impossible under this trigger,
+including for bipartite demand graphs.
+
+Proof. Each $p_d\ge1$, so $\Delta_B=0$ forces every $p_d=1$ and
+$\Lambda_d\le1$. At the specified cell an edge gives
+$\kappa_v\ge2$, and $\Lambda_{d(v)}\le1$ forces $\kappa_v=2$.
+Two distinct edges of a simple graph have at least three incident
+vertices. Thus $\nu_v\ge3>\kappa_v$. Its children are distinct and
+internal by Lemma 11.2. They cannot both have $\kappa\ge2$, which
+would give $\Lambda_{d(v)+1}\ge2$. At least one has $\kappa=1$,
+so this depth belongs to $\mathcal T_B$ and $\mu_B\ge1$.
+Now $P_B=\beta_B-1$ and (CL.50) prove (CL.51). No odd cycle is
+required. A single simple edge has $\nu_v=\kappa_v=2$: a size-$t_v$
+cut can cut it, so $M_v=1$, while both terms of (CL.19) equal two.
+It therefore supplies no $\nu_v>\kappa_v$ trigger by itself.
+$\square$
+
+## 13. Exact-baseline rigidity and its host justification
+
+**Theorem 13.1 (necessary local coordinate swap at the exact baseline).**
+Suppose $E_B=\beta_B-1$. On every internal depth there is exactly one
+support-ambiguous cell. At that cell $b_v=a_v=2$, while every other
+cell on the depth has $b_v=a_v=1$. Every support at every interior
+cell has exactly one host.
+
+If the ambiguous cell $v$ has two live internal children, its two
+supports $S_1,S_2$ satisfy
+
+$$
+S_1\setminus S_2=\{x\},\qquad
+S_2\setminus S_1=\{y\},\qquad x\ne y.
+\tag{CL.52}
+$$
+
+Writing $q_1,q_2$ for their unique respective hosts, one has
+
+$$
+i(q_1)=y,\quad i(q_2)=x,\qquad
+\delta(q_1,0)=\delta(q_2,0),\quad
+\delta(q_1,1)=\delta(q_2,1),
+\tag{CL.53}
+$$
+
+and the zero and one successor states are distinct. The inherited
+support in either child is $S_1\cup S_2$. The entire child family
+can have an additional support from another parent. Every demand
+graph $\Gamma_v$ in this gap is edgeless or has just one edge.
+These are necessary conditions, not a complete graph specification.
+
+Proof. There are $\beta_B-1$ internal depths. Their nonnegative
+integer excesses satisfy $e_d\ge1$ by (CL.12), so equality of their
+sum forces every $e_d=1$. Noncommonness supplies a cell with
+$a_v\ge2$ on each such depth. Since $b_v\ge a_v$, that cell uses
+the entire unit of excess and has $b_v=a_v=2$; every other cell
+has $b=a=1$. The fixed-cell map from hosts onto supports described
+in (CL.5) is a surjection of finite sets of equal sizes at every
+interior cell. It is consequently a bijection: each support has
+exactly one host. This is stronger than merely knowing $a_v\le2$.
+
+Now let $d=d(v)$ and let both children be live and internal. If
+$|S_1\cup S_2|\ge d+2$, then $\rho_v\ge2$. Theorem 11.1 with
+$j=1$ forces both children ambiguous. Their two positive excesses
+contradict $e_{d+1}=1$. Distinct $d$-element supports have union of
+size at least $d+1$, so their union has exactly that size. This
+proves (CL.52).
+
+Set $Z_i=S_i\cup\{i(q_i)\}$ for $i=1,2$. By (CL.6), each $Z_i$
+is an actual support at each of the two children. If $Z_1\ne Z_2$,
+both children are again ambiguous, contradicting $e_{d+1}=1$.
+Thus $Z_1=Z_2$. It contains $S_1\cup S_2$, and all these sets
+have size $d+1$, so it equals that union. Freshness now forces
+the queried coordinates in (CL.53). For a fixed reply the two
+successors host the same inherited support in the same child cell.
+The already proved host–support bijection at that child, not a
+singleton-family assumption, identifies those successors. The zero
+and one child cells have unequal hits and the same inherited
+support; the equal-support exclusion in Section 1 forbids a common
+host between them. Their successor states are therefore distinct.
+Another parent may supply a second support at the sole ambiguous
+child on that depth, consistently with all these conclusions.
+
+A demanded cell has at least two supports by Theorem 5.1, hence is
+the sole ambiguous cell on its depth. Lemma 11.2 gives its two live
+internal children, so (CL.52) applies there. Among its two supports
+only $x,y$ have varying membership, and their membership orientations
+are opposite. Every other coordinate is present in both supports or
+in neither. An edge requires both opposite membership orientations
+by Theorem 4.1, so its only possible pair is $\{x,y\}$. A cell
+with one support has no demand edge. This proves the final assertion.
+
+For an empty interior the depth assertions are vacuous. An ambiguous
+cell with only one live child, or in the last internal layer, is
+outside the two-child assertion. No unproved singleton property is
+assigned to its descendants, and no paid certified continuation is
+removed. $\square$
+
+## 14. Tight common-cone capacity as an uncharged diagnostic
+
+**Proposition 14.1 (exhausted complement and private AND/OR arms).**
+Consider a shared pair from Corollary 3.2, with supports $S,T$ at
+$p=(h,z),p'=(g,w)$ and gaps $r=g-h,s=z-w$. Put $\ell=n-b$.
+Suppose the common-cone bound is tight:
+
+$$
+|S\cup T|=g+z-\ell.
+$$
+
+Set
+
+$$
+C=T_b\setminus(S\cup T),\quad N=n-g-z,\quad
+A_1=K-1-g,\quad A_0=L-1-z.
+\tag{CL.54}
+$$
+
+For every reply word with $A_1$ ones and $A_0$ zeros, the $N$ common
+available queries, including the query after its last reply, form a
+permutation of $C$. At that final shared state, the zero successor
+has a live occurrence extending the higher-hit history and queries
+a coordinate in $S\setminus T$. The one successor has a live
+occurrence extending the lower-hit history and queries a coordinate
+in $T\setminus S$. These two successor states are distinct. The
+surviving lower and higher contexts have residual predicates
+
+$$
+\operatorname{AND}\bigl((T\setminus S)\cup([n]\setminus T_b)\bigr),
+\qquad
+\operatorname{OR}\bigl((S\setminus T)\cup([n]\setminus T_b)\bigr),
+\tag{CL.55}
+$$
+
+respectively. These predicates describe those actual contexts, not
+a context-independent residual attached to an installed state.
+
+Proof. Tightness gives $|C|=N=A_1+A_0+1\ge1$. Every prefix of a
+word with the specified counts is live for both histories. The proof
+of Theorem 3.1 works for any such word: its fixed-successor induction
+uses only these partial count bounds. It gives $N$ distinct common
+available coordinates in $C$. Since $|C|=N$, these exhaust $C$.
+No agreement of the original exposed assignments is required.
+
+After all $N-1$ replies and before the last query, the lower and
+higher counts are, respectively,
+
+$$
+(K-1-r,L-1),\qquad(K-1,L-1-s).
+\tag{CL.56}
+$$
+
+A one reply leaves the lower context live at $(K-r,L-1)$ and
+certifies the higher. A zero reply leaves the higher context live
+at $(K-1,L-s)$ and certifies the lower. The gaps $r,s\ge2$
+guarantee the asserted surviving liveness. After that reply the
+surviving supports are respectively $S\cup C$ and $T\cup C$.
+Their depths are $n-r$ and $n-s$, both at most $b-1$ by
+$r,s\ge\ell+1$ in (CL.14), and both remain above $a$.
+The envelope and freshness therefore put their next fixed labels in
+
+$$
+T_b\setminus(S\cup C)=T\setminus S,\qquad
+T_b\setminus(T\cup C)=S\setminus T,
+\tag{CL.57}
+$$
+
+respectively. These private sets are nonempty and disjoint, so the
+successor states are distinct.
+
+Tightness also gives $|T\setminus S|=r-\ell$ and
+$|S\setminus T|=s-\ell$. Exactly $r$ coordinates remain unread in
+the surviving lower context, and its $K-r$ old ones require all
+$r$ to be one. Exactly $s$ remain unread in the surviving higher
+context, and its $K-1$ old ones require at least one more. Their
+unread sets are precisely those displayed in (CL.55), proving the
+predicates. This covers $N=1$, $b=n$ and unequal original depths.
+$\square$
+
+The proposition locates two arms in existing live pools. It does not
+show that either arm supplies an additional installed host or a
+never-live state. Different words and witnesses may reuse states.
+The certified occurrence still follows the same fixed successor and
+pays every subsequent visit. This diagnostic contributes no separate
+term to $\mu_B$, $E_B$ or a global compensation sum.
+
+## 15. Collective consequence on the unchanged graph
+
+Keep $\mathcal L_*,\mathcal A_*$ and the same-graph reserve $R\ge0$
+of (CL.31). Every quantity below, including the correction $\mu_B$,
+is computed as a mathematical index of that one original table.
+
+**Theorem 15.1 (collective restriction with propagation correction).**
+One has
+
+$$
+\begin{aligned}
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+&\le\sum_{B\in\mathcal L_*}(D_B-P_B-\mu_B),\\
+m-G&\ge R-\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr).
+\end{aligned}
+\tag{CL.58}
+$$
+
+Thus $m<G$ requires
+
+$$
+\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr)>R.
+\tag{CL.59}
+$$
+
+Proof. Sum (CL.50) over the disjoint late-long pools. Within each
+pool (CL.49) has already made every selected adjacent depth set
+disjoint, and the remaining depths supply their original $p_d$ once.
+Localization in Lemma 2.2 separates different pools and cuts. The exact
+identity remains
+$m-G=R-\sum_{B\in\mathcal L_*}(D_B-E_B)$, which gives (CL.58).
+A strict saving makes that exact deficit exceed $R$, proving (CL.59).
+Duplicate cell incidences stay in $D_B$. A state live on one input
+and certified on another stays in its live pool; it is not assigned
+to $u$. No differently restricted graph or independently optimized
+residual resource is combined with this one. $\square$
+
+For the exact remaining obligation put
+
+$$
+Z_B^{\rm rem}=E_B-P_B-\mu_B\ge0.
+$$
+
+Then the original comparison $m\ge G$ is exactly equivalent to
+
+$$
+\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B-Z_B^{\rm rem}\bigr)\le R.
+\tag{CL.60}
+$$
+
+Indeed $P_B+\mu_B+Z_B^{\rm rem}=E_B$, so the left side is the
+unchanged exact sum $\sum_{B\in\mathcal L_*}(D_B-E_B)$.
+This equivalence is bookkeeping, not a separate compensation proof.
+An empty $\mathcal L_*$ is already covered by the credited signs
+of Section 7.
+
+For a correct original full-fiber native preparer at both caps
+$n+1,W+3$, use its particular conditional Boolean projection in
+(CL.37). Here $r\ge0$ is the original additional-latch parameter
+of Section 9. That projection obeys both Boolean caps and
+$m\le H_P-4-r$, so (CL.58) gives
+
+$$
+H_P\ge G+4+r+R-\sum_{B\in\mathcal L_*}
+ \bigl(D_B-(\beta_B-1)-\Delta_B-\mu_B\bigr).
+\tag{CL.61}
+$$
+
+All right-hand data belong to that projection. This only applies the
+displayed conditional full-fiber correspondence; it supplies no new
+source or service bridge. The source remains the entire unbounded
+fiber (CL.35), with its original homomorphism, complete current row,
+eleven profiles, original positions and fixed pointwise code (CL.36).
+Preparation still returns the literal original latch and enters the
+complete original $e_0$ or $e_1$ on the same source. The four original
+replies and separately installed edges (CL.39), two paid profile states
+and all mandated latches keep their original meanings and charges.
+The independently priced eight-state reader still returns the whole
+predecessor row, including exterior, occurrences, canonical equality
+partition, repetitions, disequalities and strict-prefix guards, with
+at most two fresh calls and six letters. Every installed unused state
+and every actual repeated or certified visit remains paid. Binding,
+authentication, access, same-version data, export, isolation, code-only
+handoff and stationary service remain the separate source and service
+assumptions in Section 9. No acquisition, free history, clock, counter,
+selector, address computation or physical resource conclusion follows.
+
+## 16. Attribution and the remaining unrestricted alternative
+
+SI supplies the actual-prefix and fixed-successor interfaces, the common
+cuts, support envelopes, localization and exact incidence identities.
+Its span-at-most-four and early-endpoint signs remain the credited
+suppliers of $R\ge0$. Sections 3–6 supply the union capacity, eligible
+private joins, combined membership and fixed-size cut capacity
+$\kappa_v$, and the per-depth maximum $p_d$ in $P_B$. Those bounds
+are retained without replacing their maximum by a sum. SI's
+all-history both-conflict capacity, count relaxation, star and cyclic
+injections, and complete above-grid inclusions retain their original
+scope. The conditional native correspondence and original source,
+profiles, entries and reader retain their separate supplied contracts.
+
+The additional deductions are the descent of every alternative support
+at a cell, the singleton-descent inequalities (CL.41), the resulting
+host-saturation or two-child alternative, and the additional adjacent
+depth charge (CL.48). Disjoint depth pairs turn that local propagation
+into the nonnegative correction $\mu_B$ on top of $P_B$. Corollary
+12.4 gives its nonzero consequence for two distinct simple edges when
+the old demand bound has only its baseline, including bipartite demands.
+The exact-baseline argument derives the host–support bijection before
+using it for coordinate swaps and merging successors; it does not
+infer singleton entire child families. Proposition 14.1 is only an
+uncharged equality-case refinement. Finite union counting, integrality,
+set cardinality identities and summation over disjoint sets are standard
+tools. The residual rewrite (CL.60) is not additional mathematical
+content. No external novelty or priority claim is made.
+
+The correction can vanish. Ineligible joins generate no demand by this
+route. A single-edge demand has $\nu_v=\kappa_v=2$ and does not
+satisfy the new strict trigger. If both children already have
+$\kappa\ge2$, their existing demand charges can absorb the forced
+ambiguity, so (CL.48) supplies no extra unit under that configuration.
+At a cell with one live child, ambiguity can descend along that arm
+without forcing two ambiguous cells on its next depth. The final
+internal layer has no internal adjacent pair. These are boundaries of
+the deductions, not complete realizations or counterexamples. The
+cone-equality arms can also reuse existing live states; no unspent
+surplus from those arms has been proved.
+
+What remains missing is a universal same-graph charge covering every
+remaining duplicate incidence by actual unspent excess, genuine
+never-live states and the collective reserve. No uniform positivity
+of $\mu_B$, no inequality paying all $D_B$, and no separate
+compensation theorem for every late pool is proved. Independent
+residual lower bounds on overlapping coordinate sets cannot be
+subtracted to manufacture that charge. All-input correctness, actual
+termination and both full-run caps still constrain any prospective
+construction, including its certified traffic and fixed successors.
+
+For the unchanged all-size domain $\min(k,n-k+1)\ge4$, retain the
+original alternatives: either prove collective compensation for every
+complete original graph at both original $n,W$ caps, or provide a
+complete correct strict-subgrid graph meeting both on every input.
+Neither alternative is completed here. The supplied critical-instance
+intervals are background; no improved numerical optimum or strict-subgrid
+construction is asserted. The unrestricted-budget minimum remains a
+separate question. These are ordinary symbolic deductions conditional
+on the displayed interfaces, with no kernel, independent-review,
+exhaustive-search, general-neural-network, empirical learning,
+physical-resource or programme-completion claim.
+
+## 追加锚（本行以下为增补区）
