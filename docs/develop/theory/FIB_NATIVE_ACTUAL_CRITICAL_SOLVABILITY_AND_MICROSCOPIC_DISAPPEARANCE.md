@@ -1764,3 +1764,125 @@ All limits fix the original datum, $R>r_C$ and the prescribed sequence as specif
 The comparison formulas determine shapes and all $L^2$ mass only. They imply no native form-domain membership, kinetic-energy transfer, native point interaction, cutoff-free realization, analytic-state preparation or physical-space/dimension correspondence. Absolute response sign, positive/zero occurrence, occurrence of a finite mixed branch, actual selection of $R$ or of divergent $r_s$, finer signed energy coefficients and centered crossover remain unresolved. Thus conditional rigidity at an actually occurring finite $R>r_C$ leaves the original every-ground-state decision and the full target of Definition 9.1 unresolved. Entire-height response residuals and resource, cone, observation or completely positive realizations supply no additional native analytic preparation premise.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. At most one native eigenvalue below the Coulomb energy order
+
+**Theorem 21.1 (deep spectral count and the actual ground-state complement).** Fix one admitted original datum of Definitions 1.1–2.2 and all its inherited analytic antecedents before taking $s\downarrow0$. In particular retain P Theorems 87.2, 88.1 and 104.2 and R Theorem 9.1 on its entire complex domain. Define the selfadjoint operators
+
+$$
+\begin{aligned}
+H_s&=aS-\chi_cs^3W_{s^2},&D(H_s)&=D(S),\\
+\mathscr H_s&=aC_s-\chi_cU_s
+ =s^2\mathcal U_sH_s\mathcal U_s^{-1},&
+D(\mathscr H_s)&=D(A_s)=\mathcal U_sD(S)
+ \quad\text{in }L^2(\Omega_s).
+\end{aligned}
+\tag{21.1}
+$$
+
+There are constants $C>0,s_0>0$, depending only on this fixed datum and its antecedent constants, such that for every $0<s<s_0$,
+
+$$
+\operatorname{rank}_{\mathbb C}
+ \mathbf1_{(-\infty,-Cs^6)}(H_s)\le1,
+\qquad
+\operatorname{rank}_{\mathbb C}
+ \mathbf1_{(-\infty,-Cs^8)}(\mathscr H_s)\le1.
+\tag{21.2}
+$$
+
+For every actual normalized complex ground state $\psi_s$ of $H_s$ and every $u$ in the entire original complex form domain $\mathcal Q$,
+
+$$
+\langle\psi_s,u\rangle=0
+\quad\Longrightarrow\quad
+\mathfrak e_{\chi_cs^3,s^2}[u]\ge-Cs^6\|u\|_2^2.
+\tag{21.3}
+$$
+
+Equivalently, with $F_s=\mathcal U_s\psi_s$, for every $F\in\mathcal Q_s=\mathcal U_s\mathcal Q$ on the actual moving domain $\Omega_s=I_s\times\mathbb R^3$,
+
+$$
+\langle F_s,F\rangle=0
+\quad\Longrightarrow\quad
+q_s^c[F]\ge-Cs^8\|F\|_2^2.
+\tag{21.4}
+$$
+
+The spectral intervals in (21.2) are open at their displayed thresholds; (21.3)–(21.4) are non-strict inequalities, including threshold equality. Multiplicities are complex dimensions. The constants are independent of every eigenvector or ground-state choice and require no assumption on the response sign.
+
+Proof. Work first in the common complex space $\mathscr L=L^2(\mathbb R^4,d\xi)$ used in P §104. Native vectors and the output of their resolvents are zero extended from $\Omega_s$ only for these comparisons. Put $t_c=\chi_c/a$, $K=K_{\rm rec}=\mathcal E^{-1}V$ with the precise reconstruction meaning of P (104.1), and $L=I-t_cK$. P Theorem 87.2 makes $K$ compact, with range in $D(\mathcal E)$ and $\mathcal EKf=Vf$. Moreover
+
+$$
+\ker L=\mathbb Cp.
+\tag{21.5}
+$$
+
+Indeed $Lf=0$ implies $f\in D(\mathcal E)$ and $a\mathcal Ef=\chi_cVf$, so P Theorem 88.1 gives $f\in\mathbb Cp$. Conversely $\mathcal E(p-t_cKp)=0$; both terms belong to $D(\mathcal E)$, and injectivity of $\mathcal E$ from P Theorem 87.2 gives $Lp=0$.
+
+There is therefore a number $\gamma>0$ such that
+
+$$
+\|Lw\|_2\ge\gamma\|w\|_2
+\quad(w\in\mathscr L,\ \langle p,w\rangle=0).
+\tag{21.6}
+$$
+
+For completeness, if not, take unit vectors $w_n\perp p$ with $Lw_n\to0$. Compactness of $K$ gives a subsequence on which $Kw_n$ converges. The identity $w_n=Lw_n+t_cKw_n$ makes that subsequence converge strongly to a unit vector $w\perp p$ with $Lw=0$, contradicting (21.5). No selfadjointness of $K$ or positive spectral gap above zero for $H_c$ is used. For the orthogonal projection $\Pi f=\langle p,f\rangle p$, (21.5)–(21.6) imply
+
+$$
+\|(I-\Pi)f\|_2\le\gamma^{-1}\|Lf\|_2.
+\tag{21.7}
+$$
+
+Let $z<0$ be any eigenvalue of $H_s$ and $\psi\in D(S)$ any corresponding unit complex eigenvector. R Theorem 9.1 and (2.2), applied to every native form vector, give $H_s\ge-C_R I$ for fixed $C_R>0$ and sufficiently small $s$. Thus $-C_R\le z<0$. Write $F=\mathcal U_s\psi$, zero extended, and $h=-s^2z/a>0$. The exact operator conjugacy (21.1) gives
+
+$$
+(C_s+h)F=t_cU_sF,
+\qquad F=t_cR_s(h)U_sF,
+\qquad 0<h\le A_0s^2,\quad A_0=C_R/a.
+\tag{21.8}
+$$
+
+These equations hold before extension in $D(C_s)=\mathcal U_sD(S)$ and then as $L^2$ equalities after extension. In particular they apply to every negative eigenvector, without invoking the ground-sequence conclusion of P Theorem 105.1. The coefficient is exactly $s^2(\chi_cs^3)s^{-5}/a=t_c$, with no change of the field heat clock.
+
+Let $C_0,d_s$ be the fixed-data constant and vanishing error of P (104.2). For $s$ small enough that $A_0s^2\le1$, that full-output operator-norm estimate gives, uniformly over all the above eigenvectors whose $h\ge Ms^8$,
+
+$$
+\|LF\|_2\le t_c\left[d_s+C_0(A_0s^2)^{3/4}
+              +C_0M^{-1/4}+C_0M^{-1/2}\right]
+ =:\Delta_s(M).
+\tag{21.9}
+$$
+
+Choose once and for all $M\ge1$ with $t_cC_0(M^{-1/4}+M^{-1/2})<\gamma/4$, then decrease $s_0$ so that $t_c[d_s+C_0(A_0s^2)^{3/4}]<\gamma/4$ for every $0<s<s_0$. Set $C=aM$. If $z<-Cs^6$, then $h>Ms^8$, so (21.7)–(21.9) give $\|(I-\Pi)F\|_2<1/2$ and hence $|\langle p,F\rangle|^2>3/4$.
+
+P Proposition 70.2 gives discrete spectrum of finite multiplicity below zero at each positive cutoff. If the first projection in (21.2) had rank at least two, its range would contain two orthonormal eigenvectors, including the case of a repeated eigenvalue. Their unitary images $F_1,F_2$ remain orthonormal after zero extension. Complex Bessel's inequality would give
+
+$$
+1=\|p\|_2^2\ge
+ |\langle p,F_1\rangle|^2+|\langle p,F_2\rangle|^2
+ >\frac32,
+\tag{21.10}
+$$
+
+a contradiction. This proves the first count. The same argument also applies when an eigenvalue equals the threshold, since $h=Ms^8$ still satisfies (21.9); only the asserted open interval is needed. Thus no threshold eigenvector has been silently counted as strictly below it.
+
+To prove (21.3), put $T=-Cs^6$. Negative ground-state attainment is P Proposition 75.2. If its energy $E_s\ge T$, the spectral theorem gives $\mathfrak e_{\chi_cs^3,s^2}[u]\ge T\|u\|_2^2$ for every $u\in\mathcal Q$. If $E_s<T$, (21.2) forces $\mathbf1_{(-\infty,T)}(H_s)$ to have range exactly $\mathbb C\psi_s$ and forces that ground eigenvalue to be simple. For $u\perp\psi_s$, its scalar spectral measure consequently has no mass below $T$. The closed-form spectral representation on the entire form domain gives
+
+$$
+\mathfrak e_{\chi_cs^3,s^2}[u]
+ =\int_{[T,\infty)}x\,d\langle u,\mathbf1_{(-\infty,x]}(H_s)u\rangle
+ \ge T\|u\|_2^2.
+\tag{21.11}
+$$
+
+At $E_s=T$ the first case applies, regardless of degeneracy; the same is true above $T$. This proves the assertion for every ground-state choice without any independent simplicity assumption on the finite native bottom. Finally the exact unitary conjugacy in (21.1) transports the first spectral projection to the second in (21.2), multiplying energies by $s^2$. Formula (2.2) transports (21.3) to (21.4). Both the operator domain $\mathcal U_sD(S)$ and the form domain $\mathcal Q_s$ retain the two moving Dirichlet faces; zero extension has not replaced them by a fixed-domain operator. $\square$
+
+**Definition 21.2 (source correspondence and remaining scalar).** Theorem 21.1 is a source-specific `repo-derived` consequence of P (104.2), the compact reconstruction and simple complex kernel of P §§87–88, and the full-domain lower bound R (9.1)–(9.2). The latter is essential for the uniform upper bound on $h$ in (21.8); the displayed local coercivity (4.2) alone is not used as a global lower bound. Compactness, complex Bessel's inequality and selfadjoint spectral and closed-form calculus are classical intermediate tools; see [Teschl, *Mathematical Methods in Quantum Mechanics*](../../../Library/Fourier/teschl2009mathematical.md), equation (1.11), §2.3 and §3.1 in the [author-hosted first edition](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf). Its complex Hilbert-space Bessel inequality applies to the orthonormal pair in (21.10); the semibounded closed-form and selfadjoint spectral representations apply to (21.11) on $\mathcal Q$. The count concerns the finite native operator, not just the fixed-domain zero mode or a separate long-scale trial branch.
+
+All constants fix the original signed nonzero $\kappa$, jointly realized rational fields, all-real phase cover, both height deaths and raw source before $s\downarrow0$. The density $j_0$ and the distinction between field multiplier $U_s$ and chart unitary $\mathcal U_s$ remain exactly (2.1)–(2.3); the field clock is $B$, independently of $a$. No uniformity in varying admitted data or as $\kappa\to0$ is asserted. The complement in (21.3) is orthogonal to an actual ground state; it is not the complement of an arbitrarily chosen core or trial state.
+
+The possible single eigenvalue below $-Cs^6$ is not bounded from below by this count. In particular it gives no $E_s\ge-Cs^6$ conclusion, evaluates no signed core scalar or absolute response sign, assumes no finite-$R$ occurrence, and selects neither $r_s$ nor the actual critical ground-state orbit. The original ground energy/scale selection of Definition 9.1, including response-zero selection, remains unresolved. No analytic-state preparation or physical-space/dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）

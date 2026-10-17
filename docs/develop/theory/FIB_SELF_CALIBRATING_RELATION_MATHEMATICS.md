@@ -3323,3 +3323,550 @@ $$
 对于未声明次数上界的函数，只需在任意 $L$ 个已读序号上给漂移增加非零倍数的 $\prod_{i=0}^{L-1}(t-i)$，就保留全部有限读数而改变未来。因此有限恢复不认证其前提在更大函数族中的有效性。时间平移边界直接沿用命题 37.4。模变换群识别的一般概念可参见 Li–Lee–Bresler, “A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models”, Definition 2.7, [arXiv:1501.06120](https://arxiv.org/abs/1501.06120)；本推论的具体正尺度群及其完备性由上述共同来源恢复给出。∎
 
 ## 追加锚（本行以下为增补区）
+## 40. 固定路径的不可避免读取量与已知左因子接口
+
+### 定义 40.1（固定路径读取数）
+
+固定 $k,d\ge0$。一条每步必读的预定路径是
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1}\quad(1\le i<N),\qquad E_i\in\{M,J\},
+$$
+
+并在每个 $A_i$ 读取一次。定义 $n_{\rm fix}(k,d)$ 为使某条这样的路径对定义 39.1 的全部
+$(R_0,H,D)$ 唯一确定目标的最小统一读取数；若无此路径则置为 $\infty$。路径在任何读数前固定，且不重置关系、增益、漂移或读数时钟。
+
+### 引理 40.2（两来源多项式碰撞）
+
+对任意固定合法路径和 $N\le 2k+d+2$，存在两个不同的严格正秩一规范关系
+$R_0^{(1)},R_0^{(2)}$，两个非零 $H_1,H_2\in\Pi_k$，以及
+$D_1,D_2\in\Pi_d$，使
+
+$$
+H_1(i)\operatorname{tr}(A_iR_0^{(1)})+D_1(i)
+ =H_2(i)\operatorname{tr}(A_iR_0^{(2)})+D_2(i)\quad(0\le i<N).
+$$
+
+这两个世界的全部操作和读数序号相同，但规范关系不同。
+
+**证明。** 零次读取时，任取两个不同规范关系、$H_1=H_2=1,D_1=D_2=0$ 即可；
+以下设 $N\ge1$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间。固定任意严格正列
+$u=(u_1,u_2)^{\mathsf T}$，写 $A_i u=(r_i,s_i)^{\mathsf T}$。在未知系数
+
+$$
+(P,Q,E)\in\Pi_k\times\Pi_k\times\Pi_d
+$$
+
+上考虑齐次评价方程
+
+$$
+r_iP(i)+s_iQ(i)+E(i)=0\qquad(0\le i<N).                    \tag{40.1}
+$$
+
+其未知数为 $2k+d+3>N$，故有非零核元。先保证可选取 $(P,Q)\ne(0,0)$：
+当 $N\ge d+1$ 时，次数至多 $d$ 的多项式在这 $N$ 个互异序号上全零就恒零，
+所以非零核元不可能只有漂移块。当 $1\le N<d+1$ 时，直接取 $P=1,Q=0$，
+并以 Lagrange 插值取 $E(i)=-r_i$；其次数至多 $N-1\le d$，故同样得到
+所需核元。
+
+对这个核元，选择两个不同的正数 $\rho_1,\rho_2$，使
+$Q-\rho_jP\not\equiv0$。这样的选择总存在：若 $P=0$，则 $Q\ne0$；
+若 $P\ne0$，恒等式 $Q=\rho P$ 至多排除一个实数 $\rho$。定义
+
+$$
+p_1=\frac{Q-\rho_2P}{\rho_1-\rho_2},\qquad
+p_2=\frac{Q-\rho_1P}{\rho_1-\rho_2}.
+$$
+
+两者均为非零的 $\Pi_k$ 元素，且直接相减给出多项式恒等式
+
+$$
+p_1-p_2=P,\qquad \rho_1p_1-\rho_2p_2=Q.
+$$
+
+取实际来源 $R^{(j)}=u(1,\rho_j)$、实际增益 $G_j=p_j$，并令 $D_1=E,D_2=0$。
+每个 $R^{(j)}$ 都严格正且秩一；它在整条路径上固定，且
+$\operatorname{tr}(A_iR^{(j)})=r_i+\rho_js_i$。故两世界的读数之差恰为
+式 (40.1) 的左侧，在每个实际序号上为零。置
+
+$$
+a_j=u_1+\rho_ju_2>0,\qquad
+R_0^{(j)}=\frac{u(1,\rho_j)}{a_j},\qquad H_j=a_jp_j.
+$$
+
+这就得到声明中的规范世界，两个 $H_j$ 仍非零。规范化保持第二列与第一列
+之比 $\rho_j$，所以 $\rho_1\ne\rho_2$ 保证两个规范关系不同。整个构造只使用
+给定的累计矩阵 $A_i$；重复累计矩阵不改变序号互异，也不影响插值或差分恒等式。
+
+这里的秩—核、可行像的差分（secant）及模变换群识别均为标准工具，背景见
+Li–Lee–Bresler, Definition 2.7、Theorem 2.8（文献及链接见推论 39.4），以及
+Kech–Krahmer, “Optimal Injectivity Conditions for Bilinear Inverse Problems with
+Applications to Identifiability of Deconvolution Problems”, Definitions III.1–III.2,
+[arXiv:1603.07316](https://arxiv.org/abs/1603.07316)。所需的实正来源实现由上面的
+显式构造给出，不借用复数域或泛型假设。
+
+证明从未除以采样增益，也不要求其为正、次数达到上界或根为单根。它不剔除初读
+零点、其他采样零点、负采样值、重根或较低实际次数。$k=d=0$ 时同一构造给出
+常非零增益和常漂移的碰撞；更强的四读数不充分性见定理 40.6。∎
+
+### 定理 40.3（固定路径的通用下界）
+
+在定义 39.1 的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(k,d)\ge \max\{2k+d+3,\ k+d+4,\ 5\}.        \tag{40.2}
+$$
+
+其中第一项对每条 $N\le2k+d+2$ 的固定路径都由引理 40.2 给出；第二项是参数
+维数下界；第三项由定理 40.6 给出。
+
+**证明。** 引理 40.2 直接说明第一项以内不能唯一恢复。对第二项，取规范关系
+的正秩一开坐标 $(x,y)$，再取 $k+1$ 个增益系数和 $d+1$ 个漂移系数，得到
+维数 $k+d+4$ 的非空开集。任意固定路径的读数映射在该开集上连续；由欧氏维数
+不降性（等价地，对开集使用 invariance of domain）不能把它嵌入 $\mathbb R^N$ 且
+$N<k+d+4$。这只用于固定路径，不涉及自适应协议。第三项的精确证明在下述定理。∎
+
+### 定义 40.4（已知左因子的可行提升）
+
+固定严格正列 $u$，令 $R=u v^{\mathsf T}$，其中 $v=(v_1,v_2)^{\mathsf T}>0$，且
+$A_i u=(r_i,s_i)^{\mathsf T}$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间，并定义
+
+$$
+C_u:\Pi_k\times\Pi_k\times\Pi_d\longrightarrow\mathbb R^N,\qquad
+C_u(p,q,E)_i=r_i p(i)+s_iq(i)+E(i).
+$$
+
+对物理目标，$p=Gv_1$、$q=Gv_2$，其中 $G\in\Pi_k\setminus\{0\}$；因此可行
+提升域为
+
+$$
+\mathcal V_u=\{(p,q,E)\in\Pi_k\times\Pi_k\times\Pi_d:
+p\not\equiv0,\ q=\rho p\text{ for some }\rho>0\}.
+$$
+
+对可行提升，写 $p(t)=\sum_{h=0}^kp_ht^h$、$q(t)=\sum_{h=0}^kq_ht^h$。
+选择任一 $p_h\ne0$，则规范目标为
+
+$$
+\rho=\frac{q_h}{p_h}=\frac{v_2}{v_1}>0,\qquad
+R_0=\frac{u(1,\rho)}{u_1+\rho u_2},\qquad
+H=u_1p+u_2q=(u_1+\rho u_2)p\not\equiv0,\qquad D=E.
+$$
+
+反过来，$R_0$ 的第二列对第一列之比唯一给出 $\rho$，继而规范目标给出
+$p=H/(u_1+\rho u_2),q=\rho p,E=D$，故规范目标与可行提升一一对应。
+由于 $v_1>0$、$v_2=\rho v_1$ 且 $p=Gv_1$，每个可行提升的全部原始实现恰为
+
+$$
+v=\lambda(1,\rho)^{\mathsf T},\qquad G=p/\lambda,\qquad D=E,\qquad \lambda>0.
+$$
+
+因此原始分解的全部剩余尺度恰为
+
+$$
+ v\longmapsto\lambda v,\qquad G\longmapsto G/\lambda,\qquad \lambda>0. \tag{40.3}
+$$
+
+### 命题 40.5（已知左因子的精确判据）
+
+在固定 $u$ 的物理子族中，完整目标 $(R_0,H,D)$ 被一条固定路径统一确定，
+当且仅当 $C_u$ 在整个 $\Pi_k\times\Pi_k\times\Pi_d$ 上单射，即
+$\ker C_u=\{0\}$。等价地，$C_u$ 的 $N\times(2k+d+3)$ 系数矩阵满列秩。
+
+**证明。** 关键是完整的可行差分恒等式
+
+$$
+\mathcal V_u-\mathcal V_u=\Pi_k\times\Pi_k\times\Pi_d.
+$$
+
+对任意 $(P,Q,E)$，若 $(P,Q)\ne(0,0)$，使用引理 40.2 证明中不依赖路径或
+读取数的代数构造，选择不同的正数 $\rho_1,\rho_2$ 及非零多项式 $p_1,p_2$，便有
+
+$$
+(P,Q,E)=(p_1,\rho_1p_1,E)-(p_2,\rho_2p_2,0),
+$$
+
+且两个端点均在 $\mathcal V_u$。这里不要求方向 $(P,Q)$ 自身成比例。
+若 $P=Q=0$，则
+
+$$
+(0,0,E)=(1,1,E)-(1,1,0),
+$$
+
+仍是两个可行提升之差，包括 $E=0$。这证明了差分恒等式。
+
+记录向量正是 $C_u(p,q,E)$。全空间单射当然使可行提升唯一，从而由定义 40.4
+得到唯一规范目标。反之，任意非零核元由上述恒等式实现为两个不同的可行提升，
+其记录相同，而规范目标因该一一对应而不同。因此可行域单射与全空间单射等价。
+尤其纯漂移核元 $(0,0,E)\ne0$ 给出相同正关系和相同非零增益、却不同漂移的
+碰撞；完整目标的判据不能删掉它。对增益块非零的核元，上述构造还使规范关系
+不同。系数商只除以已判非零的 $p_h$，所以全部零点、符号及较低实际次数均保留。
+当判据成立时，同一记录的全部原始实现正是定义 40.4 的 $\lambda>0$ 纤维，
+没有其他尺度或漂移自由度。
+
+此判据不提供未知左因子的充分条件。例如 $k=d=0$，路径 $I,M,JM$ 的
+$C_u$ 系数矩阵为
+
+$$
+\begin{pmatrix}
+u_1&u_2&1\\
+u_2&u_1+u_2&1\\
+u_1+u_2&u_2&1
+\end{pmatrix},\qquad \det=-u_1u_2\ne0.
+$$
+
+它对每个固定正 $u$ 都单射；但定理 11.1 的 $R_1,R_2$ 具有不同左因子，
+取 $G=1,D=0$ 时在同一路径上均给出 $(13,21,19)$。二者迹均为 $13$，
+规范增益同为 $H=13$，规范关系却不同。故即使每个已知左因子子族都满足判据，
+也不能据此判定未知关系可恢复。∎
+
+### 定理 40.6（常增益常漂移的尖锐五读数基例）
+
+在未知非零常增益和未知常漂移的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(0,0)=5.                                                    \tag{40.4}
+$$
+
+五读数路径取 $I,M,JM,MJM,M^2JM$。令 $S=H R_0$；定理 9.1 的五个整数线性组合
+先唯一恢复 $(S,D)$，再由 $H=\operatorname{tr}S\ne0$、$R_0=S/H$ 恢复规范目标。
+这里没有假定 $H=1$，也允许 $H<0$。
+
+少于五次的下界对八条三动作历史逐一成立。表中 $S_1,S_2$ 均为严格正秩一矩阵，
+令世界 $j$ 的增益为 $\operatorname{tr}S_j$、规范关系为
+$R_0^{(j)}=S_j/\operatorname{tr}S_j$；世界 1 的漂移为 $0$，世界 2 的漂移为表中
+$c$。四个读数向量（含初始 $I$）分别相同：
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{动作}&S_1&S_2&c& (z_0,z_1,z_2,z_3)\\ \hline
+MMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&0&(3,5,8,13)\\
+MMJ&\left(\begin{smallmatrix}3&4\\3&4\end{smallmatrix}\right)&\left(\begin{smallmatrix}4&6\\2&3\end{smallmatrix}\right)&0&(7,11,18,17)\\
+MJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,4)\\
+MJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,3)\\
+JMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&0&(3,3,5,8)\\
+JMJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&-1&(2,2,3,3)\\
+JJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)&-1&(2,2,2,3)\\
+JJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&-1&(2,2,2,2)
+\end{array}
+$$
+
+直接相乘可见每行满足
+$\operatorname{tr}(A_iS_1)=\operatorname{tr}(A_iS_2)+c$；每对规范关系不同，
+故四读数不能统一恢复。表中八行穷尽三步 $M/J$ 历史，证明五读数下界。由于常非零
+增益和常漂移是任意 $k,d$ 合同的合法低阶实例，(40.4) 也给出所有 $k,d$ 的普适
+五读数下界。∎
+
+### 推论 40.7（当前合同的组合界与贡献范围）
+
+结合定理 39.2 的固定路径充分性，
+
+$$
+\boxed{\max\{2k+d+3,\ k+d+4,\ 5\}\le n_{\rm fix}(k,d)\le3k+d+5.} \tag{40.5}
+$$
+
+上界复用 §39 的合流评价、漂移分离和四迹逆；下界的新合同内容是引理 40.2 的
+同一正来源、同一增益、同一漂移碰撞及定理 40.6 的逐历史五读数表。行列式、核、
+secant 和变换群只是已知支撑工具；本推论不声称高次数最优性，也不声称任何自适应
+不可能性或未知左因子充分条件。∎
+
+## 追加锚（本行以下为增补区）
+
+## 41. 常增益常漂移下确定性反馈的精确五读数界
+
+### 定义 41.1（任意确定性反馈与统一读取数）
+
+一个世界由固定的实矩阵 $R$、固定常数 $g\ne0$ 和固定常数 $\delta\in\mathbb R$
+组成；$R$ 的四项严格为正且秩为一，$g$ 可取任一符号。初始必须读取 $A_0=I$，
+以后每次选择一个已知原子 $E_i\in\{M,J\}$，置 $A_i=E_iA_{i-1}$ 并立即读取
+
+$$
+z_i=g\operatorname{tr}(A_iR)+\delta.
+$$
+
+不允许重置、复制、无中间读数的复合操作或额外观察口。目标是完整三元组
+
+$$
+T(R,g,\delta)=\left(\frac R{\operatorname{tr}R},\ g\operatorname{tr}R,\ \delta\right).
+$$
+
+协议在每个实际历史 $\mathcal H_i=(z_0,E_1,z_1,\ldots,E_i,z_i)$ 上，
+确定性地选择停止并给出答案，或选择下一个原子。动作、停止与答案均可为历史的
+任意函数，不要求连续、可测、可计算或有限描述。统一预算 $N$ 要求协议在每个
+域内世界上至多读取 $N$ 次后停止；初始读数计入。记 $n_{\rm det}(0,0)$ 为
+在全部世界上正确的协议的最小统一预算。每次运行中的 $R,g,\delta$ 均不改变。
+
+### 定理 41.2（反馈不能将统一预算降到四次）
+
+在定义 41.1 的合同中，
+
+$$
+\boxed{n_{\rm det}(0,0)=n_{\rm fix}(0,0)=5.}                 \tag{41.1}
+$$
+
+对每个统一预算至多四次的确定性协议，都有两个合法固定世界，具有不同完整目标，
+却沿该协议产生同一个包含停止及答案的完整历史。
+
+**证明。** 先明确目标与有效来源的对应。置 $X=gR$、$h=\operatorname{tr}X$，则
+
+$$
+h=g\operatorname{tr}R\ne0,\qquad
+T=(X/h,h,\delta),\qquad X=h\,(R/\operatorname{tr}R).
+$$
+
+所以完整目标与 $(X,\delta)$ 一一对应。五次充分性直接复用定理 9.1：沿
+$I,M,JM,MJM,M^2JM$（按时间依次执行 $M,J,M,M$，每步必读），其整数线性逆
+恢复 $(X,\delta)$，再输出 $(X/h,h,\delta)$。该逆在任意实矩阵上成立，故也覆盖
+$g<0$ 时四项均负的 $X$；唯一新增的除法是除以已证非零的 $h$。这同时覆盖任意
+常漂移、零初读和重复读数值，不假定初读可作分母。
+
+下界只需 $g=1$ 的合法子域。预先固定以下七个世界 $W_j$，其中
+$g_j=1$、$\delta_j=-\operatorname{tr}R_j$：
+
+$$
+\begin{array}{c|c|r}
+j&R_j&\delta_j\\ \hline
+1&\left(\begin{smallmatrix}3&4\\3&4\end{smallmatrix}\right)&-7\\
+2&\left(\begin{smallmatrix}4&6\\2&3\end{smallmatrix}\right)&-7\\
+3&\left(\begin{smallmatrix}1&1\\4&4\end{smallmatrix}\right)&-5\\
+4&\left(\begin{smallmatrix}2&2\\4&4\end{smallmatrix}\right)&-6\\
+5&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&-3\\
+6&\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)&-3\\
+7&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&-2
+\end{array}
+$$
+
+每个矩阵四项为正且行列式为零，故秩恰为一。更明确地，对其中任意
+$R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$，有
+$R=(p,r)^{\mathsf T}(1,q/p)$，因为 $ps=qr$。这给出一个正初始列和一个始终
+固定的正量具行；$M,J$ 都将正列送到正列，所以任意表中路径始终合法。
+七个矩阵两两不同，且在这些世界中 $X_j=R_j$，故完整目标两两不同。
+全部初读都是零。
+
+词 $w=E_1\cdots E_m$ 按时间顺序书写，累计矩阵为
+$A_w=E_m\cdots E_1$，$A_\varepsilon=I$。下表的 $S_w$ 是固定世界的指标集，
+最后一列是其中每个世界在词 $w$ 的全部前缀上产生的读数：
+
+$$
+\begin{array}{c|c|l}
+w&S_w&(z_0,\ldots,z_{|w|})\\ \hline
+\varepsilon&\{1,2,3,4,5,6,7\}&(0)\\
+M&\{1,2,3,4\}&(0,4)\\
+J&\{5,6,7\}&(0,0)\\
+MM&\{1,2\}&(0,4,11)\\
+MJ&\{3,4\}&(0,4,4)\\
+JM&\{5,6,7\}&(0,0,1)\\
+JJ&\{6,7\}&(0,0,0)\\
+MMM&\{1,2\}&(0,4,11,22)\\
+MMJ&\{1,2\}&(0,4,11,10)\\
+MJM&\{3,4\}&(0,4,4,8)\\
+MJJ&\{3,4\}&(0,4,4,4)\\
+JMM&\{5,6\}&(0,0,1,4)\\
+JMJ&\{5,7\}&(0,0,1,1)\\
+JJM&\{6,7\}&(0,0,0,1)\\
+JJJ&\{6,7\}&(0,0,0,0)
+\end{array}                                                   \tag{41.2}
+$$
+
+表中各项由以下同一恒等式直接计算。若
+$A=(\begin{smallmatrix}a&b\\c&e\end{smallmatrix})$，则在上述世界中
+
+$$
+z_A=ap+br+cq+es-p-s,\qquad
+MA=\begin{pmatrix}c&e\\a+c&b+e\end{pmatrix},\qquad
+JA=\begin{pmatrix}c&e\\a&b\end{pmatrix}.
+$$
+
+从 $A=I$ 迭代这两个乘法式并代入七个矩阵即得 (41.2)；例如 $JM$ 的三世界
+$5,6,7$ 共同给出 $(0,0,1)$，随后 $M$ 保留 $5,6$，而 $J$ 保留 $5,7$。
+此外，每条边都满足 $S_{wE}\subseteq S_w$，每个集合至少含两个指标，且子行
+读数向量的前缀恰为父行读数向量。这些是下一步选择前就成立的共同前缀关系。
+
+现在固定任意声称至多四读数的协议。从初读 $0$ 开始，归纳保持如下不变量：
+当前选中的表行 $w$ 中，每个 $j\in S_w$ 都在该协议下真实产生同一动作／读数
+历史，其读数就是该行的向量。根行满足此性质。若协议在该历史停止，则它在
+全部 $S_w$ 世界中作出同一个停止决定并输出同一个答案。任选其中两个世界，
+其目标不同，故至少一个答案错误。
+
+若协议尚未停止且 $|w|<3$，确定性使全部 $S_w$ 世界选择同一个原子 $E$。
+表中总有子行 $wE$。保留 $S_{wE}$ 后，这些世界已经真实经历父历史，执行的
+又都是该原子，所以下一次实际读数正是子行给出的共同值。不变量因而延续。
+这覆盖两种首动作、四种二动作前缀及全部八种三动作分支。若一直不停，
+$|w|=3$ 时已读四次，统一预算迫使协议停止，仍有该行的两个不同目标。
+拒绝停止则违反所声称预算。
+
+因此每个可能的提前停止位置和第四次读数后的停止都产生失败。最终选择的
+世界对可以依赖整个协议，但二者都来自预先列出的固定世界，且各自真实实现
+整个被选历史；没有在运行中更换 $R,g,\delta$。量词是“对每个协议，存在一对
+世界”，而不是为每条预定词另找一对便宣称自适应下界。故
+$n_{\rm det}(0,0)\ge5$，与上述五读数充分性及定理 40.6 合并得到 (41.1)。∎
+
+数学引文与对应（定理 41.2）。模变换群识别复用 Li–Lee–Bresler,
+*A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with
+Applications to Subspace and Sparsity Models*, Definition 2.7、Theorem 2.8，
+[arXiv:1501.06120v1](https://arxiv.org/html/1501.06120v1)：在固定漂移的切片上，
+因素 $(R,g)$ 的正尺度作用为 $(R,g)\mapsto(\lambda R,g/\lambda)$、$\lambda>0$。
+未知加性漂移是另一个仿射坐标，不能不经增广就把整个模型称为该双线性问题。
+任意确定性重构及自适应线性读数的框架见 Krieg–Novak–Ullrich,
+*On the power of adaption and randomization*, §2、§4 Proposition 10 及
+Propositions 9–10 的共同证明，
+[arXiv:2406.07108v2](https://arxiv.org/html/2406.07108v2)。其 §2 不要求确定性
+算法可测，共同证明使用沿实际选择的查询保持不可区分的成熟方法。这里在环境
+坐标 $(X,\delta)$ 上，$L_A(X,\delta)=\operatorname{tr}(AX)+\delta$ 为线性，
+但合法来源受秩一与同号约束，查询受累计 $M/J$ 路径约束；上述证明不调用其
+Bernstein 宽度数值界，也不从维数或固定词非单射推出反馈结论。
+
+本卷 §§11、13、16–17 已使用共同历史论证，§40.6 给出固定路径的五读数界。
+《[Affine-gain erasure, positive secants, and drift-kernel collisions](https://github.com/the-omega-institute/trureturing/blob/b9d2000d39a399ca19ce7fc6b570bab96ab21885/docs/develop/theory/FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md)》
+§§2–4 的正割线与固定斜率核判据、§11 的固定历史边界属于不同的读取合同，
+其中允许复合词的中间原子不读。本定理新增的具体推导（repo-derived）是七个
+合法来源在 (41.2) 上的嵌套共同历史及其全部停止分支；一般对手方法和既有
+五读数逆均不是新增定理。不主张外部优先权或七世界证书的最小性。
+
+本定理只确定所述精确常数合同的统一最坏读取数，不要求每个世界都读满五次。
+它不推出随机协议、噪声、较高次数增益或漂移、期望预算、允许省略中间读数的
+复合词合同、最优操作成本或物理实现的结论；$R=0$、零迹、非严格正来源及
+$g=0$ 都不在定义 41.1 的域中，也不分别校准 $g$ 与 $R$ 的绝对尺度。
+
+## 追加锚（本行以下为增补区）
+
+## 42. 二次增益六读数反馈的前两动作限制
+
+### 定义 42.1（二次增益与常漂移的六读数合同）
+
+取定义 39.1 的 $k=2,d=0$：$R$ 是固定的四项严格正秩一实矩阵，
+$G\in\mathbb R[t]\setminus\{0\}$、$\deg G\le2$，$\delta\in\mathbb R$ 固定，目标为
+
+$$
+z_i=G(i)\operatorname{tr}(A_iR)+\delta,\qquad
+T=\left(R/\operatorname{tr}R,(\operatorname{tr}R)G,\delta\right).
+$$
+
+采用定义 41.1 的任意确定性动作、停止与答案函数，不加连续、可测或可计算条件。
+初读 $A_0=I$ 计入至多六次的统一预算；每次只选一个原子
+$E_i\in\{M,J\}$，左乘 $A_i=E_iA_{i-1}$ 并立即读取，序号连续为 $0,\ldots,5$。
+不允许重置、复制、跳读、空操作重复读、未读的复合动作或额外观察口。
+实际次数可以低于二次，初读或其他采样位置可以是增益根，允许重根、负采样增益
+及任一符号的非零常增益。词始终按动作的时间顺序书写。
+
+### 定理 42.2（统一正确协议必须切换的前两动作）
+
+在定义 42.1 的合同中，任何统一正确的至多六读数协议，在第一动作后的每个
+实际两读历史 $(z_0,E_1,z_1)$ 上都满足：若 $E_1=J$，下一动作必须是 $M$；
+若 $E_1=M$ 且 $z_0\ne z_1$，下一动作必须是 $J$。这些历史上提前停止也不正确。
+这里只限制最初两动作；$E_1=M,z_0=z_1$ 的情形不在第二项结论中。
+
+**证明。** 令 $f(t)=(t-4)(t-5)$，故
+$(f(0),\ldots,f(5))=(20,12,6,2,0,0)$。以下每对世界都取
+$\operatorname{tr}R=1$，共享同一个 $G=\kappa f$、$\kappa\ne0$ 及同一个
+$\delta$，只改变规范关系。因此两个不同矩阵就给出不同完整目标。
+任意四项严格正且行列式为零的矩阵
+$R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$
+都有固定正分解 $R=(p,r)^{\mathsf T}(1,q/p)$；$M,J$ 保持列的严格正性。
+所以这些来源及其每条后续原子路径都合法，量具行始终固定。
+
+先排除 $JJ$。对任意实数 $u,v$，取下列两种来源之一及其转置：
+
+$$
+B=\begin{pmatrix}1/3&2/3\\1/3&2/3\end{pmatrix},\qquad
+C=\begin{pmatrix}7/9&14/9\\1/9&2/9\end{pmatrix},\qquad
+(R,\kappa)=
+\begin{cases}
+(B,(u-v)/8),&u\ne v,\\
+(C,1),&u=v,
+\end{cases}\qquad\delta=u-20\kappa.                    \tag{42.1}
+$$
+
+$B,C$ 及各自转置均严格正、行列式为零、迹为一，且不等于自身转置。
+写 $h=\operatorname{tr}(JR)$，两行分别有 $h=1,5/3$。
+对于任意矩阵 $A$，
+
+$$
+\operatorname{tr}(AR)-\operatorname{tr}(AR^{\mathsf T})
+ =(A_{21}-A_{12})(R_{12}-R_{21}).                         \tag{42.2}
+$$
+
+在 $JJ$ 的前三次读取，累计矩阵为 $I,J,I$，两世界的信号为 $1,h,1$。
+由 (42.1) 得到共同初读 $20\kappa+\delta=u$ 和第二读
+$12\kappa h+\delta=v$，第三读为 $6\kappa+\delta$。
+第三动作无论选 $J$ 还是 $M$，累计矩阵都等于该原子本身，因而对称；
+式 (42.2) 使第四读同为 $2\kappa\operatorname{tr}(E_3R)+\delta$。
+此后第 $4,5$ 号读数的增益均为零，不论两次动作怎样依赖过去读数，读数都为
+$\delta$。同一固定世界对因而使 $JJ$ 后的全部三动作续词同时碰撞。
+
+确定性保证：只要两世界已有相同历史，下一动作、停止决定和答案就相同；
+上述逐位置相等性使这个性质延续至预算末端。在任何更早共同历史停止，也只能
+给两个不同目标同一答案。因此任何看到 $(u,J,v)$ 后选 $J$ 或停止的协议都失败。
+构造对所有 $u,v$ 成立，且参数从初读起固定，故第一项不只针对某条预定完整词。
+
+再排除非对角历史上的 $MM$。固定
+
+$$
+R_1=\begin{pmatrix}1/2&3/4\\1/3&1/2\end{pmatrix},\qquad
+R_2=\begin{pmatrix}5/12&7/12\\5/12&7/12\end{pmatrix},\qquad
+R_2-R_1=\frac1{12}D,\quad D=\begin{pmatrix}-1&-2\\1&1\end{pmatrix}.
+$$
+
+两源严格正、行列式为零、迹为一且不同。直接相乘给出
+
+$$
+\operatorname{tr}D=\operatorname{tr}(MD)=\operatorname{tr}(JM^2D)=0,
+\qquad M^2=I+M,\qquad M^3=I+2M.
+$$
+
+故两世界在 $I,M,M^2$ 以及下一动作产生的 $JM^2,M^3$ 上均有相同信号，依次为
+
+$$
+1,\quad19/12,\quad31/12,\quad29/12,\quad25/6.              \tag{42.3}
+$$
+
+给定任意 $u\ne v$，置 $\kappa=u-v$、$\delta=u-20\kappa$。
+沿 $MM$ 的前三读恰为 $(u,v,31\kappa/2+\delta)$；第三动作 $J,M$ 分别给出
+$29\kappa/6+\delta,25\kappa/3+\delta$。最后两读仍为 $\delta$。
+于是这同一固定对阻断 $MM$ 之后全部反馈续策及其每个提前停止位置。
+若协议在 $(u,M,v)$ 选择 $M$ 或停止，至少一个世界的答案错误，得到第二项。
+$u=v$ 会使此构造的 $\kappa=0$，不合法；这不说明等读数的 $MM$ 可恢复。
+这些见证只用合法二次增益子域；限制成立于整个合同的相同两读历史，
+并不要求实际世界的增益恰为二次或具有这两个根。∎
+
+数学引文与对应（定理 42.2）。正来源规范及固定历史碰撞复用定义 39.1、
+引理 40.2；任意反馈的共同历史与停止论证复用定理 41.2。该定理所引
+仿射增益 companion 的 §4 处理固定历史的增益抹除，此处用两个采样根覆盖最后
+两读。一般不可区分方法见 Krieg–Novak–Ullrich, *On the power of adaption and
+randomization*, §2、§4 Propositions 9–10 的共同证明，
+[arXiv:2406.07108v2](https://arxiv.org/html/2406.07108v2)；其线性算子与查询域
+不提供这里的六读数结论。(42.1)–(42.3) 对整个剩余子树的固定来源碰撞及所得
+前两动作限制是本合同的具体推导（repo-derived），不主张外部优先权。
+
+### 定理 42.3（两个未决切换子博弈的充分根桥梁）
+
+对 $p=MJ$ 或 $JM$，记 $\mathcal F_p(u,v,r)$ 为定义 42.1 的全部固定合法世界中，
+执行 $p$ 后前三读恰为 $(u,v,r)$ 的纤维。两词的累计矩阵分别为
+$(I,M,JM)$ 与 $(I,J,MJ)$。写 $L_p(u,v,r)$ 表示：对每个至多再执行三次原子、
+并在预算内停止的任意确定性续策，都存在该纤维中的两个不同目标世界，使其
+完整续行历史（包括停止和答案）相同。世界对可依赖续策，但每个世界必须从
+初读起实现整个指定前缀；不同分支所用的碰撞对可以不同。若
+
+$$
+\bigl(\exists r\in\mathbb R\ L_{MJ}(0,1,r)\bigr)\ \land\
+\bigl(\exists s\in\mathbb R\ L_{JM}(0,1,s)\bigr),            \tag{42.4}
+$$
+
+则不存在定义 42.1 的统一正确至多六读数协议。
+
+**证明。** 固定一个声称正确的协议，令初读为 $0$。若此时停止，(42.1) 中
+$u=0$ 的任一世界对即使其失败。否则首动作是 $M$ 或 $J$，考虑下一读数为 $1$。
+两种历史分别由上述 $MM$ 对或 $JJ$ 对实现，所以它们都是实际合法历史。
+在该历史停止也被相应对阻断；定理 42.2 又迫使第二动作切换。
+若形成 $MJ$，使用 (42.4) 的 $r$；若形成 $JM$，使用其中的 $s$。
+相应 $L_p$ 应用于该协议的余下续策，给出两个不同目标的固定世界和共同停止
+历史。两世界从初读起都实现 $(0,E_1,1,E_2,r)$ 或 $(0,E_1,1,E_2,s)$，
+故协议在它们上确实选择这两个动作，并非事后换源或拼接不同运行。矛盾。∎
+
+式 (42.4) 的两个存在命题均未证明或反驳；它们要求完整正来源纤维上的反馈
+失败，逐固定完整词的碰撞不能替代。它只是一条充分桥梁，未被断言为原问题的
+等价完成标准。等读数 $MM$、六读数恢复协议是否存在，以及一般
+$n_{\rm det}(k,d)\ge2k+d+3$（$k\ge2,d\ge0$）均仍未决。
+上述结论仅涉及所述精确确定性合同。
+
+## 追加锚（本行以下为增补区）
