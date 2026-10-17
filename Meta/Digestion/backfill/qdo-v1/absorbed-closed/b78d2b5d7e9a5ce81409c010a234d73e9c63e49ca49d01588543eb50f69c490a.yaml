@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
-  normalized_sha256: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
-cas_ref: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
-coverage_gids:
-  - gid: D5/S3/Quantum/Dynamics/LeastInvariantObservableAlgebra.least_invariant_observable_algebra
-    target_statement_id: sha256:9473ddbef238750ddf9ff597c4e9e30a28152268b494120eff968380a3e81d9a
-receipts:
-  unresolved_subitems: []

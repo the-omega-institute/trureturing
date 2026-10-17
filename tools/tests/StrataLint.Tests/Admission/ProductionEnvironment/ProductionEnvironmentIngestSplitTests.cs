@@ -147,6 +147,8 @@ public sealed partial class ProductionEnvironmentTests
                 $"path = \"{alternateSourcePath}\"",
                 StringComparison.Ordinal);
 
+        fixture.Files["Meta/FILEMAP.toml"] = fixture.Files["Meta/FILEMAP.toml"]
+            .Replace("docs/GOVERNANCE.md", "docs/GOVERNANCE-copy.md", StringComparison.Ordinal);
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]));
@@ -158,8 +160,8 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
-                $"atomizer = \"{AtomizerRegistry.GictId}\"",
-                $"atomizer = \"{AtomizerRegistry.PzgId}\"",
+                $"atomizer = \"{AtomizerRegistry.GenericId}\"",
+                $"atomizer = \"{AtomizerRegistry.GenericId}\"",
                 StringComparison.Ordinal);
 
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
@@ -177,6 +179,8 @@ public sealed partial class ProductionEnvironmentTests
                 "unregistered_genres = [\"未登记体\"]",
                 StringComparison.Ordinal);
 
+        fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
+            .Replace("genre_registry_check = \"no-registry\"", "genre_registry_check = \"collected\"", StringComparison.Ordinal);
         AssertReportFreeExistingPreservedWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]));
@@ -230,9 +234,8 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = UncoveredOnlyIngestFixture(rewriteExistingAtom: true);
         var currentBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
         var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            currentBytes,
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            currentBytes).Claims);
         var currentAtomId = AtomId(currentAtom);
         var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
@@ -314,13 +317,12 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string gid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var currentBytes = Encoding.UTF8.GetBytes(
             fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
         var atoms = AtomizerRegistry.Atomize(
             atomizerId,
-            currentBytes,
-            DigestionTestSupport.Rules).Claims;
+            currentBytes).Claims;
         Assert.Equal(2, atoms.Length);
         var newAtom = atoms[1];
         var entry = DigestionTestSupport.Entry(
@@ -382,13 +384,12 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestPreservesCurrentOnlyNonResidualEntryWithoutLoadingTruth()
     {
         var fixture = UncoveredOnlyIngestFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var currentBytes = Encoding.UTF8.GetBytes(
             fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
         var atoms = AtomizerRegistry.Atomize(
             atomizerId,
-            currentBytes,
-            DigestionTestSupport.Rules).Claims;
+            currentBytes).Claims;
         Assert.Equal(2, atoms.Length);
         var newAtom = atoms[1];
         var newEntry = DigestionTestSupport.Entry(
@@ -432,10 +433,9 @@ public sealed partial class ProductionEnvironmentTests
             """;
         var fixture = new RuleFixture();
         var sourceBytes = Encoding.UTF8.GetBytes(sourceText);
-        var parent = Assert.Single(PzgAtomizer.Atomize(
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
-        var ledger = MapOnlyEntry(IngestLedger(AtomizerRegistry.PzgId, parent), entry => entry with
+        var parent = Assert.Single(GenericAtomizer.Atomize(
+            sourceBytes).Claims);
+        var ledger = MapOnlyEntry(IngestLedger(AtomizerRegistry.GenericId, parent), entry => entry with
         {
             Receipts = entry.Receipts with
             {
@@ -455,12 +455,11 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestReportFreePreservesStructurallyInvalidExistingLedgerWithoutWriting()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var sourceBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             atomizerId,
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
+            sourceBytes).Claims);
         var ledger = IngestLedger(atomizerId, atom);
         var source = Assert.Single(ledger.RequireDigestionSources());
         ledger = ledger.WithDigestionSources([
@@ -540,12 +539,11 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestReportFreePreservesChangedStatusAuthorityWhenProjectedStatusWouldDrift()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var sourceBytes = Encoding.UTF8.GetBytes(fixture.Files[RuleFixture.FixtureDigestionSourcePath]);
         var atom = Assert.Single(AtomizerRegistry.Atomize(
             atomizerId,
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
+            sourceBytes).Claims);
         var ledger = MapOnlyEntry(IngestLedger(atomizerId, atom), entry => entry with
         {
             ProjectedStatus = new DigestionStatus(
@@ -577,7 +575,7 @@ public sealed partial class ProductionEnvironmentTests
         bool rewriteExistingAtom = false)
     {
         var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
+        var atomizerId = AtomizerRegistry.GenericId;
         var oldText = "# Synthetic\n\n**定理 1.1(A)**。old。\n";
         var currentText = rewriteExistingAtom
             ? "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n"
@@ -587,8 +585,7 @@ public sealed partial class ProductionEnvironmentTests
         var oldBytes = Encoding.UTF8.GetBytes(oldText);
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(
             atomizerId,
-            oldBytes,
-            DigestionTestSupport.Rules).Claims);
+            oldBytes).Claims);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = currentText;
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         InstallProjectedLedger(fixture, IngestLedger(atomizerId, oldAtom), oldAtom);
@@ -600,9 +597,8 @@ public sealed partial class ProductionEnvironmentTests
         var baselineBytes = Encoding.UTF8.GetBytes(
             fixture.Baseline[RuleFixture.FixtureDigestionSourcePath]);
         var atom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            baselineBytes,
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            baselineBytes).Claims);
         return AtomId(atom);
     }
 

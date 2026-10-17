@@ -130,21 +130,19 @@ internal static partial class CoverWorld
     {
         var sourceBytes = Encoding.UTF8.GetBytes(DefaultSourceText);
         var atom = Assert.Single(
-            AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, sourceBytes).Claims);
         var otherSourceBytes = Encoding.UTF8.GetBytes(OtherSourceText);
         var otherAtom = spec.OtherAtomGid is null
             ? null
             : Assert.Single(AtomizerRegistry.Atomize(
-                SyntheticNumberedAtomizer.Id,
-                otherSourceBytes,
-                DigestionTestSupport.Rules).Claims);
+                AtomizerRegistry.GenericId,
+                otherSourceBytes).Claims);
         var unrelatedSourceBytes = Encoding.UTF8.GetBytes(UnrelatedSourceText);
         var unrelatedAtom = spec.UnrelatedSibling is null
             ? null
             : Assert.Single(AtomizerRegistry.Atomize(
-                SyntheticNumberedAtomizer.Id,
-                unrelatedSourceBytes,
-                DigestionTestSupport.Rules).Claims);
+                AtomizerRegistry.GenericId,
+                unrelatedSourceBytes).Claims);
         var targetPath = spec.ModuleGid + ".lean";
         var targetBytes = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(spec.ModuleGid));
         var definition = Encoding.UTF8.GetBytes("scribe definition\n");
@@ -277,9 +275,8 @@ internal static partial class CoverWorld
     private static string AtomIdFor(string sourceText)
     {
         var atom = Assert.Single(AtomizerRegistry.Atomize(
-            SyntheticNumberedAtomizer.Id,
-            Encoding.UTF8.GetBytes(sourceText),
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(sourceText)).Claims);
         return atom.Fingerprints.RawSha256["sha256:".Length..];
     }
 

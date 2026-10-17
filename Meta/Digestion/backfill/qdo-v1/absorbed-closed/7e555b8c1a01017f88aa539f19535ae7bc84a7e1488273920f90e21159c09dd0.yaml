@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7e555b8c1a01017f88aa539f19535ae7bc84a7e1488273920f90e21159c09dd0
-  normalized_sha256: sha256:7e555b8c1a01017f88aa539f19535ae7bc84a7e1488273920f90e21159c09dd0
-cas_ref: sha256:7e555b8c1a01017f88aa539f19535ae7bc84a7e1488273920f90e21159c09dd0
-coverage_gids:
-  - gid: D5/S3/QuantumStates/GNSZeroPropagation.gns_zero_norm_propagation
-    target_statement_id: sha256:c499681051ca17958e78a437e561ea926c91c976f6dd9da21061b50e8cbf6357
-receipts:
-  unresolved_subitems: []

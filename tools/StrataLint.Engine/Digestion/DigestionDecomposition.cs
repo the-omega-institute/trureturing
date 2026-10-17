@@ -15,9 +15,10 @@ internal static class DigestionDecomposition
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static DigestionClausePlan Plan(DigestionLedgerEntry parent, ImmutableArray<byte> bytes,
-        TheoryAtomizer atomizer, TheoryAtomizerRules rules, RepositorySnapshot? snapshot = null,
+        TheoryAtomizer atomizer, RepositorySnapshot? snapshot = null,
         ImmutableArray<int> splitAt = default)
     {
+        _ = AtomizerRegistry.Require(parent.Atomizer);
         var frozen = DigestionAtom.FromFrozenCas(bytes);
         if (parent.CasRef != frozen.Fingerprints.RawSha256
             || parent.AtomId != frozen.Fingerprints.RawSha256[7..]
@@ -35,16 +36,8 @@ internal static class DigestionDecomposition
             if (splitAt.IsDefaultOrEmpty) return persisted;
         }
 
-        // Whole-source validators can require chapter context absent from frozen CAS.
-        // Consume emitted plans where registered; other adapters use the same CAS grammar.
-        ImmutableArray<DigestionClausePlan> plans = [];
-        if (AtomizerRegistry.EmitsClausePlans(parent.Atomizer))
-        {
-            var document = atomizer(bytes.AsSpan(), rules);
-            if (!document.UnregisteredGenres.IsEmpty)
-                throw new FormatException("UNREGISTERED_GENRE " + string.Join(',', document.UnregisteredGenres));
-            plans = document.ClausePlans;
-        }
+        var document = atomizer(bytes.AsSpan());
+        var plans = document.ClausePlans;
         foreach (var emitted in plans)
             RequireValid(emitted);
         var matching = plans.Where(p => p.Parent.Fingerprints == frozen.Fingerprints).ToArray();
@@ -243,8 +236,7 @@ internal static class DigestionDecomposition
 
     internal static DigestionDecompositionWriteSet Materialize(DigestionLedgerEntry parent,
         DigestionClausePlan plan, IReadOnlyDictionary<string, DigestionLedgerEntry> globalEntries,
-        bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null,
-        TheoryAtomizerRules? rules = null)
+        bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null)
     {
         RequireValid(plan);
         if (parent.Fingerprints != plan.Parent.Fingerprints || parent.CasRef != plan.Parent.Fingerprints.RawSha256)
@@ -280,12 +272,11 @@ internal static class DigestionDecomposition
                 || parent.Receipts.Nonpropositional is not null)
                 throw new FormatException("CHAIN_RECONCILE_LIVE_OBLIGATIONS");
             ArgumentNullException.ThrowIfNull(snapshot);
-            ArgumentNullException.ThrowIfNull(rules);
             // The old direct chain must itself be a lossless, identity-valid partition.
             // Reuse the same persisted-plan and nested-plan authority as ordinary decomposition.
             RequireValid(PersistedPlan(parent, plan.Parent, snapshot)!);
-            _ = ValidatedClosure(parent.Receipts.ChainAtoms, globalEntries, snapshot, rules);
-            var retained = ValidatedClosure(chain.Where(globalEntries.ContainsKey), globalEntries, snapshot, rules);
+            _ = ValidatedClosure(parent.Receipts.ChainAtoms, globalEntries, snapshot);
+            var retained = ValidatedClosure(chain.Where(globalEntries.ContainsKey), globalEntries, snapshot);
             retained.UnionWith(chain);
             foreach (var oldChild in parent.Receipts.ChainAtoms)
                 if (!retained.Contains(oldChild))
@@ -302,7 +293,7 @@ internal static class DigestionDecomposition
 
     internal static HashSet<string> ValidatedClosure(IEnumerable<string> roots,
         IReadOnlyDictionary<string, DigestionLedgerEntry> entries,
-        RepositorySnapshot snapshot, TheoryAtomizerRules rules)
+        RepositorySnapshot snapshot)
     {
         var seen = new HashSet<string>(StringComparer.Ordinal);
         var pending = new Stack<string>(roots);
@@ -318,8 +309,7 @@ internal static class DigestionDecomposition
                 || entry.CasRef != fingerprint.RawSha256 || entry.Fingerprints != fingerprint)
                 throw new FormatException($"CHILD_IDENTITY_CONFLICT atom_id={id}");
             if (entry.Receipts.ChainAtoms.IsEmpty) continue;
-            var nested = Plan(entry, blob.RawBytes, AtomizerRegistry.Require(entry.Atomizer).Atomize,
-                rules, snapshot);
+            var nested = Plan(entry, blob.RawBytes, AtomizerRegistry.Require(entry.Atomizer).Atomize, snapshot);
             var materialized = Materialize(entry, nested, entries);
             if (!materialized.NewEntries.IsEmpty)
                 throw new FormatException($"CHILD_MISSING parent={id}");

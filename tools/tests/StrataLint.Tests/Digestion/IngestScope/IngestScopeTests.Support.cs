@@ -13,7 +13,7 @@ public sealed partial class IngestScopeTests
     private const string Addition = "## Claim 3\n\nAdditional fact.\n";
 
     private static DigestionAtom Atom(string text) => Assert.Single(
-        GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(text), DigestionTestSupport.Rules).Claims);
+        GenericAtomizer.Atomize(Encoding.UTF8.GetBytes(text)).Claims);
 
     private static DigestionLedgerSource Source(string id, string path, string text, bool populated = true)
     {
@@ -62,7 +62,7 @@ public sealed partial class IngestScopeTests
         RawRepositorySnapshot.Create(files.Select(static item => RawRepositoryEntry.FromText(item.Key, item.Value)));
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(raw)).Snapshot;
+        Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(DigestionTestSupport.WithSourcePolicy(raw))).Snapshot;
 
     private static string AtomPath(DigestionLedgerEntry entry) =>
         $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/residual-open/{entry.AtomId}.yaml";
@@ -127,8 +127,7 @@ public sealed partial class IngestScopeTests
         {
             var sourceText = entry.SourceId == "alpha" ? files[AlphaPath] : files[BetaPath];
             var atom = GenericAtomizer.Atomize(
-                    Encoding.UTF8.GetBytes(sourceText),
-                    DigestionTestSupport.Rules)
+                    Encoding.UTF8.GetBytes(sourceText))
                 .Claims
                 .FirstOrDefault(candidate => candidate.Fingerprints.RawSha256 == entry.CasRef);
             if (atom is not null)

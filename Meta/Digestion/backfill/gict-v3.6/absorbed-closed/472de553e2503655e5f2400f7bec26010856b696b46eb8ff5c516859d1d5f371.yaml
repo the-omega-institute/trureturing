@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
-  normalized_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
-cas_ref: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
-coverage_gids:
-  - gid: D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
-    target_statement_id: sha256:f1095a82ea146d9ab186cfe196a35a68f43818665d11bf683ec529184b1512d2
-receipts:
-  unresolved_subitems: []

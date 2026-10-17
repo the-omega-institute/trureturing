@@ -105,7 +105,6 @@ __main() {
               (lake-manifest.json) continue ;;
               (Meta/BACKFILL.yaml) continue ;;
               (Meta/Digestion/backfill/*) continue ;;
-              (Meta/Digestion/atomizers.toml) continue ;;
               (Meta/Digestion/atoms/sha256/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Golden/Frozen/state/*) continue ;;

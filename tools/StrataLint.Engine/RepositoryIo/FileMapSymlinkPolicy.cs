@@ -62,9 +62,11 @@ internal static class FileMapSymlinkPolicy
         var declarations = tables.Select(item => ParseEntry(item.Table, item.Location))
             .OfType<FileMapSymlink>().ToImmutableArray();
         var patterns = tables.Select(item => item.Table.TryGetValue("pattern", out var rawPattern) && rawPattern is string pattern
-            ? FileMapGlob.Create(pattern)
+            ? (Include: FileMapGlob.Create(pattern), Exclude: FileMapGlob.ParseExclusions(item.Table, item.Location)
+                .Select(FileMapGlob.Create).ToArray())
             : throw Invalid(item.Location, "file pattern must be a string")).ToArray();
-        ValidateCoverage(declarations, path => patterns.Count(pattern => pattern.IsMatch(path)), location);
+        ValidateCoverage(declarations, path => patterns.Count(pattern => pattern.Include.IsMatch(path)
+            && !pattern.Exclude.Any(exclude => exclude.IsMatch(path))), location);
         return declarations;
     }
 

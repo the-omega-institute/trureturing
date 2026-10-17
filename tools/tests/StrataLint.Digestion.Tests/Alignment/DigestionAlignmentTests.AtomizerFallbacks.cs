@@ -29,7 +29,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             DigestionAlignmentMode.Ingest,
-            _ => (_, _) => corruptDocument);
+            _ => (_) => corruptDocument);
 
         Assert.Empty(result.Fallbacks);
         Assert.Contains(result.Findings, finding =>
@@ -57,7 +57,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             DigestionAlignmentMode.Ingest,
-            _ => (_, _) => fabricatedDocument);
+            _ => (_) => fabricatedDocument);
 
         Assert.Empty(result.Fallbacks);
         Assert.Empty(result.Residual);
@@ -79,7 +79,7 @@ public sealed partial class DigestionAlignmentTests
             ledger,
             Snapshot(sourceBytes.ToArray(), [oldCapture]),
             DigestionAlignmentMode.Ingest,
-            _ => (_, _) => corrupt);
+            _ => (_) => corrupt);
 
         Assert.Empty(result.Fallbacks);
         Assert.Empty(result.Residual);
@@ -113,7 +113,7 @@ public sealed partial class DigestionAlignmentTests
                 [],
                 CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
                 CasEntry("fine-receipt", fine, fineCapture.Reference)),
-            AtomizerRegistry.NoAtomizerId);
+            AtomizerRegistry.GenericId);
 
         var plan = ReportFreeDigestionIngestor.Plan(
             ledger,
@@ -151,7 +151,7 @@ public sealed partial class DigestionAlignmentTests
         BackfillInventoryDocument Ledger) MissedCoarseReplacement()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
-            "# Observer\n\n**\u5b9a\u7406(\u89c2\u5bdf\u8005\u4ee3\u6570\u7684\u552f\u4e00\u5f62\u6001)\u3002** claim\u3002\n");
+            "# Observer\n\n**\u5b9a\u7406 1.1(\u89c2\u5bdf\u8005\u4ee3\u6570\u7684\u552f\u4e00\u5f62\u6001)\u3002** claim\u3002\n");
         var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
         var coarse = new DigestionAtom(
             0,
@@ -160,9 +160,8 @@ public sealed partial class DigestionAlignmentTests
             DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
             []);
         var fine = Assert.Single(AtomizerRegistry.Atomize(
-            AtomizerRegistry.ObserverId,
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
+            AtomizerRegistry.GenericId,
+            sourceBytes).Claims);
         var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
         var fineCapture = DigestionCasStore.Capture(fine.RawBytes.AsSpan());
         var ledger = WithAtomizer(
@@ -170,7 +169,7 @@ public sealed partial class DigestionAlignmentTests
                 [],
                 CasEntry("coarse-receipt", coarse, coarseCapture.Reference),
                 CasEntry("fine-receipt", fine, fineCapture.Reference)),
-            AtomizerRegistry.ObserverId);
+            AtomizerRegistry.GenericId);
         return (sourceBytes, coarseCapture, fineCapture, ledger);
     }
 }
