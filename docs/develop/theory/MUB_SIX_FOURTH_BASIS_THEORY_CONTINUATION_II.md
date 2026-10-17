@@ -2658,3 +2658,240 @@ nonzero; the negative endpoint follows from (72.13). These endpoint identities
 are algebraic limits and do not enlarge the actual open parameter branch.
 The factorization proves neither an exhaustive classification of rank-two
 Hadamard matrices nor a whole-branch no-quartet theorem.
+
+## 73. Complete reduction of the nondegenerate opposite-Fourier stratum
+
+### 73.1 Controlled-form hypothesis and conclusion
+
+**Theorem 73.1.** Let
+
+\[
+ R_\theta=\begin{pmatrix}\cos\theta&\sin\theta\\
+ \sin\theta&-\cos\theta\end{pmatrix},\qquad
+ H=(R_\alpha\otimes I_3)\operatorname{diag}(V,W)(R_\beta\otimes I_3),
+ \tag{73.1}
+\]
+
+where \(V,W\) are order-three unitaries,
+\(0<\alpha,\beta\le\pi/4\), and
+\((\alpha,\beta)\ne(\pi/4,\pi/4)\). Suppose \(H\) is complex Hadamard
+and the two controlled blocks have opposite dephased Fourier orientations
+in the same row and column order. Their flatness follows in the proof, so
+this last condition is well defined without a separate flatness assumption.
+
+Then \(H\) reduces to \(H_0(b)\) for some \(0<b\le1\), using unitary
+monomial factors, complex conjugation, and optionally transpose. More precisely,
+
+\[
+ \cot2\alpha\cot2\beta=\frac12,
+ \tag{73.2}
+\]
+
+both angles are strictly below \(\pi/4\), and after optional exchange of
+angles one has \(\alpha\le\beta\) and \(b=\sqrt3\cos2\beta\).
+The value \(b=1\) is an algebraic endpoint; it is retained in the theorem
+rather than silently included in the actual open branch.
+
+This is a reduction of the explicitly assumed controlled stratum.
+The source formula \(H_2(\alpha,\beta,\gamma,V,W)\) in
+[Chen--Yu, arXiv:1610.04875v3, equation (39)](https://arxiv.org/pdf/1610.04875v3)
+has an additional left factor \(\operatorname{diag}(1,e^{i\gamma})\otimes I_3\),
+which is monomial and can first be removed. No assertion that every rank-two
+Hadamard has the form (73.1), and no rank-two no-quartet theorem, is imported.
+
+### 73.2 Original flatness and the forced phase angle
+
+For one entry pair \(v=v_{jk},w=w_{jk}\), the corresponding four entries
+of (73.1), writing \(c_\alpha=\cos\alpha\) and \(s_\alpha=\sin\alpha\), are
+
+\[
+ c_\alpha c_\beta v+s_\alpha s_\beta w,\quad
+ c_\alpha s_\beta v-s_\alpha c_\beta w,\quad
+ s_\alpha c_\beta v-c_\alpha s_\beta w,\quad
+ s_\alpha s_\beta v+c_\alpha c_\beta w.
+ \tag{73.3}
+\]
+
+Their four squared moduli equal \(1/6\). Summing in pairs gives
+
+\[
+ |v|^2+|w|^2=2/3,\qquad
+ \cos2\alpha(|v|^2-|w|^2)=\cos2\beta(|v|^2-|w|^2)=0.
+ \tag{73.4}
+\]
+
+At least one cosine is nonzero, so every \(|v|=|w|=1/\sqrt3\).
+Thus \(V,W\) are indeed Hadamard. Substitution in the first squared
+modulus in (73.3) yields
+
+\[
+ \cos2\alpha\cos2\beta+
+ 3\operatorname{Re}(v\bar w)\sin2\alpha\sin2\beta=0.
+ \tag{73.5}
+\]
+
+For \(r=w/v\) this says \(\operatorname{Re}r=-\tau\), where
+\(\tau=\cot2\alpha\cot2\beta\ge0\). Since \(|r|=1\), one has
+\(\tau\le1\). Put \(\theta=\arccos(-\tau)\in[\pi/2,\pi]\).
+Every ratio \(r\) lies in \(\{e^{i\theta},e^{-i\theta}\}\).
+
+Use indices \(j,k\in\{0,1,2\}\) and \(F_{jk}=\omega^{jk}/\sqrt3\).
+For a three-dimensional Hadamard with unit-entry rescaling \(a_{jk}\),
+the factors
+
+\[
+ L_0=\operatorname{diag}(\bar a_{j0}),\qquad
+ R_0=\operatorname{diag}(a_{00}\bar a_{0k})
+ \tag{73.6}
+\]
+
+dephase its first row and column to \(1/\sqrt3\). The other two entries
+of its second row are \(\omega/\sqrt3,\omega^2/\sqrt3\) in one order:
+three unit phases with sum zero form an equilateral triangle. Orthogonality
+fixes the third row. Thus its dephased form is \(F\) or \(\bar F\),
+without permutations. Apply the same factors (73.6) to both controlled blocks;
+this is a permitted monomial operation on (73.1). If necessary conjugate the
+whole matrix so that the first block is \(F\).
+
+The opposite-orientation hypothesis now gives
+
+\[
+ W=\operatorname{diag}(\gamma_0,\gamma_1,\gamma_2)
+       \bar F\operatorname{diag}(\delta_0,\delta_1,\delta_2),
+ \qquad\delta_0=1,\qquad
+ r_{jk}=\gamma_j\delta_k\omega^{jk}.
+ \tag{73.7}
+\]
+
+The phases \(\gamma_j=r_{j0}\) take only two possible values, so two
+are equal. For those distinct rows \(j,l\),
+\(r_{j1}/r_{l1}=\omega^{j-l}\) is a nontrivial cube root. On the other
+hand this ratio must be \(e^{2i\theta}\) or \(e^{-2i\theta}\).
+The only possibility with \(\theta\in[\pi/2,\pi]\) is
+\(\theta=2\pi/3\). This proves (73.2) and
+\(r_{jk}\in\{\omega,\omega^2\}\). It also excludes zero cotangent
+product, forcing both angles below \(\pi/4\).
+
+### 73.3 Six patterns and all simultaneous transports
+
+Write \(\gamma_j=\omega^{a_j}\), \(\delta_k=\omega^{c_k}\).
+The first column and then the first row of (73.7) show that these are
+cube roots, with \(a_j\in\{1,2\}\) and \(c_0=0\). The ratio exponent
+matrix therefore satisfies, modulo three,
+
+\[
+ A_{jk}=a_j+c_k+jk\in\{1,2\}.
+ \tag{73.8}
+\]
+
+The complete list is as follows; each three-digit string denotes one row.
+
+| \(a\) | \((c_0,c_1,c_2)\) | Rows of \(A\) | \(\epsilon\) | \(d\) |
+|---|---|---|---:|---:|
+| \((1,1,2)\) | \((0,0,1)\) | 112 / 121 / 211 | 1 | 2 |
+| \((1,2,1)\) | \((0,1,0)\) | 121 / 211 / 112 | 1 | 1 |
+| \((1,2,2)\) | \((0,1,1)\) | 122 / 212 / 221 | -1 | 0 |
+| \((2,1,1)\) | \((0,2,2)\) | 211 / 112 / 121 | 1 | 0 |
+| \((2,1,2)\) | \((0,0,2)\) | 221 / 122 / 212 | -1 | 2 |
+| \((2,2,1)\) | \((0,2,0)\) | 212 / 221 / 122 | -1 | 1 |
+
+This is an exhaustive \(2^3\cdot3^2\) check of (73.8). An elementary
+structural verification is also available. Any two rows agree once and
+differ twice, and so do any two columns. A uniform row would force the other
+two rows to differ from it twice and from each other twice, leaving two
+columns differing in only one position. Thus no row is uniform. Nonuniform
+binary rows of different weights cannot differ in exactly two positions;
+hence all rows have the same weight. Their exceptional entries occupy a
+permutation of the columns. Substitution in (73.8) gives exactly the table,
+equivalently
+
+\[
+ A_{jk}=\begin{cases}-\epsilon,&k=-\epsilon j+d,\\
+ \epsilon,&k\ne-\epsilon j+d,\end{cases}
+ \qquad\epsilon\in\{1,-1\},\quad d\in\{0,1,2\}.
+ \tag{73.9}
+\]
+
+Define \(\sigma(k)=-\epsilon k+d\) modulo three and let
+\(\Pi_\sigma\) have column \(k\) equal to \(e_{\sigma(k)}\).
+Put
+
+\[
+ \ell_j=\epsilon\mathbf1_{j=0}-jd,\quad
+ r_0=0,\quad r_1=r_2=-\epsilon,\qquad
+ L=\operatorname{diag}(\omega^{\ell_j}),\quad
+ R=\operatorname{diag}(\omega^{r_k}).
+ \tag{73.10}
+\]
+
+For every row of the table, direct exponent arithmetic proves
+
+\[
+ LF\Pi_\sigma R=V_\epsilon
+ :=\frac{J_3+(\omega^\epsilon-1)I_3}{\sqrt3},\qquad
+ LW\Pi_\sigma R=W_\epsilon:=\omega^\epsilon V_{-\epsilon}.
+ \tag{73.11}
+\]
+
+Indeed the first block has exponents
+\(\ell_j+j\sigma(k)+r_k=\epsilon\mathbf1_{j=k}\).
+After the column permutation, the ratio exponents are \(-\epsilon\)
+on the diagonal and \(\epsilon\) off it. Adding them gives the second
+block's exponents, zero on its diagonal and \(\epsilon\) off it.
+This verifies the actual matrices and every phase factor.
+
+The factors \(I_2\otimes L\) and \(I_2\otimes(\Pi_\sigma R)\)
+commute with the qubit reflections, so (73.11) acts simultaneously on the
+controlled pair. For \(\epsilon=1\) the result is exactly
+\((V_0,\omega W_0)\) from §72; for \(\epsilon=-1\) it is its complex
+conjugate. Conjugating the latter whole matrix gives the former because
+both qubit reflections are real.
+
+### 73.4 Parameter coverage and fixed-pair transport
+
+The two blocks in §72 are symmetric, and therefore
+
+\[
+ \mathcal H(\alpha,\beta)^T=\mathcal H(\beta,\alpha).
+ \tag{73.12}
+\]
+
+After optional transpose take \(\alpha\le\beta\), and set
+\(b=\sqrt3\cos2\beta>0\), \(h=\sqrt3\cos2\alpha\ge b\).
+Equation (73.2) gives
+
+\[
+ (3-h^2)(3-b^2)=4h^2b^2,\qquad
+ h^2=\frac{3-b^2}{1+b^2}.
+ \tag{73.13}
+\]
+
+Since \(h\ge b\), one has \((b^2-1)(b^2+3)\le0\), hence
+\(0<b\le1\). Conversely every such \(b\) gives exactly the positive
+angles of §72, with \(\alpha\le\beta\) and cotangent product \(1/2\).
+The explicit product-monomial identity (72.10) completes the reduction.
+
+Transpose preserves the fixed-pair problem even though it need not be a
+monomial equivalence. If \(w,Hw\) are both normalized flat vectors, then
+\(v=\overline{Hw}\) is flat and \(H^Tv=\bar w\) is flat. This
+antiunitary bijection preserves absolute inner products and orthogonality
+of collections. Equivalently, conjugate a collection of bases and multiply
+all of them by \(H^T\); this exchanges the fixed pair for \((H^T,I)\).
+The permitted operations therefore preserve quartet existence, without
+asserting that any quartet exists.
+
+### 73.5 Obligations outside this reduction
+
+The balanced case \(\alpha=\beta=\pi/4\) is excluded: (73.4) then
+allows nonflat controlled blocks. If one angle is zero, flatness forces
+the other to be \(\pi/4\); the undivided phase equation imposes no
+six-pattern restriction. Those zero-angle strata are not identified with
+only the single central matrix \(H_0(0)\). Same dephased Fourier
+orientations are also outside the theorem. The endpoint \(b=1\) remains
+an explicit obligation when applying the reduction to the actual open curve.
+
+Thus the theorem gives complete coverage of the stated positive-angle,
+non-balanced opposite-orientation controlled stratum. It supplies neither
+universal rank-two coverage nor a no-quartet proof. The unrestricted
+noncanonical orthogonal-triple problem on the rest of the actual open
+branch remains separate.
