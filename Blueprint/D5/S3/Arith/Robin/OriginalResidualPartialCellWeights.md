@@ -180,6 +180,22 @@ The normal equations follow from the positive actual finite Gram: a nonzero affi
 
 This is a finite coefficient construction. It supplies the two moments and explicit absolute bounds for the unchanged residual. It does not establish a signed residual estimate, compensation of the affine observations, analytic spectral suppliers, the original infinite construction, strict Robin for all integers above 5040, or the Riemann hypothesis.
 
+**Theorem 1.15 (Actual density supplies the original coefficient energy).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.or6_partialCell_energy_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.or6_partialCell_energy_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural N>=3 and real a,b with N<=a<=b, use the same literal partial-cell masses, full-block Gram and original coefficients A_m. Then sum_(N<=m<2N) A_m^2/w(m) <= (1+1/log(N))^2/(8*N). The coefficient A already contains the factor log(N). Equal endpoints are included. The endpoint b needs no upper bound: every original cell integral is clipped to its own unit cell.
+
+Write B=1+1/log(N). On each original unit cell, k(t)=[1/log(t)+1/log(t)^2]/t^2 is bounded by [1/log(N)+1/log(N)^2]/t^2. The exact integral of 1/t^2 over [m,m+1] is w(m). Positivity of the clipped density therefore gives 0<=d_m<=B for the original datum d_m=log(N)*omega_m/w(m). The two exact moments eliminate the cross terms in the weighted least-squares expansion about the constant B/2. Hence the residual energy is at most sum w(m)*(d_m-B/2)^2, which is at most B^2/4 times the weight mass sum w(m)=1/(2*N), giving B^2/(8*N). Both original Cramer coordinates and their mixed correction remain in that expansion.
+
+This supplies a finite upper bound from the actual density rather than assuming an energy allowance. It does not prove a sharp finite endpoint maximizer, a signed residual estimate, an analytic Mobius-prefix rate, the complete cutoff payments, strict Robin above 5040 or RH.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.c`
@@ -190,6 +206,7 @@ This is a finite coefficient construction. It supplies the two moments and expli
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.harmonic`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.mass`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.omega`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.or6_partialCell_energy_bound`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.or6_partialCell_variation`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.residual`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalResidualPartialCellWeights.rhs`
