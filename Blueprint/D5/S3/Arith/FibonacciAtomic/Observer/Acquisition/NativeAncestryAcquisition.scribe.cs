@@ -134,7 +134,7 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
             All("m", Call("ProbabilityMeasure", V("O")), All("R", Arr(V("O"), Call("CubeRun", t)),
                 All("d", Op("Real"), Imp(Seq(V("d"), Sp, Lt, Sp, Frac(D(1), D(2))),
                     Imp(decisions, Imp(seedBudget, Imp(accuracy,
-                        Le(Seq(Par(Seq(D(1), Minus, D(2), Times, V("d"))), Times, k), q))))))))));
+                        Le(Seq(Par(Seq(D(1), Minus, D(2), Times, Sp, V("d"))), Times, k), q))))))))));
         return Disp(OnGeneration(All("q", Op("Nat"), Imp(Le(q, k), And(lower, attaining, average, error)))));
     }
 }
