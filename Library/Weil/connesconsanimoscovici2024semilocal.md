@@ -1179,3 +1179,135 @@ give the complete arithmetic Weil functional a sign. A different
 same-test comparison could retain a compensating correction, and
 a different completion or finite-place scheme is not covered by
 (29). The original strict Robin upper and RH remain unproved.
+
+## The remote pole-null completion has a negligible semilocal trace
+
+The remote completion in WT11--WT14 also has a controlled effect on
+the actual semilocal trace. This is a different question from the
+large positive trace of $H_X$: it asks whether the auxiliary test
+added far away can change the trace comparison by the Robin-scale
+amount. Keep the fixed nonnegative autocorrelation $\psi$ used in
+WT7 and write
+
+$$
+q_R(x)=2\psi(x)+\psi(x-R)+\psi(x+R),
+\qquad e_X=\varepsilon_Xq_{R_X}.
+$$
+
+With the same Fourier convention as (12), translation gives the exact
+multiplier identity
+
+$$
+\widehat q_R(t)=2(1+\cos Rt)\widehat\psi(t).
+\tag{30}
+$$
+
+Since $\widehat\psi\ge0$,
+
+$$
+|\widehat e_X(t)|
+\le4\varepsilon_X\widehat\psi(t).
+\tag{31}
+$$
+
+In the unitary Mellin coordinates used in (11), $D_S(h_G)$ is the
+multiplication operator by the Fourier multiplier $\widehat G$ (up to
+the reflected variable convention, which does not change (31)). Thus
+the self-adjoint operator inequality
+
+$$
+-4\varepsilon_XD_S(h_\psi)
+\le D_S(h_{e_X})
+\le4\varepsilon_XD_S(h_\psi)
+\tag{32}
+$$
+
+holds. Compressing by the positive orthogonal projection $P_S$ and
+using the fixed-$S$ trace-class statement in (3), together with the
+trace of the positive operator on the right, gives
+
+$$
+\boxed{
+\left|\operatorname{Tr}\bigl(D_S(h_{e_X})P_S\bigr)\right|
+\le4\varepsilon_X\,t_{S,0},
+\qquad
+t_{S,0}:=\operatorname{Tr}\bigl(D_S(h_\psi)P_S\bigr).
+}
+\tag{33}
+$$
+
+The quantity $t_{S,0}$ is the $j=0$ member of the already established
+localized projection estimate (10). Therefore, uniformly over finite
+place sets,
+
+$$
+\left|\operatorname{Tr}\bigl(D_S(h_{e_X})P_S\bigr)\right|
+\ll_\psi \varepsilon_X(1+C_S),
+\qquad
+C_S=\sum_{p\in S_{\rm fin}}\frac{\log p}{\sqrt p-1}.
+\tag{34}
+$$
+
+This uses the actual orthogonal projection and does not replace it by
+the oblique transport or by the commutator majorant.
+
+For the original test's support scale $\mathsf V_X$, keep the explicit
+family $S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$. This family
+need not contain every prime through the remote completion's enlarged
+support. The owned prime-count estimate gives
+$C_{S_X}\ll\sqrt{\mathsf V_X}$.
+WT13 gives
+
+$$
+\varepsilon_X\ll_\psi L_X
+\exp\!\left(\frac{A_X-R_X}{2}\right),
+\qquad A_X=\log\mathsf V_X,
+\tag{35}
+$$
+
+because $N_X\ll_\psi L_Xe^{A_X/2}$ and
+$\mathcal P(q_{R_X})\asymp_\psi e^{R_X/2}$. Combining (34)--(35),
+
+$$
+\frac{\left|\operatorname{Tr}(D_{S_X}(h_{e_X})P_{S_X})\right|}{L_X}
+\ll_\psi
+\bigl(1+e^{A_X/2}\bigr)
+\exp\!\left(\frac{A_X-R_X}{2}\right)
+=o(1),
+\tag{36}
+$$
+
+for the WT13 choice $R_X=K(1+A_X+\log X)^2$. The last limit follows
+from the prescribed support bound $A_X=O((\log X)^4)$ and the fixed
+$K$ in WT13; it is a direct comparison of the displayed exponents.
+Consequently,
+
+$$
+\boxed{
+\operatorname{Tr}(D_{S_X}(h_{H_X+e_X})P_{S_X})
+=\operatorname{Tr}(D_{S_X}(h_{H_X})P_{S_X})+o(L_X).
+}
+\tag{37}
+$$
+
+Together with WT12 and WT14, equation (37) shows that the remote
+completion changes the signed arithmetic--semilocal-trace residual
+with this prescribed $S_X$ by $o(L_X)$. A future joint lower bound
+formed with that same family therefore transfers from the pole-null
+test back to $H_X$.
+
+The stronger comparison using every prime through the completed
+test's support remains unfinished. That support reaches
+$R_X+\tau$ in logarithmic coordinates, so the prime-count estimate
+for the enlarged family only gives $C_S\ll_\psi e^{R_X/2}$.
+Combined with (35), the resulting upper bound in (34), divided by
+$L_X$, is $O_\psi(e^{A_X/2})$; it does not establish an $o(1)$
+payment. Completing this stronger comparison requires a sharper
+trace estimate or a joint signed bound that retains the growing
+correction on the same enlarged place set. Neither (37) nor this
+insufficient upper estimate refutes such a comparison.
+
+The joint lower bound itself also remains unfinished: the residual
+for $H_X$ contains the complete prime-power term and the growing
+metric correction $\Delta_{S_X}(h_{H_X})$. Robin's inequality and
+RH remain unproved.

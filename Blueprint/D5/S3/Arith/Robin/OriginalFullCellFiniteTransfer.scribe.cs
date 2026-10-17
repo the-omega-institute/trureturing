@@ -84,9 +84,35 @@ internal sealed class OriginalFullCellFiniteTransferDocument : IScribeDocumentDe
                         + "R=U=M(0)=0, h=1 and u=L, so C=A exactly. At q=N-2 the high range "
                         + "contains only k=N-1. Zero coefficients, variation or error constants "
                         + "require no division by them. Full residues, a signed infinite account, "
-                        + "strict Robin above 5040 and RH remain open."))), DescribeRole.Theorem))));
+                        + "strict Robin above 5040 and RH remain open."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-full-cell-finite-transfer-sharp"),
+                DeclarationHandle.Create(Prefix + "originalFullCell_finite_transfer_sharp"),
+                H("Sharp finite full-positive transfer"), StatementSource.FromAuthor(TransferFormula(true)),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Under exactly the same full-positive hypotheses, define "
+                        + "B(N,q,b)=0 if q=0, and B(N,q,b)=h*(3*q/2+2)*V/16 otherwise, h=q+1. "
+                        + "The sharp bound is abs(E-Z-C)<=((e+c/h)/L)*N*A*(1+2*u^2+2*u*(1+v))+B. "
+                        + "The complete block, nonnegative b, e,c>=0, actual F prefix-error "
+                        + "hypothesis and full range 0<=q<=N-2 are unchanged.")),
+                    Paragraph(Text("The original-owner centered_pair_variation_sharp_bound supplies "
+                        + "abs(S(d))<=d*V/16. Shared private centered-log and low-error sums consume "
+                        + "this estimate with V/16, using all actual Mobius indices and the literal +2. "
+                        + "At q=0 the low error is exactly zero because centered(1,m)=0; "
+                        + "the mean remains C(N,0,b)=A(N,b) for N>1. Neither the high error "
+                        + "nor the mean is discarded. Both public transfers call the same exact "
+                        + "decomposition and final error assembly, retaining PLUS replacement, "
+                        + "the literal -2*K(h)/L, the full first moment and the high nonnegativity "
+                        + "requirement. No sign is assumed for Abel differences.")),
+                    Paragraph(Text("For actual partial cells take b(m)=log(N)*omega(a,b,m), "
+                        + "N<=a<=b<=2*N. OriginalResidualPartialCellWeights supplies nonnegativity, "
+                        + "A=log(N)*(g(a)-g(b)) and V<=2*log(N)*activationDensity(a) "
+                        + "through its original private mass and variation proofs. These are "
+                        + "applications of the finite theorem, with no vanishing first moment. "
+                        + "The primitive estimate also covers N=1; the logarithmic transfer keeps "
+                        + "N>=3. Signed MAIN, strict Robin above 5040, cofinal/global transport "
+                        + "and RH remain open."))), DescribeRole.Theorem))));
 
-    private static Formula TransferFormula()
+    private static Formula TransferFormula(bool sharp = false)
     {
         var n = F.Id("N"); var q = F.Id("q"); var b = F.Id("b"); var f = F.Id("F");
         var e = F.Id("e"); var c = F.Id("c"); var m = F.Id("m"); var k = F.Id("k");
@@ -95,12 +121,15 @@ internal sealed class OriginalFullCellFiniteTransferDocument : IScribeDocumentDe
         Formula h = Seq(Open, q, Plus, D(1), Close);
         Formula u = Call("log", new Formula.Fraction(n, h));
         Formula v = Call("log", new Formula.Fraction(Seq(D(2), Cdot, Sp, n), h));
+        Formula low = Seq(h, Cdot, Sp, Open,
+            new Formula.Fraction(Seq(D(3), Cdot, Sp, q), D(2)),
+            Plus, D(2), Close, Cdot, Sp, Call("V", n, b));
+        if (sharp) low = Call("B", n, q, b);
         Formula budget = Seq(new Formula.Fraction(Seq(e, Plus, new Formula.Fraction(c, h)), Call("log", n)),
             Cdot, Sp, n, Cdot, Sp, Call("A", n, b), Cdot, Sp, Open,
             D(1), Plus, D(2), Cdot, Sp, new Formula.Power(u, D(2)), Plus,
             D(2), Cdot, Sp, u, Cdot, Sp, Open, D(1), Plus, v, Close, Close,
-            Plus, h, Cdot, Sp, Open, new Formula.Fraction(Seq(D(3), Cdot, Sp, q), D(2)),
-            Plus, D(2), Close, Cdot, Sp, Call("V", n, b));
+            Plus, low);
         return Disp(Seq(Forall, Sp, n, Comma, q, InMacro, Sp, naturals, Comma,
             Forall, Sp, b, Comma, f, InMacro, Sp, new Formula.Power(reals, naturals), Comma,
             Forall, Sp, e, Comma, c, InMacro, Sp, reals, Comma,
