@@ -72,7 +72,7 @@ private theorem leaf_age (p : Address) (n : Nat) :
   by_cases hp : p = []
   · subst p
     simp only [↓reduceIte, pathCost]
-    constructor <;> intro h <;> split_ifs at h <;> simp_all <;> omega
+    constructor <;> intro h <;> split_ifs at h <;> simp_all
   · simp only [hp, ↓reduceIte]
     constructor <;> intro h <;> split_ifs at h <;> simp_all <;> omega
 
@@ -113,8 +113,7 @@ private theorem capacity_arithmetic (k : Nat) :
     positiveCapacity (k+1) = 2 * positiveCapacity k + 2 ∧
     zeroCapacity (k+2) = zeroCapacity (k+1) + positiveCapacity (k+1) + 2 := by
   have pos : 1 ≤ 2^k := Nat.one_le_pow k 2 (by decide)
-  simp only [positiveCapacity, zeroCapacity, Nat.add_eq_zero_iff,
-    Nat.succ_ne_zero, and_false, ↓reduceIte, pow_succ]
+  simp only [positiveCapacity, zeroCapacity, Nat.succ_ne_zero, ↓reduceIte, pow_succ]
   omega
 
 /-- The actual fixed-source chronological transcript of a finite dialogue. -/
@@ -163,7 +162,7 @@ private theorem separated_zero {O : Type} (d : Dialogue O) (s : Finset Nat)
 
 private theorem separated_child {O : Type} (p : Address) (next : Reply → Dialogue O)
     (s : Finset Nat) (k : Nat)
-    (h : Separates (.read p (next .alpha) (next .beta) (next .branch) (next .absent)) s (k+1))
+    (h : Separates (.read p (next .alpha) (next .beta) (next .branch) (next .absent)) s (k + 1))
     (z : Reply) : Separates (next z) (cell s p z) k := by
   constructor
   · intro a ha b hb same
@@ -219,12 +218,13 @@ private theorem zero_bound {O : Type} (k : Nat) (d : Dialogue O)
           intro n hn
           have bad := (Finset.mem_filter.mp hn).2
           rw [actual_table] at bad
-          split_ifs at bad <;> contradiction
+          split_ifs at bad; contradiction
         rw [empty,Finset.card_empty] at split
         cases k with
-        | zero => simp [positiveCapacity,zeroCapacity] at *; omega
+        | zero =>
+          simp [positiveCapacity,zeroCapacity] at *
+          omega
         | succ k => rw [(capacity_arithmetic k).2.2]; omega
-
       · have hz' : 0 ∈ cell s p .absent :=
           Finset.mem_filter.mpr ⟨hz,(nonroot_zero_one p hp).1⟩
         have ho' : 1 ∈ cell s p .absent :=
@@ -305,14 +305,14 @@ private theorem threshold_table (t n : Nat) (ht : 2 ≤ t) :
     | zero =>
       change (Reply.absent = .absent ↔ 0 < t) ∧ (Reply.absent = .alpha ↔ 0 = t) ∧
         (Reply.absent = .beta ↔ 0 = t+1) ∧ (Reply.absent = .branch ↔ t+2 ≤ 0)
-      simp only [Reply.noConfusion, false_iff, true_iff]
-      omega
+      simp only [reduceCtorEq, false_iff, true_iff]
+      exact ⟨by omega,by omega,trivial,by omega⟩
     | succ n => cases n with
       | zero =>
         change (Reply.absent = .absent ↔ 1 < t) ∧ (Reply.absent = .alpha ↔ 1 = t) ∧
           (Reply.absent = .beta ↔ 1 = t+1) ∧ (Reply.absent = .branch ↔ t+2 ≤ 1)
-        simp only [Reply.noConfusion, false_iff, true_iff]
-        omega
+        simp only [reduceCtorEq, false_iff, true_iff]
+        exact ⟨by omega,by omega,by omega,by omega⟩
       | succ n =>
         have pair := NativeRankedEqualityCompiler.atomic_pair n
         change T (n+2) = .mul (T (n+1)) (T n) at pair
@@ -349,7 +349,7 @@ def zero : (r : Nat) → Dialogue Nat
       (plus b (3*a+2)) (zero a)
 termination_by r => r
 
-private theorem plus_correct (r l k : Nat) (hl : 1 ≤ l) (cap : r < 2^k) :
+private theorem plus_correct (r l k : Nat) (hl : 1 ≤ l) (cap : r < 2 ^ k) :
     Identifies (plus r l) l (l+3*r) k := by
   induction k generalizing r l with
   | zero =>
@@ -377,11 +377,11 @@ private theorem plus_correct (r l k : Nat) (hl : 1 ≤ l) (cap : r < 2^k) :
       cases hz : readout (thresholdWord (l+3*(r/2)+1)) (T n) with
       | alpha =>
         have hn := row.2.1.mp hz
-        simp only [hz,nativeRun]
+        dsimp only
         exact ⟨hn.symm,by omega⟩
       | beta =>
         have hn := row.2.2.1.mp hz
-        simp only [hz,nativeRun]
+        dsimp only
         exact ⟨hn.symm,by omega⟩
       | branch =>
         have hn := row.2.2.2.mp hz
@@ -393,7 +393,7 @@ private theorem plus_correct (r l k : Nat) (hl : 1 ≤ l) (cap : r < 2^k) :
         have answer := left n lo (by omega)
         simpa only [hz] using And.intro answer.1 (Nat.succ_le_succ answer.2)
 
-private theorem zero_correct (r k : Nat) (hr : 1 ≤ r) (cap : r < 2^k) :
+private theorem zero_correct (r k : Nat) (hr : 1 ≤ r) (cap : r < 2 ^ k) :
     Identifies (zero r) 0 (3*r-1) k := by
   induction k generalizing r with
   | zero => simp at cap; omega
@@ -408,9 +408,9 @@ private theorem zero_correct (r k : Nat) (hr : 1 ≤ r) (cap : r < 2^k) :
       have root := (finite_source_masses.2.2.2.2.2.2.2.2 n).2
       simp only [nativeRun,root]
       by_cases hn : n = 0
-      · simp [hn,nativeRun]
+      · simp [hn]
       · by_cases ho : n = 1
-        · simp [ho,nativeRun]
+        · simp [ho]
         · have answer := right n (by omega) (by omega)
           simpa [hn,ho] using And.intro answer.1 (Nat.succ_le_succ answer.2)
     · have left := ih (r/2) (by omega) ha
@@ -420,11 +420,11 @@ private theorem zero_correct (r k : Nat) (hr : 1 ≤ r) (cap : r < 2^k) :
       cases hz : readout (thresholdWord (3*(r/2))) (T n) with
       | alpha =>
         have hn := row.2.1.mp hz
-        simp only [hz,nativeRun]
+        dsimp only
         exact ⟨hn.symm,by omega⟩
       | beta =>
         have hn := row.2.2.1.mp hz
-        simp only [hz,nativeRun]
+        dsimp only
         exact ⟨hn.symm,by omega⟩
       | branch =>
         have hn := row.2.2.2.mp hz
@@ -483,7 +483,7 @@ private theorem local_total {C O : Type} (δ : C → Op C O) (c c' : C)
 
 private theorem read_total {C O : Type} (δ : C → Op C O) (c : C)
     (p : Address) (next : Reply → C) (s : Finset Nat) (k : Nat)
-    (action : δ c = .read p next) (total : Total δ c s (k+1)) (z : Reply) :
+    (action : δ c = .read p next) (total : Total δ c s (k + 1)) (z : Reply) :
     Total δ (next z) (cell s p z) k := by
   intro n hn
   obtain ⟨hn,hz⟩ := Finset.mem_filter.mp hn
@@ -665,7 +665,7 @@ theorem native_interval_capacity (L U : Nat) (hLU : L ≤ U) :
       U-L+1 ≤ if L = 0 then zeroCapacity k else positiveCapacity k) ∧
     (∀ k, (∃ d : Dialogue Nat, Identifies d L U k) ↔ minimumCalls L U ≤ k) ∧
     (∃ d : Dialogue Nat, Identifies d L U (minimumCalls L U)) ∧
-    (∀ (C O : Type) (δ : C → Op C O) (c : C) (fallback : O) (k : Nat),
+    (∀ (C O : Type) (δ : C → Op C O) (c : C) (_fallback : O) (k : Nat),
       Stationary δ → k < minimumCalls L U →
       (∀ n, L ≤ n → n ≤ U → ∃ t o, Run δ c 0 (T n) t o ∧ (answers t).length ≤ k) →
       ∃ a ∈ Finset.Icc L U, ∃ b ∈ Finset.Icc L U, a ≠ b ∧
@@ -700,11 +700,13 @@ private theorem cost_append (p q : Address) : pathCost (p ++ q) = pathCost p + p
 private theorem normalized_query (p : Address) (hp : p ≠ []) :
     ∃ t : Nat, 2 ≤ t ∧ (thresholdWord t).length ≤ p.length ∧
       (∀ n, n < t → readout p (T n) = .absent) ∧
-      ∃ phi : Reply → Reply, ∀ n, readout p (T n) = phi (readout (thresholdWord t) (T n)) := by
+      ∃ phi : Reply → Reply, ∀ n,
+        readout p (T n) = phi (readout (thresholdWord t) (T n)) := by
   let a := p.dropLast
   let b := p.getLast hp
   have shape : p = a ++ [b] := (List.dropLast_concat_getLast hp).symm
-  have cost : pathCost p = pathCost a + if b then 2 else 1 := by rw [shape,cost_append]; simp [pathCost]
+  have cost : pathCost p = pathCost a + if b then 2 else 1 := by
+    rw [shape,cost_append]; simp [pathCost]
   have len : p.length = a.length+1 := by rw [shape,List.length_append]; rfl
   let t := pathCost a + 2
   have ht : 2 ≤ t := by omega
@@ -720,13 +722,14 @@ private theorem normalized_query (p : Address) (hp : p ≠ []) :
       omega
     rw [if_neg no]
   · refine ⟨(fun z => if b then z else
-        match z with | .alpha => .beta | .beta => .branch | .branch => .branch | .absent => .absent),?_⟩
+        match z with
+        | .alpha => .beta | .beta => .branch | .branch => .branch | .absent => .absent),?_⟩
     intro n
     have row := threshold_table t n ht
     rw [actual_table,if_neg hp]
     change (if pathCost p ≤ n ∧ pathCost a+2 ≤ n then _ else _) = _
     rw [cost]
-    cases hb : b <;> simp only [hb,↓reduceIte] <;>
+    cases b <;> simp only [↓reduceIte] <;>
       cases hz : readout (thresholdWord t) (T n)
     all_goals
       first | have hn := row.1.mp hz | have hn := row.2.1.mp hz |
@@ -736,7 +739,7 @@ private theorem normalized_query (p : Address) (hp : p ≠ []) :
 
 /-- On a declared bounded domain each literal is simulated by one paid
 literal whose length is no larger than either the old length or the peak. -/
-theorem bounded_query_recode (U : Nat) (hU : 1 ≤ U) (p : Address) :
+theorem bounded_query_recode (U : Nat) (_hU : 1 ≤ U) (p : Address) :
     ∃ (q : Address) (phi : Reply → Reply), q.length ≤ min p.length ((U-1)/2) ∧
       ∀ n, n ≤ U → readout p (T n) = phi (readout q (T n)) := by
   let m := (U-1)/2
@@ -780,5 +783,145 @@ theorem bounded_query_recode (U : Nat) (hU : 1 ≤ U) (p : Address) :
     | beta => have eq := row.2.2.1.mp hz; simp [eq]
     | branch => have eq : n = 2*m+2 := by have := row.2.2.2.mp hz; omega
                 simp [eq]
+
+private theorem recode_dialogue (U : Nat) (hU : 1 ≤ U) (d : Dialogue Nat) :
+    ∃ e : Dialogue Nat, wordBound e ≤ (U-1)/2 ∧
+      ∀ n, n ≤ U → nativeRun (fun p => readout p (T n)) e =
+        nativeRun (fun p => readout p (T n)) d := by
+  induction d with
+  | stop o => exact ⟨.stop o,Nat.zero_le _,fun n hn => rfl⟩
+  | read p A B C D ihA ihB ihC ihD =>
+    obtain ⟨A',ba,ea⟩ := ihA
+    obtain ⟨B',bb,eb⟩ := ihB
+    obtain ⟨C',bc,ec⟩ := ihC
+    obtain ⟨D',bd,ed⟩ := ihD
+    obtain ⟨q,phi,bq,eq⟩ := bounded_query_recode U hU p
+    let next : Reply → Dialogue Nat := fun z =>
+      match z with | .alpha => A' | .beta => B' | .branch => C' | .absent => D'
+    have bounds (z : Reply) : wordBound (next z) ≤ (U-1)/2 := by
+      cases z <;> assumption
+    refine ⟨.read q (next (phi .alpha)) (next (phi .beta))
+      (next (phi .branch)) (next (phi .absent)),?_,?_⟩
+    · simp only [wordBound,max_le_iff]
+      exact ⟨bq.trans (min_le_right _ _),⟨bounds _,bounds _⟩,bounds _,bounds _⟩
+    · intro n hn
+      have decode := eq n hn
+      have childs (z : Reply) : nativeRun (fun p => readout p (T n)) (next z) =
+          nativeRun (fun p => readout p (T n))
+            (match z with | .alpha => A | .beta => B | .branch => C | .absent => D) := by
+        cases z <;> exact (by first | exact ea n hn | exact eb n hn | exact ec n hn | exact ed n hn)
+      cases hz : readout q (T n) <;> simp only [nativeRun,hz,decode]
+      all_goals rw [childs]; split <;> simp_all
+
+/-- Every actually submitted literal respects the declared peak. -/
+def Peak (t : Trace) (d : Nat) : Prop :=
+  ∀ e a z, Event.read e a z ∈ t → a.length ≤ d
+
+private theorem dialogue_peak (d : Dialogue Nat) (u : Source) :
+    Peak (dialogueTrace d u) (wordBound d) := by
+  induction d with
+  | stop o => simp [Peak,dialogueTrace]
+  | read p A B C D ihA ihB ihC ihD =>
+    intro e a z hm
+    have localBound : p.length ≤ wordBound (.read p A B C D) := le_max_left _ _
+    have childBound (v : Nat) (hv : v ≤ max (max (wordBound A) (wordBound B))
+        (max (wordBound C) (wordBound D))) : v ≤ wordBound (.read p A B C D) :=
+      hv.trans (le_max_right _ _)
+    cases hz : readout p u <;> simp only [dialogueTrace,hz,List.mem_cons] at hm
+    all_goals rcases hm with eq | hm
+    all_goals first
+      | cases eq; exact localBound
+      | exact childBound _ ((ihA e a z hm).trans ((le_max_left _ _).trans (le_max_left _ _)))
+      | exact childBound _ ((ihB e a z hm).trans ((le_max_right _ _).trans (le_max_left _ _)))
+      | exact childBound _ ((ihC e a z hm).trans ((le_max_left _ _).trans (le_max_right _ _)))
+      | exact childBound _ ((ihD e a z hm).trans ((le_max_right _ _).trans (le_max_right _ _)))
+
+private theorem high_transfer {C O : Type} (δ : C → Op C O) (quiet : Stationary δ)
+    (d : Nat) {c : C} {e : Nat} {u : Source} {t : Trace} {o : O}
+    (run : Run δ c e u t o) :
+    ∀ n m, u = T n → 2*d+2 ≤ n → 2*d+2 ≤ m → Peak t d →
+      Run δ c e (T m) t o := by
+  induction run with
+  | stop action => intro n m eq hn hm peak; exact .stop action
+  | localStep action tail ih =>
+    intro n m eq hn hm peak
+    exact .localStep action (ih n m eq hn hm (fun e a z hz => peak e a z (by simp [hz])))
+  | update action tail ih => exact (quiet _ _ action).elim
+  | @read c e u p next z t o action hz tail ih =>
+    intro n m eq hn hm peak
+    have hp := peak e p z (by simp)
+    have cost := (NativeFiniteMenuObstruction.path_bounds p).1
+    have zn : readout p u = .branch := by
+      rw [eq]; exact Kernel.branch_after p (.of true) n (by omega)
+    have zm : readout p (T m) = .branch :=
+      Kernel.branch_after p (.of true) m (by omega)
+    exact .read action (zm.trans (zn.symm.trans hz))
+      (ih n m eq hn hm (fun e a z hz => peak e a z (by simp [hz])))
+
+/-- Simultaneous chronological call and submitted-word bounds. -/
+def SerialBudgets {C : Type} (δ : C → Op C Nat) (c : C) (L U k d : Nat) : Prop :=
+  ∀ n, L ≤ n → n ≤ U → ∃ t, Run δ c 0 (T n) t n ∧
+    (answers t).length ≤ k ∧ Peak t d
+
+/-- Exact joint call/peak feasibility, with a single finite dialogue attaining
+both coordinate minima. -/
+theorem native_interval_joint_optimum (L U : Nat) (hLU : L ≤ U) :
+    (∀ k d, (∃ (C : Type) (δ : C → Op C Nat) (c : C),
+      Stationary δ ∧ SerialBudgets δ c L U k d) ↔
+      minimumCalls L U ≤ k ∧ (L = U ∨ U ≤ 2*d+2)) ∧
+    (∃ e : Dialogue Nat, Identifies e L U (minimumCalls L U) ∧
+      wordBound e ≤ if L = U then 0 else (U-1)/2) := by
+  have attained : ∃ e : Dialogue Nat, Identifies e L U (minimumCalls L U) ∧
+      wordBound e ≤ if L = U then 0 else (U-1)/2 := by
+    by_cases single : L = U
+    · refine ⟨.stop L,?_,by simp [wordBound,single]⟩
+      intro n lo hi
+      have eq : n = L := by omega
+      exact ⟨eq.symm,Nat.zero_le _⟩
+    · obtain ⟨d,hd⟩ := (native_interval_capacity L U hLU).2.2.1
+      obtain ⟨e,peak,eval⟩ := recode_dialogue U (by omega) d
+      refine ⟨e,?_,by simpa [single] using peak⟩
+      intro n lo hi
+      rw [eval n hi]
+      exact hd n lo hi
+  refine ⟨?_,attained⟩
+  intro k d
+  constructor
+  · rintro ⟨C,δ,c,quiet,correct⟩
+    have serial : SerialCorrect δ c L U k := by
+      intro n lo hi
+      obtain ⟨t,run,budget,peak⟩ := correct n lo hi
+      exact ⟨t,run,budget⟩
+    have calls := (minimum_calls_capacity L U k hLU).mpr
+      ((native_interval_capacity L U hLU).1 k |>.mp ⟨C,δ,c,quiet,serial⟩)
+    refine ⟨calls,?_⟩
+    by_contra bad
+    have high : 2*d+2 ≤ U-1 := by omega
+    obtain ⟨ta,ra,_,pa⟩ := correct (U-1) (by omega) (by omega)
+    obtain ⟨tb,rb,_,_⟩ := correct U hLU le_rfl
+    have transfer := high_transfer δ quiet d ra (U-1) U rfl high (by omega) pa
+    have same := (NativeSerialDepth.run_unique transfer rb).2
+    omega
+  · rintro ⟨calls,peak⟩
+    obtain ⟨e,correct,words⟩ := attained
+    have bound : wordBound e ≤ d := by
+      rcases peak with single | upper
+      · have empty : wordBound e = 0 := by simpa [single] using words
+        rw [empty]; exact Nat.zero_le d
+      · by_cases single : L = U
+        · have empty : wordBound e = 0 := by simpa [single] using words
+          rw [empty]; exact Nat.zero_le d
+        · simp only [single,↓reduceIte] at words
+          exact words.trans (by omega)
+    refine ⟨Dialogue Nat,dialogueControl,e,dialogue_stationary,fun n lo hi => ?_⟩
+    refine ⟨dialogueTrace e (T n),?_,?_,?_⟩
+    · simpa [(correct n lo hi).1] using (dialogue_run e (T n)).1
+    · rw [(dialogue_run e (T n)).2]; exact (correct n lo hi).2.trans calls
+    · intro e' a z hm
+      exact (dialogue_peak e (T n) e' a z hm).trans bound
+
+#print axioms native_interval_capacity
+#print axioms bounded_query_recode
+#print axioms native_interval_joint_optimum
 
 end D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.NativeStationaryIntervalResources
