@@ -46,9 +46,9 @@ private theorem witness_stochastic : witness ∈ Matrix.colStochastic ℝ (Fin 3
   rw [Matrix.mem_colStochastic_iff_sum]
   constructor
   · intro i j
-    fin_cases i <;> fin_cases j <;> norm_num [witness]
+    fin_cases i <;> fin_cases j <;> norm_num [witness.eq_1]
   · intro j
-    fin_cases j <;> norm_num [witness, Fin.sum_univ_succ]
+    fin_cases j <;> norm_num [witness.eq_1, Fin.sum_univ_succ]
 
 private theorem gen_stochastic {M : Matrix (Fin 3) (Fin 3) ℝ} (hM : M ∈ gen) :
     M ∈ Matrix.colStochastic ℝ (Fin 3) := by
@@ -65,9 +65,9 @@ private theorem gen_stochastic {M : Matrix (Fin 3) (Fin 3) ℝ} (hM : M ∈ gen)
       rw [Matrix.mem_colStochastic_iff_sum]
       constructor
       · intro i j
-        fin_cases i <;> fin_cases j <;> norm_num [V1, V2, V3]
+        fin_cases i <;> fin_cases j <;> norm_num [V1.eq_1, V2.eq_1, V3.eq_1]
       · intro j
-        fin_cases j <;> norm_num [V1, V2, V3, Fin.sum_univ_succ]
+        fin_cases j <;> norm_num [V1.eq_1, V2.eq_1, V3.eq_1, Fin.sum_univ_succ]
 
 private theorem power_stochastic {m : ℕ} {M : Matrix (Fin 3) (Fin 3) ℝ}
     (hM : M ∈ genPow m) : M ∈ Matrix.colStochastic ℝ (Fin 3) := by
@@ -154,7 +154,7 @@ private theorem hull_shape {M : Matrix (Fin 3) (Fin 3) ℝ}
       M 1 1 ≤ M 0 0 ∧ M 2 2 ≤ M 1 1}) ?_ ?_ hM
   · intro N hN
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hN
-    rcases hN with rfl | rfl | rfl | rfl <;> norm_num [V1, V2, V3, Matrix.one_apply, Matrix.cons_val_two, Fin.ext_iff]
+    rcases hN with rfl | rfl | rfl | rfl <;> norm_num [V1.eq_1, V2.eq_1, V3.eq_1, Matrix.one_apply, Matrix.cons_val_two, Fin.ext_iff]
   · intro M hM N hN a b ha hb _
     rcases hM with ⟨h01, h12, h20, h10, h21⟩
     rcases hN with ⟨k01, k12, k20, k10, k21⟩
@@ -235,11 +235,11 @@ private def zero_perm : Equiv.Perm (Fin 3) :=
 private theorem witness_support (i j : Fin 3) :
     0 < witness i (zero_perm j) ↔ i ≠ j := by
   fin_cases i <;> fin_cases j <;>
-    norm_num [witness, zero_perm, Equiv.Perm.mul_apply,
+    norm_num [witness.eq_1, zero_perm.eq_1, Equiv.Perm.mul_apply,
       Equiv.swap_apply_def, Matrix.cons_val_two, Fin.ext_iff]
 
 private theorem witness_lt_one (i j : Fin 3) : witness i j < 1 := by
-  fin_cases i <;> fin_cases j <;> norm_num [witness]
+  fin_cases i <;> fin_cases j <;> norm_num [witness.eq_1]
 
 private theorem product_positive {B C : Matrix (Fin 3) (Fin 3) ℝ}
     (hB : B ∈ Matrix.colStochastic ℝ (Fin 3))
@@ -278,7 +278,7 @@ private theorem indivisible {B C : Matrix (Fin 3) (Fin 3) ℝ}
       change 0 < witness (p i) (q (q.symm (p i)))
       rw [q.apply_symm_apply]
       generalize p i = t
-      fin_cases t <;> norm_num [witness]
+      fin_cases t <;> norm_num [witness.eq_1]
     obtain ⟨k, hk, _⟩ := (product_positive hB hC _ _).mp hpos
     exact ⟨k, hk⟩
   · right
@@ -339,7 +339,7 @@ private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
   · change witness.submatrix p q = swap12 at h
     have heq : witness (p 0) (q 1) = 1 := by
       have hh := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℝ => M 0 1) h
-      simpa [Matrix.submatrix_apply, swap12, Equiv.Perm.permMatrix,
+      simpa [Matrix.submatrix_apply, swap12.eq_1, Equiv.Perm.permMatrix,
         Equiv.toPEquiv_apply] using hh
     exact (witness_lt_one (p 0) (q 1)).ne heq
   · have hs := hull_shape h
@@ -347,7 +347,7 @@ private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
     all_goals
       rcases permutation_values q q.injective with hq | hq | hq | hq | hq | hq
       all_goals
-        norm_num [Matrix.submatrix_apply, hp, hq, witness, Matrix.cons_val_two] at hs
+        norm_num [Matrix.submatrix_apply, hp, hq, witness.eq_1, Matrix.cons_val_two] at hs
 
 /-- The Eq. (10) generators do not cover all stochastic matrices in twenty factors. -/
 theorem result : ¬ claim := by
