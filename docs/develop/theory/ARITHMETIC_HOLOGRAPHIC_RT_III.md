@@ -2007,3 +2007,194 @@ This proves the second inequality in (27); Theorem 93.1 proves the remaining two
 The corollary refines the unresolved list in sections 92.7 and 92.9. A zero occupancy still means an absent whole fibre, whereas an occupancy one retains only one coordinate of a two-coordinate fibre. No pattern in (29) is excluded here. Unequal full Gram ranks and the other lower-rank common-stress cases remain unresolved. For arbitrary leaking channels, calibration is invoked only to compare the unrestricted global optimum with an attained calibrated optimum, with no rank-preservation or local-minimum transfer. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither its quarter lower bound nor a classification of all quarter-error attainters follows from this section.
 
 The proof uses ordinary real Lagrange multipliers, polynomial resultants, and Sturm's real-root theorem as established mathematical tools. For the last, see [Eisermann, The Fundamental Theorem of Algebra made effective: an elementary real-algebraic proof via Sturm chains](https://arxiv.org/abs/0808.0097). The specific sharp complex-Gram minimum is derived in Theorem 93.1, and the physical consumer uses the adaptive norm and common-support reduction of sections 91–92.
+
+## 94. Quartet tangent exclusion of doubly rank-seven subquarter minima
+
+### 94.1. Original problem and precise scope
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four fibres of two coordinates, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain, the local Grams satisfy G,H≥0 and G_ff=H_ff=I₂. With T_ff=I₂ and T_fg=J₂/2 for f≠g, section 91 gives the exact objective
+
+\[
+ F(G,H)=\max_{(\rho,W)\in\mathcal C}
+       2\operatorname{Tr}[(T-G\odot H)W],\qquad
+ \mathcal C=\left\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                 \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\right\}.
+                                                                    \tag{1}
+\]
+
+**Theorem 94.1.** No calibrated local minimum of (1) with rank G=rank H=7 has error below 1/4.
+
+This is a statement about calibrated local minima, not about every doubly rank-seven competitor. The physical calibration comparison of section 72 is global and may enlarge ranks; it does not transfer local minimality from an arbitrary leaking pair. The unrestricted quarter lower bound and unequal-rank cases, including pairs with one rank seven, are not asserted here.
+
+### 94.2. The fixed support and the exact second-order prerequisite
+
+**Proof of Theorem 94.1.** The established positive lower bound makes a hypothetical subquarter value t positive. Theorems 92.1–92.2 supply a common stress support S and a reciprocal diagonal-unitary gauge preserving the complete product coefficient and target. Fix this one gauge. There is one fixed vector a, nonzero exactly on S, such that
+
+\[
+ \ker G=\ker H=\operatorname{span}(a),\qquad G_S=H_S.
+                                                                    \tag{2}
+\]
+
+The full Grams need not coincide outside S. Every cross-fibre entry of both Grams is nonzero, since the original matrix-unit test gives |1/2−G_ijH_ij|≤t<1/2.
+
+Let 𝒜₀ be the nonempty compact common-witness subset from section 92.5, retaining both ρ and W. For every (ρ,W)∈𝒜₀, its first stress has the form α_W aa* with α_W>0. The same fixed a and the same gauge are used for all these witnesses. For every Hermitian D supported on S with D_ff=0 and Da=0, section 92.5 proves
+
+\[
+ \begin{gathered}
+ \text{there exists }(\rho,W)\in\mathcal A_0
+                    \text{ such that }Q_W(D)\ge0,\\
+ Q_W(D)=-\alpha_W
+      \sum_{i,j\text{ in different fibres}}
+       \frac{\overline{a_i}a_j}{G_{ij}}D_{ij}^{2}.
+ \end{gathered}                                                   \tag{3}
+\]
+
+The witness may depend on D. No single second-order witness for all directions is assumed. Instead, (3) rules out any one direction whose quadratic value is negative for every common witness; the only witness-dependent factor in that value is α_W>0.
+
+Write n=|S| and introduce the weighted principal matrix
+
+\[
+ J=\operatorname{diag}(\overline{a_S})G_S
+                  \operatorname{diag}(a_S),\qquad
+ h_{ij}=J_{ij},\qquad d_i=J_{ii}=|a_i|^2>0,
+ \qquad J\mathbf1_n=0.                                      \tag{4}
+\]
+
+Its distinct within-fibre entries vanish, and its cross-fibre entries are nonzero. The following lemma uses these complex entries without assuming they are positive or real.
+
+### 94.3. A quartet direction embedded in the original eight coordinates
+
+**Lemma 94.2.** Choose any ordered four distinct coordinates in S, denoted 1,2,3,4, such that the five edges 13,14,23,24,34 join different original fibres. Then
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{23}+h_{24}=0.                     \tag{5}
+\]
+
+There is no requirement that coordinates 1 and 2 lie in the same fibre.
+
+**Proof.** Put
+
+\[
+ A=\frac1{h_{13}}+\frac1{h_{14}},\qquad
+ B=\frac1{h_{23}}+\frac1{h_{24}},\qquad C=\frac1{h_{34}}.     \tag{6}
+\]
+
+For arbitrary x∈C and s∈R, define E on these four coordinates by
+
+\[
+ E=\begin{pmatrix}
+ 0&0&x&-x\\
+ 0&0&-x+is&x-is\\
+ \overline x&-\overline x-is&0&is\\
+ -\overline x&\overline x+is&-is&0
+ \end{pmatrix},                                             \tag{7}
+\]
+
+and set every other entry on S to zero. This matrix is Hermitian and each of its rows sums to zero. Its diagonal entries and its 12 edge vanish. Every potentially nonzero edge lies between different original fibres by hypothesis, even when the deliberately omitted 12 edge is also a cross-fibre edge.
+
+On S set
+
+\[
+ D_S=\operatorname{diag}(1/\overline{a_S})\,E\,
+                         \operatorname{diag}(1/a_S),
+ \qquad D_{ij}=0\ \text{if }i\notin S\text{ or }j\notin S.
+                                                                    \tag{8}
+\]
+
+This defines a Hermitian matrix on all eight original coordinates. All divisions are legitimate, D_ff=0 on every original two-coordinate fibre, and Da=0 because E1_n=0. Since (2) gives the full one-dimensional kernels, both G+εD and H−εD remain PSD for sufficiently small real ε: on a⊥ the unperturbed matrices are positive definite, and D annihilates a. They remain in their exposed support faces and retain every identity fibre block. Also D is supported where G=H, so the exact coefficient error along this feasible opposite-face path is
+
+\[
+ T-(G+\varepsilon D)\odot(H-\varepsilon D)
+       =T-G\odot H+\varepsilon^2(D\odot D).                 \tag{9}
+\]
+
+The bare path by itself only concerns the full norming set. The restriction to common witnesses in this argument is precisely the fixed-direction selection (3), whose second-order drift and compact minimax proof are already established in section 92.5. Nothing stronger is inferred from (9).
+
+Using E_ij²/h_ij=conjugate(a_i)a_jD_ij²/G_ij, and pairing each edge with its Hermitian reverse, equation (3) becomes
+
+\[
+ \begin{aligned}
+ Q_W(D)&=-2\alpha_W\operatorname{Re}\Phi(x,s),\\
+ \Phi(x,s)&=x^2(A+B)-2isxB-s^2(B+C).
+ \end{aligned}                                                 \tag{10}
+\]
+
+Consequently Re Φ(x,s)≤0 for every complex x and real s. Otherwise one fixed choice would make Q_W(D)<0 for every common witness, contradicting (3).
+
+Set s=0. If A+B≠0, choose a complex square root with x²(A+B)=1. This is impossible by (10), so A+B=0. If B≠0, instead set
+
+\[
+ s=1,\qquad x=\frac{i[1+\operatorname{Re}(B+C)]}{2B}.
+                                                                    \tag{11}
+\]
+
+Then −2ixB=1+Re(B+C) and Re Φ(x,1)=1. This again gives the common negative value Q_W(D)=−2α_W. Therefore B=0 and A=0. The denominators in (6) are nonzero, so these equalities are exactly (5).
+
+Applying this lemma to several quartets imposes simultaneous equations only on the same fixed G and a. Each violated equation would separately supply a direction negative for every common witness. The argument never combines independently selected witnesses or exchanges quadratic minimax quantifiers.
+
+### 94.4. The four remaining occupancy contradictions
+
+By Theorems 92.3–92.4, a hypothetical doubly rank-seven subquarter minimum has support on at most five coordinates meeting at least three original fibres. Corollary 93.3 excludes (1,1,1,0), using the sharp complex rank-at-most-two three-vector theorem and its complete-norm consumer. Thus only the following four patterns remain before applying Lemma 94.2:
+
+\[
+ (2,1,1,0),\qquad (1,1,1,1),\qquad
+                    (2,1,1,1),\qquad (2,2,1,0).             \tag{12}
+\]
+
+Here occupancies refer to the original fibres; a zero means a whole absent fibre.
+
+For (2,1,1,0), let 1,2 be the full fibre and 3,4 the singleton coordinates. All five edges in the lemma are cross-fibre. Equation (5) and the first weighted kernel row give
+
+\[
+ h_{13}+h_{14}=0,\qquad
+ 0=d_1+h_{13}+h_{14}=d_1>0,                                \tag{13}
+\]
+
+a contradiction. In the notation (6), the same contradiction appears as B=−d₂/(h₂₃h₂₄)≠0, so the second step of the lemma supplies a strict common negative direction.
+
+For (1,1,1,1), keep coordinate 1 in the first position and choose the omitted partner successively as 2,3,4. Every quartet has all five required cross-fibre edges. Equation (5) gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{12}+h_{14}=0,\qquad
+ h_{12}+h_{13}=0.                                         \tag{14}
+\]
+
+These equations force all three entries to vanish, contradicting cross-fibre nonvanishing. The omitted edge may be cross-fibre: setting it to zero in the direction (7) is permitted by the original constraints.
+
+For (2,1,1,1), let 1,2 be the full fibre and 3,4,5 the singleton coordinates. Apply the lemma to (1,2,j,k) for all three pairs from {3,4,5}. It gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{13}+h_{15}=0,\qquad
+ h_{14}+h_{15}=0,                                         \tag{15}
+\]
+
+so these nonzero cross-fibre entries would all vanish.
+
+For (2,2,1,0), let {1,2} and {3,4} be the full fibres and let 5 be the singleton. Apply the lemma using the full first fibre and the pairs (3,5),(4,5). For each i∈{1,2}, the two conclusions and its weighted kernel row imply
+
+\[
+ h_{i3}=h_{i4}=-h_{i5},\qquad
+ 0=d_i+h_{i3}+h_{i4}+h_{i5}=d_i-h_{i5},
+ \qquad h_{i5}=d_i>0.                                    \tag{16}
+\]
+
+Reverse the roles of the two full fibres to obtain h_j5=d_j>0 also for j∈{3,4}. The singleton row now contradicts positivity:
+
+\[
+ 0=d_5+\sum_{i=1}^4 h_{5i}
+   =d_5+\sum_{i=1}^4 d_i>0.                              \tag{17}
+\]
+
+The conjugations are retained: Hermiticity gives h₅ᵢ=conjugate(hᵢ₅)=d_i only after (16) has forced hᵢ₅ to be positive real. No positive gauge was assumed.
+
+All four patterns in (12) are excluded. Together with Corollary 93.3 and the earlier support-size and two-fibre exclusions, this exhausts the hypothetical doubly rank-seven subquarter support. Theorem 94.1 follows.
+
+### 94.5. Consequence for the attained calibrated global problem
+
+**Corollary 94.3.** If the unrestricted original-channel optimum is strictly below 1/4, an attained calibrated minimizer has local Gram ranks between three and seven, with at least one rank at most six.
+
+**Proof.** Apply the physical global calibration theorem of section 72 and the compact Gram formulation. The common-stress and earlier rank-two bounds in section 92.3 place both ranks in {3,4,5,6,7}. A global minimizer is a local minimum, so Theorem 94.1 excludes the pair (7,7).
+
+This corollary excludes neither unequal pairs with one rank seven nor pairs with both ranks at most six. The active-support equalization and full one-dimensional-kernel face directions used above do not automatically extend to those cases. No rank-preserving calibration, convex extreme-point reduction, or transfer of local minimality from leaking channels has been used. The unrestricted original optimum remains in [√3−3/2,1/4].
+
+The dependencies are the original calibrated adaptive norm of section 91; the same-witness, support, fixed-direction, support-size, and two-fibre results of section 92; and the quantitative three-singleton exclusion of section 93. The additional argument here is the explicit complex quartet tangent and its weighted row contradictions. It does not require the earlier singular-error or interior-density necessary conditions for three-singleton support, or a real gauge, small-norm transversal, or reciprocal-Gram positivity assertion.
