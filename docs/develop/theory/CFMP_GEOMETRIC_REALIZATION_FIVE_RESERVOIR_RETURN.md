@@ -2550,3 +2550,942 @@ z,u and m. This proves abs(z-u)<m+1, including ties among lower values.
 In particular a local source-front angle assignment with u>=z+m+1
 cannot extend to the actual complete U star. It may still be a correct
 counterexample to a weaker scalar relaxation that omitted this bound.
+
+## 322. The inventory-one combined-angle obstruction
+
+Retain the six-edge, four-distinct-label paired setting of Sections
+314–321: original shared positive lengths, complete connected normal
+circles, degree at least six, and original angle sums 2*pi. The unique
+flat owner is sigma=(M,C,D,V,C,D), with selected axes M,V. Its transverse
+C,D angles are zero, so the genuine M,V capacities are pi each and the
+genuine C,D,Z,U capacities are 2*pi each. Lower-case letters denote
+coshes of the corresponding shared lengths.
+
+The following conditional obstruction concerns three distinct genuine
+owners with the precise roles
+
+    tau=(Z,M,C,D,M,C),
+    rho=(U,V,D,C,V,D),
+    eta=(M,V,D,Z,V,D).                              (322.1)
+
+Here eta has axes M,Z. Call (322.1) inventory one. No assertion that
+every remaining configuration has this inventory is made.
+
+**Theorem (repo-derived).** Suppose the inventory obeys
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, m<u<z+m+1,
+    (m-1)*(v-1)>=(c+d)^2.                          (322.2)
+
+Require all six strict genuine inequalities
+
+    Lt=(m+c)^2-(z-1)*(d-1)>0,
+    Jt=(z+1)*(d+1)-(m-c)^2>0,
+    Lr=(v+d)^2-(u-1)*(c-1)>0,
+    Jr=(u+1)*(c+1)-(v-d)^2>0,
+    Le=(v+d)^2-(m-1)*(z-1)>0,
+    Je=(m+1)*(z+1)-(v-d)^2>0.                      (322.3)
+
+Assume also the bad-eta condition and the retained actual partial
+M-angle budget, respectively,
+
+    theta_M(eta)+theta_Z(eta)<=pi,
+    2*beta_M(tau)+theta_M(eta)<=pi.                (322.4)
+
+Then, writing S=beta_V+beta_D at rho and eta,
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.           (322.5)
+
+Consequently no actual configuration satisfying these premises exists:
+the nine original slots in (322.5) have genuine V/D capacity at most
+pi+2*pi. The scalar implication (322.2)–(322.5) is proved below without
+using the C,Z,U budgets. Both inequalities in (322.4), including the
+whole stated partial M budget, remain premises throughout.
+
+For clarity, the paired response formulas used in the proof are
+reproduced here. Put
+
+    K=(sqrt(v^2-1)+sqrt(d^2-1))/(v+d),
+    w=sqrt((d-1)*Jt/[(d+1)*Lt]),
+    x=K*sqrt(Lr/Jr), y=K*sqrt(Le/Je),
+    A=[sqrt(m^2-1)+sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt),
+    B=[sqrt(m^2-1)-sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt).
+
+Then
+
+    theta_D(tau)=2*atan(w), beta_M(tau)=atan(A)+atan(B),
+    S(rho)=2*atan(x), S(eta)=2*atan(y),
+    tan(theta_M(eta)/2)^2=(m-1)*Je/[(m+1)*Le],
+    tan(theta_Z(eta)/2)^2=(z-1)*Je/[(z+1)*Le].       (322.6)
+
+All genuine angles lie in (0,pi); A,B are positive since m>c. The
+M budget forces beta_M(tau)<pi/2 and therefore
+
+    Ht=(m+c)*Jt-(m-c)*Lt>0,
+    4*(m-1)^2*Lt*Jt*Je<=Ht^2*Le.                  (322.7)
+
+These two conditions are equivalent to the M budget: on this branch
+tan(beta_M)=2*sqrt(m^2-1)*sqrt(Lt*Jt)/Ht and the budget is
+tan(beta_M)<=cot(theta_M(eta)/2). Squaring positive quantities yields
+(322.7). Similarly the bad-eta condition is equivalent to
+
+    (m+1)*(z+1)*Le^2>=(m-1)*(z-1)*Je^2.           (322.8)
+
+These are exact reformulations, not replacements by weaker budgets.
+The generalized hyperideal angle conventions agree with Luo–Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+[arXiv:1404.5365v2](https://arxiv.org/html/1404.5365v2).
+The inventory-specific implication here is a deduction from the
+displayed paired formulas and original-slot capacities.
+
+## 323. The bad-eta bound and a genuine rho endpoint
+
+Set p=sqrt((m-1)*(z-1)) and q=sqrt((m+1)*(z+1)). The axial
+half-angle product makes bad-eta equivalent to q*Le>=p*Je, or
+
+    p*q<=v^2+d^2+2*v*d*(q-p)/(q+p).                (323.1)
+
+Indeed expand q*[(v+d)^2-p^2]>=p*[q^2-(v-d)^2] and divide
+by p+q. Since z>m>1,
+
+    q/p<=(m+1)/(m-1), 0<(q-p)/(q+p)<=1/m.
+
+It follows that
+
+    z<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1).       (323.2)
+
+Here p*q>(m-1)*(z-1), and Zb increases with each positive v,d.
+
+We first show c<m/2, using neither the flat product nor the M budget.
+If c>=m/2, then m>4, d<m/2-1 and v<=m-2. The right side of
+(323.1) is strictly less than (m-2)^2*(5/4+1/m). But
+
+    p*q>(m-1)*(z-1)>(m-1)*(m+c)>=3*m*(m-1)/2,
+    3*m*(m-1)/2-(m-2)^2*(5/4+1/m)
+      =(m^3+10*m^2-4*m-16)/(4*m)>0,
+
+a contradiction. The last numerator is positive for m>4 because
+m^3-4*m>0 and 10*m^2-16>0.
+
+At u0=z+m+1 the rho L numerator is
+
+    Lr0=(v+d)^2-(z+m)*(c-1)=Le+z*(m-c)-m*c+1>Le>0.
+
+The strict comparison uses c<m/2 and z>m. Increasing u from its
+actual value to u0 decreases Lr linearly but keeps it positive, while
+Jr increases from its positive actual value. Hence the whole scalar
+interpolation remains genuine. Furthermore
+
+    d(Lr/Jr)/du=[-(c-1)*Jr-(c+1)*Lr]/Jr^2<0.
+
+Thus S(rho) strictly decreases. It suffices to prove (322.5) at this
+genuine endpoint. This is a comparison of rho's response with fixed
+other parameters, not a claim that the changed u preserves a global
+shared-length metric or any unrelated star.
+
+## 324. The source D angle exceeds 2*pi/3
+
+The exact axial M cosine of eta is N_e/D_e, where
+
+    D_e=m^2+v^2+d^2+2*m*v*d-1,
+    N_e=2*v*d+m*(v^2+d^2)-(m^2-1)*z.
+
+Its v-derivative has sign numerator
+
+    (N_e)_v*D_e-N_e*(D_e)_v
+      =2*(m^2-1)*[-d^3+d*m*z+d*v^2+d+m*v+v*z]>0. (324.1)
+
+Indeed d<m-2<m and z>m. Increasing v to m-2 decreases theta_M(eta)
+and preserves the M budget. Le increases, and Je stays positive since
+1<v,d<m and z>m. Tau is unchanged. For this lemma only, take v=m-2;
+no bad-eta or flat-product premise is needed along this interpolation.
+
+Put q=tan(theta_D(tau)/2)^2 and
+
+    delta=(m-c)*(d-1)/[(m+c)*(d+1)], 0<delta<1.
+
+The positive branch Ht>0 in (322.7) gives q>delta. Solving
+q=(d-1)*Jt/[(d+1)*Lt] for z gives z=Zn/Zd, with
+
+    Zd=(d^2-1)*(q+1),
+    Zn=q*(m+c)^2*(d+1)+(m-c)^2*(d-1)+(q-1)*(d^2-1),
+    LeN=(m+d-2)^2*Zd-(m-1)*(Zn-Zd),
+    JeN=(m+1)*(Zn+Zd)-(m-d-2)^2*Zd,
+    Bq=(m+c)*(d+1)*q-(m-c)*(d-1),
+    F(q)=Bq^2*LeN-4*(m-1)^2*(d^2-1)*q*JeN.       (324.2)
+
+The full M budget implies F(q)>=0. More explicitly, if
+G=Ht^2*Le-4*(m-1)^2*Lt*Jt*Je, substitution gives the identity
+
+    F(q)=G*(d-1)^2*Zd/Lt^2,
+
+whose multiplier is positive. F is a cubic polynomial in q; write
+F(q)=sum_{j=0}^3 f_j(m,c,d)*q^j.
+
+If q<=3, put h=(3-q)/(q-delta)>=0. Then q=Qn/Qd, where
+
+    Qn=(m-c)*(d-1)*h+3*(m+c)*(d+1),
+    Qd=(m+c)*(d+1)*(1+h)>0.
+
+Define the following polynomial after the indicated substitutions:
+
+    PD(a,b,e,h)=-sum_{j=0}^3 f_j*Qn^j*Qd^(3-j),
+    c=1+a, d=1+b, m=3+a+b+e.                      (324.3)
+
+Here a,b,e>0. The complete coefficient identity in Section 331
+expresses PD as 1,450 monomials with positive integer coefficients,
+including constant 56623104. Consequently PD>0 even when h=0.
+Since PD=-Qd^3*F(Qn/Qd), this contradicts F(q)>=0. Thus q>3 and
+
+    theta_D(tau)>2*pi/3, w>sqrt(3).                (324.4)
+
+We will also use a simpler consequence of (324.1). Its d counterpart
+is obtained by interchanging v,d, and the z derivative of N_e/D_e
+is negative. Increasing v,d to m-2 and decreasing z to m increases
+this algebraic cosine. The derivative signs hold on that entire
+comparison rectangle, with positive D_e; no genuine endpoint is
+required. At the endpoint
+
+    D_e-2*N_e=(m+1)*(7*m-9)>0.
+
+Hence theta_M(eta)>pi/3, and the retained M budget gives
+
+    beta_M(tau)<pi/3.                             (324.5)
+
+## 325. A strict quarter bound for the source companion
+
+The source flat inequality and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1,
+    c+d<m-2, d<m-c-2<m-3, m>4.                   (325.1)
+
+For the last assertion use c+d>2 and m>3. Define the source M
+cosine, as an algebraic function of z,d, by
+
+    C(z,d)=N(z,d)/sqrt(D(z)*D(d)),
+    N(z,d)=c*(z+d)+m*(z*d+c^2-m^2+1),
+    D(t)=t^2+m^2+c^2+2*t*m*c-1.                  (325.2)
+
+It increases strictly in both z,d. For example, its z-derivative
+has the sign of
+
+    N_z*D(z)-N*(z+m*c)
+      =(m^2-1)*[c*(d*z+m^2-c^2+1)+m*(d+z)]>0.
+
+The d derivative is symmetric. Positivity holds for z,d>1 and m>c,
+including outside the genuine angle domain.
+
+For this first bound set d0=m-c-1 and z0=Zb(m,m-2,d0). Then
+d<d0 and z<z0, so the actual source cosine is less than C(z0,d0).
+Suppose c>=m/4. Since c<m-2, write
+
+    m=4+b, b>0, c=[m/4+(m-2)*a]/(1+a), a>=0.
+
+Define the degree-six polynomial in c
+
+    A4(m,c)=m^2*(m-1)*[D(z0)*D(d0)-4*N(z0,d0)^2]
+           =sum_{j=0}^6 A4_j(m)*c^j,
+    P4(a,b)=4^6*sum_{j=0}^6 A4_j(m)
+              *[m/4+(m-2)*a]^j*(1+a)^(6-j), m=4+b. (325.3)
+
+The factor in A4 cancels its denominators exactly. Section 331 gives
+the complete expansion of P4: 69 positive integer coefficients and
+positive constant 314572800. Hence P4>0, so A4>0. Since D(z0),D(d0)
+are positive, |C(z0,d0)|<1/2. The actual source cosine is smaller,
+contradicting (324.5). Therefore
+
+    c<m/4.                                       (325.4)
+
+## 326. Coarse exact length bounds
+
+Solving w^2>3 from (324.4) for z gives
+
+    z>Z3(m,c,d)
+      :=[(2*d+1)*(m^2+c^2)+(2*d+4)*m*c+d^2-1]
+           /[2*(d^2-1)].                         (326.1)
+
+In fact (d-1)*Jt-3*(d+1)*Lt=4*(d^2-1)*(z-Z3). This Z3 increases
+with c and decreases with d. Its d derivative is
+
+    -[(m^2+c^2)*(d^2+d+1)+m*c*(d^2+4*d+1)]/(d^2-1)^2<0.
+
+Combine z<Zb, z>Z3, c>1, v<=m-2 and d<m-3. They require
+
+    Zb(m,m-2,m-3)-Z3(m,1,m-3)>0.
+
+This difference equals Nm/[2*m*(m-4)*(m-2)*(m-1)], where
+
+    Nm=2*m^5-34*m^4+124*m^3-121*m^2-109*m+192.
+
+If 4<m<=11, substitute m=(11+4*a)/(1+a), a>=0. Direct expansion is
+
+    -(1+a)^5*Nm((11+4*a)/(1+a))
+      =900*a^5+13383*a^4+74765*a^3+187297*a^2
+         +184925*a+26296>0,
+
+contradicting the positive difference. Thus m>11.
+
+If v<=6, the same monotonicity requires
+Zb(m,6,m-3)-Z3(m,1,m-3)>0. This difference is
+
+    -Nv/[2*m*(m-4)*(m-2)*(m-1)],
+    Nv=18*m^4-192*m^3+833*m^2-1331*m+576,
+    Nv(11+b)=18*b^4+600*b^3+7565*b^2+43131*b+94714>0.
+
+If d<=6, it instead requires Zb(m,m-2,6)-Z3(m,1,6)>0, equal to
+
+    -Nd/[70*m*(m-1)],
+    Nd=13*m^4-67*m^3+242*m^2-3618*m+1680,
+    Nd(11+b)=13*b^4+505*b^3+7469*b^2+46597*b+92320>0.
+
+Both are contradictions since b=m-11>0 and all denominators are
+positive. We have obtained the strict necessary bounds
+
+    m>11, v>6, d>6.                              (326.2)
+
+The positive weighted mean K therefore exceeds sqrt(35)/6. By
+bad-eta and z>m,
+
+    Le/Je>=sqrt((m-1)*(z-1)/[(m+1)*(z+1)])
+         >(m-1)/(m+1)>5/6,
+    y^2>(35/36)*(5/6)=175/216>81/100.
+
+The last difference is 1/5400, so y>9/10. This is not the stronger
+inequality y>1 or S(eta)>pi/2.
+
+## 327. A stronger affine source-companion bound
+
+Put ell(m)=6*m/25-3/2. For m>11, one has 1<ell(m)<m/4. We prove
+
+    c<ell(m).                                    (327.1)
+
+Suppose instead ell(m)<=c<m/4, and now set
+
+    d0=m-c-2, z0=Zb(m,m-2,d0).
+
+By (325.1), d<d0, and then (323.2) gives z<z0. The algebraic source
+cosine increases in both variables, so its actual value is below
+C(z0,d0). Define
+
+    AA(m,c)=m^2*(m-1)^2*[D(z0)*D(d0)-4*N(z0,d0)^2]
+           =sum_{j=0}^6 AA_j(m)*c^j.              (327.2)
+
+This is a polynomial with its denominators exactly canceled. The
+contrary domain is parametrized by
+
+    m=11+b, b>0, c=[ell(m)+(m/4)*a]/(1+a), a>=0.
+
+Define
+
+    PA(a,b)=100^6*sum_{j=0}^6 AA_j(m)
+              *[ell(m)+(m/4)*a]^j*(1+a)^(6-j), m=11+b. (327.3)
+
+Its complete expansion in Section 331 has 77 positive integer
+coefficients and constant 2579520001436709588480. Thus PA>0 and
+AA>0. As before |C(z0,d0)|<1/2, contrary to (324.5). This proves
+(327.1) as a consequence of the original premises.
+
+## 328. A strict endpoint rho ratio
+
+Work at the genuine endpoint u0=z+m+1 of Section 323. Set
+
+    lambda=21/5, Q=v^2+d^2, T=v*d,
+    ac=(1+lambda)*c+(lambda-1)=(26*c+16)/5,
+    C0=ac*(m+1)+2*lambda*(c+1).
+
+Direct expansion gives
+
+    Lr-lambda*Jr=(1+lambda)*Q+2*(1-lambda)*T
+                    -ac*(z+m)-2*lambda*(c+1).
+
+Substitute the strict upper bound z<Zb. The resulting T coefficient
+is 2*(1-lambda)-2*ac/[m*(m-1)]<0. Hence using T<=Q/2 gives
+
+    Lr-lambda*Jr>[2-ac*(m+1)/(m*(m-1))]*Q-C0.      (328.1)
+
+The coefficient of Q is positive: (327.1) gives
+
+    ac<156*m/125-23/5<5*m/4,
+    (m+1)/(m-1)<6/5,
+
+so that coefficient exceeds 1/2. The inequalities z>Z3 and z<Zb,
+together with T<=Q/2, also give
+
+    Q>m*(m-1)/(m+1)*(Z3(m,c,d)-1).
+
+Since Z3 decreases with d and d<d0=m-c-2, (328.1) implies
+
+    Lr-lambda*Jr>G(m,c),
+    G=[2*m*(m-1)/(m+1)-ac]*(Z3(m,c,d0)-1)
+                         -ac*(m+1)-2*lambda*(c+1). (328.2)
+
+The denominator
+
+    5*(m+1)*(c-m+1)*(c-m+3)
+
+is positive because c<m/4 and m>11 make its last two factors
+negative. Multiplying G by this denominator gives the polynomial
+
+    BR(m,c)=sum_{j=0}^4 BR_j(m)*c^j.
+
+For m=11+b, b>0 and c=[1+ell(m)*a]/(1+a), a>=0, define
+
+    PR(a,b)=50^4*sum_{j=0}^4 BR_j(m)
+              *[1+ell(m)*a]^j*(1+a)^(4-j), m=11+b. (328.3)
+
+This parametrization covers 1<c<ell(m); allowing a=0 only adds
+the boundary c=1. Section 331 gives all 30 coefficients of PR,
+each a positive integer, with constant 1376937500000. Thus G>0 and
+Lr>(21/5)*Jr. Endpoint genuineness gives Jr>0, so
+
+    x^2=K^2*Lr/Jr>(35/36)*(21/5)=49/12>4,
+    x>2.                                         (328.4)
+
+## 329. The tangent branch and the original-slot contradiction
+
+We have x>2, y>9/10 and w>sqrt(3). Therefore xy>1. The ratio
+R=(xy-1)/(x+y) increases strictly with either positive variable:
+its derivatives are (y^2+1)/(x+y)^2 and (x^2+1)/(x+y)^2. Hence
+
+    R>8/29>2-sqrt(3)>sqrt(1+w^2)-w.               (329.1)
+
+The middle comparison follows from sqrt(3)>50/29, equivalently
+2523>2500. The last uses strict decrease of sqrt(1+w^2)-w.
+
+Since xy>1, atan(x)+atan(y) lies in (pi/2,pi), and
+
+    tan(atan(x)+atan(y)-pi/2)=R,
+    tan(pi/4-atan(w)/2)=sqrt(1+w^2)-w.
+
+Both arguments compared here lie in (0,pi/2). Thus (329.1) proves
+atan(x)+atan(y)>3*pi/4-atan(w)/2, equivalently
+
+    2*atan(w)+4*atan(x)+4*atan(y)>3*pi.
+
+This is (322.5) at the endpoint. The original u has a strictly larger
+rho transverse sum by Section 323, so (322.5) holds there as well.
+
+Its actual charge consists of one axial D slot of tau, two V and two
+D slots of rho, and two V and two D slots of eta. The owners are
+distinct, and the paired repetitions are distinct original occurrences.
+Thus the charge is a subset of the full genuine V/D sum, at most
+pi+2*pi. Additional owners cannot decrease it. This contradiction
+proves the theorem.
+
+## 330. Scope of the conditional exclusion
+
+The theorem excludes exactly the actual inventory (322.1) under
+(322.2)–(322.4), including eta's axes M,Z and its bad-eta inequality.
+It does not force that inventory, handle eta with axes Z,U, or treat
+the other source inventory or all remaining source-face configurations.
+In particular it is not a six-edge flat-exclusion theorem or a general
+geometric-realization theorem. Scalar constraints are used only as
+necessary conditions; no scalar assignment is claimed to construct a
+face pairing or complete actual normal circles.
+
+The endpoint comparison changes only a local response for the purpose
+of a lower bound. The complete actual partial M budget and all six
+strict genuine tests are explicit premises. The proof does not replace
+the combined V/D charge by a separate V-only assertion or assume
+S(eta)>pi/2. The maximum-gap result supplies the relevant actual
+upper gap u<z+m+1; no lower gap or missing C,Z,U capacity is used
+to strengthen the scalar implication.
+
+## 331. Complete exact polynomial coefficient identities
+
+The following finite identities specify every coefficient of the four
+polynomials in (324.3), (325.3), (327.3) and (328.3). They use only
+integer coefficients and the rational substitutions displayed there.
+They can be reconstructed by ordinary multiplication and collection
+of powers; no angle approximation or sampling is involved.
+
+For PD, a row i,j,k : (r0,r1,r2,r3) denotes
+
+    a^i*b^j*e^k*(r0+r1*h+r2*h^2+r3*h^3).
+
+PD is the sum of exactly the rows below. All omitted triples have
+zero coefficient. Within a row all four h coefficients, including
+zeros, are given. There are 1,450 nonzero coefficients, with minimum
+8, maximum 7064551424 and constant 56623104. Every displayed entry
+is nonnegative, and the constant is positive, proving PD>0 on the
+nonnegative orthant and hence on the domain used in Section 324.
+
+PD coefficient rows:
+
+    0,0,0 : (56623104,0,0,0)
+    0,0,1 : (127401984,0,0,0)
+    0,0,2 : (123863040,0,0,0)
+    0,0,3 : (68124672,0,0,0)
+    0,0,4 : (23224320,0,0,0)
+    0,0,5 : (5031936,0,0,0)
+    0,0,6 : (677376,0,0,0)
+    0,0,7 : (51840,0,0,0)
+    0,0,8 : (1728,0,0,0)
+    0,1,0 : (297271296,21233664,0,0)
+    0,1,1 : (634650624,56033280,0,0)
+    0,1,2 : (585990144,63111168,0,0)
+    0,1,3 : (306266112,39739392,0,0)
+    0,1,4 : (99256320,15344640,0,0)
+    0,1,5 : (20450304,3730176,0,0)
+    0,1,6 : (2618496,558720,0,0)
+    0,1,7 : (190656,47232,0,0)
+    0,1,8 : (6048,1728,0,0)
+    0,2,0 : (712900608,110493696,3932160,0)
+    0,2,1 : (1439662080,272498688,11010048,0)
+    0,2,2 : (1256718336,285769728,13172736,0)
+    0,2,3 : (620040192,166920192,8822784,0)
+    0,2,4 : (189242880,59586048,3634176,0)
+    0,2,5 : (36606336,13358592,947712,0)
+    0,2,6 : (4385088,1844160,153600,0)
+    0,2,7 : (297696,144000,14208,0)
+    0,2,8 : (8784,4896,576,0)
+    0,3,0 : (1031831552,262750208,19529728,196608)
+    0,3,1 : (1965522944,602099712,50266112,606208)
+    0,3,2 : (1613897728,583324672,54960128,798720)
+    0,3,3 : (745632768,312867584,33427456,588800)
+    0,3,4 : (211800960,101911168,12419072,266752)
+    0,3,5 : (37841472,20719808,2901760,76544)
+    0,3,6 : (4150432,2579936,419200,13696)
+    0,3,7 : (255568,180992,34496,1408)
+    0,3,8 : (6776,5520,1248,64)
+    0,4,0 : (1003438080,377929728,44089344,917504)
+    0,4,1 : (1798610944,798912512,103456768,2564096)
+    0,4,2 : (1380946944,708151296,102333440,3033088)
+    0,4,3 : (591376896,344376064,55803904,1985536)
+    0,4,4 : (153967104,100678336,18395648,788736)
+    0,4,5 : (24868128,18161952,3768832,195584)
+    0,4,6 : (2425104,1980752,471296,29760)
+    0,4,7 : (130112,119904,33120,2560)
+    0,4,8 : (2928,3096,1008,96)
+    0,5,0 : (690806784,366751744,59785216,1929216)
+    0,5,1 : (1162846208,708712448,126625792,4836352)
+    0,5,2 : (828746240,567787520,111894016,5070848)
+    0,5,3 : (324597248,246337984,53828096,2900224)
+    0,5,4 : (75892928,63253664,15410048,988928)
+    0,5,5 : (10760240,9828800,2688128,205888)
+    0,5,6 : (894320,900032,278976,25568)
+    0,5,7 : (39216,44088,15696,1728)
+    0,5,8 : (672,864,360,48)
+    0,6,0 : (345554944,253517824,54194176,2410496)
+    0,6,1 : (545581056,442655744,102329344,5351936)
+    0,6,2 : (357486336,315536256,79500032,4893696)
+    0,6,3 : (125749760,119564128,33029376,2393856)
+    0,6,4 : (25664416,26182512,7974976,680576)
+    0,6,5 : (3061088,3358072,1135328,114080)
+    0,6,6 : (202880,241600,91520,10832)
+    0,6,7 : (6464,8512,3664,512)
+    0,6,8 : (64,96,48,8)
+    0,7,0 : (126849024,128415744,34570240,1986560)
+    0,7,1 : (187844608,199554048,57283072,3843840)
+    0,7,2 : (111664896,123956544,38314880,3000832)
+    0,7,3 : (34371648,39846112,13354752,1219520)
+    0,7,4 : (5873592,7131776,2607040,277152)
+    0,7,5 : (551184,706152,283376,35008)
+    0,7,6 : (25824,35392,15736,2256)
+    0,7,7 : (448,672,336,56)
+    0,8,0 : (34080768,48263168,15898624,1132544)
+    0,8,1 : (47436288,65411328,22645504,1869952)
+    0,8,2 : (25080768,34406208,12672064,1210880)
+    0,8,3 : (6495648,8995416,3553408,392000)
+    0,8,4 : (869824,1231024,524800,66640)
+    0,8,5 : (56896,83392,38608,5624)
+    0,8,6 : (1408,2176,1104,184)
+    0,9,0 : (6599680,13460992,5306368,455168)
+    0,9,1 : (8684032,15470976,6315904,623168)
+    0,9,2 : (3956000,6609632,2836640,321024)
+    0,9,3 : (808576,1315344,599072,77488)
+    0,9,4 : (75200,122000,59352,8736)
+    0,9,5 : (2560,4224,2208,368)
+    0,10,0 : (892416,2752512,1274368,128768)
+    0,10,1 : (1123328,2574784,1216576,140256)
+    0,10,2 : (416976,836568,410768,53824)
+    0,10,3 : (59712,112384,57968,8592)
+    0,10,4 : (2880,5280,2880,480)
+    0,11,0 : (79488,401216,214528,25088)
+    0,11,1 : (97792,286192,153952,20368)
+    0,11,2 : (26464,62752,34696,5168)
+    0,11,3 : (1984,4256,2448,408)
+    0,12,0 : (4160,39488,24000,3200)
+    0,12,1 : (5184,19072,11504,1720)
+    0,12,2 : (768,2112,1296,216)
+    0,13,0 : (96,2352,1600,240)
+    0,13,1 : (128,576,384,64)
+    0,14,0 : (0,64,48,8)
+    1,0,0 : (226492416,0,0,0)
+    1,0,1 : (445906944,0,0,0)
+    1,0,2 : (371589120,0,0,0)
+    1,0,3 : (170311680,0,0,0)
+    1,0,4 : (46448640,0,0,0)
+    1,0,5 : (7547904,0,0,0)
+    1,0,6 : (677376,0,0,0)
+    1,0,7 : (25920,0,0,0)
+    1,1,0 : (1130102784,79036416,0,0)
+    1,1,1 : (2105671680,182255616,0,0)
+    1,1,2 : (1661681664,175767552,0,0)
+    1,1,3 : (721428480,92160000,0,0)
+    1,1,4 : (186393600,28454400,0,0)
+    1,1,5 : (28694016,5186304,0,0)
+    1,1,6 : (2439360,517824,0,0)
+    1,1,7 : (88416,21888,0,0)
+    1,2,0 : (2561409024,383188992,12386304,0)
+    1,2,1 : (4496080896,821723136,30326784,0)
+    1,2,2 : (3338575872,733925376,31125504,0)
+    1,2,3 : (1360914432,355003392,17433600,0)
+    1,2,4 : (329127936,100796928,5787648,0)
+    1,2,5 : (47251392,16869312,1145856,0)
+    1,2,6 : (3731616,1548384,125952,0)
+    1,2,7 : (125232,60480,5952,0)
+    1,3,0 : (3481518080,843096064,56836096,507904)
+    1,3,1 : (5729411072,1668907008,126992384,1368064)
+    1,3,2 : (3973292032,1366967808,118137856,1547264)
+    1,3,3 : (1504082944,602271488,59542016,956416)
+    1,3,4 : (335299648,154702400,17656832,351232)
+    1,3,5 : (43975072,23275296,3102976,77312)
+    1,3,6 : (3140432,1911024,301760,9536)
+    1,3,7 : (94280,66592,12640,512)
+    1,4,0 : (3155189760,1112494080,117604352,2174976)
+    1,4,1 : (4842954752,2014140416,237389824,5260288)
+    1,4,2 : (3108117504,1494461440,197656064,5282304)
+    1,4,3 : (1077332224,590142784,88201984,2861568)
+    1,4,4 : (216931424,134231968,22871808,907264)
+    1,4,5 : (25264656,17638736,3466624,169536)
+    1,4,6 : (1568344,1244744,286496,17440)
+    1,4,7 : (39792,36528,10032,768)
+    1,5,0 : (2004873216,979963904,144752640,4157440)
+    1,5,1 : (2854105088,1603857408,260684800,8913408)
+    1,5,2 : (1675608320,1061216256,191171840,7819008)
+    1,5,3 : (521922048,367715168,73943936,3634176)
+    1,5,4 : (92306288,71933680,16286720,966528)
+    1,5,5 : (9160856,7918120,2042176,147168)
+    1,5,6 : (464016,450600,134544,11856)
+    1,5,7 : (8928,9984,3528,384)
+    1,6,0 : (914114560,606750720,117671936,4667392)
+    1,6,1 : (1199428608,884224512,186082816,8727808)
+    1,6,2 : (634312704,511008512,117685120,6547328)
+    1,6,3 : (172961792,150932144,38326976,2536192)
+    1,6,4 : (25790728,24345240,6875136,542656)
+    1,6,5 : (2043200,2101728,667808,63088)
+    1,6,6 : (75136,85776,31192,3544)
+    1,6,7 : (832,1088,464,64)
+    1,7,0 : (300721152,270632960,66282496,3404800)
+    1,7,1 : (361167360,344176896,90140416,5436544)
+    1,7,2 : (168364416,168839392,47767232,3387840)
+    1,7,3 : (38660160,40760408,12559712,1048704)
+    1,7,4 : (4554208,5072984,1717248,168992)
+    1,7,5 : (255648,304720,114656,13320)
+    1,7,6 : (5120,6688,2848,392)
+    1,8,0 : (70694400,87587840,26374656,1684480)
+    1,8,1 : (77116416,94532224,29978752,2231232)
+    1,8,2 : (30666816,37762432,12767648,1107552)
+    1,8,3 : (5569680,6974176,2536912,256416)
+    1,8,4 : (460192,593840,234448,27600)
+    1,8,5 : (13696,18560,8048,1104)
+    1,9,0 : (11557120,20409600,7406336,571648)
+    1,9,1 : (11355136,17946688,6751552,602464)
+    1,9,2 : (3647312,5466736,2163952,222992)
+    1,9,3 : (466368,684992,288200,34240)
+    1,9,4 : (20224,29824,13456,1840)
+    1,10,0 : (1244544,3339392,1436800,131200)
+    1,10,1 : (1091968,2242144,984160,103024)
+    1,10,2 : (254880,462160,210680,25224)
+    1,10,3 : (17216,29376,14064,1920)
+    1,11,0 : (79104,364256,183168,19456)
+    1,11,1 : (61504,165872,83728,10104)
+    1,11,2 : (7936,17312,8960,1224)
+    1,12,0 : (2240,23792,13792,1680)
+    1,12,1 : (1536,5504,3152,432)
+    1,13,0 : (0,704,464,64)
+    2,0,0 : (396361728,0,0,0)
+    2,0,1 : (668860416,0,0,0)
+    2,0,2 : (464486400,0,0,0)
+    2,0,3 : (170311680,0,0,0)
+    2,0,4 : (34836480,0,0,0)
+    2,0,5 : (3773952,0,0,0)
+    2,0,6 : (169344,0,0,0)
+    2,1,0 : (1874460672,127991808,0,0)
+    2,1,1 : (2985099264,252592128,0,0)
+    2,1,2 : (1956741120,202752000,0,0)
+    2,1,3 : (677191680,84971520,0,0)
+    2,1,4 : (130705920,19664640,0,0)
+    2,1,5 : (13356288,2388672,0,0)
+    2,1,6 : (565056,119232,0,0)
+    2,2,0 : (4000481280,575373312,16515072,0)
+    2,2,1 : (5974179840,1050329088,34725888,0)
+    2,2,2 : (3665166336,776404992,29835264,0)
+    2,2,3 : (1183650816,298504704,13487616,0)
+    2,2,4 : (212372352,63220608,3407616,0)
+    2,2,5 : (20086272,7028832,459264,0)
+    2,2,6 : (783264,322464,25920,0)
+    2,3,0 : (5081169920,1164206080,69591040,532480)
+    2,3,1 : (7064551424,1947342848,132395008,1232896)
+    2,3,2 : (4014460928,1309309696,102119936,1171968)
+    2,3,3 : (1192312064,454456256,41114368,589312)
+    2,3,4 : (194965184,86270720,9183616,166912)
+    2,3,5 : (16624640,8544880,1089152,25536)
+    2,3,6 : (577392,347856,54112,1664)
+    2,4,0 : (4263567360,1398415360,130945024,2076672)
+    2,4,1 : (5472653312,2118065152,222579712,4267520)
+    2,4,2 : (2842967296,1275039232,151673856,3552512)
+    2,4,3 : (761762304,391229792,53251072,1540352)
+    2,4,4 : (110460512,64701056,10221376,369664)
+    2,4,5 : (8168608,5487496,1025088,47008)
+    2,4,6 : (238752,187128,42288,2496)
+    2,5,0 : (2479392768,1106974720,144787456,3572736)
+    2,5,1 : (2908547072,1495252992,216399360,6411008)
+    2,5,2 : (1357684224,789346176,127558016,4575488)
+    2,5,3 : (319591296,208042992,37943936,1662272)
+    2,5,4 : (39483632,28761232,6005600,324480)
+    2,5,5 : (2378928,1960584,477984,32208)
+    2,5,6 : (52512,50208,14664,1248)
+    2,6,0 : (1019011072,605775872,104100864,3555840)
+    2,6,1 : (1078732800,715137024,133965312,5454336)
+    2,6,2 : (441820032,321765248,66365184,3241984)
+    2,6,3 : (87872192,69873192,16041568,946592)
+    2,6,4 : (8676880,7564264,1961216,140864)
+    2,6,5 : (379360,368768,110224,9720)
+    2,6,6 : (4800,5376,1904,208)
+    2,7,0 : (295994880,233618944,50810368,2254080)
+    2,7,1 : (278108160,234406784,54706944,2871040)
+    2,7,2 : (96488832,86244912,21844320,1362848)
+    2,7,3 : (15231312,14448472,4016816,299440)
+    2,7,4 : (1068928,1087312,336752,30176)
+    2,7,5 : (25472,28448,10032,1088)
+    2,8,0 : (59650560,63431680,17032960,942720)
+    2,8,1 : (48605952,51934144,14719424,956128)
+    2,8,2 : (13491792,14634240,4435264,339280)
+    2,8,3 : (1505760,1678080,550384,49768)
+    2,8,4 : (56320,65696,23680,2544)
+    2,9,0 : (7991680,11872640,3868032,259776)
+    2,9,1 : (5451136,7434496,2512736,196400)
+    2,9,2 : (1086784,1423920,506920,46208)
+    2,9,3 : (64448,83584,31744,3384)
+    2,10,0 : (653952,1457920,568768,45408)
+    2,10,1 : (350272,620256,246560,22704)
+    2,10,2 : (38144,60416,24912,2648)
+    2,11,0 : (27168,105664,48832,4560)
+    2,11,1 : (9664,22880,10576,1128)
+    2,12,0 : (320,3424,1856,200)
+    3,0,0 : (396361728,0,0,0)
+    3,0,1 : (557383680,0,0,0)
+    3,0,2 : (309657600,0,0,0)
+    3,0,3 : (85155840,0,0,0)
+    3,0,4 : (11612160,0,0,0)
+    3,0,5 : (628992,0,0,0)
+    3,1,0 : (1771241472,117669888,0,0)
+    3,1,1 : (2343075840,193167360,0,0)
+    3,1,2 : (1224253440,123863040,0,0)
+    3,1,3 : (316477440,38891520,0,0)
+    3,1,4 : (40538880,5996160,0,0)
+    3,1,5 : (2060928,364032,0,0)
+    3,2,0 : (3544350720,487833600,12042240,0)
+    3,2,1 : (4373667840,736542720,21258240,0)
+    3,2,2 : (2125688832,432420864,14788608,0)
+    3,2,3 : (509154816,123902208,5109504,0)
+    3,2,4 : (60147840,17415936,883968,0)
+    3,2,5 : (2806080,966912,61632,0)
+    3,3,0 : (4182138880,901386240,46284800,286720)
+    3,3,1 : (4765831168,1236711424,73170944,561152)
+    3,3,2 : (2124701696,654403712,45191424,437504)
+    3,3,3 : (462634496,167641600,13748608,171520)
+    3,3,4 : (49123904,20915392,2081856,34240)
+    3,3,5 : (2032480,1025152,126880,2816)
+    3,4,0 : (3223203840,976517120,78471168,1009664)
+    3,4,1 : (3350097920,1198920192,109331968,1728256)
+    3,4,2 : (1345107456,560099072,58709632,1159808)
+    3,4,3 : (259305216,124728064,15290752,384320)
+    3,4,4 : (23823712,13279680,1948000,63520)
+    3,4,5 : (826080,542400,97872,4224)
+    3,5,0 : (1696877568,686086144,76964864,1544704)
+    3,5,1 : (1583104000,738633472,92544256,2263936)
+    3,5,2 : (558191104,296146112,41987712,1270784)
+    3,5,3 : (91639552,55032768,8985792,341728)
+    3,5,4 : (6849792,4694952,904176,43920)
+    3,5,5 : (178656,143232,33528,2112)
+    3,6,0 : (619308544,326206464,48084480,1339904)
+    3,6,1 : (507553280,299469056,48484864,1633408)
+    3,6,2 : (151441408,98893504,17829696,735680)
+    3,6,3 : (19894624,14373296,2938160,150512)
+    3,6,4 : (1078720,874688,207864,13400)
+    3,6,5 : (16064,15104,4304,352)
+    3,7,0 : (155504640,106131200,19824640,720000)
+    3,7,1 : (108514560,79766272,16079488,700096)
+    3,7,2 : (25815552,20327560,4488080,236944)
+    3,7,3 : (2418336,2052656,505784,32776)
+    3,7,4 : (71552,66912,18896,1520)
+    3,8,0 : (26027520,23290240,5387520,245120)
+    3,8,1 : (14714624,13432736,3291488,177968)
+    3,8,2 : (2497760,2345632,618792,40168)
+    3,8,3 : (125504,123264,35712,2816)
+    3,9,0 : (2714560,3292800,929344,51552)
+    3,9,1 : (1132800,1294704,379536,24792)
+    3,9,2 : (103872,115968,35952,2792)
+    3,10,0 : (153312,270272,92192,6112)
+    3,10,1 : (37120,54272,18832,1456)
+    3,11,0 : (3264,9760,4000,312)
+    4,0,0 : (247726080,0,0,0)
+    4,0,1 : (278691840,0,0,0)
+    4,0,2 : (116121600,0,0,0)
+    4,0,3 : (21288960,0,0,0)
+    4,0,4 : (1451520,0,0,0)
+    4,1,0 : (1042513920,67092480,0,0)
+    4,1,1 : (1099284480,87920640,0,0)
+    4,1,2 : (429004800,42209280,0,0)
+    4,1,3 : (73589760,8824320,0,0)
+    4,1,4 : (4688640,679680,0,0)
+    4,2,0 : (1946296320,254976000,5160960,0)
+    4,2,1 : (1902827520,305479680,7434240,0)
+    4,2,2 : (685830144,133521408,3987456,0)
+    4,2,3 : (108111360,25362816,953472,0)
+    4,2,4 : (6294144,1778304,86400,0)
+    4,3,0 : (2118338560,426705920,17960960,81920)
+    4,3,1 : (1894230016,460240128,22878208,134144)
+    4,3,2 : (618947072,179483904,10754432,83584)
+    4,3,3 : (87431680,30164032,2237760,23744)
+    4,3,4 : (4495552,1858368,175936,2624)
+    4,4,0 : (1484497920,412247040,27145216,258048)
+    4,4,1 : (1192786432,392263168,29948672,362624)
+    4,4,2 : (344375808,132748288,11998144,190272)
+    4,4,3 : (41989760,18981280,2088608,44512)
+    4,4,4 : (1802112,969696,134304,3936)
+    4,5,0 : (697374720,253033216,23250432,346112)
+    4,5,1 : (491453440,206568576,21595648,405632)
+    4,5,2 : (120724096,58257536,7079392,172128)
+    4,5,3 : (11956800,6656592,968112,31152)
+    4,5,4 : (384480,252672,45552,1968)
+    4,6,0 : (221301760,102151680,12331520,256000)
+    4,6,1 : (132045440,68703872,9252736,240064)
+    4,6,2 : (25971712,15142272,2326672,77264)
+    4,6,3 : (1865120,1231328,222576,9640)
+    4,6,4 : (34112,26304,5792,328)
+    4,7,0 : (46508160,27067840,4142080,112640)
+    4,7,1 : (22206080,14062544,2351872,79168)
+    4,7,2 : (3123936,2153168,403088,17184)
+    4,7,3 : (122560,93632,20272,1112)
+    4,8,0 : (6127680,4527680,859200,29440)
+    4,8,1 : (2106848,1614912,327728,13768)
+    4,8,2 : (160064,128800,28688,1512)
+    4,9,0 : (448960,432400,100448,4224)
+    4,9,1 : (85056,79360,19264,984)
+    4,10,0 : (13440,17888,5056,256)
+    5,0,0 : (99090432,0,0,0)
+    5,0,1 : (83607552,0,0,0)
+    5,0,2 : (23224320,0,0,0)
+    5,0,3 : (2128896,0,0,0)
+    5,1,0 : (391200768,24256512,0,0)
+    5,1,1 : (308109312,23777280,0,0)
+    5,1,2 : (79782912,7593984,0,0)
+    5,1,3 : (6806016,792576,0,0)
+    5,2,0 : (677412864,83939328,1290240,0)
+    5,2,1 : (491166720,74778624,1465344,0)
+    5,2,2 : (116476416,21638400,556800,0)
+    5,2,3 : (9042432,2047488,71424,0)
+    5,3,0 : (674139136,126001664,4035584,11264)
+    5,3,1 : (441839104,99999232,3986432,15872)
+    5,3,2 : (93603328,25531904,1307776,7680)
+    5,3,3 : (6392064,2113792,144256,1280)
+    5,4,0 : (423943680,107035904,5371904,31488)
+    5,4,1 : (244917760,73625600,4490240,37120)
+    5,4,2 : (44669696,15952768,1222848,14656)
+    5,4,3 : (2536128,1090176,109248,1920)
+    5,5,0 : (174183936,56195840,3941120,36480)
+    5,5,1 : (85478656,32186880,2677760,34560)
+    5,5,2 : (12639552,5559936,568608,10464)
+    5,5,3 : (535584,280896,36768,960)
+    5,6,0 : (46561024,18637696,1719040,22400)
+    5,6,1 : (18289856,8339840,890560,16000)
+    5,6,2 : (1959200,1023184,131360,3312)
+    5,6,3 : (47040,28928,4640,160)
+    5,7,0 : (7760832,3804064,445120,7680)
+    5,7,1 : (2184800,1183072,156352,3680)
+    5,7,2 : (127936,77504,12048,392)
+    5,8,0 : (725088,435472,63232,1392)
+    5,8,1 : (110912,70656,11296,336)
+    5,9,0 : (28480,21312,3792,104)
+    6,0,0 : (24772608,0,0,0)
+    6,0,1 : (13934592,0,0,0)
+    6,0,2 : (1935360,0,0,0)
+    6,1,0 : (91348992,5419008,0,0)
+    6,1,1 : (47738880,3529728,0,0)
+    6,1,2 : (6147072,562176,0,0)
+    6,2,0 : (145692672,16951296,172032,0)
+    6,2,1 : (69500928,9980928,148992,0)
+    6,2,2 : (8113152,1436160,32256,0)
+    6,3,0 : (131097600,22561792,480768,512)
+    6,3,1 : (55695360,11695616,353024,768)
+    6,3,2 : (5697024,1466880,64768,256)
+    6,4,0 : (72668160,16545280,556800,1280)
+    6,4,1 : (26503680,7263232,333568,1536)
+    6,4,2 : (2245248,748800,48768,384)
+    6,5,0 : (25350144,7210240,341760,1280)
+    6,5,1 : (7478016,2518464,157056,1152)
+    6,5,2 : (470976,191040,16320,192)
+    6,6,0 : (5417856,1864064,117120,640)
+    6,6,1 : (1155840,461632,36832,384)
+    6,6,2 : (41088,19488,2048,32)
+    6,7,0 : (645696,264128,21216,160)
+    6,7,1 : (75264,34880,3440,48)
+    6,8,0 : (32640,15776,1584,16)
+    7,0,0 : (3538944,0,0,0)
+    7,0,1 : (995328,0,0,0)
+    7,1,0 : (12128256,681984,0,0)
+    7,1,1 : (3151872,221184,0,0)
+    7,2,0 : (17664000,1913856,9216,0)
+    7,2,1 : (4147200,559104,6144,0)
+    7,3,0 : (14161920,2227200,23040,0)
+    7,3,1 : (2903040,565248,12288,0)
+    7,4,0 : (6743040,1374720,23040,0)
+    7,4,1 : (1140480,285696,9216,0)
+    7,5,0 : (1903872,474240,11520,0)
+    7,5,1 : (238464,72192,3072,0)
+    7,6,0 : (294528,86592,2880,0)
+    7,6,1 : (20736,7296,384,0)
+    7,7,0 : (19200,6528,288,0)
+    8,0,0 : (221184,0,0,0)
+    8,1,0 : (700416,36864,0,0)
+    8,2,0 : (921600,92160,0,0)
+    8,3,0 : (645120,92160,0,0)
+    8,4,0 : (253440,46080,0,0)
+    8,5,0 : (52992,11520,0,0)
+    8,6,0 : (4608,1152,0,0)
+
+For each of P4,PA,PR, a row i : (r0,...,rn) denotes
+a^i*(r0+r1*b+...+rn*b^n). Each polynomial is the sum of its rows.
+All omitted coefficients are zero; internal zeros would be displayed.
+These identities in particular show positivity on a,b>=0.
+
+P4 coefficient rows:
+
+    0 : (314572800,862617600,999481344,642877440,252277248,62160384,9462912,828024,34218,300)
+    1 : (1584005120,4458053632,5376073728,3671259136,1573405696,441097216,81274848,9532696,648296,19536)
+    2 : (3077308416,8713535488,10582081536,7276156928,3133784576,878998912,160815456,18516032,1217056,34752)
+    3 : (3061579776,8774549504,10792640512,7512844288,3273002496,928100736,171781760,20076160,1349504,39936)
+    4 : (1724645376,5157027840,6635503616,4836632576,2207429120,656062464,127328256,15600640,1097216,33792)
+    5 : (556793856,1806237696,2499682304,1935181824,924071936,282288128,55111680,6612992,440320,12288)
+    6 : (84934656,300810240,440156160,348930048,164888576,47808512,8339456,802816,32768)
+
+PA coefficient rows:
+
+    0 : (2579520001436709588480,2304659822504944402048,912393902132832733440,210299251563395316352,31147968480084581376,3081746336014652416,204567095681630208,8867591799470080,233567340531712,3155214319616,12919095296)
+    1 : (26442106011838635264000,23953198019794771334400,9600687464012774979200,2237568183490877846400,334737655692913846400,33416312017475196800,2235775773783622400,97565180260851200,2582278677606400,34912679782400,140479692800)
+    2 : (82139111351704176120000,76436165161828752340000,31359053438302199640000,7459658180121741560000,1136350035858647320000,115285583296571700000,7825332856853720000,345873275696160000,9255105203040000,126136434240000,505916160000)
+    3 : (119534022468891402000000,114868457530700900000000,48421302894696027000000,11790377266243475000000,1833125549685310000000,189372629193180000000,13063731800095000000,585807991403000000,15875336438000000,218553618000000,877304000000)
+    4 : (90952188117481200000000,90630731452978046875000,39351062280216306250000,9823571422107853125000,1560567529024725000000,164300249388153125000,11527353757956250000,524807235796875000,14414547687500000,200640450000000,807425000000)
+    5 : (35158488449271562500000,36479346803437343750000,16348784057118203125000,4188970419841796875000,680380662809296875000,73034615826796875000,5213380366015625000,241063375390625000,6713518203125000,94533671875000,381718750000)
+    6 : (5462912364319335937500,5929079201063964843750,2748204682549804687500,723382100013671875000,120178125908203125000,13155973473632812500,955634173828125000,44888443359375000,1267913085937500,18067871093750,73242187500)
+
+PR coefficient rows:
+
+    0 : (1376937500000,1235150000000,353456250000,45375000000,2725000000,62500000)
+    1 : (5068874500000,4007224625000,1075910250000,132344250000,7695500000,172000000)
+    2 : (6952018730000,4636908095000,1134903325000,131541880000,7345140000,159720000)
+    3 : (4205107639400,2192440592600,455341649000,47157652400,2437511200,50329600)
+    4 : (945026658512,327612321794,42905960896,2601218944,70598816,648736)
+
+The P4 coefficients have minimum 300 and maximum 10792640512;
+the PA coefficients have minimum 12919095296 and maximum
+119534022468891402000000; the PR coefficients have minimum 648736
+and maximum 6952018730000. Their respective positive constants are
+314572800, 2579520001436709588480 and 1376937500000. All four
+identities retain the entire clearing factors specified in their
+definitions, so each positivity conclusion has exactly the sign
+used in the corresponding proof. QED.
