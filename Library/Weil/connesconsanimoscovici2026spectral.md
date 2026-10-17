@@ -8230,3 +8230,195 @@ made about an actual smaller-charge center, full-border or cofinal
 positivity, Robin or RH. This is an application of known interpolation,
 scalar algebra and the existing physical certificates; no generic
 theorem, novelty or Lean proof is asserted.
+
+
+### Bound the value of further response-only refinement
+
+The cached-source response is now localized, but both paid lower
+certificates remain negative. Before requesting a narrower response,
+keep the same source, finite parameters, transported-theta endpoints,
+prices and directed quadratic coefficients. Only a nonempty closed
+subinterval $J\subseteq I=[z_-,z_+]$ may change, including a singleton.
+This restriction defines the certificate algorithm being tested; it
+places no new restriction on the actual source.
+
+For each saved theta endpoint $e$ and each of the two saved recipes,
+write its rational coefficient lower model as
+
+$$
+q_{e,J}(z)=A_ez^2+2B_ez+C_e-2R_e\sup_{u\in J}|u|,
+\qquad A_e>0,\quad R_e\ge0.
+$$
+
+Whenever the actual response also satisfies $\zeta\in J$, the
+previous derivation gives a valid LOWER certificate
+
+$$
+L(J)=\min_e\min_{z\in J}q_{e,J}(z).
+$$
+
+The algebraic ceiling below holds for every such subinterval, including
+ones that are not established to contain the actual response. Those
+unjustified subintervals do not supply actual energy lower bounds.
+
+Removing the nonnegative linear-radius debit gives the more optimistic
+polynomial $p_e(z)=A_ez^2+2B_ez+C_e$. For every $z\in I$, write
+$z=(1-t)z_-+tz_+$, $0\le t\le1$. Direct expansion yields
+
+$$
+p_e(z)=(1-t)p_e(z_-)+tp_e(z_+)
+-A_et(1-t)(z_+-z_-)^2
+\le U_e:=\max\{p_e(z_-),p_e(z_+)\}.
+$$
+
+Thus, for EVERY allowed refinement, without choosing its endpoints,
+
+$$
+L(J)\le\min_eU_e.
+$$
+
+If $L_0$ is the already retained lower certificate for that recipe,
+retaining it after a refinement gives
+
+$$
+\boxed{
+\max\{L_0,L(J)\}
+\le C_{\rm cert}:=\max\{L_0,\min_eU_e\}.
+}
+$$
+
+The right side bounds the output strength of this unchanged LOWER
+certificate algorithm. It is not an upper bound for the actual energy,
+a constructed negative row or an exclusion of the paid family itself.
+A strictly negative $C_{\rm cert}$ excludes positive certification by
+response-only narrowing, even with exact knowledge of the response.
+A nonnegative ceiling leaves this diagnostic inconclusive. Recomputing
+coefficients, changing theta constraints, prices, projections or joint
+source information lies outside this statement.
+
+The exact-rational application gives the following directed displays.
+Lower certificates round down; certificate CEILINGS round up. The
+saved fractions remain authoritative.
+
+| Quantity | Fixed recipe | Energy-endpoint recipe |
+|---|---:|---:|
+| Current retained lower, rounded down |$-0.472489776$|$-0.674685242$|
+| Optimistic ceiling at lower theta endpoint |$<-0.472470198$|$<-0.674665225$|
+| Optimistic ceiling at upper theta endpoint |$<-0.460850945$|$<-0.663035940$|
+| Retained scalar-refinement certificate ceiling |$<-0.472470198$|$<-0.674665225$|
+
+Both recipe flags are true: with the specified coefficients and all
+other inputs fixed, no response-only interval refinement can make
+these lower certificates positive. This includes a hypothetical exact
+response and even waives the nonnegative linear-radius debit. The
+result does not exclude actual paid positivity or yield a negative
+physical source. It gives no restriction on a new bound that changes
+the projection, directed coefficients, prices or joint source
+constraints.
+
+The single exact-rational application stores assembly time<0.041523
+seconds, excluding serialization. Its eight endpoint evaluations and
+two retained caps are new; the original plane and source suppliers
+are not repeated.
+
+The [source, exact rational packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/b4c455e129b6958ab07493ce78847369b5c56f16/docs/reports/weil-c27)
+retain source SHA256 `bc523a5b5392e37f6cbcbb8da27151a39cd3f2e216633e01bb51ff03cd1e1baf` and packet SHA256
+`f4e444527b6e471b710734e702d9d31067a73eac59cab985a358900213729f1a`. The new application reads only the accepted response
+packet and uses exact rational endpoint arithmetic. It performs eight
+new polynomial endpoint evaluations and two recipe caps, with no
+plane-floor call, old scientific producer/accepted fixture replay or
+parameter/source/precision/cutoff scan. This applies elementary
+convexity; no generic theorem, novelty or Lean proof is claimed.
+
+#### A source-dependent complement is a different missing supplier
+
+The preceding ceiling does not constrain an improved projection using
+new joint information. To specify one such missing quantity, keep the
+SAME actual finite form $Q=Q_\varepsilon$, $b=-Q(y_0,y_0)>0$ and
+$v=\rho+(g/b)y_0$, with $a=Q(v,v)>0$. In this subsection write
+$\theta:=Q_\varepsilon(f,y_0)=\theta_\varepsilon$ for the transported
+response, rather than the earlier $Q_R$ response. Set
+
+$$
+s=Q(f,v)=\gamma\zeta+\omega\theta,\qquad
+f_\perp=f+(\theta/b)y_0-(s/a)v.
+$$
+
+Then $f_\perp$ is $Q$-orthogonal to $y_0,v$. Under the inherited
+negative-index-one contract its complement is nonnegative, and
+
+$$
+Q(f,f)=-\theta^2/b+s^2/a+R,\qquad
+R=Q(f_\perp,f_\perp)\ge0.
+$$
+
+Reuse the full comparison before projection, not merely its weaker
+lower bound $\mathcal E_{D,k}\ge F$. For $u=\alpha-\alpha_0$ and
+$x=y_0+f+u\rho$, the existing actual-form comparison is
+
+$$
+\mathcal E_{D,k}(\alpha)\ge k\alpha^2+D+Q(x,x).
+$$
+
+Keep $H=k+h>0$ and $A_0=k\alpha_0+g+c\theta+\gamma\zeta$.
+The exact square completion is
+
+$$
+k\alpha^2+D+Q(x,x)
+=H\left(u+\frac{A_0}{H}\right)^2+F(\theta,\zeta)+R.
+$$
+
+The old projection discards $R$. Since steering by $\rho$ stays in
+the retained plane, the same residual remains after minimizing the
+real steering coefficient, so
+
+$$
+\mathcal E_{D,k}(\alpha)\ge F(\theta,\zeta)+R.
+$$
+
+Consequently an independently certified common-source lower
+$R\ge r>0$ with $L(I)+r>0$ would make that paid comparison positive
+for every real steering coefficient. This condition is sufficient;
+no positive $r$ is supplied here, and it is not a necessary condition
+for positivity of the actual comparison. Here $L(I)$ must lower this
+same $F$; the residual cannot be added to a separate earlier bound
+whose derivation did not retain this decomposition.
+
+For a concrete further real reference row $e$ in this controlled form
+domain, remove its SAME-plane
+components:
+
+$$
+e_\perp=e+\frac{Q(e,y_0)}b y_0-\frac{Q(e,v)}a v,
+\qquad T=Q(e_\perp,e_\perp)>0.
+$$
+
+On the nonnegative complement, the standard Cauchy inequality gives
+
+$$
+R\ge\frac{|Q(f,e_\perp)|^2}{T},
+$$
+
+with the common-source cross
+
+$$
+Q(f,e_\perp)=Q(f,e)+\frac{\theta}bQ(y_0,e)
+-\frac{s}aQ(v,e).
+$$
+
+Thus a common-realization enclosure $\ell\in[\ell_-,\ell_+]$ for
+this cross and a positive upper $T\le T_{\rm up}$ would supply
+$r=\operatorname{dist}(0,[\ell_-,\ell_+])^2/T_{\rm up}$, provided
+the actual $T>0$ and all original form/source/physical conditions hold.
+If the cross interval contains zero this route supplies only $r=0$.
+The additional signed source response and the nondegenerate complement
+row are missing; assigning independent interval endpoints or naming a
+nonnegative residual does not supply either. A counterexample row from
+the older scalar relaxation lay in the retained plane and had $R=0$;
+its already documented exclusion does not prove a positive lower for
+the actual source's residual.
+
+This is the existing negative-index-one projection and Cauchy argument
+applied to a stated missing interface. It neither constructs a new
+physical row nor proves actual paid/center/full-border/good-block or
+cofinal positivity, Robin or RH.
