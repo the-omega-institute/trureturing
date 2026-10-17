@@ -17,7 +17,7 @@ internal sealed class LengthGramSideTraceDocument : IScribeDocumentDefinition
                 DescribeId.Create("cycle-edge-hull"),
                 DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/LengthGramSideTrace.cycle_edge_hull"),
                 H("Two supporting traces recover the corresponding closed edge"),
-                StatementSource.FromAuthor(F.Disp(F.Id("cycle_edge_hull"))),
+                StatementSource.FromAuthor(F.Disp(F.Id("cycleEdgeHull"))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("The endpoint support classification identifies exactly two original ordered endpoints "
