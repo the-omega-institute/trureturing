@@ -1,0 +1,4 @@
+## 75. A quartic prime family excluded from the depth-three role
+
+The construction below is an elementary rational-conic parametrization, not a new general method for constructing theta-congruent twists. This application supplies explicit certificates for Theorem 74.3 while retaining the original golden blocks. General twist-point parametrizations via products of linear factors modulo squares are classical: see M. Kan, *theta-congruent numbers and elliptic curves*, Acta Arith. 94(2) (2000), 153–160, lemma proof on p.154, [primary journal text](https://matwbn.icm.edu.pl/ksiazki/aa/aa94/aa9422.pdf). All identities and local-unit assertions needed here are proved below.
+
