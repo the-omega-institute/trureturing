@@ -72,7 +72,10 @@ internal sealed class StochasticGeneratorSetRefutationDocument : IScribeDocument
                             + "finite product from gen, indivisibility would let permutation factors be removed "
                             + "until a row and column permutation of A belonged to gen, a contradiction. "
                             + "In particular A is not a product of twenty generators, so claim is false."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vom-ende-shahbeigi-2024-stochastic-generator-set-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula, string prose) =>
