@@ -3427,3 +3427,1232 @@ quantum-first AURIC FIB ATOM programme through 2027 is unchanged
 and remains open.
 
 ## 追加锚（本行以下为增补区）
+
+## 32. Pure endpoint data at small saturated coefficient mass
+
+**Assumption 32.1 (same source, same law and separate face entry).** Retain
+Assumption 23.1, all nine source rows of GC Definition 6.1, and the
+complete original comparison class of Assumption 1.1. In §§32–35, fix a
+finite $t\ge t_0$, a feasible request $r$, and one common law $\pi$ with
+$\int_X\Gamma\,d\pi=B(t)$ and $K(\pi)\ge r$. All quantities are those
+of (FC.1)–(FC.3), (FC.55)–(FC.58) and (FC.81)–(FC.83). In particular,
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$, $b_x=t\mathfrak c(h)\xi$,
+$k=|u|$ and $g_t=|\ell+b_xf|$ use the same law. The source enclosures
+bound expressions at the stipulated root; they do not supply existence,
+isolation, Jacobian, ranks, root TP, minimax, sharp JOINT cost,
+unaveraged equality, full-complex rigidity, capacity or the constructor.
+
+Only the contact and inertia conclusions in §34 additionally assume
+Assumption 28.1: a supplied finite, entire-cylinder feasible, jointly
+attained dual with $\lambda>0$, and its complete inventory and groups.
+No finite-dual existence or boundary attainment is inferred. Write
+$\ell_-(x)=\max\{-\ell(x),0\}$, where $x=(u,v)^T\in S^1$.
+
+**Definition 32.2 (endpoint projections and residual angular moments).**
+Define measures on the directed circle by
+
+$$
+\rho_0(D)=\int_{D\times[0,1]}(1-\xi)\,d\pi,\qquad
+\rho_1(D)=\int_{D\times[0,1]}\xi\,d\pi,\qquad
+S=\rho_1(S^1),\qquad P=1-S.
+\tag{FC.130}
+$$
+
+Here $S$ is saturated endpoint coefficient mass. It is not physical
+failure or acquisition probability. Set
+
+$$
+\begin{gathered}
+m=\int x\,d\rho_0=-\int x\,d\rho_1,\qquad
+\Sigma=\int xx^T\,d\rho_0
+=\operatorname{diag}(\alpha,\beta)-\int xx^T\,d\rho_1
+=\begin{pmatrix}U_0&C_0\\C_0&V_0\end{pmatrix},\\
+k_0=\int|u|\,d\rho_0,\qquad
+H_-(\pi)=\int\ell_-\,d\rho_0
+=\int_X(1-\xi)\ell_-\,d\pi,\qquad \varepsilon_0=\frac1{30000}.
+\end{gathered}
+\tag{FC.131}
+$$
+
+The angular entries $U_0,V_0$ differ from the source quantities $V,W$.
+Endpoint projection means the comparison (FC.110), with these two
+measures on sheets $0,1$; it preserves all $\Gamma$ and $K$, and its
+height is at least $J_t(\pi)$ by (FC.108). It does not identify the
+original fractional actual labels with endpoint labels.
+
+**Theorem 32.3 (exact pure replacement with a strict height estimate).**
+Under Assumption 32.1, if $S\le1/100$, there is a measure
+$\widehat\rho_0$ on at most six directed circle points such that
+
+$$
+\begin{gathered}
+\int1\,d\widehat\rho_0=P,\quad
+\int x\,d\widehat\rho_0=m,\quad
+\int xx^T\,d\widehat\rho_0=\Sigma,\quad
+\int|u|\,d\widehat\rho_0=k_0,\quad
+\int\ell_-\,d\widehat\rho_0>\varepsilon_0.
+\end{gathered}
+\tag{FC.132}
+$$
+
+Keeping the entire original saturated endpoint measure $\rho_1$, the
+comparison $\widehat\pi=\widehat\rho_0\otimes\delta_0+
+\rho_1\otimes\delta_1$ has exactly the original $\int\Gamma$ and
+$K(\pi)$, legal pointwise capacity, and
+
+$$
+J_t(\widehat\pi)-J_t(\pi)
+>2\bigl(\varepsilon_0-H_-(\pi)\bigr),\qquad
+\Delta_\pi=R_t(r)-J_t(\pi)
+>2\bigl(\varepsilon_0-H_-(\pi)\bigr).
+\tag{FC.133}
+$$
+
+The right side need not be positive when $H_-(\pi)>\varepsilon_0$.
+This is an unrestricted comparison, with no claim of preserving the
+number of actual labels. For a nonfinite coefficient measure,
+$\widehat\pi$ retains all of $\rho_1$ algebraically. An admitted finite
+physical comparison with the same full target, exact $K$ and the same
+replacement value $J_t(\widehat\pi)$ follows from GC Proposition 12.2; it need
+not retain the entire saturated measure. The explicit construction and
+strict estimate are proved in §33.
+
+## 33. Directed six-point construction preserving the original contrast
+
+**Proof of Theorem 32.3.** First, $S\le0.01$, (FC.32), and the same-law
+identities (FC.131) imply
+
+$$
+\begin{gathered}
+P\ge0.99,\quad U_0>0.866,\quad
+\lambda_{\min}(\Sigma)>0.111,\quad
+\|m\|\le0.01,\quad |C_0|\le S/2\le0.005,\\
+\omega_0:=\Sigma^{-1}m,\qquad \|\omega_0\|<1/11.
+\end{gathered}
+\tag{FC.134}
+$$
+
+Indeed $\int xx^T d\rho_1\preceq SI_2$, its $uv$ entry has
+absolute value at most $S/2$, and $\|\int x d\rho_1\|\le S$.
+These inequalities use the one original law, including its odd moments.
+Also $u^2\le|u|$ and Cauchy–Schwarz give
+$U_0\le k_0\le\sqrt{PU_0}$. The identity
+$(u^2,uv)=|u|(|u|,\operatorname{sgn}(u)v)$ and the vector triangle
+inequality give $U_0^2+C_0^2\le k_0^2$; the value at $u=0$ is zero.
+Thus define
+
+$$
+a_0=U_0/k_0,\quad b_0=\sqrt{1-a_0^2},\quad
+T_0=k_0^2/U_0,\quad Z_0=P-T_0\ge0.
+\tag{FC.135}
+$$
+
+Here $k_0,U_0,T_0>0$. These subscripts refer to the replacement
+construction, not the source $s_0$, high height $H_0$, or budget $t_0$.
+For $b_0>0$, put
+
+$$
+q_\pm=\frac12\left(T_0\pm\frac{C_0}{a_0b_0}\right).
+\tag{FC.136}
+$$
+
+Both are nonnegative because
+$T_0a_0b_0=\sqrt{k_0^2-U_0^2}\ge|C_0|$. Form an antipodally even
+measure $\nu_0$: put mass $q_+/2$ at each of
+$(a_0,b_0),(-a_0,-b_0)$, mass $q_-/2$ at each of
+$(a_0,-b_0),(-a_0,b_0)$, and mass $Z_0/2$ at each of $(0,\pm1)$.
+Its mass is $P$, its first moment is zero, and
+
+$$
+\int u^2\,d\nu_0=T_0a_0^2=U_0,\quad
+\int uv\,d\nu_0=a_0b_0(q_+-q_-)=C_0,\quad
+\int v^2\,d\nu_0=P-U_0=V_0,\quad
+\int|u|\,d\nu_0=T_0a_0=k_0.
+\tag{FC.137}
+$$
+
+If $b_0=0$, then $k_0=U_0$ and $C_0=0$. Instead put mass
+$U_0/2$ at each of $(\pm1,0)$ and $(P-U_0)/2$ at each of
+$(0,\pm1)$. This has the same data (FC.137). Delete zero masses
+and deduplicate coincident points; $Z_0=0$, $q_+=0$ or $q_-=0$
+requires no division by zero. Antipodes remain distinct directed points.
+
+Define the odd tilt
+
+$$
+d\widehat\rho_0(x)=(1+\omega_0\cdot x)\,d\nu_0(x).
+\tag{FC.138}
+$$
+
+Every retained multiplier is strictly greater than $10/11$. Odd
+integrands have zero integral against $\nu_0$. Hence (FC.138) preserves
+mass, second moments and the even function $|u|$, while its first
+moment is $\Sigma\omega_0=m$. It therefore preserves the complete
+pure angular Gram and the original pure contribution to $K$, rather
+than merely a subset of the moments.
+
+It remains to prove the strict negative-height margin. The bounds of
+§18 give, with $A_\ell=E_{\ell,11}$,
+
+$$
+\begin{gathered}
+A_\ell<0.00463,\quad \gamma_\ell<0.01058,\quad
+0<a_\ell<0.00032,\quad
+0.00504<l_u<0.00508,\quad0.01251<l_v<0.01274,\\
+a_0^2\ge U_0/P>\frac{0.876-S}{1-S}\ge\frac{0.866}{0.99},
+\qquad 0\le b_0<9/25.
+\end{gathered}
+\tag{FC.139}
+$$
+
+All decimals are exact terminating rationals. Since
+$a_0=\sqrt{1-b_0^2}\ge1-b_0^2$, the source height satisfies
+
+$$
+\ell(-a_0,-b_0)
+<-0.00041+0.01566b_0^2-0.01251b_0<-1/2500.
+\tag{FC.140}
+$$
+
+The last quadratic is convex on $[0,9/25]$ and both endpoint values
+are below $-1/2500$. If $b_0\le1/50$, the other left point obeys
+
+$$
+\begin{aligned}
+\ell(-a_0,b_0)
+&<-0.00041+0.01566b_0^2+0.01338b_0\\
+&\le-0.00041+0.01566/2500+0.01338/50\\
+&=-0.000136136<-1/10000.
+\end{aligned}
+\tag{FC.141}
+$$
+
+Here $0.01338$ bounds $2a_\ell+l_v$. For $b_0\le1/50$ all left
+points with $|u|=a_0$ have height below $-1/10000$. Their total
+mass after tilting is greater than $5T_0/11$. Consequently
+
+$$
+\int\ell_-\,d\widehat\rho_0
+>\frac{T_0}{22000}>\frac{433}{11000000}>\frac1{30000}.
+\tag{FC.142}
+$$
+
+This includes $b_0=0$. If $b_0>1/50$, then
+$T_0a_0b_0=k_0b_0>0.866/50=0.01732$, so
+$|C_0|/(T_0a_0b_0)<0.3$. Thus $q_+>7T_0/20$, and the tilted
+mass at $(-a_0,-b_0)$ is greater than $7T_0/44$. Equation (FC.140)
+gives instead
+
+$$
+\int\ell_-\,d\widehat\rho_0
+>\frac{7T_0}{110000}>\frac{3031}{55000000}>\frac1{30000}.
+\tag{FC.143}
+$$
+
+Since $\ell=x^TE_\ell x+l_u u+l_vv$, its signed integral is fixed by
+the matched moments. The identity $|\ell|=\ell+2\ell_-$ therefore
+gives the pure absolute-height gain
+$2(\int\ell_-d\widehat\rho_0-H_-(\pi))$. Keeping $\rho_1$ leaves
+all saturated contributions and all three failure moments unchanged.
+The preceding endpoint projection adds a nonnegative triangle gain.
+This proves the first inequality of (FC.133), including its strictness.
+The original $K$ is exactly retained, so the comparison still meets
+$K\ge r$, and remains active if the original law had $K=r$.
+
+For a nonfinite law, the replacement and unchanged $\rho_1$ define a
+mathematical endpoint measure. Apply the compact continuous
+$(\Gamma,k,g_t)$ representation of GC Proposition 12.2, exactly as
+in Theorem 27.1, to obtain a finite law preserving the full target,
+$K$ and the height of $\widehat\pi$. GC Proposition 10.1 then supplies an
+admitted finite comparison. This step need not preserve $\rho_1$ as
+a measure and asserts no general continuous-instrument or native bridge.
+Its height is at most $R_t(r)$, proving the second inequality of
+(FC.133). For finite $\pi$, the explicit construction itself retains
+its finite saturated law. Nonnegative interpolation of the original
+and comparison laws on their union also retains every $\Gamma$ and
+$K$; no such interpolation is claimed to use seven labels. $\square$
+
+## 34. Forced negative pure coordinates and the inertia of the attained remainder
+
+**Theorem 34.1 (mandatory negative pure endpoint mass).** Under
+Assumption 32.1, every height-optimal law with $S\le1/100$ satisfies
+
+$$
+H_-(\pi)>\frac1{30000},\qquad
+\rho_0\{\ell<0\}>\frac1{600}.
+\tag{FC.144}
+$$
+
+On a supplied complete positive-multiplier face for which every
+representation has $S\le1/100$, define
+
+$$
+\mathscr G_-^{\rm pure}
+=\{G\in\mathscr G:G\text{ contains a pure endpoint with }\ell<0\}.
+\tag{FC.145}
+$$
+
+Every optimal representation has positive pure-coordinate mass in this
+family. Every selection $Q\subseteq\mathscr G$ disjoint from it has
+$\mathcal P_Q=\varnothing$, even if $Q$ retains reverse groups from
+$\mathscr G_{\rm rev}$. The conclusion is independent of $|Q|$ and of
+$r\in[r_-,r_+]$. Occupying such a group only at its saturated coordinate
+is insufficient.
+
+Proof. Optimality makes $\Delta_\pi=0$ in (FC.133), forcing
+$H_->\varepsilon_0$. The source bounds show $E_\ell\succ0$:
+its diagonals exceed $0.00457,0.01481$ and
+$0.00457\cdot0.01481-0.00032^2>0$. Also $l_u+l_v<0.02$.
+Thus $\ell_-<0.02$ on the circle, giving the second strict inequality
+of (FC.144). On a supplied face, Theorems 3.3 and 4.2 collect every
+optimal law into the complete finite group data. In a merged group
+of mass $p$ and fraction $\xi$, its pure contribution to $H_-$ is
+$p(1-\xi)\ell_-$. This quantity is preserved by splitting and
+compatible merging. Every $w\in\mathcal P$ is multiplier optimal and
+is height optimal at its achieved $K$, by Theorem 4.2. A representation
+using no negative pure coordinate would have $H_-=0$, contradicting
+(FC.144). This excludes the whole coordinate face before choosing
+$r$. Positive group occupancy alone says nothing about its pure
+coordinate. In particular (FC.144) is not generally mass of actual
+$\xi=0$ labels: a compatible strict fractional label can supply it.
+It is neither acquisition nor failure probability. $\square$
+
+**Proposition 34.2 (exact capacity minimum and a sufficient finite range).**
+Under the source premises, the exact circle minimum is
+
+$$
+c_{\min}=\min\{N_u/D_u,N_v/D_v\}.
+\tag{FC.146}
+$$
+
+For every common law, $S\le\mu/(tc_{\min})$. Consequently
+$t\ge t_0$ and $t\ge100\mu/c_{\min}$ suffice to apply Theorem 34.1
+at its stated optimal-law and complete-face scopes. The uniform coarse sufficient
+range $t\ge30000$ also suffices.
+
+Proof. The ratio $(N_u u^2+N_v v^2)/(D_u u^2+D_v v^2)$ is the
+positive-denominator weighted mean of the two axial ratios, and both
+axes are present. Integrate $\xi\mathfrak c$ to get
+$\mu/t\ge c_{\min}S$. The coarse source rectangle of §18 gives
+
+$$
+V<\frac{0.35(0.707)^2}{(0.1459)^2}<8.22,\qquad
+W<\frac{0.50(0.810)^2}{(0.0987)^2}<33.68,
+\qquad \mu<0.879(8.22)+0.124(33.68)=11.4017<12.
+\tag{FC.147}
+$$
+
+Use the inherited uniform $\mathfrak c>1/25$ to get $S<300/t$.
+The dyadic $t_0$ interval in §24 is below $30000$; the coarse
+$t_0$ rectangle alone is not used to assert $t_0>250$. $\square$
+
+**Theorem 34.3 (indefinite or rank-one negative semidefinite remainder).**
+Assume the supplied complete jointly attained finite $\lambda>0$
+face of Assumption 28.1 and the range of Proposition 34.2. Then
+
+$$
+\lambda_{\min}(R_-)<0\le\lambda_{\max}(R_-),\qquad
+\det R_-\le0.
+\tag{FC.148}
+$$
+
+Thus $R_-$ is either indefinite or nonzero rank-one negative
+semidefinite. If singular, there is a unique directed negative-height
+pure contact $x_*$, on $\ker R_-$. Its saturated endpoint is also a
+contact with $\eta_1(x_*)\le0$, including zero. Their compatible group
+$G_*$ is mandatory, and after merging its mass $p$ and fraction $\xi$
+satisfy
+
+$$
+p(1-\xi)\ell_-(x_*)>1/30000.
+\tag{FC.149}
+$$
+
+If $R_-$ is indefinite, no compatible paired group contains a
+negative-height pure endpoint.
+
+Proof. Theorem 34.1 forces an occupied negative pure coordinate. At
+its contact $x$, choose $\epsilon=\operatorname{sgn}u$; then
+$F_{0,\epsilon,-}(x)=0$. Entire-circle feasibility gives
+
+$$
+0\le F_{1,\epsilon,-}(x)=N_c(x)x^TR_-x.
+\tag{FC.150}
+$$
+
+So there is a nonnegative quadratic direction. Proposition 28.4
+supplies an occupied reverse saturated contact with strictly negative
+quadratic value. These two directions prove (FC.148).
+
+In the singular case $R_-$ is nonzero rank-one negative semidefinite.
+Every negative pure contact must lie in its kernel by (FC.150).
+Theorem 11.1 puts negative pure heights in $u<0$, so at most one
+of the two directed points of this kernel line can qualify. The forced
+mass proves existence. At this point (FC.150) vanishes, hence the
+saturated negative signed test also vanishes. The opposite height test
+is nonnegative, and its difference is $-2D_c\eta_1$ there, so
+$\eta_1\le0$. The endpoints are compatible even at $\eta_1=0$.
+All negative pure-coordinate mass lies in this one group; (FC.144)
+gives (FC.149).
+
+For indefinite $R_-$, suppose a negative pure endpoint and its
+saturated endpoint formed a compatible group. Their maximizing
+negative signed tests vanish together; both angular derivatives vanish
+because both full-circle tests are smooth and nonnegative. The identity
+$F_1=D_cF_0+N_c x^TR_-x$ implies $x^TR_-x=0$ and its angular
+derivative is zero. The radial and tangent vectors span $\mathbb R^2$,
+so $R_-x=0$, contradicting invertibility. This excludes that paired
+fractional possibility, without excluding negative pure singletons or
+other compatible groups. No claim supplies a finite dual. $\square$
+
+## 35. A seven-low feasible law excluded from height optimality
+
+**Proposition 35.1 (same-source positive-height consumer).** Under
+Assumption 23.1, at $t=10^6$ there is an original feasible law with
+exactly seven positive supported low labels, retaining reverse saturated
+labels, all eight $\Gamma$ moments and full failure covariance $M$,
+but with $H_-=0$. At its achieved request $r=K$, Theorem 32.3 improves
+$J_t$ by more than $1/15000$, and improves the original HALF height
+by more than $1/30000$. This proves this specific law nonoptimal; it
+does not prove that another seven-low law cannot be optimal.
+
+Proof. Keep the four saturated $F$ directions of (GC.62), each of
+mass $q/4$, where $q=\nu/t$. Their failure covariance is exactly $M$.
+In angular coordinates the remaining pure Gram is
+
+$$
+M_0=\operatorname{diag}(P,U_0,V_0),\qquad
+P=1-q,\quad U_0=\alpha(1-qu_F),\quad
+V_0=\beta(1-qv_F),\quad P=U_0+V_0.
+\tag{FC.151}
+$$
+
+Here $0<q<10^{-4}$, $U_0/P<0.88$ and $V_0/P>0.1$.
+Let $c_0=\sqrt{99}/10$, $x_0=(-c_0,1/10)$, and
+$\widehat h_0=(1,x_0)^T$ in angular Gram coordinates. Define
+
+$$
+p_0=(\widehat h_0^TM_0^{-1}\widehat h_0)^{-1},\qquad
+R_0=M_0-p_0\widehat h_0\widehat h_0^T.
+\tag{FC.152}
+$$
+
+Then $R_0\succeq0$ has rank two, by conjugating with $M_0^{-1/2}$.
+It has the circle null-trace identity and kernel
+$M_0^{-1}\widehat h_0$. Its remaining circle rays therefore satisfy
+
+$$
+u=A_0+B_0v,\qquad
+A_0=\frac{U_0}{Pc_0},\quad B_0=\frac{U_0}{10V_0c_0},\qquad
+0<B_0<A_0<1.
+\tag{FC.153}
+$$
+
+This line meets the circle in two distinct right-hemisphere points:
+$A_0/\sqrt{1+B_0^2}<1$ gives two intersections and
+$A_0>B_0$ makes $u>0$. They span the residual range. For their
+lifts $h_+,h_-$ the cross value of
+$J=\operatorname{diag}(1,-1,-1)$ is
+$h_+^TJh_-=1-x_+\cdot x_->0$. The diagonal values are zero.
+Writing $R_0=[h_+,h_-]C[h_+,h_-]^T$ gives $C\succ0$; the
+null-trace identity forces $C_{12}=0$. Its two diagonal weights are
+therefore strictly positive. This proves the exact three-pure-atom
+representation, including positivity, without a fitted moment repair.
+
+The first point has slope $-1/\sqrt{99}<-1/10$, so Theorem 25.1
+gives $\ell(x_0)>0$. The other two heights are positive by Theorem
+11.1. Thus all three pure heights are positive and $H_-=0$.
+Among the four saturated directions, the two negative-slope antipodes
+have slope $-\sqrt{m_v/m_u}<-1/10$ and lie in $T^+$; they are
+actual reverse labels. Their endpoint signs are supplied by Theorem
+25.1. All seven weights are positive. The source rays for the pure
+atoms are $(1,u/\sqrt\alpha,v/\sqrt\beta)$: they must not be
+replaced by the angular lifts $(1,u,v)$ used in (FC.152).
+
+For explicit source bounds, outward evaluation on the nine dyadic rows
+using (FC.85), (FC.151)–(FC.153), and the two quadratic line/circle
+roots gives the following strict intervals. All endpoints are terminating
+rationals; the two residual weights are ordered by decreasing size.
+
+| Quantity | Strict outer interval |
+| --- | --- |
+| $q$ | $(0.000088545791,0.000088545792)$ |
+| $p_0$ | $(0.452511544764,0.452511544765)$ |
+| First residual pure weight | $(0.435956268638,0.435956268639)$ |
+| Second residual pure weight | $(0.111443640805,0.111443640806)$ |
+| Achieved $r=K$ | $(0.900557123965,0.900557123966)$ |
+| $J_t(\widehat\pi)-J_t(\pi)$ from (FC.135)–(FC.138) | $(0.001281691803,0.001281691804)$ |
+
+For example, the residual roots are exactly
+$v_\pm=(-A_0B_0\pm\sqrt{1+B_0^2-A_0^2})/(1+B_0^2)$,
+$u_\pm=A_0+B_0v_\pm$; their weights solve mass and first moments
+of $R_0$. Thus the displayed evaluations refer to specified rational
+and radical expressions. The general strict gain already follows from
+$H_-=0$ in (FC.133), without these narrower evaluations. The explicit
+replacement here retains the same four saturated atoms and the exact
+original $K$, and has six positive pure endpoints, hence ten endpoint
+low labels. GC Proposition 10.1 realizes both finite laws with one
+coherent high. The comparison is not a seven-label compression and is
+not an eight-low or nine-low necessity seed. $\square$
+
+## 36. The same-law reversal intensity and its physical effect
+
+**Definition 36.1 (original physical parameter map).** Retain Assumption
+23.1 without a dual or height-optimality assumption. In the notation of
+GC Definitions 2.1 and 3.1–3.2, set
+
+$$
+\begin{gathered}
+q_y=(64-y)/128,\quad a_f=\frac{d_s}{h_2\sqrt\beta},\quad
+b_f=\frac{b_s}{h_1\sqrt\alpha},\quad U=m_u=\alpha V,\quad
+V_2=m_v=\beta W,\quad \mu=U+V_2,\\
+Q_\Psi=\begin{pmatrix}-2/5&-39/20\\-39/20&1\end{pmatrix},\quad
+\Psi(x)=x^TQ_\Psi x,\quad \mathcal R_+=\{x\in S^1:\Psi(x)>0\}=T^+,\\
+S_\Psi=V_2-\frac25U>0,\qquad
+\sigma(D)=\int_{D\times[0,1]}b_x\,d\pi,\qquad
+n_h=(0,a_fv,-b_fu)^T.
+\end{gathered}
+\tag{FC.154}
+$$
+
+The physical amplitudes $a_f,b_f$ are positive; $V_2$ is an angular
+intensity moment, not the source $V$. The angular intensity $\sigma$
+is induced by this very coefficient law and its exact capacity, not
+chosen independently. Equations (FC.102) give
+
+$$
+\sigma(S^1)=\mu,\qquad \int xx^T\,d\sigma=\operatorname{diag}(U,V_2),
+\qquad \int\Psi\,d\sigma=S_\Psi.
+\tag{FC.155}
+$$
+
+Define the original eventual-failure subeffect
+
+$$
+F_{\rm rev}=\int_{\mathcal R_+}n_hn_h^T\,d\sigma
+=\int_{\{\Psi>0\}}b_xn_hn_h^T\,d\pi,
+\qquad 0\preceq F_{\rm rev}\preceq M.
+\tag{FC.156}
+$$
+
+Its first row and column are zero. Entries $(F_{\rm rev})_{11}$,
+$(F_{\rm rev})_{12}$ and $(F_{\rm rev})_{22}$ below use the original
+qutrit indices $1,2$ of its lower block. The event selects existing
+actual acquisition labels with $\Psi>0,\xi>0$ and eventual failure;
+$\xi=0$ contributes zero. Both slope boundaries $-1/10,4$ are outside
+the event. The full physical covariance is $M$ by (FC.121).
+
+For reference the following are strict expression enclosures on all
+nine original dyadic rows; their finite decimal endpoints are exact
+rationals. They retain the cancelled source formulas of §§18 and 24.
+
+| Expression | Strict outer interval |
+| --- | --- |
+| $\alpha$ | $(0.8777133308422014839928,0.8777133308422014839931)$ |
+| $\beta$ | $(0.1222866691577985160069,0.1222866691577985160072)$ |
+| $U$ | $(7.076262919311446428934,7.076262919311446428943)$ |
+| $V_2$ | $(4.080037925895587476536,4.080037925895587476552)$ |
+| $S_\Psi$ | $(1.249532758171008904959,1.249532758171008904978)$ |
+| $a_f^2$ | $(0.1217758933309529383928,0.1217758933309529383933)$ |
+| $b_f^2$ | $(0.0486802048269697681486,0.0486802048269697681488)$ |
+
+These intervals follow by (FC.85), the exact positive-denominator
+source formulas for $\alpha,\beta,V,W,a_f,b_f$, and outward rational
+operations. TP is still assumed only at the consistent root.
+
+**Theorem 36.2 (joint physical trace and intensity witnesses).** Every
+common law of Definition 36.1 satisfies
+
+$$
+\begin{gathered}
+\operatorname{tr}F_{\rm rev}\ge C_{\rm tr}
+:=S_\Psi L(b_f^2,a_f^2)
+=0.046934492735440449795\ldots,\\
+\sigma(\mathcal R_+)\ge I_\Psi
+:=\frac{20S_\Psi}{6+\sqrt{1717}}
+=0.52682112884988570054\ldots,
+\end{gathered}
+\tag{FC.157}
+$$
+
+where for $a,b>0$
+
+$$
+L(a,b)=\frac{200}{1681}\left[
+\frac25b-a+\sqrt{(a-\tfrac25b)^2+\frac{1681}{100}ab}\right].
+\tag{FC.158}
+$$
+
+The trace bound and the intensity bound are distinct. Intensity is not
+physical probability, and the trace of an effect is not a probability
+on an unspecified input. Each bound is sharp over feasible original
+common laws at $s=0$ for every finite $t\ge3000$, by §38.
+
+Proof. The elementary pointwise integration certificate used here is:
+if $\mathsf W\succeq0$, $\lambda>0$ and
+$\mathsf W-\lambda Q_\Psi\succeq0$, then
+
+$$
+\int_{\mathcal R_+}x^T\mathsf Wx\,d\sigma
+\ge\lambda\int_{\mathcal R_+}\Psi\,d\sigma
+\ge\lambda S_\Psi.
+\tag{FC.159}
+$$
+
+The second inequality uses the nonpositive contribution on $\Psi\le0$
+of the same measure. This is the mature moment-bound method of
+Bertsimas–Popescu, *Optimal inequalities in probability theory: A convex
+optimization approach*, [§2, Theorem 2.1 and proof](https://web.mit.edu/dbertsim/www/papers/MomentProblems/Optimal-inequalities-in-probability-theory-A-convex-optimization-approach-SIAM15.pdf).
+Here the weighted functional is proved directly; their indicator
+objective, interior conditions and strong duality are not assumed.
+
+For $\mathsf W=\operatorname{diag}(a,b)$,
+
+$$
+\det(\mathsf W-\lambda Q_\Psi)
+=ab+\lambda(2b/5-a)-\frac{1681}{400}\lambda^2.
+\tag{FC.160}
+$$
+
+Its positive root is (FC.158). At that root the first diagonal entry
+$a+2\lambda/5$ is positive and the determinant is zero, so the matrix
+is PSD of rank one. For larger $\lambda$ its determinant is negative.
+The trace integrand is $b_f^2u^2+a_f^2v^2$, giving the first bound.
+The largest eigenvalue of $Q_\Psi$ is $(6+\sqrt{1717})/20$; taking
+$\mathsf W=I_2$ gives the second bound. The $uv$ equation as well as
+both squared moments were used in $S_\Psi$; no independent marginal
+optimization has occurred. $\square$
+
+## 37. Sharp scalar witnesses on the twelve original histories
+
+**Theorem 37.1 (positive-sign probabilities and the original maximum).**
+For each original input of GC Definition 2.1,
+
+$$
+P^{\rm rev}_{y,\epsilon,\chi}
+=\operatorname{tr}(F_{\rm rev}\rho_{y,\epsilon,\chi})
+=\int_{\mathcal R_+}
+ (\chi a_f\sqrt{q_y}\,v-b_fu/\sqrt2)^2\,d\sigma.
+\tag{FC.161}
+$$
+
+It is independent of $\epsilon$. Put
+
+$$
+L_y^+=\frac{400}{1681}\left[
+\frac25a_f^2q_y-\frac12b_f^2+
+\frac{39}{10}a_fb_f\sqrt{q_y/2}\right],\qquad C_y^+=S_\Psi L_y^+.
+\tag{FC.162}
+$$
+
+At the stipulated source, $L_y^+>0$, and every feasible common law obeys
+
+$$
+P^{\rm rev}_{y,\epsilon,+1}\ge C_y^+,\qquad
+\max_{y,\epsilon,\chi}P^{\rm rev}_{y,\epsilon,\chi}\ge C_5^+.
+\tag{FC.163}
+$$
+
+The arithmetic sign average satisfies
+
+$$
+\overline P_y:=\tfrac12(P^{\rm rev}_{y,\epsilon,+1}
+                         +P^{\rm rev}_{y,\epsilon,-1})
+=q_y(F_{\rm rev})_{11}+\tfrac12(F_{\rm rev})_{22}
+\ge\overline C_y:=S_\Psi L(b_f^2/2,a_f^2q_y).
+\tag{FC.164}
+$$
+
+All seven physical scalar constants have these strict outer intervals;
+each numerator in the last two columns is divided by $10^{12}$.
+
+| Scalar | Value | Lower numerator | Upper numerator |
+| --- | --- | ---: | ---: |
+| $C_{\rm tr}$ | $0.046934492735440449795\ldots$ | 46934492735 | 46934492736 |
+| $C_5^+$ | $0.042300241764800747578\ldots$ | 42300241764 | 42300241765 |
+| $C_{16}^+$ | $0.036854112188807889317\ldots$ | 36854112188 | 36854112189 |
+| $C_{27}^+$ | $0.030891834186173803257\ldots$ | 30891834186 | 30891834187 |
+| $\overline C_5$ | $0.022250881537514215035\ldots$ | 22250881537 | 22250881538 |
+| $\overline C_{16}$ | $0.019438389443262815153\ldots$ | 19438389443 | 19438389444 |
+| $\overline C_{27}$ | $0.016381313626343393410\ldots$ | 16381313626 | 16381313627 |
+
+Thus all six $\chi=+1$ histories have probability greater than
+$0.030891834186$, and the maximum over the original twelve histories
+is at least $C_5^+$, or $4.2300241764800747578\ldots$ percent.
+The sign average is only an algebraic average of the specified original
+test states. It supplies no prior, randomized input, extra specimen or
+estimation procedure, and does not lower-bound both signs individually.
+Each scalar minimum, and the minimum of the twelve-history maximum,
+is attained by a finite feasible original law at $s=0,t\ge3000$.
+Different scalars can have different attaining laws. Sharpness among
+height-optimal laws at a prescribed request is not asserted.
+
+Proof. The lower two coordinates of the original input vector are
+$(\chi\sqrt{q_y},1/\sqrt2)$ and the first coordinate of $n_h$ is
+zero. This proves (FC.161), including independence of $\epsilon$.
+For the plus sign use
+
+$$
+k_y=(-b_f/\sqrt2,a_f\sqrt{q_y})^T,\qquad
+\mathsf W_y^+=k_yk_y^T,\qquad
+d_{\mathsf W}=\mathsf W_{11}-2\mathsf W_{22}/5+39\mathsf W_{12}/10.
+\tag{FC.165}
+$$
+
+The source intervals give $d_{\mathsf W_y^+}<0$, and
+
+$$
+\det(\mathsf W_y^+-\lambda Q_\Psi)
+=-\lambda d_{\mathsf W_y^+}-\frac{1681}{400}\lambda^2.
+\tag{FC.166}
+$$
+
+Its positive root is exactly $L_y^+$. The first diagonal entry there
+is positive, so the root gives a PSD matrix. Apply (FC.159).
+Averaging the two signs in (FC.161) cancels the cross term and uses
+$\operatorname{diag}(b_f^2/2,a_f^2q_y)$, giving (FC.164).
+The exact formulas, the nine source rows and the rational radical rule
+(FC.85) give the table by positive-denominator interval arithmetic.
+For example the corresponding $\lambda$ intervals are
+
+$$
+\begin{gathered}
+0.0375616344817884925064<L(b_f^2,a_f^2)<0.0375616344817884925066,\\
+0.0338528473849035410538<L_5^+<0.0338528473849035410540,\\
+0.0294943145330201090151<L_{16}^+<0.0294943145330201090152,\\
+0.0247227085357821406900<L_{27}^+<0.0247227085357821406902,\\
+0.0178073615053387801172<L(b_f^2/2,a_f^2q_5)<0.0178073615053387801174,\\
+0.0155565264825194047412<L(b_f^2/2,a_f^2q_{16})<0.0155565264825194047414,\\
+0.0131099513151791055261<L(b_f^2/2,a_f^2q_{27})<0.0131099513151791055262.
+\end{gathered}
+\tag{FC.167}
+$$
+
+The exact equality laws in §38 prove sharpness without a generic
+strong-duality premise. For $\mathsf W_5^+$, all reverse intensity is
+on a negative-slope line, so $F_{12}>0$. The plus sign is consequently
+maximizing, and $q_yF_{11}+F_{22}/2+2\sqrt{q_y/2}F_{12}$ increases
+with $q_y$. Since $q_5$ is largest, the maximum over all twelve is
+exactly $C_5^+$ in that law. $\square$
+
+## 38. Exact finite equality lifts with the complete original common law
+
+**Theorem 38.1 (three-line intensity and positive residual lift).** For
+any one of the seven scalar certificates of §§36–37, and separately
+for the intensity certificate $\mathsf W=I_2$, its lower bound is
+attained by an original finite common law at every $s=0,t\ge3000$.
+The lift preserves all eight $\Gamma$ equations, the full live Gram
+$I_3$, the full failure covariance $M$, pointwise capacity and $K\ge0$.
+
+Proof. Let $\lambda$ be the appropriate value in (FC.158) or (FC.162).
+Choose the kernel slope of $\mathsf W-\lambda Q_\Psi$:
+
+$$
+z_*=-\frac{\mathsf W_{11}+2\lambda/5}
+                 {\mathsf W_{12}+39\lambda/20}.
+\tag{FC.168}
+$$
+
+For these source-specific tests the denominator is positive. Substitution
+with the source intervals gives the following strict enclosures.
+
+| Test | Kernel slope interval |
+| --- | --- |
+| Trace | $(-0.870,-0.869)$ |
+| Sign average, $y=5$ | $(-0.907,-0.906)$ |
+| Sign average, $y=16$ | $(-1.008,-1.007)$ |
+| Sign average, $y=27$ | $(-1.158,-1.157)$ |
+| Plus sign, $y=5$ | $(-1.304,-1.303)$ |
+| Plus sign, $y=16$ | $(-1.495,-1.494)$ |
+| Plus sign, $y=27$ | $(-1.808,-1.807)$ |
+
+They all satisfy $z_*<-\max\{1/10,V_2/(4U)\}$. The $\mathsf W=I_2$
+case has $z_*<-1$ and satisfies the same inequality. Set
+$z_1=z_*,z_2=-1/10,z_3=4$, and for $\{i,j,k\}=\{1,2,3\}$ put
+
+$$
+d_i=\frac{V_2+z_jz_kU}{(z_i-z_j)(z_i-z_k)},\qquad
+x_i=(1,z_i)^T/\sqrt{1+z_i^2}.
+\tag{FC.169}
+$$
+
+All $d_i$ are strictly positive. The numerator for $d_1$ is
+$S_\Psi>0$, and its denominator is positive. For $d_2$ the numerator
+$V_2+4z_*U$ and denominator are both negative. For $d_3$ the numerator
+$V_2-z_*U/10$ and denominator are both positive. Interpolating the
+polynomials $1,z,z^2$ at these three distinct slopes, or substituting
+(FC.169) directly, gives
+
+$$
+\sum_i d_i=U,\qquad \sum_i z_id_i=0,\qquad
+\sum_i z_i^2d_i=V_2.
+\tag{FC.170}
+$$
+
+Give each directed point $\pm x_i$ intensity mass
+$d_i(1+z_i^2)/2$. This finite intensity measure has exactly (FC.155).
+Only the $z_*$ antipodal pair lies in $\mathcal R_+$; the other
+four points lie on $\Psi=0$. On the reverse pair
+$x^T(\mathsf W-\lambda Q_\Psi)x=0$, and there is no negative
+$\Psi$ contribution off it. Thus equality holds in (FC.159).
+
+Now lift this intensity to the original coefficient law. For each of
+its six directed atoms with intensity $s_i>0$, set
+
+$$
+h_i=(1,u_i/\sqrt\alpha,v_i/\sqrt\beta)^T,\qquad
+p_i=\frac{s_i}{t\mathfrak c(h_i)},\quad \xi_i=1,\quad
+S_t=\sum_i p_i h_ih_i^T.
+\tag{FC.171}
+$$
+
+Antipodal pairs have equal capacity, so the first off-diagonal entries
+of $S_t$ vanish. The original bounds give
+$\alpha,\beta>3/25$, $\mu<12$, $\mathfrak c>1/25$ and
+$\|h\|^2\le1+1/\min(\alpha,\beta)<28/3$. Consequently
+
+$$
+\operatorname{tr}S_t<2800/t\le14/15,\qquad
+B_R:=I_3-S_t\succ\frac1{15}I_3\quad(t\ge3000).
+\tag{FC.172}
+$$
+
+Write its diagonals as $r_0,r_z,r_w$ and lower off-diagonal entry
+as $r_{zw}$. The pointwise ellipse identity implies
+$r_0=\alpha r_z+\beta r_w$, and positivity gives
+$|c_R|<1$ for $c_R=r_{zw}/\sqrt{r_zr_w}$. Add four pure atoms
+
+$$
+h_{\sigma,\upsilon}=
+(1,\sigma\sqrt{r_z/r_0},\upsilon\sqrt{r_w/r_0})^T,\quad
+p_{\sigma,\upsilon}=\frac{r_0}{4}(1+\sigma\upsilon c_R),\quad
+\xi=0,\qquad \sigma,\upsilon\in\{\pm1\}.
+\tag{FC.173}
+$$
+
+Their weights are strictly positive and they lie on the original
+ellipse. Direct summation gives Gram $B_R$: their odd moments vanish,
+the diagonals are $r_0,r_z,r_w$, and the lower cross entry is
+$r_{zw}$. Thus the saturated atoms plus these pure atoms have full
+live Gram $I_3$ and coefficient mass one. The saturated recovery has
+$b_i=t\mathfrak c(h_i)$ exactly, and its intensity moments are
+(FC.170), so its physical failure covariance is exactly $M$.
+The pure atoms contribute no failure. GC Proposition 12.2 therefore
+gives all eight original $\Gamma$ equations. At $s=0$ the original
+contrast requirement is $K\ge0$ and is automatic; another request
+requires checking its achieved $K$. The dyadic $t_0<3000$ ensures
+the stated finite feasible range.
+
+GC Proposition 10.1 supplies the common original finite instrument
+for this precise law. Equations (FC.122)–(FC.123) give the full-fibre
+activity and positive finite survivor effects, with TP survivor controls,
+chronological FIRST $6+a$ and no action on a failed carrier. It has
+one counted coherent high, the complete complex live output, all five
+separate Borel failure components and arbitrary passive-reference
+conditional operators. The original minimax, sharp JOINT and
+unaveraged/full-class suppliers retain their original scopes. No
+height-optimality assertion is used in this scalar equality construction.
+Every listed scalar thus has a full-common-law equality lift, rather
+than only a relaxed failure marginal. $\square$
+
+## 39. Original-history obstructions and the retained-event interface
+
+**Theorem 39.1 (a selected minus-sign history can have zero probability).**
+For any selected $y\in\{5,16,27\}$, there is, separately for that $y$,
+a feasible original finite law at every $s=0,t\ge3000$ with
+
+$$
+P^{\rm rev}_{y,\epsilon,-1}=0,\qquad
+\operatorname{rank}F_{\rm rev}=1,\qquad
+\operatorname{tr}F_{\rm rev}>0.
+\tag{FC.174}
+$$
+
+Consequently the original feasible-law constraints imply neither a
+positive lower bound on every history nor $F_{\rm rev}\succeq cM$
+for any fixed $c>0$. This does not exclude additional restrictions
+proved separately for a height-optimal face, and supplies no lower
+bound on each individual acquisition label.
+
+Proof. In (FC.169) choose instead
+
+$$
+z_y^0=-\frac{b_f}{a_f\sqrt{2q_y}}.
+\tag{FC.175}
+$$
+
+The three source intervals, in order $y=5,16,27$, are
+$(-0.659,-0.658)$, $(-0.731,-0.730)$ and $(-0.832,-0.831)$.
+Each slope satisfies $z_y^0<-\max\{1/10,V_2/(4U)\}$. The positive
+three-line construction and the residual lift (FC.171)–(FC.173) thus
+apply with no change to the full moments, $M$ or capacities. Only the
+$z_y^0$ antipodal pair is reverse. Its lower failure vectors are
+proportional to $(a_fz_y^0,-b_f)$, whose dot product with
+$(-\sqrt{q_y},1/\sqrt2)$ is zero. The reverse pair has strictly
+positive intensity, giving a nonzero rank-one effect and (FC.174).
+Since $M$ is positive definite on this lower two-dimensional support,
+a kernel vector of that rank-one effect contradicts every proposed
+$F_{\rm rev}\succeq cM$. Each selected $y$ uses its own law; no one
+law is claimed to null all three selected minus histories. $\square$
+
+**Theorem 39.2 (supported reference operators and terminal indistinguishability).**
+Let $E,P=EE^\dagger,P_f$ be the original embedding, input projection and
+failure output of GC Definition 2.1. For any positive joint input $X$
+supported on the original input subspace,
+$X=(P\otimes I_R)X(P\otimes I_R)$, and any passive reference $R$,
+the reverse-event failure output after summing the existing failure
+times and five failure components is
+
+$$
+\mathcal F_{\rm rev,R}(X)=P_f\otimes\tau_R,\qquad
+\tau_R=\operatorname{Tr}_5[(EF_{\rm rev}E^\dagger\otimes I_R)X],
+\tag{FC.176}
+$$
+
+and is CP/TNI, with
+
+$$
+0\preceq\tau_R\preceq
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X].
+\tag{FC.177}
+$$
+
+This is an upper subeffect statement. For a general original competitor,
+its action on arbitrary $P^\perp$ inputs is not fixed by the common law.
+For the explicit GC Proposition 10.1 constructors, (FC.176) holds on
+all complex ambient inputs because their low encoders contain
+$E^\dagger$.
+
+For two normalized retained-acquisition/stopped-output states
+$\omega,\widetilde\omega$ at the same event interface, with probabilities
+$p,\widetilde p$ of that event,
+
+$$
+\frac12\|\omega-\widetilde\omega\|_1\ge|p-\widetilde p|.
+\tag{FC.178}
+$$
+
+A zero-event benchmark is thus separated by at least $C_y^+$ on each
+plus-sign original history, if such a benchmark is supplied at that
+interface. Existence of an original admissible zero-event benchmark is
+not asserted; (FC.163) excludes one with zero probability on all twelve
+inputs. The retained-event difference implies no positive distance or
+error gap at the original forgotten-label terminal interface.
+
+Proof. The pullback of each actual eventual-failure effect is its term
+in (FC.156). The failure output is the prescribed one-dimensional
+$P_f$, so summing over the selected existing labels gives (FC.176).
+For a positive effect $F$, diagonalization gives Kraus maps
+$\sqrt{\lambda_i}|f\rangle\langle e_i|$ for
+$Y\mapsto\operatorname{tr}(FY)P_f$. Tensor with the passive identity.
+Partial-trace cyclicity on the input factor rewrites $\tau_R$ as the
+partial trace of the positive sandwich by
+$\sqrt{EF_{\rm rev}E^\dagger}\otimes I_R$. Apply the same argument
+to $M-F_{\rm rev}\succeq0$ to obtain (FC.177). Root TP gives
+$EME^\dagger\preceq I_5$, hence TNI. These are mature CP/effect
+facts; a textbook formulation is Watrous, *The Theory of Quantum
+Information*, [Theorem 2.22 and Definition 2.34](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf).
+They supply no reference-uniform positive lower operator bound.
+
+The event and its complement form a binary measurement of the already
+retained labels and failure outcome. Its two probability differences
+are opposite, with HALF $\ell^1$ norm $|p-\widetilde p|$. Contraction
+under this measurement proves (FC.178); see also the same textbook's
+Theorem 3.4 and Proposition 3.5. This comparison reads no inaccessible
+environment or hidden Kraus index.
+
+To prove the terminal obstruction inside the original class, take at
+the same $t\ge3000,s=0$ the $\mathsf W_5^+$ equality law of Theorem
+38.1 and the $y=5$ zero law of Theorem 39.1. Their reverse slopes lie
+in disjoint intervals $(-1.304,-1.303)$ and $(-0.659,-0.658)$.
+The first law has positive probability on $(5,\epsilon,-1)$, while
+the second has zero. In fact the first probability is the positive
+exact expression
+
+$$
+d_1\bigl(-a_f\sqrt{q_5}\,z_*-b_f/\sqrt2\bigr)^2
+=0.0045760430820284554\ldots,
+\tag{FC.179}
+$$
+
+where $d_1,z_*$ are from its equality construction. Yet both laws have
+identical full live Gram $I_3$ and covariance $M$. Realize both with
+the same GC constructor, the same complementary isometries, and its
+same $g(a)=2/(1+a)^2$. Equations (GC.53)–(GC.54) give identical
+forgotten-label live CP maps on all complex inputs, identical five
+separate failure Borel maps, and identical passive-reference conditional
+operators. Their original twelve-input complete stopped-cq HALF errors
+are identical. Thus even exact equality of the terminal channels permits
+this retained-event probability difference. No terminal-error gap or
+new label retention/readout permission follows from (FC.178). $\square$
+
+**Proposition 39.3 (exact witness on the original real effect space).**
+Let $A_y=\overline P_y$. On the real lower-supported effect space of
+(FC.156), the original test probabilities reconstruct
+
+$$
+\begin{gathered}
+(F_{\rm rev})_{11}=\frac{64}{11}(A_5-A_{27}),\qquad
+(F_{\rm rev})_{22}=2A_5-2q_5(F_{\rm rev})_{11},\\
+(F_{\rm rev})_{12}=
+\frac{P^{\rm rev}_{5,\epsilon,+1}-P^{\rm rev}_{5,\epsilon,-1}}
+     {4\sqrt{q_5/2}},\\
+\frac{(F_{\rm rev})_{11}}{a_f^2}
+-\frac{2(F_{\rm rev})_{22}}{5b_f^2}
++\frac{39(F_{\rm rev})_{12}}{10a_fb_f}
+=\int_{\mathcal R_+}\Psi\,d\sigma\ge S_\Psi.
+\end{gathered}
+\tag{FC.180}
+$$
+
+This exact indefinite witness is a linear combination of probabilities
+on the original test states. It is not informational completeness on
+all complex qutrit operators or a new measurement protocol for the one
+unknown specimen.
+
+Proof. Add and subtract (FC.161), using $q_5-q_{27}=11/64$.
+The first three identities follow. On the lower block, (FC.156) says
+$F_{11}=a_f^2\int v^2d\sigma$, $F_{22}=b_f^2\int u^2d\sigma$
+and $F_{12}=-a_fb_f\int uv d\sigma$, with all integrals restricted
+to $\mathcal R_+$. Substitution gives the last identity and (FC.159)
+gives its inequality. The finite-frame principle is mature; Scott,
+*Tight informationally complete quantum measurements*, [§III (18)–(20)
+and §IV Proposition 10](https://arxiv.org/pdf/quant-ph/0604049), requires
+spanning the actual operator space. The three-dimensional real space
+used here is checked explicitly. No complex qutrit spanning, 2-design,
+extra specimen, tomography or observable-access premise is supplied.
+$\square$
+
+## 40. Mandatory regional intensity in joint coefficient limits
+
+**Theorem 40.1 (vanishing coefficient mass with persistent physical bounds).**
+For any sequence of feasible original laws at one fixed source, put
+
+$$
+c_n=\pi_n\{\Psi>0,\xi>0\},\qquad d\sigma_n=b_x\,d\pi_n.
+\tag{FC.181}
+$$
+
+If $c_n\to0$, then $t_n\to\infty$, while at each finite index
+
+$$
+\sigma_n(\mathcal R_+)\ge I_\Psi,\qquad
+\operatorname{tr}F_{{\rm rev},n}\ge C_{\rm tr},\qquad
+P^{\rm rev}_{y,\epsilon,+1,n}\ge C_y^+.
+\tag{FC.182}
+$$
+
+For every fixed $B>0$,
+
+$$
+\int_{\mathcal R_+\cap\{b_x\le B\}}b_x\,d\pi_n\le Bc_n\longrightarrow0.
+\tag{FC.183}
+$$
+
+For each height-optimal law at any finite feasible request,
+Corollary 27.2 makes its failure-bearing reverse set saturated; its
+reverse saturated coefficient mass $c$ satisfies the strict bounds
+
+$$
+\frac{4I_\Psi}{t}<c:=\pi\{\Psi>0,\xi=1\}<\frac{25\mu}{t},\qquad
+4I_\Psi=2.1072845153995428021\ldots.
+\tag{FC.184}
+$$
+
+These are regional necessity estimates, not existence or uniqueness of
+a particular optimizer or joint limit. The physical bounds in (FC.182)
+persist although the corresponding coefficient mass can vanish.
+
+Proof. Theorems 36.2 and 37.1 give (FC.182). Pointwise capacity yields
+$\sigma_n(\mathcal R_+)\le t_nc_n/4$, so
+$t_nc_n\ge4I_\Psi>0$; hence $c_n\to0$ forces $t_n\to\infty$.
+Equation (FC.183) bounds an integral directly, with no acceptance or
+survival division. For an optimum, use $\xi=1$ on the failure-bearing
+reverse set and $t/25<b_x<t/4$. Its coefficient mass is positive by
+(FC.182); therefore
+
+$$
+\frac{tc}{25}<\sigma(\mathcal R_+)<\frac{tc}{4},\qquad
+I_\Psi\le\sigma(\mathcal R_+)\le\mu.
+\tag{FC.185}
+$$
+
+Both inequalities in (FC.184) follow. For any Borel circle set $D$,
+the physical dictionary also gives
+
+$$
+\min(a_f^2,b_f^2)\sigma_n(D)
+\le\operatorname{tr}F_{D,n}
+\le\max(a_f^2,b_f^2)\sigma_n(D).
+\tag{FC.186}
+$$
+
+Thus coefficient convergence alone discards a forced physical intensity;
+(FC.183) locates it at unbounded $b_x$ when $c_n\to0$.
+
+The fixed-intensity laws of §38 illustrate this directly. Their
+saturated coefficient weights are exactly $s_i/(t\mathfrak c_i)\to0$,
+while their physical failure effects are exactly $s_in_in_i^T$ at
+every finite $t$. Their residual pure laws tend to the same four
+angular points $(\pm\sqrt\alpha,\pm\sqrt\beta)$, each with weight
+$1/4$, independently of the chosen admissible three-line intensity law.
+Different reverse effects therefore share this coefficient-law limit.
+The generic rare-weight recovery and exact finite repair are reused
+from [FA Theorem 81.2](FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md)
+and [JS Theorem 5.1, (JS.23)–(JS.28)](https://github.com/the-omega-institute/trureturing/blob/ce3eb5de2f708f7b584dd86df8868682fc0fdbe6/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md).
+Under that map, JS's ellipse coordinates are
+$(z,w)=(u/\sqrt\alpha,v/\sqrt\beta)$, its failure measure has atom
+mass $s_i$, its rare coefficient mass is $s_i/(t\mathfrak c_i)$,
+and its physical effect is $s_in_in_i^T$. The new requirement here
+is that a fixed open reverse region must carry (FC.182) and (FC.184).
+
+Since $\sigma_n$ has fixed mass $\mu$ on a compact circle, it has
+subsequential weak limits. Continuous second moments and $S_\Psi$
+are retained by every such limit, so the same integration witnesses
+apply to each limiting intensity measure. Identifying a limit of the
+restricted effects with the restriction of that weak limit to $\Psi>0$
+requires boundary mass control on $\Psi=0$. For example, zero boundary
+mass is sufficient for these bounded restricted continuous integrands;
+it is not supplied in general. Every finite effect, and every matrix
+cluster limit of those effects, still satisfies the trace bound and
+all six plus-history bounds, by continuity of matrix testing. No
+unique limiting intensity, unique optimizer or infinite-budget
+instrument is implied, and positive finite-budget survivors are never
+replaced by a zero-survivor construction. $\square$
+
+## 41. Literature interfaces and the remaining original domain
+
+**Definition 41.1 (application content and limits of mature tools).** The
+bearing deductions of §§32–40 are source-specific conditional
+applications: a pure replacement preserving the entire original angular
+Gram and $|u|$ has a uniform negative-height contribution; it forces
+negative pure coordinates even in reverse-retaining group families,
+and restricts $R_-$ to the two inertia classes of Theorem 34.3.
+The separate physical application evaluates the reverse-region trace,
+original-history and intensity witnesses, attains each scalar bound
+with one exact original finite law, and supplies the individual-history,
+Loewner and terminal-interface obstructions and regional joint-limit
+estimates. These are repo-derived applications in ordinary mathematics,
+not new general moment, PSD, quadrature, CP or rare-weight theorems.
+
+The endpoint triangle identity, compatible groups and complete-face
+interpretation are reused from Theorems 3.3 and 4.2, GC Theorem 15.1
+and §§23–31. The full-law moment and physical maps are GC Propositions
+10.1 and 12.2, with the original retained-record distinction also
+specified in [QS Definitions 1.2–1.3, Proposition 2.3 and §4](FIB_NATIVE_COMPLETE_CONTINUATION_QUANTITATIVE_OUTPUT_STABILITY.md).
+No curvature, higher-contact or count-deficit hypotheses from QS are
+supplied by the scalar witnesses.
+
+The following primary moment interfaces delimit the replacement and
+finite comparison, without a quadrature-to-label transfer:
+
+- di Dio–Schmüdgen, *The Moment Cone*, [Theorems 19 and 52](https://arxiv.org/html/1809.00584v1):
+  Theorem 19 gives at most $\dim V$ atoms for the chosen finite
+  function space. Theorem 52 requires its normalized evaluation image
+  to have at most $m-1$ path-connected components for its $m-1$ bound.
+  A complete contact zero set has no supplied such
+  connectedness, and neither theorem gives seven actual labels here.
+- di Dio–Schmüdgen, *The multidimensional truncated Moment Problem:
+  Atoms, Determinacy, and Core Variety*, [Lemma 3 and Proposition 4](https://arxiv.org/html/1703.01497v2):
+  nonnegative continuous zero-integral functions restrict support,
+  and finite-dimensional real integrable moment data have finite
+  representatives. The compact continuous $(\Gamma,k,g_t)$ with
+  constant mass in Theorem 32.3 meets that comparison interface;
+  it does not preserve an entire arbitrary saturated measure in
+  the subsequent finite representation or construct a continuous
+  physical instrument.
+- Dette–Melas, *A note on the de la Garza phenomenon*, [§3 Theorem 1](https://arxiv.org/html/1105.3575v1):
+  interval Chebyshev systems, the distinguished diagonal information
+  entry and its Loewner improvement are required. No map preserving
+  the original rational capacity, $K$, absolute $J_t$ and actual
+  labels follows without verifying those additional interfaces.
+- Nailwal–Zalar, *Gaussian Quadratures with prescribed nodes via
+  moment theory*, [Theorem 3.1 and Example 3.6](https://arxiv.org/html/2412.20849v1):
+  the theorem requires full univariate moment data, positive definite
+  initial data, invertible prescribed-node localizing matrix and
+  positive definite generated extension. For $\gamma_i=i!$ and
+  prescribed nodes $1/3,11$, the proposed six-atomic extension fails
+  positivity in that example. It is neither an AURIC counterexample
+  nor permission to prescribe short original supports freely.
+- Riener–Turatti, *Quadrature rules with few nodes supported on
+  algebraic curves*, [Theorem 1.1](https://arxiv.org/html/2509.06643v1):
+  full polynomial strength and the stated smooth-curve/places-at-infinity
+  or rational-parametrization/pole conditions are required. The
+  two-sheet rational capacity, absolute values, directed nodes and
+  original physical labels are not automatically preserved by its
+  node bounds.
+
+Bertsimas–Popescu's pointwise integration method is applied directly
+in (FC.159); sharpness uses (FC.169)–(FC.173), not a general SDP
+strong-duality claim. Scott's finite spanning-test interface applies
+only to the explicit real lower-supported effect space in (FC.180).
+Watrous is a textbook cross-check for the elementary CP and binary
+trace-distance arguments, not primary priority evidence. No theorem
+from the Davies–Lewis primary instrument article is a premise here.
+
+Alibert–Bouchitté, *Non-uniform integrability and generalized Young
+measures*, [Theorems 2.5 and 2.9](https://journalofconvexanalysis.com/articles/jca04006/jca04006.pdf),
+separates ordinary and concentration measures for bounded $L^1$
+sequences on a fixed Radon measure space with its admissible
+recession-integrand class. The varying laws $\pi_n$ in §40 have no
+supplied fixed-base parametrization satisfying that theorem. This is
+context for concentration, not an invoked transfer; (FC.182)–(FC.186)
+are direct estimates and FA/JS supplies the generic recovery. No
+exhaustive literature search, priority or worldwide novelty claim is
+made for either application.
+
+**Definition 41.2 (unresolved finite-plane and operational obligations).**
+The small-mass theorem does not cover $S>1/100$. In particular the
+$t=1000$ event of §30 has saturated coefficient mass about $0.0885458$
+and is outside its scope. Its six-low/seven-TOTAL inventory remains an
+inherited event statement. Reverse-containing families with sufficient
+negative pure-coordinate mass remain unresolved, including indefinite
+faces and rank-one negative semidefinite faces retaining the mandatory
+kernel group. The six-point replacement need not improve $J_t$ when
+$H_-$ is already large and need not preserve an alphabet cap. No
+universal seven/eight-low coverage, necessary eight/nine-low seed or
+new strong count follows.
+
+Sharp physical bounds among height optimizers at prescribed $(s,t)$,
+including budgets below $3000$, require additional complete optimal-face
+information. The equality laws in §38 prove feasible scalar sharpness
+only. A retained-event probability is distinct from negative pure
+endpoint coefficient mass, actual acquisition probability and forgotten
+terminal observability. Theorem 39.2 prevents an event difference from
+being used as a terminal-error gap. No event or mass lower bound fixes
+each label or supplies extra original readout access.
+
+All original eight $\Gamma$ moments, $K\ge r$, within-label absolute
+height and HALF normalization remain. The one unknown specimen, all
+twelve complex histories, arbitrary passive-reference conditional
+operators, five separate Borel failures including the zero targets,
+sharp worst-history JOINT cost and separate unaveraged equality retain
+their original meanings. Necessity remains full complex and multi-Kraus
+in the finite, convergent countable and only the stipulated measurable
+class; every new physical comparison or attainer is finite. Whole-fibre
+activity, strictly positive finite survivors, TP controls, FIRST $6+a$,
+no later positive-carrier action after failure and one coherent high
+remain the constructor's conditional consequences.
+
+Source existence/isolation/Jacobian, root TP and ranks, minimax, sharp
+JOINT, unaveraged equality, full-class rigidity, capacity and constructor
+remain conditional suppliers, not recertified conclusions. Native
+source access/calibration, jointly counted coherent storage, whole-fibre
+actuation, acquisition duration, clock alignment and
+archive/source/epoch/controller permissions remain unsupplied, as does
+the general native-instrument bridge. Ordinary conditional mathematics
+here supplies no Lean/kernel or empirical implementation certification.
+
+The all-budget/all-contrast evaluated frontier, orientations and
+coefficients, branch ordering, connected coverage, selected and unused
+roots with signs and multiplicities, collisions, capacity/rank/count
+transitions, endpoint/threshold/budget/degenerate-orientation gluing,
+coefficient gluing, next terms and uniform joint limits retain the full
+obligations of Definitions 9.1, 16.1, 22.2 and 31.2. Finite positive
+multiplier dual existence, $\lambda=0$, nonfinite/unattained duals and
+boundary attainment are not supplied. Seven/eight/nine-low optimal
+counts and exact strong counts remain separate open tasks. The original
+quantum-first AURIC FIB ATOM programme through 2027 remains unchanged
+and incomplete.
+
+## 追加锚（本行以下为增补区）
