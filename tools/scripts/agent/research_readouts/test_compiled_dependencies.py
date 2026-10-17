@@ -5,6 +5,7 @@ from contextlib import redirect_stdout
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -137,12 +138,21 @@ class DependencyTests(unittest.TestCase):
         query["revision"] = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
         query["domain"]["modules"] = ["Missing.DependencyReadoutFixture"]
-        result = subprocess.run([sys.executable, "-B", str(script), "--no-build"],
-                                input=json.dumps(query), text=True, capture_output=True,
-                                cwd=script.parent)
+        # A protocol test must remain independent of installed Lean artifacts.
+        # This sandbox inherits the enclosing Git revision but has no own cache.
+        driver = ("import sys; from pathlib import Path; "
+                  "sys.path.insert(0, sys.argv[1]); import compiled_dependencies as d; "
+                  "d.ROOT=Path(sys.argv[2]); sys.argv=['compiled_dependencies.py','--no-build']; "
+                  "raise SystemExit(d.main())")
+        with tempfile.TemporaryDirectory(prefix="dependency protocol ", dir=script.parent) as sandbox:
+            result = subprocess.run([sys.executable, "-B", "-c", driver,
+                                     str(script.parent), sandbox],
+                                    input=json.dumps(query), text=True, capture_output=True,
+                                    cwd=sandbox)
         self.assertEqual(result.returncode, 2, result.stderr)
         output = json.loads(result.stdout)
         self.assertFalse(output["complete"])
+        self.assertEqual(output["acquisition"]["status"], "missing_artifacts")
         self.assertIsNone(output["queries"][0]["external_value_user_count"])
 
     def test_runtime_failure_keeps_named_incomplete_queries(self):
