@@ -8344,3 +8344,31 @@ Lean certification. The negative cutoff overlap of $H_X$ itself
 remains uncontrolled; the large unmodified positive Sonin trace is
 unchanged. The original strict signed upper, Robin and RH remain
 unproved.
+
+### The same original test has a paid boundary remainder
+
+For WT7's actual $H_X=c_X-F_X$, reuse the
+[complete boundary application](../Weil/connesconsanimoscovici2024semilocal.md#the-original-test-pays-its-complete-boundary-remainder)
+of positive-convolution localization, Plancherel and the standard
+Hilbert--Schmidt product estimate. It uses the existing
+$c_X(0)\ll_\tau L_X\mathsf Y_X^2$ and
+$\|F_X\|_\infty\ll L_X$, with the unchanged support ceiling
+$A_X=\log\mathsf V_X$. Under the original FH1 choices, including
+$\Theta=1$, it gives
+
+$$
+\boxed{
+\|\mathsf R T_{H_X}\mathsf P\|_{\mathcal S_1}
+\ll_\tau(1+A_X)L_X\mathsf Y_X^2
+=o(M_XL_X),\qquad
+\|\mathsf R T_{H_X+e_X}\mathsf P\|_{\mathcal S_1}
+=o(M_XL_X).}
+\tag{WT15}
+$$
+
+The second estimate also uses (48)'s already paid boundary cost of
+$e_X$ in that semilocal application. Thus the source's complete boundary remainder is below the
+original budget on the same compensated operator. The positive-minus-negative
+bulk remains uncontrolled; this paper application supplies neither
+its signed estimate nor the Robin upper or RH. It introduces no new
+operator theorem or Lean verification.

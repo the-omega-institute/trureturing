@@ -5,7 +5,7 @@ year: 2024
 title: Zeta zeros and prolate wave operators — semilocal adelic operators
 doi: null
 url: https://arxiv.org/abs/2310.18423v2
-claim: The remote completion has a large unmodified Sonin trace on the enlarged support family. Under exact pole compensation, its actual negative cutoff overlap and boundary allowance are o(L_X) on that same family. The original test on the compensated operator and the full signed comparison remain uncontrolled.
+claim: The remote completion has a large unmodified Sonin trace on the enlarged support family. Under exact pole compensation, its actual negative cutoff overlap and boundary allowance are o(L_X). The complete original-test boundary remainder is o(M_X L_X) under the original source-family conditions; the actual signed bulk comparison remains uncontrolled.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -1732,3 +1732,104 @@ signed comparison. The unmodified positive Sonin trace remains large
 as in (38), and no small corrected Sonin trace, uniform spectral
 perturbation estimate, all-integer Robin inequality or RH proof is
 asserted.
+
+## The original test pays its complete boundary remainder
+
+Keep WT6--WT8's actual $H_X=c_X-F_X$, its original support,
+all windows and maximizing ties, and (45)'s compensated operator.
+The following application pays the complete off-diagonal remainder
+of the source's §6 signed block identity and its §7 compensated
+counterpart. It reuses standard positive-convolution factorization,
+Plancherel and the Hilbert--Schmidt product bound; these are existing
+analytic tools, including the attributed [trace-ideal suppliers](../QuantumBounds/diem2026traceclass.md).
+No new general operator theorem, literature priority or Lean
+verification is asserted.
+
+Use the additive normalization
+$\widehat G(t)=\int G(x)e^{itx}dx$, with inverse factor $1/(2\pi)$.
+For a positive-definite compact smooth $G$ supported in $[-B,B]$,
+put $E_-=1_{[-B,0]}$ and $E_+=1_{[0,B]}$. Its convolution kernel
+$G(x-y)$ gives
+$\mathsf R T_G\mathsf P=E_-T_GE_+$, up to null endpoints.
+Since $\widehat G\ge0$, $T_G$ is positive. Its positive square root
+has an $L^2$ convolution kernel $h$ with
+$\|h\|_2^2=(2\pi)^{-1}\int\widehat G=G(0)$.
+Thus the existing square-root and Schatten estimates give
+
+$$
+\|E_-T_G^{1/2}\|_{\rm HS}^2
+=\|T_G^{1/2}E_+\|_{\rm HS}^2=B\,G(0),
+\qquad
+b(G)\le B\,G(0).
+\tag{50}
+$$
+
+This uses positivity of the convolution operator, with no pointwise
+nonnegativity requirement on $G$ or support requirement on $h$.
+
+For the actual source, take
+$B_X=\max\{1,A_X,\tau\}$, where
+$A_X=\log\mathsf V_X$ is MR5's unchanged support ceiling.
+WT7 and MR1/MR5 give
+
+$$
+\begin{aligned}
+c_X(0)&=\psi(0)\sum_j a_j
+\le\psi(0)\sum_j(1+j)a_j
+\ll_\tau L_X(1+\log D)^2
+\ll_\tau L_X\mathsf Y_X^2,\\
+0\le H_X(0)&\le c_X(0)+\|F_X\|_\infty
+\ll_\tau L_X\mathsf Y_X^2.
+\end{aligned}
+$$
+
+The prescribed FH1 choices have
+$\mathsf Y_X=O((\log X)^2)$ and
+$A_X=O((\log X)^4)$, including CP1's published-input choice at
+$\Theta=1$. Since $M_X=X^{1/2-\eta}\log X$ with fixed
+$0<\eta<1/2$, (50) yields
+
+$$
+\boxed{
+b(H_X)\ll_\tau(1+A_X)L_X\mathsf Y_X^2
+=O_\tau\!\left(L_X(\log X)^8\right)
+=o(M_XL_X).}
+\tag{51}
+$$
+
+Only fixed source parameters enter the constants. The estimate uses
+no bound on the actual test's higher derivatives and is independent
+of the finite prime set or a projection-angle constant.
+
+For $H_X'=H_X+e_X$, apply the trace-norm triangle inequality to the
+actual decomposition and reuse (48):
+
+$$
+\boxed{
+b(H_X')\le b(H_X)+b(e_X)=o(M_XL_X).}
+\tag{52}
+$$
+
+Keep exactly $\ell_X=R_X+\sigma$ and the enlarged place set from
+(45)--(49); both tests satisfy this common support contract.
+Writing $\widetilde p_{\ell_X}(G)$ for the source's **full** positive
+compression, its signed block identity therefore has, for
+$G=H_X$ and $G=H_X'$, the form
+
+$$
+\mathscr W(G)=\widetilde p_{\ell_X}(G)
+-\widetilde n_{\ell_X}(G)+r_X(G),
+\qquad |r_X(G)|\le b(G)=o(M_XL_X).
+\tag{53}
+$$
+
+Here the smooth compact convolution factor is supplied by the same
+Boas--Kac interface used above. The positive term retains the generic
+two-projection contribution as well as the Sonin contribution.
+Equations (51)--(53) pay the entire boundary uncertainty for the
+original test and its actual pole-null completion. They do not
+control the signed bulk
+$\widetilde p_{\ell_X}(G)-\widetilde n_{\ell_X}(G)$;
+separate smallness of these two terms is not required by the target.
+That actual joint estimate, the strict all-integer Robin inequality
+and RH remain unproved.
