@@ -1,0 +1,41 @@
+import D5.S3.Analytic.Convexity.CFMPTransientGlobalPrimitiveSanity
+
+/- Future Mac validation only. No output of these commands is claimed. -/
+
+#check CFMP137Transient.AdditiveAtlas.core
+#check CFMP137Transient.AdditiveAtlas.value_eq_chart
+#check CFMP137Transient.AdditiveAtlas.section_local_eq
+#check CFMP137Transient.AdditiveAtlas.exists_glued_normalized
+#check CFMP137Transient.atlasOfPrimitiveBalls
+#check CFMP137Transient.totalize_hasFDerivAt
+#check CFMP137Transient.exists_global_primitive_normalized
+#check CFMP137Transient.exists_global_primitive
+#check CFMP137Transient.exists_global_primitive_of_contraction
+#check CFMP137Transient.convexHomeomorphContraction
+#check CFMP137Transient.convexHomeomorphContraction_zero
+#check CFMP137Transient.convexHomeomorphContraction_one
+#check CFMP137Transient.exists_global_primitive_of_homeomorph
+#check CFMP137Transient.Sanity.original_inner_product_application
+
+#print axioms CFMP137Transient.AdditiveAtlas
+#print axioms CFMP137Transient.AdditiveAtlas.core
+#print axioms CFMP137Transient.AdditiveAtlas.value
+#print axioms CFMP137Transient.AdditiveAtlas.value_eq_chart
+#print axioms CFMP137Transient.AdditiveAtlas.section_local_eq
+#print axioms CFMP137Transient.AdditiveAtlas.exists_glued_normalized
+#print axioms CFMP137Transient.atlasOfPrimitiveBalls
+#print axioms CFMP137Transient.totalize_hasFDerivAt
+#print axioms CFMP137Transient.exists_global_primitive_normalized
+#print axioms CFMP137Transient.exists_global_primitive
+#print axioms CFMP137Transient.exists_global_primitive_of_contraction
+#print axioms CFMP137Transient.convexHomeomorphContraction
+#print axioms CFMP137Transient.convexHomeomorphContraction_zero
+#print axioms CFMP137Transient.convexHomeomorphContraction_one
+#print axioms CFMP137Transient.exists_global_primitive_of_homeomorph
+#print axioms CFMP137Transient.Sanity.offsetAtlas
+#print axioms CFMP137Transient.Sanity.offset_readout_sanity
+#print axioms CFMP137Transient.Sanity.shifted_local_primitive_sanity
+#print axioms CFMP137Transient.Sanity.empty_domain_sanity
+#print axioms CFMP137Transient.Sanity.dimension_zero_sanity
+#print axioms CFMP137Transient.Sanity.inverseExtension
+#print axioms CFMP137Transient.Sanity.original_inner_product_application

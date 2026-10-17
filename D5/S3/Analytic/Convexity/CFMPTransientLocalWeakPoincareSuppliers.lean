@@ -1,0 +1,43 @@
+import Mathlib.Analysis.Calculus.Rademacher
+import Mathlib.Analysis.Calculus.ContDiff.Convolution
+import Mathlib.Analysis.Calculus.BumpFunction.Convolution
+import Mathlib.MeasureTheory.Integral.CurveIntegral.Poincare
+import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+import Mathlib.Analysis.InnerProductSpace.LinearMap
+import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Topology.MetricSpace.Lipschitz
+
+/-! Pinned-supplier signatures for the future Mac build, independent of candidate elaboration. -/
+
+#check @lipschitzExtensionConstant
+#check @LipschitzOnWith.extend_finite_dimension
+#check @HasFDerivAt.congr_of_eventuallyEq
+#check @MeasureTheory.ae_restrict_iff'
+#check @LipschitzWith.integral_lineDeriv_mul_eq
+#check @LipschitzWith.locallyIntegrable_lineDeriv
+#check @ContDiff.lipschitzWith_of_hasCompactSupport
+#check @HasCompactSupport.comp_homeomorph
+#check @tsupport_comp_eq_preimage
+#check @HasCompactSupport.hasFDerivAt_convolution_right
+#check @HasCompactSupport.contDiff_convolution_right
+#check @HasCompactSupport.convolutionExists_right
+#check @HasCompactSupport.fderiv
+#check @MeasureTheory.LocallyIntegrable.integrable_smul_right_of_hasCompactSupport
+#check @ContinuousLinearMap.integrable_comp
+#check @ContinuousLinearMap.integral_apply
+#check @ContinuousLinearMap.integral_comp_comm
+#check @HasFDerivAt.hasLineDerivAt
+#check @HasLineDerivAt.lineDeriv
+#check @ContDiffBump.tsupport_normed_eq
+#check @ContDiffBump.hasCompactSupport_normed
+#check @ContDiffBump.contDiff_normed
+#check @ContDiffBump.dist_normed_convolution_le
+#check @MeasureTheory.convolution_flip
+#check @innerSL_apply_norm
+#check @curveIntegrable_segment
+#check @curveIntegral_fun_sub
+#check @norm_curveIntegral_segment_le
+#check @Convex.curveIntegral_segment_add_eq_of_hasFDerivWithinAt_symmetric
+#check @HasFDerivAt.curveIntegral_segment_source
+#check @tendsto_one_div_add_atTop_nhds_zero_nat
