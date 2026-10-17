@@ -4,7 +4,7 @@
 
 Four unitary encodings of a partially entangled state outperform every unassisted strategy at the same energy.
 
-Alice receives an input x, applies a unitary to her part of a shared pure state, and sends that part to Bob. Bob chooses a setting y and measures the joint system, obtaining an outcome b. This is the unitary case of the entanglement-assisted prepare-and-measure model in Section II, Eqs. (1)–(2), and Section IV.A. All sums range over the entire indicated finite type. Matrix entries are complex, probabilities and task values are real, and brackets denote anonymous typeclass assumptions.
+Alice receives an input x, applies a unitary to her part of a shared pure state, and sends that part to Bob. Bob chooses a setting y and measures the joint system, obtaining an outcome b. This is the unitary case of the entanglement-assisted prepare-and-measure model in Section II, Eqs. (1)–(2), and Section IV.A. All finite sums range over the entire indicated finite type; each tsum ranges over its indicated arbitrary index type. Matrix entries are complex, probabilities and task values are real, and brackets denote anonymous typeclass assumptions.
 
 **Definition 1.1 (Finite positive operator-valued measurements).**
 
@@ -26,9 +26,7 @@ $$\forall X \in \mathit{Type},\; \forall Y \in \mathit{Type},\; \forall B \in \m
 
 *Formalization.* `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.UnitaryStrategy` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
+*Citation.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
 
 *Commentary.*
 
@@ -40,9 +38,7 @@ $$\forall X \in \mathit{Type},\; \forall dA \in \mathit{Nat},\; \forall dB \in \
 
 *Formalization.* `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.encoded` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
+*Citation.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
 
 *Commentary.*
 
@@ -54,9 +50,7 @@ $$\forall X \in \mathit{Type},\; \forall Y \in \mathit{Type},\; \forall B \in \m
 
 *Formalization.* `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.unitaryProb` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
+*Citation.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
 
 *Commentary.*
 
@@ -68,9 +62,7 @@ $$\forall X \in \mathit{Type},\; \forall dA \in \mathit{Nat},\; \forall dB \in \
 
 *Formalization.* `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.unitaryVacuum` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
+*Citation.* Carles Roch i Carceller; Armin Tavakoli (2025). *The role of entanglement in energy-restricted communication and randomness generation*. DOI: [10.1088/2058-9565/ae4d80](https://doi.org/10.1088/2058-9565/ae4d80). URL: <https://arxiv.org/abs/2510.27473v1>.
 
 *Commentary.*
 
