@@ -1269,3 +1269,430 @@ Theorem 91.1 is an original-channel lower bound that keeps the complementary lea
 This refutes the proposed global sufficiency of the uniform positive-trace witness even after adjoining every complete two-fibre restricted diamond norm. It does not produce a subquarter product: the entire family has minimum (29). The [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family) and the unrestricted local theorem of section 89 retain their hypotheses and conclusions. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither a global quarter lower bound nor a calibrated reduction of arbitrary leaking pairs follows from this section.
 
 The correct-output adaptive reduction and the explicit trine-family application are derived above for this fixed encoding. Positive-part duality, polar decomposition, Choi positivity, Stinespring representations, and finite-dimensional semidefinite strong duality are standard ingredients; see [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/) and, for channel norms, [Chapter 3](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf). The two-fibre norm identity is the existing section-65 result, proved again in the notation needed for its present consumer. These ingredients are not asserted to be new general norm theory. The new obstruction is the actual common-channel family and its simultaneous failure of all the stated restricted certificates.
+
+## 92. Common adaptive stresses and support exclusions at doubly rank-seven minima
+
+### 92.1. Physical domain and the attained Gram optimization
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, input labels x=(f,i) with f=1,...,4 and i=0,1, correlated encoding |x〉↦|xx〉, and output encoding |f〉↦|ff〉 from section 91. The target forward coefficient matrix T has T_ff=I₂ and T_fg=J₂/2 for f≠g. The error is the unhalved diamond norm with arbitrary references.
+
+The [physical calibration theorem](ARITHMETIC_HOLOGRAPHIC_RT_II.md#72-exact-physical-calibration-reduction-for-collapsed-fibre-channels) permits calibration when taking the unrestricted global minimum. It preserves the product structure and does not increase the error, but may enlarge either local environment. It is not a rank-preserving replacement of an arbitrary leaking pair. The calibrated Gram domain and the adaptive witness domain are
+
+\[
+ \begin{split}
+ \mathcal E&=\{G\in\operatorname{Herm}(8):G\ge0,
+                                      \ G_{ff}=I_2\},\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                      \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\}.
+ \end{split}                                                   \tag{1}
+\]
+
+Every G,H∈ℰ is physically realized by calibrated local channels: factor each as the Gram of eight records, whose two records in each fibre are orthonormal, and use |f,i〉↦|f〉⊗a_fi on the first side and similarly on the second. The local Choi ranks equal rank G and rank H. With the forward-Gram transpose convention already incorporated as in section 91, the exact error is
+
+\[
+ F(G,H)=\max_{(\rho,W)\in\mathcal C}
+               2\operatorname{Tr}[(T-G\odot H)W].             \tag{2}
+\]
+
+Both sets in (1) are compact. Thus F is continuous and has a minimum on ℰ×ℰ, equal to the unrestricted original-channel minimum by the calibration theorem. The local assertions below concern local minima on this full calibrated Gram domain. They are not assertions about every competitor of the same rank, nor do they transfer local minimality through a rank-changing calibration.
+
+### 92.2. One norming witness for both Gram faces
+
+**Theorem 92.1.** If (G,H) is a local minimum of F, there is one feasible pair (ρ,W)∈𝒞 that attains (2) and simultaneously satisfies
+
+\[
+ \begin{aligned}
+ \operatorname{Tr}(C_A G')&\le\operatorname{Tr}(C_A G)
+                                      &&(G'\in\mathcal E),\\
+ \operatorname{Tr}(C_B H')&\le\operatorname{Tr}(C_B H)
+                                      &&(H'\in\mathcal E),\\
+ C_A&=2(\overline H\odot W),\qquad
+ C_B=2(\overline G\odot W).
+ \end{aligned}                                                   \tag{3}
+\]
+
+Consequently Hermitian 2×2 blocks Λ_A,f,Λ_B,f can be chosen so that
+
+\[
+ \begin{aligned}
+ P_A&=\bigoplus_f\Lambda_{A,f}-C_A\ge0,
+       &P_AG=GP_A&=0,\\
+ P_B&=\bigoplus_f\Lambda_{B,f}-C_B\ge0,
+       &P_BH=HP_B&=0.
+ \end{aligned}                                                   \tag{4}
+\]
+
+The same W appears in both equations. If 0<F(G,H)<1/2, both stresses are nonzero and both Grams are singular.
+
+**Proof.** Put L=T−G⊙H and t=F(G,H). The set
+
+\[
+ \mathcal A=\{(\rho,W)\in\mathcal C:
+                          2\operatorname{Tr}(LW)=t\}          \tag{5}
+\]
+
+is a nonempty compact convex exposed face. For arbitrary G′,H′∈ℰ, let D_G=G′−G and D_H=H′−H. The feasible joint segment has exact coefficient expansion
+
+\[
+ T-(G+sD_G)\odot(H+sD_H)
+   =L-s(D_G\odot H+G\odot D_H)-s^2D_G\odot D_H.                \tag{6}
+\]
+
+Uniformity over compact 𝒞 gives the one-sided derivative
+
+\[
+ \left.\frac{d}{ds}\right|_{0+}F(G+sD_G,H+sD_H)
+   =\max_{(\rho,W)\in\mathcal A} b(W;G',H'),
+ \quad
+ b=-2\operatorname{Tr}[(D_G\odot H+G\odot D_H)W].              \tag{7}
+\]
+
+Indeed every active witness gives the lower derivative bound. For the upper bound choose a maximizer at each s>0 and pass to a convergent subsequence as s decreases to zero. Its limit is active by continuity. Its value at s=0 is at most t, and (6) supplies the upper derivative bound. This argument does not require a unique norming witness or differentiability of F.
+
+Local minimality makes the maximum in (7) nonnegative for every feasible pair. There is a single point of 𝒜 for which b≥0 for all such pairs. To prove this directly, suppose the corresponding closed half-spaces had empty intersection in 𝒜. Compactness would give finitely many pairs whose half-spaces already have empty intersection. Their compact convex vector image under b is disjoint from the nonnegative orthant. Strict separation gives nonnegative coefficients λ_j, summing to one, for which the maximum of the corresponding weighted sum of b is negative. The separating coefficients are nonnegative because the orthant is unbounded in each positive coordinate. Averaging the feasible pairs with these λ_j contradicts (7), since b is affine in the pair. This proves the common-witness assertion. Set H′=H or G′=G to obtain the two support inequalities in (3).
+
+For Hermitian D,H,W, the precise coefficient identity is
+
+\[
+ \operatorname{Tr}[(D\odot H)W]
+    =\operatorname{Tr}[D(\overline H\odot W)].                 \tag{8}
+\]
+
+The (y,x) entry of the second factor on the right is H_xy W_yx, which verifies both the conjugation and the sign in (3). The matrices C_A,C_B are positive by the Schur product theorem.
+
+For any Hermitian C, the support problem max{Tr(CX):X∈ℰ} has dual
+
+\[
+ \min\left\{\sum_f\operatorname{Tr}\Lambda_f:
+                    \bigoplus_f\Lambda_f-C\ge0\right\}.       \tag{9}
+\]
+
+The primal has strictly feasible X=I₈ and bounded optimum; a sufficiently large scalar diagonal matrix is strictly dual feasible. Semidefinite strong duality and attainment apply. At equality the positive primal and slack matrices satisfy Tr(PX)=0, hence PX=XP=0. Applying this to both support problems proves (4).
+
+The matrix-unit test gives
+
+\[
+ |1/2-G_{xy}H_{xy}|\le t
+                 \qquad(x,y\text{ in different fibres}).     \tag{10}
+\]
+
+If 0<t<1/2, every cross-fibre entry of G and H is nonzero. If P_A=0, the off-diagonal fibre blocks of (4) then force W_fg=0 for every f≠g. Since L_ff=0, this would give t=2Tr(LW)=0. Thus P_A≠0 and similarly P_B≠0. Equation (4) proves singularity and, more precisely,
+
+\[
+ \operatorname{rank}G+\operatorname{rank}P_A\le8,
+ \qquad
+ \operatorname{rank}H+\operatorname{rank}P_B\le8.               \tag{11}
+\]
+
+This concludes the proof.
+
+### 92.3. Algebraic identities and the hypothetical subquarter minimum
+
+The common stress equations determine all block multipliers:
+
+\[
+ \begin{aligned}
+ \Lambda_{A,f}&=(C_AG)_{ff},&
+ \Lambda_{B,f}&=(C_BH)_{ff},\\
+ (P_A)_{ff}&=2\sum_{g\ne f}(\overline{H_{fg}}\odot W_{fg})G_{gf},&
+ (P_B)_{ff}&=2\sum_{g\ne f}(\overline{G_{fg}}\odot W_{fg})H_{gf}.
+ \end{aligned}                                                   \tag{12}
+\]
+
+They also give the trace identities
+
+\[
+ \begin{split}
+ \sum_f\operatorname{Tr}\Lambda_{A,f}
+   &=\sum_f\operatorname{Tr}\Lambda_{B,f}
+     =2\operatorname{Tr}[(G\odot H)W],\\
+ p:=\operatorname{Tr}P_A=\operatorname{Tr}P_B
+   &=2\operatorname{Tr}[(T-I_8)W]-t.
+ \end{split}                                                   \tag{13}
+\]
+
+For 0<t<1/2, p>0. The identities follow by multiplying (4) by G or H, taking diagonal blocks, and using G_ff=H_ff=I₂. In particular the computed blocks in (12) must be Hermitian; this is not an additional automatic property of an arbitrary triple G,H,W.
+
+If the unrestricted original-channel minimum were below 1/4, its attained calibrated minimizer would have both ranks in {3,4,5,6,7}. The upper bound follows from Theorem 92.1; the lower bound follows from the [rank-two-party lower bound](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds). This is a statement about an attained hypothetical minimum, not every subquarter competitor.
+
+Such a minimizer would satisfy (1)–(4), (10)–(13), and the full adaptive dual conditions from section 91:
+
+\[
+ Y\ge0,\quad Y\ge2L,\quad Y_{ff}\le tI_2,\quad
+                 t=2\operatorname{Tr}(LW),\quad0<t<1/4.       \tag{14}
+\]
+
+Equivalently, feasible primal and dual variables have the complementary relations
+
+\[
+ Y(\rho-W)=0,\qquad (Y-2L)W=0,\qquad
+                       (tI_2-Y_{ff})\rho_f=0.                 \tag{15}
+\]
+
+These follow term by term from the nonnegative gap identity in section 91. They are finite real algebraic and positive-semidefinite conditions after separating real and imaginary parts. Stress stationarity alone is not a sufficient condition for a minimum, and no extreme-point rank reduction is inferred from convexity of a one-party objective.
+
+### 92.4. Exact active support when both ranks are seven
+
+**Theorem 92.2.** Suppose (G,H) is a calibrated local minimum, rank G=rank H=7, and 0<t=F(G,H)<1/2. Its common stresses have rank one, say P_A=aa* and P_B=bb*. Their coordinate supports coincide in a set S meeting at least two fibres. Every common norming density and witness is supported on S and has strictly positive diagonal entries on S. For one such stress pair there is a diagonal unitary D on S with
+
+\[
+ H_S=D^*G_SD,\qquad
+ \operatorname{rank}G_S=\operatorname{rank}H_S=|S|-1.           \tag{16}
+\]
+
+A reciprocal diagonal phase change preserving the full product G⊙H makes G_S=H_S and the two kernel lines coincide. The adaptive norm of the principal input restriction to S is exactly t. This does not assert that S is the whole input or that the full Grams coincide outside S.
+
+**Proof.** The nonzero stresses in (4) are supported in one-dimensional kernels, so they have rank one. Neither a nor b can be supported in only one fibre, because its diagonal Gram block is I₂. Across different fibres, (4) reads
+
+\[
+ 2\overline{H_{xy}}W_{xy}=-a_x\overline{a_y},\qquad
+ 2\overline{G_{xy}}W_{xy}=-b_x\overline{b_y}.                    \tag{17}
+\]
+
+For x∈supp(a), choose y∈supp(a) in another fibre. Nonzero cross entries and (17) imply W_xy≠0 and then b_x≠0. Reversing parties proves equality of supports.
+
+If x∉S, (17) gives W_xy=0 for every y in a different fibre. Delete coordinate x with a fibre-block projection Q. The compressed pair QρQ,QWQ is feasible except that its density has trace 1−ρ_xx. Its objective is still t, because L has zero fibre blocks and all discarded cross entries of W vanish. If ρ_xx>0, normalizing by 1−ρ_xx would increase the value above t. The denominator is positive since t>0. Thus ρ_xx=0; positivity and 0≤W≤ρ make the corresponding rows and columns of both matrices vanish. Conversely each x∈S has a nonzero cross entry W_xy by (17), so W_xx>0 and ρ_xx>0. This argument applies to every common norming witness, since the two kernel lines and their supports are fixed.
+
+For x∈S put c_x=a_x/b_x and D=diag(c_x). Dividing (17), and retaining the unit diagonals and zero within-fibre off-diagonals, gives
+
+\[
+ H_S=D^*G_SD+\operatorname{diag}(1-|c_x|^2).                    \tag{18}
+\]
+
+Since Db_S=a_S, G_Sa_S=0 and H_Sb_S=0, equation (18) forces (1−|c_x|²)b_x=0. Every b_x on S is nonzero, hence D is unitary and (16)'s first identity holds. If z∈ker G_S, its extension by zero has quadratic form zero against G. Positivity puts that extension in the one-dimensional ker G. Thus ker G_S=span(a_S), proving its rank; the other side is identical.
+
+Choose diagonal unitary E on S with E²=D and extend it by arbitrary unit phases elsewhere. Then
+
+\[
+ G'=E^*GE,\qquad H'=EHE^*,\qquad
+ G'\odot H'=G\odot H,\qquad G'_S=H'_S.                        \tag{19}
+\]
+
+The transformed kernel vectors E*a and Eb coincide because a=Db=E²b. This reciprocal phase transformation is a homeomorphism of ℰ×ℰ and preserves F and local minimality. Finally the norming ρ,W are supported on S. Conversely any feasible principal witness extends by zeros to a full feasible witness. These two observations give equality of the principal adaptive norm and t, completing the proof.
+
+### 92.5. Fixed-direction second-order selection
+
+Work in the gauge (19). Let a span the common full kernel, with support S. In addition to the active face 𝒜 from (5), define the nonempty compact convex common-witness subset
+
+\[
+ \mathcal A_0=\{(\rho,W)\in\mathcal A:
+                b(W;G',H')\ge0\text{ for all }G',H'\in\mathcal E\}.
+                                                                  \tag{20}
+\]
+
+No face property of 𝒜₀ is required. For every point of 𝒜₀, its first stress equals αaa* for some α>0. Positivity of α follows exactly as in Theorem 92.1; α=0 would force the norming value to vanish. Hence, on cross-fibre coordinates of S,
+
+\[
+ W_{xy}=-\frac{\alpha a_x\overline{a_y}}
+                         {2\overline{G_{xy}}}.                 \tag{21}
+\]
+
+The gauge and kernel vector here are fixed, independently of the witness.
+
+For a Hermitian D supported on S with D_ff=0 and Da=0, both G+sD and H−sD are positive for sufficiently small real s: they preserve the kernels and the Grams are positive definite on the orthogonal kernel complements. The first-order product change vanishes because G_S=H_S. A necessary second-order condition is
+
+\[
+ \text{for each fixed }D,\quad
+ \exists(\rho,W)\in\mathcal A_0:
+                Q_W(D):=2\operatorname{Tr}[(D\odot D)W]\ge0.    \tag{22}
+\]
+
+Here is the selection proof, including the quantifier order. Fix D and R>0. For arbitrary G′,H′∈ℰ put U=R(G′−G), V=R(H′−H). The paths
+
+\[
+ G_s=G+sD+s^2U,\qquad H_s=H-sD+s^2V                            \tag{23}
+\]
+
+are feasible for sufficiently small s. For example G_s=(1−Rs²)[G+sD/(1−Rs²)]+Rs²G′ is a convex combination of feasible Grams. Their coefficient difference expands as
+
+\[
+ T-G_s\odot H_s
+   =L+s^2(D\odot D-U\odot H-G\odot V)+O(s^3).                 \tag{24}
+\]
+
+The compact-max argument of (7), now at scale s², and local minimality give
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+R b(W;G',H')]\ge0
+                         \quad\text{for every }G',H'\in\mathcal E.
+                                                                  \tag{25}
+\]
+
+The same finite separation argument used after (7) applies only to the affine variables G′,H′ and the active witnesses. It supplies a point (ρ_R,W_R)∈𝒜 satisfying Q_(W_R)(D)+R b(W_R;G′,H′)≥0 for all feasible pairs. Choosing the base pair shows Q_(W_R)(D)≥0. Compactness bounds this quadratic value uniformly. Along a convergent subsequence as R tends to infinity, the inequalities give b(W_*;G′,H′)≥0 for every fixed pair and Q_(W_*)(D)≥0. The limiting pair belongs to 𝒜₀, proving (22).
+
+The direction D is fixed throughout this minimax step. Equation (22) does not assert one witness whose quadratic form is nonnegative for every direction. Nor does negativity for one arbitrarily chosen active witness imply descent of F. The next argument uses the stronger proportionality of all the forms indexed by 𝒜₀.
+
+### 92.6. A quantitative support exclusion from quadratic inertia
+
+**Theorem 92.3.** Under the hypotheses of Theorem 92.2, put d_f=|S∩{(f,0),(f,1)}|, n=|S|, and m=Σ_(f<g)d_fd_g. Then
+
+\[
+                         m\le2n-1,\qquad n\le5.               \tag{26}
+\]
+
+Thus a positive subhalf calibrated local minimum with both ranks seven cannot have active support on six, seven, or eight input coordinates.
+
+**Proof.** The real vector space of Hermitian D supported on S with zero fibre blocks has one complex variable z=D_xy for each of its m unordered cross-fibre edges, hence dimension 2m. Equation (21) gives
+
+\[
+ Q_W(D)=-\alpha\sum_{x,y\text{ in different fibres}}
+             \frac{a_y\overline{a_x}}{G_{xy}}D_{xy}^2.         \tag{27}
+\]
+
+Each unordered edge contributes −2α Re(c_xy z²), where c_xy=a_y conjugate(a_x)/G_xy≠0. For z=u+iv, the real quadratic form Re(cz²) has eigenvalues +|c| and −|c|. Thus (27) has exactly m positive and m negative eigenvalues, with no zero eigenvalue, for arbitrary complex phases.
+
+Fix any one point of 𝒜₀ and its m-dimensional negative eigenspace N. The real-linear map D↦Da has rank at most 2n−1, because its image lies in the hyperplane Im(a*Da)=0. If m>2n−1, a nonzero D∈N therefore satisfies Da=0. It obeys every condition in (22) and has Q_W(D)<0. For every other point of 𝒜₀, formula (27) is a strictly positive scalar multiple of the same form, so this single D is negative for all common witnesses. That contradicts (22) and proves the first inequality of (26).
+
+For n=6 the possible fibre sizes are (2,2,2,0) and (2,2,1,1), giving m=12 or 13, both greater than 11. For n=7 the sizes are (2,2,2,1) and m=18>13. For n=8 they are (2,2,2,2) and m=24>15. This proves n≤5 with the original fibre constraints retained.
+
+### 92.7. Excluding support in only two fibres
+
+**Theorem 92.4.** Under the hypotheses of Theorem 92.2, the active stress support meets at least three original fibres.
+
+**Proof.** Work in the reciprocal gauge (19). If the support meets exactly two fibres, their positive occupancies can only be (1,1), (2,1), (1,2), or (2,2). A two-coordinate support is impossible: its rank-one principal Grams have unit-modulus cross entries, so their product has modulus one and differs from the target 1/2 by at least 1/2, contradicting (10).
+
+For occupancies (2,1), write the common principal Gram and a kernel vector as
+
+\[
+ G_S=H_S=\begin{pmatrix}I_2&g\\g^*&1\end{pmatrix},
+ \qquad a_S=(-g,1),\qquad \|g\|_2=1.                         \tag{28}
+\]
+
+The norm equality follows from positivity and rank two. Both entries of g are nonzero. Put m_i=1/2−g_i², the cross column of the principal error. Its complete restricted diamond norm is exactly ∥m∥₂. Here is a direct adaptive proof, with its normalization retained.
+
+For any feasible witness let w=W_fg be its cross column. Compress ρ,W to any unit vector in the first fibre and the second singleton. Write the compressed ρ diagonals as r,s, the compressed W diagonals as A,B, and its cross entry as z. Then r+s≤1 and positivity of W and ρ−W gives
+
+\[
+ |z|\le\sqrt{AB},\qquad
+ |z|\le\sqrt{(r-A)(s-B)},\qquad
+ 2|z|\le\sqrt{rs}\le\tfrac12.                              \tag{29}
+\]
+
+The middle bound follows by adding the first two and using Cauchy–Schwarz. Taking the supremum over the first-fibre unit vector gives ∥w∥₂≤1/4. The objective is 4 Re(m*w), so it is at most ∥m∥₂. Equality is feasible: for u=m/∥m∥₂ choose ρ=diag(uu*/2,1/2) and W=(u,1)(u,1)*/4; then ρ−W=(u,−1)(u,−1)*/4≥0. The case m=0 is immediate, and here t>0 excludes it. Theorem 92.2 therefore gives t=∥m∥₂, and every norming witness satisfies
+
+\[
+ w=\frac{m}{4t}.                                             \tag{30}
+\]
+
+The positive common stress αa_Sa_S* instead forces 2 conjugate(g_i)w_i=αg_i, hence w_i=βg_i/conjugate(g_i) with β=α/2>0. Combining this with (30) gives
+
+\[
+ \tfrac12=(|g_i|^2+4t\beta)\frac{g_i}{\overline{g_i}}.
+                                                                  \tag{31}
+\]
+
+The coefficient in parentheses is positive and the last factor has modulus one. Thus g_i/conjugate(g_i)=1 and |g_i|²=1/2−4tβ for both entries. Their sum contradicts ∥g∥₂²=1. The reversed occupancy (1,2) is identical after exchanging the fibres.
+
+For occupancies (2,2), write
+
+\[
+ G_S=H_S=\begin{pmatrix}I_2&C\\C^*&I_2\end{pmatrix}.
+                                                                  \tag{32}
+\]
+
+Positivity and rank three say that C has singular values one and a number strictly smaller than one. The kernel is spanned by a_S=(−u,v), where u,v are unit vectors with Cv=u and C*u=v. Every component of u,v and every entry of C is nonzero.
+
+For the purpose of calculating (27), simultaneous diagonal-unitary coordinate changes G_S↦E*G_SE, a_S↦E*a_S, D_S↦E*D_SE preserve each ordered summand and the condition D_Sa_S=0. The phase acquired by D_xy² cancels the inverse phase in its coefficient. This is an algebraic change of coordinates for finding a direction; it does not claim that applying the same phases to both physical channels preserves their product or the target. The direction is returned to the original gauge after the calculation.
+
+Choose these coordinates so that u=(c,d), v=(e,f) have positive real entries. Put u_perp=(−d,c), v_perp=(−f,e). Then
+
+\[
+ c^2+d^2=e^2+f^2=1,\qquad
+ C=uv^T+z\,u_{\perp}v_{\perp}^T,\qquad |z|<1.                \tag{33}
+\]
+
+For any complex w, the Hermitian direction with cross block D_fg=w u_perp v_perp^T and reverse block its adjoint satisfies Da=0. Extend it by zeros outside S. Substitution into (27) gives exactly
+
+\[
+ Q_W(D)=2\alpha\operatorname{Re}(w^2 A),\qquad
+ A=cdef\left(\frac{df}{C_{00}}+\frac{de}{C_{01}}
+                    +\frac{cf}{C_{10}}+\frac{ce}{C_{11}}\right).
+                                                                  \tag{34}
+\]
+
+This coefficient is nonzero for every permitted complex z. Indeed put r=d/c>0 and q=f/e>0. The bracket in (34) equals
+
+\[
+ \begin{split}
+ &\frac{rq}{1+zrq}+\frac{r}{q-zr}
+                  +\frac{q}{r-zq}+\frac{1}{rq+z}\\
+ &\qquad=
+ \frac{rq(1+r^2)(1+q^2)(1-z^2)}
+ {(1+zrq)(q-zr)(r-zq)(rq+z)}.
+ \end{split}                                                   \tag{35}
+\]
+
+The denominator is nonzero because all four entries of C are nonzero, and the numerator is nonzero because |z|<1. Choose the phase of w so that Re(w²A)<0, and return the resulting direction to the original coordinates. Formula (34) is then negative for every common witness, since its only witness-dependent factor is α>0. This contradicts the fixed-direction condition (22), and excludes the last two-fibre case. The theorem follows.
+
+Combining Theorems 92.3 and 92.4 leaves exactly five possible occupancy patterns, up to fibre permutation:
+
+\[
+ (1,1,1,0),\quad (2,1,1,0),\quad (1,1,1,1),\quad
+                 (2,2,1,0),\quad (2,1,1,1).                  \tag{36}
+\]
+
+A zero entry means a whole missing fibre. An entry one means only one retained coordinate of that original two-coordinate fibre. These are different restrictions, and none of the five patterns is excluded here.
+
+### 92.8. Why small equal principal Grams alone do not imply a quarter bound
+
+**Proposition 92.5.** There are equal positive principal Grams on one coordinate in each of four fibres, of rank three with a kernel vector nonzero on every coordinate, whose complete restricted diamond error is 21/100. They admit an original physical completion with both local ranks seven, but the completion has full error at least 1/2. The principal example cannot carry a positive common norming stress.
+
+**Proof.** In a real three-dimensional environment choose
+
+\[
+ u_f=\frac{2e_0+\cos(\pi f/2)e_1+\sin(\pi f/2)e_2}{\sqrt5},
+                    \qquad f=0,1,2,3.                       \tag{37}
+\]
+
+Their Gram R is real circulant with first row (1,4/5,3/5,4/5), eigenvalues 16/5,2/5,0,2/5, and kernel spanned by v=(1,−1,1,−1). Set both principal Grams equal to R. The singleton target is (I₄+J₄)/2, so with P=vv*/4,
+
+\[
+ L_S=\frac7{50}(vv^*-I_4)
+       =\frac{14}{25}P-\frac7{50}I_4,\qquad
+ Z=|L_S|=\frac7{50}I_4+\frac7{25}P.                           \tag{38}
+\]
+
+The eigenvalues of L_S are 21/50 and −7/50 with multiplicity three. Exact positive majorant certificates are
+
+\[
+ Z-L_S=\frac7{25}(I_4-P)\ge0,\qquad
+ Z+L_S=\frac{21}{25}P\ge0,\qquad Z_{ff}=\frac{21}{100}.
+                                                                  \tag{39}
+\]
+
+For every feasible singleton density ρ and witness W, ρ is diagonal and Tr(L_Sρ)=0. Therefore
+
+\[
+ \begin{split}
+ 2\operatorname{Tr}(L_SW)
+  &=\operatorname{Tr}(L_SW)
+              -\operatorname{Tr}[L_S(\rho-W)]\\
+  &\le\operatorname{Tr}(ZW)+\operatorname{Tr}[Z(\rho-W)]
+    =\operatorname{Tr}(Z\rho)=\frac{21}{100}.
+ \end{split}                                                   \tag{40}
+\]
+
+Equality holds for ρ=I₄/4 and W=vv*/16. This proves the complete restricted diamond norm, including arbitrary references, rather than only a uniform-input lower bound. The singleton restriction is a scalar Schur map, so (39) is also its usual diamond majorant.
+
+If a positive common norming stress existed, rank three would force it to be αvv* with α>0. Across distinct singleton fibres its equation would require W_fg=−αv_fv_g/(2R_fg). Every R_fg is positive and (L_S)_fg v_fv_g=7/50. Consequently
+
+\[
+ 2\operatorname{Tr}(L_SW)=-\frac{7\alpha}{3}<0,                \tag{41}
+\]
+
+contradicting the positive norming value. Zero stress is impossible too: all cross entries of R are nonzero, so it would force all cross entries of W to vanish. Thus the obstruction concerns every proposed common norming stress, not merely the displayed uniform witness.
+
+For the original-channel completion, use u_f as each first-bit environment record and four distinct orthonormal records e′_f in an orthogonal real four-dimensional space as the second-bit records. Use these same seven-dimensional records for both local channels. Each original fibre pair is orthonormal, so |f,i〉↦|f〉⊗record_(f,i) is a Stinespring isometry on all eight original inputs. After ordering the first-bit coordinates before the second-bit coordinates, both full Grams are R⊕I₄ and have rank seven. Hence both calibrated channels have local Choi rank seven, and the four-singleton restriction above is retained exactly.
+
+However any first-bit coordinate and a second-bit coordinate in a different fibre have product coefficient zero instead of the target 1/2. The original matrix-unit test therefore gives full error at least 1/2. This completion is not an original subquarter competitor and does not have the common active support asserted in Theorem 92.2. The proposition follows.
+
+### 92.9. Consequences and boundaries
+
+If the unrestricted original-channel minimum were below 1/4, an attained calibrated minimizer would satisfy the common adaptive stresses and complementary conditions above, with both ranks between three and seven. If both ranks were seven, its common stress support would have one of the five patterns in (36). The argument excludes supports on six or more coordinates and supports in only two fibres. It does not exclude the five remaining patterns, unequal rank pairs, or lower-rank common-stress systems.
+
+The exact 21/100 example shows why the remaining small-support analysis cannot discard the same norming witness and its positive stresses: positivity, equal principal Grams, rank |S|−1, and a physical completion do not alone imply a restricted quarter bound. Its full original error is at least 1/2, so it does not change the original optimum.
+
+These results do not classify all calibrated local minima or all quarter-error attainters. The unrestricted original-channel optimum remains in [√3−3/2,1/4]. Calibration is used only through the established physical global comparison, with no rank-preservation claim.
+
+The compact-max, finite-dimensional separation, Schur-product, and semidefinite duality ingredients are standard; see [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). The physical Gram optimization is the established section-72 reduction, and the exact adaptive norm and its primal-dual gap are section 91. The conclusions proved here are the simultaneous norming stress condition for this product problem, its exact rank-seven support constraints, the second-order and two-fibre exclusions using the original fibre dimensions, and the small-support scope counterexample. No general minimax or semidefinite-duality theorem is asserted to be new.
