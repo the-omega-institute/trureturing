@@ -37,6 +37,7 @@ internal sealed class StabilizerLogicalZSupportRefutationDocument : IScribeDocum
                 Paragraph(Text(
                     "A stabilizer word is a product of a selected subset of the r generator words. "
                         + "The selector b takes Boolean values, with true selecting its generator. "
+                        + "Function.const(A, c) returns c at every argument in A. "
                         + "List.finRange(r) lists 0 through r − 1 in order. List.foldr processes this "
                         + "list from the right, starting with the all-I word and multiplying a generator "
                         + "exactly when its selector is true. The empty selection gives the all-I word. "
@@ -139,7 +140,7 @@ internal sealed class StabilizerLogicalZSupportRefutationDocument : IScribeDocum
         All("u", Words(), All("v", Words(), body)));
     private static Formula GeneratorBinders(Formula body) => All("n", Q("Nat"), All("r", Q("Nat"),
         All("g", Arrow(Fin(N("r")), Words()), body)));
-    private static Formula IdentityWord() => LambdaOf("i", Fin(N("n")), Letter("I"));
+    private static Formula IdentityWord() => Call("Function.const", Fin(N("n")), Letter("I"));
 
     private static Formula LetterProductFormula()
     {
