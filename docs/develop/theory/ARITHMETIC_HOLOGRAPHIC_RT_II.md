@@ -1545,3 +1545,126 @@ For k=3 use the three Pauli bases; k=4,8 use §68's scalar Hadamard construction
 The Fourier frame and Naimark-complement principles are standard; see Novikov and Sevost'yanova, Maltsev equal-norm tight frames, §2 and Theorem4, https://www.mathnet.ru/eng/im9137 . The identities X1=0 and XX^T=(7/3)I identify the seven-vector configuration as a centered unit-norm tight frame, equivalently a real spherical2-design; this equivalence is classical, explicitly reviewed in Heineken, Morillas and Tarazaga, Balanced frames: a useful tool in signal processing with good properties, Proposition3.5, https://arxiv.org/html/1904.00920 . The elementary moment computation is supplied above, without a novelty claim for spherical designs or a general projection-decomposition theorem.
 
 The physical resource conclusion uses these standard frame ingredients in the exact common-channel equality criterion. It concerns the stated finite range and fixed MC channel family, with arbitrary physical product competitors and all reference extensions. No general-k existence or positive-error diamond optimum is asserted.
+
+## 70. A quantitative one-product obstruction for four qubit fibres
+
+### 70.1 Unrestricted physical statement
+
+Let F=F_(4,2) be the uniform four-fibre channel of §66. The logical input has labels |f,i>, 1≤f≤4, i∈{0,1}, and the logical output has labels |f>. Its matrix units satisfy
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g| for f≠g.
+
+Fix MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. For arbitrary local CPTP maps A,B:C^8→C^4, define the unhalved diamond error
+
+    δ(A,B)=||(A⊗B)∘J_in−J_out∘F||diamond.
+
+Then
+
+    1/40000 ≤ inf_(A,B) δ(A,B) ≤ 1/2.                    (1)
+
+The lower bound allows arbitrary local ancillas, output populations, extra coherences, and leakage outside the output MC code. It imposes no exact basis-output calibration. The upper bound is attained by an explicit single product channel with error exactly1/2. Two product branches implement the target with zero error by §68's k=4 construction. Formula (1) is a certified interval, not an assertion of the exact one-product optimum.
+
+### 70.2 From actual output error to orthonormal records
+
+It suffices to rule out δ≤1/40000; larger errors already satisfy the lower bound. Fix such a competitor and Stinespring isometries U_A,U_B. For a logical basis state |f,i>, write
+
+    U_A|f,i>=|f>e_(f,i)+b_(f,i),
+
+where b_(f,i) is orthogonal to the output-|f> subspace; use analogous vectors h and c for B. The encoded output and its ideal pure state differ in trace norm at most δ. Since their difference has trace zero, its expectation against any effect has absolute value at most δ/2. Testing the effect |ff><ff| gives
+
+    ||e_(f,i)||² ||h_(f,i)||²≥1−δ/2.
+
+Both factors are at most one, so each is at least1−δ/2. In particular ||b_(f,i)||²,||c_(f,i)||²≤δ/2.
+
+For each fibre let E_f:C²→H_EA have columns e_(f,0),e_(f,1), and let B_f have columns b_(f,0),b_(f,1). Isometry of U_A restricted to that fibre gives
+
+    E_f* E_f=I_2−B_f*B_f,
+    0≤B_f*B_f≤δ I_2,
+
+where the second bound follows from its trace≤δ. Since δ<1, the polar-normalized frame V_f=E_f(E_f*E_f)^(-1/2) is an isometry and
+
+    ||E_f−V_f||op≤1−sqrt(1−δ)≤δ.                       (2)
+
+This proves existence of two orthonormal records in the actual environment, even if its dimension was not fixed in advance. On the other party obtain orthonormal frames W_f with the same bound. These auxiliary frames are used to obtain a geometric obstruction; no claim is made that rounding preserves the original physical channel.
+
+### 70.3 Approximate row saturation and a common two-dimensional span
+
+For f≠g, let R_fg and T_fg be the cross-record matrices of the rounded frames, with entries
+
+    R_fg[i,j]=<V_g e_j,V_f e_i>,
+    T_fg[i,j]=<W_g e_j,W_f e_i>.
+
+They are 2×2 contractions. The actual retained physical coefficient is <e_(g,j),e_(f,i)><h_(g,j),h_(f,i)>. Its difference from1/2 has modulus at most δ: apply the diamond bound to the trace-norm-one logical matrix unit and then take the indicated output matrix entry. Equation (2) changes each local overlap by at most2δ, hence the product by at most4δ. Therefore
+
+    |R_fg[i,j]T_fg[i,j]−1/2|≤5δ.                        (3)
+
+For every row i, Σ_j|R_ijT_ij|≥1−10δ. Row norms of contractions are at most one, so Cauchy–Schwarz gives each row norm at least1−10δ. Its square is at least1−20δ. Thus Tr(RR*)≥2−40δ and RR*≤I_2 imply
+
+    smallest singular value of R squared≥1−40δ.        (4)
+
+The same row estimate also yields
+
+    Σ_j (|R_ij|−|T_ij|)²
+      =||R_i||²+||T_i||²−2Σ_j|R_ijT_ij|≤20δ.
+
+Combining this with (3), and |R_ij|≤1, gives the first-party-only estimate
+
+    ||R_fg[i,j]|²−1/2|≤sqrt(20δ)+5δ.                   (5)
+
+Fix the two-dimensional environment plane S=range(V_1), with orthogonal projection P. For f≠1, the contraction M_f=V_1*V_f has the singular values in (4). Hence
+
+    ||(I−P)V_f||op≤sqrt(40δ).
+
+Its unitary polar factor L_f satisfies ||M_f−L_f||op≤1−sqrt(1−40δ)≤40δ. Set Q_f=V_1 L_f, and Q_1=V_1. All Q_f are orthonormal bases of the same plane S, and
+
+    ||V_f−Q_f||op≤η:=sqrt(40δ)+40δ.                    (6)
+
+For any two unit record vectors, (6) changes their inner product by at most2η and its squared modulus by at most4η. Equation (5) therefore gives, for every distinct f,g and each i,j,
+
+    ||<Q_g e_j,Q_f e_i>|²−1/2|
+      ≤(sqrt20+4sqrt40)sqrtδ+165δ=:E(δ).                (7)
+
+All square roots used here are valid under δ≤1/40000<1/40.
+
+### 70.4 Four Bloch axes give a quantitative contradiction
+
+Identify S with C². The first projectors of its four bases have unit Bloch vectors n_1,...,n_4∈R³, and
+
+    |<Q_g e_0,Q_f e_0>|²=(1+n_f·n_g)/2.
+
+Thus (7) implies |n_f·n_g|≤2E(δ). Four unit vectors in R³ must have some pair with absolute inner product at least1/3. Indeed their 4×4 Gram matrix G is positive semidefinite, has rank≤3 and trace4, so Tr(G²)≥16/3 by Cauchy–Schwarz on its nonzero eigenvalues. If all off-diagonal inner products had modulus below1/3, its squared Frobenius norm would be below4+12/9=16/3, a contradiction.
+
+However sqrt20+4sqrt40<30. At δ≤1/40000,
+
+    E(δ)<30/200+165/40000=6165/40000<1/6.
+
+This contradicts the pair lower bound. No product competitor has error≤1/40000; in particular the infimum is at least1/40000, proving the lower side of (1). No compactness argument or exact-output ansatz enters this quantitative conclusion.
+
+### 70.5 A common product attainer for the upper bound
+
+Choose four unit tetrahedral vectors n_f in R³, so n_f·n_g=−1/3 for f≠g; for example use (1,1,1),(1,−1,−1),(−1,1,−1),(−1,−1,1), divided by sqrt3. Let e_(f,i) be eigenvectors of n_f·σ with eigenvalues(-1)^i. Define local isometries
+
+    |f,i>→|f>e_(f,i),
+    |f,i>→|f>conjugate(e_(f,i))
+
+on the two parties. They are isometric because within a fibre the records are orthonormal, and different fibres have orthogonal output labels. The product output lies in the MC code, with the correct basis populations and within-fibre units. For f≠g its logical coefficient is
+
+    |<e_(g,j),e_(f,i)>|²
+      =1/2−(-1)^(i+j)/6.
+
+To compute its full diamond error, define |f,±>=(|f,0>±|f,1>)/sqrt2 and a CPTP logical compression C with Kraus operators
+
+    K=Σ_f |f><f,−|,    K_f=|f><f,+|  (one for each f).
+
+Their adjoint products sum to I_8. Let D be dephasing in the four output labels and O=id−D. Directly on all matrix units, the difference between this product channel's logical action and F is
+
+    −(1/3) O∘C.
+
+The diamond norm of O is3/2. For the upper bound, let Z=diag(1,i,−1,−i); then D=(1/4)Σ_(j=0)^3 Ad_(Z^j), so the channel triangle inequality bounds ||O||diamond by3/4+3/4=3/2. The uniform pure output state attains3/2, since its difference from I_4/4 has eigenvalues3/4,−1/4,−1/4,−1/4. The normalized input (1/2)Σ_f|f,−> is mapped by C to that uniform pure state. Therefore the product channel's error is exactly1/2, including arbitrary-reference upper control. Isometric MC output encoding preserves this norm.
+
+### 70.6 Attribution and scope
+
+The four-vector Gram estimate is the classical Welch bound in this instance, and the tetrahedral frame, qubit Bloch parametrization and polar decomposition are standard. For the original correlation bound see L. R. Welch, Lower bounds on the maximum cross correlation of signals, IEEE Transactions on Information Theory20 (1974),397–399, https://doi.org/10.1109/TIT.1974.1055219 . For the Gram/frame derivation see also Datta, Howard and Cochran, Geometry of the Welch Bounds, https://arxiv.org/abs/0909.0206 . Channel and diamond facts follow the conventions of Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . The exact physical target and two-branch zero-error realization are from §§66 and68.
+
+The quantitative step tracks actual wrong-output Stinespring components through record rounding, row saturation and common-span approximation. It establishes a nonzero physical approximation gap between one product channel and two shared branches for this fixed coherent channel, with unrestricted leakage and ancillas. The constants are not asserted sharp, the one-product optimum is not identified, and no arbitrary-channel or full-RT recovery claim is made.
