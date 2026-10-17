@@ -288,3 +288,214 @@ x_1=u\left(1-i\sqrt{\frac{1-b}{b}}\right),\quad y=\gamma R_{01}x.
 **证明。** 显式公式给出 `|x0|²=|x1|²=b(1+(1-b)/b)=1` 和 `|1+2u|²=3`；`y` 是 `x` 的相位倍反射，故两个循环自相关之和为零。满支撑由前卷 §51.5 的逐模总能量六与单模退化排除推出。直接代入得到所列三个换位内积，而式 (52.3) 的正多项式证书排除实际输出 flat。证毕。
 
 实际循环三元组本已由前卷第 46、51 节具有满支撑和非零 `Delta`，故 canonical mode-local 射线不在本节候选域中。本节进一步排除了零模平衡子层，仍未分类或排除零模能量不相等的循环三元组、来自不同置换轨道的三元组或 residual quartet。
+
+## 53. 配对 two-circulant 的 Fourier 交点及实际 cyclic completion 的两条边
+
+本节沿用正文 §51 和上节的实际向量方向。先对任意复参数的配对
+circulant 矩阵给出精确交点判据，再将它用于同时满足两组平坦性条件的
+cyclic triple。这里的 Hadamard 等价始终允许任意左右单位模对角矩阵
+与行列置换；Fourier union 指 Fourier family 及其转置族的等价类之并。
+
+### 53.1 任意复参数的平方行列对判据
+
+下标属于 \(\mathbb Z/3\mathbb Z\)。对 \(x,y\in\mathbb T^3\)，置
+\[
+\alpha(z)=\sum_{t=0}^2\overline{z_t}z_{t+1},\qquad
+X_{ij}=x_{i-j},\quad Y_{ij}=y_{i-j},\qquad
+M(x,y)=\begin{pmatrix}X&-Y^*\\Y&X^*\end{pmatrix}.
+\]
+称两个不同行或不同列构成**平方比例对**，是指两向量逐项平方后成比例。
+因为所有条目非零，这等价于相应两个平方向量的全部 \(2\times2\) 子式为零。
+比例常数必为单位模。左右 monomial 等价保持相应类型的平方比例对是否存在。
+
+**命题 53.1。** 假设 \(\alpha(x)+\alpha(y)=0\)。则 \(MM^*=6I\)，且：
+
+1. \(M\) 有平方比例行对，当且仅当存在 \(d\in\mathbb Z/3\mathbb Z\)、
+   \(\gamma\in\mathbb T\)，使 \(y_{t+d}=\gamma x_t\) 对所有 \(t\) 成立。
+2. \(M\) 有平方比例列对，当且仅当存在 \(c\in\mathbb Z/3\mathbb Z\)、
+   \(\gamma\in\mathbb T\)，使 \(y_{c-t}=\gamma\overline{x_t}\) 对所有 \(t\) 成立。
+3. \(M\) 属于 Fourier union，当且仅当 \(\alpha(x)=0\)。在该零参数处，
+   两种平方比例对恰有一种存在，存在的一种恰有三对；非零参数处，
+   十五个行对与十五个列对各自至少有一个非零平方子式。
+
+**证明。** circulant 矩阵彼此交换且正规。块乘法给出
+\[
+MM^*=\operatorname{diag}(XX^*+YY^*,XX^*+YY^*).
+\]
+每个对角块的对角条目为 \(6\)，非对角条目为
+\(\alpha(x)+\alpha(y)\) 或其共轭，故 \(M\) 为单位条目 Hadamard 矩阵。
+
+先排除同一 channel 内的行对。比较上半块第 \(i\)、\(i+d\) 行，\(d\ne0\)。
+若平方成比例，则存在 \(c\in\mathbb T\) 使
+\[
+x_t^2=cx_{t+d}^2,\qquad
+\overline{y_{-t}}^{\,2}=c\overline{y_{-t-d}}^{\,2}.
+\]
+因此 \(x,y\) 都满足 \(z_{t+d}^2=c^{-1}z_t^2\)。遍乘三式得 \(c^3=1\)。
+取唯一的三次单位根 \(\eta\) 满足 \(\eta^{2d}=c^{-1}\)，则
+\[
+x_t=u\eta^t\varepsilon_t,\qquad y_t=v\eta^t\delta_t,
+\qquad \varepsilon_t,\delta_t\in\{1,-1\},\quad |u|=|v|=1.
+\]
+三个符号的相邻乘积之和，在符号全同时为 \(3\)，否则为 \(-1\)。于是
+\[
+\alpha(x),\alpha(y)\in\{3\eta,-\eta\},\qquad
+\alpha(x)+\alpha(y)\in\{6\eta,2\eta,-2\eta\},
+\]
+不可能为零。下半块行对交换 \(x,y\) 并作共轭、反向下标后得到相同矛盾。
+第一列块内的列对直接给出 \(x_{t+d}^2=cx_t^2\)、\(y_{t+d}^2=cy_t^2\)，
+仍是同一个符号与三次单位根论证；第二列块内的列对经共轭、反向下标亦然。
+这排除了全部十二个同 channel 的行对或列对。
+
+再比较上半块第 \(i\) 行与下半块第 \(k\) 行，令 \(d=k-i\)。
+前三列的平方比例条件为
+\[
+x_t^2=c y_{t+d}^2.
+\]
+后三列条件正是其共轭再重标下标，故等价于
+\[
+y_{t+d}=\gamma\varepsilon_t x_t,\qquad
+\gamma^2=c^{-1},\quad\varepsilon_t\in\{1,-1\}.
+\]
+写 \(e_t=\overline{x_t}x_{t+1}\)，得到
+\[
+0=\alpha(x)+\alpha(y)
+ =\sum_t(1+\varepsilon_t\varepsilon_{t+1})e_t. \tag{53.1}
+\]
+若符号不全同，三个相邻乘积恰有一个为 \(+1\)，另外两个为 \(-1\)，
+右侧就是某个单位相位的两倍，不能为零。因此符号全同，可吸收到 \(\gamma\) 中。
+这证明行对判据，并且 \(\alpha(y)=\alpha(x)\)，所以二者都为零。
+反过来，\(y_{t+d}=\gamma x_t\) 直接给出相应的跨 channel 平方比例行对。
+
+对于第一列块第 \(j\) 列与第二列块第 \(k\) 列，令 \(c_0=k-j\)。
+上半块条件为
+\[
+x_t^2=c\overline{y_{c_0-t}}^{\,2},
+\]
+下半块条件仍是其共轭与重标下标。因此存在符号使
+\[
+y_{c_0-t}=\gamma\varepsilon_t\overline{x_t}.
+\]
+反向下标与共轭同时出现，故相邻比值之和满足
+\[
+\alpha(y)=\sum_t\varepsilon_t\varepsilon_{t+1}e_t.
+\]
+式 (53.1) 的符号论证再次强制符号全同，并推出 \(\alpha(x)=0\)。
+无符号变化的关系也直接给出平方比例列对。前两项已证。
+
+若 \(\alpha(x)=0\)，则 \(\alpha(y)=0\)。任一单位相位三元组的三个
+相邻比值之积为一，其二次基本对称式为相邻比值之和的共轭，故它们是
+\[
+T^3-\alpha(z)T^2+\overline{\alpha(z)}T-1
+\]
+的根。在零参数处，这三个比值恰为 \(1,\omega,\omega^2\)，各出现一次。
+于是 \(y\) 的比值列表是 \(x\) 的比值列表的一个置换。
+偶置换是循环移位，积分相邻比值得到第一项的相位循环关系；奇置换是反向移位，
+积分得到第二项的反向共轭关系。两类互斥，因为三个比值互异。
+相应的位移唯一：若两个位移均成立，\(x\) 将是一个 Fourier 单模，
+其三个相邻比值相同，与上述互异性矛盾。每个位移对应三个跨 channel 对，
+故零参数处恰有一种类型、恰有三对。
+
+最后应用 order-six Fourier recognition。平方比例行对经列相位归一化和
+一个行相位调整变成全一行与符号行；正交性强制符号行中恰有三个 \(-1\)。
+归一化首列仍保留此模式。Matszangosz–Szöllősi 的 Proposition 4、Theorem 5
+及 Corollary 23 将这种归一化模式刻画为 transposed Fourier family；
+转置后得到列对与 Fourier family 的对应。
+反向成立，因为标准 transposed Fourier 矩阵有平方比例行对，而这一性质
+在任意 monomial 等价下不变。结合前面的全部行列对分析即得第三项。证毕。
+
+上述 recognition 使用
+[Matszangosz–Szöllősi, *A characterization of complex Hadamard matrices appearing in families of MUB triplets* (2024)](https://doi.org/10.1007/s10623-024-01503-w)。
+配对形式与 Szöllősi 的标准形式之间的精确关系是
+\[
+M(x,y)\operatorname{diag}(I,-I)
+ =\begin{pmatrix}X&Y^*\\Y&-X^*\end{pmatrix}
+ =\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},\qquad A=X,\ B=Y^*.
+\]
+若 \(A\) 的首行为 \((a,b,c)=(x_0,x_2,x_1)\)，则其原文参数
+\(a/b+b/c+c/a\) 恰为 \(\alpha(x)\)；\(B\) 的参数恰为 \(\alpha(y)\)。
+因此命题覆盖所有容许复参数及其判别式为零的边界，没有实分支或根互异的
+先验限制，也没有把任意四个 circulant 块自动当成这种配对形式。
+[Szöllősi, *A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*](https://arxiv.org/html/0811.3930v2)
+在 Lemma 3.1 给出零参数的 Fourier 交点，并在 Theorem 2.2 后提出仅此交点的预期。
+命题 53.1 用平方行列对给出相应零参数判据；其中的 Fourier recognition 属于上述文献。
+
+### 53.2 实际 cyclic completion 的输入边与输出边
+
+**命题 53.2。** 取 §§51–52 的实分支 \(-1<a<1\)，
+\[
+H_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},
+\qquad A=J+(p-1)I,\quad B=J+(q-1)I,
+\]
+其中 \(p,q\) 和分支方向与正文相同。设
+\[
+v=\frac1{\sqrt6}\binom{x}{y},\qquad x,y\in\mathbb T^3,
+\]
+满足 \(H_0v\) 平坦且 \(v,Sv,S^2v\) 正交归一。令
+\[
+K=\frac1{\sqrt6}M(x,y),\qquad C=H_0K.
+\]
+则 \(K\) 与 \(C\) 均不属于 Fourier union。
+当 \(a\ne0\) 时，\(H_0\) 也不属于 Fourier union。
+因此若这样的实际 cyclic triple 在 \(a\ne0\) 处存在，
+\((I,H_0,C)\) 是三条相对 Hadamard 边均在该 union 之外的 MUB triplet。
+
+**证明。** §51 的实际构造已经给出 \(K\) 与 \(H_0K\) 的平坦性及酉性。
+写
+\[
+H_0v=\frac1{\sqrt6}\binom{u}{z},\qquad
+u=\frac{Ax+By}{\sqrt6},\quad z=\frac{B^*x-A^*y}{\sqrt6}.
+\]
+于是 \(u,z\in\mathbb T^3\)。\(H_0\) 与所有同步坐标置换交换，
+故输出的 cyclic triple 也正交归一，且
+\[
+\alpha(u)+\alpha(z)=0.
+\]
+对三种同步 transposition \(R_j\)，酉性、交换性及正文 §51 的严格正性给出
+\[
+\langle H_0v,R_jH_0v\rangle
+ =\langle v,R_jv\rangle>0. \tag{53.2}
+\]
+这里严格正性只对原来的实际输入 \(v\) 使用；没有将 \(H_0^*\) 擅自代入
+实分支定理作为新的 seed。
+
+若单位相位三元组 \(t\) 满足 \(\alpha(t)=0\)，命题 53.1 证明中的根分析表明
+它的相邻比值恰为 \(1,\omega,\omega^2\)。所以恰有两个坐标相等，
+第三个坐标是共同值的 \(\omega\) 或 \(\omega^2\) 倍。
+三种 transposition 的内积 \(\langle t,R_jt\rangle\) 因而恰为
+\(3,0,0\) 的一个排列：交换相等坐标给出 \(3\)，另外两种给出
+\(1+\omega+\omega^2=0\)。
+
+若 \(\alpha(u)=0\)，则 \(\alpha(z)=0\)。每个 channel 的上述内积最多只在
+一个 transposition 处非零，两个 channel 合起来仍留下至少一个 \(R_j\) 满足
+\[
+\langle H_0v,R_jH_0v\rangle
+ =\frac{\langle u,R_ju\rangle+\langle z,R_jz\rangle}{6}=0,
+\]
+与式 (53.2) 矛盾。因此 \(\alpha(u)\ne0\)。相同论证也可用于输入；
+上节还给出了更强的 \(\operatorname{Re}\alpha(x)\ne0\)。
+
+令 \(U,Z\) 分别是以 \(u,z\) 为首列的 circulant 矩阵。
+由 circulant 块交换及实际乘法，
+\[
+U=\frac{AX+BY}{\sqrt6},\qquad
+Z=\frac{B^*X-A^*Y}{\sqrt6},
+\]
+\[
+H_0K=\frac1{\sqrt6}\begin{pmatrix}U&Z^*\\Z&-U^*\end{pmatrix}
+ =\frac1{\sqrt6}M(u,z)\operatorname{diag}(I,-I).
+\]
+分别对 \((x,y)\)、\((u,z)\) 应用命题 53.1，即知 \(K,C\) 均在 Fourier union
+之外。实际列方向下，completion 是 \(C\)，它的两条边分别为
+\(C\) 与 \(H_0^*C=K\)；因此两个结论没有互相替代。
+最后 \(A\) 的首列是 \((p,1,1)\)，且
+\[
+\alpha(p,1,1)=1+2\operatorname{Re}p=a.
+\]
+同一判据在 \(a\ne0\) 时排除 \(H_0\) 的两个 Fourier 方向。证毕。
+
+[Matolcsi–Matszangosz–Varga–Weiner, *Triplets of mutually unbiased bases* (2026)](https://doi.org/10.1007/s10801-026-01506-x)
+的 §4 Conjecture 1 预测所有六维 MUB triplet 都属于具有 Fourier 边的已知构造。
+命题 53.2 表明，本节实际 cyclic triple 若在 \(a\ne0\) 处存在，将落在该预测之外。
+这保留了一个精确的存在性问题：本节没有构造这样的 triple，也没有用该猜想
+代替非存在性证明；对一般不同轨道的 common-flat 向量及第四个基仍未给出排除。
