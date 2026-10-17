@@ -3376,3 +3376,193 @@ U\text{ unitary},\qquad UQ=F\text{ flat},\qquad UDQ=FT\text{ flat}.
 按正负号排列 `F0` 的行后，它正是第 10、11 节的 Fourier 型块构造；`F=F0MR` 只再乘右单项式矩阵。因此这个低 affinity completion 仍是 Fourier 等价类的伴随，已由第 11 节的 quartet 文献归约排除。它说明“相对于指定 `S` 非 mode-local”不等于“已排除所有 Fourier-equivalent completions”：固定边自同构可以显著改变前一性质而保持后一等价类。
 
 所以，若继续以 affinity 攻击剩余 quartet fibre，必须明确限制 completion 等价类，排除整个已知 Fourier locus 及其固定边自同构轨道；仅去掉 mode-local 子集不够。非零判别式内域、以及去除已知排除类后的剩余 completion 下界均未由本例解决。第 17、18、31 节的条件预算与刚性论证保持有效；六维四 MUB 问题也未由本例解决。
+
+## 45. 实际互补 contexts 的交叉 pinching 与联合 affinity 缺口
+
+第 31 节已经排除了 order-three symmetry 在两个互补 contexts 中的非平凡饱和分裂；第 32 节进一步给出近饱和定量界。本节保留实际互补基的等模重叠，改进其中的交叉项估计，得到更强的联合约束。这里不主张常数最优，也不假设单个 residual completion 的 affinity 下界。
+
+### 45.1. 定义与结论
+
+设 `d` 为正整数，`C,D` 是 `C^d` 的两个互相无偏正交基，`E_C,E_D` 是对应的 rank-one diagonal pinching。采用第 32 节的归一化：
+
+```math
+\tau(X)=\frac{\operatorname{Tr}(X)}d,\qquad
+\langle X,Y\rangle_2=\tau(X^\dagger Y),\qquad
+\|X\|_2^2=\tau(X^\dagger X).
+```
+
+令 `S` 为 `Tr(S)=0`、`S^3=I` 的 unitary，并置
+
+```math
+A=\mathsf E_C(S),\quad B=\mathsf E_D(S),\quad R=S-A-B,
+\qquad a=\|A\|_2^2,\quad b=\|B\|_2^2,\quad r=\|R\|_2^2.
+```
+
+**命题 45.1。** 有 `a+b+r=1`，且
+
+```math
+\boxed{\sqrt a(1-a)\le4\sqrt{br}+2\sqrt d\,r,\qquad
+\sqrt b(1-b)\le4\sqrt{ar}+2\sqrt d\,r.}
+```
+
+特别地，在六维令 `alpha=alpha_S(C)=2a`、`beta=alpha_S(D)=2b`，则
+
+```math
+\boxed{ab\le22r,\qquad
+\alpha\beta\le44(2-\alpha-\beta).}
+```
+
+这两个乘积不等式在 `r>0` 时严格，并且总有
+
+```math
+\boxed{\min\{\alpha,\beta\}<\sqrt{2024}-44<\frac{989}{1000}.}
+```
+
+### 45.2. 交叉项与 order-three 恒等式
+
+互相无偏性给出
+
+```math
+\mathsf E_C\mathsf E_D(X)=\mathsf E_D\mathsf E_C(X)=\tau(X)I.
+```
+
+故 `A,B` trace zero 且 Hilbert–Schmidt 正交，`E_C(R)=E_D(R)=0`，从而 `a+b+r=1`。`A,B` 分别在自己的基中对角，因此 normal。
+
+在 `C` 基中，`B` 在互补的 `D` 基中对角，所以
+
+```math
+(BB^\dagger)_{ii}=(B^\dagger B)_{ii}=b.
+```
+
+也就是说，`B` 的每一行、每一列的 Euclidean norm 平方都恰为 `b`。逐行或逐列用 Cauchy–Schwarz，再求和除以 `d`，得到
+
+```math
+\|\mathsf E_C(BR)\|_2,\quad\|\mathsf E_C(RB)\|_2,\quad
+\|\mathsf E_C(BR^\dagger)\|_2,\quad
+\|\mathsf E_C(RB^\dagger)\|_2\le\sqrt{br}.
+```
+
+例如 `d^{-1} sum_i |(BR)_{ii}|^2 <= b d^{-1} sum_{i,j}|R_{ji}|^2=br`。这一步使用实际 MUB 重叠，而不只使用 `||B||op<=1`。
+
+再令 `q_i=(RR^dagger)_{ii}>=0`。由 `sum_i q_i=dr` 可得
+
+```math
+\|\mathsf E_C(RR^\dagger)-rI\|_2^2
+=\frac1d\sum_iq_i^2-r^2\le(d-1)r^2.
+```
+
+同时，pinching 的 Hilbert–Schmidt 收缩性与 `||R||op<=sqrt(d)||R||2` 给出
+
+```math
+\|\mathsf E_C(R^2)\|_2\le\|R^2\|_2
+\le\|R\|_{\mathrm{op}}\|R\|_2\le\sqrt d\,r.
+```
+
+这里没有假定 `R` normal。投影 `SS^dagger=I`，利用 diagonal pinching 的 bimodule 性质消去含单个 `A` 的混合项，得
+
+```math
+H:=AA^\dagger-aI
+=rI-\mathsf E_C(BR^\dagger+RB^\dagger+RR^\dagger),
+\qquad \|H\|_2\le2\sqrt{br}+\sqrt{d-1}\,r.
+```
+
+又由 `S^2=S^dagger`，置
+
+```math
+\mu=\tau(B^2),\qquad J=\mathsf E_C(BR+RB+R^2),
+\qquad f=2\sqrt{br}+\sqrt d\,r,
+```
+
+则
+
+```math
+A^2+\mu I+J=A^\dagger,\qquad
+\|J\|_2\le f,\qquad\|H\|_2\le f.
+```
+
+令 `t=|mu|^2`、`u=||J||2`、`h=||H||2`。由 `A` normal 且 trace zero，
+
+```math
+\|A^2\|_2^2=a^2+h^2,\qquad
+\|A^\dagger-\mu I\|_2^2=a+t.
+```
+
+展开 `A^2=(A^dagger-mu I)-J` 的平方范数并用 Cauchy–Schwarz，保留负的 `-u^2` 项，得到
+
+```math
+a(1-a)+t\le h^2-u^2+2\sqrt{a+t}\,u.
+```
+
+若 `a=0`，所求不等式成立。若 `a>0` 且 `f>sqrt(a)`，由 `a<=1` 得 `sqrt(a)(1-a)<=sqrt(a)<2f`。余下情形 `f<=sqrt(a)` 中，`0<=u<=f<=sqrt(a+t)`，因此
+
+```math
+h^2-u^2+2\sqrt{a+t}\,u\le2f\sqrt{a+t}.
+```
+
+这里用了 `f^2-u^2=(f-u)(f+u)<=2sqrt(a+t)(f-u)`。此外
+
+```math
+2f\bigl(\sqrt{a+t}-\sqrt a\bigr)
+=\frac{2ft}{\sqrt{a+t}+\sqrt a}\le t.
+```
+
+消去 `t`，得 `a(1-a)<=2f sqrt(a)`；除以 `sqrt(a)>0` 即为第一条交叉 pinching 界。交换 `C,D` 得第二条。
+
+### 45.3. 六维的多项式联合界
+
+交换两基后可设 `a<=b`，于是 `a<=1/2`。把第一条交叉界乘以 `sqrt(a)`，用 `a(1-a)=ab+ar`，记 `p=ab`，得到
+
+```math
+p\le4\sqrt{pr}+(2\sqrt{6a}-a)r.
+```
+
+在 `0<=a<=1/2` 上，
+
+```math
+(a+3)^2-24a=a^2+9-18a>0.
+```
+
+确实，`a<1/2` 时 `9-18a>0`，端点 `a=1/2` 时右侧为 `1/4`。故 `2sqrt(6a)-a<3`，从而 `p<=4sqrt(pr)+3r`，且 `r>0` 时严格。另一方面，
+
+```math
+\tfrac12(\sqrt p-4\sqrt r)^2\ge0
+\quad\Longrightarrow\quad
+4\sqrt{pr}\le\tfrac12p+8r.
+```
+
+合并得 `p<=22r`，严格性保持。代入 `alpha=2a`、`beta=2b` 和 `2-alpha-beta=2r`，得到命题中的联合 affinity 乘积界。
+
+令 `m=min(alpha,beta)`。若 `r=0`，乘积界给出 `alpha beta=0`，所以 `m=0`。若 `r>0`，则
+
+```math
+m^2\le\alpha\beta<88r\le88(1-m),
+```
+
+因此 `(m+44)^2<2024`，即 `m<sqrt(2024)-44`。最后
+
+```math
+\left(44+\frac{989}{1000}\right)^2-2024
+=\frac{10121}{1000000}>0
+```
+
+给出所述有理数上界。命题得证。
+
+### 45.4. 对实际 residual completion 的用途与范围
+
+沿用第 16、44 节的行约定，要求 `T,F,FT,G,GT,FG^dagger` 全部是 flat unitary；额外两个基分别是 `F^dagger,G^dagger` 的列。固定 two-circulant 边的 simultaneous three-cycle symmetry `S` 满足 `Tr(S)=0`、`S^3=I`，且三个特征空间的秩均为二。实际 pinching 为
+
+```math
+\mathsf E_C(X)=F^\dagger\operatorname{diag}(FXF^\dagger)F,\qquad
+\mathsf E_D(X)=G^\dagger\operatorname{diag}(GXG^\dagger)G.
+```
+
+这里 `diag` 保留对角元并把其余元素置零。`F,G` 的 unitarity 给出完整正交性，`FG^dagger` 的 flatness 给出两基互相无偏。第 16 节的实际 mode 恒等式给出
+
+```math
+a=\frac16\sum_i|(FSF^\dagger)_{ii}|^2=\frac{\alpha_S(C)}2,
+\qquad b=\frac{\alpha_S(D)}2.
+```
+
+因此命题 45.1 对实际 quartet 的两个额外基成立，也对所有六条相对边均排除 Fourier 两种取向的 residual 子类成立。若在某个这样的 branch 上能证明每个 completion 都满足 `alpha_S>=sqrt(2024)-44`，特别是 `alpha_S>=989/1000`，便足以排除该 branch 中的 MUB pair。这把第 32 节的充分下界阈值 `2499/2500` 降低了。
+
+本节没有证明这个单 completion 下界。`F,FT` 与 `G,GT` 的共同 flatness 仍是实际 completion 域的条件，但没有在本节进一步加强联合界。六条边的 Fourier 排除、以及剩余 fibre 的单 completion 几何，仍须另行处理；本节不推出六维 quartet 不存在。

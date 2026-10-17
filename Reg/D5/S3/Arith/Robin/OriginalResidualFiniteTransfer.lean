@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.OriginalResidualFiniteTransfer
 import Reg.Support.DependentFamily
+import Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer.CenteredPairSharp
+import Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer.FirstMomentHigh
 
 namespace Reg.D5.S3.Arith.Robin.OriginalResidualFiniteTransfer
 
@@ -278,6 +280,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end CenteredPair
+
 
 namespace ReciprocalLogStep
 

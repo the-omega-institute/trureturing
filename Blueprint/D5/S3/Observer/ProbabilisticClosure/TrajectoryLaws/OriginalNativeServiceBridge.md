@@ -1,0 +1,94 @@
+# Original native receipts and successor fibers
+
+## Abstract
+
+OriginalNativeServiceBridge
+
+The source is the original PH1.2 C0 transaction system, with both seed values, all original registers, rejected seed pairs, payload return circles, completion writes, the third write-before-latch, held fields, pending Stop and delivered control. Operation and finiteStep are the existing partial native Read/Stop rules. eventBlock is the existing ordered original event list. No new virtual machine, free transition table, commitment opcode, runtime letter latch or history input is introduced.
+
+The acquiredEvent projection is a proof observation of the original event stream. The native source parameters include analysis counts and payload-return banks; only their finiteFields enter this event readout, and these parameters are not a charged observer microcarrier. It selects acquired(x) and selects no rejected/accepted seed, completion, written record, latch, move, held record or Stop. Primitive native Read/Stop cases prove that one Read block contributes precisely its own acquired letter, whereas a Stop block contributes none. Structural induction on lawful native execution proves block splicing and exact acquired-letter extension. Arbitrarily many native retries and return loops remain possible. Later operations cannot erase earlier receipts, even when current fields cease to retain those letters.
+
+On any original control with both legal Reads, the alpha and beta C0 successors differ. The proof inspects the seed/early/fourth active control rules; pending and delivered have no Read. Existing Observer.update_refines transports this distinction to disjoint complete ready successor supports. The alpha successor fiber has mass one under the alpha update and zero under the beta update. Consequently its finite mass in the same-update weighted mixture is exactly the alpha weight, including zero weights, reducible updates and arbitrary private phases. This follows from existing update_refines, the literal finiteRead cases and PMF normalization.
+
+For a full-return law already expressed as the original same-update mixture, this calculation recovers its alpha weight from the C0 successor fiber. An entrance determines the analytical successor fiber; it is not retained as a hidden transition parameter. It does not establish that a physical synthetic return is an original ready value. In particular an actual record can remain fixed while the synthetic record advances; projecting the raw actual bank gives the wrong successor. A lossless bank view alone does not prove continuation-kernel equality.
+
+The initialization architecture is the supplied local semantics of a fixed sequential bit installation. Its complete carrier contains the paid current code/data, original record, private phases, work, PC, mode, heads, addresses, frames, random/output buffers, event cursor and all computing providers. PaidImage fixes the literal resident bits at their occupied sites, even for a singleton reachable carrier, and bounds resident storage plus simultaneous runtime peak and total installation peak separately. Compression, sharing and nonoverlapping lifetimes remain permitted. The complete injection is a proof encoding, with no executable inverse. Original source/provider costs and passive receiver storage retain separate accounts; any receiver computation contributing to the law belongs to the computing-provider inventory.
+
+Architecture.nativeEdge and its result certificate describe the actual enabled local action. Reads, single-bit writes, one-cell moves, Boolean branches, fresh-bit requests, buffer writes and sends retain their local effects. Fetch/decode, operand preparation, seeking, copying, clearing and frame construction must run through these paid local actions whenever the installed convention requires them. The action and representation views inspect only the current complete snapshot. They receive no actual history, hidden depth, posterior, remembered entrance, unencoded service parameter or archive feedback. Disabled physical states have no native edge. Their analytical graph stutter has no receipt and cannot move a last-cell head or create a return.
+
+NativePrefix is an enabled-edge relation independent of Instruction. nativePrefix executes the local supplier on the external fresh-bit coordinate, counts consumed bits from actual receipts, and records complete successor snapshots. graphPrefix uses the derived deterministic/fair instruction. Induction proves equal prefixes, unused coordinates and zero/one request counts, together with enabled native execution. Fair outcomes retain separate consumed-bit receipts even when complete successors coincide. The external coordinate is an analyst representation of source-independent fresh responses, not a stored or readable random tape.
+
+Initialization entrances are current interface cases on this one carrier. A running entrance has the actual outer initialization frame; a genuine immediate return is explicitly a complete ready snapshot with no current frame. The current return predicate checks the outer frame depth, its saved caller PC, removal of the frame and current ready control. A stale ready flag, internal helper return or wrong caller PC cannot close the invocation. These are proof views of the installed convention and its paid control, not additional runtime flags. The original initial C0 projection at initialization return is the local initialization interface contract. Ready labels are full snapshot subtypes, retaining every private field; they are not the original finite-field projection.
+
+The prefix correspondence identifies the native current-initialization first-return events and nonreturn set with the derived absorbing graph events. Native almost-sure return, supplied by the original execution class for every lawful entrance, therefore gives graph nonreturn mass zero. actual_exit_denominator is applied to the common reachable graph. Its reachable carrier is a subset of the complete carrier, whose injection bounds it by the number of B-bit words. One positive integer bounded by four to that number clears every actual initialization eta entry and all lawful entrance rows are normalized. An immediate entrance contributes its actual point mass without adding an internal state.
+
+This application requires the architecture and calling-convention views to be the actual local semantics and complete paid representation of the installation. The formal telescope is not evidence for a guessed decoder, an uncharged operand operation, a hardware fairness claim or a universal compiler. The return law is defined from execution, with no assumed graph transience, matrix invertibility, rationality, normalized exit PMF or desired eta equality. No executable binary for an arbitrary installation is constructed. The Read update application below requires its installed local interface relation; paid next-letter receipt/fiber congruence or a justified full-return alternative, complete synthetic virtual-ready continuation, four common certificates and same-K full-law transport remain separate obligations. Raw actual fields do not define synthetic virtual-ready state. The two original same-update/full-law and positive-history compatibility conditions remain independent; the eventual common certificate clears q and P separately and need not clear qP.
+
+ReadUpdate.Protocol uses the same Architecture, PaidImage, complete carrier and current outer-return convention for both actual letters. Its arrival is the original paid source receipt into the installed input port. The boundary preserves every paid bit outside the declared input sites, all original finite fields and the absence of a current frame. offered reads the delivered letter from that snapshot. This is not an uncharged observer copy, latch, dispatch, seek or frame constructor: all such work after receipt is native execution. A source/provider receipt is distinct from observer work and from a synthetic letter. No history, hidden K, elapsed time, source copy or remembered entrance is passed to nativeTick, primitiveInstruction or initInstruction.
+
+The source's local interface specification is the literal partial finiteRead and eventBlock from PH1.2, PH25.1 and PH30.2. Protocol.start and Protocol.step are the implementation's small-step simulation obligations for that specification. Tracks indexes a proof by the old fields, received letter and remaining original event list; those indices are not charged state or transition arguments and need not survive in a runtime letter bank. Protocol.decodeSymbol is the original finite rendering convention at the current paid serialization cursor. ReadUpdate.committed can report an event only from PrimitiveReceipt.sent; a local read, write, branch, move or fresh-bit step with no actual send reports no event. Finite symbol/bit serialization, cursor and decoding layout must be supplied truthfully by the installation and paid image; this is a source interface interpretation, not a free arbitrary event summary. At each enabled edge, the pending original events split into the committed prefix and the remaining proof obligation, or the actual current outer return commits the last events and the literal finiteRead successor. This local specification is weaker than a prescribed probability row: it contains no PMF equality, rationality, normalization, transience, time bound or denominator hypothesis.
+
+Induction on the actual stopped native execution propagates this local relation. A completed invocation emits exactly the original acquired receipt followed by its full original event block and returns finiteRead of the incoming actual fields and letter. The source event block retains rejected and accepted seeds, parser movement, completion, post-write fields before the third latch, the latch itself and held records. Completion of the fourth segment enters its original pending Stop; it does not perform Stop inside Read. Every complete ready output includes the entire private phase, address, PC, buffers and state. A different original finite-field successor has zero actual return mass because its first-return event is empty. This support consequence is derived from the execution induction, rather than an assumed update_refines field.
+
+ReadUpdate.actual is the partial service law obtained by eliminating this actual native execution: it maps a lawful arrival to Initialization.eta on that entrance. It is absent for a Read without permission. ReadUpdate.row is the original P_x on lawful rows and uses the PH37.1 identity convention only where finiteRead is undefined, namely original pending/delivered control. Such an identity is a matrix coordinate, not a source call or a new normalized illegal service. Genuine immediate cases, if supplied by the installed interface, must satisfy both the unchanged-fields arrival boundary and the complete local Read specification; they cannot bypass the original update or its events.
+
+For each of alpha and beta, entrances collects every lawful ready row on this single paid carrier. Native first-return and nonreturn events are identified with the existing initInstruction graph by the existing primitive refinement, without giving x or z to its transitions. The literal original almost-sure return assumption at those entrances supplies the actual_exit_denominator premise. Its common reachable graph lies inside S, and PaidImage.complete bounds its size by two to B. Thus one positive d_x bounded by four to that number clears every full row and every full ready label, including zero probabilities and identity terminal rows; normalization follows from the same supplier. Different entrances do not multiply denominators. Reducibility, arbitrary retained phases and unbounded worst-case execution are unchanged. The denominator bound depends on the single common reachable carrier, rather than the number of entrances. Identity terminal rows have integral entries.
+
+The implementation-specific missing relation is precisely Protocol.start/step for the installation's actual sent-symbol rendering and actual local result, together with its source-delivery boundary. PH gives the local Read specification but does not give a universal instruction decoder or proof that an arbitrary Architecture implements this relation. The theorem proves local-to-completed-row propagation and the resulting arithmetic conditionally on those data; it does not synthesize or certify an arbitrary guessed physical table update. Providing this relation for the full original class, the actual next-letter event q, the synthetic virtual-ready continuation and the same-K full native-law transport remain obligations. The first same-update identity and the second positive-history compatibility are independent premises; clearing q and P separately need not clear their product.
+
+**Theorem 1.1 (lawful_receipt_extension).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.lawful_receipt_extension`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.lawful_receipt_extension` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The compiled statement retains the exact native source fields, legal operations and complete parameter telescope. The initialization statements use the supplied actual architecture semantics, complete paid image and current calling convention; physical interpretation of those source data is explicit.
+
+**Theorem 1.2 (original_primitive_prefix_refinement).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_primitive_prefix_refinement`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_primitive_prefix_refinement` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The compiled statement retains the exact native source fields, legal operations and complete parameter telescope. The initialization statements use the supplied actual architecture semantics, complete paid image and current calling convention; physical interpretation of those source data is explicit.
+
+**Theorem 1.3 (original_initialization_exit_certificate).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_initialization_exit_certificate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_initialization_exit_certificate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The compiled statement retains the exact native source fields, legal operations and complete parameter telescope. The initialization statements use the supplied actual architecture semantics, complete paid image and current calling convention; physical interpretation of those source data is explicit.
+
+**Theorem 1.4 (original_read_update_rows).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_read_update_rows`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_read_update_rows` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The compiled statement retains the exact native source fields, legal operations and complete parameter telescope. The initialization statements use the supplied actual architecture semantics, complete paid image and current calling convention; physical interpretation of those source data is explicit.
+
+## References
+
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.lawful_receipt_extension`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_initialization_exit_certificate`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_primitive_prefix_refinement`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalNativeServiceBridge.original_read_update_rows`
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteFairBitDenominator](FiniteFairBitDenominator.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeFullResidual](NativeFullResidual.md)
