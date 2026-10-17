@@ -7,7 +7,7 @@
    digest: A six-cycle stochastic matrix refutes the proposed twenty-factor generator bound. -/
 
 import Mathlib.LinearAlgebra.Matrix.Stochastic
-import Mathlib.Tactic
+import D5.S3.Quantum.Matrix.ProjectionAMGMRefutation
 
 set_option linter.style.longLine false
 
@@ -326,12 +326,6 @@ private theorem power_reduction (m : ℕ) (p q : Equiv.Perm (Fin 3))
             rfl
       exact ⟨p, r.trans q, heq ▸ hg⟩
 
-private theorem permutation_values : ∀ f : Fin 3 → Fin 3,
-    Function.Injective f →
-    f = ![0, 1, 2] ∨ f = ![0, 2, 1] ∨ f = ![1, 0, 2] ∨
-      f = ![1, 2, 0] ∨ f = ![2, 0, 1] ∨ f = ![2, 1, 0] := by
-  decide
-
 private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
     witness.submatrix p q ∉ gen := by
   intro h
@@ -343,11 +337,20 @@ private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
         Equiv.toPEquiv_apply] using hh
     exact (witness_lt_one (p 0) (q 1)).ne heq
   · have hs := hull_shape h
-    rcases permutation_values p p.injective with hp | hp | hp | hp | hp | hp
+    have huniv : ({1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
+        Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1} :
+        Finset (Equiv.Perm (Fin 3))) = Finset.univ :=
+      D5.S3.Quantum.Matrix.ProjectionAMGMRefutation.sixPerms_univ
+    have hp := Finset.mem_univ p
+    have hq := Finset.mem_univ q
+    rw [← huniv] at hp hq
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hp hq
+    rcases hp with rfl | rfl | rfl | rfl | rfl | rfl
     all_goals
-      rcases permutation_values q q.injective with hq | hq | hq | hq | hq | hq
+      rcases hq with rfl | rfl | rfl | rfl | rfl | rfl
       all_goals
-        norm_num [Matrix.submatrix_apply, hp, hq, witness.eq_1, Matrix.cons_val_two] at hs
+        norm_num [Matrix.submatrix_apply, witness.eq_1, Equiv.Perm.mul_apply,
+          Equiv.swap_apply_def, Matrix.cons_val_two, Fin.ext_iff] at hs
 
 /-- The Eq. (10) generators do not cover all stochastic matrices in twenty factors. -/
 theorem result : ¬ claim := by

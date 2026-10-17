@@ -76,7 +76,7 @@ private def sixPerms : Finset (Equiv.Perm (Fin 3)) :=
   {1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
     Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1}
 
-private theorem sixPerms_univ : sixPerms = Finset.univ := by
+theorem sixPerms_univ : sixPerms = Finset.univ := by
   apply Finset.eq_univ_of_card
   rw [Fintype.card_perm, Fintype.card_fin]
   decide +kernel
