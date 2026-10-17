@@ -6,17 +6,16 @@
    utility: none
    digest: Finite positive unital matrix-map Jensen via spectral effects and rectangular isometric dilation. -/
 
-
-
 import D5.S3.Quantum.Lieb.JensenOperatorInequalityIImpIV
 import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import Mathlib.Algebra.Order.Module.PositiveLinearMap
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Data.Matrix.Basis
+import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Nlinarith
+import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
 /-!
@@ -121,7 +120,8 @@ theorem cfc_intertwining (A : Matrix n n ℂ) (B : Matrix m m ℂ)
 
 private lemma transport_cfc [Nonempty n] (f : ℝ → ℝ)
     (A : Matrix n n ℂ) (hA : A.IsHermitian) :
-    Matrix.toEuclideanCLM (cfc f A) = cfc f (Matrix.toEuclideanCLM A) := by
+    (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (cfc f A) =
+      cfc f ((Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) A) := by
   exact StarAlgHomClass.map_cfc (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) f A
     (A.finite_real_spectrum.continuousOn f)
     (StarAlgEquiv.isometry (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ))).continuous
@@ -168,6 +168,7 @@ private theorem contraction_jensen [Nonempty n] {f : ℝ → ℝ}
   have h' : e (cfc f (Xᴴ * A * X)) ≤ e (Xᴴ * cfc f A * X) := by
     calc
       _ = cfcR f (star (e X) * e A * e X) := by
+        change e (cfc f (Xᴴ * A * X)) = cfc f (e (Xᴴ * A * X)) at hcAX
         simpa only [map_mul, heStar] using hcAX
       _ ≤ star (e X) * cfcR f (e A) * e X := h
       _ = e (Xᴴ * cfc f A * X) := by
@@ -184,25 +185,27 @@ private theorem isometry_jensen [Nonempty m] {f : ℝ → ℝ}
     (V : Matrix n m ℂ) (hV : Vᴴ * V = 1) :
     cfc f (Vᴴ * A * V) ≤ Vᴴ * cfc f A * V := by
   classical
-  let L : Matrix (n ⊕ m) n ℂ := Sum.elim 1 0
-  let J : Matrix (n ⊕ m) m ℂ := Sum.elim 0 1
+  let L : Matrix (n ⊕ m) n ℂ := Matrix.fromRows (1 : Matrix n n ℂ) 0
+  let J : Matrix (n ⊕ m) m ℂ := Matrix.fromRows 0 (1 : Matrix m m ℂ)
   let T : Matrix (n ⊕ m) (n ⊕ m) ℂ := Matrix.fromBlocks A 0 0 0
   let W : Matrix (n ⊕ m) (n ⊕ m) ℂ := Matrix.fromBlocks 0 V 0 0
   let C : Matrix m m ℂ := Vᴴ * A * V
   let D : Matrix (n ⊕ m) (n ⊕ m) ℂ := Wᴴ * T * W
   have hLL : Lᴴ * L = 1 := by
-    ext i j
-    simp [L, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fintype.sum_sum_type, Matrix.one_apply]
+    simp only [L, Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
+      Matrix.conjTranspose_one, Matrix.conjTranspose_zero,
+      Matrix.fromCols_mul_fromRows, Matrix.one_mul, Matrix.mul_zero, add_zero]
   have hJJ : Jᴴ * J = 1 := by
-    ext i j
-    simp [J, Matrix.mul_apply, Matrix.conjTranspose_apply,
-      Fintype.sum_sum_type, Matrix.one_apply]
+    simp only [J, Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
+      Matrix.conjTranspose_one, Matrix.conjTranspose_zero,
+      Matrix.fromCols_mul_fromRows, Matrix.zero_mul, Matrix.one_mul, zero_add]
   have hLAL : L * A * Lᴴ = T := by
-    ext i j
-    cases i <;> cases j <;>
-      simp [L, T, Matrix.fromBlocks, Matrix.mul_apply,
-        Matrix.conjTranspose_apply, Matrix.one_apply]
+    change Matrix.fromRows (1 : Matrix n n ℂ) (0 : Matrix m n ℂ) * A *
+      (Matrix.fromRows (1 : Matrix n n ℂ) (0 : Matrix m n ℂ))ᴴ = T
+    rw [Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
+      Matrix.conjTranspose_one, Matrix.conjTranspose_zero, Matrix.fromRows_mul,
+      Matrix.fromRows_mul_fromCols]
+    simp only [T, Matrix.one_mul, Matrix.zero_mul, Matrix.mul_one, Matrix.mul_zero]
   have hT : T.PosSemidef := hLAL ▸ hA.mul_mul_conjTranspose_same L
   have hWW : Wᴴ * W = Matrix.fromBlocks (0 : Matrix n n ℂ) 0 0 1 := by
     simp only [W, Matrix.fromBlocks_conjTranspose, Matrix.fromBlocks_multiply,
@@ -210,10 +213,12 @@ private theorem isometry_jensen [Nonempty m] {f : ℝ → ℝ}
       zero_add, add_zero, hV]
   have hDiff : 1 - Wᴴ * W = L * Lᴴ := by
     rw [hWW]
+    simp only [L, Matrix.conjTranspose_fromRows_eq_fromCols_conjTranspose,
+      Matrix.conjTranspose_one, Matrix.conjTranspose_zero,
+      Matrix.fromRows_mul_fromCols, Matrix.one_mul, Matrix.mul_zero,
+      Matrix.zero_mul]
     ext i j
-    cases i <;> cases j <;>
-      simp [L, Matrix.fromBlocks, Matrix.mul_apply,
-        Matrix.conjTranspose_apply, Matrix.one_apply]
+    cases i <;> cases j <;> simp [Matrix.fromBlocks, Matrix.one_apply]
   have hW : Wᴴ * W ≤ 1 := by
     apply sub_nonneg.mp
     rw [hDiff]
@@ -225,18 +230,18 @@ private theorem isometry_jensen [Nonempty m] {f : ℝ → ℝ}
       Matrix.fromBlocks_multiply, Matrix.conjTranspose_zero,
       Matrix.zero_mul, Matrix.mul_zero, zero_add, add_zero]
   have hTL : T * L = L * A := by
-    ext i j
-    cases i <;> simp [T, L, Matrix.fromBlocks, Matrix.mul_apply,
-      Matrix.one_apply, Fintype.sum_sum_type]
+    simp only [T, L, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul,
+      Matrix.mul_one, Matrix.mul_zero, Matrix.zero_mul, Matrix.one_mul,
+      add_zero, zero_add]
   have hDJ : D * J = J * C := by
     rw [hDblock]
-    ext i j
-    cases i <;> simp [J, Matrix.fromBlocks, Matrix.mul_apply,
-      Matrix.one_apply, Fintype.sum_sum_type]
+    simp only [J, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul,
+      Matrix.mul_one, Matrix.mul_zero, Matrix.zero_mul, Matrix.one_mul,
+      add_zero, zero_add]
   have hWJ : W * J = L * V := by
-    ext i j
-    cases i <;> simp [W, J, L, Matrix.fromBlocks, Matrix.mul_apply,
-      Matrix.one_apply, Fintype.sum_sum_type]
+    simp only [W, J, L, Matrix.fromBlocks_mul_fromRows, Matrix.fromRows_mul,
+      Matrix.mul_one, Matrix.mul_zero, Matrix.zero_mul, Matrix.one_mul,
+      add_zero, zero_add]
   have hJW : Jᴴ * Wᴴ = Vᴴ * Lᴴ := by
     simpa only [Matrix.conjTranspose_mul] using congrArg Matrix.conjTranspose hWJ
   have hTf : Lᴴ * cfc f T * L = cfc f A := by
@@ -266,7 +271,8 @@ private lemma stack_weighted_gram (S : k → Matrix m m ℂ) (a : k → ℂ) :
       ∑ i, a i • ((S i)ᴴ * S i) := by
   ext i j
   rw [Matrix.mul_apply]
-  simp only [Matrix.mul_diagonal, Matrix.conjTranspose_apply,
+  simp only [Matrix.mul_diagonal]
+  simp only [Matrix.conjTranspose_apply,
     stack, Fintype.sum_prod_type, Matrix.sum_apply, Matrix.smul_apply,
     Matrix.mul_apply, smul_eq_mul, Finset.mul_sum]
   apply Finset.sum_congr rfl
@@ -278,13 +284,13 @@ private lemma stack_weighted_gram (S : k → Matrix m m ℂ) (a : k → ℂ) :
 /-- Finite positive effects summing to the identity satisfy operator Jensen.
 The proof constructs the dilation; no complete positivity is supplied. -/
 private theorem finite_effects_jensen [Nonempty m] {f : ℝ → ℝ}
-    (hf : CondIciAll.{u} f) (λ : k → ℝ) (hλ : ∀ i, 0 ≤ λ i)
+    (hf : CondIciAll.{u} f) (weights : k → ℝ) (hweights : ∀ i, 0 ≤ weights i)
     (F : k → Matrix m m ℂ) (hF : ∀ i, (F i).PosSemidef)
     (hFsum : ∑ i, F i = 1) :
-    cfc f (∑ i, (λ i : ℂ) • F i) ≤ ∑ i, (f (λ i) : ℂ) • F i := by
+    cfc f (∑ i, (weights i : ℂ) • F i) ≤ ∑ i, (f (weights i) : ℂ) • F i := by
   let S : k → Matrix m m ℂ := fun i => CFC.sqrt (F i)
   let V := stack S
-  let T : Matrix (k × m) (k × m) ℂ := diagonal (fun i => (λ i.1 : ℂ))
+  let T : Matrix (k × m) (k × m) ℂ := diagonal (fun i => (weights i.1 : ℂ))
   have hSS (i : k) : (S i)ᴴ * S i = F i := by
     have hs : (S i)ᴴ = S i := (CFC.sqrt_nonneg (F i)).posSemidef.isHermitian.eq
     rw [hs]
@@ -295,14 +301,15 @@ private theorem finite_effects_jensen [Nonempty m] {f : ℝ → ℝ}
   have hT : T.PosSemidef := by
     apply Matrix.PosSemidef.diagonal
     intro i
-    exact_mod_cast hλ i.1
-  have hInput : Vᴴ * T * V = ∑ i, (λ i : ℂ) • F i := by
-    simpa only [V, T, hSS] using stack_weighted_gram S (fun i => (λ i : ℂ))
-  have hOutput : Vᴴ * cfc f T * V = ∑ i, (f (λ i) : ℂ) • F i := by
-    rw [show cfc f T = diagonal (fun i : k × m => (f (λ i.1) : ℂ)) from
+    change (0 : ℂ) ≤ (weights i.1 : ℂ)
+    exact_mod_cast hweights i.1
+  have hInput : Vᴴ * T * V = ∑ i, (weights i : ℂ) • F i := by
+    simpa only [V, T, hSS] using stack_weighted_gram S (fun i => (weights i : ℂ))
+  have hOutput : Vᴴ * cfc f T * V = ∑ i, (f (weights i) : ℂ) • F i := by
+    rw [show cfc f T = diagonal (fun i : k × m => (f (weights i.1) : ℂ)) from
       D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal
-        f (fun i : k × m => λ i.1)]
-    simpa only [V, hSS] using stack_weighted_gram S (fun i => (f (λ i) : ℂ))
+        f (fun i : k × m => weights i.1)]
+    simpa only [V, hSS] using stack_weighted_gram S (fun i => (f (weights i) : ℂ))
   simpa only [hInput, hOutput] using isometry_jensen hf T hT V hV
 
 private def spectralEffect {A : Matrix n n ℂ} (hA : A.IsHermitian) (i : n) :
@@ -438,16 +445,16 @@ theorem positive_unital_jensen {f : ℝ → ℝ}
     | inr hn =>
       letI := hn
       have hΦA : (Φ A).PosSemidef := (map_nonneg Φ hA.nonneg).posSemidef
-      have h := positive_unital_jensen_nonpos_zero (shifted_cond hconv hcont) Φ hΦ A hA
+      have h := positive_unital_jensen_nonpos_zero (shifted_cond (f := f) (@hconv) hcont) Φ hΦ A hA
       have hc (T : Matrix n n ℂ) (hT : T.PosSemidef) :
           cfc (fun x => f x - f 0) T = cfc f T - f 0 • (1 : Matrix n n ℂ) := by
         rw [cfc_sub f (fun _ => f 0) T (T.finite_real_spectrum.continuousOn f)
-          continuousOn_const, cfc_const (f 0) T hT.isHermitian,
+          continuousOn_const, cfc_const (f 0) T hT.isHermitian.isSelfAdjoint,
           Algebra.algebraMap_eq_smul_one]
       have hcOut : cfc (fun x => f x - f 0) (Φ A) =
           cfc f (Φ A) - f 0 • (1 : Matrix m m ℂ) := by
         rw [cfc_sub f (fun _ => f 0) (Φ A) ((Φ A).finite_real_spectrum.continuousOn f)
-          continuousOn_const, cfc_const (f 0) (Φ A) hΦA.isHermitian,
+          continuousOn_const, cfc_const (f 0) (Φ A) hΦA.isHermitian.isSelfAdjoint,
           Algebra.algebraMap_eq_smul_one]
       rw [hcOut, hc A hA, map_sub, PositiveLinearMap.map_smul_of_tower, hΦ] at h
       exact (sub_le_sub_iff_right (f 0 • (1 : Matrix m m ℂ))).mp h
