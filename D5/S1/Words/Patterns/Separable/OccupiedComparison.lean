@@ -6,7 +6,7 @@
    utility: none
    digest: The actual occupied-diagonal fixed point and strict nonlinear maximum comparison. -/
 
-import D5.S1.Words.Patterns.Separable.ActualCardinality
+import D5.S1.Words.Patterns.Separable.ActualCountRatios
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Analysis.Normed.Group.InfiniteSum
@@ -19,11 +19,6 @@ open D5.S1.Words.Patterns.Separable.CutFactorization
 open D5.S1.Words.Patterns.Separable.MinimumCutKernel
 open scoped BigOperators
 
-noncomputable def b : ℝ := Real.sqrt 2 - 1
-noncomputable def rho : ℝ := b ^ 2
-noncomputable def a : ℝ := 1 - b
-noncomputable def h : ℝ := (1 + b) / 2
-noncomputable def ceiling : ℝ := a / 2
 /-- Each actual sum-indecomposable shape contributes once if its diagonal is occupied. -/
 noncomputable def occupiedCount (n : ℕ) (e : ℤ) : ℕ := Nat.card {π : Indecomposable false n //
     ∃ j : Fin n, (j.val : ℤ) - ((π.val.val j).val : ℤ) = e}
@@ -41,9 +36,6 @@ noncomputable def decomposableOccupiedCount (sign : Bool) (n : ℕ) (e : ℤ) : 
 noncomputable def rawOccupation (e : ℤ) : ℝ :=
   ∑' n : ℕ, rho ^ (n + 1) * (occupiedCount (n + 1) e : ℝ)
 noncomputable def occupation (e : ℤ) : ℝ := (2 / a) * rawOccupation e
-noncomputable def shapeWeight (n : ℕ) : ℝ := rho ^ (n + 1) * (Nat.card (Avoider (n + 1)) : ℝ)
-/-- The correction at index zero is the genuine length-one correction. -/
-noncomputable def kernelWeight (n : ℕ) : ℝ := shapeWeight n + if n = 0 then rho / 2 else 0
 noncomputable def lossWeight (n : ℕ) : ℝ :=
   (3 / 2 : ℝ) * shapeWeight n + if n = 0 then rho / 2 else 0
 noncomputable def loss (x : ℝ) : ℝ := x ^ 2 / (h + x)
@@ -93,94 +85,11 @@ theorem actual_occupation_subsolution_comparison : Summable shapeWeight ∧
   have tn (n : ℕ) : 0 ≤ shapeWeight n := by
     unfold shapeWeight
     positivity
-  obtain ⟨_, actualCounts, _, _, _, _, _, _, _, _⟩ :=
-    D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
-  have weightCount (n : ℕ) : shapeWeight n = rho ^ (n + 1) * (Nat.largeSchroder n : ℝ) := by
-    simp only [shapeWeight, actualCounts (n + 1) (by omega), Nat.add_sub_cancel]
-  have weightZero : shapeWeight 0 = rho := by simp [weightCount]
-  have recurrence (n : ℕ) : shapeWeight (n + 1) = rho * shapeWeight n +
-      ∑ pair ∈ Finset.antidiagonal n, shapeWeight pair.1 * shapeWeight pair.2 := by
-    have counts : (Nat.largeSchroder (n + 1) : ℝ) = (Nat.largeSchroder n : ℝ) +
-        ∑ pair ∈ Finset.antidiagonal n,
-          (Nat.largeSchroder pair.1 : ℝ) * (Nat.largeSchroder pair.2 : ℝ) := by
-      have natural := Nat.largeSchroder_succ n
-      rw [← Nat.range_succ_eq_Iic] at natural
-      rw [← Finset.Nat.sum_antidiagonal_eq_sum_range_succ
-        (fun i j => Nat.largeSchroder i * Nat.largeSchroder j)] at natural
-      exact_mod_cast natural
-    rw [weightCount, counts, mul_add, Finset.mul_sum, weightCount]
-    congr 1
-    · rw [pow_succ]
-      ring
-    · apply Finset.sum_congr rfl
-      intro pair member
-      rw [weightCount, weightCount]
-      have indices := Finset.mem_antidiagonal.mp member
-      have exponents : n + 1 + 1 = (pair.1 + 1) + (pair.2 + 1) := by omega
-      rw [exponents, pow_add]
-      ring
-  have bp : 0 < b := sub_pos.mpr sqrtBounds.1
-  have bquadratic : b ^ 2 + 2 * b = 1 := by dsimp [b]; nlinarith
-  have rhoValue : rho = 1 - 2 * b := by dsimp [rho]; nlinarith
-  have critical : rho + rho * b + b ^ 2 = b := by rw [rhoValue]; nlinarith
-  have triangleBound (n : ℕ) : (∑ k ∈ Finset.range n,
-        ∑ pair ∈ Finset.antidiagonal k, shapeWeight pair.1 * shapeWeight pair.2) ≤
-      (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 := by
-    have disjoint : Set.PairwiseDisjoint (Finset.range n : Set ℕ) Finset.antidiagonal := by
-      intro i _ j _ different
-      apply Finset.disjoint_left.mpr
-      intro pair hi hj
-      exact different ((Finset.mem_antidiagonal.mp hi).symm.trans (Finset.mem_antidiagonal.mp hj))
-    rw [← Finset.sum_biUnion disjoint]
-    calc
-      (∑ pair ∈ (Finset.range n).biUnion Finset.antidiagonal,
-          shapeWeight pair.1 * shapeWeight pair.2) ≤
-          ∑ pair ∈ (Finset.range n) ×ˢ (Finset.range n),
-            shapeWeight pair.1 * shapeWeight pair.2 := by
-        apply Finset.sum_le_sum_of_subset_of_nonneg
-        · intro pair member
-          obtain ⟨k, hk, hpair⟩ := Finset.mem_biUnion.mp member
-          have indices := Finset.mem_antidiagonal.mp hpair
-          simp only [Finset.mem_product, Finset.mem_range]
-          have := Finset.mem_range.mp hk
-          omega
-        · intro pair _ _
-          exact mul_nonneg (tn _) (tn _)
-      _ = (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 := by
-        rw [Finset.sum_product, ← Finset.sum_mul_sum, pow_two]
-  have partialBound (n : ℕ) : (∑ k ∈ Finset.range n, shapeWeight k) ≤ b := by
-    induction n with
-    | zero => simpa using bp.le
-    | succ n ih =>
-      rw [Finset.sum_range_succ', weightZero]
-      simp_rw [recurrence]
-      rw [Finset.sum_add_distrib, ← Finset.mul_sum]
-      have nonneg : 0 ≤ ∑ k ∈ Finset.range n, shapeWeight k := Finset.sum_nonneg (fun k _ => tn k)
-      have squareBound : (∑ k ∈ Finset.range n, shapeWeight k) ^ 2 ≤ b ^ 2 := by nlinarith
-      have linearBound := mul_le_mul_of_nonneg_left ih rhop.le
-      have quadraticBound := triangleBound n
-      linarith [critical]
-  have hsum : Summable shapeWeight := summable_of_sum_range_le tn partialBound
+  obtain ⟨hsum, shapeTotal, ksum, hmass, indecomposableSummable, indecomposableTotal,
+    indecomposableIdentity⟩ :=
+    critical_shape_masses
   have productSum : Summable (fun pair : ℕ × ℕ =>
       shapeWeight pair.1 * shapeWeight pair.2) := hsum.mul_of_nonneg hsum tn tn
-  have convolutionSum := summable_sum_mul_antidiagonal_of_summable_mul productSum
-  have cauchy := hsum.tsum_mul_tsum_eq_tsum_sum_antidiagonal hsum productSum
-  have totalEquation : (∑' n, shapeWeight n) = rho + rho * (∑' n, shapeWeight n) +
-      (∑' n, shapeWeight n) ^ 2 := by
-    calc
-      (∑' n, shapeWeight n) = rho + ∑' n, shapeWeight (n + 1) := by
-        rw [hsum.tsum_eq_zero_add, weightZero]
-      _ = rho + ∑' n, (rho * shapeWeight n +
-          ∑ pair ∈ Finset.antidiagonal n, shapeWeight pair.1 * shapeWeight pair.2) := by
-        congr 1
-        exact tsum_congr recurrence
-      _ = rho + rho * (∑' n, shapeWeight n) + (∑' n, shapeWeight n) ^ 2 := by
-        rw [((hsum.mul_left rho).tsum_add convolutionSum), tsum_mul_left, ← cauchy]
-        ring
-  have shapeTotal : (∑' n, shapeWeight n) = b := by
-    rw [rhoValue] at totalEquation
-    have zero : ((∑' n, shapeWeight n) - b) ^ 2 = 0 := by nlinarith [bquadratic]
-    exact sub_eq_zero.mp (sq_eq_zero_iff.mp zero)
   have kn (n : ℕ) : 0 ≤ kernelWeight n := by
     unfold kernelWeight
     have := tn n
@@ -198,55 +107,12 @@ theorem actual_occupation_subsolution_comparison : Summable shapeWeight ∧
   have rzero : 0 < lossWeight 0 := by
     simp only [lossWeight, ite_true]
     nlinarith [tn 0]
-  have deltaSum : Summable (fun n : ℕ => if n = 0 then rho / 2 else 0) :=
-    summable_of_ne_finset_zero (s := {0}) (by
-      intro n hn
-      simp only [Finset.mem_singleton] at hn
-      exact if_neg hn)
-  have ksum : Summable kernelWeight := hsum.add deltaSum
-  have hmass : ∑' n : ℕ, kernelWeight n = (1 / 2 : ℝ) := by
-    change tsum (fun n : ℕ => shapeWeight n + if n = 0 then rho / 2 else 0) = _
-    rw [hsum.tsum_add deltaSum, shapeTotal]
-    simp only [tsum_ite_eq]
-    rw [rhoValue]
-    ring
-  obtain ⟨_, _, _, halfCounts, _, _, singletonCount, tinyCounts, _, _⟩ :=
+  obtain ⟨_, _, _, _, _, _, _, tinyCounts, _, _⟩ :=
     D5.S1.Words.Patterns.Separable.ActualCardinality.actual_schroder_cardinality
   let indecomposableWeight (n : ℕ) : ℝ :=
     rho ^ (n + 1) * (Nat.card (Indecomposable false (n + 1)) : ℝ)
-  have indecomposableIdentity (n : ℕ) : indecomposableWeight n =
-      (kernelWeight n + (if n = 0 then rho / 2 else 0)) / 2 := by
-    by_cases nz : n = 0
-    · subst n
-      have singletonIndecomposable := (tinyCounts false).2
-      simp only [indecomposableWeight, kernelWeight, shapeWeight,
-        singletonIndecomposable, singletonCount, Nat.cast_one, zero_add,
-        pow_one, ite_true]
-      ring
-    · have large : 2 ≤ n + 1 := by omega
-      have halfReal : (2 : ℝ) * (Nat.card (Indecomposable false (n + 1)) : ℝ) =
-          (Nat.card (Avoider (n + 1)) : ℝ) := by
-        exact_mod_cast halfCounts false (n + 1) large
-      dsimp [indecomposableWeight, kernelWeight, shapeWeight]
-      simp only [nz, ite_false, add_zero]
-      rw [← halfReal]
-      ring
-  have indecomposableSummable : Summable indecomposableWeight := by
-    apply Summable.congr ((ksum.add deltaSum).div_const 2)
-    intro n
-    exact (indecomposableIdentity n).symm
-  have indecomposableTotal : (∑' n, indecomposableWeight n) = ceiling := by
-    calc
-      (∑' n, indecomposableWeight n) =
-          (∑' n, (kernelWeight n + (if n = 0 then rho / 2 else 0)) / 2) :=
-        tsum_congr indecomposableIdentity
-      _ = ((∑' n, kernelWeight n) + rho / 2) / 2 := by
-        rw [tsum_div_const, ksum.tsum_add deltaSum]
-        simp
-      _ = ceiling := by
-        rw [hmass]
-        dsimp [ceiling, a, rho, b]
-        nlinarith
+  change ∀ n, indecomposableWeight n =
+    (kernelWeight n + (if n = 0 then rho / 2 else 0)) / 2 at indecomposableIdentity
   have occupiedBound (n : ℕ) (e : ℤ) :
       rho ^ (n + 1) * (occupiedCount (n + 1) e : ℝ) ≤ indecomposableWeight n := by
     have cardinal : occupiedCount (n + 1) e ≤ Nat.card (Indecomposable false (n + 1)) :=

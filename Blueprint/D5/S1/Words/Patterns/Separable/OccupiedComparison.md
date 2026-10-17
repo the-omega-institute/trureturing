@@ -49,4 +49,4 @@ A positive logarithmic subsolution still requires uniform residual estimates and
 ## References
 
 - Truth anchor: `D5/S1/Words/Patterns/Separable/OccupiedComparison.actual_occupation_subsolution_comparison`
-- Dependency: [D5/S1/Words/Patterns/Separable/ActualCardinality](ActualCardinality.md)
+- Dependency: [D5/S1/Words/Patterns/Separable/ActualCountRatios](ActualCountRatios.md)
