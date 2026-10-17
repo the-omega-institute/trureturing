@@ -1422,3 +1422,593 @@ Bernoulli 尾界属于 Hoeffding，
 不作这些工具或该综合的全域新颖性、优先权主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 128. 固定能量基、共同三维源与认证零假设
+
+**定义 C-128.1（固定物理基中的两个来源域）。** 沿用 (C123.1)–(C123.3)、
+(C123.15) 的同一物理五态顺序、能量基、目标及编码，记
+
+$$
+\begin{aligned}
+(e_0,e_1,e_2,e_3,e_4)&=(000,100,010,001,101),\\
+\mathcal B=(b_1,b_2,b_3,b_4,b_5)
+&=\left(\frac{e_0-e_1}{\sqrt2},\frac{e_0+e_1}{\sqrt2},
+\frac{e_4-e_2}{\sqrt2},\frac{e_4+e_2}{\sqrt2},e_3\right),\\
+\psi&=(e_0+e_4)/\sqrt2,\qquad \eta=(e_1+e_3)/\sqrt2,\\
+E&=(\psi,\eta,e_2),\qquad Q=\operatorname{ran}E,\qquad P_Q=EE^\dagger,\\
+P_x&=|x\rangle\langle x|\quad(\|x\|=1),\qquad
+P=P_\psi,\qquad C=\operatorname{span}(e_0,e_1,e_2,e_4),\quad P_C=I-P_{e_3}.
+\end{aligned}
+\tag{C128.1}
+$$
+
+这里 $\mathcal B$ 恰为 (C123.3) 的物理能量基，能量仍为 $(1,-1,3,-3,0)$。
+所有相干数均相对于这一个基，不相对于逻辑列基 $(\psi,\eta,e_2)$。
+令 $\mathsf D(Q)=\{\rho\succeq0:\operatorname{Tr}\rho=1,\rho=P_Q\rho P_Q\}$，并置
+
+$$
+\begin{aligned}
+\mathcal F_{\rm all}
+&=\operatorname{conv}_{\rm fin}\{P_x:\|x\|=1,
+\#\{j:\langle b_j|x\rangle\ne0\}\le3\},\\
+\mathcal F_Q&=\mathcal F_{\rm all}\cap\mathsf D(Q).
+\end{aligned}
+\tag{C128.2}
+$$
+
+$\operatorname{conv}_{\rm fin}$ 指所有有限凸混合，向量振幅允许任意复数，凸权重为非负实数且和为一。
+第一域是 (C123.4) 的整个五维零假设；第二域另有实际输入支持于 $Q$ 的承诺。
+这个 $E$ 来自[原生卷定义 65.1、(IX.7)](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#45-原支持三维输入的精确末次秩二边缘)，
+不同于其定义 55.1 的交替位置编码。给定等距矩阵、给定支持与实际制备该源是不同前提。
+
+**定义 C-128.2（无条件风险与指定目标功效）。** 对 $n\ge1$ 个已供应输入，
+目标为 $P^{\otimes n}$。对其联合零假设域 $\mathcal N$ 和无条件宣告效果 $0\preceq T\preceq I$，定义
+
+$$
+\beta_{\mathcal N}(T)=\sup_{\rho\in\mathcal N}\operatorname{Tr}(T\rho),\qquad
+\alpha_n(T)=\operatorname{Tr}(TP^{\otimes n}),\qquad
+A_{\mathcal N}(\delta)=
+\sup_{\substack{0\preceq T\preceq I\\\beta_{\mathcal N}(T)\le\delta}}\alpha_n(T),
+\quad 0\le\delta\le1.
+\tag{C128.3}
+$$
+
+风险计算包括全部输出，不能先丢弃失败分支再把条件成功率代入。
+$A$ 首先允许全部测量效果，因而是原生菜单的放松；原生达到性须另行给出实际供应。
+单输入时记 $\alpha=\alpha_1$。以下计算固定目标的功效，不要求对全部四相干态具有同一功效。
+
+## 129. 共同源与三相干零假设的完整八射线交集
+
+**定理 C-129.1（任意复振幅与全部混态分解）。** 对任意复数 $a,b,c$，
+向量 $a\psi+b\eta+ce_2$ 在固定 $\mathcal B$ 中的坐标为
+
+$$
+\left(\frac{a-b}{2},\frac{a+b}{2},
+\frac a2-\frac c{\sqrt2},\frac a2+\frac c{\sqrt2},\frac b{\sqrt2}\right).
+\tag{C129.1}
+$$
+
+在 $Q$ 内归一化且至多三支持的向量，除共同整体相位外恰为以下八条射线：
+
+$$
+e_2,\quad\eta,\quad
+u_t=\sqrt{\frac23}\psi+\frac{t}{\sqrt3}e_2,\quad
+v_{st}=\sqrt{\frac25}(\psi+s\eta)+\frac{t}{\sqrt5}e_2,
+\qquad s,t\in\{-1,1\}.
+\tag{C129.2}
+$$
+
+此处 $u_t$ 为两条、$v_{st}$ 为四条。每个 $Q$ 支持密度态的每一种有限纯态分解，
+其每个正权重分量都实际位于 $Q$。特别地，
+
+$$
+\mathcal F_Q=
+\operatorname{conv}\{P_{e_2},P_\eta,P_{u_+},P_{u_-},P_{v_{++}},P_{v_{+-}},P_{v_{-+}},P_{v_{--}}\}.
+\tag{C129.3}
+$$
+
+证明。逐项与 (C128.1) 的五个基向量配对得 (C129.1)。
+先分类非零向量。若 $a=0$ 且 $b,c$ 均非零，则五个坐标全部非零，不合条件。
+若 $a=0$，只剩 $b=0$ 或 $c=0$ 两种可能，分别给 $e_2$、$\eta$ 的射线。
+
+若 $a\ne0,b=0$，第一、第二坐标均非零，第五为零；
+要使总支持不超过三，第三、第四坐标至少一个为零，故
+$c=ta/\sqrt2$，$t=\pm1$。二者不能同时为零。
+由 $E$ 等距，范数平方为 $3|a|^2/2$，归一化后恰为 $u_t$，只留共同整体相位。
+
+若 $a\ne0,b\ne0$，第五坐标非零；前四坐标至少两个必须为零。
+第一对坐标不能同时为零，第二对也不能同时为零，否则均会迫使 $a=0$。
+所以每对恰有一个零，给出
+
+$$
+b=sa,\qquad c=ta/\sqrt2,\qquad s,t\in\{-1,1\}.
+\tag{C129.4}
+$$
+
+这是复数的精确等式，已经固定全部相对相位，不能另添任意相位族。
+此时范数平方为 $5|a|^2/2$，归一化得 $v_{st}$。
+反向代入可知 $e_2$ 恰有两个非零坐标，其余七条恰有三个，且八条互不相同。
+上述各情况穷尽全部复 $a,b,c$ 及零坐标退化。
+
+再令 $\rho\in\mathsf D(Q)$，取任意有限分解
+$\rho=\sum_\ell p_\ell P_{x_\ell}$，其中 $p_\ell>0$、$\|x_\ell\|=1$。
+以 $R=I-P_Q$ 得
+
+$$
+0=\operatorname{Tr}(R\rho)=\sum_\ell p_\ell\|Rx_\ell\|^2.
+\tag{C129.5}
+$$
+
+每项非负，故每个 $Rx_\ell=0$。这对每一种分解成立，不只对某种特选分解成立。
+若 $\rho$ 还在 $\mathcal F_{\rm all}$，将其三支持见证分解用于这一结论，
+每个正权重向量就必须属于刚分类的八射线，给 (C129.3) 的正向包含。
+反向包含由各射线三支持和 $Q$ 支持直接得到。混合中相干项的抵消不能抵消非负支撑泄漏。证毕。
+
+## 130. 原生固定读口在承诺源上的精确达到
+
+**定理 C-130.1（同一定向字与全部八射线概率）。** 使用 C-123.1 的同一理想菜单：
+每次独立选择一个受约束翻转，其余驱动与漂移为零，参数为任意实数，
+允许有限串行字及逆，末端另行供应 $\{n_1,I-n_1\}$。
+取 (C123.2) 中的定向映射
+
+$$
+O:\left(\psi,\frac{e_0-e_4}{\sqrt2},e_1,e_2,e_3\right)
+\longmapsto(e_1,e_0,e_2,e_3,-e_4),\qquad O_{\rm ph}=DOD^\dagger.
+\tag{C130.1}
+$$
+
+它有一个实际纯翻转有限字实现，指定 $S_{\star,3}$ 调用数为零。
+以该字之后的末次结果 $1$ 为宣告事件，其效果和压缩为
+
+$$
+F_0=O_{\rm ph}^\dagger n_1O_{\rm ph}=P+P_{e_3},\qquad
+E^\dagger F_0E=\operatorname{diag}(1,1/2,0).
+\tag{C130.2}
+$$
+
+全部八射线及目标的概率为
+
+| 输入射线 | 条数 | $\operatorname{Tr}(PP_x)$ | $\operatorname{Tr}(F_0P_x)$ |
+| --- | ---: | ---: | ---: |
+| $e_2$ | 1 | $0$ | $0$ |
+| $\eta$ | 1 | $0$ | $1/2$ |
+| $u_t$ | 2 | $2/3$ | $2/3$ |
+| $v_{st}$ | 4 | $2/5$ | $3/5$ |
+| $\psi$（目标） | 1 | $1$ | $1$ |
+
+因此固定的确定性事件恰有
+
+$$
+\beta_{\mathcal F_Q}(F_0)=2/3,\qquad \alpha(F_0)=1,
+\qquad \beta_{\mathcal F_{\rm all}}(F_0)=1.
+\tag{C130.3}
+$$
+
+证明。C-123.2 已证 (C130.1) 的两组有序正交基均正定向，故 $O\in SO(5)$；
+其读扇区原像为 $\operatorname{span}(\psi,e_3)$。
+$D$ 与 $n_1$ 对易，且固定 $P$、$P_{e_3}$，给 (C130.2)，亦即 (C123.6) 在 $t=0$ 的效果。
+[原生卷定理 64.1 的 (IX.1)](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#44-固定相位菜单的实际有限字达到)
+在链长三时供应实际有限字群 $\mathcal V_3=DSO(5)D^\dagger$，故供应这个 $O_{\rm ph}$ 本身。
+这里使用已给的精确有限字结论，不把 Lie 代数闭包或稠密性单独当作实际达到。
+$D$ 始终是被动坐标，未作为物理门插入；此处不调用带指定相位门的更大群结论。
+
+压缩矩阵使 $a\psi+b\eta+ce_2$ 的通过概率为 $|a|^2+|b|^2/2$，
+目标重叠为 $|a|^2$。逐行代入 (C129.2) 得表。
+由 C-129.1 的完整混态桥及线性性，承诺零假设的最大通过概率为 $2/3$，在 $u_t$ 达到。
+但 $b_5=e_3$ 是物理能量基中的一支持零假设态，且 $F_0e_3=e_3$，
+故全域风险为一。证毕。
+
+**命题 C-130.2（显示缩放的实际随机化供应）。** 若另行供应一个独立于输入、
+控制及末端结果的经典 Bernoulli 随机数 $Z$，$\Pr(Z=1)=t\in[0,1]$，
+仅在末端结果和 $Z$ 均为一时宣告，则效果为 $tF_0$，承诺域的风险、目标功效恰为
+$(2t/3,t)$。
+
+证明。对任意输入 $\rho$，联合宣告概率为
+$t\operatorname{Tr}(F_0\rho)$；对全部输入成立即确定效果 $tF_0$。
+代入 (C130.3) 即得。无此额外供应时，固定事件本身只给 $(2/3,1)$ 这一点。
+这不声称其他原生字必须使用硬币，也不声称菜单供应秩一效果 $P$。证毕。
+
+## 131. 单输入的两个尖锐风险—功效前沿
+
+**定理 C-131.1（全域放松与承诺域原生达到）。** 对所有 $\delta\in[0,1]$，
+定义 C-128.2 的单输入前沿为
+
+$$
+A_{\mathcal F_{\rm all}}(\delta)=\min\{1,4\delta/3\},\qquad
+A_{\mathcal F_Q}(\delta)=\min\{1,3\delta/2\}.
+\tag{C131.1}
+$$
+
+第一式的达到效果 $tP$ 是不限测量的放松；未由此供应其全域原生实现。
+第二式除 $tP$ 的数学达到外，在 C-130.1 菜单与 C-130.2 的独立最终硬币下，
+由实际 $tF_0$ 达到，$t=\min\{1,3\delta/2\}$。
+
+证明。目标在 $\mathcal B$ 中为 $(1,1,1,1,0)/2$。
+对归一化复三支持向量 $x=\sum_jx_jb_j$，令
+$J=\{j\le4:x_j\ne0\}$，Cauchy–Schwarz 给
+
+$$
+|\langle\psi|x\rangle|^2
+=\frac14\left|\sum_{j\in J}x_j\right|^2
+\le\frac{|J|}{4}\sum_{j\in J}|x_j|^2\le\frac34.
+\tag{C131.2}
+$$
+
+有限凸混合保持该界。令
+
+$$
+\phi_j=\frac1{\sqrt3}\sum_{\substack{1\le k\le4\\k\ne j}}b_k
+\quad(j=1,2,3,4),\qquad
+\sigma_{\rm all}=\frac14\sum_{j=1}^4P_{\phi_j}
+=\frac34P+\frac{P_C-P}{12}.
+\tag{C131.3}
+$$
+
+每个 $\phi_j$ 恰三支持且达到重叠 $3/4$。
+四投影的平均在前四个 $\mathcal B$ 坐标上对角为 $1/4$、非对角为 $1/6$，
+第五行列为零，证明最后的等式。
+$P_C-P$ 是秩三正交投影，所以这是实际零假设混态，谱为
+$3/4,1/12,1/12,1/12,0$，且 $\sigma_{\rm all}\succeq(3/4)P$。
+
+承诺域由 C-129.1 得最大目标重叠为 $2/3$，且实际零假设混态
+
+$$
+\sigma_Q=\frac12(P_{u_+}+P_{u_-})=\frac23P+\frac13P_{e_2}
+\succeq\frac23P.
+\tag{C131.4}
+$$
+
+分别记 $(\mathcal F,c,\sigma)$ 为
+$(\mathcal F_{\rm all},3/4,\sigma_{\rm all})$ 或
+$(\mathcal F_Q,2/3,\sigma_Q)$。对任意 $0\preceq T\preceq I$，
+
+$$
+\beta_{\mathcal F}(T)\ge\operatorname{Tr}(T\sigma)
+=c\alpha(T)+\operatorname{Tr}(T(\sigma-cP))\ge c\alpha(T).
+\tag{C131.5}
+$$
+
+最后一项非负，因为它等于
+$\operatorname{Tr}(T^{1/2}(\sigma-cP)T^{1/2})$，不要求 $T$ 与 $\sigma$ 对易。
+结合 $\alpha\le1$ 给两条上界。
+反向取 $t=\min\{1,\delta/c\}$，则 $0\preceq tP\preceq I$，
+其风险恰为 $tc\le\delta$，功效为 $t$，达到上界。
+在承诺域，C-130.1–C-130.2 给 $tF_0$ 同样的风险和功效。
+这包括 $\delta=0,c,1$；当 $\delta\ge c$ 时只需风险 $c$，无需用尽风险额度。
+
+若协议只消费这一未知输入，允许的辅助态、设置、随机资料均与输入无关，
+则将其固定供应和全部控制并入同一通道 $\Lambda$，末端宣告效果为 $M$，
+在输入上的效果就是 $T=\Lambda^\dagger(M)$，满足 $0\preceq T\preceq I$。
+对内部随机资料平均仍给这样的效果。
+所以 (C131.5) 也约束这类协议的全部无条件宣告；此效果约化不提供逆向的原生实现。
+若只承诺 $Q$ 支持，$E^\dagger TE$ 是任意三维效果，反向可延拓为 $ESE^\dagger$；
+压缩没有删去任何放松测量，但压缩后的零假设仍必须是八射线凸包。证毕。
+
+(C131.2) 消费标准纯态多级相干重叠见证：Ringbauer 等，
+*Certification and Quantification of Multilevel Quantum Coherence*，
+[arXiv:1707.05282v3](https://arxiv.org/html/1707.05282v3)，§I.4、式 (9) 后的重叠恒等式、
+Theorem 2／式 (10)、式 (11)，[Phys. Rev. X 8, 041007](https://doi.org/10.1103/PhysRevX.8.041007)。
+在本基中取 $k=3$，三个最大振幅模平方和正是 $3/4$。
+Johnston、Li、Plosker、Poon、Regula，
+*Some notes on the robustness of k-coherence and k-entanglement*，
+[arXiv:1806.00653v3](https://arxiv.org/html/1806.00653v3)，§II 式 (2)–(3)、§III Theorem 1，
+[Phys. Rev. A 98, 022328](https://doi.org/10.1103/PhysRevA.98.022328)，
+在五维 $k=3$、目标振幅 $(1/2,1/2,1/2,1/2,0)$ 时给标准及广义稳健性 $1/3$。
+(C131.3) 是此处直接展示的实际原始见证；这些一般结果不分类 $\mathcal F_Q$。
+
+(C131.5) 的正序支配机制亦属成熟资源区分方法，见 Takagi、Regula、Bu、Liu、Adesso，
+*Operational Advantage of Quantum Resources in Subchannel Discrimination*，
+[arXiv:1809.01672v3](https://arxiv.org/html/1809.01672v3)，式 (1)–(5)、Theorem 2，
+[Phys. Rev. Lett. 122, 140402](https://doi.org/10.1103/PhysRevLett.122.140402)。
+该定理优化子通道任务与测量，不供应这里的传感器。
+对承诺域须在压缩空间 $Q$ 上核对其满秩自由态条件：
+$(\sigma_Q+P_\eta)/2$ 在 $(\psi,\eta,e_2)$ 中为
+$\operatorname{diag}(1/3,1/2,1/6)\succ0$。
+相对广义稳健性为 $1/2$：$\sigma_Q=(P+(1/2)P_{e_2})/(3/2)$ 给上界；
+任何自由混合 $(P+s\tau)/(1+s)$ 的目标重叠至少 $1/(1+s)$，
+而 (C129.3) 将其限制为至多 $2/3$，故 $s\ge1/2$。
+这些是固定源证明内的标准一致性对应，不另立一般相干或稳健性定理。
+
+## 132. 独立新输入及其零假设乘积分支
+
+**定义 C-132.1（三种实际输入域）。** 对 $\mathcal F\in\{\mathcal F_{\rm all},\mathcal F_Q\}$，
+$n\ge1$，分别定义
+
+$$
+\begin{aligned}
+\mathcal I_n(\mathcal F)&=\{\rho^{\otimes n}:\rho\in\mathcal F\},\\
+\mathcal P_n(\mathcal F)&=\{\rho_1\otimes\cdots\otimes\rho_n:\rho_i\in\mathcal F\ (\forall i)\},\\
+\mathcal S_n(\mathcal F)&=\operatorname{conv}_{\rm fin}\mathcal P_n(\mathcal F).
+\end{aligned}
+\tag{C132.1}
+$$
+
+它们依次为 iid、独立但可不同分布，以及每个分支的每个因子均属于零假设的乘积混合。
+最后一种允许由混合标签产生关联，不要求无条件独立；其限定是每个分支的全部因子均为零假设。
+$\operatorname{conv}_{\rm fin}\mathcal I_n$ 亦包含在最后一域中。
+
+**定理 C-132.2（独立输入的两条精确前沿）。** 对任意上述四种域
+$\mathcal N=\mathcal I_n(\mathcal F),\operatorname{conv}_{\rm fin}\mathcal I_n(\mathcal F),
+\mathcal P_n(\mathcal F),\mathcal S_n(\mathcal F)$，均有
+
+$$
+\begin{aligned}
+A_{\mathcal N}(\delta)&=\min\{1,\delta/(3/4)^n\}
+&&\text{若 }\mathcal F=\mathcal F_{\rm all},\\
+A_{\mathcal N}(\delta)&=\min\{1,\delta/(2/3)^n\}
+&&\text{若 }\mathcal F=\mathcal F_Q,
+\qquad 0\le\delta\le1.
+\end{aligned}
+\tag{C132.2}
+$$
+
+全域的达到为不限测量效果 $tP^{\otimes n}$。
+承诺域由原生全通过事件 $F_0^{\otimes n}$，再配一个独立最终硬币，以
+$t=\min\{1,\delta/(2/3)^n\}$ 达到。
+逆向上界允许全部集体效果，故也约束原生测量的任意组合。
+
+证明。取 C-131.1 对应的 $c,\sigma$，写 $R=\sigma-cP\succeq0$。
+有限张量展开中，每个非全目标项都是正算子的张量积，故
+
+$$
+\sigma^{\otimes n}=(cP+R)^{\otimes n}\succeq c^nP^{\otimes n}.
+\tag{C132.3}
+$$
+
+这个实际混态属于最小的 iid 零假设域，因此对每个所列域和全部集体效果均有
+$\beta_{\mathcal N}(T)\ge c^n\alpha_n(T)$。
+不需要假设最不利态为纯态，也未将不同最优值冒充同时达到。
+
+反向对每个实际乘积逐项计算
+
+$$
+\operatorname{Tr}\bigl(P^{\otimes n}(\rho_1\otimes\cdots\otimes\rho_n)\bigr)
+=\prod_{i=1}^n\operatorname{Tr}(P\rho_i)\le c^n.
+\tag{C132.4}
+$$
+
+所有因子同时选 $P_{\phi_1}$（全域）或 $P_{u_+}$（承诺域）即达到等号，且已属 iid 域。
+凸混合由线性性保持该上界。故 $tP^{\otimes n}$ 的风险恰为 $tc^n$、目标功效为 $t$，
+给 (C132.2)，包括所有端点。
+
+在承诺域，将同一个 C-130.1 固定字分别作用于每个新输入，记录每次末端比特，
+仅当全部为一时宣告，实际效果就是 $F_0^{\otimes n}$。
+由 (C130.3) 逐因子相乘，其零假设风险恰为 $(2/3)^n$，目标功效为一；
+在乘积混合中仍成立。
+最后只用一个概率 $t$ 的独立硬币决定是否保留整个宣告，才同时乘以 $t$。
+若改为每个输入各用概率 $t$ 的独立硬币再要求全通过，效果是
+$(tF_0)^{\otimes n}=t^nF_0^{\otimes n}$，目标功效变为 $t^n$。证毕。
+
+乘积分支与复合 iid 族的框架见 Berta、Brandão、Hirche，
+*On Composite Quantum Hypothesis Testing*，
+[arXiv:1709.07268v2](https://arxiv.org/html/1709.07268v2)，式 (9)–(15)、Theorem 1.1，
+[Commun. Math. Phys.](https://doi.org/10.1007/s00220-021-04133-8)。
+该定理处理渐近误差指数，并要求每对备择／零假设的支持包含条件 (13)。
+这里零假设含与 $\psi$ 正交的 $e_2$，故不能直接以其定理代替 (C132.3) 的有限 $n$ 逆向证明。
+近期纯目标投影检验的对应见 Simpson、Palias、Jose，
+*Sample Complexity of Composite Quantum Hypothesis Testing*，
+[arXiv:2601.08588v4](https://arxiv.org/html/2601.08588v4)，§II.C 式 (5)–(7)、§III.C.1 Theorem 9／式 (15)。
+其纯目标、紧致 iid 不确定集可取 $\mathcal F_{\rm all}$ 或压缩后的 $\mathcal F_Q$；
+证明中的投影检验给先验权重 $p$ 下的对称错误上界 $(1-p)c^n$。
+该达到机制与 (C132.4) 相符，但不提供本处固定风险的精确逆向界、原生实现或边缘约束结论。
+
+## 133. 仅承诺各边缘为零假设时的联合前沿
+
+**定义 C-133.1（边缘域与同边缘子域）。** 对同一个 $\mathcal F$，定义
+
+$$
+\begin{aligned}
+\mathcal M_n(\mathcal F)&=\{\Omega\in\mathsf D(\mathcal K_3^{\otimes n}):
+\Omega_i=\operatorname{Tr}_{\ne i}\Omega\in\mathcal F\ (\forall i)\},\\
+\mathcal M_n^{=} (\mathcal F)&=\{\Omega\in\mathcal M_n(\mathcal F):
+\Omega_1=\cdots=\Omega_n\}.
+\end{aligned}
+\tag{C133.1}
+$$
+
+允许任意复联合态，包括纠缠态。$\mathcal F=\mathcal F_Q$ 时，正性实际还迫使联合态支持于
+$Q^{\otimes n}$：对每个位置，$\operatorname{Tr}((I-P_Q)_i\Omega)=0$，
+正性使其支持落在每个局部投影的核，取交即得。
+但该支持事实不使联合态成为独立乘积。
+
+**定理 C-133.2（两条不随份数改善的精确前沿）。** 对每个 $n\ge1$、
+$\delta\in[0,1]$，无论取 $\mathcal N=\mathcal M_n(\mathcal F)$ 还是 $\mathcal M_n^{=}(\mathcal F)$，
+均有
+
+$$
+\begin{aligned}
+A_{\mathcal N}(\delta)&=\min\{1,4\delta/3\}
+&&\text{若 }\mathcal F=\mathcal F_{\rm all},\\
+A_{\mathcal N}(\delta)&=\min\{1,3\delta/2\}
+&&\text{若 }\mathcal F=\mathcal F_Q.
+\end{aligned}
+\tag{C133.2}
+$$
+
+达到效果分别为不限测量的 $tP^{\otimes n}$，以及承诺域可用的原生
+$tF_0^{\otimes n}$；$t=\min\{1,\delta/c\}$，缩放仍需 C-130.2 的一个独立最终硬币。
+
+证明。在全域取 $c=3/4$、$\tau=(P_C-P)/3$，在承诺域取
+$c=2/3$、$\tau=P_{e_2}$。两种 $\tau$ 都是与 $P$ 正交的正迹一态，且
+
+$$
+\sigma=cP+(1-c)\tau\in\mathcal F,\qquad
+\Omega_* = cP^{\otimes n}+(1-c)\tau^{\otimes n}
+\succeq cP^{\otimes n}.
+\tag{C133.3}
+$$
+
+$\Omega_*$ 为实际份间可分离态，全部边缘相同且恰为已展示的实际混态 $\sigma$。
+故它已属于较小的同边缘子域；任意集体效果均满足
+$\beta_{\mathcal N}(T)\ge c\alpha_n(T)$。
+这给 (C133.2) 的逆向界，且无需纠缠联合见证。
+
+另一方面，对于任意位置 $i$，
+
+$$
+P^{\otimes n}\preceq P_i\otimes I_{\ne i},\qquad
+\operatorname{Tr}(P^{\otimes n}\Omega)\le\operatorname{Tr}(P\Omega_i)\le c.
+\tag{C133.4}
+$$
+
+这里 $P_i$ 表示在第 $i$ 位置的单份投影。
+$\Omega_*$ 在全目标投影上的概率恰为 $c$，故此上界可达，缩放得第一种达到效果。
+承诺域同理有 $F_0^{\otimes n}\preceq(F_0)_i\otimes I_{\ne i}$，
+由零假设边缘给风险至多 $2/3$；又 $F_0\psi=\psi$、$F_0e_2=0$，
+所以同一 $\Omega_*$ 达到风险 $2/3$，目标通过概率一。
+一个独立最终硬币完成缩放。证毕。
+
+**命题 C-133.3（可分离与零假设因子混合的严格区别）。** 对 $n\ge2$，
+(C133.3) 的 $\Omega_*$ 虽为可分离、置换不变且有相同零假设边缘，
+却不属于 $\mathcal S_n(\mathcal F)$。$n=1$ 时它就是 $\sigma$，全部相应单输入域及前沿重合。
+
+证明。$0<c<1$，故
+$\operatorname{Tr}(P^{\otimes n}\Omega_*)=c>c^n$。
+C-132.2 已给 $\mathcal S_n(\mathcal F)$ 上的同一重叠至多 $c^n$，矛盾。
+可分离分解的每个因子允许为有资源的 $P$；零假设因子乘积混合则禁止这样的分支。
+当 $n=1$，(C133.3) 直接化为 $\sigma$，且单份边缘就是态本身。证毕。
+
+C-116.2 与 C-121.5 已在各自底面／历史任务中给出共同标签障碍；
+这里 (C133.3) 把该机制接到固定物理 $\mathcal B$、八射线源、同一实际 $F_0$ 及尖锐逆向见证，
+不是从那些任务的统计界偷换联合零假设。
+独立通过概率与全好／全坏经典关联的成熟区分亦见 Zhu–Hayashi，
+*Efficient Verification of Pure Quantum States in the Adversarial Scenario*，
+[arXiv:1909.01900v2](https://arxiv.org/html/1909.01900v2)，式 (2)–(3) 及式 (4)–(5) 前的
+“Adversarial scenario” 段，[Phys. Rev. Lett. 123, 260504](https://doi.org/10.1103/PhysRevLett.123.260504)。
+该文测试若干系统后条件认证一个未测系统；这里是对已供应全部输入的宣告检验，二者任务不同。
+
+## 134. 功效恰为一时的最少新输入与资源计数
+
+**推论 C-134.1（独立输入的精确整数界）。** 对 C-132.1 的各域，
+目标功效要求恰为一时，$0<\delta<1$ 下最少新输入数为
+
+$$
+n_{\min}(\delta;c)=\left\lceil\frac{\log\delta}{\log c}\right\rceil,
+\qquad c=3/4\text{（全域放松）},\quad c=2/3\text{（承诺域原生）}.
+\tag{C134.1}
+$$
+
+具体的相邻有理边界为
+
+| 域与达到菜单 | 风险额度 $\delta$ | $n_{\min}$ | $c^{n_{\min}-1}>\delta$ | $c^{n_{\min}}\le\delta$ |
+| --- | ---: | ---: | ---: | ---: |
+| 全五维，不限测量放松 | $1/20$ | 11 | $59049/1048576$ | $177147/4194304$ |
+| 全五维，不限测量放松 | $1/100$ | 17 | $43046721/4294967296$ | $129140163/17179869184$ |
+| $Q$ 承诺，原生菜单 | $1/20$ | 8 | $128/2187$ | $256/6561$ |
+| $Q$ 承诺，原生菜单 | $1/100$ | 12 | $2048/177147$ | $4096/531441$ |
+
+证明。C-132.2 给功效一的充要条件 $c^n\le\delta$。
+$\log c<0$，取对数并反向除法即得 (C134.1)。表中各数是相应幂的精确值；
+交叉相乘给所列严格与非严格关系，因 $c^n$ 严格递减，正好确定最小整数。
+若 $\delta=0$，任何有限 $n$ 都不能在功效一时达到；若 $\delta=1$，限定 $n\ge1$ 时最少为一。
+在 C-133.1 的仅边缘域，功效一要求 $\delta\ge c$，与 $n$ 无关；
+特别是这两个表列风险额度下，不存在任何有限 $n$ 的功效一方案。证毕。
+
+**命题 C-134.2（原生达到实际消费的供应）。** 一次性选择 C-130.1 的某个固定有限字，
+记其翻转数为有限但未评价的 $L_0$。在 $n$ 个新输入上的承诺域全通过构造消费
+$n$ 份新输入、$n$ 个末端二值事件、$n$ 次这个固定字，即 $nL_0$ 个翻转，
+指定 $S_{\star,3}$ 调用数为零。若显示缩放 $t<1$，还消费一个概率 $t$ 的独立最终硬币。
+在 (C134.1) 的功效一边界使用未缩放全通过，故无需此缩放硬币。
+
+证明。每份输入上完整执行同一字一次，再作其一次末端测量，最后取全部事件的合取。
+计数逐项相加，零指定相位调用由 C-130.1 保持。
+$L_0$ 只计固定 $O_{\rm ph}$ 字，不与 C-124.1 的可变 Ramsey 模板长度 $L$ 混同。
+原生实现并不要求联合量子控制；任意联合输入上的局部测量全通过效果仍是张量积。
+新输入的实际来源律则分别由 C-132.1 或 C-133.1 指定，不能由测量效果推出。证毕。
+
+## 135. 制备、信息供应与原恢复目标的边界
+
+**命题 C-135.1（支持承诺不能替代物理相干数零假设）。**
+$P$ 支持于 $Q$，在逻辑列基中是一支持态，却在物理能量基 $\mathcal B$ 中恰为四支持纯态，
+故 $P\notin\mathcal F_Q$。另一方面，$P_{e_2},P_\eta\in\mathcal F_Q$。
+所以仅凭 $Q$ 支持、或把逻辑 qutrit 中至多三支持作为零假设，均不能得到本处的认证问题。
+全域逆向见证 $\sigma_{\rm all}$ 也不能用作承诺域见证。
+
+证明。$\psi=(b_1+b_2+b_3+b_4)/2$，目标有四个非零物理能量振幅。
+纯态的每个正权重分解向量都位于其一维支持，故不存在三支持分解。
+$e_2,\eta$ 的物理支持计数已由 C-129.1 给出。
+逻辑三维的所有纯向量都至多三支持，特别包括目标；
+若零假设含目标，则任何功效一的效果已有风险至少一。
+此外由 (C131.3)，
+
+$$
+\operatorname{Tr}((I-P_Q)\sigma_{\rm all})
+=\frac{\operatorname{Tr}((I-P_Q)P_C)}{12}
+=\frac{3/2}{12}=\frac18>0.
+\tag{C135.1}
+$$
+
+所以 $\sigma_{\rm all}$ 实际不在 $\mathsf D(Q)$，不能跨域借用。
+例如 $\tfrac12(P_{e_0}+P_{e_4})=\tfrac12(P_\psi+P_z)$，
+$z=(e_0-e_4)/\sqrt2\perp Q$，虽抵消了相应非对角项，仍有 $1/2$ 的支撑泄漏。证毕。
+
+**命题 C-135.2（固定目标功效与后验概率的两个反例）。**
+全域达到效果 $P$ 不对所有四相干纯态统一有正功效。
+承诺域八输入全通过的风险小于 $1/20$，也不推出通过后的目标后验概率至少 $19/20$。
+
+证明。归一化向量
+
+$$
+x=(b_1+b_2-b_3-b_4)/2
+\tag{C135.2}
+$$
+
+有四个非零物理能量振幅，却与 $\psi$ 正交，故 $\operatorname{Tr}(PP_x)=0$。
+它还属于 $C$，所以 $F_0$ 在它上的通过概率也为零。
+再取只含两个假设的明确先验：目标 $P^{\otimes8}$ 的概率为 $1/1000$，
+零假设 $P_{u_+}^{\otimes8}$ 的概率为 $999/1000$。
+C-130.1 给目标全通过概率一，零假设全通过概率 $256/6561<1/20$。
+Bayes 公式却给
+
+$$
+\Pr(\text{目标}\mid\text{全通过})
+=\frac{1}{1+999\cdot256/6561}=\frac{243}{9715}.
+\tag{C135.3}
+$$
+
+因此频率学最坏零假设风险与数据后的先验依赖概率是不同量。证毕。
+
+**命题 C-135.3（额外副本与假设相关旗标改变模型）。**
+对全部 $Q$ 支持密度态，没有一个输入上的线性通道可自动供应其独立张量平方。
+若另行供应可访问且与实际假设相关的旗标，C-131–C-133 的输入内逆向界不再适用于该扩充问题。
+
+证明。假设通道 $\Lambda$ 对全部 $\rho\in\mathsf D(Q)$ 满足
+$\Lambda(\rho)=\rho\otimes\rho$。它在 $P,P_{e_2}$ 上的该作用及线性性，迫使
+
+$$
+\Lambda(\sigma_Q)=\frac23P^{\otimes2}+\frac13P_{e_2}^{\otimes2}.
+\tag{C135.4}
+$$
+
+但 $\sigma_Q^{\otimes2}$ 在 $P\otimes P_{e_2}$ 上的期望为 $2/9$，
+(C135.4) 的同一期望为零，矛盾。
+故将一个未知输入重置、再访问或重复控制，不能当作本处 $n$ 个独立新输入的服务。
+此反例仅用线性性，不否认另行供应源的制备能力。
+
+对旗标例子，把目标改为 $P^{\otimes n}\otimes|1\rangle\langle1|$，
+每个零假设联合态改为 $\Omega\otimes|0\rangle\langle0|$。
+读取效果 $I\otimes|1\rangle\langle1|$ 即有功效一、风险零。
+这是额外输入相关信息，违反 C-131.1 效果约化所需的共同输入无关辅助供应，
+不反驳原输入域上的正序见证。设置也不能依赖尚未知的实际假设标签。证毕。
+
+**适用边界 C-135.4（源与恢复的不同义务）。** (C129.1)–(C133.4) 的固定模型组合
+连接实际 $E$ 源、同一物理 $\mathcal B$、八射线零假设、原生 $F_0$ 与各自联合输入域。
+标准多级相干见证、正序支配、张量正性、效果约化与关联反例均是中间工具；
+其一般数学不作为新增资源定理，固定模型综合亦不附全域原创性或优先权断言。
+
+精确有限字的供应仅在理想无漂移独立控制合同内成立，未给已评价的脉冲参数表、
+数值 $L_0$、精度或漂移容错界、硬件实现与物理时长。
+支持承诺、$\psi$ 或其他 $E$ 输出的制备、承诺真实性的认证、独立新输入供应、
+校准、相位时钟及 SSR／参考系兼容性仍需各自额外前提。
+这里不引入数超选择规则下的新有限参考模型。
+$Q$ 的固定相干关系作为数学定义存在，不等于制备或参考供应。
+全部前沿为理想模型内的普通数学结果；本处不作形式内核核验或经验实现断言。
+全五维的 $tP^{\otimes n}$ 只给不限测量放松的达到，
+全五维原生最优值及其实现未在此确定；承诺域的原生达到不能跨越这个供应边界。
+
+[相位增益与 qutrit 恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+中，正 $\beta$、整个实 Kraus 编码器类 $M_3\to M_5$ 的尖锐 diamond 恢复曲线仍未解决。
+认证目标态的风险—功效前沿既不构造该类的统一恢复通道，也不证明其全类尖锐性，
+原恢复目标及其全部输入、参考与共同恢复量词保持原义。
+
+## 追加锚（本行以下为增补区）
