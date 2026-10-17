@@ -2923,3 +2923,293 @@ $$
 由 (IX.7) 的三列逐项配对即可得到；它通常不等于原 $M$。定理 65.2 解决的是支持效果的精确匹配，而非仅按比特个数判断的障碍。效果只决定结果概率及其丢弃系统后的参考边缘：它不指定条件量子后态、GC 的低/高取得分支、完整 live 通道、整个未来可访问纤维成本或真实 FIRST 时刻。甚至“允许末次 PVM 的概率”也不自动给出可复用的 Lüders 后态服务。GC §§23–25 分别保留这些仪器障碍及另加装置前提的条件构造；那些前提没有由本定理授权。原生仪器与时钟缺口，以及原全部预算、全部对比、源与 minimax 的目标，均不因此完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 46. 固定四分之一相位的调用秩与精确谱前沿
+
+**定义 66.1（原维数、实帧与至多调用合同）。** 固定 $\mathcal H=\mathbb C^d$ 的一组实正交基及其中的逐坐标共轭，$d\geq2$。设 $P=P^T=P^2$ 是非零、非恒等的实投影，$\operatorname{rank}P=p$，唯一收费门为正向固定相位 $S=\exp(i\pi P/2)$。实控制允许任意有限个 $SO(d)$ 元素；终端只读一个固定实投影 $R=R^T=R^2$ 的二值 PVM $\{R,I-R\}$，$\operatorname{rank}R=r\in\{0,\ldots,d\}$。令
+
+$$
+\begin{aligned}
+q&=\min(p,d-p),& h&=\min(r,d-r),&m&=\lfloor d/2\rfloor,\\
+\mathcal U_{\leq k}
+ &=\bigcup_{j=0}^{k}
+   \{O_j S O_{j-1}S\cdots S O_0:O_0,\ldots,O_j\in SO(d)\},\\
+B_k(\rho,\sigma)
+ &=\max_{U\in\mathcal U_{\leq k}}
+       |\operatorname{tr}((\rho-\sigma)U^\dagger R U)|,
+\qquad k\in\mathbb Z_{\geq0}.
+\end{aligned}
+\tag{IX.11}
+$$
+
+$j=0$ 项为 $SO(d)$。每次 $S$ 计一次，$S^{-1}=S^3$ 若实际采用则计三次；不另供负向相位或连续可调相位。每个固定 $j$ 的参数空间是紧空间 $SO(d)^{j+1}$，有限并仍紧，故 (IX.11) 的最大值确实存在于有限字中。控制字可依赖已知候选对 $(\rho,\sigma)$ 和预先固定的共同经典记录，但对两个未知输入标签必须相同；不提供标签相关旁信息。不使用辅助量子系统、可访问参考、中途测量、后选择或任何非酉 CPTP 预处理。
+
+输入域为全部满足 $\operatorname{Re}\rho=\operatorname{Re}\sigma$ 的密度态对，实部按上述同一实帧逐项取得。因此 $\Delta=\rho-\sigma=iA$，其中 $A$ 为实反对称矩阵。以降序非负数 $a_1\geq\cdots\geq a_m\geq0$ 表示其反对称块权重，包含零块；于是
+
+$$
+\operatorname{spec}(\Delta)
+ =\{a_1,-a_1,\ldots,a_m,-a_m\}
+   \cup\{0\ \text{若 }d\text{ 为奇数}\},
+\qquad
+D(\rho,\sigma)=\tfrac12\|\Delta\|_1=\sum_{j=1}^{m}a_j.
+\tag{IX.12}
+$$
+
+这种实部与反对称块分解是既有工具，见 Wu 等，[*Resource theory of imaginarity: quantification and state conversion*，arXiv:2103.01805v1，式 (36)–(37)](https://arxiv.org/html/2103.01805v1#S3.E36)。此输入域称为旧盲态对：每个实对称效果与 $iA$ 的迹配对均为零，因而任何零相位字的读数相同。该定义只约束态对，不授予任意态的原生制备权限。
+
+$B_k$ 是二值概率分布的总变差，即同一事件的概率差绝对值；它采用定义 60.1 的受限测量对比口径。一般框架及其与迹距离的归一化见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*，arXiv:0810.2327v2，引言式 (1)–(3) 及 §1](https://arxiv.org/html/0810.2327v2)。相对于固定实基的实 Kraus 操作比这里的实酉控制更宽；Wu 等，[*Operational Resource Theory of Imaginarity*，arXiv:2007.14847v2，Theorem 2、式 (5) 及随后关于二维像的论述](https://arxiv.org/html/2007.14847v2#Thmtheorem2)，采用的是该更宽菜单。参考文稿《AURIC 受限量子读出与相位资源理论》P.6 的单相位合同与此处相接；P.8/C4 中的实 CPTP 反对称平面合并不在 (IX.11) 的操作类内。
+
+**定理 66.2（每次调用的普适谱上界）。** 对定义 66.1 的全部维数、投影和旧盲态对，令 $t_k=\min(kq,h)$，空和为零，则
+
+$$
+B_k(\rho,\sigma)\leq\sum_{j=1}^{t_k}a_j\leq D(\rho,\sigma).
+\tag{IX.13}
+$$
+
+特别地，$B_0=0$；$r=0,d$ 时所有预算的对比均为零。
+
+**证明。** 对含 $j\leq k$ 次调用的字 $U$，先只作代数上的整体标量归一化。置
+
+$$
+\widehat S=
+\begin{cases}
+S=I+(i-1)P,&p\leq d/2,\\
+-iS=I+(-i-1)(I-P),&p>d/2.
+\end{cases}
+\qquad
+\operatorname{rank}(\widehat S-\overline{\widehat S})=q.
+\tag{IX.14}
+$$
+
+将 $U$ 中每个 $S$ 换为 $\widehat S$ 得 $\widehat U$，只改变整体相位，所以 $Q=U^\dagger RU=\widehat U^\dagger R\widehat U$。乘积差的望远镜展开以及实控制 $O=\bar O$ 给
+
+$$
+\begin{aligned}
+\operatorname{rank}(\widehat U-\overline{\widehat U})&\leq jq,\\
+Q-\bar Q
+ &=(\widehat U^\dagger-\widehat U^T)R\widehat U
+     +\widehat U^T R(\widehat U-\overline{\widehat U}),\\
+\operatorname{rank}(Q-\bar Q)&\leq2jq.
+\end{aligned}
+\tag{IX.15}
+$$
+
+这里的标量归一化没有增添一个可调用的门。又因 $Q,\bar Q$ 都是秩 $r$ 投影，分别对它们及其补投影使用秩的次可加性，得到 $\operatorname{rank}(Q-\bar Q)\leq2h$。
+
+令 $H=(Q-\bar Q)/2$。这是 Hermitian 矩阵，$\bar H=-H$，故每个正特征值 $b$ 的共轭特征向量具有特征值 $-b$。两个投影之差介于 $-I$ 和 $I$ 之间，因此
+
+$$
+\operatorname{rank}H=2s,\qquad
+s\leq\min(jq,h)\leq t_k,\qquad
+H=H_+-H_-,\qquad
+0\preceq H_\pm\preceq\tfrac12 I,\quad
+\operatorname{rank}H_\pm=s.
+\tag{IX.16}
+$$
+
+实对称矩阵 $(Q+\bar Q)/2$ 与 $iA$ 的迹配对为零，所以 $\operatorname{tr}(\Delta Q)=\operatorname{tr}(\Delta H)$。复用定理 60.2 所用的 Fan 谱极值：对秩不超过 $s$、满足 $0\preceq C\preceq I/2$ 的矩阵，将其写成超水平谱投影的积分 $C=\int_0^{1/2}\mathbf1_{(u,\infty)}(C)\,du$。每个积分中的投影秩不超过 $s\leq m$，而 $\Delta$ 和 $-\Delta$ 的前 $s$ 个特征值都是 $a_1,\ldots,a_s$，故
+
+$$
+\operatorname{tr}(\pm\Delta C)\leq\tfrac12\sum_{v=1}^{s}a_v,
+\qquad
+|\operatorname{tr}(\Delta H)|\leq\sum_{v=1}^{s}a_v
+ \leq\sum_{v=1}^{t_k}a_v.
+\tag{IX.17}
+$$
+
+将第一项分别用于 $H_+,H_-$ 及 $\pm\Delta$，即得第二项的双向界。对全部有限字取最大值得 (IX.13)。$j=0$ 或 $h=0$ 时 $s=0$，也包含在此论证内。$\square$
+
+**定理 66.3（有足够旁观方向时的精确有限字）。** 在定义 66.1 的合同下，若
+
+$$
+d-2h\geq q,
+\qquad\text{则对每个 }k\geq0\text{ 有}\qquad
+\boxed{B_k(\rho,\sigma)=\sum_{j=1}^{\min(kq,h)}a_j}.
+\tag{IX.18}
+$$
+
+等号由一个含至多 $k$ 次正向 $S$ 的实际有限字取得。单调用特例与参考文稿 P.6 在 $\theta=\pi/2$ 的公式相同；多调用等式由下述原维数分批构造给出。条件 $d-2h\geq q$ 是充分条件；不以它作为必要条件。无此条件的普适等式以及任意其他固定角度的精确预算前沿，均不由本定理判定；预算仍为至多调用，不涉及恰好调用的分类。
+
+**证明。** 若 $h=0$ 或 $k=0$，定理 66.2 已给结论。以下 $h,k\geq1$。取 (IX.12) 的实正交反对称块基，记前 $h$ 个平面为 $\operatorname{span}_{\mathbb R}\{e_v,f_v\}$，使
+
+$$
+A|_{\operatorname{span}\{e_v,f_v\}}
+ =a_v\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad
+u_v=\frac{e_v+f_v}{\sqrt2},
+\qquad
+R_0=\sum_{v=1}^{h}|\nu_v\rangle\langle\nu_v|.
+\tag{IX.19}
+$$
+
+$h\leq m$ 保证这些平面存在，零权重也允许。令 $W$ 为它们的实正交补，$\dim W=d-2h\geq q$。这里 $W$ 是原来同一 $d$ 维系统中的方向；无额外张量因子，也不要求其初态已被置零。
+
+置 $t=\min(kq,h)$，将 $\{1,\ldots,t\}$ 分成 $L=\lceil t/q\rceil\leq k$ 个非空批次 $J_1,\ldots,J_L$，每批大小 $b_\alpha\leq q$。在 $W$ 的一组固定实正交基中，为每批选 $q-b_\alpha$ 个方向，令 $Z_\alpha$ 是其投影，置
+
+$$
+E_\alpha=\sum_{v\in J_\alpha}|e_v\rangle\langle e_v|+Z_\alpha,
+\qquad
+\operatorname{rank}E_\alpha=q,
+\qquad
+Z_\alpha R_0=R_0Z_\alpha=0.
+\tag{IX.20}
+$$
+
+不同批次的填充方向可以复用，且全部 $E_\alpha$ 在同一实基中对角，因而对易。写 $\varepsilon=1$ 当 $p\leq d/2$，否则 $\varepsilon=-1$，并令 $T_\alpha=\exp(i\varepsilon\pi E_\alpha/2)$。
+
+任意两个同秩非平凡实投影均可由 $SO(d)$ 共轭：先取正交共轭；若行列式为负，再乘一个与目标投影对易的单方向反射即可校正行列式。这只是选取允许的实控制，不增加相位。于是存在 $O_\alpha\in SO(d)$，在 $p\leq d/2$ 时使 $O_\alpha P O_\alpha^T=E_\alpha$，在 $p>d/2$ 时使 $O_\alpha P O_\alpha^T=I-E_\alpha$。因此一次实际正向调用给
+
+$$
+V_\alpha=O_\alpha S O_\alpha^T
+ =\begin{cases}
+T_\alpha,&p\leq d/2,\\
+iT_\alpha,&p>d/2.
+\end{cases}
+\tag{IX.21}
+$$
+
+第二行是同一个正向物理门的恒等式，并未免费使用 $S^{-1}$。
+
+令 $R_h=R$ 若 $r=h$，否则 $R_h=I-R$；这是证明中对终端事件的换名，绝对概率差不变。上述实投影共轭性质给 $O_*\in SO(d)$，使 $O_*^T R_hO_*=R_0$。取实际字 $U=O_*V_L\cdots V_1$。展开 (IX.21) 并合并相邻实控制，这恰含 $L$ 次正向 $S$。整体标量在 $U^\dagger R_hU$ 中消去；每个已选平面上 $T_L\cdots T_1$ 将 $e_v$ 乘以 $e^{i\varepsilon\pi/2}$、保持 $f_v$ 不变，未选平面保持恒等。在 $W$ 上它虽可施加相位，但 $R_0$ 在那里为零。故
+
+$$
+\begin{aligned}
+U^\dagger R_hU
+ &=\sum_{v=1}^{t}
+   \left|\frac{e^{-i\varepsilon\pi/2}e_v+f_v}{\sqrt2}\right\rangle
+   \left\langle\frac{e^{-i\varepsilon\pi/2}e_v+f_v}{\sqrt2}\right|
+     +\sum_{v=t+1}^{h}|\nu_v\rangle\langle\nu_v|,\\
+\operatorname{tr}(\Delta U^\dagger R_hU)
+ &=-\varepsilon\sum_{v=1}^{t}a_v.
+\end{aligned}
+\tag{IX.22}
+$$
+
+第一式的每个已选向量都是对应 $iA$ 块的特征向量，特征值 $-\varepsilon a_v$；每个未选实向量的期望为零。这也直接核对了第二式的符号与归一化。若 $R_h=I-R$，$\operatorname{tr}\Delta=0$ 只将总迹换号。因此原固定 $R$ 的绝对对比为 $\sum_{v\leq t}a_v$，与定理 66.2 上界相合。全程在原维数内给出有限乘积，不使用闭包或无限逼近。$\square$
+
+**推论 66.4（固定读口的饱和调用数与完整迹距离）。** 保留定理 66.3 的维数条件，令 $\ell=\#\{v:a_v>0\}$、$B_\infty=\sup_{k\geq0}B_k$，并令 $K_{\mathrm{sat}}$ 是取得 $B_\infty$ 的最小非负调用预算。则
+
+$$
+B_\infty=\sum_{v=1}^{h}a_v,
+\qquad
+K_{\mathrm{sat}}=
+ \left\lceil\frac{\min(\ell,h)}{q}\right\rceil,
+\qquad
+\bigl(\exists k:\ B_k=D\bigr)\ \Longleftrightarrow\ \ell\leq h.
+\tag{IX.23}
+$$
+
+$\ell=0$ 时 $K_{\mathrm{sat}}=0$。这些是同一个固定读口的概率对比结论；当 $B_\infty<1$ 时并不提供一次完美区分。
+
+**证明。** 预算 $\lceil h/q\rceil$ 已由 (IX.18) 取得前 $h$ 项之和。若 $s=\min(\ell,h)>0$，前 $s$ 项严格为正，故当 $kq<s$ 时至少遗漏第 $kq+1$ 个严格正项，而当 $kq\geq s$ 时所遗漏的前 $h$ 项全为零。这给最小预算；$s=0$ 时空字已足够。由 (IX.12)，$D-B_\infty=\sum_{v>h}a_v$，它为零当且仅当 $\ell\leq h$，包括 $h=0$ 和零差。$\square$
+
+## 47. 同址 FIB 相位的全部预算与尖锐混态见证
+
+**定义 67.1（全合法链上的旧盲对比）。** 固定 $n\geq3$，采用定义 55.1、假设 55.2 的整个 $\mathcal K_n$，保留 (VII.18) 的同一被动实帧 $D_n$、(VII.4) 位于物理位置对 $(1,3)$ 的同一正向相位，以及命题 59.1 的同一末端第一位置二值 PVM。以下下标 $n$ 的 $p$ 专指相位支撑秩，$r$ 专指读口秩：
+
+$$
+\begin{aligned}
+d&=F_{n+2},&
+p&=\operatorname{rank}(n_1n_3|_{\mathcal K_n})=F_{n-2},&
+r&=\operatorname{rank}(n_1|_{\mathcal K_n})=F_n,\\
+\widetilde\rho&=D_n^\dagger\rho D_n,&
+\widetilde\sigma&=D_n^\dagger\sigma D_n,&
+\widetilde\rho-\widetilde\sigma&=iA,\quad A\in M_d(\mathbb R),\quad A^T=-A.
+\end{aligned}
+\tag{IX.24}
+$$
+
+仅对满足最后一项的旧盲密度态对定义 $B_{n,k}$，即在至多 $k$ 次实际 $S_{\star,n}$、其余为任意有限纯翻转字的菜单中，最大化该同一终端事件的概率差绝对值。$D_n$ 只改变坐标，不能作为门；$n_1n_3$ 和 $n_1$ 均与它对易。定理 64.1 的 (IX.1) 已给纯翻转字恰为 $D_nSO(d)D_n^\dagger$，故这里的任意实控制均有有限原生翻转字实现，不消耗任何相位调用。相位计数使用 (IX.1) 的零相位精确实现；(IX.2) 的无预算通用性不提供给定调用预算的结论。
+
+整个输入域是这些全链密度态对，不限定到交替编码或五维窗口，不另加辅助、参考或 CPTP 合并权限。若固定历史 $h_0$ 已给非空来源纤维 $X_{h_0}$，可将态对限于其中相容来源的端口态；优化字依赖这两个候选及共同已得记录，不能依赖未知来源标签。原生制备、取得记录的成本及一次读口不能直接返回精确概率的边界，与定义 60.1 相同。
+
+**定理 67.2（FIB 旧盲态对的精确调用前沿）。** 对定义 67.1 的每个 $n\geq3$、每个旧盲态对和每个整数 $k\geq0$，以 (IX.12) 的 $a_v$ 表示其被动实帧差的权重，则
+
+$$
+\boxed{B_{n,k}(\rho,\sigma)
+ =\sum_{v=1}^{\min(kF_{n-2},F_n)}a_v}.
+\tag{IX.25}
+$$
+
+每个最大值均由同一物理相位安装上的有限字达到。若 $\ell=\#\{v:a_v>0\}$，取得无限预算固定读口值的最小调用数为
+
+$$
+B_{n,\infty}=\sum_{v=1}^{F_n}a_v,
+\qquad
+K_{n,\mathrm{sat}}
+ =\left\lceil\frac{\min(\ell,F_n)}{F_{n-2}}\right\rceil;
+\qquad
+\exists k:\ B_{n,k}=D
+\ \Longleftrightarrow\ \ell\leq F_n.
+\tag{IX.26}
+$$
+
+零差的最小调用数为零。对整个旧盲输入域取最坏情形，固定读口饱和所需的调用数恰为
+
+$$
+\max_{\rho,\sigma\text{ 旧盲}}K_{n,\mathrm{sat}}
+ =\left\lceil\frac{F_n}{F_{n-2}}\right\rceil
+ =\begin{cases}2,&n=3,\\3,&n\geq4.\end{cases}
+\tag{IX.27}
+$$
+
+**证明。** 相位秩与读口秩分别复用定理 58.1 的 (VII.22) 及命题 59.1；有限实控制复用定理 64.1。Fibonacci 递推给
+$d-2r=F_{n-1}\geq F_{n-2}=p>0$，故 $r<d/2$，又 $p\leq r$，于是 $q=p$、$h=r$，恰满足定理 66.3 的维数条件。将该定理及推论 66.4 代入，得到 (IX.25)–(IX.26)。构造中的每个实控制用 (IX.1) 的有限纯翻转字替代；每个 $V_\alpha$ 仍只含一次位于 $(1,3)$ 的 $S_{\star,n}$，故实际调用数保持不变。
+
+最小调用公式至多为 $\lceil r/p\rceil$。下述命题 67.3 给出全部 $m=\lfloor d/2\rfloor$ 个权重严格为正的有效旧盲密度态对；$m\geq r$，故该对达到此调用数下界。最后 $n=3$ 时 $(r,p)=(2,1)$；$n\geq4$ 时
+$F_n=2F_{n-2}+F_{n-3}$ 且 $0<F_{n-3}\leq F_{n-2}$，所以 $2<r/p\leq3$，给 (IX.27)。这些比值只计相位调用，不给翻转脉冲数、持续时间或参数精度的界。$\square$
+
+**命题 67.3（尖锐统一系数、正交混态与八维例）。** 在定义 67.1 的输入域上，令 $m=\lfloor F_{n+2}/2\rfloor$、$t=\min(kF_{n-2},F_n)$，则最佳统一下界系数为 $t/m$：
+
+$$
+\frac{t}{m}D(\rho,\sigma)
+ \leq B_{n,k}(\rho,\sigma)\leq D(\rho,\sigma).
+\tag{IX.28}
+$$
+
+左侧系数对每个 $n,k$ 均尖锐，包括 $k=0$。特别地，对每个 $n\geq4$，都有支撑正交、$D=1$ 的旧盲混态对，在读口无限预算饱和后仍不能达到完整迹距离。
+
+**证明。** 当 $0<t<m$ 时，降序非负权重满足
+$(m-t)\sum_{v\leq t}a_v\geq t\sum_{v>t}a_v$：将每个 $a_u\geq a_v$（$u\leq t<v$）求和即可。整理得前 $t$ 项之和至少为 $t/m$ 倍总和；$t=0,m$ 直接成立。结合 (IX.25) 得 (IX.28)。
+
+为给出有效密度态见证，在被动实帧内任取 $m$ 个两两正交实平面，实正交单位基为 $e_v,f_v$，定义
+
+$$
+\begin{aligned}
+|\psi_v^\pm\rangle&=\frac{e_v\mp i f_v}{\sqrt2},\\
+\widetilde\rho_\pm
+ &=\frac1m\sum_{v=1}^{m}|\psi_v^\pm\rangle\langle\psi_v^\pm|,
+\qquad \rho_\pm=D_n\widetilde\rho_\pm D_n^\dagger,\\
+\widetilde\rho_+-\widetilde\rho_-
+ &=\frac{i}{m}\bigoplus_{v=1}^{m}
+           \begin{pmatrix}0&1\\-1&0\end{pmatrix}
+       \ \oplus\ 0_{d-2m}.
+\end{aligned}
+\tag{IX.29}
+$$
+
+每个符号下有 $m$ 个正交单位向量，故两算子均正、迹为一；两个符号的全部向量也互相正交。它们的实部同为
+$\frac1{2m}\sum_v(|e_v\rangle\langle e_v|+|f_v\rangle\langle f_v|)$，所以是旧盲态对。全部 $a_v=1/m$，$\ell=m$、$D=1$，由 (IX.25) 得 $B_{n,k}=t/m$；任何更大的统一系数在此失效。奇数维时未用的一维带零本征值，仍是同一 $d$ 维系统中的合法密度态。$n\geq3$ 时 $m\geq2$，因此这些态确为混态。$n\geq4$ 时 $d-2r=F_{n-1}\geq2$，所以 $m>r$，该见证的无限预算值 $r/m$ 严格小于一；$n=3$ 则 $m=r=2$，无限预算值为一。
+
+$n=4$ 时 $(d,p,r,m)=(8,1,3,4)$。在原合法基序中取
+$(e_1,f_1)=(|0000\rangle,|0001\rangle)$、
+$(e_2,f_2)=(|0010\rangle,|0100\rangle)$、
+$(e_3,f_3)=(|0101\rangle,|1000\rangle)$、
+$(e_4,f_4)=(|1001\rangle,|1010\rangle)$，并按 (IX.29) 先在被动实帧中定义态再共轭回物理坐标。八个字恰为全部合法长度四链，故这个选择确有四个完整实平面。此符号态对满足
+
+$$
+D(\rho_+,\rho_-)=1,
+\qquad
+B_{4,k}(\rho_+,\rho_-)
+ =\begin{cases}
+0,&k=0,\\
+1/4,&k=1,\\
+1/2,&k=2,\\
+3/4,&k\geq3.
+\end{cases}
+\tag{IX.30}
+$$
+
+因此它也同时给出一次相位不能合并全部四个反对称平面、三次达到固定读口上限但仍非一次完美区分的见证。完整迹距离为一与当前固定秩读口的最大对比为 $3/4$ 相容。定理 60.2 的常数针对全部密度态对；(IX.28) 的常数针对本节旧盲子域，两者的量词域不同。$\square$
+
+## 追加锚（本行以下为增补区）
