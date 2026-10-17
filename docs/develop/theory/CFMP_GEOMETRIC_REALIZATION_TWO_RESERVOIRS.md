@@ -3795,3 +3795,286 @@ Hence every U occurrence is genuine and its original edge equation is
 its genuine 2*pi budget. In particular U cannot be an axis of the source
 flat. The proof preserves original occurrences and the whole remaining
 u>m branch is still open.
+
+
+## 205. Hypotheses and existing consequences
+
+Retain the actual finite paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths and original 2*pi
+edge equations. There are exactly five reservoirs and a nonempty flat set.
+Choose a maximal pi-selected reservoir M, its source sigma with pair {C,D},
+and its escape tau=(Z,M,C,D,M,C). Write H={M,C,D,Z,U} and cosh values
+m,c,d,z,u. Use the already established consequences
+
+ m>1+c+d, c,d<m-2, z>m, u>m, p_M=1.
+
+All five reservoirs are genuinely witnessed, every flat selects its two
+axes, and neither Z nor U has any flat occurrence. The latter statement
+for Z is the five-witness result; for U it is the small-fifth exclusion.
+For every special edge with fixed reservoir pair {A,B}, its value obeys
+s<1+a+b. These statements hold for actual labels and slots.
+
+## 206. Unique actual flat owner
+
+**Proposition 206.1.** Sigma is the only flat tetrahedron. Every flat has fixed
+reservoir pair {C,D}, and its unique M slot is one axial pi occurrence.
+The other source axis O is C, D, or a special label.
+
+Consider any flat. Neither Z nor U occurs in it, so its two distinct
+reservoir labels form one of {M,C}, {M,D}, or {C,D}. All its axes are
+among M,C,D and special labels. For an axis that is special, the barrier
+uses this same fixed pair, because a special edge occurs only axially
+and actual face transport keeps its reservoir pair fixed.
+
+If the pair is {M,C} or {M,D}, each H axis has value at most m, strictly
+below 1 plus the sum of that pair's values. Every special axis has the
+same strict upper bound. If those axis values are r,o and the pair
+values are a,b, then (r-1)*(o-1)<(a+b)^2. This contradicts axial flatness.
+
+Thus every flat has pair {C,D}. An axis labeled C or D is strictly below
+1+c+d, as is every special axis. If neither axis were M, the same
+product contradiction would apply. Hence every flat has at least one
+axial M slot, necessarily pi-selected. The complete M edge has exactly
+one flat pi occurrence. Consequently there is exactly one flat owner,
+namely sigma, and it has exactly one M axis. Its other axis is not M,
+not Z or U, and is therefore C,D or special, as asserted. Repeated
+owners, repeated labels and self-gluings do not affect the occurrence
+count: two flat owners or two M axes would give two distinct pi slots.
+
+## 207. Exact source-star budgets
+
+Every slot outside sigma is genuine. There are three alternatives.
+
+If O=C, sigma has one M pi slot, one C pi slot, two transverse C zero
+slots, and two transverse D zero slots. Thus M has degree(M)-1 genuine
+slots with total angle pi; C has degree(C)-3>=3 genuine slots with total
+angle pi; and D has degree(D)-2>=4 genuine slots with total angle 2*pi.
+All Z, U and special slots are genuine.
+
+If O=D, interchange C and D in that statement. In particular D has
+at least three genuine slots with budget pi, and C has at least four
+with budget 2*pi.
+
+If O=S is special, sigma has one M pi slot, one S pi slot, and two zero
+slots on each of C,D. M and S each have at least five genuine slots
+with budget pi. C and D each have at least four genuine slots with
+budget 2*pi. Every other special edge, and Z and U, is wholly genuine.
+
+All counts are original slot multiplicities. In particular, an axis
+repeated as a transverse reservoir in sigma contributes all three
+original slots to its degree, although only one is pi-selected.
+These statements reduce the possible flat set and record exact remaining
+capacities. They do not exclude any of the three source alternatives or
+prove five-reservoir realization.
+
+
+## 208. Exact hypotheses and reused inputs
+
+Retain the finite actual paired-frame quotient, complete circular edge links,
+minimum degree six, common positive generalized lengths and all original
+2*pi edge equations. Suppose exactly five reservoirs and a nonempty flat set.
+Use the maximal-selected escape tau=(Z,M,C,D,M,C), with H={M,C,D,Z,U}.
+Write cosh values m,z,c,d,u. The proved five-label results give
+
+ m>1+c+d>3, c,d<m-2, z>1+m+c, u>m,
+ p_M=1, p_Z=p_U=0.
+
+All five labels are genuinely witnessed. By Proposition 206.1, sigma is the only flat owner. Its frame is
+(M,C,D,O,C,D), where O=C,D, or a special label S. Every other owner is
+genuine. Put P={M,Z,U}; its total genuine angle capacity is 5*pi.
+
+We reuse the exact paired response and flat-product formulas of §95,
+the special fixed-pair barrier §112.1, and the response transfer proof
+of §116.1. In particular, for a genuine frame (r,a,b,o,a,b),
+
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ tan(theta_r/2)^2=(r-1)/(r+1)*J/L,
+ (beta_a+beta_b)/2=atan(lambda_r*cot(theta_r/2)),
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b).
+
+If a>b, the individual a angle is
+ atan(A*t)+atan(B*t), t=cot(theta_r/2),
+ A/B=[sqrt(a^2-1) +/- sqrt(b^2-1)]/(a+b)*sqrt((r-1)/(r+1)).
+For A,B>0 with A+B>=1 this gives theta_r+2*beta_a>pi.
+
+## 209. At most two genuine axial M owners have pair {C,D}
+
+**Lemma 209.1.** There are at most two genuine owners with an axial M slot and
+fixed pair {C,D}, in the entire quotient, not merely one axial run.
+
+Such an owner cannot have two M axes: since m>1+c+d, it would be flat.
+Thus its axial M occurrence uniquely identifies it. Suppose there are
+g>=3 such owners, with axial angles theta_i. Their sum is at most pi.
+The proof of §116.1 uses only the existence of one angle <=pi/3,
+not equality of the entire sum to pi. It therefore gives
+
+ lambda_M^2>1/3, lambda_O^2>1/7,
+
+where lambda_M and lambda_O use the source pair {C,D}. The second bound
+uses the actual source product (m-1)*(o-1)>=(c+d)^2. Explicitly, putting
+K=(sqrt(c^2-1)+sqrt(d^2-1))^2/(c+d)^2 and T=(m-1)/(m+1), the positive
+remainder identity of §96 gives K*T>1/3 and
+F(m)=2*(m-1)/(c+d)^2-T*(c-d)^2/(c+d)^2<1/3.
+Then K>1/3 and
+ lambda_O^2>=K/[1+2*(m-1)/(c+d)^2]>1/7.
+
+The function b_lambda(theta)=atan(lambda*cot(theta/2)) is positive,
+strictly decreasing and strictly convex for 0<lambda<1. Jensen gives
+ sum_i b_lambda_M(theta_i)>=g*b_lambda_M(pi/g)
+                              >=g*b_lambda_M(pi/3)>g*pi/4.
+Each of these distinct owners contributes 4*b_lambda_M(theta_i) in
+its four original C/D transverse slots. Their total exceeds 3*pi.
+
+If O=C or D, the entire genuine C/D budget is exactly 3*pi, contradiction.
+If O=S is special, its complete star has h=degree(S)-1>=5 genuine slots
+of total angle pi, all with fixed pair {C,D}. The bound lambda_S^2>1/7
+and Jensen imply
+ sum_j b_lambda_S(phi_j)>=h*b_lambda_S(pi/h)
+                           >=h*b_lambda_S(pi/3)>h*pi/6.
+An actual owner has at most two S slots, so the C/D transverse expense
+of these owners is at least 2*sum_j b_lambda_S(phi_j)>pi.
+No such genuine owner belongs to the axial M set: one containing both
+M and S has exactly the six source lengths and is flat. The disjoint
+C/D expenses would exceed 3*pi+pi=4*pi, contradiction. This proves the
+lemma with repeated S axes fully counted.
+
+## 210. Two distinct non-high-pair owners consume more than 2*pi
+
+**Lemma 210.1.** There is an actual genuine owner kappa_owner, distinct from
+tau, whose fixed reservoir pair is not {Z,U}, and whose P-angle expense
+exceeds pi. Tau also has P expense exceeding pi. Hence these two owners
+reserve more than 2*pi of the complete 5*pi capacity.
+
+Consider the maximal axial M run containing sigma. It keeps pair {C,D}
+by actual face transport. Section 209 shows that it has at most two genuine
+slots, each in a distinct owner, in addition to its one flat M slot.
+It cannot be the whole M circle, because degree(M)>=6.
+
+At either transverse boundary M slot, the owner has frame
+ (W,M,A,B,M,A), {A,B}={C,D}.
+Its two transverse M angles are positive and at most pi/2, since their
+sum is part of the total genuine M budget pi. At w0=1+m+a its M cosine
+numerator equals
+ [a+m*(1+m+a)]*(1+a+b-m)<0.
+Strict increase implies w>w0. W cannot be special by its fixed-pair
+barrier, and cannot be M,C,D. Thus W is Z or U. The positive response
+parameters for the axial W slot and transverse M angle have sum >1:
+a<m-2 and w>m+2 give the strict bound of §168. Consequently the original
+P expense theta_W+2*beta_M exceeds pi. Each boundary owner's pair
+{M,A} is not {Z,U}.
+
+One of the two boundary owners is the chosen tau. If the other is
+distinct, it is the required kappa_owner. Suppose both belong to tau.
+Then the two source-run boundary slots are tau's two transverse M slots.
+Since the source run plus tau has at most 1+2+2=5 M slots, degree(M)>=6
+forces a new owner on the other arc of the complete M circle. The first
+such owner is across a remaining tau face with labels {M,Z,C}; self
+pairing cannot supply a new original M slot. The target possibilities
+are exactly
+ (i) axial Z, pair {M,C};
+ (ii) axial M, pair {Z,C};
+ (iii) axial C, pair {M,Z}.
+Its pair differs from {C,D} and {Z,U}, and the owner is neither sigma
+nor a source-run axial M owner nor tau.
+
+For (i), theta_Z+2*beta_M>pi by §168; for (ii), theta_M+2*gamma_Z>pi
+by §169, using c<m-2 and z>m+2. Both are actual P expenses.
+For (iii), let the other axis value be q, and put k=z+m and h=z-m.
+The increasing Z numerator at q0=1+z+m is not needed. Instead, if q is
+special then q<q0; if q is M,C,D,Z then q<q0. If q=U>=q0, the owner
+has an axial U and reservoir pair {M,Z}, all three values greater than
+three; the final paragraph below directly proves P expense >pi.
+If q=U<q0 the following computation applies as well.
+
+With r=c, q<k+1, the exact L,J satisfy
+ L-2*J>k^2-(3*c+1)*k-4*(c+1)+2*h^2>0.
+For the last strict inequality, set z=m+c+1+t, with t>0. At t=0 the
+polynomial is 2*(2*m^2-m*c+m-c-1)>0, since c<m-2. Its derivative in t
+is 4*m+3*c+5+6*t>0. Also kappa^2>8/9 because z,m>3. Thus
+(beta_M+gamma_Z)=2*atan(kappa*sqrt(L/J))>pi/2, and its four transverse
+P slots already consume more than pi.
+
+For the deferred case, or any genuine owner with a P axis r and both
+reservoir labels in P, all r,a,b exceed three. Therefore kappa>sqrt(8/9)
+and lambda_r>2/3>1/2. For t=cot(theta_r/2),
+ 2*atan(lambda_r*t)>atan(t):
+if the left side is at least pi/2 this is immediate; otherwise its
+tangent is 2*lambda_r*t/(1-lambda_r^2*t^2)>t.
+Hence theta_r+2*(beta_a+beta_b)>pi. These are five original P slots,
+even when the axial label repeats a transverse label. This completes
+all target cases and proves the second-reserved-owner lemma.
+
+## 211. No special edge has fixed pair {Z,U}
+
+**Lemma 211.1.** Every owner with reservoir pair {Z,U} has both axes in H.
+
+Suppose a special edge e has this pair. All its owners are genuine,
+since Z and U never occur in a flat. Write a=max(z,u), b=min(z,u),
+k=a+b>6, q=x_e>1, and use its complete original star of n>=6 slots.
+Both a,b exceed three. Its total angle is 2*pi. Every other axis r is
+<1+k: all H values are <=a, and special axes obey their fixed-pair
+barrier. Set K=(sqrt(a^2-1)+sqrt(b^2-1))^2/k^2>8/9 and
+lambda^2=K*(q-1)/(q+1).
+
+The star owners have fixed pair {Z,U}, so are disjoint from the two
+reserved owners of Section 210. Their P expense is less than 3*pi; in
+particular their total Z/U transverse expense is less than 3*pi.
+Counting a repeated e axis at most twice, and then using Jensen, gives
+
+ 3*pi> transverse Z/U expense
+      >=2*sum_i b_lambda(theta_i)
+      >=2*n*b_lambda(2*pi/n)>=12*b_lambda(pi/3).
+
+Thus lambda^2<1/3, and K>8/9 implies q<11/5.
+For any of these owners, the cosine of its axial e angle is N/D, where
+ N=2*a*b+q*(a^2+b^2)-(q^2-1)*r,
+ D=q^2+a^2+b^2+2*q*a*b-1>0.
+Using r<1+a+b and writing a=3+x,b=3+y, with x,y>0, yields
+
+ 2*N-D>
+ -3*(5*q-11)*(q+1)+(6*q+8-2*q^2)*(x+y)
+ +(2*q-1)*(x-y)^2+(2*q+2)*x*y>0.
+
+Every coefficient displayed is positive for 1<q<11/5. Hence
+0<theta_e<pi/3. Also, with L=k^2-(q-1)*(r-1) and
+J=(q+1)*(r+1)-(a-b)^2,
+
+ K*L-J>(8/9)*L-J
+ > (8/9)*k^2-((17*q+1)/9)*k-2*(q+1)+(a-b)^2
+ > (8/45)*(k-6)*(5*k+6)>0.
+
+The last step uses q<11/5 and discards the nonnegative square. Therefore
+the transverse sum beta_a+beta_b=2*atan(sqrt(K*L/J)) exceeds pi/2.
+For each actual e occurrence,
+ theta_e<(2/3)*(beta_a+beta_b).
+If an owner has multiplicity w=1 or2 in the e star, its w copies of the
+transverse sum are at most its actual two copies. Summing gives
+ 2*pi<(2/3)*(total original transverse Z/U expense)<2*pi,
+a contradiction. Thus no such special edge exists.
+
+## 212. At most two actual owners have reservoir pair {Z,U}
+
+**Proposition 212.1.** There are at most two genuine owners with fixed pair
+{Z,U} in the entire quotient.
+
+By Section 211 all their axes lie in H. If an axis lies in P, the five-slot
+argument at the end of Section 210 gives P expense >pi. If both axes lie
+in {C,D}, put a=max(z,u), b=min(z,u)>m>3 and let their axis values be
+r,o. Then r<=b,o<=a and
+
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0.
+
+Together with K>8/9, this shows beta_Z+beta_U>pi/2, so again the four
+transverse P slots consume more than pi. The two distinct reserved
+owners of Section 210 have other fixed pairs and consume more than 2*pi.
+Three pair-{Z,U} owners would therefore exceed P's genuine capacity
+5*pi. At most two can exist.
+
+The result bounds the actual high-pair core, not merely its number of
+labels, and Section 209 uses the entire opposite source star. It leaves
+owners where just one high reservoir is transverse and another is axial,
+and both relative orderings of Z and U, for further analysis. It does
+not exclude the remaining five-reservoir configurations.
