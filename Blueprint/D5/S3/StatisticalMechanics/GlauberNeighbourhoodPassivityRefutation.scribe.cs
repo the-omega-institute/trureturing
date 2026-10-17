@@ -25,7 +25,7 @@ internal sealed class GlauberNeighbourhoodPassivityRefutationDocument : IScribeD
                 "For state i at step k, the Gibbs weights are evaluated at beta(k + 1), while the population "
                     + "differences use p(k). The sum runs over the states adjacent to i and is the ratio-weighted "
                     + "passivity expression in Eq. (41). The five reused annealing definitions are displayed below.",
-                AssessedProvenance.FromRepo(Source),
+                AssessedProvenance.FromLiterature(Source),
                 new DocumentBlock.DisplayFormula(RegularNeighborhoodFormula()),
                 new DocumentBlock.DisplayFormula(GibbsFormula()),
                 new DocumentBlock.DisplayFormula(EdgeWeightFormula()),
