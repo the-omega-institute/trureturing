@@ -1897,3 +1897,977 @@ joint-limit and native obligations.
 [DetteMelas]: https://arxiv.org/abs/1105.3575v1
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Quantitative first activation and its selected equations
+
+**Convention 18.1 (conditional scope and canonical data).** Sections 18–25
+retain the complete original experiment and every condition in §§1–3.
+In particular the original source root, ranks, root TP identity, HALF
+complete stopped-cq minimax/error identification, and JR34–42's sharp
+joint-cost and unaveraged all-error-optimizer equality identification
+remain the named premises of Convention 1.1. The necessary reduction is
+FA69, FA72 and FA87, for arbitrary complex encoders and hidden Kraus
+multiplicity in the original finite/countable and stipulated measurable
+finite-fibre class. None of these premises is replaced by a restriction
+to the displayed attainer. The additional spectral/strict-decrease
+supplier used in RC58.4/RC.7 retains its separate hypotheses; sharp-cost
+rigidity alone does not establish that supplier. The quantitative
+contact argument below uses the full attached moment correspondence,
+not those additional residual-optimizer signs.
+
+Use the source dictionary AC.6–.14, the eight moments AC.46, and the
+polynomial numerators AC.81–.82. In particular $N_{ij}$ is the height
+matrix, $G=LNL$, $L=\operatorname{diag}(s_0,1,1)$ and
+$M_2=\operatorname{diag}(m_1,m_2)$. Physical failure whitening and
+the spectral quantities $d_f,z_f,L_f$ are exactly AC.8. The complete
+source comparison expressions and all nine varying source coordinates
+are [FA94][FA] and RC58.3. Only at the source root are they asserted
+to define the original normalized experiment.
+
+Let $\bar X$ be FA94's exact eighteen-entry rational centre, let
+$\varrho$ be FA95's eighteen strip radii, and let $R$ be **that same**
+FA95 rational $18\times18$ preconditioner. These specified data,
+including all 324 entries of $R$, are used without taking a numerical
+inverse or introducing a second matrix specification. Set
+
+$$
+I=[9999/10,10001/10],\qquad
+\mathcal B_X=\prod_{j=0}^{17}[\bar X_j-\varrho_j,\bar X_j+\varrho_j],
+\qquad \|v\|_\varrho=\max_j|v_j|/\varrho_j.
+\tag{AC.92}
+$$
+
+This eighteen-coordinate contact root is distinct from the original
+nine-coordinate CG source root. A statement about uniqueness below
+means uniqueness in $\mathcal B_X$ for this selected contact system.
+
+**Definition 18.2 (report normalization and selected root).** Write
+$u=\cos\phi$, $v=\sin\phi$, $z=u/\sqrt\alpha$,
+$w=v/\sqrt\beta$, and set
+
+$$
+k_u=\sum_i p_i|u_i|,\qquad
+C_s=s_0/\sqrt\alpha,\qquad s_\lambda=C_s k_u.
+\tag{AC.93}
+$$
+
+Thus $k_u=\sqrt\alpha\,k_z$, where $k_z=\sum p_i|z_i|$
+is the contrast moment in AC.11. Here $\lambda$ multiplies $|u|$;
+the corresponding multiplier of $|z|$ is $\lambda\sqrt\alpha$,
+and the multiplier of physical requested contrast is
+$\lambda/C_s=\lambda\sqrt\alpha/s_0$. None is a CG root coordinate.
+The five contacts have the following fixed charts and signs:
+
+| $i$ | Sheet $\eta_i$ | Height sign $\epsilon_i$ | Maximum-report sign $\sigma_i$ | Chart base |
+| --- | --- | --- | --- | --- |
+| $0$ | $0$ | $+$ | $+$ | $0$ |
+| $1$ | $0$ | $+$ | $-$ | $\pi$ |
+| $2$ | $0$ | $-$ | $-$ | $\pi$ |
+| $3$ | $1$ | $+$ | $+$ | $0$ |
+| $4$ | $1$ | $-$ | $+$ | $3\pi/2$ |
+
+For $\phi=b^{\rm chart}+2\arctan x$, put $r=1+x^2$ and
+use $(U,V_c)=(1-x^2,2x)$, $(-1+x^2,-2x)$ or
+$(2x,-1+x^2)$ in the respective charts. With the numerator
+dictionary AC.81–.82, define
+
+$$
+\begin{gathered}
+D_0=r^2,\quad D_1=D_cr^2,\qquad
+W_0=rU,\quad W_1=D_crU,\\
+P_{\eta,\epsilon,\sigma;\lambda}
+ =d\cdot\Gamma_\eta^{\rm num}
+  -\epsilon H_\eta^{\rm num}-\lambda\sigma W_\eta.
+\end{gathered}
+\tag{AC.94}
+$$
+
+In particular $W_\eta=D_\eta u$. The ordered equations
+$\mathcal F(X;t,\lambda)=0$ are the eight components of
+$\sum_i p_i\Gamma_{\eta_i}(\phi_i)-B(t)$, followed, in increasing
+$i$, by
+
+$$
+P_{\eta_i,\epsilon_i,\sigma_i;\lambda}(x_i)=0,\qquad
+P'_{\eta_i,\epsilon_i,\sigma_i;\lambda}(x_i)=0.
+\tag{AC.95}
+$$
+
+The unknown order is $(x_0,\ldots,x_4,p_0,\ldots,p_4,d_0,\ldots,d_7)$.
+All denominators are positive on the real charts. At a zero, clearing
+them preserves value and stationarity exactly. Pure and saturated
+degrees are at most four and eight. Their homogeneous values also
+specify each chart's point at infinity.
+
+## 19. A uniform rational multiplier rectangle
+
+**Lemma 19.1 (weighted perturbation margins).** On the entire source
+comparison box, $t\in I$ and $X\in\mathcal B_X$,
+
+$$
+\|R\partial_\lambda\mathcal F\|_\varrho<4\cdot10^9,
+\qquad
+\|R D_X\partial_\lambda\mathcal F\|_\varrho<10^6.
+\tag{AC.96}
+$$
+
+Proof. The following exact rational bounds use FA95's row and column
+order. In the last column $L_i>\sum_{j=8}^{17}|R_{ij}|$; the first
+eight rows of $\partial_\lambda\mathcal F$ vanish.
+
+| $i$ | Strict lower bound for $\varrho_i$ | $L_i$ |
+| --- | --- | --- |
+| $0$ | $6\cdot10^{-6}$ | $5$ |
+| $1$ | $10^{-5}$ | $70$ |
+| $2$ | $5\cdot10^{-6}$ | $32$ |
+| $3$ | $2\cdot10^{-7}$ | $2$ |
+| $4$ | $3\cdot10^{-7}$ | $3$ |
+| $5$ | $9\cdot10^{-6}$ | $1$ |
+| $6$ | $10^{-6}$ | $43$ |
+| $7$ | $6\cdot10^{-6}$ | $44$ |
+| $8$ | $5\cdot10^{-6}$ | $3/50$ |
+| $9$ | $8\cdot10^{-6}$ | $13/100$ |
+| $10$ | $8\cdot10^{-7}$ | $2$ |
+| $11$ | $6\cdot10^{-8}$ | $2$ |
+| $12$ | $2\cdot10^{-7}$ | $2$ |
+| $13$ | $8\cdot10^{-7}$ | $2$ |
+| $14$ | $2\cdot10^{-8}$ | $2$ |
+| $15$ | $3\cdot10^{-3}$ | $260$ |
+| $16$ | $2\cdot10^{-3}$ | $350$ |
+| $17$ | $10^{-3}$ | $160$ |
+
+Each last entry is obtained by summing ten absolute rational entries
+of the specified $R$; it involves no new inverse. The same radii give
+
+$$
+\begin{gathered}
+\max_{i<5}\varrho_i<2\cdot10^{-5},\qquad
+\max_{5\le i<10}\varrho_i<10^{-5},\\
+\sum_{i=10}^{14}\varrho_i<3\cdot10^{-6},\qquad
+\sum_{i=15}^{17}\varrho_i<8\cdot10^{-3}.
+\end{gathered}
+\tag{AC.97}
+$$
+
+For coefficient $\ell^1$ norms in each of the three needed charts,
+the positive-pivot source enclosures give
+
+$$
+\|D_c\|_1<1/2,\quad \|N_c\|_1<1/25,\quad
+\|L_c\|_1<3/10,\quad \|F_c\|_1<1/4.
+\tag{AC.98}
+$$
+
+These follow directly, for example, from the rational relaxations
+$0.98<h_0<0.99$, $0.70<h_1<0.71$, $0.80<h_2<0.81$,
+$0.065<a<0.066$, $0.145<b_{\rm src}<0.146$,
+$0.015<c_{\rm src}<0.016$, $0.098<d_{\rm src}<0.099$,
+$0.87<\alpha<0.88$, $0.12<\beta<0.13$,
+$0.125<s_0<0.126$ and $|G_{ij}|<0.003$.
+The coefficient norms of the first five moment numerators are at
+most four on the pure sheet and two on the saturated sheet; the last
+three saturated norms are at most $4/25$. Consequently
+$\|W_\eta\|_1\le4$, and for the contact coordinates $|x_i|<0.3$,
+
+$$
+|W_\eta|,|W'_\eta|<32,\qquad |W''_\eta|<224.
+\tag{AC.99}
+$$
+
+Indeed their degrees are at most eight and $|x|<1$; derivative
+coefficient sums give these conservative bounds. The weighted row
+bounds in AC.96 are bounded respectively by
+$\max_i32L_i/\varrho_i$ and
+$\max_i224L_i\max_{j<5}\varrho_j/\varrho_i$.
+Substitution of the displayed rational bounds proves AC.96.
+$\square$
+
+**Theorem 19.2 (selected analytic root and displacement).** For every
+$t\in I$, $0\le\lambda\le10^{-12}$ and each source comparison
+point, AC.95 has a unique root in $\mathcal B_X$. It is real analytic
+in the parameters on their analytic domains, with local extensions
+at the rectangle endpoints, and satisfies
+
+$$
+\|\partial_\lambda X(t,\lambda)\|_\varrho<5\cdot10^9,
+\qquad
+\|X(t,\lambda)-X(t,0)\|_\varrho<5\cdot10^9\lambda
+\quad(\lambda>0).
+\tag{AC.100}
+$$
+
+At $\lambda=0$ the displacement is zero. These are contact-root
+statements, not source-root or off-root TP assertions.
+
+Proof. FA96's correlated-parameter rational certificate for
+$T_0(X)=X-R\mathcal F(X;t,0)$ gives self-map radius ratio $<3/4$
+and weighted derivative norm $<1/100$. Its centre residual is
+preconditioned before taking the common $t$ interval; in particular
+the two target derivative rows are $\mu/t^2$ and $\alpha V/t^2$.
+No independent copies of that parameter are introduced. By AC.96,
+$T_\lambda=X-R\mathcal F(X;t,\lambda)$ has
+
+$$
+\begin{aligned}
+T_\lambda(\mathcal B_X)&\subset
+\bar X+(3/4+4\cdot10^9\lambda)(\mathcal B_X-\bar X)
+\subset\bar X+(4/5)(\mathcal B_X-\bar X),\\
+\|D_XT_\lambda\|_\varrho
+&<1/100+10^6\lambda\le0.010001<1/50.
+\end{aligned}
+\tag{AC.101}
+$$
+
+The geometric-series contraction argument gives its unique fixed
+point. The Neumann series makes $RD_X\mathcal F$ invertible;
+since these are square matrices, both $R$ and $D_X\mathcal F$ are
+invertible, and a fixed point is a root. Differentiation gives
+$X_\lambda=-(D_X\mathcal F)^{-1}\mathcal F_\lambda$ and
+norm $<4\cdot10^9/(1-1/50)<5\cdot10^9$. Integration proves
+AC.100. The positive source pivots and denominators make the equations
+analytic. Their invertible Jacobian and common-box uniqueness identify
+the local implicit solutions on overlaps, including the endpoints.
+$\square$
+
+## 20. Every report half-circle and every intermediate height
+
+**Theorem 20.1 (uniform whole-circle certificate).** At the selected
+source-root family of Theorem 19.2,
+
+$$
+d(t,\lambda)\cdot\Gamma_\eta(\phi)
+\ge |H_\eta(\phi)|+\lambda|\cos\phi|
+\quad(\eta=0,1,\ \phi\in\mathbb R/2\pi\mathbb Z).
+\tag{AC.102}
+$$
+
+The maximum-report absolute-height gap has exactly the five specified
+zeros. The pure and saturated zero sets are disjoint. All used weights,
+height signs, report signs, curvatures and ranks remain nondegenerate
+throughout the closed parameter rectangle.
+
+Proof. Fix the same $t$ and compare the selected $\lambda$ root with
+its zero-multiplier root. The moment numerator bounds, AC.97 and
+AC.100 imply for every needed signed report polynomial
+
+$$
+\|P_\lambda-P_0\|_1<7\cdot10^6\lambda,
+\qquad \|P_0\|_1<20,
+\qquad |x_i(t,\lambda)-x_i(t,0)|<10^5\lambda.
+\tag{AC.103}
+$$
+
+For the first estimate an explicit majorant is
+$5\cdot10^9\lambda[4(3\cdot10^{-6})+(4/25)(8\cdot10^{-3})]
++4\lambda<7\cdot10^6\lambda$. All these are coefficient bounds,
+not evaluations on an angular grid.
+
+Let $\mathscr D_a^2$ mean twice taking the quotient upon division
+by $x-a$. The descending synthetic-division recurrence gives, for
+$|a|<0.3$,
+
+$$
+\|\mathscr D_a^2\|_{1\to1}\le(1-0.3)^{-2}<3,
+\qquad
+\|\partial_a\mathscr D_a^2\|_{1\to1}
+\le2(1-0.3)^{-3}<6.
+\tag{AC.104}
+$$
+
+At a designated contact the remainder is **exactly** zero by AC.95;
+an interval containing zero is not used as zero. For its deflated
+quotient, AC.103–AC.104 give
+
+$$
+\|Q_\lambda-Q_0\|_1
+<3(7\cdot10^6)\lambda+6(20)(10^5)\lambda
+<4\cdot10^7\lambda\le4\cdot10^{-5}.
+\tag{AC.105}
+$$
+
+FA97's exact double-root divisions and covering Bernstein partitions
+supply the following normalized margins at $\lambda=0$:
+
+| Sheet and height sign | Contact's chart | Quotient degree $n$ | Usable margin $m$ |
+| --- | --- | --- | --- |
+| Pure, $-$ | $\pi$ | $2$ | $9/1000$ |
+| Saturated, $+$ | $0$ | $6$ | $6\cdot10^{-5}$ |
+| Saturated, $-$ | $3\pi/2$ | $6$ | $4\cdot10^{-4}$ |
+
+More precisely, for both signs of the real chart, every Bernstein
+control of $(1-y)^nQ_0(\pm y/(1-y))$ on its specified closed
+dyadic leaf exceeds $m$. Hence
+$Q_0(x)>m(1+|x|)^n\ge m(1+x^2)^{n/2}$ on the full real axis.
+For any degree-at-most-$n$ perturbation,
+
+$$
+\frac{|(Q_\lambda-Q_0)(x)|}{(1+x^2)^{n/2}}
+\le\|Q_\lambda-Q_0\|_1.
+\tag{AC.106}
+$$
+
+The least margin $6\cdot10^{-5}$ exceeds $4\cdot10^{-5}$.
+Thus all three deflated quotients stay strictly positive, including
+their positive homogeneous leading coefficients at infinity. These
+prove the needed inequalities on the report half containing each
+contact.
+
+The two pure positive-height contacts require two report polynomials.
+At zero multiplier, in the base-zero chart,
+
+$$
+P_0(x)=a_*(x-a_0)^2(x-b_1)^2,\qquad
+0.0029<a_*<0.003,\quad |a_0|<0.025,\quad3.38<b_1<3.4,
+\tag{AC.107}
+$$
+
+where $a_0=x_0(t,0)$ and $b_1=-1/x_1(t,0)$.
+On $u\ge0$, base-zero $x\in[-1,1]$ covers the entire closed
+half-circle. Removing its designated contact leaves
+$Q_0=a_*(x-b_1)^2>1/100$. On $u\le0$ use the base-$\pi$
+coordinate $y\in[-1,1]$. The homogeneous change $x=-1/y$
+gives, after removal of the first contact in this chart,
+$\widetilde Q_0=a_*b_1^2(1+a_0y)^2>1/100$.
+AC.105 preserves both strict margins. At positive multiplier the
+two contacts have opposite reports and are not required to be zeros
+of one common polynomial.
+
+It remains to check the other report half for each of the three
+single-contact gaps. Their designated $|u_i|$ exceed $0.9,0.9,0.4$,
+respectively. If $\phi$ belongs to the opposite half-circle, elementary
+circle geometry gives
+
+$$
+\sin^2\frac{\phi-\phi_i}{2}\ge\frac{u_i^2}{4},\qquad
+\frac{(x-a)^2}{1+x^2}
+=(1+a^2)\sin^2\frac{\phi-\phi_i}{2}.
+\tag{AC.108}
+$$
+
+The saturated physical denominator
+$D_c/(1+x^2)^2$ is less than one by AC.98. Dividing the old
+polynomials by their positive denominators therefore gives opposite-half
+gaps strictly greater than $0.0018$, $0.00001215$ and $0.000016$.
+
+For an uncleared-gap perturbation use $0<c(h)<1/4$ on the whole
+circle. To verify this last bound write its numerator and denominator
+as affine functions of $u^2\in[0,1]$. At $u^2=1$ their bounds are
+$N<9/1000$, $D>3/80$, and at $u^2=0$ they are
+$N<7/1000$, $D>2/25$. Thus $4N<D$ at both endpoints and
+everywhere between. The physical gap change is at most
+
+$$
+5\cdot10^9\lambda
+ [3\cdot10^{-6}+(1/4)(8\cdot10^{-3})]+\lambda
+<1.1\cdot10^7\lambda\le1.1\cdot10^{-5}.
+\tag{AC.109}
+$$
+
+This is smaller than every opposite-half margin. All height signs
+and report signs, both sheets, both axes and every chart infinity
+have now been covered. The strict quotient and opposite-half bounds
+exclude all additional maximum-report zeros.
+
+For completeness, positive weights and the height signs follow on
+the same entire box from FA99's intervals. The angular curvatures of
+the perturbed signed gaps have the following strict rational relaxations:
+
+| Contact | Curvature interval |
+| --- | --- |
+| $0$ | $(0.0167826,0.0167865)$ |
+| $1$ | $(0.0167814,0.0167877)$ |
+| $2$ | $(0.0603113,0.0603166)$ |
+| $3$ | $(17.2374,17.2419)$ |
+| $4$ | $(0.85197,0.85710)$ |
+
+They are obtained from
+$(P_i''-\lambda\sigma_iW_i'')D_{\eta_i}^{-1}
+((1+x_i^2)/2)^2$ when $P_i$ here denotes the zero-report-term
+polynomial evaluated with the current $d$; equivalently use
+$P_{i,\lambda}''$ directly. The exact value and first derivative
+vanish at the selected root. The normalized pure frame
+$((1,u_i,v_i))_{i=0}^2$ has determinant in $(1.5240,1.5244)$,
+and the moment minor with rows $(1,u,v,\eta c,\eta cu^2)$
+lies in $(-0.015478,-0.015475)$. These are the normalized circle
+coordinates, before rescaling to $h_i$. Every pairwise normalized
+projection determinant has magnitude $>0.0459$. Consequently the
+five weight columns are independent, the pure Gram has rank three,
+and the two saturated rank-one physical effects have rank-two sum.
+No zero weight, height zero, axis contact or line collision occurs.
+$\square$
+
+**Corollary 20.2 (global original upper bound).** Let $Y,Z_f$ be
+the physical matrices AC.64–.65 evaluated at the selected $d(t,\lambda)$;
+in particular $Z_f$ includes the factor $1/t$. Then
+$dB=\operatorname{tr}Y+\operatorname{tr}(Z_fM_2)$ and every
+admitted original weak competitor obeys
+
+$$
+T_{\rm actual}\le\frac12
+ [H_0+dB-\lambda(\sqrt\alpha/s_0)s].
+\tag{AC.110}
+$$
+
+Proof. Substitution gives
+$d\Gamma_0=h^TYh$ and
+$d\Gamma_1=h^TYh+tc(h)\widehat n_h^TZ_f\widehat n_h$.
+For its **own** $b\in[0,tc(h)]$, the absolute-value convex chord
+therefore gives
+
+$$
+h^TYh+b\widehat n_h^TZ_f\widehat n_h
+\ge|\ell(h)+bf(h)|+\lambda|u|.
+\tag{AC.111}
+$$
+
+Integrate the full live Gram and physical failure covariance. Since
+the actual report satisfies $s\le\mathsf V(F)\le C_s\int|u|dp$,
+AC.110 follows with the original HALF factor. FA69/87 supplies this
+reduction for the full complex/multi-Kraus class, with each competitor's
+admitted time laws. No failure direction, low-sheet support or maximum
+live-height decomposition was imposed on that class. Supported-zero
+full encoders contribute zero supported height and are still admitted.
+$\square$
+
+## 21. A strictly positive response with an explicit lower bound
+
+**Theorem 21.1 (response throughout the rectangle).** For the selected
+root define $\chi(t,\lambda)=\partial_\lambda k_u(t,\lambda)$.
+Then
+
+$$
+\frac3{1000}<\chi(t,\lambda)<10^6
+\quad(t\in I,\ 0\le\lambda\le10^{-12}).
+\tag{AC.112}
+$$
+
+Proof. Write $y=(p_0,\ldots,p_4,\phi_0,\ldots,\phi_4)$ and
+$J=D_y\sum p_i\Gamma_{\eta_i}(\phi_i)$. The pure five-moment
+rank argument of Lemma 10.2 and the independent two saturated
+failure directions still apply. Thus $J$ has rank eight. If $\gamma_i$
+is the current signed-gap curvature, put
+
+$$
+D_y=\operatorname{diag}(0_5,p_0\gamma_0,\ldots,p_4\gamma_4),
+\quad \mathscr H=N_T^TD_yN_T,\quad
+q_T=N_T^T\nabla_y k_u,
+\tag{AC.113}
+$$
+
+where the two columns of $N_T$ span $\ker J$. Theorem 20.1 gives
+$\gamma_i>0$ and independent weight columns. Zero quadratic form
+on $\ker J$ therefore first forces every angle velocity to vanish
+and then every weight velocity to vanish. Hence $\mathscr H\succ0$.
+Differentiating stationarity and the moment equations gives
+$D_yy_\lambda+J^Td_\lambda=\nabla_y k_u$ and $Jy_\lambda=0$,
+so
+
+$$
+\chi=q_T^T\mathscr H^{-1}q_T.
+\tag{AC.114}
+$$
+
+This expression is invariant under every invertible change of the
+tangent basis. It remains to prove and quantify $q_T\ne0$.
+
+Fix the two saturated atoms. For the three pure atoms put
+$A_p=(\sqrt{p_i}h_i)_{i=0}^2$, $S_p=A_p^TQA_p$. Its diagonal
+is zero and
+$(S_p)_{ij}=\sqrt{p_ip_j}[1-\cos(\phi_i-\phi_j)]>0$ for $i\ne j$.
+Choose the skew matrix with
+$\Omega_{10}=1/(S_p)_{01}$,
+$\Omega_{20}=-1/(S_p)_{02}$,
+$\Omega_{21}=1/(S_p)_{12}$. Then $\dot A_p=A_p\Omega$
+preserves the pure Gram and each null constraint to first order.
+This is an integrable constrained tangent: the pure live moment map
+has rank five on six variables, so its fixed-moment level is a smooth
+one-manifold. Alternatively the map
+$O\mapsto\operatorname{diag}(O^TS_pO)$ has constant-sum image
+and rank-two derivative at identity, giving the same local null curve.
+Positive first-row entries recover positive weights and normalized $h_i$.
+Every failure moment stays fixed.
+
+For $a=x_0$, $b=x_1$, $c=x_2$ define
+
+$$
+\rho_1=\frac{a-b}{1+ab},\qquad
+\rho_2=\frac{a-c}{1+ac},\qquad q_{12}=\frac{1+bc}{c-b}.
+\tag{AC.115}
+$$
+
+On the entire box $0.02<a<0.03$, $-0.30<b<-0.29$,
+$0.12<c<0.14$, all displayed denominators are positive, and
+
+$$
+0.31<\rho_1<0.34,\quad-0.12<\rho_2<-0.08,\quad
+0<q_{12}<2.44,\quad\cos\phi_0>0.99,\quad\tan\phi_0<0.061.
+\tag{AC.116}
+$$
+
+Direct half-angle substitution in $\dot A_p$ gives the three angular
+velocities
+$(\rho_1-\rho_2)/p_0$, $(\rho_1+q_{12})/p_1$,
+$(q_{12}-\rho_2)/p_2$. The preserved first live moment and pure
+report signs $(+,-,-)$ give the exact rational identity
+
+$$
+\dot k_u=2\cos\phi_0(\rho_1-\rho_2)
+ (\rho_1+\rho_2-\tan\phi_0)>9/100.
+\tag{AC.117}
+$$
+
+For example its lower bound follows from
+$2(0.99)(0.31+0.08)(0.31-0.12-0.061)>0.09$.
+This also supplies a direct algebraic check of the orientation signs.
+The weight bounds $p_0>2/5$, $p_1>9/50$, $p_2>3/10$ and
+curvatures $\gamma_0,\gamma_1<1/50$, $\gamma_2<7/100$ give
+
+$$
+\dot y^TD_y\dot y
+<\frac1{50}\frac{0.46^2}{0.4}
+ +\frac1{50}\frac{2.78^2}{0.18}
+ +\frac7{100}\frac{2.56^2}{0.3}<5/2.
+\tag{AC.118}
+$$
+
+Cauchy–Schwarz for the positive tangent metric in AC.114 now yields
+$\chi\ge\dot k_u^2/(\dot y^TD_y\dot y)>(0.09)^2/2.5>3/1000$.
+For the upper bound, AC.100 and the exact radii give
+$|p'_i|<5\cdot10^4$, $|x'_i|<10^5$. Since $\sum p_i=1$
+and $|\partial_xu_i|<4$ in these charts,
+$\chi<5(5\cdot10^4)+4\cdot10^5<10^6$.
+$\square$
+
+## 22. The exact platform endpoint and an evaluated positive interval
+
+**Theorem 22.1 (first activation and quantitative right branch).**
+Under Convention 18.1 let
+
+$$
+s_c(t)=C_s k_u(t,0),\qquad
+T_c(t)=\tfrac12[H_0+d(t,0)\cdot B(t)].
+\tag{AC.119}
+$$
+
+For every $t\in I$, the original weak value equals $T_c(t)$
+exactly on $0\le s\le s_c(t)$. Every feasible larger weak request
+has strictly smaller value. The endpoint satisfies AC.85's enclosure.
+The map $\lambda\mapsto s_\lambda(t)$ is strictly increasing and
+covers
+
+$$
+\boxed{\quad s_c(t)\le s\le s_c(t)+3\cdot10^{-16}.\quad}
+\tag{AC.120}
+$$
+
+For each request in this interval take the unique
+$\lambda\in[0,10^{-12}]$ satisfying $C_s k_u(t,\lambda)=s$.
+Then the original value is
+
+$$
+\boxed{\mathcal T_{\log(1+t)}(s)
+ =\tfrac12[H_0+d(t,\lambda)\cdot B(t)-\lambda k_u(t,\lambda)].}
+\tag{AC.121}
+$$
+
+The system, root box and strictly monotone equation specify its value;
+there is no remaining optimization or unselected algebraic root.
+
+Proof. The eight exact equations restore both full moment identities
+in AC.11: the omitted live $v^2$ moment follows from $u^2+v^2=1$,
+and the omitted failure $v^2$ moment from $\mu=\alpha V+\beta W$.
+Positive weights and the five height signs turn contact equality into
+$\sum_i p_i|H_{\eta_i}|=dB-\lambda k_u$. Section 13's common
+instrument therefore matches AC.110 when its request is $s_\lambda$.
+
+At $\lambda=0$, any unconstrained original maximizer must have zero
+integrated nonnegative certificate slack. A strict intermediate
+$0<b<tc$ would require both endpoint gaps to vanish at that same
+direction. Their disjoint zero sets exclude this. Thus every supported
+nonzero low label belongs to the five listed endpoint directions.
+The independent five columns and positive matching weights fix their
+aggregate weights uniquely. Every top law has **available** contrast
+$s_c(t)$. It is feasible for every smaller request, whereas FA72's
+attainment prevents an equal value at any larger feasible weak request.
+This identifies the actual first endpoint, rather than merely a contrast
+of one displayed maximizer. The same argument works for countable
+slack sums and, only in the stipulated integral model, almost everywhere.
+
+The source bounds give $1/8<C_s<4/25$. Integrating AC.112 yields
+
+$$
+s_{10^{-12}}(t)-s_c(t)
+>\frac18\frac3{1000}10^{-12}
+=3.75\cdot10^{-16}>3\cdot10^{-16}.
+\tag{AC.122}
+$$
+
+Strict monotonicity gives unique inversion and AC.121. There is a
+feasible higher contrast even at the upper endpoint in AC.120.
+Together with $t_0<265<9999/10$ and $s_\lambda<s_0$, this is
+an original weak interior interval, not a maximum-contrast boundary.
+$\square$
+
+**Proposition 22.2 (actual reports and the isolated strong comparison).**
+On the platform the unique aggregate supported law has available
+contrast $s_c(t)$. A maximum-contrast report attains that value; a
+general optimizing report need only lie between the request and
+$s_c(t)$. On the active interval $s>s_c(t)$ every optimizer has
+available contrast and actual report contrast both equal to $s$.
+For this budget strip, every feasible larger request in the separate
+strong component also has value strictly less than $T_c(t)$.
+
+Proof. For $0\le s<s_c$, let $\gamma=s/s_c$. Independently
+flipping the maximum report with probability $(1-\gamma)/2$ gives
+$F_+^{(\gamma)}=\gamma F_+ +(1-\gamma)I_5/2$ and actual contrast
+$s$. Retaining the original acquisition record preserves its TV,
+cost, decoder and activity. If a report coin is retained as an extra
+actual outcome, it is counted as a split outcome; it is not a free
+hidden Kraus control. Maximum reports already attain the platform
+minimum alphabet because the original constraint is an inequality.
+Thus no claim that every platform optimizer reports $s_c$ is needed.
+
+On the active side $\lambda>0$. Equality in AC.110 forces
+$k_u=s/C_s$, and $s\le\mathsf V(F)\le C_sk_u$ forces actual
+equality. This is also the global platform argument of Theorem 8.1.
+
+For the remaining feasible requests reuse FA71.1: at finite activity
+the only feasible contrast in $[s_0,1]$ is $s^\dagger$; in particular
+$s_0$ and $1$ are infeasible. Let
+$v^\dagger=m_2d_{\rm src}^2h_1^2/(m_1b_{\rm src}^2h_2^2)$,
+$u^\dagger=\theta v^\dagger+\omega$ and
+$K_{\sigma\tau}=\sqrt{u^\dagger}D+
+\sigma\sqrt{v^\dagger}T+\tau S$ as in that supplier.
+Its two high differences are positive. With
+$H=(1-u^\dagger)N_{00}+(1-v^\dagger)N_{11}$, the supplied
+four-ray law and triangle inequality bound every such strong value by
+
+$$
+\frac12\left[H+\frac14\sum_{\sigma,\tau=\pm1}
+ |\operatorname{tr}(K_{\sigma\tau}\Delta K_{\sigma\tau}^\dagger)|
+ +d_f\right]
+<0.08569449380880800673445923202444725
+<0.10278797993678910558710493681877579<T_c(t).
+\tag{AC.123}
+$$
+
+The first strict rational comparison is substitution of the complete
+positive-pivot source box in the displayed expression; its four terms
+are $u^\dagger N_{00}+v^\dagger N_{11}+N_{22}
++2\sigma\sqrt{u^\dagger v^\dagger}N_{01}
++2\tau\sqrt{u^\dagger}N_{02}+2\sigma\tau\sqrt{v^\dagger}N_{12}$.
+The last lower bound is the whole-strip zero-multiplier value
+enclosure from FA's matching data. FA71.2 only subtracts further
+nonnegative capacity losses. This comparison uses the existing strong
+theorem at its scope; it transfers no weak alphabet count to that
+component. Requests above one are infeasible by the original sharp
+contrast law. $\square$
+
+## 23. Exact HALF loss, seam coefficient and a rational right-side point
+
+**Theorem 23.1 (quadratic loss and regularity).** On AC.120 put
+$v_*=dB-\lambda k_u$. Then
+
+$$
+\partial_\lambda v_*=-\lambda\chi,\qquad
+\frac{dv_*}{dk_u}=-\lambda,\qquad
+\partial_s\mathcal T_A(s)=-\frac{\lambda\sqrt\alpha}{2s_0}.
+\tag{AC.124}
+$$
+
+For each $t\in I$ the right expansion at its first seam is
+
+$$
+\mathcal T_A(s)=T_c(t)
+ -\frac{\alpha}{4s_0^2\chi(t,0)}(s-s_c)^2
+ +O((s-s_c)^3),
+\tag{AC.125}
+$$
+
+and throughout the explicitly covered strict right interval,
+
+$$
+10^{-5}(s-s_c)^2<T_c(t)-\mathcal T_A(s)
+<7000(s-s_c)^2.
+\tag{AC.126}
+$$
+
+The value is $C^1$ and not $C^2$ at this seam: its left second
+derivative is zero and its right second derivative is
+$-\alpha/(2s_0^2\chi(t,0))<0$.
+
+Proof. Differentiating the matched signed Lagrangian on the fixed
+moment level eliminates changes of weights, angles and multipliers
+by their exact stationarity and moment equations. Only the report
+term remains, giving $\partial_\lambda v_*=-\lambda\partial_\lambda k_u$.
+Analyticity and AC.112 give local inversion; use $s=C_sk_u$ and
+$T=(H_0+v_*)/2$ to obtain AC.124–AC.125. In particular the coefficient
+is an exact selected-root expression, not a numerical value of $\chi$.
+It can also be written without choosing $N_T$ as
+
+$$
+\chi=-\frac{\nabla_Xk_u^T\operatorname{adj}(D_X\mathcal F)
+                  \partial_\lambda\mathcal F}
+                 {\det(D_X\mathcal F)}.
+\tag{AC.127}
+$$
+
+The denominator is nonzero by AC.101. No extremization is hidden in
+either AC.114 or AC.127. Along the entire branch
+$10<\alpha/(4s_0^2)<20$ and $3/1000<\chi<10^6$.
+Since $d\lambda/ds=1/(C_s\chi)$, integration of AC.124 bounds
+the loss between coefficients $10/10^6=10^{-5}$ and
+$20/(3/1000)<7000$, proving AC.126 without an unspecified
+neighborhood remainder. The platform is constant, so its first
+derivative joins the zero right derivative, while its second derivative
+cannot join the strictly negative right value. This is finite-budget
+gluing, not a joint asymptotic limit. $\square$
+
+**Corollary 23.2 (a fixed rational point strictly beyond activation).**
+At $t=1000$ choose the exact rational request
+$s_+=0.1242167167887866$. Then
+
+$$
+\begin{gathered}
+0.12421671678878638487626873539472489<s_c(1000)
+ <0.12421671678878651209298880874023137,\\
+8\cdot10^{-17}<s_+-s_c(1000)<2.2\cdot10^{-16},\\
+5\cdot10^{-22}<\lambda_+<6\cdot10^{-13},\\
+6\cdot10^{-38}<T_c(1000)-\mathcal T_{\log1001}(s_+)
+ <4\cdot10^{-28},\\
+0.10283536503869052<\mathcal T_{\log1001}(s_+)
+ <0.10283536503869072.
+\end{gathered}
+\tag{AC.128}
+$$
+
+Proof. Use the same centre and $R$ with radius $10^{-16}$ in all
+eighteen coordinates at $t=1000$, as specified in FA94–96. Its
+zero-multiplier contraction is $<10^{-12}$ and its self-map ratio
+is $<1/200$; it lies inside $\mathcal B_X$ and selects the same root.
+Substituting this seed box and the full source box in
+$C_s\sum p_i\sigma_i u_i$ gives the first strict enclosure.
+Exact rational subtraction gives the next line, within AC.120.
+Integrating $ds/d\lambda=C_s\chi$ with
+$1/8<C_s<4/25$ and AC.112 gives the multiplier bounds.
+AC.126 applied to the rational gap bounds gives the strict loss bounds.
+Finally FA93's seed TV enclosure
+$(0.10283536503869052157453180203846052,
+0.10283536503869071116976210460262283)$ retains the last, relaxed
+interval after subtracting the loss. Strict decrease is proved by
+the loss bound, not by subtracting the wider decimal value endpoints.
+$\square$
+
+## 24. Actual outcomes and the simultaneous original instrument
+
+**Theorem 24.1 (local minimum alphabet and all interfaces).** Under
+Convention 18.1, on the entire platform $0\le s\le s_c(t)$ and
+the active interval AC.120, every original optimizer has at least
+five supported-nonzero actual low outcomes and at least six total
+actual outcomes. These minima are attained by one common instrument
+with joint fibre dimensions $(2,2,2,2,2,5)$ at each parameter point.
+It simultaneously satisfies the complete complex-input, passive-reference,
+five-labelled Borel-output, twelve-error, sharp-cost, finite-activity
+and absolute-FIRST conditions of the original experiment.
+
+Proof. At zero multiplier the unique top aggregate law was proved
+in Theorem 22.1; on the active side equality in AC.110 gives the
+same exact zero-set restriction for the current certificate. Each
+strictly intermediate height would require both endpoint contacts at
+one direction, which Theorem 20.1 excludes. The independent five
+moment columns and positive solution weights require all five aggregate
+masses. FA69's rigidity is about each existing actual low outcome:
+different effective supported directions cannot be merged inside one
+such outcome, whatever its inaccessible Kraus multiplicity. Positive
+fixed high acquired mass requires a further high outcome. A finite
+alphabet with fewer outcomes cannot carry the five positive masses;
+in the stipulated measurable model the same zero-slack argument is
+almost everywhere, and a positive nonatomic alphabet is already infinite.
+Extra nonzero full-$M_5$ outcomes whose supported restrictions vanish
+remain allowed and counted. They cannot reduce this lower bound.
+
+For attainment use precisely §13's full-fibre constructor with
+
+$$
+K_i=\sqrt{p_i}(s_0D+z_iT+w_iS),\qquad
+N_i=p_i\eta_i t c(h_i)n_in_i^T.
+\tag{AC.129}
+$$
+
+The two complete moment identities have already been proved. For the
+typed row-space isometries $J_i:\mathbb C^2\to\operatorname{ran}K_i^\dagger$,
+AC.69–.70 gives $B_iC_i=K_iE^\dagger$,
+$C_i^\dagger F_iC_i=EN_iE^\dagger$,
+$B_i^\dagger B_i+F_i=I_2$ and $I_2-F_i\succ0$ on the entire
+qubit fibre. Take AC.71's fixed simulator density
+$g(u)=2/(1+u)^2$ only for this attainer, with current-survivor jumps
+AC.72 and terminal survivor isometry $EB_i(I-F_i)^{-1/2}$.
+The three pure outcomes have zero activity. The two saturated outcomes
+have activity exactly $\log(1+t)$ and least terminal survival
+eigenvalue $1/(1+t)>0$.
+
+Choose fixed isometries $W_\perp:\mathbb C^2\to P^\perp$ and
+$J_0:\mathbb C^2\to\mathbb C^3$. The single high encoder is
+$C_H=(\sqrt{1-\delta}DE^\dagger;W_\perp^\dagger)$ into a
+jointly counted five-dimensional fibre. Its rate is zero and its TP
+decoder has the two inaccessible Kraus matrices $E[I_3\ 0]$ and
+$EJ_0[0\ I_2]$. Thus its coherent complementary share is acquired
+and counted before decoding. This is the allowed free JR completion,
+explicitly distinct from CA10's certain-failure completion. Splitting
+off a supported-zero complementary outcome would add an actual label.
+
+Source-root TP and the exact Gram/failure sums give total encoder
+effect $I_5$. Expanding the low Gram gives
+$\delta D(\cdot)D^\dagger+T(\cdot)T^\dagger+S(\cdot)S^\dagger$;
+the high supported term adds $(1-\delta)D(\cdot)D^\dagger$.
+Consequently, for every complex $X\in M_5$, the complete outputs
+are exactly AC.75–.76, and on every passive reference they are
+AC.77 and the amplified live Kraus conjugations. In particular the
+failure reference operator is
+$\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$, multiplied by
+$w_\ell\int_{\mathcal B}g(u)du$ and $P_f$; it is not the
+unconditional reference marginal. The weights
+$(0,1/4,1/2,1/4,0)$ remain five separate Borel components, with
+labels $0,13$ individually zero. The terminal live map has its stated
+CP effect $L_{\rm dec}=I-F_i$ and isometry normalization. No
+arbitrary prescribed noncommuting time law is inferred merely from
+endpoint coercivity; such laws retain FA68's full path-cost hypotheses.
+
+All twelve specimens lie in $P$. Their complete stopped-cq outputs
+are therefore exactly the original simulator outputs, compared with
+the ideal coherent blocks and ideal $f_y$ of AC.3. Under the named
+HALF minimax/error identification, for each sign pair
+$e_{5,e,n}=e_{27,e,n}=E_*$ and $e_{16,e,n}<E_*$. The maximum
+error is not substituted for all twelve individual errors.
+
+Only the high fibre has dimension at least three. Its acquired
+probability is $(1-\delta)A_y$, where $A_y=\sum h_i^2p_{yi}$;
+$h_0>h_1$ makes the worst history $27$. JR's original sharp-cost
+identity gives $(1-\delta)A_{27}=\mathsf C(s)$ throughout this weak
+range. Every low acquisition probability uses
+$K_i^\dagger K_i+N_i$, including future failure; no acceptance or
+survival division occurs. Maximum low reports $\operatorname{sgn}z_i$
+and high report plus give $C_sk_u\ge s$, with equality on the active
+side; Proposition 22.2 permits platform attenuation when desired.
+No hidden Kraus index becomes a readable decoder control.
+
+The chosen jump construction is chronologically TP at every cut,
+with absorbing first failure at absolute time $6+u$. Only not-yet-failed
+carriers receive terminal processing; there is neither deadline
+absorption nor later positive-carrier action. Necessity in AC.110
+retains every admitted competitor time law, not only this $g$.
+All rates and activity integrals are on entire jointly counted fibres.
+This proves simultaneous attainment at the original mathematical scope.
+$\square$
+
+The five low projection lines, two nonzero physical failure lines,
+five supported-nonzero outcomes, six total actual outcomes, hidden
+Kraus multiplicity and joint quantum dimensions are different counts.
+The minimum is attained without asserting that every implementation
+uses exactly six: splitting and supported-zero outcomes remain admitted.
+Both endpoints of $I$, zero request and threshold attainment are
+included. No axis, zero-height or zero-weight degeneration occurs in
+this rectangle; elsewhere those cases remain in the original comparison
+class and require their own analysis. At $t=0$, $M_2\succ0$ makes
+the class empty before any division by $t$. The strong fixed-source
+four-low counts at normalized budgets $r=1,2$ and five-low counts at
+every other feasible $r$ retain FA's separate scope; there is no
+reachable six-low strong region inferred here.
+
+## 25. Roof transfer, attribution and the unchanged larger problem
+
+**Proposition 25.1 (an explicit full-pure-roof transfer obstruction).**
+Let $\mathcal C$ be coordinate conjugation on $\mathbb C^3$,
+$\vartheta=Q\mathcal C$ and $\omega_0=I_3/3$. For the payoff
+$g(|\psi\rangle\langle\psi|)=|\langle\psi,\vartheta\psi\rangle|$,
+the concave roof restricted to real $Q$-null pure decompositions
+of $\omega_0$ is zero, while the roof over all complex pure
+decompositions is $2/3$.
+
+Proof. Every allowed real null vector has payoff $|\psi^TQ\psi|=0$.
+The four vectors $(1,\sigma,\upsilon)^T/\sqrt3$,
+$\sigma,\upsilon=\pm1$, are unit and null because
+$\alpha+\beta=1$; their equally weighted projectors sum to
+$I_3/3$. Thus the restricted domain is nonempty and its roof is zero.
+The Hermitian antilinear operator $Q\mathcal C$ satisfies the
+hypotheses of Uhlmann, *Roofs and Convexity*, Proposition 4.1,
+§4.2, equations (51)–(53), PDF p.17 of arXiv:1108.3218v1.
+The singular eigenvalues of
+$|\sqrt{\omega_0}\vartheta\sqrt{\omega_0}|$ are
+$1/3,\alpha/3,\beta/3$, whose sum is $2/3$. This gives the
+full-pure concave roof. Independently, its upper bound follows from
+$|\psi^TQ\psi|\le\psi^T|Q|\overline\psi$ and averaging,
+and the coordinate basis decomposition attains $\operatorname{tr}|Q|/3$.
+The constrained trace-null state section contains the full-rank
+$I_3/3$ but is a proper subset of the state space, hence is not a
+support face. The face restriction in Uhlmann's Hadamard-extension
+proof, PDF p.19, cannot identify these two decomposition domains.
+$\square$
+
+This is a counterexample to unrestricted transfer of a roof formula,
+not a counterexample to this source's particular height payoff.
+The entire real null domain, rational saturated payoff, matrix moments,
+allowed operations and physical whitening must all match before a
+roof or complete-class theorem can supply an original finite optimum.
+The literature hypotheses in §15 retain their stated scopes: ordinary
+Chebyshev information-matrix conditions, compact generalized-moment
+relative interior, Lorentz-positive maps, and nonsingular feasible
+continuation systems cannot be inferred from scalar resemblance.
+
+The exact selected zero-multiplier family and its rational data are
+reused from FA93–100. The whole-fibre path minimum, rigidity, capacities
+and chronological constructor are FA68–70/87; the original unaveraged
+equality and sharp cost are JR34–42. RC and the static residual-height
+results retain their original static scopes. The added quantitative
+conclusions are AC.96–AC.112's uniform perturbation and report-split
+global certificate, AC.119–AC.128's selected first endpoint, specified
+positive right interval, rational point and loss bounds. Their tools
+are the classical contraction argument, Bernstein positivity, analytic
+implicit functions and a positive constrained second variation. This
+is a repository-derived conditional synthesis, with no originality or
+exhaustive literature claim. Ordinary source proofs and rational
+inequalities supply no Lean/kernel or native certification.
+
+The complete original finite-$(s,A)$ problem remains: evaluated
+global roots, positive common weights and whole-circle necessities
+for every jointly chosen oriented failure allocation and every
+live-height decomposition, including below fixed-allocation maximum
+contrast; all later contact, sign, zero-weight, rank, collision,
+extra-zero and actual-label transitions; and all gluing and degenerate
+directions. The present fixed rectangle does not supply that atlas.
+Existence of the fixed-strength coefficient $K(s)$ is not its
+evaluation or continuity. Its original precontact/contact values,
+chosen attaining auxiliary family $\nu_\star$, orientations and
+coefficients remain required beyond the supplied postcontact and
+rank-conditional results. The selected measure
+$\sum p_i\delta_{(h_i,\eta_i tc(h_i))}$ here is a finite-budget
+attainer, not an evaluation of that separate $\nu_\star$ problem.
+
+The published TC/SC limiting support, strict concavity/convexity and
+quadratic results, JS full-class finite-product/common recovery and
+spectral saturation, and FA strong/path/rank/moment/rate results retain
+their precise completed ranges. JS's clamped limiting selector,
+pointwise two/three physical-failure-ray criterion, critical strip,
+sub-spectral uniform rate and compact-uniform spectral layer are
+reused results. The remaining JS.58 root inventory, isolation,
+ordering, multiplicities and sign intervals, next terms, critical
+five-label/static-contact joint layers and other required uniform
+joint scales remain separate duties. A limiting moment problem's
+threshold values do not provide its full interpolation or every rate;
+limiting three-line structure does not bound finite-budget support
+or all actual acquisition outcomes. Weak three/four/five feasibility
+counts, static support counts and global optimizer alphabet minima
+remain distinct from the local five/six theorem.
+
+Finally the mathematical instrument has no native realization bridge
+for lawful access to the sole specimen, calibration, actual acquisition
+and report generation, acquisition duration/cut placement, coherent
+joint storage and every accessible-share charge, whole-fibre decoder
+actuation, aligned absolute FIRST clock, stopped archives, source/epoch,
+controller or permissions. OriginalControl remains geometry. A native
+cyclic state-count theorem provides no quantum operation, acquisition,
+resource or permission correspondence without such a bridge. The
+quantum-first AURIC FIB ATOM programme through 2027 and all its original
+output, competitor and resource requirements remain unchanged.
+
+## 追加锚（本行以下为增补区）
