@@ -257,6 +257,8 @@ def evidence : Registration arena (type_of% (@fill_at)) where
   bridge := Iff.rfl
   variation := ⟨fill_at,bad,bad_law⟩
   sensitivity := by
+    unfold Sensitivity
+    dsimp only [arena,signature]
     constructor
     · intro i
       exact ⟨bad,fun j ne => (ne (Subsingleton.elim j i)).elim,rfl,bad_law⟩
