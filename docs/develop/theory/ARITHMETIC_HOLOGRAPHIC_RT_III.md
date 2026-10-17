@@ -1696,3 +1696,314 @@ The exact 21/100 example shows why the remaining small-support analysis cannot d
 These results do not classify all calibrated local minima or all quarter-error attainters. The unrestricted original-channel optimum remains in [√3−3/2,1/4]. Calibration is used only through the established physical global comparison, with no rank-preservation claim.
 
 The compact-max, finite-dimensional separation, Schur-product, and semidefinite duality ingredients are standard; see [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). The physical Gram optimization is the established section-72 reduction, and the exact adaptive norm and its primal-dual gap are section 91. The conclusions proved here are the simultaneous norming stress condition for this product problem, its exact rank-seven support constraints, the second-order and two-fibre exclusions using the original fibre dimensions, and the small-support scope counterexample. No general minimax or semidefinite-duality theorem is asserted to be new.
+
+## 93. A sharp complex three-vector bound and exclusion of three-singleton support
+
+### 93.1. Domain and quantitative statement
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four fibres of two input coordinates each, correlated encoding |f,i〉↦|f,i〉|f,i〉, and output encoding |f〉↦|ff〉. The error is the unhalved diamond norm, including arbitrary reference systems. For calibrated channels the forward local Grams satisfy G_ff=H_ff=I₂, their product coefficient is G⊙H, and the target has T_ff=I₂ and T_fg=J₂/2 for f≠g, as in sections 91–92. Calibration of arbitrary leaking channels is used only through the physical global comparison of section 72; it is not assumed to preserve local ranks or local minima.
+
+The common-stress and active-support reduction in section 92 makes the two principal Grams equal on a hypothetical doubly rank-seven minimum's common support. The following bound treats the entire complex rank-two three-coordinate domain, so no further singular-error or curvature condition is needed for the three-singleton case.
+
+**Theorem 93.1.** Let G be any complex Hermitian positive semidefinite 3×3 matrix with diagonal entries one and rank at most two. Put a=G₁₂, b=G₂₃, c=G₃₁, and let u be the positive real cube root of 9. Then
+
+\[
+ E(G):=\left|\frac12-a^2\right|^2+
+        \left|\frac12-b^2\right|^2+
+        \left|\frac12-c^2\right|^2
+ \ \ge\ \frac{21-9u}{16}\ >\ \frac9{64}.                 \tag{1}
+\]
+
+The first inequality is sharp. No reality, phase, kernel-weight, or symmetry assumption is imposed on G.
+
+### 93.2. An attainer and all boundary reductions
+
+**Proof of Theorem 93.1.** Set
+
+\[
+ x=\frac{1+u}{4},\qquad y=\frac{1-x}{\sqrt3},\qquad
+ z=x+iy,\qquad
+ G_* =\begin{pmatrix}
+ 1&z&\overline z\\
+ \overline z&1&z\\
+ z&\overline z&1
+ \end{pmatrix}.                                             \tag{2}
+\]
+
+Since 2<u<3, one has 0<x<1. The circulant eigenvalues are 1+2x, 2(1−x), and zero. Thus G_* is a rank-two correlation Gram, and direct substitution gives
+
+\[
+ E(G_*)=\frac{64x^4-64x^3+24x^2-40x+25}{12}
+        =\frac{21-9u}{16}<\frac3{16}.                       \tag{3}
+\]
+
+The domain of Theorem 93.1 is compact. Hence a global minimizer exists, and every global minimizer has value below 3/16 by (3). Fix any such minimizer. None of its cross entries is zero: a zero alone contributes 1/4. None has modulus one: the reverse triangle inequality again gives a contribution at least 1/4. Its rank is exactly two, because rank one would force every cross entry to have modulus one. Every coordinate of a nonzero kernel vector is nonzero, since a kernel vector with a zero coordinate would make a 2×2 principal unit-diagonal block singular and force its cross entry to have modulus one.
+
+In the real affine space of Hermitian unit-diagonal matrices, the determinant-zero set is a smooth hypersurface near this minimizer. Indeed the adjugate is a positive nonzero multiple of the kernel outer product. Each complex cross-coordinate derivative pair is therefore nonzero; in particular the real determinant gradient is nonzero. The two positive eigenvalues remain positive nearby, and on this hypersurface the third is zero. Thus the entire nearby hypersurface is feasible. Ordinary real Lagrange multipliers apply without discarding any boundary case.
+
+### 93.3. Stationary equations and repeated magnitudes
+
+Write q₁=|a|², q₂=|b|², q₃=|c|² and P=abc. The determinant condition and the conjugate-coordinate Lagrange equations are
+
+\[
+ \begin{aligned}
+ 1-q_1-q_2-q_3+2\operatorname{Re}P&=0,\\
+ (2q_1+\lambda)a-\overline a&=\lambda\overline{bc},
+ \end{aligned}                                               \tag{4}
+\]
+
+with cyclic versions of the second equation and a single real multiplier λ. The derivative conventions are ∂E/∂ā=2q₁a−ā and ∂det(G)/∂ā=−a+overline(bc). Dividing by the nonzero a gives
+
+\[
+ \frac{\overline a}{a}
+       =2q_1+\lambda-\frac{\lambda\overline P}{q_1},          \tag{5}
+\]
+
+and similarly for b,c. The multiplier is nonzero. Otherwise all q_i=1/2 and all entries are real, so their determinant would be −1/2±1/√2, never zero.
+
+Taking squared moduli in (5) shows that every q_i is a positive root of
+
+\[
+ \begin{split}
+ F(X)={}&4X^4+4\lambda X^3+
+       (\lambda^2-4\lambda\operatorname{Re}P-1)X^2\\
+       &-2\lambda^2\operatorname{Re}P\,X+\lambda^2|P|^2.
+ \end{split}                                                   \tag{6}
+\]
+
+The three q_i cannot be distinct. If they were, the fourth root, counted with multiplicity, would be r₀=λ²/4>0 by the constant term and |P|²=q₁q₂q₃. Vieta's sum and third symmetric coefficient would give
+
+\[
+ \begin{aligned}
+ U:=q_1+q_2+q_3
+    &=-\lambda-\frac{\lambda^2}{4}
+       =1-\frac{(\lambda+2)^2}{4}\le1,\\
+ q_1q_2q_3+r_0(q_1q_2+q_2q_3+q_3q_1)
+    &=\frac{\lambda^2\operatorname{Re}P}{2}
+      =r_0(U-1)\le0.
+ \end{aligned}                                                 \tag{7}
+\]
+
+The second line contradicts its strictly positive left side. It also covers a fourth root equal to one of the first three; no distinctness of all four roots was assumed.
+
+Relabel so q₁=q₂=q. Equation (5) implies a²=b². A diagonal sign conjugation of G can therefore arrange a=b, preserving positivity, rank, and every squared entry. This uses only signs, not an unrestricted phase gauge. Put r=|c|² and B=2q+λ. Multiplication of the first equation in (4) by a gives
+
+\[
+ B a^2=q(1+\lambda\overline c).                              \tag{8}
+\]
+
+### 93.4. Real and zero-denominator branches
+
+If B=0, then c=−1/λ is real. Whenever c is real, its stationary equation forces a² real. The possibility a²=−q gives one squared error (1/2+q)²>1/4 and is impossible. Hence a²=q, so a,b are real. Since |c|≠1, the determinant condition becomes
+
+\[
+ (1-c)(1+c-2q)=0,\qquad q=\frac{1+c}{2},
+ \qquad
+ E=\left(c^2-\frac14\right)^2+\frac3{16}\ge\frac3{16},       \tag{9}
+\]
+
+again impossible. Thus every minimizing stationary point has B≠0 and Im c≠0. In particular the vanishing-denominator branch has been exhausted rather than canceled.
+
+### 93.5. Polynomial reduction of the nonreal branch
+
+Write c=X+iY with Y≠0. Substitution of (8) into the stationary equation for c gives
+
+\[
+ [B(2r+\lambda)-\lambda^2q]c-B\overline c=\lambda q.
+                                                                    \tag{10}
+\]
+
+Its imaginary and real parts imply respectively
+
+\[
+ r=\frac{\lambda^2q/B-\lambda-1}{2},\qquad
+ X=-\frac{\lambda q}{2B}.                                    \tag{11}
+\]
+
+The modulus of (8) and the determinant condition then yield
+
+\[
+ \begin{aligned}
+ B(1+\lambda^2r-B^2)-\lambda^2q&=0,\\
+ B^2(1-2q-r)+2q\lambda rB-\lambda q^2&=0.
+ \end{aligned}                                                 \tag{12}
+\]
+
+Substituting r from (11), the two left sides are exactly the following polynomials f and g:
+
+\[
+ \begin{aligned}
+ f&=-\frac12(\lambda^2+2\lambda+4q-2)V,\\
+ V&=4q^2+(-\lambda^2+4\lambda+2)q+\lambda^2+\lambda,\\
+ g&=-\frac12\bigl[-2\lambda^3q^2+3\lambda^3q-\lambda^3
+             +6\lambda^2q^2+2\lambda^2q-3\lambda^2\\
+  &\hspace{55mm}{}+18\lambda q^2-12\lambda q+16q^3-12q^2\bigr].
+ \end{aligned}                                                 \tag{13}
+\]
+
+All preceding divisions were by quantities already proved nonzero. It remains to examine both factors of f.
+
+### 93.6. Excluding the sextic branch by a rational Sturm certificate
+
+If λ²+2λ+4q−2=0, substitution in g gives
+
+\[
+ \begin{aligned}
+ q&=-\frac{\lambda^2+2\lambda-2}{4},\qquad
+ B=\frac{2-\lambda^2}{2},\\
+ g&=\frac{(\lambda+2)H(\lambda)}{16},\qquad
+ H(\lambda)=\lambda^6+\lambda^5-5\lambda^4+4\lambda+4.
+ \end{aligned}                                                 \tag{14}
+\]
+
+At λ=−2, equations (11) and (14) give q=1/2 but r=−1/2, impossible. For the remaining roots of H, the exact identity
+
+\[
+ r-X^2-\frac{2\lambda^3+7\lambda^2-4\lambda-6}{16}
+   =-\frac{(\lambda+1)H(\lambda)}{8(\lambda^2-2)^2}           \tag{15}
+\]
+
+has nonzero denominator because B≠0. Thus Y² is the displayed cubic divided by 16 at any remaining candidate.
+
+For completeness, the entire real-root isolation uses the following polynomials:
+
+\[
+ \begin{aligned}
+ H_0&=\lambda^6+\lambda^5-5\lambda^4+4\lambda+4,\\
+ H_1&=6\lambda^5+5\lambda^4-20\lambda^3+4,\\
+ H_2&=13\lambda^4-4\lambda^3-24\lambda-28,\\
+ H_3&=21\lambda^3-13\lambda^2-30\lambda-22,\\
+ H_4&=-55\lambda^2+12\lambda+62,\\
+ H_5&=7\lambda+27,\qquad H_6=1.
+ \end{aligned}                                                 \tag{16}
+\]
+
+Here H₁=H₀′, and polynomial division gives −rem(H_(j−2),H_(j−1))=κ_j H_j, with the strictly positive rational factors
+
+\[
+ (\kappa_2,\kappa_3,\kappa_4,\kappa_5,\kappa_6)
+ =\left(\frac5{36},\frac{144}{169},\frac{169}{441},
+                     \frac{3528}{3025},\frac{39325}{49}\right).
+                                                                    \tag{17}
+\]
+
+Thus this is a positively rescaled Sturm chain. Its exact signs and variation counts are
+
+\[
+ \begin{array}{c|rrrrrrr|c}
+ \lambda&H_0&H_1&H_2&H_3&H_4&H_5&H_6&\text{variations}\\ \hline
+ -\infty&+&-&+&-&-&-&+&4\\
+ -3&+&-&+&-&-&+&+&4\\
+ -14/5&-&-&+&-&-&+&+&3\\
+ -7/10&-&+&-&-&+&+&+&3\\
+ -69/100&+&+&-&-&+&+&+&2\\
+ +\infty&+&+&+&+&-&+&+&2
+ \end{array}.                                                   \tag{18}
+\]
+
+No finite endpoint has a zero sign. Sturm's theorem therefore gives exactly one real root in (−3,−14/5), exactly one in (−7/10,−69/100), and none elsewhere. The first interval makes λ²+2λ−2 positive: it decreases there and equals 6/25 at the right endpoint. Hence q<0. On the second interval, 2λ³+7λ²−4λ−6 is strictly decreasing and equals −57/125 at the left endpoint. Hence Y²<0. Both roots are unphysical, so the first factor in (13) supplies no minimizer.
+
+### 93.7. The unique physical stationary value
+
+It remains that V=0. The resultant in q is the exact identity
+
+\[
+ \operatorname{Res}_q(V,g)=4\lambda^3(3\lambda-2)C(\lambda),
+ \qquad C(\lambda)=6\lambda^3+9\lambda^2+9\lambda+5.           \tag{19}
+\]
+
+The leading q-coefficients of V and g are nonzero constants. Only the necessary implication from a common root to a zero resultant is used. The case λ=0 was excluded in section 93.3. At λ=2/3, V has roots q=−1/2 and q=−5/9, and only the former also solves g=0; neither is positive. Therefore C(λ)=0.
+
+The polynomial C is strictly increasing because
+
+\[
+ C'(\lambda)=18\left(\lambda+\frac12\right)^2+\frac92>0,
+ \quad C(-7/8)=-\frac1{256},\quad
+ C(-87/100)=\frac{15541}{500000}.                            \tag{20}
+\]
+
+It has a unique real root, in (−7/8,−87/100). Put
+
+\[
+ A_0=121\lambda^2-843\lambda-985,\qquad
+ B_0=295\lambda^2+395\lambda+25.                             \tag{21}
+\]
+
+Reduction of the polynomial remainder of g modulo V, followed by reduction modulo C in λ, gives (A₀q−B₀)/96. Thus A₀q=B₀ at a candidate. The coefficient A₀ is strictly negative on the interval in (20): it is decreasing there and A₀(−7/8)=−9903/64. Division by A₀ is therefore justified. The identity
+
+\[
+ A_0\frac{6\lambda^2-3\lambda+5}{20}-B_0
+      =\frac{(121\lambda-1085)C(\lambda)}{20}               \tag{22}
+\]
+
+forces q=q_C:=(6λ²−3λ+5)/20. The substitutions in (11) satisfy
+
+\[
+ \begin{aligned}
+ r-q_C&=-\frac{(\lambda+15)C(\lambda)}
+                  {20(6\lambda^2+7\lambda+5)},\\
+ X-\frac{18\lambda^2+21\lambda+20}{20}
+       &=-\frac{(9\lambda+10)C(\lambda)}
+                  {10(6\lambda^2+7\lambda+5)}.
+ \end{aligned}                                                 \tag{23}
+\]
+
+These denominators are positive because 6λ²+7λ+5=6(λ+7/12)²+71/24. Hence all three squared magnitudes agree and
+
+\[
+ q=r=\frac{6\lambda^2-3\lambda+5}{20},\qquad
+ X=\frac{18\lambda^2+21\lambda+20}{20}.                      \tag{24}
+\]
+
+Equation (5) now makes all three oriented squared entries equal, without requiring the unsquared entries to be real. Consequently
+
+\[
+ E=3\left(q^2+q-2X^2+\frac14\right)
+   =-\frac{3(54\lambda^2+63\lambda+10)}{80},                 \tag{25}
+\]
+
+where the second equality uses C(λ)=0. For u³=9 the real number λ=−(u²−u+3)/6 is the unique real root of C, as follows from
+
+\[
+ C\left(-\frac{u^2-u+3}{6}\right)
+   =-\frac{(u^3-9)(u^3-3u^2+3u+8)}{36}.                    \tag{26}
+\]
+
+Substituting this λ into (25) and reducing by u³=9 gives E=(21−9u)/16. Every global minimizer was below 3/16, and all boundary and stationary alternatives below that threshold have been exhausted. The matrix (2) attains the resulting value, proving the sharp minimum. Finally 9·12³=15552<15625=25³ gives u<25/12 and therefore (21−9u)/16>9/64. This completes the proof of Theorem 93.1.
+
+### 93.8. Complete-norm consumer and the remaining original-channel cases
+
+**Theorem 93.2.** For a calibrated principal restriction to one input coordinate in each of three different original fibres, suppose the two forward local Grams coincide and have rank at most two. With G that common Gram and L=(I₃+J₃)/2−G⊙G, the complete unhalved diamond error δ_S satisfies
+
+\[
+ \delta_S\ \ge\ \frac{\|L\|_1}{3}
+       \ \ge\ \frac23\sqrt{E(G)}
+       \ \ge\ \frac{\sqrt{21-9\sqrt[3]{9}}}{6}
+       \ >\ \frac14.                                       \tag{27}
+\]
+
+The Frobenius edge minimum in Theorem 93.1 is sharp; no sharpness claim is made for the derived diamond lower bound (27).
+
+**Proof.** The uniform density ρ=I₃/3 is feasible in the complete adaptive formula of section 91. Its value is ||L||₁/3. Equivalently the uniform correlated input on the three coordinates has output error Lᵀ/3 in the correlated output basis, whose trace norm is ||L||₁/3. This verifies the original forward-Gram transpose convention and the unhalved normalization. Since it is an allowed input, the complete norm, which also allows arbitrary references, is at least this value.
+
+The Hermitian matrix L has trace zero and Tr(L²)/2=E(G). Up to a sign reversal and reordering, its eigenvalues are s,t,−s−t for s,t≥0, including zero eigenvalues and the zero matrix. Thus
+
+\[
+ \|L\|_1=2(s+t),\qquad
+ E(G)=s^2+st+t^2\le(s+t)^2.                                 \tag{28}
+\]
+
+This proves the second inequality in (27); Theorem 93.1 proves the remaining two. No singularity of L is assumed.
+
+**Corollary 93.3.** A calibrated local minimum of the original four-fibre problem with both full local Gram ranks seven and error strictly below 1/4 cannot have common active-support occupancy (1,1,1,0). Consequently the possible doubly rank-seven patterns left by section 92 are reduced from five to four, up to permutation of the original fibres:
+
+\[
+ (2,1,1,0),\qquad (1,1,1,1),\qquad
+                (2,2,1,0),\qquad (2,1,1,1).                 \tag{29}
+\]
+
+**Proof.** The common-witness theorem and exact active-support reduction of section 92 give a reciprocal phase gauge preserving the full product coefficient and target. On a support of occupancy (1,1,1,0), the principal Grams then coincide and have rank two. The complete restricted norm equals the full value because the common norming witness is supported there; restriction monotonicity alone also suffices for the lower bound. Equation (27) contradicts a value below 1/4. Combining this exclusion with Theorems 92.3–92.4 leaves precisely (29).
+
+The corollary refines the unresolved list in sections 92.7 and 92.9. A zero occupancy still means an absent whole fibre, whereas an occupancy one retains only one coordinate of a two-coordinate fibre. No pattern in (29) is excluded here. Unequal full Gram ranks and the other lower-rank common-stress cases remain unresolved. For arbitrary leaking channels, calibration is invoked only to compare the unrestricted global optimum with an attained calibrated optimum, with no rank-preservation or local-minimum transfer. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither its quarter lower bound nor a classification of all quarter-error attainters follows from this section.
+
+The proof uses ordinary real Lagrange multipliers, polynomial resultants, and Sturm's real-root theorem as established mathematical tools. For the last, see [Eisermann, The Fundamental Theorem of Algebra made effective: an elementary real-algebraic proof via Sturm chains](https://arxiv.org/abs/0808.0097). The specific sharp complex-Gram minimum is derived in Theorem 93.1, and the physical consumer uses the adaptive norm and common-support reduction of sections 91–92.
