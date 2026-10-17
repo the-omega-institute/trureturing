@@ -4826,3 +4826,5 @@ y=(1,e^{-i\theta},e^{i\theta}),\qquad v=(x,y)/\sqrt6.
 \]
 与命题 51.2 的必要条件矛盾。各 channel 的零 mode 值为 \(1+2c=\sqrt3\)，其余两 mode 值的乘积为
 \((1-c)^2-3(1-c^2)=-6c\ne0\)，因此满支撑也成立。证毕。
+
+第 52 节及后续推导见同主题[理论续卷](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION.md)。
