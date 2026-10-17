@@ -18,7 +18,7 @@ namespace D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer
 
 open D5.S3.Arith.Robin.ActualOddMobiusFinitePairing (mobiusPrefix prefix_abel)
 open D5.S3.Arith.Robin.OriginalResidualFiniteTransfer
-  (response variation variation_nonneg centered centered_floor centered_pair_variation_bound weighted_floor_bound
+  (response variation variation_nonneg centered centered_floor centered_pair_variation_bound centered_pair_variation_sharp_bound weighted_floor_bound
    reciprocal_log_step weighted_log_step log_bounds prefix_bound sum_indices prefix_error_bound)
 
 /-- Total coefficient, without a vanishing-moment condition. -/
@@ -310,31 +310,32 @@ private theorem kernel_centered {N d : ℕ} (b : ℕ → ℝ) (hd : 0 < d) :
   <;> ring
 
 private theorem centered_log_bound {N d : ℕ} (hN : 1 < N) (b : ℕ → ℝ)
-    (hd : 0 < d) (hdN : d ≤ N) :
-    |centeredLogPair N b d| ≤ Real.log N*(d : ℝ)*variation N b := by
+    (hd : 0 < d) (hdN : d ≤ N) (V : ℝ) (hV : 0 ≤ V)
+    (hpair : |centeredPair N b d| ≤ (d : ℝ)*V) :
+    |centeredLogPair N b d| ≤ Real.log N*(d : ℝ)*V := by
   have hl := log_bounds hd hdN
   unfold centeredLogPair
   rw [abs_mul, abs_of_nonneg hl.1]
   calc
-    _ ≤ Real.log ((N : ℝ)/d)*((d : ℝ)*variation N b) :=
-      mul_le_mul_of_nonneg_left (centered_pair_variation_bound (by omega) b hd) hl.1
+    _ ≤ Real.log ((N : ℝ)/d)*((d : ℝ)*V) :=
+      mul_le_mul_of_nonneg_left hpair hl.1
     _ ≤ _ := by
       have := mul_le_mul_of_nonneg_right hl.2
-        (mul_nonneg (Nat.cast_nonneg d) (variation_nonneg N b))
+        (mul_nonneg (Nat.cast_nonneg d) hV)
       nlinarith
 
 private theorem low_error_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
-    (b : ℕ → ℝ) : |lowError N q b| ≤
-      (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b := by
+    (b : ℕ → ℝ) (V : ℝ) (hV : 0 ≤ V)
+    (hpair : ∀ {d : ℕ}, 0 < d → |centeredPair N b d| ≤ (d : ℝ)*V) :
+    |lowError N q b| ≤ (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*V := by
   have hL : 0 < Real.log (N : ℝ) := Real.log_pos (by exact_mod_cast hN)
-  have hV := variation_nonneg N b
   have hq0 : (0 : ℝ) ≤ q := Nat.cast_nonneg _
   have hsum : |∑ d ∈ Ioc 0 q, (ArithmeticFunction.moebius d : ℝ)*centeredLogPair N b d| ≤
-      Real.log N*variation N b*((q : ℝ)*(q + 1)/2) := by
+      Real.log N*V*((q : ℝ)*(q + 1)/2) := by
     calc
       _ ≤ ∑ d ∈ Ioc 0 q, |(ArithmeticFunction.moebius d : ℝ)*centeredLogPair N b d| :=
         abs_sum_le_sum_abs _ _
-      _ ≤ ∑ d ∈ Ioc 0 q, Real.log N*(d : ℝ)*variation N b := by
+      _ ≤ ∑ d ∈ Ioc 0 q, Real.log N*(d : ℝ)*V := by
         apply sum_le_sum
         intro d hd
         rw [abs_mul]
@@ -342,10 +343,11 @@ private theorem low_error_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
           _ ≤ 1*|centeredLogPair N b d| := mul_le_mul_of_nonneg_right
             (by exact_mod_cast ArithmeticFunction.abs_moebius_le_one (n := d)) (abs_nonneg _)
           _ ≤ _ := by
-            simpa using centered_log_bound hN b (mem_Ioc.mp hd).1 (by have := mem_Ioc.mp hd; omega)
+            simpa using centered_log_bound hN b (mem_Ioc.mp hd).1
+              (by have := mem_Ioc.mp hd; omega) V hV (hpair (mem_Ioc.mp hd).1)
       _ = _ := by
-        have he : (∑ d ∈ Ioc 0 q, Real.log N*(d : ℝ)*variation N b) =
-            Real.log N*variation N b*(∑ d ∈ Ioc 0 q, (d : ℝ)) := by
+        have he : (∑ d ∈ Ioc 0 q, Real.log N*(d : ℝ)*V) =
+            Real.log N*V*(∑ d ∈ Ioc 0 q, (d : ℝ)) := by
           rw [mul_sum]
           apply sum_congr rfl
           intro d _
@@ -356,9 +358,9 @@ private theorem low_error_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
       _ ≤ |mobiusPrefix q|+|2| := abs_add_le _ _
       _ ≤ _ := by norm_num; exact prefix_bound q
   have hterm : |(mobiusPrefix q+2)*centeredLogPair N b (q + 1)| ≤
-      ((q : ℝ)+2)*(Real.log N*(q + 1 : ℕ)*variation N b) := by
+      ((q : ℝ)+2)*(Real.log N*(q + 1 : ℕ)*V) := by
     rw [abs_mul]
-    exact mul_le_mul hprefix (centered_log_bound hN b (by omega) hq)
+    exact mul_le_mul hprefix (centered_log_bound hN b (by omega) hq V hV (hpair (by omega)))
       (abs_nonneg _) (by positivity)
   unfold lowError
   rw [abs_div, abs_of_pos hL]
@@ -366,6 +368,20 @@ private theorem low_error_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
   calc
     _ ≤ _ := (abs_sub _ _).trans (add_le_add hsum hterm)
     _ = _ := by push_cast; ring
+
+private theorem sharp_low_error_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
+    (b : ℕ → ℝ) : |lowError N q b| ≤
+      if q = 0 then 0 else (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b/16 := by
+  by_cases hq0 : q = 0
+  · subst q
+    simp [lowError, centeredLogPair, centeredPair, centered, Nat.mod_one]
+  · rw [if_neg hq0]
+    have he := low_error_bound hN hq b (variation N b/16)
+      (div_nonneg (variation_nonneg N b) (by norm_num)) (fun {d} hd => by
+        have hp := centered_pair_variation_sharp_bound (by omega : 0 < N) b hd
+        change |centeredPair N b d| ≤ (d : ℝ)/16*variation N b at hp
+        convert hp using 1 <;> ring)
+    convert he using 1 <;> ring
 
 private theorem prefix_log_identity {N q : ℕ} (hN : 0 < N) :
     (∑ d ∈ Ioc 0 q, (ArithmeticFunction.moebius d : ℝ)*Real.log ((N : ℝ)/d)) =
@@ -422,21 +438,13 @@ private theorem abel_identity {N : ℕ} (hN : 0 < N) (b : ℕ → ℝ) :
   rw [hs, ← he]
   rfl
 
-/-- Finite full-positive JK13 for the actual response. No moment vanishes by hypothesis. -/
-theorem originalFullCell_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
-    (b F : ℕ → ℝ) (ε c : ℝ) (hε : 0 ≤ ε) (hc : 0 ≤ c)
-    (hb : ∀ m ∈ Ico N (2 * N), 0 ≤ b m)
-    (herr : ∀ k ∈ Ico (q + 1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) :
-    |pairing N b-replacement N q b F-meanCorrection N q b| ≤
-      (ε+c/(q + 1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
-        (1+2*Real.log ((N : ℝ)/(q + 1 : ℕ))^2+
-          2*Real.log ((N : ℝ)/(q + 1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q + 1 : ℕ)))))+
-      (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b := by
+private theorem transfer_identity {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
+    (b F : ℕ → ℝ) :
+    pairing N b-replacement N q b F-meanCorrection N q b = lowError N q b-
+      (∑ k ∈ Ico (q + 1) N, (F k-mobiusPrefix k)*logDifference N b k)/Real.log N := by
   have hN1 : 1 < N := by omega
   have hN0 : 0 < N := by omega
   have hh : q + 1 < N := by omega
-  have hL : 0 < Real.log (N : ℝ) := Real.log_pos (by exact_mod_cast hN1)
-  have hfactor : 0 ≤ (ε+c/(q + 1 : ℕ))/Real.log N := by positivity
   let P := ∑ k ∈ Ioc 0 q, mobiusPrefix k*logDifference N b k
   let T := ∑ k ∈ Ico (q + 1) N, (F k-mobiusPrefix k)*logDifference N b k
   have hsplit : (∑ k ∈ Ioc 0 (N-1), mobiusPrefix k*logDifference N b k) =
@@ -460,18 +468,34 @@ theorem originalFullCell_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ 
       ring
     rw [hs, he, kernel_top hN0 b]
     ring
-  have hexact : pairing N b-replacement N q b F-meanCorrection N q b =
-      lowError N q b-T/Real.log N := by
-    have he := abel_identity hN0 b
-    rw [hsplit] at he
-    have hlo := low_identity (q := q) hN1 b
-    change totalMass N b+(P-2*logPair N b (q + 1))/Real.log N = _ at hlo
-    rw [he]
-    unfold replacement
-    dsimp [T]
-    simp_rw [add_mul, sub_mul]
-    rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, htel]
-    linear_combination hlo
+  change _ = lowError N q b-T/Real.log N
+  have he := abel_identity hN0 b
+  rw [hsplit] at he
+  have hlo := low_identity (q := q) hN1 b
+  change totalMass N b+(P-2*logPair N b (q + 1))/Real.log N = _ at hlo
+  rw [he]
+  unfold replacement
+  dsimp [T]
+  simp_rw [add_mul, sub_mul]
+  rw [sum_add_distrib, sum_sub_distrib, ← mul_sum, htel]
+  linear_combination hlo
+
+private theorem transfer_of_low_bound {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
+    (b F : ℕ → ℝ) (ε c : ℝ) (hε : 0 ≤ ε) (hc : 0 ≤ c)
+    (hb : ∀ m ∈ Ico N (2 * N), 0 ≤ b m)
+    (herr : ∀ k ∈ Ico (q + 1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) (A : ℝ) (hlow : |lowError N q b| ≤ A) :
+    |pairing N b-replacement N q b F-meanCorrection N q b| ≤
+      (ε+c/(q + 1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
+        (1+2*Real.log ((N : ℝ)/(q + 1 : ℕ))^2+
+          2*Real.log ((N : ℝ)/(q + 1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q + 1 : ℕ)))))+
+      A := by
+  have hN1 : 1 < N := by omega
+  have hN0 : 0 < N := by omega
+  have hh : q + 1 < N := by omega
+  have hL : 0 < Real.log (N : ℝ) := Real.log_pos (by exact_mod_cast hN1)
+  have hfactor : 0 ≤ (ε+c/(q + 1 : ℕ))/Real.log N := by positivity
+  let T := ∑ k ∈ Ico (q + 1) N, (F k-mobiusPrefix k)*logDifference N b k
+  have hexact := transfer_identity hN hq b F
   have hT : |T|/Real.log N ≤
       (ε+c/(q + 1 : ℕ))/Real.log N*weightedVariation N (q + 1) b := by
     have he := prefix_error_bound (by omega : 0 < q + 1) (logDifference N b) F hc herr
@@ -485,10 +509,10 @@ theorem originalFullCell_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ 
   calc
     _ ≤ |lowError N q b|+|T/Real.log N| := abs_sub _ _
     _ = |lowError N q b|+|T|/Real.log N := by rw [abs_div, abs_of_pos hL]
-    _ ≤ (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b+
+    _ ≤ A+
         (ε+c/(q + 1 : ℕ))/Real.log N*weightedVariation N (q + 1) b :=
-      add_le_add (low_error_bound hN1 hh.le b) hT
-    _ ≤ (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b+
+      add_le_add hlow hT
+    _ ≤ A+
         (ε+c/(q + 1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
           (1+2*Real.log ((N : ℝ)/(q + 1 : ℕ))^2+
             2*Real.log ((N : ℝ)/(q + 1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q + 1 : ℕ))))) := by
@@ -496,6 +520,34 @@ theorem originalFullCell_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ 
         (weighted_variation_bound (by omega) hh b hb) hfactor)
     _ = _ := add_comm _ _
 
+/-- Finite full-positive JK13 for the actual response. No moment vanishes by hypothesis. -/
+theorem originalFullCell_finite_transfer {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
+    (b F : ℕ → ℝ) (ε c : ℝ) (hε : 0 ≤ ε) (hc : 0 ≤ c)
+    (hb : ∀ m ∈ Ico N (2 * N), 0 ≤ b m)
+    (herr : ∀ k ∈ Ico (q + 1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) :
+    |pairing N b-replacement N q b F-meanCorrection N q b| ≤
+      (ε+c/(q + 1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
+        (1+2*Real.log ((N : ℝ)/(q + 1 : ℕ))^2+
+          2*Real.log ((N : ℝ)/(q + 1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q + 1 : ℕ)))))+
+      (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b := by
+  exact transfer_of_low_bound hN hq b F ε c hε hc hb herr _
+    (low_error_bound (by omega) (by omega) b (variation N b) (variation_nonneg N b)
+      (fun {_} hd => centered_pair_variation_bound (by omega) b hd))
+
+/-- The midpoint primitive sharpens the low error, which vanishes exactly at q=0. -/
+theorem originalFullCell_finite_transfer_sharp {N q : ℕ} (hN : 3 ≤ N) (hq : q ≤ N-2)
+    (b F : ℕ → ℝ) (ε c : ℝ) (hε : 0 ≤ ε) (hc : 0 ≤ c)
+    (hb : ∀ m ∈ Ico N (2 * N), 0 ≤ b m)
+    (herr : ∀ k ∈ Ico (q + 1) N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) :
+    |pairing N b-replacement N q b F-meanCorrection N q b| ≤
+      (ε+c/(q + 1 : ℕ))/Real.log N*((N : ℝ)*totalMass N b*
+        (1+2*Real.log ((N : ℝ)/(q + 1 : ℕ))^2+
+          2*Real.log ((N : ℝ)/(q + 1 : ℕ))*(1+Real.log (2*(N : ℝ)/(q + 1 : ℕ)))))+
+      (if q = 0 then 0 else (q + 1 : ℕ)*((3 : ℝ)*q/2+2)*variation N b/16) := by
+  exact transfer_of_low_bound hN hq b F ε c hε hc hb herr _
+    (sharp_low_error_bound (by omega) (by omega) b)
+
 #print axioms originalFullCell_finite_transfer
+#print axioms originalFullCell_finite_transfer_sharp
 
 end D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer

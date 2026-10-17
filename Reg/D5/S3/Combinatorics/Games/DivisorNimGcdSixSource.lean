@@ -162,4 +162,5 @@ abbrev parentArena : Arena where
     ∃ N, ∀ n, N ≤ n →
       R.readout () A (n + sixTargetPeriod H) = R.readout () A n
 
+
 end Reg.D5.S3.Combinatorics.Games.DivisorNimGcdSixSource

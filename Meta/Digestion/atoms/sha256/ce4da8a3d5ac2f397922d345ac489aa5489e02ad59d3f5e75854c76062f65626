@@ -1,0 +1,18 @@
+**定义 1.1（完整开放路径目标）。** 对 $n\ge1$ 令
+
+$$
+B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\ (1\le i<n)\},
+$$
+
+并令 $\Gamma_n$ 的顶点为全部 $B_n$，边为全部合法 Hamming 一位差词对。端点测试使用
+$w_0=w_{n+1}=0$，首尾不相接。对整个单纯形 $\mathcal P(B_n)$ 置
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\qquad
+\Phi_n(\mu)=\sum_{\{w,z\}\in E(\Gamma_n)}h(\mu_w,\mu_z),\qquad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu),\qquad
+c_\star=\lim_{n\to\infty}\kappa_n/n .
+$$
+
+零质量不删除顶点、边或接缝；全部合法词和开放端点都保留。
+

@@ -1764,3 +1764,919 @@ All limits fix the original datum, $R>r_C$ and the prescribed sequence as specif
 The comparison formulas determine shapes and all $L^2$ mass only. They imply no native form-domain membership, kinetic-energy transfer, native point interaction, cutoff-free realization, analytic-state preparation or physical-space/dimension correspondence. Absolute response sign, positive/zero occurrence, occurrence of a finite mixed branch, actual selection of $R$ or of divergent $r_s$, finer signed energy coefficients and centered crossover remain unresolved. Thus conditional rigidity at an actually occurring finite $R>r_C$ leaves the original every-ground-state decision and the full target of Definition 9.1 unresolved. Entire-height response residuals and resource, cone, observation or completely positive realizations supply no additional native analytic preparation premise.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. At most one native eigenvalue below the Coulomb energy order
+
+**Theorem 21.1 (deep spectral count and the actual ground-state complement).** Fix one admitted original datum of Definitions 1.1–2.2 and all its inherited analytic antecedents before taking $s\downarrow0$. In particular retain P Theorems 87.2, 88.1 and 104.2 and R Theorem 9.1 on its entire complex domain. Define the selfadjoint operators
+
+$$
+\begin{aligned}
+H_s&=aS-\chi_cs^3W_{s^2},&D(H_s)&=D(S),\\
+\mathscr H_s&=aC_s-\chi_cU_s
+ =s^2\mathcal U_sH_s\mathcal U_s^{-1},&
+D(\mathscr H_s)&=D(A_s)=\mathcal U_sD(S)
+ \quad\text{in }L^2(\Omega_s).
+\end{aligned}
+\tag{21.1}
+$$
+
+There are constants $C>0,s_0>0$, depending only on this fixed datum and its antecedent constants, such that for every $0<s<s_0$,
+
+$$
+\operatorname{rank}_{\mathbb C}
+ \mathbf1_{(-\infty,-Cs^6)}(H_s)\le1,
+\qquad
+\operatorname{rank}_{\mathbb C}
+ \mathbf1_{(-\infty,-Cs^8)}(\mathscr H_s)\le1.
+\tag{21.2}
+$$
+
+For every actual normalized complex ground state $\psi_s$ of $H_s$ and every $u$ in the entire original complex form domain $\mathcal Q$,
+
+$$
+\langle\psi_s,u\rangle=0
+\quad\Longrightarrow\quad
+\mathfrak e_{\chi_cs^3,s^2}[u]\ge-Cs^6\|u\|_2^2.
+\tag{21.3}
+$$
+
+Equivalently, with $F_s=\mathcal U_s\psi_s$, for every $F\in\mathcal Q_s=\mathcal U_s\mathcal Q$ on the actual moving domain $\Omega_s=I_s\times\mathbb R^3$,
+
+$$
+\langle F_s,F\rangle=0
+\quad\Longrightarrow\quad
+q_s^c[F]\ge-Cs^8\|F\|_2^2.
+\tag{21.4}
+$$
+
+The spectral intervals in (21.2) are open at their displayed thresholds; (21.3)–(21.4) are non-strict inequalities, including threshold equality. Multiplicities are complex dimensions. The constants are independent of every eigenvector or ground-state choice and require no assumption on the response sign.
+
+Proof. Work first in the common complex space $\mathscr L=L^2(\mathbb R^4,d\xi)$ used in P §104. Native vectors and the output of their resolvents are zero extended from $\Omega_s$ only for these comparisons. Put $t_c=\chi_c/a$, $K=K_{\rm rec}=\mathcal E^{-1}V$ with the precise reconstruction meaning of P (104.1), and $L=I-t_cK$. P Theorem 87.2 makes $K$ compact, with range in $D(\mathcal E)$ and $\mathcal EKf=Vf$. Moreover
+
+$$
+\ker L=\mathbb Cp.
+\tag{21.5}
+$$
+
+Indeed $Lf=0$ implies $f\in D(\mathcal E)$ and $a\mathcal Ef=\chi_cVf$, so P Theorem 88.1 gives $f\in\mathbb Cp$. Conversely $\mathcal E(p-t_cKp)=0$; both terms belong to $D(\mathcal E)$, and injectivity of $\mathcal E$ from P Theorem 87.2 gives $Lp=0$.
+
+There is therefore a number $\gamma>0$ such that
+
+$$
+\|Lw\|_2\ge\gamma\|w\|_2
+\quad(w\in\mathscr L,\ \langle p,w\rangle=0).
+\tag{21.6}
+$$
+
+For completeness, if not, take unit vectors $w_n\perp p$ with $Lw_n\to0$. Compactness of $K$ gives a subsequence on which $Kw_n$ converges. The identity $w_n=Lw_n+t_cKw_n$ makes that subsequence converge strongly to a unit vector $w\perp p$ with $Lw=0$, contradicting (21.5). No selfadjointness of $K$ or positive spectral gap above zero for $H_c$ is used. For the orthogonal projection $\Pi f=\langle p,f\rangle p$, (21.5)–(21.6) imply
+
+$$
+\|(I-\Pi)f\|_2\le\gamma^{-1}\|Lf\|_2.
+\tag{21.7}
+$$
+
+Let $z<0$ be any eigenvalue of $H_s$ and $\psi\in D(S)$ any corresponding unit complex eigenvector. R Theorem 9.1 and (2.2), applied to every native form vector, give $H_s\ge-C_R I$ for fixed $C_R>0$ and sufficiently small $s$. Thus $-C_R\le z<0$. Write $F=\mathcal U_s\psi$, zero extended, and $h=-s^2z/a>0$. The exact operator conjugacy (21.1) gives
+
+$$
+(C_s+h)F=t_cU_sF,
+\qquad F=t_cR_s(h)U_sF,
+\qquad 0<h\le A_0s^2,\quad A_0=C_R/a.
+\tag{21.8}
+$$
+
+These equations hold before extension in $D(C_s)=\mathcal U_sD(S)$ and then as $L^2$ equalities after extension. In particular they apply to every negative eigenvector, without invoking the ground-sequence conclusion of P Theorem 105.1. The coefficient is exactly $s^2(\chi_cs^3)s^{-5}/a=t_c$, with no change of the field heat clock.
+
+Let $C_0,d_s$ be the fixed-data constant and vanishing error of P (104.2). For $s$ small enough that $A_0s^2\le1$, that full-output operator-norm estimate gives, uniformly over all the above eigenvectors whose $h\ge Ms^8$,
+
+$$
+\|LF\|_2\le t_c\left[d_s+C_0(A_0s^2)^{3/4}
+              +C_0M^{-1/4}+C_0M^{-1/2}\right]
+ =:\Delta_s(M).
+\tag{21.9}
+$$
+
+Choose once and for all $M\ge1$ with $t_cC_0(M^{-1/4}+M^{-1/2})<\gamma/4$, then decrease $s_0$ so that $t_c[d_s+C_0(A_0s^2)^{3/4}]<\gamma/4$ for every $0<s<s_0$. Set $C=aM$. If $z<-Cs^6$, then $h>Ms^8$, so (21.7)–(21.9) give $\|(I-\Pi)F\|_2<1/2$ and hence $|\langle p,F\rangle|^2>3/4$.
+
+P Proposition 70.2 gives discrete spectrum of finite multiplicity below zero at each positive cutoff. If the first projection in (21.2) had rank at least two, its range would contain two orthonormal eigenvectors, including the case of a repeated eigenvalue. Their unitary images $F_1,F_2$ remain orthonormal after zero extension. Complex Bessel's inequality would give
+
+$$
+1=\|p\|_2^2\ge
+ |\langle p,F_1\rangle|^2+|\langle p,F_2\rangle|^2
+ >\frac32,
+\tag{21.10}
+$$
+
+a contradiction. This proves the first count. The same argument also applies when an eigenvalue equals the threshold, since $h=Ms^8$ still satisfies (21.9); only the asserted open interval is needed. Thus no threshold eigenvector has been silently counted as strictly below it.
+
+To prove (21.3), put $T=-Cs^6$. Negative ground-state attainment is P Proposition 75.2. If its energy $E_s\ge T$, the spectral theorem gives $\mathfrak e_{\chi_cs^3,s^2}[u]\ge T\|u\|_2^2$ for every $u\in\mathcal Q$. If $E_s<T$, (21.2) forces $\mathbf1_{(-\infty,T)}(H_s)$ to have range exactly $\mathbb C\psi_s$ and forces that ground eigenvalue to be simple. For $u\perp\psi_s$, its scalar spectral measure consequently has no mass below $T$. The closed-form spectral representation on the entire form domain gives
+
+$$
+\mathfrak e_{\chi_cs^3,s^2}[u]
+ =\int_{[T,\infty)}x\,d\langle u,\mathbf1_{(-\infty,x]}(H_s)u\rangle
+ \ge T\|u\|_2^2.
+\tag{21.11}
+$$
+
+At $E_s=T$ the first case applies, regardless of degeneracy; the same is true above $T$. This proves the assertion for every ground-state choice without any independent simplicity assumption on the finite native bottom. Finally the exact unitary conjugacy in (21.1) transports the first spectral projection to the second in (21.2), multiplying energies by $s^2$. Formula (2.2) transports (21.3) to (21.4). Both the operator domain $\mathcal U_sD(S)$ and the form domain $\mathcal Q_s$ retain the two moving Dirichlet faces; zero extension has not replaced them by a fixed-domain operator. $\square$
+
+**Definition 21.2 (source correspondence and remaining scalar).** Theorem 21.1 is a source-specific `repo-derived` consequence of P (104.2), the compact reconstruction and simple complex kernel of P §§87–88, and the full-domain lower bound R (9.1)–(9.2). The latter is essential for the uniform upper bound on $h$ in (21.8); the displayed local coercivity (4.2) alone is not used as a global lower bound. Compactness, complex Bessel's inequality and selfadjoint spectral and closed-form calculus are classical intermediate tools; see [Teschl, *Mathematical Methods in Quantum Mechanics*](../../../Library/Fourier/teschl2009mathematical.md), equation (1.11), §2.3 and §3.1 in the [author-hosted first edition](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf). Its complex Hilbert-space Bessel inequality applies to the orthonormal pair in (21.10); the semibounded closed-form and selfadjoint spectral representations apply to (21.11) on $\mathcal Q$. The count concerns the finite native operator, not just the fixed-domain zero mode or a separate long-scale trial branch.
+
+All constants fix the original signed nonzero $\kappa$, jointly realized rational fields, all-real phase cover, both height deaths and raw source before $s\downarrow0$. The density $j_0$ and the distinction between field multiplier $U_s$ and chart unitary $\mathcal U_s$ remain exactly (2.1)–(2.3); the field clock is $B$, independently of $a$. No uniformity in varying admitted data or as $\kappa\to0$ is asserted. The complement in (21.3) is orthogonal to an actual ground state; it is not the complement of an arbitrarily chosen core or trial state.
+
+The possible single eigenvalue below $-Cs^6$ is not bounded from below by this count. In particular it gives no $E_s\ge-Cs^6$ conclusion, evaluates no signed core scalar or absolute response sign, assumes no finite-$R$ occurrence, and selects neither $r_s$ nor the actual critical ground-state orbit. The original ground energy/scale selection of Definition 9.1, including response-zero selection, remains unresolved. No analytic-state preparation or physical-space/dimension conclusion follows.
+
+## 追加锚（本行以下为增补区）
+
+## 22. A conditional quantitative lower bound at zero response
+
+**Theorem 22.1 (actual zero-response energy and the entire complex form).** Fix one admitted original datum of Definitions 1.1–2.2, including its signed nonzero $\kappa$, jointly realized rational fields, interval, interior pole, $a,\varepsilon$, raw unit source and density $j_0$, before taking $s\downarrow0$. Retain the analytic antecedents of those definitions, P §§104 and 106–107, R §§4–5, 8 and 16–20, and the mode and derivative bounds of [Entire-height response escape](FIB_NATIVE_ENTIRE_HEIGHT_RESPONSE_ESCAPE.md), Theorem 3.1. Let $\Psi$ be the particular real odd response of (3.5), with its canonical $\mathcal Q_E\cap L^2$ representative supplied by R Theorem 16.2. Suppose that this fixed datum satisfies
+
+$$
+C_{\rm resp}=\nu^2(K_{\rm base}-D_{\rm resp})
+              -\lambda D_{\rm clock}=0.
+\tag{22.1}
+$$
+
+There exist $C,c,s_0>0$, depending only on this datum and its antecedent constants, such that for every $0<s<s_0$ and every complex $F\in\mathcal Q_s=\mathcal U_s\mathcal Q$,
+
+$$
+q_s^c[F]\ge-Cs^4\|F\|_2^2.
+\tag{22.2}
+$$
+
+Consequently, along exactly $\tau=s^2$, $g_s=\chi_cs^3$,
+
+$$
+-Cs^2\le E_s\le-cs^6,\qquad
+cs^8\le-\epsilon_c(s)\le Cs^4,\qquad
+c\le r_s\le Cs^{-4}.
+\tag{22.3}
+$$
+
+The upper energy direction in (22.3) is P (100.3), applied at $g_s$; it is not a new identification of the minimizing branch. Constants are independent of every actual normalized complex ground-state choice. The operator remains $aS-g_sW_{s^2}$ on $D(S)$ and the field heat clock remains $B$, independently of $a$. No reality, parity or separate phase $H^1$ restriction is imposed on $F$.
+
+Proof. Write $\chi=\chi_c$, $\beta=\beta_s=\nu s$, $\nabla_H=(X,Y)$, and $\mathfrak d=d_E(0,\cdot)$ for the same homogeneous control metric as R §16. We establish the estimates consumed by the actual-energy argument before passing to arbitrary form vectors.
+
+**Particular weighted response.** Put $U_h=pF_*$ and $v=\Psi-U_h$, with exactly the height projection of R (16.2). R (16.3) supplies
+
+$$
+|F_*|\le C|r|,\quad |F_*'|=|q_*|\le C,\quad
+p\le C(1+\mathfrak d)^{-5},\quad
+|\nabla_Hp|\le C(1+\mathfrak d)^{-6},\quad
+\mathfrak d\ge c_r|r|.
+\tag{22.4}
+$$
+
+The control balls have volume $v_dR^7$. Let $\vartheta_R$ be the even compact spatial cutoff of R §20, equal to one on $\mathbb B_{2R}$ and supported in $\mathbb B_{3R}$. R (20.4) and its $\operatorname{Err}_R=O(R^{-3})$ bound give $h[(1-\vartheta_R)v]\le CR^{-3}$. This vector is odd, so R (16.1) gives $b[(1-\vartheta_R)v]\le CR^{-3}$. Outside $\mathbb B_{3R}$ its horizontal derivatives equal those of $v$. Moreover
+
+$$
+XU_h=F_*Xp+pq_*,\qquad YU_h=F_*Yp,
+\qquad |\nabla_HU_h|\le C(1+\mathfrak d)^{-5}.
+$$
+
+Integrating these pointwise bounds, and using R Lemma 20.1 for $v$ and the same decay for $U_h$, proves, for $R\ge1$,
+
+$$
+\int_{\mathfrak d>R}|\nabla_H\Psi|^2\le CR^{-3},
+\qquad \|\mathbf1_{\mathfrak d>R}\Psi\|_2\le CR^{-1/2}.
+\tag{22.5}
+$$
+
+Dyadic summation of $\mathfrak d^2|\nabla_H\Psi|^2$ bounds its integral over $\mathfrak d>1$ by $C\sum_{j\ge0}2^{2j}2^{-3j}<\infty$. Local form membership handles the remaining ball. Together with (22.4), this proves
+
+$$
+\begin{gathered}
+rX\Psi,rY\Psi\in L^2,\qquad r^2Yp\in L^2,\qquad p\in L^{14/9},\\
+\|\mathbf1_{|r|>R}p\|_2+
+\|\mathbf1_{|r|>R}rYp\|_2\le CR^{-3/2},\qquad
+\|\mathbf1_{|r|>R}Y\Psi\|_2\le CR^{-3/2}.
+\end{gathered}
+\tag{22.6}
+$$
+
+For instance $r^4|Yp|^2\le C\mathfrak d^4(1+\mathfrak d)^{-12}$ is integrable in homogeneous dimension seven, and $5(14/9)>7$ proves the stated integrability of $p$. The Engel Sobolev inequality yields
+
+$$
+\|w\|_{14/5}\le C\sqrt{b[w]},\qquad
+|\langle p,w\rangle|\le C\sqrt{b[w]}
+\quad(w\in\mathcal Q_E).
+\tag{22.7}
+$$
+
+Here the first inequality is the $s=1$ case of Bahouri–Barilari–Gallagher–Léautaud, [arXiv:2206.10396v1](https://arxiv.org/pdf/2206.10396v1), Theorem 5.1. Their fields, group law, Haar measure and $Q=7$ coincide with (2.6), and their homogeneous norm is $\sqrt b$. Its core inequality extends by form closure to this complex domain, either directly in the complex-valued spaces or by real and imaginary parts; Hölder and (22.6) give the second inequality. These steps prove only the weighted horizontal derivatives needed here. Neither $r\Psi\in L^2$ nor $\Psi\in D(\mathcal E)$ or an uncut native response membership is used.
+
+**Complete cubic field and global remainder.** Use the single bridge and matrix notation of (3.1), and additionally define
+
+$$
+\begin{aligned}
+M_3&=\int_0^t H_v^3u(H_v)u(H_v)^{\mathsf T}dv,\\
+p_3(t;r,\mathbf z)&=h_t(r)\mathbb E_{0,r}^t\big[
+ -4D\gamma_{M_0}[M_3]-6D^2\gamma_{M_0}[M_1,M_2]
+ -\tfrac43D^3\gamma_{M_0}[M_1,M_1,M_1]\big],\\
+V_3&=j_0^{-1}\int_1^\infty p_3(t;\cdot)dt,
+\qquad V_{1t}=j_0^{-1}\int_1^\infty t p_1(t;\cdot)dt,\\
+\mathcal W_3&=\nu^3V_3+\nu\lambda V_{1t}.
+\end{aligned}
+\tag{22.8}
+$$
+
+These integrals converge absolutely, and
+
+$$
+\mathcal W_3\circ\sigma=-\mathcal W_3,\qquad
+|\mathcal W_3(r,\mathbf z)|\le C(1+|r|)^{-2},
+\tag{22.9}
+$$
+
+$$
+\left\|\widetilde U_s-\left(V+\beta V_1+\beta^2V_2
+ +\lambda s^2V_{\rm t}+s^3\mathcal W_3\right)\right\|_\infty
+ \le Cs^4.
+\tag{22.10}
+$$
+
+To prove these claims, fix $\ell>0$ small enough that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$, and put $L_s=\ell/s$, $T_s=s^{-2}$. On $S_t<L_s$ define
+
+$$
+M(\nu\vartheta)=\int_0^t(1+\nu\vartheta H_v)^{-2}
+ u(H_v)u(H_v)^{\mathsf T}dv,\qquad 0\le\vartheta\le s.
+$$
+
+The proof of P (107.6) applies also to derivative order four: differentiation of the scalar denominator gives the matrix-order bound $\|M_0^{-1/2}\partial_\vartheta^jM(\nu\vartheta)M_0^{-1/2}\|\le C_jS_t^j$. The covariance is uniformly comparable to $M_0$. Matrix Gaussian differentiation therefore gives, uniformly in $\mathbf z$,
+
+$$
+|\partial_\vartheta^j\gamma_{M(\nu\vartheta)}|
+ \le C_jS_t^j(\det M_0)^{-1/2}\quad(0\le j\le4).
+$$
+
+Indeed each derivative is a polynomial of fixed degree in $M_0^{-1/2}\mathbf z$ times a uniformly decreasing Gaussian; the matrix-order bounds control its coefficients. For $t\le T_s$, $\vartheta\sqrt t\le1$, whence $|\partial_\vartheta^k e^{\lambda\vartheta^2t}|\le C_kt^{k/2}$ for $k\le4$. P (107.5), equivalently (3.3), and the product rule now give
+
+$$
+h_t(r)\mathbb E_{0,r}^t\left[
+ \mathbf1_{S_t<L_s}\sup_{0\le\vartheta\le s}
+ |\partial_\vartheta^4(e^{\lambda\vartheta^2t}
+                       \gamma_{M(\nu\vartheta)})|\right]
+ \le C\sum_{j=0}^4t^{(4-j)/2}t^{(j-7)/2}
+ \le Ct^{-3/2}.
+\tag{22.11}
+$$
+
+Taylor's theorem is applied on each path before averaging. Its integrated remainder on $1\le t\le T_s$ is at most $Cs^4\int_1^{T_s}t^{-3/2}dt\le Cs^4$. The expansion $M(\beta)=M_0-2\beta M_1+3\beta^2M_2-4\beta^3M_3+\cdots$ gives exactly (22.8); the retained combined-clock coefficients are
+
+$$
+p_0+\nu s p_1+s^2(\nu^2p_2+\lambda t p_0)
+             +s^3(\nu^3p_3+\nu\lambda t p_1).
+\tag{22.12}
+$$
+
+In particular the cubic time-field cross term has not been omitted. The same moment estimate at zero parameter bounds $|p_3|+|tp_1|$ by $Ct^{-2}e^{-cr^2/t}$, proving convergence and (22.9)'s decay. Reflection of the bridge, with the phase transformation in $\sigma$, proves its odd parity, exactly as for P (107.8).
+
+It remains to compare the auxiliary strip with the complete native field. On every bridge surviving in the original $I_s$, $1+\beta H_v$ has positive fixed lower and upper bounds: these are the bounds for $(k-\alpha_\kappa)/d_0$ on the original interval. Thus the surviving covariance is comparable to $M_0$, even on paths leaving the auxiliary strip. The supremum of its Gaussian is at most $C(\det M_0)^{-1/2}$. P (107.5) bounds the cost of deleting those paths on $[1,T_s]$ by
+
+$$
+C\int_1^{T_s}t^{-7/2}e^{-cL_s^2/t}dt
+ \le CL_s^{-5}=O(s^5).
+\tag{22.13}
+$$
+
+For each coefficient $t^kp_j$ in (22.12), $j+2k\le3$, the same estimate bounds removal of the auxiliary indicator by $CL_s^{j+2k-5}$ after integration. Its prefactor $s^{j+2k}$ makes this $O(s^5)$. The integral of that coefficient over $t>T_s$ is at most $CT_s^{(j+2k-5)/2}$, again $O(s^5)$ after its prefactor. Finally (2.9a) bounds the original complete native integral over $t>T_s$ by $Cs^5$. All factors $j_0^{-1}$ are unchanged. These bounds are uniform over every real phase and every height endpoint, including zero extension outside $I_s$: there a bridge with $S_t<L_s$ cannot end, and the omitted coefficient paths satisfy the same estimates. This proves (22.10). Only the stated fixed-order bridge moments, surviving-path covariance and native long tail were used; no infinite-time derivative exchange or global conclusion from a local heat expansion is needed.
+
+**Supported complex lower bound.** Choose $\delta>0$ small enough that $|r|\le3\delta/s$ lies between both moving faces and $3\nu\delta<1/4$, and set $R=\delta/s$. Further smallness of this fixed $\delta$ will be specified below. Let $\rho$ be the even cutoff of R Lemma 8.1 and let $d=d_{s,\delta}$ be exactly its (8.1): $d=\rho(r/R)((1+\beta r)^{-2}-1)$ on $|r|<3R$, and $d=0$ elsewhere. The rational expression is evaluated only on that safe strip. On $\mathcal Q_E$ define the estimating form
+
+$$
+\begin{aligned}
+\mathfrak q_{s,\delta}[z]={}&h[z]+a\int d|Yz|^2
+ -\chi\int(\beta V_1+\beta^2V_2+\lambda s^2V_{\rm t}
+                         +s^3\mathcal W_3)|z|^2
+ -a\lambda s^2\|z\|_2^2.
+\end{aligned}
+\tag{22.14}
+$$
+
+For every $u\in\mathcal Q_E$ supported in $|r|\le2R$, native strip admissibility and (22.10) imply
+
+$$
+|\widetilde q_s^c[u]-\mathfrak q_{s,\delta}[u]|
+ \le Cs^4\|u\|_2^2.
+\tag{22.15}
+$$
+
+Put $t_s=p+\beta\Psi$, $c=b(p,u)/b[p]=\mu^{-1}\int Vpu$, and $w=u-ct_s$. By R Theorem 16.2 these are canonical form vectors. Oddness gives $b(p,\Psi)=0$, so $b(p,w)=0$ and $|c|\le C\|u\|_2$, using $Vp\in L^2$. The estimating form is used on $t_s,w$ on the canonical space; exact native agreement is claimed only on their supported sum $u$.
+
+Define $I_\Psi=\int r(Yp)(Y\Psi)$ and $J_\Psi=\int V_1p\Psi$. The response equation gives $D_{\rm resp}=2aI_\Psi+\chi J_\Psi$ and $h[t_s]=\beta^2D_{\rm resp}$. Taylor expansion of the safe rational coefficient through cubic order and parity give
+
+$$
+a\int d|Yt_s|^2
+ =3a\beta^2A-4a\beta^2I_\Psi+O_\delta(s^4).
+\tag{22.16}
+$$
+
+Here are the required tail and remainder bounds for this expansion. The $p$ diagonal's odd linear and cubic terms vanish with the even cutoff; its quadratic cutoff loss is $O(\beta^2R^{-3})$ by (22.6), and its fourth-order remainder is bounded by $C\beta^4\|r^2Yp\|_2^2$. For the leading kinetic cross term the omitted tail is bounded by
+
+$$
+\int_{|r|>2R}|rYp\,Y\Psi|
+ \le\|\mathbf1_{|r|>2R}rYp\|_2
+       \|\mathbf1_{|r|>2R}Y\Psi\|_2
+ \le CR^{-3}.
+\tag{22.17}
+$$
+
+Its coefficient is $\beta^2$, making the loss $O_\delta(s^5)$. The quadratic-coefficient cross term vanishes by parity, and the remaining cross term is bounded by $C\beta^4\|r^2Yp\|_2\|rY\Psi\|_2$. In the response diagonal the linear coefficient vanishes by parity; the remainder is bounded by $C\beta^4\|rY\Psi\|_2^2$. These are finite by (22.6), establishing (22.16) without an unproved weighted response norm.
+
+The complete potential expansion on $t_s$ has its quadratic part $-\chi\beta^2(C_2+2J_\Psi)-\chi\lambda s^2T$. Every cubic base contribution vanishes: $V_1\Psi^2$, $V_2p\Psi$, $V_{\rm t}p\Psi$ and $\mathcal W_3p^2$ are odd. Boundedness of the fields and $p,\Psi\in L^2$ bound the remaining terms by $Cs^4$. The exact threshold is $-a\lambda s^2\|t_s\|_2^2=-a\lambda s^2+O(s^4)$, since $\langle p,\Psi\rangle=0$. Thus
+
+$$
+\mathfrak q_{s,\delta}[t_s]
+ =\beta^2(K_{\rm base}-D_{\rm resp})
+       -\lambda s^2D_{\rm clock}+O_\delta(s^4)
+ =O_\delta(s^4),
+\tag{22.18}
+$$
+
+where the last equality uses exactly (22.1).
+
+We next bound the cross and complement terms for arbitrary complex $w$ with $b(p,w)=0$. The complexified response equation gives $h(t_s,w)=\beta\ell(w)$; its first-order kinetic and $V_1$ contributions cancel those in (22.14). The remaining kinetic coefficients satisfy
+
+$$
+\|(d+2\beta r)Yp\|_2\le C_\delta s^2,
+\qquad \|\beta dY\Psi\|_2\le Cs^2.
+\tag{22.19}
+$$
+
+For the first bound, on $|r|<3R$ write $d+2\beta r=\rho(r/R)(d_{\rm rat}(r)+2\beta r)+2\beta r(1-\rho(r/R))$, where $d_{\rm rat}(r)=(1+\beta r)^{-2}-1$ is evaluated only there. Outside that strip $d+2\beta r=2\beta r$. The first term is bounded by $C\beta^2r^2$ on the strip, and the remaining terms have norm at most $C\beta R^{-3/2}$ after multiplication by $Yp$, by (22.6). For the second bound use $|d|\le C|\beta r|$ and $rY\Psi\in L^2$.
+
+R Theorem 4.1 bounds each $L\in\{V_1,V_2,V_{\rm t}\}$ by $C\sqrt V$, with $\int\sqrt V|z|^2\le\Gamma b[z]$. Cauchy–Schwarz with this positive weight bounds $|\int L\Psi w|$ by $C\sqrt{b[\Psi]}\sqrt{b[w]}$; (3.6) gives the analogous bound with $p$. Equation (22.7) bounds the threshold cross term containing $p$. Keep the threshold term containing $\beta\Psi$ and the bounded cubic-field cross term as $L^2$ terms. Together with (22.19) this gives
+
+$$
+|\mathfrak q_{s,\delta}(t_s,w)|
+ \le C_\delta s^2\sqrt{b[w]}+Cs^3\|w\|_2,
+\tag{22.20}
+$$
+
+$$
+\mathfrak q_{s,\delta}[w]
+ \ge(a\theta-C\delta-Cs)b[w]-Cs^2\|w\|_2^2.
+\tag{22.21}
+$$
+
+The second inequality uses the energy-complement gap (3.4), $|d|\le C\delta$, the same multiplier bounds, and boundedness of $\mathcal W_3$. In particular its negative $L^2$ term is retained.
+
+To absorb that term use the support relation, not a positive global $L^2$ gap. Let $\kappa_R(r)$ equal one on $[-2R,2R]$, vanish outside $[-4R,4R]$, and have $|\kappa_R'|\le C/R$. Hilbert-valued one-dimensional Dirichlet Poincaré for $\kappa_Rw$ gives
+
+$$
+\begin{aligned}
+\|\kappa_Rw\|_2
+ &\le CR\|X(\kappa_Rw)\|_2\\
+ &\le CR\sqrt{b[w]}+C\|\mathbf1_{2R<|r|<4R}w\|_2.
+\end{aligned}
+$$
+
+The extra cutoff derivative has been included in the last term. Outside the support of $u$, $w=-ct_s$. The same relation bounds $(1-\kappa_R)w$, so (22.5)–(22.6) yield
+
+$$
+\begin{aligned}
+\|w\|_2&\le CR\sqrt{b[w]}
+      +C|c|\|\mathbf1_{|r|>2R}t_s\|_2\\
+ &\le C\frac\delta s\sqrt{b[w]}
+      +C(R^{-3/2}+sR^{-1/2})|c|\\
+ &\le C\frac\delta s\sqrt{b[w]}+C_\delta s^{3/2}|c|,\\
+s^2\|w\|_2^2&\le C\delta^2 b[w]+C_\delta s^5|c|^2.
+\end{aligned}
+\tag{22.22}
+$$
+
+This auxiliary height cutoff is canonical; its support need not lie inside the native domain. Its Poincaré estimate requires only $Xw\in L^2$, as follows by the $\mathcal Q_E$ core closure and Fubini, with values in $L^2(\mathbb R^3;\mathbb C)$.
+
+Use complex polarization on $u=ct_s+w$. First fix $\delta>0$ small enough to absorb $C\delta+C\delta^2$ in (22.21) into $a\theta$, then take $s$ sufficiently small. In the cross term (22.20), (22.22) bounds $s^3\|w\|_2$ by $C\delta s^2\sqrt{b[w]}+C_\delta s^{9/2}|c|$. Young's inequality absorbs $C_\delta s^2|c|\sqrt{b[w]}$ and leaves $C_\delta s^4|c|^2$; the $s^5$ and $s^{9/2}$ terms are smaller. Combining (22.18)–(22.22) and then (22.15) proves
+
+$$
+\widetilde q_s^c[u]\ge-C_\delta s^4\|u\|_2^2
+\quad\bigl(u\in\mathcal Q_E,
+             \operatorname{supp}u\subset\{|r|\le2\delta/s\}\bigr).
+\tag{22.23}
+$$
+
+All pairings extend from the core by the displayed bounds. Only $p$ and $\Psi$ have prescribed parities; neither $u$ nor $w$ is restricted to a real or parity subspace.
+
+**Actual far-height mass.** We claim that, for the same fixed $\delta$, every actual unit complex ground state satisfies
+
+$$
+\int_{|r|>\delta/s}|F_s|^2
+ \le C_\delta(s^3+r_s^{-1/2}),\qquad F_s=\mathcal U_s\psi_s.
+\tag{22.24}
+$$
+
+This claim does not require (22.1). Use exactly P (104.1)'s $Q_s(t)=e^{-tC_s}$, kernel $q_s(t;\eta,\xi)$, resolvent $R_s(h)$, and split $U_s=U_s^{<}+U_s^{>}$ at $T_s=s^{-2}$. We prove, for every $h>0$,
+
+$$
+\|\mathbf1_{|r|>R}R_s(h)U_s\|_{2\to2}
+ \le C_\delta s^{3/2}+Cs^2h^{-1/4}+Cs^4h^{-1/2},
+\qquad R=\delta/s.
+\tag{22.25}
+$$
+
+For $0<t\le T_s$, P (104.4), symmetry and the semigroup column identity give $\sup_{\eta,\xi}q_s(t;\eta,\xi)\le Ct^{-7/2}$. Explicitly the uniform diagonal estimate at time $t$ is the squared column norm at time $t/2$, and Cauchy–Schwarz at the two endpoints gives this supremum. If $|\eta_r|\le R/2$, integrate first over all output phases. The height coordinate of the original scaled killed diffusion has generator $\partial_r^2$; its killing only decreases its endpoint measure. Hence
+
+$$
+\int_{|\xi_r|>R}q_s(t;\eta,\xi)d\xi
+ \le e^{\lambda s^2t}
+       \mathbb P(|\eta_r+\sqrt2B_t|>R)
+ \le Ce^{-cR^2/t}.
+$$
+
+The shifted factor is bounded on this time interval; the shifted heat is not assumed to be Markov in raw measure. Positivity and the supremum bound imply
+
+$$
+\|\mathbf1_{|\xi_r|>R}q_s(t;\eta,\cdot)\|_2
+ \le Ct^{-7/4}e^{-cR^2/t}.
+\tag{22.26}
+$$
+
+Split the input $U_s^{<}f$ at $|\eta_r|=R/2$ in the resolvent integral over $0<t<T_s$. For the inner input, P (104.6) gives $\|U_s^{<}f\|_1\le C\|f\|_2$, so (22.26) bounds its full-output contribution by
+
+$$
+C\|f\|_2\int_0^{T_s}t^{-7/4}e^{-cR^2/t}dt
+ \le CR^{-3/2}\|f\|_2.
+$$
+
+For the outer input, $0\le U_s^{<}\le U_s$ and (2.9)'s native height bound give multiplier norm $C_\delta s^5$. The same height bound applies before shear because the phase shear is bijective at each height. Since $Q_s(t)$ is an $L^2$ contraction, this contribution is at most $C_\delta s^5T_s\|f\|_2=C_\delta s^3\|f\|_2$. For the rest of the short-potential resolvent integral retain P (104.11)'s $Cs^2h^{-1/4}$ bound. For the entire long potential use P (104.14)'s $Cs^4h^{-1/2}$ bound; its multiplier is the actual fixed-cutoff $W_1$, not an $L^2$ Coulomb surrogate. These estimates prove (22.25), including time zero, all output phases and both moving deaths.
+
+The actual eigen-equation on $D(C_s)=\mathcal U_sD(S)$ is
+
+$$
+F_s=\frac\chi a R_s(h_s)U_sF_s,
+\qquad h_s=-\epsilon_c(s)/a=r_ss^8/a>0.
+\tag{22.27}
+$$
+
+Substitution in (22.25) gives $\|\mathbf1_{|r|>\delta/s}F_s\|_2\le C_\delta s^{3/2}+Cr_s^{-1/4}+Cr_s^{-1/2}$. P (100.3) gives $r_s\ge c_0>0$, so squaring and absorbing $r_s^{-1}$ into $C r_s^{-1/2}$ proves (22.24). All constants are uniform over actual ground-state choices; no rate for P (104.2)'s $d_s$ or norm-to-energy transfer has entered.
+
+**Native energy closure.** For any actual unit ground state put $f_s=\mathcal T_sF_s$. The shear preserves heights and norms, so (22.24) holds for $f_s$. Use the original quadratic height partition $\eta_R^2+\zeta_R^2=1$ of (2.11). The full complex closed-domain IMS identity R (9.3) gives
+
+$$
+\epsilon_c(s)=\widetilde q_s^c[\eta_Rf_s]
+ +\widetilde q_s^c[\zeta_Rf_s]
+ -a\int(|\eta_R'|^2+|\zeta_R'|^2)|f_s|^2.
+\tag{22.28}
+$$
+
+The inner vector is a canonical form vector supported in $|r|\le2R$ and is bounded below by (22.23). In the outer vector retain the exact nonnegative native free threshold form $aC_s$, with both faces, rather than discarding its threshold subtraction. By (2.9) the outer potential then costs at most $C_\delta s^5$. The derivative term is supported where $|r|>R$ and is at most $C_\delta s^2\int_{|r|>R}|f_s|^2$. Thus (22.24) gives
+
+$$
+-\epsilon_c(s)\le Cs^4+Cs^2r_s^{-1/2},
+\qquad -E_s\le Cs^2+Cr_s^{-1/2}.
+\tag{22.29}
+$$
+
+Set $x_s=(-E_s)/s^2>0$. Since $r_s=x_ss^{-4}$, (22.29) implies $x_s\le C+Cx_s^{-1/2}$. If $x_s\ge1$, its right side is at most $2C$; otherwise $x_s<1$. Hence $x_s$ is uniformly bounded and $E_s\ge-Cs^2$. At each $s>0$ the bottom is attained by the original-domain operator, by P Proposition 75.2. It is the infimum over the entire original complex form domain. Therefore this bound on its actual attained value implies (22.2) for every $F\in\mathcal Q_s$ by homogeneity, including vectors of arbitrary kinetic size. Combining with P (100.3) proves (22.3). Actual minimizers were used in (22.27)–(22.29), not replaced by trials. $\square$
+
+**Definition 22.2 (attribution, quantifiers and unresolved selection).** Theorem 22.1 is a `repo-derived` conditional actual-energy estimate. P (100.3) owns its macroscopic one-sided upper direction; P §104 owns the exact native short/long split and complete complex reconstruction bounds. P §§106–107 own the weighted mode, parity and fixed-order bridge moments; R §§4–5 and 8 own the coefficient multipliers, horizontal-energy complement gap, response equation and safe estimating coefficient; R §§16 and 19–20 own the particular canonical $L^2$/form representative and exterior loss. Entire-height response escape, Theorem 3.1, owns the full mode and first-horizontal-derivative decay. The particular weighted-response consequence, complete cubic-field estimate, supported response-corrected lower bound and actual far-height estimate above are consumed in the native energy closure, not separate replacements for that closure. The earlier nonassertion of response membership in Definition 3.2 is used only at its original scope; the stronger particular membership here is precisely R Theorem 16.2.
+
+The Sobolev interface is the identical Engel/Haar/$Q=7$ case of Bahouri–Barilari–Gallagher–Léautaud, Theorem 5.1 cited in (22.7). Colin de Verdière–Hillairet–Trélat, [DOI 10.5802/ahl.93](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf), Theorem A and Theorem 3.2, have the compact positive-time/interior-endpoint and local-realization scopes described in P §§104 and 107. The original smooth interior rational fields, zero drift, constant density and step-three flag meet those local hypotheses. They do not supply (22.10)'s global integrated remainder; (22.11)–(22.13) supply it. No one-dimensional threshold power law or positive canonical $L^2$ gap is imported. The inherited global heat, reconstruction and attainment statements remain ordinary conditional antecedents.
+
+Every constant and limit fixes the same original datum before $s\downarrow0$; no uniformity over varying data, vanishing $\kappa$, or a moving zero-response locus is asserted. The full real phase cover, both original Dirichlet faces, raw unit source, $j_0$ density and original rational third field remain unchanged. The canonical estimating vectors do not assert uncut native response membership, and the actual all-form conclusion uses only the original operator and form domains. No physical-space/dimension or analytic-state preparation conclusion follows.
+
+The premise $C_{\rm resp}=0$ has not been shown to occur. Absolute canonical response sign and positive/zero occurrence remain unresolved. The interval $cs^6\le-E_s\le Cs^2$ does not give a sharp order, signed fourth-order coefficient, centered crossover, or a matching Coulomb lower bound. The range $c\le r_s\le Cs^{-4}$ still permits bounded, divergent and mixed subsequential behavior; it selects no actual ground-state orbit. Indeed when $-E_s\asymp s^2$, (22.24) allows transition mass of order $s^2$, whose IMS cost is of order $s^4$, the same as a prospective fourth-order rescaled energy. Theorem 21.1's count still leaves a possible unique deep ground channel. Thus the original every-actual-choice selection target of Definition 9.1 remains unresolved.
+
+## 追加锚（本行以下为增补区）
+
+
+## 23. The complete fourth-order field at fixed original data
+
+Throughout §§23–28 fix one admitted original datum of Definitions 1.1–2.2 and retain every analytic antecedent of Theorem 22.1. In particular the signed nonzero $\kappa$, the jointly realized rational vector, both height faces, $a,\varepsilon$, the raw unit source and $j_0$ are fixed before $s\downarrow0$. The heat clock remains $B$, independently of $a$. All actual states have the full complex domains (1.5). The additional premise is $C_{\rm resp}=0$; its occurrence is not asserted. Write $\chi=\chi_c$ and
+
+$$
+v=\nu\Psi,\qquad t_s=p+sv,
+\tag{23.0}
+$$
+
+using exactly the particular real odd $\mathcal Q_E\cap L^2$ representative of R Theorem 16.2. No new representative of the first response is chosen.
+
+**Definition 23.1 (same-bridge fourth-order coefficients).** Reuse $p_0,p_1,p_2,V_1,V_2,V_{\rm t}$ of (3.1) and $p_3,V_3,V_{1t},\mathcal W_3$ of (22.8). On precisely that height bridge, with $u(h)=(1,h,h^2/2)$, define
+
+$$
+\begin{aligned}
+M_4&=\int_0^t H_u^4u(H_u)u(H_u)^{\mathsf T}\,du,\\
+p_4(t;\xi)&=h_t(r)\mathbb E_{0,r}^t\bigl[
+ 5D\gamma_{M_0}[M_4]+8D^2\gamma_{M_0}[M_1,M_3]
+ +\tfrac92D^2\gamma_{M_0}[M_2,M_2]\\
+&\hspace{31mm}+6D^3\gamma_{M_0}[M_1,M_1,M_2]
+ +\tfrac23D^4\gamma_{M_0}[M_1,M_1,M_1,M_1]\bigr],\\
+V_4&=j_0^{-1}\int_1^\infty p_4(t;\cdot)\,dt,\qquad
+V_{2t}=j_0^{-1}\int_1^\infty t p_2(t;\cdot)\,dt,\qquad
+V_{tt}=j_0^{-1}\int_1^\infty t^2p_0(t;\cdot)\,dt,\\
+\mathcal V_1&=\nu V_1,\qquad
+\mathcal V_2=\nu^2V_2+\lambda V_{\rm t},\qquad
+\mathcal V_3=\mathcal W_3,\\
+\mathcal V_4&=\nu^4V_4+\nu^2\lambda V_{2t}+\tfrac12\lambda^2V_{tt}.
+\end{aligned}
+\tag{23.1}
+$$
+
+Matrix derivatives keep the terminal phase fixed. Every integral uses the original $B$ clock, threshold $\lambda$ and factor $j_0^{-1}$.
+
+**Lemma 23.2 (global complete-field remainder).** The new integrals converge absolutely. Each $\mathcal V_j$ is real, bounded and satisfies $\mathcal V_j\circ\sigma=(-1)^j\mathcal V_j$. Moreover $|\mathcal V_4(r,\mathbf z)|\le C(1+|r|)^{-1}$, and on all of $\mathbb R^4$, with the original zero extension,
+
+$$
+\left\|\widetilde U_s-
+ \left(V+s\mathcal V_1+s^2\mathcal V_2+s^3\mathcal V_3+s^4\mathcal V_4\right)
+\right\|_\infty\le Cs^5(1+|\log s|)=o(s^4).
+\tag{23.2}
+$$
+
+Proof. Choose the same sufficiently small fixed $\ell>0$ as in the proof of (22.10), so $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$. Put $L_s=\ell/s$ and $T_s=s^{-2}$. On $S_t<L_s$ use
+
+$$
+M(\beta)=\int_0^t(1+\beta H_u)^{-2}u(H_u)u(H_u)^{\mathsf T}\,du.
+$$
+
+For $|\beta|L_s\le1/4$ this covariance is uniformly comparable to $M_0$. Differentiating the scalar denominator, then conjugating by $M_0^{-1/2}$, gives
+
+$$
+\|M_0^{-1/2}M^{(j)}(\beta)M_0^{-1/2}\|\le C_jS_t^j,
+\qquad
+|\partial_\beta^j\gamma_{M(\beta)}(\mathbf z)|
+ \le C_jS_t^j(\det M_0)^{-1/2}\quad(0\le j\le5).
+\tag{23.3}
+$$
+
+For $j=0$ only the second inequality is intended. Each Gaussian derivative is a polynomial of bounded degree in $M_0^{-1/2}\mathbf z$ times a uniformly decreasing Gaussian. The matrix bound controls its coefficients and therefore its supremum over all real phases. This proves (23.3) directly, extending the finite-order calculation of P (107.6).
+
+For $t\le T_s$, $0\le\vartheta\le s$ and $k\le5$, differentiation gives $|\partial_\vartheta^ke^{\lambda\vartheta^2t}|\le C_kt^{k/2}$, since $\vartheta\sqrt t\le1$. Leibniz, (23.3) and the full-moment estimate (3.3), at orders at most five, imply
+
+$$
+h_t(r)\mathbb E_{0,r}^t\left[
+ \mathbf1_{S_t<L_s}\sup_{0\le\vartheta\le s}
+ \left|\partial_\vartheta^5
+       \left(e^{\lambda\vartheta^2t}\gamma_{M(\nu\vartheta)}(\mathbf z)\right)\right|
+ \right]
+ \le C\sum_{j=0}^5t^{(5-j)/2}t^{(j-7)/2}=Ct^{-1}.
+\tag{23.4}
+$$
+
+Taylor's theorem is applied on each safe path before averaging. Its integrated remainder on $[1,T_s]$ is at most $Cs^5\int_1^{s^{-2}}t^{-1}dt$. Expanding
+$M(\beta)=M_0-2\beta M_1+3\beta^2M_2-4\beta^3M_3+5\beta^4M_4+\cdots$
+in the matrix Taylor formula gives the five fourth-order coefficients $5,8,9/2,6,2/3$ in (23.1). For example the second derivative contributes $8D^2\gamma[M_1,M_3]+(9/2)D^2\gamma[M_2,M_2]$, the third contributes $6D^3\gamma[M_1,M_1,M_2]$, and the fourth contributes $(2/3)D^4\gamma[M_1,M_1,M_1,M_1]$. Multiplication by $e^{\lambda s^2t}$ adds exactly $\nu^2\lambda tp_2+(\lambda^2/2)t^2p_0$ at fourth order, as well as the lower-order clock terms already retained.
+
+The moment estimate with the endpoint retained gives
+
+$$
+|p_4(t;\xi)|+|tp_2(t;\xi)|+|t^2p_0(t;\xi)|
+ \le Ct^{-3/2}e^{-cr^2/t}.
+\tag{23.5}
+$$
+
+Its integral on $t\ge1$ proves convergence, boundedness and the height decay. Bridge reflection $H\mapsto-H$, with the phase map in $\sigma$, proves the parities exactly as in P (107.8).
+
+We check the entire native comparison. On every path surviving in the original $I_s$, $1+\nu sH_u$ has fixed positive lower and upper bounds inherited from $(k-\alpha_\kappa)/d_0$. Thus its Gaussian has supremum at most $C(\det M_0)^{-1/2}$, including surviving paths that leave the safe strip. By (3.3), deleting these paths on $[1,T_s]$ costs at most
+
+$$
+C\int_1^{T_s}t^{-7/2}e^{-cL_s^2/t}dt\le CL_s^{-5}=O(s^5).
+$$
+
+For a retained coefficient $t^kp_j$, put $m=j+2k\le4$. Removing its safe-path indicator costs at most $CL_s^{m-5}$ after integration: its integrand is bounded by $Ct^{(m-7)/2}e^{-cL_s^2/t}$, and the substitution $t=L_s^2u$ proves this bound. Its full canonical tail past $T_s$ is at most $CT_s^{(m-5)/2}$. Multiplication by $s^m$ makes both errors $O(s^5)$. The original native tail past $T_s$ is $O(s^5)$ by (2.9a). Both original deaths are retained in the surviving-path part. Outside $I_s$ a safe path cannot have that endpoint; (3.3) then gives the same deleted-coefficient estimates for zero extension. These bounds, including all phases and the unchanged $j_0^{-1}$, prove (23.2). No infinite-time differentiation or local-to-global heat inference is used. $\square$
+
+## 24. The second homogeneous response and the quartic scalar
+
+Let $\dot{\mathcal H}$ be the completion of the complex compact smooth core in $\sqrt b$ and $\dot{\mathcal H}_0=\{z:b(p,z)=0\}$. The Sobolev inequality (22.7) realizes this completion in $L^{14/5}$. The form $h$ extends continuously, is nonnegative and has $h(p,z)=0$ there. Indeed $\int V|z|^2\le C_*b[z]$ extends by density, and its polarized version gives continuity. R Theorem 5.1 and projection along $p$ extend the complement gap to $\dot{\mathcal H}_0$.
+
+All forms are conjugate linear in the first slot; write $\mathfrak a_j[f]=\mathfrak a_j(f,f)$. On pairs for which the integrals are finite define
+
+$$
+\begin{aligned}
+\mathfrak a_1(f,z)&=-2a\nu\int r\,\overline{Yf}Yz
+                   -\chi\int\mathcal V_1\bar fz,\\
+\mathfrak a_2(f,z)&=3a\nu^2\int r^2\overline{Yf}Yz
+                   -\chi\int\mathcal V_2\bar fz-a\lambda\langle f,z\rangle,\\
+\mathfrak a_3(f,z)&=-4a\nu^3\int r^3\overline{Yf}Yz
+                   -\chi\int\mathcal V_3\bar fz,\\
+\mathfrak a_4(f,z)&=5a\nu^4\int r^4\overline{Yf}Yz
+                   -\chi\int\mathcal V_4\bar fz,\\
+\mathcal F_2(z)&=\mathfrak a_2(p,z)+\mathfrak a_1(v,z).
+\end{aligned}
+\tag{24.1}
+$$
+
+These are not bounded forms on arbitrary pairs of canonical or actual states. Only their indicated fixed-vector pairings are used.
+
+**Lemma 24.1 (second response in homogeneous energy).** There is a unique $\Upsilon\in\dot{\mathcal H}_0$ such that
+
+$$
+h(\Upsilon,z)=-\mathcal F_2(z)\quad(z\in\dot{\mathcal H}),
+\qquad b(p,\Upsilon)=0.
+\tag{24.2}
+$$
+
+It is real and even. No $L^2$ representative or native-domain membership of $\Upsilon$ is asserted.
+
+Proof. The kinetic terms of $\mathcal F_2$ are continuous in $\sqrt b$ because $r^2Yp,rYv\in L^2$ by (22.6). For $L\in\{V_1,V_2,V_{\rm t}\}$, (3.4) gives $|L|\le C\sqrt V$ and $\int\sqrt V|z|^2\le\Gamma b[z]$. Weighted Cauchy–Schwarz therefore bounds the pairings with $p$ or $v$ by $C\sqrt{b[z]}$. The full unweighted threshold term is continuous because
+$|\langle p,z\rangle|\le\|p\|_{14/9}\|z\|_{14/5}\le C\sqrt{b[z]}$,
+using (22.6)–(22.7). These estimates define the complex linear $\mathcal F_2$ on the completion.
+
+The first response equation (3.5), with R Theorem 16.2's representative, says on this completion
+
+$$
+h(v,z)=-\mathfrak a_1(p,z).
+\tag{24.3}
+$$
+
+Parity extends it from the odd completion to all $z$. In particular $\mathfrak a_1(p,v)=-h[v]$ is real. Hermitian symmetry and $\|p\|_2=1$ give the exact compatibility
+
+$$
+\begin{aligned}
+\mathcal F_2(p)
+ &=\mathfrak a_2[p]-h[v]\\
+ &=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock}
+ =C_{\rm resp}=0.
+\end{aligned}
+\tag{24.4}
+$$
+
+Thus the threshold contribution $-a\lambda\langle p,z\rangle$ is included in compatibility. On $\dot{\mathcal H}_0$ the bounds $a\theta b\le h\le ab$ and Riesz representation give a unique solution of (24.2). Since both sides annihilate $p$, it solves the equation on the whole completion. Complex conjugation and reflection commute with $h$, while $\mathcal F_2$ is real on real vectors and annihilates odd vectors. Uniqueness gives reality and evenness. $\square$
+
+**Definition 24.2 (the same-source coefficient).** Set
+
+$$
+\begin{aligned}
+D_4&=\mathfrak a_4[p]+2\operatorname{Re}\mathfrak a_3(p,v)+\mathfrak a_2[v]\\
+ &=5a\nu^4\int r^4|Yp|^2
+   -8a\nu^3\int r^3(Yp)(Yv)
+   +3a\nu^2\int r^2|Yv|^2\\
+ &\quad-\chi\int\bigl(\mathcal V_4p^2+2\mathcal V_3pv+\mathcal V_2v^2\bigr)
+   -a\lambda\|v\|_2^2,\\
+C_4&=D_4-h[\Upsilon].
+\end{aligned}
+\tag{24.5}
+$$
+
+All kinetic integrals are absolutely finite: their majorants are respectively $|r^2Yp|^2$, $|r^2Yp|\,|rYv|$ and $|rYv|^2$, from (22.6). Boundedness of the fields and $p,v\in L^2$ prove finiteness of the potential and threshold integrals. Thus $C_4$ is a defined real scalar of the same original datum. In particular (23.1)'s $\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$, and the last threshold term in (24.5), are retained.
+
+Real core density and (24.2) give
+
+$$
+\inf_{z\in C_c^\infty(\mathbb R^4;\mathbb R)}
+ \{h[z]+2\mathcal F_2(z)\}=-h[\Upsilon].
+\tag{24.6}
+$$
+
+Indeed the expression equals $h[z-\Upsilon]-h[\Upsilon]$. Approximate $\Upsilon$ in energy by real core vectors. Their possible $p$ coordinates do not affect either $h$ or $\mathcal F_2$; no $L^2$ approximation of $\Upsilon$ is used.
+
+## 25. A retained estimate for every actual complex choice
+
+Fix $\delta>0$ sufficiently small as in Theorem 22.1 and R Lemma 8.1, and put $R=\delta/s$. It remains fixed throughout each small-$s$ argument. Let $d=d_{s,\delta}$ be exactly R (8.1), including its even cutoff $\rho$. On $\mathcal Q_E$ use the estimating form
+
+$$
+\widehat q_s[z]=h[z]+a\int d|Yz|^2
+ -\chi\int(\widetilde U_s-V)|z|^2-a\lambda s^2\|z\|_2^2.
+\tag{25.1}
+$$
+
+On vectors supported in $|r|\le2R$ it agrees exactly with the original sheared form. The rational expression in $d$ is evaluated only on $|r|<3R$. This introduces no replacement native operator.
+
+**Lemma 25.1 (retained complement estimate).** For a supported complex $u$ put $c=b(p,u)/b[p]$ and $w=u-ct_s$. There are $k>0$ and $C_\delta<\infty$ such that, for sufficiently small $s$,
+
+$$
+\widehat q_s[u]\ge k b[w]-C_\delta s^4\|u\|_2^2,
+\qquad b(p,w)=0.
+\tag{25.2}
+$$
+
+For every actual normalized complex ground state define
+
+$$
+F_s=\mathcal U_s\psi_s,\qquad f_s=\mathcal T_sF_s,\qquad
+u_s=\eta_R f_s,\qquad
+c_s=b(p,u_s)/b[p],\qquad w_s=u_s-c_st_s.
+\tag{25.3}
+$$
+
+Then, uniformly over all actual choices,
+
+$$
+b(p,w_s)=0,\qquad
+b[w_s]\le C_\delta\bigl(s^4+s^2r_s^{-1/2}\bigr).
+\tag{25.4}
+$$
+
+Proof. Let $\mathfrak q=\mathfrak q_{s,\delta}$ of (22.14). Equations (22.18), (22.20), (22.21) and their proofs give
+
+$$
+|\mathfrak q[t_s]|\le C_\delta s^4,\qquad
+|\mathfrak q(t_s,w)|\le C_\delta s^2\sqrt{b[w]}+Cs^3\|w\|_2,
+\qquad
+\mathfrak q[w]\ge(a\theta-C\delta-Cs)b[w]-Cs^2\|w\|_2^2.
+\tag{25.5}
+$$
+
+The identity $c=\mu^{-1}\int Vpu$ gives $|c|\le C\|u\|_2$. Since $u$ is supported in $|r|\le2R$, $w=-ct_s$ outside that strip. The Hilbert-valued height Poincaré argument (22.22), including its auxiliary cutoff derivative, gives
+
+$$
+\|w\|_2\le C\delta s^{-1}\sqrt{b[w]}+C_\delta s^{3/2}|c|.
+\tag{25.6}
+$$
+
+Consequently $Cs^2\|w\|_2^2\le C\delta^2b[w]+C_\delta s^5|c|^2$, and $s^3\|w\|_2\le C\delta s^2\sqrt{b[w]}+C_\delta s^{9/2}|c|$. Choose $\delta$ so $C\delta+C\delta^2$ leaves a positive part of $a\theta$, and then take $s$ small. In the polarization of $\mathfrak q[ct_s+w]$, Young's inequality absorbs the cross term into less than half this positive part, at cost $C_\delta s^4|c|^2$. Retain the rest as $kb[w]$. Equation (22.10) bounds $|\widehat q_s[u]-\mathfrak q[u]|$ by $Cs^4\|u\|_2^2$. This proves (25.2), without a global $L^2$ gap.
+
+The actual closed-form eigen-equation tested with $\eta_R^2 f_s$ gives exactly
+
+$$
+\widehat q_s[u_s]=\epsilon_c(s)\|u_s\|_2^2
+                  +a\int|\eta_R'|^2|f_s|^2.
+\tag{25.7}
+$$
+
+Height multiplication preserves the full complex closed domain by the supported-strip core closure; $Y\eta_R=0$ and the $X$ product rule gives the displayed derivative term. Native negativity, $\|u_s\|_2\le1$ and (22.24), which is unchanged by the height-preserving shear, bound the right side above by $C_\delta s^2(s^3+r_s^{-1/2})$. Apply (25.2) and absorb $s^5$ into $s^4$ to obtain (25.4). All constants are independent of the actual normalized complex choice. $\square$
+
+**Corollary 25.2 (negative fourth-order subsequences and the weak threshold pairing).** On any actual sequence with
+
+$$
+\epsilon_c(s)/s^4\longrightarrow L<0,
+\tag{25.8}
+$$
+
+one has
+
+$$
+r_s\asymp s^{-4},\quad b[w_s]=O_\delta(s^4),\quad
+\|w_s\|_2=O_\delta(s),\quad
+w_s/s\rightharpoonup0\text{ in }L^2,\quad
+\langle v,w_s\rangle=o_\delta(s).
+\tag{25.9}
+$$
+
+Proof. The scale relation is (1.7). Insert it in (25.4), then (25.6); $c_s$ is bounded. The vectors $w_s/s$ are bounded in $L^2$, while $\|X(w_s/s)\|_2=O_\delta(s)\to0$. Every weak $L^2$ cluster point therefore has distributional $\partial_r$ equal to zero. An $L^2(\mathbb R_r\times\mathbb R^3)$ function independent of $r$ is zero, by Fubini. Weak compactness and uniqueness of this cluster point prove weak convergence along the entire sequence. Pair it with the fixed $v\in L^2$ to obtain the last assertion. No estimate of $\langle v,z\rangle$ by $\sqrt{b[z]}$ is asserted or used. $\square$
+
+## 26. Fourth-order pairings and both moving cutoffs
+
+Keep the same fixed $\delta$. Put $\vartheta_s=\eta_{R/4}$ and $e_s=(1-\vartheta_s)t_s$. The vector $\vartheta_st_s$ is supported in $|r|\le R/2$ and is native admissible. The vector $e_s$ is used only in canonical estimating pairings. The decay (22.4) and ball volume $v_dR^7$ imply $\|\mathbf1_{|r|>R}\nabla_Hp\|_2\le CR^{-5/2}$. Combining (22.5)–(22.6) with the cutoff product rule gives
+
+$$
+\sqrt{b[e_s]}\le C(R^{-5/2}+sR^{-3/2})=O_\delta(s^{5/2}),
+\qquad
+\|e_s\|_2\le C(R^{-3/2}+sR^{-1/2})=O_\delta(s^{3/2}).
+\tag{26.1}
+$$
+
+For example the extra $X$ derivative costs $R^{-1}$ times the indicated $L^2$ tail; $Y\vartheta_s=0$.
+
+**Lemma 26.1 (all consumed scalar and cutoff errors).** One has
+
+$$
+\widehat q_s[t_s]=s^4D_4+o_\delta(s^4),\qquad
+\widehat q_s(e_s,t_s)=o_\delta(s^4),\qquad
+\widehat q_s[e_s]=O_\delta(s^5).
+\tag{26.2}
+$$
+
+On every sequence (25.8), additionally,
+
+$$
+\widehat q_s(t_s,w_s)=s^2\mathcal F_2(w_s)+o_\delta(s^4),
+\qquad
+\widehat q_s(e_s,w_s)=o_\delta(s^4).
+\tag{26.3}
+$$
+
+Proof. Decompose $d$ into its even and odd parts in $r$. They satisfy $|d_{\rm even}|\le Cs^2r^2$, $|d_{\rm odd}|\le Cs|r|$ everywhere and $|d|\le C\delta$. On $|r|\le2R$ its Taylor coefficients are $-2\nu sr,3\nu^2s^2r^2,-4\nu^3s^3r^3,5\nu^4s^4r^4$.
+
+For the $t_s$ diagonal, all odd products vanish by reflection. The omitted quadratic $p$ tail is $O(s^2R^{-3})$ by (22.6); the omitted leading $p,v$ cross tail has the same bound by (22.17). Both are $O_\delta(s^5)$. After subtracting these lower-order contributions, the normalized fourth-order kinetic terms are dominated, respectively, by constant multiples of
+
+$$
+r^4|Yp|^2,\qquad |r^2Yp|\,|rYv|,\qquad r^2|Yv|^2.
+\tag{26.4}
+$$
+
+These are integrable by (22.6). To include the expanding transition and exterior explicitly, on $|r|\ge2R$ one has $s^{-1}\le |r|/(2\delta)$. Thus each lost quadratic or linear coefficient, after division by $s^4$ and inclusion of its $s$ cross factor, has the same respective majorant in (26.4), with a fixed $\delta$-dependent constant. On each fixed height strip ordinary Taylor convergence gives the quartic coefficients. Dominated convergence therefore gives $5a\nu^4\int r^4|Yp|^2-8a\nu^3\int r^3YpYv+3a\nu^2\int r^2|Yv|^2$ at fourth order.
+
+The full second-order coefficient on $t_s$ is
+$h[v]+2\mathfrak a_1(p,v)+\mathfrak a_2[p]=C_{\rm resp}=0$.
+The first- and third-order integrals vanish by parity. By (23.2), the fourth-order field coefficient is exactly $-\chi\int(\mathcal V_4p^2+2\mathcal V_3pv+\mathcal V_2v^2)$; all higher products are $o(s^4)$ by boundedness and $p,v\in L^2$. The threshold is exactly $-a\lambda s^2-a\lambda s^4\|v\|_2^2$, since $\langle p,v\rangle=0$. The complete-field remainder costs $O(s^5(1+|\log s|))\|t_s\|_2^2$. These calculations prove the first formula of (26.2), with precisely (24.5).
+
+For the boundary pairing, $h(p,z)=0$ and parity remove the $p$ terms and the mixed $p,v$ term, leaving
+
+$$
+h(e_s,t_s)=s^2h((1-\vartheta_s)v,v)=O(s^2R^{-3}).
+\tag{26.5}
+$$
+
+For its rate use (24.3) on $(1-\vartheta_s)v$. In its kinetic right side $Y\vartheta_s=0$; the two tail norms $\|\mathbf1_{|r|>R/4}rYp\|_2$ and $\|\mathbf1_{|r|>R/4}Yv\|_2$ are $O(R^{-3/2})$. The field right side is at most $CR^{-4}\|\mathbf1_{|r|>R/4}p\|_2\|\mathbf1_{|r|>R/4}v\|_2=O(R^{-6})$. This proves (26.5), including the derivative implicit in $h$.
+
+The rational part of $\widehat q_s(e_s,t_s)$ is $a\int d(1-\vartheta_s)|Yt_s|^2$. The even/odd bounds above and parity bound its three terms by
+
+$$
+Cs^2\int_{|r|>R/4}r^2|Yp|^2
+ +Cs^2\int_{|r|>R/4}|rYp\,Yv|
+ +Cs^4\int_{|r|>R/4}r^2|Yv|^2
+ =O_\delta(s^5)+o_\delta(s^4).
+\tag{26.6}
+$$
+
+For the field part, the first-order base term and every third-order product are odd and integrate to zero. The second-order tails containing $\mathcal V_1pv$ and $\mathcal V_2p^2$ are $O(R^{-6})$: use (3.2)'s height decays $R^{-4},R^{-3}$ and the $L^2$ tails $R^{-3/2},R^{-1/2}$ of $p,v$. The fourth-order field tails tend to zero by integrability of $\mathcal V_4p^2,\mathcal V_3pv,\mathcal V_2v^2$, and hence cost $o(s^4)$. Higher products and the remainder (23.2) also cost $o(s^4)$. The threshold term is bounded by $Cs^2(R^{-3}+s^2R^{-1})=O_\delta(s^5)$, its odd cross term vanishing. Together with (26.5)–(26.6) this proves $\widehat q_s(e_s,t_s)=o_\delta(s^4)$.
+
+For $\widehat q_s[e_s]$, nonnegativity of $h$ and $h\le ab$, together with $|d|\le C\delta$, bound the kinetic and $h$ terms in absolute value by $Cb[e_s]=O_\delta(s^5)$. The first two field coefficients are bounded energy multipliers by (3.4) and cost $C(s+s^2)b[e_s]$. Boundedness of the cubic and higher fields costs $Cs^3\|e_s\|_2^2=O_\delta(s^6)$. The threshold costs $Cs^2\|e_s\|_2^2=O_\delta(s^5)$. This proves the last formula of (26.2).
+
+For the actual cross term, first-order cancellation by (24.3) leaves the second-order kinetic terms in $s^2\mathcal F_2(w_s)$. The remaining kinetic errors have coefficient norms
+
+$$
+\left\|\frac{d+2\nu sr-3\nu^2s^2r^2}{s^2}Yp\right\|_2\longrightarrow0,
+\qquad
+\left\|\frac{d+2\nu sr}{s}Yv\right\|_2\longrightarrow0.
+\tag{26.7}
+$$
+
+For the first limit, on $|r|<2R$ the divided Taylor remainder is bounded by $C\delta r^2|Yp|$ and converges pointwise to zero. On the transition and exterior separate the lost linear term, whose norm is at most $Cs^{-1}\|\mathbf1_{|r|>2R}rYp\|_2=O_\delta(s^{1/2})$. The remaining terms there are bounded by $C_\delta r^2|Yp|$ with tail norm tending to zero. For the second limit, $|d|\le Cs|r|$ gives majorant $C|rYv|$, and the multiplier tends pointwise to zero. Equation (25.9) therefore makes the resulting pairings with $Yw_s$ equal to $o_\delta(s^4)$.
+
+The second-order field terms are exactly $-\chi s^2\int(\mathcal V_2p+\mathcal V_1v)w_s$. The next two terms are $s^3$ times pairings with $\mathcal V_3p$ and $\mathcal V_2v$. Their magnitudes are $O_\delta(s^5)$: for the first use boundedness of $\mathcal V_3$, $p\in L^{14/9}$ and Sobolev (22.7); for the second use the energy multiplier bound and weighted Cauchy–Schwarz. The remaining fields have coefficient $O(s^4)$ in $L^2$ when multiplied by $p$ or $v$, and cost $O_\delta(s^5)$ by $\|w_s\|_2=O_\delta(s)$. The full remainder (23.2) is smaller. Retain $-a\lambda s^2\langle p,w_s\rangle$ inside $s^2\mathcal F_2(w_s)$. Its other threshold term is $-a\lambda s^3\langle v,w_s\rangle=o_\delta(s^4)$ by Corollary 25.2. This is the weak unweighted pairing step; $v$ has not been assigned fictitious homogeneous dual membership. These bounds prove the first formula of (26.3).
+
+Finally, continuity of $h$ and $|d|\le C\delta$ bound the $h$ and rational parts of $\widehat q_s(e_s,w_s)$ by $C\sqrt{b[e_s]}\sqrt{b[w_s]}=O_\delta(s^{9/2})$. The first two field coefficients cost $C(s+s^2)\sqrt{b[e_s]}\sqrt{b[w_s]}$ by (3.4). The bounded cubic and higher fields cost $Cs^3\|e_s\|_2\|w_s\|_2=O_\delta(s^{11/2})$, and the threshold costs $Cs^2\|e_s\|_2\|w_s\|_2=O_\delta(s^{9/2})$. Equation (23.2) handles its remainder. This proves the second formula of (26.3). All these actual pairings allow arbitrary complex $w_s$; parity was applied only to the fixed $p,v$ and their even cutoff products. $\square$
+
+## 27. The actual fourth-order spectral bottom
+
+**Theorem 27.1 (complete conditional actual fourth-order law).** At each fixed admitted original datum satisfying the antecedents of Theorem 22.1 and $C_{\rm resp}=0$, the scalar (24.5) satisfies
+
+$$
+\lim_{s\downarrow0}\frac{\epsilon_c(s)}{s^4}
+ =\lim_{s\downarrow0}\frac{E_s}{s^2}=\min\{0,C_4\}.
+\tag{27.1}
+$$
+
+If $C_4<0$, then $E_s=C_4s^2+o(s^2)$, $r_s\sim(-C_4)s^{-4}$, and for every prescribed sequence and every actual normalized complex ground-state choice,
+
+$$
+\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb T p)\longrightarrow0.
+\tag{27.2}
+$$
+
+Here $\mathbb T p=\{e^{i\theta}p:\theta\in\mathbb R\}$. If $C_4\ge0$, then $E_s=o(s^2)$ and $r_s=o(s^{-4})$. No finer scale or profile selection is asserted in this case.
+
+Proof. First construct a native recovery upper bound. For each fixed real $z\in C_c^\infty$, put $k_s=\vartheta_st_s+s^2z$. For all small $s$ this has height support strictly between both native faces. The supported-strip closure makes $\mathcal T_s^{-1}k_s\in\mathcal Q_s$, with no separate phase regularity imposed, and $\|k_s\|_2\to1$. Lemma 26.1 gives $\widehat q_s[\vartheta_st_s]=s^4D_4+o_\delta(s^4)$. For fixed $z$, (24.3), rational Taylor expansion on its fixed support and (23.2) give $\widehat q_s(t_s,z)=s^2\mathcal F_2(z)+o(s^2)$ and $\widehat q_s[z]\to h[z]$. Since $\vartheta_s=1$ on the support of $z$ and its derivatives for small $s$, $\widehat q_s(e_s,z)=0$ exactly. Exact supported agreement therefore yields
+
+$$
+q_s^c[\mathcal T_s^{-1}k_s]
+ =s^4\{D_4+h[z]+2\mathcal F_2(z)\}+o_\delta(s^4).
+\tag{27.3}
+$$
+
+Normalization adds no fourth-order contribution: the numerator is $O(s^4)$ and the norm tends to one. Take $s\downarrow0$ for each fixed $z$, then the real energy-core infimum (24.6), to get
+
+$$
+\limsup_{s\downarrow0}\epsilon_c(s)/s^4\le C_4.
+\tag{27.4}
+$$
+
+Only compact approximants of $\Upsilon$ have been used. This step by itself is a trial upper bound.
+
+Now let an arbitrary sequence satisfy $\epsilon_c(s)/s^4\to L<0$, and choose any actual normalized complex ground states. Then $r_s\to\infty$, so P Theorem 105.1 gives distance to $\mathbb T p$ tending to zero. Multiplying each actual state by a single constant phase gives $F_s\to p$ in $L^2$. Since $\mathcal T_s$ is unitary and strongly continuous at the identity, $f_s=\mathcal T_sF_s\to p$ as well. Hence $u_s\to p$, and $c_s\to1$ by the fixed $Vp\in L^2$ coordinate. No actual state is assumed real or even.
+
+By (25.9), $w_s/s^2$ is bounded in $\dot{\mathcal H}_0$. Let $W$ be a weak energy cluster point. Test the native eigen-equation with any fixed complex compact smooth $z$. For small $s$, $\eta_R=1$ on its support and derivative support, so $\widehat q_s(z,u_s)=\epsilon_c(s)\langle z,f_s\rangle$. Insert $u_s=c_st_s+w_s$ and divide by $s^2$ to obtain
+
+$$
+h(z,w_s/s^2)+c_s\overline{\mathcal F_2(z)}\longrightarrow0.
+\tag{27.5}
+$$
+
+For clarity, the fixed-support rational perturbation paired with $w_s$ is $O_z(s)\sqrt{b[w_s]}=O_z(s^3)$. The first two field perturbations have the same or smaller bound by (3.4); the bounded higher fields and threshold are $O_z(s^2)\|w_s\|_2=O_z(s^3)$. The eigenvalue side is $O_z(s^4)$. The fixed-test expansion on $t_s$ has remainder $o_z(s^2)$ by (24.3) and (23.2). These are all the discarded terms in (27.5). After passage to the weak limit and conjugation, density gives $h(W,z)=-\mathcal F_2(z)$ and $b(p,W)=0$. Lemma 24.1 gives $W=\Upsilon$. Uniqueness of the cluster point yields
+
+$$
+w_s/s^2\rightharpoonup\Upsilon\quad\text{in }\dot{\mathcal H}_0.
+\tag{27.6}
+$$
+
+This asserts only homogeneous energy weak convergence.
+
+Use the native-admissible $\vartheta_st_s$ itself as test in the actual equation. Its support is inside the region where $\eta_R=1$, including derivative supports. The exact identity, with conjugate-linear first slots, is
+
+$$
+\begin{aligned}
+\epsilon_c(s)\langle\vartheta_st_s,f_s\rangle
+ &=\widehat q_s(\vartheta_st_s,u_s)\\
+ &=c_s\widehat q_s(t_s-e_s,t_s)+\widehat q_s(t_s-e_s,w_s).
+\end{aligned}
+\tag{27.7}
+$$
+
+Every cutoff error needed here has been proved in Lemma 26.1. Substitution gives
+
+$$
+\epsilon_c(s)\langle\vartheta_st_s,f_s\rangle
+ =c_ss^4D_4+s^2\mathcal F_2(w_s)+o_\delta(s^4).
+\tag{27.8}
+$$
+
+The left inner product tends to one, $c_s\to1$, and continuity of $\mathcal F_2$ on energy space with (27.6) gives
+$\mathcal F_2(w_s/s^2)\to\mathcal F_2(\Upsilon)=-h[\Upsilon]$.
+Divide (27.8) by $s^4$. Every strictly negative actual fourth-order cluster point is therefore $L=C_4$. The IMS error was used with its actual sign in (25.7) to bound the remainder; it has not been discarded at order $s^4$ in (27.8). No norm-to-energy inference has been used.
+
+Theorem 22.1 gives the compact interval $-C\le\epsilon_c(s)/s^4<0$. If $C_4<0$, (27.4) excludes zero cluster points; all cluster points then equal $C_4$. If $C_4\ge0$, the preceding identification excludes every negative cluster point, leaving only zero. This proves the whole limit (27.1). The scale consequences follow from (1.7): $r_s=-E_s/s^6$. In the negative case $r_s\to\infty$, so P Theorem 105.1 supplies (27.2) for every prescribed sequence and every actual choice. In the nonnegative case the dictionary gives only the two stated little-o consequences. $\square$
+
+## 28. Attribution and unresolved original scope
+
+Theorem 27.1 is a `repo-derived` ordinary conditional increment beyond Theorem 22.1's order bound. Its same-source quartic field, complete remainder, energy-continuous second forcing, retained actual remainder, weak unweighted pairing and actual scalar eigen-equation are proved in §§23–27. It reuses the first response equation, finite-strip Poincaré estimate and actual far-height estimate of §22; R §§4–5, 8, 16 and 19–20 supply the energy multipliers, complement gap, particular first-response membership and exterior loss. Entire-height response escape Theorem 3.1 owns the mode and first-horizontal-derivative decay. P §§104–107 own the full complex native reconstruction, actual every-choice orbit criterion and bridge moments. The cubic field is reused from (22.8), with no second definition. Taylor's theorem, Riesz representation, weak compactness, polarization and dominated convergence are mature tools; no literature-wide novelty is claimed.
+
+No new external perturbation theorem is invoked. The Sobolev interface remains exactly (22.7): the Engel group and horizontal fields (2.6), Haar measure, homogeneous dimension seven and order one in Bahouri–Barilari–Gallagher–Léautaud, Theorem 5.1, give $L^{14/5}$ and dual exponent $14/9$. The global fifth-order integrated remainder was proved using the inherited fixed-order moments, not inferred from the local heat theorem. All heat, kernel, local compactness, reconstruction and attainment antecedents remain ordinary conditional premises at their supplied scopes. No positive $L^2$ threshold gap, arbitrary $L^2$ inverse, or $L^2$ second response has been introduced.
+
+The original datum and each applicable $\delta$ are fixed before $s\downarrow0$. Recovery takes the small-$s$ limit for a fixed compact correction first and only then takes its energy-core infimum. The signed nonzero $\kappa$, same jointly realized rational fields, all-real phase cover, both Dirichlet faces, raw unit source, $j_0$, full complex domains and original $B$ clock remain unchanged. Canonical estimating extensions are never replacement native operators.
+
+Zero-response occurrence, the absolute sign of $C_4$, finer nonnegative-$C_4$ selection, centered crossover, analytic/native $L^2$ preparation and physical three-dimensional realization remain unresolved. The nonnegative branch still permits bounded, divergent or mixed subsequential $r_s$. The complete original every-ground-state decision of Definition 9.1, original A and the full target are not settled by this conditional theorem. This ordinary proof makes no Lean/kernel, independent-review, publication or lifecycle claim.
+
+## 追加锚（本行以下为增补区）

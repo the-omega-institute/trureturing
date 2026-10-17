@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Geometry.Hyperideal.TwoLengthAngleSum
 import Reg.Support.DependentFamily
+import Reg.D5.S3.Geometry.Hyperideal.NativeRadicand
 
 open scoped BigOperators
 open _root_.D5.S3.Geometry.Hyperideal.TwoLengthAngleSum
@@ -170,5 +171,41 @@ noncomputable def registration_1 :
 
 #print axioms registration
 #print axioms registration_1
+
+noncomputable def registration_2 :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Geometry.Hyperideal.TwoLengthAngleSum.rad_positive)
+    (type_of% (realize.{0,0,0,0,0}
+      _root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.signature
+      (fun _ p z => rad p.1 p.2 z) (fun e => nomatch e))) Unit Unit := {
+  unitName := `D5.S3.Geometry.Hyperideal.TwoLengthAngleSum.rad_positive.native_radicand_unit
+  realizationName := `Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.radicand_family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨_root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.arena⟩
+  objectArena := .source ⟨_root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source _root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.arena
+    ⟨_root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.radicand_family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize.{0,0,0,0,0}
+    _root_.Reg.D5.S3.Geometry.Hyperideal.NativeRadicand.signature
+    (fun _ p z => rad p.1 p.2 z) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Geometry.Hyperideal.TwoLengthAngleSum
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{ path := #["body","body","body","body","body","body","arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms registration_2
 end
 end Reg.D5.S3.Geometry.Hyperideal.TwoLengthAngleSum
