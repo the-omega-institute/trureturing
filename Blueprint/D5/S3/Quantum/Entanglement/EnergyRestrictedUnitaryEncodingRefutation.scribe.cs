@@ -42,19 +42,29 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                     + "requires this quantity to be at least 1 − omega for every input, where omega "
                     + "is the allowed energy and NeZero dA makes the vacuum index available."),
             Node("QCStrategy", "Unassisted quantum communication with shared randomness", QCStrategyFormula(),
-                "The finite random variable l has nonnegative weights q summing to one. Conditional "
-                    + "on l and x, Alice sends a positive semidefinite trace-one matrix rho(l,x). "
-                    + "Conditional on l and y, Bob measures a POVM. These are the states and measurements "
-                    + "of the unassisted quantum model in Section II.B and Eq. (4). No entangled system "
-                    + "is retained by Bob."),
+                "The message space H is an arbitrary complex Hilbert space with unit vacuum vector vac; "
+                    + "there is no dimension restriction. Shared randomness ranges over an arbitrary type L, "
+                    + "with nonnegative weights q and HasSum q 1. For each l and x, density operators enter "
+                    + "through their ensemble decompositions: nonnegative weights p(l,x,k) with sum one "
+                    + "and unit vectors psi(l,x,k), indexed by an arbitrary type K. Spectral decomposition "
+                    + "represents every density operator in this way. For each l and y, N is a finite POVM "
+                    + "of bounded complex linear operators; 0 ≤ N means positivity in the operator order. "
+                    + "These are the states and measurements of the unassisted quantum model in Section II.B "
+                    + "and Eq. (4). Bob retains no entangled system.", AssessedProvenance.FromLiterature(Source)),
             Node("qcProb", "Probabilities averaged over the shared random variable", QCProbFormula(),
-                "Equation (4) averages the conditional Born probabilities with the weights q. "
-                    + "The real part of the trace is explicit. The definition itself places no positivity "
-                    + "or normalization conditions on the weights, states or effects."),
+                "Equation (4) averages the Born probabilities first over each message ensemble and then "
+                    + "over shared randomness. For a density operator rho represented by an ensemble, "
+                    + "Re Tr(N rho) is the weighted sum of Re inner(Complex,psi,N psi). The two tsum "
+                    + "expressions range over the entire arbitrary index types L and K. The definition "
+                    + "requires a complex inner-product space; positivity, normalization and completeness "
+                    + "are supplied separately by QCStrategy.", AssessedProvenance.FromLiterature(Source)),
             Node("qcVacuum", "The averaged vacuum population", QCVacuumFormula(),
-                "Equation (5) averages the vacuum entries of the conditional message states. "
-                    + "The energy restriction is qcVacuum(q,rho,x) at least 1 − omega for each x. "
-                    + "It constrains the average over l and permits the conditional energies to differ."),
+                "Equation (5) averages the squared vacuum overlaps over each message ensemble and "
+                    + "over shared randomness, using tsum on both arbitrary index types. For unit vac, "
+                    + "the ensemble average is the vacuum population of the corresponding density operator. "
+                    + "The energy restriction is qcVacuum(vac,q,p,psi,x) at least 1 − omega for each x. "
+                    + "It permits the conditional energies to differ. This expression is defined on any "
+                    + "complex inner-product space without normalization assumptions.", AssessedProvenance.FromLiterature(Source)),
             Node("taskValue", "A general finite linear communication task", TaskValueFormula(),
                 "Each real coefficient c(b,x,y) multiplies the corresponding probability, and the "
                     + "sum includes all outcomes, inputs and settings. The coefficients are arbitrary; "
@@ -64,7 +74,9 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                     + "The displayed proposition is the positive answer for finite alphabets and "
                     + "0 ≤ omega < 1/2: every unitary entanglement-assisted value would be matched "
                     + "or exceeded by an unassisted strategy with the same energy bound. The latter "
-                    + "may use any positive finite message dimension and any finite shared random variable. "
+                    + "may use any complex Hilbert message space with a unit vacuum vector, arbitrary "
+                    + "shared randomness, density operators represented by ensembles, and POVMs of positive "
+                    + "bounded operators. Its message dimension has no restriction. "
                     + "Result 4 concerns only probabilistic transmission of a bit; the proposition here "
                     + "quantifies over all finite linear tasks.", AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
@@ -90,14 +102,26 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                             + "restriction holds with omega = 288/625 < 1/2. The overlap with the "
                             + "corresponding measurement vector is 49/50, giving task value 2401/2500.")),
                     Paragraph(Text(
-                        "For every density matrix rho and effect 0 ≤ E ≤ I, "
-                            + "Re Tr(E rho) − Re E_(0,0) ≤ sqrt(1 − Re rho_(0,0)). "
-                            + "For a pure state, compression to the span of its vacuum and nonvacuum "
-                            + "parts reduces this inequality to a two-dimensional Hermitian involution. "
-                            + "Spectral decomposition and concavity of the square root give the density-matrix "
-                            + "case. Summing the effect inequality over the four guesses and averaging "
-                            + "over the shared random variable bounds every unassisted value for this "
-                            + "task by 1/4 + sqrt(omega) under the same averaged energy restriction. "
+                        "In every complex Hilbert space, unit vectors g and psi and an effect 0 ≤ E ≤ I "
+                            + "satisfy Delta = Re inner(psi,E psi) − Re inner(g,E g) "
+                            + "≤ sqrt(1 − |inner(g,psi)|²). Multiply psi by a complex scalar of modulus one "
+                            + "so that a = inner(g,psi) is real and nonnegative, and put u = psi + g and "
+                            + "v = psi − g. Then Delta "
+                            + "is both Re inner(u,E v) and −Re inner(u,(I − E)v). Cauchy–Schwarz for the "
+                            + "positive forms of E and I − E gives Delta² ≤ A B and "
+                            + "Delta² ≤ (U − A)(V − B), where A = inner(u,E u), B = inner(v,E v), "
+                            + "U = norm(u)² = 2 + 2a and V = norm(v)² = 2 − 2a. The inequality "
+                            + "sqrt(A B) + sqrt((U − A)(V − B)) ≤ sqrt(U V) yields the stated bound.")),
+                    Paragraph(Text(
+                        "For nonnegative weights w summing to one and 0 ≤ t_j ≤ 1, put s = sum_j w_j t_j. "
+                            + "When s > 0, the tangent-line inequality sqrt(t) ≤ (t + s)/(2 sqrt(s)) "
+                            + "gives sum_j w_j sqrt(t_j) ≤ sqrt(s). When s = 0, each nonnegative "
+                            + "weighted term vanishes. Apply this averaging bound to the ensemble decompositions "
+                            + "of the density operators and then to shared randomness. The POVM identity gives "
+                            + "sum_x inner(vac,N_x vac) = 1 for each value of the shared random variable. "
+                            + "Consequently, in every Hilbert message space the four-guess task value is at most "
+                            + "1/4 + (1/4) sum_x sqrt(1 − qcVacuum(vac,q,p,psi,x)) ≤ 1/4 + sqrt(omega) "
+                            + "under the same averaged energy restriction. "
                             + "Since sqrt(288/625) < 17/25, every such value is less than 93/100, "
                             + "whereas 2401/2500 > 93/100. Hence claim is false."))),
                 DescribeRole.Theorem,
@@ -162,21 +186,31 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
     private static Formula Unitaries() => Arrow(N("X"), Call("Matrix.unitaryGroup", Fin("dA"), N("Complex")));
     private static Formula JointEffects() => Arrow(N("Y"), Arrow(N("B"), Matrix(Product())));
     private static Formula Weights() => Arrow(N("L"), N("Real"));
-    private static Formula Messages() => Arrow(N("L"), Arrow(N("X"), Matrix(Fin("d"))));
-    private static Formula QCEffects() => Arrow(N("L"), Arrow(N("Y"), Arrow(N("B"), Matrix(Fin("d")))));
+    private static Formula EnsembleWeights() => Arrow(N("L"), Arrow(N("X"), Arrow(N("K"), N("Real"))));
+    private static Formula Messages() => Arrow(N("L"), Arrow(N("X"), Arrow(N("K"), N("H"))));
+    private static Formula Operators() => Call("ContinuousLinearMap", N("Complex"), N("H"), N("H"));
+    private static Formula QCEffects() => Arrow(N("L"), Arrow(N("Y"), Arrow(N("B"), Operators())));
     private static Formula Behaviours() => Arrow(N("B"), Arrow(N("X"), Arrow(N("Y"), N("Real"))));
     private static Formula Positive(Formula value) => Call("Matrix.PosSemidef", value);
-    private static Formula Trace(Formula value) => Call("Matrix.trace", value);
     private static Formula RealPart(Formula value) => Call("Complex.re", value);
+    private static Formula Inner(Formula left, Formula right) => Call("inner", N("Complex"), left, right);
+    private static Formula NormSquared(Formula value) => new Formula.Power(new Formula.Norm(value), D(2));
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(new Formula.Subscript(Sum, Seq(N(name), Colon, type)), Parenthesized(body));
+    private static Formula TsumOver(string name, Formula type, Formula body) =>
+        Call("tsum", Seq(Typed(N(name), type), Sp, Mapsto, Sp, body));
+    private static Formula HilbertInstances(Formula body, bool complete = false) =>
+        Instance(Call("NormedAddCommGroup", N("H")),
+            Instance(Call("InnerProductSpace", N("Complex"), N("H")),
+                complete ? Instance(Call("CompleteSpace", N("H")), body) : body));
     private static Formula Types(Formula body) =>
         All("X", N("Type"), All("Y", N("Type"), All("B", N("Type"), body)));
     private static Formula Dimensions(Formula body) => All("dA", N("Nat"), All("dB", N("Nat"), body));
     private static Formula UnitaryData(Formula body) =>
         All("Psi", Vector(), All("U", Unitaries(), All("M", JointEffects(), body)));
-    private static Formula QCData(Formula body) =>
-        All("q", Weights(), All("rho", Messages(), All("M", QCEffects(), body)));
+    private static Formula EnsembleData(Formula body) =>
+        All("q", Weights(), All("p", EnsembleWeights(), All("psi", Messages(), body)));
+    private static Formula QCData(Formula body) => EnsembleData(All("N", QCEffects(), body));
     private static Formula Encoded() => Call("encoded", N("Psi"), N("U"), N("x"));
     private static Formula Energy(Formula vacuum) => All("x", N("X"), Le(Sub(D(1), N("omega")), vacuum));
 
@@ -212,31 +246,48 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
 
     private static Formula QCStrategyFormula()
     {
-        var state = At(N("rho"), N("l"), N("x"));
-        var effect = At(N("M"), N("l"), N("y"), N("b"));
-        var conditions = And(All("l", N("L"), Le(D(0), At(N("q"), N("l")))),
-            And(Eq(SumOver("l", N("L"), At(N("q"), N("l"))), D(1)),
-                And(All("l", N("L"), All("x", N("X"), And(Positive(state), Eq(Trace(state), D(1))))),
-                    All("l", N("L"), All("y", N("Y"), And(
-                        All("b", N("B"), Positive(effect)), Eq(SumOver("b", N("B"), effect), D(1))))))));
-        return Types(All("L", N("Type"), Instance(Call("Fintype", N("B")),
-            Instance(Call("Fintype", N("L")), All("d", N("Nat"), QCData(
-                IffFormula(Call("QCStrategy", N("q"), N("rho"), N("M")), conditions)))))));
+        var vector = At(N("psi"), N("l"), N("x"), N("k"));
+        var effect = At(N("N"), N("l"), N("y"), N("b"));
+        var effects = All("l", N("L"), All("y", N("Y"), And(
+            All("b", N("B"), Le(D(0), effect)), Eq(SumOver("b", N("B"), effect), D(1)))));
+        var unitVectors = All("l", N("L"), All("x", N("X"), All("k", N("K"),
+            Eq(new Formula.Norm(vector), D(1)))));
+        var ensembleSums = All("l", N("L"), All("x", N("X"),
+            Call("HasSum", At(N("p"), N("l"), N("x")), D(1))));
+        var ensemblePositive = All("l", N("L"), All("x", N("X"), All("k", N("K"),
+            Le(D(0), At(N("p"), N("l"), N("x"), N("k"))))));
+        var conditions = And(Eq(new Formula.Norm(N("vac")), D(1)),
+            And(All("l", N("L"), Le(D(0), At(N("q"), N("l")))),
+                And(Call("HasSum", N("q"), D(1)),
+                    And(ensemblePositive, And(ensembleSums, And(unitVectors, effects))))));
+        var body = All("vac", N("H"), QCData(
+            IffFormula(Call("QCStrategy", N("vac"), N("q"), N("p"), N("psi"), N("N")), conditions)));
+        return Types(All("H", N("Type"), All("L", N("Type"), All("K", N("Type"),
+            Instance(Call("Fintype", N("B")), HilbertInstances(body, complete: true))))));
     }
 
-    private static Formula QCProbFormula() => Types(All("L", N("Type"),
-        Instance(Call("Fintype", N("L")), All("d", N("Nat"), QCData(
-            All("b", N("B"), All("x", N("X"), All("y", N("Y"),
-                Eq(Call("qcProb", N("q"), N("rho"), N("M"), N("b"), N("x"), N("y")),
-                    SumOver("l", N("L"), Mul(At(N("q"), N("l")),
-                        RealPart(Trace(Mul(At(N("rho"), N("l"), N("x")),
-                            At(N("M"), N("l"), N("y"), N("b"))))))))))))))));
+    private static Formula QCProbFormula()
+    {
+        var vector = At(N("psi"), N("l"), N("x"), N("k"));
+        var average = TsumOver("l", N("L"), Mul(At(N("q"), N("l")),
+            TsumOver("k", N("K"), Mul(At(N("p"), N("l"), N("x"), N("k")),
+                RealPart(Inner(vector, At(At(N("N"), N("l"), N("y"), N("b")), vector)))))));
+        var body = QCData(All("b", N("B"), All("x", N("X"), All("y", N("Y"),
+            Eq(Call("qcProb", N("q"), N("p"), N("psi"), N("N"), N("b"), N("x"), N("y")), average)))));
+        return Types(All("H", N("Type"), All("L", N("Type"), All("K", N("Type"),
+            HilbertInstances(body)))));
+    }
 
-    private static Formula QCVacuumFormula() => All("X", N("Type"), All("L", N("Type"),
-        Instance(Call("Fintype", N("L")), All("d", N("Nat"), Instance(Call("NeZero", N("d")),
-            All("q", Weights(), All("rho", Messages(), All("x", N("X"),
-                Eq(Call("qcVacuum", N("q"), N("rho"), N("x")), SumOver("l", N("L"),
-                    Mul(At(N("q"), N("l")), RealPart(At(N("rho"), N("l"), N("x"), D(0), D(0))))))))))))));
+    private static Formula QCVacuumFormula()
+    {
+        var average = TsumOver("l", N("L"), Mul(At(N("q"), N("l")),
+            TsumOver("k", N("K"), Mul(At(N("p"), N("l"), N("x"), N("k")),
+                NormSquared(Inner(N("vac"), At(N("psi"), N("l"), N("x"), N("k"))))))));
+        var body = All("vac", N("H"), EnsembleData(All("x", N("X"),
+            Eq(Call("qcVacuum", N("vac"), N("q"), N("p"), N("psi"), N("x")), average))));
+        return All("X", N("Type"), All("H", N("Type"), All("L", N("Type"), All("K", N("Type"),
+            HilbertInstances(body)))));
+    }
 
     private static Formula TaskValueFormula() => Types(Instance(Call("Fintype", N("X")),
         Instance(Call("Fintype", N("Y")), Instance(Call("Fintype", N("B")),
@@ -246,13 +297,16 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
 
     private static Formula ClaimFormula()
     {
-        var unassisted = Some("d", N("Nat"), SomeInstance(Call("NeZero", N("d")),
-            Some("L", N("Type"), SomeInstance(Call("Fintype", N("L")),
-                Some("q", Weights(), Some("rho", Messages(), Some("N", QCEffects(),
-                    And(Call("QCStrategy", N("q"), N("rho"), N("N")),
-                        And(Energy(Call("qcVacuum", N("q"), N("rho"), N("x"))),
-                            Le(Call("taskValue", N("c"), Call("unitaryProb", N("Psi"), N("U"), N("M"))),
-                                Call("taskValue", N("c"), Call("qcProb", N("q"), N("rho"), N("N")))))))))))));
+        var qcConditions = And(Call("QCStrategy", N("vac"), N("q"), N("p"), N("psi"), N("N")),
+            And(Energy(Call("qcVacuum", N("vac"), N("q"), N("p"), N("psi"), N("x"))),
+                Le(Call("taskValue", N("c"), Call("unitaryProb", N("Psi"), N("U"), N("M"))),
+                    Call("taskValue", N("c"), Call("qcProb", N("q"), N("p"), N("psi"), N("N"))))));
+        var unassisted = Some("H", N("Type"), SomeInstance(Call("NormedAddCommGroup", N("H")),
+            SomeInstance(Call("InnerProductSpace", N("Complex"), N("H")),
+                SomeInstance(Call("CompleteSpace", N("H")), Some("vac", N("H"),
+                    Some("L", N("Type"), Some("K", N("Type"), Some("q", Weights(),
+                        Some("p", EnsembleWeights(), Some("psi", Messages(),
+                            Some("N", QCEffects(), qcConditions)))))))))));
         var comparison = Imp(Call("UnitaryStrategy", N("Psi"), N("U"), N("M")),
             Imp(Energy(Call("unitaryVacuum", N("Psi"), N("U"), N("x"))), unassisted));
         return IffFormula(N("claim"), Types(Instance(Call("Fintype", N("X")),
