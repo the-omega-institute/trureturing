@@ -20,14 +20,6 @@ internal sealed class FixedMarginalNegativityRefutationDocument : IScribeDocumen
                     + "The ket |ij⟩ is the basis vector |i⟩ ⊗ |j⟩, the dagger is conjugate transpose, "
                     + "and real coefficients of complex matrices are interpreted through the usual inclusion into C. "
                     + "All sums include every element of the indicated finite index set.")),
-            Node("negativity", "Negativity", NegativityFormula(), Blocks(
-                Paragraph(Text(
-                    "Equation (4) defines the negativity with the factor 1/2. "
-                        + "The trace norm used here is the real part of the trace of the positive square root:"),
-                    Math(In(TraceNormFormula())), Text(".")),
-                Paragraph(Text(
-                    "Partial transposition acts on B alone, exchanging the second row and column indices:"),
-                    Math(In(PartialTransposeFormula())), Text(".")))),
             Node("orderedMarginal", "The ordered fixed marginal",
                 MarginalFormula("orderedMarginal", Subscript(F.Id("x"), D(1)), Subscript(F.Id("x"), D(2))),
                 Blocks(Paragraph(Text(
@@ -44,6 +36,17 @@ internal sealed class FixedMarginalNegativityRefutationDocument : IScribeDocumen
                         + "with value zero on negative inputs, so the formula also specifies the definition "
                         + "outside the parameter region used below.")))),
             Node("claim", "The maximizing conjecture in the region of Eq. (27)", ClaimFormula(), Blocks(
+                Paragraph(Text("The negativity in this assertion is Eq. (4), "),
+                    Math(In(NegativityFormula())), Text(
+                        ", using the definition "),
+                    Ref("D5/S3/QuantumBounds/NegativityReductionInclusionRefutation.negativity"),
+                    Text(" with both factors indexed by Fin 3.")),
+                Paragraph(Text(
+                    "The trace norm used here is the real part of the trace of the positive square root:"),
+                    Math(In(TraceNormFormula())), Text(".")),
+                Paragraph(Text(
+                    "Partial transposition acts on B alone, exchanging the second row and column indices:"),
+                    Math(In(PartialTransposeFormula())), Text(".")),
                 Paragraph(Text(
                     "Section IV conjectures that the quasidistillable candidates maximize negativity at fixed marginals. "
                         + "Here this assertion is restricted to the region of Eq. (27): the two spectra are "

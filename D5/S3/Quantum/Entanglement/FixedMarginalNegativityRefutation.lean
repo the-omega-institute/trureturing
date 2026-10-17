@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.claim; result=D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.result; claim=D5/S3/Quantum/Entanglement/FixedMarginalNegativityRefutation.claim
    digest: Fixed two-qutrit marginals admit greater negativity than the Baio et al. candidate. -/
 
-import D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-import D5.S3.Quantum.Foundation.FiniteTraceDistance
-import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.QuantumBounds.NegativityReductionInclusionRefutation
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -20,13 +18,11 @@ open Matrix
 open scoped ComplexOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
 open D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation
-  (partialTransposeB IsDensity)
+  (IsDensity)
+open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
+open D5.S3.QuantumBounds.NegativityReductionInclusionRefutation (negativity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
   (partialTraceLeft partialTraceRight partialTraceLeft_kronecker partialTraceRight_kronecker)
-
-/-- The negativity of Eq. (4), with partial transposition on the second factor. -/
-noncomputable def negativity (R : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : ℝ :=
-  (traceNorm (partialTransposeB R) - 1) / 2
 
 /-- The ordered diagonal marginal of Eq. (24), for both `ρ_A` and `ρ_B`. -/
 noncomputable def orderedMarginal (x₁ x₂ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
@@ -137,11 +133,12 @@ private noncomputable def rhoPT : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :
     else if (p = (1, 1) ∧ q = (2, 2)) ∨ (p = (2, 2) ∧ q = (1, 1)) then 99/5000
     else 0
 
-private theorem rho_pt_eq : partialTransposeB rho = rhoPT := by
+private theorem rho_pt_eq : partialTranspose rho = rhoPT := by
   ext ⟨i, j⟩ ⟨k, l⟩
+  change rho (i, l) (k, j) = _
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
-      Fin.reduceFinMk, partialTransposeB, rho.eq_1, rho0.eq_1, chi.eq_1, rhoPT.eq_1,
+      Fin.reduceFinMk, rho.eq_1, rho0.eq_1, chi.eq_1, rhoPT.eq_1,
       orderedMarginal.eq_1, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
       Matrix.cons_val_two, map_ofNat]
 
@@ -177,7 +174,7 @@ private theorem reflection_unitary : (1 - (2 : ℂ) • K) ∈ unitaryGroup (Fin
   exact hp.one_sub.two_mul_sub_one_mem_unitary
 
 private theorem reflection_trace :
-    ((1 - (2 : ℂ) • K) * partialTransposeB rho).trace =
+    ((1 - (2 : ℂ) • K) * partialTranspose rho).trace =
       1 + 2 * (8168881/50000000 : ℂ) := by
   rw [rho_pt_eq]
   norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
@@ -186,11 +183,11 @@ private theorem reflection_trace :
     map_ofNat]
 
 private theorem rho_negativity_lower : (8168881/50000000 : ℝ) ≤ negativity rho := by
-  have h := (traceNorm_eq_max_re_tr_U (partialTransposeB rho)).2
+  have h := (traceNorm_eq_max_re_tr_U (partialTranspose rho)).2
     ⟨⟨1 - (2 : ℂ) • K, reflection_unitary⟩, rfl⟩
   rw [reflection_trace] at h
   norm_num at h
-  rw [negativity.eq_1]
+  rw [negativity]
   linarith
 
 private noncomputable def sigma : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
@@ -277,12 +274,13 @@ private theorem negative_entries_eq : ptNegative = negativeEntries := by
     ring_nf
   all_goals norm_num [sqrt5_square]
 
-private theorem sigma_pt_split : partialTransposeB sigma = ptPositive - ptNegative := by
+private theorem sigma_pt_split : partialTranspose sigma = ptPositive - ptNegative := by
   rw [positive_entries_eq, negative_entries_eq]
   ext ⟨i, j⟩ ⟨k, l⟩
+  change sigma (i, l) (k, j) = _
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     norm_num (config := { decide := true }) [-Fin.val_eq_zero_iff, Fin.reduceEq,
-      Fin.reduceFinMk, partialTransposeB, sigma.eq_1, positiveEntries.eq_1,
+      Fin.reduceFinMk, sigma.eq_1, positiveEntries.eq_1,
       negativeEntries.eq_1, Matrix.vecMulVec_apply, Matrix.cons_val_two, map_ofNat] <;>
     ring_nf
   all_goals norm_num [sqrt5_square]
@@ -331,7 +329,7 @@ private theorem candidate_negativity_upper :
   rw [positive_trace] at hp
   rw [negative_trace] at hq
   norm_num at hp hq
-  rw [candidate_eq_sigma, negativity.eq_1]
+  rw [candidate_eq_sigma, negativity]
   linarith
 
 /-- At marginals `diag(49,47,4)/100` and `diag(94,5,1)/100`, the candidate
