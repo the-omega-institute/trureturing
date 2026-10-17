@@ -56,7 +56,7 @@ def claim : Prop :=
 
 set_option maxRecDepth 4096
 
-private theorem diagonal_norm {n : Type*} [Fintype n] [DecidableEq n] (d : n → ℝ) :
+theorem diagonal_norm {n : Type*} [Fintype n] [DecidableEq n] (d : n → ℝ) :
     traceNorm (diagonal (fun i => (d i : ℂ))) = ∑ i, |d i| := by
   have hp : (diagonal (fun i => ((|d i| : ℝ) : ℂ))).PosSemidef := by
     apply posSemidef_diagonal_iff.mpr
