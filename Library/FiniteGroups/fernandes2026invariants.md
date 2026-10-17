@@ -20,7 +20,10 @@ The source is licensed under CC BY 4.0
 (https://creativecommons.org/licenses/by/4.0/). The quotation retains the
 wording with mathematical typography normalized; no endorsement is implied.
 
-## Exact source scope
+## Verified locator
+
+- DOI: 10.48550/arXiv.2609.20516.
+- Primary URL: https://arxiv.org/html/2609.20516v1.
 
 Problem 6.2, §6, HTML anchor `S6.Thmtheorem2`:
 
