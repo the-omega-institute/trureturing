@@ -1627,3 +1627,121 @@ the displayed five-reservoir paired class from the at-most-four-reservoir
 paired class on this original triangulation, and does not satisfy a blanket
 minimum-degree-at-least-nine hypothesis. No claim of census novelty, global
 minimality, or separation from every earlier geometric criterion is made.
+
+## 296. Assumptions and statement
+
+Retain the assumptions of Section 130: an actual finite ideal face
+pairing with connected circular edge links, every original degree at
+least six, fixed vertex-induced paired frames (R,A,B,O,A,B) with
+A,B in H and A!=B, one common positive generalized length field, and
+all original angle sums 2*pi. Axes can repeat and self-gluings are
+allowed. There is no bound on the number of reservoir labels.
+
+Assume a flat exists. Choose M maximal in cosh-length among all
+pi-selected reservoir labels, and write m=x_M, as in Section 132.
+
+**Theorem.** Every reservoir U with u=x_U>m-2 has a genuine occurrence.
+Every flat transverse occurrence of such U has angle pi; consequently,
+after the genuine witness is established, there are no flat transverse
+occurrences of U at all. An axial U occurrence can still be flat zero
+in an owner selecting a different, lower reservoir transversely; this
+last possibility is not excluded by the theorem.
+
+The result extends the genuine-witness step of Sections 184–186 to an
+arbitrary number of reservoir labels. It does not extend the entire
+five-reservoir return classification or assert general flat exclusion.
+
+## 297. Transverse zero occurrences are impossible
+
+Consider a flat owner with reservoir pair {U,A}. If it selects A,A,
+the transverse-flat inequality of Lemma 111.1 requires
+
+    a-u >= sqrt((r+1)*(o+1)) > 2.
+
+Since A is selected, a<=m; whereas u>m-2. This is impossible.
+If the owner instead selects its axes, each selected H axis has shifted
+value at most m-1<u+1<u+a. Each selected special axis has shifted value
+strictly below u+a by the fixed-pair special-edge barrier, Theorem112.1.
+The product of the two shifted axis values is therefore strictly less
+than (u+a)^2, contrary to the axial-flat condition of Section130.
+Thus the only possible flat selection is the transverse U,U pair.
+This proves the first assertion without any bound on |H|, including
+u>m, when selecting U itself is also impossible by maximality of M.
+
+## 298. Saturation and the original axial runs
+
+Suppose U has no genuine occurrence. Then every original U slot is
+flat and its complete edge equation gives exactly two pi slots.
+Every transverse U slot has angle pi by Section297 above. Every axial
+zero U slot belongs to an owner selecting a transverse reservoir P.
+
+For a fixed unordered reservoir pair {P,Q}, there is at most one such
+actual zero owner: only the strictly larger pair value can be selected,
+and one owner already contributes two pi slots to that selected global
+label. This uses the full selected-label equation, not an assumption
+that different visits around U correspond to different owners.
+
+Furthermore no axial-zero owner can have two U axes. If it did, its
+transverse-selected value p and companion q would satisfy
+
+    p-q >= sqrt((u+1)^2)=u+1.
+
+Since q>1 and u>m-2, this gives p>u+2>m. But P is a pi-selected
+reservoir, contradicting the definition of M. Therefore each actual
+zero owner supplies at most one original axial U occurrence.
+
+First suppose every U occurrence is axial. By the original-slot
+transport in Section131, its fixed reservoir pair is constant around
+the connected U circle. There is at most one zero owner, supplying at
+most one U occurrence. Together with the exactly two pi slots, this
+gives degree(U)<=3, contrary to minimum degree six.
+
+Otherwise U has a transverse occurrence. Its flat owner selects U,U,
+and its two transverse U slots exhaust the two pi slots in the complete
+U equation. These are the only transverse occurrences of U. Every
+other U occurrence is axial and zero.
+
+Remove these two distinct original transverse intervals from the U
+normal circle. The remaining original intervals form at most two
+consecutive axial runs, possibly empty. The two removed intervals may
+belong to the same tetrahedron, as indeed they do; they remain two
+separate intervals in the actual normal link. The complementary
+reservoir pair is constant along each run by Section131. The preceding
+fixed-pair argument allows at most one zero owner in each run, and the
+no-two-U-axes argument allows at most one U occurrence of that owner.
+Thus each run has at most one original interval, giving
+
+    degree(U)<=2+1+1=4.
+
+This again contradicts minimum degree six. Repeated visits, parallel
+face pairings and self-gluings change which endpoints are paired, but
+not the count of original intervals in these complete runs. Therefore
+U must have a genuine occurrence.
+
+A flat transverse U owner would already contribute 2*pi to U and
+leave no positive genuine contribution. Hence no such owner remains.
+This proves the theorem. QED.
+
+## 299. The exact six-reservoir boundary
+
+The genuine escape tau=(Z,M,C,D,M,C) of Theorem134.1 witnesses four
+distinct reservoir labels. The upper-gap theorem of Section182 supplies
+another actual label U outside those four with u>T(m,z)>m-2. The theorem
+above witnesses U without using reservoir cardinality.
+
+For exactly six labels H={M,C,D,Z,U,V}, the only possibly unwitnessed
+label is therefore V, and it must satisfy v<=m-2. If V is unwitnessed,
+every transverse-selected flat owner must select V, since all five
+other labels are genuinely witnessed. There is at most one such actual
+owner. Every flat axial zero slot of any label belongs to that owner,
+if it exists. Transverse zero slots in axial-flat owners are still
+possible and are not discarded.
+
+This identifies the first five-label cardinality issue precisely:
+the witness of the upper-gap label does not require five labels, but
+Section187's conclusion that every reservoir is witnessed, and hence
+that every flat owner selects its axes, does not follow for six from
+this argument. Even if the sixth label is witnessed, its additional
+face roles remain outside the published five-label case analysis.
+No actual realization of the residual low-label pattern, six-label
+flat exclusion, or six-label geometric realization is claimed here.
