@@ -2768,3 +2768,355 @@ If h=2, (12) implies Y is unitary: the eigenvalues of that block Gram are 1 plus
 Theorem 96.4 is a necessary reduction, not an exclusion of all support on two full fibres. Its remaining rank-one quotient permits a reciprocal gauge with equal principal Grams, but the full opposite kernel may have additional vectors. The earlier affine face directions cannot be used without proving that they annihilate those vectors.
 
 Together, Theorems 96.2 and 96.4 exclude all kernel supports with at most three coordinates at subquarter values and exclude the opposite-principal-rank-two alternative for two complete active fibres. Section 95 separately excludes full-support rank-(7,6) positive-subhalf minima. The remaining smaller-support and lower-rank cases, including the (3,1) principal-rank pair in (19), are open here. These statements concern full-domain calibrated local minima. Calibration may enlarge ranks and does not transfer local minimality from arbitrary leaking channels; the original unrestricted quarter optimum remains open.
+
+## 97. Reciprocal completion and rank-one quotient exclusion
+
+### 97.1. Original domain and the principal-kernel question
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, four two-coordinate fibres, correlated input encoding |f,i〉↦|f,i〉|f,i〉, output encoding |f〉↦|ff〉, and arbitrary-reference unhalved diamond error. On the calibrated domain, write
+
+\[
+ \begin{aligned}
+ \mathcal E&=\{G=G^*\ge0:G_{ff}=I_2\},\\
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}2\operatorname{Tr}[(T-G\odot H)W],\\
+ \mathcal C&=\{\rho=\bigoplus_f\rho_f\ge0:
+                 \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g).
+ \end{aligned}                                                     \tag{1}
+\]
+
+Suppose (G,H) is a local minimum on the full domain 𝓔×𝓔, rank G=7, and 0<t=F(G,H)<1/2. Fix a spanning vector a of ker G, put S=supp(a), O=Sᶜ, n=|S|, P=G_S and K=H_S. Let 𝒜₀ be the complete set of norming pairs satisfying b(W;G′,H′)≥0 for every feasible G′,H′, where b is the joint first-order expression (14) below. Sections 92 and 95 show that this common-witness subset is nonempty, compact and convex. For every member, the first stress is α_W aa*, α_W>0, and
+
+\[
+ W_{ij}=-\frac{\alpha_W a_i\overline{a_j}}
+                       {2\overline{H_{ij}}}
+       \quad(i,j\text{ in different original fibres}).             \tag{2}
+\]
+
+All cross-fibre entries of G,H are nonzero by |1/2−G_ijH_ij|≤t<1/2. Choose one common witness to define the supported PSD unit-diagonal quotient R of Lemma 95.2. Then
+
+\[
+ \begin{aligned}
+ P&=K\odot\overline R,\qquad \operatorname{rank}P=n-1,\\
+ (P_B)_S&=\alpha\operatorname{diag}(a_S)R
+                           \operatorname{diag}(\overline{a_S}),\\
+ P_BH&=0,\qquad P_B=0\text{ outside }S\times S,\\
+ h+r&\le n,\qquad n-1\le hr,\qquad
+ r\le8-\operatorname{rank}H,
+ \quad h=\operatorname{rank}K,\quad r=\operatorname{rank}R.
+ \end{aligned}                                                     \tag{3}
+\]
+
+The full opposite kernel may contain vectors with nonzero coordinates outside S. A direction annihilating only ker K need not give an affine feasible path for H. The next construction addresses that distinction by changing the outside cross blocks reciprocally. It makes no claim that a principal pair is itself a joint local minimum.
+
+### 97.2. A nonlinear lift retaining the complete product
+
+**Theorem 97.1.** Let D be a Hermitian principal matrix on S with D_ff=0 on each original fibre intersection and D ker K=0. Put D_G=−overline R⊙D. There are feasible full Grams G_s,H_s for all sufficiently small real s of either sign such that
+
+\[
+ (G_s)_S=P+sD_G,\qquad (H_s)_S=K+sD,\qquad
+ T-G_s\odot H_s=L+s^2\overline R\odot D\odot D,
+ \quad L=T-G\odot H.                                            \tag{4}
+\]
+
+Every expression involving the principal R and D in a full coefficient is extended by zero outside S×S. In particular the complete original product is unchanged outside that set. The squares in (4) are ordinary entrywise complex squares.
+
+**Proof.** By (3), range((P_B)_S)⊆ker K. Hence D(P_B)_S=0. All coordinates of a_S are nonzero, so
+
+\[
+ D\operatorname{diag}(a_S)R=0,\qquad
+ (D_Ga_S)_i
+   =-\sum_jD_{ij}a_jR_{ji}
+   =-\bigl(D\operatorname{diag}(a_S)R\bigr)_{ii}=0.               \tag{5}
+\]
+
+The Hermitian matrix D_G has zero original fibre blocks. Equation (3) also gives
+
+\[
+ D_G\odot K+P\odot D=0,\qquad
+ (P+sD_G)\odot(K+sD)
+     =P\odot K-s^2\overline R\odot D\odot D.                    \tag{6}
+\]
+
+In the S,O partition write
+
+\[
+ G=\begin{pmatrix}P&B\\B^*&C\end{pmatrix},\qquad
+ H=\begin{pmatrix}K&E\\E^*&J\end{pmatrix}.
+                                                                    \tag{7}
+\]
+
+The generalized Schur criterion gives range E⊆range K and J−E*K⁺E≥0. It does not require J to be invertible: when the range condition holds, the exact factorization is
+
+\[
+ \begin{pmatrix}K&E\\E^*&J\end{pmatrix}
+ =
+ \begin{pmatrix}I&0\\E^*K^+&I\end{pmatrix}
+ \begin{pmatrix}K&0\\0&J-E^*K^+E\end{pmatrix}
+ \begin{pmatrix}I&K^+E\\0&I\end{pmatrix}.                       \tag{8}
+\]
+
+Conversely, positivity forces the range condition by testing kernel vectors, and completing the square gives the Schur inequality.
+
+Since D is Hermitian and annihilates ker K, it acts only on range K, where K is positive definite. Choose c>0 with −cK≤D≤cK. For |s|<1/c put d=c|s| and λ=1−d. The matrices K+sD and K have the same range and kernel. Inverting on that common range gives
+
+\[
+ K+sD\ge(1-d)K,\qquad
+ (K+sD)^+\le(1-d)^{-1}K^+,\qquad
+ \lambda^2(K+sD)^+\le K^+.                                  \tag{9}
+\]
+
+Define
+
+\[
+ G_s=\begin{pmatrix}P+sD_G&\lambda^{-1}B\\
+                    \lambda^{-1}B^*&C\end{pmatrix},\qquad
+ H_s=\begin{pmatrix}K+sD&\lambda E\\
+                    \lambda E^*&J\end{pmatrix}.              \tag{10}
+\]
+
+The range condition for H_s is unchanged, and
+
+\[
+ J-\lambda^2E^*(K+sD)^+E\ge J-E^*K^+E\ge0.                  \tag{11}
+\]
+
+Thus H_s≥0 even when J is singular and H has additional full kernel vectors.
+
+For G_s, extend a_S by zero on O. Equation (5), Pa_S=0 and B*a_S=0 show G_s a=0 exactly. Also G_s−G=O(|s|). The restriction of G to a⊥ has a strictly positive least eigenvalue because rank G=7. For all sufficiently small |s| of either sign, G_s is therefore positive definite on a⊥ and has the same full kernel span(a). Every original fibre block remains I₂, including fibres meeting both S and O: their cross entries were zero and remain zero under scalar multiplication.
+
+Across S,O the multipliers λ and λ⁻¹ cancel entrywise, and the O×O blocks do not change. Equation (6) proves (4). If O is empty, the cross blocks are absent and the same proof reduces to the ordinary face paths. No rank preservation for H_s is needed. ∎
+
+### 97.3. Common-witness curvature at the coefficient level
+
+**Lemma 97.2.** For every fixed D satisfying Theorem 97.1, some (ρ,W)∈𝒜₀ satisfies
+
+\[
+ Q_W(D):=2\operatorname{Tr}[(\overline R\odot D\odot D)W]\ge0.
+                                                                    \tag{12}
+\]
+
+Consequently, on the same fixed G,H,a,R,
+
+\[
+ q_R(D):=-\sum_{\substack{i,j\in S\\
+                         i,j\text{ in different fibres}}}
+       \frac{\overline{a_i}a_j\overline{R_{ij}}}{H_{ij}}D_{ij}^2
+       \ge0.                                                     \tag{13}
+\]
+
+**Proof.** Let 𝒜 be the compact convex set of all norming pairs at (G,H), and set
+
+\[
+ b(W;G',H')=-2\operatorname{Tr}
+       [((G'-G)\odot H+G\odot(H'-H))W].
+                                                                    \tag{14}
+\]
+
+The common-witness subset consists exactly of the members of 𝒜 for which b(W;G′,H′)≥0 for every G′,H′∈𝓔. Fix D first. For M>0 and any such feasible pair, use the paths (10) in the convex mixtures
+
+\[
+ \widehat G_s=(1-Ms^2)G_s+Ms^2G',\qquad
+ \widehat H_s=(1-Ms^2)H_s+Ms^2H'.                              \tag{15}
+\]
+
+They are feasible for sufficiently small s. Although (10) can have a cusp at zero, it converges at rate O(|s|), and its coefficient is exactly quadratic. Thus direct product expansion gives
+
+\[
+ \begin{aligned}
+ T-\widehat G_s\odot\widehat H_s
+   =L+s^2\bigl[\overline R\odot D\odot D
+      -M((G'-G)\odot H+G\odot(H'-H))\bigr]+o(s^2).
+ \end{aligned}                                                   \tag{16}
+\]
+
+For each fixed M,G′,H′, the remainder is uniform against compact 𝓒. The derivative of a compact maximum of affine functionals is the maximum of their derivatives over the norming set. Local minimality at coefficient scale s² therefore gives
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+Mb(W;G',H')]\ge0
+       \quad\text{for every }G',H'\in\mathcal E.                \tag{17}
+\]
+
+There is one member of 𝒜 satisfying all the inequalities inside (17) simultaneously. Otherwise compactness supplies a finite inconsistent subsystem. The affine image of 𝒜 for those inequalities is compact convex and disjoint from the nonnegative orthant. Strict separation gives nonnegative weights, normalized to sum to one; their convex average of the corresponding feasible pairs contradicts (17). This separation uses affine variables with D fixed.
+
+Call the simultaneous pair (ρ_M,W_M). Setting G′=G,H′=H gives Q_(W_M)(D)≥0. The Q values are bounded on 𝒜. Along a convergent subsequence as M→∞, the simultaneous inequalities give b(W_*;G′,H′)≥0 for every fixed feasible pair. The limit belongs to 𝒜₀ and retains Q_(W_*)(D)≥0, proving (12).
+
+Substitution of (2), with the reversed indices in the trace, gives Q_W(D)=α_W q_R(D). The ordered summands in (13) are Hermitian-conjugate pairs. Its cross-fibre quotient coefficients are fixed by G,H; all within-fibre terms vanish. Since α_W>0 for every common witness, (12) implies (13). No single second-order witness for all directions, and no exchange of quadratic minimax quantifiers, has been assumed. ∎
+
+If additionally rank R=dim ker K, (3) gives range((P_B)_S)=ker K. For a Hermitian D, the principal-kernel condition is then equivalent to
+
+\[
+ E_D R=0,\qquad
+ E_D=\operatorname{diag}(\overline{a_S})D
+                                  \operatorname{diag}(a_S).
+                                                                    \tag{18}
+\]
+
+Indeed both conditions are equivalent to D diag(a_S)R=0. This is a sufficient dimension criterion for equality of the relevant spaces, not a converse about all restricted directions.
+
+### 97.4. Rank-one quotients and embedded quartet identities
+
+**Theorem 97.3.** Under the hypotheses of section 97.1, if one common witness has rank R=1, then S consists of three singleton coordinates in three distinct original fibres, and
+
+\[
+ t\ge\kappa:=\frac{\sqrt{21-9\sqrt[3]{9}}}{6}>\frac14.
+                                                                    \tag{19}
+\]
+
+**Proof.** Write R=vv*, |v_i|=1 and choose a diagonal unitary V on S with V²=diag(v). The reciprocal gauge G↦VGV*, H↦V*HV, extended diagonally outside S, preserves the full domain and product and makes
+
+\[
+ G_S=H_S=Q,\qquad \operatorname{rank}Q=n-1,\qquad
+ \ker Q=\operatorname{span}(a_S).                              \tag{20}
+\]
+
+Fix this gauge throughout. Its cross-fibre quotient entries are one, and all within-fibre entries of D vanish, so D_G=−D. Lemma 97.2 now applies to every Hermitian supported D with D_ff=0 and Da=0. Its fixed real quadratic form is
+
+\[
+ q(D)=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+            \frac{\overline{a_i}a_j}{Q_{ij}}D_{ij}^2\ge0.
+                                                                    \tag{21}
+\]
+
+Introduce the weighted principal matrix
+
+\[
+ J=\operatorname{diag}(\overline{a_S})Q\operatorname{diag}(a_S),
+ \quad h_{ij}=J_{ij},\quad d_i=J_{ii}=|a_i|^2>0,
+ \quad J\mathbf1_n=0.                                         \tag{22}
+\]
+
+The distinct within-fibre entries vanish and every cross-fibre entry is nonzero.
+
+Choose four distinct supported coordinates 1,2,3,4 for which edges 13,14,23,24,34 cross original fibres. No assumption is made on edge 12. For x∈C and s∈R use the matrix
+
+\[
+ E=\begin{pmatrix}
+ 0&0&x&-x\\
+ 0&0&-x+is&x-is\\
+ \overline x&-\overline x-is&0&is\\
+ -\overline x&\overline x+is&-is&0
+ \end{pmatrix}                                                \tag{23}
+\]
+
+on this quartet and zero on the other coordinates. It is Hermitian, has zero row sums, and vanishes on every original fibre block. Thus
+
+\[
+ D=\operatorname{diag}(1/\overline{a_S})E
+                              \operatorname{diag}(1/a_S)
+                                                                    \tag{24}
+\]
+
+on S, extended by zero, is an original eight-coordinate admissible direction for (21). The nonlinear lift handles any extra full kernel of H.
+
+Put A=1/h₁₃+1/h₁₄, B=1/h₂₃+1/h₂₄ and C=1/h₃₄. Pairing each edge with its reverse gives
+
+\[
+ q(D)=-2\operatorname{Re}\Phi(x,s),\qquad
+ \Phi(x,s)=x^2(A+B)-2isxB-s^2(B+C).                            \tag{25}
+\]
+
+Hence Re Φ≤0 for all x,s. With s=0, complex square freedom forces A+B=0. If B≠0, the choice s=1 and x=i[1+Re(B+C)]/(2B) gives Re Φ=1, a contradiction. Thus A=B=0 and
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{23}+h_{24}=0.                     \tag{26}
+\]
+
+These identities concern the same fixed J. Each violation would separately give a direction negative for every common witness. Combining several identities therefore combines no incompatible witnesses.
+
+### 97.5. Exhausting all original support patterns
+
+First suppose all four fibres are occupied. If one is full, call its coordinates 1,2 and choose one coordinate 3,4,5 from each other fibre. Applying (26) with all three pairs from {3,4,5} gives
+
+\[
+ h_{13}+h_{14}=0,\qquad h_{13}+h_{15}=0,\qquad
+ h_{14}+h_{15}=0,                                           \tag{27}
+\]
+
+forcing those nonzero entries to vanish. This covers all four-fibre supports of sizes five through eight. If all four fibres are singletons, keep coordinate 1 first and choose its omitted partner successively as 2,3,4. The resulting equations h₁₃+h₁₄=h₁₂+h₁₄=h₁₂+h₁₃=0 give the same contradiction.
+
+For three occupied fibres, retain (1,1,1,0) temporarily. The other possibilities, up to permutation, are (2,1,1,0), (2,2,1,0), and (2,2,2,0). In the first, take {1,2} full and 3,4 singleton. Equations (22),(26) give 0=d₁+h₁₃+h₁₄=d₁>0.
+
+For (2,2,1,0), take {1,2},{3,4} full and 5 singleton. Apply (26) to the first full fibre and pairs (3,5),(4,5). For i=1,2, it gives h_i3=h_i4=−h_i5, so row i forces h_i5=d_i>0. Reversing the two full fibres gives h_j5=d_j>0 for j=3,4. Only now using Hermiticity, the singleton row contradicts
+
+\[
+ 0=d_5+\sum_{i=1}^4h_{5i}=\sum_{i=1}^5d_i>0.              \tag{28}
+\]
+
+No positive or real gauge was assumed. For (2,2,2,0), label the fibres {1,2},{3,4},{5,6}. Apply (26) to (1,2,3,5) and (1,2,4,6). The first kernel row becomes 0=d₁+(h₁₃+h₁₅)+(h₁₄+h₁₆)=d₁>0. In particular no earlier bound n≤5 is needed for this exhaustion.
+
+It remains to check supports on at most two fibres. A one-fibre principal Gram is an identity matrix and cannot have rank n−1. Two-fibre occupancies are (1,1), (2,1), or (2,2). In (1,1), rank Q=1 makes its cross entry have modulus one, giving |1/2−Q₁₂²|≥1/2. Occupancy (2,1) is excluded by the exact common-witness objective in section 96.2, with its zero within-fibre target.
+
+For (2,2), write Q=[[I₂,C],[C*,I₂]]. Rank three makes the singular values of C equal to 1 and σ<1. Choose unit u,v with Cv=u,C*u=v, and rescale the fixed kernel vector a so that a=(−u,v); this multiplies q by a positive factor and keeps every α_W positive. Every component of u,v and every entry of C is nonzero. The algebraic form (21) is invariant under simultaneous diagonal unitary changes Q↦E*QE, a↦E*a, D↦E*DE. This is solely a change of variables in the fixed form, not a physical same-phase gauge preserving the target. We may calculate with
+
+\[
+ \begin{gathered}
+ u=(p,q),\quad v=(r,l),\quad p,q,r,l>0,\quad
+ p^2+q^2=r^2+l^2=1,\\
+ x=(-q,p),\quad y=(-l,r),\qquad
+ C=uv^{\mathsf T}+zxy^{\mathsf T},\quad |z|<1.
+ \end{gathered}                                                   \tag{29}
+\]
+
+The Hermitian D with cross block wxyᵀ, w∈C, has zero fibre blocks and Da=0. Substitution in (21) gives q(D)=2Re(w²A), where
+
+\[
+ A=pqrl\left(\frac{ql}{C_{11}}+\frac{qr}{C_{12}}
+                       +\frac{pl}{C_{21}}+\frac{pr}{C_{22}}\right).
+                                                                    \tag{30}
+\]
+
+With b=q/p>0 and d=l/r>0, the bracket is exactly
+
+\[
+ \begin{aligned}
+ &\frac{bd}{1+zbd}+\frac b{d-zb}+\frac d{b-zd}+\frac1{bd+z}\\
+ &\qquad=
+ \frac{bd(1+b^2)(1+d^2)(1-z^2)}
+ {(1+zbd)(d-zb)(b-zd)(bd+z)}.
+ \end{aligned}                                                   \tag{31}
+\]
+
+The denominator is nonzero by the entrywise nonvanishing of C; the numerator is nonzero because b,d>0 and |z|<1. Thus A≠0, and a phase choice of w makes q(D)<0. Theorem 97.1, rather than an unsupported affine opposite-face path, supplies feasibility.
+
+Only three singletons remain. Then Q is a complex PSD unit-diagonal rank-two matrix. The sharp theorem of section 93 and the original uniform density on S give
+
+\[
+ \begin{aligned}
+ E&:=\sum_{i<j}|1/2-Q_{ij}^{\,2}|^2
+                  \ge\frac{21-9\sqrt[3]{9}}{16},\\
+ t&\ge\frac{\|T_S-Q\odot Q\|_1}{3}
+                  \ge\frac{2\sqrt E}{3}\ge\kappa.
+ \end{aligned}                                                   \tag{32}
+\]
+
+For the middle inequality, the coefficient has trace zero and squared Frobenius norm 2E. If its positive and negative spectral masses are each m, their squared sums are at most m² each, so ∥T_S−Q⊙Q∥₁=2m≥2√E. The density I₃/3 and its positive-part witness extend by zero to the original domain. The strict κ>1/4 follows from 9<(25/12)³. This proves Theorem 97.3 with the complete unhalved normalization. ∎
+
+### 97.6. Consequences and the remaining boundary
+
+**Corollary 97.4.** No positive-subhalf full-domain calibrated local minimum with one rank-seven side has kernel support on at most two original fibres.
+
+**Proof.** The supports of size at most three on two fibres are excluded in section 96.2. For two complete fibres, Theorem 96.4 leaves only the principal rank pair (h,r)=(3,1), now excluded by the two-full-fibre argument above. The alternative (2,2) was already excluded there by the exact unitary best-response theorem. ∎
+
+Thus at a hypothetical subquarter minimum with one rank-seven side, its kernel support has at least four coordinates, occupies at least three original fibres, and every common supported quotient has rank at least two. Theorem 97.3 applies to any common witness that would have rank one.
+
+For a hypothetical rank-(7,6) subquarter minimum, these facts sharpen to
+
+\[
+ r=2,\qquad h=n-2,\qquad
+ \operatorname{range}P_B=\ker H,\qquad \ker H\subseteq\mathbb C^S.
+                                                                    \tag{33}
+\]
+
+Indeed r≤2 by (3). Since H is PSD, it is a Gram matrix; adding the 8−n records outside S increases span dimension by at most 8−n. Thus h≥6−(8−n)=n−2. Together with h+r≤n and r≥2 this gives equality. The supported complementary stress has rank two, equal to dim ker H, proving the last two assertions. Section 95 excludes full support in this rank pair. Up to fibre permutation, its still-unresolved support patterns are therefore
+
+\[
+ (2,1,1,0),\ (1,1,1,1),\
+ (2,2,1,0),\ (2,1,1,1),\
+ (2,2,2,0),\ (2,2,1,1),\ (2,2,2,1).                         \tag{34}
+\]
+
+This is a necessary reduction, not an exclusion of those seven patterns. Higher-rank quotients, other lower-rank pairs, and the unrestricted original quarter lower bound remain open; the global interval remains [√3−3/2,1/4]. The global calibration comparison may enlarge ranks and does not transfer local minimality from arbitrary leaking channels. No convex extreme-point rank reduction or principal joint-local-minimum assumption has been used.
+
+The dependencies are the exact adaptive norm and common stresses of sections 91–92, the supported quotient of section 95, the sharp complex three-vector theorem of section 93, and the small-support and unitary best-response consumers of section 96. The new mechanism is the reciprocal full completion and its coefficient-level common-witness consequence; the rank-one support exhaustion retains every original fibre constraint.
