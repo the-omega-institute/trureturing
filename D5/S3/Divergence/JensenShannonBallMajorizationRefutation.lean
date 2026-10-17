@@ -125,12 +125,17 @@ private def a : Fin 3 → ℝ := ![1/2, 2/5, 1/10]
 private def b : Fin 3 → ℝ := ![8/15, 1/3, 2/15]
 
 private lemma probability_data : IsProbVec p ∧ IsProbVec a ∧ IsProbVec b := by
-  norm_num [IsProbVec, D5.S3.TotalVariation.CycleSingleCutMinimax.Probability,
-    p, a, b, Fin.sum_univ_succ, Fin.forall_fin_succ]
+  rw [IsProbVec.eq_1, IsProbVec.eq_1, IsProbVec.eq_1]
+  rw [D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1,
+    D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1,
+    D5.S3.TotalVariation.CycleSingleCutMinimax.Probability.eq_1]
+  rw [p.eq_1, a.eq_1, b.eq_1]
+  norm_num [p.eq_1, a.eq_1, b.eq_1, Fin.sum_univ_succ, Fin.forall_fin_succ]
 
 private lemma js_three (q : Fin 3 → ℝ) :
     jensenShannon p q = term (2/3) (q 0) + term (4/15) (q 1) + term (1/15) (q 2) := by
-  norm_num [jensenShannon, Fin.sum_univ_succ, p, term]
+  rw [jensenShannon.eq_1, term.eq_1, term.eq_1, term.eq_1]
+  norm_num [Fin.sum_univ_succ, p.eq_1]
   ring
 
 private lemma term_nonneg_eq {c x : ℝ} (hc : 0 < c) (hx : 0 ≤ x) :
@@ -153,15 +158,38 @@ private lemma radius_pos : 0 < jensenShannon p a := by
   change 0 < term (2/3) (1/2) + term (4/15) (2/5) + term (1/15) (1/10)
   linarith [h1.1, h2.1]
 
+private lemma descending_data :
+    desc a = [(1/2:ℝ), 2/5, 1/10] ∧ desc b = [(8/15:ℝ), 1/3, 2/15] := by
+  constructor
+  · rw [desc.eq_1]
+    change ([(1/2:ℝ), 2/5, 1/10].mergeSort (fun x y => decide (y ≤ x))) = _
+    exact List.mergeSort_of_pairwise (by norm_num)
+  · rw [desc.eq_1]
+    change ([(8/15:ℝ), 1/3, 2/15].mergeSort (fun x y => decide (y ≤ x))) = _
+    exact List.mergeSort_of_pairwise (by norm_num)
+
 private lemma majorized_bounds {r : Fin 3 → ℝ} (h : Majorizes a r) :
     ∀ i, 1/10 ≤ r i ∧ r i ≤ 1/2 := by
   have h1 := h.1 1 (by decide)
   have h2 := h.1 2 (by decide)
   have h3 := h.2
-  norm_num [a, prefixSum, desc, List.ofFn_succ, List.mergeSort] at h1 h2 h3
-  by_cases h01 : r 1 ≤ r 0 <;> by_cases h02 : r 2 ≤ r 0 <;> by_cases h12 : r 2 ≤ r 1 <;>
-    norm_num [List.merge, h01, h02, h12] at h1 h2 h3 <;>
-    norm_num [Fin.forall_fin_succ] <;> (repeat' constructor) <;> linarith
+  have length : (desc r).length = 3 := by
+    rw [desc.eq_1, List.length_mergeSort, List.length_ofFn]
+  obtain ⟨u, v, w, sorted_eq⟩ := List.length_eq_three.mp length
+  have ordered : (desc r).Pairwise (fun x y : ℝ => y ≤ x) := by
+    rw [desc.eq_1]
+    exact List.pairwise_mergeSort' (fun x y : ℝ => y ≤ x) (List.ofFn r)
+  rw [sorted_eq] at ordered
+  norm_num at ordered
+  rw [prefixSum.eq_1] at h1
+  norm_num [prefixSum.eq_1, sorted_eq, descending_data.1] at h1 h2 h3
+  intro i
+  have membership : r i ∈ desc r := by
+    rw [desc.eq_1, List.mem_mergeSort]
+    exact List.mem_ofFn.mpr ⟨i, rfl⟩
+  rw [sorted_eq] at membership
+  simp only [List.mem_cons, List.not_mem_nil, or_false] at membership
+  rcases membership with heq | heq | heq <;> rw [heq] <;> constructor <;> linarith
 
 private lemma unique_candidate {r : Fin 3 → ℝ} (hr : IsProbVec r)
     (hm : Majorizes a r) (hball : jensenShannon p r ≤ jensenShannon p a) : r = a := by
@@ -275,7 +303,8 @@ private lemma second_in_ball : jensenShannon p b < jensenShannon p a := by
 private lemma not_majorizes : ¬ Majorizes b a := by
   intro h
   have h2 := h.1 2 (by decide)
-  norm_num [a, b, prefixSum, desc, List.ofFn_succ, List.mergeSort, List.merge] at h2
+  rw [prefixSum.eq_1] at h2
+  norm_num [prefixSum.eq_1, descending_data.1, descending_data.2] at h2
 
 /-- The Jensen--Shannon ball at `p = (2/3,4/15,1/15)` with threshold `J(p,a)`
 has no majorization-minimizer, where `a = (1/2,2/5,1/10)`. -/
