@@ -68,7 +68,7 @@ Missing whole preregistrations (historical issues) and explicit empty prediction
 
 ## Deterministic output
 
-The command writes a single JSON object to stdout, without persistent state or a cache. Invalid input exits 2 with `READOUT <named failure>` on stderr and **no partial stdout**. The canonical test command is `make -C tools research-readouts-test`; the same tests also run within the existing `tests-instruction-contract` CI unit.
+The command writes a single JSON object to stdout, without persistent state or a cache. Invalid input exits 2 with `READOUT <named failure>` on stderr and **no partial stdout**. The canonical test command is `make -C tools research-readouts-test`; the existing `tests-workflow-script` CI unit runs it through `ResearchReadoutsScriptTests`. Its whitelist covers this directory and `skills/autonomous-research/*`.
 
 Probabilities and scores are computed as exact rational numbers from JSON decimals. Output rationals are reduced strings (`"0"`, `"1"`, `"1/16"`); no floating-point rounding occurs. Units and seats are sorted by their identities. For a settled binary answer a, each seat's binary Brier loss is `(p-a)^2` (version 1, without the two-category factor of two). The aggregate prediction is the equally weighted arithmetic mean of seat probabilities. `surprise` is the **mean of seat Brier losses**, not the Brier loss of the aggregate prediction. y=1 iff this mean is at least the registered threshold. Proper scoring measures prediction error; neither the score nor its threshold measures mathematical information or research value. No family weighting or calibration claim is made.
 

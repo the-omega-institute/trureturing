@@ -160,6 +160,19 @@ class ReadoutTests(unittest.TestCase):
         self.assertEqual(unit['y'], 1)
         self.assertEqual(unit['model_families'], ['family-a', 'family-b'])
 
+    def test_asymmetric_three_seat_arithmetic_means(self):
+        batch, prereg, terminal = fixture(p=0)
+        prereg['predictions'].extend([
+            {'seat': 'predictor-b', 'model_family': 'family-b',
+             'event': EVENT.copy(), 'probability': 0},
+            {'seat': 'predictor-c', 'model_family': 'family-c',
+             'event': EVENT.copy(), 'probability': 1},
+        ])
+        unit = run(rebuild(batch, prereg, terminal))['units'][0]
+        self.assertEqual(unit['aggregate_probability'], '1/3')
+        self.assertEqual(unit['surprise'], '2/3')
+        self.assertEqual(unit['y'], 1)
+
     def test_registered_threshold_boundary_is_inclusive(self):
         batch, prereg, terminal = fixture(p=0.5)
         self.assertEqual(run(batch)['units'][0]['y'], 1)
