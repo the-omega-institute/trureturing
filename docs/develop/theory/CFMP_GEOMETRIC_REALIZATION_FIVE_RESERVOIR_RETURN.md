@@ -596,3 +596,169 @@ The special case is impossible. Together with Section 262 and q>m, the
 only remaining opposite-axis label is Q=U. The theorem preserves all
 original multiplicities and the external low-only region. It supplies
 no exclusion of rho=(M,Z,C,U,Z,C), which remains the next open family.
+
+## 264. Exact setting and theorem
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+263, with shared positive lengths, all original 2*pi angle equations,
+complete connected circular edge links of degree at least six, and
+chosen paired frames with two distinct transverse H labels. Write
+H={M,C,D,Z,U} and P={M,Z,U}. The four distinct interacting genuine
+owners are K={tau,rho,eta,xi}. The published reductions give
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C),
+with the two {M,Z,C} faces paired between tau and rho. Assume in this
+note that neither eta nor xi contains M.
+
+The unique flat owner has an axial M pi slot and transverse pair {C,D}.
+The genuine M budget is pi. Z and U occur in no flat and each has
+budget 2*pi. Lower-case cosh values satisfy
+ c,d>1, m>1+c+d, z>1+m+c, u>m.
+All repeated axes, repeated owners along circles, and distinct-face
+self-gluings remain permitted. External low-only components are not
+assumed closed inside K.
+
+We prove that this case necessarily has
+ max(c,d)<2*min(c,d)+1,
+and at least one of the two genuine axial-M/{C,D} owners constructed
+below has a special opposite axis. Thus the entire unbalanced case and
+the entire both-low-opposite-axes case are excluded. The balanced cases
+with one or two special opposite labels are not excluded here; nor is
+the case that eta or xi contains M. No five-reservoir closure is claimed.
+
+## 265. The actual M circle has exactly six original slots
+
+The three original M intervals of tau (two transverse) and rho (one
+axial) form a path with its two ends on tau's unused {M,C,D} faces.
+The M edge on each paired {M,Z,C} face is unambiguous, since those
+three labels are distinct.
+
+Every other M owner is outside K by the assumed absence of M from
+eta,xi. The complete single-high-M classification (Sections 205–221)
+leaves the unique flat, at most two genuine axial-M/{C,D} owners, and
+at most one transverse-M exception (B,M,B,B,M,B), B=C or D. The
+exception has only face multisets {M,B,B} and cannot receive {M,C,D}.
+
+Every axial-M/{C,D} owner has exactly one M slot. If both axes were M,
+then (m-1)^2>(c+d)^2 would make it axial-flat with two M pi slots,
+contrary to p_M=1. Its one M interval has both ends on {M,C,D} faces.
+Following the actual circle from a free tau endpoint therefore remains
+within the axial-M/{C,D} class until it returns to the tau/rho path.
+Connectedness leaves no additional disjoint M interval or transverse-M
+exception. There are at most
+ 2+1+1+2=6
+original slots: tau's two, rho's one, the flat's one and at most two
+genuine axial-M slots. Minimum degree six forces equality.
+
+Consequently there are exactly two distinct genuine owners
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+and the exact original M equation is
+ S+theta_M(A_1)+theta_M(A_2)=pi,
+ S=2*beta_M(tau)+theta_M(rho).                    (265.1)
+An opposite R_i cannot be M by the preceding argument, or Z/U, because
+m>1+c+d and z,u>m would make that axial pair flat, contradicting the
+absence of Z/U from all flat owners. Therefore R_i is C,D or special.
+For a special R_i its fixed pair is {C,D}, so Theorem112.1 gives
+1<r_i<1+c+d. The same upper bound holds for the low alternatives.
+
+## 266. A strict one-third M budget already paid by the source pair
+
+We prove
+ S>pi/3.                                        (266.1)
+The published source response gives
+ theta_Z(tau)+2*beta_M(tau)>pi.
+The original Z equation implies
+ theta_Z(tau)+2*beta_Z(rho)<=2*pi.               (266.2)
+Both inequalities concern original slots; other Z contributions have
+only been omitted as nonnegative.
+
+Put theta=theta_M(rho), h=theta/2, t=cot(h)>0. The exact individual
+response for rho's transverse Z angle is
+ beta_Z(rho)=atan(A*t)+atan(B*t),
+ A=[sqrt(z^2-1)+sqrt(c^2-1)]/(z+c)*sqrt((m-1)/(m+1)),
+ B=[sqrt(z^2-1)-sqrt(c^2-1)]/(z+c)*sqrt((m-1)/(m+1)).
+Here 0<B<A<1, and their product is
+ p=A*B=(z-c)/(z+c)*(m-1)/(m+1)>1/3.
+Indeed z>m+c+1 first gives
+ p>(m-1)/(m+2*c+1),
+and c<m-2 makes this last expression greater than 1/3.
+Also A+B<=1+p, since (1-A)*(1-B)>=0.
+
+If theta>pi/3, (266.1) is immediate. Otherwise h<=pi/6 and t>=sqrt(3).
+At t=sqrt(3), p*t^2>1, so beta_Z(rho)>pi/2 and
+ theta+2*beta_Z(rho)>4*pi/3.
+For t>sqrt(3), the tangent addition formula on the branch (pi/2,pi)
+gives
+ beta_Z(rho)=pi-atan((A+B)*t/(p*t^2-1)).
+For fixed t, (1+p)/(p*t^2-1) is strictly decreasing in p. Therefore
+ (A+B)*t/(p*t^2-1)<= (1+p)*t/(p*t^2-1)
+                        <4*t/(t^2-3).
+The sum atan(t)+atan(t/3) lies in (pi/2,pi), with the latter ratio as
+the absolute value of its tangent. Thus
+ beta_Z(rho)>atan(t)+atan(t/3),
+and, since h+atan(t)=pi/2,
+ theta+2*beta_Z(rho)>pi+2*atan(t/3)>4*pi/3.
+This proves that inequality whenever theta<=pi/3 as well.
+
+If S<=pi/3, then theta<=pi/3 and adding the source inequality gives
+ [theta_Z(tau)+2*beta_Z(rho)]+S>7*pi/3.
+This contradicts (266.2) and S<=pi/3. Hence (266.1) holds. By (265.1),
+ Theta=theta_M(A_1)+theta_M(A_2)<2*pi/3.         (266.3)
+
+## 267. Unbalanced transverse values are impossible
+
+Set a=max(c,d), b=min(c,d), choosing either actual label in a numerical
+tie. Suppose a>=2*b+1. For either A_i, the individual transverse-a
+response as a function of its M angle x is
+ beta_a(x)=atan(lambda_plus*cot(x/2))
+              +atan(lambda_minus*cot(x/2)),
+ lambda_plus/minus=[sqrt(a^2-1) +/- sqrt(b^2-1)]/(a+b)
+                                      *sqrt((m-1)/(m+1)).
+Both lambda parameters are in (0,1). Each arctangent response is
+strictly decreasing and strictly convex on (0,pi), so their sum is too.
+The response is the same function in both owners, independently of
+their opposite axes.
+
+Its parameter product satisfies
+ lambda_plus*lambda_minus
+ =(a-b)/(a+b)*(m-1)/(m+1)
+ >(a-b)/(a+b+2)>=1/3,
+using m>a+b+1 and a>=2*b+1. At x=pi/3 the product of the two arctangent
+arguments consequently exceeds one, so beta_a(pi/3)>pi/2.
+Jensen's inequality and (266.3) now give
+ beta_a(theta_M(A_1))+beta_a(theta_M(A_2))
+ >=2*beta_a(Theta/2)>2*beta_a(pi/3)>pi.
+Each angle occurs twice in its owner. These four original a slots
+already exceed the whole edge-a budget 2*pi, contradiction.
+Hence a<2*b+1. This exclusion allowed either or both R_i to be special,
+with arbitrary overlap of their complete stars.
+
+## 268. Both opposite labels low is impossible in the balanced range
+
+It remains to consider b<=a<2*b+1 and suppose both R_i are C or D.
+Each opposite value r_i is then at least b. We prove for every such
+owner that theta_M(A_i)>pi/3, contradicting (266.3).
+
+The exact axial cosine has positive denominator
+ D=m^2+a^2+b^2+2*m*a*b-1
+and numerator
+ N(r)=2*a*b+m*(a^2+b^2)-(m^2-1)*r.
+Since r>=b and m>1, D-2*N(r)>=D-2*N(b).
+Put h=m-a-b-1>0. Direct expansion gives
+ D-2*N(b)
+ =2*(a+1)*(a+b)*(2*b+1-a)
+  +2*[(a-b)*(2*b+1-a)+3*b^2+4*b+1]*h
+  +(1+2*b)*h^2.
+All terms are nonnegative in b<=a<=2*b+1, and the coefficient of h
+is strictly positive. Therefore D-2*N(r)>0. It follows that
+ cos(theta_M(A_i))=N(r)/D<1/2,
+so its principal genuine angle exceeds pi/3. The two distinct A_i
+then contribute more than 2*pi/3, contrary to (266.3).
+
+The both-low case is thus excluded in the balanced range, while Section
+267 already excluded the unbalanced range with any opposite-axis roles.
+Every surviving no-extra-core-M configuration must have balanced low
+values and at least one special R_i. This is an actual subcase exclusion
+under the unchanged original hypotheses, not a claim that the strengthened
+special-star scalar inequalities or the entire residual family are
+inconsistent. The complete special-axis stars remain required in the
+next case analysis.
