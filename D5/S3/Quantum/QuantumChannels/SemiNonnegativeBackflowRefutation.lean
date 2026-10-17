@@ -7,6 +7,7 @@
    digest: A non-SP semi-nonnegative qutrit map doubles trace distance in a Kraus context. -/
 
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
+import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 
 set_option linter.style.longLine false
@@ -17,6 +18,8 @@ open scoped BigOperators ComplexOrder
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap (of_kraus)
 open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm)
+open D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
+  (krausApply IsKrausChannel)
 
 namespace D5.S3.Quantum.QuantumChannels.SemiNonnegativeBackflowRefutation
 
@@ -34,15 +37,6 @@ def IsSemiPositive {d : ℕ} (Ψ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ]
 def IsSemiNonnegative {d : ℕ} (Ψ : Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ]
     Matrix (Fin d) (Fin d) ℂ) : Prop :=
   ∃ ρ, IsDensity ρ ∧ IsDensity (Ψ ρ)
-
-/-- The existing finite Kraus linear map, evaluated on a matrix. -/
-def krausApply {d : ℕ} {ι : Type} [Fintype ι]
-    (K : ι → Matrix (Fin d) (Fin d) ℂ) (X : Matrix (Fin d) (Fin d) ℂ) :=
-  of_kraus K K X
-
-/-- Normalization of a finite Kraus family. -/
-def IsKrausChannel {d : ℕ} {ι : Type} [Fintype ι]
-    (K : ι → Matrix (Fin d) (Fin d) ℂ) : Prop := ∑ r, (K r)ᴴ * K r = 1
 
 /-- The matrix trace distance, using the canonical trace norm. -/
 def traceDistance {d : ℕ} (ρ σ : Matrix (Fin d) (Fin d) ℂ) : ℝ :=
@@ -145,7 +139,8 @@ private theorem phi_normalized : IsKrausChannel phiKraus := by
       Matrix.cons_val_two, vecHead, vecTail, Fin.ext_iff, map_ofNat]
 
 private theorem xi_action (X : Matrix (Fin 3) (Fin 3) ℂ) : krausApply xiKraus X = xi X := by
-  simp only [krausApply.eq_1, of_kraus, xiKraus.eq_1, Fin.sum_univ_succ,
+  rw [krausApply.eq_1]
+  simp only [of_kraus, xiKraus.eq_1, Fin.sum_univ_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single,
       Matrix.single_mul_mul_single]
   ext i j
@@ -155,7 +150,8 @@ private theorem xi_action (X : Matrix (Fin 3) (Fin 3) ℂ) : krausApply xiKraus 
         map_ofNat] <;> ring
 
 private theorem phi_action (X : Matrix (Fin 3) (Fin 3) ℂ) : krausApply phiKraus X = phi X := by
-  simp only [krausApply.eq_1, of_kraus, phiKraus.eq_1, Fin.sum_univ_succ,
+  rw [krausApply.eq_1]
+  simp only [of_kraus, phiKraus.eq_1, Fin.sum_univ_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.conjTranspose_single,
       Matrix.single_mul_mul_single]
   ext i j

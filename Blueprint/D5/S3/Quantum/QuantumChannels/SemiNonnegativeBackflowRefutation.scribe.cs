@@ -33,13 +33,6 @@ internal sealed class SemiNonnegativeBackflowRefutationDocument : IScribeDocumen
                 "Definition 2 requires a density matrix with a density image, allowing singular matrices. "
                     + "Hermiticity and trace preservation are separate hypotheses in the statement below. "
                     + "Theorem 2 characterizes this property for HPTP maps by a pair of channels with composition Psi after Phi equal to Xi."),
-            Node("krausApply", "The finite Kraus action", KrausApplyFormula(),
-                "The action of a finite family K is the sum of K(r) X K(r) adjoint. "
-                    + "This is the finite Kraus form of the completely positive maps in the source's channel contexts. "
-                    + "The action is defined without assuming that the family is normalized."),
-            Node("IsKrausChannel", "Kraus normalization", KrausChannelFormula(),
-                "The adjoint products sum to the identity matrix. This is the trace-preservation condition "
-                    + "for the finite Kraus action, giving the CPTP channels used in Theorem 2."),
             Node("traceDistance", "Trace distance", TraceDistanceFormula(),
                 "Trace distance is one half of the trace norm of the difference. "
                     + "The trace norm is the real part of the trace of the positive square root of the adjoint product, "
@@ -134,10 +127,6 @@ internal sealed class SemiNonnegativeBackflowRefutationDocument : IScribeDocumen
     private static Formula SumOver(Formula r, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(r, Colon, type), Sp, Parenthesized(body));
     private static Formula Instance(string name, Formula type) => Seq(OpenBracket, Call(name, type), CloseBracket);
-    private static Formula FamilyBinders(Formula body) => Dimension(All("iota", Named("Type"),
-        Seq(Instance("Fintype", F.Id("iota")), Sp,
-            All("K", new Formula.TypeArrow(F.Id("iota"), Mat), body))));
-
     private static Formula HptpFormula()
     {
         Formula x = F.Id("X"), image = Apply(F.Id("Psi"), x);
@@ -161,18 +150,16 @@ internal sealed class SemiNonnegativeBackflowRefutationDocument : IScribeDocumen
             Some("rho", Mat, And(Density(rho), Density(Apply(F.Id("Psi"), rho))))));
     }
 
-    private static Formula KrausApplyFormula()
+    private static Formula KrausApplyFormula(Formula k, Formula indexType, Formula x)
     {
-        Formula k = F.Id("K"), x = F.Id("X"), kr = Apply(k, F.Id("r"));
-        return FamilyBinders(All("X", Mat, Equal(Call("krausApply", k, x),
-            SumOver(F.Id("r"), F.Id("iota"), Multiply(Multiply(kr, x), Adjoint(kr))))));
+        Formula kr = Apply(k, F.Id("r"));
+        return SumOver(F.Id("r"), indexType, Multiply(Multiply(kr, x), Adjoint(kr)));
     }
 
-    private static Formula KrausChannelFormula()
+    private static Formula KrausChannelFormula(Formula k, Formula indexType)
     {
-        Formula kr = Apply(F.Id("K"), F.Id("r"));
-        return FamilyBinders(Iff(Call("IsKrausChannel", F.Id("K")),
-            Equal(SumOver(F.Id("r"), F.Id("iota"), Multiply(Adjoint(kr), kr)), D(1))));
+        Formula kr = Apply(k, F.Id("r"));
+        return Equal(SumOver(F.Id("r"), indexType, Multiply(Adjoint(kr), kr)), D(1));
     }
 
     private static Formula TraceDistanceFormula()
@@ -187,14 +174,14 @@ internal sealed class SemiNonnegativeBackflowRefutationDocument : IScribeDocumen
     private static Formula ClaimFormula()
     {
         Formula intermediate = F.Id("Psi"), k = F.Id("K"), l = F.Id("L"), x = F.Id("X"),
-            s = F.Id("sigmaOne"), t = F.Id("sigmaTwo");
-        Formula bound = AtMost(Call("traceDistance", Call("krausApply", l, s), Call("krausApply", l, t)),
-            Call("traceDistance", Call("krausApply", k, s), Call("krausApply", k, t)));
+            s = F.Id("sigmaOne"), t = F.Id("sigmaTwo"), iota = F.Id("iota"), kappa = F.Id("kappa");
+        Formula bound = AtMost(Call("traceDistance", KrausApplyFormula(l, kappa, s), KrausApplyFormula(l, kappa, t)),
+            Call("traceDistance", KrausApplyFormula(k, iota, s), KrausApplyFormula(k, iota, t)));
         Formula states = All("sigmaOne", Mat, All("sigmaTwo", Mat, Imp(Density(s), Imp(Density(t), bound))));
-        Formula composition = All("X", Mat, Equal(Apply(intermediate, Call("krausApply", k, x)), Call("krausApply", l, x)));
+        Formula composition = All("X", Mat, Equal(Apply(intermediate, KrausApplyFormula(k, iota, x)), KrausApplyFormula(l, kappa, x)));
         Formula channels = All("K", new Formula.TypeArrow(F.Id("iota"), Mat),
             All("L", new Formula.TypeArrow(F.Id("kappa"), Mat),
-                Imp(Call("IsKrausChannel", k), Imp(Call("IsKrausChannel", l), Imp(composition, states)))));
+                Imp(KrausChannelFormula(k, iota), Imp(KrausChannelFormula(l, kappa), Imp(composition, states)))));
         Formula families = All("iota", Named("Type"), All("kappa", Named("Type"),
             Seq(Instance("Fintype", F.Id("iota")), Sp, Instance("Fintype", F.Id("kappa")), Sp, channels)));
         Formula hypotheses = And(Call("IsHPTP", intermediate), And(Call("IsSemiNonnegative", intermediate),
