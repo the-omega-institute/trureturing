@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Universal count and first-moment lower bounds for squarefree integers
-     in the thirty-wheel. -/
+   digest: Universal count and first-moment lower bounds for squarefree integers in the thirty-wheel. -/
 
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Data.Nat.Sqrt
