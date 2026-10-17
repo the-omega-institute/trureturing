@@ -1309,3 +1309,321 @@ action is added. The strict-angle construction and Luo–Yang existence
 step are reused; the new five-reservoir input is the complete flat
 exclusion. No example separating this class from every earlier criterion,
 Lean certification, or unrestricted CFMP conclusion is claimed.
+
+## 288. An eight-tetrahedron example and its exact scope
+
+The following actual finite ideal face pairing has eight tetrahedra, five actual
+global edges of degrees `(16,8,8,8,8)`, and one connected closed orientable
+ideal-vertex link of genus 4. It is a connected orientable compact 3-manifold
+after truncation. Every tetrahedron has a vertex-induced paired frame
+`(R,A,B,O,A,B)`, and every simultaneous choice of paired frames across all eight tetrahedra
+forces the union of their transverse reservoir labels to contain all five actual edges.
+
+Thus this is a concrete strict separation from the paired-frame class with at
+most four transverse reservoirs. Its minimum edge degree is 8, so it also lies
+outside a blanket minimum-degree-at-least-9 hypothesis. No local label appears
+three times, in any vertex frame. This is not a claim of separation from every
+older geometric criterion, nor of minimality among all such triangulations.
+No unrestricted CFMP or public priority claim is made.
+
+## 289. Local labels and all sixteen face pairs
+
+Use tetrahedra `P0,M0,P1,M1,P2,M2,P3,M3` with vertices `1,2,3,4`.
+The label words in edge order `(12,13,14,34,24,23)` are:
+
+| Type | Both copies' label word | Forced transverse pair |
+|---|---|---|
+| 0 | `(4,0,1,2,0,1)` | `{0,1}` |
+| 1 | `(1,0,2,3,0,2)` | `{0,2}` |
+| 2 | `(2,0,3,4,0,3)` | `{0,3}` |
+| 3 | `(3,0,4,1,0,4)` | `{0,4}` |
+
+`Fj` means the face opposite vertex `j`. A map `q1q2q3q4` sends vertex `j` to
+`qj`; restrict it to the stated source face. The omitted vertex is mapped to the
+omitted target vertex, so the listed full permutation also fixes its parity.
+
+| Source | Target | Full vertex map |
+|---|---|---|
+| `P0:F3` | `P3:F1` | `3214` |
+| `P0:F4` | `P3:F2` | `1432` |
+| `M3:F1` | `M0:F4` | `4123` |
+| `M3:F2` | `M0:F3` | `2341` |
+| `P1:F3` | `M1:F3` | `1234` |
+| `P1:F4` | `P0:F1` | `2341` |
+| `M0:F1` | `P0:F2` | `2143` |
+| `M0:F2` | `M1:F4` | `1432` |
+| `P2:F3` | `M2:F3` | `1234` |
+| `P2:F4` | `P1:F1` | `2341` |
+| `M1:F1` | `P1:F2` | `2143` |
+| `M1:F2` | `M2:F4` | `1432` |
+| `P3:F3` | `M3:F3` | `1234` |
+| `P3:F4` | `P2:F1` | `2341` |
+| `M2:F1` | `P2:F2` | `2143` |
+| `M2:F2` | `M3:F4` | `1432` |
+
+Every one of the 32 faces appears once, and every map preserves all three edge
+labels of its face. Give `P0,...,P3` positive vertex-order orientation and
+`M0,...,M3` negative orientation. Each pairing has
+`s(target)=-sign(map)*s(source)`, so it reverses the induced face orientations.
+The dual graph is connected; for example the face table connects `P0` to
+`P1,P3,M0`, then `P1` to `P2,M1`, `P2` to `M2`, and `P3` to `M3`.
+
+## 290. Actual global edge equivalence classes
+
+The exact classes below are computed from the face identifications. They are
+also proved directly by the first-return cycles in Section 291: every displayed
+occurrence is visited, while label preservation prevents classes from merging.
+There is consequently no gap between a prescribed color and an actual edge.
+
+- Edge `0`, degree 16: `M0:13`, `M0:24`, `P0:13`, `P0:24`, `M1:13`, `M1:24`, `P1:13`, `P1:24`, `M2:13`, `M2:24`, `P2:13`, `P2:24`, `M3:13`, `M3:24`, `P3:13`, `P3:24`.
+- Edge `1`, degree 8: `M0:14`, `M0:23`, `P0:14`, `P0:23`, `M1:12`, `P1:12`, `M3:34`, `P3:34`.
+- Edge `2`, degree 8: `M0:34`, `P0:34`, `M1:14`, `M1:23`, `P1:14`, `P1:23`, `M2:12`, `P2:12`.
+- Edge `3`, degree 8: `M1:34`, `P1:34`, `M2:14`, `M2:23`, `P2:14`, `P2:23`, `M3:12`, `P3:12`.
+- Edge `4`, degree 8: `M0:12`, `P0:12`, `M2:34`, `P2:34`, `M3:14`, `M3:23`, `P3:14`, `P3:23`.
+
+The five lists are disjoint and exhaust all 48 local edges.
+
+## 291. All oriented normal first-return circles
+
+A state `T:a>b/Ff` is an ordered local edge with endpoints `a,b` and exiting
+face `Ff`. Cross that face with its stated map, carry both endpoints in their
+order, then exit through the other face containing the image edge. Each list
+below is cyclic: its last state transitions to its first state exactly,
+including the ordered endpoints. Every underlying local edge occurs once.
+
+### Actual edge 0: 16 sectors
+
+1. `M0:1>3/F2`
+2. `M1:1>3/F2`
+3. `M2:1>3/F2`
+4. `M3:1>3/F2`
+5. `M0:2>4/F1`
+6. `P0:1>3/F4`
+7. `P3:1>3/F4`
+8. `P2:2>4/F3`
+9. `M2:2>4/F1`
+10. `P2:1>3/F4`
+11. `P1:2>4/F3`
+12. `M1:2>4/F1`
+13. `P1:1>3/F4`
+14. `P0:2>4/F3`
+15. `P3:2>4/F3`
+16. `M3:2>4/F1`
+
+### Actual edge 1: 8 sectors
+
+1. `M0:1>4/F2`
+2. `M1:1>2/F3`
+3. `P1:1>2/F4`
+4. `P0:2>3/F4`
+5. `P3:4>3/F1`
+6. `P0:4>1/F2`
+7. `M0:3>2/F4`
+8. `M3:4>3/F2`
+
+### Actual edge 2: 8 sectors
+
+1. `M0:3>4/F1`
+2. `P0:4>3/F1`
+3. `P1:3>2/F1`
+4. `P2:2>1/F3`
+5. `M2:2>1/F4`
+6. `M1:4>1/F3`
+7. `P1:4>1/F2`
+8. `M1:3>2/F4`
+
+### Actual edge 3: 8 sectors
+
+1. `M1:3>4/F1`
+2. `P1:4>3/F1`
+3. `P2:3>2/F1`
+4. `P3:2>1/F3`
+5. `M3:2>1/F4`
+6. `M2:4>1/F3`
+7. `P2:4>1/F2`
+8. `M2:3>2/F4`
+
+### Actual edge 4: 8 sectors
+
+1. `M0:1>2/F3`
+2. `M3:4>1/F3`
+3. `P3:4>1/F2`
+4. `P0:2>1/F3`
+5. `P3:2>3/F4`
+6. `P2:3>4/F2`
+7. `M2:4>3/F2`
+8. `M3:2>3/F1`
+
+Thus each actual edge has a circular normal link, with no endpoint reversal.
+The displayed cycles also cover every ordered-edge/exiting-face state: cyclic
+shifts choose each of the 48 local edges, reversing the ordered endpoints
+chooses either endpoint order, and reversing traversal chooses either exiting
+face. These four choices per local edge give all 192 states. Each has the
+same first-return length as its displayed cycle and no endpoint reversal.
+
+## 292. Every vertex-link corner fan
+
+There is one link triangle `(T,v)` for each of the 32 local tetrahedron vertices.
+Its corner `(T;v,w)` is the endpoint at `v` of edge `vw`. Its two incident sides
+come from the two faces containing that edge. The following ten cyclic lists
+are all the actual link-vertex fans. Here `T:v>w` means the corner `(T;v,w)`;
+it does not mean a directed edge in a new triangulation.
+
+- Label 0, endpoint fan 0: `M0:1>3`, `M1:1>3`, `M2:1>3`, `M3:1>3`, `M0:2>4`, `P0:1>3`, `P3:1>3`, `P2:2>4`, `M2:2>4`, `P2:1>3`, `P1:2>4`, `M1:2>4`, `P1:1>3`, `P0:2>4`, `P3:2>4`, `M3:2>4`.
+- Label 0, endpoint fan 1: `M0:3>1`, `M1:3>1`, `M2:3>1`, `M3:3>1`, `M0:4>2`, `P0:3>1`, `P3:3>1`, `P2:4>2`, `M2:4>2`, `P2:3>1`, `P1:4>2`, `M1:4>2`, `P1:3>1`, `P0:4>2`, `P3:4>2`, `M3:4>2`.
+- Label 1, endpoint fan 0: `M0:1>4`, `M1:1>2`, `P1:1>2`, `P0:2>3`, `P3:4>3`, `P0:4>1`, `M0:3>2`, `M3:4>3`.
+- Label 1, endpoint fan 1: `M0:4>1`, `M1:2>1`, `P1:2>1`, `P0:3>2`, `P3:3>4`, `P0:1>4`, `M0:2>3`, `M3:3>4`.
+- Label 2, endpoint fan 0: `M0:3>4`, `P0:4>3`, `P1:3>2`, `P2:2>1`, `M2:2>1`, `M1:4>1`, `P1:4>1`, `M1:3>2`.
+- Label 2, endpoint fan 1: `M0:4>3`, `P0:3>4`, `P1:2>3`, `P2:1>2`, `M2:1>2`, `M1:1>4`, `P1:1>4`, `M1:2>3`.
+- Label 3, endpoint fan 0: `M1:3>4`, `P1:4>3`, `P2:3>2`, `P3:2>1`, `M3:2>1`, `M2:4>1`, `P2:4>1`, `M2:3>2`.
+- Label 3, endpoint fan 1: `M1:4>3`, `P1:3>4`, `P2:2>3`, `P3:1>2`, `M3:1>2`, `M2:1>4`, `P2:1>4`, `M2:2>3`.
+- Label 4, endpoint fan 0: `M0:1>2`, `M3:4>1`, `P3:4>1`, `P0:2>1`, `P3:2>3`, `P2:3>4`, `M2:4>3`, `M3:2>3`.
+- Label 4, endpoint fan 1: `M0:2>1`, `M3:1>4`, `P3:1>4`, `P0:1>2`, `P3:3>2`, `P2:4>3`, `M2:3>4`, `M3:3>2`.
+
+Every consecutive pair, including last-to-first, is joined by the relevant
+face map from Section 289. All ten fans are disjoint. The two fans at edge 0 have
+length 16; the other eight have length 8. They exhaust all 96 local corners,
+and each corner has exactly two incident side identifications. Therefore every
+link vertex has a circular fan and a disc neighborhood. All 96 triangle sides
+are paired by a fixed-point-free involution, so every link-edge interior also
+has a disc neighborhood, and the resulting surfaces have no boundary. These
+are local manifold checks; Euler characteristic is not being used to assume
+surface manifoldness.
+
+For complete explicit connectivity evidence, the following 31 face-induced
+identifications form a spanning tree on all 32 link triangles:
+
+- `M0:1 ~ M3:2`
+- `M0:1 ~ M3:4`
+- `M0:1 ~ M1:1`
+- `M3:2 ~ P3:2`
+- `M3:2 ~ M2:4`
+- `M3:4 ~ M0:3`
+- `M3:4 ~ P3:4`
+- `M1:1 ~ P1:1`
+- `M1:1 ~ M2:1`
+- `P3:2 ~ P0:2`
+- `P3:2 ~ P2:3`
+- `M2:4 ~ P2:4`
+- `M0:3 ~ P0:4`
+- `M0:3 ~ M1:3`
+- `P1:1 ~ M1:2`
+- `M2:1 ~ P2:1`
+- `M2:1 ~ M3:1`
+- `P2:3 ~ P1:4`
+- `P2:4 ~ P3:3`
+- `P2:4 ~ M2:3`
+- `P0:4 ~ P1:3`
+- `M1:2 ~ P1:2`
+- `M1:2 ~ M0:4`
+- `P2:1 ~ M2:2`
+- `M3:1 ~ M0:2`
+- `M3:1 ~ P3:1`
+- `P1:4 ~ M1:4`
+- `P3:3 ~ P0:1`
+- `P3:3 ~ P0:3`
+- `M2:3 ~ M3:3`
+- `P1:3 ~ P2:2`
+
+There is therefore exactly one actual ideal vertex and one connected link.
+The link is orientable directly: order the three corner labels of triangle
+`(T,v)` by increasing `w != v`, then give it sign `s(T)*(-1)^(v-1)`.
+Every side identification reverses the induced side orientations. This is
+checked directly on the 96 directed side occurrences by restricting the
+signed vertex permutations in Section 289.
+
+After the local and global surface checks, its cell counts are
+`V=10`, `E=48`, `F=32`, hence `chi=10-48+32=-6=2-2*4`.
+The sole link is a closed orientable genus-4 surface. Truncation produces the
+required compact connected orientable 3-manifold: face interiors have ordinary
+paired neighborhoods, every original edge has a circular normal link without
+reversal, and the actual ideal vertex link is the verified surface above.
+
+## 293. Exactly five transverse reservoirs under all vertex frames
+
+Each type has exactly two equal opposite edge pairs, namely the pair labeled 0
+and the pair labeled `i+1`. The remaining opposite pair has two distinct labels,
+also distinct from `0,i+1`. Vertex permutations preserve opposite-pair incidence.
+Hence a frame `(R,A,B,O,A,B)` with `A!=B` must use precisely the two equal pairs
+as its transverse pairs. It follows that type `i` always forces `{0,i+1}`.
+
+For a local word `(r,a,b,o,a,b)` with four distinct labels, exactly eight of the
+24 vertex permutations yield paired frames. Their four words, each appearing
+twice, are
+
+- `(r,a,b,o,a,b)`;
+- `(r,b,a,o,b,a)`;
+- `(o,a,b,r,a,b)`;
+- `(o,b,a,r,b,a)`.
+
+The other sixteen permutations fail the required equalities. Across all 24
+permutations there are twelve distinct words, each occurring twice, and every
+word has multiplicity profile `(2,2,1,1)`. Indeed the unequal opposite pair
+must remain the axial pair; its stabilizer in the 24 vertex permutations has
+order eight. The four displayed words each occur twice. This accounts for all
+192 vertex-frame choices over the eight tetrahedra, and no triple-repeated
+label can appear by reframing.
+
+The union of the forced pairs `{0,1},{0,2},{0,3},{0,4}` is all five proved-distinct
+actual global edges. No reservoir set of size at most four works, even with
+independent vertex-frame choices in every tetrahedron. Conversely, all five
+work in the displayed frames. The minimum is exactly five.
+
+For reference, there is already an elementary strict angle structure: assign
+angle `pi/8` to each occurrence of edge 0 and `pi/4` to every other occurrence.
+Each edge sum is `2*pi`, and every local vertex sum is `5*pi/8 < pi`. This checks
+the angle-structure hypotheses directly. It does not by itself replace the
+common-length, nondegeneracy, and face-isometry steps of a geometric realization.
+
+## 294. Even multiplicities in the five cyclic-type family
+
+This is a **structural obstruction only for the five cyclic types**
+`sigma_i=(i,i+1,i+2,i+3,i+1,i+2)`, `i mod 5`, retaining their five distinct global
+label names. It is not a nonexistence theorem for six-tetrahedron paired examples.
+
+The face-color triples are `T_i={i,i+1,i+2}`. A copy of type `i` has two faces of
+triple `T_i` and two of triple `T_(i+1)`. Every allowed color-preserving map
+between faces with the same triple extends to an even permutation of the four
+listed vertices. For same-type maps the possibilities are identity or `2143`.
+For a low face of type `i` mapped to a high face of type `i-1`, the four full
+maps are `4213`, `3124`, `2431`, `1342`, all even; reverse maps are even too.
+These exhaust the possibilities because each triangle has three distinct colors.
+
+Suppose an orientable face pairing exists, and let `d_i` be the number of
+positive copies minus the number of negative copies of type `i`, where signs
+are relative to its listed vertex order. Every allowed face map is even, so
+it must pair opposite signs. Counting faces of triple `T_i` gives
+
+`2*d_i + 2*d_(i-1) = 0`.
+
+Thus `d_i=-d_(i-1)` around an odd five-cycle, forcing every `d_i=0`.
+Every type multiplicity must be even. In particular `(2,1,1,1,1)` is impossible
+in this specified family, independent of the face matching choices.
+If all five original types occur and each nominal color is to be exactly one
+actual global edge, each type occurs at least twice and every edge degree is
+at least 12. This five-type family, with all five types present, therefore
+cannot give a degree below nine. The eight-tetrahedron example instead uses
+the four types in Section 289.
+
+## 295. Genuine realization of this original triangulation
+
+The verified truncation is a connected orientable compact 3-manifold with
+one nonempty boundary component, a closed surface of genus four. Every
+original edge degree is at least eight, hence at least six. Taking H to be
+the five actual global edges and S empty gives the required vertex-induced
+paired frames with distinct transverse labels. All hypotheses of the
+realization theorem in Sections 284–287 are therefore satisfied.
+
+Applying Section 287 gives a genuine nondegenerate hyperideal realization
+of this same eight-tetrahedron face pairing with totally geodesic boundary.
+No subdivision or separate per-tetrahedron length assignment is introduced.
+The explicit strict angle structure in Section 293 is consistent with that
+application, while the common-length and nondegeneracy conclusions use the
+completed realization theorem.
+
+This example requires five reservoirs under every simultaneous choice of
+paired vertex frames and has minimum degree eight. It consequently separates
+the displayed five-reservoir paired class from the at-most-four-reservoir
+paired class on this original triangulation, and does not satisfy a blanket
+minimum-degree-at-least-nine hypothesis. No claim of census novelty, global
+minimality, or separation from every earlier geometric criterion is made.
