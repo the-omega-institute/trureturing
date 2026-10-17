@@ -1441,8 +1441,17 @@ $M_2^{1/2}e_\epsilon e_\epsilon^TM_2^{1/2}$, not the bare projectors.
 No spectral direction is silently substituted for $\widehat n_h$.
 
 The original-class reduction used here is [FA69–70, FA72 and FA.37][FA67],
-with JR42's all-error-optimizer equality conditions. A nonzero actual
-low label has, for $p_j>0$,
+with JR42's all-error-optimizer equality conditions. For an actual CP
+encoder $\mathcal E_j$, call its supported restriction
+$\mathcal E_j^P(X)=\mathcal E_j(EXE^\dagger)$, $X\in M_3$.
+Let $\mathcal J_+(\Phi)$ be the actual low labels with
+$\mathcal E_j^P\ne0$, and $\mathcal J_0(\Phi)$ the nonzero actual
+low labels with $\mathcal E_j^P=0$. In the stipulated integral case
+these are almost-everywhere domains. Every sum over $j$ and every
+label coordinate $p_j,h_j,b_j$ in §§67–76 ranges over
+$\mathcal J_+(\Phi)$ only. For each such supported-nonzero low label,
+its effective supported live product and attached failure effect have,
+for $p_j>0$, the form
 
 $$
 \begin{gathered}
@@ -1456,30 +1465,52 @@ N_j=p_j b_j n_{h_j}n_{h_j}^T,\qquad 0\le b_j\le C(h_j),\\
 \tag{RC.66}
 $$
 
+Labels in $\mathcal J_0$ have no positive-$p_j$ ellipse direction and
+contribute zero to the twelve supported acquisition laws, contrast and
+height TV. They remain admitted nonzero full-$M_5$ acquisition outcomes:
+[TA Definition 1.2][TA67] counts them in the complete actual alphabet,
+and their entire joint fibres still obey the activity bound. No such
+label is deleted from the full instrument. FA Definition 77.2 counts
+only $\mathcal J_+$ in its low live-bearing minima; full actual-low
+and total-alphabet counts also include $\mathcal J_0$.
+Indeed $\mathcal E_j^P=0$ implies $C_{ja}E=0$ for every encoder
+Kraus matrix $C_{ja}$: the sum of their positive effects on support
+is zero. Every composite supported live and failure map then vanishes.
+Conversely finite whole-fibre survival ensures that a nonzero supported
+encoder has nonzero supported live composition, the domain of FA69.
+Thus the two domains exhaust the actual low labels without imposing
+an extra restriction on the original full-$M_5$ instrument.
+
 The equality conditions yield the real coefficient directions from the
-full complex, multi-Kraus comparison class; real processors are not
-assumed in the lower bound. For the admitted countable/measurable
-extension, sums have their original integral meaning and the measurable
-finite-dimensional-fibre hypotheses of Convention 58.1 remain in force.
+full complex, multi-Kraus comparison class on this supported-nonzero
+domain; real processors are not assumed in the lower bound. For the
+admitted countable/measurable extension, sums have their original
+integral meaning and the measurable finite-dimensional-fibre hypotheses of Convention 58.1 remain in force.
 The common canonical time density is used only to construct attainments.
 Necessity retains every admitted failure-time CP measure and TP survivor
 control. In particular finite whole-fibre activity gives terminal live
-effect at least $e^{-A}I$ by FA68's trace balance, so no nonzero encoded
-label can be failure-only. The static certain-failure rows of JR44
-would instead need hazard $2/(1-u^2)$ with infinite integral. They do
-not supply a missing finite-$A$ competitor. At $t=0$, (RC.66) would
+effect at least $e^{-A}I$ by FA68's trace balance, so every nonzero
+encoded positive output has positive terminal live mass. This excludes
+failure-only full encoders, but does not make a supported-zero encoder
+nonzero on support; it leaves $\mathcal J_0$ admitted. The static
+certain-failure rows of JR44 would instead need hazard $2/(1-u^2)$
+with infinite integral. They do not supply a missing finite-$A$ competitor. At $t=0$, (RC.66) would
 force $M_2=0$, so the class is empty.
 
-Endpoint splitting of each $b_j$ into $0,C(h_j)$, already supplied by
-FA72, preserves all moments and contrast and weakly increases height.
-It yields the attained two-sheet moment problem with heights
+Endpoint splitting of each supported-nonzero label's $b_j$ into
+$0,C(h_j)$, already supplied by FA72, preserves all moments and contrast
+and weakly increases height. It yields the attained two-sheet moment
+problem with heights
 $H_\eta(h)=\ell(h)+\eta C(h)f(h)$, $\eta\in\{0,1\}$. Its value is
 $2\mathcal T_A(s)-H_0$. Its feasibility threshold and maximum contrast
 are FA78–79's $t_0$ and (RC.65). This is reuse of those results, not a
 new survival, feasibility, or compression theorem. The finite-height
 continuation's continuous null roof, fixed-allocation rank-at-most-two
-formulas, nine-low-plus-one-high existence bound and total-count
-identity $n_{\rm total}=n_{\rm low}+1$ retain their separate meanings.
+formulas, existence of at most nine supported-nonzero low labels plus
+one high label, and identity between minimum counts
+$n_{\rm total}=n_{\rm low}+1$ retain their separate meanings. Here $n_{\rm low}$ counts $\mathcal J_+$;
+the total minimum is attained by putting the complement in the high
+fibre. This is not a count identity for every full instrument.
 None chooses the full weak finite-budget frontier.
 
 ## 68. Attainment of a common dual at every strict interior point
@@ -1500,8 +1531,8 @@ h^TYh+C(h)\widehat n_h^TZ\widehat n_h
 \tag{RC.67}
 $$
 
-Every optimal endpoint family is supported on the corresponding
-contact equalities and satisfies
+Every optimal endpoint family of supported-nonzero low labels is
+supported on the corresponding contact equalities and satisfies
 $\lambda(\sum p_j|z_j|-\tau)=0$.
 
 **Proof.** Let $\rho_\circ$ be uniform angular probability on
@@ -1631,14 +1662,14 @@ axis contacts are retained. Summing the four bounds on each sheet gives
 
 The count concerns the support candidates of a particular certificate.
 It is neither an actual-label bound nor an improvement of the inherited
-nine-low-label existence bound. Fejér–Riesz factorization can certify
+nine-supported-nonzero-low-label existence bound. Fejér–Riesz factorization can certify
 an already selected nonnegative polynomial, including its zeros; it
 does not select $Y,Z,\lambda$, contacts or common positive weights.
 
 ## 70. Strictly unsaturated labels and degeneracies
 
 **Theorem 70.1 (common-kernel necessity).** At a strict interior point,
-let a globally optimal actual low label have $p_j>0$ and
+let a globally optimal supported-nonzero actual low label have $p_j>0$ and
 $0<b_j<C(h_j)$. Its two endpoint heights have a common sign
 $\epsilon\in\{\pm1\}$, with zeros allowed. For every optimal common
 certificate,
@@ -1649,7 +1680,8 @@ $$
 $$
 
 Consequently if both $Z-\Delta_f$ and $Z+\Delta_f$ are invertible,
-every nonzero optimal low label is pure or saturated.
+every supported-nonzero optimal low label is pure or saturated.
+Supported-zero actual labels have no assigned endpoint or contact.
 
 **Proof.** Endpoint splitting gives
 
@@ -1697,8 +1729,9 @@ cases. $\square$
 
 ## 71. Complete orientation optimization for a fixed even-moment family
 
-**Definition 71.1 (the fixed data).** Remove zero weights, and fix
-$q_i>0$, $v_i=(z_i,w_i)^T$, $\eta_i\in\{0,1\}$ with
+**Definition 71.1 (the fixed data).** Remove zero weights, and fix a
+finite family indexed by $i=1,\ldots,m$, with $q_i>0$,
+$v_i=(z_i,w_i)^T$, $\eta_i\in\{0,1\}$ satisfying
 $\alpha z_i^2+\beta w_i^2=1$ and
 
 $$
@@ -1794,16 +1827,19 @@ global finite frontier.
 ## 72. The entire two-projection-line layer
 
 **Definition 72.1 (what is counted).** Let
-$\mathscr L(\Phi)=\{\mathbb R(z_j,w_j):j\text{ a nonzero actual low label}\}$.
-This counts every low live projection line, including pure-live labels.
+$\mathscr L(\Phi)=\{\mathbb R(z_j,w_j):j\in\mathcal J_+(\Phi)\}$.
+This counts every supported-nonzero low live projection line, including
+pure-live labels. Supported-zero actual labels in $\mathcal J_0$ have
+no projected line; they remain allowed in this layer and counted in
+its full actual alphabet and whole-fibre activity.
 The vectors $(1,z,w)$ and $(1,-z,-w)$ are distinct live directions but
 have the same projected line. Neither failure-ray count, Hilbert-space
 dimension, hidden Kraus multiplicity nor readable alphabet cardinality
 is this count. Let $\mathcal T_A^{[2]}(s)$ be the supremal original
 height restricted to $|\mathscr L|\le2$.
 
-**Lemma 72.2 (the lines are forced).** Every feasible instrument in this
-layer uses exactly the four possible directions
+**Lemma 72.2 (the lines are forced).** In every feasible instrument in
+this layer, the supported-nonzero low labels use all four directions
 
 $$
 h_{z,\pm}=(1,\pm\alpha^{-1/2},0),\qquad
@@ -1879,8 +1915,8 @@ $$
 $$
 
 Let $P_w=\beta/2$, $x_- =\min(P_w,q_{\rm ax})$,
-$x_+=q_{\rm ax}-x_-$. An attainer consists of the following actual
-low labels, with zero rows deleted:
+$x_+=q_{\rm ax}-x_-$. An attainer consists of the following
+supported-nonzero actual low labels, with zero rows deleted:
 
 | Direction | Weight $p$ | Failure ratio $b_j$ |
 | --- | --- | --- |
@@ -1891,8 +1927,10 @@ low labels, with zero rows deleted:
 | $h_{w,-}$, pure | $P_w-x_-$ | $0$ |
 | $h_{w,-}$, saturated | $x_-$ | $tc_w$ |
 
-The minimum numbers of actual low and total acquisition labels at this
-layer's optimal height are
+At this layer's optimal height, the minimum number of supported-nonzero
+low labels equals the minimum number of all nonzero actual low labels;
+write this common minimum as $n_{\rm low}^{[2]}$. The complete total
+actual-alphabet minimum is $n_{\rm total}^{[2]}$. They are
 
 $$
 n_{\rm low}^{[2]}=
@@ -1902,8 +1940,8 @@ n_{\rm low}^{[2]}=
 \tag{RC.85}
 $$
 
-Every optimizer has the same $w$-axis pure/saturated mass allocation
-$x_\pm$. The $z$-axis failure allocation need not be unique: it has
+Every optimizer has the same supported-nonzero $w$-axis pure/saturated
+mass allocation $x_\pm$. The $z$-axis failure allocation need not be unique: it has
 aggregate $\sum_{z\text{-axis}}p_jb_j=\alpha V$ and the individual
 capacity bounds, but its height is independent of this allocation.
 
@@ -1929,20 +1967,25 @@ x_-+x_+=q_{\rm ax},\quad 0\le x_\pm\le P_w.
 $$
 
 Since $b_w>0$, the unique maximizing allocation fills $x_-$ first.
-This proves (RC.84) and the table's attainment. Every actual $w$
-label of strictly intermediate failure ratio would make endpoint
+This proves (RC.84) and the table's attainment. Every supported-nonzero
+actual $w$ label of strictly intermediate failure ratio would make endpoint
 splitting strict, so all optimizing $w$ labels are endpoints. At
 $q_{\rm ax}=\beta$ or $\beta/2$ each direction needs one label;
 at every other finite feasible $q_{\rm ax}$ exactly one $w$
 direction needs both positive pure and saturated masses. Those cannot
-be combined: their opposite signs make (RC.73) strict. Different low
-live directions cannot share one actual label by FA69's rigidity.
-All four directions have positive total mass. The lower count therefore
-matches four or five as in (RC.85). Each $z$ direction can use one
-label with ratio $V$, so no further count is needed. There is positive
-high acquired mass and hence at least one high label. Section 75
-completes the same instrument with exactly one. Its full joint fibre
-is counted even on supported-zero inputs. $\square$
+be combined: their opposite signs make (RC.73) strict. Different
+supported-nonzero low live directions cannot share one actual label by FA69's rigidity.
+All four directions have positive total mass. Thus every competitor
+needs at least four or five supported-nonzero low labels as in (RC.85),
+and hence at least as many actual low labels. Each $z$ direction can
+use one label with ratio $V$. Positive high acquired mass requires at
+least one high label. Section 75 attains both lower bounds with exactly
+these supported-nonzero low labels, no separate supported-zero low label,
+and one high label containing the complement. Any separate labels in
+$\mathcal J_0$ add to the actual low and total counts without changing
+(RC.80) or (RC.84). Their presence is permitted; the minimum uses the
+aggregated completion. Every full joint fibre is counted even on
+supported-zero inputs. $\square$
 
 The formula is constant in $s$ over this layer's entire feasible
 contrast inequality. The four/five changes here are layer minima,
@@ -1960,7 +2003,9 @@ $$
 $$
 
 Consequently every globally optimal instrument in a nonempty original
-weak finite-budget class has at least three low projection lines.
+weak finite-budget class has at least three supported-nonzero low
+projection lines, that is, $|\mathscr L(\Phi)|\ge3$ regardless of any
+additional supported-zero actual labels.
 
 **Proof.** First the entire axis layer lies strictly inside the domain
 of Theorem 68.1. Indeed $c_w<c_f$ gives
@@ -1995,8 +2040,8 @@ live covariance, and any two-line optimizer would belong to the layer
 just excluded. The lower bound follows, including feasible parameters
 outside the layer. $\square$
 
-The argument uses a common dual and the actual-label unsaturated kernel,
-with no maximum-contrast live-completion restriction. The conclusion
+The argument uses a common dual and the supported-nonzero actual-label
+unsaturated kernel, with no maximum-contrast live-completion restriction. The conclusion
 is not an upper bound of three lines and is not TC's limiting
 failure-line theorem. It does not count quantum dimension or the
 number of readable labels.
@@ -2035,8 +2080,8 @@ h_{\sigma\upsilon}=(1,\sigma\sqrt{d_z/m},\upsilon\sqrt{d_w/m}),
 \tag{RC.91}
 $$
 
-These eight positive low atoms satisfy (RC.66) with normalized contrast
-at least $\sqrt\alpha$. For every $0\le s\le\sqrt\theta$, the
+These eight positive supported-nonzero low atoms satisfy (RC.66) with
+normalized contrast at least $\sqrt\alpha$. For every $0\le s\le\sqrt\theta$, the
 single original instrument of §75 built from them has low height
 strictly more than $\gamma/2$ above the layer value (RC.84), and
 hence TV improvement strictly more than $\gamma/4$.
@@ -2113,19 +2158,20 @@ large-budget construction.
 ## 75. One common original output and chronological decoder
 
 **Proposition 75.1 (simultaneous original-class realization).** Every
-finite family in (RC.66), in particular the axis and eight-atom families,
-has one common instrument on the original unknown five-mode specimen
+finite supported-nonzero low family in (RC.66), in particular the axis
+and eight-atom families, has one common instrument on the original unknown five-mode specimen
 which attains its actual height and contrast, all twelve required errors,
 the sharp weak worst-history joint cost, and the stated finite activity.
-It has precisely one additional actual high acquisition label. The
-five failure labels and every Borel component and passive-reference
+It has precisely one additional actual high acquisition label, with
+the complementary subspace included in that label. The five failure
+labels and every Borel component and passive-reference
 conditional operator retain their original meanings.
 
 **Proof.** This is the full-fibre constructor of FA70 and FA86 applied
 to these moment families, with the complement aggregated into one high
 fibre as permitted in the original JR class. The formulas below specify
 the common realization rather than separate optima. Omit zero weights
-before taking inverses. For each low label set
+before taking inverses. For each supported-nonzero low label set
 
 $$
 \begin{gathered}
@@ -2217,6 +2263,26 @@ three. The hidden Kraus index is not a readable acquisition label.
 This coherent completion differs from the fixed CA.10 certain-failure
 completion and has finite zero activity on its whole fibre.
 
+The same supported family also permits the separate FA70.2/FA86.1
+completion: replace $C_H$ by a high encoder
+$\sqrt{1-\delta}\,DE^\dagger$ into $\mathbb C^3$, with decoder $E$,
+and an actual low encoder $C_\perp=W_\perp^\dagger$ into
+$\mathbb C^2$, with decoder $EJ_0$. Give both deterministic report $+$
+and zero rate. The latter full encoder is nonzero with effect $I_5-P$,
+but $C_\perp E=0$; it belongs to $\mathcal J_0$ and has no $p,h,b$
+coordinates. Its survivor effect is $I_2$ at every time. The two
+encoders' effects sum to $C_H^\dagger C_H$, and their composed live
+CP maps sum to the high branch's composed live map in (RC.102).
+Consequently the total acquisition effect (RC.101), the forgotten-label
+live map, all five failure-labelled Borel output maps (RC.102), their
+passive-reference amplifications (RC.103), and all errors (RC.104)
+are unchanged for all complex $M_5$ inputs. The supported histories give the complementary label probability
+zero, so height TV, contrast and sharp high acquisition cost are also
+unchanged. The separate completion has one more actual low label and
+one more total label; its complementary qubit is fully counted and obeys the same
+activity bound. Neither completion excludes the other from the original
+class. The minimum-count witnesses use (RC.100).
+
 The low live coefficient Gram is $\operatorname{diag}(\delta,1,1)$;
 the high part adds $(1-\delta)D$ in squared-coefficient weight. Thus
 summing encoder effects gives, using the conditional root TP identity,
@@ -2292,7 +2358,7 @@ Only the high acquisition has joint dimension at least three. On each
 height-$y$ specimen its probability is
 $(1-\delta)\operatorname{tr}(D^\dagger D\rho_y)$, maximized at $27$,
 which is JR34–40's sharp weak $\mathsf C(s)$. The complementary
-coherent share is counted in the same high fibre even though the
+coherent share in (RC.100) is counted in the same high fibre even though the
 original specimens have zero probability in it. Resource is the maximum
 over actual labels of (RC.99) on each entire joint fibre, not an expected
 activity, instantaneous maximum or integral of a cross-label maximum.
@@ -2311,9 +2377,9 @@ actuator, calibration or clock permission. $\square$
 
 **Theorem 76.1 (local continuation from an already certified seed).**
 At a strict interior parameter $(t,\tau)$ suppose there is a finite
-positive endpoint family and a matching full-circle certificate of
-Theorem 68.1. Suppose all zeros of the eight nonnegative polynomials
-are tracked, isolated double zeros with strictly positive angular
+positive endpoint family of supported-nonzero low labels and a matching
+full-circle certificate of Theorem 68.1. Suppose all zeros of the eight
+nonnegative polynomials are tracked, isolated double zeros with strictly positive angular
 second derivative, with no additional zeros. Fix the gauge
 $Y\mapsto Y+a_QQ$. Choose either the branch $\lambda>0$ with
 contrast equality, or the branch $\lambda=0$ with strict contrast
@@ -2381,8 +2447,8 @@ continuation, TC's unique at-most-three-line limiting failure structure,
 SC's convexity and saturation curvature, JS's full-product limit and
 recovery, and WE's universal critical law retain their established
 hypotheses. None of those limiting support bounds is imposed on finite
-live labels. In particular 24 sheet contacts, nine low labels, at least
-three live projection lines, two/three limiting failure lines, and actual
+live labels. In particular 24 sheet contacts, nine supported-nonzero low
+labels, at least three supported-nonzero live projection lines, two/three limiting failure lines, and actual
 total labels are five different assertions.
 
 **Convention 77.2 (limiting selection and current native interfaces).**
@@ -2415,7 +2481,8 @@ counterexample to a decreasing-curvature shortcut in TB does not refute
 JS's convex contour selection, which does not assume that shortcut.
 No single-transition or global $C^2$ conclusion follows.
 
-The current [AURIC control construction, §§35–36 and 55–56][AO67]
+The current [AURIC control construction, §§35–36, Definition 55.1,
+Assumption 55.2, Proposition 55.3 and Theorem 56.1][AO67]
 uses independently driven drift-free local PXP flips, its specified
 reusable phase at positions $(1,3)$, and supplied encoding and
 initialization. Those controls are not granted by the original fixed
@@ -2462,6 +2529,7 @@ an actuator. No finite source unit, conditional theorem or compatible
 native contract completes or narrows the unchanged through-2027 goal.
 
 [FA67]: FIB_NATIVE_COMPLETE_CONTINUATION_FINITE_ACTIVITY_FRONTIER.md
+[TA67]: FIB_NATIVE_TOTAL_ACTUAL_ACQUISITION_ALPHABET.md
 [JS67]: FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
 [TB67]: FIB_NATIVE_JOINT_TRANSITION_BANDS_AND_SELECTED_BRANCHES.md
 [AO67]: AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md
