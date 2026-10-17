@@ -4078,3 +4078,264 @@ labels, and Section 209 uses the entire opposite source star. It leaves
 owners where just one high reservoir is transverse and another is axial,
 and both relative orderings of Z and U, for further analysis. It does
 not exclude the remaining five-reservoir configurations.
+
+## 213. Hypotheses and exact inputs
+
+Retain all hypotheses and notation of the five-reservoir opposite-star
+capacity theorem (publication §§205–212). These include the actual finite
+paired-frame quotient, complete circular edge links, degree at least six,
+common positive lengths, and every original edge angle equation 2*pi.
+We argue under the remaining mixed-flat hypothesis. The five reservoirs
+are H={M,C,D,Z,U}, with cosh values satisfying
+ m>1+c+d>3, c,d<m-2, z>1+m+c, u>m.
+The only flat owner is sigma=(M,C,D,O,C,D), O=C,D, or special.
+All other owners are genuine. Put P={M,Z,U}. Its total genuine original
+angle capacity is pi+2*pi+2*pi=5*pi. The genuine escape owner
+ tau=(Z,M,C,D,M,C)
+has P expense greater than pi. No special edge has fixed pair {Z,U}.
+Every special edge occurs only axially and has one fixed reservoir pair
+throughout its complete star, with value less than one plus the pair sum.
+
+For a genuine frame (r,a,b,o,a,b), put
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ K=(sqrt(a^2-1)+sqrt(b^2-1))^2/(a+b)^2.
+The paired response is
+ (beta_a+beta_b)/2=B_lambda(theta_r),
+ B_lambda(theta)=atan(lambda*cot(theta/2)),
+ lambda^2=K*(r-1)/(r+1),
+ beta_a+beta_b=2*atan(sqrt(K*L/J)).
+B_lambda is positive, decreasing, and convex for 0<lambda<1.
+If a,b>3, then K>8/9. If additionally r>3, then lambda>2/3,
+and the five original slots obey
+ theta_r+2*beta_a+2*beta_b>pi.
+This remains an original-slot statement when labels repeat.
+
+## 214. No special edge has any pair contained in P
+
+It remains to exclude pairs {M,Z} and {M,U}. Suppose a special edge e
+has either pair {a,b}, and let q be its cosh value. Here a,b>3 and
+k=a+b>6. Its complete star is genuine: sigma has pair {C,D}.
+Its n>=6 axial occurrences have angles theta_i with sum 2*pi.
+The global genuine budget of the pair is 3*pi. An owner has at most
+two e occurrences; its original transverse pair expense is
+4*B_lambda(theta_i), independent of which of its equal e axes is used.
+Consequently, counting each actual owner once,
+ 3*pi >= pair expense of star owners
+       >=2*sum_i B_lambda(theta_i)
+       >=2*n*B_lambda(2*pi/n)
+       >=12*B_lambda(pi/3).
+Thus lambda^2<=1/3. Since K>8/9, it follows strictly that q<11/5.
+
+Every star owner has P expense greater than pi. To prove this, let r
+be its other axis value. If that axis belongs to P, use the five-slot
+inequality in Section 213, with r as the distinguished axis. Otherwise
+it is C, D, or special. In every such case r<k+1: this follows from
+c,d<m-2 for C,D, and from the fixed-pair barrier for a special axis.
+Use L=k^2-(q-1)*(r-1), J=(q+1)*(r+1)-(a-b)^2. Then
+ K*L-J>(8/9)*L-J
+ > (8/9)*k^2-((17*q+1)/9)*k-2*(q+1)+(a-b)^2
+ > (8/45)*(k-6)*(5*k+6)>0.
+The second line uses r<k+1; the third uses q<11/5 and discards the
+nonnegative square. Hence beta_a+beta_b>pi/2 and the four transverse
+P slots alone have expense greater than pi.
+
+Tau is outside this star because its fixed pair is {M,C}, different
+from both candidate pairs. It reserves more than pi of P's 5*pi.
+There can therefore be at most three distinct star owners, since four
+would have P expense greater than 4*pi. Each owner has at most two e
+occurrences, whereas degree(e)>=6. It follows that there are exactly
+three owners, each with two e axes (and degree(e)=6). For each, the
+other axis is again q, which satisfies q<11/5<k+1. The preceding
+four-transverse-slot argument thus applies to all three: their pair
+expense exceeds 3*pi. This contradicts the complete genuine pair
+budget 3*pi. No special edge with either pair exists.
+Together with the previously proved {Z,U} case, every owner whose
+fixed pair is contained in P has both axes in H.
+
+## 215. Every owner containing two distinct high labels costs more than pi
+
+Let an actual owner contain at least two distinct labels from P.
+It is genuine, because sigma contains only M from P. We exhaust its
+fixed-pair possibilities.
+
+If both pair labels belong to P, Section 214 excludes special axes.
+If an axis lies in P, apply the five-slot inequality of Section 213.
+If both axes lie in {C,D}, order the pair values a>=b>=m>3 and denote
+axis values by r,o. We have r<=b and o<=a, so
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0.
+Since K>8/9, K*L/J>16/9>1. Thus the four transverse P slots have
+expense 2*(beta_a+beta_b)>pi.
+
+If exactly one pair label A lies in P, the other B lies in {C,D}.
+A second distinct P label must be an axis R. Write its values a,b,r.
+Then a,r>=m and b<m-2<a. For t=cot(theta_r/2)>0 the individual angle
+beta_a equals atan(Aplus*t)+atan(Aminus*t), with Aplus,Aminus>0 and
+ Aplus+Aminus=2*sqrt(a^2-1)/(a+b)*sqrt((r-1)/(r+1))>1.
+Indeed sqrt(a^2-1)/(a+b) is strictly increasing in a>1, its derivative
+is (a*b+1)/[sqrt(a^2-1)*(a+b)^2]>0, and the square root in r is
+increasing. Substituting a=r=m gives the lower bound
+ 2*(m-1)/(m+b)>1,
+since b<m-2. For positive X,Y,t with X+Y>1,
+atan(X*t)+atan(Y*t)>atan(t): if their sum is at least pi/2 this is
+immediate, and otherwise its tangent is (X+Y)*t/(1-X*Y*t^2)>t.
+Therefore theta_r+2*beta_a>pi. These are three actual P slots.
+
+Finally, if neither pair label belongs to P, the pair is {C,D}.
+Having two distinct P labels forces both axes into P. Both values
+are at least m>1+c+d, so their flat product is strictly larger than
+(c+d)^2. Such an owner is flat, contradicting unique flatness and
+the fact that sigma has only one P axis. This case is impossible.
+The cases exhaust every paired frame and prove the assertion.
+
+## 216. Finite interacting-core consequence and scope
+
+Define the interacting high core to be the set of actual tetrahedron
+owners containing at least two distinct labels from P, without
+requiring either label to be transverse. Every owner in this set
+consumes more than pi from the same original genuine P budget 5*pi.
+Distinct owners have disjoint original slots, even if their edge
+labels or face neighbors coincide. Hence the interacting high core
+has at most four owners. In particular the two previously forced
+owners tau and kappa lie in this core, leaving at most two additional
+owners containing two distinct P labels.
+
+This also excludes every special edge with a two-high fixed pair.
+It does not bound the number of owners containing only one high
+label, does not establish that a pair-{Z,U} owner exists, and does
+not rule out the five-reservoir case. Complete-edge transport across
+the remaining single-high owners is still required for exclusion.
+
+## 217. Setting
+
+Retain all hypotheses of the unique-flat and opposite-star chain
+(§§205–212), including distinct reservoir labels in each chosen transverse
+pair. In particular H={M,C,D,Z,U}, P={M,Z,U},
+ m>1+c+d>3, c,d<m-2, z>m, u>m,
+and the total genuine M angle is pi. The only flat owner has pair {C,D}.
+Every special edge is purely axial with a fixed distinct reservoir pair
+throughout its complete circular star. All degrees are at least six.
+We classify a genuine owner with a transverse M slot and no Z or U slot.
+Repeated owners, axes, and edge labels are permitted as in the original
+quotient. The conclusions below concern actual original angle slots.
+
+## 218. A special edge paired with M has value less than 5/4
+
+Let e be special with fixed pair {M,B}, B=C or D, and write q=x_e,
+b=x_B. Its entire star is genuine because the sole flat has pair {C,D}.
+Let its n>=6 original axial angles be theta_i, summing to 2*pi. Put
+ lambda_plus/minus=(sqrt(m^2-1) +/- sqrt(b^2-1))/(m+b)
+                    *sqrt((q-1)/(q+1)).
+Both numbers lie strictly between zero and one since m>b>1. The
+individual transverse M response is
+ beta(theta)=atan(lambda_plus*cot(theta/2))
+            +atan(lambda_minus*cot(theta/2)).
+Each summand is positive, decreasing, and convex on (0,pi).
+An owner has two transverse M slots and at most two e axes. Thus
+its original M expense is at least the sum of beta over its e slots,
+including repeated equal axes. The total genuine M budget gives
+ pi >= sum_i beta(theta_i)
+    >= n*beta(2*pi/n)>=6*beta(pi/3).
+Write s=lambda_plus+lambda_minus and p=lambda_plus*lambda_minus>0.
+The last inequality gives beta(pi/3)<=pi/6. In particular the tangent
+addition denominator 1-3*p is positive, and
+ sqrt(3)*s/(1-3*p)<=1/sqrt(3),
+so 3*s+3*p<=1 and s<=1/3. Therefore
+ (q-1)/(q+1)<= (m+b)^2/[36*(m^2-1)]
+             <(m-1)/[9*(m+1)]<1/9,
+using b<m-2. Hence q<5/4.
+
+## 219. Exhaustion of a single-high transverse M owner
+
+Its frame can be written (r,M,B,o,M,B), with B=C or D, because the
+transverse pair is distinct and Z,U do not occur. Neither axis can
+be M: that would still contain no second distinct high label, so this
+possibility must be checked separately rather than discarded.
+For an axial M and transverse pair {M,B}, the individual M response
+has positive parameters whose sum is
+ 2*sqrt(m^2-1)/(m+b)*sqrt((m-1)/(m+1))
+ =2*(m-1)/(m+b)>1.
+Thus theta_M+2*beta_M>pi, contradicting the total M budget. This
+excludes either axis equal to M, including two such axes.
+Both axes consequently are C,D, or special.
+
+The two transverse M angles are equal and their sum is at most pi.
+Hence beta_M<=pi/2, and its cosine numerator must be nonnegative:
+ N=b*(r+o)+m*(r*o+b^2-m^2+1)>=0.
+This expression is strictly increasing separately in b,r,o>1.
+
+If either axis is special, its value is less than 5/4 by Section 218.
+The other is at most max(m-2,5/4), while b<m-2. If m>=13/4,
+monotonicity bounds N strictly above by its value at
+b=m-2 and axes (m-2,5/4), which is
+ -(m+1)*(7*m-6)/4<0.
+If 3<m<13/4, use axes (5/4,5/4) instead. At b=m-2 this gives
+ -(64*m^2-145*m+80)/16<0.
+The quadratic is positive for m>=3: its value at 3 is 221 and its
+derivative 128*m-145 is positive there and thereafter. Thus special
+axes are impossible in either range.
+
+Both axes are now C or D. Let A be the member of {C,D} different
+from B, with value a. If an axis equals A, fix it as r=a. The other
+axis o<m-2<1+m+b. At o0=1+m+b, direct substitution yields
+ N(a,o0)=[b+m*(1+m+b)]*(1+a+b-m)<0,
+by m>1+a+b. Strict monotonicity in o gives N<0, a contradiction.
+Therefore both axes equal B. Every such owner has precisely the
+symmetric frame (B,M,B,B,M,B).
+
+## 220. At most one actual exceptional owner
+
+In this frame the two opposite M edges have angle alpha and the four
+other edges have value b. The exact cosine formula simplifies to
+ cos(alpha)=[2*b^2-m*(m-1)]/[2*b^2+m-1].
+Its denominator is positive. Since b<m-2 and m>3,
+ (m-1)*(2*m+1)-2*b^2
+ > (m-1)*(2*m+1)-2*(m-2)^2=7*m-9>0.
+Thus cos(alpha)<1/2 and alpha>pi/3. Each such actual owner consumes
+2*alpha>2*pi/3 of the genuine M budget pi. Two distinct owners would
+already exceed that budget, so there is at most one in the whole
+quotient, even if the candidate low label differs between them.
+
+The theorem classifies the possible single-high transverse-M returns;
+it does not exclude the one permitted exceptional owner. Together
+with the interacting-high-core bound, it gives a finite M-star
+classification, but no five-reservoir exclusion or realization claim.
+
+## 221. Finite size of the complete selected-M circle
+
+Under the exact five-reservoir hypotheses of the whole-high-core and
+single-high-return theorems, at most eight actual tetrahedron owners
+contain M, and 6<=degree(M)<=19.
+
+Proof. The unique flat owner sigma contributes one M slot. A genuine
+owner containing M and also Z or U belongs to the interacting high core,
+which has at most four owners. Otherwise, if M is transverse, the
+single-high theorem gives the one possible symmetric exceptional owner,
+with two M slots. If M is not transverse, it is axial and the distinct
+transverse pair must be {C,D}. There are at most two such genuine owners;
+each has exactly one M slot, because two M axes would make it flat.
+These alternatives exhaust all actual owners containing M. Their union
+has at most 1+4+1+2=8 members, without needing a disjointness assumption
+for this upper bound.
+
+Every paired owner has at most four M slots: at most two axes and at
+most two transverse slots, because the transverse labels are distinct.
+The interacting core contains tau=(Z,M,C,D,M,C), which has exactly two
+M slots. Thus its other at most three owners contribute at most twelve
+M slots. Adding sigma, the two genuine axial-CD owners, and the possible
+exception gives
+ degree(M)<=1+2+2+2+3*4=19.
+The lower bound six is the standing degree hypothesis.
+
+For any chosen nonempty subset of marked original M slots, the actual
+oriented normal circle has a first-return permutation on those slots.
+Each first-return segment retains its original number of slots and the
+sum of its original angles. The segments partition the actual circle;
+their lengths sum to degree(M)<=19 and their angle weights sum to 2*pi.
+This is ordinary segmentation of the actual successor cycle, including
+any repeated visits to one tetrahedron owner. It does not identify
+owners, assume homogeneous angles on a segment, discard slots, or
+replace the original angle equations by a formal graph equation.
+The finite bounds permit a bounded role analysis but do not prove
+five-reservoir exclusion or realization.
