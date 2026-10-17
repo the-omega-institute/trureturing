@@ -23,18 +23,7 @@ Section 6, first bullet, asks for the remaining exact formula at k = 4 and
 whether the upper bound in Theorem 3.3 is the exact value.
 This is one question over all integer orders at least four.
 
-## Motivation
-
-The source gives exact formulas for the other weak parameters and leaves
-the weak-four case open. A universal formula also decides whether its
-Theorem 3.3 upper bound is always sharp.
-
-## Gap
-
-The source does not supply the universal sharp lower bound, the exceptional
-order-five obstruction or equality-size witnesses at every order.
-
-## Result and semantics
+### Exact value and semantics
 
 For every integer $n\ge4$,
 
@@ -70,6 +59,17 @@ number division represents the ceiling as $(2n+10)/11$.
 At order nine the answer is twenty. The source upper bound is twenty-one
 there, so Theorem 3.3 is not always sharp. The answer covers every order;
 this strict inequality alone is not the whole result.
+
+## Motivation
+
+The source gives exact formulas for the other weak parameters and leaves
+the weak-four case open. A universal formula also decides whether its
+Theorem 3.3 upper bound is always sharp.
+
+## Gap
+
+The source does not supply the universal sharp lower bound, the exceptional
+order-five obstruction or equality-size witnesses at every order.
 
 ## Route
 
