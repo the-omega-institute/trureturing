@@ -1071,6 +1071,8 @@
     "tools/scripts/worktree/worktree_publication.py",
     "tools/scripts/worktree/worktree_preservation.py",
     "[tests-lean]",
+    "tools/scripts/agent/research_readouts/compiled_dependencies.py",
+    "tools/scripts/agent/research_readouts/test_compiled_dependencies.py",
     "# Compiled audit execution in current consumes these runtime inputs.",
     "D5/*.lean",
     "Reg/*.lean",

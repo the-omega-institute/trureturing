@@ -1,6 +1,7 @@
 """Contract for finite, explicitly scoped compiled dependency observations."""
 import json
 import io
+import os
 from contextlib import redirect_stdout
 from pathlib import Path
 import subprocess
@@ -167,5 +168,120 @@ class DependencyTests(unittest.TestCase):
         self.assertIsNone(result["queries"][0]["external_value_user_count"])
 
 
+class DependencyEntryTests(unittest.TestCase):
+    """Real make/acquire/Main execution using the existing core-only native fixture."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(dependency.ROOT / "tools/lean-inspector/tests"))
+        from test_native_support import NativeTestSupport
+
+        class Fixture(NativeTestSupport, unittest.TestCase):
+            pass
+
+        Fixture.setUpClass()
+        cls.fixture_type = Fixture
+
+    def setUp(self):
+        temporary_root = dependency.ROOT / ".lake"
+        temporary_root.mkdir(exist_ok=True)
+        parent = tempfile.TemporaryDirectory(prefix="dependency entry ", dir=temporary_root)
+        self.addCleanup(parent.cleanup)
+        self.fixture = fixture = self.fixture_type()
+        with patch.dict(os.environ, {"STRATALINT_NATIVE_TMPDIR": parent.name}):
+            fixture.setUp()
+        self.addCleanup(fixture.cleanup_fixture)
+        for name in ["tools/Makefile",
+                     "tools/scripts/agent/research_readouts/compiled_dependencies.py",
+                     "tools/lean-inspector/DependencyReadoutMain.lean",
+                     "tools/lean-inspector/LeanInformationAudit/DependencyReadout.lean",
+                     "tools/lean-inspector/LeanInformationAudit/Registry/Repository.lean",
+                     "tools/lean-inspector/LeanInformationAuditRegTests/DependencyFixtures/Base.lean",
+                     "tools/lean-inspector/LeanInformationAuditRegTests/DependencyFixtures/Users.lean"]:
+            fixture.copy(name)
+        config = fixture.root / "tools/lean-inspector/lakefile.lean"
+        source = config.read_text()
+        source = source.replace("roots := #[`LeanInformationAudit.RawArtifacts",
+            "roots := #[`LeanInformationAudit.DependencyReadout, `LeanInformationAudit.Registry.Repository, "
+            "`LeanInformationAudit.RawArtifacts")
+        source = source.replace("globs := #[.one `LeanInformationAudit.RawArtifacts",
+            "globs := #[.one `LeanInformationAudit.DependencyReadout, .one `LeanInformationAudit.Registry.Repository, "
+            ".one `LeanInformationAudit.RawArtifacts")
+        config.write_text(source)
+        # Route the unmodified cache entry to the same built producer used by native tests.
+        # Cold-build consent applies only to this private core-only project.
+        fixture.env.update(STRATALINT_LEAN_PRODUCER_DLL=str(fixture.cli),
+                           STRATALINT_ACCEPT_COLD_BUILD="1",
+                           PATH=os.pathsep.join([str(Path(fixture.dotnet).parent),
+                                               str(Path(fixture.lake).parent), os.environ["PATH"]]))
+        fixture.write(".gitignore", ".lake/\n")
+        subprocess.run(["git", "-C", str(fixture.root), "add", "."], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(fixture.root), "-c", "user.name=Fixture",
+                        "-c", "user.email=fixture@example.invalid", "-c", "commit.gpgsign=false",
+                        "commit", "-qm", "compiled dependency fixture"], check=True, capture_output=True)
+        self.revision = subprocess.check_output(
+            ["git", "-C", str(fixture.root), "rev-parse", "HEAD"], text=True).strip()
+        receipt = fixture.ensure()
+        self.assertEqual(receipt["project_olean_state"], "cold")
+
+    def read(self, targets, expected_exit):
+        fixture = self.fixture
+        program = fixture.root / ".lake/build/lean-inspector/producer/bin/dependencyReadout"
+        self.assertFalse(program.exists(), "the production make entry must build the executable")
+        query = {"revision": self.revision,
+                 "domain": {"modules": ["LeanInformationAuditRegTests.DependencyFixtures.Base",
+                                        "LeanInformationAuditRegTests.DependencyFixtures.Users"],
+                            "complete": True}, "targets": targets}
+        fixture.write("request.json", json.dumps(query))
+        result = fixture.guarded_command(["/bin/bash", "-c",
+            'exec make -s --no-print-directory -C "$1" compiled-dependencies DEPENDENCY_NO_BUILD=0 < "$2"',
+            "dependency-entry", str(fixture.root / "tools"), str(fixture.root / "request.json")],
+            cwd=fixture.root / "tools", env=fixture.env)
+        diagnostic = "[FAIL] CompiledDependencyProductionEntry: " + result.stdout + result.stderr
+        self.assertEqual(result.returncode, expected_exit, diagnostic)
+        output = json.loads(result.stdout)
+        self.assertEqual(output["schema"], "compiled-dependencies-v1")
+        self.assertEqual(output["revision"], self.revision)
+        self.assertEqual(output["acquisition"]["status"], "built", diagnostic)
+        self.assertTrue(output["acquisition"]["complete"], diagnostic)
+        self.assertEqual(output["acquisition"]["build_exit"], 0)
+        self.assertEqual(output["acquisition"]["reader_exit"], 0)
+        self.assertTrue(program.is_file())
+        return output
+
+    def test_production_entry_reads_value_users_separately_from_types_and_imports(self):
+        output = self.read(["DependencyFixture.seed", "DependencyFixture.Token"], 0)
+        self.assertTrue(output["complete"])
+        self.assertEqual(output["gaps"], [])
+        seed, token = output["queries"]
+        self.assertIn("DependencyFixture.Users.direct", seed["external_value_users"])
+        self.assertIn("DependencyFixture.Users.throughHelper", seed["external_value_users"])
+        self.assertNotIn("DependencyFixture.Users.typeOnly", seed["external_value_users"])
+        self.assertNotIn("DependencyFixture.Users.importOnly", seed["external_value_users"])
+        self.assertEqual(seed["external_value_user_count"], len(seed["external_value_users"]))
+        self.assertEqual(seed["value_paths"]["DependencyFixture.Users.direct"],
+                         ["DependencyFixture.Users.direct", "DependencyFixture.seed"])
+        self.assertEqual(token["external_value_users"], [])
+        self.assertEqual(token["external_value_user_count"], 0)
+        rows = {row["name"]: row for row in output["declarations"]}
+        self.assertIn("DependencyFixture.Token",
+                      rows["DependencyFixture.Users.typeOnly"]["type"]["forward"]["direct"])
+        self.assertNotIn("DependencyFixture.Token",
+                         rows["DependencyFixture.Users.typeOnly"]["value"]["forward"]["transitive"])
+        modules = {row["module"]: row for row in output["modules"]}
+        self.assertTrue(all(row["status"] == "ok" for row in modules.values()))
+        self.assertIn("LeanInformationAuditRegTests.DependencyFixtures.Base",
+                      modules["LeanInformationAuditRegTests.DependencyFixtures.Users"]["imports"]["forward"]["direct"])
+
+    def test_production_entry_names_unknown_declaration_without_an_exact_count(self):
+        missing = "DependencyFixture.missingDeclaration"
+        output = self.read([missing], 2)
+        self.assertFalse(output["complete"])
+        self.assertEqual(output["gaps"], [{"code": "UNKNOWN_DECLARATION", "subject": missing}])
+        query, = output["queries"]
+        self.assertEqual(query["status"], "incomplete")
+        self.assertIsNone(query["external_value_user_count"])
+
+
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(defaultTest="DependencyTests")
