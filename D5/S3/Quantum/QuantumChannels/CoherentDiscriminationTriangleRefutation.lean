@@ -25,7 +25,8 @@ def extend {R : Type} (K : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ)
     (ψ : R × Fin 2 → ℂ) : R × Fin 2 × Fin 4 → ℂ :=
   fun x => ∑ a, K x.2.2 x.2.1 a * ψ (x.1, a)
 
-private def amplitude {R E : Type} [Fintype R] [Fintype E] [DecidableEq E]
+open Classical in
+private def amplitude {R E : Type} [Fintype R] [Fintype E]
     (K : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ) (ψ : R × Fin 2 → ℂ)
     (V : Matrix (R × Fin 2 × E × Fin 2) (R × Fin 2 × E × Fin 2) ℂ)
     (e0 : E) (f : Fin 2) : R × Fin 2 × E → ℂ :=
@@ -67,10 +68,12 @@ private def replacement (t : Fin 2 → ℝ) : Fin 4 → Matrix (Fin 2) (Fin 2) �
 private theorem replacement_normalized (t : Fin 2 → ℝ) (ht : ∀ j, 0 ≤ t j)
     (hs : t 0 + t 1 = 1) : IsKrausChannel (replacement t) := by
   rw [IsKrausChannel.eq_1]
+  rw [← (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).sum_comp
+    (fun k => (replacement t k)ᴴ * replacement t k)]
   ext a b
   fin_cases a <;> fin_cases b <;>
     norm_num [replacement.eq_1, Fin.sum_univ_succ, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, finProdFinEquiv, Fin.divNat, Fin.modNat, ← Complex.ofReal_pow,
+      Matrix.conjTranspose_apply, Fintype.sum_prod_type, ← Complex.ofReal_pow,
       ← pow_two, Real.sq_sqrt (ht 0), Real.sq_sqrt (ht 1), ← Complex.ofReal_add, hs]
 
 private def block {R E : Type} [Fintype R]
@@ -91,11 +94,12 @@ private theorem replacement_amplitude {R E : Type} [Fintype R] [Fintype E]
       _ = ((Real.sqrt (t j) : ℂ) ^ 2) * z * w := by ring
       _ = _ := by rw [← Complex.ofReal_pow, Real.sq_sqrt (ht j)]
   rw [amplitude.eq_1]
+  simp_rw [← (finProdFinEquiv : Fin 2 × Fin 2 ≃ Fin 4).sum_comp]
   simp only [Fintype.sum_prod_type]
   simp only [extend.eq_1, replacement.eq_1, block.eq_1]
   rcases x with ⟨r, a, e⟩
   fin_cases a <;>
-    simp [Fin.sum_univ_succ, finProdFinEquiv, Fin.divNat, Fin.modNat, mul_ite,
+    simp [Fin.sum_univ_succ, mul_ite,
       Finset.mul_sum, ← mul_assoc, scalar]
 
 private theorem block_energy {R E : Type} [Fintype R] [Fintype E]
@@ -290,8 +294,8 @@ private theorem attaining (t u : Fin 2 → ℝ)
     linear_combination h0 + h1
   rw [successProbability.eq_1]
   simp only [hvec, Fintype.sum_prod_type]
-  norm_num [input0.eq_1, Fin.sum_univ_two, norm_mul, ← Complex.ofReal_add,
-    Complex.norm_real, Real.norm_eq_abs, sq_abs]
+  norm_num [input0.eq_1, Fin.sum_univ_two, norm_mul]
+  rw [← Complex.ofReal_add, Complex.norm_real, Real.norm_eq_abs, sq_abs]
   ring
 
 private theorem replacement_value (t u : Fin 2 → ℝ)
