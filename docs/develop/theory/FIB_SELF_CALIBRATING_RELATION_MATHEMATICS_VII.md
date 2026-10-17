@@ -873,3 +873,734 @@ losing node nor a linear gain-readout obstruction supplies the
 missing unrestricted original-root proof.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 一个完整 H* 纤维的增益射线排除
+
+**定义 8.1（固定历史及其完整插值坐标）。** Retain Definition 1.1
+and fix the single literal history
+
+$$
+H_*=(0,J,24,M,48,M,312/5,J,48/5,M,-532/5),
+\qquad \mathcal F_* =\mathcal F(H_*).                         \tag{8.1}
+$$
+
+Its cumulative matrices at original clocks zero through five are
+exactly the six matrices in (1.5). No initial-root or drift condition
+is imposed on $\mathcal F_*$. For any legal source put
+
+$$
+P=\begin{pmatrix}a&b\\c&1-a\end{pmatrix},\qquad
+u=\operatorname{tr}(JP)=b+c>0,\qquad
+v=\operatorname{tr}(LP)=1+b>1.                               \tag{8.2}
+$$
+
+For a source and a real drift $d$, define $G_{P,d}$ by interpolation
+at the four original clocks $0,1,2,3$, with values
+
+$$
+(q_0,q_1,q_2,q_3)
+=\left(-d,\frac{24-d}{u},\frac{48-d}{v},
+                    \frac{312/5-d}{u+v}\right).
+\tag{8.3}
+$$
+
+Explicitly, $G_{P,d}(T)=\sum_{i=0}^3q_i\ell_i(T)$, where
+
+$$
+\begin{aligned}
+\ell_0&=-(T-1)(T-2)(T-3)/6,&
+\ell_1&=T(T-2)(T-3)/2,\\
+\ell_2&=-T(T-1)(T-3)/2,&
+\ell_3&=T(T-1)(T-2)/6.
+\end{aligned}                                                \tag{8.4}
+$$
+
+This is the unique gain of degree at most three giving the first four
+readings with this source and drift. It cannot be identically zero:
+otherwise those readings would all equal $d$. In particular these
+coordinates retain every lower degree, sign and sampled-root case.
+Write $G_i=G_{P,d}(i)$. The useful evaluations are
+
+$$
+\begin{pmatrix}G_4\\G_5\\G_6\end{pmatrix}
+=\begin{pmatrix}-1&4&-6&4\\-4&15&-20&10\\-10&36&-45&20\end{pmatrix}
+ \begin{pmatrix}q_0\\q_1\\q_2\\q_3\end{pmatrix}.              \tag{8.5}
+$$
+
+Define the following response functions of the same fixed world:
+
+$$
+\begin{aligned}
+\mathcal Y(P,d)&=d+G_4(1+a+u),\\
+\mathcal Z(P,d)&=d+G_5(u+2v-a),\\
+S_J(P,d)&=d+G_6(2+2a+2u-v),\\
+S_M(P,d)&=d+G_6(1+2u+2v).
+\end{aligned}                                                \tag{8.6}
+$$
+
+The first two are the fourth-$J$ and fifth-$M$ readings. The last two
+are alternative sixth readings, since
+$JQ=\left(\begin{smallmatrix}3&2\\1&1\end{smallmatrix}\right)$ and
+$MQ=\left(\begin{smallmatrix}3&2\\4&3\end{smallmatrix}\right)$.
+All their trace factors are positive for a legal source. Thus
+$\mathcal F_*$ is exactly the set of triples
+$(P,G_{P,d},d)$ with a legal source and
+$\mathcal Y=48/5,\mathcal Z=-532/5$. No equation at four or five is
+omitted by the interpolation. Defining both sixth response functions
+does not acquire both readings.
+
+**定理 8.2（完整 H* 纤维中每条增益射线至多一个目标）。** If
+$W_1,W_2\in\mathcal F_*$ and their nonzero gains are proportional over
+$\mathbb R$, then $W_1=W_2$. There is no restriction on their drifts.
+
+Proof. Let $d_i$ be the drift of $W_i$. Write $g_i=c_i h$, with
+$c_i\ne0$, $h\ne0$, $\deg h\le3$, and $R_i=c_iP_i$. Let
+
+$$
+(y_0,\ldots,y_5)=(0,24,48,312/5,48/5,-532/5).
+\tag{8.7}
+$$
+
+These six readings are distinct. A sampled zero $h(k)=0$ forces
+$d_1=d_2=y_k$. If the drifts agree, there is at most one such sampled
+zero. At the other at least five clocks, the common readings give
+$\operatorname{tr}(A_k(R_1-R_2))=0$. Every five of the matrices in
+(1.5) span $\operatorname{Mat}_2(\mathbb R)$, as established in
+Lemma 2.1. Nondegeneracy of the trace pairing gives $R_1=R_2$.
+Their traces are $c_1,c_2$, so trace normalization then gives
+$c_1=c_2$, $P_1=P_2$, and the same entire gain and drift. This also
+handles all sampled-zero cases.
+
+Suppose instead $d_1\ne d_2$. All six $h(k)$ are now nonzero. Set
+
+$$
+S=\frac{R_1-R_2}{d_1-d_2},\qquad V=R_1-d_1S.
+\tag{8.8}
+$$
+
+The common readings imply
+
+$$
+\operatorname{tr}(A_kS)=-\frac1{h(k)},\qquad
+\operatorname{tr}(A_kV)=\frac{y_k}{h(k)}.                    \tag{8.9}
+$$
+
+These are auxiliary real matrices, with no asserted source legality.
+Rescale the representation $c_i h$ so that $h(1)=1$. The identity
+$A_3=J+L$ applied to both matrices gives
+
+$$
+\frac1{h(3)}=1+\frac1{h(2)},\qquad
+\frac{312/5}{h(3)}=24+\frac{48}{h(2)}.
+\tag{8.10}
+$$
+
+Solving yields $h(2)=-3/8$ and $h(3)=-3/5$. Cubic interpolation,
+including lower degrees, now gives
+
+$$
+B:=h(4)=\frac{77}{20}-h(0),\qquad
+h(5)=\frac{33}{2}-4h(0)=4B+\frac{11}{10}.                    \tag{8.11}
+$$
+
+Both quantities are nonzero. Applying $Q=I+2J+2L-C$ to $V$ gives
+
+$$
+\frac{-532/5}{4B+11/10}=-208-\frac{48/5}{B}.
+\tag{8.12}
+$$
+
+Clearing these already nonzero denominators requires
+$5200B^2+1005B+66=0$. The exact everywhere-positive certificate is
+
+$$
+20800(5200B^2+1005B+66)
+=(10400B+1005)^2+362775>0.                                  \tag{8.13}
+$$
+
+This contradiction excludes unequal drifts. No sign of $c_i$, rank
+condition on an auxiliary matrix, or nonzero-gain-sample promise was
+used to infer existence of a physical world. ∎
+
+**推论 8.3（互异祖先读数下的负判别式延伸）。** Consider
+$H_{JM}(Y,z)$ with $D_0=0,\lambda=1$. Suppose its six readings
+$0,24,48,312/5,Y,z$ are pairwise distinct and
+
+$$
+\left(\frac{1144}{5}+4Y+z\right)^2
+       -4\cdot832\cdot\frac{11Y}{10}<0.                     \tag{8.14}
+$$
+
+Then proportional gains again force identical complete targets on
+that entire fiber.
+
+Proof. Distinct readings give exactly the same sampled-zero and
+equal-drift argument. In the unequal-drift case, (8.10)–(8.11)
+are unchanged. The final identity for $V$ is
+$z/(4B+11/10)=-208-Y/B$, requiring
+
+$$
+832B^2+\left(\frac{1144}{5}+4Y+z\right)B+\frac{11Y}{10}=0.
+\tag{8.15}
+$$
+
+Its leading coefficient is positive and its discriminant is negative,
+so it has no real solution. At $(Y,z)=(48/5,-532/5)$ the discriminant
+is $-232176/25$, and (8.15) is a positive scalar multiple of the
+quadratic in (8.13). Nonnegative discriminant is not asserted to
+give actual collisions. Neither result supplies the unknown gain
+ray from the readings, or excludes collisions of nonproportional
+gains. ∎
+
+## 9. 完整交叉切片及其远端代数目标
+
+**定理 9.1（包括闭源极限的精确 u=1 切片）。** Let $\theta$ be
+the unique root in $[0,1]$ of
+
+$$
+C_*(b)=45b^3+141b^2+2464b-56.
+\tag{9.1}
+$$
+
+It satisfies
+
+$$
+\frac{22697}{10^6}<\theta<\frac{22698}{10^6}.                 \tag{9.2}
+$$
+
+The entire set $\mathcal F_*\cap\{\operatorname{tr}(JP)=1\}$
+consists of exactly the following two complete targets:
+
+$$
+\begin{aligned}
+W_0&=(P_0,g_0,0),&
+P_0&=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},&
+g_0(T)&=\frac4{25}T(T^2-53T+202),\\
+W_\theta&=(P_\theta,g_\theta,d_\theta),&
+P_\theta&=\begin{pmatrix}1-\theta&\theta\\1-\theta&\theta\end{pmatrix},&
+d_\theta&=\frac{48}{5}
+ \frac{10\theta^3-3\theta^2-89\theta+44}
+      {3\theta^3-\theta^2-20\theta+8}.
+\end{aligned}                                                \tag{9.3}
+$$
+
+Here $g_\theta$ is specified completely by its four values
+
+$$
+\left(-d_\theta,\ 24-d_\theta,
+ \frac{48-d_\theta}{1+\theta},
+ \frac{312/5-d_\theta}{2+\theta}\right)
+\quad\text{at }0,1,2,3,                                    \tag{9.4}
+$$
+
+using (8.4). The same two targets exhaust the solutions if source
+positivity is relaxed to entrywise nonnegativity while retaining
+trace one, determinant zero, $u=1$, and all six ancestor equations.
+Thus there is no compatible source-boundary limit on this slice.
+
+Proof. In (8.2), $u=1$ gives $c=1-b$. The determinant equation is
+
+$$
+a(1-a)=b(1-b),\qquad (a-b)(1-a-b)=0.
+\tag{9.5}
+$$
+
+Consequently both and all source branches are $a=b$ and $a=1-b$,
+with $0<b<1$. For the nonnegative version use $0\le b\le1$;
+(9.5) still exhausts the sources. The six trace factors are
+$1,1,1+b,2+b,2+a,3+2b-a$, all strictly positive even at those
+closed-interval endpoints.
+
+Put
+
+$$
+\begin{aligned}
+D&=(b+1)(b+2),\\
+A_4&=\frac{96}{5}(5b^2+13b-7),&B_4&=2-7b-3b^2,\\
+A_5&=24(15b^2+31b-24),&B_5&=8-23b-11b^2,\\
+t_4&=2+a,&t_5&=3+2b-a,\\
+Q_i&=D+t_iB_i,&N_i&=y_iD-t_iA_i\quad(i=4,5),
+\end{aligned}
+\qquad y_4=48/5,\quad y_5=-532/5.                            \tag{9.6}
+$$
+
+The first four readings force precisely the interpolant (9.4) with
+$b,d$ in place of $\theta,d_\theta$. By (8.5),
+$DG_i=A_i+dB_i$ for $i=4,5$. Hence the two remaining actual
+ancestor equations are exactly
+
+$$
+dQ_4=N_4,\qquad dQ_5=N_5.                                   \tag{9.7}
+$$
+
+Multiplication of the displayed polynomials gives the identities
+
+$$
+N_4Q_5-N_5Q_4=
+\begin{cases}
+\dfrac{12}{5}(2b-1)D(334+157b-4b^2-5b^3),&a=b,\\[2mm]
+\dfrac45(2b-1)D C_*(b),&a=1-b.
+\end{cases}                                                 \tag{9.8}
+$$
+
+On $[0,1]$, $D>0$ and the first residual cubic is at least $325$.
+The second has derivative $135b^2+282b+2464>0$, with endpoint values
+$-56,2594$. Moreover its values at the left and right endpoints
+of (9.2) are respectively
+
+$$
+-\frac{285830572174143}{200000000000000000},\qquad
+ \frac{26032934573941}{25000000000000000}.                    \tag{9.9}
+$$
+
+Thus the only possible parameters are $b=1/2$ on either branch,
+and $b=\theta$ on the branch $a=1-b$. This conclusion includes
+the closed endpoints and precedes any division by $Q_i$.
+
+At $b=a=1/2$, $Q_4=-15/8$ and $N_4=0$, so $d=0$ and interpolation
+gives $g_0$. On the second branch,
+
+$$
+Q_4=3b^3-b^2-20b+8,\qquad
+N_4=\frac{48}{5}(10b^3-3b^2-89b+44).
+\tag{9.10}
+$$
+
+For $b$ in (9.2), $Q_4>7$. Therefore $d=N_4/Q_4$ is lawful and
+gives exactly $d_\theta$. Conversely, at either candidate, (9.8)
+vanishes and $Q_4\ne0$. Substituting $d=N_4/Q_4$ into (9.8)
+gives $dQ_5=N_5$, without division by $Q_5$. Both remaining
+ancestors are satisfied. The four earlier ones hold by the single
+fixed interpolant, not by changing the world at a later clock.
+
+Both displayed matrices are strictly positive, trace one and rank
+one. The interpolants are nonzero, as already noted after (8.4).
+This proves existence and exhaustion, including every potential
+zero divisor, sampled root and degree drop, and proves the
+closed-source assertion. ∎
+
+**推论 9.2（远端符号界及实际第六读逆）。** The algebraic target has
+
+$$
+53<d_\theta<54,\qquad -199<g_\theta(6)<-197,
+\tag{9.11}
+$$
+
+and its actual sixth responses satisfy
+
+$$
+-922<S_J(W_\theta)<-921,\qquad
+-945<S_M(W_\theta)<-944.                                    \tag{9.12}
+$$
+
+Either sixth atom recovers the entire known slice of Theorem 9.1
+with seven total readings. Execute either chosen sixth atom and
+return $W_\theta$ when its reading is below $-800$, and $W_0$
+otherwise.
+
+Proof. On the remote branch, the sixth trace factors in (8.6) are
+$5-3\theta$ and $5+2\theta$. The gain formula is
+
+$$
+g_\theta(6)=864-26d_\theta
+ +\frac{45(d_\theta-48)}{1+\theta}
+ +\frac{20(312/5-d_\theta)}{2+\theta}.                        \tag{9.13}
+$$
+
+For explicit rational interval bounds, partition the interval in
+(9.2) into
+
+$$
+I_k=\left[\frac{64\cdot22697+k}{64000000},
+           \frac{64\cdot22697+k+1}{64000000}\right],
+\qquad 0\le k<64.                                          \tag{9.14}
+$$
+
+Evaluate (9.10), $d=N_4/Q_4$, (9.13), and then
+$d+g(6)(5-3b),d+g(6)(5+2b)$ on each $I_k$. Horner evaluation
+and rational interval addition, multiplication, and reciprocal give
+the following containing intervals, uniformly for every $k$:
+
+$$
+\begin{array}{c|c}
+\text{expression}&\text{containing open interval}\\ \hline
+Q_4&(7,9)\\
+d&(53,54)\\
+g(6)&(-199,-197)\\
+d+g(6)(5-3b)&(-922,-921)\\
+d+g(6)(5+2b)&(-945,-944).
+\end{array}                                                 \tag{9.15}
+$$
+
+All input endpoints and all coefficients in this finite interval
+certificate are given in (9.10), (9.13)–(9.14). For multiplication
+take the least and greatest of the four endpoint products; for a
+nonzero interval $[r,s]$ use reciprocal $[1/s,1/r]$. Every reciprocal
+here has positive denominator, including $Q_4>7$, $1+b>1$ and
+$2+b>2$. These rules establish (9.11)–(9.12) on their union.
+
+In particular $g_\theta(0),g_\theta(1),g_\theta(2)<0$ and
+$g_\theta(3)>0$, by (9.4) and $53<d_\theta<54<312/5$.
+The positive fourth and fifth trace factors and their ancestor
+equations give $g_\theta(4),g_\theta(5)<0$; (9.11) gives the
+same strict sign at six. Thus the remote target has a nonzero
+initial sample and a different ancestor sign pattern from $W_0$.
+
+For the base world, (8.5)–(8.6) give
+
+$$
+S_J(W_0)=-1344/5,\qquad S_M(W_0)=-2304/5.                   \tag{9.16}
+$$
+
+Both exceed $-800$, whereas both remote responses are below it.
+Theorem 9.1 exhausts the slice, so the stated inverse returns the
+complete actual target. Execute only the selected sixth atom and
+immediately read it at original clock six. The already acquired
+six readings plus this one give seven. The two distinct targets
+share $H_*$, so no answer before this added reading can recover
+the whole slice. The source-slice label is a supplied class
+restriction, not an observation inferred from $H_*$. ∎
+
+## 10. 两个局部逆与整个源带的无逃逸桥梁
+
+**引理 10.1（两个实际世界的响应雅可比证书）。** Use the bijective
+positive-source chart
+
+$$
+P(\alpha,\beta)=\frac1{1+\alpha\beta}
+ \begin{pmatrix}1&\beta\\\alpha&\alpha\beta\end{pmatrix},
+\qquad \alpha,\beta>0.                                    \tag{10.1}
+$$
+
+Its inverse is $\alpha=P_{21}/P_{11}$,
+$\beta=P_{12}/P_{11}$; the rank-one equation determines the fourth
+entry and trace one determines the denominator. Let
+$\mathcal T_J=(\mathcal Y,\mathcal Z,S_J)$ and
+$\mathcal T_M=(\mathcal Y,\mathcal Z,S_M)$, using the interpolant
+and response functions of Definition 8.1. Their coordinate domain is
+$\{\alpha,\beta>0,d\in\mathbb R\}$. Both are smooth there.
+At $x_0=(1,1,0)$ their four response gradients, with columns
+$\alpha,\beta,d$, are
+
+$$
+\begin{array}{c|rrr}
+&\partial_\alpha&\partial_\beta&\partial_d\\ \hline
+\mathcal Y&-56&1352/25&-1/2\\
+\mathcal Z&-20878/75&19738/75&-29/6\\
+S_J&-16152/25&18072/25&-13\\
+S_M&-27552/25&27552/25&-23.
+\end{array}                                                 \tag{10.2}
+$$
+
+In particular,
+
+$$
+\det\frac{\partial(\mathcal Y,\mathcal Z)}{\partial(\alpha,\beta)}
+=\frac{197952}{625},\quad
+\det D\mathcal T_J(x_0)=-\frac{382512}{25},\quad
+\det D\mathcal T_M(x_0)=-\frac{1142016}{125}.                 \tag{10.3}
+$$
+
+At $x_\theta=(1,\theta/(1-\theta),d_\theta)$,
+$D\mathcal T_J$ has its nine entries in the respective open
+intervals below; every endpoint in the table is divided by $100$:
+
+$$
+\begin{pmatrix}
+(29567,29569)&(-9918,-9916)&(364,365)\\
+(75219,75223)&(-46913,-46906)&(847,849)\\
+(440914,440931)&(-73660,-73642)&(4101,4102)
+\end{pmatrix}.                                             \tag{10.4}
+$$
+
+Consequently
+
+$$
+\frac{502852949701}{500000}
+\le\det D\mathcal T_J(x_\theta)
+\le\frac{1052660174081}{1000000},                            \tag{10.5}
+$$
+
+so this determinant too is nonzero.
+
+Proof. Write $h=1+\alpha\beta$. The source coordinates and their
+partial derivatives are
+
+$$
+\begin{gathered}
+a=h^{-1},\qquad u=(\alpha+\beta)/h,\qquad v=1+\beta/h,\\
+(a_\alpha,a_\beta)=(-\beta,-\alpha)/h^2,\\
+(u_\alpha,u_\beta)=(1-\beta^2,1-\alpha^2)/h^2,\qquad
+(v_\alpha,v_\beta)=(-\beta^2,1)/h^2.
+\end{gathered}                                              \tag{10.6}
+$$
+
+For $\tau=(1,u,v,u+v)$ and $y=(0,24,48,312/5)$, the interpolation
+samples satisfy, for $r=\alpha,\beta$,
+
+$$
+(q_i)_r=-\frac{(y_i-d)(\tau_i)_r}{\tau_i^2},\qquad
+(q_i)_d=-\frac1{\tau_i}.                                   \tag{10.7}
+$$
+
+This also gives $(q_0)_r=0,(q_0)_d=-1$. Apply (8.5) to these
+derivatives. If a response is $d+G_it$, its $r$ derivative is
+$t(G_i)_r+G_it_r$ for $r=\alpha,\beta$, and its $d$ derivative
+is $1+t(G_i)_d$. Substituting $x_0$ gives (10.2), and determinant
+expansion gives (10.3).
+
+For (10.4), differentiate with $\alpha,\beta,d$ independent first.
+Then in (10.6)–(10.7), (8.5)–(8.6) substitute
+$\alpha=1$, $\beta=b/(1-b)$ and the rational function
+$d=N_4(b)/Q_4(b)$ from (9.10). On each rational interval $I_k$ of
+(9.14), the interval rules in Corollary 9.2 put the nine resulting
+entries strictly between the endpoints in (10.4). The denominators
+$1-b,h,u,v,u+v,Q_4$ are positive on these intervals. The derivative
+with respect to $d$ is a partial derivative, not a derivative along
+the substituted curve $d=N_4(b)/Q_4(b)$.
+
+Finally let $E_{ij}$ denote the closed interval obtained by dividing
+the corresponding endpoints of (10.4) by $100$. Applying the same
+interval rules to the six signed products
+
+$$
+E_{11}E_{22}E_{33}+E_{12}E_{23}E_{31}+E_{13}E_{21}E_{32}
+-E_{13}E_{22}E_{31}-E_{12}E_{21}E_{33}-E_{11}E_{23}E_{32}
+\tag{10.8}
+$$
+
+gives exactly the endpoint interval in (10.5). Its lower endpoint
+is positive. This is a finite rational certificate for the remote
+Jacobian, without a generic-rank assumption. ∎
+
+**定理 10.2（整个充分小源带上的实际单读恢复）。** There exists
+$\varepsilon>0$ such that the sixth-$J$ response is injective on
+the entire set
+
+$$
+K_\varepsilon=
+\{W\in\mathcal F_*:|\operatorname{tr}(JP)-1|<\varepsilon\}.
+\tag{10.9}
+$$
+
+One fixed sixth $J$ and its immediate reading recover the complete
+target for every member of this known set, with seven total
+readings. No additional restriction on drift, gain signs, roots,
+degrees or cardinality is imposed inside the band.
+
+Proof. By Lemma 10.1 and the inverse function theorem, there are open
+coordinate neighborhoods $V_0,V_\theta$ of $x_0,x_\theta$ on each
+of which $\mathcal T_J$ is injective and has a smooth inverse onto
+its image. The distinct base responses (9.12), (9.16) allow these
+neighborhoods to be shrunk so that
+
+$$
+S_J(V_0)\subset(-400,-200),\qquad
+S_J(V_\theta)\subset(-1000,-900).                            \tag{10.10}
+$$
+
+On the compatible part of either neighborhood, $\mathcal Y,\mathcal Z$
+are fixed. Thus $S_J$ alone is injective on each such entire part,
+and the two response ranges are disjoint. It remains to prove that
+some whole band (10.9) is contained in their union.
+
+Suppose no such band is contained there. Choose compatible worlds
+$W_n=(P_n,g_n,d_n)$ outside both neighborhoods with $u_n\to1$.
+Write $P_n$ as in (8.2). Since $0<a_n<1$ and
+$0<b_n,c_n<u_n$, a subsequence of their source entries converges
+to a nonnegative matrix
+
+$$
+P_\infty=\begin{pmatrix}a&b\\1-b&1-a\end{pmatrix},\qquad
+0\le a,b\le1,\qquad a(1-a)=b(1-b).                         \tag{10.11}
+$$
+
+Here trace and determinant pass to the limit. In particular
+$v_n=1+b_n\to1+b\ge1$, and $u_n,v_n,u_n+v_n$ stay bounded away
+from zero. This compactness does not assume the source-chart
+parameters stay bounded.
+
+We first exclude unbounded drift. From (8.3)–(8.5) write
+$G_i=\gamma_i+d\kappa_i$ for $i=4,5$, where
+
+$$
+\begin{aligned}
+\gamma_4&=96/u-288/v+(1248/5)/(u+v),&
+\kappa_4&=1-4/u+6/v-4/(u+v),\\
+\gamma_5&=360/u-960/v+624/(u+v),&
+\kappa_5&=4-15/u+20/v-10/(u+v).
+\end{aligned}                                              \tag{10.12}
+$$
+
+For $t_4=1+a+u,t_5=u+2v-a$, the last two ancestor equations are
+
+$$
+d(1+t_i\kappa_i)=y_i-t_i\gamma_i,\qquad i=4,5.
+\tag{10.13}
+$$
+
+Their right sides remain bounded along the convergent sources.
+If a further subsequence had $|d_n|\to\infty$, dividing (10.13)
+by $d_n$ and passing to the limit would give
+$1+t_4\kappa_4=1+t_5\kappa_5=0$ at (10.11). At $u=1$ these
+two expressions are precisely $Q_4/D,Q_5/D$ in (9.6). Thus
+$Q_4=Q_5=0$, so the residual (9.8) vanishes. Its closed-interval
+factorization forces $b=1/2$ or $b=\theta$, with the branch
+conditions of Theorem 9.1. At these candidates $Q_4=-15/8$ or
+$Q_4>7$, respectively, a contradiction. Therefore the drift
+sequence is bounded even along subsequences whose sources approach
+the boundary.
+
+Take a further subsequence with $d_n\to d$. The first four
+interpolation samples then converge, because their trace denominators
+stay positive. The gain coefficients converge by (8.4). The limiting
+gain is nonzero: if it were zero, the limiting initial and first
+readings would give both $d=0$ and $d=24$. All six ancestor
+equations pass to the limit. The closed-source part of Theorem 9.1
+now forces this limit to be $W_0$ or $W_\theta$. Both have strictly
+positive sources. The inverse chart in Lemma 10.1 is continuous
+there, so the coordinate sequence eventually belongs to $V_0$ or
+$V_\theta$. This contradicts its choice outside both. Hence a
+positive band radius with the required containment exists.
+
+For this radius, $S_J$ is injective on each of the two retained
+parts and their ranges are disjoint by (10.10), proving injectivity
+on all of $K_\varepsilon$. An actual read $s$ selects $V_\theta$
+when $s<-800$ and $V_0$ otherwise. Apply that neighborhood's inverse
+of $\mathcal T_J$ to $(48/5,-532/5,s)$, then (10.1) and (8.4),
+to return the complete $(P,g,d)$. Actual membership supplies existence
+of this inverse value; uniqueness is on the whole promised band.
+Only sixth $J$ is executed and read, so the budget is $6+1=7$.
+
+The band contains actual nonzero-drift continua, not just the two
+slice points. Indeed the first minor in (10.3) gives, by the
+implicit function theorem, the entire local compatible fiber at
+$W_0$ as a graph $(\alpha(d),\beta(d),d)$ for $d$ in an interval
+about zero. Differentiating its fixed $\mathcal Y,\mathcal Z$
+equations gives
+
+$$
+\alpha'(0)=-\frac{81125}{197952},\qquad
+\beta'(0)=-\frac{82175}{197952},\qquad
+\frac{dS_J}{dd}(0)=-\frac{199225}{4124},\qquad
+\frac{dS_M}{dd}(0)=-\frac{29740}{1031}.                       \tag{10.14}
+$$
+
+Thus both sixth responses are locally strictly decreasing after
+shrinking the interval. This is the usual implicit-function method
+around the base world, now with its actual response transversality;
+its existence alone is not a global inverse. The identity
+
+$$
+u-1=-\frac{(\alpha-1)(\beta-1)}{1+\alpha\beta}               \tag{10.15}
+$$
+
+and the two nonzero source velocities show $u<1$ for sufficiently
+small nonzero $d$. These worlds have $g(0)=-d\ne0$ and lie in
+$K_\varepsilon$ by continuity. Thus neither the initial-root
+condition nor the exact slice label is determined by $H_*$. The
+whole-band conclusion instead uses the closed-slice classification,
+both local inverses, disjoint response ranges, and the no-escape
+argument above. ∎
+
+## 11. 仿射运输、数学接口与完整问题的边界
+
+**推论 11.1（任意基线及两种非零尺度符号）。** Fix
+$D_0\in\mathbb R$, $\lambda\in\mathbb R\setminus\{0\}$ and set
+
+$$
+H_*^{D_0,\lambda}=
+(D_0,J,D_0+24\lambda,M,D_0+48\lambda,M,D_0+312\lambda/5,
+ J,D_0+48\lambda/5,M,D_0-532\lambda/5).                      \tag{11.1}
+$$
+
+Theorems 8.2, 9.1 and 10.2 transport to this entire literal history
+under
+
+$$
+(P,g,d)\longmapsto(P,\lambda g,D_0+\lambda d).
+\tag{11.2}
+$$
+
+In particular the same source radius $\varepsilon$ gives a
+seven-total-reading decoder on the entire corresponding known band.
+
+Proof. This is the bijective normalization (1.4). For every original
+clock and every action word, its readings satisfy
+$z_i^{\rm aff}=D_0+\lambda z_i$. Sources, strict positivity, rank,
+degrees, roots, target distinction and source-band membership are
+preserved. For either sign of $\lambda$, normalize the actual sixth
+read as $s=(z_6^{\rm aff}-D_0)/\lambda$, apply the inverse above,
+and return (11.2). In particular its branch test is $s<-800$;
+using the unnormalized inequality without reversing it when
+$\lambda<0$ would not be this policy. The normalization is algebra
+on acquired readings, not another sensor or acquisition. The history
+already contains six immediate readings and only one $J$ and read
+are added at clock six. The extension (8.14) likewise transports
+with $Y,z$ interpreted as normalized readings. ∎
+
+**约定 11.2（所用数学结果的精确对应）。** The interpolation and
+trace-coordinate methods above use the following interfaces with
+their stated scopes.
+
+| Mathematical source | Correspondence and restriction |
+| --- | --- |
+| Definitions 1.1–1.3 and Lemma 2.1 of this volume | Complete targets, original-clock acquisition, the six actual matrices and their every-five spanning property; only this algebraic spanning fact is used in the proportional-gain proof. Theorem 4.1 already excludes two-target $L_2$ on every specified fifth-$M$ fiber, without a gain-ray promise; it is not reproved as a larger-family theorem. |
+| [VI, Theorem 3.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_VI.md) | Recovery of every known set of at most three targets at its distinct $MMJM$ parent. Its size hypothesis and literal history are retained; it imposes no bound on the cardinality of $\mathcal F_*$. |
+| [FIB Moving-Trace Recovery and Sharp Calibrated Continuations, Lemmas 3.1–3.2 and Theorems 5.1–5.2](FIB_MOVING_TRACE_RECOVERY_AND_SHARP_CALIBRATED_CONTINUATIONS.md) | Trace bases and the two-branch spectral crossing are existing structures. Here (9.5) evaluates the $J$ crossing against every $H_*$ ancestor. The moving-trace pure-$M$ calibration and its prescribed-prefix sharpness are not hypotheses for an unrestricted eight-reading bound. |
+| Li–Lee–Bresler, *A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems*, [Definition 2.7 and Theorem 2.8](https://arxiv.org/html/1501.06120v1) | Identification requires every compatible solution to belong to the specified transformation orbit, with factor-orbit and conditional-fiber conditions. Here trace one removes positive source/gain scaling and leaves drift as a separate coordinate. The proportional-gain exclusion does not acquire the gain orbit. No bilinear sampling threshold is applied. |
+| Breiding–Gesmundo–Michałek–Vannieuwenhoven, *Algebraic compressed sensing*, [Answers 7–9](https://arxiv.org/html/2108.13208v2) | The generic-map and generic-point identification statements have different quantifiers from everywhere identification for prescribed atoms. No dimension threshold from those results is used here; the passage from local inverses to the entire band is the explicit compactness argument of Theorem 10.2. |
+
+The base world and the implicit-function construction are supporting
+examples and standard methods. The substantive compatibility
+calculations are the full-fiber positive quadratic certificate, the
+exhaustive two-branch ancestor calculation with its remote target,
+and the closed-source and unbounded-drift exclusion that joins both
+local inverses on the whole band. Polynomial interpolation, the
+implicit and inverse function theorems, elementary trace linear
+algebra, rational interval bounds and finite-dimensional compactness
+are established mathematical tools. These applications carry no
+external-priority assertion.
+
+**开放问题 11.3（带外纤维与不受限原根目标）。** The radius in
+Theorem 10.2 is existential; no numerical radius, stability modulus
+or computational cost bound is specified. Band membership is a known
+input restriction. The history does not thereby certify that its
+actual world lies in that band, and no collision between a band
+world and a world outside it has been excluded. At $H_*$, every
+$L_2$ family must contain a world outside this band, but such a
+necessary condition neither realizes a losing family nor supplies
+an inverse on all of $\mathcal F_*$. The full-fiber gain-ray theorem
+still permits families of different gain rays.
+
+For a complete two-further-reading inverse on $\mathcal F_*$ one
+must select a single sixth atom and, for every actual response, stop
+on a singleton or select one seventh atom injective on that entire
+retained fiber. Alternatively an $L_2$ witness must use fixed legal
+worlds realizing every ancestor simultaneously, with losing actual
+children for both sixth atoms. Different children and terminal
+actions can use different collision pairs, including disjoint pairs;
+constant-response arms also remain in scope. Neither alternative
+is supplied by the slice or band inverse.
+
+The exact-slice and band results concern (8.1) and its affine copies
+(11.1), not arbitrary $Y,z$ in (1.3). Corollary 8.3 provides only
+its explicit distinct-reading, negative-discriminant exclusion on
+some further histories. The complementary parent arms, other
+original histories and early stops retain their own obligations.
+At the distinct $MMJM$ parent, the unrestricted four-target and
+larger $L_3$ question and the whole-fiber three-read inverse remain
+the questions of Section 7. The $H_*$ restrictions do not impose a
+common gain, drift or source stratum on that distinct parent.
+
+The full original-clock alternative remains
+$n_{\mathrm{det}}(3,0)\ge9$ versus a lawful decoder for every
+$(P,g,\delta)\in\mathcal W_3$ in at most eight total readings.
+It quantifies over all initial actions and actual branches, all
+constant drifts, every nonzero cubic-or-lower gain with all signs
+and sampled or repeated roots, and arbitrary deterministic policies
+without regularity assumptions. The three conclusions above give
+neither an original-root lower-bound tree nor an unrestricted
+eight-reading decoder.
+
+## 追加锚（本行以下为增补区）
