@@ -526,6 +526,16 @@ Because its source error lies in $N$, each edge error is at most $\|n_h-n_h^{(m)
 
 What is still missing: explicit acquisition or approximation of $P_N$ itself, a transfer between the actual projected increments, and its joint reconstruction/norm estimate. The anchors' positive mass can be very small and no useful numerical conditioning is claimed. The inverse series is an operator identity involving the exact $P_N$, not a finite algorithm or a spectral certificate for the original remainder. G1 bounds K_- only, not D, and does not prove RH, Robin, the half-bound or the cofinal comparison.
 
+The [direct Mellin/Sonine interface (BM1)–(BM5)](burnol2002sonine.md#the-direct-theta-to-sonine-identification-changes-domain-or-norm)
+retains this same common correction. Its literal physical Mellin input
+has trivial intersection with every fixed Sonine $L_a$. Relabelling the
+raw Fourier values as Gamma-completed values instead gives an unbounded
+map even from the original form norm or the joint projected-edge norm:
+actual real-zero duals have polynomial form-norm growth and fixed-width
+Fourier peaks, against an exponential inverse-Gamma weight. This excludes
+those exact direct identifications, not a different transformed or
+spectrally restricted interface, and determines no signed half-slack.
+
 
 ### Even geometry gives a stronger negative-edge inverse constant
 
