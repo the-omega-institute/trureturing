@@ -2895,3 +2895,682 @@ non-balanced opposite-orientation controlled stratum. It supplies neither
 universal rank-two coverage nor a no-quartet proof. The unrestricted
 noncanonical orthogonal-triple problem on the rest of the actual open
 branch remains separate.
+
+## 74. Reflection-edge rigidity at the two half parameters
+
+This section gives an exact finite-parameter obstruction inside the actual
+family. It classifies reflection-generated orthogonal pairs, with no
+restriction on the candidate ray. Its graph consequence concerns one
+symmetry-orbit union at a time.
+
+### 74.1. Statement in the original input convention
+
+Write
+\[
+ h=\sqrt{\frac{3-b^2}{1+b^2}},\qquad
+ P=\frac{bh-3+i(h+b)}2,\qquad Q=\frac{-bh-3+i(h-b)}2,
+\]
+\[
+ H_0(b)=\frac1{\sqrt6}
+ \begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix}.                 \tag{74.1}
+\]
+Let \(R\) exchange coordinates 0 and 1 synchronously in the two channels,
+and let \(\Theta(x,y)=(-\bar y,\bar x)\).
+
+**Theorem 74.1 (half-parameter reflection-edge classification).**
+For \(b=1/2\) or \(b=-1/2\), suppose \(w=(x,y)\) and \(H_0(b)w\)
+have all six coordinates of modulus one, and \(w^*Rw=0\).
+Then the projective ray of \(w\) is one of exactly four rays
+\[
+ \left(f_m,\ \varepsilon\frac{b+i}{\sqrt{1+b^2}}f_m\right),
+ \quad m\in\{1,2\},\quad\varepsilon\in\{-1,1\},
+ \qquad f_m=(1,\omega^m,\omega^{2m}),\quad
+ \omega=\frac{-1+i\sqrt3}{2}.                              \tag{74.2}
+\]
+The same statement holds for either other synchronous transposition.
+Here \(w/\sqrt6\) is the normalized input vector; (74.1) acts on that
+input, so no input/output basis identification is implicit.
+
+The proof below prints the original reduction, every exceptional chart,
+and two finite rational ideal certificates. They use elementary polynomial
+operations only. No ray census or external no-quartet theorem is assumed.
+
+### 74.2. A quaternionic reduction retaining individual flatness
+
+Use the quaternion realization
+\[
+ (\Re z,\Im z,\Re t,\Im t)
+ \longleftrightarrow
+ \begin{pmatrix}z&t\\-\bar t&\bar z\end{pmatrix}.
+\]
+Quaternion conjugation is denoted by \(*\). Pure quaternions are vectors in
+\(\mathbb R^3\), with \(uv=-u\cdot v+u\times v\); put \(e=(1,0,0)\).
+The channel pair \((x_j,y_j)\) is the first column of the quaternion
+\(W_j=T(x_j,-\bar y_j)\). Its squared norm is
+\(|x_j|^2+|y_j|^2\), and the \(e\)-component of \(W_jeW_j^*\)
+is \(|x_j|^2-|y_j|^2\).
+
+In interleaved channel order, \(iH_0\) is a quaternionic unitary matrix
+with off-diagonal entry \(A=A_0/\sqrt6\) and diagonal entry \(D=D_0/\sqrt6\),
+where
+\[
+ A_0=(0,1,0,1),\qquad
+ D_0=\left(-\frac{h+b}{2},\frac{bh-1}{2},
+              -\frac{h-b}{2},\frac{-bh-1}{2}\right).
+\]
+Put \(B=D-A\). Direct multiplication, using
+\((1+b^2)h^2=3-b^2\), gives
+\[
+ |A|^2=|D|^2=\frac13,\quad |B|^2=1,\quad
+ D_0^*A_0=-1+\boldsymbol K,\qquad
+ \boldsymbol K=(-b,bh,-h),\quad|\boldsymbol K|^2=3.           \tag{74.3}
+\]
+These identities also verify unitarity of (74.1).
+
+The four normalized columns associated with
+\(w,Rw,\Theta w,R\Theta w\) are mutually orthogonal: \(R\) is real
+symmetric, commutes with \(\Theta\), and \(\Theta^2=-I\).
+They form a quaternionic two-plane containing the \(R\)-odd line.
+Its complementary quaternionic line is \(R\)-even. Its complex
+projector has diagonal \(1/3\), since the four flat columns contribute
+\(2/3\). Thus its unit vector has the unique right normalization
+\[
+ C_{\mathcal Q}=\frac{(1,1,\mathcal Q)}{\sqrt3},
+ \qquad |\mathcal Q|=1.
+\]
+An orthonormal quaternionic basis of its complement is
+\[
+ E_{\mathcal Q}=\frac{(1,1,-2\mathcal Q)}{\sqrt6},\qquad
+ O_0=\frac{(1,-1,0)}{\sqrt2}.
+\]
+Output flatness of the four columns gives the same complementary
+projector diagonal. Since the first two output coefficients agree,
+unitarity shows this is equivalent to
+\[
+ |2A+D\mathcal Q|^2=1,
+ \qquad\langle-1+\boldsymbol K,\mathcal Q\rangle=-1.        \tag{74.4}
+\]
+The bracket is the Euclidean quaternion inner product.
+Set
+\[
+ L=A+D-2A\mathcal Q,\quad T_0=D\mathcal Q-A,\quad F=L^*B.
+\]
+Then \(|L|=|T_0|=1\), and the images of the displayed basis are
+\((L,L,-2T_0)/\sqrt6\) and \((B,-B,0)/\sqrt2\). Moreover,
+\[
+ F=1+\frac{(1-\mathcal Q^*)(-3-\boldsymbol K)}3,
+ \qquad \mathcal Q=\frac{(3+\boldsymbol K)(3F^*-\boldsymbol K)}{12}.
+                                                                    \tag{74.5}
+\]
+The complement conditions are exactly
+\[
+ |F|=1,\qquad \Im(F)\cdot\boldsymbol K=0.                   \tag{74.6}
+\]
+For example,
+\[
+ |\mathcal Q|^2-1=\tfrac34(|F|^2-1)
+                   +\tfrac12\Im(F)\cdot\boldsymbol K,
+\]
+\[
+ |F|^2-1=\tfrac43(|\mathcal Q|^2-1)
+          +\tfrac23(\langle-1+\boldsymbol K,\mathcal Q\rangle+1).
+\]
+No parameter-dependent denominator is used here.
+
+Reflection orthogonality and equal input channel-pair norms give
+\[
+ W_0=\frac{(1+\sqrt3 V)\eta}{\sqrt2},\quad
+ W_1=\frac{(1-\sqrt3 V)\eta}{\sqrt2},\quad
+ W_2=-\sqrt2\mathcal Q\eta,                                \tag{74.7}
+\]
+where \(\eta\) is unit, \(V\) is pure unit, \(v=\Im V\), and
+\(n=\eta e\eta^*\) is unit. The output pair norms equal two precisely
+when \(\Im(F)\cdot v=0\). The six individual input/output imbalances
+are exactly
+\[
+ n\cdot(e\times v)=0,\quad
+ n\cdot(3(e\cdot v)v-e)=0,\quad
+ n\cdot\mathcal Q^*e\mathcal Q=0,                           \tag{74.8}
+\]
+\[
+ n\cdot(\mathbf h\times v-h_0v)=0,\quad
+ n\cdot(e_L-3e_B+6(e_B\cdot v)v)=0,\quad
+ n\cdot T_0^*eT_0=0,                                     \tag{74.9}
+\]
+where \(e_B=B^*eB\), \(e_L=L^*eL\), and
+\(B^*eL=h_0+\mathbf h\). These follow by expanding (74.7) and
+its output, obtained by replacing \(1,V,\mathcal Q\) with
+\(L,BV,T_0\). Conversely, choose any lift \(\eta e\eta^*=n\)
+and use (74.7). The pair norms and (74.8)–(74.9) give all twelve
+original unit moduli and reflection orthogonality. The lifts differ
+only by a right unit complex scalar, which is the common projective
+phase. Thus the projector condition has not replaced individual flatness.
+
+Writing \(c=e\cdot v\), when \(|c|<1\) the first two input equations give
+\[
+ N(v)=(1-3c^2)v+2ce,\qquad
+ n=\frac{\pm N(v)}{\sqrt{(1-c^2)(1+3c^2)}}.                \tag{74.10}
+\]
+At \(v=\pm e\), instead they give \(n\cdot e=0\). This exceptional
+circle will be handled without (74.10).
+
+### 74.3. Real poles, axis, and parallel exceptions
+
+If \(F\) is real, \(F=\pm1\) and \(L=\pm B\).
+The first two input and output equations become
+\[
+ n\cdot(e\times v)=n\cdot(e_B\times v)=0,\quad
+ n\cdot(3(e\cdot v)v-e)=n\cdot(3(e_B\cdot v)v-e_B)=0.
+\]
+The axes are independent, since \(e\cdot e_B=-bh/3\) and
+\(|bh|\le1\). These equations force
+\(v\perp e,e_B\) and \(n=\pm v\). Indeed, outside the axes' plane
+the first two equations force \(n\parallel v\), and the last two
+then give the perpendicularities. Inside that plane they force \(n\)
+inside it and \(n-3(n\cdot v)v=0\), contradicting \(|n|=1\).
+
+For \(F=1\), (74.5) gives \(\mathcal Q=1\) and \(T_0=B\).
+Since \(V\eta=\pm\eta e\), (74.7) gives the two nonzero Fourier
+patterns \((f_m,gf_m)\). Original flatness requires
+\(\Re(P\bar Q\bar g)=0\); the identity
+\[
+ P\bar Q=\frac{(b^2+3)(1-ib)}{1+b^2}
+\]
+gives exactly (74.2). For \(F=-1\),
+\(\mathcal Q=(-1-\boldsymbol K)/2\), whereas
+\[
+ (e\times e_B)\cdot\mathcal Q^*e\mathcal Q
+       =-\frac{h(b^2+3)}6\ne0.
+\]
+This contradicts the third input equation. Both pole arguments include
+\(v=\pm e\).
+
+Assume henceforth \(\Im F\ne0\). Rotate about \(e\) so that
+\(\boldsymbol K=(-b,k,0)\), \(k=\sqrt{3-b^2}>0\). Put
+\[
+ \rho=\frac{3b}{b^2+3},\qquad d_0=\boldsymbol K+2\rho e,
+ \qquad e_B=-\frac{b^2+3}{3h(1+b^2)}d_0.                  \tag{74.11}
+\]
+The scalar multiplier is nonzero.
+If \(v=\pm e\), write \(F=a+(0,0,kt)\),
+\(a^2+k^2t^2=1\), and \(n=(0,n_y,n_z)\). With
+\(D_1=2\rho-b=b(3-b^2)/(b^2+3)\), the output equations give
+\[
+ n_z(a+D_1t)=0,\qquad n_y[a(a+D_1t)-2]=0.
+\]
+Because \(|D_1|<k\), \(|D_1at|<1/2\); hence the second bracket
+cannot vanish. Thus \(n_y=0\), \(n_z=\pm1\), and \(a+D_1t=0\).
+The third input equation is \(a+2bt=1\). At \(b=0\) these are
+inconsistent. Otherwise they give
+\[
+ t=\frac{b^2+3}{3b(1+b^2)},\qquad
+ a=-\frac{3-b^2}{3(1+b^2)},\qquad
+ a^2+k^2t^2=\frac{3-b^2}{b^2(1+b^2)}.
+\]
+The sphere condition forces \((b^2-1)(b^2+3)=0\).
+In particular neither half parameter survives. This argument excludes
+the axis on the open branch, without making an endpoint claim.
+
+If \(v\parallel\boldsymbol K\), write
+\(F=a+(kp,bp,kq)\), \(a^2+3p^2+k^2q^2=1\).
+Here \(n\) is proportional to
+\(N_0=(1-b^2)\boldsymbol K-2be\ne0\). The output-pair sum becomes
+\[
+\begin{aligned}
+0&=N_0\cdot[F d_0F^*-3d_0+2(d_0\cdot\boldsymbol K)\boldsymbol K]\\
+ &=\frac{2(3-b^2)}{b^2+3}
+       [(3-b^2)(a+2bq)^2+3(1+b^2)]>0.
+\end{aligned}                                                     \tag{74.12}
+\]
+Thus this full stratum is impossible. We may now write
+\[
+ F=a+t(\boldsymbol K\times v),\quad t\ne0,\quad
+ d=\boldsymbol K\cdot v,\quad\Delta=e\cdot(\boldsymbol K\times v),
+\]
+\[
+ \Delta^2=3-b^2-3c^2-d^2-2bcd,\qquad
+ a^2+t^2(3-d^2)=1.                                     \tag{74.13}
+\]
+The excluded parallel case was essential for this parametrization.
+
+### 74.4. The remaining scalar equations
+
+For \(\lambda=1,3\), define
+\[
+\begin{gathered}
+ A_c=1-3c^2,\quad V_c=1-c^2,\quad Z=3cV_c,\quad
+ W=A_cd-2bc,\quad J=3-d^2,\quad u_0=a-1-td,\\
+ E_\lambda=-bu_0+3tc-\lambda t\Delta,\quad
+ N_\lambda=u_0W+3tV_c-2\lambda ct\Delta,\\
+ P_\lambda=3u_0^2+9t^2+\lambda^2t^2J+6u_0td,\quad
+ C_\lambda=-u_0A_c\Delta+\lambda t(bV_c+cW).
+\end{gathered}
+\]
+The four remaining equations, after replacing \(n\) by its nonzero
+multiple \(N(v)\), are
+\[
+\begin{aligned}
+ I={}&[(1+3a)^2-P_3]Z+2E_3N_3-2(1+3a)C_3=0,\\
+ D_f={}&2\Delta[ca-t\{\rho(1+c^2)+cd\}]=0,\\
+ S_f={}&[a^2-t^2J-3](W+2\rho Z)+8\rho ct^2\Delta^2\\
+      &+2at[(3-2\rho b)V_c-(d+2\rho c)W]
+         +6(d+2\rho c)V_c=0,\\
+ O_f={}&[(3+a)^2-P_1](W+2\rho Z)
+       +2[3(a-1)+2\rho E_1]N_1\\
+      &-2(3+a)[-6ct\Delta-t(3V_c-dW)+2\rho C_1]=0.
+\end{aligned}                                                     \tag{74.14}
+\]
+For direct reconstruction from (74.8)–(74.9), use
+\[
+ \mathcal Q=\frac{1+3F^*+\boldsymbol K(F^*-1)}4,\qquad
+ G=B^*T_0=\frac{3+F^*+\boldsymbol K(F^*-1)}4.             \tag{74.15}
+\]
+Then \(I=16N\cdot\mathcal Q^*e\mathcal Q\), \(S_f\) is
+\(N\cdot[F d_0F^*-3d_0+6(d_0\cdot v)v]\), and
+\(O_f=16N\cdot G^*d_0G\). The difference equation is \(D_f=0\).
+Expansion by scalar and vector quaternion multiplication proves these
+identities; (74.13) supplies only the unit-vector and Gram relations.
+
+We now fix \(b=1/2\), so \(k^2=11/4\) and \(\rho=6/13\).
+Two exact ideal certificates exclude the remaining plane and nonplane charts.
+
+### 74.5. Finite polynomial-operation convention
+
+Both certificates below are fully specified by their printed seeds and
+operation tables. Over \(\mathbb Q\), use graded reverse lexicographic
+order in the displayed variable order: larger total degree is larger;
+at equal degree, at the last differing coordinate the smaller exponent
+is larger. Write \(\operatorname{LM},\operatorname{LC}\) for leading
+monomial and coefficient. Define
+\[
+ \mathsf S(f,g)=\frac{m}{\operatorname{LM}(f)}
+                    \frac f{\operatorname{LC}(f)}
+              -\frac{m}{\operatorname{LM}(g)}
+                    \frac g{\operatorname{LC}(g)},\qquad
+ m=\operatorname{lcm}(\operatorname{LM}(f),\operatorname{LM}(g)).
+\]
+Define \(\mathsf R(f;g_1,\ldots,g_s)\) by ordinary ordered multivariate
+division: repeatedly cancel the leading term using the first listed
+\(g_j\) whose leading monomial divides it; if none divides it, transfer
+that term to the remainder. Normalize the final nonzero remainder by
+its leading coefficient. An empty divisor list just makes \(f\) monic.
+All displayed uses have nonzero divisors and nonzero final remainder.
+
+In each table, row \(j\) defines polynomial \(z_j\). The notation
+\(\mathsf I(i)\) means seed \(i\), \(\mathsf S(p,q)\) means
+\(\mathsf S(z_p,z_q)\), and \(\mathsf R(p;q_1,\ldots,q_s)\)
+means \(\mathsf R(z_p;z_{q_1},\ldots,z_{q_s})\).
+Every reference points backward. By induction every row lies in the
+seed ideal: an S-polynomial is a polynomial combination, and a division
+remainder differs from its input by polynomial multiples of divisors.
+Thus no theorem asserting correctness of a Gröbner-basis implementation
+is needed. The tables specify finite rational calculations, including
+the divisor order, rather than a choice of elimination strategy.
+
+### 74.6. The plane chart and its strictly positive consequence
+
+If \(\Delta=0\), the retained nonparallel vectors satisfy
+\[
+ v=(x,ky,0),\quad F=a+(0,0,kt),\quad
+ x^2+k^2y^2=a^2+k^2t^2=1.
+\]
+The already handled points \(v=\pm e\), \(F=-1\) allow the complete
+Cayley chart
+\[
+ x=\frac{1-k^2u^2}{1+k^2u^2},\quad y=\frac{2u}{1+k^2u^2},\qquad
+ a=\frac{1-k^2r^2}{1+k^2r^2},\quad t=\frac{2r}{1+k^2r^2},
+ \qquad u\ne0.                                         \tag{74.16}
+\]
+All denominators are positive. Set \(N=(1-3x^2)v+2xe\).
+The three retained original equations are
+\[
+ N\cdot\mathcal Q^*e\mathcal Q=0,\quad
+ N\cdot[F d_0F^*-3d_0+6(d_0\cdot v)v]=0,\quad
+ N\cdot G^*d_0G=0.                                    \tag{74.17}
+\]
+Use variable order \((r,u)\). The following coefficient table defines
+polynomials \(p_i=\sum_{j=0}^4p_{ij}(u)r^j\). Define seeds
+\(f_0=p_0/14641\), \(f_1=p_1/190333\), and \(f_2=p_2/73205\).
+
+| i | j | \(p_{ij}(u)\) |
+| --- | --- | --- |
+| 0 | 4 | \(121 \left(11 u^{2} - 4 u - 4\right) \left(11 u^{2} + 22 u - 4\right)\) |
+| 0 | 3 | \(44 \left(121 u^{4} + 726 u^{3} - 176 u^{2} - 264 u + 16\right)\) |
+| 0 | 2 | \(- 44 \left(121 u^{4} - 1386 u^{3} - 176 u^{2} + 504 u + 16\right)\) |
+| 0 | 1 | \(- 192 \left(121 u^{4} - 176 u^{2} + 16\right)\) |
+| 0 | 0 | \(- 768 u \left(11 u^{2} - 4\right)\) |
+| 1 | 4 | \(1573 \left(11 u^{2} + 4\right)^{2}\) |
+| 1 | 3 | \(484 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 1 | 2 | \(264 \left(11 u^{2} - 4\right) \left(143 u^{2} + 44 u - 52\right)\) |
+| 1 | 1 | \(- 176 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 1 | 0 | \(208 \left(11 u^{2} + 4\right)^{2}\) |
+| 2 | 4 | \(121 \left(605 u^{4} - 726 u^{3} - 880 u^{2} + 264 u + 80\right)\) |
+| 2 | 3 | \(121 \left(605 u^{4} + 462 u^{3} - 880 u^{2} - 168 u + 80\right)\) |
+| 2 | 2 | \(66 \left(121 u^{4} + 726 u^{3} - 176 u^{2} - 264 u + 16\right)\) |
+| 2 | 1 | \(44 \left(121 u^{4} - 858 u^{3} - 176 u^{2} + 312 u + 16\right)\) |
+| 2 | 0 | \(8 \left(1573 u^{4} + 726 u^{3} - 2288 u^{2} - 264 u + 208\right)\) |
+
+Writing \(D_0'=(11r^2+4)^2(11u^2+4)^3>0\), the three expressions in
+(74.17) are respectively
+\[
+ \frac{161051u}{D_0'}f_0,\qquad
+ \frac{1288408u}{D_0'}f_1,\qquad
+ -\frac{6442040u}{13D_0'}f_2.                            \tag{74.18}
+\]
+These exact identities follow from (74.15)–(74.16). Every multiplier is
+nonzero, so no solution is lost. The following finite certificate uses
+these three seeds.
+
+| j | Definition of \(z_j\) |
+| --- | --- |
+| 0 | \(\mathsf I(0)\) |
+| 1 | \(\mathsf I(1)\) |
+| 2 | \(\mathsf I(2)\) |
+| 3 | \(\mathsf R(0;)\) |
+| 4 | \(\mathsf R(1;0)\) |
+| 5 | \(\mathsf R(2;0)\) |
+| 6 | \(\mathsf R(3;)\) |
+| 7 | \(\mathsf R(4;)\) |
+| 8 | \(\mathsf R(5;4)\) |
+| 9 | \(\mathsf R(6;)\) |
+| 10 | \(\mathsf R(7;)\) |
+| 11 | \(\mathsf R(8;)\) |
+| 12 | \(\mathsf S(9,11)\) |
+| 13 | \(\mathsf R(12;11,10)\) |
+| 14 | \(\mathsf S(10,11)\) |
+| 15 | \(\mathsf R(14;11,10,13)\) |
+| 16 | \(\mathsf S(15,11)\) |
+| 17 | \(\mathsf R(16;15,11,10,13)\) |
+| 18 | \(\mathsf S(17,13)\) |
+| 19 | \(\mathsf R(18;17,15,11,10)\) |
+| 20 | \(\mathsf S(19,15)\) |
+| 21 | \(\mathsf R(20;17,19,15,11,10)\) |
+| 22 | \(\mathsf S(21,17)\) |
+| 23 | \(\mathsf R(22;17,21,19,15,11,10)\) |
+| 24 | \(\mathsf S(23,19)\) |
+| 25 | \(\mathsf R(24;17,21,23,19,15,11,10)\) |
+| 26 | \(\mathsf S(25,10)\) |
+| 27 | \(\mathsf R(26;25,17,23,19,15,11)\) |
+| 28 | \(\mathsf S(27,11)\) |
+| 29 | \(\mathsf R(28;27,25,17,23,19,15)\) |
+| 30 | \(\mathsf S(29,15)\) |
+| 31 | \(\mathsf R(30;29,27,25,17,23,19)\) |
+| 32 | \(\mathsf S(31,19)\) |
+| 33 | \(\mathsf R(32;31,29,27,25,17,23)\) |
+| 34 | \(\mathsf S(33,23)\) |
+| 35 | \(\mathsf R(34;33,31,29,27,25,17)\) |
+| 36 | \(\mathsf S(35,17)\) |
+| 37 | \(\mathsf R(36;35,33,31,29,27,25)\) |
+| 38 | \(\mathsf S(37,25)\) |
+| 39 | \(\mathsf R(38;37,35,33,31,29,27)\) |
+| 40 | \(\mathsf S(39,27)\) |
+| 41 | \(\mathsf R(40;39,37,35,33,31,29)\) |
+| 42 | \(\mathsf S(41,29)\) |
+| 43 | \(\mathsf R(42;41,39,37,35,33,31)\) |
+| 44 | \(\mathsf R(33;39,41,43)\) |
+| 45 | \(\mathsf R(39;41,43)\) |
+
+The last two rows have the particularly small values
+\[
+ z_{44}=u^6+\frac8{11}u^4+\frac{64}{121}u^2-\frac{192}{1331}
+                -\frac{144}{121}ru-\frac{12}{11}r^3u,
+\]
+\[
+ z_{45}=\frac{256}{1089}u-\frac{40}{99}u^3-\frac29u^5
+             -\frac{16}{121}r+\frac{12}{11}ru^2
+             -\frac4{33}r^3+r^3u^2.
+\]
+Consequently the following explicit combination lies in the seed ideal:
+\[
+\begin{aligned}
+ &(14641u^2-5324/3)z_{44}+15972u z_{45}\\
+ &\qquad=14641u^8+5324u^6+704u^2+256\\
+ &\qquad=(11u^2+4)^2[(11u^2-2)^2+12]>0.                 \tag{74.19}
+\end{aligned}
+\]
+This excludes the entire remaining real plane chart.
+
+### 74.7. The nonplane chart and its impossible interior root
+
+Now \(\Delta\ne0\), \(|c|<1\), and \(t\ne0\). The undivided
+\(D_f=0\) in (74.14), with \(\rho=6/13\ne0\), excludes \(c=0\).
+Hence the substitutions
+\[
+ U=c^2,\quad R=cd,\quad K=c\Delta,\quad T=t/c,\qquad
+ a=T\left[\frac6{13}(1+U)+R\right],\qquad0<U<1            \tag{74.20}
+\]
+are legitimate. In this subsection \(K,R,T\) are formal scalar
+variables, distinct from \(\boldsymbol K\), the reflection operator,
+and the quaternion \(T_0\). The five polynomial seeds are as follows;
+the variable order is \((T,K,R,U)\).
+
+For \(i=0,1,2\), set \(f_i=A_iT^2+B_iT+C_i\), where
+
+\[
+A_0=9 \left(676 K^{2} U - 72 K U^{3} - 354 K U^{2} - 258 K U + 24 K + 676 R^{2} U + 12 R U^{3} + 735 R U^{2} + 43 R U - 4 R - 72 U^{4} + 1830 U^{3} - 1506 U^{2} - 28 U\right).
+\]
+\[
+B_0=156 \left(6 K U^{2} - 9 K U - 2 K - 3 R U^{2} + 24 R U + R - 18 U^{3} + 12 U^{2} + 17 U\right).
+\]
+\[
+C_0=169 \left(6 K U - 2 K + 3 R U - R + 6 U^{2} - 5 U\right).
+\]
+\[
+A_1=2704 K^{2} U + 2704 R^{2} U - 468 R U^{3} + 4693 R U^{2} + 2613 R U + 156 R - 432 U^{4} + 4404 U^{3} - 3143 U^{2} + 1992 U.
+\]
+\[
+B_1=0.
+\]
+\[
+C_1=169 \left(13 R U + 13 R + 12 U^{2} + U\right).
+\]
+\[
+A_2=676 K^{2} U - 216 K U^{3} - 1062 K U^{2} - 774 K U + 72 K + 676 R^{2} U - 360 R U^{3} + 1480 R U^{2} + 1284 R U + 120 R + 216 U^{4} + 1110 U^{3} - 1613 U^{2} + 1380 U.
+\]
+\[
+B_2=- 156 \left(6 K U^{2} - 48 K U - 2 K + 3 R U^{2} - 24 R U - R + 18 U^{3} - 12 U^{2} - 17 U\right).
+\]
+\[
+C_2=1014 \left(3 U - 1\right) \left(K - 2 R - U\right).
+\]
+\[
+f_3=4 K^{2} + 4 R^{2} + 4 R U + 12 U^{2} - 11 U.
+\]
+\[
+f_4=156 R T^{2} U + 156 R T^{2} + 36 T^{2} U^{2} + 579 T^{2} U + 36 T^{2} - 169.
+\]
+
+Substituting (74.20) backward, \(f_0,f_1,f_2\) equal respectively
+\(169cI\), \((2197c/3)S_f\), and \((2197c/12)O_f\).
+The other two equal
+\[
+ 4c^2(\Delta^2-11/4+3c^2+d^2+cd),\qquad
+ 169[a^2+t^2(3-d^2)-1].                                 \tag{74.21}
+\]
+Thus all five seeds vanish on the chart, with every used multiplier
+nonzero. The finite certificate is:
+
+| j | Definition of \(z_j\) |
+| --- | --- |
+| 0 | \(\mathsf I(0)\) |
+| 1 | \(\mathsf I(1)\) |
+| 2 | \(\mathsf I(2)\) |
+| 3 | \(\mathsf I(3)\) |
+| 4 | \(\mathsf I(4)\) |
+| 5 | \(\mathsf R(0;)\) |
+| 6 | \(\mathsf R(1;)\) |
+| 7 | \(\mathsf R(2;0,1)\) |
+| 8 | \(\mathsf R(3;)\) |
+| 9 | \(\mathsf R(4;)\) |
+| 10 | \(\mathsf R(5;)\) |
+| 11 | \(\mathsf R(6;)\) |
+| 12 | \(\mathsf R(7;)\) |
+| 13 | \(\mathsf R(8;)\) |
+| 14 | \(\mathsf R(9;)\) |
+| 15 | \(\mathsf S(11,14)\) |
+| 16 | \(\mathsf R(15;13,14,12)\) |
+| 17 | \(\mathsf S(16,12)\) |
+| 18 | \(\mathsf R(17;13,14)\) |
+| 19 | \(\mathsf S(16,14)\) |
+| 20 | \(\mathsf R(19;14,18,16)\) |
+| 21 | \(\mathsf S(20,18)\) |
+| 22 | \(\mathsf R(21;14,18,16,20)\) |
+| 23 | \(\mathsf S(22,16)\) |
+| 24 | \(\mathsf R(23;22,14,18)\) |
+| 25 | \(\mathsf S(22,14)\) |
+| 26 | \(\mathsf R(25;24,22,14,18,20)\) |
+| 27 | \(\mathsf S(18,13)\) |
+| 28 | \(\mathsf R(27;13,24,22,18,20)\) |
+| 29 | \(\mathsf S(18,16)\) |
+| 30 | \(\mathsf R(29;13,24,22,14,26,18,20)\) |
+| 31 | \(\mathsf S(30,28)\) |
+| 32 | \(\mathsf R(31;13,24,22,14,30,18,20)\) |
+| 33 | \(\mathsf S(32,30)\) |
+| 34 | \(\mathsf R(33;13,24,22,14,26,32,30,18,20)\) |
+| 35 | \(\mathsf S(32,18)\) |
+| 36 | \(\mathsf R(35;13,24,22,14,26,32,30,18,20,34)\) |
+| 37 | \(\mathsf S(30,24)\) |
+| 38 | \(\mathsf R(37;13,24,22,14,26,32,30,18,20,34)\) |
+| 39 | \(\mathsf S(38,14)\) |
+| 40 | \(\mathsf R(39;13,24,22,14,38,32,30,18,20)\) |
+| 41 | \(\mathsf S(38,26)\) |
+| 42 | \(\mathsf R(41;13,24,22,14,26,38,32,40,30,18,20,36,34)\) |
+| 43 | \(\mathsf S(38,13)\) |
+| 44 | \(\mathsf R(43;13,24,22,14,26,38,32,40,30,18,20,42,36,34)\) |
+| 45 | \(\mathsf S(30,20)\) |
+| 46 | \(\mathsf R(45;13,24,22,14,26,38,32,30,18,20,36,34)\) |
+| 47 | \(\mathsf S(46,22)\) |
+| 48 | \(\mathsf R(47;13,24,22,14,46,38,32,40,30,18,20)\) |
+| 49 | \(\mathsf S(46,38)\) |
+| 50 | \(\mathsf R(49;13,24,22,14,46,26,38,48,32,40,30,18,20,44,42,36,34)\) |
+| 51 | \(\mathsf S(50,34)\) |
+| 52 | \(\mathsf R(51;24,22,46,50,38,48,32,40,30,18,20,36)\) |
+| 53 | \(\mathsf S(46,13)\) |
+| 54 | \(\mathsf R(53;13,24,22,14,46,50,26,38,52,48,32,40,30,18,20,44,42,36)\) |
+| 55 | \(\mathsf S(54,50)\) |
+| 56 | \(\mathsf R(55;24,54,46,50,38,52,48,32,40,30,18,44,42,36)\) |
+| 57 | \(\mathsf S(54,13)\) |
+| 58 | \(\mathsf R(57;13,24,54,46,50,38,56,52,48,32,40,30,18,44,42,36)\) |
+| 59 | \(\mathsf S(58,36)\) |
+| 60 | \(\mathsf R(59;24,54,46,58,50,38,52,48,32,40,30,18)\) |
+| 61 | \(\mathsf S(60,26)\) |
+| 62 | \(\mathsf R(61;13,24,22,60,54,14,46,58,50,26,38,56,52,48,32,40,30,18,44,42)\) |
+| 63 | \(\mathsf S(62,24)\) |
+| 64 | \(\mathsf R(63;24,22,62,60,54,14,46,38,48,32,40,30,18)\) |
+| 65 | \(\mathsf S(64,24)\) |
+| 66 | \(\mathsf R(65;24,22,64,62,60,54,14,46,58,38,52,48,32,40,30,18)\) |
+| 67 | \(\mathsf S(66,54)\) |
+| 68 | \(\mathsf R(67;24,66,22,64,62,60,54,14,46,58,50,26,38,56,52,48,32,40,30)\) |
+| 69 | \(\mathsf S(68,30)\) |
+| 70 | \(\mathsf R(69;24,68,66,22,64,62,60,54,14,46,58,38,56,52,48,32,40)\) |
+| 71 | \(\mathsf S(70,62)\) |
+| 72 | \(\mathsf R(71;24,70,68,66,22,64,62,60,54,14,46,58,50,26,38,56,52,48,32)\) |
+| 73 | \(\mathsf S(68,60)\) |
+| 74 | \(\mathsf R(73;24,70,68,66,22,64,62,60,54,14,46,72,58,50,26,38,56,52,48,32)\) |
+| 75 | \(\mathsf S(74,68)\) |
+| 76 | \(\mathsf R(75;74,24,70,68,66,22,64,62,60,54,14,46,72,58,50,26,38,56,52,48)\) |
+| 77 | \(\mathsf S(74,66)\) |
+| 78 | \(\mathsf R(77;13,74,24,70,68,66,22,64,62,60,54,14,46,76,72,58,50,26,38,56,52,48)\) |
+| 79 | \(\mathsf S(78,70)\) |
+| 80 | \(\mathsf R(79;78,74,24,70,68,66,22,64,62,60,54,14,46,76,72,58,50,26,38,56,52)\) |
+| 81 | \(\mathsf S(80,74)\) |
+| 82 | \(\mathsf R(81;13,80,78,74,24,70,68,66,22,64,62,60,54,14,46,76,72,58,50,26,38)\) |
+| 83 | \(\mathsf S(78,74)\) |
+| 84 | \(\mathsf R(83;13,80,78,74,24,70,68,66,22,64,62,60,54,14,46,76,72,58,50,26,38,82,56)\) |
+| 85 | \(\mathsf S(74,22)\) |
+| 86 | \(\mathsf R(85;80,78,74,24,70,68,66,22,64,62,60,54,14,46,58,50,26,38,84,82,56)\) |
+| 87 | \(\mathsf S(70,68)\) |
+| 88 | \(\mathsf R(87;13,80,78,74,24,70,68,66,22,64,62,60,54,14,46,86,76,72,58,50,26,38,84,82,56)\) |
+| 89 | \(\mathsf S(88,74)\) |
+| 90 | \(\mathsf R(89;13,88,80,78,74,24,70,68,66,22,64,62,60,54,14,46,86,76,72,58,50,26,38,84,82)\) |
+| 91 | \(\mathsf S(90,82)\) |
+| 92 | \(\mathsf R(91;90,88,80,78,74,24,70,68,66,22,64,62,60,54,14,86,76,72,58,50,26,84)\) |
+| 93 | \(\mathsf S(16,10)\) |
+| 94 | \(\mathsf R(93;13,90,92,88,80,78,74,24,70,68,66,22,64,62,60,54,14,76,72,58,50,26)\) |
+| 95 | \(\mathsf S(94,14)\) |
+| 96 | \(\mathsf R(95;94,90,88,80,78,74,24,70,68,66,22,64,62,60,54)\) |
+| 97 | \(\mathsf S(96,54)\) |
+| 98 | \(\mathsf R(97;96,94,90,88,80,78,74,24,70,68,66,22,64,62,60)\) |
+| 99 | \(\mathsf S(98,60)\) |
+| 100 | \(\mathsf R(99;98,96,94,90,88,80,78,74,24,70,68,66,22,64,62)\) |
+| 101 | \(\mathsf S(100,62)\) |
+| 102 | \(\mathsf R(101;100,98,96,94,90,88,80,78,74,24,70,68,66,22,64)\) |
+| 103 | \(\mathsf S(102,64)\) |
+| 104 | \(\mathsf R(103;102,100,98,96,94,90,88,80,78,74,24,70,68,66,22)\) |
+| 105 | \(\mathsf S(104,22)\) |
+| 106 | \(\mathsf R(105;104,102,100,98,96,94,90,88,80,78,74,24,70,68,66)\) |
+| 107 | \(\mathsf S(106,66)\) |
+| 108 | \(\mathsf R(107;106,104,102,100,98,96,94,90,88,80,78,74,24,70,68)\) |
+| 109 | \(\mathsf S(108,68)\) |
+| 110 | \(\mathsf R(109;108,106,104,102,100,98,96,94,90,88,80,78,74,24,70)\) |
+| 111 | \(\mathsf S(110,70)\) |
+| 112 | \(\mathsf R(111;110,108,106,104,102,100,98,96,94,90,88,80,78,74,24)\) |
+| 113 | \(\mathsf S(112,24)\) |
+| 114 | \(\mathsf R(113;112,110,108,106,104,102,100,98,96,94,90,88,80,78,74)\) |
+| 115 | \(\mathsf S(114,74)\) |
+| 116 | \(\mathsf R(115;114,112,110,108,106,104,102,100,98,96,94,90,88,80,78)\) |
+| 117 | \(\mathsf S(116,78)\) |
+| 118 | \(\mathsf R(117;116,114,112,110,108,106,104,102,100,98,96,94,90,88,80)\) |
+| 119 | \(\mathsf S(118,80)\) |
+| 120 | \(\mathsf R(119;118,116,114,112,110,108,106,104,102,100,98,96,94,90,88)\) |
+| 121 | \(\mathsf S(120,88)\) |
+| 122 | \(\mathsf R(121;120,118,116,114,112,110,108,106,104,102,100,98,96,94,90)\) |
+| 123 | \(\mathsf S(122,104)\) |
+| 124 | \(\mathsf R(123;122,120,118,116,114,112,110,108,106)\) |
+| 125 | \(\mathsf S(124,106)\) |
+| 126 | \(\mathsf R(125;124,122,120,118,116,114,112,110,108)\) |
+| 127 | \(\mathsf S(126,108)\) |
+| 128 | \(\mathsf R(127;126,124,122,120,118,116,114,112,110)\) |
+| 129 | \(\mathsf S(128,110)\) |
+| 130 | \(\mathsf R(129;128,126,124,122,120,118,116,114,112)\) |
+| 131 | \(\mathsf R(120;126,128,130,122,124)\) |
+
+Its final value is exactly
+\[
+ z_{131}=U^3-U=U(U-1)(U+1).                              \tag{74.22}
+\]
+This contradicts \(0<U<1\). The plane and nonplane cases, together
+with §74.3, exhaust all the original real charts, proving the upper
+classification at \(b=1/2\). Direct substitution verifies that all
+four rays (74.2) attain it and are projectively distinct.
+
+### 74.8. Negative transport and the same-union graph consequence
+
+Let \(X=\begin{psmallmatrix}0&1\\1&0\end{psmallmatrix}\) and
+\(Z=\operatorname{diag}(1,-1)\). Directly from (74.1),
+\[
+ H_0(-b)=(Z\otimes I_3)H_0(b)(X\otimes I_3).             \tag{74.23}
+\]
+Both factors are monomial, \(X\otimes I_3\) commutes with every
+synchronous permutation, and channel exchange maps (74.2) to the
+negative-parameter set, with the sign relabeled after dephasing.
+This proves the negative half case. Conjugation inside \(S_3\) proves
+the other two transposition cases.
+
+**Corollary 74.2 (one symmetry-union is bipartite).** At \(b=\pm1/2\),
+for every noncanonical common-flat ray \([w]\), the orthogonality graph
+induced on \(S_3[w]\cup S_3[\Theta w]\) is bipartite, with these two
+orbits as its parts. In particular this union contains no orthogonal
+triple.
+
+To prove it, a relative transposition edge is excluded by Theorem 74.1.
+An order-three edge \(w\perp Sw\) gives the full synchronous triple
+\(w,Sw,S^2w\), excluded outside canonical rays by Proposition 57.1
+in [Continuation I](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION.md).
+Its parameter convention agrees with (74.1): put \(a=bh\), so its
+\(p(a)-1=P\), \(q(a)-1=Q\), using the positive roots \(h+b,h-b\).
+Thus neither orbit has an internal edge. The original identities
+\(H_0\Theta=-\Theta H_0\), \(R\Theta=\Theta R\), and
+\(\Theta^2=-I\) show that \(\Theta\) preserves common-flatness and
+the canonical set. The two projective orbits are disjoint: a fixed
+projective ray of \(R\Theta\) is impossible since its square is
+\(-I\) for a transposition, and its \(2\operatorname{ord}(R)\)-th
+power is \(-I\) for odd-order \(R\). An antiunitary projective
+fixed ray instead has positive scalar even powers. This proves the
+corollary.
+
+Edges between different such unions remain outside this result.
+Neither an exhaustive half-parameter ray census nor arbitrary
+noncanonical-triple exclusion follows from the same-union statement.
+The whole-open-branch pair and basis classification remains open.
