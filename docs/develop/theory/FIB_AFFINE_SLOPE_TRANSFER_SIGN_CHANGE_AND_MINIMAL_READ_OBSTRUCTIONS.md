@@ -459,3 +459,418 @@ The original remaining target is unchanged: determine the sharp uniform number o
 The necessary sign condition does not classify singular quotient slopes or prove sufficiency at one-sided slopes. The infinite family does not exhaust histories, establish an adaptive lower bound, or give an optimal atom count. All statements concern exact scalar observations and ordinary conditional mathematical proofs. Read count, literal atomic-operation count, bit precision, elapsed time, and physical acquisition cost are distinct resources; the results assert no noisy-stability, empirical-learning, physical-resource, or external-priority conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 6. Determinant geometry and the common-source collision bridge
+
+Continue with an arbitrary legal history at $n=d+5$ and the operators $\mathcal B,\mathcal C,\mathcal T_\kappa$ of Section 2. None of the following results restricts the finite words, their lengths, or empty-word repetitions. Define the symmetric bilinear form on the real matrix space by
+
+$$
+\mathfrak b(X,Y)=\det(X+Y)-\det X-\det Y.
+$$
+
+For $S=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ this is
+
+$$
+\mathfrak b(S,Y)=sY_{11}+pY_{22}-rY_{12}-qY_{21},
+\qquad \mathfrak b(X,X)=2\det X.
+$$
+
+Testing the four single-entry matrices shows that $\mathfrak b$ is nondegenerate. At a positive rank-one $S$, the source tangent space is
+
+$$
+\mathsf V_S=\{V:\mathfrak b(S,V)=0\}.
+\tag{6.1}
+$$
+
+Indeed the determinant differential is the displayed nonzero functional, and the positive source chart $S=rE(x,y)$, with
+
+$$
+E(x,y)=\begin{pmatrix}x&xy\\1&y\end{pmatrix},
+\qquad r,x,y>0,
+$$
+
+parametrizes exactly the positive part of its zero set. For any linear operator $H$ on matrices, put
+
+$$
+Q_H(S)=\mathfrak b(S,H(S)),\qquad R_H(S)=\det(H(S)).
+$$
+
+The determinant expansion of Section 2 is therefore
+$\det(S+tH(S))=tQ_H(S)+t^2R_H(S)$ on this source domain.
+
+We use the following common-source bridge for every quotient equality below. Given positive rank-one $S_0,S_1$ and slopes $\kappa_0,\kappa_1$ with
+$\mathcal T_{\kappa_0}S_0=\mathcal T_{\kappa_1}S_1$, define
+
+$$
+u_i=(1+\kappa_0i)\operatorname{tr}(A_iS_0)
+ -(1+\kappa_1i)\operatorname{tr}(A_iS_1).
+$$
+
+By Lemma 2.1, $\Lambda u=0$ means that one entire polynomial $P\in\mathcal P_d$ agrees with $u$ at every recorded position. Its explicit expression is
+
+$$
+P(t)=\sum_{h=0}^d u_h
+ \prod_{\substack{0\le b\le d\\b\ne h}}\frac{t-b}{h-b}.
+\tag{6.2}
+$$
+
+The node differences are nonzero; the product is one when $d=0$. Use $D_0=0,D_1=P$. Thus every original observation agrees, including a position where either affine gain vanishes. The quotient identity guarantees all $d+5$ equations, beyond the first $d+1$ interpolation nodes.
+
+For each endpoint $S_a=(\begin{smallmatrix}p_a&q_a\\r_a&s_a\end{smallmatrix})$, the actual original parameters are
+
+$$
+R_a=S_a,\quad \alpha_a=1,\quad\beta_a=\kappa_a,
+\qquad c_a=(p_a,r_a)^{\mathsf T},\quad
+\ell_a=(1,q_a/p_a).
+\tag{6.3}
+$$
+
+Positivity and $p_as_a=q_ar_a$ give $c_a\ell_a=S_a$ and
+$\ell_a A_i c_a=\operatorname{tr}(A_iS_a)$. The fixed row $\ell_a$ is used at every read and unread state of its run. Each atom sends a positive column to a positive column:
+$M(v_1,v_2)^{\mathsf T}=(v_2,v_1+v_2)^{\mathsf T}$ and
+$J(v_1,v_2)^{\mathsf T}=(v_2,v_1)^{\mathsf T}$. This realizes the prescribed history with its actual recorded clock and the single polynomial $D_a$ throughout each run. Different slopes give distinct effective targets even if $S_0=S_1$. For same-slope collisions the positive-secant criterion supplies distinct sources. Equations (6.2)–(6.3) implement the credited quotient and realization interfaces; they introduce neither independent lifted sources nor per-read drift choices.
+
+## 7. Strict sign at every regular quotient slope
+
+**Theorem 7.1 (a zero of the transfer form obstructs recovery).** Fix a real $a$ such that $\mathcal T_a$ is invertible, and put $H=\mathcal T_a^{-1}\mathcal C$. If $Q_H(S_*)=0$ at any positive rank-one $S_*$, the prescribed history has two distinct actual effective targets with identical observations. Consequently a uniformly recovering history must satisfy, at every such slope, either
+
+$$
+Q_H(S)>0\quad\hbox{for every }S\in\mathcal R_+,
+\qquad\hbox{or}\qquad
+Q_H(S)<0\quad\hbox{for every }S\in\mathcal R_+.
+\tag{7.1}
+$$
+
+This excludes zeros of a one-sided form as well as an identically zero form.
+
+**Proof.** If $R_H(S_*)=0$, then for every sufficiently small nonzero $\varepsilon$ the matrix
+$S_0=S_*+\varepsilon H(S_*)$ has positive entries and zero determinant. Set $S_1=S_*$. The exact transfer equality is
+
+$$
+\mathcal T_a S_0
+ =\mathcal T_a S_1+\varepsilon\mathcal C S_1
+ =\mathcal T_{a+\varepsilon}S_1.
+\tag{7.2}
+$$
+
+The bridge of Section 6 gives the complete collision, including the case $H(S_*)=0$.
+
+Suppose next that $R_H(S_*)\ne0$ and that $Q_H$ is not identically zero on $\mathcal R_+$. Choose $S_b$ with $q_b=Q_H(S_b)\ne0$ and write $\sigma=\operatorname{sign}(q_b)$. Connect $S_*$ to $S_b$ by linear interpolation of their three positive coordinates $(r,x,y)$. Along the resulting compact positive rank-one path $S(\theta)$ let $m>0$ be a common lower bound for its entries and put
+
+$$
+K=1+\max_{\theta,j,k}|H(S(\theta))_{jk}|.
+$$
+
+Choose any nonzero $\varepsilon$ of the sign specified by
+$\operatorname{sign}(\varepsilon R_H(S_*))=-\sigma$, with
+
+$$
+|\varepsilon|<
+\min\left(\frac{m}{2K},
+ \frac{|q_b|}{2(1+|R_H(S_b)|)}\right).
+$$
+
+Then $F_\varepsilon(\theta)=Q_H(S(\theta))+\varepsilon R_H(S(\theta))$ has sign $-\sigma$ at zero and sign $\sigma$ at one. Continuity gives an interior zero. At that source $S_1$, put $S_0=S_1+\varepsilon H(S_1)$. Every entry of $S_0$ exceeds $m/2$, and its determinant is $\varepsilon F_\varepsilon=0$. Equality (7.2) again applies. This works for every sufficiently small magnitude of the specified sign, without assuming a nonzero derivative of $Q_H$ at its zero. In particular it applies to an interior minimum or maximum of a one-sided form.
+
+It remains to treat a form that vanishes identically on $\mathcal R_+$. As a homogeneous quadratic polynomial in $(p,q,r,s)$ it then satisfies
+
+$$
+Q_H(X)=\rho\det X
+\quad\hbox{for every real matrix }X
+\tag{7.3}
+$$
+
+for some real $\rho$. To prove this identity, substitute $(p,q,r,s)=(x,xy,1,y)$ into its ten quadratic monomials:
+
+$$
+\begin{array}{c|cccccccccc}
+ &p^2&q^2&r^2&s^2&pq&pr&ps&qr&qs&rs\\ \hline
+ &x^2&x^2y^2&1&y^2&x^2y&x&xy&xy&xy^2&y .
+\end{array}
+$$
+
+Only $ps$ and $qr$ coincide. A polynomial vanishing for every positive $x,y$ has all coefficients zero, by fixing one variable and applying the polynomial root bound in each variable. Thus the two coincident coefficients sum to zero and every other coefficient vanishes, proving (7.3).
+
+Let $H^*$ denote the adjoint for $\mathfrak b$, defined by
+$\mathfrak b(HX,Y)=\mathfrak b(X,H^*Y)$. It exists uniquely by nondegeneracy. Polarizing (7.3) gives
+
+$$
+\mathfrak b(X,HY)+\mathfrak b(HX,Y)
+ =\rho\mathfrak b(X,Y),
+\qquad H+H^*=\rho\operatorname{Id}.
+\tag{7.4}
+$$
+
+In particular $H^*=\rho\operatorname{Id}-H$ commutes with $H$.
+
+For sufficiently small nonzero $t$, define
+
+$$
+\gamma=1+\rho t,\qquad
+t'=-\frac{t}{1+\rho t},\qquad
+A_t=\operatorname{Id}+tH,\qquad
+G=A_{t'}^{-1}A_t .
+\tag{7.5}
+$$
+
+If $\rho\ne0$, require $|\rho t|<1$. Both $A_t$ and $A_{t'}$ are invertible near zero, and $\gamma\ne0$. Formula (7.4) gives
+$A_{t'}=\gamma^{-1}A_t^*$, hence
+
+$$
+G=\gamma(A_t^*)^{-1}A_t,\qquad
+G^*=\gamma A_t^*A_t^{-1},\qquad
+G^*G=\gamma^2\operatorname{Id}.
+$$
+
+The last identity follows because all these factors commute. Therefore
+
+$$
+\det(GX)=\tfrac12\mathfrak b(GX,GX)
+ =\tfrac12\mathfrak b(X,G^*GX)=\gamma^2\det X.
+\tag{7.6}
+$$
+
+For any fixed $S\in\mathcal R_+$, $G$ tends to the identity as $t$ tends to zero. Thus $S'=GS$ is strictly positive and has determinant zero for all sufficiently small $t$. Moreover $t'\ne t$: equality for nonzero $t$ would force $\rho t=-2$, excluded by the stated smallness condition, and when $\rho=0$ one has $t'=-t$. This transformation of slopes is an involution, since
+$1+\rho t'=1/(1+\rho t)$ and applying (7.5) again returns $t$.
+
+Finally $\mathcal T_{a+t}=\mathcal T_a A_t$, so
+
+$$
+\mathcal T_{a+t'}S'
+ =\mathcal T_a A_{t'}A_{t'}^{-1}A_tS
+ =\mathcal T_{a+t}S.
+$$
+
+The bridge supplies actual runs with these different slopes and with the entire compensating drift. This argument does not require $\det(H(S))=0$ and covers $\rho=0$.
+
+All possible zeros have now been excluded for a recovering history. The positive source domain is connected in $(r,x,y)$, so a continuous form with no zeros has one strict sign there. This proves (7.1). The opposite-strict-sign obstruction in Theorem 3.1 remains a credited result; the additional conclusions concern zeros and the explicit involution. ∎
+
+## 8. Safe singular slopes and a transverse sign restriction
+
+Write
+
+$$
+\mathcal C_{\mathrm{safe}}=
+\left\{\begin{pmatrix}A&B_0\\C_0&E_0\end{pmatrix}:
+ A,E_0\ge0,\ B_0,C_0\le0\right\}.
+$$
+
+The positive-secant and prescribed-slope criteria used here are Theorems 2.1 and 3.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md). Their matrix interpolation kernel is exactly $\ker\mathcal T_a$, by Lemma 2.1. A subspace contained in
+$\mathcal C_{\mathrm{safe}}\cup(-\mathcal C_{\mathrm{safe}})$ has dimension at most one. We use those existing results without re-proving them.
+
+**Theorem 8.1 (transverse zeros force different-slope collisions).** At a singular slope $a$, a uniformly recovering history must have $\operatorname{rank}\mathcal T_a=3$ and
+
+$$
+\ker\mathcal T_a=\mathbb R K,\qquad
+K\in\mathcal C_{\mathrm{safe}}\setminus\{0\}.
+\tag{8.1}
+$$
+
+Choose any nonzero covector $w$ with $w\mathcal T_a=0$, and define the linear functional
+
+$$
+h(S)=w(\mathcal C S)
+ =h_pp+h_qq+h_rr+h_ss .
+$$
+
+If $h(S_*)=0$ at a positive rank-one source, there are actual different-slope collisions with slopes $a$ and $a+t$ for every sufficiently small nonzero $t$ of either sign. Thus recovery requires either that $(h_p,h_q,h_r,h_s)$ be all nonnegative and not all zero, or that they be all nonpositive and not all zero.
+
+**Proof.** If $\operatorname{rank}\mathcal T_a\le2$, its kernel has dimension at least two and cannot lie in the safe cone union. If the rank is three but the kernel line is unsafe, it already contains a nonzero positive secant. In both cases the credited prescribed-slope criterion supplies an actual same-slope collision. Its matrix difference has a polynomial compensator by Lemma 2.1; Section 6 supplies the entire drifts and actual positive factors. Hence only (8.1) can remain.
+
+Now suppose (8.1) holds and set $S=S_*$. The range of $\mathcal T_a$ equals $\ker w$, since inclusion holds and both have dimension three. The condition $h(S)=0$ therefore gives a real matrix $X$ with
+
+$$
+\mathcal T_a X=\mathcal C S.
+\tag{8.2}
+$$
+
+Explicitly, choose three matrices whose images form a basis of the range, express $\mathcal C S$ in that basis, and use the same coefficients on those matrices. No singular inverse is used.
+
+For $K=(\begin{smallmatrix}A&B_0\\C_0&E_0\end{smallmatrix})$, positivity of $S$ gives
+
+$$
+v=\mathfrak b(S,K)=sA+pE_0-rB_0-qC_0>0,
+\tag{8.3}
+$$
+
+because all four terms are nonnegative and some entry of $K$ is nonzero. Put $m=\min_{j,k}S_{jk}>0$. Choose $\eta>0$ with
+$\eta\max|K_{jk}|<m/4$ and $\eta|\det K|<v/2$; the latter bound is automatic if $\det K=0$. Then
+
+$$
+\det(S+\eta K)>\eta v/2>0,\qquad
+\det(S-\eta K)<-\eta v/2<0.
+$$
+
+For every sufficiently small $|t|$, these endpoint signs persist for
+$\det(S+tX+\eta K)$ and $\det(S+tX-\eta K)$. Also require
+$|t|\max|X_{jk}|<m/4$, which imposes no restriction if $X=0$. Every
+$S+tX+\lambda K$, $-\eta\le\lambda\le\eta$, then has entries greater than $m/2$. Continuity in $\lambda$ gives a value $\lambda(t)$ making its determinant zero. Set
+
+$$
+S_0=S+tX+\lambda(t)K,\quad S_1=S,\quad
+\kappa_0=a,\quad\kappa_1=a+t .
+$$
+
+Both sources are positive rank one, and (8.1)–(8.2) yield
+
+$$
+\mathcal T_a S_0
+ =\mathcal T_a S+t\mathcal C S
+ =\mathcal T_{a+t}S_1.
+$$
+
+For each nonzero $t$ the slopes differ. Equations (6.2)–(6.3) realize every observation, including any sampled gain zero, with one entire polynomial and one fixed positive row in each run.
+
+For completeness, a linear functional has no zero on $\mathcal R_+$ exactly when its four entry coefficients have one weak sign and are not all zero. Evaluate it on $E(x,y)$. The limits
+
+$$
+\begin{aligned}
+h(E(\varepsilon,\varepsilon))&\longrightarrow h_r,\\
+h(E(T,T))/T^2&\longrightarrow h_q,\\
+h(E(T,T^{-2}))/T&\longrightarrow h_p,\\
+h(E(T^{-2},T))/T&\longrightarrow h_s
+\end{aligned}
+$$
+
+isolate each nonzero coefficient, with $\varepsilon\downarrow0$ and $T\to\infty$. Mixed signs therefore give both signs on positive sources and a zero along a positive-coordinate path. All zero coefficients give zeros everywhere. Conversely one nonzero coefficient and a common weak sign give a strict sign at every source because all source entries are positive. Applying this equivalence to $h$ proves the coefficient requirement, which is invariant under nonzero rescaling of $w$. ∎
+
+**Proposition 8.2 (the local meaning of the transverse test).** Under (8.1), the derivative of
+$f(S,\kappa)=\mathcal T_\kappa S$ on the source/slope domain is nonsingular at $(S,a)$ exactly when $h(S)\ne0$.
+
+**Proof.** By (6.1) and (8.3), $K$ is not in the source tangent space $\mathsf V_S$. Thus $\mathcal T_a$ restricts injectively from this three-dimensional space onto its three-dimensional range. The derivative is
+
+$$
+(V,t)\longmapsto\mathcal T_a V+t\mathcal C S,\qquad V\in\mathsf V_S.
+$$
+
+Its first three dimensions give precisely that range. It is invertible exactly when $\mathcal C S$ lies outside the range, or equivalently when $w(\mathcal C S)\ne0$. Together with (8.1), the coefficient condition of Theorem 8.1 characterizes nonsingularity at every source on this singular slice. It asserts local derivative nonsingularity, without a global inverse. ∎
+
+## 9. Actual-target critical points and an exact quadratic obstruction
+
+**Theorem 9.1 (a critical point forces noninjectivity in this model).** For any legal $n=d+5$ history, if the full observation map on the actual target chart has a singular derivative at any allowed target, that history admits two distinct actual effective targets with identical observations. Consequently a uniformly recovering endpoint history must have an everywhere nonsingular derivative and be a local smooth diffeomorphism at every target. The collision need not pass through the particular critical target.
+
+**Proof.** Use the actual chart
+
+$$
+(r,x,y,\kappa,\delta_0,\ldots,\delta_d),\quad
+r,x,y>0,\qquad
+S=rE(x,y),\quad D(t)=\sum_{j=0}^d\delta_jt^j .
+$$
+
+It parametrizes the target injectively; Section 6 realizes every chart point with positive factors. Apply to the output vector the fixed linear map
+
+$$
+v\longmapsto(v_0,\ldots,v_d,\Lambda v).
+\tag{9.1}
+$$
+
+This is an isomorphism. Its kernel is zero: Lemma 2.1 gives $v=\operatorname{ev}(P)$, and its first $d+1$ zero entries force $P=0$ by interpolation. Its domain and codomain both have dimension $d+5$.
+
+In these output coordinates, drift appears only in the first $d+1$ components. Its derivative block there is the invertible evaluation map for degree-at-most-$d$ polynomials at $0,\ldots,d$. The last four components equal $f(S,\kappa)=\mathcal T_\kappa S$. Ordering the drift coordinates first makes the derivative block triangular. Hence the full derivative is singular exactly when the four-dimensional derivative of $f$ is singular.
+
+Fix the slope $a$ of such a point. If $\mathcal T_a$ is invertible, the kernel equation for the quotient derivative is
+
+$$
+\mathcal T_a V+t\mathcal C S=0,\quad V\in\mathsf V_S,
+\qquad\hbox{equivalently}\qquad V=-tH(S).
+$$
+
+A nonzero kernel vector must have $t\ne0$. Equation (6.1) then says exactly $Q_H(S)=0$, and Theorem 7.1 supplies a collision in every branch of that condition.
+
+If $\mathcal T_a$ has rank at most two or an unsafe kernel line, the prescribed-slope criterion used in Theorem 8.1 already gives a collision. The only remaining case has rank three and a safe kernel line. Proposition 8.2 says that a singular quotient derivative there means $h(S)=0$, and Theorem 8.1 supplies a different-slope collision. These cases exhaust all quotient ranks and kernels. Every collision uses the complete Section 6 bridge. The inverse function theorem gives the asserted local diffeomorphism when the derivative is nonsingular. This argument uses the determinant and pencil structure of this model; it is not a theorem about arbitrary smooth injective maps. ∎
+
+For $E=E(x,y)$ define
+
+$$
+E_x=\begin{pmatrix}1&y\\0&0\end{pmatrix},
+\qquad
+E_y=\begin{pmatrix}0&x\\0&1\end{pmatrix}.
+$$
+
+The symbol $\det_4$ below is the determinant of four quotient vectors as columns; it is distinct from the two-by-two source determinant. Put
+
+$$
+\begin{aligned}
+c(x,y)&=\det_4[\mathcal B E,\mathcal B E_x,\mathcal B E_y,\mathcal C E],\\
+b_1(x,y)&=\det_4[\mathcal B E,\mathcal C E_x,\mathcal B E_y,\mathcal C E]\\
+&\quad+\det_4[\mathcal B E,\mathcal B E_x,\mathcal C E_y,\mathcal C E],\\
+a_2(x,y)&=\det_4[\mathcal B E,\mathcal C E_x,\mathcal C E_y,\mathcal C E].
+\end{aligned}
+\tag{9.2}
+$$
+
+**Theorem 9.2 (quadratic no-real-root requirement).** Every uniformly recovering $n=d+5$ history must satisfy, for each $x,y>0$, exactly one of the alternatives
+
+$$
+a_2=b_1=0,\quad c\ne0,
+\qquad\hbox{or}\qquad
+a_2\ne0,\quad b_1^2-4a_2c<0.
+\tag{9.3}
+$$
+
+Moreover $c$ has one common strict sign over all positive source shapes, and every nonzero $a_2$ has that same sign. Failure of (9.3) at one positive shape gives an actual collision on that history. Satisfying (9.3) at every shape is equivalent to an everywhere nonsingular actual-target derivative; it is a necessary condition for recovery.
+
+**Proof.** The vectors $E,E_x,E_y$ are independent: their $21$, then $11$, then $22$ entries force the coefficients in a zero linear combination to vanish successively. They span the three-dimensional source tangent in (6.1), with the appropriate nonzero factors of $r$.
+
+In chart order $(r,x,y,\kappa)$ the four quotient derivative columns are
+
+$$
+\mathcal T_\kappa E,\qquad
+r\mathcal T_\kappa E_x,\qquad
+r\mathcal T_\kappa E_y,\qquad r\mathcal C E.
+$$
+
+Factoring out $r^3$ and subtracting $\kappa$ times the last column from the first gives
+
+$$
+\begin{aligned}
+\det Df
+&=r^3\det_4[\mathcal B E,
+ (\mathcal B+\kappa\mathcal C)E_x,
+ (\mathcal B+\kappa\mathcal C)E_y,\mathcal C E]\\
+&=r^3\bigl(c+b_1\kappa+a_2\kappa^2\bigr).
+\end{aligned}
+\tag{9.4}
+$$
+
+Thus the apparent cubic term vanishes exactly, without an invertibility assumption on any $\mathcal T_\kappa$.
+
+For a fixed positive shape, write $j(\kappa)=c+b_1\kappa+a_2\kappa^2$. If $a_2=0$ and $b_1\ne0$, it has the root $-c/b_1$. If $a_2=b_1=0$, it has no real root precisely when $c\ne0$; otherwise it is the zero polynomial. If $a_2\ne0$, its real roots exist exactly when the discriminant
+$\Delta=b_1^2-4a_2c$ is nonnegative, and are
+$(-b_1\pm\sqrt{\Delta})/(2a_2)$. This includes a repeated root when $\Delta=0$. When $\Delta<0$, completing the square gives
+$4a_2j(\kappa)=(2a_2\kappa+b_1)^2-\Delta>0$, so there is no real root. These are all degree and discriminant degeneracies, proving that (9.3) is exactly the no-real-root condition.
+
+Theorem 9.1 and (9.4) require this condition for recovery. Conversely, if it fails at a positive shape, choose one of the real roots just described, any $r>0$, and any allowed drift. The full derivative at that actual target is singular by (9.1)–(9.4). The exhaustive cases of Theorem 9.1 produce a collision with the actual positive factors and drift compensation of Section 6.
+
+If (9.3) holds for every shape, (9.4) and the invertible drift block show that the full derivative is everywhere nonsingular. The function
+$j(\kappa;x,y)$ is continuous and nonzero on the connected domain
+$\mathbb R\times(0,\infty)^2$, so its sign is common throughout. In particular $c=j(0;x,y)$ has a common strict sign. Wherever $a_2\ne0$, the sign for large $|\kappa|$ equals the sign of $a_2$, giving the stated agreement with $c$. These conclusions also cover singular or identically singular quotient pencils through the rank cases of Theorem 9.1. They do not supply global injectivity. ∎
+
+## 10. Credits, conditions, and the surviving endpoint problem
+
+Theorem 3.1 supplies the existing opposite-strict-sign obstruction. Theorem 7.1 strengthens it by excluding every positive-source zero at an invertible slope, including a one-sided zero and the identically zero case. Theorem 8.1 treats singular slopes: rank at most two or an unsafe line reuses the existing prescribed-slope criterion, while the safe rank-three case acquires a further transverse sign requirement. Theorems 9.1–9.2 combine these branches into an all-history critical-point obstruction and the exact quadratic requirement (9.3). These results range over every legal minimum-length history at their stated hypotheses; no additional excluded tail family replaces that quantifier.
+
+The exact quotient and transfer are those of Section 2. The positive-secant and safe-subspace results, actual positive factorization, and prescribed-slope collision criterion are credited to Proposition 1.1 and Theorems 2.1 and 3.1 of [Affine-gain erasure, positive secants, and drift-kernel collisions](FIB_AFFINE_GAIN_ERASURE_SPAN_AND_POSITIVE_GAIN_COLLISIONS.md). They are consumed in Section 8 and the singular branches of Section 9; their old proofs and excluded families are not repeated here. Equations (6.2)–(6.3) apply their realization interface to every new quotient collision.
+
+The upper and lower numerical bounds retain their credited sources. Theorems 2.1 and 5.1 of [Shared affine gain and zero-crossing recovery](FIB_SHARED_AFFINE_GAIN_ZERO_CROSSING_RECOVERY.md) give the affine upper bound $\max(d+6,7)$ and all-fixed-history lower bound $d+5$. Its Theorem 4.1 concerns its specified baseline/shear prefix. Theorem 2.1 and Proposition 2.2 of [Affine six-read recovery and unknown-slope collisions](FIB_AFFINE_SIX_READ_RECOVERY_AND_UNKNOWN_SLOPE_COLLISIONS.md) give the six-read constant-drift construction and its compatibility test. Its prescribed-slope safe-line inverse and different-positive-slope collisions remain separate path-specific results.
+
+Theorem 4.1 and Lemma 3.2 of [Common polynomial-gain shear calibration and erasure recovery](FIB_POLYNOMIAL_GAIN_SHEAR_CALIBRATION_AND_ERASURE_RECOVERY.md) give the broader common polynomial-gain construction, with its positive-scale fibre and specified-prefix optimum in Theorems 6.1 and 8.1. On the affine restriction its target conversion is
+$R_0=S/\operatorname{tr}S$ and
+$H(t)=(\operatorname{tr}S)(1+\kappa t)$, with inverse
+$S=H(0)R_0$, $\kappa=H'(0)/H(0)$, and $H(0)>0$.
+These are correspondences of entire common-source targets. The references to the original self-calibrating source in Sections 1 and 5 remain credits with their stated scopes.
+
+The original numerical alternatives are unchanged:
+
+$$
+5\le C_{\mathrm{fix}}(0)\le6,\qquad
+d+5\le C_{\mathrm{fix}}(d)\le d+6\quad(d\ge1).
+$$
+
+The unresolved target is a sharp uniform count over all predetermined finite-word cumulative histories, with a legal attaining history and a common-source inverse for every real affine slope and the entire degree-at-most-$d$ drift. No endpoint construction or universal endpoint collision obstruction is established here.
+
+More precisely, the surviving regular-slope residual consists of transfer forms strictly of one sign on all positive rank-one sources. The singular residual consists of rank-three slopes with a safe kernel line and a transverse functional whose entry coefficients have one weak sign and are not all zero. A candidate must meet these requirements simultaneously at all slopes and satisfy (9.3) at every positive source shape. These results neither show that a legal history satisfies all of them nor eliminate distant different-slope collisions for a history that does. Everywhere local derivative nonsingularity does not give a global common-source inverse.
+
+All statements keep strict positive rank one, one fixed positive row per run, the known $M,J$, every finite cumulative word including the empty word, the actual recorded-reading index, arbitrary real slopes, and one entire allowed drift polynomial. Sampled gain zeros and negative gains are included by the undivided equations in Section 6. The representation scales remain exactly those of Section 1. These ordinary conditional proofs assert no independent review or Lean certification, adaptive lower bound, optimal atom count, bit-precision bound, noisy stability, physical acquisition claim, empirical-learning consequence, external priority, or completion of the programme.
+
+## 追加锚（本行以下为增补区）
