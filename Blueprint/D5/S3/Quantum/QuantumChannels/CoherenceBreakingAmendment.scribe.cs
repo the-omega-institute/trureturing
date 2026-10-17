@@ -40,7 +40,10 @@ internal sealed class CoherenceBreakingAmendmentDocument : IScribeDocumentDefini
                     Paragraph(Text("Write Phi for the Kraus channel, let P erase the diagonal entries of a matrix, and put T = P composed with Phi. Incoherence implies that T kills every diagonal matrix, so T = T composed with P. Choose a permutation sigma and phases omega(c) in {1,i,-1,-i}; the unitary U sends the c-th basis vector to omega(c) times the sigma(c)-th basis vector. Its conjugation Lambda commutes with P. The off-diagonal part of the amended composite is (T Lambda)^(n-1) T.")),
                     Paragraph(Text("If that composite were coherence-breaking, this linear map would vanish on every density matrix. Density matrices span the Hermitian matrices over the reals, and every complex matrix is a Hermitian matrix plus i times a Hermitian matrix, so the map would vanish identically. Multiplication on the right by Lambda then gives (T Lambda)^n = 0. Nilpotency forces Tr(T Lambda) = 0, where Tr is the trace of a linear endomorphism of the matrix space.")),
                     Paragraph(Text("Minimality of n >= 2 implies that Phi itself is not coherence-breaking, hence T is nonzero. Since T kills diagonal matrices and has only off-diagonal outputs, there are a != b and k != l for which the (k,l) entry of T(E_ab) is nonzero. Choose sigma with sigma(k) = a and sigma(l) = b. The weighted sum of Tr(T Lambda) over all fourth-root phase assignments, with weight conjugate(omega(k)) omega(l), is 4^d times that nonzero entry. Orthogonality of the phase characters therefore supplies a unitary for which Tr(T Lambda) is nonzero. This contradicts the trace forced by coherence-breaking and proves the conjecture."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yang-chen-li-fei-wang-2018-coherence-breaking-amendment"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
