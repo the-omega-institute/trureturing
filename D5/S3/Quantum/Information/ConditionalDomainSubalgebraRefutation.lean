@@ -114,19 +114,15 @@ private theorem witness_upper_mem :
     Matrix.single 0 1 (1 : ℂ) ∈ conditionalDomainB witnessMatrix := by
   change Commute _ _
   rw [witness_marginal_right, witness_transform]
-  change _ * _ = _ * _
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [Matrix.mul_apply, Fin.sum_univ_two, Matrix.single_apply]
+  simpa [Matrix.diagonal_fin_two, Matrix.single_apply] using
+    (Matrix.commute_diagonal ![(9 / 16 : ℂ), 7 / 16] ![(1 / 32 : ℂ), -1 / 32])
 
 private theorem witness_lower_mem :
     Matrix.single 1 0 (1 : ℂ) ∈ conditionalDomainB witnessMatrix := by
   change Commute _ _
   rw [witness_marginal_right, witness_transform]
-  change _ * _ = _ * _
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    norm_num [Matrix.mul_apply, Fin.sum_univ_two, Matrix.single_apply]
+  simpa [Matrix.diagonal_fin_two, Matrix.single_apply] using
+    (Matrix.commute_diagonal ![(9 / 16 : ℂ), 7 / 16] ![(1 / 32 : ℂ), -1 / 32])
 
 private theorem witness_corner_not_mem :
     Matrix.single 0 0 (1 : ℂ) ∉ conditionalDomainB witnessMatrix := by
