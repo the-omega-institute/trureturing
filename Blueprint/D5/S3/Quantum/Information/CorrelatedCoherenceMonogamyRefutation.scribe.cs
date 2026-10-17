@@ -67,7 +67,10 @@ internal sealed class CorrelatedCoherenceMonogamyRefutationDocument : IScribeDoc
                             + "Thus a pure three-qubit state contradicts claim and hence the conjecture "
                             + "for all tripartite pure states. This does not contradict Theorem 4: "
                             + "its trade-off hypothesis is not assumed by the conjecture."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("basso-maziero-2020-correlated-coherence-monogamy-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
