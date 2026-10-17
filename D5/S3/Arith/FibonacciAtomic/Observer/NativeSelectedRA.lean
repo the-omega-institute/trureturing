@@ -442,7 +442,7 @@ private theorem root_candidate_steps (w : Work) :
 
 /-- The actual guard follows the left spine and ends with an authentic leaf
 reply, retaining its materialized address for later validation. -/
-private theorem guard_search (U T : Source) (q : Bool) (p : Address)
+theorem guard_search (U T : Source) (q : Bool) (p : Address)
     (observed : ∀ z : Address, readout (p ++ z) U = readout z T) :
     ∃ (g : Address) (ell : Reply), (ell = .alpha ∨ ell = .beta) ∧
       readout g U = ell ∧

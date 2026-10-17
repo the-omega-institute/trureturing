@@ -45,6 +45,8 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
             Theorem("selected_root_support", "Exact root support and the blocked beta witness", Support(),
                 "The cut choice persists through every local step, Read and independent update. A root-selected return therefore requires an alpha first reply. No substitution image is alpha, so no update preceded that Read and the invocation source was alpha. The raw history starts with that alpha Read itself, with no preceding update. Conversely, a left-spine induction constructs the guard search on every finite source. Appending the constant root candidate, its validation and cleanup gives a witness after any supplied number j of post-selection updates. A quiescent beta invocation takes the two-address branch and returns the literal beta exterior with no holes. Its root beta leaf blocks both L and R. The same code cannot return any root-selected state from beta, although the semantic root row agrees for every finite source at every epoch."),
             Def("Continues", "A finite stationary prefix", "Continues U c d means that every returning execution from d on U can be preceded by a finite update-free word to give an execution from c on that same source. The prefix is proof-side data and is not retained by the machine."),
+            Theorem("guard_search", "A stationary guard reaches an actual leaf", GuardSearch(),
+                "The actual read map at p is the complete finite tree T. In the formula guardEntry p is emptyWork with guardPath p, and guardExit g ell is emptyWork with control three, guardPath g and guardReply ell. Left-spine induction produces an alpha or beta reply at its actual materialized address g. A finite update-free prefix reaches control three with this guard address and reply, empty row and operand, and absent comparison latches."),
             Def("pairStart", "Relative comparison entry", "Control is twenty and the operand is L followed by the relative cursor z. All other Work fields are preserved."),
             Def("pairDone", "Relative comparison exit", "Control is twenty seven and the operand is R followed by z. Both comparison latches contain the supplied leaf reply; all other regions are preserved."),
             Def("rightLeafReply", "Rightmost leaf label", "Follow right children in a finite subtree until a leaf, and return its alpha or beta label."),
@@ -139,6 +141,16 @@ internal sealed class NativeSelectedRADocument : IScribeDocumentDefinition
         Formula body=Imp(ScanRead(false,V("T")),Imp(ScanRead(true,V("T")),
             Call("Continues",V("U"),Active(Call("pairStart",V("w"),V("z"))),end)));
         return All("U",V("Source"),All("T",V("Source"),All("w",V("Work"),All("z",V("Address"),body))));
+    }
+    private static Formula GuardSearch()
+    {
+        Formula observed=All("z",V("Address"),EqOf(Call("readout",Append(V("p"),V("z")),V("U")),Call("readout",V("z"),V("T"))));
+        Formula start=Call("active",V("q"),Call("guardEntry",V("p")));
+        Formula end=Call("active",V("q"),Call("guardExit",V("g"),V("ell")));
+        Formula leaf=OrOf(EqOf(V("ell"),Call("alpha")),EqOf(V("ell"),Call("beta")));
+        Formula body=Imp(observed,Some("g",V("Address"),Some("ell",V("Reply"),AndOf(leaf,
+            EqOf(Call("readout",V("g"),V("U")),V("ell")),Call("Continues",V("U"),start,end)))));
+        return All("U",V("Source"),All("T",V("Source"),All("q",V("Bool"),All("p",V("Address"),body))));
     }
     private static Formula ScanOutput(Formula control, Formula row, Formula start) => Some("v",V("Work"),AndOf(
         EqOf(Call("pc",V("v")),control),EqOf(Call("row",V("v")),row),

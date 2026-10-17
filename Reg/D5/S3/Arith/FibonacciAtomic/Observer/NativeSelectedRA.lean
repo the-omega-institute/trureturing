@@ -522,4 +522,72 @@ noncomputable def pair_complete_registration :
   familyRecord := none
   options := #[]
 
+
+abbrev guardArena : Arena where
+  signature := supportSignature
+  Law R := ∀ (U T : Source) (q : Bool) (p : Address),
+    (∀ z : Address, _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout
+      (p ++ z) U = _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout z T) →
+    ∃ (g : Address) (ell : _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.Reply),
+      (ell = .alpha ∨ ell = .beta) ∧
+      _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.readout g U = ell ∧
+      scanContinues (R.readout () ()) U (.active q {emptyWork with guardPath := p})
+        (.active q {emptyWork with pc := 3,guardPath := g,guardReply := ell})
+
+private theorem guard_bad : ¬ guardArena.Law supportBad := by
+  intro h
+  obtain ⟨g,ell,_,_,cont⟩ := h (.of true) (.of true) true [] (fun _ => rfl)
+  let d : State := .active true {emptyWork with pc := 3,guardPath := g,guardReply := ell}
+  have tail : Run (supportBad.readout () ()) d (.of true) [.observer .ret] d := Run.ret rfl
+  obtain ⟨t,_,run⟩ := cont [.observer .ret] d tail
+  have same := stopped_only run
+  have no := congrArg (fun s : State => match s with
+    | .active _ w => w.pc.val | _ => 0) same
+  norm_num [d,emptyWork] at no
+
+def guard_searchProof : Registration guardArena (type_of% (@guard_search)) where
+  actual := supportActual
+  bridge := Iff.rfl
+  variation := ⟨@guard_search,supportBad,guard_bad⟩
+  sensitivity := ⟨fun i => ⟨supportBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,guard_bad⟩,fun i => nomatch i⟩
+  dependence := support_dependence
+
+noncomputable def guard_search_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_search)
+      (Realization supportSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_search
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.guard_searchProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨guardArena⟩
+  objectArena := .source ⟨guardArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source guardArena ⟨guard_searchProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize supportSignature (fun _ _ s => step s) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+    definition := some {
+      owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA
+      name := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA.Continues
+      path := #[]}
+    coordinates := #[]
+    readouts := #[{
+      path := #["body","body","body","body","body","domain","fn","fn","fn","fn","arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativeSelectedRA

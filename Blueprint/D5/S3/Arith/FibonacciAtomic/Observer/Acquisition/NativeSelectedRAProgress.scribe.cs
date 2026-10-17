@@ -21,6 +21,8 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
                 "Both positions Lz and Rz are current branches. Either common child extends the relative cursor to two existing positions."),
             Def("Saved", "A saved reply under substitution",
                 "A saved reply is nonabsent, and a saved branch still denotes a branch at its original address. A saved leaf label need not equal the current reply."),
+            Def("GuardFresh", "Empty guard-search workspace",
+                "The candidate row and comparison operand are empty, and all three reply latches are absent. The guard address and finite control are separate fields."),
             Def("Frontier", "Concrete phase conditions",
                 "Guard search reads an existing address and descends only after a branch. "
                 + "Comparison phases distinguish the left and right base cells, existing paired positions, saved replies and branch positions before descent. "
@@ -40,6 +42,8 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
                 DescribeRole.Theorem),
             Def("ScanFinishes", "A finite stationary comparison continuation",
                 "The current whole configuration has a finite update-free continuation to an active Work configuration at control eight. The continuation composes with every subsequent returning execution. It preserves the actual current source; it imposes no bound on tree size, cursor length or earlier interference."),
+            Def("Halts", "A finite stationary return",
+                "There is an update-free legal execution from the whole current configuration to a state at its separate Return. The finite word and end state are proof-side witnesses."),
             Describe.Lean(DescribeId.Create("native-selected-ra-reachable-frontier-progress"),
                 DeclarationHandle.Create(Prefix + "reachable_scan_frontier_progress"),
                 H("Resuming every reachable comparison phase"), StatementSource.FromAuthor(Progress()),
@@ -48,6 +52,15 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
                     + "A saved branch remains an actual branch after substitution, so an interrupted read pair can safely finish its decision. "
                     + "The stationary equal and unequal subtree scans handle each pending subtree. Reverse induction on the cursor handles upward retraction and the next right sibling. "
                     + "This conclusion concerns the comparison phase; guard search, validation, retry and final handoff are separate phases."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-selected-ra-finite-interference-termination"),
+                DeclarationHandle.Create(Prefix + "finite_interference_terminates"),
+                H("Return under every finite active interference schedule"), StatementSource.FromAuthor(Termination()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every initial finite source and every active event schedule, finiteness of writer events before Return implies that Return occurs. "
+                    + "After the last such update, the proof continues from the actual interrupted configuration. It finishes any pending comparison, guard search, body, validation or cleanup. "
+                    + "A failed validation executes the original row, operand and guard retraction loops before a fresh attempt on the stationary source. That attempt validates and returns. "
+                    + "In this active event model, finite writer interference already ensures that pending observer events execute; no idle events or runtime bound are supplied to the observer."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
@@ -73,6 +86,18 @@ internal sealed class NativeSelectedRAProgressDocument : IScribeDocumentDefiniti
                 Par(Seq(Par(phase), Sp, Implies, Sp, conclusion)))));
         return Disp(All("u", Op("Source"), All("s", Seq(Op("Nat"), Sp, To, Sp, Op("Bool")),
             All("n", Op("Nat"), Seq(Call("Safe", Call("source", w), Call("config", w)), Sp, Land, Sp, Par(active))))));
+    }
+    private static Formula Termination()
+    {
+        Formula w = Call("trajectory", V("s"), Call("world", Op("entry"), V("u"), Op("false")), V("n"));
+        Formula pending = Seq(EqOf(Call("apply", V("s"), V("n")), Op("true")), Sp, Land, Sp,
+            EqOf(Call("returned", w), Op("false")));
+        Formula events = Seq(OpenBrace, V("n"), Colon, Op("Nat"), Sp, Vert, Sp, pending, CloseBrace);
+        Formula end = Call("trajectory", V("s"), Call("world", Op("entry"), V("u"), Op("false")), V("m"));
+        Formula result = Seq(Exists, Sp, V("m"), Colon, Op("Nat"), Comma, Sp,
+            EqOf(Call("returned", end), Op("true")));
+        return Disp(All("u", Op("Source"), All("s", Seq(Op("Nat"), Sp, To, Sp, Op("Bool")),
+            Seq(Call("Finite", events), Sp, Implies, Sp, Par(result)))));
     }
     private static Formula Reachable()
     {

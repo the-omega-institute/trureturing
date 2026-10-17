@@ -60,13 +60,18 @@ Leaf labels need not be stable while the writer is active. -/
 def Saved (U : Source) (p : Address) (y : Reply) : Prop :=
   y ≠ .absent ∧ (y = .branch → readout p U = .branch)
 
+/-- Guard search starts with empty row and operand regions and empty latches. -/
+def GuardFresh (w : Work) : Prop :=
+  w.row = [] ∧ w.operand = [] ∧ w.guardReply = .absent ∧
+    w.leftReply = .absent ∧ w.rightReply = .absent
+
 /-- Phase-specific concrete cursor conditions. Cleanup records which regions
 have already been retracted; reset records when the guard region is empty. -/
 def Frontier (U : Source) (q : Bool) (w : Work) : Prop :=
   match w.pc.val with
-  | 1 => readout w.guardPath U ≠ .absent
-  | 2 => readout w.guardPath U = .branch
-  | 3 | 5 | 6 | 7 | 8 | 9 | 10 | 25 | 29 | 40 | 50 | 51 | 52 => True
+  | 1 => GuardFresh w ∧ readout w.guardPath U ≠ .absent
+  | 2 => GuardFresh w ∧ readout w.guardPath U = .branch
+  | 3 | 5 | 6 | 7 | 8 | 9 | 10 | 25 | 29 | 40 | 50 => True
   | 4 => q = false
   | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 =>
       q = false ∧ readout [] U = .branch
@@ -88,7 +93,12 @@ def Frontier (U : Source) (q : Bool) (w : Work) : Prop :=
       w.leftReply = .absent
   | 45 => w.operand = [] ∧ w.guardPath = [] ∧ w.guardReply = .absent ∧
       w.leftReply = .absent ∧ w.rightReply = .absent
-  | 53 | 54 | 55 => w.guardPath = []
+  | 51 => w.row = []
+  | 52 => w.row = [] ∧ w.operand = []
+  | 53 => w.row = [] ∧ w.operand = [] ∧ w.guardPath = []
+  | 54 => w.row = [] ∧ w.operand = [] ∧ w.guardPath = [] ∧ w.guardReply = .absent
+  | 55 => w.row = [] ∧ w.operand = [] ∧ w.guardPath = [] ∧
+      w.guardReply = .absent ∧ w.leftReply = .absent
   | _ => False
 
 /-- The condition concerns the actual source register and whole configuration. -/
@@ -115,6 +125,7 @@ private theorem frontier_writer (U : Source) (q : Bool) (w : Work)
     | exact present _ h
     | exact branch _ h
     | exact ⟨h.1,branch _ h.2⟩
+    | exact ⟨h.1,present _ h.2⟩
     | (rcases h with ⟨hq,z,ho,hz⟩; exact ⟨hq,z,ho,pair z hz⟩)
     | (rcases h with ⟨hq,z,ho,hz,hy⟩; exact ⟨hq,z,ho,pair z hz,saved _ _ hy⟩)
     | (rcases h with ⟨hq,z,ho,hz,hy,hy'⟩;
@@ -163,8 +174,8 @@ private theorem active_observer (U : Source) (q : Bool) (w : Work)
     simp_all [Frontier,Safe,worldEvent,step,lift,privateStep,localInstruction,
       receipt,follow,go,put,switch]
   case «1» =>
-    cases hy : readout g U <;> simp_all [Safe,Frontier]
-  case «2» => exact (children U g).1 h false
+    cases hy : readout g U <;> simp_all [Safe,Frontier,GuardFresh]
+  case «2» => exact ⟨h.1,(children U g).1 h.2 false⟩
   case «3» => cases q <;> simp [Safe,Frontier]
   case «4» =>
     cases U with
@@ -227,7 +238,7 @@ private theorem active_observer (U : Source) (q : Bool) (w : Work)
   case «50» => by_cases he : r = [] <;> simp [he,Safe,Frontier]
   case «51» => by_cases he : o = [] <;> simp [he,Safe,Frontier]
   case «52» => by_cases he : g = [] <;> simp [he,Safe,Frontier]
-  case «55» => exact root_present U
+  case «55» => simpa [GuardFresh] using root_present U
 
 private theorem safe_event (U : Source) (c : State) (r writer : Bool)
     (h : Safe U c) :
@@ -245,7 +256,7 @@ private theorem safe_event (U : Source) (c : State) (r writer : Bool)
     | false =>
       cases c with
       | entry =>
-        simpa [worldEvent,step,Safe,Frontier,emptyWork] using root_present U
+        simpa [worldEvent,step,Safe,Frontier,emptyWork,GuardFresh] using root_present U
       | ready q row => trivial
       | active q w =>
         have next := active_observer U q w h
@@ -498,5 +509,378 @@ theorem reachable_scan_frontier_progress (u : Source) (σ : Nat → Bool) (n : N
   intro q v hv phase
   rw [hv] at safe
   exact finish_frontier _ q v safe phase
+
+
+/-- A stationary returning execution from the actual whole configuration. -/
+def Halts (U : Source) (c : State) : Prop :=
+  ∃ (h : Word) (b : State), .update ∉ h ∧ Run step c U h b
+
+private theorem halt_prefix {U : Source} {c d : State}
+    (lead : Continues U c d) (next : Halts U d) : Halts U c := by
+  obtain ⟨h,b,hh,run⟩ := next
+  obtain ⟨t,ht,rt⟩ := lead h b run
+  exact ⟨t ++ h,b,by simp [ht,hh],rt⟩
+
+private theorem halt_local {U : Source} {c d : State}
+    (hop : step c = .localStep d) (next : Halts U d) : Halts U c := by
+  obtain ⟨h,b,hh,run⟩ := next
+  exact ⟨.observer .localStep :: h,b,by simp [hh],Run.localStep hop run⟩
+
+private theorem halt_read {U : Source} {c : State} {p : Address} {f : Reply → State}
+    (hop : step c = .read p f) (next : Halts U (f (readout p U))) : Halts U c := by
+  obtain ⟨h,b,hh,run⟩ := next
+  exact ⟨.observer (.read p (readout p U)) :: h,b,by simp [hh],Run.read hop rfl run⟩
+
+private theorem halt_local_suffix {U : Source} {c d : State}
+    (hop : step c = .localStep d) (h : Halts U c) : Halts U d := by
+  obtain ⟨t,b,ht,run⟩ := h
+  cases run with
+  | ret he => simp [hop] at he
+  | localStep he rest =>
+    have eq : _ = d := Op.localStep.inj (he.symm.trans hop)
+    subst eq
+    exact ⟨_,_,by simpa using ht,rest⟩
+  | read he _ _ => simp [hop] at he
+  | update _ => simp at ht
+
+private theorem cleanup_halts (U : Source) (q : Bool) (w : Work) :
+    Halts U (.active q (go 40 w)) := by
+  have none (n : Nat) : .update ∉ NativeIndependentExecution.expand
+      (cleanupTiming n (fun _ => 0)) := by
+    induction n with
+    | zero => simp [cleanupTiming,NativeIndependentExecution.expand]
+    | succ n ih => simpa [cleanupTiming,NativeIndependentExecution.expand] using ih
+  exact ⟨_,_,none _,cleanup_every_schedule q w (fun _ => 0) U⟩
+
+private theorem body_halts (U : Source) (q : Bool) (w : Work)
+    (next : ∀ v : Work, v.pc = 25 → v.guardPath = w.guardPath →
+      v.guardReply = w.guardReply → Halts U (.active q v)) :
+    Halts U (.active q (go 3 w)) := by
+  cases q with
+  | true =>
+    apply halt_local rfl
+    apply halt_local rfl
+    apply halt_local rfl
+    apply halt_local rfl
+    apply halt_local rfl
+    exact next _ rfl rfl rfl
+  | false =>
+    apply halt_local rfl
+    apply halt_read (p := [])
+      (f := fun y => .active false {go 4 w with pc :=
+        if y = .alpha then 9 else if y = .beta then 10 else if y = .branch then 11 else 99})
+    · simp [step,lift,privateStep,receipt,follow,go]
+      funext y
+      cases y <;> rfl
+    cases U with
+    | of b =>
+      cases b <;> simp only [readout,↓reduceIte,Bool.false_eq_true]
+      all_goals
+        apply halt_local rfl
+        apply halt_local rfl
+        apply halt_local rfl
+        exact next _ rfl rfl rfl
+    | mul A B =>
+      simp only [readout,↓reduceIte]
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      let v := put 19 forkPrefix[7] (put 18 forkPrefix[6] (put 17 forkPrefix[5]
+        (put 16 forkPrefix[4] (put 15 forkPrefix[3] (put 14 forkPrefix[2]
+        (put 13 forkPrefix[1] (put 12 forkPrefix[0] (go 11 w))))))))
+      change Halts (.mul A B) (.active false v)
+      apply halt_local (d := .active false (pairStart v [])) rfl
+      obtain ⟨d,hpc,_,hg,hr,lead⟩ := pair_complete (.mul A B) A B v
+        (fun _ => rfl) (fun _ => rfl)
+      apply halt_prefix lead
+      apply halt_local (d := .active false (put 25 5 d))
+      · simp [step,lift,privateStep,localInstruction,hpc,put]
+      apply next _ rfl
+      · simpa [v,put,go] using hg
+      · simpa [v,put,go] using hr
+
+private theorem fresh_halts (U T : Source) (q : Bool) (p : Address)
+    (observed : ∀ z : Address, readout (p ++ z) U = readout z T) :
+    Halts U (.active q {emptyWork with guardPath := p}) := by
+  obtain ⟨g,ell,_,hy,lead⟩ := guard_search U T q p observed
+  apply halt_prefix lead
+  apply body_halts U q {emptyWork with pc := 3,guardPath := g,guardReply := ell}
+  intro v hp hg hr
+  apply halt_read (p := v.guardPath)
+    (f := fun y => .active q (go (if y = v.guardReply then 40 else 50) v))
+  · simp [step,lift,privateStep,receipt,follow,hp]
+    funext y
+    cases y <;> rfl
+  have valid : readout v.guardPath U = v.guardReply := by simpa [hg,hr] using hy
+  simpa only [valid,↓reduceIte] using cleanup_halts U q v
+
+
+private theorem reset_guard_halts (U : Source) (q : Bool) (w : Work)
+    (row : w.row = []) (operand : w.operand = []) :
+    Halts U (.active q (go 52 w)) := by
+  induction hn : w.guardPath.length using Nat.strong_induction_on generalizing w with
+  | h n ih =>
+    by_cases empty : w.guardPath = []
+    · apply halt_local (d := .active q (go 53 w))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      apply halt_local rfl
+      apply halt_local rfl
+      apply halt_local rfl
+      simpa [emptyWork,go,row,operand,empty] using fresh_halts U U q [] (fun _ => rfl)
+    · have shorter : (pop w.guardPath).length < n := by
+        have pos := List.length_pos_iff.mpr empty
+        simp only [pop,List.length_dropLast]
+        omega
+      apply halt_local (d := .active q (go 52 {w with guardPath := pop w.guardPath}))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      exact ih _ shorter _ row operand rfl
+
+private theorem reset_operand_halts (U : Source) (q : Bool) (w : Work)
+    (row : w.row = []) : Halts U (.active q (go 51 w)) := by
+  induction hn : w.operand.length using Nat.strong_induction_on generalizing w with
+  | h n ih =>
+    by_cases empty : w.operand = []
+    · apply halt_local (d := .active q (go 52 w))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      exact reset_guard_halts U q w row empty
+    · have shorter : (pop w.operand).length < n := by
+        have pos := List.length_pos_iff.mpr empty
+        simp only [pop,List.length_dropLast]
+        omega
+      apply halt_local (d := .active q (go 51 {w with operand := pop w.operand}))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      exact ih _ shorter _ row rfl
+
+private theorem reset_halts (U : Source) (q : Bool) (w : Work) :
+    Halts U (.active q (go 50 w)) := by
+  induction hn : w.row.length using Nat.strong_induction_on generalizing w with
+  | h n ih =>
+    by_cases empty : w.row = []
+    · apply halt_local (d := .active q (go 51 w))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      exact reset_operand_halts U q w empty
+    · have shorter : (pop w.row).length < n := by
+        have pos := List.length_pos_iff.mpr empty
+        simp only [pop,List.length_dropLast]
+        omega
+      apply halt_local (d := .active q (go 50 {w with row := pop w.row}))
+      · simp [step,lift,privateStep,localInstruction,go,empty]
+      exact ih _ shorter _ rfl
+
+private theorem validation_halts (U : Source) (q : Bool) (w : Work) :
+    Halts U (.active q (go 25 w)) := by
+  apply halt_read (p := w.guardPath)
+    (f := fun y => .active q (go (if y = w.guardReply then 40 else 50) w))
+  · simp [step,lift,privateStep,receipt,follow,go]
+    funext y
+    cases y <;> rfl
+  by_cases valid : readout w.guardPath U = w.guardReply
+  · simpa only [valid,↓reduceIte] using cleanup_halts U q w
+  · simpa only [valid,↓reduceIte] using reset_halts U q w
+
+private theorem eight_halts (U : Source) (q : Bool) (w : Work) (hp : w.pc = 8) :
+    Halts U (.active q w) := by
+  apply halt_local (d := .active q (put 25 5 w))
+  · simp [step,lift,privateStep,localInstruction,hp,put]
+  exact validation_halts U q (put 25 5 w)
+
+private theorem scan_halts (U : Source) (c : State) (h : ScanFinishes U c) :
+    Halts U c := by
+  obtain ⟨v,hp,lead⟩ := h
+  exact halt_prefix lead (eight_halts U false v hp)
+
+
+private theorem guard_halts (U : Source) (q : Bool) (w : Work) (hp : w.pc = 1)
+    (fresh : GuardFresh w) (present : readout w.guardPath U ≠ .absent) :
+    Halts U (.active q w) := by
+  have access := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1
+  have root := access w.guardPath [] U
+  simp only [List.append_nil] at root
+  cases ht : subtree w.guardPath U with
+  | none => simp [ht] at root; exact (present root).elim
+  | some T =>
+    have lead := fresh_halts U T q w.guardPath (by intro z; simpa [ht] using access w.guardPath z U)
+    have shape : {emptyWork with guardPath := w.guardPath} = w := by
+      rcases w with ⟨pc,g,o,r,a,b,c⟩
+      simp_all [GuardFresh,emptyWork]
+    simpa only [shape] using lead
+
+set_option maxHeartbeats 2000000 in
+-- The termination proof checks the same finite control table as preservation.
+private theorem frontier_halts (U : Source) (q : Bool) (w : Work)
+    (safe : Frontier U q w) : Halts U (.active q w) := by
+  by_cases scan : w.pc.val ∈ [20,21,22,23,24,26,27,28,31]
+  · exact scan_halts U _ (finish_frontier U q w safe scan)
+  rcases w with ⟨pc,g,o,r,a,b,c⟩
+  fin_cases pc <;> simp only [Frontier] at safe
+  all_goals first
+    | contradiction
+    | exact validation_halts U q _
+    | exact cleanup_halts U q _
+    | exact reset_halts U q _
+    | exact eight_halts U q _ rfl
+    | skip
+  case «1» => exact guard_halts U q _ rfl safe.1 safe.2
+  case «2» =>
+    apply halt_local rfl
+    exact guard_halts U q _ rfl safe.1 ((children U g).1 safe.2 false)
+  case «3» => exact body_halts U q ⟨3,g,o,r,a,b,c⟩ (fun v hp _ _ => by
+    have hw : go 25 v = v := by cases v; simp_all [go]
+    simpa [hw] using validation_halts U q v)
+  case «4» =>
+    subst q
+    exact halt_local_suffix rfl (body_halts U false ⟨3,g,o,r,a,b,c⟩
+      (fun v hp _ _ => by
+        have hw : go 25 v = v := by cases v; simp_all [go]
+        simpa [hw] using validation_halts U false v))
+  case «5» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    apply halt_local rfl
+    exact eight_halts U q _ rfl
+  case «6» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    exact eight_halts U q _ rfl
+  case «7» => apply halt_local rfl; exact eight_halts U q _ rfl
+  case «9» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    exact eight_halts U q _ rfl
+  case «10» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    exact eight_halts U q _ rfl
+  all_goals try (simp only [List.mem_cons,List.not_mem_nil,or_false] at scan; contradiction)
+  all_goals first
+    | (rcases safe with ⟨rfl,branch⟩
+       repeat' apply halt_local rfl
+       apply scan_halts U
+       apply finish_start U _ [] rfl rfl
+       intro b
+       exact (children U []).1 branch b)
+    | skip
+  case «25» => exact validation_halts U q ⟨25,g,o,r,a,b,c⟩
+  case «40» => exact cleanup_halts U q ⟨40,g,o,r,a,b,c⟩
+  case «50» => exact reset_halts U q ⟨50,g,o,r,a,b,c⟩
+  case «29» => apply halt_local rfl; exact eight_halts U q _ rfl
+  case «41» =>
+    apply halt_local_suffix (c := .active q (go 40 ⟨41,g,o,r,a,b,c⟩))
+    · simp [step,lift,privateStep,localInstruction,go,safe]
+    exact cleanup_halts U q _
+  case «42» =>
+    have h := cleanup_halts U q ⟨42,g,o,r,a,b,c⟩
+    have h := halt_local_suffix (d := .active q (go 41 ⟨42,g,o,r,a,b,c⟩))
+      (by simp [step,lift,privateStep,localInstruction,go,safe.1]) h
+    exact halt_local_suffix
+      (by simp [step,lift,privateStep,localInstruction,go,safe.2]) h
+  case «43» =>
+    have h := cleanup_halts U q ⟨43,g,o,r,a,b,c⟩
+    have h := halt_local_suffix (d := .active q (go 41 ⟨43,g,o,r,a,b,c⟩))
+      (by simp [step,lift,privateStep,localInstruction,go,safe.1]) h
+    have h := halt_local_suffix (d := .active q (go 42 ⟨43,g,o,r,a,b,c⟩))
+      (by simp [step,lift,privateStep,localInstruction,go,safe.2.1]) h
+    exact halt_local_suffix
+      (by simp [step,lift,privateStep,localInstruction,go,safe.2.2]) h
+  case «44» =>
+    apply halt_local_suffix (c := .active q ⟨43,g,o,r,a,b,c⟩)
+    · simp [step,lift,privateStep,localInstruction,go,safe.2.2.2]
+    have h := cleanup_halts U q ⟨44,g,o,r,a,b,c⟩
+    have h := halt_local_suffix (d := .active q (go 41 ⟨44,g,o,r,a,b,c⟩))
+      (by simp [step,lift,privateStep,localInstruction,go,safe.1]) h
+    have h := halt_local_suffix (d := .active q (go 42 ⟨44,g,o,r,a,b,c⟩))
+      (by simp [step,lift,privateStep,localInstruction,go,safe.2.1]) h
+    exact halt_local_suffix
+      (by simp [step,lift,privateStep,localInstruction,go,safe.2.2.1]) h
+  case «45» =>
+    apply halt_local (d := .ready q r)
+    · simp [step,lift,privateStep,localInstruction,safe]
+    exact ⟨_,_,by simp,Run.ret rfl⟩
+  case «51» => exact reset_operand_halts U q ⟨51,g,o,r,a,b,c⟩ safe
+  case «52» => exact reset_guard_halts U q ⟨52,g,o,r,a,b,c⟩ safe.1 safe.2
+  case «53» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    apply halt_local rfl
+    simpa [emptyWork,safe.1,safe.2.1,safe.2.2] using fresh_halts U U q [] (fun _ => rfl)
+  case «54» =>
+    apply halt_local rfl
+    apply halt_local rfl
+    simpa [emptyWork,safe.1,safe.2.1,safe.2.2.1,safe.2.2.2] using fresh_halts U U q [] (fun _ => rfl)
+  case «55» =>
+    apply halt_local rfl
+    simpa [emptyWork,safe.1,safe.2.1,safe.2.2.1,safe.2.2.2.1,safe.2.2.2.2] using
+      fresh_halts U U q [] (fun _ => rfl)
+
+
+private theorem safe_halts (U : Source) (c : State) (h : Safe U c) : Halts U c := by
+  cases c with
+  | ready q row => exact ⟨_,_,by simp,Run.ret rfl⟩
+  | active q w => exact frontier_halts U q w h
+  | entry =>
+    apply halt_read rfl
+    exact guard_halts U _ emptyWork rfl (by simp [GuardFresh,emptyWork]) (root_present U)
+
+private theorem observer_run {U : Source} {c b : State} {h : Word}
+    (run : Run step c U h b) (none : .update ∉ h) :
+    (worldEvent false)^[h.length] ⟨c,U,false⟩ = ⟨b,U,true⟩ := by
+  induction run with
+  | ret hop => simp [worldEvent,hop]
+  | @localStep c d U h b hop run ih =>
+    simp only [List.mem_cons,not_or] at none
+    simpa only [List.length_cons,Function.iterate_succ_apply,worldEvent,
+      Bool.false_eq_true,↓reduceIte,hop] using ih none.2
+  | @read c U p f y h b hop hy run ih =>
+    simp only [List.mem_cons,not_or] at none
+    simpa only [List.length_cons,Function.iterate_succ_apply,worldEvent,
+      Bool.false_eq_true,↓reduceIte,hop,hy] using ih none.2
+  | update _ _ => simp at none
+
+private theorem observer_trajectory (w : World) (n : Nat) :
+    trajectory (fun _ => false) w n = (worldEvent false)^[n] w := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp only [trajectory,ih,Function.iterate_succ_apply']
+
+/-- Every source and schedule with finitely many active writer events returns.
+All continuation arguments start at the actual interrupted configuration. -/
+theorem finite_interference_terminates (u : Source) (σ : Nat → Bool)
+    (finite : Set.Finite {n : Nat | σ n = true ∧
+      (trajectory σ ⟨.entry,u,false⟩ n).returned = false}) :
+    ∃ m : Nat, (trajectory σ ⟨.entry,u,false⟩ m).returned = true := by
+  obtain ⟨N,bound⟩ := finite.bddAbove
+  have event (k : Nat) :
+      worldEvent (σ (N+1+k)) (trajectory σ ⟨.entry,u,false⟩ (N+1+k)) =
+      worldEvent false (trajectory σ ⟨.entry,u,false⟩ (N+1+k)) := by
+    cases returned : (trajectory σ ⟨.entry,u,false⟩ (N+1+k)).returned with
+    | true => simp [worldEvent,returned]
+    | false =>
+      cases writer : σ (N+1+k) with
+      | false => rfl
+      | true => have impossible := bound ⟨writer,returned⟩; omega
+  have suffix (k : Nat) : trajectory σ ⟨.entry,u,false⟩ (N+1+k) =
+      trajectory (fun _ => false) (trajectory σ ⟨.entry,u,false⟩ (N+1)) k := by
+    induction k with
+    | zero => rfl
+    | succ k ih =>
+      change worldEvent (σ (N+1+k)) (trajectory σ ⟨.entry,u,false⟩ (N+1+k)) =
+        worldEvent false (trajectory (fun _ => false)
+          (trajectory σ ⟨.entry,u,false⟩ (N+1)) k)
+      rw [event k,ih]
+  have safe := trajectory_safe u σ (N+1)
+  cases hw : trajectory σ ⟨.entry,u,false⟩ (N+1) with
+  | mk c U returned =>
+    cases returned with
+    | true => exact ⟨N+1,by simp [hw]⟩
+    | false =>
+      have hc : Safe U c := by simpa only [hw] using safe
+      obtain ⟨h,b,none,run⟩ := safe_halts U c hc
+      refine ⟨N+1+h.length,?_⟩
+      rw [suffix,hw,observer_trajectory,observer_run run none]
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress

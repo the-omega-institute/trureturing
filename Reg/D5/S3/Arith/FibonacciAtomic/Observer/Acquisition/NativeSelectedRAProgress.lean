@@ -151,4 +151,62 @@ noncomputable def reachable_scan_frontier_progress_registration :
   familyRecord := none
   options := #[]
 
+
+abbrev terminationArena : Arena where
+  signature := frontierSignature
+  Law R := ∀ (u : Source) (σ : Nat → Bool),
+    Set.Finite {n : Nat | σ n = true ∧ (R.readout () (u,σ) n).returned = false} →
+    ∃ m : Nat, (R.readout () (u,σ) m).returned = true
+
+private theorem termination_bad : ¬ terminationArena.Law frontierBad := by
+  intro h
+  have finite : Set.Finite {n : Nat | (fun _ : Nat => false) n = true ∧
+      (frontierBad.readout () (.of true,fun _ => false) n).returned = false} := by
+    simp
+  obtain ⟨m,hm⟩ := h (.of true) (fun _ => false) finite
+  simp [frontierBad,realize] at hm
+
+def terminationProof : Registration terminationArena (type_of% (@finite_interference_terminates)) where
+  actual := frontierActual
+  bridge := Iff.rfl
+  variation := ⟨@finite_interference_terminates,frontierBad,termination_bad⟩
+  sensitivity := ⟨fun i => ⟨frontierBad,fun j h => (h (Subsingleton.elim j i)).elim,
+    rfl,termination_bad⟩,fun i => nomatch i⟩
+  dependence := frontier_dependence
+
+noncomputable def finite_interference_terminates_registration :
+    LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
+      (@_root_.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.finite_interference_terminates)
+      (Realization frontierSignature) Type Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.finite_interference_terminates
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress.terminationProof
+  realizationSource := none
+  generated := false
+  arena := .source ⟨terminationArena⟩
+  objectArena := .source ⟨terminationArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source terminationArena ⟨terminationProof⟩
+  correspondence := {stage := .evidence,objectStage := .evidence}
+  bundleNonempty := .absent
+  readout := some (realize frontierSignature
+    (fun _ p n => trajectory p.2 ⟨.entry,p.1,false⟩ n) (fun i => nomatch i))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress
+    definition := none
+    coordinates := #[0,1]
+    readouts := #[{
+      path := #["body","body","body","body","arg","arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false}] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeSelectedRAProgress
