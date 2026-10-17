@@ -906,3 +906,459 @@ intermediate successors instead changes the exact realization contract.
 No search miss establishes library nonexistence or originality.
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Completed original services and the physical coordinates they must retain
+
+**Definition 13.1 (original material and completed event coordinate).** Keep
+Assumption 1.2's one $G_{\mathrm{gc}}$, original initialization, code,
+current owners, parked client, verifier and INITIAL consumer. For any
+actual cut $x$, let
+
+$$
+A_{55}(x)=\sum_{i=0}^{55}\#\operatorname{Cells}_i(x).
+$$
+
+Here a cell is identified by its actual port and creation-chain position.
+Count blank cells, separators, status cells, fixed boundary cells, old
+counter versions and all retired material. Ports56–63 and annex64–73
+are excluded from this particular count; their actual material and costs
+are still retained by the full state. Thus $A_{55}$ is a function of
+original tape material already in $O^+$, not an added readout or an actor
+permission. Let $n(x)$ remain the actual native receipt tally.
+
+At completed counter boundaries write $\mu(x)$ for CAP's current
+committed unified-event count $m$. Use its actual selected old/new phase
+rule and complete counter/index state, not a descriptor ordinal, a
+historical counter chosen as current, or the native receipt tally.
+Acknowledged outer Ready boundaries and completed original-service
+boundaries have this interpretation; a frozen journal helper keeps its
+already selected count. The allocation argument below does not require
+decoding $\mu$ at intermediate cuts.
+
+**Definition 13.2 (the completed services being compared).** An original
+event service is a whole actually invoked CAP source, Reserve, Raise,
+NativeLocal or Halt service, through its real commitment, row/index
+construction, required dependency delivery, checks and ACK, followed by
+its prescribed return or global halt. The five source kinds include
+ReadE, TagRead, Rho, Left and Right. Canonical executed source rejects,
+absent literal replies and all three maintenance outcomes are included.
+
+A producer journal service means CAP Definition 6.2a's installed
+three-field packet service, with authentic complete metadata, an owned
+complete query and the actual closed-prefix binding. Its five query
+kinds are semantic row, unified row, source-only row, semantic prefix
+and whole prefix. GetSourceRequest includes its paid zero-to-one-based
+translation before GetSourcePost. Include either actual entry below,
+with the retained return kind and all its required completion edges.
+
+| Entry | Required actual path and authority |
+| --- | --- |
+| Actor archive client | CAP Definition 4.6's installed public caller at acknowledged idle; producer admission CTL and busy source-token TOK; the twelve-word loan; retained query construction/staging and route49; the actor's twelve reverse TOKs and CTL before producer parsing; requested reply/dependency work, checks, ACK, source-token TOK and idle CTL. |
+| Producer-local frozen-prefix client | The installed frozen/stop continuation already holds its producer phase, source-service token and owned retained packet/payload. It uses the producer parser and bounded service, then the fixed edge back to that retained continuation. It has no new actor query channel, idle admission or idle return. |
+
+The token/workspace assignments are CAP Definition 2.2's: public word
+ports1–12, producer descriptor/counter/index work17–23, actor archive
+and checking work28–31, and original mailboxes48–55. Actor24–27 remain
+protected. An origin reference supplies no private token. In particular,
+a successful actor lookup reads its acquired local copy after seal,
+not a printed producer address. A producer-local helper uses authority
+already held by its actual continuation. Neither entry can be invoked
+merely because another cut has an idle-looking counter or an old token
+in a recovered history.
+
+A finite out-of-range or zero row query returning typed `no-row` is a
+well-formed service in this domain. Repeated queries, previously acquired
+rows/dependencies, empty selected prefixes and reuse of a complete
+retained packet are included whenever the actual caller invokes them.
+They are distinct from malformed packets, structural metadata faults,
+interrupted calls, partial token transfers and entry attempts at an
+arbitrary busy cut. These latter cases are not completed services of
+this definition. CAP Definition 6.2a's fixed caller constructs the three
+Frames from complete public words and invokes the service with that
+retained packet. Its canonical invocation does not supply a partial or
+malformed packet as another query outcome. A structural refusal from a
+wider raw or faulty-metadata state can have executed work; it is not
+identified with an unexecuted `none`. No allocation bound for every such
+refusal is asserted here. Verifier/consumer scans of their own acquired
+snapshots are also not producer journal invocations: CAP Definition
+6.2a gives them local lookup, without a reverse mailbox route or private
+read.
+
+**Definition 13.3 (same-instance replacement branches).** Let $P$ be an
+authentic outer Ready of this fixed installation. A comparison branch
+$B$ is a finite actual continuation from this very $P$, using genuine
+current entries and their prescribed native rows. Count $E(B)$ whole
+completed original event services, once each at their actual commitment,
+and $J(B)$ completed producer journal invocations of Definition 13.2.
+Every original event commitment in the branch must belong to a service
+whose entire required row/delivery/ACK/return or halt completes before
+the endpoint. A pending committed event is outside this comparison
+domain. A helper nested in a larger service is counted at its actual
+invocation, not again as a second copy of the containing event. When
+using the completed event count at the end, require its actual counter
+completion, rather than a pending prepared version.
+
+The branch may use arbitrary finite request lengths and public adaptive
+choices, arbitrarily many services, any legitimately retained growing
+supplement, and additional lawful original or annex work. There is no
+uniform memory or runtime bound. All rows, channel copies and return
+routing remain actual work. No new code, entry, source initialization,
+port identification, counter reset or deallocation is introduced.
+Adaptivity chooses from actual available operations using acquired public
+information; it supplies no private-source advice. Quantification over
+such branches does not declare that an unavailable journal caller is
+available, or that an annex row has original-$Q$ admission.
+
+A *composition of whole services* is the subclass in which every executed
+row belongs to one of these completed invocations or its installed
+invocation/return routing. Unexecuted disabled trials may be interspersed.
+A branch with no service in this subclass has no executed rows. Standalone
+primitive work with no completed service belongs only to the broader
+comparison class, not to this subclass.
+
+## 14. The journal exception to event counting still leaves original material
+
+**Lemma 14.1 (fresh material on both completed journal entries).** Let $C$
+be any completed producer journal invocation of Definition 13.2. Let
+$w_1,w_2,w_3$ be the three finite field values in its retained packet and
+$k_i=|w_i|$. Then
+
+$$
+\Delta A_{55}(C)\ \ge\ \sum_{i=1}^3(2k_i+3)\ \ge\ 9,
+\qquad \Delta\mu(C)=0.
+$$
+
+For an actor invocation, if $\ell$ is the actual query block's bit-payload
+length, its route49 mailbox alone contributes a further $\ell+2$ cells,
+disjoint from those parser work words. These inequalities are lower
+bounds, not complete allocation or service-cost formulae.
+
+Proof. CAP Definition 4.6 installs the query parser before the row/prefix
+service. Definition 6.2a specifies the packet's three bounded fields and
+that the producer parses them by ReadFrame. Its producer-local variant
+uses its own retained packet and already owned payload in this same
+service; the omitted operations are the actor packet/channel and loan,
+not the producer's parser. Its frozen return kind changes the final
+return edge. CAP §7's journal bill makes the same distinction between
+the actor channel/loan and the producer-local owned-packet helper.
+
+Expand ReadFrame by CAP Definition 6.1. For a field with $k$ bits,
+ReadUnary copies the length $U(k)$, including its terminating zero, to
+a fresh work word, then Finish appends sep. This constructs $k+2$
+cells. ReadFrame then New's its output, appends its $k$ payload bits,
+and Finish appends another sep, constructing $k+1$ further cells. Even
+when $k=0$, the length zero and the two separators are constructed.
+CAP Definition 3.1 defines New as Tail and Append as EX; WR; MR.
+New does not clear, rewind for overwrite, or reclaim an earlier word.
+Reuse of a word *role* therefore appends a new physical interval. Its
+successive EX occurrences remain distinct even when later fields reuse
+the same finite roles. Summing gives $\sum_i(2k_i+3)$ actual original
+allocations on1–12.
+
+For the actor route, the pool is back at the producer before parsing;
+its work-word authority is therefore current, not inferred from the
+packet. Before that return, Definition 6.2a requires sending the query
+on actor-to-producer route49. CAP Definition 6.3 measures its actual
+mailbox Base, constructs its $\ell$ payload cells and sep, then appends
+a zero-status cell before copying. Thus port49 alone gains $\ell+2$
+cells. Its descriptor, receiver allocation and the later response route
+add further material. Retaining the sender packet does not turn this
+channel into a reuse of an old mailbox interval.
+
+For the producer-local route, the producer already owns1–12 and its
+packet/payload, so the same parser work is legal without an actor loan.
+The proof does not charge it an actor channel or idle return. A selected
+prefix that invokes CAP Definition 6.3's full snapshot routine adds
+its actual count/end/index construction on21 and dependency delivery.
+That routine constructs counts, none ends and a sealed index even for
+an empty prefix. This is additional material, not a premise needed for
+the parser lower bound.
+
+No result-dependent shortcut precedes these three field parses. The
+closed-end index scans occur afterward. A valid zero/out-of-range query
+returns `no-row` only at their checked closed end. CAP §7 also requires
+its response construction, channel where applicable, and return. A
+repeated hit still parses its packet. A previously acquired origin may
+omit a redundant payload/dependency channel, as CAP's origin scan and
+§7 allow; it omits neither this parser nor the actor's query route49.
+An already retained producer-local packet likewise omits its new
+construction/transport, while ReadFrame still constructs new length and
+output words. Thus all the cases included in Definition 13.2 retain
+the displayed lower bound. CAP Definition 6.2a expressly creates no
+source, NativeLocal, Halt or maintenance event and changes none of
+$q,g,e,j,m$. This proves the event equation. ∎
+
+**Theorem 14.2 (actual effects of completed service composition).** For
+every comparison branch $B$ of Definition 13.3, ending at its specified
+completed counter boundary,
+
+$$
+\mu(B_{\rm end})-\mu(P)=E(B),\qquad
+A_{55}(B_{\rm end})-A_{55}(P)\ge E(B)+9J(B).
+$$
+
+The allocation inequality also holds without interpreting the event
+counter at the final cut, provided the counted services themselves have
+completed. Additional lawful work cannot remove these allocations.
+
+Proof. TMC PR57.D1's EX on a port0–55 adds exactly one cell. RD, WR,
+ML, MR, BF, IN, OUT, TOK and CTL remove no cell. A write of a blank,
+retirement, loss of a handle and return of a token do not shorten a
+creation chain. The same fact holds under GENERAL Lemma 2.6's actual
+incidence realization: its patches preserve that very native effect.
+Consequently $\Delta A_{55}$ is the number of actual EX occurrences on
+these ports, and is additive over disjoint consecutive row intervals.
+
+For each completed event, CAP Definition 4.6 requires the unified
+row/index/delivery route before return or halt. Definition 6.2 constructs
+its new row on14 by Base, payload Appends, sep/status and descriptor
+construction; it does not overwrite a previous row. In particular at
+least one new14 cell exists for each counted event. These row writes
+are distinct from the1–12 parser allocations counted by Lemma 14.1.
+Apply that lemma to every completed journal invocation, and add the
+nonnegative allocations of all remaining work. This proves the inequality,
+including nested journal helpers without counting any EX twice.
+
+For the event equation use CAP Definition 4.6's commitment rule and ARC
+Proposition 10.4's actual row indicators. Each source, NativeLocal, Halt
+or maintenance commitment increments $m$ exactly once. A later row seal
+materializes that event without another increment. Source rejection and
+`absent` remain source events; unchanged and refused maintenance remain
+maintenance events. Journals create no event by Lemma 14.1. At the
+completed boundaries the selected counters agree with those commitments;
+CAP Definition 6.1 provides no independently updated shadow bank.
+Summing the actual indicators gives the equation. Disabled trials have
+no row, receipt or commitment. Every executed row, including all the
+extra parsing, copying and return work, still adds its own actual native
+receipt; event neutrality is not zero cost. ∎
+
+## 15. Whole original services cannot invisibly replace returning history work
+
+**Lemma 15.1 (original allocation neutrality of actual history flights).**
+Let $H:P\longrightarrow R$ be a nonempty finite sequence of accepted
+canonical GENERAL history flights from an authentic Ready $P$ to a later
+Ready $R$, without an intervening01 source call or00 original-client
+continuation. Require actually supplied finite inputs and the termination
+premises of GENERAL Theorem 8.2 for these completed flights. Then, for
+its actual positive finite row count $L_H$,
+
+$$
+\mu(R)=\mu(P),\qquad A_{55}(R)=A_{55}(P),\qquad
+n(R)=n(P)+L_H,\quad L_H>0.
+$$
+
+Proof. GENERAL Definitions 2.1–2.3 place the real word assignments on
+banks64/65, scratch66/67, descriptors68 and staging69, with ingress70.
+Its §7 channels, publications and receivers use71/72/73 and the same
+annex work. The only imported old archives are the closed owned26/28/29
+prefixes with their actual checks and head restoration. No converter
+borrows producer1–12, source16, producer13/17 or verifier32–39. Reading
+an original cell creates no new cell there. A represented historical
+EX or event inside Step/replay is data computed in the annex; it is
+not an actual EX or event commitment on an original port. Induction
+over these real row operands therefore gives $\Delta A_{55}=0$.
+ARC Proposition 10.4 gives $\Delta\mu=0$ for these history/compiler/client
+rows. GENERAL Theorem 8.2 supplies their completed finite return.
+The actual gate, request, conversion, publication, check, ACK and return
+rows have positive total length and each appends a meter receipt.
+Concatenating the flights proves all three equations. This asserts no
+equality of the remaining original fields: physical control, latches,
+receipts and their actual changes remain in the full state. ∎
+
+**Theorem 15.2 (completed-original-service replacement obstruction).**
+For every $P,H,R$ of Lemma 15.1 and every actual comparison branch $B$
+from the same $P$ with $E(B)+J(B)>0$,
+
+$$
+A_{55}(B_{\rm end})>A_{55}(R).
+$$
+
+In particular its complete original physical endpoint differs from
+$R$'s, irrespective of its receipt count, source-tree value, printed
+reply, final token owner or size of retained supplementary memory.
+Every composition of whole services of Definition 13.3, including the
+empty or disabled-only composition, fails to have the same complete
+original endpoint as $H$. This holds branch by branch for every finite
+public adaptive composition, without a bound on its number of calls or
+its variable-length request recoding.
+
+Proof. Theorem 14.2 and Lemma 15.1 give
+
+$$
+A_{55}(B_{\rm end})\ge A_{55}(P)+E(B)+9J(B)
+>A_{55}(P)=A_{55}(R).
+$$
+
+All counts belong to this one actual source, initialization and starting
+cut. Additional work and allocation, including an arbitrarily growing
+supplement, cannot reverse the inequality. Eventful branches also have
+the independent discrepancy $\mu(B_{\rm end})=\mu(P)+E(B)>\mu(R)$.
+No comparison of separately optimized or differently initialized runs
+is used. If a whole-service composition has $E=J=0$, its definition
+leaves only unexecuted trials and the empty branch. Its receipt tally
+is $n(P)$, whereas $n(R)=n(P)+L_H>n(P)$. These exhaust that subclass.
+Public adaptivity only selects an actual branch to which the same
+argument applies. ∎
+
+**Corollary 15.3 (necessary change in an exact original-response bridge).**
+A proposed realization of these actual history flights that preserves
+every original physical cell and receipt in the required complete
+successors cannot replace a flight by a composition of whole services
+of Definition 13.3. More generally, any such replacement branch must
+have $E=J=0$, even if it contains arbitrary additional lawful work.
+
+Proof. Complete-original-successor equality entails equality of its
+original tape material and actual meter, hence of $A_{55}$ and $n$.
+Theorem 15.2 contradicts this necessary condition. No equality of hidden
+query traces or publication occurrences was used. A decoder that simply
+discards the additional actual original material does not retain the
+stipulated successor. For a nonempty service branch the contradiction
+already holds after selecting only $A_{55}$; this is a necessary
+projection of the unchanged full requirement, not a replacement task. ∎
+
+## 16. Legitimate instances, primitive boundaries and the remaining recovery construction
+
+**Proposition 16.1 (nonempty comparison on the initialized source).** Under
+Assumption 1.2's finite-supply and reached-computation termination premises,
+first Ready admits an actual accepted history flight of Lemma 15.1 and
+an alternative actual returning ReadE service branch of Theorem 15.2.
+Both retain the original source $u=\beta$ and the occupied original roles.
+
+Proof. Let $a$ and $b$ be this authentic predecessor's acquisition and
+Ready tallies. GENERAL Theorem 8.2 supplies the accepted AcquisitionOffset0
+name for $a\in[a,b]$. Supply gate1, HistoryMode1 and its existing frame
+
+$$
+111\,U(2)\,0U(0).
+$$
+
+The two-bit payload is AcquisitionOffset0. The existing received-body
+cycle and checked return give $H$, not a new selector or hypothetical
+service. Alternatively supply outer01 and CAP's canonical ReadE frame
+$000\,U(0)$. ARC Definitions 5.1–5.2 put the twelve word tokens at the
+producer, the source token at its dispatcher, and route01 to the genuine
+$F^A$ header prelude. CAP's original source admission, row/dependency
+checks, ACK and return, followed by the actual InnerReturn/CaptureCAP
+routing, give the next Ready by ARC Proposition 5.5 and GENERAL Theorem
+8.4. This branch has $E=1$ and a freshly constructed original unified
+row; ReadE preserves $\beta$. Thus the comparison class has an actual
+nonempty instance with legitimate old-service entry on this very source.
+No journal entry at a busy history cut is postulated.
+
+The unchanged source body has GENERAL Theorem 9.1's fixed-entry original
+Supply/Advance correspondence, with its stated exclusion of changed
+final idle CTL. The assertion here about the complete outer routes is
+native reachability with genuine old-service entry. It does not add
+original-$Q$ admission for their outer gate or changed return rows. ∎
+
+**Proposition 16.2 (positive primitive work need not be a completed
+service).** The inference from positive original primitive work to
+$E+J>0$ is false on the existing source domain.
+
+Proof. At a reached prescribed header IN inside the canonical ReadE
+source body, Supply its next canonical bit. AIF Definition 2.2 and TMC
+PR57.D1 make this one actual IN: it changes its input latch/control and
+adds a receipt, without writing, moving or constructing an ordinary
+cell. The following matching EX/WR has not occurred, nor has a service
+committed. Thus on this one-row interval $\Delta A_{55}=\Delta\mu=0$
+and $\Delta n=1$. GENERAL Theorem 9.1 supplies this original action on
+its unchanged fixed-entry chart. It is a genuine unfinished source
+prefix, outside the whole-completed-service subclass. ∎
+
+**Convention 16.3 (scope of the obstruction and complete accounting).**
+Theorem 15.2 covers complete event services and both installed producer
+journal entries, including no-row, repetition, already-acquired material
+and retained packet reuse. Its lower bound is proved from their actual
+row writer, parser and channel graphs; event-freedom of a journal does
+not make it allocation-free. A packet-free local scan, verifier/consumer
+lookup on an acquired snapshot, malformed-query or structural-fault
+return, interrupted protocol, and a branch consisting only of standalone
+primitives are not covered by the journal lemma. An extension to every
+such path remains open and would require its own entry, work and return
+analysis. In particular no claim that every original primitive or every
+possible recovery construction is impossible follows from this theorem.
+
+Endpoint equality is already impossible for the stated replacements;
+requiring every executed original action's full successor cannot repair
+that failure. The theorem itself does not identify a native history
+flight with an original experiment. It adds no publication-occurrence
+condition to endpoint equality. BANK_DISCLOSURE's complete View0
+publication-origin theorem remains the supplier when such an occurrence
+is separately required. It is not used to exclude the empty composition;
+the actual retained meter does that. Nor does a physical endpoint
+inequality by itself prove an original-$Q$ kernel separation, especially
+at absorbing halt: the empty terminal response remains output-only.
+
+For each actual $L$-row branch keep GENERAL Definition 8.5's same-run bill
+
+$$
+(\Delta\mathrm{ticks},\Delta\mathrm{fee},\Delta\mathrm{bits})
+=(L,2L,\Delta b_{\mathrm{ctl}}+8\Delta A+8L).
+$$
+
+Here $A$ counts all actual nonmeter cells on all ports, including the
+annex, every dead bank, retired descriptor, sender, mailbox, receiver,
+partial block and scratch word; it is not $A_{55}$. Every actual input,
+copy, test, ACK and return remains charged. Keep the separately declared
+atomic-incidence tariff and foundation as in GENERAL. The allocation
+bounds are not numerical runtime measurements or complete bills.
+
+**Corollary 16.4 (recovery obligation after allowing growing memory).**
+Retaining an unbounded supplement removes neither Theorem 15.2's
+completed-service obstruction nor BANK_DISCLOSURE obligation 6.3 and
+Convention 12.2's missing original admission/response obligations.
+A construction preserving the stipulated original physical response
+for a Lemma 15.1 flight must justify its actual original primitive or
+other protocol correspondence without invoking a completed original
+service of Definition 13.2 in that replacement branch.
+
+Proof. Theorem 15.2 has no bound on the supplementary state, and
+Corollary 15.3 requires $E=J=0$. This differs from Theorem 10.2's
+finite-supplement obstruction and Theorem 11.1's sharp finite chart:
+it restricts actual service effects even when all growing annex material
+is retained. GENERAL's independent view inverses and paid cycle remain
+available; neither they nor native numerical inversion create an original
+entry. The genuine added-phase domains, physical PC/phase/latch4/latch6,
+OUT releases and every complete original successor still require the
+original interface proof. The raw/preacquisition/noncanonical domain,
+all unfinished phases, rolling entries, changed final idle/return,
+final00 without later Ready, unchanged terminal observation and the
+separate lower Check/Core/Run realization remain in that obligation.
+No alternative all-`none` task or source-independence statement is used.
+The two leaves and ordered pairing retain Assumption 1.2's explicitly
+declared primitive models rather than deriving their laws. ∎
+
+**Convention 16.5 (mathematical provenance and comparison contracts).**
+Lemmas 14.1 and 15.1, Theorems 14.2 and 15.2 and their stated consequences
+are `repo-derived` ordinary source-model deductions. Their central facts
+are the concrete mandatory original allocations and the annex-only
+physical operands, not an assumed abstract service-effect condition.
+No Lean certification or worldwide novelty is asserted. The source
+meanings and formal-library boundaries in Conventions 8.2 and 12.3 are
+retained, including the private source-traversal and evaluator-erasure
+results: those results presuppose their actual run/realization and
+readout contracts, rather than constructing this original interface.
+
+The `literature-attested` comparison interfaces have different premises.
+Pinned mathlib's StateTransition.Respects requires a supplied relation
+matching a step by a nonempty target path and matching termination.
+[CompCert v3.16's `fsim_properties`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v)
+requires a well-founded index, initial/final matching, public-symbol
+preservation and trace-matching Plus or decreasing-index Star. Neither
+contract asserts equality of all the concrete physical coordinates here.
+[CSLib's `IsSimulation`](https://github.com/leanprover/cslib/blob/6d9d11371bae527fa615a016da8111bbdeb36f7c/Cslib/Foundations/Semantics/LTS/Simulation.lean)
+likewise assumes the two LTSs and a relation, matching an already given
+transition with the same label and related successor. It supplies no
+entry for this source. Its Lean4.36.0-rc1/mathlib625d8914 setting is
+separate from this source's Lean4.33.0/mathlibdb584cd6 setting.
+Devriese, Patrignani, Piessens and Keuchel's *Modular, Fully-abstract
+Compilation by Approximate Back-translation*, DOI10.23638/LMCS-13(4:2)2017,
+uses preservation/reflection of behavioral equivalence for its specified
+languages and contexts; its abstract's approximate back-translation is
+step-bounded and conservative beyond that bound. Those observations
+cannot silently replace the full original response. The present
+obstruction fixes that response requirement and proves an actual
+source-effect mismatch; it proves no general impossibility of simulation,
+full abstraction or recovery under other separately specified contracts.
+
+## 追加锚（本行以下为增补区）
