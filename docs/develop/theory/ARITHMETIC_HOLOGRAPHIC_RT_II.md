@@ -2261,3 +2261,139 @@ The lower bound for budget (2,2) comes directly from §74 applied to the origina
 ### 75.5 Attribution and scope
 
 Cayley unitary parametrization, Stinespring dilations and positive-semidefinite trace-norm certificates are standard linear algebra and channel theory; see [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/) and [Watrous, Simpler semidefinite programs for completely bounded norms, §3.2](https://arxiv.org/abs/1207.5726). Sections 72 and 73 supply the block-Gram channel norm and the earlier symmetric qutrit-environment certificate; §74 supplies the unrestricted small-rank obstruction. The present finite asymmetric construction establishes that only one environment needs to grow to beat the sharp two-qubit-environment threshold. It does not determine the exact optimum at budget (2,3), establish error below 1/3 at that budget, or determine the unrestricted-environment one-product optimum.
+
+## 76. A nonlinear Schmidt-support obstruction to one-product recovery
+
+### 76.1 Uniform qubit fibres and the quantitative conclusion
+
+For the uniform collapsed-fibre channel F_(k,2), let k≥4. The fixed MC input encoding sends |f,i> to |f,i>_A|f,i>_B, and the output encoding sends |f> to |ff>. Local physical channels have full input dimension 2k and output dimension k. For every single product of CPTP maps A⊗B, define the unhalved error
+
+    δ=||(A⊗B)J_in−J_out F_(k,2)||diamond.
+
+No environment bound, covariance, calibrated outputs or leakage restriction is imposed. Then
+
+    δ≥max{(sqrt(16k−39)−3)/(4k), 2(k−3)/(5k)}.           (1)
+
+In particular, the unrestricted one-product optimum for the four-fibre target is at least 1/8. Together with §73's explicit product, it lies in [1/8,1/3). This does not identify that optimum. The general lower bound has limit at least 2/5 as k grows.
+
+The mechanism is nonlinear: two coherent test inputs force incompatible properties of one common family of environment records. A single linear functional cannot strictly separate this target from every product channel, because §66 supplies an exact finite LOSR realization.
+
+### 76.2 A rank-two Schmidt-support inequality
+
+Let a_0,a_1 and b_0,b_1 be orthonormal pairs in arbitrary finite-dimensional local spaces. Set
+
+    x_i=a_i⊗b_i,
+    c=(x_0+x_1)/sqrt(2),
+    d=(x_0−x_1)/sqrt(2).
+
+These are orthonormal unit vectors. Their two local reduced density operators are equal: both are the uniform states on the spans of the corresponding record pairs.
+
+Let c₀ be any maximally entangled rank-two unit vector, with local Schmidt-support projections P_A,P_B. Write
+
+    P=P_A⊗P_B,
+    Q=P−|c₀><c₀|,
+    F=|<c₀,c>|²,  e=1−F.
+
+Here Q is an orthogonal projection of rank three. Then
+
+    ||(I−Q)d||²≤e+e².                                  (2)
+
+To prove this, write F_−=|<c₀,d>|² and p_±=<c or d,P(c or d)>. Every product vector a⊗b satisfies
+
+    |<c₀,a⊗b>|²≤(1/2)||P_A a||²||P_B b||².
+
+Applying this to x_0,x_1 and using the plus/minus change of basis gives
+
+    F+F_−≤(p_++p_−)/2.
+
+Let h_A=<a_0,P_A a_1> and h_B=<b_0,P_B b_1>. Direct expansion gives p_+−p_−=2 Re(h_A h_B). Consequently
+
+    <d,Qd>=p_−−F_−≥F−Re(h_A h_B)≥F−|h_A h_B|.          (3)
+
+For L_A=Σ_i||(I−P_A)a_i||², orthogonality of a_0,a_1 gives
+
+    |h_A|=|<a_0,(I−P_A)a_1>|≤L_A/2.
+
+Moreover, |c₀><c₀|≤P_A⊗I and the local reduced-state identity imply F≤1−L_A/2. Thus L_A≤2e. The same statements hold for B, so |h_A h_B|≤e². Substituting into (3) proves (2).
+
+The simpler coefficient-one bound ||(I−Q)d||²≤e is false. In local dimension three take
+
+    c₀=(|00>+|11>)/sqrt(2),
+    a_0=b_0=(e_0+e_2)/sqrt(2),
+    a_1=b_1=(e_0−e_2)/sqrt(2).
+
+Then c=(|00>+|22>)/sqrt(2), d=(|02>+|20>)/sqrt(2), F=1/4, and Qd=0. The leakage is one although e=3/4. No optimality of the quadratic estimate (2) is asserted.
+
+### 76.3 Two normalized coherent tests select an actual anchor
+
+By §72's resource-preserving calibration theorem, any original product has a calibrated product replacement of no greater diamond error. It suffices to prove (1) for that replacement; for the remainder of the proof let δ denote its error. This reduction preserves the number of product branches, and no claim about preservation of its original environment dimensions is needed here.
+
+A calibrated product has local Stinespring records a_(f,0),a_(f,1) and b_(f,0),b_(f,1), orthonormal within each fibre, with unrestricted common local environment spaces. Put
+
+    x_(f,i)=a_(f,i)⊗b_(f,i),
+    c_f=(x_(f,0)+x_(f,1))/sqrt(2),
+    d_f=(x_(f,0)−x_(f,1))/sqrt(2).
+
+Let C and M be their k×k Gram matrices, C_fg=<c_f,c_g> and M_fg=<d_f,d_g>. Each c_f and d_f is a unit vector; within each fibre c_f is orthogonal to d_f. Define the two normalized logical input states
+
+    |ψ_±>=k^(-1/2)Σ_f |f,±>,
+    |f,±>=(|f,0>±|f,1>)/sqrt(2).
+
+After the output MC isometry is removed, the actual outputs are C^T/k and M^T/k respectively. The transpose comes from tracing the environment in the convention Gram_fg=<record_f,record_g>. The ideal outputs are J_k/k and I_k/k. Transposition preserves trace norm, so
+
+    δ≥||C−J_k||₁/k,
+    δ≥||M−I_k||₁/k.                                   (4)
+
+These tests need no reference, but their errors are lower bounds for the full-reference diamond norm. All four output operators in (4), divided by k as displayed, are normalized density matrices. This normalization supplies the trace-zero factor two used below.
+
+Let c̄=k^(-1)Σ_f c_f. Testing the first output difference against the pure uniform state gives
+
+    2(1−||c̄||²)≤δ.                                    (5)
+
+Indeed the difference has trace zero, and the ideal uniform-state expectation is one. Set σ=k^(-1)Σ_f|c_f><c_f|. The Gram representation gives λ_max(σ)≥||c̄||². Since 0≤δ≤2 for channel differences, (5) implies
+
+    Trσ²≥λ_max(σ)²≥(1−δ/2)²≥1−δ.
+
+Average over actual fibre indices a:
+
+    (1/k)Σ_a Σ_f (1−|<c_a,c_f>|²)
+       =k(1−Trσ²)≤kδ.
+
+Therefore some actual c_a, still maximally entangled of Schmidt rank two, satisfies
+
+    s:=Σ_f e_f≤kδ,
+    e_f:=1−|<c_a,c_f>|²∈[0,1].                         (6)
+
+The anchor is c_a, not the mean c̄; no Schmidt-rank assertion about the mean is made.
+
+### 76.4 Common three-dimensional support forces a spectral deficit
+
+Let Q be the rank-three projection associated with this anchor c_a as in (2). Applying the support inequality to every pair c_f,d_f gives
+
+    Σ_f||(I−Q)d_f||²≤Σ_f(e_f+e_f²)
+      ≤s+min{s²,s}
+      ≤min{kδ+k²δ²,2kδ}.                               (7)
+
+Let B:C^k→H_A⊗H_B have columns d_f, so M=B*B. The positive matrix B*QB has rank at most three. The sum of the k−3 smallest eigenvalues of M is at most
+
+    Tr B*(I−Q)B=Σ_f||(I−Q)d_f||².                      (8)
+
+For example, choose a (k−3)-dimensional subspace of ker(QB) and apply the variational characterization of the sum of the smallest eigenvalues; the trace of B*(I−Q)B on that subspace is bounded by its full trace. This argument neither assumes a common local Schmidt plane for all fibres nor truncates the competitors' environments.
+
+Write the eigenvalues of M increasingly as λ_1,...,λ_k. Since TrM=k, the second trace-zero difference in (4) yields
+
+    δ≥(2/k)Σ_j(1−λ_j)_+
+      ≥(2/k)((k−3)−Σ_(j=1)^(k−3)λ_j).                 (9)
+
+Combining (7)–(9) separately with its two bounds gives
+
+    2kδ²+3δ−2(k−3)/k≥0,
+    5δ≥2(k−3)/k.
+
+The positive root of the quadratic is (sqrt(16k−39)−3)/(4k). This proves (1) for every calibrated product and hence, by the non-increasing replacement, for every original physical product. For k=4 the quadratic becomes 16δ²+6δ−1≥0, whose positive root is exactly 1/8.
+
+### 76.5 Attribution and boundary
+
+The Gram spectral and dimension arguments use standard positive-matrix variational principles, closely related to the frame-rank inequalities behind Welch bounds; see [Datta, Howard and Cochran, Geometry of the Welch Bounds, §2](https://arxiv.org/abs/0909.0206). Stinespring representations, trace-distance tests and the diamond norm follow [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 72 supplies the already established exact common-product calibration comparison. The new support-transfer estimate and the two-input argument provide the stated explicit obstruction for this uniform collapsed-fibre family.
+
+The comparison is against one common physical product acting on every coherent input. Separate optimizers for the plus and minus tests are not allowed. Finite LOSR mixtures can implement the target exactly, so (1) is neither a lower bound for arbitrary shared randomness nor a linear separation from its convex feasible set. The result permits arbitrary local environments and physical leakage, and establishes bounds rather than an exact unrestricted optimum or a general RT recovery theorem.
