@@ -9,7 +9,7 @@ internal sealed class CoherentFollowerCoverDocument : IScribeDocumentDefinition
     private const string Owner = "D5/S1/Dynamics/Shadowing/CoherentFollowerCover.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Coherent closed forward-invariant finite-follower languages have finite live covers with onto maps on entire paths.",
+        "Coherent closed forward-invariant finite-follower languages over finite alphabets have finite live covers with onto maps on entire paths.",
         H("Coherent All-Subface Follower Covers"),
         Blocks(
             Describe.Lean(
@@ -213,7 +213,7 @@ internal sealed class CoherentFollowerCoverDocument : IScribeDocumentDefinition
     private static Formula GraphPath(Formula f) => Call("graphLanguage", Call("S.Edge", f), Id("id"));
     private static Formula Restrict(Formula h, Formula v) => Call("S.restrictVertex", h, v);
     private static Formula RestrictPath(Formula h, Formula p) => Call("S.restrictPath", h, p);
-    private static Formula FiniteAlphabet => Inst(Seq(All("i", Id("I")), Call("Finite", Call("A", Id("i")))));
+    private static Formula FiniteAlphabet => Seq(Grp(), Inst(Seq(All("i", Id("I")), Call("Finite", Call("A", Id("i"))))));
     private static Formula Family(bool system = true) => Seq(
         All("I", Type), All("A", Arr(Id("I"), Type)),
         Inst(Seq(All("i", Id("I")), Call("TopologicalSpace", Call("A", Id("i"))))),
