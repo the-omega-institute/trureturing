@@ -131,15 +131,15 @@ def citation(ref, sources):
     return excerpt
 
 
-def preregistration(value, carrier, as_of):
+def preregistration(value, carrier):
     fields(value, ('event', 'deadline', 'scoring_rule',
                    'surprise_threshold', 'predictions'), 'preregistration')
     event(value['event'])
     registered, deadline = timestamp(carrier['created_at']), timestamp(value['deadline'])
     if carrier['created_at'] != carrier['updated_at']:
         fail('EDITED_PREREGISTRATION', carrier['html_url'])
-    if not registered < deadline <= as_of:
-        fail('BEFORE_DEADLINE' if deadline > as_of else 'DEADLINE', value['deadline'])
+    if not registered < deadline:
+        fail('DEADLINE', value['deadline'])
     rule = value['scoring_rule']
     fields(rule, ('name', 'version'), 'scoring_rule')
     if rule['name'] != 'binary-brier' or type(rule['version']) is not int or rule['version'] != 1:
@@ -188,7 +188,7 @@ def unit_reading(item, sources, as_of):
     if 'prereg' not in records:
         return reading
     prereg, carrier = records['prereg']
-    registered, deadline, threshold, forecasts = preregistration(prereg, carrier, as_of)
+    registered, deadline, threshold, forecasts = preregistration(prereg, carrier)
     reading['event'] = prereg['event']
     reading['registered_at'] = carrier['created_at']
     reading['model_families'] = sorted({family for _, family, _ in forecasts})
@@ -230,6 +230,8 @@ def unit_reading(item, sources, as_of):
                     reading['evidence_status'] = 'missing-shape'
         elif terminal['settled_at'] is not None or terminal['shape_evidence'] is not None:
             fail('UNSETTLED_EVIDENCE', 'an unresolved/invalid attempt cannot claim settled content')
+    if answer is None and as_of < deadline:
+        fail('BEFORE_DEADLINE', url + ' has no settled answer yet')
     reading['x'] = x
     if not forecasts:
         reading['score_status'] = 'missing-predictions'
@@ -341,7 +343,7 @@ def load_issues(numbers):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--as-of', required=True, help='UTC snapshot cutoff; must reach every deadline')
+    parser.add_argument('--as-of', required=True, help='UTC snapshot cutoff; unresolved units require their deadline')
     parser.add_argument('--issue', type=int, action='append', help='fetch this preregistration issue (repeatable); otherwise read REST snapshots from stdin')
     args = parser.parse_args()
     try:

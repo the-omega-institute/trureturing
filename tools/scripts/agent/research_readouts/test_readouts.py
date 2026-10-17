@@ -233,6 +233,11 @@ class ReadoutTests(unittest.TestCase):
                           for k in ('p0', 'p2', 'p5', 'p25', 'p3')], [1, -1, -1, 1, 0])
         self.assertNotEqual(a['five_counts'], b['five_counts'])
 
+    def test_early_settlement_can_be_scored_before_deadline(self):
+        unit = run(fixture()[0], END)['units'][0]
+        self.assertEqual(unit['mode'], 'p2')
+        self.assertEqual(unit['score_status'], 'scored')
+
     def test_deadline_is_required_for_unresolved_readings(self):
         batch = fixture(status='unresolved')[0]
         with self.assertRaisesRegex(readouts.ContractError, 'BEFORE_DEADLINE'):
