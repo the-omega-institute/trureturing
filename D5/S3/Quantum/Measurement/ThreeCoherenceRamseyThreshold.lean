@@ -89,11 +89,86 @@ private theorem root_exists : ∃ α : ℝ,
   · intro h; subst α; linarith
   · intro h; subst α; linarith
 
+private theorem denominator_positive (r : ℝ) (hr : 0 ≤ r) : 0 < thresholdD r := by
+  unfold thresholdD
+  positivity
+
 private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
     (hh : α < 12339 / 10000) (hp : thresholdP α = 0) :
     5 / 4 < thresholdN α / thresholdD α ∧
     ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ thresholdN α / thresholdD α := by
-  sorry
+  have ha : (123 / 100 : ℝ) < α := by linarith
+  have hb : α < (31 / 25 : ℝ) := by linarith
+  have hapos : 0 ≤ α := by linarith
+  have hd := denominator_positive α hapos
+  let T := thresholdN α / thresholdD α
+  have hnlo : thresholdN (6169 / 5000) ≤ thresholdN α := by
+    unfold thresholdN
+    gcongr <;> linarith
+  have hdhi : thresholdD α ≤ thresholdD (12339 / 10000) := by
+    unfold thresholdD
+    gcongr <;> linarith
+  have hnum : (177 / 100 : ℝ) * thresholdD (12339 / 10000) <
+      thresholdN (6169 / 5000) := by norm_num [thresholdN, thresholdD]
+  have ht : (177 / 100 : ℝ) < T := by
+    apply (lt_div_iff₀ hd).2
+    linarith
+  have hv : T * thresholdD α - thresholdN α = 0 := by
+    dsimp [T]
+    rw [div_mul_cancel₀ _ hd.ne', sub_self]
+  have hs : (α + 2) * (α ^ 2 + 2) *
+      (T * (6 * α ^ 5 + 20 * α ^ 4 + 32 * α ^ 3 + 48 * α ^ 2 + 40 * α + 16) -
+        (6 * α ^ 5 + 120 * α ^ 3 + 180 * α)) = 0 := by
+    unfold thresholdD thresholdN at hv
+    unfold thresholdP at hp
+    linear_combination (6 * α ^ 2 + 8 * α + 4) * hv - 4 * hp
+  have hstat : T * (6 * α ^ 5 + 20 * α ^ 4 + 32 * α ^ 3 + 48 * α ^ 2 + 40 * α + 16) -
+      (6 * α ^ 5 + 120 * α ^ 3 + 180 * α) = 0 :=
+    (mul_eq_zero.mp hs).resolve_left (by positivity)
+  have hq4 : 0 < T - 1 := by linarith
+  have hq3 : 0 < 4 * T + 2 * α * (T - 1) := by positivity
+  have hq2 : 0 < 8 * T - 30 + 8 * α * T + 3 * α ^ 2 * (T - 1) := by
+    have hbound : 8 * (177 / 100 : ℝ) + 8 * (123 / 100) * (177 / 100) +
+        3 * (123 / 100) ^ 2 * (77 / 100) ≤
+        8 * T + 8 * α * T + 3 * α ^ 2 * (T - 1) := by
+      gcongr <;> linarith
+    linarith
+  have hq1 : 0 < 16 * T + 16 * α * T - 60 * α +
+      12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1) := by
+    have hbound : 16 * (177 / 100 : ℝ) + 16 * (123 / 100) * (177 / 100) +
+        12 * (123 / 100) ^ 2 * (177 / 100) + 4 * (123 / 100) ^ 3 * (77 / 100) ≤
+        16 * T + 16 * α * T + 12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1) := by
+      gcongr <;> linarith
+    linarith
+  have hq0 : 0 < 20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
+      16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4 := by
+    have hbound : 20 * (177 / 100 : ℝ) + 32 * (123 / 100) * (177 / 100) +
+        24 * (177 / 100) * (123 / 100) ^ 2 + 16 * (177 / 100) * (123 / 100) ^ 3 +
+        5 * (77 / 100) * (123 / 100) ^ 4 ≤
+        20 * T + 32 * α * T + 24 * T * α ^ 2 + 16 * T * α ^ 3 +
+        5 * (T - 1) * α ^ 4 := by
+      gcongr <;> linarith
+    have hsquare : α ^ 2 ≤ (31 / 25 : ℝ) ^ 2 := by gcongr <;> linarith
+    nlinarith only [hbound, hsquare]
+  refine ⟨by dsimp [T] at ht; linarith, ?_⟩
+  intro r hr
+  have hidentity : T * thresholdD r - thresholdN r = (r - α) ^ 2 *
+      ((T - 1) * r ^ 4 + (4 * T + 2 * α * (T - 1)) * r ^ 3 +
+       (8 * T - 30 + 8 * α * T + 3 * α ^ 2 * (T - 1)) * r ^ 2 +
+       (16 * T + 16 * α * T - 60 * α + 12 * α ^ 2 * T +
+         4 * α ^ 3 * (T - 1)) * r +
+       (20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
+         16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4)) := by
+    unfold thresholdD thresholdN at hv ⊢
+    linear_combination hv + (r - α) * hstat
+  apply (div_le_iff₀ (denominator_positive r hr)).2
+  have hquartic : 0 ≤
+      (T - 1) * r ^ 4 + (4 * T + 2 * α * (T - 1)) * r ^ 3 +
+      (8 * T - 30 + 8 * α * T + 3 * α ^ 2 * (T - 1)) * r ^ 2 +
+      (16 * T + 16 * α * T - 60 * α + 12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1)) * r +
+      (20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
+        16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4) := by positivity
+  nlinarith only [hidentity, mul_nonneg (sq_nonneg (r - α)) hquartic]
 
 private theorem signal_bound (T : ℝ) (hT : 5 / 4 < T)
     (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
