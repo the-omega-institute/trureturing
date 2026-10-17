@@ -98,7 +98,7 @@ Every declaration is bind-only. The bind-only form is admitted under the open-pr
   - Then M = R_ABC + Δ_AB + Δ_AC + Δ_BC − Δ_A − Δ_B − Δ_C.
   - The source's conditions (22)–(24) make the singleton deficits Δ_A, Δ_B, Δ_C vanish, which gives M ≥ R_ABC ≥ 0.
   - The witness has real amplitudes of mixed sign. Their destructive interference in the one-body marginals makes the singleton deficits outweigh the rest.
-- *Scope.* Violations need such cancellations and occupy a thin region: random states, whose phases are generic, do not violate the relation. The weaker trade-off (41) of the source is not addressed.
+- *Scope.* A violation needs such cancellations. A scan of 20 000 random complex pure states found no violation; the size and measure of the set of violating states are not determined. M is continuous in ψ, so the strict violation persists on a neighbourhood of the witness, including complex perturbations of its amplitudes. The weaker trade-off (41) of the source is not addressed.
 
 **Effect on the paper.** The monogamy relation of Theorem 3 needs a condition of the type (22)–(24). It does not hold for all tripartite pure states.
 
