@@ -1463,3 +1463,186 @@ single-ray branch approaching a canonical ray, or exclude every
 arbitrary noncanonical orthogonal triple near such rays. Compactness
 closes the complete-basis problem by using the full canonical-basis
 germ in precisely that limiting case.
+
+## 68. An exact central overlap gap and ambient quartet exclusion
+
+### 68.1 Pairwise gap and neighborhood theorem
+
+Let \(H_\star=H_0(0)\). For a unitary matrix \(H\), define
+
+\[
+ \mathcal F(H)=\left\{v\in\mathbb C^6:
+ |v_r|^2=|(Hv)_r|^2=\frac16\text{ for }r=0,\ldots,5\right\}.
+\tag{68.1}
+\]
+
+These are normalized common-flat input vectors. Put
+
+\[
+ \delta=\frac{9\sqrt7-21}{14}>0.
+\]
+
+**Theorem 68.1 (repo-derived central gap and ambient exclusion).**
+The exact central minimum is
+
+\[
+ \min_{v,w\in\mathcal F(H_\star)}
+ \left|\,|v^*w|^2-\frac16\right|
+ =\frac\delta{36}=\frac{9\sqrt7-21}{504}.
+\tag{68.2}
+\]
+
+The minimum includes equal rays and both orderings. Moreover there
+exists \(r>0\) such that, for every unitary \(H\) with
+\(\|H-H_\star\|_{\mathrm F}<r\) and every
+\(v,w\in\mathcal F(H)\),
+
+\[
+ \left|\,|v^*w|^2-\frac16\right|
+ \ge\frac\delta{72}=\frac{9\sqrt7-21}{1008}>0.
+\tag{68.3}
+\]
+
+Thus no two such common-flat vectors are mutually unbiased. In
+particular no complex Hadamard unitary in this ambient neighborhood
+can occur with \(I_6\) in a quartet of mutually unbiased bases.
+The neighborhood includes the central point and is not restricted
+to the one-parameter family. No numerical value of \(r\) is asserted.
+
+### 68.2 Complete exact central pair comparison
+
+Theorem 66.1 supplies all 42 central rays. Index the canonical
+unit-entry representatives by
+
+\[
+ c_{2m}=(f_m,if_m),\qquad c_{2m+1}=(f_m,-if_m),
+ \qquad f_m=(1,\omega^m,\omega^{2m}),\quad m=0,1,2,
+\]
+
+and use \(z_0,\ldots,z_{35}\) from (65.3) for the other rays.
+For unit-entry representatives, write \(h=z^*z'\). Normalization
+divides \(|h|^2\) by 36; hence mutual unbiasedness corresponds to
+\(|h|^2=6\).
+
+Canonical/canonical squared overlaps are 36 on the diagonal and
+zero off it. The 38-orbit table in §65.4 gives the complete set of
+noncanonical/noncanonical squared overlaps off the diagonal:
+
+\[
+ 0,18,\frac94,\frac{243}{28},\frac{18}{7},\frac{27}{7},
+ \frac{36}{7},\frac{297\pm27\sqrt{21}}{56},
+ \frac{81}{7},\frac{99}{14}.
+\tag{68.4}
+\]
+
+Every distance of a number in (68.4) from six is at least \(6/7\).
+For the two radical values this follows from \(\sqrt{21}>4\):
+
+\[
+ \frac{27\sqrt{21}-39}{56}>\frac{69}{56}>\frac67,
+ \qquad
+ \frac{39+27\sqrt{21}}{56}>\frac{147}{56}>\frac67.
+\]
+
+Their diagonal overlaps are again 36. Reversing a pair leaves its
+squared overlap unchanged.
+
+It remains to compare all \(6\cdot36=216\) mixed pairs. The four
+generators of §65.4 act on the canonical indices as
+
+\[
+ \begin{aligned}
+ R_{(1,0,2)}&=(2\ 4)(3\ 5),& R_{(1,2,0)}&=\mathrm{id},\\
+ \Theta&=(0\ 1)(2\ 5)(3\ 4),& X&=(0\ 1)(2\ 3)(4\ 5).
+ \end{aligned}
+\tag{68.5}
+\]
+
+Together with their displayed action on noncanonical indices, they
+produce the following ten disjoint orbits. Each table value is a
+direct substitution of the exact representatives; orbit sizes sum
+to 216, and squared moduli are invariant under every group element.
+
+| \((j,k)\), meaning \((c_j,z_k)\) | Orbit size | \(|c_j^*z_k|^2\) |
+|---|---:|---:|
+| \((0,0)\) | 12 | \(9-9\sqrt7/7\) |
+| \((0,1)\) | 12 | \(9+9\sqrt7/7\) |
+| \((0,12)\) | 24 | \(9/2-9\sqrt7/14\) |
+| \((0,13)\) | 24 | \(9/2+9\sqrt7/14\) |
+| \((2,0)\) | 24 | \(9/2-9\sqrt7/14\) |
+| \((2,1)\) | 24 | \(9/2+9\sqrt7/14\) |
+| \((2,12)\) | 24 | \(9-9\sqrt7/7\) |
+| \((2,13)\) | 24 | \(9+9\sqrt7/7\) |
+| \((2,14)\) | 24 | \(9/2+9\sqrt7/14\) |
+| \((2,15)\) | 24 | \(9/2-9\sqrt7/14\) |
+
+The respective distances from six of the four mixed values
+\(9-9\sqrt7/7\), \(9+9\sqrt7/7\), \(9/2-9\sqrt7/14\), and
+\(9/2+9\sqrt7/14\) are
+
+\[
+ 2\delta,\qquad 2\delta+6,\qquad \delta+3,\qquad\delta.
+\tag{68.6}
+\]
+
+Since \(0<\delta<1/4<6/7\), the exact minimum over all pair types
+is \(\delta\), attained for instance by \((c_0,z_{13})\).
+There are 72 attaining mixed pairs with the canonical ray first,
+and 144 attaining ordered pairs after reversal. This comparison
+covers all \(42^2=1764\) ordered pairs, including all 42 diagonal
+pairs. Dividing by 36 proves (68.2).
+
+### 68.3 Compactness in the ambient unitary space
+
+The fixed flat-input torus
+
+\[
+ \mathcal T=\{v\in\mathbb C^6:|v_r|^2=1/6\text{ for all }r\}
+\]
+
+is compact. If no positive radius made (68.3) true, there would be
+unitaries \(H_n\to H_\star\) and vectors
+\(v_n,w_n\in\mathcal F(H_n)\) with
+
+\[
+ \left|\,|v_n^*w_n|^2-\frac16\right|<\frac\delta{72}.
+\]
+
+Pass to convergent subsequences in \(\mathcal T\times\mathcal T\).
+Continuity of all output-modulus equations gives
+\(v_n\to v\), \(w_n\to w\) with
+\(v,w\in\mathcal F(H_\star)\). Continuity of the overlap gives
+
+\[
+ \left|\,|v^*w|^2-\frac16\right|\le\frac\delta{72},
+\]
+
+contradicting (68.2). This proves the ambient half-gap (68.3).
+No finiteness or regularity of nearby ray loci is assumed, and
+possible rays approaching canonical points are included.
+The argument supplies a positive radius by compactness, not a
+numerical matrix-radius estimate from the central overlap gap alone.
+
+### 68.4 Quartet obstruction and coordinate convention
+
+If \(H\) is a complex Hadamard unitary in the neighborhood, a unitary
+basis \(B\) is unbiased to \((I_6,H)\) exactly when \(B\) and
+\(H^*B\) are flat. Each column \(v=H^*B_j\) therefore belongs to
+\(\mathcal F(H)\), with output \(Hv=B_j\).
+
+If two additional bases \(B,C\) formed a quartet with the pair,
+choose any columns and set \(v=H^*B_j\), \(w=H^*C_k\). Unitarity
+and mutual unbiasedness would give
+
+\[
+ |v^*w|^2=|B_j^*C_k|^2=\frac16,
+\]
+
+contradicting (68.3). This proves the last assertion of Theorem 68.1.
+\(\square\)
+
+The multiple common-unbiased bases at the central point remain:
+they are not mutually unbiased to one another. The theorem excludes
+quartets containing the specified nearby pair, and does not settle
+the general dimension-six fourth-basis problem or every parameter
+of the full Hadamard family.
