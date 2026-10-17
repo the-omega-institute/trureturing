@@ -469,3 +469,130 @@ faces has been excluded. The exceptional-U common-return family is
 therefore impossible. The arbitrary-Q axial-M common-return family
 remains open; no general five-reservoir or unrestricted CFMP conclusion
 is asserted.
+
+## 260. Inherited setting and conclusion
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+259 of the return continuation. All edges have shared positive lengths,
+complete connected circular normal links, original degree at least six,
+and total dihedral angle 2*pi. Each chosen paired frame
+(R,A,B,O,A,B) has distinct transverse labels A,B in H. The labels in
+S=E\H occur only axially. Repeated axes, repeated neighboring owners,
+parallel face pairings and self-gluings of distinct faces remain allowed.
+
+Write H={M,C,D,Z,U}, P={M,Z,U}. The four distinct interacting owners K
+are the genuine owners containing two distinct P labels. Each consumes
+more than pi of the genuine P budget, whose total is 5*pi: M has budget
+pi, while Z and U each have budget 2*pi and occur in no flat owner.
+Every P label occurs in at least two distinct K owners. The unique flat
+owner has transverse pair {C,D}; no flat owner contains Z or U.
+These are the established reductions in Sections 205–234.
+
+The source is tau=(Z,M,C,D,M,C). Its two {M,Z,C} faces pair to one
+other owner rho. Sections 242–245 and the exceptional-U exclusion in
+Sections 254–259 leave rho=(M,Z,C,Q,Z,C). We prove that Q=U.
+This is a necessary role classification; it does not exclude this last
+role or prove five-reservoir realization.
+
+For lower-case cosh values the retained strict premises are
+ c,d>1, m>1+c+d, z>1+m+c, u>m.
+Thus c,d<m-2 and m>3. Since rho is genuine,
+ (m+1)(q+1)>(z-c)^2>(m+1)^2,
+so q>m. It follows that Q is Z, U or a special label in S.
+
+## 261. A uniform individual-Z expense estimate
+
+We record the exact response needed in both exclusions. Consider any
+genuine paired owner with transverse pair {Z,C} and an axial cosh value
+r>=m. Its other axis is arbitrary. Let theta_r denote the chosen axial
+angle, beta_Z the transverse Z angle, and t=cot(theta_r/2)>0. The
+individual paired response of Sections 95–96 gives
+ beta_Z=atan(A*t)+atan(B*t),
+ A=(sqrt(z^2-1)+sqrt(c^2-1))/(z+c)*sqrt((r-1)/(r+1)),
+ B=(sqrt(z^2-1)-sqrt(c^2-1))/(z+c)*sqrt((r-1)/(r+1)).
+Both A and B are positive, since z>m>c>1. Their sum is
+ A+B=2*sqrt(z^2-1)/(z+c)*sqrt((r-1)/(r+1))>1.
+Here is a direct verification of the strict bound. For fixed c>1,
+ sqrt(z^2-1)/(z+c)
+is strictly increasing in z: its derivative has numerator z*c+1>0.
+For fixed z it is decreasing in c. The axial factor is increasing in r.
+Use z>m, c<m-2 and r>=m to compare with z=m,c=m-2,r=m. At that boundary
+ 2*sqrt(m^2-1)/(2*m-2)*sqrt((m-1)/(m+1))=1.
+The comparison is strict in the actual domain.
+
+Consequently beta_Z>atan(t). Indeed, if A*B*t^2>=1, the sum of the two
+arctangents is at least pi/2, which exceeds atan(t). Otherwise its sum
+lies in (0,pi/2) and its tangent is
+ (A+B)*t/(1-A*B*t^2)>t.
+In either case, since atan(t)=pi/2-theta_r/2, we obtain
+ theta_r+2*beta_Z>pi.                         (261.1)
+These are three actual slots of one owner; no assumption on the other
+axis, or on distinct neighboring owners, was used.
+
+## 262. The repeated-Z axis is impossible
+
+Suppose Q=Z. Since all four K owners consume more than pi of P expense,
+core P expense exceeds 4*pi. The entire genuine M+U budget is 3*pi,
+so core Z expense exceeds pi. All genuine Z expense outside K is
+therefore strictly less than pi.
+
+Any owner incident to a face with multiset {Z,Z,C} must have distinct
+transverse pair {Z,C} and a Z axis. Z occurs in no flat, so that owner is
+genuine. Applying (261.1) with r=z>m shows that its three Z slots already
+consume more than pi. Thus no owner outside K can receive either of
+rho's two remaining {Z,Z,C} faces.
+
+These faces cannot match tau's unused {D,M,C} faces. If they pair to
+each other, every Z-incident face of tau and rho is paired within these
+two owners. Their nonempty set of 1+3=4 original Z normal intervals
+would be a closed component of the actual Z circle, contradicting
+minimum degree six. Hence at least one face meets eta or xi, the two
+remaining K owners. Denote one such receiver by eta.
+
+Tau and rho contain no U. The two-owner occurrence property for U
+therefore implies that both eta and xi contain U. Eta's incoming face
+{Z,Z,C} forces pair {Z,C} and a Z axis. Its only remaining place for U
+is its other axis. Thus eta=(Z,Z,C,U,Z,C), up to the frame symmetries,
+and (261.1) gives more than pi of Z expense from eta.
+
+Tau has more than pi of M/Z expense by the established source estimate
+(Section 210). In rho, (261.1) with its M axis gives
+ theta_M(rho)+2*beta_Z(rho)>pi.
+The distinct owners tau,rho,eta therefore spend more than 3*pi on M/Z,
+contrary to the entire genuine M/Z budget. These three charges use
+original slots of distinct owners, even when other incidences repeat.
+Thus Q is not Z.
+
+## 263. A special opposite axis is impossible
+
+Suppose Q belongs to S. Every occurrence of the actual global label Q
+is axial, because transverse labels belong to H. Start with rho, whose
+Q axis has fixed transverse pair {Z,C}. Across either Q-incident face,
+the matching face has labels {Q,Z,C}. At its receiver Q must again be
+axial; therefore that receiver's fixed transverse pair is {Z,C}.
+
+Propagate this fact along the actual Q normal circle. Every original
+Q interval is reached, because this circle is connected. Consequently
+every actual owner containing Q has transverse pair {Z,C}, even if an
+owner supplies two Q intervals or is revisited by the traversal. Every
+such owner is genuine: it contains Z, which has no flat occurrence.
+This argument neither assumes distinct neighbors nor replaces the
+normal circle by a graph on owner names.
+
+Let n be the number of distinct actual owners containing Q. In each
+owner select one of its Q slots. Apply (261.1) with r=q>m to its selected
+axial angle and its two original transverse Z angles. Summing over these
+n distinct owners yields a strict expense greater than n*pi. The chosen
+Q angles sum to at most the full Q budget 2*pi. The chosen transverse Z
+slots are distinct original slots across the selected owners and sum
+to at most the full genuine Z budget 2*pi. Hence n*pi<4*pi and n<=3.
+
+Each selected owner has at most two Q slots, since Q can only occupy its
+two axes. Rho has exactly one, since its other axis is M and Q is special.
+All original Q slots belong to these n owners by the propagation above.
+Thus degree(Q)<=1+2*(n-1)<=5, contrary to minimum degree six.
+
+The special case is impossible. Together with Section 262 and q>m, the
+only remaining opposite-axis label is Q=U. The theorem preserves all
+original multiplicities and the external low-only region. It supplies
+no exclusion of rho=(M,Z,C,U,Z,C), which remains the next open family.
