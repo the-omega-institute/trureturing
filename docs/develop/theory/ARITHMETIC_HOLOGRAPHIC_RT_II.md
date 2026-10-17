@@ -894,3 +894,104 @@ The triangle inequality and the diamond norm one of unitary channels give ||O||_
 Section61 supplied exact incompatibility and a compactness-only positive gap. The present estimate supplies an explicit leakage-tolerant gap and a finite coherent full-code upper construction. The general inequality (1) applies in every finite dimension to any three selected labels. The result does not determine the exact global projection of the qutrit family, nor give a uniform positive gap as p tends to zero.
 
 Stinespring dilation, Cauchy–Schwarz, the trace-zero effect bound and elementary diamond-norm properties are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The finite dephasing/label constructions use the established local incoherent-operation background already attributed in §§54 and61; see Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature-priority, formal-kernel, arbitrary-channel, or full RT recovery claim is made.
+
+## 63. Exact common implementation of coherent star compression
+
+### 63.1. Channel family and physical model
+
+Let m≥1 and let the logical input have orthonormal labels 1,...,m,h. The output is a qubit with labels0,1. Fix the MC encodings V_in|i>=|ii> and V_out|a>=|aa>. For z∈C^m define E_z on input matrix units by
+
+    E_z(ii)=00 (1≤i≤m),    E_z(hh)=11,
+    E_z(ij)=0 (i≠j≤m),
+    E_z(ih)=z_i 01,    E_z(hi)=conj(z_i)10.
+
+Physical competitors are finite LOSR mixtures of arbitrary local CPTP maps from C^(m+1) to C². The same physical channel must act on every coherent input and every reference extension.
+
+Then:
+
+1. E_z is CPTP exactly when ||z||₂≤1.
+2. There exists a physical LOSR channel Φ with Φ∘J_in=J_out∘E_z exactly when ||z||₁≤1. Whenever feasible, a single product of two local CPTP maps suffices; shared randomness adds no implementability in this family.
+3. Every coordinate two-label restriction of every CPTP E_z has an exact physical product-channel implementation. Thus for m≥2 any z with ||z||₂≤1<||z||₁ gives a pairwise/global coherent separation. The symmetric example z_i=1/sqrt(m) has this property.
+4. Among all physical LOSR competitors constrained to reproduce the displayed basis outputs exactly, the optimal unhalved diamond error is the Euclidean distance from z to the complex unit ℓ₁ ball. A single product channel attains it, with the explicit threshold formula below.
+
+The basis-output constraint in item4 is essential to its claimed scope. No equality with the unrestricted leakage-allowing diamond optimum is asserted. Item2, being exact implementation, has no extra constraint: equality itself enforces those basis outputs.
+
+### 63.2. Complete positivity and a direct dilation
+
+The only nonzero block of the input-first Choi matrix, indexed by |i,0> for leaves and |h,1>, is
+
+    [[I_m,z],[z*,1]].
+
+Its positivity is equivalent to 1−Σ_i|z_i|²≥0 by the Schur complement of I_m. Trace preservation follows directly from the specified matrix units.
+
+Equivalently, choose an environment with orthonormal e_0,e_1,...,e_m and set
+
+    a=Σ_i conj(z_i)e_i+sqrt(1−||z||₂²)e_0.
+
+The map |i>→|0>e_i, |h>→|1>a is an isometry. Its channel has exactly the stated action, since <a,e_i>=z_i with the inner product conjugate-linear in its first argument. This is a logical-channel dilation; it does not yet give a physical local implementation on the MC code.
+
+### 63.3. Necessity from the actual common local channels
+
+Suppose a finite physical LOSR channel realizes E_z. On every basis input |ii>, its output is the pure product |00>, and on |hh> its output is |11>. A convex combination of density matrices equals a pure state only if every positive-weight summand is that same pure state. Consequently every positive-weight product branch has local output |0> on each leaf and |1> on the hub, on both parties.
+
+Take a Stinespring isometry for each local map in a branch. Purity of these local basis outputs forces the forms
+
+    U_A|i>=|0>a_i,    U_A|h>=|1>a_h,
+    U_B|i>=|0>b_i,    U_B|h>=|1>b_h,
+
+with all environment vectors unit. Isometry of U_A implies that a_1,...,a_m are orthonormal, and similarly b_1,...,b_m. Put α_i=<a_h,a_i>, β_i=<b_h,b_i>. The branch's retained leaf–hub coefficient is α_iβ_i. Bessel's inequality gives Σ|α_i|²≤1 and Σ|β_i|²≤1, so
+
+    Σ_i |α_iβ_i|≤1.
+
+For the common mixture, z_i=Σ_b w_b α_(b,i)β_(b,i). The triangle inequality and the preceding branch estimate give ||z||₁≤1. This uses unrestricted local CPTP maps and their actual dilations, not an incoherent-operation ansatz. It also shows that any physical competitor with the same exact basis outputs necessarily equals J_out∘E_w on the full encoded input for some ||w||₁≤1: same-fiber orthogonality kills every distinct leaf–leaf matrix unit, and all remaining units have the displayed form.
+
+### 63.4. Sufficiency by one product channel
+
+Let s=Σ_i|z_i|≤1. Choose phases θ_i with z_i=|z_i|exp(iθ_i), taking θ_i=0 when z_i=0. With orthonormal environment vectors e_0,e_1,...,e_m, set
+
+    a_i=b_i=e_i,
+    a_h=Σ_i sqrt(|z_i|)exp(−iθ_i)e_i+sqrt(1−s)e_0,
+    b_h=Σ_i sqrt(|z_i|)e_i+sqrt(1−s)e_0.
+
+These are unit vectors, and the two maps |i>→|0>a_i, |h>→|1>a_h and their B versions are isometries. Their product channel acts on an encoded leaf–hub unit with coefficient
+
+    <a_h,a_i><b_h,b_i>=z_i.
+
+It acts correctly on every other encoded matrix unit. Therefore equality holds as linear maps and after tensoring with every passive reference. The construction uses environments of dimension m+1, finite local Kraus families, and no shared random branch selection.
+
+For a coordinate pair {i,h}, the same construction needs only the one coefficient z_i, whose modulus is at most1 for every CPTP member. Extend the local maps arbitrarily and trace-preservingly on the other basis labels, for example by measuring the orthogonal complement and preparing |0>. For a pair of leaves, both local channels can reset to |0>. These are exact maps on the complete two-label algebra, including coherences; their full logical output is the qubit.
+
+### 63.5. Exact constrained diamond projection and threshold attainer
+
+For any z,w let v=z−w. The difference E_z−E_w has only leaf–hub matrix units, with coefficients v_i. Its diamond norm is
+
+    ||E_z−E_w||_diamond=||v||₂.                            (1)
+
+If v=0 this is immediate. Otherwise let r=||v||₂ and let |a>=Σ_i conj(v_i)|i>/r in the leaf space. Define a CPTP compression C from the logical input to a qubit using the Kraus operator K=|0><a|+|1><h| and additional Kraus operators |0><b_j| for an orthonormal basis of the leaf-space complement of a. Let O(T)=(T−ZTZ)/2 be the qubit off-diagonal map. Directly on every matrix unit,
+
+    E_z−E_w=r O∘C.
+
+The diamond norm of O is1, because it is half the difference of two unitary channels and achieves trace norm1 on |+><+|. Thus the diamond norm is at most r even with arbitrary references. On the normalized input (|a>+|h>)/sqrt(2), the output difference has eigenvalues r/2 and−r/2, giving the matching lower bound. Isometric MC output encoding preserves this norm.
+
+The characterization above therefore reduces the basis-preserving physical optimum exactly to min_{||w||₁≤1}||z−w||₂. If ||z||₁≤1 choose w=z. Otherwise there is a unique τ>0 satisfying
+
+    Σ_i max(|z_i|−τ,0)=1,
+
+and an optimizer is
+
+    w_i=exp(i arg z_i) max(|z_i|−τ,0),
+    optimal error=sqrt(Σ_i min(|z_i|,τ)²).                 (2)
+
+Here zero coordinates have arbitrary phase. For completeness, phase alignment cannot increase squared Euclidean distance, so it suffices to project the nonnegative vector a_i=|z_i| onto x_i≥0,Σx_i≤1. Set y_i=max(a_i−τ,0). On active coordinates a_i−y_i=τ, and on inactive coordinates a_i≤τ. For any feasible x,
+
+    Σ_i(a_i−y_i)(x_i−y_i)≤τ(Σ_i x_i−Σ_i y_i)≤0.
+
+Expanding ||a−x||₂² around y proves optimality. Strict convexity gives uniqueness. Existence and uniqueness of τ follow continuity and strict decrease of Σ_i max(a_i−τ,0) until it reaches zero. The single-product construction above implements the resulting w, so the exact optimum is attained by an actual common channel, not just a scalar relaxation.
+
+For z_i=1/sqrt(m), the constrained optimum has w_i=1/m and error1−1/sqrt(m). This quantitative statement remains within the exact-basis-output class; unrestricted physical leakage may improve it.
+
+### 63.6. Relation to prior results and boundaries
+
+Section54 supplies the general physical normal-form perspective, while §§61–62 exhibit a qutrit obstruction and unrestricted leakage bounds. This family gives a complete all-dimensional common-implementation criterion and an exact coherent diamond projection under a stated basis-output constraint. Pure-output forcing, Bessel/Cauchy–Schwarz, Choi positivity, and Euclidean ℓ₁-ball projection are standard ingredients. The physical conclusion concerns the same pair of local channels on the entire input algebra, not independent state conversions.
+
+For standard channel, dilation and diamond facts see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . PIO and zero-communication MC constructions are established background, as discussed by Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These citations are not claimed to state the exact family characterization above, and no literature-priority claim is made. This is paper mathematics, not a compiled formal theorem or a full RT recovery result.
