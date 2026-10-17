@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
-  normalized_sha256: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
-cas_ref: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
-coverage_gids:
-  - gid: D5/S0/Asymptotics/Interference/FiniteLagAutocorrelation.finite_lag_autocorrelation_expansion
-    target_statement_id: sha256:2992d9fd61dcef287a3239edd114ba29f51b1b3a2dc624fd47577c60c387a5c0
-receipts:
-  unresolved_subitems: []

@@ -38,18 +38,46 @@ internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDef
                     + "Phi(persp(f,A,B)) using signed sandwich support. Thus a "
                     + "negative value of f(0) does not require a positivity claim "
                     + "for f(X).")), Paragraph(Text(
-                    "The three mathematical modules have passed explicit targeted "
-                    + "Lean builds. Their joint scoped report records only propext, "
-                    + "Quot.sound and Classical.choice. Information-audit binding "
-                    + "is assessed separately and is not claimed complete here. "
-                    + "The finite-effect to rectangular-isometry to endomorphism "
-                    + "contraction bridge remains an explicit authored dependency; "
-                    + "it is not an assumed new axiom. The analytic supplier is "
-                    + "the existing attributed Physlib transplant by Kei Tsukamoto, "
-                    + "Kento Mori and Hayata Yamasaki, revision "
-                    + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "
-                    + "No official acceptance or mathematical novelty is asserted "
-                    + "by this document."))),
+                    "The analytic power supplier is the existing attributed Physlib "
+                    + "transplant by Kei Tsukamoto, Kento Mori and Hayata Yamasaki, "
+                    + "revision b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "
+                    + "PowerConvexity.condIciAll_rpow supplies all-Hilbert operator "
+                    + "convexity of x^(1+h) on [0,infinity) for 0<h<=1. For these h the affine "
+                    + "correction g_h(x)=(x^(1+h)-x)/h is operator convex on that interval: "
+                    + "subtract the affine operator argument in the power inequality "
+                    + "and multiply by the positive scalar 1/h.")),
+                    Paragraph(Text(
+                    "UniformPowerSlope.rpow_slope_tendsto_uniformly reuses Alex "
+                    + "Meiburg's estimate from Physlib QuantumInfo/Entropy/Relative.lean "
+                    + "at the same revision, under Apache-2.0. It supplies uniform "
+                    + "convergence of g_h(x) to x log x on every [0,K], including "
+                    + "x=0. For a positive bounded operator S its entire real spectrum "
+                    + "lies in [0,norm(S)]. Mathlib.tendsto_cfc_fun therefore passes "
+                    + "this uniform convergence through CFC. Apply it to A, B and "
+                    + "(1-t)A+tB; closed operator order passes their Jensen inequality "
+                    + "to the limit. This establishes the actual OperatorConvexOnAll "
+                    + "condition for x log x in every original Hilbert universe. "
+                    + "The limit is cfc(x log x,S), with value zero at zero. Spectra "
+                    + "accumulating at zero are allowed; no bounded CFC logarithm "
+                    + "or factorization as S times log(S) is used.")),
+                    Paragraph(Text(
+                    "For the concrete entropy application let a,b be arbitrary "
+                    + "finite decidable types in the same universe, including empty "
+                    + "types. Let Phi be positive and complex-linear, and require "
+                    + "trace(Phi(Z))=trace(Z) for every matrix Z. For PSD A,B assume "
+                    + "exactly ker B contained in ker A. Set f(x)=x log x, using "
+                    + "Real.continuous_mul_log for continuity and the preceding "
+                    + "all-Hilbert limit for operator convexity. The transformer "
+                    + "gives persp(f,Phi(A),Phi(B)) <= Phi(persp(f,A,B)). "
+                    + "Apply the positive trace map, substitute the literal trace "
+                    + "preservation law, and take real parts. The result is "
+                    + "Re trace(persp(f,Phi(A),Phi(B))) <= Re trace(persp(f,A,B)). "
+                    + "No complete positivity, unitality, normalization, invertibility "
+                    + "or commutation is required. This is the supported maximal, "
+                    + "or Belavkin-Staszewski-type, entropy perspective. It is not "
+                    + "an identification with Umegaki entropy, and the finite "
+                    + "matrix conclusion is not an infinite-dimensional quantum "
+                    + "data-processing theorem."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)

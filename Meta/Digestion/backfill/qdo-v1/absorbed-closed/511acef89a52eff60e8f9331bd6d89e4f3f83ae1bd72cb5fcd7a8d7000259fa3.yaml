@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:511acef89a52eff60e8f9331bd6d89e4f3f83ae1bd72cb5fcd7a8d7000259fa3
-  normalized_sha256: sha256:511acef89a52eff60e8f9331bd6d89e4f3f83ae1bd72cb5fcd7a8d7000259fa3
-cas_ref: sha256:511acef89a52eff60e8f9331bd6d89e4f3f83ae1bd72cb5fcd7a8d7000259fa3
-coverage_gids:
-  - gid: D5/S3/Quantum/Dynamics/BaseNormContraction.positive_normalization_preserving_dynamics_contracts_base_norm
-    target_statement_id: sha256:bedd01f68f226aff67e80c0ff896b6f9c5bfdabcf62f3b2194eb08466ac9a25b
-receipts:
-  unresolved_subitems: []

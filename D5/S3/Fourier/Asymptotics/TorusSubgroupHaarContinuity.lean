@@ -32,7 +32,7 @@ noncomputable def ambientHaar {I : Type*} [Fintype I]
   let μ : Measure H := Measure.haarMeasure ⊤
   letI : IsProbabilityMeasure μ := ⟨Measure.haarMeasure_self⟩
   exact ProbabilityMeasure.map (⟨μ, inferInstance⟩ : ProbabilityMeasure H)
-    continuous_subtype_val.measurable.aemeasurable
+    (Subtype.val : H → I → Circle)
 
 
 /-- Hausdorff convergence of closed torus subgroups implies weak convergence of their

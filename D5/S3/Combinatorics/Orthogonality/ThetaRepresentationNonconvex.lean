@@ -45,7 +45,7 @@ private theorem fixed_of_one {V : Type} [Fintype V] [DecidableEq V]
     M *ᵥ a = a := by
   have hz : star a ⬝ᵥ ((1 - M) *ᵥ a) = 0 := by
     simp only [star_trivial, sub_mulVec, one_mulVec, dotProduct_sub, ha, hq, sub_self]
-  have hk := (hC.dotProduct_mulVec_zero_iff a).mp hz
+  have hk := (hC.dotProduct_mulVec_zero_iff (x := a)).mp hz
   simp only [sub_mulVec, one_mulVec, sub_eq_zero] at hk
   exact hk.symm
 

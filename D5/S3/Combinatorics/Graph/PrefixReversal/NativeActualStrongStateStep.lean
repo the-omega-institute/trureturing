@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Advance both actual orders and retained-edge invariants on one cycle. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualStateJointPromotion
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeFullStateTransport
 

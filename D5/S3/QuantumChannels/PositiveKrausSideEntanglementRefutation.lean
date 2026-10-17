@@ -93,6 +93,7 @@ FiniteKrausRepresentation is unfrozen; its additional channel declarations are
 not used. The frozen FiniteKrausChannel.of_kraus owner suffices here.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Measurements.BroadcastingChannelExtremaRefutation
 import D5.S3.Quantum.Entanglement.BellPureStateMixedMarginal
 

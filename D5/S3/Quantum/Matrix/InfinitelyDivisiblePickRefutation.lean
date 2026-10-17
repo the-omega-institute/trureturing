@@ -137,7 +137,6 @@ private lemma calc_negative :
   simp only [pickCalc, Fin.sum_univ_one, Matrix.cons_val_zero]
   rw [shifted_inverse]
   norm_num [C, Matrix.one_apply, Fin.ext_iff]
-  rfl
 
 theorem result : ¬ claim := by
   intro h

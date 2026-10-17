@@ -5,6 +5,7 @@
    anchors: []
    digest: The finite-dimensional separable cone is closed; witness existence remains open. -/
 import Mathlib
+import Mathlib.Analysis.InnerProductSpace.PiL2
 import D5.S3.Resource.CompositeCones
 import D5.S3.Resource.CompositeConeDuality
 import D5.S3.Resource.EntanglementWitness
@@ -133,7 +134,7 @@ private lemma normalizedSlice_eq_convexHull [Nonempty (Fin m)] [Nonempty (Fin n)
         · obtain ⟨i, rfl⟩ := hj'
           simpa [z', e.injective.extend_apply] using (hz i).1
         · simp only [z', Function.extend_apply' _ _ _ hj']
-          constructor <;> simp [Metric.mem_sphere, EuclideanSpace.norm_single]
+          constructor <;> simp [Metric.mem_sphere, EuclideanSpace.single, PiLp.norm_single]
     · unfold normalizedMap
       rw [show (fun i => w' i • productGenerator (z' i).1 (z' i).2) =
           Function.extend e
@@ -200,7 +201,7 @@ private lemma norm_unitize {ι : Type*} [Fintype ι] [Nonempty ι]
   unfold unitize
   letI := Classical.decEq ι
   split_ifs with ha
-  · rw [EuclideanSpace.norm_single]
+  · rw [EuclideanSpace.single, PiLp.norm_single]
     norm_num
   · rw [norm_smul, Real.norm_eq_abs, abs_inv, abs_of_nonneg (norm_nonneg _),
       inv_mul_cancel₀ ha]

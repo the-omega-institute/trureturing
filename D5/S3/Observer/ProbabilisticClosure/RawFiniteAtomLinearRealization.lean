@@ -7,7 +7,7 @@
    digest: Native finite tests descend through the exceptional parity quotient. -/
 
 import D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization
-import Mathlib.Logic.Lemmas
+import Mathlib.Basic.Logic.Lemmas
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.Data.W.Basic
 set_option autoImplicit false

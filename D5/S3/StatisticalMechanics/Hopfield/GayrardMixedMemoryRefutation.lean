@@ -23,9 +23,12 @@ import D5.S3.Combinatorics.IsingUniquenessSets
 import D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound
 import Mathlib.Probability.Independence.InfinitePi
 import Mathlib.Probability.StrongLaw
-import Mathlib.Probability.Distributions.Uniform
+import D5.S0.Diagonal.Probability.EquivariantEscape
 import Mathlib.Data.Real.Sign
 import Mathlib.Analysis.Calculus.Deriv.Mul
+
+open D5.S0.Diagonal.Probability.EquivariantEscape
+  (uniformPmf)
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -204,7 +207,7 @@ theorem result : ¬ claim := by
       rw [heq0,abs_mul,hp,one_mul]
       exact hh
     norm_num [m,w] at hh'
-  let b := (PMF.uniformOfFintype Bool).toMeasure
+  let b := (uniformPmf Bool).toMeasure
   let q := Measure.infinitePi (fun _ : ℕ => b)
   let P := Measure.infinitePi (fun _ : ℕ => q)
   let ξ : ℕ → ℕ → (ℕ → ℕ → Bool) → ℝ := fun μ i ω => sgn (ω i μ)
@@ -229,7 +232,7 @@ theorem result : ¬ claim := by
     have heqn : {x : Bool | sgn x = -1} = {false} := by ext x; cases x <;> norm_num [sgn]
     rw [heqp] at hp
     rw [heqn] at hn
-    simpa [b,ξ,PMF.uniformOfFintype_apply] using And.intro hp hn
+    simpa [b,ξ,uniformPmf, PMF.ofFintype_apply] using And.intro hp hn
   have hspin (N i : ℕ) (ω : ℕ → ℕ → Bool) :
       memorySpin F (fun _ => 5) m ξ N i ω =
         Real.sign (∑ k : Fin 5, ((w k : ℝ)/8) * sgn (ω i k.val)) := by
@@ -244,7 +247,7 @@ theorem result : ¬ claim := by
   have hfinite (f : (Fin 5 → Bool) → ℝ) :
       (∫ x, f (fun j : Fin 5 => x j.val) ∂q) = (1/32:ℝ) * ∑ x : Fin 5 → Bool, f x := by
     have hb (a : Bool) : b {a} = 1/2 := by
-      simp [b, PMF.uniformOfFintype_apply]
+      simp [b, uniformPmf, PMF.ofFintype_apply]
     have hi : iIndepFun (fun j : Fin 5 => fun x : ℕ → Bool => x j.val) q :=
       (iIndepFun_infinitePi (X := fun _ : ℕ => (id : Bool → Bool))
         (P := fun _ => b) (fun _ => measurable_id)).precomp Fin.val_injective
@@ -254,7 +257,7 @@ theorem result : ¬ claim := by
     have hm : Measurable f := Measurable.of_discrete
     change (∫ x, f (fun j : Fin 5 => x j.val) ∂q) = _
     rw [← integral_map (μ := q) (φ := fun x (j : Fin 5) => x j.val)
-      (measurable_pi_lambda _ (fun j => measurable_pi_apply j.val)).aemeasurable
+      (Measurable.of_eval (fun j => measurable_pi_apply j.val)).aemeasurable
       hm.aestronglyMeasurable, hlaw, integral_fintype Integrable.of_finite]
     simp only [measureReal_def, Measure.pi_singleton, hb, Finset.prod_const, Finset.card_univ,
       Fintype.card_fin]
@@ -268,7 +271,7 @@ theorem result : ¬ claim := by
     let X : ℕ → (ℕ → ℕ → Bool) → ℝ := fun i ω => g (ω i)
     have hfm : Measurable f := Measurable.of_discrete
     have hgm : Measurable g := hfm.comp (show Measurable (fun x : ℕ → Bool => fun k : Fin 5 => x k.val) from
-      measurable_pi_lambda _ (fun k => measurable_pi_apply k.val))
+      Measurable.of_eval (fun k => measurable_pi_apply k.val))
     have hrows : iIndepFun (fun i : ℕ => fun ω : ℕ → ℕ → Bool => ω i) P :=
       iIndepFun_infinitePi (P := fun _ => q) (X := fun _ => id) (fun _ => measurable_id)
     have hX : iIndepFun X P := hrows.comp (fun _ => g) (fun _ => hgm)
@@ -279,7 +282,7 @@ theorem result : ¬ claim := by
         (P := fun _ => b) (fun _ => measurable_id)).precomp Fin.val_injective
     have hproj : HasLaw (fun x : ℕ → Bool => fun k : Fin 5 => x k.val)
         (Measure.pi (fun _ : Fin 5 => b)) q := by
-      refine ⟨(measurable_pi_lambda _ (fun k => measurable_pi_apply k.val)).aemeasurable, ?_⟩
+      refine ⟨(Measurable.of_eval (fun k => measurable_pi_apply k.val)).aemeasurable, ?_⟩
       rw [hib.map_fun_eq_pi_map (fun k => (measurable_pi_apply k.val).aemeasurable)]
       simp [q, Measure.infinitePi_map_eval]
     have htotal := hproj.comp (hrow 0)

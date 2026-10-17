@@ -134,7 +134,8 @@ internal static partial class CoverAtomCommand
                 .OfType<string>().Where(static path => RepoPath.TryCreate(path, out _));
             var paths = new[]
                 {
-                    TheoryAtomizerDataLoader.DataPath, "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state",
+                    "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state",
+                    FileMapLoader.RelativePath, ":(glob)Meta/FILEMAP.*.toml",
                 }
                 .Concat(declared.Select(DigestionQuerySelection.Literal))
                 .Concat(casPaths.Select(DigestionQuerySelection.Literal))

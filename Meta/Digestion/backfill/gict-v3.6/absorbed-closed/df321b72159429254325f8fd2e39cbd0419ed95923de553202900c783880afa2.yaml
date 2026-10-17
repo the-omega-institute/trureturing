@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:df321b72159429254325f8fd2e39cbd0419ed95923de553202900c783880afa2
-  normalized_sha256: sha256:df321b72159429254325f8fd2e39cbd0419ed95923de553202900c783880afa2
-cas_ref: sha256:df321b72159429254325f8fd2e39cbd0419ed95923de553202900c783880afa2
-coverage_gids:
-  - gid: D5/S3/Constants/Transcription/C2Certificate.c2_transcription_certificate
-    target_statement_id: sha256:c9656d91ef629a025a035e0d5c2de10c7339f1fcfa4f6dce38ea7789d607d5e0
-receipts:
-  unresolved_subitems: []

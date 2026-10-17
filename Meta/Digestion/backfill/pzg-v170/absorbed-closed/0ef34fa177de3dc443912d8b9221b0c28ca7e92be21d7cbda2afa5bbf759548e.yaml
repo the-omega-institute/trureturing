@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
-  normalized_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
-cas_ref: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
-coverage_gids:
-  - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
-    target_statement_id: sha256:db2552e4fcb42150dfad24911616078638b16b098aa530388aeeff58c605f41b
-receipts:
-  unresolved_subitems: []

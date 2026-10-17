@@ -146,7 +146,12 @@ noncomputable def coordinateLaw (ε : unitInterval) (hNbr : ∀ v, ∃ w, G.Adj 
   | .refresh _ _ => bernoulliMeasure true false ε
   | .choice _ v => by
       letI : Nonempty (G.neighborSet v) := ⟨⟨(hNbr v).choose, (hNbr v).choose_spec⟩⟩
-      exact (PMF.uniformOfFintype (G.neighborSet v)).toMeasure
+      let α := G.neighborSet v
+      let p : PMF α := PMF.ofFintype (fun _ => (Fintype.card α : ℝ≥0∞)⁻¹) (by
+        rw [Finset.sum_const, nsmul_eq_mul]
+        exact ENNReal.mul_inv_cancel (Nat.cast_ne_zero.mpr Fintype.card_ne_zero)
+          (ENNReal.natCast_ne_top _))
+      exact p.toMeasure
 
 structure Model [MeasurableSpace Ω] (P : Measure Ω) where
   probability : IsProbabilityMeasure P
@@ -176,7 +181,10 @@ private instance coordinateLawProbability (ε : unitInterval) (hNbr : ∀ v, ∃
   | initial v => exact instIsProbabilityMeasureBernoulliMeasure
   | fresh t v => exact instIsProbabilityMeasureBernoulliMeasure
   | refresh t v => exact instIsProbabilityMeasureBernoulliMeasure
-  | choice t v => exact PMF.toMeasure.isProbabilityMeasure _
+  | choice t v =>
+      unfold coordinateLaw
+      dsimp
+      infer_instance
 
 private instance valueFinite (i : Coord V) : Finite (Value G i) := by
   cases i <;> dsimp [Value] <;> infer_instance

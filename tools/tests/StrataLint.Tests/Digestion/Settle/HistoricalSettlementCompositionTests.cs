@@ -44,7 +44,7 @@ public sealed class HistoricalSettlementCompositionTests
         using var dir = new TemporaryDirectory();
         SettleAtomCommandTests.WriteFiles(dir.Path, f.Current);
         var descendants = DigestionDecomposition.ValidatedClosure([parent.AtomId],
-            f.Document.RequireDigestionEntries().ToDictionary(e => e.AtomId), f.Snapshot, f.Rules);
+            f.Document.RequireDigestionEntries().ToDictionary(e => e.AtomId), f.Snapshot);
         descendants.Remove(parent.AtomId);
         foreach (var id in descendants.OrderBy(id => f.Current.Entries.Single(e => e.Path == DigestionCasStore.RootPath + id).Bytes.Length))
         {
@@ -99,7 +99,7 @@ public sealed class HistoricalSettlementCompositionTests
         Assert.Equal(0, f.Writes);
         var plan = DigestionDecomposition.Plan(Target(f),
             f.Current.Entries.Single(e => e.Path == DigestionCasStore.RootPath + f.Parent.AtomId).Bytes,
-            GenericAtomizer.Atomize, f.Rules, f.Snapshot);
+            GenericAtomizer.Atomize, f.Snapshot);
         Assert.Null(DigestionDecomposition.IntegrityFailure(plan));
         return f;
     }
