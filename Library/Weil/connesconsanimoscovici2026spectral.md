@@ -9536,3 +9536,117 @@ or a Lean-proof claim. Actual-center/full-border/cofinal positivity,
 Robin and RH remain open.
 
 The [saved-data consumer, directed energy budget and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/3115ead2bc655c55bf3b25435f9d20a979cd3872/docs/reports/weil-c27) preserve the accepted source and its single application.
+
+
+### Condition the lifted far row on the paid good-block observations
+
+Keep the SAME source, positive block and exact enclosed lift. Let
+$Y=P^{-1}[r_g^*,b_{J,g}^*]$ be the two saved actions, put
+$A=[\iota_gY,V]$, and write the physical upper Gram as
+
+$$
+F=A^*(HKH^*+\varepsilon I)A
+=\begin{pmatrix}F_{mm}&F_{my}\\F_{ym}&F_{yy}\end{pmatrix}.
+$$
+
+The signed112-dimensional kernel $K$ is not assumed positive.
+The inherited physical majorant
+$R_F^*W_FR_F\preceq HKH^*+\varepsilon I$ implies positivity of the
+exact $F$. No claim is made that every matrix in its entrywise interval
+box is positive. The complete original512-metadata allowance is retained.
+Reuse the saved $H^*\iota_gY$, $H^*V$, $V^*V$ and $F_{yy}$;
+the new contractions supply $Y^*Y$, $-Y^*(P^{-1}C)$, $F_{mm}$ and
+$F_{my}$. No old physical block, source functional or inverse action
+is recalculated.
+
+For the actual row $y=fV$ and the already paid pair $m=(u,v)$, the
+column $\xi=(m,y)^T$ satisfies
+
+$$
+\xi\xi^*\preceq\Gamma F,
+\qquad \Gamma=\kappa^2E,
+\qquad \kappa=33/32,
+$$
+
+where $E$ is the accepted upper for the SAME physical source norm
+squared. The original weight is already present in $F$ and $E$.
+This physical Gram is distinct from the earlier inverse metric $G_{JJ}$.
+Its observed energy is not the unknown $z=f_gP^{-1}f_g^*$.
+
+Standard Schur conditioning gives, for this one common realization,
+
+$$
+B=F_{mm}^{-1}F_{my},\qquad S_F=F_{yy}-F_{ym}B,
+$$
+
+$$
+(y-mB)^*(y-mB)
+\preceq
+\left(\Gamma-mF_{mm}^{-1}m^*\right)S_F.
+$$
+
+Only positivity of the observed two-by-two block is required for this
+formula; the remaining exact Schur form may be semidefinite. The single
+saved-data application verifies its pivots within
+
+$$
+(F_{mm})_{00}\in[241.5294309926483,\ 241.5294309926484],
+\qquad
+s_m\in[2.76928258548446,\ 2.76928258548447]\cdot10^{-6}.
+$$
+
+It encloses the observed fraction
+
+$$
+\frac{mF_{mm}^{-1}m^*}{\Gamma}
+\in[0.19224358456570,\ 0.82455202205468].
+$$
+
+This is a containing interval, not an asserted attainable range.
+A lower enclosure of the spent energy supplies the remaining-energy
+upper used in the coordinate supports. Across all18 original lift
+coordinates, the individual physical variance ratios obey
+
+$$
+\boxed{
+\frac{(S_F)_{jj}}{(F_{yy})_{jj}}
+\in[1.8707,\ 1.9304]\cdot10^{-10},\qquad 0\le j<18.
+}
+$$
+
+These compare conditional and unconditional variances in the SAME
+physical Gram. They are not a reduction factor for the old source-query
+errors, the core inverse energy, or the Robin deficit. Intersecting the
+conditional supports with the original saved640-grid far row leaves
+all18 original intervals exactly unchanged. Width accounting uses those
+original grid bounds; no round-trip enlargement is credited as progress.
+The full joint Gram and conditional Schur form are retained for a
+correlated core estimate. Unchanged coordinate intervals alone do not
+exclude an improvement of that estimate.
+
+For a subsequent quadratic comparison, existing trust-region results
+must keep their hypotheses. [Jeyakumar--Li, Lemma6.3 and
+Corollary4.3](https://arxiv.org/abs/1309.3000) distinguish the single
+Slater quadratic constraint from extended trust regions with linear
+constraints; the latter equivalence requires strict feasibility and
+their dimension condition(2.2).
+[Wang--Xia, Theorem6](https://arxiv.org/html/1407.0465v2) concerns one
+scalar quadratic interval constraint, not this two-observation rectangle.
+No exactness of a future multiple-constraint relaxation or successful
+quadratic comparison is asserted here.
+
+The sole1024-working/640-export application takes<0.358260seconds,
+excluding serialization. Its126523-byte packet has SHA256
+`2e1c11ef3807445ce6b157d47232bc6086ac96f8a07786e4b03b7355e61c00ae`;
+the source has SHA256
+`d081a2d80786ea53deb91896548271e5b63f3adf966922362c0f9d5a6da7e7ab`.
+There is no new source/far query, target reconstruction, inverse/solve,
+old producer/fixture replay or parameter/precision scan. This is a
+conditional numerical application of existing Schur and ellipsoid
+methods, without generic-method novelty or a Lean-proof claim.
+The indefinite core and joint determinant remain uncertified; no upper
+for the unseen far inverse energy is supplied. A sufficient direct joint
+comparison remains an alternative. Actual-center/full-border/cofinal
+positivity, Robin and RH remain open.
+
+The [twenty-profile consumer, directed conditional Gram and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/f3e667c05bc6bbdce7ef7832f7e368567a7f3969/docs/reports/weil-c27) retain the shared-source application and its original-grid comparison.
