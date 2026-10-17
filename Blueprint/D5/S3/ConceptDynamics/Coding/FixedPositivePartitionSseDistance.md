@@ -32,8 +32,23 @@ $\forall V: Type, \forall W: Type, [\operatorname{AddCommGroup}\left(V\right)], 
 
 Explicit endpoint shift coordinates evaluate each layer as q-1 times the number of partition parts exceeding its threshold. Cancel q-1, which is positive. Taking j equal to each part of the opposite partition proves the coordinate bound in both directions. Their maximum gives the lower bound on every chain length. No classification or partition assumption is imposed on the intermediate matrices.
 
+**Theorem 1.2 (Arbitrary shift equivalences bound the partition distance).**
+
+Lean statement: `D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.rational_shift_equivalence_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.rational_shift_equivalence_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let H be finite and nontrivial, n be positive, and p,r be any padded partitions of n. Let X,Y be arbitrary rational group-ring n by n matrices and let L be any natural number. Assume only the four shift-equivalence equations: A(p)X=XA(r), A(r)Y=YA(p), XY=A(p)^L and YX=A(r)^L. Then dInf(p,r)<=L. In particular, no competing exchange chain is an input, and natural positive SE data are covered by their rational coefficient cast.
+
+The original quotient-layer proof is used twice, once in each direction. The original endpoint action evaluates the two image-rank filtrations, and the original coordinate-bound argument gives the maximum-coordinate bound. The existing theorem32_2 now consumes this chain-free result after extracting its cumulative factors. This theorem does not identify the prescribed single-chain matrices or construct aligned certificates.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.rational_shift_equivalence_bound`
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.theorem32_2`
 - Dependency: [D5/S3/Combinatorics/Partitions/PartitionLInftyGeodesic](../../Combinatorics/Partitions/PartitionLInftyGeodesic.md)
 - Dependency: [D5/S3/ConceptDynamics/Coding/InertGroupBlockConjugacy](InertGroupBlockConjugacy.md)
