@@ -892,4 +892,97 @@ These strict inequalities persist for every $s\ge s_0$. Set $D_0=\lceil\exp(s_0)
 
 This is eventual uniqueness within the actual squarefree rank-one stratum. It neither classifies the finite exceptions nor supplies a numerical cutoff or an additional exclusion at $N=81$. Higher-rank curves and nonsquarefree original blocks are outside the theorem. No infinitude of squarefree rank-one blocks or universal WSS exclusion is asserted.
 
+## 92. Rank-one uniqueness with arbitrary original square cofactor
+
+This section removes the full-block squarefreeness restriction from §§90–91. The squarefree kernel remains the twist parameter, while the entire original block controls the real arc.
+
+**Theorem 92.1 (arbitrary square cofactor).** Let $j,C,c$ be positive integers, let $N=3^j\ge81$, and write the actual original block as
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is its full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$k>B_N/2.$$
+
+Moreover, there is an effectively computable absolute constant $B_0$ such that no such repetition occurs when $B_N>B_0$. This constant is uniform over all positive original square cofactors $C$.
+
+**Proof.** Put $n=Nk$. The two integral points are
+
+$$R=(5DB,25D^2L_NCF_N),\qquad
+K=(5DB_n,25D^2L_ncF_n).$$
+
+The odd-index identity $L_t^2+4=5F_t^2$ verifies their curve equations. Their full two-descent classes, ordered as $(X,X+5D,X-15D)$, are both $(5,D,5D)$. For example,
+
+$$X(R)=5D^2C^2,\quad X(R)+5D=25DF_N^2,\quad X(R)-15D=5DL_N^2,$$
+
+and the same identities hold with $c,n$ for $K$.
+
+Theorem 85.1 and Corollary 85.2 already apply to arbitrary positive $C$: the rational torsion is $E_D[2]$, and $R$ is primitive modulo all torsion. Rank one therefore gives $E_D(\mathbb Q)=\mathbb ZR\oplus E_D[2]$. Write $K=mR+T$.
+
+The torsion classes are $(1,1,1)$, $(-3,5D,-15D)$, $(-5D,1,-5D)$, and $(15D,5D,3)$. None equals $(5,D,5D)$: signs exclude the two negative classes, $5$ excludes the identity, and the last would require $15D$ to be a square. Here $D$ is squarefree and coprime to $15$. Only $O$ has trivial descent class. Thus $m$ is odd and $T=O$. Since $B_n>B$, one has $K\ne\pm R$ and $|m|\ge3$.
+
+**The real coordinate is the full block.** The normalized real isomorphism
+
+$$z=X/(5D),\qquad w=Y/(5D)^{3/2}$$
+
+gives the fixed curve $w^2=z(z+1)(z-3)$. Now $z(R)=B$, whereas $z(K)=B_n>B$. Define
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}},\qquad
+u(B)=\int_B^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+As in §90, the identity component is parametrized by $\mathbb R/\omega\mathbb Z$, and coordinates greater than $B$ correspond to $(0,u(B))$ and $(\omega-u(B),\omega)$. Replacing $m$ by $a=|m|$ leaves the coordinate unchanged. If $au(B)\ge\omega$, then $a\ge\omega/u(B)$; otherwise $a>1$ excludes the first arc and forces $au(B)>\omega-u(B)$. Hence
+
+$$|m|>\omega/u(B)-1.$$
+
+The same integrand inequalities as in §90 give
+
+$$\omega>2/\sqrt3,\qquad u(B)<1/\sqrt{B-3}.$$
+
+Because $B\ge144$, it follows that
+
+$$|m|>2\sqrt{(B-3)/3}-1>\sqrt B.\tag{92.1}$$
+
+No restriction on $C$ enters this first-return argument.
+
+**The Lucas relative index.** The normalized-coordinate height bound of §74 gives
+
+$$\widehat h(R)\ge\tfrac12\log B-\tfrac16\log144\ge\tfrac13\log B.$$
+
+For $v=((1+\sqrt5)/2)^{2N}>1$, one has $B=v+1+v^{-1}$ and, for $k>1$,
+
+$$B_{Nk}=v^k+1+v^{-k}<B^k.$$
+
+Consequently
+
+$$\widehat h(K)\le\tfrac12\log B_{Nk}+\tfrac16\log24<\tfrac{2k}{3}\log B.$$
+
+Quadraticity under $K=mR$ yields $m^2<2k$. Together with (92.1), this proves $k>B/2$.
+
+**The twist height uses the squarefree kernel.** The integral short transformation $x=9X-30D$, $y=27Y$ sends $R,K$ to integral points $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+It is $D$, rather than $B$, that is squarefree. This is exactly the premise needed for the quasi-minimality check of §91: $8775=3^3\cdot5^2\cdot13$, $D$ is coprime to $15$, and every prime valuation of $8775D^2$ is less than $4$. No integral short equation in its isomorphism class has smaller discriminant.
+
+All twists have $j=35152/9$. At the only potentially multiplicative prime $3$, the minimal multiplicative type, if present, is $I_2$. Additive component-group orders are at most $4$, and good reduction has trivial component group. Thus $M(P)\mid12$, independently of $C$.
+
+The original-support congruence gives $D\equiv19\pmod{120}$, so $D\ge19$. In Ingram's height convention,
+
+$$h(E'_D)=3\log D+\log945000\le3\log B+\log945000.\tag{92.2}$$
+
+The equality holds already for $D\ge19$: the cubic coefficient dominates the linear one and $h(j)=\log35152$. This height also exceeds $2\pi\sqrt3$, so the large-height proof of Proposition 11 applies without its finite small-height adjustment.
+
+The effective constants $c_3,c_4$ from Ingram's Proposition 11 can be chosen uniformly for $M(P)\mid12$, as in §91. If $|m|\le c_3$, use that bound; otherwise the integrality of $|m|P$ gives $|m|<c_4h(E'_D)^{5/2}$. Therefore (92.1)–(92.2) imply
+
+$$\sqrt B<|m|\le\max\left\{c_3,c_4(3\log B+\log945000)^{5/2}\right\}.\tag{92.3}$$
+
+The effective cutoff argument of §91 now applies with $s=\log B$. The function $\exp(s/2)/(3s+\log945000)^{5/2}$ increases for $s\ge\log144$ and tends to infinity. Choose an effective $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2},$$
+
+and set $B_0=\lceil\exp(s_0)\rceil$. Then $B>B_0$ contradicts (92.3). Since $B_{3^j}$ is strictly increasing and computable, only effectively bounded finitely many original indices remain possible. ∎
+
+The real lower bound depends on the full block $B_N=DC^2$, whereas the twist-height upper bound depends on $D\le B_N$. This extends effective eventual uniqueness to every actual rank-one original block, including blocks with nontrivial square cofactor. The analytic input remains Ingram's [Proposition 11](https://arxiv.org/pdf/0802.2651), with the model and uniformity checks of §91. Rank one remains essential. No numerical cutoff, exhaustive finite search, extra $N=81$ exclusion, higher-rank conclusion, or universal WSS solution is asserted.
+
 ## 追加锚（本行以下为增补区）
