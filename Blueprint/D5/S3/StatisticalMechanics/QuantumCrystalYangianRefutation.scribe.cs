@@ -71,7 +71,10 @@ internal sealed class QuantumCrystalYangianRefutationDocument : IScribeDocumentD
                             + "The left side O₋ v has coefficient 4 at the hook and coefficient 1 at the row. "
                             + "Since 4 is not twice 1, the identity is impossible. In particular O₋ cannot act on "
                             + "these bosonic states as the asserted linear combination of the generators."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("araujo-orlando-reffert-2020-quantum-crystal-yangian-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
