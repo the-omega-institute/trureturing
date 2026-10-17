@@ -4791,3 +4791,5 @@ The example rules out universal intersection with the canonical component.
 It does not establish persistence away from the center or a general
 fourth-MUB result; the explicit cross-overlaps (61.8) already distinguish
 two alternative completions from four mutually unbiased bases.
+
+后续结果见[理论续卷 II](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md)：第 62 节给出移动 canonical 基穿过中心参数的局部唯一性，第 63 节确定本节六条非 canonical 射线的局部正交图。

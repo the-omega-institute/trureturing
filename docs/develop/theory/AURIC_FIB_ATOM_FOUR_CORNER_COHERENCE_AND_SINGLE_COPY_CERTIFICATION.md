@@ -784,3 +784,641 @@ $$
 上下端向外取整；表格只保留其近似值，精确成本界始终由公式决定。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 123. 全五维复输入上的原生 Ramsey 相干认证
+
+**定义 C-123.1（同一原生载体、固定能量基与实际信号）。** 采用
+[原生卷定义 55.1、假设 55.2](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#35-交替位置编码与单处固定相位) 及
+[定义 68.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#48-固定初始五人口的全单纯形相位增益)
+的整个 $\mathcal K_3$、无漂移独立翻转菜单及被动标架，
+并采用其命题 59.1 另行允许的末次二值 PVM $\{n_1,I-n_1\}$。
+本章起 $e_j$ 专指该卷的物理标准基，不沿用 (C116.1) 的派生向量名称：
+
+$$
+(e_0,e_1,e_2,e_3,e_4)=(|000\rangle,|100\rangle,|010\rangle,|001\rangle,|101\rangle),
+\quad D=\operatorname{diag}(1,i,i,i,1),
+\quad n_1=\operatorname{diag}(0,1,0,0,1).
+\tag{C123.1}
+$$
+
+置 $P_3=|e_3\rangle\langle e_3|$、$P_C=I-P_3$、$C=\operatorname{ran}P_C$，并定义
+
+$$
+\begin{aligned}
+\psi&=(e_0+e_4)/\sqrt2,& z&=(e_0-e_4)/\sqrt2,\\
+A_1&=|e_1\rangle\langle e_0|-|e_0\rangle\langle e_1|,&
+A_3&=|e_2\rangle\langle e_4|-|e_4\rangle\langle e_2|,\\
+A&=A_1+3A_3,&R(t)&=e^{tA},\qquad H=iA,\\
+O\psi&=e_1,\quad Oz=e_0,\quad Oe_1=e_2,&
+Oe_2&=e_3,\quad Oe_3=-e_4,\\
+W_{\rm ph}(t)&=DOR(t)D^\dagger,&
+p_\rho(t)&=\operatorname{Tr}\bigl(n_1W_{\rm ph}(t)\rho W_{\rm ph}(t)^\dagger\bigr).
+\end{aligned}
+\tag{C123.2}
+$$
+
+这里 $A_1,A_3$ 是两个指定目标平面旋转，不是原生翻转生成元。
+输入 $\rho$ 遍历全部五维复密度矩阵。$H$ 在 $C$ 上的固定本征向量为
+
+$$
+v_{1\pm}=(e_0\pm i e_1)/\sqrt2,\qquad
+v_{3\pm}=(e_4\pm i e_2)/\sqrt2,
+\qquad
+\mathcal B=(Dv_{1+},Dv_{1-},Dv_{3+},Dv_{3-},e_3).
+\tag{C123.3}
+$$
+
+相应物理谱模型 $H_{\rm ph}=DHD^\dagger$ 在 $\mathcal B$ 中的能量为
+$(1,-1,3,-3,0)$。这个谱模型指定信号的数学参数，尚不表示安装了裸驱动。
+记 $\operatorname{cn}_{\mathcal B}(\rho)\le3$ 当且仅当存在有限分解
+
+$$
+\rho=\sum_{a=1}^{N}q_a|\phi_a\rangle\langle\phi_a|,
+\quad q_a\ge0,\quad\sum_aq_a=1,\quad\|\phi_a\|=1,
+\quad\#\{b\in\mathcal B:\langle b|\phi_a\rangle\ne0\}\le3\quad(\forall a).
+\tag{C123.4}
+$$
+
+这是同一个固定能量基中的混态 ensemble 条件，不是密度矩阵的逐项稀疏性。
+沿用 [ThreeCoherenceRamseyThreshold 的定义 1.3–1.4、1.8–1.11 和定理 1.12](../../../Blueprint/D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold.md)：
+
+$$
+M_q(p)=\frac1{2\pi}\int_0^{2\pi}p(t)^q\,dt,
+\qquad R_3(p)=\frac{M_3(p)}{M_1(p)^2},
+\qquad T=\frac{\operatorname{thresholdN}(\alpha)}{\operatorname{thresholdD}(\alpha)},
+\quad \frac{6169}{5000}<\alpha<\frac{12339}{10000},
+\quad\operatorname{thresholdP}(\alpha)=0,
+\tag{C123.5}
+$$
+
+其中选择该定理所供应的一个 $\alpha$；$T$ 是其 `admissibleValues` 的最大元。
+
+**定理 C-123.2（实际秩二读口的全空间阈值）。** 对每个五维复密度矩阵，令
+$\lambda=\langle e_3|\rho|e_3\rangle$。则实际拉回效应及第一矩为
+
+$$
+\begin{aligned}
+F(t)&=W_{\rm ph}(t)^\dagger n_1W_{\rm ph}(t)
+=D\bigl[R(t)^T|\psi\rangle\langle\psi|R(t)+P_3\bigr]D^\dagger,\\
+M_1(p_\rho)&=\frac{1+3\lambda}{4}\ge\frac14.
+\end{aligned}
+\tag{C123.6}
+$$
+
+若 (C123.4) 成立，则
+
+$$
+R_3(p_\rho)\le
+\frac{16\lambda^3-12\lambda^2+12\lambda+T(1-\lambda)^3}{(1+3\lambda)^2}
+\le T.
+\tag{C123.7}
+$$
+
+因而 $R_3(p_\rho)>T$ 排除整个五维基 $\mathcal B$ 中的三相干 ensemble，
+无需承诺 $\rho$ 支持于 $C$。结论限定于 (C123.2) 的实际协议。
+
+证明。$O$ 把一组正交归一基送到另一组；
+$(\psi,z,e_1,e_2,e_3)$ 与 $(e_1,e_0,e_2,e_3,-e_4)$ 的定向均为正，
+所以 $O\in SO(5)$。读扇区 $\operatorname{span}(e_1,e_4)$ 的原像为
+$\operatorname{span}(\psi,e_3)$，故 $O^Tn_1O=|\psi\rangle\langle\psi|+P_3$。
+又 $R(t)$ 固定 $e_3$ 且保持 $C$，得到 (C123.6) 的效应式。
+它在全载体上始终秩二，对 $C\oplus\mathbb Ce_3$ 分块对角；
+跨块相干的实部、虚部均不进入迹配对。这是算符恒等式，不是对实际态执行去相干。
+
+设 $\lambda<1$，置
+
+$$
+\sigma=D^\dagger\rho D,\qquad
+\sigma_C=\frac{P_C\sigma P_C}{1-\lambda},\qquad
+s(t)=\operatorname{Tr}\bigl(|\psi\rangle\langle\psi|R(t)\sigma_CR(t)^T\bigr).
+\tag{C123.8}
+$$
+
+压缩正性与迹一给 $\sigma_C\in\mathsf D(C)$，而效应式给
+
+$$
+p_\rho(t)=\lambda+(1-\lambda)s(t),\qquad 0\le s(t)\le1.
+\tag{C123.9}
+$$
+
+四个主动能量互异，$\langle v_{j\pm}|\psi\rangle=1/2$，
+周期平均消去主动块的非对角项，所以 $M_1(s)=\operatorname{Tr}(\sigma_C)/4=1/4$。
+这证明 (C123.6) 的均值式，未限制 $\rho$ 的复相干。
+
+现在假设 (C123.4)。令 $u_a=P_CD^\dagger\phi_a$、$b_a=\|u_a\|^2$。
+舍弃 $b_a=0$ 的项后有有限归一分解
+
+$$
+\sigma_C=\sum_{a:b_a>0}\frac{q_ab_a}{1-\lambda}
+\left|\frac{u_a}{\sqrt{b_a}}\right\rangle
+\left\langle\frac{u_a}{\sqrt{b_a}}\right|,
+\qquad\sum_aq_ab_a=1-\lambda.
+\tag{C123.10}
+$$
+
+$D^\dagger$ 将物理能量基运到被动能量基， inactive 坐标仅多一个相位；
+$P_C$ 只删除该坐标。每个保留向量仍在同一四能量基中至多三稀疏，
+每个范数为一，权重非负且和一。
+在所引最大元定理中取 $d=4$、此有限 ensemble、
+$n=(1,-1,3,-3)$、$\chi=(1/2,1/2,1/2,1/2)$，
+则 `mixedSignal` 恰为 $s$，读出归一且第一矩 $1/4>0$。
+因此 $M_3(s)\le T/16$。这个投影和重新加权仅用于证明，不要求物理后选择权限。
+
+所需 $4/3<T<2$ 可直接由供应阈值和有理估计得到。
+三个能量 $0,1,2$、输入与读出均为 $(1,1,1)/\sqrt3$ 的单项 ensemble 可容许；
+$(1+x+x^2)^3$ 的系数为 $(1,3,6,7,6,3,1)$，平方和为 $141$。
+故它有 $M_1=1/3$、$M_3=141/729=47/243$、$R_3=47/27$，给 $T\ge47/27>4/3$。
+另一方面 $123/100<\alpha<31/25$，正参数上的两个多项式
+$N=\operatorname{thresholdN}$、$D_{\rm poly}=\operatorname{thresholdD}$ 各自正且严格递增。
+于是
+
+$$
+T<\frac{N(31/25)}{D_{\rm poly}(123/100)}<2,
+\qquad
+2D_{\rm poly}(123/100)-N(31/25)
+=\frac{12274038070201}{500000000000}>0.
+\tag{C123.11}
+$$
+
+此处不需要假设比值 $N/D_{\rm poly}$ 单调。
+
+由 $M_2(s)\le M_1(s)=1/4$ 展开 (C123.9)，得到
+
+$$
+\begin{aligned}
+M_3(p_\rho)
+&=\lambda^3+\tfrac34\lambda^2(1-\lambda)
+ +3\lambda(1-\lambda)^2M_2(s)+(1-\lambda)^3M_3(s)\\
+&\le\lambda^3+\tfrac34\lambda(1-\lambda)+\tfrac T{16}(1-\lambda)^3.
+\end{aligned}
+\tag{C123.12}
+$$
+
+除以 $((1+3\lambda)/4)^2$ 即为 (C123.7) 第一界。
+第二界的分子差为
+
+$$
+\begin{aligned}
+&T(1+3\lambda)^2-\bigl[16\lambda^3-12\lambda^2+12\lambda+T(1-\lambda)^3\bigr]\\
+&\qquad=\lambda\bigl[(9T-12)+(6T+12)\lambda+(T-16)\lambda^2\bigr].
+\end{aligned}
+\tag{C123.13}
+$$
+
+方括号关于 $\lambda$ 凹，在 $0,1$ 的值分别为 $9T-12$、$16(T-1)$，均非负。
+因此在 $[0,1]$ 上非负。
+若 $\lambda=1$，其余对角元皆为零；正性给
+$|\rho_{jk}|^2\le\rho_{jj}\rho_{kk}$，迫使 $\rho=P_3$。
+此时 $p_\rho=1$、$M_1=M_3=R_3=1\le T$，直接满足两界，无须除以 $1-\lambda$。
+
+背景组合也可用成熟的透视凸性解释。对 $x\ge0,y>0$，
+$\Phi(x,y)=x^3/y^2$ 的 Hessian 在方向 $(u,v)$ 上的二次型为
+$6x(yu-xv)^2/y^4\ge0$。
+对连续非负周期信号 $f,g$、各自正均值 $m_f,m_g$ 及 $0\le a\le1$，在
+$(f(t),m_f),(g(t),m_g)$ 应用凸性再平均，得到
+$R_3(af+(1-a)g)\le aR_3(f)+(1-a)R_3(g)$。
+代入 $f=1,g=s,a=\lambda$，即有
+$R_3(p_\rho)\le\lambda+(1-\lambda)T\le T$。
+这是同一固定协议的另一条中间推导；粗矩展开所用 $4/3$ 不是恒亮背景组合的必要门槛。证毕。
+
+**推论 C-123.3（实际四能量见证及共同三维源）。** 对供应输入
+$\rho_\psi=|\psi\rangle\langle\psi|$，同一个协议满足
+
+$$
+\begin{aligned}
+p_\psi(t)&=\frac{(\cos t+\cos3t)^2}{4}
+=\frac14+\frac38\cos2t+\frac14\cos4t+\frac18\cos6t,\\
+M_1(p_\psi)&=\frac14,\qquad M_2(p_\psi)=\frac{11}{64},\qquad
+M_3(p_\psi)=\frac{145}{1024},\qquad R_3(p_\psi)=\frac{145}{64}>2>T.
+\end{aligned}
+\tag{C123.14}
+$$
+
+对[原生卷定义 65.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#45-原支持三维输入的精确末次秩二边缘)
+及 [GC 定理 21.2](FIB_NATIVE_COMPLETE_CONTINUATION_GLOBAL_ACTUAL_COUNTS.md#21-the-fixed-complex-linear-five-mode-dictionary)
+的同一复线性编码，在当前物理坐标写
+
+$$
+E=\bigl((e_0+e_4)/\sqrt2,(e_1+e_3)/\sqrt2,e_2\bigr).
+\tag{C123.15}
+$$
+
+对每个复 qutrit 密度态 $\tau$，$\rho=E\tau E^\dagger$ 满足
+$\lambda=\tau_{11}/2$，其中 $\tau_{11}$ 是中间列的逻辑人口。
+所以定理 C-123.2 覆盖整个 $E$ 源，包括 $\lambda>0$ 的情形；
+它不自动断言每个 $E$ 输出违反阈值。
+
+证明。$D^\dagger\psi=\psi$，$\langle\psi|R(t)|\psi\rangle=(\cos t+\cos3t)/2$。
+置 $\zeta=e^{2it}$，见证信号的 Laurent 系数从 $-3$ 到 $3$ 为
+$(1,2,3,4,3,2,1)/16$。
+平方的常数项为 $44/256=11/64$；立方的常数项为 $580/4096=145/1024$。
+后者也由 $(1+x+x^2+x^3)^3$ 的系数
+$(1,3,6,10,12,12,10,6,3,1)$ 的平方和 $580$ 得到。
+零次系数和均值归一化给其余矩及比值。
+最后三列正交归一，直接配对得
+$E^\dagger P_3E=\operatorname{diag}(0,1/2,0)$，于是
+$\operatorname{Tr}(P_3E\tau E^\dagger)=\tau_{11}/2$。证毕。
+
+## 124. 两个可变参数的统一零相位有限字
+
+**定理 C-124.1（整个载体上的固定模板）。** 在定义 C-123.1 的原生菜单下，
+存在一个有限槽模板与整数 $L$，使对所有 $t\in\mathbb R$ 及所有五维输入，
+模板精确求值为 $W_{\rm ph}(t)$。模板不调用指定门
+$S_{\star,3}=\operatorname{diag}(1,1,1,1,i)$；仅两个 $H_2$ 槽的参数随 $t$ 变化。
+更具体地，存在固定纯翻转字，长度为 $m_O,m_1,m_3$，使
+
+$$
+\begin{aligned}
+W_{\rm ph}(t)&=O_{\rm ph}Q_1e^{-itH_2}Q_1^\dagger
+                         Q_3e^{-i3tH_2}Q_3^\dagger,
+\qquad O_{\rm ph}=DOD^\dagger,\\
+L&=m_O+2m_1+2m_3+2.
+\end{aligned}
+\tag{C124.1}
+$$
+
+右端先作用；零参数保留为恒等槽。这里的 $L$ 是存在性界，不给数值脉冲数或时长最优值。
+
+证明。原生 $H_2=|e_0\rangle\langle e_2|+|e_2\rangle\langle e_0|$，所以
+
+$$
+G=-iD^\dagger H_2D=|e_0\rangle\langle e_2|-|e_2\rangle\langle e_0|.
+\tag{C124.2}
+$$
+
+定义实矩阵 $Q_1$ 固定 $e_0,e_3,e_4$，送 $e_1\mapsto e_2$、$e_2\mapsto-e_1$；
+$Q_3$ 固定 $e_1,e_3$，送 $e_0\mapsto e_4$、$e_4\mapsto e_0$、$e_2\mapsto-e_2$。
+二者正交且行列式一，均只混合同一 $D$ 相位的坐标，故与 $D$ 对易。
+逐个秩一项共轭给
+
+$$
+Q_1GQ_1^T=A_1,\qquad Q_3GQ_3^T=A_3,\qquad
+[A_1,A_3]=0,\qquad e^{-itH_2}=De^{tG}D^\dagger.
+\tag{C124.3}
+$$
+
+因此 $R(t)=e^{tA_1}e^{3tA_3}$，相乘得到整个五维算符的 (C124.1)。
+由[原生卷定理 64.1 的 (IX.1)](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#44-固定相位菜单的实际有限字达到)，
+一次性选择分别求值为 $O_{\rm ph},Q_1,Q_3$ 的三个纯翻转有限字；
+$Q_j=DQ_jD^\dagger$ 保证它们属于该精确纯翻转群。
+每个逆字通过反转因子次序并反号参数取得，长度不变。
+将三个固定字和两个逆字代入 (C124.1)，再保留两个可变 $H_2$ 槽，即得
+$\exists(\text{模板},L)\,\forall t\,\forall\rho$，而非仅逐点的 $\forall t\,\exists\text{字}$。
+这里只使用 (IX.1) 的实际有限字，不使用相位辅助 (IX.2) 或闭包极限。证毕。
+
+**命题 C-124.2（周期、支持与参数的精确范围）。** 此模板可以将每个原生参数
+取为模 $2\pi$ 的非负代表而保持整个算符不变。所有实际信号共同以 $\pi$ 为周期；
+$W_{\rm ph}$ 的全算符以 $2\pi$ 为周期，$\pi$ 不是其全算符周期。
+原生字前缀无须保持 $C$，但每个脉冲及其中途均保持整个合法 $\mathcal K_3$。
+
+证明。假设 55.2 中每个单位系数 $H_j$ 为二态翻转块与零块之直和，
+故 $H_j^3=H_j$，其指数有 $2\pi$ 周期；固定字、逆字及两个可变槽均适用。
+令 $J=P_3-P_C$。主动能量全为奇数，inactive 能量为零，所以
+
+$$
+R(t+\pi)=R(t)J,\qquad W_{\rm ph}(t+\pi)=W_{\rm ph}(t)J,
+\qquad F(t+\pi)=JF(t)J=F(t).
+\tag{C124.4}
+$$
+
+$J\ne I$，甚至在全空间上不是标量，故不能把信号的 $\pi$ 周期当作全算符周期。
+整块 $Q_1,Q_3,H_2$ 固定 $e_3$，但所选择的有限原生实现没有逐前缀保持 $C$ 的要求；
+末端 $O_{\rm ph}$ 还把 $e_2$ 送到 $e_3$。
+整个合法域的保持来自假设 55.2 的每个原生控制，而非 $C$ 支持承诺。
+$H_{\rm ph}$ 的 $(e_2,e_4)$ 矩阵元为 $-3$，在每个瞬时原生 $H_j$ 中均为零。
+故有限字综合不等于提供该裸 Hamiltonian。
+$D$ 从未作为物理门插入；模周期选参也不提供校准时钟或把 $t$ 等同于物理经过时间。证毕。
+
+## 125. 同一固定谱模型的有限矩求积与受限最小性
+
+**定理 C-125.1（全五维复信号的十节点矩公式）。** 对所有五维复密度矩阵，置
+$t_j=\pi j/10$、$j=0,\ldots,9$，则
+
+$$
+M_q(p_\rho)=\frac1{10}\sum_{j=0}^9p_\rho(t_j)^q,
+\qquad q=1,2,3.
+\tag{C125.1}
+$$
+
+证明。主动能量差为 $0,\pm2,\pm4,\pm6$；(C123.6) 排除与 inactive 能量的跨块项。
+故包括任意 $\lambda$ 与任意复相干的整个信号族都具有形式
+
+$$
+p_\rho(t)=c_0+\sum_{k=1}^3(a_k\cos2kt+b_k\sin2kt),
+\qquad c_0=(1+3\lambda)/4.
+\tag{C125.2}
+$$
+
+在 $\zeta=e^{2it}$ 中，$p_\rho^q$ 的 Laurent 次数不超过 $3q\le9$。
+而 $10^{-1}\sum_{j=0}^9e^{2\pi i kj/10}=0$ 对 $0<|k|\le9$ 成立。
+有限节点平均与积分均只保留常数项，得 (C125.1)。
+$\pi$ 周期函数在 $[0,\pi]$ 的归一平均与 (C123.5) 的 $2\pi$ 归一平均相同。证毕。
+
+**定理 C-125.2（固定加权三次幂求积类恰需十节点）。** 设节点 $s_1,\ldots,s_m$
+及实权重 $w_1,\ldots,w_m$ 不依赖 $\rho$，并要求对同一个实际谱模型的每个密度态都有
+
+$$
+M_3(p_\rho)=\sum_{j=1}^m w_jp_\rho(s_j)^3.
+\tag{C125.3}
+$$
+
+即使允许负权重，也必须至少有十个模 $\pi$ 不同的节点。
+因此 (C125.1) 在这个固定节点、固定权重直接作用于三次幂的类中达到最小节点数；
+另要求第一、第二矩精确不改变这个下界。
+
+证明。将主动物理能量基按 $(-3,-1,1,3)$ 排序，构造实际态
+
+$$
+\rho_{\rm act}=I_4/4+X,\qquad
+X_{0k}=2(a_k-i b_k),\quad X_{k0}=2(a_k+i b_k)\quad(1\le k\le3),
+\tag{C125.4}
+$$
+
+其余元素为零，并在 inactive 坐标补零。
+$X$ Hermitian、迹零，其非零本征值为
+$\pm2r$，$r=\sqrt{\sum_{k=1}^3(a_k^2+b_k^2)}$。
+这由 $X$ 的星形二块矩阵或 $X^3=4r^2X$ 得到。
+所以 $r<1/8$ 时主动块严格正，嵌回后为实际五维密度态。
+固定读出各坐标为 $1/2$，第 $0,k$ 项贡献
+
+$$
+\tfrac14\bigl[2(a_k-i b_k)e^{2ikt}+2(a_k+i b_k)e^{-2ikt}\bigr]
+=a_k\cos2kt+b_k\sin2kt.
+\tag{C125.5}
+$$
+
+这些实际态恰实现 $c=1/4$ 周围六个非恒定实系数的开放球。
+此构造用于检验普遍量词，不主张菜单供应这些态的制备。
+
+令 $I$ 为归一积分、$Q(f)=\sum_jw_jf(s_j)$、$\mathcal L=I-Q$，并置
+$V=\operatorname{span}_{\mathbb R}\{\cos2kt,\sin2kt:1\le k\le3\}$。
+假设给 $\mathcal L((c+v)^3)=0$ 在 $V$ 的上述开放球上成立。
+这是六个实系数的三次多项式恒等式。
+常数、一次、二次、三次系数及极化分别给
+
+$$
+\mathcal L(1)=\mathcal L(v)=\mathcal L(vw)=\mathcal L(vwu)=0
+\quad(v,w,u\in V).
+\tag{C125.6}
+$$
+
+复化后 $V$ 包含 $\zeta^{\pm1},\zeta^{\pm2},\zeta^{\pm3}$。
+每个 $|k|\le9$ 的 $\zeta^k$ 都是至多三个这样的因子的乘积，或为常数。
+故 $Q$ 必须精确积分全部九次三角多项式。
+合并模 $\pi$ 重复节点后，若不同节点数 $d\le9$，则
+
+$$
+F_*(t)=\prod_{j=1}^{d}|e^{2it}-e^{2is_j}|^2
+\tag{C125.7}
+$$
+
+是次数 $d$ 的非负、非恒零三角多项式，有 $I(F_*)>0$；
+但所有节点上为零，使任意权重下 $Q(F_*)=0$，矛盾。
+空节点集直接由常数函数排除。结合 C-125.1 完成最小性证明。证毕。
+
+**命题 C-125.3（七节点 Fourier 重构的类外边界）。** 若允许从精确概率值
+先重构信号、再非线性计算矩，则七个等距设置 $s_j=\pi j/7$ 已足以计算三个矩。
+这一算法不属于 (C125.3) 的固定加权三次幂求积类。
+
+证明。在 (C125.2) 中写 $p(t)=\sum_{k=-3}^3c_ke^{2ikt}$。
+七个指数 $-3,\ldots,3$ 在模七中互异，故离散反演给
+
+$$
+c_k=\frac17\sum_{j=0}^6p(\pi j/7)e^{-2\pi i kj/7},
+\qquad
+M_q(p)=\sum_{\substack{k_1,\ldots,k_q\in\{-3,\ldots,3\}\\k_1+\cdots+k_q=0}}c_{k_1}\cdots c_{k_q}.
+\tag{C125.8}
+$$
+
+三次卷积中出现不同节点值的乘积，未要求表示为固定权重的 $p(s_j)^3$ 之和。
+若可以普遍这样表示，就与 C-125.2 矛盾。
+所以十节点最小性不是一般测量设置最优性，也不是对所有统计算法的样本下界。证毕。
+
+## 126. 固定校准与新 iid 输入下的有限样本认证
+
+**假设 C-126.1（额外供应的重复来源与固定规则）。** 在数据以前固定
+$0<\delta<1$、整数 $n\ge1$、C-125.1 的十个设置及以下分析规则。
+每个设置供应 $n$ 份新的、独立且同分布的相同未知密度态 $\rho$；
+各试次使用同一个已校准的理想 $W_{\rm ph}(t_j)$ 和末端二值传感器。
+于是总共 $10n$ 个记录具有固定概率的独立 Bernoulli 模型
+
+$$
+X_{jr}\sim\operatorname{Bernoulli}(p_j),\qquad
+p_j=p_\rho(t_j),\qquad
+\widehat p_j=\frac1n\sum_{r=1}^{n}X_{jr}.
+\tag{C126.1}
+$$
+
+这是原生单输入菜单之外的供应前提，不是对原未知输入作重置或反复使用。
+同一个固定校准模型、来源与规则适用于全部试次；不允许据数据选 $n$ 或可选停止。
+以下 $\log$ 均为自然对数。
+
+**定义 C-126.2（截断下置信比）。** 置
+
+$$
+\begin{aligned}
+\varepsilon&=\sqrt{\frac{\log(20/\delta)}{2n}},&
+\ell_j&=\max(0,\widehat p_j-\varepsilon),&
+u_j&=\min(1,\widehat p_j+\varepsilon),\\
+L_3&=\frac1{10}\sum_{j=0}^9\ell_j^3,&
+U_1&=\frac1{10}\sum_{j=0}^9u_j,&
+\widehat R_{\rm low}&=\frac{L_3}{U_1^2}.
+\end{aligned}
+\tag{C126.2}
+$$
+
+由于 $\varepsilon>0$，每个数据集均有 $u_j\ge\min(1,\varepsilon)>0$，故 $U_1>0$。
+
+**定理 C-126.3（条件置信覆盖与频率学误报界）。** 在假设 C-126.1 下，
+对每个固定五维复密度态 $\rho$，
+
+$$
+\Pr_\rho\bigl(\widehat R_{\rm low}\le R_3(p_\rho)\bigr)\ge1-\delta,
+\qquad
+\sup_{\operatorname{cn}_{\mathcal B}(\rho)\le3}
+\Pr_\rho(\widehat R_{\rm low}>T)\le\delta.
+\tag{C126.3}
+$$
+
+阈值改用 $\widehat R_{\rm low}>2$ 仍有相同误报界。
+这是固定状态与供应模型下重复实验的误报概率，不是数据后关于状态的后验概率。
+
+证明。对任意 $X\sim\operatorname{Bernoulli}(p)$，包括 $p=0,1$，定义
+
+$$
+\begin{aligned}
+h(\theta)&=\log\mathbb E e^{\theta(X-p)}
+=\log(1-p+pe^\theta)-p\theta,\\
+q_\theta&=\frac{pe^\theta}{1-p+pe^\theta},\qquad
+h(0)=h'(0)=0,\qquad h''(\theta)=q_\theta(1-q_\theta)\le\frac14.
+\end{aligned}
+\tag{C126.4}
+$$
+
+分母始终正。Taylor 积分式对所有实 $\theta$ 给
+$h(\theta)=\theta^2\int_0^1(1-v)h''(v\theta)\,dv\le\theta^2/8$。
+独立性使中心化和的矩母函数不超过 $e^{n\theta^2/8}$。
+对 $\theta=4\varepsilon>0$，指数 Markov 给
+
+$$
+\Pr\left(\sum_{r=1}^n(X_{jr}-p_j)>n\varepsilon\right)
+\le e^{-n\theta\varepsilon+n\theta^2/8}=e^{-2n\varepsilon^2}.
+\tag{C126.5}
+$$
+
+下尾对负中心化和同理，得到
+$\Pr(|\widehat p_j-p_j|>\varepsilon)\le2e^{-2n\varepsilon^2}=\delta/10$。
+对十设置取并集界，事件
+
+$$
+\mathcal G=\bigcap_{j=0}^9\{|\widehat p_j-p_j|\le\varepsilon\}
+\quad\text{满足}\quad\Pr_\rho(\mathcal G)\ge1-\delta.
+\tag{C126.6}
+$$
+
+在此事件上，因 $0\le p_j\le1$，截断保留
+$0\le\ell_j\le p_j\le u_j\le1$。
+由 C-125.1，$0\le L_3\le M_3(p_\rho)$，
+$U_1\ge M_1(p_\rho)\ge1/4$，于是 $L_3/U_1^2\le R_3(p_\rho)$。
+若再有 (C123.4)，同一事件上 C-123.2 给
+$\widehat R_{\rm low}\le R_3(p_\rho)\le T$，所以误报事件包含于 $\mathcal G^c$。
+这个界对每个零假设态使用同一 $\delta$，取上确界即得 (C126.3)。
+$T<2$ 给更保守触发规则的结论。证毕。
+
+**推论 C-126.4（同一估计器的两个充分样本界）。** 在假设 C-126.1 的见证来源
+$\rho=\rho_\psi$ 上，每设置取
+
+$$
+n\ge\left\lceil131072\log(20/\delta)\right\rceil
+\tag{C126.7}
+$$
+
+即可保证 $\Pr_{\rho_\psi}(\widehat R_{\rm low}>2)\ge1-\delta$。
+利用同一见证的第二矩，可将充分条件改进为
+
+$$
+n\ge\left\lceil18432\log(20/\delta)\right\rceil.
+\tag{C126.8}
+$$
+
+这两个界使用同一截断估计器与误报规则；较小常数不是样本最优性结论。
+
+证明。在 (C126.6) 的同一事件上，
+$0\le p_j-\ell_j\le2\varepsilon$ 且 $u_j\le p_j+2\varepsilon$。
+$x^3$ 在 $[0,1]$ 上的 Lipschitz 常数为三，故
+
+$$
+L_3\ge\frac{145}{1024}-6\varepsilon,\qquad U_1\le\frac14+2\varepsilon.
+\tag{C126.9}
+$$
+
+若 $\varepsilon\le1/512$，分子下界为正，并有
+
+$$
+\widehat R_{\rm low}\ge
+\frac{133/1024}{(65/256)^2}=\frac{8512}{4225}>2.
+\tag{C126.10}
+$$
+
+由 $512^2/2=131072$，(C126.7) 足以保证此 $\varepsilon$ 条件。
+更精细地，逐节点有
+
+$$
+p_j^3-\ell_j^3
+=(p_j-\ell_j)(p_j^2+p_j\ell_j+\ell_j^2)
+\le6\varepsilon p_j^2.
+\tag{C126.11}
+$$
+
+用 C-125.1 的第二矩公式和 (C123.14)，得到
+$L_3\ge145/1024-(33/32)\varepsilon$。
+因此 $\varepsilon\le1/192$ 时
+
+$$
+\widehat R_{\rm low}\ge
+\frac{279/2048}{(25/96)^2}=\frac{2511}{1250}>2.
+\tag{C126.12}
+$$
+
+$192^2/2=18432$，所以向上取整的 (C126.8) 给该条件。
+两次推导均在同一概率至少 $1-\delta$ 的事件上成立。证毕。
+
+## 127. 资源、频谱与文献适用边界
+
+**命题 C-127.1（条件协议的实际资源范围）。** 在 C-124.1 与 C-126.1 的条件下，
+十设置、每设置 $n$ 次的完整固定规则消费 $10n$ 份新输入及 $10n$ 次末端二值记录，
+至多使用 $10nL$ 个原生脉冲槽，指定 $S_{\star,3}$ 调用数为零。
+源制备、固定校准、参数精度、时钟、SSR 或参考系兼容性及物理时长均为额外供应或未评价成本。
+
+证明。每份输入仅施加所选设置的一次 $L$ 槽字并作一次末端二值测量，
+然后转到下一份新输入；总计直接相乘。
+C-124.1 的模板只由原生翻转字组成；$D$ 为被动坐标。
+假设 55.2 没有承诺初始化或硬件成本界，C-126.1 则明确增加重复输入与校准前提。
+因此这些成本不能由零指定相位计数、字的存在或概率可识别性消去。
+本结论不供应 $\psi$ 或 $E\tau E^\dagger$ 的制备，也不授予跨 SSR 的相干操作。证毕。
+
+**命题 C-127.2（无固定谱模型时的有限节点反例）。** 在全部连续、$\pi$ 周期、
+取值于 $[0,1]$ 的概率函数类中，任意有限节点的精确函数值不足以决定第一、第三矩。
+即使节点值固定为实际见证 $p_\psi$ 的值，也不足以决定第一矩。
+
+证明。对给定有限节点 $s_1,\ldots,s_m$，令
+
+$$
+g(t)=\prod_{j=1}^{m}\frac{1-\cos(2(t-s_j))}{2}.
+\tag{C127.1}
+$$
+
+它连续、$\pi$ 周期且在 $[0,1]$ 中，所有节点上为零，除有限个零点外为正。
+所以 $0$ 与 $g$ 有相同节点值，而 $M_1(g),M_3(g)>0$。
+再取任意 $0<a\le1$，置
+
+$$
+q(t)=p_\psi(t)+a p_\psi(t)(1-p_\psi(t))g(t).
+\tag{C127.2}
+$$
+
+$0\le q\le p_\psi+p_\psi(1-p_\psi)\le1$，节点值仍等于 $p_\psi$。
+见证在某个开区间内严格介于零与一，去掉有限节点后增量在那里严格正，
+故 $M_1(q)>M_1(p_\psi)$。
+这些反例属于无模型的连续函数类，不断言它们可由 (C123.2) 的同一固定谱设备实现。
+因此它们不反驳 C-125.1，只说明不能删除其频谱条件。证毕。
+
+**适用边界 C-127.3（证书对象与尚未确定的量）。** C-123–C-126 的组合仅认证
+固定物理能量基 $\mathcal B$ 中的混态相干数。
+它不将原生秩二传感器任意更换为别的秩二读出，不给任意秩二传感器的通用阈值定理。
+与 C-121 的历史条件、随机设置及三结果 PVM 不同，C-126 使用固定 iid 源、固定设置与末端二值读口；
+两套假设不能互相替代。C-116.2 的共同标签反例仍排除以相同边缘或可交换性代替 iid。
+精确矩、脉冲模板存在、模型内误报控制均不证明源独立性、实际校准、物理安装或本体解释。
+数值 $L$、脉冲数和时长最优值、一般算法的最小设置数、最优样本数均未在此确定。
+[相位增益与 qutrit 恢复卷定义 6.2](AURIC_OMEGA_PHASE_GAIN_AND_QUTRIT_RECOVERY.md#6-class-optimization-and-remaining-mathematical-obligations)
+的正 $\beta$ 全实编码器类尖锐恢复曲线仍是另一未解决问题。
+
+**数学引文 C-127.4（供应结果与中间工具的范围）。**
+三相干阈值复用
+[ThreeCoherenceRamseyThreshold.result](../../../D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold.lean)
+及其 [Blueprint](../../../Blueprint/D5/S3/Quantum/Measurement/ThreeCoherenceRamseyThreshold.md)、
+[文献注](../../../Library/QuantumBounds/dive2020multilevelcoherence.md) 的显式有限 ensemble 量词。
+Dive、Koukoulekidis、Mousafeiris、Mintert，
+*Characterisation of multi-level quantum coherence without ideal measurements*，
+[arXiv:1901.08599v3](https://arxiv.org/abs/1901.08599v3)，§II、式 (1)–(4)、Table I、Appendix A，
+[Phys. Rev. Research 2, 013220](https://doi.org/10.1103/PhysRevResearch.2.013220)，
+供应固定共同 Hamiltonian、归一秩一读出和混态矩比凸性的背景。
+该文 $C_k$ 符号在定义与阈值表的操作读法间需区分，故这里以 (C123.4) 为准；
+精确代数最大值引用仓内结果，不归给该文的解析上界或数值表。
+实际秩二读口的适用性由 (C123.6)–(C123.13) 的全空间分解承担。
+
+有限 Fourier 正交性及周期梯形求积为成熟工具，见 Trefethen–Weideman，
+*The Exponentially Convergent Trapezoidal Rule*，
+[SIAM Review 56(3), 385–458](https://doi.org/10.1137/130932132)，Corollary 3.3，印刷页 398：
+次数 $d$ 的三角多项式在节点数 $N>d$ 时由等距周期梯形规则精确积分。
+C-125.1 直接证明所需有限正交式；C-125.2 另用实际正密度的六系数开放球守住其普遍量词。
+
+Bernoulli 尾界属于 Hoeffding，
+*Probability Inequalities for Sums of Bounded Random Variables*，
+[JASA 58(301), 13–30](https://doi.org/10.1080/01621459.1963.10500830) 的有界变量浓缩框架。
+这里使用的精确常数和全部概率步骤由 (C126.4)–(C126.6) 自包含证明，不依赖该文定理编号。
+透视凸性、Fourier 求积及浓缩不等式均为中间工具；
+本章的 repo-derived 综合是将其接到同一个实际原生字、全五维复源、指定能量基及明确新增供应的统计协议，
+不作这些工具或该综合的全域新颖性、优先权主张。
+
+## 追加锚（本行以下为增补区）

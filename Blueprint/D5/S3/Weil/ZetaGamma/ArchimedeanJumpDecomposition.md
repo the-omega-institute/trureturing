@@ -4,7 +4,19 @@
 
 The completed-zeta Archimedean term is its mass contribution plus a nonnegative continuous translation energy.
 
-**Theorem 1.1 (Archimedean jump decomposition).**
+**Theorem 1.1 (Actual jump density as a positive rate series).**
+
+Lean statement: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x>0, archimedeanJumpDensity(x) equals the sum over natural n of exp(-((2*n)+1/2)*x). The geometric ratio exp(-2*x) lies in [0,1). This is the original density-series proof used by the Levy decomposition; the extended periodic comparison consumes the same declaration directly.
+
+**Theorem 1.2 (Archimedean jump decomposition).**
 
 $$\forall f\in \mathcal{W}, hArch: \operatorname{ArchimedeanConvergent}(\operatorname{convolutionSquare}\left(f\right)) \Rightarrow \operatorname{archimedeanTerm}\left(\operatorname{convolutionSquare}\left(f\right), hArch\right) = \operatorname{archimedeanConstant} \cdot \operatorname{l2Mass}\left(f\right) + \operatorname{archimedeanJumpEnergy}\left(f\right) \land 0 \le \operatorname{archimedeanJumpEnergy}\left(f\right)$$
 
@@ -43,4 +55,5 @@ These interval and Fourier conclusions apply the existing Gamma density and Levy
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition`
+- Truth anchor: `D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum`
 - Dependency: [D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity](../TestFunctions/ConvolutionSquarePositivity.md)
