@@ -39,7 +39,7 @@ private theorem quadratic_convex (a b c : ℝ) (ha : 0 ≤ a) :
   simp only [smul_eq_mul] at hpow ⊢
   nlinarith only [mul_nonneg ha (sub_nonneg.mpr hpow)]
 
-private theorem quadratic_interval_le_fun (f : ℝ → ℝ) (a b c l r x M : ℝ)
+theorem quadratic_interval_le_fun (f : ℝ → ℝ) (a b c l r x M : ℝ)
     (hf : ∀ y, f y = a*y^2+b*y+c) (ha : 0 ≤ a)
     (hl : l ≤ x) (hr : x ≤ r) (hleft : f l ≤ M) (hright : f r ≤ M) :
     f x ≤ M := by
@@ -65,7 +65,7 @@ private theorem quadratic_interval_nonneg (f : ℝ → ℝ) (a b c l r x : ℝ)
   exact (le_min hleft hright).trans
     (hcc.min_le_of_mem_Icc (Set.mem_univ _) (Set.mem_univ _) ⟨hl, hr⟩)
 
-private theorem ordered_block_energy {ι κ : Type*} [Fintype ι] [Fintype κ]
+theorem ordered_block_energy {ι κ : Type*} [Fintype ι] [Fintype κ]
     (upper : ι → ℝ) (lower : κ → ℝ) (m : ℝ)
     (hm : 0 ≤ m) (hu : ∀ i, m ≤ upper i)
     (hl0 : ∀ i, 0 ≤ lower i) (hl1 : ∀ i, lower i ≤ m)
