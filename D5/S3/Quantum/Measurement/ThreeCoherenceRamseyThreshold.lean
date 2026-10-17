@@ -104,10 +104,10 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
   let T := thresholdN α / thresholdD α
   have hnlo : thresholdN (6169 / 5000) ≤ thresholdN α := by
     unfold thresholdN
-    gcongr <;> linarith
+    gcongr
   have hdhi : thresholdD α ≤ thresholdD (12339 / 10000) := by
     unfold thresholdD
-    gcongr <;> linarith
+    gcongr
   have hnum : (177 / 100 : ℝ) * thresholdD (12339 / 10000) <
       thresholdN (6169 / 5000) := by norm_num [thresholdN, thresholdD]
   have ht : (177 / 100 : ℝ) < T := by
@@ -131,14 +131,14 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
     have hbound : 8 * (177 / 100 : ℝ) + 8 * (123 / 100) * (177 / 100) +
         3 * (123 / 100) ^ 2 * (77 / 100) ≤
         8 * T + 8 * α * T + 3 * α ^ 2 * (T - 1) := by
-      gcongr <;> linarith
+      gcongr; linarith
     linarith
   have hq1 : 0 < 16 * T + 16 * α * T - 60 * α +
       12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1) := by
     have hbound : 16 * (177 / 100 : ℝ) + 16 * (123 / 100) * (177 / 100) +
         12 * (123 / 100) ^ 2 * (177 / 100) + 4 * (123 / 100) ^ 3 * (77 / 100) ≤
         16 * T + 16 * α * T + 12 * α ^ 2 * T + 4 * α ^ 3 * (T - 1) := by
-      gcongr <;> linarith
+      gcongr; linarith
     linarith
   have hq0 : 0 < 20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
       16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4 := by
@@ -147,8 +147,8 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
         5 * (77 / 100) * (123 / 100) ^ 4 ≤
         20 * T + 32 * α * T + 24 * T * α ^ 2 + 16 * T * α ^ 3 +
         5 * (T - 1) * α ^ 4 := by
-      gcongr <;> linarith
-    have hsquare : α ^ 2 ≤ (31 / 25 : ℝ) ^ 2 := by gcongr <;> linarith
+      gcongr; linarith
+    have hsquare : α ^ 2 ≤ (31 / 25 : ℝ) ^ 2 := by gcongr
     nlinarith only [hbound, hsquare]
   refine ⟨by dsimp [T] at ht; linarith, ?_⟩
   intro r hr
@@ -169,6 +169,87 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
       (20 * T - 90 + 32 * α * T + (24 * T - 90) * α ^ 2 +
         16 * T * α ^ 3 + 5 * (T - 1) * α ^ 4) := by positivity
   nlinarith only [hidentity, mul_nonneg (sq_nonneg (r - α)) hquartic]
+
+private def equalMoment (a b c : ℝ) : ℝ :=
+  (a ^ 2 + b ^ 2 + c ^ 2) ^ 3 +
+    6 * (a ^ 2 + b ^ 2 + c ^ 2) * ((b * (a + c)) ^ 2 + (a * c) ^ 2) +
+    6 * (b * (a + c)) ^ 2 * (a * c)
+
+private theorem equal_spacing_bound (T : ℝ) (hT : 5 / 4 < T)
+    (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
+    (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) (hone : a + b + c = 1) :
+    equalMoment a b c ≤ T * (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by
+  let s := a + c
+  let A := s ^ 2 + b ^ 2
+  let B := b ^ 2 * s ^ 2
+  let ell := b ^ 2 + s ^ 2 / 2
+  let u := a ^ 2 + b ^ 2 + c ^ 2
+  let F := fun v : ℝ => (5 / 2) * v - 3 * A +
+    (3 / 2) * (A ^ 2 + 2 * B) / v + 3 * A * B / v ^ 2
+  have hs : 0 ≤ s := by dsimp [s]; positivity
+  have hsum : s + b = 1 := by dsimp [s]; linarith
+  have hA : 0 < A := by dsimp [A]; nlinarith [sq_nonneg (s - b)]
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  have hell : 0 < ell := by dsimp [ell]; nlinarith [sq_nonneg (s - b)]
+  have hlu : ell ≤ u := by dsimp [ell, u, s]; nlinarith [sq_nonneg (a - c)]
+  have huA : u ≤ A := by dsimp [u, A, s]; nlinarith [mul_nonneg ha hc]
+  have hu : 0 < u := lt_of_lt_of_le hell hlu
+  have hconv : ConvexOn ℝ (Set.Ioi 0) F := by
+    have hid : ConvexOn ℝ (Set.Ioi 0) (fun v : ℝ => (5 / 2) * v) :=
+      (convexOn_id (convex_Ioi (0 : ℝ))).smul (by norm_num)
+    have hinv := (convexOn_zpow (-1 : ℤ) (𝕜 := ℝ)).smul
+      (show 0 ≤ (3 / 2 : ℝ) * (A ^ 2 + 2 * B) by positivity)
+    have hinvsq := (convexOn_zpow (-2 : ℤ) (𝕜 := ℝ)).smul
+      (show 0 ≤ 3 * A * B by positivity)
+    have hcv := ((hid.add_const (-3 * A)).add hinv).add hinvsq
+    change ConvexOn ℝ (Set.Ioi 0) (fun v : ℝ =>
+      ((5 / 2) * v + -3 * A) + ((3 / 2) * (A ^ 2 + 2 * B)) * v ^ (-1 : ℤ) +
+        (3 * A * B) * v ^ (-2 : ℤ)) at hcv
+    simpa [F, zpow_neg, zpow_natCast, div_eq_mul_inv, sub_eq_add_neg] using hcv
+  have hleft : F ell ≤ T := by
+    by_cases hszero : s = 0
+    · have hb_one : b = 1 := by linarith
+      dsimp [F, ell, A, B]
+      rw [hszero, hb_one]
+      norm_num
+      linarith
+    · have hspos : 0 < s := lt_of_le_of_ne hs (Ne.symm hszero)
+      have hr : 0 ≤ 2 * b / s := by positivity
+      have heq : F ell = thresholdN (2 * b / s) / thresholdD (2 * b / s) := by
+        dsimp [F, ell, A, B, thresholdN, thresholdD]
+        rw [show b = 1 - s by linarith]
+        field_simp
+        ring
+      rw [heq]
+      exact hsym _ hr
+  have hright : F A ≤ T := by
+    have htwo : A + 6 * (b * s) ^ 2 / A ≤ (5 / 4 : ℝ) := by
+      have hw : 0 ≤ b * s := mul_nonneg hb hs
+      have hwupper : b * s ≤ 1 / 4 := by nlinarith [sq_nonneg (b - s)]
+      have hAeq : A = 1 - 2 * (b * s) := by dsimp [A]; nlinarith [hsum]
+      have hfactor : 0 ≤ (1 - 4 * (b * s)) * (1 + 10 * (b * s)) :=
+        mul_nonneg (by linarith) (by positivity)
+      have hineq : A ^ 2 + 6 * (b * s) ^ 2 ≤ (5 / 4 : ℝ) * A := by
+        rw [hAeq]
+        nlinarith only [hfactor]
+      have heq : A + 6 * (b * s) ^ 2 / A = (A ^ 2 + 6 * (b * s) ^ 2) / A := by
+        field_simp
+      rw [heq]
+      exact (div_le_iff₀ hA).2 hineq
+    have heq : F A = A + 6 * (b * s) ^ 2 / A := by
+      dsimp [F, B]
+      field_simp
+      ring
+    rw [heq]
+    exact htwo.trans hT.le
+  have hmax := (hconv.le_max_of_mem_Icc hell hA ⟨hlu, huA⟩).trans (max_le hleft hright)
+  have heq : F u = equalMoment a b c / u ^ 2 := by
+    dsimp [F, A, B, equalMoment]
+    field_simp
+    dsimp [u, s]
+    ring
+  rw [heq] at hmax
+  exact (div_le_iff₀ (sq_pos_of_pos hu)).mp hmax
 
 private theorem signal_bound (T : ℝ) (hT : 5 / 4 < T)
     (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
