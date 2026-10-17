@@ -4390,3 +4390,195 @@ mode `2` 由同步反射 `j -> -j` 得到相同的奇异值。因此去公共相
 **证明。** 第 48 节保证非 canonical completion 至少含三条非 canonical 射线。无论如何指定列置换和各列相位，这三列与分配给它们的 canonical 列之间的距离都至少为 `|a|/80`。平方求和再开方，得到式 (49.8)。若含例外射线，由第 47 节两个子图间没有边，`C` 不能含任何 canonical 列，因而六列都可使用同一距离下界。证毕。
 
 式 (49.8) 排除 canonical completion 周围的明确邻域，但没有排除更远的 completion。该界在 `a=0` 退化；它既不控制两条非 canonical 射线之间的距离，也不建立 affinity 下界或排除三条满 channel 支撑射线的正交兼容性。
+
+## 50. 实参数支上两条 canonical 射线的共同正交刚性
+
+本节沿用第 46–49 节的实参数支与 [Szöllősi 的 paired-circulant 构造，§2](https://arxiv.org/abs/0811.3930)，取 `-1<a<1, a!=0`。它约束同一个实际共同无偏向量与两条 canonical 射线的正交关系，不以逐模正交替代全局正交。
+
+### 50.1 参数、实际基方向与结论
+
+沿用 `h>0, s=h²`，并置
+
+```math
+P=p-1=\frac{a-3+i(h+a/h)}2,\qquad
+Q=q-1=\frac{-a-3+i(h-a/h)}2,\qquad A=P+3,\quad B=Q+3.
+```
+
+此时 `1<s<3, a²=s(3-s)/(1+s)`，三个归一化 Fourier 块为
+
+```math
+T_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\\bar B&-\bar A\end{pmatrix},
+\qquad
+T_1=T_2=\frac1{\sqrt6}\begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+```
+
+记其未归一化首行为 `(alpha_l,beta_l)`，并定义
+
+```math
+g_l^\varepsilon=
+\frac{\varepsilon i\alpha_l\overline{\beta_l}}{|\alpha_l||\beta_l|},
+\qquad b_l^\varepsilon=(1,g_l^\varepsilon)^T,
+\qquad \varepsilon\in\{1,-1\}.
+```
+
+所有分母均非零，因为
+
+```math
+|A|^2=3+2a,\quad |B|^2=3-2a,\quad
+|P|^2=3-a,\quad |Q|^2=3+a.
+```
+
+令 `f_l=(1,omega^l,omega^(2l))`。输入侧六条 canonical 射线由单位向量 `(f_l,g_l^epsilon f_l)/sqrt(6)` 代表；它们组成正交基，且每个 `T_l b_l^epsilon` 的两个分量均有模一。
+
+**命题 50.1。** 对这个实参数支，若单位相位输入 `(x,y)` 与 `H0(x,y)` 都逐项有模一，且其射线正交于两条不同的 canonical 输入射线，则该射线本身是 canonical。因而：
+
+1. 含两条 canonical 射线的实际共同无偏正交三元组全部由 canonical 射线组成。
+2. 任一非 canonical 六元正交 completion 至多包含一条 canonical 射线。
+3. 在第 47、48 节的两个例外参数之外，任一非 canonical completion 至少包含五条 `Delta!=0` 的射线；在整个 `a!=0` 实支上，至少包含四条。
+
+在实际列基对 `(I,H0)` 中，对单位向量 `v` 使用输入 `sqrt(6)H0* v`。公共酉变换 `H0` 保持全部内积，把上述 canonical 输入基传为实际 canonical completion。因此命题中的正交性与计数也成立于这个列基约定；`Delta` 始终在上述输入侧计算。
+
+### 50.2 两个全局正交条件强制八个三维子空间之一
+
+**证明。** 单位相位三元组若有一个 Fourier 系数为零，就必为单模。若共同平坦输入的一个完整二维 mode 投影为零，则两个 channel 都是单模。它们只能取同一个 mode：否则某个输出 channel 恰有两个非零 Fourier 系数，这不可能是单位相位三元组。这里使用了所有 `T_l` 的四个矩阵元非零。因此，整个 mode 投影为零的输入必为 canonical。
+
+反设有非 canonical 射线满足命题的两个正交条件。它在三个 mode 上均非零。两条给定 canonical 射线不能来自同一个 mode，否则它们张成该完整 mode，导致上述矛盾。因此它们来自两个不同的 mode。
+
+在这两个 mode 内，输入分量必须分别沿另一个 canonical 方向，故两个输入 channel 的逐模质量相等。两条输入 channel 的总平方范数都为三，遂使第三个 mode 的两条输入质量也相等。前两个 mode 的两个输出质量同样相等；输出 channel 的总平方范数也都为三，故第三个 mode 的两个输出质量相等。
+
+非零二维向量 `(u,z)` 若满足 `|u|=|z|`，且在 `T_l` 下的两个输出质量相等，则
+
+```math
+\operatorname{Re}\bigl(\alpha_l\overline{\beta_l}
+ u\overline z\bigr)=0,
+\qquad \frac zu=g_l^\varepsilon
+```
+
+对某个符号 `epsilon` 成立。因此该输入必落在选定每个 mode 一个 canonical 方向的八个三维子空间之一：
+
+```math
+z_l=g_lu_l,\qquad
+ g_l=g_l^{\varepsilon_l},\qquad
+(\varepsilon_0,\varepsilon_1,\varepsilon_2)\in\{1,-1\}^3.
+```
+
+以下证明每个这样的子空间内，共同平坦射线只能是单模。
+
+### 50.3 四条实际 channel 的 autocorrelation 满秩证书
+
+写 `T_l b_l=(U_l,V_l)^T`。四条实际 Fourier channel 系数分别为
+
+```math
+(u_l),\qquad(g_lu_l),\qquad(U_lu_l),\qquad(V_lu_l),
+```
+
+其中 `g_l,U_l,V_l` 均为单位复数。令 `c_l=conjugate(u_l)u_(l+1)`，下标模三。四条相位条件给出 `Lc=0`，矩阵 `L` 的第 `l` 列为
+
+```math
+L_{\cdot l}=\begin{pmatrix}
+1\\\overline{g_l}g_{l+1}\\
+\overline{U_l}U_{l+1}\\\overline{V_l}V_{l+1}
+\end{pmatrix}.
+```
+
+先设 `epsilon_2=-epsilon_1`。此时 `b1,b2` 正交，平方范数均为二。分别相加 `L` 的前两行与后两行，得到
+
+```math
+(A_0,0,B_0),\qquad(C_0,0,D_0),
+```
+
+其中
+
+```math
+A_0=\langle b_0,b_1\rangle,\quad B_0=\langle b_2,b_0\rangle,
+\qquad C_0=\langle T_0b_0,T_1b_1\rangle,\quad
+D_0=\langle T_1b_2,T_0b_0\rangle.
+```
+
+令
+
+```math
+C=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+K=\begin{pmatrix}-a/h&-h-ia\\-h+ia&a/h\end{pmatrix}.
+```
+
+直接相乘给出
+
+```math
+C^*(\sqrt6T_1)=-3I-iK,\qquad
+\sqrt6T_0=\sqrt6T_1+3C,\qquad
+R:=T_0^*T_1=-\frac{I+iK}{2}.
+```
+
+这里 `K*=K, Tr(K)=0`。取酉矩阵 `E=(b1/sqrt(2),b2/sqrt(2))`，记 `K'=E*KE`。在此基中展开 `R* b0`，利用 `||b0||²=2` 与 `Tr(K')=0`，恰得
+
+```math
+A_0D_0-B_0C_0=2iK'_{21}.
+```
+
+该量非零。否则 Hermitian 性使 `K'` 为 `diag(k,-k)`；而 `E` 的四个矩阵元平方模均为 `1/2`，所以 `K=E diag(k,-k) E*` 的两个对角元都为零，与 `K11=-a/h!=0` 矛盾。因此两条行和强制 `c0=c2=0`，再由第一行得到 `c1=0`。
+
+现在设 `epsilon_1=epsilon_2`。此时 `b1=b2`、`T1b1=T2b2`，所以 `L` 的每行都有形式 `(rho,1,conjugate(rho))`，对应四个单位复数
+
+```math
+1,\qquad r=\overline{g_0}g_1,\qquad
+u=\overline{U_0}U_1,\qquad v=\overline{V_0}V_1.
+```
+
+三个不同的 `rho` 已足以使秩为三：将每行乘以 `rho`，就得到行形 `(rho²,rho,1)` 的 Vandermonde 矩阵。
+
+置 `k0=|A||B|, k1=|P||Q|, e=epsilon_0 epsilon_1`。由二维输出的显式公式，
+
+```math
+r=\frac{eP\overline Q\overline A B}{k_0k_1},\qquad
+\frac{V_l}{U_l}=
+-\frac{\varepsilon_l i\overline{\alpha_l\beta_l}}
+ {|\alpha_l||\beta_l|},\qquad
+t:=\frac vu=\frac{e\overline{PQ}AB}{k_0k_1}.
+```
+
+下列精确虚部恒等式给出 `r!=1` 及 `t notin {1,r,r^(-1)}`：
+
+```math
+\operatorname{Im}(P\overline Q\overline A B)
+=-\frac{3a(s+3)}{2h}\ne0,
+```
+
+```math
+\operatorname{Im}(P\overline A)=3\operatorname{Im}P>0,\qquad
+\operatorname{Im}(\overline Q B)=-3\operatorname{Im}Q<0,
+```
+
+```math
+\operatorname{Im}(AB\overline{PQ})
+=\frac32\bigl((3-a)\operatorname{Im}Q+(3+a)\operatorname{Im}P\bigr)>0.
+```
+
+其中 `Im P=(h+a/h)/2, Im Q=(h-a/h)/2` 在本支均为正。第一式也可由 `P conjugate(A)=-(3-a)/2+3i Im P` 与 `conjugate(Q) B=-(3+a)/2-3i Im Q` 直接得到。中间两式分别结合
+
+```math
+\frac rt=\frac{P\overline A}{\overline P A},\qquad
+rt=\frac{\overline Q B}{Q\overline B}
+```
+
+排除 `t=r`、`t=r^(-1)`；最后一式排除 `t=1`。
+
+若四个 `rho` 只有至多两个值，因为 `r!=1`，必有 `u,v in {1,r}`，从而 `v/u in {1,r,r^(-1)}`，矛盾。因此这一符号情形也有 `rank L=3`。
+
+两种情形穷尽八个选择。于是 `c0=c1=c2=0`，在三循环上这意味着至多一个 `u_l` 非零；该射线必为 canonical，完成核心刚性证明。
+
+### 50.4 对实际 completion 的约束
+
+若非 canonical completion 包含两条 canonical 射线，其余每条都正交于这两条，因而也必 canonical，矛盾。所以它至多含一条 canonical 射线。
+
+除第 47、48 节的两个参数 `a=±sqrt((37-sqrt(73))/72)` 外，`Delta=0` 射线恰是 canonical 六条，故任一非 canonical completion 至少含五条 `Delta!=0` 射线。在例外参数处，若它含一条 canonical 射线，其他五条也均有 `Delta!=0`，因为例外射线与 canonical 射线之间没有正交边；若它不含 canonical 射线，其 `Delta=0` 部分位于 `K3,3`，最多只能取两条，故至少四条满足 `Delta!=0`。命题得证。
+
+此外，结合第 49 节已证的逐射线距离，对任一非 canonical completion `C`，至多一列为 canonical，故至少五列与任意 canonical 射线的 projective 距离不小于 `|a|/80`。因此，在全部列相位与排列构成的单项式酉矩阵 `M` 上，
+
+```math
+\inf_M\|C-C_{\mathrm{can}}M\|_F\ge\frac{\sqrt5\,|a|}{80}.
+```
+
+若含例外射线，第 49 节的 `sqrt(6)|a|/80` 下界仍然成立。
+
+本节没有排除只含一条 canonical 射线的混合正交三元组，也没有排除三条 `Delta!=0` 射线的正交兼容性；没有由这些计数推出 affinity 下界或 quartet 排除。
