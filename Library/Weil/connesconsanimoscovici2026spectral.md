@@ -10006,3 +10006,82 @@ generic-method novelty is claimed.
 
 
 The [scalar norm consumer, directed fixed-comparison certificate and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/7e5a0a22485af3938723588bbc78117c81e5caef/docs/reports/weil-c27) retain the source, single application and inherited comparison bindings.
+
+### Extend the old-base exclusion to every valid common charge
+
+Reuse the accepted actual common-charge identity and its saved lower,
+
+$$
+\mathcal K=m_J-h+\kappa s-E_\phi\ge D_{\rm lo},\qquad s\ge0,
+\qquad D_{\rm lo}>169.193163899615576.
+$$
+
+This lower is distinct from the refined common-charge UPPER
+$\overline D$. The new norm upper and this floor bind to the SAME
+actual finite row, original source and old core through their accepted
+packet chains. No new source relation or independent endpoint
+attainability is assumed.
+
+At the SAME optimistic $t_+$, changing only the fee gives the exact
+identity
+
+$$
+z_{\rm crit}(D)-Q_J
+=z_{\rm crit}(\overline D)-Q_J+\overline D-D.
+$$
+
+Consequently every actual-valid $D\ge\mathcal K\ge D_{\rm lo}$ has
+
+$$
+\boxed{z_{\rm crit}(D)-Q_J\le
+U_{\rm adm}:=U_N+\overline D-D_{\rm lo}<-15.895593038365393<0.}
+$$
+
+The exact-rational saved-data application uses the original endpoints.
+The extra debit is below14.607513220067395, so it fits inside the
+already certified negative budget. At $D=D_{\rm lo}$ the existing
+$z\ge Q_J$ and positive first border entry give
+
+$$
+\det N_2\ge A_{\rm lo}(-U_{\rm adm})>626827.787500448>0.
+$$
+
+Thus this endpoint border is positive definite. The inherited inertia
+identity gives a negative direction of the SAME OLD lower target at
+$(t_+,D_{\rm lo})$. For every $0<t\le t_+$ and $D\ge\mathcal K$,
+
+$$
+L_*+t r^*r+b^*b/D
+\preceq L_*+t_+r^*r+b^*b/D_{\rm lo}.
+$$
+
+The negative direction therefore persists throughout that family.
+Neither endpoint is asserted physically eligible; this stronger
+comparison suffices to exclude the actual eligible subset. In
+particular the legal shifts supplied by the saved band cap are included,
+since $t\le\tau_{\rm band}/h\le t_+$.
+
+This closes the smaller-charge escape for this old-base, fixed-source,
+supplied-shift family. It does not repeat the old projection-ceiling
+exclusion: that covered only $\tau\le0.0215048994$, while the band
+budget reaches approximately0.0272333894. The earlier norm result
+covered only $D\ge\overline D$; this application also includes all
+actual-valid smaller fees. Affine dependence, inertia and Loewner
+monotonicity are reused, without a generic novelty or Lean-proof claim.
+
+The single exact-rational application takes<0.003954seconds, excluding
+serialization. Its3155-byte packet has SHA256
+`9ed4c784f0f38cb430d48c527fac4478a41577069c7431428c08bc27a0e06435`;
+the120-line source has SHA256
+`3ddf2f163e70f9af2c1930f4a726ad337b174419407673cba6f4758a6e6f978a`.
+There are zero new source/far queries, matrix/vector contractions,
+inverses/solves, accepted producer/fixture replays or parameter scans.
+The [consumer and exact packet](https://github.com/the-omega-institute/trureturing-experiments/tree/734afcfef0edc6d958a0a64da55e18b55648095a/docs/reports/weil-c27)
+retain the original inputs and their common-source bindings.
+
+All inherited common-form/domain, physical-majorant, source/lift,
+positive-reference, normalization, full-far and actual-denominator
+premises remain. A stronger TRUE baseline, other sources or shifts
+beyond the supplied cap are outside this exclusion. The actual retained
+form can dominate the rejected lower target and remain positive.
+Actual retained/cofinal positivity, Robin and RH remain unresolved.
