@@ -14,7 +14,7 @@ internal sealed class OriginalResidualFiniteTransferDocument : IScribeDocumentDe
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
     private static DocumentBlock Helper(string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create("original-residual-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("original-residual-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
