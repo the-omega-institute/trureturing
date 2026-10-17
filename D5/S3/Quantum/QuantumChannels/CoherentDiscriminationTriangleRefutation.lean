@@ -7,7 +7,6 @@
    digest: Coherent discrimination bias violates the triangle inequality on replacement channels. -/
 
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
-import D5.S3.QuantumBounds.PeritoTensorBlockBound
 import D5.S3.Quantum.Dynamics.PositivePauliClockOrder
 
 set_option linter.style.longLine false
@@ -115,8 +114,8 @@ private theorem block_energy {R E : Type} [Fintype R] [Fintype E]
         ∑ r, ‖ψ (r, a)‖ ^ 2 := by
     let v : R × Fin 2 × E × Fin 2 → ℂ := fun y =>
       if y.2.1 = j ∧ y.2.2.1 = e0 ∧ y.2.2.2 = 0 then ψ (y.1, a) else 0
-    have hnorm := D5.S3.QuantumBounds.PeritoTensorBlockBound.unitary_norm_map
-      V.val V.prop (WithLp.toLp 2 v)
+    have hnorm := ContinuousLinearMap.norm_map_of_mem_unitary
+      (Unitary.map_mem (toEuclideanCLM (𝕜 := ℂ)) V.prop) (WithLp.toLp 2 v)
     have htotal : (∑ y, ‖(V.val *ᵥ v) y‖ ^ 2) = ∑ r, ‖ψ (r, a)‖ ^ 2 := by
       have hsq := congrArg (fun z : ℝ => z ^ 2) hnorm
       rw [Matrix.toEuclideanCLM_toLp, EuclideanSpace.norm_sq_eq,
