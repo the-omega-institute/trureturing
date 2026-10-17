@@ -1989,4 +1989,137 @@ The rational Kummer image modulo exact rational torsion lies in this radical, an
 
 For s=2 the determinant is the Pfaffian condition of section 99. The present theorem treats every s>=1 with simultaneous certificate normalization and the full lambda-lambda vanishing proved uniformly. It leaves singular H open and does not infer rational points from extra Selmer classes. No actual support realizing an invertible H, universal rank-one claim, or universal WSS exclusion is asserted.
 
+## 101. A fixed earlier-block dihedral balance on actual golden odd-depth support
+
+### 101.1. Exact statements and scope
+
+**Theorem 101.1.**
+
+Let j>=2 and C be positive integers, N=3^j, and B_N=L_N²+3=D C² with D the full positive squarefree kernel. Assume every prime p dividing D satisfies (19/p)=+1. Actual support already gives p>5, (5/p)=1, D=19 modulo 120 and 19 not dividing B_N. For either root s_p of5 modulo p define
+
+ chi(p)=(8+3s_p / p).
+
+The value is nonzero and independent of the root, since (8+3s_p)(8-3s_p)=19 and (19/p)=1. Then
+
+ product_(p|D) chi(p)=+1.
+
+The product is over precisely the odd-depth primes, each once. No splitting assumption is imposed on primes occurring only in the square cofactor C.
+
+In particular, if B_N has exactly one prime Q of odd initial depth, then Q splits completely in the fixed field
+
+ F=Q(sqrt5,sqrt19,sqrt(8+3sqrt5)).
+
+Consequently the following explicit prime family is excluded from being that unique odd-depth prime at every j>=2:
+
+ Q=19 modulo 120, (19/Q)=1, chi(Q)=-1,
+
+where Q is prime and Q does not divide2*5*19. This abstract family has natural density 1/128 among rational primes, as proved separately below. The density assertion does not claim that any such prime has the exact original block period, is WSS, or survives all other known necessary conditions. It certifies a nonempty excluded candidate family; it does not supply an actual original block. No elliptic-rank, Selmer-dimension or Sha assumption occurs.
+
+### 101.2. Original recurrence and the norm element
+
+**Proof.**
+
+For odd n, the Fibonacci identity is F_(3n)=5F_n³-3F_n. Since F_9=34=-4 modulo 19 and 5(-4)³-3(-4)=-4 modulo 19, induction gives
+
+ F_N=-4 modulo 19 for every j>=2.
+
+The same recurrence, starting at F_3=2, gives F_N=2 modulo 4 for every j>=1. The standard odd-index identity L_N²-5F_N²=-4 yields
+
+ B_N=5F_N²-1,
+ beta=-1-F_N sqrt5,
+ Norm_(Q(sqrt5)/Q)(beta)=-D C².
+
+Thus B_N=3 modulo 19, so neither D nor C is divisible by19. At the two roots sqrt5=9,-9 modulo 19, beta has residues16 and 1. Both are nonzero squares modulo 19. This is the exact original-index input; it can equivalently be viewed as the combination of the original Pell identity with the known cross-level congruence B_N=3 modulo 19. We do not present that congruence itself as new.
+
+In the full integer ring O_5=Z[phi], phi=(1+sqrt5)/2, the congruence F_N=2 modulo 4 gives beta=1 modulo 4O_5. This full-ring congruence, not an integer-coefficient shorthand, will control the dyadic place.
+
+### 101.3. Primary reciprocity and all admissibility conditions
+
+Write R(a,b,c)=(-1)^[a,b,c] for Stevenhagen's multiplicative Rédei symbol. Use arXiv:1806.06250v3, Corollary 5.2, Definitions 7.5–7.8, Theorem 7.9 and equations (45)–(48): https://arxiv.org/pdf/1806.06250 . Its conditions are all pairwise Hilbert symbols equal to 1 at every place and gcd(Delta(a),Delta(b),Delta(c))=1. Infinite places and the minimal dyadic condition are retained.
+
+Apply it to (5,-D,19). The pair (5,-D) is everywhere split because beta is an explicit rational norm representative of -D. The pair (5,19) is everywhere split because gamma=8+3sqrt5 has norm 19. For (-D,19), the odd factors at p|D are (19/p)=1 by assumption. At 19 the factor is (-D/19)=1, because D C²=3 modulo 19 and -3=16 is a square. At 2 both arguments are odd and -D=1 modulo 4, so the odd-unit Hilbert formula gives1. At infinity the positive argument 19 gives1. All other odd primes have unit arguments and factor1. Thus the third pair is also everywhere split.
+
+The discriminants are 5,-D,76, respectively: D is squarefree and 3 modulo 4, while 19 is 3 modulo 4. Their three-way gcd is 1. No pairwise-discriminant-coprimality assumption is made or needed. The symbols R(5,-D,19) and R(5,19,-D) are therefore defined and equal by Theorem 7.9.
+
+### 101.4. Minimality and evaluation of the actual beta field
+
+Set E_beta=Q(sqrt5,sqrt(-D)), K_beta=Q(sqrt(-5D)), and F_beta=E_beta(sqrt beta). Corollary 5.2 gives the norm-field construction. The square cofactor C is retained throughout the following ramification check.
+
+At an odd rational prime ell different from 5, the two conjugates of beta sum to-2. Thus at any prime above ell they cannot both have positive valuation. If ell splits in Q(sqrt5), its norm valuations are precisely the valuations of D C², with one conjugate a unit. If ell does not divide D, every nonzero valuation is even, so removal of a local square leaves a unit. If ell divides D, the valuation is odd in Q(sqrt5) but becomes even after adjoining sqrt(-D); equivalently use the unit conjugate, since beta times its conjugate is -D C², a square in E_beta. At these primes 5 is already a local square by actual support, so E_beta and K_beta have the same local completion. The resulting quadratic extensions are unramified at odd residue characteristic. At inert odd primes the trace-unit condition forces both valuations to be zero. These arguments also cover primes dividing C with arbitrarily large even norm valuation.
+
+At 5, beta is a unit and -D is a square in Q_5 because D=4 modulo 5. Consequently E_beta=K_beta locally, and adjoining a square root of a unit is unramified. At 2, beta=1 modulo 4O_5 gives the integral polynomial T²-T+(1-beta)/4 with unit derivative modulo2, so its quadratic extension is unramified. The base biquadratic fields are also unramified at 2: 5 and -D are both 5 modulo 8, while -5D is 1 modulo 8. Thus the extension K_beta contained in F_beta satisfies the required minimal ramification at every finite place. This is the actual norm field, not an arbitrary twist chosen after computing the sign.
+
+The positive third argument 19 adds no infinite factor. At 19, both 5 and -D are local squares, and the residues of beta are 16 and 1 by section 101.2. Equation (47) therefore gives
+
+ R(5,-D,19)=+1.
+
+No prime of C enters this Artin evaluation; its effect was accounted for in the minimality argument.
+
+### 101.5. Minimality and evaluation of the fixed gamma field
+
+Let gamma=8+3sqrt5, E=Q(sqrt5,sqrt19), K=Q(sqrt95), and F=E(sqrt gamma). Its conjugate is 8-3sqrt5, and their product is 19. Both are positive in the real embeddings.
+
+At odd primes other than 19, gamma is a unit. At 5, 19 is a local square and E=K locally; the unit extension is unramified. At 19, use the unit conjugate of gamma, whose residue is 16 at the appropriate prime. The two square roots define the same extension over E because their product19 is a square there. Thus the extension is unramified over K at all odd primes, including19.
+
+For the dyadic condition, interchange the norm construction as in Corollary 5.2 and put alpha=2(8+sqrt19). One may see the equality of the resulting fields from (sqrt gamma+sqrt gamma_bar)²=alpha. With varpi=1+sqrt19,
+
+ alpha/varpi²=(8+sqrt19)/(10+sqrt19) in 1+2 O_(Q_2(sqrt19)),
+ Norm(alpha/varpi²)=5/9.
+
+The denominator is a unit, the numerator differs from it by-2, and the removed varpi² is a square. Definition 7.5 gives the exact conductor-two minimality for the (19,5) case. This verifies Definition 7.6 for discriminants 76 and5; it does not incorrectly assert unramifiedness at 2.
+
+By reciprocity R(5,19,-D)=+1. Its third argument is negative, so an infinite factor must be included; it is +1 because gamma is totally positive. For every p|D, both 5 and 19 are local squares, p is unramified in F, and gamma has residue8+3s_p. Equations (45)–(47) evaluate the finite factor as chi(p). Therefore
+
+ +1=R(5,19,-D)=product_(p|D) chi(p),
+
+which proves the stated odd-depth balance. No individual symbol R(5,19,p) is used without checking its own hypotheses; the single composite third argument -D carries the complete admissibility and infinite-place calculation.
+
+### 101.6. Unique odd-depth consequence
+
+If D=Q is prime, actual support gives Q=19 modulo 120. The congruence Q C²=3 modulo 19 gives (Q/19)=(3/19)=-1. Since Q and 19 are both 3 modulo 4, reciprocity gives (19/Q)=+1. Thus the hypothesis of the balance is automatic, recovering the relevant quadratic splitting input of GPC10 without imposing it anew.
+
+The balance then gives chi(Q)=+1. Since Q splits in Q(sqrt5,sqrt19), its Frobenius in F lies in Gal(F/E), and chi(Q) is exactly that last quadratic Frobenius. It is trivial, so Q splits completely in F. This conclusion allows arbitrary C, including primes of even depth not splitting19 and the possibility Q divides C. Only the full odd-depth kernel is used. It excludes the stated chi=-1 family from the unique odd-depth role, not from every possible role or every Fibonacci index.
+
+### 101.7. Nonempty abstract excluded family and density
+
+The field F is the splitting field of T^4-16T²+19. Its degree is 8. Indeed gamma is not a square in Q(sqrt5), since its norm 19 is not a rational square. It also cannot become a square after adjoining sqrt19: that would make either gamma or gamma/19 a square in Q(sqrt5), whose norms19 and 1/19 are again nonsquares. Hence [F:E]=2 and [E:Q]=4.
+
+The Galois group is dihedral of order 8. Explicitly, the automorphism changing sqrt5 to-sqrt5 and fixing sqrt19 sends sqrt gamma to sqrt19/sqrt gamma; the automorphism fixing sqrt5 and sqrt gamma while negating sqrt19 is another involution. Their product has order 4. Their commutator is the nontrivial central element z of Gal(F/E). Thus E is the maximal abelian subfield of F.
+
+Let A=Q(zeta_120). Every abelian subfield of F lies in E. Of the three quadratic subfields of E, Q(sqrt19) and Q(sqrt95) ramify at 19, whereas A is unramified there. The remaining Q(sqrt5) lies in A. Therefore F intersect A=Q(sqrt5), and [FA:Q]=8*32/2=128.
+
+The cyclotomic automorphism tau_19:zeta_120 maps to zeta_120^19 fixes sqrt5, since (5/19)=1. The pair (z,tau_19) therefore defines an element of Gal(FA/Q). It is central: z is central in Gal(F/Q) and the cyclotomic group is abelian. Its conjugacy class is a singleton. By Chebotarev, the unramified rational primes having this Frobenius have natural density 1/128. A primary textbook statement is Milne, Algebraic Number Theory, Theorem 8.31: https://www.jmilne.org/math/CourseNotes/ANT.pdf . These are precisely the primes in the displayed excluded family: the cyclotomic component gives Q=19 modulo 120, while z fixes E and is nontrivial on sqrt gamma, giving (19/Q)=1 and chi(Q)=-1.
+
+The identity element over E paired with the same cyclotomic automorphism also gives density 1/128 for chi=+1. Thus the new sign distinguishes two nonempty abstract families satisfying the same listed rational congruence and quadratic splitting conditions. This does not establish independence from every earlier higher-order test, nor the existence of any prime with the exact golden clock. In particular Chebotarev is used solely to certify nonemptiness of the excluded candidate family, never to manufacture actual original support. ∎
+
+### 101.8. Comparison and remaining determinant gap
+
+Equations GPC9–GPC10 in the golden-unit-lift dossier constrain products in multiquadratic fields generated by earlier support primes. Sections 81–84 evaluate Rédei symbols with a divisor of the current odd-depth kernel as the third argument. Here 19 is coprime to the current block, and its exact earlier-index recurrence makes the actual beta residue a square; reciprocity then imposes a fixed dihedral balance on the later odd-depth kernel. The deduction applies classical reciprocity to the original Pell identity and known cross-level congruence, yielding the explicitly evaluated earlier-field constraint and its unique-odd-depth consumer.
+
+No claim is made that this decides any individual mixed entry of §100 or forces its determinant. The gap there remains. This theorem instead supplies a fixed-golden-support restriction beyond the particular quadratic splitting conditions explicitly compared above, while retaining every square cofactor and initial-depth parity.
+
+### 101.9. Alternate proof of the product balance by Hilbert reciprocity
+
+**Proof of the product assertion in Theorem 101.1.**
+
+Keep exactly Theorem 101.1's hypotheses and put K0=Q(sqrt(5)), beta=-1-F_N sqrt(5), and gamma=8+3sqrt(5). Consider the quadratic Hilbert symbols (beta,gamma)_v over all places of K0. Their product is 1. We calculate every local contribution.
+
+**Real places.** Both conjugates of gamma are positive. Thus both real Hilbert symbols are 1, regardless of the signs of beta.
+
+**Places above two.** The full-ring computation gives beta in 1+4 O_(K0,v). Its square root defines an unramified quadratic algebra, by the étale polynomial already displayed. Gamma is a unit because its norm is the odd integer 19. Every unit is a norm from an unramified quadratic local extension (and everything is a norm from the split algebra). Hence the local Hilbert symbol is 1.
+
+**The place above five.** Both beta and gamma are units: their norms are -D C^2, coprime to five, and 19. Over a local field of odd residue characteristic, two units have Hilbert symbol 1. Thus this place contributes 1.
+
+**Places above 19.** The prime splits in K0, and the residues of beta at its two primes are 16 and 1. Hensel's lemma makes beta a square in each local field because these are nonzero squares and 19 is odd. Both Hilbert symbols are therefore 1, even at the prime where gamma has positive valuation. No assumption about the primes of C has entered.
+
+**Places above odd rational primes outside 5*19*D.** Gamma is a unit. The trace relation beta+bar(beta)=-2 prevents both conjugates from having positive valuation at a split rational prime. Any nonzero beta valuation is consequently 2v_p(C), which is even. At an inert prime a positive valuation would force both conjugates and their trace to be divisible by that prime, which is impossible. Thus the local Hilbert formula, after removing a square, makes every factor 1. This accounts for every prime occurring only in the square cofactor, with no imposed 19-splitting condition and no bound on its exponent.
+
+**Places above a prime p|D.** Such a prime is greater than five, different from 19, and splits in K0. The two beta valuations are 0 and 1+2v_p(C). Indeed their sum is the valuation of its rational norm and their simultaneous positivity is excluded by the trace. At the unit prime both beta and gamma are units, so the Hilbert factor is 1. At the other prime, gamma is a unit and the odd-local formula is its residue-field quadratic character raised to the odd beta valuation. The residue field is F_p, so the factor is (8+3s/p) for the root s corresponding to that prime. It equals chi(p): the residues at the two roots are nonzero and their product is 19, whose character is +1 by the hypothesis. Thus the root selected by the actual beta valuation makes no difference. The possibility p|C changes only the even part of the valuation.
+
+These are all places. The global product formula therefore gives exactly
+
+1 = product_(p|D) chi(p).
+
+This proof explains directly the distinction between full support and odd-depth support. The general product hypothesis on (19/p) is used to identify the locally selected character with the root-independent character in the statement; it is not silently imposed at even-depth primes. This proves the same product assertion directly by Hilbert reciprocity. ∎
+
 ## 追加锚（本行以下为增补区）
