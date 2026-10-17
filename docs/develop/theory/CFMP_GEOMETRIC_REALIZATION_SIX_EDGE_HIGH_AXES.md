@@ -4409,3 +4409,290 @@ hypothesis (459.3) bounds all actual values, including special axes;
 no such bound is silently inferred from a bound on reservoirs only.
 Thus Theorem 459.1 and Corollary 466.1 give no flat-exclusion or
 realization conclusion for either of these larger classes.
+
+## 467. A source-specific maximum bound with repeated axes
+
+Use a finite actual ideal face-pairing quotient. Every original tetrahedron
+has one fixed vertex-induced frame (R,A,B,O,A,B), in edge order
+(12,13,14,34,24,23), with distinct actual transverse labels A,B. Axes
+may repeat each other or transverse labels. The original face pairing
+is a fixed-point-free involution on original face occurrences. Retain
+its vertex maps and every original normal interval.
+A common positive generalized length field supplies the usual paired
+responses. Let M,Z,C,D be four distinct actual labels with
+
+    c,d>1, m>=1+c+d, z>=1+m+c,
+    tau=(Z,M,C,D,M,C) genuine.
+
+Every owner containing Z is genuine. Its complete original Z-angle sum
+is 2*pi and its normal link is one connected circle of original degree
+at least six. The total genuine M-angle expense is at most pi. Thus
+actual genuine M/Z expense is at most 3*pi. Define
+
+    w=max{x_e : e is an actual label different from Z}.
+
+This maximum exists because the actual edge set is finite and contains
+M,C,D. In particular w>=m>3. No label-count, unique-flat, special-edge
+barrier, four-distinct-frame or degree condition for M is imposed.
+
+**Theorem 467.1.** Under these hypotheses,
+
+    z<1+2*w.                                           (467.1)
+
+This is a source-specific bound. It is not the four-distinct gap
+z<u+m+1, and does not identify w with a prescribed label U.
+It does not resolve the source-axis C/D cases or exclude a second flat.
+
+The proof uses the paired cosine and genuine-factor formulas of
+Sections 95 and 130 of the
+[paired-reservoir volume](CFMP_GEOMETRIC_REALIZATION_TWO_RESERVOIRS.md),
+and the source charge from Section 461. All interval counts below
+are original multiplicities, even when two slots have the same label.
+
+## 468. Every transverse Z owner has three or four Z slots
+
+Suppose instead z>=1+2*w. Then z>w. Consider any owner with transverse
+pair {Z,A}, where a<=w and A!=Z. Its two axes have values b,r.
+
+If neither axis is Z, both b,r<=w. Its genuine inequality would require
+
+    (b+1)*(r+1)>(z-a)^2,
+
+whereas z-a>=1+w and (b+1)*(r+1)<=(w+1)^2. This is impossible.
+Thus at least one axis is Z.
+
+If one axis is not Z, name it B, with b<=w; its other axis is Z.
+The transverse Z cosine has a positive denominator and numerator
+
+    N(r)=a*(b+r)+z*(b*r+a^2-z^2+1).
+
+Its derivative in r is a+z*b>0. At the algebraic comparison value
+r0=1+z+a it factors as
+
+    N(r0)=[a+z*(1+z+a)]*(1+a+b-z)<=0,
+
+because a+b<=2*w<=z-1. The actual r=z is strictly below r0, so
+N(z)<0. Each of its two equal transverse Z angles exceeds pi/2.
+The owner has exactly three original Z slots, and its total Z
+expense is greater than pi. No genuine test at r0 is needed here.
+
+If both axes are Z, its frame is (Z,Z,A,Z,Z,A). All four original
+Z angles have the same cosine
+
+    z*(a+1)/(2*z^2+a-1)<1/2.
+
+Indeed z>a+1, and cross multiplication leaves
+2*z*(z-a-1)+a-1>0. Thus this four-slot owner spends more than 4*pi/3
+at Z, and in particular more than pi.
+
+Every transverse Z owner therefore spends more than pi at Z.
+The complete Z equation permits at most one such actual owner, rho.
+This counts all its axial and transverse Z slots; repeated labels
+are not collapsed to one angle.
+
+## 469. The source axial charge and existence of rho
+
+The source inequalities imply m>3, c<m-2 and z>m+2. For any genuine
+axial Z occurrence with fixed pair {M,C}, let theta be the Z angle,
+beta its transverse M angle and t=cot(theta/2)>0. The exact response is
+
+    beta=atan(A*t)+atan(B*t),
+    A=[sqrt(m^2-1)+sqrt(c^2-1)]/(m+c)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m^2-1)-sqrt(c^2-1)]/(m+c)*sqrt((z-1)/(z+1)).
+
+Both coefficients are positive, and
+
+    A+B=2*sqrt(m^2-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+To verify the strict comparison, replacing c by m-2 and z by m
+would give one; the actual c is smaller and z is larger. If beta
+is at least pi/2 then beta>atan(t). Otherwise its positive tangent
+is (A+B)*t/(1-A*B*t^2)>t. In either branch,
+
+    theta+2*beta>pi.                                  (469.1)
+
+No genuine owner of pair {M,C} can have two axial Z slots, since
+its first genuine factor would be
+
+    (m+c)^2-(z-1)^2<=0.
+
+If the whole original Z circle were axial, actual face transport
+would preserve the fixed pair {M,C} through tau around the circle.
+All its intervals would have distinct owners by the preceding factor.
+Summing (469.1) over at least six intervals uses distinct original M/Z
+angles and contradicts their total capacity 3*pi. Thus there is a
+transverse Z occurrence, and rho is the unique owner of all such
+occurrences. Tau is different from rho, since its fixed transverse
+pair is {M,C}, not a pair containing Z.
+
+## 470. The four-slot owner closes the entire Z circle
+
+Suppose rho has both axes Z. Every original face of rho has multiset
+{Z,Z,A}. Follow either tracked Z edge across any such face. If its
+image is axial, the other two edge labels force fixed pair {Z,A}.
+If its image is transverse, its companion must be A: companion Z
+would violate distinctness of the transverse labels. It again belongs
+to a pair-{Z,A} owner. Every such owner is a transverse Z owner,
+hence is rho itself.
+
+Consequently every endpoint of rho's four original Z normal intervals
+is paired inside those four intervals. They form a nonempty closed
+subcollection. If it splits into more than one circular component,
+connectedness is already violated. If it has one component, that is
+the entire connected actual Z circle and has degree four. Both
+possibilities contradict the required connected degree at least six.
+This includes self-gluings and every orientation of the original maps.
+
+## 471. The three-slot owner: the two exact face-map alternatives
+
+The remaining case has fixed frame
+
+    rho=(B,Z,A,Z,Z,A), B!=Z, A!=Z.
+
+Its Z slots are edges 13,24,34. The two original faces 134 and 234
+have multiset {Z,Z,A}; the other two faces have multiset {B,Z,A}.
+The preceding receiving-role argument forces both {Z,Z,A} faces to
+pair within rho. Since B!=Z, they are exactly rho's two such faces,
+so the original fixed-point-free face involution pairs them to each
+other. They cannot pair to one and the same original face.
+
+There are precisely two label-preserving vertex maps from 134 to 234.
+The unique A edge 14 must map to 23, while the common vertex 3 of
+the two Z edges must map to vertex 4. Thus the maps, written by the
+images of (1,3,4), are
+
+    (2,4,3), or (3,4,2).                            (471.1)
+
+For the first map, edge 34 maps to itself with reversed endpoint
+order. Its one original normal interval has its two endpoints paired
+to each other. It is a closed one-interval component, impossible in
+a connected original circle of degree at least six. The other two
+Z intervals do not erase this component.
+
+For the second map, edge 13 maps to 34 and edge 34 maps to 24.
+The three original Z intervals form one path, in order 13,34,24,
+whose two external endpoints lie on the remaining faces 123 and 124.
+Reversing the face-map direction merely reverses this path. No
+interval interior is identified, and all three intervals remain
+original occurrences of rho.
+
+## 472. The complementary source run exceeds the actual capacity
+
+In the second alternative, the connected normal circle consists of
+this three-interval rho path and its complementary arc. The latter
+contains every other original Z interval, including tau. It has
+
+    n=degree(Z)-3>=3
+
+intervals. All are axial, because rho is the only transverse Z owner.
+Actual face transport along this axial arc preserves its pair; since
+it contains tau, that pair is {M,C}. In particular the complementary
+pair at either residual rho face, {A,B}, must equal {M,C}. If A=B,
+an axial receiver would be impossible and no complementary arc of
+positive length could exist; that case is excluded by the same degree
+and connectedness hypotheses, rather than by a frame assumption.
+
+Each owner along this complementary arc has exactly one Z occurrence:
+there is no transverse Z owner other than rho, and two axial Z slots
+with pair {M,C} fail the genuine factor in Section 469. Hence these n
+intervals have distinct actual owners, each different from rho, and
+the two transverse M angles charged in (469.1) are distinct original
+slots. Summing gives actual genuine M/Z expense strictly greater than
+n*pi>=3*pi, contradicting the total capacity at most 3*pi. No expense
+from rho is needed for this last strict contradiction.
+
+This proves (467.1). Every count is by original slots and intervals;
+loops, parallel face pairs, repeated labels, repeated visits and
+individual face-map orientation reversals are retained.
+
+## 473. Exact six-actual-edge application
+
+Retain the full manifold, face-involution, fixed-frame and original-degree
+hypotheses of Section 466. In this class, take exactly six
+actual reservoir labels, distinct transverse labels per fixed frame,
+and allow repeated axes. Assume the given common positive generalized
+field has a nonempty flat set. The source and six-reservoir witness
+reductions supply all premises of Theorem 467.1, so (467.1) holds for
+its designated source label Z. Corollary 466.1 additionally gives
+at least one U!=Z with u>m; the maximum w is therefore greater than m.
+
+The bound is z<1+2*max_{e!=Z}x_e. It does not order the extra label V,
+replace w by a chosen U without a separate maximum premise, or give
+the one-sided bound z<u+m+1 needed in the older four-distinct analysis.
+The repeated source-axis C/D and possible two-flat cases remain open.
+
+## 474. A stronger lower source gap when C is the repeated axis
+
+Use common positive cosh lengths for four distinct labels M,Z,C,D,
+with m>=1+c+d, z>=1+m+c and c,d>1. Let
+
+    tau=(Z,M,C,D,M,C)
+
+be genuine, and suppose its two original transverse M angles together
+spend at most pi. No degree or face-incidence hypothesis is used below.
+
+**Proposition 474.1.** If the source flat is
+
+    sigma=(M,C,D,C,C,D),
+
+selecting its two axial occurrences, then z>2*m+1.
+
+**Proof.** Its axial-flat inequality is
+
+    (m-1)*(c-1)>=(c+d)^2.
+
+The polynomial division identity
+
+    (c+d)^2=(c-1)*(c+2*d+1)+(d+1)^2
+
+therefore gives
+
+    m>=c+2*d+2+(d+1)^2/(c-1)>c+2*d+2.
+
+Put t=m-c-2*d-2>0. The transverse M cosine numerator in tau is
+
+    N(z)=c*(z+d)+m*(z*d+c^2-m^2+1).
+
+Its denominator is positive. The two equal M angles fit at most pi,
+so each is at most pi/2 and N(z)>=0. Also N is strictly increasing
+in z, with derivative c+m*d>0. Direct substitution gives
+
+    -N(2*m+1)
+      =t^3+(3*c+4*d+6)*t^2
+       +(2*c^2+8*c*d+10*c+4*d^2+15*d+11)*t
+       +2*(d+1)*(c^2+2*c*d+3*c+3*d+3)>0.
+
+Consequently N(z)>=0 requires z>2*m+1.
+
+If the hypotheses of Theorem 467.1 also hold, including the connected
+original circle and complete budgets, then z<1+2*w for
+w=max_{e!=Z}x_e. Combining the inequalities gives w>m.
+This is only a quantitative consequence in this repeated-C source case;
+it does not exclude that source or replace Corollary 466.1. QED.
+
+## 475. Repetition of D does not imply the same local source gap
+
+**Proposition 475.1.** The exact tuple
+
+    (m,c,d,z)=(100,2,90,112)
+
+defines an axial-flat local word sigma=(M,C,D,D,C,D), a genuine
+local word tau with transverse M expense less than pi, and z<2*m+1,
+despite both weak source inequalities.
+
+**Proof.** Its axial-flat product is
+
+    (m-1)*(d-1)=8811>8464=(c+d)^2.
+
+It satisfies m>=1+c+d and z>=1+m+c. The source tau is strictly
+genuine because its two paired genuine factors are
+
+    L=(m+c)^2-(z-1)*(d-1)=525>0,
+    J=(z+1)*(d+1)-(m-c)^2=679>0.
+
+Its transverse M cosine numerator is N(z)=8904>0, so its two M
+angles spend strictly less than pi. Yet z=112<201=2*m+1.
+Thus the local hypotheses in Section 474, with C repetition replaced
+by D repetition, do not imply the same source gap. This exact tuple
+is a scalar counterexample to that substituted implication; it is
+not an actual complete face quotient or a flat-exclusion counterexample. QED.
