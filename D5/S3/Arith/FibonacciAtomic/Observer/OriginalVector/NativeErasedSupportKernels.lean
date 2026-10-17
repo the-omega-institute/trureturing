@@ -159,11 +159,11 @@ private theorem erased_reply_presence (p : Address) (b : Bool) (u v : Source) :
     erase (readout p u) = erase (readout p v) ↔
       (readout p u ≠ .absent ↔ readout p v ≠ .absent) ∧
       (readout (p ++ [b]) u ≠ .absent ↔ readout (p ++ [b]) v ≠ .absent) := by
-  have at := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1
-  have pu := at p [] u
-  have pv := at p [] v
+  have readAt := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1
+  have pu := readAt p [] u
+  have pv := readAt p [] v
   simp only [List.append_nil] at pu pv
-  rw [pu, pv, at p [b] u, at p [b] v]
+  rw [pu, pv, readAt p [b] u, readAt p [b] v]
   have present (t : Source) : readout [] t ≠ .absent := by
     intro ht
     have ht' := (DelayedOriginalReadout.right_clock_readout 0 t).1.mp ht
