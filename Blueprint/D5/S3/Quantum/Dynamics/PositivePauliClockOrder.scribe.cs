@@ -133,7 +133,7 @@ internal sealed class PositivePauliClockOrderDocument : IScribeDocumentDefinitio
             Theorem("controlled_unitary", "Unitary controlled qubit matrices", ControlledUnitaryFormula(),
                 "For any two unitary complex qubit matrices Q and P, the controlled matrix is unitary. "
                 + "The matrix is block diagonal with blocks Q and P, with both pair coordinates swapped. "
-                + "Thus the second coordinate selects Q for 0 and P for 1, while the first coordinate carries their action."),
+                + "Thus the first coordinate selects Q for 0 and P for 1, while the second coordinate carries their action."),
             Theorem("controlled_partial_trace", "Mixed controlled-block trace identity", MixedTrace(),
                 "Q, P and rho are arbitrary complex two-dimensional matrices. branch(Q,P,0) is Q and branch(Q,P,1) is P. "
                 + "The identity directly expands the mixed partial trace; no damping or Gram hypothesis is assumed."),
