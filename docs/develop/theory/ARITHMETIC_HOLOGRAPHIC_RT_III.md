@@ -771,3 +771,501 @@ This exact full-reference value makes the distinction from (8) quantitative.
 The [rank-two-party lower bounds](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds), [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), and subsequent one-sided, qubit-core, curvature and local results retain their stated hypotheses. Both parties in (2) have rank three, so the example lies outside the rank-two-party hypothesis. Section 89 supplies a lower bound in a neighborhood of the classified rank-two-side equality pairs, whereas (8) disproves an unrestricted global extension of the witness. Moreover the full diamond error (15) exceeds 1/4, so this example does not violate that local diamond lower bound even if tested without reference to its neighborhood hypothesis.
 
 For this pair, the normalized maximally entangled logical/reference input gives (1+√7)/16, while the coherent inputs (10) and (14) give respectively 1/2 and (1+2√2)/7. Thus a global quarter proof must retain sufficient input optimization, or a different full-reference dual bound, to distinguish these values. No conclusion about the existence of a subquarter original product follows from the failure of the two Gram certificates.
+
+## 91. Adaptive original-channel witnesses and an obstruction to all two-fibre tests
+
+The separation in section 90 leaves open whether the uniform-reference witness becomes sufficient after adding every two-fibre coherent test. This section gives an exact physical counterexample to that stronger assertion. It also derives an input-adaptive correct-output witness that includes both tests, retains original leakage, and equals the full diamond norm when the original channels are calibrated. The unrestricted global quarter optimum remains open.
+
+### 91.1. Original channels, forward Grams, and the adaptive theorem
+
+The logical input has orthonormal basis |f,i〉, 1≤f≤4 and i∈{0,1}. The target channel ℱ:C⁸→C⁴ is
+
+\[
+ \mathcal F(|f,i\rangle\langle f,j|)=\delta_{ij}|f\rangle\langle f|,
+ \qquad
+ \mathcal F(|f,i\rangle\langle g,j|)=\tfrac12|f\rangle\langle g|
+ \quad(f\ne g).
+                                                               \tag{1}
+\]
+
+Keep the fixed correlated encodings V_in|f,i〉=|f,i〉⊗|f,i〉 and V_out|f〉=|f〉⊗|f〉, with encoding channels J_in and J_out. For arbitrary original CPTP maps A,B:C⁸→C⁴, put
+
+\[
+ \delta(A,B)=\|(A\otimes B)\circ J_{\rm in}
+                    -J_{\rm out}\circ\mathcal F\|_\diamond.
+                                                               \tag{2}
+\]
+
+The norm is unhalved and permits arbitrary reference systems and arbitrary operator inputs in its definition. No Kraus-rank bound or output-support restriction is imposed unless stated.
+
+Choose Stinespring isometries V_A,V_B and define their correct-output records
+
+\[
+ a_{fi}=(\langle f|\otimes I)V_A|f,i\rangle,
+ \qquad b_{fi}=(\langle f|\otimes I)V_B|f,i\rangle.
+                                                               \tag{3}
+\]
+
+Let G,H be their forward Grams, with inner products conjugate-linear in the first argument, and put K=G⊙H. Let T have diagonal blocks I₂ and off-diagonal blocks J₂/2, and set L=T−K. The original encoded product uses the transpose of this forward Gram.
+
+Define the compact set of fibre-block densities and the adaptive value
+
+\[
+ \begin{split}
+ \mathcal D&=\{\rho=\bigoplus_{f=1}^4\rho_f:
+                \rho_f\ge0,\ \sum_f\operatorname{Tr}\rho_f=1\},\\
+ \mathcal B(L)&=\max_{\rho\in\mathcal D}
+              2\operatorname{Tr}(\sqrt\rho L\sqrt\rho)_+.
+ \end{split}                                             \tag{4}
+\]
+
+Here X₊ denotes the positive part of a Hermitian matrix X.
+
+**Theorem 91.1.** For the original channels in (2), including arbitrary output leakage,
+
+\[
+ \delta(A,B)\ge\mathcal B(L).                            \tag{5}
+\]
+
+If both original channels are fibre-calibrated, meaning that V_A|f,i〉=|f〉⊗a_fi and V_B|f,i〉=|f〉⊗b_fi, then
+
+\[
+ \delta(A,B)=\mathcal B(L)
+       =\max_{\rho\in\mathcal D}\|\sqrt\rho L\sqrt\rho\|_1.
+                                                               \tag{6}
+\]
+
+In this calibrated case a reference of dimension at most two attains the diamond norm. The leakage-safe construction proving (5) uses a tagged reference and makes no corresponding reference-qubit assertion for arbitrary leaking channels.
+
+The value in (4) has the exact primal and dual descriptions
+
+\[
+ \begin{split}
+ \mathcal B(L)
+   &=\max\{2\operatorname{Tr}(LW):\rho\in\mathcal D,
+                                      \ 0\le W\le\rho\}\\
+   &=\min\{t:Y\ge0,\ Y\ge2L,\ Y_{ff}\le tI_2
+                                      \text{ for every }f\}.
+ \end{split}                                             \tag{7}
+\]
+
+Both optima are attained. Under calibration the dual is equivalently
+
+\[
+ \mathcal B(L)=\min\{t:Z\ge L,\ Z\ge-L,
+                              \ Z_{ff}\le tI_2\ \forall f\}.
+                                                               \tag{8}
+\]
+
+Without calibration, the substitution Z=Y−L gives (Z+L)_ff≤tI₂, not the block constraint in (8).
+
+### 91.2. Proof with the original leakage retained
+
+The correct-output column map from either input fibre is a contraction, since it is a coordinate projection of the original Stinespring isometry restricted to that fibre. Thus G_ff,H_ff≤I₂. Positivity of Schur multiplication by H_ff gives
+
+\[
+ 0\le K_{ff}\le I_2\odot H_{ff}
+                 =\operatorname{diag}(H_{ff})\le I_2,
+ \qquad L_{ff}\ge0.                                    \tag{9}
+\]
+
+These are properties of the actual channels, not a sufficient physical completion criterion for independently specified blocks.
+
+Fix ρ∈𝒟 and set Q=√ρ. Use the normalized logical/reference state
+
+\[
+ |\Psi_\rho\rangle=\sum_{x,r}Q_{xr}|r\rangle_R\otimes|x\rangle,
+ \qquad x=(f,i),\quad r=(g,j).
+                                                               \tag{10}
+\]
+
+Its squared norm is Trρ=1. Since Q is fibre-block diagonal, every nonzero term has f=g. Project the reference and original physical output onto
+
+\[
+ P=\operatorname{span}\{|f,j\rangle_R\otimes|ff\rangle_{\rm out}:
+                              1\le f\le4,\ j\in\{0,1\}\}.
+                                                               \tag{11}
+\]
+
+In this orthonormal support, direct contraction of (10) gives target matrix (QTQ)ᵀ and actual compressed matrix (QKQ)ᵀ. The formulas hold for complex Q and K. The target lies entirely in P and has trace TrρT=1. The reference-fibre tag prevents wrong-output records from a different input fibre from entering this compression.
+
+Pinch the difference into P and its orthogonal complement. The complementary actual block is positive with trace 1−TrρK. Transposition preserves trace norm, and pinching is trace-norm contractive on Hermitian matrices. Consequently
+
+\[
+ \begin{split}
+ \delta(A,B)
+   &\ge\|QLQ\|_1+1-\operatorname{Tr}(\rho K)\\
+   &=\|QLQ\|_1+\operatorname{Tr}(QLQ)
+     =2\operatorname{Tr}(QLQ)_+.
+ \end{split}                                             \tag{12}
+\]
+
+Maximizing proves (5). In particular the complementary population has not been discarded, and no calibration or trace-zero assumption was used.
+
+### 91.3. Exact calibrated norm and the reference dimension
+
+For a coefficient matrix C define
+
+\[
+ \mathcal M_C(|f,i\rangle\langle g,j|)
+       =C_{fi,gj}|f\rangle\langle g|.
+                                                               \tag{13}
+\]
+
+At calibration the target-minus-product logical map is exactly ℳ_(Lᵀ), followed by the fixed output isometry. Consider any normalized pure reference/input state
+
+\[
+ |\psi\rangle=\sum_{f,i}|r_{fi}\rangle_R\otimes|f,i\rangle,
+ \qquad \sum_{f,i}\|r_{fi}\|^2=1,
+                                                               \tag{14}
+\]
+
+with no restriction on its reference dimension. Set V|f,i〉=|r_fi〉⊗|f〉. Its output difference is VLᵀV*, and
+
+\[
+ V^*V=S=\bigoplus_f S_f,\qquad
+ (S_f)_{ij}=\langle r_{fi},r_{fj}\rangle,
+ \qquad \operatorname{Tr}S=1.
+                                                               \tag{15}
+\]
+
+The output labels force this block structure regardless of cross-fibre reference overlaps. Polar decomposition V=U√S preserves the nonzero spectrum on the support of S, including when S is singular. With ρ=Sᵀ it follows that
+
+\[
+ \|VL^TV^*\|_1
+     =\|\sqrt S L^T\sqrt S\|_1
+     =\|\sqrt\rho L\sqrt\rho\|_1,
+ \qquad \rho\in\mathcal D.
+                                                               \tag{16}
+\]
+
+Conversely, each 2×2 block ρ_fᵀ is the Gram of two vectors in C². All four factorizations may use the same reference C², because their cross-fibre overlaps do not enter (15). The resulting state (14) is normalized and realizes the value associated with ρ. Thus every value on the right of (6), including its maximum, is attainable with a reference qubit.
+
+To pass from normalized states to the defining diamond norm, convexity first handles mixed positive inputs. A uniform bound for positive inputs and arbitrary references extends to Hermitian inputs by Jordan decomposition. For an arbitrary operator X, apply that Hermitian bound to
+
+\[
+ \frac12\begin{bmatrix}0&X\\X^*&0\end{bmatrix}
+                                                               \tag{17}
+\]
+
+on one additional reference qubit. The dilation's input trace norm is ‖X‖₁ and its output trace norm equals the original output norm on X. This proves the full operator-input upper bound. Finally L_ff=0 at calibration, so TrρL=0 for every ρ∈𝒟 and the trace norm in (6) equals twice the positive-part trace. This proves (6).
+
+Rank-one blocks ρ_f correspond exactly to scalar reference vectors, hence to pure no-reference inputs. This observation does not imply that rank-one blocks always maximize (6).
+
+### 91.4. Primal, dual, and exact certificates
+
+If 0≤W≤ρ, then W annihilates kerρ. Inverting √ρ on its support gives W=√ρ E√ρ with 0≤E≤I. Conversely every such E gives a feasible W. Standard positive-part duality therefore gives
+
+\[
+ \max_{0\le W\le\rho}\operatorname{Tr}(LW)
+       =\operatorname{Tr}(\sqrt\rho L\sqrt\rho)_+,
+                                                               \tag{18}
+\]
+
+proving the primal in (7).
+
+The positive-semidefinite multiplier Y for ρ−W≥0 must satisfy Y≥0. Finiteness of the Lagrangian over W≥0 requires Y≥2L, and finiteness over block-diagonal ρ≥0 with trace one requires Y_ff≤tI₂. Thus the dual is exactly the second line of (7). The primal has a relative strictly feasible point ρ=I₈/8, W=I₈/16. The dual is strictly feasible with Y=cI₈, c>2‖L‖op, and t>c. Finite-dimensional semidefinite strong duality applies. The primal feasible set is compact. For the dual, bounded t and Y≥0 bound every diagonal entry and hence every matrix entry, so a bounded minimizing sequence has a feasible convergent subsequence. Both optima are attained.
+
+For any feasible primal and dual tuples the exact gap is
+
+\[
+ \begin{split}
+ t-2\operatorname{Tr}(LW)
+  &=\sum_f\operatorname{Tr}[(tI_2-Y_{ff})\rho_f]\\
+  &\quad+\operatorname{Tr}[Y(\rho-W)]
+       +\operatorname{Tr}[(Y-2L)W].
+ \end{split}                                             \tag{19}
+\]
+
+Each term is nonnegative. Matching feasible values therefore certify the optimum without approximation.
+
+Under calibration, Z=Y−L satisfies Z≥±L and Z_ff=Y_ff, giving (8). This has a direct completely-positive interpretation. The Choi matrix of ℳ_C is the isometric embedding of C on {|f,i〉_reference⊗|f〉_output}, so C≥0 implies ℳ_C is CP. Thus Z±L≥0 make ℳ_Z±ℳ_L CP, and ℳ_Z*(I) has diagonal fibre blocks Z_ffᵀ≤tI₂. For the actual forward-Gram map use Zᵀ,Lᵀ, which preserve these inequalities. For any normalized positive reference/input state its error output X and majorant output Y′ obey −Y′≤X≤Y′ and TrY′≤t. The positive and negative spectral projections of X give ‖X‖₁≤TrY′. The Jordan and dilation argument of (17) then supplies the full diamond upper bound. This interpretation does not turn the calibrated formula (8) into an upper bound for the original leaking maps.
+
+### 91.5. Uniform-reference and complete two-fibre tests
+
+Taking ρ=I₈/8 in (4) gives Tr(L₊)/4. For any pair f≠g, choose unit vectors u,v such that u*L_fg v=‖L_fg‖op and take ρ_f=uu*/2, ρ_g=vv*/2, with other blocks zero. The nonzero compression of √ρL√ρ has off-diagonal entries ‖L_fg‖op/2 and nonnegative diagonal entries by (9). Adding the latter cannot decrease positive-part trace. Hence
+
+\[
+ \mathcal B(L)\ge
+ \max\left\{\tfrac14\operatorname{Tr}L_+,
+                     \max_{f<g}\|L_{fg}\|_{\rm op}\right\}.
+                                                               \tag{20}
+\]
+
+At calibration the two selected diagonal entries vanish. More strongly, for calibrated channels the entire restriction of the original difference map to the sum of two input fibres has diamond norm exactly ‖L_fg‖op, allowing arbitrary references and arbitrary within-fibre bit amplitudes.
+
+For completeness, write D=L_fg and q=‖D‖op. For q>0 the coefficient matrix
+
+\[
+ \begin{bmatrix}I_2&D/q\\D^*/q&I_2\end{bmatrix}\ge0
+                                                               \tag{21}
+\]
+
+defines a CPTP two-fibre coefficient-collapse channel. Composing it with the output off-diagonal map O(X)=(X−σ_zXσ_z)/2 gives the two-fibre difference divided by q, up to the forward-Gram transpose. The diamond norm of O is one: the two-unitary-channel triangle inequality gives the upper bound, and |+〉 attains it. Singular vectors of D give a normalized equal-weight two-fibre input with output coherences q/2 and hence trace norm q. This proves the exact norm identity; q=0 is immediate. The fixed correlated output isometry preserves the norm. This is the two-fibre identity of [section 65](ARITHMETIC_HOLOGRAPHIC_RT_II.md#65-exact-unrestricted-common-channel-projection-for-two-collapsed-fibres), here used for the actual restricted channels.
+
+### 91.6. A physical trine-qutrit family
+
+Let 0≤t≤1, let e₀,e₁,e₂ be an orthonormal basis of C³, and put ω=(−1+i√3)/2. For j=0,1,2 define
+
+\[
+ \begin{split}
+ u_j&=\sqrt{1-t}\,e_1+\sqrt t\,\omega^j e_2,\\
+ b_{j+1,0}&=(e_0+u_j)/\sqrt2,
+ &b_{j+1,1}&=(e_0-u_j)/\sqrt2,\\
+ b_{4,0}&=e_2,&b_{4,1}&=e_0,
+ \qquad a_{fi}=\overline{b_{fi}}.
+ \end{split}                                             \tag{22}
+\]
+
+Use the original isometries V_A|f,i〉=|f〉⊗a_fi and V_B|f,i〉=|f〉⊗b_fi. Each within-fibre pair is orthonormal, and different fibres have distinct output labels, so these are genuine CPTP maps C⁸→C⁴. They are calibrated by construction. Their record frame operators are
+
+\[
+ \sum_{f,i}b_{fi}b_{fi}^*
+      =\operatorname{diag}(4,3(1-t),1+3t),
+                                                               \tag{23}
+\]
+
+and the same matrix for a. For 0<t<1 the records span C³. A linear dependence among the three environment-indexed Kraus operators would annihilate every record; hence both local Kraus ranks are exactly three.
+
+The product Gram is real with entries K_fi,gj=|〈b_fi,b_gj〉|². Its diagonal blocks are I₂. For distinct outer fibres f,g≤3 and for f≤3 its remaining blocks are
+
+\[
+ \begin{split}
+ K_{fg}&=\begin{bmatrix}a&b\\b&a\end{bmatrix},
+ &a&=1-\tfrac32t+\tfrac34t^2,
+ &b&=\tfrac34t^2,\\
+ K_{f4}&=\begin{bmatrix}t/2&1/2\\t/2&1/2\end{bmatrix},
+ &K_{4f}&=K_{f4}^*.
+ \end{split}                                             \tag{24}
+\]
+
+These formulas specify the entire Gram. For example 〈u_j,u_k〉=1−t+tω^(k−j), and the outer entries are |1±〈u_j,u_k〉|²/4.
+
+Define outer plus and minus inputs c_f=(|f,0〉+|f,1〉)/√2 and d_f=(|f,0〉−|f,1〉)/√2, for f=1,2,3. In the full orthonormal ordered basis
+
+\[
+ (c_1,c_2,c_3,|4,0\rangle;
+                  d_1,d_2,d_3,|4,1\rangle)
+                                                               \tag{25}
+\]
+
+the complete matrix L=T−K becomes M⊕N, where
+
+\[
+ \begin{gathered}
+ M=\begin{bmatrix}r(J_3-I_3)&h\mathbf1_3\\
+                         h\mathbf1_3^*&0\end{bmatrix},
+ \qquad N=s(J_3-I_3)\oplus0,\\
+ r=\tfrac32t(1-t),\qquad h=(1-t)/\sqrt2,
+ \qquad s=\tfrac32t-1.
+ \end{gathered}                                           \tag{26}
+\]
+
+In particular all mixed plus/minus coefficients vanish. The decomposition is unitary and omits no input coordinate or cross block.
+
+### 91.7. Exact full-reference norm of the family
+
+**Theorem 91.2.** The original channels (22) have exact error
+
+\[
+ \delta(t)=\max\{D_+(t),\tfrac43|\tfrac32t-1|\},
+                                                               \tag{27}
+\]
+
+where
+
+\[
+ D_+(t)=
+ \begin{cases}
+ (1-t)/(\sqrt2-t),&0\le t\le1/\sqrt2,\\
+ 2t(1-t),&1/\sqrt2\le t\le1.
+ \end{cases}
+                                                               \tag{28}
+\]
+
+Consequently
+
+\[
+ \min_{0\le t\le1}\delta(t)
+      =2\sqrt{2/3}-\tfrac43>\tfrac14,
+ \qquad t_{\min}=\sqrt{2/3}.
+                                                               \tag{29}
+\]
+
+**Proof.** The coefficient map for (26) kills cross-sector input blocks. Each sector has one coordinate for each of the four output labels, so its restriction is a scalar Schur multiplier with kernel M or N. For a positive reference/input state, the two principal sector blocks are positive and their traces sum to one. The triangle inequality bounds the total output error by the larger sector norm, even though their outputs share the same output space. An input wholly in one sector attains its sector norm. The state-to-operator argument in (17) makes this a full diamond-norm reduction.
+
+We compute the plus-sector norm directly. For r,h≥0 the spectrum of M is
+
+\[
+ -r,\ -r,\ r+\sqrt{r^2+3h^2},\ r-\sqrt{r^2+3h^2}.
+                                                               \tag{30}
+\]
+
+In particular M has at most one positive eigenvalue. The needed norm is
+
+\[
+ \|\operatorname{Schur}_M\|_\diamond=
+ \begin{cases}
+ 4r/3,&h\le2r/3,\\
+ 3h^2/(3h-r),&h\ge2r/3,
+ \end{cases}
+                                                               \tag{31}
+\]
+
+with the zero matrix treated separately.
+
+First suppose r>0 and h≤2r/3. Set d=4r/3, v=(1,1,1,3h/(2r))ᵀ and Y=dvv*. Then
+
+\[
+ Y\ge0,\qquad
+ Y-2M=2r(I_3-J_3/3)\oplus(3h^2/r)\ge0.
+                                                               \tag{32}
+\]
+
+The diagonal of Y is (d,d,d,3h²/r), bounded by d precisely because h≤2r/3. Thus Z=Y−M dominates ±M and its diagonal is at most d. The CP argument in section 91.4, with one coordinate per fibre, proves the arbitrary-reference upper bound d. The normalized uniform input on the three outer coordinates has output M_outer/3, with eigenvalues 2r/3,−r/3,−r/3. Its trace norm is d. This includes h=0; the separate r=h=0 case is immediate.
+
+Next suppose h>0 and h≥2r/3. Put d=3h²/(3h−r) and Y=dJ₄. On the outer sum-zero space Y−2M is 2rI. On the outer-uniform and central coordinates it is
+
+\[
+ \begin{bmatrix}
+ 3d-4r&\sqrt3(d-2h)\\
+ \sqrt3(d-2h)&d
+ \end{bmatrix}.
+                                                               \tag{33}
+\]
+
+This matrix has determinant zero and 3d−4r=(3h−2r)²/(3h−r)≥0; since d>0, it is positive semidefinite. Hence Y≥0, Y≥2M, and its diagonal is d. The same CP argument gives the upper bound d.
+
+For a matching input set
+
+\[
+ q=\frac{3h}{2(3h-r)},\qquad
+ p=(q/3,q/3,q/3,1-q),\qquad
+ |\psi_p\rangle=\sum_f\sqrt{p_f}|f\rangle.
+                                                               \tag{34}
+\]
+
+The regime h≥2r/3 ensures 0≤q≤1. At every index with p_f>0 one has (Mp)_f=d/2. Thus (√p_f)_f is an eigenvector of diag(√p)Mdiag(√p) with eigenvalue d/2. Congruence cannot increase its number of positive eigenvalues, and its trace is zero. Its trace norm is therefore d, proving (31), including the common boundary of its regimes.
+
+The minus-sector norm is 4|s|/3: the uniform outer input attains it, and (32) with r=|s| and h=0 gives the upper bound; reversing the sign of a kernel does not change its norm. For t<1 the inequality h≤2r/3 in (26) is equivalent to t≥1/√2. Substitution gives (27)–(28), with t=1 handled by M=0.
+
+On [0,1/√2] the first expression in (28) decreases to √2−1. On [1/√2,1] the plus-sector value 2t(1−t) decreases, whereas the minus-sector value 2t−4/3 increases. They meet at t=√(2/3), with value (29), below √2−1. Finally 2√(2/3)>19/12, as is seen by squaring positive sides, so (29) is strictly larger than 1/4. This proves the theorem.
+
+### 91.8. Failure of the uniform witness together with every complete two-fibre test
+
+**Corollary 91.3.** For every parameter
+
+\[
+ \frac{1+1/\sqrt3}{2}<t<\frac56,
+                                                               \tag{35}
+\]
+
+the original rank-(3,3) channels (22) satisfy
+
+\[
+ \max\left\{\tfrac14\operatorname{Tr}L_+,
+              \max_{f<g}\|L_{fg}\|_{\rm op}\right\}<\frac14.
+                                                               \tag{36}
+\]
+
+Each pair norm here is the full arbitrary-reference diamond norm of the original error map restricted to those two input fibres. Nevertheless the full original error is (27) and is always at least the strictly superquarter quantity (29).
+
+**Proof.** Equations (26) and (30) give
+
+\[
+ \operatorname{Tr}L_+
+     =2|s|+r+\sqrt{r^2+3h^2},\qquad
+ \max_{f<g}\|L_{fg}\|_{\rm op}=\max\{r,|s|,h\}.
+                                                               \tag{37}
+\]
+
+Indeed an outer-pair block has eigenvalues r,s, while an outer-central block has singular values h,0. Throughout (35), r<1/4, 0<s<1/4 and h<1/4. Since 2/3<t<1, the comparison TrL₊<1 is equivalent, after dividing by 1−t, to
+
+\[
+ \sqrt{9t^2/4+3/2}<3-3t/2.
+                                                               \tag{38}
+\]
+
+Its right side is positive. The difference of the squared right and left sides is 15/2−9t, so (38) is equivalent to t<5/6. This proves (36). Calibration and section 91.5 give the complete two-fibre interpretation, and Theorem 91.2 gives the stated full error.
+
+### 91.9. A rational-Gram member and matching exact certificates
+
+At t=4/5, formula (22) uses u_j=(e₁+2ω^j e₂)/√5. Its frame operator is diag(4,3/5,17/5), and (24) becomes
+
+\[
+ K_{fg}=\frac1{25}\begin{bmatrix}7&12\\12&7\end{bmatrix}
+ \quad(f\ne g\le3),\qquad
+ K_{f4}=\begin{bmatrix}2/5&1/2\\2/5&1/2\end{bmatrix}.
+                                                               \tag{39}
+\]
+
+Here r=6/25, s=1/5 and h=1/(5√2). The complete spectrum of L is
+
+\[
+ \left\{\frac{12+7\sqrt6}{50},\frac25,
+         \frac{12-7\sqrt6}{50},
+         -\frac6{25},-\frac6{25},-\frac15,-\frac15,0\right\}.
+                                                               \tag{40}
+\]
+
+Thus the normalized maximally entangled logical/reference input has exact error
+
+\[
+ \frac{\|L\|_1}{8}
+   =\frac{\operatorname{Tr}L_+}{4}
+   =\frac{32+7\sqrt6}{200}<\frac14,
+ \qquad
+ \max_{f<g}\|L_{fg}\|_{\rm op}=\frac6{25}<\frac14.
+                                                               \tag{41}
+\]
+
+The first equality uses the full correct-support Choi embedding and TrL=0. Its strict comparison follows from 294<324. The uniform value exceeds 6/25 because 294>256, so the maximum in (36) at this member is exactly (32+7√6)/200.
+
+A normalized no-reference state on three outer fibres is
+
+\[
+ |\psi\rangle=\frac{c_1+c_2+c_3}{\sqrt3}
+             =\frac1{\sqrt6}\sum_{f=1}^3
+                                      (|f,0\rangle+|f,1\rangle).
+                                                               \tag{42}
+\]
+
+Its target-minus-product output, represented on the outer output code, is (r/3)(J₃−I₃). Its eigenvalues are 4/25,−2/25,−2/25, so its unhalved trace norm is 8/25. There is no omitted output block because the actual maps are calibrated.
+
+For an explicit arbitrary-reference upper certificate in (8), use the basis (25) and define
+
+\[
+ \begin{gathered}
+ Y_+=\frac8{25}vv^*,\qquad
+ v=(1,1,1,5\sqrt2/8)^T,\\
+ Y_-=\frac4{15}ww^*,\qquad w=(1,1,1,0)^T,\\
+ Y_+-2M=\frac{12}{25}(I_3-J_3/3)\oplus\frac14,\qquad
+ Y_--2N=\frac25(I_3-J_3/3)\oplus0.
+ \end{gathered}                                           \tag{43}
+\]
+
+Both Y matrices and both displayed residuals are positive semidefinite. Let Z=(Y₊−M)⊕(Y₋−N), returned to the original bit basis. Then Z≥±L. Each original outer 2×2 fibre block of Z has eigenvalues (8/25,4/15), and the central block is diag(1/4,0). Hence Z_ff≤(8/25)I₂ for every original fibre. This supplies the upper bound 8/25 for all reference and operator inputs, matching (42). Therefore
+
+\[
+ \boxed{\delta(A,B)=\mathcal B(L)=\frac8{25}.}
+                                                               \tag{44}
+\]
+
+There is also an explicit zero-gap primal certificate for (7). Set
+
+\[
+ \rho=\frac13\sum_{f=1}^3|c_f\rangle\langle c_f|,
+ \qquad W=\frac13|\psi\rangle\langle\psi|,
+ \qquad Y=Z+L,\qquad t=\frac8{25}.
+                                                               \tag{45}
+\]
+
+Then ρ∈𝒟, 0≤W≤ρ and 2Tr(LW)=8/25. The dual tuple is feasible by (43), and all three nonnegative terms in (19) vanish. The adaptive optimizer here is a three-fibre no-reference input, whereas the complete uniform and every two-fibre tests in (41) remain below quarter.
+
+### 91.10. Scope and mathematical attribution
+
+Theorem 91.1 is an original-channel lower bound that keeps the complementary leakage population. Its equality and reference-qubit conclusions require calibration of the actual channels. Theorem 91.2 and Corollary 91.3 concern explicitly constructed physical products, so they require no independent-block completion or error-monotone calibration replacement.
+
+This refutes the proposed global sufficiency of the uniform positive-trace witness even after adjoining every complete two-fibre restricted diamond norm. It does not produce a subquarter product: the entire family has minimum (29). The [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family) and the unrestricted local theorem of section 89 retain their hypotheses and conclusions. The unrestricted original-channel optimum remains in [√3−3/2,1/4]; neither a global quarter lower bound nor a calibrated reduction of arbitrary leaking pairs follows from this section.
+
+The correct-output adaptive reduction and the explicit trine-family application are derived above for this fixed encoding. Positive-part duality, polar decomposition, Choi positivity, Stinespring representations, and finite-dimensional semidefinite strong duality are standard ingredients; see [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/) and, for channel norms, [Chapter 3](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf). The two-fibre norm identity is the existing section-65 result, proved again in the notation needed for its present consumer. These ingredients are not asserted to be new general norm theory. The new obstruction is the actual common-channel family and its simultaneous failure of all the stated restricted certificates.
