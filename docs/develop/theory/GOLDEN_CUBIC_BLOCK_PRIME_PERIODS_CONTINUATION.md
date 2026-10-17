@@ -209,4 +209,115 @@ Indeed $t=1$ implies $d\equiv7\pmod8$ and prefactor one; $t\ge2$ implies $d\equi
 
 The endpoint $d=D$ is allowed and yields $\chi_D=(-2/D)=1$ because $D\equiv19\pmod{120}$; no separate novelty claim is made for that endpoint. The theorem retains the full original integral orbit. It does not establish a violating numerical support surviving all previous restrictions, independence from all earlier Cassels conditions, prime-family infinitude, or a universal WSS exclusion.
 
+## 85. An integral-class height gap without a rank bound
+
+**Theorem 85.1 (exact index recovery and a uniform height gap).** Let $j,C$ be positive integers, $N=3^j$, and $B_N=L_N^2+3=D C^2$, where $D$ is the full positive squarefree kernel. On
+
+$$E_D:Y^2=X(X+5D)(X-15D)$$
+
+put
+
+$$R=(5D B_N,25D^2L_N C F_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$, and $R,S$ are non-torsion. Every affine integral point $K$ with full two-descent squareclasses
+
+$$\delta(K)=(5,D,5D)$$
+
+has $X(K)=5D B_n$ for a positive odd integer $n$ satisfying
+
+$$\boxed{v_3(n)=j.}$$
+
+If $n=N$, then $K=\pm R$. Otherwise $n\ge5N$ and
+
+$$\boxed{\widehat h(K)>3\widehat h(R).}$$
+
+No elliptic-rank or Selmer-dimension premise is imposed.
+
+**Proof.** TBN3 and GPC5 of the [WSS dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md) give $D\equiv19\pmod{120}$ and, for every $q\mid D$, $q>5$, $(5/q)=1$, $\rho(q)=6N$, and $q\equiv1\pmod{6N}$. In particular $7,11\nmid D$.
+
+We use complete two-descent, prime-to-residue-characteristic torsion injection at good reduction, and canonical heights as in [Silverman, *The Arithmetic of Elliptic Curves*, VII.3, VIII.9 and X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). The estimate proved in §74 applies to every positive twist parameter $D$: its fixed-coordinate duplication formula does not require primality. With $z=X/(5D)$,
+
+$$\frac12h(z)-c_0\le\widehat h\le\frac12h(z)+u_0,\qquad c_0=\frac{\log144}{6},\quad u_0=\frac{\log24}{6}.$$
+
+Indeed the duplication map is $(z^2+3)^2/[4z(z+1)(z-3)]$, and the same numerator/denominator estimates and gcd bound apply. The bounded difference $|h(X/(5D))-h(X)|\le\log(5D)$ disappears in the canonical-height doubling limit.
+
+At seven, translating $X=t+D$ gives $Y^2=t^3-D^2t$. The character sum cancels under $t\mapsto-t$, since $-1$ is a nonsquare modulo seven, so the reduced curve has eight points. At eleven the curve with $D=1$ has character values
+
+$$0,1,1,1,0,-1,0,-1,1,1,1\qquad(X=0,\ldots,10),$$
+
+whose sum is four. Its nonzero twists therefore have sixteen or eight points. Torsion injection at seven bounds every primary torsion part other than the seven-primary part by eight; injection at eleven excludes the seven-primary part as well. Thus the rational torsion order divides eight.
+
+The three-coordinate two-descent classes of the four rational two-torsion points are
+
+$$\begin{aligned}
+\delta(O)&=(1,1,1),\\
+\delta(T_0)&=(-3,5D,-15D),\\
+\delta((-5D,0))&=(-5D,1,-5D),\\
+\delta((15D,0))&=(15D,5D,3).
+\end{aligned}$$
+
+None of the three nonzero torsion points has trivial descent class: use the negative first coordinate in the first two cases and the nonsquare third coordinate $3$ in the last. Hence none is a double of a rational point. This excludes four-torsion, and therefore eight-torsion, proving $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$. The displayed point $R$ has nonzero $Y$, so it and its torsion translate $S$ are non-torsion. Direct calculation gives
+
+$$\delta(R)=(5,D,5D),\qquad \delta(S)=(-15,5,-3).$$
+
+Now let $K$ be as in the theorem. Its three root factors are nonzero. Integrality and squarefreeness of $5,D,5D$ imply that there are integers $a,b,\ell$ with
+
+$$X(K)=5a^2,\qquad X(K)+5D=D b^2,\qquad X(K)-15D=5D\ell^2.$$
+
+A rational square times a squarefree integer can be integral only when its square root coordinate is integral. The first two equations give $D\mid a^2$, hence $D\mid a$. Writing $a=Dc$ yields
+
+$$X(K)=5D^2c^2,\qquad \ell^2+3=Dc^2,\qquad b^2=5(Dc^2+1).$$
+
+Thus $b=5f$ and $\ell^2+4=5f^2$. None of $c,\ell,f$ is zero; in particular $\ell=0$ would give $Dc^2=3$, impossible for $D\ge19$. Replace $\ell,f$ by their positive absolute values.
+
+The integral negative-Pell classification used in §76 gives $(\ell,f)=(L_n,F_n)$ for a positive odd $n$. For completeness, $\ell,f$ have the same parity. The solution with $\ell=1$ has $f=1$. If $\ell>1$, then $\ell\ge4$, $f\ge2$, and
+
+$$\ell'=(3\ell-5f)/2,\qquad f'=(3f-\ell)/2$$
+
+are positive integers satisfying the same equation with $\ell'<\ell$. Positivity follows from $9\ell^2-25f^2=4\ell^2-20>0$ and $9f^2-\ell^2=4f^2+4>0$. The inverse transformation multiplies $(\ell'+f'\sqrt5)/2$ by $\phi^2$. Iteration therefore gives precisely the positive odd powers of $\phi$, proving the classification. Consequently $X(K)=5D B_n$ and $B_n=Dc^2$.
+
+Choose any $q\mid D$ and view $\phi$ in $\mathbb F_q$. The original rank is $\operatorname{ord}_q(-\phi^2)=6N$. Put $a=\phi^2$. Because $N$ is odd, $a^{3N}=1$, and the order of $-a$ is twice the odd order of $a$. Hence $\operatorname{ord}(a)=3N$. Since $n$ is odd,
+
+$$B_n=a^n+a^{-n}+1\pmod q.$$
+
+The divisibility $q\mid B_n$ and $q\ne3$ imply that $a^n$ is a nontrivial cube root of unity. Therefore
+
+$$\operatorname{ord}(a^n)=3,\qquad \gcd(3N,n)=N,\qquad v_3(n)=j.$$
+
+Thus $n=Nk$ with $k$ positive odd and $3\nmid k$. If $n=N$, equality of $X$-coordinates gives $K=\pm R$. Otherwise $k\ge5$.
+
+To quantify the gap, put $x=L_N\ge4$. The odd-index identity
+
+$$L_{5N}=x^5+5x^3+5x$$
+
+gives $B_{5N}>x^{10}$. With $t=x^2\ge16$,
+
+$$\frac{x^{10}}{(x^2+3)^3}=t^2\left(\frac{t}{t+3}\right)^3\ge\frac{16^5}{19^3}>144,$$
+
+where the final comparison is $1{,}048{,}576>987{,}696$. Hence $B_{5N}>144B_N^3$. For $n\ge5N$, the height estimate gives
+
+$$\begin{aligned}
+\widehat h(K)&\ge\tfrac12\log B_{5N}-c_0\\
+&>\tfrac32\log B_N+\tfrac12\log144-c_0\\
+&>3\bigl(\tfrac12\log B_N+u_0\bigr)\ge3\widehat h(R).
+\end{aligned}$$
+
+The last strict comparison follows from
+
+$$\tfrac12\log144-c_0-3u_0=\tfrac13\log144-\tfrac12\log24>0,$$
+
+which is equivalent to $144^2>24^3$. This proves the height gap. ∎
+
+**Corollary 85.2 (primitivity in the full Mordell–Weil lattice).** Under the hypotheses of Theorem 85.1, the common class of $R,S$ in $E_D(\mathbb Q)/E_D(\mathbb Q)_{\mathrm{tors}}$ is primitive. Equivalently, if $S=[m]H+T$ with $m\ge1$, $H\in E_D(\mathbb Q)$ and rational torsion $T$, then $m=1$.
+
+**Proof.** The descent class $\delta(S)=(-15,5,-3)$ differs from every torsion class listed above. For $O$ and $(-5D,0)$ use the second coordinate; for $T_0$ the ratio of first coordinates is $5$; for $(15D,0)$ the ratio of third coordinates is $-1$. Thus $S$ cannot be a double plus torsion, excluding even $m$.
+
+Suppose $m\ge3$ is odd. Since the torsion is two-torsion, absorb $T$ into $H'=H+T$ to get $S=[m]H'$. Put $K=H'+T_0$. Then $[m]K=R$.
+
+The point $K$ is integral at every prime. On this integral Weierstrass model, a nonintegral rational point lies in the formal subgroup and has negative $X$ valuation. Its nonzero multiples remain in that subgroup and have negative $X$ valuation; see [Silverman IV.1--2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). If $K$ were nonintegral anywhere, $R=[m]K$ would be nonintegral, contrary to its displayed coordinates. The points are non-torsion, so the multiple is not $O$. This includes $2,3,5$ and primes dividing $D$, and requires no prime-to-residue-characteristic condition on $m$. The model is also minimal everywhere: its discriminant $2^8 3^2 5^6D^6$ has every valuation below twelve.
+
+Odd multiplication preserves the two-descent class, so $\delta(K)=\delta(R)$. Also $\widehat h(K)=\widehat h(R)/m^2\le\widehat h(R)$. Theorem 85.1 forces $K=\pm R$, and then $R=[m]K=\pm[m]R$ contradicts non-torsion. Thus $m=1$. ∎
+
+These statements impose an integral-index and divisibility restriction for every actual squarefree kernel. They do not assert that the primitive point generates a group of rank greater than one, impose a universal rank bound, or exhibit a newly excluded prime family. The rank-one generation conclusions in §§76--78 retain their own hypotheses.
+
 ## 追加锚（本行以下为增补区）
