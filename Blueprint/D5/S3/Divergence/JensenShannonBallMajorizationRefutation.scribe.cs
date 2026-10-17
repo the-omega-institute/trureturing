@@ -69,7 +69,10 @@ internal sealed class JensenShannonBallMajorizationRefutationDocument : IScribeD
                             + "The two largest coordinates of a sum to 9/10, whereas those of b sum to 13/15. "
                             + "The strict inequality 9/10 > 13/15 shows that a is not majorized by b. "
                             + "Thus this ball has no majorization-minimizer."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanson-2020-jensen-shannon-ball-majorization-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(
