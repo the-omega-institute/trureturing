@@ -88,7 +88,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestDoesNotRetireCoarseReceiptForFineReceiptWithoutRegisteredAdapter()
+    public void IngestPreservesDistinctCoarseAndFineReceipts()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("# Legacy\n\nfine claim\n");
         var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
@@ -129,8 +129,12 @@ public sealed partial class DigestionAlignmentTests
     public void IngestPreservesFineGenerationRetirementAcknowledgment()
     {
         var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var acknowledged = coarseCapture.Reference["sha256:".Length..];
+        ledger = ledger.WithDigestionSources([source with { AcknowledgedStale = [acknowledged] }]);
         var snapshot = Snapshot(sourceBytes, [coarseCapture, fineCapture]);
         var first = ReportFreeDigestionIngestor.Plan(ledger, snapshot);
+        Assert.Equal([acknowledged], Assert.Single(first.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
         var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         using var temporary = new TemporaryDirectory();
         var persisted = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -141,6 +145,7 @@ public sealed partial class DigestionAlignmentTests
         var second = ReportFreeDigestionIngestor.Plan(settled, snapshot);
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
+        Assert.Equal([acknowledged], Assert.Single(second.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Equal(firstBytes, secondBytes);
     }

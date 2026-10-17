@@ -30,7 +30,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void CasBackedNoAtomizerEntryIsSeenWithoutReplayingItsSpecificationSource()
+    public void CasBackedManualEntryIsSeenWithoutReplayingItsMissingSource()
     {
         var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
@@ -58,7 +58,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void IngestKeepsCasBackedNoAtomizerEntryByteIdempotent()
+    public void IngestKeepsCasBackedManualEntryByteIdempotent()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
