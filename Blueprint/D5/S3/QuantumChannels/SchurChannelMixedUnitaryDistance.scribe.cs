@@ -15,6 +15,14 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
         "For every Schur channel, the diamond distance to all mixed-unitary channels equals the distance to Schur mixed-unitary channels.",
         H("Schur-channel mixed-unitary distance equality"),
         Blocks(
+            Support("referenceChannel", "Reference amplification as a CPTP channel",
+                "For independent finite reference, input and output types, referenceChannel lifts the canonical CPTP channel to the reference-first product system. Its linear action is referenceLinear; complete positivity follows by regrouping two finite reference factors, and trace preservation follows by summing the diagonal reference blocks.", DescribeRole.Definition),
+            Support("trace_contract_rectangular", "Trace contraction between different dimensions",
+                "For any canonical CPTP channel between independent finite input and output types, the trace distance of the two output density states is at most the trace distance of the inputs. The positive and negative Jordan parts of the Hermitian input difference have preserved trace; their output trace norms are bounded by their total mass. Applied to referenceChannel, this bounds every amplified joint-state error.", DescribeRole.Theorem),
+            Support("diamond_bounds", "Bounded stabilized channel distance",
+                "For any pair of canonical channels with the same finite input and output types, the unhalved stabilized diamondDistance lies in [0,2]. Every joint output is a density state, whose unhalved trace-norm difference is at most two. The defining supremum contains zero, including when no input density state exists.", DescribeRole.Theorem),
+            Support("reference_error_le_diamond", "Every reference-state error is bounded",
+                "For arbitrary independent finite reference, input and output types, referenceError is at most diamondDistance. Relabel the reference type by Fin of its cardinality; trace norm is invariant under this reindexing, and the error belongs to the bounded defining supremum set.", DescribeRole.Theorem),
             Node("MixedUnitary", "Finite convex mixtures of unitary channels", MixedFormula(),
                 "Page 1: \"So any Ψ ∈ Conv(U(H_d)) can be written as a mixture (convex combination) of unitary channels. (The number of unitary channels in the mixture can be made finite due to the Carathéodory’s theorem on convex hull).\" The dimension d and mixture length n are natural numbers. The real weights p are nonnegative and sum to one. U is a family in Matrix.unitaryGroup; val exposes each matrix, star is its matrix adjoint, and act is the canonical channel action on every complex matrix X.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -36,6 +44,11 @@ internal sealed class SchurChannelMixedUnitaryDistanceDocument : IScribeDocument
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("yu-duan-xu-2017-schur-channel-diamond-equality"),
                     ResolutionKind.Proved)))));
+
+    private static DocumentBlock Support(string name, string title, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("support-" + name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
