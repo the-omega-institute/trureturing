@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction
 import Reg.Support.DependentFamily
 
@@ -77,8 +78,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨1 / 4, .of true, .of false, ?_⟩
   intro he
   have hh := congrFun he (.of true)
+  have hn : (FreeMagma.of false : Source) ≠ .of true := by decide
   norm_num [actual, realize, mass,
-    _root_.D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation.frontier] at hh
+    _root_.D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation.frontier, hn] at hh
 
 private theorem sensitivity (law : Realization signature → Prop)
     (h : ¬ law bad) : Sensitivity ⟨signature, law⟩ actual := by
@@ -92,7 +94,8 @@ def rootFamilyRegistration : Registration rootArena (type_of% root_cases) := {
   sensitivity := sensitivity rootArena.Law root_bad
   dependence := dependence }
 
-def contractionFamilyRegistration : Registration contractionArena (type_of% two_step_contraction) := {
+def contractionFamilyRegistration :
+    Registration contractionArena (type_of% two_step_contraction) := {
   actual := actual
   bridge := Iff.rfl
   variation := ⟨two_step_contraction, bad, contraction_bad⟩
