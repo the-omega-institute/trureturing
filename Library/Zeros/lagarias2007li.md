@@ -222,3 +222,217 @@ is used.
 This restriction of tested indices is distinct from using Fibonacci or
 Zeckendorf addresses to label all integer indices. Such an all-index
 encoding does not discard indices and is not excluded by this example.
+
+## Fibonacci-sampled absolute growth: a paper criterion
+
+Fibonacci-only sign positivity in FL1–FL5 differs from an absolute-growth
+condition. The following paper derivation gives
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\limsup_{j\to\infty}|\lambda_{F_j}|^{1/F_j}\le1,
+\qquad F_0=0,\ F_1=1,
+\tag{FG1}
+$$
+
+for the actual classical Li coefficients. It does not establish the
+displayed growth bound for those coefficients and therefore does not
+prove RH. No Lean certification or literature priority is claimed.
+Hilbert basis, Laurent observation ideals and the Li generating-function
+identity are existing tools; the application and its remaining bound
+must be distinguished from them.
+
+### FG2. A finite exact relation for the common Fibonacci phase state
+
+Fix $d\ge1$ and positive integers $m_1,\ldots,m_d$; write $M=\sum_i m_i$.
+Work in the Noetherian Laurent polynomial ring
+
+$$
+\mathcal A=\mathbb Q[X_1^{\pm1},\ldots,X_d^{\pm1},
+                         Y_1^{\pm1},\ldots,Y_d^{\pm1}].
+$$
+
+Noetherianity is the usual finite-type extension and localization result;
+see [Stacks Project, Lemma 10.31.1, tag 00FN](https://stacks.math.columbia.edu/tag/00FN).
+It imposes no algebraicity condition on the points where these formal
+polynomial identities are evaluated.
+
+The Fibonacci phase update and its inverse are
+
+$$
+T(x,y)=(y,xy),\qquad T^{-1}(x,y)=(y/x,x),
+$$
+
+coordinatewise. Pullback $\sigma f=f\circ T$ is a ring automorphism,
+with $\sigma X_i=Y_i$ and $\sigma Y_i=X_iY_i$. Put
+$p=\sum_i m_iX_i$ and $I=(p,\sigma p,\sigma^2p,\ldots)$.
+The inclusion $\sigma I\subseteq I$ gives the ascending ideal chain
+
+$$
+I\subseteq\sigma^{-1}I\subseteq\sigma^{-2}I\subseteq\cdots.
+$$
+
+It stabilizes by Noetherianity. Applying a power of $\sigma$ at a
+stabilization gives $\sigma I=I$. In particular, ideal membership
+supplies some finite $K\ge1$ and $a_1,\ldots,a_K\in\mathcal A$ with
+
+$$
+\boxed{\ p=\sum_{r=1}^K a_r\,\sigma^rp.\ }
+\tag{FG2}
+$$
+
+This is an identity before any phases are substituted. No effective
+value of $K$ or bound on the coefficients is computed here.
+
+### FG3. Every fixed-length block retains a nonzero observation
+
+Let $u_i\in\mathbb S^1$, put $a=(1,\ldots,1,u_1,\ldots,u_d)$, and
+use the same state for every iterate. Then
+
+$$
+T^ja=((u_i^{F_j})_i,(u_i^{F_{j+1}})_i),\qquad
+q_j=p(T^ja)=\sum_i m_i u_i^{F_j},\qquad q_0=M>0.
+$$
+
+Every Laurent monomial has modulus one on
+$\mathbb T=(\mathbb S^1)^{2d}$. Let
+$C=\max(1,\sum_{r=1}^K\|a_r\|_1)$, where the norm is the sum of
+absolute coefficient values. Evaluating FG2 at $T^ja$ gives
+
+$$
+|q_j|\le C\max_{1\le r\le K}|q_{j+r}|.
+$$
+
+For $B_j=\max_{0\le r<K}|q_{j+r}|$, this yields
+$B_j\le CB_{j+1}$: all entries except the first already belong to
+the next block. Thus
+
+$$
+\boxed{\ \max_{0\le r<K}|q_{j+r}|\ge MC^{-j}\qquad(j\ge0).\ }
+\tag{FG3}
+$$
+
+Both $K$ and $C$ depend only on the fixed multiplicity vector, not on
+the phases or $j$. Positivity enters through $q_0=M$. Repeated phases,
+root-of-unity ratios and simultaneous dominant zeros are retained.
+No single dominant pair or algebraicity assumption is used.
+
+The update is the multiplicative phase form of the matrix
+$\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$, with
+initial exponent pair $(0,1)$. Its invertibility is essential to FG2.
+The scalar update $u\mapsto u^2$ has no inverse in the Laurent ring;
+there is no corresponding assertion for arbitrary lacunary sequences.
+
+### FG4. Finite positive power sums preserve their maximal root rate
+
+Let $z_i\ne0$ be arbitrary complex bases with positive integer weights
+$m_i$, allowing repetitions, and set $R=\max_i|z_i|$. Then
+
+$$
+\limsup_{j\to\infty}
+\left|\sum_i m_i z_i^{F_j}\right|^{1/F_j}=R.
+\tag{FG4}
+$$
+
+For common modulus $R$, write $z_i=Ru_i$ and use FG3. Every block
+supplies an index $\ell_j\in[j,j+K-1]$ with
+$|q_{\ell_j}|\ge MC^{-j}$. Since $j/F_{\ell_j}\to0$, this loss has
+root rate one on the scale $F_{\ell_j}$. The elementary bound
+$|q_j|\le M$ gives the reverse inequality.
+
+More generally, for dominant bases $|z_i|=R$ and any remainder
+$E_n=O(B^n)$ with a fixed $0<B<R$, the same proof gives
+
+$$
+a_n=-\sum_i m_i z_i^n+E_n
+\quad\Longrightarrow\quad
+\limsup_j|a_{F_j}|^{1/F_j}=R.
+\tag{FG5}
+$$
+
+Writing $|E_n|\le AB^n$ for sufficiently large $n$, at the indices supplied by FG3,
+$|a_{F_{\ell_j}}|\ge R^{F_{\ell_j}}(MC^{-j}-A(B/R)^{F_{\ell_j}})$,
+which is at least $MC^{-j}R^{F_{\ell_j}}/2$ eventually.
+Unequal-modulus sums in FG4 follow by placing all smaller-modulus
+terms in this remainder. The bound holds in every block; the favorable
+indices are consequences, not an assumption about a selected subsequence.
+
+### FG5. The actual Li generating function pays the entire remainder
+
+Use Lagarias, arXiv:math/0404394v4, Introduction, equation (1.4):
+
+$$
+G(w)=-\frac1{(1-w)^2}
+ \frac{\xi'}{\xi}\!\left(-\frac{w}{1-w}\right)
+=\sum_{n\ge1}\lambda_nw^{n-1}.
+\tag{FG6}
+$$
+
+This is the logarithmic derivative of the actual composed xi function,
+not a global choice of logarithm or a substituted zero model. Xi is
+entire and nonzero at zero, so $G$ is holomorphic near zero and
+meromorphic throughout $|w|<1$.
+
+A zero $\rho$ of multiplicity $m_\rho$ gives a simple pole at
+$w_\rho=\rho/(\rho-1)$, with residue $m_\rho$. Put
+$z_\rho=1-1/\rho=1/w_\rho$. Its pole term is
+
+$$
+\frac{m_\rho}{w-w_\rho}
+=-\frac{m_\rho z_\rho}{1-z_\rho w}
+=-\sum_{n\ge1}m_\rho z_\rho^n w^{n-1}.
+\tag{FG7}
+$$
+
+If RH is false, reflection symmetry supplies a zero with
+$\Re\rho<1/2$, hence a pole inside the disk since
+$|z_\rho|^2=1+(1-2\Re\rho)/|\rho|^2>1$.
+The discrete pole set has a positive smallest modulus $r_0<1$, attained
+at finitely many poles $w_1,\ldots,w_d$. Retain all their multiplicities
+$m_i>0$ and put $z_i=1/w_i$, $R=1/r_0>1$.
+
+Choose $r_0<r_1<1$ so these are the only poles in $|w|\le r_1$.
+Subtracting all their principal parts gives
+
+$$
+H(w)=G(w)+\sum_{i=1}^d\frac{m_i z_i}{1-z_iw},
+$$
+
+holomorphic on a neighborhood of the closed disk $|w|\le r_1$.
+Cauchy's coefficient estimate for $H$ gives the exact decomposition
+
+$$
+\lambda_n=-\sum_{i=1}^d m_i z_i^n+E_n,\qquad
+E_n=O(B^n),\qquad B=1/r_1<R.
+\tag{FG8}
+$$
+
+This controls the entire analytic remainder of the actual generating
+function. It neither discards uncomputed zeros nor rearranges an infinite
+constant-minus-power sum. No zero-height computation is required.
+By the smaller-remainder estimate (FG5), under RH failure,
+
+$$
+\limsup_j|\lambda_{F_j}|^{1/F_j}
+=\max_\rho\left|1-\frac1\rho\right|>1.
+\tag{FG9}
+$$
+
+Conversely, under RH the same $G$ has no poles inside the unit disk.
+The standard Cauchy coefficient bound on every smaller disk gives the
+all-index root bound, hence its Fibonacci restriction. This is the known
+RH-to-growth implication, also recorded in Lagarias's all-index criterion
+(Theorem 2.2(3), equation (2.22)); it is reused, not counted as new
+mathematics. Together with FG9 it gives FG1.
+
+### FG6. What remains to prove
+
+The unpaid assertion is still the actual bound
+$|\lambda_{F_j}|=O_\varepsilon(e^{\varepsilon F_j})$ for every
+$\varepsilon>0$. The exact finite observation relation detects an
+exponential rate; it does not rule that rate out for the actual xi
+function. FL1–FL5 remains a valid sign-only obstruction, whose positive
+Fibonacci samples grow exponentially. The original Robin signed estimate,
+the endpoint half-variance bound and RH remain unresolved. No numerical
+experiment, parameter scan, zero computation or new Lean certification
+is used.
