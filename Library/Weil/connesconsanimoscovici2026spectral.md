@@ -7803,3 +7803,192 @@ completion. It asserts no generic theorem, novelty or Lean proof.
 The actual-form/domain, common-source/lift and physical error premises
 remain. Actual-center/full-border/good-block/cofinal positivity,
 Robin and RH remain unresolved.
+
+### Retain both source responses in the same indefinite plane
+
+The single-timelike lower and marginal derivative completion discard
+part of the joint self-term relation. Reuse the classical block Schur
+and inertia argument on the SAME two-dimensional span, keeping the
+positive square instead of dropping it. This is an application of the
+existing matrix theory and saved source certificates, not a new
+generic inequality or an RH claim.
+
+Write
+
+$$
+Q_\varepsilon=\gamma P-e_0e_0^*/\delta\preceq Q_{\rm true},
+\quad \gamma=1-\varepsilon=\frac1{1+\eta},
+\quad \varepsilon=\frac\eta{1+\eta},\quad 0\le\eta<1.
+$$
+
+Keep the same real rows $y_0=\alpha_0\rho+\beta_J$, actual $f$,
+$c=\rho[0]/y_0[0]$ and $w=\rho-cy_0$ with $w[0]=0$. Define
+
+$$
+\begin{aligned}
+b&=-y_0Q_\varepsilon y_0^*>0,&
+g&=\rho Q_\varepsilon y_0^*,&
+h&=\rho Q_\varepsilon\rho^*,\\
+t&=wQ_\varepsilon w^*=\gamma wPw^*\ge0,&
+\omega&=c+g/b,&
+a&=t+b\omega^2=h+g^2/b.
+\end{aligned}
+$$
+
+The common identities come from the original reference rows and
+operators. Overlap of two scalar interval evaluations is only an
+inconsistency test; it cannot establish a common realization.
+For $a>0$, the row $v=\rho+(g/b)y_0$ is $Q_\varepsilon$-orthogonal
+to $y_0$ and has energy $a$. The span has one negative and one positive
+direction. Since $Q_\varepsilon$ has at most one negative direction,
+its orthogonal remainder is nonnegative, even when $P$ is singular.
+Consequently
+
+$$
+fQ_\varepsilon f^*\ge
+-\frac{\theta_\varepsilon^2}{b}
++\frac{(\gamma\zeta+\omega\theta_\varepsilon)^2}{a},
+\qquad
+\theta_\varepsilon=fQ_\varepsilon y_0^*,\quad \zeta=fPw^*.
+$$
+
+Transport the whole original signed-response interval by
+
+$$
+\theta_\varepsilon=\theta-\varepsilon fPy_0^*,\qquad
+|\theta_\varepsilon-\theta|\le
+\varepsilon\sqrt{A\,r_{0,\rm up}}.
+$$
+
+Here $A\ge fPf^*$ is the SAVED upper for the same actual row, while
+$r_0=y_0Py_0^*$. Keep $A$ fixed in both paid recipes, including the
+source-energy lower-endpoint recipe. No source-energy lower replaces a
+far-row upper. The other exact response identity is
+
+$$
+fQ_\varepsilon\rho^*=\gamma\zeta+c\theta_\varepsilon.
+$$
+
+For one fixed saved $k,D>0$, put $H=k+h$. Expanding the SAME paid
+comparison and minimizing over every real $s=\alpha-\alpha_0$, when
+$H>0$, gives
+
+$$
+\begin{aligned}
+\mathcal E_{D,k}(\alpha)&\ge
+F(\theta_\varepsilon,\zeta),\\
+F(\theta_\varepsilon,z)&=
+k\alpha_0^2+D-b+2\theta_\varepsilon
+-\frac{\theta_\varepsilon^2}{b}
++\frac{(\gamma z+\omega\theta_\varepsilon)^2}{a}
+-\frac{(k\alpha_0+g+c\theta_\varepsilon+\gamma z)^2}{H}.
+\end{aligned}
+$$
+
+This is a lower for the specified paid comparison. It is not a lower
+for an actual center with a smaller justified charge, and an all-real
+bound does not assert physical admissibility of every $\alpha$.
+
+The coefficient of $\theta_\varepsilon^2$ is
+
+$$
+-\frac1b+\frac{\omega^2}{a}-\frac{c^2}{H}
+=-\frac{t}{ab}-\frac{c^2}{H}\le0.
+$$
+
+Thus its minimum over the certified $\theta_\varepsilon$ interval,
+for each $z$, occurs at one of its two endpoints. If in addition
+$k-g^2/b>0$, the $z^2$ coefficient is positive:
+
+$$
+A_z=\gamma^2\left(\frac1a-\frac1H\right)>0,
+\qquad H-a=k-g^2/b.
+$$
+
+Each endpoint leaves one convex quadratic
+$A_z z^2+2B_z z+C_z$ on the saved $[z_{\rm lo},z_{\rm hi}]$.
+Take directed rational $0<A_{\rm lo}\le A_z$, $C_{\rm lo}\le C_z$
+and $B_z\in[B_{\rm lo},B_{\rm hi}]$. Put
+
+$$
+B_m=(B_{\rm lo}+B_{\rm hi})/2,\quad
+B_r=(B_{\rm hi}-B_{\rm lo})/2,\quad
+Z=\max\{|z_{\rm lo}|,|z_{\rm hi}|\}.
+$$
+
+For every allowed $z$, a common lower is
+
+$$
+A_{\rm lo}z^2+2B_mz+C_{\rm lo}-2B_rZ.
+$$
+
+Its minimum occurs at the exact rational
+
+$$
+z_* = \max\{z_{\rm lo},\min\{z_{\rm hi},-B_m/A_{\rm lo}\}\}.
+$$
+
+Evaluate this lower at $z_*$ and take the smaller result from the two
+$\theta_\varepsilon$ endpoints. All finite-parameter errors remain
+included. No endpoints are asserted simultaneously attainable, and
+$z_*$ belongs only to a bounding quadratic, not a constructed actual
+source or physically legal steering parameter. If the required
+positive denominators or curvature cannot be certified, this consumer
+supplies no new floor.
+
+The fixed1024-working/640-export application gives the following
+outward displays. Exact rational lower certificates and640-bit
+endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Transported $\theta_\varepsilon$ |contained in[−4.331314,−4.325974]|
+| Saved $\zeta$ |contained in[−8.423007,0.178344]|
+| Theta transport error upper |<1.590332e-26|
+| Positive-plane energy $a$ |>1629.238166139474|
+| Fixed comparison curvature $H$ |>19789.907603158162|
+| Fixed rank gap $k-g^2/b$ |>18160.669437018688|
+| Previous fixed all-real lower, rounded down |−0.572919446|
+| New fixed all-real lower, rounded down |−0.484608778|
+| Previous energy-endpoint all-real lower, rounded down |−0.779703304|
+| New energy-endpoint all-real lower, rounded down |−0.687084970|
+
+Both lower certificates strictly improve, while both exclusion flags
+remain false. The four scalar bounding quadratics, one per theta
+endpoint and recipe, select the saved lower zeta endpoint. This
+identifies the worst endpoint of these bounding polynomials; it
+constructs no source realizing that endpoint or a negative paid value.
+
+The improvement comes from retaining the positive plane and its common
+response relations, with the original working precision and saved
+suppliers. It does not determine the actual paid sign. It leaves open whether further source-image or residual information
+can settle that sign. No claim is made that any one new scalar
+necessarily suffices.
+
+The single application binds12 invoked and66 inherited paths and
+performs two joint-plane applications, each with two analytic theta
+endpoints. Stored assembly time is<0.133236seconds, excluding
+serialization. It repeats no old scientific producer or passed
+fixture.
+
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/82e2d6241886e2c19355ebecfa19c3e261369a78/docs/reports/weil-c27)
+retain packet SHA256 `3bdf5f3f81daeeda99c5fa71f2a48ee64c84c09da0f20070b45b0ad781aeec22` and source SHA256
+`fb6ae6eb627079e43628481bae7e2b9485077ab22bac7c85b4bcf12994f1b3b9`. The consumer applies this saved-scalar bound
+to the fixed current $(k,D)$ and the already saved energy-endpoint
+$(k_{\min},D_{\min})$. Every stronger previous floor remains retained.
+A strictly positive endpoint floor excludes only the fixed monotone
+energy-cap-only pricing family because every one of those comparisons
+has $k\ge k_{\min},D\ge D_{\min}$, with the same actual row and other
+premises. A nonpositive lower is inconclusive and constructs no
+negative row or upper.
+
+No finite direction, feature, Gram, cross, source, derivative, inverse,
+solve, sine, moment, tail, trace or pricing supplier is repeated.
+There is no source/parameter/precision/cutoff scan or retry. The
+original actual-form/domain, common source/lift, reference, inverse,
+weight and actual-symbol physical-error certificates remain premises.
+This reuses standard indefinite projection, concavity and scalar
+quadratic minimization; it claims no generic theorem, novelty or Lean
+proof. Actual-center/full-border/good-block/cofinal positivity, Robin
+and RH remain unresolved.
