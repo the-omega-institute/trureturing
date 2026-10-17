@@ -11360,3 +11360,98 @@ Under the inherited actual form/domain, exact-trial, normalization and
 sound-cache premises, the common lower-bound bridge and the displayed
 necessary pass are available. The paid full-target sign, actual retained
 and cofinal Weil positivity, Robin, RH and Lean verification remain open.
+
+
+#### Keep the paid channel border before eliminating its inverse
+
+The existing one-negative-core determinant and Schur/Haynsworth interfaces
+also apply directly to the SAME fixed nineteen-channel lower target.
+Reuse its newly saved joint arrays
+
+$$
+D=D_g+\Omega_\beta\succ0,\qquad B=\beta_V,\qquad
+C=\Sigma_*+B^*D^{-1}B.
+$$
+
+The matrices have dimensions19,19-by18 and18 respectively. Both the old
+inertia $\operatorname{inertia}(\Sigma_*)=(17,1,0)$ and the19 positive
+leading-minor certificates for $D$ are already available. They are inputs
+to this application; their computations are not repeated.
+
+Instead of evaluating the inverse in $C$, retain the coupled border
+
+$$
+\mathcal Z=\begin{pmatrix}D&B\\B^*&-\Sigma_*\end{pmatrix}.
+$$
+
+Schur's determinant identity gives
+
+$$
+\det\mathcal Z=\det D\,\det(-C)=\det D\,\det C,
+$$
+
+because the lower block has even dimension18. The gain $B^*D^{-1}B$ is
+positive semidefinite, so the old17 strictly positive eigenvalues give
+at least17 strictly positive eigenvalues of $C$. Since $\det D>0$,
+
+$$
+\boxed{C\succ0\iff\det\mathcal Z>0,\qquad
+n_-(C)=1\iff\det\mathcal Z<0.}
+$$
+
+The second equivalence concerns a nonzero determinant; no zero direction
+occurs in that case. The updated good block
+$P+\beta_G^*D_g^{-1}\beta_G$ remains positive, so its Schur
+complement $C$ transports this classification to the fixed1281 lower target
+$\mathcal L_g^{(19)}=L_*+\beta^*D_g^{-1}\beta$.
+A zero-containing determinant enclosure classifies neither sign. These
+are applications of the already owned inertia and determinant methods,
+not a new RH criterion or a new determinant algorithm.
+
+The new entry enclosure is formed from the saved $D,B,\Sigma_*$ before
+explicit inverse elimination. The SAME $B$ fills both off-diagonal blocks;
+$D$ and $\Sigma_*$ may be symmetrized by averaging their transpose
+entries. This preserves their actual symmetric matrices. The accepted
+positivity premise refers to the actual $D$, while the serialized box
+need only contain it. No independently chosen endpoint matrix is used
+as a Loewner upper or lower bound.
+
+A single37-by37 FLINT determinant uses the unchanged1024-bit working
+precision. Its absolute export grid is $640\cdot37+64=23744$ bits,
+following the existing degree-aware rule. Supporting its exact decimal
+endpoint strings is a serialization setting, not a precision increase.
+No old determinant, inertia, inverse action, $D_g$, joint metric, residual,
+source, far Gram or trial producer is rerun. There is no balancing,
+parameter, basis, direction, cutoff, weight or precision scan.
+
+The [source and exact archived result](https://github.com/the-omega-institute/trureturing-experiments/tree/0f72c75a1653fedddf023a8c9cdb32b7a41459c7/docs/reports/weil-c27)
+are pinned at source/data commit `0f72c75a1653fedddf023a8c9cdb32b7a41459c7`.
+The single application takes0.119342seconds and returns
+`inconclusive-coupled-border-determinant`.
+
+| Quantity | Value or enclosing interval |
+|---|---:|
+| Working precision | 1024bits |
+| Saved matrix-entry grid | 640bits |
+| Coupled-border dimension | 37 |
+| Determinant export grid | 23744bits |
+| New native determinant calls | 1 |
+| Coupled-border determinant | $[-1.391,1.391]\cdot10^{-1859}$ |
+| New solve, inverse, source or Gram calls | 0 |
+| Old determinant or inertia fixture replays | 0 |
+
+The exact dyadic determinant endpoints have opposite signs. The displayed
+rounded enclosure therefore certifies neither positivity nor a negative
+direction of the fixed lower target; it is not an exact-zero certificate.
+Both target-sign flags remain false. The application stops without a new
+minor, determinant, balancing, precision or parameter retry.
+
+This archive supplies the result of the previously missing coupled-border
+application; no accepted19-RHS action or earlier scientific certificate
+needs recomputation. Under the inherited actual form/domain, original
+exact-trial, normalization and sound-cache premises, the earlier common
+lower-bound bridge remains available. The paid fixed-target sign, actual
+retained/cofinal Weil positivity, Robin, RH and Lean verification remain
+open. A bounded certificate for this single trial cannot supply a uniform
+cofinal estimate or the core-density and continuity bridge needed to pass
+to all admissible tests.
