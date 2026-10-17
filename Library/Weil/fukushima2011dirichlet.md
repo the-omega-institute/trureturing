@@ -1394,3 +1394,12 @@ windowed (FF7)/(VH1) choices retain their own unpaid conditions.
 No cofinal family is supplied; the fixed-height separation barrier
 remains. The one-half bound, full Robin, RH and Lean certification
 remain unresolved.
+
+The [fixed-head remainder construction (FH1)–(FH4)](lagarias2004li.md#a-fixed-verified-head-cannot-absorb-the-absolute-smoothed-remainder)
+also excludes absorbing the whole absolute paired tail into this fixed
+head with a vanishing ambient-norm error uniformly on the entire original
+form remainder, even after these same unwindowed maps. It uses actual
+real zero duals and exact finite head annihilation, independently of the
+shifted-tail separation estimate. The constructed inputs have not been
+placed in the strict-subhalf spectral class used above; no signed-tail
+obstruction or change to (UG9) follows.
