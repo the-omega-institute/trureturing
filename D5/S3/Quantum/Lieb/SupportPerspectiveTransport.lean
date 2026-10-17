@@ -138,12 +138,13 @@ private theorem support_of_two_sided_bounds (C H P : Matrix n n ℂ)
     apply Matrix.nonneg_iff_posSemidef.mp
     simpa only [sub_neg_eq_add, add_comm] using sub_nonneg.mpr hLo
   have hDC : r • C + H ≤ (2 * r) • C := by
-    have h := add_le_add_left hHi (r • C)
     have hs : r • C + r • C = (2 * r) • C := by
       rw [← add_smul]
       congr 1
       ring
-    simpa only [hs] using h
+    calc
+      _ ≤ r • C + r • C := add_le_add le_rfl hHi
+      _ = _ := hs
   obtain ⟨hPD, hDP⟩ := support_of_nonneg_le_smul C (r • C + H) P hP hPC hD
     (2 * r) hDC
   have hCP : C * P = C := by
@@ -185,10 +186,12 @@ theorem positive_map_sandwich_support
       hZ.isSelfAdjoint.neg_algebraMap_norm_le_self
   have hHi : S ≤ ‖Z‖ • C := by
     have h := Φ.monotone (congruence_mono hZHi R)
+    change Φ (Rᴴ * Z * R) ≤ Φ (Rᴴ * (‖Z‖ • (1 : Matrix n n ℂ)) * R) at h
     simpa only [hR, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one,
       hRR, PositiveLinearMap.map_smul_of_tower, S, C] using h
   have hLo : -(‖Z‖ • C) ≤ S := by
     have h := Φ.monotone (congruence_mono hZLo R)
+    change Φ (Rᴴ * -(‖Z‖ • (1 : Matrix n n ℂ)) * R) ≤ Φ (Rᴴ * Z * R) at h
     simpa only [hR, Matrix.mul_neg, Matrix.neg_mul, Matrix.mul_smul,
       Matrix.smul_mul, Matrix.mul_one, hRR, map_neg,
       PositiveLinearMap.map_smul_of_tower, S, C] using h
@@ -237,9 +240,11 @@ def normalizedPositiveMap
         simp only [Matrix.mul_add, Matrix.add_mul, map_add]
       map_smul' := by
         intro c Z
-        simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul] }
+        simp only [Matrix.mul_smul, Matrix.smul_mul, map_smul, RingHom.id_apply] }
     (by
       intro Z hZ
+      change 0 ≤ spectralInverseSqrt (Φ B) *
+        Φ (CFC.sqrt B * Z * CFC.sqrt B) * spectralInverseSqrt (Φ B)
       have hR : (CFC.sqrt B)ᴴ = CFC.sqrt B :=
         (CFC.sqrt_nonneg B).posSemidef.isHermitian.eq
       have hW : (spectralInverseSqrt (Φ B))ᴴ = spectralInverseSqrt (Φ B) := by
@@ -279,7 +284,8 @@ def ambientUnitalization
         abel
       map_smul' := by
         intro c Z
-        simp only [map_smul, Matrix.smul_apply, smul_eq_mul, smul_add, smul_smul] }
+        simp only [map_smul, Matrix.smul_apply, smul_eq_mul, smul_add, smul_smul,
+          RingHom.id_apply] }
     (by
       intro Z hZ
       have hC : (Φ B).PosSemidef := (map_nonneg Φ hB.nonneg).posSemidef
@@ -314,7 +320,7 @@ theorem ambient_unitalized_jensen {f : ℝ → ℝ}
         X i i • (1 - spectralSupport (Φ B))) ≤
       normalizedPositiveMap Φ B (cfc f X) +
         (cfc f X) i i • (1 - spectralSupport (Φ B)) := by
-  exact positive_unital_jensen hconv hcont (ambientUnitalization Φ B hB i)
+  exact positive_unital_jensen (@hconv) hcont (ambientUnitalization Φ B hB i)
     (ambientUnitalization_one Φ B hB i) X hX
 
 end Uniform
