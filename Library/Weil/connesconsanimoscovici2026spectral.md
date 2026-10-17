@@ -8542,3 +8542,114 @@ generic theorem, literature novelty or Lean proof is claimed. All
 original common-form, source-energy and physical-error premises remain;
 actual paid/center/full-border/good-block/cofinal positivity, Robin and
 RH remain unresolved.
+
+
+#### Supply a signed raw coordinate from the same cached source
+
+The missing observation can be supplied without regenerating the source.
+Keep the original physical map $f=\kappa u_F^*W_FB$ with $B=R_FV$ and
+$\kappa=33/32$. Let $e_0$ be the first coordinate of the same18-column
+lift, $b_0=Be_0$, and $h_0=(P_0D_{\rm phys}V)e_0$. Then
+
+$$
+f[0]=\kappa\langle u_F,b_0\rangle_{W_F}.
+$$
+
+This is the raw coordinate used above, with no division by $\sqrt\delta$.
+The saved full physical Gram bound supplies
+$N_0=\sqrt{G_{00,\mathrm{up}}}\ge\|b_0\|_{W_F}$; its original weight
+already belongs to $W_F$ and it contains no $\kappa$ factor. The lift
+cap is $L_0=\sqrt{(V^*V)_{00}}$. The accepted forward and mixed-error
+certificates are uniform coefficients times a lift norm cap. Their
+transport by $L_0/L_b$ therefore applies to this new direction;
+it is not an empirical scaling of an error measured on one vector.
+
+Use the stored approximate symbols, source interpolation polynomial
+and left physical-kernel action on the first feature column. The
+finite principal pairing and analytic tail are evaluated only for
+this new column. The mixed term is one new112-component dot product
+of the stored left-kernel row with $h_0$, multiplied once by $\kappa$.
+No kernel positivity is assumed.
+
+Write $N_{\mathrm{pr}}$ for the saved principal-source norm cap, $\Delta$ for the
+saved source-tail interpolation error, $\epsilon_0$ for the transported
+physical forward error and $\epsilon_{\rm sm}$ for the saved smooth
+source remainder. If $A_{0,k}$ are the new first-column
+jet coefficients and $\sigma$ is the original uniform symbol error,
+the new symbol-jet allowance is
+
+$$
+\beta_0=\operatorname{UP}\frac{2\sqrt w\,\sigma}{\pi\sqrt M}
+\sum_{k=0}^{55}|A_{0,k}|\left(\frac M{M+1}\right)^{2k},
+\qquad M=32768.
+$$
+
+The actual-symbol jet norm is at most $N_0+\epsilon_0$. Consequently
+the source/symbol allowance is
+
+$$
+\kappa\bigl((N_0+\epsilon_0)\Delta+(N_{\mathrm{pr}}+\Delta)\beta_0\bigr).
+$$
+
+Pay the new analytic-tail Abel allowance and transported two-sided
+physical mixed error separately, together with
+$\kappa\epsilon_{\rm sm}N_0$ and $\kappa N_{\mathrm{pr}}\epsilon_0$.
+The approximate symbols are not substituted for actual symbols
+without this allowance. The smooth polynomial uses its640-bit export
+grid; the uniform symbol error uses its832-bit analytic grid.
+
+Intersect the resulting signed interval $I_0$ with the original
+$[-C,C]$. The same-source residual observation is now
+$I_{\ell,\mathrm{new}}=(I_0+I_d)\cap I_\ell$, using the SAVED plane
+offset and complement norm. An empty intersection stops the application.
+With the inherited positive norm certificate, reuse
+
+$$
+R\ge r_{\xi,\mathrm{new}}=
+\frac{\operatorname{dist}(0,I_{\ell,\mathrm{new}})^2}
+{T_{\xi,\mathrm{up}}}.
+$$
+
+As before, add this only to the lower of the SAME $F$, then take the
+maximum with the previously retained lower. Signed-coordinate
+separation, residual gain and paid positivity are separate tests.
+
+
+The single1024-working/640-export application gives these outward
+results; exact saved fractions remain authoritative:
+
+| Quantity | Directed range or lower certificate |
+|---|---|
+| Raw $f[0]$ | $[2.200218370,2.201145838]\cdot10^{-16}$ |
+| New $f_\perp[0]$ enclosure | $[6.426507665,6.776871553]\cdot10^{-18}$ |
+| Residual lower $r_{\xi,\mathrm{new}}$ | $\ge0.0001193399383345589672>0$ |
+| Fixed retained lower | $\ge-0.472370436$; exact saved lower is still negative |
+| Energy-endpoint retained lower | $\ge-0.674565902$; exact saved lower is still negative |
+
+Both paid recipes improve by the same saved residual lower, but neither
+certificate is positive. Under the inherited common-source/form and
+physical-error premises, this additional signed observation rules out
+zero residual for the actual row in this direction. It does not assert
+that every row satisfying the older observations has positive residual;
+the older zero-residual plane construction remains valid for those
+older observations alone. A negative retained lower does not establish
+negative actual paid energy.
+
+The source and packet retain SHA256
+`a8f9133a4dd8a574fc9a3b7db27cfc1e2d9722764b444fc31cdd636fcd653a12`
+and
+`12cd1ff9de20ab9083d27ddae812d415ec37c95520de619a6f9813304c2081a5`.
+Assembly time is<1.073261seconds, excluding serialization. The consumer
+reads ten accepted packets, makes one new finite principal functional,
+one new cached analytic-tail application and one new short mixed dot.
+It makes no source recovery/interpolation, physical left-kernel action,
+quadratic/matrix/inverse/solve/moment/sine/phase supplier or plane-floor
+call. No old producer or accepted scientific fixture is replayed;
+there is no parameter/source/precision/cutoff scan or retry.
+
+This is a new source-specific application of the existing projection,
+error transport and PSD Cauchy argument, with no new generic theorem,
+literature novelty or Lean claim. Actual paid/center/full-border/good-block
+and cofinal positivity, Robin and RH remain unresolved.
+
+The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/3366fa48c777581c99fdb0d5c132b1615285cfd0/docs/reports/weil-c27) retain this application and its original input bindings.
