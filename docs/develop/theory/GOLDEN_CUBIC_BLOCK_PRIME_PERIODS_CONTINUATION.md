@@ -985,4 +985,140 @@ and set $B_0=\lceil\exp(s_0)\rceil$. Then $B>B_0$ contradicts (92.3). Since $B_{
 
 The real lower bound depends on the full block $B_N=DC^2$, whereas the twist-height upper bound depends on $D\le B_N$. This extends effective eventual uniqueness to every actual rank-one original block, including blocks with nontrivial square cofactor. The analytic input remains Ingram's [Proposition 11](https://arxiv.org/pdf/0802.2651), with the model and uniformity checks of §91. Rank one remains essential. No numerical cutoff, exhaustive finite search, extra $N=81$ exclusion, higher-rank conclusion, or universal WSS solution is asserted.
 
+## 93. An explicit rank-one cutoff: only the original index 81 remains
+
+This section makes the eventual cutoff of §92 numerical, retaining arbitrary original square cofactors. The analytic estimate is specialized to the actual golden point, whose height is already controlled explicitly.
+
+**Theorem 93.1 (explicit original-index cutoff).** Let $j,C,c$ be positive integers, $N=3^j\ge81$, and
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is the full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$\log B_N<200,\qquad j=4.$$
+
+Thus no such repeated kernel occurs for any original $j\ge5$ in this rank-one stratum. The surviving original index $N=81$ is not resolved by this theorem.
+
+**Proof.** Put $n=Nk$. The actual-point construction and real-arc argument of §92 give integral points
+
+$$R=(5DB,25D^2L_NCF_N),\qquad K=(5DB_n,25D^2L_ncF_n)$$
+
+with $K=mR$, where $m$ is odd, $a=|m|\ge3$, and
+
+$$a^2>B. \tag{93.1}$$
+
+The elimination of the torsion term uses Theorem 85.1 and Corollary 85.2 as in §92; rank one is retained throughout. The integral transformation $x=9X-30D$, $y=27Y$ sends these points to $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+Replacing $m$ by $a$ changes only the ordinate's sign. Set $s=\log B$ and $\widehat h=\widehat h(P)$. The normalized-coordinate height bounds give
+
+$$\frac{s}{3}\le\widehat h\le\frac{s}{2}+\frac{\log24}{6}\le\frac{2s}{3}. \tag{93.2}$$
+
+The elementary Lucas estimate $L_N^2\ge2^{N-1}$ and $\log2>1/2$ give $s>40$. In Ingram's curve-height convention, since $19\le D\le B$,
+
+$$H=h(E'_D)=3\log D+\log945000<4s. \tag{93.3}$$
+
+Here $\log945000<14<s$, and $H>2\pi\sqrt3$. The point height uses the full block $B$; the curve height uses its squarefree kernel $D$.
+
+**The real period and the small logarithm.** The ordered roots of the short cubic are
+
+$$e_1=105D,\qquad e_2=-30D,\qquad e_3=-75D.$$
+
+Write $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The usual substitution in the elliptic integral gives the period basis
+
+$$\omega=\frac{2K_{\rm ell}(1/2)}{\sqrt{180D}},\qquad
+\omega'=\frac{2iK_{\rm ell}(\sqrt3/2)}{\sqrt{180D}}.$$
+
+The real-period parameter is $(e_2-e_3)/(e_1-e_3)=1/4$. Thus $\tau=\omega'/\omega$ is purely imaginary with $\operatorname{Im}\tau>1$, so this basis is already reduced. Choose the real principal logarithm $u$ of $P$, with $|u|\le\omega/2$, and an integer $b$ such that
+
+$$\Lambda=au+b\omega,\qquad |\Lambda|\le\omega/2.$$
+
+The point $P$ lies on the identity component. Hence $\Lambda$ is a real principal logarithm of $aP$, $|b|\le(a+1)/2<a$, and $\Lambda\ne0$ because $P$ is nontorsion.
+
+Its short coordinate is $x_a=45DB_n-30D$. Since $B_n>B\ge144$, one has $x_a\ge B_n$ and $x_a>210D=2\max_i|e_i|$. Ingram's Lemma 8 gives
+
+$$\log|\Lambda|\le\frac32\log2-\frac12\log x_a
+\le\frac32\log2-\frac12\log B_n.$$
+
+The normalized upper height bound gives $a^2\widehat h\le\tfrac12\log B_n+\log24/6$. Therefore
+
+$$\log|\Lambda|\le-\frac{a^2s}{3}+\frac{\log24}{6}+\frac32\log2
+<-\frac{a^2s}{3}+2\le-\frac{a^2s}{6}. \tag{93.4}$$
+
+The last step uses $a\ge3$ and $s>40$.
+
+**Explicit elliptic-logarithm parameters.** Apply David's Theorem 2.1 directly, with Ingram's Lemma 10 and equation (9) as a convenient form of the specialization. Take number-field degree $1$, two logarithms $u,\omega$ corresponding to $P,O$, coefficient vector $(0,a,b)$, and auxiliary parameter $E=e$. David explicitly permits logarithms at poles, so the period representing $O$ is allowed. His degree-three projective embedding has canonical-height limit $3\widehat h(P)$; we use that requirement directly rather than the $2\widehat h(P)$ printed in Ingram's specialization. The invariants $g_2=35100D^2$, $g_3=945000D^3$ give exactly the curve height $H$. David's numerical constant satisfies
+
+$$2.9\cdot10^{18}\cdot4^8\cdot3^{38.3}<4\cdot10^{41}.$$
+
+Sufficient parameter conditions are
+
+$$\log V_2\ge\max\{H,3\pi/\operatorname{Im}\tau\},$$
+
+$$\log V_1\ge\max\{3\widehat h,H,
+3\pi|u|^2/(|\omega|^2\operatorname{Im}\tau),\log V_2\},$$
+
+$$\log A\ge\max\{eH,\log a,\log|b|,\log V_1\}.$$
+
+When $b=0$, its coefficient-height term is zero. Since $\Lambda\ne0$, the resulting bound is
+
+$$\log|\Lambda|\ge-4\cdot10^{41}(\log A+1)
+(\log\log A+H+1)^3\log V_1\log V_2. \tag{93.5}$$
+
+Choose
+
+$$\log V_1=\log V_2=100s,\qquad t=\log a,\qquad
+L=\log A=\max\{100s,t\}.$$
+
+Equations (93.2)–(93.3), $3\widehat h\le2s$, $\operatorname{Im}\tau>1$, $|u|\le\omega/2$, $e<3$, $\pi<4$, and $|b|<a$ verify all requirements. In particular $eH<12s<100s$. David's remaining auxiliary-parameter requirement is $E=e\le e\sqrt{\log V_i/A_i}$, where $A_i=3\pi|u_i|^2/(|\omega|^2\operatorname{Im}\tau)$, $u_1=u$ and $u_2=\omega$. It follows from the already checked $\log V_i\ge A_i$. No unspecified Lang-height constant or small-height adjustment enters.
+
+If $t\le100s$, then $L=100s$, $L+1\le101s$, and $\log L+H+1\le8s$. The last estimate follows from $\log(100s)+1\le4s$ for $s\ge40$: it holds at $40$ using $\log4000<12$, and its difference has positive derivative. Combining (93.4)–(93.5) yields
+
+$$a^2<6\cdot4\cdot10^{41}\cdot101\cdot8^3\cdot10000\,s^5<10^{60}s^5. \tag{93.6}$$
+
+If $t>100s$, then $t>4000$, $L+1\le2t$, and $\log L+H+1<2t$, because $H<t/25$ and $\log t+1<t$. Instead the same comparison gives
+
+$$e^{2t}<6\cdot4\cdot10^{41}\cdot2\cdot8\cdot10000\,t^4s<10^{60}t^5.$$
+
+This is impossible for $t\ge4000$: at the endpoint,
+
+$$60\log10+5\log4000<180+60=240<8000,$$
+
+and $2t-60\log10-5\log t$ has positive derivative. Thus (93.6) always holds. In particular the actual multiplier satisfies $a<10^{30}(\log B)^{5/2}$.
+
+**The numerical cutoff.** By (93.1) and (93.6),
+
+$$e^s<10^{60}s^5. \tag{93.7}$$
+
+Positive exponential-series partial sums give exact certificates
+
+$$e^{5/2}>\sum_{h=0}^{4}\frac{(5/2)^h}{h!}=\frac{4169}{384}>10,\qquad
+e^6>\sum_{h=0}^{6}\frac{6^h}{h!}=\frac{1223}{5}>200.$$
+
+Hence $\log10<5/2$ and $\log200<6$. At $s=200$,
+
+$$60\log10+5\log200<150+30=180<200.$$
+
+The function $s-60\log10-5\log s$ has positive derivative for $s\ge200$, so (93.7) forces $s<200$.
+
+For completeness, $e<3$ follows from $h!\ge2^{h-1}$ for $h\ge1$, strict for $h\ge3$, and summing the geometric majorant. Thus $e^2<9<10$, giving $\log10>2$.
+
+For odd $v$, the identity $L_{3v}=L_v^3+3L_v$ gives the exact chain
+
+$$L_1=1,\quad L_3=4,\quad L_9=76,\quad L_{27}=439204,$$
+
+$$L_{81}=84722519070079276,$$
+
+$$L_{243}=608130213374088941214747405817720942127490792974404>10^{50}.$$
+
+Each entry is the preceding entry cubed plus three times that entry. Consequently
+
+$$B_{243}=369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219>10^{100}.$$
+
+It follows that $\log B_{243}>100\log10>200$. Since the Lucas sequence is strictly increasing at these positive indices, every $j\ge5$ contradicts $s<200$. The hypothesis $N\ge81$ leaves only $j=4$. $\square$
+
+**Sources and scope.** The analytic inputs are Patrick Ingram, *Multiples of integral points on elliptic curves*, [arXiv:0802.2651v2](https://arxiv.org/pdf/0802.2651), Lemmas 8 and 10, equation (9), and Sinnou David, *Minorations de formes linéaires de logarithmes elliptiques*, Mémoires de la SMF 62 (1995), [Theorem 2.1](https://www.numdam.org/issue/MSMF_1995_2_62__1_0.pdf). The direct parameter check above retains David's projective-height convention. The original arithmetic and real-arc inputs are §92. This gives an explicit cutoff for repeated full kernels on the actual rank-one stratum, with arbitrary positive $C$. It leaves the $N=81$ case and all higher-rank cases open; it is not a universal WSS exclusion.
+
+
 ## 追加锚（本行以下为增补区）
