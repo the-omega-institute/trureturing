@@ -161,6 +161,34 @@ def preregistration(value, carrier):
     return registered, deadline, threshold, sorted(predictions)
 
 
+def terminal_record(value, carrier, sources):
+    if carrier['created_at'] != carrier['updated_at']:
+        fail('EDITED_TERMINAL', carrier['html_url'])
+    fields(value, ('event', 'execution_started_at', 'status', 'settled_at',
+                   'evidence', 'shape_evidence'), 'terminal')
+    event(value['event'])
+    started, published = timestamp(value['execution_started_at']), timestamp(carrier['created_at'])
+    if started > published:
+        fail('EXECUTION_TIME', carrier['html_url'])
+    if value['status'] not in ('proved', 'refuted', 'invalid', 'unresolved'):
+        fail('TERMINAL_STATUS', repr(value['status']))
+    citation(value['evidence'], sources)
+    settled, shape = None, None
+    if value['status'] in ('proved', 'refuted'):
+        settled = timestamp(value['settled_at'])
+        if not started <= settled <= published:
+            fail('SETTLEMENT_TIME', carrier['html_url'])
+        if value['shape_evidence'] is not None:
+            excerpt = citation(value['shape_evidence'], sources)
+            match = re.fullmatch(r'proof_shape: (content|bind-only)', excerpt)
+            if not match:
+                fail('SHAPE_EVIDENCE', 'cite exactly one existing proof_shape line')
+            shape = int(match[1] == 'content')
+    elif value['settled_at'] is not None or value['shape_evidence'] is not None:
+        fail('UNSETTLED_EVIDENCE', 'an unresolved/invalid attempt cannot claim settled content')
+    return started, settled, shape
+
+
 def unit_reading(item, sources, as_of):
     fields(item, ('issue', 'comments'), 'issue snapshot')
     issue, comments = item['issue'], item['comments']
@@ -185,6 +213,9 @@ def unit_reading(item, sources, as_of):
                'aggregate_probability': None, 'surprise': None, 'scores': [],
                'model_families': [], 'registered_at': None, 'score_status': 'missing-preregistration',
                'evidence_status': 'missing-preregistration'}
+    if 'terminal' in records:
+        terminal, terminal_carrier = records['terminal']
+        started, settled, shape = terminal_record(terminal, terminal_carrier, sources)
     if 'prereg' not in records:
         return reading
     prereg, carrier = records['prereg']
@@ -197,40 +228,19 @@ def unit_reading(item, sources, as_of):
     answer, x = None, 0
     reading['z'] = 1
     if 'terminal' in records:
-        terminal, terminal_carrier = records['terminal']
-        if terminal_carrier['created_at'] != terminal_carrier['updated_at']:
-            fail('EDITED_TERMINAL', terminal_carrier['html_url'])
-        fields(terminal, ('event', 'execution_started_at', 'status', 'settled_at',
-                          'evidence', 'shape_evidence'), 'terminal')
-        if event(terminal['event']) != prereg['event']:
+        if terminal['event'] != prereg['event']:
             fail('EVENT_MISMATCH', 'terminal in ' + url)
-        started = timestamp(terminal['execution_started_at'])
         if registered > started:
             fail('POSTHOC_PREDICTION', url)
-        if not started < deadline or started > timestamp(terminal_carrier['created_at']):
+        if not started < deadline:
             fail('EXECUTION_TIME', url)
-        if terminal['status'] not in ('proved', 'refuted', 'invalid', 'unresolved'):
-            fail('TERMINAL_STATUS', repr(terminal['status']))
-        citation(terminal['evidence'], sources)
         reading['evidence_status'] = 'referenced'
-        if terminal['status'] in ('proved', 'refuted'):
-            settled = timestamp(terminal['settled_at'])
-            if not started <= settled <= timestamp(terminal_carrier['created_at']):
-                fail('SETTLEMENT_TIME', url)
-            if settled <= deadline:
-                answer = int(terminal['status'] == 'proved')
-                reading['z'] = 0
-                x = None
-                if terminal['shape_evidence'] is not None:
-                    excerpt = citation(terminal['shape_evidence'], sources)
-                    match = re.fullmatch(r'proof_shape: (content|bind-only)', excerpt)
-                    if not match:
-                        fail('SHAPE_EVIDENCE', 'cite exactly one existing proof_shape line')
-                    x = int(match[1] == 'content')
-                else:
-                    reading['evidence_status'] = 'missing-shape'
-        elif terminal['settled_at'] is not None or terminal['shape_evidence'] is not None:
-            fail('UNSETTLED_EVIDENCE', 'an unresolved/invalid attempt cannot claim settled content')
+        if settled is not None and settled <= deadline:
+            answer = int(terminal['status'] == 'proved')
+            reading['z'] = 0
+            x = shape
+            if shape is None:
+                reading['evidence_status'] = 'missing-shape'
     if answer is None and as_of < deadline:
         fail('BEFORE_DEADLINE', url + ' has no settled answer yet')
     reading['x'] = x

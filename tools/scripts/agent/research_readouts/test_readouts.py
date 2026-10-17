@@ -202,6 +202,18 @@ class ReadoutTests(unittest.TestCase):
         self.assertIsNone(result['units'][0]['mode'])
         self.assertEqual(result['batch']['missing_counts']['shape_units'], 1)
 
+    def test_terminal_contract_is_checked_without_a_scored_answer(self):
+        batch, _, _ = fixture()
+        batch['issues'][0]['comments'][0]['body'] = 'Historical record without predictions.'
+        batch['issues'][0]['comments'][1]['body'] = block('terminal', {})
+        self.assert_bad(batch, 'FIELDS')
+        batch, prereg, terminal = fixture()
+        terminal['settled_at'] = AFTER
+        terminal['shape_evidence']['excerpt'] = 'not an existing proof_shape line'
+        batch['issues'][0]['comments'][1]['created_at'] = AFTER
+        batch['issues'][0]['comments'][1]['updated_at'] = AFTER
+        self.assert_bad(rebuild(batch, prereg, terminal), 'EVIDENCE_MISMATCH')
+
     def test_all_five_modes_and_complete_counts(self):
         batch = {'issues': [], 'evidence': []}
         for n, p, shape, status in ((1, 1, 'bind-only', None), (2, 1, 'content', None),
