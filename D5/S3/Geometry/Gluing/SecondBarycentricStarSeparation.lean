@@ -1,7 +1,7 @@
 /- GID: D5/S3/Geometry/Gluing/SecondBarycentricStarSeparation
    generality: G
    mirror-B: D5/B/S3/Geometry/Gluing/SecondBarycentricStarSeparation
-   mirror-E: none(coordinate-separation-core)
+   mirror-E: none(waiver:coordinate-separation-core-has-no-empirical-mirror)
    anchors: []
    utility: none
    digest: The 25/48 coordinate regions in the standard tetrahedron are separated by 1/24 and have disjoint 1/48 neighborhoods. -/
