@@ -35,3 +35,8 @@ activity law and the original open endpoints. Deleting vertices
 evaluates event probabilities; it does not replace the chain.
 The source's lattice phase-coexistence and slow-mixing conclusions
 do not establish the FIB comparison of its two spectral edges.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1007/978-3-642-40328-6_27
+- Source: https://arxiv.org/abs/1211.6182v1
