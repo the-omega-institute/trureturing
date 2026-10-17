@@ -448,3 +448,111 @@ For t=1/4 the exact unhalved diamond error is 2/9 and the optimal identity weigh
 Sections 38–39 give common coherent implementations with isometric pure flat-sector targets; Sections 40–44 develop restricted-control and Schur-channel statements. The target here is a nonunital logical noise channel with mixed basis output, not a pure flat-target encoding isometry, so those formulas do not directly supply this value. Section 57 gives exact MC state-conversion errors but does not itself optimize this reference-sensitive common-channel task. The present two-label model is a concrete coherent consumer, not a proof of general RT recovery or a gravitational dictionary.
 
 Amplitude damping, Choi positivity, trace-norm duality and diamond norm are standard. A primary background reference is Watrous, The Theory of Quantum Information (2018), §3.3, Definition 3.43 and Theorem 3.51, https://cs.uwaterloo.ca/~watrous/TQI/ . No literature-priority claim is made for these ingredients or for a general nonlocal-channel classification. The precise result established here is the stated finite-LOSR diamond optimum and its explicit physical attainer.
+
+## 59. Exact coherent LOSR projection for all phase-covariant qubit channels
+
+### 59.1 Model and theorem
+
+Let L=X=Y=C², V|0>=|00>, V|1>=|11>, and J(Z)=VZV*. A logical phase-covariant channel E_(α,β,λ) is specified on matrix units by
+
+    E(00)=α00+(1−α)11,
+    E(11)=(1−β)00+β11,
+    E(01)=λ01, E(10)=conj(λ)10.
+
+Here ij abbreviates |i><j| on the logical system. Its complete positivity and trace preservation are equivalent to 0≤α,β≤1 and |λ|²≤αβ: its input-first Choi matrix has the block [[α,λ],[conj(λ),β]] on |00>,|11> and remaining diagonal entries 1−α,1−β. The parameterization includes every qubit channel covariant under all rotations diag(1,exp(iθ)); covariance forces the displayed matrix-unit form.
+
+Physical competitors are all finite LOSR channels Φ=Σ_b p_b A_b⊗B_b with arbitrary qubit CPTP local maps. Their comparison domain is the logical qubit, via F=Φ∘J, and their output is X⊗Y. Local product ancillas are allowed. Neither code preservation nor phase covariance nor exact basis-state action is imposed on the competitors. The diamond norm is unhalved and includes arbitrary passive references.
+
+Writing c=|λ| and m=min(α,β), the exact optimum is
+
+    inf_Φ ||Φ∘J − J∘E_(α,β,λ)||_diamond = (8/9) max(0,c−m).
+
+One common physical channel attains the optimum on the entire logical operator algebra. At most four product-CPTP branches suffice when the error is zero, and at most three suffice when it is positive. In particular, exact physical implementation is possible if and only if c≤min(α,β). The positive-error lower bound applies to all physical outputs, including leakage outside span{|00>,|11>}.
+
+### 59.2 Exact feasible class and finite common implementations
+
+First assume α≥β and phase-align λ=c≥0. The general case follows by local output phase unitaries and simultaneous logical input/output flips: J intertwines the logical flip with X⊗X, and those pre/post operations preserve the finite physical LOSR class and diamond norm. Simultaneous flips exchange α,β and conjugate λ.
+
+For completeness, §54's full-support channel normal form supplies a direct necessity proof for exact implementation. Apply it to J(I/2), which is strictly positive on the two-dimensional MC code. If Φ∘J=J∘E, every positive-weight product branch preserves that code on all matrix units. Such a branch has a deterministic label map f:{0,1}→{0,1}. Constant f kills the off-diagonal; the flip f sends |00><11| to a multiple of |11><00|; only the identity f contributes to the coefficient of |00><11|. Each such coefficient has modulus at most one. If their total probability is a, then c≤a, while both survival probabilities α and β are at least a. Hence c≤min(α,β). This is an equality of channel actions, not merely a statement about one source state.
+
+Here is an explicit converse using one common random branch. Let I be identity on both physical systems; let R0 reset both to |0>; let Cid=Δ⊗Δ, where Δ is computational-basis dephasing; and let Cflip=(Ad_X∘Δ)⊗(Ad_X∘Δ). Both classical branches erase every off-diagonal code matrix unit. If c≤β≤α, use weights
+
+    c I + (1−α) Cflip + (α−β) R0 + (β−c) Cid.
+
+They are nonnegative and sum to one. On 00 and 11 they give precisely the displayed populations, and on 01 they give c01. Thus all matrix units, and consequently all reference-extended inputs, agree. A local output diagonal unitary restores the desired phase of λ. Zero weights may be omitted. This construction also proves the endpoint cases, including c=0 and α or β equal to zero or one. The necessity above is a consumer of §54, not a new claim of priority for PIO-type channel constructions.
+
+### 59.3 An unrestricted product-channel witness
+
+Continue with α≥β and λ=c≥0. Use the fixed logical-reference input
+
+    |Ω>=sqrt(1/3)|0_R0_L>+sqrt(2/3)|1_R1_L>.
+
+The reference has dimension two and the joint output space R⊗X⊗Y has dimension eight. Define H by the block
+
+    [[1/3,2sqrt(2)/3],[2sqrt(2)/3,−1/3]]
+
+on |0,00>,|1,11>; set H=+1 on |1,00>, H=+1/3 on |0,11>, and H=−1 on each of the remaining four computational basis vectors. The block squares to identity, so ||H||∞=1. The changed value on |0,11>, compared with §58, is essential: it treats both possible code outputs of logical input 0 equally.
+
+For an arbitrary product channel A⊗B put a0=<0|A(00)|0>, b0=<0|B(00)|0>, a1=<1|A(11)|1>, b1=<1|B(11)|1>, and z_A=<0|A(01)|1>, z_B=<0|B(01)|1>. Complete positivity gives |z_A|≤sqrt(a0a1), |z_B|≤sqrt(b0b1). All four probabilities belong to [0,1]. Define
+
+    U=a0b0+(1−a0)(1−b0), B0=(1−a1)(1−b1), C=a1b1.
+
+Expanding σ=(id_R⊗[(A⊗B)∘J])(|Ω><Ω|) gives
+
+    9 Tr(Hσ)=4U+12B0+4C+8 Re(z_A z_B)−9.
+
+Indeed the R=0 diagonal contribution is (4U−3)/9, the R=1 contribution is (12B0+4C−6)/9, and the two coherent contributions total 8 Re(z_A z_B)/9. This expansion retains all leakage probabilities. Now U≤1, a0b0≤1, and with z=sqrt(C) the arithmetic-geometric mean inequality gives B0≤(1−z)². Hence
+
+    4U+12B0+4C+8 Re(z_A z_B)
+      ≤4[1+3(1−z)²+z²+2z]
+      =16(1−z+z²)≤16.
+
+Thus Tr(Hσ)≤7/9 for every product CPTP map, and by affinity for every finite LOSR mixture. No support-preservation or phase-covariance assumption was used.
+
+For the ideal output, the R=0 populations α/3 and (1−α)/3 both encounter witness value 1/3. The R=1 populations are 2(1−β)/3 on |1,00> and 2β/3 on |1,11>, and the coherent entry is sqrt(2)c/3. Consequently
+
+    Tr[H(id_R⊗J∘E)(|Ω><Ω|)] = 7/9 + (8/9)(c−β).
+
+Trace-norm duality proves the lower bound (8/9)(c−β) when c>β. Nonnegativity gives the zero lower bound otherwise. This holds against every common physical LOSR channel, including ones that alter the populations or leak outside the code.
+
+### 59.4 Exact projection and diamond upper bound
+
+Suppose c>β and α≥β. Put k=c−β>0 and a=β+k/3=(2β+c)/3. Complete positivity gives c≤sqrt(αβ)≤α, so β<a≤α≤1. Choose the exact feasible logical channel E' with parameters (α,a,a), implemented physically by
+
+    a I + (1−α) Cflip + (α−a) R0.
+
+These three weights are nonnegative and sum to one. Thus this is an actual common physical channel, not independently selected state optimizers. The logical output phase can again be restored at the end.
+
+For Δ=J∘(E−E'), the only nonzero matrix-unit differences are
+
+    Δ(11)=(k/3)(|00><00|−|11><11|),
+    Δ(01)=(2k/3)|00><11|, Δ(10)=Δ(01)*,
+
+while Δ(00)=0. To verify its full diamond norm, let an arbitrary normalized pure input with any reference be |0>u+|1>v with ||u||²=1−q and ||v||²=q. Write d=k/3 and e=2k/3. The output difference is the positive rank-one operator d|00><00|⊗|v><v| plus a block on the orthogonal vectors |00>u,|11>v with normalized matrix [[0,e sqrt(q(1−q))],[e sqrt(q(1−q)),−dq]]. Therefore its trace norm is at most
+
+    dq+sqrt(d²q²+4e²q(1−q))
+      =(k/3)[q+sqrt(16q−15q²)]≤8k/9.
+
+The last inequality follows by squaring sqrt(16q−15q²)≤8/3−q; the difference of the squares is 16(q−2/3)². At q=2/3 with u⊥v, the positive rank-one term is orthogonal to the block and equality holds. This is the same Ω as in the witness proof.
+
+Mixed density inputs follow by convexity. Hermitian operator inputs follow by Jordan decomposition; arbitrary operator inputs follow by adjoining a reference qubit and applying the Hermitian bound to (1/2)[[0,Z],[Z*,0]], whose input and image trace norms equal those of Z and its image. Thus the bound covers the diamond norm, not only unreferenced states. This proves the upper bound and exact attainment. If c≤β, the exact implementation already gives error zero. Local phase unitaries and simultaneous flips give all parameters in the theorem.
+
+### 59.5 Damping, dephasing, and thermal specialization
+
+The damping/dephasing family fixes α=1, β=t and allows |λ|≤sqrt(t). Its exact error is (8/9)max(0,|λ|−t), with §58 recovered at λ=sqrt(t). This is a corollary of the full channel theorem, rather than a separate mathematical increment.
+
+For generalized amplitude damping followed by dephasing, let t∈[0,1], g∈[0,1] be the ground-state equilibrium population, and ζ∈[0,1] the coherence attenuation. The parameters are
+
+    α=g+(1−g)t, β=(1−g)+gt, c=ζ sqrt(t).
+
+They are physical because αβ=t+g(1−g)(1−t)²≥t≥c². The exact unrestricted physical-LOSR error is
+
+    (8/9) max(0, ζ sqrt(t) − [min(g,1−g)+max(g,1−g)t]).
+
+Thus sufficient dephasing gives exact common implementation, while the positive branch is attained by the three physical branches above after the appropriate flip. At thermal balance g=1/2, (1+t)/2≥sqrt(t), so the entire family is exactly implementable. Away from balance it may have a strict obstruction. For example g=9/10,t=1/4,ζ=1 gives α=37/40,β=13/40,c=1/2 and exact error 7/45. The optimal logical parameters are (37/40,23/60,23/60), physically implemented with identity weight 23/60, classical flip weight3/40 and reset-to-zero weight13/24. Both directions of thermal population transfer are present, so this example is not on the reset axis.
+
+### 59.6 Scope and attribution
+
+The result concerns a fixed two-dimensional MC encoding and a whole family of coherent logical channels; all inputs share one physical LOSR implementation. The exact feasible-class argument reuses §54. The zero-temperature boundary reuses §58, while the modified witness establishes the all-output projection off that boundary. Sections38–39 concern isometric flat-sector targets, Sections40–44 restricted-control and Schur results, and §57 optimizes a single MC state pair. None of those statements alone optimizes this full phase-covariant channel family.
+
+Physically incoherent constructions and their zero-communication lifting to maximally correlated systems are established background: Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 ; related qubit reachable geometry appears in Shi et al., Scientific Reports7,14806 (2017), https://www.nature.com/articles/s41598-017-13687-4 . Diamond norm and reference-assisted channel discrimination are standard; see Watrous, The Theory of Quantum Information (2018), §3.3, https://cs.uwaterloo.ca/~watrous/TQI/ . No priority claim is made for those ingredients or for the parameterization. The theorem is an exact finite-LOSR diamond projection on the stated fixed-code channel family, not a general RT recovery theorem or a classification of arbitrary logical channels.
