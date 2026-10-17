@@ -308,8 +308,10 @@ set_option maxHeartbeats 1000000 in
 private theorem family_swap (a b c d : ℝ) :
     pairAC (familyState a b c d) = pairAB (familyState b a c d) := by
   ext ⟨i, j⟩ ⟨k, l⟩
+  refine (pairAC_entry (familyState a b c d) (i, j) (k, l)).trans
+    (Eq.trans ?_ (pairAB_entry (familyState b a c d) (i, j) (k, l)).symm)
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-    simp [pairAC_entry, pairAB_entry, familyState.eq_1, Fin.sum_univ_three]
+    simp [familyState.eq_1, Fin.sum_univ_three]
 
 private theorem separator_algebra (a b c d r x y z : ℝ)
     (ha : 0 ≤ a) (hd : 0 ≤ d) (hr : 0 ≤ r)
