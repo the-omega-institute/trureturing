@@ -57,7 +57,9 @@ private theorem slot_step (N j : ℕ) (hN : 67 ≤ N)
 private theorem slot_five (N j : ℕ) (hN : 67 ≤ N)
     (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     (slot N hN j hj hj' 5).val + 1 = j := by
-  simpa [positions] using slot_step N j hN hj hj' 5
+  calc
+    _ = positions N j 5 := slot_step N j hN hj hj' 5
+    _ = j := by norm_num [positions]
 
 private def middle (N : ℕ) : Finset (Fin N) :=
   univ.filter (fun k => 5 ≤ k.val ∧ k.val < N-10)
@@ -136,12 +138,14 @@ private theorem packed_boundary (N j : ℕ) (hN : 67 ≤ N)
     apply hq
     exact Fin.ext he
   by_cases hh : q.val < 5
-  · simp only [packed, dif_pos hh]
+  · dsimp only [packed]
+    rw [dif_pos hh]
     congr 1
     apply Fin.ext
     change q.val = positions N j q - 1
     simp [positions, hh]
-  · simp only [packed, dif_neg hh, if_neg hq5]
+  · dsimp only [packed]
+    rw [dif_neg hh, if_neg hq5]
     congr 1
     apply Fin.ext
     change N - 10 + (q.val - 6) = positions N j q - 1
@@ -161,8 +165,15 @@ private theorem packed_nonneg {N : ℕ} (hN : 67 ≤ N)
 private def lift16 (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     (Fin 16 → ℝ) →ₗ[ℝ] (Fin N → ℝ) where
   toFun x := ∑ q, x q • unitGap (slot N hN j hj hj' q)
-  map_add' x y := by simp [add_smul, sum_add_distrib]
-  map_smul' a x := by simp [Finset.smul_sum, smul_smul]
+  map_add' x y := by
+    calc
+      _ = ∑ q, (x q • unitGap (slot N hN j hj hj' q) +
+          y q • unitGap (slot N hN j hj hj' q)) :=
+        sum_congr rfl (fun q _ => add_smul _ _ _)
+      _ = _ := sum_add_distrib
+  map_smul' a x := by
+    rw [Finset.smul_sum]
+    exact sum_congr rfl (fun q _ => mul_smul _ _ _)
 
 private theorem lift_packed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
     (k : Fin N) (hk : k ∈ middle N) :
@@ -181,14 +192,16 @@ private theorem lift_packed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
   rw [Finset.sum_apply]
   by_cases hi : i ∈ middle N
   · rw [Finset.sum_eq_single (5 : Fin 16)]
-    · simp [fixedGaps, boundaryGaps, unitGap, packed, hi, he5]
+    · rw [he5]
+      dsimp only [packed]
+      simp [fixedGaps, boundaryGaps, unitGap, hi]
     · intro q _ hq
       have hqi : e q ≠ i := by
         intro he
         have hb := slot_boundary N (k.val+1) hN hj hj' q hq
         exact hb (he.symm ▸ hi)
-      simp [unitGap, hqi, Ne.symm hqi]
-    · simp
+      rw [Pi.smul_apply, unitGap, Pi.single_eq_of_ne (Ne.symm hqi), smul_zero]
+    · exact fun h => (h (mem_univ _)).elim
   · obtain ⟨q, hq, heq⟩ := boundary_covered N (k.val+1) hN hj hj' i hi
     change e q = i at heq
     rw [Finset.sum_eq_single q]
@@ -200,8 +213,8 @@ private theorem lift_packed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
       have hri : e r ≠ i := by
         intro he
         exact hr (e.injective (he.trans heq.symm))
-      simp [unitGap, hri, Ne.symm hri]
-    · simp
+      rw [Pi.smul_apply, unitGap, Pi.single_eq_of_ne (Ne.symm hri), smul_zero]
+    · exact fun h => (h (mem_univ _)).elim
 
 -- The old step synthesis generalized from Fin 9 to Fin m is the ONLY synthesis.
 private abbrev fullSynth (N : ℕ) : (Fin N → ℝ) →ₗ[ℝ] (Fin N → ℝ) :=
@@ -217,8 +230,11 @@ private theorem synth_lift (N j : ℕ) (hN : 67 ≤ N)
     fullSynth N (lift16 N j hN hj hj' x) = synth (d := N) (positions N j) x := by
   change fullSynth N (∑ q, x q • unitGap (slot N hN j hj hj' q)) = _
   rw [map_sum]
-  simp_rw [map_smul, fullSynth_unit, slot_step N j hN hj hj']
-  rfl
+  change (∑ q, fullSynth N (x q • unitGap (slot N hN j hj hj' q))) =
+    ∑ q, x q • step N (positions N j q)
+  apply sum_congr rfl
+  intro q _
+  rw [map_smul, fullSynth_unit, slot_step N j hN hj hj']
 
 -- The exact original sums, oriented bottom minus top. No selected terms dropped.
 private def slackMap (N : ℕ) (hN : 67 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) where
@@ -257,9 +273,14 @@ private theorem slack_synth (N j : ℕ) (hN : 67 ≤ N)
     slackMap N hN (synth (d := N) (positions N j) x) = A *ᵥ x := by
   change slackMap N hN (∑ q, x q • step N (positions N j q)) = _
   rw [map_sum]
-  simp_rw [map_smul, slot_step_slack N j hN hj hj']
-  ext r
-  simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
+  calc
+    _ = ∑ q, x q • (fun r => A r q) := by
+      apply sum_congr rfl
+      intro q _
+      rw [map_smul, slot_step_slack N j hN hj hj']
+    _ = _ := by
+      ext r
+      simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
 
 -- The A-image of the full Fin N gap vector is the original row-slack vector.
 private def gapRows (N : ℕ) (hN : 67 ≤ N) : (Fin N → ℝ) →ₗ[ℝ] (Fin 3 → ℝ) :=
@@ -302,11 +323,14 @@ private theorem gapRows_fixed (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
   calc
     gapRows N hN (fixedGaps g k) =
         gapRows N hN (boundaryGaps g) + middleMass g • middleColumn := by
-      simp only [fixedGaps, map_add, map_smul, hu k hk]
+      rw [fixedGaps, map_add, map_smul, hu k hk]
     _ = gapRows N hN (boundaryGaps g + ∑ i ∈ middle N, g i • unitGap i) := by
       rw [map_add, map_sum]
-      simp_rw [map_smul]
       rw [hsum]
+      congr 1
+      apply sum_congr rfl
+      intro i hi
+      rw [map_smul]
     _ = gapRows N hN g := by rw [gaps_split g]
 
 private theorem packed_image (N : ℕ) (hN : 67 ≤ N) (g : Fin N → ℝ)
@@ -351,7 +375,8 @@ private theorem norm_from_fixed_cones (N : ℕ) (hN : 67 ≤ N) (c : ℝ)
     intro r
     rw [packed_image N hN g k hk]
     change 0 ≤ slackMap N hN (fullSynth N g) r
-    simpa only [hrecon] using hrows r
+    rw [hrecon]
+    exact hrows r
   by_cases hM : middleMass g = 0
   · -- Boundary-only branch, no division: every middle gap is actually zero.
     have hz : ∀ k ∈ middle N, g k = 0 :=

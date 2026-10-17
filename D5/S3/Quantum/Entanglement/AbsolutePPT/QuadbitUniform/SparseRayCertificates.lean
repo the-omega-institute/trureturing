@@ -21,296 +21,238 @@ set_option maxHeartbeats 20000000 in
 theorem sparseRayCertificates (i : Fin 29) :
     (originalRay ⟨0 + i.val, by omega⟩).Valid := by
   fin_cases i
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0], u := 1, v := 0, c := (-2), C := (-2), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0], u := 1, v := 0, c := (-1), C := (-1), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], u := 1, v := 0, c := 0, C := 0, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0], u := 1, v := 0, c := 0, C := 2, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], u := 1, v := 0, c := 2, C := 8, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0], u := 1, v := 0, c := 1, C := 5, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2], u := 2, v := 0, c := 6, C := 42, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,0], u := 3, v := 0, c := 3, C := 39, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1], u := 1, v := 0, c := 3, C := 9, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,2,0,0,0,0,0,0,0,0,0,0,3,0], u := 3, v := 0, c := 5, C := 55, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1], u := 1, v := 0, c := 4, C := 12, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,3,0,0,0,0,0,0,0,0,0,5,0], u := 5, v := 0, c := 10, C := 170, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,5], u := 5, v := 0, c := 20, C := 280, branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0], u := 2, v := 1, c := (-2), C := (-4), branch := .envelope₁ }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,3], u := 3, v := 2, c := 0, C := 0, branch := .bulk }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,3,0,0,0,0,0,0,0,5,0], u := 8, v := 0, c := (-32), C := (-376), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,5], u := 9, v := 0, c := (-36), C := (-504), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,2,0,0,0,0,0,0,3,0], u := 5, v := 0, c := (-19), C := (-137), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1], u := 2, v := 0, c := (-8), C := (-24), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,0], u := 5, v := 0, c := (-17), C := (-121), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1], u := 2, v := 0, c := (-7), C := (-21), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,2,0,0,0,0,3,0], u := 5, v := 0, c := (-15), C := (-105), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1], u := 2, v := 0, c := (-6), C := (-18), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0], u := 2, v := 0, c := (-6), C := (-16), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,2], u := 5, v := 0, c := (-15), C := (-105), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0], u := 2, v := 0, c := (-5), C := (-13), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,1], u := 3, v := 0, c := (-8), C := (-32), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0], u := 2, v := 0, c := (-4), C := (-10), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
-  · change RayData.Valid { gap := ![0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1], u := 3, v := 0, c := (-6), C := (-24), branch := .boundary }
-    refine {
-      u_nonneg := by norm_num
-      v_nonneg := by norm_num
-      mass67_pos := by norm_num
-      moments := by
-        unfold MomentWitness
-        decide +kernel
-      branch_valid := by
-        norm_num [branchValid, boundaryCertificate, middleCertificate] }
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0], 1, 0, (-2), (-2), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0], 1, 0, (-1), (-1), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], 1, 0, 0, 0, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0], 1, 0, 0, 2, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1], 1, 0, 2, 8, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0], 1, 0, 1, 5, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2], 2, 0, 6, 42, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,2,0,0,0,0,0,0,0,0,0,0,0,3,0], 3, 0, 3, 39, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1], 1, 0, 3, 9, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,2,0,0,0,0,0,0,0,0,0,0,3,0], 3, 0, 5, 55, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1], 1, 0, 4, 12, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,3,0,0,0,0,0,0,0,0,0,5,0], 5, 0, 10, 170, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,5], 5, 0, 20, 280, 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,0], 2, 1, (-2), (-4), 1)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,3], 3, 2, 0, 0, 3)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,3,0,0,0,0,0,0,0,5,0], 8, 0, (-32), (-376), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,5], 9, 0, (-36), (-504), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,2,0,0,0,0,0,0,3,0], 5, 0, (-19), (-137), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1], 2, 0, (-8), (-24), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,2,0,0,0,0,0,3,0], 5, 0, (-17), (-121), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1], 2, 0, (-7), (-21), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,2,0,0,0,0,3,0], 5, 0, (-15), (-105), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1], 2, 0, (-6), (-18), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0], 2, 0, (-6), (-16), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,2], 5, 0, (-15), (-105), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0], 2, 0, (-5), (-13), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,1], 3, 0, (-8), (-32), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0], 2, 0, (-4), (-10), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
+  · change RayData.Valid (![0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1], 3, 0, (-6), (-24), 0)
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · norm_num
+    · norm_num
+    · norm_num
+    · unfold MomentWitness
+      decide +kernel
+    · norm_num [branchValid, boundaryCertificate, middleCertificate]
 
 end
 end D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound

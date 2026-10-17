@@ -11,7 +11,10 @@ internal sealed class RayMomentsDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/RayMoments.ray_gram_bound"),
                 H("Original rays and their moments"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The original 187 identifiers retain their sixteen gap coordinates and their boundary, " +
-                    "middle-envelope or bulk branch. The integer position coefficients describe exactly " +
+                    "middle-envelope or bulk branch. Each ray uses the product of its gap vector, four integer " +
+                    "moment coefficients u, v, c, C, and a Fin 4 branch label. Labels 0, 1, 2, 3 denote " +
+                    "boundary, first middle envelope, second middle envelope, bulk. Validity is the conjunction " +
+                    "of its five defining conditions. The integer position coefficients describe exactly " +
                     "1,2,3,4,5,j,N-9 through N. MomentWitness records three linear mass coefficients and three " +
                     "quadratic Gram coefficients. A valid ray has nonnegative coefficients, positive mass " +
                     "throughout N at least 67 and j at least 6, exact moments and its branch certificate. These " +
