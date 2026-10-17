@@ -4350,4 +4350,124 @@ We verify that both coordinates are $Q$-adic units. First $\gcd(m,n)=1$: otherwi
 The lemma is a compatibility check, not the exclusion argument. The family is not disjoint from actual golden prime support: $\mathcal F(1,1)=19=L_3^2+3$. This example is not a new individual exclusion. The theorem is uniform in all integer parameters and all original layers; it does not replace exact golden support by unrestricted splitting. No assertion is made that infinitely many represented primes have pure ternary golden period, that every other cross-level necessary condition is independent of the representation, or that a member cannot be WSS in another depth vector. The parametrization and congruence lemma are elementary; the global exclusion uses Section 74's height and reduction obstruction. This is a paper proof with no Lean certification claim.
 
 
+## 76. The original integral orbit forces a primitive global generator
+
+**Theorem 76.1 (primitive generator and simultaneous formal reduction).** Suppose $j\ge1$, $N=3^j$, and
+
+$$B_N=L_N^2+3=P^2Q^3$$
+
+for distinct primes $P,Q$. On $E_Q:Y^2=X(X+5Q)(X-15Q)$, let $G_0(Q)$ be the global rational subgroup of Definition 74.1, let $T_0=(0,0)$, and put
+
+$$R=(5QB_N,25Q^2 L_N(PQ)F_N),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0(Q)=\mathbb Z S.}$$
+
+In particular every point of $G_0(Q)$ reduces to infinity at both $Q$ and $P$. Reduction at $P$ is good. This asserts primitivity in the specified global subgroup, not a choice of generator of the full Mordell–Weil group modulo torsion.
+
+**Proof.** Section 74 supplies $P,Q>5$, $Q\ge19$, and the conditional conclusions that $G_0(Q)=G_1(Q)$ is torsion-free of rank one and that $S$ is non-torsion with
+
+$$X(S)=-\frac{15}{P^2Q^2},\qquad z(S)=\frac{X(S)}{5Q}=-\frac3{B_N}.$$
+
+Choose a generator $H$ of $G_0(Q)$ and its sign so that $S=[m]H$ with $m>0$.
+
+First $m$ is odd. For a real non-torsion point $U$, Section 74's duplication formula gives
+
+$$z(2U)=\frac{(z(U)^2+3)^2}{4z(U)(z(U)+1)(z(U)-3)}>0,$$
+
+because the denominator is $4Y(U)^2/(5Q)^3>0$. An even $m$ would therefore contradict $X(S)<0$. Set $K=H+T_0$. Since $m$ is odd and $T_0$ has order two,
+
+$$[m]K=[m]H+T_0=S+T_0=R.$$
+
+The point $K$ is non-torsion and integral. To see the latter, the displayed integral model has discriminant $2^8 3^2 5^6 Q^6$, whose valuation is less than twelve at every prime, so it is locally minimal everywhere. If a rational point on this model is nonintegral at a prime $\ell$, its $X$-coordinate has negative valuation and it belongs to the formal kernel. That kernel is a subgroup at every prime, including $2,3,5,Q$. Thus a nonintegral $K$ would make its nonzero multiple $[m]K=R$ nonintegral at the same prime, contradicting the displayed integer coordinates of $R$. No prime-to-$\ell$ assumption on $m$ is needed. These are the standard formal-kernel facts of Silverman, [VII.1–3](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+For the split cubic, complete two-descent gives the squareclass homomorphism whose coordinates at a non-two-torsion point $U$ are $X(U)$, $X(U)+5Q$, and $X(U)-15Q$ modulo rational squares. See Silverman, [X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf), printed p.315 / PDF p.327; the third class follows from the curve equation. Odd multiplication preserves these classes. At $R$ they are $(5,Q,5Q)$, because
+
+$$X(R)=5(PQ^2)^2,\quad X(R)+5Q=Q(5F_N)^2,\quad X(R)-15Q=5Q L_N^2.$$
+
+Consequently
+
+$$X(K)=5a^2,\qquad X(K)+5Q=Qb^2,\qquad X(K)-15Q=5Qd^2$$
+
+for rational $a,b,d$. They are integers: each left side is integral, and each coefficient $5,Q,5Q$ is squarefree, so a reduced denominator would require an impossible square factor in that coefficient. The equality $5a^2+5Q=Qb^2$ gives $Q\mid a$. Write $a=Qc$. The remaining equalities yield
+
+$$X(K)=5Q^2c^2,\qquad d^2+3=Qc^2,\qquad b^2=5(Qc^2+1).$$
+
+Hence $5\mid b$; writing $b=5f$ gives $d^2+4=5f^2$. Here $c\ne0$ because $K$ is non-torsion, $d\ne0$ because $Qc^2=3$ is impossible, and $f\ne0$. Take $d,f$ positive by changing their signs.
+
+We recall the elementary integral negative-Pell classification, with its argument to fix the exact orbit: every positive solution of $d^2+4=5f^2$ is $(L_n,F_n)$ for an odd $n\ge1$. The two integers have the same parity. The solution with $d=1$ is $(1,1)$. If $d>1$, then $d\ge4$, and
+
+$$d'=\frac{3d-5f}{2},\qquad f'=\frac{3f-d}{2}$$
+
+are positive integers with $d'^2+4=5f'^2$ and $d'<d$. Positivity follows from $9d^2-25f^2=4d^2-20>0$ and $9f^2-d^2=4f^2+4>0$; strict decrease follows from $d<5f$. Descent ends at $(1,1)$. Its inverse multiplies $(d'+f'\sqrt5)/2$ by $\phi^2$, where $\phi=(1+\sqrt5)/2$, so $(d+f\sqrt5)/2=\phi^n$ for a positive odd $n$. This gives precisely the stated Lucas and Fibonacci coordinates.
+
+Thus $Q\mid L_n^2+3$. The odd-index identities
+
+$$L_{3n}=L_n(L_n^2+3),\qquad F_{6n}=F_{3n}L_{3n}$$
+
+imply $Q\mid F_{6n}$. The original exact rank is $\rho(Q)=2\cdot3^{j+1}=6N$, by TBN3 in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md). Rank divisibility gives $6N\mid6n$, hence $N\mid n$ and $n\ge N$. In particular
+
+$$z(K)=\frac{X(K)}{5Q}=Qc^2=L_n^2+3\ge B_N.$$
+
+The original integral orbit is essential in this step; an arbitrary rational Pell solution does not supply an integer index $n$.
+
+Write $c_0=\log144/6$ and $u_0=\log24/6$. The uniform bounds proved in Section 74, and invariance of canonical height under torsion translation, give
+
+$$\widehat h(K)=\widehat h(H)\ge\tfrac12\log B_N-c_0,\qquad
+\widehat h(R)=\widehat h(S)\le\tfrac12\log B_N+u_0.$$
+
+Set $t=\tfrac12\log B_N$. Since $R=[m]K$,
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+But $B_N\ge19>12$, so $t-c_0>0$ and
+
+$$8t=4\log B_N>4\log12>3\log12+\frac{\log24}{6}=9c_0+u_0,$$
+
+using $24<12^6$. Thus $9(t-c_0)>t+u_0$ and $m<3$. The positive odd integer $m$ must equal one. Hence $H=S$ and $G_0(Q)=\mathbb ZS$.
+
+The entire group already lies in $G_1(Q)$ by Section 74. At $P$, the discriminant is a unit because $P>5$ and $P\ne Q$, and $v_P(X(S))=-2$ gives $\operatorname{red}_P(S)=O$. Therefore every point of $G_0(Q)$ also reduces to infinity at $P$. ∎
+
+**Corollary 76.2 (one-point second-prime exclusion).** Let $P,Q>5$ be distinct primes. If there is a rational point $U\in E_Q(\mathbb Q)$ with nonsingular reduction at $Q$ and nonzero reduction at $P$, then
+
+$$L_{3^j}^{\,2}+3\ne P^2Q^3\qquad\text{for every }j\ge1.$$
+
+**Proof.** A hypothetical factorization puts $U$ in the global group of Theorem 76.1, whose reduction at $P$ is zero, a contradiction. ∎
+
+This certificate may use a point in the $Q$-formal kernel; it does not require that point to generate any rational subgroup. Neither existence of a certificate for every pair, an infinite family of certificates, nor a general non-WSS conclusion follows. The rank-one hypothesis used in the proof is obtained only from the hypothetical actual factorization through Section 74, without a parity conjecture or finiteness assumption on a Tate–Shafarevich group.
+
+
+**Corollary 76.3 (full rational group and reduction image).** Under the hypotheses of Theorem 76.1,
+
+$$E_Q(\mathbb Q)=\mathbb Z S\oplus E_Q[2],\qquad
+\operatorname{red}_P(E_Q(\mathbb Q))=E_Q(\mathbb F_P)[2].$$
+
+The group on the right has exactly the four points $O,(0,0),(-5Q,0),(15Q,0)$ reduced modulo $P$.
+
+**Proof.** First $[2]U\in G_0(Q)$ for every $U\in E_Q(\mathbb Q)$. This is immediate for two-torsion and for $U\in G_0(Q)$. Otherwise $U$ reduces to the cusp at $Q$, so $k=v_Q(X(U))\ge1$. The duplication formula is
+
+$$X(2U)=\frac{(X(U)^2+75Q^2)^2}{4X(U)(X(U)+5Q)(X(U)-15Q)}.$$
+
+If $k\ge2$, the shifted factors each have valuation one. The curve equation forces $k+2$ to be even, and the numerator has valuation four, so $v_Q(X(2U))=2-k\le0$.
+
+If $k=1$, write $X(U)=Qw$ with $w$ a $Q$-adic unit. The even valuation of
+
+$$Y(U)^2=Q^3w(w+5)(w-15)$$
+
+forces exactly one of $w+5,w-15$ to have a positive, odd valuation $t$. Their difference is $20$, a unit at $Q>5$. At the respective residues $w=-5$ and $w=15$, the expression $w^2+75$ is $100$ or $300$, also a unit at $Q>5$. Thus $v_Q(X(2U))=4-(3+t)=1-t\le0$.
+
+Negative $X$-valuation gives reduction to infinity, while zero valuation gives a finite nonsingular point on $Y^2=X^3$. This proves $[2]U\in G_0(Q)$ in all cases. Theorem 76.1 now writes $[2]U=[k]S$ for an integer $k$. If $k$ were odd, its $X$-coordinate would have the negative squareclass $-15$ of $X(S)$, by complete two-descent. It would therefore be negative. But the nonzero double $[2]U$ has positive $X$ by the real duplication formula. Hence $k=2l$, and $U-[l]S$ is rational two-torsion. Non-torsion of $S$ makes the sum direct.
+
+The four rational two-torsion points reduce distinctly at $P>5$, $P\ne Q$. The point $S$ reduces to infinity, proving the image equality. ∎
+
+**Corollary 76.4 (explicit second-prime support from one rational point).** Let $P,Q>5$ be distinct primes and let $U=(x,y)\in E_Q(\mathbb Q)$ be a point which is not two-torsion. Write $\operatorname{den}(x)>0$ for the denominator of $x$ in lowest terms and $\operatorname{num}(y)\ne0$ for the numerator of $y$ in lowest terms. An actual factorization $L_{3^j}^2+3=P^2Q^3$ necessarily satisfies
+
+$$\boxed{P\mid\operatorname{den}(x)\operatorname{num}(y).}$$
+
+**Proof.** If $P$ divides neither factor, $x$ is $P$-integral and the integral curve equation makes $y$ $P$-integral as well. Its reduced numerator being a unit makes $y$ a unit. Thus $U$ reduces to a finite point with nonzero $Y$-coordinate, which is not two-torsion. This contradicts Corollary 76.3. ∎
+
+For a fixed $Q$ and one supplied non-two-torsion rational point, the nonzero integer in Corollary 76.4 gives a finite explicit set containing every possible second prime. The point need not be a generator or satisfy a nonsingular-reduction test at $Q$. This does not assert that such a point or a new excluded pair has been exhibited for every $Q$.
+
+
 ## 追加锚（本行以下为增补区）
