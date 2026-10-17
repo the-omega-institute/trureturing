@@ -4223,3 +4223,643 @@ The ordered Young norm step is Fischer–Ruzhansky, *Sobolev spaces on graded gr
 Absolute response and quartic signs, zero-response and positive-quartic occurrence, and the finer $C_{\rm resp}=0,C_4=0$ actual scale/profile branch remain unresolved. The original full-family every-actual-choice target of Definition 9.1 is therefore still unresolved, including the remaining bounded, divergent or mixed actual scale alternatives where applicable. Centered crossover, analytic $L^2$ state preparation, physical-space or three-dimensional realization, and native operational clock/resource bridges are not consequences of these conditional analytic results. The original source and clock, raw and weighted charges, entire complex domains and every-choice quantifiers remain those of Definitions 1.1–2.2; canonical correction parity imposes no condition on actual states.
 
 ## 追加锚（本行以下为增补区）
+
+## 51. A common-source translated two-face family
+
+**Definition 51.1 (fixed realization and order of limits).** Write G for
+*Native two-control Green stability* and L for *Native long-time phase
+ diffusion*. Retain the ordinary analytic antecedents of Definitions
+1.1–3.2, P §§70,75–76,87–88,97,104–107 and L §§35–36,41.
+Fix $H\in(0,1/2)$, $a,\varepsilon>0$, a prescribed sign of $\kappa$
+and $R_*>0$. Put $x=\sqrt{R_*}/\pi$ and $L_0=H/[4(x+1)]$.
+Choose $b_{\rm ref}>0$ with
+$\varepsilon b_{\rm ref}<\min(xL_0/4,L_0/4)$, and then a sufficiently
+small fixed nonzero $\kappa$ of that sign. Set
+
+$$
+\begin{aligned}
+k_0&=\alpha_\kappa+xL_0,&
+I_b&=(k_0-\varepsilon b,k_0+L_0-\varepsilon b),
+       &&0<b\le b_{\rm ref},\\
+c_\kappa(k)&=\left(
+\frac{(k-2\kappa)(H+\kappa-k)}{2H(k-\alpha_\kappa)},
+-\frac{k(k-2\kappa)}{2H(k-\alpha_\kappa)},
+\frac{H+\kappa-k}{H(k-\alpha_\kappa)}\right),\\
+\lambda&=\varepsilon^2\pi^2/L_0^2,&
+\nu&=\varepsilon/(k_0-\alpha_\kappa),&
+\lambda/\nu^2&=R_*.
+\end{aligned}
+\tag{51.1}
+$$
+
+The original means are $X=Y=H+\kappa$, $Z=1-2H$, and the five
+probabilities, in original order, are
+$(k-2\kappa,H+\kappa-k,1-2H,H+\kappa-k,k)$.
+The lifted real coordinate remains $x_{\rm lift}=D/\kappa$.
+All members use precisely this one vector, raw $dk\,dq$, source
+$o=(k_0,0)$, covariance $\operatorname{diag}(\varepsilon^2,1)$,
+and the original $B$ heat clock, independently of $a$.
+Only the two Dirichlet faces move. A limit in $s$ always fixes $b>0$
+first; $b=0$ is only a coefficient-family closure point.
+
+**Proposition 51.2 (admission and compact-family uniformity).** The
+choices in Definition 51.1 can be made for either sign so that all
+$I_b$ are admitted original intervals, with common larger-interval
+probability, pole, determinant and derivative margins. The all-height
+heat estimates of P76 and the two-endpoint band estimates of L41 hold
+with constants uniform for $0<b\le b_{\rm ref}$.
+
+Proof. At $\kappa=0$, the closed union of the intervals lies in
+$[xL_0-\varepsilon b_{\rm ref},(x+1)L_0]\Subset(0,H)$.
+Its lower endpoint is at least $3xL_0/4$ and its upper endpoint is $H/4$.
+Continuity therefore permits a fixed larger interval $(l',u')\Subset(0,H)$
+and a sufficiently small $\delta>0$ such that $|\kappa|=\delta$ and
+$2\delta<\min\{l'/4,(H-u')/2,H/4\}$.
+R Proposition 14.1 applies on $[-2\delta,2\delta]\times[l',u']$.
+In particular every probability is positive, $k-\alpha_\kappa$ stays
+positive, and
+$\det(c_\kappa,c_\kappa',c_\kappa'')
+=-(H^2-\kappa^2)/[2H^3(k-\alpha_\kappa)^3]$ stays away from zero.
+All fixed-order derivatives are bounded there. These are actual
+jointly realized source conditions, not independently prescribed jets.
+
+Translate the height to $z=k-(k_0-\varepsilon b)\in(0,L_0)$.
+The coefficient $c_b(z)=c_\kappa(k_0-\varepsilon b+z)$ extends smoothly
+through $b=0$ on this fixed interval. In G (26.7) the map from a phase
+vector to the quadratic numerator coefficients is invertible: its kernel
+would give a linear combination of $c_b,c_b',c_b''$ equal to zero.
+The translated polynomial coefficient map and its inverse have bounded
+norms on the compact $b$ interval. G (26.8)–(26.12)'s sublevel proof
+therefore gives uniform all-real-frequency coercivity and smoothing.
+The scalar height eigenvalues are unchanged, with gap $3\lambda$.
+Moreover
+
+$$
+M_b=\int_0^{L_0}c_b(z)c_b(z)^{\mathsf T}
+             \frac2{L_0}\sin^2(\pi z/L_0)\,dz
+\quad\hbox{satisfies}\quad m\mathrm{Id}\le M_b\le M\mathrm{Id}.
+\tag{51.2}
+$$
+
+Indeed it is continuous even at $b=0$, and a zero quadratic form
+would make a nonzero linear combination of $c_b$ vanish on an interval,
+contradicting the determinant. Compactness gives the stated constants.
+The bounded-potential perturbation and $H^2$ zero-boundary quotient
+proofs in L36 and L41 now have uniform constants: the potential
+coefficients, the inverse of the height gap and the matrices (51.2)
+are uniformly bounded. Their complementary Riesz projections give the
+same uniform band error including both endpoint factors. The common
+larger interval supplies P76's all-height small-time bound, also
+uniformly. This proves the asserted uniformity by its owning proofs.
+It does not admit a source on the $b=0$ face. $\square$
+
+## 52. A convergent signed diagonal coefficient and its late part
+
+**Definition 52.1 (relative diagonal and canonical wall constant).** Let
+$B_b$ denote (1.4) on $I_b\times\mathbb R^3$, $S_b=B_b-\lambda$ and
+$K_b(t;Y,Z)=e^{\lambda t}p_t^{B_b}(Y,Z)$, extended by zero.
+Write $K_{\rm ref}=K_{b_{\rm ref}}$, $W_{1,b}(Y)=\int_1^\infty K_b(t;o,Y)dt$,
+$\ell_0=L_0/\varepsilon$, and define differences directly by
+
+$$
+\begin{aligned}
+\delta_b^{<}&=\int_0^1(K_b-K_{\rm ref})(t;o,o)dt,\\
+\Delta_b&=\int_0^\infty(K_b-K_{\rm ref})(t;o,o)dt.
+\end{aligned}
+\tag{52.1}
+$$
+
+For the canonical height bridge with generator $\partial_r^2$ from
+zero to zero, use $M_0,h_t,\gamma_{M_0}$ of (3.1) and put
+
+$$
+D_E(t)=h_t(0)\mathbb E_{0,0}^t
+ [\gamma_{M_0}(0)\mathbf1_{\{\min H\le-1\}}],
+\qquad C_E=\int_0^\infty D_E(t)dt.
+\tag{52.2}
+$$
+
+**Theorem 52.2 (signed boundary coefficient and late diagonal size).**
+The integrals (52.1) converge absolutely for each fixed $b>0$,
+$0<C_E<\infty$, and
+
+$$
+\lim_{b\downarrow0}b^5\Delta_b=-C_E/j_0<0,
+\qquad W_{1,b}(o)\asymp b^2\quad(0<b\le b_{\rm ref}).
+\tag{52.3}
+$$
+
+The comparison constants in the second assertion are independent of $b$.
+
+Proof. In the source chart at scale one the height intervals are
+$(-b,\ell_0-b)$ and $(-b_{\rm ref},\ell_0-b_{\rm ref})$.
+Both kernels are expectations over the same free height bridge, with
+the same rational covariance on a path surviving the relevant interval.
+A difference of their survival indicators forces the path to reach
+$-b$ or $\ell_0-b_{\rm ref}$, hence to have supremum at least $b$.
+On paths surviving either interval the factor $(1+\nu H)^{-2}$ has
+common positive bounds; its covariance is comparable to $M_0$.
+Taking the phase Gaussian supremum and using (3.3), with $m=0$, gives
+
+$$
+|(K_b-K_{\rm ref})(t;o,o)|
+ \le Ct^{-7/2}e^{-cb^2/t}\quad(0<t\le1).
+\tag{52.4}
+$$
+
+The common raw chart factor and bounded $e^{\lambda t}$ are included
+in $C$. L41 gives $Ct^{-3/2}$ for $t\ge1$. These are integrable
+for each positive $b$; separate divergent diagonal Green integrals
+have not been subtracted.
+
+For $t\le1$, (3.3) bounds $D_E(t)$ by
+$Ct^{-7/2}e^{-c/t}$; for $t\ge1$, it is at most
+$k_t(0)=t^{-7/2}k_1(0)$. Thus $C_E$ is finite. The crossing event
+has positive bridge probability and $M_0$ is positive definite almost
+surely, so $C_E>0$. More explicitly, if $Z=-\min_{[0,1]}H$, Brownian
+scaling and Tonelli give
+
+$$
+C_E=\frac25h_1(0)\mathbb E_{0,0}^1[\gamma_{M_0}(0)Z^5].
+\tag{52.5}
+$$
+
+The integral of $t^{-7/2}\mathbf1_{\{t\ge Z^{-2}\}}$ is
+$2Z^5/5$; (3.3)'s fifth moment also proves its finiteness.
+The variance convention is exactly generator $\partial_r^2$.
+
+Apply the exact privileged chart $\Xi_b$ and determinant-one shear
+(2.4) at scale $b$, with raw Jacobian $j_0b^7$.
+At physical time $b^2u$ the first interval becomes
+$(-1,\ell_0/b-1)$, its covariance factor is $(1+\nu bH)^{-2}$,
+and its clock is $e^{\lambda b^2u}$.
+The reference interval becomes
+$(-b_{\rm ref}/b,(\ell_0-b_{\rm ref})/b)$.
+For every fixed $u>0$ continuity of bridges, covariance comparability
+and (3.3)'s inverse moment give
+
+$$
+j_0b^7(K_b-K_{\rm ref})(b^2u;o,o)\longrightarrow-D_E(u).
+\tag{52.6}
+$$
+
+The minimum equals $-1$ with probability zero; the upper face is
+retained before tending to infinite rescaled distance. On
+$u\le b^{-2}$, (52.4) gives the integrable majorant
+$Cu^{-7/2}e^{-c/u}$ for the left side of (52.6).
+Extend this integrand by zero beyond $b^{-2}$ and use dominated
+convergence. The physical-time part $t\ge1$ has uniformly bounded
+integral by Proposition 51.2 and vanishes after multiplication by
+$b^5$. Since $dt=b^2du$, this proves the first limit in (52.3).
+The original clock has remained present at every finite $b$.
+
+For the late part L41, uniformly in $b$, gives
+$K_b(t;o,o)\le C\phi_b(k_0)^2t^{-3/2}$ for $t\ge1$ and
+
+$$
+K_b(t;o,o)=\phi_b(k_0)^2
+ \left[(4\pi)^{-3/2}(\det M_b)^{-1/2}t^{-3/2}
+                         +O(t^{-5/2})\right].
+\tag{52.7}
+$$
+
+By (51.2) the leading coefficient has a positive uniform lower
+bound. Choose one fixed large $T_0$ making the error at most half
+that coefficient for $t\ge T_0$. Integration on $[T_0,\infty)$
+gives the lower bound for $W_{1,b}(o)$; the first estimate gives the
+upper bound. Finally
+$\phi_b(k_0)^2=(2/L_0)\sin^2(\pi\varepsilon b/L_0)\asymp b^2$.
+Positivity alone would not have supplied this uniform lower bound.
+$\square$
+
+**Proposition 52.3 (precisely conditional local-coefficient invariance).**
+All members of Definition 51.1 have the same $C_{\rm resp}$.
+Whenever their common $C_{\rm resp}$ is zero, their existing coefficient
+$C_4$ of §§23–24 is also the same.
+
+Proof. The complete vector and every source jet, $d_0,\nu,j_0,a$
+and $\lambda$ are identical. The canonical heat, $V,p$, homogeneous
+response and each formula (3.1)–(3.7) therefore agree exactly.
+Under $C_{\rm resp}=0$, the same observation applied to (23.1) and
+(24.1)–(24.6) gives identical forcing, second response, $D_4$ and
+$C_4$. Faces enter the native remainder, not those local formulas.
+Each fixed $b>0$ has the positive source-face margins needed by those
+expansions; their small-$s$ constants need not be uniform as $b\to0$.
+This proves neither zero nor double-zero occurrence. $\square$
+
+## 53. Relative heat on the full common space and moving early modes
+
+**Definition 53.1 (original spectral tests).** For $d=b,b_{\rm ref}$
+fix that admitted datum and use the exact $\Xi_s,\mathcal U_s,
+\mathcal T_s$ of §2. Write $Y_s=\Xi_s\circ\mathscr L_s$ and, by
+restriction and zero extension on complex $L^2(\mathbb R^4)$, set
+
+$$
+\begin{aligned}
+C_d&=s^2(\mathcal T_s\mathcal U_s)S_d
+                  (\mathcal T_s\mathcal U_s)^{-1},&T&=s^{-2},\\
+Q_d(t)&=e^{-tC_d},&q_d(t;\eta,\xi)&=j_0s^7K_d(s^2t;Y_s\eta,Y_s\xi),\\
+H_d&=\int_0^TQ_d(t)dt,&F_d&=j_0^{-1}\int_1^Tq_d(t;0,\cdot)dt,\\
+J_d&=s^5W_{1,d}(Y_s\cdot),&U_d&=F_d+J_d,\\
+R_d(h)&=(C_d+h)^{-1},&
+\mathscr K_d(h)&=U_d^{1/2}R_d(h)U_d^{1/2},\\
+k_d(h)&=\|\mathscr K_d(h)\|_{2\to2},&
+A_p&=\int Vp,&\mathscr A&=(C_*+j_0A_p^2)/\mu>0.
+\end{aligned}
+\tag{53.1}
+$$
+
+Here $J_d$ denotes a multiplier only; it is not assumed in $L^2$.
+The untransported domains are exactly (1.5) on $I_d$, for every real
+phase frequency. The transported operator domain is
+$(\mathcal T_s\mathcal U_s)D(S_d)$ and the form domain is
+$(\mathcal T_s\mathcal U_s)\mathcal Q_d$. Both moving faces remain.
+
+**Lemma 53.2 (relative kernel including remote endpoints).** For this
+fixed pair choose a closed physical height neighborhood $J$ of $k_0$
+strictly inside both intervals. For $0<t\le1$, whenever either endpoint
+has height in $J$, uniformly over the other height and all phases,
+
+$$
+|(K_b-K_{\rm ref})(t;Y,Z)|\le Ct^{-7/2}e^{-c\delta^2/t},
+\tag{53.2}
+$$
+
+where $\delta>0$ is fixed. For $t\ge1$ the difference is bounded
+by $Ct^{-3/2}$. Consequently $(F_b-F_{\rm ref})/s^5$ is globally
+bounded and tends pointwise to $\delta_b^{<}$, while on output heights
+in $J$, $(H_b-H_{\rm ref})/s^5$ has globally bounded kernel tending
+at every fixed microscopic endpoint pair to $j_0\delta_b^{<}$.
+
+Proof. In the scale-one chart write the bridge as $H=A+W$, starting
+at a height $A$ in the compact chart image of $J$. On paths surviving
+either domain the common rational covariance is comparable to
+$\int u(H)u(H)^{\mathsf T}$. The identity $u(A+W)=D_Au(W)$ from
+Lemma 30.2 has $\det D_A=1$, so this covariance determinant equals
+that of the relative zero-start bridge. Differing indicators force
+$\sup|W|\ge\delta$, the distance from $J$ to the faces, with the
+fixed height conversion absorbed into $\delta$. The phase Gaussian
+supremum followed by (3.3), $m=0$, proves (53.2) for every other
+endpoint, including one outside a domain. Symmetry interchanges
+endpoints. The large-time bound is L41. Exact raw scaling gives
+
+$$
+\begin{aligned}
+(F_b-F_{\rm ref})(\xi)
+ &=s^5\int_{s^2}^1(K_b-K_{\rm ref})(t;o,Y_s\xi)dt,\\
+(H_b-H_{\rm ref})(\eta,\xi)
+ &=j_0s^5\int_0^1(K_b-K_{\rm ref})(t;Y_s\eta,Y_s\xi)dt.
+\end{aligned}
+\tag{53.3}
+$$
+
+The integrable estimate (53.2), positive-time smoothness near $(o,o)$
+and dominated convergence prove every asserted limit and bound.
+No compact-output approximation supplies the remote-endpoint bound.
+$\square$
+
+**Lemma 53.3 (full early vectors).** The top nonzero eigenvalue
+$\ell_d$ of $H_dF_d$ has a nonnegative right eigenvector $u_d$ with
+$\|u_d\|_2=1$, and
+
+$$
+\ell_d\to C_*,\quad u_d\to p\text{ in }L^2,\quad
+x_d:=F_du_d\to Vp\text{ in }L^1,\quad
+m_d:=\int F_du_d^2\to\mu.
+\tag{53.4}
+$$
+
+The $x_d$ have bounded $L^1$ and $L^2$ norms.
+
+Proof. P (104.6),(104.9) give $F_d\to V$ in $L^2$, bounded
+$L^2$ and supremum norms, and $H_dF_d\to K_{\rm rec}$ in operator
+norm. The source-fixing shears tend strongly to identity, and their
+conjugation of a compact operator converges in norm, so these statements
+hold in (53.1)'s coordinates. For each fixed $s$, truncating the heat
+integral below a positive time makes $Q_d(t)F_d$ Hilbert–Schmidt by
+the column bound and $F_d\in L^2$; the omitted norm is at most
+$\delta\|F_d\|_\infty$. Thus $H_dF_d$ is compact. The symmetric
+sandwich $F_d^{1/2}H_dF_d^{1/2}$ is compact too: its positive-time
+squared Hilbert–Schmidt norm is at most
+$\sup q_d(t)\langle F_d,Q_d(t)F_d\rangle
+\le\sup q_d(t)\|F_d\|_2^2$, and the same truncation applies.
+It is positive selfadjoint and its top vector can be chosen nonnegative
+by the modulus Rayleigh inequality. The nonzero spectra of the two
+products coincide, with multiplicities; applying $H_dF_d^{1/2}$
+to that vector constructs a nonnegative $u_d$.
+
+P87–88 identify the nonzero canonical reconstruction spectrum with
+the compact canonical selfadjoint Birman–Schwinger spectrum, with
+isolated simple top $C_*$. Compact spectral perturbation gives
+$\ell_d\to C_*$. The equation $u_d=\ell_d^{-1}H_dF_du_d$
+and compact norm convergence make these vectors precompact in the
+full $L^2$ norm. Every nonnegative normalized cluster is $p$.
+Cauchy–Schwarz now gives
+$\|F_du_d-Vp\|_1\le\|F_d\|_2\|u_d-p\|_2+
+\|F_d-V\|_2\|p\|_2\to0$; bounded multiplication bounds $\|x_d\|_2$.
+Finally $u_d^2\to p^2$ in $L^1$; uniform boundedness and convergence
+in measure of $F_d$ give $\int F_du_d^2\to\int Vp^2$ by truncation
+against the fixed integrable $p^2$. Also $0<A_p<\infty$ since
+$V,p\in L^2$ and both are positive. No rate or positive $L^2$ gap
+for $H_c$ is used. $\square$
+
+## 54. The complete relative early principal value
+
+**Theorem 54.1 (both field and return contributions).** For each fixed
+pair in Definition 53.1,
+
+$$
+\ell_b-\ell_{\rm ref}=\mathscr A\delta_b^{<}s^5+o_b(s^5).
+\tag{54.1}
+$$
+
+Proof. Use conjugate-linear first slots. The two exact eigen-equations
+and selfadjointness of $H_{\rm ref}$ give
+
+$$
+\begin{aligned}
+(\ell_b-\ell_{\rm ref})\langle x_{\rm ref},u_b\rangle
+={}&\langle x_{\rm ref},(H_b-H_{\rm ref})x_b\rangle\\
+ &+\ell_{\rm ref}\langle u_{\rm ref},(F_b-F_{\rm ref})u_b\rangle.
+\end{aligned}
+\tag{54.2}
+$$
+
+The denominator tends to $\mu$, using bounded $F_{\rm ref}$,
+$u_b-u_{\rm ref}\to0$ and (53.4). On output heights in $J$, the
+first term divided by $s^5$ tends to $j_0\delta_b^{<}A_p^2$.
+Indeed the normalized kernel in Lemma 53.2 is uniformly bounded;
+replacing either moving $x$ by $Vp$ costs its $L^1$ error times a
+bounded $L^1$ norm. Fixed-input dominated convergence then applies
+on the entire product space, with the expanding indicator of $J$.
+
+For its complementary output heights, (2.9) implies
+$F_{\rm ref}\le Cs^5$, since there $|r|\ge c/s$.
+Moreover $\|(H_b-H_{\rm ref})x_b\|_2\le C$: integrate contraction
+on $(0,1)$ and $Ct^{-7/4}\|x_b\|_1$ on $(1,T)$, separately
+for the two heats, using (29.5). Hence the omitted scalar is bounded by
+$Cs^5\|\mathbf1_{\{k\notin J\}}u_{\rm ref}\|_2=o(s^5)$.
+The last equality follows from full $L^2$ convergence to $p$, because
+this set recedes to $|r|\ge c/s$; zero-extended domain differences
+are included. For the second term in (54.2),
+$u_{\rm ref}u_b\to p^2$ in $L^1$ and the bounded multiplier limit
+of Lemma 53.2 gives $C_*\delta_b^{<}$ after division by $s^5$.
+Dividing the sum by $\mu$ proves (54.1). $\square$
+
+## 55. Full principal norm equality at both probes
+
+**Theorem 55.1 (complete original relative spectral law).** For each
+separately fixed admitted $b>0$, each $d=b,b_{\rm ref}$ and each
+$q\in\{6,7\}$,
+
+$$
+\begin{aligned}
+k_d(s^q)&=\ell_d+\mathscr A W_{1,d}(o)s^5+o_d(s^5),\\
+k_b(s^q)-k_{\rm ref}(s^q)&=\mathscr A\Delta_b s^5+o_b(s^5),\\
+\lim_{b\downarrow0}b^5\lim_{s\downarrow0}
+ \frac{k_b(s^q)-k_{\rm ref}(s^q)}{s^5}
+ &=-\mathscr A C_E/j_0<0.
+\end{aligned}
+\tag{55.1}
+$$
+
+In particular all sufficiently small separately fixed $b>0$ satisfy
+$k_b(s^q)<k_{\rm ref}(s^q)$ for all sufficiently small $s$ depending
+on $b$, at both probes. No response-zero premise is imposed.
+
+Proof. Fix $d$ and suppress it. Put $h=s^q$, $x=Fu$, $y=Ju$,
+$d_s=\int Ju^2$, $n=m+d_s$, and $z=U^{1/2}u/\sqrt n$.
+These are actual early eigenvectors from Lemma 53.3, not actual ground
+states; $z$ is a unit test for the full selfadjoint operator. Boundedness
+and continuity of the original $W_1$ at $o$ give
+$d_s/s^5\to W_1(o)$, using $u^2\to p^2$ in $L^1$.
+Write
+
+$$
+H^h=\int_0^Te^{-ht}Q(t)dt,\qquad
+L^h=\int_T^\infty e^{-ht}Q(t)dt,\qquad D=H-H^h,
+\qquad R=H^h+L^h.
+\tag{55.2}
+$$
+
+Their kernels and quadratic forms are nonnegative. Exact scaling gives
+
+$$
+s^{-5}L^h(\eta,\xi)=j_0\int_1^\infty
+ e^{-(h/s^2)t}K(t;Y_s\eta,Y_s\xi)dt.
+\tag{55.3}
+$$
+
+L41 bounds the integrand by $Ct^{-3/2}$ over both endpoints.
+Since $h/s^2\to0$, (53.4) and dominated convergence on the full
+product space yield
+$\langle x,L^hx\rangle=j_0W_1(o)A_p^2s^5+o(s^5)$.
+Replacing a moving input by $Vp$ costs at most its $L^1$ error
+ times a bounded $L^1$ norm under this globally bounded kernel.
+
+The damping has the input-specific estimates
+
+$$
+0\le\langle x,Dx\rangle\le
+h\int_0^Tt\|Q(t/2)x\|_2^2dt\le Ch,
+\qquad \|Dx\|_2\le Chs^{-1/2}.
+\tag{55.4}
+$$
+
+For the first, use contraction below time one and
+$\|Q(t/2)x\|_2\le Ct^{-7/4}\|x\|_1$ above it;
+$\int_1^\infty t^{-5/2}dt$ is finite. For the second integrate
+$ht\|Q(t)x\|_2$: its large-time integral up to $T$ is
+$ChT^{1/4}=Chs^{-1/2}$. The time overlap near $T$ only changes $C$.
+Furthermore $\|y\|_2\le Cs^5$ and P (104.14) imply
+
+$$
+0\le\langle y,Ry\rangle\le Cs^9h^{-1/2}=o(s^5).
+\tag{55.5}
+$$
+
+Thus spectral Cauchy–Schwarz gives
+$|\langle x,L^hy\rangle|\le
+\langle x,L^hx\rangle^{1/2}\langle y,Ry\rangle^{1/2}=o(s^5)$,
+and $|\langle y,Dx\rangle|\le Cs^5hs^{-1/2}=o(s^5)$.
+As $Hx=\ell u$, the full quotient, with every long-field term retained,
+is consequently
+
+$$
+\mathcal Q_s:=\langle z,\mathscr K(h)z\rangle
+=\frac{\ell m+2\ell d_s+j_0W_1(o)A_p^2s^5+o(s^5)}{m+d_s}
+=\ell+\mathscr A W_1(o)s^5+o(s^5).
+\tag{55.6}
+$$
+
+In particular division retains one, rather than two, early cross copies.
+The error estimates hold for both $q=6$ and $q=7$.
+
+It remains to control improvement of the full principal value over this
+quotient. P70 gives compactness of $\mathscr K(h)$ at each $s,h>0$.
+P (104.2) gives $R(h)U\to K_{\rm rec}$ in operator norm for either
+$q<8$. The nonzero spectrum of $R(h)U$ equals that of
+$\mathscr K(h)$, with multiplicities, by bounded product factorization.
+Compact spectral perturbation therefore gives $k(h)\to C_*$, a
+single top eigenvalue separated from all the other spectrum by one
+fixed positive gap, and $\|\mathscr K(h)\|\le C$.
+This does not assert norm convergence of $\mathscr K(h)$ itself.
+
+The exact unsandwiched residual is
+$R(h)Uu=\ell u+e$, where $e=-Dx+L^hx+Ry$.
+The early raw mass satisfies $\int F\le Cs^{-2}$: the integral of
+$q(t;0,\cdot)$ is $e^{\lambda s^2t}$ times killed survival, at most
+$e^\lambda$ for $t\le T$. Equation (55.3) and (29.5) give
+$\|L^hx\|_\infty\le Cs^5$ and
+$\|L^hx\|_2\le Cs^2h^{-1/4}\|x\|_1$.
+Splitting its weighted norm into $F$ and $J$ therefore gives
+
+$$
+\begin{aligned}
+\|U^{1/2}L^hx\|_2^2&\le C(s^8+s^9h^{-1/2}),\\
+\|U^{1/2}Dx\|_2^2&\le Ch^2s^{-1},\\
+\|U^{1/2}Ry\|_2^2
+ &\le\|R^{1/2}UR^{1/2}\|\langle y,Ry\rangle
+ \le Cs^9h^{-1/2}.
+\end{aligned}
+\tag{55.7}
+$$
+
+For the last line the middle norm equals $\|\mathscr K(h)\|$.
+All these are bounded operators for fixed $h>0$; $J$ itself is
+never assigned an $L^2$ norm. Since $n\to\mu>0$, (55.7) proves
+
+$$
+\| (\mathscr K(h)-\ell)z\|_2^2
+ \le C(h^2s^{-1}+s^8+s^9h^{-1/2})=o(s^5).
+\tag{55.8}
+$$
+
+The bound is $O(s^6)$ at $h=s^6$ and $O(s^{11/2})$ at $h=s^7$.
+For completeness, if a positive selfadjoint operator has top $k$ and
+remaining spectrum at most $k_2$, integrate
+$(k-t)(t-k_2)\le0$ against the spectral measure of a unit vector
+with quotient $\mathcal Q>k_2$. This gives
+$\|(K-\mathcal Q)z\|^2\ge(k-\mathcal Q)(\mathcal Q-k_2)$.
+Replacing $\ell$ by its quotient minimizes the squared residual.
+The fixed gap and (55.8) thus imply $0\le k-\mathcal Q_s=o(s^5)$.
+This classical variance argument is included inside the source-specific
+proof so that (55.6) is upgraded to a norm equality.
+
+The first line of (55.1) follows. Subtract it for the two fixed datasets
+and apply Theorem 54.1. The exact identity
+$\delta_b^{<}+W_{1,b}(o)-W_{1,\rm ref}(o)=\Delta_b$ gives the
+second line; Theorem 52.2 gives the iterated limit and strict order.
+No joint-uniform remainder in $(b,s)$ is asserted or used. $\square$
+
+## 56. Exact original threshold tests and actual-infimum implications
+
+**Theorem 56.1 (entire-complex-domain equivalence and relative order).**
+For each fixed member and each $h>0$,
+
+$$
+k_d(h)\le C_*\ \Longleftrightarrow\ \epsilon_{c,d}(s)\ge-ah,
+\qquad
+k_d(h)>C_*\ \Longleftrightarrow\ \epsilon_{c,d}(s)<-ah.
+\tag{56.1}
+$$
+
+For the small separately fixed $b$ in Theorem 55.1, at either probe,
+$k_{\rm ref}(s^q)\le C_*$ implies $k_b(s^q)<C_*$ and
+$\epsilon_{c,b}(s)\ge-as^q$; while $k_b(s^q)>C_*$ implies
+$k_{\rm ref}(s^q)>C_*$ and $\epsilon_{c,\rm ref}(s)<-as^q$.
+An eventual strict crossing for any fixed member gives, respectively,
+
+$$
+\begin{array}{c|c|c}
+h&E_s&r_s\\ \hline
+s^6&E_s<-as^4&r_s>as^{-2}\\
+s^7&E_s<-as^5&r_s>a/s
+\end{array}
+\tag{56.2}
+$$
+
+In either eventual-crossing case P Theorem 105.1 gives
+$\operatorname{dist}_{L^2}(\mathcal U_s\psi_s,\mathbb Tp)\to0$
+for every prescribed sequence and every actual normalized complex
+ground-state choice of that fixed datum, with the original $\mathcal U_s$.
+
+Proof. On the entire transported complex form domain, exactly (2.2)
+and (2.5) give
+
+$$
+q_s^c[\mathcal T_s^{-1}f]+ah\|f\|_2^2
+=a\|(C_d+h)^{1/2}f\|_2^2-\chi_c\|U_d^{1/2}f\|_2^2.
+\tag{56.3}
+$$
+
+Since $C_d\ge0$ and $h>0$, its square root maps that form domain
+onto $L^2(\Omega_{s,d})$. The squared norm of
+$U_d^{1/2}(C_d+h)^{-1/2}$ is $k_d(h)$.
+Therefore nonnegativity of (56.3) for all complex $f$ is equivalent
+to $k_d(h)\le a/\chi_c=C_*$, and by the actual infimum in (2.2)
+is equivalent to $\epsilon_{c,d}\ge-ah$. Negation gives the strict
+ equivalence. Zero extension does not change this norm or infimum.
+Explicitly, for a unit top vector $z$ with $k>C_*$,
+$f=R_d(h)U_d^{1/2}z\in D(C_d)$ is nonzero and its shifted form
+is $a(k-\gamma k^2)<0$, $\gamma=\chi_c/a$.
+Normalization supplies a lawful trial for the actual infimum; it
+neither identifies a minimizer nor restricts actual states to be real.
+
+The relative implications use only the strict norm ordering.
+Using $\epsilon_c=s^2E_s=-r_ss^8$ gives (56.2).
+If a crossing holds eventually then $r_s\to\infty$, so apply P105.1
+directly to every prescribed actual sequence. A failure of the
+ every-choice conclusion would provide failing actual choices along a
+sequence and contradict that theorem. No new proof of P105 is required.
+$\square$
+
+## 57. Analytic correspondence and the absolute boundary
+
+**Definition 57.1 (owners and mathematical scope).** The new deductions
+of §§51–56 are conditional on the original ordinary analytic suppliers,
+not on an absolute early spectral estimate. P70/75 own fixed-cutoff
+compactness and attainment; P76/97/107 own both-face heat and the exact
+rational same-bridge moments; P87–88 own specified compact reconstruction
+and its simple mode; P104 owns global reconstruction and the long-field
+resolvent bound. P105 is reused unchanged for actual choices.
+L36/41 own the full-frequency tensor band with both endpoint factors.
+The compact translated uniformity, convergent relative integral,
+wall coefficient, moving early comparison, full residual and principal
+norm equality are proved here, not supplied by local heat asymptotics.
+
+The local primary interface is Colin de Verdière–Hillairet–Trélat,
+*Small-time asymptotics of hypoelliptic heat kernels near the diagonal,
+nilpotentization and related results*, Annales Henri Lebesgue 4,
+[Theorem B, pp.915–916; §3.1 and Theorem 3.2, pp.917–922](https://ahl.centre-mersenne.org/item/10.5802/ahl.93.pdf).
+The fields $\varepsilon\partial_k,c_\kappa(k)\cdot\partial_q$ have
+zero divergence in raw measure, zero drift, and determinant nonzero
+on the common larger interval, hence uniformly bounded step three.
+The privileged weights are $(1,1,2,3)$ and density is $j_0d\xi$.
+The killed realizations are selfadjoint contractions; after shift their
+semigroups satisfy the allowed $e^{\lambda t}$ bound.
+These meet the primary's smooth density, bracket, realization and
+compact-interior localization hypotheses. That theorem supplies local
+smoothness/nilpotentization only. Equations (52.4),(53.2) and L41,
+rather than that local theorem, pay time-zero relative cancellation,
+remote endpoints and infinite time. The compact spectral perturbation,
+nonzero-product correspondence, Gaussian conditioning, spectral calculus
+and variance inequality are classical intermediate steps. The resulting
+same-source relative law is repository-derived; no worldwide novelty
+or fresh global-antecedent certification is asserted.
+
+**Definition 57.2 (unresolved absolute threshold).** The quantity
+$k_{\rm ref}(s^q)-C_*$ remains unevaluated. In particular (55.1) does
+not give a fifth-order expansion or enclosure for that absolute defect;
+fixing a large negative relative coefficient cannot dominate an
+uncontrolled reference offset. There is no response/quartic sign,
+zero-response or double-zero occurrence, selected actual branch,
+actual-state counterexample, physical spatial dimension, or analytic
+state-preparation consequence. The original full-family target of
+Definition 9.1 and its remaining doubly-zero actual scale/profile cases
+remain unresolved. Local invariance is only Proposition 52.3's
+conditional invariance; relative ordering is only Theorem 55.1's iterated
+fixed-data statement. All full complex domains, actual-choice quantifiers,
+raw source charges, original clock and both deaths remain unchanged.
+
+## 追加锚（本行以下为增补区）

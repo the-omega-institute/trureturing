@@ -2957,4 +2957,103 @@ For an everywhere-unramified cyclic cubic extension, the ideal-class Artin map t
 
 The conclusions are necessary restrictions on the full product M=D_N D_(3N). They do not identify an actual pair excluded by a new cubic test, prove nontriviality of the relevant class-group quotient, exclude an original golden support prime, or rule out a zero of the original initial quotient. Such an exclusion still requires an arithmetic comparison between that original target and the marked classes above 2 and 3 for the actual consecutive kernels. Forgetting C,C' retains only equality up to sign in Cl(K)/Cl(K)^3; retaining their product C C' is necessary for the exact marked sign. The original orders in Theorem 106.1, both full prime supports, and all even-depth factors remain part of that comparison.
 
+## 108. Certified arithmetic of the original block N=243
+
+### 108.1. The complete finite support
+
+**Proposition 108.1.** For the actual Fibonacci and Lucas sequences, put B_243=L_243^2+3. Its complete prime support, in order, is
+
+ p0=1459,
+ p1=58321,
+ p2=67234945243909760461,
+ p3=64642456533364216165903625998192510598323380531684784427098565775883411861.
+
+The four primes are distinct and B_243=p0 p1 p2 p3. Thus the complete decomposition B_243=D C^2 has D=B_243 and C=1. Their residues modulo 24 are (19,1,13,13), D=19 modulo 120, and each p satisfies p>5, p=1 modulo 3, and (5/p)=1. Each has exact Fibonacci rank rho(p)=1458, golden-matrix order tau_p=1458, and squared-golden-unit order 729.
+
+In the notation of sections 95 and 105, the actual zero-row-sum Legendre matrix is
+
+ A=[[1,0,1,0],[0,0,1,1],[1,1,1,1],[0,1,1,0]],
+ ker A=ker A^T=<1111>.
+
+Consequently r=0, U4=U0=U24={0}, and the existing local Selmer parametrization has full dimension 3 and pure dimension 1 at this block.
+
+**Proof.** The integer Lucas recurrence gives
+
+ L_243=608130213374088941214747405817720942127490792974404,
+ B_243=369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219.
+
+Direct multiplication gives B_243=p0 p1 p2 p3, and the same recurrence gives L_729=L_243 B_243. The prime certificates in section 108.2 establish that the four distinct entries are all the prime factors. The complete product then proves every valuation is one. The residue and order calculations in section 108.3 prove the remaining assertions. ∎
+
+### 108.2. Explicit recursive prime certificates
+
+Continue the proof using the established partial-(n-1) Pocklington criterion, as in [Théry, Primality Tests and Prime Certificate, section 6, Theorem 6.1](https://arxiv.org/pdf/2203.16341). For n-1=F R with certified prime factorization of F and F^2>n, it suffices that every q|F have a witness a with
+
+ a^(n-1)=1 modulo n,
+ gcd(a^((n-1)/q)-1,n)=1.
+
+For completeness, these congruences imply that the order of a modulo every prime ell|n has the full q-primary part of n-1. Hence F divides ell-1. Every prime divisor of n exceeds sqrt(n), impossible for composite n. This argument does not require R to be prime or completely factored.
+
+The trial-prime leaves are
+
+ 7,1459,3359,23561,58321,64577,84391,49052561.
+
+Division through their respective integer square roots proves each prime; the largest bound is 7003. All factors in F below have exponent one, and all witnesses are a=2. The rows are applied in order, so every factor used in F is already proved prime.
+
+| Row | n | Factored F | R=(n-1)/F |
+|---|---|---|---|
+| n1 | 413434668377 | 3359 * 23561 | 5224 |
+| n2 | 10749301377803 | 413434668377 | 26 |
+| n3 | 67234945243909760461 | 10749301377803 | 6254820 |
+| n4 | 6716009 | 64577 | 104 |
+| n5 | 6076153 | 84391 | 72 |
+| n6 | 2452628051 | 49052561 | 50 |
+| n7 | 17621137135676240824957318941605860107004737413 | 7 * 6716009 * 6076153 * 2452628051 | 25151519613085654400308 |
+| n8 | 64642456533364216165903625998192510598323380531684784427098565775883411861 | 17621137135676240824957318941605860107004737413 | 3668461123458787098841337220 |
+
+In every row n-1=F R and F^2>n. In particular the penultimate row has F=700599304008193622607589. For each row, 2^(n-1)=1 modulo n. The exact residues z=2^((n-1)/q) modulo n are as follows; each displayed pair has gcd(z-1,n)=1.
+
+| Row | q | z |
+|---|---|---|
+| n1 | 3359 | 211467924522 |
+| n1 | 23561 | 208447102076 |
+| n2 | 413434668377 | 67108864 |
+| n3 | 10749301377803 | 21274376115164224375 |
+| n4 | 64577 | 149818 |
+| n5 | 84391 | 2519108 |
+| n6 | 49052561 | 1379006666 |
+| n7 | 7 | 8100935807586575965236027092034370695109509424 |
+| n7 | 6716009 | 937647731211356654546621386475543904927678194 |
+| n7 | 6076153 | 12421664611777357650097112785558811908661591006 |
+| n7 | 2452628051 | 4850218281223585426470843620386396877565848609 |
+| n8 | 17621137135676240824957318941605860107004737413 | 12552533399653229716850993367719369717555096831458299299262808411114642050 |
+
+Thus all eight rows prove primes. In particular p2=n3 and p3=n8 are proved prime, completing the support proof without a probable-prime hypothesis or an unfactored-support remainder.
+
+### 108.3. Exact original orders and the actual Selmer input
+
+The identity 5F_243^2=B_243+1 gives (5/p)=1 for each certified p|B_243. The Fibonacci recurrence modulo each p gives F_1458=0 and F_1459=1. Its following two residues are nonzero:
+
+| p | F_486 modulo p | F_729 modulo p |
+|---|---|---|
+| p0 | 883 | 425 |
+| p1 | 2904 | 46850 |
+| p2 | 119531222675559162 | 51394769882147228846 |
+| p3 | 56877369221439794888688788101320967243013036213729766600109733973139287127 | 64642456533364216165903082069994000232476292686056395579268240592639061137 |
+
+To see that these finite residues establish minimality, let alpha,beta be the distinct roots of X^2-X-1 in F_p; they exist because (5/p)=1 and p>5. Both roots are nonzero and
+
+ F_k=(alpha^k-beta^k)/(alpha-beta).
+
+Hence F_k=0 precisely when (alpha/beta)^k=1. Its least positive zero therefore divides any zero index. Since 1458=2*3^6, any proper divisor of 1458 divides either 729 or 486. The table and F_1458=0 thus prove rho(p)=1458.
+
+For M=[[1,1],[1,0]], the identity M^k=[[F_(k+1),F_k],[F_k,F_(k-1)]] and (F_1458,F_1459)=(0,1) show M^1458=I. A smaller matrix order would give a smaller positive Fibonacci zero. Thus tau_p=1458, and M^2 has order 1458/gcd(1458,2)=729. The squared eigenvalues alpha^2,beta^2 are reciprocal because alpha beta=-1, so each squared golden root has that same order 729.
+
+Euler's criterion at these certified primes gives the matrix A in Proposition 108.1. Its equations imply successively x2=x0, x3=x0, and x1=x0; hence ker A=<1111>. It is symmetric, so its left kernel is the same. The sign and dyadic vectors are
+
+ delta=(1,0,0,0),  t=(1,0,1,1).
+
+The only kernel vector vanishing in the p0-coordinate is zero; hence U4=U0=U24={0}. Thus dim ker A=r+1=1, and the already established local formulas give dim Sel_2=1+dim ker A+dim ker A^T=3 and dim Sel_2/E[2]=2r+1=1.
+
+**Definition 108.2 (arithmetic scope).** The content of Proposition 108.1 is the complete certified support and exact finite input at N=243. The primality criterion is established literature, and the Selmer parametrization is the prior result of section 95; neither is presented as a new general theorem. This block has no proper common-cut direction and does not realize the nonmaximal pattern of Corollary 105.5. No complete support for B_729 or a later block, missing mixed Cassels value in larger nullity, or general exclusion of original initial-quotient zeros is asserted here.
+
 ## 追加锚（本行以下为增补区）

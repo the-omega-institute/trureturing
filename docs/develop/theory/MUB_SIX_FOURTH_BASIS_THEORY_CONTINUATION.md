@@ -4438,3 +4438,358 @@ Their entries are the zero-based indices fixed in §60.3.
  &301,149,152,74,24).
  \end{aligned}
 \]
+
+## 61. A recovered central completion and its joint local isolation
+
+### 61.1 The central representative and the new local statement
+
+Retain the actual input-ray convention and the one-parameter matrix
+\(M(b)=\sqrt6H_0(b)\) of (60.1). At \(b=0\), put
+
+\[
+ \omega=\frac{-1+i\sqrt3}{2},\qquad
+ A=J_3+(\omega-1)I_3,\qquad
+ M(0)=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix}.
+\tag{61.1}
+\]
+
+Define the unit phases
+
+\[
+ \begin{aligned}
+ \gamma&=-\frac{\sqrt3+5i}{2\sqrt7},\\
+ t&=-\frac12-\frac{3\sqrt{21}}{28}
+       +i\left(-\frac{\sqrt3}{4}+\frac{3\sqrt7}{14}\right),\\
+ \delta&=-\frac{3+i\sqrt7}{4},\qquad
+ \tau=\omega^2t,\qquad \sigma=\omega^2\delta.
+ \end{aligned}
+\tag{61.2}
+\]
+
+For \(m=0,1,2\), let \(f_m=(1,\omega^m,\omega^{2m})\), and set
+
+\[
+ \begin{gathered}
+ u_m=((1,1,\tau)\odot f_m,(\gamma,\gamma,\sigma)\odot f_m),\\
+ \Theta(x,y)=(-\bar y,\bar x),\qquad
+ U=(u_0,u_1,u_2,\Theta u_0,\Theta u_1,\Theta u_2),\\
+ V=U\operatorname{diag}(1,1,1,-\gamma,-\gamma,-\gamma).
+ \end{gathered}
+\tag{61.3}
+\]
+
+Here \(\odot\) is coordinatewise multiplication. The first row of \(V\)
+is \((1,1,1,1,1,1)\). The columns of \(U/\sqrt6\) and \(V/\sqrt6\)
+represent the same six rays.
+
+Alternative completions at this central Fourier-equivalent point are
+already part of the Fourier-family literature; see the explicit bridge
+and attribution in §61.5. Their existence is used here as an intermediate
+fact, with an explicit representative and original-equation proof.
+The new statement is isolation relative to the prescribed real branch,
+with no restriction on nearby basis coordinates.
+
+**Theorem 61.1 (repo-derived joint local isolation).**
+The point \((0,[V/\sqrt6])\) is locally isolated in the space of pairs
+\((b,[B])\) for which \(|b|<1\) and \(B\) is an actual common-flat
+orthonormal basis for \(H_0(b)\). Brackets identify independent column
+phases and column permutations only.
+
+More explicitly, after matching the six columns and normalizing their
+first entries, there is a neighborhood of \((0,V)\) in which the only
+unit-entry matrix \(Z\) satisfying
+
+\[
+ Z^*Z=6I_6,\qquad |(M(b)Z)_{rk}|^2=6\quad(0\le r,k\le5)
+\tag{61.4}
+\]
+
+is \(b=0, Z=V\). This excludes distinct nearby solutions, not only
+smooth continuations of the displayed basis. It makes no classification
+claim about other central completions or other points of the branch.
+
+### 61.2 The original central flatness equations
+
+Directly from (61.2),
+\(|\gamma|^2=|t|^2=|\delta|^2=1\). Character orthogonality gives
+\(u_m^*u_n=6\delta_{mn}\). In \(u_m^*\Theta u_n\), the upper and
+lower terms cancel coordinatewise. Since \(\Theta\) preserves norms
+and orthogonality, \(U^*U=6I_6\), and every entry of \(U\) has modulus 1.
+
+For \(e\in\{+1,-1\}\), put
+
+\[
+ r_e=1+e\gamma,\qquad s_e=\tau+e\sigma,\qquad
+ R_e=|r_e|^2,\quad S_e=|s_e|^2,\quad z_e=\bar r_es_e.
+\]
+
+Their exact values are
+
+\[
+ \begin{aligned}
+ R_+&=2-\frac{\sqrt{21}}7,& S_+&=2+\frac{2\sqrt{21}}7,\\
+ z_+&=-\frac{1+\sqrt{21}}4
+       +\frac{3i(\sqrt7+7\sqrt3)}{28},\\
+ R_-&=2+\frac{\sqrt{21}}7,& S_-&=2-\frac{2\sqrt{21}}7,\\
+ z_-&=\frac{\sqrt{21}-1}4
+       +\frac{3i(\sqrt7-7\sqrt3)}{28}.
+ \end{aligned}
+\tag{61.5}
+\]
+
+Consequently
+
+\[
+ 2R_e+S_e=6,\qquad
+ \omega^2R_++z_++\omega\bar z_+=0,\qquad
+ \omega R_-+z_-+\omega^2\bar z_-=0.
+\tag{61.6}
+\]
+
+The rows of \(A\operatorname{diag}(r_+,r_+,s_+)\) have zero cyclic
+three-point autocorrelation and squared norm 6. The same is true of
+\(\bar A\operatorname{diag}(r_-,r_-,s_-)\). Their three-point Fourier
+transforms therefore have every squared modulus6. These are precisely
+the upper and lower channels of \(M(0)u_m\). The identity
+\(M(0)\Theta=-\Theta M(0)\) gives the other three columns. Thus
+
+\[
+ |U_{rk}|^2=1,\qquad U^*U=6I_6,\qquad |(M(0)U)_{rk}|^2=6.
+\tag{61.7}
+\]
+
+For a normalized input \(U_{:k}/\sqrt6\), the output is
+\(M(0)U_{:k}/6\), so (61.7) is exactly the original common-flatness
+condition. The same equations hold after the column phases defining \(V\).
+
+The first two upper coordinates of \(u_m\) fix its Fourier character
+as \(m\), whereas
+
+\[
+ \Re\tau=-\frac18+\frac{9\sqrt{21}}{56}\in(0,1).
+\]
+
+Hence \(\tau\ne1\), so no \(u_m\) is canonical. The antiunitary
+\(\Theta\) permutes the canonical rays by (60.13), so none of
+\(\Theta u_m\) is canonical either. Direct character sums give the
+following four possible squared moduli of normalized overlaps with the
+canonical basis:
+
+\[
+ \frac{1\pm1/\sqrt7}{4},\qquad
+ \frac{1\pm1/\sqrt7}{8}.
+\tag{61.8}
+\]
+
+All are positive and different from \(1/6\). In particular the recovered
+completion and the canonical completion are not mutually unbiased.
+
+### 61.3 A complete unrestricted phase chart and its minor
+
+For each column \(k=0,\ldots,5\), fix only its first entry to 1.
+Every sufficiently nearby unit-entry matrix then has a unique expression
+with all \(\theta_{r,k}\) in a sufficiently small neighborhood of \(0\):
+
+\[
+ Z_{rk}(\theta)=V_{rk}e^{i\theta_{r,k}},\qquad
+ \theta_{0,k}=0,\qquad
+ \theta_{r,k}\in\mathbb R\quad(1\le r\le5).
+\tag{61.9}
+\]
+
+The 30 remaining phases are independent coordinates. No row phase has
+been removed, and no covariance or cross-column relation is imposed.
+In particular, all five simultaneous row-phase directions remain present.
+
+Define a real-analytic map \(\Phi(b,\theta)\in\mathbb R^{60}\), with
+zero-based row order as follows:
+
+1. For \((j,k)\) in lexicographic order with \(0\le j<k\le5\), append
+   \(\Re((Z^*Z)_{jk})\), then \(\Im((Z^*Z)_{jk})\). These are rows 0–29.
+2. For \(k=0,\ldots,5\), then \(a=0,\ldots,4\), append
+   \(|(M(b)Z)_{ak}|^2-6\). These are rows 30–59.
+
+The input moduli and Gram diagonal are automatic. Since
+\(M(b)^*M(b)=6I_6\), every input column has output squared norm 36.
+Thus the omitted sixth output condition follows from the first five,
+throughout the branch, not merely to first order. Consequently
+\(\Phi=0\) is equivalent to all conditions in (61.4).
+
+For the actual coefficients of (60.1),
+\(a'(0)=\sqrt3\), \(h'(0)=0\), and therefore
+
+\[
+ p=\frac{\sqrt3+i}{2},\qquad
+ M'(0)=\begin{pmatrix}pI_3&-pI_3\\-\bar pI_3&-\bar pI_3\end{pmatrix}.
+\tag{61.10}
+\]
+
+Put \(Y=M(0)V\), \(Y'=M'(0)V\). Order the Jacobian columns as
+
+\[
+ (\theta_{1,0},\ldots,\theta_{5,0},
+   \theta_{1,1},\ldots,\theta_{5,1},\ldots,
+   \theta_{1,5},\ldots,\theta_{5,5},b).
+\]
+
+For \(j<k\), the complex Gram derivative in the column
+\(\theta_{r,\ell}\) is
+
+\[
+ i\bar V_{rj}V_{rk}(\delta_{\ell k}-\delta_{\ell j}).
+\]
+
+Its real and imaginary parts give the two Gram rows; their \(b\)-entries
+are zero. The output-row entries are
+
+\[
+ \begin{aligned}
+ \partial_{\theta_{r,\ell}}\Phi^{\rm out}_{ak}
+   &=2\delta_{\ell k}\Re\!\left(i\bar Y_{ak}M(0)_{ar}V_{rk}\right),\\
+ \partial_b\Phi^{\rm out}_{ak}
+   &=2\Re(\bar Y_{ak}Y'_{ak}).
+ \end{aligned}
+\tag{61.11}
+\]
+
+These formulas specify the full \(60\times31\) real Jacobian
+\(\mathcal J=D\Phi(0,0)\) over \(\mathbb Q(\sqrt3,\sqrt7)\).
+Choose its rows in the following exact order:
+
+\[
+ \begin{aligned}
+ \rho=(&0,1,2,3,4,5,6,7,8,9,12,13,14,16,18,19,20,\\
+       &24,25,26,27,30,31,32,33,34,35,36,37,45,46).
+ \end{aligned}
+\]
+
+For \(B=\mathcal J[\rho,:]\), expansion in this specified field gives
+
+\[
+ \det B=\frac{25\cdot3^{24}(84+31\sqrt{21})}{2^{14}7^2}>0,
+ \qquad
+ N_{\mathbb Q(\sqrt3,\sqrt7)/\mathbb Q}(\det B)
+   =\frac{3^{98}5^{16}}{2^{56}7^6}.
+\tag{61.12}
+\]
+
+The determinant uses the positive \(b\)-derivative in (61.11).
+Its degree-four norm includes both repetitions of the quadratic
+conjugates, since the determinant lies in \(\mathbb Q(\sqrt{21})\).
+Indeed \((84+31\sqrt{21})(84-31\sqrt{21})=-3\cdot5^4\cdot7\).
+Thus (61.12) is a nonzero minor of the unrestricted joint derivative,
+not of a restricted construction of bases.
+
+### 61.4 Proof of joint local isolation
+
+The 31 selected components of \(\Phi\) define a real-analytic map
+from an open neighborhood of 0 in \(\mathbb R^{31}\) to
+\(\mathbb R^{31}\). The positive radicals in (60.1) are analytic near
+\(b=0\), and the phase chart is analytic. Equations (61.7) make 0 an
+exact zero, and (61.12) makes its derivative invertible.
+
+The inverse-function theorem therefore gives a neighborhood in which 0
+is the unique zero of those 31 components. Every actual common-flat
+orthonormal basis in the chart satisfies all 60 components, hence the
+selected 31. It follows that \(b=0\) and \(\theta=0\).
+
+Finally, the six rays are distinct, so their ordering can be fixed
+locally; column permutations are a discrete action. Together with the
+explicit column-phase normalization, this proves Theorem 61.1.
+It also excludes any distinct sequence of solutions converging to this
+point, including a nondifferentiable continuation through it. The result
+concerns the prescribed family \(H_0(b)\), not arbitrary nearby
+Hadamard-pair parameters.
+
+### 61.5 Graph distinction and the known Fourier point
+
+**Corollary 61.2 (repo-derived graph distinction).** At \(b=0\), the six
+rays in (61.3) form an all-noncanonical orthogonality clique. No automorphism
+of the full common-flat orthogonality graph sends the canonical \(K_6\)
+onto this clique. In particular, no fixed-pair unitary or antiunitary
+symmetry preserving the common-flat locus does so.
+
+**Proof.** Let \(R_3\) interchange zero-based positions 1 and 2 in three
+coordinates, and put \(R=\operatorname{diag}(R_3,R_3)\). For any
+\(w=(x,y)\), symmetry of \(R_3\) gives
+
+\[
+ \langle w,R\Theta w\rangle
+ =-\bar x^TR_3\bar y+\bar y^TR_3\bar x=0.
+\]
+
+Since \(R\) commutes with \(M(0)\), the ray of
+\(v=R\Theta u_2\) is common-flat and orthogonal to \(u_2\).
+All six displayed basis rays have second/first upper-coordinate ratio
+in \(\{1,\omega,\omega^2\}\). For \(v\), that ratio is
+\(\overline{\delta/\gamma}\), whose real part is
+
+\[
+ \frac{35+3\sqrt{21}}{56}\in(0,1).
+\]
+
+Thus \(v\) is outside the displayed basis. The vertex \([u_2]\) has
+its five basis neighbors and this sixth distinct neighbor. Proposition 60.1
+gives degree exactly 5 for each canonical vertex. Graph automorphisms
+preserve degree, proving the claim. This does not preclude ordinary
+Hadamard equivalence that changes the fixed pair.
+
+For the literature identification, let \(\zeta=e^{\pi i/3}\) and define
+
+\[
+ F_{jk}=\frac{\zeta^{jk+(j\bmod2)\mathbf1_{k\in\{1,4\}}}}{\sqrt6},
+ \qquad 0\le j,k\le5.
+\tag{61.13}
+\]
+
+This is \(F(1/6,0)\) in Brierley–Weigert's Fourier-family convention,
+Appendix A.2, equation (35) of
+[*Constructing Mutually Unbiased Bases in Dimension Six*](https://arxiv.org/abs/0901.4051v2).
+Let \(\Pi\) reorder rows as \((3,0,4,2,5,1)\), and put
+
+\[
+ \begin{aligned}
+ D_L&=\operatorname{diag}(1,\zeta^4,\zeta^2,\zeta^2,\zeta^2,\zeta^2),\\
+ D_R&=\operatorname{diag}(\zeta^4,1,1,\zeta,\zeta^3,\zeta^3).
+ \end{aligned}
+\]
+
+The entrywise identity is
+
+\[
+ \Pi H_0(0)=D_LFD_R.
+\tag{61.14}
+\]
+
+Thus, if a unit column vector \(v\) is unbiased to \((I,F)\), then
+\(v\) and \(F^*v\) are flat, and
+
+\[
+ w=D_R^*F^*v,\qquad H_0(0)w=\Pi^*D_Lv
+\tag{61.15}
+\]
+
+are the corresponding actual input and output. The inverse is
+\(v=D_L^*\Pi H_0(0)w\); this is a unitary bijection preserving
+orthogonality. The usual common-unbiased column basis associated with
+(61.3) for the actual pair \((I,H_0(0))\) is \(H_0(0)U/\sqrt6\).
+
+Brierley–Weigert §4.2 discusses multiple completions at this Fourier
+point. Szöllősi's
+[*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*](https://arxiv.org/abs/0811.3930v2),
+Lemma 3.1, supplies the central Fourier-intersection context.
+Theorem 1.4 of Jaming–Matolcsi–Móra–Szöllősi–Weiner,
+[*A generalized Pauli problem and an infinite family of MUB-triplets in dimension 6*](https://arxiv.org/abs/0902.0882v2),
+excludes a quartet containing a Fourier-family pair. These are established
+context and intermediate identifications, not premises of the determinant
+in (61.12). No exact census, exhaustive classification, or priority for
+the existence of alternative completions is inferred. Identifying the
+particular radical representative with a catalogued source basis is
+unnecessary for the original-equation proof or the local-isolation result.
+
+The example rules out universal intersection with the canonical component.
+It does not establish persistence away from the center or a general
+fourth-MUB result; the explicit cross-overlaps (61.8) already distinguish
+two alternative completions from four mutually unbiased bases.
+
+后续结果见[理论续卷 II](MUB_SIX_FOURTH_BASIS_THEORY_CONTINUATION_II.md)：第 62 节给出移动 canonical 基穿过中心参数的局部唯一性，第 63 节确定本节六条非 canonical 射线的局部正交图。
