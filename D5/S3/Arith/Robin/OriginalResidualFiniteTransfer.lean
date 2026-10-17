@@ -58,7 +58,8 @@ def residual (N : ℕ) (a : ℕ → ℝ) : ℝ :=
 def replacement (N q : ℕ) (a F : ℕ → ℝ) : ℝ :=
   -(∑ k ∈ Ico (q + 1) N, (F k+2)*logDifference N a k)/Real.log N
 
-private def centered (d m : ℕ) : ℝ :=
+/-- Integer remainders centered at their exact residue mean. -/
+def centered (d m : ℕ) : ℝ :=
   (m % d : ℕ)/(d : ℝ)-((d : ℝ)-1)/(2 * d)
 
 private def periodicPrimitive (d m : ℕ) : ℝ :=
@@ -105,7 +106,7 @@ private theorem centered_prefix {d : ℕ} (hd : 0 < d) (b l : ℕ) :
   rw [he]
   exact (abs_sub _ _).trans (by linarith [primitive_bound hd (b + l), primitive_bound hd b])
 
-private theorem centered_floor {d : ℕ} (hd : 0 < d) (m : ℕ) :
+theorem centered_floor {d : ℕ} (hd : 0 < d) (m : ℕ) :
     (m / d : ℕ) = (m : ℝ)/d-centered d m-((d : ℝ)-1)/(2 * d) := by
   have he := Nat.mod_add_div m d
   have he' : ((m % d : ℕ) : ℝ)+(d : ℝ)*(m / d : ℕ) = m := by exact_mod_cast he
@@ -151,7 +152,7 @@ private theorem pair_endpoints {N : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
 private theorem mass_nonneg (N : ℕ) (a : ℕ → ℝ) : 0 ≤ mass N a :=
   sum_nonneg fun _ _ => abs_nonneg _
 
-private theorem variation_nonneg (N : ℕ) (a : ℕ → ℝ) : 0 ≤ variation N a := by
+theorem variation_nonneg (N : ℕ) (a : ℕ → ℝ) : 0 ≤ variation N a := by
   unfold variation
   positivity
 
@@ -181,15 +182,14 @@ private theorem pair_mass_bound {N d : ℕ} (a : ℕ → ℝ) (hd : 0 < d)
       exact (mul_le_mul_of_nonneg_left (centered_bound hd m) (abs_nonneg _)).trans_eq
         (mul_one _)
 
-private theorem pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
-    (hd : 0 < d) (hz : ∑ m ∈ Ico N (2 * N), a m = 0)
-    (hm : ∑ m ∈ Ico N (2 * N), (m : ℝ)*a m = 0) :
-    |floorPair N a d| ≤ (d : ℝ)*variation N a := by
+theorem centered_pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
+    (hd : 0 < d) :
+    |∑ m ∈ Ico N (2 * N), a m*centered d m| ≤ (d : ℝ)*variation N a := by
   have hp (n : ℕ) : |∑ m ∈ range n, centered d m| ≤ (d : ℝ) := by
     simpa only [zero_add, ← range_eq_Ico] using centered_prefix hd 0 n
   have he := sum_Ico_by_parts a (centered d) (by omega : N < 2 * N)
   simp only [smul_eq_mul] at he
-  rw [pair_centered a hd hz hm, abs_neg, he]
+  rw [he]
   calc
     _ ≤ |a (2 * N - 1)*(∑ m ∈ range (2 * N), centered d m)| +
         |a N*(∑ m ∈ range N, centered d m)| +
@@ -208,7 +208,14 @@ private theorem pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
         exact mul_le_mul_of_nonneg_left (hp _) (abs_nonneg _)
     _ = (d : ℝ)*variation N a := by rw [← sum_mul]; unfold variation; ring
 
-private theorem reciprocal_log_step {k : ℕ} (hk : 0 < k) :
+private theorem pair_variation_bound {N d : ℕ} (hN : 0 < N) (a : ℕ → ℝ)
+    (hd : 0 < d) (hz : ∑ m ∈ Ico N (2 * N), a m = 0)
+    (hm : ∑ m ∈ Ico N (2 * N), (m : ℝ)*a m = 0) :
+    |floorPair N a d| ≤ (d : ℝ)*variation N a := by
+  rw [pair_centered a hd hz hm, abs_neg]
+  exact centered_pair_variation_bound hN a hd
+
+theorem reciprocal_log_step {k : ℕ} (hk : 0 < k) :
     (1 : ℝ) / (k + 1 : ℕ) ≤ Real.log (k + 1 : ℕ) - Real.log (k : ℝ) := by
   have hk' : (0 : ℝ) < k := by exact_mod_cast hk
   have he := Real.one_sub_inv_le_log_of_pos
@@ -239,7 +246,7 @@ private theorem weighted_floor_identity (m : ℕ) {h N : ℕ} (hh : 0 < h)
   dsimp [f]
   ring
 
-private theorem weighted_floor_bound {N h m : ℕ} (hh : 0 < h) (hN : h < N)
+theorem weighted_floor_bound {N h m : ℕ} (hh : 0 < h) (hN : h < N)
     (hm : m < 2 * N) :
     (∑ k ∈ Ico h N, (k : ℝ)*((m / k : ℕ)-(m / (k + 1) : ℕ) : ℝ)) ≤
       2 * N * (1 + Real.log (2 * (N : ℝ)/h)) := by
@@ -285,7 +292,7 @@ private theorem weighted_floor_bound {N h m : ℕ} (hh : 0 < h) (hN : h < N)
       mul_le_mul_of_nonneg_right hm' (by linarith)
     _ ≤ _ := mul_le_mul_of_nonneg_left (by linarith) (by positivity)
 
-private theorem log_bounds {N d : ℕ} (hd : 0 < d) (hdN : d ≤ N) :
+theorem log_bounds {N d : ℕ} (hd : 0 < d) (hdN : d ≤ N) :
     0 ≤ Real.log ((N : ℝ)/d) ∧ Real.log ((N : ℝ)/d) ≤ Real.log N := by
   have hd' : (0 : ℝ) < d := by exact_mod_cast hd
   have hN' : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le hd hdN)
@@ -314,7 +321,7 @@ private theorem pair_difference_bound {N k : ℕ} (a : ℕ → ℝ) (hk : 0 < k)
   rw [abs_mul, abs_of_nonneg (sub_nonneg.mpr ?_)]
   exact_mod_cast Nat.div_le_div_left (by omega : k ≤ k + 1) hk
 
-private theorem weighted_log_step {k : ℕ} (hk : 0 < k) :
+theorem weighted_log_step {k : ℕ} (hk : 0 < k) :
     (k : ℝ)*(Real.log (k + 1 : ℕ)-Real.log (k : ℝ)) ≤ 1 := by
   have hk' : (0 : ℝ) < k := by exact_mod_cast hk
   have he := Real.log_le_sub_one_of_pos
@@ -410,7 +417,7 @@ private theorem weighted_variation_bound {N h : ℕ} (hh : 0 < h) (hN : h < N)
       exact mul_le_mul_of_nonneg_right (by exact_mod_cast Nat.sub_le N h) hA
     _ = _ := by dsimp [u, v]; ring
 
-private theorem prefix_bound (q : ℕ) : |mobiusPrefix q| ≤ (q : ℝ) := by
+theorem prefix_bound (q : ℕ) : |mobiusPrefix q| ≤ (q : ℝ) := by
   unfold mobiusPrefix
   calc
     _ ≤ ∑ d ∈ Ioc 0 q, |(ArithmeticFunction.moebius d : ℝ)| := abs_sum_le_sum_abs _ _
@@ -474,7 +481,7 @@ private theorem log_pair_variation {N d : ℕ} (hN : 1 < N) (a : ℕ → ℝ)
         (mul_nonneg (Nat.cast_nonneg d) (variation_nonneg N a))
       nlinarith
 
-private theorem sum_indices (q : ℕ) :
+theorem sum_indices (q : ℕ) :
     (∑ d ∈ Ioc 0 q, (d : ℝ)) = (q : ℝ)*(q + 1)/2 := by
   have hn := sum_range_id_mul_two (q + 1)
   simp only [Nat.add_sub_cancel] at hn
@@ -531,16 +538,16 @@ private theorem small_prefix_bound {N q : ℕ} (hN : 1 < N) (hq : q + 1 ≤ N)
     _ ≤ _ := (abs_sub _ _).trans (add_le_add hsum hterm)
     _ = _ := by push_cast; ring
 
-private theorem high_error_bound {N h : ℕ} (hh : 0 < h) (a F : ℕ → ℝ)
+theorem prefix_error_bound {N h : ℕ} (hh : 0 < h) (D F : ℕ → ℝ)
     {ε c : ℝ} (hc : 0 ≤ c)
     (herr : ∀ k ∈ Ico h N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) :
-    |∑ k ∈ Ico h N, (F k-mobiusPrefix k)*logDifference N a k| ≤
-      (ε+c/(h : ℝ))*weightedVariation N h a := by
+    |∑ k ∈ Ico h N, (F k-mobiusPrefix k)*D k| ≤
+      (ε+c/(h : ℝ))*(∑ k ∈ Ico h N, (k : ℝ)*|D k|) := by
   have hh' : (0 : ℝ) < h := by exact_mod_cast hh
   calc
-    _ ≤ ∑ k ∈ Ico h N, |(F k-mobiusPrefix k)*logDifference N a k| :=
+    _ ≤ ∑ k ∈ Ico h N, |(F k-mobiusPrefix k)*D k| :=
       abs_sum_le_sum_abs _ _
-    _ ≤ ∑ k ∈ Ico h N, (ε+c/(h : ℝ))*((k : ℝ)*|logDifference N a k|) := by
+    _ ≤ ∑ k ∈ Ico h N, (ε+c/(h : ℝ))*((k : ℝ)*|D k|) := by
       apply sum_le_sum
       intro k hk
       have hk' : (h : ℝ) ≤ k := by exact_mod_cast (mem_Ico.mp hk).1
@@ -552,10 +559,17 @@ private theorem high_error_bound {N h : ℕ} (hh : 0 < h) (a F : ℕ → ℝ)
           _ = _ := by ring
       rw [abs_mul]
       calc
-        _ ≤ ((ε+c/(h : ℝ))*(k : ℝ))*|logDifference N a k| :=
+        _ ≤ ((ε+c/(h : ℝ))*(k : ℝ))*|D k| :=
           mul_le_mul_of_nonneg_right ((herr k hk).trans hcost) (abs_nonneg _)
         _ = _ := by ring
-    _ = _ := by rw [← mul_sum]; rfl
+    _ = _ := by rw [← mul_sum]
+
+private theorem high_error_bound {N h : ℕ} (hh : 0 < h) (a F : ℕ → ℝ)
+    {ε c : ℝ} (hc : 0 ≤ c)
+    (herr : ∀ k ∈ Ico h N, |F k-mobiusPrefix k| ≤ ε*(k : ℝ)+c) :
+    |∑ k ∈ Ico h N, (F k-mobiusPrefix k)*logDifference N a k| ≤
+      (ε+c/(h : ℝ))*weightedVariation N h a := by
+  exact prefix_error_bound hh (logDifference N a) F hc herr
 
 /-- FT11 for the unchanged full Mobius response, with both exact moments and
 both nonnegative error constants. The cut q=0 and the one-term high range
