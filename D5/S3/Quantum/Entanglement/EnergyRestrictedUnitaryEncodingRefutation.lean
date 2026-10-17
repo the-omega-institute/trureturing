@@ -475,7 +475,7 @@ private theorem qc_bound {H L K : Type} [NormedAddCommGroup H] [InnerProductSpac
         rw [← Finset.mul_sum]
         congr 1
         have ht := congrArg (fun E : H →L[ℂ] H => (⟪vac, E vac⟫_ℂ).re) (hM l ()).2
-        simpa [z, ContinuousLinearMap.sum_apply, inner_sum, inner_self_eq_norm_sq_to_K, hg] using ht
+        simpa [z, _root_.sum_apply, inner_sum, inner_self_eq_norm_sq_to_K, hg] using ht
       _ = 1 := by simpa only [mul_one] using hqs.tsum_eq
   calc
     taskValue coefficients (qcProb q p ψ M) = (1 / 4) * ∑ x, qcProb q p ψ M x x () :=
