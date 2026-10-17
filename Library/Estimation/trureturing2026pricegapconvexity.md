@@ -2634,6 +2634,114 @@ with no new generic theorem, literature-originality claim or Lean
 verification. They eliminate legal-height optimization from the leading
 unpaid issue; the original signed Robin target and RH remain unproved.
 
+## The original budget pays the head above an auxiliary selected height
+
+Keep HC1--HC3's actual source, all original windows and ties, fixed
+$a$, outgoing weights $\delta_i$ and admissible upper heights $\tau_i$.
+Use FH1/CP1's deterministic ceiling $\log B_i\le Y:=\mathsf Y_X$
+with $Y\to\infty$ and $Y=O((\log X)^2)$. Write $M=M_X$,
+$L=L_X$ and $b=\min_{i<m}B_i$. The original source gives
+$b/\ell_X\to\infty$ and
+
+$$
+\frac{\sqrt{\ell_X}}{M_X}
+=\sqrt{\frac d8}\frac{X^{\eta/2}}{\sqrt{\log X}}
+\longrightarrow\infty.
+$$
+
+Here $\eta>0$ follows from the original $1-\Theta<\eta<1/2$.
+Set $T^0_{B,X}=\sqrt B\,Y^2/M$. Uniformly over the actual cores,
+
+$$
+\frac{T^0_{B,X}}{\log^2B}\ge\frac{\sqrt b}{M}\longrightarrow\infty,
+\qquad
+\frac{T^0_{B,X}}{\sqrt B}=\frac{Y^2}{M}\longrightarrow0.
+$$
+
+Thus $\max\{51,\log^2 B\}<T^0_{B,X}<(\sqrt B-2)/4$
+at one common source start. Directly apply the
+[adopted CHJ selected-height theorem](../Analytic/cullyhugilljohnston2026truncation.md#exact-supplier-contract),
+with its same $\alpha=1/2$, $\omega=1$ row and lower parameter
+$T^0_{B,X}$. It supplies an individual auxiliary height with
+
+$$
+\widehat\tau_{B,X}\in[T^0_{B,X},2T^0_{B,X}],\qquad
+\psi(B)=B-Z_B(\widehat\tau_{B,X})+\widehat e_B,
+\qquad
+|\widehat e_B|\le19.81\frac{M}{Y^2}\sqrt B.
+\tag{BH1}
+$$
+
+The auxiliary cuts carry BH1's error contract. The original upper
+heights retain HC1's $80\sqrt B$ contract and original admissibility
+definition. Since $Y^2/M\to0$, every auxiliary cut is below every
+original admissible upper height at a common source start. Each cut
+is selected at its own actual core; no common height is required.
+
+Both finite explicit formulas use the same weak $\psi(B)$. Their
+full baseline cancels exactly, giving
+
+$$
+\frac{|Z_B(\tau_B)-Z_B(\widehat\tau_{B,X})|}{\sqrt B}
+\le80+19.81\frac{M}{Y^2}.
+\tag{BH2}
+$$
+
+All prime-power endpoints are retained in the two formulas. For
+the degree-two part, reuse DH3's recorded coefficient bound and
+the reciprocal-square zero count:
+
+$$
+|s_BF_B(\rho)|\le\frac{2\sqrt B}{\gamma^2},\qquad
+\sum_{\gamma>T}\frac{m_\rho}{\gamma^2}
+\ll\frac{\log(eT)}T\quad(T\ge4).
+$$
+
+Since $\widehat\tau_{B,X}\ge\sqrt B\,Y^2/M$ and
+$\log(e\widehat\tau_{B,X})\ll Y$, these give
+
+$$
+\left|2s_B\operatorname{Re}
+\sum_{\widehat\tau_{B,X}<\gamma\le\tau_B}
+ m_\rho F_B(\rho)\right|
+\ll\frac{\sqrt B\log(e\widehat\tau_{B,X})}
+         {\widehat\tau_{B,X}}
+\ll\frac{M}{Y}.
+$$
+
+Combine this with BH2 for the complete original coefficient
+$c_{B,a}(\rho)=s_BF_B(\rho)-aB^{\rho-1/2}/\rho$.
+The original positive weights then yield
+
+$$
+\boxed{
+\sum_{i<m}\delta_i
+\left|2\operatorname{Re}
+\sum_{\widehat\tau_{B_i,X}<\gamma\le\tau_i}
+ m_\rho c_{B_i,a}(\rho)\right|
+\ll_a L_X\left(1+\frac{M_X}{\mathsf Y_X}\right)
+=o(M_XL_X).}
+\tag{BH3}
+$$
+
+This pays the actual complete upper slice across all zero real
+parts, including $\Theta=1$, with the original upper masks and
+all multiplicities. The degree-one contribution is bounded after
+conjugate pairing through BH2; no termwise absolute bound for it
+is used. Positivity of the residence weights introduces no
+independence assumption.
+
+The auxiliary cuts satisfy
+$\widehat\tau_{B_i,X}/\tau_i\ll\mathsf Y_X^2/M_X\to0$
+uniformly, while their minimum tends to infinity. Removing this
+precise slice changes the original weighted head by $o(M_XL_X)$.
+The remaining head still contains every fixed zero eventually;
+its signed estimate is unproved. This is a paper parameter
+application of the existing CHJ and coefficient suppliers,
+without a new truncation theorem, literature-priority claim or
+Lean certification. The full Robin comparison and RH remain
+unproved.
+
 ## The published BHP count controls total local core occupation
 
 Keep all original qualifying full windows, all maximizing ties and the
