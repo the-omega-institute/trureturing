@@ -89,7 +89,10 @@ internal sealed class CoherentDiscriminationTriangleRefutationDocument : IScribe
                             + "Their sum (√65 − 7)/16 is strictly less than 1/8 because √65 < 9. "
                             + "These normalized Kraus families contradict claim and hence give a negative "
                             + "answer to the metric question in Section VI."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("wilde-2020-coherent-discrimination-triangle-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
