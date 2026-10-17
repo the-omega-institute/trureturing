@@ -3729,3 +3729,224 @@ If the two local direct-sum perturbations add equal new-environment amplitudes t
 The argument provides a full-output dual witness and exact global best-response certificates for every member of the disphenoid equality family. It permits arbitrary original leakage, dimensions, and both local ranks at least three in its comparisons. Its additional necessary condition for beating quarter is that all 32 party/transversal frame norms exceed two; its stability estimate requires both parties to change.
 
 It does not prove a universal quarter lower bound. In particular one cannot infer that every pair of local frame collections has a transversal of norm at most two, nor that the bilinear term in (15) is nonpositive. The genuinely unrestricted four-fibre optimum remains open between sqrt(3)-3/2 and 1/4. No mean-rank-two assumption, polar-completion monotonicity, or false centroid/two-test variance bound is used.
+
+## 84. Qubit-core Schur certificates for joint high-rank products
+
+The theorem below certifies an entire two-sided class of original physical products, allowing arbitrary local Kraus ranks and output leakage. Both channels may change simultaneously. The hypothesis is a qubit-core factorization of either party's correct-output Gram, not a restriction of its actual Kraus rank. The robust bound measures distance from that factorization class. A concrete high-rank path shows that this obstruction is stronger than the section-83 transversal criterion even arbitrarily close to quarter-error equality.
+
+This does not settle the unrestricted optimum or give a complete tangent-cone classification.
+
+### 84.1. Original correct-output Grams and the factorization hypothesis
+
+Let k>=4 be an integer, let F_(k,2) be the uniform qubit-fibre target with the fixed input/output MC encodings, and let A,B:C^(2k)->C^k be original CPTP maps. Let delta be their unhalved arbitrary-reference diamond error from that target. For Stinespring isometries of the original maps, form the correct-output records
+
+    a_fi=(<f|_out tensor I)V_A|f,i>,
+    b_fi=(<f|_out tensor I)V_B|f,i>.
+
+Let G,H be their forward Grams, indexed by (f,i), and put K=G entrywise-multiplied by H. Their diagonal two-by-two blocks satisfy
+
+    G_ff<=I_2,   H_ff<=I_2.
+
+The target coefficient matrix T has diagonal blocks I_2 and off-diagonal blocks J_2/2.
+
+Say that G has a qubit-core Schur factorization when
+
+    G=Q entrywise-multiplied by M,
+    Q>=0,  rank Q=2,  Q_ff=I_2,
+    M>=0,  M_(fi,fi)<=1.                            (1)
+
+A rank-two PSD matrix with Q_ff=I_2 is exactly the Gram of four, or generally k, orthonormal qubit bases u_f0,u_f1 in one common C^2. Factor M as a marker Gram. Thus (1) is equivalently a factorization of the correct-output record Gram by product vectors
+
+    a_fi ~ u_fi tensor m_fi,
+    <u_f0,u_f1>=0, ||u_fi||=1, ||m_fi||<=1.          (2)
+
+The symbol ~ means equality of all inner products, or an isometric identification of the correct-output record spans. Markers may depend on both f and i, and may be subnormalized. Neither their dimension nor the original A environment dimension is bounded. The factorization does imply that this party's two correct-output columns within a fibre are orthogonal; it is not asserted for arbitrary correct-output blocks.
+
+### 84.2. Exact dimension-free obstruction, including both-sided leakage
+
+**Qubit-core transfer theorem.** If either G or H has (1), then
+
+    delta >= (k-3)/k.                               (3)
+
+In particular the original four-fibre error is at least 1/4, regardless of both actual local Kraus ranks, the other party's correct-output nonorthogonality, or either party's wrong-output components.
+
+Proof. Suppose G=Q entrywise-multiplied by M, and define
+
+    H'=M entrywise-multiplied by H.
+
+Schur positivity gives H'>=0. Its diagonal fibre block is a contraction Gram, because
+
+    H'_ff=M_ff entrywise-multiplied by H_ff
+          <=M_ff entrywise-multiplied by I_2
+           =diag(M_(f0,f0),M_(f1,f1)) <=I_2.         (4)
+
+The first inequality follows by applying Schur positivity to M_ff and I_2-H_ff. Thus H' is the joint Gram of k arbitrary two-column contractions in a common finite environment. Algebraically its columns can be taken as m_fi tensor b_fi. All cross-fibre inner products are preserved, not fitted separately.
+
+By associativity,
+
+    K=Q entrywise-multiplied by H'.                 (5)
+
+The section-81 contraction/support lemma applies directly to (5): one Gram consists of orthonormal qubit frames and the other has contraction diagonal blocks. Its full-matrix projection witness gives
+
+    Tr(T-K)_+ >= k-3.                               (6)
+
+For the original physical maps, the normalized input
+
+    |Omega>=(1/sqrt(2k))sum_(f,i)|f,i>_R tensor |f,i>_logical
+
+has correct-output compression K^T/(2k) on the orthonormal support
+
+    {|f,i>_R tensor |ff>_out}.
+
+The target compression is T/(2k), and the complementary actual block is positive with trace 1-Tr K/(2k). The valid original-output pinching inequality is therefore
+
+    delta >= [||K-T||_1+2k-Tr K]/(2k)
+          = Tr(T-K)_+/k.                            (7)
+
+Combining (6) and (7) proves (3).
+
+This proof transfers markers only in the algebraic Gram factorization used by the support lemma. It does not assume that arbitrary transferred contraction blocks assemble into a new output-dimension-k CPTP map with the same cross-fibre action. No such physical completion is needed: K in (5)--(7) is exactly the unchanged correct-output Gram of the original product, and the discarded trace is the original physical output deficit. The transpose is only the forward-Gram convention and does not affect trace norm. The parties can be interchanged.
+
+Consequently joint deformations of qubit bases and arbitrary fibre-dependent markers cannot beat quarter error whenever at least one party retains (1). Such deformations need not preserve low local Kraus ranks. They need not retain the balanced axes or the fixed-marker assumption of the equality family.
+
+### 84.3. A robust distance-to-factorization certificate
+
+Let g be the diagonal of an actual correct-output Gram G. Define
+
+    D_core(G)=min ||G-Q entrywise-multiplied by M||_1,
+
+where the minimum runs over Q>=0 with rank Q=2 and Q_ff=I_2, and M>=0 with diag M=g. This set is nonempty: any common-qubit frame Gram Q and M=diag(g) are feasible. It is compact: both PSD factors have fixed bounded diagonals, and the rank-at-most-two condition is closed; Q_ff=I_2 forces rank exactly two. Thus the minimum is attained. A specific feasible pair Q,M is already a valid certificate; optimizing over Q is not asserted to be a convex problem.
+
+**Robust factorization theorem.** For every original physical product,
+
+    delta >= max{0, (k-3)/k-D_core(G)/(2k)},
+    delta >= max{0, (k-3)/k-D_core(H)/(2k)}.          (8)
+
+Proof. Fix any feasible Q,M, and write
+
+    G_0=Q entrywise-multiplied by M,
+    E=G-G_0,
+    K_0=G_0 entrywise-multiplied by H,
+    Delta=E entrywise-multiplied by H.
+
+Then K=K_0+Delta. Equation (4) remains valid for M because its diagonal is g<=1, so the same algebraic contraction lemma gives Tr(T-K_0)_+>=k-3. Matching the diagonals makes E, and hence Delta, have zero diagonal and zero trace.
+
+Schur multiplication by H is trace-norm contractive on Hermitian matrices because H>=0 and its diagonal entries are at most one. Indeed for the positive/negative decomposition E=E_+-E_-, both H entrywise-multiplied by E_+ and H entrywise-multiplied by E_- are positive, and their traces are at most Tr E_+ and Tr E_-, respectively. The triangle inequality gives
+
+    ||Delta||_1<=||E||_1,
+    Tr Delta_+=||Delta||_1/2.                        (9)
+
+Apply the variational principle to an optimal projection for (T-K_0)_+:
+
+    Tr(T-K)_+ >= Tr(T-K_0)_+-Tr Delta_+
+               >= k-3-||E||_1/2.                   (10)
+
+Using the original pinching (7) and minimizing ||E||_1 proves (8). No physical approximation channel with Gram G_0 is required.
+
+At k=4, an error delta<=1/4-eta with eta>0 requires
+
+    D_core(G)>=8eta,  D_core(H)>=8eta.               (11)
+
+Thus a sub-quarter product must leave this factorization class on both sides by a definite, representation-independent Gram distance. The maximum with zero in (8) is essential when the displayed certificate becomes vacuous. The exact case D_core=0 is the qubit-core transfer theorem.
+
+### 84.4. An explicit joint high-rank path missed by every transversal norm test
+
+The following physical path has ranks (4,4) for every positive parameter, all 32 party/transversal Gram operator norms strictly greater than two, and error strictly above but converging to 1/4. It is nevertheless certified by the qubit-core transfer theorem throughout. This shows that the section-83 necessary spectral condition is not sufficient, even arbitrarily close to the equality family.
+
+Start with the tetrahedral axes
+
+    n_1=(1,1,1)/sqrt(3), n_2=(1,-1,-1)/sqrt(3),
+    n_3=(-1,1,-1)/sqrt(3), n_4=(-1,-1,1)/sqrt(3).
+
+Choose unitary qubit frames U_f whose column projectors are (I+(-1)^i n_f dot sigma)/2. For
+
+    0<t<=1/100,
+    D(t)=diag((1+i t)/(1-i t),1),
+
+let U_f(t)=U_f for f=1,2,3 and U_4(t)=D(t)U_4. Write u_fi(t) for their columns. Choose fixed A markers and varying B markers
+
+    m_0=e_0,  m_1=(3/4)e_0+(sqrt(7)/4)e_1,
+    r_0(t)=e_0, r_1(t)=sqrt(1-t^2)e_0+t e_1.
+
+Define calibrated Stinespring isometries on the complete local inputs by
+
+    V_A(t)|f,i>=|f> tensor u_fi(t) tensor m_i,
+    V_B(t)|f,i>=|f> tensor conjugate(u_fi(t)) tensor r_i(t).   (12)
+
+Within each fibre the qubit columns are orthonormal; distinct fibres have orthogonal output labels. Thus these are actual CPTP maps for every stated t. Each party's correct-output Gram has (1), so (3) gives delta(t)>=1/4.
+
+For each bit, the first three tetrahedral qubit records already span C^2. The two markers of A are independent, and those of B are independent for t>0. Each party's records therefore span exactly C^2 tensor C^2, so both minimal Kraus ranks are exactly four.
+
+#### 84.4.1. Both constant-bit transversal norms are strictly above two
+
+The new axes have sum n_4(t)-n_4, which is nonzero. Explicitly the phase in D(t) rotates about the z axis, and
+
+    ||sum_f n_f(t)||
+      =2sqrt(2/3)t/sqrt(1+t^2)>0.
+
+For a fixed bit, the marker is the same unit vector in every fibre. The corresponding Gram has the same nonzero eigenvalues as the qubit frame operator. Hence, on each party and for both constant-bit transversals,
+
+    L(t)=2+(1/2)||sum_f n_f(t)||>2.                 (13)
+
+#### 84.4.2. Every mixed transversal retains a strict margin
+
+First work at t=0 with arbitrary fixed markers of real overlap rho in [0,1]. A mixed transversal selects one or three copies of bit zero, or two copies.
+
+If it selects one copy of one bit and three of the other, balance of the tetrahedral axes makes the sum of the three qubit projectors equal to I plus the selected single qubit projector. In the latter qubit line, the frame operator on the marker factor is P_m+2P_n. Its top eigenvalue is
+
+    L_(1,3)(rho)=(3+sqrt(1+8rho^2))/2.              (14)
+
+The perpendicular qubit line contributes only a unit marker projector, so (14) is the full top eigenvalue.
+
+If it selects two copies of each bit, the two qubit frame operators coincide, by sum_f n_f=0. Each is I+v dot sigma with ||v||=1/sqrt(3). The full frame operator is their common qubit operator tensored with the sum of the two marker projectors, giving
+
+    L_(2,2)(rho)=(1+1/sqrt(3))(1+rho).              (15)
+
+For A at t=0, rho=3/4, and both (14)--(15) are strictly greater than 5/2. For B at t=0, rho=1, and they are at least three.
+
+For any transversal, let V be its matrix of four unit environment columns. At the base, ||V||op<=2. If its perturbation is DeltaV, then
+
+    ||V(t)^*V(t)-V(0)^*V(0)||op
+       <=4||DeltaV||op+||DeltaV||op^2.              (16)
+
+For A only the fourth column can change, and
+
+    ||D(t)-I||op=2t/sqrt(1+t^2)<=2t.
+
+Thus ||DeltaV_A||op<=2t and its Gram change is at most 8t+4t^2<1/2 on the stated interval. Every mixed A transversal consequently still has norm greater than two.
+
+For B, the change of any marker vector has norm at most 2t, since
+
+    ||r_1(t)-e_0||^2=2-2sqrt(1-t^2)<=2t^2.
+
+The four marker changes contribute Frobenius norm at most 4t, and the one changed qubit column contributes at most 2t. Therefore ||DeltaV_B||op<=6t, and its Gram change is at most 24t+36t^2<1. Every mixed B transversal likewise retains norm strictly greater than two. Together with (13), all 32 norms exceed two for every 0<t<=1/100.
+
+#### 84.4.3. Strict quarter gap and convergence
+
+For this calibrated example only, there is also an explicit physical refactorization with the same complete encoded channel:
+
+    V_At(t)|f,i>=|f> tensor u_fi(t) tensor m_i tensor r_i(t),
+    V_Bt(t)|f,i>=|f> tensor conjugate(u_fi(t)).        (17)
+
+Both maps in (17) are isometries. All product-record inner products, and thus every encoded matrix unit, coincide with (12). This is a constructed physical equivalence specific to (12), not the unneeded completion assumption excluded in section 84.2.
+
+The second channel in (17) has rank two. The section-82 equality theorem would therefore require some signs epsilon_f in {+1,-1} such that sum_f epsilon_f n_f(t)=0. At t=0 every nonconstant sign pattern has norm at least two: a one-versus-three sign pattern gives norm two, and a two-versus-two pattern gives 4/sqrt(3). The perturbation of any such signed sum has norm at most ||n_4(t)-n_4||<=2t<2. Thus none becomes zero. The two constant sign patterns are nonzero by (13). No signed balance exists, so equality at 1/4 is excluded by section 82. Therefore
+
+    delta(t)>1/4 for every 0<t<=1/100.              (18)
+
+At t=0, (12) is the attaining tetrahedral 3/4-marker pair, so delta(0)=1/4. A quantitative continuity estimate is also available. The Stinespring operator changes satisfy
+
+    ||V_A(t)-V_A(0)||op<=2t,
+    ||V_B(t)-V_B(0)||op<=4t.
+
+For B, split the change into a qubit rotation of norm at most 2t and a marker change of norm at most 2t; the unperturbed qubit columns are orthogonal. The standard pure-state trace-distance estimate followed by partial trace gives a local diamond distance at most twice the Stinespring operator distance. Tensoring channels and using the triangle inequality therefore yields
+
+    1/4<delta(t)<=1/4+12t.                          (19)
+
+In particular delta(t) converges to 1/4, although both ranks are four and every transversal norm test is already above its threshold for all t>0. The exact qubit-core factorization, not the transversal norm condition, supplies the lower certificate along this bilateral path.
+
+### 84.5. Boundary
+
+The proof uses Schur positivity and its trace-norm contraction consequence, the section-81 algebraic support witness, and the original reference/output pinching with its complete trace deficit. It does not claim that arbitrary local frames factor as a qubit core times markers. Nor does it complete arbitrary transferred contraction blocks into physical channels.
+
+The two-sided path certifies a nontrivial family of simultaneous rank-raising directions, not the complete feasible cone around equality. Any sub-quarter product must fail the qubit-core factorization on both sides and satisfy the quantitative escape condition (11), in addition to the section-83 transversal conditions. General nonfactorizable bilateral deformations remain unresolved. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
