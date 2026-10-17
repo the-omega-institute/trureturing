@@ -136,7 +136,7 @@ $$\forall Q \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \op
 
 *Commentary.*
 
-For any two unitary complex qubit matrices Q and P, the controlled matrix is unitary. The matrix is block diagonal with blocks Q and P, with both pair coordinates swapped. Thus the second coordinate selects Q for 0 and P for 1, while the first coordinate carries their action.
+For any two unitary complex qubit matrices Q and P, the controlled matrix is unitary. The matrix is block diagonal with blocks Q and P, with both pair coordinates swapped. Thus the first coordinate selects Q for 0 and P for 1, while the second coordinate carries their action.
 
 **Theorem 1.11 (Mixed controlled-block trace identity).**
 
