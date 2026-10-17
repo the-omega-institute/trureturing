@@ -1091,3 +1091,140 @@ For the symmetric vector, permutation symmetry or the threshold formula gives w_
 Section63 established exact implementability and the calibrated projection. The new step is (3) for actual unrestricted local CPTP outputs, followed by the normalized reference witness. Neither pure basis outputs nor exact code support is assumed in this step. Section62's leakage estimate is not needed for this family.
 
 Stinespring dilation, adjoint contraction, Cauchy–Schwarz, trace-norm duality and the diamond norm are standard; see Watrous, The Theory of Quantum Information (2018), https://cs.uwaterloo.ca/~watrous/TQI/ . The known local incoherent-operation background and the finite constructions used in §63 retain their attribution to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No priority claim is made for these ingredients. The result concerns the stated all-dimensional coherent star family and fixed MC encodings, not all logical channels or full RT recovery; it is a paper proof without a formal-kernel claim.
+
+## 65. Exact unrestricted common-channel projection for two collapsed fibres
+
+### 65.1 Physical family and result
+
+Let m,n≥1. The logical input has disjoint orthonormal labels a_1,...,a_m and b_1,...,b_n; the logical output is a qubit. Fix input and output MC encodings J_in(T)=V_in T V_in*, V_in|x>=|xx>, and V_out|s>=|ss>. For Z∈C^(m×n), define E_Z by
+
+    E_Z(a_i a_k)=δ_ik 00,    E_Z(b_j b_l)=δ_jl 11,
+    E_Z(a_i b_j)=Z_ij 01,    E_Z(b_j a_i)=conj(Z_ij)10.
+
+Matrix units are denoted by their two labels. Define the compact convex set
+
+    S_(m,n)={W: Σ_j|W_ij|≤1 for every i,
+                  Σ_i|W_ij|≤1 for every j}.
+
+Then:
+
+1. E_Z is CPTP iff ||Z||op≤1.
+2. E_Z has an exact physical LOSR implementation on the whole MC code iff Z∈S_(m,n).
+3. For every CPTP E_Z, allowing arbitrary physical output populations, extra coherences and leakage,
+
+    inf_Φ ||Φ∘J_in−J_out∘E_Z||diamond
+       = min_(W∈S_(m,n)) ||Z−W||op.                      (1)
+
+Here Φ ranges over finite mixtures of product local CPTP maps C^(m+n)→C². The same physical channel acts on all inputs and reference extensions, and the diamond norm is unhalved. The minimum is attained by a finite common LOSR channel with at most mn+1 product branches. A single product branch need not suffice; an explicit example below has minimum branch count two.
+
+For n=1, S_(m,1) is the complex unit ℓ₁ ball and the operator norm is the vector ℓ₂ norm, recovering §64. For general m,n, (1) is an exact finite convex optimization, not a claimed elementary closed formula.
+
+### 65.2 Complete positivity and the unrestricted retained matrix
+
+The only nonzero Choi block of E_Z, on |a_i,0> and |b_j,1>, is
+
+    [[I_m,Z],[Z*,I_n]].
+
+It is positive semidefinite iff ||Z||op≤1, by the Schur complement. Trace preservation is immediate from the matrix units.
+
+For an arbitrary physical competitor define
+
+    Λ_ij=<00|Φ(|a_i a_i><b_j b_j|)|11>.
+
+We claim Λ∈S_(m,n) without any calibration or support assumption. In one local Stinespring representation write U_A|x>=|0>u_(0,x)+|1>u_(1,x), and similarly U_B with vectors v. Let C_A:C^m→H_EA map e_i to u_(0,a_i), and D_A:C^n→H_EA map e_j to u_(1,b_j). Both are contractions, being coordinate projections of an isometry restricted to a subspace. The matrix
+
+    R_ij=<u_(1,b_j),u_(0,a_i)>
+
+is the entrywise conjugate of C_A*D_A, so ||R||op≤1. Likewise the matrix T for the B party is a contraction. The actual product branch has retained matrix R⊙T.
+
+Each row and each column of a contraction has Euclidean norm at most one. Cauchy–Schwarz therefore gives
+
+    Σ_j|R_ij T_ij|≤1,    Σ_i|R_ij T_ij|≤1.
+
+Finite convex mixtures preserve both bounds by the triangle inequality. Thus Λ∈S_(m,n). The proof does not assume that the output-coordinate environment vectors within a fibre are orthogonal or normalized; it uses their column-map contractions. It covers arbitrary local ancillas through Stinespring dilation.
+
+This already proves exact-implementation necessity. It also implies that every W∈S is a contraction: the standard bound ||W||op²≤||W||_(1→1)||W||_(∞→∞) gives ||W||op≤1. Alternatively this follows from the convex decomposition constructed next.
+
+### 65.3 Signed partial matchings give finite physical sufficiency
+
+Let W∈S and put P_ij=|W_ij|. This is a rectangular doubly substochastic matrix. To see its finite partial-permutation decomposition directly from Birkhoff's theorem, let r_i=1−Σ_jP_ij and c_j=1−Σ_iP_ij. The square matrix
+
+    [[P,diag(r)],[diag(c),P^T]]
+
+of size m+n is nonnegative with every row and column sum one. Decompose it into a convex combination of permutation matrices. Their upper-left blocks are m×n partial permutation matrices, proving P=Σ_t w_t P_t. By Carathéodory in R^(mn), at most mn+1 such blocks are needed, including a zero block if necessary.
+
+Choose phases θ_ij with W_ij=P_ij exp(iθ_ij), arbitrarily when P_ij=0. Give every selected entry of P_t this phase to obtain a signed partial matching Q_t. Then W=Σ_t w_t Q_t.
+
+Each Q_t has an exact product-channel implementation. For each matching choose orthonormal environment records for all A-fibre labels and all B-fibre labels, identifying the record for a_i with the record for b_j precisely when (i,j) is matched. All unmatched records and records of distinct matching pairs are mutually orthogonal. Within each fibre the records are therefore orthonormal. On the first party multiply the b_j record of a matched pair by exp(−iθ_ij); on the second party use the unphased records. Define local isometries by
+
+    |a_i>→|0>e_i,    |b_j>→|1>f_j,
+
+using those phased or unphased records on the respective party. Cross-fibre input orthogonality is enforced by the output0/1 labels. The product of the two local cross-record overlaps is exactly (Q_t)_ij; same-fibre off-diagonal units vanish. Thus the product channel implements E_(Q_t) on all encoded matrix units. Both environments can be chosen of dimension at most m+n.
+
+Mixing these product channels with weights w_t implements E_W. This supplies one common finite channel, not a separate choice for each matrix entry. Equality of the full linear maps implies equality after all passive reference extensions. It also proves finite attainment once an optimizing W is chosen.
+
+The partial-permutation convex-hull theorem and its branch decomposition are classical Birkhoff-type facts, not new matrix-combinatorics claims.
+
+### 65.4 Exact difference norm and unrestricted lower witness
+
+For any two matrices Z,W, including matrices whose individual channels are not positive, their prescribed linear-map difference satisfies
+
+    ||E_Z−E_W||diamond=||Z−W||op.                         (2)
+
+Let D=Z−W and r=||D||op. For r=0 this is immediate. Otherwise E_(D/r) is CPTP by the Choi criterion above. If O(T)=(T−σ_z T σ_z)/2 is the qubit off-diagonal map, then
+
+    E_Z−E_W=r O∘E_(D/r).
+
+The diamond norm of O is one: the unitary-channel triangle inequality bounds it by one and the state |+><+| attains one. This proves the upper bound r for arbitrary references and arbitrary operator inputs.
+
+There exist normalized vectors |a> in the first fibre and |b> in the second such that
+
+    Σ_ij a_i conj(b_j)D_ij=r,
+
+after adjusting a global phase. Indeed this is the usual singular-vector variational formula for ||D||op with the first vector conjugated; conjugation does not change its unit sphere. The normalized state (|a>+|b>)/sqrt(2) has difference output with off-diagonal entries r/2, so its trace norm is r. This proves (2); isometric output encoding preserves the norm.
+
+For an unrestricted physical Φ let Λ be its retained matrix, D=Z−Λ and r=||D||op. Choose the same maximizing a,b and a two-dimensional passive reference. Put
+
+    |Ψ>=(|0>_R|a>+|1>_R|b>)/sqrt(2),
+    H=|0,00><1,11|+|1,11><0,00|.
+
+The input is normalized and ||H||op=1. For Δ=J_out∘E_Z−Φ∘J_in,
+
+    Tr[H(id_R⊗Δ)(|Ψ><Ψ|)]=r.
+
+Only the two reference-off-diagonal output entries contribute, each r/2; arbitrary populations, extra coherences and leakage cannot alter this expectation. Consequently ||Δ||diamond≥||Z−Λ||op. Since Λ∈S, this proves the lower bound in (1). A minimizer W exists because S is compact. Its finite physical construction and (2) give the matching upper bound, completing the unrestricted result.
+
+### 65.5 An explicit finite convex program
+
+Formula (1) can be evaluated as a semidefinite program with complex matrix W, real variables t_ij≥0 and δ≥0:
+
+    minimize δ,
+    [[δ I_m,Z−W],[(Z−W)*,δ I_n]] ≥0,
+    [[t_ij,W_ij],[conj(W_ij),t_ij]] ≥0 for every i,j,
+    Σ_j t_ij≤1 for every i,    Σ_i t_ij≤1 for every j.
+
+The two-by-two constraints say t_ij≥|W_ij|, so their projection is exactly S. The first constraint says ||Z−W||op≤δ, including δ=0. Complex Hermitian constraints can equivalently be written as real symmetric constraints by the usual realification. This is an exact description with a proved finite physical attainer, not a relaxation of the physical optimum. No closed-form solution or computational complexity claim is made for general Z.
+
+### 65.6 Shared randomness can be strictly necessary
+
+Take m=n=3 and
+
+    W=(1/2)[[1,1,0],[1,0,1],[0,1,1]].
+
+It lies in S and is therefore CPTP and exactly physically implementable. It is half the sum of the permutation matrices with supports {(1,1),(2,3),(3,2)} and {(1,2),(2,1),(3,3)}, so two product branches suffice.
+
+No single product channel implements it. Exact basis outputs are pure, so a putative product realization has local orthonormal records within each fibre, with cross-record contraction matrices R,T satisfying W=R⊙T. In every row,
+
+    1=Σ_j|R_ij T_ij|≤||R_i||₂||T_i||₂≤1.
+
+Equality forces both row norms to be one and |R_ij|=|T_ij| for every j. Therefore |R_ij|²=W_ij. Since R is a square contraction with every row norm one, RR*≤I and Tr(RR*)=3; positivity of I−RR* forces RR*=I, so its rows are orthonormal. But its first and second rows overlap in exactly one nonzero column, with overlap modulus1/2. They cannot be orthogonal, a contradiction. Thus the minimum number of product branches for exact implementation is exactly two.
+
+This uses the familiar obstruction to a bistochastic matrix being the squared moduli of a unitary matrix. The contribution here is its role in the actual common-channel resource count, not a new unistochastic-matrix obstruction.
+
+### 65.7 Attribution and boundaries
+
+The retained-matrix contraction proof extends §64's vector argument to two arbitrary fibres. The physical matching construction and unrestricted reference witness establish the exact channel reduction. Pairwise feasibility alone is insufficient whenever a contraction Z lies outside S, while shared randomness has a separate role even inside S as the example shows.
+
+Birkhoff and doubly substochastic decompositions are established matrix theory; see Lei Cao, A short note on doubly substochastic analog of Birkhoff's theorem, https://arxiv.org/abs/1801.01232 . Unistochastic matrices and the distinction from bistochastic matrices are standard; see Bengtsson, Ericsson, Kuś, Tadej and Życzkowski, Birkhoff's polytope and unistochastic matrices, N=3 and N=4, https://arxiv.org/abs/math/0402325 . For channel and diamond facts see Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . PIO/zero-communication background remains credited to Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . These standard ingredients are not claimed novel, and no global priority claim is made for the family result.
+
+The theorem concerns the specified two-fibre compression channels and fixed MC encodings, with unrestricted physical LOSR competitors for that target family. It does not classify arbitrary logical channels or assert full RT recovery. This is paper mathematics without a formal-kernel claim.
