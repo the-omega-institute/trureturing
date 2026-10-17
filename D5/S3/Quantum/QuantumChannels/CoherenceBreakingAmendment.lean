@@ -321,14 +321,15 @@ private theorem nonzero_trace {d : ℕ}
 theorem result : claim := by
   intro d r K _hchannel hK n hn _hpower hminimal
   have hnot : ¬ IsCoherenceBreaking (krausApply K) := by
-    simpa only [Function.iterate_one] using hminimal 1 (by omega) (by omega)
+    exact hminimal 1 (by omega) (by omega)
   have hnonzero : residual K ≠ 0 := by
     intro hz
     apply hnot
     intro ρ _ _ i j hij
     have he := congrArg (fun F : Module.End ℂ (Matrix (Fin d) (Fin d) ℂ) => F ρ i j) hz
     change (if i = j then 0 else krausApply K ρ i j) = 0 at he
-    simpa only [ite_eq_right hij] using he
+    rw [ite_eq_right hij] at he
+    exact he
   obtain ⟨a, b, hab⟩ : ∃ a b : Fin d, residual K (single a b 1) ≠ 0 := by
     by_contra h
     push Not at h
