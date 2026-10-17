@@ -117,9 +117,113 @@ private theorem eigenspace (x : Fin 4 → ℝ) (hx : U *ᵥ x = (1 : ℝ) • x)
     Matrix.one_mulVec, hx, one_smul, ← two_smul ℝ x, smul_smul]
   norm_num
 
+private def e : Fin 3 → ℂ := Pi.single 0 1
+
+private def K : Matrix (Fin 3) (Fin 3) ℂ := fun i j =>
+  ![e i, ((A.map Complex.ofReal) *ᵥ e) i,
+    ((A.map Complex.ofReal) *ᵥ ((A.map Complex.ofReal) *ᵥ e)) i] j
+
+private theorem cyclic_det : K.det = (41/4096 : ℂ) := by
+  norm_num [K, e, A, Matrix.det_fin_three, Matrix.mulVec, dotProduct, Fin.sum_univ_succ,
+    Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail]
+
+private theorem irreducible (X : Matrix (Fin 3) (Fin 3) ℂ)
+    (hX : X ∈ Matrix.unitaryGroup (Fin 3) ℂ)
+    (hcomm : X * A.map Complex.ofReal = A.map Complex.ofReal * X) :
+    ∃ μ : ℂ, X = μ • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+  have hinv : Commute (star X) (A.map Complex.ofReal) :=
+    Commute.units_inv_left (u := Unitary.toUnits ⟨X, hX⟩) hcomm
+  have hstar : X * star (A.map Complex.ofReal) = star (A.map Complex.ofReal) * X :=
+    hinv.star_right.eq
+  have h10 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 1 0) hstar
+  have h20 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 2 0) hstar
+  norm_num [A, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.star_apply,
+    Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at h10 h20
+  have hz1 : X 1 0 = 0 := by
+    linear_combination (20/41 : ℂ) * h10 + (16/41 : ℂ) * h20
+  have hz2 : X 2 0 = 0 := by
+    linear_combination (-16/41 : ℂ) * h10 + (20/41 : ℂ) * h20
+  have hXe : X *ᵥ e = (X 0 0) • e := by
+    ext i
+    fin_cases i <;> simp [e, hz1, hz2]
+  have hstep (z : Fin 3 → ℂ) (hz : X *ᵥ z = (X 0 0) • z) :
+      X *ᵥ ((A.map Complex.ofReal) *ᵥ z) =
+        (X 0 0) • ((A.map Complex.ofReal) *ᵥ z) := by
+    rw [Matrix.mulVec_mulVec, hcomm, ← Matrix.mulVec_mulVec, hz, Matrix.mulVec_smul]
+  have hcyclic : X * K = (X 0 0) • K := by
+    ext i j
+    fin_cases j
+    · exact congrFun hXe i
+    · exact congrFun (hstep e hXe) i
+    · exact congrFun (hstep ((A.map Complex.ofReal) *ᵥ e) (hstep e hXe)) i
+  have hK : IsUnit K := by
+    apply (Matrix.isUnit_iff_isUnit_det K).mpr
+    rw [cyclic_det]
+    norm_num
+  refine ⟨X 0 0, hK.mul_right_cancel ?_⟩
+  rw [hcyclic, Matrix.smul_mul, Matrix.one_mul]
+
+private theorem metzler_trace (B : Matrix (Fin 3) (Fin 3) ℝ)
+    (hB : ∀ i j, i ≠ j → 0 ≤ B i j) :
+    0 ≤ 3 * Matrix.trace (B * B) - (Matrix.trace B)^2 := by
+  have h01 : 0 ≤ B 0 1 * B 1 0 := mul_nonneg (hB 0 1 (by decide)) (hB 1 0 (by decide))
+  have h02 : 0 ≤ B 0 2 * B 2 0 := mul_nonneg (hB 0 2 (by decide)) (hB 2 0 (by decide))
+  have h12 : 0 ≤ B 1 2 * B 2 1 := mul_nonneg (hB 1 2 (by decide)) (hB 2 1 (by decide))
+  have identity : 3 * Matrix.trace (B * B) - (Matrix.trace B)^2 =
+      (B 0 0 - B 1 1)^2 + (B 1 1 - B 2 2)^2 + (B 2 2 - B 0 0)^2 +
+        6 * (B 0 1 * B 1 0 + B 0 2 * B 2 0 + B 1 2 * B 2 1) := by
+    simp only [Matrix.trace_fin_three, Matrix.mul_apply, Fin.sum_univ_three]
+    ring
+  rw [identity]
+  nlinarith [sq_nonneg (B 0 0 - B 1 1), sq_nonneg (B 1 1 - B 2 2),
+    sq_nonneg (B 2 2 - B 0 0)]
+
+private theorem obstruction (S : Matrix (Fin 3) (Fin 3) ℂ)
+    (B : Matrix (Fin 3) (Fin 3) ℝ) (hS : IsUnit S) (hB : IsMarkovGenerator B)
+    (hsim : S⁻¹ * A.map Complex.ofReal * S = B.map Complex.ofReal) : False := by
+  have hinv : S * S⁻¹ = 1 :=
+    Matrix.mul_nonsing_inv S ((Matrix.isUnit_iff_isUnit_det S).mp hS)
+  have htrace : Matrix.trace (B.map Complex.ofReal) =
+      Matrix.trace (A.map Complex.ofReal) := by
+    rw [← hsim]
+    exact Matrix.trace_conj' hS _
+  have hsquare : B.map Complex.ofReal * B.map Complex.ofReal =
+      S⁻¹ * (A.map Complex.ofReal * A.map Complex.ofReal) * S := by
+    rw [← hsim]
+    calc
+      (S⁻¹ * A.map Complex.ofReal * S) * (S⁻¹ * A.map Complex.ofReal * S) =
+          S⁻¹ * A.map Complex.ofReal * (S * S⁻¹) * A.map Complex.ofReal * S := by
+            simp only [Matrix.mul_assoc]
+      _ = S⁻¹ * (A.map Complex.ofReal * A.map Complex.ofReal) * S := by
+        rw [hinv, Matrix.mul_one]
+        simp only [Matrix.mul_assoc]
+  have htrace2 : Matrix.trace (B.map Complex.ofReal * B.map Complex.ofReal) =
+      Matrix.trace (A.map Complex.ofReal * A.map Complex.ofReal) := by
+    rw [hsquare]
+    exact Matrix.trace_conj' hS _
+  have ht : Matrix.trace B = -5/2 := by
+    have hr := congrArg Complex.re htrace
+    norm_num [Matrix.trace_fin_three, A, Matrix.cons_val_two, Matrix.vecHead,
+      Matrix.vecTail] at hr ⊢
+    exact hr
+  have ht2 : Matrix.trace (B * B) = 9/8 := by
+    have hr := congrArg Complex.re htrace2
+    norm_num [Matrix.trace_fin_three, Matrix.mul_apply, Fin.sum_univ_succ, A,
+      Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail] at hr ⊢
+    exact hr
+  have hnonneg := metzler_trace B hB.1
+  rw [ht, ht2] at hnonneg
+  norm_num at hnonneg
+
 /-- The steady-state block conjecture fails even with real orthogonal symmetry. -/
 theorem result : ¬ claim := by
-  sorry
+  intro h
+  obtain ⟨S, B, hS, hB, hsim⟩ := h 4 L U p generator orthogonal symmetry probability
+    stationary 3 V 1 frame (by rw [restriction]; exact invariant)
+    (by simpa only [one_smul] using eigenframe) eigenspace contains_stationary
+    (by rw [restriction]; exact irreducible)
+  rw [restriction] at hsim
+  exact obstruction S B hS hB hsim
 
 end
 end D5.S3.StatisticalMechanics.SteadyStateBlockMarkovFormRefutation
