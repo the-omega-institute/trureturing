@@ -56,3 +56,18 @@ already retain both directions and all long edges. No numerical
 superiority to those operators is asserted. A cumulative absolute
 error estimate by itself supplies neither the required signed all-test
 comparison nor RH or Robin positivity.
+
+
+## Growing Li rows with a common arithmetic cutoff
+
+The [Li-row application](../Zeros/coffey2009stieltjes.md#cs8-a-uniform-arithmetic-tail-for-growing-li-tests)
+uses the same Theorem 1.1 together with the existing complete
+proper-prime-power bound and the classical finite Laguerre coefficients.
+It keeps the finite Stieltjes endpoint and obtains a simultaneous
+omitted-tail allowance for every degree $1\le n\le N$ at a common
+integer cutoff with $\log X\ge N^4$. The resulting adjacent-Fibonacci
+matrix error is bounded in operator norm. This is a parameter
+application of existing sources, not a new PNT estimate; its cutoff
+has no asserted computational efficiency. It does not bound the sign
+of the remaining finite arithmetic head or prove the full joint
+inequalities, Robin, or RH.

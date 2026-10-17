@@ -514,3 +514,202 @@ No conclusion that the printed statement is false, new literature
 priority, Lean certification, or RH proof follows. The generating-function
 identity and the Fibonacci growth derivation above use neither (6.2)
 nor its contested zero-residue sign.
+
+## A one-sided Li tail bound from reciprocal zero pairing
+
+The original joint matrix is the $(G_b,G_c)$ specialization of
+[published Theorem 3.1, equation (3.3)](https://aif.centre-mersenne.org/item/10.5802/aif.2311.pdf),
+printed p.1705, where $G_n(s)=1-(1-1/s)^n$. Its entries are
+$\lambda_n+\lambda_{-m}-\lambda_{n-m}$; zeta reflection gives
+$\lambda_{-m}=\lambda_m$. This existing joint identity is used directly.
+
+This is a paper application of the classical Li zero sum, the functional
+equation and the unit-circle Gram identity already used in the
+[generalized Li interface](freitas2006li.md). The explicit fourth-moment
+allowance is reused from
+[VH5--VH6](../Weil/fukushima2011dirichlet.md#reuse-the-inclusive-verified-head-and-the-strict-actual-zero-tail).
+No corrected version of the sign-sensitive contour formula (6.2) is
+assumed. The application estimates the actual tail's possible negative
+contribution; it supplies no sign for the complete Li matrix, Robin or RH.
+It has no new Lean certification or literature-priority claim.
+
+Let $a,b$ be positive integers and $c=a+b$. For an integer $H\ge5$ put
+
+$$
+\lambda_n^{\rm head}(H)=
+\sum_{|\Im\rho|\le H}m_\rho
+ \left[1-\left(1-\frac1\rho\right)^n\right],
+\qquad
+\lambda_n^{\rm tail}(H)=\lambda_n-\lambda_n^{\rm head}(H).
+$$
+
+The sum is over distinct nontrivial zeros, with their full analytic
+multiplicities. Zeros at height exactly $H$ stay in the head. Use the
+original linear matrix map
+
+$$
+\mathcal M(x_a,x_b,x_c)=
+\begin{pmatrix}
+2x_b&x_b+x_c-x_a\\
+x_b+x_c-x_a&2x_c
+\end{pmatrix},
+\qquad K^{\rm tail}_{a,b}(H)=
+\mathcal M(\lambda_a^{\rm tail},\lambda_b^{\rm tail},
+           \lambda_c^{\rm tail}).
+$$
+
+Write $S_4^+(H)=\sum_{\Im\rho>H}m_\rho/(\Im\rho)^4$.
+The existing allowance, for $L_H=\lfloor\log_2(H+4)\rfloor+1$, is
+
+$$
+\begin{aligned}
+\mathscr R_4(H)&=\frac{256}{H}
+\left[\left(\frac2{H^3}+\frac1{2H^2}\right)L_H+
+\frac{2/H^2+1/H}{H+4}\right],\\
+S_4^+(H)&\le\tfrac12\mathscr R_4(H).
+\end{aligned}
+\tag{RT1}
+$$
+
+The factor $1/2$ uses conjugation: VH6 already counts both ordinate signs.
+Its supplier is `finite_inverse_fourth_tail_le`, applied to the actual
+ordinate and multiplicity with $A=128$, $T=H$, $L=L_H$, and
+`zeroData_large_window_count`, then to the supremum of finite subsets.
+No spectral-ball containment or newly verified zero height is required.
+
+### Keep each reflected pair's common phase
+
+For an upper zero $\rho=\beta+i\gamma$, $\gamma>H$, set
+
+$$
+z_\rho=1-\frac1\rho=e^{d_\rho}w_\rho,
+\qquad |w_\rho|=1,\quad d_\rho=\log|z_\rho|.
+$$
+
+The strip $0<\beta<1$ gives
+
+$$
+|d_\rho|=
+\frac12\left|\log\frac{\gamma^2+(1-\beta)^2}{\gamma^2+\beta^2}\right|
+\le\frac1{2\gamma^2}.
+$$
+
+Indeed the logarithm is $1/\gamma^2$-Lipschitz on the two positive
+arguments and their distance is $|1-2\beta|\le1$.
+The functional equation and conjugation preserve multiplicities and the
+upper tail under $\rho\mapsto1-\overline\rho$. They give exactly
+
+$$
+z_{1-\overline\rho}=\frac1{\overline{z_\rho}},\qquad
+ d_{1-\overline\rho}=-d_\rho,\qquad
+ w_{1-\overline\rho}=w_\rho.
+$$
+
+Define the comparison coefficients on these same upper zeros by
+
+$$
+C_n(H)=2\sum_{\Im\rho>H}m_\rho(1-\Re w_\rho^n).
+$$
+
+They converge for each fixed $n$: $|w_\rho-1|\le2/\gamma$,
+$2(1-\Re w_\rho^n)=|1-w_\rho^n|^2\le4n^2/\gamma^2$, and the
+classical reciprocal-square zero tail is summable.
+On every finite interval $H<\gamma\le Y$, average over the reflected
+permutation before taking $Y\to\infty$. The exact difference is
+
+$$
+\Delta_n(H):=\lambda_n^{\rm tail}(H)-C_n(H)
+=-2\sum_{\Im\rho>H}m_\rho
+       (\cosh(nd_\rho)-1)\Re w_\rho^n.
+$$
+
+Thus the first radial variation cancels on the actual reflected zero
+set. From $\cosh x-1\le x^2e^{|x|}/2$, for $1\le n\le c$,
+
+$$
+|\Delta_n(H)|\le
+\frac{n^2}{4}e^{c/(2H^2)}S_4^+(H)
+\le\frac{n^2}{8}e^{c/(2H^2)}\mathscr R_4(H).
+\tag{RT2}
+$$
+
+The error series is absolutely convergent. This argument reorders no
+unpaired infinite zero sum and discards no off-line partner.
+
+### The original mixed entry survives the comparison
+
+For each upper zero the matrix
+$\mathcal M(2(1-\Re w^a),2(1-\Re w^b),2(1-\Re w^c))$
+is twice the real Gram matrix on $(1-w^b,1-w^c)$, since $c-b=a$.
+It is positive semidefinite. The convergent sum therefore gives
+$\mathcal M(C_a,C_b,C_c)\succeq0$.
+For the error matrix $E=\mathcal M(\Delta_a,\Delta_b,\Delta_c)$,
+RT2 and the maximum absolute row sum give
+
+$$
+\|E\|_{\rm op}\le
+\frac{a^2+b^2+3c^2}{8}e^{c/(2H^2)}\mathscr R_4(H)
+\le\frac{c^2}{2}e^{c/(2H^2)}\mathscr R_4(H)
+=:\eta_c(H).
+$$
+
+Consequently the complete actual high-zero matrix satisfies
+
+$$
+\boxed{K^{\rm tail}_{a,b}(H)\succeq-\eta_c(H)I_2.}
+\tag{RT3}
+$$
+
+The two scalar directions needed by
+[CS29](coffey2009stieltjes.md#cs10-two-weaker-signed-targets-on-the-actual-middle)
+also follow directly, with
+
+$$
+\begin{aligned}
+\lambda_c^{\rm tail}(H)&\ge
+-\frac{c^2}{8}e^{c/(2H^2)}\mathscr R_4(H),\\
+2\lambda_a^{\rm tail}(H)+2\lambda_b^{\rm tail}(H)
+ -\lambda_c^{\rm tail}(H)&\ge
+-\frac{2a^2+2b^2+c^2}{8}e^{c/(2H^2)}\mathscr R_4(H).
+\end{aligned}
+\tag{RT4}
+$$
+
+For the second inequality the comparison direction is nonnegative
+because it equals $(2,-1)\mathcal M(C_a,C_b,C_c)(2,-1)^{\mathsf T}/2$.
+The same zeros, phases and cutoff occur in both directions.
+
+### A sublinear negative allowance, with the unknown head retained
+
+For $c\ge25$ take the single symbolic choice
+$H_c=\lceil\sqrt c\rceil$. Since
+$\mathscr R_4(H)=O(\log H/H^3)$ and $c/H_c^2\le1$,
+
+$$
+\eta_c(H_c)=O(\sqrt c\log c)=o(c),\qquad
+K_{a,b}\succeq K^{\rm head}_{a,b}(H_c)-\eta_c(H_c)I_2.
+\tag{RT5}
+$$
+
+No zero computation, height scan or change to an arithmetic cutoff is
+used. At adjacent Fibonacci indices,
+[CS28](coffey2009stieltjes.md#cs9-a-classical-bound-pays-the-growing-low-prime-prefix)
+already gives the original
+actual arithmetic middle, with the complete $h^*=H+U-B$, all prime powers
+and its original endpoints. If its stated allowance is
+$\epsilon_{\rm mid}(c)=o(c)$, then
+
+$$
+\boxed{K_j^{\rm mid}\succeq
+K_j^{\rm head}(H_c)-
+ [\eta_c(H_c)+\epsilon_{\rm mid}(c)]I_2.}
+\tag{RT6}
+$$
+
+RT3 is a lower bound, not an operator-norm bound on the tail itself.
+The head in RT5--RT6 contains every actual zero through the growing
+height $H_c$, including unverified off-line zeros and their
+multiplicities; no positivity or polynomial lower bound for that head
+has been acquired. With a fixed verified height instead, the allowance
+retains its factor $e^{c/(2H^2)}$ and supplies no cofinal polynomial
+budget. The original head probes, CS29, Robin and RH remain unresolved.

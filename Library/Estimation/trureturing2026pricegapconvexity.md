@@ -8319,9 +8319,13 @@ now supplies a separate bound for the added term,
 using its actual orthogonal projection and the prescribed family
 $S_X=\{\infty\}\cup\{p:p\le\mathsf V_X\}$ for the original test's
 support scale. This family need not contain every prime through the
-remote completion's enlarged support. The stronger comparison on that
-enlarged family still requires a sharper trace estimate or a joint
-signed bound that retains its growing correction. The added remote
-prime powers and the original $H_X$ trace remain part of the same-test
-joint comparison. That signed lower bound, the original strict Robin
-upper and RH remain unproved.
+remote completion's enlarged support. On the enlarged
+all-primes-through-completed-support family, the same added term has
+[trace at least a constant times \(N_X/R_X^7\)](../Weil/connesconsanimoscovici2024semilocal.md#the-enlarged-support-family-retains-a-large-remote-trace),
+which exceeds $M_XL_X$ along the original qualifying cofinal family.
+Its full signed arithmetic cost remains $o(L_X)$, so a negligible
+arithmetic--trace transfer fails for this enlarged family and specified
+completion. A joint signed comparison must retain that growing
+correction together with the added remote prime powers and original
+$H_X$ trace. Such a comparison is not excluded by this lower bound.
+The original strict Robin upper and RH remain unproved.
