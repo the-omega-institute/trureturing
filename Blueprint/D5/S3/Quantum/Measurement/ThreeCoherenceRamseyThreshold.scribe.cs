@@ -60,7 +60,10 @@ internal sealed class ThreeCoherenceRamseyThresholdDocument : IScribeDocumentDef
                     Paragraph(Text("At equal spacing put u = a² + b² + c², X = b(a + c) and Y = ac. The ratio is u + 6(X² + Y²)/u + 6X²Y/u². At fixed b, set A = (1 − b)² + b² and B = b²(1 − b)². The same expression is (5/2)u − 3A + (3/2)(A² + 2B)/u + 3AB/u², convex for u > 0. Its feasible interval has endpoints u = b² + (1 − b)²/2 and u = A. The first has a = c; the second has ac = 0 and ratio at most 5/4. In the symmetric case a = c = 1/(r + 2), b = r/(r + 2), the ratio is N(r)/D(r). The case b = 1 has ratio one.")),
                     Paragraph(Text("The intermediate value theorem supplies α in the stated interval with P(α) = 0. Put T = N(α)/D(α). Rational estimates give T > 177/100 > 5/4 and the identity T D(r) − N(r) = (r − α)²Q(r), where Q(r) = (T − 1)r⁴ + (4T + 2α(T − 1))r³ + (8T − 30 + 8αT + 3α²(T − 1))r² + (16T + 16αT − 60α + 12α²T + 4α³(T − 1))r + 20T − 90 + 32αT + (24T − 90)α² + 16Tα³ + 5(T − 1)α⁴. The bounds 123/100 < α < 31/25 and T > 177/100 make all five coefficients positive. Hence Q(r) > 0 for r ≥ 0 and N(r)/D(r) ≤ T.")),
                     Paragraph(Text("For attainment take the energies 0, 1, 2 and ψ = χ with populations (1, α, 1)/(α + 2), namely amplitudes (√(1/(α + 2)), √(α/(α + 2)), √(1/(α + 2))). A single pure component of weight one has positive first moment and ratio T. Thus T belongs to admissibleValues and bounds every admissible value above."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dive-koukoulekidis-mousafeiris-mintert-2020-three-coherence-ramsey-threshold"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
