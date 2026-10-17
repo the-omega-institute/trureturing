@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.ThreeCoherenceRamseyThreshold
 import Reg.Support.DependentFamily
 
+/-! Source-bound audit of the polynomial root defining the sharp three-coherence threshold. -/
+
 namespace Reg.D5.S3.Quantum.Measurement.ThreeCoherenceRamseyThreshold
 open _root_.D5.S3.Quantum.Measurement.ThreeCoherenceRamseyThreshold
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
