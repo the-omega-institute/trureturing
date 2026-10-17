@@ -37,7 +37,7 @@ theorem descent_algebra_closure_tfae {X B : Type*}
       PullbackInvariant q F,
       ObservableInvariant (realizedReadout q) F] := by
   tfae_have 1 ↔ 2 :=
-    (deterministic_interface_sixfold_equivalence q F).out 0 4
+    (deterministic_interface_sixfold_equivalence q F).out 1 5
   tfae_have 1 ↔ 3 := by
     constructor
     · rintro ⟨descended, hDescent, hUnique⟩

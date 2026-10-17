@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Six independently oriented actual components partition the entire F2 domain. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeJ2SixthComponent
 
 set_option autoImplicit false

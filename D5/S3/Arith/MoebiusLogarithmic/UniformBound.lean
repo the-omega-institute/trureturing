@@ -17,7 +17,6 @@ import Mathlib.NumberTheory.EulerProduct.Basic
 
 open scoped BigOperators
 open Finset MeasureTheory
-open private floor_cancellation from D5.S3.Arith.MoebiusLogarithmic.ReciprocalBound
 
 noncomputable section
 attribute [local instance] Classical.propDecidable

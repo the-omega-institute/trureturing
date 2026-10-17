@@ -22,6 +22,7 @@ and Apache-2.0 attribution are preserved in its frozen source.
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
+set_option synthInstance.maxHeartbeats 100000
 open CategoryTheory Limits LightProfinite OnePoint MonoidalCategory
 open scoped BigOperators
 

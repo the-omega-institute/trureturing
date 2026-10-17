@@ -723,7 +723,6 @@ private theorem actual_mass (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j 
   rw [mass_synth (positions N j) (slot_bounds N j hN hj hj')]
   rw [positions_literal N j hN]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D]
-  simp only [Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, min_def, Fin.reduceLE, ite_true, ite_false]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring
@@ -744,7 +743,6 @@ private theorem actual_square (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : 
   simp_rw [hmin]
   rw [positions_literal N j hN]
   norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D, H2, D2, E]
-  simp only [Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, min_def, Fin.reduceLE, ite_true, ite_false]
   try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring

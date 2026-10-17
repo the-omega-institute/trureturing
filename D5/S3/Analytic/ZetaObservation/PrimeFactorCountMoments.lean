@@ -130,7 +130,9 @@ theorem primeFactorCount_eq_tsum_support (n : Nat) :
         have hfactor : n.factorization p ≠ 0 := by
           rw [← Finsupp.mem_support_iff, Nat.support_factorization]
           exact hp
-        simp [Set.indicator, hpprime, Nat.pos_iff_ne_zero.mpr hfactor]
+        exact ((Set.indicator_of_mem (s := {p : Nat | p.Prime}) (a := p)
+          hpprime (fun p : Nat => if 0 < n.factorization p then (1 : Real) else 0)).trans
+          (if_pos (Nat.pos_iff_ne_zero.mpr hfactor))).symm
   · intro p hp
     simp [Set.indicator, Finsupp.notMem_support_iff.mp hp]
 

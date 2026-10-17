@@ -11,9 +11,6 @@ import D5.S3.Arith.Covering.ConcentratedPrimeSingleton
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open private Erdos7.OddDistinctCoveringSystem.deleting_owner_contradicts_count_minimality from
-  D5.S3.Arith.Covering.ConcentratedPrimeSingleton
-
 namespace Erdos7.OddDistinctCoveringSystem
 
 /-- If two descendants of an original class have the same residue modulo its

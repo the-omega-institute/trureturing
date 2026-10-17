@@ -6,6 +6,7 @@
    utility: none
    digest: The moment envelope increases with mean and decreases with squared deviation. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.Interpolation.TwoPointGridDominance
 import D5.S3.Analytic.Interpolation.HermiteMomentBounds
 import D5.S3.Analytic.Interpolation.HermiteUpperEnvelope

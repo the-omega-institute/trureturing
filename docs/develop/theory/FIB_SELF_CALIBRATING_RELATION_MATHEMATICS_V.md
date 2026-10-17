@@ -890,3 +890,436 @@ At the exact complementary histories (5.1), nonbaseline-drift bad pairs and actu
 The original full question is still whether $n_{\rm det}(3,0)\ge9$ or a lawful full-domain decoder with at most eight total readings exists. The root slot system of IV, Theorem 9.3 has no feasibility determination here. All lower degrees, signed gains, sampled and repeated roots, constant drifts, deterministic nonregular policies and early stops remain in that full question.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. JMMJ 的完整实际父纤维与仿射对应
+
+**定义 9.1（归一父历史与实际子集）。** In the domain $\mathcal W_3$ of Definition 1.1, write a normalized target as $W=(P,f,d)$ and put
+
+$$
+\begin{gathered}
+H_p(y)=(0,J,24,M,48,M,312/5,J,y),\qquad
+\mathcal P_y=\mathcal F(H_p(y)),\\
+\mathcal F_y^E(z)=\mathcal F((H_p(y),E,z)),
+\qquad E\in\{M,J\},\quad y,z\in\mathbb R.
+\end{gathered}                                                     \tag{9.1}
+$$
+
+Thus $H_p(y)$ is precisely $H_J(Y)$ of Definition 5.1 at $D_0=0$, $\lambda=1$, $Y=y$. No drift, gain ray or root condition is imposed on $\mathcal P_y$ or its actual response subsets. Sources are strictly entrywise positive real rank-one trace-one matrices; symmetry is not assumed. Gains range over all nonzero real polynomials of degree at most three, with every sign, degree drop, repeated root and sampled root allowed, and $d$ is any real number.
+
+The clocks, actions, stopping rules and complete target are those of Definition 1.1. In particular, each chosen atomic action is immediately read on the same unresettable, uncopyable history at its original clock. A response formula for an unchosen action is a function of a fixed target, not an additional observation.
+
+**引理 9.2（两种增益符号的仿射输运）。** For $D_0\in\mathbb R$ and $\lambda\in\mathbb R\setminus\{0\}$, define
+
+$$
+\Phi_{D_0,\lambda}(P,f,d)=(P,\lambda f,D_0+\lambda d).
+                                                                  \tag{9.2}
+$$
+
+This is a bijection of $\mathcal W_3$. On every fixed action word, it maps each normalized reading $z_i$ to $D_0+\lambda z_i$. Consequently it maps $\mathcal P_y$ bijectively onto $\mathcal F(H_J(Y))$ for $Y=D_0+\lambda y$, with exactly the parameters $D_0,\lambda$ in (5.1). It preserves complete-target distinction, actual response fibers, every failure predicate $L_s$, and recoverability by deterministic policies with early stopping and the same number of readings. These assertions hold for both signs of $\lambda$.
+
+Proof. The inverse is $(P,g,\delta)\mapsto(P,g/\lambda,(\delta-D_0)/\lambda)$. Source positivity, rank and trace are unchanged; multiplication of a nonzero polynomial by $\lambda\ne0$ preserves its degree and roots. At every original clock,
+
+$$
+(\lambda f(i))\operatorname{tr}(A_iP)+D_0+\lambda d
+=D_0+\lambda\bigl(f(i)\operatorname{tr}(A_iP)+d\bigr).
+$$
+
+Since this affine map on readings is injective, corresponding actual children are bijective. Induction in (1.1) proves preservation of $L_s$: cardinalities are preserved at $s=0$, and the possible next response values are related bijectively at each induction step. To transport a policy, apply the inverse affine map to each acquired reading before making the original policy's next action, stop or output decision, and apply $\Phi_{D_0,\lambda}$ to its returned target. The inverse construction transports policies back. No comparison of ordered readings or sign of $\lambda$ is used. ∎
+
+**引理 9.3（同历史单调性与二目标判据）。** Let $H$ be one literal history and $K\subseteq K'\subseteq\mathcal F(H)$, with no cardinality restriction. For every nonnegative integer $s$,
+
+$$
+L_s(K,H)\ \Longrightarrow\ L_s(K',H).                            \tag{9.3}
+$$
+
+For a two-target set after clock five, $L_2$ holds exactly when the same pair has equal readings under both sixth actions and under all four chronological sixth/seventh suffixes. For a two-target set after clock six, $L_1$ holds exactly when both possible final readings agree on the pair.
+
+Proof. For $s=0$, inclusion preserves the existence of two distinct targets. If the assertion holds for $s-1$, each losing actual child of $K$ is contained in the corresponding actual child of $K'$; apply the induction hypothesis there and then (1.1). For a two-target set, a child has at least two targets precisely when both remain in that child. Applying this observation once gives the $L_1$ criterion and twice gives the $L_2$ criterion. A deterministic early stop cannot return different complete targets on an identical history, so it does not remove either obstruction. ∎
+
+## 10. 不预设增益射线的全部第五 J 二目标必要性
+
+**定理 10.1（第五 J 的二目标完全刻画）。** Let $y,\xi\in\mathbb R$ and let $W_1,W_2$ be distinct complete targets in $\mathcal F_y^J(\xi)$. Put
+
+$$
+t=\frac5{96}(y-12),\qquad
+Q_t(\ell)=\left(t^2-\frac38\right)\ell^2+
+                  \left(\frac{11}8-3t\right)\ell+1.              \tag{10.1}
+$$
+
+Then
+
+$$
+L_2(\{W_1,W_2\},(H_p(y),J,\xi))                                \tag{10.2}
+$$
+
+holds if and only if $\xi=0$ and there exist two distinct real roots $\ell_1,\ell_2$ of $Q_t$ such that
+
+$$
+\begin{gathered}
+1<\ell_i<\frac83,\qquad 0<t\ell_i-1<1,\\
+W_i=W_{\ell_i}=(P_{\ell_i},f_{\ell_i},0),\\
+P_\ell=\begin{pmatrix}
+t\ell-1&\ell-1\\
+1-3\ell/8&2-t\ell
+\end{pmatrix},\qquad
+f_\ell(T)=\frac8{5\ell}\,T(T-5)(T-7).
+\end{gathered}                                                     \tag{10.3}
+$$
+
+In particular, baseline drift and the gain ray are consequences of (10.2), not promises on the starting pair. This statement classifies two-target $L_2$ sets; it does not classify larger losing families or pairs required to collide only after one already specified sixth action.
+
+Proof. The actual cumulative matrices at clocks one through five, with fifth action $J$, are
+
+$$
+J,\quad L_0=MJ,\quad Q=J+L_0=
+\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+C_0=JQ=\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad Q.
+                                                                  \tag{10.4}
+$$
+
+By Lemma 9.3, (10.2) gives equality of all four terminal response functions of this same pair. Apply the terminal reconstruction subargument of Theorem 7.1, specifically (7.1), at the actual fifth matrix $Q$. Its hypotheses hold: $\det Q=-1$, $Q$ is nonnegative with no zero row, and each $QP_i$ is strictly positive rank one. That subargument determines the same matrix $X=f_i(7)QP_i$ and the same drift $d$ from the four response functions, including its zero-entry stratum. If $X\ne0$, invertibility and trace normalization give the same $P_i$ and $f_i(7)$; the common ancestor readings at clocks $0,1,2,3$ then give the same entire polynomial $f_i$, since their source trace factors are positive. This contradicts distinctness. Hence
+
+$$
+d_1=d_2=d,\qquad f_1(7)=f_2(7)=0.                              \tag{10.5}
+$$
+
+Only the terminal subargument is being applied here; the later fifth-$M$ baseline exclusion in Theorem 7.1 concerns a different actual child.
+
+For each of these same two targets write
+
+$$
+\begin{gathered}
+P_i=\begin{pmatrix}r_i&u_i\\v_i&1-r_i\end{pmatrix},\quad
+\jmath_i=u_i+v_i>0,\quad \ell_i=1+u_i>1,\quad
+a_i=\jmath_i+\ell_i>0,\\
+q_i=\jmath_i/a_i\in(0,1),\quad h_i=a_if_i,\quad
+\alpha_i=(1+r_i+\jmath_i)/a_i>0.
+\end{gathered}                                                     \tag{10.6}
+$$
+
+The trace factors at clocks $0,\ldots,5$ in (10.4) are
+
+$$
+1,\quad \jmath_i,\quad \ell_i,\quad a_i,\quad
+1+r_i+\jmath_i,\quad a_i.
+$$
+
+Use the common constants
+
+$$
+\begin{gathered}
+A=312/5-d,\quad B=\xi-d,\quad C=24-d,\quad D=48-d,\\
+K=15A-5B,\qquad L=-5A+15B,\qquad N=9A+9B.
+\end{gathered}                                                     \tag{10.7}
+$$
+
+The parent and actual fifth equations imply
+
+$$
+h_i(3)=A,\quad h_i(5)=B,\quad h_i(7)=0,\quad
+q_ih_i(1)=C,\quad (1-q_i)h_i(2)=D.                              \tag{10.8}
+$$
+
+Polynomial interpolation at the four distinct clocks $1,3,5,7$, valid for every degree at most three, gives
+
+$$
+\begin{aligned}
+16h_i(2)&=5C/q_i+K,\\
+16h_i(4)&=-C/q_i+N,\\
+16h_i(6)&=C/q_i+L.
+\end{aligned}                                                     \tag{10.9}
+$$
+
+For example, the coefficient rows of the interpolant at $2,4,6$, relative to its values at $1,3,5,7$, are respectively $(5,15,-5,1)/16$, $(-1,9,9,-1)/16$, $(1,-5,15,5)/16$. Thus each $q_i$ satisfies
+
+$$
+(1-q_i)(5C+Kq_i)=16Dq_i.                                      \tag{10.10}
+$$
+
+Let $w_J,w_M$ be the pair's common actual sixth responses after the fifth $J$. The actual fourth and sixth equations are
+
+$$
+y-d=\alpha_i h_i(4),\quad
+w_J-d=\alpha_i h_i(6),\quad
+w_M-d=(2-q_i)h_i(6),                                         \tag{10.11}
+$$
+
+because $\operatorname{tr}(MQP_i)=\jmath_i+2\ell_i=(2-q_i)a_i$.
+
+We first prove $q_1=q_2$. If $C=0$, then $d=24$ and $D=24$; division of (10.10) only by $q_i>0$ gives $K(1-q_i)=384$. This has at most one solution, including the case $K=0$, when it has none. Suppose instead that $C\ne0$ and $q_1\ne q_2$. They are roots of
+
+$$
+-Kq^2+(K-5C-16D)q+5C=0.
+$$
+
+The constant term is nonzero, so two distinct roots require $K\ne0$ and give $q_1q_2=-5C/K$. Equality of the sixth-$M$ responses in (10.11), using (10.9), gives
+
+$$
+(q_2-q_1)(2C+Lq_1q_2)=0,\qquad L=\frac{2K}{5}.                 \tag{10.12}
+$$
+
+The first two common responses in (10.11), and $\alpha_1\alpha_2>0$, also imply
+
+$$
+h_1(4)h_2(6)-h_2(4)h_1(6)=0.
+$$
+
+After multiplication by $256q_1q_2$, (10.9) makes this equation
+
+$$
+C(N+L)(q_1-q_2)=0,\qquad N+L=0.                              \tag{10.13}
+$$
+
+No gain sample or response is divided out in either cancellation. Equations (10.12)–(10.13) say $-11A+17B=0$ and $A+6B=0$, whence $A=B=0$, contradicting $K\ne0$. This proves $q_1=q_2=q$. The four values at $1,3,5,7$ now agree, so $h_1=h_2=h$ as polynomials.
+
+Suppose $d\ne0$. The initial read gives $h(0)=-a_id$, so $a_1=a_2=a$. Consequently $\jmath_i=qa$ and $\ell_i=(1-q)a$ agree. If either $h(4)$ or $h(6)$ is nonzero, its common response in (10.11) fixes $\alpha_i$, hence $r_i$; then $u_i=\ell_i-1$, $v_i=\jmath_i-u_i$ and $f_i=h/a$ agree as well. This again contradicts distinctness.
+
+The remaining nonzero-drift case has $h(4)=h(6)=0$. Since also $f_i(7)=0$, a nonzero polynomial of degree at most three must have exactly the form
+
+$$
+f_i(T)=\frac d{168}(T-4)(T-6)(T-7),                            \tag{10.14}
+$$
+
+where its initial value $f_i(0)=-d$ fixes the coefficient. The parent readings at $1,2,3$ then require, for either source,
+
+$$
+\jmath=\frac{28(d-24)}{15d},\qquad
+\ell=\frac{21(d-48)}{5d},\qquad
+a=\frac{14(d-312/5)}d.
+$$
+
+The identity $a=\jmath+\ell$ gives $d=1344/17$, and therefore $\jmath=13/10$, $\ell=33/20$, $u=v=13/20$. But rank one and trace one require
+
+$$
+uv=r(1-r)\le\frac14,\qquad
+\frac{169}{400}>\frac14,
+$$
+
+a contradiction even for one legal source. The three distinct roots in (10.14) also exclude a lower-degree exception. Thus $d=0$ is necessary.
+
+Now each target lies in the whole promised class $C_J(y)$ of (5.2), with exactly $D_0=0$, $\lambda=1$, baseline drift and the already proved seventh root. Apply the gain-ray conclusion (5.4) of Theorem 5.2. It gives $f_i(T)=\kappa_i T(T-5)(T-7)$, with $\kappa_i>0$, and the trace constraints there give
+
+$$
+\kappa_i\jmath_i=1,\qquad \kappa_i\ell_i=8/5.
+$$
+
+Hence $\jmath_i=5\ell_i/8$, $\kappa_i=8/(5\ell_i)$ and $\xi=0$. The common fourth reading is
+
+$$
+y=\frac{96}{5\ell_i}(1+r_i+\jmath_i)
+  =12+\frac{96}{5}\frac{1+r_i}{\ell_i}.
+$$
+
+Thus $r_i=t\ell_i-1$ with the common $t$ in (10.1), and the source is exactly (10.3). Its determinant is $-Q_t(\ell_i)$. Its four entries are strictly positive exactly when $1<\ell_i<8/3$ and $0<t\ell_i-1<1$. Equality of the two $\ell_i$ would now give equality of the complete targets, so the roots are distinct.
+
+Conversely, take any two distinct roots satisfying these strict inequalities. Formula (10.3) gives positive trace-one sources with determinant zero, and nonzero degree-three gains. Their trace factors along the entire original parent are
+
+$$
+1,\quad 5\ell/8,\quad \ell,\quad 13\ell/8,\quad
+(t+5/8)\ell.
+$$
+
+Multiplying by the gain samples at clocks $0,1,2,3,4$ gives exactly $0,24,48,312/5,y$. After fifth $J$ the reading is $0$; sixth $J$ reads $-y/2$ and sixth $M$ reads $-126/5$ on both targets. Every seventh reading is $0$, since both gains vanish at $7$. Lemma 9.3 proves (10.2). The sixth gain samples are $-48/(5\ell)\ne0$. All zero-sample and degree-drop cases were retained in (10.8)–(10.13) before the final form was deduced; no leading gain coefficient or unknown gain sample was used as a divisor. ∎
+
+## 11. 两个尖锐合法窗口与同一配对的全部实际响应
+
+**定理 11.1（严格正源的精确窗口）。** The polynomial $Q_t$ in (10.1) has two distinct roots satisfying (10.3) exactly when
+
+$$
+t\in\left(\frac34,\frac{31}{40}\right)
+       \ \cup\ \left(\frac78,1\right).
+                                                                  \tag{11.1}
+$$
+
+Equivalently, an actual fifth-$J$ two-target $L_2$ set exists at $H_p(y)$ exactly when
+
+$$
+y\in\mathcal I:=
+\left(\frac{132}5,\frac{672}{25}\right)
+\ \cup\
+\left(\frac{144}5,\frac{156}5\right).                            \tag{11.2}
+$$
+
+At the four excluded endpoints, the roots and their failure mechanisms are
+
+$$
+\begin{array}{c|c|c}
+t&\text{roots of }Q_t&\text{obstruction to a distinct legal pair}\\ \hline
+3/4&2,\ 8/3&\ell=8/3\text{ has zero source entries}\\
+31/40&40/19\text{ (double)}&\text{only one target}\\
+7/8&8/5\text{ (double)}&\text{only one target}\\
+1&1,\ 8/5&\ell=1\text{ has zero source entries}.
+\end{array}                                                       \tag{11.3}
+$$
+
+Proof. Two distinct legal roots are positive. Since $Q_t$ has constant coefficient $1$, it is not identically zero, and a degree drop leaves at most one root. Thus its leading coefficient $a_t=t^2-3/8$ is nonzero. The positive product of the roots gives $a_t>0$. Legality also gives $0<t<2$, and puts both roots strictly between $1/t$ and $2/t$. An upward quadratic is positive strictly outside its two roots, so
+
+$$
+Q_t(1/t)=-\frac{(8t-3)(t-1)}{8t^2}>0,\qquad
+Q_t(2/t)=-\frac{(4t-3)(t-2)}{4t^2}>0.                          \tag{11.4}
+$$
+
+With $0<t<2$, the second inequality implies $t>3/4$; the first then implies $t<1$. Its discriminant is
+
+$$
+\Delta_t=\left(\frac{11}8-3t\right)^2
+          -4\left(t^2-\frac38\right)
+        =5\left(t-\frac{31}{40}\right)\left(t-\frac78\right).
+                                                                  \tag{11.5}
+$$
+
+Two distinct real roots require $\Delta_t>0$, giving exactly (11.1).
+
+Conversely, let $t$ lie in (11.1). Then $a_t>0$, both endpoint values in (11.4) are positive, and $\Delta_t>0$. The vertex
+
+$$
+\ell_*=\frac{24t-11}{16t^2-6}
+$$
+
+lies strictly between $1/t$ and $2/t$: after multiplication by the positive $t(16t^2-6)$, the two inequalities have respective numerators
+
+$$
+8t^2-11t+6>0,\qquad 8t^2+11t-12>0.
+$$
+
+The first quadratic has discriminant $-71$ and positive leading coefficient. The second has value $3/4$ at $t=3/4$ and positive derivative for $t>3/4$. Since $Q_t(\ell_*)=-\Delta_t/(4a_t)<0$, there is a root on each side of this vertex inside $(1/t,2/t)$. These are its two roots. Moreover
+
+$$
+1<1/t<\ell<2/t<8/3,
+$$
+
+so all the strict source conditions hold. The affine relation $y=12+96t/5$ gives (11.2). Direct factorization at the endpoints gives (11.3); the two double roots are legal but each yields only one complete target. This also covers the discriminant-zero and leading-coefficient-zero possibilities. Theorem 10.1 supplies both directions of the asserted existence criterion. ∎
+
+**定义 11.2（绑定的同父二目标族）。** For every $y\in\mathcal I$, set $t=5(y-12)/96$ and define the one family
+
+$$
+\begin{aligned}
+\mathcal R_t&=\{\ell\in\mathbb R:
+Q_t(\ell)=0,\ 1<\ell<8/3,\ 0<t\ell-1<1\},\\
+\mathcal A_y&=\{W_\ell:\ell\in\mathcal R_t\},
+\end{aligned}                                                     \tag{11.6}
+$$
+
+where $W_\ell$ is exactly the complete target (10.3). By Theorems 10.1 and 11.1, $\mathcal A_y$ has exactly two elements, both in the same entire literal parent $\mathcal P_y$. The symbol $\mathcal A_y$ always denotes this set, including when it is retained in a fifth-$M$ or sixth-action response child.
+
+**命题 11.3（同一族的实际分支与非父层失败）。** Fix $y\in\mathcal I$ and the family $\mathcal A_y$ of (11.6). For each $W_\ell\in\mathcal A_y$, its predictions at original clocks $5,6,7$ are as follows; the last column holds for either final atom:
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&z_5&z_6&z_7\\ \hline
+J&J&0&-y/2&0\\
+J&M&0&-126/5&0\\
+M&J&0&48/5-y&0\\
+M&M&0&-156/5-48/(5\ell)&0.
+\end{array}                                                       \tag{11.7}
+$$
+
+In particular,
+
+$$
+\begin{gathered}
+L_2(\mathcal A_y,(H_p(y),J,0)),\\
+\mathcal A_y\subseteq
+\mathcal F((H_p(y),M,0,J,48/5-y)),\\
+L_1(\mathcal A_y,(H_p(y),M,0,J,48/5-y)),\\
+\neg L_2(\mathcal A_y,(H_p(y),M,0)),\qquad
+\neg L_3(\mathcal A_y,H_p(y)).
+\end{gathered}                                                     \tag{11.8}
+$$
+
+Proof. The first two rows were computed in Theorem 10.1. For fifth $M$, the cumulative matrix is $MC_0$, and $f_\ell(5)=0$ gives the same fifth read $0$. The two sixth trace factors are
+
+$$
+\operatorname{tr}(JMC_0P_\ell)=(2t+1/4)\ell,\qquad
+\operatorname{tr}(M^2C_0P_\ell)=1+13\ell/4.
+$$
+
+Multiplying by $f_\ell(6)=-48/(5\ell)$ and using $y=12+96t/5$ gives the last two sixth responses. The gain vanishes at $7$ for every final action. Lemma 9.3 proves the positive failure assertions. The last sixth response is injective in $\ell>0$, so fifth $M$, sixth $M$ separate the pair by clock six. This proves both negations in (11.8); it is the restriction of the existing whole-class inverse of Theorem 5.2 to this pair, not an inverse on $\mathcal P_y$.
+
+For the existing representatives in Proposition 5.3, the normalized parameters are $y=1632/55$, $t=81/88$ and $\ell=88/69,88/53$. They are instances of (11.6), with exactly the same $M,M$ separation as that proposition. ∎
+
+## 12. 强制实际动作与任意基数的同父粘合
+
+**定理 12.1（全纤维成功解码的必要动作）。** Let $y\in\mathcal I$. Any deterministic decoder that recovers every complete target of the whole unrestricted fiber $\mathcal P_y$ by original clock seven must choose fifth $M$. After its actual fifth-$M$ response $0$, it must choose sixth $M$. The same sixth-action necessity holds for any decoder required to recover the whole fiber $\mathcal F_y^M(0)$ with at most two further readings. These are necessary conditions on a successful decoder; existence of such a decoder is not a hypothesis-free conclusion.
+
+Proof. The parent contains both elements of $\mathcal A_y$, so an immediate stop cannot recover all of it. Fifth $J$ has the actual response-$0$ child containing this same pair with $L_2$, by (11.8) and monotonicity (9.3). That child cannot be recovered within clocks $6,7$, including by a history-dependent sixth action and early stops. Therefore a successful parent decoder must choose fifth $M$. Its actual response-$0$ fiber contains the same two targets, so it cannot stop there. Sixth $J$ has the actual response-$(48/5-y)$ child containing $\mathcal A_y$ with $L_1$; no final choice or early stop recovers that child. Thus the necessary sixth action is $M$. Separation of $\mathcal A_y$ under that action proves only recovery of this pair, as stated in Proposition 11.3. ∎
+
+**定理 12.2（同父粘合与整个父纤维的条件等价）。** Fix one $y\in\mathcal I$. For every $z\in\mathbb R$ and every family $\mathcal B\subseteq\mathcal F_y^M(z)$ of arbitrary cardinality, if
+
+$$
+L_2(\mathcal B,(H_p(y),M,z)),
+$$
+
+then the family $\mathcal U=\mathcal A_y\cup\mathcal B$ consists of fixed legal targets in $\mathcal P_y$ and satisfies
+
+$$
+L_3(\mathcal U,H_p(y)).                                        \tag{12.1}
+$$
+
+More generally, for every $\mathcal A_y\subseteq K\subseteq\mathcal P_y$,
+
+$$
+\begin{aligned}
+L_3(K,H_p(y))
+\quad\Longleftrightarrow\quad
+\exists z\in\mathbb R:\quad
+L_2(K\cap\mathcal F_y^M(z),(H_p(y),M,z)).
+\end{aligned}                                                     \tag{12.2}
+$$
+
+In particular (12.2) holds for $K=\mathcal P_y$. No finiteness, common drift, common gain ray, common response under the other fifth action, or two-target losing subset is required of $\mathcal B$.
+
+Proof. All targets in $\mathcal B$ share the entire literal $H_p(y)$ by its assumed actual-child membership; those in $\mathcal A_y$ share that identical history by (11.6). Thus their union uses one and the same $y$ and never changes any target. Its fifth-$J$ response-$0$ child contains $\mathcal A_y$ with $L_2$, and its fifth-$M$ response-$z$ child contains $\mathcal B$ with $L_2$. Lemma 9.3 gives the same failure predicates on the corresponding union children. Applying (1.1) proves (12.1). The two fifth response values need not coincide.
+
+For (12.2), the forward implication is the fifth-$M$ clause of (1.1). Conversely, the stated fifth-$M$ child supplies that clause, and the fifth-$J$ response-$0$ child of $K$ contains $\mathcal A_y$, supplying the other clause by (11.8) and (9.3). This proves the equivalence without extracting a pair or triple from an arbitrary losing family. ∎
+
+**定理 12.3（实际 M0 子纤维的精细第六 M 消费者）。** Fix one $y\in\mathcal I$ and put
+
+$$
+H_{M0}=(H_p(y),M,0),\qquad \beta_y=48/5-y.
+$$
+
+For every family $\mathcal A_y\subseteq K_0\subseteq\mathcal F_y^M(0)$ of arbitrary cardinality,
+
+$$
+\begin{aligned}
+L_2(K_0,H_{M0})
+\quad\Longleftrightarrow\quad
+\exists v\in\mathbb R:\quad
+L_1\bigl(K_0\cap\mathcal F((H_{M0},M,v)),(H_{M0},M,v)\bigr).
+\end{aligned}                                                     \tag{12.3}
+$$
+
+Consequently, for any real $v$ and any family
+
+$$
+\mathcal T\subseteq\mathcal F((H_p(y),M,0,M,v)),\qquad
+L_1(\mathcal T,(H_p(y),M,0,M,v)),
+                                                                  \tag{12.4}
+$$
+
+the explicitly bound union $\mathcal U_0=\mathcal A_y\cup\mathcal T$ satisfies
+
+$$
+L_2(\mathcal U_0,H_{M0}),\qquad L_3(\mathcal U_0,H_p(y)).          \tag{12.5}
+$$
+
+The $L_1$ hypothesis in (12.4) concerns both final actions on that same $\mathcal T$; their witnessing collision pairs may differ. It does not require $v=\beta_y$, and no cardinality or drift promise is imposed on $\mathcal T$.
+
+Proof. The same defined family $\mathcal A_y$ lies in the actual sixth-$J$ response-$\beta_y$ child of $H_{M0}$ and has $L_1$ there, by (11.8). Thus every $K_0$ as stated already has the sixth-$J$ clause needed in (1.1). Its sixth-$M$ clause is exactly the right-hand side of (12.3). This proves both directions.
+
+For (12.4), all elements of $\mathcal U_0$ share the entire same $H_{M0}$. Its sixth-$J$ response-$\beta_y$ child contains $\mathcal A_y$ with $L_1$, and its sixth-$M$ response-$v$ child contains $\mathcal T$ with $L_1$. Monotonicity and (1.1) give the first assertion in (12.5). At the original parent, the fifth-$M$ response-$0$ child is $\mathcal U_0$ and therefore has $L_2$; the fifth-$J$ response-$0$ child contains $\mathcal A_y$ with $L_2$. Applying (1.1) again gives the second assertion. Every inclusion uses the same fixed targets and the same literal $y$. The existential response in the $L_1$ definition can be chosen separately for each final action; hence the proof does not assume one common terminal collision pair inside $\mathcal T$. ∎
+
+**推论 12.4（原参数下的两个窗口与实际动作）。** Let $D_0\in\mathbb R$, $\lambda\ne0$, $Y\in\mathbb R$ and $y=(Y-D_0)/\lambda$. At the literal parent $H_J(Y)$ of (5.1), a two-target $L_2$ set in an actual fifth-$J$ child exists exactly for $y\in\mathcal I$. Every such pair is the image under $\Phi_{D_0,\lambda}$ of the pair (11.6), has drift $D_0$, and has actual fifth-$J$ response $D_0$. On these normalized windows, every successful whole-parent decoder by clock seven must choose fifth $M$ and, after actual response $D_0$, sixth $M$.
+
+All same-parent inclusions, arbitrary-cardinality gluing implications and conditional equivalences of Theorems 12.2–12.3 transport by $\Phi_{D_0,\lambda}$. In the finer consumer the actual fifth response is $D_0$, the sixth-$J$ response is
+
+$$
+D_0+\lambda\beta_y=2D_0+\frac{48\lambda}{5}-Y,
+$$
+
+and an arbitrary normalized sixth-$M$ response $v$ becomes $D_0+\lambda v$.
+
+Proof. Apply the bijection of Lemma 9.2 to Theorems 10.1, 11.1 and 12.1–12.3 and to each of their actual history arguments. The two windows are imposed on $y=(Y-D_0)/\lambda$, so negative $\lambda$ requires no assumption about the order of physical $Y$ endpoints. Every transported family shares the entire corresponding $H_J(Y)$; the displayed sixth response follows by substitution. These conditional implications do not supply a family satisfying the fifth-$M$ $L_2$ premise or the finer sixth-$M$ $L_1$ premise. ∎
+
+## 追加锚（本行以下为增补区）

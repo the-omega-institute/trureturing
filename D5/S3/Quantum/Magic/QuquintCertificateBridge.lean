@@ -6,6 +6,7 @@
    utility: kind=certified-instance; basis=consumer=D5/S3/Quantum/Magic/QuquintFiniteMaximum.finite_sign_maximum
    digest: Identify the numerical certificate matrices with the ququint tangent forms. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Magic.QuquintWignerCriticalGeometry
 import D5.S3.Quantum.Magic.QuquintCertificateData
 

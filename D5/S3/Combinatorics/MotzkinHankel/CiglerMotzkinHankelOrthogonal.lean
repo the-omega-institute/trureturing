@@ -240,8 +240,7 @@ theorem hankelDet_coefficients (shift size : ℕ) :
     · simp only [Matrix.mul_apply, extended, Matrix.of_apply, top, if_false]
       rw [sum_eq_single row]
       · simp only [ite_true, one_mul, coefficients, Matrix.of_apply]
-        congr 2
-        omega
+        rw [Nat.add_sub_of_le (Nat.le_of_not_lt top)]
       · intro height _ height_ne
         simp [Ne.symm height_ne]
       · simp

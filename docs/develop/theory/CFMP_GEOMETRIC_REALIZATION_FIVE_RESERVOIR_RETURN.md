@@ -1627,3 +1627,1865 @@ the displayed five-reservoir paired class from the at-most-four-reservoir
 paired class on this original triangulation, and does not satisfy a blanket
 minimum-degree-at-least-nine hypothesis. No claim of census novelty, global
 minimality, or separation from every earlier geometric criterion is made.
+
+## 296. Assumptions and statement
+
+Retain the assumptions of Section 130: an actual finite ideal face
+pairing with connected circular edge links, every original degree at
+least six, fixed vertex-induced paired frames (R,A,B,O,A,B) with
+A,B in H and A!=B, one common positive generalized length field, and
+all original angle sums 2*pi. Axes can repeat and self-gluings are
+allowed. There is no bound on the number of reservoir labels.
+
+Assume a flat exists. Choose M maximal in cosh-length among all
+pi-selected reservoir labels, and write m=x_M, as in Section 132.
+
+**Theorem.** Every reservoir U with u=x_U>m-2 has a genuine occurrence.
+Every flat transverse occurrence of such U has angle pi; consequently,
+after the genuine witness is established, there are no flat transverse
+occurrences of U at all. An axial U occurrence can still be flat zero
+in an owner selecting a different, lower reservoir transversely; this
+last possibility is not excluded by the theorem.
+
+The result extends the genuine-witness step of Sections 184–186 to an
+arbitrary number of reservoir labels. It does not extend the entire
+five-reservoir return classification or assert general flat exclusion.
+
+## 297. Transverse zero occurrences are impossible
+
+Consider a flat owner with reservoir pair {U,A}. If it selects A,A,
+the transverse-flat inequality of Lemma 111.1 requires
+
+    a-u >= sqrt((r+1)*(o+1)) > 2.
+
+Since A is selected, a<=m; whereas u>m-2. This is impossible.
+If the owner instead selects its axes, each selected H axis has shifted
+value at most m-1<u+1<u+a. Each selected special axis has shifted value
+strictly below u+a by the fixed-pair special-edge barrier, Theorem112.1.
+The product of the two shifted axis values is therefore strictly less
+than (u+a)^2, contrary to the axial-flat condition of Section130.
+Thus the only possible flat selection is the transverse U,U pair.
+This proves the first assertion without any bound on |H|, including
+u>m, when selecting U itself is also impossible by maximality of M.
+
+## 298. Saturation and the original axial runs
+
+Suppose U has no genuine occurrence. Then every original U slot is
+flat and its complete edge equation gives exactly two pi slots.
+Every transverse U slot has angle pi by Section297 above. Every axial
+zero U slot belongs to an owner selecting a transverse reservoir P.
+
+For a fixed unordered reservoir pair {P,Q}, there is at most one such
+actual zero owner: only the strictly larger pair value can be selected,
+and one owner already contributes two pi slots to that selected global
+label. This uses the full selected-label equation, not an assumption
+that different visits around U correspond to different owners.
+
+Furthermore no axial-zero owner can have two U axes. If it did, its
+transverse-selected value p and companion q would satisfy
+
+    p-q >= sqrt((u+1)^2)=u+1.
+
+Since q>1 and u>m-2, this gives p>u+2>m. But P is a pi-selected
+reservoir, contradicting the definition of M. Therefore each actual
+zero owner supplies at most one original axial U occurrence.
+
+First suppose every U occurrence is axial. By the original-slot
+transport in Section131, its fixed reservoir pair is constant around
+the connected U circle. There is at most one zero owner, supplying at
+most one U occurrence. Together with the exactly two pi slots, this
+gives degree(U)<=3, contrary to minimum degree six.
+
+Otherwise U has a transverse occurrence. Its flat owner selects U,U,
+and its two transverse U slots exhaust the two pi slots in the complete
+U equation. These are the only transverse occurrences of U. Every
+other U occurrence is axial and zero.
+
+Remove these two distinct original transverse intervals from the U
+normal circle. The remaining original intervals form at most two
+consecutive axial runs, possibly empty. The two removed intervals may
+belong to the same tetrahedron, as indeed they do; they remain two
+separate intervals in the actual normal link. The complementary
+reservoir pair is constant along each run by Section131. The preceding
+fixed-pair argument allows at most one zero owner in each run, and the
+no-two-U-axes argument allows at most one U occurrence of that owner.
+Thus each run has at most one original interval, giving
+
+    degree(U)<=2+1+1=4.
+
+This again contradicts minimum degree six. Repeated visits, parallel
+face pairings and self-gluings change which endpoints are paired, but
+not the count of original intervals in these complete runs. Therefore
+U must have a genuine occurrence.
+
+A flat transverse U owner would already contribute 2*pi to U and
+leave no positive genuine contribution. Hence no such owner remains.
+This proves the theorem. QED.
+
+## 299. The exact six-reservoir boundary
+
+The genuine escape tau=(Z,M,C,D,M,C) of Theorem134.1 witnesses four
+distinct reservoir labels. The upper-gap theorem of Section182 supplies
+another actual label U outside those four with u>T(m,z)>m-2. The theorem
+above witnesses U without using reservoir cardinality.
+
+For exactly six labels H={M,C,D,Z,U,V}, the only possibly unwitnessed
+label is therefore V, and it must satisfy v<=m-2. If V is unwitnessed,
+every transverse-selected flat owner must select V, since all five
+other labels are genuinely witnessed. There is at most one such actual
+owner. Every flat axial zero slot of any label belongs to that owner,
+if it exists. Transverse zero slots in axial-flat owners are still
+possible and are not discarded.
+
+This identifies the first five-label cardinality issue precisely:
+the witness of the upper-gap label does not require five labels, but
+Section187's conclusion that every reservoir is witnessed, and hence
+that every flat owner selects its axes, does not follow for six from
+this argument. Even if the sixth label is witnessed, its additional
+face roles remain outside the published five-label case analysis.
+No actual realization of the residual low-label pattern, six-label
+flat exclusion, or six-label geometric realization is claimed here.
+
+## 300. Exact assumptions and conclusion
+
+Retain the actual paired-framework hypotheses of Section130 and a
+nonempty flat set, with exactly six distinct reservoir labels. Use the
+genuine escape and upper-gap label to write
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Here p counts original flat pi slots. The arbitrary-reservoir upper-
+witness theorem supplies genuine witnesses for M,Z,U and excludes all
+their flat transverse occurrences. C,D already occur in genuine tau.
+Suppose V is the only unwitnessed reservoir, so p_V=2 and v<=m-2.
+All degrees and counts below refer to the original face quotient.
+
+**Theorem.** After naming the larger of C,D by A and the smaller by B,
+with values a,b, the following necessary conclusions hold:
+
+1. a>=1+v+b, in particular a>b and a>v.
+2. Exactly two actual axial-flat owners have V transversely. One has
+   frame (A,V,B,Q,V,B); the other has frame (U,V,L,T,V,L), where L=A or B.
+   They are distinct. Their selected A and U slots are unique, so
+   p_A=p_U=1 and m-2<u<=m.
+3. If an owner F_V selects V transversely, it is unique and has
+   transverse companion B. The degree of V is six or seven. Without
+   F_V its degree is exactly six.
+4. The original source flat sigma=(M,C,D,O,C,D) and the two owners
+   above have their other selected axial labels O,Q,T in {B,V} union S.
+   Across these three actual owners there is at most one B pi slot.
+   If F_V exists none of O,Q,T is V; otherwise they contain at most
+   two V slots, counting repetitions.
+
+Thus an unwitnessed sixth label must be a degree-six or degree-seven
+actual edge with this specific flat-owner configuration. In particular,
+if all six reservoir edges have degree at least eight, every reservoir
+is genuinely witnessed and every flat owner selects its axes. This
+last conclusion is not an exclusion of axial flats or a six-reservoir
+geometric-realization theorem.
+
+## 301. Count every V occurrence
+
+A transverse-selected flat must select an unwitnessed reservoir, because
+its two pi slots exhaust that label's original equation. Consequently
+it must select V, and there is at most one such actual owner F_V.
+A flat axial zero occurrence of V must belong to F_V. This owner cannot
+have V on both axes: the transverse-flat inequality would require
+v-l>=sqrt((v+1)^2)=v+1 with l>1. Thus F_V has at most one axial V slot.
+
+If F_V exists, its two transverse V pi slots exhaust p_V=2; all axial
+V slots are zero and belong to F_V. If F_V does not exist, all axial V
+slots have angle pi, and there are exactly two of them.
+Every other V occurrence is transverse zero in an axial-flat owner.
+Let k be the number of these actual owners. Each contributes exactly
+two transverse V slots, irrespective of any additional V axis.
+Therefore the exact degrees are
+
+    degree(V)=2+2*k+t,  t in {0,1}, if F_V exists;
+    degree(V)=2+2*k,                 otherwise.
+
+The second formula counts any axial V slots in these same owners
+separately, as original slots. Minimum degree six implies k>=2 in
+both cases.
+
+All transverse labels of any flat belong to {C,D,V}: M,Z,U have no
+flat transverse occurrences. Each of the k owners thus has pair {V,C}
+or {V,D}. It differs from sigma, whose pair is {C,D}.
+
+## 302. Every such owner uses U or the larger low label
+
+Every axial-flat owner has at least one selected H axis: two special
+axes violate the fixed-pair special barrier. None of the k owners has
+a selected M axis, since sigma already uses the unique M pi slot.
+None has selected Z, since p_Z=0. Their selected H axes therefore lie
+in {C,D,U,V}.
+
+Consider one without a U axis, with pair {V,L}, where L=C or D. Let
+X be its selected H axis of largest cosh value x. Its other axis is
+either H-valued and at most x, or special and has shifted value less
+than v+l. The axial-flat product implies respectively
+
+    (x-1)^2 >= (v+l)^2, or (x-1)*(v+l) > (v+l)^2.
+
+In either case x>=1+v+l. Thus X is neither V nor L; it must be the
+other member of {C,D}. The latter is strictly larger than L and V.
+Such an owner therefore selects the larger low label A and has pair
+{V,B}, with a>=1+v+b.
+
+Since A is witnessed by tau, p_A<=1. There is at most one owner of
+this kind. Since U is witnessed, p_U<=1, and there is at most one of
+the k owners with a U axis. These two possibilities exhaust them.
+Thus k<=2. Together with k>=2 this forces exactly one of each kind.
+In particular A and U each supply one selected slot and no others.
+The selected U value is at most m by maximality of M, giving
+m-2<u<=m. The precise frames in the statement follow by interchanging
+the axial positions when necessary.
+
+Substituting k=2 into the exact degree formulas proves degree(V)=6 or7,
+and degree(V)=6 if F_V is absent. If F_V exists its companion is C orD,
+since the other three reservoirs cannot be transverse in any flat.
+It cannot be A, because transverse selection would require v>a,
+whereas a>=1+v+b. Its companion is therefore B.
+
+## 303. Remaining selected slots and open cases
+
+The three owners sigma, the selected-A owner and the selected-U owner
+are distinct, by their transverse pairs or their unique selected slots.
+Their respective first axes M,A,U exhaust the pi budgets of these three
+witnessed labels. Z cannot be selected. Their other axes O,Q,T are
+therefore in {B,V} union S. The genuine B witness gives p_B<=1, so at
+most one of those original slots has label B, including repeated labels
+within or between owners. The complete V equation gives at most two V
+pi slots; if F_V exists its transverse slots already use both.
+
+No number of low-only genuine owners is bounded here. The special
+opposite axes, the actual remaining face pairings and every genuine
+angle equation are still to be satisfied. The theorem does not assert
+that these necessary residual roles are realizable. It leaves open
+both the displayed saturated degree-six/seven cases and the separate
+case in which all six reservoir labels are genuinely witnessed.
+
+## 304. Statement and exact input
+
+Retain the actual finite paired-frame face quotient of Section130:
+connected circular normal links, every original degree at least six,
+frames (R,A,B,O,A,B) with distinct transverse A,B in H, common positive
+generalized lengths, and every original angle equation 2*pi. Assume
+exactly six reservoir labels and a nonempty flat set. No original slot,
+repeated axis, self-gluing or special edge is removed.
+
+**Theorem.** Every reservoir has a genuine occurrence. Every flat owner
+therefore selects its axial pair. This is a structural theorem; it
+neither excludes all axial flats nor gives six-reservoir realization.
+
+Choose the maximal pi-selected reservoir M and genuine escape
+
+    tau=(Z,M,C,D,M,C), H={M,C,D,Z,U,V},
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0.
+
+The upper-gap theorem182 supplies U outside M,C,D,Z with u>T(m,z)>m-2.
+The arbitrary-reservoir upper-witness theorem296–298 witnesses U and
+excludes every flat transverse occurrence of M,Z,U. C,D are witnessed
+in tau. Consequently only V can be unwitnessed. If it is, v<=m-2.
+
+We first prove a complete-star lemma that allows additional low labels,
+then show that an unwitnessed V would violate it. Only the weak escape
+inequalities above are used; the five-label strict-source theorem191
+is not imported.
+
+## 305. One upper-gap label cannot have value at most m
+
+**Lemma.** In the same actual framework suppose the reservoir set is
+{M,Z,U} disjoint union L, where C,D belong to L, every B in L has
+1<b<=m-2, and U is genuinely witnessed with u>m-2. Suppose the escape
+and pi data of Section304 hold and Z has no flat transverse occurrence.
+Then u>m. Labels in L need not be genuinely witnessed.
+
+**Proof.** Suppose u<=m. Every H value except Z is at most m, so Z is
+largest. We have m>3,z>m+2,c,d<m-2. All transverse Z owners are genuine.
+An owner with axial Z and pair {M,B}, b<m, is genuine: axial selection
+would select Z, transverse M selection would spend two pi slots of M,
+and transverse B selection would require b>m. An axial Z owner with
+pair {M,U} is also genuine, since both M and U are witnessed and hence
+neither can be selected transversely. These are all axial Z owners
+whose genuineness will be used. Other axial Z zero slots are not
+assumed absent.
+
+Take the maximal axial Z run through tau with pair {M,C}. Each owner
+is genuine and has at most one Z axis, since (z-1)^2>=(m+c)^2 would
+make two Z axes flat. At each such slot the exact individual response
+has positive coefficients with sum greater than one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The arctangent addition formula gives theta_Z+2*beta_M>pi.
+A wholly axial Z circle would have at least six such owners and exceed
+the complete M/Z genuine capacity 3*pi. Thus the run is proper.
+Each boundary owner has frame (B,Z,A,Q,Z,A), {A,B}={M,C}.
+For H axes q<=z; for special axes q<1+z+a. Hence q<1+z+a.
+The transverse Z cosine numerator is strictly increasing in q and at
+1+z+a equals
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Each boundary Z angle exceeds pi/2. Both distinct boundary slots must
+belong to one owner rho, since two owners would exceed Z's 2*pi budget.
+Their total is greater than pi. The run's axial angle sum is less than
+pi and its doubled transverse M sum is at most pi; summing its strict
+per-owner inequality forces exactly one run owner, tau.
+The return is (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+The complete special-star exclusions of Section176 apply to pairs
+{Z,M} and {Z,C}. Their required inputs are: genuine transverse Z
+owners, m,z>3, z>2*c+3, actual M/Z capacities pi and 2*pi, special
+minimum degree six, and every other axis below 1+z+a. All hold here.
+Those weighted-star arguments make no claim that all L labels are
+witnessed. Thus no special axis occurs in an owner of either pair.
+
+For the companion-C return, genuineness gives
+q>(z-c)^2/(m+1)-1>=m, so Q=Z. Any owner of pair {Z,C} with an axis
+other than Z has that value at most m; the same cosine numerator bound
+makes its two Z angles obtuse, so it must be rho. The alternative with
+both axes Z has four Z angles of cosine
+z*(c+1)/(2*z*z+c-1)<1/2; its expense exceeds 4*pi/3 and cannot coexist
+with rho. Thus rho is the only owner with that pair. Its residual
+{Z,Z,C} faces transport every Z slot back into rho, in either axial or
+transverse role. Together with tau this closes at most four original
+Z intervals, contradicting connectedness and degree six.
+Hence rho=(C,Z,M,Q,Z,M), with Q in H and q>c.
+
+No owner uses only M and Z: the standard two-value vertex response of
+Section157, with all values greater than three, makes its six-angle
+M/Z expense greater than pi. It would differ from tau and rho, each
+already costing more than pi of M/Z. Now any owner with pair {Z,M}
+has only H axes and at least one axis B other than M,Z, with b<=m.
+Its other axis r<=z. Put
+
+    L0=(z+m)^2-(b-1)*(r-1),
+    J0=(b+1)*(r+1)-(z-m)^2.
+
+Both are positive, and the exact expansion gives
+
+    L0-2*J0 >= (m-3)*(m+1)+(z-m)*(m-1)+3*(z-m)^2 >0.
+
+The transverse-sum coefficient kappa squared exceeds 8/9, so its four
+M/Z transverse slots cost more than pi. Together with tau and rho,
+this forbids every such owner other than rho itself.
+
+If Q=M or Z, the residual face multiset {Z,M,Q} forces its next Z slot
+back into this unique pair-{Z,M} owner, closing at most four intervals.
+If Q=B in L, B!=C because q>c. An axial Z target would have pair {M,B};
+it is genuine as checked above and costs theta_Z+2*beta_M>pi by b<=m-2.
+A transverse Z target either has pair {Z,M}, hence is rho, or pair
+{Z,B} with an M axis. The latter is genuine and costs
+
+    theta_M+2*gamma_Z>pi,
+
+since its positive response coefficients have sum
+2*sqrt(z*z-1)/(z+b)*sqrt((m-1)/(m+1))>1.
+Either new role differs from tau and rho by its fixed pair and violates
+the remaining M/Z budget. Thus this Q case also closes the short circle.
+These exclusions hold for every B in L, including an unwitnessed one.
+Only Q=U remains: rho=(C,Z,M,U,Z,M).
+
+Across rho's residual {Z,M,U} faces, the Z roles are axial with pair
+{M,U}, transverse with pair {Z,M} (only rho), or transverse with pair
+{Z,U} and an M axis. If the third role never occurs, the complementary
+arc of the complete Z circle is a single axial {M,U} run with
+n=degree(Z)-3>=3 original intervals. All are genuine as checked above.
+At each such interval its M response is
+
+    beta=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A=(sqrt(m*m-1)+sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>1/2,
+    B=(sqrt(m*m-1)-sqrt(u*u-1))/(m+u)*sqrt((z-1)/(z+1))>=0.
+
+For theta>=pi/2, theta+beta>pi/2. Otherwise t>1 and
+cot(theta)=(t-1/t)/2<t/2<A*t, giving the same strict bound.
+Assigning one beta per axial Z interval uses at most the two actual
+M slots in its owner, including an owner with both axes Z. Therefore
+these intervals cost more than 3*pi/2 of M/Z, while tau and rho leave
+less than pi. This contradiction forces a third distinct genuine owner
+eta=(M,Z,U,Q,Z,U). Its actual M/Z expense obeys theta_M+2*gamma_Z<pi.
+
+## 306. The exact third-owner contradiction
+
+Here 1<u<=m<z, u>m-2, and q<q0=1+z+u. Set
+
+    k=z+u, h=z-u, alpha=sqrt((m-1)/(m+1)),
+    L=k*k-(m-1)*(q-1)>0, J=(m+1)*(q+1)-h*h>0.
+
+The exact axial and transverse responses give
+
+    tan(theta/2)^2=alpha^2*J/L,
+    gamma=atan(A*t)+atan(B*t), t=cot(theta/2),
+    A+B=2*sqrt(z*z-1)*alpha/k, A*B*t*t=(h/k)*L/J.
+
+Both A,B are positive. Increasing q to q0 strictly decreases L/J:
+L remains positive up to q0, where L0=k*(k-m+1)>0, while J is positive
+and increasing. Thus
+
+    A+B+A*B*t*t > F(u)
+      =2*sqrt(z*z-1)*alpha/(z+u)
+       +(z-u)*(z+u-m+1)/[(m+1)*(z+u+2)-(z-u)^2].
+
+On u<=v<=m the first term of F decreases. The second numerator
+N(v)=(z-v)*(z+v-m+1)>0 has derivative m-1-2*v<3-m<0.
+Its denominator J0(v)>0 has derivative m+1+2*(z-v)>0.
+Consequently F(u)>=F(m). At m, J0(m)=(z+1)*(3*m+2-z)>0 and
+
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms increase strictly in z on m+2<=z<3*m+2: their derivative
+signs follow from m*z+1>0 and 2*m+2>0 respectively. Hence
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+For the final inequality, the squared comparison with 1-1/m reduces
+to (m-1)*(2*m*m+m+1)>0. All denominators are positive since m>3.
+Therefore A+B+A*B*t*t>1. If gamma>=pi/2 then theta+2*gamma>pi.
+Otherwise the positive tangent branch yields
+
+    tan(gamma)=(A+B)*t/(1-A*B*t*t)>t,
+
+and again theta+2*gamma>pi. This contradicts eta's actual complete-
+budget bound. The lemma is proved. No absent axial Z zero occurrence
+was silently replaced by a genuine one: every used run has its fixed
+pair and genuineness checked, and the connected residual arc cannot
+exit that pair without the expressly enumerated transverse boundary.
+
+## 307. The saturated sixth label forces the forbidden u<=m case
+
+Suppose V is unwitnessed. Every transverse-selected flat must select V,
+and there is at most one such owner F_V. Every axial zero V slot lies
+in F_V. If F_V exists it has at most one V axis, since two would require
+v-b>=v+1 for a positive companion. Its two transverse slots exhaust
+p_V=2. Without F_V exactly two axial V slots have angle pi and no axial
+V slot is zero.
+
+Let k be the number of axial-flat owners with V transverse. Each has
+two such slots. The exact V degree is 2+2*k+t, t in {0,1}, when F_V
+exists, and 2+2*k otherwise. Therefore k>=2.
+Every one has pair {V,C} or {V,D}, since M,Z,U have no flat transverse
+occurrence. It differs from the source sigma, whose pair is {C,D}.
+It cannot select M, already selected once in sigma, or Z. It has at
+least one selected H axis, by the special-edge barrier. Its selected
+H axes are consequently among C,D,U,V.
+
+If such an owner has no U axis, choose its largest selected H value x.
+For pair {V,B}, where B=C or D, the other axis is H-valued and at most
+x, or special with shifted value less than v+b. Axial flatness implies
+x>=1+v+b in either case. Thus X is neither V nor B; it is the other
+low label A, strictly larger than both. Every owner without U therefore
+selects that same larger label A. Since A is witnessed, p_A<=1, so
+there is at most one such owner. Also p_U<=1, giving at most one owner
+with U selected. Since k>=2, both kinds must occur and U is selected.
+Maximality of M gives u<=m.
+
+Apply the complete-star lemma with L={C,D,V}. All its premises hold:
+c,d<m-2 and v<=m-2; U is genuinely witnessed and u>T>m-2;
+Z has no flat transverse occurrence; the original source data remain
+unchanged. The lemma instead gives u>m, contradiction.
+Thus V is witnessed too. No flat can select a transverse pair of any
+reservoir, since that would exhaust a witnessed edge's equation.
+Every flat therefore selects its axes, proving the theorem.
+
+## 308. Remaining six-reservoir problem
+
+This proves six-reservoir genuine witnesses and axial-flat classification
+without a seed, degree-eight strengthening, or extra incidence premise.
+It excludes the entire unwitnessed-sixth branch, not all flat fields.
+With all six labels witnessed, the additional reservoir may exceed the
+upper-gap threshold and participate in new genuine return roles. The
+published five-reservoir role exhaustion does not cover those roles.
+No six-reservoir realization or unrestricted CFMP conclusion follows.
+
+## 309. Statement and dependencies
+
+Retain the actual finite paired-framework hypotheses: connected circular
+normal links, degree at least six, fixed distinct-transverse paired frames,
+one common positive generalized length vector and every original 2*pi
+edge equation. Assume exactly six reservoir labels and a nonempty flat set.
+Choose the maximal-selected escape and upper-gap label as before:
+
+    H={M,C,D,Z,U,V}, tau=(Z,M,C,D,M,C),
+    m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+    u>T(m,z)>m-2.
+
+Use the six-reservoir witness theorem: every reservoir is genuinely
+witnessed and every flat selects its axes. Hence each reservoir has at
+most one original flat pi slot. The arbitrary-reservoir upper-witness
+result also excludes every flat transverse occurrence of any label
+whose value exceeds m-2. The one-upper-gap lemma allows arbitrarily
+many other labels of value at most m-2.
+
+**Theorem.** There are at most two actual flat tetrahedron owners.
+This is a bound on the whole original flat set, not just one face
+component. It does not bound the number of genuine owners, remove
+external low-only regions, or prove six-reservoir flat exclusion.
+
+## 310. The low sixth-label case
+
+Suppose v<=m-2. The one-upper-gap complete-star lemma, with low set
+{C,D,V}, gives u>m. Thus neither U nor Z can be a selected flat axis.
+Nor can M,Z,U be transverse in a flat. Every flat's reservoir pair
+therefore lies in {C,D,V}. The source sigma, with pair {C,D}, uses the
+unique M pi slot. Every other flat avoids M entirely as a selected axis.
+
+Any such other flat has at least one selected H axis, since two special
+axes violate the fixed-pair barrier. Choose its largest selected H
+value x. Its other axis is either H-valued at most x or special with
+shifted value strictly below the sum of its transverse pair values.
+The axial-flat product implies that x is at least one plus that sum.
+Thus X lies outside its transverse pair and is numerically larger than
+both members. Since its available H axes and pair all lie in {C,D,V},
+it selects the unique numerically largest member A of this three-label
+set and has the other two labels as its pair. If the numerical maximum
+is tied, there is no such owner at all.
+
+The genuine A witness gives p_A<=1, so at most one such additional
+owner exists. Together with sigma this gives at most two flat owners.
+An A pi slot already used by sigma only reduces this bound.
+
+## 311. The two-upper-gap case first gives at most three
+
+Suppose v>m-2. No flat has any of M,Z,U,V transversely, so every flat
+has reservoir pair {C,D}. At least one selected H axis is present in
+each flat. Choose its largest selected H value x. As in Section310,
+axial flatness implies x>=1+c+d, so X cannot be C or D. It is not Z,
+which has p_Z=0. Thus every flat selects at least one of M,U,V.
+
+Each of these three genuinely witnessed labels has at most one pi
+slot, so there are at most three actual flat owners. Suppose there
+are exactly three. Each must use exactly one of the available M,U,V
+slots, and all three are used. Therefore p_M=p_U=p_V=1 and
+m-2<u,v<=m. Every H label except Z has value at most m, and z>m.
+For each flat, its selected label X in {M,U,V} is its largest H axis:
+its other axis cannot use another one of M,U,V, since the three owners
+already require all three distinct slots. Hence each chosen X satisfies
+x>=1+c+d as well as x>m-2.
+
+## 312. Each of the three selected axes forces a different dominant Z run
+
+Fix one of these three flat owners and its selected X. Its complete
+genuine angle budget is pi, and its only flat X occurrence is its one
+axial pi slot: flat transverse X occurrences are excluded by x>m-2,
+and axial zeros do not occur because every flat selects its axes.
+
+Its entire X circle cannot be axial. Otherwise its fixed pair is
+{C,D}; there are g=degree(X)-1>=5 genuine X occurrences. They have
+distinct owners, since two X axes with x>=1+c+d would be flat.
+The dominant-axis inequality gives 2*theta_X+beta_C+beta_D>pi for each.
+Their actual C/D expense is therefore greater than
+2*g*pi-4*pi>=6*pi, contrary to complete C/D capacity 4*pi.
+
+Thus the maximal axial X run through the selected flat is proper.
+Its two distinct transverse boundary X slots are genuine; their angles
+sum to at most pi, so choose one at most pi/2. Actual face transport
+gives an owner (W,X,A,B,X,A), {A,B}={C,D}. The exact transverse-X
+cosine numerator increases with w and at w0=1+x+a equals
+
+    [a+x*(1+x+a)]*(1+a+b-x)<=0.
+
+Consequently w>=1+x+a>m, because x>m-2 and a>1. The special-edge
+barrier excludes W in S. Among H only Z has value greater than m,
+so W=Z. This owner gives a dominant axial Z run with pair {X,A}.
+For distinct X in {M,U,V}, these fixed pairs are distinct: A belongs
+to {C,D}, disjoint from all three X labels.
+
+## 313. The actual Z circle allows at most one such dominant run
+
+All Z occurrences are genuine: every flat is axial-selected, p_Z=0,
+and flat transverse Z occurrences have already been excluded. A wholly
+axial Z circle would have one fixed pair, so cannot contain the three
+distinct pairs just obtained. Their runs are proper.
+
+At a boundary of a dominant axial Z run with pair {A,B}, the genuine
+receiver has frame (B,Z,A,Q,Z,A). Every H axis is at most z and every
+special axis has q<1+z+a, so in all cases q<1+z+a. The increasing
+transverse-Z numerator at this upper endpoint is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Thus the boundary Z angle is greater than pi/2. The complete Z budget
+permits only one actual owner rho with two such transverse slots.
+Every dominant run uses both distinct slots of rho as its boundaries.
+
+At a transverse Z slot of rho, let its companion be A and its axes
+B,Q. The two complementary face pairs are {A,B} and {A,Q}.
+If both sides bordered dominant axial runs, dominance would give
+z>=1+a+b and z>=1+a+q, hence
+
+    (z-a)^2 >= (b+1)*(q+1).
+
+This contradicts the genuine strict inequality for rho. Each of its
+two original Z slots therefore supports at most one dominant-run
+boundary incidence. One proper run already uses both. Two distinct
+proper dominant runs are impossible, a contradiction.
+
+The proposed three-flat case is excluded. Combined with Sections310–311,
+there are at most two actual flat owners, as claimed. QED.
+
+The argument allows arbitrary repeated axes, repeated visits in the
+original normal circles and distinct-face self-gluings. The remaining
+one-flat and two-flat six-reservoir configurations still require new
+joint geometric and face-transport arguments; this theorem alone does
+not assert that either residual configuration exists or is impossible.
+
+
+## 314. Two strict upper labels in the actual six-edge distinct-frame case
+
+Retain the original finite paired-frame quotient with complete connected
+normal circles, minimum original degree six, common positive lengths and
+all original angle equations 2*pi. Suppose there are exactly six actual
+global edge labels, no special edges, and every paired frame
+(R,A,B,O,A,B) has four distinct labels R,A,B,O. Assume a nonempty flat set.
+The public six-witness theorem through Section 308 makes every label
+genuinely witnessed and every flat axial-selected. Each label has at most
+one flat pi slot. The arbitrary upper-witness theorem excludes every
+flat transverse occurrence of a label with value greater than m-2.
+
+Choose the maximal-selected reservoir M and its usual genuine escape
+
+    tau=(Z,M,C,D,M,C),
+    m>=1+c+d>3, z>=1+m+c>m+2, p_M=1, p_Z=0.
+
+All lower-case values are coshes of original shared lengths. M has total
+genuine angle pi. Z occurs in no flat owner, so its total genuine angle
+is 2*pi. The argument below uses only the stated response formulas and
+original circles; it does not invoke the five-label exhaustion.
+
+**Theorem.** Some actual edge other than Z has value greater than m.
+Consequently, after naming it U, the entire six-edge distinct-frame
+mixed-flat configuration has the following form:
+
+    H=E={M,C,D,Z,U,V}, u>m, z>m,
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2.
+
+Sigma is the unique flat owner and the only owner of transverse pair
+{C,D}. Thus both its M and V axial runs consist of one original interval.
+This is a structural reduction, not exclusion of the remaining flat.
+
+## 315. A uniform expense for a third-role owner
+
+We first isolate the response estimate used below. Let m>3,z>m+2,
+1<q<=m and r<=m. Suppose (M,Z,Q,R,Z,Q) is genuine. Write theta for
+its axial M angle and gamma for its transverse Z angle. Then
+
+    theta+2*gamma>pi.                                      (315.1)
+
+For q<=m-2 the positive response coefficients have sum
+
+    2*sqrt(z*z-1)/(z+q)*sqrt((m-1)/(m+1))>1.
+
+This follows by comparison with z=m,q=m-2, where the sum is one.
+Hence gamma>atan(cot(theta/2)) and (315.1) follows.
+
+For m-2<q<=m, use the exact rational comparison already proved in
+Sections 202–204; its scalar argument is reproduced here to state its
+full domain. Set k=z+q, h=z-q>0 and alpha=sqrt((m-1)/(m+1)). The actual
+other axis satisfies r<=m<r0=1+z+q. Define
+
+    L=k*k-(m-1)*(r-1)>0,
+    J=(m+1)*(r+1)-h*h>0,
+    t=cot(theta/2),
+    A/B=[sqrt(z*z-1) +/- sqrt(q*q-1)]/k*alpha.
+
+A,B are positive, and
+
+    A+B=2*sqrt(z*z-1)*alpha/k,
+    A*B*t*t=h/k*L/J.
+
+L/J strictly decreases as r increases to r0. At that endpoint,
+
+    L0=k*(k-m+1)>0,
+    J0=(m+1)*(k+2)-h*h>0.
+
+The latter follows by increasing J from its positive actual value.
+Therefore
+
+    A+B+A*B*t*t > F(q),
+    F(q)=2*sqrt(z*z-1)*alpha/(z+q)
+       +(z-q)*(z+q-m+1)/[(m+1)*(z+q+2)-(z-q)^2].
+
+On the interval from q to m, the first term decreases. The numerator
+N(x)=(z-x)*(z+x-m+1) is positive and has derivative
+m-1-2*x<3-m<0. The positive denominator J0(x) strictly increases,
+with derivative m+1+2*(z-x)>0. Hence F(q)>=F(m), including q=m.
+
+    J0(m)=(z+1)*(3*m+2-z)>0,
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms strictly increase in z on m+2<=z<3*m+2. Thus
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+The final comparison follows by squaring positive terms; the required
+numerator is
+
+    (2*m-1)*(m+1)^2-4*m*m
+      =(m-1)*(2*m*m+m+1)>0.
+
+Consequently A+B+A*B*t*t>1. If gamma>=pi/2, then gamma>atan(t).
+Otherwise its tangent is (A+B)*t/(1-A*B*t*t)>t. In either case
+2*gamma>pi-theta, proving (315.1). No label-count premise is present
+in this scalar estimate, and r<=m is stronger than its needed bound.
+
+## 316. A unique strict upper label is impossible
+
+Suppose, for contradiction, every actual edge other than Z has value
+at most m. Every Z slot is genuine. Along the maximal axial Z run
+through tau the pair is {M,C}. At each owner the individual response
+has positive coefficients whose sum exceeds one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The same elementary arctangent comparison gives theta_Z+2*beta_M>pi.
+Four-distinctness gives one axial Z slot per such owner. If the whole
+Z circle were axial, degree at least six would contradict the entire
+M/Z capacity 3*pi. Hence the run is proper.
+
+At each of its transverse boundary slots, write the receiver as
+(B,Z,A,Q,Z,A), with {A,B}={M,C}. Its other axis obeys q<=m<z.
+The transverse-Z cosine numerator increases with q. At q=1+z+a it
+is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Since the actual q is strictly below this endpoint, its Z angle is
+strictly greater than pi/2. Each such owner has two equal transverse
+Z slots. The two distinct run boundaries therefore belong to a single
+actual owner rho; two distinct owners would exceed Z's total 2*pi.
+The original rho Z expense exceeds pi. Every run owner costs more
+than pi in M/Z, so the remaining capacity below 2*pi forces the run
+to consist of exactly tau.
+
+The possible companion-C return (M,Z,C,Q,Z,C) has
+
+    (m+1)*(q+1)>(z-c)^2>=(m+1)^2,
+
+so q>m. The only possible label would be Z, but four-distinctness
+forbids that repeated label. Therefore
+
+    rho=(C,Z,M,Q,Z,M),
+
+where Q is distinct from M,Z,C and q<=m. All owners with fixed pair
+{Z,M} have their two axes at most m. For any such genuine owner with
+axis values r,s<=m, put
+
+    L=(z+m)^2-(r-1)*(s-1),
+    J=(r+1)*(s+1)-(z-m)^2.
+
+Then
+
+    L-2*J=3*z*z-2*z*m+3*m*m-3*r*s-r-s-3
+          >=3*z*z-2*z*m-2*m-3>0.
+
+Define the squared paired coefficient
+
+    K=((sqrt(z*z-1)+sqrt(m*m-1))/(z+m))^2.
+
+The transverse angle sum is beta_Z+beta_M=2*atan(sqrt(K*L/J)),
+and K>8/9 since m,z>3. Hence
+K*L/J>16/9, and its four transverse M/Z slots cost more than pi.
+Tau already costs more than pi. Two distinct pair-{Z,M} owners
+would consequently exceed 3*pi. Thus rho is the unique such owner,
+and all owners other than tau,rho have M/Z capacity strictly below pi.
+
+The unused rho faces have labels {Z,M,Q}. Across such a face, a Z
+slot is axial with pair {M,Q}, transverse with pair {Z,M}, or
+transverse with pair {Z,Q} and an M axis. The second role can only
+be rho. Every owner of the third role is genuine and satisfies (315.1),
+so it is impossible under the remaining capacity below pi.
+
+Actual continuation now makes the other arc between rho's two Z
+slots one axial run with fixed pair {M,Q}. It contains
+n=degree(Z)-3>=3 original Z intervals, and all its owners are genuine.
+For any such slot of angle theta and its transverse M angle beta,
+
+    beta=atan(A*cot(theta/2))+atan(B*cot(theta/2)),
+    A=[sqrt(m*m-1)+sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m*m-1)-sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1))>=0.
+
+Because q>1 and q<=m,
+sqrt(q*q-1)>sqrt((m-1)/(m+1))*(q-1), giving A>1/2.
+For theta>=pi/2, theta+beta>pi/2 is immediate. For theta<pi/2,
+t=cot(theta/2)>1 and cot(theta)=(t-1/t)/2<t/2<A*t, giving the same
+strict bound. Four-distinctness makes these n owners distinct and
+each charge theta+beta uses only one of its two original M slots.
+Their actual M/Z expense exceeds n*pi/2>=3*pi/2, contradicting the
+remaining capacity below pi. The supposed unique upper label cannot
+exist. This proves the first assertion.
+
+## 317. The whole six-edge source pair is unique
+
+Name a second edge of value greater than m as U. Since C,D<m-2,
+U lies outside M,C,D,Z. The source's other axis must be the sixth
+label V: it is distinct from M,C,D by the frame hypothesis and cannot
+be U or Z, which exceed the maximal selected value. Thus v<=m and
+sigma=(M,C,D,V,C,D).
+
+If v<=m-2, Section 310 shows that every other flat would select the
+largest of {C,D,V}, with the remaining two as its transverse pair.
+Its other selected axis cannot be M (the source uses its only pi
+slot), U,Z (unselected), either transverse label, or the already used
+largest low label. Four-distinctness and the six actual labels exhaust
+all possibilities, so no second flat exists.
+
+If v>m-2, every flat has transverse pair {C,D}, since M,V,Z,U have
+no flat transverse occurrence. Its distinct selected axes can only
+be M and V: U,Z are unselected, and C,D belong to its pair. Both M
+and V pi slots are already used by sigma. Again no second flat exists.
+
+Finally any owner with pair {C,D} has two distinct axes from
+{M,V,Z,U}. Since z,u>m>=v, their shifted product is at least
+(m-1)*(v-1)>=(c+d)^2. Such an owner would be flat and hence is sigma.
+The one-flat and one-CD-owner conclusions are global actual-owner
+statements. They do not eliminate the remaining changed-pair source
+faces or prove six-reservoir realization. QED.
+
+
+## 318. Complete-circle upper bound for the largest actual length
+
+In an actual finite paired quotient with four distinct labels in every
+frame, connected normal circles of degree at least six and complete
+angle equations 2*pi, let X be a label whose entire star is genuine.
+Suppose x is a largest actual cosh length. Let a1>=a2 be the two
+largest values at distinct other actual labels. Then
+
+    x < 1+a1+a2.
+
+This is a necessary actual-star bound, not a scalar existence claim.
+For the mixed-flat six-edge setting with Z,U>m and all remaining
+values at most m, it gives
+
+    abs(z-u)<m+1.
+
+The stronger one-sided Z bound derived from the source run may also
+be retained. No six-reservoir flat exclusion follows from these gaps.
+
+## 319. The dominant-axis estimate
+
+For a genuine frame (r,a,b,o,a,b) with r>=1+a+b, write
+s=a+b, delta=a-b, T=(r-1)/(r+1),
+K=(sqrt(a*a-1)+sqrt(b*b-1))^2/s^2 and lambda=sqrt(K*T).
+Let theta be the r angle and S=beta_a+beta_b. The exact response is
+S=2*atan(lambda*cot(theta/2)). We claim 2*theta+S>pi.
+
+Define
+
+    F(r)=[2*(r-1)-T*delta^2]/s^2.
+
+The genuine half-angle square is
+T*[(r+1)*(o+1)-delta^2]/[s^2-(r-1)*(o-1)].
+It increases strictly with o wherever its denominator is positive,
+so tan(theta/2)^2>F(r), its value at o=1. This comparison remains
+valid when F(r) is negative. On r>=s+1, F increases because
+F'(r)=2*[1-delta^2/(r+1)^2]/s^2>0, and lambda increases.
+At r0=s+1, put D=s*(s+2) and H=a*a+b*b-2>0. Then
+
+    1-F(r0)=2*H/D,
+    lambda(r0)=(sqrt(a*a-1)+sqrt(b*b-1))/sqrt(D)>H/D.
+
+The strict inequality follows from D>H and
+sqrt(a*a-1)+sqrt(b*b-1)>=sqrt(H). Consequently
+F(r)+2*lambda>1 throughout the domain.
+
+If theta>=pi/2 the claimed estimate is immediate from S>0.
+Otherwise t=cot(theta/2)>1. If lambda>=1/2, then
+lambda*t>(t-1/t)/2=cot(theta).
+If lambda<1/2, the proved inequality gives
+F(r)>1-2*lambda>0 and t^2<1/F(r)<1/(1-2*lambda),
+which gives the same strict comparison. Thus
+atan(lambda*t)>pi/2-theta, proving 2*theta+S>pi.
+This establishes the per-owner estimate without an extra angle premise.
+
+## 320. The original-circle proof of the maximum gap
+
+First suppose X has a transverse occurrence with companion A and
+axes R,O. The four labels are distinct. The genuine inequality gives
+
+    (x-a)^2<(r+1)*(o+1).
+
+Since x>=a, it follows that
+
+    x<a+sqrt((r+1)*(o+1))
+      <=a+1+(r+o)/2.
+
+For any three distinct other labels, a+(r+o)/2<=a1+a2:
+if A carries a largest value, each of r,o is at most a2; otherwise
+A is at most a2 and the average of r,o is at most a1. Hence the
+claimed strict bound follows.
+
+Otherwise every X occurrence is axial. Connectedness transports one
+fixed pair {A,B} around its whole circle. Four-distinctness gives
+one X slot per owner, so there are n=degree(X)>=6 distinct genuine
+owners. Suppose x>=1+a+b. The established dominant-axis response
+inequality (the same one used in Sections 209 and 312) gives at each
+owner
+
+    2*theta_X+beta_A+beta_B>pi.
+
+Summing uses the actual X angles exactly once and only half of the
+two transverse A/B slots per owner. Thus
+
+    n*pi < 2*sum(theta_X)+sum(beta_A+beta_B)
+         <= 4*pi+(2*pi+2*pi)/2 = 6*pi.
+
+This contradicts n>=6. Therefore x<1+a+b<=1+a1+a2.
+All charging is by original slots at distinct actual owners; repeated
+visits or distinct-face self-pairings do not change the count. QED.
+
+## 321. Application and exact scope
+
+In the current mixed-flat six-edge class, the maximal selected value
+is m, while Z and another edge U exceed m. Every flat is axial-selected,
+and no flat has a transverse occurrence of a value greater than m-2.
+Consequently both Z and U have wholly genuine stars. Apply the lemma
+to the larger of z,u. The two largest other values are the smaller of
+z,u and m. This proves abs(z-u)<m+1, including ties among lower values.
+
+In particular a local source-front angle assignment with u>=z+m+1
+cannot extend to the actual complete U star. It may still be a correct
+counterexample to a weaker scalar relaxation that omitted this bound.
+
+## 322. The inventory-one combined-angle obstruction
+
+Retain the six-edge, four-distinct-label paired setting of Sections
+314–321: original shared positive lengths, complete connected normal
+circles, degree at least six, and original angle sums 2*pi. The unique
+flat owner is sigma=(M,C,D,V,C,D), with selected axes M,V. Its transverse
+C,D angles are zero, so the genuine M,V capacities are pi each and the
+genuine C,D,Z,U capacities are 2*pi each. Lower-case letters denote
+coshes of the corresponding shared lengths.
+
+The following conditional obstruction concerns three distinct genuine
+owners with the precise roles
+
+    tau=(Z,M,C,D,M,C),
+    rho=(U,V,D,C,V,D),
+    eta=(M,V,D,Z,V,D).                              (322.1)
+
+Here eta has axes M,Z. Call (322.1) inventory one. No assertion that
+every remaining configuration has this inventory is made.
+
+**Theorem (repo-derived).** Suppose the inventory obeys
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, m<u<z+m+1,
+    (m-1)*(v-1)>=(c+d)^2.                          (322.2)
+
+Require all six strict genuine inequalities
+
+    Lt=(m+c)^2-(z-1)*(d-1)>0,
+    Jt=(z+1)*(d+1)-(m-c)^2>0,
+    Lr=(v+d)^2-(u-1)*(c-1)>0,
+    Jr=(u+1)*(c+1)-(v-d)^2>0,
+    Le=(v+d)^2-(m-1)*(z-1)>0,
+    Je=(m+1)*(z+1)-(v-d)^2>0.                      (322.3)
+
+Assume also the bad-eta condition and the retained actual partial
+M-angle budget, respectively,
+
+    theta_M(eta)+theta_Z(eta)<=pi,
+    2*beta_M(tau)+theta_M(eta)<=pi.                (322.4)
+
+Then, writing S=beta_V+beta_D at rho and eta,
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.           (322.5)
+
+Consequently no actual configuration satisfying these premises exists:
+the nine original slots in (322.5) have genuine V/D capacity at most
+pi+2*pi. The scalar implication (322.2)–(322.5) is proved below without
+using the C,Z,U budgets. Both inequalities in (322.4), including the
+whole stated partial M budget, remain premises throughout.
+
+For clarity, the paired response formulas used in the proof are
+reproduced here. Put
+
+    K=(sqrt(v^2-1)+sqrt(d^2-1))/(v+d),
+    w=sqrt((d-1)*Jt/[(d+1)*Lt]),
+    x=K*sqrt(Lr/Jr), y=K*sqrt(Le/Je),
+    A=[sqrt(m^2-1)+sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt),
+    B=[sqrt(m^2-1)-sqrt(c^2-1)]/(m+c)*sqrt(Lt/Jt).
+
+Then
+
+    theta_D(tau)=2*atan(w), beta_M(tau)=atan(A)+atan(B),
+    S(rho)=2*atan(x), S(eta)=2*atan(y),
+    tan(theta_M(eta)/2)^2=(m-1)*Je/[(m+1)*Le],
+    tan(theta_Z(eta)/2)^2=(z-1)*Je/[(z+1)*Le].       (322.6)
+
+All genuine angles lie in (0,pi); A,B are positive since m>c. The
+M budget forces beta_M(tau)<pi/2 and therefore
+
+    Ht=(m+c)*Jt-(m-c)*Lt>0,
+    4*(m-1)^2*Lt*Jt*Je<=Ht^2*Le.                  (322.7)
+
+These two conditions are equivalent to the M budget: on this branch
+tan(beta_M)=2*sqrt(m^2-1)*sqrt(Lt*Jt)/Ht and the budget is
+tan(beta_M)<=cot(theta_M(eta)/2). Squaring positive quantities yields
+(322.7). Similarly the bad-eta condition is equivalent to
+
+    (m+1)*(z+1)*Le^2>=(m-1)*(z-1)*Je^2.           (322.8)
+
+These are exact reformulations, not replacements by weaker budgets.
+The generalized hyperideal angle conventions agree with Luo–Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+[arXiv:1404.5365v2](https://arxiv.org/html/1404.5365v2).
+The inventory-specific implication here is a deduction from the
+displayed paired formulas and original-slot capacities.
+
+## 323. The bad-eta bound and a genuine rho endpoint
+
+Set p=sqrt((m-1)*(z-1)) and q=sqrt((m+1)*(z+1)). The axial
+half-angle product makes bad-eta equivalent to q*Le>=p*Je, or
+
+    p*q<=v^2+d^2+2*v*d*(q-p)/(q+p).                (323.1)
+
+Indeed expand q*[(v+d)^2-p^2]>=p*[q^2-(v-d)^2] and divide
+by p+q. Since z>m>1,
+
+    q/p<=(m+1)/(m-1), 0<(q-p)/(q+p)<=1/m.
+
+It follows that
+
+    z<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1).       (323.2)
+
+Here p*q>(m-1)*(z-1), and Zb increases with each positive v,d.
+
+We first show c<m/2, using neither the flat product nor the M budget.
+If c>=m/2, then m>4, d<m/2-1 and v<=m-2. The right side of
+(323.1) is strictly less than (m-2)^2*(5/4+1/m). But
+
+    p*q>(m-1)*(z-1)>(m-1)*(m+c)>=3*m*(m-1)/2,
+    3*m*(m-1)/2-(m-2)^2*(5/4+1/m)
+      =(m^3+10*m^2-4*m-16)/(4*m)>0,
+
+a contradiction. The last numerator is positive for m>4 because
+m^3-4*m>0 and 10*m^2-16>0.
+
+At u0=z+m+1 the rho L numerator is
+
+    Lr0=(v+d)^2-(z+m)*(c-1)=Le+z*(m-c)-m*c+1>Le>0.
+
+The strict comparison uses c<m/2 and z>m. Increasing u from its
+actual value to u0 decreases Lr linearly but keeps it positive, while
+Jr increases from its positive actual value. Hence the whole scalar
+interpolation remains genuine. Furthermore
+
+    d(Lr/Jr)/du=[-(c-1)*Jr-(c+1)*Lr]/Jr^2<0.
+
+Thus S(rho) strictly decreases. It suffices to prove (322.5) at this
+genuine endpoint. This is a comparison of rho's response with fixed
+other parameters, not a claim that the changed u preserves a global
+shared-length metric or any unrelated star.
+
+## 324. The source D angle exceeds 2*pi/3
+
+The exact axial M cosine of eta is N_e/D_e, where
+
+    D_e=m^2+v^2+d^2+2*m*v*d-1,
+    N_e=2*v*d+m*(v^2+d^2)-(m^2-1)*z.
+
+Its v-derivative has sign numerator
+
+    (N_e)_v*D_e-N_e*(D_e)_v
+      =2*(m^2-1)*[-d^3+d*m*z+d*v^2+d+m*v+v*z]>0. (324.1)
+
+Indeed d<m-2<m and z>m. Increasing v to m-2 decreases theta_M(eta)
+and preserves the M budget. Le increases, and Je stays positive since
+1<v,d<m and z>m. Tau is unchanged. For this lemma only, take v=m-2;
+no bad-eta or flat-product premise is needed along this interpolation.
+
+Put q=tan(theta_D(tau)/2)^2 and
+
+    delta=(m-c)*(d-1)/[(m+c)*(d+1)], 0<delta<1.
+
+The positive branch Ht>0 in (322.7) gives q>delta. Solving
+q=(d-1)*Jt/[(d+1)*Lt] for z gives z=Zn/Zd, with
+
+    Zd=(d^2-1)*(q+1),
+    Zn=q*(m+c)^2*(d+1)+(m-c)^2*(d-1)+(q-1)*(d^2-1),
+    LeN=(m+d-2)^2*Zd-(m-1)*(Zn-Zd),
+    JeN=(m+1)*(Zn+Zd)-(m-d-2)^2*Zd,
+    Bq=(m+c)*(d+1)*q-(m-c)*(d-1),
+    F(q)=Bq^2*LeN-4*(m-1)^2*(d^2-1)*q*JeN.       (324.2)
+
+The full M budget implies F(q)>=0. More explicitly, if
+G=Ht^2*Le-4*(m-1)^2*Lt*Jt*Je, substitution gives the identity
+
+    F(q)=G*(d-1)^2*Zd/Lt^2,
+
+whose multiplier is positive. F is a cubic polynomial in q; write
+F(q)=sum_{j=0}^3 f_j(m,c,d)*q^j.
+
+If q<=3, put h=(3-q)/(q-delta)>=0. Then q=Qn/Qd, where
+
+    Qn=(m-c)*(d-1)*h+3*(m+c)*(d+1),
+    Qd=(m+c)*(d+1)*(1+h)>0.
+
+Define the following polynomial after the indicated substitutions:
+
+    PD(a,b,e,h)=-sum_{j=0}^3 f_j*Qn^j*Qd^(3-j),
+    c=1+a, d=1+b, m=3+a+b+e.                      (324.3)
+
+Here a,b,e>0. The complete coefficient identity in Section 331
+expresses PD as 1,450 monomials with positive integer coefficients,
+including constant 56623104. Consequently PD>0 even when h=0.
+Since PD=-Qd^3*F(Qn/Qd), this contradicts F(q)>=0. Thus q>3 and
+
+    theta_D(tau)>2*pi/3, w>sqrt(3).                (324.4)
+
+We will also use a simpler consequence of (324.1). Its d counterpart
+is obtained by interchanging v,d, and the z derivative of N_e/D_e
+is negative. Increasing v,d to m-2 and decreasing z to m increases
+this algebraic cosine. The derivative signs hold on that entire
+comparison rectangle, with positive D_e; no genuine endpoint is
+required. At the endpoint
+
+    D_e-2*N_e=(m+1)*(7*m-9)>0.
+
+Hence theta_M(eta)>pi/3, and the retained M budget gives
+
+    beta_M(tau)<pi/3.                             (324.5)
+
+## 325. A strict quarter bound for the source companion
+
+The source flat inequality and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1,
+    c+d<m-2, d<m-c-2<m-3, m>4.                   (325.1)
+
+For the last assertion use c+d>2 and m>3. Define the source M
+cosine, as an algebraic function of z,d, by
+
+    C(z,d)=N(z,d)/sqrt(D(z)*D(d)),
+    N(z,d)=c*(z+d)+m*(z*d+c^2-m^2+1),
+    D(t)=t^2+m^2+c^2+2*t*m*c-1.                  (325.2)
+
+It increases strictly in both z,d. For example, its z-derivative
+has the sign of
+
+    N_z*D(z)-N*(z+m*c)
+      =(m^2-1)*[c*(d*z+m^2-c^2+1)+m*(d+z)]>0.
+
+The d derivative is symmetric. Positivity holds for z,d>1 and m>c,
+including outside the genuine angle domain.
+
+For this first bound set d0=m-c-1 and z0=Zb(m,m-2,d0). Then
+d<d0 and z<z0, so the actual source cosine is less than C(z0,d0).
+Suppose c>=m/4. Since c<m-2, write
+
+    m=4+b, b>0, c=[m/4+(m-2)*a]/(1+a), a>=0.
+
+Define the degree-six polynomial in c
+
+    A4(m,c)=m^2*(m-1)*[D(z0)*D(d0)-4*N(z0,d0)^2]
+           =sum_{j=0}^6 A4_j(m)*c^j,
+    P4(a,b)=4^6*sum_{j=0}^6 A4_j(m)
+              *[m/4+(m-2)*a]^j*(1+a)^(6-j), m=4+b. (325.3)
+
+The factor in A4 cancels its denominators exactly. Section 331 gives
+the complete expansion of P4: 69 positive integer coefficients and
+positive constant 314572800. Hence P4>0, so A4>0. Since D(z0),D(d0)
+are positive, |C(z0,d0)|<1/2. The actual source cosine is smaller,
+contradicting (324.5). Therefore
+
+    c<m/4.                                       (325.4)
+
+## 326. Coarse exact length bounds
+
+Solving w^2>3 from (324.4) for z gives
+
+    z>Z3(m,c,d)
+      :=[(2*d+1)*(m^2+c^2)+(2*d+4)*m*c+d^2-1]
+           /[2*(d^2-1)].                         (326.1)
+
+In fact (d-1)*Jt-3*(d+1)*Lt=4*(d^2-1)*(z-Z3). This Z3 increases
+with c and decreases with d. Its d derivative is
+
+    -[(m^2+c^2)*(d^2+d+1)+m*c*(d^2+4*d+1)]/(d^2-1)^2<0.
+
+Combine z<Zb, z>Z3, c>1, v<=m-2 and d<m-3. They require
+
+    Zb(m,m-2,m-3)-Z3(m,1,m-3)>0.
+
+This difference equals Nm/[2*m*(m-4)*(m-2)*(m-1)], where
+
+    Nm=2*m^5-34*m^4+124*m^3-121*m^2-109*m+192.
+
+If 4<m<=11, substitute m=(11+4*a)/(1+a), a>=0. Direct expansion is
+
+    -(1+a)^5*Nm((11+4*a)/(1+a))
+      =900*a^5+13383*a^4+74765*a^3+187297*a^2
+         +184925*a+26296>0,
+
+contradicting the positive difference. Thus m>11.
+
+If v<=6, the same monotonicity requires
+Zb(m,6,m-3)-Z3(m,1,m-3)>0. This difference is
+
+    -Nv/[2*m*(m-4)*(m-2)*(m-1)],
+    Nv=18*m^4-192*m^3+833*m^2-1331*m+576,
+    Nv(11+b)=18*b^4+600*b^3+7565*b^2+43131*b+94714>0.
+
+If d<=6, it instead requires Zb(m,m-2,6)-Z3(m,1,6)>0, equal to
+
+    -Nd/[70*m*(m-1)],
+    Nd=13*m^4-67*m^3+242*m^2-3618*m+1680,
+    Nd(11+b)=13*b^4+505*b^3+7469*b^2+46597*b+92320>0.
+
+Both are contradictions since b=m-11>0 and all denominators are
+positive. We have obtained the strict necessary bounds
+
+    m>11, v>6, d>6.                              (326.2)
+
+The positive weighted mean K therefore exceeds sqrt(35)/6. By
+bad-eta and z>m,
+
+    Le/Je>=sqrt((m-1)*(z-1)/[(m+1)*(z+1)])
+         >(m-1)/(m+1)>5/6,
+    y^2>(35/36)*(5/6)=175/216>81/100.
+
+The last difference is 1/5400, so y>9/10. This is not the stronger
+inequality y>1 or S(eta)>pi/2.
+
+## 327. A stronger affine source-companion bound
+
+Put ell(m)=6*m/25-3/2. For m>11, one has 1<ell(m)<m/4. We prove
+
+    c<ell(m).                                    (327.1)
+
+Suppose instead ell(m)<=c<m/4, and now set
+
+    d0=m-c-2, z0=Zb(m,m-2,d0).
+
+By (325.1), d<d0, and then (323.2) gives z<z0. The algebraic source
+cosine increases in both variables, so its actual value is below
+C(z0,d0). Define
+
+    AA(m,c)=m^2*(m-1)^2*[D(z0)*D(d0)-4*N(z0,d0)^2]
+           =sum_{j=0}^6 AA_j(m)*c^j.              (327.2)
+
+This is a polynomial with its denominators exactly canceled. The
+contrary domain is parametrized by
+
+    m=11+b, b>0, c=[ell(m)+(m/4)*a]/(1+a), a>=0.
+
+Define
+
+    PA(a,b)=100^6*sum_{j=0}^6 AA_j(m)
+              *[ell(m)+(m/4)*a]^j*(1+a)^(6-j), m=11+b. (327.3)
+
+Its complete expansion in Section 331 has 77 positive integer
+coefficients and constant 2579520001436709588480. Thus PA>0 and
+AA>0. As before |C(z0,d0)|<1/2, contrary to (324.5). This proves
+(327.1) as a consequence of the original premises.
+
+## 328. A strict endpoint rho ratio
+
+Work at the genuine endpoint u0=z+m+1 of Section 323. Set
+
+    lambda=21/5, Q=v^2+d^2, T=v*d,
+    ac=(1+lambda)*c+(lambda-1)=(26*c+16)/5,
+    C0=ac*(m+1)+2*lambda*(c+1).
+
+Direct expansion gives
+
+    Lr-lambda*Jr=(1+lambda)*Q+2*(1-lambda)*T
+                    -ac*(z+m)-2*lambda*(c+1).
+
+Substitute the strict upper bound z<Zb. The resulting T coefficient
+is 2*(1-lambda)-2*ac/[m*(m-1)]<0. Hence using T<=Q/2 gives
+
+    Lr-lambda*Jr>[2-ac*(m+1)/(m*(m-1))]*Q-C0.      (328.1)
+
+The coefficient of Q is positive: (327.1) gives
+
+    ac<156*m/125-23/5<5*m/4,
+    (m+1)/(m-1)<6/5,
+
+so that coefficient exceeds 1/2. The inequalities z>Z3 and z<Zb,
+together with T<=Q/2, also give
+
+    Q>m*(m-1)/(m+1)*(Z3(m,c,d)-1).
+
+Since Z3 decreases with d and d<d0=m-c-2, (328.1) implies
+
+    Lr-lambda*Jr>G(m,c),
+    G=[2*m*(m-1)/(m+1)-ac]*(Z3(m,c,d0)-1)
+                         -ac*(m+1)-2*lambda*(c+1). (328.2)
+
+The denominator
+
+    5*(m+1)*(c-m+1)*(c-m+3)
+
+is positive because c<m/4 and m>11 make its last two factors
+negative. Multiplying G by this denominator gives the polynomial
+
+    BR(m,c)=sum_{j=0}^4 BR_j(m)*c^j.
+
+For m=11+b, b>0 and c=[1+ell(m)*a]/(1+a), a>=0, define
+
+    PR(a,b)=50^4*sum_{j=0}^4 BR_j(m)
+              *[1+ell(m)*a]^j*(1+a)^(4-j), m=11+b. (328.3)
+
+This parametrization covers 1<c<ell(m); allowing a=0 only adds
+the boundary c=1. Section 331 gives all 30 coefficients of PR,
+each a positive integer, with constant 1376937500000. Thus G>0 and
+Lr>(21/5)*Jr. Endpoint genuineness gives Jr>0, so
+
+    x^2=K^2*Lr/Jr>(35/36)*(21/5)=49/12>4,
+    x>2.                                         (328.4)
+
+## 329. The tangent branch and the original-slot contradiction
+
+We have x>2, y>9/10 and w>sqrt(3). Therefore xy>1. The ratio
+R=(xy-1)/(x+y) increases strictly with either positive variable:
+its derivatives are (y^2+1)/(x+y)^2 and (x^2+1)/(x+y)^2. Hence
+
+    R>8/29>2-sqrt(3)>sqrt(1+w^2)-w.               (329.1)
+
+The middle comparison follows from sqrt(3)>50/29, equivalently
+2523>2500. The last uses strict decrease of sqrt(1+w^2)-w.
+
+Since xy>1, atan(x)+atan(y) lies in (pi/2,pi), and
+
+    tan(atan(x)+atan(y)-pi/2)=R,
+    tan(pi/4-atan(w)/2)=sqrt(1+w^2)-w.
+
+Both arguments compared here lie in (0,pi/2). Thus (329.1) proves
+atan(x)+atan(y)>3*pi/4-atan(w)/2, equivalently
+
+    2*atan(w)+4*atan(x)+4*atan(y)>3*pi.
+
+This is (322.5) at the endpoint. The original u has a strictly larger
+rho transverse sum by Section 323, so (322.5) holds there as well.
+
+Its actual charge consists of one axial D slot of tau, two V and two
+D slots of rho, and two V and two D slots of eta. The owners are
+distinct, and the paired repetitions are distinct original occurrences.
+Thus the charge is a subset of the full genuine V/D sum, at most
+pi+2*pi. Additional owners cannot decrease it. This contradiction
+proves the theorem.
+
+## 330. Scope of the conditional exclusion
+
+The theorem excludes exactly the actual inventory (322.1) under
+(322.2)–(322.4), including eta's axes M,Z and its bad-eta inequality.
+It does not force that inventory, handle eta with axes Z,U, or treat
+the other source inventory or all remaining source-face configurations.
+In particular it is not a six-edge flat-exclusion theorem or a general
+geometric-realization theorem. Scalar constraints are used only as
+necessary conditions; no scalar assignment is claimed to construct a
+face pairing or complete actual normal circles.
+
+The endpoint comparison changes only a local response for the purpose
+of a lower bound. The complete actual partial M budget and all six
+strict genuine tests are explicit premises. The proof does not replace
+the combined V/D charge by a separate V-only assertion or assume
+S(eta)>pi/2. The maximum-gap result supplies the relevant actual
+upper gap u<z+m+1; no lower gap or missing C,Z,U capacity is used
+to strengthen the scalar implication.
+
+## 331. Complete exact polynomial coefficient identities
+
+The following finite identities specify every coefficient of the four
+polynomials in (324.3), (325.3), (327.3) and (328.3). They use only
+integer coefficients and the rational substitutions displayed there.
+They can be reconstructed by ordinary multiplication and collection
+of powers; no angle approximation or sampling is involved.
+
+For PD, a row i,j,k : (r0,r1,r2,r3) denotes
+
+    a^i*b^j*e^k*(r0+r1*h+r2*h^2+r3*h^3).
+
+PD is the sum of exactly the rows below. All omitted triples have
+zero coefficient. Within a row all four h coefficients, including
+zeros, are given. There are 1,450 nonzero coefficients, with minimum
+8, maximum 7064551424 and constant 56623104. Every displayed entry
+is nonnegative, and the constant is positive, proving PD>0 on the
+nonnegative orthant and hence on the domain used in Section 324.
+
+PD coefficient rows:
+
+    0,0,0 : (56623104,0,0,0)
+    0,0,1 : (127401984,0,0,0)
+    0,0,2 : (123863040,0,0,0)
+    0,0,3 : (68124672,0,0,0)
+    0,0,4 : (23224320,0,0,0)
+    0,0,5 : (5031936,0,0,0)
+    0,0,6 : (677376,0,0,0)
+    0,0,7 : (51840,0,0,0)
+    0,0,8 : (1728,0,0,0)
+    0,1,0 : (297271296,21233664,0,0)
+    0,1,1 : (634650624,56033280,0,0)
+    0,1,2 : (585990144,63111168,0,0)
+    0,1,3 : (306266112,39739392,0,0)
+    0,1,4 : (99256320,15344640,0,0)
+    0,1,5 : (20450304,3730176,0,0)
+    0,1,6 : (2618496,558720,0,0)
+    0,1,7 : (190656,47232,0,0)
+    0,1,8 : (6048,1728,0,0)
+    0,2,0 : (712900608,110493696,3932160,0)
+    0,2,1 : (1439662080,272498688,11010048,0)
+    0,2,2 : (1256718336,285769728,13172736,0)
+    0,2,3 : (620040192,166920192,8822784,0)
+    0,2,4 : (189242880,59586048,3634176,0)
+    0,2,5 : (36606336,13358592,947712,0)
+    0,2,6 : (4385088,1844160,153600,0)
+    0,2,7 : (297696,144000,14208,0)
+    0,2,8 : (8784,4896,576,0)
+    0,3,0 : (1031831552,262750208,19529728,196608)
+    0,3,1 : (1965522944,602099712,50266112,606208)
+    0,3,2 : (1613897728,583324672,54960128,798720)
+    0,3,3 : (745632768,312867584,33427456,588800)
+    0,3,4 : (211800960,101911168,12419072,266752)
+    0,3,5 : (37841472,20719808,2901760,76544)
+    0,3,6 : (4150432,2579936,419200,13696)
+    0,3,7 : (255568,180992,34496,1408)
+    0,3,8 : (6776,5520,1248,64)
+    0,4,0 : (1003438080,377929728,44089344,917504)
+    0,4,1 : (1798610944,798912512,103456768,2564096)
+    0,4,2 : (1380946944,708151296,102333440,3033088)
+    0,4,3 : (591376896,344376064,55803904,1985536)
+    0,4,4 : (153967104,100678336,18395648,788736)
+    0,4,5 : (24868128,18161952,3768832,195584)
+    0,4,6 : (2425104,1980752,471296,29760)
+    0,4,7 : (130112,119904,33120,2560)
+    0,4,8 : (2928,3096,1008,96)
+    0,5,0 : (690806784,366751744,59785216,1929216)
+    0,5,1 : (1162846208,708712448,126625792,4836352)
+    0,5,2 : (828746240,567787520,111894016,5070848)
+    0,5,3 : (324597248,246337984,53828096,2900224)
+    0,5,4 : (75892928,63253664,15410048,988928)
+    0,5,5 : (10760240,9828800,2688128,205888)
+    0,5,6 : (894320,900032,278976,25568)
+    0,5,7 : (39216,44088,15696,1728)
+    0,5,8 : (672,864,360,48)
+    0,6,0 : (345554944,253517824,54194176,2410496)
+    0,6,1 : (545581056,442655744,102329344,5351936)
+    0,6,2 : (357486336,315536256,79500032,4893696)
+    0,6,3 : (125749760,119564128,33029376,2393856)
+    0,6,4 : (25664416,26182512,7974976,680576)
+    0,6,5 : (3061088,3358072,1135328,114080)
+    0,6,6 : (202880,241600,91520,10832)
+    0,6,7 : (6464,8512,3664,512)
+    0,6,8 : (64,96,48,8)
+    0,7,0 : (126849024,128415744,34570240,1986560)
+    0,7,1 : (187844608,199554048,57283072,3843840)
+    0,7,2 : (111664896,123956544,38314880,3000832)
+    0,7,3 : (34371648,39846112,13354752,1219520)
+    0,7,4 : (5873592,7131776,2607040,277152)
+    0,7,5 : (551184,706152,283376,35008)
+    0,7,6 : (25824,35392,15736,2256)
+    0,7,7 : (448,672,336,56)
+    0,8,0 : (34080768,48263168,15898624,1132544)
+    0,8,1 : (47436288,65411328,22645504,1869952)
+    0,8,2 : (25080768,34406208,12672064,1210880)
+    0,8,3 : (6495648,8995416,3553408,392000)
+    0,8,4 : (869824,1231024,524800,66640)
+    0,8,5 : (56896,83392,38608,5624)
+    0,8,6 : (1408,2176,1104,184)
+    0,9,0 : (6599680,13460992,5306368,455168)
+    0,9,1 : (8684032,15470976,6315904,623168)
+    0,9,2 : (3956000,6609632,2836640,321024)
+    0,9,3 : (808576,1315344,599072,77488)
+    0,9,4 : (75200,122000,59352,8736)
+    0,9,5 : (2560,4224,2208,368)
+    0,10,0 : (892416,2752512,1274368,128768)
+    0,10,1 : (1123328,2574784,1216576,140256)
+    0,10,2 : (416976,836568,410768,53824)
+    0,10,3 : (59712,112384,57968,8592)
+    0,10,4 : (2880,5280,2880,480)
+    0,11,0 : (79488,401216,214528,25088)
+    0,11,1 : (97792,286192,153952,20368)
+    0,11,2 : (26464,62752,34696,5168)
+    0,11,3 : (1984,4256,2448,408)
+    0,12,0 : (4160,39488,24000,3200)
+    0,12,1 : (5184,19072,11504,1720)
+    0,12,2 : (768,2112,1296,216)
+    0,13,0 : (96,2352,1600,240)
+    0,13,1 : (128,576,384,64)
+    0,14,0 : (0,64,48,8)
+    1,0,0 : (226492416,0,0,0)
+    1,0,1 : (445906944,0,0,0)
+    1,0,2 : (371589120,0,0,0)
+    1,0,3 : (170311680,0,0,0)
+    1,0,4 : (46448640,0,0,0)
+    1,0,5 : (7547904,0,0,0)
+    1,0,6 : (677376,0,0,0)
+    1,0,7 : (25920,0,0,0)
+    1,1,0 : (1130102784,79036416,0,0)
+    1,1,1 : (2105671680,182255616,0,0)
+    1,1,2 : (1661681664,175767552,0,0)
+    1,1,3 : (721428480,92160000,0,0)
+    1,1,4 : (186393600,28454400,0,0)
+    1,1,5 : (28694016,5186304,0,0)
+    1,1,6 : (2439360,517824,0,0)
+    1,1,7 : (88416,21888,0,0)
+    1,2,0 : (2561409024,383188992,12386304,0)
+    1,2,1 : (4496080896,821723136,30326784,0)
+    1,2,2 : (3338575872,733925376,31125504,0)
+    1,2,3 : (1360914432,355003392,17433600,0)
+    1,2,4 : (329127936,100796928,5787648,0)
+    1,2,5 : (47251392,16869312,1145856,0)
+    1,2,6 : (3731616,1548384,125952,0)
+    1,2,7 : (125232,60480,5952,0)
+    1,3,0 : (3481518080,843096064,56836096,507904)
+    1,3,1 : (5729411072,1668907008,126992384,1368064)
+    1,3,2 : (3973292032,1366967808,118137856,1547264)
+    1,3,3 : (1504082944,602271488,59542016,956416)
+    1,3,4 : (335299648,154702400,17656832,351232)
+    1,3,5 : (43975072,23275296,3102976,77312)
+    1,3,6 : (3140432,1911024,301760,9536)
+    1,3,7 : (94280,66592,12640,512)
+    1,4,0 : (3155189760,1112494080,117604352,2174976)
+    1,4,1 : (4842954752,2014140416,237389824,5260288)
+    1,4,2 : (3108117504,1494461440,197656064,5282304)
+    1,4,3 : (1077332224,590142784,88201984,2861568)
+    1,4,4 : (216931424,134231968,22871808,907264)
+    1,4,5 : (25264656,17638736,3466624,169536)
+    1,4,6 : (1568344,1244744,286496,17440)
+    1,4,7 : (39792,36528,10032,768)
+    1,5,0 : (2004873216,979963904,144752640,4157440)
+    1,5,1 : (2854105088,1603857408,260684800,8913408)
+    1,5,2 : (1675608320,1061216256,191171840,7819008)
+    1,5,3 : (521922048,367715168,73943936,3634176)
+    1,5,4 : (92306288,71933680,16286720,966528)
+    1,5,5 : (9160856,7918120,2042176,147168)
+    1,5,6 : (464016,450600,134544,11856)
+    1,5,7 : (8928,9984,3528,384)
+    1,6,0 : (914114560,606750720,117671936,4667392)
+    1,6,1 : (1199428608,884224512,186082816,8727808)
+    1,6,2 : (634312704,511008512,117685120,6547328)
+    1,6,3 : (172961792,150932144,38326976,2536192)
+    1,6,4 : (25790728,24345240,6875136,542656)
+    1,6,5 : (2043200,2101728,667808,63088)
+    1,6,6 : (75136,85776,31192,3544)
+    1,6,7 : (832,1088,464,64)
+    1,7,0 : (300721152,270632960,66282496,3404800)
+    1,7,1 : (361167360,344176896,90140416,5436544)
+    1,7,2 : (168364416,168839392,47767232,3387840)
+    1,7,3 : (38660160,40760408,12559712,1048704)
+    1,7,4 : (4554208,5072984,1717248,168992)
+    1,7,5 : (255648,304720,114656,13320)
+    1,7,6 : (5120,6688,2848,392)
+    1,8,0 : (70694400,87587840,26374656,1684480)
+    1,8,1 : (77116416,94532224,29978752,2231232)
+    1,8,2 : (30666816,37762432,12767648,1107552)
+    1,8,3 : (5569680,6974176,2536912,256416)
+    1,8,4 : (460192,593840,234448,27600)
+    1,8,5 : (13696,18560,8048,1104)
+    1,9,0 : (11557120,20409600,7406336,571648)
+    1,9,1 : (11355136,17946688,6751552,602464)
+    1,9,2 : (3647312,5466736,2163952,222992)
+    1,9,3 : (466368,684992,288200,34240)
+    1,9,4 : (20224,29824,13456,1840)
+    1,10,0 : (1244544,3339392,1436800,131200)
+    1,10,1 : (1091968,2242144,984160,103024)
+    1,10,2 : (254880,462160,210680,25224)
+    1,10,3 : (17216,29376,14064,1920)
+    1,11,0 : (79104,364256,183168,19456)
+    1,11,1 : (61504,165872,83728,10104)
+    1,11,2 : (7936,17312,8960,1224)
+    1,12,0 : (2240,23792,13792,1680)
+    1,12,1 : (1536,5504,3152,432)
+    1,13,0 : (0,704,464,64)
+    2,0,0 : (396361728,0,0,0)
+    2,0,1 : (668860416,0,0,0)
+    2,0,2 : (464486400,0,0,0)
+    2,0,3 : (170311680,0,0,0)
+    2,0,4 : (34836480,0,0,0)
+    2,0,5 : (3773952,0,0,0)
+    2,0,6 : (169344,0,0,0)
+    2,1,0 : (1874460672,127991808,0,0)
+    2,1,1 : (2985099264,252592128,0,0)
+    2,1,2 : (1956741120,202752000,0,0)
+    2,1,3 : (677191680,84971520,0,0)
+    2,1,4 : (130705920,19664640,0,0)
+    2,1,5 : (13356288,2388672,0,0)
+    2,1,6 : (565056,119232,0,0)
+    2,2,0 : (4000481280,575373312,16515072,0)
+    2,2,1 : (5974179840,1050329088,34725888,0)
+    2,2,2 : (3665166336,776404992,29835264,0)
+    2,2,3 : (1183650816,298504704,13487616,0)
+    2,2,4 : (212372352,63220608,3407616,0)
+    2,2,5 : (20086272,7028832,459264,0)
+    2,2,6 : (783264,322464,25920,0)
+    2,3,0 : (5081169920,1164206080,69591040,532480)
+    2,3,1 : (7064551424,1947342848,132395008,1232896)
+    2,3,2 : (4014460928,1309309696,102119936,1171968)
+    2,3,3 : (1192312064,454456256,41114368,589312)
+    2,3,4 : (194965184,86270720,9183616,166912)
+    2,3,5 : (16624640,8544880,1089152,25536)
+    2,3,6 : (577392,347856,54112,1664)
+    2,4,0 : (4263567360,1398415360,130945024,2076672)
+    2,4,1 : (5472653312,2118065152,222579712,4267520)
+    2,4,2 : (2842967296,1275039232,151673856,3552512)
+    2,4,3 : (761762304,391229792,53251072,1540352)
+    2,4,4 : (110460512,64701056,10221376,369664)
+    2,4,5 : (8168608,5487496,1025088,47008)
+    2,4,6 : (238752,187128,42288,2496)
+    2,5,0 : (2479392768,1106974720,144787456,3572736)
+    2,5,1 : (2908547072,1495252992,216399360,6411008)
+    2,5,2 : (1357684224,789346176,127558016,4575488)
+    2,5,3 : (319591296,208042992,37943936,1662272)
+    2,5,4 : (39483632,28761232,6005600,324480)
+    2,5,5 : (2378928,1960584,477984,32208)
+    2,5,6 : (52512,50208,14664,1248)
+    2,6,0 : (1019011072,605775872,104100864,3555840)
+    2,6,1 : (1078732800,715137024,133965312,5454336)
+    2,6,2 : (441820032,321765248,66365184,3241984)
+    2,6,3 : (87872192,69873192,16041568,946592)
+    2,6,4 : (8676880,7564264,1961216,140864)
+    2,6,5 : (379360,368768,110224,9720)
+    2,6,6 : (4800,5376,1904,208)
+    2,7,0 : (295994880,233618944,50810368,2254080)
+    2,7,1 : (278108160,234406784,54706944,2871040)
+    2,7,2 : (96488832,86244912,21844320,1362848)
+    2,7,3 : (15231312,14448472,4016816,299440)
+    2,7,4 : (1068928,1087312,336752,30176)
+    2,7,5 : (25472,28448,10032,1088)
+    2,8,0 : (59650560,63431680,17032960,942720)
+    2,8,1 : (48605952,51934144,14719424,956128)
+    2,8,2 : (13491792,14634240,4435264,339280)
+    2,8,3 : (1505760,1678080,550384,49768)
+    2,8,4 : (56320,65696,23680,2544)
+    2,9,0 : (7991680,11872640,3868032,259776)
+    2,9,1 : (5451136,7434496,2512736,196400)
+    2,9,2 : (1086784,1423920,506920,46208)
+    2,9,3 : (64448,83584,31744,3384)
+    2,10,0 : (653952,1457920,568768,45408)
+    2,10,1 : (350272,620256,246560,22704)
+    2,10,2 : (38144,60416,24912,2648)
+    2,11,0 : (27168,105664,48832,4560)
+    2,11,1 : (9664,22880,10576,1128)
+    2,12,0 : (320,3424,1856,200)
+    3,0,0 : (396361728,0,0,0)
+    3,0,1 : (557383680,0,0,0)
+    3,0,2 : (309657600,0,0,0)
+    3,0,3 : (85155840,0,0,0)
+    3,0,4 : (11612160,0,0,0)
+    3,0,5 : (628992,0,0,0)
+    3,1,0 : (1771241472,117669888,0,0)
+    3,1,1 : (2343075840,193167360,0,0)
+    3,1,2 : (1224253440,123863040,0,0)
+    3,1,3 : (316477440,38891520,0,0)
+    3,1,4 : (40538880,5996160,0,0)
+    3,1,5 : (2060928,364032,0,0)
+    3,2,0 : (3544350720,487833600,12042240,0)
+    3,2,1 : (4373667840,736542720,21258240,0)
+    3,2,2 : (2125688832,432420864,14788608,0)
+    3,2,3 : (509154816,123902208,5109504,0)
+    3,2,4 : (60147840,17415936,883968,0)
+    3,2,5 : (2806080,966912,61632,0)
+    3,3,0 : (4182138880,901386240,46284800,286720)
+    3,3,1 : (4765831168,1236711424,73170944,561152)
+    3,3,2 : (2124701696,654403712,45191424,437504)
+    3,3,3 : (462634496,167641600,13748608,171520)
+    3,3,4 : (49123904,20915392,2081856,34240)
+    3,3,5 : (2032480,1025152,126880,2816)
+    3,4,0 : (3223203840,976517120,78471168,1009664)
+    3,4,1 : (3350097920,1198920192,109331968,1728256)
+    3,4,2 : (1345107456,560099072,58709632,1159808)
+    3,4,3 : (259305216,124728064,15290752,384320)
+    3,4,4 : (23823712,13279680,1948000,63520)
+    3,4,5 : (826080,542400,97872,4224)
+    3,5,0 : (1696877568,686086144,76964864,1544704)
+    3,5,1 : (1583104000,738633472,92544256,2263936)
+    3,5,2 : (558191104,296146112,41987712,1270784)
+    3,5,3 : (91639552,55032768,8985792,341728)
+    3,5,4 : (6849792,4694952,904176,43920)
+    3,5,5 : (178656,143232,33528,2112)
+    3,6,0 : (619308544,326206464,48084480,1339904)
+    3,6,1 : (507553280,299469056,48484864,1633408)
+    3,6,2 : (151441408,98893504,17829696,735680)
+    3,6,3 : (19894624,14373296,2938160,150512)
+    3,6,4 : (1078720,874688,207864,13400)
+    3,6,5 : (16064,15104,4304,352)
+    3,7,0 : (155504640,106131200,19824640,720000)
+    3,7,1 : (108514560,79766272,16079488,700096)
+    3,7,2 : (25815552,20327560,4488080,236944)
+    3,7,3 : (2418336,2052656,505784,32776)
+    3,7,4 : (71552,66912,18896,1520)
+    3,8,0 : (26027520,23290240,5387520,245120)
+    3,8,1 : (14714624,13432736,3291488,177968)
+    3,8,2 : (2497760,2345632,618792,40168)
+    3,8,3 : (125504,123264,35712,2816)
+    3,9,0 : (2714560,3292800,929344,51552)
+    3,9,1 : (1132800,1294704,379536,24792)
+    3,9,2 : (103872,115968,35952,2792)
+    3,10,0 : (153312,270272,92192,6112)
+    3,10,1 : (37120,54272,18832,1456)
+    3,11,0 : (3264,9760,4000,312)
+    4,0,0 : (247726080,0,0,0)
+    4,0,1 : (278691840,0,0,0)
+    4,0,2 : (116121600,0,0,0)
+    4,0,3 : (21288960,0,0,0)
+    4,0,4 : (1451520,0,0,0)
+    4,1,0 : (1042513920,67092480,0,0)
+    4,1,1 : (1099284480,87920640,0,0)
+    4,1,2 : (429004800,42209280,0,0)
+    4,1,3 : (73589760,8824320,0,0)
+    4,1,4 : (4688640,679680,0,0)
+    4,2,0 : (1946296320,254976000,5160960,0)
+    4,2,1 : (1902827520,305479680,7434240,0)
+    4,2,2 : (685830144,133521408,3987456,0)
+    4,2,3 : (108111360,25362816,953472,0)
+    4,2,4 : (6294144,1778304,86400,0)
+    4,3,0 : (2118338560,426705920,17960960,81920)
+    4,3,1 : (1894230016,460240128,22878208,134144)
+    4,3,2 : (618947072,179483904,10754432,83584)
+    4,3,3 : (87431680,30164032,2237760,23744)
+    4,3,4 : (4495552,1858368,175936,2624)
+    4,4,0 : (1484497920,412247040,27145216,258048)
+    4,4,1 : (1192786432,392263168,29948672,362624)
+    4,4,2 : (344375808,132748288,11998144,190272)
+    4,4,3 : (41989760,18981280,2088608,44512)
+    4,4,4 : (1802112,969696,134304,3936)
+    4,5,0 : (697374720,253033216,23250432,346112)
+    4,5,1 : (491453440,206568576,21595648,405632)
+    4,5,2 : (120724096,58257536,7079392,172128)
+    4,5,3 : (11956800,6656592,968112,31152)
+    4,5,4 : (384480,252672,45552,1968)
+    4,6,0 : (221301760,102151680,12331520,256000)
+    4,6,1 : (132045440,68703872,9252736,240064)
+    4,6,2 : (25971712,15142272,2326672,77264)
+    4,6,3 : (1865120,1231328,222576,9640)
+    4,6,4 : (34112,26304,5792,328)
+    4,7,0 : (46508160,27067840,4142080,112640)
+    4,7,1 : (22206080,14062544,2351872,79168)
+    4,7,2 : (3123936,2153168,403088,17184)
+    4,7,3 : (122560,93632,20272,1112)
+    4,8,0 : (6127680,4527680,859200,29440)
+    4,8,1 : (2106848,1614912,327728,13768)
+    4,8,2 : (160064,128800,28688,1512)
+    4,9,0 : (448960,432400,100448,4224)
+    4,9,1 : (85056,79360,19264,984)
+    4,10,0 : (13440,17888,5056,256)
+    5,0,0 : (99090432,0,0,0)
+    5,0,1 : (83607552,0,0,0)
+    5,0,2 : (23224320,0,0,0)
+    5,0,3 : (2128896,0,0,0)
+    5,1,0 : (391200768,24256512,0,0)
+    5,1,1 : (308109312,23777280,0,0)
+    5,1,2 : (79782912,7593984,0,0)
+    5,1,3 : (6806016,792576,0,0)
+    5,2,0 : (677412864,83939328,1290240,0)
+    5,2,1 : (491166720,74778624,1465344,0)
+    5,2,2 : (116476416,21638400,556800,0)
+    5,2,3 : (9042432,2047488,71424,0)
+    5,3,0 : (674139136,126001664,4035584,11264)
+    5,3,1 : (441839104,99999232,3986432,15872)
+    5,3,2 : (93603328,25531904,1307776,7680)
+    5,3,3 : (6392064,2113792,144256,1280)
+    5,4,0 : (423943680,107035904,5371904,31488)
+    5,4,1 : (244917760,73625600,4490240,37120)
+    5,4,2 : (44669696,15952768,1222848,14656)
+    5,4,3 : (2536128,1090176,109248,1920)
+    5,5,0 : (174183936,56195840,3941120,36480)
+    5,5,1 : (85478656,32186880,2677760,34560)
+    5,5,2 : (12639552,5559936,568608,10464)
+    5,5,3 : (535584,280896,36768,960)
+    5,6,0 : (46561024,18637696,1719040,22400)
+    5,6,1 : (18289856,8339840,890560,16000)
+    5,6,2 : (1959200,1023184,131360,3312)
+    5,6,3 : (47040,28928,4640,160)
+    5,7,0 : (7760832,3804064,445120,7680)
+    5,7,1 : (2184800,1183072,156352,3680)
+    5,7,2 : (127936,77504,12048,392)
+    5,8,0 : (725088,435472,63232,1392)
+    5,8,1 : (110912,70656,11296,336)
+    5,9,0 : (28480,21312,3792,104)
+    6,0,0 : (24772608,0,0,0)
+    6,0,1 : (13934592,0,0,0)
+    6,0,2 : (1935360,0,0,0)
+    6,1,0 : (91348992,5419008,0,0)
+    6,1,1 : (47738880,3529728,0,0)
+    6,1,2 : (6147072,562176,0,0)
+    6,2,0 : (145692672,16951296,172032,0)
+    6,2,1 : (69500928,9980928,148992,0)
+    6,2,2 : (8113152,1436160,32256,0)
+    6,3,0 : (131097600,22561792,480768,512)
+    6,3,1 : (55695360,11695616,353024,768)
+    6,3,2 : (5697024,1466880,64768,256)
+    6,4,0 : (72668160,16545280,556800,1280)
+    6,4,1 : (26503680,7263232,333568,1536)
+    6,4,2 : (2245248,748800,48768,384)
+    6,5,0 : (25350144,7210240,341760,1280)
+    6,5,1 : (7478016,2518464,157056,1152)
+    6,5,2 : (470976,191040,16320,192)
+    6,6,0 : (5417856,1864064,117120,640)
+    6,6,1 : (1155840,461632,36832,384)
+    6,6,2 : (41088,19488,2048,32)
+    6,7,0 : (645696,264128,21216,160)
+    6,7,1 : (75264,34880,3440,48)
+    6,8,0 : (32640,15776,1584,16)
+    7,0,0 : (3538944,0,0,0)
+    7,0,1 : (995328,0,0,0)
+    7,1,0 : (12128256,681984,0,0)
+    7,1,1 : (3151872,221184,0,0)
+    7,2,0 : (17664000,1913856,9216,0)
+    7,2,1 : (4147200,559104,6144,0)
+    7,3,0 : (14161920,2227200,23040,0)
+    7,3,1 : (2903040,565248,12288,0)
+    7,4,0 : (6743040,1374720,23040,0)
+    7,4,1 : (1140480,285696,9216,0)
+    7,5,0 : (1903872,474240,11520,0)
+    7,5,1 : (238464,72192,3072,0)
+    7,6,0 : (294528,86592,2880,0)
+    7,6,1 : (20736,7296,384,0)
+    7,7,0 : (19200,6528,288,0)
+    8,0,0 : (221184,0,0,0)
+    8,1,0 : (700416,36864,0,0)
+    8,2,0 : (921600,92160,0,0)
+    8,3,0 : (645120,92160,0,0)
+    8,4,0 : (253440,46080,0,0)
+    8,5,0 : (52992,11520,0,0)
+    8,6,0 : (4608,1152,0,0)
+
+For each of P4,PA,PR, a row i : (r0,...,rn) denotes
+a^i*(r0+r1*b+...+rn*b^n). Each polynomial is the sum of its rows.
+All omitted coefficients are zero; internal zeros would be displayed.
+These identities in particular show positivity on a,b>=0.
+
+P4 coefficient rows:
+
+    0 : (314572800,862617600,999481344,642877440,252277248,62160384,9462912,828024,34218,300)
+    1 : (1584005120,4458053632,5376073728,3671259136,1573405696,441097216,81274848,9532696,648296,19536)
+    2 : (3077308416,8713535488,10582081536,7276156928,3133784576,878998912,160815456,18516032,1217056,34752)
+    3 : (3061579776,8774549504,10792640512,7512844288,3273002496,928100736,171781760,20076160,1349504,39936)
+    4 : (1724645376,5157027840,6635503616,4836632576,2207429120,656062464,127328256,15600640,1097216,33792)
+    5 : (556793856,1806237696,2499682304,1935181824,924071936,282288128,55111680,6612992,440320,12288)
+    6 : (84934656,300810240,440156160,348930048,164888576,47808512,8339456,802816,32768)
+
+PA coefficient rows:
+
+    0 : (2579520001436709588480,2304659822504944402048,912393902132832733440,210299251563395316352,31147968480084581376,3081746336014652416,204567095681630208,8867591799470080,233567340531712,3155214319616,12919095296)
+    1 : (26442106011838635264000,23953198019794771334400,9600687464012774979200,2237568183490877846400,334737655692913846400,33416312017475196800,2235775773783622400,97565180260851200,2582278677606400,34912679782400,140479692800)
+    2 : (82139111351704176120000,76436165161828752340000,31359053438302199640000,7459658180121741560000,1136350035858647320000,115285583296571700000,7825332856853720000,345873275696160000,9255105203040000,126136434240000,505916160000)
+    3 : (119534022468891402000000,114868457530700900000000,48421302894696027000000,11790377266243475000000,1833125549685310000000,189372629193180000000,13063731800095000000,585807991403000000,15875336438000000,218553618000000,877304000000)
+    4 : (90952188117481200000000,90630731452978046875000,39351062280216306250000,9823571422107853125000,1560567529024725000000,164300249388153125000,11527353757956250000,524807235796875000,14414547687500000,200640450000000,807425000000)
+    5 : (35158488449271562500000,36479346803437343750000,16348784057118203125000,4188970419841796875000,680380662809296875000,73034615826796875000,5213380366015625000,241063375390625000,6713518203125000,94533671875000,381718750000)
+    6 : (5462912364319335937500,5929079201063964843750,2748204682549804687500,723382100013671875000,120178125908203125000,13155973473632812500,955634173828125000,44888443359375000,1267913085937500,18067871093750,73242187500)
+
+PR coefficient rows:
+
+    0 : (1376937500000,1235150000000,353456250000,45375000000,2725000000,62500000)
+    1 : (5068874500000,4007224625000,1075910250000,132344250000,7695500000,172000000)
+    2 : (6952018730000,4636908095000,1134903325000,131541880000,7345140000,159720000)
+    3 : (4205107639400,2192440592600,455341649000,47157652400,2437511200,50329600)
+    4 : (945026658512,327612321794,42905960896,2601218944,70598816,648736)
+
+The P4 coefficients have minimum 300 and maximum 10792640512;
+the PA coefficients have minimum 12919095296 and maximum
+119534022468891402000000; the PR coefficients have minimum 648736
+and maximum 6952018730000. Their respective positive constants are
+314572800, 2579520001436709588480 and 1376937500000. All four
+identities retain the entire clearing factors specified in their
+definitions, so each positivity conclusion has exactly the sign
+used in the corresponding proof. QED.

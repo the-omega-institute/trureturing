@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: Advance Actual Native Boundaries with Retained Route Identities. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Graph.PrefixReversal.NativeActualJointUpdate
 import D5.S3.Combinatorics.Graph.PrefixReversal.RecursiveBoundaryAdvance
 import D5.S3.Combinatorics.Graph.Walks.ActualSingleOrderBoundaryUpdate
