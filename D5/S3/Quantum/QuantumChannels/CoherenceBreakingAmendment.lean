@@ -8,9 +8,7 @@
 
 import D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace
 import D5.S3.Quantum.Matrix.MonomialDiagonalPreserving
-import Mathlib.GroupTheory.GroupAction.MultipleTransitivity
 import D5.S3.Quantum.Entanglement.AbsoluteSeparability.GurvitsBarnumMoments
 
 /-! # Amendment of incoherent channels with finite coherence-breaking index -/
