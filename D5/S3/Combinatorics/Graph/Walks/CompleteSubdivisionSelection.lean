@@ -6,6 +6,7 @@
    utility: none
    digest: Extract the full diagonal-aware selection matrix from arbitrary subdivision landmarks. -/
 import D5.S3.Combinatorics.Graph.Walks.CompleteSubdivisionCounting
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 set_option autoImplicit false
 

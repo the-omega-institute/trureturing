@@ -6,6 +6,7 @@
    utility: none
    digest: Equal augmented selected degrees force actual edge-profile collisions. -/
 import D5.S3.Combinatorics.Graph.Walks.CompleteSubdivisionSelection
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 set_option autoImplicit false
 
