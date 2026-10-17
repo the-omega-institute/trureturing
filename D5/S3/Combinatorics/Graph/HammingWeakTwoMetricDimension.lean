@@ -18,10 +18,10 @@ namespace D5.S3.Combinatorics.Graph.HammingWeakTwoMetricDimension
 
 open Function
 
-private def leftCount {α β : Type*} [DecidableEq α] (S : Finset (α × β)) (a : α) : ℕ :=
+def leftCount {α β : Type*} [DecidableEq α] (S : Finset (α × β)) (a : α) : ℕ :=
   (S.filter (fun e => e.1 = a)).card
 
-private def rightCount {α β : Type*} [DecidableEq β] (S : Finset (α × β)) (b : β) : ℕ :=
+def rightCount {α β : Type*} [DecidableEq β] (S : Finset (α × β)) (b : β) : ℕ :=
   (S.filter (fun e => e.2 = b)).card
 
 private def Good {α β : Type*} [DecidableEq α] [DecidableEq β]
@@ -29,13 +29,13 @@ private def Good {α β : Type*} [DecidableEq α] [DecidableEq β]
   (∀ a, 1 ≤ leftCount S a) ∧ (∀ b, 1 ≤ rightCount S b) ∧
   ∀ e ∈ S, 3 ≤ leftCount S e.1 + rightCount S e.2
 
-private def join {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+def join {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ]
     (S : Finset (α × β)) (T : Finset (γ × δ)) : Finset ((α ⊕ γ) × (β ⊕ δ)) :=
   S.map (Embedding.inl.prodMap Embedding.inl) ∪
   T.map (Embedding.inr.prodMap Embedding.inr)
 
-private theorem join_disjoint {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_disjoint {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) :
     Disjoint (S.map (Embedding.inl.prodMap Embedding.inl))
       (T.map (Embedding.inr.prodMap Embedding.inr)) := by
@@ -46,27 +46,27 @@ private theorem join_disjoint {α β γ δ : Type*} [DecidableEq α] [DecidableE
   have hh : Sum.inr t.1 = Sum.inl s.1 := congrArg (fun e => e.1) h
   cases hh
 
-private theorem join_card {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_card {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) :
     (join S T).card = S.card + T.card := by
   simp [join, Finset.card_union_of_disjoint (join_disjoint S T)]
 
-private theorem join_left_inl {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_left_inl {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) (a : α) :
     leftCount (join S T) (Sum.inl a) = leftCount S a := by
   simp [leftCount, join, Finset.filter_union, Finset.filter_map, Function.comp_def]
 
-private theorem join_left_inr {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_left_inr {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) (a : γ) :
     leftCount (join S T) (Sum.inr a) = leftCount T a := by
   simp [leftCount, join, Finset.filter_union, Finset.filter_map, Function.comp_def]
 
-private theorem join_right_inl {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_right_inl {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) (b : β) :
     rightCount (join S T) (Sum.inl b) = rightCount S b := by
   simp [rightCount, join, Finset.filter_union, Finset.filter_map, Function.comp_def]
 
-private theorem join_right_inr {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+theorem join_right_inr {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (S : Finset (α × β)) (T : Finset (γ × δ)) (b : δ) :
     rightCount (join S T) (Sum.inr b) = rightCount T b := by
   simp [rightCount, join, Finset.filter_union, Finset.filter_map, Function.comp_def]
@@ -90,26 +90,32 @@ private theorem good_join {α β γ δ : Type*} [DecidableEq α] [DecidableEq β
     · obtain ⟨s, hs, rfl⟩ := Finset.mem_map.mp he
       simpa [join_left_inr, join_right_inr] using hT.2.2 s hs
 
+theorem leftCount_map {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+    [DecidableEq γ] [DecidableEq δ] (f : α ≃ γ) (g : β ≃ δ)
+    (S : Finset (α × β)) (a : α) :
+    leftCount (S.map (f.toEmbedding.prodMap g.toEmbedding)) (f a) = leftCount S a := by
+  simp [leftCount, Finset.filter_map, Function.comp_def]
+
+theorem rightCount_map {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
+    [DecidableEq γ] [DecidableEq δ] (f : α ≃ γ) (g : β ≃ δ)
+    (S : Finset (α × β)) (b : β) :
+    rightCount (S.map (f.toEmbedding.prodMap g.toEmbedding)) (g b) = rightCount S b := by
+  simp [rightCount, Finset.filter_map, Function.comp_def]
+
 private theorem good_map {α β γ δ : Type*} [DecidableEq α] [DecidableEq β]
     [DecidableEq γ] [DecidableEq δ] (f : α ≃ γ) (g : β ≃ δ)
     {S : Finset (α × β)} (hS : Good S) :
     Good (S.map (f.toEmbedding.prodMap g.toEmbedding)) := by
-  have hl (a : α) : leftCount (S.map (f.toEmbedding.prodMap g.toEmbedding)) (f a) =
-      leftCount S a := by
-    simp [leftCount, Finset.filter_map, Function.comp_def]
-  have hr (b : β) : rightCount (S.map (f.toEmbedding.prodMap g.toEmbedding)) (g b) =
-      rightCount S b := by
-    simp [rightCount, Finset.filter_map, Function.comp_def]
   refine ⟨?_, ?_, ?_⟩
   · intro a
     obtain ⟨a, rfl⟩ := f.surjective a
-    simpa [hl] using hS.1 a
+    simpa [leftCount_map] using hS.1 a
   · intro b
     obtain ⟨b, rfl⟩ := g.surjective b
-    simpa [hr] using hS.2.1 b
+    simpa [rightCount_map] using hS.2.1 b
   · intro e he
     obtain ⟨e, hs, rfl⟩ := Finset.mem_map.mp he
-    simpa [hl, hr] using hS.2.2 e hs
+    simpa [leftCount_map, rightCount_map] using hS.2.2 e hs
 
 private theorem small_design (n m : ℕ) (hn : 0 < n) (hm : 0 < m)
     (hbal₁ : n ≤ 2 * m) (hbal₂ : m ≤ 2 * n) (hN : 3 ≤ n + m) (hsmall : n + m ≤ 5) :
