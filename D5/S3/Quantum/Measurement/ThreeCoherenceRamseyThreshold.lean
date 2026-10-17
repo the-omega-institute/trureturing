@@ -76,6 +76,144 @@ def claim : Prop := ∃ α : ℝ,
   6169 / 5000 < α ∧ α < 12339 / 10000 ∧ thresholdP α = 0 ∧
   IsGreatest admissibleValues (thresholdN α / thresholdD α)
 
+private def character (k : ℤ) (t : ℝ) : ℂ := Complex.exp ((k : ℂ) * t * I)
+
+private def trigPoly {ι : Type*} [Fintype ι] (n : ι → ℤ) (z : ι → ℂ) (t : ℝ) : ℂ :=
+  ∑ j, z j * character (n j) t
+
+private def average (f : ℝ → ℂ) : ℂ := (1 / (2 * π)) * ∫ t in (0)..(2 * π), f t
+
+private theorem character_continuous (k : ℤ) : Continuous (character k) := by
+  unfold character
+  fun_prop
+
+private theorem character_mul_star (k m : ℤ) (t : ℝ) :
+    character k t * star (character m t) = character (k - m) t := by
+  simp only [character, Complex.star_def, ← Complex.exp_conj, map_mul, map_intCast,
+    Complex.conj_ofReal, Complex.conj_I, ← Complex.exp_add, Int.cast_sub]
+  congr 1
+  ring
+
+private theorem character_average (k : ℤ) :
+    average (character k) = if k = 0 then 1 else 0 := by
+  by_cases hk : k = 0
+  · subst k
+    simp [average, character, Complex.ofReal_mul, Complex.ofReal_ofNat]
+    field_simp
+  · have hkcomplex : (k : ℂ) * I ≠ 0 :=
+      mul_ne_zero (Int.cast_ne_zero.mpr hk) Complex.I_ne_zero
+    have harg : ((k : ℂ) * I) * ((2 * π : ℝ) : ℂ) = k * (2 * π * I) := by
+      push_cast
+      ring
+    have hint : (∫ t in (0)..(2 * π), character k t) = 0 := by
+      simp only [character, mul_right_comm (k : ℂ) _ I]
+      rw [integral_exp_mul_complex hkcomplex, harg, Complex.exp_int_mul_two_pi_mul_I]
+      simp
+    simp [average, hint, hk]
+
+private theorem average_sum {ι : Type*} [Fintype ι] (f : ι → ℝ → ℂ)
+    (hf : ∀ i, Continuous (f i)) :
+    average (fun t => ∑ i, f i t) = ∑ i, average (f i) := by
+  simp only [average, intervalIntegral.integral_finsetSum
+    (fun i _ => (hf i).intervalIntegrable _ _), Finset.mul_sum]
+
+private theorem moment_one_formula {ι : Type*} [Fintype ι]
+    (n : ι → ℤ) (z : ι → ℂ) :
+    moment 1 (fun t => Complex.normSq (trigPoly n z t)) =
+      ∑ i, ∑ j, if n i = n j then (z i * star (z j)).re else 0 := by
+  classical
+  have hpoint (t : ℝ) : (Complex.normSq (trigPoly n z t) : ℂ) =
+      ∑ i, ∑ j, (z i * star (z j)) * character (n i - n j) t := by
+    rw [Complex.normSq_eq_conj_mul_self, mul_comm]
+    simp only [trigPoly, map_sum, Finset.sum_mul, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [map_mul]
+    change (z i * character (n i) t) * (star (z j) * star (character (n j) t)) = _
+    rw [← character_mul_star]
+    ring
+  have hcast : (moment 1 (fun t => Complex.normSq (trigPoly n z t)) : ℂ) =
+      ∑ i, ∑ j, if n i = n j then z i * star (z j) else 0 := by
+    simp only [moment, pow_one, Complex.ofReal_mul, Complex.ofReal_div,
+      Complex.ofReal_one, Complex.ofReal_ofNat, ← intervalIntegral.integral_ofReal]
+    change average (fun t => (Complex.normSq (trigPoly n z t) : ℂ)) = _
+    simp_rw [hpoint]
+    rw [average_sum _ (fun i => by
+      apply continuous_finsetSum
+      intro j _
+      exact continuous_const.mul (character_continuous _))]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [average_sum (fun j t => (z i * star (z j)) * character (n i - n j) t)
+      (fun j => continuous_const.mul (character_continuous _))]
+    apply Finset.sum_congr rfl
+    intro j _
+    change average (fun t => (z i * star (z j)) * character (n i - n j) t) = _
+    unfold average
+    rw [intervalIntegral.integral_const_mul]
+    rw [mul_left_comm]
+    change (z i * star (z j)) * average (character (n i - n j)) = _
+    rw [character_average]
+    by_cases hij : n i = n j <;> simp [hij, sub_eq_zero]
+  simpa only [Complex.ofReal_re, Complex.re_sum, apply_ite Complex.re,
+    Complex.zero_re] using congrArg Complex.re hcast
+
+private theorem trigPoly_power {ι : Type*} [Fintype ι]
+    (n : ι → ℤ) (z : ι → ℂ) (q : ℕ) (t : ℝ) :
+    trigPoly n z t ^ q = trigPoly
+      (fun τ : Fin q → ι => ∑ i, n (τ i)) (fun τ => ∏ i, z (τ i)) t := by
+  classical
+  simp only [trigPoly, Fintype.sum_pow, Finset.prod_mul_distrib]
+  apply Finset.sum_congr rfl
+  intro τ _
+  congr 1
+  simp only [character, ← Complex.exp_sum, ← Finset.sum_mul, ← Int.cast_sum]
+
+private theorem moment_formula {ι : Type*} [Fintype ι]
+    (n : ι → ℤ) (z : ι → ℂ) (q : ℕ) :
+    moment q (fun t => Complex.normSq (trigPoly n z t)) =
+      ∑ τ : Fin q → ι, ∑ σ : Fin q → ι,
+        if (∑ i, n (τ i)) = ∑ i, n (σ i)
+        then ((∏ i, z (τ i)) * star (∏ i, z (σ i))).re else 0 := by
+  have hpoint (t : ℝ) : Complex.normSq (trigPoly n z t) ^ q =
+      Complex.normSq (trigPoly (fun τ : Fin q → ι => ∑ i, n (τ i))
+        (fun τ => ∏ i, z (τ i)) t) := by
+    rw [← map_pow, trigPoly_power]
+  have heq : moment q (fun t => Complex.normSq (trigPoly n z t)) =
+      moment 1 (fun t => Complex.normSq (trigPoly (fun τ : Fin q → ι => ∑ i, n (τ i))
+        (fun τ => ∏ i, z (τ i)) t)) := by
+    simp only [moment, pow_one, hpoint]
+  rw [heq, moment_one_formula]
+
+private theorem moment_abs_le {ι : Type*} [Fintype ι]
+    (n : ι → ℤ) (z : ι → ℂ) (q : ℕ) :
+    moment q (fun t => Complex.normSq (trigPoly n z t)) ≤
+      moment q (fun t => Complex.normSq (trigPoly n (fun i => (‖z i‖ : ℂ)) t)) := by
+  classical
+  rw [moment_formula, moment_formula]
+  apply Finset.sum_le_sum
+  intro τ _
+  apply Finset.sum_le_sum
+  intro σ _
+  split_ifs
+  · calc
+      _ ≤ ‖(∏ i, z (τ i)) * star (∏ i, z (σ i))‖ := Complex.re_le_norm _
+      _ = _ := by simp [norm_prod, ← Complex.ofReal_prod, ← Complex.ofReal_mul]
+  · rfl
+
+private theorem moment_one_injective {ι : Type*} [Fintype ι]
+    (n : ι → ℤ) (z : ι → ℂ) (hn : Function.Injective n) :
+    moment 1 (fun t => Complex.normSq (trigPoly n z t)) = ∑ i, ‖z i‖ ^ 2 := by
+  classical
+  rw [moment_one_formula]
+  simp only [hn.eq_iff, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [Complex.star_def, Complex.mul_conj, Complex.ofReal_re, Complex.normSq_eq_norm_sq]
+
 private theorem root_exists : ∃ α : ℝ,
     6169 / 5000 < α ∧ α < 12339 / 10000 ∧ thresholdP α = 0 := by
   have hlow : 0 < thresholdP (6169 / 5000) := by norm_num [thresholdP]
