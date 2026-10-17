@@ -3609,3 +3609,415 @@ Existence of a common positive critical length field and conversion
 to a geometric realization are separate inputs and are not proved by
 this flat-exclusion argument alone. No unrestricted CFMP theorem or
 Lean/kernel verification is asserted.
+
+## 448. The exact six-edge realization class
+
+Let N be a connected orientable compact 3-manifold with nonempty
+boundary, every component a closed surface of genus at least two.
+Fix an actual finite ideal face-pairing triangulation whose ideal
+vertex links are those boundary surfaces. Original faces are paired
+by a fixed-point-free involution on their occurrences, with the
+prescribed vertex maps. Every actual edge has a connected circular
+normal link formed from its original local edge intervals, and its
+original degree, counting every occurrence, is at least six.
+
+Suppose the actual global edge set E has exactly six elements. In
+every original tetrahedron fix a vertex-induced frame, in order
+(12,13,14,34,24,23), with label word
+
+    (R,A,B,O,A,B), R,A,B,O four distinct actual labels in E.
+
+This is the combinatorial and topological input class. No length
+field or geometric realization is assumed here. Repeated visits,
+loops, parallel face pairs, distinct-face self-gluings and identical
+role words on different owners are allowed under the stated actual
+manifold conditions. Numerical equality at distinct labels is allowed.
+
+## 449. Strict angles and a common positive generalized field
+
+The original volume's Theorem 42.2 applies to the manifold, boundary
+and original degree hypotheses of Section 448. Starting from the
+normalized angles a_o=2/d(P(o)), it preserves every original edge sum
+while transporting vertex deficits along the actual boundary-link
+surfaces. The total deficit on a link S_nu is
+
+    F_nu-2*V_nu=-2*chi(S_nu)>0.
+
+The theorem makes every angle positive and every local vertex sum
+strictly less than pi, while every original edge sum stays 2*pi.
+The argument counts source and target occurrences separately even
+for self-gluings. It does not assume the unmodified angles already
+have strict vertex sums. The constructed angle structure need not
+respect equality of a fixed frame's transverse angle pairs; this
+is unnecessary at the existence step.
+
+Restore the ideal vertices to the original finite face pairing.
+All original faces are paired, so this is the closed triangulated
+pseudo 3-manifold used by the hyperideal variational theorem.
+Its restored vertices have the prescribed boundary surfaces as
+links; truncation recovers N. Closed in this usage does not assert
+that the restored quotient is a closed smooth 3-manifold.
+
+The strictly positive angle structure satisfies Luo–Yang's hyperideal
+Definition 6.1. Theorem 6.3(a),(c) and Theorem 1.4 provide a volume
+maximizer and one common vector ell in R_{>0}^E producing its angles.
+Every original edge has angle sum 2*pi, and each owner is genuine
+or has two opposite pi angles and four zeros. These are the reused
+inputs of the original volume's Corollary 43.1 and Section 285.
+The source is Luo–Yang, *Volume and rigidity of hyperbolic polyhedral
+3-manifolds*, https://arxiv.org/html/1404.5365v2 .
+
+At this point the field is only generalized: positive coordinates
+do not themselves exclude a flat owner. Nor does a strict angle
+structure alone ensure that its separate local geometric blocks
+have matching lengths. The variational theorem supplies this common
+field; no new existence theorem is inferred from flat exclusion.
+
+## 450. Applying the exact flat exclusion to that field
+
+Because the fixed frame uses actual global labels, pulling ell back
+to an original tetrahedron gives the length word
+
+    (ell_R,ell_A,ell_B,ell_O,ell_A,ell_B).
+
+Its coshes are greater than one and obey the paired response
+formulas. Equality in each repeated pair follows from the common
+field, without an averaging operation or additional symmetry.
+
+All original face maps, degrees, label classes and normal intervals
+are unchanged. Together with the complete angle sums and positive
+length classification, these are precisely the hypotheses of
+Section 444. Theorem 447.1 therefore excludes every flat owner.
+Consequently ell belongs to the simultaneous genuine length domain
+L(T), and all original edge-angle sums are still 2*pi.
+
+The low-sixth and near-maximal cases used in Theorem 447.1 exhaust
+1<v<=m only after the exact earlier source reduction. Neither a
+local scalar assignment nor the label count alone is substituted
+for that reduction in this application.
+
+## 451. The prescribed face gluing and compact completeness
+
+Reuse the cardinality-independent face argument of Section 287.
+Each genuine truncated hyperideal tetrahedron has right-angled
+hexagonal faces. Across a paired original face, the prescribed
+vertex map matches three alternating original-edge sides with the
+same lengths ell_e. A right-angled hyperbolic hexagon is determined
+by these lengths, so the prescribed side correspondence is realized
+by an isometry, with the inverse used on its paired occurrence.
+Orientation reversals are kept exactly as prescribed.
+
+The endpoints of each compact side fix its interval isometry;
+there is no extra shear parameter. Equal numerical lengths do not
+replace the specified map by an arbitrary hexagon symmetry. Thus
+the pieces glue using the original face and edge identifications,
+including loops and distinct-face self-gluings, and their quotient
+is N itself.
+
+At an original interior edge, its connected circular normal link
+and total angle 2*pi give a smooth hyperbolic neighborhood without
+a cone defect. The actual manifold hypothesis excludes an edge
+reversal orbifold. The truncation triangles meet adjacent hexagonal
+faces orthogonally, so their planes continue across the seams
+without bending. At a boundary-link vertex, its triangle-angle sum
+is the original 2*pi edge-end angle sum. Hence the boundary has no
+residual cone point and is smooth and totally geodesic.
+
+There are finitely many compact genuine truncated tetrahedra.
+Their glued metric on N is compact and therefore complete as an
+intrinsic path metric including its boundary. Equivalently, doubling
+across the totally geodesic boundary gives a compact smooth closed
+hyperbolic manifold. This is not a completeness assertion for the
+open interior with the boundary deleted or for a cusp end.
+
+## 452. Realization of the same six-edge triangulation
+
+**Theorem 452.1.** Under exactly the hypotheses of Section 448, the
+same original triangulation has a nondegenerate hyperideal
+realization with all original edge-angle sums 2*pi and smooth
+totally geodesic boundary. Its compact metric on N, including the
+boundary, is complete.
+
+Proof. Section 449 supplies a common positive generalized field.
+Section 450 makes every owner genuine. Section 451 realizes the
+prescribed face pairing and establishes the stated metric and
+boundary conclusions.
+
+The strict-angle and variational existence results are reused.
+The new input is the completed flat exclusion for exactly six
+actual edges and four distinct labels in each fixed paired frame.
+The theorem does not cover repeated selected frame labels, six
+reservoir labels with additional special actual edges, more than
+six actual edges, torus boundary or arbitrary minimum-six-degree
+triangulations. No unrestricted CFMP, dynamical convergence,
+literature-priority or Lean/kernel verification claim is made.
+
+## 453. A ten-tetrahedron six-edge witness
+
+**Proposition 453.1.** The finite face pairing below gives a connected orientable compact 3-manifold
+after ideal-vertex truncation, with one connected genus-5 boundary component,
+ten original tetrahedra, and exactly six actual global edges. Their original
+degrees are (20,8,8,8,8,8). Every owner has a vertex-induced paired frame with
+four distinct labels. Every simultaneous selection of such paired frames has
+all six actual labels in its union of transverse labels.
+
+Thus this is a strict separation from the at-most-five-transverse-reservoir
+condition, even when the paired frame is allowed to vary on each owner. It is
+not a separation claim from every older geometric criterion, a minimality
+claim, an unrestricted CFMP result, or a kernel-certified theorem.
+
+The proof is the actual face and interval calculation in Sections 454-457.
+No topological property is inferred from an unspecified general family.
+
+## 454. Original labels and all possible paired frames
+
+Use tetrahedra P0,...,P4,M0,...,M4 with vertices 1,2,3,4. Edge order is
+(12,13,14,34,24,23). Both copies of each type have this word:
+
+| Type | Label word | Forced transverse pair |
+|---|---|---|
+| 0 | `(5, 0, 1, 2, 0, 1)` | `{0,1}` |
+| 1 | `(1, 0, 2, 3, 0, 2)` | `{0,2}` |
+| 2 | `(2, 0, 3, 4, 0, 3)` | `{0,3}` |
+| 3 | `(3, 0, 4, 5, 0, 4)` | `{0,4}` |
+| 4 | `(4, 0, 5, 1, 0, 5)` | `{0,5}` |
+
+All four selected labels are distinct. Each word has exactly two labels of
+multiplicity two and two labels of multiplicity one. In any vertex-induced
+paired word, the transverse labels each occur twice, so they must be exactly
+the two multiplicity-two labels displayed here. This proves the forced-pair
+claim for every possible frame, not just the displayed frame. Their union is
+{0,1,2,3,4,5}. Thus allowing any of the 24 vertex permutations on each
+owner cannot lower the union of transverse labels.
+
+## 455. All original face pairs and orientations
+
+Fj is the face opposite vertex j. A full permutation q1q2q3q4 sends j to qj;
+restrict it to the stated source face. The omitted source vertex is sent to
+the omitted target vertex. The inverse map is used in the reverse direction.
+
+| Source | Target | Full vertex map |
+|---|---|---|
+| P0:F3 | P4:F1 | 3214 |
+| P0:F4 | P4:F2 | 1432 |
+| M4:F1 | M0:F4 | 4123 |
+| M4:F2 | M0:F3 | 2341 |
+| P1:F3 | M1:F3 | 1234 |
+| P1:F4 | P0:F1 | 2341 |
+| M0:F1 | P0:F2 | 2143 |
+| M0:F2 | M1:F4 | 1432 |
+| P2:F3 | M2:F3 | 1234 |
+| P2:F4 | P1:F1 | 2341 |
+| M1:F1 | P1:F2 | 2143 |
+| M1:F2 | M2:F4 | 1432 |
+| P3:F3 | M3:F3 | 1234 |
+| P3:F4 | P2:F1 | 2341 |
+| M2:F1 | P2:F2 | 2143 |
+| M2:F2 | M3:F4 | 1432 |
+| P4:F3 | M4:F3 | 1234 |
+| P4:F4 | P3:F1 | 2341 |
+| M3:F1 | P3:F2 | 2143 |
+| M3:F2 | M4:F4 | 1432 |
+
+Every one of the forty original face occurrences appears exactly once.
+Substitution in the label table verifies all three edge labels on every
+paired face. The involution on face occurrences is fixed-point-free.
+
+Orient every P owner positively in its displayed vertex order and every M
+owner negatively. Each listed map satisfies
+
+    sign(target)=-sign(vertex permutation)*sign(source),
+
+so the induced face orientations are reversed. The original dual graph is
+connected: the P_i form a chain through the pairs P_i:F4/P_(i-1):F1 for
+1<=i<=4, each M_i for i>=1 is attached to P_i, and M0 is attached to P0.
+The extra closing pairs do not disturb connectedness or orientation.
+
+## 456. Every oriented original normal circle
+
+A state T:a>b/Ff is an ordered local edge with exiting face Ff. Cross Ff by
+its specified face map, carry a and b in their order, and exit by the other
+face containing the image edge. The following lists close exactly, including
+the ordered endpoints. Each underlying original local edge occurs once in
+its displayed cycle.
+
+### Actual edge 0: 20 original intervals
+
+1. `P0:1>3/F2`
+2. `M0:2>4/F3`
+3. `M4:1>3/F4`
+4. `M3:1>3/F4`
+5. `M2:1>3/F4`
+6. `M1:1>3/F4`
+7. `M0:1>3/F4`
+8. `M4:2>4/F3`
+9. `P4:2>4/F1`
+10. `P0:2>4/F1`
+11. `P1:1>3/F2`
+12. `M1:2>4/F3`
+13. `P1:2>4/F1`
+14. `P2:1>3/F2`
+15. `M2:2>4/F3`
+16. `P2:2>4/F1`
+17. `P3:1>3/F2`
+18. `M3:2>4/F3`
+19. `P3:2>4/F1`
+20. `P4:1>3/F2`
+
+### Actual edge 1: 8 original intervals
+
+1. `P0:1>4/F2`
+2. `M0:2>3/F4`
+3. `M4:3>4/F2`
+4. `M0:4>1/F2`
+5. `M1:2>1/F3`
+6. `P1:2>1/F4`
+7. `P0:3>2/F4`
+8. `P4:3>4/F1`
+
+### Actual edge 2: 8 original intervals
+
+1. `P0:3>4/F1`
+2. `P1:2>3/F1`
+3. `P2:1>2/F3`
+4. `M2:1>2/F4`
+5. `M1:1>4/F3`
+6. `P1:1>4/F2`
+7. `M1:2>3/F4`
+8. `M0:4>3/F1`
+
+### Actual edge 3: 8 original intervals
+
+1. `P1:3>4/F1`
+2. `P2:2>3/F1`
+3. `P3:1>2/F3`
+4. `M3:1>2/F4`
+5. `M2:1>4/F3`
+6. `P2:1>4/F2`
+7. `M2:2>3/F4`
+8. `M1:4>3/F1`
+
+### Actual edge 4: 8 original intervals
+
+1. `P2:3>4/F1`
+2. `P3:2>3/F1`
+3. `P4:1>2/F3`
+4. `M4:1>2/F4`
+5. `M3:1>4/F3`
+6. `P3:1>4/F2`
+7. `M3:2>3/F4`
+8. `M2:4>3/F1`
+
+### Actual edge 5: 8 original intervals
+
+1. `P0:1>2/F3`
+2. `P4:3>2/F4`
+3. `P3:4>3/F2`
+4. `M3:3>4/F2`
+5. `M4:3>2/F1`
+6. `M0:2>1/F3`
+7. `M4:1>4/F3`
+8. `P4:1>4/F2`
+
+Each transition is directly obtained from Section 455. Label preservation
+prevents different lists from joining; the lists are disjoint and exhaust
+all sixty original local edge occurrences. Thus each displayed color is one
+actual global edge class, not a union of several unresolved classes. Its
+normal quotient is one circle of the displayed degree. The ordered endpoint
+return rules out an edge-reversal monodromy. Reversing the orientation gives
+the opposite traversal of the same normal circle, not an extra edge class.
+
+## 457. The actual ideal vertex link
+
+Under the face vertex maps, all forty local vertex occurrences belong to one
+ideal vertex. The following tree records 39 actual corner identifications
+joining them; T:j denotes corner j of owner T. Each row is a restriction
+of the indicated face pair in Section 455. Starting at P0:1 and following
+the rows reaches every corner occurrence.
+
+| Parent corner | New corner | Source / target faces |
+|---|---|---|
+| P0:1 | P4:3 | P0:F3 / P4:F1 |
+| P0:1 | P4:1 | P0:F4 / P4:F2 |
+| P0:1 | M0:2 | P0:F2 / M0:F1 |
+| P4:3 | P0:3 | P4:F2 / P0:F4 |
+| P4:3 | P3:4 | P4:F4 / P3:F1 |
+| P4:1 | M4:1 | P4:F3 / M4:F3 |
+| P4:1 | P3:2 | P4:F4 / P3:F1 |
+| M0:2 | M4:3 | M0:F4 / M4:F1 |
+| P0:3 | P1:2 | P0:F1 / P1:F4 |
+| P0:3 | M0:4 | P0:F2 / M0:F1 |
+| P3:4 | M3:4 | P3:F3 / M3:F3 |
+| P3:4 | M3:3 | P3:F2 / M3:F1 |
+| M4:1 | M3:1 | M4:F4 / M3:F2 |
+| P3:2 | M3:2 | P3:F3 / M3:F3 |
+| P3:2 | P2:3 | P3:F4 / P2:F1 |
+| P1:2 | M1:2 | P1:F3 / M1:F3 |
+| P1:2 | P2:1 | P1:F1 / P2:F4 |
+| M3:4 | P3:3 | M3:F1 / P3:F2 |
+| M3:4 | M4:2 | M3:F2 / M4:F4 |
+| M3:3 | M2:3 | M3:F4 / M2:F2 |
+| M3:1 | P3:1 | M3:F3 / P3:F3 |
+| M3:1 | M2:1 | M3:F4 / M2:F2 |
+| M3:2 | M2:4 | M3:F4 / M2:F2 |
+| P2:3 | P1:4 | P2:F4 / P1:F1 |
+| M1:2 | P1:1 | M1:F1 / P1:F2 |
+| P2:1 | M2:2 | P2:F2 / M2:F1 |
+| P3:3 | P2:4 | P3:F4 / P2:F1 |
+| P3:3 | P4:2 | P3:F1 / P4:F4 |
+| M4:2 | M0:1 | M4:F1 / M0:F4 |
+| M2:3 | M1:3 | M2:F4 / M1:F2 |
+| P3:1 | P2:2 | P3:F4 / P2:F1 |
+| M2:1 | M1:1 | M2:F4 / M1:F2 |
+| P1:4 | M1:4 | P1:F3 / M1:F3 |
+| P1:1 | P0:2 | P1:F4 / P0:F1 |
+| M0:1 | M4:4 | M0:F3 / M4:F2 |
+| M1:3 | M0:3 | M1:F4 / M0:F2 |
+| P2:2 | P1:3 | P2:F4 / P1:F1 |
+| P0:2 | P4:4 | P0:F4 / P4:F2 |
+| M0:3 | P0:4 | M0:F1 / P0:F2 |
+
+The link therefore has forty triangles and is connected by its face-side
+gluings. Its 120 triangle sides are paired in sixty
+pairs of tetrahedral face corners, giving sixty link edges: equivalently,
+3*40/2=60.
+
+Each of the six actual edges has two distinct endpoint classes in this link.
+Indeed its ordered normal cycle closes without reversing the ordered edge,
+so the two endpoint cycles are separate; no endpoint can change its actual
+edge label. Consequently the link has twelve vertices. The original endpoint cycles
+account for every link vertex, including the two endpoints of an edge
+whose endpoints lie on this same boundary component.
+
+The link of each of these twelve vertices is its original normal cycle,
+hence one circle. Together with the complete side pairing, this shows that
+the connected link is a closed surface, not merely a two-complex with the
+correct Euler number. The orientation established in Section 455 induces an
+orientation on this link. Its Euler characteristic is
+
+    chi=12-60+40=-8,
+
+so it has genus five. All other points of the original quotient have the
+usual manifold neighborhoods: face interiors are paired in twos, original
+edge interiors have the connected circular normal links without reversals,
+and tetrahedron interiors are unchanged. Truncating the sole ideal vertex
+therefore gives a connected orientable compact 3-manifold with exactly this
+closed genus-5 boundary surface. No edge link or ideal vertex is omitted.
+
+## 458. Realization and the limited separation conclusion
+
+The face pairing of Proposition 453.1 meets every hypothesis of Section 448:
+there are six actual edges, four distinct labels per fixed paired frame,
+original degree at least six, connected normal circles, and one closed
+orientable genus-5 boundary link on the connected actual manifold.
+Theorem 452.1 therefore realizes this same triangulation by genuine
+hyperideal tetrahedra with totally geodesic boundary and a compact complete
+metric including that boundary.
+
+The construction has an actual six-label transverse necessity. It cannot
+be put into the earlier at-most-five-reservoir class merely by changing
+vertex-induced paired frames. This is the asserted strict separation;
+it does not exclude another older geometric criterion from proving this
+particular triangulation realizable. No minimality or unrestricted CFMP
+claim is made, and no explicit numerical edge-length solution is needed
+for this application of Theorem 452.1.
