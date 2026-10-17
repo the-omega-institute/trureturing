@@ -57,7 +57,7 @@ private theorem witness_gram : witnessMatrix = (1 / 32 : ℝ) •
   rcases p with ⟨a, b⟩
   rcases q with ⟨c, d⟩
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [witnessMatrix, diagonalWeights, gramRows, Matrix.diagonal_apply,
+    norm_num [witnessMatrix.eq_1, diagonalWeights.eq_1, gramRows.eq_1, Matrix.diagonal_apply,
       Matrix.add_apply, Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
       Pi.star_apply, Fin.sum_univ_four, smul_eq_mul, Matrix.cons_val_two,
       Matrix.cons_val_three]
@@ -69,7 +69,8 @@ private theorem witness_positive : witnessMatrix.PosSemidef := by
   · apply Matrix.PosSemidef.diagonal
     intro p
     rcases p with ⟨a, b⟩
-    fin_cases a <;> fin_cases b <;> norm_num [diagonalWeights, Complex.nonneg_iff]
+    fin_cases a <;> fin_cases b <;>
+      apply Complex.nonneg_iff.mpr <;> norm_num [diagonalWeights.eq_1]
   · exact Matrix.posSemidef_sum Finset.univ
       (fun k _ => Matrix.posSemidef_vecMulVec_self_star (gramRows k))
 
@@ -77,13 +78,13 @@ private theorem witness_marginal_right :
     partialTraceRight witnessMatrix = !![(9 / 16 : ℂ), 0; 0, 7 / 16] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [partialTraceRight, witnessMatrix, Fin.sum_univ_two]
+    norm_num [partialTraceRight, witnessMatrix.eq_1, Fin.sum_univ_two]
 
 private theorem witness_marginal_left :
     partialTraceLeft witnessMatrix = !![(5 / 8 : ℂ), 0; 0, 3 / 8] := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [partialTraceLeft, witnessMatrix, Fin.sum_univ_two]
+    norm_num [partialTraceLeft, witnessMatrix.eq_1, Fin.sum_univ_two]
 
 private theorem witness_trace : Matrix.trace witnessMatrix = 1 := by
   rw [← trace_partialTraceRight, witness_marginal_right]
@@ -95,11 +96,13 @@ private def witnessState : DensityState (Fin 2 × Fin 2) :=
 
 private theorem witness_right_unit : IsUnit (partialTraceRight witnessMatrix) := by
   rw [witness_marginal_right, Matrix.isUnit_iff_isUnit_det]
-  norm_num [Matrix.det_fin_two, isUnit_iff_ne_zero]
+  apply isUnit_iff_ne_zero.mpr
+  norm_num [Matrix.det_fin_two]
 
 private theorem witness_left_unit : IsUnit (partialTraceLeft witnessMatrix) := by
   rw [witness_marginal_left, Matrix.isUnit_iff_isUnit_det]
-  norm_num [Matrix.det_fin_two, isUnit_iff_ne_zero]
+  apply isUnit_iff_ne_zero.mpr
+  norm_num [Matrix.det_fin_two]
 
 private theorem witness_transform (B : Matrix (Fin 2) (Fin 2) ℂ) :
     partialTraceRight (witnessMatrix * (1 ⊗ₖ B)) =
@@ -108,7 +111,7 @@ private theorem witness_transform (B : Matrix (Fin 2) (Fin 2) ℂ) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [partialTraceRight, Matrix.mul_apply, Fintype.sum_prod_type,
-      Fin.sum_univ_two, witnessMatrix] <;> ring
+      Fin.sum_univ_two, witnessMatrix.eq_1] <;> ring
 
 private theorem witness_upper_mem :
     Matrix.single 0 1 (1 : ℂ) ∈ conditionalDomainB witnessMatrix := by
