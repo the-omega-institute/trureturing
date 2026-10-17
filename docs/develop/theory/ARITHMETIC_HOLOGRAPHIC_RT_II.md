@@ -252,3 +252,109 @@ Identity attains this bound because tau-rho has MC block [[A,B],[B,-A]], eigenva
 This gives all physical MC targets for the entire two-parameter source region q<=c<=sqrt(rq), including strictly mixed sources. It completes the missing t>1 part of §55 by a family of supporting witnesses, and reuses §51 for the central population interval. Sources with 0<=c<q remain outside the support derivation and their general positive-error optimum is not asserted. No general coherent multisector RT optimum follows from this state theorem. The proof uses §53's standard Schmidt support method; no novelty claim is made for that ingredient, the PIO construction, or convex support identities.
 
 For a strictly mixed corner example take r=3/4, c=3/10, P=4/5 and w=2/5. The source determinant is 39/400>0, while the target is physical and pure. Then t=68/61>1, P−r=1/20 and w−c=1/10, so the exact unhalved trace error is √5/10, attained by identity. This example lies outside the §55 projection regime.
+
+## 57. Complete mixed-MC source to MC target trace-error formula
+
+All norms below are unhalved Schatten trace norms. LOSR means finite convex mixtures of product qubit CPTP maps, with arbitrary local product ancillas, no additional entanglement, communication or postselection. Competitor outputs are unrestricted two-qubit states.
+
+By independent local input and output unitaries, write the source as rho=r|00><00|+q|11><11|+c(|00><11|+|11><00|), where r>=1/2, q=1-r and 0<=c<=sqrt(rq); write the target as tau=P|00><00|+(1-P)|11><11|+w(|00><11|+|11><00|), where P>=1/2, 0<=w<=sqrt(P(1-P)). These reductions preserve the allowed set and trace distance.
+
+If q=0, the exact error is 2w. If q>0, put D=sqrt(q^2+c^2) and t=[q(1-P)+cw]/D^2. The exact error is
+
+    2 max(0,w-c),                         P<=r;
+    2 max(0,[qw-c(1-P)]/D),               P>=r and t<=1;
+    2 sqrt((P-r)^2+(w-c)^2),              P>=r and t>=1.
+
+The formulas agree on overlaps. The first regime reuses §51. The last two remove the source condition c>=q from §§55–56. In particular the theorem includes every physical mixed MC qubit source and target. It makes no statement about non-MC targets or coherent multisector recovery channels.
+
+### 57.1 Unrestricted pure-target fidelity support
+
+For u in [1/2,1], let psi_u=sqrt(u)|00>+sqrt(1-u)|11>, and f_r,c(u)=ru+q(1-u)+2c sqrt(u(1-u)). We prove
+
+    sup_Lambda <psi_u|Lambda(rho)|psi_u> = max{u,f_r,c(u)}.
+
+The fidelity convention is the displayed squared overlap. Identity and simultaneous product reset attain the two quantities. The issue is the upper bound for all product CPTP maps, including nonunital maps and outputs outside MC support.
+
+**Reduction to a channel paired with its conjugate.**
+
+For channel A define A_kl,ij=<k|A(|i><j|)|l>, and similarly B. Put rho_00=r, rho_11=q, rho_01=rho_10=c and s_kl=sqrt(u_k u_l), where u_0=u,u_1=1-u. Every weight rho_ij s_kl is nonnegative. The fidelity is
+
+    F(A,B)=sum_{i,j,k,l} rho_ij s_kl A_kl,ij B_kl,ij.
+
+Weighted Cauchy–Schwarz implies F(A,B)<=sqrt(Q(A)Q(B)), where Q(A)=sum rho_ij s_kl |A_kl,ij|^2. Entrywise conjugation of all Kraus matrices produces a CPTP channel conjugate(A) whose coefficients are conjugates of A's, and Q(A)=F(A,conjugate(A)). Compactness therefore gives max_A,B F(A,B)=max_A Q(A). Affinity extends this to finite LOSR mixtures. This reduction concerns fidelity support, not a direct restriction on trace-distance optimizers.
+
+**Balanced-source boundary.**
+
+Fix x in [0,1/sqrt(2)], y=sqrt(1-x^2)>0, k=x/y in [0,1], and u=(1+x)/2. Consider the balanced source r=q=1/2,c=k/2. We prove Q(A)<=u for every qubit CPTP map.
+
+Order the Choi matrix by input index first, then output index, and write
+
+    J_A = [[a, h, s, z],
+           [conj(h), 1-a, v, -s],
+           [conj(s), conj(v), b, l],
+           [conj(z), -conj(s), conj(l), 1-b]].
+
+This is the general Hermitian Choi form after the trace-preserving constraints: a,b are real in [0,1], the diagonal blocks each have trace1, and the off-diagonal block has trace0. Positivity of its 2-by-2 principal minors gives
+
+    |h|^2+|l|^2 <= a(1-a)+b(1-b),
+    |z|^2+|v|^2 <= a(1-b)+(1-a)b,
+    |s|^2 <= min{ab,(1-a)(1-b)}.
+
+Direct substitution in Q, using 2sqrt(u(1-u))=y and ky=x, yields
+
+    2Q = a^2+b^2-(1-x)(a+b)+(1-x)
+         +y(|h|^2+|l|^2)+2k|s|^2+x(|z|^2+|v|^2).
+
+Set S=a+b, V=ab and L=1-y+x-k=(1-y)(1-k)>=0. The principal-minor bounds imply
+
+    2u-2Q >= 2x+(1-2x-y)S-(1-y)S^2
+               +2(1-y+x)V-2k min{V,1-S+V}.
+
+If S<=1, the minimum is V and V>=0. Thus the right side is at least
+
+    2x+(1-2x-y)S-(1-y)S^2
+      =(1-S)[2x+(1-y)S]>=0.
+
+If S>=1, the minimum is 1-S+V and V>=S-1, since (1-a)(1-b)>=0. The coefficient of V after combining terms is 2L>=0. Substitution of V>=S-1 simplifies the lower bound to
+
+    (1-y)(S-1)(2-S)>=0.
+
+Here 0<=S<=2. Both cases prove Q<=u, including all endpoints. Identity also attains u on this boundary because c y=q x. This proof covers every Choi rank and every local environment.
+
+**Convex completion over all source parameters.**
+
+For fixed u<1 write x=2u-1, y=2sqrt(u(1-u))>0, k=x/y. The physical sorted source domain is the closed quarter-disk
+
+    D_source={(r,c): 1/2<=r<=1, c>=0, c^2<=r(1-r)}.
+
+Split it by the line c=k(1-r). On the lower region f_r,c(u)<=u; on the upper region f_r,c(u)>=u. For each fixed product channel, its fidelity is affine in (r,c). On each of the two compact convex regions the proposed upper bound (u or f_r,c(u)) is also affine. It therefore suffices to establish the bound at that region's extreme points.
+
+The boundary consists of a circular arc, the segments r=1/2 and c=0, and the splitting line. An extreme point is consequently either on the circular arc, one of (1/2,0),(1,0), or the intersection (1/2,k/2) when 0<=k<=1. Intersections of the splitting line with the circular arc are already included in the first category; interior points of any straight boundary segment are not additional extreme points. The circular arc consists of pure MC sources, for which the all-output fidelity bound is §53. The classical corners have bound u by separability (and (1,0) has f=u). The only remaining point is exactly the balanced-source boundary proved above. If k>1, this point is outside the domain and is not needed. Thus the bound holds throughout both regions, and hence for every source. At u=1 the bound is simply1 and reset attains it. This proves the support identity.
+
+### 57.2 Trace-norm lower bounds and explicit attainers
+
+For P<=r the population-interval theorem §51 applies. Suppose P>=r and q>0. Use x=c/D,y=q/D and u=(1+x)/2. Then c y=q x, so the support identity shows that H=2|psi_u><psi_u|-I has output support at most x. Its MC block is [[x,y],[y,-x]] and its other block is -I. Norm duality gives the all-output lower bound
+
+    ||tau-Lambda(rho)||_1 >= 2[qw-c(1-P)]/D.
+
+If qw<=c(1-P) and c>0, z=w/c gives the exact attainable target
+
+    tau=z rho+[P-zr]|00><00|+[(1-P)-zq]|11><11|.
+
+The weights are nonnegative because z<=(1-P)/q<=1 and P-zr>=(P-r)/q>=0. If c=0 the same zero-error condition forces w=0, and the target is a mixture of the two resets. Thus zero error is attained in every zero-bound case.
+
+If qw>c(1-P) and t<=1, t>0 and omega=t rho+(1-t)|00><00| is attainable. Its residual MC block is
+
+    b [[c/D,q/D],[q/D,-c/D]],  b=[qw-c(1-P)]/D>0.
+
+It has eigenvalues +/-b and hence trace norm2b. This also applies when c=0 and w>0. The other block vanishes.
+
+For t>=1 put A=P-r>=0 and B=w-c. The condition is equivalent to cB>=qA. If c>0 it gives B>=0; apart from A=B=0 one has B>0. Set L0=sqrt(A^2+B^2), x=A/L0,y=B/L0 and u=(1+x)/2. Then cy>=qx, so the support identity gives Tr H xi<=Tr H rho for every output xi. Norm duality gives ||tau-xi||_1>=2(xA+yB)=2L0. Identity attains this since tau-rho has MC eigenvalues +/-L0. If c=0, t>=1 and P>=r imply P=r; §51 gives2w, which agrees with the corner formula. The zero residual is immediate. Finally q=0 forces c=0; separability/negativity yields the lower bound2w and the population-matching mixture of product resets attains it.
+
+At t=1, the edge attainer equals rho and its norm is exactly the corner expression. At P=r, t<=1 means w<=c when c>0, and both formulas vanish; t>=1 gives2(w-c), matching §51. The c=0 overlaps were treated explicitly. Thus every physical source/target parameter and all degeneracies are covered, with at most three product-CPTP branches overall.
+
+### 57.3 Scope and attribution
+
+The exact zero-error region agrees with the PIO reachable geometry and the independently proved full-support necessity in §54; that geometry and its construction are not claimed as new. The pure-source boundary uses §53's explicit Schmidt-support proof, following the standard method of George–Chitambar, Phys. Rev. A109,062418 (2024), https://link.aps.org/accepted/10.1103/PhysRevA.109.062418 . PIO predecessors are Shi et al., Scientific Reports7,14806 (2017), https://www.nature.com/articles/s41598-017-13687-4 , and Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . No literature priority claim is made for the auxiliary Cauchy–Schwarz, Choi-minor or convexity arguments. The conclusion is the complete all-output trace-norm optimum on the physical two-qubit MC source/target family, not the original coherent multisector RT optimum.
+
+For an explicit low-coherence example, take r=3/4, c=1/10 and the pure target P=9/10, w=3/10. Here q=1/4>c, D=√29/20 and t=22/29. The exact error is 13/(5√29), attained by (22/29)ρ+(7/29)|00⟩⟨00|. This lies outside the source region of §56 and exceeds the negativity lower bound 2(w−c)=2/5.
