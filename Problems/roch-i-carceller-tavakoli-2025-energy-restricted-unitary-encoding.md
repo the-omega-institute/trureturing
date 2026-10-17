@@ -96,11 +96,11 @@ Every other public declaration is a definition used by a public statement. The b
 **Computed, not formalized** (orchestrator, exact, recorded in #17895): the four message marginals (1/625)[[337, ±84], [±84, 288]], Bob's constant marginal diag(16/25, 9/25), and the success matrix with diagonal entries 2401/2500.
 
 **Argued, not formalized.**
-- *Infinite-dimensional messages.* An unassisted strategy with infinite-dimensional messages and integrable shared randomness reduces to the finite case. Compress each message onto a finite subspace that contains |0⟩, and renormalize. This does not lower the vacuum component, and it changes the value by at most the discarded weight, which can be made arbitrarily small. Since the formal bound 1/4 + √ω has a strict margin, the conclusion persists.
 - *Mechanism.* With two inputs, the energy restriction forces a common ground state close to both encoded states (the companion paper's proof). With four inputs, a partially entangled state with Schmidt coefficients 4/5 and 3/5 leaves every message marginal below the energy threshold. Meanwhile, four orthogonal sign patterns let Bob read two bits from the joint system, which no low-energy single message can carry as well.
 - *Range.* Take the same construction with Ψ = cos t|00⟩ + sin t|11⟩ and R the rotation by t. Each message then has vacuum component cos⁴t + sin⁴t, so ω = sin²(2t)/2, and the success is ((1 + sin 2t)/2)². It beats the bound 1/4 + √ω exactly when sin 2t > 2√2 − 2, that is for 6 − 4√2 ≈ 0.343 < ω < 1/2. The true unassisted optimum may lie below this bound, so the advantage may extend further.
 
 **Open.**
+- Whether the unassisted bound 1/4 + √ω, proved here for finite-dimensional messages and finite shared randomness, extends to infinite-dimensional messages and general shared randomness. The source's QC model allows both; the formal claim quantifies over the finite case only.
 - The smallest ω at which unitary encoding helps in some task, and the optimal unitary value for four-message discrimination at each ω.
 - Whether three inputs suffice.
 
