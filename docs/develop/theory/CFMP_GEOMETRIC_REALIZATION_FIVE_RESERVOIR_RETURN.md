@@ -2232,3 +2232,321 @@ original normal circles and distinct-face self-gluings. The remaining
 one-flat and two-flat six-reservoir configurations still require new
 joint geometric and face-transport arguments; this theorem alone does
 not assert that either residual configuration exists or is impossible.
+
+
+## 314. Two strict upper labels in the actual six-edge distinct-frame case
+
+Retain the original finite paired-frame quotient with complete connected
+normal circles, minimum original degree six, common positive lengths and
+all original angle equations 2*pi. Suppose there are exactly six actual
+global edge labels, no special edges, and every paired frame
+(R,A,B,O,A,B) has four distinct labels R,A,B,O. Assume a nonempty flat set.
+The public six-witness theorem through Section 308 makes every label
+genuinely witnessed and every flat axial-selected. Each label has at most
+one flat pi slot. The arbitrary upper-witness theorem excludes every
+flat transverse occurrence of a label with value greater than m-2.
+
+Choose the maximal-selected reservoir M and its usual genuine escape
+
+    tau=(Z,M,C,D,M,C),
+    m>=1+c+d>3, z>=1+m+c>m+2, p_M=1, p_Z=0.
+
+All lower-case values are coshes of original shared lengths. M has total
+genuine angle pi. Z occurs in no flat owner, so its total genuine angle
+is 2*pi. The argument below uses only the stated response formulas and
+original circles; it does not invoke the five-label exhaustion.
+
+**Theorem.** Some actual edge other than Z has value greater than m.
+Consequently, after naming it U, the entire six-edge distinct-frame
+mixed-flat configuration has the following form:
+
+    H=E={M,C,D,Z,U,V}, u>m, z>m,
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2.
+
+Sigma is the unique flat owner and the only owner of transverse pair
+{C,D}. Thus both its M and V axial runs consist of one original interval.
+This is a structural reduction, not exclusion of the remaining flat.
+
+## 315. A uniform expense for a third-role owner
+
+We first isolate the response estimate used below. Let m>3,z>m+2,
+1<q<=m and r<=m. Suppose (M,Z,Q,R,Z,Q) is genuine. Write theta for
+its axial M angle and gamma for its transverse Z angle. Then
+
+    theta+2*gamma>pi.                                      (315.1)
+
+For q<=m-2 the positive response coefficients have sum
+
+    2*sqrt(z*z-1)/(z+q)*sqrt((m-1)/(m+1))>1.
+
+This follows by comparison with z=m,q=m-2, where the sum is one.
+Hence gamma>atan(cot(theta/2)) and (315.1) follows.
+
+For m-2<q<=m, use the exact rational comparison already proved in
+Sections 202–204; its scalar argument is reproduced here to state its
+full domain. Set k=z+q, h=z-q>0 and alpha=sqrt((m-1)/(m+1)). The actual
+other axis satisfies r<=m<r0=1+z+q. Define
+
+    L=k*k-(m-1)*(r-1)>0,
+    J=(m+1)*(r+1)-h*h>0,
+    t=cot(theta/2),
+    A/B=[sqrt(z*z-1) +/- sqrt(q*q-1)]/k*alpha.
+
+A,B are positive, and
+
+    A+B=2*sqrt(z*z-1)*alpha/k,
+    A*B*t*t=h/k*L/J.
+
+L/J strictly decreases as r increases to r0. At that endpoint,
+
+    L0=k*(k-m+1)>0,
+    J0=(m+1)*(k+2)-h*h>0.
+
+The latter follows by increasing J from its positive actual value.
+Therefore
+
+    A+B+A*B*t*t > F(q),
+    F(q)=2*sqrt(z*z-1)*alpha/(z+q)
+       +(z-q)*(z+q-m+1)/[(m+1)*(z+q+2)-(z-q)^2].
+
+On the interval from q to m, the first term decreases. The numerator
+N(x)=(z-x)*(z+x-m+1) is positive and has derivative
+m-1-2*x<3-m<0. The positive denominator J0(x) strictly increases,
+with derivative m+1+2*(z-x)>0. Hence F(q)>=F(m), including q=m.
+
+    J0(m)=(z+1)*(3*m+2-z)>0,
+    F(m)=2*sqrt(z*z-1)*alpha/(z+m)+(z-m)/(3*m+2-z).
+
+Both terms strictly increase in z on m+2<=z<3*m+2. Thus
+
+    F(m)>sqrt(1-4/(m+1)^2)+1/m>1.
+
+The final comparison follows by squaring positive terms; the required
+numerator is
+
+    (2*m-1)*(m+1)^2-4*m*m
+      =(m-1)*(2*m*m+m+1)>0.
+
+Consequently A+B+A*B*t*t>1. If gamma>=pi/2, then gamma>atan(t).
+Otherwise its tangent is (A+B)*t/(1-A*B*t*t)>t. In either case
+2*gamma>pi-theta, proving (315.1). No label-count premise is present
+in this scalar estimate, and r<=m is stronger than its needed bound.
+
+## 316. A unique strict upper label is impossible
+
+Suppose, for contradiction, every actual edge other than Z has value
+at most m. Every Z slot is genuine. Along the maximal axial Z run
+through tau the pair is {M,C}. At each owner the individual response
+has positive coefficients whose sum exceeds one:
+
+    2*sqrt(m*m-1)/(m+c)*sqrt((z-1)/(z+1))>1.
+
+The same elementary arctangent comparison gives theta_Z+2*beta_M>pi.
+Four-distinctness gives one axial Z slot per such owner. If the whole
+Z circle were axial, degree at least six would contradict the entire
+M/Z capacity 3*pi. Hence the run is proper.
+
+At each of its transverse boundary slots, write the receiver as
+(B,Z,A,Q,Z,A), with {A,B}={M,C}. Its other axis obeys q<=m<z.
+The transverse-Z cosine numerator increases with q. At q=1+z+a it
+is
+
+    [a+z*(1+z+a)]*(1+a+b-z)<=0.
+
+Since the actual q is strictly below this endpoint, its Z angle is
+strictly greater than pi/2. Each such owner has two equal transverse
+Z slots. The two distinct run boundaries therefore belong to a single
+actual owner rho; two distinct owners would exceed Z's total 2*pi.
+The original rho Z expense exceeds pi. Every run owner costs more
+than pi in M/Z, so the remaining capacity below 2*pi forces the run
+to consist of exactly tau.
+
+The possible companion-C return (M,Z,C,Q,Z,C) has
+
+    (m+1)*(q+1)>(z-c)^2>=(m+1)^2,
+
+so q>m. The only possible label would be Z, but four-distinctness
+forbids that repeated label. Therefore
+
+    rho=(C,Z,M,Q,Z,M),
+
+where Q is distinct from M,Z,C and q<=m. All owners with fixed pair
+{Z,M} have their two axes at most m. For any such genuine owner with
+axis values r,s<=m, put
+
+    L=(z+m)^2-(r-1)*(s-1),
+    J=(r+1)*(s+1)-(z-m)^2.
+
+Then
+
+    L-2*J=3*z*z-2*z*m+3*m*m-3*r*s-r-s-3
+          >=3*z*z-2*z*m-2*m-3>0.
+
+Define the squared paired coefficient
+
+    K=((sqrt(z*z-1)+sqrt(m*m-1))/(z+m))^2.
+
+The transverse angle sum is beta_Z+beta_M=2*atan(sqrt(K*L/J)),
+and K>8/9 since m,z>3. Hence
+K*L/J>16/9, and its four transverse M/Z slots cost more than pi.
+Tau already costs more than pi. Two distinct pair-{Z,M} owners
+would consequently exceed 3*pi. Thus rho is the unique such owner,
+and all owners other than tau,rho have M/Z capacity strictly below pi.
+
+The unused rho faces have labels {Z,M,Q}. Across such a face, a Z
+slot is axial with pair {M,Q}, transverse with pair {Z,M}, or
+transverse with pair {Z,Q} and an M axis. The second role can only
+be rho. Every owner of the third role is genuine and satisfies (315.1),
+so it is impossible under the remaining capacity below pi.
+
+Actual continuation now makes the other arc between rho's two Z
+slots one axial run with fixed pair {M,Q}. It contains
+n=degree(Z)-3>=3 original Z intervals, and all its owners are genuine.
+For any such slot of angle theta and its transverse M angle beta,
+
+    beta=atan(A*cot(theta/2))+atan(B*cot(theta/2)),
+    A=[sqrt(m*m-1)+sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1)),
+    B=[sqrt(m*m-1)-sqrt(q*q-1)]/(m+q)*sqrt((z-1)/(z+1))>=0.
+
+Because q>1 and q<=m,
+sqrt(q*q-1)>sqrt((m-1)/(m+1))*(q-1), giving A>1/2.
+For theta>=pi/2, theta+beta>pi/2 is immediate. For theta<pi/2,
+t=cot(theta/2)>1 and cot(theta)=(t-1/t)/2<t/2<A*t, giving the same
+strict bound. Four-distinctness makes these n owners distinct and
+each charge theta+beta uses only one of its two original M slots.
+Their actual M/Z expense exceeds n*pi/2>=3*pi/2, contradicting the
+remaining capacity below pi. The supposed unique upper label cannot
+exist. This proves the first assertion.
+
+## 317. The whole six-edge source pair is unique
+
+Name a second edge of value greater than m as U. Since C,D<m-2,
+U lies outside M,C,D,Z. The source's other axis must be the sixth
+label V: it is distinct from M,C,D by the frame hypothesis and cannot
+be U or Z, which exceed the maximal selected value. Thus v<=m and
+sigma=(M,C,D,V,C,D).
+
+If v<=m-2, Section 310 shows that every other flat would select the
+largest of {C,D,V}, with the remaining two as its transverse pair.
+Its other selected axis cannot be M (the source uses its only pi
+slot), U,Z (unselected), either transverse label, or the already used
+largest low label. Four-distinctness and the six actual labels exhaust
+all possibilities, so no second flat exists.
+
+If v>m-2, every flat has transverse pair {C,D}, since M,V,Z,U have
+no flat transverse occurrence. Its distinct selected axes can only
+be M and V: U,Z are unselected, and C,D belong to its pair. Both M
+and V pi slots are already used by sigma. Again no second flat exists.
+
+Finally any owner with pair {C,D} has two distinct axes from
+{M,V,Z,U}. Since z,u>m>=v, their shifted product is at least
+(m-1)*(v-1)>=(c+d)^2. Such an owner would be flat and hence is sigma.
+The one-flat and one-CD-owner conclusions are global actual-owner
+statements. They do not eliminate the remaining changed-pair source
+faces or prove six-reservoir realization. QED.
+
+
+## 318. Complete-circle upper bound for the largest actual length
+
+In an actual finite paired quotient with four distinct labels in every
+frame, connected normal circles of degree at least six and complete
+angle equations 2*pi, let X be a label whose entire star is genuine.
+Suppose x is a largest actual cosh length. Let a1>=a2 be the two
+largest values at distinct other actual labels. Then
+
+    x < 1+a1+a2.
+
+This is a necessary actual-star bound, not a scalar existence claim.
+For the mixed-flat six-edge setting with Z,U>m and all remaining
+values at most m, it gives
+
+    abs(z-u)<m+1.
+
+The stronger one-sided Z bound derived from the source run may also
+be retained. No six-reservoir flat exclusion follows from these gaps.
+
+## 319. The dominant-axis estimate
+
+For a genuine frame (r,a,b,o,a,b) with r>=1+a+b, write
+s=a+b, delta=a-b, T=(r-1)/(r+1),
+K=(sqrt(a*a-1)+sqrt(b*b-1))^2/s^2 and lambda=sqrt(K*T).
+Let theta be the r angle and S=beta_a+beta_b. The exact response is
+S=2*atan(lambda*cot(theta/2)). We claim 2*theta+S>pi.
+
+Define
+
+    F(r)=[2*(r-1)-T*delta^2]/s^2.
+
+The genuine half-angle square is
+T*[(r+1)*(o+1)-delta^2]/[s^2-(r-1)*(o-1)].
+It increases strictly with o wherever its denominator is positive,
+so tan(theta/2)^2>F(r), its value at o=1. This comparison remains
+valid when F(r) is negative. On r>=s+1, F increases because
+F'(r)=2*[1-delta^2/(r+1)^2]/s^2>0, and lambda increases.
+At r0=s+1, put D=s*(s+2) and H=a*a+b*b-2>0. Then
+
+    1-F(r0)=2*H/D,
+    lambda(r0)=(sqrt(a*a-1)+sqrt(b*b-1))/sqrt(D)>H/D.
+
+The strict inequality follows from D>H and
+sqrt(a*a-1)+sqrt(b*b-1)>=sqrt(H). Consequently
+F(r)+2*lambda>1 throughout the domain.
+
+If theta>=pi/2 the claimed estimate is immediate from S>0.
+Otherwise t=cot(theta/2)>1. If lambda>=1/2, then
+lambda*t>(t-1/t)/2=cot(theta).
+If lambda<1/2, the proved inequality gives
+F(r)>1-2*lambda>0 and t^2<1/F(r)<1/(1-2*lambda),
+which gives the same strict comparison. Thus
+atan(lambda*t)>pi/2-theta, proving 2*theta+S>pi.
+This establishes the per-owner estimate without an extra angle premise.
+
+## 320. The original-circle proof of the maximum gap
+
+First suppose X has a transverse occurrence with companion A and
+axes R,O. The four labels are distinct. The genuine inequality gives
+
+    (x-a)^2<(r+1)*(o+1).
+
+Since x>=a, it follows that
+
+    x<a+sqrt((r+1)*(o+1))
+      <=a+1+(r+o)/2.
+
+For any three distinct other labels, a+(r+o)/2<=a1+a2:
+if A carries a largest value, each of r,o is at most a2; otherwise
+A is at most a2 and the average of r,o is at most a1. Hence the
+claimed strict bound follows.
+
+Otherwise every X occurrence is axial. Connectedness transports one
+fixed pair {A,B} around its whole circle. Four-distinctness gives
+one X slot per owner, so there are n=degree(X)>=6 distinct genuine
+owners. Suppose x>=1+a+b. The established dominant-axis response
+inequality (the same one used in Sections 209 and 312) gives at each
+owner
+
+    2*theta_X+beta_A+beta_B>pi.
+
+Summing uses the actual X angles exactly once and only half of the
+two transverse A/B slots per owner. Thus
+
+    n*pi < 2*sum(theta_X)+sum(beta_A+beta_B)
+         <= 4*pi+(2*pi+2*pi)/2 = 6*pi.
+
+This contradicts n>=6. Therefore x<1+a+b<=1+a1+a2.
+All charging is by original slots at distinct actual owners; repeated
+visits or distinct-face self-pairings do not change the count. QED.
+
+## 321. Application and exact scope
+
+In the current mixed-flat six-edge class, the maximal selected value
+is m, while Z and another edge U exceed m. Every flat is axial-selected,
+and no flat has a transverse occurrence of a value greater than m-2.
+Consequently both Z and U have wholly genuine stars. Apply the lemma
+to the larger of z,u. The two largest other values are the smaller of
+z,u and m. This proves abs(z-u)<m+1, including ties among lower values.
+
+In particular a local source-front angle assignment with u>=z+m+1
+cannot extend to the actual complete U star. It may still be a correct
+counterexample to a weaker scalar relaxation that omitted this bound.
