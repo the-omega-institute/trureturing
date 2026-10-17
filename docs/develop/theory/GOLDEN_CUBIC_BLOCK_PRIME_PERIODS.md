@@ -4470,4 +4470,111 @@ $$\boxed{P\mid\operatorname{den}(x)\operatorname{num}(y).}$$
 For a fixed $Q$ and one supplied non-two-torsion rational point, the nonzero integer in Corollary 76.4 gives a finite explicit set containing every possible second prime. The point need not be a generator or satisfy a nonsingular-reduction test at $Q$. This does not assert that such a point or a new excluded pair has been exhibited for every $Q$.
 
 
+
+## 77. A prime squareclass controls every even initial depth
+
+**Theorem 77.1 (the original generator with a simple odd-depth factor allowed).** Let $j\ge1$, $N=3^j$, and suppose the actual golden block satisfies
+
+$$B_N=L_N^2+3=QC^2$$
+
+for a rational prime $Q$ and a positive integer $C$. Thus $Q$ is the only prime of odd initial depth; no all-WSS hypothesis or assumption $Q\mid C$ is imposed. On $E_Q:Y^2=X(X+5Q)(X-15Q)$ put
+
+$$R=(5QB_N,25Q^2L_NCF_N),\qquad T_0=(0,0),\qquad S=R+T_0.$$
+
+Then
+
+$$\boxed{G_0(Q)=\mathbb ZS,\qquad E_Q(\mathbb Q)=\mathbb ZS\oplus E_Q[2].}$$
+
+Moreover the global formal subgroup is exactly
+
+$$\boxed{G_1(Q)=\begin{cases}Q\mathbb ZS,&h_Q=1,\\\mathbb ZS,&h_Q\ge3,\end{cases}\qquad h_Q=1+2v_Q(C).}$$
+
+The nonsingular global reduction image at $Q$ is respectively all of $\mathbb F_Q$ or zero. For every prime $p\mid C$ with $p\ne Q$, reduction is good and
+
+$$\operatorname{red}_p(E_Q(\mathbb Q))=E_Q(\mathbb F_p)[2].$$
+
+**Proof.** TBN3 and GPC5 in [the golden-unit-lift dossier](../../../Problems/wall-sun-sun-golden-unit-lift.md) give $p>5$, $\rho(p)=6N$ and $v_p(B_N)=h_p$ for every prime $p\mid B_N$. GPC5 gives the squarefree kernel $19$ modulo $120$, so here $Q\equiv19\pmod{120}$ without an all-WSS assumption. Goto's full two-Selmer bound, [Section 2 and Table 9](https://www.ma.noda.tus.ac.jp/u/tg/files/thesis.pdf), type $5\times19$, therefore gives $\operatorname{rank}E_Q(\mathbb Q)\le1$ as in Section 74.
+
+The torsion-freeness argument for $G_0(Q)$ in Section 74 is independent of the factorization pattern. The formal kernel at $Q\ge19$ is torsion-free. Torsion in $G_0(Q)$ therefore injects into the additive nonsingular group $\mathbb F_Q$ and has order dividing $Q$. Good reduction at seven, where this curve has eight points, rules out such torsion. The displayed model is minimal at every prime because its discriminant is $2^8 3^2 5^6Q^6$, with every nonzero valuation below twelve.
+
+The identities $B_N=QC^2$ and $L_N^2+4=5F_N^2$ show directly that $R$ is integral on $E_Q$. Translation by $T_0$ gives
+
+$$X(S)=-\frac{15}{C^2},\qquad z(S)=\frac{X(S)}{5Q}=-\frac3{B_N}.$$
+
+The point $S\ne O$ lies in $G_0(Q)$: it is formal if $Q\mid C$, and has unit coordinates and finite nonsingular reduction if $Q\nmid C$. Torsion-freeness of $G_0(Q)$ proves that $S$ is non-torsion in both cases. In particular this argument does not invoke the vanishing-image theorem 74.2 in the new case $h_Q=1$. The rank is one, and $G_0(Q)=\mathbb ZH$.
+
+Choose the sign of $H$ so $S=[m]H$ with $m>0$. A nonzero real double has positive $X$ by the duplication formula, whereas $X(S)<0$, so $m$ is odd. Put $K=H+T_0$; then $[m]K=R$. The formal-kernel argument of Theorem 76.1 proves that $K$ is integral at every prime, including $2,3,5,Q$: a nonintegral point belongs to the formal kernel, whose nonzero multiples remain nonintegral. This needs no condition on the prime divisors of $m$.
+
+Complete two-descent, [Silverman X.1, Proposition 1.4](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf), preserves squareclasses under odd multiplication. At $R$ the three classes are again $(5,Q,5Q)$, since
+
+$$X(R)=5(QC)^2,\quad X(R)+5Q=Q(5F_N)^2,\quad X(R)-15Q=5QL_N^2.$$
+
+As in the explicit descent of Theorem 76.1, integrality and squarefreeness of $5,Q,5Q$ therefore give integers $c,d,f$ with
+
+$$X(K)=5Q^2c^2,\qquad d^2+3=Qc^2,\qquad d^2+4=5f^2.$$
+
+After choosing positive $d,f$, the integral negative-Pell classification proved there gives $(d,f)=(L_n,F_n)$ for an odd integer $n\ge1$. The equation $Q\mid L_n^2+3$, the identities $L_{3n}=L_n(L_n^2+3)$ and $F_{6n}=F_{3n}L_{3n}$, and the original exact rank $\rho(Q)=6N$ imply $N\mid n$. Consequently
+
+$$z(K)=L_n^2+3\ge B_N.$$
+
+The uniform height bounds of Section 74 now give, with $t=\tfrac12\log B_N$, $c_0=\log144/6$ and $u_0=\log24/6$,
+
+$$m^2(t-c_0)\le t+u_0.$$
+
+Exactly as in Theorem 76.1, $B_N\ge19>12$ implies $9(t-c_0)>t+u_0$. Thus $m<3$ and the positive odd integer $m$ is one. This proves $G_0(Q)=\mathbb ZS$. The proof also applies when $C=1$.
+
+The local duplication computation of Corollary 76.3 uses only $Q>5$ and proves $[2]U\in G_0(Q)$ for every rational point $U$. Write $[2]U=[k]S$. If $k$ is odd, its $X$-coordinate has the negative squareclass $-15$ of $X(S)$, contrary to positivity of a nonzero real double. Hence $k$ is even and $U\in\mathbb ZS+E_Q[2]$. Non-torsion of $S$ makes the sum direct.
+
+If $Q\nmid C$, the reduction of $S$ is nonzero in the additive group $\mathbb F_Q$ and has order $Q$, giving $G_1(Q)=Q\mathbb ZS$. If $Q\mid C$, the generator is formal and $G_1(Q)=\mathbb ZS$. Finally, for $p\mid C$, $p\ne Q$, the discriminant is a $p$-unit and $v_p(X(S))=-2v_p(C)<0$. The generator reduces to infinity and the four rational two-torsion points reduce distinctly, proving the last assertion. ∎
+
+**Theorem 77.2 (full cofactor denominator certificate).** Under the hypotheses of Theorem 77.1, every rational point $U$ which is not two-torsion satisfies
+
+$$\boxed{C^2\mid\operatorname{den}(X(2U)),\qquad B_N\le Q\operatorname{den}(X(2U)).}$$
+
+Here denominators are positive and in lowest terms. In standard coprime coordinates $X(U)=A/D^2$, $Y(U)=B/D^3$, $D>0$, one also has
+
+$$\boxed{C\mid DB.}$$
+
+**Proof.** Theorem 77.1 writes $U=[l]S+T$ with $T\in E_Q[2]$ and $l\ne0$. Hence $2U=[2l]S\ne O$. For $p\mid C$ put $e=v_p(C)>0$. Since $p>5$, $v_p(X(S))=-2e$, and the standard formal parameter $t=-X/Y$ has valuation $e$. The formal multiplication series on this integral model has integral $p$-adic coefficients and zero constant term, so multiplication by every integer preserves $p^e\mathbb Z_p$. The formal Laurent expansion for $X$ then gives
+
+$$v_p(X(2U))\le-2e.$$
+
+These standard integral formal-group facts are recorded in [Silverman IV.1–2 and VII.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf). They apply also at $p=Q$ when $Q\mid C$; good reduction is unnecessary. Taking the product over all primes of $C$ proves the denominator divisibility and the bound for $B_N$.
+
+In the standard coordinates, duplication gives
+
+$$X(2U)=\frac{(A^2+75Q^2D^4)^2}{4D^2B^2}.$$
+
+Its reduced denominator divides $4D^2B^2$, so $C^2\mid4D^2B^2$. Since $C$ is odd, comparison of valuations gives $C\mid DB$. The premise on $U$ ensures $B\ne0$ and $2U\ne O$. ∎
+
+**Corollary 77.3 (an integral nonsingular point forces a prime block).** Let $Q>5$ be prime. If $E_Q$ has an affine integral point $U$ with nonsingular reduction at $Q$, then every actual equality $B_N=QC^2$ as in Theorem 77.1 has $C=1$, hence $B_N=Q$.
+
+**Proof.** The point belongs to $G_0(Q)=\mathbb ZS$, so $U=[k]S$ with $k\ne0$. If a prime $p$ divided $C$, then $S$ would belong to the formal kernel at $p$. Its nonzero multiple $U$ would also be formal, with negative $X$-valuation, contradicting integrality of $U$. Thus $C$ has no prime divisor and equals one. ∎
+
+**Corollary 77.4 (quartic prime-squareclass rigidity).** Use the integer polynomial and parameters of Section 75:
+
+$$Q=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4>5\quad\text{prime},$$
+
+$$u=m^2+mn-n^2,\qquad v=m^2-4mn-n^2,\qquad r=m^2+n^2.$$
+
+If an actual block satisfies $B_N=QC^2$, then necessarily
+
+$$\boxed{C=1,\quad u^2=1,\quad v^2=L_N^2,\quad r=F_N,\quad h_Q=1.}$$
+
+In particular, if $|m^2+mn-n^2|\ne1$, the prime $Q$ cannot be the sole odd-depth prime of any actual golden ternary block. For every prime $Q$ in this quartic family, a nontrivial square cofactor $C>1$ is impossible; this includes every mixed-depth pattern $P^2Q$ with distinct primes.
+
+**Proof.** Section 75 supplies the integral point $U=(-15u^2,75uvr)$ and proves $Q\nmid uvr$, including all zero and coprimality exceptions. Thus $U$ is nonsingular at $Q$, and Corollary 77.3 gives $C=1$ and $Q=B_N$. Theorem 77.1 writes $U=[k]S$ with $k\ne0$. Its negative $X$-coordinate forces $k$ to be odd.
+
+Both base coordinates have the same rational height:
+
+$$z(U)=-\frac{3u^2}{Q},\qquad z(S)=-\frac3Q,\qquad h(z(U))=h(z(S))=\log Q.$$
+
+Indeed $Q=3u^2+v^2$, $v\ne0$ and $Q\nmid u$, so the first fraction is reduced and its denominator exceeds its numerator in absolute value. The uniform height bounds, with $t=\tfrac12\log Q$, give
+
+$$k^2(t-c_0)\le t+u_0.$$
+
+As above, $Q\ge19$ implies $|k|<3$, hence $k=\pm1$. Equality of the $X$-coordinates of $U$ and $S$ gives $u^2=1$. The identities $Q=3u^2+v^2=5r^2-u^2$ then give $v^2=L_N^2$ and $r^2=F_N^2$. Since $r=m^2+n^2>0$, one has $r=F_N$. Finally $C=1$ gives $h_Q=1$. ∎
+
+The new scope includes a simple odd-depth factor: in $P^2Q$, $P$ would be WSS while $Q$ would be non-WSS, and a $Q$-unit point alone does not invoke the earlier depth-three exclusion. The integral-point argument excludes this mixed pattern for the displayed quartic family. The denominator theorem also constrains all even exponents and arbitrary one-odd-prime all-WSS vectors. Multiple odd-depth primes are outside its rank-one argument. No new numerical previously surviving pair, infinitude of prime quartic values, independence from all older congruences, universal point existence, or global WSS decision is asserted.
+
 ## 追加锚（本行以下为增补区）
