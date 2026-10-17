@@ -93,7 +93,10 @@ internal sealed class SteadyStateBlockMarkovFormRefutationDocument : IScribeDocu
                             + "For A, tr A = -5/2 and tr(A^2) = 9/8, giving "
                             + "3 tr(A^2) - (tr A)^2 = -23/8. Both traces are invariant under complex similarity. "
                             + "Consequently no invertible complex S can make S^(-1) A S a real Markov generator."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sa-ribeiro-prosen-bernard-2024-steady-state-block-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static Formula GeneratorFormula() => All("n", Naturals(),
