@@ -17,12 +17,9 @@ namespace D5.S3.Quantum.Information.StabilizerLogicalZSupportRefutation
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (Pauli anticomm)
 open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.Pauli
 
-/-- Multiplication of Pauli labels with the scalar phase omitted. -/
-def pmul : Pauli → Pauli → Pauli :=
-  D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterProduct
-
 /-- Pointwise phase-free multiplication of Pauli words. -/
-def wmul {n : ℕ} (u v : Fin n → Pauli) : Fin n → Pauli := fun i => pmul (u i) (v i)
+def wmul {n : ℕ} (u v : Fin n → Pauli) : Fin n → Pauli := fun i =>
+  D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation.letterProduct (u i) (v i)
 
 /-- Pauli words commute when the number of anticommuting positions is even. -/
 def Commutes {n : ℕ} (u v : Fin n → Pauli) : Prop :=
