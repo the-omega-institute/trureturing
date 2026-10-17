@@ -436,3 +436,81 @@ Fibonacci samples grow exponentially. The original Robin signed estimate,
 the endpoint half-variance bound and RH remain unresolved. No numerical
 experiment, parameter scan, zero computation or new Lean certification
 is used.
+
+## A signed truncation formula requires a source-use restriction
+
+Theorem 6.1, equation (6.2), in both arXiv:math/0404394v4 and the
+[published article](https://aif.centre-mersenne.org/item/10.5802/aif.2311.pdf),
+printed p.1722, is not adopted here as an unconditional signed supplier.
+With the article's definition
+
+$$
+L_n(T)=\sum_{\substack{\rho\in Z(\zeta)\\|\Im\rho|\le T}}
+\left[1-\left(1-\frac1\rho\right)^n\right],
+$$
+
+including all zero multiplicities, that displayed formula reads
+$S_f(n)=+L_n(\sqrt n)+O(\sqrt n\log n)$. The following local
+residue and consistency checks explain the restriction; they do not
+establish that the printed statement is false.
+
+For the counterclockwise contour in the proof, with normalization
+$1/(2\pi i)$, put $k_n(s)=(1+1/s)^n-1$. At $s=\rho-1$,
+
+$$
+\operatorname{Res}\left[k_n(s)\left(-\frac{\zeta'}\zeta(1+s)\right)
+\right]
+=-m_\rho k_n(\rho-1)
+=m_\rho\left[1-\left(\frac\rho{\rho-1}\right)^n\right].
+$$
+
+Reflection $\rho\mapsto1-\rho$ preserves the full ordinate cutoff,
+so these nontrivial-zero residues sum to $+L_n(T)$. The unnumbered
+contour expansion following (6.5) instead inserts $+k_n(\rho-1)$;
+its subsequent (6.7), printed p.1723, has $-L_n(T)$.
+Definitions (1.1), (4.5)--(4.8) and (6.1) supply no compensating
+convention change in the classical zeta specialization. A local
+sign repair would reverse this contribution. It alone would not
+establish the remaining contour estimates, and no corrected version
+of the signed asymptotic is asserted here.
+
+There is also an independent weak-tail consistency check. Pair
+$\rho=\beta+i\gamma$ with its conjugate and put $z=1-1/\rho$.
+For $\gamma>\sqrt n$, $0<\beta<1$ gives
+$|z|\le1+1/(2\gamma^2)$ and $\Re(1/\rho)=O(\gamma^{-2})$.
+Taylor's formula for the polynomial $z^n$ at one gives
+
+$$
+|z^n-1-n(z-1)|
+\le\tfrac12n(n-1)|z-1|^2\max(1,|z|)^{n-2},
+$$
+
+so the complete conjugate pair satisfies
+$|(1-z^n)+(1-\bar z^n)|\ll n^2/\gamma^2$ uniformly in this
+range. Reusing $N(T)=O(T\log T)$, including multiplicities, gives
+$\sum_{\gamma>T}m_\rho\gamma^{-2}=O(\log T/T)$ and hence
+
+$$
+\lambda_n-L_n(\sqrt n)=O(n^{3/2}\log n).
+\tag{ST1}
+$$
+
+The paired tail is absolutely convergent for each fixed $n$, so it
+also agrees with the ordinate-cutoff convention for the complete
+Li sum. Combining ST1 with the exact classical split from published
+Lemma 4.4, $\lambda_n=S_\infty(n)-S_f(n)+1$, shows that **if** the
+literal plus-sign approximation (6.2) were used, it would imply
+
+$$
+2\lambda_n=S_\infty(n)+1+O(n^{3/2}\log n).
+$$
+
+Published Theorem 5.1 supplies $S_\infty(n)=O(n\log n)$
+unconditionally. The displayed implication would therefore give
+polynomial absolute growth and RH by the existing all-index criterion.
+It is an implication from a sign-sensitive premise, not an acquired
+bound: we do not import that premise pending clarification of its proof.
+No conclusion that the printed statement is false, new literature
+priority, Lean certification, or RH proof follows. The generating-function
+identity and the Fibonacci growth derivation above use neither (6.2)
+nor its contested zero-residue sign.
