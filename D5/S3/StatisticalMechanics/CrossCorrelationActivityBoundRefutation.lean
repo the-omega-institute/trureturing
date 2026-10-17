@@ -91,7 +91,7 @@ private theorem clique_mem : ∀ m n : Fin 16,
 private theorem rates_zero (m n : Fin 16) (h : (m, n) ∉ support) : rates m n = 0 := by
   have hm : (m, n) ∉ hex ∧ (n, m) ∉ hex ∧
       (m, n) ∉ clique ∧ (n, m) ∉ clique := by
-    simpa [support.eq_1, Finset.mem_image, Prod.exists, and_assoc,
+    simpa [support.eq_1, and_assoc,
       and_comm, and_left_comm] using h
   rw [hex_mem] at hm
   rw [hex_mem] at hm
