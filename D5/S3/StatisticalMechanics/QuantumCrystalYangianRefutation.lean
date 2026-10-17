@@ -9,8 +9,6 @@
 import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Order.UpperLower.Basic
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option linter.style.longLine false
