@@ -108,12 +108,6 @@
    Publicized owner audit target: D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry sha256:4788fda704d1194f8a5bde2ab1145d8e251a3dab3778b671874f5829488f6faa;
    its finite-type and arbitrary complex-matrix source family has no compiled reconstruction,
    lawful readout, source selection, variation, sensitivity or observational-dependence evidence.
-   Shared-support escape audits unfinished:
-   https://github.com/the-omega-institute/trureturing/issues/17928
-   diamond_bounds, trace_contract_rectangular and reference_error_le_diamond
-   have no completed whole-family variation, sensitivity, actual observational
-   dependence or source-selection evidence. Their original proofs also supply
-   the finite dynamic residual composition estimate.
    Literature completeness: ASSUMED-UNVERIFIED.
  -/
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
@@ -285,7 +279,7 @@ private theorem reference_error_bounds {r a b : Type}
     change referenceError Φ Ψ ρ / 2 ≤ 1 at h
     linarith
 
-theorem diamond_bounds {a b : Type}
+private theorem diamond_bounds {a b : Type}
     [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (Φ Ψ : QuantumChannel a b) :
     0 ≤ diamondDistance Φ Ψ ∧ diamondDistance Φ Ψ ≤ 2 := by
@@ -361,7 +355,7 @@ private theorem assembly_from_replacement
     obtain ⟨Ψ', hΨ', hdist⟩ := replacement d Φ hΦ Ψ hΨ
     exact (csInf_le (distance_image_bdd_below Φ _) ⟨Ψ', hΨ', rfl⟩).trans hdist
 
-def referenceChannel {r a b : Type}
+private def referenceChannel {r a b : Type}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b) :
     QuantumChannel (r × a) (r × b) := by
@@ -387,7 +381,7 @@ def referenceChannel {r a b : Type}
     exact Finset.sum_congr rfl (fun i _ =>
       T.trace_preserving (CStarMatrix.ofMatrix fun x y => X (i,x) (i,y)))
 
-theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
+private theorem trace_contract_rectangular {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (T : QuantumChannel a b)
     (ρ σ : DensityState a) :
     traceDistance (T.mapState ρ) (T.mapState σ) ≤ traceDistance ρ σ := by
@@ -468,7 +462,7 @@ private theorem reference_reindex_error {r s a b : Type}
   rw [he Φ, he Ψ, ← map_sub]
   exact reindex_traceNorm _ _
 
-theorem reference_error_le_diamond {r a b : Type}
+private theorem reference_error_le_diamond {r a b : Type}
     [Fintype r] [DecidableEq r] [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (Φ Ψ : QuantumChannel a b)
     (ρ : DensityState (r × a)) : referenceError Φ Ψ ρ ≤ diamondDistance Φ Ψ := by
