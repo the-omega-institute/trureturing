@@ -1768,3 +1768,405 @@ No compatible complete quotient realizing these residual possibilities,
 and no contradiction eliminating all of them, is asserted here. In
 particular the unselected edge Z has a full 2*pi budget, not M's remaining
 pi budget. The proof never transfers that half-budget to Z.
+
+
+## 146. A single-block return: inherited complete-star facts
+
+Sections 137--145 supply the complete-star facts below. The refinement
+uses the exact angle responses (95.4)--(95.5); it is independent of the
+special-axis exclusion in Sections 151--155.
+
+Take an actual finite ideal tetrahedron face pairing with complete circular
+edge links and every actual edge degree at least six. All counts retain
+local occurrences, repeated actual labels, distinct-face self-gluing,
+and repeated appearances of a tetrahedron along an edge link.
+
+The actual edge set is E=H disjoint-union S, with |H|=4. Every tetrahedron
+has a fixed vertex-induced frame, in edge order (12,13,14,34,24,23),
+
+    (R,A,B,O,A,B),       A,B in H, A != B.
+
+The axial labels may repeat each other or reservoir labels. There is one
+common positive global length field, x_e=cosh(ell_e)>1, and every original
+extended edge-angle sum is 2*pi. Assume a flat block exists.
+
+The source theorem gives four distinct actual labels H={M,C,D,Z} and a
+genuine escape block tau with frame (Z,M,C,D,M,C). Write m,c,d,z for their
+cosh lengths. Its already proved complete-star consequences are:
+
+1. m>1+c+d and z>1+m+c. Hence m>c+2 and z>m>c,d.
+2. Every H label has a genuine witness. Every flat block selects its
+   axial pair. M has exactly one flat occurrence, with angle pi, so the
+   sum of all genuine M angles is pi. Every occurrence of Z is genuine.
+3. The complete Z circle has a unique dominant maximal axial run I,
+   with constant actual reservoir pair {M,C}. It contains tau. A run
+   is dominant when its target value is at least one plus the sum of its
+   reservoir values. The source proves I is proper and nonempty.
+4. Its two distinct transverse Z boundary occurrences belong to the same
+   genuine owner rho, different from every owner of I. Their common
+   angle gamma exceeds pi/2. Thus the sum Theta of the axial Z angles
+   within I is strictly less than pi.
+5. The g owners of I are distinct. Indeed an owner with two axial Z slots
+   would be flat, since (z-1)^2>(m+c)^2. If beta_i is its transverse M
+   angle, its two M slots are distinct occurrences, and
+
+       2*sum_i beta_i < pi.                         (146.1)
+
+   The weak inequality is M's genuine budget; strictness follows because
+   the different genuine owner rho also contains M.
+
+These are full-star facts from the same original length field. No
+independent local angles or replacement length assignment is introduced.
+
+## 147. A strict response inequality for every run owner
+
+Let one genuine owner of I have cosh vector (z,m,c,o,m,c). Its other axial
+value o is arbitrary; no assumption about its actual label is needed.
+Let theta be its axial Z angle and beta its transverse M angle.
+Write k=m+c and
+
+    lambda_plus  = [sqrt(m^2-1)+sqrt(c^2-1)]/k
+                   *sqrt((z-1)/(z+1)),
+    lambda_minus = [sqrt(m^2-1)-sqrt(c^2-1)]/k
+                   *sqrt((z-1)/(z+1)).
+
+Both parameters are positive, since m>c>1. The exact half-sum and
+half-difference formulas give
+
+    beta = atan(lambda_plus*cot(theta/2))
+           + atan(lambda_minus*cot(theta/2)).       (146.2)
+
+These parameters are the same for every run owner, independently of o.
+
+We claim lambda_plus+lambda_minus>1. Its square is exactly
+
+    4*(m^2-1)*(z-1)/(k^2*(z+1)).
+
+Because z>k+1,
+
+    (z-1)/(z+1) > k/(k+2).
+
+Because m>c+2, k<2m-2; all factors are positive, so
+
+    k*(k+2) < (2m-2)*(2m)
+              =4*m*(m-1) <4*(m^2-1).
+
+Consequently
+
+    (lambda_plus+lambda_minus)^2
+       >4*(m^2-1)/(k*(k+2))>1,                    (146.3)
+
+which proves the claim without a limiting or numerical argument.
+
+For completeness the arctangent branch is explicit. If A,B,t>0 and
+A+B>1, then
+
+    atan(A*t)+atan(B*t)>atan(t).                   (146.4)
+
+If A*B*t^2>=1, the left side is at least pi/2 and the right side is
+strictly below pi/2. If A*B*t^2<1, the left side is in (0,pi/2) and its
+tangent is (A+B)*t/(1-A*B*t^2)>t. Strict monotonicity of atan on this
+branch proves (146.4).
+
+Apply (146.4) to A=lambda_plus, B=lambda_minus and t=cot(theta/2)>0.
+Since 0<theta<pi, atan(t)=(pi-theta)/2. Equations (146.2)--(146.3) therefore yield
+
+    theta+2*beta > pi.                             (146.5)
+
+This inequality holds for every owner of I, including any owner whose
+other axis repeats an M or C label. Its proof only uses the genuine paired
+shape and the shared inequalities m>c+2, z>1+m+c.
+
+## 148. The run contains exactly one owner
+
+Sum (146.5) over all g axial occurrences of I. These have distinct owners,
+as recorded above, so their two M slots each are correctly counted in (146.1):
+
+    g*pi < Theta+2*sum_i beta_i < 2*pi.
+
+Thus g<2. Since I is nonempty,
+
+    g=1.                                          (146.6)
+
+Its single owner is the original escape tau. This improves the previous
+one-or-two bound using M's remaining pi and Z's full 2*pi equations.
+It does not assign M's half-budget to Z.
+
+## 149. Coupling to both ends of the source M run
+
+The proper axial M run containing the selected source flat block has
+pair {C,D}. Both of its distinct transverse M endpoints are genuine.
+Every genuine transverse M angle is strictly below pi/2: its owner has
+two equal M angles and, since M has one flat occurrence and degree at
+least six, at least three further positive genuine occurrences share
+M's remaining pi with those two slots.
+
+At either source endpoint actual face transport gives the paired frame
+
+    (Q,M,A,B,M,A),       {A,B}={C,D}.
+
+The increasing transverse-M cosine numerator, evaluated at
+x_Q=1+m+x_A, equals
+
+    [x_A+m(1+m+x_A)]*(1+x_A+x_B-m)<0.
+
+The actual angle is less than pi/2, so the numerator is positive and
+x_Q>1+m+x_A. The special-edge bound excludes Q in S; among H only Z
+has value above m. Thus Q=Z and each endpoint owner has a dominant
+axial Z occurrence.
+
+Uniqueness of the dominant Z run and (146.6) force both endpoint owners to
+be the SAME actual tetrahedron tau, rather than two copies with equal
+length data. Its two transverse M slots are the two source-run endpoints.
+The companion is C on both sides because tau has fixed pair {M,C}.
+
+## 150. An actual parallel face pair and realization consequence
+
+The two faces of tau containing its axial Z edge are paired respectively
+to the two return faces of rho containing its two transverse Z slots.
+They are two different actual face pairings between the distinct owners
+tau and rho. The faces of tau are different because they are the two
+faces incident to one local edge. The transverse Z slots of rho are
+opposite local edges, so no face contains both; its return faces are
+different as well. This is a dual pair of parallel edges, not a repeated
+traversal of one face pairing due to repeated labels or self-gluing.
+
+**Theorem 150.1.** Under Section 146's assumptions, the existence of a flat
+block forces two distinct actual tetrahedra joined by two different
+face pairings.
+
+**Corollary 150.2.** In an actual finite ideal face pairing with complete
+circular edge links, minimum degree six, and the same fixed paired
+framework with |H|<=4, if no two distinct tetrahedra are joined by two different face pairings, every
+common positive zero-curvature generalized length field is genuine.
+Dual triangles and self-loops elsewhere are allowed.
+
+For |H|=4 this is the contrapositive of Theorem 150.1. For |H|<=3 it is
+already implied by the maximal-selected four-label escape theorem.
+
+For a finite connected orientable ideal triangulation of a compact
+3-manifold whose every boundary component has genus at least two, the existing
+strict-angle-structure and Luo--Yang existence inputs give such a common
+positive zero-curvature field. Corollary 150.2 makes it genuine, yielding
+a hyper-ideal realization of the original triangulation with totally
+geodesic boundary. This reuses the established existence transfer; it
+does not claim that the naive 2*pi/degree assignment is itself strict
+at every degree-six vertex.
+
+The theorem does not eliminate the possible parallel-face configurations.
+It is independent of whether rho's other axis lies in H or S.
+
+## 151. Excluding special return axes: assumptions
+
+This exclusion uses Sections 137--145 and the response convexity already
+proved in Section 95. It does not require the single-block refinement.
+
+Retain the actual finite ideal face pairing, complete circular edge links,
+minimum degree six, fixed paired frames, and common positive generalized
+length field with every original edge-angle sum 2*pi from the source.
+There are exactly four reservoir labels H={M,C,D,Z}. A nonempty flat set
+has produced the source's genuine escape and unique short return. Write
+m,c,d,z for their cosh lengths. In particular:
+
+    m>1+c+d>3,       z>1+m+c>5.
+
+All occurrences of Z are genuine. M has exactly one flat occurrence and
+its total genuine angle is pi. Every H value is at most z. The return rho
+has one of the frames
+
+    (C,Z,M,Q,Z,M),       (M,Z,C,Q,Z,C).
+
+Its two transverse Z angles exceed pi/2. If a is its companion reservoir
+value and b its shared axis value, genuineness yields
+
+    q=x_Q > (z-a)^2/(b+1)-1 > b.
+
+We prove Q cannot belong to S. No claim excluding the remaining H-axis
+returns is made.
+
+## 152. Weighted complete-star response, retaining repeated axes
+
+Suppose Q is special, with its fixed reservoir pair {A,B}, numerical
+values a>b>1. Every owner containing Q then has a frame
+
+    (q,a,b,o,a,b).
+
+In both cases below the pair includes Z, so every such owner is genuine.
+For each owner j let w_j be its number of axial Q slots, either one or
+two. These count actual local slots, even when the owner occurs twice in
+the normal circle. Let theta_j be the angle of a Q slot. If w_j=2 the
+two angles are equal by the vertex symmetry of (q,a,b,q,a,b).
+Write beta_j,delta_j for its transverse A,B angles. Then
+
+    n=sum_j w_j=degree(Q)>=6,     sum_j w_j*theta_j=2*pi.
+
+Each owner contributes exactly two transverse A slots and two transverse
+B slots, regardless of w_j. These slots are distinct across owners.
+Thus weighting by w_j<=2 never overcounts the actual transverse cost
+that is bounded by the global reservoir budgets below.
+
+Put
+
+    k=a+b,
+    kappa=(sqrt(a^2-1)+sqrt(b^2-1))/k,
+    t=sqrt((q-1)/(q+1)),
+    lambda_plus=kappa*t,
+    lambda_minus=(sqrt(a^2-1)-sqrt(b^2-1))*t/k.
+
+Both parameters lie strictly between zero and one. Define
+
+    B_lambda(theta)=atan(lambda*cot(theta/2)),  0<theta<pi.
+
+Section 95 gives
+
+    beta+delta=2*B_lambda_plus(theta),
+    beta=B_lambda_plus(theta)+B_lambda_minus(theta).
+
+For 0<lambda<1 this function is positive, strictly decreasing, and
+strictly convex on (0,pi), as already proved in Section 95. Therefore
+weighted Jensen applies directly to the n actual Q slots. No owners are
+replaced by independently chosen shapes or lengths.
+
+The other axis always obeys
+
+    o<1+a+b.
+
+Indeed if its label is H then o<=z<1+a+b; if it is special, its fixed
+reservoir pair is the same {A,B}, so Section 112 supplies this strict
+bound. This also covers o=q in a repeated-axis owner.
+
+## 153. Excluding a special return with companion M
+
+Here the fixed Q pair is {Z,M}, so a=z>b=m>3. Its owners consume at most
+2*pi of genuine Z angle and pi of genuine M angle. Consequently
+
+    2*sum_j(beta_j+delta_j)<=3*pi,
+    sum_j w_j*(beta_j+delta_j)<=3*pi.
+
+Jensen and n>=6 give
+
+    12*B_lambda_plus(pi/3)
+      <= 2*n*B_lambda_plus(2*pi/n)
+      <= sum_j w_j*(beta_j+delta_j) <= 3*pi.
+
+The first inequality follows from positivity and decreasingness of B:
+2*pi/n<=pi/3 and n>=6. Since cot(pi/6)=sqrt(3), this implies
+
+    lambda_plus^2<=1/3.
+
+For a,b>3 one has sqrt(a^2-1)>(sqrt(8)/3)*a, and the corresponding b
+inequality. Hence kappa^2>8/9. It follows that
+
+    (q-1)/(q+1)<3/8,       1<q<11/5.              (A)
+
+We now prove, for EVERY owner in this same Q star,
+
+    theta<pi/3,       beta+delta>pi/2.            (B)
+
+For the first inequality use the original axial cosine formula. Its
+positive denominator and numerator are
+
+    D_q=q^2+a^2+b^2+2qab-1,
+    N_q=2ab+q(a^2+b^2)-(q^2-1)o.
+
+Because o<1+a+b,
+
+    2*N_q-D_q > P,
+    P=(2q-1)(a^2+b^2)+(4-2q)ab
+       -2(q^2-1)(a+b)-3q^2+3.
+
+Write a=3+u,b=3+v, where u,v>0. Exact expansion gives
+
+    P=-3(5q-11)(q+1)+(6q+8-2q^2)(u+v)
+      +(2q-1)(u^2+v^2)+(4-2q)uv.
+
+The constant is positive by (A), and the linear coefficient is positive
+on 1<q<11/5. The quadratic part equals
+
+    (2q-1)(u-v)^2+(2q+2)uv>0.
+
+Thus 2*N_q>D_q, giving cos(theta)>1/2 and theta<pi/3.
+
+For the second inequality put
+
+    L=k^2-(q-1)(o-1)>0,
+    J=(q+1)(o+1)-(a-b)^2>0.
+
+The existing half-angle identity gives
+
+    tan^2(theta/2)=((q-1)/(q+1))*J/L.
+
+Section 96's elementary square-root inequality gives kappa^2>(k-2)/k.
+Since o<1+k and k=z+m>8,
+
+    kappa^2*L-J
+      >(k-2)(k-q+1)-(q+1)(k+2)
+       =k^2-2k(q+1)-4 > 0.
+
+The last expression increases in k>=8 for q<11/5 and is bounded below
+by 64-256/5-4=44/5. Therefore
+lambda_plus^2>tan^2(theta/2). Positive square roots and the response
+formula imply beta+delta=2*atan(lambda_plus*cot(theta/2))>pi/2.
+This proves (B).
+
+In particular theta<(2/3)(beta+delta). Summing over actual Q slots and
+using their global angle equation gives the contradiction
+
+    2*pi=sum_j w_j*theta_j
+       <(2/3)*sum_j w_j*(beta_j+delta_j)
+       <=(2/3)*3*pi=2*pi.
+
+Hence the companion-M return cannot have a special other axis.
+
+## 154. Excluding a special return with companion C
+
+Now a=z,b=c, and the necessary return inequality gives q>m. Since
+m>1+c+d and d>1, m>c+2. The response parameters satisfy
+
+    lambda_plus*lambda_minus
+       =((z-c)/(z+c))*((q-1)/(q+1))
+       >((m+1)/(m+2c+1))*((m-1)/(m+1))
+       =(m-1)/(m+2c+1)>1/3.                      (C)
+
+The first strict inequality uses z>m+c+1 and q>m; the ratio
+(z-c)/(z+c) increases with z. The last uses m>c+2.
+
+Let f(theta)=B_lambda_plus(theta)+B_lambda_minus(theta), the transverse
+Z angle in an owner of the Q star. It is positive, decreasing and convex.
+By (C), the product of sqrt(3)*lambda_plus and sqrt(3)*lambda_minus
+exceeds one. For positive x,y, xy>1 implies atan(x)+atan(y)>pi/2.
+Consequently
+
+    f(pi/3)>pi/2.
+
+Weighted Jensen over the n>=6 actual Q slots yields
+
+    sum_j w_j*beta_j >= n*f(2*pi/n)
+                         >= 6*f(pi/3)>3*pi.
+
+But every owner contributes two Z slots and w_j<=2. The actual entire Z
+budget therefore gives
+
+    sum_j w_j*beta_j<=2*sum_j beta_j<=2*pi,
+
+a contradiction. This excludes the companion-C special-axis return too.
+
+## 155. Consequence and exact remaining cases
+
+The unique obtuse return owner in the four-reservoir short-return theorem
+must have its other axial label Q in H. The source's complete alternatives
+therefore reduce to:
+
+* (C,Z,M,M,Z,M), retaining the additional axial M slot;
+* (C,Z,M,Z,Z,M), retaining the additional axial Z slot;
+* (C,Z,M,D,Z,M), only if
+  d>(z-m)^2/(c+1)-1>c;
+* (M,Z,C,Z,Z,C), retaining the additional axial Z slot.
+
+These are necessary patterns, not asserted compatible quotients. The
+complete equations for repeated-role H edges can change reservoir pair
+along their stars, so the fixed-pair special-star Jensen argument cannot
+simply be applied to them. No seed or global all-H witness hypothesis is
+added: the needed witnesses and length inequalities came from the same
+actual four-reservoir escape block. No degree upper bound, distinct-owner
+assumption for Q's axes, or prohibition of self-gluing has been imposed.
