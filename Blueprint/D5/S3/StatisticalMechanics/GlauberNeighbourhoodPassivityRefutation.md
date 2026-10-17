@@ -12,9 +12,7 @@ $$\forall (N: \mathbb{N}), (\forall (n: \mathbb{N}), (\forall (A: (\operatorname
 
 *Formalization.* `D5/S3/StatisticalMechanics/GlauberNeighbourhoodPassivityRefutation.neighbourhoodPassivity` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Yutong Luo; Yi-Zheng Zhen; Xiangjing Liu; Daniel Ebler; Oscar Dahlsten (2023). *Bound on annealing performance from stochastic thermodynamics, with application to simulated annealing*. DOI: [10.1103/PhysRevE.108.054119](https://doi.org/10.1103/PhysRevE.108.054119). URL: <https://arxiv.org/abs/2311.10424v1>.
+*Citation.* Yutong Luo; Yi-Zheng Zhen; Xiangjing Liu; Daniel Ebler; Oscar Dahlsten (2023). *Bound on annealing performance from stochastic thermodynamics, with application to simulated annealing*. DOI: [10.1103/PhysRevE.108.054119](https://doi.org/10.1103/PhysRevE.108.054119). URL: <https://arxiv.org/abs/2311.10424v1>.
 
 *Commentary.*
 
