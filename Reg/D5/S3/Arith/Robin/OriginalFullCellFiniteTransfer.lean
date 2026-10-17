@@ -113,5 +113,84 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms registration
 #print axioms audit
 
+namespace Sharp
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {N q : ℕ}, 3 ≤ N → q ≤ N - 2 →
+    ∀ (a F : ℕ → ℝ) (ε c : ℝ), 0 ≤ ε → 0 ≤ c →
+    (∀ m ∈ Ico N (2 * N), 0 ≤ a m) →
+    (∀ k ∈ Ico (q + 1) N, |F k - mobiusPrefix k| ≤ ε * (k : ℝ) + c) →
+    |pairing N a - R.readout () ⟨N, q, a⟩ F - meanCorrection N q a| ≤
+      (ε + c / (q + 1 : ℕ)) / Real.log N * ((N : ℝ) * totalMass N a *
+        (1 + 2 * Real.log ((N : ℝ) / (q + 1 : ℕ))^2 +
+          2 * Real.log ((N : ℝ) / (q + 1 : ℕ)) *
+          (1 + Real.log (2 * (N : ℝ) / (q + 1 : ℕ))))) +
+        (if q = 0 then 0 else (q + 1 : ℕ) * ((3 : ℝ) * (q : ℝ) / 2 + 2) * variation N a / 16)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have he := h (N := 3) (q := 1) (by norm_num) (by norm_num)
+    (fun _ => 0) mobiusPrefix 0 0 le_rfl le_rfl (by intro m _; exact le_rfl)
+    (by intro k _; simp)
+  norm_num [rejected, realize,
+    _root_.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer.pairing, totalMass, variation, meanCorrection] at he
+
+
+def registration : Registration arena (type_of% @originalFullCell_finite_transfer_sharp) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨originalFullCell_finite_transfer_sharp, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/-- The replacement readout observes F and retains the original theorem telescope. -/
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@originalFullCell_finite_transfer_sharp) (Realization signature) Type Unit where
+  unitName := `OriginalFullCellFiniteTransfer.originalFullCell_finite_transfer_sharp.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer.Sharp.registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p F => replacement p.1 p.2.1 p.2.2 F)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer
+    definition := none
+    coordinates := #[0, 1, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }]
+  }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms registration
+#print axioms audit
+
+end Sharp
+
 end
 end Reg.D5.S3.Arith.Robin.OriginalFullCellFiniteTransfer
