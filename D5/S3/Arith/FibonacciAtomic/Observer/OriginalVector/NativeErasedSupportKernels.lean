@@ -10,6 +10,12 @@ import D5.S3.Arith.FibonacciAtomic.Observer.NativeSerialDepth
 import D5.S3.Arith.FibonacciAtomic.Observer.FiniteMenu.Kernel
 import D5.S3.Arith.FibonacciAtomic.Observer.DelayedOriginalReadout
 
+/-! # Native erased and support prefix kernels
+
+Two substitutions shift labeled and erased prefix agreement by one layer and
+presence agreement by two layers. Iteration gives the corresponding even-epoch kernels.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -85,7 +91,9 @@ private theorem sharp_forward (h : Nat) (u v : Source) (same : OriginalAgree h u
         cases a with
         | nil => rfl
         | cons b a =>
-          have az : a = [] := List.length_eq_zero_iff.mp (by simp only [List.length_cons] at ha; omega)
+          have az : a = [] := List.length_eq_zero_iff.mp (by
+            simp only [List.length_cons] at ha
+            omega)
           subst a
           have roots (t : Source) : readout [] (C t) = .branch :=
             FiniteMenu.Kernel.branch_after [] t 2 (by
@@ -121,7 +129,7 @@ private theorem sharp_forward (h : Nat) (u v : Source) (same : OriginalAgree h u
           · exact ih r r' right a small
 
 private theorem erased_reflection (h : Nat) (u v : Source)
-    (same : ErasedAgree (h+1) (C u) (C v)) : OriginalAgree h u v := by
+    (same : ErasedAgree (h + 1) (C u) (C v)) : OriginalAgree h u v := by
   induction h generalizing u v with
   | zero =>
     intro a ha
@@ -209,7 +217,9 @@ private theorem erased_support (r : Nat) (u v : Source) :
         (same a.dropLast small)).2
   · intro same a ha
     apply (erased_reply_presence a false u v).mpr
-    exact ⟨same a (by omega), same (a ++ [false]) (by simp only [List.length_append, List.length_singleton]; omega)⟩
+    exact ⟨same a (by omega), same (a ++ [false]) (by
+      simp only [List.length_append, List.length_singleton]
+      omega)⟩
 
 /-- Two native steps shift the labeled and erased kernels by one layer,
 and the presence kernel by two layers. -/

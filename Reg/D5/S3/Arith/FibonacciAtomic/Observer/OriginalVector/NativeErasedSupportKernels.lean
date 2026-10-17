@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels
 import Reg.Support.SingleDependentReadout
 
+/-! # Dependent-family registrations for native prefix kernels -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -91,8 +93,12 @@ def evenEpochFamily : Registration evenEpochArena (type_of% (@even_epoch_support
 
 def two_step_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@two_step_prefix_kernel) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels.two_step_prefix_kernel.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels.twoStepFamily
+  unitName := .str
+    (.str `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels
+      "two_step_prefix_kernel") "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels
+    "twoStepFamily"
   realizationSource := none
   generated := false
   arena := .source ⟨twoStepArena⟩
@@ -125,8 +131,12 @@ def two_step_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _,
 
 def even_epoch_registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@even_epoch_support_kernel) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels.even_epoch_support_kernel.__information_unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels.evenEpochFamily
+  unitName := .str
+    (.str `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels
+      "even_epoch_support_kernel") "__information_unit"
+  realizationName := .str
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativeErasedSupportKernels
+    "evenEpochFamily"
   realizationSource := none
   generated := false
   arena := .source ⟨evenEpochArena⟩
