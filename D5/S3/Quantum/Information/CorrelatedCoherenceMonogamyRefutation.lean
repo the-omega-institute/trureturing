@@ -134,12 +134,12 @@ private theorem coherence_A : l1Coherence (reducedState {0} psi) = 8416 / 49922 
     ∑ j : (↥({0} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {0} psi i j‖) = _
   rw [sum_single (fun i => i ∈ ({0} : Finset (Fin 3))) 0 (by simp)]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∈ ({0} : Finset (Fin 3))) 0 (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∉ ({0} : Finset (Fin 3))) 1 2 (by decide)
+  simp_rw [sum_single (fun i => i ∈ ({0} : Finset (Fin 3))) 0 (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_pair (fun i => i ∉ ({0} : Finset (Fin 3))) 1 2 (by decide)
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff]
 
 private theorem coherence_B : l1Coherence (reducedState {1} psi) = 288 / 49922 := by
   classical
@@ -147,12 +147,12 @@ private theorem coherence_B : l1Coherence (reducedState {1} psi) = 288 / 49922 :
     ∑ j : (↥({1} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {1} psi i j‖) = _
   rw [sum_single (fun i => i ∈ ({1} : Finset (Fin 3))) 1 (by simp)]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∈ ({1} : Finset (Fin 3))) 1 (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∉ ({1} : Finset (Fin 3))) 0 2 (by decide)
+  simp_rw [sum_single (fun i => i ∈ ({1} : Finset (Fin 3))) 1 (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_pair (fun i => i ∉ ({1} : Finset (Fin 3))) 0 2 (by decide)
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff]
 
 private theorem coherence_C : l1Coherence (reducedState {2} psi) = 288 / 49922 := by
   classical
@@ -160,12 +160,12 @@ private theorem coherence_C : l1Coherence (reducedState {2} psi) = 288 / 49922 :
     ∑ j : (↥({2} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {2} psi i j‖) = _
   rw [sum_single (fun i => i ∈ ({2} : Finset (Fin 3))) 2 (by simp)]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∈ ({2} : Finset (Fin 3))) 2 (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∉ ({2} : Finset (Fin 3))) 0 1 (by decide)
+  simp_rw [sum_single (fun i => i ∈ ({2} : Finset (Fin 3))) 2 (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_pair (fun i => i ∉ ({2} : Finset (Fin 3))) 0 1 (by decide)
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff]
 
 private theorem coherence_AB : l1Coherence (reducedState {0, 1} psi) = 48928 / 49922 := by
   classical
@@ -173,12 +173,12 @@ private theorem coherence_AB : l1Coherence (reducedState {0, 1} psi) = 48928 / 4
     ∑ j : (↥({0, 1} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {0, 1} psi i j‖) = _
   rw [sum_pair (fun i => i ∈ ({0, 1} : Finset (Fin 3))) 0 1 (by decide) (by simp)]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∈ ({0, 1} : Finset (Fin 3))) 0 1 (by decide) (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∉ ({0, 1} : Finset (Fin 3))) 2
+  simp_rw [sum_pair (fun i => i ∈ ({0, 1} : Finset (Fin 3))) 0 1 (by decide) (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_single (fun i => i ∉ ({0, 1} : Finset (Fin 3))) 2
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff, Fin.forall_fin_succ]
 
 private theorem coherence_AC : l1Coherence (reducedState {0, 2} psi) = 48928 / 49922 := by
   classical
@@ -186,12 +186,12 @@ private theorem coherence_AC : l1Coherence (reducedState {0, 2} psi) = 48928 / 4
     ∑ j : (↥({0, 2} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {0, 2} psi i j‖) = _
   rw [sum_pair (fun i => i ∈ ({0, 2} : Finset (Fin 3))) 0 2 (by decide) (by simp)]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∈ ({0, 2} : Finset (Fin 3))) 0 2 (by decide) (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∉ ({0, 2} : Finset (Fin 3))) 1
+  simp_rw [sum_pair (fun i => i ∈ ({0, 2} : Finset (Fin 3))) 0 2 (by decide) (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_single (fun i => i ∉ ({0, 2} : Finset (Fin 3))) 1
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff, Fin.forall_fin_succ]
 
 private theorem coherence_BC : l1Coherence (reducedState {1, 2} psi) = 50336 / 49922 := by
   classical
@@ -199,12 +199,12 @@ private theorem coherence_BC : l1Coherence (reducedState {1, 2} psi) = 50336 / 4
     ∑ j : (↥({1, 2} : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState {1, 2} psi i j‖) = _
   rw [sum_pair (fun i => i ∈ ({1, 2} : Finset (Fin 3))) 1 2 (by decide) (by simp)]
-  simp_rw -implicitDefEqProofs [sum_pair (fun i => i ∈ ({1, 2} : Finset (Fin 3))) 1 2 (by decide) (by simp)]
-  simp -implicitDefEqProofs only [entry_norm]
-  simp_rw -implicitDefEqProofs [sum_single (fun i => i ∉ ({1, 2} : Finset (Fin 3))) 0
+  simp_rw [sum_pair (fun i => i ∈ ({1, 2} : Finset (Fin 3))) 1 2 (by decide) (by simp)]
+  simp only [entry_norm]
+  simp_rw [sum_single (fun i => i ∉ ({1, 2} : Finset (Fin 3))) 0
     (by intro i; fin_cases i <;> simp)]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff, Fin.forall_fin_succ]
 
 set_option maxHeartbeats 2000000 in
 private theorem coherence_ABC : l1Coherence (reducedState Finset.univ psi) =
@@ -214,10 +214,10 @@ private theorem coherence_ABC : l1Coherence (reducedState Finset.univ psi) =
     ∑ j : (↥(Finset.univ : Finset (Fin 3)) → Fin 2),
       if i = j then (0 : ℝ) else ‖reducedState Finset.univ psi i j‖) = _
   rw [sum_full]
-  simp_rw -implicitDefEqProofs [sum_full]
-  simp -implicitDefEqProofs only [entry_norm, sum_empty]
-  norm_num -implicitDefEqProofs [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
-    funext_iff, Subtype.forall, Fin.forall_fin_succ]
+  simp_rw [sum_full]
+  simp only [entry_norm, sum_empty]
+  norm_num [weight.eq_1, join, Equiv.piEquivPiSubtypeProd_symm_apply, Fin.sum_univ_two,
+    funext_iff, Fin.forall_fin_succ]
 
 private theorem gap_value : monogamyGap psi = -383 / 24961 := by
   unfold monogamyGap
