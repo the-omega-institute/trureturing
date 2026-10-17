@@ -4748,3 +4748,88 @@ The supposed two-distinct-neighbor pattern is impossible. Hence both
 marked tau faces meet the same actual owner, proving the claim. Other
 four-core return patterns and the external low-only boundary remain;
 no five-reservoir exclusion or realization is asserted.
+
+## 238. Exact setting
+
+Retain the mixed-flat five-reservoir hypotheses and the proved conclusion
+that the interacting high core K has exactly four actual owners. Put
+P={M,Z,U}; all three cosh values exceed three. Every K owner is genuine
+and has original P-angle expense greater than pi. The complete genuine
+P budget is 5*pi. An entirely high-labelled owner means one whose six
+original edge slots all have labels in P; repeated labels are allowed.
+Such an owner belongs to K, because its transverse pair is distinct.
+
+We prove a stronger angle bound for one entirely high-labelled owner,
+then exclude the concrete remaining pattern containing two of them.
+No assumption on how their faces are paired, or on low-only cells
+outside the high neighborhood, is added.
+
+## 239. The stronger original-angle bound
+
+Let its paired frame be (r,a,b,o,a,b), with r,a,b,o>3. Write theta_r,
+theta_o for its two axial angles and beta_a,beta_b for the paired
+transverse angles. Put s=beta_a+beta_b. All angles are genuine, and
+the hyperideal vertex inequalities give theta_r+s<pi and theta_o+s<pi.
+The exact paired response gives
+ tan(theta_r/2)*tan(s/2)=lambda_r,
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+and the analogous identity for o. Since a,b>3,
+ kappa>sqrt(8/9),
+while r,o>3 give sqrt((r-1)/(r+1)),sqrt((o-1)/(o+1))>1/sqrt(2).
+Thus lambda_r,lambda_o>2/3.
+
+For positive A,B with A+B=t<pi/2,
+ tan(A)*tan(B)=[cos(A-B)-cos(t)]/[cos(A-B)+cos(t)]
+              <=[1-cos(t)]/[1+cos(t)]=tan(t/2)^2.
+The denominator is positive and the quotient is increasing in cos(A-B),
+so this bound does not assume A=B. If theta_r+s<=3*pi/4, taking
+A=theta_r/2, B=s/2 gives
+ lambda_r<=tan(3*pi/16)^2<tan(pi/5)^2=5-2*sqrt(5)<2/3,
+a contradiction. Here 3/16<1/5, tangent is increasing on (0,pi/2),
+and 5-2*sqrt(5)<2/3 follows by squaring 13<6*sqrt(5).
+Consequently theta_r+s>3*pi/4, and similarly theta_o+s>3*pi/4.
+The total angle expense in its six original high slots is therefore
+ theta_r+theta_o+2*beta_a+2*beta_b>3*pi/2.
+Repeated axis or transverse labels do not change this original-slot sum.
+
+## 240. Exclusion and scope
+
+If two of the four distinct K owners were entirely high-labelled,
+their combined genuine P expense would exceed 3*pi. Each of the other
+two K owners consumes more than pi, so the four owners alone would
+exceed the complete 5*pi budget. This is impossible. Therefore at most
+one actual owner in the quotient is entirely high-labelled.
+
+This excludes every remaining four-core incidence pattern with two
+such owners, independently of loops and parallel face pairings. Patterns
+with zero or one entirely high-labelled owner, the external low-only
+boundary, and five-reservoir realization remain unresolved.
+
+## 241. The branch containing an entirely high-labelled owner
+
+Suppose one such owner exists. The four K owners then have combined
+original genuine P expense greater than 3*pi/2+3*pi=9*pi/2.
+Every single-high transverse owner has original P expense greater than
+2*pi/3 by the preceding single-high classification. Its addition would
+make the total greater than 31*pi/6>5*pi. Therefore no single-high
+transverse owner exists in this branch.
+
+Every genuine high-containing owner outside K is consequently in the
+class A of single-high axial owners with distinct transverse pair {C,D}.
+Each has exactly one high axis: two distinct high axes would put it in
+K, and two equal high axes would force flatness. Let g=|A|, let Theta_A
+be the sum of their original high axial angles, and let B_A be the sum
+of beta_C+beta_D counted once per actual A owner. The dominant-axis
+inequality gives g*pi<=2*Theta_A+B_A, with equality allowed only for
+the empty sum. Each owner contributes two original copies of each
+transverse angle, so 2*B_A is its total original C/D expense summed
+over A. The complete genuine C/D budget is at most4*pi, hence
+B_A<=2*pi. The strict four-core expense leaves Theta_A<pi/2.
+It follows that g*pi<3*pi, so g<=2.
+
+The unique flat owner contributes one additional high-containing owner.
+Thus in this branch there are at most 1+4+2=7 actual owners containing
+any high label, and every genuine one outside the interacting core is
+single-high axial with pair {C,D}. This conclusion does not restrict
+the size of the external low-only region or eliminate the branch.
