@@ -14,33 +14,27 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/-- Observe whether the input set consists of densities and spans the Hermitian space. -/
+/-- Observe the set comprehension in the density-spanning statement. -/
 abbrev signature : Signature where
   Params := ℕ
-  State d := Set (Matrix (Fin d) (Fin d) ℂ)
+  State d := Matrix (Fin d) (Fin d) ℂ → Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Bool
+  Output _ d := Set (Matrix (Fin d) (Fin d) ℂ)
   Anchor := Empty
   finiteAnchor := inferInstance
 
-open Classical in
 def actual : Realization signature :=
-  realize signature (fun _ _ T => decide (TomographicallyComplete T)) (fun e => nomatch e)
+  realize signature (fun _ _ p => Set.ofPred p) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => ∅) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ d : ℕ, R.readout () d {ρ : Matrix (Fin d) (Fin d) ℂ | IsDensity ρ} = true
-
-theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have he := h 0
-  change false = true at he
-  cases he
+  Law R := ∀ d : ℕ,
+    TomographicallyComplete (R.readout () d (fun ρ : Matrix (Fin d) (Fin d) ℂ => IsDensity ρ))
 
 theorem empty_not_complete : ¬ TomographicallyComplete (∅ : Set (Matrix (Fin 1) (Fin 1) ℂ)) := by
   intro h
@@ -51,11 +45,14 @@ theorem empty_not_complete : ¬ TomographicallyComplete (∅ : Set (Matrix (Fin 
   have he := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℂ => M 0 0) hz
   norm_num at he
 
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact empty_not_complete (h 1)
+
 def source_registration : Registration arena (type_of% @all_density_tomographically_complete) where
   actual := actual
-  bridge := by simp [actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using all_density_tomographically_complete,
-    rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨all_density_tomographically_complete, rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i
@@ -64,10 +61,10 @@ def source_registration : Registration arena (type_of% @all_density_tomographica
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, {ρ | IsDensity ρ}, ∅, ?_⟩
-    simp [actual, realize, all_density_tomographically_complete, empty_not_complete]
+    refine ⟨0, (fun _ => False), (fun _ => True), ?_⟩
+    change (∅ : Set (Matrix (Fin 0) (Fin 0) ℂ)) ≠ Set.univ
+    exact Set.empty_ne_univ
 
-open Classical in
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@all_density_tomographically_complete) (Realization signature) Unit Unit := {
@@ -85,7 +82,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some
-    (realize signature (fun _ _ T => decide (TomographicallyComplete T)) (fun e => nomatch e))
+    (realize signature (fun _ _ p => Set.ofPred p) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -95,11 +92,11 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body"]
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
