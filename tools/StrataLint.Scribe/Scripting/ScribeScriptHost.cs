@@ -59,10 +59,7 @@ public static class ScribeScriptHost
     private const int LoadDiagnosticChunkBytes = 3072;
     private const int LoadDiagnosticMaxImageBytes = 512 * 1024;
     private const int LoadDiagnosticMaxExceptionChars = 128 * 1024;
-
-    // Test-only sink. Production executions write to stderr so the ordinary job log
-    // remains the transport; tests can verify the exact wire format without a log file.
-    internal static TextWriter? LoadDiagnosticWriter { get; set; }
+    private static long loadDiagnosticSequence;
 
     public static ScribeScriptResult Execute(string repositoryRoot, string relativePath)
     {
@@ -81,18 +78,19 @@ public static class ScribeScriptHost
             ReadScriptParseOptions(constants), allowlistPath: null, entryTypeOverride: null);
 
     internal static ScribeScriptResult ExecuteWithAllowlistPath(
-        string repositoryRoot, string relativePath, string allowlistPath) => ExecutePrepared(
+        string repositoryRoot, string relativePath, string allowlistPath, TextWriter? diagnosticWriter = null) => ExecutePrepared(
             repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(), ScriptParseOptions,
-            allowlistPath, entryTypeOverride: null);
+            allowlistPath, entryTypeOverride: null, diagnosticWriter);
 
     internal static ScribeScriptResult ExecuteWithEntryType(
-        string repositoryRoot, string relativePath, string entryType) => ExecutePrepared(
+        string repositoryRoot, string relativePath, string entryType, TextWriter? diagnosticWriter = null) => ExecutePrepared(
             repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(), ScriptParseOptions,
-            allowlistPath: null, entryType);
+            allowlistPath: null, entryType, diagnosticWriter);
 
     private static ScribeScriptResult ExecutePrepared(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
-        CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride)
+        CSharpParseOptions? parseOptions, string? allowlistPath, string? entryTypeOverride,
+        TextWriter? diagnosticWriter = null)
     {
         var normalized = NormalizePath(relativePath);
         if (normalized is null)
@@ -129,7 +127,7 @@ public static class ScribeScriptHost
                     or FileNotFoundException or BadImageFormatException)
                 {
                     EmitLoadDiagnostic(normalized, entryTypeOverride ?? compilation.EntryType!, references,
-                        image, assembly, loadContext, exception);
+                        image, assembly, loadContext, exception, diagnosticWriter);
                     return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
                 }
                 DocumentDefinition definition;
@@ -382,11 +380,18 @@ public static class ScribeScriptHost
         MemoryStream image,
         Assembly? assembly,
         AssemblyLoadContext loadContext,
-        Exception exception)
+        Exception exception,
+        TextWriter? diagnosticWriter)
     {
-        var writer = LoadDiagnosticWriter ?? Console.Error;
+        var writer = diagnosticWriter ?? Console.Error;
+        var capture = string.Empty;
+        void WriteLine(string kind, string payload) =>
+            writer.WriteLine($"{LoadDiagnosticPrefix}_{kind} capture={capture} {payload}");
+        void WriteField(string key, string value) => WriteLine("FIELD", $"{key}={Sanitize(value)}");
         try
         {
+            capture = Environment.ProcessId.ToString(CultureInfo.InvariantCulture) + "-"
+                + Interlocked.Increment(ref loadDiagnosticSequence).ToString(CultureInfo.InvariantCulture);
             var bytes = image.ToArray();
             var complete = bytes.Length <= LoadDiagnosticMaxImageBytes;
             var digest = Convert.ToHexStringLower(SHA256.HashData(bytes));
@@ -396,45 +401,46 @@ public static class ScribeScriptHost
             var exceptionPayload = exceptionComplete
                 ? exceptionText
                 : exceptionText[..LoadDiagnosticMaxExceptionChars];
-            WriteDiagnosticLine(writer, $"{LoadDiagnosticPrefix}_BEGIN version=1");
-            WriteDiagnosticField(writer, "source_utf8_base64", EncodeUtf8(relativePath));
-            WriteDiagnosticField(writer, "entry_utf8_base64", EncodeUtf8(entryType));
-            WriteDiagnosticField(writer, "failure_code", ScribeScriptFailureCode.TypeLoad.ToString());
-            WriteDiagnosticField(writer, "failure_exception_utf8_base64", EncodeUtf8(exceptionPayload));
-            WriteDiagnosticField(writer, "failure_exception_complete", exceptionComplete ? "true" : "false");
-            WriteDiagnosticField(writer, "image_length", bytes.Length.ToString(CultureInfo.InvariantCulture));
-            WriteDiagnosticField(writer, "image_sha256", digest);
-            WriteDiagnosticField(writer, "image_mvid", imageMetadata);
-            WriteDiagnosticField(writer, "payload_complete", complete ? "true" : "false");
+            WriteLine("BEGIN", "version=2");
+            WriteField("source_utf8_base64", EncodeUtf8(relativePath));
+            WriteField("entry_utf8_base64", EncodeUtf8(entryType));
+            WriteField("failure_code", ScribeScriptFailureCode.TypeLoad.ToString());
+            WriteField("failure_exception_utf8_base64", EncodeUtf8(exceptionPayload));
+            WriteField("failure_exception_complete", exceptionComplete ? "true" : "false");
+            WriteField("image_length", bytes.Length.ToString(CultureInfo.InvariantCulture));
+            WriteField("image_sha256", digest);
+            WriteField("image_mvid", imageMetadata);
+            WriteField("payload_complete", complete ? "true" : "false");
             if (!complete)
-                WriteDiagnosticField(writer, "payload_incomplete_reason", $"image exceeds {LoadDiagnosticMaxImageBytes} bytes");
+                WriteField("payload_incomplete_reason", $"image exceeds {LoadDiagnosticMaxImageBytes} bytes");
 
-            WriteDiagnosticField(writer, "runtime_framework", RuntimeInformation.FrameworkDescription);
-            WriteDiagnosticField(writer, "runtime_version", Environment.Version.ToString());
-            WriteDiagnosticField(writer, "os_description", RuntimeInformation.OSDescription);
-            WriteDiagnosticField(writer, "os_architecture", RuntimeInformation.OSArchitecture.ToString());
-            WriteDiagnosticField(writer, "process_architecture", RuntimeInformation.ProcessArchitecture.ToString());
-            WriteDiagnosticField(writer, "testhost_process", Environment.ProcessPath ?? "unknown");
-            WriteDiagnosticField(writer, "coreclr_path", typeof(object).Assembly.Location);
-            WriteDiagnosticField(writer, "scribe_host_path", typeof(ScribeScriptHost).Assembly.Location);
-            WriteDiagnosticField(writer, "roslyn_compiler", typeof(CSharpCompilation).Assembly.FullName ?? "unknown");
-            WriteDiagnosticField(writer, "roslyn_compiler_path", typeof(CSharpCompilation).Assembly.Location);
-            WriteDiagnosticField(writer, "sdk_compiler", "in-process Roslyn; no external SDK compiler invoked");
-            WriteDiagnosticField(writer, "load_context_collectible", loadContext.IsCollectible ? "true" : "false");
-            WriteDiagnosticField(writer, "load_context_name", loadContext.Name ?? "<null>");
-            WriteDiagnosticField(writer, "loaded_assembly", assembly?.FullName ?? "<load failed>");
-            WriteDiagnosticField(writer, "loaded_assembly_mvid", assembly is null ? "<load failed>" : ReadAssemblyMvid(assembly));
-            WriteDiagnosticField(writer, "loaded_context_name", assembly is null
+            WriteField("runtime_framework", RuntimeInformation.FrameworkDescription);
+            WriteField("runtime_version", Environment.Version.ToString());
+            WriteField("os_description", RuntimeInformation.OSDescription);
+            WriteField("os_architecture", RuntimeInformation.OSArchitecture.ToString());
+            WriteField("process_architecture", RuntimeInformation.ProcessArchitecture.ToString());
+            WriteField("testhost_process", Environment.ProcessPath ?? "unknown");
+            WriteField("managed_core_library_path", typeof(object).Assembly.Location);
+            WriteField("scribe_host_path", typeof(ScribeScriptHost).Assembly.Location);
+            WriteField("roslyn_compiler", typeof(CSharpCompilation).Assembly.FullName ?? "unknown");
+            WriteField("roslyn_compiler_path", typeof(CSharpCompilation).Assembly.Location);
+            WriteField("sdk_compiler", "in-process Roslyn; no external SDK compiler invoked");
+            WriteField("load_context_collectible", loadContext.IsCollectible ? "true" : "false");
+            WriteField("load_context_name", loadContext.Name ?? "<null>");
+            WriteField("loaded_assembly", assembly?.FullName ?? "<load failed>");
+            WriteField("loaded_assembly_mvid", assembly is null ? "<load failed>" : ReadAssemblyMvid(assembly));
+            WriteField("loaded_context_name", assembly is null
                 ? "<load failed>"
                 : AssemblyLoadContext.GetLoadContext(assembly)?.Name ?? "<null>");
 
+            WriteField("reference_count", references.Length.ToString(CultureInfo.InvariantCulture));
             for (var index = 0; index < references.Length; index++)
             {
                 var display = references[index].Display ?? "<null>";
                 var reference = ReadReferenceMetadata(display);
-                WriteDiagnosticField(writer, $"reference_{index}_display", display);
-                WriteDiagnosticField(writer, $"reference_{index}_identity", reference.Identity);
-                WriteDiagnosticField(writer, $"reference_{index}_mvid", reference.Mvid);
+                WriteField($"reference_{index}_display", display);
+                WriteField($"reference_{index}_identity", reference.Identity);
+                WriteField($"reference_{index}_mvid", reference.Mvid);
             }
 
             if (complete)
@@ -443,30 +449,25 @@ public static class ScribeScriptHost
                 {
                     var length = Math.Min(LoadDiagnosticChunkBytes, bytes.Length - offset);
                     var chunk = Convert.ToBase64String(bytes, offset, length);
-                    WriteDiagnosticLine(writer,
-                        $"{LoadDiagnosticPrefix}_CHUNK index={offset / LoadDiagnosticChunkBytes} offset={offset} length={length} base64={chunk}");
+                    WriteLine("CHUNK",
+                        $"index={offset / LoadDiagnosticChunkBytes} offset={offset} length={length} base64={chunk}");
                 }
             }
 
-            WriteDiagnosticLine(writer,
-                $"{LoadDiagnosticPrefix}_END chunks={(complete ? (bytes.Length + LoadDiagnosticChunkBytes - 1) / LoadDiagnosticChunkBytes : 0)}");
+            WriteLine("END",
+                $"chunks={(complete ? (bytes.Length + LoadDiagnosticChunkBytes - 1) / LoadDiagnosticChunkBytes : 0)}");
         }
         catch (Exception diagnosticFailure) when (diagnosticFailure is not OutOfMemoryException)
         {
             // A diagnostic must never alter TypeLoad semantics. If the sink itself fails,
-            // leave an explicit incomplete marker in the same ordinary job log.
+            // leave an explicit incomplete marker on the same sink.
             try
             {
-                WriteDiagnosticLine(writer, $"{LoadDiagnosticPrefix}_INCOMPLETE reason={Sanitize(diagnosticFailure.Message)}");
+                WriteLine("INCOMPLETE", $"reason={Sanitize(diagnosticFailure.Message)}");
             }
             catch (Exception) { }
         }
     }
-
-    private static void WriteDiagnosticField(TextWriter writer, string key, string value) =>
-        WriteDiagnosticLine(writer, $"{LoadDiagnosticPrefix}_FIELD {key}={Sanitize(value)}");
-
-    private static void WriteDiagnosticLine(TextWriter writer, string line) => writer.WriteLine(line);
 
     private static string EncodeUtf8(string value) => Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
 
