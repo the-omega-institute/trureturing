@@ -7,6 +7,7 @@
    digest: Path compression of the actual preorder frontier and bounded trial control. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.BoundedPreorderTrial
+import D5.S3.Arith.FibonacciAtomic.Observer.NativePollingAlignment
 import D5.S3.ObserverMemory.Algorithms.TwoBankInstalledWord
 
 /-! The cursor retains only an address. Pending siblings and report sequences
@@ -279,5 +280,186 @@ def controlProgram (P : Parameters) (z : Control) : Instruction Control Address 
     | .halt0 | .halt1 => .halt
     | .error => .read [] (fun _ => canonical .error)
   else .read [] (fun _ => canonical .error)
+
+private theorem cursor_balance {c d : Option Address} {s : History}
+    (run : CursorRun c s d) (honest : ∀ a ∈ s, a.2 ≠ .absent) :
+    (pending d).length + leafVisits s = (pending c).length + branches s := by
+  induction run with
+  | nil => simp [leafVisits, branches]
+  | @cons p r s d rest ih =>
+    have hr := honest ⟨p, r⟩ (by simp)
+    have ht : ∀ a ∈ s, a.2 ≠ .absent := by
+      intro a ha
+      exact honest a (by simp [ha])
+    have balance := ih ht
+    rw [cursor_frontier] at balance
+    cases r <;> simp [acquisitionStep, pending, branches, leafVisits] at hr balance ⊢ <;> omega
+
+private theorem one_update_polling (P : Parameters) (u : Source)
+    (active : P.active = true) (d : Nat) :
+    ∀ a, rightClock u + a + d = 2 * P.pollDepth →
+      Run (controlProgram P) (NativePollingAlignment.observations u)
+        (canonical .poll) a (fresh 0) (a + d) := by
+  induction d with
+  | zero =>
+    intro a clock
+    have reply : NativePollingAlignment.observations u a (rights P.pollDepth) = .alpha :=
+      (right_clock_readout P.pollDepth (substitution^[a] u)).2.1.mpr
+        (by rw [right_clock_iterate]; omega)
+    apply Run.read (p := rights P.pollDepth)
+      (k := fun r => match r with
+        | .absent => canonical .update
+        | .alpha => fresh 0
+        | .beta | .branch => canonical .error)
+      (by simp [controlProgram, Valid, canonical, active])
+    rw [reply]
+    simpa using Run.refl (fresh 0) a
+  | succ d ih =>
+    intro a clock
+    have reply : NativePollingAlignment.observations u a (rights P.pollDepth) = .absent :=
+      (right_clock_readout P.pollDepth (substitution^[a] u)).1.mpr
+        (by rw [right_clock_iterate]; omega)
+    apply Run.read (p := rights P.pollDepth)
+      (k := fun r => match r with
+        | .absent => canonical .update
+        | .alpha => fresh 0
+        | .beta | .branch => canonical .error)
+      (by simp [controlProgram, Valid, canonical, active])
+    rw [reply]
+    apply Run.update (z := canonical .poll)
+      (by simp [controlProgram, Valid, canonical, active])
+    convert ih (a + 1) (by omega) using 1 <;> omega
+
+private theorem right_clock_size (u : Source) : rightClock u ≤ 2 * u.length - 1 := by
+  induction u with
+  | of b => cases b <;> decide
+  | mul x y _hx hy =>
+    have positive := x.length_pos
+    have positiveY := y.length_pos
+    change 2 + rightClock y ≤ 2 * (x.length + y.length) - 1
+    omega
+
+/-- The even right-ray threshold fixed at installation. -/
+def alignmentBudget (h T : Nat) : Nat := 2 * halfCeil (T + 2 * h)
+
+/-- Active alignment installs only a fixed starting offset and a short index range. -/
+def activeParameters (h T : Nat) : Parameters :=
+  ⟨h, alignmentBudget h T - 2 * h + 1, 2 * h - 1,
+    alignmentBudget h T / 2, true⟩
+
+/-- Actual one-Update polling reaches exactly the certified stationary interval. -/
+theorem native_one_update_alignment (h T t : Nat) (u : Source)
+    (hu : u.length = h) (ht : t ≤ T) :
+    let B := alignmentBudget h T
+    let U := B - t - rightClock u
+    0 < U ∧ t + U = B - rightClock u ∧
+    B - 2 * h + 1 ≤ t + U ∧ t + U ≤ B ∧
+    t + U - (B - 2 * h + 1) ≤ 2 * h - 1 ∧
+    Run (controlProgram (activeParameters h T))
+      (NativePollingAlignment.observations (substitution^[t] u))
+      (canonical .poll) 0 (fresh 0) U := by
+  dsimp only
+  have size := right_clock_size u
+  rw [hu] at size
+  have hh : 0 < h := by rw [← hu]; exact u.length_pos
+  have rem := Nat.mod_lt (T + 2 * h) (by decide : 0 < 2)
+  have div := Nat.mod_add_div (T + 2 * h) 2
+  have lower : T + 2 * h ≤ alignmentBudget h T := by
+    unfold alignmentBudget halfCeil
+    omega
+  have clock : rightClock (substitution^[t] u) +
+      (alignmentBudget h T - t - rightClock u) =
+      2 * (activeParameters h T).pollDepth := by
+    rw [right_clock_iterate]
+    simp only [activeParameters, alignmentBudget]
+    have halve : 2 * halfCeil (T + 2 * h) / 2 = halfCeil (T + 2 * h) := by omega
+    rw [halve]
+    unfold alignmentBudget at lower
+    omega
+  refine ⟨by omega, by omega, by omega, by omega, by omega, ?_⟩
+  simpa using one_update_polling (activeParameters h T) (substitution^[t] u) rfl
+    (alignmentBudget h T - t - rightClock u) 0 (by simpa using clock)
+
+private theorem trial_geometry (h τ N : Nat) (u y : Source)
+    (spec : BoundedPreorderTrial.TrialSpec h τ N u y)
+    (H : History) (a : BoundedPreorderTrial.Report) (tail : History)
+    (split : trial h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail) :
+    CursorRun (some []) H (some a.1) ∧
+    frontier H = a.1 :: rightsPending a.1 ∧
+    branches H < h ∧ leafVisits H < h ∧ a.1.length < h := by
+  let v := BoundedPreorderTrial.virtualSource u τ N
+  have pre : (trial h v).IsPrefix (acquisitionTrace [] v) := List.take_prefix _ _
+  obtain ⟨extra, full⟩ := pre
+  have hs : acquisitionTrace [] v = H ++ a :: (tail ++ extra) := by
+    rw [← full, split]
+    simp only [List.append_assoc, List.cons_append]
+  obtain ⟨run, front, _⟩ :=
+    (reachable_compressed_frontier_and_trial_simulation v).2.2 H a (tail ++ extra) hs
+  have pref : H.IsPrefix (acquisitionTrace [] v) := ⟨a :: (tail ++ extra), hs.symm⟩
+  have before := spec.before_cutoff H.length (by rw [split]; simp)
+  rw [← List.prefix_iff_eq_take.mp pref] at before
+  have Hsub : H ⊆ trial h v := by rw [split]; exact List.subset_append_left _ _
+  have honest : ∀ r ∈ H, r.2 ≠ .absent :=
+    fun r hr => (spec.reached r (Hsub hr)).2
+  have mass := cursor_balance run honest
+  simp only [pending, rightsPending, List.length_cons, List.length_nil] at mass
+  have member : a ∈ trial h v := by rw [split]; simp
+  have depth := (spec.reached a member).1
+  exact ⟨run, front, before, by omega, by omega⟩
+
+/-- Mathematical comparison of fields with a report prefix; never used by the rows. -/
+def atPrefix (j : Nat) (H : History) (p : Address) (mu : Mode) : Control :=
+  ⟨p, p.length, branches H, leafVisits H, j, decide (betas H % 2 = 1), mu⟩
+
+private theorem guard_value_progress (P : Parameters) (τ N : Nat) (u y : Source)
+    (spec : BoundedPreorderTrial.TrialSpec P.h τ N u y)
+    (j : Nat) (hj : j ≤ P.last) (offset : P.start + j = N)
+    (H : History) (a : BoundedPreorderTrial.Report) (tail : History)
+    (split : trial P.h (BoundedPreorderTrial.virtualSource u τ N) = H ++ a :: tail)
+    (obs : Nat → Address → Reply) (epoch : Nat)
+    (response : ∀ p, obs epoch p = readout p y)
+    (final : Control) (lastEpoch : Nat)
+    (continuation : Run (controlProgram P) obs
+      (virtualDelta P (atPrefix j H a.1 .value) a.2) epoch final lastEpoch) :
+    Run (controlProgram P) obs
+      (atPrefix j H a.1 (queryMode N a.1)) epoch final lastEpoch := by
+  obtain ⟨_, _, hb, hl, hp⟩ := trial_geometry P.h τ N u y spec H a tail split
+  have member : a ∈ trial P.h (BoundedPreorderTrial.virtualSource u τ N) := by
+    rw [split]; simp
+  have decoded := spec.decoded a member
+  have label : decodeLabel N (readout (a.1 ++ rights (halfCeil N)) y) = a.2 := by
+    by_cases hn : N = 0
+    · simpa [hn, DelayedOriginalReadout.originalDecode, DelayedOriginalReadout.originalQueries,
+        decodeLabel, halfCeil, rights] using decoded
+    · by_cases root : a.1 = []
+      · simpa [DelayedOriginalReadout.originalDecode, DelayedOriginalReadout.originalQueries,
+          hn, root] using decoded
+      · simpa [DelayedOriginalReadout.originalDecode, DelayedOriginalReadout.originalQueries,
+          hn, root, spec.guard_accept a member root] using decoded
+  have valid : Valid P (atPrefix j H a.1 .value) := by
+    simpa [Valid, atPrefix] using And.intro hp ⟨hb, Nat.le_of_lt hl, hj⟩
+  have value : Run (controlProgram P) obs (atPrefix j H a.1 .value) epoch
+      final lastEpoch := by
+    apply Run.read (p := a.1 ++ rights (halfCeil N))
+      (k := fun r => virtualDelta P (atPrefix j H a.1 .value) (decodeLabel N r))
+      (by rw [controlProgram, ite_eq_left valid]; simp only [atPrefix, offset])
+    rw [response, label]
+    exact continuation
+  by_cases direct : N = 0 ∨ a.1 = []
+  · simpa [queryMode, direct] using value
+  · have positive : 0 < N := by omega
+    have nonroot : a.1 ≠ [] := fun root => direct (Or.inr root)
+    have validGuard : Valid P (atPrefix j H a.1 .guard) := by
+      simp [Valid, atPrefix, offset, hp, hb, Nat.le_of_lt hl, hj, positive, nonroot]
+    simp only [queryMode, ite_eq_right direct]
+    apply Run.read (p := a.1.dropLast ++ rights (N / 2 + 1))
+      (k := fun r => if guardAccept N r then
+        { atPrefix j H a.1 .guard with mu := .value } else canonical .error)
+      (by rw [controlProgram, ite_eq_left validGuard]; simp only [atPrefix, offset])
+    rw [response, spec.guard_accept a member nonroot]
+    simpa [atPrefix] using value
+
+#print axioms reachable_compressed_frontier_and_trial_simulation
+#print axioms native_one_update_alignment
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl

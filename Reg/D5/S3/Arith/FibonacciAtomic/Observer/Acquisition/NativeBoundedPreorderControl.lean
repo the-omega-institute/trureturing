@@ -14,6 +14,9 @@ open Observer.BoundedPreorderTrial (History Report)
 open Observer.Acquisition.NativeBoundedPreorderControl
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
+open _root_.D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution (Run)
+open Observer.DelayedOriginalReadout (rightClock)
+open GenealogicalFiberTransport (substitution)
 
 abbrev signature := Reg.Support.SingleDependentReadout.signature
   Unit (fun _ => Source) (fun _ => History)
@@ -83,6 +86,77 @@ def reachable_compressed_frontier_and_trial_simulation_registration :
     readouts := #[{
       path := #["body", "fn", "arg", "fn", "arg"]
       stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+abbrev alignmentSignature := Reg.Support.SingleDependentReadout.signature
+  Unit (fun _ => Source) (fun _ => Nat)
+
+def alignmentActual : Realization alignmentSignature :=
+  realize alignmentSignature (fun _ _ u => rightClock u) (fun e => nomatch e)
+
+def alignmentBad : Realization alignmentSignature :=
+  realize alignmentSignature (fun _ _ _ => 2) (fun e => nomatch e)
+
+abbrev alignmentArena : Arena where
+  signature := alignmentSignature
+  Law R := ∀ (h T t : Nat) (u : Source), u.length = h → t ≤ T →
+    let B := alignmentBudget h T
+    let U := B - t - R.readout () () u
+    0 < U ∧ t + U = B - rightClock u ∧
+    B - 2 * h + 1 ≤ t + U ∧ t + U ≤ B ∧
+    t + U - (B - 2 * h + 1) ≤ 2 * h - 1 ∧
+    Run (controlProgram (activeParameters h T))
+      (Observer.NativePollingAlignment.observations (substitution^[t] u))
+      (canonical .poll) 0 (fresh 0) U
+
+private theorem alignment_bad_law : ¬ alignmentArena.Law alignmentBad := by
+  intro law
+  have impossible := law 1 0 0 (.of true) rfl (by decide)
+  change 0 < 0 ∧ _ at impossible
+  exact Nat.lt_irrefl 0 impossible.1
+
+def alignmentFamily : Registration alignmentArena (type_of% (@native_one_update_alignment)) where
+  actual := alignmentActual
+  bridge := Iff.rfl
+  variation := ⟨@native_one_update_alignment, alignmentBad, alignment_bad_law⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ alignment_bad_law
+  dependence := by
+    intro i
+    refine ⟨(), .of true, .of false, ?_⟩
+    change (0 : Nat) ≠ 1
+    decide
+
+def native_one_update_alignment_registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@native_one_update_alignment) (Realization alignmentSignature) Unit Unit where
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.alignmentUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.alignmentFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨alignmentArena⟩
+  objectArena := .source ⟨alignmentArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source alignmentArena ⟨alignmentFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize alignmentSignature alignmentActual.readout alignmentActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "value", "arg"]
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
