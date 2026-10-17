@@ -1,0 +1,42 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform;
+
+internal sealed class ActualPSDMomentDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Joint moments of ordered defects under the actual positive semidefinite constraint.",
+        H("Zero-jump actual-PSD defect moment"), Blocks(
+            Describe.Lean(DescribeId.Create("appt-quadbit-actual-psd-zero-jump-moment"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_zero_jump_moment"),
+                H("Continuous joint moment bound"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+"For arbitrary real h on Fin 5 and d on Fin 9, assume h is antitone and nonnegative, d is monotone with every coordinate between zero and one, and H+D is at most four, where H and D are the respective coordinate sums. The literal symmetric matrix has diagonal entries 2(1-d8), 2(1-d6), 2(1-d3), and upper off-diagonal entries -(h0+d7), -(h1+d5), -(h2+d4). Its positive semidefiniteness implies sum h_i^2 + sum d_i^2 - (H-D)/4 is at most 7/2. All indices are zero based. The statement includes singular matrices and arbitrary ordered tail shapes."
+                ))), DescribeRole.Theorem),
+            Paragraph(Text(
+"Write r=d6+d7+d8 and u=d3. The original ordered-block energy theorem supplies sum d_i^2 at most r^2. The actual PSD matrix also supplies the coupled tail budget via a homogeneous quadratic-form evaluation in the full plus/minus congruence. Combining this budget with ordering gives two further square-sum envelopes. Rational polynomial case splits yield sum d_i^2 at most 9/4."
+            )),
+            Paragraph(Text(
+"For h0 at most 1/2, the head chord estimate and H+D at most four give a joint moment at most 13/4. For h0 at least 1/2, replace the tail by zero and add r to h0. This preserves order and the total budget. In the full congruent Z-matrix it increases entries while keeping off-diagonal entries nonpositive, so it preserves actual positive semidefiniteness. The joint moment increases by 2r(h0-1/2)+(r^2-sum d_i^2)+(3r-D)/4."
+            )),
+            Paragraph(Text(
+"For the resulting flat tail, the PSD determinant gives a^2+b^2+e^2+abe at most four for the first three heads. The other two heads are bounded by a chord and their remaining mass budget. Polynomial comparison reduces the first two heads to a scalar interval with one possible kink; the original quadratic interval theorem and rational endpoint factors give the bound 7/2. This is a statement about continuous real defect data; any physical realization or purity theorem requires its own connection to these hypotheses."
+            )),
+            Describe.Lean(DescribeId.Create("appt-quadbit-actual-psd-flat-tail-middle-energy"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/ActualPSDMoment.actual_psd_flat_tail_middle_energy"),
+                H("Flat-tail middle energy"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+"Let h be any antitone nonnegative real function on Fin 5, with H=sum h_i at most 4-6w and h0 at least one. Assume 1/4 is at most w and w is at most (5-sqrt(17))/2. The literal symmetric matrix has diagonal entries two and upper off-diagonal entries -(w+h0), -(w+h1), -(w+h2). Positive semidefiniteness of this matrix implies wH+sum h_i^2 is at most 4-2w-4w^2+w^3+w^4. Indices are zero based; arbitrary continuous ordered heads and singular PSD matrices are included. No determinant bound or auxiliary head or tail cap is a premise."
+                ))), DescribeRole.Theorem),
+            Paragraph(Text(
+"Set a=w+h0, b=w+h1, e=w+h2, x=w+h3 and y=w+h4. The shared literal determinant implication gives a^2+b^2+e^2+abe at most four. The shared ordered-head consequence gives e at most one. Put A=2-e^2. At the original point only, the tail chord bounds x(x-w)+y(y-w) by e times min(2(e-w),4-3w-a-b-e). The shared fixed-e square-sum comparison splits at a+b=A+e. In the lower branch put z=a+b-e; ordering, h0 at least one and this branch condition give 1+w at most z and z at most A. In the upper branch compare directly with A."
+            )),
+            Paragraph(Text(
+"The scalar comparison is G(w,z,e)=min(z^2+4e^2-wz-4we,z^2-(w+e)z+(4-5w)e). Both entries increase from z to A when 1+w is at most z and z is at most A. This comparison remains valid if the replacement L4 remainder is negative: the chord was used only at the original point, and no replacement spectrum is asserted to be feasible or PSD. At A, the two entries are F(w,e)=4-2w-4we+we^2+e^4 and U(w,e)=4-2w+2e-5we+(w-4)e^2+e^3+e^4."
+            )),
+            Paragraph(Text(
+"For w at most e at most 1/2, the exact full-polynomial secant and its nonnegative factor decomposition give F(w,e) at most F(w,w). For e at least 1/2, the exact truncated-polynomial secant gives U(w,e) at most U(w,1/2), which is at most F(w,1/2) and hence at most F(w,w). Finally F(w,w)=4-2w-4w^2+w^3+w^4. The private scalar proof works up to w=1/2; the public statement retains the original upper endpoint. This middle estimate is only one dimension-independent obligation for a later rounded-purity assembly; it asserts neither an all-dimension purity theorem nor a physical APPT characterization."
+            ))
+        )));
+}

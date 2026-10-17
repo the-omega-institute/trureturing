@@ -92,5 +92,133 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end structural_fixed_good
 
+namespace quadratic_interval_le_fun
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (ℝ → ℝ) (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ f x => f x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ f x => f x + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ (f : ℝ → ℝ) (a b c l r x M : ℝ)
+    (hf : ∀ y, f y = a*y^2+b*y+c) (ha : 0 ≤ a)
+    (hl : l ≤ x) (hr : x ≤ r) (hleft : f l ≤ M) (hright : f r ≤ M),
+    O.readout () f x ≤ M
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (fun _ => 0) 0 0 0 0 0 0 0
+    (by intro y; ring) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  norm_num [rejected, realize] at hb
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨id, 0, 1, zero_ne_one⟩
+def family : Registration arena (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.quadratic_interval_le_fun)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.quadratic_interval_le_fun, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.quadratic_interval_le_fun) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.quadratic_interval_le_fun.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.quadratic_interval_le_fun.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ f x => f x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 6
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end quadratic_interval_le_fun
+
+namespace ordered_block_energy
+universe u v
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ s => s ^ 2) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ s => s ^ 2 - 1) (fun e => nomatch e)
+/-- The original implicit types, instances, bounds and cardinality premises are unchanged. -/
+abbrev arena : Arena where
+  signature := signature
+  Law O := ∀ {ι : Type u} {κ : Type v} [Fintype ι] [Fintype κ]
+    (upper : ι → ℝ) (lower : κ → ℝ) (m : ℝ)
+    (hm : 0 ≤ m) (hu : ∀ i, m ≤ upper i)
+    (hl0 : ∀ i, 0 ≤ lower i) (hl1 : ∀ i, lower i ≤ m)
+    (hk : 1 ≤ (Fintype.card ι : ℝ))
+    (hcard : (Fintype.card κ : ℝ) ≤
+      (Fintype.card ι : ℝ)*((Fintype.card ι : ℝ)-1)),
+    (∑ i, (upper i)^2)+(∑ i, (lower i)^2) ≤ O.readout () () (∑ i, upper i)
+private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  have hb := h (ι := ULift.{u} (Fin 1)) (κ := ULift.{v} (Fin 0))
+    0 0 0 (by norm_num) (by intro i; simp) (by intro i; simp)
+    (by intro i; simp) (by norm_num) (by norm_num)
+  norm_num [rejected, realize] at hb
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  norm_num [actual, realize]
+def family : Registration arena.{u,v} (type_of% (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.ordered_block_energy.{u,v})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.ordered_block_energy.{u,v}, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound.ordered_block_energy.{u,v}) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.ordered_block_energy.unit
+  realizationName := `Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone.ordered_block_energy.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ s => s ^ 2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ordered_block_energy
+
 end
 end Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
