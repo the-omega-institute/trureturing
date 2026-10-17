@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compact Inspector statement spools into the canonical v3 report bundle."""
+"""Compact Inspector statement spools into the canonical v4 report bundle."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
-REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
+REPORT_SCHEMA = "stratalint-raw-lean-report-v4"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")

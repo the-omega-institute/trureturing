@@ -99,7 +99,7 @@ public sealed class CompressedLeanMaterialTests
             for suffix in ('', '.materials.zip'):
                 assert (root / ('plain.json' + suffix)).read_bytes() == (root / ('compressed.json' + suffix)).read_bytes()
             # The current report format and material bytes have fixed content identities.
-            assert hashlib.sha256((root / 'plain.json').read_bytes()).hexdigest() == '5073ca87ad247a64f8b2b5de2c98d3616ebf7666427e700e582c7953971a5ffa'
+            assert hashlib.sha256((root / 'plain.json').read_bytes()).hexdigest() == '5e1fa1b01385bccc8ce48148f66b963bb03186a1331f6d9d92e8477ab15afb91'
             assert hashlib.sha256((root / 'plain.json.materials.zip').read_bytes()).hexdigest() == '3645dbf13d606a04f63ffb5704fab99ffcab588dd458f8e30540bee548f2416d'
             assert not list(plain.iterdir())
             assert not compressed.exists() if mode == 'overlap' else not list(compressed.iterdir())

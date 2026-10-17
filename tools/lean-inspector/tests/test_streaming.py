@@ -35,6 +35,18 @@ def evidence_fixture():
 
 
 class EvidenceFormatTests(unittest.TestCase):
+    def test_typed_source_reading_requires_residual_sufficiency_field(self):
+        reading = fib_analysis.unavailable('fixture')
+        reading['continuation_target'] = {'task': 0}
+        leaf = dict(application='Reg.X.application', owner='Reg.X', target='X.theorem',
+            target_module='X', target_type_identity='a' * 64, input_identity='b' * 64,
+            request={'arena': 'typed-source'}, unavailable_reason='', reading=reading)
+        partition = {'applications': [leaf]}
+        with self.assertRaisesRegex(ValueError, '^fib.invalid_reading$'):
+            fib_analysis.validate(partition)
+        reading['continuation_target']['residual_sufficiency'] = None
+        self.assertEqual(fib_analysis.validate(partition), partition)
+
     def test_fib_partition_is_optional_unversioned_and_strict(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(fib_analysis.subprocess, 'run', side_effect=AssertionError('unexpected analysis')):

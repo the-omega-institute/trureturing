@@ -39,6 +39,23 @@ def source_validation_requests():
                       law(["1", "0", "0", "0", "0"], archive=[[0, 0, 0]])]
 
 
+def generic(values, task, initial, additions):
+    """Typed-source request whose role kernels are the equalities of the given values."""
+    n = len(values[0])
+    kernel = lambda roles: [[all(values[r][i] == values[r][j] for r in roles) for j in range(n)]
+                            for i in range(n)]
+    selected = lambda k: initial + [r for step in additions[:k] for r in step]
+    return {"arena": "typed-source", "binding": {},
+            "plan": {"roles": [{} for _ in values], "available": True, "initial": initial,
+                     "additions": additions, "task": task},
+            "acquisition": {"kind": "finite", "reason": ""},
+            "finite": {"cardinality": n, "states": [{} for _ in range(n)],
+                       "outputs": [[{"value": v} for v in row] for row in values],
+                       "task_outputs": [{"value": v} for v in values[task]],
+                       "kernels": [kernel([r]) for r in range(len(values))],
+                       "layers": [kernel(selected(k)) for k in range(len(additions) + 1)]}}
+
+
 EMPIRICAL = {"kind": "empirical-archive", "source": "synthetic-archive",
              "window_length": 1, "native_contract": "initialized-high-to-low-high-suffix"}
 ARCHIVE = [[0, 0, 0], [1, 0, 0], [0, 1, 0], [1, 1, 0], [0, 0, 1]]
@@ -146,6 +163,49 @@ class FiniteAnalysisContract(unittest.TestCase):
             self.assertIsNone(report['escape_rate'])
             for field in ('arena', 'source_contract', 'escape_pairs', 'escape_rate'):
                 self.assertEqual(report['disposition']['readings'][field]['kind'], 'unavailable')
+
+    def test_generic_residual_sufficiency(self):
+        a, b = [0, 0, 1, 1], [0, 1, 0, 1]
+        xor = [x ^ y for x, y in zip(a, b)]
+        cases = (
+            ([a, b, a], 2, [], [[0], [1]], True, [], 1),
+            ([a, b, xor], 2, [], [[0]], False, [[0, 1], [1, 0], [2, 3], [3, 2]], None),
+            ([a, b, xor], 2, [], [[0], [1]], True, [], 2),
+            ([a, b, xor], 2, [2], [[0]], True, [], 0),
+            ([a, b, xor], 2, [], [[], [0], [1], []], True, [], 3))
+        for values, task, initial, additions, sufficient, pairs, determined in cases:
+            with self.subTest(task=values[task], initial=initial, additions=additions):
+                report = self.execute(generic(values, task, initial, additions), direct=True)
+                result = report['continuation_target']['residual_sufficiency']
+                self.assertEqual(result['task'], task)
+                self.assertIs(result['sufficient'], sufficient)
+                self.assertEqual(result['conflict_count'], len(pairs))
+                self.assertEqual(result['conflict_pairs'], pairs)
+                self.assertEqual(result['conflict_rate'], {'numerator': len(pairs), 'denominator': 12})
+                self.assertEqual(result['determined_at_layer'], determined)
+                unresolved = {tuple(p) for p in report['layered_spectrum']['unresolved']['pairs']}
+                self.assertTrue({tuple(p) for p in pairs} <= unresolved)
+        for values in ([[0]], [[]]):
+            n = len(values[0])
+            report = self.execute(generic(values, 0, [], [[0]]), direct=True)
+            result = report['continuation_target']['residual_sufficiency']
+            self.assertIs(result['sufficient'], True)
+            self.assertEqual(result['conflict_count'], 0)
+            self.assertIsNone(result['conflict_rate'], n)
+            self.assertEqual(result['determined_at_layer'], 0)
+        report = self.execute(generic([[0, 0, 1]], 0, [], []), direct=True)
+        result = report['continuation_target']['residual_sufficiency']
+        self.assertIs(result['sufficient'], False)
+        self.assertEqual(result['conflict_pairs'], [[0, 2], [1, 2], [2, 0], [2, 1]])
+        self.assertEqual(result['conflict_count'], 4)
+        self.assertEqual(result['conflict_rate'], {'numerator': 4, 'denominator': 6})
+        self.assertIsNone(result['determined_at_layer'])
+        request = generic([a, b, xor], 2, [], [[0]])
+        for kind in ('infinite', 'unavailable'):
+            request['acquisition'] = {'kind': kind, 'reason': 'claimed domain'}
+            request['finite'] = None
+            report = self.execute(request, direct=True)
+            self.assertIsNone(report['continuation_target']['residual_sufficiency'])
 
     def test_raw_native_evidence_boundary(self):
         for request in ({}, law(["1/5"] * 5), *NATIVE_METADATA_REQUESTS):

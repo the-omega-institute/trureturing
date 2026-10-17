@@ -251,7 +251,7 @@ public sealed class TruthReleaseBundleWriterTests
         var truthGraph = MinimalTruthGraph();
         var truthGraphBytes = TruthGraphJsonWriter.Write(truthGraph);
         var rawLeanReport = ImmutableArray.CreateRange(Utf8(
-            "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v3\"}\n"));
+            "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v4\"}\n"));
         var truthExport = MinimalTruthExport();
         var truthExportBytes = TruthExportJsonWriter.Write(truthExport);
         var blueprintIndex = ImmutableArray.CreateRange(Utf8("{\"blueprints\": []}\n"));
