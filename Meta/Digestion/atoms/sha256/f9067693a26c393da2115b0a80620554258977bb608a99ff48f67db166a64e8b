@@ -1,0 +1,22 @@
+**Theorem 81.2 (an explicit residue test).** Under the prime hypotheses of Theorem 81.1, suppose
+
+$$q=u^2-5v^2,\qquad u>0,\quad u\equiv1\pmod4,\quad4\mid v.$$
+
+For either root $s^2\equiv5\pmod r$, every original block in Theorem 81.1 requires
+
+$$\boxed{\left(\frac{u+vs}{r}\right)=\left(\frac{2u}{q}\right)=\left(\frac{u}{5}\right).}$$
+
+Thus the opposite sign excludes $D$ as the squarefree kernel for every $C$ and every ternary index.
+
+**Proof.** The element $\gamma=u+v\sqrt5$ has norm $q$, is totally positive, and is $1\pmod{4\mathcal O_0}$. Primality gives $\gcd(u,v)=1$ and $q\nmid2u$. The field $F_q=\mathbb Q(\sqrt5,\sqrt q,\sqrt\gamma)$ is minimally ramified over $K_q=\mathbb Q(\sqrt{5q})$. At odd primes outside $5q$, $\gamma$ is a unit. At $5$ it is a unit and $q$ splits. At $q$, the conjugate unit is $2u$; since $\gamma\bar\gamma=q$ is a square in $E_q=\mathbb Q(\sqrt5,\sqrt q)$, one has $E_q(\sqrt\gamma)=E_q(\sqrt{\bar\gamma})$, allowing that unit conjugate or its corresponding conjugate prime. The same local argument as in Theorem 81.1 gives unramified extension at these primes. At two, $\gamma\equiv1\pmod{4\mathcal O_0}$ and $q\equiv1\pmod8$ give unramified extension by the same étale quadratic polynomial.
+
+The negative third argument in $\mathcal R(5,q,-D)$ includes infinity. Total positivity of $\gamma$ makes that factor $+1$. The finite factors at $q,r$ are $(2u/q)$ and $(u+vs/r)$. The two choices of $s$ have product of residues $q$, whose Legendre symbol modulo $r$ is $+1$, so the factor is independent of the choice. Hence
+
+$$\mathcal R(5,q,-D)=\left(\frac{2u}{q}\right)\left(\frac{u+vs}{r}\right).$$
+
+Theorem 81.1 gives the first boxed equality. Since $q\equiv1\pmod8$, $u>0$ is odd and $u\equiv1\pmod4$, quadratic reciprocity for Jacobi symbols gives
+
+$$\left(\frac{2u}{q}\right)=\left(\frac{u}{q}\right)=\left(\frac{q}{u}\right)=\left(\frac{-5v^2}{u}\right)=\left(\frac{-5}{u}\right)=\left(\frac{u}{5}\right).$$
+
+Coprimality makes all these symbols defined and removes $v^2$. ∎
+

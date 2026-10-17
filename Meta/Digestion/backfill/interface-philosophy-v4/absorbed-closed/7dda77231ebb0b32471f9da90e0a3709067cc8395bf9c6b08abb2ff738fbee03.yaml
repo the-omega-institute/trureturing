@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:7dda77231ebb0b32471f9da90e0a3709067cc8395bf9c6b08abb2ff738fbee03
-  normalized_sha256: sha256:7dda77231ebb0b32471f9da90e0a3709067cc8395bf9c6b08abb2ff738fbee03
-cas_ref: sha256:7dda77231ebb0b32471f9da90e0a3709067cc8395bf9c6b08abb2ff738fbee03
-coverage_gids:
-  - gid: D5/S0/Conventions/SingleEyeInvariant.IsSingleEyed
-    target_statement_id: sha256:876dc7e7260851c4ec65d5d0b587082422349cbe34ce96d0346f11be32ad66a9
-receipts:
-  unresolved_subitems: []

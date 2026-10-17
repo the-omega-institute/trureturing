@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
-  normalized_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
-cas_ref: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
-coverage_gids:
-  - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
-    target_statement_id: sha256:b8ac933e4969a010faa77bcb3d14839c6664e0d9f929a09e9c4ae8196bd3fae8
-receipts:
-  unresolved_subitems: []
