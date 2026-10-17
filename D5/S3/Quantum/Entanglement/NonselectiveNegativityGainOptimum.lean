@@ -290,11 +290,11 @@ private theorem rotation_unitary (s t : ℝ) (hst : s ^ 2 + t ^ 2 = 1) :
     rotation s t ∈ unitaryGroup (Fin 2 × Fin 2) ℂ := by
   rw [Matrix.mem_unitaryGroup_iff]
   have hc : (s : ℂ) ^ 2 + (t : ℂ) ^ 2 = 1 := by exact_mod_cast hst
+  have hrev : (t : ℂ) ^ 2 + (s : ℂ) ^ 2 = 1 := (add_comm _ _).trans hc
   ext ⟨i, j⟩ ⟨k, l⟩
   fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
     simp [rotation.eq_1, Matrix.mul_apply,
-      Fintype.sum_prod_type, Fin.sum_univ_two, ← pow_two, hc] <;>
-    first | exact hc | exact (add_comm _ _).trans hc | ring
+      Fintype.sum_prod_type, Fin.sum_univ_two, ← pow_two, hc, hrev, mul_comm]
 
 private theorem schmidt_pure (x : Fin 2 → ℝ) :
     pure (schmidt x) = correlated (x 0 ^ 2) (x 1 ^ 2) (x 0 * x 1) := by
@@ -397,7 +397,7 @@ theorem result : claim := by
       show L.valᴴ * L.val = 1 from Matrix.mem_unitaryGroup_iff'.mp L.prop,
       Matrix.one_mul, schmidt_pure] at ht
     simpa [correlated.eq_1, Matrix.trace, Fintype.sum_prod_type, Fin.sum_univ_two,
-      ← Complex.ofReal_pow] using
+      pow_two, Complex.mul_re] using
       congrArg Complex.re ht
   obtain ⟨U, hU, hopt⟩ := schmidt_attainment x hn hx
   refine ⟨L.val * U, (unitaryGroup (Fin 2 × Fin 2) ℂ).mul_mem L.prop hU, ?_⟩
