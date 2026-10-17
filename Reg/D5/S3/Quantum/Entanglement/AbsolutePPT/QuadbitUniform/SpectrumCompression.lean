@@ -60,7 +60,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.SpectrumCompression
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -121,7 +122,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.SpectrumCompression
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
@@ -144,11 +146,13 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
-  norm_num [rejected, realize] at hb
+  change (0 : ℝ) ≤ -1 at hb
+  norm_num at hb
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 1, 2, ?_⟩
-  norm_num [actual, realize, target]
+  change target 1 ≠ target 2
+  norm_num [target]
 def family : Registration arena (type_of% (@target_nonneg)) where
   actual := actual
   bridge := Iff.rfl
@@ -178,7 +182,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.SpectrumCompression
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "arg"]
+    readouts := #[{
+      path := #["body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none

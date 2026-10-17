@@ -31,22 +31,26 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   intro i
   let bad : Fin 16 → ℝ := fun q => if q = 15 then -1 else 0
   refine ⟨(67,6), 0, bad, ?_⟩
-  change spectralGood (Real.sqrt (target 67)) (synth (positions 67 6) 0) ≠
-    spectralGood (Real.sqrt (target 67)) (synth (positions 67 6) bad)
-  have hzero : spectralGood (Real.sqrt (target 67)) (synth (positions 67 6) 0) := by
+  change spectralGood (Real.sqrt (target 67)) (synth (d := 67) (positions 67 6) 0) ≠
+    spectralGood (Real.sqrt (target 67)) (synth (d := 67) (positions 67 6) bad)
+  have hzero : spectralGood (Real.sqrt (target 67)) (synth (d := 67) (positions 67 6) 0) := by
     rw [map_zero]
     exact spectralGood_zero _ _
   have hp : ∀ q, positions 67 6 q ≤ 67 := by
     intro q; fin_cases q <;> norm_num [positions]
-  have hm : (∑ k : Fin 67, synth (positions 67 6) bad k) = -67 := by
-    rw [mass_synth (positions 67 6) hp]
-    norm_num [bad, positions, Fin.sum_univ_succ]
+  have hm : (∑ k : Fin 67, synth (d := 67) (positions 67 6) bad k) = -67 := by
+    rw [mass_synth (d := 67) (positions 67 6) hp]
+    rw [Finset.sum_eq_single (15 : Fin 16)]
+    · norm_num [bad, positions]
+    · intro q _ hq
+      simp [bad, hq]
+    · simp
   have ht : 0 < Real.sqrt (target 67) := Real.sqrt_pos.2 (by norm_num [target])
   intro heq
   have hb := Eq.mp heq hzero
   unfold spectralGood at hb
   rw [hm] at hb
-  have hn := norm_nonneg (WithLp.toLp 2 (synth (positions 67 6) bad))
+  have hn := norm_nonneg (WithLp.toLp 2 (synth (d := 67) (positions 67 6) bad))
   nlinarith
 def family : Registration arena (type_of% (@structural_fixed_good)) where
   actual := actual
@@ -77,7 +81,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.StructuralCone
     definition := none
     coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none

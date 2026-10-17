@@ -31,14 +31,13 @@ private theorem quadratic_convex (a b c : ℝ) (ha : 0 ≤ a) :
     ConvexOn ℝ Set.univ (fun x : ℝ => a*x^2+b*x+c) := by
   have hs : ConvexOn ℝ Set.univ (fun x : ℝ => x^2) :=
     (show Even (2 : ℕ) from ⟨1, rfl⟩).convexOn_pow
-  have hl : ConvexOn ℝ Set.univ (fun x : ℝ => b*x) := by
-    rcases le_total 0 b with hb | hb
-    · simpa only [smul_eq_mul, id_eq] using
-        (convexOn_id (𝕜 := ℝ) (s := Set.univ) convex_univ).smul hb
-    · have hn := ((concaveOn_id (𝕜 := ℝ) (s := Set.univ) convex_univ).smul
-        (show 0 ≤ -b by linarith)).neg
-      simpa only [smul_eq_mul, id_eq, neg_mul, neg_neg] using hn
-  simpa only [smul_eq_mul, Pi.add_apply] using ((hs.smul ha).add hl).add_const c
+  refine ⟨convex_univ, ?_⟩
+  intro x hx y hy p q hp hq hpq
+  have hpow := hs.2 hx hy hp hq hpq
+  have hqeq : q = 1-p := by linarith
+  subst q
+  simp only [smul_eq_mul] at hpow ⊢
+  nlinarith only [mul_nonneg ha (sub_nonneg.mpr hpow)]
 
 private theorem quadratic_interval_le_fun (f : ℝ → ℝ) (a b c l r x M : ℝ)
     (hf : ∀ y, f y = a*y^2+b*y+c) (ha : 0 ≤ a)
@@ -56,10 +55,13 @@ private theorem quadratic_interval_nonneg (f : ℝ → ℝ) (a b c l r x : ℝ)
     0 ≤ f x := by
   have hcc : ConcaveOn ℝ Set.univ f := by
     have hn := (quadratic_convex (-a) (-b) (-c) (by linarith)).neg
-    convert hn using 1
-    ext y
-    rw [hf]
-    ring
+    refine ⟨convex_univ, ?_⟩
+    intro y hy z hz p q hp hq hpq
+    have hineq := hn.2 hy hz hp hq hpq
+    simp only [smul_eq_mul, Pi.neg_apply] at hineq
+    simp only [hf, smul_eq_mul]
+    nlinarith only [hineq]
+
   exact (le_min hleft hright).trans
     (hcc.min_le_of_mem_Icc (Set.mem_univ _) (Set.mem_univ _) ⟨hl, hr⟩)
 
@@ -194,7 +196,7 @@ private theorem defect_subtotals {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → 
       H3 h+D6 d ≤ H h+D d ∧ h 0+D3 d ≤ H h+D d ∧ d 8 ≤ H h+D d := by
   have hh := hd.hn
   have dd := hd.dn
-  simp only [H, D, H3, D3, D6, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+  simp only [H, D, H3, D3, D6, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
   constructor
   · linarith [hh 3, hh 4]
   constructor
@@ -213,36 +215,36 @@ private theorem ordered_defect_energy {u v : ℝ} {h : Fin 5 → ℝ} {d : Fin 9
     (fun i : Fin 2 => (![h 1,h 2] : Fin 2 → ℝ) i)
     (fun i : Fin 2 => (![h 3,h 4] : Fin 2 → ℝ) i) (h 2)
     (hd.hn 2)
-    (by intro i; fin_cases i; exact hd.ho (by norm_num); exact le_rfl)
+    (by intro i; fin_cases i; exact hd.ho (by decide); exact le_rfl)
     (by intro i; fin_cases i; exact hd.hn 3; exact hd.hn 4)
-    (by intro i; fin_cases i; exact hd.ho (by norm_num); exact hd.ho (by norm_num))
+    (by intro i; fin_cases i; exact hd.ho (by decide); exact hd.ho (by decide))
     (by norm_num) (by norm_num)
   have hed := ordered_block_energy
     (fun i : Fin 3 => (![d 6,d 7,d 8] : Fin 3 → ℝ) i)
     (fun i : Fin 6 => (![d 0,d 1,d 2,d 3,d 4,d 5] : Fin 6 → ℝ) i) (d 6)
     (hd.dn 6)
-    (by intro i; fin_cases i <;> exact hd.do_ (by norm_num))
+    (by intro i; fin_cases i <;> exact hd.do_ (by decide))
     (by intro i; fin_cases i <;> exact hd.dn _)
-    (by intro i; fin_cases i <;> exact hd.do_ (by norm_num))
+    (by intro i; fin_cases i <;> exact hd.do_ (by decide))
     (by norm_num) (by norm_num)
-  simp only [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero, Matrix.cons_val_zero, Matrix.cons_val_succ,
+  simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
     Matrix.cons_val_fin_one, add_zero] at heh hed
   constructor
   · dsimp [H2]
-    simp only [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
     nlinarith only [heh]
   constructor
   · dsimp [D2, D3]
-    simp only [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
     nlinarith only [hed]
   · dsimp [D, D3]
-    simp only [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
-    linarith [hd.do_ (show (0 : Fin 9) ≤ 6 by norm_num),
-      hd.do_ (show (1 : Fin 9) ≤ 7 by norm_num),
-      hd.do_ (show (2 : Fin 9) ≤ 8 by norm_num),
-      hd.do_ (show (3 : Fin 9) ≤ 6 by norm_num),
-      hd.do_ (show (4 : Fin 9) ≤ 7 by norm_num),
-      hd.do_ (show (5 : Fin 9) ≤ 8 by norm_num)]
+    simp only [Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    linarith [hd.do_ (show (0 : Fin 9) ≤ 6 by decide),
+      hd.do_ (show (1 : Fin 9) ≤ 7 by decide),
+      hd.do_ (show (2 : Fin 9) ≤ 8 by decide),
+      hd.do_ (show (3 : Fin 9) ≤ 6 by decide),
+      hd.do_ (show (4 : Fin 9) ≤ 7 by decide),
+      hd.do_ (show (5 : Fin 9) ≤ 8 by decide)]
 
 private theorem small_head_energy {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 → ℝ}
     (hd : DefectData 1 w h d) (hw : 0 ≤ w) (hz : h 0 ≤ 1) :
@@ -365,7 +367,7 @@ private theorem large_head_transfer_parameters (w z b r : ℝ)
     · norm_num
     · exact hr
     · exact hr1
-    · exact h10
+    · simpa only [sub_zero] using h10
     · convert h11 using 1 <;> dsimp [transferUpper] <;> ring
   apply quadratic_interval_le_fun (fun y => transferUpper w z y r)
     4 (-1) (4*w*(4-6*w)+4*z^2-z+4*r^2+3*r)
@@ -388,8 +390,9 @@ private theorem large_head_estimates {w : ℝ} {h : Fin 5 → ℝ} {d : Fin 9 �
   have hz1 : h 0 ≤ 2-w := by linarith [hd.row2]
   have hr1 : D3 d ≤ 2-w-h 0 := by linarith [hd.row2]
   have hb1 : h 1+h 2 ≤ 3-3*w-h 0-D3 d := by
-    dsimp [H3] at *
-    linarith [hd.row0]
+    have hrow := hd.row0
+    dsimp [H3] at hrow
+    linarith
   have hmul := mul_le_mul_of_nonneg_left hd.row1 hw
   have hE : E w h d ≤ energyUpper w (h 0) (h 1+h 2) (D3 d) := by
     dsimp [E, energyUpper]
@@ -489,7 +492,7 @@ private theorem square_completion (theta h K S : ℝ) (ht : 0 < theta)
   have hp : 0 ≤ 4*theta*(theta*S^2-(h*S-K)) := by
     rw [hid]
     nlinarith only [sq_nonneg (2*theta*S-h), hdisc]
-  have hs := nonneg_of_mul_nonneg_left hp (by positivity : 0 < 4*theta)
+  have hs := nonneg_of_mul_nonneg_right hp (by positivity : 0 < 4*theta)
   linarith
 
 private theorem discriminant_intervals (N : ℝ) (hN : 67 ≤ N) :
@@ -580,7 +583,7 @@ private theorem small_jump_scalars (N w : ℝ) (hN : 67 ≤ N)
         (N+11+3*(2/15)+(2/15)^2)) := by
       rw [hid]
       exact add_nonneg (sq_nonneg _) hdisc
-    exact nonneg_of_mul_nonneg_left hp (by positivity : 0 < 4*theta)
+    exact nonneg_of_mul_nonneg_right hp (by positivity : 0 < 4*theta)
   have hF : 0 ≤ theta*(N+3+2*w)^2-(N+11+3*w+w^2) := by
     apply quadratic_interval_nonneg
       (fun y => theta*(N+3+2*y)^2-(N+11+3*y+y^2))
@@ -653,8 +656,8 @@ private theorem actual_row_identities (x : Fin 16 → ℝ) :
     (A *ᵥ x) 0 = 3*low x-3*x 5-H3 (head x)-D6 (tail x) ∧
     (A *ᵥ x) 1 = 4*low x-6*x 5-H (head x)-D (tail x) ∧
     (A *ᵥ x) 2 = 2*low x-x 5-head x 0-D3 (tail x) := by
-  simp only [A, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_fin_one,
+  simp only [A, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero,
+    Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ, Matrix.cons_val_fin_one,
     low, head, tail, H, D, H3, D6, D3]
   constructor
   · ring
@@ -666,34 +669,34 @@ private theorem actual_defects (x : Fin 16 → ℝ)
   obtain ⟨hr0, hr1, hr2⟩ := actual_row_identities x
   have hn : ∀ i, 0 ≤ head x i := by
     intro i
-    fin_cases i <;> simp only [head, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    fin_cases i <;> simp only [head, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
       Matrix.cons_val_fin_one] <;> linarith [hx 0, hx 1, hx 2, hx 3, hx 4]
   have ho : Antitone (head x) := by
     intro i j hij
-    fin_cases i <;> fin_cases j <;> norm_num at hij ⊢ <;>
-      simp only [head, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    fin_cases i <;> fin_cases j <;> norm_num (config := { decide := true }) at hij <;>
+      simp only [head, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
         Matrix.cons_val_fin_one] <;> linarith [hx 0, hx 1, hx 2, hx 3, hx 4]
   have dn : ∀ i, 0 ≤ tail x i := by
     intro i
-    fin_cases i <;> simp only [tail, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    fin_cases i <;> simp only [tail, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
       Matrix.cons_val_fin_one] <;>
       linarith [hx 6, hx 7, hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14]
   have do_ : Monotone (tail x) := by
     intro i j hij
-    fin_cases i <;> fin_cases j <;> norm_num at hij ⊢ <;>
-      simp only [tail, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    fin_cases i <;> fin_cases j <;> norm_num (config := { decide := true }) at hij <;>
+      simp only [tail, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
         Matrix.cons_val_fin_one] <;>
       linarith [hx 6, hx 7, hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14]
   have du : ∀ i, tail x i ≤ low x := by
     intro i
-    fin_cases i <;> simp only [tail, low, Matrix.cons_val_zero, Matrix.cons_val_succ,
+    fin_cases i <;> simp only [tail, low, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ,
       Matrix.cons_val_fin_one] <;>
       linarith [hx 6, hx 7, hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14, hx 15]
   exact ⟨hn, ho, dn, do_, du,
     by linarith [hAx 0], by linarith [hAx 1], by linarith [hAx 2]⟩
 
 private theorem last_defect_identity (x : Fin 16 → ℝ) : tail x 8 = low x-x 15 := by
-  simp only [tail, low, Matrix.cons_val_succ, Matrix.cons_val_zero,
+  simp only [tail, low, Matrix.cons_val_succ, Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc,
     Matrix.cons_val_fin_one]
   ring
 
@@ -719,8 +722,9 @@ private theorem actual_mass (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j 
       low x*(N : ℝ)+x 5*(j : ℝ)+H (head x)-D (tail x) := by
   rw [mass_synth (positions N j) (slot_bounds N j hN hj hj')]
   rw [positions_literal N j hN]
-  norm_num [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D]
-  simp (disch := omega) only [Nat.cast_sub]
+  norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D]
+  simp only [Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, min_def, Fin.reduceLE, ite_true, ite_false]
+  try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring
 
@@ -739,8 +743,9 @@ private theorem actual_square (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : 
     · rw [min_eq_right hrq, min_eq_right ((positions_strict N j hN hj hj').monotone hrq)]
   simp_rw [hmin]
   rw [positions_literal N j hN]
-  norm_num [Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D, H2, D2, E]
-  simp (disch := omega) only [Nat.cast_sub]
+  norm_num [Matrix.cons_val, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero, low, head, tail, H, D, H2, D2, E]
+  simp only [Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, min_def, Fin.reduceLE, ite_true, ite_false]
+  try simp (disch := omega) only [Nat.cast_sub]
   norm_num
   ring
 
@@ -763,12 +768,13 @@ private theorem zero_low (x : Fin 16 → ℝ) (hx : ∀ q, 0 ≤ x q)
   have he : H (head x)+D (tail x) =
       x 0+2*x 1+3*x 2+4*x 3+5*x 4+
       9*x 6+8*x 7+7*x 8+6*x 9+5*x 10+4*x 11+3*x 12+2*x 13+x 14 := by
-    norm_num [H, D, head, tail, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    norm_num [Matrix.cons_val, H, D, head, tail, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
     ring
-  rw [he] at hrow
+  have hrowTotal : 0 ≤ -6*x 5-(H (head x)+D (tail x)) := by linarith
+  rw [he] at hrowTotal
   dsimp [low] at hu
   ext q
-  fin_cases q <;> simp only [Pi.zero_apply] <;>
+  fin_cases q <;> simp only [Pi.zero_apply, Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue] <;>
     linarith [hx 0, hx 1, hx 2, hx 3, hx 4, hx 5, hx 6, hx 7,
       hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14, hx 15]
 
@@ -831,17 +837,19 @@ private def bulk : Fin 16 → ℝ := ![0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,3]
 
 private theorem bulk_rows : A *ᵥ bulk = ![3,0,4] := by
   ext r
-  fin_cases r <;> norm_num [A, bulk, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+  fin_cases r <;> norm_num [A, bulk, Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
 
+set_option maxRecDepth 8192 in
 private theorem bulk_good (N j : ℕ) (hN : 67 ≤ N) (hj : 6 ≤ j) (hj' : j ≤ N-10) :
     spectralGood (Real.sqrt (target N)) (synth (d := N) (positions N j) bulk) := by
   have hm : (∑ k : Fin N, synth (positions N j) bulk k) = 3*(N : ℝ)+2*(j : ℝ) := by
     rw [actual_mass N j hN hj hj']
-    norm_num [bulk, low, head, tail, H, D, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    simp only [bulk, low, head, tail, H, D, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    norm_num
   have hq : (∑ k : Fin N, (synth (positions N j) bulk k)^2) = 9*(N : ℝ)+16*(j : ℝ) := by
     rw [actual_square N j hN hj hj']
-    norm_num [bulk, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
-    ring
+    simp only [bulk, low, head, tail, H, D, H2, D2, E, Fin.sum_univ_succ, Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val, Finset.univ_eq_empty, Finset.sum_empty, add_zero]
+    norm_num <;> ring
   have hden : 0 < 3*(N : ℝ)+2*(j : ℝ) := by
     have hn : (67 : ℝ) ≤ N := by exact_mod_cast hN
     have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
@@ -896,7 +904,7 @@ private theorem subtraction_rows (a : ℝ) (x : Fin 16 → ℝ) :
     (A *ᵥ (x-a • bulk)) 2 = (A *ᵥ x) 2-4*a := by
   simp only [Matrix.mulVec_sub, Matrix.mulVec_smul, bulk_rows,
     Pi.sub_apply, Pi.smul_apply, smul_eq_mul,
-    Matrix.cons_val_zero, Matrix.cons_val_succ, Matrix.cons_val_fin_one]
+    Matrix.cons_val, Nat.reduceAdd, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_zero', Matrix.cons_val_succ', Fin.reduceFinMk, Fin.reduceSucc, Matrix.cons_val_succ, Matrix.cons_val_fin_one]
   constructor
   · ring
   constructor <;> ring
@@ -911,22 +919,28 @@ private theorem residual_feasible (x : Fin 16 → ℝ)
   obtain ⟨hr0, hr1, hr2⟩ := subtraction_rows (alpha x) x
   have hy : ∀ q, 0 ≤ (x-alpha x • bulk) q := by
     intro q
-    fin_cases q <;> norm_num [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul] <;>
+    fin_cases q <;>
+      simp only [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul,
+        Fin.reduceFinMk, Fin.reduceSucc, Nat.reduceAdd, Fin.isValue, Matrix.cons_val] <;>
+      norm_num <;>
       linarith [hx 0, hx 1, hx 2, hx 3, hx 4, hx 5, hx 6, hx 7,
         hx 8, hx 9, hx 10, hx 11, hx 12, hx 13, hx 14, hx 15]
   have hAy : ∀ r, 0 ≤ (A *ᵥ (x-alpha x • bulk)) r := by
     intro r
     fin_cases r
-    · rw [hr0]; linarith
-    · rw [hr1]; exact hAx 1
-    · rw [hr2]; linarith
+    · change 0 ≤ (A *ᵥ (x-alpha x • bulk)) 0
+      rw [hr0]; linarith
+    · change 0 ≤ (A *ᵥ (x-alpha x • bulk)) 1
+      rw [hr1]; exact hAx 1
+    · change 0 ≤ (A *ᵥ (x-alpha x • bulk)) 2
+      rw [hr2]; linarith
   refine ⟨hy, hAy, ?_⟩
   rcases alpha_attained x with he | he | he | he
   · left
-    norm_num [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Matrix.cons_val]
     linarith
   · right; left
-    norm_num [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [bulk, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Matrix.cons_val]
     linarith
   · right; right; left
     rw [hr0]

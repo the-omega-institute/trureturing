@@ -4,7 +4,6 @@ import Reg.Support.SingleDependentReadout
 
 namespace Reg.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniformSpectralBound
-open _root_.D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSpectralBound.SharedSpectral
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators Matrix
@@ -57,7 +56,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -114,7 +114,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -171,7 +172,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -228,7 +230,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -285,7 +288,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "fn", "arg"]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
       stateOperand := none
