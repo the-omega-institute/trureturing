@@ -114,9 +114,10 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                             + "sqrt(A B) + sqrt((U − A)(V − B)) ≤ sqrt(U V) yields the stated bound.")),
                     Paragraph(Text(
                         "For nonnegative weights w summing to one and 0 ≤ t_j ≤ 1, put s = sum_j w_j t_j. "
-                            + "When s > 0, the tangent-line inequality sqrt(t) ≤ (t + s)/(2 sqrt(s)) "
-                            + "gives sum_j w_j sqrt(t_j) ≤ sqrt(s). When s = 0, each nonnegative "
-                            + "weighted term vanishes. Apply this averaging bound to the ensemble decompositions "
+                            + "Cauchy–Schwarz for sqrt(w_j) and sqrt(w_j t_j) gives "
+                            + "sum_j w_j sqrt(t_j) = sum_j sqrt(w_j)·sqrt(w_j t_j) "
+                            + "≤ sqrt(sum_j w_j)·sqrt(sum_j w_j t_j) = sqrt(s). "
+                            + "Apply this averaging bound to the ensemble decompositions "
                             + "of the density operators and then to shared randomness. The POVM identity gives "
                             + "sum_x inner(vac,N_x vac) = 1 for each value of the shared random variable. "
                             + "Consequently, in every Hilbert message space the four-guess task value is at most "
