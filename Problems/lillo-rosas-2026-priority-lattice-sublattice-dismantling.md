@@ -31,13 +31,19 @@ support this standard meaning. The source does not separately say “disjoint”
 The authors' historical Sage version and exact call are unknown. Evidence of an
 intended overlapping-cover meaning would invalidate this semantic bridge.
 
-## Resolution
+## Motivation
 
 The answer is negative: $\Pi(6)$ is not sublattice dismantlable.
 The declaration `SublatticeDismantling.result` has the exact type `¬ claim`,
 where `claim : Prop` is
 `∀ n : Nat, 1 ≤ n → Dismantlable (Set.univ : Set (Pi n))`.
 Thus one positive parameter refutes the whole universal question.
+
+## Gap
+
+An abstract seventeen-element obstruction answers this source question only after its members are valid priority forests and its binary operations are actual ambient extrema. The construction below supplies that bridge, the hereditary restriction of recursive dismantling, and transport to the literal source carrier.
+
+## Route
 
 Put
 
@@ -81,7 +87,22 @@ two nonempty children retain a valid disjoint partition. Hence a dismantling of
 $\Pi(6)$ would dismantle $S$, which has no first split. The existing order
 isomorphism transports the recursive predicate to the literal source carrier.
 
-## Scope and surviving questions
+## Falsifier
+
+An invalid interval forest, a failure of the ambient extremum proof, a collision
+between distinct forest codes, a nontrivial closed two-part partition of $S$,
+a failure of hereditary restriction, or evidence that the source means an
+overlapping cover would invalidate the corresponding step. Every algebraic
+step of the delivered conclusion is expressed in the Lean source; the source
+interpretation retains the stated semantic boundary.
+
+## Evidence
+
+The [Lean module](../D5/S3/Combinatorics/PriorityLattice/SublatticeDismantling.lean) proves the exact negation of the all-positive-size claim. The axiom closures of its declarations are contained in `{propext, Classical.choice, Quot.sound}`. The proof uses actual ambient extrema and no computation-trust axiom.
+
+The [Scribe source](../Blueprint/D5/S3/Combinatorics/PriorityLattice/SublatticeDismantling.scribe.cs) links the recursive definition, hereditary restriction, source-order transport, embedding, ambient meets and joins, and partition obstruction to their compiled declarations. Its settling node carries one `OpenProblemResolutionClaim` with `ResolutionKind.Refuted` for this dossier.
+
+## Triage
 
 The refutation does not challenge the authors' reported checks for $1\le n\le5$.
 It proves neither those checks nor a minimality theorem. Padding the displayed
@@ -94,7 +115,7 @@ The abstract incidence-lattice obstruction is background. The source-specific
 content is the actual forest embedding, its ambient extrema, hereditary
 restriction including empty branches, and the whole universal negation.
 
-## Source and prior boundary
+## ASSUMED-UNVERIFIED
 
 The exact v1 question and source forest/order definitions are retained in the
 [Library note](../Library/GraphInvariants/lillo2026prioritylattice.md).
@@ -103,12 +124,3 @@ prior settlement. This is not exhaustive publication-priority clearance;
 absence of every earlier published or unpublished resolution remains
 `ASSUMED-UNVERIFIED`. The source's reported small-size computations are not
 assumptions of the refutation.
-
-## Falsifier
-
-An invalid interval forest, a failure of the ambient extremum proof, a collision
-between distinct forest codes, a nontrivial closed two-part partition of $S$,
-a failure of hereditary restriction, or evidence that the source means an
-overlapping cover would invalidate the corresponding step. Every algebraic
-step of the delivered conclusion is expressed in the Lean source; the source
-interpretation retains the stated semantic boundary.
