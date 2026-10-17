@@ -3885,3 +3885,738 @@ Korzekwa 等 Propositions 4、7 的 $M=2$ 阈值与这里的指定差谱接口�
 也不对其他链长、其他相位角、全部来源或 minimax 采样方案给出完成性结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 53. 固定初始人口的完整联合相位谱
+
+**定义 73.1（同一实帧的联合域）。** 沿用定义 68.1 的物理顺序 (X.1) 和同一被动实帧。
+以下 $z=z^{\mathrm{ph}}$ 始终是这个顺序中的初始人口，
+$\zeta_1\geq\cdots\geq\zeta_5$ 是其降序排列；另记
+$P=\zeta_1$、$Q=\zeta_1+\zeta_2$、$V=\zeta_4+\zeta_5$。
+这里的 $V$ 对应 (X.3) 的 $U$，不是控制字。
+对 $z_i\geq0$、$\sum_i z_i=1$，定义
+
+$$
+\begin{aligned}
+\mathcal S_z
+ &=\{(a,b):a\geq b\geq0,\ \exists(\rho,\sigma)\in\mathcal E(z),\
+       \operatorname{spec}(\rho-\sigma)=(a,b,0,-b,-a)\},\\
+s&=a+b=D(\rho,\sigma),\\
+H_z(s)&=\sup\{b:(s-b,b)\in\mathcal S_z\}
+       \quad\text{仅在该切片非空时定义}.
+\end{aligned}
+\tag{XI.1}
+$$
+
+每对态的共同实部可以随见证改变；没有固定一个实部矩阵让全部态对共用。
+$\zeta$ 是指定帧的对角人口，$\lambda$ 或 $r$ 将专指实部的特征值，二者不混用。
+本节至第 59 节给出 (X.35) 任意 $D_0=s$ 的联合刻画；
+(X.4) 的自由总距离优化与 (X.21) 的正交边界继续按原量词使用。
+
+**命题 73.2（同一实部谱的四条必要约束）。** 设 $\lambda_1\geq\cdots\geq\lambda_5\geq0$
+是某个 $\mathcal E(z)$ 见证的共同实部谱。则其两个权重同时满足
+
+$$
+a^2\leq4\lambda_1\lambda_2,\qquad
+b^2\leq4\lambda_1\lambda_4,\qquad
+b^2\leq4\lambda_2\lambda_3,\qquad
+a^2b^2\leq16\lambda_1\lambda_2\lambda_3\lambda_4.
+\tag{XI.2}
+$$
+
+**证明。** 用 (X.7) 的共轭对称化取 $\tau=(\rho+\bar\sigma)/2=R+iC$，
+则 $\tau-\bar\tau=\rho-\sigma$，$\operatorname{diag}R=z$，
+$R$ 实对称半正、迹一，$C$ 实反对称。
+为包括奇异边界，对实 $x\in\ker R$ 有
+$x^\dagger\tau x=0$；半正性由 $\|\tau^{1/2}x\|^2=0$ 给 $\tau x=0$，
+所以 $Cx=0$。实核的复张成也被消去，反对称性又给 $\operatorname{ran}C\subseteq\operatorname{ran}R$。
+因此 (X.8) 的支撑逆平方根给出实反对称矩阵 $K$，满足
+
+$$
+C=R^{1/2}KR^{1/2},\qquad \|K\|_{\mathrm{op}}\leq1.
+\tag{XI.3}
+$$
+
+具体地，在 $\operatorname{ran}R$ 上，$\tau\succeq0$ 等价于 $I+iK\succeq0$；
+$iK$ 的实特征值成相反数对，所以这又等价于 $\|K\|\leq1$。
+核上延零即可。反向的合同变换也成立，没有在核上取逆。
+
+以实正交矩阵对角化 $R$，写 $D_\lambda=\operatorname{diag}(\sqrt{\lambda_j})$。
+此基中 $C=D_\lambda K D_\lambda$ 的奇异值为 $(c,c,d,d,0)$，
+其中 $c=a/2$、$d=b/2$。
+所用乘积不等式 (X.9) 的指标可由如下极小极大论证核对：
+在 $Y$ 的第 $j$ 个奇异值控制子空间与
+$Y^{-1}$ 拉回的 $X$ 的第 $i$ 个控制子空间相交，
+余维至多 $i+j-2$，在其中
+$\|XYx\|\leq s_i(X)s_j(Y)\|x\|$。
+故 $s_{i+j-1}(XY)\leq s_i(X)s_j(Y)$，不要求 $Y$ 可逆。
+由 $KK^T\preceq I$ 得
+$(D_\lambda K)(D_\lambda K)^T\preceq D_\lambda^2$，
+所以 $s_i(D_\lambda K)\leq\sqrt{\lambda_i}$。
+对 $(D_\lambda K)D_\lambda$ 分别取
+$(i,j)=(1,2),(1,4),(2,3)$，得到
+
+$$
+c^2\leq\lambda_1\lambda_2,\qquad
+d^2\leq\lambda_1\lambda_4,\qquad
+d^2\leq\lambda_2\lambda_3.
+\tag{XI.4}
+$$
+
+第一项使用第二个奇异值 $s_2(C)=c$，后两项使用第四个 $s_4(C)=d$。
+第四条还需要第四外幂，而非只用第二外幂：
+
+$$
+c^2d^2=\|\mathop{\bigwedge}\nolimits^4 C\|_{\mathrm{op}}
+ \leq\|\mathop{\bigwedge}\nolimits^4D_\lambda\|_{\mathrm{op}}^2
+       \|\mathop{\bigwedge}\nolimits^4K\|_{\mathrm{op}}
+ \leq\lambda_1\lambda_2\lambda_3\lambda_4.
+\tag{XI.5}
+$$
+
+这里外幂的奇异值是原奇异值的相应乘积，且收缩的外幂仍为收缩。
+代回 $c=a/2,d=b/2$ 即得全部四条。它们属于同一个 $\lambda$。$\square$
+
+## 54. 实二维收缩夹乘的精确插值
+
+**引理 74.1（两个奇异值的完整实现）。** 设
+$\alpha_1\geq\alpha_2\geq0$、$\beta_1\geq\beta_2\geq0$、$c\geq d\geq0$，
+$A=\operatorname{diag}(\alpha_1,\alpha_2)$、$B=\operatorname{diag}(\beta_1,\beta_2)$。
+存在实 $T$、$\|T\|_{\mathrm{op}}\leq1$，
+使 $X=ATB$ 的奇异值精确为 $(c,d)$，当且仅当
+
+$$
+c\leq\alpha_1\beta_1,\qquad
+d\leq\min\{\alpha_1\beta_2,\alpha_2\beta_1\},\qquad
+cd\leq\alpha_1\alpha_2\beta_1\beta_2.
+\tag{XI.6}
+$$
+
+**证明。** 必要性由前述奇异值乘积不等式的第一、第二指标及
+$|\det T|\leq1$ 得到。为证充分性，若 $c=0$，取 $T=X=0$。
+若 $c>0,d=0$，第一条保证 $\alpha_1\beta_1>0$，取
+
+$$
+T=\operatorname{diag}\left(\frac{c}{\alpha_1\beta_1},0\right),
+\qquad X=\operatorname{diag}(c,0).
+\tag{XI.7}
+$$
+
+这允许 $\alpha_2$ 或 $\beta_2$ 为零。以下 $d>0$，
+(XI.6) 强制全部 $\alpha_i,\beta_i$ 严格为正。
+令 $W=\operatorname{diag}(c,d)$、
+$h=(cd/(\alpha_1\alpha_2))^2>0$，并令 $U(\theta)$ 为
+$0\leq\theta\leq\pi/2$ 的实二维旋转。考察
+
+$$
+M(\theta)=W U(\theta)^T A^{-2}U(\theta)W,\qquad
+\det M(\theta)=h.
+\tag{XI.8}
+$$
+
+其迹为
+$c^2(\alpha_1^{-2}\cos^2\theta+\alpha_2^{-2}\sin^2\theta)
++d^2(\alpha_1^{-2}\sin^2\theta+\alpha_2^{-2}\cos^2\theta)$，
+从 $t_0=c^2/\alpha_1^2+d^2/\alpha_2^2$ 连续不减到
+$t_1=c^2/\alpha_2^2+d^2/\alpha_1^2$，因为
+$t_1-t_0=(c^2-d^2)(\alpha_2^{-2}-\alpha_1^{-2})\geq0$。
+固定正行列式时，最大特征值为 $(t+\sqrt{t^2-4h})/2$，随迹不减。
+故 $M(\theta)$ 的最大特征值连续遍历
+
+$$
+[m_{\mathrm{lo}},m_{\mathrm{hi}}]
+ =\left[\max\left\{\frac{c^2}{\alpha_1^2},\frac{d^2}{\alpha_2^2}\right\},
+               \frac{c^2}{\alpha_2^2}\right].
+\tag{XI.9}
+$$
+
+所需的两个 Gram 特征值装入 $\beta_1^2,\beta_2^2$，
+等价于选取 $\mu$ 同时满足
+$\mu\leq\beta_1^2$ 和 $h/\mu\leq\beta_2^2$。
+这要求区间 (XI.9) 与 $[h/\beta_2^2,\beta_1^2]$ 相交。
+四个交叉端点比较完整地由 (XI.6) 给出：
+$m_{\mathrm{lo}}\leq\beta_1^2$ 使用
+$c\leq\alpha_1\beta_1,d\leq\alpha_2\beta_1$；
+$h/\beta_2^2\leq m_{\mathrm{hi}}$ 使用 $d\leq\alpha_1\beta_2$；
+$h/\beta_2^2\leq\beta_1^2$ 使用乘积条件；
+$m_{\mathrm{lo}}\leq m_{\mathrm{hi}}$ 则已由排序成立。
+因此可以选一个交点 $\mu$ 及相应旋转 $U$。
+
+选实正交矩阵 $V_0$ 使
+$V_0 M V_0^T=\operatorname{diag}(\mu,h/\mu)$，并定义
+
+$$
+X=U W V_0^T,\qquad T=A^{-1}XB^{-1}.
+\tag{XI.10}
+$$
+
+则 $X$ 的奇异值仍精确为 $c,d$，且方向必须按以下等式计算：
+
+$$
+X^T A^{-2}X=V_0 M V_0^T
+ =\operatorname{diag}(\mu,h/\mu)\preceq B^2,\qquad
+T^TT\preceq I.
+\tag{XI.11}
+$$
+
+这证明实收缩的存在。使用 $V_0^T M V_0$ 代替中间式将不符合 (XI.10)。
+若迹区间退化为一点，取端点旋转即可；
+重特征值允许任取实正交特征基，闭区间端点也允许。
+加上 (XI.7)，全部零值、重根及范数恰为一的情况均已覆盖。$\square$
+
+## 55. 固定实部谱的实际正密度接口
+
+**命题 75.1（同谱充分性与实际正密度见证）。** 对任意降序非负五元组 $\lambda$
+及 $a\geq b\geq0$，存在实对称 $R_0\succeq0$ 和实反对称 $C_0$，
+使 $\operatorname{spec}R_0=\lambda$、
+$R_0\pm iC_0\succeq0$、
+$\operatorname{spec}(2iC_0)=(a,b,0,-b,-a)$，
+当且仅当 (XI.2) 成立。若 $\sum_j\lambda_j=1$，两算子都是密度矩阵。
+
+**证明。** 必要性为命题 73.2 的同谱论证，未用指定对角。
+充分性在引理 74.1 中取
+
+$$
+A=\operatorname{diag}(\sqrt{\lambda_1},\sqrt{\lambda_3}),\qquad
+B=\operatorname{diag}(\sqrt{\lambda_2},\sqrt{\lambda_4}),\qquad
+(c,d)=(a/2,b/2).
+\tag{XI.12}
+$$
+
+(XI.2) 正好给出 (XI.6) 的全部条件，得到 $X=ATB$。
+在分组坐标 $(1,3\mid2,4\mid5)$ 中置
+
+$$
+\begin{aligned}
+R_0&=\operatorname{diag}(A^2,B^2,\lambda_5),&
+C_0&=\begin{pmatrix}0&X\\-X^T&0\end{pmatrix}\oplus0,\\
+R_0+iC_0
+ &=\operatorname{diag}(A,B)
+       \begin{pmatrix}I&iT\\-iT^T&I\end{pmatrix}
+       \operatorname{diag}(A,B)\ \oplus\lambda_5.
+\end{aligned}
+\tag{XI.13}
+$$
+
+中间 Hermitian 块的特征值为 $1\pm s_j(T)$：对 $T$ 作实奇异值分解，
+即可分成两个这样的二维块。因此它半正；换 $i$ 为 $-i$ 同样半正。
+即使 $A,B$ 奇异，这个无逆的因子式仍成立。
+$C_0$ 的奇异值为 $c,c,d,d,0$，所以 $2iC_0$ 有指定差谱。
+因 $C_0$ 对角为零，$R_0\pm iC_0$ 的迹均为 $\sum_j\lambda_j$。构造的 $X$ 允许交叉项，
+没有要求实部特征轴与反对称标准平面同时对齐。$\square$
+
+## 56. 一个共同四谱的联合充要条件
+
+**定理 76.1（消去矩阵未知量的精确联合域）。** 定义紧凸多面体
+
+$$
+\mathcal P_z=\left\{r\in\mathbb R^4:
+\begin{array}{l}
+r_1\geq r_2\geq r_3\geq r_4\geq0,\quad \sum_{j=1}^4r_j=1,\\
+r_1\geq P,\quad r_1+r_2\geq Q,\quad r_4\leq V
+\end{array}\right\}.
+\tag{XI.14}
+$$
+
+则 $(a,b)\in\mathcal S_z$ 当且仅当 $a\geq b\geq0$，且存在同一个 $r\in\mathcal P_z$ 满足
+
+$$
+\boxed{\quad
+a^2\leq4r_1r_2,\qquad b^2\leq4r_1r_4,\qquad
+b^2\leq4r_2r_3,\qquad a^2b^2\leq16r_1r_2r_3r_4.\quad}
+\tag{XI.15}
+$$
+
+四个归一化谱标量只有三个自由坐标。
+每个合格 $r$ 都给指定 $z,a,b$ 的实际半正迹一密度态对，
+不仅是谱松弛或必要条件。
+
+**证明。** 本证明先复用 (X.11) 的经典实 Schur–Horn 接口：对降序实谱 $\lambda$ 和指定实对角 $z$，
+存在实正交 $O$ 使
+$\operatorname{diag}(O\operatorname{diag}(\lambda)O^T)=z$，
+当且仅当 $\zeta\prec\lambda$。零值和重根均允许。
+
+其必要性中，每个 $k$ 坐标子集的对角和为
+$\sum_j\lambda_j t_j$，其中 $t_j$ 是 $O$ 第 $j$ 列在该子集上的平方和，
+满足 $0\leq t_j\leq1,\sum_jt_j=k$。
+这个线性式至多为最大的 $k$ 个 $\lambda_j$ 之和；总迹相同，得到主序。
+
+充分性对维数归纳，先排序 $z$。一维只有等和条件。
+若 $\zeta_1=\lambda_1$，保留该特征轴，剩余前缀不等式直接相减后归纳。
+否则选 $k$ 使 $\lambda_k\geq\zeta_1\geq\lambda_{k+1}$；
+这样的 $k$ 存在，因为 $\lambda_1>\zeta_1$，而等和与排序给 $\zeta_1\geq\lambda_n$。
+在这两条实轴上作平面旋转，选单位向量 $v$ 使其二次型为 $\zeta_1$。
+当两谱值不同，$v$ 在第 $k$ 轴上的平方坐标取
+$(\zeta_1-\lambda_{k+1})/(\lambda_k-\lambda_{k+1})$；
+相等时直接取一条轴，无须相除。
+压缩到 $v^\perp$ 的谱 $\eta$ 是把 $\lambda_k,\lambda_{k+1}$
+替成 $q=\lambda_k+\lambda_{k+1}-\zeta_1$，保留其余项，
+且 $\lambda_k\geq q\geq\lambda_{k+1}$。
+若 $j<k$，它的前 $j$ 项和为 $\sum_{i\leq j}\lambda_i$，
+至少为 $j\zeta_1\geq\sum_{i=2}^{j+1}\zeta_i$；
+若 $j\geq k$，则为
+$\sum_{i\leq j+1}\lambda_i-\zeta_1\geq\sum_{i=2}^{j+1}\zeta_i$。
+总和也相等，故 $\eta$ 主序支配剩余目标对角。
+在 $v^\perp$ 上归纳选基；这些向量的对角二次型只取决于压缩，
+不受它们与 $v$ 的非对角耦合影响。最后逆置换恢复原 $z$，即得实正交 $O$。
+
+这就是 (X.11) 所需的经典实版本；
+Carlen–Lieb 的开篇 Horn 陈述及文内 Horn 归纳证明亦给出这个接口。
+其 Theorem 1.2 是 Mirsky 定理，不作为这里的 Horn 定理编号。
+
+现在 (XI.14) 等价于 $\zeta\prec(r_1,r_2,r_3,r_4,0)$：
+第一、第二前缀给 $P,Q$；第三前缀是 $1-r_4\geq1-V$；
+第四前缀为一，自动成立。总迹相同。它由闭线性约束给出，且每项在 $[0,1]$ 中，
+故为紧凸多面体。
+
+从任意原见证的完整共同实部谱 $\lambda$ 出发，上述实 Schur–Horn 接口给 $\zeta\prec\lambda$。
+将第五谱质量吸收到第一项，置
+
+$$
+r=(\lambda_1+\lambda_5,\lambda_2,\lambda_3,\lambda_4).
+\tag{XI.16}
+$$
+
+它仍降序非负且迹一；$(r,0)$ 的前四个前缀各比 $\lambda$ 增加 $\lambda_5$，
+故 $\zeta\prec\lambda\prec(r,0)$。
+(XI.2) 的四个乘积右端在这个同一个替换下均不减，
+于是 $r\in\mathcal P_z$ 并满足 (XI.15)。
+这一步保留两权重的存在性，不是对原输入实际实施质量转移。
+
+反向给定合格 $r$，用命题 75.1 对 $\lambda=(r,0)$ 构造 (XI.13)。
+它的 $R_0$ 谱为 $(r,0)$，由上述实 Schur–Horn 接口可选实正交 $O$ 使
+$\operatorname{diag}(OR_0O^T)=z$；分组坐标的置换已吸收入 $O$。
+定义
+
+$$
+\rho=O(R_0+iC_0)O^T,\qquad \sigma=O(R_0-iC_0)O^T=\bar\rho.
+\tag{XI.17}
+$$
+
+两者半正、迹一，共同实部为 $OR_0O^T$。
+实反对称矩阵 $OC_0O^T$ 的对角为零，所以两人口都恰为 $z$；
+实正交共轭保持差谱，得到指定的 $a,b$。
+若先按降序人口选择矩阵，再同时逆置换两态的行列，便恢复原物理人口顺序。
+最后用 $D_3$ 被动返回物理坐标，人口和差谱均保持。
+这给出充要性及每一个合格参数的完整密度构造。$\square$
+
+固定候选 $(a,b)$ 后，$r$ 的可行集是凸集：
+四条乘积界分别是二元或四元几何平均这个凹函数的闭超水平集，
+例如 $(r_1r_2r_3r_4)^{1/4}\geq\sqrt{ab}/2$；
+与 $\mathcal P_z$ 相交仍凸，包含零阈值情况。
+这不推出 $\mathcal S_z$ 在普通 $(a,b)$ 坐标中凸。
+(XI.14)–(XI.15) 也表明整个联合域只依赖 $P,Q,V$：
+在保持排序合法及这三个量时，对最小两个人口重新分配不改变它。
+任意人口置换 $\Pi$ 则由
+$(\rho,\sigma)\mapsto(\Pi\rho\Pi^T,\Pi\sigma\Pi^T)$ 给保持权重的双射；
+这是状态存在域的协变性。
+
+## 57. 固定总距离的实际域、完整区间与达到
+
+**定义 77.1（谱标量包络）。** 对 $r\in\mathcal P_z$，置
+
+$$
+u(r)=2\sqrt{r_1r_2},\qquad v(r)=2\sqrt{r_3r_4},\qquad
+w(r)=2\min\{\sqrt{r_1r_4},\sqrt{r_2r_3}\}.
+\tag{XI.18}
+$$
+
+总有 $u\geq v$、$w\geq v$。对 $s\geq0$，用 $x_+=\max\{x,0\}$ 定义
+
+$$
+\begin{aligned}
+E_z(s)&=\{r\in\mathcal P_z:u(r)+v(r)\geq s\},\\
+L_r(s)&=(s-u(r))_+,\\
+U_r(s)&=\min\left\{w(r),\
+       \frac{s-\sqrt{(s^2-4u(r)v(r))_+}}2\right\}.
+\end{aligned}
+\tag{XI.19}
+$$
+
+**命题 77.2（固定谱的精确总距离切片）。** 固定 $r$ 后，(XI.15) 的最大 $a+b$ 为 $u+v$，
+点 $(u,v)$ 达到。对 $s\geq0$，该谱的固定总距离切片非空当且仅当 $s\leq u+v$；
+在此条件下，它恰为
+
+$$
+a=s-b,\qquad L_r(s)\leq b\leq U_r(s).
+\tag{XI.20}
+$$
+
+每个区间值均由 (XI.10)–(XI.17) 的同谱构造达到。
+
+**证明。** 四条界等价于
+$a\geq b\geq0,\ a\leq u,\ b\leq w,\ ab\leq uv$。
+$(u,v)$ 满足它们，且由相邻谱轴的两个饱和虚块直接实现。
+若 $uv=0$，则 $ab=0$ 强制 $b=0$，最大总和就是 $u$。
+若 $uv>0$ 且 $a\leq\sqrt{uv}$，
+$a+b\leq2a\leq2\sqrt{uv}\leq u+v$；
+若 $a\geq\sqrt{uv}$，则
+$a+b\leq a+uv/a$，此函数在 $[\sqrt{uv},u]$ 不减，故至多 $u+v$。
+得到最大总和，且每个较小 $s$ 可按共同因子缩放 $(u,v)$ 达到；
+$u+v=0$ 时只有原点。
+
+在固定 $s$ 下，排序给 $0\leq b\leq s/2$。
+$a\leq u$ 等价于 $b\geq(s-u)_+$。
+函数 $b(s-b)$ 在 $[0,s/2]$ 上递增；
+若 $s^2\leq4uv$，乘积界在全区间自动成立；
+否则恰等价于 $b\leq(s-\sqrt{s^2-4uv})/2$。
+再与 $b\leq w$ 相交，便得到 (XI.20)。
+为直接核对非空，若 $s\leq u+v$，则
+$L\leq v\leq w$，又因 $v\leq u$ 有 $s\leq2u$，故 $L\leq s/2$。
+$L=0$ 时乘积为零；$L>0$ 时
+$L(s-L)=u(s-u)\leq uv$。于是 $L\leq U$。
+反向，区间有点就给合格权重，所以 $s\leq u+v$。
+$s=0$ 或 $uv=0$ 均由闭公式给 $U=0$，没有除零步骤。$\square$
+
+**定理 77.3（实际距离域与填满的精确包络）。** 令
+
+$$
+m=\max\{P,\tfrac12\},\qquad
+s_{\max}=2\sqrt{m(1-m)}.
+\tag{XI.21}
+$$
+
+实际可行的总距离恰为 $0\leq s\leq s_{\max}$，域外切片为空。
+对每个域内 $s$，$E_z(s)$ 非空紧凸，且
+
+$$
+\boxed{\quad H_z(s)=\max_{r\in E_z(s)}U_r(s),\qquad
+\mathcal S_z=\{(s-b,b):0\leq s\leq s_{\max},\
+                              0\leq b\leq H_z(s)\}.\quad}
+\tag{XI.22}
+$$
+
+最大值及包络下方的每一个点均由指定初始人口的实际密度态对达到。
+公式只含三个自由谱坐标、显式线性约束和平方根。
+
+**证明。** 首先 $u+v\leq r_1+r_2+r_3+r_4=1$。
+若 $P\geq1/2$，写 $x=r_1\geq P$、$t=r_2\leq1-x$，则
+
+$$
+u+v\leq2\sqrt{xt}+1-x-t
+ \leq2\sqrt{x(1-x)}
+ \leq2\sqrt{P(1-P)}.
+\tag{XI.23}
+$$
+
+中间函数在 $0\leq t\leq1-x\leq x$ 上不减：
+对 $t>0$ 的导数为 $\sqrt{x/t}-1\geq0$，零端点由连续性覆盖；
+最后用 $x(1-x)$ 在 $[1/2,1]$ 上不增。$x=1$ 时各项直接为零。
+所以所有见证的 $s$ 都受 (XI.21) 控制。
+反向，取同一个谱
+
+$$
+r^0=(m,1-m,0,0)\in\mathcal P_z.
+\tag{XI.24}
+$$
+
+其第一项至少为 $P$，前两项和已为一，所以它主序支配 $\zeta$。
+对每个 $0\leq s\leq s_{\max}$，
+在 $\operatorname{diag}(m,1-m,0,0,0)$ 上只设 $C_{12}=s/2$。
+唯一非零二维块的行列式是 $m(1-m)-s^2/4\geq0$，迹非负，
+故 $R\pm iC$ 半正、迹一，权重为 $(s,0)$。
+再用定理 76.1 证明中的实 Schur–Horn 接口，以同一个实正交变换恢复所需人口 $z$。
+这证明整个实际距离域，同时说明 $r^0\in E_z(s)$。
+
+$\mathcal P_z$ 紧凸，$u+v$ 连续且凹，
+故其闭超水平集 $E_z(s)$ 非空紧凸。
+$L,U$ 在此集上连续，包括 $s^2=4uv$ 和所有零值处。
+最大值定理给某个 $r^*\in E_z(s)$ 达到 $\max U$。
+由定理 76.1 与命题 77.2，每个实际态对提供一个 $r$ 和区间中的 $b$，
+故 $b\leq\max U$；反之，$b=U_{r^*}(s)$ 已是同谱可达点。
+因此该最大值就是 (XI.1) 的 $H_z(s)$，不只是不一定达到的上确界。
+
+还需证明所有 $0\leq b\leq H_z(s)$ 都有同一总距离的真实见证。
+沿线段 $r(t)=(1-t)r^0+tr^*$，$0\leq t\leq1$，
+凸性使全部 $r(t)$ 留在同一个 $E_z(s)$，总距离参数始终为 $s$。
+连续函数 $t\mapsto U_{r(t)}(s)$ 在两端分别为
+$U_{r^0}(s)=0$ 和 $H_z(s)$。
+介值定理为每个目标 $b$ 给出一个 $t$，使 $U_{r(t)}(s)=b$；
+命题 77.2 保证 $L_{r(t)}(s)\leq b$，故目标落在该谱的精确区间内。
+当 $b>0$ 时按引理 74.1 选 $\mu,U,V_0$；
+当 $b=0$ 时用 (XI.7) 或零矩阵。由此构造 $X=ATB$、
+(XI.13) 的共轭密度矩阵，再用 (XI.17) 恢复人口，
+便精确取得 $a=s-b,b,z,s$。
+包络点直接使用 $r^*$，$H=0$ 时 $r^0$ 已足够。
+这证明填满结论，未对权重域作凸化。$\square$
+
+闭边界可进一步明确。$s=0$ 时 $H_z(0)=0$，
+可直接取 $\rho=\sigma=\operatorname{diag}z$。
+存在 $b>0$ 的态对当且仅当至少四个人口严格正：
+必要性由半正矩阵的 $|M_{ij}|^2\leq M_{ii}M_{jj}$ 得零人口整行列为零，
+而 $b>0$ 要求 $\operatorname{rank}C=4$；
+充分性是在任意四个正人口上放两个足够小的非零虚反对称块，
+每块满足 $|C_{ij}|\leq\sqrt{z_i z_j}$，其余只放对角。
+因此支撑至多三维时，所有实际距离切片都有 $H_z(s)=0$。
+
+若 $P\geq1/2$，(XI.23) 达到 $s=s_{\max}$ 的等号条件强制
+$r_1=P,r_2=1-P,r_3=r_4=0$：
+对 $P<1$，中间函数在内点严格递增，最后一项在 $x>P$ 时严格减小；
+$P=1$ 则由迹直接给出。这也包括 $P=1/2$。
+故最远距离端点只有权重 $(s_{\max},0)$。
+当 $P\leq1/2$ 时，$s=1$ 切片直接复用定理 69.1：
+
+$$
+H_z(1)=\min\{\tfrac12,1-2P,2V\}.
+\tag{XI.25}
+$$
+
+它也可从 $u+v\leq1$ 的等号核对：
+$r_1=r_2,r_3=r_4$，最大总和达到时
+$(a,b)=(u,v)$，故 $r=(a/2,a/2,b/2,b/2)$。
+主序给 $b\leq1-2P,\ b\leq1-Q,\ b\leq2V$；
+$Q\leq2P$ 使中间一条冗余。$P>1/2$ 时该切片为空。
+这些边界与 (X.21)、(X.30)–(X.34) 的控制例相容；
+自由 $D$ 的极值仍不能与另一态对的 $D=1$ 极值拼接。
+
+## 58. 交叉混合的尖锐点与普通坐标非凸性
+
+**命题 78.1（对齐两块约化的固定距离反例及精确包络值）。** 在 (X.1) 的物理顺序中，
+暂以 $1,\ldots,5$ 编号矩阵坐标，取
+
+$$
+z^0=(\tfrac25,\tfrac3{10},\tfrac15,\tfrac1{10},0),\qquad R=\operatorname{diag}z^0.
+\tag{XI.26}
+$$
+
+令实反对称 $C$ 的非零上三角项为
+$C_{12}=\sqrt6/10,\ C_{14}=\sqrt2/10,\ C_{23}=\sqrt3/10,\ C_{34}=1/10$，
+并取 $\rho=R+iC,\sigma=R-iC$。
+这是实际密度态对，其权重为
+
+$$
+a^0=\frac{\sqrt{6+2\sqrt3}}5,\qquad
+b^0=\frac{\sqrt{6-2\sqrt3}}5,\qquad
+s^0=a^0+b^0,\qquad (s^0)^2=\frac{12+4\sqrt6}{25}.
+\tag{XI.27}
+$$
+
+对任意态对先按 (X.7) 写其差为 $2iC$；若在共同实部的一组实特征基中，
+$C$ 只连接两个互不相交的坐标对，余下一维为实旁观方向，
+称为对齐两块类；每块允许任意收缩。
+对同一 $z^0$ 和同一 $s=s^0$，这个类的全部见证均满足 $b\leq3/10<b^0$。
+完整域则有精确包络值 $H_{z^0}(s^0)=b^0$。
+
+**证明。** 在 $(1,3\mid2,4)$ 分组中，
+
+$$
+\begin{aligned}
+X&=\frac1{10}\begin{pmatrix}\sqrt6&\sqrt2\\-\sqrt3&1\end{pmatrix}
+ =\operatorname{diag}(\sqrt{2/5},\sqrt{1/5})
+   \frac1{\sqrt2}\begin{pmatrix}1&1\\-1&1\end{pmatrix}
+   \operatorname{diag}(\sqrt{3/10},\sqrt{1/10}).
+\end{aligned}
+\tag{XI.28}
+$$
+
+中间矩阵实正交，故 (XI.13) 给 $R\pm iC\succeq0$。
+两态迹一、对角为 $z^0$，共同实部恰为 $R$；
+左下条目使用 $C_{32}=-C_{23}$，符号不能删。
+$X$ 的两个奇异值 $c\geq d$ 满足
+$c^2+d^2=3/25,\ cd=\det X=\sqrt6/50$，
+解二次式即得 (XI.27) 的 $a^0=2c,b^0=2d$。
+严格比较有
+
+$$
+(b^0)^2-\frac9{100}=\frac{15-8\sqrt3}{100}>0,\qquad
+(s^0)^2-\frac{21}{25}=\frac{4\sqrt6-9}{25}>0,
+\tag{XI.29}
+$$
+
+因为 $225>192$、$96>81$。
+
+现取任意同人口的对齐见证，不要求其实部仍为 $R$。
+用 (X.7) 共轭对称化后，实部谱为降序 $\lambda$，
+主序给 $t=\lambda_1+\lambda_2\geq7/10$。
+$b=0$ 已不能匹配本点；否则有两个活跃平面。
+若最大的两个谱轴没有分别占据这两个活跃平面，
+包括有一个在旁观方向的情形，则至少有一个完整活跃平面避开这两轴。
+该平面的迹至多 $1-t$；
+二维正块给它的差权重至多两人口的两倍几何平均，进而至多该迹。
+较小权重 $b$ 不大于此权重，所以 $b\leq1-t\leq3/10$。
+若两个最大轴各在一个活跃平面中，
+令其伙伴人口为 $\mu,\nu$，则 $\mu+\nu\leq1-t$，从而
+
+$$
+s\leq2\sqrt{\lambda_1\mu}+2\sqrt{\lambda_2\nu}
+ \leq2\sqrt{t(\mu+\nu)}
+ \leq2\sqrt{t(1-t)},\qquad s^2\leq21/25.
+\tag{XI.30}
+$$
+
+最后用 $t\geq7/10$ 及 $t(1-t)$ 在 $[1/2,1]$ 上递减。
+所有轴分配已覆盖，零谱或重根不改变这项逐基论证。
+(XI.29) 排除后一情形在 $s=s^0$ 出现，前一情形则强制 $b\leq3/10$。
+因此不存在保留两个权重的对齐替代，也不存在保持 $s^0$ 而把第二权重提高到 $b^0$
+的对齐包络替代；允许另取更主序集中的实部谱仍受同一障碍。
+
+为证明完整包络的精确值，任意 $\mathcal E(z^0)$ 中的态由零第五人口
+支撑于前四坐标。对称化后，第四外幂界与实部的 Hadamard 行列式界给
+
+$$
+(ab)^2\leq16\det R_4
+ \leq16\prod_{j=1}^4z_j^0,\qquad
+ab\leq\mathfrak p_0:=\frac{2\sqrt6}{25}.
+\tag{XI.31}
+$$
+
+$R_4$ 为该见证的四维实部，不必对角；
+半正 Hadamard 界可由 Gram 向量体积不超过其长度乘积得到，奇异时行列式为零。
+本构造恰有 $a^0b^0=\mathfrak p_0$。
+在固定 $s^0$ 下，$b(s^0-b)$ 在 $[0,s^0/2]$ 严格递增，
+所以 (XI.31) 强制 $b\leq b^0$。
+实际密度对已达到该值，故 $H_{z^0}(s^0)=b^0$。$\square$
+
+**命题 78.2（联合权重域不必凸）。** 同一个 $z^0$ 上的两个可达点为
+
+$$
+P_{\mathrm{pt}}=(2\sqrt3/5,\sqrt2/5),\qquad
+Q_{\mathrm{pt}}=(2\sqrt2/5,\sqrt3/5),
+\tag{XI.32}
+$$
+
+但它们的普通坐标中点不可达。
+
+**证明。** 保持 $R=\operatorname{diag}z^0$。
+第一点令 $C_{12}=\sqrt3/5,C_{34}=\sqrt2/10$；
+第二点令 $C_{13}=\sqrt2/5,C_{24}=\sqrt3/10$，其余上三角项为零。
+各自的 $R\pm iC$ 都是两个饱和半正二维块与零旁观方向的直和，
+故是有相同人口和共同实部的实际密度对，差权重正好为 (XI.32)。
+中点为
+
+$$
+M=\left(\frac{\sqrt3+\sqrt2}{5},\frac{\sqrt3+\sqrt2}{10}\right),\qquad
+M_1M_2=\frac{5+2\sqrt6}{50}>\frac{4\sqrt6}{50}=\mathfrak p_0,
+\tag{XI.33}
+$$
+
+其中严格性等价于 $5>2\sqrt6$，由 $25>24$ 得到。
+普适共同见证界 (XI.31) 排除 $M\in\mathcal S_{z^0}$，
+而它属于 $\operatorname{conv}(\mathcal S_{z^0})$。
+其中点的固定总距离是 $s_M=3(\sqrt3+\sqrt2)/10$；
+两个端点的总距离不同，不声称一个固定 $s$ 切片非凸。
+(XI.22) 的每个切片恰是闭区间，与本反例相容。
+仅用普通坐标凸包的线性支持不等式会接纳此不可达点，不能替代 (XI.15)。$\square$
+
+## 59. 同一安装与固定末端事件的完整消费者
+
+**定理 79.1（固定人口和总距离的原生概率前沿）。** 保持假设 55.2 的原 $\mathcal K_3$、
+(X.1) 的被动实帧、唯一正向安装
+$S_{13}=\operatorname{diag}(1,1,1,1,i)$
+和固定末端二值 PVM
+$\{n_1,I-n_1\}$，$n_1=\operatorname{diag}(0,1,0,0,1)$。
+对每个 $\mathcal E(z)$ 中的候选态对，定理 67.2 给出
+
+$$
+B_0=0,\qquad B_1=a,\qquad B_k=a+b=s\quad(k\geq2).
+\tag{XI.34}
+$$
+
+每个值由实际有限字达到。对固定 $z$ 和实际可行 $s$，
+全部输入存在见证的前沿恰为
+
+$$
+\{(B_1,B_2)\}=\{(s-b,s):0\leq b\leq H_z(s)\},
+\quad B_1\in[s-H_z(s),s],\quad B_2-B_1\in[0,H_z(s)].
+\tag{XI.35}
+$$
+
+最小饱和调用数为：$s=0$ 时零次；$s>0,b=0$ 时一次；$b>0$ 时两次。
+域外没有相应输入态对。
+
+**证明。** 原合同的参数是
+$d=5,p=1,r_{\mathrm{read}}=2,q=1,h=2$，
+且 $d-2h=1=q$。
+故定理 67.2 在同一原维数和菜单上直接给 (XI.34) 的上界及等号，
+并未使用无预算的 (IX.2) 去推断调用预算。
+为明确实际消费者，把差写成 $\Delta=iA$，
+选其实正交标准平面 $(e_1,f_1),(e_2,f_2)$，
+使第 $v$ 块为 $a_v\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$，
+其中 $(a_1,a_2)=(a,b)$。
+这些下标是证明中的实向量，区别于 (X.1) 的物理坐标标签。
+令 $u_v=(e_v+f_v)/\sqrt2$，
+$R_{\mathrm{can}}=|u_1\rangle\langle u_1|+|u_2\rangle\langle u_2|$。
+取 $O_*\in SO(5)$ 使 $O_*^T n_1O_*=R_{\mathrm{can}}$；
+实秩二投影的正交共轭可在其补空间校正行列式。
+
+再取 $O_v\in SO(5)$ 把安装的第五坐标方向送到 $e_v$，定义
+$J_v=O_vS_{13}O_v^T$。
+$J_v$ 只将 $e_v$ 乘以 $+i$，每个 $J_v$ 含恰一次原安装的正向调用。
+使用被动帧字 $O_*J_1$ 及 $O_*J_2J_1$，
+读效果在已选平面上的向量为 $(-ie_v+f_v)/\sqrt2$，
+它是 $\Delta$ 的特征向量，特征值为 $-a_v$；
+未选的实 $u_v$ 期望为零。
+因此两字的绝对概率对比分别恰为 $a$、$a+b$。
+零相位实字的效果实对称，与 $\Delta$ 配对为零。
+所有 $SO(5)$ 矩阵及其转置都由定理 64.1 的 (IX.1)
+在物理坐标中实现为有限纯翻转字；
+$D_3$ 与 $S_{13},n_1$ 对易，所以被动返回保持这两个实际调用计数。
+这个构造没有调用逆相位、额外编码、维数扩展或参考系统。
+当某权重为零时仍可补齐实标准平面；空差取空字即可。
+
+同一态对在两个预算下的最优值由此落实；
+它们可以使用各自的达到字，不能理解为一个设置同时返回两个最优概率。
+(XI.22) 为每个 $b\in[0,H_z(s)]$ 提供该同一个总距离的输入态对，
+所以 (XI.35) 的两端和全部中间值均达到，反向由联合必要性排除区间外值。
+由 (XI.34) 中遗漏的严格正权重，得到所述最小调用分类。$\square$
+
+以上 $B_k$ 是已知候选对优化后的理论二值概率差。
+同一候选对的两个未知标签必须使用同一个设置；
+优化字可以依赖候选对及共同已得记录，不能读取未知标签。
+一次末端 PVM 只给一个比特，不给精确概率或整个前沿；
+$B_2-B_1$ 是两个预算最优对比之差，不是同份输入上的两次测量记录。
+密度构造、第五质量吸收、人口排序与 Schur–Horn 矩阵只提供输入存在见证，
+不构成原生制备、共同实 CPTP 预处理或实际历史纤维运输。
+对给定来源纤维 $X_{h_0}$，仍须另证态对成员资格和这些字的共同合法性；
+也未给纯翻转脉冲数、时长、精度、估计概率或重复来源的成本。
+
+## 60. 联合刻画的数学归属与剩余接口
+
+**约定 80.1（来源、结果范围与未解量）。** 实 Schur–Horn 是经典 Horn 结论；
+Carlen–Lieb，*Short proofs of theorems of Mirsky and Horn on diagonals and eigenvalues of matrices*，
+[arXiv:0904.0734v3](https://arxiv.org/pdf/0904.0734v3)，
+开篇的 Horn 陈述明确允许实正交矩阵，文内随后给出 Horn 的归纳证明。
+其 Theorem 1.2 属于 Mirsky，不能用该编号归属实 Schur–Horn。
+定理 76.1 的证明在复用这一经典接口时，完整给出有限维实归纳及零值、重根边界，
+与 (X.11) 所引 Kaftal–Weiss Theorem 1.1(ii) 的 orthostochastic 接口一致。
+
+Wu 等，[arXiv:2103.01805v1，式 (36)–(37)](https://arxiv.org/pdf/2103.01805v1)，
+供应实对称／实反对称分解及实正交标准块；本文差权重是 $\operatorname{Im}\tau=C$
+块权重的两倍。支撑收缩的块正性背景沿用 (X.8) 所引
+Moslehian–Kian–Xu Theorem 5.11，实际奇异支撑桥梁见 (XI.3) 的证明。
+Gil，*Entropic and Geometric Population-Coherence Complementarity in Finite-Dimensional Quantum States*，
+[DOI 10.3390/e28080877](https://doi.org/10.3390/e28080877)，
+§§2.1、2.3 和式 (3)、(7)–(9) 的相关参数是实部特征值、支撑伪逆归一化及实反对称收缩；
+其 intrinsic populations 对应这里的 $\lambda$，不等于指定帧的 $\zeta$。
+这里只采用上述接口的自足支撑证明，不使用该文 §2.2 的纯态人口断言。
+
+固定非退化辛形式的谱结论有不同前提：
+Bhatia–Jain，[arXiv:1803.04647v1，Theorem 11](https://arxiv.org/pdf/1803.04647v1)，
+处理偶维实正定矩阵；
+Son–Stykel，[arXiv:2208.05291v1，Proposition 2.2、Theorem 3.1](https://arxiv.org/pdf/2208.05291v1)，
+半正定 Williamson 形式要求固定偶维辛空间中的核为辛子空间。
+这些结果不自动适用于这里的任意奇异五维实部和可变收缩 $K$。
+(XI.4)–(XI.13) 的奇异值、第四外幂及实二维夹乘给出本题所需桥梁。
+未取得完整证明的 Ren 等 DOI 10.1016/j.physleta.2025.130677、
+未认证的 Hypnos Math 说明文稿及未定位的 Mathias 引文均不作为前提；
+它们与本结果的全证明重合范围及优先权未核对。
+
+(XI.15) 的共同四谱充要性、(XI.22) 的固定总距离连续填充、
+(XI.27)–(XI.33) 的精确反例与包络点，
+以及 (XI.35) 对原有限字读口的应用，是此处的综合推导，
+不作全球原创性或优先权断言。
+本结论为普通数学源文证明；没有 Lean/kernel 核验、冻结或消化覆盖主张，
+也不以有限数值检验代替全称证明。
+
+三个辅助谱坐标尚未全部消去为只含人口与 $s$ 的最短分段代数式；
+这项显式化仍待解决，完整可行性、每个切片与达到由 (XI.15)–(XI.22) 给出。
+例如人口 (X.30) 的整段 $H_z(s)$ 可以继续求分支：
+每一候选分支须同时给合格 $r(s)$ 的达到和覆盖全部 $E_z(s)$ 的上界。
+人口固定于输入，不是控制中逐时守恒条件；
+正人口也不要求密度态满秩。
+实际来源支撑、制备、历史相融运输、完整仪器与硬件供应仍需各自的实现桥梁。
+本五维固定人口接口没有结算其他链长、其他相位角、全部替代方案、
+全部来源或 minimax 采样的目标；
+原 U7、全预算／全对比／全替代／来源／minimax／原生 programme 仍保留其未完成部分，
+时钟、经验本体或物理资源结论也不由这个输入存在定理取得。
+
+## 追加锚（本行以下为增补区）
