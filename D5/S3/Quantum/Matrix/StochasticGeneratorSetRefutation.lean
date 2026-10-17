@@ -337,13 +337,10 @@ private theorem orbit_not_gen (p q : Equiv.Perm (Fin 3)) :
         Equiv.toPEquiv_apply] using hh
     exact (witness_lt_one (p 0) (q 1)).ne heq
   · have hs := hull_shape h
-    have huniv : ({1, Equiv.swap 0 1, Equiv.swap 0 2, Equiv.swap 1 2,
-        Equiv.swap 0 1 * Equiv.swap 1 2, Equiv.swap 1 2 * Equiv.swap 0 1} :
-        Finset (Equiv.Perm (Fin 3))) = Finset.univ :=
-      D5.S3.Quantum.Matrix.ProjectionAMGMRefutation.sixPerms_univ
     have hp := Finset.mem_univ p
     have hq := Finset.mem_univ q
-    rw [← huniv] at hp hq
+    rw [← ProjectionAMGMRefutation.sixPerms_univ] at hp hq
+    delta ProjectionAMGMRefutation.sixPerms at hp hq
     simp only [Finset.mem_insert, Finset.mem_singleton] at hp hq
     rcases hp with rfl | rfl | rfl | rfl | rfl | rfl
     all_goals
