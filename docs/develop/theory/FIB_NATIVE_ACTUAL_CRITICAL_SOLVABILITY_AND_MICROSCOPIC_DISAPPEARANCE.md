@@ -3510,3 +3510,716 @@ The ordered derivative transfer in (36.8) and (37.2) is R (16.4)–(16.12), corr
 Every actual statement retains the same fixed admitted signed nonzero $\kappa$, full jointly realized rational vector, positive denominator margins, both original Dirichlet faces, all real phases, raw unit source and $j_0$ density, original microscopic unitary and determinant-one source-fixing shear, and full complex horizontal form/operator domains (1.5). The $B$ field heat clock is independent of kinetic $a$. No actual-state parity or reality, arbitrary zero-energy $L^2$ inverse, positive $L^2$ complement gap, uncut native response, assumed $r_s$ growth, global family through a denominator pole, norm-to-energy inference or trial-to-actual substitution is introduced. Neither an actual-state counterexample nor analytic preparation, empirical selection or physical-space/dimension conclusion follows.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 42. Higher finite charges at one fixed zero-response datum
+
+**Definition 42.1 (hypotheses, full domains and coefficient notation).** Fix one admitted original datum of Definitions 1.1–2.2 before $s\downarrow0$. Retain every conditional analytic antecedent of Theorem 22.1 and Definitions 29.1 and 36.1. These are the canonical heat, Gaussian and bridge-moment estimates, hypoellipticity and horizontal Sobolev realization, the specified compact reconstruction and simple critical mode, the homogeneous-energy complement gap, the particular first-response representative and its stated derivative tails, and the original native domain, attainment, heat and actual-state reconstruction statements at their owning scopes. In particular the actual weak-disk conclusion, P §§104–105, Theorem 27.1 and Theorem 10.2 retain their original hypotheses. Suppose throughout §§42–50 that this fixed datum satisfies $C_{\rm resp}=0$.
+
+All actual vectors have the entire complex form or operator domains (1.5), transported only by the original $\mathcal U_s$ and determinant-one $\mathcal T_s$. Both original moving Dirichlet faces, every real phase frequency, the signed nonzero $\kappa$ and full jointly realized rational vector (1.2), fixed denominator margins, raw unit source and $j_0$ remain unchanged. The field heat clock is $B$, independently of $a$. Constants may depend on the fixed datum and its antecedent constants; no uniformity for varying data or approaching a pole is asserted.
+
+Use precisely $\mathsf Q_j,G_j,\mathcal V_j,\mathcal N_s,\mathcal B_s(h)$ of §§23 and 29–33, with $\mathcal V_0=V$. Set
+
+$$
+\gamma=\chi_c/a,\qquad \mu=\int Vp^2,\qquad
+g_0=Vp/\mu,\qquad v=\nu\Psi,\qquad
+A=I-\gamma\mathcal N_0,\qquad
+\omega=1+|r|,\qquad \mathfrak d=d_E(0,\cdot).
+\tag{42.1}
+$$
+
+The first charge $g_1$ is exactly (37.1). Inner products are conjugate linear in the first slot. To distinguish differential coefficients from the scalar $D_4$ in (24.5), write
+
+$$
+\begin{aligned}
+\mathscr D_1&=2\nu rY^2,&
+\mathscr D_2&=-3\nu^2r^2Y^2-\lambda,\\
+\mathscr D_3&=4\nu^3r^3Y^2,&
+\mathscr D_4&=-5\nu^4r^4Y^2.
+\end{aligned}
+\tag{42.2}
+$$
+
+They are the coefficients of
+$-X^2-(1+\nu sr)^{-2}Y^2-\lambda s^2$.
+Since $Yr=0$, integration by parts on compact tests gives exactly
+
+$$
+\mathfrak a_j(f,z)
+ =a\langle\mathscr D_jf,z\rangle
+   -\chi_c\int\mathcal V_j\bar fz
+\tag{42.3}
+$$
+
+with the forms (24.1); this notation extends only to pairings justified below. In particular $\mathscr D_2$ includes $-\lambda$. The complete field coefficients retain $\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$. No scalar is redefined: throughout this append
+
+$$
+C_4=D_4-h[\Upsilon]
+\tag{42.4}
+$$
+
+means exactly (24.5).
+
+**Theorem 42.2 (finite-row actual compatibility and positive-quartic endpoint).** Under Definition 42.1, for every prescribed sequence $s_n\downarrow0$ along which the actual spectral bottom satisfies $\epsilon_c(s_n)=o(s_n^4)$, choose any actual normalized complex ground state $\psi_{s_n}\in D(S)$ at each $s_n$. Every microscopic weak limit
+
+$$
+\mathcal U_{s_n}\psi_{s_n}\rightharpoonup cp
+\quad\text{satisfies}\quad cC_4=0.
+\tag{42.5}
+$$
+
+Both premises $C_{\rm resp}=0$ and $\epsilon_c=o(s^4)$ are part of this assertion. If the fixed datum additionally has $C_4>0$, every actual choice has weak microscopic limit zero, and
+
+$$
+E_s=\chi_c^2e_Cs^6+o(s^6),\qquad
+r_s\longrightarrow-\chi_c^2e_C,\qquad
+\operatorname{dist}_{L^2}\!
+ \left(\mathcal D_{g_s}\psi_s,\mathbb T\,\phi h_C\right)
+ \longrightarrow0 .
+\tag{42.6}
+$$
+
+The endpoint has full unit mass and the original fixed-cutoff Coulomb normalization of Theorem 10.2. The proof is given in §§43–49, including every consumed row and scalar pairing. Neither zero-response nor positive-$C_4$ occurrence is asserted.
+
+## 43. Input-specific return bounds and coefficient equations
+
+**Lemma 43.1 (additional return and field norms).** All the following return integrals converge absolutely in their displayed norms:
+
+$$
+\begin{gathered}
+G_2g_0\in L^{5/2}\cap L^{8/3}\cap L^{14/5}\cap L^4,\qquad
+G_3g_0\in L^4,\qquad G_4g_0\in L^8,\\
+g\in L^1,\ \omega^4g\in L^2
+ \ \Longrightarrow\
+ G_0g,G_1g\in L^2,\quad G_jg\in L^4\ (0\le j\le2),\\
+g\in L^{6/5},\ \omega^3g\in L^2
+ \ \Longrightarrow\
+ G_0g\in L^2,\quad G_0g,G_1g\in L^4,\\
+g\in L^{6/5}\cap L^2\ \Longrightarrow\ G_0g\in L^2,\qquad
+\omega^3\mathcal V_1\in L^8.
+\end{gathered}
+\tag{43.1}
+$$
+
+These are particular-input conclusions, not bounded threshold inverses on arbitrary $L^2$.
+
+Proof. In (30.4), let $n$ be the input-height degree and $m=j-n$ the relative degree. The output-$L^q$ time power is
+
+$$
+\frac m2-\frac72\left(\frac1{p_n}-\frac1q\right),
+\qquad\text{with input norm }\|r^ng\|_{p_n}.
+\tag{43.2}
+$$
+
+Below time one, weighted $L^2$ inputs give powers $m/2-7/8$ for output $L^4$, and no worse powers for the displayed $q\le4$. They are integrable. For $G_4g_0$ in $L^8$, use the weighted $L^8$ seed inputs and kernel $L^1$, giving powers $m/2\ge0$. These inputs follow from (31.3).
+
+Above time one, the seed input exponents for $n=0,\ldots,4$ are
+
+$$
+(p_0,p_1,p_2,p_3,p_4)=(1,1,1,7/6,7/5).
+\tag{43.3}
+$$
+
+For $G_2g_0$ the largest power is $1-(7/2)(1-1/q)$. At $q=5/2,8/3,14/5,4$ these powers are respectively
+$-11/10,-19/16,-5/4,-13/8$.
+For $G_3g_0$ in $L^4$ it is $-9/8$; for $G_4g_0$ in $L^8$ it is $-17/16$. All other terms at each indicated degree decay faster, proving these assertions.
+
+For $g\in L^1$ with $\omega^4g\in L^2$, interpolation gives
+
+$$
+r^ng\in L^{p_n},\qquad
+(p_0,p_1,p_2,p_3)=(1,7/6,7/5,7/4).
+\tag{43.4}
+$$
+
+Indeed the interpolation weights for $n=1,2,3$ are $2n/7$, so the available height weights are $8n/7>n$. Inserting (43.4) in (43.2) proves the $L^2$ returns through order one and $L^4$ returns through order two. For example the largest large-time power for $G_1g$ in $L^2$ is $-5/4$, and for $G_2g$ in $L^4$ it is $-13/8$.
+
+For $g\in L^{6/5}$ with $\omega^3g\in L^2$, interpolation gives
+$rg\in L^{18/13}$ and $r^2g\in L^{18/11}$: the interpolation parameters $1/3,2/3$ give exactly weights one and two. For $G_1g$ in $L^4$, (43.2) gives $-37/24$ and $-119/72$ at large time; $G_0g$ in $L^2$ has power $-7/6$. All are integrable. The last $G_0$ assertion needs no weight: $L^2$ contraction handles $(0,1)$ and the same $t^{-7/6}$ bound handles $(1,\infty)$.
+
+For the field, apply the phase integration and bridge-moment argument of (32.2)–(32.3) with the additional output weight $|r|^3$. A bridge started at zero has $|r|\le S_t$, so an order-one source Gaussian with this weight has $L^8$ norm at most
+
+$$
+Ct^{(4-7+7/8)/2}=Ct^{-17/16}.
+\tag{43.5}
+$$
+
+Its integral over $t\ge1$ converges. The unweighted term also converges, and the finite-time part is bounded by the same full moment majorants. This proves $\omega^3\mathcal V_1\in L^8$ on the whole group, including all phases and its fixed $j_0^{-1}$ and $\nu$. It is not a height-supremum assertion. The convolution norm step is (30.4), with precisely its ordered Haar convolution. $\square$
+
+**Lemma 43.2 (distributional return equations and time boundaries).** On the inputs and orders consumed in §§44–48,
+
+$$
+\mathcal EG_0g=g,\qquad
+\mathcal EG_jg=-\sum_{\ell=1}^j\mathscr D_\ell G_{j-\ell}g
+\quad(1\le j\le4)
+\tag{43.6}
+$$
+
+in distributions. Only the seed uses order four; $g_1,g_2,g_3$ use at most orders three, two and one respectively.
+
+Proof. On a finite safe height slab and bounded phase Fourier band the differentiated common Dirichlet heat equation is a bounded-potential variation-of-constants identity:
+
+$$
+(\partial_t+\mathcal E)\mathsf Q_j(t)g
+ =-\sum_{\ell=1}^j\mathscr D_\ell\mathsf Q_{j-\ell}(t)g.
+\tag{43.7}
+$$
+
+The coefficient of $e^{\lambda s^2t}$ gives exactly $-\lambda$ in $\mathscr D_2$. As in Theorem 36.2, remove the safe slab by the deleted-path inflated-Gaussian estimates of §§30 and 36 and then remove the Fourier cutoff against compact tests. This proves (43.7) without defining a nonzero rational parameter through a pole.
+
+At time zero, $\mathsf Q_0(t)g\to g$ in $L^2$. For $j\ge1$, approximate the input simultaneously in its finite weighted $L^2$ norms through degree $j$ by compact-height, bounded-frequency inputs. For such inputs iterated variation of constants is $O(t)$ at time zero; the finite Gaussian height moments and (30.4) bound the approximation uniformly for $0<t\le1$. Therefore $\mathsf Q_j(t)g\to0$ in $L^2$. Every used input has these weights by (31.3), (38.1), or §§44–45.
+
+At infinity use (43.2) with $q=\infty$. For the seed through degree four, $g_1$ through degree three, $g_2$ through degree two and $g_3$ through degree one, the largest powers are respectively $-3/2,-2,-5/2,-29/12$. In particular the supremum bounds tend to zero and are integrable for compact distributional testing. Near time zero the weighted $L^2$ bounds are likewise integrable after moving differential coefficients to the compact test. Thus integration of (43.7) over $(0,\infty)$ is justified and has exactly the time boundaries claimed in (43.6). Return coefficients integrate against unit Lebesgue Haar measure; no $j_0^{-1}$ is inserted into $G_j$. $\square$
+
+## 44. The second finite charge and the homogeneous response
+
+**Theorem 44.1 (normalized second charge).** Define
+
+$$
+\mathcal R_2=\mathcal N_2g_0+\mathcal N_1g_1.
+\tag{44.1}
+$$
+
+There is a unique normalized real even $g_2\in L^2$ such that
+
+$$
+Ag_2=\gamma\mathcal R_2,\qquad
+\langle p,g_2\rangle=0.
+\tag{44.2}
+$$
+
+It has the consumed norms
+
+$$
+g_2\in L^1,\qquad \omega^4g_2\in L^2.
+\tag{44.3}
+$$
+
+Moreover
+
+$$
+u_2=\gamma\mu(G_2g_0+G_1g_1+G_0g_2)
+ \in\dot{\mathcal H},\qquad
+u_2=\Upsilon+d_2p
+\tag{44.4}
+$$
+
+for a real $d_2$. This identifies the homogeneous second response without asserting its $L^2$ membership.
+
+Proof. Reuse the particular identity
+$v=\gamma\mu(G_1g_0+G_0g_1)$ from §§36–37. Put
+$W_2=\gamma\mu(G_2g_0+G_1g_1)$.
+Lemma 43.1 and the first-charge bounds give $W_2\in L^{14/5}$ and
+
+$$
+\mathcal EW_2=-\mathscr D_1v-\mathscr D_2p
+\tag{44.5}
+$$
+
+in distributions. The right side is continuous in free homogeneous energy: its divergence terms involve $rYv,r^2Yp\in L^2$, and the scalar term is $\lambda p\in L^{14/9}$, by (22.6). Riesz representation for $b$ gives a homogeneous solution in $L^{14/5}$.
+
+To identify that solution with $W_2$, their difference is distributionally $\mathcal E$-harmonic and in $L^{14/5}$. Hypoellipticity makes it smooth. For each real or imaginary part $w$ take compact dilated cutoffs $\eta_R$, with horizontal derivative bounded by $C/R$, and test against $\eta_R^2|w|^{q-2}w$, $q=14/5$. Regularization at $w=0$, the product rule and absorption give
+
+$$
+b[\eta_R|w|^{q/2}]
+ \le CR^{-2}\|w\|_q^q.
+\tag{44.6}
+$$
+
+Letting $R\to\infty$ makes its horizontal derivatives zero on every compact set. Bracket generation makes $w$ constant; infinite Haar volume and $L^q$ membership force zero. Thus $W_2\in\dot{\mathcal H}$ and (44.5) is its homogeneous equation.
+
+Expanding the two rows gives exactly
+
+$$
+\gamma\mu\mathcal R_2
+ =VW_2+\mathcal V_1v+\mathcal V_2p.
+\tag{44.7}
+$$
+
+Test (44.5) with $p$ and use $\mathcal Ep=\gamma Vp$. All the pairings are homogeneous-energy pairings; (24.1)–(24.4) then give
+
+$$
+\langle p,\mathcal R_2\rangle
+ =-\frac{\mathfrak a_2[p]+\mathfrak a_1(p,v)}
+          {a\gamma^2\mu}
+ =-\frac{C_{\rm resp}}{a\gamma^2\mu}=0.
+\tag{44.8}
+$$
+
+Here is also the required input regularity, before solving for $g_2$. In (44.7), $\mathcal V_2p\in L^1$ follows from $\mathcal V_2\in L^3$ and $p\in L^{3/2}$; its weighted $L^2$ bound follows from bounded $\omega^3\mathcal V_2$ and $\omega p\in L^2$. The term $\mathcal V_1v$ is $L^1$ by $\mathcal V_1,v\in L^2$, and its weighted bound uses bounded $\omega^4\mathcal V_1$. For $VG_2g_0$, the $L^1$ pair is $L^{5/3}\cdot L^{5/2}$; the weighted $L^2$ pair is $L^{10}\cdot L^{5/2}$, since
+
+$$
+\omega^4V\le C(1+\mathfrak d)^{-1}\in L^{10}.
+\tag{44.9}
+$$
+
+Finally $VG_1g_1$ uses $V,G_1g_1\in L^2$ for $L^1$, and bounded $\omega^4V$ for the weighted $L^2$ norm. The $L^2$ return here follows from the same time powers as Lemma 43.1 using (38.1). Consequently
+$\mathcal R_2\in L^1$ and $\omega^4\mathcal R_2\in L^2$, in particular $\mathcal R_2\in L^2$.
+
+Proposition 34.1's compact Fredholm argument has
+$\ker A=\mathbb Cg_0$, $\ker A^\ast=\mathbb Cp$ and
+$\langle p,g_0\rangle=1$. Equation (44.8) therefore gives exactly one solution of (44.2). Conjugation and reflection preserve its normalization and even real right side, giving reality and evenness.
+
+The weighted conclusion requires a bootstrap, rather than an inverse on general threshold data. Let
+$R_V=G_0\sqrt V$ be precisely P Theorem 87.2's bounded specified reconstruction. Its adjoint factorization gives
+
+$$
+\mathcal N_0=\sqrt V\,R_V^\ast,\qquad
+\mathcal N_0:L^2\longrightarrow L^{6/5},
+\tag{44.10}
+$$
+
+because $\sqrt V\in L^3$. The equation
+$g_2=\gamma\mathcal N_0g_2+\gamma\mathcal R_2$ first gives $g_2\in L^{6/5}$. Here $\mathcal R_2\in L^{6/5}$ follows by interpolation between its already proved $L^1$ and $L^2$ norms. Lemma 43.1 now constructs $G_0g_2$ as an absolutely convergent $L^2$ heat integral, without any new weight assumption. Compact testing and cutoff density identify the adjoint product in (44.10) with $VG_0g_2$.
+
+For finite heat integrals, spectral calculus gives
+$\mathcal E\int_\delta^TP_tg_2\,dt=P_\delta g_2-P_Tg_2$.
+The right side tends in $L^2$ to $g_2$; the large-time heat bound forces $P_Tg_2\to0$. Closedness gives $G_0g_2\in D(\mathcal E)$ and $\mathcal EG_0g_2=g_2$. Since $V\in L^2$ and $\omega^4V$ is bounded, $VG_0g_2$ belongs to $L^1$ and has $\omega^4$ times it in $L^2$. Returning to the charge equation proves (44.3), without circularly using it to define $G_0g_2$.
+
+The vector in (44.4) is in $\dot{\mathcal H}$: this holds for $W_2$, and $G_0g_2\in D(\mathcal E)$ has finite energy. Equations (43.6), (44.2) and (44.7) imply
+
+$$
+h(u_2,z)=-\mathfrak a_2(p,z)-\mathfrak a_1(v,z)
+       =-\mathcal F_2(z)\qquad(z\in\dot{\mathcal H}).
+\tag{44.11}
+$$
+
+Projecting along $p$ and using Lemma 24.1's homogeneous complement uniqueness gives $u_2=\Upsilon+d_2p$. Reality gives $d_2\in\mathbb R$. No $L^2$ conclusion about $u_2$ or $\Upsilon$ follows or is needed. $\square$
+
+## 45. The third charge and the normalized fourth residual
+
+**Theorem 45.1 (third charge and fourth solvability).** Set
+
+$$
+\begin{aligned}
+\mathcal R_3&=\mathcal N_3g_0+\mathcal N_2g_1+\mathcal N_1g_2,\\
+\mathcal R_4&=\mathcal N_4g_0+\mathcal N_3g_1
+                         +\mathcal N_2g_2+\mathcal N_1g_3,\qquad
+\rho=\langle p,\mathcal R_4\rangle.
+\end{aligned}
+\tag{45.1}
+$$
+
+There are unique normalized real $L^2$ charges $g_3,g_4$ with
+
+$$
+\begin{aligned}
+Ag_3&=\gamma\mathcal R_3,&\langle p,g_3\rangle&=0,\\
+Ag_4&=\gamma(\mathcal R_4-\rho g_0),&
+\langle p,g_4\rangle&=0.
+\end{aligned}
+\tag{45.2}
+$$
+
+The third charge is odd and satisfies
+
+$$
+g_3\in L^{6/5},\qquad \omega^3g_3\in L^2.
+\tag{45.3}
+$$
+
+Every coefficient row $\mathcal N_jg_i$, $i\le3$, $i+j\le4$, exists in $L^2$. Only the $L^2$ norm of $g_4$ is asserted or consumed.
+
+Proof. For the seed contribution to $\mathcal R_3$, the products are
+$\mathcal V_3p/(\gamma\mu)$,
+$\mathcal V_2G_1g_0$,
+$\mathcal V_1G_2g_0$ and $VG_3g_0$.
+Their $\omega^3$-weighted $L^2$ bounds use, in order, $\omega p\in L^2$ and bounded $\omega^2\mathcal V_3$; bounded $\omega^3\mathcal V_2$ and $G_1g_0\in L^2$; $\omega^3\mathcal V_1\in L^8$ and $G_2g_0\in L^{8/3}$; and $\omega^3V\in L^4$ and $G_3g_0\in L^4$. The $G_1g_0$ norm is also an immediate instance of (43.2).
+
+The three order-two products on $g_1$ use bounded $\omega^3\mathcal V_2$, bounded $\omega^3\mathcal V_1$, and $\omega^3V\in L^4$, respectively against $G_0g_1,G_1g_1\in L^2$ and $G_2g_1\in L^4$. The two order-one products on $g_2$ use bounded $\omega^3\mathcal V_1,\omega^3V$ against $G_0g_2,G_1g_2\in L^2$. Thus $\omega^3\mathcal R_3\in L^2$.
+
+For completeness its $L^{6/5}$ norm uses the following field/return Hölder pairs:
+
+$$
+\begin{array}{c|c}
+\text{product}&\text{field exponent, return exponent}\\ \hline
+\mathcal V_3p&(4,12/7)\\
+\mathcal V_2G_1g_0,\ \mathcal V_2G_0g_1&(3,2)\\
+\mathcal V_1G_2g_0&(30/13,5/2)\\
+VG_3g_0,\ VG_2g_1&(12/7,4)\\
+\mathcal V_1G_1g_1,\ \mathcal V_1G_0g_2,\ VG_1g_2&(3,2).
+\end{array}
+\tag{45.4}
+$$
+
+Every reciprocal sum is $5/6$. All field exponents satisfy (32.3)'s strict integrability condition; the mode is in $L^{12/7}$ by its full spatial decay, and all return norms were proved above or in §38. Hence $\mathcal R_3\in L^{6/5}$.
+
+Coefficient parity makes $\mathcal R_3$ real odd, so $\langle p,\mathcal R_3\rangle=0$. Fredholm solvability and normalization give $g_3$, and uniqueness makes it real odd. Equation (44.10) first gives $g_3\in L^{6/5}$. The unweighted $G_0$ assertion of Lemma 43.1 then gives $G_0g_3\in L^2$ with its specified adjoint interpretation. Bounded $\omega^3V$ and the already proved $\omega^3\mathcal R_3\in L^2$ give $\omega^3g_3\in L^2$ from its equation. This repeats the noncircular reconstruction bootstrap, not an $L^1$ claim about $g_3$.
+
+Lemma 43.1 now gives $G_0g_3,G_1g_3\in L^4$, and $G_jg_2\in L^4$ for $j\le2$. Multiplication by the corresponding $L^4$ fields proves every new row is in $L^2$; the seed and $g_1$ rows are §§33 and 38. Thus $\mathcal R_4\in L^2$. Since $\langle p,g_0\rangle=1$, its subtraction in (45.2) is exactly orthogonal to $p$. Fredholm gives the normalized real $g_4$. This construction makes no weighted, native-domain or energy assertion about $g_4$. Parity of fixed charges never restricts the actual complex states. $\square$
+
+## 46. Both later early native rows on the full output space
+
+**Theorem 46.1 (second- and third-charge early remainders).** With restriction to the original $\Omega_s$ and zero extension as in Definition 29.1,
+
+$$
+\left\|\mathcal N_sg_i-\sum_{j=0}^{4-i}s^j\mathcal N_jg_i\right\|_2
+ =o(s^{4-i}),\qquad i=2,3.
+\tag{46.1}
+$$
+
+The norms are on the entire common $L^2(\mathbb R^4)$ space, with all real phases.
+
+Proof. Fix sufficiently small $\ell>0$ so $(-L,L)\Subset I_s$, $L=\ell/s$, and $\nu\ell<1/4$. Put $T=s^{-2}$. Auxiliary killing at $\pm L$ is used only to estimate the original heat. On safe paths differentiate the combined shifted Gaussian; clock derivatives have the same relative-degree count as in §39.
+
+For $g_2$, expand the return through degree two. On $(0,1)$, weighted $L^2$ inputs through degree three and kernel $L^1$ give integrable powers $t^{m/2}$; multiply by bounded $F_s$. On $(1,T)$ use return output $L^\infty$, $F_s\in L^2$, and (43.4). At derivative degree three the four powers
+
+$$
+\frac{3-n}{2}-\frac7{2p_n}=-2
+\qquad(n=0,1,2,3)
+\tag{46.2}
+$$
+
+are integrable. The Taylor remainder in the joint product is therefore $O(s^3)$.
+
+For $g_3$ expand through degree one. The analogous second-derivative inputs are
+$(p_0,p_1,p_2)=(6/5,18/13,18/11)$.
+Their large-time powers are
+
+$$
+-\frac{23}{12},\qquad-\frac{73}{36},\qquad-\frac{77}{36}.
+\tag{46.3}
+$$
+
+Small times use weighted $L^2$ and kernel $L^1$ as before. Hence this safe Taylor remainder is $O(s^2)$.
+
+We account separately for all noncompact input, deleted paths and coefficient time tails. Let $w=6-i$ and
+
+$$
+e_i(L)=\|\mathbf1_{|r|>L/4}\omega^wg_i\|_2\longrightarrow0.
+\tag{46.4}
+$$
+
+The original shifted heat and its extra-killed restriction are $L^2$ contractions because their nonnegative forms are $C_s$ and its Dirichlet restriction. On $(0,T)$ the outer-input return is therefore at most
+$TL^{-w}e_i(L)$.
+For an outer coefficient of relative degree $m$ and input degree $n$, multiply its $L^2$ bound by its factor $s^{m+n}$ to obtain
+
+$$
+Cs^{m+n}T^{1+m/2}L^{n-w}e_i(L)
+ \le Cs^{w-2}e_i(L).
+\tag{46.5}
+$$
+
+This includes input outside $\Omega_s$, which is absent from the native restriction. Since $w-2=4-i$, it is precisely the required little-o.
+
+For inner input, a path deleted at an auxiliary face has relative height supremum at least a fixed multiple of $L$. The relative-degree-$m$ inflated kernel, retaining that exit event, has $L^p$-to-$L^\infty$ bound
+
+$$
+Ct^{m/2-7/(2p)}e^{-cL^2/t}.
+\tag{46.6}
+$$
+
+To obtain it, retain the exit event in the phase-integration bound (30.3); the inverse-determinant moment estimate supplies the exponential, its $L^1$ bound supplies the relative moment, and interpolation gives the indicated convolution-kernel norm. The input factor remains $r^ng_i$. Its deleted-path time integral and its coefficient tail above $T$, after the coefficient factor, are each bounded by
+
+$$
+Cs^{m+n}L^{m+2-7/p}\|r^ng_i\|_p
+ =Cs^{7/p-2+n}\|r^ng_i\|_p.
+\tag{46.7}
+$$
+
+The substitution $t=L^2u$ proves the first bound; direct integration above $T$ proves the second, with a strictly integrable power in every used case.
+
+For $g_2$, use $n=0,1,2$ and the corresponding exponents in (43.4): all powers in (46.7) equal five. For $g_3$, use $n=0,1$ and exponents $6/5,18/13$: the powers are $23/6,73/18$. They exceed the required orders two and one. The unexpanded native deletion is (46.6) with $m=n=0$ and input $L^1$ or $L^{6/5}$. Original surviving covariances remain uniformly comparable even after leaving the auxiliary strip, by the fixed original denominator margins. Safe paths cannot end outside either original face. Thus these same bounds cover the zero-extended output everywhere, without a phase cutoff or a replacement operator.
+
+We have proved the joint return estimate multiplied by $F_s$. For each retained $s^jG_jg_i$ use its $L^4$ norm and expand $F_s$ only through degree $4-i-j$. Lemma 32.1 with $p=4$ gives remainder orders $s^3,s^2,s$ for $g_2$ at $j=0,1,2$, and $s^2,s$ for $g_3$ at $j=0,1$. Multiplication by $s^j$ makes these $O(s^{5-i})$. Hölder restores all complete-field cross terms and proves (46.1). No $L^p$ integrability has been assigned to the full long Coulomb multiplier. $\square$
+
+## 47. The actual spectral parameter and the final strong row
+
+**Theorem 47.1 (late corrections and final fixed-input limit).** On every actual sequence in Theorem 42.2, put $h_s=-\epsilon_c(s)/a=r_ss^8/a$. Then
+
+$$
+s^i\|(\mathcal B_s(h_s)^\ast-\mathcal N_s)g_i\|_2=o(s^4)
+\quad(i=2,3),\qquad
+\|(\mathcal B_s(h_s)^\ast-\mathcal N_0)g_4\|_2\longrightarrow0.
+\tag{47.1}
+$$
+
+These statements include bounded-$r_s$ sequences.
+
+Proof. Theorem 44.1 gives $g_2\in L^1\cap L^2$. The actual-path estimate (29.4) therefore bounds its unweighted late error by $C(h_s+s^5)$. Since $h_s=o(s^4)$, its factor $s^2$ proves the first assertion for $i=2$.
+
+For $g_3$, interpolate (29.5)'s $1\to2$ and $2\to2$ estimates at $p=6/5$. Symmetry and composition with the $2\to\infty$ estimate give
+
+$$
+\begin{array}{c|cc}
+& p\to2&p\to\infty\\ \hline
+0<t\le T&Ct^{-7/6}&Ct^{-35/12}\\
+t\ge T&Cs^{4/3}t^{-1/2}&Cs^{10/3}t^{-5/4}.
+\end{array}
+\tag{47.2}
+$$
+
+No Markov assertion for the shifted raw-measure semigroup is used. On $(0,1)$ use $L^2$ contraction and $\|F_s\|_\infty\le C$. On $(1,T)$, the replacement $e^{-h_st}-1$ in the short field costs
+
+$$
+Ch_s\|g_3\|_{6/5}\int_1^\infty t^{1-35/12}dt,
+\tag{47.3}
+$$
+
+which is finite. The short-field return past $T$ costs
+$Cs^{10/3}\int_T^\infty t^{-5/4}dt\,\|g_3\|_{6/5}
+=Cs^{23/6}\|g_3\|_{6/5}$.
+
+The long multiplier has supremum $Cs^5$. Its return below $T$ costs
+$Cs^5(\|g_3\|_2+\|g_3\|_{6/5})$, because $t^{-7/6}$ is integrable above one. Past $T$ its cost is at most
+
+$$
+Cs^{19/3}\|g_3\|_{6/5}
+ \int_T^\infty e^{-h_st}t^{-1/2}dt
+ \le Cs^{19/3}h_s^{-1/2}\|g_3\|_{6/5}
+ \le Cs^{7/3}\|g_3\|_{6/5}.
+\tag{47.4}
+$$
+
+The last inequality uses only the owned actual $r_s\ge c>0$. Hence the $g_3$ error is $O(h_s+s^{7/3})$; its factor $s^3$ is $o(s^4)$. Both original deaths remain in every heat operator.
+
+Finally (29.4) gives convergence on the dense class $L^1\cap L^2$. P (104.2) gives uniform $L^2$ bounds for $\mathcal B_s(h_s)^\ast$ along $h_s\ge cs^8$, $h_s\to0$; P (104.9) gives norm convergence $\mathcal N_s\to\mathcal N_0$. Approximate the fixed $g_4$ in $L^2$ by a member of the dense class. Uniform boundedness bounds the approximation error independently of $s$; first take $s\to0$, then the approximation error to zero. This proves the strong limit in (47.1), without a rate or a weight on $g_4$. $\square$
+
+## 48. Infinite-domain scalar correspondence with the unchanged quartic
+
+**Theorem 48.1 (paid fourth scalar).** The scalar $\rho$ of (45.1) satisfies
+
+$$
+\rho=-\frac{C_4}{a\gamma^2\mu},
+\tag{48.1}
+$$
+
+where $C_4$ is exactly (24.5).
+
+Proof. Define fixed reconstructed vectors
+
+$$
+u_0=p,\qquad u_1=v,\qquad
+u_n=\gamma\mu\sum_{i+j=n}G_jg_i\quad(n=2,3),\qquad
+u_4^0=\gamma\mu\sum_{\substack{i+j=4\\i\le3}}G_jg_i.
+\tag{48.2}
+$$
+
+We have $u_2\in\dot{\mathcal H}\subset L^{14/5}$,
+$u_3\in L^4$ and $u_4^0\in L^8+L^4$ by Lemma 43.1 and §38. The coefficient and charge equations give
+
+$$
+\begin{aligned}
+\mathcal Eu_n
+ &=\gamma\mu g_n-\sum_{\ell=1}^n\mathscr D_\ell u_{n-\ell}
+ &&(0\le n\le3),\\
+\mathcal Eu_4^0
+ &=-\sum_{\ell=1}^4\mathscr D_\ell u_{4-\ell},\\
+\mu g_n&=\sum_{k=0}^n\mathcal V_ku_{n-k}
+ &&(0\le n\le3),\\
+\gamma\mu\mathcal R_4
+ &=Vu_4^0+\mathcal V_1u_3+\mathcal V_2u_2
+                       +\mathcal V_3v+\mathcal V_4p.
+\end{aligned}
+\tag{48.3}
+$$
+
+The first two lines hold distributionally; the last two are locally integrable identities. There is no term $g_4$ in $u_4^0$.
+
+We justify all integrations at spatial infinity before using them. On a homogeneous annulus $A_R$ and its fixed enlargement, the owned mode and response bounds give
+
+$$
+\|p\|_{2,A_R}=O(R^{-3/2}),\quad
+\|\nabla_Hp\|_{2,A_R}=O(R^{-5/2}),\quad
+\|v\|_{2,A_R}=O(R^{-1/2}),\quad
+\|\nabla_Hv\|_{2,A_R}=O(R^{-3/2}).
+\tag{48.4}
+$$
+
+The annulus has volume $O(R^7)$. Hölder therefore gives
+
+$$
+\|u_2\|_{2,A_R}=O(R),\qquad
+\|u_3\|_{2,A_R}=O(R^{7/4}),\qquad
+\|u_4^0\|_{2,A_R}=O(R^{21/8}+R^{7/4}).
+\tag{48.5}
+$$
+
+For a local equation $\mathcal Eu=YF+G$ with locally $L^2$ data, the cutoff real-part energy test gives
+
+$$
+\|\nabla_Hu\|_{2,A_R}
+ \le C\left(R^{-1}\|u\|_{2,\widetilde A_R}
+            +\|F\|_{2,\widetilde A_R}
+            +R\|G\|_{2,\widetilde A_R}\right).
+\tag{48.6}
+$$
+
+Here is its local justification without assuming the derivative being estimated. Localize the distributional equation; the cutoff terms can be written as horizontal divergences of $L^2$ fields plus $L^2$ functions. Smooth in the group, perform the real-part test with $\eta^2u$, and absorb each mixed derivative term by $2AB\le\delta A^2+\delta^{-1}B^2$. The cutoff derivative contributes $R^{-1}\|u\|_2$ and the scalar forcing contributes $R\|G\|_2$. Weak closure gives local horizontal energy membership and (48.6) for the original data. This is a local estimate, not global homogeneous energy membership.
+
+The third coefficient equation has explicitly
+
+$$
+\mathcal Eu_3
+ =Y(-2\nu rYu_2+3\nu^2r^2Yv-4\nu^3r^3Yp)
+     +\lambda v+\gamma\mu g_3.
+\tag{48.7}
+$$
+
+Since $u_2\in\dot{\mathcal H}$ and $g_3\in L^2$, (48.4)–(48.6) give
+$\|\nabla_Hu_3\|_{2,A_R}=O(R)$.
+The fourth equation has divergence field
+
+$$
+-2\nu rYu_3+3\nu^2r^2Yu_2
+       -4\nu^3r^3Yv+5\nu^4r^4Yp
+\tag{48.8}
+$$
+
+and scalar forcing $\lambda u_2$. The same estimate gives
+$\|\nabla_Hu_4^0\|_{2,A_R}=O(R^2)$.
+
+Consequently the annular absolute pairings
+$|\nabla_Hv|\,|\nabla_Hu_3|$,
+$|rYp|\,|Yu_3|$ and
+$|\nabla_Hp|\,|\nabla_Hu_4^0|$
+are each $O(R^{-1/2})$. They are summable over dyadic annuli. Cutoff-derivative errors in the $v/u_3$ exchange are bounded by
+
+$$
+C\left(R^{-1}\|u_3\|_{2,A_R}\|\nabla_Hv\|_{2,A_R}
+       +R^{-1}\|v\|_{2,A_R}\|\nabla_Hu_3\|_{2,A_R}\right)
+ =O(R^{-3/4})+O(R^{-1/2}),
+\tag{48.9}
+$$
+
+and those in the $p/u_4^0$ exchange are
+$O(R^{-7/8})+O(R^{-1/2})$. They all vanish. The weighted first-coefficient cutoff pairing with $p,u_3$ is controlled in the same way using $rYp$.
+
+The other kinetic terms are finite by
+$\|rYv\|_2\|Yu_2\|_2$,
+$\|r^2Yp\|_2\|Yu_2\|_2$ and
+$\|r^2Yp\|_2\|rYv\|_2$.
+For potentials, $\mathcal V_1p\in L^{4/3}$ pairs with $u_3\in L^4$;
+$p\mathcal V_2\in L^{14/9}$ pairs with $u_2\in L^{14/5}$;
+bounded $\mathcal V_3$ pairs $p,v\in L^2$.
+The term $Vp$ is in both dual spaces for $L^8+L^4$, and $Vv\in L^{4/3}$. The remaining $\mathcal V_1v/u_2$ pair is the continuous energy-multiplier pairing of Lemma 24.1. The unweighted threshold $p/u_2$ term is paid by $p\in L^{14/9}$. Thus the limiting exchanges include every kinetic, potential and threshold term; neither $u_3$ nor $u_4^0$ has been assigned a global energy norm.
+
+Now test the fourth equation in (48.3) with cutoffs of $p$. Use $\mathcal Ep=\gamma Vp$ and the last line of (48.3). The vanishing boundary terms just proved give
+
+$$
+\rho=-\frac{S_4}{a\gamma^2\mu},\qquad
+S_4=\mathfrak a_4[p]+\mathfrak a_3(p,v)
+          +\mathfrak a_2(p,u_2)+\mathfrak a_1(p,u_3).
+\tag{48.10}
+$$
+
+The first response equation, tested against cutoffs of $u_3$, gives
+$h(v,u_3)=-\mathfrak a_1(p,u_3)$.
+The third equation, tested against cutoffs of $v$, gives
+
+$$
+h(u_3,v)
+ =-\mathfrak a_1(u_2,v)-\mathfrak a_2[v]-\mathfrak a_3(p,v).
+\tag{48.11}
+$$
+
+All these fixed vectors are real. Hermitian symmetry and the paid exchanges imply
+
+$$
+\begin{aligned}
+S_4
+ &=\mathfrak a_4[p]+2\mathfrak a_3(p,v)+\mathfrak a_2[v]
+          +\mathfrak a_2(p,u_2)+\mathfrak a_1(v,u_2)\\
+ &=D_4+\mathcal F_2(u_2).
+\end{aligned}
+\tag{48.12}
+$$
+
+By (44.4), $\mathcal F_2(p)=0$ and (24.2),
+
+$$
+\mathcal F_2(u_2)=\mathcal F_2(\Upsilon)
+ =-h[\Upsilon],\qquad S_4=C_4.
+\tag{48.13}
+$$
+
+This proves (48.1). In particular the field products
+$\nu^2\lambda V_{2t}$ and $\lambda^2V_{tt}/2$ and the threshold term
+$-a\lambda\|v\|_2^2$ in $D_4$ survive unchanged. The normalization is
+$\rho=-C_4/(a\gamma^2\mu)$, not an identification of $\rho$ with $C_4$. $\square$
+
+## 49. The exact fourth corrected actual equation
+
+**Theorem 49.1 (full residual and every actual weak coefficient).** Define the finite $L^2$ vector
+
+$$
+G_s^{\rm corr}=g_0+sg_1+s^2g_2+s^3g_3+s^4g_4.
+\tag{49.1}
+$$
+
+For every actual sequence with $C_{\rm resp}=0$ and $\epsilon_c(s)=o(s^4)$,
+
+$$
+\left\|(I-\gamma\mathcal B_s(h_s)^\ast)G_s^{\rm corr}
+        -\frac{s^4C_4}{a\gamma\mu}g_0\right\|_2=o(s^4).
+\tag{49.2}
+$$
+
+It follows that every actual microscopic weak coefficient satisfies (42.5).
+
+Proof. Theorems 33.2, 39.1 and 40.1 give the seed and first-charge rows through degrees four and three, including their actual-height errors. Theorems 46.1 and 47.1 give the second and third rows through degrees two and one. The final strong row of Theorem 47.1 is multiplied by $s^4$. Expanding each fixed input only to its consumed degree, the equations for $g_0,g_1,g_2,g_3$ cancel exactly orders zero through three. The fourth row is
+
+$$
+Ag_4-\gamma\mathcal R_4
+ =-\gamma\rho g_0=\frac{C_4}{a\gamma\mu}g_0.
+\tag{49.3}
+$$
+
+Every omitted vector is $o(s^4)$ in the full common $L^2$ space. This proves (49.2), with constants independent of actual choices along the fixed sequence.
+
+For an actual state let $f_s=\mathcal T_s\mathcal U_s\psi_s$. Its exact original-domain equation is (33.6):
+
+$$
+f_s=\gamma\mathcal B_s(h_s)f_s,\qquad \|f_s\|_2=1.
+\tag{49.4}
+$$
+
+At each $h_s>0$ this is a bounded-operator equation. Pair it against the entire vector (49.1). Equations (49.2)–(49.4) give
+
+$$
+0=\frac{s^4C_4}{a\gamma\mu}\langle g_0,f_s\rangle+o(s^4).
+\tag{49.5}
+$$
+
+The test needs no native form-domain membership. In particular, if
+$\alpha_s=\langle g_0,f_s\rangle$ and $z_s=f_s-\alpha_sp$, then
+$\langle g_0,z_s\rangle=0$ exactly. The full residual is paired with the unit vector $f_s$, so every remaining complement term is paid by its full $L^2$ norm. There is no unproved polynomial rate for $z_s$ and no multiplication of an uncontrolled $o(1)$ complement by a negative power of $s$.
+
+If $f_s\rightharpoonup cp$, then $\alpha_s\to c$ because
+$\langle g_0,p\rangle=1$. Division of (49.5) by $s^4$ gives $cC_4=0$. The determinant-one shears $\mathcal T_s$ and their inverses converge strongly to the identity on each fixed $L^2$ test: prove it first on compact smooth tests by their explicit matrices (2.4), then use unitarity and density. Thus $f_s$ and the original $\mathcal U_s\psi_s$ have the same weak limits. This proves (42.5) for all complex choices and weak coefficients, without imposing fixed-charge reality or parity on an actual state. $\square$
+
+**Corollary 49.2 (conditional positive-quartic full-mass Coulomb branch).** If the fixed datum of Definition 42.1 has $C_4>0$, then (42.6) holds for every prescribed sequence and every actual normalized complex ground-state choice, with
+
+$$
+\begin{aligned}
+M&=\int_I\phi(k)^2c_\kappa(k)c_\kappa(k)^{\mathsf T}\,dk,\\
+\beta_C&=\frac{\phi(k_0)\int_I\phi(k)^3\,dk}{4\pi\sqrt{\det M}},
+& e_C&=-\frac{\beta_C^2}{4a},&
+\varrho&=\frac{\beta_C}{2a},\\
+h_C(z)&=(\det M)^{-1/4}(\varrho^3/\pi)^{1/2}
+       \exp\!\left(-\varrho\sqrt{z^{\mathsf T}M^{-1}z}\right),\\
+(\mathcal D_g\psi)(k,z)&=g^{-3/2}\psi(k,z/g),&
+\mathbb T&=\{\zeta\in\mathbb C:|\zeta|=1\}.
+\end{aligned}
+\tag{49.6}
+$$
+
+Proof. Under $C_{\rm resp}=0$ and $C_4>0$, the owning quartic spectral-bottom law, Theorem 27.1, supplies $\epsilon_c(s)=o(s^4)$. The owned actual compactness and weak-disk result identifies every microscopic weak cluster as $cp$. Theorem 49.1 forces $c=0$. Weak sequential compactness of the unit ball then makes each whole prescribed actual sequence weakly zero: a sequence failing a weak test would have a weakly convergent subsequence contradicting its zero cluster.
+
+Apply the already proved actual weak-zero endpoint, Theorem 10.2, with its original fixed-cutoff source hypotheses. It gives $E_s/g_s^2\to e_C$, $r_s\to-\chi_c^2e_C$ and the full-mass phase orbit with exactly (49.6). Since $g_s=\chi_cs^3$, its energy statement is (42.6). This uses the actual theorem, not its one-sided trial upper bound.
+
+All antecedents of Theorem 10.2 remain in force, including its fixed source, matrix positivity, both original faces and actual attainment. If an every-choice conclusion failed, choose failing actual ground states along a sequence $s_n\downarrow0$; the sequential argument just proved contradicts that failure. This establishes the stated every-choice quantifiers, with no trial, arbitrary near-minimizer or phase-fixed substitute. $\square$
+
+## 50. Mathematical attribution and the remaining selection boundary
+
+**Definition 50.1 (owning analytic scope and classical interfaces).** Theorems 44.1–49.1 and Corollary 49.2 are conditional repository-derived deductions from the fixed original problem. P §§76, 87–88, 97 and 104–107 own the both-face native heat, specified compact reconstruction and simple mode, exact shear, common bridge moments, attainment, actual equation and actual weak-disk/orbit criteria at their stated scopes. R §§4–5, 8, 16 and 19–20 own the multiplier controls, homogeneous complement gap, left coordinate, particular form/$L^2$ first response and exterior control. Entire-height response escape, Theorem 3.1, owns the mode and horizontal derivative tails. Theorems 22.1 and 27.1 retain their conditional full-domain energy hypotheses; Theorem 10.2 retains the original fixed-cutoff actual weak-zero endpoint hypotheses. The finite seed and first-charge results are reused from §§29–40.
+
+The additional return norms, normalized higher charges and consumed weights, their two early native rows, actual-height late rows, final fixed-$L^2$ strong row, spatial-boundary payments and $\rho/C_4$ correspondence are proved in §§43–48. They are not assumed as extra analytic suppliers. The resulting finite residual is consumed by the exact actual equation in §49. There is no global $L^2$ threshold inverse, positive $L^2$ complement gap, uncut native representative of $\Upsilon$, global energy membership for $u_3,u_4^0$, prescribed $r_s$ growth or rational continuation across a pole.
+
+The ordered Young norm step is Fischer–Ruzhansky, *Sobolev spaces on graded groups*, [arXiv:1311.0192v1, §2.1, (2.2)](https://arxiv.org/html/1311.0192v1#S2.SS1): $f*k(\xi)=\int f(\eta)k(\eta^{-1}\xi)d\eta$, with $1/p+1/b=1+1/q$. The Engel law (2.6) is graded and unimodular, Haar measure is unit Lebesgue measure, and this is exactly the input-first factor order of (30.3). The horizontal Sobolev realization remains the identical $Q=7$, order-one interface (22.7) from Bahouri–Barilari–Gallagher–Léautaud, Theorem 5.1. Riesz representation, compact Fredholm solvability, Hölder, interpolation, spectral calculus, finite Gaussian differentiation and cutoff energy estimates are classical intermediate tools. The local positive-time heat interface keeps its original interior-endpoint scope; it is not used to supply missing noncompact, time-zero, moving-face or infinite-time bounds. The inherited global analytic antecedents remain conditional, and no literature-wide novelty or absence claim is made.
+
+**Definition 50.2 (resolved finite compatibility and unresolved original selection).** The later-row, scalar-identification and actual-consumer mathematical boundary stated in Definition 41.2 is replaced by Theorems 44.1–49.1 at their explicit hypotheses: $C_{\rm resp}=0$ and actual $\epsilon_c=o(s^4)$ give $cC_4=0$. Under the additional fixed-data condition $C_4>0$, Theorem 27.1 supplies the latter premise and Corollary 49.2 gives the original-source full-mass Coulomb endpoint. At $C_4=0$ the finite compatibility is nonselecting. At $C_4<0$, the owning quartic law does not give $\epsilon_c=o(s^4)$, so that premise cannot be omitted from Theorem 49.1.
+
+Absolute response and quartic signs, zero-response and positive-quartic occurrence, and the finer $C_{\rm resp}=0,C_4=0$ actual scale/profile branch remain unresolved. The original full-family every-actual-choice target of Definition 9.1 is therefore still unresolved, including the remaining bounded, divergent or mixed actual scale alternatives where applicable. Centered crossover, analytic $L^2$ state preparation, physical-space or three-dimensional realization, and native operational clock/resource bridges are not consequences of these conditional analytic results. The original source and clock, raw and weighted charges, entire complex domains and every-choice quantifiers remain those of Definitions 1.1–2.2; canonical correction parity imposes no condition on actual states.
+
+## 追加锚（本行以下为增补区）
