@@ -17,6 +17,10 @@ internal sealed class PauliThreeWeightBayesianInverseUniquenessDocument : IScrib
             Node("paulis", "The Pauli matrices", PaulisFormula(),
                 "sigma lists the identity and the Pauli matrices X, Y = i X Z and Z of pauliMatrix, indexed by Fin 4.",
                 "sigma", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("pauli-properties", "Self-adjoint Pauli involutions", SigmaPropertiesFormula(),
+                "Each of the four Pauli matrices is self-adjoint and its square is the identity. "
+                    + "The superscript H denotes conjugate transpose, and the product is matrix multiplication.",
+                "sigma_properties", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("spin", "Spin observables", SpinFormula(),
                 "For every real three-vector r, spin r is the sum of the complex embeddings of its coordinates times the three Pauli matrices. The index i.succ in Fin 4 selects X, Y and Z, leaving out the identity.",
                 "spin", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
@@ -95,6 +99,14 @@ internal sealed class PauliThreeWeightBayesianInverseUniquenessDocument : IScrib
             Call("pauliMatrix", F.Id("I")), Comma, Sp, Call("pauliMatrix", F.Id("X")), Comma, Sp,
             Call("pauliMatrix", F.Id("Y")), Comma, Sp, Call("pauliMatrix", F.Id("Z"))));
         return Disp(Equal(F.Id("sigma"), list));
+    }
+
+    private static Formula SigmaPropertiesFormula()
+    {
+        Formula matrix = Sigma(Mu);
+        return Disp(All(Mu, Call("Fin", F.D(4)), And(
+            Equal(Power(Parenthesized(matrix), F.Id("H")), matrix),
+            Equal(TimesOf(matrix, matrix), F.D(1)))));
     }
 
     private static Formula Qualified(params string[] parts)

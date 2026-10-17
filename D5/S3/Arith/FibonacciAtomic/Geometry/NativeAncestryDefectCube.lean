@@ -132,7 +132,7 @@ private theorem fill_length_word (t : Source) (a : Address → Bool) :
       exact ⟨by simp only [FreeMagma.length, (hl _).1, (hr _).1],
         by simpa [wd, map_mul] using congrArg₂ (· ++ ·) (hl _).2 (hr _).2⟩
 
-private theorem fill_at (t : Source) (a : Address → Bool) (p : Address)
+theorem fill_at (t : Source) (a : Address → Bool) (p : Address)
     (hp : p ∈ positions t) :
     subtree p (fill t a) = some (if a p then defectD else defectB) := by
   induction t generalizing a p with

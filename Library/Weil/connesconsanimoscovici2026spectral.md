@@ -9322,3 +9322,847 @@ claim. The actual-center/full-border/cofinal positivity, Robin and
 RH questions remain open.
 
 The [two new consumers, complete retained row, finite joint metric and inverse actions](https://github.com/the-omega-institute/trureturing-experiments/tree/f9610d3a5a732abaf68e733e50a7e34e66148ced/docs/reports/weil-c27) preserve the source and target bindings and reproduction entry.
+
+
+### Two new far pairings on the saved good-block inverse actions
+
+The complete18-coordinate far row on the old lift is already saved
+above. It is reused, rather than queried again. The new finite joint
+metric also saves two different directions,
+$Y_1=P^{-1}r_g^*$ and $Y_2=P^{-1}b_{J,g}^*$, on the SAME1263-positive
+principal block. The missing observations are now the two actual
+same-source contractions
+
+$$
+u=f_gY_1,\qquad v=f_gY_2,\qquad
+f=\kappa u_F^*W_FR_F,\quad\kappa=33/32.
+$$
+
+These profiles are not columns of the old18-dimensional lift, and
+their inverse actions are already supplied. No new solve, general
+inverse or target reconstruction is needed.
+
+Let $H$ be the existing1281-by112 far feature map and let
+$\iota_g$ embed the positive coordinates with zeros on the remaining
+18 coordinates. Aggregate
+
+$$
+h_i=H^*\iota_gY_i,\qquad L_i\ge\|\iota_gY_i\|_2
+$$
+
+before source functionals or error estimates. The norm caps are
+computed directly on the full embedded retained vectors. The signed
+masked kernel $K$ is not assumed PSD. The full paid Gram comparison
+and the accepted directional jet estimate give two independently
+valid bounds on the same physical profile:
+
+$$
+\|R_F\iota_gY_i\|_{W_F}^2
+\le \min\left\{\operatorname{up}(h_i^*Kh_i)+\varepsilon L_i^2,\
+N_{i,\mathrm{jet}}^2\right\}.
+$$
+
+Here $\varepsilon$ is the already transported COMPLETE far allowance,
+at least the original512-grid allowance. Matrix arrays use640bits.
+The directional bound retains its omitted moments, masking,
+rounding and actual-symbol forward payment. The original physical
+weight is already present; this norm bound adds no $\kappa$ factor.
+
+The existing cached finite and analytic-tail maps are applied once
+to each new aggregated profile. The raw mixed part uses the saved
+left-kernel row on the same two-column feature matrix. All source,
+symbol, smooth, actual-symbol forward, raw mixed and Abel allowances
+are retained. Uniform forward and raw mixed errors scale by $L_i$
+through the existing homogeneous contract. Approximate cached symbols
+are not identified with the actual symbol.
+
+| New observation | Outward enclosure |
+|---|---|
+| $u=f_gP^{-1}r_g^*$ | $[20.231424206590496643,\ 20.240043090713776357]$ |
+| $v=f_gP^{-1}b_{J,g}^*$ | $[2.786887993197035236,\ 2.788073520641284838]$ |
+| Complete $G_{2,12}=c+u$ | $[683.456490591670613158,\ 683.465109475822996702]$ |
+| $G_{2,22}-z=d+2v$ | $[97.741734616883793577,\ 97.744105671790482675]$ |
+
+The single1024-working/640-export application takes<4.991544seconds,
+excluding serialization. Its30181-byte packet has SHA256
+`39ddee410fa83bf4d35cb97f33bc9e63568dff8d9404dee331b0b3925336a858`;
+the source has SHA256
+`62c0da60931ae22580a8e1f16b79180ef9f26c40bae4aaf08b047e2006b09d2b`.
+It makes two new feature, norm, finite-functional and cached-tail
+applications, with one two-column raw mixed product. Old source
+recovery, old lift queries, target reconstruction, inverse/solve,
+scientific producer and fixture replays are all0. No scan or retry
+follows.
+
+For these two profiles the directional jet caps are selected; their
+improvement over the full paid Gram caps is below the displayed precision.
+The physical norm-squared uppers are at most241.529430992648325580 and
+4.573192066649095956. The total explicit functional allowances are
+at most0.004309442047589309 and0.000592763720310256, including
+the respective Abel allowances0.004032646541103321 and
+0.000554676109821741. The positive signs do not result from dropping
+these nonzero analytic payments.
+
+Write the previously saved finite metric as
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$.
+The actual complete joint metric is enclosed through
+
+$$
+G_2=
+\begin{pmatrix}a&c+u\\c+u&d+2v\end{pmatrix}
++\begin{pmatrix}0&0\\0&z\end{pmatrix},
+\qquad z=f_gP^{-1}f_g^*\ge0.
+$$
+
+The unknown $z$ still has no new upper bound. The matrix before the
+$z$ term need not be PSD and is not substituted for $G_2$.
+The two response intervals contain functionals of ONE actual source;
+their endpoints are not asserted independently attainable.
+The saved old18-coordinate far row also retains its earlier broad
+error-transport limitation. These observations alone do not certify
+the complete joint border or remove the cofinal obligation.
+
+All inherited common-form/domain, residual-map, source, normalization
+and comparison premises remain. This is a new source-specific
+application of accepted functional and error-estimation methods,
+without a generic-method novelty or Lean-proof claim. Actual-center,
+full-border/cofinal positivity, Robin and RH remain open.
+
+The [new two-profile source, directed cross terms, partial complete metric and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/d90d6869c73e1fbcdb4321e0879b55902b4abd81/docs/reports/weil-c27) preserve this same-source application and all explicit payments.
+
+
+### Price the remaining far inverse energy from the saved correlations
+
+Reuse the two paid far pairings and the finite joint metric on the SAME
+positive block. Write
+$G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$,
+$m=(u,v)$ and $s=d-c^2/a>0$. The classical projection inequality gives
+
+$$
+z=f_gP^{-1}f_g^*\ge Q_J,
+\qquad
+Q_J=\frac{u^2}{a}+\frac{(v-cu/a)^2}{s}.
+$$
+
+This is a lower bound, not the missing upper. One saved-data application
+returns
+
+$$
+\boxed{Q_J\in[0.086276954471713906,\ 0.086630925124381975].}
+$$
+
+It reuses every old source query and inverse action. No new source or far
+functional, target reconstruction, inverse, solve or parameter scan runs.
+The interval is for functionals of one source; its endpoints are not
+asserted jointly attainable.
+
+For the earlier joint border use the SAME complete reduced row
+$\beta=\beta_J+fV$, with the already saved18-coordinate far row. Choose
+only the fixed optimistic comparison
+$t_+=\mathrm{cap}/h_{\mathrm{lo}}$ and the saved refined common charge
+$D=\overline D$. Eligibility of $t_+$ is not asserted. Let $p=(\Sigma_0)_{00}<0$;
+the18-by17 core elimination map $T_\Sigma$ has first row
+$-(\Sigma_0)_{0,1:}/p$ and remaining block $I_{17}$. The reference
+inverse $R$ of the17-dimensional positive core and its accepted Neumann
+constant $\eta<1$ are reused. A single new reference action on
+$\beta T_\Sigma$ supplies its energy and its cross with $\rho T_\Sigma$;
+the archived $\rho T_\Sigma R T_\Sigma^*\rho^*$ is consumed directly. The relative inverse error
+is bounded by $\eta/(1-\eta)$ in the reference metric, with its bilinear
+Cauchy allowances retained.
+
+Put
+
+$$
+\begin{aligned}
+\mathfrak a&=t_+^{-1}+a+\rho\Sigma_0^{-1}\rho^*,\\
+\mathfrak c&=c+u+\rho\Sigma_0^{-1}\beta^*,\\
+\mathfrak d&=\overline D+d+2v+\beta\Sigma_0^{-1}\beta^*.
+\end{aligned}
+$$
+
+Then the existing border identity becomes
+
+$$
+\det N_2=\mathfrak a z+\mathfrak a\mathfrak d-\mathfrak c^2.
+$$
+
+The first entry is enclosed by
+
+$$
+\mathfrak a\in[39434.061125466995953787,\
+39434.061125466995953788]>0.
+$$
+
+Thus this comparison requires
+
+$$
+z<z_{\mathrm{crit}}
+=\mathfrak c^2/\mathfrak a-\mathfrak d,
+\qquad
+z-Q_J<\Delta=z_{\mathrm{crit}}-Q_J.
+$$
+
+The calculation is inconclusive about that budget. The saved canonical
+18-coordinate far-row box, transported through the weak core directions,
+produces enclosures for both $z_{\mathrm{crit}}$ and $\Delta$ contained
+in $[-7\cdot10^{192},7\cdot10^{192}]$ that cross zero. These are wide
+containing intervals, not a claim that either exact quantity varies over
+them or that the actual source has intrinsic uncertainty of that size.
+The undivided determinant coefficients remain saved. The new projection
+floor does not turn an inconclusive budget into a target sign.
+
+Consequently the positive floor does not settle the required joint
+inequality $z<z_{\mathrm{crit}}$. The current canonical row box also fails
+to provide a useful threshold for that comparison. A useful next input must retain shared
+source constraints in the core transport or supply a sufficient joint
+comparison directly. Increasing the arithmetic precision of this same
+box does not add those constraints. No source or precision retry follows.
+Any future exclusion with $t_+$ would apply only to $0<t\le t_+$ and
+$D\ge\overline D$ on this SAME lower target, not to every admissible
+charge or the actual full center.
+
+The sole1024-working/640-export application takes<0.121972seconds,
+excluding serialization. Its11131-byte packet has SHA256
+`11ccabd6110436b2b29f1a910c6c36a5fd8479af19d183cf614826ed9ad746c6`;
+the source has SHA256
+`a478b8d52e52384be98b6f385e65df9a4364d6b882a5fd82a119c9752ca3fd9f`.
+It makes one new17-reference action, two new reference bilinears and one
+explicit two-dimensional projection calculation. No old scientific
+producer or fixture is replayed. All inherited common-form/domain,
+residual, source/lift, complete-far, normalization and comparison premises
+remain. These are conditional numerical applications of existing
+projection, Schur and Neumann methods, without generic-method novelty
+or a Lean-proof claim. Actual-center/full-border/cofinal positivity,
+Robin and RH remain open.
+
+The [saved-data consumer, directed energy budget and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/3115ead2bc655c55bf3b25435f9d20a979cd3872/docs/reports/weil-c27) preserve the accepted source and its single application.
+
+
+### Condition the lifted far row on the paid good-block observations
+
+Keep the SAME source, positive block and exact enclosed lift. Let
+$Y=P^{-1}[r_g^*,b_{J,g}^*]$ be the two saved actions, put
+$A=[\iota_gY,V]$, and write the physical upper Gram as
+
+$$
+F=A^*(HKH^*+\varepsilon I)A
+=\begin{pmatrix}F_{mm}&F_{my}\\F_{ym}&F_{yy}\end{pmatrix}.
+$$
+
+The signed112-dimensional kernel $K$ is not assumed positive.
+The inherited physical majorant
+$R_F^*W_FR_F\preceq HKH^*+\varepsilon I$ implies positivity of the
+exact $F$. No claim is made that every matrix in its entrywise interval
+box is positive. The complete original512-metadata allowance is retained.
+Reuse the saved $H^*\iota_gY$, $H^*V$, $V^*V$ and $F_{yy}$;
+the new contractions supply $Y^*Y$, $-Y^*(P^{-1}C)$, $F_{mm}$ and
+$F_{my}$. No old physical block, source functional or inverse action
+is recalculated.
+
+For the actual row $y=fV$ and the already paid pair $m=(u,v)$, the
+column $\xi=(m,y)^T$ satisfies
+
+$$
+\xi\xi^*\preceq\Gamma F,
+\qquad \Gamma=\kappa^2E,
+\qquad \kappa=33/32,
+$$
+
+where $E$ is the accepted upper for the SAME physical source norm
+squared. The original weight is already present in $F$ and $E$.
+This physical Gram is distinct from the earlier inverse metric $G_{JJ}$.
+Its observed energy is not the unknown $z=f_gP^{-1}f_g^*$.
+
+Standard Schur conditioning gives, for this one common realization,
+
+$$
+B=F_{mm}^{-1}F_{my},\qquad S_F=F_{yy}-F_{ym}B,
+$$
+
+$$
+(y-mB)^*(y-mB)
+\preceq
+\left(\Gamma-mF_{mm}^{-1}m^*\right)S_F.
+$$
+
+Only positivity of the observed two-by-two block is required for this
+formula; the remaining exact Schur form may be semidefinite. The single
+saved-data application verifies its pivots within
+
+$$
+(F_{mm})_{00}\in[241.5294309926483,\ 241.5294309926484],
+\qquad
+s_m\in[2.76928258548446,\ 2.76928258548447]\cdot10^{-6}.
+$$
+
+It encloses the observed fraction
+
+$$
+\frac{mF_{mm}^{-1}m^*}{\Gamma}
+\in[0.19224358456570,\ 0.82455202205468].
+$$
+
+This is a containing interval, not an asserted attainable range.
+A lower enclosure of the spent energy supplies the remaining-energy
+upper used in the coordinate supports. Across all18 original lift
+coordinates, the individual physical variance ratios obey
+
+$$
+\boxed{
+\frac{(S_F)_{jj}}{(F_{yy})_{jj}}
+\in[1.8707,\ 1.9304]\cdot10^{-10},\qquad 0\le j<18.
+}
+$$
+
+These compare conditional and unconditional variances in the SAME
+physical Gram. They are not a reduction factor for the old source-query
+errors, the core inverse energy, or the Robin deficit. Intersecting the
+conditional supports with the original saved640-grid far row leaves
+all18 original intervals exactly unchanged. Width accounting uses those
+original grid bounds; no round-trip enlargement is credited as progress.
+The full joint Gram and conditional Schur form are retained for a
+correlated core estimate. Unchanged coordinate intervals alone do not
+exclude an improvement of that estimate.
+
+For a subsequent quadratic comparison, existing trust-region results
+must keep their hypotheses. [Jeyakumar--Li, Lemma6.3 and
+Corollary4.3](https://arxiv.org/abs/1309.3000) distinguish the single
+Slater quadratic constraint from extended trust regions with linear
+constraints; the latter equivalence requires strict feasibility and
+their dimension condition(2.2).
+[Wang--Xia, Theorem6](https://arxiv.org/html/1407.0465v2) concerns one
+scalar quadratic interval constraint, not this two-observation rectangle.
+No exactness of a future multiple-constraint relaxation or successful
+quadratic comparison is asserted here.
+
+The sole1024-working/640-export application takes<0.358260seconds,
+excluding serialization. Its126523-byte packet has SHA256
+`2e1c11ef3807445ce6b157d47232bc6086ac96f8a07786e4b03b7355e61c00ae`;
+the source has SHA256
+`d081a2d80786ea53deb91896548271e5b63f3adf966922362c0f9d5a6da7e7ab`.
+There is no new source/far query, target reconstruction, inverse/solve,
+old producer/fixture replay or parameter/precision scan. This is a
+conditional numerical application of existing Schur and ellipsoid
+methods, without generic-method novelty or a Lean-proof claim.
+The indefinite core and joint determinant remain uncertified; no upper
+for the unseen far inverse energy is supplied. A sufficient direct joint
+comparison remains an alternative. Actual-center/full-border/cofinal
+positivity, Robin and RH remain open.
+
+The [twenty-profile consumer, directed conditional Gram and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/f3e667c05bc6bbdce7ef7832f7e368567a7f3969/docs/reports/weil-c27) retain the shared-source application and its original-grid comparison.
+
+
+### Contract the complete joint budget before taking its upper bound
+
+Keep the SAME finite comparison, source, lift and measured pair. Write
+$G=\Sigma_0^{-1}$ as a mathematical symbol, without computing a new
+inverse. Let $p=(\Sigma_0)_{00}<0$, $T=[-(\Sigma_0)_{0,1:}/p;I]$, and
+reuse the accepted positive reference inverse $R$ with its original
+$0\le\eta<1$. Put
+
+$$
+\mathcal W=TRT^T,\qquad
+\widehat G=p^{-1}e_0e_0^T+\mathcal W,\qquad
+\ell=\frac{\eta}{1-\eta}.
+$$
+
+For the actual inverse, the inherited relative reference guarantee gives
+
+$$
+|v^T(G-\widehat G)w|
+\le\ell\sqrt{v^T\mathcal Wv}\sqrt{w^T\mathcal Ww}.
+$$
+
+This is the original Neumann payment, not an identification of the
+reference and actual inverses. All vectors below use column notation;
+the saved regression $B$ still has two rows and eighteen columns.
+Let $S=S_F$, $m=(u,v)^T$, $\mu=B^Tm$, and $r=y-\mu$. The retained
+conditional geometry gives
+
+$$
+rr^T\preceq\overline\Delta S,
+$$
+
+where $\overline\Delta$ is the already saved remaining-energy upper.
+The exact $S$ is positive semidefinite under the physical-majorant
+premise. Its whole entrywise interval box is not asserted positive.
+The signed far kernel and original full $\varepsilon/512$-metadata
+allowance remain unchanged.
+
+The actual comparison is
+
+$$
+z_{\rm crit}-Q_J
+=\frac{(c+u+\rho^TGx)^2}{A}
+-\overline D-d-2v-x^TGx-Q_J(m),\qquad x=\beta_J+y,
+$$
+
+with the SAME positive $A$, finite inverse metric entries $c,d$, fixed
+optimistic $t_+$ and charge $\overline D$ from the previous budget.
+Choose a positive rational $a_0$ at the midpoint of the saved $A$
+enclosure. Define
+
+$$
+\begin{aligned}
+\widehat h(m)&=c+u+\rho^T\widehat G(\beta_J+B^Tm),\\
+\widehat q_c(m)&=\widehat h(m)^2/a_0-\overline D-d-2v
+-(\beta_J+B^Tm)^T\widehat G(\beta_J+B^Tm)-Q_J(m),\\
+\widehat g(m)&=\widehat G\rho\,\widehat h(m)/a_0
+-\widehat G(\beta_J+B^Tm),\\
+\widehat H&=\widehat G\rho\rho^T\widehat G/a_0-\widehat G.
+\end{aligned}
+$$
+
+The complete nominal budget is exactly
+
+$$
+\widehat q_c(m)+2\widehat g(m)^Tr+r^T\widehat Hr.
+$$
+
+The source assembles $\widehat q_c=\theta^TC_q\theta$ and
+$\widehat g=Z\theta$, $\theta=(1,u,v)^T$, BEFORE taking interval
+bounds. Thus the square and indefinite core contribution retain their
+signed cancellation. New contractions supply
+
+$$
+t_1=\operatorname{tr}(S\widehat H),\qquad
+t_2=\operatorname{tr}(S\widehat HS\widehat H),\qquad
+C_g=Z^TSZ.
+$$
+
+[Wolkowicz--Styan, Theorem2.1, Eq(2.3)](https://www.math.uwaterloo.ca/~hwolkowi/henry/reports/bndseigs80.pdf)
+gives the real-eigenvalue trace bound. Apply it to the mathematical
+symmetric matrix $S^{1/2}\widehat HS^{1/2}$ in dimension18; no numerical
+square root, inverse or eigensolver is needed. With directed trace
+intervals $[a_1,b_1]$, $[a_2,b_2]$, and
+$d_1=\operatorname{dist}(0,[a_1,b_1])$, use
+
+$$
+\overline\lambda=
+\max\left(0,\frac{b_1}{18}
++\sqrt{17\left(\frac{b_2}{18}-\frac{d_1^2}{18^2}\right)}\right).
+$$
+
+A negative upper enclosure for the discriminant contradicts the
+inherited domain and stops. The primary paper requires real eigenvalues;
+it does not require this nominal curvature to be positive.
+
+The linear term keeps BOTH the conditional Gram and the original raw
+640-grid row box. Write the latter as $y\in[\bar y-b,\bar y+b]$.
+Two uniform support uppers are obtained from
+
+$$
+\sqrt{\overline\Delta\,\theta^TC_g\theta},\qquad
+\widehat g(m)^T(\bar y-B^Tm)+\sum_i b_i|\widehat g_i(m)|.
+$$
+
+Let $L_+$ be the smaller of their directed uniform uppers, and set
+
+$$
+U_{\rm nom}=\operatorname{ub}(\widehat q_c)+2L_+
++\overline\Delta\,\overline\lambda.
+$$
+
+All these are upper bounds for one common realization. Endpoints and
+component extrema are not asserted jointly attainable. No coordinate
+interval has to shrink, and no exact optimization or multi-constraint
+S-lemma equivalence is invoked.
+
+The reference error is paid on the ENTIRE budget. A new conditional
+reference-energy bound $E_x\ge x^T\mathcal Wx$ follows by PSD trace
+monotonicity and Minkowski, using the mean Gram of
+$[\beta_J,B^T]$ and $\operatorname{tr}(R T^TST)$. Its finite diagonal
+is reused from the paid identity
+$gRg-2\alpha\,rRb-\alpha^2rRr$; only the two new regression rows
+receive reference vector actions. This $E_x$ is a reference-core norm,
+not the unseen far inverse energy $z$.
+
+Reuse $R_\rho\ge\rho^T\mathcal W\rho$, and put
+
+$$
+\begin{aligned}
+\delta_O&=\ell\sqrt{R_\rho E_x},\\
+\overline O&=\operatorname{ub}|\widehat h|
++\sqrt{\overline\Delta\operatorname{ub}(\rho^T\widehat GS\widehat G\rho)},\\
+J_A&=\operatorname{ub}|A^{-1}-a_0^{-1}|,\\
+\epsilon_R&=\frac{2\overline O\delta_O+\delta_O^2}{A_{\rm lo}}
++\overline O^2J_A+\ell E_x.
+\end{aligned}
+$$
+
+Expanding the actual offdiagonal as its nominal value plus
+$\rho^T(G-\widehat G)x$, and applying the same reference inequality to
+$x^T(G-\widehat G)x$, gives the sufficient bound
+
+$$
+\boxed{z_{\rm crit}-Q_J\le U_*:=U_{\rm nom}+\epsilon_R.}
+$$
+
+The denominator enclosure and all original reference/source payments
+are retained. This avoids substituting an unpriced nominal inverse or
+independent interval entries for the actual inverse.
+
+The single saved-data application is inconclusive about the complete
+comparison. The directed bounds include
+
+| Contribution | Saved enclosure |
+|---|---|
+| Nominal center $\widehat q_c(m)$ | $[-157.40499,-147.08236]$ |
+| Selected linear support upper $L_+$ | $[2.0669461,2.0669462]\cdot10^{68}$ |
+| Curvature upper $\overline\lambda$ | $[2.8567554,2.8567555]\cdot10^{28}$ |
+| Complete reference/denominator payment $\epsilon_R$ | $[6.5348005,6.5348006]\cdot10^{-15}$ |
+| Complete budget upper $U_*$ | $[4.1338923,4.1338924]\cdot10^{68}$ |
+
+The last four rows enclose computed upper-bound values, not attainable
+ranges of the target. In particular, the positive $U_*$ supplies no sign
+for $z_{\rm crit}-Q_J$. The selected linear support is the dominant
+contribution to this sufficient upper. Its gradient-energy enclosure is
+contained in $[-5.4265663,5.4265663]\cdot10^{135}$, although the exact
+energy is nonnegative under the inherited physical-majorant premise.
+This is an unresolved enclosure, not an assertion that the actual source
+has that intrinsic uncertainty. This application does not distinguish
+inherited entry widths, evaluation dependency and arithmetic loss as
+causes of its size. A next comparison needs a better joint-gradient
+bound or another correlation-preserving contraction; the small paid
+reference perturbation alone does not fix the current upper.
+
+The auxiliary reference-energy calculation does give a strictly tighter
+positive-core upper. The old paid original-grid upper lies in
+$[8.0136669,8.0136670]\cdot10^{97}$, whereas the new one lies in
+$[451.44423,451.44424]$. Their ratio lies in
+$[5.6334290,5.6334291]\cdot10^{-96}$. These are bounds on the SAME
+positive-core energy, with the original source allowance and Neumann
+factor. They do not measure a change in that energy or an improvement
+of the Robin deficit. The new reference-energy bound is consumed in
+$\epsilon_R$ for the COMPLETE budget; it is not a substitute terminal
+claim. A useful norm bound has therefore not yet delivered the required
+joint sign.
+
+The sole1024-working/640-export application takes<0.247876seconds,
+excluding serialization. Its138122-byte packet has SHA256
+`6656a9e9ab05dd090168c93a359eeb8930998b89e855755b062f2493634dd0dd`;
+the source has SHA256
+`f72c0235bf32f8ded6fefc615f7a7414e7b66d2cd57626002e18b6f1eb437063`.
+Only the new regression actions and common-source trace/gradient
+contractions are evaluated. No source/far query, target reconstruction,
+inverse/solve, accepted producer/fixture replay or source/precision scan
+runs. The original raw coordinate intervals and source allowance are
+retained.
+
+If a certified $U_*<0$ were obtained, the EXISTING LOWER bound $z\ge Q_J$
+would give
+
+$$
+\det N_2=A(z-z_{\rm crit})\ge A_{\rm lo}(-U_*)>0.
+$$
+
+This would exclude only the fixed optimistic comparison. It would not
+pay parameter eligibility or a transfer to the actual full target.
+An inconclusive upper is neither a target counterexample nor an
+impossibility result for stronger correlated certificates. No independent
+$z$ upper, negative determinant, actual-center/full-border/cofinal
+positivity, Robin or RH proof is supplied. This is a source-specific
+application of existing trace, norm and reference-error methods, without
+a generic-method novelty or Lean-proof claim.
+
+
+The [joint-budget consumer, directed result and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/58635d877caf1fe56e3708faa14394e19d2f9154/docs/reports/weil-c27) retain the single application and its common-source bindings.
+
+
+### Consume the reference energies as a complete scalar norm bound
+
+Keep the SAME source, lift, conditional mean $\bar x=\beta_J+B^Tm$,
+remaining-energy upper $\overline\Delta$, nominal denominator $a_0$,
+nominal center $\widehat q_c$ and complete actual-minus-nominal payment
+$\epsilon_R$. These quantities are consumed from the preceding packets;
+the matrix contractions that produced them are not repeated.
+
+Write $d_p=-1/p>0$, so that
+$\widehat G=\mathcal W-d_p e_0e_0^T$. For the exact positive semidefinite
+forms $\mathcal W,S$, ordinary PSD trace monotonicity gives
+
+$$
+\mathcal W S\mathcal W\preceq
+\operatorname{tr}(S\mathcal W)\mathcal W.
+$$
+
+It follows by the triangle inequality that
+
+$$
+\|S^{1/2}\widehat Gv\|
+\le\sqrt{\operatorname{tr}(S\mathcal W)\,v^T\mathcal Wv}
++d_p|v_0|\sqrt{S_{00}}.
+$$
+
+Both forms may be singular. These are applications of existing PSD
+trace, Cauchy--Schwarz and norm inequalities, without a new generic
+theorem or positivity claim for the full interval-entry box.
+
+Reuse uniform saved upper bounds $\tau,R_\mu,R_\rho$ for
+$\operatorname{tr}(S\mathcal W)$,
+$\bar x^T\mathcal W\bar x$ and $\rho^T\mathcal W\rho$.
+With directed scalar enclosures define
+
+$$
+\begin{aligned}
+K_\mu&=\sqrt{\tau R_\mu}+d_p|\bar x_0|\sqrt{S_{00}},\\
+K_\rho&=\sqrt{\tau R_\rho}+d_p|\rho_0|\sqrt{S_{00}},\\
+H_+&=|c+u|+d_p|\rho_0|\,|\bar x_0|+\sqrt{R_\rho R_\mu}.
+\end{aligned}
+$$
+
+Each right side denotes its directed uniform upper. In particular,
+$|\widehat h|\le H_+$ and
+$\|S^{1/2}\widehat g\|\le H_+K_\rho/a_0+K_\mu$.
+The first coordinate $\bar x_0$ is a new scalar combination of the
+already saved finite row, observations and regression. No new vector or
+matrix action is needed.
+
+For the SAME conditional residual $rr^T\preceq\overline\Delta S$, put
+
+$$
+L_N=\sqrt{\overline\Delta}
+\left(H_+K_\rho/a_0+K_\mu\right),\qquad
+\Lambda_N=K_\rho^2/a_0+d_p S_{00}.
+$$
+
+Then $\widehat g^Tr\le L_N$. Moreover,
+
+$$
+r^T\widehat Hr
+=\frac{(\rho^T\widehat Gr)^2}{a_0}
+-r^T\mathcal Wr+d_p r_0^2
+\le\overline\Delta\Lambda_N.
+$$
+
+The negative $-r^T\mathcal Wr$ is dropped in the upper-bound direction.
+This is a sufficient norm majorant, not an assertion that the current
+curvature is positive or that component extrema are simultaneously
+attainable. Reusing the saved COMPLETE center and inverse/denominator
+payment gives another full comparison bound,
+
+$$
+\boxed{
+z_{\rm crit}-Q_J
+\le U_N=\operatorname{ub}(\widehat q_c)
++2L_N+\overline\Delta\Lambda_N+\operatorname{ub}(\epsilon_R).
+}
+$$
+
+All original source-energy, physical-majorant, source/lift/domain,
+positive-reference, normalization, full epsilon/512-metadata and
+positive actual-denominator premises remain. The same nominal inverse
+and $a_0$ are used, so the original complete perturbation payment applies
+without being recalculated.
+
+The single scalar application now certifies a strictly negative complete
+upper. Its directed values include
+
+| Sufficient bound | Saved enclosure |
+|---|---|
+| Linear support upper $L_N$ | $[57.877991,57.877992]$ |
+| Curvature upper $\Lambda_N$ | $[0.10457128,0.10457129]$ |
+| Complete budget upper $U_N$ | $[-30.503107,-30.503106]$ |
+
+These intervals enclose computed bound values, not attainable target
+ranges. Under the stated inherited premises, the existing lower bound
+$z\ge Q_J$ and positive actual comparison denominator give
+
+$$
+\boxed{
+\det N_2=A(z-z_{\rm crit})
+\ge A_{\rm lo}(-U_N)
+\ge1.2028613\cdot10^6>0.
+}
+$$
+
+Thus the fixed optimistic comparison is excluded from the desired
+negative-determinant route. This conclusion uses no unseen $z$ upper.
+It does not establish the admissibility of its optimistic coefficients,
+exclude other source/parameter choices, or transfer the sign to the
+actual full target. The old positive sufficient upper and new negative
+one refer to the SAME comparison; replacing the unresolved gradient
+contraction by a scalar majorant is enough to decide this conditional
+fixed-case sign. The source itself and its original allowance have not
+changed.
+
+The sole1024-working/640-export scalar application takes<0.228457seconds,
+excluding serialization. Its8469-byte packet has SHA256
+`5e0cbe77aac75340a29b40987bf820efa3272e6b421c40ba769cc38cdd9aef9a`;
+the source has SHA256
+`e61f59d027c536bdcd8e1761123c502cf865ee46a40b74cd15a5308de5c8ba37`.
+There are zero new vector/matrix reference actions or contractions,
+source/far queries, target reconstructions, inverse/solves, old scientific
+producer/fixture replays or source/precision scans.
+
+This consumes a different sufficient majorant of the SAME unresolved
+comparison. It is not a rerun of the source, the previous scientific
+producer, its fixtures or a different precision. The new application
+uses only saved scalar inputs and scalar inequalities. It does not
+assert an unseen far inverse-energy upper, comparison-parameter
+eligibility, transfer to the actual target, or actual-center/full-border/
+cofinal positivity. Robin and RH remain unresolved; no Lean-proof or
+generic-method novelty is claimed.
+
+
+The [scalar norm consumer, directed fixed-comparison certificate and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/7e5a0a22485af3938723588bbc78117c81e5caef/docs/reports/weil-c27) retain the source, single application and inherited comparison bindings.
+
+### Extend the old-base exclusion to every valid common charge
+
+Reuse the accepted actual common-charge identity and its saved lower,
+
+$$
+\mathcal K=m_J-h+\kappa s-E_\phi\ge D_{\rm lo},\qquad s\ge0,
+\qquad D_{\rm lo}>169.193163899615576.
+$$
+
+This lower is distinct from the refined common-charge UPPER
+$\overline D$. The new norm upper and this floor bind to the SAME
+actual finite row, original source and old core through their accepted
+packet chains. No new source relation or independent endpoint
+attainability is assumed.
+
+At the SAME optimistic $t_+$, changing only the fee gives the exact
+identity
+
+$$
+z_{\rm crit}(D)-Q_J
+=z_{\rm crit}(\overline D)-Q_J+\overline D-D.
+$$
+
+Consequently every actual-valid $D\ge\mathcal K\ge D_{\rm lo}$ has
+
+$$
+\boxed{z_{\rm crit}(D)-Q_J\le
+U_{\rm adm}:=U_N+\overline D-D_{\rm lo}<-15.895593038365393<0.}
+$$
+
+The exact-rational saved-data application uses the original endpoints.
+The extra debit is below14.607513220067395, so it fits inside the
+already certified negative budget. At $D=D_{\rm lo}$ the existing
+$z\ge Q_J$ and positive first border entry give
+
+$$
+\det N_2\ge A_{\rm lo}(-U_{\rm adm})>626827.787500448>0.
+$$
+
+Thus this endpoint border is positive definite. The inherited inertia
+identity gives a negative direction of the SAME OLD lower target at
+$(t_+,D_{\rm lo})$. For every $0<t\le t_+$ and $D\ge\mathcal K$,
+
+$$
+L_*+t r^*r+b^*b/D
+\preceq L_*+t_+r^*r+b^*b/D_{\rm lo}.
+$$
+
+The negative direction therefore persists throughout that family.
+Neither endpoint is asserted physically eligible; this stronger
+comparison suffices to exclude the actual eligible subset. In
+particular the legal shifts supplied by the saved band cap are included,
+since $t\le\tau_{\rm band}/h\le t_+$.
+
+This closes the smaller-charge escape for this old-base, fixed-source,
+supplied-shift family. It does not repeat the old projection-ceiling
+exclusion: that covered only $\tau\le0.0215048994$, while the band
+budget reaches approximately0.0272333894. The earlier norm result
+covered only $D\ge\overline D$; this application also includes all
+actual-valid smaller fees. Affine dependence, inertia and Loewner
+monotonicity are reused, without a generic novelty or Lean-proof claim.
+
+The single exact-rational application takes<0.003954seconds, excluding
+serialization. Its3155-byte packet has SHA256
+`9ed4c784f0f38cb430d48c527fac4478a41577069c7431428c08bc27a0e06435`;
+the120-line source has SHA256
+`3ddf2f163e70f9af2c1930f4a726ad337b174419407673cba6f4758a6e6f978a`.
+There are zero new source/far queries, matrix/vector contractions,
+inverses/solves, accepted producer/fixture replays or parameter scans.
+The [consumer and exact packet](https://github.com/the-omega-institute/trureturing-experiments/tree/734afcfef0edc6d958a0a64da55e18b55648095a/docs/reports/weil-c27)
+retain the original inputs and their common-source bindings.
+
+All inherited common-form/domain, physical-majorant, source/lift,
+positive-reference, normalization, full-far and actual-denominator
+premises remain. A stronger TRUE baseline, other sources or shifts
+beyond the supplied cap are outside this exclusion. The actual retained
+form can dominate the rejected lower target and remain positive.
+Actual retained/cofinal positivity, Robin and RH remain unresolved.
+
+### Test one explicit twenty-profile direction on the stronger baseline
+
+The preceding old-target exclusion does not decide the stronger baseline.
+The already saved frame $A=[\iota_gY,V]$ supplies a different finite test:
+
+$$
+A^*L_*A=\operatorname{diag}(G_{JJ},\Sigma_0),\qquad H_{20}=A^*A,
+\qquad 0\preceq\overline L-L_*\preceq\delta I.
+$$
+
+All these are the SAME archived forms and profiles. For fixed exact
+coefficients $w=(g,z)\in\mathbb Q^2\oplus\mathbb Q^{18}$, retain
+$m=(u,v)$ in both the good coordinates and conditional mean. Then
+
+$$
+\begin{aligned}
+B_w&=g^*G_{JJ}g+z^*\Sigma_0z,\\
+\mu_w&=c g_1+d g_2+\beta_Jz+m(g+Bz),\\
+|bAw|&\le|\mu_w|+\sqrt{\overline\Delta\,z^*Sz}.
+\end{aligned}
+$$
+
+Here $G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$,
+$y=mB+q$ and $qq^*\preceq\overline\Delta S$ are the saved conditional
+source relation. Ordinary Cauchy and the baseline order give the full
+sufficient upper
+
+$$
+U(w)=\operatorname{ub}B_w+\delta\operatorname{ub}(w^*H_{20}w)
++t_+\operatorname{ub}|rAw|^2
++\frac{\left(\operatorname{ub}|\mu_w|
++\sqrt{\overline\Delta\operatorname{ub}(z^*Sz)}\right)^2}{D_{\rm lo}}.
+$$
+
+A negative $U(w)$ would certify a negative direction of the SAME stronger
+lower construction. The existing monotonicity then covers all
+$0<t\le t_+$ and $D\ge\mathcal K\ge D_{\rm lo}$. Reference or midpoint
+data can choose $w$; the original enclosures must certify it.
+
+One nominal Woodbury selection, with one new combined17-reference action
+and two2x2 selection inverses, does not pass this test. Its fixed dyadic
+vector gives
+
+| Quantity | Saved enclosure |
+|---|---|
+| Old-base quadratic $B_w$ |$[4.2597335,4.2597336]\cdot10^{37}$|
+| Euclidean norm squared $w^*H_{20}w$ |$[4.3024170,4.3024171]\cdot10^{171}$|
+| Full stronger-target upper $U(w)$ |$[6.5391654,6.5391655]\cdot10^{37}$|
+
+The first row is strictly positive. Since all added terms and the true
+baseline gain are nonnegative, this particular vector cannot be a
+negative witness even for the old target. A positive sufficient UPPER
+alone would be inconclusive; the separate strict base LOWER rules out
+this vector. Neither fact decides the stronger form's sign or excludes
+another vector. The earlier negative border budget is not the quadratic
+value or normalization of this selected vector.
+
+This application does not distinguish selection mismatch, rounding
+amplification and loss of common relations as causes of failure. No
+source, direction, parameter or precision retry follows. A further
+witness-recovery method must retain its actual elimination relations;
+the saved vector and all component bounds can be consumed without
+rerunning this selection.
+
+The sole1024-working/640-export application takes<0.102317seconds,
+excluding serialization. Its9259-byte packet has SHA256
+`db3c21bc3ddb8af0784521f27311d6fd75312b7371a68dd3410c66fbd371c3b7`;
+the232-line source has SHA256
+`ebeabd3114efd0fb109082cc96f7c1ba11fc4a4a010c57202ff55c58b0bf8626`.
+The [explicit vector, source and directed budget](https://github.com/the-omega-institute/trureturing-experiments/tree/48619c68429c987a929fbb1ea0af0aba5aa9f973/docs/reports/weil-c27)
+retain this fixed test. Every old source, solve, physical/Euclidean Gram
+and passed fixture is reused. No new large inverse/solve, source/far query
+or scientific-producer replay runs.
+
+All inherited actual common-form/domain, source/lift, normalization,
+reference, conditional-ellipsoid, complete-far and true-baseline-order
+premises remain. This applies existing block minimization, Rayleigh and
+Cauchy methods without a generic novelty or Lean-proof claim. The
+stronger-target sign, actual retained/cofinal positivity, Robin and RH
+remain unresolved.
