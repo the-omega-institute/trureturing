@@ -823,3 +823,26 @@ What remains unpaid is an estimate of the actual same-source middle
 with both endpoints, sufficient for CS29 or another valid RH route.
 Robin, the complete joint estimate, endpoint half-variance and RH remain
 unresolved; no new Lean certification is asserted.
+
+## CS12. A positive-data representation with a signed inversion
+
+The [generalized Li interface](freitas2006li.md) supplies another exact
+representation of the same actual critical coefficients. Its common
+finite transfer TL3 uses the actual nonnegative $\tau=2$ coefficients
+$\Lambda_m(2)$, with one prescribed regularization and integer cutoff
+for every $1\le n\le c$. The uniform approximation in TL4 gives the
+same original Fibonacci matrix a whole-matrix error
+$5Ce^{-c^2/2}$ for all sufficiently large indices. This is an
+approximation-error estimate, not a sign or growth bound on the
+critical Li coefficients or the actual arithmetic middle.
+
+At $\tau=2$ a classical Poisson representation gives an unconditional
+positive semidefinite comparison matrix. Returning to $\tau=1$ uses
+signed binomial weights: the coefficient matrix already at index
+$m=a<b<c$ is indefinite. Thus no termwise positivity transport is
+supplied. The same-source weighted sum retains the original unresolved
+sign problem; positivity of the whole transferred matrix is not
+asserted. The CS29 targets, Robin, endpoint half-variance and RH remain
+unproved. The source identities and estimates are directly reused;
+the growing-parameter transfer is a paper application without Lean
+certification, numerical execution or a literature-priority claim.
