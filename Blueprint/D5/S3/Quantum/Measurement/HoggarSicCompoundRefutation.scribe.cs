@@ -77,7 +77,10 @@ internal sealed class HoggarSicCompoundRefutationDocument : IScribeDocumentDefin
                             + "It reduces every pair overlap in each orbit to a self-overlap. "
                             + "Each orbit of fₖ therefore satisfies the SIC equations. The 512 states "
                             + "form a SIC-compound and answer the exceptional dimension-eight question positively."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-bengtsson-gisin-renes-2020-hoggar-sic-compound-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose) =>
