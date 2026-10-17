@@ -194,6 +194,7 @@ class ReadoutTests(unittest.TestCase):
         unit = run(batch)['units'][0]
         self.assertIsNone(unit['y'])
         self.assertIsNone(unit['mode'])
+        self.assertEqual(unit['evidence_status'], 'missing-preregistration')
         batch, prereg, terminal = fixture()
         terminal['shape_evidence'] = None
         result = run(rebuild(batch, prereg, terminal))

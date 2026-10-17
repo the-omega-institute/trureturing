@@ -184,13 +184,14 @@ def unit_reading(item, sources, as_of):
     reading = {'issue': url, 'event': None, 'x': None, 'y': None, 'z': None, 'mode': None,
                'aggregate_probability': None, 'surprise': None, 'scores': [],
                'model_families': [], 'registered_at': None, 'score_status': 'missing-preregistration',
-               'evidence_status': 'missing-terminal'}
+               'evidence_status': 'missing-preregistration'}
     if 'prereg' not in records:
         return reading
     prereg, carrier = records['prereg']
     registered, deadline, threshold, forecasts = preregistration(prereg, carrier)
     reading['event'] = prereg['event']
     reading['registered_at'] = carrier['created_at']
+    reading['evidence_status'] = 'missing-terminal'
     reading['model_families'] = sorted({family for _, family, _ in forecasts})
     reading['aggregate_probability'] = str(sum((p for _, _, p in forecasts), Fraction()) / len(forecasts)) if forecasts else None
     answer, x = None, 0
