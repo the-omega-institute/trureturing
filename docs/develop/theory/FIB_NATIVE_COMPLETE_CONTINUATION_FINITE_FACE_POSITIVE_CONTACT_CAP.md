@@ -801,15 +801,38 @@ and its readable labels alone. In the original GC class, independent
 phases on all Kraus operators within a fixed classical acquisition
 branch likewise preserve its full CP map and physical outputs.
 
-Proof. The same instrument in (PC.35) has the two values (PC.41) and
-(PC.42). More generally replacing every Kraus operator $C_{fj}$
+Proof. To identify what the classical data in (PC.35) retain, first
+use Watrous, Chapter 2, instrument equations (2.258)–(2.262) and the
+Choi/Kraus interfaces of Theorem 2.22 and Corollary 2.27. Summing
+the branches in (PC.35) gives the qubit identity channel. It has the
+single Kraus operator $I_2$, and its nonzero Choi matrix is
+$|\operatorname{vec}I_2\rangle\langle\operatorname{vec}I_2|$, of rank
+one. More generally, for any integer $m\ge1$ choose positive
+$p_1,\ldots,p_m$ with sum one and define
+$\mathcal I_j(X)=p_jX$. These are $m$ nonzero readable branches,
+while their sum is still the identity channel. They require no
+additional input specimen. Proportional subdivision changes this
+readable count without changing the forgotten channel.
+
+Even after fixing the four-label subdivision (PC.35), Theorem 8.1
+gives the two values (PC.41) and (PC.42) for that same instrument.
+More generally replacing every Kraus operator $C_{fj}$
 of a classical branch by $e^{i\vartheta_f}C_{fj}$ cancels the phase
 in each $C_{fj}XC_{fj}^\dagger$. It preserves that CP branch,
 its effect, all passive-reference conditional outputs and every
 subsequent conditional CP operation. In the GC dictionary it therefore
 preserves $\Gamma$, $K$, $J_t$ and all physical outputs. Cross-label
 coherent record inner products need not be invariant under the same
-independent phases, as the example computes. $\square$
+independent phases, as the example computes.
+
+RT81's $d$ refers to a specified local channel's pure environment
+resource. It is neither the number of readable outcomes in (PC.35)
+nor the count of original GC optimal labels. The subdivision above
+concerns an arbitrary classical instrument; it is not a theorem about
+the minimum count among GC height optimizers. Conversely an
+environment may be discarded and unreadable. A valid count transfer
+must relate the actual jointly accessible original resource to the
+particular channel environment used by RT81. $\square$
 
 The phase variation in Theorem 8.1 changes coherent RT81 channels;
 it is not two Stinespring descriptions of one fixed coherent channel.
@@ -819,7 +842,7 @@ The example is an obstruction to deriving that fixed-target witness
 from classical branches alone, not an RT81 counterexample or an
 original-source actual-count necessity seed.
 
-## 9. Supported Schmidt resources and readable labels
+## 9. Supported Schmidt resources
 
 **Definition 9.1 (the source-preserving local preparation class).**
 Let $R$ be a passive reference and let a positive normalized joint
@@ -892,32 +915,6 @@ future operational reduction with an explicit resource correspondence.
 Correlated entangled shares require their original joint accounting;
 they cannot be inserted into the proposition as independent blanks.
 
-**Proposition 9.3 (readable label count and local Kraus rank differ).**
-The number of readable outcomes of a classical instrument is not
-determined by the Kraus rank of its forgotten channel. In particular
-the four-label instrument (PC.35) forgets to a channel of Kraus rank
-one, and arbitrary finite readable counts are possible with that
-same forgotten channel.
-
-Proof. Summing the branches in (PC.35) gives the qubit identity
-channel. It has the single Kraus operator $I_2$, and its nonzero Choi
-matrix is $|\operatorname{vec}I_2\rangle\langle\operatorname{vec}I_2|$,
-of rank one. More generally, for any integer $m\ge1$ choose positive
-$p_1,\ldots,p_m$ with sum one and define
-$\mathcal I_j(X)=p_jX$. These are $m$ nonzero readable branches,
-while their sum is still the identity channel. They require no
-additional input specimen. Proportional subdivision changes this
-readable count without changing the forgotten channel. $\square$
-
-RT81's $d$ refers to a specified local channel's pure environment
-resource. It is neither the number of readable outcomes in (PC.35)
-nor the count of original GC optimal labels. Proposition 9.3 concerns
-an arbitrary classical instrument; its subdivision is not a theorem
-about the minimum count among GC height optimizers. Conversely an
-environment may be discarded and unreadable. A valid count transfer
-must relate the actual jointly accessible original resource to the
-particular channel environment used by RT81.
-
 ## 10. Primary interfaces and the missing transfer conditions
 
 **Convention 10.1 (mathematical attribution).** The source-specific
@@ -928,8 +925,8 @@ of the precise source bounds and complete-face interfaces in FC and
 GC. The maximal-zero real-square reduction is FC Theorem 12.1;
 the all-optima and compatible-group mechanisms are FC Theorems 3.3,
 4.2 and 7.3; the mandatory reverse and negative-pure results are FC
-§28 and §§32–34. Theorems 8.1 and Propositions 9.2–9.3 give exact
-interface obstructions using the coherent RT81 definitions and
+§28 and §§32–34. Theorem 8.1, Corollary 8.2 and Proposition 9.2 give
+exact interface obstructions using the coherent RT81 definitions and
 elementary matrix identities. No general factorization, separation,
 quadrature, Schmidt or Kraus–Stinespring theorem is claimed as new.
 
@@ -951,10 +948,11 @@ and needs no quadrature reduction.
 
 Watrous, *The Theory of Quantum Information*, author-hosted
 [Chapter 1, Schmidt decompositions](https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf),
-[Chapter 2, Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf),
+[Chapter 2, instrument equations (2.258)–(2.262), Theorem 2.22 and Corollary 2.27](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf),
 and [Chapter 3, Definition 3.43](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf),
 gives the coefficient-matrix Schmidt correspondence, the
-Kraus/Choi/Stinespring interfaces and the arbitrary-reference norm
+standard instrument construction, Kraus/Choi/Stinespring interfaces
+and the arbitrary-reference norm
 convention. These textbook interfaces support the elementary arguments
 above; they do not supply an original-source reduction. The bounded
 source and literature interfaces here carry no exhaustive novelty or
@@ -970,9 +968,11 @@ and jointly accessible fibre resources. The original eight moments do
 not specify cross-label coherent phases. The original finite test
 objective is not the arbitrary-reference norm of (PC.33), and merely
 having that larger norm lower-bounded gives no lower bound on the
-original restricted objective. Propositions 9.2–9.3 exclude the stated
-exact input/resource identifications, while leaving noisy encodings and
-other explicitly proved reductions available.
+original restricted objective. Proposition 9.2 excludes the stated
+exact input identification, and Corollary 8.2's instrument calculation
+distinguishes readable counts from the specified-channel environment
+resource. Noisy encodings and other explicitly proved reductions
+remain available.
 
 ## 11. The remaining actual-count, source and native mathematics
 
