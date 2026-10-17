@@ -180,7 +180,7 @@ end D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 namespace D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
 noncomputable section
 
-theorem state_diag_le_one {n : Type*} [Fintype n] [DecidableEq n]
+private theorem state_diag_le_one {n : Type*} [Fintype n] [DecidableEq n]
     {P : Matrix n n ℂ} (hp : P.PosSemidef) (ht : P.trace = 1) (i : n) :
     (P i i).re ≤ 1 := by
   have hs : (P i i).re ≤ ∑ j, (P j j).re :=

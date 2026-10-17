@@ -6,8 +6,8 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.claim; result=D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.result; claim=D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.claim
    digest: Four unitary encodings beat every unassisted strategy below half-unit energy. -/
 
-import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
+import D5.S3.Quantum.QuantumChannels.PositiveFilterTransposeRefutation
+import D5.S3.Quantum.FiniteDimensional
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -18,8 +18,6 @@ namespace D5.S3.Quantum.Entanglement.EnergyRestrictedUnitaryEncodingRefutation
 
 open _root_.Matrix
 open scoped BigOperators ComplexOrder MatrixOrder Kronecker InnerProductSpace
-open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsDensity)
-open D5.S3.Quantum.Reduction.IsometricCompression (compress)
 
 /-- A POVM on any finite carrier; on `Fin d` this is the existing POVM predicate. -/
 def IsPOVM {n B : Type} [Fintype n] [DecidableEq n] [Fintype B]
@@ -49,23 +47,27 @@ def unitaryVacuum {X : Type} {dA dB : ℕ} [NeZero dA]
     (Ψ : Fin dA × Fin dB → ℂ) (U : X → unitaryGroup (Fin dA) ℂ) (x : X) : ℝ :=
   ∑ j, ‖encoded Ψ U x (0, j)‖ ^ 2
 
-/-- Finite shared randomness, density messages, and conditional POVMs. -/
-def QCStrategy {X Y B L : Type} [Fintype B] [Fintype L] {d : ℕ}
-    (q : L → ℝ) (ρ : L → X → Matrix (Fin d) (Fin d) ℂ)
-    (M : L → Y → B → Matrix (Fin d) (Fin d) ℂ) : Prop :=
-  (∀ l, 0 ≤ q l) ∧ ∑ l, q l = 1 ∧ (∀ l x, IsDensity (ρ l x)) ∧
-    ∀ l y, D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation.IsPOVM (M l y)
+/-- Density messages represented by ensembles on any complex Hilbert space, with arbitrary
+    discrete shared randomness and bounded positive-operator-valued measurements. -/
+def QCStrategy {X Y B H L K : Type} [Fintype B] [NormedAddCommGroup H]
+    [InnerProductSpace ℂ H] [CompleteSpace H] (vac : H) (q : L → ℝ)
+    (p : L → X → K → ℝ) (ψ : L → X → K → H)
+    (N : L → Y → B → (H →L[ℂ] H)) : Prop :=
+  ‖vac‖ = 1 ∧ (∀ l, 0 ≤ q l) ∧ HasSum q 1 ∧
+    (∀ l x k, 0 ≤ p l x k) ∧ (∀ l x, HasSum (p l x) 1) ∧
+    (∀ l x k, ‖ψ l x k‖ = 1) ∧
+    ∀ l y, (∀ b, 0 ≤ N l y b) ∧ ∑ b, N l y b = 1
 
-/-- Shared randomness averages the conditional Born probabilities. -/
-def qcProb {X Y B L : Type} [Fintype L] {d : ℕ}
-    (q : L → ℝ) (ρ : L → X → Matrix (Fin d) (Fin d) ℂ)
-    (M : L → Y → B → Matrix (Fin d) (Fin d) ℂ) (b : B) (x : X) (y : Y) : ℝ :=
-  ∑ l, q l * (trace (ρ l x * M l y b)).re
+/-- Shared randomness and each message ensemble average the Born probabilities. -/
+def qcProb {X Y B H L K : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (q : L → ℝ) (p : L → X → K → ℝ) (ψ : L → X → K → H)
+    (N : L → Y → B → (H →L[ℂ] H)) (b : B) (x : X) (y : Y) : ℝ :=
+  ∑' l, q l * ∑' k, p l x k * (⟪ψ l x k, N l y b (ψ l x k)⟫_ℂ).re
 
-/-- The energy constraint averages vacuum populations over shared randomness. -/
-def qcVacuum {X L : Type} [Fintype L] {d : ℕ} [NeZero d]
-    (q : L → ℝ) (ρ : L → X → Matrix (Fin d) (Fin d) ℂ) (x : X) : ℝ :=
-  ∑ l, q l * (ρ l x 0 0).re
+/-- The energy constraint averages vacuum populations over both distributions. -/
+def qcVacuum {X H L K : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (vac : H) (q : L → ℝ) (p : L → X → K → ℝ) (ψ : L → X → K → H) (x : X) : ℝ :=
+  ∑' l, q l * ∑' k, p l x k * ‖⟪vac, ψ l x k⟫_ℂ‖ ^ 2
 
 /-- An arbitrary finite linear communication task. -/
 def taskValue {X Y B : Type} [Fintype X] [Fintype Y] [Fintype B]
@@ -79,11 +81,12 @@ def claim : Prop :=
       (U : X → unitaryGroup (Fin dA) ℂ)
       (M : Y → B → Matrix (Fin dA × Fin dB) (Fin dA × Fin dB) ℂ),
       UnitaryStrategy Ψ U M → (∀ x, 1 - ω ≤ unitaryVacuum Ψ U x) →
-      ∃ (d : ℕ) (_ : NeZero d) (L : Type) (_ : Fintype L)
-        (q : L → ℝ) (ρ : L → X → Matrix (Fin d) (Fin d) ℂ)
-        (N : L → Y → B → Matrix (Fin d) (Fin d) ℂ),
-        QCStrategy q ρ N ∧ (∀ x, 1 - ω ≤ qcVacuum q ρ x) ∧
-          taskValue c (unitaryProb Ψ U M) ≤ taskValue c (qcProb q ρ N)
+      ∃ (H : Type) (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℂ H)
+        (_ : CompleteSpace H) (vac : H) (L K : Type) (q : L → ℝ)
+        (p : L → X → K → ℝ) (ψ : L → X → K → H)
+        (N : L → Y → B → (H →L[ℂ] H)),
+        QCStrategy vac q p ψ N ∧ (∀ x, 1 - ω ≤ qcVacuum vac q p ψ x) ∧
+          taskValue c (unitaryProb Ψ U M) ≤ taskValue c (qcProb q p ψ N)
 
 private theorem involution_bound (A N : Matrix (Fin 2) (Fin 2) ℂ) (hA : A.IsHermitian)
     (hAA : A * A = 1) (ht : trace A = 0)
@@ -228,156 +231,194 @@ private theorem protocol_value :
   simp_rw [coefficients.eq_1]
   simp [hp]
 
-private theorem residual_norm {d : ℕ} [NeZero d]
-    (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
-    ‖v - v 0 • (PiLp.single 2 0 1 : EuclideanSpace ℂ (Fin d))‖ ^ 2 =
-      1 - Complex.normSq (v 0) := by
-  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
-  have hg : ‖g‖ = 1 := by simp [g]
-  have hgv : ⟪g, v⟫_ℂ = v 0 := by
-    simpa [g] using EuclideanSpace.inner_single_left 0 (1 : ℂ) v
-  have hvg : ⟪v, g⟫_ℂ = star (v 0) := by rw [← inner_conj_symm, hgv]; rfl
-  change ‖v - v 0 • g‖ ^ 2 = _
-  rw [norm_sub_sq (𝕜 := ℂ), hv, norm_smul, hg, inner_smul_right, hvg]
-  change 1 ^ 2 - 2 * (v 0 * star (v 0)).re + (‖v 0‖ * 1) ^ 2 = 1 - Complex.normSq (v 0)
+private theorem residual_norm {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (g v : H) (hg : ‖g‖ = 1) (hv : ‖v‖ = 1) :
+    ‖v - ⟪g, v⟫_ℂ • g‖ ^ 2 = 1 - ‖⟪g, v⟫_ℂ‖ ^ 2 := by
+  rw [norm_sub_sq (𝕜 := ℂ), hv, norm_smul, hg, inner_smul_right, ← inner_conj_symm v g]
+  change 1 ^ 2 - 2 * (⟪g, v⟫_ℂ * star ⟪g, v⟫_ℂ).re +
+    (‖⟪g, v⟫_ℂ‖ * 1) ^ 2 = 1 - ‖⟪g, v⟫_ℂ‖ ^ 2
   rw [Complex.star_def, Complex.mul_conj, Complex.ofReal_re, one_pow, mul_one,
-    ← Complex.normSq_eq_norm_sq]
+    Complex.normSq_eq_norm_sq]
   ring
 
-private theorem vacuum_frame {d : ℕ} [NeZero d] (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1)
-    (s : ℝ) (hs : 0 < s) (he : s ^ 2 = 1 - Complex.normSq (v 0)) :
-    ∃ D : Matrix (Fin d) (Fin 2) ℂ, Dᴴ * D = 1 ∧
-      D *ᵥ ![v 0, (s : ℂ)] = v ∧ D *ᵥ ![1, 0] = Pi.single 0 1 := by
-  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
-  let w : EuclideanSpace ℂ (Fin d) := (s : ℂ)⁻¹ • (v - v 0 • g)
-  have hg : ‖g‖ = 1 := by simp [g]
-  have hgv : ⟪g, v⟫_ℂ = v 0 := by simpa [g] using EuclideanSpace.inner_single_left 0 (1 : ℂ) v
-  have hr := residual_norm v hv
-  change ‖v - v 0 • g‖ ^ 2 = 1 - Complex.normSq (v 0) at hr
-  rw [← he] at hr
-  have hw : ‖w‖ = 1 := by
-    have hrn : ‖v - v 0 • g‖ = s := by nlinarith [norm_nonneg (v - v 0 • g)]
-    simp [w, norm_smul, hrn, abs_of_pos hs, ne_of_gt hs]
-  have hgw : ⟪g, w⟫_ℂ = 0 := by
-    simp [w, hgv, inner_self_eq_norm_sq_to_K, hg]
-  have hwg : ⟪w, g⟫_ℂ = 0 := by rw [← inner_conj_symm, hgw]; simp
-  let D : Matrix (Fin d) (Fin 2) ℂ := fun i j => (![g i, w i] : Fin 2 → ℂ) j
-  refine ⟨D, ?_, ?_, ?_⟩
-  · have hi (a b : EuclideanSpace ℂ (Fin d)) :
-        star a.ofLp ⬝ᵥ b.ofLp = ⟪a, b⟫_ℂ := by
-      rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm]
-    ext i j
-    fin_cases i <;> fin_cases j
-    · change star g.ofLp ⬝ᵥ g.ofLp = 1
-      rw [hi]; simp [inner_self_eq_norm_sq_to_K, hg]
-    · change star g.ofLp ⬝ᵥ w.ofLp = 0
-      rw [hi, hgw]
-    · change star w.ofLp ⬝ᵥ g.ofLp = 0
-      rw [hi, hwg]
-    · change star w.ofLp ⬝ᵥ w.ofLp = 1
-      rw [hi]; simp [inner_self_eq_norm_sq_to_K, hw]
-  · ext i
-    simp [D, Matrix.mulVec, dotProduct, Fin.sum_univ_two, w, PiLp.smul_apply]
-    field_simp
-    ring
-  · ext i
-    simp [D, Matrix.mulVec, dotProduct, Fin.sum_univ_two, g, Pi.single_apply]
+private def compression {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (D : Fin 2 → H) (E : H →L[ℂ] H) : Matrix (Fin 2) (Fin 2) ℂ :=
+  fun i j => ⟪D i, E (D j)⟫_ℂ
 
-private theorem pure_bound {d : ℕ} [NeZero d] (E : Matrix (Fin d) (Fin d) ℂ)
-    (hE : E.PosSemidef) (hEc : (1 - E).PosSemidef)
-    (v : EuclideanSpace ℂ (Fin d)) (hv : ‖v‖ = 1) :
-    (star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp)).re - (E 0 0).re ≤
-      Real.sqrt (1 - Complex.normSq (v 0)) := by
-  let s := Real.sqrt (1 - Complex.normSq (v 0))
-  let g : EuclideanSpace ℂ (Fin d) := PiLp.single 2 0 1
-  have he0 : 0 ≤ 1 - Complex.normSq (v 0) := by
-    rw [← residual_norm v hv]
-    positivity
+private theorem compression_pairing {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (D : Fin 2 → H) (E : H →L[ℂ] H) (z : Fin 2 → ℂ) :
+    star z ⬝ᵥ (compression D E *ᵥ z) =
+      ⟪∑ i, z i • D i, E (∑ i, z i • D i)⟫_ℂ := by
+  simp [compression, dotProduct, Matrix.mulVec, Fin.sum_univ_two]
+  ring
+
+private theorem compression_pos {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (D : Fin 2 → H) (E : H →L[ℂ] H) (hE : 0 ≤ E) :
+    (compression D E).PosSemidef := by
+  have hp := (ContinuousLinearMap.nonneg_iff_isPositive E).mp hE
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+  · ext i j
+    simp only [compression, Matrix.conjTranspose_apply]
+    change (starRingEnd ℂ) ⟪D j, E (D i)⟫_ℂ = _
+    rw [inner_conj_symm]
+    exact hp.isSymmetric (D i) (D j)
+  · intro z
+    rw [compression_pairing]
+    exact hp.inner_nonneg_right _
+
+private theorem pure_bound {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (E : H →L[ℂ] H) (hE : 0 ≤ E) (hEc : 0 ≤ 1 - E)
+    (g v : H) (hg : ‖g‖ = 1) (hv : ‖v‖ = 1) :
+    (⟪v, E v⟫_ℂ).re - (⟪g, E g⟫_ℂ).re ≤
+      Real.sqrt (1 - ‖⟪g, v⟫_ℂ‖ ^ 2) := by
+  let c := ⟪g, v⟫_ℂ
+  let s := Real.sqrt (1 - ‖c‖ ^ 2)
+  have hr := residual_norm g v hg hv
+  change ‖v - c • g‖ ^ 2 = 1 - ‖c‖ ^ 2 at hr
+  have he0 : 0 ≤ 1 - ‖c‖ ^ 2 := by rw [← hr]; positivity
   have hs0 : 0 ≤ s := Real.sqrt_nonneg _
-  have hs2 : s ^ 2 = 1 - Complex.normSq (v 0) := Real.sq_sqrt he0
-  change (star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp)).re - (E 0 0).re ≤ s
+  have hs2 : s ^ 2 = 1 - ‖c‖ ^ 2 := Real.sq_sqrt he0
+  change _ ≤ s
   by_cases hs : s = 0
-  · have hr0 : v - v 0 • g = 0 := by
+  · have hr0 : v - c • g = 0 := by
       apply norm_eq_zero.mp
-      have hr := residual_norm v hv
-      change ‖v - v 0 • g‖ ^ 2 = 1 - Complex.normSq (v 0) at hr
-      nlinarith [norm_nonneg (v - v 0 • g)]
-    have hcn : Complex.normSq (v 0) = 1 := by nlinarith [hs2]
-    have hvec : v.ofLp = v 0 • Pi.single 0 1 := by
-      have hf := congrArg WithLp.ofLp (sub_eq_zero.mp hr0)
-      simpa [g] using hf
-    have hcalc : star v.ofLp ⬝ᵥ (E *ᵥ v.ofLp) = E 0 0 := by
-      rw [hvec]
-      simp only [star_smul, Matrix.mulVec_smul, smul_dotProduct, dotProduct_smul]
-      simp only [Pi.star_single, star_one, Matrix.mulVec_single_one,
-        single_dotProduct, one_mul, smul_eq_mul]
-      change v 0 * (star (v 0) * E 0 0) = E 0 0
-      rw [← mul_assoc, mul_comm (v 0), Complex.star_def,
-        ← Complex.normSq_eq_conj_mul_self, hcn, Complex.ofReal_one, one_mul]
-    rw [hcalc, sub_self, hs]
-  · obtain ⟨D, hD, hvD, hgD⟩ := vacuum_frame v hv s (lt_of_le_of_ne hs0 (Ne.symm hs)) hs2
-    let N := compress D E
-    have hN : N.PosSemidef := hE.conjTranspose_mul_mul_same D
+      nlinarith [norm_nonneg (v - c • g)]
+    have hcn : Complex.normSq c = 1 := by rw [Complex.normSq_eq_norm_sq]; nlinarith [hs2]
+    rw [sub_eq_zero.mp hr0]
+    simp only [map_smul, inner_smul_left, inner_smul_right]
+    rw [← mul_assoc, mul_comm c, ← Complex.normSq_eq_conj_mul_self, hcn, Complex.ofReal_one, one_mul, hs]
+    simp
+  · have hspos : 0 < s := lt_of_le_of_ne hs0 (Ne.symm hs)
+    let w := (s : ℂ)⁻¹ • (v - c • g)
+    have hrn : ‖v - c • g‖ = s := by nlinarith [norm_nonneg (v - c • g)]
+    have hw : ‖w‖ = 1 := by
+      simp [w, norm_smul, hrn, abs_of_pos hspos, ne_of_gt hspos]
+    have hgw : ⟪g, w⟫_ℂ = 0 := by
+      simp [w, c, inner_self_eq_norm_sq_to_K, hg]
+    have hwg : ⟪w, g⟫_ℂ = 0 := by rw [← inner_conj_symm, hgw]; simp
+    let D : Fin 2 → H := ![g, w]
+    let N := compression D E
+    have hD : compression D (1 : H →L[ℂ] H) = 1 := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [compression, D, hgw, hwg, inner_self_eq_norm_sq_to_K, hg, hw]
+    have hN : N.PosSemidef := compression_pos D E hE
     have hNc : (1 - N).PosSemidef := by
-      have hp := hEc.conjTranspose_mul_mul_same D
-      simpa only [Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_one, hD, N, compress] using hp
-    have pairing (z : Fin 2 → ℂ) :
-        star z ⬝ᵥ (N *ᵥ z) = star (D *ᵥ z) ⬝ᵥ (E *ᵥ (D *ᵥ z)) := by
-      dsimp [N, compress]
-      rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, dotProduct_mulVec,
-        vecMul_conjTranspose, star_star]
-    have hn00 : N 0 0 = E 0 0 := by
-      have hp := pairing ![1, 0]
-      rw [hgD] at hp
-      simpa [dotProduct, Fin.sum_univ_two, Matrix.mulVec_single_one,
-        Matrix.mulVec, Pi.single_apply] using hp
-    have hread := pairing ![v 0, (s : ℂ)]
+      convert compression_pos D (1 - E) hEc using 1
+      rw [← hD]
+      ext i j
+      simp [N, compression]
+    have hvD : ∑ i, (![c, (s : ℂ)] : Fin 2 → ℂ) i • D i = v := by
+      simp only [Fin.sum_univ_two, D, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_fin_one, w, smul_smul]
+      rw [mul_inv_cancel₀ (by exact_mod_cast ne_of_gt hspos), one_smul]
+      module
+    have hread := compression_pairing D E ![c, (s : ℂ)]
     rw [hvD] at hread
-    rw [← hread, ← hn00]
-    exact two_level_bound N hN hNc s (v 0) hs0 (by linarith [hs2])
+    rw [← hread]
+    exact two_level_bound N hN hNc s c hs0 (by rw [Complex.normSq_eq_norm_sq]; linarith)
 
-private theorem sqrt_average {L : Type} [Fintype L] (q e : L → ℝ)
-    (hq : ∀ l, 0 ≤ q l) (ht : ∑ l, q l = 1) (he : ∀ l, 0 ≤ e l) :
-    (∑ l, q l * Real.sqrt (e l)) ≤ Real.sqrt (∑ l, q l * e l) := by
-  simpa only [smul_eq_mul] using Real.strictConcaveOn_sqrt.concaveOn.le_map_sum
-    (t := Finset.univ) (w := q) (p := e) (fun l _ => hq l) ht (fun l _ => he l)
+private theorem weighted_summable {L : Type} (w f : L → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hs : HasSum w 1) (hf : ∀ i, 0 ≤ f i ∧ f i ≤ 1) :
+    Summable (fun i => w i * f i) :=
+  Summable.of_nonneg_of_le (fun i => mul_nonneg (hw i) (hf i).1)
+    (fun i => by nlinarith [hw i, (hf i).2]) hs.summable
 
-private theorem effect_bound {d : ℕ} [NeZero d]
-    (ρ : Matrix (Fin d) (Fin d) ℂ) (hρ : IsDensity ρ)
-    (E : Matrix (Fin d) (Fin d) ℂ) (hE : E.PosSemidef) (hEc : (1 - E).PosSemidef) :
-    (trace (E * ρ)).re - (E 0 0).re ≤ Real.sqrt (1 - (ρ 0 0).re) := by
-  classical
-  let t := hρ.1.isHermitian.eigenvalues
-  let v := hρ.1.isHermitian.eigenvectorBasis
-  have ht (j : Fin d) : 0 ≤ t j := hρ.1.eigenvalues_nonneg j
-  have hsum : ∑ j, t j = 1 :=
-    D5.S3.Quantum.Matrix.CartesianVariance.density_eigenvalues_sum ρ hρ
-  have hn (j : Fin d) : ‖v j‖ = 1 := v.orthonormal.1 j
-  have hdiag : (ρ 0 0).re = ∑ j, t j * Complex.normSq (v j 0) := by
-    rw [D5.S3.Quantum.Matrix.CartesianVariance.hermitian_spectral_sum ρ hρ.1.isHermitian]
-    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply,
-      Complex.normSq_apply, Complex.mul_re, t, v]
-  have hread : (trace (E * ρ)).re =
-      ∑ j, t j * (star (v j).ofLp ⬝ᵥ (E *ᵥ (v j).ofLp)).re := by
-    have hh := congrArg Complex.re
-      (D5.S3.Quantum.Matrix.CartesianVariance.hermitian_trace_spectral ρ E hρ.1.isHermitian)
-    rw [Matrix.trace_mul_comm] at hh
-    simpa only [Complex.re_sum, Complex.smul_re, smul_eq_mul,
-      EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin,
-      Matrix.toLin'_apply, dotProduct_comm, t, v] using hh
-  have he (j : Fin d) : 0 ≤ 1 - Complex.normSq (v j 0) := by
-    rw [← residual_norm (v j) (hn j)]
-    positivity
-  have hj := sqrt_average t (fun j => 1 - Complex.normSq (v j 0)) ht hsum he
-  have havg : (∑ j, t j * (1 - Complex.normSq (v j 0))) = 1 - (ρ 0 0).re := by
-    simp only [mul_sub, mul_one, Finset.sum_sub_distrib, hsum, hdiag]
+private theorem weighted_bounds {L : Type} (w f : L → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hs : HasSum w 1) (hf : ∀ i, 0 ≤ f i ∧ f i ≤ 1) :
+    0 ≤ ∑' i, w i * f i ∧ (∑' i, w i * f i) ≤ 1 := by
+  constructor
+  · exact tsum_nonneg (fun i => mul_nonneg (hw i) (hf i).1)
+  · rw [← hs.tsum_eq]
+    exact (weighted_summable w f hw hs hf).tsum_le_tsum
+      (fun i => by nlinarith [hw i, (hf i).2]) hs.summable
+
+private theorem sqrt_average {L : Type} (w t : L → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hs : HasSum w 1) (ht : ∀ i, 0 ≤ t i ∧ t i ≤ 1) :
+    (∑' i, w i * Real.sqrt (t i)) ≤ Real.sqrt (∑' i, w i * t i) := by
+  let s := ∑' i, w i * t i
+  have hts := weighted_summable w t hw hs ht
+  have hss : 0 ≤ s := (weighted_bounds w t hw hs ht).1
+  have hsqrt := weighted_summable w (fun i => Real.sqrt (t i)) hw hs
+    (fun i => ⟨Real.sqrt_nonneg _, Real.sqrt_le_one.mpr (ht i).2⟩)
+  change _ ≤ Real.sqrt s
+  by_cases hz : s = 0
+  · have hzero (i : L) : w i * t i = 0 := by
+      apply le_antisymm
+      · calc
+          w i * t i ≤ ∑' j, w j * t j :=
+            hts.le_tsum i (fun j _ => mul_nonneg (hw j) (ht j).1)
+          _ = 0 := hz
+      · exact mul_nonneg (hw i) (ht i).1
+    have heach (i : L) : w i * Real.sqrt (t i) = 0 := by
+      rcases mul_eq_zero.mp (hzero i) with hi | hi <;> simp [hi]
+    simp [hz, heach]
+  · have hpos : 0 < Real.sqrt s := Real.sqrt_pos.mpr (lt_of_le_of_ne hss (Ne.symm hz))
+    have htangent (i : L) : Real.sqrt (t i) ≤ (t i + s) / (2 * Real.sqrt s) := by
+      apply (le_div_iff₀ (by positivity)).mpr
+      nlinarith [sq_nonneg (Real.sqrt (t i) - Real.sqrt s),
+        Real.sq_sqrt (ht i).1, Real.sq_sqrt hss]
+    calc
+      (∑' i, w i * Real.sqrt (t i)) ≤ ∑' i, (w i * t i + w i * s) / (2 * Real.sqrt s) := by
+        apply hsqrt.tsum_le_tsum
+        · intro i
+          convert mul_le_mul_of_nonneg_left (htangent i) (hw i) using 1
+          ring
+        · exact (hts.add (hs.summable.mul_right s)).div_const _
+      _ = (s + s) / (2 * Real.sqrt s) := by
+        rw [tsum_div_const, hts.tsum_add (hs.summable.mul_right s), tsum_mul_right,
+          hs.tsum_eq, one_mul]
+      _ = Real.sqrt s := by
+        apply (div_eq_iff (by positivity)).mpr
+        nlinarith [Real.sq_sqrt hss]
+
+private theorem overlap_bounds {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (g v : H) (hg : ‖g‖ = 1) (hv : ‖v‖ = 1) :
+    0 ≤ ‖⟪g, v⟫_ℂ‖ ^ 2 ∧ ‖⟪g, v⟫_ℂ‖ ^ 2 ≤ 1 := by
+  refine ⟨sq_nonneg _, ?_⟩
+  nlinarith [residual_norm g v hg hv, sq_nonneg ‖v - ⟪g, v⟫_ℂ • g‖]
+
+private theorem effect_probability_bounds {H : Type} [NormedAddCommGroup H]
+    [InnerProductSpace ℂ H] (E : H →L[ℂ] H) (hE : 0 ≤ E) (hEc : 0 ≤ 1 - E)
+    (v : H) (hv : ‖v‖ = 1) :
+    0 ≤ (⟪v, E v⟫_ℂ).re ∧ (⟪v, E v⟫_ℂ).re ≤ 1 := by
+  constructor
+  · exact ((ContinuousLinearMap.nonneg_iff_isPositive E).mp hE).re_inner_nonneg_right v
+  · have hc := ((ContinuousLinearMap.nonneg_iff_isPositive (1 - E)).mp hEc).re_inner_nonneg_right v
+    change 0 ≤ (⟪v, v - E v⟫_ℂ).re at hc
+    rw [inner_sub_right, Complex.sub_re, inner_self_eq_norm_sq_to_K] at hc
+    norm_num [hv] at hc
+    linarith
+
+private theorem ensemble_bound {H K : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    (E : H →L[ℂ] H) (hE : 0 ≤ E) (hEc : 0 ≤ 1 - E)
+    (g : H) (hg : ‖g‖ = 1) (w : K → ℝ) (hw : ∀ k, 0 ≤ w k) (hs : HasSum w 1)
+    (v : K → H) (hv : ∀ k, ‖v k‖ = 1) :
+    (∑' k, w k * (⟪v k, E (v k)⟫_ℂ).re) ≤
+      (⟪g, E g⟫_ℂ).re + Real.sqrt (1 - ∑' k, w k * ‖⟪g, v k⟫_ℂ‖ ^ 2) := by
+  have ha (k : K) := overlap_bounds g (v k) hg (hv k)
+  have he (k : K) : 0 ≤ 1 - ‖⟪g, v k⟫_ℂ‖ ^ 2 ∧ 1 - ‖⟪g, v k⟫_ℂ‖ ^ 2 ≤ 1 := by
+    constructor <;> linarith [(ha k).1, (ha k).2]
+  have hprob := weighted_summable w (fun k => (⟪v k, E (v k)⟫_ℂ).re) hw hs
+    (fun k => effect_probability_bounds E hE hEc (v k) (hv k))
+  have hroot := weighted_summable w (fun k => Real.sqrt (1 - ‖⟪g, v k⟫_ℂ‖ ^ 2)) hw hs
+    (fun k => ⟨Real.sqrt_nonneg _, Real.sqrt_le_one.mpr (he k).2⟩)
+  have herr : (∑' k, w k * (1 - ‖⟪g, v k⟫_ℂ‖ ^ 2)) =
+      1 - ∑' k, w k * ‖⟪g, v k⟫_ℂ‖ ^ 2 := by
+    simp_rw [mul_sub, mul_one]
+    rw [hs.summable.tsum_sub (weighted_summable w _ hw hs ha), hs.tsum_eq]
   calc
-    (trace (E * ρ)).re - (E 0 0).re =
-        ∑ j, t j * ((star (v j).ofLp ⬝ᵥ (E *ᵥ (v j).ofLp)).re - (E 0 0).re) := by
-      simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hsum, one_mul, hread]
-    _ ≤ ∑ j, t j * Real.sqrt (1 - Complex.normSq (v j 0)) :=
-      Finset.sum_le_sum (fun j _ => mul_le_mul_of_nonneg_left (pure_bound E hE hEc (v j) (hn j)) (ht j))
-    _ ≤ Real.sqrt (1 - (ρ 0 0).re) := by simpa only [havg] using hj
+    (∑' k, w k * (⟪v k, E (v k)⟫_ℂ).re) ≤
+        ∑' k, (w k * (⟪g, E g⟫_ℂ).re + w k * Real.sqrt (1 - ‖⟪g, v k⟫_ℂ‖ ^ 2)) := by
+      apply hprob.tsum_le_tsum _ ((hs.summable.mul_right _).add hroot)
+      intro k
+      have hb := mul_le_mul_of_nonneg_left (pure_bound E hE hEc g (v k) hg (hv k)) (hw k)
+      nlinarith
+    _ = (⟪g, E g⟫_ℂ).re + ∑' k, w k * Real.sqrt (1 - ‖⟪g, v k⟫_ℂ‖ ^ 2) := by
+      rw [(hs.summable.mul_right _).tsum_add hroot, tsum_mul_right, hs.tsum_eq, one_mul]
+    _ ≤ (⟪g, E g⟫_ℂ).re + Real.sqrt (∑' k, w k * (1 - ‖⟪g, v k⟫_ℂ‖ ^ 2)) :=
+      add_le_add (le_refl _) (sqrt_average w _ hw hs he)
+    _ = _ := by rw [herr]
 
 private theorem diagonal_task (p : (Fin 2 × Fin 2) → (Fin 2 × Fin 2) → Unit → ℝ) :
     taskValue coefficients p = (1 / 4) * ∑ x, p x x () := by
@@ -385,81 +426,95 @@ private theorem diagonal_task (p : (Fin 2 × Fin 2) → (Fin 2 × Fin 2) → Uni
   simp_rw [coefficients.eq_1]
   simp [ite_mul, Finset.mul_sum]
 
-private theorem qc_bound {L : Type} [Fintype L] {d : ℕ} [NeZero d]
-    (q : L → ℝ) (ρ : L → (Fin 2 × Fin 2) → Matrix (Fin d) (Fin d) ℂ)
-    (M : L → Unit → (Fin 2 × Fin 2) → Matrix (Fin d) (Fin d) ℂ)
-    (h : QCStrategy q ρ M) (ω : ℝ) (henergy : ∀ x, 1 - ω ≤ qcVacuum q ρ x) :
-    taskValue coefficients (qcProb q ρ M) ≤ 1 / 4 + Real.sqrt ω := by
+private theorem qc_bound {H L K : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+    [CompleteSpace H] (vac : H) (q : L → ℝ) (p : L → (Fin 2 × Fin 2) → K → ℝ)
+    (ψ : L → (Fin 2 × Fin 2) → K → H)
+    (M : L → Unit → (Fin 2 × Fin 2) → (H →L[ℂ] H))
+    (h : QCStrategy vac q p ψ M) (ω : ℝ)
+    (henergy : ∀ x, 1 - ω ≤ qcVacuum vac q p ψ x) :
+    taskValue coefficients (qcProb q p ψ M) ≤ 1 / 4 + Real.sqrt ω := by
   classical
-  let e (x : Fin 2 × Fin 2) := ∑ l, q l * (1 - (ρ l x 0 0).re)
-  have he0 (l : L) (x : Fin 2 × Fin 2) : 0 ≤ 1 - (ρ l x 0 0).re :=
-    sub_nonneg.mpr (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.state_diag_le_one
-      (h.2.2.1 l x).1 (h.2.2.1 l x).2 0)
-  have he (x : Fin 2 × Fin 2) : 0 ≤ e x :=
-    Finset.sum_nonneg (fun l _ => mul_nonneg (h.1 l) (he0 l x))
-  have heω (x : Fin 2 × Fin 2) : e x ≤ ω := by
-    have hx := henergy x
-    dsimp [e]
-    simp only [mul_sub, mul_one, Finset.sum_sub_distrib, h.2.1]
-    change 1 - qcVacuum q ρ x ≤ ω
-    linarith
+  rcases h with ⟨hg, hq, hqs, hp, hps, hψ, hM⟩
+  let a (l : L) (x : Fin 2 × Fin 2) := ∑' k, p l x k * ‖⟪vac, ψ l x k⟫_ℂ‖ ^ 2
+  let r (l : L) (x : Fin 2 × Fin 2) := ∑' k, p l x k * (⟪ψ l x k, M l () x (ψ l x k)⟫_ℂ).re
+  let z (l : L) (x : Fin 2 × Fin 2) := (⟪vac, M l () x vac⟫_ℂ).re
+  have hEc (l : L) (x : Fin 2 × Fin 2) : 0 ≤ 1 - M l () x := by
+    apply sub_nonneg.mpr
+    rw [← (hM l ()).2]
+    exact Finset.single_le_sum (fun b _ => (hM l ()).1 b) (Finset.mem_univ x)
+  have ha (l : L) (x : Fin 2 × Fin 2) : 0 ≤ a l x ∧ a l x ≤ 1 :=
+    weighted_bounds (p l x) _ (hp l x) (hps l x)
+      (fun k => overlap_bounds vac (ψ l x k) hg (hψ l x k))
+  have hr (l : L) (x : Fin 2 × Fin 2) : 0 ≤ r l x ∧ r l x ≤ 1 :=
+    weighted_bounds (p l x) _ (hp l x) (hps l x)
+      (fun k => effect_probability_bounds (M l () x) ((hM l ()).1 x) (hEc l x)
+        (ψ l x k) (hψ l x k))
+  have hz (l : L) (x : Fin 2 × Fin 2) : 0 ≤ z l x ∧ z l x ≤ 1 :=
+    effect_probability_bounds (M l () x) ((hM l ()).1 x) (hEc l x) vac hg
+  have he (l : L) (x : Fin 2 × Fin 2) : 0 ≤ 1 - a l x ∧ 1 - a l x ≤ 1 := by
+    constructor <;> linarith [(ha l x).1, (ha l x).2]
   have hpoint (x : Fin 2 × Fin 2) :
-      qcProb q ρ M x x () ≤ (∑ l, q l * (M l () x 0 0).re) + Real.sqrt (e x) := by
-    have hj := sqrt_average q (fun l => 1 - (ρ l x 0 0).re) h.1 h.2.1 (fun l => he0 l x)
+      qcProb q p ψ M x x () ≤ (∑' l, q l * z l x) + Real.sqrt ω := by
+    have hprob := weighted_summable q (fun l => r l x) hq hqs (fun l => hr l x)
+    have hbase := weighted_summable q (fun l => z l x) hq hqs (fun l => hz l x)
+    have hroot := weighted_summable q (fun l => Real.sqrt (1 - a l x)) hq hqs
+      (fun l => ⟨Real.sqrt_nonneg _, Real.sqrt_le_one.mpr (he l x).2⟩)
+    have herr : (∑' l, q l * (1 - a l x)) = 1 - qcVacuum vac q p ψ x := by
+      simp_rw [mul_sub, mul_one]
+      rw [hqs.summable.tsum_sub (weighted_summable q _ hq hqs (fun l => ha l x)),
+        hqs.tsum_eq]
+      rfl
     calc
-      qcProb q ρ M x x () ≤
-          ∑ l, q l * ((M l () x 0 0).re + Real.sqrt (1 - (ρ l x 0 0).re)) := by
-        apply Finset.sum_le_sum
-        intro l _
-        apply mul_le_mul_of_nonneg_left _ (h.1 l)
-        have hm := h.2.2.2 l ()
-        have hc : (1 - M l () x).PosSemidef := by
-          change M l () x ≤ 1
-          rw [← hm.2]
-          exact Finset.single_le_sum (fun b _ => (hm.1 b).nonneg) (Finset.mem_univ x)
-        have hb := effect_bound (ρ l x) (h.2.2.1 l x) (M l () x) (hm.1 x) hc
-        rw [Matrix.trace_mul_comm] at hb
-        linarith
-      _ = (∑ l, q l * (M l () x 0 0).re) +
-          ∑ l, q l * Real.sqrt (1 - (ρ l x 0 0).re) := by
-        simp only [mul_add, Finset.sum_add_distrib]
-      _ ≤ _ := add_le_add (le_refl _) hj
-  have htotal : (∑ x, ∑ l, q l * (M l () x 0 0).re) = 1 := by
-    rw [Finset.sum_comm]
+      qcProb q p ψ M x x () = ∑' l, q l * r l x := rfl
+      _ ≤ ∑' l, (q l * z l x + q l * Real.sqrt (1 - a l x)) := by
+        apply hprob.tsum_le_tsum _ (hbase.add hroot)
+        intro l
+        have hb := mul_le_mul_of_nonneg_left
+          (ensemble_bound (M l () x) ((hM l ()).1 x) (hEc l x) vac hg
+            (p l x) (hp l x) (hps l x) (ψ l x) (hψ l x)) (hq l)
+        dsimp only [r, z, a]
+        nlinarith
+      _ = (∑' l, q l * z l x) + ∑' l, q l * Real.sqrt (1 - a l x) :=
+        hbase.tsum_add hroot
+      _ ≤ (∑' l, q l * z l x) + Real.sqrt (∑' l, q l * (1 - a l x)) :=
+        add_le_add (le_refl _) (sqrt_average q _ hq hqs (fun l => he l x))
+      _ ≤ (∑' l, q l * z l x) + Real.sqrt ω := by
+        apply add_le_add (le_refl _)
+        apply Real.sqrt_le_sqrt
+        rw [herr]
+        linarith [henergy x]
+  have htotal : (∑ x, ∑' l, q l * z l x) = 1 := by
+    rw [← Summable.tsum_finsetSum (fun x _ =>
+      weighted_summable q (fun l => z l x) hq hqs (fun l => hz l x))]
     calc
-      (∑ l, ∑ x, q l * (M l () x 0 0).re) = ∑ l, q l * 1 := by
-        apply Finset.sum_congr rfl
-        intro l _
+      (∑' l, ∑ x, q l * z l x) = ∑' l, q l * 1 := by
+        apply tsum_congr
+        intro l
         rw [← Finset.mul_sum]
         congr 1
-        have hm := congrArg (fun A : Matrix (Fin d) (Fin d) ℂ => (A 0 0).re) (h.2.2.2 l ()).2
-        simpa [Matrix.sum_apply] using hm
-      _ = 1 := by simpa only [mul_one] using h.2.1
-  have hjx := sqrt_average (fun _ : Fin 2 × Fin 2 => (1 / 4 : ℝ)) e
-    (by intro x; norm_num) (by norm_num [Fintype.sum_prod_type, Fin.sum_univ_two]) he
-  have havg : (∑ x : Fin 2 × Fin 2, (1 / 4 : ℝ) * e x) ≤ ω := by
-    calc
-      _ ≤ ∑ _x : Fin 2 × Fin 2, (1 / 4 : ℝ) * ω :=
-        Finset.sum_le_sum (fun x _ => mul_le_mul_of_nonneg_left (heω x) (by norm_num))
-      _ = ω := by norm_num [Fintype.sum_prod_type, Fin.sum_univ_two]; ring
+        have ht := congrArg (fun E : H →L[ℂ] H => (⟪vac, E vac⟫_ℂ).re) (hM l ()).2
+        simpa [z, ContinuousLinearMap.sum_apply, inner_sum, inner_self_eq_norm_sq_to_K, hg] using ht
+      _ = 1 := by simpa only [mul_one] using hqs.tsum_eq
   calc
-    taskValue coefficients (qcProb q ρ M) = (1 / 4) * ∑ x, qcProb q ρ M x x () := diagonal_task _
-    _ ≤ (1 / 4) * ∑ x, ((∑ l, q l * (M l () x 0 0).re) + Real.sqrt (e x)) :=
+    taskValue coefficients (qcProb q p ψ M) = (1 / 4) * ∑ x, qcProb q p ψ M x x () :=
+      diagonal_task _
+    _ ≤ (1 / 4) * ∑ x, ((∑' l, q l * z l x) + Real.sqrt ω) :=
       mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun x _ => hpoint x)) (by norm_num)
-    _ = 1 / 4 + ∑ x, (1 / 4 : ℝ) * Real.sqrt (e x) := by
-      rw [Finset.sum_add_distrib, htotal, mul_add, mul_one, Finset.mul_sum]
-    _ ≤ 1 / 4 + Real.sqrt (∑ x, (1 / 4 : ℝ) * e x) := add_le_add (le_refl _) hjx
-    _ ≤ 1 / 4 + Real.sqrt ω := add_le_add (le_refl _) (Real.sqrt_le_sqrt havg)
+    _ = 1 / 4 + Real.sqrt ω := by
+      rw [Finset.sum_add_distrib, htotal]
+      norm_num [Fintype.sum_prod_type, Fin.sum_univ_two]
+      ring
 
 theorem result : ¬ claim := by
   intro hc
-  obtain ⟨d, hd, L, hL, q, ρ, M, hvalid, henergy, hvalue⟩ :=
+  obtain ⟨H, hH, hI, hC, vac, L, K, q, p, ψ, M, hvalid, henergy, hvalue⟩ :=
     hc (Fin 2 × Fin 2) Unit (Fin 2 × Fin 2) coefficients (288 / 625)
       (by norm_num) (by norm_num) 2 2 shared protocolU protocolM protocol_valid
       (by intro x; rw [protocol_vacuum]; norm_num)
-  let _ : NeZero d := hd
-  let _ : Fintype L := hL
-  have hb := qc_bound q ρ M hvalid (288 / 625) henergy
+  let _ : NormedAddCommGroup H := hH
+  let _ : InnerProductSpace ℂ H := hI
+  let _ : CompleteSpace H := hC
+  have hb := qc_bound vac q p ψ M hvalid (288 / 625) henergy
   have hs : Real.sqrt (288 / 625 : ℝ) < 17 / 25 := by
     apply (Real.sqrt_lt (by norm_num) (by norm_num)).2
     norm_num
