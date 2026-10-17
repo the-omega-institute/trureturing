@@ -867,7 +867,7 @@ $b_0y^2+a_0y-p_{\min}$ is strictly increasing, with its unique positive
 zero
 
 $$
-y_*=rac{-a_0+\sqrt{a_0^2+4b_0p_{\min}}}{2b_0}
+y_*=\frac{-a_0+\sqrt{a_0^2+4b_0p_{\min}}}{2b_0}
    =\frac{2p_{\min}}{a_0+\sqrt{a_0^2+4b_0p_{\min}}}.
 $$
 
