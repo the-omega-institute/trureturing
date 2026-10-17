@@ -2198,3 +2198,362 @@ All four patterns in (12) are excluded. Together with Corollary 93.3 and the ear
 This corollary excludes neither unequal pairs with one rank seven nor pairs with both ranks at most six. The active-support equalization and full one-dimensional-kernel face directions used above do not automatically extend to those cases. No rank-preserving calibration, convex extreme-point reduction, or transfer of local minimality from leaking channels has been used. The unrestricted original optimum remains in [√3−3/2,1/4].
 
 The dependencies are the original calibrated adaptive norm of section 91; the same-witness, support, fixed-direction, support-size, and two-fibre results of section 92; and the quantitative three-singleton exclusion of section 93. The additional argument here is the explicit complex quartet tangent and its weighted row contradictions. It does not require the earlier singular-error or interior-density necessary conditions for three-singleton support, or a real gauge, small-norm transversal, or reciprocal-Gram positivity assertion.
+
+## 95. A PSD quotient and full-support rank-(7,6) exclusion
+
+### 95.1. Original channels, exact objective, and scope
+
+Retain the original local CPTP maps A,B:C⁸→C⁴, the four original two-coordinate fibres, the correlated input encoding |f,i〉↦|f,i〉|f,i〉, the output encoding |f〉↦|ff〉, and the arbitrary-reference unhalved diamond error. On the calibrated domain put
+
+\[
+ \begin{aligned}
+ \mathcal E&=\{G=G^*\ge0:G_{ff}=I_2\text{ for every fibre }f\},\\
+ \mathcal C&=\{(\rho,W):\rho=\bigoplus_f\rho_f\ge0,
+                    \ \operatorname{Tr}\rho=1,\ 0\le W\le\rho\},\\
+ T_{ff}&=I_2,\qquad T_{fg}=J_2/2\quad(f\ne g),\\
+ F(G,H)&=\max_{(\rho,W)\in\mathcal C}
+                 2\operatorname{Tr}[(T-G\odot H)W].
+ \end{aligned}                                                     \tag{1}
+\]
+
+Section 91 identifies (1) exactly with that calibrated physical error. Every local minimum below means a local minimum on the full domain 𝓔×𝓔, rather than on a fixed-rank stratum.
+
+**Theorem 95.1.** Suppose (G,H) is such a local minimum with 0<F(G,H)<1/2, rank G=7, and a vector spanning ker G has all eight coordinates nonzero. Then rank H≠6. The statement also holds with the two parties interchanged.
+
+The proof first obtains a supported positive correlation quotient for any rank-seven first Gram, and then a necessary quadratic inequality with its full opposite-kernel constraint. In the full-support rank-(7,6) case, explicit complex directions contradict that inequality for every possible number, from zero to four, of singular quotient fibre blocks. No positivity or reality of cross-fibre entries is assumed.
+
+This theorem excludes a class of calibrated local minima at every positive subhalf value. It makes no claim about arbitrary rank-(7,6) competitors, rank-seven kernels with missing coordinates, or smaller opposite ranks. The calibration comparison in section 72 may enlarge ranks and does not transfer local minimality from an arbitrary leaking pair. The unrestricted optimum remains between √3−3/2 and 1/4.
+
+### 95.2. One rank-seven side gives a supported PSD quotient
+
+For this subsection retain that (G,H) is a local minimum on the full calibrated domain, with 0<t=F(G,H)<1/2 and rank G=7; no full-support or opposite-rank hypothesis is imposed. Fix one nonzero a spanning ker G and let S=supp(a). Set L=T−G⊙H. Let 𝒜 be the compact convex set of norming pairs (ρ,W) in (1), and define
+
+\[
+ b(W;G',H')=-2\operatorname{Tr}
+  [((G'-G)\odot H+G\odot(H'-H))W],
+ \qquad G',H'\in\mathcal E.                                  \tag{2}
+\]
+
+The simultaneous first-order result of section 92 supplies the nonempty compact convex common-witness subset
+
+\[
+ \mathcal A_0=\{(\rho,W)\in\mathcal A:
+             b(W;G',H')\ge0\text{ for all }G',H'\in\mathcal E\}.
+                                                                    \tag{3}
+\]
+
+For every pair in this subset there are complementary PSD stresses
+
+\[
+ \begin{aligned}
+ P_A&=\operatorname{blockdiag}(\Lambda_A)
+                           -2\overline H\odot W\ge0,
+       &P_AG&=0,\\
+ P_B&=\operatorname{blockdiag}(\Lambda_B)
+                           -2\overline G\odot W\ge0,
+       &P_BH&=0.
+ \end{aligned}                                                     \tag{4}
+\]
+
+Both stresses are nonzero by the positive-subhalf argument of section 92. Thus P_A=αaa* with α>0. Moreover every cross-fibre entry of G and H is nonzero: the original matrix-unit test gives |1/2−G_ijH_ij|≤t<1/2. Equating the cross-fibre entries in (4) gives
+
+\[
+ W_{ij}=-\frac{\alpha a_i\overline{a_j}}{2\overline{H_{ij}}},
+ \qquad
+ (P_B)_{ij}=\alpha a_i\overline{a_j}
+                           \frac{\overline{G_{ij}}}{\overline{H_{ij}}}
+ \quad(i,j\text{ in different fibres}).                         \tag{5}
+\]
+
+**Lemma 95.2.** For each common witness, P_B is supported on S, with (P_B)_ii=α|a_i|². The matrix
+
+\[
+ R=\alpha^{-1}\operatorname{diag}(1/a_S)(P_B)_{SS}
+                         \operatorname{diag}(1/\overline{a_S})
+                                                                    \tag{6}
+\]
+
+is PSD with diagonal one, and satisfies
+
+\[
+ G_S=H_S\odot\overline R,\qquad
+ R\operatorname{diag}(\overline{a_S})H_S=0.                    \tag{7}
+\]
+
+If n=|S|, h=rank H_S, and r=rank R, then
+
+\[
+ \operatorname{rank}G_S=n-1,\qquad h+r\le n,\qquad
+ n-1\le hr,\qquad r\le8-\operatorname{rank}H.                 \tag{8}
+\]
+
+**Proof.** If i∉S, (5) makes every cross-fibre entry in row i of P_B zero. Since H_ff=I₂, the diagonal equation (P_BH)_ii=0 then gives (P_B)_ii=0. A PSD matrix with a zero diagonal entry has a zero corresponding row and column. Thus P_B is supported on S. For any i, the same complementary equation yields
+
+\[
+ \begin{aligned}
+ (P_B)_{ii}
+  &=-\alpha a_i\sum_{j\text{ outside }i\text{'s fibre}}
+                            \overline{a_j}\,\overline{G_{ij}}\\
+  &=-\alpha a_i\overline{\sum_{j\text{ outside }i\text{'s fibre}}
+                                                  G_{ij}a_j}
+   =\alpha|a_i|^2.
+ \end{aligned}                                                     \tag{9}
+\]
+
+The last equality uses Ga=0 and G_ff=I₂. Formula (6) is an invertible diagonal congruence of (P_B)_SS divided by α>0, so R is PSD with unit diagonal. Equation (5) gives R_ij=overline(G_ij)/overline(H_ij) on cross-fibre entries. The first identity in (7) also holds on diagonal entries and on the zero distinct within-fibre entries, regardless of the corresponding entries of R. The second follows from P_BH=0 and support of P_B.
+
+Every kernel vector of the principal PSD matrix G_S extends by zero to a vector in ker G. Since that full kernel is span(a), dim ker G_S=1. The second identity in (7) gives h+r≤n. Gram factorizations of H_S and overline R realize their Hadamard product by tensor products of records of dimensions h and r, so its rank is at most hr. Finally rank R=rank P_B and P_BH=0 give the last inequality in (8). ∎
+
+The quotient need not be rank one. Its cross-fibre entries are determined by the quotient formula; that formula does not specify its within-fibre entries, which are not needed for the cross-fibre quadratic coefficients below. In particular, when S contains all eight coordinates and rank H=6, one has r≤2. If r=1, its unit diagonal makes R=uu* with |u_i|=1, and (7) makes G a diagonal-unitary conjugate of H, contradicting their different ranks. Hence
+
+\[
+ \operatorname{rank}R=2,\qquad
+ P_B=\alpha\operatorname{diag}(a)R\operatorname{diag}(\overline a),
+ \qquad \operatorname{range}(P_B)=\ker H.                    \tag{10}
+\]
+
+These assertions alone are necessary conditions. The proof must still retain both the full opposite kernel and the exact product variation.
+
+### 95.3. Joint face tangents with the full kernel constraint
+
+Continue with the general support S. Fix one pair in 𝒜₀ only to define R by (6). Let D be any Hermitian matrix on all eight coordinates, supported on S×S, such that
+
+\[
+ D_{ff}=0\text{ on every original fibre},\qquad
+ D\ker H=0.
+                                                                    \tag{11}
+\]
+
+Define D_G=−overline R⊙D on S×S and extend it by zero elsewhere. All subsequent Hadamard expressions involving this principal R and full eight-coordinate directions are formed on S×S and extended by zero outside that set. It is Hermitian and has zero original fibre blocks. Since range(P_B)⊆ker H, (11) implies DP_B=0 and therefore
+
+\[
+ D_S\operatorname{diag}(a_S)R=0,\qquad
+ (D_Ga)_i=-\sum_j D_{ij}a_jR_{ji}=0.                         \tag{12}
+\]
+
+For the second equality, the sum is the i-th diagonal entry of the first matrix in (12); outside S it vanishes by support. Thus D_G annihilates the entire kernel of G. Equation (7) also gives
+
+\[
+ D_G\odot H+G\odot D=0,\qquad
+ T-(G+sD_G)\odot(H+sD)
+       =L+s^2\overline R\odot(D\odot D).                   \tag{13}
+\]
+
+The entrywise square in this formula is not an absolute square. Both Gram paths are feasible for every sufficiently small real s. Indeed a Hermitian direction annihilating the full kernel acts only on its orthogonal complement, where the unperturbed Gram is positive definite. Small perturbations remain PSD, and every original fibre block remains I₂.
+
+**Lemma 95.3.** For every fixed D satisfying (11), some pair (ρ,W)∈𝒜₀ satisfies
+
+\[
+ Q_W(D):=2\operatorname{Tr}[(\overline R\odot D\odot D)W]\ge0.
+                                                                    \tag{14}
+\]
+
+**Proof.** The selection is made with D fixed. Given M>0 and arbitrary G′,H′∈𝓔, put V_G=M(G′−G), V_H=M(H′−H). The paths
+
+\[
+ G_s=G+sD_G+s^2V_G,\qquad H_s=H+sD+s^2V_H                 \tag{15}
+\]
+
+are feasible for sufficiently small s. For example,
+
+\[
+ G_s=(1-Ms^2)\left(G+\frac{sD_G}{1-Ms^2}\right)+Ms^2G'
+                                                                    \tag{16}
+\]
+
+is a convex combination of feasible matrices; the H path has the same form. Expansion gives the coefficient L plus
+
+\[
+ s^2[\overline R\odot D\odot D-V_G\odot H-G\odot V_H]+O(s^3).
+                                                                    \tag{17}
+\]
+
+The remainder is uniform against the compact witness set 𝓒. The compact-max derivative formula at scale s², together with local minimality, therefore gives
+
+\[
+ \max_{(\rho,W)\in\mathcal A}
+       [Q_W(D)+M b(W;G',H')]\ge0
+                \quad\text{for every }G',H'\in\mathcal E.          \tag{18}
+\]
+
+There is one pair in 𝒜 satisfying all the inequalities inside (18) simultaneously. Otherwise compactness would give finitely many with empty intersection. Their affine image of the compact convex set 𝒜 would be strictly separated from the nonnegative orthant by nonnegative coefficients. Normalize those coefficients to sum to one. The resulting convex average of the corresponding feasible pairs G′,H′ contradicts (18). This separation uses only affine variables; the direction D remains fixed.
+
+Call the resulting pair (ρ_M,W_M). Taking G′=G and H′=H gives Q_(W_M)(D)≥0. The Q values are uniformly bounded on 𝒜. Along a convergent subsequence as M→∞, the inequalities give b(W_*;G′,H′)≥0 for every fixed feasible pair. The limit belongs to 𝒜₀ and still has Q_(W_*)(D)≥0. This proves (14). ∎
+
+For every common witness, (5) has the same fixed G,H,a and some α_W>0. Substitution into (14), retaining the reversed indices in the trace, gives
+
+\[
+ \begin{aligned}
+ Q_W(D)&=\alpha_W q(D),\\
+ q(D)&=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+       \frac{\overline{a_i}a_j\overline{R_{ij}}}{H_{ij}}D_{ij}^2.
+ \end{aligned}                                                     \tag{19}
+\]
+
+The ordered summands for (i,j) and (j,i) are conjugates, so q is real. Its cross-fibre coefficients do not depend on the common witness, and its remaining entries vanish. Consequently Lemma 95.3 and α_W>0 imply q(D)≥0 for every admissible D. This does not interchange the direction and witness quantifiers: a witness may be selected separately for each fixed D because every such selection gives a strictly positive multiple of the same real number q(D).
+
+Introduce weighted coordinates
+
+\[
+ E_D=\operatorname{diag}(\overline{a_S})D_S\operatorname{diag}(a_S),
+ \qquad J=\operatorname{diag}(\overline{a_S})H_S
+                                         \operatorname{diag}(a_S).
+                                                                    \tag{20}
+\]
+
+Then E_D is Hermitian, its original fibre blocks vanish, E_DR=0 by (12), and
+
+\[
+ q(D)=-\sum_{\substack{i,j\in S\\i,j\text{ in different fibres}}}
+               \frac{\overline{R_{ij}}}{J_{ij}}(E_D)_{ij}^2\ge0.
+                                                                    \tag{21}
+\]
+
+In general E_DR=0 does not by itself replace the full-kernel condition (11). The replacement is guaranteed when range(P_B)=ker H; no converse on the restricted direction space is asserted. In the full-support rank-(7,6) case, (10) gives exactly that equality. Invertible diagonal multiplication then makes (11) equivalent to E_DR=0.
+
+### 95.4. The resulting rank-two algebraic problem
+
+Under the hypotheses of Theorem 95.1 with rank H=6, put
+
+\[
+ c_{ij}=\frac{\overline{R_{ij}}}{J_{ij}}
+          \quad(i,j\text{ in different fibres}),\qquad
+ \mathcal V=\{E=E^*:E_{ff}=0,\ ER=0\}.
+                                                                    \tag{22}
+\]
+
+All these coefficients are nonzero, and c_ji=overline(c_ij). Equations (19)–(21) give a single real quadratic form
+
+\[
+ q(E)=-\sum_{i,j\text{ in different fibres}}c_{ij}E_{ij}^{2}
+                         \ge0\qquad(E\in\mathcal V).        \tag{23}
+\]
+
+Here and below q(E) denotes the same form expressed in weighted coordinates. Factor R=U*U, where U is a rank-two 2×8 matrix, and write U_f for its four 2×2 fibre blocks. Then ER=0 is equivalent to EU*=0. Each U_f has rank one or two, since each column of U has norm one. We will contradict (23) in every case.
+
+We use the elementary fact that for a nonnegative real quadratic form, a zero vector of the form lies in its radical:
+
+\[
+ q(X)=0\quad\Longrightarrow\quad
+ B_q(X,Y)=0\text{ for every }Y,\qquad
+ B_q(X,Y)=\frac{q(X+Y)-q(X)-q(Y)}2.                         \tag{24}
+\]
+
+Indeed q(X+sY)=2sB_q(X,Y)+s²q(Y) is nonnegative for both signs of all sufficiently small real s, forcing its linear coefficient to vanish.
+
+### 95.5. Singular fibres give complex star directions
+
+Suppose U_f has rank one. Choose a nonzero vector n supported on fibre f with Un=0. Both coordinates of n are nonzero, since each of the two columns of U_f is nonzero. If v∈ker U has v_f=0 and z∈C, define
+
+\[
+ S_f(z,v)=z n v^*+\overline z\,v n^*.
+                                                                    \tag{25}
+\]
+
+This full eight-coordinate matrix is Hermitian, has zero entire original fibre blocks, and annihilates U*. It therefore belongs to 𝓥 and is supported only on edges incident to f. Its value in (23) is
+
+\[
+ q(S_f(z,v))=-2\operatorname{Re}[z^2A_f(v)],\qquad
+ A_f(v)=\sum_{i\in f,\,j\notin f}c_{ij}n_i^2\overline{v_j}^{2}.
+                                                                    \tag{26}
+\]
+
+Since every complex z is allowed, nonnegativity forces A_f(v)=0. Every star (25) thus has zero polarization with every member of 𝓥 by (24).
+
+**At least two singular fibres.** Choose two singular fibres f,g whose complement C, consisting of the other two fibres, has rank U_C=2. Such a choice always exists. With exactly two or three singular fibres, the complement of any chosen two contains an invertible fibre. If all four are singular, rank U=2 gives two independent fibre column lines; choose those as C and the other two as f,g.
+
+Let n_f,n_g be local kernel vectors on f,g. For arbitrary p∈C² on f and r∈C² on g, choose v,w∈ker U with
+
+\[
+ v_f=0,\quad v_g=r,\quad U_Cv_C=-U_gr,\qquad
+ w_g=0,\quad w_f=p,\quad U_Cw_C=-U_fp.                    \tag{27}
+\]
+
+These equations are solvable because U_C is surjective. The two stars S_f(z,v), S_g(y,w) overlap only on the cross block fg. Their zero polarization is
+
+\[
+ -2\operatorname{Re}\left[
+ z\overline y\sum_{i\in f,\,j\in g}
+       c_{ij}(n_f)_i p_i\overline{r_j}\,\overline{(n_g)_j}
+                         \right]=0.                       \tag{28}
+\]
+
+Arbitrary complex phase of z makes the inner sum zero. Taking p and r to be individual coordinate vectors gives c_ij(n_f)_i overline((n_g)_j)=0 for every entry of that cross block. Both local kernel vectors have no zero coordinate, so every such c_ij is zero, contradicting (22). This excludes two, three, and four singular fibres, including all complex-phase and coincident-line possibilities.
+
+**Exactly one singular fibre.** Let f be the singular fibre and g,h,k the three invertible ones. Fix its local kernel vector n. For arbitrary u∈C² define v∈ker U by
+
+\[
+ v_g=U_g^{-1}u,\qquad v_h=-U_h^{-1}u,\qquad v_f=v_k=0.
+                                                                    \tag{29}
+\]
+
+For arbitrary p∈C² choose w∈ker U with w_f=p, w_k=−U_k⁻¹U_fp, and w_g=w_h=0. The matrix Y=wv*+vw* is Hermitian and annihilates U*. Its vector supports lie in the disjoint groups of entire fibres {f,k} and {g,h}, so its original fibre blocks vanish. Thus Y∈𝓥. Its edges shared with S_f(z,v) are exactly fg and fh. Their zero polarization, with arbitrary complex phase of z, yields
+
+\[
+ \sum_{i\in f}n_i p_i
+  \left[\sum_{j\in g}c_{ij}\overline{(U_g^{-1}u)_j}^{2}
+       +\sum_{j\in h}c_{ij}\overline{(U_h^{-1}u)_j}^{2}
+  \right]=0.                                                 \tag{30}
+\]
+
+Every n_i is nonzero and p is arbitrary, so each bracket vanishes. For fixed i∈f set
+
+\[
+ Q_\ell(u)=\sum_{j\in\ell}c_{ij}
+                    \overline{(U_\ell^{-1}u)_j}^{2},
+                     \qquad \ell\in\{g,h,k\}.                \tag{31}
+\]
+
+Apply (29)–(30) to each pair of invertible fibres, using the remaining invertible fibre to construct w. This gives Q_g+Q_h=Q_g+Q_k=Q_h+Q_k=0, hence every Q_ℓ vanishes identically. Since U_ℓ is invertible, U_ℓ⁻¹u ranges over C². Its two coordinate-vector values force both corresponding coefficients c_ij to vanish. This again contradicts (22), excluding one singular fibre.
+
+### 95.6. Four invertible fibres give four-vertex directions
+
+It remains to exclude zero singular fibres. For arbitrary u∈C² put x_f(u)=U_f⁻¹u. For every Hermitian 4×4 matrix Z with diagonal zero and Z1₄=0, define the full eight-coordinate matrix
+
+\[
+ E_{fg}=Z_{fg}x_f(u)x_g(u)^*\quad(f\ne g),\qquad E_{ff}=0.
+                                                                    \tag{32}
+\]
+
+This is Hermitian, preserves every original fibre block, and satisfies EU*=0: its f-th block row against U* is x_f(u)(Σ_gZ_fg)u*=0. Substitution into (23) therefore gives
+
+\[
+ \begin{aligned}
+ -\sum_{f\ne g}k_{fg}(u)Z_{fg}^{2}&\ge0,\\
+ k_{fg}(u)&=\sum_{i\in f,\,j\in g}
+          c_{ij}x_f(u)_i^2\overline{x_g(u)_j}^{2}.
+ \end{aligned}                                                     \tag{33}
+\]
+
+For fixed u the coefficients satisfy k_gf=overline(k_fg). The following elementary four-vertex observation forces every one of them to vanish. Use the Hermitian zero-row-sum matrix with upper entries
+
+\[
+ Z_{12}=0,\quad Z_{13}=x,\quad Z_{14}=-x,\quad
+ Z_{23}=-x+is,\quad Z_{24}=x-is,\quad Z_{34}=is,
+ \qquad x\in\mathbb C,\ s\in\mathbb R.                     \tag{34}
+\]
+
+With A=k₁₃+k₁₄, B=k₂₃+k₂₄, C=k₃₄, the left side of (33) is −2Re Φ, where
+
+\[
+ \Phi=(A+B)x^2-2isBx-s^2(B+C).                              \tag{35}
+\]
+
+Setting s=0 and varying complex x gives A+B=0. If B≠0, take s=1 and x=i[1+Re(B+C)]/(2B). Then Re Φ=1, contradicting (33). Thus B=0 and A=0. Relabeling the four vertices gives all three pairwise sums of the coefficients in any fixed row equal to zero. Each coefficient is therefore zero. In particular, k_fg(u)=0 for every u.
+
+To recover the original 2×2 coefficient block C_fg=(c_ij)_(i∈f,j∈g), set m(u)=(u₁²,u₁u₂,u₂²)ᵀ and write x_f(u)⊙x_f(u)=A_fm(u). The 2×3 matrix A_f has rank two: its rows are squares of two independent linear forms, whose squares remain linearly independent. Hence
+
+\[
+ m(u)^T A_f^T C_{fg}\overline{A_g}\,\overline{m(u)}=0
+                                      \quad(u\in\mathbb C^2).       \tag{36}
+\]
+
+The nine monomials of bidegree (2,2) in u and overline u are linearly independent as polynomials in the four real coordinates of u. Indeed the change of variables from those real coordinates to u₁,u₂,overline(u₁),overline(u₂) is invertible over C. Thus (36) gives A_fᵀC_fg overline(A_g)=0. Since A_fᵀ has full column rank and overline(A_g) has full row rank, C_fg=0. This contradicts (22), excluding zero singular fibres.
+
+### 95.7. Exhaustion and the remaining global problem
+
+The quotient has exactly zero, one, two, three, or four singular original fibre blocks. Sections 95.5–95.6 exclude every case, proving Theorem 95.1. All directions were embedded in the original eight coordinates, had zero entire original fibre blocks, and annihilated the full opposite kernel through (10). Every common-witness quadratic used the same fixed G,H,a and the same cross-fibre quotient. Complex phases were varied explicitly rather than discarded by a real gauge.
+
+The new exclusion uses the exact adaptive objective and simultaneous common stresses of sections 91–92, the quotient of Lemma 95.2, and the fixed-direction argument of Lemma 95.3. It does not require the sharp three-vector theorem or the doubly rank-seven support-size reduction. Section 94 separately excludes all doubly rank-seven subquarter calibrated local minima.
+
+A hypothetical global subquarter optimum can still lie at a calibrated minimum whose rank-seven kernel has smaller coordinate support, whose opposite Gram has rank at most five, or whose two ranks are both at most six, subject to the earlier reductions. Neither a missing whole fibre nor a single missing coordinate is covered by Theorem 95.1. In smaller opposite ranks, annihilating R need not annihilate the full opposite kernel. No rank-preservation assertion under calibration or unsupported reduction to extreme Grams is used. The unrestricted quarter lower bound for the original channels, including leakage, remains open.
