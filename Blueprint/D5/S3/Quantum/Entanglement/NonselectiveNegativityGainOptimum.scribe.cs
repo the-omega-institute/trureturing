@@ -40,7 +40,10 @@ internal sealed class NonselectiveNegativityGainOptimumDocument : IScribeDocumen
                         "Partial transposition permutes the matrix entries, so it preserves the Frobenius norm. In dimension four the Hilbert–Schmidt Hölder inequality gives ‖Y‖₁ ≤ 2‖Y‖_F, hence ‖X^Γ‖₁ ≤ 2. The triangle inequality applied to 2σ^Γ = ρ^Γ + X^Γ yields 2‖σ^Γ‖₁ ≤ ‖ρ^Γ‖₁ + 2. Substitution into the definition of negativity gives N(σ) ≤ N(ρ)/2 + 1/4.")),
                     Paragraph(Text(
                         "For attainment, the Schmidt decomposition gives local coordinates ψ₀ = a|00⟩ + b|11⟩ with a, b nonnegative and a² + b² = 1. A real orthogonal measurement basis in the span of |00⟩ and |11⟩, completed by |01⟩ and |10⟩, gives the half-pure, half-Bell state σ₀ = (ψ₀ψ₀† + ΦΦ†)/2, where Φ = (|00⟩ + |11⟩)/√2. Its partially transposed eigenvalues are a²/2 + 1/4, b²/2 + 1/4, ab/2 + 1/4, and −(ab/2 + 1/4). Consequently N(σ₀) = ab/2 + 1/4 = N(ψ₀ψ₀†)/2 + 1/4. Local unitaries transport this measurement back to ψ and preserve negativity. This attaining state is the construction of Theorem 3; together with the bound it establishes the global optimality asked in Section II.E."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("zuppardo-ganardi-miller-bandyopadhyay-paterek-2018-nonselective-negativity-optimum"),
+                    ResolutionKind.Proved))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
