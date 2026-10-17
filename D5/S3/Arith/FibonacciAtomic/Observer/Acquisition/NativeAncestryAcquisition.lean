@@ -383,10 +383,15 @@ private theorem scan_answer (t : Source) (J A : Finset Address) (hJ : J ⊆ posi
   change scanDecode (runPassiveProtocol readout (scanTree J.toList) (variant t A)) = true ↔ _
   rw [scan_transcript]
   simp only [scanDecode,decide_eq_true_eq,List.forall_mem_map,Finset.mem_toList]
-  simp only [at_left]
   rw [Finset.eq_empty_iff_forall_notMem]
-  simp only [Finset.mem_inter]
-  tauto
+  constructor
+  · intro all p hp
+    obtain ⟨ha,hp⟩ := Finset.mem_inter.mp hp
+    exact ((at_left p hp).mp (all p hp)) ha
+  · intro empty p hp
+    apply (at_left p hp).mpr
+    intro ha
+    exact empty p (Finset.mem_inter.mpr ⟨ha,hp⟩)
 
 private theorem scan_paid (t : Source) (J A : Finset Address) :
     (paid ((scanRun t J).trace A)).card = J.card := by
