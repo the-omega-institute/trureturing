@@ -44,10 +44,12 @@ Issue #17895 records the literature check before any Lean:
    - Alice encodes x = (u, v) by U_{uv} = Z^u R Z^v, with R = (1/5)[[4, −3], [3, 4]] and Z = diag(1, −1).
    - Every message marginal has vacuum component 337/625, so the energy is ω = 288/625 < 1/2.
    - Bob measures the orthonormal basis m_{uv} = (1/2)(1, −(−1)^v, (−1)^u, (−1)^{u+v}). Each overlap is 49/50, so the average success is 2401/2500.
-2. **Effect inequality.** For a density matrix ρ, an effect 0 ≤ E ≤ 1 and the vacuum e₀: Re Tr(Eρ) − Re E₀₀ ≤ √(1 − Re ρ₀₀).
-   - For pure ρ this is a 2 × 2 computation.
-   - For mixed ρ it follows from the spectral theorem and concavity of √.
-3. **Unassisted bound.** Summing over the four messages, with Σ_x E_x = 1, and averaging over the shared randomness with concavity of √, every unassisted strategy at energy ω succeeds with probability at most 1/4 + √ω.
+2. **Pure-state inequality, in every Hilbert space.** For unit vectors ψ and |0⟩ and an effect 0 ≤ E ≤ 1: ⟨ψ, Eψ⟩ − ⟨0, E0⟩ ≤ √(1 − |⟨0|ψ⟩|²).
+   - Choose the phase of ψ so that a = ⟨0|ψ⟩ ≥ 0, and put u = ψ + |0⟩ and v = ψ − |0⟩. The difference equals Re⟨u, Ev⟩ and also −Re⟨u, (1 − E)v⟩.
+   - Cauchy–Schwarz for the positive forms of E and of 1 − E bounds its square by both ⟨u, Eu⟩⟨v, Ev⟩ and ⟨u, (1 − E)u⟩⟨v, (1 − E)v⟩. Together these give at most ‖u‖‖v‖/2 = √(1 − a²).
+3. **Unassisted bound.** A message is an ensemble of unit vectors with weights summing to 1, the ensemble decomposition of its density operator.
+   - Sum the pure inequality over the four messages, with Σ_x E_x = 1, and average over the ensembles and the shared randomness.
+   - The tangent-line bound Σ_j w_j √t_j ≤ √(Σ_j w_j t_j) then shows that every unassisted strategy at energy ω succeeds with probability at most 1/4 + √ω. The message space has any dimension.
 4. **Conclusion.** √(288/625) < 17/25, so every unassisted value is below 93/100 < 2401/2500.
 
 ## Falsifier
@@ -58,40 +60,43 @@ The refutation would not answer the question if:
 - its task were not a linear task of the source's form.
 
 The module quantifies over every finite task and every 0 ≤ ω < 1/2. Its unassisted strategies have:
-- arbitrary finite message dimension;
-- finitely many shared random values;
-- density-matrix messages and conditional POVMs;
+- an arbitrary complex Hilbert space for the message, with a unit vacuum vector;
+- shared randomness over an arbitrary index type with weights summing to 1;
+- messages given by ensembles of unit vectors. Every density operator has such a decomposition (its spectral decomposition), and every ensemble defines one;
+- POVMs of positive bounded operators summing to the identity;
 - the averaged energy restriction of Eq. (5).
+
+This is the source's QC model, Eqs. (4)–(5), which fixes no message dimension. The unitary strategies are finite-dimensional, which only weakens the claim.
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean` (469 lines).
+The canonical source is `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean` (524 lines).
 - It defines `IsPOVM`, `UnitaryStrategy`, `encoded`, `unitaryProb`, `unitaryVacuum`, `QCStrategy`, `qcProb`, `qcVacuum`, `taskValue` and `claim`, and proves `result : ¬ claim`.
-- It reuses `IsDensity`, the POVM predicate of `ConcealmentKernelNecessityRefutation`, and the spectral expansions of `CartesianVariance`. It also reuses the diagonal bound of `QubitWassersteinCouplings`; three of these theorems are made public by removing only `private`.
+- It reuses frozen finite-dimensional matrix results for the protocol, and Mathlib's inner product spaces and operator order for the unassisted side. No frozen owner is changed.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
-- The escape registrations: `result` is the designated refutation result of the `utility` header and is exempt. Of the three owner theorems made public, `CartesianVariance.hermitian_spectral_sum` and `hermitian_trace_spectral` are `declared_validated` under `Reg/D5/`. The registration of `QubitWassersteinCouplings.state_diag_le_one` compiles but remains `declared_unresolved` (`IE-C050 … rule=source.descriptor_actual`). This is a template gap recorded in [#16937](https://github.com/the-omega-institute/trureturing/issues/16937), so its escape audit is incomplete.
+- The escape registrations: `result` is the designated refutation result of the `utility` header and is exempt. The module has no other public theorem.
 
-Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean.json`, statement `sha256:b2d5139f30351ae1f5aa37411fe75f805d037b749e9fbad295488000af07897e`.
+Frozen state: `Golden/Frozen/state/D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean.json`, statement `sha256:d9e9b1fdef83e9af30768b0a86ded67b0f227ac8114b455b7a22e90443787c58`.
 
 Declaration statements:
 - `result`: `sha256:131df8981c442c115d95dbd2b558c08f0b1c26deb2621ffc905a794161ba45dd`;
-- `claim`: `sha256:1d5c2ad9a70a4ce656f513bb59415eaa21d178412faceb8130654ead7611fd35`.
+- `claim`: `sha256:ad777371d7368117ec5e109036a9b372610f2fdc9502481ff97fd5d8572f68e7`.
 
 ## Triage
 
-Tier 1 question of a 2025 paper, preregistered in issue #17895 before any Lean.
+Tier 1 question of a 2025 paper, preregistered in issue #17895 before any Lean. The preregistration revision on #17895 widens the unassisted class to the source's model.
 `theorem`; resolution `refuted`.
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none: after inlining, the protocol identities are finite computations, and the bound is an instantiation of the spectral theorem, trace positivity and Jensen for √, followed by normalization | open-problem-resolution |
+| result | bind-only | none: after inlining, the protocol identities are finite computations, and the bound is an instantiation of Cauchy–Schwarz for positive operators and the tangent-line bound for √, followed by normalization | open-problem-resolution |
 | the protocol, effect-bound and Jensen helpers (private) | bind-only (consumed on the proof path of `result`) | none | consumed helpers |
 
 Every other public declaration is a definition used by a public statement. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The refutation is a certified instance with basis `refutes`. There is no digestion atom.
 
 ### What the settlement shows
 
-**Refuted by `result`:** at ω = 288/625 < 1/2, a unitary-encoded entanglement-assisted strategy reaches 2401/2500 in four-message discrimination, while every unassisted strategy with finite-dimensional messages and finite shared randomness stays below 93/100.
+**Refuted by `result`:** at ω = 288/625 < 1/2, a unitary-encoded entanglement-assisted strategy reaches 2401/2500 in four-message discrimination, while every unassisted strategy, with messages in any Hilbert space and arbitrary discrete shared randomness, stays below 93/100.
 
 **Computed, not formalized** (orchestrator, exact, recorded in #17895): the four message marginals (1/625)[[337, ±84], [±84, 288]], Bob's constant marginal diag(16/25, 9/25), and the success matrix with diagonal entries 2401/2500.
 
@@ -100,7 +105,6 @@ Every other public declaration is a definition used by a public statement. The b
 - *Range.* Take the same construction with Ψ = cos t|00⟩ + sin t|11⟩ and R the rotation by t. Each message then has vacuum component cos⁴t + sin⁴t, so ω = sin²(2t)/2, and the success is ((1 + sin 2t)/2)². It beats the bound 1/4 + √ω exactly when sin 2t > 2√2 − 2, that is for 6 − 4√2 ≈ 0.343 < ω < 1/2. The true unassisted optimum may lie below this bound, so the advantage may extend further.
 
 **Open.**
-- Whether the unassisted bound 1/4 + √ω, proved here for finite-dimensional messages and finite shared randomness, extends to infinite-dimensional messages and general shared randomness. The source's QC model allows both; the formal claim quantifies over the finite case only.
 - The smallest ω at which unitary encoding helps in some task, and the optimal unitary value for four-message discrimination at each ω.
 - Whether three inputs suffice.
 
