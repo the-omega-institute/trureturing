@@ -530,4 +530,67 @@ theorem block_kummer_images (D C L F : ℚ) (hD : D ≠ 0) (hC : C ≠ 0)
   rw [smul_comm (2 : ℤ) n, hd, zsmul_zero, zero_add]
   exact himageS
 
+
+/-- The block equations themselves construct both original affine points and identify
+translation by the actual point `(0,0)` in the rational point group. -/
+theorem block_translation (D C L F : ℚ) (hC : C ≠ 0)
+    (hblock : L ^ 2 + 3 = D * C ^ 2) (hfib : L ^ 2 + 4 = 5 * F ^ 2) :
+    ∃ (hR : (curve D).Nonsingular (5 * D * (L ^ 2 + 3)) (25 * D ^ 2 * L * C * F))
+      (hT : (curve D).Nonsingular 0 0)
+      (hS : (curve D).Nonsingular (-15 / C ^ 2) (75 * L * F / C ^ 3)),
+      Point.some _ _ hR + Point.some _ _ hT = Point.some _ _ hS := by
+  have hD : D ≠ 0 := by
+    intro hz
+    rw [hz, zero_mul] at hblock
+    nlinarith [sq_nonneg L]
+  letI : (curve D).IsElliptic := curve_is_elliptic D hD
+  have hB : L ^ 2 + 3 ≠ 0 := by nlinarith [sq_nonneg L]
+  have hx : 5 * D * (L ^ 2 + 3) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero (by norm_num) hD) hB
+  have hReq : (curve D).Equation (5 * D * (L ^ 2 + 3))
+      (25 * D ^ 2 * L * C * F) := by
+    rw [equation_iff]
+    calc
+      (25 * D ^ 2 * L * C * F) ^ 2 =
+          125 * D ^ 3 * L ^ 2 * (D * C ^ 2) * (5 * F ^ 2) := by ring
+      _ = 125 * D ^ 3 * L ^ 2 * (L ^ 2 + 3) * (L ^ 2 + 4) := by
+        rw [← hblock, ← hfib]
+      _ = _ := by ring
+  have hR := (WeierstrassCurve.Affine.equation_iff_nonsingular).mp hReq
+  have hT : (curve D).Nonsingular 0 0 := by
+    apply (WeierstrassCurve.Affine.equation_iff_nonsingular).mp
+    rw [equation_iff]
+    ring
+  have hSeq : (curve D).Equation (-15 / C ^ 2) (75 * L * F / C ^ 3) := by
+    rw [equation_iff]
+    field_simp [hC]
+    linear_combination -1125 * L ^ 2 * hfib +
+      1125 * (D * C ^ 2 + L ^ 2 + 1) * hblock
+  have hS := (WeierstrassCurve.Affine.equation_iff_nonsingular).mp hSeq
+  refine ⟨hR, hT, hS, ?_⟩
+  rw [Point.add_of_X_ne hx]
+  have hslope : (curve D).slope (5 * D * (L ^ 2 + 3)) 0
+      (25 * D ^ 2 * L * C * F) 0 = 5 * L * F / C := by
+    rw [WeierstrassCurve.Affine.slope_of_X_ne hx]
+    simp only [sub_zero]
+    rw [hblock]
+    field_simp [hD, hC]
+    <;> ring
+  have hxadd : (curve D).addX (5 * D * (L ^ 2 + 3)) 0 (5 * L * F / C) =
+      -15 / C ^ 2 := by
+    change (5 * L * F / C) ^ 2 + 0 * (5 * L * F / C) - (-10 * D) -
+      (5 * D * (L ^ 2 + 3)) - 0 = -15 / C ^ 2
+    field_simp [hC]
+    linear_combination -5 * L ^ 2 * hfib + (5 * L ^ 2 + 5) * hblock
+  have hyadd : (curve D).addY (5 * D * (L ^ 2 + 3)) 0
+      (25 * D ^ 2 * L * C * F) (5 * L * F / C) = 75 * L * F / C ^ 3 := by
+    unfold WeierstrassCurve.Affine.addY WeierstrassCurve.Affine.negAddY
+    rw [hxadd]
+    change -(5 * L * F / C * (-15 / C ^ 2 - 5 * D * (L ^ 2 + 3)) +
+      25 * D ^ 2 * L * C * F) - 0 * (-15 / C ^ 2) - 0 = 75 * L * F / C ^ 3
+    field_simp [hC]
+    linear_combination 25 * D * L * C ^ 2 * F * hblock
+  simp only [hslope]
+  exact (Point.some.injEq ..).mpr ⟨hxadd, hyadd⟩
+
 end D5.S3.Factorization.Mordell.RationalKummer
