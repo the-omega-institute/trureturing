@@ -14,9 +14,14 @@ triage: anchor
 
 # Alon-Tarsi for Hypergraphs
 
+## Locator
+
 The version of record is *Electronic Journal of Combinatorics* 33(3), P3.74,
 DOI 10.37236/15173, published 2026-09-25. The corresponding preprint is
-arXiv:2501.00157v2. Journal PDF page numbers are used below.
+[arXiv:2501.00157v2](https://arxiv.org/html/2501.00157v2).
+Journal PDF page numbers are used below.
+
+## Statements and native scope
 
 Conjecture 4 (pp. 5 and 23) asserts that every hypergraph polynomial p of H
 satisfies AT(p) ≤ 2 ceil(ed(H)) + 1. Conjecture 28 (p. 23) asserts the same
