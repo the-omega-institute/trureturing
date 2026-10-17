@@ -12,6 +12,8 @@ For any finite C subset T, n(C,e) counts all occurrences with block in C and glo
 
 RestrictedFlatEdgeChain(p,ell,i,j) abbreviates EqvGen of the relation p.edgeStep(u,v) together with Flat(p,ell,u.fst) and Flat(p,ell,v.fst), from i to j. Endpoint(p,ell,C,e) means that some occurrence i has i.fst in C, P(i)=e and alpha(i)=pi, that the global m(F,e)=1, and that some occurrence j has P(j)=e with j.fst outside Flat. The classifier makes that last block genuine. All weighted coefficients and cardinalities in real sums use their real casts.
 
+The information-escape audits for m_le_two, saturated_support, native_component_budget, genuine_of_single_pi, component_exposed_label and component_endpoints remain unfinished under https://github.com/the-omega-institute/trureturing/issues/17994. The universal native_component_budget family has compiled proof evidence, but its source registration remains blocked by the rigid-universe decoder. The other five audits lack complete variation, sensitivity, observational-dependence and admissible source-selection evidence. The issue supplies neither mathematical proof nor validated registration status.
+
 **Theorem 1.1 (At most two flat pi contributions).**
 
 $$\forall T \in Type,\; [Fintype\left(T\right)], \forall p \in RawFacePairing\left(T\right), ell \in Function\left(GlobalEdge\left(p\right), Real\right), C \in Finset\left(T\right), e \in GlobalEdge\left(p\right),\; AngleSums\left(p, ell\right) \Rightarrow m\left(p, ell, C, e\right) \le 2$$
