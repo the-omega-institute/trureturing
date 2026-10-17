@@ -184,7 +184,7 @@ private theorem negativity_upper {a b : Type} [Fintype a] [DecidableEq a]
     (htrace : ρ.trace.re = 1) : 2 * negativity ρ ≤ 2 * Q.trace.re := by
   have h := psd_sub_bound P Q hP hQ
   have ht : (partialTranspose ρ).trace = ρ.trace := by
-    simp only [Matrix.trace, Matrix.diag_apply, partialTranspose]
+    rfl
   have ht2 := congrArg Complex.re (congrArg Matrix.trace hsplit)
   rw [ht, Matrix.trace_sub, Complex.sub_re, htrace] at ht2
   rw [← hsplit] at h
@@ -234,8 +234,9 @@ private theorem family_pair_loose (a b c d : ℝ) (hb : 0 ≤ b) (hd : 0 ≤ d)
       ((posSemidef_vecMulVec_self_star _).smul hbhalf)
   have hsplit : partialTranspose (pairAB (familyState a b c d)) = P - Q := by
     ext ⟨i, j⟩ ⟨k, l⟩
+    change pairAB (familyState a b c d) (i, l) (k, j) = _
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      simp [partialTranspose, pairAB.eq_1, familyState.eq_1, P, Q, rankOneDensity,
+      simp [pairAB.eq_1, familyState.eq_1, P, Q, rankOneDensity,
         single.eq_1, blockVec.eq_1, edge.eq_1, vecMulVec_apply, Fin.sum_univ_three,
         Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_pow] <;> ring
   have hQt : 2 * Q.trace.re = 2 * b ^ 2 + 4 * b * d := by
@@ -275,11 +276,12 @@ private theorem family_pair_gram (a b c d : ℝ) (ha : 0 < a)
   have hsplit : partialTranspose (pairAB (familyState a b c d)) = P - Q := by
     have hane : (a : ℂ) ≠ 0 := by exact_mod_cast ha.ne'
     ext ⟨i, j⟩ ⟨k, l⟩
+    change pairAB (familyState a b c d) (i, l) (k, j) = _
     fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
-      simp [partialTranspose, pairAB.eq_1, familyState.eq_1, P, Q, v, w, z, rankOneDensity,
+      simp [pairAB.eq_1, familyState.eq_1, P, Q, v, w, z, rankOneDensity,
         single.eq_1, blockVec.eq_1, edge.eq_1, vecMulVec_apply, Fin.sum_univ_three,
         Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_pow] <;>
-      field_simp [hane] <;> ring
+      field_simp (discharger := first | exact hane | exact pow_ne_zero _ hane | norm_num) <;> ring
   have hQt : 2 * Q.trace.re = 2 * b ^ 2 + 4 * (d ^ 2 * (b ^ 2 + c ^ 2) / a ^ 2) := by
     simp [Q, Matrix.trace, rankOneDensity, single.eq_1, edge.eq_1, vecMulVec_apply,
       Fintype.sum_prod_type, Fin.sum_univ_three]
@@ -430,7 +432,7 @@ private theorem family_separator (a b c d : ℝ)
   let r := Real.sqrt (a ^ 2 + b ^ 2 + c ^ 2)
   have hrs : r ^ 2 = a ^ 2 + b ^ 2 + c ^ 2 := Real.sq_sqrt (by positivity)
   apply separator_algebra a b c d r _ _ _ ha hd (Real.sqrt_nonneg _) hrs
-    (by nlinarith) (by simpa [r, hrs] using family_whole a b c d hd hn) ?_
+    (by nlinarith) (by rw [family_whole a b c d hd hn, hrs]) ?_
     (fun hapos => family_pair_gram a b c d hapos hn) hz hdelta
   rw [family_swap]
   exact family_pair_loose b a c d ha hd (by nlinarith)
@@ -557,13 +559,13 @@ private theorem witness_pairs :
     all_goals norm_num [map_ofNat]
   have htx : (reflectionU * partialTranspose (pairAB witnessRaw)).trace.re =
       175013 / 5000 + 2 / 17 + 1 / 1000 := by
-    change (∑ p, ∑ q, reflectionU p q * partialTranspose (pairAB witnessRaw) q p).re = _
-    norm_num [reflectionU.eq_1, rankOneDensity, edge.eq_1, vecMulVec_apply, partialTranspose,
+    change (∑ p, ∑ q, reflectionU p q * pairAB witnessRaw (q.1, p.2) (p.1, q.2)).re = _
+    norm_num [reflectionU.eq_1, rankOneDensity, edge.eq_1, vecMulVec_apply,
       pairAB.eq_1, witnessRaw.eq_1,
       Fintype.sum_prod_type, Fin.sum_univ_three, Matrix.one_apply]
   have hty : (swapU * partialTranspose (pairAC witnessRaw)).trace.re = 81 := by
-    change (∑ p, ∑ q, swapU p q * partialTranspose (pairAC witnessRaw) q p).re = _
-    norm_num [swap_entry, partialTranspose, pairAC.eq_1, witnessRaw.eq_1,
+    change (∑ p, ∑ q, swapU p q * pairAC witnessRaw (q.1, p.2) (p.1, q.2)).re = _
+    norm_num [swap_entry, pairAC.eq_1, witnessRaw.eq_1,
       Fintype.sum_prod_type, Fin.sum_univ_three]
   have hx := unitary_bound (partialTranspose (pairAB witnessRaw)) reflectionU hU
   have hy := unitary_bound (partialTranspose (pairAC witnessRaw)) swapU swap_unitary
