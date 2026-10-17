@@ -50,7 +50,7 @@ without requiring a classification of every possible limit.
 ## Gap
 
 The scoped source and literature searches recorded in
-`Library/Words/vatter2026assortment.md` found no direct prior answer to this
+`Library/PermutationPatterns/vatter2026assortment.md` found no direct prior answer to this
 single question. They do not certify global publication priority. The
 separate Question 4.3 already has its own dossier and resolution; the known
 Hoffman-Rizzolo-Slivken implications for Conjecture 4.1 and Question 4.2

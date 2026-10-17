@@ -4,7 +4,7 @@
 
 Bounded decreasing tails yield derangement limits cofinal below one.
 
-The paragraph following Question 4.3 in Section 4 of `D5/L/Words/vatter2026assortment` asks: Is there a largest possible limit strictly less than 1? The question concerns arbitrary permutation classes, with no growth restriction. The construction below answers this question negatively. It gives limits arbitrarily close to one from below, without classifying all possible limits.
+The paragraph following Question 4.3 in Section 4 of `D5/L/PermutationPatterns/vatter2026assortment` asks: Is there a largest possible limit strictly less than 1? The question concerns arbitrary permutation classes, with no growth restriction. The construction below answers this question negatively. It gives limits arbitrarily close to one from below, without classifying all possible limits.
 
 Perm(n) denotes Equiv.Perm(Fin(n)). Positions and values are numbered from zero; val is the underlying natural number of a Fin element or the underlying permutation of a subtype element, as appropriate. P(n,a) denotes tailPerm with the displayed assumption a<=n. C(k) denotes boundedTailClass(k). The containment relation Contains, the hereditary-class structure PermClass, the fixed-point-free predicate IsDerangement, and the real-valued ratio are those of `D5/S1/Words/Patterns/DerangementRatioNonconvergence`. Nonempty(S) means that the set S contains a permutation. Every cardinality is Fintype.card; all quotients of cardinalities or natural parameters in a real formula use their real casts.
 

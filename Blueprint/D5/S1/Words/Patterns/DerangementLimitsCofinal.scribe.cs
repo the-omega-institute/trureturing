@@ -8,7 +8,7 @@ internal sealed class DerangementLimitsCofinalDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S1/Words/Patterns/DerangementLimitsCofinal.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/vatter2026assortment");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/vatter2026assortment");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Bounded decreasing tails yield derangement limits cofinal below one.",
@@ -16,7 +16,7 @@ internal sealed class DerangementLimitsCofinalDocument : IScribeDocumentDefiniti
         Blocks(
             Paragraph(Text(
                 "The paragraph following Question 4.3 in Section 4 of "),
-                Ref("D5/L/Words/vatter2026assortment"), Text(
+                Ref("D5/L/PermutationPatterns/vatter2026assortment"), Text(
                 " asks: Is there a largest possible limit strictly less than 1? "
                 + "The question concerns arbitrary permutation classes, with no growth restriction. "
                 + "The construction below answers this question negatively. It gives limits "
