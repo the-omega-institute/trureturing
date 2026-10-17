@@ -1,17 +1,17 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+import D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
 import Reg.Support.SingleDependentReadout
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
 
 open _root_.D5.S3.Arith.FibonacciAtomic
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (acquisitionTrace frontier)
 open Observer.BoundedPreorderTrial (History Report)
-open Observer.Acquisition.NativeBoundedPreorderControl
+open Observer.Acquisition.NativeBoundedPreorderRows
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open _root_.D5.S3.ObserverMemory.Algorithms.GuardedPhaseExecution (Run)
@@ -63,8 +63,8 @@ def reachable_compressed_frontier_and_trial_simulation_registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@reachable_compressed_frontier_and_trial_simulation)
       (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.unit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.family
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -80,7 +80,7 @@ def reachable_compressed_frontier_and_trial_simulation_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -134,8 +134,8 @@ def alignmentFamily : Registration alignmentArena (type_of% (@native_one_update_
 def native_one_update_alignment_registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@native_one_update_alignment) (Realization alignmentSignature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.alignmentUnit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.alignmentFamily
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.alignmentUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.alignmentFamily
   realizationSource := none
   generated := false
   arena := .source ⟨alignmentArena⟩
@@ -151,7 +151,7 @@ def native_one_update_alignment_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -221,8 +221,8 @@ def stationaryFamily : Registration stationaryArena
 def native_stationary_bounded_execution_registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@native_stationary_bounded_execution) (Realization stationarySignature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.stationaryUnit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.stationaryFamily
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.stationaryUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.stationaryFamily
   realizationSource := none
   generated := false
   arena := .source ⟨stationaryArena⟩
@@ -238,7 +238,7 @@ def native_stationary_bounded_execution_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -294,8 +294,8 @@ def rowsFamily : Registration rowsArena (type_of% (@native_bounded_rows_executio
 def native_bounded_rows_execution_registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       (@native_bounded_rows_execution) (Realization stationarySignature) Unit Unit where
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.rowsUnit
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl.rowsFamily
+  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.rowsUnit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows.rowsFamily
   realizationSource := none
   generated := false
   arena := .source ⟨rowsArena⟩
@@ -311,7 +311,7 @@ def native_bounded_rows_execution_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -325,4 +325,4 @@ def native_bounded_rows_execution_registration :
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderControl
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeBoundedPreorderRows
