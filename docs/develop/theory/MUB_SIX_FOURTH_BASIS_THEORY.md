@@ -3566,3 +3566,230 @@ a=\frac16\sum_i|(FSF^\dagger)_{ii}|^2=\frac{\alpha_S(C)}2,
 因此命题 45.1 对实际 quartet 的两个额外基成立，也对所有六条相对边均排除 Fourier 两种取向的 residual 子类成立。若在某个这样的 branch 上能证明每个 completion 都满足 `alpha_S>=sqrt(2024)-44`，特别是 `alpha_S>=989/1000`，便足以排除该 branch 中的 MUB pair。这把第 32 节的充分下界阈值 `2499/2500` 降低了。
 
 本节没有证明这个单 completion 下界。`F,FT` 与 `G,GT` 的共同 flatness 仍是实际 completion 域的条件，但没有在本节进一步加强联合界。六条边的 Fourier 排除、以及剩余 fibre 的单 completion 几何，仍须另行处理；本节不推出六维 quartet 不存在。
+
+## 46. 实参数支上共同无偏向量的退化 autocorrelation 排除
+
+### 46.1 实参数种子与非退化结论
+
+令 `-1<a<1`，并取正平方根：
+
+```math
+p=\frac{a-1}{2}+i\sqrt{1-\frac{(a-1)^2}{4}},\qquad
+q=\frac{-a-1}{2}+i\sqrt{1-\frac{(a+1)^2}{4}}.
+```
+
+于是 `|p|=|q|=1`、`Re(p+q)=-1`。记 `S` 为三循环矩阵，约定其第一行为 `(0,1,0)`，`J` 为三阶全一矩阵，并令：
+
+```math
+A=\operatorname{circ}(1,p,1)=J+(p-1)S,\qquad
+B=\operatorname{circ}(1,q,1)=J+(q-1)S,
+\qquad
+H=\frac1{\sqrt6}\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix}.
+```
+
+这里 `H` 始终表示归一化矩阵。此 block construction 是 Szöllősi 的已知构造，见 [*A two-parameter family of complex Hadamard matrices of order 6 induced by hypocycloids*，§2，式 (1)–(7)](https://arxiv.org/abs/0811.3930)，DOI `10.1090/S0002-9939-09-10102-8`。本节研究的是其实际共同无偏向量上的额外非退化结论。
+
+取 `omega=exp(2 pi i/3)`，按 `S` 的特征值 `1,omega,omega²` 排列酉 Fourier 坐标。对两个三元单位相位向量 `x,y`，记其 Fourier 坐标为 `u,z`，并循环定义：
+
+```math
+c_k=\overline{u_k}u_{k+1},\qquad d_k=\overline{z_k}z_{k+1},\qquad
+\Delta(x,y)=\det\begin{pmatrix}
+c_0&c_1&c_2\\d_0&d_1&d_2\\1&1&1
+\end{pmatrix}.
+```
+
+**命题 46.1。** 若 `H(x,y)^T` 的六个分量也都具有模一，则：
+
+```math
+\left(\prod_{k=0}^2u_kz_k\ne0\right)
+\quad\Longrightarrow\quad \Delta(x,y)\ne0.
+```
+
+等价地，在这些实际共同平坦向量上，`Delta(x,y)=0` 必迫使 `x,y` 至少有一个是单一 Fourier mode。该命题适用于整个所述实参数区间。
+
+**证明。** 首先，`AA*+BB*=6I`，因为其非对角相关系数为 `2+2 Re(p+q)=0`；circulant 矩阵交换又给出其余 block Gram 恒等式。因此 `H` 确为平坦酉矩阵。
+
+反设 `u,z` 都有满支撑而 `Delta=0`。单位相位条件给出 `sum c_k=sum d_k=0`。两非零向量 `c,d` 位于二维零和子空间，退化行列式使它们成比例，故可写 `d=eta c`。令 `z_k=lambda_k u_k`，则：
+
+```math
+\overline{\lambda_k}\lambda_{k+1}=\eta.
+```
+
+三个相邻模长乘积相等，故三个 `|lambda_k|` 相等。由 `||u||²=||z||²=3`，公共模长是一。因此 `eta³=1`，存在同一个单位相位 `gamma` 及 `m in {0,1,2}`，使：
+
+```math
+z_k=\gamma\omega^{mk}u_k,\qquad y=\gamma S^m x.
+\tag{46.1}
+```
+
+以下分别排除三种位移，始终保留同一相位 `gamma`。
+
+### 46.2 实参数恒等式与非零循环位移
+
+写 `p+q=-1+ih`，并令 `P=p-1`、`Q=q-1`。由 `p,q` 均在开第二象限，其辐角之差的绝对值小于 `pi/2`；故 `|p+q|²>2`，即 `h>1`。又 `|p+q|<=2`，所以 `h<=sqrt(3)`。直接由两个单位模条件及实部之和得到：
+
+```math
+pq=\frac{1-ih}{1+ih},\qquad
+ a^2=\frac{h^2(3-h^2)}{1+h^2},\qquad
+\operatorname{Re}(Q^2-P^2)=4a,
+\qquad I_0:=\operatorname{Im}(P^2+Q^2)=-\frac{4h^3}{1+h^2}.
+```
+
+因此有严格不等式：
+
+```math
+I_0^2-4a^2
+=\frac{4h^2(h^2-1)(5h^2+3)}{(1+h^2)^2}>0.
+\tag{46.2}
+```
+
+`A,B` 未归一化的 mode 特征值分别为：
+
+```math
+a_0=2+p,\quad a_k=P\omega^k\ (k=1,2),\qquad
+b_0=2+q,\quad b_k=Q\omega^k\ (k=1,2).
+```
+
+固定式 (46.1) 的 `m`，令：
+
+```math
+K_k=a_k+\gamma\omega^{mk}b_k,\qquad
+L_k=\overline{b_k}-\gamma\omega^{mk}\overline{a_k}.
+```
+
+输出的两个 Fourier channel 为 `K_k u_k/sqrt(6)` 和 `L_k u_k/sqrt(6)`。它们与 `x` 的 constant-modulus 条件共同给出：
+
+```math
+\sum_kc_k=
+\sum_k\overline{K_k}K_{k+1}c_k=
+\sum_k\overline{L_k}L_{k+1}c_k=0.
+```
+
+由于 `c` 非零，三个方程的系数行列式必须为零。但对 `m=1,2`，其确切展开为：
+
+```math
+\det\begin{pmatrix}
+1&1&1\\
+\overline{K_0}K_1&\overline{K_1}K_2&\overline{K_2}K_0\\
+\overline{L_0}L_1&\overline{L_1}L_2&\overline{L_2}L_0
+\end{pmatrix}
+=18\omega^m\left(a\frac pq\gamma^{-2}-iI_0-a\frac qp\gamma^2\right).
+\tag{46.3}
+```
+
+式 (46.3) 可逐个 Laurent 系数展开得到：以 `conjugate(p)=1/p`、`conjugate(q)=1/q`、`conjugate(omega)=omega²` 代入，乘以 `p²q²gamma²` 后使用：
+
+```math
+\omega^2+\omega+1=0,\qquad
+p^2q+pq^2+2pq+p+q=0.
+```
+
+其中两个奇次系数为零，其余三个系数即为式 (46.3) 右侧。由于 `p/q` 和 `gamma` 都有模一，若右侧为零，三角不等式就给出 `|I_0|<=2|a|`，与式 (46.2) 矛盾。两个非零循环位移均被排除。
+
+### 46.3 零位移中的相位一致性与范数矛盾
+
+现在令 `y=gamma x`，并记 `sigma=x_0+x_1+x_2`。满支撑保证 `sigma!=0`，且 `x` 不是常向量。未归一化的输出 channel 为：
+
+```math
+(P+\gamma Q)Sx+(1+\gamma)\sigma\mathbf1,
+\qquad
+(\overline Q-\gamma\overline P)S^2x+(1-\gamma)\sigma\mathbf1.
+\tag{46.4}
+```
+
+若 `x` 的三个单位相位彼此不同，实线性泛函在这三个圆周点上取同一个值就必须为零。比较式 (46.4) 的分量平方模，因 `sigma!=0`，便有：
+
+```math
+(P+\gamma Q)(1+\overline\gamma)=0,\qquad
+(\overline Q-\gamma\overline P)(1-\overline\gamma)=0.
+```
+
+`gamma=1` 或 `-1` 与 `P+Q=-3+ih!=0` 矛盾；其余情形使两个第一因子均为零，消去 `gamma` 得到 `-|P|²=|Q|²`，仍然矛盾。因此 `x` 恰有两个不同分量。乘以公共相位并作循环置换后可设 `x=(1,1,xi)`，其中 `|xi|=1`、`xi!=1`。
+
+令：
+
+```math
+U=(P+\gamma Q)(1+\overline\gamma),\qquad
+V=(\overline Q-\gamma\overline P)(1-\overline\gamma),\qquad
+Z=\overline\sigma(1-\xi)\ne0.
+```
+
+两种分量平方模的差给出 `Re(UZ)=Re(VZ)=0`，从而 `Im(U conjugate(V))=0`。写 `gamma=cos(phi)+i sin(phi)`，展开得：
+
+```math
+\operatorname{Im}(U\overline V)
+=2\sin\phi\bigl(I_0\sin\phi-4a\cos\phi\bigr).
+\tag{46.5}
+```
+
+再记 `Z_1=Q conjugate(P)`、`Z_0=(2+q)(2+conjugate(p))`，则：
+
+```math
+\operatorname{Re}Z_0=\operatorname{Re}Z_1=\frac{h^2+3}{2},\qquad
+\operatorname{Im}Z_1=\frac a2(h+3/h),\qquad
+\operatorname{Im}Z_0=\frac a2(h-3/h).
+\tag{46.6}
+```
+
+当 `gamma=±1` 时，`Re(gamma Z_0)` 和 `Re(gamma Z_1)` 同号且非零。式 (46.5) 的另一分支使：
+
+```math
+\gamma=\pm\frac{I_0+4ia}{\sqrt{I_0^2+16a^2}}.
+```
+
+利用实参数恒等式和式 (46.6)，此时两个实部的分子分别满足：
+
+```math
+I_0\operatorname{Re}Z_1-4a\operatorname{Im}Z_1
+=-\frac{6h(h^2+3)}{1+h^2}<0,
+```
+
+```math
+I_0\operatorname{Re}Z_0-4a\operatorname{Im}Z_0
+=-\frac{18h(h^2-1)}{1+h^2}<0.
+```
+
+所以这两个实部仍同号且非零。另一方面：
+
+```math
+|K_0|^2=6+2\operatorname{Re}(\gamma Z_0),\qquad
+|K_1|^2=|K_2|^2=6+2\operatorname{Re}(\gamma Z_1).
+```
+
+三个平方模必同时严格大于六，或同时严格小于六。由 `sum |u_k|²=3`，输出第一 channel 的平方范数：
+
+```math
+\frac16\sum_k|K_ku_k|^2
+```
+
+便不能等于三。这与其三个分量均有模一矛盾，排除了最后一个位移。
+
+因此满支撑时必有 `Delta!=0`。最后，三元单位相位向量若有一个 Fourier 分量为零，便有三个单位复数之和为零；它们必构成等边三角形。在三个位置上，这些相位只能按两个循环方向排列，所以原向量为单一 Fourier mode。这也证明了命题中的等价表述。证毕。
+
+### 46.4 实际列基方向与第 33 节的适用结论
+
+**推论 46.2。** 保持命题 46.1 的归一化 `H`。令 `L` 为分块循环行置换，并置 `H_0=LH`。若归一化向量 `v` 共同无偏于实际列基 `(I,H_0)`，设：
+
+```math
+w=H_0^*v,\qquad \binom{x}{y}=\sqrt6\,w.
+```
+
+则 `x,y` 都是单位相位向量，且：
+
+```math
+H\binom{x}{y}=\sqrt6\,L^*v
+```
+
+也逐项有模一。因此，只要 `w` 的两个 channel Fourier transforms 均有满支撑，第 33 节的输出侧行列式就满足 `Delta(w)!=0`。特别地，这适用于第 35 节使用的行置换 indices `(2,0,1,4,5,3)`。
+
+继续假设 `w` 的两个 channel Fourier transforms 均有满支撑。若另一实际共同无偏向量 `v'` 与 `v` **逐模正交**，则令 `w'=H_0^*v'` 后，第 33 节的 conditional partner theorem 给出：`w'` 是 mode-local，或 `w'~R^m Theta w`。返回原坐标，即：
+
+```math
+v'\text{ 是 mode-local},\qquad\text{或}\qquad
+v'\sim H_0R^m\Theta H_0^*v
+\quad(m\in\mathbb Z_3).
+```
+
+**证明。** 共同无偏的定义保证 `v` 与 `H_0*v` 的每个分量均有模 `1/sqrt(6)`，上述缩放恒等式直接给出命题 46.1 的两个实际平坦条件。缩放使 `Delta` 乘以非零因子，故非零性不变。`L` 为分块循环置换，而 `H` 为两 circulant block 矩阵，所以 `H_0` 保持每个二维 mode 子空间，并在其上酉作用；故它保持逐模正交和 mode-local 性质。对 `w,w'` 应用第 33 节，再以 `H_0` 传回即可。证毕。
+
+此推论不把输入侧 `Delta(v)` 与输出侧 `Delta(H_0*v)` 视为同一个量，也不将全局正交替换为逐模正交。命题 46.1 留下的退化情形，是至少一个 channel 为单一 Fourier mode；它未断言另一个 channel 也为单一 mode。这一排除结论本身尚不给出实际 completion 的 affinity 下界。
