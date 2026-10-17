@@ -4856,6 +4856,16 @@ $$X(S)=-15/C^2,\qquad X(S)+5D=5L_N^2/C^2.$$
 
 Its descent pair is exactly $\sigma=(-15,5)$. The rational Mordell--Weil image lies in the Cassels-pairing radical, as recalled in the cited paper's introduction, so $\langle\lambda,\sigma\rangle=+1$. Hence every such certificate must satisfy $(b/5)=-1$. A certificate with the opposite symbol excludes the original block for every $C$. No finiteness assumption on $\Sha$ is used. This argument does not use the rank-one guard of §79 and remains valid when that section's quartic symbol is $+1$. ∎
 
+**Certificate-choice independence.** The sign in Theorem 80.1 cannot be freely changed by choosing another normalized primitive norm certificate. For two such points $Q=(a,b,c)$ and $Q'=(a',b',c')$, put $G=aa'-qbb'-5qrcc'$. If $G\ne0$, the Gram determinant identity on $H_3$ gives, at a common evaluation point away from tangent zeros,
+
+$$2G L_3L'_3=5q^2r\det(Q,Q',P)^2.$$
+
+Thus $L'_3/L_3$ has squareclass $k=5q^2r/(2G)$. On $H_1$ the corresponding points are $(2a,2b,c)$ and $(2a',2b',c')$, their inner product is $4G$, and the quadratic-form determinant is $20q^2r$. Since $L_1$ is half the associated bilinear evaluation, $L'_1/L_1$ has the same squareclass $k$. The global pairing ratio is therefore
+
+$$\prod_v(k,-15)_v(k,-3)_v=\prod_v(k,5)_v=1$$
+
+by Hilbert reciprocity. If $G=0$, the two isotropic vectors are orthogonal in a nondegenerate ternary quadratic space and hence proportional; primitivity and $c,c'>0$ make the representatives equal. Consequently every admissible certificate has the same $(b/5)$. Weak approximation on the rational conic controls $\beta=b/c$, but does not control the $5$-character of the primitive global denominator $c$; the retained factor $(c/5)$ is essential.
+
 **Corollary 80.2 (an explicit conditional prime family).** Let $q$ be prime, $q\equiv1\pmod{24}$ and $(5/q)=1$. Suppose integers $A,b$ satisfy
 
 $$24\mid A,\quad b\equiv3\pmod4,\quad \gcd(qA,b)=1,\quad (b/5)=+1,$$
