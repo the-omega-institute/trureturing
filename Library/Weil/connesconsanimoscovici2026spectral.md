@@ -11191,3 +11191,60 @@ full joint coupling and good-block metric; a scalar initial-trial value
 cannot replace those data. The earlier stopped rank-one endpoint family
 remains a separate insufficient construction. There is no actual
 retained/cofinal positivity, Robin, Lean or RH conclusion here.
+
+
+### Complete original-source restricted inertia at eta one
+
+The [complete directed certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/ec7c9fc8c5bbe14a41ef9e3f8b083706831422e2/docs/reports/weil-c27/signed-restriction-eta1)
+now supplies the formerly missing original112 inertia `(56,56,0)`.
+All112 coordinates are covered exactly once by65 invertible signed pivot
+blocks. The already paid21 strictly negative coordinates give original133
+border inertia `(56,77,0)` and same-source restriction inertia `(1261,0,0)`.
+
+For the unchanged1263-dimensional positive good metric $P$, retain the two
+independent rows $B$, saved actions $PX=B^*$, $G=BX>0$, and the complete
+physical majorant
+
+$$
+F_0=F K_f F^*+\epsilon I\succeq0,\qquad
+\epsilon=\frac{27852372618143874844}{2^{512}}+2^{-542}.
+$$
+
+For a full orthonormal basis $Z$ of $\ker B$, the inherited bordered identity
+is
+
+$$
+\operatorname{In}\bigl(Z^*(P-F_0)Z\bigr)
+ =\bigl(1205+n_+(T_{112}),\ n_-(T_{112})-56,\ n_0(T_{112})\bigr).
+$$
+
+Thus this count establishes $F_0\prec P$ on $\ker B$, under those original
+common-source and action identities. It retains every original good mode,
+physical weight, boundary contribution and the complete isotropic allowance.
+The partition remains1263 good and18 remaining modes, total1281.
+In particular the eta-one restricted domination premise is now paid. The
+separate same-source full-border budget is still required; this restricted
+count does not determine the actual retained Weil sign.
+
+The successful calculation fixes an exact upper triangular dyadic change
+of basis with positive power-of-two diagonal, and then evaluates its full
+congruence outward. This basis is invertible independently of the accuracy
+of its approximate construction. Midpoint signs do not supply the count.
+The two earlier uncertain-pivot eliminations did not establish singularity.
+No large1263-dimensional Gram replay was needed for the completed count.
+
+The archive pins all17 files, the executed arithmetic source, the original
+contractions and reduction, the fixed basis, the complete interval pivot
+transcript, and the independent six-fixture review. The final count took
+170.580775291seconds with174096384bytes peak RSS; its actual calculation
+and native execution both exited0. The result JSON has SHA256
+`53c79a0f9a355b1126482f5e02ba009df8d1515dc6e62556fcbdcf00de942412`.
+The portable driver can verify the archived files or replay the small
+reduction and fixed-basis count; it does not repeat the large Gram.
+
+This is a finite numerical certificate conditional on the stated source
+and action identities. Hash agreement authenticates bytes and does not
+prove those identities. No particular rational eta below one, matching
+positive downstream budget, new Lean theorem or official kernel acceptance
+is supplied here. Neither cofinal Weil positivity, the strict Robin
+inequality for every integer above5040, nor RH follows from this count.
