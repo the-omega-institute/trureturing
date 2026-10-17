@@ -18,7 +18,9 @@ A. J. Parzygnat, *Conditional Distributions for Quantum Systems*, in M. Backens 
 
 ## Verified locator
 
-Primary version read: https://arxiv.org/abs/2102.01529v3; the text was read from the PDF. Versions v1 and v2 were compared for the statements below.
+DOI: 10.4204/EPTCS.343.1
+
+Source: https://arxiv.org/abs/2102.01529v3; the text was read from the PDF. Versions v1 and v2 were compared for the statements below.
 - page 6: Corollary 4.5 (the conditionals F and G for invertible marginals);
 - page 9: Lemma 5.1 (∗-preservation criteria);
 - page 10: Definition 5.5 (the commutants and the conditional domains), Lemma 5.8 (operator systems), Example 5.10, the remark on the 9 × 9 counterexample, and footnote 13.

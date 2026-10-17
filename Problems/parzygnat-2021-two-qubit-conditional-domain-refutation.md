@@ -91,9 +91,11 @@ Every public declaration is bind-only; the definitions are used by public statem
 
 ### What the settlement shows
 
-**Refuted by `result`:** the strictly positive two-qubit state ν above has invertible marginals, and its conditional domain B_ν is not closed under multiplication.
+**Refuted by `result`:** the two-qubit density matrix ν above has invertible marginals, and its conditional domain B_ν is not closed under multiplication.
 
-**Computed, not formalized** (orchestrator, exact SymPy check recorded in #18167). tr_A((A ⊗ 1)ν) = (1/32)·[[11a + b + c + 9d, a − d], [a − d, 7a − b − c + 5d]] for A = [[a, b], [c, d]], so A_ν = {[[a, b], [c, a]]} as well. Both conditional domains fail.
+**Computed, not formalized** (orchestrator, exact SymPy check recorded in #18167).
+- ν ≥ (3/32)·1, by the sum of squares in step 1 of the route, so ν has full rank; the module proves positive semidefiniteness.
+- tr_A((A ⊗ 1)ν) = (1/32)·[[11a + b + c + 9d, a − d], [a − d, 7a − b − c + 5d]] for A = [[a, b], [c, d]], so A_ν = {[[a, b], [c, a]]} as well. Both conditional domains fail.
 
 **Argued, not formalized.**
 - *When the domain is an algebra.* Write T(B) = tr_B(ν(1 ⊗ B)), so B_ν is the preimage under T of the commutant of ρ.
@@ -101,9 +103,9 @@ Every public declaration is bind-only; the definitions are used by public statem
   - Otherwise the commutant of ρ is two-dimensional. If moreover T is invertible, B_ν is a two-dimensional operator system, of the form span{1, X} with X Hermitian, and X² = (tr X)X − (det X)·1 lies in it by Cayley–Hamilton.
 
   So a two-qubit counterexample needs a non-scalar marginal and a singular T, and the same holds for A_ν. In the witness, T has rank 3: its kernel contains E₀₁ − E₁₀.
-- *Genericity.* det T is a polynomial in the entries of ν. It does not vanish at the Bell state (1/2)(e₀₀ + e₁₁)(e₀₀ + e₁₁)ᴴ, where T(B) = Bᵀ/2. So the counterexamples lie in a proper algebraic subset of the two-qubit states. The suspicion holds for almost every two-qubit state and fails on that subset, which contains states of full rank.
+- *Genericity.* det T is a polynomial in the entries of ν. It does not vanish at the Bell state (1/2)(e₀₀ + e₁₁)(e₀₀ + e₁₁)ᴴ, where T(B) = Bᵀ/2. The same holds for the corresponding map of A_ν. So the suspicion holds for every two-qubit state with invertible marginals outside the zero sets of these two determinants, a proper algebraic subset. Counterexamples can occur only within that subset, and the witness shows that one occurs there with full rank.
 
-**Effect on the paper.** The answer "no" to "Is this always the case?" already holds for two qubits, with a strictly positive state and invertible, non-degenerate marginals. The 9 × 9 example of the source is not the smallest.
+**Effect on the paper.** The answer "no" to "Is this always the case?" already holds for two qubits, with a full-rank state and invertible, non-degenerate marginals. The 9 × 9 example of the source is not the smallest.
 
 ## ASSUMED-UNVERIFIED
 
