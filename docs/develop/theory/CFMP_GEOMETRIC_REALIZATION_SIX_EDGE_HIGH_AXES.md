@@ -3057,3 +3057,555 @@ omitted reduction, source-face existence assertion, complete-star
 premise, or lower-reservoir theorem is silently promoted here. The
 arguments are pure mathematical derivations and do not constitute
 Lean or kernel verification.
+
+## 431. A reusable transverse-dominance expense
+
+**Theorem 431.1.** Let r,p,a,b>1 and consider the paired frame
+(r,p,a,b,p,a), with strict genuine factors
+
+    L=(p+a)^2-(r-1)*(b-1)>0,
+    J=(r+1)*(b+1)-(p-a)^2>0.
+
+Let theta_r be its axial angle at r and beta_p its transverse angle
+at p, with the usual paired hyperideal response formulas. Assume
+
+    p>=a+b.                                           (431.1)
+
+Then
+
+    theta_r+2*beta_p>pi.                               (431.2)
+
+No lower bound on r besides r>1 and strict genuineness is needed.
+No source, maximum gap, degree, normal circle or face receiver is
+assumed. The two transverse p occurrences are counted separately.
+The argument is a scalar consequence of the paired response formulas.
+
+## 432. The exact angle-sign criterion
+
+Put
+
+    D_r=r^2+p^2+a^2+2*r*p*a-1,
+    D_b=b^2+p^2+a^2+2*b*p*a-1,
+    N=a*(r+b)+p*(r*b+a^2-p^2+1).
+
+For the genuine angles,
+
+    cos(beta_p)=N/sqrt(D_r*D_b),
+    sin(beta_p)=sqrt((p^2-1)*L*J)/sqrt(D_r*D_b),
+    cot(theta_r/2)=sqrt((r+1)*L/((r-1)*J)).
+
+The sine identity follows from the exact polynomial identity
+
+    D_r*D_b-N^2=(p^2-1)*L*J.                         (432.1)
+
+If N<=0, then beta_p>=pi/2, and theta_r>0 proves (431.2).
+Suppose N>0. Then beta_p is in (0,pi/2), while theta_r/2 is in
+(0,pi/2). The target (431.2) is equivalent to
+
+    beta_p>pi/2-theta_r/2,
+    tan(beta_p)>cot(theta_r/2).
+
+All factors used in this comparison are positive. Squaring and
+cancelling L>0 shows that it suffices, and is equivalent, to
+
+    Delta=(p^2-1)*(r-1)*J^2-(r+1)*N^2>0.           (432.2)
+
+## 433. An affine factorization in the high axis
+
+Direct expansion gives
+
+    Delta=D_r*F(r), F(r)=A*r+B,                    (433.1)
+
+where
+
+    A=(2*b+1)*p^2-2*a*b*p-a^2-b^2-2*b-1,
+    B=-2*a^2*p^2+a^2-2*a*b*p+4*a*p^3-4*a*p
+      -b^2+2*b*p^2-2*b-2*p^4+3*p^2-1.
+
+Under p>=a+b, the coefficient A is strictly positive. Indeed
+
+    dA/dp=2*((2*b+1)*p-a*b)>0,
+    A at p=a+b
+      =2*a*b*(b+1)+2*b*(b^2-1)-1>3>0.             (433.2)
+
+The last strict comparison uses a,b>1. Thus F is strictly increasing
+as a function of r on the whole real line. This is an algebraic
+monotonicity, not an unproved monotonicity of the angle expense.
+
+## 434. Comparison at the zero of the cosine numerator
+
+The numerator N is affine in r with positive slope a+p*b. At r=1,
+
+    N(1)=a*(1+b)+p*(b+a^2-p^2+1).
+
+For p>=a+b, this is strictly negative. To verify it, its derivative
+with respect to p is b+a^2+1-3*p^2, which is at most
+
+    1+b-2*a^2-6*a*b-3*b^2<0.
+
+At the boundary p=a+b, exact factorization gives
+
+    N(1)=-(2*a+b)*(a*b+b^2-b-1)<0,                 (434.1)
+
+because a*b>b and b^2>1. Therefore the unique zero of N as a
+function of r is
+
+    r0=[p*(p^2-a^2-1)-a*b]/(a+p*b)>1.             (434.2)
+
+Our current branch N>0 implies r>r0. The following comparison does not
+require the genuine tests at r0; it is a polynomial identity evaluated
+at that rational point. Since D_r0>0 and r0>1, (433.1) gives
+
+    D_r0*F(r0)=(p^2-1)*(r0-1)*J(r0)^2>=0.
+
+Thus F(r0)>=0. By the strict positive slope A and r>r0,
+
+    F(r)>F(r0)>=0.
+
+Equation (433.1) yields Delta>0, proving the angle comparison (432.2)
+and hence (431.2). Both signs of N have been handled, including N=0.
+
+## 435. Exact high/low separation in the near-maximal range
+
+Let the six distinct actual labels be M,V,Z,U,C,D, with corresponding
+coshes m,v,z,u,c,d. Suppose
+
+    c,d>1, m>=v>1, z,u>=m,
+    v>m-2, (m-1)*(v-1)>=(c+d)^2.                  (435.1)
+
+Set H={M,V,Z,U}. Since m<v+2, the product gives
+
+    (c+d)^2< (v+1)*(v-1)=v^2-1.
+
+Consequently
+
+    v>sqrt(5)>2, c+d<v, c,d<v-1,                 (435.2)
+
+and every H value is at least v. Every pair of distinct H labels,
+with values r,p, also satisfies
+
+    (r-1)*(p-1)>=(m-1)*(v-1)>=(c+d)^2.            (435.3)
+
+Indeed V is a least H value and all other H values are at least m.
+This retains the actual distinct-label product constraint. It does
+not replace both factors in (435.3) by v-1.
+
+The later role argument uses only the following reusable conditions,
+which (435.1)-(435.3) supply with s=v:
+
+    c,d>1; every H value is at least s>c+d;
+    (r-1)*(p-1)>=(c+d)^2 for every distinct H pair. (435.4)
+
+Conditions (435.4) imply s>2 and c,d<s-1. The pairwise product is a
+separate hypothesis, not inferred merely by lowering both high values
+to s. It can equivalently be checked on the two least H values at
+distinct labels. This separates the direct four-high theorem from
+the specific near-maximal sufficient conditions.
+
+## 436. Two high transverse labels and two low axes
+
+Consider a genuine frame (r,p,q,o,p,q) with
+
+    p,q>=s>2, 1<r,o<=s-1.
+
+Let S=beta_p+beta_q and K=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q).
+The exact paired response is S=2*atan(K*sqrt(L/J)), where
+
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+The scalar bounds imply
+
+    L>=4*s^2-(s-2)^2=3*s^2+4*s-4>3*s^2,
+    J<=s^2,
+    K^2>=1-1/s^2>3/4.
+
+For K, apply sqrt(x^2-1)>=x*sqrt(1-1/s^2) separately at x=p,q.
+Thus K^2*L/J>9/4>1. Since atan is increasing on positive reals,
+S>pi/2. The four original high transverse slots therefore obey
+
+    2*beta_p+2*beta_q>pi.                          (436.1)
+
+No condition on the ordering of p and q is needed, including p=q.
+
+## 437. Three high labels with the low label transverse
+
+Let
+
+    r,p,o>=s>2, 1<q<=s-1,
+    L=(p+q)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(p-q)^2>0.
+
+In the genuine paired frame (r,p,q,o,p,q), define its four-high-slot
+expense E=theta_r+theta_o+2*beta_p. Then
+
+    E>4*pi/3-4/s^2>pi.                            (437.1)
+
+Compared with Sections 395-399, the low-label gap is now one rather
+than two, with a weaker
+expense conclusion. It does not assume monotonicity of E.
+
+## 438. Distortion of an angle for every u>2
+
+For u>2 put a0=sqrt(1-u^(-2))>1/2. If phi,psi in (0,pi) have
+positively oriented vectors proportional to (cos(phi),sin(phi))
+and (cos(phi),a0*sin(phi)), respectively, then
+
+    |psi-phi|<1/u^2.                              (438.1)
+
+Their difference delta has absolute value less than pi/2. The exact
+angle-between-vectors formula gives
+
+    tan(|delta|)=(1-a0)*|sin(phi)*cos(phi)|
+                  /(cos(phi)^2+a0*sin(phi)^2)
+                <=(1-a0)/(2*sqrt(a0)).
+
+The inequality follows from (|cos(phi)|-sqrt(a0)*sin(phi))^2>=0.
+Since |delta|<=tan(|delta|) and 1-a0=1/[u^2*(1+a0)],
+
+    |delta|<=1/[2*u^2*sqrt(a0)*(1+a0)]<1/u^2.
+
+This covers phi=pi/2 and the zero-distortion case too. The proof
+requires only u>2, rather than importing the earlier u>3 domain.
+
+## 439. Exact axial-pair reduction and comparison branch
+
+Define local auxiliary scalars
+
+    z0=sqrt((r+1)*(o+1)), y0=sqrt((r-1)*(o-1)),
+    h=(z0+y0)/2, k=(z0-y0)/2.
+
+Then
+
+    h>=s, 1<=k<=h/s.                              (439.1)
+
+The first bound follows from z0>=s+1 and y0>=s-1. The identity
+z0^2-(y0+2)^2=2*(sqrt(r-1)-sqrt(o-1))^2>=0 proves k>=1.
+Finally y0/z0>= (s-1)/(s+1) gives k/h<=1/s.
+
+Put alpha=(theta_r+theta_o)/2, X=sqrt(L*J)>0, and
+
+    Np=p*(h^2+k^2+q^2-p^2)+2*q*h*k,
+    Nh=h*(p^2+q^2+k^2-h^2)+2*k*p*q.
+
+The original genuine factors are
+
+    L=(p+q)^2-(h-k)^2,
+    J=(h+k)^2-(p-q)^2.
+
+The exact half-angle identities, obtained by tangent addition, are
+
+    cot(alpha)=Nh/(sqrt(h^2-1)*X),
+    cot(beta_p)=Np/(sqrt(p^2-1)*X).               (439.2)
+
+For example, with a_r=sqrt((r-1)/(r+1)), a_o similarly, one has
+a_r*a_o=(h-k)/(h+k) and a_r+a_o=2*sqrt(h^2-1)/(h+k).
+These give the first formula. The second uses the sum and product
+of the two transverse arctangent coefficients. Both sines are
+positive, so the cotangent formulas retain right-angle cases.
+
+Define alpha0,beta0 in (0,pi) by cot(alpha0)=Nh/(h*X) and
+cot(beta0)=Np/(p*X). Applying (438.1) at u=h,p gives
+
+    E/2=alpha+beta_p>alpha0+beta0-2/s^2.           (439.3)
+
+Let T0=alpha0+beta0. Initially T0 is in (0,2*pi), and
+
+    cot(alpha0)+cot(beta0)
+      =[2*(q^2+k^2)+2*q*k*(p/h+h/p)]/X>0.
+
+As both individual sines are positive, this implies sin(T0)>0,
+hence T0 is in (0,pi). Exact polynomial identities are
+
+    Np^2+p^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Nh^2+h^2*L*J
+      =4*(h*k+p*q)*(h*p+k*q)*(h*q+k*p),
+    Np*Nh-p*h*L*J
+      =-2*(h*k+p*q)*(h*q+k*p)*(h^2+p^2-q^2-k^2).
+
+Their positive normalization gives
+
+    cos(T0)=-(h^2+p^2-q^2-k^2)/(2*(h*p+k*q)).     (439.4)
+
+## 440. A positive quadratic for the one-unit gap
+
+The expression q^2+k^2+k*q increases in both positive variables.
+Using q<=s-1 and k<=h/s, we obtain
+
+    h^2+p^2-q^2-k^2-h*p-k*q
+      >=(1-1/s^2)*h^2+p^2-h*p
+         -(s-1)^2-h*(s-1)/s.
+
+Write A0=h-s>=0 and B0=p-s>=0. The last expression equals
+
+    s-1+(s-1-1/s)*A0+s*B0
+      +(1-1/s^2)*A0^2+B0^2-A0*B0.                (440.1)
+
+Here s-1>0, s-1-1/s>0, and s>0. Since s>2, the quadratic
+part is at least
+
+    (3/4)*A0^2+B0^2-A0*B0
+      =(1/4)*A0^2+(1/2)*B0^2+(1/2)*(A0-B0)^2>=0.
+
+Thus h^2+p^2-q^2-k^2>h*p+k*q. By (439.4), cos(T0)<-1/2.
+The established T0 in (0,pi) gives T0>2*pi/3. Equation (439.3)
+therefore proves E>4*pi/3-4/s^2. Since s>2 and pi>3,
+
+    4*pi/3-4/s^2>4*pi/3-1>pi.
+
+This completes (437.1), including all sign branches of Nh and Np and
+all ties among the three high values.
+
+## 441. A high axis and two high transverse labels
+
+Suppose a genuine frame (r,p,q,o,p,q) has r,p,q>=s>2. The other
+axis o is arbitrary above one. Let theta=theta_r and S=beta_p+beta_q.
+Put
+
+    K=(sqrt(p^2-1)+sqrt(q^2-1))/(p+q),
+    lambda=K*sqrt((r-1)/(r+1)), t=cot(theta/2)>0.
+
+The exact response is S=2*atan(lambda*t). Moreover
+
+    K>=sqrt(1-1/s^2),
+    lambda>=(s-1)/s>1/2.                         (441.1)
+
+We claim S>atan(t). If S>=pi/2 this is immediate. Otherwise S is
+in (0,pi/2), its tangent denominator is positive, and
+
+    tan(S)=2*lambda*t/(1-lambda^2*t^2)>t.
+
+Indeed 2*lambda>1 and the denominator is positive and at most one.
+Strict monotonicity of tangent on (0,pi/2) proves the claim. Since
+theta+2*atan(t)=pi, it follows that
+
+    theta_r+2*beta_p+2*beta_q>pi.                  (441.2)
+
+These are five original high slots. The sixth slot is nonnegative
+and may itself be high. This lemma therefore covers both a three-high
+frame with its low label axial and a frame with all four labels high.
+
+## 442. The complete four-high role partition
+
+Under (435.4), a frame with four distinct actual labels contains at
+least two H labels, because the complement has only C,D. The complete
+fixed-word partition is:
+
+| High-label placement | Fixed words | High slots | Conclusion |
+|---|---:|---:|---|
+| Two high labels, both axial; C,D transverse | 24 | 2 | Not genuine |
+| Two high labels, one axial and one transverse | 96 | 3 | >pi by Sections 431-434 |
+| Two high labels, both transverse; C,D axial | 24 | 4 | >pi by Section 436 |
+| Three high labels, low label transverse | 96 | 4 | >pi by Sections 437-440 |
+| Three high labels, low label axial | 96 | 5 | >pi by Section 441 |
+| Four high labels | 24 | 6 | >pi by Section 441 and positivity |
+
+The six counts sum to 360. With exactly two high labels there are
+six choices of their pair, and their four positions give counts
+4,16,4 per choice. With three high labels there are four choices
+of high triple and two choices of low label; twelve permutations
+place that low label axially and twelve transversely. With four high
+labels there are 24 permutations.
+
+For the first row, the distinct actual high axes obey (435.4), so
+L=(c+d)^2-(r-1)*(o-1)<=0; strict genuineness fails. In the second
+row, the transverse high p is at least s>c+d, so Theorem 431.1 in
+Sections 431-434 applies with {a,b}={c,d}. In every later row use the
+same s>2, with each low value strictly below s-1. This proves
+that every genuine owner spends strictly more than pi on H.
+
+The census is by fixed actual label words, before numerical
+coincidences. Original owners with repeated role vectors remain
+separate. Every axial occurrence counts once and every transverse
+label has its two separate original slots. No receiver, distinct-role
+assumption, or prohibition on loops or self-gluings is introduced.
+
+## 443. A reusable direct four-high exclusion theorem
+
+Assume a finite actual face-paired tetrahedral quotient with exactly
+six distinct actual labels M,V,Z,U,C,D. Each original owner has a
+fixed vertex-induced paired frame with four distinct actual labels.
+Assume one common positive length field with coshes satisfying (435.4),
+and complete original angle sums 2*pi at every actual edge.
+
+Assume sigma=(M,C,D,V,C,D) is the unique flat owner, with angle pi
+at its M,V axes and zero at its four transverse slots. Every other
+owner is genuine, with strict L,J>0 and the usual paired response
+angles. As for genuine hyperideal paired tetrahedra throughout the
+published theory, each genuine owner's six-slot total is less than
+2*pi. This follows by adding its two vertex-link inequalities
+theta_r+beta_p+beta_q<pi and theta_o+beta_p+beta_q<pi.
+
+**Theorem 443.1.** No such quotient and length field exist.
+
+Proof. Let g be the number of genuine original owners. The six complete
+angle sums total 12*pi, and sigma contributes 2*pi. Therefore
+
+    10*pi=sum_genuine total_six_slot_angle<2*pi*g,
+    g>=6.                                               (443.1)
+
+The four actual H labels have total angle capacity 8*pi. Sigma
+contributes pi at each of M,V and nothing at Z,U. Thus
+
+    sum_genuine expense_H=6*pi.                          (443.2)
+
+The exhaustive role partition proves expense_H>pi for every genuine
+owner. Hence (443.1)-(443.2) give
+
+    6*pi=sum_genuine expense_H>g*pi>=6*pi,
+
+a contradiction.
+
+Once this unique-flat normal form is given, the direct contradiction
+does not use the near-maximal inequality, a named source tau, either
+maximum gap, an original degree lower bound, or connected-circle
+topology. Those hypotheses are needed
+by the earlier reductions supplying the normal form, not by this last
+strict-capacity argument. The scalar hypotheses here permit numerical
+ties such as m=v and z=u; actual labels remain distinct.
+
+## 444. The exact intrinsic six-edge ambient class
+
+For the next deduction retain the full ambient class of the earlier
+paired-reservoir volume. Let N be a connected orientable compact
+3-manifold with nonempty boundary, every component a closed surface
+of genus at least two. Fix an actual finite ideal face-pairing
+triangulation of N whose ideal vertex links are those boundary
+surfaces. Original faces are paired by a fixed-point-free involution
+on their occurrences. The actual normal quotient is formed by pairing
+the endpoints of the original local edge intervals through those face
+maps. Each actual edge has a connected circular normal link and
+original degree at least six.
+
+Suppose there are exactly six actual global edge labels. In every
+original tetrahedron choose one fixed vertex-induced paired frame,
+in edge order (12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B), with R,A,B,O four distinct actual labels.
+
+Assume one common positive global generalized length field has every
+original edge-angle sum equal to 2*pi. The usual positive-length
+classification makes each owner genuine or flat with two opposite
+pi angles and four zeros. All original occurrences count, including
+repeated visits, loops, parallel face pairings and distinct-face
+self-gluings. Numerical ties at distinct labels are permitted.
+
+These are the common ambient hypotheses for the following binding;
+no ambient topology assumption from the earlier volume is removed.
+The direct scalar/angle theorem of Section 443 needed less topology
+once its unique-flat normal form was already supplied.
+
+## 445. Published reductions to the whole source range
+
+Suppose a flat exists in the class of Section 444. In the framework
+of Section 130, take the reservoir part to be all of E and the special
+part to be empty. This is allowed even if a label
+happens to occur only axially; no transverse witness is presumed.
+Sections 132-134 choose M maximal among all pi-selected reservoir
+labels and provide four distinct actual labels M,Z,C,D and a genuine
+source tau with
+
+    tau=(Z,M,C,D,M,C), p_M=1, p_Z=0,
+    m>=1+c+d, z>=1+m+c>m.
+
+Here p_e counts original flat pi slots. In particular c,d<m-2.
+Section 182 provides an additional upper-threshold reservoir.
+Sections 296-298 and 304-307 then prove that every one of the six
+reservoirs has a genuine occurrence and every flat is axial-selected.
+The degree-eight strengthening mentioned earlier is unnecessary.
+
+Sections 314-316, under the four-distinct-frame hypothesis, provide
+a second actual label U with u>m. Section 317 shows that the source
+flat's other axis is the sixth label V, and proves globally that
+sigma is the unique flat owner and the only owner with fixed pair
+C,D. Thus
+
+    sigma=(M,C,D,V,C,D), 1<v<=m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u>m, z>=1+m+c,
+
+and every other original owner is genuine. In particular Z,U have
+wholly genuine stars. This published reduction covers both ranges
+v<=m-2 and m-2<v<=m; it does not itself exclude the latter.
+
+Sections 318-321 apply the complete-star maximum-gap theorem to the
+larger of Z,U. Every cosh outside those two labels is at most m, and
+the two largest other values are min(z,u) and m. With all the actual
+degree, circle and complete-angle hypotheses retained, this gives
+
+    |z-u|<m+1,
+    u<z+m+1 and z<u+m+1.                          (445.1)
+
+This is the source of both strict one-sided gaps used by the
+low-sixth proof. They are not inferred from a local scalar relaxation.
+
+## 446. Binding the two source ranges without a hidden strictness premise
+
+First suppose v<=m-2. If m=1+c+d, then the source-flat product gives
+
+    (c+d)*(v-1)>=(c+d)^2,
+    v>=1+c+d=m,
+
+contradicting v<=m-2. Hence m>1+c+d.
+
+The genuine source tau has two original transverse M slots and sigma
+already contributes pi at M. Therefore 2*beta_M(tau)<=pi. Its cosine
+has positive denominator and numerator
+
+    N(z)=c*(z+d)+m*(z*d+c^2-m^2+1).
+
+This affine function has derivative c+m*d>0. At z0=1+m+c,
+
+    N(z0)=[c+m*(1+m+c)]*(1+c+d-m)<0.
+
+The source angle budget gives N(z)>=0, forcing z>1+m+c. This is the
+strict clause of the original escape theorem in Section 134. The
+remaining conditions of Section 413 follow from Section 444, the
+published reductions, and (445.1). Thus Theorem 430.1 excludes the
+entire low-sixth subcase. No receiver inventory is inserted here.
+
+Now suppose m-2<v<=m. Section 435 gives
+
+    c+d<v, v>2,
+    all four M,V,Z,U values >=v,
+    every distinct high-pair shifted product >=(c+d)^2.
+
+These are exactly the scalar conditions of Theorem 443.1 with s=v.
+The unique flat and the complete original angle sums are supplied by
+the same reduction. That direct theorem therefore excludes this
+remaining near-maximal range, without using the strict-source
+upgrades or either maximum gap in this second branch.
+
+The equality m=1+c+d forces v=m by the source product and v<=m;
+it is consequently included in this second branch. This necessary
+equality implication is not an assertion that the boundary is
+realizable. Equal numerical coshes and the endpoint v=m-2 are all
+covered by the displayed disjoint split.
+
+## 447. Flat exclusion for exactly six actual edges and four-distinct frames
+
+**Theorem 447.1.** Under all hypotheses of Section 444, every original
+tetrahedron of the common positive generalized length field is genuine.
+
+Proof. A nonempty flat set would give the source data of Section 445.
+Its entire range 1<v<=m is the union of the two cases excluded in
+Section 446. Thus no flat exists, and the positive-length classification
+leaves only genuine owners.
+
+The proof includes all actual original slots and face occurrences.
+It neither removes repeated visits nor forbids two distinct owners
+from having the same role vector. The four-distinct-label condition
+is a condition within each fixed frame, not an assumption that the
+four numerical coshes differ or that owners have different roles.
+
+This theorem completes flat exclusion for the stated intrinsic
+six-actual-edge class. It does not extend the 360-word census to
+repeated axial/frame labels, to six reservoir labels with additional
+special actual edges, or to more than six actual labels. The original
+degree and topology hypotheses remain those of Section 444.
+
+Existence of a common positive critical length field and conversion
+to a geometric realization are separate inputs and are not proved by
+this flat-exclusion argument alone. No unrestricted CFMP theorem or
+Lean/kernel verification is asserted.
