@@ -3081,3 +3081,493 @@ $$
 **证明。** 真实正来源必有 $a=\operatorname{tr}(\alpha R)>0$，故先排除 $a\le0$。在所述判定域内至少有两个非零切换增益，定理 38.2 的恢复有定义；共同物理实现给出列出的每个条件，故它们必要。反向设条件成立。第 4 节的逆保证所构造 $T$ 的四个迹正是 $u_{m-1},u_m,U_0,U_1$。对 $S=M^{-(m-1)}T$，其纯 $M$ 信号在 $m-1,m$ 的值已与 $u$ 一致；Fibonacci 递推可反向写为 $u_i=u_{i+2}-u_{i+1}$，故两序列在 $0,1$ 乃至全部纯 $M$ 位置一致。于是 $\operatorname{tr}S=a,\operatorname{tr}(MS)=b$，而 $c=\kappa a,e=\kappa b$ 使前 $N$ 次线性拟合恰为共同增益模型。其余已读位置由所列等式保证。取 $\alpha=1,R=S,\beta=\kappa$，正秩一条件给出一个实际共同来源，所有读数均在一条累计路径上实现。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 任意已知有限次共同增益的零安全固定历史恢复
+
+### 定义 39.1（次数合同与不依赖初读增益的目标）
+
+固定已知整数 $k,d\ge0$。令 $R\in\operatorname{Mat}_2(\mathbb R)$ 的四项严格为正且秩为一，$G\in\mathbb R[t]\setminus\{0\}$、$\deg G\le k$，$D\in\mathbb R[t]$、$\deg D\le d$，其中零漂移也允许。所有读数由同一个固定关系、同一个增益多项式和同一个漂移多项式产生：
+
+$$
+z_i=G(i)\operatorname{tr}(A_iR)+D(i).
+$$
+
+操作 $M,J$ 是第 2、3 节的已知矩阵；$i$ 是从零开始记录的连续整数读数序号，每个位置读取一次，不是待估计的物理时间。设
+
+$$
+a=\operatorname{tr}R>0,\qquad
+R_0=R/a,\qquad H=aG,\qquad
+b=\operatorname{tr}(MR_0).
+$$
+
+恢复目标为 $(R_0,H,D)$，于是 $\operatorname{tr}R_0=1$、$H\not\equiv0$，且 $z_i=H(i)\operatorname{tr}(A_iR_0)+D(i)$。这里不要求 $G(0)$ 或任何指定位置的 $G(i)$ 非零，也不要求增益为正、实际次数等于上界、根为单根或两个 Fibonacci 模态都出现。
+
+令
+
+$$
+N=2k+d+3,\qquad m=N-1,\qquad L=N+k+2=3k+d+5.
+$$
+
+预先固定一条不可重置的累计路径：
+
+$$
+A_i=M^i\quad(0\le i<N),\qquad
+A_{N+j}=M^jJM^m\quad(0\le j\le k+1).
+$$
+
+因此先从 $I$ 连续执行 $m$ 次 $M$，下一步执行一次 $J$，以后只执行 $M$。切换不重启关系、增益、漂移或读数时钟。记 $f_i,g_i$ 为 Fibonacci 递推的两个解，初值分别为 $(f_0,f_1)=(1,0)$、$(g_0,g_1)=(0,1)$。另记普通 Fibonacci 数为 $F_0=0,F_1=1$；则 $g_i=F_i$，而 $f_i=F_{i-1}$ 对 $i\ge1$ 成立。
+
+### 定理 39.2（任意有限次共同增益的统一采集）
+
+在定义 39.1 的合同中，固定的 $L=3k+d+5$ 个读数 $z_0,\ldots,z_{L-1}$ 唯一确定完整目标 $(R_0,H,D)$。其中前 $N$ 个读数唯一给出三个多项式 $P,Q,\widehat D$，满足
+
+$$
+\deg P,\deg Q\le k,\qquad \deg\widehat D\le d,\qquad
+z_i=f_iP(i)+g_iQ(i)+\widehat D(i)\quad(0\le i<N).
+$$
+
+真实模型必有
+
+$$
+P=H\not\equiv0,\qquad Q=bH,\qquad\widehat D=D.
+$$
+
+取 $P$ 的任一非零系数即可恢复 $b$；在 $k+2$ 个切换后位置中取任意两个增益非零的位置即可恢复两个切换信号坐标，再调用定理 4.1 恢复全部 $R_0$。选择解码位置不改变采集路径或读数数目。
+
+这个数目只是本固定方案的充分上界，不是所有固定或自适应协议的最少读数。$k=1$ 时的 $d+8$ 与 §38 的无切换零点限制数目一致，但本节不要求初读增益为正；§37 的较大仿射提升已经包含初读增益为零的情形。本节的新增结论是任意已知有限次数下同一共同增益、同一完整关系与同一时钟的统一采集及其规范不变量，不把初读零点的仿射情形视为此前全未覆盖。
+
+**证明。** 首先建立前 $N$ 行的线性逆，而不预先除以任何增益值。由 $M^2=M+I$ 及 $\operatorname{tr}R_0=1$，纯 $M$ 信号为
+
+$$
+u_i=\operatorname{tr}(M^iR_0)=f_i+bg_i.
+$$
+
+令 $s=2(k+1)$。考虑固定的 $s$ 个数列 $i^rf_i,i^rg_i$，$0\le r\le k$，以及它们在连续行 $i=0,\ldots,s-1$ 上的评价矩阵 $X_0$。其可逆性可具体由合流 Vandermonde 结构读出。设
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2},\qquad
+f_i=\frac{\phi\psi^i-\psi\phi^i}{\phi-\psi},\qquad
+g_i=\frac{\phi^i-\psi^i}{\phi-\psi}.
+$$
+
+两节点 $\phi,\psi$ 互异、非零，且 $\phi-\psi=\sqrt5\ne0$。对每个 $r$，上述两列与 $i^r\phi^i,i^r\psi^i$ 之间的二阶变换可逆。对任一节点 $\lambda\ne0$，用下降阶乘 $(i)_r=i(i-1)\cdots(i-r+1)$、$(i)_0=1$，各列 $i^r\lambda^i$ 又通过三角可逆变换变成 $(i)_r\lambda^{i-r}$：普通幂到下降阶乘的基底变换对角线为 $1$，而节点幂缩放的对角线为非零的 $\lambda^r$。
+
+因此 $X_0$ 与节点重数均为 $k+1$、连续行 $0,\ldots,s-1$ 的合流 Vandermonde 矩阵只差可逆列变换。所用矩阵及行列式是 Batenkov–Yomdin, “On the Accuracy of Solving Confluent Prony Systems”, §2B, Definitions 2.3–2.4、式 (2.2)–(2.4), [arXiv:1106.1137v3](https://arxiv.org/abs/1106.1137v3), [DOI:10.1137/110836584](https://doi.org/10.1137/110836584) 中的已知中间工具；在这里具体为
+
+$$
+\det U=(\psi-\phi)^{(k+1)^2}
+\left(\prod_{r=0}^{k}r!\right)^2\ne0.
+$$
+
+这里只使用固定已知节点的线性评价逆，不使用需要最高模态系数非零的未知节点 Prony 识别结论。矩阵与未知系数无关，所以最高系数消失、实际次数较低、某个模态振幅为零均不改变其可逆性。连续行假设正是在这里使用；并未把这个结论推广为任意缺行的合流评价矩阵都可逆。
+
+令 $E$ 为前移算子。对次数不超过 $k$ 的多项式 $p$，
+
+$$
+(E-\lambda)\bigl(\lambda^ip(i)\bigr)
+=\lambda^{i+1}\bigl(p(i+1)-p(i)\bigr),
+$$
+
+故上述 $s$ 个数列都被
+
+$$
+\mathcal Q(E)=(E^2-E-I)^{k+1}
+$$
+
+消去，且 $\mathcal Q$ 首一、次数为 $s$、$\mathcal Q(1)=(-1)^{k+1}$。现在直接应用定理 35.2，取其 $h=0,r=s=2(k+1)$，就得到 $s+d+1=N$ 行的信号—漂移逆。其前提 $X_0$ 可逆已由上式核实，$\mathcal Q(1)$ 在实数中是单位。该逆把次数不超过 $d$ 的漂移写在二项式基底上；由于实数中的 $j!$ 非零，这与普通多项式合同相同。因此任意前 $N$ 个实读数均有唯一的 $(P,Q,\widehat D)$。对真实来源，$H(i)u_i=f_iH(i)+g_i(bH(i))$ 正是该表示，唯一性给出 $P=H,Q=bH,\widehat D=D$。
+
+写 $P(t)=\sum_{r=0}^kp_rt^r$、$Q(t)=\sum_{r=0}^kq_rt^r$。因 $a>0$ 且 $G\not\equiv0$，$P=H\not\equiv0$。选取任一 $p_r\ne0$，便有
+
+$$
+b=q_r/p_r.
+$$
+
+这个除法的分母是已恢复且已判非零的系数，既不要求 $H(0)\ne0$，也不要求任一预定读数的增益非零。真实共同来源还给出所有系数恒等式 $q_r=bp_r$。
+
+接着令
+
+$$
+U_j=\operatorname{tr}(M^jJM^mR_0),\qquad
+w_j=z_{N+j}-D(N+j)=H(N+j)U_j.
+$$
+
+序列 $U$ 满足 $U_{j+2}=U_{j+1}+U_j$。非零且次数至多 $k$ 的实多项式在互异实数上至多有 $k$ 个零点：每个不同零点贡献一个一次因子，逐次应用因子定理即得；重根不会增加不同零点的数目。所以 $k+2$ 个互异位置 $N,\ldots,N+k+1$ 中至少有两个非零增益。任取其局部序号 $0\le p<q\le k+1$，只在已知 $H(N+p)H(N+q)\ne0$ 的域上定义
+
+$$
+V_p=\frac{w_p}{H(N+p)},\qquad
+V_q=\frac{w_q}{H(N+q)}.
+$$
+
+不需要这两个位置相邻。矩阵
+
+$$
+C_{p,q}=\begin{pmatrix}f_p&g_p\\f_q&g_q\end{pmatrix}
+$$
+
+满足
+
+$$
+\Delta_{p,q}:=\det C_{p,q}=(-1)^pF_{q-p}\ne0.
+$$
+
+为核对这个任意间距恒等式，记 $v_j=(f_j,g_j)$，则 $v_{j+2}=v_{j+1}+v_j$，$\det(v_0,v_1)=1$，且 $\det(v_{j+1},v_{j+2})=-\det(v_j,v_{j+1})$。对 $h\ge1$，递推给出 $v_{p+h}=F_{h-1}v_p+F_hv_{p+1}$，从而所列行列式为 $F_{q-p}(-1)^p$；$F_h>0$ 对每个整数 $h\ge1$ 成立。于是全部解码除法都有非零分母，并得到
+
+$$
+U_0=\frac{g_qV_p-g_pV_q}{\Delta_{p,q}},\qquad
+U_1=\frac{f_pV_q-f_qV_p}{\Delta_{p,q}},\qquad
+U_j=f_jU_0+g_jU_1.
+$$
+
+最后由 $u_0=1,u_1=b$ 递推得到 $u_{m-1},u_m$。令 $\mathcal I$ 表示定理 4.1 已有的四迹逆，构造
+
+$$
+T=\mathcal I(u_{m-1},u_m,U_0,U_1),\qquad
+R_0=M^{-(m-1)}T.
+$$
+
+该调用合法，因为真实 $T=M^{m-1}R_0$ 的四个输入恰是
+
+$$
+\operatorname{tr}T=u_{m-1},\qquad
+\operatorname{tr}(MT)=u_m,\qquad
+\operatorname{tr}(JMT)=U_0,\qquad
+\operatorname{tr}(MJMT)=U_1.
+$$
+
+这里 $m=N-1\ge2$，且 $\det M=-1$，所以所需矩阵逆始终存在。这个 $T$ 只是同一固定关系的代数坐标；没有从另一条重置历史借入任何迹。
+
+任意两个真实实现若有相同的 $L$ 个读数，前段线性逆先使其 $H,D,b$ 相同；它们因此有相同的非零增益位置、相同的 $V_p,V_q$ 及 $U_0,U_1$，继而由定理 4.1 有相同的 $T,R_0$。所以恢复的是完整矩阵，不只是纯 $M$ 的两个坐标。计数为 $N+(k+2)=3k+d+5$。这个共同增益采集是由本卷四迹逆、漂移分离与上述已知合流评价工具组合得到的 repo-derived 结论，不作文献优先权主张。∎
+
+### 命题 39.3（有限数据的精确共同来源相容性）
+
+给定定义 39.1 路径及同一序号时钟上的任意 $L$ 个实数，先用定理 39.2 的前段线性逆得到 $(P,Q,\widehat D)$。这些数据来自定义 39.1 的某个实现，当且仅当以下条件全部成立。
+
+1. $P\not\equiv0$。选取最小的 $r$ 使 $p_r\ne0$，令 $\widehat b=q_r/p_r$，要求多项式恒等式 $Q=\widehat bP$。
+2. 置 $\widehat H=P$、$\widehat u_i=f_i+\widehat b g_i$。取切换后最小的两个非零增益位置 $p<q$，用定理 39.2 的公式，从 $w_j=z_{N+j}-\widehat D(N+j)$ 构造 $\widehat U_0,\widehat U_1$；再令
+
+$$
+\widehat U_j=f_j\widehat U_0+g_j\widehat U_1,\qquad
+\widehat T=\mathcal I(\widehat u_{m-1},\widehat u_m,
+\widehat U_0,\widehat U_1),\qquad
+\widehat R_0=M^{-(m-1)}\widehat T.
+$$
+
+要求 $\widehat R_0$ 四项严格为正且 $\det\widehat R_0=0$。
+
+3. 对每一个实际已读的切换位置，而不只是用于解码的两个位置，要求
+
+$$
+z_{N+j}-\widehat D(N+j)=\widehat H(N+j)\widehat U_j
+\qquad(0\le j\le k+1).
+$$
+
+尤其当 $\widehat H(N+j)=0$ 时，条件就是该位置的实际去漂移残差为零。根处并未被删除、插值替代或用一个没有定义的商代替。 前段的线性表示与条件 1 同样强制每个 $\widehat H(i)=0$、$0\le i<N$ 的实际残差 $z_i-\widehat D(i)$ 为零，特别包括可能的初读零点。
+
+**证明。** 条件中的各个构造在其先前条件成立时都有定义：前段线性逆对任意实数据有定义；$P\not\equiv0$ 保证系数商有非零分母，并由根数界保证切换后至少两个非零增益位置；相应的 $\Delta_{p,q}$ 非零。真实来源必有 $P=H\not\equiv0,Q=bH,\widehat D=D$，定理 39.2 的恢复返回真实关系和切换信号，故三项条件必要。
+
+反向设三项条件成立。定理 4.1 保证构造出的 $\widehat T$ 确实具有所输入的四个迹。令 $\widetilde u_i=\operatorname{tr}(M^i\widehat R_0)$，则
+
+$$
+\widetilde u_{m-1}=\widehat u_{m-1},\qquad
+\widetilde u_m=\widehat u_m.
+$$
+
+两数列都满足 Fibonacci 递推，且可反向使用 $u_i=u_{i+2}-u_{i+1}$。所以它们在 $0,1$ 及所有非负位置相同，特别地
+
+$$
+\operatorname{tr}\widehat R_0=1,\qquad
+\operatorname{tr}(M\widehat R_0)=\widehat b.
+$$
+
+同一个四迹逆还给出
+
+$$
+\operatorname{tr}(JM^m\widehat R_0)=\widehat U_0,\qquad
+\operatorname{tr}(MJM^m\widehat R_0)=\widehat U_1.
+$$
+
+因此该矩阵的全部切换后信号也恰为 $\widehat U_j$。条件 1 使前 $N$ 行的唯一线性表示成为
+
+$$
+f_iP(i)+g_iQ(i)+\widehat D(i)
+=\widehat H(i)\operatorname{tr}(M^i\widehat R_0)+\widehat D(i).
+$$
+
+条件 3 则给出同一关系、同一 $\widehat H,\widehat D$ 在全部已读切换位置的正确读数，包括每个零增益位置。由条件 2，$\widehat R_0$ 非零、严格正且秩一。取 $R=\widehat R_0,G=\widehat H,D=\widehat D$ 就得到一个定义 39.1 的实际实现。没有分别拟合两个来源或两个时钟；相同的矩阵和相同的两个多项式同时实现所有读数。∎
+
+### 推论 39.4（精确正尺度纤维与退化边界）
+
+对通过命题 39.3 的数据，所有定义 39.1 中的实现恰为
+
+$$
+\boxed{R=t\widehat R_0,\qquad
+G=\widehat H/t,\qquad
+D=\widehat D,\qquad t>0.}
+$$
+
+等价地，两个域内实现产生相同的所述有限读数，当且仅当存在 $\lambda>0$ 使 $R'=\lambda R,G'=G/\lambda,D'=D$。这也使它们沿任意相同的未来已知操作历史、在相同读数序号上的读数一致。若另把 $R=c\ell$ 分成正对象和正量具，定理 5.1 的内部互逆尺度仍在；关系—增益尺度没有分别校准该分解。
+
+零关系 $R=0$ 和恒零增益 $G\equiv0$ 均不在该恢复域中：前者使 $R/\operatorname{tr}R$ 无定义且所有增益不可见，后者使任意关系都只产生漂移。严格正性之外的零迹来源亦不属于本结论。已声明的有限次数上界、精确读数与已记录序号是前提；有限拟合不能证明一个未先声明上界的时间函数永远遵守该次数，也不恢复 §37.4 中可被多项式平移吸收的未知时间原点。
+
+**证明。** 定理 39.2 的唯一性强制每个实现具有同一 $R/\operatorname{tr}R=\widehat R_0$、$(\operatorname{tr}R)G=\widehat H$ 和漂移 $\widehat D$。取 $t=\operatorname{tr}R>0$ 得到必要性。反向任取 $t>0$，严格正性、秩一及次数上界保持，$G$ 因 $\widehat H\not\equiv0$ 仍非零，而且对每个操作矩阵 $A$ 及每个读数序号 $i$ 都有
+
+$$
+\frac{\widehat H(i)}t\operatorname{tr}(A\,t\widehat R_0)
++\widehat D(i)
+=\widehat H(i)\operatorname{tr}(A\widehat R_0)+\widehat D(i).
+$$
+
+这同时证明充分性及未来读数一致性。将两个实现的正迹之比取作 $\lambda$ 即得等价表述。零来源和零增益的断言由读数式直接代入可得；它们是更大的退化纤维，不能用上述正尺度纤维替代。
+
+对于未声明次数上界的函数，只需在任意 $L$ 个已读序号上给漂移增加非零倍数的 $\prod_{i=0}^{L-1}(t-i)$，就保留全部有限读数而改变未来。因此有限恢复不认证其前提在更大函数族中的有效性。时间平移边界直接沿用命题 37.4。模变换群识别的一般概念可参见 Li–Lee–Bresler, “A Unified Framework for Identifiability Analysis in Bilinear Inverse Problems with Applications to Subspace and Sparsity Models”, Definition 2.7, [arXiv:1501.06120](https://arxiv.org/abs/1501.06120)；本推论的具体正尺度群及其完备性由上述共同来源恢复给出。∎
+
+## 追加锚（本行以下为增补区）
+## 40. 固定路径的不可避免读取量与已知左因子接口
+
+### 定义 40.1（固定路径读取数）
+
+固定 $k,d\ge0$。一条每步必读的预定路径是
+
+$$
+A_0=I,\qquad A_i=E_iA_{i-1}\quad(1\le i<N),\qquad E_i\in\{M,J\},
+$$
+
+并在每个 $A_i$ 读取一次。定义 $n_{\rm fix}(k,d)$ 为使某条这样的路径对定义 39.1 的全部
+$(R_0,H,D)$ 唯一确定目标的最小统一读取数；若无此路径则置为 $\infty$。路径在任何读数前固定，且不重置关系、增益、漂移或读数时钟。
+
+### 引理 40.2（两来源多项式碰撞）
+
+对任意固定合法路径和 $N\le 2k+d+2$，存在两个不同的严格正秩一规范关系
+$R_0^{(1)},R_0^{(2)}$，两个非零 $H_1,H_2\in\Pi_k$，以及
+$D_1,D_2\in\Pi_d$，使
+
+$$
+H_1(i)\operatorname{tr}(A_iR_0^{(1)})+D_1(i)
+ =H_2(i)\operatorname{tr}(A_iR_0^{(2)})+D_2(i)\quad(0\le i<N).
+$$
+
+这两个世界的全部操作和读数序号相同，但规范关系不同。
+
+**证明。** 零次读取时，任取两个不同规范关系、$H_1=H_2=1,D_1=D_2=0$ 即可；
+以下设 $N\ge1$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间。固定任意严格正列
+$u=(u_1,u_2)^{\mathsf T}$，写 $A_i u=(r_i,s_i)^{\mathsf T}$。在未知系数
+
+$$
+(P,Q,E)\in\Pi_k\times\Pi_k\times\Pi_d
+$$
+
+上考虑齐次评价方程
+
+$$
+r_iP(i)+s_iQ(i)+E(i)=0\qquad(0\le i<N).                    \tag{40.1}
+$$
+
+其未知数为 $2k+d+3>N$，故有非零核元。先保证可选取 $(P,Q)\ne(0,0)$：
+当 $N\ge d+1$ 时，次数至多 $d$ 的多项式在这 $N$ 个互异序号上全零就恒零，
+所以非零核元不可能只有漂移块。当 $1\le N<d+1$ 时，直接取 $P=1,Q=0$，
+并以 Lagrange 插值取 $E(i)=-r_i$；其次数至多 $N-1\le d$，故同样得到
+所需核元。
+
+对这个核元，选择两个不同的正数 $\rho_1,\rho_2$，使
+$Q-\rho_jP\not\equiv0$。这样的选择总存在：若 $P=0$，则 $Q\ne0$；
+若 $P\ne0$，恒等式 $Q=\rho P$ 至多排除一个实数 $\rho$。定义
+
+$$
+p_1=\frac{Q-\rho_2P}{\rho_1-\rho_2},\qquad
+p_2=\frac{Q-\rho_1P}{\rho_1-\rho_2}.
+$$
+
+两者均为非零的 $\Pi_k$ 元素，且直接相减给出多项式恒等式
+
+$$
+p_1-p_2=P,\qquad \rho_1p_1-\rho_2p_2=Q.
+$$
+
+取实际来源 $R^{(j)}=u(1,\rho_j)$、实际增益 $G_j=p_j$，并令 $D_1=E,D_2=0$。
+每个 $R^{(j)}$ 都严格正且秩一；它在整条路径上固定，且
+$\operatorname{tr}(A_iR^{(j)})=r_i+\rho_js_i$。故两世界的读数之差恰为
+式 (40.1) 的左侧，在每个实际序号上为零。置
+
+$$
+a_j=u_1+\rho_ju_2>0,\qquad
+R_0^{(j)}=\frac{u(1,\rho_j)}{a_j},\qquad H_j=a_jp_j.
+$$
+
+这就得到声明中的规范世界，两个 $H_j$ 仍非零。规范化保持第二列与第一列
+之比 $\rho_j$，所以 $\rho_1\ne\rho_2$ 保证两个规范关系不同。整个构造只使用
+给定的累计矩阵 $A_i$；重复累计矩阵不改变序号互异，也不影响插值或差分恒等式。
+
+这里的秩—核、可行像的差分（secant）及模变换群识别均为标准工具，背景见
+Li–Lee–Bresler, Definition 2.7、Theorem 2.8（文献及链接见推论 39.4），以及
+Kech–Krahmer, “Optimal Injectivity Conditions for Bilinear Inverse Problems with
+Applications to Identifiability of Deconvolution Problems”, Definitions III.1–III.2,
+[arXiv:1603.07316](https://arxiv.org/abs/1603.07316)。所需的实正来源实现由上面的
+显式构造给出，不借用复数域或泛型假设。
+
+证明从未除以采样增益，也不要求其为正、次数达到上界或根为单根。它不剔除初读
+零点、其他采样零点、负采样值、重根或较低实际次数。$k=d=0$ 时同一构造给出
+常非零增益和常漂移的碰撞；更强的四读数不充分性见定理 40.6。∎
+
+### 定理 40.3（固定路径的通用下界）
+
+在定义 39.1 的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(k,d)\ge \max\{2k+d+3,\ k+d+4,\ 5\}.        \tag{40.2}
+$$
+
+其中第一项对每条 $N\le2k+d+2$ 的固定路径都由引理 40.2 给出；第二项是参数
+维数下界；第三项由定理 40.6 给出。
+
+**证明。** 引理 40.2 直接说明第一项以内不能唯一恢复。对第二项，取规范关系
+的正秩一开坐标 $(x,y)$，再取 $k+1$ 个增益系数和 $d+1$ 个漂移系数，得到
+维数 $k+d+4$ 的非空开集。任意固定路径的读数映射在该开集上连续；由欧氏维数
+不降性（等价地，对开集使用 invariance of domain）不能把它嵌入 $\mathbb R^N$ 且
+$N<k+d+4$。这只用于固定路径，不涉及自适应协议。第三项的精确证明在下述定理。∎
+
+### 定义 40.4（已知左因子的可行提升）
+
+固定严格正列 $u$，令 $R=u v^{\mathsf T}$，其中 $v=(v_1,v_2)^{\mathsf T}>0$，且
+$A_i u=(r_i,s_i)^{\mathsf T}$。记 $\Pi_j$ 为实次数不超过 $j$ 的多项式空间，并定义
+
+$$
+C_u:\Pi_k\times\Pi_k\times\Pi_d\longrightarrow\mathbb R^N,\qquad
+C_u(p,q,E)_i=r_i p(i)+s_iq(i)+E(i).
+$$
+
+对物理目标，$p=Gv_1$、$q=Gv_2$，其中 $G\in\Pi_k\setminus\{0\}$；因此可行
+提升域为
+
+$$
+\mathcal V_u=\{(p,q,E)\in\Pi_k\times\Pi_k\times\Pi_d:
+p\not\equiv0,\ q=\rho p\text{ for some }\rho>0\}.
+$$
+
+对可行提升，写 $p(t)=\sum_{h=0}^kp_ht^h$、$q(t)=\sum_{h=0}^kq_ht^h$。
+选择任一 $p_h\ne0$，则规范目标为
+
+$$
+\rho=\frac{q_h}{p_h}=\frac{v_2}{v_1}>0,\qquad
+R_0=\frac{u(1,\rho)}{u_1+\rho u_2},\qquad
+H=u_1p+u_2q=(u_1+\rho u_2)p\not\equiv0,\qquad D=E.
+$$
+
+反过来，$R_0$ 的第二列对第一列之比唯一给出 $\rho$，继而规范目标给出
+$p=H/(u_1+\rho u_2),q=\rho p,E=D$，故规范目标与可行提升一一对应。
+由于 $v_1>0$、$v_2=\rho v_1$ 且 $p=Gv_1$，每个可行提升的全部原始实现恰为
+
+$$
+v=\lambda(1,\rho)^{\mathsf T},\qquad G=p/\lambda,\qquad D=E,\qquad \lambda>0.
+$$
+
+因此原始分解的全部剩余尺度恰为
+
+$$
+ v\longmapsto\lambda v,\qquad G\longmapsto G/\lambda,\qquad \lambda>0. \tag{40.3}
+$$
+
+### 命题 40.5（已知左因子的精确判据）
+
+在固定 $u$ 的物理子族中，完整目标 $(R_0,H,D)$ 被一条固定路径统一确定，
+当且仅当 $C_u$ 在整个 $\Pi_k\times\Pi_k\times\Pi_d$ 上单射，即
+$\ker C_u=\{0\}$。等价地，$C_u$ 的 $N\times(2k+d+3)$ 系数矩阵满列秩。
+
+**证明。** 关键是完整的可行差分恒等式
+
+$$
+\mathcal V_u-\mathcal V_u=\Pi_k\times\Pi_k\times\Pi_d.
+$$
+
+对任意 $(P,Q,E)$，若 $(P,Q)\ne(0,0)$，使用引理 40.2 证明中不依赖路径或
+读取数的代数构造，选择不同的正数 $\rho_1,\rho_2$ 及非零多项式 $p_1,p_2$，便有
+
+$$
+(P,Q,E)=(p_1,\rho_1p_1,E)-(p_2,\rho_2p_2,0),
+$$
+
+且两个端点均在 $\mathcal V_u$。这里不要求方向 $(P,Q)$ 自身成比例。
+若 $P=Q=0$，则
+
+$$
+(0,0,E)=(1,1,E)-(1,1,0),
+$$
+
+仍是两个可行提升之差，包括 $E=0$。这证明了差分恒等式。
+
+记录向量正是 $C_u(p,q,E)$。全空间单射当然使可行提升唯一，从而由定义 40.4
+得到唯一规范目标。反之，任意非零核元由上述恒等式实现为两个不同的可行提升，
+其记录相同，而规范目标因该一一对应而不同。因此可行域单射与全空间单射等价。
+尤其纯漂移核元 $(0,0,E)\ne0$ 给出相同正关系和相同非零增益、却不同漂移的
+碰撞；完整目标的判据不能删掉它。对增益块非零的核元，上述构造还使规范关系
+不同。系数商只除以已判非零的 $p_h$，所以全部零点、符号及较低实际次数均保留。
+当判据成立时，同一记录的全部原始实现正是定义 40.4 的 $\lambda>0$ 纤维，
+没有其他尺度或漂移自由度。
+
+此判据不提供未知左因子的充分条件。例如 $k=d=0$，路径 $I,M,JM$ 的
+$C_u$ 系数矩阵为
+
+$$
+\begin{pmatrix}
+u_1&u_2&1\\
+u_2&u_1+u_2&1\\
+u_1+u_2&u_2&1
+\end{pmatrix},\qquad \det=-u_1u_2\ne0.
+$$
+
+它对每个固定正 $u$ 都单射；但定理 11.1 的 $R_1,R_2$ 具有不同左因子，
+取 $G=1,D=0$ 时在同一路径上均给出 $(13,21,19)$。二者迹均为 $13$，
+规范增益同为 $H=13$，规范关系却不同。故即使每个已知左因子子族都满足判据，
+也不能据此判定未知关系可恢复。∎
+
+### 定理 40.6（常增益常漂移的尖锐五读数基例）
+
+在未知非零常增益和未知常漂移的精确实正秩一合同中，
+
+$$
+ n_{\rm fix}(0,0)=5.                                                    \tag{40.4}
+$$
+
+五读数路径取 $I,M,JM,MJM,M^2JM$。令 $S=H R_0$；定理 9.1 的五个整数线性组合
+先唯一恢复 $(S,D)$，再由 $H=\operatorname{tr}S\ne0$、$R_0=S/H$ 恢复规范目标。
+这里没有假定 $H=1$，也允许 $H<0$。
+
+少于五次的下界对八条三动作历史逐一成立。表中 $S_1,S_2$ 均为严格正秩一矩阵，
+令世界 $j$ 的增益为 $\operatorname{tr}S_j$、规范关系为
+$R_0^{(j)}=S_j/\operatorname{tr}S_j$；世界 1 的漂移为 $0$，世界 2 的漂移为表中
+$c$。四个读数向量（含初始 $I$）分别相同：
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{动作}&S_1&S_2&c& (z_0,z_1,z_2,z_3)\\ \hline
+MMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&0&(3,5,8,13)\\
+MMJ&\left(\begin{smallmatrix}3&4\\3&4\end{smallmatrix}\right)&\left(\begin{smallmatrix}4&6\\2&3\end{smallmatrix}\right)&0&(7,11,18,17)\\
+MJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,4)\\
+MJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&-1&(2,3,3,3)\\
+JMM&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&2\\1&1\end{smallmatrix}\right)&0&(3,3,5,8)\\
+JMJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&1\\2&2\end{smallmatrix}\right)&-1&(2,2,3,3)\\
+JJM&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}2&1\\2&1\end{smallmatrix}\right)&-1&(2,2,2,3)\\
+JJJ&\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)&\left(\begin{smallmatrix}1&2\\1&2\end{smallmatrix}\right)&-1&(2,2,2,2)
+\end{array}
+$$
+
+直接相乘可见每行满足
+$\operatorname{tr}(A_iS_1)=\operatorname{tr}(A_iS_2)+c$；每对规范关系不同，
+故四读数不能统一恢复。表中八行穷尽三步 $M/J$ 历史，证明五读数下界。由于常非零
+增益和常漂移是任意 $k,d$ 合同的合法低阶实例，(40.4) 也给出所有 $k,d$ 的普适
+五读数下界。∎
+
+### 推论 40.7（当前合同的组合界与贡献范围）
+
+结合定理 39.2 的固定路径充分性，
+
+$$
+\boxed{\max\{2k+d+3,\ k+d+4,\ 5\}\le n_{\rm fix}(k,d)\le3k+d+5.} \tag{40.5}
+$$
+
+上界复用 §39 的合流评价、漂移分离和四迹逆；下界的新合同内容是引理 40.2 的
+同一正来源、同一增益、同一漂移碰撞及定理 40.6 的逐历史五读数表。行列式、核、
+secant 和变换群只是已知支撑工具；本推论不声称高次数最优性，也不声称任何自适应
+不可能性或未知左因子充分条件。∎
+
+## 追加锚（本行以下为增补区）

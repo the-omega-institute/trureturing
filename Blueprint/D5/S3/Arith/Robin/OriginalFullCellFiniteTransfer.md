@@ -156,6 +156,22 @@ Let S(d)=sum(b(m)*centered(d,m)). The exact integer mean gives Q(d)=A*(d-1)/(2*d
 
 The remaining high error is exactly sum(h<=k<N,(M(k)-F(k))*D(k))/L. The shared original-owner prefix_error_bound bounds it by ((e+c/h)/L)*W. At q=0, R=U=M(0)=0, h=1 and u=L, so C=A exactly. At q=N-2 the high range contains only k=N-1. Zero coefficients, variation or error constants require no division by them. Full residues, a signed infinite account, strict Robin above 5040 and RH remain open.
 
+**Theorem 1.13 (Sharp finite full-positive transfer).**
+
+$$\forall N,q\in \mathbb{N},\forall b,F\in \mathbb{R}^{\mathbb{N}},\forall e,c\in \mathbb{R},3\le N\land q\le N-2\land 0\le e\land 0\le c\land (\forall m\in \mathbb{N},N\le m< 2\cdot N\Rightarrow 0\le \operatorname{b}\left(m\right))\land (\forall k\in \mathbb{N},(q+1)\le k< N\Rightarrow \lvert \operatorname{F}\left(k\right)-\operatorname{M}\left(k\right)\rvert \le e\cdot k+c)\Rightarrow \lvert \operatorname{E}\left(N, b\right)-\operatorname{Z}\left(N, q, b, F\right)-\operatorname{C}\left(N, q, b\right)\rvert \le \frac{e+\frac{c}{(q+1)}}{\operatorname{log}\left(N\right)}\cdot N\cdot \operatorname{A}\left(N, b\right)\cdot (1+2\cdot \operatorname{log}\left(\frac{N}{(q+1)}\right)^{2}+2\cdot \operatorname{log}\left(\frac{N}{(q+1)}\right)\cdot (1+\operatorname{log}\left(\frac{2\cdot N}{(q+1)}\right)))+\operatorname{B}\left(N, q, b\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.originalFullCell_finite_transfer_sharp` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under exactly the same full-positive hypotheses, define B(N,q,b)=0 if q=0, and B(N,q,b)=h*(3*q/2+2)*V/16 otherwise, h=q+1. The sharp bound is abs(E-Z-C)<=((e+c/h)/L)*N*A*(1+2*u^2+2*u*(1+v))+B. The complete block, nonnegative b, e,c>=0, actual F prefix-error hypothesis and full range 0<=q<=N-2 are unchanged.
+
+The original-owner centered_pair_variation_sharp_bound supplies abs(S(d))<=d*V/16. Shared private centered-log and low-error sums consume this estimate with V/16, using all actual Mobius indices and the literal +2. At q=0 the low error is exactly zero because centered(1,m)=0; the mean remains C(N,0,b)=A(N,b) for N>1. Neither the high error nor the mean is discarded. Both public transfers call the same exact decomposition and final error assembly, retaining PLUS replacement, the literal -2*K(h)/L, the full first moment and the high nonnegativity requirement. No sign is assumed for Abel differences.
+
+For actual partial cells take b(m)=log(N)*omega(a,b,m), N<=a<=b<=2*N. OriginalResidualPartialCellWeights supplies nonnegativity, A=log(N)*(g(a)-g(b)) and V<=2*log(N)*activationDensity(a) through its original private mass and variation proofs. These are applications of the finite theorem, with no vanishing first moment. The primitive estimate also covers N=1; the logarithmic transfer keeps N>=3. Signed MAIN, strict Robin above 5040, cofinal/global transport and RH remain open.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.firstMoment`
@@ -164,6 +180,7 @@ The remaining high error is exactly sum(h<=k<N,(M(k)-F(k))*D(k))/L. The shared o
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.logPair`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.meanCorrection`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.originalFullCell_finite_transfer`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.originalFullCell_finite_transfer_sharp`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.pairing`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.polePrefix`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalFullCellFiniteTransfer.reciprocalPrefix`
