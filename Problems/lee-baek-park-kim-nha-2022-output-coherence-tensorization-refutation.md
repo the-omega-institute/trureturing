@@ -59,7 +59,10 @@ The module takes:
 
 The canonical source is `D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.lean` (266 lines).
 - It defines `maxCoherence`, the Kraus channel action and normalization, `outputMaxCoherence`, `krausTensor` and `claim`, and proves `result : ¬ claim`.
-- It reuses the Pauli matrices of `PauliThreeWeightBayesianInverseUniqueness` and a scalar identity of `CHSHWitness`, made public by removing only `private`.
+- It reuses:
+  - `DensityState` of `FiniteStateChannel` and the Kraus map `MatrixMap.of_kraus` of `FiniteKrausChannel`;
+  - the Bell density of `CHSHWitness`, the Pauli matrices of `PauliThreeWeightBayesianInverseUniqueness`, and the principal-minor bound `psd_entry_bound` of `CartesianVariance`;
+  - `CHSHWitness.complex_sqrt_two_inv_mul_self` and `PauliThreeWeightBayesianInverseUniqueness.sigma_properties`, made public by removing only `private`.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 - The escape registrations: `result` is the designated refutation result of the `utility` header and is exempt. The newly public `CHSHWitness.complex_sqrt_two_inv_mul_self` and `PauliThreeWeightBayesianInverseUniqueness.sigma_properties` are registered in `Reg/D5/S3/QuantumBounds/CHSHWitness.lean` and `Reg/D5/S3/QuantumChannels/PauliThreeWeightBayesianInverseUniqueness.lean`, both `declared_validated`.
 
