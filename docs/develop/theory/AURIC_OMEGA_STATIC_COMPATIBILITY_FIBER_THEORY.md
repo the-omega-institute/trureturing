@@ -2549,3 +2549,260 @@ $$
 这里消费的是定理 58.1 对整个合法空间的控制，输入不再受五维块或交替码限制；末端二值读口是另外声明的观察权限。概率函数的识别不等于一份未知输入上的确定态名取得：命题 32.2 的非正交态障碍仍适用，估计概率族还需要重复来源及统计资源。端口态不能自动替代定义 41.1 的实际记录或对可回流环境的联合描述；公布反馈的共同正确值仍须满足定义 33.2 的交集条件，命题 33.3 已表明控制通用性不保证该交集非空。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 第一位置读口的尖锐全链对比率
+
+**定义 60.1（原生概率对比与来源范围）。** 固定 $n\geq3$，沿用假设 55.2 的整个合法链、有限字集 $\mathcal W_n$ 和命题 59.1 的末端二值读口。以下简记
+
+$$
+\begin{aligned}
+d&=F_{n+2},&q&=F_n,&P&=n_1|_{\mathcal K_n},\\
+P_w&=w^\dagger Pw,&p_\rho(w)&=\operatorname{tr}(\rho P_w),\\
+D(\rho,\sigma)&=\tfrac12\|\rho-\sigma\|_1,&
+B_n(\rho,\sigma)&=\sup_{w\in\mathcal W_n}
+                  |p_\rho(w)-p_\sigma(w)|.
+\end{aligned}
+\tag{VIII.1}
+$$
+
+$F_0=0,F_1=1$，故 $2\leq q<d/2$。$B_n$ 比较理想二值概率函数；一次实际读口只返回一个比特，并不返回 $p_\rho(w)$。对既有历史 $h$ 的来源纤维 $X_h$，可将 $\rho,\sigma$ 限于其中的端口态。下述统一常数的尖锐性和设置数下界则在整个 $\mathsf D(\mathcal K_n)$ 上取量词；这一数学定义域不授予任意态的制备权限。受限测量范数与最佳支配常数的研究框架见 Matthews–Wehner–Winter，[*Distinguishability of quantum states under restricted families of measurements*](https://arxiv.org/html/0810.2327v2)，引言及 §1。
+
+**定理 60.2（Fibonacci 秩读口的最佳对比常数）。** 令 $A=\rho-\sigma$ 的特征值为 $\lambda_1\geq\cdots\geq\lambda_d$。则
+
+$$
+\begin{aligned}
+B_n(\rho,\sigma)
+ &=\max\left\{\sum_{i=1}^q\lambda_i,
+                    -\sum_{i=d-q+1}^d\lambda_i\right\},\\
+c_nD(\rho,\sigma)&\leq B_n(\rho,\sigma)\leq D(\rho,\sigma),\\
+c_n&=\frac{d-q}{d-1}=\frac{F_{n+1}}{F_{n+2}-1}.
+\end{aligned}
+\tag{VIII.2}
+$$
+
+两个常数在全部态对上均最佳。$c_n>1/\varphi$ 且 $c_n\to1/\varphi$，其中 $\varphi=(1+\sqrt5)/2$。若 $B_n(\rho,\sigma)>b$，存在真正有限字 $w$ 使概率差大于 $b$；不要求上确界在有限字中取得。
+
+**证明。** 定理 58.1 给 $SU(d)\subseteq\overline{\mathcal W_n}$。任意两个秩 $q$ 投影酉共轭；将实现共轭的酉乘以适当标量即可令行列式为一而不改共轭。因此实际 $P_w$ 的闭包恰为全部秩 $q$ 投影。这只消费共轭轨道，不把 (VII.23) 的有限行列式类改成 $U(d)$ 稠密性。
+
+所需谱极值是 Fan 的成熟变分工具，见 [Fan 原文 Theorem 1，刊页 653](https://doi.org/10.1073/pnas.35.11.652) 及 [仓内来源说明](../../../Library/Eigenstructure/fan1949weyl.md)。这里的有限维步骤可直接核对：在 $A$ 的特征基中，任意秩 $q$ 投影 $R$ 满足
+
+$$
+\operatorname{tr}(AR)=\sum_i\lambda_i r_i,
+\qquad 0\leq r_i\leq1,\qquad \sum_i r_i=q.
+\tag{VIII.3}
+$$
+
+把权重移向较大特征值，最大值为前 $q$ 项之和；最小值为后 $q$ 项之和。相应谱投影达到两端。连续性及上述轨道闭包给 (VIII.2) 第一式。由于 $\operatorname{tr}A=0$，正负谱质量均为 $D$；任何效果与 $A$ 的配对都在 $[-D,D]$ 内，故上界成立。
+
+设 $A\ne0$，正、负特征值个数分别为 $r,s\geq1$。若 $r<q$，前 $q$ 项保留全部正质量，只扣去其余 $d-r$ 个非正特征值中绝对值最小的 $q-r$ 项。它们的绝对值之和至多 $(q-r)D/(d-r)$，包括零特征值时仍成立。因此
+
+$$
+\sum_{i=1}^q\lambda_i
+ \geq\frac{d-q}{d-r}D\geq\frac{d-q}{d-1}D.
+\tag{VIII.4}
+$$
+
+若 $s<q$，对 $-A$ 作同一论证。其余情形 $r,s\geq q$ 时，前 $q$ 个正特征值至少占正质量的 $q/r$，最负 $q$ 项至少占负质量的 $q/s$，故
+
+$$
+B_n(\rho,\sigma)\geq\frac{q}{\min(r,s)}D
+ \geq\frac{q}{\lfloor d/2\rfloor}D\geq c_nD.
+\tag{VIII.5}
+$$
+
+最后一步使用实际 Fibonacci 秩：$d=3q-F_{n-2}\leq3q-1$。于是 $q\geq(d+1)/3$，且
+$q(3d-2)-d^2\geq(d-2)/3>0$，等价地 $2q/d>(d-q)/(d-1)$；再用 $q/\lfloor d/2\rfloor\geq2q/d$。$A=0$ 的情形直接成立。
+
+取任意单位向量 $\psi\in\operatorname{ran}P$，定义同一族见证
+
+$$
+\rho_0=|\psi\rangle\langle\psi|,
+\qquad \rho_1=\frac{I-\rho_0}{d-1}.
+\tag{VIII.6}
+$$
+
+两态支撑正交，$D(\rho_0,\rho_1)=1$；差的谱为 $1,-1/(d-1),\ldots,-1/(d-1)$。谱公式给 $B_n=c_n$，并且空字的原 $P$ 已达到此值。因此任何更大的统一下界常数都失败。另取 $u\in\operatorname{ran}P$、$v\in\ker P$ 为单位向量，两纯态的 $D$ 与空字概率差都为一，证明上界常数最佳。
+
+递推式给 $\varphi F_{n+1}-F_{n+2}=(-1)^n\varphi^{-(n+1)}$，从而 $\varphi F_{n+1}-(F_{n+2}-1)>0$。结合 Fibonacci 比值极限即得 $c_n>1/\varphi$ 及所述极限。最后，若全部实际字概率差均不大于 $b$，其上确界也不大于 $b$，证明严格阈值的有限字结论。$\square$
+
+## 41. 同一极值态对的有限份自适应读出
+
+**假设 61.1（逐份一次末端比特合同）。** 两个已知候选为 (VIII.6)，先验各为 $1/2$。另行供应至多 $M$ 份样本，在假设 $i$ 下联合态为 $\rho_i^{\otimes M}$；测量装置各次独立初始化，无跨份量子记忆。每份样本只可施加一个 $\mathcal W_n$ 有限字，再作一次原二值终端测量。字可依赖既往完整经典记录，可提前停止，也容许输入无关的经典随机化；禁止同份追加测量、跨份联合量子操作或额外量子读口。此为统计资源假设，不由定理 58.1 或命题 59.1 产生。
+
+**定理 61.2（原生一次比特合同的精确错误率）。** 在假设 61.1 下，对每个整数 $M\geq0$，最优等先验平均错误率为
+
+$$
+e_n(M)=\tfrac12\beta_n^M,
+\qquad \beta_n=\frac{q-1}{d-1}\in(0,1).
+\tag{VIII.7}
+$$
+
+因而对 $0<\epsilon<1/2$，达到 $e_n(M)\leq\epsilon$ 的最小整数预算为
+$\left\lceil\log(1/(2\epsilon))/\log(1/\beta_n)\right\rceil$。这是供应样本份数，不是物理历时。
+
+**证明。** 任一允许效果 $R=P_w$ 的秩为 $q$。令 $a=\langle\psi|R|\psi\rangle\in[0,1]$；结果一的两假设概率为
+
+$$
+\Pr_0(Y=1)=a,
+\qquad \Pr_1(Y=1)=\frac{q-a}{d-1}.
+\tag{VIII.8}
+$$
+
+空字的基准比特 $X$ 满足 $\Pr_0(X=1)=1$、$\Pr_1(X=1)=\beta_n$。对它施加假设无关的随机核
+
+$$
+\Pr(Y=1\mid X=1)=a,
+\qquad \Pr(Y=1\mid X=0)=\frac{q(1-a)}{d-q}.
+\tag{VIII.9}
+$$
+
+因 $q<d-q$，这是合法的 $[0,1]$ 概率。在假设一之下，输出一的概率为
+$a(q-1)/(d-1)+q(1-a)/(d-1)=(q-a)/(d-1)$；假设零之下为 $a$。故每个允许单份实验都是同一基准实验的经典退化。
+
+对自适应策略，依次取独立基准比特，按已模拟的历史选择 (VIII.9)，便可在两个假设下同时模拟整个记录和最终决策。源的乘积合同保证每一步条件概率恰为 (VIII.8)。提前停止可填充至 $M$ 步并忽略多余比特。输入无关随机种子可一并模拟。因此完整原记录是 $M$ 个独立基准比特的假设无关后处理。这里直接消费 [《递归关系观察：波粒事件》定理 296.2](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#296-信息退化可见结果被怎样压缩同样属于边界) 的有限实验 Bayes 风险单调性，不另立一般 Blackwell 定理。
+
+基准记录在假设零下恒为全一；在假设一下，全一的概率为 $\beta_n^M$。对有限记录分布 $p_0,p_1$，等先验最优错误率为 $\frac12\sum_z\min\{p_0(z),p_1(z)\}$，因为每个记录上分别选择较大似然即可。这里仅全一贡献重叠，得 (VIII.7)。重复原空字 $M$ 次，全一判零、否则判一，恰好达到该界；$M=0$ 时取无观测猜测。$\square$
+
+两态虽然正交，所有有限 $M$ 的上述受限错误率仍严格正。若另授效果 $\rho_0$ 的二值测量，一份即可无误区分两支撑；它不是秩 $q\geq2$ 的原生一次末端效果。故 (VIII.7) 不约束更强的联合测量、同份序贯测量或未知端口上的任务，也不是任意态对的多份公式。
+
+## 42. 保留统一对比的预设有限菜单及其设置数
+
+**定义 62.1（最大单设置对比）。** 一个输入无关的预设菜单为非空有限字列表 $\mathcal F=(w_1,\ldots,w_m)$，其效果为 $P_j=P_{w_j}$。定义
+
+$$
+B_{\mathcal F}(\rho,\sigma)
+ =\max_{1\leq j\leq m}|\operatorname{tr}((\rho-\sigma)P_j)|.
+\tag{VIII.10}
+$$
+
+列表在看到未知输入及其测量记录之前固定。这里比较各二值实验中的最大概率差，不是把多个结果概率求和的单一 POVM 范数。
+
+**定理 62.2（严格次尖锐菜单存在与指数设置代价）。** 对任意 $0<\chi<c_n$，存在这样的实际有限字菜单，使对全部密度态对同时有
+
+$$
+\chi D(\rho,\sigma)\leq B_{\mathcal F}(\rho,\sigma)
+ \leq D(\rho,\sigma).
+\tag{VIII.11}
+$$
+
+反之，任何在全部密度态对上满足 (VIII.11) 下界的 $m$ 设置菜单都满足
+
+$$
+m\geq\tfrac12\exp\!\left(
+                  \frac{2\chi^2(d-1)^3}{d^2}\right).
+\tag{VIII.12}
+$$
+
+**证明。** 先在紧集
+$\mathcal S=\{A=A^\dagger:\operatorname{tr}A=0,\ \|A\|_1=2\}$ 上取有限覆盖。每个 $A\in\mathcal S$ 都是两个密度态之差：其正负部分各有迹一。定理 60.2 给某个真正有限字满足 $|\operatorname{tr}(AP_w)|>\chi$。对固定字，这是 $\mathcal S$ 上的开条件。所有这些开集覆盖 $\mathcal S$，紧致性给有限子覆盖。对非零态差除以其 $D$，便得 (VIII.11)；零差直接成立。所选字和参数只依赖 $n,\chi$，不依赖输入。这一存在证明没有把闭包中的门当作已执行的无限字。
+
+为证下界，对每个单位向量 $v$ 使用同一见证族
+$\rho_v=|v\rangle\langle v|$、$\sigma_v=(I-\rho_v)/(d-1)$，其 $D=1$。对固定秩 $q$ 投影 $Q$，置 $S=\langle v|Q|v\rangle$，有
+
+$$
+\operatorname{tr}((\rho_v-\sigma_v)Q)=\frac{dS-q}{d-1}.
+\tag{VIII.13}
+$$
+
+仅在此证明中，以复单位球面上的酉不变概率选择 $v$。其分布可由独立标准复 Gaussian 坐标归一化得到，因为 Gaussian 密度只依赖向量范数。各坐标模平方为独立均值一指数变量；前 $q$ 项与其余项之和分别具有密度 $x^{q-1}e^{-x}/(q-1)!$ 和 $y^{d-q-1}e^{-y}/(d-q-1)!$，由指数密度的卷积归纳即可得到。作 $s=x/(x+y),t=x+y$ 的变量替换并积分 $t$，得
+
+$$
+f_S(s)=\frac{(d-1)!}{(q-1)!(d-q-1)!}
+             s^{q-1}(1-s)^{d-q-1},\qquad 0<s<1.
+\tag{VIII.14}
+$$
+
+因此，对 $0<u<1$ 及 $Z_u\sim\operatorname{Bin}(d-1,u)$，
+
+$$
+\Pr(S\geq u)=\Pr(Z_u\leq q-1),
+\qquad \Pr(S\leq u)=\Pr(Z_u\geq q).
+\tag{VIII.15}
+$$
+
+例如第一式右侧是 $\sum_{k=0}^{q-1}\binom{d-1}{k}u^k(1-u)^{d-1-k}$，其导数为 $-f_S(u)$，在 $u=0$ 为一；第二式取补集。这直接给出所需 Beta—二项关系。
+
+使用 Hoeffding 的成熟二项尾界，见 [*Probability Inequalities for Sums of Bounded Random Variables*](https://doi.org/10.1080/01621459.1963.10500830)，Theorem 2：若 $Z\sim\operatorname{Bin}(N,u)$、$b\geq0$，则任一方向离开均值至少 $Nb$ 的概率不超过 $e^{-2Nb^2}$。其所需一步也可直接推出：Bernoulli 变量 $X$ 的中心化对数矩母函数 $g(t)=\log\mathbb E e^{t(X-u)}$ 满足 $g(0)=g'(0)=0$，而 $g''(t)$ 是一个 Bernoulli 方差，至多 $1/4$。故 $g(t)\leq t^2/8$；独立相乘、指数 Markov 及 $t=4b$ 给上尾，$t=-4b$ 给下尾。
+
+令 $p=q/d$、$a=\chi(d-1)/d$。在上阈值 $u=p+a\in(0,1)$，
+
+$$
+(d-1)u-(q-1)=1-p+(d-1)a\geq(d-1)a;
+\tag{VIII.16}
+$$
+
+在下阈值 $u=p-a\in(0,1)$，$q-(d-1)u=p+(d-1)a\geq(d-1)a$。结合 (VIII.15) 及尾界得
+
+$$
+\Pr\{|S-q/d|\geq a\}
+ \leq2e^{-2(d-1)a^2}.
+\tag{VIII.17}
+$$
+
+阈值在 $[0,1]$ 外时相应尾事件为空；在端点也因 (VIII.14) 无原子而为零。由 (VIII.13)，固定设置满足对比至少 $\chi$ 的球面概率不超过 (VIII.17)。若 $m$ 个设置对所有见证态对均满足 (VIII.11)，这些事件的并集必须覆盖整个球面。因此 $1\leq2m e^{-2(d-1)a^2}$，即 (VIII.12)。这里的酉不变测度只是排除小菜单的数学见证，不是供应随机控制或随机制备的资源。$\square$
+
+对固定 $\chi>0$ 且 $\chi<c_n$，(VIII.12) 的指数随 $d=F_{n+2}$ 线性增长。这不与有限维线性坐标的精确可识别性冲突：本定理要求相对于迹距离的统一正对比裕量，且用最大单设置误差衡量。它不提供任意层析、加权结果范数、自适应设置或联合测量的样本下界；也不提供最小菜单、有效字综合或字长上界。若来源域不含全部见证族，不能沿用这里的设置数下界。框架层析参见 Scott，[*Tight informationally complete quantum measurements*](https://arxiv.org/html/quant-ph/0604049v6)，§§III、VI。
+
+## 43. 有限实际记录下的共同来源置信纤维
+
+**假设 63.1（固定历史后的重复来源与独立初始化）。** 固定已得历史 $h$、实际来源 $x\in X_h$ 和端口态 $\rho_x$。先固定满足 (VIII.11) 的实际菜单及整数 $N\geq1$。条件于这一个来源和历史，另行供应 $mN$ 份态 $\rho_x^{\otimes mN}$；第 $j$ 组 $N$ 份分别执行 $w_j$ 和原末端二值测量。装置每份独立初始化，实际效果恰为已知 $P_j$，无跨次返回环境。记录包含设置、样本数和全部比特；记各组一的计数为 $K_j$、频率为 $\widehat p_j=K_j/N$。样本数预先固定，不作未计入的可选停止。
+
+**命题 63.2（原生未来与独立端口协议的同一置信纤维）。** 给定 $0<\delta<1$，置
+
+$$
+\begin{aligned}
+t&=\sqrt{\frac{\log(2m/\delta)}{2N}},\\
+\mathcal C_{\widehat p}
+ &=\{\tau\in\mathsf D(\mathcal K_n):
+          \max_j|\operatorname{tr}(\tau P_j)-\widehat p_j|\leq t\},\\
+X_{h,\widehat p}
+ &=\{y\in X_h:\rho_y\in\mathcal C_{\widehat p}\},
+\qquad r=\min\{1,2t/\chi\}.
+\end{aligned}
+\tag{VIII.18}
+$$
+
+则对每个固定 $x\in X_h$ 有 $\Pr_x\{x\in X_{h,\widehat p}\mid h\}\geq1-\delta$。任何非空 $\mathcal C_{\widehat p}$ 的迹距离直径至多 $r$。对该集合内任意 $\sigma,\tau$，同时有
+
+$$
+\sup_{w\in\mathcal W_n}|p_\sigma(w)-p_\tau(w)|\leq r.
+\tag{VIII.19}
+$$
+
+进一步，固定任意已声明的有限端口协议 $\Pi$：仅接收端口输入 $A$，有限辅助系统以同一已知态 $\eta$ 独立初始化，采用固定有限分支的量子仪器和经典反馈，终止时保留完整记录，不含被省略的输入相关返回环境。其完整无条件记录律满足
+
+$$
+\operatorname{TV}(\mathsf P_\sigma^\Pi,
+                   \mathsf P_\tau^\Pi)\leq D(\sigma,\tau)\leq r.
+\tag{VIII.20}
+$$
+
+**证明。** 假设 63.1 下，第 $j$ 组为 $N$ 个独立 Bernoulli 试验，均值为 $\operatorname{tr}(\rho_xP_j)$。Hoeffding 双侧界及 $m$ 项并合给
+
+$$
+\Pr_x\left\{\max_j|\widehat p_j-
+               \operatorname{tr}(\rho_xP_j)|>t\mid h\right\}
+ \leq2m e^{-2Nt^2}=\delta.
+\tag{VIII.21}
+$$
+
+这复用 [《递归关系观察：波粒事件》定理 22.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#22-从精确恢复到有误差的关系重建) 的独立重复取样与共同置信事件方法；这里的消费者是 (VIII.11) 的指定原生菜单。(VIII.21) 中失败事件的补事件 $\{\max_j|\widehat p_j-\operatorname{tr}(\rho_xP_j)|\leq t\}$ 在 $\Pr_x(\cdot\mid h)$ 下的概率至少为 $1-\delta$；在该联合成功事件上，$\rho_x\in\mathcal C_{\widehat p}$，从而 $x\in X_{h,\widehat p}$。若 $\sigma,\tau$ 同属该集合，逐坐标三角不等式给 $B_{\mathcal F}(\sigma,\tau)\leq2t$；(VIII.11) 给 $D(\sigma,\tau)\leq2t/\chi$，再用 $D\leq1$。定理 60.2 的上界于是给 (VIII.19)，无需对无限字族另取并合界。
+
+为核对 (VIII.20) 的协议量词，把每条完整记录 $z$ 的复合分支记为辅助扩张上的 CP 映射 $\mathcal I_z$，把预先的独立初始化记为 $J_\eta(\tau)=\tau\otimes\eta$。其输入效果为 $E_z=(\mathcal I_z\circ J_\eta)^*(I)\geq0$。完整性给 $\sum_zE_z=I$；反馈只决定各分支内已声明的复合映射。因此 $\mathsf P_\tau^\Pi(z)=\operatorname{tr}(\tau E_z)$。对任何记录事件 $S$，$E_S=\sum_{z\in S}E_z$ 是效果，故 $|\operatorname{tr}((\sigma-\tau)E_S)|\leq D(\sigma,\tau)$。对 $S$ 取最大便得完整记录总变差界。只要每个协议满足同一初始化合同，这一确定性结论在同一个置信事件上对全部这样的协议成立；它不授予其中未声明的操作。$\square$
+
+在非空纤维中选一个估计态，只能得到上述置信保证，不是有限比特给出无误精确态名。若集合为空，应报告该置信集合为空，不用任意态替换它。对 $0<\epsilon<1$，充分的预设每组样本数为
+
+$$
+N\geq\frac{2\log(2m/\delta)}{\chi^2\epsilon^2},
+\tag{VIII.22}
+$$
+
+此时 $r\leq\epsilon$，总消耗为 $mN$ 份所供应样本。该充分预算与 (VIII.12) 的设置数障碍是不同方向的结论，不把两者合称最优层析复杂度。可靠置信区域参见 Christandl–Renner，[*Reliable Quantum State Tomography*](https://arxiv.org/abs/1108.5329v2)。
+
+若按训练记录选择未来字或协议，(VIII.19)–(VIII.20) 的确定性统一界仍可用，但物理预测必须作用于一份另行供应的、条件于固定 $x,h$ 与训练记录独立的留出输入，及该协议独立初始化的辅助系统。它不是已消耗样本的测后条件态预测。对于输入相关的隐环境，局部边缘 $\rho_x$ 不决定回流记录；这里直接保留 [《观察者内生三轴几何与预测接口》定义 9.3 的共同环境例](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) 的边界。对稀有后选择事件的条件律也须另给事件概率下界，不能从完整无条件记录界直接保留同一常数。
+
+相同单份边缘不供应假设 63.1。复用 [《四角相干与单份认证》命题 C-121.5](AURIC_FIB_ATOM_FOUR_CORNER_COHERENCE_AND_SINGLE_COPY_CERTIFICATION.md) 的共同标签机制：取单位向量 $u\in\operatorname{ran}P_j$、$v\in\ker P_j$，仅抽一次公平比特 $L$，随后全部样本按 $L$ 同时取 $u$ 或同时取 $v$。每份边缘均为 $(|u\rangle\langle u|+|v\rangle\langle v|)/2$，但 $\widehat p_j=L$，对其边缘均值的误差恒为 $1/2$，不随 $N$ 缩小。共同标签造成的联合关联不能被边缘相等消去。
+
+若还要求保留一个实际参考 $R$，可另假定供应 $\tau_{AR}\otimes\rho_x^{\otimes mN}$ 且 $\operatorname{tr}_R\tau_{AR}=\rho_x$；测量后面的独立份不会物理作用于 $AR$。然而本置信纤维只约束 $A$ 的边缘，不识别未知 $AR$ 相关，也不提供带参考的联合迹距离证书。这样的联合供应不是从一个未知 $AR$ 输入免费复制出来的资源。
+
+## 追加锚（本行以下为增补区）

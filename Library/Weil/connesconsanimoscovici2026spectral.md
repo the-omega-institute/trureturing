@@ -11075,3 +11075,176 @@ order, weight, parameter, precision or partition scan.
 
 The [source and directed packet](https://github.com/the-omega-institute/trureturing-experiments/tree/e08384fdadbf3cf9cd135c824c8d85a480439502/docs/reports/weil-c27)
 retain this one application.
+
+
+### A whole-inverse consumer and its necessary scalar check
+
+The propagated positive row supplies a uniform actual surplus. To use it
+on all retained coefficients, reuse the existing inverse order and actual
+residual identity, with the SAME original exact support trial $Y$:
+
+$$
+H_{\rm ext}\succeq T+gI,\quad T=\Lambda+B_{\rm GP}>0,\qquad
+Q=A_N-C_N^*Y-Y^*C_N+Y^*H_{\rm ext}Y,
+$$
+
+$$
+R=C_N-H_{\rm ext}Y,\qquad S_N=Q-R^*H_{\rm ext}^{-1}R.
+$$
+
+All inherited actual common form/domain, basis, trial and sound-cache
+premises remain. The bounded operator $T$ keeps the complete positive even
+Gamma boundary and pole. The original nineteen-channel Young comparison
+satisfies $\overline W\succeq T^{-1}$ on the residual range and
+$Q-R^*\overline W R\succeq L_*$, at its original $\rho=1/32$.
+
+For any valid $T\preceq M_T I$, the standard positive-operator calculus
+gives
+
+$$
+H_{\rm ext}^{-1}\preceq(T+gI)^{-1}\preceq cT^{-1}
+\preceq c\overline W,\qquad c=\frac{M_T}{M_T+g}<1,
+$$
+
+where comparison with $\overline W$ is on that same residual range.
+Consequently there is a coefficient-uniform sufficient lower target
+
+$$
+\boxed{S_N\succeq\mathcal L_{\rm unif}
+:=cL_*+(1-c)Q.}
+$$
+
+Indeed, $Q-cR^*\overline W R
+=c(Q-R^*\overline W R)+(1-c)Q$.
+The actual $H_{\rm ext}$ need not be bounded; its inverse comparison uses
+the inherited closed-form order. This is an application of the existing
+operator-order and residual results, without a new general theorem.
+
+The missing separate diagonals of the full initial-trial matrix $Q$
+cannot be recovered from a scalar $Q(v)$. A cached scalar nevertheless
+supplies a necessary check before producing that matrix. Take the SAME
+exact256-bit, all1281-coordinate direction saved by the original
+nineteen-channel test, and put
+
+$$
+q=Q(v)>0,\qquad\ell=v^*L_*v<0.
+$$
+
+Its finite dual packet pins that exact direction and original trial.
+For this fixed comparison,
+
+$$
+v^*\mathcal L_{\rm unif}v=\frac{M_T\ell+gq}{M_T+g}>0
+\quad\Longleftrightarrow\quad
+M_T<M_{\rm crit}(v;g):=\frac{gq}{-\ell}.
+$$
+
+A negative upper excludes the sufficient target before any complete
+retained factorization. A positive lower would pass only this necessary
+direction check.
+
+The [cached contraction consumer](https://github.com/the-omega-institute/trureturing-experiments/tree/11b6f791e7ef9acbd2924d89e17dd43da795006a/docs/reports/weil-c27)
+uses all exterior weights1281–32768, including the selected support, and
+the positive constant far weight $D$. Let
+
+$$
+\lambda_{\max}=\max\{W_n^{-1}:1281\le n\le32768,\ D^{-1}\}.
+$$
+
+The complete Gamma bound G2 and the positive even pole supply the fixed
+rational bound
+
+$$
+M_T=\lambda_{\max}+\frac{22}{3}+\frac{729}{364}+\frac{52}{5}.
+$$
+
+For its Gamma part, use $\pi<22/7$, $e^2>7$, $\sqrt{27}>5$ and
+$\log27<4$ in G2. Its two terms are then bounded by $22/3$ and
+$729/364$. The complete even pole has norm at most
+$4\sinh(\log27/2)=52/\sqrt{27}<52/5$. Restriction/compression preserves
+these norm upper bounds. This uses the full boundary, including every
+Gamma rate. The reciprocal maximum uses all exterior modes rather than
+only the residual rows after the selected support.
+
+| Quantity | Rounded value or enclosing interval |
+|---|---:|
+| $\lambda_{\max}$, attained on the far constant | $3.30454609429024$ |
+| Supplied complete norm upper $M_T$ | $23.04062668037082$ |
+| Accepted uniform surplus lower $g$ | $0.360851119703494$ |
+| Whole-inverse contraction $c$ | $0.984579985811736$ |
+| Same cached initial-trial $Q(v)$ | $2.97162648706417\cdot10^{-30}$ |
+| Same cached $v^*L_*v$ | $-1.17771656935993\cdot10^{-31}$ |
+| Necessary ceiling $M_{\rm crit}(v;g)$ | $[9.1050323405,9.1050323406]$ |
+| $v^*\mathcal L_{\rm unif}v$ | $[-7.013309373,-7.013309371]\cdot10^{-32}$ |
+
+The archived exact rational endpoints determine the sign. One fixed
+Fraction-only consumption takes0.18862seconds, using four pinned packets.
+It supplies the norm bound and necessary comparison without another
+trial quadratic, residual, Gram, inverse, solve, far query or full target.
+No accepted scientific producer or fixture is replayed, and no norm,
+weight, direction, parameter or precision scan is used.
+
+This fixed uniform-contraction target is therefore insufficient. The
+actual norm of $T$ and the actual retained Weil sign remain undetermined
+by this check. A stronger common inverse-residual estimate still needs its
+full joint coupling and good-block metric; a scalar initial-trial value
+cannot replace those data. The earlier stopped rank-one endpoint family
+remains a separate insufficient construction. There is no actual
+retained/cofinal positivity, Robin, Lean or RH conclusion here.
+
+
+### Complete original-source restricted inertia at eta one
+
+The [complete directed certificate](https://github.com/the-omega-institute/trureturing-experiments/tree/ec7c9fc8c5bbe14a41ef9e3f8b083706831422e2/docs/reports/weil-c27/signed-restriction-eta1)
+now supplies the formerly missing original112 inertia `(56,56,0)`.
+All112 coordinates are covered exactly once by65 invertible signed pivot
+blocks. The already paid21 strictly negative coordinates give original133
+border inertia `(56,77,0)` and same-source restriction inertia `(1261,0,0)`.
+
+For the unchanged1263-dimensional positive good metric $P$, retain the two
+independent rows $B$, saved actions $PX=B^*$, $G=BX>0$, and the complete
+physical majorant
+
+$$
+F_0=F K_f F^*+\epsilon I\succeq0,\qquad
+\epsilon=\frac{27852372618143874844}{2^{512}}+2^{-542}.
+$$
+
+For a full orthonormal basis $Z$ of $\ker B$, the inherited bordered identity
+is
+
+$$
+\operatorname{In}\bigl(Z^*(P-F_0)Z\bigr)
+ =\bigl(1205+n_+(T_{112}),\ n_-(T_{112})-56,\ n_0(T_{112})\bigr).
+$$
+
+Thus this count establishes $F_0\prec P$ on $\ker B$, under those original
+common-source and action identities. It retains every original good mode,
+physical weight, boundary contribution and the complete isotropic allowance.
+The partition remains1263 good and18 remaining modes, total1281.
+In particular the eta-one restricted domination premise is now paid. The
+separate same-source full-border budget is still required; this restricted
+count does not determine the actual retained Weil sign.
+
+The successful calculation fixes an exact upper triangular dyadic change
+of basis with positive power-of-two diagonal, and then evaluates its full
+congruence outward. This basis is invertible independently of the accuracy
+of its approximate construction. Midpoint signs do not supply the count.
+The two earlier uncertain-pivot eliminations did not establish singularity.
+No large1263-dimensional Gram replay was needed for the completed count.
+
+The archive pins all17 files, the executed arithmetic source, the original
+contractions and reduction, the fixed basis, the complete interval pivot
+transcript, and the independent six-fixture review. The final count took
+170.580775291seconds with174096384bytes peak RSS; its actual calculation
+and native execution both exited0. The result JSON has SHA256
+`53c79a0f9a355b1126482f5e02ba009df8d1515dc6e62556fcbdcf00de942412`.
+The portable driver can verify the archived files or replay the small
+reduction and fixed-basis count; it does not repeat the large Gram.
+
+This is a finite numerical certificate conditional on the stated source
+and action identities. Hash agreement authenticates bytes and does not
+prove those identities. No particular rational eta below one, matching
+positive downstream budget, new Lean theorem or official kernel acceptance
+is supplied here. Neither cofinal Weil positivity, the strict Robin
+inequality for every integer above5040, nor RH follows from this count.

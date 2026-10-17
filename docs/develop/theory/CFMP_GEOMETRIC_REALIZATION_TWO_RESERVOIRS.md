@@ -4659,3 +4659,277 @@ The proof excludes the entire three-core incidence pattern using the
 actual face pairing and complete links; its applicability relies on the
 previous angle-derived core bounds. Four-core patterns and the external
 low-only region remain, so five-reservoir realization is not proved.
+
+## 235. Precise surviving-pattern target
+
+Retain the exact mixed-flat five-reservoir hypotheses and the proved
+three-core exclusion. Thus the interacting high core K has exactly
+four actual owners. Put P={M,Z,U}, and retain the escape
+ tau=(Z,M,C,D,M,C),
+with distinct M,Z,C,D, m>1+c+d, c,d<m-2, z>1+m+c, and u>m.
+Every K owner is genuine; its faces carrying two distinct P labels
+pair only to other K faces. All original normal edge links are complete
+circles of degree at least six. The total genuine M/Z budget is 3*pi.
+Every owner has a fixed paired frame with distinct transverse labels.
+Repeated axes, self-gluings, and repeated normal-circle visits remain
+allowed. No connectedness of the marked-face graph is assumed.
+
+**Claim.** Tau's two faces {M,Z,C}, incident to its unique Z axis, are
+paired to two faces of one and the same other actual owner.
+
+They cannot pair to each other, because this closes tau's one Z normal
+interval and forces degree(Z)=1. Suppose instead they meet two distinct
+owners rho and eta. Write xi for the fourth K owner. We exclude exactly
+this incidence pattern using actual angle and face-pairing constraints.
+
+## 236. The only exceptional neighboring role
+
+A genuine owner with a face {M,Z,C} has one of three frames, with its
+other axis Q arbitrary:
+ (i)  (Z,M,C,Q,M,C),
+ (ii) (M,Z,C,Q,Z,C),
+ (iii)(C,M,Z,Q,M,Z).
+The public opposite-star argument in Section 210 gives genuine M/Z
+expense greater than pi in (i) and (ii): respectively
+ theta_Z+2*beta_M>pi,  theta_M+2*beta_Z>pi.
+These inequalities depend only on m,z,c, so apply with arbitrary Q.
+They follow from the positive individual response whose two parameters
+sum to more than one, using c<m-2 and z>m+2.
+
+In (iii), if Q is not U, its value q<1+m+z. For Q in {M,Z,C,D}
+this is immediate; for special Q it is its fixed-pair barrier for {M,Z}.
+Writing k=z+m, h=z-m, the exact paired quantities obey
+ L-2*J>k^2-(3*c+1)*k-4*(c+1)+2*h^2>0,
+ K_pair=(sqrt(m^2-1)+sqrt(z^2-1))^2/(m+z)^2>8/9.
+The strict polynomial bound is the one proved in Section 210: at
+z=m+c+1 its right side is 2*(2*m^2-m*c+m-c-1)>0, and its derivative
+in z-(m+c+1)>=0 is 4*m+3*c+5+6*(z-m-c-1)>0.
+Hence beta_M+beta_Z=2*atan(sqrt(K_pair*L/J))>pi/2.
+The four original transverse M/Z slots alone have expense greater than pi.
+
+Thus the only neighboring role not already known to consume more than
+pi of M/Z budget is
+ E=(C,M,Z,U,M,Z).
+Tau itself has M/Z expense greater than pi. If neither rho nor eta has
+role E, the three distinct owners tau,rho,eta exceed the complete M/Z
+budget 3*pi. Therefore at least one, say rho, must have role E.
+
+## 237. The exceptional neighbor forces a short U link
+
+Rho has one U axis and two incident faces {U,M,Z}. Their partners cannot
+be tau, which has no U slot. They cannot pair to each other, since this
+closes rho's unique U normal interval at degree one.
+
+Eta has a face {M,Z,C}. If eta contains U, that U is its other axis
+and is unique: its two transverse labels lie in {M,Z,C}, and its first
+axis is the remaining label. Every U-incident face of eta is then
+marked. In particular, if both rho U faces pair to eta, eta's two U
+faces are exactly those paired faces. The two U intervals close,
+forcing degree(U)=2. Thus avoiding these immediate contradictions
+requires at least one rho face {U,M,Z} to pair to xi.
+
+A face {U,M,Z} in xi forces its transverse pair to consist of two of
+these three high labels, and one axis to carry the third. Every U slot
+in xi then has both incident faces marked, whether U is transverse,
+axial, or also repeats at its other axis. Xi contains at most three U
+slots: at most two transverse and one additional axis, or at most two
+axes when U is not transverse.
+
+Every U slot in K now has both incident faces marked: rho's unique
+axis, eta's possible unique axis, and xi's at most three slots. Tau
+has none. All their interval ends therefore pair inside K. This is a
+nonempty closed subset of the actual U normal circle with at most
+1+1+3=5 original slots. Completeness of the circle forces degree(U)<=5,
+contradicting the standing minimum degree six. No assumption about
+single-high owners outside K is needed: marked interval ends cannot
+exit to them.
+
+The supposed two-distinct-neighbor pattern is impossible. Hence both
+marked tau faces meet the same actual owner, proving the claim. Other
+four-core return patterns and the external low-only boundary remain;
+no five-reservoir exclusion or realization is asserted.
+
+## 238. Exact setting
+
+Retain the mixed-flat five-reservoir hypotheses and the proved conclusion
+that the interacting high core K has exactly four actual owners. Put
+P={M,Z,U}; all three cosh values exceed three. Every K owner is genuine
+and has original P-angle expense greater than pi. The complete genuine
+P budget is 5*pi. An entirely high-labelled owner means one whose six
+original edge slots all have labels in P; repeated labels are allowed.
+Such an owner belongs to K, because its transverse pair is distinct.
+
+We prove a stronger angle bound for one entirely high-labelled owner,
+then exclude the concrete remaining pattern containing two of them.
+No assumption on how their faces are paired, or on low-only cells
+outside the high neighborhood, is added.
+
+## 239. The stronger original-angle bound
+
+Let its paired frame be (r,a,b,o,a,b), with r,a,b,o>3. Write theta_r,
+theta_o for its two axial angles and beta_a,beta_b for the paired
+transverse angles. Put s=beta_a+beta_b. All angles are genuine, and
+the hyperideal vertex inequalities give theta_r+s<pi and theta_o+s<pi.
+The exact paired response gives
+ tan(theta_r/2)*tan(s/2)=lambda_r,
+ lambda_r=kappa*sqrt((r-1)/(r+1)),
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+and the analogous identity for o. Since a,b>3,
+ kappa>sqrt(8/9),
+while r,o>3 give sqrt((r-1)/(r+1)),sqrt((o-1)/(o+1))>1/sqrt(2).
+Thus lambda_r,lambda_o>2/3.
+
+For positive A,B with A+B=t<pi/2,
+ tan(A)*tan(B)=[cos(A-B)-cos(t)]/[cos(A-B)+cos(t)]
+              <=[1-cos(t)]/[1+cos(t)]=tan(t/2)^2.
+The denominator is positive and the quotient is increasing in cos(A-B),
+so this bound does not assume A=B. If theta_r+s<=3*pi/4, taking
+A=theta_r/2, B=s/2 gives
+ lambda_r<=tan(3*pi/16)^2<tan(pi/5)^2=5-2*sqrt(5)<2/3,
+a contradiction. Here 3/16<1/5, tangent is increasing on (0,pi/2),
+and 5-2*sqrt(5)<2/3 follows by squaring 13<6*sqrt(5).
+Consequently theta_r+s>3*pi/4, and similarly theta_o+s>3*pi/4.
+The total angle expense in its six original high slots is therefore
+ theta_r+theta_o+2*beta_a+2*beta_b>3*pi/2.
+Repeated axis or transverse labels do not change this original-slot sum.
+
+## 240. Exclusion and scope
+
+If two of the four distinct K owners were entirely high-labelled,
+their combined genuine P expense would exceed 3*pi. Each of the other
+two K owners consumes more than pi, so the four owners alone would
+exceed the complete 5*pi budget. This is impossible. Therefore at most
+one actual owner in the quotient is entirely high-labelled.
+
+This excludes every remaining four-core incidence pattern with two
+such owners, independently of loops and parallel face pairings. Patterns
+with zero or one entirely high-labelled owner, the external low-only
+boundary, and five-reservoir realization remain unresolved.
+
+## 241. The branch containing an entirely high-labelled owner
+
+Suppose one such owner exists. The four K owners then have combined
+original genuine P expense greater than 3*pi/2+3*pi=9*pi/2.
+Every single-high transverse owner has original P expense greater than
+2*pi/3 by the preceding single-high classification. Its addition would
+make the total greater than 31*pi/6>5*pi. Therefore no single-high
+transverse owner exists in this branch.
+
+Every genuine high-containing owner outside K is consequently in the
+class A of single-high axial owners with distinct transverse pair {C,D}.
+Each has exactly one high axis: two distinct high axes would put it in
+K, and two equal high axes would force flatness. Let g=|A|, let Theta_A
+be the sum of their original high axial angles, and let B_A be the sum
+of beta_C+beta_D counted once per actual A owner. The dominant-axis
+inequality gives g*pi<=2*Theta_A+B_A, with equality allowed only for
+the empty sum. Each owner contributes two original copies of each
+transverse angle, so 2*B_A is its total original C/D expense summed
+over A. The complete genuine C/D budget is at most4*pi, hence
+B_A<=2*pi. The strict four-core expense leaves Theta_A<pi/2.
+It follows that g*pi<3*pi, so g<=2.
+
+The unique flat owner contributes one additional high-containing owner.
+Thus in this branch there are at most 1+4+2=7 actual owners containing
+any high label, and every genuine one outside the interacting core is
+single-high axial with pair {C,D}. This conclusion does not restrict
+the size of the external low-only region or eliminate the branch.
+
+## 242. Exact target and inherited facts
+
+Retain all mixed-flat five-reservoir hypotheses and the four-owner
+interacting core K. Use the proved forced double-face return: both
+marked {M,Z,C} faces of tau=(Z,M,C,D,M,C) pair to one other owner rho.
+Write eta,xi for the other two core owners. Transverse labels in each
+chosen frame are distinct. All original edge links are complete circles
+of degree at least six, and all original edge angle sums hold.
+
+We reuse: m>1+c+d, c,d<m-2, z>1+m+c, u>m; the genuine M/Z capacity
+3*pi; no special edge has a fixed pair contained in P={M,Z,U}; and every
+high label occurring in K occurs in at least two distinct K owners.
+Marked faces, those with two distinct P labels, pair inside K. A nonempty
+closed set of original normal intervals for one actual edge is its whole
+normal circle, so a closed set of at most five slots is impossible.
+
+We prove rho has one of the following roles, up to the usual interchange
+of the transverse pair and axes:
+ (A) (M,Z,C,Q,Z,C), with Q arbitrary;
+ (B) (C,M,Z,U,M,Z).
+No exclusion of these two remaining roles is asserted.
+
+## 243. The axial-Z role is impossible
+
+The three roles at a face {M,Z,C} are axial Z with pair {M,C}, axial M
+with pair {Z,C}, and axial C with pair {M,Z}. In the first, rho's other
+axis cannot also be Z, because (z-1)^2>(m+c)^2 would make rho flat.
+Its unique Z slot therefore has its two incident faces paired to tau's
+two Z faces. The two original Z intervals close and force degree(Z)=2.
+This excludes the first role. The axial-M role is exactly (A).
+
+## 244. Setup for the axial-C role with Q not U
+
+Suppose rho=(C,M,Z,Q,M,Z), with Q not U. A special Q is impossible by
+the fixed-pair exclusion for {M,Z}. Thus Q is one of M,Z,C,D. Tau and
+rho have no U, so the two other core owners eta and xi must both contain
+U by the two-owner occurrence property.
+
+After removing the two face occurrences paired to tau, rho's remaining
+two faces have multiset labels {Q,M,Z}. This description remains valid
+when Q=C and the two axial labels coincide. They cannot pair to each
+other: every Z-incident face of tau and rho would then be paired within
+those two owners. Tau has one Z slot and rho at most three, so a nonempty
+closed Z subset would have at most four slots. They cannot pair to an
+unused tau face, which has labels {D,M,C} and contains no Z.
+
+If the two faces meet eta and xi separately, each target owner has a
+face not containing U and also contains U. Consequently U is the other
+axis and is unique in each target. Their transverse pairs contain M or
+Z, so every incident U face is marked. All U slots in K, at most two,
+would close internally, contradiction. Thus both remaining rho faces
+meet the same owner, say eta.
+
+Eta contains U but has a face {Q,M,Z}, not containing U, so it has
+exactly one U axis. All its U faces are marked. They cannot pair to
+each other (degree U one), or to tau or rho (no U), so both meet xi.
+
+## 245. Exhaustion of Q and the target frame
+
+If Q=M or Z, the face {Q,M,Z} has only the two distinct high labels
+M,Z. Distinct transverse labels therefore force eta's transverse pair
+to be {M,Z}, with axes Q and U. Its U faces are {U,M,Z}. A matching
+face in xi forces two high transverse labels and the third high axis;
+every U face of xi is marked, and xi has at most three U slots. Together
+with eta's one, all U slots in K close with degree at most four.
+
+It remains that Q=C or D is low. Eta has one of three roles:
+ (i)  (Q,M,Z,U,M,Z),
+ (ii) (Z,M,Q,U,M,Q),
+ (iii)(M,Z,Q,U,Z,Q).
+In (i), its U faces are again {U,M,Z}. The same xi role and closed-U
+argument gives degree(U)<=4.
+
+In (ii), every Z face in tau, rho, and eta is marked. Their original Z
+counts are respectively one, two, and one. Xi has a face {U,M,Q}, so
+it can contain Z only as its other axis, at most once. If present, that
+Z axis has a transverse pair containing U or M, hence both its faces
+are marked. All Z slots in K therefore close, with at most 1+2+1+1=5
+slots. This contradicts minimum degree six.
+
+In (iii), use the exact M/Z angle expenses. Tau consumes more than pi.
+Eta has axis M and pair {Z,Q}, with q<m-2 and z>m+2, so its individual
+response gives theta_M+2*beta_Z>pi, as in the established Section210
+role estimate (replace its low C by Q). Rho has pair {M,Z} and both
+axes low, C and Q. Write a=z>b=m>3 and r=c,o=q. Then
+ L-2*J>=3*a^2-5*a*b+3*b^2-a-b-3
+       =(b-3)*(b+1)+(a-b)*(b-1)+3*(a-b)^2>0,
+using r<=b and o<=a. Also K_pair>8/9. Hence its transverse sum
+beta_M+beta_Z=2*atan(sqrt(K_pair*L/J)) exceeds pi/2, and its four
+original M/Z slots consume more than pi. The three distinct owners
+tau,rho,eta exceed the entire genuine M/Z budget 3*pi, contradiction.
+
+All Q other than U are excluded in the axial-C role. This leaves
+precisely (B), together with the unexcluded axial-M family (A).
+The argument retains repeated low axes, arbitrary other labels in xi,
+and self-pairings. It does not replace the external low-only boundary
+by closed equations or prove five-reservoir realization.
+
+Continuation: [Five-reservoir exceptional return chains, Sections 246–253](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).

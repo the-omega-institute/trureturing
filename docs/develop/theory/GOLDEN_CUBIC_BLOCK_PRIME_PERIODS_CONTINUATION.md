@@ -691,4 +691,568 @@ where $r\ge11$ is prime.
 
 Theorem 89.2 excludes every composite relative index at this exact original block, including arbitrarily large ones. The surviving prime-index case remains open. Neither existence of a repeated kernel nor a universal WSS exclusion follows, and the finite certificate is not extrapolated to other original indices.
 
+## 90. A real-arc lower bound for repeated kernels in rank one
+
+**Theorem 90.1 (first-return obstruction).** Let $j,c$ be positive integers, let $N=3^j\ge81$, and suppose the actual full block
+
+$$D=B_N=L_N^2+3$$
+
+is squarefree. Assume that $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$\boxed{k>D/2.}$$
+
+**Proof.** Put $n=Nk$. The original and new integral points are
+
+$$R=(5D^2,25D^2L_NF_N),\qquad
+K=(5DB_n,25D^2L_ncF_n).$$
+
+The odd-index Pell identity $L_t^2+4=5F_t^2$ verifies both points on $E_D$. In the descent coordinate order $(X,X+5D,X-15D)$, they have the same class
+
+$$\delta(R)=\delta(K)=(5,D,5D).$$
+
+Theorem 85.1 gives $E_D(\mathbb Q)_{\mathrm{tors}}=E_D[2]$, and Corollary 85.2 gives primitivity of $R$ modulo all rational torsion. The rank-one assumption therefore implies
+
+$$E_D(\mathbb Q)=\mathbb ZR\oplus E_D[2].$$
+
+Write $K=mR+T$. The four torsion descent classes are
+
+$$
+\begin{aligned}
+\delta(O)&=(1,1,1),\\
+\delta((0,0))&=(-3,5D,-15D),\\
+\delta((-5D,0))&=(-5D,1,-5D),\\
+\delta((15D,0))&=(15D,5D,3).
+\end{aligned}
+$$
+
+None equals $(5,D,5D)$. The two negative classes are excluded by signs, the identity by the nonsquare $5$, and the last by its third coordinate: $3$ and $5D$ have different squareclasses since $15D$ is nonsquare. Here $D$ is squarefree and coprime to $15$ by the original-support inputs. The list also shows that no nonzero torsion point has trivial descent class. An even $m$ would give $\delta(K)=\delta(T)$, a contradiction. Hence $m$ is odd, and equality of the two golden classes then forces $\delta(T)=1$ and $T=O$. Thus $K=mR$. Since $n>N$, one has $B_n>D$, so $K\ne\pm R$ and $|m|\ge3$.
+
+**The normalized real arc.** The positive real change of variables
+
+$$z=\frac{X}{5D},\qquad w=\frac{Y}{(5D)^{3/2}}$$
+
+is a real group isomorphism to $E_0:w^2=z(z+1)(z-3)$. Its identity component consists of $z\ge3$ and $O$. With invariant differential $dz/(2w)$, its positive real period is
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}}.$$
+
+For $z>3$, define
+
+$$u(z)=\int_z^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+This decreases strictly from $\omega/2$ to $0$. Under the real group parametrization $\mathbb R/\omega\mathbb Z$, the two points of coordinate $z$ have parameters $\pm u(z)$. This is the inverse elliptic integral from analytic uniformization; see Silverman, *The Arithmetic of Elliptic Curves*, VI.1 and VI.5, especially Proposition 5.2, in the [primary text](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf).
+
+Set $u=u(D)$. The original point has parameter $\pm u$, whereas $z(K)=B_n>D$ places the new point strictly in one of the two arcs
+
+$$(0,u)\quad\text{or}\quad(\omega-u,\omega)\pmod\omega.$$
+
+The coordinate function is even, so replace $m$ by $a=|m|\ge3$ when comparing coordinates. If $au\ge\omega$, then $a\ge\omega/u$. If $au<\omega$, it cannot lie in $(0,u)$ because $a>1$, and so it lies in $(\omega-u,\omega)$. Both cases give
+
+$$a>\omega/u-1.\tag{90.1}$$
+
+This treats negative multipliers, both ends of the high-coordinate arc, and the first wrap around the real component.
+
+For $t>3$, one has $t(t+1)(t-3)<t^3$, and for $t\ge D>3$ one has $t(t+1)(t-3)>(t-3)^3$. Therefore
+
+$$\omega>\int_3^\infty t^{-3/2}\,dt=\frac2{\sqrt3},\qquad
+u:=u(D)<\int_D^\infty\frac{dt}{2(t-3)^{3/2}}=\frac1{\sqrt{D-3}}.$$
+
+Substituting these bounds in (90.1) gives
+
+$$a>2\sqrt{\frac{D-3}{3}}-1>\sqrt D.\tag{90.2}$$
+
+For the last inequality, $D\ge144$ suffices: after squaring positive quantities it is equivalent to $D-15>6\sqrt D$, which follows from $(\sqrt D-3)^2>24$ when $\sqrt D\ge12$. Our $N\ge81$ ensures $D\ge144$. Consequently $m^2>D$.
+
+**The original Lucas index.** Use the canonical-height bounds of §74 in precisely the normalized coordinate $z=X/(5D)$:
+
+$$\frac12h(z(P))-\frac{\log144}{6}\le\widehat h(P)
+\le\frac12h(z(P))+\frac{\log24}{6}.$$
+
+These refer to the canonical height on $E_D$; the real coordinate change above does not change that height. Since $z(R)=D$ and $D\ge144$,
+
+$$\widehat h(R)\ge\frac12\log D-\frac{\log144}{6}\ge\frac13\log D.\tag{90.3}$$
+
+Let $\alpha=(1+\sqrt5)/2$ and $v=\alpha^{2N}>1$. Since $N$ and $Nk$ are odd,
+
+$$D=v+1+v^{-1},\qquad
+B_{Nk}=v^k+1+v^{-k}<(v+1+v^{-1})^k=D^k.$$
+
+The strict inequality for $k>1$ follows from the positive mixed terms in the expansion. As $z(K)=B_{Nk}$ is an integer, the upper height estimate gives
+
+$$\widehat h(K)<\frac k2\log D+\frac{\log24}{6}\le\frac{2k}{3}\log D,\tag{90.4}$$
+
+because $k\log D\ge\log24$. Combining $K=mR$, quadraticity, and (90.3)–(90.4),
+
+$$\frac{m^2}{3}\log D\le\widehat h(K)<\frac{2k}{3}\log D.$$
+
+Hence $k>m^2/2>D/2$. ∎
+
+**Corollary 90.2 (the remaining prime indices at N=81).** If $k>1$ is odd, $3\nmid k$, and $B_{81k}$ has the same full squarefree kernel as $B_{81}$, then $k=r$ is prime and
+
+$$r>\frac{7177905237579946589743592924684179}{2}.$$
+
+Thus every prime relative index at most $3588952618789973294871796462342089$ is excluded.
+
+**Proof.** Section 89 certifies the squarefree factorization
+
+$$D=B_{81}=AQ,\qquad A=59779,\qquad Q=120074026624398979403194983601.$$
+
+Exact modular exponentiation gives
+
+$$Q\equiv300\pmod A,\qquad 300^{29889}\equiv59778\equiv-1\pmod A.$$
+
+Euler's criterion proves $(Q/A)=-1$. Theorem 78.1 therefore applies to this actual two-prime block with $C=1$ and gives rational rank one. Theorem 89.2 makes $k$ prime, and Theorem 90.1 gives the strict lower bound. ∎
+
+The general theorem requires actual squarefreeness of $B_N$ and rank one; both are verified in the $N=81$ application. The argument uses the real position of the original generator and does not require an odd-valuation primitive divisor. Larger prime relative indices remain open, and no universal WSS exclusion is asserted.
+
+## 91. Effective eventual uniqueness for squarefree rank-one golden blocks
+
+**Theorem 91.1 (effective finite-exception theorem).** There is an effectively computable absolute constant $D_0$ with the following property. Let $j$ be a positive integer, let $N=3^j\ge81$, and suppose the actual block $D=B_N=L_N^2+3$ is squarefree and $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $D>D_0$, then there are no odd integer $k>1$ and positive integer $c$ satisfying
+
+$$3\nmid k,\qquad B_{Nk}=Dc^2.$$
+
+Thus only finitely many squarefree rank-one original ternary blocks can have an admissible repeated full squarefree kernel, and their possible original indices are effectively bounded. The constant $D_0$ is not numerically computed here; in particular, no assertion that $B_{81}>D_0$ follows.
+
+**Proof.** We combine the first-return lower bound from §90 with an effective upper bound for integral multiples on a fixed quadratic-twist family.
+
+**The actual integral multiple.** For any repetition under the hypotheses, the proof of Theorem 90.1 supplies the integral points
+
+$$R=(5D^2,25D^2L_NF_N),\qquad
+K=(5DB_{Nk},25D^2L_{Nk}cF_{Nk})$$
+
+and an odd integer $m$ such that
+
+$$K=mR,\qquad |m|\ge3,\qquad |m|>\sqrt D.\tag{91.1}$$
+
+The full Kummer class removes the rational two-torsion term. The multiplier used below is this elliptic multiplier $m$, not the Lucas relative index $k$.
+
+**A fixed short twist family.** Make the integral change of coordinates
+
+$$x=9X-30D,\qquad y=27Y.$$
+
+Direct expansion gives
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.\tag{91.2}$$
+
+This rational group isomorphism sends $R$ and $K$ to integral points $P$ and $mP$, and $P$ is nontorsion.
+
+The model (91.2) is quasi-minimal in Ingram's sense: its discriminant is minimal among integral short Weierstrass equations. Indeed, $8775=3^3\cdot5^2\cdot13$, and $D$ is squarefree and coprime to $15$. Every prime valuation of $8775D^2$ is less than $4$: at $3$ it is $3$, at $5$ it is $2$, at $13$ it is $1$ or $3$, and at other primes it is $0$ or $2$. An isomorphism between short equations in characteristic zero has no translation term and scales the coefficient of $x$ by a fourth power. A strict local decrease of the discriminant with integral short coefficients would require a prime fourth power dividing that coefficient, which is impossible.
+
+The base curve $E'_1$ is fixed, and $E'_D$ is its squarefree quadratic twist. Its invariant is
+
+$$j(E'_D)=35152/9.$$
+
+For $D\ge144$, Ingram's height convention therefore gives
+
+$$
+\begin{aligned}
+h(E'_D)
+&=\max\bigl(h(j),\log\max(4\cdot8775D^2,4\cdot236250D^3)\bigr)\\
+&=3\log D+\log945000.
+\end{aligned}\tag{91.3}
+$$
+
+Here $h(j)=\log35152$ is smaller than the displayed expression.
+
+**Uniform integral-multiple bound.** Ingram, *Multiples of integral points on elliptic curves*, Proposition 11, supplies effectively obtainable positive constants $c_3,c_4$, depending only on
+
+$$M(P)=\mathop{\mathrm{lcm}}_p\operatorname{ord}\bigl(P\bmod E_0(\mathbb Q_p)\bigr),$$
+
+such that, on a quasi-minimal short curve, $n>c_3$ and integrality of $nP$ imply
+
+$$n<c_4h(E)^{5/2}.\tag{91.4}$$
+
+See the [primary paper](https://arxiv.org/pdf/0802.2651), Proposition 11 and its proof. Its elliptic-logarithm estimate has an explicit constant $4\cdot10^{41}$ in equation (9), and its small-height adjustment is effective. In our family $h(E'_D)>2\pi\sqrt3$ already for $D\ge144$, so that adjustment is unnecessary for this application.
+
+There is a direct uniform bound on $M(P)$. The only prime where $j$ has negative valuation is $3$, with $v_3(j)=-2$. Multiplicative reduction can occur only there and has type $I_2$, whose component group has order at most $2$. Every additive Kodaira type has component-group order in $\{1,2,3,4\}$, and good reduction has trivial component group. Consequently every local order divides $12$, and
+
+$$M(P)\mid12.$$
+
+These component statements concern the intrinsic minimal model; using quasi-minimal short coordinates does not change the quotient groups. We may take maxima over the finitely many divisors of $12$ to obtain fixed effective constants $c_3,c_4$ for the entire family.
+
+Apply (91.4) to $|m|P$, which is integral whether $m$ is positive or negative. Equations (91.1)–(91.4) yield
+
+$$\sqrt D<|m|\le\max\left\{c_3,c_4(3\log D+\log945000)^{5/2}\right\}.\tag{91.5}$$
+
+If $|m|\le c_3$, the first alternative applies; otherwise (91.4) applies. Both constants are uniform in the original block and the point.
+
+**An effective cutoff.** For $s\ge\log144$, the function
+
+$$\frac{\exp(s/2)}{(3s+\log945000)^{5/2}}$$
+
+is increasing, since its logarithmic derivative is
+
+$$\frac12-\frac{15/2}{3s+\log945000}>0.$$
+
+It tends to infinity. We can therefore effectively choose $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2}.$$
+
+These strict inequalities persist for every $s\ge s_0$. Set $D_0=\lceil\exp(s_0)\rceil$. If $D>D_0$, (91.5) is impossible. The sequence $B_{3^j}$ is strictly increasing and effectively computable, so $D\le D_0$ leaves an effectively bounded finite set of possible original indices $j$. ∎
+
+This is eventual uniqueness within the actual squarefree rank-one stratum. It neither classifies the finite exceptions nor supplies a numerical cutoff or an additional exclusion at $N=81$. Higher-rank curves and nonsquarefree original blocks are outside the theorem. No infinitude of squarefree rank-one blocks or universal WSS exclusion is asserted.
+
+## 92. Rank-one uniqueness with arbitrary original square cofactor
+
+This section removes the full-block squarefreeness restriction from §§90–91. The squarefree kernel remains the twist parameter, while the entire original block controls the real arc.
+
+**Theorem 92.1 (arbitrary square cofactor).** Let $j,C,c$ be positive integers, let $N=3^j\ge81$, and write the actual original block as
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is its full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$k>B_N/2.$$
+
+Moreover, there is an effectively computable absolute constant $B_0$ such that no such repetition occurs when $B_N>B_0$. This constant is uniform over all positive original square cofactors $C$.
+
+**Proof.** Put $n=Nk$. The two integral points are
+
+$$R=(5DB,25D^2L_NCF_N),\qquad
+K=(5DB_n,25D^2L_ncF_n).$$
+
+The odd-index identity $L_t^2+4=5F_t^2$ verifies their curve equations. Their full two-descent classes, ordered as $(X,X+5D,X-15D)$, are both $(5,D,5D)$. For example,
+
+$$X(R)=5D^2C^2,\quad X(R)+5D=25DF_N^2,\quad X(R)-15D=5DL_N^2,$$
+
+and the same identities hold with $c,n$ for $K$.
+
+Theorem 85.1 and Corollary 85.2 already apply to arbitrary positive $C$: the rational torsion is $E_D[2]$, and $R$ is primitive modulo all torsion. Rank one therefore gives $E_D(\mathbb Q)=\mathbb ZR\oplus E_D[2]$. Write $K=mR+T$.
+
+The torsion classes are $(1,1,1)$, $(-3,5D,-15D)$, $(-5D,1,-5D)$, and $(15D,5D,3)$. None equals $(5,D,5D)$: signs exclude the two negative classes, $5$ excludes the identity, and the last would require $15D$ to be a square. Here $D$ is squarefree and coprime to $15$. Only $O$ has trivial descent class. Thus $m$ is odd and $T=O$. Since $B_n>B$, one has $K\ne\pm R$ and $|m|\ge3$.
+
+**The real coordinate is the full block.** The normalized real isomorphism
+
+$$z=X/(5D),\qquad w=Y/(5D)^{3/2}$$
+
+gives the fixed curve $w^2=z(z+1)(z-3)$. Now $z(R)=B$, whereas $z(K)=B_n>B$. Define
+
+$$\omega=\int_3^\infty\frac{dt}{\sqrt{t(t+1)(t-3)}},\qquad
+u(B)=\int_B^\infty\frac{dt}{2\sqrt{t(t+1)(t-3)}}.$$
+
+As in §90, the identity component is parametrized by $\mathbb R/\omega\mathbb Z$, and coordinates greater than $B$ correspond to $(0,u(B))$ and $(\omega-u(B),\omega)$. Replacing $m$ by $a=|m|$ leaves the coordinate unchanged. If $au(B)\ge\omega$, then $a\ge\omega/u(B)$; otherwise $a>1$ excludes the first arc and forces $au(B)>\omega-u(B)$. Hence
+
+$$|m|>\omega/u(B)-1.$$
+
+The same integrand inequalities as in §90 give
+
+$$\omega>2/\sqrt3,\qquad u(B)<1/\sqrt{B-3}.$$
+
+Because $B\ge144$, it follows that
+
+$$|m|>2\sqrt{(B-3)/3}-1>\sqrt B.\tag{92.1}$$
+
+No restriction on $C$ enters this first-return argument.
+
+**The Lucas relative index.** The normalized-coordinate height bound of §74 gives
+
+$$\widehat h(R)\ge\tfrac12\log B-\tfrac16\log144\ge\tfrac13\log B.$$
+
+For $v=((1+\sqrt5)/2)^{2N}>1$, one has $B=v+1+v^{-1}$ and, for $k>1$,
+
+$$B_{Nk}=v^k+1+v^{-k}<B^k.$$
+
+Consequently
+
+$$\widehat h(K)\le\tfrac12\log B_{Nk}+\tfrac16\log24<\tfrac{2k}{3}\log B.$$
+
+Quadraticity under $K=mR$ yields $m^2<2k$. Together with (92.1), this proves $k>B/2$.
+
+**The twist height uses the squarefree kernel.** The integral short transformation $x=9X-30D$, $y=27Y$ sends $R,K$ to integral points $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+It is $D$, rather than $B$, that is squarefree. This is exactly the premise needed for the quasi-minimality check of §91: $8775=3^3\cdot5^2\cdot13$, $D$ is coprime to $15$, and every prime valuation of $8775D^2$ is less than $4$. No integral short equation in its isomorphism class has smaller discriminant.
+
+All twists have $j=35152/9$. At the only potentially multiplicative prime $3$, the minimal multiplicative type, if present, is $I_2$. Additive component-group orders are at most $4$, and good reduction has trivial component group. Thus $M(P)\mid12$, independently of $C$.
+
+The original-support congruence gives $D\equiv19\pmod{120}$, so $D\ge19$. In Ingram's height convention,
+
+$$h(E'_D)=3\log D+\log945000\le3\log B+\log945000.\tag{92.2}$$
+
+The equality holds already for $D\ge19$: the cubic coefficient dominates the linear one and $h(j)=\log35152$. This height also exceeds $2\pi\sqrt3$, so the large-height proof of Proposition 11 applies without its finite small-height adjustment.
+
+The effective constants $c_3,c_4$ from Ingram's Proposition 11 can be chosen uniformly for $M(P)\mid12$, as in §91. If $|m|\le c_3$, use that bound; otherwise the integrality of $|m|P$ gives $|m|<c_4h(E'_D)^{5/2}$. Therefore (92.1)–(92.2) imply
+
+$$\sqrt B<|m|\le\max\left\{c_3,c_4(3\log B+\log945000)^{5/2}\right\}.\tag{92.3}$$
+
+The effective cutoff argument of §91 now applies with $s=\log B$. The function $\exp(s/2)/(3s+\log945000)^{5/2}$ increases for $s\ge\log144$ and tends to infinity. Choose an effective $s_0\ge\log144$ such that
+
+$$\exp(s_0/2)>c_3,\qquad
+\exp(s_0/2)>c_4(3s_0+\log945000)^{5/2},$$
+
+and set $B_0=\lceil\exp(s_0)\rceil$. Then $B>B_0$ contradicts (92.3). Since $B_{3^j}$ is strictly increasing and computable, only effectively bounded finitely many original indices remain possible. ∎
+
+The real lower bound depends on the full block $B_N=DC^2$, whereas the twist-height upper bound depends on $D\le B_N$. This extends effective eventual uniqueness to every actual rank-one original block, including blocks with nontrivial square cofactor. The analytic input remains Ingram's [Proposition 11](https://arxiv.org/pdf/0802.2651), with the model and uniformity checks of §91. Rank one remains essential. No numerical cutoff, exhaustive finite search, extra $N=81$ exclusion, higher-rank conclusion, or universal WSS solution is asserted.
+
+## 93. An explicit rank-one cutoff: only the original index 81 remains
+
+This section makes the eventual cutoff of §92 numerical, retaining arbitrary original square cofactors. The analytic estimate is specialized to the actual golden point, whose height is already controlled explicitly.
+
+**Theorem 93.1 (explicit original-index cutoff).** Let $j,C,c$ be positive integers, $N=3^j\ge81$, and
+
+$$B=B_N=L_N^2+3=DC^2,$$
+
+where $D$ is the full positive squarefree kernel. Suppose $E_D:Y^2=X(X+5D)(X-15D)$ has rational rank one. If $k>1$ is odd, $3\nmid k$, and $B_{Nk}=Dc^2$, then
+
+$$\log B_N<200,\qquad j=4.$$
+
+Thus no such repeated kernel occurs for any original $j\ge5$ in this rank-one stratum. The surviving original index $N=81$ is not resolved by this theorem.
+
+**Proof.** Put $n=Nk$. The actual-point construction and real-arc argument of §92 give integral points
+
+$$R=(5DB,25D^2L_NCF_N),\qquad K=(5DB_n,25D^2L_ncF_n)$$
+
+with $K=mR$, where $m$ is odd, $a=|m|\ge3$, and
+
+$$a^2>B. \tag{93.1}$$
+
+The elimination of the torsion term uses Theorem 85.1 and Corollary 85.2 as in §92; rank one is retained throughout. The integral transformation $x=9X-30D$, $y=27Y$ sends these points to $P,mP$ on
+
+$$E'_D:y^2=x^3-8775D^2x-236250D^3.$$
+
+Replacing $m$ by $a$ changes only the ordinate's sign. Set $s=\log B$ and $\widehat h=\widehat h(P)$. The normalized-coordinate height bounds give
+
+$$\frac{s}{3}\le\widehat h\le\frac{s}{2}+\frac{\log24}{6}\le\frac{2s}{3}. \tag{93.2}$$
+
+The elementary Lucas estimate $L_N^2\ge2^{N-1}$ and $\log2>1/2$ give $s>40$. In Ingram's curve-height convention, since $19\le D\le B$,
+
+$$H=h(E'_D)=3\log D+\log945000<4s. \tag{93.3}$$
+
+Here $\log945000<14<s$, and $H>2\pi\sqrt3$. The point height uses the full block $B$; the curve height uses its squarefree kernel $D$.
+
+**The real period and the small logarithm.** The ordered roots of the short cubic are
+
+$$e_1=105D,\qquad e_2=-30D,\qquad e_3=-75D.$$
+
+Write $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The usual substitution in the elliptic integral gives the period basis
+
+$$\omega=\frac{2K_{\rm ell}(1/2)}{\sqrt{180D}},\qquad
+\omega'=\frac{2iK_{\rm ell}(\sqrt3/2)}{\sqrt{180D}}.$$
+
+The real-period parameter is $(e_2-e_3)/(e_1-e_3)=1/4$. Thus $\tau=\omega'/\omega$ is purely imaginary with $\operatorname{Im}\tau>1$, so this basis is already reduced. Choose the real principal logarithm $u$ of $P$, with $|u|\le\omega/2$, and an integer $b$ such that
+
+$$\Lambda=au+b\omega,\qquad |\Lambda|\le\omega/2.$$
+
+The point $P$ lies on the identity component. Hence $\Lambda$ is a real principal logarithm of $aP$, $|b|\le(a+1)/2<a$, and $\Lambda\ne0$ because $P$ is nontorsion.
+
+Its short coordinate is $x_a=45DB_n-30D$. Since $B_n>B\ge144$, one has $x_a\ge B_n$ and $x_a>210D=2\max_i|e_i|$. Ingram's Lemma 8 gives
+
+$$\log|\Lambda|\le\frac32\log2-\frac12\log x_a
+\le\frac32\log2-\frac12\log B_n.$$
+
+The normalized upper height bound gives $a^2\widehat h\le\tfrac12\log B_n+\log24/6$. Therefore
+
+$$\log|\Lambda|\le-\frac{a^2s}{3}+\frac{\log24}{6}+\frac32\log2
+<-\frac{a^2s}{3}+2\le-\frac{a^2s}{6}. \tag{93.4}$$
+
+The last step uses $a\ge3$ and $s>40$.
+
+**Explicit elliptic-logarithm parameters.** Apply David's Theorem 2.1 directly, with Ingram's Lemma 10 and equation (9) as a convenient form of the specialization. Take number-field degree $1$, two logarithms $u,\omega$ corresponding to $P,O$, coefficient vector $(0,a,b)$, and auxiliary parameter $E=e$. David explicitly permits logarithms at poles, so the period representing $O$ is allowed. His degree-three projective embedding has canonical-height limit $3\widehat h(P)$; we use that requirement directly rather than the $2\widehat h(P)$ printed in Ingram's specialization. The invariants $g_2=35100D^2$, $g_3=945000D^3$ give exactly the curve height $H$. David's numerical constant satisfies
+
+$$2.9\cdot10^{18}\cdot4^8\cdot3^{38.3}<4\cdot10^{41}.$$
+
+Sufficient parameter conditions are
+
+$$\log V_2\ge\max\{H,3\pi/\operatorname{Im}\tau\},$$
+
+$$\log V_1\ge\max\{3\widehat h,H,
+3\pi|u|^2/(|\omega|^2\operatorname{Im}\tau),\log V_2\},$$
+
+$$\log A\ge\max\{eH,\log a,\log|b|,\log V_1\}.$$
+
+When $b=0$, its coefficient-height term is zero. Since $\Lambda\ne0$, the resulting bound is
+
+$$\log|\Lambda|\ge-4\cdot10^{41}(\log A+1)
+(\log\log A+H+1)^3\log V_1\log V_2. \tag{93.5}$$
+
+Choose
+
+$$\log V_1=\log V_2=100s,\qquad t=\log a,\qquad
+L=\log A=\max\{100s,t\}.$$
+
+Equations (93.2)–(93.3), $3\widehat h\le2s$, $\operatorname{Im}\tau>1$, $|u|\le\omega/2$, $e<3$, $\pi<4$, and $|b|<a$ verify all requirements. In particular $eH<12s<100s$. David's remaining auxiliary-parameter requirement is $E=e\le e\sqrt{\log V_i/A_i}$, where $A_i=3\pi|u_i|^2/(|\omega|^2\operatorname{Im}\tau)$, $u_1=u$ and $u_2=\omega$. It follows from the already checked $\log V_i\ge A_i$. No unspecified Lang-height constant or small-height adjustment enters.
+
+If $t\le100s$, then $L=100s$, $L+1\le101s$, and $\log L+H+1\le8s$. The last estimate follows from $\log(100s)+1\le4s$ for $s\ge40$: it holds at $40$ using $\log4000<12$, and its difference has positive derivative. Combining (93.4)–(93.5) yields
+
+$$a^2<6\cdot4\cdot10^{41}\cdot101\cdot8^3\cdot10000\,s^5<10^{60}s^5. \tag{93.6}$$
+
+If $t>100s$, then $t>4000$, $L+1\le2t$, and $\log L+H+1<2t$, because $H<t/25$ and $\log t+1<t$. Instead the same comparison gives
+
+$$e^{2t}<6\cdot4\cdot10^{41}\cdot2\cdot8\cdot10000\,t^4s<10^{60}t^5.$$
+
+This is impossible for $t\ge4000$: at the endpoint,
+
+$$60\log10+5\log4000<180+60=240<8000,$$
+
+and $2t-60\log10-5\log t$ has positive derivative. Thus (93.6) always holds. In particular the actual multiplier satisfies $a<10^{30}(\log B)^{5/2}$.
+
+**The numerical cutoff.** By (93.1) and (93.6),
+
+$$e^s<10^{60}s^5. \tag{93.7}$$
+
+Positive exponential-series partial sums give exact certificates
+
+$$e^{5/2}>\sum_{h=0}^{4}\frac{(5/2)^h}{h!}=\frac{4169}{384}>10,\qquad
+e^6>\sum_{h=0}^{6}\frac{6^h}{h!}=\frac{1223}{5}>200.$$
+
+Hence $\log10<5/2$ and $\log200<6$. At $s=200$,
+
+$$60\log10+5\log200<150+30=180<200.$$
+
+The function $s-60\log10-5\log s$ has positive derivative for $s\ge200$, so (93.7) forces $s<200$.
+
+For completeness, $e<3$ follows from $h!\ge2^{h-1}$ for $h\ge1$, strict for $h\ge3$, and summing the geometric majorant. Thus $e^2<9<10$, giving $\log10>2$.
+
+For odd $v$, the identity $L_{3v}=L_v^3+3L_v$ gives the exact chain
+
+$$L_1=1,\quad L_3=4,\quad L_9=76,\quad L_{27}=439204,$$
+
+$$L_{81}=84722519070079276,$$
+
+$$L_{243}=608130213374088941214747405817720942127490792974404>10^{50}.$$
+
+Each entry is the preceding entry cubed plus three times that entry. Consequently
+
+$$B_{243}=369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219>10^{100}.$$
+
+It follows that $\log B_{243}>100\log10>200$. Since the Lucas sequence is strictly increasing at these positive indices, every $j\ge5$ contradicts $s<200$. The hypothesis $N\ge81$ leaves only $j=4$. $\square$
+
+**Sources and scope.** The analytic inputs are Patrick Ingram, *Multiples of integral points on elliptic curves*, [arXiv:0802.2651v2](https://arxiv.org/pdf/0802.2651), Lemmas 8 and 10, equation (9), and Sinnou David, *Minorations de formes linéaires de logarithmes elliptiques*, Mémoires de la SMF 62 (1995), [Theorem 2.1](https://www.numdam.org/issue/MSMF_1995_2_62__1_0.pdf). The direct parameter check above retains David's projective-height convention. The original arithmetic and real-arc inputs are §92. This gives an explicit cutoff for repeated full kernels on the actual rank-one stratum, with arbitrary positive $C$. It leaves the $N=81$ case and all higher-rank cases open; it is not a universal WSS exclusion.
+
+
+## 94. Exact elliptic-logarithm separation at the remaining original index 81
+
+**Theorem 94.1 (the original block at 81).** Put
+
+$$B=B_{81}=L_{81}^2+3=7177905237579946589743592924684179.$$
+
+There are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and
+
+$$B_{81k}=Bc^2.$$
+
+**Proof.** The complete factorization in §89 makes $B$ squarefree, and the descent calculation in §90 gives $\operatorname{rank}E_B(\mathbb Q)=1$. Suppose such a repetition exists. The actual Kummer and primitivity argument of §92 gives $K=mR$ and $a=|m|$ with $a^2>B$. The explicit estimates in the proof of Theorem 93.1 give, for $s=\log B$,
+
+$$a<10^{30}s^{5/2},\qquad \log|\Lambda|\le-\frac{a^2s}{6}, \tag{94.1}$$
+
+where $\Lambda\ne0$ is a principal real logarithm of the multiple on
+
+$$y^2=x^3-8775B^2x-236250B^3.$$
+
+Since $10^{33}<B<10^{34}$ and $\log10<5/2$, one has $40<s<85<100$. Therefore
+
+$$a<10^{35}<M:=10^{40},\qquad \frac{a^2s}{6}>B>10^{33}. \tag{94.2}$$
+
+We will obtain incompatible lower and upper bounds for $|\Lambda|$.
+
+**The normalized real logarithm.** On $y_0^2=z(z+1)(z-3)$, with differential $dz/(2y_0)$, define
+
+$$u_0(B)=\int_0^{1/\sqrt B}\frac{dv}{\sqrt{1-2v^2-3v^4}},\qquad
+\omega_0=K_{\rm ell}(1/2),$$
+
+where $K_{\rm ell}(t)=\int_0^{\pi/2}(1-t^2\sin^2\theta)^{-1/2}\,d\theta$. The substitution $v=1/\sqrt z$ in the integral from $B$ to infinity gives $u_0$. The ordered roots $3,0,-1$ have real-period parameter $1/4$, so the full real period is $2K_{\rm ell}(1/2)/\sqrt4=\omega_0$.
+
+The short coordinates satisfy
+
+$$x=45Bz-30B,\qquad y=135\sqrt5\,B^{3/2}y_0.$$
+
+Thus its invariant differential is $1/\sqrt{45B}$ times the normalized differential, and its real period is
+
+$$\omega=\frac{\omega_0}{\sqrt{45B}}.$$
+
+Put $\alpha=u_0(B)/\omega_0$. The sign of the actual point or multiplier can be absorbed into the integer $m$, so for some integers $m,b$,
+
+$$|\Lambda|=\omega|m\alpha+b|,\qquad 1\le|m|<M. \tag{94.3}$$
+
+The intervals below also establish $0<u_0<\omega_0/2$. Any principal-period shift would in any event be absorbed into $b$.
+
+**Rational intervals for the two integrals.** For an integer $q>1$ and a positive even integer $T$, define
+
+$$A(q,T)=\sum_{h=0}^{T-1}\frac{(-1)^h}{(2h+1)q^{2h+1}},\qquad
+E(q,T)=\frac1{(2T+1)q^{2T+1}}.$$
+
+The alternating series gives $A(q,T)<\arctan(1/q)<A(q,T)+E(q,T)$. Machin's identity $\pi=16\arctan(1/5)-4\arctan(1/239)$ follows exactly from
+
+$$\tan(4\arctan(1/5))=\frac{120}{119},\qquad
+\frac{120\cdot239-119}{119\cdot239+120}=1,$$
+
+and the angle $4\arctan(1/5)-\arctan(1/239)$ lying in $(0,\pi/2)$. Set
+
+$$\pi_L=16A(5,200)-4\bigl(A(239,60)+E(239,60)\bigr),$$
+
+$$\pi_U=16\bigl(A(5,200)+E(5,200)\bigr)-4A(239,60).$$
+
+Then $\pi_L<\pi<\pi_U$. Define
+
+$$S=\sum_{h=0}^{239}\frac{\binom{2h}{h}^2}{64^h},\qquad
+T_{240}=\frac{\binom{480}{240}^2}{64^{240}},$$
+
+$$K_L=\frac{\pi_L S}{2},\qquad
+K_U=\frac{\pi_U}{2}\left(S+\frac43T_{240}\right).$$
+
+Expanding the complete elliptic integral gives $K_{\rm ell}(1/2)=(\pi/2)\sum_{h\ge0}\binom{2h}{h}^2/64^h$. The ratio of successive summands is $(2h+1)^2/[16(h+1)^2]<1/4$. Hence
+
+$$K_L<\omega_0<K_U.$$
+
+For the incomplete integral, set
+
+$$R_0=\left\lfloor\sqrt{B\,10^{360}}\right\rfloor,\qquad
+x_L=\frac{10^{180}}{R_0+1},\qquad x_U=\frac{10^{180}}{R_0}.$$
+
+The strict integer-square inequalities $R_0^2<B10^{360}<(R_0+1)^2$ give $x_L<1/\sqrt B<x_U$. Define
+
+$$w=\frac2B+\frac3{B^2},$$
+
+$$V=\sum_{h=0}^{4}\sum_{i=0}^{h}
+\frac{\binom{2h}{h}}{4^h}\binom hi
+\frac{2^{h-i}3^i}{(2h+2i+1)B^{h+i}},$$
+
+$$u_L=x_LV,\qquad
+u_U=x_U\left(V+\frac{w^5}{1-w}\right).$$
+
+All denominators are positive. In the positive expansion $(1-z)^{-1/2}=\sum_{h\ge0}c_hz^h$, one has $0<c_h=\binom{2h}{h}/4^h\le1$. Integrating its first five terms with $z=2v^2+3v^4$ gives exactly $B^{-1/2}V$. On the integration interval $z\le w<1$, so the entire omitted integral is at most $B^{-1/2}w^5/(1-w)$. Consequently
+
+$$u_L<u_0(B)<u_U.$$
+
+Finally put
+
+$$\alpha_L=\frac{u_L}{K_U},\qquad \alpha_U=\frac{u_U}{K_L}.$$
+
+**A finite rational separation certificate.** Take
+
+$$p=200202472053660572292891,\qquad
+q=28593120581134066096406246353512955933058.$$
+
+The preceding finite sums and integer operations give the following exact rational inequalities:
+
+$$\gcd(p,q)=1,\qquad M<q<10^{50},$$
+
+$$\max\left\{\left|\frac pq-\alpha_L\right|,
+\left|\frac pq-\alpha_U\right|\right\}<\frac1{2Mq}, \tag{94.4}$$
+
+$$1<K_L<K_U,\qquad 0<u_L<u_U<\frac12.$$
+
+Together with the displayed square-root bracket, these form a finite certificate using only rational arithmetic; the sums, truncation lengths and integers determining every entry are specified above. In particular $0<\alpha_L<\alpha<\alpha_U$, and (94.4) implies $|\alpha-p/q|<1/(2Mq)$.
+
+For any integers $m,b$ with $1\le|m|\le M$, the integer $mp+bq$ is nonzero: otherwise coprimality would give $q\mid m$, contrary to $q>M$. Thus
+
+$$|m\alpha+b|\ge\frac1q-|m|\left|\alpha-\frac pq\right|>\frac1{2q}.$$
+
+Because $\omega_0>1$ and $45B<10^{36}$, one has $\omega>10^{-18}$. Equations (94.3)–(94.4) give
+
+$$|\Lambda|>\frac{10^{-18}}{2\cdot10^{50}}>10^{-69}. \tag{94.5}$$
+
+On the other hand, (94.1)–(94.2) give
+
+$$|\Lambda|<e^{-10^{33}}<24\cdot10^{-132}<10^{-130},$$
+
+where the middle inequality follows from $e^x>x^4/4!$ for $x>0$. This contradicts (94.5) and proves the theorem. $\square$
+
+**Corollary 94.2 (rank-one nonrepetition for all original indices at least 81).** Let $j,C$ be positive integers, $N=3^j\ge81$, and $B_N=DC^2$ with $D$ its full positive squarefree kernel. If $E_D$ has rational rank one, then there are no positive integers $k,c$ with $k>1$ odd, $3\nmid k$, and $B_{Nk}=Dc^2$.
+
+**Proof.** Theorem 93.1 excludes $j\ge5$. The only remaining value is $j=4$, whose original block is the squarefree $B$ of Theorem 94.1. That theorem excludes its repetitions as well. $\square$
+
+The result uses exact rational integral bounds and a fixed rational approximation; no floating-point approximation or finite scan over multipliers is a premise. Its rank-one hypothesis remains essential in the passage to $K=mR$. It leaves higher-rank blocks and original indices below $81$ outside its conclusion and does not settle the full WSS problem.
+
+
 ## 追加锚（本行以下为增补区）
