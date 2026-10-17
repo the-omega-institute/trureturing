@@ -4931,3 +4931,5 @@ precisely (B), together with the unexcluded axial-M family (A).
 The argument retains repeated low axes, arbitrary other labels in xi,
 and self-pairings. It does not replace the external low-only boundary
 by closed equations or prove five-reservoir realization.
+
+Continuation: [Five-reservoir exceptional return chains, Sections 246–253](CFMP_GEOMETRIC_REALIZATION_FIVE_RESERVOIR_RETURN.md).
