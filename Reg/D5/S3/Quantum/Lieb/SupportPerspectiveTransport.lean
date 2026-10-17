@@ -50,7 +50,7 @@ def family : Registration arena.{u} (type_of% (@cfc_supported_localization.{u}))
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := dependence
@@ -74,7 +74,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Lieb.SupportPerspectiveTransport
     definition := none
@@ -115,7 +115,7 @@ private theorem actual_law : arena.{u}.Law actual := by
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro hall
   let n := ULift.{u} (Fin 1)
-  have h := hall zero_convex continuousOn_const
+  have h := hall (f := fun _ => 0) (@zero_convex.{u}) continuousOn_const
     (PositiveLinearMap.id ℂ (Matrix n n ℂ)) 1 Matrix.PosSemidef.one
     (ULift.up 0) 0 Matrix.PosSemidef.zero
   apply not_one_le_zero (n := n)
@@ -130,7 +130,7 @@ def family : Registration arena.{u} (type_of% (@ambient_unitalized_jensen.{u})) 
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := dependence
@@ -154,7 +154,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Lieb.SupportPerspectiveTransport
     definition := none
@@ -219,7 +219,7 @@ def family : Registration arena.{u} (type_of% (@spectral_sqrt_normalization.{u})
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := by
@@ -251,8 +251,11 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Lieb.SupportPerspectiveTransport
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "arg"], stateBinder := 3,
-      functionOperand := false, stateOperand := none,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -315,7 +318,7 @@ def family : Registration arena.{u,v} (type_of% (@positive_map_sandwich_support.
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := by

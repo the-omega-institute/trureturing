@@ -86,7 +86,7 @@ def family : Registration arena.{u,v} (type_of% (@cfc_intertwining.{u,v})) where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := dependence
@@ -110,7 +110,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Lieb.PositiveMapJensen
     definition := none
@@ -147,7 +147,7 @@ private theorem actual_law : arena.{u}.Law actual := by
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro hall
   let n := ULift.{u} (Fin 1)
-  have h := hall zero_convex continuousOn_const
+  have h := hall (f := fun _ => 0) (@zero_convex.{u}) continuousOn_const
     (PositiveLinearMap.id ℂ (Matrix n n ℂ)) rfl 0 Matrix.PosSemidef.zero
   apply not_one_le_zero (n := n)
   simpa [rejected, realize] using h
@@ -161,7 +161,7 @@ def family : Registration arena.{u} (type_of% (@positive_unital_jensen.{u})) whe
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := dependence
@@ -185,7 +185,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ → ℝ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Lieb.PositiveMapJensen
     definition := none
@@ -238,7 +238,8 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   have h := hall (A := (1 : Matrix n n ℂ)) (B := 1) le_rfl V
   have hGram : Vᴴ * V = (1 : Matrix m m ℂ) := by
     ext i j
-    simp [V, Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.one_apply]
+    change (∑ k : n, star (V k i) * V k j) = if i = j then 1 else 0
+    simp [V, n, m, Subsingleton.elim i j]
   apply FunctionObservation.not_one_le_zero (n := m)
   simpa [rejected, realize, hGram] using h
 
@@ -251,7 +252,7 @@ def family : Registration arena.{u,v} (type_of% (@congruence_mono.{u,v})) where
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim j i)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro e
       exact nomatch e
   dependence := by
@@ -284,8 +285,11 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Lieb.PositiveMapJensen
     definition := none
     coordinates := #[0, 1]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 9,
-      functionOperand := false, stateOperand := none,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
+      stateBinder := 9
+      functionOperand := false
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

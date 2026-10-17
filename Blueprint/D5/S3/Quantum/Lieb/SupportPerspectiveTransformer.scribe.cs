@@ -1,4 +1,4 @@
-// Source candidate; current Scribe compilation and emission are pending.
+// Exact supported perspective transformer for finite positive matrix maps.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -8,7 +8,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Lieb;
 internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Proposed exact supported perspective transformer for positive finite matrix maps.",
+        "Exact supported perspective transformer for positive finite matrix maps.",
         H("SupportPerspectiveTransformer"), Blocks(
             Describe.Lean(DescribeId.Create("supported-positive-map-transformer"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransformer.supportedPerspective_transformer"),
@@ -38,18 +38,18 @@ internal sealed class SupportPerspectiveTransformerDocument : IScribeDocumentDef
                     + "Phi(persp(f,A,B)) using signed sandwich support. Thus a "
                     + "negative value of f(0) does not require a positivity claim "
                     + "for f(X).")), Paragraph(Text(
-                    "The Jensen and support transport modules have passed explicit "
-                    + "targeted Lean builds. The current transformer repair has not "
-                    + "yet passed elaboration; the scoped axiom report, registration "
-                    + "binding and Scribe compilation and emission remain pending. "
+                    "The three mathematical modules have passed explicit targeted "
+                    + "Lean builds. Their joint scoped report records only propext, "
+                    + "Quot.sound and Classical.choice. Information-audit binding "
+                    + "is assessed separately and is not claimed complete here. "
                     + "The finite-effect to rectangular-isometry to endomorphism "
                     + "contraction bridge remains an explicit authored dependency; "
                     + "it is not an assumed new axiom. The analytic supplier is "
                     + "the existing attributed Physlib transplant by Kei Tsukamoto, "
                     + "Kento Mori and Hayata Yamasaki, revision "
                     + "b9043cc548ef6d63a28454cf3a57fb12a0c2e142, Apache-2.0. "
-                    + "No binding, validation, official acceptance or mathematical "
-                    + "novelty is asserted by this proposed Scribe source."))),
+                    + "No official acceptance or mathematical novelty is asserted "
+                    + "by this document."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)

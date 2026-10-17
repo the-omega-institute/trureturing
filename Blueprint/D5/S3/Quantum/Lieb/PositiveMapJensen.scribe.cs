@@ -1,4 +1,4 @@
-// Source candidate; current Scribe compilation and emission are pending.
+// Finite positive-map Jensen with explicit all-Hilbert operator-convex input.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -8,7 +8,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Lieb;
 internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite positive-map Jensen bridge; scoped report and Scribe checks remain pending.",
+        "Finite positive-map Jensen bridge with arbitrary finite carriers.",
         H("PositiveMapJensen"), Blocks(
             Describe.Lean(DescribeId.Create("rectangular-congruence"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/PositiveMapJensen.congruence_mono"),
@@ -50,11 +50,11 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
                     + "complete-positivity hypothesis, and no trace assumption. "
                     + "An empty output carrier is trivial; an empty input with a "
                     + "nonempty output contradicts unitality.")), Paragraph(Text(
-                    "This Lean module has passed its explicit targeted build. "
-                    + "Scribe compilation, emission, the scoped axiom report and "
-                    + "registration binding remain pending. No validated information-audit "
-                    + "registration, kernel result, official acceptance or novelty "
-                    + "claim is supplied by this document."))), DescribeRole.Theorem))));
+                    "The three mathematical modules have passed explicit targeted "
+                    + "Lean builds. Their joint scoped report contains only propext, "
+                    + "Quot.sound and Classical.choice. Information-audit binding "
+                    + "is assessed separately; this document does not claim complete "
+                    + "registration, official acceptance or mathematical novelty."))), DescribeRole.Theorem))));
 
     private static AssessedProvenance SupplierProvenance() => AssessedProvenance.FromRepo(
         LibraryNoteRef.Create("D5/L/Divergence/tsukamotomoriyamasaki2026lieb"));
@@ -83,7 +83,7 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
         Instance("Fintype", "m"), Instance("DecidableEq", "m"));
     private static Formula Congruence() => Disp(Seq(Carriers(),
         Binder("A", Mat("n", "n")), Binder("B", Mat("n", "n")), Binder("V", Mat("n", "m")),
-        F.Id("A"), Le, F.Id("B"), Sp, Implies, Sp,
+        F.Id("A"), Le, Sp, F.Id("B"), Sp, Implies, Sp,
         Call("adjoint", F.Id("V")), F.Id("A"), F.Id("V"), Le,
         Call("adjoint", F.Id("V")), F.Id("B"), F.Id("V")));
     private static Formula Intertwining() => Disp(Seq(Carriers(),
@@ -100,7 +100,7 @@ internal sealed class PositiveMapJensenDocument : IScribeDocumentDefinition
         Call("OperatorConvexOnAll", F.Id("u"), Call("Ici", D(0)), F.Id("f")), Comma, Sp,
         Call("ContinuousOn", F.Id("f"), Call("Ici", D(0))), Comma, Sp,
         Call("PositiveComplexLinear", F.Id("Phi")), Comma, Sp,
-        Call("Phi", D(1)), Eq, D(1), Comma, Sp, D(0), Le, F.Id("A"), Implies, Esc,
+        Call("Phi", D(1)), Eq, D(1), Comma, Sp, D(0), Le, Sp, F.Id("A"), Implies, Esc,
         Call("cfc", F.Id("f"), Call("Phi", F.Id("A"))), Le,
         Call("Phi", Call("cfc", F.Id("f"), F.Id("A")))));
 }

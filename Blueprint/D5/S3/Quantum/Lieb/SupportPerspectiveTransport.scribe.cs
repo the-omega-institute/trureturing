@@ -1,4 +1,4 @@
-// Source candidate; current Scribe compilation and emission are pending.
+// Signed support transport and ambient unitalization for finite positive maps.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -8,7 +8,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Lieb;
 internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Signed support transport and ambient unitalization for the proposed transformer.",
+        "Signed support transport and ambient unitalization for the supported transformer.",
         H("SupportPerspectiveTransport"), Blocks(
             Describe.Lean(DescribeId.Create("spectral-square-root-normalization"),
                 DeclarationHandle.Create("D5/S3/Quantum/Lieb/SupportPerspectiveTransport.spectral_sqrt_normalization"),
@@ -65,9 +65,10 @@ internal sealed class SupportPerspectiveTransportDocument : IScribeDocumentDefin
                     "SupportPerspectiveTransformer consumes these interfaces and supplies "
                     + "the exact kernel-inclusion reconstruction, mixed spectral products "
                     + "and final congruence cancellations. The Jensen and transport "
-                    + "modules have passed their explicit targeted Lean builds. "
-                    + "The transformer repair, scoped axiom report, registration "
-                    + "binding and these Scribe sources remain unchecked. Identity regularization and "
+                    + "modules and the transformer have passed explicit targeted "
+                    + "Lean builds and a joint scoped report using only standard "
+                    + "Lean axioms. Information-audit binding is assessed separately. "
+                    + "Identity regularization and "
                     + "trace data processing remain outside this source endpoint."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
