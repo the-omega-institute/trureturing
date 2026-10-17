@@ -81,7 +81,10 @@ internal sealed class SemiNonnegativeBackflowRefutationDocument : IScribeDocumen
                             + "Phi sends them to diag(5/8,3/8,0) and diag(3/8,5/8,0), whose trace distance is 1/4. "
                             + "Xi sends them to diag(3/4,1/4,0) and diag(1/4,3/4,0), whose trace distance is 1/2. "
                             + "The asserted inequality would therefore give 1/2 at most 1/4, a contradiction."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cao-fitzsimmons-mann-pereira-laflamme-2023-semi-nonnegative-backflow-refutation"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
