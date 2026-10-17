@@ -7,7 +7,6 @@
    digest: The global two-qubit non-selective measurement optimum is N/2 + 1/4. -/
 
 import D5.S3.QuantumBounds.NegativityReductionInclusionRefutation
-import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
