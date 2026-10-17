@@ -556,3 +556,133 @@ Thus sufficient dephasing gives exact common implementation, while the positive 
 The result concerns a fixed two-dimensional MC encoding and a whole family of coherent logical channels; all inputs share one physical LOSR implementation. The exact feasible-class argument reuses §54. The zero-temperature boundary reuses §58, while the modified witness establishes the all-output projection off that boundary. Sections38–39 concern isometric flat-sector targets, Sections40–44 restricted-control and Schur results, and §57 optimizes a single MC state pair. None of those statements alone optimizes this full phase-covariant channel family.
 
 Physically incoherent constructions and their zero-communication lifting to maximally correlated systems are established background: Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 ; related qubit reachable geometry appears in Shi et al., Scientific Reports7,14806 (2017), https://www.nature.com/articles/s41598-017-13687-4 . Diamond norm and reference-assisted channel discrimination are standard; see Watrous, The Theory of Quantum Information (2018), §3.3, https://cs.uwaterloo.ca/~watrous/TQI/ . No priority claim is made for those ingredients or for the parameterization. The theorem is an exact finite-LOSR diamond projection on the stated fixed-code channel family, not a general RT recovery theorem or a classification of arbitrary logical channels.
+
+## 60. Exact leakage removal and diamond projection for parity-covariant logical channels
+
+### 60.1 Model and conclusions
+
+Fix L=X=Y=C² and the MC encoding V|i>=|ii>, J(T)=VTV*. Write ij=|i><j| on L. Consider
+
+    E(00)=α00+(1−α)11, E(11)=(1−β)00+β11,
+    E(01)=λ01+μ10, E(10)=conj(λ)10+conj(μ)01.
+
+These are exactly the qubit channels covariant under conjugation by Z=diag(1,−1). They form a narrower class than channels merely preserving the diagonal algebra, which can also convert off-diagonal input into diagonal output. The necessary and sufficient CPTP conditions are 0≤α,β≤1, |λ|²≤αβ and |μ|²≤(1−α)(1−β), by the two blocks of the input-first Choi matrix.
+
+Physical competitors are finite mixtures Φ=Σ_b p_b A_b⊗B_b of arbitrary local qubit CPTP maps, including local product ancillas. They act on every logical input through Φ∘J. Diamond norm is unhalved and includes arbitrary passive references. No code-preservation or covariance restriction is imposed on these competitors.
+
+The following conclusions hold.
+
+1. Exact physical implementation Φ∘J=J∘E is possible if and only if
+
+       |λ|≤min(α,β), |μ|≤min(1−α,1−β).
+
+   Every channel satisfying these simultaneous conditions has an implementation with at most four product-CPTP branches.
+2. For every physical competitor, there is a common physical competitor that preserves the code and is parity-covariant, with no greater diamond error against J∘E. Thus unrestricted leakage cannot improve the optimum anywhere in this family.
+3. After phase alignment, the unrestricted optimum equals the explicit finite semidefinite program below. Its optimizer yields the four-branch physical attainer. This is an exact optimization formula for all parameters, including unequal simultaneous deficits; it is not a claimed elementary closed form.
+4. In the simultaneous equal-deficit family α≥β, λ,μ≥0 and λ−β=μ−(1−α)=k>0, the exact optimum is sqrt(2)k. A three-branch common physical channel attains it. This differs from treating the two coherence constraints independently.
+
+### 60.2 The exact common-channel feasible class
+
+Put l=|λ|, m=|μ|. Necessity follows from §54's full-support normal form: apply an exact implementation to J(I/2). Every positive-weight product branch has a deterministic code-label map f. Identity f can contribute only to λ, with coefficient of modulus at most one; flip f can contribute only to μ, also with modulus at most one; constant f kills both coherences. If total identity and flip branch weights are a and b, then l≤a≤min(α,β) and m≤b≤min(1−α,1−β).
+
+For a constructive converse set S=1−l−m, A=α−l, B=β−l. The displayed inequalities imply S≥0 and 0≤A,B≤S. Choose U=max(0,A+B−S), so 0≤U≤min(A,B). Define
+
+    wI=l+U, wF=m+S−A−B+U, w0=A−U, w1=B−U.
+
+All weights are nonnegative and sum to one. Use an identity-label branch of weight wI, with local dephasing on Alice chosen so its logical 01 coefficient is λ/wI. Use a flip-label branch of weight wF: dephase Alice and then apply X on both sides, choosing the dephasing coefficient so the resulting logical 10 coefficient is μ/wF. Local dephasing with any complex multiplier of modulus at most one is CPTP. The remaining branches reset both parties to |0> or |1>, with weights w0,w1. Zero-weight branches are omitted, so division by zero is never needed. The identity and flip weights dominate l and m respectively. Directly on the four matrix units, the resulting channel has populations α=wI+w0, β=wI+w1 and coherences λ,μ. Therefore it agrees on all logical inputs and all reference extensions. This reuses the known PIO-type constructions; no new priority is asserted for the feasible-class ingredients.
+
+### 60.3 A contractive global retraction with a separately physical output implementation
+
+Let P=|00><00|+|11><11| and Q=I−P on X⊗Y, and set ω=(|00><00|+|11><11|)/2. Define the global CPTP map
+
+    R(T)=PTP+Tr(QT)ω.
+
+Complete positivity follows, for example, from Kraus operator P and the four operators |ii><jk|/sqrt(2), with i∈{0,1} and jk∈{01,10}; their adjoint products sum to P+Q=I. The map fixes every code-supported operator and kills code/leak cross terms. It is used only as a mathematical contraction, not claimed to be an LOSR operation.
+
+Let U=Z⊗I on the physical output. For any physical Φ define the two-term physical twirl
+
+    Φbar=(Φ+Ad_U∘Φ∘Ad_U)/2.
+
+This remains finite LOSR, since U is local, and U V=V Z. The target J∘E is fixed by the corresponding input/output symmetry. Unitary invariance and convexity of diamond norm give ||Φbar∘J−J∘E||diamond≤||Φ∘J−J∘E||diamond. The map R commutes with Ad_U, so R∘Φbar∘J is a code-supported parity-covariant channel.
+
+Consider one arbitrary product branch A⊗B before this twirl. Put a0=<0|A(00)|0>, a1=<1|A(11)|1>, and b0,b1 similarly. Let z_A=<0|A(01)|1>, v_A=<1|A(01)|0>, with analogous coefficients for B. Choi principal minors give
+
+    |z_A|²≤a0a1, |v_A|²≤(1−a0)(1−a1),
+
+and the same for B. Retraction and twirling give logical parameters
+
+    α'=(a0+b0)/2, β'=(a1+b1)/2,
+    λ'=z_A z_B, μ'=v_A v_B.
+
+For example the new 00 probability on input00 is a0b0+[a0(1−b0)+(1−a0)b0]/2=(a0+b0)/2. Twirling removes all diagonal-to-off-diagonal and off-diagonal-to-diagonal coefficients; it preserves the two displayed coherence directions. Moreover
+
+    |λ'|≤sqrt(a0a1b0b1)≤min((a0+b0)/2,(a1+b1)/2),
+    |μ'|≤sqrt((1−a0)(1−a1)(1−b0)(1−b1))
+         ≤min(1−(a0+b0)/2,1−(a1+b1)/2).
+
+The first line follows by dropping a1b1≤1 and then applying the arithmetic-geometric mean bound, or dropping a0b0≤1; the second is identical with complemented probabilities. For mixtures the same inequalities follow from the triangle inequality and affinity of the populations. Thus R∘Φbar∘J=J∘E' for a channel E' in the exact feasible class above, and that class supplies an actual finite physical implementation Ψ of E'. Complete trace-norm contractivity of R now gives
+
+    ||Ψ∘J−J∘E||diamond
+      =||R∘Φbar∘J−R∘J∘E||diamond
+      ≤||Φ∘J−J∘E||diamond.
+
+This proves leakage removal for optimization without pretending that R itself is a physical local protocol. Both twirling and retraction act on one common channel, not on separately optimized inputs. Since the feasible parameters form a compact set and diamond norm is continuous, an optimal parameter choice exists and is physically attained by at most four branches.
+
+### 60.4 An explicit exact finite projection program
+
+Independent diagonal input and output unitaries can make λ and μ simultaneously real and nonnegative: for input angle θ and output angle φ their phases change by −θ−φ and −θ+φ, respectively. These logical unitaries lift to local physical unitaries, preserve the allowed class, and preserve diamond distance. Zero coefficients need no phase choice. Hence write the aligned target as (α,β,l,m) with l,m≥0.
+
+For a competitor let a,b be its survival probabilities and x,y its real coherence coefficients. Real coefficients lose no optimality: average a feasible competitor with its entrywise complex conjugate, using that the target is real and diamond norm is invariant under simultaneous input/output complex conjugation. The exact feasible inequalities are
+
+    0≤a,b≤1,
+    −a≤x≤a, −b≤x≤b,
+    −(1−a)≤y≤1−a, −(1−b)≤y≤1−b.
+
+These linear constraints imply the CPTP inequalities automatically. Define u=α−a, v=β−b and the real symmetric Choi difference blocks
+
+    D1=[[u,l−x],[l−x,v]],
+    D2=[[-u,m−y],[m−y,−v]].
+
+The blocks use ordered bases {|0,0>,|1,1>} and {|0,1>,|1,0>} of the logical input/output Choi space. They are unnormalized Choi blocks; no factor1/2 is inserted.
+
+Minimize a real scalar δ over a,b,x,y and real symmetric two-by-two matrices Z1,Z2, subject to the feasible inequalities above and
+
+    Z1−D1≥0, Z1+D1≥0,
+    Z2−D2≥0, Z2+D2≥0,
+    (Z1)11+(Z2)11≤δ,
+    (Z1)22+(Z2)22≤δ.
+
+The minimum equals the unrestricted physical LOSR diamond optimum. To see this, for any Hermiticity-preserving difference map with Choi matrix D, the standard diamond-norm dual is min ||Tr_out Z||∞ over Hermitian Z≥D and Z≥−D. Here the trace bound is exactly Tr_out Z≤δ I. Averaging Z under Z⊗Z makes it block diagonal in the displayed parity blocks; averaging with entrywise conjugation makes it real, without changing feasibility or increasing δ. Partial trace gives precisely the two diagonal sums displayed above. Conversely any listed Z1,Z2 reconstruct a feasible diamond dual. Thus the program is exactly the ordinary diamond dual optimized over the independently established physical feasible class; the retraction theorem proves that no unrestricted leakage competitor was omitted. Feasibility and attainment follow from the compact parameter minimum and the finite-dimensional diamond dual. Each two-by-two positive-semidefinite constraint can equivalently be written as a second-order-cone constraint. No numerical solution is assumed in this theorem, and the general unequal-deficit value is specified by this exact finite program rather than an unproved closed formula.
+
+### 60.5 A sharp simultaneous-deficit family
+
+Assume α≥β, l=β+k and m=1−α+k with k>0, and the physical CPTP inequalities. Cauchy–Schwarz gives l+m≤sqrt(αβ)+sqrt((1−α)(1−β))≤1, so 2k≤α−β. Define
+
+    a=α−k/2, b=β+k/2, x=b, y=1−a.
+
+These are feasible. The corresponding common physical implementation consists of identity on both sides with weight β+k/2, flip X on both with weight1−α+k/2, and simultaneous reset to zero with weight α−β−k. All weights are nonnegative and sum to one. The phase-aligned logical difference Δ=E−E' has
+
+    Δ(00)=Δ(11)=(k/2)Z,
+    Δ(01)=Δ(10)=(k/2)X.
+
+Consequently, with P±=(I±X)/2,
+
+    Δ(T)=(k/2)[Tr(P+T)(Z+X)+Tr(P−T)(Z−X)].
+
+For a density input with any reference, its two positive conditional reference operators ρ± have total trace one. Since ||Z±X||1=2sqrt(2), the triangle inequality bounds the output trace norm by sqrt(2)k. Convexity, Jordan decomposition and the Hermitian block embedding used in §58 extend this bound to all operator inputs and hence to diamond norm. Encoding J preserves trace norm, including references.
+
+For a direct lower bound against all physical products, use |Ω>=(|0_R0_L>+|1_R1_L>)/sqrt(2). On the joint output define H=0 outside the reference/code subspace. On |0,00>,|1,11> use [[1,1],[1,−1]]/sqrt(2); on |0,11>,|1,00> use [[−1,1],[1,1]]/sqrt(2). Thus ||H||∞=1. With the product-channel notation above, put t_A=a0−a1 and t_B=b0−b1. Direct expansion gives
+
+    sqrt(2) Tr(Hσ)=(t_A+t_B)/2+Re(z_Az_B+v_Av_B).
+
+The Choi minor bounds imply
+
+    |z_A|²+|v_A|²≤a0a1+(1−a0)(1−a1)≤1−|t_A|,
+
+and similarly for B. The last inequality follows by considering a0≥a1 and a1≥a0 separately; its slack is twice the smaller probability times one minus the larger. Cauchy–Schwarz and the arithmetic-geometric mean inequality therefore bound the displayed witness expectation by 1/sqrt(2). Mixtures obey the same bound. On the ideal output it equals [(α−β)+l+m]/sqrt(2)=(1+2k)/sqrt(2). Norm duality gives the lower bound sqrt(2)k, matching the common physical attainer.
+
+For an explicit genuinely two-direction example take α=4/5, β=1/5 and l=m=2/5. Both Choi determinant bounds are saturated and k=1/5. The exact diamond error is sqrt(2)/5, attained by weights3/10 identity,3/10 simultaneous flip,2/5 simultaneous reset to zero. Applying the one-direction §59 formula separately would give8/45 for each deficit, strictly below the true joint optimum; a maximum of separate errors is not the channel answer.
+
+### 60.6 Attribution and scope
+
+The exact-code branch classification reuses §54 and the PIO-to-zero-communication construction described by Chitambar–Gour, Phys. Rev. A94,052336 (2016), https://link.aps.org/accepted/10.1103/PhysRevA.94.052336 . Standard diamond semidefinite programs are due to Watrous; see Simpler semidefinite programs for completely bounded norms, https://arxiv.org/abs/1207.5726 . Channel-conversion SDPs also occur in dynamical coherence theory, for different free superchannels, in Saxena–Chitambar–Gour, Phys. Rev. Research2,023298 (2020), https://doi.org/10.1103/PhysRevResearch.2.023298 . These constructions and general optimization machinery are not claimed as new. The result here is the proved unrestricted-output reduction for the specified physical LOSR/code model, the resulting exact simultaneous-coherence projection, and the sharp common-channel family above. It does not classify arbitrary diagonal-algebra-preserving channels, all logical channels, or general RT recovery.
