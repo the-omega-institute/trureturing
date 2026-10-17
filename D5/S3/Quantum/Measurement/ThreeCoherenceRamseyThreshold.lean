@@ -92,7 +92,7 @@ private theorem character_continuous (k : ℤ) : Continuous (character k) := by
 
 private theorem character_mul_star (k m : ℤ) (t : ℝ) :
     character k t * star (character m t) = character (k - m) t := by
-  simp only [character, Complex.star_def, ← Complex.exp_conj, map_mul, map_intCast,
+  simp only [character.eq_1, Complex.star_def, ← Complex.exp_conj, map_mul, map_intCast,
     Complex.conj_ofReal, Complex.conj_I, ← Complex.exp_add, Int.cast_sub]
   congr 1
   ring
@@ -102,7 +102,9 @@ private theorem character_average (k : ℤ) :
   by_cases hk : k = 0
   · subst k
     simp [average, character, Complex.ofReal_mul, Complex.ofReal_ofNat]
-    field_simp
+    simpa only [div_eq_mul_inv, mul_inv, mul_comm] using
+      div_self (mul_ne_zero (Complex.ofReal_ne_zero.mpr Real.pi_ne_zero)
+        (by norm_num : (2 : ℂ) ≠ 0))
   · have hkcomplex : (k : ℂ) * I ≠ 0 :=
       mul_ne_zero (Int.cast_ne_zero.mpr hk) Complex.I_ne_zero
     have harg : ((k : ℂ) * I) * ((2 * π : ℝ) : ℂ) = k * (2 * π * I) := by
@@ -117,7 +119,7 @@ private theorem character_average (k : ℤ) :
 private theorem average_sum {ι : Type*} [Fintype ι] (f : ι → ℝ → ℂ)
     (hf : ∀ i, Continuous (f i)) :
     average (fun t => ∑ i, f i t) = ∑ i, average (f i) := by
-  simp only [average, intervalIntegral.integral_finsetSum
+  simp only [average.eq_1, intervalIntegral.integral_finsetSum
     (fun i _ => (hf i).intervalIntegrable _ _), Finset.mul_sum]
 
 private theorem moment_one_formula {ι : Type*} [Fintype ι]
@@ -140,7 +142,7 @@ private theorem moment_one_formula {ι : Type*} [Fintype ι]
     ring
   have hcast : (moment 1 (fun t => Complex.normSq (trigPoly n z t)) : ℂ) =
       ∑ i, ∑ j, if n i = n j then z i * star (z j) else 0 := by
-    simp only [moment, pow_one, Complex.ofReal_mul, Complex.ofReal_div,
+    simp only [moment.eq_1, pow_one, Complex.ofReal_mul, Complex.ofReal_div,
       Complex.ofReal_one, Complex.ofReal_ofNat, ← intervalIntegral.integral_ofReal]
     change average (fun t => (Complex.normSq (trigPoly n z t) : ℂ)) = _
     simp_rw [hpoint]
@@ -218,8 +220,8 @@ private theorem moment_one_injective {ι : Type*} [Fintype ι]
 
 private theorem root_exists : ∃ α : ℝ,
     6169 / 5000 < α ∧ α < 12339 / 10000 ∧ thresholdP α = 0 := by
-  have hlow : 0 < thresholdP (6169 / 5000) := by norm_num [thresholdP]
-  have hhigh : thresholdP (12339 / 10000) < 0 := by norm_num [thresholdP]
+  have hlow : 0 < thresholdP (6169 / 5000) := by norm_num [thresholdP.eq_1]
+  have hhigh : thresholdP (12339 / 10000) < 0 := by norm_num [thresholdP.eq_1]
   have hcont : Continuous thresholdP := by unfold thresholdP; fun_prop
   obtain ⟨α, hα, hzero⟩ := intermediate_value_Icc'
     (by norm_num : (6169 / 5000 : ℝ) ≤ 12339 / 10000) hcont.continuousOn
@@ -249,7 +251,7 @@ private theorem threshold_bound (α : ℝ) (hl : 6169 / 5000 < α)
     unfold thresholdD
     gcongr
   have hnum : (177 / 100 : ℝ) * thresholdD (12339 / 10000) <
-      thresholdN (6169 / 5000) := by norm_num [thresholdN, thresholdD]
+      thresholdN (6169 / 5000) := by norm_num [thresholdN.eq_1, thresholdD.eq_1]
   have ht : (177 / 100 : ℝ) < T := by
     apply (lt_div_iff₀ hd).2
     linarith
@@ -358,7 +360,7 @@ private theorem equal_spacing_bound (T : ℝ) (hT : 5 / 4 < T)
       have heq : F ell = thresholdN (2 * b / s) / thresholdD (2 * b / s) := by
         dsimp [F, ell, A, B, thresholdN, thresholdD]
         rw [show b = 1 - s by linarith]
-        field_simp
+        field_simp (disch := positivity)
         ring
       rw [heq]
       exact hsym _ hr
@@ -373,19 +375,19 @@ private theorem equal_spacing_bound (T : ℝ) (hT : 5 / 4 < T)
         rw [hAeq]
         nlinarith only [hfactor]
       have heq : A + 6 * (b * s) ^ 2 / A = (A ^ 2 + 6 * (b * s) ^ 2) / A := by
-        field_simp
+        field_simp (disch := positivity)
       rw [heq]
       exact (div_le_iff₀ hA).2 hineq
     have heq : F A = A + 6 * (b * s) ^ 2 / A := by
       dsimp [F, B]
-      field_simp
+      field_simp (disch := positivity)
       ring
     rw [heq]
     exact htwo.trans hT.le
   have hmax := (hconv.le_max_of_mem_Icc hell hA ⟨hlu, huA⟩).trans (max_le hleft hright)
   have heq : F u = equalMoment a b c / u ^ 2 := by
     dsimp [F, A, B, equalMoment]
-    field_simp
+    field_simp (disch := positivity)
     dsimp [u, s]
     ring
   rw [heq] at hmax
@@ -428,7 +430,7 @@ private theorem cubic_collision (n : Fin 3 → ℤ) (h01 : n 0 < n 1) (h12 : n 1
          (i = 6 ∧ j = 4) ∨ (i = 5 ∧ j = 7) ∨ (i = 7 ∧ j = 5))) ∨
       (2 * n 0 + n 2 = 3 * n 1 ∧ ((i = 2 ∧ j = 6) ∨ (i = 6 ∧ j = 2))) ∨
       (n 0 + 2 * n 2 = 3 * n 1 ∧ ((i = 5 ∧ j = 6) ∨ (i = 6 ∧ j = 5))) := by
-  fin_cases i <;> fin_cases j <;> norm_num [cubicEnergy] <;> omega
+  fin_cases i <;> fin_cases j <;> norm_num [cubicEnergy.eq_1] <;> omega
 
 private theorem cubic_moment_formula (n : Fin 3 → ℤ) (a b c : ℝ) :
     moment 3 (fun t => Complex.normSq (trigPoly n ![(a : ℂ), b, c] t)) =
@@ -436,7 +438,7 @@ private theorem cubic_moment_formula (n : Fin 3 → ℤ) (a b c : ℝ) :
         cubicCoefficient a b c i * cubicCoefficient a b c j else 0 := by
   have hcoeff (i : Fin 10) : cubicCoefficient (a : ℂ) b c i =
       ((cubicCoefficient (R := ℝ) a b c i : ℝ) : ℂ) := by
-    fin_cases i <;> simp [cubicCoefficient]
+    fin_cases i <;> simp [cubicCoefficient.eq_1]
   calc
     _ = moment 1 (fun t => Complex.normSq
         (trigPoly (cubicEnergy n) (cubicCoefficient (a : ℂ) b c) t)) := by
@@ -480,7 +482,7 @@ private theorem subunit_equal_bound (T : ℝ) (hT : 5 / 4 < T)
   · have hazero : a = 0 := by dsimp [s] at hzero; linarith
     have hbzero : b = 0 := by dsimp [s] at hzero; linarith
     have hczero : c = 0 := by dsimp [s] at hzero; linarith
-    simp [hazero, hbzero, hczero, equalMoment]
+    simp [hazero, hbzero, hczero, equalMoment.eq_1]
   · have hs : 0 < s := lt_of_le_of_ne (by dsimp [s]; positivity) (Ne.symm hzero)
     have hnorm : a / s + b / s + c / s = 1 := by
       rw [← add_div, ← add_div]
@@ -489,14 +491,14 @@ private theorem subunit_equal_bound (T : ℝ) (hT : 5 / 4 < T)
       (by positivity) (by positivity) (by positivity) hnorm
     have heq : equalMoment a b c = s ^ 6 * equalMoment (a / s) (b / s) (c / s) := by
       dsimp [equalMoment]
-      field_simp
+      field_simp (disch := positivity)
     have hu : (a / s) ^ 2 + (b / s) ^ 2 + (c / s) ^ 2 =
-        (a ^ 2 + b ^ 2 + c ^ 2) / s ^ 2 := by field_simp
+        (a ^ 2 + b ^ 2 + c ^ 2) / s ^ 2 := by field_simp (disch := positivity)
     rw [hu] at hscaled
     have hmul := mul_le_mul_of_nonneg_left hscaled (pow_nonneg hs.le 6)
     rw [← heq] at hmul
     have hcancel : s ^ 6 * (T * ((a ^ 2 + b ^ 2 + c ^ 2) / s ^ 2) ^ 2) =
-        T * s ^ 2 * (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by field_simp
+        T * s ^ 2 * (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by field_simp (disch := positivity)
     rw [hcancel] at hmul
     have hsone : s ^ 2 ≤ 1 := by dsimp [s]; nlinarith
     have hTzero : 0 ≤ T := by linarith
@@ -615,13 +617,13 @@ private theorem weighted_cube {ι : Type*} [Fintype ι] (w p b : ι → ℝ)
     rw [Finset.sum_div]
     apply Finset.sum_congr rfl
     intro i _
-    field_simp [(hb i).ne']
+    field_simp (disch := first | exact (hb i).ne' | positivity)
   have hcubic : ∑ i, (w i * b i / s) * (p i / b i) ^ 3 =
       (∑ i, w i * (p i ^ 3 / b i ^ 2)) / s := by
     rw [Finset.sum_div]
     apply Finset.sum_congr rfl
     intro i _
-    field_simp [(hb i).ne']
+    field_simp (disch := first | exact (hb i).ne' | positivity)
   rw [hlinear, hcubic, div_pow] at hj
   apply (mul_le_mul_iff_right₀ hs).mp
   rw [mul_comm s]
@@ -725,10 +727,10 @@ private theorem threshold_attained (α : ℝ) (hα : 0 ≤ α) :
   have hden : 0 < α + 2 := by positivity
   have ha : 0 < a := by dsimp [a]; positivity
   have hb : 0 ≤ b := by dsimp [b]; positivity
-  have hone : a + b + a = 1 := by dsimp [a, b]; field_simp; ring
+  have hone : a + b + a = 1 := by dsimp [a, b]; field_simp (disch := positivity); ring
   let v : Fin 3 → ℂ := ![(Real.sqrt a : ℂ), Real.sqrt b, Real.sqrt a]
   have hv : IsUnitVector v := by
-    simpa [IsUnitVector, v, Fin.sum_univ_succ, Real.mul_self_sqrt ha.le,
+    simpa [IsUnitVector.eq_1, v, Fin.sum_univ_succ, Real.mul_self_sqrt ha.le,
       Real.mul_self_sqrt hb, add_assoc] using hone
   have hsparse : IsThreeSparse v :=
     (Set.ncard_le_card _).trans (by simp)
@@ -761,12 +763,12 @@ private theorem threshold_attained (α : ℝ) (hα : 0 ≤ α) :
   have hratio : ratio3 (signal (![0, 1, 2] : Fin 3 → ℤ) v v) = thresholdN α / thresholdD α := by
     rw [ratio3, hmone, hmthree]
     dsimp [equalMoment, a, b, thresholdN, thresholdD]
-    field_simp
+    field_simp (disch := positivity)
     ring
   have hmix : mixedSignal (![0, 1, 2] : Fin 3 → ℤ) v (fun _ : Fin 1 => v) (fun _ => 1) =
       signal (![0, 1, 2] : Fin 3 → ℤ) v v := by
     funext t
-    simp [mixedSignal]
+    simp [mixedSignal.eq_1]
   refine ⟨3, 1, ![0, 1, 2], v, (fun _ => v), (fun _ => 1), hv,
     (fun _ => ⟨hv, hsparse⟩), (fun _ => by norm_num), by simp, ?_, ?_⟩
   · rw [hmix, hmone]
