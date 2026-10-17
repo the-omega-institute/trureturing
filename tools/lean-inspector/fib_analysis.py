@@ -23,6 +23,7 @@ FIELDS = {"arena", "source_contract", "atom_readout", "seam_readout",
           "layered_spectrum", "residuals", "disposition"}
 ROW_FIELDS = {"application", "owner", "target", "target_module", "target_type_identity",
               "input_identity", "request", "unavailable_reason", "reading"}
+RETIRED_REPORT_SCHEMA = 'stratalint-raw-lean-report-v3'
 
 
 def validate(value, *, complete=True):
@@ -61,6 +62,11 @@ def validate(value, *, complete=True):
         if (not isinstance(reading, dict) or set(reading) != FIELDS
                 or reading["disposition"].get("is_lean_proof") is not False):
             raise ValueError("fib.invalid_reading")
+        if (request is not None and request.get('arena') == 'typed-source'
+                and reading['disposition'].get('status') != 'refuted'):
+            continuation = reading['continuation_target']
+            if not isinstance(continuation, dict) or 'residual_sufficiency' not in continuation:
+                raise ValueError('fib.invalid_reading')
         if row["request"] is None and any(reading[k] is not None for k in FIELDS - {"disposition"}):
             raise ValueError("fib.unavailable_fabricated_reading")
     return value
@@ -162,16 +168,20 @@ def prepare(row, previous_artifact):
         import publication
         with zipfile.ZipFile(path) as artifact:
             report = publication.read_json(artifact.read('raw-lean-report.json'))
-            if report['schema'] != publication.materials.REPORT_SCHEMA or len(report['modules']) != 1:
+            if (report['schema'] not in {publication.materials.REPORT_SCHEMA, RETIRED_REPORT_SCHEMA}
+                    or len(report['modules']) != 1):
                 raise ValueError('fib.previous_module_binding')
             old = report['modules'][0]
             if old['module'] != row['module']:
                 raise ValueError('fib.previous_module_binding')
-            publication.check_origin(publication.read_json(
-                artifact.read('raw-lean-report.json.provenance.json')), old)
-        if "fib_analysis" in old:
-            validate(old["fib_analysis"])
-            previous = {x["application"]: x for x in old["fib_analysis"]["applications"]}
+            # Retired reports supply no readings or equality evidence. Only a
+            # current-format artifact can participate in declaration reuse.
+            if report['schema'] == publication.materials.REPORT_SCHEMA:
+                publication.check_origin(publication.read_json(
+                    artifact.read('raw-lean-report.json.provenance.json')), old)
+                if "fib_analysis" in old:
+                    validate(old["fib_analysis"])
+                    previous = {x["application"]: x for x in old["fib_analysis"]["applications"]}
     pending = []
     reused = 0
     for leaf in partition["applications"]:
@@ -286,10 +296,21 @@ def run_regressions(repository, previous, current, selected=False):
     try:
         previous_inputs = application_inputs(previous) if Path(previous).exists() else {}
     except ValueError as error:
-        if os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1' or str(error) != 'fib.invalid_partition':
+        import publication
+        retired = False
+        try:
+            # Read only the parent format; retired rows never establish input
+            # equality. The current report was checked independently above.
+            for _ in publication.report_rows(previous, RETIRED_REPORT_SCHEMA):
+                pass
+            retired = True
+        except ValueError:
+            pass
+        if not retired and (os.environ.get('REGENERATE_REPORT_ARTIFACTS') != '1'
+                            or str(error) != 'fib.invalid_partition'):
             raise
-        # Explicit regeneration cannot use a rejected old partition as equality
-        # evidence. Require one canonical suite before publishing fresh data.
+        # Retired formats and explicitly regenerated partitions cannot supply
+        # equality evidence. Require one canonical suite before publication.
         previous_inputs = None
     changed = current_inputs != previous_inputs
     print(f'LEAN_INSPECTOR_FIB_REGRESSIONS changed={str(changed).lower()} selected={str(selected).lower()}',

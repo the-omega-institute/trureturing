@@ -151,8 +151,8 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
             tools=["lake", "lean"], platform=family,
             environment={name: "" for name in ("LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS")})
         expected = hashlib.sha256(json.dumps(execution, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        self.assertEqual(dict(report_format="stratalint-raw-lean-report-v3", execution_sha256=expected), address["cache_key"])
-        self.assertEqual(f"lean-cache-v2-{REV}-{host}-report-stratalint-raw-lean-report-v3-env-{expected[:12]}-",
+        self.assertEqual(dict(report_format="stratalint-raw-lean-report-v4", execution_sha256=expected), address["cache_key"])
+        self.assertEqual(f"lean-cache-v2-{REV}-{host}-report-stratalint-raw-lean-report-v4-env-{expected[:12]}-",
                          address["release_prefix"])
         write(self.root / "D5/A.lean", "def a := 333\n")
         self.assertEqual(address, json.loads(self.transport("address").stdout))
@@ -166,7 +166,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         changed = self.transport("address", ELAN_TOOLCHAIN="other-toolchain")
         self.assertNotEqual(expected, json.loads(changed.stdout)["cache_key"]["execution_sha256"])
         selection = self.root / "tools/scripts/report/lean-report-selection.py"
-        write(selection, selection.read_text().replace("stratalint-raw-lean-report-v3", "stratalint-raw-lean-report-test"))
+        write(selection, selection.read_text().replace("stratalint-raw-lean-report-v4", "stratalint-raw-lean-report-test"))
         changed = json.loads(self.transport("address").stdout)
         self.assertEqual("stratalint-raw-lean-report-test", changed["cache_key"]["report_format"])
         self.assertIn("-report-stratalint-raw-lean-report-test-env-", changed["release_prefix"])

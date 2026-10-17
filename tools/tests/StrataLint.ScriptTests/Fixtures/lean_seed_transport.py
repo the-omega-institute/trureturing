@@ -27,7 +27,7 @@ class ReleaseTransportCases(PartitionFixture):
         self.remote.mkdir()
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
         write(self.root / ".lake/build/stratalint/raw-lean-report.json",
-              '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}\n')
+              '{"modules":[],"schema":"stratalint-raw-lean-report-v4"}\n')
         write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
 if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then

@@ -101,8 +101,8 @@ end AuricFibUniversalProduction
             if 'fib_analysis' in plain['modules'][0]:
                 raise AssertionError('nonparticipants must not acquire a FIB partition')
         raw = json.loads(cls.report.read_text())
-        if raw['schema'] != 'stratalint-raw-lean-report-v3':
-            raise AssertionError('parent report schema must remain v3')
+        if raw['schema'] != publication.selection.REPORT_FORMAT:
+            raise AssertionError('parent report schema must match the current report format')
         if set(raw['modules'][0]['fib_analysis']) != {'applications'}:
             raise AssertionError('FIB partition must have no independent version field')
         cls.first = {row['application'].removeprefix(PREFIX): row for row in consumed['applications']
@@ -250,6 +250,59 @@ end AuricFibUniversalProduction
             bundle.writestr('raw-lean-report.json', json.dumps(dict(schema='unknown', modules=[row])))
         with self.assertRaisesRegex(ValueError, 'fib.previous_module_binding'):
             fib_analysis.produce(row, malformed, '')
+
+    def test_v3_residual_sufficiency_upgrade_matches_complete_consumption(self):
+        original = json.loads(self.report.read_text())['modules'][0]
+        old = copy.deepcopy(original)
+        for leaf in old['fib_analysis']['applications']:
+            if leaf['request'] is not None and leaf['request'].get('arena') == 'typed-source':
+                leaf['reading']['continuation_target'].pop('residual_sufficiency', None)
+        previous = self.directory / 'v3-module.zip'
+        prior_bytes = materials.canonical_json(dict(schema='stratalint-raw-lean-report-v3', modules=[old]))
+        origin = json.loads(Path(str(self.report) + '.provenance.json').read_text())
+        origin['report_sha256'] = hashlib.sha256(prior_bytes).hexdigest()
+        with zipfile.ZipFile(previous, 'w') as bundle:
+            bundle.writestr('raw-lean-report.json', prior_bytes)
+            bundle.writestr('raw-lean-report.json.provenance.json', materials.canonical_json(origin))
+            bundle.writestr('raw-lean-report.json.materials.zip',
+                            Path(str(self.report) + '.materials.zip').read_bytes())
+
+        incremental = copy.deepcopy(old)
+        for leaf in incremental['fib_analysis']['applications']:
+            leaf['reading'] = None
+        analyzer = ROOT / 'tools/scripts/auric-fib-analysis.sh'
+        stats = fib_analysis.produce(incremental, previous, analyzer)
+        finite = next(x for x in incremental['fib_analysis']['applications']
+                      if x['application'] == PREFIX + 'finite')
+        self.assertIn('residual_sufficiency', finite['reading']['continuation_target'])
+        self.assertEqual(stats['reused'], 0)
+        self.assertEqual(stats['generated'], sum(x['request'] is not None
+                         for x in incremental['fib_analysis']['applications']))
+        self.assertEqual(stats['analysis-invocations'], 1)
+        complete = copy.deepcopy(old)
+        for leaf in complete['fib_analysis']['applications']:
+            leaf['reading'] = None
+        fib_analysis.produce(complete, self.directory / 'absent-module.zip', analyzer)
+
+        def consume(name, row, schema=materials.REPORT_SCHEMA):
+            report = self.directory / (name + '.json')
+            report.write_bytes(materials.canonical_json(dict(schema=schema, modules=[row])))
+            provenance = dict(origin, report_sha256=hashlib.sha256(report.read_bytes()).hexdigest())
+            Path(str(report) + '.provenance.json').write_bytes(materials.canonical_json(provenance))
+            Path(str(report) + '.materials.zip').write_bytes(
+                Path(str(self.report) + '.materials.zip').read_bytes())
+            return fib_analysis.consume(report)
+
+        self.assertEqual(consume('upgraded', incremental), consume('complete', complete))
+        with self.assertRaises(ValueError):
+            consume('retired', old, 'stratalint-raw-lean-report-v3')
+        self.assertEqual(incremental, original)
+        native = next(x for x in incremental['fib_analysis']['applications']
+                      if x['application'] == PREFIX + 'nativeDeclared')
+        self.assertNotIn('residual_sufficiency', native['reading']['continuation_target'])
+        print('FIB_REPORT_FORMAT_UPGRADE ' + json.dumps(dict(
+            previous_format='stratalint-raw-lean-report-v3', current_format=materials.REPORT_SCHEMA,
+            work=stats, incremental_equals_complete=True, current_readings_unchanged=True)), flush=True)
 
     def test_report_consumer_compares_complete_inputs_and_runs_once(self):
         original = json.loads(self.report.read_text())['modules'][0]

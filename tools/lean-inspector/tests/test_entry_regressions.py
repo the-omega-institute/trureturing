@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 import zipfile
 
 import test_reuse
@@ -17,7 +18,8 @@ import reuse
 
 class EntryRegressionTests(unittest.TestCase):
     def entry(self, *, cached=False, changed=False, selected=False, failure=0,
-              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False):
+              unavailable_clock=False, missing_inputs=False, regenerate=False, obsolete=False, invalid_fresh=False,
+              retired=False):
         fixture = test_reuse.ReuseTests()
         fixture.setUp()
         self.addCleanup(fixture.doCleanups)
@@ -63,9 +65,19 @@ class EntryRegressionTests(unittest.TestCase):
             origins = json.loads(publication.member(report, '.provenance.json').read_text())['module_origins']
             origins['D5.A']['report_sha256'] = hashlib.sha256(materials.canonical_json(value)).hexdigest()
             publication.write_sidecars(report, publication.coordinates(root), origins)
+        if retired:
+            value = json.loads(report.read_text())
+            value['schema'] = 'stratalint-raw-lean-report-v3'
+            report.write_bytes(materials.canonical_json(value))
+            origins = json.loads(publication.member(report, '.provenance.json').read_text())['module_origins']
+            origins['D5.A']['report_sha256'] = hashlib.sha256(materials.canonical_json(value)).hexdigest()
+            publication.write_sidecars(report, publication.coordinates(root), origins)
+            with patch.object(publication.selection, 'REPORT_FORMAT', value['schema']):
+                reuse.seal(root, report, reuse.capture(root), publication.bundle_identity(report))
         before = {suffix: publication.member(report, suffix).read_bytes() for suffix in publication.SUFFIXES}
         if not cached:
-            fixture.write('D5/A.lean', 'def a := 2\n')
+            if not retired:
+                fixture.write('D5/A.lean', 'def a := 2\n')
             fixture.report = root / 'produced' / publication.RAW
             fixture.report.parent.mkdir()
             bundle(('b' if changed else 'a') * 64, missing_inputs)
@@ -124,6 +136,21 @@ class EntryRegressionTests(unittest.TestCase):
             cwd=report.parent, env=environment, capture_output=True, text=True, timeout=30)
         actual_calls = calls.read_text().splitlines() if calls.exists() else []
         return result, actual_calls, report, logs, before
+
+    def test_v3_report_upgrade_rejects_reuse_and_runs_one_suite_before_publication(self):
+        for failure in (0, 41):
+            with self.subTest(failure=failure):
+                result, calls, report, logs, before = self.entry(retired=True, failure=failure)
+                self.assertEqual(result.returncode, failure, result.stdout + result.stderr)
+                self.assertEqual(calls, ['ensure', 'report', 'regressions'])
+                self.assertEqual(publication.member(report, '.reuse.json').exists(), failure == 0)
+                if failure:
+                    self.assertEqual(before, {suffix: publication.member(report, suffix).read_bytes()
+                                              for suffix in publication.SUFFIXES})
+                    self.assertNotIn('phase=publish ', result.stderr)
+                else:
+                    self.assertIn('phase=publish status=completed', result.stderr)
+                    self.assertEqual(json.loads(report.read_text())['schema'], materials.REPORT_SCHEMA)
 
     def test_explicit_recovery_rejects_old_comparison_and_runs_exactly_one_suite(self):
         for failure in (0, 41):

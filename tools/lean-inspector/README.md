@@ -287,7 +287,7 @@ fail by name and have no fallback.
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
-输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
+输出采用 `stratalint-raw-lean-report-v4`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
 传递报告给消费者时须保留整组文件；statement materials 与报告一起校验。
 成功输出 `RAW_LEAN_REPORT path=… sha256=…`。

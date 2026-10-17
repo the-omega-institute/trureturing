@@ -193,6 +193,13 @@ class FiniteAnalysisContract(unittest.TestCase):
             self.assertEqual(result['conflict_count'], 0)
             self.assertIsNone(result['conflict_rate'], n)
             self.assertEqual(result['determined_at_layer'], 0)
+        report = self.execute(generic([[0, 0, 1]], 0, [], []), direct=True)
+        result = report['continuation_target']['residual_sufficiency']
+        self.assertIs(result['sufficient'], False)
+        self.assertEqual(result['conflict_pairs'], [[0, 2], [1, 2], [2, 0], [2, 1]])
+        self.assertEqual(result['conflict_count'], 4)
+        self.assertEqual(result['conflict_rate'], {'numerator': 4, 'denominator': 6})
+        self.assertIsNone(result['determined_at_layer'])
         request = generic([a, b, xor], 2, [], [[0]])
         for kind in ('infinite', 'unavailable'):
             request['acquisition'] = {'kind': kind, 'reason': 'claimed domain'}
