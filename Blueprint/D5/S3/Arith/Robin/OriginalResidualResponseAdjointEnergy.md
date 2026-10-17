@@ -22,7 +22,7 @@ The original prime/composite four-point gap annihilates every affine vector, inc
 
 The coefficient-energy upper result concerns a different quantity: for N>=3 and real N<=a<=b, it bounds sum_(m in S(N)) A(N,a,b,m)^2/w(m) by (1+1/log(N))^2/(8*N). That result retains its full scope, original proof and exposition. The present lower result concerns w*E^2 for the response adjoint and does not convert that upper bound into a signed pairing.
 
-The original nonaffinity, quantitative defect and response-adjoint results are the actual proof dependencies. These finite energies provide no prescribed endpoint lower bound, actual interval sign, cofinal selection, infinite compensation, strict Robin inequality above 5040, or RH. Classical suppliers and the existing ended proofs are reused with no novelty claim.
+The lower-energy proof uses response_four_point_gap, the positive logarithmic gap and the original Gram response-residual definitions. These finite energies provide no prescribed endpoint lower bound, actual interval sign, cofinal selection, infinite compensation, strict Robin inequality above 5040, or RH. Classical suppliers and the existing ended proofs are reused with no novelty claim.
 
 ## References
 

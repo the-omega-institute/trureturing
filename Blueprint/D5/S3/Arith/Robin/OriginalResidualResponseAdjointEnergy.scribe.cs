@@ -49,8 +49,8 @@ internal sealed class OriginalResidualResponseAdjointEnergyDocument : IScribeDoc
                 + "The present lower result concerns w*E^2 for the "
                 + "response adjoint and does not convert that upper bound into a signed pairing.")),
             Paragraph(Text(
-                "The original nonaffinity, quantitative defect and response-adjoint "
-                + "results are the actual proof dependencies. These finite energies provide no prescribed "
+                "The lower-energy proof uses response_four_point_gap, the positive logarithmic "
+                + "gap and the original Gram response-residual definitions. These finite energies provide no prescribed "
                 + "endpoint lower bound, actual interval sign, cofinal selection, infinite "
                 + "compensation, strict Robin inequality above 5040, or RH. "
                 + "Classical suppliers and the existing ended proofs are reused with no "

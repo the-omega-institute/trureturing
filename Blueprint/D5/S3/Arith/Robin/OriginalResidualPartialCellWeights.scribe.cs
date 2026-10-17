@@ -145,7 +145,7 @@ internal sealed class OriginalResidualPartialCellWeightsDocument : IScribeDocume
                         + "directly. The separate response-adjoint module is its actual consumer. "
                         + "No original definition, proof, accepted energy content or owner import "
                         + "is replaced. It makes no interval-sign, cofinal or RH assertion. "
-                        + "This interface and its Reg/Scribe additions remain source candidates; "
-                        + "the coefficient-energy upper unit is locally accepted but not official CI."))),
+                        + "This interface and its Reg/Scribe additions have completed local scoped "
+                        + "validation; repository PR and CI acceptance remain separate delivery steps."))),
                 DescribeRole.Theorem))));
 }
