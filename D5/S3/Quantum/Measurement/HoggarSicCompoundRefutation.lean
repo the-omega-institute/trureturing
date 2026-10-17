@@ -22,7 +22,7 @@ private noncomputable def phase (z b : Fin 8) : ℂ :=
 
 /-- The three-qubit Pauli action, with the shift applied before the parity sign. -/
 noncomputable def pauli (x z : Fin 8) (u : Fin 8 → ℂ) (b : Fin 8) : ℂ :=
-  phase z ((b ^^^ x)) * u ((b ^^^ x))
+  phase z (b ^^^ x) * u (b ^^^ x)
 
 /-- Equation (1) in dimension eight, indexed by the 64 Pauli labels. -/
 def IsSIC (φ : (Fin 8 × Fin 8) → Fin 8 → ℂ) : Prop :=
@@ -50,7 +50,7 @@ private def w : Fin 8 → Fin 8 → GaussianInt := ![
 private def r : Fin 8 → ℤ := ![12,6,6,6,12,6,6,6]
 
 private def pauliG (x z : Fin 8) (u : Fin 8 → GaussianInt) (b : Fin 8) : GaussianInt :=
-  bitSign z.val ((b ^^^ x)).val * u ((b ^^^ x))
+  bitSign z.val (b ^^^ x).val * u (b ^^^ x)
 
 private theorem gram : ∀ k l : Fin 8,
     (∑ b : Fin 8, star (w k b) * w l b) =
@@ -65,30 +65,30 @@ private theorem self_overlap : ∀ k x z : Fin 8,
 private theorem sign_laws : ∀ z t b : Fin 8,
     star (bitSign z.val b.val) = bitSign z.val b.val ∧
     bitSign z.val b.val * bitSign z.val b.val = 1 ∧
-    bitSign z.val ((b ^^^ t)).val = bitSign z.val b.val * bitSign z.val t.val ∧
-    bitSign ((z ^^^ t)).val b.val = bitSign z.val b.val * bitSign t.val b.val := by
+    bitSign z.val (b ^^^ t).val = bitSign z.val b.val * bitSign z.val t.val ∧
+    bitSign (z ^^^ t).val b.val = bitSign z.val b.val * bitSign t.val b.val := by
   decide +kernel
 
 private theorem phase_laws (z t b : Fin 8) :
     star (phase z b) = phase z b ∧ phase z b * phase z b = 1 ∧
-    phase z ((b ^^^ t)) = phase z b * phase z t ∧
-    phase ((z ^^^ t)) b = phase z b * phase t b := by
+    phase z (b ^^^ t) = phase z b * phase z t ∧
+    phase (z ^^^ t) b = phase z b * phase t b := by
   obtain ⟨hc, hs, ha, hb⟩ := sign_laws z t b
-  exact ⟨by simpa only [phase, GaussianInt.toComplex_star, Complex.star_def] using
+  exact ⟨by simpa only [phase.eq_1, GaussianInt.toComplex_star, Complex.star_def] using
       congrArg GaussianInt.toComplex hc,
-    by simpa only [phase, map_mul, map_one] using congrArg GaussianInt.toComplex hs,
-    by simpa only [phase, map_mul] using congrArg GaussianInt.toComplex ha,
-    by simpa only [phase, map_mul] using congrArg GaussianInt.toComplex hb⟩
+    by simpa only [phase.eq_1, map_mul, map_one] using congrArg GaussianInt.toComplex hs,
+    by simpa only [phase.eq_1, map_mul] using congrArg GaussianInt.toComplex ha,
+    by simpa only [phase.eq_1, map_mul] using congrArg GaussianInt.toComplex hb⟩
 
 private theorem pauli_mul (x z y t : Fin 8) (u : Fin 8 → ℂ) :
     pauli x z (pauli y t u) =
-      fun b => phase z y * pauli ((x ^^^ y)) ((z ^^^ t)) u b := by
+      fun b => phase z y * pauli (x ^^^ y) (z ^^^ t) u b := by
   funext b
   simp only [pauli.eq_1, xor_assoc (α := Fin (2 ^ 3))]
-  rw [(phase_laws z t ((b ^^^ (x ^^^ y)))).2.2.2]
-  have hs : phase z ((b ^^^ x)) =
-      phase z ((b ^^^ (x ^^^ y))) * phase z y := by
-    rw [← (phase_laws z y ((b ^^^ (x ^^^ y)))).2.2.1]
+  rw [(phase_laws z t (b ^^^ (x ^^^ y))).2.2.2]
+  have hs : phase z (b ^^^ x) =
+      phase z (b ^^^ (x ^^^ y)) * phase z y := by
+    rw [← (phase_laws z y (b ^^^ (x ^^^ y))).2.2.1]
     congr 1
     calc
       b ^^^ x = ((b ^^^ x) ^^^ y) ^^^ y :=
@@ -102,14 +102,14 @@ private theorem pauli_inner (x z : Fin 8) (u v : Fin 8 → ℂ) :
     star (pauli x z u) ⬝ᵥ pauli x z v = star u ⬝ᵥ v := by
   simp only [dotProduct, Pi.star_apply, pauli.eq_1, star_mul]
   calc
-    _ = ∑ b : Fin 8, star (u ((b ^^^ x))) * v ((b ^^^ x)) := by
+    _ = ∑ b : Fin 8, star (u (b ^^^ x)) * v (b ^^^ x) := by
       apply Finset.sum_congr rfl
       intro b _
-      rw [(phase_laws z 0 ((b ^^^ x))).1]
+      rw [(phase_laws z 0 (b ^^^ x)).1]
       calc
-        _ = (phase z ((b ^^^ x)) * phase z ((b ^^^ x))) *
-            (star (u ((b ^^^ x))) * v ((b ^^^ x))) := by ring
-        _ = _ := by rw [(phase_laws z 0 ((b ^^^ x))).2.1, one_mul]
+        _ = (phase z (b ^^^ x) * phase z (b ^^^ x)) *
+            (star (u (b ^^^ x)) * v (b ^^^ x)) := by ring
+        _ = _ := by rw [(phase_laws z 0 (b ^^^ x)).2.1, one_mul]
     _ = _ := by
       exact Fintype.sum_bijective (fun b : Fin 8 => b ^^^ x)
         (xor_left_involutive (α := Fin (2 ^ 3)) x).bijective
@@ -117,25 +117,25 @@ private theorem pauli_inner (x z : Fin 8) (u v : Fin 8 → ℂ) :
 
 private theorem pair_overlap (x z y t : Fin 8) (u : Fin 8 → ℂ) :
     Complex.normSq (star (pauli x z u) ⬝ᵥ pauli y t u) =
-      Complex.normSq (star u ⬝ᵥ pauli ((x ^^^ y)) ((z ^^^ t)) u) := by
-  have hi := pauli_inner x z u (pauli ((x ^^^ y)) ((z ^^^ t)) u)
+      Complex.normSq (star u ⬝ᵥ pauli (x ^^^ y) (z ^^^ t) u) := by
+  have hi := pauli_inner x z u (pauli (x ^^^ y) (z ^^^ t) u)
   have hx : (x ^^^ (x ^^^ y) : Fin 8) = y :=
     xor_cancel_left (α := Fin (2 ^ 3)) x y
   have hz : (z ^^^ (z ^^^ t) : Fin 8) = t :=
     xor_cancel_left (α := Fin (2 ^ 3)) z t
   rw [pauli_mul, hx, hz] at hi
   have hs : star (pauli x z u) ⬝ᵥ
-      (fun b => phase z ((x ^^^ y)) * pauli y t u b) =
-        phase z ((x ^^^ y)) * (star (pauli x z u) ⬝ᵥ pauli y t u) := by
+      (fun b => phase z (x ^^^ y) * pauli y t u b) =
+        phase z (x ^^^ y) * (star (pauli x z u) ⬝ᵥ pauli y t u) := by
     simp only [dotProduct, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro b _
     ring
   rw [hs] at hi
-  have hn : Complex.normSq (phase z ((x ^^^ y))) = 1 := by
+  have hn : Complex.normSq (phase z (x ^^^ y)) = 1 := by
     apply Complex.ofReal_injective
     rw [Complex.normSq_eq_conj_mul_self, ← Complex.star_def,
-      (phase_laws z 0 ((x ^^^ y))).1, (phase_laws z 0 ((x ^^^ y))).2.1]
+      (phase_laws z 0 (x ^^^ y)).1, (phase_laws z 0 (x ^^^ y)).2.1]
     rfl
   have he := congrArg Complex.normSq hi
   rwa [Complex.normSq_mul, hn, one_mul] at he
@@ -204,7 +204,7 @@ private theorem fid_inner (k l : Fin 8) :
   rw [divide_dot, raw_gram]
   by_cases h : k = l
   · subst l
-    simp only [if_pos rfl]
+    simp only
     rw [sqrt_product]
     exact div_self (by exact_mod_cast ne_of_gt (r_positive k))
   · simp only [if_neg h, zero_div]
