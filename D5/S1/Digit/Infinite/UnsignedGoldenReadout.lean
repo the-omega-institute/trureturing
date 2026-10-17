@@ -7,6 +7,7 @@
    digest: Unsigned golden readout: interval range, continuity and prefix control. -/
 
 import D5.S1.Digit.Infinite.SignedSeriesRange
+import D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 import D5.S1.Deficit.Displacement.GoldenInverseRecurrence
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 
@@ -16,6 +17,7 @@ namespace D5.S1.Digit.Infinite.UnsignedGoldenReadout
 
 open D5.S1.Digit.Infinite.SuccessorContinuity
 open D5.S1.Digit.Infinite.SignedSeriesRange (u v)
+open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel (bitShift)
 open D5.S1.Deficit.Displacement.GoldenInverseRecurrence
 open scoped Topology
 
@@ -33,12 +35,6 @@ def singleName : LegalDigits := ⟨fun k => decide (k = 0), by
   intro j
   simp only [decide_eq_true_eq]
   omega⟩
-
-private def shift (x : LegalDigits) (n : ℕ) : LegalDigits :=
-  ⟨fun k => x.val (k + n), by
-    intro j h
-    exact x.property (j + n) (by simpa only [Nat.add_assoc, Nat.add_comm,
-      Nat.add_left_comm] using h)⟩
 
 private noncomputable def term (x : LegalDigits) (k : ℕ) : ℝ :=
   (if x.val k then 1 else 0) * r ^ (k + 1)
@@ -89,12 +85,12 @@ private theorem value_bounds (x : LegalDigits) : U x ∈ Set.Icc (0 : ℝ) 1 := 
       _ = 1 := hg.tsum_eq
 
 private theorem value_split (x : LegalDigits) (n : ℕ) :
-    U x = (∑ k ∈ Finset.range n, term x k) + r ^ n * U (shift x n) := by
-  have ht : (∑' k, term x (k + n)) = r ^ n * U (shift x n) := by
+    U x = (∑ k ∈ Finset.range n, term x k) + r ^ n * U (bitShift x n) := by
+  have ht : (∑' k, term x (k + n)) = r ^ n * U (bitShift x n) := by
     rw [U, ← tsum_mul_left]
     apply tsum_congr
     intro k
-    dsimp [term, shift]
+    dsimp [term, bitShift]
     rw [show k + n + 1 = n + (k + 1) by omega, pow_add]
     ac_rfl
   exact ((term_summable x).sum_add_tsum_nat_add n).symm.trans (congrArg _ ht)
@@ -227,8 +223,8 @@ theorem unsigned_golden_readout :
       intro k hk
       simp only [term, hxy k (Finset.mem_range.mp hk)]
     rw [value_split x n, value_split y n, hp]
-    have hx := value_bounds (shift x n)
-    have hy := value_bounds (shift y n)
+    have hx := value_bounds (bitShift x n)
+    have hy := value_bounds (bitShift y n)
     have hn := pow_nonneg ratio_pos.le n
     apply abs_le.mpr
     constructor <;> nlinarith [hx.1, hx.2, hy.1, hy.2]

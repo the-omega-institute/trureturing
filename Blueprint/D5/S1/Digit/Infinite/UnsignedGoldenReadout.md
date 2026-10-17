@@ -68,4 +68,5 @@ The endpoint and coincident-name values follow by summing the even and odd geome
 - Truth anchor: `D5/S1/Digit/Infinite/UnsignedGoldenReadout.singleName`
 - Truth anchor: `D5/S1/Digit/Infinite/UnsignedGoldenReadout.unsigned_golden_readout`
 - Truth anchor: `D5/S1/Digit/Infinite/UnsignedGoldenReadout.zeroName`
+- Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel](ClosedObservationCommonTailWidthModel.md)
 - Dependency: [D5/S1/Digit/Infinite/SignedSeriesRange](SignedSeriesRange.md)
