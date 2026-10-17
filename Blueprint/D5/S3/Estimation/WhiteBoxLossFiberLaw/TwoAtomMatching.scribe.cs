@@ -94,6 +94,19 @@ internal sealed class TwoAtomMatchingDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(RadialSource, MergingSource),
                 Blocks(Paragraph(Text("Let u and v be orthogonal unit vectors, w=(u+v)/sqrt(2), zero-weight objective J0=a C(u,D)+b C(u+v,D), and B=a(lambda-lambda^2/2)+b(sqrt(2)lambda-lambda^2/2). For 0<lambda<1/sqrt(2), a,b>0 and 0<delta<norm(u-w)/2, kappa(delta)=min(a g(1,delta),b g(sqrt(2),delta)) is positive. Every ordered unit dictionary with J0<B+kappa(delta) has both atoms within delta of u and w, in one of the two orders. Repeated, antipodal and off-plane atoms are included in the domain. The baseline uses the classical proximal radial values; the explicit positive kappa and simultaneous matching strengthen the zero-weight merging characterization recorded in MAIS-A3."))), DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("code-cost-bounds"),
+                DeclarationHandle.Create("D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.code_cost_bounds"),
+                H("Nonnegative cost and the zero-code upper bound"),
+                StatementSource.FromAuthor(Disp(Flow(Forall,F.Id("E"),InMacro,F.Id("RealInnerProductSpaces"),Comma,
+                    Forall,lam,Ge,D(0),Comma,F.Id("x"),InMacro,F.Id("E"),Comma,F.Id("D"),InMacro,Call("UnitDictionary",F.Id("E")),Comma,
+                    D(0),Le,Call("C",F.Id("x"),F.Id("D")),Land,Call("C",F.Id("x"),F.Id("D")),Le,
+                    Frac,Grp(Sq(Norm(F.Id("x")))),Grp(D(2))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In every real inner-product space, for every nonnegative lambda, sample x and ordered pair D of unit atoms, " +
+                    "the infimal nonnegative code cost lies between zero and norm(x) squared over two. The energy is nonnegative " +
+                    "for every feasible code and the zero code gives the upper bound. At x=0 both bounds coincide, so the zero sample " +
+                    "contributes exactly zero to every finite weighted expectation."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("perturbation-bounds"),
                 DeclarationHandle.Create("D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.perturbation_bounds"),
                 H("Uniform perturbation bound"),
