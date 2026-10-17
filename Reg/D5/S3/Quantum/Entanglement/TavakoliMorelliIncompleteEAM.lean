@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 import Reg.Support.DependentFamily
 
+/-! Source-bound audits of incomplete equiangular measurements and their product estimate. -/
+
 namespace Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 open _root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -561,6 +563,104 @@ def registration :
 #print axioms registration
 
 end SchmidtBound
+
+namespace ProductTraceNorm
+
+/-- The square-root Hilbert--Schmidt coordinate in the product estimate. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {κ : Type u_1} [Fintype κ] (R S : Matrix κ κ ℂ),
+    traceNorm (R * S) ≤ r.readout () ()
+      (_root_.D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq R) *
+      Real.sqrt
+        (_root_.D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq S)
+
+theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
+  intro h
+  let κ := ULift.{u_1} Unit
+  have he := h (1 : Matrix κ κ ℂ) 1
+  have hn := traceNorm_nonneg (1 : Matrix κ κ ℂ)
+  have hs : _root_.D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq
+      (1 : Matrix κ κ ℂ) = 1 := by
+    simp [_root_.D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.entryNormSq]
+  change _root_.D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm
+    ((1 : Matrix κ κ ℂ) * 1) ≤ -1 * Real.sqrt _ at he
+  rw [Matrix.one_mul, hs, Real.sqrt_one, mul_one] at he
+  linarith
+
+def source_registration : Registration arena.{u_1}
+    (type_of% @_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.traceNorm_mul_le_hsSq.{u_1}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨traceNorm_mul_le_hsSq, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    change Real.sqrt 0 ≠ Real.sqrt 1
+    norm_num
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.traceNorm_mul_le_hsSq.{u_1})
+      (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ProductTraceNorm.unit
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM.ProductTraceNorm.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some
+    (realize signature (fun _ _ x => Real.sqrt x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Entanglement.TavakoliMorelliIncompleteEAM
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end ProductTraceNorm
 
 namespace Bound
 
