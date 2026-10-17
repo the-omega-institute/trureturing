@@ -93,7 +93,7 @@ internal sealed class FiniteRealZeroFillRegisterDocument : IScribeDocumentDefini
     private static Formula StateOf(Formula horizon) => App(Op("State"), horizon);
     private static Formula FinOf(Formula horizon) => App(Op("Fin"), Seq(horizon, Plus, D(1)));
     private static Formula Val(Formula index) => Seq(index, Dot, Op("val"));
-    private static Formula Pair(Formula value, Formula bound) => Seq(Langle, value, Comma, bound, Rangle);
+    private static Formula Pair(Formula value, Formula bound) => Seq(Langle, Sp, value, Comma, bound, Rangle);
     private static Formula Hom(Formula domain, Formula codomain) =>
         Seq(Op("Hom"), Underscore, Grp(Real), Open, domain, Comma, codomain, Close);
 
@@ -102,28 +102,28 @@ internal sealed class FiniteRealZeroFillRegisterDocument : IScribeDocumentDefini
 
     private static Formula BitSignFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),
-        Forall, Sp, F.Id("b"), InMacro, Bool, Comma, Quad,
+        Forall, Sp, F.Id("b"), InMacro, Sp, Bool, Comma, Quad, Sp,
         App(Op("bitSign"), F.Id("b")), Eq, Open, Minus, D(1), Close,
-        Caret, Grp(App(Op("toNat"), F.Id("b"))), InMacro, Real,
+        Caret, Grp(App(Op("toNat"), F.Id("b"))), InMacro, Sp, Real,
         RowBreak, Grp(),
-        App(Op("bitSign"), Op("false")), Eq, Plus, D(1), Comma, Quad,
+        App(Op("bitSign"), Op("false")), Eq, Plus, D(1), Comma, Quad, Sp,
         App(Op("bitSign"), Op("true")), Eq, Minus, D(1),
         End, Grp(F.Id("gathered"))));
 
     private static Formula SignalFormula() => Disp(Seq(
-        Forall, Sp, F.Id("t"), InMacro, Nat, Comma, Sp,
-        Forall, Sp, F.Id("x"), InMacro, F.Id("X"), Comma, Quad,
+        Forall, Sp, F.Id("t"), InMacro, Sp, Nat, Comma, Sp,
+        Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("X"), Comma, Quad, Sp,
         App(Op("signal"), Seq(F.Id("t"), Comma, F.Id("x"))), Eq,
         App(Op("bitSign"), App(F.Id("x"), F.Id("t")))));
 
     private static Formula StateFormula() => Disp(Seq(
-        Forall, Sp, F.Id("H"), InMacro, Nat, Comma, Quad,
+        Forall, Sp, F.Id("H"), InMacro, Sp, Nat, Comma, Quad, Sp,
         StateOf(F.Id("H")), Colon, Eq, Open, FinOf(F.Id("H")), To, Real, Close));
 
     private static Formula InitialFormula() => Disp(Seq(
-        Forall, Sp, F.Id("H"), InMacro, Nat, Comma, Sp,
-        Forall, Sp, F.Id("x"), InMacro, F.Id("X"), Comma, Sp,
-        Forall, Sp, F.Id("i"), InMacro, FinOf(F.Id("H")), Comma, Quad,
+        Forall, Sp, F.Id("H"), InMacro, Sp, Nat, Comma, Sp,
+        Forall, Sp, F.Id("x"), InMacro, Sp, F.Id("X"), Comma, Sp,
+        Forall, Sp, F.Id("i"), InMacro, Sp, FinOf(F.Id("H")), Comma, Quad, Sp,
         App(App(Op("initState"), Seq(F.Id("H"), Comma, F.Id("x"))), F.Id("i")), Eq,
         App(Op("signal"), Seq(Val(F.Id("i")), Comma, F.Id("x")))));
 
@@ -132,32 +132,32 @@ internal sealed class FiniteRealZeroFillRegisterDocument : IScribeDocumentDefini
         Formula h = F.Id("H"), q = F.Id("q"), v = F.Id("v"), i = F.Id("i"), c = F.Id("c");
         Formula u = Seq(F.Id("U"), Underscore, Grp(h));
         Formula next = Seq(Val(i), Plus, D(1));
-        return Disp(Seq(Forall, Sp, h, InMacro, Nat, Comma, Quad,
+        return Disp(Seq(Forall, Sp, h, InMacro, Sp, Nat, Comma, Quad, Sp,
             Begin, Grp(F.Id("gathered")),
-            u, Colon, Eq, App(Op("update"), h), InMacro, Hom(StateOf(h), StateOf(h)),
+            u, Colon, Eq, App(Op("update"), h), InMacro, Sp, Hom(StateOf(h), StateOf(h)),
             RowBreak, Grp(),
-            Forall, Sp, q, InMacro, StateOf(h), Comma, Sp,
-            Forall, Sp, i, InMacro, FinOf(h), Comma, Quad,
+            Forall, Sp, q, InMacro, Sp, StateOf(h), Comma, Sp,
+            Forall, Sp, i, InMacro, Sp, FinOf(h), Comma, Quad, Sp,
             App(App(u, q), i), Eq, Begin, Grp(F.Id("cases")),
             App(q, Pair(next, F.Id("h"))), Comma, Amp, Sp,
             F.Id("h"), Colon, next, Lt, h, Plus, D(1), Comma,
-            RowBreak, Grp(), D(0), InMacro, Real, Comma, Amp, Sp,
+            RowBreak, Grp(), D(0), InMacro, Sp, Real, Comma, Amp, Sp,
             Mathrm, Grp(F.Id("otherwise")),
             End, Grp(F.Id("cases")),
             RowBreak, Grp(),
-            Forall, Sp, q, Comma, v, InMacro, StateOf(h), Comma, Sp,
-            Forall, Sp, c, InMacro, Real, Comma, Quad,
-            App(u, Seq(q, Plus, v)), Eq, App(u, q), Plus, App(u, v), Comma, Quad,
-            App(u, Seq(c, Cdot, q)), Eq, c, Cdot, App(u, q),
+            Forall, Sp, q, Comma, v, InMacro, Sp, StateOf(h), Comma, Sp,
+            Forall, Sp, c, InMacro, Sp, Real, Comma, Quad, Sp,
+            App(u, Seq(q, Plus, v)), Eq, App(u, q), Plus, App(u, v), Comma, Quad, Sp,
+            App(u, Seq(c, Cdot, Sp, q)), Eq, c, Cdot, Sp, App(u, q),
             End, Grp(F.Id("gathered"))));
     }
 
     private static Formula ReadoutFormula()
     {
         Formula h = F.Id("H"), q = F.Id("q"), r = Seq(F.Id("R"), Underscore, Grp(h));
-        return Disp(Seq(Forall, Sp, h, InMacro, Nat, Comma, Quad,
-            r, Colon, Eq, App(Op("readout"), h), InMacro, Hom(StateOf(h), Real), Comma, Quad,
-            Forall, Sp, q, InMacro, StateOf(h), Comma, Quad,
+        return Disp(Seq(Forall, Sp, h, InMacro, Sp, Nat, Comma, Quad, Sp,
+            r, Colon, Eq, App(Op("readout"), h), InMacro, Sp, Hom(StateOf(h), Real), Comma, Quad, Sp,
+            Forall, Sp, q, InMacro, Sp, StateOf(h), Comma, Quad, Sp,
             App(r, q), Eq, App(q, D(0))));
     }
 
@@ -168,10 +168,10 @@ internal sealed class FiniteRealZeroFillRegisterDocument : IScribeDocumentDefini
         Formula index = Seq(Val(i), Plus, t);
         Formula iterate = Seq(App(Op("update"), h), Caret, Grp(OpenBracket, t, CloseBracket));
         return Disp(Seq(
-            Forall, Sp, h, Comma, t, InMacro, Nat, Comma, Sp,
-            Forall, Sp, q, InMacro, StateOf(h), Comma, Sp,
-            Forall, Sp, i, InMacro, FinOf(h), Comma, Sp,
-            Forall, Sp, hi, Colon, index, Lt, h, Plus, D(1), Comma, Quad,
+            Forall, Sp, h, Comma, t, InMacro, Sp, Nat, Comma, Sp,
+            Forall, Sp, q, InMacro, Sp, StateOf(h), Comma, Sp,
+            Forall, Sp, i, InMacro, Sp, FinOf(h), Comma, Sp,
+            Forall, Sp, hi, Colon, index, Lt, h, Plus, D(1), Comma, Quad, Sp,
             App(App(iterate, q), i), Eq, App(q, Pair(index, hi))));
     }
 
@@ -182,10 +182,10 @@ internal sealed class FiniteRealZeroFillRegisterDocument : IScribeDocumentDefini
         Formula iterate = Seq(App(Op("update"), h), Caret, Grp(OpenBracket, t, CloseBracket));
         Formula initial = App(Op("initState"), Seq(h, Comma, x));
         return Disp(Seq(
-            Forall, Sp, h, InMacro, Nat, Comma, Sp,
-            Forall, Sp, x, InMacro, F.Id("X"), Comma, Sp,
-            Forall, Sp, t, InMacro, Nat, Comma, Sp,
-            Forall, Sp, ht, Colon, t, Leq, h, Comma, Quad,
+            Forall, Sp, h, InMacro, Sp, Nat, Comma, Sp,
+            Forall, Sp, x, InMacro, Sp, F.Id("X"), Comma, Sp,
+            Forall, Sp, t, InMacro, Sp, Nat, Comma, Sp,
+            Forall, Sp, ht, Colon, t, Leq, Sp, h, Comma, Quad, Sp,
             App(App(Op("readout"), h), App(iterate, initial)), Eq,
             App(Op("signal"), Seq(t, Comma, x))));
     }
