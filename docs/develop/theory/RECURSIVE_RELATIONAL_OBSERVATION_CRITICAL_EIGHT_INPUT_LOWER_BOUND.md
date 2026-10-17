@@ -626,3 +626,1161 @@ where $\mathcal L_*=\{(a,b):b-a\ge5,\ b>\max(k,n-k+1)\}$ and $\mathcal A_*$ is i
 [CE19]: RECURSIVE_RELATIONAL_OBSERVATION_CRITICAL_EIGHT_INPUT_LOWER_BOUND.md
 
 ## 追加锚（临界十九下界；本行以下为增补区）
+
+## 10. Actual-support forks and the surviving nineteen-state architecture
+
+**Convention 10.1 (one original graph and the equality interfaces).**
+Retain the entire model and both simultaneous caps of Sections 1–2 and
+Convention 7.1. In particular there is one stationary finite installed
+graph, with its current state as its sole changing configuration,
+correctness and actual termination on every input, and costs at most
+eight queries and the original distinct-cost sum $`W`$ on each same
+run. All installed states count. Adaptive orders, multiple histories,
+sharing, repeated queries, paid certified traffic and syntactic cycles
+with actual termination remain allowed.
+
+Let $`\mathcal S_p`$ be the family of supports of actual live histories
+at cell $`p`$, and put $`a_p=|\mathcal S_p|`$. The supplied incidence
+interface gives $`1\le a_p\le b_p`$ and one support for each fixed
+cell and host. In addition to $`\mathsf a,\mathsf b,\mathsf c,\mathsf d`$
+from (16), write
+
+$$
+\begin{gathered}
+\mathsf P=(1,2),\quad \mathsf R=(2,1),\quad
+\mathsf M=(2,2),\quad \mathsf N=(2,3),\\
+\mathsf U=(2,4),\quad \mathsf V_6=(3,3),\qquad
+Z_j=(0,j),\quad O_j=(j,0).
+\end{gathered}
+\tag{40}
+$$
+
+These cell names are unrelated to native row classes, coordinate names
+or coordinate costs. Retain
+$`\ell=e_{\mathsf a}+e_{\mathsf b}`$ and
+$`r=e_{\mathsf c}+e_{\mathsf d}`$. For a specified long pool let
+$`A`$ count shared states with an axis endpoint and $`N_{\rm sh}`$
+count those with neither endpoint on an axis. Lemma 7.2 gives
+
+$$
+D_B=A+N_{\rm sh},\qquad
+N_{\rm sh}\le 2+\min(\ell,r).
+\tag{41}
+$$
+
+Its at-most-two-cell statement is essential: a state cannot be counted
+as a non-axis sharing state and also as a sharing state with an
+additional axis endpoint.
+
+For clarity, the full possible partner lists for the five participating
+axis cells, before restricting to a particular pool, are
+
+| Axis cell | All possible distinct partner cells |
+| --- | --- |
+| $`Z_2`$ | $`O_2,O_3`$ |
+| $`Z_3`$ | $`O_2,\mathsf R,O_3,\mathsf c`$ |
+| $`Z_4`$ | $`O_2,\mathsf R,\mathsf M,O_3,\mathsf c,\mathsf d`$ |
+| $`O_2`$ | $`Z_2,Z_3,Z_4`$ |
+| $`O_3`$ | $`Z_2,Z_3,Z_4,\mathsf P,\mathsf a,\mathsf b`$ |
+
+Indeed, a partner of $`Z_j`$ has hits two or three and zeros at most
+$`j-2`$; a partner of $`O_2`$ has zero hits and at least two zeros;
+a partner of $`O_3`$ has hits zero or one and at least two zeros.
+Together with the rectangle bounds these give exactly the displayed
+lists. With no axis endpoint the only pairs are
+$`\mathsf a\mathsf c,\mathsf b\mathsf c,\mathsf b\mathsf d`$,
+as credited in Lemma 7.2.
+
+The following table gives both count children of every candidate pair.
+An entry $`\mathsf C_0`$ means that this occurrence has reached five
+zeros, and $`\mathsf C_1`$ means that it has reached four ones.
+Neither symbol specifies a terminal or deletes any paid continuation.
+When both entries in a child column are live cells, their actual
+occurrences have the same fixed successor of the shared parent state,
+by (15).
+
+| Candidate pair, in displayed order | Zero children | One children |
+| --- | --- | --- |
+| $`Z_2,O_2`$ | $`Z_3,\mathsf R`$ | $`\mathsf P,O_3`$ |
+| $`Z_2,O_3`$ | $`Z_3,\mathsf c`$ | $`\mathsf P,\mathsf C_1`$ |
+| $`Z_3,O_2`$ | $`Z_4,\mathsf R`$ | $`\mathsf a,O_3`$ |
+| $`Z_3,O_3`$ | $`Z_4,\mathsf c`$ | $`\mathsf a,\mathsf C_1`$ |
+| $`Z_4,O_2`$ | $`\mathsf C_0,\mathsf R`$ | $`\mathsf b,O_3`$ |
+| $`Z_4,O_3`$ | $`\mathsf C_0,\mathsf c`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`Z_3,\mathsf R`$ | $`Z_4,\mathsf M`$ | $`\mathsf a,\mathsf c`$ |
+| $`Z_3,\mathsf c`$ | $`Z_4,\mathsf d`$ | $`\mathsf a,\mathsf C_1`$ |
+| $`Z_4,\mathsf R`$ | $`\mathsf C_0,\mathsf M`$ | $`\mathsf b,\mathsf c`$ |
+| $`Z_4,\mathsf M`$ | $`\mathsf C_0,\mathsf N`$ | $`\mathsf b,\mathsf d`$ |
+| $`Z_4,\mathsf c`$ | $`\mathsf C_0,\mathsf d`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`Z_4,\mathsf d`$ | $`\mathsf C_0,\mathsf V_6`$ | $`\mathsf b,\mathsf C_1`$ |
+| $`O_3,\mathsf P`$ | $`\mathsf c,\mathsf a`$ | $`\mathsf C_1,\mathsf M`$ |
+| $`O_3,\mathsf a`$ | $`\mathsf c,\mathsf b`$ | $`\mathsf C_1,\mathsf N`$ |
+| $`O_3,\mathsf b`$ | $`\mathsf c,\mathsf C_0`$ | $`\mathsf C_1,\mathsf U`$ |
+| $`\mathsf a,\mathsf c`$ | $`\mathsf b,\mathsf d`$ | $`\mathsf N,\mathsf C_1`$ |
+| $`\mathsf b,\mathsf c`$ | $`\mathsf C_0,\mathsf d`$ | $`\mathsf U,\mathsf C_1`$ |
+| $`\mathsf b,\mathsf d`$ | $`\mathsf C_0,\mathsf V_6`$ | $`\mathsf U,\mathsf C_1`$ |
+
+The tables are necessary implications for actual occurrences, not
+realizations of abstract pairs. Each live child used below is separately
+realized by fixing the fresh queried bit of its own parent history and
+completing that exposed assignment. Two different parent histories need
+not have compatible assignments or one common completing input.
+
+Theorem 9.1 and Corollary 9.2 supply the already proved lower bound
+nineteen and its necessary equality alternatives (35)–(36). They are
+used only at that stated scope. In particular a nineteen-state
+competitor has $`D_B=E_B+1`$ in its sole long pool,
+$`E_{\rm cut}=u=0`$, and one of the two displayed cut lists.
+
+**Lemma 10.2 (the shared $`Z_3,\mathsf R`$ support fork).**
+If an installed state hosts both $`Z_3=(0,3)`$ and
+$`\mathsf R=(2,1)`$, then
+
+$$
+a_{\mathsf N}\ge2,\qquad b_{\mathsf N}\ge2,\qquad
+e_{\mathsf N}\ge1.
+\tag{42}
+$$
+
+This assertion has no nineteen-state or equality hypothesis.
+
+**Proof.** Choose actual live histories at their shared state $`q`$,
+with respective supports $`S,T`$. Each has size three. Their unequal
+hit counts forbid $`S=T`$. Put $`x=i(q)`$; freshness gives
+$`x\notin S\cup T`$. Define
+
+$$
+A_*=S\cup\{x\},\qquad C_*=T\cup\{x\}.
+$$
+
+These are distinct size-four sets. The actual zero successor
+$`q_0=\delta(q,0)`$ hosts $`Z_4,\mathsf M`$, with respective
+supports $`A_*,C_*`$. The actual one successor
+$`q_1=\delta(q,1)`$ hosts $`\mathsf a,\mathsf c`$, with those same
+respective supports. All four child cells lie in the live rectangle.
+
+Let $`u=i(q_0)`$, $`v=i(q_1)`$. Applying freshness at both
+occurrences of each successor gives
+
+$$
+u,v\notin A_*\cup C_*.
+$$
+
+No assumption that $`u\ne v`$ is needed. From the $`\mathsf M`$
+occurrence at $`q_0`$, take its live zero child at $`\mathsf N`$;
+its support is $`C_*\cup\{u\}`$. From the $`\mathsf a`$
+occurrence at $`q_1`$, take its live one child at $`\mathsf N`$;
+its support is $`A_*\cup\{v\}`$. Choose $`j\in A_*\setminus C_*`$,
+which exists since the two distinct sets have equal size. Then $`j`$
+belongs to the latter support and not the former, because $`u\notin A_*`$.
+Thus two distinct supports occur at $`\mathsf N`$.
+One support per fixed cell and host gives $`b_{\mathsf N}\ge
+a_{\mathsf N}\ge2`$, proving (42).
+
+All the displayed children arise at the installed successors of the
+chosen actual histories. Their separate realizations do not assert
+realizability of an arbitrary syntactic path or agreement of the two
+old assignments. $`\square`$
+
+**Lemma 10.3 (an $`\mathsf a\mathsf c`$ host forces both last-layer
+ambiguities when the outer supports are unique).**
+Suppose a state hosts both $`\mathsf a=(1,3)`$ and
+$`\mathsf c=(3,1)`$, and
+
+$$
+a_{\mathsf b}=a_{\mathsf d}=1.
+$$
+
+Then
+
+$$
+a_{\mathsf N}\ge2,\qquad
+a_{\mathsf U}\ge2,\qquad a_{\mathsf V_6}\ge2,\qquad e_6\ge2.
+\tag{43}
+$$
+
+The hypothesis concerns unique supports; unique hosts at
+$`\mathsf b,\mathsf d`$ are sufficient but are not required.
+
+**Proof.** Let $`q`$ be the shared $`\mathsf a,\mathsf c`$ state,
+and let $`B_*,D_*`$ be the unique supports at $`\mathsf b,\mathsf d`$.
+The fixed zero successor $`q_0=\delta(q,0)`$ hosts both these cells.
+Their supports have size five, and equal-support unequal-hit exclusion
+gives $`B_*\ne D_*`$. Its fixed query $`w=i(q_0)`$ is fresh at
+both occurrences, so
+
+$$
+w\notin B_*\cup D_*.
+\tag{44}
+$$
+
+The $`\mathsf a`$ occurrence at $`q`$, followed by reply one,
+reaches $`\mathsf N`$ with support $`B_*`$: its zero sibling at
+$`\mathsf b`$ has exactly that support, and the two children of one
+history expose the same set. Independently choose any actual live
+history at $`\mathsf M`$, which exists by the incidence interface.
+Its one child at $`\mathsf d`$ has support $`D_*`$ by uniqueness,
+so its zero child at $`\mathsf N`$ has support $`D_*`$ as well.
+These children are all live. Thus $`\mathsf N`$ has the two distinct
+size-five supports $`B_*,D_*`$.
+
+Suppose first that $`\mathsf U`$ had one support $`T`$.
+Every $`\mathsf N`$ occurrence has a live zero child at $`\mathsf U`$;
+hence $`B_*,D_*\subset T`$, with $`|T|=6`$. If
+$`|B_*\cup D_*|>6`$, this containment is already impossible.
+Otherwise the distinct size-five sets have union of size at least
+six, so their union must equal $`T`$. But the $`\mathsf b`$
+occurrence at $`q_0`$ has its actual live one child at $`\mathsf U`$,
+with support $`B_*\cup\{w\}`$. It follows that $`w\in T`$,
+contradicting (44) and $`T=B_*\cup D_*`$.
+Therefore $`a_{\mathsf U}\ge2`$.
+
+Now suppose that $`\mathsf V_6`$ had one support $`T'`$.
+Every $`\mathsf N`$ occurrence has a live one child at $`\mathsf V_6`$,
+so $`B_*,D_*\subset T'`$, with $`|T'|=6`$.
+A union of size greater than six is again immediately impossible;
+otherwise $`T'=B_*\cup D_*`$. The $`\mathsf d`$ occurrence
+at $`q_0`$ has its actual live zero child at $`\mathsf V_6`$,
+with support $`D_*\cup\{w\}`$. This forces $`w\in T'`$,
+again contrary to (44). Thus $`a_{\mathsf V_6}\ge2`$.
+
+These are the two cells of depth six. Since $`b_p\ge a_p`$,
+each contributes at least one excess, giving $`e_6\ge2`$.
+The proof uses both actual live successors of $`\mathsf N`$, and the
+one and zero successors of the two occurrences at the same installed
+$`\mathsf b,\mathsf d`$ host. No new child host is chosen in place
+of a fixed successor. $`\square`$
+
+**Theorem 10.4 (exclusion of cut list $`(0,1,7,8)`$).**
+No nineteen-state competitor in the original model has complete
+common-support cut list $`(0,1,7,8)`$.
+
+**Proof.** Suppose it did. Its long pool is $`B=(1,7)`$.
+Put $`E=E_B`$, $`D=D_B=E+1`$. Depths two through six are
+internal and noncommon. By Lemma 7.3, $`A\le4`$.
+Define $`\kappa=1`$ when $`A=4`$ and $`\kappa=0`$ when $`A\le3`$.
+The credited depth-two axis fork gives $`e_3\ge1+\kappa`$.
+The axis and non-axis bounds therefore give
+
+$$
+D\le5+\kappa+\min(\ell,r),\qquad
+E\ge5+\kappa,\qquad
+E\ge\ell+r+3+\kappa.
+\tag{45}
+$$
+
+The last estimate retains the depth-two, depth-three and depth-six
+excesses outside $`\ell+r`$. In full, the excess decomposition is
+
+$$
+E=\ell+r+e_2+e_3+e_6+e_{\mathsf M}+e_{\mathsf N}.
+\tag{46}
+$$
+
+Indeed the non-axis cells of depth four are
+$`\mathsf a,\mathsf M,\mathsf c`$, and those of depth five are
+$`\mathsf b,\mathsf N,\mathsf d`$; all axis excesses vanish.
+
+Write $`s=\min(\ell,r)`$, $`t=\max(\ell,r)`$.
+If $`s=0`$, the first two bounds in (45) contradict
+$`D=E+1`$. If $`s>0`$, combining the first and third bounds with
+$`D=E+1`$ gives
+$`s+t+4+\kappa\le5+\kappa+s`$, hence $`t\le1`$.
+Thus the branch $`t\ge2`$ is also impossible, and the only remaining
+nonnegative integral case is
+
+$$
+\ell=r=1,\quad E=5+\kappa,\quad D=6+\kappa,\quad
+A=3+\kappa,\quad N_{\rm sh}=3.
+\tag{47}
+$$
+
+Here the value of $`E`$ follows from its lower bound and
+$`E+1\le5+\kappa+s`$; the values of $`A,N_{\rm sh}`$
+follow because their separate upper bounds sum to $`D`$.
+Equation (46) and the retained positive excesses then force
+
+$$
+e_2=e_6=1,\quad e_3=1+\kappa,\qquad
+e_{\mathsf M}=e_{\mathsf N}=0.
+\tag{48}
+$$
+
+In particular $`\mathsf N`$ has just one host and one support.
+
+The three non-axis shared states consume all
+$`b_{\mathsf a}+b_{\mathsf b}=3`$ lower-endpoint hosts and all
+$`b_{\mathsf c}+b_{\mathsf d}=3`$ upper-endpoint hosts in (41).
+Every host of those four cells already shares with another of the
+four. Since no state hosts three count cells, none of these hosts can
+also share with an axis cell.
+
+We next exclude every sharing possibility for $`Z_2,O_2`$, using
+the complete partner lists in Convention 10.1.
+
+* A $`Z_2,O_2`$ host has its actual fixed zero successor shared by
+  $`Z_3,\mathsf R`$. Lemma 10.2 contradicts
+  $`e_{\mathsf N}=0`$.
+* A $`Z_2,O_3`$ host has its actual fixed zero successor shared by
+  $`Z_3,\mathsf c`$. This contradicts the exhausted
+  $`\mathsf c`$ hosts.
+* A $`Z_3,O_2`$ host has its actual fixed one successor shared by
+  $`\mathsf a,O_3`$. This contradicts the exhausted
+  $`\mathsf a`$ hosts.
+* A $`Z_4,O_2`$ host has its actual fixed one successor shared by
+  $`\mathsf b,O_3`$. This contradicts the exhausted
+  $`\mathsf b`$ hosts.
+
+Each paired child just used is live. These four cases exhaust the
+two partners of $`Z_2`$ and the three partners of $`O_2`$, with
+their common pair counted once.
+
+Only $`Z_3,Z_4,O_3`$ can consequently be axis endpoints.
+Each has one host. If $`\kappa=1`$, (47) requires four
+axis-endpoint shared states from these three axis incidences, an
+immediate contradiction. If $`\kappa=0`$, (47) requires exactly
+three. Each must then use exactly one of those three axis
+incidences, so no two of $`Z_3,Z_4,O_3`$ share with each other.
+The unique $`Z_3`$ host must participate. Its full partner list is
+$`O_2,\mathsf R,O_3,\mathsf c`$. The first was excluded,
+the third would use a second axis incidence at one shared state,
+and the fourth has no host available for axis sharing.
+Its partner must therefore be $`\mathsf R`$.
+Lemma 10.2 again contradicts (48).
+
+Both axis-count branches and all zero or positive endpoint-excess
+branches have been exhausted. This proves the theorem on the one
+original graph. $`\square`$
+
+**Corollary 10.5 (a multiple-host endpoint in the surviving list).**
+Every nineteen-state original competitor has complete cut list
+
+$$
+(0,1,2,7,8),
+\tag{49}
+$$
+
+and its sharing endpoints satisfy
+
+$$
+\ell+r\ge1.
+\tag{50}
+$$
+
+Equivalently, at least one of
+$`\mathsf a,\mathsf b,\mathsf c,\mathsf d`$ has at least two
+actual live hosts.
+
+**Proof.** Corollary 9.2 and Theorem 10.4 leave only (49).
+For its sole long pool $`B=(2,7)`$, equality still gives
+$`D=E+1`$. Suppose first that $`\ell+r=0`$.
+All four nonnegative endpoint excesses then vanish; the four
+cells each have one host and one support.
+Only $`Z_3,Z_4,O_3`$ can be axis endpoints in this pool,
+so $`A\le3`$, while (41) gives $`N_{\rm sh}\le2`$.
+The four internal noncommon depths give $`E\ge4`$. Consequently
+$`D\le5`$ and $`D=E+1`$ force
+
+$$
+E=4,\quad D=5,\quad A=3,\quad N_{\rm sh}=2,\qquad
+e_3=e_4=e_5=e_6=1.
+\tag{51}
+$$
+
+The two non-axis shared states consume all four endpoint hosts.
+The only non-axis partner of $`\mathsf a`$ is $`\mathsf c`$,
+and the only one of $`\mathsf d`$ is $`\mathsf b`$.
+Thus these two states must be an $`\mathsf a,\mathsf c`$
+host and a $`\mathsf b,\mathsf d`$ host.
+The cells $`\mathsf b,\mathsf d`$ have unique supports, so
+Lemma 10.3 applies to the former host and gives $`e_6\ge2`$,
+contrary to (51). The zero-excess branch is impossible.
+In the remaining branch $`\ell+r>0`$, integrality gives (50);
+no sufficiency or further realization is inferred from that branch.
+$`\square`$
+
+**Proposition 10.6 (the exact installed-state residual and its coordinate
+blocks).**
+A nineteen-state competitor, if one exists, has cuts (49),
+$`D_B-E_B=1`$, $`E_{\rm cut}=u=0`$ and (50).
+There are seven distinct cut hosts and exactly twelve interior hosts.
+The latter host thirteen count cells:
+
+$$
+\begin{aligned}
+V_3&=\{Z_3,\mathsf P,\mathsf R,O_3\},&
+V_4&=\{Z_4,\mathsf a,\mathsf M,\mathsf c\},\\
+V_5&=\{\mathsf b,\mathsf N,\mathsf d\},&
+V_6&=\{\mathsf U,\mathsf V_6\}.
+\end{aligned}
+\tag{52}
+$$
+
+Write $`T_1=\{x\}`$, $`T_2=\{x,y\}`$,
+and $`[8]\setminus T_7=\{j\}`$ for its common supports.
+Every actual live run begins with the coordinates $`x,y`$ in that
+order. Exactly one installed state queries $`x`$, exactly two query
+$`y`$, exactly one queries $`j`$, and the other fifteen query
+coordinates in $`T_7\setminus T_2`$.
+
+**Proof.** The cut depths before the formal endpoint are zero, one,
+two and seven, containing respectively one, two, three and one
+count cells. Their excesses are zero by $`E_{\rm cut}=0`$.
+Each cell therefore has one host, and the seven hosts are mutually
+distinct and disjoint from the interior by the supplied localization.
+The cells in (52) are exactly the internal diagonals of $`(2,7)`$;
+they number $`4+4+3+2=13`$. Since $`u=0`$, every installed
+state is live somewhere. The remaining $`19-7=12`$ states are
+exactly its interior pool. This also agrees with
+$`|Q_B|=|V_B|+E_B-D_B=13-1=12`$.
+
+The supplied common-support envelope places the fixed label of every
+live host in the coordinate block between its two surrounding cuts.
+The four disjoint blocks for (49) are
+
+$$
+T_1=\{x\},\quad T_2\setminus T_1=\{y\},\quad
+T_7\setminus T_2,\quad [8]\setminus T_7=\{j\}.
+\tag{53}
+$$
+
+At the first depth, extension to the depth-one common support forces
+the query $`x`$. At depth one, extension to the depth-two common
+support forces the next query $`y`$. Freshness makes these different
+coordinates. The half-open depth ranges $`[0,1),[1,2),[2,7),[7,8)`$
+have respectively one, two, fifteen and one live states: the third
+range consists of the three depth-two cut hosts and the twelve
+interior hosts. Their fixed labels belong to the respective blocks
+in (53). The blocks partition the coordinates, and $`u=0`$
+leaves no further installed states to query any block. This proves
+all four label-multiplicity assertions.
+
+The conclusion describes installed labels and actual live prefixes.
+It does not require certified traffic to follow those prefixes or
+support envelopes, nor erase its original query and weighted charges.
+$`\square`$
+
+**Attribution and remaining boundary 10.7.**
+The equality-residual arguments R1–R4 supply the four deductions
+proved as Lemmas 10.2–10.3, Theorem 10.4 and Corollary 10.5.
+The critical companion's Theorem 9.1 and Corollary 9.2 own the
+nineteen lower bound and its two equality cut lists.
+Its Lemmas 7.2–7.3 own the sharing classification, unique axis
+incidences and the earlier depth-two axis fork. Its endpoint estimates
+and twenty-state grid remain credited; the grid is not new progress.
+The support-incidence source [SI][SI19], specifically Theorem 2.2,
+the local diagonal argument of Theorem 4.1, Theorems 5.2 and 9.3,
+the short-gap results and Lemma 10.2, owns the incidence, support,
+localization and resource interfaces used here. The nested PCA, PE
+and WTF statements retain their displayed conditional scope; no
+unlisted supplier is authenticated by these deductions.
+
+The additional content is necessary actual-support propagation:
+the $`Z_3,\mathsf R`$ fork forces ambiguity at $`\mathsf N`$;
+a shared $`\mathsf a,\mathsf c`$ host with unique outer supports
+forces ambiguity at both depth-six cells; and these implications
+exclude one full equality architecture and the all-singleton-endpoint
+case of the other. No condition has been imposed as a new graph
+class, and no separately optimized graphs or incompatible estimates
+have been combined.
+
+The exact numerical critical interval remains
+
+$$
+19\le m_{\min}(8,4)\le20.
+\tag{54}
+$$
+
+The twelve-state interior in Proposition 10.6 remains to be realized
+or excluded with globally compatible actual supports, fixed coordinate
+labels and successors, all-input correctness, actual termination and
+both original caps. At least one endpoint must have multiple hosts.
+Lemma 10.2 can be paid by ambiguity at $`\mathsf N`$, and the
+unique-support hypothesis of Lemma 10.3 need not hold.
+The necessary conditions are not a nineteen-state construction.
+No unrestricted twenty-state lower bound is established.
+
+For every original instance with $`\min(k,n-k+1)\ge4`$, the original
+all-size alternative remains unchanged: prove
+$`m\ge G=k(n-k+1)`$ on every complete correct original graph at both
+caps $`n,W`$, equivalently prove the collective inequality (39),
+or construct one complete correct strict-subgrid graph satisfying
+both caps on every input. Neither alternative follows from this
+section. Separate compensation in each late pool remains stronger
+than the collective target. The unrestricted-budget minimum and
+fixed-specification attainment remain separate unresolved questions.
+
+The entire original unbounded source fiber, homomorphism, eleven
+profiles, prescribed pointwise code, original latches and literal
+complete entries, all four replies, and the separately priced
+eight-state whole-row predecessor reader are retained. Any native
+consequence continues to depend on (2), equivalently (SI.5), and the
+original source and service assumptions. In particular the existing
+conditional interval $`23+r\le H_{\min}^{\,9,W+3}\le24+r`$
+is unchanged. No complete original native acquisition/service bridge
+is established here. These are ordinary symbolic conditional proofs;
+there is no Lean or kernel verification, executed search,
+physical-resource, general neural-network, empirical-learning,
+worldwide-priority or programme-completion claim.
+
+## 追加锚（临界十九等号剩余结构；本行以下为增补区）
+
+## 11. Exact critical twenty from the remaining actual-history equality cases
+
+**Convention 11.1 (original model and conditional interface scope).**
+Fix one complete graph of Sections 1–2 and Convention 7.1, with
+$n=8$, $k=4$, correctness and actual termination on every Boolean
+input, and both original caps $t_P(\theta)\le8$ and
+$J_P(\theta)\le W$ on every same run. Its sole changing configuration
+is its current state. Every installed running state counts, including
+unused and certified-only states. Adaptive coordinate orders, multiple
+histories, sharing across counts or depths, repeated queries, paid
+certified traffic and syntactic cycles remain permitted.
+
+The conclusions below are ordinary symbolic deductions conditional on
+the displayed SI interfaces already used in Sections 2, 7 and 10.
+In particular we reuse actual live freshness, one support per fixed
+cell and host, equal-support unequal-hit exclusion, properly nested
+live-support exclusion, actual fixed live successors, the local
+singleton-support diagonal argument, and the exact same-graph pool
+identity and localization. No unlisted nested supplier is independently
+authenticated. No abstract count incidence is presumed realizable.
+
+Retain the cells $\mathsf a,\mathsf b,\mathsf c,\mathsf d$ of (16)
+and $\mathsf P,\mathsf R,\mathsf M,\mathsf N,\mathsf U,\mathsf V_6$
+of (40), together with the axis cells $Z_j,O_j$. Section 10 supplies
+the following previously proved actual-history facts:
+
+- A shared $Z_3,\mathsf R$ host forces
+  $e_{\mathsf N}\ge1$ (Lemma 10.2, the R1 fork).
+- A shared $\mathsf a,\mathsf c$ host, when
+  $\mathsf b,\mathsf d$ each have one support, forces
+  $e_6\ge2$ (Lemma 10.3, the R2 propagation).
+- A nineteen-state graph cannot have cut list $(0,1,7,8)$
+  (Theorem 10.4, R3).
+- Every remaining nineteen-state graph has cut list
+  $(0,1,2,7,8)$ and $\ell+r\ge1$
+  (Corollary 10.5, R4).
+
+These facts retain their complete proofs above and their original
+conditional suppliers. The two new lemmas below concern actual
+support families; singleton hosts are sufficient for their premises
+because $1\le a_p\le b_p$.
+
+**Lemma 11.2 (L1: the inner singleton-support obstruction).**
+A state cannot host both $\mathsf a=(1,3)$ and
+$\mathsf c=(3,1)$ if each of $\mathsf a,\mathsf M=(2,2)$ and
+$\mathsf d=(3,2)$ has one exposed support.
+
+**Proof.**
+The adjacent singleton-support cells $\mathsf a,\mathsf M$ on
+depth four have the same support $S$, of size four. Indeed, take an
+actual history at their common parent $\mathsf P=(1,2)$; its zero
+and one children are live and have equal supports, and the singleton
+hypotheses identify those supports with the two unique ones.
+
+Suppose $q$ hosts actual $\mathsf a,\mathsf c$ histories with
+supports $S,T$. The supports both have size four. Equal-support
+unequal-hit exclusion gives $T\ne S$. Put $x=i(q)$. Freshness at
+both occurrences gives $x\notin S\cup T$. The actual zero child of
+the $\mathsf c$ occurrence is a live $\mathsf d$ occurrence with
+support $T\cup\{x\}$. Independently take an actual history at
+$\mathsf M$. Its live one child is also at $\mathsf d$, and its
+support contains $S$.
+
+Let $D_*$ be the unique size-five support at $\mathsf d$. These two
+actual children imply
+$S\subseteq D_*$ and $D_*=T\cup\{x\}$.
+In particular $x\in D_*\setminus S$. Since $|S|=4$ and $|D_*|=5$,
+it follows that $D_*=S\cup\{x\}$. But $x\notin T$ and $|T|=4$,
+so $T=D_*\setminus\{x\}=S$, a contradiction.
+
+The two $\mathsf d$ children may be realized on different completing
+inputs. Both are live children at their installed fixed successors;
+no certified successor or common completion is required. $\square$
+
+**Lemma 11.3 (L2: a host outside two exhausted families).**
+If $\mathsf a,\mathsf M,\mathsf b=(1,4)$ and
+$\mathsf N=(2,3)$ each have one exposed support, there is an actual
+live $\mathsf d$ host outside
+$F_{\mathsf b}\cup F_{Z_4}$.
+
+**Proof.**
+The axis cell $Z_4$ has its unique support. The consecutive
+singleton-support diagonal segment $Z_4,\mathsf a,\mathsf M$ has a
+common size-four support $S$. This follows by taking actual histories
+at the common parents $Z_3$ and $\mathsf P$ and using their two
+live children. Likewise the adjacent singleton-support cells
+$\mathsf b,\mathsf N$ have a common size-five support $T$; an
+actual parent at $\mathsf a$ identifies them.
+
+Take an actual history at $\mathsf M$, whose support is $S$.
+Its live zero child at $\mathsf N$ has support $T$, so
+$S\subsetneq T$. Its live one child at $\mathsf d$ has that same
+support $T$, since the two children of this particular query expose
+the same new coordinate. Let $q_*$ be this actual one successor.
+
+If $q_*\in F_{\mathsf b}$, the singleton-support premise at
+$\mathsf b$ gives a $\mathsf b$ occurrence at $q_*$ with support
+$T$. Its hit count is one, whereas the displayed $\mathsf d$
+occurrence has three hits. Equal-support unequal-hit exclusion
+forbids this. If $q_*\in F_{Z_4}$, that occurrence has support $S$,
+properly contained in $T$, contradicting nested-support exclusion.
+Thus the specific actual child $q_*$ lies outside the stated union.
+
+This supplies one installed host on the original graph. It allocates
+no independent residual graph or free state. $\square$
+
+**Theorem 11.4 (exclusion of every twelve-state interior).**
+No original nineteen-state graph can realize the thirteen cells in
+(52) on the twelve interior states of Proposition 10.6.
+
+**Proof.**
+Assume such a graph exists. By Theorem 9.1, Corollary 9.2 and
+Theorem 10.4, its sole long pool is $B=(2,7)$, and
+$D_B=E_B+1$. Work throughout on that one installed graph. Write
+$E=E_B$, $D=D_B$, and define the nonnegative integer excesses
+and their sums by
+
+$$
+\begin{gathered}
+a_0=e_{\mathsf a},\quad b_0=e_{\mathsf b},\quad
+c_0=e_{\mathsf c},\quad d_0=e_{\mathsf d},\quad
+\mu=e_{\mathsf M},\quad \nu=e_{\mathsf N},\\
+t=e_3,\quad f=e_6,\quad w=\mu+\nu,\qquad
+\ell=a_0+b_0,\quad \varrho=c_0+d_0,\\
+E=\ell+\varrho+t+f+w,\qquad D=E+1.
+\end{gathered}
+\tag{55}
+$$
+
+Here $\varrho$ is the endpoint-excess sum denoted by $r$ in (20);
+it is unrelated to the number of native mandated latches. The four
+internal depths are noncommon-support. Since axis excesses vanish,
+this gives
+
+$$
+t\ge1,\quad f\ge1,\quad
+a_0+c_0+\mu\ge1,\quad b_0+d_0+\nu\ge1,\quad E\ge4.
+\tag{56}
+$$
+
+Corollary 10.5 also gives $\ell+\varrho\ge1$.
+
+Let $A$ count shared states having an axis endpoint and let
+$N_{\rm sh}$ count shared states without one. Lemma 7.2 shows that
+a state hosts at most two distinct count cells, so
+
+$$
+D=A+N_{\rm sh}.
+\tag{57}
+$$
+
+Only $Z_3,Z_4,O_3$ can be axis endpoints inside this pool, and
+each has one host. Therefore $A\le3$. If $A=3$, all three axes
+participate in distinct shared states, with exactly one axis
+incidence at each state. In particular the $Z_3$ host cannot
+share with $O_3$: that would use two of the three available axis
+incidences at one state. Its only possible partners are then
+$\mathsf R$ or $\mathsf c$, by the full partner table in
+Convention 10.1. The excluded axis $O_2$ lies at the cut, outside
+the pool, and localization excludes cross-pool sharing.
+
+Let $X,Y,Z$ be the respective numbers of non-axis shared states
+of types $\mathsf a\mathsf c,\mathsf b\mathsf c,
+\mathsf b\mathsf d$. These are the complete non-axis possibilities,
+so
+
+$$
+\begin{gathered}
+N_{\rm sh}=X+Y+Z,\\
+X\le b_{\mathsf a},\quad
+Y+Z\le b_{\mathsf b},\quad
+X+Y\le b_{\mathsf c},\quad Z\le b_{\mathsf d},\\
+N_{\rm sh}\le2+\ell,\qquad
+N_{\rm sh}\le2+\varrho.
+\end{gathered}
+\tag{58}
+$$
+
+Whenever either final bound is an equality, every host on that
+endpoint side is used by a non-axis shared state. None of those
+hosts can also share with an axis cell, since it would host three
+distinct cells. This is a count of distinct installed states, not
+an addition of independently optimized witnesses.
+
+The actual-successor table in Convention 10.1 supplies the following
+implications on this graph. Every $\mathsf a\mathsf c$ host has its
+zero successor at a $\mathsf b\mathsf d$ host. A shared
+$Z_3,\mathsf R$ host has zero successor shared by $Z_4,\mathsf M$
+and one successor shared by $\mathsf a,\mathsf c$. A shared
+$Z_3,\mathsf c$ host has zero successor shared by $Z_4,\mathsf d$.
+All children in these implications are live. Each is realized
+separately by extending its actual parent history with the specified
+fresh reply. No injectivity of the successor maps is assumed.
+
+Put $s=\min(\ell,\varrho)$ and $H=\max(\ell,\varrho)$.
+Equations (55), (57) and (58) imply
+
+$$
+E+1\le A+2+s,\qquad
+H+t+f+w\le A+1\le4.
+\tag{59}
+$$
+
+Thus $H\le2$. The already established
+$\ell+\varrho\ge1$ excludes $H=0$. There are exactly the following
+two possible positive values.
+
+*Case 1: $H=2$.*
+The second inequality in (59), with $t,f\ge1$, forces
+
+$$
+A=3,\qquad t=f=1,\qquad \mu=\nu=0.
+\tag{60}
+$$
+
+In particular $\mathsf M,\mathsf N$ have one host each, and
+(55), (57) give
+$E=\ell+\varrho+2$ and $N_{\rm sh}=\ell+\varrho$.
+Lemma 10.2 excludes a shared $Z_3,\mathsf R$ host because
+$\nu=0$. Since $A=3$, the $Z_3$ host must therefore share with
+$\mathsf c$. Its actual zero successor shares $Z_4,\mathsf d$.
+
+These are two distinct axis shared states: coincidence would host
+more than two cells. They use one $\mathsf c$ host and one
+$\mathsf d$ host, neither of which can be a non-axis shared state.
+Counting all these upper-endpoint hosts on the same graph gives
+
+$$
+N_{\rm sh}+2\le b_{\mathsf c}+b_{\mathsf d}=2+\varrho.
+\tag{61}
+$$
+
+Together with $N_{\rm sh}=\ell+\varrho$, this forces $\ell=0$.
+Consequently $\varrho=2$ and $N_{\rm sh}=2$.
+
+The two lower-endpoint hosts, one at each of $\mathsf a,\mathsf b$,
+are both exhausted by non-axis sharing. The $\mathsf a$ host must
+be of type $\mathsf a\mathsf c$, and its zero successor is of
+type $\mathsf b\mathsf d$. These states are distinct by the
+two-cell limit. There are only two non-axis states in all, so
+
+$$
+X=Z=1,\qquad Y=0.
+\tag{62}
+$$
+
+The non-axis $\mathsf a\mathsf c$ host and the axis
+$Z_3,\mathsf c$ host require two distinct $\mathsf c$ hosts.
+The non-axis $\mathsf b\mathsf d$ host and the axis
+$Z_4,\mathsf d$ host likewise require two distinct
+$\mathsf d$ hosts. Their total available capacity is
+$2+\varrho=4$, so each cell has exactly two. In particular
+
+$$
+F_{\mathsf d}\subseteq F_{\mathsf b}\cup F_{Z_4}.
+\tag{63}
+$$
+
+But $\ell=0$ and $\mu=\nu=0$ make
+$\mathsf a,\mathsf b,\mathsf M,\mathsf N$ singleton-host,
+hence singleton-support, cells. Lemma 11.3 supplies an actual
+$\mathsf d$ host outside the union in (63), a contradiction.
+This excludes every $H=2$ possibility, including either orientation
+of its larger endpoint excess and the possibility
+$\ell=\varrho=2$.
+
+*Case 2: $H=1$.*
+Equation (59) implies $A\ge2$, so $A$ is two or three.
+
+*Case 2a: $A=2$.*
+Equation (59) forces $t=f=1$ and $w=0$.
+Then $E=\ell+\varrho+2\ge4$ and
+$0\le\ell,\varrho\le1$, so
+
+$$
+\ell=\varrho=1,\qquad E=4,\qquad N_{\rm sh}=3.
+\tag{64}
+$$
+
+Both endpoint sides have exactly three hosts, all in non-axis
+sharing by (58). Because $\mu=\nu=0$, (56) shows that the
+depth-four and depth-five excesses $a_0+c_0$ and $b_0+d_0$
+are each positive. Their sum is $\ell+\varrho=2$, so each is
+one. Endpoint saturation now gives
+
+$$
+b_{\mathsf a}=X,\quad b_{\mathsf b}=Y+Z,\quad
+b_{\mathsf c}=X+Y,\quad b_{\mathsf d}=Z,
+$$
+
+and hence
+
+$$
+2X+Y=3,\qquad Y+2Z=3,\qquad X,Z\ge1.
+\tag{65}
+$$
+
+The nonnegative integer solutions of these equations must have
+$X=Z=1$ and $Y=1$: the first gives $X\le1$ and the second
+gives $Z\le1$, after which both determine $Y$.
+Thus $\mathsf a$ and $\mathsf d$ have one host, as does
+$\mathsf M$. An $\mathsf a\mathsf c$ host exists, contrary to
+Lemma 11.2. No $A=2$ possibility survives.
+
+*Case 2b: $A=3$ and $\ell+\varrho=1$.*
+Here $s=0$, so $N_{\rm sh}\le2$.
+From $E+1=3+N_{\rm sh}$ and $E\ge4$ it follows that
+
+$$
+E=4,\qquad N_{\rm sh}=2,\qquad t+f+w=3.
+\tag{66}
+$$
+
+The sum of the depth-four and depth-five excesses is
+$\ell+\varrho+w=1+w$ and is at least two by (56).
+Together with $t,f\ge1$, this forces $w=1$, $t=f=1$.
+Each of those two layer excesses is exactly one.
+
+First suppose $\ell=1,\varrho=0$. The two upper hosts,
+one at each of $\mathsf c,\mathsf d$, are exhausted by the
+two non-axis states. The $Z_3$ host cannot partner $\mathsf c$,
+so it partners $\mathsf R$. Lemma 10.2 forces $\nu\ge1$;
+as $w=1$, this means $\nu=1,\mu=0$.
+The depth-five excess equation
+$b_0+d_0+\nu=1$, with $d_0=0$, gives $b_0=0$.
+Thus $\mathsf b,\mathsf d$ have one support each.
+The one successor of the $Z_3,\mathsf R$ host is an actual
+$\mathsf a\mathsf c$ host, so Lemma 10.3 forces $f\ge2$,
+contrary to $f=1$.
+
+Now suppose $\ell=0,\varrho=1$. The two lower hosts,
+one at each of $\mathsf a,\mathsf b$, are exhausted by
+non-axis sharing. The first must be an $\mathsf a\mathsf c$
+host, whose zero successor is a $\mathsf b\mathsf d$ host.
+Thus $X=Z=1,Y=0$. If $\nu=0$, then $\mu=1$.
+The depth-five excess equation gives $d_0=1,c_0=0$.
+Lemma 10.2 forbids the $Z_3,\mathsf R$ option, while the
+$Z_3,\mathsf c$ option would require an additional
+$\mathsf c$ host although its sole host is already the
+non-axis $\mathsf a\mathsf c$ state. Both possible partners
+are impossible. Therefore $\nu=1,\mu=0$.
+The depth-four excess equation now forces $c_0=1,d_0=0$.
+The cells $\mathsf a,\mathsf M,\mathsf d$ have one host,
+and an $\mathsf a\mathsf c$ host exists. Lemma 11.2 again
+gives a contradiction. This excludes both orientations in Case 2b.
+
+*Case 2c: $A=3$ and $\ell=\varrho=1$.*
+Now $N_{\rm sh}\le3$ and
+$E=N_{\rm sh}+2\ge4$. Thus $E$ is four or five.
+
+If $E=4$, (55) forces $t=f=1,w=0$, and
+$N_{\rm sh}=2$. Since $\nu=0$, Lemma 10.2 excludes
+$Z_3,\mathsf R$. As $A=3$, the axis host at $Z_3$
+must share with $\mathsf c$, and its zero successor shares
+$Z_4,\mathsf d$. These two distinct axis states, in addition
+to the two non-axis states, require four distinct upper-endpoint
+hosts. But $b_{\mathsf c}+b_{\mathsf d}=2+\varrho=3$.
+This contradiction excludes $E=4$.
+
+If $E=5$, then $N_{\rm sh}=3$, exhausting all three lower
+and all three upper hosts. The $Z_3$ host therefore cannot
+partner $\mathsf c$ and must partner $\mathsf R$.
+Lemma 10.2 gives $\nu\ge1$. Since
+$t+f+w=3$ and $t,f\ge1$, we obtain
+
+$$
+t=f=1,\qquad \mu=0,\qquad \nu=1.
+\tag{67}
+$$
+
+Endpoint saturation yields
+
+$$
+X=1+a_0,\quad Z=1+d_0,\quad
+X+Y=1+c_0,\quad Y+Z=1+b_0.
+$$
+
+With $a_0+b_0=c_0+d_0=1$, these imply
+
+$$
+a_0+d_0+Y=1.
+\tag{68}
+$$
+
+All three summands are nonnegative integers. If $Y=1$, then
+$a_0=d_0=0$ and $b_0=c_0=1$.
+An $\mathsf a\mathsf c$ host exists, while
+$\mathsf a,\mathsf M,\mathsf d$ have one host;
+Lemma 11.2 excludes it.
+If $a_0=1$, then $Y=d_0=b_0=0$ and $c_0=1$.
+The cells $\mathsf b,\mathsf d$ have one support and
+$X=2$ ensures an $\mathsf a\mathsf c$ host.
+Lemma 10.3 gives $f\ge2$, contradicting (67).
+If $d_0=1$, then $Y=a_0=c_0=0$ and $b_0=1$.
+Equation (67) gives $\mu=0$, so
+$a_0+c_0+\mu=0$, contrary to the noncommon depth-four
+requirement in (56). These are all possibilities in (68).
+Thus $E=5$ is impossible as well.
+
+The nonnegative integer partition is exhaustive: $H=0$ was excluded
+by R4, $H\ge3$ by (59), $H=2$ by Case 1, and $H=1$ by
+Cases 2a–2c, which cover every allowed $A,\ell,\varrho,E$.
+Every contradiction concerns actual histories or distinct installed
+hosts of the alleged original graph. Consequently the thirteen-cell
+interior cannot have twelve states. $\square$
+
+**Corollary 11.5 (the unrestricted critical exact minimum at both caps).**
+Conditional on the displayed SI interfaces, for every choice of the
+original distinct positive positions $s_1<\cdots<s_8$,
+
+$$
+m_{\min}(8,4;\ t\le8,\ J\le W)=20.
+\tag{69}
+$$
+
+Here $m$ counts running states; including the two distinct Boolean
+terminals the corresponding installed total is twenty-two.
+
+**Proof, lower bound.**
+Theorem 9.1 gives $m\ge19$ in the full original graph class.
+If $m=19$, Theorem 10.4 excludes the first equality cut list,
+and Proposition 10.6 identifies the remaining cut list with precisely
+the twelve-state interior excluded by Theorem 11.4.
+Thus $m=19$ is impossible. Since $m$ is an integer, every competitor
+has $m\ge20$.
+
+**Proof, credited complete attaining graph.**
+Reuse exactly the twenty-state ordered grid of Proposition 5.1.
+For completeness its entire fixed graph is given by
+
+$$
+\begin{gathered}
+Q=\{q_{h,z}:0\le h\le3,\ 0\le z\le4\},\qquad
+q_{\rm start}=q_{0,0},\qquad i(q_{h,z})=h+z+1,\\
+\delta(q_{h,z},0)=
+\begin{cases}
+\mathsf0,&z=4,\\
+q_{h,z+1},&z<4,
+\end{cases}
+\qquad
+\delta(q_{h,z},1)=
+\begin{cases}
+\mathsf1,&h=3,\\
+q_{h+1,z},&h<3.
+\end{cases}
+\end{gathered}
+\tag{70}
+$$
+
+There are no other running states, and $\mathsf0,\mathsf1$ are
+distinct terminals. Immediately before $q_{h,z}$, induction gives
+that exactly the first $h+z$ coordinates have been queried, with
+$h$ ones and $z$ zeros. A one edge at $h=3$ certifies four
+ones; a zero edge at $z=4$ certifies five zeros, leaving at most
+three ones. Thus both terminal outputs are correct.
+Every other edge preserves the invariant and increases the exposed
+depth by one. The sole live cell at depth seven is $(3,4)$,
+whose next query terminates. Hence every input terminates correctly
+within eight queries. Each query is at a distinct coordinate,
+so that same run pays at most the original $W$ letters.
+
+The actual input $11100000$ reaches $q_{3,4}$ after its first
+seven replies, queries coordinate eight, and returns zero.
+It pays exactly eight queries and $W$ letters together.
+All twenty installed running states count. This is the credited
+upper, not a new construction. It attains the new lower bound
+without restricting any competing graph to an ordered or read-once
+subclass. $\square$
+
+**Corollary 11.6 (conditional exact native installed-control consumer).**
+Under precisely (2), equivalently (SI.5), and its original source and
+service assumptions, at the fixed native caps nine queries and
+$W+3$ letters the critical preparation minimum is
+
+$$
+H_{\min}^{\,9,W+3}=24+r.
+\tag{71}
+$$
+
+The original eight-state whole-row reader remains separately priced.
+This statement is a consumer of the supplied correspondence, not an
+independently authenticated original-source or service bridge.
+
+**Proof, lower bound.**
+The supplied projection of any complete original native preparer is
+a complete correct Boolean graph at both caps $8,W$, with at most
+$H_P-4-r$ running states. Corollary 11.5 gives
+$H_P-4-r\ge20$, so $H_P\ge24+r$.
+This is the only Boolean-to-native lower transfer used.
+
+**Proof, credited full-fiber attaining lift.**
+Apply the supplied constructive direction of (SI.5) to exactly
+(70). Each coordinate-$i$ row queries the fixed original literal
+$a_i=LLL L^{s_i}R$, costing $c_i=s_i+4$ letters. Its four
+separately installed successors in the order alpha, beta, branch,
+absent are
+
+$$
+(\delta_0,\delta_0,\delta_1,\delta_0),
+\tag{72}
+$$
+
+with the two Boolean terminals replaced by the two original-entry
+latches $\widehat e_0,\widehat e_1$. Add the unchanged original
+profile front:
+
+| Profile state | Fixed literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_0$ | $RLR$ | $\widehat e_1$ | $q_{0,0}$ | $T_0$ | $\widehat e_0$ |
+| $T_0$ | $RRR$ | $\widehat e_1$ | $\widehat e_0$ | $\widehat e_0$ | $\widehat e_0$ |
+
+Start at $D_0$ and install all $r$ further mandated distinct
+latches, including unused ones. There are twenty selected running
+states, two profile states and $2+r$ latches, hence $24+r$
+preparation states. Boolean terminals are replaced, not charged a
+second time.
+
+The full-fiber meaning is that of the supplied lift. The domain
+remains every finite nonempty ordered alpha/beta tree in
+
+$$
+\mathcal U_*=\{u:R_{\{L,R\}^3}(\rho u)=R_*\},
+$$
+
+of unbounded size, depth and interior shape. The original
+homomorphism satisfies $\rho(\alpha)=\beta$,
+$\rho(\beta)=\langle\beta,\alpha\rangle$ and acts homomorphically
+on pairs. The current row retains exactly the equality classes
+$\{LLL,LRL\}=a$, $\{LLR\}=b_1$, $\{LRR\}=b_2$,
+$\{RLL,RRL\}=c$, $\{RLR\}=b_3$, $\{RRR\}=b_4$,
+with different classes disequal.
+
+All eleven original profiles and the literal pointwise code (SI.2)
+remain fixed: zero on $\Pi_1\cup\Pi_2$, one on
+$\Pi_3\cup\Pi_4$, selected threshold four on $Z_{b_3}$,
+and zero on the other zero profiles. Preparation produces the
+original $\widehat e_\sigma$, and code-only handoff enters
+literally the original complete $e_\sigma$ on that same source.
+All original finite addresses and all four replies keep their
+meaning and permission.
+
+For every $Z_{b_3}$ source, its allowed arbitrary branch image
+determines one fixed Boolean indicator vector. By the supplied
+all-address occurrence identity, the entire selected run is (70)
+on that vector, including alpha, beta and absent using their
+separate zero edges. It is correct and costs at most eight queries
+and $W$ letters. The profile front adds one paid call and three
+letters on this route. The other ten profiles terminate through
+the two displayed profile rows within two calls and six letters,
+also within the fixed native caps. This reuses the supplier on
+every allowed noncomb image and absent selected node; it is not a
+cube-only upper. The supplied cube realizes $11100000$ by an
+actual original source, so the two native maxima are attained
+together on one source.
+
+The independent original reader retains three running states and
+five whole-row halts, hence eight separately priced states, with
+at most two fresh calls and six fresh letters. It returns the
+entire predecessor row: ordered exterior, every reached occurrence,
+canonical equality partition, repetitions, disequalities and
+strict-prefix guards. It is not included in the preparation count.
+
+Source binding, the fixed register, acquired same-version row,
+authentication, permission, same-source export, access isolation,
+code-only handoff, lawful complete entry and stationary continuity
+remain the separate supplied and priced services. All installed
+running, output, latch and unused states, and every actual constant,
+repeated and post-certificate invocation, retain their original
+charges. The lift adds no free source copy, record, selector,
+history, counter, clock, phase, computed address or work register.
+These are conditional installed-control statements; no acquisition,
+physical time, memory, permission or realization theorem is inferred.
+$\square$
+
+**Attribution and current boundary 11.7.**
+The new numerical conclusion (69) explicitly replaces the unresolved
+critical interval (54) and the twelve-state residual question in
+Section 10.7. Those preceding necessary statements and lower bounds
+remain valid, but the critical minimum at the two fixed original
+caps is now exactly twenty, and its supplied conditional native
+consumer is exactly $24+r$. The former native interval
+$23+r\le H_{\min}^{\,9,W+3}\le24+r$ is correspondingly resolved
+only through (SI.5) and its original assumptions.
+
+The actual-history obstructions L1 and L2 and the symbolic equality
+partition used in Theorem 11.4 are the additional deductions supplied
+by the critical-twenty mathematics projection. R1–R4 are the earlier
+Section 10 results, retained with their complete proofs and credits.
+Theorems 4.1 and 9.1 own the earlier eighteen and nineteen lower
+bounds; Lemmas 7.2–7.3 and Section 8 own the sharing classification,
+axis fork and endpoint estimates; Corollary 9.2 owns the two equality
+cut lists. Proposition 5.1 and the credited full-domain grid own
+the unchanged attaining upper.
+
+The support-incidence source [SI][SI19] owns the original graph model,
+the actual-history and support interfaces, local singleton diagonal
+argument, same-graph incidence and pool identities, localization,
+short-gap compensation and right-cut separation. Its exact count
+relaxation, classical all-history both-conflict capacity, star and
+cyclic sufficient classes and complete above-grid inclusion families
+remain credited at their separate scopes. None is imposed as a
+necessary subclass or rebranded as this critical equality exclusion.
+The nested PCA, PE and WTF results retain their stated conditional
+interfaces. In particular (SI.5) owns the native correspondence;
+this section supplies no independent authentication of its complete
+original-source or operational service bridge.
+
+The proof partitions the simultaneous integer constraints of one
+alleged installed graph. Endpoint saturation consumes actual hosts
+only once; the two-cell limit separates axis and non-axis uses.
+Every successor implication is an actual live extension at its fixed
+installed successor. The singleton arguments use full support
+families, and do not replace multiple histories by representatives.
+A certified visit to a state live elsewhere does not make that state
+new or free. No normalization to an ordered, read-once, acyclic,
+both-conflict, star or cyclic graph has been used.
+
+For the original all-size range $\min(k,n-k+1)\ge4$, the unrestricted
+alternatives remain unresolved: prove $m\ge G=k(n-k+1)$ for every
+complete correct original graph at both same-run caps $n,W$, or
+construct one complete correct strict-subgrid graph satisfying both
+caps on every input. Equivalently, the general collective obligation
+remains
+
+$$
+\sum_{B\in\mathcal L_*}(D_B-E_B)
+\le E_{\rm cut}+u+\sum_{B\in\mathcal A_*}(E_B-D_B),
+\tag{73}
+$$
+
+where $\mathcal L_*$ consists of consecutive common-support gaps
+of span at least five whose endpoint is greater than
+$\max(k,n-k+1)$, and $\mathcal A_*$ is its complement among
+consecutive gaps. Separate compensation in every long pool is stronger
+than this collective target. The critical case has been settled;
+no all-size collective theorem, general strict-subgrid construction,
+unrestricted representative injection or normalization follows.
+The unrestricted-budget minimum and fixed-specification attainment
+questions remain separate.
+
+No external unrestricted lower-bound theorem or new literature
+authentication is used. The source comparisons keep their hypotheses:
+Bryant's ordered graphs require increasing variable indices;
+Wegener's BP1 normalization uses realizability of every graph path;
+acyclic semantic read-once suppliers have their own repetition
+conditions; weak one-way conflicts differ from every ordered
+off-diagonal intersection in the classical Bollobás supplier.
+None provides a normalization of this arbitrary paid graph.
+These are ordinary symbolic conditional proofs, with no Lean or
+kernel verification, executed mathematics or exhaustive search,
+empirical learning, general neural-network, physical-resource,
+worldwide-priority or programme-completion claim. Installed control,
+table and address representation, retained export alphabet,
+workspace, acquisition, elapsed time and physical memory remain
+distinct quantities. No quantum, calibration, stochastic timing,
+analytic, conditional joint-interior/saturation or expanded-storage
+contract supplies an additional numerical or operational transfer.
+
+## 追加锚（临界二十精确结论；本行以下为增补区）
