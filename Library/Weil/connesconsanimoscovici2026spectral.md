@@ -9222,3 +9222,103 @@ This is a source-specific application of the existing projection and
 convexity results, without a generic novelty or Lean-proof claim.
 
 The [fixed-trial source, exact packet and reproduction entry](https://github.com/the-omega-institute/trureturing-experiments/tree/fbfefa527018d4388fd9c2cb4dd5c0d2130f7043/docs/reports/weil-c27) preserve this conditional stopping result; the common-trial supplier is reused without replay.
+
+
+### The complete unweighted row and the finite joint good-block metric
+
+The archived $1263$-by-$18$ action $P^{-1}C$ serves the old lift,
+not arbitrary new rows. A different query supplies the missing
+unweighted row and two inverse actions on the SAME positive principal
+block of the rho32-v2 lower target. The accepted original target,
+residual generators, source, lift and positive-pivot evidence are
+reused; no old target supplier or old lift solve is replayed.
+
+The original exact384-bit row0 source $w$ has support
+$2049\le m\le32768$. Put its coefficients, without $W$, $Mw$ or
+rescaling, into the accepted residual-generator Cauchy product. This
+gives every retained coefficient of
+
+$$
+r_n=\sum_{m=2049}^{32768}w_mR_{mn},\qquad0\le n\le1280.
+$$
+
+The scalar $\kappa$ enters only through the reused product.
+Because $w$ itself is finitely supported, this $r=w^*R$ is complete
+for the original source; it requires no omitted $w$-source tail.
+The source and exact-lift formulas identify $rV$ with the archived
+unweighted projection. The overlap check tests the new implementation
+and does not establish source equality from overlap.
+
+Use the saved full finite row $b_J$ and restrict both rows to the
+accepted1263 positive coordinates. With
+
+$$
+B_J=\begin{pmatrix}r_g\\b_{J,g}\end{pmatrix},\qquad
+PX_J=B_J^*,\qquad G_{JJ}=B_JX_J,
+$$
+
+one new validated two-right-side solve encloses $X_J$ and $G_{JJ}$.
+The two off-diagonal evaluations enclose the same real cross entry;
+their average remains enclosing. For every real $e\in\mathbb R^2$,
+
+$$
+e^*G_{JJ}e=(e^*B_J)P^{-1}(B_J^*e)\ge0.
+$$
+
+This retains the common-realization cross energy, rather than
+combining separately optimized marginal bounds. $P$ is the certified
+principal block of the saved lower target, not a new certification of
+the whole actual center.
+
+| Metric entry | Outward enclosure |
+|---|---|
+| $r_gP^{-1}r_g^*$ | $[4787.103066499741053563,\ 4787.103066499741053564]$ |
+| $r_gP^{-1}b_{J,g}^*$ | $[663.225066385094668430,\ 663.225066385094668431]$ |
+| $b_{J,g}P^{-1}b_{J,g}^*$ | $[92.167958630498818052,\ 92.167958630498818053]$ |
+
+The row packet is144087bytes, SHA256
+`566cb68530f31dd6e26af076055bb368e2b2e82fdcc0857abb7b2b475a036f48`;
+its assembly takes<8.573037seconds. The joint metric packet is303335bytes,
+SHA256
+`9ba53b70a0f1cad25b9e92894eff93f1340dc31d1a9bf945c560b6dc6940d072`.
+It includes all1263-by2 inverse-action intervals. Its preparation and
+target reconstruction take<14.334747seconds, the one two-right-side
+solve takes<118.573775seconds, and total assembly takes<133.114112seconds,
+excluding serialization.
+
+The working precision is fixed1024bits and export precision640bits;
+the Cauchy product uses the fixed accepted order512. There is one
+new unweighted product and one new solve with two new right sides.
+The target reconstruction supplies that new solve's input; it is not
+an old scientific-producer replay. No general inverse, source,
+direction, parameter, precision or cutoff scan is performed.
+
+The complete row remains $b=b_J+b_{\rm far}$. Writing
+$f_g=b_{{\rm far},g}$, the complete metric from the earlier joint
+border is
+
+$$
+G_2=G_{JJ}+
+\begin{pmatrix}
+0&r_gP^{-1}f_g^*\\
+f_gP^{-1}r_g^*&
+b_{J,g}P^{-1}f_g^*+f_gP^{-1}b_{J,g}^*+f_gP^{-1}f_g^*
+\end{pmatrix}.
+$$
+
+Thus $G_{JJ,11}$ already concerns the complete original $r$, whereas
+the other entries do not yet supply the complete $b$ metric.
+The exported1263-by2 inverse actions can be reused for the two mixed
+far terms; the remaining far energy and the reduced-core far row
+still require a sound common-source estimate. No arbitrary finite
+$b_J$ energy can replace the complete $b$ energy, and the correction
+matrix is not asserted to have either Loewner sign.
+
+All inherited actual form, residual-map/domain, source/lift and
+comparison premises remain. These are conditional numerical
+applications of the existing Cauchy-product, interval-solve and
+Schur mechanisms, without a generic-method novelty or Lean-proof
+claim. The actual-center/full-border/cofinal positivity, Robin and
+RH questions remain open.
+
+The [two new consumers, complete retained row, finite joint metric and inverse actions](https://github.com/the-omega-institute/trureturing-experiments/tree/f9610d3a5a732abaf68e733e50a7e34e66148ced/docs/reports/weil-c27) preserve the source and target bindings and reproduction entry.
