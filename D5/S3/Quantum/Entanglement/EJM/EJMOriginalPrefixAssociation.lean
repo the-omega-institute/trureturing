@@ -1,10 +1,10 @@
 /- GID: D5/S3/Quantum/Entanglement/EJM/EJMOriginalPrefixAssociation
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMOriginalPrefixAssociation
-   mirror-E: none(waiver:original-prefix-cache-association)
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
    anchors: []
    utility: none
-   digest: Arbitrary actual base-four prefixes retain all original local associations and leave future coordinates unknown. -/
+   digest: Induction on every original base-four prefix keeps all future coordinates unknown and preserves all thirty-two local cache associations. -/
 
 /- Prepared source, uncompiled. This new module preserves the already accepted
 EJMOriginalReplayAssembly source and avoids invalidating its 69 anchor imports.

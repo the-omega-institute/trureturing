@@ -1,3 +1,11 @@
+/- GID: D5/S0/Certificates/PreparedFiniteAdaptiveFrontierResponse
+   generality: G
+   mirror-B: D5/B/S0/Certificates/PreparedFiniteAdaptiveFrontierResponse
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.accepted_original_root
+   digest: For arbitrary coordinate, outcome, symmetry and cache types, an accepted adaptive replay with a proved response at every marked valid context turns every compatible bad event into one of strictly smaller natural rank. -/
+
 /- Prepared, uncompiled source. This extends the receipt theorem and reuses
 the same executable Adaptive.check. No complete EJM acceptance asserted. -/
 import D5.S0.Certificates.FiniteAdaptiveSemanticFrontierReplay

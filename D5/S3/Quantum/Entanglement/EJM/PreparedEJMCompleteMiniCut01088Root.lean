@@ -1,41 +1,49 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteMiniCut01088Root
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteMiniCut01088Root
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteMiniCut01088Root.actual_prefix_score_lower_bound
+   digest: The complete finite elimination program consumes all original factor bounds, each scoped bucket inequality, every literal factor partition and the terminal minimum. -/
+
 /- Prepared actual complete-cut source, uncompiled.
 Original cut depth=13, code=17540, index=42672; Fin20/Fin4,
 all 32 original factors, F1/F2 and scale 6987435 remain unchanged.
 Saved producer cells are untrusted until every explicit kernel goal passes. -/
 import D5.S0.Certificates.FiniteMinPlusElimination
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket00
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket01
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket02
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket03
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket04
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket05
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket06
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket07
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket08
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket09
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket10
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket11
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket12
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket13
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Bucket14
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group00
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group01
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group02
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group03
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group04
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group05
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group06
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group07
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group08
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group09
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group10
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group11
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group12
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group13
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group14
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group15
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group16
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteMiniCut01088Group17
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket00
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket01
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket02
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket03
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket04
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket05
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket06
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket07
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket08
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket09
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket10
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket11
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket12
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket13
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Bucket14
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group00
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group01
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group02
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group03
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group04
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group05
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group06
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group07
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group08
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group09
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group10
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group11
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group12
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group13
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group14
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group15
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group16
+import D5.S3.Quantum.Entanglement.EJM.Semantic.Cut01088.PreparedEJMCompleteMiniCut01088Group17
 import Mathlib.Tactic.Ring
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

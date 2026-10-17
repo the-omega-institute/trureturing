@@ -9,30 +9,30 @@
 /- Untrusted exact certificate input. Source generation and native binding do
 not assert Lean acceptance. Actual bound and symmetry predicates must be
 checked at every reached partial context of the complete original domain. -/
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock00
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock01
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock02
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock03
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock04
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock05
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock06
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock07
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock08
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock09
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock10
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock11
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock12
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock13
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock14
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock15
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock16
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock17
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock18
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock19
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock20
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock21
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock22
-import D5.S3.Quantum.Entanglement.EJM.EJMOriginalDAGBlock23
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock00
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock01
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock02
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock03
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock04
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock05
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock06
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock07
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock08
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock09
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock10
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock11
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock12
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock13
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock14
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock15
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock16
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock17
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock18
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock19
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock20
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock21
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock22
+import D5.S3.Quantum.Entanglement.EJM.Encoding.EJMOriginalDAGBlock23
 import D5.S3.Quantum.Entanglement.EJM.EJMGlobalScoreSymmetry
 import D5.S0.Certificates.FiniteSymmetryDAGNode
 set_option autoImplicit false

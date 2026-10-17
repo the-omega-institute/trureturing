@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierTypes
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierTypes
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.accepted_original_root
+   digest: Original cut rows, exact lookup, executable metadata and canonical responses have separate roles. -/
+
 /- Prepared source only; no Lean invocation or acceptance claim.
 The data are untrusted until the explicit kernel goals in the generated
 consumer modules pass. No native subtree size is a theorem premise. -/
@@ -42,16 +50,6 @@ def CutTable.lookup : CutTable → Nat → Nat → Option CutRow
         left.lookup depth code
       else right.lookup depth code
 
-def CutTable.count : CutTable → Nat
-  | .empty => 0
-  | .leaf _ => 1
-  | .branch _ _ left right => left.count + right.count
-
-def CutTable.domainSum : CutTable → Nat
-  | .empty => 0
-  | .leaf cut => cut.domain
-  | .branch _ _ left right => left.domainSum + right.domainSum
-
 /-- Count the literal original nodes, with all four edges and their occurrence
 multiplicity. It is independent of score/cache acceptance, so shared shape may
 share this count, but never an actual-context replay receipt. -/
@@ -83,11 +81,6 @@ def CanonicalResponse (cut : CutRow) : Prop :=
   ∀ e : Event (Fin 20) (Fin 4), Compatible (prefixPartial cut.depth cut.code) e →
     score F1 F2 e < scale →
       ∃ e', score F1 F2 e' < scale ∧ FiniteLexSymmetry.rank e' < FiniteLexSymmetry.rank e
-
-theorem canonical_valid (depth code : Nat) (within : depth ≤ 20) :
-    EJMOriginalCachedGlobalReplay.Valid (21 - depth)
-      (prefixCache depth code) (prefixPartial depth code) := by
-  exact PreparedEJMAdaptiveResponseBridge.canonical_valid depth code within
 
 theorem response_of_raw (cut : CutRow) (within : cut.depth ≤ 20)
     (hindex : cut.index < EJMOriginalGlobalDAGData.Size)

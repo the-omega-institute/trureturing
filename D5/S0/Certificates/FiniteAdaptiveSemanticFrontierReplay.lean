@@ -1,10 +1,10 @@
 /- GID: D5/S0/Certificates/FiniteAdaptiveSemanticFrontierReplay
    generality: G
    mirror-B: D5/B/S0/Certificates/FiniteAdaptiveSemanticFrontierReplay
-   mirror-E: none(waiver:adaptive-semantic-frontier-replay)
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/TransientEJMOriginalAdaptiveFrontierBridge.original_adaptive_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/EJMOriginalGlobalDAGData.root
-   digest: Mixed-depth semantic frontiers and exact suffixes preserve every original context and strict global rank descent. -/
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.accepted_original_root
+   digest: A fuel-indexed adaptive replay checks actual bound, symmetry and split nodes, with a separately supplied semantic frontier. -/
 
 import D5.S0.Certificates.FiniteCachedSymmetryDAGReplay
 

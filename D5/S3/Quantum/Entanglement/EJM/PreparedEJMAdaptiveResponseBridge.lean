@@ -1,8 +1,16 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMAdaptiveResponseBridge
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMAdaptiveResponseBridge
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: none
+   digest: Canonical prefix validity preserves all original cache associations. -/
+
 /- Prepared source only, uncompiled. The same adaptive checker is reused.
 Canonical raw suffix acceptance provides rank descent for an actual partial;
 no equality of arbitrary associated caches is asserted or needed. -/
 import D5.S0.Certificates.PreparedFiniteAdaptiveFrontierResponse
-import D5.S3.Quantum.Entanglement.EJM.TransientEJMOriginalAdaptiveFrontierBridge
+import D5.S3.Quantum.Entanglement.EJM.Frontier.EJMOriginalAdaptiveFrontierBridge
 import D5.S3.Quantum.Entanglement.EJM.EJMOriginalPrefixAssociation
 
 set_option autoImplicit false
@@ -45,26 +53,6 @@ theorem accepted_suffix_bad_event_response (depth code : Nat)
     (prefixCache depth code) (prefixPartial depth code) accepted
     (canonical_valid depth code within) e hp hbad
 
-/-- Complete original adaptive acceptance and a proved response at every
-marked valid context retain the original complete score conclusion. -/
-theorem original_adaptive_score_lower_bound
-    (frontier : Nat → Fin EJMOriginalGlobalDAGData.Size → Cache →
-      Partial (Fin 20) (Fin 4) → Bool)
-    (responses : ∀ fuel index cache p, Valid fuel cache p →
-      frontier fuel index cache p = true → ∀ e,
-      Compatible p e → score F1 F2 e < scale →
-        ∃ e', score F1 F2 e' < scale ∧ FiniteLexSymmetry.rank e' < FiniteLexSymmetry.rank e)
-    (accepted : FiniteAdaptiveSemanticFrontierReplay.check EJMOriginalGlobalDAGData.nodes
-      step lower EJMGlobalScoreSymmetry.dominates scale frontier 21
-      EJMOriginalGlobalDAGData.root initial (fun _ => none) = true) :
-    ∀ e : Event (Fin 20) (Fin 4), scale ≤ score F1 F2 e := by
-  exact PreparedFiniteAdaptiveFrontierResponse.checked_global_lower_bound
-    (score F1 F2) FiniteLexSymmetry.rank EJMGlobalScoreSymmetry.act
-    EJMOriginalGlobalDAGData.nodes step lower EJMGlobalScoreSymmetry.dominates scale
-    Valid valid_lower_le_score step_valid EJMGlobalScoreSymmetry.actual_score_invariant
-    EJMGlobalScoreSymmetry.dominates_rank_lt frontier responses
-    21 EJMOriginalGlobalDAGData.root initial initial_valid accepted
 
 #print axioms accepted_suffix_bad_event_response
-#print axioms original_adaptive_score_lower_bound
 end D5.S3.Quantum.Entanglement.EJM.PreparedEJMAdaptiveResponseBridge

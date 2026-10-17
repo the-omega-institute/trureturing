@@ -1,3 +1,11 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierSelector
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierSelector
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; instance=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.accepted_original_root
+   digest: The selector decodes a valid actual partial assignment, looks up its full depth and code, and checks the node index and retained metadata. -/
+
 /- Prepared, uncompiled complete-table selector.
 The executable selector reads the actual prefix and verifies the complete
 stored cut metadata. Its soundness requires the concrete all-cut Responses
@@ -5,7 +13,7 @@ theorem, which is generated from separate actual original suffix receipts.
 It never equates associated caches, reuses a shape's acceptance, or infers a
 local score bound from raw symmetry acceptance. -/
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierTable
-import D5.S3.Quantum.Entanglement.EJM.TransientEJMOriginalPrefixDecoder
+import D5.S3.Quantum.Entanglement.EJM.Frontier.EJMOriginalPrefixDecoder
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

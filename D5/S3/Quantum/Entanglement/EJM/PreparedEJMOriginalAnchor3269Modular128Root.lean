@@ -1,7 +1,15 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMOriginalAnchor3269Modular128Root
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMOriginalAnchor3269Modular128Root
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound; premises=D5/S3/Quantum/Entanglement/EJM/PreparedEJMOriginalAnchor3269Modular128Root.accepted_actual_context
+   digest: The independently checked parts assemble one exact original cut context. -/
+
 /- Generated actual-context certificate source; prepared/uncompiled.
 No native count, minimum or producer assertion is a Lean premise. -/
 import D5.S3.Quantum.Entanglement.EJM.EJMOriginalReplayAssembly
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMOriginalAnchor3269Modular128Part000095
+import D5.S3.Quantum.Entanglement.EJM.Replay.Anchor3269.Parts.PreparedEJMOriginalAnchor3269Modular128Part000095
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option maxHeartbeats 100000000

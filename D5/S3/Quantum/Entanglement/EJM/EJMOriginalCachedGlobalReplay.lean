@@ -1,8 +1,3 @@
-/- Prepared final original-domain consumer, not yet kernel checked.
-The complete original DAG replaces the older candidate by independent name.
-No acceptance proof is asserted here: every reached suffix receipt and the
-complete prefix still have to be checked before the unconditional result.
-The actual initial/step/lower path and original F1/F2/scale are retained. -/
 /- GID: D5/S3/Quantum/Entanglement/EJM/EJMOriginalCachedGlobalReplay
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/EJM/EJMOriginalCachedGlobalReplay
@@ -11,6 +6,11 @@ The actual initial/step/lower path and original F1/F2/scale are retained. -/
    utility: none
    digest: Fuel-prefix validity restricts transitions to actual unknown coordinates and preserves every original global branch and score margin. -/
 
+/- Prepared final original-domain consumer, not yet kernel checked.
+The complete original DAG replaces the older candidate by independent name.
+No acceptance proof is asserted here: every reached suffix receipt and the
+complete prefix still have to be checked before the unconditional result.
+The actual initial/step/lower path and original F1/F2/scale are retained. -/
 /- Prepared source, not compiled. Concrete local mirror and transition
 acceptance is imported only from complete kernel receipts. The single remaining
 globalAccepted proposition is the complete actual original-DAG replay, with the

@@ -1,6 +1,14 @@
+/- GID: D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot
+   generality: I
+   mirror-B: D5/B/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot
+   mirror-E: none(waiver:exact-original-context-mathematical-source)
+   anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/EJM/EJMOriginalPhysicalNonlocality.result; premises=D5/S3/Quantum/Entanglement/EJM/PreparedEJMCompleteFrontierRoot.original_score_lower_bound
+   digest: Actual adaptive acceptance at the empty original root combines with a proved response at every selected valid context. -/
+
 /- Generated prepared source. Not compiled or kernel accepted.
 All original coordinates, four values, F1/F2, 32 blocks and scale are retained. -/
-import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierCover550
+import D5.S3.Quantum.Entanglement.EJM.Frontier.Cover.Part011.PreparedEJMCompleteFrontierCover1101
 import D5.S3.Quantum.Entanglement.EJM.PreparedEJMCompleteFrontierResponses
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
