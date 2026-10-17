@@ -1,0 +1,11 @@
+**Theorem 74.3 (one-point certificate excluding the depth-three role).**
+Let Q>5 be prime. If there are rational numbers a,b satisfying
+
+ b^2=a(a+5Q)(a-15Q),     v_Q(a)=v_Q(b)=0,
+
+then there are no j>=1 and prime P distinct from Q such that
+
+ L_(3^j)^2+3=P^2 Q^3.
+
+Proof. The displayed rational point reduces to a finite nonsingular point of Y^2=X^3, because both coordinates are nonzero modulo Q. Hence it belongs to G_0(Q) but not G_1(Q). Theorem 74.2 contradicts the proposed golden factorization. This conclusion concerns only the depth-three role in this factorization; it asserts neither non-WSS status for Q in other settings nor existence of such certificates for infinitely many primes.
+

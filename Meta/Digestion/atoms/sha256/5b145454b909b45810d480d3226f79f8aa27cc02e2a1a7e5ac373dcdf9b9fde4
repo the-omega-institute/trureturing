@@ -1,0 +1,25 @@
+**Corollary 78.2 (a supplied integral certificate for two odd depths).** Let integers $m,n$ give the squarefree integer
+
+$$D=4m^4-2m^3n+11m^2n^2+2mn^3+4n^4=qr,$$
+
+where $q,r>5$ are distinct primes, $q,r\equiv1\pmod6$, $D\equiv19\pmod{120}$, and $(q/r)=-1$. Put
+
+$$u=m^2+mn-n^2,\quad v=m^2-4mn-n^2,\quad r_0=m^2+n^2.$$
+
+If $B_N=DC^2$ is an actual golden ternary block, then
+
+$$\boxed{C=1,\qquad u^2=1,\qquad v^2=L_N^2,\qquad r_0=F_N.}$$
+
+In particular, $|u|>1$ excludes $D$ as the squarefree kernel of every such actual block. Any member of this family excludes the two-odd-prime all-WSS profiles with $C>1$.
+
+**Proof.** The classical two-conic parametrization already used in §75 gives
+
+$$D=3u^2+v^2=5r_0^2-u^2,\qquad 4u^2+v^2=5r_0^2.$$
+
+Thus $U=(-15u^2,75uvr_0)$ is integral on $E_D$. The values $u,v,r_0$ are nonzero: vanishing of $u$ or $v$ requires a rational root of a quadratic with nonsquare discriminant, and $r_0=0$ forces $D=0$. Squarefreeness of $D$ forces $\gcd(m,n)=1$. If $p\mid D$ also divides $u$, then $p\mid v$ and $v-u=-5mn$ gives $p\mid mn$. The second identity gives $p\mid r_0$, so $p\mid m,n$, a contradiction. Divisibility of $v$ or $r_0$ likewise forces divisibility of $u$. Therefore $\gcd(D,uvr_0)=1$, and $U$ is nonsingular at both odd-depth primes.
+
+Theorem 78.1 forces $C=1$ and $U=kS$ with $k\ne0$. Negative $X(U)$ makes $k$ odd. Since $0<3u^2<D$, $\gcd(u,D)=1$ and $3\nmid D$, both $z(U)=-3u^2/D$ and $z(S)=-3/D$ have height $\log D$. The same uniform height constants force $|k|<3$, hence $k=\pm1$. Comparing $X$ gives $u^2=1$, and the two conic identities give the remaining equalities.
+
+This application supplies an explicit conditional restriction for composite squareclass. The Selmer formulas and quartic parametrization are classical inputs. No infinitude of the prime-factorization family, previously surviving numerical pair, independence from every earlier support condition, or conclusion in the mutual-residue case is asserted.
+
+
