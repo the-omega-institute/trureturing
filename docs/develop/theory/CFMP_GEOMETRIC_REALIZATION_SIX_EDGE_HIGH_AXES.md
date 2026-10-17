@@ -1625,3 +1625,190 @@ source faces, but the two partners may still be the same actual owner.
 If v exceeds both c and d, either family remains possible. These
 statements do not exclude those remaining regions, establish a complete
 quotient there, or assert full six-edge flat exclusion.
+
+## 390. A stronger charge for two transverse P labels
+
+Retain the six-edge source-normal-form scalar conditions
+
+    c,d,v>1, m>1+c+d, v<=m-2, z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1, z<u+m+1.                              (390.1)
+
+The labels M,V,C,D,Z,U are distinct actual labels; equal numerical
+coshes at different labels are allowed. Every owner has its fixed
+four-distinct paired frame (R,A,B,O,A,B), with edge order
+(12,13,14,34,24,23). Put P={M,Z,U} and low={V,C,D}.
+
+For a genuine owner with axes r,o and pair a,b, use its original slots
+and the paired formulas
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0,
+    K=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b),
+    S=beta_a+beta_b=2*atan(K*sqrt(L/J)),
+    tan(theta_r/2)=sqrt((r-1)/(r+1))*sqrt(J/L).     (390.2)
+
+Every genuine angle is in (0,pi). P expense counts each original
+transverse occurrence twice and each axial occurrence once.
+
+**Theorem 390.1.** Every genuine owner whose two transverse labels both
+belong to P spends more than 4*pi/3 on P. Such an owner has either
+four or five original P slots. The four-slot case needs no upper gap;
+the five-slot case uses the two gaps exactly through
+
+    each high value < the sum of the other two high values + 1.
+
+**Corollary 390.2.** Also assume the unique flat source sigma has
+frame (M,C,D,V,C,D), the genuine source tau has frame
+(Z,M,C,D,M,C), and complete actual angle sums give genuine P capacity
+5*pi. Then at most two genuine owners have both transverse labels in
+P. The scalar theorem itself assumes no normal-circle topology.
+
+The one-sided gaps in a full quotient are supplied only by the
+complete-star maximum-gap theorem of published Sections 318–321 under
+all its original hypotheses. This refinement does not assert either
+gap from the remaining scalar conditions alone.
+
+## 391. Source bounds and the full lower range of m
+
+Every low value is at most m-2: this is explicit for v, while
+c<m-d-1<m-2 and d<m-c-1<m-2. Every high value is at least m.
+The source product and v<=m-2 imply
+
+    (m-1)*(m-3)>4,
+
+because c+d>2. Since m>3, this gives
+
+    m>2+sqrt(5)>4.                                  (391.1)
+
+For any transverse high pair p,q, both at least m,
+
+    K>=sqrt(m^2-1)/m,                               (391.2)
+
+because sqrt(x^2-1)/x increases for x>1, and K is the p,q-weighted
+mean of this function. Also 0<K<1.
+
+## 392. Four P slots: both axes low
+
+If the axes r,o are both low and the pair p,q is high, then
+
+    L>=4*m^2-(m-3)^2=3*(m+3)*(m-1),
+    J<=(m-1)^2.
+
+Thus, using J>0 and (391.2),
+
+    K^2*L/J >= 3*(m+1)*(m+3)/m^2 > 3.
+
+It follows that S>2*atan(sqrt(3))=2*pi/3. The four original
+P slots have expense 2*S>4*pi/3. No gap is used here.
+
+## 393. Five P slots: one axis high, one low
+
+Write the high axis as r, the low axis as t, and the high pair as
+p,q. These are exactly the three distinct high labels, so (390.1)
+gives r<p+q+1. The exact branch requirements are:
+
+- r=m: the inequality follows from z,u>=m>1, with no gap;
+- r=z: it is exactly z<u+m+1;
+- r=u: it is exactly u<z+m+1.
+
+Thus no branch uses the opposite one-sided gap. We have t<=m-2
+and p,q,r>=m.
+
+The high axial angle is acute. Indeed, after exchanging p,q if needed,
+p<=q, and
+
+    r*t < (p+q+1)*(m-2)
+        <=(p+q+1)*(p-2)
+        < p^2+q^2.
+
+The cosine numerator
+
+    N_r=2*p*q+r*(p^2+q^2)-(r^2-1)*t
+       =2*p*q+r*(p^2+q^2-r*t)+t
+
+is positive. Hence theta:=theta_r<pi/2.
+
+Put lambda=K*sqrt((r-1)/(r+1)). Then
+
+    0<lambda<1, lambda>=(m-1)/m,
+    E:=theta+2*S=theta+4*atan(lambda*cot(theta/2)). (393.1)
+
+For fixed lambda>1/2 this last expression strictly decreases with
+theta in (0,pi), since its derivative is
+
+    1-2*lambda/[sin(theta/2)^2+lambda^2*cos(theta/2)^2]<0.
+
+It strictly increases with lambda.
+
+If m>=5, lambda>=4/5 and theta<pi/2, so
+
+    E>pi/2+4*atan(4/5)>4*pi/3.                      (393.2)
+
+For the last strict inequality,
+
+    tan(2*atan(4/5))=40/9>2+sqrt(3)=tan(5*pi/12),
+
+and both compared angles lie in (0,pi/2). Therefore
+4*atan(4/5)>5*pi/6.
+
+It remains to check 2+sqrt(5)<m<=5 without assuming m>=5.
+The following exact comparison supplies the required sharper angle:
+
+    cos(theta)>=2/(m+1)>=1/3.                       (393.3)
+
+To prove it, raise t to m-2, then r to p+q+1. Along this path the
+strict genuine interval is maintained: L remains positive because
+
+    L>=(p+q)*(p+q-m+3)>0,
+
+and J increases. Formula (390.2) shows theta increases with either t
+or r while L,J remain positive. Its cosine therefore decreases.
+At the final endpoint let N,D be the axial cosine numerator and
+positive denominator, where D=r^2+p^2+q^2+2*r*p*q-1. Set
+A=p-m>=0 and B=q-m>=0. Direct expansion gives
+
+    (m+1)*N-2*D
+      =(m+1)*(A^3+B^3)+(m-3)*(A^2*B+A*B^2)
+       +(3*m^2+2*m-1)*(A^2+B^2)
+       +(2*m^2-8*m-2)*A*B
+       +(2*m^3-2*m)*(A+B) >= 0.                    (393.4)
+
+Every coefficient is positive for m>2+sqrt(5); the constant is zero.
+This proves (393.3), including all numerical high-label ties.
+
+Now lambda>3/4 and theta<=theta0:=acos(1/3). The monotonicities in
+(393.1), together with cot(theta0/2)=sqrt(2), give
+
+    E>theta0+4*atan(3*sqrt(2)/4)>theta0+pi>4*pi/3,
+
+because 3*sqrt(2)/4>1 and theta0>pi/3. This completes the five-slot
+case, and hence the scalar theorem over the entire source range.
+
+## 394. At most two double-P-pair owners
+
+Tau has exactly three P slots: its Z axis and two transverse M slots.
+The published mixed high-axis/transverse estimate in Section 376 gives
+
+    theta_Z(tau)+2*beta_M(tau)>pi.
+
+Tau's pair is MC, so it is distinct from every owner counted by this
+refinement. If k actual genuine owners have both transverse labels in
+P, their disjoint original P slots and tau's slots give
+
+    5*pi >= P_expense(tau)+sum_{i=1}^k P_expense(i)
+         > pi+k*(4*pi/3).
+
+Thus k<3 and k<=2. Repeated copies of one role count as separate actual
+owners; no bound on their multiplicity was assumed. Self-gluings do
+not identify original angle slots or change this sum.
+
+The only five-P-slot owners and the four-P-slot owners with both
+transverse labels in P together have at most two members. The original
+P-degree contributions remain five or four respectively, so repeated
+role vectors cannot evade this count.
+
+This does not cover the other four-P-slot class, whose two axes and
+exactly one transverse label belong to P. It also does not eliminate
+the cheap single-P axial families of Section 378 or prove full six-edge
+flat exclusion. No general degree-weighted infeasibility claim is made.
