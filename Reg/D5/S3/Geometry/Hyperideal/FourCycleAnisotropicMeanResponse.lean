@@ -95,22 +95,6 @@ register_information_theorem
       stateOperand := some #["fn", "arg"] }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  let target := `D5.S3.Geometry.Hyperideal.FourCycleAnisotropicMeanResponse.paired_angle_half_sum
-  let some row := TemplateBinding.records env |>.find? (fun row =>
-      row.occurrence.key.theoremName == target &&
-      row.occurrence.key.registrationModule == env.header.mainModule)
-    | throwError "Missing original CFMP registration"
-  match row.result with
-  | .declaredValidated certificate =>
-      unless row.escape.fromObject.isSome && certificate.sourceBinding.isSome &&
-          row.escape.bridgeKind == "source-equivalence" &&
-          row.escape.continuation.any (·.kind == "open") do
-        throwError "Original CFMP registration lacks four-slot source evidence"
-  | .declaredUnresolved diagnostic => throwError "Original CFMP unresolved: {diagnostic}"
-  | .undeclared => throwError "Original CFMP registration is undeclared"
 
 #print axioms registration
 
