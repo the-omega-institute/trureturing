@@ -587,3 +587,187 @@ For an arbitrary original channel use the canonical Choi square-root Kraus decom
 There are genuine higher-rank quarter-attainers on the scalar cone. Start with a classified balanced qubit frame and original marker overlap η=3/4. Use the scalar B markers from (19)–(20) and change A's scalar overlap to (3/4)/τ. For small λ≥0 this is a permissible overlap of normalized marker vectors. The product Gram K is then exactly the original equality Gram, so the entire original reference-sensitive channel error remains 1/4. This explains the scalar zero modes without discarding them. It does not make all points in the larger witness-minimum manifold full diamond attainers.
 
 The proof is local at every section-82 equality member and includes its boundary disphenoids, because the spectral gap, balance regularity, old normal coercivity, and positive coefficient bound hold there. It establishes no lower bound of 1/4 for arbitrary distant product channels. The unrestricted global quarter-optimum problem remains open.
+
+## 90. An exact qutrit product separating global Gram certificates from diamond error
+
+**Proposition 90.1 (exact global certificate limitations; repo-derived).** There are original CPTP channels A,B:C⁸→C⁴, both calibrated on the four fixed fibres and both of Kraus rank three, for which the forward record Grams G,H satisfy Λ₂(T−G⊙H)=(1+√7)/4<1 and ‖G⊙H−T‖₁=(1+√7)/2<2, while the original unhalved arbitrary-reference diamond error is δ(A,B)=(1+2√2)/7>1/2. Here T has diagonal blocks I₂ and off-diagonal blocks J₂/2, and Λ₂ denotes the sum of the two largest eigenvalues. Thus these two proposed unrestricted global Gram inequalities cannot furnish a universal quarter diamond lower bound.
+
+This proposition concerns the limitations of these specific certificates. It does not give a product with diamond error below 1/4. The [local quarter-minimum theorem](#89-an-unrestricted-local-quarter-minimum-from-analytic-descent-at-the-scalar-cone) has its stated neighborhood hypothesis, and the unrestricted global quarter-optimum problem remains open.
+
+### 90.1. Original physical channels and the complete product Gram
+
+**Proof.** Let e₀,e₁,e₂ be the standard basis of C³ and put u=(e₁+e₂)/√2. Define four local orthonormal two-frames by
+
+\[
+ \begin{array}{ll}
+ b_{10}=(e_0+e_1)/\sqrt2,&b_{11}=(e_0-e_1)/\sqrt2,\\
+ b_{20}=(e_0+iu)/\sqrt2,&b_{21}=(e_0-iu)/\sqrt2,\\
+ b_{30}=u,&b_{31}=e_0,\\
+ b_{40}=(e_0+e_2)/\sqrt2,&b_{41}=(e_0-e_2)/\sqrt2.
+ \end{array}                                               \tag{1}
+\]
+
+Set a_fi=conjugate(b_fi). On the eight-dimensional local input with fixed basis |f,i〉, define Stinespring isometries
+
+\[
+ V_A|f,i\rangle=|f\rangle\otimes a_{fi},\qquad
+ V_B|f,i\rangle=|f\rangle\otimes b_{fi}.                    \tag{2}
+\]
+
+Each within-fibre frame in (1) is orthonormal, and different fibres in (2) have orthogonal output labels. Hence V_A*V_A=V_B*V_B=I₈. Tracing the C³ environments gives original CPTP channels A,B:C⁸→C⁴. The environment records span C³. The associated three Kraus operators are linearly independent, because a linear relation between them annihilates every record; thus each physical channel has Kraus rank exactly three. Equivalently the local frame operator has eigenvalues 4,3,1.
+
+Let H be the forward Gram of the b records, G=conjugate(H), and K=G⊙H. All 2×2 diagonal blocks of G,H are I₂, and K_fi,gj=|〈b_fi,b_gj〉|². In the ordered basis (10,11,20,21,30,31,40,41), the entire product Gram is
+
+\[
+ K=\frac18
+ \begin{bmatrix}
+ 8&0&3&3&2&4&2&2\\
+ 0&8&3&3&2&4&2&2\\
+ 3&3&8&0&4&4&3&3\\
+ 3&3&0&8&4&4&3&3\\
+ 2&2&4&4&8&0&2&2\\
+ 4&4&4&4&0&8&4&4\\
+ 2&2&3&3&2&4&8&0\\
+ 2&2&3&3&2&4&0&8
+ \end{bmatrix}.                                           \tag{3}
+\]
+
+The target T has diagonal blocks I₂ and off-diagonal blocks J₂/2. Therefore its full difference from this product Gram is
+
+\[
+ L:=T-K=\frac18
+ \begin{bmatrix}
+ 0&0&1&1&2&0&2&2\\
+ 0&0&1&1&2&0&2&2\\
+ 1&1&0&0&0&0&1&1\\
+ 1&1&0&0&0&0&1&1\\
+ 2&2&0&0&0&0&2&2\\
+ 0&0&0&0&0&0&0&0\\
+ 2&2&1&1&2&0&0&0\\
+ 2&2&1&1&2&0&0&0
+ \end{bmatrix}.                                           \tag{4}
+\]
+
+No plus/minus or cross-fibre block is omitted.
+
+### 90.2. Complete spectrum and the two global certificate limitations
+
+In the logical coefficient space define orthonormal vectors
+c₁=(|1,0〉+|1,1〉)/√2, c₂=(|2,0〉+|2,1〉)/√2, c₃=|3,0〉, c₄=(|4,0〉+|4,1〉)/√2. The orthogonal complement of their span is in ker L. In this four-dimensional span, L is the matrix
+
+\[
+ M=\begin{bmatrix}
+ 0&1/4&\sqrt2/4&1/2\\
+ 1/4&0&0&1/4\\
+ \sqrt2/4&0&0&\sqrt2/4\\
+ 1/2&1/4&\sqrt2/4&0
+ \end{bmatrix}.                                           \tag{5}
+\]
+
+The vector t=(c₁−c₄)/√2 has eigenvalue −1/2, and z=(−√2c₂+c₃)/√3 has eigenvalue zero. On the remaining orthonormal pair r=(c₁+c₄)/√2 and w=(c₂+√2c₃)/√3 the matrix is
+
+\[
+ \begin{bmatrix}1/2&\sqrt6/4\\\sqrt6/4&0\end{bmatrix},
+ \qquad \lambda_\pm=\frac{1\pm\sqrt7}{4}.                \tag{6}
+\]
+
+Normalized eigenvectors for λ_± are (λ_±r+(√6/4)w)/√(λ_±²+3/8). Together with t, z, the three minus-bit vectors of fibres 1,2,4, and |3,1〉, this is a complete orthonormal eigenbasis. In particular
+
+\[
+ \det(sI_8-L)
+   =\frac{s^5(2s+1)(8s^2-4s-3)}{16},\qquad
+ \operatorname{spec}(L)=
+ \left\{\frac{1+\sqrt7}{4},\frac{1-\sqrt7}{4},-\frac12,0^{\times5}\right\}.
+                                                               \tag{7}
+\]
+
+There is exactly one positive eigenvalue. Consequently
+
+\[
+ F(A,B):=\frac14\Lambda_2(L)=\frac{1+\sqrt7}{16}<\frac14,
+ \qquad
+ \|G\odot H-T\|_1=\frac{1+\sqrt7}{2}<2.                 \tag{8}
+\]
+
+The inequalities follow from √7<3. Since Tr L=0, the normalized maximally entangled logical/reference input has unhalved error ‖L‖₁/8=(1+√7)/16. It is therefore below 1/4 for this pair. This input-specific value is not the diamond error.
+
+### 90.3. A normalized coherent input gives error one half
+
+Let the fixed logical input encoding be |f,i〉↦|f,i〉_A⊗|f,i〉_B, and let the target output encoding be |f〉↦|ff〉. The original product and target are calibrated into that output code. For a coefficient matrix C define the logical map
+
+\[
+ \mathcal M_C(|f,i\rangle\langle g,j|)
+      =C_{fi,gj}|f\rangle\langle g|.                      \tag{9}
+\]
+
+Because the product Gram (3) is real symmetric, the original encoded channel difference is exactly −M_L followed by the output encoding. The usual forward-Gram transpose therefore causes no convention change here.
+
+The normalized no-reference input
+
+\[
+ |\psi_0\rangle=\frac12
+ (|1,0\rangle+|1,1\rangle+|4,0\rangle+|4,1\rangle)
+                                                               \tag{10}
+\]
+
+has output difference −(|1〉〈4|+|4〉〈1|)/4, and hence unhalved trace norm 1/2. The output encoding preserves this norm. Thus δ(A,B)≥1/2 already, despite both inequalities in (8).
+
+### 90.4. Exact arbitrary-reference diamond error
+
+The full norm can also be computed, without restricting the reference. Set
+
+\[
+ \mu=\frac1{2(2\sqrt2-1)},\qquad
+ v=c_1+\frac1{\sqrt2}c_2+c_3+c_4,\qquad
+ Z=2\mu vv^*-L.                                         \tag{11}
+\]
+
+We claim Z≥±L. The inequality Z+L≥0 is immediate. For the other one it is enough to check μvv*−L≥0. This matrix vanishes on ker L, equals 1/2 on t, and in the r,w coordinates of section 90.2 is
+
+\[
+ \begin{bmatrix}
+ 2\mu-1/2&\sqrt3\mu-\sqrt6/4\\
+ \sqrt3\mu-\sqrt6/4&3\mu/2
+ \end{bmatrix}.                                         \tag{12}
+\]
+
+Both diagonal entries are positive and its determinant is zero, using μ=1/[2(2√2−1)]. Hence (12) is positive semidefinite, proving the claim. Since every diagonal fibre block of L is zero,
+
+\[
+ Z_{ff}=2\mu v_fv_f^*\le2\mu I_2;
+ \qquad (\|v_1\|^2,\|v_2\|^2,\|v_3\|^2,\|v_4\|^2)
+          =(1,1/2,1,1).                                 \tag{13}
+\]
+
+For any positive-semidefinite coefficient matrix C, the map M_C is completely positive: its Choi matrix is an isometric embedding of C on {|f,i〉_reference⊗|f〉_output}. Thus Z±L≥0 imply M_Z±M_L are completely positive. Moreover (13) says M_Z*(I)≤2μI₈; explicitly this adjoint effect is the block-diagonal matrix with blocks Z_ffᵀ, which obey the same bound.
+
+For every normalized positive reference/input state ρ, set X=(id⊗M_L)(ρ), Y=(id⊗M_Z)(ρ). Then −Y≤X≤Y and Y≥0. If P₊ and P₋ are the positive and negative spectral projections of X, the order bounds give ‖X‖₁≤Tr((P₊+P₋)Y)≤Tr Y≤2μ. This is a bound on the actual 8→4 map, valid for every reference dimension. To pass from states to the defining diamond-norm optimization, first use the Jordan decomposition of any Hermitian input Q to obtain ‖(id⊗M_L)(Q)‖₁≤2μ‖Q‖₁. For a general input X, apply that bound after adjoining one reference qubit to the Hermitian dilation [[0,X],[X*,0]]/2; its trace norm is ‖X‖₁, and the output dilation has trace norm ‖(id⊗M_L)(X)‖₁. Thus δ(A,B)≤2μ for the full diamond norm.
+
+For a matching lower bound put
+
+\[
+ q=\frac{\sqrt2}{2\sqrt2-1},\qquad
+ p=(q/2,0,1-q,q/2),\qquad
+ |\psi\rangle=\sqrt{p_1}c_1+\sqrt{p_3}c_3+\sqrt{p_4}c_4.
+                                                               \tag{14}
+\]
+
+The numbers p_f are nonnegative and sum to one. Thus |ψ〉 is a normalized logical input with no reference. Its output difference is minus D_p M D_p, where D_p=diag(√p₁,…,√p₄) and M is (5). Direct substitution gives (Mp)_f=μ at every f for which p_f>0. Hence the unit vector (√p_f)_f is an eigenvector of D_p M D_p with eigenvalue μ. Congruence cannot increase the number of positive eigenvalues, so this matrix has exactly one positive eigenvalue, and its trace is zero. Its trace norm is therefore 2μ, attaining the upper bound. We have proved
+
+\[
+ \boxed{\displaystyle
+ \delta(A,B)=2\mu=\frac1{2\sqrt2-1}=\frac{1+2\sqrt2}{7}>\frac12.}
+                                                               \tag{15}
+\]
+
+This exact full-reference value makes the distinction from (8) quantitative.
+
+### 90.5. Scope of the certificate obstruction
+
+**Corollary 90.2.** Neither Λ₂(T−G⊙H)≥1 nor ‖G⊙H−T‖₁≥2 holds for all original product channels, even when both local record matrices consist of four exact orthonormal two-frames. The two assertions remain false when restricted to pairs of Kraus ranks exactly (3,3).
+
+**Proof.** The product Gram in (3) comes from the original isometries (2), and (8) violates both assertions. In particular no relaxation to independently chosen contraction blocks is needed.
+
+The [rank-two-party lower bounds](ARITHMETIC_HOLOGRAPHIC_RT_II.md#81-a-subnormalized-centroid-support-witness-for-original-local-environment-bounds), [rank-two-party equality classification](ARITHMETIC_HOLOGRAPHIC_RT_II.md#82-quarter-error-rigidity-minimal-kraus-product-and-the-complete-rank-two-party-family), and subsequent one-sided, qubit-core, curvature and local results retain their stated hypotheses. Both parties in (2) have rank three, so the example lies outside the rank-two-party hypothesis. Section 89 supplies a lower bound in a neighborhood of the classified rank-two-side equality pairs, whereas (8) disproves an unrestricted global extension of the witness. Moreover the full diamond error (15) exceeds 1/4, so this example does not violate that local diamond lower bound even if tested without reference to its neighborhood hypothesis.
+
+For this pair, the normalized maximally entangled logical/reference input gives (1+√7)/16, while the coherent inputs (10) and (14) give respectively 1/2 and (1+2√2)/7. Thus a global quarter proof must retain sufficient input optimization, or a different full-reference dual bound, to distinguish these values. No conclusion about the existence of a subquarter original product follows from the failure of the two Gram certificates.
