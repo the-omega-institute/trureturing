@@ -4659,3 +4659,92 @@ The proof excludes the entire three-core incidence pattern using the
 actual face pairing and complete links; its applicability relies on the
 previous angle-derived core bounds. Four-core patterns and the external
 low-only region remain, so five-reservoir realization is not proved.
+
+## 235. Precise surviving-pattern target
+
+Retain the exact mixed-flat five-reservoir hypotheses and the proved
+three-core exclusion. Thus the interacting high core K has exactly
+four actual owners. Put P={M,Z,U}, and retain the escape
+ tau=(Z,M,C,D,M,C),
+with distinct M,Z,C,D, m>1+c+d, c,d<m-2, z>1+m+c, and u>m.
+Every K owner is genuine; its faces carrying two distinct P labels
+pair only to other K faces. All original normal edge links are complete
+circles of degree at least six. The total genuine M/Z budget is 3*pi.
+Every owner has a fixed paired frame with distinct transverse labels.
+Repeated axes, self-gluings, and repeated normal-circle visits remain
+allowed. No connectedness of the marked-face graph is assumed.
+
+**Claim.** Tau's two faces {M,Z,C}, incident to its unique Z axis, are
+paired to two faces of one and the same other actual owner.
+
+They cannot pair to each other, because this closes tau's one Z normal
+interval and forces degree(Z)=1. Suppose instead they meet two distinct
+owners rho and eta. Write xi for the fourth K owner. We exclude exactly
+this incidence pattern using actual angle and face-pairing constraints.
+
+## 236. The only exceptional neighboring role
+
+A genuine owner with a face {M,Z,C} has one of three frames, with its
+other axis Q arbitrary:
+ (i)  (Z,M,C,Q,M,C),
+ (ii) (M,Z,C,Q,Z,C),
+ (iii)(C,M,Z,Q,M,Z).
+The public opposite-star argument in Section 210 gives genuine M/Z
+expense greater than pi in (i) and (ii): respectively
+ theta_Z+2*beta_M>pi,  theta_M+2*beta_Z>pi.
+These inequalities depend only on m,z,c, so apply with arbitrary Q.
+They follow from the positive individual response whose two parameters
+sum to more than one, using c<m-2 and z>m+2.
+
+In (iii), if Q is not U, its value q<1+m+z. For Q in {M,Z,C,D}
+this is immediate; for special Q it is its fixed-pair barrier for {M,Z}.
+Writing k=z+m, h=z-m, the exact paired quantities obey
+ L-2*J>k^2-(3*c+1)*k-4*(c+1)+2*h^2>0,
+ K_pair=(sqrt(m^2-1)+sqrt(z^2-1))^2/(m+z)^2>8/9.
+The strict polynomial bound is the one proved in Section 210: at
+z=m+c+1 its right side is 2*(2*m^2-m*c+m-c-1)>0, and its derivative
+in z-(m+c+1)>=0 is 4*m+3*c+5+6*(z-m-c-1)>0.
+Hence beta_M+beta_Z=2*atan(sqrt(K_pair*L/J))>pi/2.
+The four original transverse M/Z slots alone have expense greater than pi.
+
+Thus the only neighboring role not already known to consume more than
+pi of M/Z budget is
+ E=(C,M,Z,U,M,Z).
+Tau itself has M/Z expense greater than pi. If neither rho nor eta has
+role E, the three distinct owners tau,rho,eta exceed the complete M/Z
+budget 3*pi. Therefore at least one, say rho, must have role E.
+
+## 237. The exceptional neighbor forces a short U link
+
+Rho has one U axis and two incident faces {U,M,Z}. Their partners cannot
+be tau, which has no U slot. They cannot pair to each other, since this
+closes rho's unique U normal interval at degree one.
+
+Eta has a face {M,Z,C}. If eta contains U, that U is its other axis
+and is unique: its two transverse labels lie in {M,Z,C}, and its first
+axis is the remaining label. Every U-incident face of eta is then
+marked. In particular, if both rho U faces pair to eta, eta's two U
+faces are exactly those paired faces. The two U intervals close,
+forcing degree(U)=2. Thus avoiding these immediate contradictions
+requires at least one rho face {U,M,Z} to pair to xi.
+
+A face {U,M,Z} in xi forces its transverse pair to consist of two of
+these three high labels, and one axis to carry the third. Every U slot
+in xi then has both incident faces marked, whether U is transverse,
+axial, or also repeats at its other axis. Xi contains at most three U
+slots: at most two transverse and one additional axis, or at most two
+axes when U is not transverse.
+
+Every U slot in K now has both incident faces marked: rho's unique
+axis, eta's possible unique axis, and xi's at most three slots. Tau
+has none. All their interval ends therefore pair inside K. This is a
+nonempty closed subset of the actual U normal circle with at most
+1+1+3=5 original slots. Completeness of the circle forces degree(U)<=5,
+contradicting the standing minimum degree six. No assumption about
+single-high owners outside K is needed: marked interval ends cannot
+exit to them.
+
+The supposed two-distinct-neighbor pattern is impossible. Hence both
+marked tau faces meet the same actual owner, proving the claim. Other
+four-core return patterns and the external low-only boundary remain;
+no five-reservoir exclusion or realization is asserted.
