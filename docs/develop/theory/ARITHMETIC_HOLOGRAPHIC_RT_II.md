@@ -3066,3 +3066,421 @@ All off-diagonal coherences between these two support sectors were handled by a 
 The proof uses standard singular value decomposition, an explicit convex decomposition of a rectangular contraction into isometries, Hilbert--Schmidt projection contraction, the positive-part variational principle, and trace-norm contractivity of pinching; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/) for the matrix and channel background. The new pointwise inequality (3) transfers a common centroid-support witness through the contraction decomposition and, crucially, retains the missing Choi trace in (9)--(10). Section 79 supplies the attaining physical product and its exact arbitrary-reference error. The normalized Choi and Stinespring conventions agree with sections 72 and 74, but no calibration theorem is used here.
 
 The resource d is the dimension of a pure Stinespring environment, or local Kraus rank. A mixed ancilla's purification must be included. Equation (2) is a necessary bound, not a sufficiency statement for arbitrary k,d. At k=4,d=2 the exact value 1/4 is established by the matching construction. The general arbitrary-rank four-fibre optimum remains unresolved; this result does not prove ||G entrywise-multiplied by H-T||_1>=2 when both Gram factors have unrestricted rank.
+
+## 82. Quarter-error rigidity, minimal Kraus product, and the complete rank-two-party family
+
+### 82.1. Original-channel theorem and equality classification
+
+Let F=F_(4,2) be the logical channel from C^4 tensor C^2 to C^4 defined by
+
+    F(|f,i><f,j|)=delta_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  for f!=g.
+
+All diamond norms are unhalved and permit arbitrary references. Use the fixed input and output maximally-correlated encodings J_in and J_out. Let A,B:C^8->C^4 be original CPTP maps, and put
+
+    delta=||(A tensor B)J_in-J_out F||diamond.
+
+**Theorem.** If B has Kraus rank two and delta=1/4, then both original channels are exactly fibre-calibrated: every input |f,i> has output support in |f>. Moreover A has Kraus rank exactly four. The statement is symmetric in A and B.
+
+Consequently the minimum product of local Kraus ranks among all original physical products having error exactly 1/4 is eight. In particular no rank pair (2,2), (2,3), or (3,2) attains quarter error. The known eta=3/4 tetrahedral-marker product has ranks (4,2) and attains the minimum. This does not settle whether products with both ranks at least three can have error below 1/4.
+
+The equality family is also complete within this rank-two-party class. After exchanging the parties if needed, environment isometries and independent simultaneous input-bit swaps in the two local channels put every equality product into a fixed-marker form with overlap 3/4. Its four balanced Bloch axes have a disphenoid Gram, parametrized by x^2+y^2+z^2=1, and exact quarter error is equivalent to x^2,y^2,z^2>=2/7. Sections 82.9--82.12 prove necessity and sufficiency, including the full-reference upper bound. These equivalences use only the stated target-preserving swaps, not arbitrary changes of the input bit bases.
+
+A pure Stinespring environment dimension is meant throughout, and a mixed environment must be purified. Each local Kraus rank is at least two, since a Stinespring isometry C^8->C^4 tensor C^d requires 8<=4d.
+
+### 82.2. Correct-output contractions and an equality-sensitive support witness
+
+Choose Stinespring isometries for the original maps, taking the B environment to be C^2. For each fibre their correct-output blocks are contractions
+
+    A_f:C^2->E_A,   H_f:C^2->C^2,
+    A_f e_i=(<f| tensor I)V_A|f,i>,
+    H_f e_i=(<f| tensor I)V_B|f,i>.
+
+Define coefficient matrices, using the standard Hilbert--Schmidt inner product <Y,Z>=Tr(Y^*Z),
+
+    C_f=A_f H_f^T/sqrt(2),
+    D_f=A_f Z H_f^T/sqrt(2),   Z=diag(1,-1),
+    S=(1/4)sum_f C_f,   p=||S||_F^2,   a=4-4p,
+    t_f=Tr(A_f^* A_f)/2,   epsilon_A=sum_f(1-t_f).
+
+Coefficient matrices identify E_A tensor C^2 isometrically with its tensor-product vectors. Let
+
+    L_S={S X: X is 2-by-2 and Tr X=0},
+    Q=orthogonal projection onto L_S.
+
+For the actual product records x_fi=a_fi tensor h_fi, write their forward Gram as K. After changing each bit basis to |+>,|-> and ordering all plus coordinates first,
+
+    Khat=[[Cgram,X],[X^*,M]],  That=diag(J_4,I_4),
+    Cgram_fg=<C_f,C_g>, M_fg=<D_f,D_g>, X_fg=<C_f,D_g>.
+
+Here T has diagonal blocks I_2 and off-diagonal blocks J_2/2. The entire cross block X is retained.
+
+The pointwise inequality of section 81.2 can retain the A deficit:
+
+    ||(I-Q)D_f||_F^2 <= t_f+p-2 Re<S,C_f>.             (1)
+
+For completeness, take any unitary U replacing H_f, and set
+
+    C_U=A_f U^T/sqrt(2), D_U=A_f Z U^T/sqrt(2),
+    N_U=conjugate(U) Z U^T.
+
+The matrix N_U is traceless Hermitian unitary, D_U=C_U N_U, and ||C_U||_F^2=t_f. Thus
+
+    ||(I-Q)D_U||_F^2 <= ||D_U-S N_U||_F^2
+                     = ||C_U-S||_F^2
+                     = t_f+p-2 Re<S,C_U>.
+
+For H_f=L diag(s_1,s_2)V^*, 0<=s_j<=1, use the explicit unitary decomposition
+
+    U_eta=L diag(eta_1,eta_2)V^*,
+    q_eta=((1+eta_1 s_1)(1+eta_2 s_2))/4,
+    H_f=sum_(eta in {+1,-1}^2) q_eta U_eta.            (2)
+
+It is valid at zero or repeated singular values, after choosing any unitary SVD factors. Squared norm is convex and the overlap term is real-linear, proving (1). Summing gives
+
+    sum_f ||(I-Q)D_f||_F^2 <= a-epsilon_A.             (3)
+
+Let B_0:C^4->E_A tensor C^2 have columns D_f, let V have orthonormal columns spanning ker(QB_0), and set r=dim ker(QB_0), Pi=VV^*. Since dim L_S<=3, r>=1. For s=(1,1,1,1)^T/2 and Phat=diag(ss^*,Pi),
+
+    Tr Phat(Khat-That)
+       =-a+||B_0 V||_F^2-r
+       =-a+||(I-Q)B_0 V||_F^2-r
+       <=-a+||(I-Q)B_0||_F^2-r
+       <=-r-epsilon_A.                               (4)
+
+To apply this to the original maps, use the normalized reference input
+
+    |Omega>=(1/sqrt(8))sum_(f,i)|f,i>_R tensor |f,i>_logical.
+
+On the orthonormal joint reference/output support
+
+    {|f,i>_R tensor |ff>_output},
+
+the correct-output compression is K^T/8 and the target is T/8. The complementary actual block is positive of trace 1-TrK/8. Pinching into these two supports and positive-part duality imply
+
+    delta >= (||K-T||_1+8-TrK)/8
+          = Tr(T-K)_+/4
+          >= (r+epsilon_A)/4.                        (5)
+
+The physical Gram is transposed because K is the forward Gram. Transposition preserves the trace norm. This is a bound on the original leaking maps; no calibration or polar-replacement monotonicity is assumed.
+
+Assume henceforth delta=1/4. Since r>=1 and epsilon_A>=0, every inequality in (3)--(5) that enters (4) must be an equality, r=1, and epsilon_A=0. Thus every t_f=1. Positivity of I_2-A_f^*A_f gives
+
+    A_f^*A_f=I_2 for all f.                           (6)
+
+For each |f,i>, its correct-output component already has norm one. Since the original Stinespring map is isometric, all wrong-output components vanish. Hence the original A channel is fibre-calibrated.
+
+Rank(QB_0)=3, so rank Q=3. If rank S<=1, the space {S X:Tr X=0} has dimension at most two. Therefore
+
+    rank S=2.                                       (7)
+
+Let v be a unit vector spanning ker(QB_0), and write R_0=(I-Q)B_0. Equality in ||R_0 v||^2<=||R_0||_F^2 implies R_0(I-vv^*)=0. Set
+
+    W=B_0 v=R_0 v,   ||W||_F^2=a.
+
+Then the actual residual for fibre f is
+
+    W_f=(I-Q)D_f=conjugate(v_f) W.                    (8)
+
+Here W is again identified with its coefficient matrix. Since W is orthogonal to L_S,
+
+    S^*W=lambda I_2                                 (9)
+
+for some complex lambda: the orthogonal complement of all traceless 2-by-2 matrices is the scalar matrices.
+
+### 82.3. Equality through every positive SVD component
+
+Fix one fibre and its decomposition (2), retaining only positive weights. Equality in the pointwise bound (1) forces equality both in Jensen's inequality and in every positive-weight projection inequality. This can be seen directly by writing the pointwise slack as
+
+    sum_eta q_eta ||(I-Q)D_Ueta-(I-Q)D_f||_F^2
+      +sum_eta q_eta ||Q D_Ueta-S N_Ueta||_F^2.
+
+Both sums are nonnegative, and their sum is zero. Consequently every positive component U satisfies
+
+    (I-Q)D_U=W_f,   QD_U=S N_U,
+    D_U=S N_U+W_f,
+    C_U=S+W_f N_U.                                  (10)
+
+By (6), each such C_U satisfies
+
+    C_U^*C_U=I_2/2.                                 (11)
+
+These are equality identities for every component in the stated SVD decomposition. There is no arbitrary replacement of H_f by a polar unitary.
+
+### 82.4. Every original B correct-output block is unitary
+
+All singular-value patterns in [0,1]^2 are handled as follows.
+
+#### 82.4.1. Both singular values strictly below one
+
+All four weights in (2) are positive, in particular a pair U and -U. Since D_(-U)=-D_U, their common residual in (10) is W_f=0. Equation (10) then gives C_U=S=C_(-U)=-C_U, forcing S=0. This contradicts (7). This also excludes both zero singular values and the cases with just one zero when the other is below one.
+
+#### 82.4.2. Exactly one singular value is one
+
+Suppose the other is strictly below one, including zero. Exactly two weights are positive; denote the two unitaries by U_+,U_-. Their sum and difference both have rank one. Since A_f is injective by (6), C_++C_- and C_+-C_- both have rank one.
+
+Let N_+,N_- be their traceless Hermitian unitaries. Equation (10) yields
+
+    C_+-C_-=W_f(N_+-N_-).
+
+They cannot satisfy N_+=N_-, because C_+-C_- is nonzero. A nonzero traceless Hermitian 2-by-2 matrix has eigenvalues t,-t with t!=0, and is invertible. Therefore W_f has rank one. In particular v_f!=0, and (8) gives rank W=1 and a>0.
+
+They also cannot satisfy N_+=-N_-: otherwise (10) would give C_++C_-=2S, contradicting rank S=2. Thus this fibre has two N matrices neither equal nor opposite.
+
+From (9) and rank W=1, lambda=0. Put P=S^*S and R=W^*W, with rank R=1. For every fibre g and every positive component N in its SVD decomposition, equations (10)--(11) give
+
+    P+|v_g|^2 N R N=I_2/2.                           (12)
+
+Taking traces, using Tr R=a and p=1-a/4, yields |v_g|^2=1/4 for every g. Hence no coordinate vanishes, and
+
+    N R N=4(I_2/2-P)                                 (13)
+
+is one fixed nonzero rank-one matrix for all these N.
+
+The following elementary qubit fact now applies. If two traceless Hermitian unitaries N_+,N_- are neither equal nor opposite, and both carry the same complex line span(w) to the same complex line span(u), then u is orthogonal to w. To verify this, choose w=e_0. Such a matrix has form
+
+    N=[[b,z],[conjugate(z),-b]], b real, b^2+|z|^2=1.
+
+Its first column is a unit vector on span(u). If u_0!=0, the requirement that its first entry be real fixes that column up to sign, and the rest of N is then fixed. This would give only one antipodal pair. Thus u_0=0, so u is orthogonal to w.
+
+Apply this fact to the two matrices from the partially singular fibre, taking w in the range of R and u in the range of the fixed matrix in (13). Every positive-component N from every fibre must then have zero diagonal in the same basis. All such N lie in one real two-dimensional Pauli subspace, whose complex span also has dimension two. But (10) implies
+
+    QD_g=S sum_eta q_eta N_(g,eta),
+
+so rank(QB_0)<=2, contradicting rank(QB_0)=3.
+
+#### 82.4.3. Both singular values are one
+
+The two preceding cases exhaust every nonunitary 2-by-2 contraction. Hence each H_f is unitary. As in the argument for A, norm preservation of each correct-output block forces all original B wrong-output components to vanish. Both original maps are therefore fibre-calibrated.
+
+The proof of B calibration did not infer absence of leakage merely from equality in trace-norm pinching; it used the equality identities for the actual contraction blocks.
+
+### 82.5. Calibrated equality normal form and two normalized coherent tests
+
+Write B_f=H_f and
+
+    N_f=conjugate(B_f) Z B_f^T.
+
+Each N_f is traceless Hermitian unitary. Equations (8)--(10) give
+
+    C_f=S+conjugate(v_f)W N_f,
+    D_f=S N_f+conjugate(v_f)W.                        (14)
+
+Since rank S=2 and rank(QB_0)=3, the N_f span the full three-dimensional real Pauli space. A linear relation among Hermitian Pauli matrices has a real coefficient kernel, and its complexification is the complex coefficient kernel. Since that kernel is one-dimensional, v can be chosen real after a common phase change of v and W. Thus
+
+    ||v||=1,  sum_f v_f N_f=0,
+    C_f=S+v_f W N_f, D_f=S N_f+v_f W.                (15)
+
+Retain S^*W=lambda I_2 and ||W||_F^2=a. Every C_f and D_f has norm one, so Cgram-J_4 and M-I_4 are trace zero.
+
+Let |f,+>=(|f,0>+|f,1>)/sqrt(2) and |f,->=(|f,0>-|f,1>)/sqrt(2). The following two logical inputs are normalized:
+
+    |psi_+>=(1/2)sum_f |f,+>,
+    |psi_->=(1/2)sum_f |f,->.
+
+Their physical product outputs, represented on the output MC support, are Cgram^T/4 and M^T/4; their target outputs are J_4/4 and I_4/4. From (15) and Tr N_f=0,
+
+    (Cgram-J_4)s=-a s,  s=(1,1,1,1)^T/2,
+    M v=a v.
+
+For the first identity, sum C_f=4S and <C_f,S>=p; for the second, sum v_fD_f=W and <D_f,W>=a v_f. A trace-zero Hermitian matrix with eigenvalue q has trace norm at least 2|q|. Therefore these two normalized tests give
+
+    delta>=a/2,   delta>=|1-a|/2.                    (16)
+
+At delta=1/4 the only possible value is
+
+    a=1/2,  p=7/8.                                  (17)
+
+Now take the trace of C_f^*C_f=I_2/2 in (15). The mixed term vanishes because S^*W is scalar and N_f is traceless. Hence
+
+    1=p+v_f^2 a.
+
+Together with (17), this proves
+
+    v_f=epsilon_f/2,  epsilon_f in {+1,-1}.           (18)
+
+In particular every coordinate is nonzero; this conclusion is not assumed at any earlier division in the calibrated case.
+
+### 82.6. The full negative-subspace invariance forces scalar matrix identities
+
+Let Delta=Khat-That. Since both channels are now calibrated, Tr Delta=0. The normalized reference test and delta=1/4 imply ||Delta||_1<=2. The witness Phat=diag(ss^*,vv^*) from (4) has Tr Phat Delta=-1. Thus
+
+    ||Delta||_1=2,   Tr Delta_-=1,
+    -Tr Phat Delta=Tr Delta_-.
+
+This optimality makes Phat an invariant subspace of the full Delta. Explicitly,
+
+    Tr Phat Delta_+ + Tr(I-Phat)Delta_-=0.
+
+Each term is nonnegative. Positivity therefore forces Phat Delta_+=0 and (I-Phat)Delta_-=0, so [Phat,Delta]=0. In particular the true cross block obeys
+
+    Xv in span(s).                                  (19)
+
+No cross coupling is discarded. Write R=W^*W and P=S^*S. Using sum v_fD_f=W gives
+
+    (Xv)_f=<C_f,W>=2lambda+v_f alpha_f,
+    alpha_f=Tr(N_f R),  alpha_f real.
+
+By (19), v_f alpha_f is constant in f. Its sum is zero, since sum v_fN_f=0. Hence every v_f alpha_f=0. By (18), alpha_f=0 for every f. Since the N_f span all traceless Hermitian 2-by-2 matrices,
+
+    R=(Tr R/2)I_2=I_2/4.                            (20)
+
+Return to the full identity C_f^*C_f=I_2/2:
+
+    P+v_f^2 N_f R N_f+2v_f Re(lambda)N_f=I_2/2.
+
+Using (18)--(20), if Re(lambda) were nonzero, all v_f N_f would coincide, contradicting their three-dimensional span. Consequently
+
+    Re(lambda)=0,   P=7I_2/16.                       (21)
+
+The possible remaining imaginary overlap is excluded by a separate coherent test, rather than by an unproved reality convention.
+
+### 82.7. A normalized mixed coherent test removes the remaining overlap
+
+For complex alpha,gamma with |alpha|^2+|gamma|^2=1, use the normalized logical input
+
+    |psi_(alpha,gamma)>
+       =(1/2)sum_f [alpha|f,+>+gamma epsilon_f|f,->].  (22)
+
+The actual output is E^T/4, where E is the forward Gram of
+
+    e_f=alpha C_f+gamma epsilon_f D_f.
+
+The target output is (|alpha|^2 J_4+|gamma|^2 I_4)/4. Both have trace one. Since sum epsilon_fN_f=0, equations (15) and (18) imply
+
+    sum_f e_f=4alpha S+2gamma W.
+
+Test the actual-minus-target difference on the normalized uniform output vector s. Its expectation is
+
+    ||4alpha S+2gamma W||_F^2/16
+       -|alpha|^2-|gamma|^2/4
+      =-1/8+2 Re(conjugate(alpha) gamma lambda).      (23)
+
+If lambda!=0, choose |alpha|=|gamma|=1/sqrt(2) and their relative phase so that conjugate(alpha)gamma lambda=-|lambda|/2. Then (23) is -1/8-|lambda|. A trace-zero Hermitian output difference has trace norm at least minus twice any negative expectation. Thus
+
+    delta>=1/4+2|lambda|.
+
+As delta=1/4, it follows that
+
+    S^*W=0.                                        (24)
+
+All input and output test vectors used here are normalized; no reference is required for these three coherent tests. The full reference test remains essential in section 82.6.
+
+### 82.8. Exact Kraus rank and the minimal product
+
+Equations (20)--(24) give
+
+    S^*S=7I_2/16,   W^*W=I_2/4,   S^*W=0.           (25)
+
+Hence S and W have rank two and orthogonal column ranges; their combined column span has dimension four. By (15), every C_f has its columns in this four-dimensional span. Since B_f is unitary and C_f=A_f B_f^T/sqrt(2), the columns of all A_f have the same collective span as all C_f. Conversely S is the mean of the C_f, while W=sum_f v_fD_f and D_f=C_fN_f, so the columns of S and W belong to that collective span. Therefore
+
+    dim span{a_fi : f=1,...,4, i=0,1}=4.             (26)
+
+For a calibrated Stinespring map V_A|f,i>=|f> tensor a_fi, the minimal environment dimension equals this record-span dimension: a linear combination of its environment-indexed Kraus operators vanishes exactly when the corresponding covector annihilates every a_fi. Thus the original channel A has Kraus rank exactly four.
+
+Every local rank is at least two. An integer rank product below eight must be (2,2), (2,3), or (3,2), all excluded at exact quarter error by the theorem. The established marker construction of section 79 attains error 1/4 with ranks (4,2). Hence the least rank product at that exact error is eight.
+
+As a qualitative corollary, the minimum error with rank bounds (3,2) or (2,3) is strictly greater than 1/4. Indeed the sets of finite-dimensional CPTP maps with those Kraus-rank upper bounds are compact (closed bounded Choi sets with closed rank constraints), and the error is continuous. The centroid-support lower bound is 1/4 throughout the set, and the equality case has just been excluded. This argument gives no numerical size for the strict gap.
+
+### 82.9. The equality normal form is a fixed-marker construction
+
+The original-channel rigidity proof in sections 82.2--82.8 supplies, for every original exact-quarter product with a rank-two B party, calibrated matrices
+
+    C_f=S+(epsilon_f/2)W N_f,
+    N_f=conjugate(B_f)Z B_f^T,
+    epsilon_f in {+1,-1},   sum_f epsilon_f N_f=0,
+    S^*S=7I_2/16,  W^*W=I_2/4,  S^*W=0.
+
+Set U_0=4S/sqrt(7) and U_1=2W. They are isometries with orthogonal ranges. Since A_f=sqrt(2)C_f conjugate(B_f), its columns are
+
+    a_fi=sqrt(7/8)U_0 conjugate(b_fi)
+          +epsilon_f(-1)^i sqrt(1/8)U_1 conjugate(b_fi).
+
+Identify their four-dimensional collective range with C^2 tensor C^2 by U_0 u=u tensor e_0 and U_1 u=u tensor e_1. This is a unitary identification on the minimal environment span, or an environment isometry in a larger presentation, and does not change the physical channel. Swap the two input bit labels in each fibre with epsilon_f=-1, simultaneously for both local maps. These independent bit swaps preserve the target, whose diagonal bit blocks are I_2 and whose off-diagonal bit blocks are J_2/2; hence they preserve the approximation error. After these swaps, the local records have the form
+
+    a_fi=conjugate(b_fi) tensor m_i,
+    m_i=sqrt(7/8)e_0+(-1)^i sqrt(1/8)e_1,
+    <m_0,m_1>=3/4.                                  (27)
+
+The overlap in (27) is the forward overlap <m_0,m_1>; because it is real, it agrees with section 79's reverse-overlap parameter as well. The corresponding traceless Hermitian unitaries are now N'_f=epsilon_f N_f and satisfy sum_f N'_f=0. Thus their Bloch axes n_f are balanced:
+
+    ||n_f||=1,   sum_f n_f=0.                        (28)
+
+Conversely (27) with any four qubit bases defines genuine calibrated Stinespring isometries. All subsequent norm assertions are on the resulting full physical product, allowing arbitrary reference systems.
+
+### 82.10. Every balanced four-axis Gram has the disphenoid form
+
+For vectors satisfying (28), put
+
+    u=(n_1+n_2)/2,  v=(n_1+n_3)/2,  w=(n_1+n_4)/2.
+
+Then
+
+    n_1=u+v+w,  n_2=u-v-w,
+    n_3=-u+v-w, n_4=-u-v+w.
+
+Equality of their four squared lengths implies u dot v=u dot w=v dot w=0. Therefore, in an orthonormal real coordinate frame, their Gram is represented by
+
+    n_1=(x,y,z), n_2=(x,-y,-z),
+    n_3=(-x,y,-z), n_4=(-x,-y,z),
+    x,y,z>=0,  x^2+y^2+z^2=1.                       (29)
+
+Only the Gram is being specified; the orientation of this coordinate frame is immaterial. Write R_fg=n_f dot n_g. The four real characters of the Klein four group diagonalize R. Its eigenvalues are
+
+    0, 4x^2, 4y^2, 4z^2,                            (30)
+
+with the zero eigenvalue on the normalized uniform vector. In particular balance and uniform null coefficients do not force a regular tetrahedron.
+
+### 82.11. Exact full-reference error of the entire balanced marker family
+
+The two parties' qubit overlaps cancel their phases. At the real marker overlap 3/4, the plus/minus forward-Gram blocks are
+
+    Cgram=(7/8)J_4+(1/8)R,
+    M=(1/8)J_4+(7/8)R,
+    X=0.                                            (31)
+
+This identity holds also on the diagonal, because R_ff=1. Subtracting the target diag(J_4,I_4) leaves
+
+    D_+=(R-J_4)/8,
+    D_-=(J_4+7R)/8-I_4.                              (32)
+
+The physical output uses the transpose of a forward Gram; the kernels in (32) are real symmetric, so their transposes coincide with them. The logical difference map is the sum of the Schur multiplier with kernel D_+ acting on the input's plus block and the Schur multiplier with kernel D_- acting on its minus block. Cross blocks are killed. For any normalized positive input with any reference, those two input principal blocks are positive and have traces summing to one. The triangle inequality therefore bounds the output error by the larger of the two Schur-multiplier diamond norms. Choosing an input entirely in one bit sector attains either sector norm, so the full norm is exactly their maximum. The fixed output MC isometry preserves it.
+
+For any Hermitian Klein-circulant four-by-four kernel D with eigenvalues lambda_chi in its real character basis,
+
+    D=(1/4)sum_chi lambda_chi h_chi h_chi^*,
+    Schur_D=(1/4)sum_chi lambda_chi Ad_diag(h_chi).
+
+Each h_chi has entries in {+1,-1}. The triangle inequality gives an arbitrary-reference upper bound sum|lambda_chi|/4. On the normalized uniform pure input, the output is D/4 and has exactly that trace norm. Hence
+
+    ||Schur_D||diamond=||D||_1/4.                    (33)
+
+Equations (30)--(32) give the eigenvalues
+
+    D_+: -1/2, x^2/2, y^2/2, z^2/2;
+    D_-: -1/2, (7/2)x^2-1, (7/2)y^2-1, (7/2)z^2-1.
+
+Thus every balanced-marker member has exact error
+
+    delta=max{1/4,
+       [1/2+|(7/2)x^2-1|+|(7/2)y^2-1|
+                    +|(7/2)z^2-1|]/4}.             (34)
+
+The last three D_- eigenvalues sum to 1/2, so (34) equals 1/4 if and only if
+
+    x^2>=2/7,  y^2>=2/7,  z^2>=2/7,
+    x^2+y^2+z^2=1.                                  (35)
+
+This is a nontrivial continuum. The regular tetrahedron is x^2=y^2=z^2=1/3, but, for example, x^2=3/10,y^2=13/40,z^2=3/8 also satisfies (35). Its nonzero Bloch-Gram eigenvalues are 6/5,13/10,3/2.
+
+### 82.12. Classification and resource interpretation
+
+By the original-channel rigidity proof above, every exact-quarter product having a rank-two party is, after an environment isometry and independent simultaneous bit swaps, one of the fixed-marker products (27) whose balanced-axis Gram satisfies (35). Conversely all these products attain exact quarter error. Their three axis directions are nonzero by (35), and the local ranks are exactly (4,2), consistently with the rigidity theorem.
+
+No regular-tetrahedron uniqueness claim is made. The unrestricted optimum with both local ranks at least three remains open.
+
+### 82.13. Attribution and boundary
+
+The equality proof refines section 81's original-channel centroid-support witness by retaining the first party's trace deficit and following every equality through the SVD convex decomposition. It then uses three normalized coherent inputs together with the full normalized reference test. Section 79 supplies the original attaining product; sections 82.9--82.12 identify the complete rank-two-party equality family and its exact full-reference norm. The linear algebra, Stinespring equivalence, trace-norm duality, and channel-norm background are standard; see [Watrous, The Theory of Quantum Information, Chapters 1--3](https://cs.uwaterloo.ca/~watrous/TQI/).
+
+No regular-tetrahedron uniqueness is asserted: the allowed disphenoids form a continuum. The minimum rank product eight is an original-channel statement, because both channels' calibration was proved from equality before the calibrated normal form was used. The classification is complete only when at least one party has local Kraus rank two. It does not classify quarter-error products whose two ranks are both at least three, or decide whether such products can beat quarter error. The unrestricted four-fibre optimum remains open in [sqrt(3)-3/2,1/4].
