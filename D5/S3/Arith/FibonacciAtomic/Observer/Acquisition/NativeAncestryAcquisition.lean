@@ -107,16 +107,17 @@ private theorem hit_determines_bit (t : Source) (A B : Finset Address)
     (p q : Address) (hp : p ∈ positions t) (hq : q ∈ support p)
     (same : readout q (variant t A) = readout q (variant t B)) :
     (p ∈ A ↔ p ∈ B) := by
-  have local (z : Address) (hz : z ∈ support []) :
+  have at_suffix (z : Address) (hz : z ∈ support []) :
       readout (p ++ z) (variant t A) = readout (p ++ z) (variant t B) →
       (p ∈ A ↔ p ∈ B) := by
     unfold variant
     rw [reply_at t _ p z hp, reply_at t _ p z hp]
     have ne := mt (local_reply_table z).1.mp (not_not.mpr hz)
+    have ne' := Ne.symm ne
     by_cases ha : p ∈ A <;> by_cases hb : p ∈ B <;> simp_all
   simp only [support, Finset.mem_insert, Finset.mem_singleton] at hq
   rcases hq with rfl | rfl | rfl | rfl | rfl | rfl <;>
-    exact local _ (by simp [support]) same
+    exact at_suffix _ (by simp [support]) same
 
 /-- The original positions whose supports occur in a chronological raw history. -/
 def hit (t : Source) (h : Hist (fun _ : Address => Reply)) : Finset Address :=
@@ -213,7 +214,7 @@ private theorem face_card (t : Source) (A : Finset Address) (hA : A ⊆ position
     exact (Finset.mem_sdiff.mp hq).2 (Finset.mem_inter.mp hp).2
   rw [eq, Finset.card_Icc_finset Finset.subset_union_left,
     Finset.card_union_of_disjoint disj, Finset.card_sdiff_of_subset hH]
-  simp
+  simp [H]
 
 /-- The observation face has its exact cardinality and the uniform conditional law,
 whose Shannon entropy in bits is the number of unhit positions. -/
@@ -238,7 +239,8 @@ theorem native_record_face (n : ℕ) (hn : 3 ≤ n) (A : Finset Address)
   have uniform : posterior (T n) h =
       (fun _ => ((compatible (T n) h).card : ℝ)⁻¹) := by
     funext B
-    simp only [posterior, Finset.sum_const, smul_eq_mul, Finset.card_univ, Fintype.card_coe]
+    simp only [posterior, Finset.sum_const, Finset.card_univ, Fintype.card_coe,
+      nsmul_eq_mul]
     field_simp [ne_of_gt pos,ne_of_gt powpos]
   have sourcecard : (compatibleSources (T n) h).card = (compatible (T n) h).card := by
     apply Finset.card_image_of_injOn
@@ -314,8 +316,8 @@ private theorem supports_disjoint (n : ℕ) (hn : 3 ≤ n) (p r : Address)
   rcases geometry with eq | inc | bad | bad
   · exact ne eq.1
   · exact prefixes.elim inc.1 inc.2
-  · exact (show defectB ≠ ActualLeafHistoryRigidity.C by decide) bad.1
-  · exact (show defectB ≠ ActualLeafHistoryRigidity.C by decide) bad.2.1
+  · exact (show defectB ≠ ActualImageSevenLeafSeparation.C by decide) bad.1
+  · exact (show defectB ≠ ActualImageSevenLeafSeparation.C by decide) bad.2.1
 
 private theorem hit_card_le_paid (n : ℕ) (hn : 3 ≤ n)
     (h : Hist (fun _ : Address => Reply)) : (hit (T n) h).card ≤ (paid h).card := by
@@ -373,15 +375,15 @@ private def scanRun (t : Source) (J : Finset Address) : CubeRun t where
 
 private theorem scan_answer (t : Source) (J A : Finset Address) (hJ : J ⊆ positions t) :
     (scanRun t J).answer A = true ↔ A ∩ J = ∅ := by
-  have local (p : Address) (hp : p ∈ J) :
+  have at_left (p : Address) (hp : p ∈ J) :
       ActualCoarseReadoutHistory.kappa (readout (p ++ [false]) (variant t A)) = none ↔ p ∉ A := by
     unfold variant
     rw [reply_at t _ p [false] (hJ hp)]
     by_cases ha : p ∈ A <;> simp [ha,defectB,defectD,readout,ActualCoarseReadoutHistory.kappa]
   change scanDecode (runPassiveProtocol readout (scanTree J.toList) (variant t A)) = true ↔ _
   rw [scan_transcript]
-  simp only [scanDecode,decide_eq_true_eq,List.forall_mem_map,List.mem_toList]
-  simp only [local]
+  simp only [scanDecode,decide_eq_true_eq,List.forall_mem_map,Finset.mem_toList]
+  simp only [at_left]
   rw [Finset.eq_empty_iff_forall_notMem]
   simp only [Finset.mem_inter]
   tauto
@@ -390,7 +392,7 @@ private theorem scan_paid (t : Source) (J A : Finset Address) :
     (paid ((scanRun t J).trace A)).card = J.card := by
   have eq : paid ((scanRun t J).trace A) = J.image (fun p => p ++ [false]) := by
     ext q
-    simp only [scanRun,scan_transcript,paid,List.mem_toFinset,List.mem_map,List.mem_toList,
+    simp only [scanRun,scan_transcript,paid,List.mem_toFinset,List.mem_map,Finset.mem_toList,
       Finset.mem_image]
     constructor
     · rintro ⟨e,⟨p,hp,rfl⟩,rfl⟩; exact ⟨p,hp,rfl⟩
@@ -453,15 +455,26 @@ private theorem scan_coarse (t : Source) (J : Finset Address) :
             D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual
             (D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance (scanTree (p::ps)) f) k
           by_cases hit : e.1 = p ++ [false]
-          · simpa [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
-              hit,← addr] using ih h k heads.2
-          · simp only [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
-              ← addr,hit,↓reduceDIte]
+          · have fhit : f.1 = p ++ [false] := addr.symm.trans hit
+            simpa [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
+              hit,fhit] using ih h k heads.2
+          · have fhit : f.1 ≠ p ++ [false] := fun ff => hit (addr.trans ff)
+            simp only [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
+              hit,fhit,↓reduceDIte]
             exact (stopped h).trans (stopped k).symm
   intro h k eq
   have decoder (h : Hist (fun _ : Address => Reply)) : scanDecode h =
       decide (∀ e ∈ κH h, e.2 = none) := by
-    simp [scanDecode,κH,ActualCoarseReadoutHistory.kappa_hist]
+    have condition : (∀ e ∈ h, ActualCoarseReadoutHistory.kappa e.2 = none) ↔
+        (∀ e ∈ κH h, e.2 = none) := by
+      constructor
+      · intro all e he
+        obtain ⟨a,ha,rfl⟩ := List.mem_map.mp he
+        exact all a ha
+      · intro all e he
+        exact all ⟨e.1,ActualCoarseReadoutHistory.kappa e.2⟩
+          (List.mem_map.mpr ⟨e,he,rfl⟩)
+    simp only [scanDecode,condition]
   change D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
     (scanTree J.toList) scanDecode h =
     D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
@@ -469,7 +482,11 @@ private theorem scan_coarse (t : Source) (J : Finset Address) :
   unfold D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
   rw [sameResidual J.toList h k eq]
   cases D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual (scanTree J.toList) k with
-  | stop => rw [decoder,decoder,eq]
+  | stop =>
+    change (Sum.inr (scanDecode h) : Sum Address Bool) = .inr (scanDecode k)
+    rw [decoder h,decoder k]
+    change κH h = κH k at eq
+    rw [eq]
   | query a next => rfl
 
 /-- Every correct policy pays at least the number of positions on the canonical input;
@@ -516,16 +533,19 @@ private theorem seedwise_bound (n : ℕ) (hn : 3 ≤ n) (q : ℕ) (R : CubeRun (
     have bound : (((positions (T n)).filter (fun p => R.answer {p} = false)).card : ℝ) ≤ q := by
       exact_mod_cast (Finset.card_le_card subset).trans (budget ∅ (Finset.empty_subset _))
     simp only [success,canonical,ite_true,card]
-    exact add_le_add_left (div_le_div_of_nonneg_right bound (by positivity)) _
+    exact add_le_add le_rfl (div_le_div_of_nonneg_right bound
+      (by positivity : (0:ℝ) ≤ 2 * Nat.fib (n-2)))
   · have bound : (((positions (T n)).filter (fun p => R.answer {p} = false)).card : ℝ) ≤
         Nat.fib (n-2) := by
       exact_mod_cast (Finset.card_filter_le _ _).trans card.le
-    simp only [success,canonical,ite_false,zero_add,card]
+    have canonical_false : R.answer ∅ = false := Bool.eq_false_of_not_eq_true canonical
+    simp only [success,canonical_false,Bool.false_eq_true,↓reduceIte,zero_add,card]
     have half : (((positions (T n)).filter (fun p => R.answer {p} = false)).card : ℝ) /
         (2*Nat.fib (n-2)) ≤ 1/2 := by
       apply (div_le_iff₀ (by positivity : (0:ℝ)<2*Nat.fib (n-2))).mpr
       linarith
-    exact half.trans (le_add_of_nonneg_right (by positivity))
+    exact half.trans (le_add_of_nonneg_right
+      (by positivity : (0:ℝ) ≤ (q:ℝ) / (2 * Nat.fib (n-2))))
 
 private theorem scan_success (n : ℕ) (hn : 3 ≤ n) (J : Finset Address)
     (hJ : J ⊆ positions (T n)) :
@@ -598,7 +618,8 @@ private theorem uniform_error_lower (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
     exact integrable {p} (by simpa)
   have sum_lower : ((positions (T n)).card : ℝ)*(1-δ) ≤
       ∑ p ∈ positions (T n), ∫ ω, reward (R ω) {p} ∂μ := by
-    simpa using Finset.sum_le_sum (fun p hp => accurate {p} (by simpa))
+    simpa only [Finset.sum_const,nsmul_eq_mul] using
+      Finset.sum_le_sum (fun p hp => accurate {p} (by simpa))
   have card := (Geometry.NativeAncestryDefectCube.native_area_cube n hn).1
   have kpos : (0:ℝ) < Nat.fib (n-2) := by exact_mod_cast Nat.fib_pos.mpr (by omega : 0<n-2)
   have canonical := accurate ∅ (Finset.empty_subset _)
