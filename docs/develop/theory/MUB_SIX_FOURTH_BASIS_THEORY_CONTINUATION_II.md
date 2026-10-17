@@ -608,3 +608,232 @@ their union. Its symmetry identities transport certificates and the
 uniquely continued rays; they do not restrict arbitrary candidates to
 a covariance ansatz. No exhaustive census or general noncanonical
 orthogonal-triple exclusion follows.
+
+## 64. Central reflection-fixed rays and a finite-census congruence
+
+### 64.1 Exact fixed-ray classification
+
+At the actual central seed, put
+
+\[
+ \omega=\frac{-1+i\sqrt3}{2},\qquad A=J_3+(\omega-1)I_3,
+ \qquad M=\begin{pmatrix}A&A\\\bar A&-\bar A\end{pmatrix}.
+\]
+
+Let \(R=\operatorname{diag}(R_3,R_3)\), where \(R_3\) exchanges
+coordinates zero and one. Common-flat rays have unit-entry
+representatives \(z\) satisfying \(|(Mz)_j|^2=6\).
+
+**Theorem 64.1 (repo-derived reflection-fixed classification).**
+Exactly six common-flat rays are projectively fixed by \(R\). After
+first-coordinate dephasing, two are
+
+\[
+ (1,1,1,i,i,i),\qquad(1,1,1,-i,-i,-i).
+\]
+
+The other four are \((1,1,T,g,g,Tq)\), one for each of the four roots
+
+\[
+ \begin{gathered}
+ G(g)=7g^4+11g^2+7=0,
+ \qquad g=\frac{\varepsilon\sqrt3+5\eta i}{2\sqrt7},
+ \quad\varepsilon,\eta\in\{-1,1\},\\
+ q=\frac{g(21g^2-16)}{35},\qquad
+ T=\frac{7\sqrt3\,i g^3+21g^2+13\sqrt3\,i g+14}{20}.
+ \end{gathered}
+\tag{64.1}
+\]
+
+All four are noncanonical. The same count holds for either of the other
+synchronous transpositions by conjugation in \(S_3\).
+
+**Proof.** If \(Rz=\lambda z\), its unchanged, nonzero third coordinate
+forces \(\lambda=1\). Hence every fixed ray has the unique chart
+
+\[
+ z=(1,1,T,g,g,Tq),\qquad |T|=|g|=|q|=1.
+\]
+
+Put \(r_\pm=1\pm g\) and \(s_\pm=T(1\pm q)\). Its top outputs are
+\(-\omega^2r_++s_+,-\omega^2r_++s_+,2r_++\omega s_+\), and the
+bottom outputs are
+\(-\omega r_-+s_-,-\omega r_-+s_-,2r_-+\omega^2s_-\).
+Since \(A^*A=3I_3\), their channel norms and one equation from each
+channel reduce the full six equations exactly to
+
+\[
+ \begin{gathered}
+ q+q^{-1}=-2(g+g^{-1}),\\
+ A_1T+\bar A_1T^{-1}=-R_0,
+ \qquad B_1T+\bar B_1T^{-1}=-S_0,\\
+ A_1=\omega(1+g^{-1})(1+q),\quad
+ B_1=\omega^2(1-g^{-1})(1-q),\\
+ R_0=2+g+g^{-1},\qquad S_0=2-g-g^{-1}.
+ \end{gathered}
+\tag{64.2}
+\]
+
+Here the bar sends \(i\) to \(-i\), \(g\) to \(g^{-1}\), and \(q\)
+to \(q^{-1}\). For explicit equivalence, let \(F_j=|(Mz)_j|^2-6\)
+and set
+
+\[
+ \ell=2(g+g^{-1})+q+q^{-1},\quad
+ p=A_1T+\bar A_1T^{-1}+R_0,\quad
+ r=B_1T+\bar B_1T^{-1}+S_0.
+\]
+
+Direct expansion gives \(F_0=F_1=-p+\ell\),
+\(F_3=F_4=-r-\ell\),
+\(F_0+F_1+F_2=3\ell\), and
+\(F_3+F_4+F_5=-3\ell\). Thus \(F=0\) is equivalent to (64.2).
+
+No denominator stratum is discarded. The cases \(g=\pm1\) would
+require \(q+q^{-1}=\mp4\), impossible on the unit circle. If \(q=1\),
+the norm equation gives \(g+g^{-1}=-1\), and the first bottom output
+has squared modulus three. If \(q=-1\), the first top output likewise
+has squared modulus three. Both contradict six. Consequently
+\(g^2\ne1\), \(q^2\ne1\), and the two-by-two determinant is nonzero:
+
+\[
+ \Delta=A_1\bar B_1-\bar A_1B_1
+ =\frac{i\sqrt3(g-1)(g+1)(q-1)(q+1)}{gq}.
+\]
+
+With \(N=-R_0\bar B_1+S_0\bar A_1\) and
+\(O=-S_0A_1+R_0B_1\), Cramer's rule gives \(T=N/\Delta\),
+\(T^{-1}=O/\Delta\), and
+
+\[
+ \begin{gathered}
+ T=\frac{gq-1+(i/\sqrt3)(q-g)}{q^2-1},\\
+ NO-\Delta^2
+ =\frac{(g-1)^2(g+1)^2(q-g)C(g,q)}{g^3q^2},\qquad
+ C(g,q)=3gq^3+gq-q^2-3.
+ \end{gathered}
+\tag{64.3}
+\]
+
+Thus either \(q=g\) or \(C=0\). Multiplying the norm equation by
+\(gq\) gives \(E(g,q)=gq^2+2(g^2+1)q+g=0\).
+When \(q=g\), it reduces to \(3g(g^2+1)=0\), hence \(g=\pm i\)
+and \(T=1\). Otherwise polynomial division and a resultant give
+
+\[
+ \begin{aligned}
+ C\bmod E&=\frac2g\bigl[(6g^4+12g^2+7)q+g(3g^2+2)\bigr],\\
+ \operatorname{Res}_q(E,C)&=12g(g^2+1)(7g^4+11g^2+7).
+ \end{aligned}
+\tag{64.4}
+\]
+
+At \(g=\pm i\), the monic gcd of \(E,C\) is \(q-g\), giving no new
+ray. The remaining roots satisfy \(G=0\). The denominator
+\(D=6g^4+12g^2+7\) cannot vanish there, because
+
+\[
+ \left(-\frac{18g^2}{25}-\frac{149}{175}\right)D+
+ \left(\frac{108g^2}{175}+\frac{174}{175}\right)G=1.
+\tag{64.5}
+\]
+
+Solving (64.4) and reducing (64.3) modulo \(G\) gives exactly (64.1).
+Conversely the four distinct roots in (64.1) are unit phases. With
+\(\bar g=g^{-1}\), substitution modulo \(G\) gives
+
+\[
+ q\bar q=T\bar T=1,\qquad
+ |(M(1,1,T,g,g,Tq)^T)_j|^2=6\quad(0\le j\le5).
+\tag{64.6}
+\]
+
+These are exact rational-function identities: the denominators are
+coprime to \(G\), as are \(g\), \(g^2-1\), \(g^2+1\), and the
+substituted \(q^2-1\). Thus necessity and sufficiency both hold.
+The first coordinate is one and the four values of \(g\) are distinct,
+so the four rays are distinct. A canonical ray fixed by this
+transposition must have mode zero, hence \(T=1\) and \(g=\pm i\).
+The quartic roots do not satisfy \(g^2+1=0\), proving their
+noncanonical character. This completes the proof.
+
+### 64.2 Stabilizers and the conditional total count
+
+Let \(\mathcal G\) be the projective group generated by synchronous
+\(S_3\) and \(\Theta(x,y)=(-\bar y,\bar x)\).
+The identities \(M\Theta=-\Theta M\), \(MR=RM\),
+\(R\Theta=\Theta R\), and \(\Theta^2=-I\) show that it preserves
+the central common-flat ray locus. Its twelve projective operations
+form \(S_3\times C_2\).
+
+**Corollary 64.2 (repo-derived central orbit constraint).**
+The canonical rays have orbits of sizes two and four. There are exactly
+two noncanonical orbits of size six. Every other noncanonical orbit
+has size twelve. If the entire central ray locus is finite, its size is
+
+\[
+ N=18+12m\equiv6\pmod{12}
+\tag{64.7}
+\]
+
+for a nonnegative integer \(m\). No finiteness premise is needed for
+the classification of fixed rays or the two noncanonical six-orbits.
+
+**Proof.** No antiunitary operation \(R\Theta\) fixes a ray. Indeed a
+unit representative of an antiunitary-fixed ray would satisfy
+\(Tv=\lambda v\), \(|\lambda|=1\), and therefore \(T^2v=v\).
+For the identity or a transposition \(R\), one has
+\((R\Theta)^2=-I\); for a three-cycle, \((R\Theta)^6=-I\).
+Both contradict that necessary condition.
+
+A ray fixed projectively by a three-cycle has both three-coordinate
+channels in its same one-dimensional Fourier eigenspace. Thus it is
+\((f_l,gf_l)\), \(|g|=1\), after dephasing. The corresponding channel
+eigenvalues of \(A\) and \(\bar A\) both have squared modulus three.
+Flatness forces \(|1+g|^2=|1-g|^2=2\), equivalently \(g=\pm i\).
+These are exactly the six canonical rays. Synchronous permutations and
+\(\Theta\) give the orbit sizes two and four.
+
+A noncanonical stabilizer lies in \(S_3\), contains no three-cycle,
+and cannot contain two distinct transpositions. It is therefore trivial
+or generated by one transposition. Its orbit has size twelve or six.
+In a six-orbit \(\mathcal G/H\), a specified transposition fixes
+exactly two cosets: its centralizer has size four and \(|H|=2\).
+Theorem 64.1 gives exactly four noncanonical fixed rays, so precisely
+two such six-orbits exist. This proves (64.7) when the whole locus is
+finite.
+
+For a separate count check, Burnside's lemma gives the number of orbits
+of a finite locus as
+
+\[
+ \frac{N+3\cdot6+2\cdot6+6\cdot0}{12}
+ =\frac{N+30}{12}\in\mathbb Z.
+\tag{64.8}
+\]
+
+Here the terms are respectively the identity, three transpositions, two
+three-cycles, and six antiunitary operations. This again forces the
+congruence without determining \(N\).
+
+### 64.3 Scope and the unresolved reported count
+
+The exact Fourier bridge (61.14)–(61.15) identifies this ray problem
+with the ordinary common-unbiased columns for \((I,F(1/6,0))\).
+It is a unitary ray bijection, so the change of input/output convention
+does not alter finite cardinalities.
+
+[Brierley–Weigert, *Constructing Mutually Unbiased Bases in Dimension Six*,
+§4.2 and Table 2](https://arxiv.org/html/0901.4051v2#S4.SS2)
+report \(N_v=48\) for their sampled Fourier matrices, including this
+parameter; their Eq. (6) already fixes the overall phase. Their §3.4
+also discusses upper bounds obtained through numerical approximation.
+The congruence (64.7) rules out 48 as an exact finite distinct-ray census
+for the actual equations here. Its relation to the reported count and
+the scope of that approximation argument remains unresolved. No phase
+or multiplicity reinterpretation, source erratum, complete census, or
+42-ray completeness is established by this section.
+
+Only the transposition-fixed locus is classified exhaustively. The
+remaining free-orbit count, finiteness of the full locus, and arbitrary
+noncanonical orthogonal triples remain separate questions.
