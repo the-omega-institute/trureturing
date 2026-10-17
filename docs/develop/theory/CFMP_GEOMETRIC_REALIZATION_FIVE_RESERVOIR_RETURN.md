@@ -4183,3 +4183,427 @@ premises of Theorem 341.2. Its conclusion concerns the Z/U axial expense
 in that setting, without assuming an opposite-companion receiver. It
 does not exclude the unique flat source, settle the remaining M/U or
 M/Z high-axis patterns, or prove six-edge or general CFMP realization.
+
+## 348. The actual-circle M/Z theorem with an explicit upper gap
+
+The scalar implication (322.2)--(322.5) extends to an opposite-V
+owner whose other axis is M or Z, by a genuine one-axis comparison.
+A separate transverse-M estimate excludes every opposite-M exit.
+These two global exclusions allow the actual D-circle argument to
+treat M/Z high axes without assuming a receiver inventory.
+
+The deductions here are repo-derived from the displayed paired
+response formulas, the scalar implication in Section 322, the exact
+quarter-bound identity (325.3) in Section 331, and Theorem 332.1.
+They retain the original generalized angle conventions of Section
+322 and make no claim of a new general rigidity theorem.
+
+**Definition 348.1 and hypotheses.**
+
+Consider a finite face-paired tetrahedral quotient with precisely the
+six distinct actual edge labels M,V,C,D,Z,U. Every actual edge has a
+connected circular normal link. Each original tetrahedron owner has
+one fixed vertex-induced paired frame, in local edge order
+(12,13,14,34,24,23), of the form
+
+    (R,A,B,O,A,B),
+
+where R,A,B,O are four distinct actual labels. Original faces are
+paired by maps preserving actual edge labels. Repeated role vectors,
+distinct-face self-gluings, loops, and repeated visits to an owner in
+a normal circle are allowed. Each original local edge occurrence is
+a separate angle slot and normal-link interval.
+
+There is one shared positive generalized length at each actual edge;
+write its cosh as m,v,c,d,z,u. All original generalized angles are
+nonnegative and sum to 2*pi around each actual edge. There is a unique
+flat owner
+
+    sigma=(M,C,D,V,C,D),
+
+with axial M,V angles pi and transverse C,D angles zero. Every other
+owner is genuine, with all its angles in (0,pi). A genuine owner
+
+    tau=(Z,M,C,D,M,C)
+
+exists. Assume exactly the numerical conditions
+
+    c,d,v>1, m>1+c+d, 1<v<=m-2,
+    z>1+m+c, u>m,
+    (m-1)*(v-1)>=(c+d)^2,
+    u<z+m+1.                                           (348.1)
+
+The final inequality is an explicit additional upper-gap premise; it
+is not inferred just from connected circles. In the original setting
+where all actual circle degrees are at least six, the published
+complete-star maximum-gap theorem in Sections 318--321 supplies it.
+No degree lower bound is otherwise used here.
+
+For shared coshes r,a,b,o, every genuine paired response obeys
+
+    L=(a+b)^2-(r-1)*(o-1)>0,
+    J=(r+1)*(o+1)-(a-b)^2>0.                          (348.2)
+
+Its axial and transverse angles are the published original paired
+angles, not angles of a changed frame.
+
+**Theorem 348.2 (repo-derived).** Under these hypotheses, every
+genuine owner eta with axes M,Z and transverse pair {V,C} or {V,D}
+satisfies
+
+    theta_M(eta)+theta_Z(eta)>pi.                       (348.3)
+
+The conclusion is an angle-expense implication. It does not assert
+that such an eta exists, force an opposite-companion receiver, exclude
+the unique flat, or solve the general six-edge CFMP problem.
+
+## 349. Original capacities and the bad M/Z owner
+
+**Proof of Theorem 348.2.**
+
+All genuine original M slots together have total pi, and the same
+holds for V. All genuine D slots together have total 2*pi. These
+statements follow by subtracting sigma's contributions from the full
+angle sums. Nonnegativity bounds any subset by the same capacity.
+Self-gluings do not erase an original angle occurrence.
+
+Sigma is the only owner whose fixed transverse pair is {C,D}.
+Indeed such an owner's two distinct axes lie in {M,V,Z,U}. Since
+z,u>m>v, the smallest possible shifted axial product is
+(m-1)*(v-1). Its L is therefore at most
+
+    (c+d)^2-(m-1)*(v-1)<=0.
+
+It cannot be genuine, so the unique-flat premise makes it sigma.
+
+For eta with pair {V,C}, Theorem 332.1 applies with first axis Z and
+second axial cosh r=m. Its explicit hypotheses are exactly the
+relevant inequalities in (348.1), together with eta's strict L/J.
+It proves (348.3). Hence suppose instead
+
+    eta=(M,V,D,Z,V,D),
+    theta_M(eta)+theta_Z(eta)<=pi.                    (349.1)
+
+Tau and eta are distinct actual owners because tau has no V label.
+Their actual M slots give
+
+    2*beta_M(tau)+theta_M(eta)<=pi.                   (349.2)
+
+This includes eta's real axial M occurrence. It will never be removed
+from a budget or replaced by a zero charge.
+
+## 350. Two-owner bounds without a receiver premise
+
+The following consequences depend only on tau, eta, (348.1), (349.1),
+and (349.2). In particular they do not assume an owner rho exists.
+
+The source-flat inequality and v<=m-2 give
+
+    (c+d)^2<=(m-1)*(m-3)=(m-2)^2-1,
+    c+d<m-2, d<m-c-2<m-3, m>4.                       (350.1)
+
+For eta, the exact axial M cosine is N_e/D_e, where
+
+    D_e=m^2+v^2+d^2+2*m*v*d-1>0,
+    N_e=2*v*d+m*(v^2+d^2)-(m^2-1)*z.
+
+Its v derivative has sign numerator
+
+    (N_e)_v*D_e-N_e*(D_e)_v
+      =2*(m^2-1)*[-d^3+d*m*z+d*v^2+d+m*v+v*z]>0.
+
+The d derivative is obtained by interchanging v,d; the z derivative
+is negative. The signs hold throughout 1<v,d<=m-2 and z>=m.
+Thus increasing v,d to m-2 and decreasing z to m strictly increases
+the algebraic cosine. At that comparison point
+
+    D_e-2*N_e=(m+1)*(7*m-9)>0.
+
+No genuine comparison endpoint is needed. The actual genuine angle
+therefore satisfies
+
+    theta_M(eta)>pi/3, beta_M(tau)<pi/3,              (350.2)
+
+the second statement following from (349.2).
+
+Put p=sqrt((m-1)*(z-1)) and q=sqrt((m+1)*(z+1)). The exact
+bad-eta half-angle product (349.1) is equivalent to
+
+    p*q<=v^2+d^2+2*v*d*(q-p)/(q+p).
+
+Since z>m>1, (q-p)/(q+p)<=1/m and
+p*q>(m-1)*(z-1). Hence
+
+    z<Zb(m,v,d):=1+[v^2+d^2+2*v*d/m]/(m-1).         (350.3)
+
+The right side increases in both positive variables v,d.
+
+For clarity, the published quarter-bound argument needs no rho
+premise. The source M cosine, as an algebraic function, is
+
+    C_t(z,d)=N_t(z,d)/sqrt(D_t(z)*D_t(d)),
+    N_t(z,d)=c*(z+d)+m*(z*d+c^2-m^2+1),
+    D_t(t)=t^2+m^2+c^2+2*t*m*c-1>0.
+
+It increases in z,d. For example its z derivative has sign numerator
+
+    (m^2-1)*[c*(d*z+m^2-c^2+1)+m*(d+z)]>0,
+
+and the d version is symmetric. Set d1=m-c-1 and
+z1=Zb(m,m-2,d1). Then d<d1,z<z1, and the actual source
+cosine is less than C_t(z1,d1).
+
+If c>=m/4, use m=4+b, b>0 and
+c=[m/4+(m-2)*a]/(1+a), a>=0, which covers m/4<=c<m-2.
+The exact polynomial from (325.3) is
+
+    A4(m,c)=m^2*(m-1)*[D_t(z1)*D_t(d1)-4*N_t(z1,d1)^2]
+           =sum_{j=0}^6 A4_j(m)*c^j,
+    P4(a,b)=4^6*sum_{j=0}^6 A4_j(m)
+              *[m/4+(m-2)*a]^j*(1+a)^(6-j), m=4+b.
+
+The complete published identity in Section 331 has 69 positive
+integer coefficients and positive constant 314572800. Thus P4>0,
+A4>0, and |C_t(z1,d1)|<1/2. The actual cosine is smaller,
+contradicting beta_M(tau)<pi/3 in (350.2). We have proved
+
+    1<c<m/4.                                          (350.4)
+
+Every hypothesis used in this reconstruction has been stated above;
+neither a rho L/J inequality nor a rho angle is used. The bound
+follows from the displayed two-owner calculation.
+
+Finally (350.1), (350.3), and monotonicity of Zb imply
+
+    z+m+1<Zb(m,m-2,m-3)+m+1
+           =3*m-(4*m^2-m-12)/(m*(m-1))<3*m.           (350.5)
+
+The final numerator is positive for m>4. Consequently each of
+v,z,u is strictly below 3*m, using the explicit gap for u.
+
+## 351. A uniform opposite-M transverse-angle bound
+
+**Lemma 351.1 (repo-derived).** Let a genuine paired response
+have axes r,c and transverse coshes m,d. If
+
+    m>4, 1<c<m/4, 1<d<m-c-2, 1<r<3*m,              (351.1)
+
+then its transverse M angle beta_M is greater than pi/3.
+
+Its exact cosine C=N/sqrt(D(r)*D(c)) uses
+
+    D(t)=t^2+m^2+d^2+2*t*m*d-1>0,
+    N=d*(r+c)+m*(r*c+d^2-m^2+1).                    (351.2)
+
+The r derivative has sign numerator
+
+    N_r*D(r)-N*(r+m*d)
+      =(m^2-1)*[d*(c*r+m^2-d^2+1)+m*(c+r)]>0.      (351.3)
+
+Here m>d, and all other variables exceed one. Thus increasing r
+to 3*m strictly increases C. Work now with r=3*m. In particular
+c*r<m^2, by c<m/4. The d derivative has sign numerator
+
+    E_d=N_d*D(r)*D(c)
+        -N*[D_d(r)*D(c)+D(r)*D_d(c)]/2
+       =(m^2-1)*P,                                (351.4)
+
+where the exact polynomial identity is
+
+    P=(c+r)*d^4+4*m*(c*r+1)*d^3+6*m^2*(c+r)*d^2
+      +4*m*[c*r*(m^2-c*r)+m^2+c^2+r^2-1]*d
+      +(c+r)*[m^4-c^2*r^2+c^2+r^2-1].              (351.5)
+
+Every displayed summand is positive for c,r>1 and c*r<m^2.
+In particular m^4-c^2*r^2>0. Hence increasing d to
+d0=m-c-2 strictly increases C again. These comparisons concern
+an algebraic function with positive denominators; no intermediate
+or endpoint response is asserted to be genuine.
+
+At r=3*m,d=d0 define the polynomial
+
+    Q(m,c)=[D(r)*D(c)-4*N^2] at r=3*m,d=m-c-2.
+
+It is positive on m>4,1<c<m/4. Here is a full finite identity
+proving that assertion. Set m=4+b and
+c=[1+(m/4)*a]/(1+a), so a,b>0 cover that domain. Then
+
+    256*(1+a)^4*Q(4+b,[1+((4+b)/4)*a]/(1+a))
+      =T0(b)+a*T1(b)+a^2*T2(b)+a^3*T3(b)+a^4*T4(b),
+
+where the five coefficient polynomials are
+
+    T0=6144*b^5+97280*b^4+602624*b^3+1831168*b^2
+        +2736640*b+1612800;
+    T1=768*b^6+33664*b^5+421504*b^4+2416512*b^3
+        +7158144*b^2+10718080*b+6451200;
+    T2=1856*b^6+57760*b^5+646432*b^4+3550400*b^3
+        +10411152*b^2+15734400*b+9676800;
+    T3=1424*b^6+39176*b^5+417432*b^4+2261424*b^3
+        +6672544*b^2+10261120*b+6451200;
+    T4=332*b^6+8910*b^5+95182*b^4+524912*b^3
+        +1588368*b^2+2508160*b+1612800.              (351.6)
+
+All 34 coefficients are positive integers. Thus Q>0 and the final
+comparison cosine has absolute value less than 1/2. The actual
+cosine is strictly smaller, so beta_M>pi/3, proving the lemma.
+
+## 352. Global exclusion of the opposite-M exit
+
+Suppose any actual owner has fixed frame, up to exchanging axes or
+the two transverse labels,
+
+    kappa=(W,M,D,C,M,D).                            (352.1)
+
+It is not sigma, hence genuine. Four-distinctness forces
+W in {V,Z,U}. Its axial cosh r is below 3*m by (350.5), including
+the explicit gap when W=U. Equations (350.1) and (350.4) supply every
+other condition in (351.1). Thus beta_M(kappa)>pi/3.
+
+Kappa and eta are distinct owners because kappa has C whereas eta
+does not. Their real original M slots contribute
+
+    2*beta_M(kappa)+theta_M(eta)>2*pi/3+pi/3=pi.
+
+This contradicts the complete genuine M capacity. Consequently no
+owner of type (352.1) exists anywhere under (349.1). No claim that it
+meets a source face is used. Even if a face self-glues, kappa's two
+transverse M slots and eta's axial M slot remain three distinct
+original occurrences.
+
+## 353. The opposite-V comparison for all three remaining axes
+
+Suppose any actual owner has fixed frame
+
+    rho=(W,V,D,C,V,D).                              (353.1)
+
+It is genuine and W in {M,Z,U}. Let r be its axial cosh. In all
+three cases r<u0:=z+m+1: this is immediate for r=m or z, and it
+is the explicit gap for r=u. The actual rho is strictly genuine.
+
+Write S=beta_V+beta_D at rho and eta. Define rho's scalar
+response for a varying first axis t by
+
+    Lr(t)=(v+d)^2-(t-1)*(c-1),
+    Jr(t)=(t+1)*(c+1)-(v-d)^2,
+    S_r(t)=2*atan(K*sqrt(Lr(t)/Jr(t))),
+    K=(sqrt(v^2-1)+sqrt(d^2-1))/(v+d)>0.
+
+At u0, writing Le=(v+d)^2-(m-1)*(z-1)>0, one has
+
+    Lr(u0)=Le+z*(m-c)-m*c+1>Le>0.                 (353.2)
+
+Indeed c<m/4<m/2 and z>m. Along [r,u0], Lr decreases but
+stays positive, and Jr increases from its positive actual value.
+The whole interpolation is therefore genuine and
+
+    d(Lr/Jr)/dt=[-(c-1)*Jr-(c+1)*Lr]/Jr^2<0.     (353.3)
+
+Choose r'=(max(m,r)+u0)/2. Then r<r'<u0 and m<r'.
+Apply the published scalar implication (322.2)--(322.5) with its
+independent rho-axis variable u assigned r'. Tau and eta, all their
+strict L/J conditions, (349.1), and the complete partial M budget
+(349.2) remain unchanged. The virtual rho is genuine by (353.2)--(353.3),
+and m<r'<z+m+1 supplies the old theorem's exact rho-axis order.
+Its scalar conclusion is
+
+    theta_D(tau)+2*S_r(r')+2*S(eta)>3*pi.
+
+Since S_r(r)>S_r(r'), we obtain at the actual rho
+
+    theta_D(tau)+2*S(rho)+2*S(eta)>3*pi.           (353.4)
+
+This is a local comparison of scalar responses. When W=M or Z,
+the virtual r' is not substituted for the global m or z anywhere
+else, and is not asserted to define a shared metric or an owner.
+The published result explicitly supplies this scalar implication;
+its separate actual-incidence corollary is not applied to virtual
+data. No receiver with axial label U is needed for this comparison.
+
+The actual owners tau,rho,eta are distinct: tau has no V, and rho
+has C whereas eta does not. The charge in (353.4) consists of tau's
+one D-axis slot, rho's two V and two D slots, and eta's two V and
+two D slots. Its actual capacity is at most pi+2*pi. Therefore
+(353.4) is impossible, and every owner of type (353.1) is globally
+absent under (349.1).
+
+## 354. Original-corner transport and actual-circle closure
+
+In the fixed edge order (12,13,14,34,24,23), the original faces
+of any paired frame (R,A,B,O,A,B) are
+
+    F4=(123): {R,A,B}, F3=(124): {R,A,B},
+    F2=(134): {O,A,B}, F1=(234): {O,A,B}.          (354.1)
+
+All three face labels are distinct. A face with label set {X,C,D},
+where X is M or V, can therefore have only the fixed transverse
+pair {C,D}, {X,C}, or {X,D}. The complete receiving possibilities
+are as follows:
+
+    Face MCD: CD -> sigma;
+              MC -> an axial D interval with pair MC;
+              MD -> an opposite-M owner, excluded in Section 352.
+    Face VCD: CD -> sigma;
+              VC -> an axial D interval with pair VC;
+              VD -> an opposite-V owner, excluded in Section 353.
+
+The first alternatives are the actual single owner sigma, by
+Section 349; duplicate owners with the same CD-pair role are not
+allowed. There is one D corner on each such face. Every
+label-preserving original face map must send it to the receiving
+D corner just classified, even when different labels have equal
+numerical coshes. No paired-frame change is used.
+
+Build the actual D normal link from one closed interval per original
+local D edge occurrence, pairing its endpoints by the original face
+maps. Select the set S of original intervals consisting of
+
+1. both transverse D intervals of sigma, its edges 14 and 23;
+2. every axial D interval of every owner with fixed pair MC or VC.
+
+Each sigma interval has one endpoint on an MCD face and the other
+on a VCD face: edge 14 lies on F3,F2, and edge 23 on F4,F1.
+Each selected MC-pair axial interval has both endpoints on MCD
+faces, and each selected VC-pair axial interval has both on VCD
+faces. The complete face classification proves that every endpoint
+of S is paired to an endpoint of S, possibly on the same interval.
+
+Therefore S is a nonempty union of entire connected components of
+the actual D normal-link graph. More explicitly, the original face
+pairing gives two half-edges at each glued endpoint; endpoint closure
+leaves no half-edge exiting S, so every finite edge path from S
+stays in S. Connectedness of the actual D circle forces all of its
+original intervals to belong to S.
+
+But eta has two original transverse D intervals, with companion V
+and axes M,Z. It is not sigma; neither interval is axial D. Both
+are outside S, a contradiction. This proves that (349.1) is impossible
+and completes the proof of Theorem 348.2.
+
+## 355. Scope of the receiver-free M/Z implication
+
+This argument prescribes no source partner inventory or number of
+receiving owners. A source face can pair to another face of the same
+owner, several faces can meet the same owner, and the actual circle
+can revisit owners. The selection and transport use original edge
+intervals and original face incidences throughout. Both global exit
+exclusions, rather than just absence at the first source face, are
+needed and were proved in Sections 352--353.
+
+The proof retains the actual eta M-axis slot twice in its respective
+valid subset budgets: first with tau to establish (350.2)--(350.4), and
+then with a hypothetically existing kappa to contradict the complete
+M capacity. It does not add those two subset inequalities together
+or double-count eta in one total.
+
+The one-sided upper gap u<z+m+1 is essential to the present stated
+proof: it bounds an opposite-M U axis by 3*m and permits the scalar
+comparison for an opposite-V U axis. It is supplied by the published
+maximum-gap theorem only with that theorem's original hypotheses,
+including the degree assumption; it is not a consequence of
+connectedness in the weaker Section 341 normal form.
+
+Together with Theorem 341.2, this leaves the M/U high-axis
+pattern separate under the same source normal form. No full
+unique-flat exclusion or general six-edge geometric realization
+result is claimed.
