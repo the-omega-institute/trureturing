@@ -3067,3 +3067,799 @@ Thus the remaining band is exactly
 excluded in Proposition 56.1. The original column-basis statement
 follows from the unitary basis-direction argument at the end of §55.
 This completes the proof of Proposition 57.1.
+
+## 58. Zero-mode single-canonical orthogonality rigidity
+
+### 58.1 Actual convention and theorem
+
+Let
+
+\[
+ |b|<1,\quad h=\sqrt{\frac{3-b^2}{1+b^2}}>1,\quad a=hb,\quad
+ P=\frac{a-3+i(h+b)}2,\quad Q=\frac{-a-3+i(h-b)}2,
+ \quad A=P+3,\quad B=Q+3,
+\]
+
+where \(J\) is the three-by-three all-ones matrix and \(I\) is the
+three-by-three identity. Let the actual seed be
+
+\[
+ H_0=\frac1{\sqrt6}
+ \begin{pmatrix}J+PI&J+QI\\J+\bar QI&-J-\bar PI\end{pmatrix}.
+\]
+
+Indices are in \(\mathbb Z_3\), and \(f_l(j)=\omega^{lj}\), where
+\(\omega=e^{2\pi i/3}\). The parameter map is the one in (57.32),
+so \(|b|<1\) covers precisely \(-1<a<1\); in particular
+\(1-a^2=(1-b^2)^2/(1+b^2)>0\).
+The Fourier convention, with no additional square-root factor, is
+
+\[
+ x=\sum_{l=0}^2u_lf_l,\qquad y=\sum_{l=0}^2z_lf_l,
+ \qquad
+ \binom{U_l}{V_l}=T_l\binom{u_l}{z_l},
+\]
+
+where
+
+\[
+ T_0=\frac1{\sqrt6}\begin{pmatrix}A&B\\\bar B&-\bar A\end{pmatrix},
+ \qquad
+ T_1=T_2=\frac1{\sqrt6}
+                 \begin{pmatrix}P&Q\\\bar Q&-\bar P\end{pmatrix}.
+\]
+
+Here \(U,V\) are the Fourier coefficients of the actual two output
+channels. These blocks are unitary. For any coefficient triple \(q\),
+its inverse Fourier transform has three unit entries if and only if
+
+\[
+ \sum_l|q_l|^2=1,\qquad \sum_l\bar q_lq_{l+1}=0.
+\]
+
+This follows by expanding its squared moduli in the basis
+\(1,f_1,f_2\). Thus these are the original input and output flatness
+equations for each of \(q=u,z,U,V\).
+The canonical input rays, for \(l=0,1,2\) and \(\epsilon=\pm1\), are
+
+\[
+ c_l^\epsilon=\frac1{\sqrt6}(f_l,g_l^\epsilon f_l),\qquad
+ g_l^\epsilon=\frac{\epsilon i\alpha_l\bar\beta_l}
+ {|\alpha_l||\beta_l|},
+\]
+
+where \((\alpha_0,\beta_0)=(A,B)\) and
+\((\alpha_1,\beta_1)=(\alpha_2,\beta_2)=(P,Q)\).
+Here \(|A|^2=3+2a, |B|^2=3-2a, |P|^2=3-a, |Q|^2=3+a\),
+so none of these denominators vanishes. These six rays form an
+orthonormal basis, and each is actual common-flat. Orthogonality of an
+input ray to \(c_k^\epsilon\) is exactly
+\(u_k+\overline{g_k^\epsilon}z_k=0\).
+
+**Proposition 58.1.** Suppose every coordinate of \(x,y\in\mathbb C^3\)
+has modulus one and every coordinate of \(H_0(x,y)\) has modulus one.
+If \((x,y)/\sqrt6\) is orthogonal to either zero-mode canonical ray,
+then it is one of the six canonical rays. This includes \(a=0\).
+
+All statements concern the same shared input phases and the two original
+output channels. Explicitly, a unit vector \(v\) is common-unbiased to
+the column bases \((I,H_0)\) if and only if
+\((x,y)=\sqrt6H_0^*v\) and \(H_0(x,y)=\sqrt6v\) both have unit entries.
+The corresponding canonical column rays are \(H_0c_l^\epsilon\),
+and the common unitary transport preserves every inner product.
+Only a common projective phase of the input is free.
+
+### 58.2 Means, degeneracies, and canonical parameter
+
+Put \(X=\sum x_j\), \(Y=\sum y_j\). Orthogonality to
+\(c_0^{-\epsilon}\) is precisely \(Y=gX\), where
+\(g=g_0^\epsilon\). Thus \(|g|=1\) and
+\(\operatorname{Re}(A\bar B\bar g)=0\).
+Set
+
+\[
+ U=A+Bg,\qquad V=\bar B-\bar Ag;
+ \qquad |U|^2=|V|^2=6.                         \tag{58.1}
+\]
+
+If \(X=0\), both channel zero-mode coefficients vanish. A unit-phase
+triple with any zero Fourier coefficient is monochromatic: after
+modulation its three phases sum to zero and hence are the three cube
+roots of one common phase, in some order. The two input channel modes
+must agree, since otherwise an output channel would have exactly two
+nonzero Fourier coefficients, which is incompatible with three unit
+moduli. Therefore this case is canonical.
+
+If one input channel is constant, \(|X|=|Y|=3\) makes the other constant,
+and (58.1) makes the ray canonical. Otherwise multiply the entire input by
+one common phase to arrange
+
+\[
+ X=3t,\qquad Y=3gt,\qquad 0<t<1.              \tag{58.2}
+\]
+
+The antiunitary \(\Theta(x,y)=(-\bar y,\bar x)\) satisfies
+\(H_0\Theta=-\Theta H_0\) and exchanges the two zero-mode canonical
+rays projectively. Thus, if either channel has three distinct entries,
+it suffices to treat the case where \(x\) has three distinct entries.
+The case where both channels have exactly two distinct entries is
+retained separately below.
+
+For later algebra put
+
+\[
+ s=h^2,\quad \lambda=\frac{2h^3}{s+3},\quad
+ \rho=\lambda+w,\qquad w^2=1+\lambda^2,\qquad
+ b^2=\frac{3-s}{1+s}.                           \tag{58.3}
+\]
+
+Both real signs of \(w\) are retained. Define
+
+\[
+ D=-b(h+\rho)+i(3\rho-h),\qquad
+ N=-3-\rho h+i(b-\rho a),\qquad
+ g=\frac{\bar N}{\bar D}.                       \tag{58.4}
+\]
+
+These give exactly the two canonical phases in (58.1). Here is a direct
+check of the parameterization and its denominators. Let
+
+\[
+ L_0=3-ib-(a+ih)\bar g,\qquad
+ L_1=(3+ib)\bar g+a-ih.
+\]
+
+The two summands in \(L_1\) have squared moduli \(9+b^2\) and
+\(3-b^2\), so \(L_1\ne0\). Also
+\(\operatorname{Re}(L_0\bar L_1)=4\operatorname{Re}(A\bar B\bar g)=0\).
+Consequently \(-L_0/L_1=i\rho\) with \(\rho\) real.
+The equation \(|g|=1\) then gives
+
+\[
+ (s+3)\rho^2-4h^3\rho-(s+3)=0.
+\]
+
+Solving \(L_0+i\rho L_1=0\) gives (58.4), and substitution gives
+\(L_1=-12/D\). Conversely, (58.3)--(58.4) give a unit canonical phase.
+In particular \(D\ne0\); the norm identity (58.12) below is another
+explicit verification throughout the domain.
+
+### 58.3 Three distinct phases: necessary equations without lost zero factors
+
+Let \(u=x-t\mathbf1\) and \(\xi=x_0x_1x_2\). The elementary
+symmetric functions of the three unit phases give the coordinatewise
+identities
+
+\[
+ u^2=t u+\xi\bar u+2t(t-\xi)\mathbf1,
+ \qquad |u|^2=(1-t^2)\mathbf1-t(u+\bar u).       \tag{58.5}
+\]
+
+The vectors \(u,\bar u\) are linearly independent: otherwise the
+three distinct unit-circle points \(x_j\) would lie on a real affine
+line. They form a basis of the complex zero-sum plane. Therefore there
+are unique complex \(c,d\) with
+
+\[
+ y=gt\mathbf1+c u+d\bar u.
+\]
+
+For a channel \(kt\mathbf1+C u+D_1\bar u\), the coefficient of \(u\)
+in its squared-modulus vector is
+
+\[
+ t(\bar k C+k\bar D_1-|C|^2-|D_1|^2+C\bar D_1)
+       +\bar\xi\bar C D_1.                    \tag{58.6}
+\]
+
+Both this coefficient and its conjugate must vanish for a flat channel.
+Apply (58.6) to the actual triples
+
+\[
+ (k,C,D_1)=(g,c,d),\quad
+ (U,P+Qc,Qd),\quad(V,\bar Q-\bar Pc,-\bar Pd).
+\]
+
+The sum of the last two equations minus six times the first gives
+
+\[
+ L_0+L_1c+\bar L_1\bar d=0.
+\]
+
+Hence write, with real \(X_1,Y_1\),
+
+\[
+ d=D(X_1+iY_1),\qquad c=i\rho-D(X_1-iY_1).     \tag{58.7}
+\]
+
+This is an invertible real-linear parameterization since \(D\ne0\).
+Put \(e=\bar\xi/t\), and define
+
+\[
+ \begin{aligned}
+ Y_c&=\bar g c+g\bar d-|c|^2-|d|^2+c\bar d,\\
+ T_c&=\bar U(P+Qc)+U\bar Q\bar d-|P+Qc|^2-|Qd|^2
+                                  +(P+Qc)\bar Q\bar d,\\
+ E_c&=\bar c(T_c-|Q|^2Y_c)-Q\bar P Y_c,\\
+ Z(X_1,Y_1)&=iD E_c.
+ \end{aligned}                                               \tag{58.8}
+\]
+
+The first two equations (58.6), divided only by \(t>0\), are
+
+\[
+ Y_c+e\bar c d=0,\qquad
+ T_c+e(|Q|^2\bar c+Q\bar P)d=0.
+\]
+
+Multiplying their difference by \(\bar c\) and subtracting
+\(Q\bar P\) times the first proves \(E_c=0\). No division by
+\(c\) or \(d\) occurs; their zero cases remain included.
+
+There is one more necessary polynomial, from the constant coefficient
+of the original \(|y_j|^2=1\) equations. Write
+\(A_c=|c|^2+|d|^2\), \(B_c=|cd|^2\), and set
+
+\[
+ \mathcal N=(A_c-1)(|Y_c|^2-B_c)
+                   +4B_c\operatorname{Re}(c\bar d+Y_c).       \tag{58.9}
+\]
+
+Then \(\mathcal N=0\). Indeed the original constant equation is
+\((A_c-1)(1-t^2)+4t\operatorname{Re}(c\bar d(t-\xi))=0\).
+Use \(|e|^2=t^{-2}\) and \(Y_c=-e\bar c d\), then multiply by
+\(B_c\), to obtain (58.9). This is only a necessary implication and does
+not divide by \(B_c\). Thus it introduces no excluded zero branch.
+
+### 58.4 Exact quadratic certificate for \(1<s<3\)
+
+All coefficients in (58.8)--(58.9) belong to the real algebra generated by
+\(h,b,w\), with the two square relations (58.3), and its complexification.
+For a real coefficient \(F\), use the four-conjugate product
+
+\[
+ \mathfrak N(F)=\prod_{\sigma,\tau\in\{1,-1\}}
+                 F(h,\sigma b,\tau w).                       \tag{58.10}
+\]
+
+The following supplies full coefficient definitions and finite arithmetic
+rules for the certificate, without requiring expanded high-degree rows.
+Expand the explicitly defined quadratic (58.8) as
+
+\[
+ Z=z_{00}+z_{10}X_1+z_{01}Y_1+z_{20}X_1^2
+                  +z_{11}X_1Y_1+z_{02}Y_1^2.
+\]
+
+Its three quadratic coefficients are real. Coefficients can equivalently
+be reconstructed by evaluating at \((0,0),(1,0),(-1,0),(0,1),(0,-1),(1,1)\):
+the linear coefficients are the corresponding half-differences, the
+pure quadratic coefficients are half-sums minus \(z_{00}\), and the
+mixed coefficient is \(Z(1,1)-Z(1,0)-Z(0,1)+Z(0,0)\).
+Set
+
+\[
+ L=\operatorname{Im}z_{10},\quad
+ x_0=-\operatorname{Im}z_{00}/L,\quad
+ x_1=-\operatorname{Im}z_{01}/L,
+\]
+
+and define the real coefficients \(q_j\) by
+
+\[
+ q_0+q_1Y_1+q_2Y_1^2=\operatorname{Re}Z(x_0+x_1Y_1,Y_1).
+                                                               \tag{58.11}
+\]
+
+Direct multiplication with (58.3), or successive reduction of \(b^2\)
+and \(w^2\) by their displayed values, gives
+
+\[
+\begin{aligned}
+ \mathfrak N(|D|^2)&=
+ \frac{2^8 3^4(s+1)^2(4s^2-3s+9)^2}{(s+3)^4},\\
+ \mathfrak N(L)&=
+ \frac{2^8 3^8(s-3)^2(s+1)^2(3s^2-2s+3)^2}{(s+3)^2},\\
+ \mathfrak N(q_2)&=
+ \frac{2^{20}3^4(s+1)^2(4s^2-3s+9)^4G(s)^2}
+ {(s-3)^4(3s^2-2s+3)^4},\qquad
+ G(s)=s^3+25s^2-84s+36.                         \tag{58.12}
+\end{aligned}
+\]
+
+The first two quantities are nonzero for \(1<s<3\). If \(G(s)\ne0\),
+normalize (58.11) to the monic polynomial
+\(Q_2(Y_1)=Y_1^2+\widehat q_1Y_1+\widehat q_0\).
+Substitute \(X_1=x_0+x_1Y_1\) into (58.9) and reduce every power by
+\(Y_1^2=-\widehat q_1Y_1-\widehat q_0\), obtaining
+\(n_0+n_1Y_1\). Thus a common zero would force
+
+\[
+ R=n_0^2-\widehat q_1n_0n_1+\widehat q_0n_1^2=0.
+\]
+
+The same exact arithmetic rules give the identity
+
+\[
+ \mathfrak N(R)=
+ \frac{2^{16}3^{24}s^4(s-1)^4(s+1)^8
+ (s^2+24s-9)^4(s^3-2s^2-3s+9)^4}
+ {(s+3)^{16}G(s)^8}.                            \tag{58.13}
+\]
+
+Every numerator factor is nonzero on \(1<s<3\). For the only less
+immediate factor, write \(s=2+v\), \(-1<v<1\); then
+\(s^3-2s^2-3s+9=3+v+v^2(4+v)>2\).
+Thus (58.13) contradicts \(R=0\).
+
+#### 58.4.1 The exceptional leading coefficient
+
+The locus \(G(s)=0\) is not discarded. Put
+
+\[
+ D_4(s)=9s^4-35s^3+37s^2+15s-18,
+\quad
+ w_0=-\frac{2h(s-3)(s+1)(9s^3-16s^2+30s-9)}{(s+3)D_4(s)}.
+                                                               \tag{58.14}
+\]
+
+There are exactly two algebraic choices \(w=w_0\) and \(w=-w_0\),
+because
+
+\[
+ w_0^2-(1+\lambda^2)=
+ -\frac{(s+1)(3s^2-2s+3)^2G(s)}{D_4(s)^2}.
+\]
+
+The denominator is nonzero there:
+\(\operatorname{Res}_s(G,D_4)=-2^7 3^{15}\).
+For \(w=w_0\), (58.11) has \(q_2=0\), and reduction modulo \(G\) gives
+
+\[
+ q_1=-\frac{16bh}{81}(113s^2+3080s-2505)\ne0.
+\]
+
+At its forced root \(Y_1=-q_0/q_1\), the original polynomial (58.9)
+reduces to
+
+\[
+ \mathcal N=\frac{4377023s^2+120515585s-62310990}{472392}>0,
+                                                               \tag{58.15}
+\]
+
+since \(s>1\). For \(w=-w_0\), the quadratic leading coefficient is
+nonzero; its product under \(b\mapsto-b\) is
+
+\[
+ \frac{147456s(s+1)^2(4s^2-3s+9)^2
+ (9s^3-16s^2+30s-9)^2}
+ {(s+3)^2(3s^2-2s+3)^4}>0.
+\]
+
+Here \(9s^3-16s^2+30s-9=9s(s-1)^2+2s^2+21s-9>0\).
+The same monic reduction defining \(R\) gives, modulo \(G\),
+
+\[
+ R=\frac{-4595029s^2+13975190s-5899332}{128}.
+\]
+
+Its numerator cannot vanish at a root of \(G\), since their resultant
+is \(2^4 3^{17}\cdot11\cdot41\ne0\).
+These identities resolve both branches of (58.14), including every
+vanishing-leading-coefficient case.
+
+#### 58.4.2 The central parameter
+
+For \(a=b=0\), \(h=\sqrt3\), write \(g=\epsilon i\).
+The linear equation in §58.3 becomes
+\(c=\bar d+i(\sqrt3-2\epsilon)\).
+The equation \(E_c=0\) is, after a nonzero scalar factor,
+
+\[
+ \bar d^2+d^2-(1+\epsilon\sqrt3)|d|^2
+                 +i(\epsilon-\sqrt3)(d+\bar d)=0.
+\]
+
+Its imaginary part forces \(\operatorname{Re}d=0\), and its real
+part then forces \((3+\epsilon\sqrt3)(\operatorname{Im}d)^2=0\).
+Thus \(d=0\), but the first original equation (58.6) divided by \(t\)
+is then \(-9+5\epsilon\sqrt3=0\), impossible.
+This finishes the three-distinct-phase case, without assuming \(a\ne0\).
+
+### 58.5 Both channels have two distinct phases
+
+Use a simultaneous permutation and a common phase to write
+\(x=(1,1,q)\), \(|q|=1\), \(q\ne1\).
+Equality \(|Y|=|X|\) implies that the relative phase of the two values
+in \(y\) is either \(q\) or \(\bar q\), because
+\(|2+q|^2=5+4\operatorname{Re}q\).
+Consequently
+
+\[
+ y=gS^m x\quad\hbox{or}\quad
+ y=\gamma S^m\bar x,\qquad
+ \gamma=g\frac{2+q}{2+\bar q},\quad m=0,1,2.      \tag{58.16}
+\]
+
+Every Fourier coefficient of either input channel is nonzero here:
+\(q\ne1\), and \(2+q\ne0\).
+Here \(S(x_0,x_1,x_2)=(x_1,x_2,x_0)\). The first alternatives in
+(58.16) are excluded by Proposition 46.1 of the main theory, which
+rules out a shared phase times any cyclic shift for full-support actual
+inputs on the whole open real branch, including \(a=0\). To match its
+matrix convention exactly, set
+\(p_{\rm seed}=P+1,\ q_{\rm seed}=Q+1\). Its unnormalized upper blocks
+are \(J+PS,J+QS\), and its lower blocks are explicitly
+\(J+\bar Q S^2,-J-\bar P S^2\), namely \(B^*,-A^*\) in that convention.
+Left multiplication by \(\operatorname{diag}(S^2,S)\)
+gives exactly the displayed \(H_0\). This is only an output permutation,
+so preserves actual flatness and leaves both input channels unchanged.
+Furthermore \(y=gS^mx\) makes the two input autocorrelation rows
+proportional, hence gives precisely the forbidden zero determinant.
+This invocation uses no cyclic orthogonality assumption.
+
+A transposition of the two equal entries of \(x\) interchanges the
+remaining conjugate cases \(m=1,2\), while commuting with \(H_0\).
+Thus only \(m=0,1\) remain.
+For finite real \(v\), put
+
+\[
+ q=\frac{1+iv}{1-iv},\quad
+ D_v=(1-iv)(3+iv),\quad
+ X_v=(D_v,D_v,(1+iv)(3+iv)),
+\]
+
+and put \(Y_v=(y_a,y_a,y_b)\) for \(m=0\), or
+\(Y_v=(y_a,y_b,y_a)\) for \(m=1\), where
+
+\[
+ y_a=g(1+iv)(3-iv),\qquad y_b=g(1-iv)(3-iv).
+\]
+
+Then the actual input is \((X_v,Y_v)/D_v\), and
+\(|D_v|^2=(1+v^2)(9+v^2)>0\). Form its six original unnormalized
+output numerators
+
+\[
+ F_j=PX_{v,j}+QY_{v,j}+\sum X_v+\sum Y_v,
+\quad
+ F_{j+3}=\bar QX_{v,j}-\bar PY_{v,j}+\sum X_v-\sum Y_v.
+\]
+
+Order the six residual polynomials as top 0, bottom 0, top 1, bottom 1,
+top 2, bottom 2, and divide each
+\(|F_j|^2-6|D_v|^2\) by \(v\), obtaining real cubics \(p_0,\ldots,p_5\).
+This division is legitimate for the nonconstant finite case \(v\ne0\).
+The value \(v=0\) is the already classified constant canonical input.
+
+Here are explicit coefficient operations specifying a small certificate.
+Let \(k=[v^3]p_0\), \(p_*=p_0/k\),
+\(r_j=p_j-([v^3]p_j)p_*\) for \(1\le j\le5\), and
+\(\ell=[v^2]r_1\).
+For \(1<s<3\), exact reduction using (58.3) gives
+
+\[
+\begin{aligned}
+ \mathfrak N(k)&=\frac{2^8(s+3)^2(s^2-2s+3)^2}{(4s^2-3s+9)^2}>0,\\
+ \mathfrak N(\ell)&=
+ \frac{2^{12}3^4(s-1)^4(s+3)^2}{(s+1)^2(s^2-2s+3)^2}>0,\\
+ Q_v:=r_1/\ell&=v^2-\frac{2b(s+1)}{s-1}v-\frac{s+3}{s-1}.
+                                                               \tag{58.17}
+\end{aligned}
+\]
+
+For \(j=2,3,4,5\), let
+\(L_j=r_j-([v^2]r_j)Q_v=A_jv+B_j\).
+Then
+
+\[
+ (s-3)B_j=b(3-5s)A_j,
+\]
+
+and the norm of \(\sum_{j=2}^5A_j^2\) is respectively
+
+\[
+\begin{cases}
+\displaystyle
+ \frac{2^{44}3^8(s-3)^4(s+3)^8}
+ {(s-1)^8(4s^2-3s+9)^4},&m=0,\\[6pt]
+\displaystyle
+ \frac{2^{32}(s-3)^4(s+3)^8(4s^3-7s^2+30s+9)^4}
+ {(s-1)^8(s+1)^4(4s^2-3s+9)^4},&m=1.
+\end{cases}                                                   \tag{58.18}
+\]
+
+Both are nonzero, since
+\(4s^3-7s^2+30s+9=4s(s-1)^2+s^2+26s+9>0\).
+Thus at least one retained linear equation forces
+\(v=b(5s-3)/(s-3)\). But substituting this into (58.17) gives
+
+\[
+ Q_v(v)=-\frac{4(4s^2-3s+9)}{(s-3)(s+1)}>0,
+\]
+
+a contradiction. The missing circle-chart point \(q=-1\) is also
+excluded: its first residual is the leading degree-four coefficient
+\(k\), which is nonzero by (58.17).
+
+At \(a=b=0\), for either \(g=\epsilon i\), the first two cubics
+for both \(m=0,1\) are exactly
+
+\[
+ -4\{v^3+9v+\epsilon(3v^2-9)\},\qquad
+ -4\{v^3+9v-\epsilon(3v^2-9)\}.
+\]
+
+Their sum forces \(v(v^2+9)=0\), hence \(v=0\) for real \(v\),
+where neither cubic vanishes. Their leading coefficients are \(-4\),
+so the point \(q=-1\) is excluded as well. All two-valued cases are
+therefore impossible.
+
+### 58.6 Conclusion and exact scope
+
+All mean-zero, constant-channel, distinct-channel, repeated-coordinate,
+central, and finite/infinite phase-chart cases have been retained.
+The theorem follows for both zero-mode canonical rays throughout
+\(-1<a<1\). The endpoint \(h=1\), or \(b=\pm1\), is not included;
+the certificate deliberately has vanishing factors there.
+
+This constrains mixed orthogonality without assuming a basis or a triple
+is covariant under a cyclic permutation. It does not by itself establish
+single-canonical rigidity for the two nonzero modes, classify all mixed
+orthogonal triples, or resolve the general fourth-basis problem.
+
+### 58.7 Endpoint check
+
+The open endpoint cannot be added to this theorem. At \(b=h=a=1\),
+put \(z=(1-2i)/\sqrt5\), and take
+\(x=(1,z,-z)\), \(y=(-1,1,-z)\).
+Here \(P=-1+i,Q=-2\), \(g_0^-=z\). All six input entries have
+modulus one, and direct multiplication gives six squared output moduli
+six before division by \(\sqrt6\). Moreover
+\(\sum x+\bar z\sum y=1-1=0\).
+Thus this is a genuine noncanonical common-flat ray orthogonal to a
+zero-mode canonical ray at the excluded endpoint. Its input channels
+are not monochromatic, so it is not one of the canonical rays.
+
+## 59. Single-canonical orthogonality rigidity at the central seed
+
+### 59.1 Statement, actual Fourier equations, and missing modes
+
+Use the actual matrix, Fourier convention, and canonical rays of §58.1.
+At the central seed,
+
+\[
+ a=b=0,\qquad h=\sqrt3,\qquad
+ P=Q=\frac{-3+i\sqrt3}{2},\qquad
+ A=B=\frac{3+i\sqrt3}{2},\qquad g_l^+=i.
+\tag{59.1}
+\]
+
+**Proposition 59.1.** At this seed, every actual common-flat input ray
+orthogonal to any one of the six canonical rays is canonical. For a
+fixed canonical ray its actual common-flat orthogonal rays are exactly
+the other five members of the canonical orthonormal basis.
+
+The zero-mode cases are Proposition 58.1. First consider orthogonality
+to \(c_1^+\), which is exactly \(z_1=-iu_1\). If \(u_1=0\), both
+selected-mode coefficients vanish. A unit-phase triple with one zero
+Fourier coefficient is monochromatic, as proved in §58.2. Hence both
+input channels are monochromatic. Their modes must agree: otherwise an
+output channel has exactly two nonzero Fourier coefficients, since all
+entries of the blocks \(T_l\) are nonzero, contradicting that same
+unit-phase property. With a common mode, actual flatness gives one of
+the two canonical phases. This treats the missing selected mode.
+
+Otherwise use only a common phase to take \(u_1=t>0\). Suppose the
+ray is noncanonical. Then every \(u_l\) and \(z_l\) is nonzero.
+Indeed a zero coefficient in either channel would make that channel
+monochromatic. Its selected-mode coefficient is nonzero, so its sole
+mode would be 1 and its coefficient would have modulus one. The equal
+selected-mode modulus in the other channel and its norm equation
+\(\sum_l|z_l|^2=1\), or \(\sum_l|u_l|^2=1\), force that channel
+to be monochromatic at mode 1 as well. This would be canonical.
+
+### 59.2 Normalized mode maps and the rank-one case
+
+Put
+
+\[
+ \gamma=-i,\qquad r=\frac{z_0}{\gamma u_0},\quad
+ s=\frac{z_2}{\gamma u_2},\quad R=\bar r,\quad T=\bar s,
+ \qquad \omega=\frac{-1+i\sqrt3}{2},
+\]
+
+and define
+
+\[
+ \begin{aligned}
+ A_1&=(1+i)/2,& B_1&=(1-i)/2,\\
+ F&=\omega^2(A_1+B_1r),&G&=\omega(B_1+A_1r),\\
+ D&=A_1+B_1s,&E&=B_1+A_1s.
+ \end{aligned}
+\tag{59.2}
+\]
+
+These are the actual output amplitudes relative to the selected mode's
+fixed unit output phases. More explicitly,
+
+\[
+ T_1\binom{1}{\gamma}=\binom{\lambda}{\mu},\qquad
+ \lambda=\frac{P(1-i)}{\sqrt6},\quad
+ \mu=\frac{\bar P(1+i)}{\sqrt6},\quad
+ |\lambda|=|\mu|=1.
+\]
+
+Dividing the two whole output channels by \(\lambda,\mu\) gives
+Fourier triples \((Fu_0,t,Du_2)\) and \((Gu_0,t,Eu_2)\).
+Dividing the two input channels by \(1,\gamma\) gives
+\((u_0,t,u_2)\) and \((ru_0,t,su_2)\). These fixed unit divisions
+only preserve their norm and autocorrelation equations; they do not
+choose independent phases for an actual candidate.
+
+Let
+
+\[
+ c=(\bar u_0u_1,\bar u_1u_2,\bar u_2u_0).
+\]
+
+All three coordinates are nonzero. The two original input flatness
+conditions give
+
+\[
+ (1,1,1)\mathbin{\cdot}c=0,\qquad
+ (R,s,rT)\mathbin{\cdot}c=0.
+\tag{59.3}
+\]
+
+If \(R=s\), subtracting the two equations gives \(rT=R\), since
+\(c_2\ne0\). Now \(T=r\), so \(r^2=\bar r\). As \(r\ne0\),
+this implies \(|r|=1\) and \(r^3=1\). Hence
+\(r=\omega^m,s=\omega^{-m}\), with \(m=0,1,2\).
+For these three values, respectively, the matrix with rows
+
+\[
+ (1,1,1),\qquad(\bar F,D,\bar D F),\qquad
+ (\bar G,E,\bar E G)
+\]
+
+has determinants
+
+\[
+ 3\sqrt3\,i,\qquad
+ \frac94-\frac{3\sqrt3}{4}i,\qquad
+ -\frac94-\frac{3\sqrt3}{4}i.
+\tag{59.4}
+\]
+
+Each is nonzero, whereas the remaining actual autocorrelation equations
+would make its product with \(c\) zero. Thus the rank-one input-row
+case is impossible. No determinant-zero stratum is dropped here.
+
+### 59.3 Independent input rows and the norm obstruction
+
+It remains to treat \(R\ne s\). The two rows in (59.3) are
+independent and have null vector
+
+\[
+ n=(s-rT,rT-R,R-s).
+\]
+
+Consequently \(c=\tau n\) for some \(\tau\ne0\), and all three
+\(n_j\) are nonzero. Put
+
+\[
+ \mathcal P=(\bar F,D,\bar D F)\mathbin{\cdot}n,\qquad
+ \mathcal Q=(\bar G,E,\bar E G)\mathbin{\cdot}n,\qquad
+ L=-\frac12-\frac{\sqrt3}{6}+i\frac{1+\sqrt3}{2}.
+\]
+
+The two original output flatness equations require
+\(\mathcal P=\mathcal Q=0\). Expansion of the explicit formulas
+(59.2), with \(R=\bar r,T=\bar s\), gives the identity
+
+\[
+ L\mathcal P+\bar L\mathcal Q
+           =(R-s)(rT+2+\sqrt3).
+\tag{59.5}
+\]
+
+As \(R-s\ne0\), it follows that
+
+\[
+ rT=-k,\qquad Rs=-k,\qquad k=2+\sqrt3>0.
+\tag{59.6}
+\]
+
+In particular \(s=-k/R,T=-k/r\); the denominators are nonzero by
+full support.
+
+Let \(w_l=|u_l|^2\). Since \(c=\tau n\),
+
+\[
+ \frac{w_2}{w_0}=
+ \frac{|c_1|^2}{|c_0|^2}=
+ \frac{|n_1|^2}{|n_0|^2}.
+\]
+
+Both input coefficient triples have squared norm one, and their
+selected-mode masses agree. Their norm difference therefore forces
+
+\[
+ N=(|r|^2-1)|n_0|^2+(|s|^2-1)|n_1|^2=0.
+\tag{59.7}
+\]
+
+On the relations (59.6), direct substitution gives
+
+\[
+ \begin{aligned}
+ |r|^2N&=(6+4\sqrt3)J,\\
+ J&=v^2+k^2+(1+\sqrt3)x(k-v),\qquad
+ v=|r|^2>0,\quad x=\operatorname{Re}r.
+ \end{aligned}
+\tag{59.8}
+\]
+
+Because \(|x|\le\sqrt v\) and \((1+\sqrt3)^2=2k\),
+
+\[
+ J\ge v^2+k^2-\sqrt{2kv}\,|k-v|
+   \ge\frac{v^2+k^2}{2}>0.
+\tag{59.9}
+\]
+
+The second inequality is \(2AB\le A^2+B^2\) with
+\(A=|k-v|, B=\sqrt{2kv}\), for which \(A^2+B^2=v^2+k^2\).
+This contradicts (59.7). Every denominator used in this argument was
+nonzero on the retained full-support branch, and every equation was
+an original flatness consequence. The case \(c_1^+\) is proved.
+
+### 59.4 Symmetries, endpoint, and scope
+
+Synchronous reflection \(j\mapsto-j\) commutes with \(H_0\) and
+exchanges modes 1 and 2. The antiunitary
+\(\Theta(x,y)=(-\bar y,\bar x)\) preserves unit entries and satisfies
+\(H_0\Theta=-\Theta H_0\) by block multiplication. Thus it preserves
+actual common-flatness. At (59.1) it maps \(c_l^\epsilon\)
+projectively to \(c_{-l}^{-\epsilon}\). Reflection followed by
+\(\Theta\) flips the sign at a fixed nonzero mode. This proves all
+four nonzero-mode cases. Together with Proposition 58.1 it proves
+Proposition 59.1, without assuming cyclic covariance of any basis or
+triple.
+
+For comparison, the excluded endpoint \(b=h=a=1\) has a genuine
+noncanonical ray orthogonal to \(c_1^+\). Let \(\zeta=e^{i\pi/12}\),
+\(M=\sqrt6H_0\), and
+
+\[
+ v=(1,\zeta^{-4},\zeta^{-7},\zeta^{-8},\zeta,\zeta^{-3}),
+ \qquad P=-1+i,\quad Q=-2,\quad g_1^+=\frac{1+i}{\sqrt2}.
+\]
+
+Substitution, using \(\zeta^4=(1+i\sqrt3)/2\), gives
+
+\[
+ (|(Mv)_j|^2)_{j=0}^5=(6,6,6,6,6,6),\qquad
+ \langle c_1^+,v\rangle=0.
+\]
+
+The squared moduli of the two channel Fourier triples are respectively
+\((\alpha,1/9,\beta)\) and \((\beta,1/9,\alpha)\), where
+
+\[
+ \alpha=\frac{8+3\sqrt2-\sqrt6}{18}>0,\qquad
+ \beta=\frac{8-3\sqrt2+\sqrt6}{18}>0.
+\]
+
+Thus all six Fourier coefficients are nonzero, and this endpoint ray
+is noncanonical. The endpoint calculation makes no assertion about
+nonzero-mode orthogonality on \(0<|a|<1\).
+
+Proposition 59.1 classifies only the common-flat rays orthogonal to an
+already specified canonical ray at the central seed. Proposition 58.1
+provides the zero-mode classification throughout the open real branch.
+These results impose mixed-orthogonality constraints without a covariance
+hypothesis. They do not prove that an arbitrary further orthonormal
+basis must contain a canonical ray, classify the remaining nonzero-mode
+fibres away from the center, or settle the general fourth-basis problem.
