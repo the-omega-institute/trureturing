@@ -617,7 +617,7 @@ minorant, so that estimate fails on the original core. This is a
 conditional paper obstruction to that sufficient gradient route,
 without a diffusion-curvature equivalence or new Lean certification.
 It does not determine the sign of the integrated half-slack on
-$\mathcal R$, or invalidate the existing conditional $0.41$ bound.
+$\mathcal R$, or invalidate the [existing conditional $921/2000=0.4605$ bound](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails).
 The full half-bound, Robin and RH remain unresolved.
 
 ### Positive radial derivative transport needs a different interface

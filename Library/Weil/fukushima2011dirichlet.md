@@ -814,7 +814,7 @@ finite matrix signs or RH assumption.
 
 This excludes that sufficient pointwise gradient route at rate
 $e^{-t}$. It excludes neither a weaker gradient estimate nor an
-integrated or directly estimated global half-bound. The [accepted conditional $0.41$ lower bound](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/sharper-exterior.md)
+integrated or directly estimated global half-bound. The [accepted conditional $921/2000=0.4605$ lower bound](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails)
 remains reusable, while positivity on
 the complete critical quotient, the one-half bound, Robin and RH
 remain unresolved. No precise smaller optimal curvature constant is
@@ -1184,3 +1184,213 @@ supply a cofinal half-bound by this same formula. This restriction
 concerns this supplier; it does not rule out signed tails, a different
 justified approximation map or a different height-to-form transfer.
 The endpoint half-bound, RH and strict Robin remain unresolved.
+
+## A fixed unwindowed transfer to the original variance gap
+
+The [existing saved comparison](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/target-correction.md#reuse-the-positive-blocks-when-a-requested-gap-test-fails)
+already supplies the conditional global constant $921/2000=0.4605$.
+The application below uses the same original even minimal form and
+accepted scalar suppliers, and supplies $15/32>921/2000$. It reuses the
+Fourier commutator, whole-projector argument, weighted theta tails,
+actual zero count and published verified height. It introduces no new
+generic method, priority claim or Lean certification.
+
+### The unwindowed image has an actual paired zero formula
+
+Put $W_N=U^{-1}p_NU$, without a spatial multiplier. For every even
+complex $h\in L^2(\nu)$, $g=p_NUh$ belongs to $H^1$, and (WF2) puts
+$h_N=U^{-1}g$ in the original minimal form domain. Its physical test is
+$f=\Phi h_N=sg$.
+
+Use the scaled smooth cutoffs from the
+[theta mixed-nullity passage](lagarias2004li.md#mixed-nullity-needs-a-domain-bridge),
+with uniformly bounded scaled derivatives. Then
+$(\chi_R-1)g\to0$ in $H^1$, so (WF2) gives
+$\chi_Rh_N\to h_N$ in the actual form norm. Compact frequency support
+makes every derivative of $g$ bounded. The original (WC2) tails therefore
+give
+
+$$
+\int e^{|x|/2}\left(|(\chi_R-1)f|
+ +|((\chi_R-1)f)''|\right)dx\longrightarrow0.
+\tag{UG1}
+$$
+
+The existing closed-strip integration-by-parts bound and actual
+multiplicity-weighted inverse-fourth summability let the compact paired
+zero formula pass to this limit. Consequently
+
+$$
+q(h_N)=\sum_\rho m_\rho\widehat f(z_\rho)
+ \overline{\widehat f(\overline{z_\rho})}.
+\tag{UG2}
+$$
+
+Only this specified noncompact image is added to the compact-test
+identity. No maximal-domain equality or discarded critical-projection
+tail is used. The energy and every prime power pass through the original
+closed form. The sign and normalization of the off-line paired product
+remain those in (VH7).
+
+### A prescribed smooth frequency cutoff
+
+Let $w=15/16$. Define the even trapezoid $p_0$ to equal one on
+$[-33/32,33/32]$, decrease linearly to zero at $\pm63/32$, and vanish
+outside. Let $b_0(x)=64(1-64|x|)_+$, fix one nonnegative even smooth
+unit-mass $b_1$ supported in $[-1/64,1/64]$, and put
+$b=b_0*b_1$, $p=p_0*b$.
+This one fixed construction has the original (WF7) hypotheses,
+$L_p\le16/15$ and $\|b\|_2^2\le128/3$.
+The four translates in $p_0''*b$ have disjoint supports. Young's
+inequality, Cauchy–Schwarz and Plancherel in the stated normalization give
+
+$$
+\begin{gathered}
+\|p'\|_2^2\le\frac{32}{15},\qquad
+\|p''\|_2^2\le\frac{131072}{675},\\
+C_p^2\le\tfrac12(\|p'\|_2^2+\|p''\|_2^2)<100.
+\end{gathered}
+\tag{UG3}
+$$
+
+Here $\check p_0=(2\pi)^{-1}\int e^{ix\xi}p(\xi)d\xi$ in the
+(WF7) definition of $C_p$; the subscript does not denote the trapezoid.
+For the last bound apply Cauchy–Schwarz with weight $(1+x^2)^{-1}$.
+
+### Charge the constants from accepted original-theta inputs
+
+The accepted
+[derivative supplier](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/derivative-bandwidth.md)
+gives $S_j=\|s^{(j)}\|_2^2$ with
+$S_0<1/2$, $S_1<2$, $S_2<42$, $S_3<28000$. Thus
+$\|s\|_{H^3}^2=S_0+3S_1+3S_2+S_3<28133$.
+These saved inputs are reused without recomputing theta derivatives.
+
+The same (WC1) series constants admit the elementary bounds
+$C_0<60$, $C_1<650$, $C_2<7200$. To check them, use
+$P_{1,a}=a-2z$, $P_{2,a}=a^2-4(a+1)z+4z^2$,
+$3<\pi<22/7$ and $e^3>20$ (its positive Taylor polynomial through
+degree eight exceeds twenty). Coefficient caps are respectively
+$59n^4$, $(1281/2)n^6$, $6969n^8$; the omitted tail after $n=1$
+is at most $2^{4+2j}/7992$ times that coefficient cap, because
+$e^{-3\pi}<1/8000$ and the shared ratio is below $1/1000$.
+
+It follows that $A_1<19$, $A_2<885$, $B_2<1250$ in (WC1)–(WC2).
+For $\zeta=\pi/2-3/8>9/8$, the same scalar maxima give
+$M_1<1$, $M_3<(8/3)^3/20<1$ and
+$M_5<(40/9)^5/32<55$. Therefore
+
+$$
+\begin{gathered}
+K_0<8,\quad K_1<152,\quad K_2<550000,\\
+\|(s^2)'\|_\infty<2432,\qquad
+\sum_n\|b_n'\|_\infty<3648,\\
+\mathcal A_*:=\int e^{|x|/2}|s''(x)|dx
+ \le K_2\int_1^\infty u^{-3/4}e^{-3u/8}du<2^{21}.
+\end{gathered}
+\tag{UG4}
+$$
+
+For the prime sum use (WC4) and $r=e^{-3/4}<1/2$; its bracket is
+less than $3/2$. For the last integral use $u^{-3/4}\le1$ and
+$\int_1^\infty e^{-3u/8}du<8/3$.
+
+Reuse the principal coefficient $64$ obtained explicitly in the proof
+above (WF7), before its conservative enlargement to $128$. Keep the
+old $K_p$ definition and all old consumers intact, and define this
+application's sharper constant by
+
+$$
+\begin{aligned}
+K_p^\sharp&=64L_p\|s\|_{H^3}^2+
+ C_p\left(8\|(s^2)'\|_\infty+2\sum_n\|b_n'\|_\infty\right)\\
+&<\frac{1024}{15}\,28133+267520
+ =\frac{32820992}{15}<9\cdot2^{18}.
+\end{aligned}
+\tag{UG5}
+$$
+
+### One fixed reuse of the complete saved high rows
+
+Fix $\varepsilon=1/32$, $a=15/32$, $N=2^{40}$ and
+$H=3\cdot10^{12}$. The proof of (WF3) gives
+$m(N/2)\ge\tfrac12\log N>40/3$.
+The saved $m(32)$ upper bound is below $22/3$.
+For each accepted positive cell let $J_i$ and $s_{i,-}^2$ be its saved
+joint floor and squared-theta lower endpoint. The single fixed rational
+application checks
+
+$$
+J_i+6s_{i,-}^2>31/64\qquad(0\le i<128).
+\tag{UG6}
+$$
+
+The [fixed rational application](https://github.com/the-omega-institute/trureturing-experiments/blob/9188d87ac0c5bf1f36e248f2cb3c835af6f05c9e/docs/reports/theta-mixed-matrix/verified-height-unwindowed-gap.md)
+checks all 128 cells and its
+[exact saved result](https://github.com/the-omega-institute/trureturing-experiments/blob/9188d87ac0c5bf1f36e248f2cb3c835af6f05c9e/docs/reports/theta-mixed-matrix/verified-height-unwindowed-gap-result.json)
+has every fixed budget comparison true. These are new inequalities on
+the accepted data, with no theta,
+operator action, Gram or old producer executed. They bound the complete
+$W(x)+m(N/2)s(x)^2$ on every cell. On the entire exterior reuse the
+[saved $W$ floor](https://github.com/the-omega-institute/trureturing-experiments/blob/e5c5d8bf2b157e5c94af05ba724e18f4131b4c88/docs/reports/theta-mixed-matrix/sharper-exterior.md),
+which exceeds $31/64$ before adding the positive symbol term.
+The same (WF5) leakage, with $m(N/2)\le16N$ and $S_2<42$, is below
+$2^{-70}<1/128$. Hence the full even high restriction is at least
+$61/128=a+\varepsilon/4$.
+
+The whole-projector argument of (WF8) now applies with this supplied
+high restriction and $K_p^\sharp$. It does not require the separate
+coarse sufficient choice $N_0(\varepsilon)$. Since $\log2<7/10$,
+
+$$
+\|(I-W_N)P_\varepsilon\|_{\nu\to\mathcal F}
+\le\frac{6K_p^\sharp}{\varepsilon}\frac{1+\log N}{N}
+<\frac{783}{65536}<\frac1{80}.
+\tag{UG7}
+$$
+
+### Pay the actual zero tail on this same map
+
+The (VH3)–(VH7) strip argument applies with $s$ in place of $a_R$;
+(WC2) removes its integration-by-parts boundary terms. At the fixed $H$,
+$L_H=42$ and $\mathscr R_4(H)<2^{-109}$.
+Also $3H>8N$, so $(1-2N/H)^{-4}<256$. Using
+$2N/\pi<N$ and (UG4) gives
+
+$$
+q(W_Nh)\ge-\mathcal E\|h\|_\nu^2,\qquad
+\mathcal E<2^{40}2^{42}2^8 2^{-109}=2^{-19}.
+\tag{UG8}
+$$
+
+The inclusive verified head is precisely the already published
+Platt–Trudgian input; the strict tail keeps all actual multiplicities
+and off-line paired factors. No zero computation is repeated.
+
+For a centered unit $h\in\operatorname{ran}P_\varepsilon$,
+$q(h)\le-1/32$ and $\|h\|_{\mathcal F}\le\sqrt{47/32}<49/40$.
+The same polarized-form bound as in (VH8) and (UG7) imply
+
+$$
+|q(W_Nh)-q(h)|<\frac1{80}
+ \left(\frac{49}{20}+\frac1{80}\right)=\frac{197}{6400},
+\qquad q(W_Nh)<-\frac3{6400}<-2^{-19},
+$$
+
+contradicting (UG8). Constants reduce the actual operator separately.
+The original spectral theorem therefore gives
+
+$$
+D(h)\ge\frac{15}{32}\operatorname{Var}_\nu(h)
+\qquad(h\in\mathcal F_{\min,\mathrm{even}}).
+\tag{UG9}
+$$
+
+This is a conditional paper deduction under the inherited actual
+form/domain and accepted scalar-supplier premises, plus the checked
+finite inequality (UG6). The accompanying rational application records
+the same input commit and all fixed budget comparisons. The literal
+windowed (FF7)/(VH1) choices retain their own unpaid conditions.
+No cofinal family is supplied; the fixed-height separation barrier
+remains. The one-half bound, full Robin, RH and Lean certification
+remain unresolved.
