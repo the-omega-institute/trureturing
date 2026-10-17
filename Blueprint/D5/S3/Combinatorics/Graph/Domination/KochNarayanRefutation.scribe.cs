@@ -40,7 +40,10 @@ internal sealed class KochNarayanRefutationDocument : IScribeDocumentDefinition
         string prose, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("kochnarayan-" + selector.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(Presentation(selector)),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolution);
+            selector is "halfCeil" or "halfFloor" or "phi" or "bound" or "claim"
+                ? AssessedProvenance.FromLiterature(Source)
+                : AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);

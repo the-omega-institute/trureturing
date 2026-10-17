@@ -14,7 +14,11 @@ triage: anchor
 
 # Maximal bipartite graphs with a unique minimum dominating set
 
-## Exact source
+## Verified locator
+
+DOI: 10.48550/arXiv.2511.01719
+
+Source: https://arxiv.org/abs/2511.01719v1
 
 Garrison Koch and Darren Narayan, arXiv:2511.01719v1, Conjecture 1,
 https://arxiv.org/html/2511.01719v1#Thmthm1 . The version-labelled HTML has

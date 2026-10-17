@@ -10,9 +10,7 @@ $$\operatorname{halfCeil}\left(k\right) = \operatorname{ceil}\left(\frac{k}{2}\r
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/KochNarayanRefutation.halfCeil` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
+*Citation.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
 
 *Commentary.*
 
@@ -24,9 +22,7 @@ $$\operatorname{halfFloor}\left(k\right) = \left\lfloor\frac{k}{2}\right\rfloor$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/KochNarayanRefutation.halfFloor` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
+*Citation.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
 
 *Commentary.*
 
@@ -38,9 +34,7 @@ $$\operatorname{phi}\left(n, gamma\right) = \operatorname{max}\left(0, n - 3 \cd
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/KochNarayanRefutation.phi` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
+*Citation.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
 
 *Commentary.*
 
@@ -52,9 +46,7 @@ $$\operatorname{bound}\left(n, gamma\right) = 2 \cdot gamma + 2 \cdot \operatorn
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/KochNarayanRefutation.bound` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
+*Citation.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
 
 *Commentary.*
 
@@ -66,9 +58,7 @@ $$claim \Leftrightarrow \left(\forall V \in Type,\; \forall finite \in \operator
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/KochNarayanRefutation.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
+*Citation.* Garrison Koch; Darren Narayan (2025). *Maximal bipartite graphs with a unique minimum dominating set*. DOI: [10.48550/arXiv.2511.01719](https://doi.org/10.48550/arXiv.2511.01719). URL: <https://arxiv.org/abs/2511.01719v1>.
 
 *Commentary.*
 
