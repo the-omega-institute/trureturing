@@ -143,6 +143,70 @@ private theorem block_energy {R E : Type} [Fintype R] [Fintype E]
       Finset.sum_le_sum fun a _ => column a
     _ = _ := Finset.sum_comm
 
+private theorem weighted_norm {I : Type} [Fintype I] (t u : ℝ)
+    (ht : 0 ≤ t) (hu : 0 ≤ u) (x y : EuclideanSpace ℂ I) :
+    ‖(t : ℂ) • x + (u : ℂ) • y‖ ^ 2 ≤
+      (t ^ 2 + u ^ 2) * (‖x‖ ^ 2 + ‖y‖ ^ 2) := by
+  have htriangle := norm_add_le ((t : ℂ) • x) ((u : ℂ) • y)
+  simp only [norm_smul, Complex.norm_real, Real.norm_eq_abs,
+    abs_of_nonneg ht, abs_of_nonneg hu] at htriangle
+  have hcs := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset (Fin 2))
+    ![t, u] ![‖x‖, ‖y‖]
+  simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at hcs
+  exact ((sq_le_sq₀ (norm_nonneg _) (by positivity)).2 htriangle).trans hcs
+
+private theorem success_upper {R E : Type} [Fintype R] [Fintype E]
+    [DecidableEq R] [DecidableEq E] (t u : Fin 2 → ℝ)
+    (ht : ∀ j, 0 < t j) (hu : ∀ j, 0 < u j)
+    (ψ : R × Fin 2 → ℂ) (hψ : ∑ x, ‖ψ x‖ ^ 2 = 1)
+    (V : Matrix.unitaryGroup (R × Fin 2 × E × Fin 2) ℂ) (e0 : E) :
+    successProbability (replacement t) (replacement u) ψ V e0 ≤
+      (Real.sqrt (t 0 ^ 2 + u 0 ^ 2) + Real.sqrt (t 1 ^ 2 + u 1 ^ 2)) ^ 2 / 4 := by
+  let X (i j : Fin 2) : EuclideanSpace ℂ (R × Fin 2 × E) :=
+    WithLp.toLp 2 (block V.val e0 i j ψ)
+  let W (j : Fin 2) := (t j : ℂ) • X 0 j + (u j : ℂ) • X 1 j
+  have hW (j : Fin 2) : ‖W j‖ ≤ Real.sqrt (t j ^ 2 + u j ^ 2) := by
+    have he : ‖X 0 j‖ ^ 2 + ‖X 1 j‖ ^ 2 ≤ 1 := by
+      rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq]
+      change (∑ x, ‖block V.val e0 0 j ψ x‖ ^ 2) +
+        (∑ x, ‖block V.val e0 1 j ψ x‖ ^ 2) ≤ 1
+      rw [← Finset.sum_add_distrib, ← hψ]
+      exact block_energy V e0 j ψ
+    have hw := weighted_norm (t j) (u j) (ht j).le (hu j).le (X 0 j) (X 1 j)
+    have hm := mul_le_mul_of_nonneg_left he (by positivity : 0 ≤ t j ^ 2 + u j ^ 2)
+    have hs := Real.sq_sqrt (by positivity : 0 ≤ t j ^ 2 + u j ^ 2)
+    dsimp only [W]
+    nlinarith [norm_nonneg ((t j : ℂ) • X 0 j + (u j : ℂ) • X 1 j),
+      Real.sqrt_nonneg (t j ^ 2 + u j ^ 2)]
+  have hvec : (WithLp.toLp 2 (fun x =>
+      amplitude (replacement t) ψ V.val e0 0 x +
+      amplitude (replacement u) ψ V.val e0 1 x) : EuclideanSpace ℂ (R × Fin 2 × E)) =
+        W 0 + W 1 := by
+    ext x
+    change amplitude (replacement t) ψ V.val e0 0 x +
+      amplitude (replacement u) ψ V.val e0 1 x =
+      ((t 0 : ℂ) * block V.val e0 0 0 ψ x + (u 0 : ℂ) * block V.val e0 1 0 ψ x) +
+      ((t 1 : ℂ) * block V.val e0 0 1 ψ x + (u 1 : ℂ) * block V.val e0 1 1 ψ x)
+    rw [replacement_amplitude t (fun j => (ht j).le),
+      replacement_amplitude u (fun j => (hu j).le)]
+    simp only [Fin.sum_univ_two]
+    ring
+  have hn := (norm_add_le (W 0) (W 1)).trans (add_le_add (hW 0) (hW 1))
+  have hsquare := (sq_le_sq₀ (norm_nonneg _) (by positivity)).2 hn
+  rw [successProbability.eq_1]
+  have heq := EuclideanSpace.norm_sq_eq
+    (WithLp.toLp 2 (fun x => amplitude (replacement t) ψ V.val e0 0 x +
+      amplitude (replacement u) ψ V.val e0 1 x) : EuclideanSpace ℂ (R × Fin 2 × E))
+  change ‖(WithLp.toLp 2 (fun x => amplitude (replacement t) ψ V.val e0 0 x +
+    amplitude (replacement u) ψ V.val e0 1 x) : EuclideanSpace ℂ (R × Fin 2 × E))‖ ^ 2 =
+      ∑ x, ‖amplitude (replacement t) ψ V.val e0 0 x +
+        amplitude (replacement u) ψ V.val e0 1 x‖ ^ 2 at heq
+  rw [hvec] at heq
+  change (1 / 4 : ℝ) * (∑ x, ‖amplitude (replacement t) ψ V.val e0 0 x +
+    amplitude (replacement u) ψ V.val e0 1 x‖ ^ 2) ≤ _
+  rw [← heq]
+  linarith
+
 end
 
 end D5.S3.Quantum.QuantumChannels.CoherentDiscriminationTriangleRefutation
