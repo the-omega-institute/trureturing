@@ -4168,3 +4168,292 @@ The result includes arbitrary coherent first-order changes inside the old two-di
 New-environment leakage or failure to preserve either tight-frame row space forces a positive quadratic gap. Only the explicitly identified directions (16)--(17) can remain flat to this order. Even in that flat class, a smooth bilateral path can at most improve by o(t^2), or by O(t^3) under the Lipschitz condition. These statements concern the smooth amplitude parameter, and do not apply after a singular reparameterization t=sqrt(s) as if the same differentiability hypothesis held in s.
 
 This is a second-order obstruction, not a complete feasible-cone or local-minimum theorem. Higher-order nonfactorizable bilateral escape and the unrestricted quarter-optimum problem remain open.
+
+## 86. Local quartic stability from the rank-two Ky Fan minimum manifold
+
+The present argument strengthens the second-order theorem in section 85. It concerns arbitrary original CPTP maps C^8 -> C^4 near any section-82 quarter-error pair having a rank-two party. Both perturbed channels may have arbitrary Kraus rank and output leakage. No differentiable path, calibrated perturbation, or qubit-core factorization is assumed in the main statement.
+
+The conclusion permits improvement at fourth order in a smooth new-environment amplitude. It does not prove a local minimum or settle the unrestricted optimum.
+
+### 86.1. Statement and conventions
+
+Let (A_0,B_0) be any original quarter-error pair with B_0 of Kraus rank two. Write J_B for the unnormalized Choi matrix of B, so J_B is positive semidefinite and Tr J_B=8. List its eigenvalues in nonincreasing order and define
+
+    epsilon_2(B)=sum_(j=3)^32 lambda_j(J_B).                 (1)
+
+There exist a neighborhood U of (A_0,B_0) in the finite-dimensional space of original channels and a finite constant C such that
+
+    delta(A,B) >= 1/4-C epsilon_2(B)^2
+    for every (A,B) in U.                                  (2)
+
+Here delta is the unhalved arbitrary-reference diamond error of the original product from the fixed RT target. The roles of the parties can be exchanged. Since delta is nonnegative, the right side may also be replaced by its maximum with zero.
+
+A Stinespring version is useful. Fix any finite environment dimension d>=4 for A and an old environment of dimension two for B. Embed the equality isometries in these environments. For any nearby isometries V_A and
+
+    V_B=W direct-sum R,
+    W:C^8 -> C^4 tensor C^2,
+
+there is a local constant C_d such that
+
+    delta(A,B) >= 1/4-C_d ||R||_F^4.                        (3)
+
+The constant can be chosen independently of the finite dimension of the new environment containing R. Equation (2) follows by taking d=32 and making a canonical Choi spectral split.
+
+Consequently, along any path converging to the equality pair and possessing a Stinespring split with ||R(t)||_F=O(t), one has delta(t)>=1/4-O(t^4). The other party need only converge to A_0. In particular the O(t^3) possible improvement left by section 85 is excluded, including its flat-curvature directions. If new Kraus probability rather than amplitude is the parameter, (2) instead gives a quadratic bound in that tail probability.
+
+All inner products below are conjugate-linear in the first argument. Gram matrices are forward Grams. Correct-output blocks are denoted A_f and B_f, with two columns indexed by the fixed input bit. The only bit changes used at the base are the simultaneous fibrewise swaps allowed in section 82.
+
+### 86.2. The smooth rank-two comparison function
+
+For the correct-output Grams G,H put K=G entrywise-multiplied by H. The target T has diagonal 2-by-2 blocks I_2 and off-diagonal blocks J_2/2. Define
+
+    F(A,B)=Lambda_2(T-K)/4,                                (4)
+
+where Lambda_2 sums the two largest Hermitian eigenvalues. On the normalized reference input 8^(-1/2) sum_(f,i)|f,i>_R|f,i>_logical, the correct joint reference/output compression is K^T/8 on {|f,i>_R tensor |ff>_out}. Pinching and retaining the complementary positive trace give
+
+    delta(A,B)>=Tr(T-K)_+/4>=F(A,B).                        (5)
+
+The section-85 refinement of the original contraction/support witness gives
+
+    F(A,B)>=1/4 whenever B has Kraus rank two,              (6)
+
+for every original A, including leakage. Explicitly, with C_f=A_f B_f^T/sqrt(2), D_f=A_f Z B_f^T/sqrt(2), S=mean_f C_f and Z=diag(1,-1), project onto {SX:Tr X=0}. Its complex dimension is at most three. A unit vector in the kernel of the four projected D columns, together with the uniform plus vector, gives a rank-two projection of T-K with trace at least one. Only one kernel vector is selected, even if the kernel is larger.
+
+At any section-82 equality member the two largest eigenvalues of T-K are 1/2,1/2; the others are at most zero. Thus the top cluster has a gap at least 1/2, including boundary disphenoids. In marker-aligned bit coordinates its projection is
+
+    P_0=(J_4/4) tensor I_2.                                (7)
+
+The function F is real-analytic near the base in the ambient real channel coordinates. We also view it as a smooth function of Stinespring isometries. The comparison space is
+
+    X=St(C^8,C^4 tensor C^d) times U(8),
+
+where the second factor is traced over an environment of dimension two. By (6), F>=1/4 everywhere on X. Both correct and wrong output blocks are retained in this space.
+
+We prove a quadratic growth estimate on X about an explicit smooth minimum manifold M. This intermediate manifold consists of minima of F; it is larger than the quarter-error equality family of the full diamond norm.
+
+### 86.3. An explicit nearby minimum manifold
+
+At the base, the calibrated B blocks B_f are 2-by-2 unitaries. Set
+
+    N_f=conjugate(B_f) Z B_f^T.
+
+These are traceless Hermitian unitaries. After the allowed marker alignment, sum_f N_f=0, and their real span is the full three-dimensional Pauli space. This span condition holds at every allowed disphenoid, since x^2,y^2,z^2>=2/7.
+
+For nearby calibrated B frames satisfying sum_f N_f=0, take d-by-2 matrices S,W and real parameters h,beta near 1/2,0 such that
+
+    S^*S=(1/2-h/8)I_2,
+    W^*W=(h/2)I_2,
+    S^*W=i beta I_2.                                      (8)
+
+Define calibrated A frames through
+
+    C_f=S+(1/2)W N_f,
+    A_f=sqrt(2) C_f conjugate(B_f).                        (9)
+
+Equations (8) imply C_f^*C_f=I_2/2 and hence A_f^*A_f=I_2. Make both original isometries calibrated by assigning output f to the two columns of fibre f. Let M be the resulting local subset of X.
+
+Here is a local parameterization and a check of smoothness. The Gram matrix of [S W] is
+
+    [[1/2-h/8, i beta],[-i beta,h/2]] tensor I_2.
+
+It is positive definite at and near the base. Thus [S W] is parameterized by an arbitrary F_4 in St(C^4,C^d), multiplied on the right by the positive square root of this Gram matrix. The balance map (B_f)_f -> sum_f N_f has surjective differential at the base: each N_f can vary over its Bloch-sphere tangent plane, and a real vector orthogonal to all four such tangent planes would be parallel to every Bloch axis, which is impossible. Its zero set is therefore smooth of real dimension 16-3=13. Together with h,beta and dim_R St(C^4,C^d)=8d-16, the parameter space has dimension
+
+    dim_R M=8d-1.                                        (10)
+
+It is locally embedded. Indeed B_f are part of the tuple; C_f are recovered from A_f,B_f; balance gives S=mean C_f and W=(1/2)sum_f D_f, where D_f=C_f N_f. Finally h=||W||_F^2 and beta=Im Tr(S^*W)/2, and the Stiefel parameter is recovered by the inverse Gram square root.
+
+Every point of M is a minimum of F. In full plus/minus coordinates the subspace spanned by (s,0),(0,s), with s=ones/2, is invariant under T-K. Its compression is
+
+    [[h,-4i beta],[4i beta,1-h]],                          (11)
+
+which has trace one. The other six eigenvalues remain separated below this cluster after shrinking the neighborhood, by the base gap. Hence F=1/4 on M and its top projection is P_0.
+
+A further property of M will be important. Let
+
+    T_i=sqrt(2)[S+(-1)^i W/2].
+
+Then T_i^*T_i=I_2 and a_fi=T_i conjugate(b_fi). The balance condition implies sum_f |b_fi><b_fi|=2I_2 separately for both fixed bits. Thus, for each (A_m,B_m) in M, the bit-i Gram of A_m is the transpose of a rank-two tight-frame Gram H_i^m with H_i^m<=2I_4. For every original channel B with correct bit Gram H_i,
+
+    Tr(P_0 K)=(1/4)sum_i Tr(H_i^m H_i)
+                  <=(1/2)sum_i Tr H_i<=4,
+    Tr(P_0 T)=5.
+
+Consequently
+
+    F(A_m,B)>=1/4 for every original B.                    (12)
+
+This remains true when h and beta differ from their equality values. Their scalar cross overlap is T_0^*T_1=(1-h/2-2i beta)I_2; no assertion of full diamond equality for these additional parameters is made.
+
+### 86.4. Exact sum of squares on the calibrated comparison subspace
+
+Consider a calibrated comparison tuple near the base, without assuming balance or (8). Put C_f=A_f B_f^T/sqrt(2), D_f=C_f N_f and S=mean C_f. Let Q be the orthogonal projection in matrix Hilbert space onto
+
+    L_S={SX:Tr X=0}.
+
+Near the base S has full column rank, so dim_C L_S=3. Let D_col have the vectorized D_f as columns. At the base QD_col has rank three, because its columns are S N_f and the N_f span Pauli space. Therefore there is a smooth unit vector v spanning ker(QD_col), fixed by requiring <s,v> to be positive real. Set
+
+    W=D_col v,
+    E_f=Q D_f-S N_f,
+    R_c=(I-Q)D_col,
+    P_w=diag(ss^*,vv^*)                                  (13)
+
+in plus/minus coordinates. In particular S^*W is a scalar matrix, since W is orthogonal to L_S.
+
+Since each N_f is unitary, C_f^*C_f=I_2/2 and S is the mean,
+
+    a=4-4||S||_F^2=sum_f||C_f-S||_F^2
+       =sum_f||D_f-SN_f||_F^2
+       =sum_f||E_f||_F^2+||R_c||_F^2.
+
+Moreover D_col v=R_c v. The plus uniform Rayleigh value of T-K is a and the minus value at v is 1-||D_col v||^2. Hence the exact identity is
+
+    4(F-1/4)
+      =sum_f||E_f||_F^2+||R_c(I-vv^*)||_F^2
+         +[Lambda_2(T-K)-Tr(P_w(T-K))].                   (14)
+
+No plus/minus cross block has been removed. Its effect appears in the final variational gap.
+
+Write P_* for the true top-two spectral projection. In a fixed small neighborhood there are constants 0<gamma<=Gamma such that
+
+    (gamma/2)||P_*-P_w||_F^2
+      <=Lambda_2(T-K)-Tr(P_w(T-K))
+      <=(Gamma/2)||P_*-P_w||_F^2.                         (15)
+
+Indeed diagonalize T-K and use the separation of its second and third eigenvalues for the lower bound and its spectral diameter for the upper bound; the exchanged projection weight is 2-Tr(P_*P_w)=||P_*-P_w||_F^2/2.
+
+At the base all three nonnegative terms in (14) vanish. Therefore a calibrated tangent is in the kernel of the Hessian of F precisely when
+
+    E_f'=0 for every f,
+    [R_c(I-vv^*)]'=0,
+    P_*'=P_w'.                                           (16)
+
+This equivalence uses both bounds in (15) and smoothness. Hessians are regarded as real quadratic forms.
+
+### 86.5. The Hessian kernel is exactly T M
+
+We now calculate every implication in (16). Primes denote derivatives at the base along any smooth calibrated curve. There v=s, S^*W=0, W^*W=I_2/4 and ||W||_F^2=1/2. The first two conditions in (16) imply
+
+    D_f=S N_f+conjugate(v_f)W+O(t^2),
+    C_f=S+conjugate(v_f)W N_f+O(t^2).                     (17)
+
+Since D_col v=W and v is unit, substitution in the first equation gives S sum_f v_f N_f=O(t^2). As S has full column rank,
+
+    sum_f v_f N_f=O(t^2).
+
+Its imaginary first derivative yields sum_f Im(v_f')N_f=0. The only real relation between the four base N_f is the uniform one. The phase convention gives sum_f Im(v_f')=0, so Im(v_f')=0 for all f. The normalization of v gives sum_f Re(v_f')=0.
+
+The exact identity S^*W=lambda I_2 and tracelessness of N_f eliminate the cross term in the Frobenius norm of the second equation in (17). With p=||S||_F^2 and w=||W||_F^2,
+
+    1=p+|v_f|^2 w+O(t^2).
+
+Summing derivatives gives 4p'+w'=0. Each individual derivative is p'+w'/4+w_0 Re(v_f')=0, and w_0=1/2. Thus v'=0. The differentiated relation above then gives
+
+    sum_f N_f'=0,
+    P_w'=0,
+    P_*'=0.                                              (18)
+
+The last conclusion is where the full variational gap is essential. Differentiating spectral invariance, P_*'=0 implies
+
+    (I-P_0)(T-K)'P_0=0.
+
+Use its plus-orthogonal/minus-uniform component. If X=C_col^*D_col is the full cross Gram block, then Xv has f-th entry <C_f,W>. Equations (17) give
+
+    (Xv)_f=2lambda+v_f Tr(N_f W^*W)+O(t^2).
+
+Because v'=0 and W^*W=I_2/4 at the base, cross invariance says the four numbers Tr(N_f (W^*W)') are equal. Their sum is zero by balance, so they are all zero. The N_f span Pauli space; therefore (W^*W)' is scalar.
+
+Finally differentiate the individual matrix normalizations C_f^*C_f=I_2/2 using (17). They give
+
+    (S^*S)'+(1/4)(W^*W)'+Re(lambda')N_f=0.
+
+Averaging and then subtracting shows that (S^*S)' is scalar, equals -(W^*W)'/4, and Re(lambda')=0. Together with (18), these are exactly the tangent constraints of (8)--(9):
+
+    (W^*W)'=(h'/2)I_2,
+    (S^*S)'=-(h'/8)I_2,
+    (S^*W)'=i beta' I_2,
+    sum_f N_f'=0,
+    C_f'=S'+(W'N_f+WN_f')/2.                             (19)
+
+There are no omitted singular support cases: S and [S W] have full respective ranks two and four throughout the chosen neighborhood, and every base disphenoid spans all three Pauli directions. The parameterization in section 86.3 realizes all derivatives satisfying (19), because the positive-definite Gram constraint is a smooth Stiefel parameterization and balance is a regular constraint. Thus every calibrated Hessian-kernel vector lies in T M. Conversely F is constant and minimal on M, so every tangent to M is in the Hessian kernel.
+
+### 86.6. Original output leakage and normal quadratic growth
+
+The previous computation extends to the full comparison space X; it does not assume perturbations remain calibrated. At a calibrated base isometry the correct-output part of any tangent satisfies the individual Stiefel tangent equations. Choose a calibrated curve with these same correct-output first derivatives. For the B side choose the corresponding block-diagonal unitary curve. Such a choice is possible because the first derivative of each correct block is tangent to its local frame manifold. The original full tangent may also have wrong-output blocks.
+
+The first derivative of F with respect to arbitrary variations of the correct records at the base is
+
+    dF=-(1/4)sum_(f,i) Re[<a_fi^0,da_fi>
+                                +<b_fi^0,db_fi>].          (20)
+
+To check this, dF=-(1/4)Tr(P_0 dK), and in either fixed-bit sector the other party's tight Gram sends the base record-column matrix to twice itself. Differentiating the Gram gives Tr(P_0 dK)=sum Re of the displayed record inner products. Wrong-output records do not enter K and have zero direct first derivative.
+
+Write a curve as V_0+tV_1+t^2 V_2+o(t^2), without a factorial in V_2. Comparing its isometry normalization with that of the calibrated curve having the same correct V_1 gives, fibrewise,
+
+    A_f^0{}^* Delta A_(2),f+Delta A_(2),f^* A_f^0
+       =-sum_(g!=f) L_(g f)^* L_(g f),
+
+where L_(g f) are the first-order wrong-output blocks; the same identity holds for B. All mixed second-derivative terms of F agree between the two curves because their correct first derivatives agree. Equation (20) therefore gives for the t^2 coefficients
+
+    q_full=q_calibrated
+              +(||L_A||_F^2+||L_B||_F^2)/8.              (21)
+
+This includes arbitrary environment components of the A tangent; those inside the correct output blocks were already included in the d-dimensional calibrated calculation. The full comparison Hessian is positive semidefinite by (6). Equation (21) shows that its kernel forces both wrong-output tangents to vanish and then is exactly the calibrated kernel T M. Hence
+
+    ker Hess_X F at the base = T M.                       (22)
+
+This proves the needed local quadratic growth by an elementary normal-coordinate argument. The Hessian is positive definite on the normal space to M at the base. The same lower bound, with a possibly smaller positive constant, holds on normal spaces at nearby points of M by continuity. Both F=1/4 and dF=0 on M. Taylor expansion in tubular normal coordinates, uniformly on a small neighborhood, consequently gives
+
+    F(x)>=1/4+c rho(x)^2,   c>0,                          (23)
+
+where rho(x) is the distance to M in any fixed smooth local metric on X. Equivalently this is a local Morse--Bott minimum. No general Morse--Bott theorem is required beyond the stated normal-coordinate Taylor argument.
+
+### 86.7. Comparing an arbitrary rank-raising channel to M
+
+For a nearby full B isometry write V_B=W direct-sum R, D=R^*R, epsilon=||R||_F^2. Since the old sector W is square and near a unitary, its polar factor
+
+    U=W(I-D)^(-1/2)
+
+is unitary. Thus V_B=U sqrt(I-D) direct-sum R. Let B_U denote its rank-two old comparison channel, and x=(V_A,U) in X. The square-root expansion gives, uniformly for small epsilon,
+
+    B-B_U=Psi_(U,R)+O(epsilon^2),
+    Psi_(U,R)(Y)=Tr_new(R Y R^*)
+                    -(1/2)B_U(DY+YD),
+    ||Psi_(U,R)||<=C_1 epsilon.                           (24)
+
+These channel-norm estimates depend on the fixed input/output dimensions, not on the dimension of the new environment. For example ||D||op<=epsilon and the new CP map has norm bounded by a fixed constant times epsilon; the old square-root remainder is O(||D||op^2).
+
+Let m=(V_(A_m),U_m) be a nearby closest point of M. At m the physical one-sided path
+
+    U_m sqrt(I-sD) direct-sum sqrt(s)R,   s>=0,
+
+is an isometry for sufficiently small s. Its channel derivative is Psi_(U_m,R). The fixed-A_m global minimum (12) and differentiability of F imply
+
+    d_B F(A_m,B_(U_m))[Psi_(U_m,R)]>=0.                    (25)
+
+Smoothness and (24) imply a uniform Lipschitz comparison
+
+    d_B F(A,B_U)[Psi_(U,R)]>=-C_2 rho(x) epsilon.           (26)
+
+Indeed the derivative of F varies by O(rho), while Psi varies with U by O(||U-U_m|| epsilon); both changes are bounded using (24). Taylor expansion in the physical channel difference in (24), followed by (23), gives
+
+    F(A,B)>=1/4+c rho^2-C_2 rho epsilon-C_3 epsilon^2
+           >=1/4-C_4 epsilon^2.                          (27)
+
+The final inequality completes the square. Combining (5) and (27) proves (3). No error monotonicity under polar replacement is used. The argument keeps all original output coherences; pinching is used only for the valid lower bound (5).
+
+### 86.8. Intrinsic Choi-tail form and path consequence
+
+At B_0 the two nonzero Choi eigenvalues are 4,4: the eight base correct records are four orthonormal qubit frames. Thus there is a spectral gap separating the top-two Choi subspace from the rest. Near B_0 let P_B be its spectral projection. Choose a continuous orthonormal frame E_B:C^2->C^32 for that subspace, aligned with the base Kraus vectors. The Choi vector columns
+
+    J_B^(1/2) E_B,
+    J_B^(1/2)(I-P_B)
+
+form an old/new Kraus decomposition. Their Gram outer-product sum is J_B because P_B commutes with J_B. After the usual vector-to-Kraus reshaping, its Stinespring isometry has an old square block W near V_0 and a new block R satisfying
+
+    ||R||_F^2=Tr[J_B(I-P_B)]=epsilon_2(B).                 (28)
+
+The old frame can be aligned at the base by a fixed environment unitary. For A use the canonical square-root Choi decomposition in environment dimension 32; it is continuous near A_0, and a fixed environment unitary identifies its base with an embedding of the original four-dimensional equality environment. Therefore every pair of physical channels in a sufficiently small neighborhood has a lift to the Stinespring neighborhood used in (3), with d=32. This proves (2) without a smooth-path assumption.
+
+Alternatively, for any given Stinespring split the rank-two old Kraus contribution is positive semidefinite and leaves a positive Choi remainder of trace ||R||_F^2. The variational characterization of the two largest Choi eigenvalues gives epsilon_2(B)<=||R||_F^2. Hence amplitude ||R(t)||_F=O(t) implies the stated quartic path lower bound. In particular a C^2 finite-environment path covered by section 85 has this property. Arbitrary convergence of the other channel suffices for eventual membership in U.
+
+The theorem is local in channel space and its constant need not be uniform over the entire equality family. The second-order positive coefficient of section 85 can still provide a stronger positive gap in nonflat directions. In the flat directions, the present estimate rules out cubic improvement but leaves quartic and higher-order escape unresolved. The unrestricted quarter-optimum conjecture remains open.
