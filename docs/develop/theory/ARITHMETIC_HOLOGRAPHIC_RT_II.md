@@ -1668,3 +1668,131 @@ The diamond norm of O is3/2. For the upper bound, let Z=diag(1,i,−1,−i); the
 The four-vector Gram estimate is the classical Welch bound in this instance, and the tetrahedral frame, qubit Bloch parametrization and polar decomposition are standard. For the original correlation bound see L. R. Welch, Lower bounds on the maximum cross correlation of signals, IEEE Transactions on Information Theory20 (1974),397–399, https://doi.org/10.1109/TIT.1974.1055219 . For the Gram/frame derivation see also Datta, Howard and Cochran, Geometry of the Welch Bounds, https://arxiv.org/abs/0909.0206 . Channel and diamond facts follow the conventions of Watrous, The Theory of Quantum Information, https://cs.uwaterloo.ca/~watrous/TQI/ . The exact physical target and two-branch zero-error realization are from §§66 and68.
 
 The quantitative step tracks actual wrong-output Stinespring components through record rounding, row saturation and common-span approximation. It establishes a nonzero physical approximation gap between one product channel and two shared branches for this fixed coherent channel, with unrestricted leakage and ancillas. The constants are not asserted sharp, the one-product optimum is not identified, and no arbitrary-channel or full-RT recovery claim is made.
+
+## 71. A robust shared-weight law for uniform qubit fibres
+
+### 71.1 Physical channel and resource statement
+
+Let k≥2 and let F=F_(k,2) be the uniform channel of §66, from a logical input with basis |f,i>, 1≤f≤k and i∈{0,1}, to a logical output with basis |f>. Thus
+
+    F(|f,i><f,j|)=δ_ij |f><f|,
+    F(|f,i><g,j|)=(1/2)|f><g|  (f≠g).
+
+Use the fixed MC encodings J_in(|x><y|)=|xx><yy| and J_out(|f><g|)=|ff><gg|. Consider any finite physical LOSR channel
+
+    L=Σ_(t=1)^r w_t (A_t⊗B_t),  w_t>0,  Σ_t w_t=1,
+
+where A_t,B_t map C^(2k) to C^k and are arbitrary CPTP maps. Set
+
+    δ=||L∘J_in−J_out∘F||diamond,
+    β(δ)=10δ+18√(20δ),    M_k(δ)=1+(k−1)β(δ).
+
+The diamond norm is unhalved. Local ancillas, populations, extra coherences and leakage outside the output MC code are unrestricted. Every such implementation satisfies
+
+    w_t ≤ min{1, 3M_k(δ)/k}  for every t,                  (1)
+    r ≥ ceil(k/[3M_k(δ)]),                                (2)
+    H(w) ≥ max{0, log(k/[3M_k(δ)])}.                       (3)
+
+The logarithm in H uses the same arbitrary fixed base greater than one as the logarithm on the right. In particular, the exact shared-weight cap 3/k is stable under physical diamond error, uniformly in the number of branches and all environment dimensions. These are necessary resource bounds; no optimality of their positive-error constants is asserted.
+
+### 71.2 Weighted polar rounding from actual output populations
+
+Choose finite local Stinespring isometries, enlarging each environment to dimension at least two if necessary. For party A write
+
+    U_t|f,i>=|f>e_(t,f,i)+b_(t,f,i),
+
+where b is orthogonal to the output-|f> subspace. Write h and c for party B. Applying the diamond bound to a basis density operator and then the output effect |ff><ff| gives
+
+    Σ_t w_t ||e_(t,f,i)||² ||h_(t,f,i)||² ≥ 1−δ/2.         (4)
+
+The factor δ/2 follows because the difference of the two output density operators is Hermitian and trace zero. Each local good norm is at most one, so (4) implies
+
+    Σ_t w_t ||b_(t,f,i)||² ≤ δ/2,
+    Σ_t w_t ||c_(t,f,i)||² ≤ δ/2.                         (5)
+
+For fixed t,f, let E_(t,f) have columns e_(t,f,0),e_(t,f,1), and let B_(t,f) have the two bad columns. Isometry of U_t gives E*E+B*B=I_2. There is an isometry V_(t,f):C²→environment such that
+
+    E_(t,f)=V_(t,f)(E*E)^(1/2),
+    ||E_(t,f)−V_(t,f)||op ≤ Tr(B*B).                     (6)
+
+This includes singular E: extend its polar partial isometry on the kernel into the orthogonal complement of its range. The enlarged environment has dimension at least two, so the extension exists. For every singular value s∈[0,1], 1−s≤1−s², which proves (6). No inverse or positive lower singular-value assumption is used. Let H_(t,f) have columns h_(t,f,0),h_(t,f,1), and let W_(t,f) be the corresponding isometry for party B. From (5),
+
+    Σ_t w_t ||E_(t,f)−V_(t,f)||op ≤ δ,
+    Σ_t w_t ||H_(t,f)−W_(t,f)||op ≤ δ.                   (7)
+
+These frames are auxiliary mathematical objects, not an assertion that either rounded family is a physical replacement channel.
+
+### 71.3 Approximate cross-Gram saturation in the same mixture
+
+For f≠g define contractions R_(t,fg),T_(t,fg) by
+
+    R_(t,fg)[i,j]=<V_(t,g)e_j,V_(t,f)e_i>,
+    T_(t,fg)[i,j]=<W_(t,g)e_j,W_(t,f)e_i>.
+
+The actual output coefficient on |ff><gg| for input |f,i><g,j| is the weighted product of the corresponding unrounded local overlaps. Its difference from 1/2 has modulus at most δ: the input matrix unit has trace norm one and the output matrix coefficient is a norm-one functional. Changing one local overlap to its rounded version costs at most the sum of the two frame errors. Each factor has modulus at most one. Therefore (7) gives
+
+    |Σ_t w_t R_(t,fg)[i,j] T_(t,fg)[i,j]−1/2| ≤ 5δ.      (8)
+
+Fix a row i and omit f,g from the notation. Each row of R_t and T_t has Euclidean norm at most one. Summing the real part of (8) over its two columns gives
+
+    Re Σ_t w_t Σ_j R_t[i,j]T_t[i,j] ≥ 1−10δ.
+
+Consequently,
+
+    Σ_t w_t Σ_j |R_t[i,j]−conj(T_t[i,j])|² ≤ 20δ,         (9)
+    Σ_t w_t ||R_t[i,:]||₂² ≥ 1−20δ.                    (10)
+
+For (9), expand the square and bound the two averaged row norms squared by one each. For (10), use Re Σ_j RT ≤ (||Rrow||²+||Trow||²)/2 ≤ (||Rrow||²+1)/2 before averaging. Weighted Cauchy–Schwarz and (9), applied to each entry, now show
+
+    |Σ_t w_t |R_(t,fg)[i,j]|²−1/2| ≤ 5δ+√(20δ).         (11)
+
+Indeed, the difference between Σw RT and Σw |R|² is bounded by (Σw |R|²)^(1/2)(Σw |T−conj(R)|²)^(1/2)≤√(20δ). All averages use the original common branch weights; no pairwise reoptimization has occurred.
+
+### 71.4 A common plane in each branch and a robust Gram bound
+
+Anchor each branch at S_t=range(V_(t,1)), with projection P_t. For f≠1, sum (10) over the two rows of R_(t,1f). This yields
+
+    Σ_t w_t Tr[V_(t,f)*(I−P_t)V_(t,f)] ≤ 40δ.            (12)
+
+Let N_(t,f)=V_(t,1)*V_(t,f), and choose a unitary polar extension L_(t,f) of this 2×2 contraction. Set Q_(t,f)=V_(t,1)L_(t,f), and Q_(t,1)=V_(t,1). Thus each Q is an orthonormal basis of the same plane S_t. If s_1,s_2 are the singular values of N, then
+
+    ||V_(t,f)−Q_(t,f)||F²=2Σ_a(1−s_a)
+      ≤2Σ_a(1−s_a²)=2Tr[V_(t,f)*(I−P_t)V_(t,f)].
+
+The identity follows by expanding the Frobenius square and using Re Tr(L*N)=s_1+s_2; it holds also when N is singular. Equation (12) therefore implies
+
+    Σ_t w_t ||V_(t,f)−Q_(t,f)||op ≤ √(80δ).              (13)
+
+Changing the two vectors in a cross overlap changes that overlap by at most their two frame errors. For complex numbers of modulus at most one, the difference of their squared moduli is at most twice their distance. Hence (11) and (13) give, for every f≠g and i,j,
+
+    |Σ_t w_t |<Q_(t,g)e_j,Q_(t,f)e_i>|²−1/2|
+      ≤5δ+√(20δ)+4√(80δ)=5δ+9√(20δ).                   (14)
+
+Identify each S_t with C². Let n_(t,f)∈R³ be the unit Bloch vector of the rank-one projector onto Q_(t,f)e_0. The qubit overlap identity and (14) imply
+
+    |Σ_t w_t n_(t,f)·n_(t,g)| ≤ β(δ)  (f≠g).            (15)
+
+Define u_f=(√w_t n_(t,f))_(t=1)^r in the direct sum of r copies of R³, and let U have columns u_f. Its Gram matrix G=U*U has diagonal one and off-diagonal modulus at most β. For every scalar vector x,
+
+    x*Gx ≤ Σ_f |x_f|² + β Σ_(f≠g)|x_f||x_g|
+          ≤[1+(k−1)β]||x||₂².
+
+Thus ||U||op²≤M_k(δ). The t-th diagonal 3×3 block of UU* is
+
+    w_t Σ_f n_(t,f)n_(t,f)^T.
+
+It is positive semidefinite, has trace k w_t, and operator norm at most M_k(δ). Its trace is therefore at most 3M_k(δ), proving (1). Summing the weight cap proves (2), while −log w_t≥log(k/[3M_k(δ)]) and H≥0 prove (3).
+
+### 71.5 A positive-error branch obstruction and scope
+
+Fix an integer r with 1≤r<k/3, and define
+
+    a=(k/(3r)−1)/(k−1)>0,    B=18√20.
+
+Every implementation with at most r positive product branches obeys the explicit necessary condition
+
+    δ ≥ [2a/(B+√(B²+40a))]².                            (16)
+
+Indeed, (2) implies M_k(δ)≥k/(3r), hence 10δ+B√δ≥a. Solving this quadratic in √δ, with a rationalized positive root, gives (16). It applies to unrestricted physical channels, all coherent logical inputs and arbitrary reference systems. It does not presume that approximate branches retain exact fibre outputs or a common physical environment plane.
+
+The exact δ=0 cap and its MUB/Bloch resource interpretation are supplied by §66; its classical mutually unbiased basis and traceless-projector ingredients are credited there, including [Boykin, Sitharam, Tiep and Wocjan](https://arxiv.org/abs/quant-ph/0506089) and [Pittenger and Rubin](https://arxiv.org/abs/quant-ph/0308142). The diamond-norm convention is [Watrous, The Theory of Quantum Information, §3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 70 treats one product and four fibres with a stronger numerical lower bound and an explicit upper construction. The present theorem supplies a different resource conclusion: simultaneous quantitative control of every shared weight, the branch count and the entropy for arbitrary k and finite mixtures. It asserts no matching positive-error construction or general RT recovery theorem.
