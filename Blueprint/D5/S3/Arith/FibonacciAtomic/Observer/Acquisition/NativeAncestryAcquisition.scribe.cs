@@ -25,6 +25,8 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
                 "A choice is consistent when every recorded query has exactly the recorded reply in its actual native source."),
             Def("compatible", "The complete compatible subset family",
                 "Filter the full powerset of original positions by consistency with the raw history."),
+            Def("compatibleSources", "The compatible actual trees",
+                "Map every compatible subset to its actual simultaneously filled source. The native cube injectivity distinguishes all of these sources."),
             Def("posterior", "Uniform-prior conditioning",
                 "Every original subset has prior weight one divided by two to the number of original positions. On the compatible family, divide this common weight by its total over that family. A truthful history makes that total positive."),
             Thm("native_record_face", "An exact face and its conditional entropy", FaceFormula(),
@@ -37,8 +39,10 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
                 "Every correct policy must hit all K supports on the empty defect subset: an unhit singleton defect otherwise replays the same terminal run with the opposite correct answer. Distinct supports are disjoint and therefore require distinct paid literal addresses. Querying pL once for every original p gives a correct policy on every subset, always pays K addresses, and attains the lower bound. Only first-use literal source reads are counted; address generation, address length, program and memory costs are separate quantities."),
             Def("success", "The half-canonical, half-singleton score",
                 "The empty subset has weight one half. Every singleton defect has weight one divided by twice K. The score is the resulting average correct-classification probability for a fixed policy."),
+            Def("reward", "Correct classification on one input",
+                "The reward is one exactly when the terminal Boolean answer matches whether the defect subset is empty, and zero otherwise."),
             Thm("optimal_single_defect_success", "Exact success under a hard support budget", BayesFormula(),
-                "For any nonnegative integer q at most K, impose at most q hit supports on every cube input and every fixed random seed. Along the canonical run, every unhit singleton has the same answer. If that answer is canonical, only hit singleton defects can add success; if it is defect, the entire singleton contribution is at most one half. Thus success is at most one half plus q divided by twice K. A fixed scan of any q distinct original positions attains equality, including q zero, q K and K one. Integrating over any source-independent probability law preserves the upper bound for measurable terminal scores."))));
+                "For any nonnegative integer q at most K, impose at most q hit supports on every cube input and every fixed random seed. Along the canonical run, every unhit singleton has the same answer. If that answer is canonical, only hit singleton defects can add success; if it is defect, the entire singleton contribution is at most one half. Thus success is at most one half plus q divided by twice K. A fixed scan of any q distinct original positions attains equality, including q zero, q K and K one. Integrating over any source-independent probability law preserves the upper bound for measurable terminal scores. If every candidate has expected correct reward at least one minus delta, with delta less than one half, then q is at least one minus twice delta times K."))));
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("ancestry-acquisition-" + name.ToLowerInvariant()),
@@ -65,7 +69,7 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
     private static Formula Card(Formula a) => Call("card", a);
     private static Formula Subset(Formula a, Formula b) => Call("Subset", a, b);
     private static Formula Inter(Formula a, Formula b) => Call("inter", a, b);
-    private static Formula Minus(Formula a, Formula b) => Call("natSub", a, b);
+    private static Formula NatSub(Formula a, Formula b) => Call("natSub", a, b);
     private static Formula Positions(Formula t) => Call("positions", t);
     private static Formula Variant(Formula t, Formula a) => Call("variant", t, a);
     private static Formula Cost(Formula r, Formula a) => Card(Call("paid", Call("trace", r, a)));
@@ -89,21 +93,23 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
     {
         Formula t = Call("T", V("n")), a = V("A"), b = V("B"), h = V("h");
         Formula hit = Call("hit", t, h), family = Call("compatible", t, h);
-        Formula free = Minus(Call("fib", Minus(V("n"), D(2))), Card(hit));
+        Formula free = NatSub(Call("fib", NatSub(V("n"), D(2))), Card(hit));
         Formula face = All("B", Call("Finset", Op("Address")), Imp(Subset(b, Positions(t)),
             IffOf(Call("Consistent", t, b, h), EqOf(Inter(b, hit), Inter(a, hit)))));
         Formula uniform = All("B", family, EqOf(Call("posterior", t, h, b), Frac(D(1), Card(family))));
         Formula entropy = EqOf(Frac(Call("shannonEntropy", Call("posterior", t, h)), Call("log", D(2))), free);
         return Disp(OnGeneration(All("A", Call("Finset", Op("Address")), Imp(Subset(a, Positions(t)),
             All("h", Op("RawHistory"), Imp(Call("Consistent", t, a, h),
-                And(face, EqOf(Card(family), new Formula.Power(D(2), free)), uniform, entropy)))))));
+                And(face, EqOf(Card(family), new Formula.Power(D(2), free)),
+                    EqOf(Card(Call("compatibleSources", t, h)), new Formula.Power(D(2), free)), uniform, entropy)))))));
     }
 
     private static Formula CanonicalFormula()
     {
-        Formula t = Call("T", V("n")), k = Call("fib", Minus(V("n"), D(2))), r = V("R");
+        Formula t = Call("T", V("n")), k = Call("fib", NatSub(V("n"), D(2))), r = V("R");
         Formula lower = All("R", Call("CubeRun", t), Imp(Call("Correct", t, r), Le(k, Cost(r, Emptyset))));
         Formula upper = Some("R", Call("CubeRun", t), And(Call("Correct", t, r),
+            Call("FactorsThrough", Call("policy", r), Op("kappaHist")),
             All("A", Call("Finset", Op("Address")), Imp(Subset(V("A"), Positions(t)), Le(Cost(r, V("A")), k))),
             EqOf(Cost(r, Emptyset), k)));
         return Disp(OnGeneration(And(lower, upper)));
@@ -111,7 +117,7 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
 
     private static Formula BayesFormula()
     {
-        Formula t = Call("T", V("n")), k = Call("fib", Minus(V("n"), D(2))), q = V("q"), r = V("R");
+        Formula t = Call("T", V("n")), k = Call("fib", NatSub(V("n"), D(2))), q = V("q"), r = V("R");
         Formula lower = All("R", Call("CubeRun", t), Imp(Budget(t, q, r), Le(Call("success", t, r), Bound(q, k))));
         Formula attaining = Some("R", Call("CubeRun", t), And(Budget(t, q, r), EqOf(Call("success", t, r), Bound(q, k))));
         Formula seedBudget = All("s", V("O"), Budget(t, q, Call("R", V("s"))));
@@ -120,6 +126,15 @@ internal sealed class NativeAncestryAcquisitionDocument : IScribeDocumentDefinit
                 Imp(Call("Measurable", Call("seedScore", t, r)),
                     Imp(seedBudget,
                         Le(Call("integralScore", V("m"), t, r), Bound(q, k))))))));
-        return Disp(OnGeneration(All("q", Op("Nat"), Imp(Le(q, k), And(lower, attaining, average)))));
+        Formula accuracy = All("A", Call("Finset", Op("Address")), Imp(Subset(V("A"), Positions(t)),
+            Le(Seq(D(1), Minus, V("d")), Call("integralReward", V("m"), r, V("A")))));
+        Formula decisions = All("A", Call("Finset", Op("Address")), Imp(Subset(V("A"), Positions(t)),
+            Call("Measurable", Call("seedAnswer", r, V("A")))));
+        Formula error = All("O", Op("Type"), Imp(Call("MeasurableSpace", V("O")),
+            All("m", Call("ProbabilityMeasure", V("O")), All("R", Arr(V("O"), Call("CubeRun", t)),
+                All("d", Op("Real"), Imp(Seq(V("d"), Sp, Lt, Sp, Frac(D(1), D(2))),
+                    Imp(decisions, Imp(seedBudget, Imp(accuracy,
+                        Le(Seq(Par(Seq(D(1), Minus, D(2), Times, V("d"))), Times, k), q))))))))));
+        return Disp(OnGeneration(All("q", Op("Nat"), Imp(Le(q, k), And(lower, attaining, average, error)))));
     }
 }

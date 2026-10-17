@@ -161,6 +161,10 @@ private theorem record_face_iff (t : Source) (A B : Finset Address)
 def compatible (t : Source) (h : Hist (fun _ : Address => Reply)) : Finset (Finset Address) :=
   (positions t).powerset.filter (fun A => Consistent t A h)
 
+/-- The actual native sources, retaining all original brackets and labels. -/
+def compatibleSources (t : Source) (h : Hist (fun _ : Address => Reply)) : Finset Source :=
+  (compatible t h).image (variant t)
+
 /-- Conditioning the uniform law on all subsets on the observed nonempty fiber. -/
 def posterior (t : Source) (h : Hist (fun _ : Address => Reply)) : compatible t h → ℝ :=
   fun _ => (2 ^ (positions t).card : ℝ)⁻¹ /
@@ -219,6 +223,7 @@ theorem native_record_face (n : ℕ) (hn : 3 ≤ n) (A : Finset Address)
     (∀ B ⊆ positions (T n), Consistent (T n) B h ↔
       B ∩ hit (T n) h = A ∩ hit (T n) h) ∧
     (compatible (T n) h).card = 2 ^ (Nat.fib (n-2) - (hit (T n) h).card) ∧
+    (compatibleSources (T n) h).card = 2 ^ (Nat.fib (n-2) - (hit (T n) h).card) ∧
     posterior (T n) h = (fun _ => ((compatible (T n) h).card : ℝ)⁻¹) ∧
     D5.S3.Entropy.MaxEntropy.shannonEntropy (posterior (T n) h) / Real.log 2 =
       (Nat.fib (n-2) - (hit (T n) h).card : ℕ) := by
@@ -233,9 +238,17 @@ theorem native_record_face (n : ℕ) (hn : 3 ≤ n) (A : Finset Address)
   have uniform : posterior (T n) h =
       (fun _ => ((compatible (T n) h).card : ℝ)⁻¹) := by
     funext B
-    simp only [posterior, Finset.sum_const, smul_eq_mul, Fintype.card_coe]
-    field_simp
-  refine ⟨fun B hB => record_face_iff (T n) A B hA hB h truth,card,uniform,?_⟩
+    simp only [posterior, Finset.sum_const, smul_eq_mul, Finset.card_univ, Fintype.card_coe]
+    field_simp [ne_of_gt pos,ne_of_gt powpos]
+  have sourcecard : (compatibleSources (T n) h).card = (compatible (T n) h).card := by
+    apply Finset.card_image_of_injOn
+    intro B hB C hC eq
+    have hB' := Finset.mem_powerset.mp (Finset.mem_filter.mp hB).1
+    have hC' := Finset.mem_powerset.mp (Finset.mem_filter.mp hC).1
+    exact congrArg Subtype.val
+      ((Geometry.NativeAncestryDefectCube.native_area_cube n hn).2.1
+        (a₁ := ⟨B,hB'⟩) (a₂ := ⟨C,hC'⟩) eq)
+  refine ⟨fun B hB => record_face_iff (T n) A B hA hB h truth,card,sourcecard.trans card,uniform,?_⟩
   have norm : (∀ B, 0 ≤ posterior (T n) h B) ∧ ∑ B, posterior (T n) h B = 1 := by
     rw [uniform]
     constructor
@@ -340,7 +353,7 @@ private def scanTree : List Address → PassiveProtocol Address (fun _ => Reply)
   | p :: ps => .query (p ++ [false]) (fun _ => scanTree ps)
 
 private def scanDecode (h : Hist (fun _ : Address => Reply)) : Bool :=
-  decide (∀ e ∈ h, e.2 = Reply.branch)
+  decide (∀ e ∈ h, ActualCoarseReadoutHistory.kappa e.2 = none)
 
 private theorem scan_transcript (ps : List Address) (U : Source) :
     runPassiveProtocol readout (scanTree ps) U =
@@ -361,10 +374,10 @@ private def scanRun (t : Source) (J : Finset Address) : CubeRun t where
 private theorem scan_answer (t : Source) (J A : Finset Address) (hJ : J ⊆ positions t) :
     (scanRun t J).answer A = true ↔ A ∩ J = ∅ := by
   have local (p : Address) (hp : p ∈ J) :
-      readout (p ++ [false]) (variant t A) = Reply.branch ↔ p ∉ A := by
+      ActualCoarseReadoutHistory.kappa (readout (p ++ [false]) (variant t A)) = none ↔ p ∉ A := by
     unfold variant
     rw [reply_at t _ p [false] (hJ hp)]
-    by_cases ha : p ∈ A <;> simp [ha,defectB,defectD,readout]
+    by_cases ha : p ∈ A <;> simp [ha,defectB,defectD,readout,ActualCoarseReadoutHistory.kappa]
   change scanDecode (runPassiveProtocol readout (scanTree J.toList) (variant t A)) = true ↔ _
   rw [scan_transcript]
   simp only [scanDecode,decide_eq_true_eq,List.forall_mem_map,List.mem_toList]
@@ -406,15 +419,69 @@ private theorem scan_hit (n : ℕ) (hn : 3 ≤ n) (J A : Finset Address)
     rw [scan_transcript]
     exact List.mem_map.mpr ⟨p,by simpa using hp,rfl⟩
 
+private theorem scan_coarse (t : Source) (J : Finset Address) :
+    Function.FactorsThrough (scanRun t J).policy ActualCoarseReadoutHistory.kappa_hist := by
+  let κH := ActualCoarseReadoutHistory.kappa_hist
+  have stopped (h : Hist (fun _ : Address => Reply)) :
+      D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual
+        (.stop : PassiveProtocol Address (fun _ => Reply)) h = .stop := by
+    induction h with
+    | nil => rfl
+    | cons e h ih => exact ih
+  have sameResidual (ps : List Address) : ∀ h k, κH h = κH k →
+      D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual (scanTree ps) h =
+      D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual (scanTree ps) k := by
+    induction ps with
+    | nil => intro h k _; exact (stopped h).trans (stopped k).symm
+    | cons p ps ih =>
+      intro h k eq
+      cases h with
+      | nil =>
+        cases k with
+        | nil => rfl
+        | cons e k => simp [κH,ActualCoarseReadoutHistory.kappa_hist] at eq
+      | cons e h =>
+        cases k with
+        | nil => simp [κH,ActualCoarseReadoutHistory.kappa_hist] at eq
+        | cons f k =>
+          have heads := List.cons.inj (show
+            (⟨e.1,ActualCoarseReadoutHistory.kappa e.2⟩ : Sigma (fun _ : Address => Option Bool)) :: κH h =
+            ⟨f.1,ActualCoarseReadoutHistory.kappa f.2⟩ :: κH k from eq)
+          have addr := congrArg Sigma.fst heads.1
+          change D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual
+            (D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance (scanTree (p::ps)) e) h =
+            D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual
+            (D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance (scanTree (p::ps)) f) k
+          by_cases hit : e.1 = p ++ [false]
+          · simpa [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
+              hit,← addr] using ih h k heads.2
+          · simp only [scanTree,D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.advance,
+              ← addr,hit,↓reduceDIte]
+            exact (stopped h).trans (stopped k).symm
+  intro h k eq
+  have decoder (h : Hist (fun _ : Address => Reply)) : scanDecode h =
+      decide (∀ e ∈ κH h, e.2 = none) := by
+    simp [scanDecode,κH,ActualCoarseReadoutHistory.kappa_hist]
+  change D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
+    (scanTree J.toList) scanDecode h =
+    D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
+      (scanTree J.toList) scanDecode k
+  unfold D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.treePolicy
+  rw [sameResidual J.toList h k eq]
+  cases D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.residual (scanTree J.toList) k with
+  | stop => rw [decoder,decoder,eq]
+  | query a next => rfl
+
 /-- Every correct policy pays at least the number of positions on the canonical input;
 a fixed left-child scan attains that value and bounds the cost on every input. -/
 theorem optimal_canonical_queries (n : ℕ) (hn : 3 ≤ n) :
     (∀ R : CubeRun (T n), Correct (T n) R →
       Nat.fib (n-2) ≤ (paid (R.trace ∅)).card) ∧
     ∃ R : CubeRun (T n), Correct (T n) R ∧
+      Function.FactorsThrough R.policy ActualCoarseReadoutHistory.kappa_hist ∧
       (∀ A ⊆ positions (T n), (paid (R.trace A)).card ≤ Nat.fib (n-2)) ∧
       (paid (R.trace ∅)).card = Nat.fib (n-2) := by
-  refine ⟨canonical_lower n hn,scanRun (T n) (positions (T n)),?_,?_,?_⟩
+  refine ⟨canonical_lower n hn,scanRun (T n) (positions (T n)),?_,scan_coarse _ _,?_,?_⟩
   · intro A hA
     rw [scan_answer _ _ _ (Finset.Subset.refl _),Finset.inter_eq_left.mpr hA]
   · intro A _
@@ -454,10 +521,11 @@ private theorem seedwise_bound (n : ℕ) (hn : 3 ≤ n) (q : ℕ) (R : CubeRun (
         Nat.fib (n-2) := by
       exact_mod_cast (Finset.card_filter_le _ _).trans card.le
     simp only [success,canonical,ite_false,zero_add,card]
-    apply (div_le_iff₀ (by positivity : (0:ℝ)<2*Nat.fib (n-2))).mpr
-    have qnonneg : (0:ℝ) ≤ q := by positivity
-    field_simp
-    nlinarith
+    have half : (((positions (T n)).filter (fun p => R.answer {p} = false)).card : ℝ) /
+        (2*Nat.fib (n-2)) ≤ 1/2 := by
+      apply (div_le_iff₀ (by positivity : (0:ℝ)<2*Nat.fib (n-2))).mpr
+      linarith
+    exact half.trans (le_add_of_nonneg_right (by positivity))
 
 private theorem scan_success (n : ℕ) (hn : 3 ≤ n) (J : Finset Address)
     (hJ : J ⊆ positions (T n)) :
@@ -478,6 +546,75 @@ private theorem scan_success (n : ℕ) (hn : 3 ≤ n) (J : Finset Address)
   simp only [success,canonical,ite_true,defects,
     (Geometry.NativeAncestryDefectCube.native_area_cube n hn).1]
 
+/-- The indicator of a correct terminal classification on one fixed input. -/
+def reward {t : Source} (R : CubeRun t) (A : Finset Address) : ℝ :=
+  if R.answer A = decide (A = ∅) then 1 else 0
+
+private theorem success_reward_sum (t : Source) (R : CubeRun t) :
+    success t R = (1/2:ℝ) * reward R ∅ +
+      (∑ p ∈ positions t, reward R {p}) / (2*(positions t).card) := by
+  have sum : (∑ p ∈ positions t, reward R {p}) =
+      (((positions t).filter (fun p => R.answer {p} = false)).card : ℝ) := by
+    simpa only [reward,Finset.singleton_ne_empty,decide_false] using
+      (Finset.sum_boole (fun p => R.answer {p} = false) (positions t) :
+        (∑ p ∈ positions t, if R.answer {p} = false then (1:ℝ) else 0) = _)
+  rw [sum]
+  cases he : R.answer ∅ <;> simp [success,reward,he]
+
+private theorem averaged_bound (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
+    {Ω : Type} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+    [MeasureTheory.IsProbabilityMeasure μ] (R : Ω → CubeRun (T n))
+    (budget : ∀ ω A, A ⊆ positions (T n) → (hit (T n) ((R ω).trace A)).card ≤ q) :
+    ∫ ω, success (T n) (R ω) ∂μ ≤ 1/2 + (q : ℝ)/(2*Nat.fib (n-2)) := by
+  have bound := MeasureTheory.integral_mono_of_nonneg
+    (MeasureTheory.ae_of_all μ (fun ω => success_nonneg (T n) (R ω)))
+    (MeasureTheory.integrable_const (1/2+(q:ℝ)/(2*Nat.fib (n-2))))
+    (MeasureTheory.ae_of_all μ (fun ω => seedwise_bound n hn q (R ω) (budget ω)))
+  simpa only [MeasureTheory.integral_const,MeasureTheory.probReal_univ,one_smul] using bound
+
+private theorem uniform_error_lower (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
+    {Ω : Type} [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+    [MeasureTheory.IsProbabilityMeasure μ] (R : Ω → CubeRun (T n)) (δ : ℝ) (hδ : δ < 1/2)
+    (budget : ∀ ω A, A ⊆ positions (T n) → (hit (T n) ((R ω).trace A)).card ≤ q)
+    (accurate : ∀ A ⊆ positions (T n), 1-δ ≤ ∫ ω, reward (R ω) A ∂μ) :
+    (1-2*δ)*(Nat.fib (n-2) : ℝ) ≤ q := by
+  have integrable (A : Finset Address) (hA : A ⊆ positions (T n)) :
+      MeasureTheory.Integrable (fun ω => reward (R ω) A) μ := by
+    apply MeasureTheory.Integrable.of_integral_ne_zero
+    have pos : (0:ℝ) < ∫ ω, reward (R ω) A ∂μ := lt_of_lt_of_le (by linarith) (accurate A hA)
+    exact ne_of_gt pos
+  have sumint : MeasureTheory.Integrable (fun ω => ∑ p ∈ positions (T n), reward (R ω) {p}) μ :=
+    MeasureTheory.integrable_finsetSum _ (fun p hp => integrable {p} (by simpa))
+  have expression : (∫ ω, success (T n) (R ω) ∂μ) =
+      (1/2:ℝ) * (∫ ω, reward (R ω) ∅ ∂μ) +
+        (∑ p ∈ positions (T n), ∫ ω, reward (R ω) {p} ∂μ) /
+          (2*(positions (T n)).card) := by
+    simp_rw [success_reward_sum]
+    rw [MeasureTheory.integral_add
+      ((integrable ∅ (Finset.empty_subset _)).const_mul _) (sumint.div_const _),
+      MeasureTheory.integral_const_mul,MeasureTheory.integral_div,
+      MeasureTheory.integral_finsetSum]
+    intro p hp
+    exact integrable {p} (by simpa)
+  have sum_lower : ((positions (T n)).card : ℝ)*(1-δ) ≤
+      ∑ p ∈ positions (T n), ∫ ω, reward (R ω) {p} ∂μ := by
+    simpa using Finset.sum_le_sum (fun p hp => accurate {p} (by simpa))
+  have card := (Geometry.NativeAncestryDefectCube.native_area_cube n hn).1
+  have kpos : (0:ℝ) < Nat.fib (n-2) := by exact_mod_cast Nat.fib_pos.mpr (by omega : 0<n-2)
+  have canonical := accurate ∅ (Finset.empty_subset _)
+  have upper := averaged_bound n hn q μ R budget
+  rw [expression,card] at upper
+  rw [card] at sum_lower
+  have divlower : (1-δ)/2 ≤
+      (∑ p ∈ positions (T n), ∫ ω, reward (R ω) {p} ∂μ)/(2*Nat.fib (n-2)) := by
+    calc
+      (1-δ)/2 = ((Nat.fib (n-2) : ℝ)*(1-δ))/(2*Nat.fib (n-2)) := by
+        field_simp [ne_of_gt kpos]
+      _ ≤ _ := div_le_div_of_nonneg_right sum_lower (by positivity)
+  have fraclower : (1/2:ℝ)-δ ≤ (q:ℝ)/(2*Nat.fib (n-2)) := by linarith
+  have mul_upper := (le_div_iff₀ (by positivity : (0:ℝ)<2*Nat.fib (n-2))).mp fraclower
+  nlinarith
+
 /-- The hard per-input support budget has exact optimal average success.
 The same upper bound holds after averaging any source-independent seed law. -/
 theorem optimal_single_defect_success (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
@@ -492,8 +629,14 @@ theorem optimal_single_defect_success (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
       [MeasureTheory.IsProbabilityMeasure μ] (R : Ω → CubeRun (T n)),
       Measurable (fun ω => success (T n) (R ω)) →
       (∀ ω A, A ⊆ positions (T n) → (hit (T n) ((R ω).trace A)).card ≤ q) →
-      ∫ ω, success (T n) (R ω) ∂μ ≤ 1/2 + (q : ℝ)/(2*Nat.fib (n-2))) := by
-  refine ⟨seedwise_bound n hn q,?_,?_⟩
+      ∫ ω, success (T n) (R ω) ∂μ ≤ 1/2 + (q : ℝ)/(2*Nat.fib (n-2))) ∧
+    (∀ (Ω : Type) [MeasurableSpace Ω] (μ : MeasureTheory.Measure Ω)
+      [MeasureTheory.IsProbabilityMeasure μ] (R : Ω → CubeRun (T n)) (δ : ℝ), δ < 1/2 →
+      (∀ A ⊆ positions (T n), Measurable (fun ω => (R ω).answer A)) →
+      (∀ ω A, A ⊆ positions (T n) → (hit (T n) ((R ω).trace A)).card ≤ q) →
+      (∀ A ⊆ positions (T n), 1-δ ≤ ∫ ω, reward (R ω) A ∂μ) →
+      (1-2*δ)*(Nat.fib (n-2) : ℝ) ≤ q) := by
+  refine ⟨seedwise_bound n hn q,?_,?_,?_⟩
   · have hq' : q ≤ (positions (T n)).card := by
       rwa [(Geometry.NativeAncestryDefectCube.native_area_cube n hn).1]
     obtain ⟨J,hJ,card⟩ := Finset.exists_subset_card_eq hq'
@@ -501,11 +644,13 @@ theorem optimal_single_defect_success (n : ℕ) (hn : 3 ≤ n) (q : ℕ)
     · intro A _; rw [scan_hit n hn J A hJ,card]
     · rw [scan_success n hn J hJ,card]
   · intro Ω _ μ _ R _ budget
-    have bound := MeasureTheory.integral_mono_of_nonneg
-      (MeasureTheory.ae_of_all μ (fun ω => success_nonneg (T n) (R ω)))
-      (MeasureTheory.integrable_const (1/2+(q:ℝ)/(2*Nat.fib (n-2))))
-      (MeasureTheory.ae_of_all μ (fun ω => seedwise_bound n hn q (R ω) (budget ω)))
-    simpa only [MeasureTheory.integral_const,MeasureTheory.probReal_univ,one_smul] using bound
+    exact averaged_bound n hn q μ R budget
+  · intro Ω _ μ _ R δ hδ _ budget accurate
+    exact uniform_error_lower n hn q μ R δ hδ budget accurate
 
 end
+#print axioms outside_support_invariance
+#print axioms native_record_face
+#print axioms optimal_canonical_queries
+#print axioms optimal_single_defect_success
 end D5.S3.Arith.FibonacciAtomic.Observer.Acquisition.NativeAncestryAcquisition

@@ -227,4 +227,78 @@ def registration : Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
 end Diameter
 
 end
+namespace FillAt
+def signature : Signature where
+  Params := Address
+  State _ := Source
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Option Source
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ p t => subtree p t) (fun e => nomatch e)
+def bad : Realization signature :=
+  realize signature (fun _ _ _ => none) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law F := ∀ (t : Source) (a : Address → Bool) (p : Address), p ∈ positions t →
+    F.readout () p (fill t a) = some (if a p then defectD else defectB)
+private theorem bad_law : ¬ arena.Law bad := by
+  intro h
+  have eq := h defectB (fun _ => false) [] (by decide)
+  change (none : Option Source) = some defectB at eq
+  cases eq
+
+def evidence : Registration arena (type_of% (@fill_at)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨fill_at,bad,bad_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨bad,fun j ne => (ne (Subsingleton.elim j i)).elim,rfl,bad_law⟩
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨[],.of true,.of false,?_⟩
+    change some (FreeMagma.of true) ≠ some (FreeMagma.of false)
+    decide
+
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@fill_at) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube.fill_at.__information_unit
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube.FillAt.evidence
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨evidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p t => subtree p t) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube
+    definition := none
+    coordinates := #[2]
+    readouts := #[{
+      path := #["body","body","body","body","fn","arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+#print axioms evidence
+#print axioms registration
+end FillAt
 end Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeAncestryDefectCube
