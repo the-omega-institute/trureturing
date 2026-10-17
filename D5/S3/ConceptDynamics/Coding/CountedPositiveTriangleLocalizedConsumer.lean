@@ -94,6 +94,22 @@ theorem dyadicReduction (e : ℕ) :
   intro z
   exact IsLocalization.Away.lift_eq (2 : ℤ) (by simpa using htwo) z
 
+theorem centralizer_product {M : Type*} [Monoid M] (A : M)
+    (B : M → M → ZMod 3)
+    (htriangle : ∀ R V W, B R (V*W) + B V (W*R) = B (R*V) W)
+    (U V : Mˣ) (hU : Commute (U : M) A) :
+    B ((U*V : Mˣ) : M) (↑((U*V)⁻¹)*A) =
+      B (U : M) (↑U⁻¹*A) + B (V : M) (↑V⁻¹*A) := by
+  have hconj : (↑U⁻¹ : M) * (A * (U : M)) = A := by
+    rw [← hU.eq, ← mul_assoc, Units.inv_mul, one_mul]
+  have hleft : (V : M) * ((↑V⁻¹ : M) * ↑U⁻¹ * A) = (↑U⁻¹ : M) * A := by
+    rw [← mul_assoc, ← mul_assoc, Units.mul_inv, one_mul]
+  have hright : ((↑V⁻¹ : M) * ↑U⁻¹ * A) * (U : M) = (↑V⁻¹ : M) * A := by
+    simpa only [mul_assoc] using congrArg (fun x : M => (↑V⁻¹ : M) * x) hconj
+  change B ((U : M)*(V : M)) ((↑V⁻¹ : M)*↑U⁻¹*A) = _
+  rw [← htriangle, hleft, hright]
+
+
 end SourceOnlyLocalizedCocycle
 
 namespace D5.S3.ConceptDynamics.Coding.CountedOrderTypeGyration

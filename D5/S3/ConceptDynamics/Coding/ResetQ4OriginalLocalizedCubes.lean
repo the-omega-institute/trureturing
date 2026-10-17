@@ -248,7 +248,9 @@ private theorem beta_correction (i : ℕ) (w : (AdjoinRoot (g 4))ˣ) :
 units. Integral compatibility is used only for j=k, not to glue cube roots. -/
 private theorem localized_normal_form (u : (QF 4)ˣ) :
     ∃ i j : Fin 3, ∃ v : Oˣ,
-      integralUnits u = timeUnit^i.val * onePlusUnit^j.val * v^3 := by
+      integralUnits u = timeUnit^i.val * onePlusUnit^j.val * v^3 ∧
+      residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
+        (Units.map (plus 4).toMonoidHom u))) = (j.val : ZMod 3) := by
   let up := Units.map (plus 4).toMonoidHom u
   let um := Units.map (minus 4).toMonoidHom u
   have hc : Units.map (rplus 4).toMonoidHom up =
@@ -262,7 +264,10 @@ private theorem localized_normal_form (u : (QF 4)ˣ) :
       congrArg ZMod.val hjk
   subst k
   let root : Oˣ := joinUnit (plusUnits v) (minusUnits (beta^(3*i.val) * w))
-  refine ⟨i,j,root,?_⟩
+  have hres : residueCharacter (Additive.ofMul
+      (Units.map (rplus 4).toMonoidHom up)) = (j.val : ZMod 3) :=
+    residueCharacter_plus_factorization up i j v hp
+  refine ⟨i,j,root,?_,hres⟩
   apply unit_components_ext
   · have hcomp : firstUnit (integralUnits u) = plusUnits up := by
       apply Units.ext
@@ -478,13 +483,13 @@ def onePlusTime : Centralizer := evaluateCentralizer onePlusUnit
 def originalImage (h : ResetFullAut 4) : Centralizer :=
   evaluateCentralizer (integralUnits (originalScalar h))
 
-private theorem time_val : ((time : DyadicMatrixˣ) : DyadicMatrix) = T :=
+theorem time_val : ((time : DyadicMatrixˣ) : DyadicMatrix) = T :=
   matrixTime_val
 
-private theorem onePlusTime_val : ((onePlusTime : DyadicMatrixˣ) : DyadicMatrix) = 1+T :=
+theorem onePlusTime_val : ((onePlusTime : DyadicMatrixˣ) : DyadicMatrix) = 1+T :=
   matrixOnePlus_val
 
-private theorem originalImage_val (h : ResetFullAut 4) :
+theorem originalImage_val (h : ResetFullAut 4) :
     ((originalImage h : DyadicMatrixˣ) : DyadicMatrix) = rhoD h := by
   change evaluation (integral (originalScalar h : QF 4)) = rhoD h
   rw [evaluation_integral, originalScalar_matrix]
@@ -515,7 +520,7 @@ private theorem original_unit_factorization (h : ResetFullAut 4) :
         (originalImage (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))^i.val *
         (originalImage (evenAut 4 (by decide) (by decide)))^j.val * v^3 := by
   rw [originalImage_unitShift, originalImage_even]
-  obtain ⟨i,j,v,hv⟩ := localized_normal_form (originalScalar h)
+  obtain ⟨i,j,v,hv,_⟩ := localized_normal_form (originalScalar h)
   refine ⟨i,j,evaluateCentralizer v,?_⟩
   simpa only [map_mul, map_pow, originalImage, time, onePlusTime] using
     congrArg evaluateCentralizer hv
@@ -533,5 +538,54 @@ theorem original_localized_cube_factorization (h : ResetFullAut 4) :
   have he := congrArg (fun u : Centralizer => ((u : DyadicMatrixˣ) : DyadicMatrix)) hv
   simpa only [Subgroup.coe_mul, Subgroup.coe_pow, Units.val_mul,
     Units.val_pow_eq_pow_val, originalImage_val, rhoD_unitShift, rhoD_even] using he
+
+
+/-- The same real commuting unit and bounded exponents carry the native
+residue value. The quantifier is over ALL original ResetFullAut 4. -/
+theorem original_character_factorization (h : ResetFullAut 4) :
+    ∃ i j : Fin 3, ∃ v : Centralizer,
+      originalImage h = time^i.val * onePlusTime^j.val * v^3 ∧
+      residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
+        (Units.map (plus 4).toMonoidHom (originalScalar h)))) =
+          (j.val : ZMod 3) := by
+  obtain ⟨i,j,v,hv,hres⟩ := localized_normal_form (originalScalar h)
+  refine ⟨i,j,evaluateCentralizer v,?_,hres⟩
+  simpa only [map_mul, map_pow, originalImage, time, onePlusTime] using
+    congrArg evaluateCentralizer hv
+
+private theorem originalScalar_unitShift_val :
+    (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
+      fp 4 X := by
+  apply (nativeIntEquiv 4 (by decide)).injective
+  calc
+    nativeIntEquiv 4 (by decide)
+        (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
+        rho 4 (by decide) (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))
+          (nativeIntEquiv 4 (by decide) 1) := by
+      simpa only [mul_one] using originalScalar_action
+        (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) (1 : QF 4)
+    _ = resetTheta 4 (nativeIntEquiv 4 (by decide) 1) :=
+      LinearMap.congr_fun (rho_unitShift 4 (by decide)) _
+    _ = nativeIntEquiv 4 (by decide) (fp 4 X) := by
+      simpa only [mul_one] using
+        ((native_presentation 4 (by decide)).2.1 (1 : QF 4)).symm
+
+/-- The residue of the ACTUAL original forward shift is annihilated.
+This is proved in the integral chart, before any dyadic localization. -/
+theorem original_time_residue :
+    residueCharacter (Additive.ofMul (Units.map (rplus 4).toMonoidHom
+      (Units.map (plus 4).toMonoidHom
+        (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)))))) = 0 := by
+  have hp : Units.map (plus 4).toMonoidHom
+      (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4))) = alpha := by
+    apply Units.ext
+    change plus 4
+      (originalScalar (StandardBeamHomeomorphisms.unitShift (ResetGraph 4)) : QF 4) =
+        alpha.val
+    rw [originalScalar_unitShift_val]
+    rfl
+  rw [hp]
+  simpa only [Fin.val_zero, Nat.cast_zero] using residueCharacter_plus_factorization
+    alpha (1 : Fin 3) (0 : Fin 3) 1 (by simp)
 
 end D5.S3.ConceptDynamics.Coding.ResetQ4OriginalLocalizedCubes

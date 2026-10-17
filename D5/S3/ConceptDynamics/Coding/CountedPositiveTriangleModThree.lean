@@ -150,7 +150,7 @@ private theorem PathCoding.signed_equation {n m d : ℕ} [NeZero d]
   change x.val.val t = x.val.val ((t + -(k.val : ℤ)) + (k.val : ℤ))
   simp only [add_assoc, neg_add_cancel, add_zero]
 
-private theorem periodic_translate_residue {n d : ℕ} [NeZero d]
+theorem periodic_translate_residue {n d : ℕ} [NeZero d]
     {A : CountMat n n} (x : Path A)
     (hx : Function.IsPeriodicPt (shift A) d x) (q : ℤ) :
     translate (countedGraph A) q x = (shift A)^[(timeIndex (d := d) q).val] x := by
