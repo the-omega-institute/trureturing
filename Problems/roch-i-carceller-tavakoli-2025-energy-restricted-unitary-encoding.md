@@ -49,7 +49,7 @@ Issue #17895 records the literature check before any Lean:
    - Cauchy–Schwarz for the positive forms of E and of 1 − E bounds its square by both ⟨u, Eu⟩⟨v, Ev⟩ and ⟨u, (1 − E)u⟩⟨v, (1 − E)v⟩. Together these give at most ‖u‖‖v‖/2 = √(1 − a²).
 3. **Unassisted bound.** A message is an ensemble of unit vectors with weights summing to 1, the ensemble decomposition of its density operator.
    - Sum the pure inequality over the four messages, with Σ_x E_x = 1, and average over the ensembles and the shared randomness.
-   - The tangent-line bound Σ_j w_j √t_j ≤ √(Σ_j w_j t_j) then shows that every unassisted strategy at energy ω succeeds with probability at most 1/4 + √ω. The message space has any dimension.
+   - The averaging bound Σ_j w_j √t_j ≤ √(Σ_j w_j t_j), which is Cauchy–Schwarz for the sequences √w_j and √(w_j t_j), then shows that every unassisted strategy at energy ω succeeds with probability at most 1/4 + √ω. The message space has any dimension.
 4. **Conclusion.** √(288/625) < 17/25, so every unassisted value is below 93/100 < 2401/2500.
 
 ## Falsifier
@@ -89,7 +89,7 @@ Tier 1 question of a 2025 paper, preregistered in issue #17895 before any Lean. 
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none: after inlining, the protocol identities are finite computations, and the bound is an instantiation of Cauchy–Schwarz for positive operators and the tangent-line bound for √, followed by normalization | open-problem-resolution |
+| result | bind-only | none: after inlining, the protocol identities are finite computations, and the bound is an instantiation of Cauchy–Schwarz for positive operators and Hölder's inequality for sums with exponents 2 and 2, followed by normalization | open-problem-resolution |
 | the protocol, effect-bound and Jensen helpers (private) | bind-only (consumed on the proof path of `result`) | none | consumed helpers |
 
 Every other public declaration is a definition used by a public statement. The bind-only form is admitted under the open-problem-resolution basis of CLAUDE.md §3.2; no escape witness is claimed. The refutation is a certified instance with basis `refutes`. There is no digestion atom.
