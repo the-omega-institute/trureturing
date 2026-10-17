@@ -7379,3 +7379,1166 @@ This is a numerical application of existing equality and inverse
 comparison identities, with no new generic theorem, novelty or Lean
 proof. Actual-center/full-border signs, good-block payment,
 retained/cofinal positivity, Robin tail and RH remain unresolved.
+
+
+### Retain the source relation on a zero-first-coordinate direction
+
+The preceding negative row belongs to a scalar relaxation. Add a
+relation supplied by the original common source before seeking another
+nonnegative certificate. Reuse $P=TRT^*\succeq0$,
+$Q_R=P-e_0e_0^*/\delta$, $y_0=\alpha_0\rho+\beta_J$ and
+$\lambda=y_0[0]\ne0$. Set
+
+$$
+c=\frac{\rho[0]}\lambda,\qquad w=\rho-cy_0.
+$$
+
+Then $w[0]=0$ exactly, so
+
+$$
+Q_Rw^*=Pw^*,\qquad
+fQ_R\rho^*=fPw^*+c\theta,\qquad \theta=fQ_Ry_0^*.
+$$
+
+This is a positive-metric slice of the SAME finite reference form;
+it does not change the actual row. Since the first row of $T$ is the
+negative-pivot elimination row and its other rows form the identity,
+$wT=w_{\rm tail}$. Thus one cached reference-vector action supplies
+
+$$
+v_d=Pw^*=TRw_{\rm tail}^*.
+$$
+
+No new inverse, solve or old reference quadratic is required. The
+coefficient $c$ and every finite row retain their interval uncertainty;
+$w[0]=0$ is imposed using the exact common-parameter identity, not a
+subtraction of rounded coordinates.
+
+The original source relation is
+$f=\kappa u_F^*W_F\mathsf B$, where $\mathsf B=R_FV$ and
+$\kappa=33/32$. Define
+
+$$
+v_b=Q_Ry_0^*,\qquad b=\mathsf Bv_b,\qquad d=\mathsf Bv_d.
+$$
+
+The saved signed observation and the desired new pairing are therefore
+
+$$
+\theta=\kappa\langle u_F,b\rangle_{W_F},\qquad
+\zeta=fPw^*=\kappa\langle u_F,d\rangle_{W_F}.
+$$
+
+The entire signed $\theta$ interval is retained, together with the SAME
+source-energy UPPER $E\ge\|u_F\|_{W_F}^2$. No interior response is
+substituted for the actual one. The tighter saved cap
+$J_b\ge\|b\|_{W_F}^2$ is reused without replaying its quadratic.
+
+For any direction $v$ in this common lift, the original physical
+interface supplies $t_v=D_{\rm phys}Vv$, $h_v=P_0t_v$, and
+$\|t_v\|\le\sqrt{K_{\rm phys}}L_v$, where
+
+$$
+L_v=\sum_j|v_j|\sqrt{(V^*V)_{jj}}.
+$$
+
+Use the cached112-by18 feature map once to obtain $h_d$; $h_b$ is
+already saved. The original operator-norm Gram certificate gives
+
+$$
+\begin{aligned}
+\|d\|_{W_F}^2&\le J_d:=
+\operatorname{up}\left(h_d^TK_0h_d+
+\epsilon_{\rm far}K_{\rm phys}L_d^2\right),\\
+\langle b,d\rangle_{W_F}&\in h_b^TK_0h_d+
+[-e_{bd},e_{bd}],\qquad
+ e_{bd}=\operatorname{up}
+ (\epsilon_{\rm far}K_{\rm phys}L_bL_d).
+\end{aligned}
+$$
+
+The complete interval evaluation also pays uncertainty in both feature
+vectors and the saved kernel. This is a bilinear Gram error; it does
+not infer a vector error by taking the square root of a Gram error.
+Neither rounded kernel centers nor the masked kernel are assumed PSD.
+The physical allowance retains its original512-grid interpretation;
+weighted kernel and Hilbert norms already contain the original far
+weight, with no extra weight or $\kappa$ inserted.
+
+Apply the existing `projected_energy` common-representer bound to the
+SAME three real vectors $(u_F,d,b)$, using squared-norm uppers
+$(E,J_d,J_b)$ and signed pairings
+$s=\theta/\kappa$, $t=\langle b,d\rangle$. At each exact realization,
+
+$$
+\left|\langle u_F,d\rangle-\frac{st}{J_b}\right|
+\le
+\sqrt{\left(E-\frac{s^2}{J_b}\right)
+      \left(J_d-\frac{t^2}{J_b}\right)}.
+$$
+
+The formula remains valid when $J_b$ is only an upper: extend $b$ by
+one orthogonal coordinate to give it squared norm $J_b$, and extend
+$u_F,d$ by zero. The existing interval implementation bounds both
+residual factors and the signed product uniformly. Multiplication by
+$\kappa$ supplies a conditional interval for $\zeta$ and then for
+$fQ_R\rho^*=\zeta+c\theta$.
+
+Retain the earlier scalar-only bound too. With
+$p=\rho Py_0^*$, $r_0=y_0Py_0^*$, $r_\rho=\rho P\rho^*$ and the
+SAME far-row energy cap $A\ge fPf^*$,
+
+$$
+|\zeta|\le\sqrt{A(r_\rho-2cp+c^2r_0)}.
+$$
+
+Here $A$ and source energy $E$ have different meanings and units. The
+two valid intervals are intersected; an empty intersection is an
+inconsistency and stops the application.
+
+For the previously constructed row, reuse its own saved $\tau$ and
+$s=\alpha_*-\alpha_0$ to obtain
+
+$$
+f_{\rm rel}Pw^*=\tau(p-cr_0)-s(r_\rho-cp).
+$$
+
+Its target remains chosen inside the observed interval, not identified
+with the actual $\theta$. Disjoint intervals would exclude this
+particular row under the added source-energy/Gram relation; this test
+neither excludes all negative rows nor decides the actual paid
+comparison.
+
+The uniform physical Gram estimate has new-direction quadratic
+$h_d^TK_0h_d\simeq13.75086838$, but its norm-error payment exceeds2984.69.
+It therefore retains the scalar-only interval and leaves the constructed
+row unexcluded. This identifies the cost of that uniform certificate,
+not an attained physical norm or a source counterexample.
+
+Reuse the preceding directional full-jet estimate on the SAVED new
+features and quadratic. No direction, feature, quadratic or cross is
+recomputed. In the original sharp forward formula, all factors except
+$L_v$ form one uniform coefficient $C_{\rm forw}$. Since
+$\epsilon_b^\sharp\ge C_{\rm forw}L_b$ and $L_b>0$,
+
+$$
+\epsilon_d^\sharp:=\operatorname{up}
+\left(\epsilon_b^\sharp\frac{L_d}{L_b}\right)
+\ge C_{\rm forw}L_d.
+$$
+
+This transfers a uniform forward-error coefficient, not an arbitrary
+norm of the old realization. The original three retained moments and
+existing omitted-block/midpoint payments give $J_{h_d}$ for the full
+new jet. Thus
+
+$$
+\|d\|_{W_F}^2\le J_d^{\rm jet}:=
+\operatorname{up}\left((\sqrt{J_{h_d}}+\epsilon_d^\sharp)^2\right).
+$$
+
+Select the smaller of this cap and the valid uniform physical cap,
+then apply the SAME common-projection bound with the saved old/new
+cross. Intersect the resulting interval with the saved coarse interval.
+The actual signed response and common source stay fixed throughout.
+
+The directional certificate gives the following outward displayed
+bounds. Exact rational caps and640-bit endpoints remain authoritative;
+the actual-pairing rows below also enclose the exported Arb balls.
+
+| Quantity | Enclosure or directed cap |
+|---|---:|
+| Uniform physical squared-norm upper |<2998.447008|
+| Directional full-jet squared-norm upper |<13.750868382|
+| Transferred sharp forward-error upper |<1.416877e-67|
+| Retained scalar-only zero-pairing interval |contained in[−66.425463,66.425463]|
+| Refined actual $\zeta$ interval |contained in[−9.656778,9.656778]|
+| Constructed row's $f_{\rm rel}Pw^*$ |contained in[−20.900041,−20.900040]|
+| Refined actual $fQ_R\rho^*$ interval |contained in[−33.775533,−14.432247]|
+
+The norm cap strictly improves and the actual zero-pairing interval
+strictly narrows. It is disjoint from the particular constructed row's
+pairing. Thus the additional source-energy/norm relation excludes that
+row under the retained original-source premises. The symmetric new
+$\zeta$ bound does not supply its sign. The reference-$\rho$ pairing
+is strictly negative within the same conditional model, but this is
+one far-row pairing, not the paid expression or a full-border sign.
+
+The [sources, exact packets and README](https://github.com/the-omega-institute/trureturing-experiments/tree/64fb7bfb67e4acfe00418f03047e1c860f733d59/docs/reports/weil-c27)
+retain the coarse packet SHA256
+`c4cbbead777f652812c0aa0bd238bf08053daa52be7afbedfa1321da19847a9b`
+and source SHA256
+`612ba841171f1a040c90f376c85cbc326f3e46c2a9ef94e0257094720c0460bb`;
+the directional refinement packet SHA256 is
+`ee401d13ef503a44089c33e958b8f90dab09aefa843050f09713ee6a33729861`
+and its source SHA256 is
+`4c07a0a9a55dd9d87c1f1b741960f29c495246a9a868ecd3b2341bf0b11c07d0`.
+There is one cached-reference vector action, one cached-feature action,
+one new physical-feature quadratic and one old/new feature cross. The
+old direction quadratic, source, sine, moment, tail, inverse, solve and
+trace suppliers are reused. Each consumer has one fixed1024-working/
+640-export application. The refinement only applies the homogeneous
+forward, existing directional norm and common-projection bounds to
+saved outputs; it repeats none of those four finite actions. There is
+no parameter/source/precision/cutoff scan or retry.
+
+This is a numerical application of existing linear, physical-Gram and
+common-projection results. It claims no generic theorem, novelty or
+Lean proof. The actual-form/domain, common-source/lift and original
+physical error premises remain. An interval for an actual far-row
+pairing is not an exact derivative or an actual paid-comparison sign.
+Actual-center/full-border signs, good-block payment, retained/cofinal
+positivity, Robin tail and RH remain unresolved.
+
+### Retain the old/new directional Gram before pricing the family
+
+The uniform physical cross payment above is greater than111.74,
+although the saved masked cross is about10.64041669 and both individual
+directional norm certificates have small errors. Retain that SAME
+masked cross and the two saved feature arrays. A two-sided application
+of the original moment and forward-vector estimates can pay their
+cross without repeating either feature action or contraction.
+
+Use the ACTUAL-symbol full jets $j_b,j_d$ from the existing synthesis
+interface, with $x_m=M/m$, $M=32768$, $R=56$:
+
+$$
+j_v(m)=\frac{2(-1)^m}{\pi m}
+\left[x_mB_v(x_m^2)-s_mA_v(x_m^2)\right].
+$$
+
+Here $s_m$ is the true far symbol. The original moments, symbol budget
+$|s_m|\le S$, weight $w_F$, and sharp bounds
+$\|b-j_b\|_{W_F}\le\epsilon_b^\sharp$,
+$\|d-j_d\|_{W_F}\le\epsilon_d^\sharp$ all refer to this actual
+synthesis. The approximate-symbol finite samples in the signed-proxy
+calculation are not used in this application. In particular no new
+symbol-error identification is required. Both forward bounds are
+copied from accepted packets, without rescaling them again.
+
+For each omitted antidiagonal $R\le n\le2R-2$, form the ordered
+bilinear coefficients
+
+$$
+\begin{aligned}
+a_n&=\sum_{k+l=n}(h_b)_{A_k}(h_d)_{A_l},\\
+g_n&=\sum_{k+l=n}
+\left[(h_b)_{A_k}(h_d)_{B_l}+(h_b)_{B_k}(h_d)_{A_l}\right],\\
+b_n&=\sum_{k+l=n}(h_b)_{B_k}(h_d)_{B_l}.
+\end{aligned}
+$$
+
+The omitted jet cross is exactly
+
+$$
+w_F\alpha\sum_{n=R}^{2R-2}
+\left(a_nU_{2n+2}-g_nT_{2n+3}+b_nV_{2n+4}\right),
+\qquad \alpha=\frac4{\pi^2M}.
+$$
+
+The two mixed orientations are included in $g_n$; no additional
+factor2 is inserted. The original decreasing-tail moment bounds give
+
+$$
+U_p\le\frac{S^2}{p-1},\qquad
+|T_p|\le\frac S{p-1},\qquad
+V_p\le\frac1{p-1}.
+$$
+
+Consequently the absolute masking payment is bounded upward by
+
+$$
+e_{\rm mask}=\operatorname{up}\left[
+w_F\alpha_{\rm up}\sum_{n=R}^{2R-2}
+\left(\frac{S^2|a_n|}{2n+1}
++\frac{S|g_n|}{2n+2}+\frac{|b_n|}{2n+3}\right)\right].
+$$
+
+Absolute AA and BB coefficients pay BOTH signs; the earlier one-sided
+norm estimate cannot simply be negated to supply a cross lower.
+Feature uncertainty is propagated before taking absolute uppers.
+No omitted moment is produced or reconstructed.
+
+Reuse the original moment-matrix error $e_H=112\,2^{-640}$,
+full moment TRACE upper $H_*$, prefactor halfwidth $r_\alpha$,
+and saved squared feature-norm uppers $H_b,H_d$. The same midpoint
+interface, now bilinear, supplies
+
+$$
+e_{\rm mid}=\operatorname{up}\left[
+w_F\sqrt{H_bH_d}
+\left(\alpha_{\rm up}e_H+r_\alpha(H_*+e_H)\right)\right].
+$$
+
+The retained entry intervals have width at most two640-grid units,
+so midpoint errors remain at most $2^{-640}$ entrywise after masking.
+Thus $e_H$ controls the SAME masked matrix; it is not inferred by
+assuming that masking contracts operator norm. The full true moment
+Gram is PSD and masking contracts its Frobenius norm, giving the
+previous bound $\|H_0\|\le H_*+e_H$. The masked moment matrix
+and its rounded center need not be PSD.
+For the saved full-jet norm uppers $J_{j_b},J_{j_d}$, the separate
+forward-vector certificates and Cauchy give
+
+$$
+e_{\rm forw}=\operatorname{up}\left[
+\epsilon_b^\sharp\sqrt{J_{j_d}}
++\epsilon_d^\sharp\sqrt{J_{j_b}}
++\epsilon_b^\sharp\epsilon_d^\sharp\right].
+$$
+
+This is a payment using actual vector errors, not a square root of
+the old Gram error. With the SAVED masked cross interval $I_0$,
+
+$$
+\langle b,d\rangle_{W_F}\in
+\left(I_0+[-e,e]\right)\cap I_{\rm coarse},\qquad
+e=e_{\rm mask}+e_{\rm mid}+e_{\rm forw}.
+$$
+
+An empty intersection stops the application. The existing
+`projected_energy` estimate uses this signed interval on the SAME
+$(u_F,d,b)$, with the saved $(E,J_d,J_b)$ and entire
+$\theta/\kappa$ interval. Intersect its resulting $\zeta$ interval
+with the accepted one, then retain the corresponding interval for
+$\phi=fQ_R\rho^*=\zeta+c\theta$. All intersections preserve the
+same actual row and parameter uncertainty.
+
+#### Apply the existing paid square completion to the new response
+
+Use the saved old reference values, with $k_0=t_0^{-1}$:
+
+$$
+q_0=k_0\alpha_0^2+D_0+y_0Q_Ry_0^*,\qquad
+d_0=k_0\alpha_0+\rho Q_Ry_0^*,\qquad
+h_{11}=k_0+\rho Q_R\rho^*.
+$$
+
+Keep the earlier SAME-row negative-square upper $F_-$ and inverse-loss
+payments $C_0+C_2s^2$, $s=\alpha-\alpha_0$. They are valid uppers
+from the earlier source certificate; a new source-energy lower is
+never substituted for any of these far-row uppers. For any one fixed
+new reciprocal coefficient $k>0$ and fee $D>0$, the existing expansion
+gives the all-real lower
+
+$$
+\mathcal E_{D,k}(\alpha_0+s)
+\ge K+Hs^2-2B|s|,
+$$
+
+where directed choices are
+
+$$
+\begin{aligned}
+K&=\operatorname{down}\left[q_{0,\rm lo}+D-D_0
++(k-k_0)\alpha_0^2+2\theta_{\rm lo}-F_--C_0\right],\\
+H&=\operatorname{down}\left[h_{11,\rm lo}+k-k_0-C_2\right],\\
+B&=\operatorname{up}|d_0+(k-k_0)\alpha_0+\phi|.
+\end{aligned}
+$$
+
+These translations preserve the old reference definitions while
+changing the paid recipe. If $H>0$, scalar square completion gives
+
+$$
+\mathcal E_{D,k}(\alpha)\ge
+K-\operatorname{up}(B^2/H)\qquad(\alpha\in\mathbb R).
+$$
+
+A nonpositive floor is inconclusive and supplies neither a feasible
+negative row nor an actual-source upper. No restriction on physically
+legal $\alpha$ is invented. The consumer evaluates the fixed current
+$(k,D)$ and the already saved energy LOWER-endpoint $(k_{\min},D_{\min})$.
+Monotonicity of the existing fixed pricing rule makes a strictly
+positive endpoint floor an exclusion for every recipe obtained solely
+by improving its source-energy upper. That exclusion would still give
+no lower bound for an actual center with a smaller justified charge.
+
+The following displays enclose the exported balls, or round scalar
+upper/lower certificates in the indicated direction. Exact rational
+caps and640-bit packet endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Bilinear omitted-moment masking payment |<1.055086e-128|
+| Bilinear moment/prefactor rounding payment |<2.575728e-185|
+| Total additional bilinear cross-error payment |<4.932753e-67|
+| Actual physical $\langle b,d\rangle_{W_F}$ |contained in[10.6404166919614235901773440,10.6404166919614235901773441]|
+| Refined actual $\zeta$ |contained in[−8.423007,0.178344]|
+| Refined actual $fQ_R\rho^*$ |contained in[−32.541761,−23.910682]|
+| New fixed-recipe all-real lower, rounded down |−2.756762331|
+| New energy-endpoint all-real lower, rounded down |−2.959238524|
+| Retained stronger fixed-recipe lower, rounded down |−0.572919446|
+| Retained stronger energy-endpoint lower, rounded down |−0.779703304|
+
+The small additional payment does not remove the saved masked-cross
+uncertainty: the final physical-cross interval still has width about
+$5.56\times10^{-27}$, rather than $4.94\times10^{-67}$. Both the
+physical cross and $\zeta$ strictly narrow. The $\zeta$ interval still
+contains zero; the strictly negative reference-$\rho$ pairing is not
+the sign of the paid expression.
+
+Both new paid-floor exclusion flags are false. These two square-completion
+lowers are weaker than the preceding timelike joint floors, so retain
+the preceding stronger floors for the SAME fixed and energy-endpoint
+recipes. No old valid lower is replaced. Improved marginal pairing
+intervals alone have not improved the paid positivity certificate;
+the source response and its self-term must retain enough joint
+information to control that comparison. Neither negative lower
+constructs a feasible negative row or supplies an actual negative upper.
+
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/a4bc1a53695fd8ec65150026e1cc3271dfad061b/docs/reports/weil-c27)
+retain packet SHA256 `5cfba16d5428c1c61618a861a8167ca6828f46142d7bd7993d4d84b20de6e980` and source SHA256
+`a35c3222a788508622b92adc6525bc73a26cdc2070c26eb5a701a62015e991a5`. There is one new bilinear error application,
+one application of the existing common projection and two scalar paid
+floor applications, at fixed1024 working/640 export bits. No finite
+direction, feature, quadratic or cross is repeated, and no source,
+sine, moment, tail, inverse, solve or trace producer is invoked. There
+is no parameter/source/precision/cutoff scan or retry.
+
+This is a conditional application of the original jet/moment/forward
+certificates, Cauchy, existing common projection and scalar square
+completion. It asserts no generic theorem, novelty or Lean proof.
+The actual-form/domain, common-source/lift and physical error premises
+remain. Actual-center/full-border/good-block/cofinal positivity,
+Robin and RH remain unresolved.
+
+### Retain both source responses in the same indefinite plane
+
+The single-timelike lower and marginal derivative completion discard
+part of the joint self-term relation. Reuse the classical block Schur
+and inertia argument on the SAME two-dimensional span, keeping the
+positive square instead of dropping it. This is an application of the
+existing matrix theory and saved source certificates, not a new
+generic inequality or an RH claim.
+
+Write
+
+$$
+Q_\varepsilon=\gamma P-e_0e_0^*/\delta\preceq Q_{\rm true},
+\quad \gamma=1-\varepsilon=\frac1{1+\eta},
+\quad \varepsilon=\frac\eta{1+\eta},\quad 0\le\eta<1.
+$$
+
+Keep the same real rows $y_0=\alpha_0\rho+\beta_J$, actual $f$,
+$c=\rho[0]/y_0[0]$ and $w=\rho-cy_0$ with $w[0]=0$. Define
+
+$$
+\begin{aligned}
+b&=-y_0Q_\varepsilon y_0^*>0,&
+g&=\rho Q_\varepsilon y_0^*,&
+h&=\rho Q_\varepsilon\rho^*,\\
+t&=wQ_\varepsilon w^*=\gamma wPw^*\ge0,&
+\omega&=c+g/b,&
+a&=t+b\omega^2=h+g^2/b.
+\end{aligned}
+$$
+
+The common identities come from the original reference rows and
+operators. Overlap of two scalar interval evaluations is only an
+inconsistency test; it cannot establish a common realization.
+For $a>0$, the row $v=\rho+(g/b)y_0$ is $Q_\varepsilon$-orthogonal
+to $y_0$ and has energy $a$. The span has one negative and one positive
+direction. Since $Q_\varepsilon$ has at most one negative direction,
+its orthogonal remainder is nonnegative, even when $P$ is singular.
+Consequently
+
+$$
+fQ_\varepsilon f^*\ge
+-\frac{\theta_\varepsilon^2}{b}
++\frac{(\gamma\zeta+\omega\theta_\varepsilon)^2}{a},
+\qquad
+\theta_\varepsilon=fQ_\varepsilon y_0^*,\quad \zeta=fPw^*.
+$$
+
+Transport the whole original signed-response interval by
+
+$$
+\theta_\varepsilon=\theta-\varepsilon fPy_0^*,\qquad
+|\theta_\varepsilon-\theta|\le
+\varepsilon\sqrt{A\,r_{0,\rm up}}.
+$$
+
+Here $A\ge fPf^*$ is the SAVED upper for the same actual row, while
+$r_0=y_0Py_0^*$. Keep $A$ fixed in both paid recipes, including the
+source-energy lower-endpoint recipe. No source-energy lower replaces a
+far-row upper. The other exact response identity is
+
+$$
+fQ_\varepsilon\rho^*=\gamma\zeta+c\theta_\varepsilon.
+$$
+
+For one fixed saved $k,D>0$, put $H=k+h$. Expanding the SAME paid
+comparison and minimizing over every real $s=\alpha-\alpha_0$, when
+$H>0$, gives
+
+$$
+\begin{aligned}
+\mathcal E_{D,k}(\alpha)&\ge
+F(\theta_\varepsilon,\zeta),\\
+F(\theta_\varepsilon,z)&=
+k\alpha_0^2+D-b+2\theta_\varepsilon
+-\frac{\theta_\varepsilon^2}{b}
++\frac{(\gamma z+\omega\theta_\varepsilon)^2}{a}
+-\frac{(k\alpha_0+g+c\theta_\varepsilon+\gamma z)^2}{H}.
+\end{aligned}
+$$
+
+This is a lower for the specified paid comparison. It is not a lower
+for an actual center with a smaller justified charge, and an all-real
+bound does not assert physical admissibility of every $\alpha$.
+
+The coefficient of $\theta_\varepsilon^2$ is
+
+$$
+-\frac1b+\frac{\omega^2}{a}-\frac{c^2}{H}
+=-\frac{t}{ab}-\frac{c^2}{H}\le0.
+$$
+
+Thus its minimum over the certified $\theta_\varepsilon$ interval,
+for each $z$, occurs at one of its two endpoints. If in addition
+$k-g^2/b>0$, the $z^2$ coefficient is positive:
+
+$$
+A_z=\gamma^2\left(\frac1a-\frac1H\right)>0,
+\qquad H-a=k-g^2/b.
+$$
+
+Each endpoint leaves one convex quadratic
+$A_z z^2+2B_z z+C_z$ on the saved $[z_{\rm lo},z_{\rm hi}]$.
+Take directed rational $0<A_{\rm lo}\le A_z$, $C_{\rm lo}\le C_z$
+and $B_z\in[B_{\rm lo},B_{\rm hi}]$. Put
+
+$$
+B_m=(B_{\rm lo}+B_{\rm hi})/2,\quad
+B_r=(B_{\rm hi}-B_{\rm lo})/2,\quad
+Z=\max\{|z_{\rm lo}|,|z_{\rm hi}|\}.
+$$
+
+For every allowed $z$, a common lower is
+
+$$
+A_{\rm lo}z^2+2B_mz+C_{\rm lo}-2B_rZ.
+$$
+
+Its minimum occurs at the exact rational
+
+$$
+z_* = \max\{z_{\rm lo},\min\{z_{\rm hi},-B_m/A_{\rm lo}\}\}.
+$$
+
+Evaluate this lower at $z_*$ and take the smaller result from the two
+$\theta_\varepsilon$ endpoints. All finite-parameter errors remain
+included. No endpoints are asserted simultaneously attainable, and
+$z_*$ belongs only to a bounding quadratic, not a constructed actual
+source or physically legal steering parameter. If the required
+positive denominators or curvature cannot be certified, this consumer
+supplies no new floor.
+
+The fixed1024-working/640-export application gives the following
+outward displays. Exact rational lower certificates and640-bit
+endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Transported $\theta_\varepsilon$ |contained in[−4.331314,−4.325974]|
+| Saved $\zeta$ |contained in[−8.423007,0.178344]|
+| Theta transport error upper |<1.590332e-26|
+| Positive-plane energy $a$ |>1629.238166139474|
+| Fixed comparison curvature $H$ |>19789.907603158162|
+| Fixed rank gap $k-g^2/b$ |>18160.669437018688|
+| Previous fixed all-real lower, rounded down |−0.572919446|
+| New fixed all-real lower, rounded down |−0.484608778|
+| Previous energy-endpoint all-real lower, rounded down |−0.779703304|
+| New energy-endpoint all-real lower, rounded down |−0.687084970|
+
+Both lower certificates strictly improve, while both exclusion flags
+remain false. The four scalar bounding quadratics, one per theta
+endpoint and recipe, select the saved lower zeta endpoint. This
+identifies the worst endpoint of these bounding polynomials; it
+constructs no source realizing that endpoint or a negative paid value.
+
+The improvement comes from retaining the positive plane and its common
+response relations, with the original working precision and saved
+suppliers. It does not determine the actual paid sign. It leaves open whether further source-image or residual information
+can settle that sign. No claim is made that any one new scalar
+necessarily suffices.
+
+The single application binds12 invoked and66 inherited paths and
+performs two joint-plane applications, each with two analytic theta
+endpoints. Stored assembly time is<0.133236seconds, excluding
+serialization. It repeats no old scientific producer or passed
+fixture.
+
+
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/82e2d6241886e2c19355ebecfa19c3e261369a78/docs/reports/weil-c27)
+retain packet SHA256 `3bdf5f3f81daeeda99c5fa71f2a48ee64c84c09da0f20070b45b0ad781aeec22` and source SHA256
+`fb6ae6eb627079e43628481bae7e2b9485077ab22bac7c85b4bcf12994f1b3b9`. The consumer applies this saved-scalar bound
+to the fixed current $(k,D)$ and the already saved energy-endpoint
+$(k_{\min},D_{\min})$. Every stronger previous floor remains retained.
+A strictly positive endpoint floor excludes only the fixed monotone
+energy-cap-only pricing family because every one of those comparisons
+has $k\ge k_{\min},D\ge D_{\min}$, with the same actual row and other
+premises. A nonpositive lower is inconclusive and constructs no
+negative row or upper.
+
+No finite direction, feature, Gram, cross, source, derivative, inverse,
+solve, sine, moment, tail, trace or pricing supplier is repeated.
+There is no source/parameter/precision/cutoff scan or retry. The
+original actual-form/domain, common source/lift, reference, inverse,
+weight and actual-symbol physical-error certificates remain premises.
+This reuses standard indefinite projection, concavity and scalar
+quadratic minimization; it claims no generic theorem, novelty or Lean
+proof. Actual-center/full-border/good-block/cofinal positivity, Robin
+and RH remain unresolved.
+
+
+### Recover a source response from saved finite outputs
+
+The previous response interval uses common Hilbert norms and a signed
+old/new Gram. The original computation also retains the complete finite
+Cauchy output and old approximate jet on modes $M+1$ through $2M$,
+$M=32768$. These are stronger observations of the same source. Reuse them
+before asking for another source, elementary sine or tail-moment supplier.
+The new interface applies ordinary algebra and polynomial interpolation;
+it asserts no new generic inequality or algorithm.
+
+Keep the original real weighted space $W_F=w_FI$, $\kappa=33/32$, and
+
+$$
+u_F=v+r+C_{\rm phys}\ell,\qquad
+v_m=\frac{(-1)^m}{2}C(m),\qquad
+C(m)=\sum_{n=1281}^{M}\frac{z_n}{m+n},\qquad
+\sum_n|z_n|\le Z.
+$$
+
+The saved source intervals and the exact384-bit source integers define
+these same $z_n$. The smooth remainder has its existing bound
+$\|r\|_{W_F}\le\epsilon_{\rm sm}$. Retain the old and zero-coordinate
+directions $b=\mathsf Bv_b,d=\mathsf Bv_d$, with complete short features
+$h_b,h_d$. Their actual jets are
+
+$$
+j_h(m)=\frac{2(-1)^m}{\pi m}
+\left[xB_h(x^2)-s_mA_h(x^2)\right],\qquad x=M/m.
+$$
+
+The desired response is $\zeta=\kappa\langle u_F,d\rangle_{W_F}$.
+The physical source, lift, reference form, weights and errors remain
+unchanged. No relation between independently chosen interval endpoints
+is asserted.
+
+#### Eliminate the shared approximate symbol
+
+The stored old finite jet $\widetilde j_b(m)$ uses the original
+approximate symbol $\widetilde s_m$. It is not the actual physical
+operator. All its coefficient and output uncertainty is retained.
+For $0\le t\le1$, a coefficient bound supplies
+
+$$
+|A_b(t)|\ge
+|h_{b,A_0}|-\sum_{k=1}^{55}|h_{b,A_k}|>0.
+$$
+
+Consequently each already saved finite jet determines an enclosing
+interval for the SAME approximate symbol by
+
+$$
+\widetilde s_m=
+\frac{xB_b(x^2)-\pi m(-1)^m\widetilde j_b(m)/2}{A_b(x^2)}.
+$$
+
+Use it with $h_d$ and the already saved $C(m)$ to evaluate one new
+finite functional
+
+$$
+\widetilde\mu_{d,\rm fin}
+=\frac{\kappa w_F}{\pi}
+\sum_{m=M+1}^{2M}\frac{C(m)}m
+\left[xB_d(x^2)-\widetilde s_mA_d(x^2)\right].
+$$
+
+This is a new contraction of old outputs. It does not repeat their
+Cauchy convolution, old jet evaluation or elementary sine evaluations.
+Failure to certify the nonzero denominator stops this interface;
+there is no midpoint division or precision retry.
+
+#### A tail interpolation from the same saved source outputs
+
+Set $U(x)=\sum_nz_n/(1+(n/M)x)$, so that $C(m)=U(M/m)/m$.
+Use exactly13 saved sample modes
+
+$$
+m_i=M+1+\left\lfloor\frac{i(M-1)}{12}\right\rfloor,
+\quad x_i=M/m_i,\quad U_i=m_iC(m_i),\quad 0\le i\le12.
+$$
+
+Their rational nodes satisfy $1/2\le x_i<1$ and are distinct. Let
+$P_{12}$ be their explicit Lagrange interpolation polynomial. Every
+coefficient retains the saved sample uncertainty, including its
+amplification by the interpolation bases.
+
+Apply the classical reciprocal-kernel difference formula in Carl de Boor,
+[*Divided Differences*](https://arxiv.org/abs/math/0502036v1),
+section7 Example8 equations(38)–(39), together with the interpolation
+remainder in section1 Example6 equation(16). With $a_n=n/M\in(0,1]$,
+
+$$
+U(x)-P_{12}(x)=
+(-1)^{13}\prod_{i=0}^{12}(x-x_i)
+\sum_n\frac{z_na_n^{13}}
+{(1+a_nx)\prod_{i=0}^{12}(1+a_nx_i)}.
+$$
+
+For one kernel $1/(1+ax)$, multiply its interpolation error by
+$1+ax$. The resulting degree13 polynomial vanishes at every $x_i$;
+evaluation at $x=-1/a$ determines its leading factor as
+$(-a)^{13}/\prod_i(1+ax_i)$. Summing over the signed source coefficients
+gives the displayed identity. This uses no positivity of those coefficients.
+
+For $0\le x\le1/2$, each $|x-x_i|\le x_i$, and
+$a/(1+ax_i)$ increases on $0\le a\le1$. Thus
+
+$$
+|U(x)-P_{12}(x)|\le
+E_U:=Z\prod_{i=0}^{12}\frac{x_i}{1+x_i}.
+$$
+
+This bound uses signed source coefficients through their absolute sum;
+it assumes neither positivity nor a fitted empirical remainder.
+For $m>2M$, replacing $C(m)$ by $P_{12}(M/m)/m$ therefore has weighted
+principal-source error at most
+
+$$
+\delta_v=\frac{\sqrt{w_F}E_U}{2\sqrt{2M}},
+$$
+
+because $\sum_{m>2M}m^{-2}\le(2M)^{-1}$. The finite band is unchanged.
+The old source-power polynomial was not retained and is not regenerated;
+this polynomial is obtained directly from the saved outputs.
+
+#### Reuse the saved real kernels and physical errors
+
+Write $L(x)$ for the original approximate smooth symbol polynomial,
+and set
+
+$$
+F_0=P_{12}\bigl(xB_d(x^2)-L(x)A_d(x^2)\bigr),\qquad
+F_1=P_{12}A_d(x^2).
+$$
+
+The original archived real kernels use the normalization
+
+$$
+K_q=M^{q-1}\sum_{m\ge2M+1}m^{-q}.
+$$
+
+Their saved range covers every coefficient used here. The nonoscillatory
+tail term is exactly
+
+$$
+\widetilde\mu_{d,\rm tail}
+=\frac{\kappa w_F}{\pi M}\sum_p(F_0)_pK_{p+2}.
+$$
+
+The existing phase-gap cap and Abel estimate bound the omitted oscillatory
+part by
+
+$$
+R_{\rm osc}=\frac{2\kappa w_F}{\pi(2M+1)^2}
+\left[\sum_p|(F_1)_p|\left(\frac M{2M+1}\right)^p\right]
+\mathrm{PhaseCap}.
+$$
+
+No new phase, logarithm, sine or Hurwitz kernel is supplied.
+The global approximate-symbol error still has to be paid. The inherited
+uniform symbol allowance gives a jet error $\beta_d$; use the original
+Hilbert error contract
+
+$$
+R_{\rm fun}=\kappa\left[J_d\delta_v+(P+\delta_v)\beta_d\right],
+\quad J_d\ge\|j_d\|_{W_F},\quad P\ge\|v\|_{W_F}.
+$$
+
+Here $J_d$ denotes a norm upper, rather than the squared-norm upper used
+in the earlier Gram sections. In this application it is bounded by the
+saved physical norm plus the saved sharp forward error. Thus the actual
+principal pairing is enclosed by the finite and nonoscillatory terms
+with radius $R_{\rm fun}+R_{\rm osc}$.
+
+For the mixed source, reuse the saved $a=P_0\ell$ and weighted physical
+kernel $K_0$. One new cached action $a^TK_0$, followed by its contraction
+with $h_d$, supplies $\kappa a^TK_0h_d$. Its physical Gram error is paid
+using the original homogeneous error coefficient and the saved lift
+norm. Add the separate smooth and proxy-forward allowances. The kernel
+already contains the original far weight and is not assumed PSD.
+These operations give an enclosure of the actual $\zeta$; intersect it
+with the previous interval and stop on inconsistency.
+
+The fixed1024-working/640-export application gives the following
+outward displays; the packet's exact rational bounds and640-bit
+interval endpoints remain authoritative.
+
+| Quantity | Enclosure or directed bound |
+|---|---:|
+| Nonzero old $A_b$ absolute lower |$>1037.446293$|
+| Source absolute-sum upper $Z$ |$<2161.865701$|
+| Uniform interpolation error $E_U$ |$<0.016074441$|
+| Principal-source tail norm error $\delta_v$ |$<0.000017270703$|
+| Functional interpolation/symbol error $R_{\rm fun}$ |$<0.000066044862$|
+| Oscillatory tail allowance $R_{\rm osc}$ |$<0.000584639478$|
+| Physical mixed error allowance |$<4.458569\times10^{-65}$|
+| Smooth remainder allowance |$<5.240841\times10^{-12}$|
+| Proxy forward allowance |$<3.723887\times10^{-67}$|
+| Previous $\zeta$ |contained in$[-8.423006305,0.178343401]$|
+| New $\zeta$ |contained in$[-7.591449537,-7.590148168]$|
+| Previous fixed all-real lower, rounded down |$-0.484608778$|
+| Retained fixed all-real lower, rounded down |$-0.472489776$|
+| Previous energy-endpoint all-real lower, rounded down |$-0.687084970$|
+| Retained energy-endpoint all-real lower, rounded down |$-0.674685242$|
+
+The actual same-source response interval is strictly narrower, and both
+retained paid lower bounds strictly improve. Both exclusion flags remain
+false. All four saved bounding quadratics select the new lower zeta
+endpoint; this constructs no source realizing that endpoint and supplies
+no negative actual paid value. Even after the response is localized to
+this narrow negative interval, these particular paid estimates do not
+establish positivity. Further sharpening of this scalar alone has not
+been shown sufficient.
+
+The application binds16 invoked and66 inherited paths. Stored assembly
+time is<1.118949seconds, excluding serialization. The old producers and
+accepted fixtures are reused without replay.
+
+The reusable packet retains the recovered approximate finite symbols,
+13 interpolation coefficients and nodes, and physical left-kernel
+action. They remain observations and enclosures of the same source;
+they do not identify arbitrary interval choices with realizable rows.
+The [source, exact packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/d4741a6243a16170ee2634c7cb6e9f18fc34fb0c/docs/reports/weil-c27) retain source
+SHA256 `da93886e4aa00ef58ab4c446486c671996f6f22eaed8d251b7fa8d6d064d94d2` and packet SHA256 `2f6fa2f46f91dfa0449d5bec2523cdbd91a0e7587284f8e417ccb5bd2068ee03`.
+
+The application uses one fixed13-node interpolation and the original
+finite band, at1024 working/640 export bits. It repeats no old producer
+or accepted fixture and performs no source/parameter/precision/cutoff
+scan. It reuses the previous plane bound with the new response interval
+and the same saved transported theta and actual-row positive-energy
+upper. Stronger earlier floors remain retained. A positive paid floor
+would exclude only the specified recipe or monotone pricing family;
+a negative lower remains inconclusive for its actual sign. No claim is
+made about an actual smaller-charge center, full-border or cofinal
+positivity, Robin or RH. This is an application of known interpolation,
+scalar algebra and the existing physical certificates; no generic
+theorem, novelty or Lean proof is asserted.
+
+
+### Bound the value of further response-only refinement
+
+The cached-source response is now localized, but both paid lower
+certificates remain negative. Before requesting a narrower response,
+keep the same source, finite parameters, transported-theta endpoints,
+prices and directed quadratic coefficients. Only a nonempty closed
+subinterval $J\subseteq I=[z_-,z_+]$ may change, including a singleton.
+This restriction defines the certificate algorithm being tested; it
+places no new restriction on the actual source.
+
+For each saved theta endpoint $e$ and each of the two saved recipes,
+write its rational coefficient lower model as
+
+$$
+q_{e,J}(z)=A_ez^2+2B_ez+C_e-2R_e\sup_{u\in J}|u|,
+\qquad A_e>0,\quad R_e\ge0.
+$$
+
+Whenever the actual response also satisfies $\zeta\in J$, the
+previous derivation gives a valid LOWER certificate
+
+$$
+L(J)=\min_e\min_{z\in J}q_{e,J}(z).
+$$
+
+The algebraic ceiling below holds for every such subinterval, including
+ones that are not established to contain the actual response. Those
+unjustified subintervals do not supply actual energy lower bounds.
+
+Removing the nonnegative linear-radius debit gives the more optimistic
+polynomial $p_e(z)=A_ez^2+2B_ez+C_e$. For every $z\in I$, write
+$z=(1-t)z_-+tz_+$, $0\le t\le1$. Direct expansion yields
+
+$$
+p_e(z)=(1-t)p_e(z_-)+tp_e(z_+)
+-A_et(1-t)(z_+-z_-)^2
+\le U_e:=\max\{p_e(z_-),p_e(z_+)\}.
+$$
+
+Thus, for EVERY allowed refinement, without choosing its endpoints,
+
+$$
+L(J)\le\min_eU_e.
+$$
+
+If $L_0$ is the already retained lower certificate for that recipe,
+retaining it after a refinement gives
+
+$$
+\boxed{
+\max\{L_0,L(J)\}
+\le C_{\rm cert}:=\max\{L_0,\min_eU_e\}.
+}
+$$
+
+The right side bounds the output strength of this unchanged LOWER
+certificate algorithm. It is not an upper bound for the actual energy,
+a constructed negative row or an exclusion of the paid family itself.
+A strictly negative $C_{\rm cert}$ excludes positive certification by
+response-only narrowing, even with exact knowledge of the response.
+A nonnegative ceiling leaves this diagnostic inconclusive. Recomputing
+coefficients, changing theta constraints, prices, projections or joint
+source information lies outside this statement.
+
+The exact-rational application gives the following directed displays.
+Lower certificates round down; certificate CEILINGS round up. The
+saved fractions remain authoritative.
+
+| Quantity | Fixed recipe | Energy-endpoint recipe |
+|---|---:|---:|
+| Current retained lower, rounded down |$-0.472489776$|$-0.674685242$|
+| Optimistic ceiling at lower theta endpoint |$<-0.472470198$|$<-0.674665225$|
+| Optimistic ceiling at upper theta endpoint |$<-0.460850945$|$<-0.663035940$|
+| Retained scalar-refinement certificate ceiling |$<-0.472470198$|$<-0.674665225$|
+
+Both recipe flags are true: with the specified coefficients and all
+other inputs fixed, no response-only interval refinement can make
+these lower certificates positive. This includes a hypothetical exact
+response and even waives the nonnegative linear-radius debit. The
+result does not exclude actual paid positivity or yield a negative
+physical source. It gives no restriction on a new bound that changes
+the projection, directed coefficients, prices or joint source
+constraints.
+
+The single exact-rational application stores assembly time<0.041523
+seconds, excluding serialization. Its eight endpoint evaluations and
+two retained caps are new; the original plane and source suppliers
+are not repeated.
+
+The [source, exact rational packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/b4c455e129b6958ab07493ce78847369b5c56f16/docs/reports/weil-c27)
+retain source SHA256 `bc523a5b5392e37f6cbcbb8da27151a39cd3f2e216633e01bb51ff03cd1e1baf` and packet SHA256
+`f4e444527b6e471b710734e702d9d31067a73eac59cab985a358900213729f1a`. The new application reads only the accepted response
+packet and uses exact rational endpoint arithmetic. It performs eight
+new polynomial endpoint evaluations and two recipe caps, with no
+plane-floor call, old scientific producer/accepted fixture replay or
+parameter/source/precision/cutoff scan. This applies elementary
+convexity; no generic theorem, novelty or Lean proof is claimed.
+
+#### A source-dependent complement is a different missing supplier
+
+The preceding ceiling does not constrain an improved projection using
+new joint information. To specify one such missing quantity, keep the
+SAME actual finite form $Q=Q_\varepsilon$, $b=-Q(y_0,y_0)>0$ and
+$v=\rho+(g/b)y_0$, with $a=Q(v,v)>0$. In this subsection write
+$\theta:=Q_\varepsilon(f,y_0)=\theta_\varepsilon$ for the transported
+response, rather than the earlier $Q_R$ response. Set
+
+$$
+s=Q(f,v)=\gamma\zeta+\omega\theta,\qquad
+f_\perp=f+(\theta/b)y_0-(s/a)v.
+$$
+
+Then $f_\perp$ is $Q$-orthogonal to $y_0,v$. Under the inherited
+negative-index-one contract its complement is nonnegative, and
+
+$$
+Q(f,f)=-\theta^2/b+s^2/a+R,\qquad
+R=Q(f_\perp,f_\perp)\ge0.
+$$
+
+Reuse the full comparison before projection, not merely its weaker
+lower bound $\mathcal E_{D,k}\ge F$. For $u=\alpha-\alpha_0$ and
+$x=y_0+f+u\rho$, the existing actual-form comparison is
+
+$$
+\mathcal E_{D,k}(\alpha)\ge k\alpha^2+D+Q(x,x).
+$$
+
+Keep $H=k+h>0$ and $A_0=k\alpha_0+g+c\theta+\gamma\zeta$.
+The exact square completion is
+
+$$
+k\alpha^2+D+Q(x,x)
+=H\left(u+\frac{A_0}{H}\right)^2+F(\theta,\zeta)+R.
+$$
+
+The old projection discards $R$. Since steering by $\rho$ stays in
+the retained plane, the same residual remains after minimizing the
+real steering coefficient, so
+
+$$
+\mathcal E_{D,k}(\alpha)\ge F(\theta,\zeta)+R.
+$$
+
+Consequently an independently certified common-source lower
+$R\ge r>0$ with $L(I)+r>0$ would make that paid comparison positive
+for every real steering coefficient. This condition is sufficient;
+no positive $r$ is supplied here, and it is not a necessary condition
+for positivity of the actual comparison. Here $L(I)$ must lower this
+same $F$; the residual cannot be added to a separate earlier bound
+whose derivation did not retain this decomposition.
+
+For a concrete further real reference row $e$ in this controlled form
+domain, remove its SAME-plane
+components:
+
+$$
+e_\perp=e+\frac{Q(e,y_0)}b y_0-\frac{Q(e,v)}a v,
+\qquad T=Q(e_\perp,e_\perp)>0.
+$$
+
+On the nonnegative complement, the standard Cauchy inequality gives
+
+$$
+R\ge\frac{|Q(f,e_\perp)|^2}{T},
+$$
+
+with the common-source cross
+
+$$
+Q(f,e_\perp)=Q(f,e)+\frac{\theta}bQ(y_0,e)
+-\frac{s}aQ(v,e).
+$$
+
+Thus a common-realization enclosure $\ell\in[\ell_-,\ell_+]$ for
+this cross and a positive upper $T\le T_{\rm up}$ would supply
+$r=\operatorname{dist}(0,[\ell_-,\ell_+])^2/T_{\rm up}$, provided
+the actual $T>0$ and all original form/source/physical conditions hold.
+If the cross interval contains zero this route supplies only $r=0$.
+The additional signed source response and the nondegenerate complement
+row are missing; assigning independent interval endpoints or naming a
+nonnegative residual does not supply either. A counterexample row from
+the older scalar relaxation lay in the retained plane and had $R=0$;
+its already documented exclusion does not prove a positive lower for
+the actual source's residual.
+
+This is the existing negative-index-one projection and Cauchy argument
+applied to a stated missing interface. It neither constructs a new
+physical row nor proves actual paid/center/full-border/good-block or
+cofinal positivity, Robin or RH.
+
+
+#### Use the saved raw-coordinate cap as a complement response
+
+The existing absolute-coordinate certificate can be tested against the
+same projection without supplying a new physical far row. Keep the real
+finite form and all common-source/domain assumptions above. In the
+original block factorization, the tail of $T$ is the identity and its
+first row is $-\Sigma_{0,\mathrm{tail}}/\Sigma_{00}$. Therefore the real row
+
+$$
+n=(1,\Sigma_{0,\mathrm{tail}}/\Sigma_{00})
+$$
+
+satisfies $Pn^*=0$ and $n[0]=1$. With $\delta=-\Sigma_{00}>0$, define
+$\xi=-\delta n$. Since $Q=\gamma P-e_0e_0^*/\delta$,
+
+$$
+Q\xi^*=e_0,\qquad Q(\xi,\xi)=-\delta,\qquad Q(f,\xi)=f[0].
+$$
+
+This is a reference row in the same full finite real form domain; it is
+not asserted to be a new source-generated far row. Write
+$\lambda=y_0[0]$ in the RAW original coordinate, so $v[0]=\lambda\omega$.
+Removing the same $y_0,v$ components gives
+
+$$
+\begin{aligned}
+T_\xi&=Q(\xi_\perp,\xi_\perp)
+=-\delta+\frac{\lambda^2}{b}-\frac{\lambda^2\omega^2}{a}
+=-\delta+\frac{\lambda^2t}{ba},\\
+\ell_\xi&=Q(f,\xi_\perp)
+=f[0]+\lambda\left(\frac{t\theta}{ba}
+-\frac{\gamma\omega\zeta}{a}\right).
+\end{aligned}
+$$
+
+Here $\theta=\theta_\varepsilon$ is still the transported response.
+The accepted cap $C\ge|f[0]|$ and $\lambda$ use the same raw units,
+with no division by $\sqrt\delta$. This follows from the saved
+$\lambda=\alpha_0\rho[0]+\beta_J[0]$ definition and the original
+homogeneous coordinate-cap derivation. A cap for source energy would
+not be interchangeable with $C$.
+
+Let $I_d$ enclose the second term of $\ell_\xi$ using the saved
+common-source responses and shared finite parameters. Then
+$I_\ell=[-C,C]+I_d$ encloses the actual $\ell_\xi$. Under a certified
+$0<T_\xi\le T_{\xi,\mathrm{up}}$, the preceding PSD Cauchy estimate gives
+
+$$
+r_\xi=\frac{\operatorname{dist}(0,I_\ell)^2}{T_{\xi,\mathrm{up}}}
+\le R.
+$$
+
+The implementation requires a strictly positive directed lower for
+$T_\xi$ before division. A zero-containing cross gives $r_\xi=0$;
+an unresolved norm sign also supplies no positive gain. Algebraic
+identities come from the same reference form, not overlap of separately
+evaluated scalar intervals.
+
+For each paid recipe let $L_F$ be the saved lower for precisely the
+$F$ in the full $F+R$ decomposition. The augmented lower is $L_F+r_\xi$;
+only afterward take its maximum with the previously retained lower.
+Adding $r_\xi$ directly to an unrelated older lower would not follow
+from that decomposition.
+
+
+The single saved-scalar application certifies that this projected
+coordinate direction is nondegenerate, but its cross interval contains
+zero:
+
+| Quantity | Outward range or exact result |
+|---|---|
+| $T_\xi$ | $[3.460702373153308560,3.460702373153308561]\cdot10^{-31}$ |
+| $I_d$ | contained in $[-2.135953295,-2.133377122]\cdot10^{-16}$ |
+| $I_\ell$ | contained in $[-6.503116871,2.233786454]\cdot10^{-16}$; exact saved interval contains0 |
+| Certified $r_\xi$ | $0$ |
+| Fixed retained lower | unchanged, $-0.472489775052793370265\ldots$ |
+| Energy-endpoint retained lower | unchanged, $-0.674685241069653953208\ldots$ |
+
+Thus this use of the saved absolute coordinate cap supplies no positive
+residual gain. It does not show that the actual residual is zero or
+that an actual paid energy is negative.
+
+The entire saved $I_d$ is inside $[-C,C]$, where the accepted cap is
+$C>4.367163575891468984\cdot10^{-16}$. To see the resulting limitation
+of these particular observations, use the exact common plane row
+
+$$
+f_H=-\frac{\theta}{b}y_0+
+\frac{\gamma\zeta+\omega\theta}{a}v.
+$$
+
+It satisfies $Q(f_H,y_0)=\theta$ and $P(f_H,w)=\zeta$; the latter
+follows from $w=v-\omega y_0$ and $w[0]=0$. It also has
+$f_H[0]=-d$ and $R(f_H)=0$. Consequently the two responses and this
+absolute-coordinate cap ALONE permit zero residual for every common
+realization covered by these enclosures. This does not assert that
+$f_H$ satisfies every earlier scalar constraint, a paid sign or the
+original source-to-row image condition. A positive residual lower for
+the actual source still needs a noncancellation relation for
+$f[0]+d=f_\perp[0]$, or another residual direction.
+
+The [source, directed interval packet and README](https://github.com/the-omega-institute/trureturing-experiments/tree/d7497eef7232569ed88113c4d1cdc7e2ec7342ef/docs/reports/weil-c27)
+retain source SHA256
+`47f34f89cfddfecb581fe626415d303df64de0b5c5004935ebfb0c42285c0a19`
+and packet SHA256
+`7f6c5d4dc3175e4cd508aadef54d65588bf4c003fddfd01f1c22f8b1748198bb`.
+The one1024-working/640-export application stores assembly time<0.580244
+seconds, excluding serialization. It reads four accepted scalar
+packets, makes one coordinate-complement application and two lower
+additions, with no old plane-floor/source/matrix/inverse/solve/tail
+supplier or accepted scientific fixture replay and no parameter,
+source, precision or cutoff scan/retry.
+
+This applies the existing projection and PSD Cauchy inequality. No new
+generic theorem, literature novelty or Lean proof is claimed. All
+original common-form, source-energy and physical-error premises remain;
+actual paid/center/full-border/good-block/cofinal positivity, Robin and
+RH remain unresolved.

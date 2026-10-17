@@ -3214,3 +3214,1464 @@ requirements, is neither completed nor narrowed by these finite results.
 [JSce3]: https://github.com/the-omega-institute/trureturing/blob/ce3eb5de2f708f7b584dd86df8868682fc0fdbe6/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 87. Finite activity, attached records, and one complete original-class witness
+
+The following statements use the conditional source dictionary already fixed in
+FA.35--FA.37. Let
+
+$$
+\begin{gathered}
+\theta=ab/(h_0h_1),\qquad \omega=cd/(h_0h_2),\qquad
+\delta=\theta+\omega,\qquad s_0=\sqrt\delta,\\
+\alpha=\theta/\delta,\qquad \beta=\omega/\delta,\qquad
+Q=\operatorname{diag}(1,-\alpha,-\beta),\qquad
+L=\operatorname{diag}(s_0,1,1),\\
+\mathscr C=\{(1,z,w)^T:\alpha z^2+\beta w^2=1\},\\
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad
+(K_0,K_1,K_2)=(D,T,S),\quad G=LNL,\\
+K_h=s_0D+zT+wS,\quad \ell(h)=h^T Gh,\quad
+H_0=(1-\delta)N_{00},\\
+n_h=(0,dw/h_2,-bz/h_1)^T,\quad f(h)=n_h^T\Delta n_h,\\
+\mathfrak c(h)=
+\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c^2h_1^2w^2}
+     {h_0^2\delta+b^2z^2+d^2w^2}.
+\end{gathered}
+\tag{FA.87}
+$$
+
+All source-root, null, rank, TP, minimax and sharp-cost hypotheses in these
+formulas remain conditional. The failure covariance is physically whitened by
+
+$$
+M_2=\operatorname{diag}(m_1,m_2),\qquad
+\Xi=M_2^{1/2}\Delta_{\{1,2\}}M_2^{1/2}
+ =\begin{pmatrix}-d_f&z_f\\z_f&0\end{pmatrix},
+\quad d_f=\frac{11m_1}{64},\quad
+z_f=\sqrt{m_1m_2}\,\Delta_{12},\quad
+L_f=\sqrt{d_f^2+4z_f^2}.
+\tag{FA.88}
+$$
+The physical spectral effects are
+$M_2^{1/2}e_\pm e_\pm^TM_2^{1/2}$, where $e_\pm$ are unit spectral
+vectors of $\Xi$; the unwhitened vectors are not physical failure directions.
+
+**Proposition 87.1 (finite activity excludes a nonzero failure-only label).**
+Consider one generated actual label whose entire decoder fibre has activity at
+most $A<\infty$. If its survivor rate is any measurable positive operator rate
+and its terminal processing is trace preserving on survivors, then
+
+$$
+L_{\mathrm{dec}}\succeq e^{-A}I.
+\tag{FA.89}
+$$
+Consequently every nonzero positive encoded state has strictly positive terminal
+live mass. A nonzero actual label carrying only failure mass is therefore not in
+the finite-$A$ class.
+
+**Proof.** For a positive encoded state $Y$, let
+$p(u)=\operatorname{tr}\mathcal S_u(Y)$. Trace balance and the operator norm give
+$p'(u)\ge-\|R(u)\|p(u)$. Gronwall's inequality and terminal trace preservation
+therefore give
+$p(1)\ge\exp(-\int_0^1\|R(u)\|du)p(0)\ge e^{-A}p(0)$.
+Since this holds for every $Y\succeq0$, the operator inequality follows. A
+nonzero failure-only label would have zero terminal live mass on a nonzero
+positive input, contradicting the inequality. This argument permits
+noncommuting Hamiltonians, unobserved trace-preserving survivor controls and
+multiple Kraus operators. $\square$
+
+For example, the scalar failure density $g(u)=2/(1+u)^2$ with total failure one
+has survival $(1-u)/(1+u)$ and hazard
+
+$$
+r(u)=\frac{2}{1-u^2},\qquad
+\int_0^1r(u)\,du=\infty.
+\tag{FA.90}
+$$
+Thus the absence of a terminal failure atom does not make that row finite
+activity. The same obstruction applies to a completion that sends the entire
+complement to failure.
+
+**Theorem 87.2 (attached finite-$A$ parameterization).** In the weak range
+$0\le s<s_0$, index by $j$ exactly the actual low labels that are nonzero on
+supported inputs. In the original all-complex, multi-Kraus equality class,
+each such label has one normalized direction $h_j\in\mathscr C$ and numbers
+$p_j>0$, $0\le b_j\le t\mathfrak c(h_j)$, where $t=e^A-1$, such that
+
+$$
+K_j=\sqrt{p_j}K_{h_j},\qquad
+N_j=p_jb_jn_{h_j}n_{h_j}^T,
+\tag{FA.91}
+$$
+
+$$
+\sum_jp_jh_jh_j^T=I_3,\qquad
+\sum_jp_jb_jn_{h_j}n_{h_j}^T=M.
+\tag{FA.92}
+$$
+The actual contrast and full-label record TV are respectively bounded by
+
+$$
+\mathsf V\le s_0\sum_jp_j|z_j|,
+\qquad
+T_{\mathrm{actual}}=\frac12\left[H_0+
+ \sum_jp_j|\ell(h_j)+b_jf(h_j)|\right].
+\tag{FA.93}
+$$
+The contrast bound is attained by the deterministic report
+$\operatorname{sgn}(z_j)$, with an arbitrary report at $z_j=0$.
+Here $K_j,N_j$ are supported data. A nonzero full-$M_5$ CP acquisition map
+can vanish on all supported inputs: the complementary qubit with encoder
+$W^\dagger$, rate zero and live decoder $EJ_0$ in Theorem 75.1 is such
+a label. It is absent from the indexed sums and contributes zero to supported
+contrast and TV, but remains an actual label in the total alphabet; its entire
+fibre still obeys the activity bound. Thus nonzero on the full input algebra
+is distinct from nonzero on supported inputs. At $t=0$ the class is empty
+when $M\ne0$.
+
+**Proof.** Proposition 87.1 supplies a nonzero supported live product in every
+indexed label, since its supported encoder is nonzero. The supplied equality
+face makes that product a rank-two real-null product. Its common-image and
+common-kernel rigidity forces all nonzero supported live Kraus products in
+that label onto one normalized direction. Pulling a supported failure effect
+through the same factor gives a rank-one effect on $\mathbb Rn_{h_j}$;
+the Schur complement of the positive $00$ pivot is exactly
+$N_j\preceq tK_j^\dagger K_j$, which is (FA.91). Summing the complete live Gram
+and failure covariance gives (FA.92). The report inequality is
+$|\sum_jp_jm_jz_j|\le\sum_jp_j|z_j|$ for $|m_j|\le1$, and the stated signs
+attain it. If $t=0$, (FA.91) forces every $N_j=0$, contradicting $M\ne0$.
+No prescribed noncommuting time law is inferred from these endpoint moments.
+$\square$
+
+**Theorem 87.3 (one common original-class output constructor).** Fix a weak
+request $0\le s<s_0$ and a finite family satisfying (FA.91)--(FA.92) with
+$\sum_jp_j|z_j|\ge\tau:=s/s_0$. Give low label $j$ the deterministic report
+$\operatorname{sgn}(z_j)$, arbitrary at zero, and choose isometries
+$J_j:\mathbb C^2\to\operatorname{ran}K_j^\dagger$. Put
+
+$$
+\begin{gathered}
+Q_j=J_j^\dagger(K_j^\dagger K_j+N_j)J_j,\\
+C_j=Q_j^{1/2}J_j^\dagger E^\dagger,\qquad
+B_j=K_jJ_jQ_j^{-1/2},\\
+F_j=Q_j^{-1/2}J_j^\dagger N_jJ_jQ_j^{-1/2},
+\end{gathered}
+\tag{FA.94}
+$$
+so that $B_j^\dagger B_j+F_j=I_2$ and
+$L_{\mathrm{dec},j}=B_j^\dagger B_j\succ0$. Use
+
+$$
+G_{\mathrm{time}}(u)=\frac{2u}{1+u},\qquad
+Z_j(u)=\sqrt{I-G_{\mathrm{time}}(u)F_j},\qquad
+R_j(u)=2(1+u)^{-2}F_j[I-G_{\mathrm{time}}(u)F_j]^{-1}.
+\tag{FA.95}
+$$
+
+The current-survivor jump on each of the five labelled Borel components is
+
+$$
+Y\longmapsto w_\ell\,\frac{2}{(1+u)^2}
+\operatorname{tr}\!\left(F_jZ_j(u)^{-1}YZ_j(u)^{-1}\right)P_f,
+\quad w=(0,\tfrac14,\tfrac12,\tfrac14,0),
+\tag{FA.96}
+$$
+and the survivor terminal map uses $EB_j(I-F_j)^{-1/2}$. Its activity is
+
+$$
+\int_0^1\|R_j(u)\|du
+=\log\left(1+\frac{b_j}{\mathfrak c(h_j)}\right)\le A.
+\tag{FA.97}
+$$
+
+Choose isometries $W_\perp:\mathbb C^2\to\operatorname{ran}(I-P)$ and
+$J_0:\mathbb C^2\to\mathbb C^3$, and use one counted high label
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}\,DE^\dagger\\ W_\perp^\dagger\end{pmatrix}.
+\tag{FA.98}
+$$
+Its rate is zero, its binary report is deterministically $+$, and its two
+terminal Kraus indices are hidden. For every $X\in M_5$ and every passive
+reference, the resulting full output satisfies
+
+$$
+\Phi^L(X)=E\left[\Lambda_*(E^\dagger XE)+
+J_0W_\perp^\dagger XW_\perp J_0^\dagger\right]E^\dagger,
+\tag{FA.99}
+$$
+
+$$
+\Phi^f_\ell(\mathcal B)(X)=w_\ell\left(\int_{\mathcal B}\frac{2\,du}{(1+u)^2}\right)
+\operatorname{tr}(EME^\dagger X)P_f,
+\tag{FA.100}
+$$
+with conditional reference operator
+$w_\ell(\int_{\mathcal B}g)P_f\otimes
+\operatorname{Tr}_5[(EME^\dagger\otimes I_R)X]$. The five components include the two
+zero components. The total encoder effect is $I_5$; failures occur first at
+absolute time $6+u$, only survivors receive the terminal map, and no later
+positive-carrier action or forced deadline absorption is introduced. Under the
+inherited source identities, the same instrument preserves
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*,\qquad e,n\in\{\pm1\},
+\tag{FA.101}
+$$
+and its whole dimension-five high fibre (supported dimension three plus
+coherent complementary dimension two) is charged by the dimension-at-least-three
+acquisition event and has the original sharp worst-history joint cost. This
+constructor uses the allowed JR free complement and is distinct
+from the fixed certain-failure CA10 completion.
+
+**Proof.** The identities in (FA.94) are direct matrix multiplication. Since
+$F_j\prec I$, (FA.95) is positive on the whole fibre and integration of the
+rank-one eigenvalue gives (FA.97). Equations (FA.99)--(FA.100) follow by
+summing the live and failure Kraus components; tensoring the same calculation
+with $I_R$ gives the reference identity. The source error and cost identities
+are inherited exactly. The low reports attain
+$\mathsf V=s_0\sum_jp_j|z_j|\ge s$, while the deterministic high report
+contributes no $01$ effect. The moment and capacity identities alone give the
+displayed CP outputs; membership at the requested contrast also uses the
+stated available-contrast hypothesis. $\square$
+
+**Corollary 87.4 (weak total actual alphabet).** Let $n_{\mathrm{opt}}(s,A)$ be
+the minimum number of actual low labels nonzero on supported inputs among
+weak height maximizers, and assume the weak finite-$A$ class is nonempty. Then
+
+$$
+N_{\mathrm{opt}}^{\mathrm{total}}(s,A)=n_{\mathrm{opt}}(s,A)+1.
+\tag{FA.102}
+$$
+The same equality holds with $n_{\mathrm{feas}}$ and $N_{\mathrm{feas}}$.
+Total counts include every nonzero full-$M_5$ acquisition map, including
+supported-zero labels; these are excluded only from the supported low count.
+
+**Proof.** Every competitor has its supported-nonzero low labels and at least
+one positive-supported high acquisition label. Any additional supported-zero
+labels also count, so the total is at least the supported low count plus one.
+Starting with a minimum supported-low-label optimum, use (FA.94)--(FA.100),
+placing the coherent complement inside the one high fibre. All high differences
+are nonnegative and sum to $H_0$ there, and the low TV is unchanged. The low
+sign reports attain at least the original contrast, and the deterministic high
+report contributes none, so the same inequality request is satisfied. This is
+a reconstruction of a common instrument, not an effect-only merge of arbitrary
+channels. $\square$
+
+## 88. A strict finite-interior submaximal-height counterexample
+
+Set
+
+$$
+V_f=\frac{m_2h_1^2}{b^2},\quad W_f=\frac{m_1h_2^2}{d^2},\quad
+\mu_f=\alpha V_f+\beta W_f,\quad
+\nu=\frac{\mu_f}{c_*(V_f/\mu_f)},\quad
+\nu_f=u_f=V_f/\mu_f,\quad \upsilon_f=W_f/\mu_f.
+\tag{FA.103}
+$$
+Under the supplied source enclosure, $0<\nu_f<1<\upsilon_f<3$ and
+$\alpha\nu_f+\beta\upsilon_f=1$. Let
+
+$$
+ h^F_{\sigma\upsilon}=(1,\sigma\sqrt{\nu_f},\upsilon\sqrt{\upsilon_f}),\qquad
+\Sigma_f=\frac{\mu_f}{4}\sum_{\sigma,\upsilon=\pm1}\delta_{h^F_{\sigma\upsilon}}.
+\tag{FA.104}
+$$
+For $0<q\le10^{-5}$ set $t=\nu/q$ and $A=\log(1+t)$. Four failure-bearing labels have weight $q/4$ and saturated coefficient
+$b_F=\mu_f/q$; their total failure covariance is $M$.
+The remaining Gram is
+
+$$
+B_q=\operatorname{diag}(m,d_1,d_2),\qquad
+m=1-q,\quad d_1=1-q\nu_f,\quad d_2=1-q\upsilon_f,
+\quad m=\alpha d_1+\beta d_2.
+\tag{FA.105}
+$$
+It is positive definite. The unique maximum-contrast completion is the four
+corner measure
+
+$$
+h^4_{\sigma\upsilon}=(1,\sigma\sqrt{d_1/m},\upsilon\sqrt{d_2/m}),\qquad
+p^4_{\sigma\upsilon}=m/4,
+\tag{FA.106}
+$$
+with height contribution $J_4(q)=\frac m4\sum|\ell(h^4_{\sigma\upsilon})|$.
+Indeed, Cauchy--Schwarz gives the upper bound $\sqrt{md_1}$ and equality fixes
+both absolute coordinates and then all four cross moments.
+
+A different null decomposition is
+
+$$
+\begin{gathered}
+\chi_q=m+\alpha d_1,\quad h^0=(1,\alpha^{-1/2},0),\quad
+p_0=\frac{m\alpha d_1}{\chi_q},\\
+h^\pm=\left(1,-\frac{\sqrt\alpha d_1}{m},
+ \pm\frac{\sqrt{d_2\chi_q}}m\right),\quad
+p_\pm=\frac{m^2}{2\chi_q}.
+\end{gathered}
+\tag{FA.107}
+$$
+All three weights are positive, all three directions lie in $\mathscr C$, and
+
+$$
+p_0h^0(h^0)^T+p_+h^+(h^+)^T+p_-h^-(h^-)^T=B_q,
+\tag{FA.108}
+$$
+while their contrast is
+
+$$
+\kappa_3(q)=\frac{2m\sqrt\alpha d_1}{m+\alpha d_1}<\sqrt{md_1}.
+\tag{FA.109}
+$$
+Define $J_3(q)=p_0|\ell(h^0)|+p_+|\ell(h^+)|+p_-|\ell(h^-)|$.
+
+**Theorem 88.1 (strict height gain below maximum contrast).** Under the inherited
+source-box inequalities, for every $0<q\le10^{-5}$,
+
+$$
+J_3(q)>J_4(q).
+\tag{FA.110}
+$$
+
+**Proof.** Write
+$G=(g_{ij})$ and compare the continuous extensions at $q=0$. The source
+signs leave only $(1,-1,-1)$ among the four corners and only
+$(1,-\sqrt\alpha,-\sqrt{1+\alpha})$ among the three rays with negative
+$\ell$. Direct expansion gives
+
+$$
+\begin{aligned}
+D_0:=J_3(0)-J_4(0)
+={}&\frac{\beta(g_1-g_0)}{2(1+\alpha)}-\frac{g_2}{2}
+-\frac{g_{01}(1-\sqrt\alpha)^2}{1+\alpha}\\
+&+g_{02}\left(\frac2{\sqrt{1+\alpha}}-1\right)
++g_{12}\left(1-2\sqrt{\frac\alpha{1+\alpha}}\right).
+\end{aligned}
+\tag{FA.111}
+$$
+The directed source box supplies
+$0.8777<\alpha<0.8778$, $g_2<0.001678$,
+$g_{01}<0.002371$, $g_{02}>0.002208$,
+$\sqrt\alpha>0.936$, $\sqrt{1+\alpha}<1.371$ and
+$1+\alpha>1.877$. Therefore
+
+$$
+D_0>
+\frac{2208}{10^6}\left(\frac{2000}{1371}-1\right)-\frac{1678}{2\cdot10^6}
+-\frac{2371}{10^6}\frac{(64/1000)^2}{1877/1000}
+>\frac1{6250}.
+\tag{FA.112}
+$$
+On $0\le q\le10^{-5}$, the same enclosure gives $\|G\|<0.006$. The
+explicit derivatives of (FA.106)--(FA.107) bound
+$|J_4'|\le20\|G\|$ and $|J_3'|\le48\|G\|$, hence
+$|(J_3-J_4)(q)-D_0|\le68\|G\|q<q$. Thus
+$J_3-J_4>1/6250-q>0$.
+
+For $\tau_3(q)=q\sqrt{\nu_f}+\kappa_3(q)$, every
+$0\le\tau\le\tau_3(q)$ is feasible for both completions. Since
+$q<1/\upsilon_f$, $t>t_0$, and
+$\tau_3(q)<q\sqrt{\nu_f}+\sqrt{(1-q)(1-q\nu_f)}=\tau_{\max}(t)$,
+these are strict interior points above the minimum-budget boundary. The
+common constructor of Theorem 87.3 gives the same twelve error values, five
+Borel components, sharp joint cost and first-event clock. Therefore this is an
+original-class attainable height comparison, not a claim of global optimality
+or minimum alphabet. It refutes only the substitution of maximum contrast for
+height optimization below that contrast. $\square$
+
+## 89. Continuous null roofs and the complete rank-two fixed-allocation branch
+
+Let
+
+$$
+\mathcal K_Q=\{B\succeq0:\operatorname{tr}(QB)=0\},\qquad
+\mathcal R_\varphi(B)=\max_{\mu\ge0,\ \int hh^T d\mu=B}\int\varphi(h)d\mu,
+\tag{FA.113}
+$$
+for $\varphi\in C(\mathscr C)$. Every $B\in\mathcal K_Q$ has a null
+representation: apply the zero-diagonal orthogonal-basis argument to
+$B^{1/2}QB^{1/2}$ on its range and pull the basis back by $B^{1/2}$.
+The mass of every representing measure is $B_{00}$, and $\mathscr C$ is compact.
+
+**Theorem 89.1 (continuity on the whole PSD cone).**
+$\mathcal R_\varphi$ is continuous on all of $\mathcal K_Q$ for every continuous
+real payoff $\varphi$. In particular, the available-contrast roof
+$\mathcal V_Q(B)=\mathcal R_{|z|}(B)$ is continuous at every rank.
+
+**Proof.** Compactness of the ellipse and fixed mass give attainment and weakly
+convergent maximizing subsequences, hence upper semicontinuity. At $B\succ0$,
+choose $\varepsilon_n\downarrow0$ with
+$B_n\succeq(1-\varepsilon_n)B$ and write
+$R_n=B_n-(1-\varepsilon_n)B\in\mathcal K_Q$. Mixing representing measures
+for $B$ and $R_n$ gives lower semicontinuity. If $\operatorname{rank}B=2$,
+the compression $B^{1/2}QB^{1/2}$ has nonzero eigenvalues $\kappa,-\kappa$:
+a real two-plane cannot be totally isotropic for signature $(1,2)$. Its two
+null lines are the pullbacks of the vectors
+$(a_++a_-)/\sqrt2$ and $(a_+-a_-)/\sqrt2$, and their weights are uniquely
+fixed by $B$. Thus every representing measure for $B_n\to B$ converges to
+that unique two-atom measure. Rank one has one atom and rank zero has the zero
+measure, so the same argument gives lower semicontinuity at all boundary ranks.
+$\square$
+
+**Corollary 89.2 (rank-at-most-two fixed-allocation value and count).**
+Let $F$ be a finite oriented failure allocation
+$\Sigma=\sum_{h\in F}a_h\delta_h$ with
+$\sum a_hn_hn_h^T=M$, and let
+
+$$
+B=I-\sum_{h\in F}\frac{a_h}{t\mathfrak c(h)}hh^T\succeq0,
+\qquad \operatorname{rank}B\le2.
+\tag{FA.114}
+$$
+Write its unique null representation as $B=\sum_{h\in R}r_hhh^T$ and set
+$C_h=t\mathfrak c(h)$. The fixed-allocation feasible contrast condition is
+
+$$
+\tau\le\sum_{h\in F}\frac{a_h}{C_h}|z_h|+\sum_{h\in R}r_h|z_h|.
+\tag{FA.115}
+$$
+For every such request the fixed-allocation maximum height is
+
+$$
+\mathcal H_F(t)=\frac12\left[H_0+
+\sum_{h\in F}\frac{a_h}{C_h}|\ell(h)+C_hf(h)|+
+\sum_{h\in R}r_h|\ell(h)|\right].
+\tag{FA.116}
+$$
+Its minimum low actual-label count is
+
+$$
+|F\cup R|+\#\{h\in F\cap R:\ell(h)[\ell(h)+C_hf(h)]<0\}.
+\tag{FA.117}
+$$
+The total actual alphabet of the constructor is one larger.
+
+**Proof.** Saturating every fixed failure direction leaves the unique residual
+measure of (FA.114), independent of the requested contrast. For a common
+direction, convexity gives
+$|\ell+bf|\le(1-b/C_h)|\ell|+(b/C_h)|\ell+C_hf|$.
+Endpoint splitting attains equality. If the two endpoint values have opposite
+strict signs and both masses are positive, every interior coefficient has
+strict loss and two labels are necessary; equal signs, a zero endpoint or a
+zero mass permit one label. Distinct directions cannot share an actual low
+label by Theorem 87.2. Axes, coincident directions and zero weights are
+removed by the same formula. $\square$
+
+## 90. A nine-coordinate common-attainer bound
+
+**Theorem 90.1 (at most nine low labels).** Every nonempty weak finite-$A$
+class has a height maximizer with at most nine actual low labels nonzero on
+supported inputs, and Theorem 87.3 then gives a total alphabet of at most ten.
+This is an existence
+upper bound, not a minimum or a parameter classification.
+
+**Proof.** Use the attained finite family supplied by FA72 and split every atom
+into pure-live and saturated endpoints; absolute-value convexity does not lower
+height and preserves all original moment constraints. For each resulting atom
+$(h_i,p_i,b_i)$ record
+
+$$
+\Gamma_i=(1,z_i,w_i,z_i^2,z_iw_i,
+ b_i,b_iz_i^2,b_iz_iw_i,|z_i|)\in\mathbb R^9.
+\tag{FA.118}
+$$
+The first five coordinates fix the complete live Gram. The next three fix the
+failure covariance because
+$\sum p_ib_i=\mu_f$, $\sum p_ib_iz_i^2=V_f$ and
+$\sum p_ib_iz_iw_i=0$; the remaining failure second moment follows from the
+null ellipse. The last coordinate preserves available contrast. If more than
+nine weights are positive, a nonzero dependence $\sum d_i\Gamma_i=0$
+allows both small perturbation signs. Height is affine along this segment, so
+optimality forces its derivative to vanish. Continue in one sign until a weight
+is zero and iterate. The resulting family has at most nine atoms, all moments,
+contrast and height unchanged. The common constructor turns them into actual
+labels, with deterministic reports and hidden Kraus indices counted only as
+specified by the original record. $\square$
+
+## 91. Literature boundaries and the unresolved dual
+
+The following primary results are used only at the stated interfaces. Huang--
+Zhang, June 2005 author manuscript, §2 opening and Theorem 2.1, distinguishes
+one real quadratic-form equal-trace decomposition from the stronger two-form
+complex Hermitian statement. The real transfer fails for
+$A=\operatorname{diag}(1,-1)$ and $B=\begin{pmatrix}0&1\\1&0\end{pmatrix}$:
+a nonzero real vector cannot satisfy both quadratic equations. Uhlmann,
+*Roofs and Convexity*, Propositions 2.2 and 3.5, gives common flat
+ decompositions and attainment under compactness and continuous extreme payoff;
+it does not retain the present covariance, capacity and joint objective.
+Dette--Melas, Theorem 3.1 with (3.2)--(3.4), requires a specified information
+matrix and Chebyshev systems. The nine coordinates in (FA.118) do not form
+such a system: on the pure-live sheet the three $b$-coordinates vanish.
+Xia--Wang--Sheu, Theorem 3, has a separate equality exception whose hypotheses
+are not those of the capacity-cleared quartic terms here. Leppäjärvi--Sedlák,
+Definition 7 in §6.1, requires equality of each output CP map, which is why
+(FA.99)--(FA.100) are stated componentwise. Zhu--Zhang--An--Zeng, (2)--(4),
+gives a Stiefel parameterization for a fixed state decomposition but no global
+finite-activity certificate. Hsieh--Tavakoli--Ku--Skrzypczyk, Result 1,
+defines robustness into non-interactive instruments; that SDP is not the
+actual-label integrated-rate resource used here. Pinelis, Theorem 1,
+Corollaries 4--5 and Proposition 6, supports finite atomic extreme
+representations under its compact cone hypotheses; (FA.118) supplies the
+nine-coordinate original-data specialization.
+
+A valid conditional dual upper bound for the still-unsolved global problem is
+obtained from matrices $Y,Z$ and $\lambda\ge0$ satisfying, on every
+$h\in\mathscr C$,
+
+$$
+ h^TYh\ge|\ell(h)|+\lambda|z|,
+\qquad
+ h^TYh+t\mathfrak c(h)n_h^TZn_h
+ \ge|\ell(h)+t\mathfrak c(h)f(h)|+\lambda|z|.
+\tag{FA.119}
+$$
+Integration bounds the unhalved low-label objective
+$\sum_jp_j|\ell(h_j)+b_jf(h_j)|$ by
+$\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau$.
+Consequently the full record TV is at most
+$[H_0+\operatorname{tr}Y+\operatorname{tr}(ZM)-\lambda\tau]/2$.
+No all-parameter choice of $Y,Z,\lambda$, common contacts or positive weights
+is supplied here; (FA.119) is a precise missing bridge, not an evaluated
+frontier.
+
+## 92. Programme boundary and current-source interfaces
+
+When its available-contrast hypothesis holds, the common constructor of
+Theorem 87.3 preserves the complete original experiment: one unknown
+reached-cut specimen; all twelve histories; one common full-complex CPTP
+instrument; live coherences and passive references; five separately labelled
+Borel failure maps including zero components; the contrast inequality; the
+sharp jointly counted dimension-at-least-three acquisition cost; and the same
+FIRST clock at $6+u$. It preserves all individual errors
+$e_5=e_{27}=E_*$ and $e_{16}<E_*$. The constructor is conditional on the
+source-root, equality-face, TP and minimax antecedents and does not certify
+native access, calibration, coherent storage, decoder actuation, aligned clock,
+archives, controller or permission semantics.
+
+The complete evaluated $\mathcal T_A(s)$ for every feasible interior point is
+still open: global oriented failure allocation, full-rank submaximal live-height
+optimization, all contacts and rank transitions, and a universal bound with a
+matching evaluated common attainer for that frontier have not been supplied.
+The complete precontact and
+contact $K(s)$ coefficients, gluing and degeneracies remain open. The exact
+finite-$A$ optimizer alphabet partition remains open beyond (FA.102),
+(FA.114)--(FA.117), the strong four/five results already supplied by FA, and
+the upper bound (FA.118).
+
+The completed conditional JS source supplies global limiting-budget selection
+by its unique clamped scalar root and strictly monotone inversion
+([JS, Theorem 11.3][JSsel]). Its Proposition 12.2 distinguishes this selection
+from the inventory of transition zeros. JS Theorem 14.1 supplies the
+quantitative critical strip for every complete actual record, Theorem 14.2
+supplies the uniform $O(t^{-1})$ value error on actually feasible sub-spectral
+product intervals bounded away from the spectral threshold, and Theorem 16.2
+supplies the compact-uniform spectral product/value layer. These supplied
+limiting and uniform results are retained at their stated conditional scopes;
+they are not exact finite-frontier evaluations.
+
+As specified in JS Definition 18.2, the full source-specific transition-zero
+inventory in JS.58, including isolation, ordering, multiplicities and sign
+intervals, remains open. The critical five-label and static-contact joint
+layers and the other required next terms also remain open. Global selection
+of the limiting optimizer does not establish a single support transition or
+close these remaining obligations. No static failure-line count is identified
+with a finite actual alphabet, hidden Kraus multiplicity or joint quantum
+dimension.
+
+The current transition-band source contributes conditional scalar contact,
+curvature and selected-branch information at its own source scope; it does not
+evaluate the finite-$A$ quantum frontier. The current self-calibration source
+proves a finite-record common-gain reconstruction under its own control
+contract; it does not provide specimen access, quantum acquisition or native
+permission. The current static-compatibility source uses an explicitly added
+separator/control contract for its encoded chain; it does not supply the
+original quantum acquisition/action bridge. These interfaces therefore leave
+the unresolved full-programme obligations just listed unchanged. The
+through-2027 quantum-first AURIC
+FIB ATOM programme is neither completed nor narrowed by this finite source
+increment.
+
+[JSsel]: https://github.com/the-omega-institute/trureturing/blob/f1451cc068cd7e7717629ff6e0c0b171ba91282a/docs/develop/theory/FIB_NATIVE_JOINT_ENDPOINT_SATURATION_BOUNDARY.md
+
+## 追加锚（本行以下为增补区）
+
+## 93. A selected conditional five-contact optimum on a closed strip
+
+**Assumption 93.1 (source, class and identification).** Retain FA Convention
+67.1, Definitions 67.2--67.3 and Theorem 87.2; RC Conventions 58.1 and
+Definitions 58.2--58.3; CG Definitions 13.1, Proposition 13.2, Theorem 15.1
+and Convention 21.3; and JR Theorem 42.1 and its sharp-cost equality face.
+The original isolated source root, its existence, uniqueness, isolation,
+Jacobian, ranks, exact source-root TP normalization, stopped-cq minimax/error
+identification and sharp joint acquisition-cost identification are
+`ASSUMED-UNVERIFIED` premises here. The new contact root below is a different
+root, and its proof does not discharge those source premises.
+
+**Theorem 93.2 (selected original optimum).** Under Assumption 93.1, assume the original CG isolated root exists in the entire nine-coordinate radius-10^(-24) box of RC58, with the supplied ranks, source-root TP normalization, original HALF stopped-cq minimax/error identification, JR42 supported equality/sharp joint acquisition-cost conclusions, and FA67's admitted original instrument class. Use the free JR coherent full-M5 completion, rather than imposing fixed CA10's certain-failure complement. Only supported-nonzero low labels enter the necessary low-label reduction; supported-zero labels can have nonzero full encoders.
+
+For every
+
+$$
+9999/10\le t=e^A-1\le10001/10,\qquad0\le s\le3/25,
+$$
+
+the exact original value is
+
+$$
+\boxed{\mathcal T_{\log(1+t)}(s)=\tfrac12\{H_0+d_0+\alpha d_3+
+ (\mu/t)d_5+(\alpha V/t)d_6\}.} \tag{FA.120}
+$$
+
+The eight multipliers $d$, five positive weights and five contact coordinates in (FA.120) form the unique zero of the eighteen equations (FA.123) in the explicit box of §95, for that $t$ and the original source. This is a selected algebraic root with an outward existence/uniqueness and global sign certificate, not a remaining maximization, grid optimum, SDP, or uninstantiated sufficient-certificate condition. The same five supported low atoms attain (FA.120) for every requested s in the displayed interval. Their actual contrast is strictly greater than 0.12421255 on the whole strip, so the original requested contrast inequality has slack. All these points have $t>t_0$; for $0<s<3/25$ they are strictly interior original weak points.
+
+An exact seed is
+
+$$
+\boxed{s=1/16,\quad t=1000,\quad A=\log1001.} \tag{FA.121}
+$$
+
+At this seed the conditional optimal TV lies in
+
+$$
+(0.10283536503869052157453180203846052,
+ 0.10283536503869071116976210460262283).
+$$
+
+The selected family has three pure-live and two saturated low labels, five distinct low projection lines, two nonzero physical failure lines, and one entirely counted dimension-five high fibre. The minimum number of actual supported low labels among all original global height optimizers is five, and the minimum total actual alphabet is six, throughout this strip. This count is restricted to this strip; it is not the global atlas. The supported atom law is unique, and the multipliers are unique in the specified gauge and box; arbitrary full instrument representatives and time laws are not asserted unique.
+
+The selected maps, weights, contacts and multipliers depend real analytically on $t$ in $(999.9,1000.1)$. The value is independent of requested $s$ on this rectangle. The original positive global seed, all contact curvatures, absence of other zeros, strict contrast slack, positive weights, fixed gauge and nonsingular Jacobian required by the implicit-function continuation argument are established in §§96--99.
+
+**Proof.** Sections 94--97 establish the selected root and its complete
+circle certificate; §98 proves matching, universal optimality and the actual
+alphabet minimum. Section 99 proves regularity, and §100 supplies one
+simultaneous original instrument. All statements use Assumption 93.1. $\square$
+
+## 94. Source expressions and the eighteen independent contact equations
+
+**Definition 94.1 (source and contact dictionary).** Use exactly (FA.87)--(FA.88), (FA.103) and RC58:
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad T=ae_0e_1^T+be_1e_0^T,
+\quad S=ce_0e_2^T+de_2e_0^T,\quad M=\operatorname{diag}(0,m_1,m_2),\\
+\theta=ab/(h_0h_1),\quad\omega=cd/(h_0h_2),\quad\delta=\theta+\omega,
+\quad s_0=\sqrt\delta,\quad\alpha=\theta/\delta,\quad\beta=\omega/\delta,\\
+L=\operatorname{diag}(s_0,1,1),\quad G=LNL,\quad
+N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger),\quad(K_0,K_1,K_2)=(D,T,S),\\
+\Delta=\rho_{27,+,+}-\rho_{5,+,+},\quad H_0=(1-\delta)N_{00},\\
+V=m_2h_1^2/b^2,\quad W=m_1h_2^2/d^2,\quad\mu=\alpha V+\beta W.
+\end{gathered}
+$$
+
+Here $u_f=V/\mu$, $c_f=c_*(u_f)$, $\nu=\mu/c_f$ and $t_0=W/c_f$. The inherited scalar $\nu$ and any fixed-strength $\nu_*$ retain their original meanings. Limiting selection in JS does not imply finite optimality.
+
+Put $u=\cos\phi$, $v=\sin\phi$, $z=u/\sqrt\alpha$, $w=v/\sqrt\beta$, $h=(1,z,w)^T$ and
+
+$$
+\ell=h^TGh,\quad n=(0,dw/h_2,-bz/h_1)^T,\quad f=n^T\Delta n,
+\quad c=\frac{h_1^2h_2^2\delta+a^2h_2^2z^2+c_{\rm src}^2h_1^2w^2}
+ {h_0^2\delta+b^2z^2+d^2w^2}.
+$$
+
+The source amplitude c_src in this capacity is the c in S; the capacity function c is a different object. Below c always denotes this capacity when it is a function. Define
+
+$$
+\Gamma_\eta=(1,u,v,u^2,uv,\eta c,\eta cu^2,\eta cuv),\quad
+H_\eta=\ell+\eta tcf,\quad
+B(t)=(1,0,0,\alpha,0,\mu/t,\alpha V/t,0).
+\tag{FA.122}
+$$
+
+The five contacts have sheet indices $\eta=(0,0,0,1,1)$, height signs $\epsilon=(+,+,-,+,-)$, and angular chart bases $b_{\rm chart}=(0,\pi,\pi,0,3\pi/2)$. Their local coordinates satisfy $\phi_i=b_{{\rm chart},i}+2\arctan x_i$. The unknown vector is
+
+$$
+X=(x_0,\ldots,x_4,p_0,\ldots,p_4,d_0,\ldots,d_7)\in\mathbb R^{18}.
+$$
+
+The equations, ordered with the eight moment equations first and then the value/derivative pair for each contact in increasing index, are
+
+$$
+\sum_i p_i\Gamma_{\eta_i}(\phi_i)=B(t),\qquad
+P_i(x_i)=0,\qquad P_i'(x_i)=0\quad(i=0,\ldots,4). \tag{FA.123}
+$$
+
+The cleared numerator $P_i$ of $d\cdot\Gamma_{\eta_i}-\epsilon_iH_{\eta_i}$ is defined as follows. In any chosen chart let $r=1+x^2$, and let $(U,V)$ be $(1-x^2,2x)$ for base $0$, $(-1+x^2,-2x)$ for base $\pi$, and $(2x,-1+x^2)$ for base $3\pi/2$. In these polynomial displays $V$ is a chart numerator, distinct from the scalar source moment $V=m_2h_1^2/b^2$. Set $Z=U/\sqrt\alpha$, $W_n=V/\sqrt\beta$; write $d_{\rm src}$ for the source amplitude when it could be confused with the multiplier vector. Define
+
+$$
+\begin{aligned}
+D_c&=h_0^2\delta r^2+b^2Z^2+d_{\rm src}^2W_n^2,\\
+N_c&=h_1^2h_2^2\delta r^2+a^2h_2^2Z^2+c_{\rm src}^2h_1^2W_n^2,\\
+L_c&=(r,Z,W_n)^TG(r,Z,W_n),\\
+F_c&=\Delta_{11}(d_{\rm src}W_n/h_2)^2
+ -2\Delta_{12}d_{\rm src}bZW_n/(h_1h_2).
+\end{aligned}
+$$
+
+$\Delta_{22}=0$ exactly. Pure numerators for $\Gamma$ are
+
+$$
+(r^2,rU,rV,U^2,UV,0,0,0),\quad D_0=r^2,\quad H_0^{\rm num}=L_c.
+$$
+
+Saturated numerators are
+
+$$
+(D_cr^2,D_crU,D_crV,D_cU^2,D_cUV,N_cr^2,N_cU^2,N_cUV),
+\quad D_1=D_cr^2,\quad H_1^{\rm num}=D_cL_c+tN_cF_c.
+$$
+
+For either sheet $P=d\cdot\Gamma^{\rm num}-\epsilon H^{\rm num}$. The denominators $D_\eta$ are positive everywhere. Derivatives in (FA.123) are polynomial derivatives in the local coordinate. At a zero the value and stationarity equations are exactly those of the original gap; denominator clearing introduces no branch or extra root. Pure degrees are four and saturated degrees eight.
+
+The exact rational decimal centre of X at t=1000 is listed below. It defines an enclosing box, not an assertion that the decimal centre solves the equations.
+
+| coordinate | exact rational decimal centre |
+|---|---|
+| x0 | 0.0239983886642378607964294310901679274398090903664722197137187518454914256245 |
+| x1 | -0.295345657849378476306024301450483432304865657374456698646986628268886428144 |
+| x2 | 0.127640893565866832951084082477176300214962315541575619037141303345451632888 |
+| x3 | 0.151088636285802408169627202014237321102259249309113798503448321432425648207 |
+| x4 | 0.251237409581127356717457548926907910867475688233491094351221514230825083392 |
+| p0 | 0.40356105912434429587028385796306861440267440303930150136389554751929146834 |
+| p1 | 0.183968107565001260784005926671856498076335410359553001589052683256527679673 |
+| p2 | 0.320043755240561323971427131511530770797419136045901918140238020651677504285 |
+| p3 | 0.0361481337929972639565176638271383531983401158115725409751968219643484098342 |
+| p4 | 0.0562789442770958554177654200264057635252309347436710379316169266081549378682 |
+| d0 | 0.0244863499508953549551714115254785990455229653352660072423427775163528545274 |
+| d1 | 0.00358535399816408539814614897471262212522535275458846005404812615848843507412 |
+| d2 | 0.00715283156818416310756463367571142082407236735174105388329649684474543316655 |
+| d3 | -0.0183927422338048386671395313708612800603754221994926300815476732972939276256 |
+| d4 | 0.00403186188336576407517441402354141469657869331844789615857271955201630579117 |
+| d5 | 21.7811418184010051130038082491418452870010839274827565904191911611069497405 |
+| d6 | -17.6924448925415546973374521319795072232789713541765300081920400162650964287 |
+| d7 | -11.0558270043314784681815861874335551388404582163945740457886311004049481113 |
+
+For the seed use radius 10^(-16) in each of these 18 coordinates. For the whole $t$ strip use the same centre and the eighteen exact radii in §95. These boxes specify the selected root.
+
+The original source box used in every interval calculation has the following nine exact decimal centres, each with radius 10^(-24):
+
+- lambda_CG: .479508042205945691075728241615
+- alpha1: 1.412018697539825943102823246594
+- alpha2: 1.185897402486986028204155873343
+- beta1: .413330945620125544606320492846
+- beta2: .809647491041060318009094562763
+- z_CG: .066998926272600209516864472757
+- eta0: .279795267654829218213193898783
+- eta1: .199570407911600478528148253443
+- eta2: .091392615490799158339482855657
+
+The source expressions are (RC.5), (CG.112)--(CG.113), (CG.134).
+With the source-box coordinates in the displayed order, form
+
+$$
+\begin{gathered}
+v_5=(\alpha_1,\alpha_2,-1)^T,\qquad
+v_{27}=(\beta_1,\beta_2,1)^T,\\
+A_5=\lambda_{\rm CG}\frac{v_5v_5^T}{v_5^Tv_5},\qquad
+A_{27}=(1-\lambda_{\rm CG})\frac{v_{27}v_{27}^T}{v_{27}^Tv_{27}},\\
+\mathcal N=\sum_{y\in\{5,27\}}A_y\odot(a_ya_y^T),\quad
+\zeta=(z_{\rm CG},59\lambda_{\rm CG}/128,\lambda_{\rm CG}/2),\\
+S_0=\operatorname{diag}(\zeta)-\mathcal N,\quad
+H=1000\eta_0\operatorname{adj}S_0,\quad
+Q^{0j}=\eta_j\operatorname{adj}S_{0j},\\
+(h_0,h_1,h_2)^T=He_0/\sqrt{H_{00}},\quad
+(a,b)^T=Q^{01}e_0/\sqrt{Q^{01}_{00}},\quad
+(c_{\rm src},d_{\rm src})^T=Q^{02}e_0/\sqrt{Q^{02}_{00}},\\
+m_1=1-h_1^2-a^2,\qquad m_2=1-h_2^2-c_{\rm src}^2.
+\end{gathered}
+$$
+
+No singular matrix is inverted. All nine coordinates vary, including all
+three $\eta_j$. Off-root these define comparison expressions only;
+source-root TP, ranks and original optimality identification remain
+Assumption 93.1.
+
+For completeness, write $a_y=(\sqrt{y/128},\sqrt{(64-y)/128},1/\sqrt2)^T$
+and distinguish the source matrix $\mathcal N=\sum_y A_y\odot(a_ya_y^T)$
+from the height matrix $N$ in the first display of this section. Then
+
+$$
+S_{0j}=\begin{pmatrix}
+\zeta_j-\sum_{y\in\{5,27\}}(A_y)_{00}p_{yj}&-\mathcal N_{0j}\\
+-\mathcal N_{0j}&\zeta_0-\sum_{y\in\{5,27\}}(A_y)_{jj}p_{y0}
+\end{pmatrix},\quad j=1,2.
+$$
+
+All radicals denote positive roots. In interval evaluations one can use
+(RC.3) for $G$: its diagonal is
+$\delta\sum h_i^2\Delta_{ii}$, $b^2\Delta_{00}+a^2\Delta_{11}$,
+$d^2\Delta_{00}+c_{\rm src}^2\Delta_{22}$, and its off-diagonal entries are
+$s_0(h_0a+h_1b)\Delta_{01}$, $s_0(h_0c_{\rm src}+h_2d_{\rm src})\Delta_{02}$,
+$a c_{\rm src}\Delta_{12}$. This is algebraically the same $LNL$.
+The gauge $Y_{22}=0$ is fixed throughout; at report multiplier zero the
+two report-sign rows coincide and are included only once.
+
+## 95. Rational boxes and preconditioning witness
+
+**Definition 95.1 (exact rational witness).** All decimal entries in §§94--99
+are rational numbers with their displayed digits, not floating point values.
+The coordinate order is $(x_0,\ldots,x_4,p_0,\ldots,p_4,d_0,\ldots,d_7)$.
+The centre is the eighteen-entry table in §94. The seed radius is $10^{-16}$
+in every coordinate. For the strip the radii are:
+
+| Coordinate | Exact radius |
+| --- | --- |
+| $x_0$ | $0.000006761993587113994445842634178144602240580569310515161143597295$ |
+| $x_1$ | $0.00001909166870775727992548294915271800415210011902597737243278185$ |
+| $x_2$ | $0.00000576370965544218547669681442936480818216738074780938112826528$ |
+| $x_3$ | $0.000000200319989426527288038057603917082547438184668070464553125534$ |
+| $x_4$ | $0.0000003072091903292812340727985408350138921392151584905019172839845$ |
+| $p_0$ | $0.00000923899159127341094528761555702862378160696139561701848702143$ |
+| $p_1$ | $0.000001937612893327679725943882524131604114451510018277767819587495$ |
+| $p_2$ | $0.00000655475919025580098848599222483946625113410709916376524851637$ |
+| $p_3$ | $0.00000542899914227639280601819134136207227747564613313373355517248$ |
+| $p_4$ | $0.000008427238745925139401811533916374413640813969653134532015658865$ |
+| $d_0$ | $0.000000800823523742675546667615068988807767441824381899632603186881$ |
+| $d_1$ | $0.00000006698602207943754315896825231995631285014150271899353937133275$ |
+| $d_2$ | $0.0000002819074118617448006610255852707087950607821094871617531661145$ |
+| $d_3$ | $0.0000008549221603182385285786880644213512954941700614053355260208275$ |
+| $d_4$ | $0.00000002429556829182523019983292383275904828013799307658752001229685$ |
+| $d_5$ | $0.003329062046329244115510966240895051922766518946611688977049175$ |
+| $d_6$ | $0.00272214511421723779859411793204890296953793919160356279071039$ |
+| $d_7$ | $0.0016555800426521794253570651416496512049639846958807520293175$ |
+
+The rational $18\times18$ matrix $R$ is specified by the following column
+blocks, with row and column indices $0,\ldots,17$. These entries define $R$
+exactly; no matrix inverse or approximate root is a premise.
+
+| $i$ | $R_{i,0}$ | $R_{i,1}$ | $R_{i,2}$ |
+| --- | --- | --- | --- |
+| 0 | $-0.20266380172106673378962119192730179168342196305893325930294702695$ | $-0.03640275308156547466525806231498003950091550123606079564077425266$ | $0.61751940181199260697284473548014005160808392189274099946266431962$ |
+| 1 | $-2.3551013749237650083986973496189468593318331448646264382872792713$ | $-0.18433695605036703852167133170282893697621695278349495172517585179$ | $0.48136633409620466751070457062809440434500762710801015160627444864$ |
+| 2 | $0.67909683105182863077068934076573790549741046245564636585726785811$ | $0.05419116861628247846447361259359256029671855251089830857941506599$ | $-0.16789766197434806132677402097439814685794949366093893370693744421$ |
+| 3 | $-0.0068313797247007740837284077235981710549721774310349399984254475379$ | $-0.00057131628229389084526930862160118147734517718288795408601734193497$ | $0.0024232474624184824175186893436438886514964978581663566129457441501$ |
+| 4 | $-0.010478371825379589595635436167523663084581875816245068405903601913$ | $-0.00087631850036430746432976162728192914182022243033905342357344488419$ | $0.0037169194159003671348836062977403042670492169085450698337195213415$ |
+| 5 | $0.20548537446585590262562193702848632547693518313350246189472976868$ | $0.4975592206426673706991793044943334558735075719377908705959285611$ | $0.027150282715681589734512037431499767211517642964870847052225113519$ |
+| 6 | $0.12500869092940291562443388551041191996208608639523243165972082998$ | $-0.17462163358476937976038064757846146115687358336908425256009363861$ | $0.66486175486300981349735825399593448090616022131948590651449436062$ |
+| 7 | $0.66923216684949969339364927894105091125157850607536373861322181898$ | $-0.32296048257570546604722626657033341985654620294377367036315487582$ | $-0.69191492586115911524429167759614903586823964634288835048302804307$ |
+| 8 | $-0.00022788576822523806389123703020962136358489279534920855533871760175$ | $-0.000019058353529869552606868755401450908990539325062329220781710635565$ | $0.000080836321772068217496943152089390908274383430929988429517988064455$ |
+| 9 | $0.00050165352346672642018613555026046467298503737539115562351677440812$ | $0.000041953871337344661034478409862876048892164809422767183503240909175$ | $-0.00017794803930435620507555698337460315772739692896475238196606320507$ |
+| 10 | $-0.093671915217622191554282876713122289255183874941526463401504545901$ | $-0.0074978421611010600564239069543386468010204845765849115261115607506$ | $0.023802208509862292341509077650135589155244343285794007595162416156$ |
+| 11 | $-0.0074978421611010600564239069543386468010206127045560448247964887235$ | $-0.00061136231851792991944676522638171212491680486621710542025378294415$ | $0.0022195629086588772397734324182519718698873269287948853047545050343$ |
+| 12 | $0.023802208509862292341509077650135589155242455807122226220835703168$ | $0.0022195629086588772397734324182519718698875803650745563559538147002$ | $-0.01486485636858955030036958867308780447583784863233045493354215022$ |
+| 13 | $0.10062118583265929809170747575215907761891217472714219171846458621$ | $0.0080328012091328630364093000607254121050157821199475054531588330544$ | $-0.02497101233042632250707051000542628367669588394366670157804664477$ |
+| 14 | $-0.0077284049583814179482017469003497040815834802165325772792340837613$ | $-0.00025644472709497616039737812018317981795146314907204149109616175388$ | $-0.0081940412134287677530763672568521522281043136593757898563317126592$ |
+| 15 | $1.7759050590387228141298322951896467205680336875320892555848076418$ | $0.14745762289101630190791681194379885620129756870592626532759675825$ | $-0.60012870521097127681810872381845695785869373948644006223006803336$ |
+| 16 | $-2.0430518522086283908863428022969916484287044951799817242655694327$ | $-0.16926111433519477747312107125780631710273160372816721195178554527$ | $0.67979360478936461139129940998591476825939614828619322373220223835$ |
+| 17 | $0.39455616515416135212944735614108647950481926280870441880384109243$ | $0.028122014117387671987570223704336910581987452810859056341570118613$ | $-0.0032212732547290249709966325557934990097057578453511710037378528812$ |
+
+| $i$ | $R_{i,3}$ | $R_{i,4}$ | $R_{i,5}$ |
+| --- | --- | --- | --- |
+| 0 | $0.17937083227280056075011710374915197188256505661342229847149647932$ | $0.63540341280879351267665707042766942775157248848138152692559605775$ | $13.399441225927841891103212524346828595156711930514046863132145154$ |
+| 1 | $2.5377474131624088687045772321379036600166560699090420782357300086$ | $-0.32918537867178386684652966014373168902932199818832649648525634774$ | $42.673149844101304795620485385114912634480275954664297422273280617$ |
+| 2 | $-0.72979291512072837420582596045325635970036700411538390556513306191$ | $0.061400210527607131355358396675168547069586174405219301600124860784$ | $-12.796127254989132970238783133638102656576180019586066314578083371$ |
+| 3 | $0.0072916357903900495496260298152808555727586983228639491825346898392$ | $0.00022832078239070753106850168062539179907770036679587205679407352718$ | $5.2314202484708977572299576709297630818490242252957574070108784667$ |
+| 4 | $0.011184339636499883530918013483814302521352858798189793166446898277$ | $0.00035021183856914154879765018206082085372521765459467504915697980356$ | $-46.240961644466558424653573731836179974029999685764116437121759868$ |
+| 5 | $0.29575391641624443450101765915965120472283099354488500181184393053$ | $0.024052196991282917109742371089152152406611572174940470520236896317$ | $-4.5634160586084955868069941883348597107804351972079724696569064988$ |
+| 6 | $0.052334626805074245830727972836317655916345591074171281170467069292$ | $-0.7241137503299234354334464595259081325016580006372640768213967465$ | $6.1897856153637803686348033452764652776115936261879765422423646872$ |
+| 7 | $-0.34779633068990929258266698726776326029927038659869188568610163664$ | $0.70007070330110623709912940985772369802490448590909154316219574998$ | $-17.106506871827396543807574537107408836681508060929791552131396311$ |
+| 8 | $0.0002432393002109776428334873762506938614666467124968362265539926189$ | $0.0000076164785144003747376199503663984027768910117435875971746685089501$ | $1.4348869272632340531082988700485183259018146790355207631833795214$ |
+| 9 | $-0.00053545183162036539191213210445629420138373701337912527044470606753$ | $-0.000016766440980119150162941371334116332650088314262221572726796971188$ | $14.045250387808877708871466510117284943948265735199574114186320719$ |
+| 10 | $0.1006211858326592980917074757521590776189135643608642132143015807$ | $-0.0077284049583814179482017469003497040815722104920533742831068422977$ | $1.7759050590387228141298322951896467205678217698382158591226331309$ |
+| 11 | $0.0080328012091328630364093000607254121050160456076669479862958924028$ | $-0.00025644472709497616039737812018317981795108349375030883955760754954$ | $0.14745762289101630190791681194379885620127507155743744677070493931$ |
+| 12 | $-0.024971012330426322507070510005426283676693789576904377804164590168$ | $-0.0081940412134287677530763672568521522281071007529644231898891218432$ | $-0.6001287052109712768181087238184569578585877349683952799098612914$ |
+| 13 | $-0.10812643136918434365788612539690256654357541504609841084736493171$ | $0.0089895908019985155935165750030494408990706073009433317044106953782$ | $-1.8975741825950520881210739148714022584102593285222710202549634748$ |
+| 14 | $0.0089895908019985155935165750030494408990833273320956205112071000377$ | $-0.012340664497750842674272911578498420936653124024507482284084459874$ | $-0.024992259788489775348175085652527928822179586204336812685218714704$ |
+| 15 | $-1.897574182595052088121073914871402258410505113877384041075756556$ | $-0.024992259788489775348175085652527928822390701892758716969493682679$ | $-465.27248114125093496317341199744262899345789499654813883042480182$ |
+| 16 | $2.1837420443247241585671823872200706444754082310125637946020226102$ | $0.016526017049720469236505409917998797895684294851860318402163745858$ | $717.94122544968986706237877547432884963809807407958447890688077278$ |
+| 17 | $-0.43039802192046280212142507110569081390420271438080003863612176054$ | $0.14434998758340849187066298518241208760726881637943498616485086227$ | $-673.20292262914486026353027095453648106919596408517351760584030956$ |
+
+| $i$ | $R_{i,6}$ | $R_{i,7}$ | $R_{i,8}$ |
+| --- | --- | --- | --- |
+| 0 | $-14.733845758983852891842919811802812060276356615612750269421363603$ | $-5.3759921005902176494847351251244959590533131166328944081867419218$ | $0.027461439166317756164850424410332757622959378874357862789802226654$ |
+| 1 | $-49.233311645589182590098020355619936051209041614052825905766202241$ | $11.208403585922618585577960310580570523796590484106625421750275321$ | $0.34200680760982137369593402082815722870728570056459593776140278324$ |
+| 2 | $14.726641138452499284634828180627085367704037634330957714478837032$ | $-2.9117399101108493100513641558222772213716373389163815046762840377$ | $0.15754650567397435016732731466647226505441680922509208266232802018$ |
+| 3 | $-8.1867908262313120524684191606654393424733142047405685341243647416$ | $7.9381228379006710934535165844395664882995669960533411186212237224$ | $-0.029907298758115912939219152756663035995585690691403257998875673663$ |
+| 4 | $72.996129906005084950678578820090776994538608164709205879174722846$ | $-72.222431509826513258306597234122307601754527997089506673272463222$ | $-0.045873573027588996099970189866742815664296792339821931159035036262$ |
+| 5 | $-1.4980545689200794834984758877184249344306364114614103117893530348$ | $2.4163362357093146445613812667690903830555763259145113497357312244$ | $0.0066571610275721903303284902079699080116142068165628796513986130559$ |
+| 6 | $-7.9180909622917523833788300646536121687217291069778792175120226067$ | $3.7135020762636046140526415259348664044980525913327075929775413849$ | $0.22069596344838071499809664563953733783377015839011735664433586267$ |
+| 7 | $20.762710911623653382934026462740033306110703405217155640576961336$ | $-7.2348775472029636540959045770391725302837152170209738369426017655$ | $-0.2285516604051944289278287789679972179468528508463635983689046905$ |
+| 8 | $2.8481834515273188392702084293665396278429112884985004585332164614$ | $4.9648162997794494016774209701877490468281715996172938795935064613$ | $-0.00099766782519668546031513199124758973125811765548936980058249514121$ |
+| 9 | $-14.194748831939140355326928939734535830800771764811823866007891313$ | $-3.8597770645494050061955391858525333040981209835840781965358433002$ | $0.0021962037544382090597187751117375618327257541451794212366790094991$ |
+| 10 | $-2.0430518522086283908863428022969916484296004891103869416652590099$ | $0.39455616515416135212944735614108647950522319435224514224313049543$ | $0.21308638806341507407240793164092075788486826406587892501812744534$ |
+| 11 | $-0.16926111433519477747312107125780631710280163158312587967998992941$ | $0.028122014117387671987570223704336910582026962489309789077571947021$ | $0.49839438612209635870713860716746655587065134487142038870928455064$ |
+| 12 | $0.67979360478936461139129940998591476825968022342852625557644090991$ | $-0.0032212732547290249709966325557934990098517013395723888931511687553$ | $0.0032380762874732307320999057249571171273507956139772362110421497762$ |
+| 13 | $2.1837420443247241585671823872200706444763414329509835162263954654$ | $-0.43039802192046280212142507110569081390462266641298523801220979171$ | $0.28847684622137110691346782803793497375171171786502942812448654427$ |
+| 14 | $0.016526017049720469236505409917998797895481213273022277446540300397$ | $0.14434998758340849187066298518241208760729311800477051015804249685$ | $-0.00054806172086651220482009010090097456300447875220899678366881801941$ |
+| 15 | $717.94122544968986706237877547432884963831317562502964508482529003$ | $-673.20292262914486026353027095453648106927957979801292229990696508$ | $-5.0763528665171449600451420526842821026935180308218762136867132872$ |
+| 16 | $-1114.0366096340872354999721183843319444441416048240284490497438095$ | $1058.98612536376557311329440433093719360257704453122735098032467$ | $-0.92653727861593611178642302209800757493727246271996338085755706561$ |
+| 17 | $1058.9861253637655731132944043309371936027506465909424356024737962$ | $-1040.6727572020745768432742284430353550538321101012299451125377581$ | $2.6214579373098843182049407101011641922019080932415099681470230155$ |
+
+| $i$ | $R_{i,9}$ | $R_{i,10}$ | $R_{i,11}$ |
+| --- | --- | --- | --- |
+| 0 | $0.070145217734320996929823105345929649994080594208007392549421473284$ | $1.753892761558921060370600967819118261220172510548148150675962867$ | $0.37668757053501149060851900063927069090215062105944181557612798853$ |
+| 1 | $0.97564092266843771612634064343003600272969527621925935638930119515$ | $25.421997874509007571904384221490071222510039740941583946439476403$ | $5.437416010796903235517520796591366441732366694760321810044631106$ |
+| 2 | $0.47160540529285293092504283302471119727485641574173593662296989208$ | $12.488362867372063485225437984752941020262538738090484406112736856$ | $2.6668839202870513750276432253282053192161302782014155182115245332$ |
+| 3 | $-0.023746124493718334089703355372003135307682868635454076059626295979$ | $-0.063739625463967047207228692344337782424897215686104285164952874217$ | $-0.025310137864123673278887428473355818606470051799560930464000492751$ |
+| 4 | $-0.036423201737308363299824484140720605731461649140576421348049089527$ | $-0.097767584666234368042526858948025218742965179641977991441140054431$ | $-0.038822177390164509263836817860840889459815796104608304230345907153$ |
+| 5 | $0.013798177247358478665413696487519481061988883937965347093712676611$ | $0.31272744227466093810854310475929734791569920534184886704886707502$ | $0.067872918239823058016648873316956152580300223416442762621894632898$ |
+| 6 | $0.64067719443947928529978564323656025539222588845989049268116082043$ | $16.793992286201773166795840979279663902821139662660559099287408869$ | $3.5898991873991093280985659606604109139658133319204617521839386481$ |
+| 7 | $-0.65542699836553405673544517997542298215590610516687019846615167418$ | $-17.109274095952173832173090473172956259696704068540510092228900274$ | $-3.6587864102021613380643951498146764641380739783813457870149084152$ |
+| 8 | $-0.00079213922233845278308210554530542600750840386527423982267039284435$ | $-0.0021262693775789650772069163888484998526169418060730298567600526862$ | $-0.00084431263426878961893522990239983530089141923372086982005678336229$ |
+| 9 | $0.0017437659010347455533279457966486717091977571237254661928751509704$ | $0.0046806368533186923459133055228435088124345547816240156401219326012$ | $0.0018586171974977415681155457397092328928415799628048830366435074186$ |
+| 10 | $-0.081693093564939425721104858757427245993105431988469051820654167031$ | $-0.29251750001002657515199725783784410800127961053575317535463165045$ | $-0.36653043725700515753625818119315854352579138694491725233039952204$ |
+| 11 | $-0.014673826742906627939354460913612769235932802826755757955402078951$ | $-0.17889893343385724816974153401065341435058984729189865042539474861$ | $-0.028688830902641490688330549922715626654606236589794957941677485192$ |
+| 12 | $0.24891998394377601252405621520214026592708124807694633810305097674$ | $0.6438608891718916979857648235814007773561736567710403336728072397$ | $0.074916271034317904317085524776756499985789443887627229784857045558$ |
+| 13 | $0.07230377629968118844300911638305684704085685896158023403167273242$ | $0.47343296058973906378436606523834019864075050732758767668094105169$ | $0.39495610630534361764918588871974234280137058392492627888514167241$ |
+| 14 | $0.25612896833699729215409718619427726880311428425143086431324389303$ | $-0.66825127695361750371825040801631502817762194174768412840089922281$ | $-0.051231960572010378310321535350203896422168587392970979793663969942$ |
+| 15 | $5.4012694743298241597964126007998844480326615136945954583193446906$ | $12.452876005330789370903768826333053715703741274427197223828982972$ | $6.641331213183319782367788224804945508923872446677437304231327317$ |
+| 16 | $-5.9391634319417539406670810595211601259151846187884310685796498709$ | $-15.024371062874418980496563904897479139496197013871821339797127641$ | $-7.6623059360458923180785929878964328747784415297117673880912240338$ |
+| 17 | $-2.1670442474100659834198390514789511208520357477350889689205172545$ | $5.0369886865803690925574992804484935925964840210933121497210297526$ | $1.7443924542034568307199904039736501241649768845069289615994116737$ |
+
+| $i$ | $R_{i,12}$ | $R_{i,13}$ | $R_{i,14}$ |
+| --- | --- | --- | --- |
+| 0 | $-1.7563919846474781370431439850556727704767210584349771942049680206$ | $0.36252819753860949950559325392496961397757886362161925241099743013$ | $0.071967548655972087834328748982016780797244609078040435463278779586$ |
+| 1 | $-25.428940661825385680963567373731764215332439898842890620732081305$ | $5.309771701724622240441909300354297303744774391983105257785110338$ | $0.19867681931698038579790756379276813705421507298064190469990922916$ |
+| 2 | $-12.486306530283353287315196542415233597555995189693163743939890367$ | $2.618665444662708569333742786302303937184840954917369551240977088$ | $-0.060059921215999031533035777226039172266499522182590809660534887169$ |
+| 3 | $0.078937419277817715746754417390302281716412536099276619765206746296$ | $0.015233644136089732743916814159910013365177399319986656187394222558$ | $-0.43827875999928658269937912287562116218880614214496903119419506305$ |
+| 4 | $0.12107885426689419674148592858532696124140488187144941450897104593$ | $0.023366258932481380152268045559949274661604649687710825038721011589$ | $-0.67225772764959051373301364403186176393183125987418713203833164256$ |
+| 5 | $-0.31409312131566695104365552696718470624082104594078193889772166716$ | $0.062910346446540539380223801523265701587024431132067895884818618509$ | $0.039365245582453860938164853809655688561549421948025914743259630229$ |
+| 6 | $-16.795842239428765479937321074315535516664067321063636649438170419$ | $3.5128272358012844327398524082803323327281598451592815152107641349$ | $0.052330530824956403720466642447740298424889816737212588297298101296$ |
+| 7 | $17.113098780280621501788345045601611849706711067462678081206827353$ | $-3.5751270934845952832076788331704372824985552808869417313350828506$ | $-0.10925981136526547613307715099250695661265865839443515456757879412$ |
+| 8 | $0.002633247624751403046468409977230444938314025020837493425703054599$ | $0.00050817416637965629337691125291636698856853911151741632969363714531$ | $-0.014620398212985732358622647398948395963993093138811555741823364062$ |
+| 9 | $-0.0057966671609404738538368542961220717400890157327132746663805308248$ | $-0.0011186629296093452057742878860771188052072685769307731749093138061$ | $0.032184433170840943833068302134059365590208992129878122797767805645$ |
+| 10 | $0.54223257547504616216753750455780120454852235254239400975929994637$ | $0.21042817012873806962437022913189648931411764243846366633483531103$ | $0.0083456766328574788082978916765995549219866296165957340670738830371$ |
+| 11 | $-0.32112462100911421828080184433275846761096250414196332479762034991$ | $0.016791932943347688353806514644075447684116917132572636964688873784$ | $0.00069795870516039556294708790848133748816614547678009842802849069853$ |
+| 12 | $-0.64377200547253251146095555832618193863685559895016469742095343394$ | $-0.052025567139569020423172901985146991354334921692743640247831147978$ | $-0.0029604033940044139006163335156654575583995778494021233898771797596$ |
+| 13 | $-0.22312818735404320584927180599865481525874859360455846407269213339$ | $-0.22613709957078559203611236576120470139550626088198111955230893652$ | $-0.0089079566476347501455451777117694048539837462947586980871590638527$ |
+| 14 | $0.66824678851492614331031550335172039257035830510816908369128375801$ | $0.019025760916645432807551322216504782373208351863598594225181151245$ | $-0.00027893214770422220905795624125750711677365389572984280568140450802$ |
+| 15 | $-14.570467539683446043985186113484892778024060049995800341452875818$ | $-3.965068779412889435999334815190339751581837326620600322210971725$ | $19.573773329072670734500708839705820928758397163006078629750710616$ |
+| 16 | $17.809863812489794123874890468863155361750406281765016047087371661$ | $4.5632669822761218702767909394682917723904046443368887099136277164$ | $74.302793846679627248902950342924278662399341715337607049912148423$ |
+| 17 | $-6.5515030001748088754521351340315264855650088356777612009160508366$ | $-0.90224556080822020608156307800535799942999435916057845372704894423$ | $87.126703844763203553189581026417633968393539398936926888198656171$ |
+
+| $i$ | $R_{i,15}$ | $R_{i,16}$ | $R_{i,17}$ |
+| --- | --- | --- | --- |
+| 0 | $-0.043868788119445715039589006877676681360813746946480727510049165746$ | $0.081345754968962764872706136543900760512781949274878415896380227155$ | $-0.048184403539326629142602178499514284811597775479993076585359299759$ |
+| 1 | $-0.12110612982701274271111398632303646052313583844475996977784675307$ | $0.22456671324778883532606965005022930155473435374982295390457194578$ | $-0.13302000991643974412957105005745556824259634315817037578974322479$ |
+| 2 | $0.036610333511430833347136851697812485336576078650234820364129284569$ | $-0.06788642556170268704299943946522746840632795147478916527694382458$ | $0.040211894589405516350317138727022490395381005002821824600565031527$ |
+| 3 | $0.26715871832139453857777987961248197112535154478151851850106910745$ | $-0.49539156584909306428096381477641482143971234561633124687528139358$ | $0.29344059967184748112295359516643629338708302998051824782006267915$ |
+| 4 | $0.40978374790694868232362060792452214447213728436378376338883656801$ | $-0.75986070681368608403063597302146303857770535345104058598743577275$ | $0.45009644258336970294987162697362783316484440835360730949987411964$ |
+| 5 | $-0.02399561538467533906849288768404226473402255428908534024164501799$ | $0.044494993663753304418628491286810531413188831712910372501242594591$ | $-0.026356196841397490717371568924340160784659561344560861992088865666$ |
+| 6 | $-0.03189877954454452498009079429114934941457199835129763160910419329$ | $0.059149805952566770893393025660097957691818294440038868640399576359$ | $-0.0350368389890632675521110459776780992001404298847056636348497632$ |
+| 7 | $0.066600788887029741407578734433575457622521978510808409574404869979$ | $-0.12349763204747477209303265707078094605934462882623872030215757491$ | $0.073152677001980717818935543564534789656697816768469311607668254417$ |
+| 8 | $0.0089120605523663372710302655134840167629163378808595078304623366472$ | $-0.016525605676350990973128482977156251849469670795907398548676706776$ | $0.0097887892606676264343442079977160475852618077196021550488841195919$ |
+| 9 | $-0.01961845451017621463002531797186786023684161765015240197575910816$ | $0.036378438107505687754139623101028708803803193960659026876300673427$ | $-0.0215484304321875859837971366602325772571572760338292903400712218$ |
+| 10 | $-0.0050872195421075046304023897361157630932497751021438196953082423143$ | $0.0094332150963194812665304903114791451460409116835858906800790030544$ | $-0.0055876774768118122652600746071491161722951181904035357926743600293$ |
+| 11 | $-0.00042545012473845390646067830254424762287463682634389540773202915078$ | $0.00078891081978961666378975979373872515092090848224076848117265963607$ | $-0.00046730400758819808156263051244563118921760669296039837539693339211$ |
+| 12 | $0.0018045537421384805111471130866068104296385943719992799677472119065$ | $-0.0033461782927906509317086049649121300560900216261582747554713115788$ | $0.0019820776786186075627246745425067673677826740955967330595101026395$ |
+| 13 | $0.0054299648945993185443647136703636396868372856588136415042770476262$ | $-0.010068766718685614292102134307849643729093749148605244485761222147$ | $0.0059641405860895841100477749941060757652139367534526060497836586742$ |
+| 14 | $0.00017002684565278777725440747285378389342706369579066680692000647742$ | $-0.00031528024177368320484581967453691268819577057466378105221581954037$ | $0.0001867533272436394904215101921301897814118088885779734631967848015$ |
+| 15 | $3.8957552344469856737107239735412545790566290958425230170602846132$ | $153.73494909784439222733235547264245235134403789465079549290173171$ | $-24.658370994345261964427508034949100775045533192629899884118895531$ |
+| 16 | $-6.0965725749017161130527508521082060489218553527014884650440562991$ | $-167.10103928066637686409548040477503144450977489425086519973019941$ | $38.925783296054961435141075674544713705063436850249769065205937805$ |
+| 17 | $5.9113934894589715310597530177465321785267007155808869974146172663$ | $-4.3160177507971017274709668823175104177207295603616535672779822195$ | $-38.513202298337234815637630176408907135950964598450187741242014406$ |
+
+## 96. Uniform contraction and exact contact-root inclusion
+
+**Theorem 96.1 (root inclusion and regularity).** For every source point in
+RC.4's entire nine-coordinate box, the eighteen equations (FA.123) have a unique
+zero in the strip box for every $9999/10\le t\le10001/10$. At $t=1000$ they
+also have a unique zero in the seed box, and it is the same zero. The
+Jacobian with respect to the eighteen unknowns is nonsingular throughout
+both boxes. These are statements about the comparison expressions; TP is
+asserted only at the source root under Assumption 93.1.
+
+**Proof.** Let $\mathcal F$ be the ordered left sides of (FA.123), with the targets
+subtracted. Denote its centre by $\bar X$, its radii by $r_i$, and its
+Jacobian by $J$. All interval endpoints below can be obtained using the
+dyadic denominator $D=2^{220}$, with
+
+$$
+\operatorname{down}(q)=\lfloor Dq\rfloor/D,\qquad
+\operatorname{up}(q)=\lceil Dq\rceil/D.
+$$
+
+An interval sum or product takes the extremal endpoint sums or four endpoint
+products and rounds outwards. Division uses the outwards reciprocal followed
+by multiplication, on intervals excluding zero. For $q=a/b\ge0$, a square
+root lower endpoint is $\lfloor\sqrt{\lfloor aD^2/b\rfloor}\rfloor/D$ and
+an upper endpoint is that integer plus one, divided by $D$. Squaring an
+interval containing zero uses lower endpoint zero. These rules involve
+only integer arithmetic and integer square roots.
+
+Evaluate source amplitudes by the positive-pivot adjugate expressions of
+§94, then $G$ by its expanded entries there. Evaluate ascending polynomials
+by Horner's rule, with coefficient sums and matrix products in increasing
+indices. Polynomial differentiation and multiplication are exact coefficient
+operations, followed by the stated endpoint rounding. In the following
+Jacobian formulas $g_{ij}(x)=\Gamma^{\rm num}_{\eta_i,j}(x)$,
+$D_i(x)=D_{\eta_i}(x)$ and $P_i$ use contact $i$'s own chart:
+
+$$
+\begin{aligned}
+J_{j,i}&=p_i\frac{g'_{ij}D_i-g_{ij}D'_i}{D_i^2},&
+J_{j,5+i}&=g_{ij}/D_i&& (0\le j<8),\\
+J_{8+2i,i}&=P_i',&J_{9+2i,i}&=P_i'',\\
+J_{8+2i,10+j}&=g_{ij},&J_{9+2i,10+j}&=g'_{ij}.
+\end{aligned}
+$$
+
+Unlisted entries vanish. Put $E_R=I-RJ$ and
+
+$$
+q_i=\sum_j\sup|(E_R)_{ij}|\frac{r_j}{r_i},\qquad
+\zeta_i=\sup|(R\mathcal F(\bar X,1000))_i|.
+$$
+
+For the seed let $e_i=\zeta_i/r_i$. For the strip use
+
+$$
+e_i=\frac{\zeta_i+\frac1{10}\sup|(R\partial_t\mathcal F
+ (\bar X,[9999/10,10001/10]))_i|}{r_i}.
+$$
+
+Precondition before bounding this derivative: $t$ is one common parameter.
+The only nonzero moment derivative rows are $\mu/t^2$ and
+$\alpha V/t^2$ in rows 5 and 6. At saturated contacts the other derivative
+rows are $-\epsilon_i N_cF_c$ and its local derivative. Thus the strip
+centre-displacement bound is the scalar mean-value theorem applied to
+$R\mathcal F$, with source coordinates held fixed inside their full box.
+All occurrences of the source and of $t$ remain over-enclosed; none is
+replaced by a root approximation or treated as an independent parameter.
+
+The resulting rational upper bounds are as follows. The seed $q_i$ column
+is in units of $10^{-15}$; the other three columns are dimensionless.
+
+| $i$ | Seed $10^{15}q_i<$ | Seed $e_i<$ | Strip $q_i<$ | Strip $e_i<$ |
+| --- | --- | --- | --- | --- |
+| 0 | 17 | 0.0000193 | 0.00041766 | 0.66740735 |
+| 1 | 130 | 0.00009088 | 0.00074404 | 0.66752689 |
+| 2 | 58 | 0.00003112 | 0.00094428 | 0.6675121 |
+| 3 | 5 | 0.00002838 | 0.00170517 | 0.67794482 |
+| 4 | 31 | 0.00007981 | 0.00266087 | 0.73366237 |
+| 5 | 5 | 0.00000869 | 0.0001267 | 0.66679263 |
+| 6 | 73 | 0.00002567 | 0.00347506 | 0.66792342 |
+| 7 | 81 | 0.00004112 | 0.00122273 | 0.66768712 |
+| 8 | 2 | 0.00000254 | 0.00000491 | 0.66678763 |
+| 9 | 6 | 0.00001148 | 0.00001008 | 0.66726904 |
+| 10 | 5 | 0.00000363 | 0.00064514 | 0.66743931 |
+| 11 | 2 | 0.00000043 | 0.00114617 | 0.66652024 |
+| 12 | 3 | 0.0000014 | 0.00091549 | 0.66724648 |
+| 13 | 5 | 0.00000388 | 0.00066279 | 0.66744546 |
+| 14 | 3 | 0.00000065 | 0.00831084 | 0.6642485 |
+| 15 | 430 | 0.00311194 | 0.00001337 | 0.66672836 |
+| 16 | 634 | 0.00430733 | 0.00002173 | 0.66678341 |
+| 17 | 518 | 0.00260262 | 0.00001978 | 0.66684789 |
+
+In particular $\max q_i<10^{-12}$ and $\max(e_i+q_i)<1/200$ for the seed;
+$\max q_i<1/100$ and $\max(e_i+q_i)<3/4$ for the whole strip. Every entry
+in the table follows by the displayed interval substitutions with the exact
+rational $R$, centres and radii; strictness also follows directly from the
+rounded upper entries.
+
+For the weighted maximum norm $\|v\|_r=\max_i|v_i|/r_i$, the map
+$T(X)=X-R\mathcal F(X)$ has Lipschitz constant $\max q_i<1$, and
+$|T(\bar X)_i-\bar X_i|\le e_i r_i$. Hence $T$ maps the closed box strictly
+into itself. Iterating $T$ gives a Cauchy sequence by the geometric-series
+bound on successive differences; its limit is a fixed point, and the same
+Lipschitz bound proves uniqueness. For every enclosed Jacobian,
+$\|I-RJ\|_r<1$ implies $RJ$ invertible by its Neumann series. In finite equal
+dimensions both $R$ and $J$ are therefore invertible, so a fixed point is
+exactly $\mathcal F=0$. The seed box lies inside the strip box, so their
+zeros at $t=1000$ coincide. $\square$
+
+## 97. Double-root deflation and the complete circle inequalities
+
+**Theorem 97.1 (all eight inequalities and all zeros).** At the selected
+root the four distinct capacity/height gap polynomials are nonnegative on
+the whole circle, and their zero sets consist exactly of the five stated
+contacts. With report multiplier zero they give all eight report/height
+inequalities.
+
+**Proof.** At the selected solution the four gap polynomials factor exactly as follows:
+
+| eta,epsilon | angular chart | repeated factors removed | remaining degree |
+|---|---|---|---|
+| 0,+ | base 0 | (x-x0)^2 (x+1/x1)^2 | 0 |
+| 0,- | base pi | (x-x2)^2 | 2 |
+| 1,+ | base 0 | (x-x3)^2 | 6 |
+| 1,- | base 3pi/2 | (x-x4)^2 | 6 |
+
+These are exact factors because the value and derivative equations in (FA.123) vanish at the exact selected solution. The two pure-positive contacts are distinct; chart changes transform the local root x1 to -1/x1. Synthetic division with the boxes of §95 encloses all coefficients of the exact quotients. Remainders need not be numerically assumed zero: their exact zero follows from (FA.123). No interval residual is silently rounded to zero.
+
+Every remaining quotient q(x)=sum a_k x^k has even degree n and is strictly positive for every real x, including the homogeneous point at infinity. For each sign sigma=+1,-1 the following rational witnesses prove positivity on [0,1] of
+
+$$
+(1-y)^nq(\sigma y/(1-y))
+=\sum_{k=0}^n a_k\sigma^k y^k(1-y)^{n-k}.
+$$
+
+Its initial Bernstein controls are $a_k\sigma^k/\binom nk$. Exact dyadic de Casteljau subdivisions yield strictly positive lower controls on a covering partition. Bernstein basis functions are nonnegative and sum to one, so positivity follows on each entire closed interval. The leading coefficient, also strictly positive, checks y=1/infinity. This proves the circle inequalities, not sampled signs or merely positive curvature at the selected contacts. Consequently the only whole-circle zeros are exactly the two pure-positive, one pure-negative, one saturated-positive and one saturated-negative contacts listed. The report-sign copies give all eight original inequalities: the report multiplier $\lambda=0$ makes the two report signs identical, so their duplicate rows are not counted as independent Jacobian equations. All height and orientation cases, axes and each chart's infinity are included.
+
+For clarity, the original matrix multipliers matching the eight-coordinate dual are the report multiplier $\lambda=0$ and
+
+$$
+Y=\begin{pmatrix}
+d_0&\sqrt\alpha d_1/2&\sqrt\beta d_2/2\\
+\sqrt\alpha d_1/2&\alpha d_3&\sqrt{\alpha\beta}d_4/2\\
+\sqrt\beta d_2/2&\sqrt{\alpha\beta}d_4/2&0
+\end{pmatrix},
+$$
+
+$$
+Z_f=\frac1t\begin{pmatrix}
+\beta d_5h_2^2/d_{\rm src}^2&
+-\sqrt{\alpha\beta}d_7h_1h_2/(2bd_{\rm src})\\
+-\sqrt{\alpha\beta}d_7h_1h_2/(2bd_{\rm src})&
+\alpha(d_5+d_6)h_1^2/b^2
+\end{pmatrix}. \tag{FA.125}
+$$
+
+The factor $1/t$ is part of the physical dual. The fixed gauge is $Y_{22}=0$ in zero-based $h$ coordinates. Direct substitution gives, on the entire ellipse,
+
+$$
+h^TYh\ge|\ell(h)|,\quad
+h^TYh+tc(h)\widehat n_h^TZ_f\widehat n_h
+\ge|\ell(h)+tc(h)f(h)|.
+\tag{FA.126}
+$$
+
+This uses physical n_h. Failure whitening is M2^(-1/2)nn^TM2^(-1/2); the physical spectral effect, when needed, is M2^(1/2)ee^TM2^(1/2), never ee^T itself. No spectral source equality is substituted for the finite contact certificate.
+
+The remaining coefficient intervals below are in ascending powers of the
+local chart variable. Each displayed endpoint is rounded outwards from the
+$2^{-220}$ calculation of the polynomial coefficients and synthetic divisions.
+For division of $\sum_{k=0}^n a_kx^k$ by $x-\xi$, the coefficient recurrence
+is $b_{n-1}=a_n$, $b_{k-1}=a_k+\xi b_k$ in descending $k$. Use it twice
+per removed root. The exact remainder is zero by the equations, independently
+of its interval enclosure. On the positive pure sheet the second root in the
+base-zero chart is $-1/x_1$; it is separated from $x_0$ and finite throughout
+the box. All other removed roots use their own chart coordinates.
+
+| Sheet, sign | $k$ | Seed quotient coefficient | Strip quotient coefficient |
+| --- | --- | --- | --- |
+| $(0, 1)$ | 0 | $[0.00297015401014,0.00297015401015]$ | $[0.00296843127843,0.00297187674185]$ |
+| $(0, -1)$ | 0 | $[0.12560327735391,0.12560327735392]$ | $[0.1255991906209,0.12560736406896]$ |
+| $(0, -1)$ | 1 | $[-0.04144793101512,-0.04144793101511]$ | $[-0.04144920610409,-0.04144665588641]$ |
+| $(0, -1)$ | 2 | $[0.01933831323362,0.01933831323363]$ | $[0.01933659050192,0.01934003596534]$ |
+| $(1, 1)$ | 0 | $[1.4964217976616,1.49642179766161]$ | $[1.49623139748703,1.49661219790962]$ |
+| $(1, 1)$ | 1 | $[0.45325689126271,0.45325689126272]$ | $[0.45319604085388,0.45331774183573]$ |
+| $(1, 1)$ | 2 | $[1.42988962848658,1.42988962848659]$ | $[1.42969879526944,1.43008046177866]$ |
+| $(1, 1)$ | 3 | $[0.4135255617023,0.41352556170231]$ | $[0.41346324114809,0.41358788242282]$ |
+| $(1, 1)$ | 4 | $[1.52858664735452,1.52858664735453]$ | $[1.52839059013532,1.5287827046349]$ |
+| $(1, 1)$ | 5 | $[0.45133016947045,0.45133016947046]$ | $[0.45126146716503,0.45139887181646]$ |
+| $(1, 1)$ | 6 | $[0.03427654488529,0.0342765448853]$ | $[0.03422592173848,0.03432716803211]$ |
+| $(1, -1)$ | 0 | $[0.11207633916492,0.11207633916493]$ | $[0.11173034301084,0.11242233568834]$ |
+| $(1, -1)$ | 1 | $[0.06948343855543,0.06948343855544]$ | $[0.0691160560784,0.06985082180826]$ |
+| $(1, -1)$ | 2 | $[0.4182865421397,0.41828654213971]$ | $[0.41772175572569,0.41885132887932]$ |
+| $(1, -1)$ | 3 | $[0.19322286797197,0.19322286797198]$ | $[0.19301795860816,0.19342777762964]$ |
+| $(1, -1)$ | 4 | $[0.13209435653274,0.13209435653275]$ | $[0.13187133828485,0.13231737485947]$ |
+| $(1, -1)$ | 5 | $[0.06065944909555,0.06065944909556]$ | $[0.06060365159343,0.06071524663854]$ |
+| $(1, -1)$ | 6 | $[0.0108334810251,0.01083348102511]$ | $[0.01080022191544,0.01086674013477]$ |
+
+For the transformed polynomial on each half-line use the Bernstein controls
+just specified and restrict them to the following closed dyadic intervals.
+The restriction is ordinary de Casteljau subdivision: at parameter $v$ replace
+adjacent controls by $(1-v)b_k+vb_{k+1}$ until one remains; the two boundary
+chains give the left and right restricted controls. An interval $[a,b]$ is
+obtained by first keeping the right part at $a$, then the left part at
+$(b-a)/(1-a)$, with the evident conventions at 0 and 1. Each rational lower
+bound in the next table bounds every restricted control using the coarsened
+coefficient intervals above, so it is itself a sufficient whole-domain
+witness. The signs here select the positive or negative real half-line and
+are distinct from the height sign.
+
+| Sheet, height sign | Half-line sign | Closed partition | Seed lower control $>$ | Strip lower control $>$ |
+| --- | --- | --- | --- | --- |
+| $(0, 1)$ | $1$ | $[0,1]$ | 0.00297015401 | 0.002968431278 |
+| $(0, 1)$ | $-1$ | $[0,1]$ | 0.00297015401 | 0.002968431278 |
+| $(0, -1)$ | $1$ | $[0,1/2], [1/2,3/4], [3/4,1]$ | 0.009322743548 | 0.009321292113 |
+| $(0, -1)$ | $-1$ | $[0,1]$ | 0.019338313233 | 0.019336590501 |
+| $(1, 1)$ | $1$ | $[0,1]$ | 0.020676278085 | 0.020673162057 |
+| $(1, 1)$ | $-1$ | $[0,1/2], [1/2,3/4], [3/4,13/16], [13/16,27/32], [27/32,7/8], [7/8,1]$ | 0.000088860347 | 0.000060458205 |
+| $(1, -1)$ | $1$ | $[0,1]$ | 0.008806290435 | 0.008791422552 |
+| $(1, -1)$ | $-1$ | $[0,1/2], [1/2,3/4], [3/4,1]$ | 0.000442309136 | 0.000425306464 |
+
+Both partitions start at 0, end at 1 and have identical adjacent endpoints.
+Every quotient has even degree and strictly positive leading coefficient,
+which also checks the homogeneous point at infinity. Bernstein basis functions
+are nonnegative and sum to one, proving positivity over each entire interval.
+Thus the removed exact double roots exhaust the circle zeros, including all
+axes and chart infinities. The original denominators are positive, and the
+squared factors introduce no sign change. This proves the asserted global
+gaps and (FA.126). $\square$
+
+## 98. Matching value and the minimum actual alphabet of every optimizer
+
+**Theorem 98.1 (universal matching and count).** Under Assumption 93.1,
+for every point of the closed strip the family in §94 is globally optimal
+among all stipulated original competitors. Every such optimizer has at
+least five supported-nonzero actual low labels and at least six total actual
+labels, and the minimum is attained.
+
+**Proof.** Equation (FA.122)'s eight moments are exactly the full live Gram and full physical failure covariance: u²+v²=1 restores the omitted live v² moment; mu=alpha V+beta W restores the omitted failure v² moment. Thus
+
+$$
+\sum_i p_ih_ih_i^T=I_3,\quad
+\sum_i p_i\eta_i tc(h_i)n_in_i^T=M.
+$$
+
+Every weight is strictly positive. The sign checks give epsilon_i H_eta_i>0. The contact equations imply sum p_i |H_eta_i|=d.B(t). For every original competitor, apply (FA.126) to capacity endpoints and the convex chord inequality to its own b in [0,tc]. Integrating its complete live and physical failure moments gives low height <=tr(Y)+tr(Z_fM2)=d.B(t). FA69 and Theorem 87.2's reduction applies only to supported-nonzero low labels, but every supported-zero label has zero height difference and cannot evade this bound. Original competitor time laws have not been fixed to g. Adding the fixed positive high contribution H0 and dividing by two proves the universal upper bound (FA.120), matched by this one original construction. Jointly choosing orientations and failure allocation was allowed in that bound.
+
+The five projection lines are pairwise distinct: their normalized u,v determinant magnitudes exceed 0.04598 at the seed and remain nonzero over the whole strip. The three normalized pure vectors $(1,u_i,v_i)$ have determinant in $(1.5240677,1.5242904)$ on the strip; the invertible diagonal rescaling to $h_i$ preserves independence; the remaining pure live Gram is rank three. Thus this is not a fixed-allocation rank-two or maximum-contrast surrogate. A five-column minor of Gamma, using rows $(1,u,v,\eta\mathfrak c,\eta\mathfrak c u^2)$, lies in
+
+$$
+(-0.015477643822831680,-0.015475293534243875)
+$$
+
+on the strip. The five weights are therefore uniquely determined by their moments.
+
+For an arbitrary existing supported-nonzero low label let
+$C=t\mathfrak c(h)$, $v=b/C\in[0,1]$, and let $g_0,g_1$ denote the
+nonnegative pure and saturated absolute-value dual gaps. Its unhalved slack
+is exactly
+
+$$
+(1-v)g_0(h)+vg_1(h)+
+(1-v)|\ell(h)|+v|\ell(h)+Cf(h)|-|\ell(h)+bf(h)|\ge0.
+$$
+
+The last three terms are the convex chord loss. Integrating gives the
+already matched universal bound. At any optimizer, vanishing total slack
+forces vanishing slack in each existing positive outcome (almost everywhere
+in the stipulated integral version). A strictly interior b would require zero gaps at BOTH endpoints on the same direction by the convex chord decomposition. The certified pure and saturated zero sets are disjoint, so no such label exists. The only optimal supported directions and endpoint choices are the five listed. The nonzero minor and their positive matching weights require all five. FA69 and Theorem 87.2's actual-label rigidity forbids combining distinct directions into one low label, independently of hidden Kraus multiplicity. Positive high acquired mass requires at least one further actual high label. The construction below has exactly five low plus one high, including the complement, proving the exact minimum six here. This argument does not depend on an optional determinant test for Z_f +/- Delta over a broad interval.
+
+For a convergent countable alphabet the nonnegative slack sum vanishes
+only if each positive supported term has zero slack. In CG Convention
+21.3's stipulated integral model, the same conclusion holds almost everywhere
+for the supplied CP/Kraus densities, by vanishing integral of nonnegative
+slack. It restricts their supported directions to the same five rays and
+fixes their five aggregate coefficient masses. It does not construct a
+disintegration of an arbitrary instrument. A purported actual alphabet with
+fewer than five supported outcomes is finite and reduces to its finite
+positive CP-mass outcomes; it cannot support the five strictly positive
+aggregate masses. Positive nonatomic actual mass already has infinite
+alphabet. Hidden Kraus indices cannot replace actual outcomes.
+
+A supported-zero outcome may have a nonzero full-$M_5$ encoder and is admitted
+and counted, even though its supported height and contrast are zero. Such
+additional outcomes cannot lower these bounds. The complement in §100 is
+counted inside the one high outcome. Five low projection lines, two physical
+failure lines, the actual alphabet and the joint fibre dimensions
+$(2,2,2,2,2,5)$ are different quantities. The minimum statement holds only
+on this strip; optimal implementations may split a ray into several actual
+labels or add supported-zero outcomes. $\square$
+
+## 99. Strict margins and analytic dependence on the activity parameter
+
+**Theorem 99.1 (closed-strip margins and regular branch).** The family,
+its value and a fixed analytic choice of instrument factors depend real
+analytically on $t$ for $9999/10<t<10001/10$ and continuously at both
+endpoints. The optimum is constant in the requested $s$ on $[0,3/25]$.
+
+**Proof.** All five angular second derivatives of the appropriate gap are strictly positive. Their uniform strip enclosures are
+
+- contact 0: (0.01678263300596134647607184464176762, 0.01678644900066609033089675882945644).
+- contact 1: (0.01678141971097141399331153641316915, 0.01678766249897283262877500029544263).
+- contact 2: (0.06031133751310846247936672851294927, 0.06031655252590283334925811709277640).
+- contact 3: (17.23741444892271443501698377453156460, 17.24184281361076349586024173695675543).
+- contact 4: (0.85197496258990452305983215822696129, 0.85709731507883159868282892569297981).
+
+These are computed as P_i''/D_eta times ((1+x_i²)/2)^2 at the exact contact, using P_i=P_i'=0. Positive quotient certificates exhaust every zero; compactness supplies the strictly positive gap away from them. Weights and sign values have strict positive margins; physical contrast exceeds 0.12421255, above every requested s<=0.12. The weighted Jacobian norm bound proves nonsingularity after the gauge and removal of duplicate report constraints. Rational analytic equations with positive denominators and nonsingular Jacobian give analytic dependence on t by the implicit function theorem. Uniform contraction selects the same branch throughout the entire stated interval. Thus all seed, curvature, global-sign and independent-Jacobian hypotheses of the continuation argument hold on the specified branch.
+
+The root coordinates remain strictly inside their fixed boxes by §96.
+The equations are real analytic wherever their source radicals and
+denominators are positive, and their gauge-fixed Jacobian is invertible.
+The implicit function theorem therefore gives local analytic solutions;
+uniqueness in the common box identifies them on overlaps. Uniform contraction
+gives continuity at both closed endpoints. The sign reports stay fixed
+because none of the five $z_i$ crosses zero. Positive square roots in the
+constructor and analytic rank-two frame choices give an analytic instrument
+representative; this does not assert uniqueness of its full CP completion or
+time laws.
+
+The following outward enclosures hold uniformly on the strip:
+
+| Quantity | Strict enclosure |
+| --- | --- |
+| Physical contrast | $(0.12421255682840184212,0.12422087673167824425)$ |
+| Five-column moment minor | $(-0.01547764382283167927,-0.01547529353424387514)$ |
+| Pure normalized frame determinant | $(1.5240677194037333283,1.52429036518928477366)$ |
+| Every pairwise projection determinant magnitude | $>0.0459$ |
+| Original activity floor $t_0$ | $(264.80903138857747844055,264.80903138857747844386)$ |
+
+The positive weights, capacities and signed heights can also be enclosed
+without choosing sign branches after evaluation:
+
+| $i$ | $p_i$ | $\mathfrak c(h_i)$ | $\epsilon_iH_{\eta_i}(h_i)$ |
+| --- | --- | --- | --- |
+| 0 | $(0.403551820132,0.403570298116)$ | $(0.210664559785,0.210666270016)$ | $(0.010253268733,0.010253639963)$ |
+| 1 | $(0.183966169952,0.183970045178)$ | $(0.137635731409,0.137662212179)$ | $(0.010558500861,0.010560998242)$ |
+| 2 | $(0.320037200481,0.32005031)$ | $(0.190964924576,0.190971375137)$ | $(0.002967133478,0.002967450763)$ |
+| 3 | $(0.036142704793,0.036153562793)$ | $(0.183965805294,0.18396605267)$ | $(0.476464351917,0.476694506627)$ |
+| 4 | $(0.056270517038,0.056287371516)$ | $(0.080070287785,0.080070450066)$ | $(1.810181210942,1.810558411808)$ |
+
+In particular $p_i>0.03614270$, actual contrast $>0.12421255>3/25$,
+and $t_0<9999/10$. Both $s$ endpoints, including zero, and both $t$ endpoints
+are included. The smallest requested contrast is an inequality, not a
+requirement to alter the common atom law. The case $t=0$ remains empty by
+Theorem 87.2 and is outside this strip. $\square$
+
+## 100. One common full-complex instrument with the original outputs
+
+**Theorem 100.1 (simultaneous original realization).** Under Assumption 93.1,
+the following one instrument attains the strip value, five-low/six-total
+minimum, error and resource conditions for the sole unknown reached-cut
+specimen, with no additional input or later carrier action.
+
+**Proof.** For each selected atom put K_i=sqrt(p_i)(s0 D+z_iT+w_iS) and N_i=p_i eta_i tc(h_i)n_in_i^T. Reuse FA70 and Theorem 87.3's row-space constructor: choose J_i:C²->ran K_i^* isometric and define
+
+$$
+Q_i=J_i^*(K_i^*K_i+N_i)J_i,\quad
+C_i=Q_i^{1/2}J_i^*E^*,\quad B_i=K_iJ_iQ_i^{-1/2},\quad
+F_i=Q_i^{-1/2}J_i^*N_iJ_iQ_i^{-1/2}.
+$$
+
+Then B_i^*B_i+F_i=I2, B_iC_i=K_iE^*, and the supported acquisition effect is E(K_i^*K_i+N_i)E^*. In particular later failure is included in acquired probabilities. The entire fibre has dimension two. For the chosen attainer take g(u)=2/(1+u)^2, Gtime(u)=2u/(1+u), survivor Z_i(u)=sqrt(I-Gtime F_i) and positive first-event rate R_i(u)=g(u)F_i[I-Gtime F_i]^(-1). For the separately labelled components $\ell\in\{0,1,2,3,13\}$, current-survivor failure maps are
+
+$$
+Y\mapsto w_\ell g(u)\operatorname{tr}
+(F_i Z_i(u)^{-1}Y Z_i(u)^{-1})P_f.
+$$
+
+Terminal processing on survivors only is the isometry EB_i(I-F_i)^(-1/2). The composite live matrix is EB_i. Its prescribed effect is B_i^*B_i=I-F_i, not an arbitrary map inferred from endpoint coercivity. Pure rows have zero rate; saturated rows have exact activity log(1+t), with nonzero failure eigenvalue t/(1+t). At t=1000 the minimum terminal live eigenvalue is exactly 1/1001. All survivors remain positive and there is no forced deadline failure.
+
+Fix Wperp:C²->Pperp and J0:C²->C³ isometric. A single completely counted dimension-five high fibre has encoder
+
+$$
+C_H=\begin{pmatrix}\sqrt{1-\delta}DE^*\\W_\perp^*\end{pmatrix},
+$$
+
+zero rate, and two hidden terminal Kraus matrices E[I3 0] and EJ0[0 I2]. Its binary report is deterministically plus. Low reports are deterministically sign(z_i). These are functions of actually generated labels; discarded Kraus indices are never read. The complement is coherent and charged within the same high fibre on complementary inputs. It has zero probability on all twelve original specimens, but its full encoder is nonzero. This is the allowed JR completion and differs explicitly from fixed CA10.
+
+Source-root TP and the exact two moment identities prove total encoder effect I5. For EVERY complex X in M5, this same instrument has
+
+$$
+\begin{aligned}
+\Phi^L(X)&=E[\Lambda_*(E^*XE)+J_0W_\perp^*XW_\perp J_0^*]E^*,\\
+\Phi^f_\ell(\mathcal B)(X)&=w_\ell\int_{\mathcal B}g(u)du\;
+\operatorname{tr}(EME^*X)P_f,
+\quad\ell\in\{0,1,2,3,13\}.
+\end{aligned}
+$$
+
+The five original weights are separately (0,1/4,1/2,1/4,0). On an arbitrary passive reference the exact failure map is
+
+$$
+w_\ell\int_{\mathcal B}g(u)du\;P_f\otimes
+\operatorname{Tr}_5[(EME^*\otimes I_R)X],
+$$
+
+and live maps tensor their displayed Kraus conjugations with I_R. This is the conditional reference operator, not an unconditional reference marginal. Both zero labels remain separately zero for EVERY Borel set, the three positive components remain separate, and no additional sector is generated.
+
+On each of the twelve histories these are exactly the supplied original simulator outputs, compared against their entire original coherent ideal blocks and ideal density f_y(u)=6y/(y+6u)^2. Thus, conditionally on the original minimax/error identification,
+
+$$
+e_{5,e,n}=e_{27,e,n}=E_*,\qquad e_{16,e,n}<E_*\quad(e,n=\pm1).
+$$
+
+Only the single high fibre has dimension >=3. Its acquired probability on history y is (1-delta)A_y; its maximum is (1-delta)A27=C(s), the sharp JOINTLY acquired worst-history cost. Every subsequently accessible share is included in the declared fibres; there is no hidden accessible quantum system. The original reported contrast is s0 sum p_i |z_i|. FIRST occurs at absolute 6+u in the chronological FA70 process; only not-yet-failed carriers receive later processing, with no positive-carrier action after absorption. Necessity covers every admitted original time law; the choice of g is only this sufficiency witness. These are mathematical maps under the original control contract; native actuation and permissions remain additional premises.
+
+Indeed $N_i\preceq tK_i^*K_i$ on the rank-two row space, so
+$F_i\preceq t(I-F_i)$ and $I-F_i\succeq I/(1+t)$. For saturated
+rank-one $N_i$, the extremal ratio is $t$, giving the exact nonzero
+failure eigenvalue $t/(1+t)$; pure rows have $F_i=0$. Thus the entire-fibre
+rate integral, not an average or postselected rate, is exactly $A$ on the
+two saturated rows and zero on the three pure and high rows.
+The high terminal Kraus effects sum to $I_5$ on that high fibre, and
+$[EB_i(I-F_i)^{-1/2}]^*[EB_i(I-F_i)^{-1/2}]=I_2$ on each low fibre.
+The latter is the terminal TP operation; its cumulative no-event map is
+$\operatorname{Ad}_{EB_i}$.
+
+On supported inputs, expanding $\sum_i K_i(\cdot)K_i^*$ with the Gram
+identity gives $\delta D(\cdot)D^*+T(\cdot)T^*+S(\cdot)S^*$;
+the high row adds $(1-\delta)D(\cdot)D^*$. The failure covariance
+identity gives the trace-and-prepare functional in every Borel component.
+Together with source-root $D^*D+T^*T+S^*S+M=I_3$, this proves total
+encoder effect $P+P^\perp=I_5$. Tensoring each Kraus conjugation with
+$I_R$ and summing its exact effects proves the conditional partial-trace
+formula for every passive reference, including complex entangled inputs.
+No real-state or single-Kraus restriction has entered the universal comparison.
+
+The twelve ideal live blocks are the coherent $U_{e,n}B_yU_{e,n}^*$ of
+(CG.111), with the original densities $6y/(y+6u)^2$. The comparison norm is
+HALF the entire stopped-cq norm, including singular time, wrong-support,
+abort and zero-target sectors. Error equality for heights 5 and 27 and
+strict inequality for height 16 are inherited at the source root, for all
+four sign pairs; they are not inferred from rounded source expressions.
+Writing $\kappa=h_0a+h_1b$, the actual reported contrast is
+$2|\operatorname{Re}(E^*F_+E)_{01}|/\kappa=s_0\sum_i p_i|z_i|$.
+Every acquired probability uses the full encoder effect, hence includes
+future failure. With $A_y=\operatorname{tr}(D^*D\rho_{y,e,n})$, the
+only dimension-at-least-three outcome has probability $(1-\delta)A_y$
+and worst history 27, equal to the inherited sharp weak $\mathsf C(s)$.
+All subsequently accessible shares are part of the declared joint fibres;
+no discarded Kraus index is a readable report or control. FIRST is the first
+jump on the original absolute clock $6+u$, followed by no positive-carrier
+action on failed branches; positive terminal survivors forbid forced
+deadline absorption. Necessity in §98 permits every admitted original
+time law; $g$ specifies only this attainer. $\square$
+
+## 101. Source dependence, literature scope and remaining mathematical boundaries
+
+**Definition 101.1 (dependence and scope).** Sections 93--100 are a
+`repo-derived` source-specific synthesis of the original capacity/rigidity,
+full-output construction and sharp-cost results in FA68--70, FA72, FA77--79,
+FA87 and JR42--44, with the original source in RC58 and CG13--17. The
+finite submaximal-height, roof and compression results of §§88--90 retain
+their own scopes. The common-dual, finite-contact, orientation, two-line
+exclusion and sufficient-continuation results are used at their stated
+conditional scopes; the selected five-contact root and its matching whole
+circle inequalities are the additional specialization here. No priority
+claim is attached to this synthesis.
+
+The contraction proof uses the geometric-series fixed-point argument and
+the polynomial sign proof uses the elementary Bernstein convex-hull identity,
+both explicitly given above. Dritschel--Rovnyak, *The Operator Fejér--Riesz
+Theorem*, arXiv:0903.3639v1, §2 Theorem 2.1, factors a Laurent polynomial
+already nonnegative everywhere on the circle, including zeros, into a
+same-degree analytic factor. It neither chooses the present unknown dual
+multipliers nor proves the present inequalities before their signs are
+known. The source-specific quotient bounds in §97 supply those signs directly.
+The relative-interior and information-matrix hypotheses discussed in §91
+are unchanged; no general support bound is transferred into this local
+actual-alphabet theorem. The ordinary real analytic implicit-function theorem
+is applied only after §96's nonsingular independent Jacobian and §99's
+positive analytic domains have been established.
+
+**Definition 101.2 (unchanged programme boundary).** The local value and
+minimum alphabet in Theorem 93.2 apply only to
+$9999/10\le e^A-1\le10001/10$, $0\le s\le3/25$ under Assumption 93.1.
+Outside this rectangle, the complete evaluated finite-$(s,A)$ frontier,
+all jointly chosen oriented failure allocations and full-rank submaximal
+live-height decompositions, common contacts, signs, zero-weight and rank
+changes, degeneracies and gluing remain required. The complete original
+precontact/contact $K(s)$ coefficients, their orientation choices and all
+seams remain required beyond supplied postcontact and rank-conditional scopes.
+Global minimum actual optimizer alphabets and every count transition outside
+this strip are not supplied by its five-low/six-total minimum.
+
+The published JS source identified in §92 supplies its unique clamped scalar
+limiting selector and strictly monotone inversion (Theorem 11.3), quantitative
+critical strip for complete actual records (Theorem 14.1), uniform
+$O(t^{-1})$ sub-spectral product/value estimates on the actually feasible
+compact intervals (Theorem 14.2), and compact-uniform spectral product/value
+layer (Theorem 16.2). Those results are credited at their conditional limiting
+scopes. JS Proposition 12.2 and Definition 18.2 leave the complete source-specific
+transition-root inventory, isolation, ordering, multiplicities and sign
+intervals in JS.58, remaining next terms, critical five-label/static-contact
+joint layers and other required joint scales outside those supplied results
+unresolved. Neither limiting three-failure-line structure nor a native state
+count is an actual finite quantum acquisition alphabet.
+
+The original source-root/isolation/Jacobian/rank, TP, minimax/error and
+sharp-cost/equality identifications remain Assumption 93.1; ordinary source
+proofs and rational arithmetic are not Lean/kernel certification. The
+conditional CP instrument does not supply lawful specimen access, calibration,
+acquisition generation or duration, coherent joint storage and share accounting,
+decoder actuation, an aligned absolute FIRST clock, archives, source/epoch,
+controller or permissions. The self-calibration, selected-transition and
+static separator/control interfaces described in §92 add no common quantum
+operation/resource realization bridge; OriginalControl remains geometry.
+The through-2027 quantum-first programme is unchanged beyond the local
+conditional theorem just stated.
+
+## 追加锚（本行以下为增补区）
