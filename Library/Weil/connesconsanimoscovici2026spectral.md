@@ -10085,3 +10085,84 @@ premises remain. A stronger TRUE baseline, other sources or shifts
 beyond the supplied cap are outside this exclusion. The actual retained
 form can dominate the rejected lower target and remain positive.
 Actual retained/cofinal positivity, Robin and RH remain unresolved.
+
+### Test one explicit twenty-profile direction on the stronger baseline
+
+The preceding old-target exclusion does not decide the stronger baseline.
+The already saved frame $A=[\iota_gY,V]$ supplies a different finite test:
+
+$$
+A^*L_*A=\operatorname{diag}(G_{JJ},\Sigma_0),\qquad H_{20}=A^*A,
+\qquad 0\preceq\overline L-L_*\preceq\delta I.
+$$
+
+All these are the SAME archived forms and profiles. For fixed exact
+coefficients $w=(g,z)\in\mathbb Q^2\oplus\mathbb Q^{18}$, retain
+$m=(u,v)$ in both the good coordinates and conditional mean. Then
+
+$$
+\begin{aligned}
+B_w&=g^*G_{JJ}g+z^*\Sigma_0z,\\
+\mu_w&=c g_1+d g_2+\beta_Jz+m(g+Bz),\\
+|bAw|&\le|\mu_w|+\sqrt{\overline\Delta\,z^*Sz}.
+\end{aligned}
+$$
+
+Here $G_{JJ}=\left(\begin{smallmatrix}a&c\\c&d\end{smallmatrix}\right)$,
+$y=mB+q$ and $qq^*\preceq\overline\Delta S$ are the saved conditional
+source relation. Ordinary Cauchy and the baseline order give the full
+sufficient upper
+
+$$
+U(w)=\operatorname{ub}B_w+\delta\operatorname{ub}(w^*H_{20}w)
++t_+\operatorname{ub}|rAw|^2
++\frac{\left(\operatorname{ub}|\mu_w|
++\sqrt{\overline\Delta\operatorname{ub}(z^*Sz)}\right)^2}{D_{\rm lo}}.
+$$
+
+A negative $U(w)$ would certify a negative direction of the SAME stronger
+lower construction. The existing monotonicity then covers all
+$0<t\le t_+$ and $D\ge\mathcal K\ge D_{\rm lo}$. Reference or midpoint
+data can choose $w$; the original enclosures must certify it.
+
+One nominal Woodbury selection, with one new combined17-reference action
+and two2x2 selection inverses, does not pass this test. Its fixed dyadic
+vector gives
+
+| Quantity | Saved enclosure |
+|---|---|
+| Old-base quadratic $B_w$ |$[4.2597335,4.2597336]\cdot10^{37}$|
+| Euclidean norm squared $w^*H_{20}w$ |$[4.3024170,4.3024171]\cdot10^{171}$|
+| Full stronger-target upper $U(w)$ |$[6.5391654,6.5391655]\cdot10^{37}$|
+
+The first row is strictly positive. Since all added terms and the true
+baseline gain are nonnegative, this particular vector cannot be a
+negative witness even for the old target. A positive sufficient UPPER
+alone would be inconclusive; the separate strict base LOWER rules out
+this vector. Neither fact decides the stronger form's sign or excludes
+another vector. The earlier negative border budget is not the quadratic
+value or normalization of this selected vector.
+
+This application does not distinguish selection mismatch, rounding
+amplification and loss of common relations as causes of failure. No
+source, direction, parameter or precision retry follows. A further
+witness-recovery method must retain its actual elimination relations;
+the saved vector and all component bounds can be consumed without
+rerunning this selection.
+
+The sole1024-working/640-export application takes<0.102317seconds,
+excluding serialization. Its9259-byte packet has SHA256
+`db3c21bc3ddb8af0784521f27311d6fd75312b7371a68dd3410c66fbd371c3b7`;
+the232-line source has SHA256
+`ebeabd3114efd0fb109082cc96f7c1ba11fc4a4a010c57202ff55c58b0bf8626`.
+The [explicit vector, source and directed budget](https://github.com/the-omega-institute/trureturing-experiments/tree/48619c68429c987a929fbb1ea0af0aba5aa9f973/docs/reports/weil-c27)
+retain this fixed test. Every old source, solve, physical/Euclidean Gram
+and passed fixture is reused. No new large inverse/solve, source/far query
+or scientific-producer replay runs.
+
+All inherited actual common-form/domain, source/lift, normalization,
+reference, conditional-ellipsoid, complete-far and true-baseline-order
+premises remain. This applies existing block minimization, Rayleigh and
+Cauchy methods without a generic novelty or Lean-proof claim. The
+stronger-target sign, actual retained/cofinal positivity, Robin and RH
+remain unresolved.
