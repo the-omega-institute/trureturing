@@ -2170,3 +2170,554 @@ simply be applied to them. No seed or global all-H witness hypothesis is
 added: the needed witnesses and length inequalities came from the same
 actual four-reservoir escape block. No degree upper bound, distinct-owner
 assumption for Q's axes, or prohibition of self-gluing has been imposed.
+
+
+## 156. Core capacity: fixed complete-star data
+
+The following argument uses the actual shared-length framework of
+Sections 137--155 and the exact paired-angle response of Section 95.
+
+Retain the source's actual finite ideal face pairing with complete circular
+edge links, minimum degree six, fixed paired frames and common positive
+generalized length field with original angle sums 2*pi. There are exactly
+four actual reservoir labels H={M,C,D,Z}. Assume a flat exists and choose
+the source's maximal-selected M and its escape. Their cosh lengths obey
+
+    m>1+c+d>3,       z>1+m+c>5.
+
+M has exactly one flat occurrence; its total genuine angle is pi. Every
+Z occurrence is genuine, with total angle 2*pi. The escape is a genuine
+tetrahedron
+
+    tau=(Z,M,C,D,M,C).
+
+Its axial Z angle theta and its transverse M angle beta satisfy
+
+    theta+2*beta>pi.                               (156.1)
+
+Its two faces containing that axial Z slot are paired to the two return
+faces of one different genuine owner rho. The latter has two transverse
+Z slots, with common angle gamma>pi/2. It has one of the four remaining
+H-only return frames:
+
+    (C,Z,M,M,Z,M),
+    (C,Z,M,Z,Z,M),
+    (C,Z,M,D,Z,M),   with d>(z-m)^2/(c+1)-1>c,
+    (M,Z,C,Z,Z,C).
+
+The unique dominant axial Z run consists only of tau. None of these
+facts assigns M's remaining pi budget to Z.
+
+## 157. A two-value tetrahedron consumes more than pi
+
+Consider a genuine tetrahedron all six of whose actual labels belong to
+{M,Z}. Its fixed reservoir pair must be {M,Z}, since the two reservoir
+labels are distinct. Its axes also belong to {M,Z}; hence every cosh
+length is strictly greater than three.
+
+At a vertex adjacent to an axis of value r, let theta be the axial angle,
+and beta,delta the reservoir angles. If the reservoir values are a,b,
+Section 95 gives
+
+    beta+delta=2*atan(lambda*cot(theta/2)),
+    lambda=[sqrt(a^2-1)+sqrt(b^2-1)]/(a+b)
+                  *sqrt((r-1)/(r+1)).
+
+Here a,b,r>3. Thus
+
+    [sqrt(a^2-1)+sqrt(b^2-1)]/(a+b)>sqrt(8)/3,
+    sqrt((r-1)/(r+1))>1/sqrt(2),
+    1>lambda>2/3.                                 (156.2)
+
+For any 0<lambda<1 and 0<theta<pi, one has
+
+    theta+2*atan(lambda*cot(theta/2))
+          >=4*atan(sqrt(lambda)).                  (156.3)
+
+To verify the branch and inequality, set t=tan(theta/2)>0 and
+F=atan(t)+atan(lambda/t). Since lambda<1,
+0<F<pi/2. The tangent addition formula and AM--GM give
+
+    tan(F)=(t+lambda/t)/(1-lambda)
+             >=2*sqrt(lambda)/(1-lambda)
+              =tan(2*atan(sqrt(lambda))).
+
+Both compared angles lie in (0,pi/2), proving (156.3).
+
+Because sqrt(lambda)>sqrt(2/3)>1/2>sqrt(2)-1=tan(pi/8),
+equations (156.2)--(156.3) show that every vertex-angle sum is strictly greater
+than pi/2. Summing the four vertex sums counts every dihedral angle
+twice. Consequently the sum of all six dihedral angles is greater than
+pi. This conclusion includes every repetition of M or Z in the axes.
+
+## 158. No owner can use only M and Z
+
+The total genuine-angle capacity of the two actual edges M,Z is 3*pi.
+The owner tau consumes more than pi of this capacity by (156.1). The distinct
+owner rho consumes more than pi through its two transverse Z slots alone.
+
+An owner whose labels were all M,Z would be genuine because it contains
+Z. It would differ from tau and rho, since each of those has a C slot.
+Its contribution to M,Z would exceed pi by Section 157. These three distinct
+owners would therefore consume more than 3*pi, a contradiction.
+
+Thus no tetrahedron in this same original quotient has all six labels
+in {M,Z}. This is a whole-owner angle-capacity exclusion, not an assumption
+about the number of times a tetrahedron occurs around an edge.
+
+## 159. A global special-edge consequence of the existing proof
+
+There is no special edge whose actual fixed reservoir pair is {Z,M}.
+Indeed the proof of Section 153 does not use that its special edge Q is
+the return axis. For any such edge all incident owners contain Z and
+are therefore genuine. Its degree is at least six; the M/Z genuine
+budgets are pi and 2*pi. Every other axis is either H, with value at most
+z, or special, with value below 1+z+m by Section 112.
+
+These are exactly the premises of the weighted complete-star argument
+of Section 153. It gives q<11/5, then theta_Q<pi/3 and the transverse
+angle sum>pi/2 in every owner, contradicting the full Q equation after
+weighting each owner's one or two axial occurrences. Hence the same
+contradiction excludes every special edge with this fixed pair.
+
+This is a reuse of that existing proof, rather than a new assumed bound
+on arbitrary special edges of other reservoir pairs.
+
+## 160. The companion-M return requires d>z-m-1>c
+
+Put h=z-m-1>c. Suppose d<=h and the return has companion M,
+so it has frame
+
+    rho=(C,Z,M,Q,Z,M).
+
+The source's H-return alternatives imply Q is M or Z; Q=D would already
+require
+
+    d>(z-m)^2/(c+1)-1 > z-m-1=h,
+
+since z-m>c+1. The two faces of rho used by tau are the faces containing
+its shared C axis. Its other two faces have labels {Z,M,Q}.
+
+First classify any genuine owner with fixed reservoir pair {Z,M}.
+Its axes cannot be special, by Section 159. If both axes belong to {M,Z},
+all its labels belong to {M,Z}, contrary to Section 158. Hence at least
+one axis is C or D, with numerical value b<=h.
+
+Such an owner has obtuse transverse Z angles. In fact write its frame
+as (B,Z,M,R,Z,M), with b<=h and r<=z. The transverse Z cosine numerator
+as a function of r is
+
+    N(r)=m(r+b)+z(rb+m^2-z^2+1),
+
+with positive denominator and positive coefficient m+zb. At r0=1+z+m,
+
+    N(r0)=[m+z(1+z+m)]*(1+m+b-z)<=0,
+
+because z=1+m+h>=1+m+b. Since r<=z<r0 and N is strictly
+increasing, N(r)<0.
+Thus both Z angles exceed pi/2. Only one actual owner in the complete
+Z star can have this property: two such owners would give more than
+2*pi to Z. This owner is rho. We have shown:
+
+    every owner with reservoir pair {Z,M} is rho.  (156.4)
+
+Now follow the actual complete normal circle of Z. Tau's two Z faces
+lead to rho, by the one-block-return theorem. At either unused return
+face, the face labels are {Z,M,M} if Q=M, or {Z,Z,M} if Q=Z.
+
+Across a {Z,M,M} face, track the chosen Z edge slot. In the next owner
+it cannot be axial: its complementary pair would be {M,M}, forbidden
+by distinct reservoir labels. If it is transverse, the other two face
+slots force companion M and an axial M slot. Thus its fixed reservoir
+pair is {Z,M}.
+
+Across a {Z,Z,M} face, keep the transported Z slot fixed even though the
+face contains another Z slot. If the target is axial, its complementary
+pair is {Z,M}. If it is transverse, its companion cannot also be Z;
+therefore its companion is M and the other Z is axial. Again its fixed
+reservoir pair is {Z,M}. This argument is about slots, not a choice of
+which equal label to ignore.
+
+By (156.4), either next owner is again rho. This also covers the extra axial
+Z slot of rho when Q=Z: its incident faces are precisely these unused
+return faces. The shared-C faces go to tau. Therefore every occurrence
+reachable in the complete connected Z circle belongs to tau or rho.
+There is only one Z slot in tau and at most three in rho. It follows that
+
+    degree(Z)<=4,
+
+contradicting the original minimum degree six. Self-pairing of unused
+faces cannot escape this conclusion; it changes adjacency among these
+same finite slots, not their number.
+
+We conclude that a companion-M return necessarily satisfies
+
+    d>z-m-1>c.
+
+Equivalently, if d<=z-m-1 the only remaining return frame is
+
+    (M,Z,C,Z,Z,C).                                 (156.5)
+
+## 161. Scope of the new restriction
+
+The proof uses both complete M/Z budgets and actual continuation across
+the two unused return faces. It rules out all M/Z-only owners globally,
+and eliminates the companion-M return when d<=z-m-1. It preserves repeated
+labels, special edges of other reservoir pairs, and distinct-face
+self-gluings. It does not exclude (156.5), or the companion-M H-return cases
+when d>z-m-1.
+
+## 162. Excluding the smaller-companion return: setting
+
+This exclusion uses Sections 137--155 independently of the capacity
+argument in Sections 156--161.
+
+Use the source's actual finite ideal face pairing, complete circular edge
+links, minimum degree six, fixed paired frames and one common positive
+generalized length field satisfying every original 2*pi edge equation.
+A nonempty flat set in the exactly-four-H case supplies distinct labels
+H={M,C,D,Z}, with cosh lengths
+
+    m>1+c+d>c+2,       z>1+m+c>2c+3.
+
+Every H value is at most z. Every Z occurrence is genuine. The genuine
+escape tau=(Z,M,C,D,M,C) is the sole owner in the dominant axial Z run.
+Its two Z faces are paired to the two return faces of a different owner
+rho. The two transverse Z slots of rho have equal angle gamma>pi/2.
+There is no other owner with obtuse transverse Z angles, since each
+such owner would contribute two angles greater than pi/2 to Z.
+
+We rule out the remaining companion-C frame
+
+    rho=(M,Z,C,Z,Z,C).                             (162.1)
+
+All roles and faces below are actual local slots, even when a face has
+two equal Z labels.
+
+## 163. No special edge has fixed reservoir pair {Z,C}
+
+Suppose Q is special with this pair, and q=x_Q. Its incident owners all
+contain Z and are genuine. Every other axis value r satisfies
+
+    r<1+z+c.
+
+If that axis is H, r<=z. If it is special, its fixed pair is also {Z,C}
+and the source's special-edge bound gives the displayed inequality.
+
+First q>z-c-1. Otherwise in any owner (q,z,c,r,z,c) the transverse Z
+cosine numerator, increasing as a function of r, is
+
+    N(r)=c(q+r)+z(qr+c^2-z^2+1),
+    N(1+z+c)=[c+z(1+z+c)]*(1+c+q-z)<=0.
+
+Because the actual r is strictly smaller, N(r)<0. Every such owner
+would therefore supply two obtuse Z angles. A Q star of degree at least
+six has at least three distinct owners, since each supplies at most
+two Q slots. This exceeds Z's 2*pi budget. Hence indeed
+
+    q>z-c-1.                                      (162.2)
+
+Let w_j in {1,2} count the axial Q slots of owner j, with common axial
+angle theta_j if there are two. Put n=sum w_j>=6; the complete Q equation
+is sum w_j*theta_j=2*pi. Its transverse Z angle is
+
+    beta_j=f(theta_j),
+    f(theta)=atan(lambda_plus*cot(theta/2))
+               +atan(lambda_minus*cot(theta/2)),
+    lambda_plus/minus=[sqrt(z^2-1) +/- sqrt(c^2-1)]/(z+c)
+                            *sqrt((q-1)/(q+1)).
+
+Both parameters lie in (0,1). The response f is positive, decreasing
+and convex by Section 95. Equation (162.2) gives
+
+    lambda_plus*lambda_minus
+      =((z-c)/(z+c))*((q-1)/(q+1))
+       >(z-c-2)/(z+c)>1/3,                        (162.3)
+
+where the last inequality is exactly z>2c+3. Thus
+f(pi/3)>pi/2, since the two positive arctangent arguments at theta=pi/3
+have product 3*lambda_plus*lambda_minus>1.
+
+Weighted Jensen on the n actual Q slots yields
+
+    sum w_j*beta_j >= n*f(2*pi/n)
+                      >=6*f(pi/3)>3*pi.
+
+But each owner contributes exactly two Z slots, and w_j<=2. The complete
+Z budget bounds the same sum by 2*sum beta_j<=2*pi. This contradiction
+excludes every special edge of pair {Z,C}, not only a possible return axis.
+
+## 164. Classification of all owners with reservoir pair {Z,C}
+
+Such an owner is genuine because it contains Z. Its axes must belong
+to H by Section 163. If at least one axis is not Z, its value b is at most
+m, since m>c,d. Write the other axis value as r<=z. The transverse Z
+cosine numerator increases with r, and at r0=1+z+c it equals
+
+    [c+z(1+z+c)]*(1+c+b-z)<0,
+
+because z>1+m+c>=1+b+c. Thus its actual two transverse Z angles are
+obtuse. This owner must be the unique rho.
+
+The only other possible axis pair is (Z,Z), giving a frame
+
+    (Z,Z,C,Z,Z,C).
+
+Its four Z angles are equal. This follows either from its vertex
+symmetries or by the two original cosine formulas: both an axial and
+a transverse Z angle have cosine
+
+    z(c+1)/(2z^2+c-1).
+
+Since z>c+1,
+
+    2z^2+c-1-2z(c+1)
+        =2z(z-c-1)+c-1>0.
+
+Each Z angle therefore exceeds pi/3. These four slots alone contribute
+more than 4*pi/3 to Z. The owner differs from rho, which has an M axis;
+together with rho's two obtuse Z slots they exceed the total 2*pi.
+So this alternative is impossible too. We have established:
+
+    every owner with reservoir pair {Z,C} is rho.  (162.4)
+
+## 165. The residual-face contradiction
+
+In the proposed return (162.1), the two faces at its M axis are already
+paired to tau's two faces at the axial Z slot. Its other two faces have
+labels {Z,Z,C}. Across either one, follow the actual transported target
+Z slot. If the next occurrence is axial, its two complementary face
+slots force reservoir pair {Z,C}. If it is transverse, its companion
+cannot also be Z, so it is C and the other Z is axial. Its reservoir
+pair is again {Z,C}. This remains true whichever of the two equal Z
+slots the actual face permutation carries the target to.
+
+By (162.4), the next owner is again rho. Its extra axial Z slot is incident
+to these same two residual faces. Tau's only Z slot leads to rho on
+both sides; rho's shared-M faces lead to tau, and its residual faces
+can only lead to rho. The complete connected Z normal circle therefore
+contains only the one Z slot of tau and the three Z slots of rho.
+It follows that degree(Z)<=4, contradicting minimum degree six.
+
+Hence the companion-C return (162.1) cannot occur. The remaining return
+must have companion M and shared axis C. This theorem does not by itself
+eliminate its other H-axis possibilities M,Z,D. It uses complete edge
+equations and actual continuation across the paired faces, rather than
+assuming the two-owner core is already a complete edge star.
+
+Combining this exclusion with Section 160, every remaining return has
+frame (C,Z,M,Q,Z,M), with Q in {M,Z,D}, and necessarily
+d>z-m-1>c. These are necessary conditions; no compatible complete
+quotient or exclusion of all three remaining cases is asserted.
+
+
+## 166. Exact hypotheses and inherited data
+
+Use the actual finite ideal face pairing, complete circular edge links,
+minimum degree six, fixed paired frames with two distinct reservoir labels,
+and one common positive generalized length field satisfying every original
+2*pi edge equation. There are exactly four actual reservoir labels
+H={M,C,D,Z}; special labels can only occur axially and have their fixed
+reservoir pair. Frames are in order (12,13,14,34,24,23).
+Assume a flat exists. Use Sections 137--165, including the core-capacity and smaller-companion
+exclusions proved above:
+
+ m>1+c+d,   z>1+m+c,   d>z-m-1>c>1.
+
+Here lower-case values are cosh of the shared positive original lengths.
+The complete genuine M budget is pi; every Z occurrence is genuine and
+the complete Z budget is 2*pi. There are distinct actual genuine owners
+
+ tau=(Z,M,C,D,M,C),     rho=(C,Z,M,Q,Z,M), Q in {M,Z,D}.
+
+Tau's one axial Z angle theta and its two transverse M angles beta obey
+ theta+2 beta>pi.
+Rho's two transverse Z angles gamma obey 2 gamma>pi. Tau's two Z faces
+are paired to rho's two faces containing its C axis. The unique dominant
+axial Z run consists of tau. There is no all-M/Z owner. There is no
+special edge with fixed reservoir pair {Z,M}. These statements count
+actual slots, including any repeated axes and distinct-face self-gluings.
+In particular m>3, z>m+2 and c,d<m-2.
+
+We prove that these inherited consequences are contradictory.
+
+## 167. Every owner with fixed pair {Z,M} is rho
+
+Every such owner is genuine because it contains Z. Neither axis can be
+special, by the global special-pair exclusion. Both axes are in H.
+They cannot both be in {M,Z}, by the all-M/Z-owner exclusion. Hence one
+axis has value b in {c,d}, so 1<b<m-2; write the other value r<=z.
+Set k=z+m and
+
+ L=k^2-(b-1)(r-1)>0,
+ J=(b+1)(r+1)-(z-m)^2>0,
+ kappa=[sqrt(z^2-1)+sqrt(m^2-1)]/(z+m).
+
+Positivity of L,J follows from genuineness. Since z,m>3, kappa^2>8/9>1/2.
+The exact paired-angle response, eliminating the axial angle at b,
+gives for the transverse Z and M angles gamma,delta
+
+ gamma+delta=2 atan(kappa sqrt(L/J)).
+
+Indeed lambda_plus=kappa sqrt((b-1)/(b+1)), and
+ tan(theta_b/2)^2=((b-1)/(b+1))*J/L.
+We now show L>2J. Direct expansion gives
+
+ L-2J=3z^2-2zm+3m^2-3br-b-r-3.
+
+The expression subtracted is strictly increasing in each of b,r>1.
+Using b<m-2 and r<=z therefore gives
+
+ L-2J >3z^2-5zm+3m^2+5z-m-1.
+
+Writing z=m+s with s>0, the last polynomial is
+ m^2+ms+3s^2+4m+5s-1>0,
+because m>3. Thus kappa sqrt(L/J)>1, and
+
+ gamma+delta>pi/2.
+
+Every such owner consequently consumes more than pi of the actual M/Z
+budget through its four transverse slots alone. Any such owner distinct
+from rho also differs from tau, whose fixed pair is {M,C}. Combining
+its contribution with tau's contribution greater than pi and rho's two
+Z angles greater than pi would exceed the complete M/Z budget 3*pi.
+Hence the only owner with fixed pair {Z,M} is rho.
+
+## 168. No axial-Z owner has pair {M,D}
+
+Suppose an owner has an axial Z slot, angle theta, and fixed pair {M,D},
+with transverse M angle beta. It is genuine. The exact response gives
+
+ beta=atan(lambda_plus*t)+atan(lambda_minus*t), t=cot(theta/2)>0,
+ lambda_plus/minus=[sqrt(m^2-1) +/- sqrt(d^2-1)]/(m+d)
+                          *sqrt((z-1)/(z+1)).
+
+Both lambda parameters are positive. From d<m-2 and z>m+2,
+
+ (lambda_plus+lambda_minus)^2
+   =4(m^2-1)/(m+d)^2 * (z-1)/(z+1)
+   >(m+1)^2/((m-1)(m+3))>1,
+
+where (m+1)^2-(m-1)(m+3)=4.
+If A,B,t>0 and A+B>1, then atan(At)+atan(Bt)>atan(t):
+when the left sum is at least pi/2 this is immediate; otherwise its
+tangent is (A+B)t/(1-ABt^2)>t, with positive denominator.
+Therefore beta>(pi-theta)/2 and theta+2 beta>pi.
+The owner differs from tau and rho because its fixed pair differs from
+both. Its actual M/Z contribution is at least theta+2 beta; any further
+M/Z axis slots only increase this. Together with tau and rho it would
+exceed 3*pi. Thus this owner cannot exist.
+
+## 169. No transverse-Z owner has pair {Z,D} and an axial M slot
+
+Suppose such an owner exists. Let theta be its axial M angle, gamma its
+transverse Z angle. It is genuine, and the two response parameters obey
+
+ lambda_plus+lambda_minus
+    =2 sqrt(z^2-1)/(z+d) * sqrt((m-1)/(m+1)).
+
+Their difference parameter is positive because z>d. For fixed m>3,
+ the function F(x)=(x^2-1)/(x+m-2)^2
+is strictly increasing for x>1: its derivative is
+ 2[x(m-2)+1]/(x+m-2)^3>0.
+Since d<m-2 and z>m+2,
+
+ (lambda_plus+lambda_minus)^2
+   >4 F(m+2)*(m-1)/(m+1)
+    =(m+3)(m-1)/m^2
+    =1+(2m-3)/m^2>1.
+
+The same arctangent argument as in Section 168 now gives
+ theta+2 gamma>pi.
+This owner differs from tau and rho by its fixed reservoir pair. Its
+actual M/Z contribution is at least theta+2 gamma, contradicting the
+complete 3*pi budget together with tau and rho. It cannot exist.
+
+## 170. Every actual Z continuation stays in tau and rho
+
+The two faces of rho at its C axis already lead to tau. Its two residual
+faces have labels {Z,M,Q}. Track an actual Z edge slot across each such
+face; the target slot has the same actual global label Z.
+
+If Q=M, the residual face is {Z,M,M}. An axial Z target would require
+the forbidden repeated reservoir pair {M,M}. A transverse Z target
+must have companion M and axial M on this face, so has fixed pair {Z,M}
+and belongs to rho by Section 167.
+
+If Q=Z, the residual face is {Z,Z,M}. An axial Z target has complementary
+reservoir pair {Z,M}. A transverse Z target cannot have companion Z,
+since reservoir labels must be distinct, so its companion is M and its
+other Z face slot is axial. It also has pair {Z,M}. Thus either case
+belongs to rho. This tracks the actual target slot even with repeated Z.
+
+If Q=D, the residual face is {Z,M,D}. An axial Z target has pair {M,D},
+excluded by Section 168. A transverse Z target has either companion M and
+axial D, giving pair {Z,M} and hence owner rho, or companion D and axial
+M, excluded by Section 169. These exhaust the roles on that actual face.
+
+Tau's only Z slot leads to rho on both sides. Rho's transverse Z slots
+have one face at C and one residual face. If Q=Z, its extra axial Z slot
+has the two residual faces. Therefore all neighbors of every Z slot in
+tau or rho again belong to tau or rho. The complete connected normal
+circle of the original edge Z is confined to those slots. Tau has one
+Z slot; rho has two, or three when Q=Z. Hence degree(Z)<=4, contrary to
+minimum degree six. Face self-pairings do not introduce extra slots.
+
+## 171. No-flat theorem for at most four reservoir labels
+
+A common positive generalized zero-curvature length field in the exact
+four-reservoir paired framework cannot have a flat tetrahedron. This
+closes the three remaining H-only return cases, using all original edge
+budgets and actual face transport. No prescribed packet, two-copy seed,
+extra H-witness assumption, girth restriction, or distinct-axis premise
+has been added. The existing result for at most three reservoir labels
+then gives the same no-flat conclusion for at most four.
+
+## 172. Realization of the paired class with at most four reservoirs
+
+**Theorem 172.1.** Let the actual finite ideal face-pairing triangulation
+satisfy the original manifold hypotheses: its truncation is a connected
+orientable compact 3-manifold with nonempty boundary, and every boundary
+component is a closed
+surface of genus at least two. Suppose every actual edge has degree at
+least six. Partition its actual global edge set as E=H disjoint union S,
+with |H|<=4. In every tetrahedron choose a fixed actual vertex frame
+whose edge labels, in order (12,13,14,34,24,23), are
+
+ (R,A,B,O,A,B),  A,B in H, A!=B, R,O in E.
+
+Then this same original triangulation has a genuine nondegenerate
+hyperideal realization with totally geodesic boundary. The reservoir pair
+may vary between tetrahedra; axes may repeat or also belong to H.
+
+**Proof.** The original volume's Theorem 42.2 gives a strictly positive
+hyperideal angle structure under precisely these manifold and minimum-six
+hypotheses. Its face-transport argument handles vertices incident only to
+six-degree edges; strictness is not assumed from the unmodified assignment
+2*pi/d(e). The original volume's Corollary 43.1, applying Luo--Yang,
+*Volume and rigidity of hyperbolic polyhedral 3-manifolds*,
+arXiv:1404.5365v2, Theorems 1.4 and 6.3, supplies a common positive global
+generalized length vector producing the volume-maximizing angle structure.
+All original edge-angle sums are 2*pi; each tetrahedron is genuine or is
+the standard flat type with two opposite pi angles and four zero angles.
+
+For |H|<=3, the existing seed-free result of Sections 130--136 excludes
+flats. For |H|=4, Section 171 excludes them. Hence every tetrahedron is
+genuine. The shared original lengths make paired right-angled hexagonal
+faces isometric. The original complete edge equations remove cone defects;
+the truncation triangles glue to totally geodesic boundary. Thus the
+metric realizes the given face pairing itself.
+
+**Scope and provenance.** The positive-angle construction and the
+Luo--Yang variational existence theorem are reused inputs. The new
+conclusion is the removal of all four-reservoir flat returns by complete
+angle budgets and actual face transport. No two-copy seed, additional
+H-witness condition, dual-girth bound, prohibition of parallel face pairs,
+role balance, or tetrahedron-transitivity hypothesis is imposed. Distinct
+local edge slots remain distinct in every budget even if their global
+labels coincide. This is a paper proof; no Lean certification is claimed.
+The hypotheses still require the fixed paired frame in every tetrahedron;
+this does not establish unrestricted CFMP or claim an example separating
+this class from every earlier realization criterion. An abstract face
+pairing without the stated manifold and boundary hypotheses does not
+inherit the variational existence step from this theorem.
