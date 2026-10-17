@@ -3266,3 +3266,292 @@ The proof preserves actual slot multiplicities, arbitrary special edges,
 repeated axes and distinct-face self-gluings. It does not assert that U
 is at most Z, that U is pi-selected, or that a return has only the old
 four-reservoir roles. Those remain substantive five-label alternatives.
+
+
+## 188. The fifth source axis is strictly subdominant
+
+Retain the exact actual paired-frame, finite face-pairing, complete circular
+edge-link, minimum-six, shared positive length and zero-curvature hypotheses.
+There are exactly five reservoir labels H={M,C,D,Z,U}, a nonempty flat set,
+and a maximal-selected escape tau=(Z,M,C,D,M,C). Write cosh lengths as
+m,c,d,z,u. Let sigma be its source flat, with axial M and reservoir pair
+{C,D}. Sections 130--136 and 182--187 give
+
+ m>=1+c+d, z>=1+m+c, p_M=1, p_Z=0,
+ u>T(m,z)>m-2,
+ T(m,z)=2*sqrt(m^2-1)*sqrt((z-1)/(z+1))-m.
+
+All five reservoirs are genuinely witnessed. Every flat selects its axes;
+U has no flat zero occurrence and p_U<=1. All Z occurrences are genuine.
+
+**Proposition 188.1.** If the opposite axis of M in sigma is U, then
+
+ u<1+c+d<m<3+c+d,
+ T(m,z)<u<1+c+d.
+
+More generally, whatever the source's opposite axis is, its value is
+strictly below 1+c+d. Consequently the maximal-selected source and its
+chosen escape satisfy the strict inequalities
+
+ m>1+c+d, z>1+m+c.
+
+This supplies necessary inequalities; it does not exclude every possible
+five-reservoir source or prove five-reservoir realization.
+
+## 189. Suppose both source axes were dominant
+
+Assume the opposite axis is U and, contrary to the proposition,
+u>=1+c+d. Then U is pi-selected, so u<=m by maximality of M.
+Since U has a genuine witness and its flat occurrence in sigma is pi,
+p_U=1. All other U occurrences are genuine, by Proposition 184.1 and Section 187.
+Its complete genuine angle budget is pi, and degree(U)>=6 gives at least
+five genuine occurrences.
+
+The entire U star cannot be axial. If it were, actual face transport
+would keep its reservoir pair {C,D} throughout. A genuine owner cannot
+contain both axes U, because (u-1)^2>=(c+d)^2 would make that owner flat.
+Thus all g=degree(U)-1>=5 genuine occurrences have distinct owners.
+For each, the dominant-axis inequality is
+
+ 2*theta_U+beta_C+delta_D>pi.
+
+Summing and counting both transverse slots per label gives
+
+ 2*sum(beta_C+delta_D)>2*g*pi-4*pi>=6*pi.
+
+Those actual C/D slots have total capacity only 4*pi, contradiction.
+
+Hence the maximal axial U run containing sigma is proper and has pair
+{C,D}. Its two distinct transverse boundary U slots are genuine. Their
+angles total at most pi, so at least one has angle at most pi/2. At that
+boundary, actual face transport gives a genuine frame
+
+ (W,U,A,B,U,A), with {A,B}={C,D}.
+
+The transverse U cosine numerator is increasing in w, and its value at
+w0=1+u+a is
+
+ [a+u(1+u+a)]*(1+a+b-u)<=0.
+
+Therefore the chosen nonobtuse U angle implies w>=1+u+a. W cannot be
+special because its fixed-pair special-edge barrier is w<1+u+a.
+Thus W is a reservoir. Moreover
+
+ w>=1+u+a>u+2>m,
+
+using a>1 and u>m-2. Among the five labels, only Z can have value above
+m: U is selected with u<=m, and c,d<m. Consequently W=Z.
+This genuine owner has an axial Z slot and pair {U,A}, and
+z>=1+u+a makes that axial run dominant. The original tau similarly gives
+a dominant axial Z run with pair {M,C}. These two pairs are distinct,
+because U,M,C,D are distinct actual labels. We next exclude two such runs.
+
+## 190. The complete Z circle admits at most one dominant axial run
+
+In this case z>m>=u and c,d<m, so Z is the numerically largest reservoir.
+Every Z occurrence is genuine. If its entire circle were axial, actual
+face transport would give one constant reservoir pair. It could not
+contain both of the distinct pairs just produced. Thus the circle has
+transverse occurrences and both dominant runs are proper.
+
+At a boundary of any dominant axial Z run with pair {A,B}, transport
+gives a genuine frame (B,Z,A,Q,Z,A), after interchanging A,B if needed.
+If Q is H, q<=z; if it is special, q<1+z+a. In either case q<1+z+a.
+Dominance means z>=1+a+b. The transverse Z cosine numerator N(q) is
+strictly increasing and satisfies
+
+ N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z)<=0.
+
+Hence the boundary Z angle exceeds pi/2. Every such owner has two equal
+transverse Z angles. The complete Z budget 2*pi therefore permits only
+one actual owner rho with this property. Each proper dominant run must
+have its two distinct boundary Z slots at the two transverse Z slots of
+rho, since all other such slots have angle at most pi/2.
+
+At one of those slots, write rho's companion as A and axes as B,Q.
+Its two incident faces have complementary pairs {A,B} and {A,Q}.
+If that slot bordered dominant axial runs on both sides, then
+
+ z>=1+a+b, z>=1+a+q,
+
+so (z-a)^2>=(b+1)(q+1). This contradicts genuineness of rho, whose
+corresponding strict inequality is (z-a)^2<(b+1)(q+1).
+Each of its two transverse Z slots can therefore support at most one
+dominant-run boundary incidence. A proper dominant run already uses
+both distinct slots. A second proper dominant run is impossible.
+This is an actual-slot argument and includes repeated owners and
+self-glued faces.
+
+The two distinct dominant pairs from Section 189 are consequently
+impossible. Thus the source's U axis satisfies u<1+c+d.
+
+## 191. Strict source inequalities and the width window
+
+Let k=c+d. In the M/U source case, axial flatness says
+
+ (m-1)(u-1)>=k^2.
+
+Since u-1<k, this implies m-1>k, hence m>1+c+d.
+Also u>m-2 and u<1+c+d imply m<3+c+d. Combining with the exact upper-gap
+inequality proves every displayed bound in the proposition.
+
+For an arbitrary source opposite axis O, O cannot be M because p_M=1,
+and cannot be Z because p_Z=0. If O is special, its fixed pair {C,D}
+gives o<1+c+d. If O is H, it is C,D or U; the first two are smaller
+than 1+c+d, and the U case was just proved. Thus always o<1+c+d.
+The same axial-flat product gives m>1+c+d. At z0=1+m+c the original
+escape numerator is then strictly negative, and its chosen transverse
+M angle is nonobtuse. Strict increase in z implies z>1+m+c.
+
+
+## 192. Statement
+
+Retain the actual finite paired-frame quotient with complete circular edge
+links, degree at least six, common positive generalized lengths and original
+2*pi edge equations. Assume exactly five reservoir labels and a nonempty
+flat set. Choose M maximal among all pi-selected H labels and its escape
+
+ tau=(Z,M,C,D,M,C), H={M,C,D,Z,U}.
+
+Write cosh lengths m,c,d,z,u. Assume u<=m. The established escape and
+five-witness results imply
+
+ m>=1+c+d, z>=1+m+c, m>3, z>m+2, c,d<m-2,
+
+M has genuine angle budget pi, Z has budget 2*pi, all five H labels have
+genuine witnesses, and every Z occurrence is genuine.
+
+**Proposition 192.1.** The complete Z circle has a one-owner dominant run tau,
+whose two boundary faces meet the two transverse Z slots of a distinct
+owner
+
+ rho=(C,Z,M,U,Z,M).
+
+Each of rho's transverse Z angles exceeds pi/2. Every tetrahedron with
+fixed reservoir pair {Z,M} is this same actual owner rho. In particular,
+
+ u>(z-m)^2/(c+1)-1>=c.
+
+Thus the five-reservoir alternatives divide into u>m, or this specified
+actual fifth-axis return. This is a necessary configuration, not a
+five-reservoir no-flat theorem.
+
+## 193. The one-owner return core and special exclusions
+
+Here every H value is <=z, because u<=m<z and c,d<m. The maximal axial
+Z run through tau has pair {M,C}. All its owners are genuine and distinct:
+two axial Z slots in an owner with this pair would force axial flatness
+since z>=1+m+c. For each such owner, the exact response gives
+
+ theta_Z+2*beta_M>pi.
+
+Indeed its positive parameters have squared sum
+4(m^2-1)/(m+c)^2 * (z-1)/(z+1) > (m+1)^2/((m-1)(m+3)) >1,
+using c<m-2,z>m+2. The arctangent argument of Section 175 proves the
+stated angle inequality. If the whole Z circle were axial, its at least
+six distinct owners would exceed the complete M/Z capacity 3*pi.
+
+At either boundary of this proper run, the frame is (B,Z,A,Q,Z,A),
+with {A,B}={M,C}. Every possible other axis obeys q<1+z+a: H axes are
+<=z and special axes obey their fixed-pair barrier. The transverse Z
+cosine numerator is strictly increasing and
+
+ N(1+z+a)=[a+z(1+z+a)]*(1+a+b-z)<=0.
+
+Both boundary angles are therefore obtuse. Two different owners with
+this property would exceed the complete Z budget. Hence both boundary
+slots belong to one actual owner rho, whose two Z angles sum to more
+than pi. The run's axial Z angle sum is consequently <pi, and its
+transverse M expenditure is <=pi. The displayed per-owner inequality
+then gives g*pi<2*pi. Thus g=1 and the run consists of tau alone.
+The return is either (C,Z,M,Q,Z,M) or (M,Z,C,Q,Z,C).
+
+Section 176's complete special-star arguments exclude every special
+edge with fixed pair {Z,M} or {Z,C} under these hypotheses. Their
+premises are exactly the genuine owners with transverse Z, minimum
+six for the special edge, the M/Z budgets pi and 2*pi, z,m>3,
+z>2c+3, and the bound on every other axis r<1+z+a. All have been
+verified here. The arguments do not need u<=m-2 or any smaller bound
+on another H axis.
+
+## 194. The return cannot have companion C
+
+For (M,Z,C,Q,Z,C), genuineness gives
+ q>(z-c)^2/(m+1)-1>=m,
+so q>m. Special Q is excluded in Section 193, and all H values except Z
+are <=m. Hence Q=Z.
+
+Every owner with pair {Z,C} is genuine and has only H axes. If one axis
+is not Z, its value b<=m and the other r<=z. At r0=1+z+c the increasing
+Z numerator is [c+z(1+z+c)]*(1+c+b-z)<=0; since r<r0 its actual Z
+angles are obtuse. It must be rho. The only other possibility has axes
+Z,Z and frame (Z,Z,C,Z,Z,C). Its four Z angles have cosine
+z(c+1)/(2z^2+c-1)<1/2, because z>c+1. They exceed 4*pi/3 in total,
+and together with rho's two obtuse Z slots exceed 2*pi. Thus every
+owner with pair {Z,C} is rho.
+
+The residual faces of rho=(M,Z,C,Z,Z,C) are {Z,Z,C}. Any actual Z slot
+transported across one has pair {Z,C}, whether axial or transverse,
+since the two reservoir labels must differ. It therefore stays in rho.
+The other faces lead to tau. Their one plus three Z slots would be the
+complete connected Z circle, contrary to degree>=6. This excludes
+companion C. The return has frame (C,Z,M,Q,Z,M), with Q in H and q>c
+by genuineness and z>=1+m+c.
+
+## 195. Uniqueness of the actual pair-{Z,M} owner
+
+No owner can use only M and Z: all six lengths have cosh greater than
+three, so the exact vertex response has lambda>2/3 and each vertex
+angle sum exceeds pi/2. Its six-angle sum exceeds pi. Such an owner
+would differ from tau and rho, each of which has a C slot; together
+with their separate M/Z expenditures greater than pi, it would exceed
+3*pi. This is the same full two-value argument as Section 157.
+
+Any owner with pair {Z,M} is genuine and has no special axes. Therefore
+one axis is B in {C,D,U}, with b<=m, and its other axis has value r<=z.
+Set k=z+m, L=k^2-(b-1)(r-1)>0 and
+J=(b+1)(r+1)-(z-m)^2>0. Its transverse sum is
+
+ gamma+delta=2*atan(kappa*sqrt(L/J)),
+ kappa=(sqrt(z^2-1)+sqrt(m^2-1))/(z+m), kappa^2>8/9.
+
+The exact expansion and the bounds b<=m,r<=z yield
+
+ L-2J>=3z^2-5zm+3m^2-m-z-3
+       =(m-3)(m+1)+(z-m)(m-1)+3(z-m)^2>0.
+
+Thus gamma+delta>pi/2 and its four transverse M/Z slots consume more
+than pi. Any such owner other than rho would be distinct from tau,
+whose fixed pair is {M,C}, and would exceed 3*pi together with tau and
+rho. Hence rho is the only owner with fixed pair {Z,M}.
+
+## 196. Only the fifth return axis survives actual continuation
+
+Genuineness and the special-pair exclusion leave Q in {M,Z,D,U}; Q=C
+would contradict q>c. For Q=M, each residual face is {Z,M,M}: an axial
+Z target would need repeated reservoir pair {M,M}, and a transverse
+target has pair {Z,M}, hence owner rho. For Q=Z, a residual face is
+{Z,Z,M}; both its possible target roles again have pair {Z,M}. Thus
+these cases confine the complete Z circle to tau and rho, at most four
+slots, which is impossible.
+
+For Q=D, two other possible roles across a residual face {Z,M,D} must
+be considered. An axial Z target has pair {M,D}. It is genuine and
+its exact response satisfies theta_Z+2*beta_M>pi because d<m-2 and
+z>m+2, by the parameter-sum calculation of Section 168. It differs
+from tau and rho by fixed pair, so its M/Z expenditure would exceed
+the complete capacity together with theirs. It cannot occur.
+A transverse Z target either has pair {Z,M}, hence is rho, or has
+pair {Z,D} and axial M. In the latter case Section 169's parameter-sum
+calculation, using exactly d<m-2,z>m+2, gives
+theta_M+2*gamma_Z>pi. This owner also differs from tau and rho by pair,
+and is excluded by the same capacity contradiction.
+Thus Q=D likewise confines the Z circle to tau and rho and is impossible.
+
+Only Q=U remains. Genuineness of (C,Z,M,U,Z,M) gives
+(c+1)(u+1)>(z-m)^2, proving the displayed lower bound on u. Its right
+side is at least c because z>=1+m+c, and the strict genuine inequality
+makes u>c. The argument has preserved every actual slot and allows
+repeated axes and self-glued faces. The residual faces {Z,M,U} still
+admit roles not excluded by the small-D estimates; those are the
+remaining joint-star cases, not a closed five-reservoir contradiction.
