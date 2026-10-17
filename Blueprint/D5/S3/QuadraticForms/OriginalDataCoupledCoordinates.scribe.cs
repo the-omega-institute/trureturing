@@ -18,31 +18,41 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
             Blocks(
                 Paragraph(Text("For a natural number m, I_m is Fin m plus Fin m and C_m is the real functions on I_m. The block index I_k plus I_h represents C_k times C_h by Sum.elim. Write Jplus_m=[[0,I],[-I,0]]=-Matrix.J (Fin m) real. The first half of each Darboux basis is labelled q and the second p because its inl/inr pairing is positive delta. Matrix(e) always means the standard-coordinate matrix of the displayed linear equivalence e.")),
                 Paragraph(Text("The only hypotheses are the original positive definite S, surjective O, closure O(Jplus_n S)=KO, and the original strict bounds 0<r<2n. Define P=OS-inverse O-transpose, L=S-inverse O-transpose P-inverse, U=range L, and V=ker O. No invertibility, complementarity, nondegeneracy, evenness, invariant lift, or coordinate basis is assumed.")),
-                Paragraph(Text("The result is one inhabitant of CoupledCoordinates S O. All eight groups below refer to the same fields of that inhabitant. In the expanded display, P,L,Sv,Sh,Jb,Dv,Dh,W,Pi,e and iota are definitionally fixed abbreviations, not additional premises or independently chosen replacements.")),
-                new DocumentBlock.Section(H("C1–C3: original images and actual coordinate equivalences"), Blocks(
-                new DocumentBlock.DisplayFormula(Disp(C123())),
-                Paragraph(Text("Apply original_data_symplectic_retract to the original S,O,K. Its restricted-radical argument tests x in ker O against (Jplus_n S)x; the vanishing pairing is negative strictly positive energy unless x=0. That argument remains on the live dependency path to the two returned Darboux bases. Include their vectors in the ambient space to obtain the columns of Tv and Th. The supplier Basis.equivFun gives their coordinate equivalences onto exactly U and V. Compose the visible equivalence with the bridge's actual observation restriction to get B. The supplier Submodule.prodEquivOfIsCompl assembles T from these same two basis maps. The returned dimension equalities and the strict bounds imply k,h>0.")))),
-                new DocumentBlock.Section(H("C4–C5: symplectic and energy congruences for the same T"), Blocks(
-                new DocumentBlock.DisplayFormula(Disp(C45())),
-                Paragraph(Text("Read the Darboux pairings as matrix entries. Alternation gives the reverse inr/inl pairing with a minus sign, producing Jplus in both diagonal blocks. The bridge identifies the exact symplectic orthogonal U-perp with V, giving the upper-right zero block; transposition and skew symmetry give the lower-left zero block. Its energy orthogonality gives the upper-right energy zero block; symmetry of S gives the lower-left block. Positive congruence with the injective Tv and Th proves positivity of exactly Sv=Tv-transpose S Tv and Sh=Th-transpose S Th. The original lift satisfies L-transpose S=P-inverse O and OL=I, hence L-transpose S L=P-inverse. Substitution of Tv=LB proves Sv=B-transpose P-inverse B.")))),
-                new DocumentBlock.Section(H("C6–C7: canonical ordering and every covector"), Blocks(
-                new DocumentBlock.DisplayFormula(Disp(PermutationDefinitions())),
-                new DocumentBlock.DisplayFormula(Disp(C67())),
-                Paragraph(Text("The mode concatenation e sends a visible index to the first k entries and a hidden index to the following h entries, followed by the equality n=k+h. The index map iota sends block order (qv,pv,qh,ph) to global order (qv,qh,pv,ph). Pi is the 0/1 matrix with entry one exactly when iota(i)=j. It acts on coordinate functions by composition with iota. Reindexing the identity matrix proves both inverse identities and identifies the inverse linear equivalence's matrix with Pi-transpose. Reindexing Jplus gives Pi-transpose Jb Pi=Jplus_n. Transposing OT=[B,0] proves the covector identity for every a, and composition with Pi gives its permuted version.")))),
-                new DocumentBlock.Section(H("C8: the two exact Williamson applications and one final R"), Blocks(
-                new DocumentBlock.DisplayFormula(Disp(C8())),
-                Paragraph(Text("Apply the existing positive_definite_williamson separately to exactly Sv and Sh. Retain the actual returned Wv,Wh and strictly positive frequency functions nuv,nuh. Their symplectic membership gives invertibility, so the block map W is a linear equivalence. Define Bhat=BWv, That=TW, and R=That Pi as actual compositions of equivalences. Surjectivity of Wv and Wh preserves range Tv and range Th. Multiplication preserves TvWv=L Bhat and the observation identity. Block multiplication gives the exact two diagonal energy blocks, and the fixed Pi gives the displayed global energy. The final covector formula uses the transpose of this same R, not a separately chosen global Williamson map.")))),
+                Paragraph(Text("The result is one inhabitant of CoupledCoordinates S O. All eight groups below refer to the same fields of that inhabitant. Choose one such inhabitant and keep it fixed throughout all the displays. The typed witnesses and all clauses below are read together for this one inhabitant, not as separate existential choices. P,L,Sv,Sh,Jb,Dv,Dh,W,Pi,e and iota are definitionally fixed abbreviations, not additional premises or independently chosen replacements.")),
+                new DocumentBlock.Section(H("Typed witnesses and fixed definitions"), Blocks(
+                    [.. Displays(WitnessTypes()), .. Displays(Dimensions()), .. Displays(Definitions())])),
+                new DocumentBlock.Section(H("C1–C3: original images and actual coordinate equivalences"), Blocks([
+                .. Displays(C123()),
+                Paragraph(Text("Apply original_data_symplectic_retract to the original S,O,K. Its restricted-radical argument tests x in ker O against (Jplus_n S)x; the vanishing pairing is negative strictly positive energy unless x=0. That argument remains on the live dependency path to the two returned Darboux bases. Include their vectors in the ambient space to obtain the columns of Tv and Th. The supplier Basis.equivFun gives their coordinate equivalences onto exactly U and V. Compose the visible equivalence with the bridge's actual observation restriction to get B. The supplier Submodule.prodEquivOfIsCompl assembles T from these same two basis maps. The returned dimension equalities and the strict bounds imply k,h>0."))])),
+                new DocumentBlock.Section(H("C4–C5: symplectic and energy congruences for the same T"), Blocks([
+                .. Displays(C45()),
+                Paragraph(Text("Read the Darboux pairings as matrix entries. Alternation gives the reverse inr/inl pairing with a minus sign, producing Jplus in both diagonal blocks. The bridge identifies the exact symplectic orthogonal U-perp with V, giving the upper-right zero block; transposition and skew symmetry give the lower-left zero block. Its energy orthogonality gives the upper-right energy zero block; symmetry of S gives the lower-left block. Positive congruence with the injective Tv and Th proves positivity of exactly Sv=Tv-transpose S Tv and Sh=Th-transpose S Th. The original lift satisfies L-transpose S=P-inverse O and OL=I, hence L-transpose S L=P-inverse. Substitution of Tv=LB proves Sv=B-transpose P-inverse B."))])),
+                new DocumentBlock.Section(H("C6–C7: canonical ordering and every covector"), Blocks([
+                .. Displays(PermutationDefinitions()),
+                .. Displays(C67()),
+                Paragraph(Text("The mode concatenation e sends a visible index to the first k entries and a hidden index to the following h entries, followed by the equality n=k+h. The index map iota sends block order (qv,pv,qh,ph) to global order (qv,qh,pv,ph). Pi is the 0/1 matrix with entry one exactly when iota(i)=j. It acts on coordinate functions by composition with iota. Reindexing the identity matrix proves both inverse identities and identifies the inverse linear equivalence's matrix with Pi-transpose. Reindexing Jplus gives Pi-transpose Jb Pi=Jplus_n. Transposing OT=[B,0] proves the covector identity for every a, and composition with Pi gives its permuted version."))])),
+                new DocumentBlock.Section(H("C8: the two exact Williamson applications and one final R"), Blocks([
+                .. Displays(C8()),
+                Paragraph(Text("Apply the existing positive_definite_williamson separately to exactly Sv and Sh. Retain the actual returned Wv,Wh and strictly positive frequency functions nuv,nuh. Their symplectic membership gives invertibility, so the block map W is a linear equivalence. Define Bhat=BWv, That=TW, and R=That Pi as actual compositions of equivalences. Surjectivity of Wv and Wh preserves range Tv and range Th. Multiplication preserves TvWv=L Bhat and the observation identity. Block multiplication gives the exact two diagonal energy blocks, and the fixed Pi gives the displayed global energy. The final covector formula uses the transpose of this same R, not a separately chosen global Williamson map."))])),
                 Paragraph(Text("The bridge retains arbitrary n,r and empty/full endpoints. The existing Darboux, complement, permutation and Williamson constructions support empty finite indices; only the present strict-bound consumer concludes k,h>0. Covectors transform by R-transpose when z=Rx. No displacement transformation, physical implementation, metaplectic operator, tensor product, Gibbs state, or thermal assertion is part of the result."))),
             DescribeRole.Theorem))));
 
     private static Formula Statement()
     {
-        var body = And(
-            Equal(V("r"), Multiply(D(2), V("k"))),
-            Equal(V("n"), Add(V("k"), V("h"))),
-            Lt(D(0), V("k")), Lt(D(0), V("h")),
-            Definitions(), C123(), C45(), PermutationDefinitions(), C67(), C8());
-        var existentials = new (string, Formula)[] {
+        var assumptions = And(Call("PosDef", V("S")), Call("Surjective", Call("mulVec", V("O"))),
+            Equal(Mul(V("O"), J("n"), V("S")), Mul(V("K"), V("O"))),
+            Lt(D(0), V("r")), Lt(V("r"), Multiply(D(2), V("n"))));
+        var body = Seq(Paren(assumptions), Sp, Rightarrow, Sp,
+            Call("Nonempty", Call("CoupledCoordinates", V("S"), V("O"))));
+        return All(V("n"), Nat, All(V("r"), Nat,
+            All(V("S"), Mat(I("n"), I("n")),
+            All(V("O"), Mat(Call("Fin", V("r")), I("n")),
+            All(V("K"), Mat(Call("Fin", V("r")), Call("Fin", V("r"))), body)))));
+    }
+
+    private static Formula[] WitnessTypes()
+    {
+        var witnesses = new (string, Formula)[] {
             ("k", Nat), ("h", Nat),
             ("Tv", Mat(I("n"), I("k"))), ("Th", Mat(I("n"), I("h"))),
             ("B", LE(C("k"), Obs)), ("T", LE(Block, C("n"))),
@@ -60,18 +70,19 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
             ("iota", Call("Equiv", BI, I("n"))), ("Pi", Mat(BI, I("n"))),
             ("PiEquiv", LE(C("n"), Block))
         };
-        foreach (var (name, type) in existentials.Reverse()) body = Ex(V(name), type, body);
-        var assumptions = And(Call("PosDef", V("S")), Call("Surjective", Call("mulVec", V("O"))),
-            Equal(Mul(V("O"), J("n"), V("S")), Mul(V("K"), V("O"))),
-            Lt(D(0), V("r")), Lt(V("r"), Multiply(D(2), V("n"))));
-        body = Seq(Paren(assumptions), Sp, Rightarrow, Sp, body);
-        return All(V("n"), Nat, All(V("r"), Nat,
-            All(V("S"), Mat(I("n"), I("n")),
-            All(V("O"), Mat(Call("Fin", V("r")), I("n")),
-            All(V("K"), Mat(Call("Fin", V("r")), Call("Fin", V("r"))), body)))));
+        return [.. witnesses.Select(witness =>
+            Seq(V(witness.Item1), Sp, Colon, Sp, witness.Item2))];
     }
 
-    private static Formula Definitions() => And(
+    private static Formula[] Dimensions() =>
+    [
+        Equal(V("r"), Multiply(D(2), V("k"))),
+        Equal(V("n"), Add(V("k"), V("h"))),
+        Lt(D(0), V("k")), Lt(D(0), V("h"))
+    ];
+
+    private static Formula[] Definitions() =>
+    [
         Equal(V("P"), Mul(V("O"), Inv(V("S")), Tr(V("O")))),
         Equal(V("L"), Mul(Inv(V("S")), Tr(V("O")), Inv(V("P")))),
         Equal(V("Sv"), Mul(Tr(V("Tv")), V("S"), V("Tv"))),
@@ -79,9 +90,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
         Equal(V("Jb"), Diag(J("k"), J("h"))),
         Equal(V("Dv"), Diag(Call("diagonal", V("nuv")), Call("diagonal", V("nuv")))),
         Equal(V("Dh"), Diag(Call("diagonal", V("nuh")), Call("diagonal", V("nuh")))),
-        Equal(V("W"), Diag(V("Wv"), V("Wh"))));
+        Equal(V("W"), Diag(V("Wv"), V("Wh")))];
 
-    private static Formula C123() => And(
+    private static Formula[] C123() =>
+    [
         Call("Injective", Call("mulVec", V("Tv"))), Call("Injective", Call("mulVec", V("Th"))),
         Equal(Range(V("Tv")), Range(V("L"))), Equal(Range(V("Th")), Ker(V("O"))),
         Equal(Mul(V("O"), V("Tv")), M("B")), Equal(Mul(V("O"), V("Th")), D(0)),
@@ -89,9 +101,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
         All(V("xv"), C("k"), All(V("xh"), C("h"),
             Equal(Call("T", Pair(V("xv"), V("xh"))), Add(MV(V("Tv"), V("xv")), MV(V("Th"), V("xh")))))),
         Equal(M("T"), Col(V("Tv"), V("Th"))),
-        Equal(Mul(V("O"), M("T")), Col(M("B"), D(0))));
+        Equal(Mul(V("O"), M("T")), Col(M("B"), D(0)))];
 
-    private static Formula C45() => And(
+    private static Formula[] C45() =>
+    [
         Equal(Mul(Tr(V("Tv")), J("n"), V("Tv")), J("k")),
         Equal(Mul(Tr(V("Th")), J("n"), V("Th")), J("h")),
         Equal(Mul(Tr(V("Tv")), J("n"), V("Th")), D(0)),
@@ -101,9 +114,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
         Equal(Mul(Tr(V("Tv")), V("S"), V("Th")), D(0)),
         Equal(Mul(Tr(V("Th")), V("S"), V("Tv")), D(0)),
         Equal(V("Sv"), Mul(Tr(M("B")), Inv(V("P")), M("B"))),
-        Equal(Mul(Tr(M("T")), V("S"), M("T")), Diag(V("Sv"), V("Sh"))));
+        Equal(Mul(Tr(M("T")), V("S"), M("T")), Diag(V("Sv"), V("Sh")))];
 
-    private static Formula PermutationDefinitions() => And(
+    private static Formula[] PermutationDefinitions() =>
+    [
         Equal(V("e"), Call("modeConcat", V("n"), V("k"), V("h"))),
         Equal(V("iota"), Call("blockToGlobal", V("n"), V("k"), V("h"))),
         Equal(V("PiEquiv"), Call("canonicalPiEquiv", V("n"), V("k"), V("h"))),
@@ -113,9 +127,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
             Pair(Lam("i", Call("Fin", V("k")), Call("z", Call("inl", Call("e", Call("inl", V("i")))))),
                  Lam("i", Call("Fin", V("k")), Call("z", Call("inr", Call("e", Call("inl", V("i"))))))),
             Pair(Lam("i", Call("Fin", V("h")), Call("z", Call("inl", Call("e", Call("inr", V("i")))))),
-                 Lam("i", Call("Fin", V("h")), Call("z", Call("inr", Call("e", Call("inr", V("i")))))))))));
+                 Lam("i", Call("Fin", V("h")), Call("z", Call("inr", Call("e", Call("inr", V("i"))))))))))];
 
-    private static Formula C67() => And(
+    private static Formula[] C67() =>
+    [
         Equal(M("PiEquiv"), V("Pi")), Equal(Call("matrix", Call("symm", V("PiEquiv"))), Tr(V("Pi"))),
         Equal(Mul(Tr(V("Pi")), V("Pi")), D(1)), Equal(Mul(V("Pi"), Tr(V("Pi"))), D(1)),
         Equal(Mul(Tr(V("Pi")), V("Jb"), V("Pi")), J("n")),
@@ -123,9 +138,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
         All(V("a"), Obs, Equal(MV(Tr(M("T")), MV(Tr(V("O")), V("a"))),
             Pair(MV(Tr(M("B")), V("a")), D(0)))),
         All(V("a"), Obs, Equal(MV(Tr(Mul(M("T"), V("Pi"))), MV(Tr(V("O")), V("a"))),
-            MV(Tr(V("Pi")), Pair(MV(Tr(M("B")), V("a")), D(0))))));
+            MV(Tr(V("Pi")), Pair(MV(Tr(M("B")), V("a")), D(0)))))];
 
-    private static Formula C8() => And(
+    private static Formula[] C8() =>
+    [
         Call("Member", V("Wv"), Call("symplecticGroup", Call("Fin", V("k")), Real)),
         Call("Member", V("Wh"), Call("symplecticGroup", Call("Fin", V("h")), Real)),
         All(V("i"), Call("Fin", V("k")), Lt(D(0), Call("nuv", V("i")))),
@@ -150,7 +166,10 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
         All(V("a"), Obs, Equal(MV(Tr(M("That")), MV(Tr(V("O")), V("a"))),
             Pair(MV(Tr(V("Wv")), MV(Tr(M("B")), V("a"))), D(0)))),
         All(V("a"), Obs, Equal(MV(Tr(M("R")), MV(Tr(V("O")), V("a"))),
-            MV(Tr(V("Pi")), Pair(MV(Tr(V("Wv")), MV(Tr(M("B")), V("a"))), D(0))))));
+            MV(Tr(V("Pi")), Pair(MV(Tr(V("Wv")), MV(Tr(M("B")), V("a"))), D(0)))))];
+
+    private static DocumentBlock[] Displays(params Formula[] clauses) =>
+        [.. clauses.Select(clause => new DocumentBlock.DisplayFormula(Disp(clause)))];
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
@@ -181,8 +200,6 @@ internal sealed class OriginalDataCoupledCoordinatesDocument : IScribeDocumentDe
     private static Formula Paren(Formula f) => Seq(Open, f, Close);
     private static Formula All(Formula name, Formula type, Formula body) =>
         Seq(Forall, Sp, Paren(Seq(name, Sp, Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Ex(Formula name, Formula type, Formula body) =>
-        Seq(Exists, Sp, Paren(Seq(name, Sp, Colon, Sp, type)), Comma, Sp, body);
     private static Formula And(params Formula[] terms) => Seq(
         [.. terms.SelectMany((term, i) => i == 0
             ? new[] { Paren(term) } : new[] { Sp, Land, Sp, Paren(term) })]);
