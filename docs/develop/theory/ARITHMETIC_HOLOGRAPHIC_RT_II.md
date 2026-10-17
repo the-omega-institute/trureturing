@@ -4457,3 +4457,403 @@ The old frame can be aligned at the base by a fixed environment unitary. For A u
 Alternatively, for any given Stinespring split the rank-two old Kraus contribution is positive semidefinite and leaves a positive Choi remainder of trace ||R||_F^2. The variational characterization of the two largest Choi eigenvalues gives epsilon_2(B)<=||R||_F^2. Hence amplitude ||R(t)||_F=O(t) implies the stated quartic path lower bound. In particular a C^2 finite-environment path covered by section 85 has this property. Arbitrary convergence of the other channel suffices for eventual membership in U.
 
 The theorem is local in channel space and its constant need not be uniform over the entire equality family. The second-order positive coefficient of section 85 can still provide a stronger positive gap in nonflat directions. In the flat directions, the present estimate rules out cubic improvement but leaves quartic and higher-order escape unresolved. The unrestricted quarter-optimum conjecture remains open.
+
+## 87. Exact anisotropic quartic coercivity at every disphenoid equality pair
+
+This is a sequel to the local Choi-tail bound in section 86, not a modification of that result. We compute the complete minimized probability-quadratic coefficient of the rank-two Ky Fan witness, including all original-channel comparison tangents. We then give a separate physical C²-amplitude-path consequence. The result excludes negative fourth-order coefficients along those paths; it does not prove a local minimum, exclude higher-order escape, or settle the unrestricted product optimum.
+
+All environments in the path statement are fixed and finite. A path with new Kraus probability proportional to its parameter generally has amplitude proportional to the square root of that parameter and is not a C² amplitude path at zero.
+
+### 87.1. Statement and original-channel consumer
+
+Let (A₀,B₀) be any section-82 original quarter-error pair, with B₀ of Kraus rank two. Use its allowed simultaneous fibrewise bit swaps and fixed environment isometries to put it in marker form. Write
+
+\[
+ N_f=\overline {B_f}ZB_f^T
+     =\sum_{a=1}^3 n_a\chi_a(f)\sigma_a,
+ \qquad u_a=n_a^2,\quad \sum_a u_a=1,\quad u_a\ge2/7.       \tag{1}
+\]
+
+Here Z=diag(1,−1), the σ_a are the standard Pauli matrices, n_a>0, and the four characters are
+
+\[
+ \chi_0=(1,1,1,1),\quad \chi_1=(1,1,-1,-1),\quad
+ \chi_2=(1,-1,1,-1),\quad\chi_3=(1,-1,-1,1).              \tag{2}
+\]
+
+Each u_a lies in [2/7,3/7]. The coefficient matrices at the base can be chosen as
+
+\[
+ C_f=A_fB_f^T/\sqrt2={1\over4}
+       \begin{bmatrix}\sqrt7 I_2\\N_f\end{bmatrix}.       \tag{3}
+\]
+
+Extra A-environment coordinates are zero. All record Grams are forward Grams. For arbitrary original channels, retain their correct-output contractions and set K=G⊙H. With the target T having diagonal blocks I₂ and off-diagonal blocks J₂/2, let
+
+\[
+ F(A,B)={1\over4}\Lambda_2(T-K).
+ \quad
+ \delta(A,B)\ge {\operatorname{Tr}(T-K)_+\over4}\ge F(A,B). \tag{4}
+\]
+
+The first inequality includes the entire lost trace. Indeed the normalized maximally entangled logical/reference input has correct joint reference/output compression Kᵀ/8 on the orthonormal support {|f,i〉_R⊗|ff〉_out}; pinching gives
+(‖K−T‖₁+8−Tr K)/8=Tr(T−K)₊/4. Thus no leakage calibration or physical channel transfer is being assumed.
+
+A flat new-environment derivative has correct records r_fi=L_i b_fi and no wrong-output records, by section 85. An environment gauge removes the common L₀. Its remaining records are
+
+\[
+ r_{f0}=0,\qquad r_{f1}=D b_{f1},\qquad D=L_1-L_0.
+ \quad E=\overline{D^*D}=r_0I_2+\sum_{a=1}^3r_a\sigma_a. \tag{5}
+\]
+
+The coefficients r_a are real. The conjugation in E fixes the convention relative to N_f in (1).
+
+**Coefficient theorem.** Fix the records (5), denoting their full original-output Stinespring operator by R. Let U(s) be any smooth old rank-two comparison unitary, and V_A(s) any smooth original A-isometry, both based at the equality tuple. Consider the physical probability path
+
+\[
+ V_B(s)=U(s)\sqrt{I-sR^*R}\ \oplus\ \sqrt{s}\,R,
+ \qquad s\ge0.                                          \tag{6}
+\]
+
+The coefficient q in F=1/4+s²q+o(s²) depends only on the first old comparison tangent. Its minimum over all such tangents, including arbitrary finite A-environments, original output leakage, and phase gauges, is
+
+\[
+ q_{\min}(D)=\sum_{a=1}^3c(u_a)r_a^2,
+ \qquad c(u)={(1-u)(7u-1)^2\over256u^2}.                 \tag{7}
+\]
+
+The minimum is attained by a calibrated comparison tangent in A-environment dimension four. In particular
+
+\[
+ {35\over1024}|r|^2\le q_{\min}(D)\le {7\over144}|r|^2,
+ \qquad q_{\min}(D)\ge {35\over2048}
+       \|E-\tfrac12\operatorname{Tr}(E)I_2\|_F^2.        \tag{8}
+\]
+
+Both coefficient bounds are sharp over the classified disphenoids. If D has one row, then |r|²=‖D‖_F⁴/4, so q_min≥35‖D‖_F⁴/4096. A zero scalar component is not being assumed in (7).
+
+**Amplitude-path consequence.** Suppose both original channels admit C² Stinespring paths V_A(t),V_B(t) in fixed finite environments through the equality pair. Split B into its base two-dimensional environment and its orthogonal complement. If the first new-environment derivative is flat, use (5) to define D. Then
+
+\[
+ \liminf_{t\downarrow0}{\delta(A(t),B(t))-1/4\over t^4}
+       \ \ge\ \sum_{a=1}^3c(u_a)r_a^2.                  \tag{9}
+\]
+
+If that derivative is not flat, the liminf is +∞. It is also +∞ whenever the first old comparison tangent has a nonzero component normal to the section-86 minimum manifold. Equation (9) will be proved separately in section 87.7; it is not inferred merely from substituting s=t² into (6).
+
+### 87.2. Comparison geometry and spectral expansion
+
+We use the following proved section-86 facts, with their full original-channel scope. On
+X=St(C⁸,C⁴⊗Cᵈ)×U(8), d≥4, the comparison function F is at least 1/4. Near (3) it has a smooth minimum manifold M with Hessian kernel exactly TM and positive definite normal Hessian. Its points are calibrated, balanced frames with
+
+\[
+ C_f=S+\tfrac12WN_f,\quad \sum_fN_f=0,\quad
+ S^*S=(\tfrac12-h/8)I_2,\quad W^*W=(h/2)I_2,\quad
+ S^*W=i\beta I_2.                                       \tag{10}
+\]
+
+Here h is near 1/2 and β near zero. The global fixed-A_m witness bound holds on this whole manifold, including its complex cross-bit marker overlaps. To verify it directly, put T_i=√2(S+(−1)^iW/2). Equations (10) give
+
+\[
+ T_i^*T_i=2\{S^*S+W^*W/4+(-1)^i(S^*W+W^*S)/2\}=I_2.
+\]
+
+Moreover a_fi=T_i conjugate(b_fi). Balance gives Σ_f|b_fi〉〈b_fi|=2I₂ separately for both fixed bits. Thus, writing H_i^m for this fixed-bit qubit Gram, one has H_i^m≤2I₄ and the corresponding A_m Gram is (H_i^m)ᵀ. Let H_i be the correct-output bit-i Gram of any original B, including arbitrary rank and output leakage. It is positive semidefinite and Tr H_i≤4. The fixed rank-two projection P₀=(J₄/4)⊗I₂ in bit coordinates sees only these same-bit sectors, so
+
+\[
+ \operatorname{Tr}(P_0K)=\tfrac14\sum_i\operatorname{Tr}(H_i^mH_i)
+       \le\tfrac12\sum_i\operatorname{Tr}H_i\le4,
+ \qquad \operatorname{Tr}(P_0T)=5.
+\]
+
+Ky Fan's variational inequality therefore gives F(A_m,B)≥Tr(P₀(T−K))/4≥1/4 for every original B. In particular every physical new-environment derivative at m is nonnegative. This argument does not require the cross-bit marker overlap to be real or equal to 3/4: the imaginary term S^*W=iβI₂ cancels in T_i^*T_i. Locally the section-86 normal Hessian result also gives F_old≥1/4+c dist(x,M)². These statements include the full plus/minus cross coupling and wrong-output blocks.
+
+At the base the top two eigenvalues of T−K are 1/2,1/2. All others are at most zero, including on the disphenoid boundary. In plus/minus coordinates the top projection and reduced resolvent are
+
+\[
+ P=\operatorname{diag}(ss^*,ss^*),\quad s=\tfrac12(1,1,1,1)^T,
+ \qquad
+ \mathcal R=\operatorname{diag}\left(
+ \sum_a{2P_a\over1+u_a},\ \sum_a{2P_a\over7u_a-1}\right),
+ \quad P_a={\chi_a\chi_a^T\over4}.                       \tag{11}
+\]
+
+The gap is at least 1/2 uniformly. For K=K₀+sK₁+s²K₂+o(s²), spectral perturbation of the isolated cluster gives
+
+\[
+ F={1\over4}-{s\over4}\operatorname{Tr}(PK_1)
+   +{s^2\over4}\operatorname{Tr}(-PK_2+PK_1\mathcal R K_1P)
+   +o(s^2).                                             \tag{12}
+\]
+
+This formula keeps all cross blocks. Since dF_old=0 and the flat noise derivative is zero, no second old comparison derivative contributes to q.
+
+The old calibrated tangent is described by C_f and N_f. Its dimension is 4(12+2)=56. There are a further eight independent bit-frame phase coordinates in B; changing A correspondingly leaves C,N unchanged. They lie in TM. Every mixed noise source vanishes on TM: the physical noise derivative is a nonnegative smooth function on M and is zero at the base for the flat R. Thus its differential there is zero. The eight phases are retained as zero directions, not removed by a change of the fixed target bit basis.
+
+### 87.3. A complete Pauli-character formula
+
+Here are explicit finite-dimensional formulas for the quadratic form being minimized. They also provide algebraic certificates for the parameter reduction below.
+
+Put n=(x,y,z)=(n₁,n₂,n₃), σ₀=I₂, and fix the character χ₁. Write
+
+\[
+ \dot C_f={1\over4}\begin{bmatrix}\sqrt7 U_f\\V_f\end{bmatrix},
+ \quad U_f=\chi_1(f)\sum_{\mu=0}^3\chi_\mu(f)u_\mu\sigma_\mu,
+ \quad V_f=\chi_1(f)\sum_{\mu=0}^3\chi_\mu(f)v_\mu\sigma_\mu,
+ \quad \dot N_f=\chi_1(f)\sum_{a=1}^3\chi_a(f)d_a\sigma_a. \tag{13}
+\]
+
+The coefficients u,v are complex and d real. The complete first-order constraints are
+
+\[
+ 7\Re u_0+n\cdot\Re v=0,\qquad
+ 7\Re u+\Re v_0\,n-n\times\Im v=0,\qquad n\cdot d=0.  \tag{14}
+\]
+
+Take the following fourteen real coordinates, indexed from zero:
+
+\[
+ \xi=(\Im u_0,\Im u_x,\Im u_y,\Im u_z,
+       \Re v_0,\Re v_x,\Re v_y,\Re v_z,
+       \Im v_0,\Im v_x,\Im v_y,\Im v_z,d_x,d_y),          \tag{15}
+\]
+
+with d_z=−(xd_x+yd_y)/z and the real parts of u determined by (14). The same construction with χ₀,χ₂,χ₃ gives all four orthogonal fourteen-dimensional character blocks.
+
+Set \dot D_f=\dot C_fN_f+C_f\dot N_f. Let K_ξ be the first variation of the full Gram of the eight matrix columns (C₁,…,C₄,C₁N₁,…,C₄N₄). Its old quadratic coefficient is ξᵀHξ, where H is defined explicitly by
+
+\[
+ \begin{split}
+ \xi^TH\xi={}&{1\over4}\sum_f\|\dot C_f\|_F^2
+ -{1\over32}\sum_f\Re\operatorname{Tr}(V_f^*\dot N_f)
+ +{1\over32}\sum_f|\dot n_f|^2\\
+ &-{1\over16}\left(\|\sum_f\dot C_f\|_F^2+
+                         \|\sum_f\dot D_f\|_F^2\right)
+ +{1\over4}\operatorname{Tr}(PK_\xi\mathcal R K_\xi P).
+ \end{split}                                             \tag{16}
+\]
+
+Here \dot n_f is the Bloch vector of \dot N_f. This follows from (12) using normalized retractions with C_{2,f}=−C_f\dot C_f^*\dot C_f and N_{2,f}=−|\dot n_f|²N_f/2. In particular H is positive semidefinite because the comparison tuple is a minimum of F.
+
+For completeness, the mixed source and fixed-noise term can be computed without choosing eigenvectors of N_f. Use bit coordinates in the rest of this paragraph, transforming P,ℛ,K_ξ by the fixed plus/minus Hadamard. Define
+
+\[
+ p_f=(I_2-N_f)/2,\quad e_{f0}=0,\quad e_{f1}=\operatorname{Tr}(p_fE),
+ \quad J_{f1,g1}=\operatorname{Tr}(p_fp_gE),
+ \quad J_{fi,gj}=0\text{ otherwise},
+ \quad A_{\alpha\gamma}=(e_\alpha+e_\gamma)/2,
+ \quad L=J-A\odot K_0,
+ \quad Q_{\alpha\gamma}=-{(e_\alpha-e_\gamma)^2\over8}(K_0)_{\alpha\gamma}.
+                                                               \tag{17}
+\]
+
+Thus L,Q are the first two noise-only Gram coefficients in (6). Put Y_f=[U_f;V_f], X_f=[I₂;N_f], and
+
+\[
+ M_f={1\over8}[7I_2\ {-I_2}]
+       (Y_f+\tfrac12X_f\dot N_fN_f),\qquad
+ J'_{f1,g1}=\operatorname{Tr}\{p_f(M_f^*+M_g)p_gE\},
+ \qquad J'_{fi,gj}=0\text{ otherwise}.
+\]
+
+A horizontal lift of the qubit frame has \overline B_f'=\dot N_fN_f\overline B_f/2; substitution in A_f=√2C_f\overline B_f gives this M_f and J'. Consequently the mixed linear functional gᵀξ and noise constant q₀ are
+
+\[
+ g^T\xi={1\over4}\operatorname{Tr}\{P(A\odot K_\xi-J')
+             +PK_\xi\mathcal R LP+PL\mathcal R K_\xi P\},
+ \qquad q_0={1\over4}\operatorname{Tr}(-PQ+PL\mathcal R LP).
+                                                               \tag{18}
+\]
+
+Equations (13)–(18) specify every matrix entry and every source component.
+
+The Klein-four action combines the corresponding fibre permutation with Pauli conjugation. It preserves the base and (12), acts by χ_a on the Pauli coefficient r_a, and by χ₀ on r₀. Hence the old Hessian is block diagonal in the four character spaces, the σ_a source is in block a, and distinct noise characters have zero quadratic cross terms. Axes can therefore be permuted, so it suffices to compute E=σ₁ in block χ₁.
+
+The scalar source and scalar noise constant are zero. One direct reason is as follows. Scalar E describes a common bit marker on B. At the base, its noise-only curve preserves the top projection P and its trace, so F=1/4. For A-variations, the scalar marker can be transferred algebraically to A's records; the section-81 rank-two contraction witness gives F≥1/4 for every original A. For U-variations at fixed A₀, the fixed-A₀ global best-response bound gives F≥1/4. Thus both parts of the mixed derivative vanish. Equivalently one may substitute E=I₂ in (17)–(18). The distinction between a fixed R and the varying marked U does not alter this mixed derivative: the noise derivative, as a nonnegative quadratic form in R with value zero at the flat base R, has zero first derivative in R there. Character orthogonality also removes all scalar–anisotropic quadratic cross terms.
+
+### 87.4. Exact range certificate and minimization
+
+The following algebraic reduction is useful; it is not a physical rotation of the equality disphenoid or a change of the target bit basis. Set ρ=√(1−x²), and form the auxiliary coefficients H_a,g_a by substituting (x,0,ρ) into (13)–(18). They are well-defined rational expressions even though this auxiliary point is outside the classified equality family. Apply
+
+\[
+ Q_x=\begin{bmatrix}1&0&0\\0&z/\rho&y/\rho\\0&-y/\rho&z/\rho\end{bmatrix}
+\]
+
+to each of the three-vector coordinate groups (Im u,Re v,Im v), leaving their scalar coordinates unchanged. On the two free d coordinates use d_x↦d_x and d_y↦−xy d_x/ρ²+z d_y/ρ. Denote this invertible fourteen-dimensional map by L_x. Direct substitution using σ_aσ_b=δ_abI+iε_abcσ_c and x²+y²+z²=1 gives
+
+\[
+ L_x^TH(x,y,z)L_x=H_a(x),\qquad L_x^Tg(x,y,z)=g_a(x).
+                                                               \tag{19}
+\]
+
+This identity includes all fourteen rows and columns. In particular H_a is positive semidefinite by congruence with the physical H; no positivity assumption at an unphysical auxiliary frame is used.
+
+Here is an explicit certificate for the remaining singular quadratic minimization. In the auxiliary coordinates let I=(2,7,12,4,10), namely (Im u_y,Re v_z,d_x,Re v₀,Im v_y), and put a=x². The source restricted to these coordinates, and the constant, are
+
+\[
+ g_I=\begin{bmatrix}
+ -7\rho(4a-1)/(8(7a-1))\\
+ -x\rho(4a^2-a+3)/(8(a+1)(7a-1))\\
+ -3/(8(7a-1))\\ x/2\\ -\rho(a-1)/(4(a+1))
+ \end{bmatrix},
+ \qquad q_0=-{a(7a^2-26a+1)\over8(a+1)(7a-1)}.          \tag{20}
+\]
+
+The principal matrix H_I is block diagonal with blocks
+
+\[
+ \begin{bmatrix}
+ {21a\over4(7a-1)}&{3x(a-1)\over4(7a-1)}&{-7\rho\over8(7a-1)}\\
+ {3x(a-1)\over4(7a-1)}&{3a^3-3a^2+46a-4\over28(a+1)(7a-1)}&
+ {-x\rho(a+5)\over8(a-1)(7a-1)}\\
+ {-7\rho\over8(7a-1)}&{-x\rho(a+5)\over8(a-1)(7a-1)}&
+ {-3\over4(a-1)(7a-1)}
+ \end{bmatrix},
+ \quad
+ \begin{bmatrix}
+ {15a-1\over7(7a-1)}&{x\rho\over7(7a-1)}\\
+ {x\rho\over7(7a-1)}&{a(13a-1)\over7(a+1)(7a-1)}
+ \end{bmatrix}.                                         \tag{21}
+\]
+
+Define the five-vector
+
+\[
+ z_I=\begin{bmatrix}
+ -\rho(a+6)/14\\ x\rho/2\\ a-1\\
+ (5a-1)(5a+1)/(16x^3)\\
+ -\rho(17a^2-14a+1)/(16x^4)
+ \end{bmatrix}.                                         \tag{22}
+\]
+
+Let z be its fourteen-dimensional extension by zero. Substituting (13)–(18) gives the full range identity, including every omitted and every gauge coordinate,
+
+\[
+ H_a z=g_a.                                              \tag{23}
+\]
+
+In particular this is stronger than checking only H_I z_I=g_I. All denominators in (19)–(23) are nonzero for 2/7≤a≤3/7 and for the original physical y,z>0. Equations (19) and (23) can also be checked purely by reducing numerators modulo ρ²−1+x² and z²−1+x²+y²; they are rational identities, not sampled numerical equalities.
+
+Completion of squares is now valid despite the Hessian zero modes:
+
+\[
+ \xi^TH_a\xi+g_a^T\xi+q_0
+   =(\xi+z/2)^TH_a(\xi+z/2)+q_0-g_I^Tz_I/4,
+ \qquad
+ q_0-g_I^Tz_I/4={(1-a)(7a-1)^2\over256a^2}.              \tag{24}
+\]
+
+The first term is nonnegative and vanishes at ξ=−z/2. Transport by L_x and permutation of the axes gives (7). Every minimizing tangent is an actual tangent of the smooth calibrated comparison manifold, so normalized local retractions realize it by a physical path (6).
+
+For the sharp uniform bound, differentiation gives
+
+\[
+ c'(a)={-49a^3+15a-2\over256a^3}.
+\]
+
+The numerator is concave for a>0, and its values at 2/7 and 3/7 are 8/7 and 4/7. It is therefore positive throughout the interval. Thus c increases, with c(2/7)=35/1024 and c(3/7)=7/144. The endpoints occur in allowed disphenoids, proving (8) and sharpness.
+
+### 87.5. No missing original-channel directions
+
+We verify that the algebraic minimum is also the full original comparison-tangent minimum in (6).
+
+First, the eight bit-frame phase directions and every other tangent to M have zero old Hessian and zero source, as proved in section 87.2. They cannot change (24).
+
+Second, any extra A-environment direction orthogonal to the four-dimensional base support has zero source and zero Hessian cross term with the supported directions. The environment unitary which is the identity on the base support and minus the identity on its orthogonal complement fixes the base, the new B records, and F, but reverses precisely those tangent directions. Invariance forces those cross terms to vanish. Their own Hessian is nonnegative by the comparison minimum. This argument covers an arbitrary fixed finite A-environment.
+
+Third, an original wrong-output tangent has no correct-output first derivative. The mixed source (18) is therefore zero for it: the new R in (5) is calibrated, R*R is fibre-block diagonal, and the correct blocks of U'R*R vanish for a pure wrong-output U' tangent. The exact section-86 leakage Hessian identity is
+
+\[
+ q_{\rm old,full}=q_{\rm old,calibrated}
+                  +(\|L_A\|_F^2+\|L_B\|_F^2)/8.        \tag{25}
+\]
+
+Thus all leakage terms only add nonnegative cost. No relaxation of a physical Stinespring constraint is needed: every actual full tangent has the stated calibrated correct part and wrong-output part, while the minimizing calibrated tangent is itself realizable. These three observations establish the coefficient theorem with the complete original-channel scope claimed.
+
+### 87.6. Exact scalar zero modes
+
+Suppose D*D=λI₂. If λ>0, D/√λ is an isometry into the new environment. The following records give an exact calibrated physical path for small t:
+
+\[
+ b_{f0}(t)=b_{f0}\oplus0,\qquad
+ b_{f1}(t)=\sqrt{1-\lambda t^2}\,b_{f1}\oplus tDb_{f1}.
+                                                               \tag{26}
+\]
+
+This is a qubit core with bit-marker overlap q(t)=√(1−λt²). Choose the A records to be the same conjugate qubit core with normalized bit markers whose real overlap is
+
+\[
+ \eta_A(t)={3\over4q(t)}.                                \tag{27}
+\]
+
+This is feasible and smooth for sufficiently small t, including at t=0; for example choose marker coordinates (√((1+η_A)/2), (−1)^i√((1−η_A)/2)). Every same-bit product Gram is unchanged, and every cross-bit product overlap is multiplied by η_A(t)q(t)=3/4. Hence the entire product Gram K, and therefore the original calibrated logical product channel, is exactly the base one. Its full-reference error remains exactly 1/4. For λ>0 and t≠0 small the B environment span is four-dimensional, so these are genuine higher-rank quarter-attainers. The case λ=0 is trivial.
+
+This explains the scalar zero in (7) by an actual physical family. It neither identifies all higher-order zero modes nor rules out higher-order anisotropic escape.
+
+### 87.7. From the coefficient to arbitrary C² amplitude paths
+
+We now prove (9), retaining the possibility of moving old tangents and higher new-environment derivatives. Write the actual B isometry in its fixed old/new split as V_B(t)=W(t)⊕R(t). Near zero W is square and has polar unitary U(t), so
+
+\[
+ V_B(t)=U(t)\sqrt{I-R(t)^*R(t)}\oplus R(t).
+\]
+
+The comparison point x(t)=(V_A(t),U(t)) is C². Choose smooth tubular coordinates near M, write its nearest point as m(t), and write its normal coordinate as n(t). These coordinates may be chosen in any fixed smooth local metric. The section-86 result gives a uniformly positive normal quadratic form and F_old=1/4 on M.
+
+For arbitrary small R put D_R=R*R. The physical polar expansion through degree four in R is
+
+\[
+ \begin{split}
+ B-B_U&=\Psi_{U,R}+\Theta_{U,R}+O(\|R\|_F^6),\\
+ \Psi_{U,R}(Y)&=\operatorname{Tr}_{\rm new}(RYR^*)
+                        -\tfrac12B_U(D_RY+YD_R),\\
+ \Theta_{U,R}(Y)&=\tfrac14B_U(D_RYD_R)
+                        -\tfrac18B_U(D_R^2Y+YD_R^2).
+ \end{split}                                             \tag{28}
+\]
+
+The estimates hold in any fixed finite-dimensional channel norm, uniformly for U near the base. Let ℓ_x=d_BF at the old comparison channel. Smoothness of the isolated cluster gives
+
+\[
+ F_{\rm full}=F_{\rm old}+\ell_x\Psi_{U,R}
+       +\ell_x\Theta_{U,R}
+       +\tfrac12d_B^2F_x(\Psi_{U,R},\Psi_{U,R})
+       +O(\|R\|_F^6).                                   \tag{29}
+\]
+
+For every m∈M and every R, the physical one-sided curve U_m√(I−sR*R)⊕√sR and the fixed-A_m best-response property imply the exact inequality
+
+\[
+ \ell_m\Psi_{U_m,R}\ge0.                               \tag{30}
+\]
+
+In normal coordinates, expand the middle term of (29) as
+
+\[
+ \ell_x\Psi_{U,R}=\ell_m\Psi_{U_m,R}
+                  +\mathcal B_m(n,R)+O(\|n\|^2\|R\|_F^2),
+                                                               \tag{31}
+\]
+
+where ℬ is linear in n and quadratic in R. This is an ordinary smooth Taylor expansion; its derivative includes both the change in ℓ and the change in U. Dropping the first term by (30) is crucial. It requires no Taylor expansion of R beyond its first derivative and introduces no possibly negative terms from R'' or from motion along M.
+
+If n'(0)≠0, normal coercivity, (29)–(31), and R=O(t) give a strictly positive t² lower coefficient; the remaining possibly negative terms are O(t³)+O(t⁴). The liminf in (9) is then +∞. If R'(0) is not flat, the positive degree-two noise coefficient from section 85 gives the same conclusion (and the old normal quadratic coefficient is nonnegative).
+
+It remains to consider n'(0)=0 and flat R₁=R'(0). A smooth environment rotation with first generator [[0,L₀*],[−L₀,0]] removes the common L₀ from R₁. It leaves the physical channels unchanged, keeps the paths C², and leaves the first old comparison derivative unchanged. We may therefore assume (5). Recompute the smooth split and normal coordinates after this rotation. Since they are C²,
+
+\[
+ n(t)=t^2n_2+o(t^2),\qquad R(t)=tR_1+o(t),\qquad m(t)\longrightarrow m_0.
+                                                               \tag{32}
+\]
+
+Taylor expansion in normal coordinates gives F_old=1/4+q_{H,m}(n)+O(‖n‖³). Insert (32) into (29)–(31), drop (30), and use continuity of all coefficient forms. The result is
+
+\[
+ F_{\rm full}(t)\ge\tfrac14+t^4\{
+       q_{H,0}(n_2)+\mathcal B_0(n_2,R_1)+q_{\rm noise,0}(R_1)
+                         \}+o(t^4).                    \tag{33}
+\]
+
+The three terms in braces are exactly the old Hessian, mixed source, and fixed-noise constant calculated in (12)–(25). This identification follows either from (28)–(29) or by taking the probability path (6) with old tangent n₂. The tangent component along M has no effect because both Hessian and source vanish there. By (7) the braces are at least Σ_a c(u_a)r_a². Finally δ≥F from the full original pinching inequality (4) proves (9).
+
+All estimates here are local about the chosen equality pair; the explicit coefficient bound (8) is uniform over the entire classified disphenoid region, but no uniform radius for the channel neighborhoods is asserted. Nonnegative fourth-order liminf does not imply a local minimum. Simultaneous arbitrary-channel approaches without these C² finite-amplitude lifts, and possible higher-order improvements in the remaining flat directions, are not settled by this theorem. The unrestricted quarter-optimum conjecture remains open.
