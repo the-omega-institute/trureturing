@@ -5,7 +5,7 @@
    anchors: []
    utility: none
    digest: Arbitrary ordered defects and constructive bulk subtraction for the full three-row cone. -/
-import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSpectralBound
+import D5.S3.Quantum.Entanglement.AbsolutePPT.HalfspaceConeTransfer
 import D5.S3.Quantum.Entanglement.AbsolutePPT.QuadbitUniform.ScalarEnvelopes
 import Mathlib.Analysis.Convex.Jensen
 import Mathlib.Analysis.Convex.Mul
