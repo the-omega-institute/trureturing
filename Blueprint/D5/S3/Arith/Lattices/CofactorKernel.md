@@ -112,7 +112,19 @@ $$\forall \{R : \operatorname{Type}\}, [\operatorname{CommRing} R] \forall \{d :
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Definition 1.10 (fromWeights).**
+**Theorem 1.10 (Cofactor cross identity for a kernel vector).**
+
+$$(\operatorname{augment} M).\operatorname{det} \cdot xi = (\sum j xj) \cdot \operatorname{cofactor} M i$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Lattices/CofactorKernel.kernel_cross_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The exact compiled declaration retains an arbitrary commutative ring R, d, the full d by d+1 matrix M, vector x, original kernel equation hx, and coordinate i. For a d by d+1 matrix over any commutative ring and a vector in its kernel, the determinant of the matrix augmented by a first row of ones times coordinate i equals the sum of the vector coordinates times signed cofactor i. The sign is (-1) to the column index and the minor deletes that column by succAbove. This is the classical adjugate/cofactor expansion identity used by the integer-kernel results. Over the reals, a strictly positive kernel vector and one nonzero cofactor force a nonzero augmented determinant and positive proportionality after choosing an orientation. The nonnegative-kernel cofactor completeness theorem consumes this identity; selected-row kernel membership alone does not establish the original row equations.
+
+**Definition 1.11 (fromWeights).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), \operatorname{fromWeights} v x = (\operatorname{Finsupp} . \operatorname{embDomain} v (\operatorname{Finsupp} . \operatorname{equivFunOnFinite} . \operatorname{symm} x))$$
 
@@ -124,7 +136,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.11 (fromWeights apply).**
+**Theorem 1.12 (fromWeights apply).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), \forall (i : \operatorname{Fin} k), \operatorname{fromWeights} v x (v i) = x i$$
 
@@ -136,7 +148,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.12 (fromWeights support subset).**
+**Theorem 1.13 (fromWeights support subset).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), (\operatorname{CoeTC}.\operatorname{coe} (\operatorname{fromWeights} v x) . \operatorname{support} : \operatorname{Set} (\operatorname{Fin} d \to \mathbb{Z})) \subseteq \operatorname{Set} . \operatorname{range} v$$
 
@@ -148,7 +160,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.13 (fromWeights restrict).**
+**Theorem 1.14 (fromWeights restrict).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (f : (\operatorname{Fin} d \to \mathbb{Z}) \to_{0} \mathbb{N}), ((\operatorname{CoeTC}.\operatorname{coe} f . \operatorname{support} : \operatorname{Set} (\operatorname{Fin} d \to \mathbb{Z})) \subseteq \operatorname{Set} . \operatorname{range} v) \to \operatorname{fromWeights} v (\operatorname{fun} i \mapsto f (v i)) = f$$
 
@@ -160,7 +172,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.14 (length fromWeights).**
+**Theorem 1.15 (length fromWeights).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), \operatorname{Finsupp} . \operatorname{degree} (\operatorname{fromWeights} v x) = \sum j , x j$$
 
@@ -172,7 +184,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.15 (fromWeights minimal of primitive).**
+**Theorem 1.16 (fromWeights minimal of primitive).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} (d + 1)) (\operatorname{Fin} d \to \mathbb{Z})), ((\operatorname{augment} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose})) . \operatorname{det} \neq 0) \to \forall (x : \operatorname{Fin} (d + 1) \to \mathbb{Z}), ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose} *_{v} x = 0) \to (\forall i , 0 < x i) \to (\operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} x = 1) \to \operatorname{IsMinimalZeroSum} (\operatorname{fromWeights} v (\operatorname{fun} i \mapsto (x i) . \operatorname{toNat}))$$
 
@@ -184,7 +196,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorna
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.16 (total fromWeights eq mulVec).**
+**Theorem 1.17 (total fromWeights eq mulVec).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), (\operatorname{fun} f : (\operatorname{Fin} d \to \mathbb{Z}) \to_{0} \mathbb{N} \mapsto f . \operatorname{sum} (\operatorname{fun} v n \mapsto (n : \mathbb{Z}) \cdot v)) (\operatorname{fromWeights} v x) = (\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} k \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose} *_{v} (\operatorname{fun} j \mapsto (x j : \mathbb{Z}))$$
 
@@ -196,7 +208,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.17 (fromWeights minimal to vector).**
+**Theorem 1.18 (fromWeights minimal to vector).**
 
 $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} k) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} k \to \mathbb{N}), (\operatorname{IsMinimalZeroSum} (\operatorname{fromWeights} v x)) \to \forall (y : \operatorname{Fin} k \to \mathbb{N}), (y \le x) \to ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} k \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose} *_{v} (\operatorname{fun} j \mapsto (y j : \mathbb{Z})) = 0) \to y = 0 \lor y = x$$
 
@@ -208,7 +220,7 @@ $$\forall \{d k : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operator
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.18 (sequence cofactor length).**
+**Theorem 1.19 (sequence cofactor length).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} (d + 1)) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} (d + 1) \to \mathbb{N}), (\forall i , 0 < x i) \to (\operatorname{IsMinimalZeroSum} (\operatorname{fromWeights} v x)) \to ((\operatorname{augment} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose})) . \operatorname{det} \neq 0) \to | (\operatorname{augment} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose})) . \operatorname{det} | = (\operatorname{Finsupp} . \operatorname{degree} (\operatorname{fromWeights} v x) : \mathbb{Z}) * \operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose}))$$
 
@@ -220,7 +232,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorna
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.19 (sequence cofactor multiplicities).**
+**Theorem 1.20 (sequence cofactor multiplicities).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorname{Embedding} (\operatorname{Fin} (d + 1)) (\operatorname{Fin} d \to \mathbb{Z})), \forall (x : \operatorname{Fin} (d + 1) \to \mathbb{N}), (\forall i , 0 < x i) \to (\operatorname{IsMinimalZeroSum} (\operatorname{fromWeights} v x)) \to ((\operatorname{augment} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose})) . \operatorname{det} \neq 0) \to (\forall i , (x i : \mathbb{Z}) = | \operatorname{cofactor} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose}) i | / \operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose}))) \land (\operatorname{Finsupp} . \operatorname{degree} (\operatorname{fromWeights} v x) : \mathbb{Z}) = | (\operatorname{augment} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose})) . \operatorname{det} | / \operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} ((\operatorname{Matrix} . \operatorname{of} (v : \operatorname{Fin} (d + 1) \to \operatorname{Fin} d \to \mathbb{Z})) . \operatorname{transpose}))$$
 
@@ -232,7 +244,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (v : \operatorname{Function} . \operatorna
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.20 (positive kernel orientation).**
+**Theorem 1.21 (positive kernel orientation).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (A : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d + 1)) \mathbb{Z}), ((\operatorname{augment} A) . \operatorname{det} \neq 0) \to \forall (x : \operatorname{Fin} (d + 1) \to \mathbb{Z}), (\forall j , 0 < x j) \to (A *_{v} x = 0) \to \exists s : \mathbb{Z} , (s = 1 \lor s = - 1) \land \forall j , 0 < s * \operatorname{cofactor} A j$$
 
@@ -244,7 +256,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (A : \operatorname{Matrix} (\operatorname{
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.21 (augmented det ne zero of oriented cofactors).**
+**Theorem 1.22 (augmented det ne zero of oriented cofactors).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (A : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d + 1)) \mathbb{Z}), \forall (s : \mathbb{Z}), (\forall j , 0 < s * \operatorname{cofactor} A j) \to (\operatorname{augment} A) . \operatorname{det} \neq 0$$
 
@@ -256,7 +268,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (A : \operatorname{Matrix} (\operatorname{
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.22 (cofactor gcd one mul right).**
+**Theorem 1.23 (cofactor gcd one mul right).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (M : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d + 1)) \mathbb{Z}), \forall (W : \operatorname{Matrix} (\operatorname{Fin} (d + 1)) (\operatorname{Fin} (d + 1)) \mathbb{Z}), (\operatorname{IsUnit} W . \operatorname{det}) \to (\operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} M) = 1) \to \operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} (M * W)) = 1$$
 
@@ -268,7 +280,7 @@ $$\forall \{d : \mathbb{N}\}, \forall (M : \operatorname{Matrix} (\operatorname{
 
 Primitive positive integer kernels give the multiplicities and lengths of minimal zero-sum sequences.
 
-**Theorem 1.23 (cofactor gcd one mul left).**
+**Theorem 1.24 (cofactor gcd one mul left).**
 
 $$\forall \{d : \mathbb{N}\}, \forall (U : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} d) \mathbb{Z}), \forall (M : \operatorname{Matrix} (\operatorname{Fin} d) (\operatorname{Fin} (d + 1)) \mathbb{Z}), (\operatorname{IsUnit} U . \operatorname{det}) \to (\operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} M) = 1) \to \operatorname{Finset} . \operatorname{univ} . \operatorname{gcd} (\operatorname{cofactor} (U * M)) = 1$$
 
@@ -298,6 +310,7 @@ Primitive positive integer kernels give the multiplicities and lengths of minima
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights_minimal_to_vector`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights_restrict`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.fromWeights_support_subset`
+- Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.kernel_cross_identity`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.length_fromWeights`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.lengths`
 - Truth anchor: `D5/S3/Arith/Lattices/CofactorKernel.positive_kernel_orientation`

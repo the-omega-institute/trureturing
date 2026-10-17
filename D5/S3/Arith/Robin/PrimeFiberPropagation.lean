@@ -35,7 +35,7 @@ def EdgeTest (n m : ℕ) : Prop :=
   (divisorRatio (n * m) / divisorRatio n - 1) * Real.log (Real.log n) ≤
     Real.log (1 + Real.log m / Real.log n)
 
-private theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
+theorem divisorRatio_pos {n : ℕ} (hn : n ≠ 0) : 0 < divisorRatio n := by
   unfold divisorRatio
   have h1 : (0 : ℝ) < ArithmeticFunction.sigma 1 n := by
     exact_mod_cast ArithmeticFunction.sigma_pos_iff.mpr (Nat.pos_of_ne_zero hn)

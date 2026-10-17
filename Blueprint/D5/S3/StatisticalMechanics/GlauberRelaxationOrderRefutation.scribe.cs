@@ -42,6 +42,16 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
                     + "Matrix.mulVec multiplies a matrix by a column vector: its i-th coordinate is the sum "
                     + "of the matrix entries in row i times the corresponding vector entries. "
                     + "The recursion holds at every natural time."),
+            Describe.Lean(
+                DescribeId.Create("glauber-order-probability-mulvec"),
+                DeclarationHandle.Create(Prefix + "probability_mulVec"),
+                H("Column-stochastic matrices preserve probability"),
+                StatementSource.FromAuthor(Disp(ProbabilityMulVecFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "A real matrix with nonnegative entries and every column summing to one sends "
+                        + "a probability vector to another probability vector under Matrix.mulVec."))),
+                DescribeRole.Theorem),
             Node("meanEnergy", "Mean energy", MeanEnergyFormula(),
                 "Mean energy is the sum of each energy level times its probability, as in Eqs. (44) and (46). "
                     + "The expression is defined for any real-valued vector p."),
@@ -150,6 +160,19 @@ internal sealed class GlauberRelaxationOrderRefutationDocument : IScribeDocument
             And(Equal(At(V("p"), D(0)), LocalCall("gibbs", V("E"), At(V("beta"), D(0)))), recursion));
         return And(ProbabilityFormula(), GraphBinders(EnergyBinder(RunBinders(
             IffOf(LocalCall("isSARun", V("n"), V("A"), V("E"), V("beta"), V("p")), conditions)))));
+    }
+
+    private static Formula ProbabilityMulVecFormula()
+    {
+        Formula probability = At(Qualified("D5", "S3", "TotalVariation", "CycleSingleCutMinimax", "Probability"), V("p"));
+        Formula image = At(Qualified("Matrix", "mulVec"), V("P"), V("p"));
+        Formula imageProbability = At(Qualified("D5", "S3", "TotalVariation", "CycleSingleCutMinimax", "Probability"), image);
+        Formula nonnegative = All("i", FinType(), All("j", FinType(),
+            LE(D(0), At(At(V("P"), V("i")), V("j")))));
+        Formula columns = All("j", FinType(), Equal(
+            SumOver("i", At(At(V("P"), V("i")), V("j"))), D(1)));
+        return SizeBinder(All("P", MatrixType(), All("p", States(),
+            Imp(nonnegative, Imp(columns, Imp(probability, imageProbability))))));
     }
 
     private static Formula MeanEnergyFormula() => SizeBinder(EnergyBinder(All("p", States(),
