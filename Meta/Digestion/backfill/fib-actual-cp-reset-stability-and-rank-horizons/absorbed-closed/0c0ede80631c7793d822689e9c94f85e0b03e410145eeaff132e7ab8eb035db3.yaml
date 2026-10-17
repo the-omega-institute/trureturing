@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0c0ede80631c7793d822689e9c94f85e0b03e410145eeaff132e7ab8eb035db3
+  normalized_sha256: sha256:0c0ede80631c7793d822689e9c94f85e0b03e410145eeaff132e7ab8eb035db3
+cas_ref: sha256:0c0ede80631c7793d822689e9c94f85e0b03e410145eeaff132e7ab8eb035db3
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/QuantitativeCPRankHorizon.coherent_compression_trace_transfer
+    target_statement_id: sha256:cb996c633cf388c4bda0cd9f29d745b30ce01e8cf5c3cd993b393493bcea29c6
+receipts:
+  unresolved_subitems: []

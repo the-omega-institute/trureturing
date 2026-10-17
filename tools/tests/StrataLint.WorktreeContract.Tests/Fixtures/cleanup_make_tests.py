@@ -21,6 +21,18 @@ ENTRANCE = sys.argv.pop(1)
 INVOCATION = sys.argv.pop(1)
 
 
+def copy_source(source, destination):
+    files = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z", "tools", ":(exclude)tools/tests"],
+                                    cwd=source).split(b"\0")
+    paths = [Path(os.fsdecode(name)) for name in files
+             if name and os.path.lexists(source / os.fsdecode(name))]
+    paths += list(map(Path, ["Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"]))
+    for relative in paths:
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source / relative, target)
+
+
 class CleanupMakeTests(NativeFixture):
     def mark_phase(self, phase):
         now = time.monotonic()
@@ -41,6 +53,11 @@ class CleanupMakeTests(NativeFixture):
 
     def git(self, *arguments, cwd=None, input=None):
         return self.run_command(["git", *arguments], cwd, input).stdout.strip()
+
+    def build_cli(self, repository):
+        self.mark_phase("canonical-build")
+        self.run_command(["make", "--no-print-directory", "-C", repository / "tools", "dotnet",
+                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
 
     def setUp(self):
         self.fixture_started = time.monotonic()
@@ -77,17 +94,7 @@ class CleanupMakeTests(NativeFixture):
         self.mark_phase("source-copy")
         # The selected CLI project and its production references do not build test
         # sources. Copy its current tool inputs without unrelated test checkouts.
-        files = subprocess.check_output(["git", "ls-files", "-z", "tools", ":(exclude)tools/tests"],
-                                        cwd=SOURCE).split(b"\0")
-        paths = [Path(os.fsdecode(name)) for name in files if name]
-        paths += list(map(Path, ["Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"]))
-        for relative in paths:
-            target = self.repository / relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(SOURCE / relative, target)
-        self.mark_phase("canonical-build")
-        self.run_command(["make", "--no-print-directory", "-C", self.repository / "tools", "dotnet",
-                          "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], phase="canonical-build")
+        copy_source(SOURCE, self.repository)
         self.mark_phase("preservation-lanes")
         self.dirty = self.add_lane("dirty")
         (self.dirty / "owned").write_text("unpublished dirty\n")
@@ -226,6 +233,7 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.build_cli(selected)
         self.diverge_main_adapter()
         (selected / "owned").write_text("old staged value\n")
         self.git("add", "owned", cwd=selected)
@@ -283,6 +291,7 @@ class CleanupMakeTests(NativeFixture):
                         ignore=shutil.ignore_patterns("bin", "obj"))
         for name in ("Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json"):
             shutil.copy2(self.repository / name, selected / name)
+        self.build_cli(selected)
         self.diverge_main_adapter()
         for tree in (selected, later):
             (tree / "deleted").write_text("delete from ordinary snapshot\n")
@@ -326,6 +335,7 @@ class CleanupMakeTests(NativeFixture):
             recovery_verified=True)), flush=True)
 
     def test_production_cleanup_entrances(self):
+        self.build_cli(self.repository)
         entrances = [
             (["-C", self.repository / "tools"], "clean-lanes", self.root),
             (["-C", self.repository / "tools"], "clean-all", self.root),
@@ -381,6 +391,42 @@ class CleanupMakeTests(NativeFixture):
                     source=str(self.repository), exit=removed.returncode,
                     removed=[str(eligible)], recoverable=[str(tree) for tree in
                         (self.dirty, self.local, self.cache, self.busy)])), flush=True)
+
+
+class SourceCopyTests(NativeFixture):
+    def test_current_tracked_untracked_and_deleted_inputs(self):
+        self.root = self.workspace("cleanup-source-")
+        source, destination = self.root / "source with spaces", self.root / "copy"
+        source.mkdir()
+        self.run_owned_command(["git", "init", "-q"], source)
+        required = ("Makefile", "Directory.Build.props", "Directory.Packages.props", "global.json")
+        for name in (*required, "tools/current.cs", "tools/deleted.cs", "tools/tests/excluded.cs"):
+            path = source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("indexed bytes\n")
+        (source / ".gitignore").write_text("ignored.cs\n")
+        self.run_owned_command(["git", "add", "."], source)
+        (source / "tools/current.cs").write_text("actual unstaged bytes\n")
+        (source / "tools/deleted.cs").unlink()
+        (source / "tools/new name\nsource.cs").write_text("actual untracked bytes\n")
+        (source / "tools/ignored.cs").write_text("ignored bytes\n")
+        index = (source / ".git/index").read_bytes()
+        copy_source(source, destination)
+        self.assertEqual("actual unstaged bytes\n", (destination / "tools/current.cs").read_text())
+        self.assertEqual("actual untracked bytes\n", (destination / "tools/new name\nsource.cs").read_text())
+        for name in ("tools/deleted.cs", "tools/ignored.cs", "tools/tests/excluded.cs"):
+            self.assertFalse((destination / name).exists(), name)
+        for name in required:
+            self.assertEqual("indexed bytes\n", (destination / name).read_text())
+        self.assertEqual(index, (source / ".git/index").read_bytes())
+        (source / "global.json").unlink()
+        with self.assertRaises(FileNotFoundError) as failure:
+            copy_source(source, self.root / "missing-required")
+        self.assertEqual(str(source / "global.json"), failure.exception.filename)
+        (source / "tools/broken.cs").symlink_to("missing-target")
+        with self.assertRaises(FileNotFoundError) as failure:
+            copy_source(source, self.root / "invalid-input")
+        self.assertEqual(str(source / "tools/broken.cs"), failure.exception.filename)
 
 
 class CommandLifetimeTests(NativeFixture):

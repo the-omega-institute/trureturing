@@ -26,6 +26,7 @@ proof_shape: Commutant.replicaSwap_apply: bind-only; consumer: CHaarConcatenatio
 escape_witness: Commutant.two_copy_commutant, via quarter phases and a Hadamard constraint.
 admission_basis: escape-witness
 Direct frozen dependencies: none; the upstream imports are pinned Mathlib.
+Escape audit unfinished for hadamard_unitary: https://github.com/the-omega-institute/trureturing/issues/16609.
 The finite Gram and coefficient identities are consumed normalization helpers. The new
 content is a universal commutant classification and the literal Haar-average reduction;
 no bounded enumeration, checker, numerical certificate or positive finite instance is retained.
@@ -67,6 +68,12 @@ instance haar_probability : IsProbabilityMeasure
 end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+def permutationUnitary {n : Type*} [Fintype n] [DecidableEq n]
+    (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
+  ⟨e.permMatrix ℂ, by
+    rw [Matrix.mem_unitaryGroup_iff]
+    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
+
 def literalMoment {I : Type*} (U : Matrix I I ℂ) :
     Matrix (((I × I) × (I × I))) (((I × I) × (I × I))) ℂ :=
   Matrix.kronecker (Matrix.kronecker (U.map star) (U.map star))
@@ -82,7 +89,7 @@ end D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
 namespace D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.Hadamard
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
+def hadamard (a b : n) (t : ℂ) : Matrix n n ℂ :=
   1 + single a a (t-1) + single b b (-t-1) + single a b t + single b a t
 
 private theorem single_mul_rule (a b c d : n) (x y : ℂ) :
@@ -111,7 +118,7 @@ private theorem hadamard_square (a b : n) (hab : a≠b) (t : ℂ) (ht : 2*t^2=1)
   all_goals simp_all [Matrix.single_apply]
   all_goals ring_nf <;> norm_num [ht2]
 
-private theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
+theorem hadamard_unitary (a b : n) (hab : a≠b) (t : ℂ)
     (hreal : star t=t) (ht : 2*t^2=1) : hadamard a b t ∈ unitaryGroup n ℂ := by
   rw [mem_unitaryGroup_iff,star_eq_conjTranspose,(hadamard_hermitian a b t hreal).eq]
   exact hadamard_square a b hab t ht
@@ -193,11 +200,6 @@ private theorem entry_support (X : Matrix ((n × n)) ((n × n)) ℂ)
     · simp [phaseCount,hca,hda] at ha
       omega
 
-private def permutationUnitary (e : Equiv.Perm n) : Matrix.unitaryGroup n ℂ :=
-  ⟨e.permMatrix ℂ, by
-    rw [Matrix.mem_unitaryGroup_iff]
-    simp [Matrix.star_eq_conjTranspose,← Matrix.permMatrix_mul]⟩
-
 omit [Fintype n] in
 private theorem tensor_permutation (e : Equiv.Perm n) :
     e.permMatrix ℂ ⊗ₖ e.permMatrix ℂ = Equiv.Perm.permMatrix ℂ (e.prodCongr e) := by
@@ -209,8 +211,8 @@ private theorem tensor_permutation (e : Equiv.Perm n) :
 private theorem entry_permutation (X : Matrix ((n × n)) ((n × n)) ℂ)
     (hX : tensorCommutes X) (e : Equiv.Perm n) (r c : (n × n)) :
     X ((e.prodCongr e) r) ((e.prodCongr e) c) = X r c := by
-  have h := hX (permutationUnitary e)
-  simp only [permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
+  have h := hX (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary e)
+  simp only [D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.permutationUnitary,tensor_permutation,Equiv.Perm.permMatrix,
     PEquiv.mul_toMatrix_toPEquiv,PEquiv.toMatrix_toPEquiv_mul] at h
   have hc := congrFun (congrFun h r) ((e.prodCongr e) c)
   rcases r with ⟨r1,r2⟩
@@ -405,7 +407,7 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
   constructor
   intro g
   have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+    inferInstance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp
@@ -415,8 +417,9 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
 
 private instance haar_invInvariant : Measure.IsInvInvariant (Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))) := by
   constructor
-  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) := by
+    unfold Measure.inv
+    infer_instance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp

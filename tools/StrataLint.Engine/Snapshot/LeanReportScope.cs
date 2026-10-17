@@ -37,10 +37,11 @@ internal sealed class LeanReportScope
         if (roots.IsEmpty)
             throw new ArgumentException("scoped Lean report targets must be nonempty", nameof(requestedTargets));
 
+        var dependencySources = LeanReportDependencySources.Select(sourceSnapshot).ToHashSet();
         var modules = sourceSnapshot.Files
-            .Where(static item => LeanClosureValidator.IsReportLean(item.Key.Value))
+            .Where(item => LeanClosureValidator.IsReportLean(item.Key.Value) || dependencySources.Contains(item.Key))
             .ToDictionary(
-                static item => ModuleName(item.Key),
+                static item => LeanImportClosure.ModuleName(item.Key),
                 static item => (Path: item.Key, File: item.Value),
                 StringComparer.Ordinal);
         var pending = new Stack<RepoPath>();
@@ -57,9 +58,11 @@ internal sealed class LeanReportScope
         }
 
         var paths = ImmutableHashSet.CreateBuilder<RepoPath>();
+        var visited = new HashSet<RepoPath>();
         while (pending.TryPop(out var path))
         {
-            if (!paths.Add(path)) continue;
+            if (!visited.Add(path)) continue;
+            if (LeanClosureValidator.IsReportLean(path.Value)) paths.Add(path);
             var source = sourceSnapshot.Files[path];
             if (RepositoryRules.TryHeader(source.Text, out var header)
                 && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
@@ -105,7 +108,4 @@ internal sealed class LeanReportScope
         || module.StartsWith("D5.", StringComparison.Ordinal)
         || module.StartsWith("Reg.", StringComparison.Ordinal);
 
-    private static string ModuleName(RepoPath path) => path.Value == "Trureturing.lean"
-        ? "Trureturing"
-        : path.Value[..^5].Replace('/', '.');
 }

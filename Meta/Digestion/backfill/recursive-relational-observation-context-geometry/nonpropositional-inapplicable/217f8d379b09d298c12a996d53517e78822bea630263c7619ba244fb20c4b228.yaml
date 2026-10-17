@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:217f8d379b09d298c12a996d53517e78822bea630263c7619ba244fb20c4b228
+  normalized_sha256: sha256:217f8d379b09d298c12a996d53517e78822bea630263c7619ba244fb20c4b228
+cas_ref: sha256:217f8d379b09d298c12a996d53517e78822bea630263c7619ba244fb20c4b228
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 命题 12.3（任务恢复与全部量子状态恢复的维数边界）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 303d9d1eb248daeafefea2161107df39fec871903c781d6a8383f5147bdad963
+    next_atom_id: 9faf622b6ea2e712a123c138829be1b17a1527aaf3d82096139c84acb081a2c3

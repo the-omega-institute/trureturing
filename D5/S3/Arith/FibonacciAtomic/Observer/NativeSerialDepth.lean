@@ -48,7 +48,7 @@ private theorem descriptor_eq {C O : Type} {δ : C → Op C O} {c b : C}
   have e := congrArg (fun x : Boundary C O => (x.2.1,x.2.2)) eq
   simpa using e
 
-private theorem run_unique {C O : Type} {δ : C → Op C O}
+theorem run_unique {C O : Type} {δ : C → Op C O}
     {c : C} {e : Nat} {r : Source} {t s : Trace} {o p : O}
     (h : Run δ c e r t o) (k : Run δ c e r s p) : t = s ∧ o = p := by
   induction h generalizing s p with

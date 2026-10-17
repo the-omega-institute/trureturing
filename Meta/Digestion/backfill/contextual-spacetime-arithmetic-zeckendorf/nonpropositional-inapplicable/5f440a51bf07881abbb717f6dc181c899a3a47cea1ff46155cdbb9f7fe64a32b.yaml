@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f440a51bf07881abbb717f6dc181c899a3a47cea1ff46155cdbb9f7fe64a32b
+  normalized_sha256: sha256:5f440a51bf07881abbb717f6dc181c899a3a47cea1ff46155cdbb9f7fe64a32b
+cas_ref: sha256:5f440a51bf07881abbb717f6dc181c899a3a47cea1ff46155cdbb9f7fe64a32b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Proof exposition for section 456.2. The mathematical statement is supplied by D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.reachable_finite, D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.history_recurrence, D5/S3/Factorization/Combinatorics/MixedPrimeHistoryCount.length_recurrence. The paragraph explains that same statement and its displayed substitutions or definitional consequences; it is not an independent theorem obligation. PrimeLetter=Prime⊕Prime，endpoint 从1按原顺序执行；n>0 给全部正终点可达及历史纤维有限。 n≥2 的两个和准确对应 q<n 加法前驱与素除数乘法前驱；k≥1 的长度递推使用 k-1，A/M 标签碰撞不合并。
+    previous_atom_id: 300c21516d0a3d70197ec8571e1c8ae534d16294dbd65de67f28cda033b5e964
+    next_atom_id: cf25ec9e2eccbbee362c0fe0cce72958980ae8eb3b2d9a8df0fad7a7d06dd3d1

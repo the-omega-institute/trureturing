@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee7991202d41f970a88e67f129b8d58c5a3fa5edbf107e39c5cea5e38058c4b3
+  normalized_sha256: sha256:ee7991202d41f970a88e67f129b8d58c5a3fa5edbf107e39c5cea5e38058c4b3
+cas_ref: sha256:ee7991202d41f970a88e67f129b8d58c5a3fa5edbf107e39c5cea5e38058c4b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Scope restriction to the first parameter case and explicit refusal to decide higher cases or a limit.
+    previous_atom_id: 47309d58bb0a17e7b7a70fc97e148bdb32e87c5b74fe84b821fa96cb8d078d7a
+    next_atom_id: 56ccf55c17107ec6e392a1246c2035c8d7a26af8ae0d3c3267e0827d644d414d

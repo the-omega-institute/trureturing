@@ -91,9 +91,6 @@ private theorem off_three : offset threeLabel = ((-1/2 : ℝ) + (-1/2 : ℝ)*g) 
   rw [t_linear]; ring
 private theorem off_two : offset twoLabel = ((1 : ℝ) + (0 : ℝ)*g) := by
   norm_num [offset,twoLabel]
-  intro hn
-  have hx := congrArg (fun i : Fin 3 => i.val) hn
-  norm_num at hx
 private theorem off_twoFive : offset twoFiveLabel = ((3/2 : ℝ) + (-1/2 : ℝ)*g) := by
   norm_num [offset,twoFiveLabel]
   rw [t_sq]; ring

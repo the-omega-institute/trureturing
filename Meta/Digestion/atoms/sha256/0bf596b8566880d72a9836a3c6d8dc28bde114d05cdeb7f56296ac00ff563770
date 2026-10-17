@@ -1,0 +1,28 @@
+**定义 1.2（一个实际有限边发射律）。** 对 $N\ge1$，保留完整参数域
+
+$$
+\Theta_N=\{(\lambda,M_0,M_1):\lambda\ge0,\ \lambda\mathbf1=1,
+\ M_0,M_1\ge0,\ A=M_0+M_1,\ A\mathbf1=\mathbf1,
+\ \lambda A=\lambda,\ \lambda M_1^2\mathbf1=0\}.
+\tag{1.1}
+$$
+
+$\lambda$ 是行向量，$M_0,M_1$ 是精确实数矩阵。最后一个条件是标量条件；本卷不把它替换为逐项的 $M_1^2=0$。给定 $\theta\in\Theta_N$，唯一使用的实际联合律由
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1})
+\tag{1.2}
+$$
+
+定义，其可见边缘为
+
+$$
+P=P_\theta,\qquad P([w]_a)=\lambda M_w\mathbf1,\qquad
+M_w=M_{w_1}\cdots M_{w_n},\quad M_\varnothing=I.
+\tag{1.3}
+$$
+
+结构零、零平稳质量、可约性、周期性和冗余表示都允许。任意接缝 $uv$ 的质量是
+$\lambda M_uM_v\mathbf1$，从不拆成两个边缘的乘积；坐标仍是原始发射位钟。
+

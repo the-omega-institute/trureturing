@@ -1,0 +1,4 @@
+**Lemma 4.3 (six-list truncation).** For any six sets $S_1,\ldots,S_6$, let $L_i\subseteq S_i$ contain exactly $\min(6,|S_i|)$ different members. A system of six distinct representatives exists in the $S_i$ if and only if one exists in the $L_i$.
+
+Proof. A system in the lists is already one in the sets. Conversely start with distinct representatives $z_1,\ldots,z_6$ in the sets and process $i=1,\ldots,6$. If $z_i\in L_i$, keep it. Otherwise $L_i$ has six members, since a smaller list contains its entire set. At most five are occupied by the other five current representatives. Replace $z_i$ by an unoccupied member of $L_i$. The system stays distinct and all earlier processed choices remain in their lists. After six steps all choices lie in their lists. Infinite sets present no additional case. This is an elementary distinct-representative replacement argument. $\square$
+

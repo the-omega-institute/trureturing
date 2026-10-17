@@ -1,0 +1,33 @@
+**Proof.** The possible first-zero classes are a and b, each having
+base total $2t$ and numerical total $2t$. Even and odd parity on
+three free bits have identical marginals on each subset of at most
+two bits: a specified assignment to r bits has $2^{2-r}$ extensions
+of each parity, for $0\le r\le2$. Thus the aggregate zero-label
+moments match. For each numerical label the C measure of Y equals
+the P measure of Z pointwise. Theorem 213.8's reading equivalence
+applies. Any table earns at most the total P mass $4t$ on Z and the
+anchor earns all of it. Cell equality gives the same costs for Y.
+Adding H preserves the equalities before maximization; subadditivity
+of the complete excess proves the displayed bound.
+
+Y is already pointwise saturated ($A_wC_w=0$), so 198.1 does not
+perform this reduction. If each event/class quadratic moment were
+fixed separately as in 206.5, fixing either first-zero class leaves
+two free bits; their degree-two moments determine all four atoms and
+distinguish the opposite parity supports. Thus the aggregate fiber
+permits a strictly different operation. The parity identity itself
+is classical and already appears in the moment discussion of 206.6.
+
+At $L=4,(a,b,j,k)=(1,2,3,4),t=1$, A occupies
+$0001,0010,1000,1011$, C occupies $0000,0011,1001,1010$, and Z
+puts P on the latter four. Their full N cell maxima are
+
+| Pair | $00,01,10,11$ |
+| --- | --- |
+| $12$ | $(2,0,2,0)$ |
+| $13,14,34$ | $(1,1,1,1)$ |
+| $23,24$ | $(2,2,0,0)$ |
+
+Every stopped pair and short schedule has support four. This also
+checks zero-reward cells and all five legal labels. $\square$
+

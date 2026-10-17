@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bbee701d5cfaab61302aeff6acc2a5aa408ff8cb9926dbb791b9b42f071d0e68
+  normalized_sha256: sha256:bbee701d5cfaab61302aeff6acc2a5aa408ff8cb9926dbb791b9b42f071d0e68
+cas_ref: sha256:bbee701d5cfaab61302aeff6acc2a5aa408ff8cb9926dbb791b9b42f071d0e68
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 17.4（固定目标的风险下降与实际策略总创新）。的证明段；本项只给出该陈述的论证及所用步骤的说明，不另立独立命题。命题陈述保留在前项。
+    previous_atom_id: 2a1b3e2852791198f567f2cc9e09c6cc16add6f1a281b78cf9ade9a3643e9f46
+    next_atom_id: 3f07c0d14d0938da269993dd12cb83bdfa6d0935cac9500968a96ffee9e91996

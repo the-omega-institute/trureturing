@@ -200,6 +200,34 @@ public sealed class RawLeanReportArtifactTests
     }
 
     [Fact]
+    public void StatementIdentityPreservesEscapingAcrossStringChunks()
+    {
+        var value = new string('a', 65535) + "🌍\b\f\r\n\t\\\"<>&\u2028\u2029";
+        var declaration = new LeanDeclaration("probe", "theorem", value, []);
+        var expected = Trureturing.Truth.StructuredCanonicalWriter.WriteJson(
+            System.Text.Json.JsonSerializer.SerializeToElement(new
+            {
+                declaration_name_key = "probe",
+                kind = "theorem",
+                module_path = "Trureturing.lean",
+                schema = "declaration-statement-v1",
+                statement_material = value,
+            }));
+
+        Assert.Equal(FrozenContentHash.Compute(FrozenHashDomains.Statement, expected.AsSpan()),
+            CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown("Trureturing.lean"), declaration));
+    }
+
+    [Fact]
+    public void StatementIdentitySupportsMaterialBeyondSingleJsonStringLimit()
+    {
+        var declaration = new LeanDeclaration("probe", "theorem", new string('x', 134217728), []);
+
+        Assert.Equal("sha256:83714a491db201c9df4f16c82c0fcbeda982b868c3c3d58da56b2a672fe073da",
+            CanonicalStatementWriter.DeclarationStatementId(RepoPath.CreateKnown("Trureturing.lean"), declaration));
+    }
+
+    [Fact]
     public void WriterIsByteStableAndUsesTheStructuredCanonicalJsonShape()
     {
         var snapshot = Snapshot();
@@ -308,6 +336,123 @@ public sealed class RawLeanReportArtifactTests
         Assert.Equal("statement-v1(test)", value);
         Assert.Same(value, read(address));
         Assert.Single(cache);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void FileReaderReturnsTheExactBytesValidatedBeforeTheFileChanges(bool validateMaterials)
+    {
+        const string material = "statement-v1(∀ α, Ω𝒪😀)";
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        WriteMaterialFixture(path, material);
+        var expected = File.ReadAllBytes(path);
+        var previousReading = RawLeanReportArtifact.Reading.Value;
+        var readingCount = 0;
+        RawLeanReportArtifact.Reading.Value = () =>
+        {
+            readingCount++;
+            File.WriteAllText(path, "{}\n");
+        };
+        try
+        {
+            var report = RawLeanReportArtifact.ReadFile(path, Snapshot(), out var rawBytes, validateMaterials);
+
+            Assert.Equal(1, readingCount);
+            Assert.Equal(expected, rawBytes.ToArray());
+            Assert.Equal("{}\n", File.ReadAllText(path));
+            var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
+            Assert.Equal("probe", declaration.Name);
+            Assert.Equal(material, declaration.LoadTypeRepresentation());
+            Assert.Same(declaration.LoadTypeRepresentation(), declaration.LoadTypeRepresentation());
+        }
+        finally
+        {
+            RawLeanReportArtifact.Reading.Value = previousReading;
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void FileReaderWithBytesPreservesTheOriginalMalformedBytesWhenValidationThrows(bool validateMaterials)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        var expected = Encoding.UTF8.GetBytes("{\"modules\":");
+        File.WriteAllBytes(path, expected);
+        var originalException = Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), validateMaterials));
+        var previousReading = RawLeanReportArtifact.Reading.Value;
+        RawLeanReportArtifact.Reading.Value = () => File.WriteAllText(path, "{}\n");
+        try
+        {
+            System.Collections.Immutable.ImmutableArray<byte> rawBytes = default;
+            var exception = Assert.Throws<FormatException>(() =>
+                RawLeanReportArtifact.ReadFile(path, Snapshot(), out rawBytes, validateMaterials));
+
+            Assert.Equal("Raw Lean report is not valid JSON.", exception.Message);
+            Assert.Equal(originalException.Message, exception.Message);
+            Assert.Equal(originalException.InnerException!.GetType(), exception.InnerException!.GetType());
+            Assert.Equal(expected, rawBytes.ToArray());
+            Assert.Equal("{}\n", File.ReadAllText(path));
+        }
+        finally
+        {
+            RawLeanReportArtifact.Reading.Value = previousReading;
+        }
+    }
+
+    [Theory]
+    [InlineData("canonical", false)]
+    [InlineData("canonical", true)]
+    [InlineData("snapshot", false)]
+    [InlineData("snapshot", true)]
+    [InlineData("scope", false)]
+    [InlineData("scope", true)]
+    public void FileReaderWithBytesPreservesStrictFullReportValidation(string defect, bool validateMaterials)
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        WriteMaterialFixture(path, "statement-v1(test)");
+        var snapshot = Snapshot();
+        switch (defect)
+        {
+            case "canonical":
+                File.WriteAllText(path, " " + File.ReadAllText(path));
+                break;
+            case "snapshot":
+                snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                    RawRepositorySnapshot.Create([RawRepositoryEntry.FromText("Trureturing.lean", Source + "\n")]))).Snapshot;
+                break;
+            case "scope":
+                File.WriteAllText(path, File.ReadAllText(path).Replace(
+                    RawLeanReportArtifact.Schema, RawLeanReportArtifact.ScopedSchema, StringComparison.Ordinal));
+                break;
+        }
+
+        Assert.Throws<FormatException>(() =>
+            RawLeanReportArtifact.ReadFile(path, snapshot, out _, validateMaterials));
+    }
+
+    [Fact]
+    public void FileReaderWithBytesPreservesLazyAndEagerMaterialValidation()
+    {
+        using var temporary = new TemporaryDirectory();
+        var path = Path.Combine(temporary.Path, "raw-lean-report.json");
+        WriteMaterialFixture(path, "statement-v1(test)");
+        var expected = File.ReadAllBytes(path);
+        File.Delete(RawLeanReportArtifact.MaterialsPath(path));
+
+        var report = RawLeanReportArtifact.ReadFile(path, Snapshot(), out var rawBytes, validateMaterials: false);
+        Assert.Equal(expected, rawBytes.ToArray());
+        var declaration = Assert.Single(Assert.Single(report.Files).Value.Declarations);
+        Assert.Throws<InvalidDataException>(() => declaration.LoadTypeRepresentation());
+        System.Collections.Immutable.ImmutableArray<byte> failedBytes = default;
+        Assert.Throws<InvalidDataException>(() =>
+            RawLeanReportArtifact.ReadFile(path, Snapshot(), out failedBytes, validateMaterials: true));
+        Assert.Equal(expected, failedBytes.ToArray());
     }
 
     [Theory]

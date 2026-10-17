@@ -20,6 +20,20 @@ internal sealed class MellinWeightedVariationDocument : IScribeDocumentDefinitio
                 + "C(x,alpha)=x^(alpha-1)/L*(h1+h2/(1-alpha)) is positive "
                 + "for x>1 and 0<alpha<1.")),
             Describe.Lean(
+                DescribeId.Create("weight-nonnegative"),
+                DeclarationHandle.Create(Prefix + "weight_nonneg"),
+                H("The Robin density is nonnegative"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real t>1, w(t)>=0. The numerator log(t)+1 "
+                        + "and the denominator t^2*log(t)^2 are positive. "
+                        + "This weight is the activation density used in the "
+                        + "partial-cell integrals; their nonnegativity follows "
+                        + "from the same inequality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("clipped-kernel-prefix"),
                 DeclarationHandle.Create(Prefix + "clipped_kernel_prefix_bound"),
                 H("Every pointwise prefix has one common bound"),

@@ -46,7 +46,7 @@ theorem feasible_iff_all_levels {B : ℕ → Type u}
   let X := Thread B q
   let π := levelProjection q (n + 1)
   have hπ (l : ℕ) : Measurable (π l) :=
-    measurable_pi_lambda _ fun j =>
+    Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   have hp (l : ℕ) : Measurable (fun x : X => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
@@ -72,21 +72,21 @@ theorem feasible_iff_all_levels {B : ℕ → Type u}
     · intro h j
       let ν := (Q : Measure (Fin (n + 1) → X)).map (fun y => y j)
       have : IsProbabilityMeasure ν :=
-        Measure.isProbabilityMeasure_map (measurable_pi_apply j).aemeasurable
+        inferInstance
       have heq (l : ℕ) : ν.map (fun x => x.val l) = (μ : Measure X).map (fun x => x.val l) := by
         rw [show ν = (Q : Measure (Fin (n + 1) → X)).map (fun y => y j) from rfl,
           Measure.map_map (hp l) (measurable_pi_apply j)]
         simpa only [Measure.map_map (measurable_pi_apply j) (hπ l), π,
           levelProjection, Function.comp_def] using h l j
       let c : X → Fin 1 → X := fun x _ => x
-      have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+      have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
       have hlev (l : ℕ) : (ν.map c).map (levelProjection q 1 l) =
           ((μ : Measure X).map c).map (levelProjection q 1 l) := by
         have hp1 : Measurable (levelProjection q 1 l) :=
-          measurable_pi_lambda _ fun i =>
+          Measurable.of_eval fun i =>
             (hp l).comp (measurable_pi_apply i)
         have hc1 : Measurable (fun x : B l => fun _ : Fin 1 => x) :=
-          measurable_pi_lambda _ fun _ => measurable_id
+          Measurable.of_eval fun _ => measurable_id
         rw [Measure.map_map hp1 hc, Measure.map_map hp1 hc]
         have hc_eq : levelProjection q 1 l ∘ c =
             (fun x : B l => fun _ : Fin 1 => x) ∘ (fun x : X => x.val l) := rfl

@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:044260844e39ecd597829ac14abe89c297436319c73e4582cd73d5b4612a1fc9
-  normalized_sha256: sha256:044260844e39ecd597829ac14abe89c297436319c73e4582cd73d5b4612a1fc9
-cas_ref: sha256:044260844e39ecd597829ac14abe89c297436319c73e4582cd73d5b4612a1fc9
-coverage_gids:
-  - gid: D5/S3/Factorization/JordanCototientRecordLimitInfinity.a004277_eventual_record_iff
-    target_statement_id: sha256:52c91414844a400270cb33bedb2d05850d0a4ca1863b5521a2a39e3c05a3aa08
-receipts:
-  unresolved_subitems: []

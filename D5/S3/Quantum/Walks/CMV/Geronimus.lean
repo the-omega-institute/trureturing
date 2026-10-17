@@ -179,7 +179,7 @@ private theorem secondStar_coeff (n k : ℕ) :
   change (Finsupp.mapDomain Nat.castEmbedding
     ((PowerSeries.trunc (n+1) (caratheodory*asPS (phiStar n))).toFinsupp.coeff))
       (Nat.castEmbedding k)=_
-  rw [Finsupp.mapDomain_apply Nat.castEmbedding.injective]
+  rw [Finsupp.mapDomain_apply_of_injective Nat.castEmbedding.injective]
   change (PowerSeries.trunc (n+1) (caratheodory*asPS (phiStar n))).coeff k=_
   rw [PowerSeries.coeff_trunc]
   simp only [Nat.lt_succ_iff]

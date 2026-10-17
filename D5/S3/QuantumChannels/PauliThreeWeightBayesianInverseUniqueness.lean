@@ -53,7 +53,7 @@ def claim : Prop := ∀ p : Fin 4 → ℝ, (∀ μ, 0 ≤ p μ) → ∑ μ, p μ
       ((∃ F, IsBayesianInverse (pauliChannel p) (pauliChannel p) F ρ) ↔
         ρ = (1 / 2 : ℂ) • 1)
 
-private theorem sigma_properties (μ : Fin 4) : (sigma μ)ᴴ = sigma μ ∧ sigma μ * sigma μ = 1 := by
+theorem sigma_properties (μ : Fin 4) : (sigma μ)ᴴ = sigma μ ∧ sigma μ * sigma μ = 1 := by
   obtain ⟨hanti, hX, hZ, hXX, hZZ⟩ := qubit_weyl_star
   change qubitXᴴ = qubitX at hX
   change qubitZᴴ = qubitZ at hZ
@@ -99,7 +99,7 @@ private theorem channel_unital (p : Fin 4 → ℝ) (hs : ∑ μ, p μ = 1) :
   rw [← Finset.sum_smul, ← Complex.ofReal_sum, hs]
   simp
 
-private theorem channel_cptp (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
+theorem channel_cptp (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
     (hs : ∑ μ, p μ = 1) : IsCPTP (pauliChannel p) := by
   let K : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ := fun μ => (Real.sqrt (p μ) : ℂ) • sigma μ
   have hK : pauliChannel p = MatrixMap.of_kraus K K := by
@@ -131,7 +131,7 @@ private theorem mixed_inverse (p : Fin 4 → ℝ) (hp : ∀ μ, 0 ≤ p μ)
   rw [map_smul, channel_unital p hs, hh]
 
 
-private def spin (r : Fin 3 → ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+def spin (r : Fin 3 → ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   ∑ i, (r i : ℂ) • sigma i.succ
 private def state (r : Fin 3 → ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   D5.S3.Quantum.Information.ActualPureQubitCostInfimum.blochMatrix 1 (WithLp.toLp 2 r)

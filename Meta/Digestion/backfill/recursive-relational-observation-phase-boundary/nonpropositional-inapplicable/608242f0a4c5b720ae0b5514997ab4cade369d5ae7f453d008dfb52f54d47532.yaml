@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:608242f0a4c5b720ae0b5514997ab4cade369d5ae7f453d008dfb52f54d47532
+  normalized_sha256: sha256:608242f0a4c5b720ae0b5514997ab4cade369d5ae7f453d008dfb52f54d47532
+cas_ref: sha256:608242f0a4c5b720ae0b5514997ab4cade369d5ae7f453d008dfb52f54d47532
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题：该 atom 仅为章节标题，不引入定义、性质或可判真假的陈述。
+    previous_atom_id: 2cf966a812b3c2a9a20ff38272fd007965749f5654e721b2e2908bcc848b432c
+    next_atom_id: e6485601aff260f5947dd72db684096ea2d3de7757e744add2a0d195d5c11c16

@@ -6,6 +6,7 @@
    utility: none
    digest: Finite grid duality, saturation of fractional optima, and matching density prices. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Analytic.Knapsack.FractionalKnapsackDual
 import D5.S3.Analytic.Interpolation.TwoPointGridDominance
 

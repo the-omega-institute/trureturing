@@ -135,7 +135,8 @@ public sealed class DigestionScopedQueryTests
         ]) };
         var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             fixture.Atomized.ClausePlans.Single().Children.Select(atom =>
-                new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes))));
+                new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)))
+            .GroupBy(static entry => entry.Path).Select(static group => group.First()));
         var environment = new ProductionCliEnvironment("/repo",
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null), new FakeLeanReportSource(null));
 
@@ -241,7 +242,8 @@ public sealed class DigestionScopedQueryTests
         Assert.Contains(fixture.Atomized.Claims, atom => Id(atom) == Id(child));
         var raw = RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(
             fixture.Atomized.ClausePlans.SelectMany(static plan => plan.Children)
-                .Select(atom => new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes))));
+                .Select(atom => new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)))
+            .GroupBy(static entry => entry.Path).Select(static group => group.First()));
 
         var result = new ProductionCliEnvironment("/repo",
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, null), new FakeLeanReportSource(null))
@@ -253,5 +255,6 @@ public sealed class DigestionScopedQueryTests
 
     private static RawRepositorySnapshot WithCas(AtomContextFixture fixture) =>
         RawRepositorySnapshot.Create(fixture.RawSnapshot().Entries.Concat(fixture.Atomized.Claims.Select(atom =>
-            new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes))));
+            new RawRepositoryEntry(DigestionCasStore.RootPath + Id(atom), atom.RawBytes)))
+            .GroupBy(static entry => entry.Path).Select(static group => group.First()));
 }

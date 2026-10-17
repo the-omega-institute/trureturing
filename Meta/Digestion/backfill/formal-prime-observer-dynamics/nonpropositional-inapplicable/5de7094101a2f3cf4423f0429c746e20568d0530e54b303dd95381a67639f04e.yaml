@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5de7094101a2f3cf4423f0429c746e20568d0530e54b303dd95381a67639f04e
+  normalized_sha256: sha256:5de7094101a2f3cf4423f0429c746e20568d0530e54b303dd95381a67639f04e
+cas_ref: sha256:5de7094101a2f3cf4423f0429c746e20568d0530e54b303dd95381a67639f04e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：- 把纸面 set-cover 等价声称为已实现最优算法；：仅为导引、项目安排、来源条目或记号清单，不提出数学命题。
+    previous_atom_id: 4f06fba38665deaff27c64b92c65fcb390149ad91ea01b146a75cbf6d17eecfb
+    next_atom_id: 093652b2815010a0f4f4fccdc477207e103f0a350596db9d875054569bb02ca0

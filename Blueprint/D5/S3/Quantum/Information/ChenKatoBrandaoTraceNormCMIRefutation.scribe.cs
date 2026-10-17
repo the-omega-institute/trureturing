@@ -20,6 +20,13 @@ internal sealed class ChenKatoBrandaoTraceNormCMIRefutationDocument : IScribeDoc
             Node("I1", "Trace-norm conditional mutual information", I1Formula(),
                 "Definition 2, PDF p. 14, verbatim: I_1(A:C|B) := ||rho_ABC - rho_A tensor rho_BC||_1 - ||rho_AB - rho_A tensor rho_B||_1. The input coordinates are (A times B) times C. partialTraceRight traces the right factor; partialTraceLeft traces the left factor. The maps R and S reassociate the product indices in opposite directions. AB, A, B and BC are the literal reduced matrices. The tensor product A tensor BC is reassociated back to the input coordinates before subtraction. No rank condition is imposed.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("ckb-trace-diagonal-norm"), DeclarationHandle.Create(Prefix + "diagonal_norm"),
+                H("Trace norm of a real diagonal matrix"), StatementSource.FromAuthor(DiagonalNormFormula()),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "The trace norm of a complex diagonal matrix with real entries is the sum of their absolute values. "
+                        + "The positive square root of its adjoint product is diagonal with entries equal to those absolute values. "
+                        + "The index type is any finite type with decidable equality, including the empty type."))), DescribeRole.Theorem),
             Node("claim", "Chen–Kato–Brandão Conjecture III.2", ClaimFormula(),
                 "Conjecture III.2, PDF p. 17, verbatim: For any channel E: C to CPrime with local contraction ratio eta_1,C < 1, there exists a global constant eta < 1 such that for any tripartite system ABC and any state rho_ABC, I_1(A:CPrime|B)_E(rho) <= eta I_1(A:C|B)_rho. All dimensions range over natural numbers. The finite Kraus family is arbitrary and its completeness equation is the channel hypothesis. L_i is the literal identity on AB kronecker K_i, and the bound applies uniformly to every DensityState on the input product carrier, including singular states.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -123,6 +130,19 @@ internal sealed class ChenKatoBrandaoTraceNormCMIRefutationDocument : IScribeDoc
                 Equal(Call("I1", m), value)))))));
         return Disp(All("dA", Naturals, All("dB", Naturals, All("n", Naturals,
             All("M", MatrixOf(abc, abc), body)))));
+    }
+
+    private static Formula DiagonalNormFormula()
+    {
+        Formula n = F.Id("n"), d = F.Id("d"), i = F.Id("i");
+        Formula diagonal = Call("Matrix.diagonal", LambdaOf(i, n, Call("Complex.ofReal", Apply(d, i))));
+        Formula norm = Call("Complex.re", Call("Matrix.trace", Call("CFC.sqrt",
+            Mul(Call("Matrix.conjTranspose", diagonal), diagonal))));
+        Formula sum = SumOver(i, n, Seq(Bar, Apply(d, i), Bar));
+        return Disp(All("n", Named("Type"), Seq(
+            OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
+            All("d", new Formula.TypeArrow(n, Reals), Equal(norm, sum)))));
     }
 
     private static Formula ClaimFormula()

@@ -138,6 +138,27 @@ private noncomputable def kappaRotation (α : ℝ) : State 2 :=
   Matrix.diagonal ![1,Complex.exp (Complex.I*(α:ℂ)),kappaPhase α]
 open Matrix Unitary
 
+theorem pair_entropy_le {u v p q : ℝ} (hu : 0 ≤ u) (huv : u < v)
+    (hp : u ≤ p) (hpv : p ≤ v) (hs : p + q = u + v) :
+    Real.negMulLog u + Real.negMulLog v ≤ Real.negMulLog p + Real.negMulLog q := by
+  let a := (v-p)/(v-u)
+  let b := (p-u)/(v-u)
+  have hd : 0 < v-u := sub_pos.mpr huv
+  have ha : 0 ≤ a := div_nonneg (sub_nonneg.mpr hpv) hd.le
+  have hb : 0 ≤ b := div_nonneg (sub_nonneg.mpr hp) hd.le
+  have hab : a+b=1 := by dsimp [a,b]; field_simp; ring
+  have hpa : a*u+b*v=p := by dsimp [a,b]; field_simp; ring
+  have hqa : b*u+a*v=q := by dsimp [a,b]; field_simp; nlinarith [hs]
+  have h1 := Real.concaveOn_negMulLog.2 hu (by linarith : 0 ≤ v) ha hb hab
+  have h2 := Real.concaveOn_negMulLog.2 hu (by linarith : 0 ≤ v) hb ha (by linarith : b+a=1)
+  simp only [smul_eq_mul, hpa, hqa] at h1 h2
+  have hsum : (a * Real.negMulLog u + b * Real.negMulLog v) +
+      (b * Real.negMulLog u + a * Real.negMulLog v) =
+      Real.negMulLog u + Real.negMulLog v := by
+    rw [show b=1-a by linarith]
+    ring
+  linarith
+
 /-- Conjecture 1 fails at K = 2, N = 3/2, epsilon = 6/7 and t = (7/2) log 2. -/
 theorem result : ¬ claim := by
   have triple_entropy_lt {a b c x y z : ℝ}
@@ -150,26 +171,6 @@ theorem result : ¬ claim := by
       (hmin : min x (min y z) < (1/8 : ℝ)) :
       Real.negMulLog x + Real.negMulLog y + Real.negMulLog z <
         Real.negMulLog a + Real.negMulLog b + Real.negMulLog c := by
-    have pair_entropy_le {u v p q : ℝ} (hu : 0 ≤ u) (huv : u < v)
-        (hp : u ≤ p) (hpv : p ≤ v) (hs : p + q = u + v) :
-        Real.negMulLog u + Real.negMulLog v ≤ Real.negMulLog p + Real.negMulLog q := by
-      let a := (v-p)/(v-u)
-      let b := (p-u)/(v-u)
-      have hd : 0 < v-u := sub_pos.mpr huv
-      have ha : 0 ≤ a := div_nonneg (sub_nonneg.mpr hpv) hd.le
-      have hb : 0 ≤ b := div_nonneg (sub_nonneg.mpr hp) hd.le
-      have hab : a+b=1 := by dsimp [a,b]; field_simp; ring
-      have hpa : a*u+b*v=p := by dsimp [a,b]; field_simp; ring
-      have hqa : b*u+a*v=q := by dsimp [a,b]; field_simp; nlinarith [hs]
-      have h1 := Real.concaveOn_negMulLog.2 hu (by linarith : 0 ≤ v) ha hb hab
-      have h2 := Real.concaveOn_negMulLog.2 hu (by linarith : 0 ≤ v) hb ha (by linarith : b+a=1)
-      simp only [smul_eq_mul, hpa, hqa] at h1 h2
-      have hsum : (a * Real.negMulLog u + b * Real.negMulLog v) +
-          (b * Real.negMulLog u + a * Real.negMulLog v) =
-          Real.negMulLog u + Real.negMulLog v := by
-        rw [show b=1-a by linarith]
-        ring
-      linarith
     have pair_entropy_lt {u v p q : ℝ} (hu : 0 ≤ u) (huv : u < v)
         (hp : u < p) (hpv : p < v) (hs : p + q = u + v) :
         Real.negMulLog u + Real.negMulLog v < Real.negMulLog p + Real.negMulLog q := by
@@ -516,8 +517,6 @@ theorem result : ¬ claim := by
     norm_num [Matrix.trace, Matrix.mul_apply, Matrix.vecMul, dotProduct,
       numberOperator, Matrix.diagonal_apply_eq, Matrix.diagonal_apply_ne,
       Fin.sum_univ_succ]
-    simp [Matrix.diagonal_apply_ne]
-    norm_num
   have dephasing_series (eta m n : ℝ) :
       HasSum (fun k : ℕ => (2*eta*m*n)^k/(k.factorial : ℝ) *
         Real.exp (-eta*(m^2+n^2))) (Real.exp (-eta*(m-n)^2)) := by

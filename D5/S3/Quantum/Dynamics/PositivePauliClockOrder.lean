@@ -295,7 +295,7 @@ theorem clock_pulse_special_directions (ω t : ℝ) :
 def controlled (Q P : QubitMatrix) : JointQubitEnvironmentMatrix :=
   (Matrix.blockDiagonal ![Q, P]).submatrix Prod.swap Prod.swap
 
-private lemma controlled_unitary (Q P : QubitMatrix)
+lemma controlled_unitary (Q P : QubitMatrix)
     (hQ : Q ∈ unitary QubitMatrix) (hP : P ∈ unitary QubitMatrix) :
     controlled Q P ∈ unitary JointQubitEnvironmentMatrix := by
   have h : ∀ i : Fin 2, (![Q, P] i) ∈ unitary QubitMatrix := by

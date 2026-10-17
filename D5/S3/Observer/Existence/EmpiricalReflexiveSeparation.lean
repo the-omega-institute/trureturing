@@ -37,7 +37,9 @@ open D5.S3.Quantum.Tomography.ObserverDiagonalSeparation
 open D5.S3.Quantum.Tomography.CompleteContextTomography
 open D5.S3.Quantum.Tomography.RankOneContextCommutator
 
-private theorem complex_sqrt_two_sq : (Real.sqrt 2 : Complex) ^ 2 = 2 := by
+/- The four-slot escape audit of complex_sqrt_two_sq is unfinished:
+https://github.com/the-omega-institute/trureturing/issues/16616. -/
+theorem complex_sqrt_two_sq : (Real.sqrt 2 : Complex) ^ 2 = 2 := by
   rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : Real) ≤ 2)]
   norm_num
 
@@ -80,11 +82,18 @@ private theorem qubitTomographyProjector_eq_rankOneDensity
       rankOneDensity (qubitTomographyVector l j) := by
   ext i k
   fin_cases l <;> fin_cases j <;> fin_cases i <;> fin_cases k <;>
-    norm_num [qubitTomographyProjector, qubitTomographyVector,
-      rankOneDensity, Matrix.vecMulVec_apply,
+    dsimp only [qubitTomographyProjector, qubitTomographyVector,
+      rankOneDensity, Matrix.vecMulVec_apply, Matrix.of_apply] <;>
+    norm_num only [qubitTomographyProjector, qubitTomographyVector,
+      rankOneDensity, Matrix.vecMulVec_apply, Matrix.of_apply,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_zero', Matrix.cons_val_succ', map_mul, map_inv₀, map_neg,
+      Pi.star_apply, star_zero, star_one, star_neg, star_mul', star_inv,
+      Complex.star_def, Complex.conj_ofReal, Complex.conj_I,
       complex_sqrt_two_inv_mul_self] <;>
     ring_nf <;>
-    norm_num [complex_sqrt_two_sq, complex_sqrt_two_inv_mul_self]
+    norm_num only [pow_two, Complex.I_mul_I, complex_sqrt_two_sq,
+      complex_sqrt_two_inv_mul_self, mul_neg]
 
 private theorem rankOneDensity_isNormalized
     (v : Fin 2 -> Complex) (hv : star v ⬝ᵥ v = 1) :
@@ -203,6 +212,5 @@ example :
   intro evaluation
   exact ⟨fun state => !(evaluation state state), hescape evaluation⟩
 
-#print axioms empirical_complete_reflexive_incomplete
 
 end D5.S3.Observer.Existence.EmpiricalReflexiveSeparation

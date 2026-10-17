@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:980374936af5b87cf87322a4cd6214f6cd7fd8ddd7c512be3a048e6bc2ff8880
+  normalized_sha256: sha256:980374936af5b87cf87322a4cd6214f6cd7fd8ddd7c512be3a048e6bc2ff8880
+cas_ref: sha256:980374936af5b87cf87322a4cd6214f6cd7fd8ddd7c512be3a048e6bc2ff8880
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只给出定理 J4 的残差极限界的证明及证明方法说明，不另立独立命题；其所证明的原陈述保留自身状态。
+    previous_atom_id: e17855c9db943466019087527afd9e178fa5c465197a1a9de44490e5fa8444b2
+    next_atom_id: d434181a00c8203a60054490e976fdfcfe0f1b1c1fc42b9a2d58797aa0341a9d

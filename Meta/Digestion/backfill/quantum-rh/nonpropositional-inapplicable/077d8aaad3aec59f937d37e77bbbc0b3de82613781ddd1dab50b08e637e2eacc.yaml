@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:077d8aaad3aec59f937d37e77bbbc0b3de82613781ddd1dab50b08e637e2eacc
+  normalized_sha256: sha256:077d8aaad3aec59f937d37e77bbbc0b3de82613781ddd1dab50b08e637e2eacc
+cas_ref: sha256:077d8aaad3aec59f937d37e77bbbc0b3de82613781ddd1dab50b08e637e2eacc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fixes the ordered FRACTRAN program, selection rule, state notation and meanings of memory, tested integer and trial divisor; no execution property is asserted.
+    previous_atom_id: caabae13f228f860ad20631756812810a0beda311a6726dd4d15b47f67c38c45
+    next_atom_id: 48ecf49516c77f9e1ed1dde12261c04c84d967ef3a554770779eec0ee0f00080

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e69795c05bf794b96080246e662edb22d2aa94e122a85963c339e8975c1ec8ca
+  normalized_sha256: sha256:e69795c05bf794b96080246e662edb22d2aa94e122a85963c339e8975c1ec8ca
+cas_ref: sha256:e69795c05bf794b96080246e662edb22d2aa94e122a85963c339e8975c1ec8ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题文本：108. 身份完成、规范完成与行为完成必须分开：仅为节标题及导引或设定适用条件；本片段未陈述后续命题的结论。
+    previous_atom_id: c2cc3f124e22737ba514b6c3aa743aa4d6bea046e6e324f6741d79aa5265b925
+    next_atom_id: 60bd2c15a51abb66ddea8e15b026c2cb1c4663bc4630824f5338a5647aa2d437

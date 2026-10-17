@@ -322,7 +322,7 @@ theorem delta_legal {C : LiteralRow} {d : Nat} (η : Patterns C d)
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem prefix_addresses_count (d : Nat) : (prefixAddresses d).length = 2^d-1 := by
+theorem prefix_addresses_count (d : Nat) : (prefixAddresses d).length = 2^d-1 := by
   induction d with
   | zero => simp [prefixAddresses]
   | succ d ih =>
@@ -396,7 +396,7 @@ theorem two_phase_uniform_bound (C : LiteralRow) (Q : CutSet) (H : History)
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem labels_witness (C : LiteralRow) (n : Nat) (hn : n ∈ labels C)
+theorem labels_witness (C : LiteralRow) (n : Nat) (hn : n ∈ labels C)
     (a : Address) : ∃ p : Address, a ++ p ∈ holeAddresses a C ∧ holeLabel p C = some n := by
   induction C generalizing a with
   | of z => cases z with
@@ -431,7 +431,7 @@ private theorem representative_label (C : LiteralRow) (b : Classes C) :
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem representative_subtree (C : LiteralRow) (v : Classes C → Source)
+theorem representative_subtree (C : LiteralRow) (v : Classes C → Source)
     (b : Classes C) :
     subtree (representative C b) (evaluateRow (NativeCutFibers.extend C v) C) = some (v b) := by
   have label := representative_label C b
@@ -512,7 +512,7 @@ private theorem phase_one_replies_correct (C : LiteralRow) (v : Classes C → So
 
 set_option maxHeartbeats 2000000 in
 -- The finite dependent carrier and transcript proofs require extended elaboration fuel.
-private theorem prefix_addresses_member (d : Nat) (s : Address) :
+theorem prefix_addresses_member (d : Nat) (s : Address) :
     s ∈ prefixAddresses d ↔ s.length < d := by
   induction d generalizing s with
   | zero => simp [prefixAddresses]

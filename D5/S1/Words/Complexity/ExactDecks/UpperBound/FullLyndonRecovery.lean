@@ -6,6 +6,7 @@
    utility: none
    digest: All bounded scattered counts are recovered unconditionally from Lyndon coordinates. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.IteratedOverlapBounds
 import D5.S1.Words.Complexity.ExactDecks.UpperBound.LyndonFactorization
 import D5.S1.Words.Complexity.ShuffleOrders.Indexed.IndexedShuffleOrder

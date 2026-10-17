@@ -348,7 +348,7 @@ public sealed class RepositorySymlinkTests
     {
         using var repository = new TemporaryDirectory();
         Initialize(repository.Path);
-        Write(repository.Path, "Meta/Digestion/atomizers.toml", "rules\n");
+        Write(repository.Path, "Meta/Digestion/backfill/probe/source.toml", "rules\n");
         Write(repository.Path, "Meta/.DS_Store", "finder\n");
         Write(repository.Path, "Reg/Probe.lean", "theorem probe : True := True.intro\n");
         Write(repository.Path, "Reg/.lake/build/Probe.olean", "compiled\n");
@@ -362,13 +362,13 @@ public sealed class RepositorySymlinkTests
             pathspecs: [":(glob)Meta/**", ":(glob)Reg/**", ".editorconfig"]);
 
         Assert.Contains(read.Entries, entry => entry.Path == ".editorconfig");
-        Assert.Contains(read.Entries, entry => entry.Path == "Meta/Digestion/atomizers.toml");
+        Assert.Contains(read.Entries, entry => entry.Path == "Meta/Digestion/backfill/probe/source.toml");
         Assert.Contains(read.Entries, entry => entry.Path == "Meta/.DS_Store");
         Assert.Contains(read.Entries, entry => entry.Path == "Reg/Probe.lean");
         Assert.Contains(read.Entries, entry => entry.Path == "Reg/.lake/build/Probe.olean");
         Assert.DoesNotContain(read.Entries, entry => entry.Path == "Reg.lean");
         Assert.DoesNotContain(read.Entries, entry => entry.Path == "docs/reports/unrelated.json");
-        Assert.Equal("rules\n", Text(read, "Meta/Digestion/atomizers.toml"));
+        Assert.Equal("rules\n", Text(read, "Meta/Digestion/backfill/probe/source.toml"));
     }
 
     [Fact]

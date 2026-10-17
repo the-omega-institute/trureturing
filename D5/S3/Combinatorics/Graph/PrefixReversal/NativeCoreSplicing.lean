@@ -52,8 +52,9 @@ private theorem half_endpoint {m : ℕ} (hm : 4 ≤ m) :
     mul_one, List.prod_flatten, List.map_replicate, List.prod_replicate, tau] using
     native_t_halfword_swap (by omega : 3 ≤ m)
 
-private theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
-    tau m * (b m * c m) = finRotate (m + 1) := by
+theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
+    Equiv.swap (0 : Fin (m + 1)) (Fin.last m) * (b m * c m) =
+      finRotate (m + 1) := by
   apply Equiv.ext
   intro i
   rw [Equiv.Perm.mul_apply, bc_apply (by omega : 2 ≤ m)]
@@ -66,7 +67,7 @@ private theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
         apply Fin.ext
         simp [hil, show m - 1 + 1 = m by omega]
       rw [he]
-      simp only [tau, Equiv.swap_apply_left, finRotate_apply]
+      simp only [Equiv.swap_apply_left, finRotate_apply]
       apply Fin.ext
       simp only [Fin.val_last, Fin.val_add, Fin.val_one',
         Nat.mod_eq_of_lt (by omega : 1 < m + 1)]
@@ -88,15 +89,14 @@ private theorem tau_bc_rotation {m : ℕ} (hm : 4 ≤ m) :
         have hv := congrArg Fin.val h
         simp only [Fin.val_last, hmod] at hv
         omega
-      rw [show tau m = Equiv.swap (0 : Fin (m + 1)) (Fin.last m) from rfl,
-        Equiv.swap_apply_of_ne_of_ne hn0 hnl, finRotate_apply]
+      rw [Equiv.swap_apply_of_ne_of_ne hn0 hnl, finRotate_apply]
       apply Fin.ext
       simp only [hmod, Fin.val_add, Fin.val_one',
         Nat.mod_eq_of_lt (by omega : 1 < m + 1),
         Nat.mod_eq_of_lt (by omega : i.val + 1 < m + 1)]
   · have he : i = Fin.last m := Fin.ext (by change i.val = m; have hb := i.isLt; omega)
     rw [dif_neg hi, he]
-    simp [tau, finRotate_apply]
+    simp [finRotate_apply]
 
 
 private theorem last_gap_rotation {m : ℕ} (hm : 4 ≤ m) :
@@ -104,7 +104,7 @@ private theorem last_gap_rotation {m : ℕ} (hm : 4 ≤ m) :
       finRotate (m + 1) := by
   change a m * c m * (b m * c m) ^ (m - 1) = _
   rw [show m - 1 = (m - 2) + 1 by omega, pow_succ,
-    ← mul_assoc, half_endpoint hm, tau_bc_rotation hm]
+    ← mul_assoc, half_endpoint hm, tau, tau_bc_rotation hm]
 
 private theorem circle_rotation {m : ℕ} (z : Configuration m) :
     configurationCycle (z * finRotate (m + 1)) = configurationCycle z := by
@@ -453,14 +453,12 @@ private theorem cutOrder_closed_chain {m : ℕ} (hm : 4 ≤ m) :
       (fun j : Fin (m - 2) =>
         (Sum.inl ⟨j.val, by have hj := j.isLt; omega⟩ : Fin m ⊕ Fin (m - 2)))).2
     convert h using 1
-    congr 2
   have huphead : up.head? = some (.inr ⟨0, by omega⟩) :=
     (ofFn_endpoints (by omega : 0 < m - 2) _).1
   have huptail : up.getLast? = some (.inr ⟨m - 3, by omega⟩) := by
     have h := (ofFn_endpoints (by omega : 0 < m - 2)
       (fun j : Fin (m - 2) => (Sum.inr j : Fin m ⊕ Fin (m - 2)))).2
     convert h using 1
-    congr 2
   have hflo : ([first] ++ lo).IsChain cutNext := by
     apply List.IsChain.append (List.IsChain.singleton _) hlo
     simp only [List.getLast?_singleton, hlohead, Option.mem_some_iff]

@@ -24,6 +24,7 @@ internal sealed record FileMapResidencePolicy(
 internal sealed record FileMapEntry
 {
     private readonly FileMapGlob glob;
+    private readonly ImmutableArray<FileMapGlob> exclusions;
 
     internal FileMapEntry(
         string pattern,
@@ -38,9 +39,12 @@ internal sealed record FileMapEntry
         string runtimeDisposition,
         string? historyRequirement,
         FileMapSymlink? symlink,
-        bool digestionSource = false)
+        bool digestionSource = false,
+        ImmutableArray<string> exclude = default)
     {
         glob = FileMapGlob.Create(pattern);
+        Exclude = exclude.IsDefault ? [] : exclude;
+        exclusions = Exclude.Select(FileMapGlob.Create).ToImmutableArray();
         Pattern = pattern;
         Kind = kind;
         AdmissionPlane = admissionPlane;
@@ -57,6 +61,8 @@ internal sealed record FileMapEntry
     }
 
     internal string Pattern { get; }
+
+    internal ImmutableArray<string> Exclude { get; }
 
     internal FileMapKind Kind { get; }
 
@@ -82,7 +88,7 @@ internal sealed record FileMapEntry
 
     internal bool DigestionSource { get; }
 
-    internal bool Matches(string path) => glob.IsMatch(path);
+    internal bool Matches(string path) => glob.IsMatch(path) && !exclusions.Any(value => value.IsMatch(path));
 }
 
 internal sealed class FileMapManifest
@@ -256,6 +262,7 @@ internal static partial class FileMapLoader
         var expectedKeys = isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys;
         if (table.ContainsKey("symlink")) expectedKeys = [.. expectedKeys, "symlink"];
         if (table.ContainsKey("digestion_source")) expectedKeys = [.. expectedKeys, "digestion_source"];
+        if (table.ContainsKey("exclude")) expectedKeys = [.. expectedKeys, "exclude"];
         RequireExactKeys(table, location, expectedKeys);
         var digestionSource = table.ContainsKey("digestion_source")
             ? table["digestion_source"] is true
@@ -341,7 +348,8 @@ internal static partial class FileMapLoader
             runtimeDisposition,
             historyRequirement,
             symlink,
-            digestionSource);
+            digestionSource,
+            FileMapGlob.ParseExclusions(table, location));
     }
 
     private static ImmutableArray<string> RequiredNames(

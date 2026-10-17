@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:601e9b49f640c552514a1e6bf396374d8a02a80190a0bf3e2de7f1e6b3aa0ab1
+  normalized_sha256: sha256:601e9b49f640c552514a1e6bf396374d8a02a80190a0bf3e2de7f1e6b3aa0ab1
+cas_ref: sha256:601e9b49f640c552514a1e6bf396374d8a02a80190a0bf3e2de7f1e6b3aa0ab1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 55.1 只规定完整单位和数组、可实现性和允许无穷值的诱导元数，不断言存在实现或有限上界。
+    previous_atom_id: 1f935fa9b44e24cfbf82c3bf0d8f1ed76d450230ee142f46ef213b7bf433e103
+    next_atom_id: aeed324ce9df4dd194466ccac874ddddba9ed743138349a032c6e8a74e4a34ae

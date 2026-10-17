@@ -580,13 +580,24 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "false. The earlier C05/C06 argument gives Measurable(delta_w) and, for every measurable original delta, "
                     + "R(w,delta_w)=Phi(-sqrt(3E(w))g/(2sigma))<=R(w,delta), where Phi(x)=cdf(gaussianReal(0,1),x). The zero-separation branch uses equal "
                     + "laws, not division by D(w).")))),
-            new DocumentBlock.Section(H("The literal quantile and the exact C10 energy cut"), Blocks(
+            new DocumentBlock.Section(H("C09: the literal Gaussian quantile and the C10 energy cut"), Blocks(
                 Paragraph(Text(
-                    "Define q=sInf {x:R | 1-alpha<=Phi(x)} and E_req=4sigma^2 q^2/(3g^2). Here sInf is the literal real infimum and Phi is the actual "
-                    + "standard Gaussian CDF. Its continuity, strict monotonicity, limits zero and one, Phi(0)=1/2 and reflection Phi(-x)=1-Phi(x) give a "
-                    + "unique q with Phi(q)=1-alpha. More explicitly, continuity and the limits provide such a point, and strict monotonicity identifies "
-                    + "the defining set as {x | q<=x}; this point is its least element and hence its sInf. Since 1-alpha>1/2=Phi(0), q>0. Reflection gives "
-                    + "Phi(-q)=alpha. For every real s, strict monotonicity now gives Phi(-s)<=alpha iff q<=s, and Phi(-s)=alpha iff s=q. These all-real "
+                    "Write Phi(x)=cdf(gaussianReal(0,1),x). This actual standard Gaussian CDF is continuous and strictly increasing on all real "
+                    + "numbers, tends to zero at minus infinity and to one at plus infinity, satisfies Phi(-x)=1-Phi(x) for every real x and "
+                    + "Phi(0)=1/2, and obeys 0<Phi(x)<1 at every finite real x. For each 0<p<1 define q(p)=sInf {x:R | p<=Phi(x)}, using the "
+                    + "literal real infimum. No convention for q(0) or q(1) is needed.")),
+                Paragraph(Text(
+                    "The two limits bracket every interior p, so continuity and the intermediate value theorem give a real root r with "
+                    + "Phi(r)=p. Strict monotonicity identifies {x:R | p<=Phi(x)} with Ici(r), whose infimum is r. Hence Phi(q(p))=p, this root "
+                    + "is unique among all real numbers, and the same superlevel set is exactly Ici(q(p)). For every real x, Phi(x)=p iff "
+                    + "x=q(p). Comparing with Phi(0)=1/2 gives all three signs: q(p)>0 iff p>1/2, q(p)=0 iff p=1/2, and q(p)<0 iff p<1/2. "
+                    + "Together these facts identify the range of Phi as exactly (0,1). This is the literal-infimum application of "
+                    + "stdNormalCDF_probit and stdNormalCDF_strictMono from the upstream source cited below.")),
+                Paragraph(Text(
+                    "For every 0<alpha<1/2 put q=q(1-alpha)=sInf {x:R | 1-alpha<=Phi(x)} and E_req=4sigma^2 q^2/(3g^2). Then q>0, "
+                    + "Phi(q)=1-alpha and, by stdNormalCDF_neg, Phi(-q)=alpha. The value q is the unique positive real root of "
+                    + "Phi(x)=1-alpha; indeed it is the unique real root, and {x:R | 1-alpha<=Phi(x)}=Ici(q). For every real s, including "
+                    + "zero and negative s, strict monotonicity gives Phi(-s)<=alpha iff q<=s, and Phi(-s)=alpha iff s=q. These all-real "
                     + "comparisons are established before any squaring.")),
                 Paragraph(Text(
                     "For E>=0 put s=sqrt(3E)g/(2sigma). Both s>=0 and q>0 are known, and 3g^2 and 4sigma^2 are positive. Therefore q<=s iff q^2<=s^2, "
@@ -803,7 +814,84 @@ internal sealed class SixDimensionalSharpGeometryDocument : IScribeDocumentDefin
                     + "positive noise added after weighting and arbitrary measurable deterministic classifiers. They retain empty designs, zero budgets and the critical "
                     + "boundary. They do not address amplitude-constrained hardware, delay optimization, correlated or non-Gaussian noise, unequal priors or costs "
                     + "beyond sum_j w_j^2. The eight conclusions here are applications of existing mathematics, with zero new Lean mathematical declarations, Describe "
-                    + "blocks or library-novelty credit. C07 and canonical C09/A17 remain outside this extension; no completion of the parent problem is asserted.")))))));
+                    + "blocks or library-novelty credit. C07 and canonical C09/A17 remain outside this extension; no completion of the parent problem is asserted.")))),
+            new DocumentBlock.Section(H("C07: two arbitrary equal-energy Gaussian designs"), Blocks(
+                Paragraph(Text(
+                    "Fix the same 0<epsilon<=1/2 and sigma>0 for two designs indexed by arbitrary finite types J and K, either of which "
+                    + "may be empty. In this section K denotes the second design's index type; the six sensor coordinates remain Fin 3 x "
+                    + "Fin 2 and B=EuclideanSpace R (Fin 3 x Fin 2). Choose arbitrary signed weights wJ:J -> R and wK:K -> R and arbitrary "
+                    + "known delays tJ:J -> R and tK:K -> R. Assume equality of the actual energies EJ=sum_j wJ(j)^2 and EK=sum_k wK(k)^2, "
+                    + "and write E=EJ=EK. There is no requirement that J and K have the same cardinality or that their weights, delays or "
+                    + "observation spaces coincide.")),
+                Paragraph(Text(
+                    "For each I=J,K separately, take a measurable sample space Omega_I, probability measures mu_I,b for b in Bool, and "
+                    + "AE-measurable noises xi_I,b,i:Omega_I -> B. Under each mu_I,b assume that the entire family (xi_I,b,i)_i is "
+                    + "independent and every member has law multivariateGaussian(0,sigma^2 I_(Fin 3 x Fin 2)). Put phi_false=0, "
+                    + "phi_true=2pi/3, s_I,b(i)=wI(i) sensor(epsilon,phi_b-tI(i)), Y_I,b(omega)(i)=s_I,b(i)+xi_I,b,i(omega), and "
+                    + "P_I,b=(mu_I,b).map(Y_I,b) on O_I=I -> B. These are separate full Gaussian-noise assumptions for each actual "
+                    + "experiment and label. No coupling or independence between the two designs or between labels is required. Noise is "
+                    + "added after weighting the signal and retains covariance sigma^2 I at zero as well as nonzero weights.")),
+                Paragraph(Text(
+                    "Use the actual flattening A_I:O_I -> V_I=EuclideanSpace R (I x (Fin 3 x Fin 2)), A_I(y)=toLp 2 (p -> y(p.1)(p.2)). "
+                    + "Set m_I,b=A_I(s_I,b), d_I=m_I,true-m_I,false and D_I=norm(d_I). This is the coordinate convention already "
+                    + "identified with the Fin 6 version above. Apply the original observation-law argument independently for I=J and I=K: "
+                    + "P_I,b.map(A_I)=multivariateGaussian(m_I,b,sigma^2 I), and pushing this law back through A_I^{-1} recovers P_I,b. In "
+                    + "particular, neither design's noise law or classifier is substituted into the other design.")))),
+            new DocumentBlock.Section(H("The two literal risk infima and their own attaining rules"), Blocks(
+                Paragraph(Text(
+                    "For every measurable deterministic delta:O_I -> Bool define R_I(delta)=[P_I,false.real({y | "
+                    + "delta(y)=true})+P_I,true.real({y | delta(y)=false})]/2. Define pInf_I=sInf {r:R | there exists delta:O_I -> Bool "
+                    + "with Measurable(delta) and R_I(delta)=r}, using the real sInf of all actual measurable deterministic classifier "
+                    + "risks. Each event probability is taken under that design's original law. The optimization has no threshold-only "
+                    + "restriction, finite candidate list or additional bound on classifiers.")),
+                Paragraph(Text(
+                    "For D_I>0 put u_I=D_I^{-1} d_I, c_I=(m_I,false+m_I,true)/2 and T_I(x)=inner(u_I,x-c_I). Define deltaStar_I(y)=true "
+                    + "exactly when 0<=T_I(A_I(y)), with true at a midpoint tie. For D_I=0 define deltaStar_I to be the constant-false "
+                    + "rule. For EACH I=J,K this is a measurable deterministic rule on O_I, and R_I(deltaStar_I)=pInf_I<=R_I(delta) for "
+                    + "every measurable delta:O_I -> Bool. Thus each design attains its own literal infimum with its own actual midpoint "
+                    + "classifier, including the constant-false coincident-mean convention.")))),
+            new DocumentBlock.Section(H("Equal actual energy gives exactly equal optimized risk"), Blocks(
+                Paragraph(Text(
+                    "Let Phi(x)=cdf(gaussianReal(0,1),x). The common value is pInf_J=pInf_K=Phi(-(sqrt(3E) "
+                    + "lowerGain(epsilon))/(2sigma))=Phi(-sqrt(6epsilon E/(9+20epsilon))/(2sigma)). Both displayed formulas hold "
+                    + "separately for each infimum and, by attainment, for R_J(deltaStar_J) and R_K(deltaStar_K). The lowerGain is the "
+                    + "actual physical chord-gain infimum defined above.")),
+                Paragraph(Text(
+                    "To derive the formulas, first apply the C05/C06 all-classifier argument separately to each actual law. Its Fubini "
+                    + "reduction and pointwise Gaussian-density domination bound EVERY original measurable rule below by "
+                    + "Phi(-D_I/(2sigma)); its actual midpoint rule attains that bound. The attainable risk set is nonempty and bounded "
+                    + "below, and the attained least-element identity IsLeast.csInf_eq therefore gives pInf_I=Phi(-D_I/(2sigma)). This "
+                    + "risk identity is a conclusion of the stated full noise model, not an extra premise about either experiment.")),
+                Paragraph(Text(
+                    "Next apply the C08 geometric identities separately to the same signed means: D_I^2=6epsilon E_I/(9+20epsilon) and "
+                    + "D_I=sqrt(3E_I) lowerGain(epsilon)=sqrt(6epsilon E_I/(9+20epsilon)). The delayed third-turn chord square is "
+                    + "6epsilon/(9+20epsilon), independently of the delay; Euclidean block squares add and the signed weight contributes "
+                    + "wI(i)^2. Since E_I>=0, D_I>=0 and lowerGain(epsilon)>0, these are the nonnegative square-root branches, including "
+                    + "E_I=0. Substitution into each independently obtained risk formula gives its energy expression. Only then use EJ=EK "
+                    + "to equate the two scalar values. This does not compare vectors in different dimensions or combine a mean, noise law "
+                    + "or witness from different designs.")))),
+            new DocumentBlock.Section(H("Zero energy, either empty index type and scope of the comparison"), Blocks(
+                Paragraph(Text(
+                    "If E=0, both D_J and D_K vanish. Within EACH experiment P_I,true=P_I,false, and the two Boolean error events are "
+                    + "measurable complements under that common probability law. Hence every measurable classifier on O_I has "
+                    + "R_I(delta)=1/2. Both literal infima and both constant-false attaining risks are 1/2, consistently with Phi(0)=1/2. "
+                    + "This includes all-zero weights on nonempty index types; equality here is between the two labels within an "
+                    + "experiment, without asserting equality of measures on O_J and O_K.")),
+                Paragraph(Text(
+                    "If J is empty, EJ=0, and the energy-equality assumption also forces EK=0; consequently both infima are 1/2. If K is "
+                    + "empty, EK=0 and EJ=0 give the same conclusion. The other index type need not be empty. These statements use the "
+                    + "actual empty finite sum and the preceding coincident-law argument. Setting K=J is an internal specialization of "
+                    + "this arbitrary-two-type comparison and adds no assumption or separate result.")),
+                Paragraph(Text(
+                    "The supplier correspondence is the C05/C06 actual-law risk argument with I, Omega_I, wI, tI, mu_I and xi_I "
+                    + "substituted separately for each experiment, followed by the C08 energy identities with exactly those same epsilon, "
+                    + "wI and tI. The geometric suppliers are sensor, six_chord_norm_sq, lower_gain_sq and lower_gain_eq_sqrt in "
+                    + "SixDimensionalSharpGeometry; the probability, finite-product, Gaussian and real-infimum suppliers are the existing "
+                    + "Mathlib results identified above at db584cd6d46c92f209a44c0f1c829460d327499d. The final step is substitution of the "
+                    + "assumed equality of finite sums of squared weights. The comparison concerns equal priors, the fixed two phases, the "
+                    + "common epsilon and positive post-weight isotropic noise scale, arbitrary known delays and all measurable "
+                    + "deterministic classifiers. It does not extend the equality to unequal noise scales, correlated or non-Gaussian "
+                    + "noise, unequal priors or a different pair of phases.")))))));
 
     private static Formula ActualEtaLimitFormula() => Disp(Call("Tendsto",
         Seq(Open, Varepsilon, Colon, Sp, Mathbb, Grp(F.Id("R")), Close,

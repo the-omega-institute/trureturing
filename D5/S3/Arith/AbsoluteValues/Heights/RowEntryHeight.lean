@@ -59,7 +59,7 @@ theorem iSup_plucker_le_prod {v : AbsoluteValue K ℝ} (hv : IsNonarchimedean v)
   rw [h1, one_mul, map_prod]
   calc ∏ i, v (Matrix.of (fun i j ↦ X i (Set.powersetCard.ofFinEmbEquiv.symm s j)) (σ i) i)
       ≤ ∏ i, ⨆ j, v (X (σ i) j) :=
-        Finset.prod_le_prod (fun i _ ↦ v.nonneg _) fun i _ ↦ Finite.le_ciSup_of_le _ le_rfl
+        Finset.prod_le_prod₀ (fun i _ ↦ v.nonneg _) fun i _ ↦ Finite.le_ciSup_of_le _ le_rfl
     _ = ∏ i, ⨆ j, v (X i j) := Equiv.prod_comp σ fun i ↦ ⨆ j, v (X i j)
 
 end exteriorPower
@@ -155,7 +155,7 @@ theorem arakelovMulHeight_plucker_row_le_prod (A : Matrix (Fin m) ι K) :
     have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
     have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
     rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod fun v _ ↦ ?_)
+    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod₀ fun v _ ↦ ?_)
       (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
     have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
       le_trans (le_of_eq (by simp [hi']))
@@ -165,7 +165,7 @@ theorem arakelovMulHeight_plucker_row_le_prod (A : Matrix (Fin m) ι K) :
   rcases eq_or_ne (plucker m A.row) 0 with h0 | h0
   · rw [h0, (show NumberField.arakelovMulHeight (0 : Set.powersetCard ι m → K) = 1 from by
       simp [NumberField.arakelovMulHeight])]
-    exact Finset.one_le_prod fun _ _ ↦ nativeSource13 _
+    exact Finset.one_le_prod₀ fun _ _ ↦ nativeSource13 _
   have hrow : ∀ i, A i ≠ 0 := by
     intro i hi
     apply h0
@@ -196,13 +196,13 @@ theorem arakelovMulHeight_plucker_row_le_prod (A : Matrix (Fin m) ι K) :
   rw [NumberField.arakelovMulHeight, if_neg h0, hexp]
   refine mul_le_mul ?_ ?_ ?_ ?_
   · rw [Finset.prod_comm]
-    refine Finset.prod_le_prod (fun v _ ↦ by positivity) fun v _ ↦ ?_
+    refine Finset.prod_le_prod₀ (fun v _ ↦ by positivity) fun v _ ↦ ?_
     rw [Real.finsetProd_rpow _ _ (fun i _ ↦ Finset.sum_nonneg fun j _ ↦ by positivity) _]
     exact Real.rpow_le_rpow (Finset.sum_nonneg fun s _ ↦ by positivity)
       (sum_sq_plucker_row_le_prod v A) (by positivity)
   · rw [← finprod_prod_comm Finset.univ (fun (v : FinitePlace K) i ↦ ⨆ j, v (A i j))
       fun i _ ↦ hfini i]
-    refine finprod_le_finprod hfinp (fun v ↦ Real.iSup_nonneg fun _ ↦ apply_nonneg _ _)
+    refine finprod_le_finprod₀ hfinp (fun v ↦ Real.iSup_nonneg fun _ ↦ apply_nonneg _ _)
       (Function.HasFiniteMulSupport.prod hfini Finset.univ) fun v ↦ ?_
     exact iSup_plucker_le_prod (NumberField.FinitePlace.add_le v) A.row
   · exact _root_.finprod_nonneg fun v ↦ Real.iSup_nonneg fun _ ↦ apply_nonneg _ _
@@ -349,7 +349,7 @@ theorem arakelovMulHeight_span_range_le_prod {μ : Type*} [Fintype μ] (v : μ �
       have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
       have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
       rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-      refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod fun v _ ↦ ?_)
+      refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod₀ fun v _ ↦ ?_)
         (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
       have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
         le_trans (le_of_eq (by simp [hi']))
@@ -406,7 +406,7 @@ theorem arakelovMulHeight_span_range_le_prod {μ : Type*} [Fintype μ] (v : μ �
           rw [← Finset.prod_sdiff (Finset.subset_univ (Finset.univ.image f))]
           exact le_mul_of_one_le_left
             (Finset.prod_nonneg fun i _ ↦ (nativeSource16 _).le)
-            (Finset.one_le_prod fun i _ ↦ nativeSource13 _)
+            (Finset.one_le_prod₀ fun i _ ↦ nativeSource13 _)
   let e : Fin (Fintype.card μ) ≃ μ := (Fintype.equivFin μ).symm
   have hrange :
       Set.range (Matrix.of fun l ↦ v (e l) : Matrix (Fin (Fintype.card μ)) ι K).row

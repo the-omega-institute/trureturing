@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:48d777afe7c9d04a02dba921e99fd9c9914e048b8b093e2b71ebcc75c47e93a4
+  normalized_sha256: sha256:48d777afe7c9d04a02dba921e99fd9c9914e048b8b093e2b71ebcc75c47e93a4
+cas_ref: sha256:48d777afe7c9d04a02dba921e99fd9c9914e048b8b093e2b71ebcc75c47e93a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 451.1（共同未知状态上的实际联合）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: ac7abe6f656f6ec735b29f690af09e77c65391ec3f73e9b2824dce46fe775773
+    next_atom_id: a73a54fcfcf315c5cdc531979ead1d96522aab2421bd6c0e32c6e1d39f8eba2d

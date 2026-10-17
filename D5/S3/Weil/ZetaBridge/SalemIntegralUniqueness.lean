@@ -182,10 +182,10 @@ private theorem salem_pullback_ae_zero_iff (f : ℝ → ℂ) :
       (∀ᵐ t ∂volume.restrict (Ioi 0), f t = 0) := by
   constructor
   · intro h
-    filter_upwards [quasiMeasurePreserving_neg_log.ae h,
+    filter_upwards [MeasureTheory.QuasiMeasurePreserving.ae quasiMeasurePreserving_neg_log h,
       ae_restrict_mem measurableSet_Ioi] with t ht htpos
-    simpa [Real.exp_log htpos] using ht
-  · exact quasiMeasurePreserving_exp_neg.ae
+    simpa only [Set.mem_setOf_eq, neg_neg, Real.exp_log htpos] using ht
+  · exact MeasureTheory.QuasiMeasurePreserving.ae quasiMeasurePreserving_exp_neg
 
 
 private theorem original_integrand_integrable (δ x : ℝ) (hδ : 0 < δ) (hx : 0 < x)

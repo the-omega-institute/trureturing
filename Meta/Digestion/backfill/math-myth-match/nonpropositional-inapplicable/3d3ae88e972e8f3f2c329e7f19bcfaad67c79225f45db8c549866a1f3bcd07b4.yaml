@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d3ae88e972e8f3f2c329e7f19bcfaad67c79225f45db8c549866a1f3bcd07b4
+  normalized_sha256: sha256:3d3ae88e972e8f3f2c329e7f19bcfaad67c79225f45db8c549866a1f3bcd07b4
+cas_ref: sha256:3d3ae88e972e8f3f2c329e7f19bcfaad67c79225f45db8c549866a1f3bcd07b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节 140. 谁在变化中相续：同一对象、同一读数与同一个人：仅为章节题名，指示讨论主题；无独立命题陈述。
+    previous_atom_id: 2f94e3a08220799c502ab7403b2f2874a797c1932c76c66a10e96702ce21f263
+    next_atom_id: 90536b708d1db35696daaedd97bd67bfa3a35595c21d9b3aecec961e9799d5dd

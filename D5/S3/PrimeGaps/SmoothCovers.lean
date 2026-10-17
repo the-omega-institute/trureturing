@@ -85,7 +85,7 @@ lemma eulerProduct_left_comparison (N : ℕ) {t : ℝ} (ht : 0 ≤ t) (ht' : t �
   calc
     _ ≤ ∏ p ∈ N.primesLE, (1 - (p : ℝ) ^ (-(1 : ℝ)))⁻¹ *
         Real.exp (smoothEulerConstant * ((p : ℝ) ^ t - 1) / p) := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · intro p hp
         exact inv_nonneg.mpr (sub_nonneg.mpr (Real.rpow_lt_one_of_one_lt_of_neg
           (by exact_mod_cast (Nat.mem_primesLE.mp hp).2.one_lt) (by linarith)).le)

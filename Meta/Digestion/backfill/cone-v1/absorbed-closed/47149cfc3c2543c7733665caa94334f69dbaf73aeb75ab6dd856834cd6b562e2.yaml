@@ -1,9 +1,0 @@
-fingerprints:
-  raw_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
-  normalized_sha256: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
-cas_ref: sha256:47149cfc3c2543c7733665caa94334f69dbaf73aeb75ab6dd856834cd6b562e2
-coverage_gids:
-  - gid: D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv
-    target_statement_id: sha256:f6fc2b2f36fe0ff12234183b5817929ace3e6949f49b2e10b7bf0f4ab5c1bbd5
-receipts:
-  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9427bb3068670e56755daa5f23eb8b544b4cc966cd0b351657bc87cc204b7757
+  normalized_sha256: sha256:9427bb3068670e56755daa5f23eb8b544b4cc966cd0b351657bc87cc204b7757
+cas_ref: sha256:9427bb3068670e56755daa5f23eb8b544b4cc966cd0b351657bc87cc204b7757
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 375. 资源敏感的概念精化：只引入本段使用的对象、记号、计算定义或术语约定，不追加存在、唯一性或性质结论。
+    previous_atom_id: 4c2b714cb3985bd4de5c58bf02d1c1c78bb6cfe342f2143ce0b84383c00d59f2
+    next_atom_id: 5cb1dd21d2e5937bd4c7aa2caeaacf5e328581c428501d70b79dc5aa2ad0a7d6

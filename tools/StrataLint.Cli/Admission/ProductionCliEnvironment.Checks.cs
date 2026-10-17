@@ -18,10 +18,10 @@ internal sealed partial class ProductionCliEnvironment
         try
         {
             var options = ParseCheckArguments(arguments);
-            if (options.CandidateLeanReport is null || (!delta && options.ProtectedBase is not null)
+            if ((!delta && (options.CandidateLeanReport is null || options.ProtectedBase is not null))
                 || (delta && options.ProtectedBase is null))
                 throw new InvalidOperationException(delta
-                    ? "check-delta requires --protected-base and --candidate-lean-report"
+                    ? "check-delta requires --protected-base; non-theory changes also require --candidate-lean-report"
                     : "check-current requires --candidate-lean-report and accepts no base");
 
             var raw = timing.Measure("repository-read", () => AdmissionRepositoryInputs.ReadCurrent(repository));
@@ -38,13 +38,17 @@ internal sealed partial class ProductionCliEnvironment
                 return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
 
             var current = timing.Measure("snapshot-load", () => Decode(raw));
-            var report = timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true));
+            var report = options.CandidateLeanReport is null ? null
+                : timing.Measure("lean-report-load", () => RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
             {
                 PolicyLoadOutcome.Accepted accepted => accepted.Policy,
                 PolicyLoadOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
             });
-            var lean = timing.Measure("lean-closure", () => LeanClosureValidator.Validate(current, report) switch
+            if (options.CandidateLeanReport is null)
+                return RenderStage(timing.Measure("rule-passes", () => RuleCatalog.Default.ExecuteTheoryDelta(
+                    current, policy, prepared!.Changes, MeasureRule), Blocked), planeObservations);
+            var lean = timing.Measure("lean-closure", () => LeanClosureValidator.Validate(current, report!) switch
             {
                 LeanValidationOutcome.Accepted accepted => accepted.Capability,
                 LeanValidationOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
@@ -68,7 +72,7 @@ internal sealed partial class ProductionCliEnvironment
             }
             else
             {
-                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report,
+                var verified = timing.Measure("scribe-verify", () => VerifyScribeForAdmission(scribeEmissionVerifier, current, report!,
                     options.ScribePaths is null ? null : RawChangeSet.Create(MarkdownFormulaScope.ParsePaths(File.ReadAllText(options.ScribePaths)))));
                 result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckCurrent(
                     CurrentRuleContext.Create(current, policy, lean, verified), MeasureRule), Blocked);

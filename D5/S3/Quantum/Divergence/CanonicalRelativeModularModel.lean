@@ -33,6 +33,21 @@ variable {a : Type u} {b : Type v} [Fintype a] [DecidableEq a] [Nonempty a]
 
 open scoped Classical
 
+/-- The real quadratic form of a real diagonal matrix is the weighted squared norm. -/
+theorem diagonal_quadratic_form {n : Type u} [Fintype n] [DecidableEq n]
+    (d : n → ℝ) (y : n → ℂ) :
+    (star y ⬝ᵥ (diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2 := by
+  change (RCLike.re : ℂ →+ ℝ) _ = _
+  simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum]
+  apply Finset.sum_congr rfl
+  intro i _
+  have term : star (y i) * ((d i : ℂ) * y i) =
+      (d i : ℂ) * (star (y i) * y i) := by ring
+  have eqnorm : star (y i) * y i = ((‖y i‖ ^ 2 : ℝ) : ℂ) := by
+    simpa only [RCLike.star_def, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_pow]
+      using RCLike.conj_mul (y i)
+  rw [term, eqnorm, ← Complex.ofReal_mul, RCLike.re_to_complex, Complex.ofReal_re]
+
 /-- One normalized Kraus representation of the actual physical channel. -/
 structure ActualKrausRepresentation (Φ : QuantumChannel a b) where
   kraus : Fin (Fintype.card b) × Fin (Fintype.card a) → Matrix b a ℂ
@@ -254,7 +269,7 @@ def supported_relative_modular_model (Φ : QuantumChannel a b) (ρ σ : DensityS
         rw [← quadratic X y, hy, dotProduct_zero]
       have hz := (Finset.sum_eq_zero_iff_of_nonneg (fun c (_ : c ∈ (Finset.univ : Finset (Fin (Fintype.card b) × Fin (Fintype.card a)))) =>
           hX.dotProduct_mulVec_nonneg ((kraus c)ᴴ *ᵥ y))).mp hsum
-      intro c; exact (hX.dotProduct_mulVec_zero_iff _).mp (hz c (Finset.mem_univ _))
+      intro c; exact (hX.dotProduct_mulVec_zero_iff (x := _)).mp (hz c (Finset.mem_univ _))
     · intro hz
       rw [Matrix.sum_mulVec]; apply Finset.sum_eq_zero; intro c _; rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hz c, Matrix.mulVec_zero]
   have outputSupport : SupportContained (Φ.mapState ρ) (Φ.mapState σ) := by
@@ -496,18 +511,8 @@ def supported_relative_modular_model (Φ : QuantumChannel a b) (ρ σ : DensityS
     have eq : star (star x ⬝ᵥ (M *ᵥ y)) = star y ⬝ᵥ (Mᴴ *ᵥ x) := by
       rw [star_dotProduct, Matrix.star_mulVec, dotProduct_comm, dotProduct_mulVec]; simp only [star_star, dotProduct_comm]
     rw [← eq, norm_star]
-  have diagonalQuadratic {n : Type u} [Fintype n] [DecidableEq n] (d : n → ℝ) (y : n → ℂ) : (star y ⬝ᵥ (diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2 := by
-    change (RCLike.re : ℂ →+ ℝ) _ = _; simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum]; apply Finset.sum_congr rfl; intro i _
-    have term : star (y i) * ((d i : ℂ) * y i) = (d i : ℂ) * (star (y i) * y i) := by ring
-    have eqnorm : star (y i) * y i = ((‖y i‖ ^ 2 : ℝ) : ℂ) := by
-      simpa only [RCLike.star_def, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_pow] using RCLike.conj_mul (y i)
-    rw [term, eqnorm, ← Complex.ofReal_mul, RCLike.re_to_complex, Complex.ofReal_re]
-  have diagonalQuadraticOutput {n : Type v} [Fintype n] [DecidableEq n] (d : n → ℝ) (y : n → ℂ) : (star y ⬝ᵥ (diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2 := by
-    change (RCLike.re : ℂ →+ ℝ) _ = _; simp only [Matrix.mulVec_diagonal, dotProduct, Pi.star_apply, map_sum]; apply Finset.sum_congr rfl; intro i _
-    have term : star (y i) * ((d i : ℂ) * y i) = (d i : ℂ) * (star (y i) * y i) := by ring
-    have eqnorm : star (y i) * y i = ((‖y i‖ ^ 2 : ℝ) : ℂ) := by
-      simpa only [RCLike.star_def, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_pow] using RCLike.conj_mul (y i)
-    rw [term, eqnorm, ← Complex.ofReal_mul, RCLike.re_to_complex, Complex.ofReal_re]
+  have diagonalQuadratic {n : Type u} [Fintype n] [DecidableEq n] (d : n → ℝ) (y : n → ℂ) : (star y ⬝ᵥ (diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2 := diagonal_quadratic_form d y
+  have diagonalQuadraticOutput {n : Type v} [Fintype n] [DecidableEq n] (d : n → ℝ) (y : n → ℂ) : (star y ⬝ᵥ (diagonal (fun i => (d i : ℂ)) *ᵥ y)).re = ∑ i, d i * ‖y i‖ ^ 2 := diagonal_quadratic_form d y
   have coordinateWeighted {n : Type u} [Fintype n] [DecidableEq n] (R S : Matrix n n ℂ) (hR : R.PosSemidef) (hS : S.PosSemidef) (M : Matrix n n ℂ) :
       let I := {i : n // 0 < hR.1.eigenvalues i}
       let J := {j : n // 0 < hS.1.eigenvalues j}

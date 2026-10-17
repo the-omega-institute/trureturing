@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51ead02a6b0e83ee0fce02e661e10d3089f0d35b40cd12db7b136efaba507446
+  normalized_sha256: sha256:51ead02a6b0e83ee0fce02e661e10d3089f0d35b40cd12db7b136efaba507446
+cas_ref: sha256:51ead02a6b0e83ee0fce02e661e10d3089f0d35b40cd12db7b136efaba507446
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题「TR.9 环面作用与周期群」仅标示本节主题，不含正文命题或性质断言。
+    previous_atom_id: fc74318e9e20f2cb92790af2f8a02b59bfdaa51d2e81ba5741be470ea0c996da
+    next_atom_id: 1616b2c6505bc3520d6dae8503c5ffa1d5baf4b6b73f724f377f88628e12ef12

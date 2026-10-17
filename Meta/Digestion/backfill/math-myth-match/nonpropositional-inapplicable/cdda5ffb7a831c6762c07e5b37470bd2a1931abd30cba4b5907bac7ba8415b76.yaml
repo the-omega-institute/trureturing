@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cdda5ffb7a831c6762c07e5b37470bd2a1931abd30cba4b5907bac7ba8415b76
+  normalized_sha256: sha256:cdda5ffb7a831c6762c07e5b37470bd2a1931abd30cba4b5907bac7ba8415b76
+cas_ref: sha256:cdda5ffb7a831c6762c07e5b37470bd2a1931abd30cba4b5907bac7ba8415b76
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 397.1（本批的比较对象）。：仅引入对象、记号及其约定条件，不断言这些条件必然实现或额外性质。
+    previous_atom_id: 6523be4df7d66f368bb4ce66826e81f95f72d8df854fb1705e178c0a5e00a96c
+    next_atom_id: dd0c0743c85c4deb2c833056192bfa2bd3f39b0c81c6493671b374d8dadf4750

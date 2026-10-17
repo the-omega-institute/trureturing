@@ -74,6 +74,7 @@
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.matrix_inner_trace: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_blocks, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_left_ext, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_adjoint_pair, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.unital_iff_adjoint_tracePreserving.
 -/
 import Mathlib.Analysis.Normed.Field.Approximation
+import Mathlib.Analysis.CStarAlgebra.PositiveLinearMap
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
@@ -405,7 +406,7 @@ end
 section
 variable {d : ℕ}
 variable {n : Type*} [Fintype n] [DecidableEq n]
-private lemma trace_rank_one (X : Matrix n n ℂ) (v : n → ℂ) :
+lemma trace_rank_one (X : Matrix n n ℂ) (v : n → ℂ) :
     (X * Matrix.vecMulVec v (star v)).trace = star v ⬝ᵥ (X *ᵥ v) := by
   rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm]
 private lemma psd_of_trace_pairing (X : Matrix n n ℂ) (hX : X.IsHermitian)
@@ -656,7 +657,7 @@ lemma faithful_fixed_eigenvalue_norm_le_one (U : (A →ₗ[ℂ] A))
     (ρ : A) (hρ : IsStrictlyPositive ρ) (hFix : U ρ = ρ)
     (z : ℂ) (hz : Module.End.HasEigenvalue U z) : ‖z‖ ≤ 1 := by
   obtain ⟨r,hr,hrρ⟩ := (CFC.exists_pos_algebraMap_le_iff
-    hρ.isSelfAdjoint).2 (fun z hz => hρ.spectrum_pos hz)
+    ρ hρ.isSelfAdjoint).2 (fun z hz => hρ.spectrum_pos hz)
   have hIn : (1 : A) ≤ (r⁻¹ : ℝ) • ρ := by
     have h := smul_le_smul_of_nonneg_left hrρ (inv_nonneg.mpr hr.le)
     simpa only [Algebra.algebraMap_eq_smul_one, smul_smul,
@@ -669,7 +670,7 @@ lemma faithful_fixed_eigenvalue_norm_le_one (U : (A →ₗ[ℂ] A))
     change (U^n) 1 ≤ (U^n) ((r⁻¹ : ℝ) • ρ) at horder
     rw [LinearMap.map_smul_of_tower, hfix] at horder
     have hnorm : ‖(U^n) 1‖ ≤ ‖(r⁻¹ : ℝ) • ρ‖ :=
-      CStarAlgebra.norm_le_norm_of_nonneg_of_le (hp 1 zero_le_one) horder
+      CStarAlgebra.norm_le_norm_of_le_of_nonneg horder (hp 1 zero_le_one)
     have h := positive_map_norm_four (U^n) hp v
     have h' : ‖(U^n) v‖ ≤ K * ‖v‖ := by
       exact h.trans (by dsimp [K]; gcongr)

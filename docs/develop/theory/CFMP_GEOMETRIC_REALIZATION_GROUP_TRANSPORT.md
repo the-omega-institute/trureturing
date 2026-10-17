@@ -336,3 +336,127 @@ $$
 **与第 122.1 节的关系。** 返回轨道长为 $r\ge1$ 时，所需局部扇形含 $n=3r$ 个带标签的角出现；$r=1$ 仍在本引理范围内。要把本同胚作为实际链接的坐标图，仍须证明三项对应：依实际有序端点运输排列这 $3r$ 个角区域；实际面仿射配对在区域上的完整限制关系恰为上述接缝关系；严格角区域的并是饱和开集，且其限制商拓扑与实际链接子空间拓扑一致。本引理不假设这些对应已成立，不单独给出整体可定向性、闭性、边界分量识别或亏格公式。一般多边形沿边粘合、相邻逆边消去及紧致到 Hausdorff 的同胚判据均为既有方法；这里固定的是实际循环接缝以及明确的径向坐标。
 
 ## 追加锚（本行以下为增补区）
+
+## 126. A strictly hyperideal bipyramid with heterogeneous tetrahedra
+
+Let B be the abstract hexagonal bipyramid with poles A,B and cyclic equatorial vertices V_0,...,V_5 (indices modulo six). Its triangular faces are
+
+    U_i = A V_i V_{i+1},     L_i = B V_i V_{i+1}.
+
+Prescribe the interior dihedral angle π/2 at every pole–equator edge A V_i and B V_i. At V_i V_{i+1}, prescribe π/m_i, where m_i=3 for even i and m_i=4 for odd i.
+
+**Lemma 126.1.** These data are realized by a unique, up to isometry, strictly hyperideal convex bipyramid P.
+
+**Proof.** The dual graph is the hexagonal prism. Its two horizontal six-cycles have exterior edge weights π/2, and its six vertical edges have exterior weights π−π/m_i, hence 2π/3 or 3π/4.
+
+Apply Bao–Bonahon Theorems 1 and 2. Every simple four-cycle in this prism is one of its square faces; it has two horizontal and two vertical edges, so its weight is at least 7π/3>2π. The prism is bipartite, and any other simple cycle has at least six edges, hence weight at least 3π>2π. This proves the strict circuit condition.
+
+An admissible path joins two vertices on one face and is not contained in that face's boundary. There is no admissible one-edge path, since neither a square nor one of the two hexagons has a chord in the prism. A two-edge path with weight at most π would have to use two horizontal edges. Such a path lies on a horizontal hexagon; its endpoints are distance two on that hexagon and cannot both belong to one square. It is therefore not admissible. Every other two-edge path has weight at least 7π/6>π, and every path with at least three edges has weight at least 3π/2>π. Thus the required path condition holds. All vertex circuits are strict, so every vertex is strictly hyperideal. ∎
+
+The cited primary source is X. Bao and F. Bonahon, “Hyperideal polyhedra in hyperbolic 3-space,” Bulletin de la Société Mathématique de France 130 (2002), 457–491, Theorems 1–2, pages 459–460. The definitions and diagonal/truncation facts used next are Lemmas 3–4, pages 463–464:
+
+https://www.numdam.org/item/10.24033/bsmf.2426.pdf
+
+**Lemma 126.2.** The six tetrahedra
+
+    T_i = A B V_i V_{i+1}
+
+give a genuine strictly hyperideal triangulation of P, with compatible canonical truncations.
+
+**Proof.** Pulling the convex projective polyhedron from the vertex A cones A to every boundary face not containing A, namely the six faces L_i. This partitions it into the displayed tetrahedra, sharing precisely the radial triangles A B V_i. Strict convexity makes each tetrahedron nondegenerate. Its only edge that is not already a boundary edge of P is A B. Bao–Bonahon Lemma 3 states that the segment between any two distinct vertices of a hyperideal polyhedron meets hyperbolic space, so this diagonal is proper. Thus all six edges of every tetrahedron meet hyperbolic space and all four vertices are strictly outside its closure. Each tetrahedron is consequently genuinely hyperideal, rather than merely an abstract subdivision. The polar truncation plane depends only on its vertex, so the truncations agree across shared faces. Lemma 4 ensures the corresponding vertex half-spaces are disjoint. ∎
+
+**Lemma 126.3.** The six tetrahedra alternate two noncongruent shapes, with a common pole-diagonal length and four common radial lengths.
+
+**Proof.** Rotation V_i↦V_{i+2}, reflection V_i↦V_{1−i}, and pole exchange A↔B preserve the prescribed angles. Uniqueness in Lemma 126.1 realizes these combinatorial symmetries as isometries of P. The first two act transitively on the six equatorial vertices and on the three edges of each parity. Including pole exchange makes all twelve pole–equator edges have one common length h. Write r for the length A B and s_3,s_4 for the respective equatorial lengths. The six tetrahedra therefore have edge-length multisets
+
+    {r,h,h,s_3,h,h}   (even i),
+    {r,h,h,s_4,h,h}   (odd i).
+
+The dihedral angle of T_i at its equatorial edge is exactly the boundary angle of P there, since that edge lies in only one subdivision tetrahedron: π/3 for even i and π/4 for odd i. If s_3=s_4, the two labeled tetrahedra would have all six corresponding lengths equal, hence the same dihedral angles, a contradiction. Thus s_3≠s_4. Their length multisets differ by cancellation of the same other five entries, so they cannot be congruent even after vertex relabeling. ∎
+
+Here r,h,s_3,s_4 are actual geometric lengths from P, not independently chosen local unknowns. Their existence and simultaneous face compatibility have been established before any finite gluing.
+
+## 127. An explicit 288-tetrahedron face pairing
+
+For m=3,4 let D_m be the dihedral group of order 2m, generated by distinct reflections r_m,s_m with r_m s_m of exact order m. Set
+
+    G=D_3×D_4,     |G|=48,
+    a=(r_3,1), b=(s_3,1), c=(1,r_4), d=(1,s_4).
+
+Take one labeled copy P_g of P for every g∈G. For even i, glue U_i in P_g to U_i in P_{ga}, and L_i in P_g to L_i in P_{gb}. For odd i, use gc and gd instead. Every gluing fixes the face's three vertex labels and uses the unique corresponding isometry between its two copies. Involution of each generator makes these prescriptions reciprocal. They have no fixed face slots because none of a,b,c,d is the identity. Duplicate prescriptions are the two directions of the same pairing.
+
+Subdivide every cell by Lemma 126.2. Equivalently, the complete tetrahedral face pairing on tetrahedra (g,i) is:
+
+- The face A B V_i of (g,i) pairs with that face of (g,i−1), preserving labels.
+- The face A V_i V_{i+1} of (g,i) pairs with the corresponding face of (ga,i) for even i, or (gc,i) for odd i.
+- The face B V_i V_{i+1} of (g,i) pairs with the corresponding face of (gb,i) for even i, or (gd,i) for odd i.
+
+These rules use every tetrahedral face exactly once. There are 6|G|=288 tetrahedra.
+
+**Theorem 127.1.** The pairing is a finite connected orientable ideal triangulation of a compact 3-manifold with totally geodesic boundary. Every tetrahedron is genuine. There are exactly 72 edges of degree six and 162 edges of degree eight. Its boundary consists of 24 surfaces of genus two and six surfaces of genus six. The displayed geometry has zero curvature at every actual global edge.
+
+**Proof: connectedness and orientation.** The cell adjacency graph is the Cayley graph generated by a,b,c,d, so it is connected. Each cell's six tetrahedra are connected internally. Give P_g orientation according to the product of the two reflection-parity homomorphisms D_m→{±1}. Each face generator changes this sign, so the label-preserving face isometries reverse induced boundary orientation. Internal faces inherit the compatible orientation of each cell. Every face map preserves all vertex labels. In particular, it cannot reverse an edge's two different endpoint labels.
+
+**Proof: actual edge links, degree and angle.** The edge A B lies in no exterior face of a cell. Thus there is one distinct such global edge for each g, with six tetrahedral occurrences and the complete circular link already present inside P_g. Its total angle is 2π.
+
+For a fixed pole edge A V_i, the two boundary faces containing it have opposite parities. Their gluing generators are a and c, which commute and generate a group of order four. Alternating across the two faces traverses exactly four cell sectors. Each sector contains the two subdivision tetrahedra T_{i−1},T_i, and its total dihedral angle is π/2. Therefore each such edge has degree eight and angle sum four times π/2=2π. There are |G|/4=12 edges for each of the six A V_i types. The same argument with b,d applies to each B V_i type. Together these give 144 degree-eight edges. These are full edge-link orbits, not just numerical incidence totals.
+
+For V_i V_{i+1}, the two face generators are a,b when i is even, and c,d when i is odd. They generate D_{m_i}. Its Cayley graph on these two involutions is a cycle of exact length 2m_i. Each cell sector contains exactly one subdivision tetrahedron and has angle π/m_i. Hence the global edge degree is 2m_i and its angle sum is 2π. For each even i there are 48/6=8 edges, and for each odd i there are 48/8=6 edges. The equator contributes 24 degree-six and 18 degree-eight edges. Together with the 48 internal edges, the totals are 72 and 162.
+
+Because vertex labels are preserved, no different listed edge type can merge in the quotient. The complete circular links and absence of edge reversal establish the manifold condition away from ideal vertices.
+
+**Proof: every ideal-vertex link.** At A, each cell contributes its polar truncation hexagon, a hyperbolic right-angled hexagon. Face transports incident to A generate ⟨a,c⟩≅C_2×C_2. Thus there are 48/4=12 A-links, each assembled from four hexagons. Their polygon counts are F=4,E=12,V=6: three corners from each of the two alternating generator types are counted through the complete four-sector orbits. Equivalently each of the six edge labels A V_i contributes one vertex. Hence χ=−2 and the connected orientable link has genus two. Subdividing the four hexagons into 24 triangles adds four central vertices, giving the equivalent counts (V,E,F)=(10,36,24). B gives another twelve identical genus-two links using ⟨b,d⟩.
+
+At V_i, the four incident face transports include all four generators, because i−1 and i have opposite parity. Hence there is exactly one V_i-link. It consists of 48 quadrilaterals, whose corner angles are π/2,π/2,π/3,π/4. Its edge count is 96. Its vertex count is 48/4+48/4+48/6+48/8=38, by the four corresponding complete edge orbits. Thus χ=38−96+48=−10 and its genus is six. The induced tetrahedral subdivision has (V,E,F)=(38,144,96), with the same Euler characteristic. There are six such labels V_i.
+
+The corner sectors at every vertex of each link make a complete 2π circle by the preceding edge calculation. Thus these links really are smooth closed hyperbolic surfaces, not singular polygon quotients. They are connected by their transport subgroups and oriented by the original cells. Truncating all ideal vertices consequently gives a compact orientable manifold with the asserted negative-Euler boundary components. The canonical truncation faces meet every original face orthogonally, so their paired boundaries are totally geodesic. All geometric edge sums are exactly 2π and all tetrahedra are genuine, proving the metric claim. ∎
+
+The combinatorial Euler identity is, t=288,e=234 gives χ(N)=e−t=−54; the asserted boundary has χ=24(−2)+6(−10)=−108, equal to 2χ(N).
+
+## 128. The general six-factor construction
+
+Choose any integers m_0,...,m_5≥3, with no periodicity assumption. Retain pole-edge interior angles π/2 and prescribe π/m_i on equatorial edge i. The proof of Lemma 126.1 applies verbatim: vertical exterior weights are at least 2π/3, while horizontal weights remain π/2. Lemma 126.2 also applies without change.
+
+Let G=∏_{i=0}^5 D_{m_i}, of order Q=∏_{i=0}^5(2m_i). Denote the two generating reflections in factor i by r_i,s_i. Glue U_i in cell g to U_i in cell gr_i and L_i to L_i in cell gs_i, preserving all vertex labels. Subdivide each cell into its six pole-diagonal tetrahedra.
+
+Exactly the same edge-link proof gives:
+
+- Q distinct central edges, each of degree six.
+- For each of twelve pole-edge labels, Q/4 global edges of degree eight; in total 3Q such edges.
+- For each equatorial label i, Q/(2m_i) edges of degree 2m_i.
+- A total of 6Q genuine tetrahedra, whose geometries are inherited simultaneously from the single actual bipyramid.
+
+There are Q/64 A-links and Q/64 B-links. Each consists of 64 right-angled hexagons, with polygon counts (V,E,F)=(96,192,64), so its genus is 17. At V_i, the incident transports generate exactly D_{m_{i−1}}×D_{m_i}. Writing m=m_{i−1},n=m_i, there are Q/(4mn) such links, each assembled from 4mn quadrilaterals. Their counts are
+
+    F=4mn, E=8mn, V=2mn+2m+2n,
+    genus = 1+mn−m−n.
+
+All these genera are at least two. Connectedness, orientability, full circular edge links, no edge reversals, compatible true lengths and angle sums 2π follow exactly as for the smaller example. Thus this is an explicit family of actual compact manifolds and their geometric ideal triangulations, not independent abstract incidence data.
+
+Pole exchange remains an isometry for arbitrary m_i. Consequently each tetrahedron has equal angles at A V_i and B V_i, and equal angles at A V_{i+1} and B V_{i+1}. It has at most four distinct dihedral angle values. If at least five m_i are distinct, the six tetrahedra cannot all be congruent: their equatorial angles include at least five distinct values, while a common shape could have at most four. In particular, m=(3,4,5,6,7,8) gives a certified heterogeneous six-position construction. Its six tetrahedral degree multisets {6,2m_i,8,8,8,8} are also distinct, so a combinatorial automorphism cannot mix positions.
+
+## 129. Degree criteria, orbit capacity and ordinary covers
+
+The two tetrahedral degree multisets are
+
+    even i: {6,6,8,8,8,8},
+    odd i:  {6,8,8,8,8,8}.
+
+Thus no combinatorial automorphism group can act transitively on tetrahedra: actual edge degree is invariant. This is not an application of the repository's tetrahedron-transitive theorem. The two actual geometric shapes are also noncongruent by Lemma 126.3.
+
+The degree-six local graph in an even tetrahedron is an opposite pair, and in an odd tetrahedron it is a single edge; it is not the pure P4 class. The uniform degree-class rainbow theorem cannot apply under any rainbow coloring: in an odd tetrahedron A B has degree six while its opposite edge has degree eight, whereas a rainbow coloring puts opposite edges in the same color, and the theorem requires fixed degree within each color. The matching-type rectangular criterion with high threshold thirteen does not apply because radial edges have degree eight. A degree-six internal edge also has an opposite degree-eight occurrence in each odd tetrahedron, so even the required critical-opposite matching fails there.
+
+Every occurrence of every central degree-six edge has four degree-eight adjacent slots. Therefore the actual-quotient obstruction already proved in [CFMP_UEMURA_PROVENANCE.md, §2](CFMP_UEMURA_PROVENANCE.md) excludes Uemura's full canonical box condition for every allowed parameter. This comparison is optional; the construction itself proves geometricity independently of that obstruction.
+
+The purely combinatorial assignment 2π/d(e) at every edge occurrence is a strict positive angle structure: the actual edge sums are 2π, and each tetrahedral vertex has at most one axial edge of degree at least six and two pole edges of degree eight. Its angle sum is therefore at most π/3+π/4+π/4=5π/6<π. Together with the proved manifold and negative-Euler boundary conditions, this supplies the strict-angle premise of the existing maximum-volume/orbit-capacity theorem independently of the constructed metric.
+
+There is an important exact overlap with the repository's main §40 orbit-capacity theorem. Left multiplication by G is a genuine face-pairing automorphism, transitive on the cell indices for each fixed tetrahedral position i. Let O_i be that orbit. A transported flat opposite pair has two possibilities:
+
+- If it is the central/equatorial pair, each equatorial edge of label i receives 2m_i π-angle occurrences from O_i, exceeding two.
+- If it is either transverse opposite pair, one selected pole-edge label receives four π-angle occurrences from O_i, one from each of its four cell sectors, again exceeding two.
+
+The position framing is preserved by left multiplication, so these transported pairs are well-defined. Both candidates are excluded by the old capacity rule, which therefore already proves geometric existence for the regular finite quotients in both constructions. Thus this explicit geometric construction is also within the existing orbit-capacity criterion; it does not extend that criterion's sufficient hypotheses.
+
+The construction uses a classical hyperideal polyhedron theorem and elementary finite gluing. It does not claim general minimum-six CFMP, a new general hyperideal polyhedron theorem, or priority over the literature on bipyramid subdivisions and polyhedral manifold constructions.
+
+Finally, the compact connected base manifold has χ=−54 and nonempty boundary, so b_1=b_2+55≥55. Its fundamental group surjects onto Z. Ordinary connected n-sheeted cyclic covers therefore give genuine triangulations with 288n tetrahedra, 72n degree-six edges and 162n degree-eight edges, retaining both local shapes. The Euler characteristic is −54n, so these manifolds are pairwise nonhomeomorphic. The cover is an ordinary manifold cover and preserves complete edge stars; it is not a branched group lift.

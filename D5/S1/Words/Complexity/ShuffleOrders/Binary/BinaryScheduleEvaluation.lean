@@ -6,6 +6,7 @@
    utility: none
    digest: Binary schedule evaluation compares swapped fixed-source prefixes. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S1.Words.Complexity.ShuffleOrders.Binary.BinaryScheduleOrder
 import Mathlib.Data.List.Lex
 

@@ -35,7 +35,7 @@ Retire these inverse leaves when our adopted Mathlib Log.lean contains
 PowerSeries.subst_exp_log and PowerSeries.subst_log_exp_sub_one with equivalent types.
 -/
 private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
-    (hderiv : derivative ℚ g * (1 + X) = g) :
+    (hderiv : derivative (R := ℚ) g * (1 + X) = g) :
     g = constantCoeff g • (1 + X) := by
   let : Invertible (1 + X : PowerSeries ℚ) :=
     (isUnit_iff_constantCoeff.mpr (by simp)).invertible
@@ -43,7 +43,7 @@ private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
     have h := congrArg (constantCoeff (R := ℚ)) (mul_invOf_self (1 + X : PowerSeries ℚ))
     rw [map_mul] at h
     simpa using h
-  have hg : g * ⅟(1 + X) = derivative ℚ g := by
+  have hg : g * ⅟(1 + X) = derivative (R := ℚ) g := by
     conv_lhs => rw [← hderiv]
     rw [mul_assoc, mul_invOf_self, mul_one]
   have key : g * ⅟(1 + X) = C (constantCoeff g) := by
@@ -54,8 +54,8 @@ private theorem eq_of_derivative_mul_one_add_X_eq_self {g : PowerSeries ℚ}
     · simp [hcu]
   rw [smul_eq_C_mul, ← key, mul_assoc, invOf_mul_self, mul_one]
 
-private theorem subst_exp_log : (exp ℚ).subst (log ℚ) = 1 + X := by
-  have hd : derivative ℚ ((exp ℚ).subst (log ℚ)) * (1 + X) =
+theorem subst_exp_log : (exp ℚ).subst (log ℚ) = 1 + X := by
+  have hd : derivative (R := ℚ) ((exp ℚ).subst (log ℚ)) * (1 + X) =
       (exp ℚ).subst (log ℚ) := by
     rw [derivative_subst (HasSubst.log), derivative_exp, mul_assoc,
       D5.S1.Recurrence.Periodic.ScaledLogColumnPeriodicity.log_derivative_mul, mul_one]
@@ -72,7 +72,7 @@ private theorem subst_exp_log : (exp ℚ).subst (log ℚ) = 1 + X := by
   have h := eq_of_derivative_mul_one_add_X_eq_self hd
   rwa [hc, one_smul] at h
 
-private theorem subst_log_exp_sub_one : (log ℚ).subst (exp ℚ - 1) = X := by
+theorem subst_log_exp_sub_one : (log ℚ).subst (exp ℚ - 1) = X := by
   let P : PowerSeries ℚ := exp ℚ - 1
   have hp : constantCoeff P = 0 := by simp [P]
   have hunit : IsUnit (coeff 1 P) := by simp [P, coeff_exp]
@@ -93,9 +93,9 @@ private theorem subst_log_exp_sub_one : (log ℚ).subst (exp ℚ - 1) = X := by
   rw [hlog]
   exact subst_substInvOfIsUnit_left P hp hunit
 
-private def q (i n : ℕ) : ℤ := (i.factorial : ℤ) * (Nat.stirlingSecond n i : ℤ)
+def q (i n : ℕ) : ℤ := (i.factorial : ℤ) * (Nat.stirlingSecond n i : ℤ)
 
-private theorem egf_q (i : ℕ) : egf (fun n => (q i n : ℚ)) = (exp ℚ - 1) ^ i := by
+theorem egf_q (i : ℕ) : egf (fun n => (q i n : ℚ)) = (exp ℚ - 1) ^ i := by
   ext n
   rw [egf, coeff_mk]
   have h := D5.S1.Recurrence.Periodic.IntegralEgfTotientPeriod.exp_shift_power n i
@@ -103,7 +103,7 @@ private theorem egf_q (i : ℕ) : egf (fun n => (q i n : ℚ)) = (exp ℚ - 1) ^
   simp only [q, Int.cast_mul, Int.cast_natCast]
   exact (div_eq_iff hf).mpr (by simpa [mul_comm] using h.symm)
 
-private theorem coeff_transform (L : ℕ → ℚ) (r : ℕ) :
+theorem coeff_transform (L : ℕ → ℚ) (r : ℕ) :
     coeff r (logarithmicTransform L) =
       ∑ n ∈ range (r + 1), L n / (n.factorial : ℚ) * coeff r (log ℚ ^ n) := by
   rw [logarithmicTransform, coeff_subst' HasSubst.log]
@@ -163,7 +163,7 @@ private theorem egf_T (a : ℕ → ℤ) :
   have hf : (n.factorial : ℚ) ≠ 0 := by exact_mod_cast n.factorial_ne_zero
   exact (div_eq_iff hf).mpr (by simpa [mul_comm] using h.symm)
 
-private theorem transform_T (a : ℕ → ℤ) :
+theorem transform_T (a : ℕ → ℤ) :
     logarithmicTransform (fun n => (T a n : ℚ)) = mk (fun n => (a n : ℚ)) := by
   rw [logarithmicTransform, egf_T,
     subst_comp_subst_apply HasSubst.exp_sub_one HasSubst.log]
@@ -174,7 +174,7 @@ private theorem transform_T (a : ℕ → ℤ) :
   change (mk (fun n => (a n : ℚ))).subst ((exp ℚ - 1).subst (log ℚ)) = _
   rw [he, X_subst]
 
-private theorem T_window (a : ℕ → ℤ) {n r : ℕ} (hn : n ≤ r) :
+theorem T_window (a : ℕ → ℤ) {n r : ℕ} (hn : n ≤ r) :
     T a n = ∑ i ∈ range (r + 1), a i * q i n := by
   rw [T]
   simp only [q, ← mul_assoc]
@@ -229,14 +229,14 @@ private theorem map_substitution {K : Type*} [Field K] [CharZero K]
         (PowerSeries.map (algebraMap ℚ K) f) := by
   exact PowerSeries.map_subst hg f
 
-private theorem map_transform {K : Type*} [Field K] [CharZero K] (L : ℕ → ℚ) :
+theorem map_transform {K : Type*} [Field K] [CharZero K] (L : ℕ → ℚ) :
     (logarithmicTransform L).map (algebraMap ℚ K) =
       logarithmicTransform (fun n => algebraMap ℚ K (L n)) := by
   unfold logarithmicTransform
   erw [map_substitution (K := K) (egf L) (log ℚ) HasSubst.log]
   rw [map_egf, map_log]
 
-private theorem reconstruction {K : Type*} [Field K] [CharZero K] (L : ℕ → K)
+theorem reconstruction {K : Type*} [Field K] [CharZero K] (L : ℕ → K)
     (h : IntegralSeries (logarithmicTransform L)) :
     ∃ a : ℕ → ℤ, ∀ n, L n = (T a n : K) := by
   choose a ha using h

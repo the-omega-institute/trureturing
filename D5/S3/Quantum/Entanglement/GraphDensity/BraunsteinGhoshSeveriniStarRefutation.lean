@@ -87,7 +87,9 @@ Supporting modules in this delivery are not baseline-frozen prerequisites.
 Information-escape registration is paused under CLAUDE.md §3.9 「信息逃逸登记暂缓」.
 -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.Entanglement.GraphDensity.SelectiveFormationBounds
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 import D5.S3.Weil.Probability.FiniteGaussianSchoenberg
 import Mathlib.Analysis.Normed.Module.Normalize
 
@@ -717,9 +719,8 @@ private theorem rawU_marginal (m : ℕ) :
 private theorem normalize_marginal {q : ℕ} (ψ : ((Fin 2 × Fin q) → ℂ)) (hp : 0<(∑ x, ‖ψ x‖^2)) :
     partialTraceRight (rankOneDensity (normalize ψ))=((1/(∑ x, ‖ψ x‖^2):ℝ):ℂ) • partialTraceRight (rankOneDensity ψ) := by
   rw [normalize_outer ψ hp]
-  ext a c
-  simp [partialTraceRight,D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight,
-    Matrix.smul_apply,Finset.mul_sum]
+  exact
+    D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction.partialTraceRight_smul _ _
 private theorem normalizedU_det {m : ℕ} (hm : 0 < m) :
     (partialTraceRight (rankOneDensity (normalize (rawU m)))).det.re = (m:ℝ)/(2*(m:ℝ)+1)^2 := by
   have hmR : 0<(m:ℝ) := by exact_mod_cast hm

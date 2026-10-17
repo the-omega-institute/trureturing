@@ -4,8 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Digestion.Tests;
 
 /// <summary>
-/// The default digestion atomizer is a rule, not a lexicon: atom content is independent
-/// of any registered vocabulary,
+/// The digestion atomizer partitions Markdown by structure rather than a lexicon,
 /// and no shape of Markdown makes it throw. These cases are that contract, one per clause.
 /// </summary>
 public sealed class GenericAtomizerTests
@@ -13,8 +12,7 @@ public sealed class GenericAtomizerTests
     private static AtomizedTheoryDocument Atomize(string markdown) =>
         AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            Encoding.UTF8.GetBytes(markdown),
-            TheoryAtomizerRules.None);
+            Encoding.UTF8.GetBytes(markdown));
 
     private static string[] Fingerprints(AtomizedTheoryDocument document) =>
         document.Claims.Select(static claim => claim.Fingerprints.RawSha256).ToArray();
@@ -82,8 +80,7 @@ public sealed class GenericAtomizerTests
 
         var document = AtomizerRegistry.Atomize(
             AtomizerRegistry.GenericId,
-            bytes,
-            TheoryAtomizerRules.None);
+            bytes);
 
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -169,7 +166,7 @@ public sealed class GenericAtomizerTests
     /// claim of its own. The header row names columns, not propositions, and is not one.
     /// </summary>
     [Fact]
-    public void EachDataRowOfATableIsItsOwnClaimAndTheHeaderRowIsNot()
+    public void TableRowsRemainWithTheirSectionAndColumnLegend()
     {
         var document = Atomize(
             "## §3 词典\n\n| 条目 | 内容 | 分型 |\n|---|---|---|\n"
@@ -177,10 +174,10 @@ public sealed class GenericAtomizerTests
             + "| 极点 = 相变 | Hagedorn 于 β=1 | 定理级 |\n"
             + "| Sarnak 熵分界 | μ ⟂ 零拓扑熵系统 | open |\n");
 
-        // The section keeps an atom of its own because its body is not empty: it holds the
-        // title and the column legend, which is what the section itself says. What it no
-        // longer holds is the eleven propositions that used to be folded into it.
-        Assert.Equal(4, document.Claims.Length);
+        var atom = Assert.Single(document.Claims);
+        var text = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
+        Assert.Contains("| 条目 | 内容 | 分型 |", text, StringComparison.Ordinal);
+        Assert.Contains("| Sarnak 熵分界 | μ ⟂ 零拓扑熵系统 | open |", text, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -294,29 +291,14 @@ public sealed class GenericAtomizerTests
         Assert.Contains(AtomizerRegistry.GenericId, AtomizerRegistry.RegisteredIds);
     }
 
-    /// <summary>
-    /// The content fingerprint is a function of the source bytes alone: loaded volume vocabularies are
-    /// not an input, so editing another volume's dialect cannot churn this volume's ledger.
-    /// </summary>
-    [Fact]
-    public void TheLocatorDoesNotDependOnAnyLoadedVocabulary()
-    {
-        var markdown = "# 卷首\n\n## 定理 1.1\n\n证。\n";
-        var bytes = Encoding.UTF8.GetBytes(markdown);
-        Assert.Equal(
-            Fingerprints(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None)),
-            Fingerprints(AtomizerRegistry.Atomize(
-                AtomizerRegistry.GenericId, bytes, DigestionTestSupport.Rules)));
-    }
-
     [Fact]
     public void AMultiClauseSectionClaimCarriesADeterministicClausePlan()
     {
         var bytes = System.Text.Encoding.UTF8.GetBytes(
             "## T1. 包络\n\n定义与记号。\n\n**定理 T1**。主张。\n\n**结案判据**:核验单调性。\n");
 
-        var first = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var second = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var first = GenericAtomizer.Atomize(bytes);
+        var second = GenericAtomizer.Atomize(bytes);
 
         var claim = Assert.Single(first.Claims);
         var plan = Assert.Single(first.ClausePlans);
@@ -341,7 +323,7 @@ public sealed class GenericAtomizerTests
     {
         var bytes = System.Text.Encoding.UTF8.GetBytes("## T0. 单款\n\n只有一段散文主张。\n");
 
-        var document = GenericAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
+        var document = GenericAtomizer.Atomize(bytes);
 
         Assert.Single(document.Claims);
         Assert.Empty(document.ClausePlans);

@@ -10,7 +10,7 @@ $$\forall (i : \operatorname{Fin}\left(16\right)), (\operatorname{M4}\left(i\rig
 
 *Formalization.* `D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.M4` (`✓ std3`).
 
-*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00506-4](https://doi.org/10.1016/S0375-9601(00)00506-4). URL: <https://arxiv.org/abs/quant-ph/0005013>.
+*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00480-1](https://doi.org/10.1016/S0375-9601(00)00480-1). URL: <https://arxiv.org/abs/quant-ph/0005013>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{claim} = \left((\forall (z : \operatorname{Fin}\left(16\right) \
 
 *Formalization.* `D5/S3/Quantum/Entanglement/HiguchiSudbery/HiguchiSudberyEntropyMaximum.claim` (`✓ std3`).
 
-*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00506-4](https://doi.org/10.1016/S0375-9601(00)00506-4). URL: <https://arxiv.org/abs/quant-ph/0005013>.
+*Citation.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00480-1](https://doi.org/10.1016/S0375-9601(00)00480-1). URL: <https://arxiv.org/abs/quant-ph/0005013>.
 
 *Commentary.*
 
@@ -40,7 +40,7 @@ $$(\forall (z : \operatorname{Fin}\left(16\right) \to \operatorname{Complex}), (
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00506-4](https://doi.org/10.1016/S0375-9601(00)00506-4). URL: <https://arxiv.org/abs/quant-ph/0005013>.
+*Acknowledgement.* A. Higuchi; A. Sudbery (2000). *How entangled can two couples get?*. DOI: [10.1016/S0375-9601(00)00480-1](https://doi.org/10.1016/S0375-9601(00)00480-1). URL: <https://arxiv.org/abs/quant-ph/0005013>.
 
 *Commentary.*
 

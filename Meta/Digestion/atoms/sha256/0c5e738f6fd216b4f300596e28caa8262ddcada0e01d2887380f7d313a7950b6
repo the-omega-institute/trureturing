@@ -1,0 +1,12 @@
+For $C=0$ use empty groups. For $C=1$ put its $d+1$ vertices in the second group. For $C\ge2$, each $s_i\le d-C+2$ since the other $C-1$ components have at least one edge each. In any fixed ordering take the shortest initial segment whose size sum $x$ is at least $C-1$. It exists since the total size is $d+C$. Before its final term the integer sum is at most $C-2$, hence
+
+$$
+C-1\le x\le(C-2)+(d-C+2)=d,
+\qquad y=d+C-x\le d+1.
+\tag{7.4}
+$$
+
+Order components by their least original vertex, using that order for the split. Translate the first group's components, in order, into consecutive disjoint vertex blocks occupying $[q'-l-x,q'-l-1]$, and the second group's into blocks occupying $[q'+r+1,q'+r+y]$. Map each vertex by its component's translation. This is injective and fixes the target component. All internal orientations and all equalities among target and edge slots are preserved exactly. Different blocks may have adjacent vertices, but the connecting edge is not a mapped queried edge; adjacency imposes no equality or dependence on distinct iid spins. Repeated occurrences of one edge all use its same mapped pair, while retaining their separate paid nodes.
+
+The smallest occupied vertex is at least $q'-l-d\ge q'-m$, and the greatest is at most $q'+r+d+1\le q'+m+1$. A mapped edge has two consecutive occupied vertices, so its left endpoint is in $[q'-m,q'+m]$. If $m=0$ there is no queried edge to bound. The ordering, split and translations specify the construction without using $p$. $\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5c763fb21269f8653b4f2b6f547d1ce33d6c7f531580bfc06dbba7bbce604e96
+  normalized_sha256: sha256:5c763fb21269f8653b4f2b6f547d1ce33d6c7f531580bfc06dbba7bbce604e96
+cas_ref: sha256:5c763fb21269f8653b4f2b6f547d1ce33d6c7f531580bfc06dbba7bbce604e96
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯定义段仅引入本节的对象、记号或术语（**定义。** 对自然数 $n$，定义周期整除 $n$ 的固定点群），没有另行断言这些对象的性质。
+    previous_atom_id: 1616b2c6505bc3520d6dae8503c5ffa1d5baf4b6b73f724f377f88628e12ef12
+    next_atom_id: a5b545e9ae8edf16a6ac962fd7e28737567737500b42f1522b2c5abe1febfa73
