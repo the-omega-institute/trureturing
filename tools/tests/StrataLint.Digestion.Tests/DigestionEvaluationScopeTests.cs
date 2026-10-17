@@ -201,7 +201,7 @@ public sealed class DigestionEvaluationScopeTests
         var entry = DigestionTestSupport.Entry(
             atom,
             "scope-probe",
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             migration,
             truth,
             [],
@@ -215,7 +215,7 @@ public sealed class DigestionEvaluationScopeTests
                     : [],
         };
         return DigestionTestSupport.Document(
-            AtomizerRegistry.NoAtomizerId,
+            AtomizerRegistry.GenericId,
             [entry],
             sourceId: "scope-probe");
     }

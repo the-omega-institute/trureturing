@@ -65,7 +65,9 @@ public sealed partial class BackfillInventoryLoaderTests
         }
 
         var evaluation = EvaluateScribeOptional(without);
-        Assert.Empty(evaluation.Findings);
+        if (field == "chain_atoms")
+            Assert.Contains(evaluation.Findings, finding => finding.Contains("missing-child", StringComparison.Ordinal));
+        else Assert.Empty(evaluation.Findings);
         var status = Assert.Single(evaluation.Entries);
         Assert.Equal(new DigestionStatus(
             field == "nonpropositional" ? DigestionMigrationState.Nonpropositional : DigestionMigrationState.Residual,
@@ -118,9 +120,7 @@ public sealed partial class BackfillInventoryLoaderTests
     [InlineData("  unrelated: []\n")]
     public void TheRetiredScribeKeyIsRejectedInEveryShape(string receipt)
     {
-        // Owner ruling #5942 retired Scribe byte receipts; #6323 through #6331 removed the
-        // last committed key. The loader now has no such key, so any entry carrying one is
-        // an unknown key and must fail closed rather than be parsed and ignored.
+        // Retired keys fail closed in every serialized shape.
         Assert.Single(BackfillInventoryLoader.Load(ScribeOptionalSnapshot()).RequireDigestionEntries());
         var snapshot = ScribeOptionalSnapshot(receipt);
         var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
@@ -135,11 +135,11 @@ public sealed partial class BackfillInventoryLoaderTests
         string receipt = "", string coverage = "coverage_gids: []\n",
         string state = "residual-open")
     {
-        const string content = "introductory prose";
+        const string content = "## Introductory prose\n\nText.\n";
         var atom = Atom("delta-v0.1", state, "delta", content);
         var text = atom.Text.Replace("coverage_gids: []\n", coverage, StringComparison.Ordinal)
             .Replace("  chain_atoms: []\n", "", StringComparison.Ordinal) + receipt;
-        return Snapshot(Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, text), (DigestionCasStore.RootPath + FixtureAtomId(content), content));
+        return Snapshot(Source("delta-v0.1", "docs/delta.md", "generic-v1"),
+            ("docs/delta.md", content), (atom.Path, text), (DigestionCasStore.RootPath + FixtureAtomId(content), content));
     }
 }
