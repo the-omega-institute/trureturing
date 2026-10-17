@@ -1646,3 +1646,686 @@ original quantum-first AURIC FIB ATOM programme through 2027
 remains unchanged and incomplete.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Same-source exclusion of positive semidefinite attained remainders
+
+**Assumption 17.1 (original source and joint attainment).** Retain
+Assumptions 1.1 and 10.1, including the same isolated root's membership
+in all nine $2^{224}$ source rows of GC Definition 6.1. The source
+amplitudes and $m_1,m_2$ are those of that one root. Source existence,
+isolation, rank and root TP, the original complete stopped-cq minimax,
+sharp worst-history JOINT cost, JR42's separate unaveraged equality
+face, FA69's full-complex multi-Kraus necessity, the physical capacity
+and common constructor remain inherited premises. Enclosure arithmetic
+below does not discharge them.
+
+For an arbitrary finite $t\ge t_0>0$, arbitrary $\lambda>0$ and arbitrary
+finite $y\in\mathbb R^8$, require the entire-cylinder inequality
+(FC.5) and a common original law $\pi$ with
+
+$$
+\int_X\Gamma\,d\pi=B(t),\qquad
+J_t(\pi)+\lambda K(\pi)=y\cdot B(t).
+\tag{FC.54}
+$$
+
+Thus the law and dual jointly attain the same value; the finite-law
+notation is $\pi=\sum_i p_i\delta_{(u_i,v_i,\xi_i)}$, with every retained
+$p_i>0$. The admitted countable and stipulated measurable extensions
+have the same integral meaning. These are the original coefficient
+weights, directions and fractions, not independently optimized live
+and failure marginals. By weak duality (FC.54) also implies
+$y\cdot B=C_t(\lambda)$. No particular displayed dual, odd orientation
+$L_o$, or $w_o$ condition is imposed. Existence of such finite duals at
+all boundary requests is not part of this assumption.
+
+**Definition 17.2 (complete source-to-matrix dictionary).** To distinguish
+source amplitudes from actual-label failure intensities, write
+$a_s=a$, $b_s=b$, $c_s=c_{\rm src}$ and $d_s=d$ in (FC.1).
+In qutrit coordinates the matrices and normalization are
+
+$$
+\begin{gathered}
+D=\operatorname{diag}(h_0,h_1,h_2),\quad
+T=\begin{pmatrix}0&a_s&0\\b_s&0&0\\0&0&0\end{pmatrix},\quad
+S=\begin{pmatrix}0&0&c_s\\0&0&0\\d_s&0&0\end{pmatrix},\quad
+M=\operatorname{diag}(0,m_1,m_2),\\
+D^\dagger D+T^\dagger T+S^\dagger S+M=I_3,\qquad
+\theta=\frac{a_sb_s}{h_0h_1},\quad
+\omega=\frac{c_sd_s}{h_0h_2},\quad
+\delta=\theta+\omega,\quad s_0=\sqrt\delta,\quad
+\alpha=\frac\theta\delta,\quad\beta=\frac\omega\delta,\\
+q_*=\frac{11}{64},\quad
+\Delta=\begin{pmatrix}
+q_*&\Delta_{01}&\Delta_{02}\\
+\Delta_{01}&-q_*&\Delta_{12}\\
+\Delta_{02}&\Delta_{12}&0
+\end{pmatrix},\\
+\Delta_{01}=\frac{\sqrt{999}-\sqrt{295}}{128},\quad
+\Delta_{02}=\frac{\sqrt{27}-\sqrt5}{16},\quad
+\Delta_{12}=\frac{\sqrt{37}-\sqrt{59}}{16}.
+\end{gathered}
+\tag{FC.55}
+$$
+
+All radicals are positive roots. The TP line applies at the root only.
+For $(K_0,K_1,K_2)=(D,T,S)$ put
+$N_{ij}=\operatorname{tr}(K_i\Delta K_j^\dagger)$,
+$L=\operatorname{diag}(s_0,1,1)$ and $G=LNL$. Explicitly, the matrix
+already identified in (FC.30) is
+
+$$
+N=\begin{pmatrix}
+q_*(h_0^2-h_1^2)&(h_0a_s+h_1b_s)\Delta_{01}&(h_0c_s+h_2d_s)\Delta_{02}\\
+(h_0a_s+h_1b_s)\Delta_{01}&q_*(b_s^2-a_s^2)&a_sc_s\Delta_{12}\\
+(h_0c_s+h_2d_s)\Delta_{02}&a_sc_s\Delta_{12}&q_*d_s^2
+\end{pmatrix}.
+\tag{FC.56}
+$$
+
+Use $x=(u,v)^T$ on the directed unit circle and
+$h=(1,u/\sqrt\alpha,v/\sqrt\beta)$. The capacity, failure pairing
+and height are precisely (FC.26):
+
+$$
+\begin{gathered}
+K_h=s_0D+(u/\sqrt\alpha)T+(v/\sqrt\beta)S,\qquad
+n_h=(0,d_sv/(h_2\sqrt\beta),-b_su/(h_1\sqrt\alpha))^T,\\
+D_c=D_u u^2+D_v v^2,\quad
+D_u=h_0^2\delta+b_s^2/\alpha,\quad
+D_v=h_0^2\delta+d_s^2/\beta,\\
+N_c=N_u u^2+N_v v^2,\quad
+N_u=h_1^2h_2^2\delta+a_s^2h_2^2/\alpha,\quad
+N_v=h_1^2h_2^2\delta+c_s^2h_1^2/\beta,\qquad
+\mathfrak c=N_c/D_c>0,\\
+f=n_h^T\Delta n_h=2euv-d_*v^2=x^T\mathsf F x,\quad
+\mathsf F=\begin{pmatrix}0&e\\e&-d_*\end{pmatrix},\\
+e=-\frac{b_sd_s\Delta_{12}}{h_1h_2\sqrt{\alpha\beta}}>0,\quad
+d_*=\frac{11d_s^2}{64\beta h_2^2}>0,\quad\chi=\frac{2e}{d_*},\\
+\ell=x^TE_\ell x+l_u u+l_v v,\quad
+E_\ell=\begin{pmatrix}
+\delta N_{00}+N_{11}/\alpha&N_{12}/\sqrt{\alpha\beta}\\
+N_{12}/\sqrt{\alpha\beta}&\delta N_{00}+N_{22}/\beta
+\end{pmatrix},\\
+l_u=2\sqrt{\delta/\alpha}N_{01},\qquad
+l_v=2\sqrt{\delta/\beta}N_{02}.
+\end{gathered}
+\tag{FC.57}
+$$
+
+In particular $D_c,N_c$ are strictly positive on every circle direction.
+For the dual, keep $P_y$ of (FC.7) and
+$Q=\left(\begin{smallmatrix}y_5+y_6&y_7/2\\y_7/2&y_5\end{smallmatrix}\right)$,
+so $Q_y=x^TQx$, $R_-=Q+t\mathsf F$ and $R_+=Q-t\mathsf F$.
+These are the same signed endpoint tests and matrices as (FC.7),
+(FC.27) and RC.70, with $\lambda_{\rm RC}=\sqrt\alpha\lambda$.
+The $b_i=t\mathfrak c(h_i)\xi_i$ below are actual-label failure
+intensities and are distinct from $b_s$.
+
+**Proposition 17.3 (one law fixes both positive failure moments).**
+Under Assumption 17.1, define
+
+$$
+\begin{gathered}
+V=\frac{m_2h_1^2}{b_s^2},\quad
+W=\frac{m_1h_2^2}{d_s^2},\quad\mu=\alpha V+\beta W,\\
+m_u=\sum_i p_i b_i u_i^2=\alpha V>0,\qquad
+m_v=\sum_i p_i b_i v_i^2=\beta W>0,\qquad
+\sum_i p_i b_i u_iv_i=0,\\
+\mathcal R:=\frac{m_v}{m_u}
+=\frac{\beta W}{\alpha V}
+=\frac{c_s b_s h_2m_1}{a_s d_s h_1m_2}.
+\end{gathered}
+\tag{FC.58}
+$$
+
+Proof. These are the failure-moment consequences of GC Proposition
+12.2 and (FC.25), applied to the same actual law. In the present
+coordinates, the last three $\Gamma$ equations give
+$\sum p_i b_i=\mu$, $\sum p_i b_i u_i^2=\alpha V$ and
+$\sum p_i b_i u_iv_i=0$. Subtracting the second from the first,
+using $u_i^2+v_i^2=1$, gives $m_v=\beta W$. Strict positivity
+uses the stipulated positive source coordinates, $m_1,m_2$ and
+$\alpha,\beta$. Finally
+$\beta/\alpha=c_sd_sh_1/(a_sb_sh_2)$ cancels the factors in
+$W/V$ and gives the last expression. The integral equations follow
+identically. No marginal law is chosen or changed. $\square$
+
+## 18. Exact enclosure consequences for the original height and moment ratio
+
+**Proposition 18.1 (whole-rectangle rational bounds).** Under the source
+enclosure premises of Assumption 17.1, all decimals in the following
+tables denote exact terminating rationals and all displayed intervals
+are strict outer intervals. The pinned input is the entire rectangle
+of GC Definition 6.1: each of its nine lower and upper integer
+numerators is divided by $2^{224}$, without fixing any coordinate at
+its centre or at a corner. That rectangle is strictly inside the
+following wider independent rectangle:
+
+| Source coordinate | Coarse open interval |
+| --- | --- |
+| $h_0$ | $(0.984,0.985)$ |
+| $h_1$ | $(0.706,0.707)$ |
+| $h_2$ | $(0.809,0.810)$ |
+| $a_s$ | $(0.0656,0.0657)$ |
+| $b_s$ | $(0.1459,0.1461)$ |
+| $c_s$ | $(0.0154,0.0156)$ |
+| $d_s$ | $(0.0987,0.0989)$ |
+| $m_1$ | $(0.49,0.50)$ |
+| $m_2$ | $(0.34,0.35)$ |
+
+For the expressions in (FC.55)–(FC.58), independent outward rational
+interval evaluation gives:
+
+| Expression | Entire pinned $2^{224}$ rectangle | Entire coarse rectangle |
+| --- | --- | --- |
+| $\alpha$ | $(0.877713330842,0.877713330843)$ | $(0.876520533289,0.878719191903)$ |
+| $\beta$ | $(0.122286669157,0.122286669158)$ | $(0.121280808097,0.123479466711)$ |
+| $\delta$ | $(0.015710310993,0.015710310994)$ | $(0.015648789254,0.015755169391)$ |
+| $E_{\ell,11}$ | $(0.004598725613,0.004598725614)$ | $(0.00457,0.00463)$ |
+| $E_{\ell,22}$ | $(0.014984627434,0.014984627435)$ | $(0.01481,0.01515)$ |
+| $E_{\ell,12}$ | $(-0.000310288045,-0.000310288044)$ | $(-0.00032,-0.00030)$ |
+| $l_u$ | $(0.005060625904,0.005060625905)$ | $(0.00504,0.00508)$ |
+| $l_v$ | $(0.012628207726,0.012628207727)$ | $(0.01251,0.01274)$ |
+| $e$ | $(0.007691619447,0.007691619448)$ | $(0.007626170518,0.007751346035)$ |
+| $d_*$ | $(0.020930231666,0.020930231667)$ | $(0.020667228141,0.021179522724)$ |
+| $\chi$ | $(0.734977000,0.734977001)$ | $(0.720145644,0.750109883)$ |
+| $\mathcal R$ | $(0.576580883,0.576580884)$ | $(0.550612697,0.597517323)$ |
+
+In particular $\chi<1$ and $\mathcal R>1/2$ already follow from
+the coarse rectangle, without a root TP or isolation computation.
+
+Proof. The seven amplitude comparisons extend those in Theorem 11.1;
+the $m_1,m_2$ coarse bounds are also the bounds in CG.117. Their
+containment follows directly from the nine dyadic rows, by multiplying
+the coarse rational endpoints by $2^{224}$ and comparing integers.
+For completeness, the interval calculation giving the table can be
+specified entirely with rational operations. For a positive rational
+$x$ let
+
+$$
+q_r=10^{70},\qquad k(x)=\max\{k\in\mathbb Z_{\ge0}:k^2\le q_r^2x\}.
+\tag{FC.59}
+$$
+
+Enclose $\sqrt{[l,h]}$, for $0\le l\le h$, by
+$[k(l)/q_r,(k(h)+1)/q_r]$. Integer square comparisons prove the
+outward directions. Apply this to the six radicals in (FC.55), and
+to every subsequent positive square root. Addition, subtraction and
+multiplication use their exact endpoint extrema; divide only by
+strictly positive intervals. In each rectangle first form
+
+$$
+\begin{gathered}
+r_s=\frac{c_sd_sh_1}{a_sb_sh_2},\quad
+\alpha=\frac1{1+r_s},\quad\beta=1-\alpha,\quad
+\delta=\frac{a_sb_s}{h_0h_1}+\frac{c_sd_s}{h_0h_2},\\
+\chi=\frac{-128\Delta_{12}}{11}\,
+       \frac{b_sh_2}{d_sh_1}\sqrt{r_s},\qquad
+\mathcal R=\frac{c_sb_sh_2m_1}{a_sd_sh_1m_2}.
+\end{gathered}
+\tag{FC.60}
+$$
+
+The cancelled formulas retain exact algebraic identities; their
+interval evaluation makes no assumption of independence between
+repeated expressions. For example the coarse lower and upper
+endpoints for $r_s$ are respectively
+
+$$
+\frac{0.0154\cdot0.0987\cdot0.706}{0.0657\cdot0.1461\cdot0.810},
+\qquad
+\frac{0.0156\cdot0.0989\cdot0.707}{0.0656\cdot0.1459\cdot0.809}.
+\tag{FC.61}
+$$
+
+Taking $1/(1+r_s)$ reverses their order, and subtracting from one
+gives the displayed $\beta$ endpoints. For $\mathcal R$, use the
+product of lower positive numerator endpoints divided by upper
+positive denominator endpoints for the lower bound, and the reverse
+for the upper bound. These coarse endpoints lie strictly between
+$0.553951184140$ and $0.593916276390$, hence inside its stated
+wider interval. Formula (FC.60) gives coarse $\chi$ endpoints
+strictly between $0.729016412872$ and $0.740982445562$, also inside
+the stated wider interval.
+
+Form the entries of $N$ by (FC.56), equivalently the literal trace
+sum $\sum_{r,k,l}(K_i)_{rk}\Delta_{kl}(K_j)_{rl}$, and then use
+(FC.57). Here are the more detailed coarse endpoints bearing on
+the five short height bounds:
+
+| Expression | Strict rational outer interval from the coarse rectangle |
+| --- | --- |
+| $E_{\ell,11}$ | $(0.004579190981,0.004619265951)$ |
+| $E_{\ell,22}$ | $(0.014819612551,0.015139161958)$ |
+| $E_{\ell,12}$ | $(-0.000314031930,-0.000306381868)$ |
+| $l_u$ | $(0.005042004017,0.005079100333)$ |
+| $l_v$ | $(0.012513805577,0.012732663987)$ |
+
+All the table comparisons reduce to cross multiplication of positive
+rational denominators, with (FC.59) supplying the square-root
+comparisons. Repeating these same operations on the nine original
+dyadic intervals gives the pinned column. This is interval
+containment on both full rectangles, not evaluation at sample points.
+Off-root points are used only to bound expressions. No TP identity,
+common-law existence or physical realization is asserted there.
+$\square$
+
+## 19. The two simple left nodal boundaries and their directed slopes
+
+**Theorem 19.1 (complete height sign geometry).** Under Assumption 17.1,
+$\ell>0$ on the entire closed right hemisphere $u\ge0$.
+There is exactly one simple zero of $\ell$ on each open upper-left
+and lower-left arc. Write them respectively as
+
+$$
+x_U=\frac{(-1,\kappa_U)}{\sqrt{1+\kappa_U^2}},\qquad
+x_L=\frac{(-1,-\kappa_L)}{\sqrt{1+\kappa_L^2}}.
+\tag{FC.62}
+$$
+
+They satisfy $0<\kappa_U<1/20$ and $0<\kappa_L<4$.
+On the left hemisphere $u<0$, with slope $z=v/u$,
+
+$$
+\ell<0\quad\Longleftrightarrow\quad
+-\kappa_U<z<\kappa_L.
+\tag{FC.63}
+$$
+
+The two endpoints of this slope interval have height zero and the
+remaining left directions have positive height. Slopes refer to
+directed points; the antipode is not identified with its original.
+
+Proof. Set $A=E_{\ell,11}$, $B=E_{\ell,22}$,
+$a_0=-E_{\ell,12}$ and $\gamma=B-A$. Proposition 18.1 gives
+
+$$
+\begin{gathered}
+B>A>0,\quad a_0>0,\quad l_u>A,\quad l_u>2a_0,\quad
+B>l_v>0,\\
+4A\gamma-l_v^2>
+4(0.00457)(0.01481-0.00463)-0.01274^2
+=0.0000237828>0.
+\end{gathered}
+\tag{FC.64}
+$$
+
+The right-hemisphere conclusion is the existing Theorem 11.1.
+Indeed its proof (FC.36) applies with these bounds:
+$\ell=A+\gamma v^2+u(l_u-2a_0v)+l_vv
+\ge A-l_v^2/(4\gamma)>0$ for $u\ge0$.
+This includes both report-axis points $(0,\pm1)$.
+
+To establish all the left boundaries rather than infer a cutoff
+from a sign sample, set $w\in[0,1]$ and define
+
+$$
+\begin{aligned}
+\phi_+(w)&=\ell(-\sqrt{1-w^2},w)
+ =A+\gamma w^2+(2a_0w-l_u)\sqrt{1-w^2}+l_vw,\\
+\phi_-(w)&=\ell(-\sqrt{1-w^2},-w)
+ =A+\gamma w^2-(2a_0w+l_u)\sqrt{1-w^2}-l_vw.
+\end{aligned}
+\tag{FC.65}
+$$
+
+For $0\le w<1$,
+
+$$
+\phi_+'(w)=2\gamma w+l_v+
+\frac{l_uw+2a_0(1-2w^2)}{\sqrt{1-w^2}}>0,
+\tag{FC.66}
+$$
+
+because $1-2w^2\ge-w$, as
+$1+w-2w^2=(1-w)(2w+1)\ge0$, and $l_u>2a_0$.
+Also $\phi_+(0)=A-l_u<0$ and $\phi_+(1)=B+l_v>0$.
+Continuity and strict increase therefore give one and only one
+upper zero, in $(0,1)$, with strictly positive derivative.
+
+For the lower arc, direct differentiation on $(0,1)$ gives
+
+$$
+\phi_-''(w)=2\gamma+
+\frac{l_u+2a_0w(3-2w^2)}{(1-w^2)^{3/2}}>0.
+\tag{FC.67}
+$$
+
+Its endpoint values are $\phi_-(0)=A-l_u<0$ and
+$\phi_-(1)=B-l_v>0$, so it has an interior zero. At any interior
+zero $w_*$, convexity gives
+$\phi_-'(w_*)\ge(\phi_-(w_*)-\phi_-(0))/w_*>0$.
+Strictly increasing derivative then prevents any later zero; two
+zeros would contradict this positive derivative at the first.
+This proves uniqueness and simplicity on the lower arc as well.
+At these interior arc points the derivative of $w$ with respect
+to the directed circle angle is nonzero, so simplicity also holds
+for angular differentiation. The common left-axis point $(-1,0)$
+has height $A-l_u<0$; neither report-axis endpoint has height zero.
+There are therefore no other circle zeros.
+
+For exact slope brackets put
+
+$$
+G_{\rm nod}(k)=(1+k^2)\ell\left(\frac{(-1,k)}{\sqrt{1+k^2}}\right)
+ =A-2E_{\ell,12}k+Bk^2+(-l_u+l_vk)\sqrt{1+k^2}.
+\tag{FC.68}
+$$
+
+This scalar $G_{\rm nod}$ is distinct from the matrix $G$.
+The short rational bounds of Proposition 18.1 give the required
+three signs:
+
+$$
+\begin{aligned}
+G_{\rm nod}(0)&<0.00463-0.00504=-0.00041<0,\\
+G_{\rm nod}(1/20)&>
+0.00457+\frac{0.00060}{20}+\frac{0.01481}{400}
++\left(-0.00508+\frac{0.01251}{20}\right)\frac{501}{500}
+=\frac{10851}{62500000}>0,\\
+G_{\rm nod}(-4)&>
+0.00457-8(0.00032)+16(0.01481)
+-(0.00508+4(0.01274))\frac{33}{8}
+=\frac{1561}{200000}>0.
+\end{aligned}
+\tag{FC.69}
+$$
+
+The square comparisons $\sqrt{401/400}<501/500$ and
+$\sqrt{17}<33/8$ justify the two radical bounds. Their multipliers
+are negative throughout the coarse intervals, so using the upper
+radical endpoints gives lower bounds in both lines. The map
+$k\mapsto k/\sqrt{1+k^2}$ has positive derivative
+$(1+k^2)^{-3/2}$ for $k>0$. The unique crossings established
+above therefore imply $\kappa_U<1/20$ and $\kappa_L<4$.
+The negative arc connects them through $(-1,0)$; substituting
+$x=(-1,-z)/\sqrt{1+z^2}$ gives exactly (FC.63). In particular
+its upper-left part has negative slopes and its lower-left part
+has positive slopes. Their right-hand antipodes have positive
+height by the right-hemisphere result, not the same height sign.
+$\square$
+
+## 20. Contact restrictions for every actual failure-bearing label
+
+**Proposition 20.1 (report axes, height zeros and fractional endpoints).**
+Under Assumption 17.1, every positive-weight actual point is a
+contact. It has $u\ne0$. No pure contact has height zero.
+Every actual point with $b_i>0$ has its same-direction saturated
+endpoint $(u_i,v_i,1)$ in contact. If $0<\xi_i<1$, both endpoints
+contact and $\eta_0\eta_1\ge0$, including weak endpoint signs.
+These conclusions do not split the actual label or change $p_i,b_i$.
+
+Proof. Integrating the globally nonnegative gap $d$ gives zero by
+(FC.54). It therefore vanishes at every positive atom, or almost
+everywhere for the admitted integral laws. This is exactly the
+support argument in Theorem 4.2. At each fixed $\xi$, all four
+signed gaps
+
+$$
+H_{\xi,\epsilon,\sigma}(x)
+=P_y+\xi\mathfrak c Q_y-\epsilon\lambda u
+ -\sigma(\ell+t\xi\mathfrak c f),\qquad
+\epsilon,\sigma\in\{\pm1\},
+\tag{FC.70}
+$$
+
+are globally nonnegative, smooth circle functions. At a contact
+with $u=0$, choose either maximizing height sign $\sigma$;
+both report-sign gaps vanish. Both angular derivatives must
+vanish at their minima, but their difference is $2\lambda u'$
+up to sign, and $u'\ne0$ at $(0,\pm1)$. This contradicts
+$\lambda>0$. This is the report-axis argument of Theorem 12.1
+and RC Proposition 70.2, applied also at fixed interior fractions.
+At a pure contact with $\ell=0$, both height-sign gaps vanish
+for a maximizing report sign. Subtracting their zero angular
+derivatives forces $\ell'=0$. Theorem 19.1's only two height
+zeros are simple, so neither can be a pure contact.
+
+For endpoints and fractions, reuse the exact triangle identity
+(FC.8) of Theorem 3.3:
+
+$$
+d(x,\xi)=(1-\xi)d(x,0)+\xi d(x,1)
+ +(1-\xi)|\eta_0|+\xi|\eta_1|
+ -|(1-\xi)\eta_0+\xi\eta_1|.
+\tag{FC.71}
+$$
+
+Every summand on the right is nonnegative. If $0<\xi<1$ and
+$d(x,\xi)=0$, both endpoint gaps vanish and the real triangle
+equality forces $\eta_0\eta_1\ge0$. The saturated endpoint
+is the original point itself when $\xi=1$. Since $t\mathfrak c>0$,
+$b_i>0$ is equivalent to $\xi_i>0$, giving all cases claimed.
+A pure endpoint has no height zero. Consequently an occupied
+strict fraction cannot have height zero either: two weakly
+same-sign endpoint heights with a zero strict convex combination
+would both be zero, contradicting the pure-endpoint exclusion.
+A saturated contact of zero height is still allowed by this
+argument and will be included in the weak negative-height branch
+below; no genericity assumption discards it. All directions are
+kept as directed points, including their separate antipodes and
+the allowed $v=0$ axes. $\square$
+
+**Proposition 20.2 (PSD forces a bounded failure-slope interval).**
+Under Assumption 17.1, suppose $R_-\succeq0$. For every actual
+positive-weight label with $b_i>0$ put $z_i=v_i/u_i$ and
+$B_*:=\max(\kappa_L,\chi)>0$. Then
+
+$$
+-\kappa_U<z_i\le B_*.
+\tag{FC.72}
+$$
+
+More precisely its same-direction saturated endpoint satisfies:
+if $\eta_1\le0$, then $u_i<0$, $\ell_i<0$ and
+$-\kappa_U<z_i<\kappa_L$; if $\eta_1>0$, then
+$0\le z_i\le\chi$. These assertions include $\eta_1=0$,
+singular $R_-$ and strict interior fractions.
+
+Proof. By Proposition 20.1 use the saturated contact at the actual
+direction, with $\epsilon=\operatorname{sgn}u_i$. If $\eta_1\le0$,
+the complete negative-height signed test gives
+
+$$
+0=D_cF_{0,\epsilon,-}+N_c x^TR_-x.
+\tag{FC.73}
+$$
+
+Both terms are nonnegative and $D_c,N_c>0$, so
+$F_{0,\epsilon,-}=0$. The pure inequality
+$P_y\ge\lambda|u|+|\ell|$, together with
+$P_y-\epsilon\lambda u+\ell=0$, implies $|\ell|\le-\ell$,
+hence $\ell\le0$ and the pure endpoint is a contact.
+This is the merge implication already proved in Theorem 13.1.
+Proposition 20.1 excludes equality $\ell=0$. Right-hemisphere
+positivity forces $u<0$ and Theorem 19.1 gives the open interval
+in the statement. The report sign is thus $\epsilon=-1$ on this
+branch. A negative slope there is upper-left ($v>0$), while a
+positive slope is lower-left ($v<0$). The case $v=0$, $u=-1$
+is included. The argument applies unchanged when $\eta_1=0$;
+it does not require a strictly negative saturated height.
+
+If $\eta_1>0$, use instead the positive-height test:
+
+$$
+0=D_cF_{0,\epsilon,+}+N_c x^TR_+x.
+\tag{FC.74}
+$$
+
+Thus $x^TR_+x\le0$. Since $R_-=R_++2t\mathsf F\succeq0$
+and $t>0$, it follows that $f=x^T\mathsf F x\ge0$.
+By $u\ne0$ and (FC.57),
+
+$$
+f=d_*u^2z(\chi-z)\ge0
+\quad\Longleftrightarrow\quad 0\le z\le\chi.
+\tag{FC.75}
+$$
+
+No strict inequality for $x^TR_+x$ is needed here. Equality,
+$z=0$, $z=\chi$, and a pure endpoint already in the same group
+are all retained. This branch may have either report sign:
+$u>0,v\ge0$ or $u<0,v\le0$. No odd orientation condition
+selects a hemisphere. Together the two branches prove (FC.72).
+The only endpoint used for a fractional label has the very same
+$(u_i,v_i)$, so its slope is the actual label's slope; no new
+endpoint label is counted. $\square$
+
+## 21. Strict variance contradicts the same-source moment ratio
+
+**Theorem 21.1 (all PSD attained configurations are excluded).**
+Under Assumption 17.1, every jointly attained finite positive-multiplier
+entire-cylinder feasible dual satisfies
+
+$$
+R_-=Q+t\mathsf F\not\succeq0.
+\tag{FC.76}
+$$
+
+This quantifies over every alternative finite dual and every common
+original law satisfying (FC.54), for every finite $t\ge t_0>0$
+and $\lambda>0$. Positive definite, rank-one PSD and zero
+remainders are all excluded without assumptions on $L_o$ or $w_o$.
+
+Proof. Suppose $R_-\succeq0$. On only the failure-bearing subset
+of the actual law introduce auxiliary probability weights
+
+$$
+w_i=\frac{p_i b_i u_i^2}{m_u},\qquad z_i=\frac{v_i}{u_i}.
+\tag{FC.77}
+$$
+
+Propositions 17.3 and 20.1 show that the denominators are positive
+and every retained $w_i>0$. Labels with $b_i=0$ contribute zero
+to all failure moments and receive no auxiliary mass. The actual
+weights $p_i$, intensities $b_i$, directions, fractions and label
+count are not replaced by $w_i$. For this auxiliary distribution,
+
+$$
+\sum_iw_i=1,\qquad
+\mathbb E_w z=\frac{\sum_i p_i b_i u_iv_i}{m_u}=0,\qquad
+\mathbb E_w z^2=\frac{\sum_i p_i b_i v_i^2}{m_u}
+=\frac{m_v}{m_u}=\mathcal R>0.
+\tag{FC.78}
+$$
+
+There is a negative-slope subset of positive auxiliary weight.
+Otherwise $z\ge0$ almost surely, and $\mathbb E_wz=0$ would
+force $z=0$ almost surely, contradicting $\mathbb E_wz^2>0$.
+For a finite or countable law this gives at least one negative
+$z_i$ of positive weight; in the stipulated integral case it
+gives a set of positive auxiliary measure.
+
+By Proposition 20.2, $-\kappa_U<z\le B_*$ almost surely.
+Therefore $(z+\kappa_U)(B_*-z)\ge0$ everywhere on the support,
+and it is strictly positive on the negative-slope subset, since
+$B_*>0$. It has strictly positive expectation. Expanding the
+quadratic and using (FC.78) yields the strict support/variance
+inequality
+
+$$
+\begin{aligned}
+0&<\mathbb E_w[(z+\kappa_U)(B_*-z)]\\
+ &=\kappa_U B_*+(B_*-\kappa_U)\mathbb E_wz-\mathbb E_wz^2
+ =\kappa_U B_*-\mathcal R.
+\end{aligned}
+\tag{FC.79}
+$$
+
+The strictness comes from an actual positive-weight negative subset,
+not from an unproved strict sign of each dual quadratic. For integral
+laws, $d\widehat\pi=b u^2\,d\pi/m_u$ is the auxiliary probability
+measure. The same moment identities and bounded slope interval make
+all integrals finite; a nonnegative function positive on a set of
+positive measure has positive integral. This gives the same strict
+inequality without presuming an atom exists.
+
+Propositions 18.1 and Theorem 19.1 give simultaneously
+
+$$
+\mathcal R>\frac12,\qquad
+\mathcal R<\kappa_U\max(\kappa_L,\chi)
+ <\frac1{20}\,4=\frac15,
+\tag{FC.80}
+$$
+
+because $\kappa_U<1/20$, $\kappa_L<4$ and $\chi<1$.
+This contradiction proves (FC.76). Neither a fitted primal table,
+a selected numerical dual, a root-box corner, nor a separately
+optimized failure marginal enters the argument. $\square$
+
+## 22. Consequences and retained original whole-law problem
+
+**Corollary 22.1 (scope of the earlier sufficient conditions).**
+Under the same-source enclosure and original-entry premises of
+Assumption 17.1, there is no jointly attained finite $\lambda>0$
+dual/common-law instance satisfying (FC.48), (FC.50), or the
+both-PSD hypotheses of Theorem 14.2. Their conditional implications,
+including Theorems 13.1–15.1, remain valid. Any original attained
+face represented by finite positive-multiplier duals must instead
+be analyzed with non-PSD $R_-$ for every such representing dual.
+
+Proof. Each listed sufficient hypothesis contains $R_-\succeq0$,
+contradicting Theorem 21.1 at this source. This is emptiness of their
+same-source jointly attained instance classes; it does not invalidate
+an implication proved under those hypotheses. Theorem 21.1 applies
+to each alternative representing dual separately. $\square$
+
+**Definition 22.2 (mathematical attribution and applicability boundary).**
+The complete signed tests, fractional triangle identity, complete
+$\Gamma$ face, compatible groups and $U_m$ criterion are reused
+from §§2–8 and 10–14, GC Proposition 12.2 and RC §§67–70.
+The bearing deduction in §§17–21 is the same-source incompatibility
+between their PSD-imposed directed nodal support and the positive
+joint failure-moment ratio. It is repo-derived ordinary conditional
+mathematics. The nonnegative-zero-integral support principle is
+standard; see di Dio–Schmüdgen, *The multidimensional truncated Moment
+Problem: Atoms, Determinacy, and Core Variety*,
+[arXiv:1703.01497v2, Lemma 3](https://arxiv.org/html/1703.01497v2).
+The quadratic support estimate is the classical bounded-variance
+argument associated with Bhatia–Davis, *A Better Bound on the
+Variance*, [DOI:10.1080/00029890.2000.12005203](https://doi.org/10.1080/00029890.2000.12005203);
+its needed strict form is explicitly proved in (FC.79).
+Rational interval containment, integer square comparisons, elementary
+one-variable derivatives and convexity are standard tools. None of
+these tools alone is a quantum alphabet or source-realization theorem.
+No literature-wide novelty, Lean/kernel verification, new source
+isolation/root TP, empirical or native/physical certification is asserted.
+
+The exclusion concerns a dual/common-law configuration. It neither
+excludes original quantum optimizers nor establishes finite dual
+attainment, $\lambda>0$ at every request, or any assertion at
+$\lambda=0$ or a nonfinite/unattained limiting dual. The original
+$\Gamma$ moments, achieved $K$, and unmodified absolute height
+$J_t$ remain the joint data for the non-PSD problem. An auxiliary
+failure reweighting is not a compression of those whole data. No
+universal seven- or eight-low compression, necessary eight-/nine-low
+seed, actual attained tuple, singular-PSD inventory search, or new
+minimum actual-label count follows from (FC.76).
+
+The original HALF complete stopped-cq objective, sharp worst-history
+JOINT cost, unaveraged equality and full-complex multi-Kraus comparison
+class remain those in Assumption 1.1. The same common constructor,
+whole-fibre activity, positive finite-budget survivors, TP survivor
+controls, absolute FIRST clock, passive-reference conditional outputs
+and one counted coherent high label retain their inherited scopes.
+Actual acquisition labels are distinct from hidden Kraus indices and
+endpoint/contact groups; supported-zero full encoders remain admitted
+and count when generated. No LOSR, diamond, PPT or entropy objective
+is substituted.
+
+All budgets and contrasts, actual counts, coefficient orientations
+and allocations, complete branch ordering and connected coverage,
+all contact/weight and unused-root signs and multiplicities,
+collisions and capacity/rank/count transitions, endpoint/threshold/
+budget/degenerate-orientation gluing, coefficient gluing and uniform
+joint limits retain Definitions 9.1 and 16.1's full obligations.
+Source/minimax/sharp JOINT/unaveraged/full-class and native prerequisites
+are retained. Source access, calibration, coherently counted storage,
+whole-fibre actuation, acquisition duration, FIRST alignment and
+archive/source/epoch/controller permissions are not supplied by
+this conditional obstruction. The full original quantum-first
+AURIC FIB ATOM programme through 2027 remains unchanged and incomplete.
+
+## 追加锚（本行以下为增补区）
