@@ -310,15 +310,50 @@ private theorem replacement_value (t u : Fin 2 → ℝ)
     · exact (attaining t u ht hu).symm
   have hupper : ∀ p ∈ S, p ≤ b := by
     rintro p ⟨R, E, fR, fE, dR, dE, e0, ψ, V, hψ, rfl⟩
-    letI := fR
-    letI := fE
-    letI := dR
-    letI := dE
-    exact success_upper t u ht hu ψ hψ V e0
+    exact @success_upper R E fR fE dR dE t u ht hu ψ hψ V e0
   have hbounded : BddAbove S := ⟨b, hupper⟩
   rw [coherentValue.eq_1]
   change sSup S = b
   exact le_antisymm (csSup_le ⟨b, hmem⟩ hupper) (le_csSup hbounded hmem)
+
+/-- Coherent discrimination bias violates the triangle inequality on replacement channels. -/
+theorem result : ¬ claim := by
+  rw [claim.eq_1]
+  intro h
+  let a : Fin 2 → ℝ := ![3/4, 1/4]
+  let b : Fin 2 → ℝ := ![1/2, 1/2]
+  let c : Fin 2 → ℝ := ![1/4, 3/4]
+  have ha : ∀ j, 0 < a j := by intro j; fin_cases j <;> norm_num [a]
+  have hb : ∀ j, 0 < b j := by intro j; fin_cases j <;> norm_num [b]
+  have hc : ∀ j, 0 < c j := by intro j; fin_cases j <;> norm_num [c]
+  have hna : IsKrausChannel (replacement a) :=
+    replacement_normalized a (fun j => (ha j).le) (by norm_num [a])
+  have hnb : IsKrausChannel (replacement b) :=
+    replacement_normalized b (fun j => (hb j).le) (by norm_num [b])
+  have hnc : IsKrausChannel (replacement c) :=
+    replacement_normalized c (fun j => (hc j).le) (by norm_num [c])
+  have hs13 := Real.sq_sqrt (by norm_num : 0 ≤ (13 : ℝ))
+  have hs5 := Real.sq_sqrt (by norm_num : 0 ≤ (5 : ℝ))
+  have hcross : Real.sqrt (13 : ℝ) * Real.sqrt (5 : ℝ) = Real.sqrt 65 := by
+    rw [← Real.sqrt_mul (by norm_num : 0 ≤ (13 : ℝ))]
+    norm_num
+  have hac : coherentValue (replacement a) (replacement c) = 5/8 := by
+    rw [replacement_value a c ha hc]
+    norm_num [a, c]
+    field_simp
+    nlinarith [Real.sq_sqrt (by norm_num : 0 ≤ (8 : ℝ))]
+  have hab : coherentValue (replacement a) (replacement b) = (9 + Real.sqrt 65)/32 := by
+    rw [replacement_value a b ha hb]
+    norm_num [a, b]
+    nlinarith [hcross]
+  have hbc : coherentValue (replacement b) (replacement c) = (9 + Real.sqrt 65)/32 := by
+    rw [replacement_value b c hb hc]
+    norm_num [b, c]
+    nlinarith [hcross]
+  have htriangle := h (replacement a) (replacement b) (replacement c) hna hnb hnc
+  rw [hac, hab, hbc] at htriangle
+  have h65 : Real.sqrt 65 < 9 := (Real.sqrt_lt (by norm_num) (by norm_num)).mpr (by norm_num)
+  linarith
 
 end
 
