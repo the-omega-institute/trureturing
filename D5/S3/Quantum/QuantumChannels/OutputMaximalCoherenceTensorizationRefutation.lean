@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.claim; result=D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.result; claim=D5/S3/Quantum/QuantumChannels/OutputMaximalCoherenceTensorizationRefutation.claim
    digest: A Pauli channel and Bell input refute tensorization of output maximal coherence. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.QuantumBounds.CHSHWitness
 
@@ -18,6 +18,8 @@ open scoped BigOperators ComplexOrder MatrixOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteStateChannel (DensityState)
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
 open D5.S3.Quantum.FiniteDimensional (qubitX qubitZ)
+open D5.S3.QuantumChannels.PauliThreeWeightBayesianInverseUniqueness (sigma sigma_properties)
+open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
 open D5.S3.QuantumBounds.CHSHWitness (bellDensity bellVector bell_density_is_state)
 
 namespace D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
@@ -94,7 +96,7 @@ private theorem kraus_psd {a b κ : Type*} [Fintype a] [DecidableEq a]
     [Finite b] [Fintype κ] (K : κ → Matrix b a ℂ)
     (ρ : Matrix a a ℂ) (hρ : ρ.PosSemidef) : (krausApply K ρ).PosSemidef := by
   classical
-  letI := Fintype.ofFinite b
+  let := Fintype.ofFinite b
   rw [krausApply.eq_1, MatrixMap.of_kraus]
   simp only [LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
   exact Matrix.posSemidef_sum _ (fun r _ => hρ.mul_mul_conjTranspose_same (K r))
@@ -109,11 +111,8 @@ private theorem output_bdd {a b κ : Type*} [Fintype a] [DecidableEq a]
 
 private def weights : Fin 4 → ℝ := ![31/40, 1/10, 1/10, 1/40]
 
-private def paulis : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ :=
-  ![1, qubitX, Complex.I • (qubitX * qubitZ), qubitZ]
-
 private def witness : Fin 4 → Matrix (Fin 2) (Fin 2) ℂ :=
-  fun r => (Real.sqrt (weights r) : ℂ) • paulis r
+  fun r => (Real.sqrt (weights r) : ℂ) • sigma r
 
 private theorem weights_nonneg (r : Fin 4) : 0 ≤ weights r := by
   fin_cases r <;> norm_num [weights.eq_1]
@@ -136,8 +135,129 @@ private theorem witness_apply (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     apply Complex.ext <;>
-    norm_num [Fin.sum_univ_succ, weights.eq_1, paulis.eq_1, qubitX, qubitZ,
+    norm_num [Fin.sum_univ_succ, weights.eq_1, sigma, pauliMatrix, qubitX, qubitZ,
       Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.conjTranspose_apply,
       Matrix.smul_apply, smul_eq_mul] <;> ring
+
+
+private theorem witness_normalized : IsKrausChannel witness := by
+  rw [IsKrausChannel.eq_1]
+  simp only [witness.eq_1, Matrix.conjTranspose_smul, Complex.star_def,
+    Complex.conj_ofReal, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    ← Complex.ofReal_mul, Real.mul_self_sqrt (weights_nonneg _)]
+  simp_rw [(sigma_properties _).1, (sigma_properties _).2]
+  rw [← Finset.sum_smul, ← Complex.ofReal_sum]
+  norm_num [weights.eq_1, Fin.sum_univ_succ]
+
+private theorem ratio_bound (a b : ℝ) (z : ℂ)
+    (hz : ‖z‖ ^ 2 ≤ a * b)
+    (hp : 0 < (4 / 5 * a + 1 / 5 * b) * (1 / 5 * a + 4 / 5 * b)) :
+    (3/4 : ℝ) * ‖z‖ / Real.sqrt ((4 / 5 * a + 1 / 5 * b) * (1 / 5 * a + 4 / 5 * b)) ≤ 3/4 := by
+  have hd : a * b ≤ (4 / 5 * a + 1 / 5 * b) * (1 / 5 * a + 4 / 5 * b) := by
+    nlinarith [sq_nonneg (a - b)]
+  have hn : ‖z‖ ≤ Real.sqrt ((4 / 5 * a + 1 / 5 * b) * (1 / 5 * a + 4 / 5 * b)) :=
+    (Real.le_sqrt (norm_nonneg _) hp.le).mpr (hz.trans hd)
+  apply (div_le_iff₀ (Real.sqrt_pos.mpr hp)).mpr
+  nlinarith
+
+private theorem witness_coherence_le (ρ : Matrix (Fin 2) (Fin 2) ℂ)
+    (hρ : ρ.PosSemidef) : maxCoherence (krausApply witness ρ) ≤ 3/4 := by
+  rw [witness_apply]
+  apply coherence_le _ (3/4) (by norm_num)
+  intro i j hij hp
+  fin_cases i <;> fin_cases j
+  · exact (hij rfl).elim
+  · norm_num [Complex.mul_re] at hp ⊢
+    exact ratio_bound _ _ _ (by simpa only [Complex.normSq_eq_norm_sq] using
+      D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hρ 0 1) hp
+  · norm_num [Complex.mul_re] at hp ⊢
+    simpa only [add_comm] using ratio_bound (ρ 1 1).re (ρ 0 0).re (ρ 1 0)
+      (by simpa only [Complex.normSq_eq_norm_sq] using
+        D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hρ 1 0)
+      (by simpa only [add_comm] using hp)
+  · exact (hij rfl).elim
+
+private theorem witness_output_upper : outputMaxCoherence witness ≤ 3/4 := by
+  let ρ : DensityState (Fin 2) :=
+    ⟨CStarMatrix.ofMatrix ((1/2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)),
+      map_nonneg CStarMatrix.ofMatrixStarAlgEquiv
+        ((Matrix.PosSemidef.one.smul (by norm_num : (0 : ℝ) ≤ 1/2)).nonneg),
+      by
+        change Matrix.trace ((1/2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1
+        norm_num [Matrix.trace, Matrix.diag, Fin.sum_univ_two]⟩
+  rw [outputMaxCoherence.eq_1]
+  refine csSup_le ⟨maxCoherence (krausApply witness ρ.1), ρ, rfl⟩ ?_
+  rintro x ⟨σ, rfl⟩
+  exact witness_coherence_le _
+    (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm σ.2.1).posSemidef
+
+private theorem tensor_apply_product {a b c d κ ι : Type*}
+    [Fintype a] [DecidableEq a] [Fintype c] [DecidableEq c]
+    [Fintype κ] [Fintype ι]
+    (K : κ → Matrix b a ℂ) (L : ι → Matrix d c ℂ)
+    (ρ : Matrix a a ℂ) (σ : Matrix c c ℂ) :
+    krausApply (krausTensor K L) (ρ ⊗ₖ σ) = krausApply K ρ ⊗ₖ krausApply L σ := by
+  classical
+  simp only [krausApply.eq_1, MatrixMap.of_kraus, LinearMap.sum_apply,
+    LinearMap.coe_mk, AddHom.coe_mk, krausTensor.eq_1,
+    Matrix.conjTranspose_kronecker, ← Matrix.mul_kronecker_mul, Fintype.sum_prod_type]
+  ext ⟨i,k⟩ ⟨j,l⟩
+  simp only [Matrix.sum_apply, Matrix.kronecker_apply, Finset.sum_mul, Finset.mul_sum]
+  exact Finset.sum_comm
+
+private theorem bell_expansion : bellDensity = (1/2 : ℂ) •
+    ((Matrix.single 0 0 1 ⊗ₖ Matrix.single 0 0 1) +
+     (Matrix.single 0 1 1 ⊗ₖ Matrix.single 0 1 1) +
+     (Matrix.single 1 0 1 ⊗ₖ Matrix.single 1 0 1) +
+     (Matrix.single 1 1 1 ⊗ₖ Matrix.single 1 1 1)) := by
+  ext ⟨i,k⟩ ⟨j,l⟩
+  fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
+    norm_num [bellDensity, bellVector, D5.S3.Quantum.QubitWitnesses.bellCoefficients,
+      Matrix.vecMulVec, Matrix.single, Matrix.kronecker_apply, smul_eq_mul,
+      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self]
+
+private theorem bell_output (i j : Fin 2 × Fin 2) :
+    krausApply (krausTensor witness witness) bellDensity i j =
+      if i = j then (if i.1 = i.2 then 17/50 else 4/25)
+      else (if i.1 = i.2 ∧ j.1 = j.2 then 9/32 else 0) := by
+  rw [bell_expansion]
+  change MatrixMap.of_kraus _ _ _ i j = _
+  simp only [map_smul, map_add]
+  change ((1/2 : ℂ) •
+    (krausApply (krausTensor witness witness) (Matrix.single 0 0 1 ⊗ₖ Matrix.single 0 0 1) +
+     krausApply (krausTensor witness witness) (Matrix.single 0 1 1 ⊗ₖ Matrix.single 0 1 1) +
+     krausApply (krausTensor witness witness) (Matrix.single 1 0 1 ⊗ₖ Matrix.single 1 0 1) +
+     krausApply (krausTensor witness witness) (Matrix.single 1 1 1 ⊗ₖ Matrix.single 1 1 1))) i j = _
+  simp only [tensor_apply_product, witness_apply]
+  rcases i with ⟨i,k⟩
+  rcases j with ⟨j,l⟩
+  fin_cases i <;> fin_cases k <;> fin_cases j <;> fin_cases l <;>
+    norm_num [Matrix.single, Matrix.kronecker_apply, smul_eq_mul]
+
+private theorem bell_output_lower :
+    (225/272 : ℝ) ≤ outputMaxCoherence (krausTensor witness witness) := by
+  let ρ : DensityState (Fin 2 × Fin 2) :=
+    ⟨CStarMatrix.ofMatrix bellDensity,
+      map_nonneg CStarMatrix.ofMatrixStarAlgEquiv bell_density_is_state.1.nonneg,
+      bell_density_is_state.2⟩
+  have hpair := coherence_pair_le
+    (krausApply (krausTensor witness witness) bellDensity) (0,0) (1,1)
+    (by decide) (by norm_num [bell_output])
+  have hvalue : (225/272 : ℝ) ≤
+      maxCoherence (krausApply (krausTensor witness witness) bellDensity) := by
+    convert hpair using 1; norm_num [bell_output, Real.sqrt_sq_eq_abs]
+  exact hvalue.trans (le_csSup (output_bdd _) ⟨ρ, rfl⟩)
+
+/-- Entangled Bell inputs violate the conjectured tensorization equality. -/
+theorem result : ¬ claim := by
+  intro h
+  rw [claim.eq_1] at h
+  have heq := h (Fin 2) (Fin 2) (Fin 2) (Fin 2) (Fin 4) (Fin 4)
+    witness witness witness_normalized witness_normalized
+  have hu := witness_output_upper
+  have hl := bell_output_lower
+  rw [heq, max_self] at hl
+  norm_num at hu hl ⊢
+  linarith
 
 end D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
