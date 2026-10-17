@@ -90,7 +90,7 @@ Every other public declaration is a definition used by a public statement. The b
 
 **Computed, not formalized** (orchestrator, recorded in #18019):
 - η̃(Φ) = 3/4 exactly, with equality at |+⟩⟨+|;
-- random two-qubit inputs reach at most 0.714 for Φ ⊗ Φ, below the Bell value. This explains why random sampling supported the conjecture.
+- random two-qubit inputs reach at most 0.714 for Φ ⊗ Φ, below the Bell value; this concerns input sampling for this one channel, while the source sampled random channel pairs and optimized their inputs, so it does not by itself explain the source's numerics.
 
 **Argued, not formalized** (search seat; only the rational member is rechecked). For 1/2 < t < 1 and 2t − 1 < c < √(2t − 1), the Pauli channel with off-diagonal factor t and diagonal contraction c has η̃ = t, while the Bell input gives 2t²/(1 + c²) > t.
 - *Mechanism.* In the Bell output, the corner coherence is t²/2 while the corner populations are (1 + c²)/4. A single qubit's output coherence is normalized by the square root of a diagonal product equal to 1/4 at the optimum. The Bell output normalizes the squared coherence factor t² by populations that the diagonal contraction c moves only to second order, so the ratio 2t²/(1 + c²) exceeds t exactly when c² < 2t − 1.
