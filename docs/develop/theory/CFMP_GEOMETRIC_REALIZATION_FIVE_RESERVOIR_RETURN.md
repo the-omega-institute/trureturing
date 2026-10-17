@@ -851,3 +851,166 @@ label must be C or D, the low values must be balanced by Section 267,
 and at least one R_i must be special by Section 268. All remaining
 special-axis stars still need their complete original equations; no
 closure of the five-reservoir family is asserted.
+
+## 273. Exact setting and public inputs
+
+Retain the original mixed-flat five-reservoir hypotheses through Section
+272 of the return continuation. The carrier is the actual original
+finite face pairing, with positive lengths shared by global edge labels,
+complete connected circular normal links, and original degree at least
+six. All original edge angle sums are 2*pi. Chosen paired frames have
+two distinct transverse labels in H={M,C,D,Z,U}. Special labels outside
+H occur only axially. Repeated axes, repeated neighboring owners,
+parallel face pairings and self-gluings of distinct faces are allowed.
+
+There are four distinct interacting genuine owners K={tau,rho,eta,xi},
+where interacting means containing two distinct labels in P={M,Z,U}.
+Each consumes more than pi of genuine P angle. Total genuine P angle
+is 5*pi: M has pi and Z,U each have 2*pi. The unique flat owner is
+sigma=(M,C,D,O,C,D). The retained source and common return are
+ tau=(Z,M,C,D,M,C), rho=(M,Z,C,U,Z,C).
+The shared cosh values satisfy c,d>1,m>1+c+d,z>1+m+c,u>m.
+
+Assume for contradiction that neither eta nor xi contains M. Sections
+264–272 then supply two distinct genuine owners outside K,
+ A_i=(M,C,D,R_i,C,D), i=1,2,
+the exact six-slot M circle, and
+ Theta=theta_M(A_1)+theta_M(A_2)<2*pi/3.
+They also prove that O is C or D, and that the four transverse C/D
+slots of each A_i together cost more than 2*pi across the two owners.
+For precision this last statement is the strict inequality
+ E_A=2*sum_i[beta_C(A_i)+beta_D(A_i)]>2*pi.
+Since sigma has its other pi axis at O in {C,D}, the total genuine C/D
+budget is 3*pi. We prove this branch impossible. The conclusion forces
+at least one of eta,xi to contain M; it does not exclude those cases
+or establish five-reservoir realization.
+
+## 274. Both opposite axes are special and smaller than both low values
+
+For a genuine frame (r,a,b,o,a,b), let
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ D_r=r^2+a^2+b^2+2*r*a*b-1,
+ D_o=o^2+a^2+b^2+2*o*a*b-1.
+The cosines of the two transverse angles have common positive
+denominator sqrt(D_r*D_o). Their numerators are
+ N_a=b*(r+o)+a*(r*o+b^2-a^2+1),
+ N_b=a*(r+o)+b*(r*o+a^2-b^2+1).
+Their exact difference is N_a-N_b=-(a-b)*L. Therefore a>=b implies
+beta_a>=beta_b, strictly if a>b.
+
+If the actual flat-opposite label O were the numerically larger of C,D,
+its transverse expense in A1,A2 would be at least E_A/2>pi. That exceeds
+its entire genuine budget pi. The same argument excludes equal low
+values. Thus O is the strictly smaller low label. Write its value b
+and the other low value a>b. The flat product and genuine A_i products
+now give
+ (m-1)*(b-1)>=(a+b)^2>(m-1)*(r_i-1).
+Hence r_i<b. Sections 265 and 268 already restrict R_i to C,D or special;
+neither low label has a value below b. Both R_i are therefore special.
+They may be the same actual label or distinct labels with equal values.
+
+## 275. A uniform low-only axial-slot inequality
+
+Consider any genuine owner with fixed transverse pair {a,b}, where
+a>=b>1, a chosen axial value 1<r<b, and opposite value 1<o<1+a+b.
+Write theta for its r-axis angle and s_angle=beta_a+beta_b. We prove
+ s_angle>theta.                                  (275.1)
+Set
+ L=(a+b)^2-(r-1)*(o-1)>0,
+ J=(r+1)*(o+1)-(a-b)^2>0,
+ kappa=(sqrt(a^2-1)+sqrt(b^2-1))/(a+b).
+The exact paired response gives
+ tan(theta/2)^2=(r-1)/(r+1)*J/L,
+ tan(theta/2)*tan(s_angle/2)=kappa*sqrt((r-1)/(r+1)).
+Both theta and s_angle lie in (0,pi). Thus (275.1) is equivalent to
+ sqrt((r-1)/(r+1))*J/L<kappa.
+
+The expression on the left strictly increases in each of r,o wherever
+J,L>0: the square-root factor increases in r, J increases in each
+variable, and L decreases in each variable. Increase to r=b and
+ o=1+a+b. Along that rectangle J remains positive and L remains
+positive, since its minimum at the final corner is (a+b)*(a+1)>0.
+It suffices to show the corner expression is at most kappa.
+At that corner J=(b+1)*(a+b+2)-(a-b)^2 and L=(a+b)*(a+1).
+After multiplication by positive factors, the corner comparison is
+ 2*b+1-a<=sqrt((a^2-1)*(b+1)/(b-1)).
+The left side is at most b+1, and the right side is at least b+1,
+because a>=b. Equality is possible only at a=b. Since the actual
+r and o are strictly below the corner, the actual comparison is strict.
+This proves (275.1), including possible repeated axial labels.
+
+## 276. Complete special circles and the high-angle payment
+
+Let S0 be the set of distinct actual labels among R1,R2, and n=|S0|,
+so n is one or two. For each label R in S0, its connected original
+normal circle propagates fixed transverse pair {C,D}. Indeed, across
+an R-incident face the special label R must again be axial, and the
+other two face labels are C,D. Connectedness reaches every original
+R slot, even when an owner or an axial label repeats.
+
+None of these R labels occurs in the unique flat sigma, whose axes are
+M and the low label O. Therefore every R slot is genuine and its full
+angle sum is 2*pi. None of their owners belongs to K: fixed pair {C,D}
+with a special R axis leaves at most one axis for a P label, so such an
+owner cannot contain two distinct P labels.
+
+Write alpha_i=theta_{R_i}(A_i). Because r_i<m, the two exact axial
+responses of A_i give
+ tan(alpha_i/2)/tan(theta_M(A_i)/2)
+ =sqrt([(r_i-1)/(r_i+1)]/[(m-1)/(m+1)])<1.
+Thus alpha_1+alpha_2<Theta. Removing these two distinct original slots
+from the complete R circles leaves total angle
+ T_remaining=2*n*pi-alpha_1-alpha_2.
+All remaining slots lie in genuine owners outside K and outside A1,A2.
+
+Partition these residual slots by whether their opposite axis is high,
+meaning labelled in P, or low-only, meaning outside P. A residual slot
+with high opposite label Y has one R axis and one Y axis. It has exactly
+one selected special slot, even if S0 contains two labels. Its angle
+psi is strictly less than theta_Y, by the same axial-response comparison
+and r<b<m<=y. Distinct such selected slots belong to distinct owners
+and select distinct actual high-axis slots.
+
+There is in fact at most one such high-opposite residual slot. The
+published four-core bound in Sections 231–234 allows at most eight
+actual high-containing owners. The four K owners, sigma, A1 and A2
+are seven distinct such owners. Every high-opposite residual owner is
+outside this set and contains exactly one selected R slot. Hence only
+one remains possible. The following summed budget also works directly
+without relying on this cardinality refinement.
+
+Let H be the sum of those selected high-axis angles and Psi the sum of
+their R angles. The four K owners spend more than 4*pi of the total
+5*pi P budget. The A_i spend Theta on their distinct M axes. Therefore
+ Theta+H<pi.
+If there are no high-opposite residual slots, H=Psi=0; otherwise Psi<H.
+In all cases Psi<=H<pi-Theta.
+Consequently the low-only residual selected slots have total angle
+ T_low=2*n*pi-alpha_1-alpha_2-Psi
+       >(2*n-1)*pi+Theta-alpha_1-alpha_2>pi.
+No bound on the number of low-only owners, or closure of the external
+low-only region within the high core, was used.
+
+## 277. The remaining low-only owners exceed the entire available budget
+
+A low-only residual selected slot has r<b and opposite label either
+C,D or special. In the first case its opposite value is below 1+a+b.
+In the second case the connected special circle has the same fixed pair
+{C,D}, so its value is below 1+a+b by the special fixed-pair barrier.
+Thus (275.1) applies to every one of these original slots.
+
+Charge beta_C+beta_D to each such selected slot. An actual owner has at
+most two selected special axial slots, across all labels in S0. It
+therefore receives at most two such charges, which its actual transverse
+C/D expense 2*(beta_C+beta_D) pays. This remains true for a repeated R
+axis and for an owner whose two axes are the two different selected
+special labels. Summing (275.1), the genuine C/D expense of these low-only
+owners is strictly greater than T_low>pi.
+
+These owners are disjoint from A1,A2, whose transverse C/D expense E_A
+is greater than 2*pi. The combined genuine C/D expense is therefore
+greater than 3*pi, contradicting the exact genuine C/D budget after
+the low flat-opposite pi slot. This excludes the entire assumed
+no-extra-core-M branch. At least one of the remaining interacting
+owners eta,xi must contain M. The residual cases with that extra core
+M occurrence remain open, with all original equations still required.
