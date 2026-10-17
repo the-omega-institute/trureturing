@@ -207,6 +207,93 @@ private theorem success_upper {R E : Type} [Fintype R] [Fintype E]
   rw [← heq]
   linarith
 
+private def rotation (t u : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (!![t / Real.sqrt (t ^ 2 + u ^ 2), -u / Real.sqrt (t ^ 2 + u ^ 2);
+    u / Real.sqrt (t ^ 2 + u ^ 2), t / Real.sqrt (t ^ 2 + u ^ 2)] :
+      Matrix (Fin 2) (Fin 2) ℝ).map Complex.ofRealHom
+
+private theorem rotation_unitary (t u : ℝ) (ht : 0 < t) :
+    rotation t u ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  let A : Matrix (Fin 2) (Fin 2) ℝ :=
+    !![t / Real.sqrt (t ^ 2 + u ^ 2), -u / Real.sqrt (t ^ 2 + u ^ 2);
+      u / Real.sqrt (t ^ 2 + u ^ 2), t / Real.sqrt (t ^ 2 + u ^ 2)]
+  have hpositive : 0 < t ^ 2 + u ^ 2 := by positivity
+  have hcircle : (t / Real.sqrt (t ^ 2 + u ^ 2)) ^ 2 +
+      (-u / Real.sqrt (t ^ 2 + u ^ 2)) ^ 2 = 1 := by
+    rw [div_pow, div_pow, neg_sq, ← add_div, Real.sq_sqrt hpositive.le]
+    exact div_self hpositive.ne'
+  have hA : A ∈ Matrix.specialOrthogonalGroup (Fin 2) ℝ := by
+    apply Matrix.of_mem_specialOrthogonalGroup_fin_two_iff.mpr
+    exact ⟨rfl, by ring, hcircle⟩
+  have horth : A * A.transpose = 1 := by simpa only [Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial] using (Matrix.mem_unitaryGroup_iff.mp hA.1)
+  rw [Matrix.mem_unitaryGroup_iff]
+  change A.map Complex.ofRealHom * star (A.map Complex.ofRealHom) = 1
+  have hstar : star (A.map Complex.ofRealHom) = A.transpose.map Complex.ofRealHom := by
+    ext i j
+    simp [Matrix.star_apply]
+  rw [hstar]
+  have hmap := congrArg (fun M : Matrix (Fin 2) (Fin 2) ℝ => M.map Complex.ofRealHom) horth
+  simpa only [Matrix.map_mul, Matrix.map_one Complex.ofRealHom
+    (map_zero Complex.ofRealHom) (map_one Complex.ofRealHom)] using hmap
+
+private def controlled (t u : Fin 2 → ℝ) :
+    Matrix (Unit × Fin 2 × Unit × Fin 2) (Unit × Fin 2 × Unit × Fin 2) ℂ :=
+  fun x y => if x.2.1 = y.2.1 then rotation (t x.2.1) (u x.2.1) x.2.2.2 y.2.2.2 else 0
+
+private theorem controlled_unitary (t u : Fin 2 → ℝ)
+    (ht : ∀ j, 0 < t j) :
+    controlled t u ∈ Matrix.unitaryGroup (Unit × Fin 2 × Unit × Fin 2) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff]
+  ext x y
+  rcases x with ⟨⟨⟩, b, ⟨⟩, f⟩
+  rcases y with ⟨⟨⟩, c, ⟨⟩, g⟩
+  have hrot := congrFun (congrFun
+    (Matrix.mem_unitaryGroup_iff.mp (rotation_unitary (t b) (u b) (ht b))) f) g
+  by_cases hbc : b = c
+  · subst c
+    simpa [controlled.eq_1, Matrix.mul_apply, Matrix.star_apply,
+      Fintype.sum_prod_type, Matrix.one_apply, ite_and] using hrot
+  · simp [controlled.eq_1, Matrix.mul_apply, Matrix.star_apply,
+      Fintype.sum_prod_type, hbc, Ne.symm hbc]
+
+private def input0 : Unit × Fin 2 → ℂ := fun x => if x.2 = 0 then 1 else 0
+
+private theorem attaining (t u : Fin 2 → ℝ)
+    (ht : ∀ j, 0 < t j) (hu : ∀ j, 0 < u j) :
+    successProbability (replacement t) (replacement u) input0
+      ⟨controlled t u, controlled_unitary t u ht⟩ () =
+      (Real.sqrt (t 0 ^ 2 + u 0 ^ 2) + Real.sqrt (t 1 ^ 2 + u 1 ^ 2)) ^ 2 / 4 := by
+  have scalar (j : Fin 2) :
+      (t j : ℂ) * ((t j / Real.sqrt (t j ^ 2 + u j ^ 2) : ℝ) : ℂ) +
+      (u j : ℂ) * ((u j / Real.sqrt (t j ^ 2 + u j ^ 2) : ℝ) : ℂ) =
+        (Real.sqrt (t j ^ 2 + u j ^ 2) : ℂ) := by
+    have hs : 0 < Real.sqrt (t j ^ 2 + u j ^ 2) := Real.sqrt_pos.mpr (add_pos_of_pos_of_nonneg (sq_pos_of_pos (ht j)) (sq_nonneg _))
+    have heq : t j * (t j / Real.sqrt (t j ^ 2 + u j ^ 2)) +
+        u j * (u j / Real.sqrt (t j ^ 2 + u j ^ 2)) = Real.sqrt (t j ^ 2 + u j ^ 2) := by
+      calc
+        _ = (t j ^ 2 + u j ^ 2) / Real.sqrt (t j ^ 2 + u j ^ 2) := by ring
+        _ = _ := (div_eq_iff hs.ne').mpr (by rw [← pow_two, Real.sq_sqrt (by positivity)])
+    exact_mod_cast heq
+  have hvec (x : Unit × Fin 2 × Unit) :
+      amplitude (replacement t) input0 (controlled t u) () 0 x +
+      amplitude (replacement u) input0 (controlled t u) () 1 x =
+      ((Real.sqrt (t 0 ^ 2 + u 0 ^ 2) + Real.sqrt (t 1 ^ 2 + u 1 ^ 2) : ℝ) : ℂ) *
+        input0 ((), x.2.1) := by
+    rw [replacement_amplitude t (fun j => (ht j).le),
+      replacement_amplitude u (fun j => (hu j).le)]
+    rcases x with ⟨⟨⟩, a, ⟨⟩⟩
+    fin_cases a <;>
+      simp [block.eq_1, controlled.eq_1, rotation.eq_1, input0.eq_1, Fin.sum_univ_two]
+    have h0 := scalar 0
+    have h1 := scalar 1
+    push_cast at h0 h1
+    linear_combination h0 + h1
+  rw [successProbability.eq_1]
+  simp only [hvec, Fintype.sum_prod_type]
+  norm_num [input0.eq_1, Fin.sum_univ_two, norm_mul, ← Complex.ofReal_add,
+    Complex.norm_real, Real.norm_eq_abs, sq_abs]
+  ring
+
 end
 
 end D5.S3.Quantum.QuantumChannels.CoherentDiscriminationTriangleRefutation
