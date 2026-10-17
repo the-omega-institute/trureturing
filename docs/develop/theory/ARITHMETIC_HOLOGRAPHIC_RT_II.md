@@ -2032,3 +2032,104 @@ The difference between the physical and target outputs, after identifying the ou
 The qutrit-environment construction above therefore shows that imposing a common qubit environment with conjugate records can change the one-product approximation optimum. It neither settles the optimum over all qubit-environment products nor the unrestricted optimum.
 
 The Gram, Schur-product and diamond-order ingredients are standard and credited in §§54 and 72 and in [Watrous, The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/). The displayed finite channel and rational certificate supply the strict counterexample to tetrahedral optimality for this fixed coherent target. No general RT recovery claim is made.
+
+## 74. A Kraus-rank obstruction and a sharp qubit-environment threshold
+
+### 74.1 Uniform fibres and the rank resource law
+
+Let k,d≥2. The uniform collapsed-fibre channel F_(k,d):C^(kd)→C^k has matrix units
+
+    F_(k,d)(|f,i><f,j|)=δ_ij|f><f|,
+    F_(k,d)(|f,i><g,j|)=(1/d)|f><g|  (f≠g).
+
+Use the fixed output MC isometry J_out(|f><g|)=|ff><gg| and write T=J_out F_(k,d). For any CPTP map C:C^(kd)→C^k⊗C^k with Kraus rank at most k(d−1),
+
+    ||C−T||diamond ≥ 2/k.                                (1)
+
+The diamond norm is unhalved. The competitor C need not preserve the output code, calibrate basis outputs, have a product structure, or satisfy any covariance. All coherences, output leakage and reference systems are included.
+
+For a physical finite LOSR implementation L=Σ_t w_t(A_t⊗B_t), with fixed MC input encoding J_in and positive weights, let a_t,b_t be the local Kraus ranks, equivalently the minimal pure Stinespring environment dimensions. Then
+
+    Σ_t a_t b_t ≤ k(d−1)
+      implies ||LJ_in−T||diamond ≥ 2/k.                   (2)
+
+In particular, error strictly below 2/k requires Σ_t a_t b_t≥k(d−1)+1. If r branches all have local Kraus ranks at most a,b, the necessary condition is rab≥k(d−1)+1. This is a joint branch-and-environment budget, not a replacement for the exact shared-weight law of §66.
+
+For k=4,d=2 the optimum over all CPTP competitors of Kraus rank at most four is exactly 1/2. The same exact optimum holds for all single physical product channels whose two local Kraus ranks are at most two. The lower bounds allow arbitrary unequal, nonconjugate local maps and arbitrary output leakage. Section 70's tetrahedral product attains 1/2 with two-dimensional local Stinespring environments. Section 73's three-dimensional local-environment product has error strictly below 1/3. These facts give an actual auxiliary-dimension separation, not merely a separation within the calibrated conjugate-paired class.
+
+The environment dimension in these statements is that of a pure Stinespring dilation. A mixed ancillary implementation must include its purification when translated into this resource; the bare dimension of an unpurified mixed ancilla is not the Kraus rank.
+
+### 74.2 Target Choi support and a kernel witness
+
+Use the unnormalized input-first Choi convention
+
+    J(C)=Σ_(x,y)|x><y|⊗C(|x><y|),
+    Tr_out J(C)=I_(kd).
+
+Let u=d^(-1/2)(1,...,1) in C^d and let j_k be the all-ones vector in C^k. On the span of |f,i>_in|ff>_out, the target Choi matrix is isometrically identified with
+
+    K=I_k⊗(I_d−uu*) + j_k j_k*⊗uu*.
+
+It is zero on the orthogonal complement of that span. Hence its nonzero eigenvalues are k once and 1 with multiplicity k(d−1). In particular,
+
+    dim S=k(d−1)+1,  S=range J(T),
+    <x,J(T)x>≥||x||²  for x∈S.                           (3)
+
+If rank J(C)≤k(d−1), restricting J(C) to the subspace S has a nontrivial kernel by rank-nullity. Thus there is nonzero
+
+    x∈S∩ker J(C).
+
+Since S lies in the displayed target-coordinate span, x can be written uniquely as
+
+    x=Σ_f x_f⊗|ff>,   x_f∈span{|f,i>:1≤i≤d}.
+
+The input vectors x_f live in mutually orthogonal fibre spaces. Put n_f=||x_f|| and s=Σ_f n_f>0.
+
+### 74.3 A normalized singular input density gives the factor two
+
+For each n_f>0 set q_f=x_f/n_f and p_f=n_f/s. Define the input-first density operator
+
+    ρ=Σ_(f:n_f>0) p_f |q_f><q_f|.
+
+It has trace one; zero components are omitted. It is generally singular. Let A=√ρ⊗I_out and use the inverse square root only on the support of ρ. Since x lies in range A, the vector
+
+    y=(ρ^(-1/2) on its support ⊗I_out)x
+
+is well defined and satisfies Ay=x. Orthogonality of the output labels and of the input fibres gives
+
+    ||y||²=Σ_(f:n_f>0) n_f²/p_f=s².
+
+Write z=y/s, a unit vector. Let Δ=C−T and Y=A J(Δ) A. This is an actual output difference on a normalized input with reference. Explicitly, in the fixed input basis take
+
+    |ψ_ρ>=Σ_x (√ρ|x>)_R⊗|x>_in.
+
+Its squared norm is Trρ=1 and
+
+    (id_R⊗Δ)(|ψ_ρ><ψ_ρ|)
+       =(√ρ⊗I_out)J(Δ)(√ρ⊗I_out)=Y.                    (4)
+
+The input marginal is ρ^T in this convention; no replacement of ρ by an unmentioned transpose is needed. Both terms in (4) are normalized output states. Thus Y is Hermitian with trace zero and ||Y||₁≤||Δ||diamond. The kernel property gives
+
+    <z,Yz>=−<x,J(T)x>/s²<0.
+
+For a Hermitian trace-zero operator, the trace norm is twice the trace of its negative part. Its negative part has trace at least −<z,Yz> for any unit z with negative expectation. Therefore
+
+    ||C−T||diamond ≥2<x,J(T)x>/s²
+      ≥2Σ_f n_f²/(Σ_f n_f)²
+      ≥2/k.                                             (5)
+
+The last step is Cauchy–Schwarz. Equations (3)–(5) prove (1) without calibration, twirling, diagonal repair, or restrictions on where the competitor's Choi support lies.
+
+### 74.4 Physical rank budgets and exact four-fibre attainment
+
+Choose local Kraus families with a_t and b_t operators. Their tensor products give a_t b_t Kraus operators for A_t⊗B_t. Precomposing with the fixed input MC isometry cannot increase this count. Multiplying by √w_t and concatenating across branches gives a Kraus family of size Σ_t a_t b_t for LJ_in. This proves (2) from (1), regardless of linear dependence between the displayed Kraus operators.
+
+At k=4,d=2, every pair of local channels admitting pure two-dimensional Stinespring environments has local Kraus ranks at most two, so its effective encoded channel has Kraus rank at most four. Equation (1) gives error at least 1/2 for all such products. The tetrahedral construction of §70 uses exactly such local environments and has full-reference error 1/2, so the lower bound is attained. That same example belongs to the larger class of all effective CPTP maps of Kraus rank at most four; consequently the minimum over that larger class is also 1/2.
+
+The rational qutrit-environment product of §73 has error below 1/3 and therefore cannot have effective Choi rank at most four. Its improvement over all two-dimensional-local-environment products is strict. No optimality of its particular error, no classification of mixed budgets such as (2,3), and no equality claim for (1) at all k,d are asserted.
+
+### 74.5 Attribution and boundary of the conclusion
+
+Kraus rank, Choi rank and minimal pure Stinespring environment dimension are standard equivalent channel resources; see [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). The general obstruction to strong channel approximation by much smaller Kraus rank is established background: [Lancien and Winter, Approximating quantum channels by completely positive maps with small Kraus rank, Quantum 8,1320 (2024), §2](https://quantum-journal.org/papers/q-2024-04-30-1320/) explicitly distinguishes diamond approximation from unreferenced output-state approximation and notes the Choi-rank obstruction. The present argument uses the uniform fibre target's support and an adapted normalized reference input to obtain the explicit 2/k bound and the sharp four-fibre resource threshold. It does not claim that the general rank-obstruction principle is new.
+
+Unlike §72's calibration reduction, which preserves shared weights but may enlarge local environments, this proof acts directly on the original effective Choi matrix. It therefore supports the stated dimension-restricted conclusion even for leakage-bearing and nonconjugate competitors. The unrestricted one-product optimum with no environment bound remains open.
