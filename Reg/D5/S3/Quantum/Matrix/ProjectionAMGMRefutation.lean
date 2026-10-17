@@ -17,7 +17,7 @@ abbrev signature : Signature :=
 
 def actual : Realization signature :=
   realize signature
-    (fun _ _ s => @decide (s = Finset.univ) (Classical.propDecidable _))
+    (fun _ _ s => decide (s = Finset.univ))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -66,7 +66,7 @@ def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ s => @decide (s = Finset.univ) (Classical.propDecidable _))
+    (fun _ _ s => decide (s = Finset.univ))
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
