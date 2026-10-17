@@ -17,7 +17,7 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                     + "and sends that part to Bob. Bob chooses a setting y and measures the joint system, "
                     + "obtaining an outcome b. This is the unitary case of the entanglement-assisted "
                     + "prepare-and-measure model in Section II, Eqs. (1)–(2), and Section IV.A. "
-                    + "All sums range over the entire indicated finite type. Matrix entries are complex, "
+                    + "All finite sums range over the entire indicated finite type; each tsum ranges over its indicated arbitrary index type. Matrix entries are complex, "
                     + "probabilities and task values are real, and brackets denote anonymous typeclass assumptions.")),
             Node("IsPOVM", "Finite positive operator-valued measurements", PovmFormula(),
                 "Every effect is positive semidefinite and the effects sum to the identity. "
@@ -26,21 +26,21 @@ internal sealed class EnergyRestrictedUnitaryEncodingRefutationDocument : IScrib
                 "The squared moduli of the state coordinates sum to one. The type of U requires "
                     + "a unitary matrix on Alice's factor for every input. For every setting, Bob's "
                     + "effects form a POVM on the product of the two factors. These are the pure-state "
-                    + "unitary strategies considered in Section IV.A."),
+                    + "unitary strategies considered in Section IV.A.", AssessedProvenance.FromLiterature(Source)),
             Node("encoded", "The state after the message is encoded", EncodedFormula(),
                 "Alice acts on her factor with U(x), while the identity acts on Bob's factor. "
                     + "The Kronecker product followed by matrix-vector multiplication gives the joint "
-                    + "state received by Bob, specializing Eq. (1) to a unitary operation."),
+                    + "state received by Bob, specializing Eq. (1) to a unitary operation.", AssessedProvenance.FromLiterature(Source)),
             Node("unitaryProb", "The outcome probability of the joint measurement", UnitaryProbFormula(),
                 "The real part of the quadratic form of M(y,b) on the encoded vector is the Born "
                     + "probability in Eq. (2). The conjugation in star is coordinatewise, and dotProduct "
                     + "sums products of matching coordinates. The expression is defined for arbitrary "
-                    + "vectors and effects; UnitaryStrategy supplies their physical normalization."),
+                    + "vectors and effects; UnitaryStrategy supplies their physical normalization.", AssessedProvenance.FromLiterature(Source)),
             Node("unitaryVacuum", "The vacuum component of the transmitted subsystem", UnitaryVacuumFormula(),
                 "Sum the squared moduli of the encoded coordinates whose Alice index is zero. "
                     + "This is the vacuum population of the reduced message state. Equation (3) "
                     + "requires this quantity to be at least 1 − omega for every input, where omega "
-                    + "is the allowed energy and NeZero dA makes the vacuum index available."),
+                    + "is the allowed energy and NeZero dA makes the vacuum index available.", AssessedProvenance.FromLiterature(Source)),
             Node("QCStrategy", "Unassisted quantum communication with shared randomness", QCStrategyFormula(),
                 "The message space H is an arbitrary complex Hilbert space with unit vacuum vector vac; "
                     + "there is no dimension restriction. Shared randomness ranges over an arbitrary type L, "
