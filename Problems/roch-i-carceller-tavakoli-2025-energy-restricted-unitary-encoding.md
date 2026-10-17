@@ -70,7 +70,7 @@ This is the source's QC model, Eqs. (4)–(5), which fixes no message dimension.
 
 ## Evidence
 
-The canonical source is `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean` (524 lines).
+The canonical source is `D5/S3/Quantum/Entanglement/EnergyRestrictedUnitaryEncodingRefutation.lean` (506 lines).
 - It defines `IsPOVM`, `UnitaryStrategy`, `encoded`, `unitaryProb`, `unitaryVacuum`, `QCStrategy`, `qcProb`, `qcVacuum`, `taskValue` and `claim`, and proves `result : ¬ claim`.
 - It reuses frozen finite-dimensional matrix results for the protocol, and Mathlib's inner product spaces and operator order for the unassisted side. No frozen owner is changed.
 - It uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
