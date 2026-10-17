@@ -1874,3 +1874,324 @@ Thus (69.12) is at most
 Since \(\beta=\rho/2<1/2\), every \(|b|\le\beta\) is inside the
 certified ambient ball. This establishes effectiveness of the local
 exclusion, while the status of the rest of the open branch remains unchanged.
+
+## 70. A certified boundary of the common-flat pair-gap method
+
+### 70.1 An unbiased ray pair on the actual branch
+
+**Theorem 70.1 (a ray-pair transition).** There is an algebraic parameter
+
+\[
+ 0.105461989024891<b_*<0.105461989224891
+ \tag{70.1}
+\]
+
+and a reflection-fixed noncanonical unit-entry vector \(w_*\) such that both
+\(w_*/\sqrt6\) and a canonical input vector \(k_*/\sqrt6\) are common-flat
+for \(H_0(b_*)\), and
+
+\[
+ \left|\left\langle w_*/\sqrt6,k_*/\sqrt6\right\rangle\right|^2=1/6.
+ \tag{70.2}
+\]
+
+Moreover a single continuous reflection-fixed common-flat branch exists over
+\([21/200,53/500]=[0.105,0.106]\), contains this isolated algebraic transition,
+and has opposite overlap-minus-six signs at its endpoints. Thus a claim of no
+mutually-unbiased common-flat ray pair cannot hold on the entire open branch.
+This is a boundary of that particular sufficient method for quartet exclusion;
+it does not refute a basis-level no-quartet assertion.
+
+### 70.2 Rational coordinates and original equations
+
+Use real coordinates \(X=(T,G,S,c,h)\) and the real parameter \(b\). Set
+
+\[
+ \chi(q)={1-q^2+2iq\over1+q^2},\quad
+ t=\chi(T),\quad g=\chi(G),\quad s=\chi(S),\quad
+ w=(1,1,t,g,g,s).
+ \tag{70.3}
+\]
+
+All denominators \(1+q^2\) are positive on the real line, and every entry of
+\(w\) has modulus one. It is fixed by the synchronous transposition of
+coordinates zero and one in each channel. Define
+
+\[
+ P=(bh-3+i(h+b))/2,\qquad Q=(-bh-3+i(h-b))/2,
+\]
+
+\[
+ M=\begin{pmatrix}J_3+PI_3&J_3+QI_3\\
+ J_3+\bar QI_3&-J_3-\bar PI_3\end{pmatrix},\qquad
+ D=(1+b^2)h^2-3+b^2.
+ \tag{70.4}
+\]
+
+Direct multiplication gives the exact identities
+
+\[
+ M^*M-6I_6={D\over2}I_6,\qquad
+ |1+P|^2=|1+Q|^2=1+D/4.
+ \tag{70.5}
+\]
+
+Thus, when \(D=0\), \(-1<b<1\), and \(h>0\), \(M/\sqrt6\) is exactly
+\(H_0(b)\): \(h=\sqrt{(3-b^2)/(1+b^2)}\). It is both unitary and Hadamard.
+
+Write \(S_x=2+t\), \(S_y=2g+s\), and
+
+\[
+ U_0=S_x+S_y+P+Qg,\quad U_2=S_x+S_y+Pt+Qs,\quad
+ V_0=S_x-S_y+\bar Q-\bar Pg.
+\]
+
+Our five rational equations are
+
+\[
+ F(X,b)=\bigl(|U_0|^2-6,\ |U_2|^2-6,\ |V_0|^2-6,
+               c^2-1-b^2,\ D\bigr)=0.
+ \tag{70.6}
+\]
+
+The first and second upper outputs are both \(U_0\); the first and second
+lower outputs are both \(V_0\). Consequently the first three equations of
+(70.6) set five of the six output squared moduli to six. Equation (70.5), \(D=0\),
+and \(\|w\|^2=6\) set their total to 36, so the remaining output also has
+squared modulus six. This reconstructs all original flatness equations, rather
+than only a subset without a converse.
+
+The boxes below have \(c,h>0\), so (70.6) also fixes \(c=\sqrt{1+b^2}\).
+Let \(\omega=(-1+i\sqrt3)/2\), \(f=(1,\omega,\omega^2)\), and define
+
+\[
+ g_1=(b+i)/c,\qquad k=(f,-g_1f).
+ \tag{70.7}
+\]
+
+This is a unit-entry canonical common-flat vector. For completeness,
+\(J_3f=0\), \(|P|^2+|Q|^2=6+D/2\), and
+\(\Re(P\bar Q(b-i))=-bD/4\). Since \(|g_1|=1\), the squared moduli of
+the two output channel factors \(P-Qg_1\) and \(\bar Q+\bar Pg_1\) are
+respectively \(6+(D/2)(1+b/c)\) and \(6+(D/2)(1-b/c)\), both six at a
+solution of (70.6).
+
+The raw overlap with (70.3) is
+
+\[
+ k^*w=\omega\bigl[(t-1)-(b-i)(s-g)/c\bigr].
+\]
+
+Define the rational numerator
+
+\[
+ N(X,b)=|c(t-1)-(b-i)(s-g)|^2-6c^2.
+ \tag{70.8}
+\]
+
+Then \(|k^*w|^2-6=N/c^2\). Thus \(N=0\) is exactly (70.2); its endpoint
+signs are also the signs of the raw overlap-minus-six. Throughout the uniform
+box, \(T>0\), so \(t\ne1\). A canonical vector with equal first two upper
+coordinates must have Fourier mode zero and all three upper coordinates equal.
+Therefore every \(w\) in this branch is noncanonical.
+
+### 70.3 Contraction and same-branch identification
+
+All centers, radii, and preconditioning matrices below are exact rationals.
+For a box \(\mathcal X=x_0+[-r_1,r_1]\times\cdots\times[-r_n,r_n]\),
+use the weighted norm \(\|u\|_r=\max_i|u_i|/r_i\). For a square system
+\(F_b\) and a fixed rational matrix \(Y\), let
+
+\[
+ \mathcal T_b(x)=x-YF_b(x),\quad
+ E_{ij}\supseteq\delta_{ij}-\sum_kY_{ik}\,\partial_jF_{b,k}(\mathcal X).
+\]
+
+Set
+
+\[
+ e_i=\sum_j\sup|E_{ij}|r_j,\quad
+ d_i\ge|(YF_b(x_0))_i|,\quad
+ q=\max_i e_i/r_i,\quad a=\max_i(d_i+e_i)/r_i.
+ \tag{70.9}
+\]
+
+The bounds \(q<1\) and \(a<1\) make \(\mathcal T_b\) a contraction of
+\(\mathcal X\) into its interior. Invertibility of \(Y\) follows from
+\(\|I-YJ\|_r<1\) at any point of the box. Its unique fixed point is
+therefore the unique zero of \(F_b\) in the box.
+
+For the uniform parameter interval \(B=[b_0-\epsilon,b_0+\epsilon]\),
+with \(b_0=211/2000\) and \(\epsilon=1/2000\), derivative intervals in
+(70.9) range over \(\mathcal X\times B\). The bound at the center is obtained
+by the one-variable mean-value inequality after preconditioning:
+
+\[
+ d_i=\sup|(YF(x_0,b_0))_i|
+       +\epsilon\sup|(YF_b(x_0,B))_i|.
+ \tag{70.10}
+\]
+
+This avoids treating different occurrences of the common parameter as unrelated
+perturbations. It is an ordinary derivative bound, not a numerical cancellation
+assumption. Uniform contraction gives a unique zero \(X(b)\in\mathcal X\)
+for every \(b\in B\). It is continuous: the fixed-point difference is bounded
+by \((1-q)^{-1}\|\mathcal T_b(X(b'))-\mathcal T_{b'}(X(b'))\|_r\), which
+tends to zero as \(b\to b'\).
+
+The following rational upper bounds result from the exact interval evaluations
+specified in §70.5. The endpoint and joint boxes have all radii \(10^{-10}\).
+
+| Box | Number of unknowns | Contraction bound \(q\) | Inclusion bound \(a\) |
+|---|---:|---:|---:|
+| Uniform branch, \(b\in[0.105,0.106]\) | 5 | \(<0.255\) | \(<0.744\) |
+| Left endpoint, \(b=0.105\) | 5 | \(<3\cdot10^{-8}\) | \(<9\cdot10^{-6}\) |
+| Right endpoint, \(b=0.106\) | 5 | \(<3\cdot10^{-8}\) | \(<5\cdot10^{-6}\) |
+| Joint system \((F,N)=0\) | 6 | \(<10^{-7}\) | \(<18\cdot10^{-6}\) |
+
+The endpoint boxes lie strictly inside the uniform five-dimensional box.
+Uniqueness therefore identifies their zeros with the endpoint values of the
+same branch \(X(b)\). Their exact rational sign enclosures are
+
+\[
+ N(X(0.105),0.105)\in[0.001197089,0.001197100],\qquad
+ N(X(0.106),0.106)\in[-0.001398270,-0.001398260].
+ \tag{70.11}
+\]
+
+Continuity already gives a zero of \(N\) on this branch. Independently, the
+six-dimensional joint contraction gives a unique zero of \((F,N)\) inside
+its much smaller box. Its first five coordinates lie strictly inside the
+uniform box, and its parameter interval lies strictly inside \(B\). By
+uniqueness of the uniform zero at that parameter, this isolated joint zero
+necessarily lies on the same continued branch. Its sixth coordinate gives (70.1).
+
+All rational denominators in (70.6) and (70.8) are nonzero on the real boxes.
+Multiplying every equation of the six-dimensional joint system by
+\(4(1+T^2)^2(1+G^2)^2(1+S^2)^2\) gives integer polynomials. The contraction
+bound implies a nonsingular joint Jacobian at its zero; clearing those nonzero
+denominators preserves nonsingularity. Thus it is an isolated complex zero of
+a rational polynomial system, and its coordinates are algebraic. Equations
+(70.1), (70.3), and the isolating box specify an exact algebraic witness, rather than
+only a decimal approximate solution.
+
+### 70.4 Scope and an ambient upper boundary
+
+At \(b_*\), (70.5)–(70.8) prove the full original common-flat equations and the
+mutual unbiasedness of the two normalized rays. Applying \(H_0(b_*)\) to
+both rays preserves their overlap and gives the corresponding output rays
+unbiased to the fixed pair \((I_6,H_0(b_*))\). This does not produce complete
+bases containing them with the required pairwise relations.
+
+In particular the universal no-unbiased-ray-pair property of §68 cannot extend
+to the entire branch. One can also give a simple upper boundary for that
+property in the ambient Frobenius metric. The family identity from §69 gives
+
+\[
+ \|H_0(b)-H_\star\|_F^2
+ ={b^2h^2+(h-\sqrt3)^2+b^2\over2}.
+\]
+
+For \(|b|<1\), \(1<h\le\sqrt3\) and
+\(|h-\sqrt3|\le(3/2)b^2\), since \(h+\sqrt3>8/3\). Hence this squared
+distance is at most \(2b^2+(9/8)b^4\). The joint box has
+\(b_*<211/2000\), and direct rational comparison gives
+
+\[
+ 2(211/2000)^2+(9/8)(211/2000)^4<9/400.
+\]
+
+Thus the open ambient ball of radius \(3/20\) already contains a Hadamard
+matrix admitting the unbiased ray pair (70.2). This is an upper bound on a
+possible universal pair-gap radius, not on a no-quartet radius.
+
+### 70.5 Exact interval arithmetic
+
+All rational centers, radii, and preconditioners are printed in §70.6.
+The bounds in §70.3 can be reproduced by evaluating (70.3), (70.6),
+and (70.8), together with their derivatives, using outward interval
+arithmetic at precision \(p=160\). The following rules specify one
+integer-only evaluation, so no external numerical data are needed.
+
+For completeness, an interval is stored as two integers \([L,U]\) representing
+\([L2^{-p},U2^{-p}]\). Addition and negation are exact. Multiplication forms
+the four integer products, divides their minimum and maximum by \(2^p\), and
+rounds the lower result down and upper result up. Reciprocation, only for
+intervals excluding zero, encloses the two endpoint values \(2^{2p}/L\) and
+\(2^{2p}/U\) by integer floor and ceiling. Division is multiplication by that
+reciprocal. Rational input endpoints are similarly rounded outwards.
+Derivatives use the ordinary sum, product, and reciprocal rules with these same
+interval operations. Therefore each reported enclosure contains the exact
+rational-function value or derivative on the full box.
+
+The strict rational inequalities in (70.9), the signs in (70.11),
+and the containment of the smaller boxes in the uniform box follow
+from these finite interval operations on the displayed data. The boxes
+also have \(c,h,T>0\) and \(-1<b<1\). All bounds in the table and
+sign display are outward rational bounds, with terminating decimals
+interpreted exactly. The original-equation identities and the continuity
+argument above turn these inequalities into the asserted existence and
+isolation theorem. No completeness assertion for rays away from zero
+or first-transition assertion is used.
+
+### 70.6 Complete rational certificate
+
+In the following display every listed integer is divided by \(10^{15}\).
+For each five-dimensional box the coordinate order is \((T,G,S,c,h)\); the
+joint box adds \(b\) last. Each matrix is the preconditioner \(Y\), with rows in coordinate order
+and columns in the equation order (70.6), followed by (70.8) for the joint system. The uniform
+radii are \((1/1000,1/500,1/1000,1/10000,3/10000)\); all other radii are
+\(10^{-10}\). The endpoint parameters are exactly 0.105 and 0.106.
+
+#### Uniform branch
+
+```text
+center = (529322879299284, -1605655737839222, 1301727298984411, 1005549725274688, 1719293190587559) / 10^15
+Y = (
+  -74044001425458, 39686004319955, -91711927520803, 0, 138195680616564
+  413580454626374, 253403812921686, 248735147031824, 0, -561869295995595
+  -1131740770487, 209311966526076, 216342259234050, 0, -197015992650825
+  0, 0, 0, 497240452095409, 0
+  0, 0, 0, 0, 287615944218974
+) / 10^15
+```
+
+#### Left endpoint
+
+```text
+center = (529120265701108, -1604702305739784, 1301213362340955, 1005497389355139, 1719412952309946) / 10^15
+Y = (
+  -73969362636663, 39703104392307, -91676292100711, 0, 138159191843137
+  413255438382929, 252999304611860, 248326826687288, 0, -561182741782829
+  -861441097563, 209201659092948, 216229793634887, 0, -197111220417418
+  0, 0, 0, 497266333352360, 0
+  0, 0, 0, 0, 287625850385156
+) / 10^15
+```
+
+#### Right endpoint
+
+```text
+center = (529525692514863, -1606608797143242, 1302242764448628, 1005602307077704, 1719172876633730) / 10^15
+Y = (
+  -74118720964880, 39668808183601, -91747697282248, 0, 138232357512250
+  413904717017460, 253808785439379, 249143968948468, 0, -562555463491845
+  -1402980885040, 209422330738926, 216454808775754, 0, -196919805733297
+  0, 0, 0, 497214451956666, 0
+  0, 0, 0, 0, 287605993085056
+) / 10^15
+```
+
+#### Joint transition
+
+```text
+center = (529307469246133, -1605583269271241, 1301688174970133, 1005545737970272, 1719302314481277, 105461989124891) / 10^15
+Y = (
+  -157842156508316, 9642501601810, -277985385100540, -674288644944426, 369859108470934, -156236367095223
+  807679088737143, 394671578888433, 1124747349189986, 3171130365632635, -1651326414314056, 734768250402058
+  -213861552165031, 133029688411627, -256560285180258, -1711797308720764, 391101115539714, -396632799207163
+  -21680934421846, -7772907917973, -48191608362986, 322796846239391, 59934489229981, -40419994463473
+  49611259252648, 17786306732102, 110274139009855, 399173974974323, 150471987981016, 92490793307202
+  -206720652473969, -74112146882584, -459491299163216, -1663281799341056, 571455845871278, -385391490325439
+) / 10^15
+```
