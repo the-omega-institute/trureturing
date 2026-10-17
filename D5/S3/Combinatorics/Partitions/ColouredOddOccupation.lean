@@ -13,6 +13,7 @@ import Mathlib.Data.Finsupp.Multiset
 import Mathlib.Data.Finsupp.Weight
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Logic.Equiv.Basic
+import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic
