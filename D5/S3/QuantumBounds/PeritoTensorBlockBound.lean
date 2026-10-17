@@ -26,7 +26,7 @@ noncomputable section
 namespace D5.S3.QuantumBounds.PeritoTensorBlockBound
 
 /-- A unitary matrix preserves the Euclidean vector norm. -/
-theorem unitary_norm_map {a : Type*} [Fintype a] [DecidableEq a]
+private theorem unitary_norm_map {a : Type*} [Fintype a] [DecidableEq a]
     (U : Matrix a a ℂ) (hU : U ∈ unitaryGroup a ℂ) (v : EuclideanSpace ℂ a) :
     ‖toEuclideanCLM (𝕜 := ℂ) U v‖ = ‖v‖ :=
   ContinuousLinearMap.norm_map_of_mem_unitary (Unitary.map_mem (toEuclideanCLM (𝕜 := ℂ)) hU) v
