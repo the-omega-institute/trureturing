@@ -2397,3 +2397,152 @@ The positive root of the quadratic is (sqrt(16k−39)−3)/(4k). This proves (1)
 The Gram spectral and dimension arguments use standard positive-matrix variational principles, closely related to the frame-rank inequalities behind Welch bounds; see [Datta, Howard and Cochran, Geometry of the Welch Bounds, §2](https://arxiv.org/abs/0909.0206). Stinespring representations, trace-distance tests and the diamond norm follow [Watrous, The Theory of Quantum Information, §§2.2 and 3.3](https://cs.uwaterloo.ca/~watrous/TQI/). Section 72 supplies the already established exact common-product calibration comparison. The new support-transfer estimate and the two-input argument provide the stated explicit obstruction for this uniform collapsed-fibre family.
 
 The comparison is against one common physical product acting on every coherent input. Separate optimizers for the plus and minus tests are not allowed. Finite LOSR mixtures can implement the target exactly, so (1) is neither a lower bound for arbitrary shared randomness nor a linear separation from its convex feasible set. The result permits arbitrary local environments and physical leakage, and establishes bounds rather than an exact unrestricted optimum or a general RT recovery theorem.
+
+## 77. The sharp rank-two Schmidt-support curve
+
+### 77.1. Exact support envelope and its channel consequence
+
+Let c₀ be a maximally entangled rank-two unit vector in arbitrary finite-dimensional bipartite spaces. Let P_A,P_B be its local Schmidt-support projections and
+
+    Q=P_A⊗P_B−|c₀><c₀|.
+
+This is a rank-three orthogonal projection. For any two local orthonormal pairs a_0,a_1 and b_0,b_1, define
+
+    c=(a_0⊗b_0+a_1⊗b_1)/sqrt(2),
+    d=(a_0⊗b_0−a_1⊗b_1)/sqrt(2),
+    F=|<c₀,c>|²,  ℓ=||(I−Q)d||².
+
+The dimension-independent sharp upper envelope, allowing arbitrary local dimensions, is
+
+    ℓ_max(F)=min{1,2(1−sqrt(F))},  0≤F≤1.              (1)
+
+Every value in (1) is attained using local dimension three. This sharp auxiliary statement strengthens §76's e+e² estimate, where e=1−F; it does not assert that a family of channel fibres can simultaneously attain every auxiliary equality.
+
+For the uniform collapsed-fibre channel F_(k,2), k≥4, every original physical product of CPTP maps, with arbitrary environments and output leakage, consequently obeys
+
+    ||(A⊗B)J_in−J_out F_(k,2)||diamond
+       ≥2(k−3)/(3k).                                   (2)
+
+The diamond norm is unhalved and the encodings are the fixed MC encodings of §§66 and 76, with full local input dimension 2k and output dimension k. At four fibres this gives 1/6. Together with §73 the unrestricted one-product optimum therefore lies in [1/6,1/3). Neither that channel optimum nor equality in (2) is claimed.
+
+### 77.2. A two-dimensional contraction inequality
+
+Write Z=diag(1,−1), and for a 2×2 matrix X let X₀=X−(TrX)I₂/2. For arbitrary complex contractions A,B of size two,
+
+    |Tr(ABᵀ)|≤1+(1/2)||(AZBᵀ)₀||²_F.                 (3)
+
+Here the transpose is the ordinary transpose, and the Frobenius norm is the Hilbert–Schmidt norm.
+
+First prove that every 2×2 contraction R, with eigenvalues λ₁,λ₂, and every traceless Hermitian unitary N satisfy
+
+    |Tr(NR)|≤1+|λ₁−λ₂|²/4.                            (4)
+
+Put R into unitary Schur form [[λ₁,r],[0,λ₂]], transforming N by the same unitary similarity. In this basis N=[[a,b],[conj(b),−a]] with a real and a²+|b|²=1. Thus
+
+    |Tr(NR)|=|a(λ₁−λ₂)+conj(b)r|
+      ≤sqrt(|λ₁−λ₂|²+|r|²).
+
+Positivity of I−R*R, specifically its determinant, gives
+
+    |r|²≤(1−|λ₁|²)(1−|λ₂|²).                          (5)
+
+For the scalar step set m=(λ₁+λ₂)/2, v=(λ₁−λ₂)/2, M=|m|², V=|v|² and h=Re(m conj(v)). Both eigenvalues have modulus at most one, hence M+V≤1. Direct expansion gives
+
+    (1+V)²−[4V+(1−|λ₁|²)(1−|λ₂|²)]
+       =M(2−2V−M)+4h²≥0.                              (6)
+
+Indeed 2−2V−M≥0 follows from M+V≤1. Equations (5)–(6) prove (4), including repeated eigenvalues and singular contractions.
+
+Now set R=ZBᵀA and T=AZBᵀ. Transposition preserves operator norm, so R is a contraction. The square matrices R and T have the same characteristic polynomial: their traces and determinants agree by cyclicity and multiplicativity. Also Tr(ZR)=Tr(ABᵀ). Applying (4) with N=Z gives
+
+    |Tr(ABᵀ)|≤1+|λ₁−λ₂|²/4.
+
+A Schur form of T has diagonal entries λ₁,λ₂, so
+
+    ||T₀||²_F≥|λ₁−λ₂|²/2.
+
+This proves (3). No simultaneous normality, invertibility, equality of A and conjugate(B), or common singular vectors is assumed.
+
+### 77.3. Converting the contraction inequality to the sharp support bound
+
+Choose local Schmidt bases of c₀ so that c₀=(|00>+|11>)/sqrt(2). Let A and B be the 2×2 matrices whose columns are the coordinates of P_A a_i and P_B b_i in these bases. Each is a compression of an isometry, hence is a contraction. Under the usual vectorization identification, the projections of c and d onto the anchor product support have coefficient matrices ABᵀ/sqrt(2) and AZBᵀ/sqrt(2). Therefore
+
+    sqrt(F)=|Tr(ABᵀ)|/2,
+    ||Qd||²=(1/2)||(AZBᵀ)₀||²_F.
+
+Equation (3) gives 2sqrt(F)≤1+||Qd||², or ℓ≤2(1−sqrt(F)). Since d is a unit vector, also ℓ≤1. This proves the upper bound in (1).
+
+For sharpness on F∈[1/4,1], use local dimension three with c₀=(|00>+|11>)/sqrt(2). For t∈[0,1] set
+
+    v=sqrt(t)e_1+sqrt(1−t)e_2,
+    a_0=b_0=(e_0+v)/sqrt(2),
+    a_1=b_1=(e_0−v)/sqrt(2).
+
+The local pairs are orthonormal. Direct expansion gives
+
+    c=(|00>+v⊗v)/sqrt(2),
+    d=(e_0⊗v+v⊗e_0)/sqrt(2),
+    F=(1+t)²/4,  ||Qd||²=t,  ℓ=1−t=2(1−sqrt(F)).
+
+For F∈[0,1/4], instead choose θ∈[0,π/4], v=cos(θ)e_0+i sin(θ)e_1, and
+
+    a_0=b_0=(v+e_2)/sqrt(2),
+    a_1=b_1=(v−e_2)/sqrt(2).
+
+Now c=(v⊗v+|22>)/sqrt(2), d=(v⊗e_2+e_2⊗v)/sqrt(2), and
+
+    F=cos²(2θ)/4,  Qd=0,  ℓ=1.
+
+These two families cover the whole interval, agree at F=1/4, and prove exact attainment of (1), including F=0 and F=1.
+
+### 77.4. An amplitude anchor yields the unrestricted channel bound
+
+Use §72 to replace an arbitrary original product by a calibrated product with no greater error. No environment-dimension constraint is imposed, so possible enlargement of its environments is harmless. Let δ be the calibrated error; a lower bound for it is also a lower bound for the original error.
+
+Write its actual joint records and their two coherent combinations as in §76:
+
+    x_(f,i)=a_(f,i)⊗b_(f,i),
+    c_f=(x_(f,0)+x_(f,1))/sqrt(2),
+    d_f=(x_(f,0)−x_(f,1))/sqrt(2).
+
+Each local pair is orthonormal. Let C and M be the Gram matrices of c_f and d_f, respectively. The normalized logical inputs
+
+    |ψ_±>=k^(-1/2)Σ_f(|f,0>±|f,1>)/sqrt(2)
+
+give actual logical outputs Cᵀ/k and Mᵀ/k, and ideal outputs J_k/k and I_k/k. The fixed MC output embedding preserves all norms. Thus, with c̄=k^(-1)Σ_f c_f,
+
+    δ≥||C−J_k||₁/k≥2(1−||c̄||²),
+    δ≥||M−I_k||₁/k.                                   (7)
+
+The factor two in the first line follows by testing the trace-zero difference of two normalized states against the pure uniform state. These unreferenced coherent inputs are valid tests for the full-reference diamond norm.
+
+The crucial anchor estimate uses amplitudes directly:
+
+    (1/k)Σ_a Σ_f Re<c_a,c_f>
+       =k||c̄||²≥k(1−δ/2).
+
+Some actual fibre index a therefore satisfies
+
+    Σ_f(1−|<c_a,c_f>|)
+       ≤k−Σ_f Re<c_a,c_f>≤kδ/2.                        (8)
+
+The anchor c_a has Schmidt rank two and equal Schmidt coefficients. Let Q be its rank-three support projection with the anchor direction removed. Apply (1) to each pair c_f,d_f. Using (8),
+
+    Σ_f||(I−Q)d_f||²
+       ≤2Σ_f(1−|<c_a,c_f>|)≤kδ.                        (9)
+
+This step does not apply Jensen's inequality to the nonlinear curve, and does not treat the mean vector as a rank-two anchor.
+
+Let B have columns d_f, so M=B*B. Since rank(QB)≤3, the sum of the k−3 smallest eigenvalues of M is at most Tr B*(I−Q)B≤kδ, by the variational argument in §76. If these eigenvalues are λ_1,...,λ_(k−3), the second normalized output test in (7), together with TrM=k, gives
+
+    δ≥(2/k)Σ_j(1−λ_j)_+
+      ≥(2/k)((k−3)−Σ_(j=1)^(k−3)λ_j)
+      ≥2(k−3)/k−2δ.
+
+Rearranging proves (2). The argument concerns the same physical product on both coherent inputs; optimizing them with different implementations would invalidate (8)–(9).
+
+### 77.5. Attribution and scope
+
+Unitary Schur decomposition is standard; see the [LAPACK Users’ Guide, Eigenvalues, Eigenvectors and Schur Factorization](https://www.netlib.org/lapack/lug/node50.html). Contraction positivity and Frobenius norms are standard matrix analysis; the channel normalization and Stinespring facts follow [Watrous, The Theory of Quantum Information, Chapters 1–3](https://cs.uwaterloo.ca/~watrous/TQI/). Sections 72 and 76 supply the existing calibration comparison and two-test spectral-deficit framework. The contraction calculation above proves the exact auxiliary support envelope, including explicit extremizers, and its amplitude-anchor application gives (2).
+
+Sharpness in (1) is local to one anchor and one Schmidt sign-pair. It neither proves simultaneous compatibility of all fibre extremizers nor supplies a channel attaining (2). Finite LOSR mixtures can realize the target exactly, so (2) is specifically a one-product obstruction, with arbitrary local environments and original leakage. No general RT recovery theorem or literature priority for the underlying classical matrix tools is asserted.
