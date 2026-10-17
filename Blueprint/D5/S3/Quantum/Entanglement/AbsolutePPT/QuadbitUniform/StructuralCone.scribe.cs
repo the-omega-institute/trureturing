@@ -6,45 +6,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.AbsolutePPT.Qua
 
 internal sealed class StructuralConeDocument : IScribeDocumentDefinition
 {
-    private static Formula Int(long n) => n < 0
-        ? new Formula.Negate(Num(-n)) : Num(n);
-    private static Formula Tuple(IEnumerable<Formula> xs) =>
-        Seq(Open, Seq(xs.SelectMany((v, i) => i == 0
-            ? new[] { v } : new[] { Comma, v }).ToArray()), Close);
-    private static Formula MatrixStatement()
-    {
-        int[][] rows = [
-            [-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3],
-            [-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4],
-            [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2]];
-        Formula Fin(int n) => new Formula.Apply(F.Id("Fin"), [Int(n)]);
-        var real = Seq(Mathbb, Grp(F.Id("R")));
-        var matrix = new Formula.Apply(F.Id("Matrix"), [Fin(3), Fin(16), real]);
-        return Seq(F.Id("A"), Colon, matrix, F.Eq,
-            Tuple(rows.Select(row => Tuple(row.Select(v => Int(v))))));
-    }
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordered defects and bulk subtraction for the full three-row spectral cone.",
         H("Structural three-row cone estimate"), Blocks(
-            Paragraph(Text("The real matrix A has rows (-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3), " +
-                    "(-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4), and " +
-                    "(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2). All sixteen slots are retained.")),
-            Describe.Lean(DescribeId.Create("appt-quadbit-spectrumcompression-a"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.A"),
-                H("Three boundary rows"), StatementSource.FromAuthor(Disp(MatrixStatement())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A has three rows and sixteen ordered gap slots. Each row retains " +
-                    "the complete original boundary inequality."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("appt-quadbit-spectrumcompression"),
-                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/QuadbitUniform/StructuralCone.positions_strict"),
-                H("Ordered boundary and middle positions"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every natural N at least 67 and middle position j from 6 through N-10, " +
-                    "the sixteen natural step positions 1,2,3,4,5,j,N-9 through N are strictly increasing. " +
-                    "These positions and A are shared by the arbitrary-defect cone estimate and " +
-                    "the spectrum compression proof. The latter remains with the scalar endpoint and " +
-                    "handles positive middle mass by barycentric weights and zero middle mass without division."))), DescribeRole.Theorem),
             Paragraph(Text("These statements concern real scalar spectra and ordered step synthesis. Connecting " +
                     "the boundary inequalities to a physical APPT model, constructing an attaining state, and " +
                     "determining a purity supremum require additional results.")),
@@ -67,19 +31,19 @@ Let l_0 ≥ ... ≥ l_{N-1} ≥ 0, sum l_i = 1, and suppose
     l_0+l_1+l_2 ≤ l_{N-6}+...+l_{N-1},
     l_0+...+l_5 ≤ l_{N-10}+...+l_{N-1},
     l_0 ≤ l_{N-3}+l_{N-2}+l_{N-1}.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 Put t=floor((3N+4)/8) and T_N=(9N+16t)/(3N+2t)^2.
 We prove sum l_i^2 ≤ T_N.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 Full gap reconstruction and convex-mixture reduction reduce the problem to the following unconditional cone bound:
 for every integer 6≤j≤N-10 and every x≥0 with Ax≥0,
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -89,7 +53,7 @@ for every integer 6≤j≤N-10 and every x≥0 with Ax≥0,
     A_0=(-1,-2,-3,-3,-3,-3,-3,-3,-3,-3,-2,-1,0,1,2,3),
     A_1=(-1,-2,-3,-4,-5,-6,-5,-4,-3,-2,-1,0,1,2,3,4),
     A_2=(-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,2).
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -99,7 +63,7 @@ For any fixed nonnegative C, the set Q≤C S^2, S≥0 is closed under
 nonnegative scaling and addition: apply the triangle inequality to f and
 its nonnegative mass. These are the same norm properties already used by
 the existing compression reduction.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 ))
             )),
             new DocumentBlock.Section(H("2. Ordered-block energy"), Blocks(
@@ -121,7 +85,7 @@ k(k-1) ordered cross products, each at least m^2. Since
 n-k≤k(k-1), (2.1) follows. This is a general order/energy argument, with
 arbitrary real input and arbitrary permitted block sizes. We will use
 (n,k)=(4,2) and (9,3). A more general two-block version holds with arbitrary finite index types and a separating level m.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 ))
             )),
             new DocumentBlock.Section(H("3. Actual head and tail defects"), Blocks(
@@ -130,7 +94,7 @@ arbitrary real input and arbitrary permitted block sizes. We will use
 For a compressed spectrum f, write u for its low middle level and v=x_5
 for its middle jump. Its high middle level is u+v. The first five entries
 are u+v+h_0,...,u+v+h_4, with
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -152,41 +116,41 @@ The last nine entries are u-d_1,...,u-d_9, with
 Let H=sum h_i, D=sum d_i, H2=sum h_i^2, D2=sum d_i^2,
 H3=h_0+h_1+h_2, D6=d_4+...+d_9, D3=d_7+d_8+d_9.
 Directly substituting into the three original rows gives exactly
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     H3+D6 ≤ 3u-3v,
     H+D   ≤ 4u-6v,
     h_0+D3≤ 2u-v.                                      (3.1)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 There are j high-middle baseline entries and N-j low-middle baseline
 entries, including their head/tail corrections. Therefore
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     S=uN+vj+H-D,
     Q=(2u+v)S-u(u+v)N+E,
     E=v(H+D)+H2+D2.                                    (3.2)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 If u=0, nonnegativity and the second inequality in (3.1) force v=H=D=0,
 so f=0. Otherwise divide the entire spectrum by u. From now on u=1 and
 write w=v/u, c=H-D, z=h_0. Then 0≤w≤2/3. Formula (3.2) becomes
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     S=N+wj+c,
     Q=(2+w)S-(1+w)N+E,
     E=w(H+D)+H2+D2.                                    (3.3)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -219,7 +183,7 @@ If z≤1, all h_i and all d_i lie in [0,1], hence
 """
     E ≤ (1+w)(H+D) ≤ (1+w)(4-6w)
       =4-2w-6w^2.                                     (4.2)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -235,13 +199,13 @@ If z≥1, put b=h_1+h_2 and r=D3. By (2.1),
 """
 Also H≥z+b, D≤3r (partition the nine ordered d_i into three blocks),
 and D6≥r. The actual row budgets (3.1) imply
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     1≤z≤2-w,   0≤r≤2-w-z,
     0≤b≤3-3w-z-r,   H+D≤4-6w.                         (4.3)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -252,7 +216,7 @@ The following **two analytic inequalities** result:
 """
     E ≤ P(w):=5-4w-w^2,
     4E-c ≤ 17-12w-4w^2.                               (4.4)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -263,7 +227,7 @@ Here is a complete derivation, including the parameter boundaries. First,
 """
     E ≤ w(4-6w)+z^2+b^2+r^2,
     4E-c ≤ 4w(4-6w)+4z^2-z+4b^2-b+4r^2+3r.          (4.5)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -274,7 +238,7 @@ convex quadratic in z, so its maximum is at z=1 or z=2-w. Thus only the
 following algebraic endpoint differences must be nonnegative. These are
 values derived from arbitrary interval inputs, not preselected cone
 multipliers or a cone-success oracle:
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -288,7 +252,7 @@ multipliers or a cone-success oracle:
 | upper | 0 | 2-w | 0 | w |
 | upper | upper | 1 | 2(1-w) | 4-3w |
 | upper | upper | 2-w | 0 | w |
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -298,7 +262,7 @@ manifest: 5w²-8w+4=5(w-4/5)^2+4/5;
 20w²-28w+14=20w²+14(1-2w);
 16w²-13w+3=16(w-13/32)^2+23/64;
 16w²-17w+7=16(w-17/32)^2+159/64. This proves (4.4).
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -321,7 +285,7 @@ The second inequality uses H+D≤4-6w and w≥0.
 """
 Write theta=B_N and q=N-67≥0. Direct positive-denominator multiplication
 proves
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -333,13 +297,13 @@ proves
     theta≥256/(255N-1001),
     theta≥36/(35N-81),
     theta≥36/(35N-80).                                 (5.1)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 For completeness the five nontrivial comparison numerators, using common
 factor (15N-4)^2 and the stated other denominator, are respectively
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -348,7 +312,7 @@ factor (15N-4)^2 and the stated other denominator, are respectively
     256/(255N-1001):3600q^2+240240q+59712,
     36/(35N-81):    300q^2+20600q+43292,
     36/(35N-80):    300q^2+20840q+59244.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -359,7 +323,7 @@ The upper estimate for theta uses
 The lower estimate uses
 (15N-8)(15N+49)-(15N-4)^2=735N-408>0.
 All denominators above are strictly positive at N≥67.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -387,14 +351,14 @@ then (3.3) yields Q≤theta S^2, because
 """
     4 theta [theta S^2-(2+w)S+K(w)]
       =[2 theta S-(2+w)]^2+4 theta K(w)-(2+w)^2≥0.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 For a concave quadratic, nonnegativity at both endpoints gives
 nonnegativity throughout the interval. We now use this fact only on
 ordinary real intervals, with all endpoint inequalities paid in (5.1).
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -408,14 +372,14 @@ ordinary real intervals, with all endpoint inequalities paid in (5.1).
 * z≥1, 2/5≤w≤1/2: use U=(4-6w)(4-5w) from (4.6).
   The coefficient is -120theta-1<0. The endpoint requirements are
   theta≥36/(35N-80) and theta≥25/[24(N-1)].
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 It remains to pay z≥1 and 0≤w≤W=2/15. This is the part for which a
 continuous bulk upper bound alone would lose the exact original target.
 Both inequalities in (4.4) are essential here.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -427,7 +391,7 @@ Set
     c*=3-4w,  L=N+3+2w,  e=w(j-6)≥0,
     a=2theta L-(2+w),
     F0(w)=theta L²-(N+11+3w+w²).
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -444,7 +408,7 @@ We first establish
 The function a is affine and decreasing in w, since 4theta-1<0. At w=W,
 L=N+49/15, so theta≥16/(15N+49) gives a≥0. At w=0,
 theta≤16/(15N) gives
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -462,7 +426,7 @@ Also F0(w) is concave in w (coefficient 4theta-1). Its value at 0 is
 nonnegative by theta≥(N+11)/(N+3)^2. Its value at W is nonnegative by
 (6.1) at W with U=P, proved above. Consequently F0(w)≥0 throughout
 [0,W]. The identity used at the endpoint, and below, is
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -478,19 +442,19 @@ If c≥c*, put d=c-c*≥0. Then S=L+e+d and E≤P, hence
 """
     theta S²-Q
       ≥ F0 + theta(e+d)²+a(e+d) ≥0.                  (6.4)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 If c≤c*, put d=c*-c≥0. The second bound in (4.4) says
 E≤P-d/4. Now S=L+e-d and
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     theta S²-Q
       ≥ F0 + theta(e-d)²+a e+(1/4-a)d ≥0.            (6.5)
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -498,7 +462,7 @@ This is a genuine mass-defect transfer identity for arbitrary e,d≥0;
 it is not a fixed-array checker. Equations (6.2)--(6.5) pay the last
 small-jump case, including w=0, d=0 and all interval endpoints.
 This completes (4.1) with no residual face assumed good.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 ))
             )),
             new DocumentBlock.Section(H("7. Attained bulk subtraction and four faces"), Blocks(
@@ -521,14 +485,14 @@ For any feasible x define
 """
     alpha=min(x_5/2, x_15/3, (A_0 x)/3, (A_2 x)/4),
     y=x-alpha b.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
 Every argument of the minimum is nonnegative. The chosen alpha guarantees
 y≥0, A_0 y≥0, A_2 y≥0, and A_1 y=A_1 x≥0. A finite minimum is attained,
 so y lies on at least one of these four faces:
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -540,7 +504,7 @@ so y lies on at least one of these four faces:
 Here is why **each** face is already covered by Section 6. If its low
 middle level u is zero, it is the zero spectrum as noted above. Otherwise
 normalize u=1 and use its actual defects:
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -548,7 +512,7 @@ normalize u=1 and use its actual defects:
 * y_15=0 implies d_9=1, so 1≤H+D≤4-6w and w≤1/2.
 * A_0 y=0 implies 3-3w=H3+D6≤H+D≤4-6w, so w≤1/3.
 * A_2 y=0 implies 2-w=z+D3≤H+D≤4-6w, so w≤2/5.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -559,7 +523,7 @@ Thus Q(y)≤B_N S(y)^2. Each face therefore satisfies the same small-jump estima
 """
 The spectrum associated with b is 5 on its first j entries and 3 on the
 remaining N-j entries. Its mass and square mass are
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -571,7 +535,7 @@ remaining N-j entries. Its mass and square mass are
 Section 8 shows Q(b)≤T_N S(b)^2 and B_N≤T_N. Since
 x=y+alpha b, positivity, homogeneity and the min-kernel triangle inequality
 from Section 1 give Q(x)≤T_N S(x)^2. No success hypothesis remains.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 ))
             )),
             new DocumentBlock.Section(H("8. Exact integer optimizer"), Blocks(
@@ -582,14 +546,14 @@ The scalar rounding facts are
 Here is their ordinary algebra, so this proof is independently readable.
 Let d=3N-8t. Natural division gives -4≤d≤3.
 For zeta=8t-3N=-d∈[-3,4],
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
     (9N+16t)(15N-4)^2
       -16(15N-8)(3N+2t)^2
       =(zeta+4)((15N-8)(4-zeta)+32)≥0.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -605,7 +569,7 @@ This proves B_N≤T_N. Define
 """
 For any natural j, the cross-multiplied difference between the bulk value
 at t and at j is
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -621,7 +585,7 @@ R is decreasing, and
 """
     R(t-1)=16+(d+4)(15N-(d+4))>0,
     R(t+1)=16-(4-d)^2-15N(4-d)<0.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -630,7 +594,7 @@ j≥t+1 and both factors are negative. At j=t it is zero. This proves the
 bulk bound at exactly the original t, without replacing it by a continuous
 maximum. All denominators 3N+2j are positive. In particular the proof
 applies on the full required 6≤j≤N-10 range.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
@@ -640,7 +604,7 @@ gives the asserted inequality for every original l. That bridge preserves
 the original full three rows, nonnegativity, antitonicity and mass; no
 truncated rows or extra hypothesis have been substituted. With sum l_i=1,
 the homogeneous bound is exactly sum l_i²≤T_N.
-""".ReplaceLineEndings(" ")
+""".Replace("\r\n", " ").Replace('\r', ' ').Replace('\n', ' ')
 )),
             Paragraph(Text(
 """
