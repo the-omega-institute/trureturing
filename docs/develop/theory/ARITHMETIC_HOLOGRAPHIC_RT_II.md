@@ -208,3 +208,47 @@ This is a direct quantitative consumer of the all-output pure-source support the
 ### 55.2 Explicit mixed-source example
 
 Take r=3/4, c=3/10, P=17/20 and w=1/4. The source is strictly mixed since c²=9/100<3/16=r(1−r), and the target is physical since w²=1/16<51/400=P(1−P). Here q=1/4, D=√61/20, c≥q, P≥r and t=45/61<1. Also qw−c(1−P)=7/400>0. Thus the exact unhalved trace error is 7/(10√61), attained by (45/61)ρ+(16/61)|00⟩⟨00|. The target population lies outside the source interval [1/4,3/4].
+
+## 56. Complete trace-error landscape for mixed sources with c >= 1-r
+
+This extends §55 by resolving its remaining corner regime.
+
+Let rho=r|00><00|+q|11><11|+c(|00><11|+|11><00|), with r>=1/2, q=1-r>0 and q<=c<=sqrt(rq). Define D=sqrt(c^2+q^2). For target tau=rho(P,w), after independent local output phase and population sorting assume P>=1/2, w>=0 and w^2<=P(1-P). LOSR is finite convex mixtures of product qubit CPTP maps. The norm below is the unhalved trace norm, with no support restriction on candidate outputs.
+
+The exact error is:
+
+1. If P<=r: delta=2 max(0,w-c), by the population-interval theorem §51.
+2. If P>=r and t=[q(1-P)+cw]/D^2<=1: delta=2 max(0,[qw-c(1-P)]/D), by the edge theorem §55.
+3. If P>=r and t>=1: delta=2 sqrt((P-r)^2+(w-c)^2).
+
+On overlaps the formulas agree. For t=1, the edge projection equals rho, and its norm difference is the third formula. At P=r, t>=1 is equivalent to w>=c, agreeing with regime1. The product source q=0 is outside these parameters and is already handled by §53.
+
+### 56.1 Full pure-target fidelity support
+
+For u in [1/2,1], define psi_u=sqrt(u)|00>+sqrt(1-u)|11> and f(u)=r u+q(1-u)+2c sqrt(u(1-u)). Then
+
+    sup_Lambda <psi_u|Lambda(rho)|psi_u> = max{u,f(u)}.
+
+Proof. Set R*=c^2/D^2>=1/2, Q*=q^2/D^2, and a=D^2/q<=1. As in §55, rho=a sigma_R*+(1-a)|00><00|. For every LOSR Lambda, §53 bounds the pure-source term by max{u,F(u)}, where F(u)=(sqrt(R*u)+sqrt(Q*(1-u)))^2. The product-source term is at most u by the largest Schmidt probability of psi_u. Therefore its total is at most
+
+    a max{u,F(u)}+(1-a)u = max{u,aF(u)+(1-a)u} = max{u,f(u)}.
+
+The final identity uses aR*+(1-a)=r, aQ*=q and a sqrt(R*Q*)=c. Identity achieves f(u), while simultaneous local reset achieves u. Thus the bound is exact for unrestricted outputs. This argument uses a source decomposition only to establish a bound on one common channel; it does not implement channels conditioned on an unknown decomposition label.
+
+Writing x=2u-1 in [0,1] and y=2sqrt(u(1-u))=sqrt(1-x^2), one has f(u)-u=cy-qx. Hence identity is optimal whenever x/y<=c/q (with the endpoint interpreted directly).
+
+### 56.2 Corner proof
+
+Let A=P-r>=0 and B=w-c. The condition t>=1 is equivalent to cB>=qA. Thus B>=0. If A=B=0, identity gives zero. Otherwise put L=sqrt(A^2+B^2)>0, x=A/L and y=B/L. In fact B>0, since q>0 and cB>=qA. Then x/y=A/B<=c/q. Choose u=(1+x)/2, so y=2sqrt(u(1-u)). For H=2|psi_u><psi_u|-I, the MC block is [[x,y],[y,-x]], the other block is -I, and ||H||_infty=1.
+
+The support result and cy>=qx show that every output xi obeys Tr H xi<=Tr H rho. Therefore
+
+    ||tau-xi||_1 >= Tr H(tau-rho) = 2(xA+yB) = 2L.
+
+Identity attains this bound because tau-rho has MC block [[A,B],[B,-A]], eigenvalues +/-L, and zero other block. This proves the third regime without any MC-output ansatz.
+
+### 56.3 Scope and relation to previous results
+
+This gives all physical MC targets for the entire two-parameter source region q<=c<=sqrt(rq), including strictly mixed sources. It completes the missing t>1 part of §55 by a family of supporting witnesses, and reuses §51 for the central population interval. Sources with 0<=c<q remain outside the support derivation and their general positive-error optimum is not asserted. No general coherent multisector RT optimum follows from this state theorem. The proof uses §53's standard Schmidt support method; no novelty claim is made for that ingredient, the PIO construction, or convex support identities.
+
+For a strictly mixed corner example take r=3/4, c=3/10, P=4/5 and w=2/5. The source determinant is 39/400>0, while the target is physical and pure. Then t=68/61>1, P−r=1/20 and w−c=1/10, so the exact unhalved trace error is √5/10, attained by identity. This example lies outside the §55 projection regime.
