@@ -3419,3 +3419,386 @@ head normalization or memory complement is supplied. There is no
 coordinate-minimality, physical-law or whole-programme completion claim.
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Original responses separate payload weights; the full meter forgets their order
+
+The actual meter supplies a positive distinction of complete original
+responses on the returned class of §16. At a fixed payload length, changing
+its weight changes the complete native bill by exactly twice the weight
+change. The same lawful original EX13 therefore has different complete
+responses. The entire marked meter, however, determines only the weight
+on this class. Its failure to determine order is a statement about this
+included coordinate, not equality of complete original responses.
+
+**Definition 17.1 (comparison across the existing weights).** Keep the
+one installation, fixed actual $P$, derived common $P_*$ and every
+executed phase of Definition 16.1. For fixed $L\ge2$, consider together
+its already specified classes
+
+$$
+\mathcal X_L=\bigcup_{r=1}^{L-1}\mathcal X_{L,r}.
+$$
+
+For each $x$ keep its complete checked rejection $R_x$, later header
+cut $h_x$ after IN5(0), and actual EX13 successor $h_x^+$. Thus neither
+an unfinished history flight nor an arbitrary later entry is included.
+Let $u=10^{L-1}$ be one weight-one member. Use the following three
+cut types, with the type fixed in each comparison:
+
+$$
+\begin{aligned}
+H_x^{\rm ret}&=R_x,&
+H_x^{\rm pre}&=h_x,&
+H_x^{\rm post}&=h_x^+,\\
+d_{P,L}^{\tau}&=n(H_u^\tau)-n(P_*),
+&&\tau\in\{\mathrm{ret},\mathrm{pre},\mathrm{post}\}.
+\end{aligned}
+$$
+
+These constants are the full RCA Definition 11.5 recurrence evaluated
+on that actual reference flight, including its incoming arenas. They
+are not unit prices for a service. In particular
+$d_{P,L}^{\rm post}=d_{P,L}^{\rm pre}+1$. All termination and actual
+supply premises remain Assumption 1.2's. Taking the union changes no
+frame language, source, mode, admission, observation or physical action.
+
+**Lemma 17.2 (the full cost difference across weights).** For all
+$x,y\in\mathcal X_L$, writing $r=|x|_1$ and $s=|y|_1$, at each of the
+three cut types,
+
+$$
+\begin{aligned}
+n(H_x^\tau)&=n(P_*)+d_{P,L}^\tau+2(r-1),\\
+n(H_x^\tau)-n(H_y^\tau)&=2(r-s).
+\end{aligned}
+$$
+
+At these cuts the nonmeter construction sizes, register lengths and
+nonmeter head geometry, bank parity and numeric placement/descriptor words are
+independent of $r$, as well as of payload order. Retained bit values
+and their copies need not agree. This is a comparison of the complete
+expanded flight, including its returns, not of one import subtotal.
+
+Proof. Extend Lemma 16.2's register-length/head induction while retaining
+its transient clock difference instead of requiring its final value
+to vanish. Correspondence is by actual phase, loop index and completed
+word operation; it is not correspondence by native ordinal.
+
+For a compiled assignment, changing cons0 to cons1 changes one literal
+written bit and neither its number of rows nor its constructed length.
+The source field index and destination field index are the same. Both
+passes copy all $r_{\mathrm{gc}}$ fields, including every dead temporary.
+LastBank and Field scan to F/sep without classifying binary values;
+SegmentCount and SegmentCopy have the same $5l+1$ rows at a given field
+length. Base counts every existing ordinary cell, not its bit value.
+LastScratch's extra L tests, all preceding retained versions, the closed
+descriptor-F count, actual unary bases/lengths/ordinals, flags10, seals
+and parity CTL consequently have the same costs and resulting lengths
+and positions. This includes entry heads on nonempty scratch and banks.
+
+The empty and first-bit word tests in RCA Definition 11.3 each use
+their own Field/RD. Both first-bit successors have that one test;
+they do not use the native binary importer. Reverse, Cat, Frame,
+Length and Take therefore retain their length schedules across
+weights. ReadFrame and ReadList consume framing lengths, not the
+numeric value of an opaque payload. Each equality containing the
+request compares authentic copies within its own run and reaches
+joint exhaustion; all other compared operands are fixed. No comparison
+between different runs is executed. Thus no new mismatch exit or
+data-dependent loop length enters the proof.
+
+The native binary importer is the exception. RCA Definitions 11.2 and
+13.2, relocated by ARC Definition 2.2 and GCA Definitions 2.2 and 3.1,
+use RD testing F, then CTL testing0, and, precisely on1, another CTL
+testing1, before the literal cons and source MR. The rows outside
+that cons are three per0 and four per1. The extra CTL changes no
+nonmeter cell, source head, bank parity or numeric metadata. At each
+corresponding completed cons/MR checkpoint its clock difference is the
+difference of the consumed prefix weights, plus the difference already
+present at entry. Every intervening bank-work summand is paired by
+the preceding induction even when these clocks differ.
+
+Here is the complete application to the flight. A zero in the last
+column means equality of the full expanded costs for that phase, at
+its actual incoming geometry; it does not mean that the phase is free.
+
+| Actual phase | Operand/geometry justification, including the paid work | Difference for weights $r,s$ |
+| --- | --- | --- |
+| Outer1, invocation TOK, reserve and separate mode1 | Actual Base70, receptions, F/seal, literal lengths, descriptor count/write, imports and persistent mode copy have the same bits and incoming lengths. | $0$ |
+| Whole-frame construction and metadata | Tag000, $U(L)$, length recovery, copied payload bound and tested payload reception have the same row/length schedule. F/seal, $U(2L+4)$, ordinal and full descriptor use real measured bases, not the current clock. | $0$ |
+| Whole-frame native import | The whole word $000U(L)x$ has length $2L+4$, with $L+r$ ones and $L-r+4$ zeros. Positioning, accumulator clear, every compiled cons and Reverse have equal costs. Only the finite binary classifier contributes a difference. | $r-s$ |
+| Recover, Boundary and cover archive | The frozen predecessor is exactly the common $P_*$. Manifest, predecessor $M$, represented inputs/events/receipts and tallies $a,b$ are identical. The current frame stays a persistent copied field outside that reservoir. Include every represented Step's physical word implementation, cover serialization and complete archive append. | $0$ |
+| CoverRef publication and ClientCover | CoverRef$(c,a,b)$ and its service/source prefix are identical. Include measured sender export, both separate endpoint allocations, actual descriptors and staged placement records, completion records, copies, print, check/ACK/mailbox return, positioned73 import, acquired-$c$ checks and invocation transfer to Bind. | $0$ |
+| Bind and first failure | The mode is1 and the tag is000. The first required111 test fails before $x$ is used as a target, offset, source index, unary value, program or loop bound. The authentic cover work already occurred; reason0000 is fixed. No Issue, PackageRef, Call/Image or successful view-cycle tail is executed. | $0$ |
+| Rejection serialization, native publication and print | ARC Definition 7.1's result has fields kind0011, fixed service binding, $\xi$, reason0000 and the raw request. GCA Definition 6.3 makes that last field the fixed pair $(1,w_x)$. The list-of-Frames codec contains $x$ once, between words depending only on $P_*,L$; length prefixes also depend only on lengths. Export, allocation, staging, both copies, completion records and mandatory print copy symbols without a binary classifier. | $0$ |
+| ClientImage's received Rejection import | Its length is fixed and its number of ones is a fixed quantity plus $r$. The F-bounded73 importer has the second variable binary classifier; all its compiled work has the common length/head schedule. | $r-s$ |
+| Rejection checks and actual Ready return | Parse the fixed-arity result and raw-request pair; check source/version/reason/request against authentic expected copies. Include full equality scans, final ACK, mailbox TOK, received bindings, five-field item serialization and complete $M$ AppendItem, invocation TOK and actual Ready CTL. These are word/copy operations, not another native import of $x$. | $0$ |
+| Later outer01, original header Base/setup and IN5(0) | The original source and13 material have survived. The gate bits and their complete native metadata/import are fixed. The original prelude does its actual old-port scans/constructions, followed by the same canonical IN. None reads the live meter. | $0$ |
+| Matching original EX13 | One real ordinary-cell construction and one receipt in each run, with current producer authority. | $0$ |
+
+For both publications the channel entries in this table include all
+three real placement descriptors and their staging: dry-count and
+real-copy each descriptor, F/seal its stage, then describe that stage
+once. They do not recursively stage the stage descriptor. Each
+endpoint's actual base and the sender payload length are reloaded
+before its copy. The sealed completion records retain the actual
+origin/placement and flags10 and leave those placement records selected.
+Print repositions its actual receiver and length. Each callback positions
+73 from staging before bank work, then imports to its existing F.
+Thus $17l+7$ for two copy bodies and print is not being used as a full
+channel price. The additional allocation, seeks, descriptor scans,
+staging, seals, checks, ACKs and returns all have equal costs by the
+numeric geometry just established.
+
+Numeric geometry does not acquire a clock dependence at the two
+imports. Bases count cells on their named ordinary ports; descriptor
+ordinals count previous descriptors; list IDs count items; payload
+lengths count bits. None counts live receipts. Completion records use
+these same actual placement/origin words. Boundary's receipt fields
+belong to the fixed predecessor. The completed history item contains
+its specified five fields, without a current-return timestamp.
+RCA Definition 13.2, ARC Definition 5.1 and GCA Definition 3.3 supply
+these different meanings. The asymmetric testing CTLs construct no
+ordinary cell, so differing clocks cannot perturb later numeric
+words, old-bank lengths or positioned heads. Public OUT bits are
+not fed back as new input. A later receiver obtains its own ingress
+bit before writing/testing it; no stale ingress latch licenses a guard.
+
+There are consequently exactly two variable binary imports, each
+contributing $r-s$. The remaining native imports are of identical
+mode, gate, CoverRef or numeric staging words. The $M$ append copies
+word fields and is not a third physical binary import. Adding all
+recurrence summands proves the second equation at $R_x$ and through
+the actual gate/header/IN/EX extension. Taking $y=u$ gives the first.
+The same induction proves the claimed construction geometry. $\square$
+
+**Lemma 17.3 (the exact physical meter on this returned family).** Let
+$\operatorname{Meter}(h)$ be the actual meter's complete ordered
+eight-track cell record, with its port/creation-position identities,
+L/R, all receipt symbols and both marked heads. Write $E_o^k(\mathfrak m)$
+for $k$ iterations of PR57.D1's existing ordinary-receipt side effect
+on a meter record $\mathfrak m$, with no core meter operation. Here $o$
+denotes that supplier's ordinary receipt; $E_o$ is mathematical notation
+for its fixed local update, not a new callable operation. Then
+
+$$
+\operatorname{Meter}(H_x^\tau)
+=E_o^{\,d_{P,L}^\tau+2(|x|_1-1)}
+       \bigl(\operatorname{Meter}(P_*)\bigr).
+$$
+
+In particular, if $\mu(h)$ selects only receipt symbols, excluding L/R,
+
+$$
+\mu(H_x^\tau)=\mu(P_*)\,o^{\,d_{P,L}^\tau+2(|x|_1-1)}.
+$$
+
+Every old F receipt is retained at its original cell. The physical read
+head remains on its actual $P_*$ cell. The append head is at the final
+R after the stated number of real extensions. These assertions include
+the effect on a read mark if it shares a receipt-stage operand cell.
+
+Proof. CAP Definition 6.1a fixes the owning convention: all other CTLs,
+including record/payload seals, append ordinary receipts unless the
+graph explicitly says fence. ARC Assumption 1.2 adopts CAP's finite
+row/effect encoding; GCA Assumption 1.3 and Assumption 1.2 here keep
+these primitives. RCA Definition 12.2 and ARC Definition 6.2 distinguish
+seal, finite-slot updates and select-F in their literal local-effect
+lists. Selecting F is not an implicit consequence of a seal or a new
+phase. The following is the exhaustive classification of physical
+work after the common $P_*$ on this route.
+
+| Physical work | Actual receipt selector and meter-head effects |
+| --- | --- |
+| Gate/mode/history ingress and metadata | Native reads, constructions, writes and moves concern70,66–69. The CTLs test ingress/length or seal the named block/descriptor and dispatch the finite phase. None selects F or moves a meter head. |
+| Bank assignments, tests and all word macros | RCA11.2–11.3/ARC2 use64–68, with purpose, scratch/bank/descriptor seals and parity restore. Their CTLs are the specified finite effects, without select-F. |
+| Recover/Boundary and cover/binding word work | Step's meter records, old fence symbols and old head effects are represented bank data. Their physical implementation consists of the preceding word operations. It neither executes a live old fence nor scans the live meter. |
+| CoverRef and Rejection publications and callbacks | Actual exports, allocations, descriptor staging, copies, completion records, print, imports and checks use64–73; seals and phase updates are ordinary CTLs. Invocation, mailbox and ACK transfers are TOKs. A written data delimiter F is not the select-F effect. |
+| Completed-item append, invocation/Ready return and later01 | The written finite phase/parity/Ready effects and TOKs do not invoke CloseFence or select F. The next gate uses its actual annex receiver, not a meter scan. |
+| Original header prelude, IN5(0) and EX13 | These precede full-frame parsing and source admission. CAP4.6's CloseFence(source-start) is later, before source generation. Base/setup touches its original ordinary work ports; IN changes latch5, and EX constructs on13. None moves the meter read head or selects F. |
+
+There is no bootstrap, outer00/Stop route, accepted source service or
+successful view-cycle suffix between these endpoints. The earlier
+ReadE, its source fences, paid readouts and changed meter-head positions
+are entirely inside $P_*$. No assumption that their meter prefix is
+ordinary or that its read head is normalized is made.
+
+Hence every physical row of this suffix selects $o$, and no core
+row reads, writes, seals or moves the meter. Apply its actual receipt
+stage inductively. At the append-marked R, replace the symbol by $o$,
+clear its append mark, retain that cell's creation identity and its
+other tracks, and construct the next R with the prescribed initialized
+tracks and append mark. The read mark stays at its existing cell,
+including if that cell was the replaced R; it does not move to the
+new R. Earlier cells, symbols, seals, unused/reserved tracks and the
+L marker are preserved. New cells have precisely the supplier's
+constructor tracks; there is no value-, opcode- or input-dependent
+receipt payload. This determines the complete record and both heads,
+not just its cardinality. Lemma 17.2 supplies the number of those
+identical local updates and gives the displayed formula. $\square$
+
+**Theorem 17.4 (one actual original experiment separates unequal
+weights).** For fixed $P$ and $L\ge3$, and $x,y\in\mathcal X_L$ of different
+weights, the one-node experiment Advance at $h_x,h_y$ is lawful at
+both, executes the prescribed original EX13, and has different
+**complete original responses**. Consequently $h_x\not\sim_Q h_y$.
+In particular this same original experiment distinguishes all $L-1$
+members
+
+$$
+h_{1^r0^{L-r}},\qquad 1\le r<L.
+$$
+
+Within $\mathcal X_L$, its already included meter coordinate
+mathematically recovers the exact weight by
+
+$$
+|x|_1=1+
+\frac{n(h_x^+)-n(h_u^+)}{2}.
+$$
+
+Proof. Lemma 16.3 and SOURCECALL Lemma 2.3 apply to every actual
+completed return in Definition 17.1. Their admission proof uses the
+real resource relation, not equal weights or equal clocks: rejection
+check/ACK and mailbox return, completed $M$ append, invocation TOK
+and actual Ready have occurred. The producer has its twelve workspace
+tokens and original source/directory/journal/counter relation, with
+heads13/17 at R; the parked client and occupied verifier/INITIAL
+consumer are unchanged. The actual later gate01 enters the original
+header Base/setup. Its IN5(0) is canonical-extending and leaves the
+producer with the current13 construction token and marked R.
+No service-source admission is being claimed before its later parser.
+
+The next EX13 is thus enabled on both states and corresponds to the
+unchanged original row, including its finite parity alternative.
+There is no new helper entry or schedule choice. The finite experiment
+tree consists only of Advance, so it makes no branch choice based on
+private state and requires no further Supply. The action releases
+no OUT bit and pays one tick, two fee units, one ordinary receipt and
+its real13 construction on each run.
+
+AIF Definitions 2.5–2.6 and SOURCECALL Definition 1.4 expressly include
+the actual original meter/receipt chain in each executed original
+joint successor. By Lemmas 17.2–17.3 the two post-EX meters have receipt
+counts differing by exactly $2(|x|_1-|y|_1)\ne0$, hence different
+complete records. Selecting that included coordinate from two equal
+complete responses would give equal records, a contradiction.
+Thus this is inequality of the complete responses themselves,
+independent of any unclassified additional coordinates. Since a
+common lawful finite experiment already distinguishes them, equality
+of their entire partial response maps is impossible. This argument
+needs neither a blanket annex-inclusion rule nor an assertion that
+the named meter selection exhausts $Q$.
+
+The reference member $u$ has weight1, so the displayed decoder is
+Lemma 17.2 rearranged. The numerator is the difference of two actual
+absolute counts and is an even nonnegative integer on this class.
+On the listed representatives that weight also determines the chosen
+payload. This mathematical selection of a successor is not a current
+actor read of the meter or an installed operational decoder. $\square$
+
+**Proposition 17.5 (exact meter limit, without promotion to full-Q
+equality).** At any one of the fixed cut types $\tau$ of Definition
+17.1,
+
+$$
+\operatorname{Meter}(H_x^\tau)=\operatorname{Meter}(H_y^\tau)
+\quad\Longleftrightarrow\quad |x|_1=|y|_1.
+$$
+
+The meter therefore determines weight and does not determine payload
+order on this actual class. In particular adding the entire meter
+record to the existing $K$ does not recover history or any one of
+the independent $S,B,T,M_J$ views on a domain containing the equal-weight
+family of §16, either before or after its lawful EX13.
+
+Proof. Equal weights give the same complete initial record and the
+same number of the exactly specified local updates in Lemma 17.3.
+Conversely equal meter records have equal numbers of constructed
+receipt cells; Lemma 17.2 then forces equal weights. The first
+direction uses the proved ordinary selector and head/track formula;
+it is not the generally false implication from count to chain equality.
+
+For the last assertion reuse Theorem 16.4's equal $K$, distinct actual
+histories and separately injective independent views at fixed $L,r$.
+Their meter records now also agree. Its explicit completed pair with
+frames00011001 and00011010 consequently still has identical augmented
+selected data. Any function of those data gives one value on the
+pair, whereas each desired history/view value differs. The class and
+its unbounded binomial fibres, four-view inverses, and the earlier
+actual checked acquisition of the raw request are all supplied by
+§16; none is a new acquisition or counting theorem here. No equality
+or separation of equal-weight complete original responses follows
+from this proposition. $\square$
+
+**Convention 17.6 (reuse, costs and remaining recovery obligations).**
+The new source-specific deductions are the cross-weight full-cost
+equation, the exact marked ordinary-suffix meter formula, the genuine
+complete-original-response distinction through the lawful EX13, and
+the resulting exact weight-versus-order limit of that included meter
+on the returned family. Lemmas 16.2–16.3 supply the length/head
+recurrence comparison and actual admission joins; they are extended
+only where the proof above explicitly tracks a nonzero clock difference.
+GENERAL4/UAS3's larger-input/joint-memory recovery, GENERAL16's family,
+equal-weight recurrence, distinct views and checked raw-request
+acquisition remain credited suppliers. This construction uses neither
+a generic replay wrapper nor a new source/observation/interface.
+
+Every bill remains Definition 8.5's complete
+$(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n)$. At a fixed cut type
+and length the proved $A$ and $b_{\rm ctl}$ agree across weights, so
+the differences in ticks, fee and constructed storage are respectively
+$2(r-s),4(r-s),16(r-s)$. All absolute entrance, old-bank, capture,
+source-prelude, descriptor, transport, checker, ACK and return costs
+remain in the reference recurrence. No equality of alternative
+ordered-stencil structural tariffs is inferred; each keeps its
+actual apparatus and paid foundation.
+
+The deduction is `repo-derived` ordinary mathematics under the
+declared native/atomic-incidence foundations, with no Lean certificate,
+measured native run, physical-law or universal minimality claim.
+Convention 10.4's repository declarations and their owning Scribes
+have different supplied interfaces: `NativeSerialMachine` requires
+actual Run/Replay premises; `NativeFullSourceProducer`'s private
+traversal invariants are proof parameters, not actor data. PH
+`OriginalNativeServiceBridge.Architecture` and the ReadUpdate
+`Protocol.arrival/start/step` still require their actual architecture,
+arrival and local simulation; no G_gc instance is inferred. At the
+exact mathlib revision cited there, `Function.factorsThrough_iff`
+requires fibre constancy, and `StateTransition.Respects`/`tr_reaches`
+require a supplied simulation. In
+[CompCert v3.16, `Smallstep.fsim_properties`](https://github.com/AbsInt/CompCert/blob/v3.16/common/Smallstep.v),
+initial/final matching and trace-matched Plus or decreasing-index
+Star are explicit premises. These standard interfaces do not prove
+the actual fence classification, affine cost or original-row admission
+used here, and stuttering simulation does not identify receipt-bearing
+one-row successors. No worldwide novelty or search-miss absence
+claim is made.
+
+For equal weights the complete original response is still unclassified;
+meter equality, augmented-$K$ equality and any larger mathematical
+projection are not promoted to $Q$ equality. No additional O+ or
+original-body continuation theorem is asserted. For unequal weights,
+Theorem 17.4 supplies a common lawful distinguishing experiment; it
+does not classify every other response or legal experiment domain.
+Original raw/added/unfinished/semantic/adaptive/empty/terminal domains
+remain exactly Definition 1.3's, with task-undefined enabled Supply,
+unexecuted `none` and executed refusal kept distinct. No70/71/73
+readout, terminal history field or current read permission is added.
+
+The meter's exact limit specifies one remaining recovery requirement:
+on this returned class, a claimed inverse of history or any independent
+view cannot use only the existing original13/latch5 data and even the
+whole actual meter; it must preserve a request-order distinction.
+The earlier real receiver check supplies that distinction in its stated
+callback, as §16.5 already proves, but no arbitrary later actor access
+or original-$Q$ use of it follows. Successful-only mixed recovery,
+equal-weight full-response comparison, full original-domain bridges
+and paid operational acquisition/use remain unresolved. Support/space,
+occurrence process/time, boundary and retained/callable memory keep
+their independently specified meanings on the same ordered alpha/beta
+source. The original parked client, occupied verifier and INITIAL
+consumer, current token/owner paths and absorbing halt remain. This
+bounded distinction does not complete the full programme.
+
+## 追加锚（本行以下为增补区）
