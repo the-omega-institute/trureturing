@@ -589,7 +589,8 @@ private theorem pure_representation {d : ℕ} (n : Fin d → ℤ) (χ ψ : Fin d
       simp only [character, energy, Int.cast_neg]
       ring
     · intro j _ hj
-      have hzero : ψ j = 0 := by simpa only [S, Set.Finite.mem_toFinset, Function.mem_support, not_not] using hj
+      have hzero : ψ j = 0 := by
+        simpa only [S, Set.Finite.mem_toFinset, Function.mem_support, not_not] using hj
       simp [hzero]
 
 private theorem pure_bound (T : ℝ) (hT : 5 / 4 < T)
@@ -601,6 +602,108 @@ private theorem pure_bound (T : ℝ) (hT : 5 / 4 < T)
   simp_rw [show signal n χ ψ = (fun t => Complex.normSq (trigPoly e z t)) from funext hsignal]
   exact coefficient_bound T hT hsym e he z hz
 
+private theorem weighted_cube {ι : Type*} [Fintype ι] (w p b : ι → ℝ)
+    (hw : ∀ i, 0 ≤ w i) (hp : ∀ i, 0 ≤ p i) (hb : ∀ i, 0 < b i)
+    (s : ℝ) (hs : 0 < s) (hone : ∑ i, w i * b i = s) :
+    (∑ i, w i * p i) ^ 3 ≤ s ^ 2 * ∑ i, w i * (p i ^ 3 / b i ^ 2) := by
+  have huone : ∑ i, w i * b i / s = 1 := by rw [← Finset.sum_div, hone, div_self hs.ne']
+  have hj := Real.pow_arith_mean_le_arith_mean_pow Finset.univ
+    (fun i => w i * b i / s) (fun i => p i / b i)
+    (fun i _ => div_nonneg (mul_nonneg (hw i) (hb i).le) hs.le) huone
+    (fun i _ => div_nonneg (hp i) (hb i).le) 3
+  have hlinear : ∑ i, (w i * b i / s) * (p i / b i) = (∑ i, w i * p i) / s := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro i _
+    field_simp [(hb i).ne']
+  have hcubic : ∑ i, (w i * b i / s) * (p i / b i) ^ 3 =
+      (∑ i, w i * (p i ^ 3 / b i ^ 2)) / s := by
+    rw [Finset.sum_div]
+    apply Finset.sum_congr rfl
+    intro i _
+    field_simp [(hb i).ne']
+  rw [hlinear, hcubic, div_pow] at hj
+  apply (mul_le_mul_iff_right₀ hs).mp
+  rw [mul_comm s]
+  calc
+    _ ≤ (∑ i, w i * (p i ^ 3 / b i ^ 2)) * s ^ 3 :=
+      (div_le_div_iff₀ (pow_pos hs 3) hs).mp hj
+    _ = _ := by ring
+
+private theorem moment_one_mixture {L : ℕ} (p : Fin L → ℝ → ℝ) (w : Fin L → ℝ)
+    (hp : ∀ l, Continuous (p l)) :
+    moment 1 (fun t => ∑ l, w l * p l t) = ∑ l, w l * moment 1 (p l) := by
+  simp only [moment, pow_one]
+  rw [intervalIntegral.integral_finsetSum (f := fun l t => w l * p l t)
+    (fun l _ => (continuous_const.mul (hp l)).intervalIntegrable _ _), Finset.mul_sum]
+  simp only [intervalIntegral.integral_const_mul]
+  apply Finset.sum_congr rfl
+  intro l _
+  ring
+
+private theorem mixture_bound {L : ℕ} (p : Fin L → ℝ → ℝ) (w : Fin L → ℝ)
+    (hp : ∀ l, Continuous (p l)) (hnonneg : ∀ l t, 0 ≤ p l t)
+    (hw : ∀ l, 0 ≤ w l) (hwone : ∑ l, w l = 1)
+    (T : ℝ) (hT : 0 ≤ T) (hbound : ∀ l, moment 3 (p l) ≤ T * moment 1 (p l) ^ 2) :
+    moment 3 (fun t => ∑ l, w l * p l t) ≤
+      T * moment 1 (fun t => ∑ l, w l * p l t) ^ 2 := by
+  let m := moment 1 (fun t => ∑ l, w l * p l t)
+  have hml : ∀ l, 0 ≤ moment 1 (p l) := by
+    intro l
+    exact mul_nonneg (by positivity) (intervalIntegral.integral_nonneg_of_forall
+      (by positivity) (fun t => by simpa using hnonneg l t))
+  have hmeq : m = ∑ l, w l * moment 1 (p l) := moment_one_mixture p w hp
+  have hm : 0 ≤ m := by rw [hmeq]; exact Finset.sum_nonneg (fun l _ => mul_nonneg (hw l) (hml l))
+  have heps (ε : ℝ) (hε : 0 < ε) :
+      moment 3 (fun t => ∑ l, w l * p l t) ≤ T * (m + ε) ^ 2 := by
+    have hs : 0 < m + ε := by positivity
+    have hsum : ∑ l, w l * (moment 1 (p l) + ε) = m + ε := by
+      simp_rw [mul_add, Finset.sum_add_distrib, ← Finset.sum_mul]
+      rw [hwone, hmeq]
+      ring
+    have hpoint (t : ℝ) : (∑ l, w l * p l t) ^ 3 ≤
+        (m + ε) ^ 2 * ∑ l, w l * (p l t ^ 3 / (moment 1 (p l) + ε) ^ 2) :=
+      weighted_cube w (fun l => p l t) (fun l => moment 1 (p l) + ε)
+        hw (fun l => hnonneg l t) (fun l => by linarith [hml l]) _ hs hsum
+    have hint : moment 3 (fun t => ∑ l, w l * p l t) ≤
+        (m + ε) ^ 2 * ∑ l, w l * (moment 3 (p l) / (moment 1 (p l) + ε) ^ 2) := by
+      calc
+        _ ≤ (1 / (2 * π)) * ∫ t in (0)..(2 * π),
+            (m + ε) ^ 2 * ∑ l, w l * (p l t ^ 3 / (moment 1 (p l) + ε) ^ 2) := by
+          apply mul_le_mul_of_nonneg_left _ (by positivity)
+          exact intervalIntegral.integral_mono_on (by positivity)
+            (by apply Continuous.intervalIntegrable; fun_prop)
+            (by apply Continuous.intervalIntegrable; fun_prop) (fun t _ => hpoint t)
+        _ = _ := by
+          rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_finsetSum
+            (fun l _ => (by fun_prop : Continuous
+              (fun t => w l * (p l t ^ 3 / (moment 1 (p l) + ε) ^ 2))).intervalIntegrable _ _)]
+          simp only [intervalIntegral.integral_const_mul, intervalIntegral.integral_div, moment]
+          simp only [Finset.mul_sum]
+          apply Finset.sum_congr rfl
+          intro l _
+          ring
+    have hterm (l : Fin L) : moment 3 (p l) / (moment 1 (p l) + ε) ^ 2 ≤ T := by
+      apply (div_le_iff₀ (sq_pos_of_pos (by linarith [hml l]))).2
+      exact (hbound l).trans (mul_le_mul_of_nonneg_left (by nlinarith [hml l]) hT)
+    have hsum_bound : (∑ l, w l * (moment 3 (p l) / (moment 1 (p l) + ε) ^ 2)) ≤ T := by
+      calc
+        _ ≤ ∑ l, w l * T := Finset.sum_le_sum
+          (fun l _ => mul_le_mul_of_nonneg_left (hterm l) (hw l))
+        _ = T := by rw [← Finset.sum_mul, hwone, one_mul]
+    exact hint.trans (by nlinarith [mul_le_mul_of_nonneg_left hsum_bound (sq_nonneg (m + ε))])
+  have hcont : ContinuousAt (fun ε : ℝ => T * (m + ε) ^ 2) 0 := by fun_prop
+  have hlimit := ge_of_tendsto hcont.continuousWithinAt.tendsto
+    (show ∀ᶠ ε in nhdsWithin (0 : ℝ) (Set.Ioi 0),
+      moment 3 (fun t => ∑ l, w l * p l t) ≤ T * (m + ε) ^ 2 from
+      Filter.mem_of_superset self_mem_nhdsWithin (fun ε hε => heps ε hε))
+  simpa using hlimit
+
+private theorem signal_continuous {d : ℕ} (n : Fin d → ℤ) (χ ψ : Fin d → ℂ) :
+    Continuous (signal n χ ψ) := by
+  unfold signal
+  fun_prop
+
 private theorem signal_bound (T : ℝ) (hT : 5 / 4 < T)
     (hsym : ∀ r : ℝ, 0 ≤ r → thresholdN r / thresholdD r ≤ T)
     {d L : ℕ} (n : Fin d → ℤ) (χ : Fin d → ℂ) (ψ : Fin L → Fin d → ℂ)
@@ -609,11 +712,67 @@ private theorem signal_bound (T : ℝ) (hT : 5 / 4 < T)
     (hw : ∀ l, 0 ≤ w l) (hwone : ∑ l, w l = 1)
     (hm : 0 < moment 1 (mixedSignal n χ ψ w)) :
     ratio3 (mixedSignal n χ ψ w) ≤ T := by
-  sorry
+  have hmix := mixture_bound (fun l => signal n χ (ψ l)) w
+    (fun l => signal_continuous n χ (ψ l)) (fun l t => Complex.normSq_nonneg _)
+    hw hwone T (by linarith)
+    (fun l => pure_bound T hT hsym n χ (ψ l) hχ (hψ l).1 (hψ l).2)
+  exact (div_le_iff₀ (sq_pos_of_pos hm)).2 hmix
 
 private theorem threshold_attained (α : ℝ) (hα : 0 ≤ α) :
     thresholdN α / thresholdD α ∈ admissibleValues := by
-  sorry
+  let a := 1 / (α + 2)
+  let b := α / (α + 2)
+  have hden : 0 < α + 2 := by positivity
+  have ha : 0 < a := by dsimp [a]; positivity
+  have hb : 0 ≤ b := by dsimp [b]; positivity
+  have hone : a + b + a = 1 := by dsimp [a, b]; field_simp; ring
+  let v : Fin 3 → ℂ := ![(Real.sqrt a : ℂ), Real.sqrt b, Real.sqrt a]
+  have hv : IsUnitVector v := by
+    simpa [IsUnitVector, v, Fin.sum_univ_succ, Real.mul_self_sqrt ha.le,
+      Real.mul_self_sqrt hb, add_assoc] using hone
+  have hsparse : IsThreeSparse v :=
+    (Set.ncard_le_card _).trans (by simp)
+  let e : Fin 3 → ℤ := ![0, -1, -2]
+  have he : Function.Injective e := by
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num [e] at *
+  have hsquare (x : ℝ) (hx : 0 ≤ x) (E : ℂ) :
+      star (Real.sqrt x : ℂ) * E * (Real.sqrt x : ℂ) = (x : ℂ) * E := by
+    rw [Complex.star_def, Complex.conj_ofReal]
+    calc
+      _ = ((Real.sqrt x : ℂ) * (Real.sqrt x : ℂ)) * E := by ring
+      _ = _ := by rw [← Complex.ofReal_mul, Real.mul_self_sqrt hx]
+  have hsignal : signal (![0, 1, 2] : Fin 3 → ℤ) v v =
+      (fun t => Complex.normSq (trigPoly e ![(a : ℂ), b, a] t)) := by
+    funext t
+    unfold signal trigPoly
+    congr 1
+    simp only [v, e, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
+      Fin.isValue, hsquare a ha.le, hsquare b hb]
+    norm_num [character]
+  have hmone : moment 1 (signal (![0, 1, 2] : Fin 3 → ℤ) v v) = 2 * a ^ 2 + b ^ 2 := by
+    rw [hsignal, moment_one_injective e _ he]
+    simp [Fin.sum_univ_succ, Complex.norm_real, Real.norm_eq_abs]
+    ring
+  have hmthree : moment 3 (signal (![0, 1, 2] : Fin 3 → ℤ) v v) = equalMoment a b a := by
+    rw [hsignal, cubic_moment_formula]
+    norm_num [e, Fin.sum_univ_succ, cubicEnergy, cubicCoefficient, equalMoment]
+    ring
+  have hratio : ratio3 (signal (![0, 1, 2] : Fin 3 → ℤ) v v) = thresholdN α / thresholdD α := by
+    rw [ratio3, hmone, hmthree]
+    dsimp [equalMoment, a, b, thresholdN, thresholdD]
+    field_simp
+    ring
+  have hmix : mixedSignal (![0, 1, 2] : Fin 3 → ℤ) v (fun _ : Fin 1 => v) (fun _ => 1) =
+      signal (![0, 1, 2] : Fin 3 → ℤ) v v := by
+    funext t
+    simp [mixedSignal]
+  refine ⟨3, 1, ![0, 1, 2], v, (fun _ => v), (fun _ => 1), hv,
+    (fun _ => ⟨hv, hsparse⟩), (fun _ => by norm_num), by simp, ?_, ?_⟩
+  · rw [hmix, hmone]
+    positivity
+  · rw [hmix]
+    exact hratio.symm
 
 /-- The sharp three-coherence threshold, including arbitrary integer spectra and mixtures. -/
 theorem result : claim := by
